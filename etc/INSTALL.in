@@ -2,152 +2,158 @@
 
 # ${RHOME}/etc/INSTALL for installing add-on packages
 # Usage:
-#	R INSTALL [(+|-)debug] [-help/+help] [-html/+html] [-latex/+latex]
-#                 [+docs/-docs] pkg [lib]
+#	R INSTALL [options] [-l lib] pkg_1 ... pkg_n
+
+VERSION="0.1-0"
+USAGE_MSG="Usage:  R INSTALL [options] [-l lib] pkg_1 ... pkg_n"
 
 DEBUG=false
-IHELP=true
-IHTML=true
-ILATEX=true
-if [ "$1" = "+debug" ]; then shift; DEBUG=true;   fi
-if [ "$1" = "-debug" ]; then shift; DEBUG=false;  fi
-if [ "$1" = "+help" ];  then shift; IHELP=true;   fi
-if [ "$1" = "-help" ];  then shift; IHELP=false;  fi
-if [ "$1" = "+html" ];  then shift; IHTML=true;   fi
-if [ "$1" = "-html" ];  then shift; IHTML=false;  fi
-if [ "$1" = "+latex" ]; then shift; ILATEX=true;  fi
-if [ "$1" = "-latex" ]; then shift; ILATEX=false; fi
+BUILD_TEXT=true
+BUILD_HTML=true
+BUILD_LATEX=true
+BUILD_HELP=true
+BUILD_HELP_OPTS=
 
-if [ "$1" = "-docs" ]; then
+NO_PERL5=@NO_PERL5@
+NO_PERL5_MSG="\
+*** Formatting and installing R help pages needs Perl version 5, which
+*** does not seem to be installed on your system or is not in your path.
+*** Please install either Perl 5 on your system and re-configure R or
+*** get pre-formatted help pages from the nearest CRAN server.
+*** The CRAN master site can be found at
+***    http://www.ci.tuwien.ac.at/R
+***    ftp://ftp.ci.tuwien.ac.at/pub/R"
+
+PKGS=
+lib=${RHOME}/library
+
+umask 022
+
+while test -n "${1}"; do
+  case ${1} in
+    -h|--help|-\?)
+      echo "${USAGE_MSG}"; exit 0 ;;
+    -V|--version)
+      echo "${VERSION}"; exit 0 ;;
+    --debug)
+      DEBUG=true ;;
+    --no-docs)
+      BUILD_TEXT=false; BUILD_HTML=false; BUILD_LATEX=false ;;
+    --no-text)
+      BUILD_TEXT=false ;;
+    --no-html)
+      BUILD_HTML=false ;;
+    --no-latex)
+      BUILD_LATEX=false ;;
+    -l)
+      lib=${2}; shift ;;
+    *)
+      if test -d ${1}; then
+	PKGS="${PKGS} `cd ${1}; pwd`"
+      else
+	echo "Warning:  package \`${1}' does not exist"
+      fi
+      ;;
+  esac
   shift
-  IHELP=false
-  IHTML=false
-  ILATEX=false
-fi
+done
 
-if [ "$1" = "+docs" ]; then
-  shift
-  IHELP=true
-  IHTML=true
-  ILATEX=true
-fi
-
-if [ "$1" ]; then
-  pkg=$1
-  if [ ! -d ${pkg} ]; then
-    echo "Package \`${pkg}' does not exist"
-    exit 1
-  fi
-else
-  echo "usage:  R INSTALL <options> pkg [lib]"
+if test -z "${PKGS}"; then
+  echo "${USAGE_MSG}"
   exit 1
 fi
 
-lib=${2:-${RHOME}/library}
-test -d ${lib} || mkdir ${lib} || exit 1;
-lib=`cd ${lib}; pwd`
+if test -d ${lib} -a -w ${lib} || mkdir ${lib} 2> /dev/null; then
+  lib=`cd ${lib}; pwd`
+else
+  echo "ERROR:  cannot write to or create directory \`${lib}"
+  exit 2
+fi
 
-cd ${pkg}
-pkg=`basename ${pkg}`
-test -d ${lib}/${pkg} || mkdir ${lib}/${pkg} || exit 1;
-echo "Installing package \`${pkg}' ..."
+if ${BUILD_TEXT}; then
+  BUILD_HELP_OPTS="${BUILD_HELP_OPTS} --nroff"
+fi
+if ${BUILD_HTML}; then
+  BUILD_HELP_OPTS="${BUILD_HELP_OPTS} --html"
+fi
+if ${BUILD_LATEX}; then
+  BUILD_HELP_OPTS="${BUILD_HELP_OPTS} --latex"
+fi
+if test -z "${BUILD_HELP_OPTS}"; then
+  BUILD_HELP=false
+elif ${DEBUG}; then
+  BUILD_HELP_OPTS="--debug ${BUILD_HELP_OPTS}"
+fi  
 
-if test -d src; then
-  echo "libs"
-  test -d ${lib}/${pkg}/libs || mkdir ${lib}/${pkg}/libs
-  if test -f src/Makefile; then
-    (cd src;
-      make -f ${RHOME}/etc/Makeconf -f Makefile;
-      cp *.so ${lib}/${pkg}/libs)
-  else
-    (cd src;
-      sh ${RHOME}/etc/SHLIB -o ${lib}/${pkg}/libs/${pkg}.so *.[cfr])
+for pkg in ${PKGS}; do
+  cd ${pkg}
+  pkg=`basename ${pkg}`
+  if test -d ${lib}/${pkg}; then
+    rm -rf ${lib}/${pkg}
   fi
-fi
+  mkdir ${lib}/${pkg} || exit 3
+  echo "Installing package \`${pkg}' ..."
 
-if test -d R; then dir=R; elif test -d funs; then dir=funs; fi
-if test "$dir"; then
-  echo "${dir}"
-  test -d ${lib}/${pkg}/R || mkdir ${lib}/${pkg}/R
-  cat `ls ${dir}/*.[RSqrs]` > ${lib}/${pkg}/R/${pkg}
-fi
+  if test -d src; then
+    echo "libs"
+    mkdir ${lib}/${pkg}/libs
+    if test -f src/Makefile; then
+      (cd src;
+	make -f ${RHOME}/etc/Makeconf -f Makefile;
+	cp *.so ${lib}/${pkg}/libs)
+    else
+      (cd src;
+	sh ${RHOME}/etc/SHLIB -o ${lib}/${pkg}/libs/${pkg}.so *.[cfr])
+    fi
+  fi
 
-if test -d data; then
-  echo "data"
-  test -d ${lib}/${pkg}/data || mkdir ${lib}/${pkg}/data
-  cp data/* ${lib}/${pkg}/data
-fi
+  if test -d R; then dir=R; elif test -d funs; then dir=funs; fi
+  if test "${dir}"; then
+    echo "${dir}"
+    mkdir ${lib}/${pkg}/R
+    cat `ls ${dir}/*.[RSqrs]` > ${lib}/${pkg}/R/${pkg}
+  fi
 
-if test -d exec; then
-  echo "exec"
-  test -d ${lib}/${pkg}/exec || mkdir ${lib}/${pkg}/exec
-  cp exec/* ${lib}/${pkg}/exec
-  chmod 755 ${lib}/${pkg}/exec/*
-fi
+  if test -d data; then
+    echo "data"
+    mkdir ${lib}/${pkg}/data
+    cp data/* ${lib}/${pkg}/data
+  fi
 
-if [ -f INDEX ]; then
-  cp INDEX ${lib}/${pkg}
-fi
-if [ -f TITLE ]; then
-  cp TITLE ${lib}/${pkg}
-fi
-(cd ${lib}; cat */TITLE > LibIndex 2> /dev/null)
+  if test -d exec; then
+    echo "exec"
+    mkdir ${lib}/${pkg}/exec
+    cp exec/* ${lib}/${pkg}/exec
+    chmod 755 ${lib}/${pkg}/exec/*
+  fi
 
-echo "DONE"
+  if test -f INDEX; then
+    cp INDEX ${lib}/${pkg}
+  fi
+  if test -f TITLE; then
+    cp TITLE ${lib}/${pkg}
+  fi
+  (cd ${lib}; cat */TITLE > LibIndex 2> /dev/null)
 
-# ----------- Installing help pages ------
-
-NO_PERL5=@NO_PERL5@
-
-if ${IHELP} || ${IHTML} || ${ILATEX}; then
+  if test -d man; then
+    echo "help"
+    if ${BUILD_HELP}; then
+      if ${NO_PERL5}; then
+	echo "${NO_PERL5_MSG}"
+      else
+	if ${DEBUG}; then
+	  echo "${RHOME}/etc/build-help ${BUILD_HELP_OPTS} ../${pkg} ${lib}"
+	fi
+	${RHOME}/etc/build-help ${BUILD_HELP_OPTS} ../${pkg} ${lib}
+      fi
+    fi
+  else
+    echo "No man pages found in package \`${pkg}'"
+  fi
+  
+  echo "DONE (${pkg})"
   echo
-else
-  exit 0
-fi
-
-if test -d man; then
-  echo "Installing documentation of package \`${pkg}' ..."
-else
-  echo "No man pages found in package \`${pkg}'"
-  exit 0
-fi
-
-if ${NO_PERL5}; then
-  echo "*** You requested to format and install the help pages of ${pkg}."
-  echo "*** Formatting R help pages needs perl version 5, which does not"
-  echo "*** seem to be installed on your system or is not in your path."
-  echo "*** Please install either perl 5 on your system and re-configure
-  echo "*** R or get pre-formatted help pages from the nearest CRAN
-  echo "*** server."
-  echo "*** The CRAN master site can be found at"
-  echo "***    ftp://ftp.ci.tuwien.ac.at/pub/R"
-  echo "***    http://www.ci.tuwien.ac.at/R"
-  echo
-  exit 0
-fi
-
-if ${DEBUG}; then
-  BUILDHELPOPTS="--debug"
-else
-  BUILDHELPOPTS=""
-fi
-
-if ${IHELP}; then
-  BUILDHELPOPTS="${BUILDHELPOPTS} --nroff"
-fi
-
-if ${IHTML}; then
-  BUILDHELPOPTS="${BUILDHELPOPTS} --html"
-fi
-
-if ${ILATEX}; then
-  BUILDHELPOPTS="${BUILDHELPOPTS} --latex"
-fi
-
-if ${DEBUG}; then
-  echo "now \`${RHOME}/etc/build-help ${BUILDHELPOPTS} ../${pkg} ${lib}'"
-fi
-${RHOME}/etc/build-help ${BUILDHELPOPTS} ../${pkg} ${lib}
+done
 
 echo "DONE (INSTALL)"
 
