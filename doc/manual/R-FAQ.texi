@@ -732,17 +732,27 @@ enhanced contributed packages.
 @item R-help
 The `main' R mailing list, for discussion about problems and solutions
 using R, announcements (not covered by `R-announce' and `R-packages')
-about the development of R and the availability of new code,
-enhancements and patches to the source code and documentation of R,
-comparison and compatibility with S and @SPLUS{}, and for the posting of
-nice examples and benchmarks.
+about the development of R and the availability of new code.
+@c enhancements and patches to the source code and documentation of R,
+@c comparison and compatibility with S and @SPLUS{}, and for the posting of
+@c nice examples and benchmarks.
 @item R-devel
-This list is for discussions about the future of R, proposals of new
-functionality, and pre-testing of new versions.  It is meant for those
-who maintain an active position in the development of R.
+This list is for questions and discussion about code development in R.
+@c discussions about the future of R, proposals of new functionality, and
+@c pre-testing of new versions.  It is meant for those who maintain an
+@c active position in the development of R.
 @end table
 
 @noindent
+Please read the @url{http://www.R-project.org/posting-guide.html,
+posting guide} @emph{before} sending anything to any mailing list.
+
+Note in particular that R-help is intended to be comprehensible to
+people who want to use R to solve problems but who are not necessarily
+interested in or knowledgeable about programming.  Questions likely to
+prompt discussion unintelligible to non-programmers (e.g., questions
+involving C or C++) should go to R-devel.
+
 Convenient access to information on these lists, subscription, and
 archives is provided by the web interface at
 @url{http://stat.ethz.ch/mailman/listinfo/}.  One can also subscribe
@@ -767,9 +777,6 @@ Of course, in the case of bug reports it would be very helpful to have
 code which reliably reproduces the problem.  Also, make sure that you
 include information on the system and version of R being used.  See
 @ref{R Bugs} for more details.
-
-Please read the @url{http://www.R-project.org/posting-guide.html,
-posting guide} @emph{before} sending anything to any mailing list.
 
 See @url{http://www.R-project.org/mail.html} for more information on
 the R mailing lists.
