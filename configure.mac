@@ -47,11 +47,13 @@ cp $RHOME/src/macintosh/Platform.h $MHOME/src/include
 
 sed '
 /^#/d
+/Rsock/d
 s/F77_SUBROUTINE(\(.*\))/int \1_();/
 s/C_FUNCTION(\(.*\))/int \1();/
 ' $RHOME/src/appl/ROUTINES > $MHOME/src/include/FFDecl.h
 sed '
 /^#/d
+/Rsock/d
 s/F77_SUBROUTINE(\(.*\))/	"\1_",	\1_,/
 s/C_FUNCTION(\(.*\))/	"\1",	\1,/
 ' $RHOME/src/appl/ROUTINES > $MHOME/src/include/FFTab.h
