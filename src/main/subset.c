@@ -735,7 +735,7 @@ SEXP do_subset3(SEXP call, SEXP op, SEXP args, SEXP env)
 
     /* first translate CADR of args into a string so that we can
        pass it down to DispatchorEval and have it behave correctly */
-    input = allocVector(STRSXP, 1);
+    input = PROTECT(allocVector(STRSXP, 1));
 
     nlist = CADR(args);
     if(isSymbol(nlist) )
@@ -755,9 +755,12 @@ SEXP do_subset3(SEXP call, SEXP op, SEXP args, SEXP env)
     /* through to the generic code below.  Note that */
     /* evaluation retains any missing argument indicators. */
 
-    if(DispatchOrEval(call, "$", args, env, &ans, 0))
+    if(DispatchOrEval(call, "$", args, env, &ans, 0)) {
+	UNPROTECT(1);
 	return(ans);
+    }
 
+    UNPROTECT(1);
     return R_subset3_dflt(CAR(ans), STRING_ELT(input, 0));
 }
 
