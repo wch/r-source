@@ -1164,12 +1164,14 @@ int DispatchGroup(char* group, SEXP call, SEXP op, SEXP args, SEXP rho,
     SEXP class, s, t, m, meth, sxp, gr, newrho;
     char buf[512], generic[128], *pt;
     /* check whether we are processing the default method */
-    sprintf(buf, "%s", PRIMNAME(op) );
-    pt = strtok(buf, ".");
-    pt = strtok(NULL, ".");
+    if ( isSymbol(CAR(call)) ) {
+	sprintf(buf, "%s", CHAR(PRINTNAME(CAR(call))) );
+	pt = strtok(buf, ".");
+	pt = strtok(NULL, ".");
 
-    if( pt != NULL && !strcmp(pt, "default") )
-	return 0;
+	if( pt != NULL && !strcmp(pt, "default") )
+	    return 0;
+    }
 
     if( !strcmp(group, "Ops") )
 	nargs = length(args);
