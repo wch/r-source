@@ -18,12 +18,14 @@ all Ä library
 
 
 ## ------------- library -----------
-PACKAGES =  mvtnorm #sn #acepack akima bootstrap deldir EMV evd GenKern gss pcurve qtl sm tree tripack
-LIBF = mvtnorm #acepack akima bootstrap deldir EMV evd GenKern gss pcurve qtl sm tree tripack
+PACKAGES =  #locfit splancs chron mvtnorm sn acepack akima bootstrap
+            #deldir EMV evd GenKern gss pcurve qtl sm tree tripack
+LIBF = #locfit splancs chron mvtnorm acepack akima bootstrap deldir 
+       #EMV evd GenKern gss pcurve qtl sm tree tripack
 
-DATA = #sn #akima bootstrap EMV evd gss pcurve qtl sm tripack
+DATA = #locfit splancs sn akima bootstrap EMV evd gss pcurve qtl sm tripack
 DEMO = #
-INST = #evd qtl sm
+INST = #splancs evd qtl sm
 
 
 
