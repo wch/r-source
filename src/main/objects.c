@@ -1240,3 +1240,42 @@ SEXP R_possible_dispatch(SEXP call, SEXP op, SEXP args,
   else
     return value;
 }
+
+SEXP R_do_MAKE_CLASS( char *what)
+{
+    static SEXP s_getClass = NULL;
+    SEXP e, call;
+    if(!what)
+	error("C level MAKE_CLASS macro called with NULL string pointer");
+    if(!s_getClass)
+	s_getClass = Rf_install("getClass");
+    PROTECT(call = allocVector(LANGSXP, 2));
+    SETCAR(call, s_getClass);
+    SETCAR(CDR(call), mkString(what));
+    e = eval(call, R_GlobalEnv);
+    UNPROTECT(1);
+    return(e);
+}
+
+SEXP R_do_new_object(SEXP class_def)
+{
+    static SEXP s_virtual = NULL, s_prototype, s_className;
+    SEXP e, value;
+    if(!s_virtual) {
+	s_virtual = Rf_install("virtual");
+	s_prototype = Rf_install("prototype");
+	s_className = Rf_install("className");
+    }
+    if(!class_def)
+	error("C level NEW macro called with null class definition pointer");
+    e = R_do_slot(class_def, s_virtual);
+    if(asLogical(e) != 0)  { /* includes NA, TRUE, or anything other than FALSE */
+	e = R_do_slot(class_def, s_className);
+	error("Trying to generate an object in C from a virtual class (\"%s\")",
+	      CHAR(asChar(e)));
+    }
+    e = R_do_slot(class_def, s_className);
+    value = R_do_slot(class_def, s_prototype);
+    setAttrib(value, R_ClassSymbol, e);
+    return value;
+}

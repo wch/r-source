@@ -123,6 +123,9 @@
 #define GET_SLOT(x, what)       R_do_slot(x, what)
 #define SET_SLOT(x, what, value)  R_do_slot_assign(x, what, value)
 
+#define MAKE_CLASS(what)	R_do_MAKE_CLASS(what)
+#define NEW(class_def)		R_do_new_object(class_def)
+
 #define s_object                SEXPREC
 #define S_EVALUATOR             /**/
 #ifndef TRUE
