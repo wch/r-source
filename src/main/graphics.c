@@ -3921,7 +3921,7 @@ void hsv2rgb(double *h, double *s, double *v, double *r, double *g, double *b)
     int i;
 
     t = 6 * modf(*h, &f);/* h = t/6 + f = fract. + int. */
-    i = floor(t);/* 0..5 */
+    i = floor(t+1e-5);/* 0..5 */
     f = modf(t, &p);
     p = *v * (1 - *s);
     q = *v * (1 - *s * f);
