@@ -23,6 +23,10 @@
 #include <string.h>		/* for memcpy */
 #include "Rconfig.h"		/* for F77_APPEND_UNDERSCORE */
 
+#ifdef  __cplusplus
+extern "C" {
+#endif
+
 /* S Like Error Handling */
 
 #include "R_ext/Error.h"	/* for error and warning */
@@ -66,4 +70,8 @@ extern void R_chk_free(void *);
 
 void	call_R(char*, long, void**, char**, long*, char**, long, char**);
 
+#ifdef  __cplusplus
+}
 #endif
+
+#endif /* R_RS_H */

@@ -28,6 +28,10 @@
 #include "R_ext/Boolean.h"
 #include "R_ext/RS.h"		/* F77_... */
 
+#ifdef  __cplusplus
+extern "C" {
+#endif
+
 void R_approx(double *, double *, int *, double *, int *,
 	      int *, double *, double *, double *);
 
@@ -268,5 +272,8 @@ void loglin(int *nvar, int *dim, int *ncon, int *config, int *ntab,
 	    double *table, double *fit, int *locmar, int *nmar, double *marg,
 	    int *nu, double *u, double *maxdev, int *maxit,
 	    double *dev, int *nlast, int *ifault);
-
+#ifdef  __cplusplus
+}
 #endif
+
+#endif /* R_APPLIC_H_ */

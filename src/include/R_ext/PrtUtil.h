@@ -49,6 +49,10 @@
 #define Rprt_adj_right 1
 #define Rprt_adj_left  0
 
+#ifdef  __cplusplus
+extern "C" {
+#endif
+
 /* Computation of printing formats */
 void formatLogical(int*,int,int*);
 void formatInteger(int*,int,int*);
@@ -76,5 +80,8 @@ void Rprintf(char*, ...);
 void REprintf(char*, ...);
 void Rvprintf(const char*, va_list);
 void REvprintf(const char*, va_list);
-
+#ifdef  __cplusplus
+}
 #endif
+
+#endif /* PRTUTIL_H_ */

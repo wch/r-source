@@ -21,6 +21,10 @@
 #ifndef R_EXT_GRAPHICS_H_
 #define R_EXT_GRAPHICS_H_
 
+#ifdef  __cplusplus
+extern "C" {
+#endif
+
 /*
  *	Some Notes on Color
  *
@@ -540,5 +544,9 @@ double GVStrWidth (const unsigned char *, int, int, int, DevDesc *);
 double GVStrHeight (const unsigned char *, int, int, int, DevDesc *);
 void GVText (double, double, int, char *, int, int,
 	     double, double, double, DevDesc *);
+
+#ifdef  __cplusplus
+}
+#endif
 
 #endif /* R_EXT_GRAPHICS_H_ */

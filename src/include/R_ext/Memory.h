@@ -21,8 +21,12 @@
  * Memory Allocation (garbage collected) --- INCLUDING S compatibility ---
  */
 
-#ifndef MEMORY_H_
-#define MEMORY_H_
+#ifndef R_EXT_MEMORY_H_
+#define R_EXT_MEMORY_H_
+
+#ifdef  __cplusplus
+extern "C" {
+#endif
 
 char*	vmaxget(void);
 void	vmaxset(char*);
@@ -39,4 +43,8 @@ void	Reset_C_alloc(void);
 char*	C_alloc(long, int);
 void	C_free(char *);
 
+#ifdef  __cplusplus
+}
 #endif
+
+#endif /* R_EXT_MEMORY_H_ */

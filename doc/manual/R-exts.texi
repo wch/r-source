@@ -3166,6 +3166,9 @@ useful when porting code from @Sl{}.  This includes rather less than
 @file{R.h}, and has some compatibility definitions (for example the
 @code{S_complex} type from @Sl{}).
 
+Most of these header files, including all those included by @file{R.h},
+can be used from C++ code.
+
 @quotation
 @strong{NOTE:} Because @R{} re-maps many of its external names to avoid
 clashes with user code, it is @emph{essential} to include the

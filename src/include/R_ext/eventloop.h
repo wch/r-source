@@ -1,6 +1,9 @@
-#ifndef CONNECTIONS_H
-#define CONNECTIONS_H
+#ifndef R_EXT_EVENTLOOP_H
+#define R_EXT_EVENTLOOP_H
 
+#ifdef  __cplusplus
+extern "C" {
+#endif
 
 #define XActivity 1
 #define StdinActivity 2
@@ -44,4 +47,8 @@ extern InputHandler *R_InputHandlers;
 extern void (* R_PolledEvents)(void);
 extern int R_wait_usec;
 
+#ifdef  __cplusplus
+}
 #endif
+
+#endif /* R_EXT_EVENTLOOP_H */

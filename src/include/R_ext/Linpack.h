@@ -22,6 +22,10 @@
 
 #include "R_ext/RS.h"		/* for F77_... */
 
+#ifdef  __cplusplus
+extern "C" {
+#endif
+
 /*-- use "extern" below, since declarations are already in ./Applic.h : */
 
 	/* Double Precision Blas */
@@ -83,4 +87,8 @@ extern int F77_NAME(dspdi)(double*, int*, int*, double*, int*, double*, int*);
 extern int F77_NAME(dspfa)(double*, int*, int*, int*);
 extern int F77_NAME(dspsl)(double*, int*, int*, double*);
 
+#ifdef  __cplusplus
+}
 #endif
+
+#endif /* R_LINPACK_H_ */

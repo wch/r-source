@@ -21,6 +21,10 @@
 #ifndef R_RANDOM_H
 #define R_RANDOM_H
 
+#ifdef  __cplusplus
+extern "C" {
+#endif
+
 typedef enum {
     WICHMANN_HILL,
     MARSAGLIA_MULTICARRY,
@@ -54,4 +58,9 @@ int * user_unif_nseed();
 int * user_unif_seedloc();
 
 double * user_norm_rand();
+
+#ifdef  __cplusplus
+}
 #endif
+
+#endif /* R_RANDOM_H */

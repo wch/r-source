@@ -21,6 +21,10 @@
 #ifndef R_COMPLEX_H
 #define R_COMPLEX_H
 
+#ifdef  __cplusplus
+extern "C" {
+#endif
+
 typedef struct {
 	double r;
 	double i;
@@ -31,4 +35,8 @@ typedef struct {
 typedef Rcomplex complex;
 #endif
 
+#ifdef  __cplusplus
+}
 #endif
+
+#endif /* R_COMPLEX_H */

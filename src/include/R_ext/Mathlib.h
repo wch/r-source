@@ -320,6 +320,9 @@
 #undef trunc
 #define	trunc	ftrunc
 
+#ifdef  __cplusplus
+extern "C" {
+#endif
 
 	/* R's versions with !R_FINITE checks */
 
@@ -598,21 +601,25 @@ int R_IsNaNorNA(double);
 int R_finite(double);
 
 #ifdef WIN32
-#define NA_REAL (*_imp__NA_REAL)
-#define R_NegInf (*_imp__R_NegInf)
-#define R_PosInf (*_imp__R_PosInf)
-#define N01_kind (*_imp__N01_kind)
-#endif
+# define NA_REAL (*_imp__NA_REAL)
+# define R_NegInf (*_imp__R_NegInf)
+# define R_PosInf (*_imp__R_PosInf)
+# define N01_kind (*_imp__N01_kind)
+# endif
 
-#endif
-#endif
+#endif /* not MATHLIB_PRIVATE_H */
+#endif /* MATHLIB_STANDALONE */
 
 #ifdef MATHLIB_STANDALONE
-#define REprintf fprintf(stderr,
+# define REprintf fprintf(stderr,
 #else
-#ifndef PRTUTIL_H_
+# ifndef PRTUTIL_H_
 void REprintf(char*, ...);
-#endif
+# endif
 #endif
 
+#ifdef  __cplusplus
+}
 #endif
+
+#endif /* MATHLIB_H */

@@ -41,6 +41,10 @@
 #define hsv2rgb       Rf_hsv2rgb
 #endif
 
+#ifdef  __cplusplus
+extern "C" {
+#endif
+
 /* ../main/sort.c : */
 void	R_isort(int*, int);
 void	R_rsort(double*, int);
@@ -65,4 +69,8 @@ double 	R_strtod(char *c, char **end);
 void	hsv2rgb(double *h, double *s, double *v,/* in */
 		double *r, double *g, double *b);/* out */
 
+#ifdef  __cplusplus
+}
 #endif
+
+#endif /* R_EXT_UTILS_H_ */

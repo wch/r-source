@@ -26,6 +26,10 @@
 #ifdef __MAIN__
 #define extern
 #endif
+#ifdef  __cplusplus
+extern "C" {
+#endif
+
 /* implementation of these : ../../main/arithmetic.c */
 extern double	R_NaN;		/* IEEE NaN or = NA_REAL */
 extern double	R_PosInf;	/* IEEE Inf  or	 DBL_MAX */
@@ -51,4 +55,8 @@ int R_finite(double);		/* True if none of NA, NaN, +/-Inf */
 #define ISNAN(x)       R_IsNaNorNA(x)
 #define R_FINITE(x)    R_finite(x)
 
+#ifdef  __cplusplus
+}
 #endif
+
+#endif /* R_ARITH_H_ */
