@@ -1,5 +1,5 @@
 #! @PERL@
-#-*- perl -*-
+#-*- mode: perl; perl-indent-level: 4; cperl-indent-level: 4 -*-
 #
 # ${RHOME}/bin/build-help
 # Usage:  build-help [--rhome dir] [--html] [--nroff] [--latex] [--example]
@@ -104,7 +104,7 @@ format STDOUT =
 .
 
 foreach $manfile (@mandir) {
-    if($manfile =~ /\.Rd$/i){
+    if($manfile =~ /\.[Rr]d$/) {
         $manfilebase = basename($manfile, (".Rd", ".rd"));
 	$manage = (-M $manfile);
 
@@ -112,8 +112,7 @@ foreach $manfile (@mandir) {
 
 	if($opt_nroff){
 	    $destfile = "$dest/help/$manfilebase";
-	    $destage = (-M $destfile);
-	    if(! ((-f $destfile) && ($destage < $manage))){
+	    if(fileolder($destfile, $manage)) {
 		$textflag = "text";
 		open(nroffout, "| tbl | nroff -ms 2> /dev/null | " .
 		     " ${RHOME}/bin/help.pretty > '$destfile'");
@@ -124,8 +123,7 @@ foreach $manfile (@mandir) {
 	if($opt_html){
 	    my $targetfile = $anindex{$manfilebase};
 	    $destfile = "$dest/html/$targetfile.$HTML";
-	    $destage = (-M $destfile);
-	    if(! ((-f $destfile) && ($destage < $manage))){
+	    if(fileolder($destfile,$manage)) {
 		$htmlflag = "html";
 		print "\t$destfile" if $opt_debug;
 		Rdconv($manfile, "html", "", "$destfile");# "": maybe $opt_debug
@@ -134,16 +132,14 @@ foreach $manfile (@mandir) {
 
 	if($opt_latex){
 	    $destfile = "$latex_d/$manfilebase.tex";
-	    $destage = (-M $destfile);
-	    if(! ((-f $destfile) && ($destage < $manage))){
+	    if(fileolder($destfile,$manage)) {
 		$latexflag = "latex";
 		Rdconv($manfile, "latex", "", "$destfile");# maybe $opt_debug
 	    }
 	}
 	if($opt_example){
 	    $destfile = "$Rex_d/$manfilebase.R";
-	    $destage = (-M $destfile);
-	    if(! ((-f $destfile) && ($destage < $manage))){
+	    if(fileolder($destfile,$manage)) {
 		$exampleflag = "example";
 		Rdconv($manfile, "example", "", "$destfile");# maybe $opt_debug
 	    }

@@ -399,4 +399,14 @@ sub build_htmlfctlist {
     close htmlfile;
 }
 
+sub fileolder { #(filename, age)
+    my($file, $age) = @_;
+    #- return ``true'' if file exists and is older than $age
+    (! ((-f $file) && ((-M $file) < $age)))
+}
+
 1;
+# Local variables: **
+# perl-indent-level: 4 **
+# cperl-indent-level: 4 **
+# End: **
