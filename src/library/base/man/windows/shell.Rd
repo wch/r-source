@@ -52,6 +52,11 @@ shell(cmd, shell, flag="/c", intern=FALSE, wait=TRUE,
     directly if their extension is given: Windows (rather than \R) then
     chooses a shell.
     
+    If the path to the command contains spaces, the relevant parts of
+    the path must be quoted, for example \code{shell('"/Program
+    Files/something or another/some.exe"').  For this to work the
+    shell must handle quoted paths correctly.
+
     See \code{\link{system}} for fuller details: \code{shell} is a more
     user-friendly wrapper for \code{system}.
 }
