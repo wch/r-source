@@ -79,8 +79,8 @@ checkS3methods(package, dir, lib.loc = NULL)
   contained in such objects.
 }
 \section{Warning}{
-  These functions are still experimental.  Both names, interfaces and
-  values might change in future versions.
+  These functions are still experimental.  Names, interfaces and values
+  might change in future versions.
 }
 \keyword{utilities}
 \keyword{documentation}
