@@ -43,11 +43,6 @@ CHANGES TO THE LANGUAGE
 	variables in a name space (i.e. a:::b is the value of the internal
 	variable b in name space a).
 
-    o	Terms in formulae can now be quoted, to allow the use of
-	non-syntactic variable names: backticks as described in the
-	next item can also be used.  [Note that other code using terms
-	objects may expect syntactic names.]
-
     o	Non-syntactic variable names can now be specified by inclusion
 	between backticks `Like This`. The deparse() code has been
 	changed to output non-syntactical names with this convention,
@@ -55,6 +50,12 @@ CHANGES TO THE LANGUAGE
 	by a `backtick' argument, which is by default TRUE for
 	composite expressions and FALSE for single symbols. This
 	should give minimal interference with existing code.
+
+    o   Terms in formulae can be quoted by single or double quotes as
+	well as by backticks: they will be deparsed with backticks.
+	terms.formula() will quote non-syntactic names in its
+	"term.labels" attribute.  [Note that other code using terms
+	objects may expect syntactic names.]
 
 
 NEW FEATURES

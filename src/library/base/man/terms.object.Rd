@@ -20,7 +20,8 @@
     variables for all levels (as when an intercept or lower-order term
     is missing).}
   \item{term.labels}{A character vector containing the labels for each
-    of the terms in the model.}
+    of the terms in the model.  Non-syntactic names will be quoted by
+    backticks.}
   \item{variables}{A list of the variables in the model}
   \item{intercept}{Either 0, indicating no intercept is to be fit, or 1
     indicating that an intercept is to be fit.}

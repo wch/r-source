@@ -815,12 +815,8 @@ SEXP do_termsform(SEXP call, SEXP op, SEXP args, SEXP rho)
     /* Step 2a: Compute variable names */
 
     PROTECT(varnames = allocVector(STRSXP, nvar));
-    for (v = CDR(varlist), i = 0; v != R_NilValue; v = CDR(v)) {
-	if (isSymbol(CAR(v)))
-	    SET_STRING_ELT(varnames, i++, PRINTNAME(CAR(v)));
-	else
-	    SET_STRING_ELT(varnames, i++, STRING_ELT(deparse1line(CAR(v), 0), 0));
-    }
+    for (v = CDR(varlist), i = 0; v != R_NilValue; v = CDR(v))
+	SET_STRING_ELT(varnames, i++, STRING_ELT(deparse1line(CAR(v), 0), 0));
     
     /* Step 2b: Remove any offset(s) */
 
