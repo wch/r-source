@@ -3,95 +3,66 @@ useDynLib(stats)
 # exportPattern("^[^\\.]")
 export(.cbind.ts, .checkMFClasses, .getXlevels, .MFclass)
 
-export(add.scope, add1, add1.default, add1.glm, add1.lm, add1.mlm,
-       aggregate, aggregate.data.frame, aggregate.default,
-       aggregate.ts, AIC, AIC.default, AIC.logLik, alias,
-       alias.formula, alias.lm, anova, anova.glm, anova.glmlist,
-       anova.lm, anova.lmlist, anova.mlm, aov, as.data.frame.logLik,
-       as.formula, as.table.ftable, as.ts, ave, binomial, bw.bcv,
-       bw.nrd, bw.nrd0, bw.SJ, bw.ucv, C, case.names,
-       case.names.default, case.names.lm, cbind.ts, coef, coef.aov,
-       coef.default, coef.listof, coefficients, complete.cases,
-       confint, confint.lm, constrOptim, contr.helmert, contr.poly,
-       contr.sum, contr.treatment, contrasts, "contrasts<-",
-       cooks.distance, cooks.distance.glm, cooks.distance.lm, cor,
-       cov, cov.wt, cov2cor, covratio, cycle, cycle.default, cycle.ts,
-       D, dbeta, dbinom, dcauchy, dchisq, delete.response, deltat,
-       deltat.default, density, deriv, deriv.default, deriv.formula,
-       deriv3, deriv3.default, deriv3.formula, deviance,
-       deviance.default, deviance.glm, deviance.lm, deviance.mlm,
-       dexp, df, df.residual, df.residual.default, dfbeta, dfbeta.lm,
-       dfbetas, dfbetas.lm, dffits, dgamma, dgeom, dhyper, diff.ts,
-       dlnorm, dlogis, dmultinom, dnbinom, dnorm, dpois, drop.scope,
-       drop.terms, drop1, drop1.default, drop1.glm, drop1.lm,
-       drop1.mlm, dsignrank, dt, dummy.coef, dummy.coef.aovlist,
-       dummy.coef.lm, dunif, dweibull, dwilcox, eff.aovlist, effects,
-       effects.glm, effects.lm, end, end.default, expand.model.frame,
-       extractAIC, extractAIC.aov, extractAIC.coxph, extractAIC.glm,
-       extractAIC.lm, extractAIC.negbin, extractAIC.survreg,
-       factor.scope, family, family.glm, family.lm, fitted,
-       fitted.default, fitted.values, fivenum, formula,
-       formula.data.frame, formula.default, formula.formula,
-       formula.lm, formula.terms, frequency, frequency.default,
-       ftable, ftable.default, ftable.formula, Gamma, gaussian, glm,
-       glm.control, glm.fit, hasTsp, hat, hatvalues, hatvalues.lm,
-       influence, influence.glm, influence.lm, influence.measures,
-       integrate, interaction.plot, inverse.gaussian, IQR,
-       is.empty.model, is.mts, is.ts, lines.ts, lm, lm.fit,
-       lm.influence, lm.wfit, logLik, logLik.glm, logLik.lm, loglin,
-       lowess, ls.diag, ls.print, lsfit, mad, mahalanobis, make.link,
+export(add.scope, add1, aggregate, aggregate.data.frame,
+       aggregate.default, aggregate.ts, AIC, alias, anova, anova.glm,
+       anova.glmlist, anova.lm, anova.lmlist, anova.mlm, aov,
+       as.formula, as.ts, ave, binomial, bw.bcv, bw.nrd, bw.nrd0, bw.SJ,
+       bw.ucv, C, case.names, cbind.ts, coef, coefficients,
+       complete.cases, confint, constrOptim, contr.helmert,
+       contr.poly, contr.sum, contr.treatment, contrasts,
+       "contrasts<-", cooks.distance, cor, cov, cov.wt, cov2cor,
+       covratio, cycle, D, dbeta, dbinom, dcauchy, dchisq,
+       delete.response, deltat, density, deriv, deriv.default,
+       deriv.formula, deriv3, deriv3.default, deriv3.formula,
+       deviance, dexp, df, df.residual, dfbeta, dfbetas, dffits,
+       dgamma, dgeom, dhyper, diff.ts, dlnorm, dlogis, dmultinom,
+       dnbinom, dnorm, dpois, drop.scope, drop.terms, drop1,
+       dsignrank, dt, dummy.coef, dunif, dweibull, dwilcox,
+       eff.aovlist, effects, end, expand.model.frame, extractAIC,
+       factor.scope, family, fitted, fitted.values, fivenum, formula,
+       frequency, ftable, Gamma, gaussian, glm, glm.control, glm.fit,
+       hasTsp, hat, hatvalues, hatvalues.lm, influence,
+       influence.measures, integrate, interaction.plot,
+       inverse.gaussian, IQR, is.empty.model, is.mts, is.ts, lines.ts,
+       lm, lm.fit, lm.influence, lm.wfit, logLik, loglin, lowess,
+       ls.diag, ls.print, lsfit, mad, mahalanobis, make.link,
        make.tables.aovproj, make.tables.aovprojlist, makepredictcall,
-       makepredictcall.default, makepredictcall.poly, manova, mean,
-       mean.data.frame, mean.default, median, model.extract,
-       model.frame, model.frame.aovlist, model.frame.default,
-       model.frame.glm, model.frame.lm, model.matrix,
-       model.matrix.default, model.matrix.lm, model.offset,
-       model.response, model.tables, model.tables.aov,
-       model.tables.aovlist, model.weights, na.action,
-       na.action.default, na.exclude, na.exclude.data.frame,
-       na.exclude.default, na.fail, na.fail.default, na.omit,
-       na.omit.data.frame, na.omit.default, na.omit.ts, na.pass,
-       napredict, napredict.default, napredict.exclude, naprint,
-       naprint.default, naprint.exclude, naprint.omit, naresid,
-       naresid.default, naresid.exclude, nlm, offset, Ops.ts, optim,
-       optimise, optimize, p.adjust, p.adjust.methods, pbeta, pbinom,
-       pcauchy, pchisq, pexp, pf, pgamma, pgeom, phyper, plnorm,
-       plogis, plot.density, plot.lm, plot.mlm, plot.ts,
-       plot.TukeyHSD, pnbinom, pnorm, poisson, poly, polym, power,
-       ppoints, ppois, predict, predict.glm, predict.lm, predict.mlm,
-       predict.poly, preplot, printCoefmat, print.anova,
-       print.aov, print.aovlist, print.density,
-       print.dummy.coef, print.dummy.coef.list, print.family,
-       print.formula, print.ftable, print.glm, print.infl,
-       print.integrate, print.lm, print.logLik, print.mtable,
-       print.summary.aov, print.summary.aovlist, print.summary.glm,
-       print.summary.lm, print.summary.manova, print.tables.aov,
-       print.terms, print.ts, print.TukeyHSD, profile, proj, proj.aov,
-       proj.aovlist, proj.default, proj.lm, psignrank, pt, ptukey,
-       punif, pweibull, pwilcox, qbeta, qbinom, qcauchy, qchisq, qexp,
-       qf, qgamma, qgeom, qhyper, qlnorm, qlogis, qnbinom, qnorm,
-       qpois, qqline, qqnorm, qqnorm.default, qqplot, qsignrank, qt,
-       qtukey, quantile, quantile.default, quasi, quasibinomial,
-       quasipoisson, qunif, qweibull, qwilcox, rbeta, rbinom, rcauchy,
-       rchisq, read.ftable, reformulate, relevel, relevel.default,
-       relevel.factor, relevel.ordered, replications, reshape, resid,
-       residuals, residuals.default, residuals.glm, residuals.lm,
-       rexp, rf, rgamma, rgeom, rhyper, rlnorm, rlogis, rmultinom,
-       rnbinom, rnorm, rpois, rsignrank, rstandard, rstandard.glm,
-       rstandard.lm, rstudent, rstudent.glm, rstudent.lm, rt, runif,
-       rweibull, rwilcox, sd, se.aov, se.aovlist, se.contrast,
-       se.contrast.aov, se.contrast.aovlist, spline, splinefun, start,
-       start.default, stat.anova, step, str.logLik, summary.aov,
-       summary.aovlist, summary.glm, summary.infl, summary.lm,
-       summary.manova, summary.mlm, symnum, t.ts, termplot, terms,
-       terms.aovlist, terms.default, terms.formula, terms.terms, time,
-       time.default, time.ts, ts, tsp, "tsp<-", TukeyHSD, TukeyHSD.aov,
+       manova, mean, mean.data.frame, mean.default, median,
+       model.extract, model.frame, model.frame.aovlist,
+       model.frame.default, model.frame.glm, model.frame.lm,
+       model.matrix, model.matrix.default, model.matrix.lm,
+       model.offset, model.response, model.tables, model.weights,
+       na.action, na.exclude, na.fail, na.omit, na.pass, napredict,
+       naprint, naresid, nlm, offset, optim, optimise, optimize, p.adjust,
+       p.adjust.methods, pbeta, pbinom, pcauchy, pchisq, pexp, pf,
+       pgamma, pgeom, phyper, plnorm, plogis, plot.density, plot.lm,
+       plot.mlm, plot.ts, plot.TukeyHSD, pnbinom, pnorm, poisson,
+       poly, polym, power, ppoints, ppois, predict, predict.glm,
+       predict.lm, predict.mlm, predict.poly, preplot, printCoefmat,
+       print.anova, print.density, print.dummy.coef,
+       print.dummy.coef.list, print.family, print.formula,
+       print.ftable, print.glm, print.infl, print.integrate, print.lm,
+       print.logLik, print.mtable, print.tables.aov, print.terms,
+       print.ts, profile, proj, psignrank, pt, ptukey, punif,
+       pweibull, pwilcox, qbeta, qbinom, qcauchy, qchisq, qexp, qf,
+       qgamma, qgeom, qhyper, qlnorm, qlogis, qnbinom, qnorm, qpois,
+       qqline, qqnorm, qqnorm.default, qqplot, qsignrank, qt, qtukey,
+       quantile, quantile.default, quasi, quasibinomial, quasipoisson,
+       qunif, qweibull, qwilcox, rbeta, rbinom, rcauchy, rchisq,
+       read.ftable, reformulate, relevel, replications, reshape,
+       resid, residuals, residuals.default, residuals.glm,
+       residuals.lm, rexp, rf, rgamma, rgeom, rhyper, rlnorm, rlogis,
+       rmultinom, rnbinom, rnorm, rpois, rsignrank, rstandard,
+       rstandard.glm, rstandard.lm, rstudent, rstudent.glm,
+       rstudent.lm, rt, runif, rweibull, rwilcox, sd, se.aov,
+       se.aovlist, se.contrast, spline, splinefun, start, stat.anova,
+       step, summary.aov, summary.aovlist, summary.glm, summary.infl,
+       summary.lm, summary.manova, summary.mlm, symnum, termplot,
+       terms, terms.aovlist, terms.default, terms.formula,
+       terms.terms, time, ts, tsp, "tsp<-", TukeyHSD, TukeyHSD.aov,
        uniroot, update, update.default, update.formula, var,
-       variable.names, variable.names.default, variable.names.lm,
-       vcov, vcov.coxph, vcov.glm, vcov.gls, vcov.lm, vcov.lme,
-       vcov.survreg, weighted.mean, weighted.residuals, weights,
-       weights.default, weights.glm, window, window.default,
-       window.ts, write.ftable)
+       variable.names, vcov, weighted.mean, weighted.residuals,
+       weights, window, write.ftable)
 
 importFrom(graphics, identify, plot)
 importFrom(utils, str)
@@ -99,7 +70,119 @@ importFrom(utils, str)
 S3method("[", formula)
 S3method("[", terms)
 S3method("[", ts)
+S3method(add1, default)
+S3method(add1, glm)
+S3method(add1, lm)
+S3method(add1, mlm)
+S3method(AIC, default)
+S3method(AIC, logLik)
+S3method(alias, formula)
+S3method(alias, lm)
+S3method(as.data.frame, logLik)
+S3method(as.table, ftable)
+S3method(case.names, default)
+S3method(case.names, lm)
+S3method(coef, aov)
+S3method(coef, default)
+S3method(coef, listof)
+S3method(confint, lm)
+S3method(cooks.distance, glm)
+S3method(cooks.distance, lm)
+S3method(cycle, default)
+S3method(cycle, ts)
+S3method(deltat, default)
+S3method(deviance, default)
+S3method(deviance, glm)
+S3method(deviance, lm)
+S3method(deviance, mlm)
+S3method(df.residual, default)
+S3method(dfbeta, lm)
+S3method(dfbetas, lm)
+S3method(drop1, default)
+S3method(drop1, glm)
+S3method(drop1, lm)
+S3method(drop1, mlm)
+S3method(dummy.coef, aovlist)
+S3method(dummy.coef, lm)
+S3method(effects, glm)
+S3method(effects, lm)
+S3method(end, default)
+S3method(extractAIC, aov)
+S3method(extractAIC, coxph)
+S3method(extractAIC, glm)
+S3method(extractAIC, lm)
+S3method(extractAIC, negbin)
+S3method(extractAIC, survreg)
+S3method(family, glm)
+S3method(family, lm)
+S3method(fitted, default)
+S3method(formula, data.frame)
+S3method(formula, default)
+S3method(formula, formula)
+S3method(formula, lm)
+S3method(formula, terms)
+S3method(frequency, default)
+S3method(ftable, default)
+S3method(ftable, formula)
+S3method(influence, glm)
+S3method(influence, lm)
+S3method(logLik, glm)
+S3method(logLik, lm)
+S3method(makepredictcall, default)
+S3method(makepredictcall, poly)
+S3method(model.tables, aov)
+S3method(model.tables, aovlist)
+S3method(na.action, default)
+S3method(na.exclude, data.frame)
+S3method(na.exclude, default)
+S3method(na.fail, default)
+S3method(na.omit, data.frame)
+S3method(na.omit, default)
+S3method(na.omit, ts)
+S3method(napredict, default)
+S3method(napredict, exclude)
+S3method(naprint, default)
+S3method(naprint, exclude)
+S3method(naprint, omit)
+S3method(naresid, default)
+S3method(naresid, exclude)
+S3method(Ops, ts)
+S3method(print, aov)
+S3method(print, aovlist)
 S3method(print, htest)
+S3method(print, summary.aov)
+S3method(print, summary.aovlist)
+S3method(print, summary.glm)
+S3method(print, summary.lm)
+S3method(print, summary.manova)
+S3method(print, TukeyHSD)
+S3method(proj, aov)
+S3method(proj, aovlist)
+S3method(proj, default)
+S3method(proj, lm)
+S3method(relevel, default)
+S3method(relevel, factor)
+S3method(relevel, ordered)
+S3method(se.contrast, aov)
+S3method(se.contrast, aovlist)
+S3method(start, default)
+S3method(str, logLik)
+S3method(t, ts)
+S3method(time, default)
+S3method(time, ts)
+S3method(variable.names, default)
+S3method(variable.names, lm)
+S3method(window, default)
+S3method(vcov, coxph)
+S3method(vcov, glm)
+S3method(vcov, gls)
+S3method(vcov, lm)
+S3method(vcov, lme)
+S3method(vcov, survreg)
+S3method(weights, default)
+S3method(weights, glm)
+S3method(window, ts)
+
 
 ## from ctest
 exportPattern("\\.test$")
@@ -261,13 +344,13 @@ S3method(weights, nls)
 ## from ts: Box.test and PP.test are covered above.
 export(acf, acf2AR, ar, ar.burg, ar.mle, ar.ols, ar.yw, arima,
        arima.sim, arima0, arima0.diag, ARMAacf, ARMAtoMA,
-       bandwidth.kernel, ccf, cpgram, decompose, df.kernel,
-       diffinv, embed, filter, HoltWinters, is.tskernel,
-       KalmanForecast, KalmanLike, KalmanRun, KalmanSmooth, kernapply,
-       kernel, lag, lag.plot, makeARIMA, monthplot, na.contiguous,
-       pacf, plot.spec, plot.spec.coherency, plot.spec.phase,
-       spec.ar, spec.pgram, spec.taper, spectrum, stl, StructTS,
-       toeplitz, ts.intersect, ts.plot, ts.union, tsdiag, tsSmooth)
+       bandwidth.kernel, ccf, cpgram, decompose, df.kernel, diffinv,
+       embed, filter, HoltWinters, is.tskernel, KalmanForecast,
+       KalmanLike, KalmanRun, KalmanSmooth, kernapply, kernel, lag,
+       lag.plot, makeARIMA, monthplot, na.contiguous, pacf, plot.spec,
+       plot.spec.coherency, plot.spec.phase, spec.ar, spec.pgram,
+       spec.taper, spectrum, stl, StructTS, toeplitz, ts.intersect,
+       ts.plot, ts.union, tsdiag, tsSmooth)
 
 # methods which are documented and registered
 # export(ar.burg.default, ar.burg.mts, ar.yw.default, ar.yw.mts,

@@ -1061,8 +1061,8 @@ test
 old <- getOption("contrasts")
 options(contrasts=c("contr.helmert", "contr.poly"))
 DF <- data.frame(x=1:20,y=rnorm(20),z=factor(1:20 <= 10))
-dummy.coef.lm(lm(y ~ z * I(x), data=DF))
-dummy.coef.lm(lm(y ~ z * poly(x,1), data=DF))
+dummy.coef(lm(y ~ z * I(x), data=DF))
+dummy.coef(lm(y ~ z * poly(x,1), data=DF))
 ## failed in 1.3.0.  Second one warns: deficiency of the method.
 options(contrasts=old)
 
