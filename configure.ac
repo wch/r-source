@@ -83,10 +83,19 @@ if test -r "${cfile}"; then
   echo "loading site script '${cfile}'"
   . "${cfile}"
 fi
-cfile="${HOME}/.Rconf"
+cfile="${HOME}/.Rconfig"
 if test -r "${cfile}"; then
   echo "loading user script '${cfile}'"
   . "${cfile}"
+## <FIXME>
+## Remove support for ~/.Rconf eventually.
+else
+  cfile="${HOME}/.Rconf"
+  if test -r "${cfile}"; then
+    echo "loading user script '${cfile}'"
+    . "${cfile}"
+  fi
+## </FIXME>
 fi
 cfile="./config.site"
 if test -r "${cfile}"; then
