@@ -51,9 +51,11 @@ filter1(double *x, int *n, double *filter, int *nfilt, int *sides,
 	    for(j = max(0, nshift + i - nn); j < min(nf, i + nshift + 1) ; j++) {
 		tmp = x[i + nshift - j];
 		if(my_isok(tmp)) z += filter[j] * tmp;
-		else { out[i] = NA_REAL; continue; }
+		else { out[i] = NA_REAL; goto bad; }
 	    }
 	    out[i] = z;
+	bad:
+	    continue;
 	}
     } else { /* circular */
 	for(i = 0; i < nn; i++)
@@ -65,9 +67,11 @@ filter1(double *x, int *n, double *filter, int *nfilt, int *sides,
 		if(ii >= nn) ii -= nn;
 		tmp = x[ii];
 		if(my_isok(tmp)) z += filter[j] * tmp;
-		else { out[i] = NA_REAL; continue; }
+		else { out[i] = NA_REAL; goto bad2; }
 	    }
 	    out[i] = z;
+	bad2:
+	    continue;
 	}	
     }
 }
@@ -83,9 +87,11 @@ filter2(double *x, int *n, double *filter, int *nfilt, double *out)
 	for (j = 0; j < nf; j++) {
 	    tmp = out[nf + i - j - 1];
 	    if(my_isok(tmp)) sum += tmp * filter[j];
-	    else { out[i] = NA_REAL; continue; }
+	    else { out[i] = NA_REAL; goto bad3; }
 	}
 	out[nf + i] = sum;
+    bad3:
+	continue;	
     }
 }
 
@@ -94,9 +100,8 @@ acf(double *x, int *n, int *nser, int *nlag, int *correlation, double *acf)
 {
     int i, u, v, lag, nl = *nlag, nn=*n, ns = *nser, d1 = nl+1, d2 = ns*d1;
     double sum, *se;
-
-    se = (double *) R_alloc(nn, sizeof(double));
     
+    se = (double *) R_alloc(nn, sizeof(double));
     for(u = 0; u < ns; u++)
 	for(v = 0; v < ns; v++)
 	    for(lag = 0; lag <= nl; lag++) {
