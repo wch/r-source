@@ -20,7 +20,7 @@ void BDRksmooth(double *x, double *y, int *n,
 		double *xp, double *yp, long *np,
 		long *kern, double *bandwidth)
 {
-  int i, imin, j;
+  int i, imin=0, j;
   double cutoff, num, den, x0, w, bw=*bandwidth;
   
   /* bandwidth is in units of half inter-quartile range. */
@@ -38,5 +38,5 @@ void BDRksmooth(double *x, double *y, int *n,
       den += w;
     }
     if(den > 0) yp[j] = num/den; else yp[j] = NA_REAL;
-  }
+  }  
 }

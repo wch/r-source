@@ -11,8 +11,13 @@ C  WARRANTY.  IN PARTICULAR, NEITHER THE AUTHORS NOR AT&T MAKE ANY
 C  REPRESENTATION OR WARRANTY OF ANY KIND CONCERNING THE MERCHANTABILITY
 C  OF THIS SOFTWARE OR ITS FITNESS FOR ANY PARTICULAR PURPOSE.
 C 
+C     altered by B.D. Ripley to
+C
+C     remove unused variables
+C     make phi in ehg139 double precision to match calling sequence
+C
       subroutine ehg126(d,n,vc,x,v,nvmax)
-      integer d,execnt,i,j,k,n,nv,nvmax,vc
+      integer d,execnt,i,j,k,n,nvmax,vc
       DOUBLE PRECISION machin,alpha,beta,mu,t
       DOUBLE PRECISION v(nvmax,d),x(n,d)
       DOUBLE PRECISION D1MACH
@@ -119,7 +124,7 @@ c           bottom of while loop
       end
       integer function ehg138(i,z,a,xi,lo,hi,ncmax)
       logical i1
-      integer d,execnt,i,j,nc,ncmax
+      integer execnt,i,j,ncmax
       integer a(ncmax),hi(ncmax),lo(ncmax)
       DOUBLE PRECISION xi(ncmax),z(8)
       save execnt
@@ -446,7 +451,7 @@ c     smooth
       return
       end
       subroutine ehg133(n,d,vc,nvmax,nc,ncmax,a,c,hi,lo,v,vval,xi,m,z,s)
-      integer d,execnt,i,i1,m,nc,ncmax,nv,nvmax,vc
+      integer d,execnt,i,i1,m,nc,ncmax,nvmax,vc
       integer a(ncmax),c(vc,ncmax),hi(ncmax),lo(ncmax)
       double precision delta(8),s(m),v(nvmax,d),vval(0:d,nvmax),xi(ncmax
      +),z(m,d)
@@ -731,7 +736,7 @@ c     bottom of while loop
       end
       subroutine ehg191(m,z,l,d,n,nf,nv,ncmax,vc,a,xi,lo,hi,c,v,nvmax,vv
      +al2,lf,lq)
-      integer lq1,d,execnt,i,i1,i2,j,m,n,nc,ncmax,nf,nv,nvmax,p,vc
+      integer lq1,d,execnt,i,i1,i2,j,m,n,ncmax,nf,nvmax,p,vc
       integer lq(nvmax,nf),a(ncmax),c(vc,ncmax),hi(ncmax),lo(ncmax)
       double precision l(m,n),lf(0:d,nvmax,nf),v(nvmax,d),vval2(0:d,nvma
      +x),xi(ncmax),z(m,d),zi(8)
@@ -821,8 +826,7 @@ c           bottom of while loop
       DOUBLE PRECISION function ehg128(z,d,ncmax,vc,a,xi,lo,hi,c,v,nvmax
      +,vval)
       logical i10,i2,i3,i4,i5,i6,i7,i8,i9
-      integer d,execnt,i,i1,i11,i12,ig,ii,j,lg,ll,m,nc,ncmax,nt,nv,nvmax
-     +,ur,vc
+      integer d,execnt,i,i1,i11,i12,ig,ii,j,lg,ll,m,ncmax,nt,nvmax,ur,vc
       integer a(ncmax),c(vc,ncmax),hi(ncmax),lo(ncmax),t(20)
       DOUBLE PRECISION ge,gn,gs,gw,gpe,gpn,gps,gpw,h,phi0,phi1,psi0,psi1
      +,s,sew,sns,v0,v1,xibar
@@ -1283,14 +1287,15 @@ c              ( U sup T Q sup T ) W $
      +ng,dd,tdeg,cdeg,lq,lf,setlf,s)
       logical setlf
       integer identi,d,dd,execnt,i,i2,i3,i5,i6,ii,ileaf,info,j,k,kernel,
-     +l,n,nc,ncmax,nf,nleaf,nv,nvmax,od,sing,tdeg,vc
+     +l,n,ncmax,nf,nleaf,nv,nvmax,od,sing,tdeg,vc
       integer lq(nvmax,nf),a(ncmax),c(vc,ncmax),cdeg(8),hi(ncmax),leaf(2
-     +56),lo(ncmax),phi(n),pi(n),psi(n),vhit(nvmax)
+     +56),lo(ncmax),pi(n),psi(n),vhit(nvmax)
       DOUBLE PRECISION f,i1,i4,i7,rcond,scale,term,tol,trl
       DOUBLE PRECISION lf(0:d,nvmax,nf),sigma(15),u(15,15),e(15,15),b(nf
      +,k),diagl(n),dist(n),eta(nf),DGAMMA(15),q(8),qraux(15),rw(n),s(0:o
      +d,nv),v(nvmax,d),vval2(0:d,nv),w(nf),work(15),x(n,d),xi(ncmax),y(n
      +),z(8)
+      DOUBLE PRECISION phi(n)
       external ehg127,ehg182,DQRSL,ehg137
       DOUBLE PRECISION ehg128
       external ehg128
@@ -1339,8 +1344,8 @@ c           invert $psi$
             do 11 i5=1,d
                z(i5)=v(l,i5)
    11       continue
-            call ehg137(z,vhit(l),leaf,nleaf,d,nv,nvmax,ncmax,vc,a,xi,lo
-     +,hi,c,v)
+            call ehg137(z,vhit(l),leaf,nleaf,d,nv,nvmax,ncmax,a,xi,lo,
+     +hi)
             do 12 ileaf=1,nleaf
                do 13 ii=lo(leaf(ileaf)),hi(leaf(ileaf))
                   i=phi(pi(ii))
@@ -1803,7 +1808,7 @@ c     initialize permutation
       end
       subroutine lowesf(xx,yy,ww,iv,liv,lv,wv,m,z,l,ihat,s)
       logical i1
-      integer execnt,ihat,m,n
+      integer execnt,ihat,m
       integer iv(*)
       double precision l(m,*),s(m),wv(*),ww(*),xx(*),yy(*),z(m,1)
       external ehg182,ehg136
@@ -1828,7 +1833,7 @@ c     initialize permutation
       return
       end
       subroutine lowesl(iv,liv,lv,wv,m,z,l)
-      integer execnt,m,n
+      integer execnt,m
       integer iv(*)
       double precision l(m,*),wv(*),z(m,1)
       external ehg182,ehg191
@@ -2087,13 +2092,10 @@ c     MachInf -> machin
     3 continue
       return
       end
-      subroutine ehg137(z,kappa,leaf,nleaf,d,nv,nvmax,ncmax,vc,a,xi,lo,h
-     +i,c,v)
-      integer d,execnt,nc,ncmax,nleaf,p,stackt
+      subroutine ehg137(z,kappa,leaf,nleaf,d,nv,nvmax,ncmax,a,xi,lo,hi)
+      integer d,execnt,ncmax,nleaf,p,stackt
       integer a(ncmax),hi(ncmax),leaf(256),lo(ncmax),pstack(20)
-      integer vc,c(vc,ncmax)
       DOUBLE PRECISION xi(ncmax),z(d)
-      DOUBLE PRECISION v(nvmax,d)
       external ehg182
       save execnt
       data execnt /0/
