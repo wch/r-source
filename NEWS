@@ -11,9 +11,9 @@
 
 NEW FEATURES
 
-    o   arraySubscript and vectorSubscript are now available to package users.
-        All "array-like" packages can use a standard method for calculating
-        subscripts.
+    o   arraySubscript and vectorSubscript are now available to package
+        users.  All "array-like" packages can use a standard method for
+        calculating subscripts.
 
     o   new.env is now internal and allows you to set hashing. Also,
         parent.env and parent.env<- are included to provide direct access
@@ -33,8 +33,12 @@ NEW FEATURES
     o	R CMD check now also fully checks the Depends field in the
 	package DESCRIPTION file.
 
-    o	codoc() now also checks whether all arguments shown in \usage
-	are documented in \arguments.
+    o	New function checkDocArgs() for checking whether all arguments
+	shown in \usage of Rd files are documented in the corresponding
+	\arguments.
+
+    o	New function checkTnF() for finding expressions containing the
+	symbols `T' and `F'.
 
     o	The startup processing now interprets escapes in the values of
 	environment variables set in R_HOME/etc/Renviron in a similar
