@@ -204,10 +204,6 @@ static GnomeUIInfo graphics_toolbar[] =
 /* create window etc */
 static int GNOME_Open(DevDesc *dd, gnomeDesc *gtkd, char *dsp, double w, double h)
 {
-  GdkPixmap *icon;
-  GdkBitmap *mask;
-  GtkWidget *iconw;
-
   GdkColor bg;
   GtkStyle *wstyle;
 
@@ -289,7 +285,6 @@ static void GNOME_MetricInfo(int c, double *ascent, double *descent, double *wid
 {
 }
 
-/* set clipping - never gets called */
 static void GNOME_Clip(double x0, double x1, double y0, double y1, DevDesc *dd)
 {
 }
