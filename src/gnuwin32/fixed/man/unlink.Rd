@@ -12,7 +12,7 @@ unlink(x)
     \code{unlink} deletes the file(s) specified by \code{x}.
 }
 \value{
-    \code{0} for success, \code{1} for failure.
+    \code{"0"} for success, \code{"1"} for failure.
 }
 \seealso{\code{\link{tempfile}} for file creation.}
 \keyword{file}

@@ -7,6 +7,8 @@ Rotated text on a windows/win.* device is placed more accurately.
 
 A windows() device reports itself as `windows' not `X11'.
 
+getenv() now returns all the environmental variables.
+
 
 rw0650
 ======

@@ -128,7 +128,6 @@ SEXP do_unlink(SEXP call, SEXP op, SEXP args, SEXP env)
 
 SEXP do_helpstart(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    SEXP  ans;
     char *home, buf[MAX_PATH];
     FILE *ff;
 
@@ -148,10 +147,7 @@ SEXP do_helpstart(SEXP call, SEXP op, SEXP args, SEXP env)
     }
     fclose(ff);
     ShellExecute(NULL, "open", buf, NULL, home, SW_SHOW);
-    PROTECT(ans = allocVector(STRSXP, 1));
-    STRING(ans)[0] = mkChar("");
-    UNPROTECT(1);
-    return (ans);
+    return R_NilValue;
 }
 
 static int nhfiles = 0;
