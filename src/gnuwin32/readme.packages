@@ -23,11 +23,10 @@ versions of the cygwin1.dll and we have used version 1.1.6.  To avoid
 frustration, please use our tool set.
 
 
-We recommend that you use the mingw32 port of gcc-2.95.2 by Mumit Khan
-from http://www.mingw.org/ or
-ftp://ftp.xraylith.wisc.edu/pub/khan/gnu-win32/mingw32. (The `portal'
-gives more precise instructions.)  As R itself is built against
-msvcrt.dll, we recommend that you use that version of the compilers.
+We recommend that you use the mingw32 port of gcc-2.95.2(.1) by Mumit
+Khan from http://www.mingw.org/. (The `portal' gives more precise
+instructions.)  As R itself is built against msvcrt.dll, we recommend
+that you use that version of the compilers.
 
 It may also be possible to use the compilers from the cygwin 1.1 net
 release with the -mno-cygwin flag.  (You will need the cygwin, gcc,
@@ -46,6 +45,8 @@ perl5, available via http://www.activestate.com/Products/ActivePerl/
 If you want to make compiled html (.chm) files you will need the
 Microsoft HTML Help Workshop, available for download at 
 http://msdn.microsoft.com/library/tools/htmlhelp/wkshp/download.htm.
+You may need this on the same drive as the other tools (although we
+have successfully used it elsewhere, others have reported problems).
 
 If you want to make Window help files you will need hcrtf.exe from a
 Windows compiler installation (this has been available for download at
