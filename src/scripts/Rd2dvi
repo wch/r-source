@@ -7,7 +7,7 @@
 ##  R CMD Rd2dvi `grep -l "\\keyword{distr" \
 ##                  /path/to/Rsrc/src/library/base/man/*.Rd | sort | uniq`
 
-revision='$Revision: 1.33 $'
+revision='$Revision: 1.33.4.1 $'
 version=`set - ${revision}; echo ${2}`
 version="Rd2dvi ${version}
 
@@ -48,6 +48,14 @@ output=""
 preview=xdvi
 verbose=false
 OSdir=${R_OSTYPE-"unix"}
+
+echo () {
+  ## Safe version of echo which does not interpret backslash-escaped
+  ## characters in SysV style.
+  cat <<EOF
+$@
+EOF
+}
 
 while test -n "${1}"; do
   case ${1} in
@@ -132,6 +140,7 @@ Rd_DESCRIPTION_to_LaTeX () {
   ## list.
   ## Usage:
   ##   Rd_DESCRIPTION_to_LaTeX FILE
+  
   fields=`sed '/^[ 	]/d; s/^\([^:]*\):.*$/\1/' $1`
   echo "\\begin{description}"
   echo "\\raggedright{}"
@@ -206,7 +215,7 @@ cat > ${build_dir}/Rd2.tex <<EOF
 \\makeindex{}
 \\begin{document}
 EOF
-if test ${is_bundle} = no; then
+if test "${is_bundle}" = no; then
   cat >> ${build_dir}/Rd2.tex <<EOF
 \\chapter*{}
 \\begin{center}
@@ -217,12 +226,11 @@ EOF
   if test -f ${1}/DESCRIPTION; then
     Rd_DESCRIPTION_to_LaTeX ${1}/DESCRIPTION >> ${build_dir}/Rd2.tex
   fi
-  if test ${is_base_package} = yes; then
+  if test "${is_base_package}" = yes; then
     R_version=unknown
     if test -f ${1}/../../../VERSION; then
       R_version=`cat ${1}/../../../VERSION`
     fi
-    echo "`pwd`: ${1} ${R_version}"
     Rd_DESCRIPTION_to_LaTeX ${1}/DESCRIPTION.in | \
       sed "s/@VERSION@/${R_version}/" >> ${build_dir}/Rd2.tex
   fi
@@ -245,7 +253,7 @@ EOF
 fi
   
 ## Rd2.tex part 2: body
-if test ${is_bundle} = no; then
+if test "${is_bundle}" = no; then
   echo ${toc} >> ${build_dir}/Rd2.tex
   Rdconv_dir_or_files_to_LaTeX ${build_dir}/Rd2.tex ${dir-${@}}
 else
@@ -279,7 +287,7 @@ cd ${build_dir}
 ${R_LATEXCMD-latex} Rd2
 ${R_MAKEINDEXCMD-makeindex} Rd2
 ${R_LATEXCMD-latex} Rd2
-if test ${out_ext} = pdf; then
+if test "${out_ext}" = pdf; then
   ${R_LATEXCMD-latex} Rd2
 fi
 cd ${start_dir}
