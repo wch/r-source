@@ -39,7 +39,7 @@ while(<$ARGV[0]/man/*.Rd>){
 
     $, = " ";
     print "Entry: $rdname\n";
-    print "Alias: @aliases\n";
+    print "Aliases: @aliases\n";
     print "Keywords: @keywords\n";
     print "Description: $rdtitle\n";
     print "URL: ../../../library/$pkg/html/$rdname.html\n\n";
