@@ -74,3 +74,4 @@ void	hsv2rgb(double *h, double *s, double *v,/* in */
 #endif
 
 #endif /* R_EXT_UTILS_H_ */
+

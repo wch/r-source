@@ -67,7 +67,7 @@
 #include <math.h>
 #else
 #include <fp.h>
-#endif macintosh
+#endif /* mac */
 
 #include "R_ext/Error.h" /* error */
 #include "R_ext/RS.h" /* Calloc */

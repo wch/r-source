@@ -397,3 +397,4 @@ bitmap createbitmap(int width, int height, int depth, unsigned char *data)
 	return obj;
 }
 
+

@@ -277,3 +277,4 @@ void loglin(int *nvar, int *dim, int *ncon, int *config, int *ntab,
 #endif
 
 #endif /* R_APPLIC_H_ */
+

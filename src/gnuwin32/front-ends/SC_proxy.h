@@ -17,7 +17,7 @@
  *  Software Foundation, Inc., 59 Temple Place - Suite 330, Boston,
  *  MA 02111-1307, USA
  *
- *  $Id: SC_proxy.h,v 1.3 1999/12/11 20:57:35 pd Exp $
+ *  $Id: SC_proxy.h,v 1.3.18.1 2001/01/24 17:46:48 maechler Exp $
  */
 
 #ifndef _STATCONN_H_
@@ -258,3 +258,4 @@ typedef int (SYSCALL* SC_PROXY_GET_OBJECT) (SC_Proxy_Object**,unsigned long);
 #define SC_PROXY_GET_OBJECT_FUN "SC_Proxy_get_object@8"
 
 #endif
+

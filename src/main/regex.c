@@ -51,7 +51,7 @@
   #include <types.h>
  #else 
   #include <sys/types.h> 
- #endif macintosh
+ #endif /* mac */
 #endif
 
 #define WIDE_CHAR_SUPPORT (HAVE_WCTYPE_H && HAVE_WCHAR_H && HAVE_BTOWC)

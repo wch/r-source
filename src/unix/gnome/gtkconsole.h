@@ -116,3 +116,4 @@ gboolean gtk_console_get_input_enabled(GtkConsole *object);
 
 
 #endif /* __GTK_CONSOLE_H__ */
+

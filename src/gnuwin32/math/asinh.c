@@ -158,3 +158,4 @@ if( x < 0.5 )
 a = sqrt( z + 1.0 );
 return( sign * log(x + a) );
 }
+

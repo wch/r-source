@@ -64,3 +64,4 @@ double * user_norm_rand();
 #endif
 
 #endif /* R_RANDOM_H */
+

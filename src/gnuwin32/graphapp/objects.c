@@ -603,3 +603,4 @@ void remove_menu_item(object obj)
 	remove_object(obj);
 	remove_deleted_object(obj);
 }
+

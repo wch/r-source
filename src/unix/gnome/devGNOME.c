@@ -756,3 +756,4 @@ Rboolean GnomeDeviceDriver(DevDesc *dd, char *display,
     /* finish */
     return TRUE;
 }
+

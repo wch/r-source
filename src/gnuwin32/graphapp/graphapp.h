@@ -771,3 +771,4 @@ inline int operator != (rect r1, rect r2)   {return !equalr(r1,r2);}
 #endif /* end C++ declarations */
 
 #endif /* Common cross-platform graphics library. */
+

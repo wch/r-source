@@ -155,3 +155,4 @@ void nextpage(printer p)
     StartPage((HDC) p->handle);
     Rwin_fpset();
 }
+

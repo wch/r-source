@@ -187,3 +187,4 @@ void startgraphapp(HINSTANCE Instance, HINSTANCE PrevInstance, int CmdShow)
 	getappname(Instance);
 }
 
+

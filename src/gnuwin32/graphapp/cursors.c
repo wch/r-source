@@ -336,3 +336,4 @@ void init_cursors(void)
 
 	setcursor(ArrowCursor);
 }
+

@@ -1184,3 +1184,4 @@ void drawbrighter(image src, rect dr, rect sr)
 		src->cmap = oldcmap;
 	discard(newcmap);
 }
+

@@ -21,7 +21,7 @@
  *  Software Foundation, Inc., 59 Temple Place - Suite 330, Boston,
  *  MA 02111-1307, USA
  *
- *  $Id: rproxy_impl.c,v 1.11 2000/09/22 14:28:57 maechler Exp $
+ *  $Id: rproxy_impl.c,v 1.11.6.1 2001/01/24 17:46:48 maechler Exp $
  */
 
 #define NONAMELESSUNION
@@ -715,4 +715,5 @@ int R_Proxy_term ()
 
   return SC_PROXY_OK;
 }
+
 

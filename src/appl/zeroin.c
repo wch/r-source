@@ -77,7 +77,7 @@
 #include <math.h>
 #else
 #include <fp.h>
-#endif macintosh
+#endif /* mac */
 
 #define EPSILON DBL_EPSILON
 

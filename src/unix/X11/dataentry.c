@@ -1697,3 +1697,4 @@ static void pastecell(int row, int col)
     closerect();
     highlightrect();
 }
+

@@ -11,3 +11,4 @@ void save_gif(image img, char *filename)
 {
 }
 
+

@@ -1452,3 +1452,4 @@ XPoint *XRotTextExtents(Display *dpy, XFontStruct *font, double angle,
 
     return xp_out;
 }
+

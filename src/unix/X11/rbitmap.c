@@ -366,3 +366,4 @@ int R_SaveAsJpeg(void  *d, int width, int height,
 }
 #endif /* HAVE_JPEG */
 
+

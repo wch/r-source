@@ -7,7 +7,7 @@
 #include <math.h>
 #else
 #include <fp.h>
-#endif macintosh
+#endif
 
 #include "R_ext/Random.h"
 #include "R_ext/Applic.h"

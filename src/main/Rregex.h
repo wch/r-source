@@ -39,7 +39,7 @@ extern "C" {
 
 #ifdef macintosh
 # include <stddef.h> 
-#endif macintosh
+#endif /* mac */
 
 /* The following two types have to be signed and unsigned integer type
    wide enough to hold a value of a pointer.  For most ANSI compilers

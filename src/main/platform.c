@@ -289,7 +289,7 @@ SEXP do_fileremove(SEXP call, SEXP op, SEXP args, SEXP rho)
 #else 
  #include <types.h>
  #include "dirent.h"
-#endif macintosh
+#endif /* mac */
 
 #if HAVE_DIRENT_H
 # include <dirent.h>
@@ -534,7 +534,7 @@ SEXP do_filechoose(SEXP call, SEXP op, SEXP args, SEXP rho)
 #else
 #include <types.h>
 #include <stat.h>
-#endif macintosh
+#endif /* mac */
 
 #if defined(Unix) && defined(HAVE_PWD_H) && defined(HAVE_GRP_H) \
   && defined(HAVE_GETPWUID) && defined(HAVE_GETGRGID)

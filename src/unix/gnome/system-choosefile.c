@@ -94,3 +94,4 @@ int Rgnome_ChooseFile(int new, char *buf, int len)
 
   return strlen(buf);
 }
+

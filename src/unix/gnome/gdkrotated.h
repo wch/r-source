@@ -31,3 +31,4 @@ void gdk_draw_text_rot	 (GdkDrawable  *drawable,
 			  const gchar  *text,
 			  gint		text_length,
 			  double        angle);
+

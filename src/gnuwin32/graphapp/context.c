@@ -510,3 +510,4 @@ font	currentfont(void)       { return current->fnt; }
 cursor	currentcursor(void)     { return current->crsr; }
 
 int 	getkeystate(void)       { return keystate; }
+

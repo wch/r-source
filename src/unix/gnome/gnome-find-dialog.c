@@ -578,3 +578,4 @@ static void close(GnomeFindDialog *find_dialog)
   gnome_dialog_close(GNOME_DIALOG(find_dialog));
 }
 
+

@@ -26,7 +26,7 @@
 #include <math.h>
 #else
 #include <fp.h>
-#endif macintosh
+#endif /* mac */
 #include <string.h>
 #include <R.h> /* for F77_CALL */
 #include <R_ext/Linpack.h>

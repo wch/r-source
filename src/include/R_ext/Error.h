@@ -40,3 +40,4 @@ void	UNIMPLEMENTED(char *);
 #endif
 
 #endif /* _R_ERROR_H_ */
+

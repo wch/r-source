@@ -27,7 +27,7 @@
 #include <math.h>
 #else
 #include <fp.h>
-#endif macintosh
+#endif /* mac */
 #include <R.h>
 #include <R_ext/Applic.h>
 #include <R_ext/PrtUtil.h> /* printRealVector */

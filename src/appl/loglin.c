@@ -13,7 +13,7 @@
 #include <math.h>
 #else
 #include <fp.h>
-#endif macintosh
+#endif /* mac */
 
 #include <stdio.h>
 #include "R_ext/RS.h"

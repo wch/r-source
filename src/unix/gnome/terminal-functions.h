@@ -19,3 +19,4 @@ void R_gtk_terminal_file_saveas(GtkWidget *widget,
 				gpointer data);
 void R_gtk_terminal_file_open(GtkWidget *widget,
 			      gpointer data);
+

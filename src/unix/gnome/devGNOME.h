@@ -20,3 +20,4 @@
 
 
 Rboolean GnomeDeviceDriver(DevDesc *, char *, double, double, double);
+

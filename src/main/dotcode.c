@@ -31,7 +31,7 @@
 
 #ifdef macintosh
 #include "Graphics.h"
-#endif macintosh
+#endif /* mac */
 
 #ifndef max
 #define max(a, b) ((a > b)?(a):(b))

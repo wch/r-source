@@ -23,3 +23,4 @@ __declspec(dllexport) void Rchtml(char **file, char **ptopic, int *error)
     rc = HtmlHelp(GetDesktopWindow(), htmlref, HH_DISPLAY_TOPIC, 0);
     *error = (rc == (HWND)NULL);
 }
+

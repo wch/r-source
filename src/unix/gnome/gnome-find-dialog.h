@@ -111,3 +111,4 @@ gchar     *gnome_find_dialog_get_find_text (GnomeFindDialog *dialog); /* returns
 
 #endif /* __GNOME_FIND_DIALOG_H__ */
 
+

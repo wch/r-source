@@ -520,3 +520,4 @@ void R_gtk_terminal_find_init()
 		     (GtkSignalFunc) find_console_changed,
 		     NULL);
 }
+

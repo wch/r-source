@@ -51,3 +51,4 @@
  * Server side authenticator
  */
 extern enum auth_stat _authenticate();
+

@@ -160,3 +160,4 @@ if( z < 0.5 )
 a = sqrt( z*(x+1.0) );
 return( log(x + a) );
 }
+

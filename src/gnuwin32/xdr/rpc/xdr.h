@@ -279,3 +279,4 @@ extern bool_t xdrrec_skiprecord();	/* move to beginning of next record */
 extern bool_t xdrrec_eof();		/* true if no more input */
 
 #endif /* __XDR_HEADER__ */
+

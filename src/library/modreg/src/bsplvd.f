@@ -196,8 +196,8 @@ C Local Variables
       integer i,j,jp1
       double precision deltal(jmax), deltar(jmax),saved,term
 
+      save j,deltal,deltar
       data j/1/
-      save j,deltal,deltar !(valid in fortran 77)
 c
                                         go to (10,20), index
    10 j = 1

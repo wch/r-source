@@ -17,7 +17,7 @@
  *  Software Foundation, Inc., 59 Temple Place - Suite 330, Boston,
  *  MA 02111-1307, USA
  *
- *  $Id: rproxy_impl.h,v 1.4 1999/12/15 17:20:28 pd Exp $
+ *  $Id: rproxy_impl.h,v 1.4.16.1 2001/01/24 17:46:48 maechler Exp $
  */
 
 #ifndef _RPROXY_IMPL_H_
@@ -35,3 +35,4 @@ int R_Proxy_set_symbol (char const* pSymbol,BDX_Data const* pData);
 int R_Proxy_term ();
 
 #endif
+

@@ -340,3 +340,4 @@ char *clnt_sperrno(/* enum clnt_stat num */);	/* string */
 #define RPCSMALLMSGSIZE	400	/* a more reasonable packet size */
 
 #endif /*!_CLNT_*/
+

@@ -2072,3 +2072,4 @@ Rboolean R_GetX11Image(int d, XImage **pximage, int *pwidth, int *pheight)
 	return TRUE;
     }
 }
+

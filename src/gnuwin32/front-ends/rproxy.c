@@ -17,7 +17,7 @@
  *  Software Foundation, Inc., 59 Temple Place - Suite 330, Boston,
  *  MA 02111-1307, USA
  *
- *  $Id: rproxy.c,v 1.6 2000/04/24 08:48:48 ripley Exp $
+ *  $Id: rproxy.c,v 1.6.12.1 2001/01/24 17:46:48 maechler Exp $
  */
 
 #define NONAMELESSUNION
@@ -463,3 +463,4 @@ int SYSCALL EXPORT SC_Proxy_get_object (SC_Proxy_Object** obj,
 
   return SC_PROXY_OK;
 }
+

@@ -82,7 +82,7 @@ typedef char *pointer;
 #  ifndef emacs
 #ifndef macintosh
  #   define malloc xmalloc
-#endif macintosh
+#endif /* mac */
 #  endif
 extern pointer malloc ();
 

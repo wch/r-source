@@ -115,7 +115,7 @@ static const double eta = DBL_EPSILON;
 static const double are = /* eta = */DBL_EPSILON;
 static const double mre = 2. * M_SQRT2 * /* eta, i.e. */DBL_EPSILON;
 static const double infin = DBL_MAX;
-#endif macintosh
+#endif /* mac */
 void R_cpolyroot(double *opr, double *opi, int *degree,
 		 double *zeror, double *zeroi, Rboolean *fail)
 {
@@ -123,7 +123,7 @@ void R_cpolyroot(double *opr, double *opi, int *degree,
     static const double smalno = 1.1920929E-07;
 #else
     static const double smalno = DBL_MIN;
-#endif macintosh
+#endif /* mac */
     static const double base = (double)FLT_RADIX;
     static int d_n, i, i1, i2;
     static double zi, zr, xx, yy;
@@ -176,7 +176,7 @@ void R_cpolyroot(double *opr, double *opi, int *degree,
 #else
 	mac_pi[i] = opi[i];
 	shr[i] = hypot(pr[i], mac_pi[i]);
-#endif macintosh
+#endif /* mac */
     }
 
     /* scale the polynomial with factor 'bnd'. */
@@ -188,7 +188,7 @@ void R_cpolyroot(double *opr, double *opi, int *degree,
 	    pi[i] *= bnd;
 #else
 	    mac_pi[i] *= bnd;
-#endif macintosh
+#endif /* mac */
 	}
     }
 
@@ -203,7 +203,7 @@ void R_cpolyroot(double *opr, double *opi, int *degree,
 	    shr[i] = hypot(pr[i], pi[i]);
 #else
 	    shr[i] = hypot(pr[i], mac_pi[i]);
-#endif macintosh
+#endif /* mac */
 	bnd = cpoly_cauchy(nn, shr, shi);
 
 	/* outer loop to control 2 major passes */
@@ -256,7 +256,7 @@ void R_cpolyroot(double *opr, double *opi, int *degree,
 	    pi[i] = qpi[i];
 #else
 	    mac_pi[i] = qpi[i];
-#endif macintosh
+#endif /* mac */
 	}
     }/*while*/
 
@@ -265,7 +265,7 @@ void R_cpolyroot(double *opr, double *opi, int *degree,
     cdivid(-pr[1], -pi[1], pr[0], pi[0], &zeror[d1], &zeroi[d1]);
 #else
     cdivid(-pr[1], -mac_pi[1], pr[0], mac_pi[0], &zeror[d1], &zeroi[d1]);
-#endif macintosh
+#endif /* mac */
     return;
 }
 
@@ -286,7 +286,7 @@ static void noshft(int l1)
 	hi[i] = xni * pi[i] / n;
 #else
 	hi[i] = xni * mac_pi[i] / n;
-#endif macintosh
+#endif /* mac */
     }
 
     for (jj = 1; jj <= l1; jj++) {
@@ -313,7 +313,7 @@ static void noshft(int l1)
 	    cdivid(-pr[nn-1], -pi[nn-1], hr[n-1], hi[n-1], &tr, &ti);
 #else
 	    cdivid(-pr[nn-1], -mac_pi[nn-1], hr[n-1], hi[n-1], &tr, &ti);
-#endif macintosh
+#endif /* mac */
 	    for (i = 1; i <= nm1; i++) {
 		j = nn - i;
 		t1 = hr[j-2];
@@ -329,7 +329,7 @@ static void noshft(int l1)
 	    }
 	    hr[0] = pr[0];
 	    hi[0] = mac_pi[0];
-#endif macintosh
+#endif /* mac */
 	}
     }
 }
@@ -363,7 +363,7 @@ static Rboolean fxshft(int l2, double *zr, double *zi)
 	   pr, pi, qpr, qpi, &pvr, &pvi);
 #else
 	   pr, mac_pi, qpr, qpi, &pvr, &pvi);
-#endif macintosh
+#endif /* mac */
 
     test = TRUE;
     pasd = FALSE;
@@ -428,7 +428,7 @@ static Rboolean fxshft(int l2, double *zr, double *zi)
 		polyev(nn, sr, si, pr, pi, qpr, qpi, &pvr, &pvi);
 #else
 		polyev(nn, sr, si, pr, mac_pi, qpr, qpi, &pvr, &pvi);
-#endif macintosh
+#endif /* mac */
 		calct(&bool);
 	    }
 	}
@@ -467,15 +467,14 @@ static Rboolean vrshft(int l3, double *zr, double *zi)
     for (i = 1; i <= l3; i++) {
 
 	/* evaluate p at s and test for convergence. */
+	polyev(nn, sr, si,
 #ifndef macintosh
-	polyev(nn, sr, si,
 	       pr, pi, qpr, qpi,
-	       &pvr, &pvi);
 #else
-	polyev(nn, sr, si,
 	       pr, mac_pi, qpr, qpi,
+#endif
 	       &pvr, &pvi);
-#endif macintosh
+
 	mp = hypot(pvr, pvi);
 	ms = hypot(sr, si);
 	if (mp <=  20. * errev(nn, qpr, qpi, ms, mp, /*are=*/eta, mre)) {

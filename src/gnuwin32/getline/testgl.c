@@ -16,3 +16,4 @@ main()
 	fputs(p, stdout);
     } while (*p != 0);
 }
+

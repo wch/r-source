@@ -366,3 +366,4 @@ void R_gtk_terminal_add_menu(GtkWidget *window)
   gnome_app_install_menu_hints(GNOME_APP(window), main_menu);
 }
 
+

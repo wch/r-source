@@ -25,9 +25,10 @@
 
 #include <R_ext/Boolean.h>
 
+/* WHY the following ?? */
 #ifdef macintosh
 #include <Rinternals.h> 
-#endif macintosh
+#endif
 
 #define R_MaxDevices 64
 

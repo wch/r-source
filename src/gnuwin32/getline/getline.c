@@ -1358,3 +1358,4 @@ gl_beep(void)
 	gl_putc('\007');
 #endif
 }	/* gl_beep */
+

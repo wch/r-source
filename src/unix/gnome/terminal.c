@@ -129,3 +129,4 @@ void R_gtk_terminal_new()
   /* finish up */
   return;
 }
+

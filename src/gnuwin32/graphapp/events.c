@@ -949,3 +949,4 @@ void finish_events(void)
 	settimer(0);
 	setmousetimer(0);
 }
+

@@ -63,3 +63,4 @@ void R_gtk_terminal_add_toolbar(GtkWidget *window)
   gnome_app_create_toolbar(GNOME_APP(window), main_toolbar);
 }
 
+

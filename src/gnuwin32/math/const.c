@@ -250,3 +250,4 @@ extern unsigned short INFINITY[];
 extern unsigned short NAN[];
 extern unsigned short NEGZERO[];
 #endif
+

@@ -78,3 +78,4 @@ WinMain (HINSTANCE Instance, HINSTANCE PrevInstance, LPSTR CmdLine,
 
 	return 0;
 }
+

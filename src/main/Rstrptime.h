@@ -49,7 +49,7 @@ static void get_locale_strings(void);
 #else
 # define match_string(cs1, s2) \
   (strncmp ((cs1), (s2), strlen (cs1)) ? 0 : ((s2) += strlen (cs1), 1))
-#endif macintosh
+#endif /* mac */
 
 /* We intentionally do not use isdigit() for testing because this will
    lead to problems with the wide character version.  */

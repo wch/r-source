@@ -682,3 +682,4 @@ void drawimage(image img, rect dr, rect sr)
 	if (i != img)
 		del(i);
 }
+

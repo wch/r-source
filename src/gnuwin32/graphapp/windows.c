@@ -670,3 +670,4 @@ int ismdi() {
  return (hwndClient!=NULL);
 }
 
+

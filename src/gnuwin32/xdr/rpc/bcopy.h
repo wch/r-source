@@ -13,3 +13,4 @@ void bcopy_fn(char *,char *,int);
 void bcopy_ff(char *,char *,int);
 void bzero(char*,int);
 int  bcmp(char *,char *,int);
+

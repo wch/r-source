@@ -296,3 +296,4 @@ xdr_double(xdrs, dp)
 	}
 	return (FALSE);
 }
+

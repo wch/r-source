@@ -74,3 +74,4 @@ LPSTR lpszExtractDir;
 } DCL, far * LPDCL;
 
 #endif /* __structs_h */
+

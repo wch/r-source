@@ -45,7 +45,7 @@
 #include <math.h>
 #else
 #include <fp.h>
-#endif macintosh
+#endif /* mac */
 #define MATHLIB_PRIVATE
 #include <Rmath.h> /* for dimach */
 #undef MATHLIB_PRIVATE

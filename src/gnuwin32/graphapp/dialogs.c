@@ -495,3 +495,4 @@ char *askpassword(char *question, char *default_str)
 	return get_dialog_string(win);
 }
 
+

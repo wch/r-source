@@ -17,7 +17,7 @@
  *  Software Foundation, Inc., 59 Temple Place - Suite 330, Boston,
  *  MA 02111-1307, USA
  *
- *  $Id: bdx.h,v 1.4 1999/12/15 17:20:28 pd Exp $
+ *  $Id: bdx.h,v 1.4.16.1 2001/01/24 17:46:48 maechler Exp $
  */
 
 #ifndef _BDX_H_
@@ -250,3 +250,4 @@ typedef struct _BDX_Array_Specification
 #endif
 
 #endif
+

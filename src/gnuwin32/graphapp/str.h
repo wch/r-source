@@ -145,3 +145,4 @@ inline int operator != (int ch, string s2)
  *  End of string class definition.
  */
 #endif
+

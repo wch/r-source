@@ -653,3 +653,4 @@ void BringToTop(window c)
 /*    SetForegroundWindow(c->handle); in 1.2.0/1 */
     BringWindowToTop(c->handle);
 }
+

@@ -132,3 +132,4 @@ void gdk_draw_text_rot(GdkDrawable *drawable,
 }
 
 
+

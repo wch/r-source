@@ -21,7 +21,7 @@
 #include <math.h>
 #else
 #include <fp.h>
-#endif macintosh
+#endif /* mac */
 
 #include "Defn.h"
 #include <Rdefines.h>		/* for CREATE_STRING_VECTOR */

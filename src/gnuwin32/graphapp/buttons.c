@@ -1326,3 +1326,4 @@ void handle_control(HWND hwnd, UINT message)
 	/* activate the control's callback */
 	activatecontrol(obj);
 }
+

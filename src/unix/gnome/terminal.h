@@ -39,3 +39,4 @@ void terminal_set_style(void);
 
 void R_gtk_terminal_new();
 
+

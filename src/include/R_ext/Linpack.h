@@ -92,3 +92,4 @@ extern int F77_NAME(dspsl)(double*, int*, int*, double*);
 #endif
 
 #endif /* R_LINPACK_H_ */
+

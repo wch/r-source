@@ -50,3 +50,4 @@ extern int	(*gl_tab_hook)();
 #endif /* __STDC__ */
 
 #endif /* GETLINE_H */
+

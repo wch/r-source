@@ -17,7 +17,7 @@
  *  Software Foundation, Inc., 59 Temple Place - Suite 330, Boston,
  *  MA 02111-1307, USA
  *
- *  $Id: bdx.c,v 1.4 1999/12/15 17:20:28 pd Exp $
+ *  $Id: bdx.c,v 1.4.16.1 2001/01/24 17:46:48 maechler Exp $
  */
 
 #include <stdlib.h>
@@ -64,3 +64,4 @@ void bdx_free (BDX_Data* data)
   free (data->dimensions);
   free (data);
 }
+

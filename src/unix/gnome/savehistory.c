@@ -53,3 +53,4 @@ void Rgnome_savehistory(SEXP call, SEXP op, SEXP args, SEXP env)
     gtk_console_save_history(GTK_CONSOLE(R_gtk_terminal_text), 
 			     file, R_HistorySize, NULL);
 }
+

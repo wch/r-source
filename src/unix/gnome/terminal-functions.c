@@ -212,3 +212,4 @@ void R_gtk_terminal_file_saveas(GtkWidget *widget, gpointer data)
 
 void R_gtk_terminal_device_activate(gint devnum) {
 }
+

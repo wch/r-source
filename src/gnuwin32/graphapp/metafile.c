@@ -114,3 +114,4 @@ metafile newmetafile(char *name, double width, double height)
     settext(obj, name ? name : "");
     return obj;
 }
+

@@ -312,7 +312,7 @@ SEXP do_systime(SEXP call, SEXP op, SEXP args, SEXP env)
 extern char *tzname[2];
 #else
 char *tzname[2];
-#endif macintosh
+#endif /* mac */
 #endif
 
 static char buff[20]; /* for putenv */
@@ -379,7 +379,7 @@ SEXP do_asPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 #endif
 #ifndef macintosh
 	tzset();
-#endif macintosh
+#endif /* mac */
     }
 
     n = LENGTH(x);
@@ -478,7 +478,7 @@ SEXP do_asPOSIXct(SEXP call, SEXP op, SEXP args, SEXP env)
 #endif
 #ifndef macintosh
 	tzset();
-#endif macintosh
+#endif /* mac */
     }
 
     for(i = 0; i < 6; i++)

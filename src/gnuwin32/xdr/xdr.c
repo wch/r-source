@@ -587,3 +587,4 @@ xdr_wrapstring(xdrs, cpp)
 	}
 	return (FALSE);
 }
+

@@ -104,3 +104,4 @@ int clipboardhastext()
 {
     return (int) IsClipboardFormatAvailable(CF_TEXT);
 }
+

@@ -639,3 +639,4 @@ static void gtk_console_changed_post (GtkConsole *console)
 }
 
 
+

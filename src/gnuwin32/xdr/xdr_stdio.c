@@ -227,3 +227,4 @@ xdrstdio_inline(xdrs, len)
 	 */
 	return (NULL);
 }
+

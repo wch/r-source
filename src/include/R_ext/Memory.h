@@ -46,3 +46,4 @@ void	C_free(char *);
 #endif
 
 #endif /* R_EXT_MEMORY_H_ */
+

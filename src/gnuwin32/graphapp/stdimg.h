@@ -15,3 +15,4 @@ extern image paste1_image;
 extern image print_image;
 extern image save_image;
 extern image stop_image;
+
