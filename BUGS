@@ -29,16 +29,10 @@ none
 
 Directory:  Add-ons
 
-* PR# 534 *
-Subject: wsfe bug report just made
-From: mallen@tntech.edu
-Date: Thu, 4 May 2000 19:20:35 +0200 (MET DST)
---follow up to PR#533
-* PR# 488 *
-Subject: Error in lme?
-From: simon.frost@ed.ac.uk
-Date: Tue, 14 Mar 2000 14:15:52 +0100 (MET)
---No example to reproduce this.
+* PR# 563 *
+From: Setzer.Woodrow@epamail.epa.gov
+Date: Tue, 06 Jun 2000 14:21:35 -0400
+--gls{nlme}; should formula.default() look for attr(*,"formula") ?
 * PR# 503 *
 Subject: dmvnorm() bug in e1071
 From: "Gregory R. Warnes" <warnes@biostat.washington.edu>
@@ -48,16 +42,6 @@ From: bonneau@epi.roazhon.inra.fr (en148)
 Date: Tue, 21 Mar 2000 10:57:13 +0100 (MET)
 --base R has no est.variogram function.
 --This appears to be a bug report on sgeostat.
-* PR# 533 *
-Subject: acepack, akima and tripack will not load 
-From: mallen@tntech.edu
-Date: Thu, 4 May 2000 19:18:59 +0200 (MET DST)
---related to PR#521: probably compiler-specific
-* PR# 521 *
-Subject: akima core dumps on loading
-From: santini@dsi.unimi.it
-Date: Mon, 17 Apr 2000 11:30:41 +0200 (MET DST)
---Probably compiler-specific
 
 Directory:  Analyses
 
@@ -110,6 +94,10 @@ Date: Fri, 28 Jan 2000 11:17:36 +0100 (MET)
 
 Directory:  Low-level
 
+* PR# 545 *
+Subject: Segmentation Fault of unknown cause
+From: kjetikj@astro.uio.no
+Date: Mon, 15 May 2000 16:29:29 +0200 (MET DST)
 * PR# 505 *
 Subject: interrupted save 
 From: Thomas Lumley <thomas@biostat.washington.edu>
@@ -140,20 +128,35 @@ From: Martin Maechler <maechler@stat.math.ethz.ch>
 Date: Fri, 19 May 2000 21:12:02 +0200 (CEST)
 --redirection of stderr to /dev/null in system occurs before the command
 --is tried on some systems and after on others.
-* PR# 537 *
-Subject: eigen broken on AIX with R-devel?
-From: Thomas J Vogels <tov@ece.cmu.edu>
-Date: 08 May 2000 12:01:04 -0400
---AIX, probably compiler-specific
-* PR# 490 *
-Subject: R-1.0.0 on alpha/osf1 memory glitch
-From: Ray Brownrigg <Ray.Brownrigg@mcs.vuw.ac.nz>
-Date: Fri, 17 Mar 2000 11:25:30 +1300 (NZDT)
 * PR# 452 *
 Subject: problem with glm
 From: Brad McNeney <mcneney@cs.sfu.ca>
 Date: Fri, 18 Feb 2000 17:51:54 -0800 (PST)
 --Problems on Alpha's with glm. Status unclear
+* PR# 521 *
+Subject: akima core dumps on loading
+From: santini@dsi.unimi.it
+Date: Mon, 17 Apr 2000 11:30:41 +0200 (MET DST)
+--Probably compiler-specific
+* PR# 490 *
+Subject: R-1.0.0 on alpha/osf1 memory glitch
+From: Ray Brownrigg <Ray.Brownrigg@mcs.vuw.ac.nz>
+Date: Fri, 17 Mar 2000 11:25:30 +1300 (NZDT)
+* PR# 537 *
+Subject: eigen broken on AIX with R-devel?
+From: Thomas J Vogels <tov@ece.cmu.edu>
+Date: 08 May 2000 12:01:04 -0400
+--AIX, probably compiler-specific
+* PR# 534 *
+Subject: wsfe bug report just made
+From: mallen@tntech.edu
+Date: Thu, 4 May 2000 19:20:35 +0200 (MET DST)
+--follow up to PR#533
+* PR# 533 *
+Subject: acepack, akima and tripack will not load 
+From: mallen@tntech.edu
+Date: Thu, 4 May 2000 19:18:59 +0200 (MET DST)
+--related to PR#521: probably compiler-specific
 
 Directory:  TooMuchAtOnce
 
@@ -171,26 +174,16 @@ none
 
 Directory:  incoming
 
-* PR# 563 *
-From: Setzer.Woodrow@epamail.epa.gov
-Date: Tue, 06 Jun 2000 14:21:35 -0400
-* PR# 536 *
-Subject: Problem with match.arg()
-From: kjetikj@astro.uio.no
-Date: Sun, 7 May 2000 13:58:21 +0200 (MET DST)
+* PR# 564 *
+Subject: "clipping error in x11()"
+From: Albrecht Gebhardt <albrecht.gebhardt@uni-klu.ac.at>
+Date: Wed, 7 Jun 2000 23:06:54 +0200 (MET DST)
 * PR# 551 *
 Subject: Bus Error crash
 From: kjetikj@astro.uio.no
 Date: Mon, 22 May 2000 13:06:48 +0200 (MET DST)
-* PR# 545 *
-Subject: Segmentation Fault of unknown cause
+* PR# 536 *
+Subject: Problem with match.arg()
 From: kjetikj@astro.uio.no
-Date: Mon, 15 May 2000 16:29:29 +0200 (MET DST)
-* PR# 562 *
-Subject: crash after help(..., chmhelp=TRUE)
-From: Uwe Ligges <ligges@statistik.uni-dortmund.de>
-Date: Tue, 06 Jun 2000 18:18:15 +0200
-* PR# 561 *
-Subject: FREE SAMPLE!  Look and feel great!  100% Guarantee!
-From: loseweightfast@visualcities.com
-Date: Mon, 5 Jun 2000 08:52:02 +0200 (MET DST)
+Date: Sun, 7 May 2000 13:58:21 +0200 (MET DST)
+--1.0.0 bug fixed for 1.0.1 ??
