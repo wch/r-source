@@ -194,12 +194,27 @@ model.offset <- function(x) {
 	}
 	else NULL
 }
-model.matrix <- function (formula, data) 
+
+model.matrix <-function (formula, data, contrasts = NULL) 
 {
-	t <- terms(formula)
-	if (missing(data)) 
-		data <- eval(attr(t, "variables"), sys.frame(sys.parent()))
-	.Internal(model.matrix(t, data))
+        t <- terms(formula)
+        if (missing(data)) 
+                data <- eval(attr(t, "variables"), sys.frame(sys.parent()))
+        contrasts.spec <- contrasts
+        rm(contrasts)
+        if (!is.null(contrasts.spec)) {
+                if (!is.list(contrasts.spec)) 
+                        stop("invalid contrasts")
+                if (is.null(names(contrasts.spec))) 
+                        stop("invalid contrasts argument")
+                for (nn in names(contrasts.spec)) {
+                        if (is.na(match(nn, names(data)))) 
+                                warning(paste("Variable", nn, 
+                                 "absent, contrast ignored"))
+                        else contrasts(data[[nn]]) <- contrasts.spec[[nn]]
+                }
+        }
+        .Internal(model.matrix(t, data))
 }
 
 model.response <- function(data, type="numeric")
