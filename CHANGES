@@ -1,9 +1,10 @@
 
-		  CHANGES IN VERSION R VERSION 0.60
+		CHANGES IN VERSION R VERSION 0.60
 
-R is now an official part of the GNU project.  To quote RMS
+R is now an official part of the GNU project.
+To quote RMS (Richard Stallman)
 
-	``I hereby dub R GNU software!''
+		``I hereby dub R GNU software!''
 
 
 NEW FEATURES
@@ -14,9 +15,28 @@ NEW FEATURES
 
     o	There has been a major change in directory structure
 	masterminded by Kurt Hornik.
+	library(.) now attaches ``package''s which are better
+	integrated, see "?library".  Packages may be available from outside
+	the RHOME path via the .lib.loc variable.
 
-    o   The use of "names" on one dimensional arrays will now produce
-	sensible results.  This means that for most purposes, one
+    o	The documentation format (of files in src/library/<package>/man/ )
+	has changed to a more easily parsable LaTeX like format.
+	The doc files now all end in `.Rd'.
+	etc/Rman2Rd  can be used to translate old-style documentation to
+	the new one.
+	The translation to *roff, LaTeX and HTML is now done using
+	etc/Rdconv, written in Perl by Fritz Leisch.
+
+	The HTML online help produced has now links which work.
+	The manual (in doc/manual/) now includes a section on the
+	documentation format and on mathematical text in graphs.
+
+	etc/ further contains `Sd2Rd' for (partial) translation of S `.d'
+	documentation to Rd, and
+	`Rd2txt' and `Rd2dvi' for easy previewing of single Rd files.
+
+    o	The use of "names" on one dimensional arrays will now produce
+	sensible results.  This means that for most purposes,
 	one dimensional arrays can be treated like vectors.
 
     o	We have a applied a patch from mward@wolf.hip.berkeley.edu
@@ -28,15 +48,24 @@ NEW FEATURES
 	models with no parameters are now acceptable.
 
     o	"cov", "cor" and "var" now produce a matrix result if either
-	of their x or y arguments is a matrix.  Dimnames are propagated
+	of their x or y arguments is a matrix.	Dimnames are propagated
 	in a sensible fashion.
+
+    o   New chisq.test(.) and prop.test() from Kurt Hornik.
+
+    o   New read.fwf(.) for reading fixed width format (KH).
+
+    o   New str(.) [alternative to summary(.) for programmers] (MM).
+
+    o   New example data sets "esoph", "infert" and "anscombe" (TL) and
+	"iris3" (KH)
 
 BUG FIXES
 
     o	"approx" and "approxfun", have had some minor adjustments.
 	which fix the interpretation of the rule= argument.  The
 	code for piecewise constant case is now internal C code
-	that than interpreted.  This should boost performance in
+	that than interpreted.	This should boost performance in
 	this case.
 
     o	There has been a minor fixup of "model.frame" to ensure that
@@ -47,7 +76,7 @@ BUG FIXES
 		lm(y~., data=df)
 		glm(y~., data=df)
 
-	will now work.  The RHS of the model will consist of an
+	will now work.	The RHS of the model will consist of an
 	additive model containing all (non-respose) variabels in the
 	given data frame.
 
@@ -59,14 +88,25 @@ BUG FIXES
 	was producing incorrect results.  The solution was to wrap
 	an implicit "as.data.frame" around the RHS.
 
-    o   "[.data.frame" no longer has a default drop=TRUE argument.
+    o	"[.data.frame" no longer has a default drop=TRUE argument.
 	This means that subsetting a data frame with "[" will always
 	yield a data frame.
 
     o	There was a swap of coordinates internally in "mtext" which
 	meant that labels were coming out in the wrong place.  Fixed.
 
-    o   Syntax errors in parse(text="...") would cause R to terminate
-	with a segmentation violation.  This no longer happens, although
+    o	Syntax errors in parse(text="...") would cause R to terminate
+	with a segmentation violation.	This no longer happens, although
 	the result is still not perfect (the parse() returns).
 	This will be fixed by a future parse rewrite.
+
+    o   rainbow, topo.colors, etc., now also work with n in {1,2}.
+
+    o   legend has new `text.width' argument and now also works with
+	mathematical expressions as text.
+
+    o   hist now works better and also has a `plot = TRUE' argument.
+
+    o   Improvement to many (even most ?) documentation (.Rd) files.
+
+   ... and numerous other fixes of minor things ...
