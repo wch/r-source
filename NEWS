@@ -12,17 +12,17 @@
 USER-VISIBLE CHANGES
 
     o	dyn.load() and libary.dynam() return an object describing the
-    	DLL that was loaded. For packages with namespaces, the DLL 
+	DLL that was loaded. For packages with namespaces, the DLL
 	objects are stored in a list within the namespace.
 
     o	The PACKAGE argument for .C/.Call/.Fortran/.External can be
-    	omitted if the call is within code within a package with a
-    	namespace.  This ensures that the native routine being called
-    	is found in the DLL of the correct version of the package if
-    	multiple versions of a package are loaded in the R session.
-    	Using a namespace and omitting the PACKAGE argument is
-    	currently the only way to ensure that the correct version is
-    	used.
+	omitted if the call is within code within a package with a
+	namespace.  This ensures that the native routine being called
+	is found in the DLL of the correct version of the package if
+	multiple versions of a package are loaded in the R session.
+	Using a namespace and omitting the PACKAGE argument is
+	currently the only way to ensure that the correct version is
+	used.
 
     o	The stub packages from 1.9.x have been removed: the library()
 	function selects the new home for their code.
@@ -42,7 +42,7 @@ USER-VISIBLE CHANGES
 	packages which are required must be already installed.
 
     o	All the datasets formerly in packages 'base' and 'stats' have
-	been moved to a new package 'datasets'.  data() does the
+	been moved to a new package 'datasets'.	 data() does the
 	appropriate substitution, with a warning.  However, calls to
 	data() are not normally needed as the data objects are visible
 	in the 'datasets' package.
@@ -51,25 +51,25 @@ USER-VISIBLE CHANGES
 	via R CMD INSTALL --lazy-data or via a field in the
 	DESCRIPTION file.
 
-    o   The semantics of data() have changed (and were incorrectly
+    o	The semantics of data() have changed (and were incorrectly
 	documented in recent releases) and the function has been moved
 	to package 'utils'.  Please read the help page carefully if
 	you use the 'package' or 'lib.loc' arguments.
 
 	data() now lists datasets, and not just names which data() accepts.
 
-    o   Dataset 'phones' has been renamed to 'WorldPhones'.
+    o	Dataset 'phones' has been renamed to 'WorldPhones'.
 
     o	Datasets 'sunspot.month' and 'sunspot.year' are available
-        separately but not via data(sunspot) (which is used by package
-        lattice to retrieve a dataset 'sunspot').
+	separately but not via data(sunspot) (which is used by package
+	lattice to retrieve a dataset 'sunspot').
 
     o	Packages must been re-installed for this version, and
 	library() will enforce this.
 
     o	Package names must now be given exactly in library() and
-    	require(), regardless of whether the underlying file system is
-    	case-sensitive or not.
+	require(), regardless of whether the underlying file system is
+	case-sensitive or not.
 
 
 NEW FEATURES
@@ -83,7 +83,7 @@ NEW FEATURES
 
     o	The package element returned by getNativeSymbolInfo() contains
 	reference to both the internal object used to resolve symbols
-	with the DLL, and the internal DllInfo structure used to 
+	with the DLL, and the internal DllInfo structure used to
 	represent the DLL within R.
 
     o	There is a new atomic vector type, class "raw".	 See ?raw for
@@ -126,9 +126,9 @@ NEW FEATURES
 	extents of the diamond more correctly.
 
     o	deparse(), dput() and dump() have a new 'control' argument to
-    	control the level of detail when deparsing. dump() defaults to
-    	the most detail, the others default to less.  See ?deparse
-    	for the details.
+	control the level of detail when deparsing. dump() defaults to
+	the most detail, the others default to less.  See ?deparse
+	for the details.
 
     o	dir.create() now expands '~' in filenames.
 
@@ -148,7 +148,7 @@ NEW FEATURES
     o	formula() methods for classes "lm" and "glm" used the expanded
 	formula (with '.' expanded) from the terms component.
 
-    o   The `formula' method for ftable() now looks for variables in the
+    o	The `formula' method for ftable() now looks for variables in the
 	environment of the formula before the usual search path.
 
     o	help() now returns information about available documentation for
@@ -186,7 +186,7 @@ NEW FEATURES
     o	The png() and jpeg() devices (and the bmp() device under Windows)
 	now allow a nominal resolution to be recorded in the file.
 
-    o   power (x^y) has optimised code for y == 2.
+    o	power (x^y) has optimised code for y == 2.
 
     o	prcomp() is now generic, with a formula method (based on an
 	idea of Jari Oksanen).
@@ -198,7 +198,7 @@ NEW FEATURES
     o	New function read.fortran() reads Fortran-style fixed-format
 	specifications.
 
-    o   read.fwf() reads multiline records, is faster for large files.
+    o	read.fwf() reads multiline records, is faster for large files.
 
     o	readChar() can now read strings with embedded nuls.
 
@@ -208,10 +208,10 @@ NEW FEATURES
     o	Replaying a plot (with replayPlot() or via autoprinting) now
 	automagically opens a device if none is open.
 
-    o   reshape() can handle multiple 'id' variables.
+    o	reshape() can handle multiple 'id' variables.
 
     o	source() with 'echo = TRUE' uses the function source attribute
-    	when displaying commands as they are parsed.
+	when displaying commands as they are parsed.
 
     o	str(obj) now displays more reasonably the STRucture of S4 objects.
 	The method for class "dendrogram" has a new argument 'stem' and
@@ -246,27 +246,27 @@ NEW FEATURES
 
 UTILITIES
 
-    o   Package 'utils' now contains a much improved citation() function
-        which also has a package argument.  By default the citation is
-        auto-generated from the package DESCRIPTION, the file
-        'inst/CITATION' can be used to override this, see
-        help(citation) and help(citEntry).
+    o	Package 'utils' now contains a much improved citation() function
+	which also has a package argument.  By default the citation is
+	auto-generated from the package DESCRIPTION, the file
+	'inst/CITATION' can be used to override this, see
+	help(citation) and help(citEntry).
 
-    o   R CMD check now checks for file names in a directory that
+    o	R CMD check now checks for file names in a directory that
 	differ only by case.
 
     o	R CMD check now checks Rd files using R code from package tools,
-        and gives refined diagnostics about "likely" Rd problems (stray
+	and gives refined diagnostics about "likely" Rd problems (stray
 	top-level text which is silently discarded by Rdconv).
 
     o	R CMD INSTALL now fails for packages with incomplete/invalid
-        DESCRIPTION metadata, using new code from package tools which is
-        also used by R CMD check.
+	DESCRIPTION metadata, using new code from package tools which is
+	also used by R CMD check.
 
-    o   list_files_with_exts (package tools) now handles zipped directories.
+    o	list_files_with_exts (package tools) now handles zipped directories.
 
     o	Package 'tools' now provides Rd_parse(), a simple top-level
-        parser/analyzer for R documentation format.
+	parser/analyzer for R documentation format.
 
 
 C-LEVEL FACILITIES
@@ -303,7 +303,7 @@ DEPRECATED & DEFUNCT
 	removed.  It was used in a couple of packages, and should be
 	replaced by a call to the documented macro ISNAN.
 
-    o   The gnome/GNOME graphics device is now defunct.
+    o	The gnome/GNOME graphics device is now defunct.
 
 
 INSTALLATION CHANGES
@@ -358,8 +358,8 @@ PACKAGE INSTALLATION CHANGES
 
 BUG FIXES
 
-    o   Complex superassignments were wrong when a variable with the same
-        name existed locally, and were not documented in R-lang.
+    o	Complex superassignments were wrong when a variable with the same
+	name existed locally, and were not documented in R-lang.
 
     o	rbind.data.frame() dropped names/rownames from columns in all
 	but the first data frame.
@@ -367,16 +367,16 @@ BUG FIXES
     o	The dimnames<- method for data.frames was not checking the
 	validity of the row names.
 
-    o   Various memory leaks reported by valgrind have been plugged.
+    o	Various memory leaks reported by valgrind have been plugged.
 
-    o   gzcon() connections would sometimes read the crc bytes from
+    o	gzcon() connections would sometimes read the crc bytes from
 	the wrong place, possibly uninitialized memory.
 
-    o   Rd.sty contained a length \middle that was not needed after a
-	revision in July 2000.  It caused problems with LaTeX systems
+    o	Rd.sty contained a length \middle that was not needed after a
+	revision in July 2000.	It caused problems with LaTeX systems
 	based on e-TeX which are starting to appear.
 
-    o   save() to a connection did not check that the connection was
+    o	save() to a connection did not check that the connection was
 	open for writing, nor that non-ascii saves cannot be made to a
 	text-mode connection.
 
@@ -386,7 +386,7 @@ BUG FIXES
 	This also fixes bug (PR#7064) about fisher.test().
 
     o	print.default(*, gap = <n>) now in principle accepts all
-        non-negative values <n>.
+	non-negative values <n>.
 
     o	smooth.spline(...)$pen.crit had a typo in its computation;
 	note this was printed in print.smooth.spline(*) but not used in
@@ -394,16 +394,16 @@ BUG FIXES
 
     o	write.table() handles zero-row and zero-column inputs correctly.
 
-    o   debug() works on trivial functions instead of crashing (PR#6804)
+    o	debug() works on trivial functions instead of crashing (PR#6804)
 
-    o   eval() could alter a data.frame/list second argument, so
+    o	eval() could alter a data.frame/list second argument, so
 	with(trees, Girth[1] < NA) altered 'trees' (and any copy of
 	'trees' too).
 
-    o   cor() could corrupt memory when the standard deviation was 
-        zero. (PR#7037)
+    o	cor() could corrupt memory when the standard deviation was
+	zero. (PR#7037)
 
-    o   inverse.gaussian() always printed 1/mu^2 as the link function.
+    o	inverse.gaussian() always printed 1/mu^2 as the link function.
 
 
 
@@ -453,30 +453,32 @@ BUG FIXES
     o	summary.Date() now has a sensible default for 'digits'.
 
     o	list.files(all.files = TRUE, recursive = TRUE) died on infinite
-    	recursion. (PR#7100)
+	recursion. (PR#7100)
 
     o	cor(as.array(c(a=1,b=2)), cbind(1:2)) no longer seg.faults (PR#7116).
 	cor(), cov() and var() no longer accidentally work with list()
 	arguments as if they were unlist()ed.
 
     o	as.matrix(data.frame(d= as.POSIXct("2004-07-20"))) doesn't give a
-        wrong warning anymore.
+	wrong warning anymore.
 
     o	gsub(perl=TRUE) code got the R length of return strings wrong
 	in some circumstances (when the string was shortened).
 	(Fixed also PR#7108)
 
-    o   summaryRprof was ignoring functions whose name begins with dot,
+    o	summaryRprof was ignoring functions whose name begins with dot,
 	e.g. .C, .Call, .Fortran. (PR#7137)
 
-    o   loglin() could segfault if 'start' was of the wrong length.  (PR#7123)
+    o	loglin() could segfault if 'start' was of the wrong length.  (PR#7123)
 
-    o   model.tables(type="means") could fail in a design where a
+    o	model.tables(type="means") could fail in a design where a
 	projection gave all zeros. (PR#7132)
 
     o	Applying attributes() to a pairlist, e.g. .Options, could segfault.
 
     o	The checking of R versions incorrectly assumed 1.9.1 >= 1.50.
+
+    o	str(Surv(..)) failed for  type = "counting"  Surv objects.
 
 
 

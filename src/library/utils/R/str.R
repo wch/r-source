@@ -130,9 +130,9 @@ str.default <-
 		else if(mod == "char") { mod <- "chr"; char.like <- TRUE }
 		else if(mod == "comp") mod <- "cplx" #- else: keep 'logi'
 		if(is.array(object)) {
-		    di <- dim(object)
-		    di <- P0(ifelse(di>1, "1:",""), di,
-			     ifelse(di>0, "" ," "))
+		    di. <- dim(object)
+		    di <- P0(ifelse(di. > 1, "1:",""), di.,
+			     ifelse(di. > 0, "" ," "))
 		    le.str <- paste(c("[", P0(di[-length(di)], ", "),
 				      di[length(di)], "]"), collapse = "")
 		    std.attr <- "dim" #- "names"
@@ -268,9 +268,13 @@ str.default <-
 		ob <- if(le > iv.len) object[seq(len=iv.len)] else object
 		ao <- abs(ob <- ob[!is.na(ob)])
 	    }
+            else if(iSurv)
+                le <- length(object <- as.character(object))
 	    if(int.surv || (all(ao > 1e-10 | ao==0) && all(ao < 1e10| ao==0) &&
 			    all(ob == signif(ob, digits.d)))) {
-		v.len <- iv.len
+		if(!iSurv || di.[2] == 2)
+                    ## use integer-like length
+                    v.len <- iv.len
 		format.fun <- function(x)x
 	    } else {
 		v.len <- round(1.25 * v.len)

@@ -3095,6 +3095,12 @@ anova(tmp.aov)
 model.tables(tmp.aov, type="means")
 ## failed in 1.9.1.
 
+if(require(survival)) { # required package
+  a <- Surv(1:4, 2:5, c(0,1,1,0))
+  str(a)
+  str(a[rep(1:4,3)], vec.len = 7)
+  detach("package:survival")
+}
 
 ### end of tests added in 1.9.1 patched ###
 
