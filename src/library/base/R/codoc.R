@@ -18,6 +18,7 @@ function(dir, use.values = FALSE, use.positions = TRUE,
         files
     }
 
+    ## Argument handling.
     if(missing(dir))
         stop("no package directory given")
     if(!file.exists(dir))
@@ -37,6 +38,7 @@ function(dir, use.values = FALSE, use.positions = TRUE,
     if(!keep.tempfiles)
         on.exit(unlink(unlinkOnExitFiles))
 
+    ## Collect code into codeFile.
     codeFile <- tempfile("Rcode")
     unlinkOnExitFiles <- c(unlinkOnExitFiles, codeFile)
     codeExts <- c("R", "r", "S", "s", "q")
@@ -47,11 +49,12 @@ function(dir, use.values = FALSE, use.positions = TRUE,
     file.create(codeFile)
     file.append(codeFile, files)
 
+    ## Collect usages into docsFile.
     docsFile <- tempfile("Rdocs")
     unlinkOnExitFiles <- c(unlinkOnExitFiles, docsFile)
     docsExts <- c("Rd", "rd")
     files <- listFilesWithExts(docsDir, docsExts, path = FALSE)
-    if(basename(dir) == "base") {
+    if(isBase) {
         baseStopList <- c("Devices.Rd") # add more if needed
 	files <- files[-grep(baseStopList, files, ignore.case = TRUE)]
     }
@@ -63,7 +66,60 @@ function(dir, use.values = FALSE, use.positions = TRUE,
     writeLines(files, docsList)
     .Script("perl", "extract-usage.pl", paste(docsList, docsFile))
 
+    ## Read code into .CodeEnv
+    lib.source <- function(file, envir) {
+        oop <- options(keep.source = FALSE)
+        on.exit(options(oop))
+        assignmentSymbol <- as.name("<-")
+        exprs <- parse(n = -1, file = file)
+        if(length(exprs) == 0)
+            return(invisible())
+        for(e in exprs) {
+            if(e[[1]] == assignmentSymbol)
+                yy <- eval(e, envir)
+        }
+        invisible()
+    }
+    .CodeEnv <- new.env()
+    if(verbose)
+        cat("Reading code from", fQuote(codeFile), "\n")        
+    lib.source(codeFile, env = .CodeEnv)
+    lsCode <- ls(envir = .CodeEnv, all.names = TRUE)
+    ## Find the functions objects to work on.
+    funs <- lsCode[sapply(lsCode, function(f) {
+        f <- get(f, envir = .CodeEnv)
+        is.function(f) && (length(formals(f)) > 0)
+    })]
+    if(ignore.generic.functions) {
+        isGeneric <- function(f) {
+            any(grep("UseMethod",
+                     deparse(body(get(f, envir = .CodeEnv)))))
+        }
+        funs <- funs[sapply(funs, isGeneric) == FALSE]
+    }
+    
     .DocsEnv <- new.env()
+    checkCoDoc <- function(f) {
+        ffc <- formals(get(f, envir = .CodeEnv))
+        ffd <- formals(get(f, envir = .DocsEnv))
+        if(!use.positions) {
+            ffc <- ffc[sort(names(ffc))]
+            ffd <- ffc[sort(names(ffd))]
+        }
+        if(!use.values) {
+            ffc <- names(ffc)
+            ffd <- names(ffd)
+        }
+        if(all(all.equal(ffc, ffd) == TRUE))
+            NULL
+        else {
+            list(list(name = f, code = ffc, docs = ffd))
+        }
+    }
+
+    ## Process the usages in the Rd files, one at a time.
+    lsDocs <- character()
+    badUsages <- list()
     if(verbose)
         cat("Reading docs from", fQuote(docsFile), "\n")
     txt <- readLines(docsFile)
@@ -83,89 +139,38 @@ function(dir, use.values = FALSE, use.positions = TRUE,
             if(inherits(yy, "try-error"))
                 stop(paste("cannot eval", gsub("^# ", "", whereAmI)))
         }
-    }
-    lsDocs <- ls(envir = .DocsEnv, all.names = TRUE)
 
-    lib.source <- function(file, envir) {
-        oop <- options(keep.source = FALSE)
-        on.exit(options(oop))
-        assignmentSymbol <- as.name("<-")
-        exprs <- parse(n = -1, file = file)
-        if(length(exprs) == 0)
-            return(invisible())
-        for(e in exprs) {
-            if(e[[1]] == assignmentSymbol)
-                yy <- eval(e, envir)
-        }
-        invisible()
+        badUsagesInFile <- list()
+        file <- gsub("^# usages in file ", "", whereAmI)
+        usages <- ls(envir = .DocsEnv, all.names = TRUE)
+        for(f in usages[usages %in% funs])
+            badUsagesInFile <- c(badUsagesInFile, checkCoDoc(f))
+        if(length(badUsagesInFile) > 0)
+            badUsages[[file]] <- badUsagesInFile
+        
+        lsDocs <- c(lsDocs, usages)
+        rm(list = usages, envir = .DocsEnv)
     }
-    .CodeEnv <- new.env()
-    if(verbose)
-        cat("Reading code from", fQuote(codeFile), "\n")        
-    lib.source(codeFile, env = .CodeEnv)
-    lsCode <- ls(envir = .CodeEnv, all.names = TRUE)
 
     ## Objects documented but missing from the code?
     overdocObjs <- lsDocs[!lsDocs %in% lsCode]
     if((length(overdocObjs) > 0) && !isBase) {
-        cat("Objects documented but missing from the code:\n")
+        writeLines("\nObjects documented but missing from the code:")
         print(overdocObjs)
+        writeLines("")
     }
 
-    funs <- sapply(lsCode,
-                   function(f) is.function(get(f, envir = .CodeEnv)))
-    ## Variables without usage information.
+    ## Objects without usage information.
     ## Could still be documented via \alias.
-    vars <- lsCode[funs == FALSE]
-    undocVars <- vars[!vars %in% lsDocs]
+    undocObjs <- lsCode[!lsCode %in% lsDocs]
     if(verbose) {
-        cat("\nVariables without usage information:\n")
-        print(undocVars)
-    }
-    ## Functions without usage information.
-    ## Could still be documented via \alias.
-    funs <- lsCode[funs]
-    undocFuns <- funs[!funs %in% lsDocs]
-    if(verbose) {
-        cat("\nFunctions without usage information:\n")
-        print(undocFuns)
+        writeLines("\nObjects without usage information:")
+        print(undocObjs)
+        writeLines("")        
     }
 
-    ## Function objects which are non-primitive (such that args() is
-    ## non-NULL) and have wrong usage documentation
-    args <- lapply(funs,
-                   function(f) args(get(f, envir = .CodeEnv)))
-    funs <- funs[(funs %in% lsDocs) & (sapply(args, length) > 0)]
-    if(ignore.generic.functions) {
-        isGeneric <- function(f) {
-            any(grep("UseMethod",
-                     deparse(body(get(f, envir = .CodeEnv)))))
-        }
-        funs <- funs[sapply(funs, isGeneric) == FALSE]
-    }
-
-    getCoDoc <- function(f) {
-        ffc <- formals(get(f, envir = .CodeEnv))
-        ffd <- formals(get(f, envir = .DocsEnv))
-        if(!use.positions) {
-            ffc <- ffc[sort(names(ffc))]
-            ffd <- ffc[sort(names(ffd))]
-        }
-        if(!use.values) {
-            ffc <- names(ffc)
-            ffd <- names(ffd)
-        }
-        list(code = ffc, docs = ffd)
-    }
-    wrongfuns <- lapply(funs, getCoDoc)
-    names(wrongfuns) <- funs
-    wrongfuns <-
-        wrongfuns[sapply(wrongfuns,
-                          function(u) {
-                              all(all.equal(u$code, u$docs) == TRUE)
-                          }) == FALSE]
-    class(wrongfuns) <- "codoc"
-    wrongfuns
+    class(badUsages) <- "codoc"
+    badUsages
 }
 
 print.codoc <-
@@ -173,7 +178,7 @@ function(x, ...)
 {
     if(length(x) == 0)
         return(invisible())
-    hasOnlyNames <- is.character(x[[1]][[1]])
+    hasOnlyNames <- is.character(x[[1]][[1]][["code"]])
     formatArgs <- function(s) {
         if(hasOnlyNames) {
             paste("function(", paste(s, collapse = ", "), ")", sep = "")
@@ -184,15 +189,19 @@ function(x, ...)
             gsub("^list", "function", s)
         }
     }
-    for(fun in names(x)) {
-        writeLines(c(fun,
-                     strwrap(paste("Code:",
-                                   formatArgs(x[[fun]][["code"]])),
-                             indent = 2, exdent = 17),
-                     strwrap(paste("Docs:",
-                                   formatArgs(x[[fun]][["docs"]])),
-                             indent = 2, exdent = 17),
-                     ""))
+    for(fname in names(x)) {
+        writeLines(paste("Codoc mismatches from file `", fname, "':",
+                         sep = ""))
+        xfname <- x[[fname]]
+        for(i in seq(along = xfname))
+            writeLines(c(xfname[[i]][["name"]],
+                         strwrap(paste("Code:",
+                                       formatArgs(xfname[[i]][["code"]])),
+                                 indent = 2, exdent = 17),
+                         strwrap(paste("Docs:",
+                                       formatArgs(xfname[[i]][["docs"]])),
+                                 indent = 2, exdent = 17)))
+        writeLines("")
     }
     invisible(x)
 }
