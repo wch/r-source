@@ -61,6 +61,7 @@ sub Rdconv { # Rdconv(foobar.Rd, type, debug, filename, pkgname)
     $Rdname = $_[0];
     open rdfile, "<$Rdname" || die "Rdconv(): Couldn't open '$Rdfile':$!\n";
 
+
     $type = $_[1];
     $debug = $_[2];
     $pkgname = $_[4];
@@ -74,12 +75,12 @@ sub Rdconv { # Rdconv(foobar.Rd, type, debug, filename, pkgname)
 	$dirname = $_[3]; # The super-directory , such as  <Rlib>/library/<pkg>
 	die "Rdconv(): '$dirname' is NOT a valid directory:$!\n"
 	  unless -d $dirname;
-	$htmlfile = $dirname ."/html/" .$Rdname.".html" if $type =~ /html/i;
-	$txtfile= $dirname ."/help/" . $Rdname	        if $type =~ /txt/i;
+	$htmlfile = $dirname .$main::sep."html".$main::sep .$Rdname.".html" if $type =~ /html/i;
+	$txtfile= $dirname .$main::sep."help".$main::sep . $Rdname	        if $type =~ /txt/i;
 	die "Rdconv(): type 'Sd' must not be used with other types (',')\n"
 	  if $type =~ /Sd/i;
-	$latexfile= $dirname ."/latex/". $Rdname.".tex"	if $type =~ /tex/i;
-	$Exfile	  = $dirname ."/R-ex/" . $Rdname.".R"	if $type =~ /example/i;
+	$latexfile= $dirname .$main::sep."latex".$main::sep. $Rdname.".tex"	if $type =~ /tex/i;
+	$Exfile	  = $dirname .$main::sep."R-ex".$main::sep . $Rdname.".R"	if $type =~ /example/i;
     }
 
 
@@ -95,6 +96,7 @@ sub Rdconv { # Rdconv(foobar.Rd, type, debug, filename, pkgname)
     #-- remove comments (everything after a %)
     while(<rdfile>){
 	$_ = expand $_;
+	
 	if (/^#ifdef\s+([A-Za-z0-9]+)/o) {
 	    if ($1 ne $main::OSdir) { $skipping = 1; }
 	    next;
@@ -1965,6 +1967,7 @@ sub rdoc2latex {# (filename)
     } else {
 	$latexout = "STDOUT";
     }
+
     print $latexout "\\Header\{";
     print $latexout $blocks{"name"};
     print $latexout "\}\{";

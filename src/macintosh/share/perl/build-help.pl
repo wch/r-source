@@ -24,7 +24,7 @@ use R::Rdconv;
 use R::Rdlists;
 use R::Utils;
 
-my $revision = ' $Revision: 1.1.2.1 $ ';
+my $revision = ' $Revision: 1.1.2.2 $ ';
 my $version;
 my $name;
 
@@ -76,8 +76,8 @@ print STDERR "Current directory (cwd): `$current'\n" if $opt_debug;
 if($opt_htmllists){
     build_htmlpkglist("$R_HOME$sep"."library");
 
-    %anindex = read_anindex("$R_HOME/library");
-    %htmlindex = read_htmlindex("$R_HOME/library");
+    %anindex = read_anindex("$R_HOME$sep"."library");
+    %htmlindex = read_htmlindex("$R_HOME$sep"."library");
 
     exit 0;
 }
@@ -119,7 +119,7 @@ print "\n";
 if($opt_html){
     %htmlindex = read_htmlindex($lib);
     if ($lib ne "$R_HOME$sep"."library") {
-	%basehtmlindex = read_htmlindex("$R_HOME/library");
+	%basehtmlindex = read_htmlindex("$R_HOME$sep"."library");
 	foreach $topic (keys %htmlindex) {
 	    $basehtmlindex{$topic} = $htmlindex{$topic};
 	}
@@ -145,7 +145,7 @@ foreach $manfile (@mandir) {
 	    $destfile = $dest.$sep."help".$sep.$targetfile;
 	    if(fileolder($destfile, $manage)) {
 		$textflag = "text";
-		Rdconv($manfile, "txt", "", "$destfile", $pkg);
+		Rdconv(":$manfile", "txt", "", "$destfile", $pkg);
 	    }
 	}
 
@@ -156,7 +156,7 @@ foreach $manfile (@mandir) {
 	    if(fileolder($destfile,$manage)) {
 		$htmlflag = "html";
 		print "\t$destfile" if $opt_debug;
-		Rdconv($manfile, "html", "", "$destfile", $pkg);
+		Rdconv(":$manfile", "html", "", "$destfile", $pkg);
 	    }
 	}
 
@@ -165,14 +165,14 @@ foreach $manfile (@mandir) {
 	    $destfile = "$dest$sep"."latex"."$sep$targetfile.tex";
 	    if(fileolder($destfile,$manage)) {
 		$latexflag = "latex";
-		Rdconv($manfile, "latex", "", "$destfile");
+		Rdconv(":$manfile", "latex", "", "$destfile");
 	    }
 	}
 	if($opt_example){
 	    my $targetfile = $filenm{$manfilebase};
 	    $destfile = "$dest$sep"."R-ex"."$sep$targetfile.R";
 	    if(fileolder($destfile,$manage)) {
-		Rdconv($manfile, "example", "", "$destfile");
+		Rdconv(":$manfile", "example", "", "$destfile");
 		if(-f$destfile) {$exampleflag = "example";}
 	    }
 	}

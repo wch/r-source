@@ -72,7 +72,7 @@ sub buildinit {
     $tmp = cwd();
     if($main::OSdir eq "windows") {
 	$tmp =~ s+\\+/+g; # need Unix-style path here
-    }
+    }    
     $pkg = basename($tmp);
 #    $pkg = basename(cwd());
 
@@ -86,7 +86,7 @@ sub buildinit {
 	opendir man, $main::OSdir;
 	foreach $file (readdir(man)) {
 	    delete $Rds{$file};
-	    $RdsOS{$file} = $main::OSdir.$main::sep.$file;
+	    $RdsOS{$file} = $main::OSdir.":".$file;
 	}
 	@mandir = sort(values %Rds);
 	push @mandir, sort(values %RdsOS);
