@@ -61,7 +61,7 @@ example(topic, package = .packages(), lib.loc = NULL,
 \author{Martin Maechler and others}
 \seealso{\code{\link{demo}}}.
 \examples{
-example(dbinom)
+example(InsectSprays)
 ## force use of the standard package eda:
 example("smooth", package="eda", lib.loc=.Library)
 }
