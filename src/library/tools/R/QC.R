@@ -1598,20 +1598,23 @@ checkFF <-
 function(package, dir, file, lib.loc = NULL,
          verbose = getOption("verbose"))
 {
-    useSaveImage <- FALSE
-
     ## Argument handling.
     if(!missing(package)) {
         if(length(package) != 1)
             stop(paste("argument", sQuote("package"),
                        "must be of length 1"))
-        ## Using package installed in @code{dir} ...
         dir <- .find.package(package, lib.loc)
-        file <- file.path(dir, "R", "all.rda")
-        if(file.exists(file))
-            useSaveImage <- TRUE
+        ## Using package installed in @code{dir} ...
+        codeDir <- file.path(dir, "R")
+        if(!fileTest("-d", codeDir))
+            stop(paste("directory", sQuote(dir),
+                       "does not contain R code"))
+        if(basename(dir) != "base")
+            .loadPackageQuietly(package, dirname(dir))
+        codeEnv <- if(packageHasNamespace(package, dirname(dir)))
+            asNamespace(package)
         else
-            file <- file.path(dir, "R", package)
+            .packageEnv(package)
     }
     else if(!missing(dir)) {
         ## Using sources from directory @code{dir} ...
@@ -1633,7 +1636,7 @@ function(package, dir, file, lib.loc = NULL,
                    sQuote("dir"), " or ", sQuote("file"), sep = ""))
     }
 
-    if(!fileTest("-f", file))
+    if(missing(package) && !fileTest("-f", file))
         stop(paste("file", sQuote(file), "does not exist"))
 
     ## <FIXME>
@@ -1675,26 +1678,7 @@ function(package, dir, file, lib.loc = NULL,
         }
     }
 
-    if(useSaveImage) {
-        if(verbose) writeLines("loading saved image ...")
-        codeEnv <- new.env()
-        ## <FIXME>
-        ## If we 'just' load a saved image of the code in a package, the
-        ## packages required by the code are not attached automatically.
-        ## Hence, we repeat the part of the default startup code (the
-        ## copy of 'share/R/firstlib.R') which attempts to take care of
-        ## this via '.required' in the saved image.  Long term, it seems
-        ## that we should always *load* a given package ...
-        .tryQuietly({
-            load(file, envir = codeEnv)
-            if(exists(".required", envir = codeEnv, inherits = FALSE)) {
-                required <- get(".required", envir = codeEnv)
-                for(pkg in required)
-                    require(pkg, quietly = TRUE, character.only = TRUE,
-                            save = FALSE)
-            }
-        })
-        ## </FIXME>
+    if(!missing(package)) {
         exprs <- lapply(ls(envir = codeEnv, all.names = TRUE),
                         function(f) {
                             f <- get(f, envir = codeEnv)
