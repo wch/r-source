@@ -126,6 +126,7 @@ sub get_exclude_patterns {
     ## Kept here so that we ensure that the lists are in sync, but not
     ## exported.
     my @exclude_patterns = ("^.Rbuildignore\$", "^TITLE\$",
+			    "^.DS_Store\$",
 			    "\~\$", "\\.swp\$", "\\.bak\$",
 			    "^.*/\\.#[^/]*\$", "^.*/#[^/]*#\$");
     @exclude_patterns;
