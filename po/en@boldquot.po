@@ -31,8 +31,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
-"Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-01-25 15:40+0000\n"
+"Report-Msgid-Bugs-To: bugs@R-project.org\n"
+"POT-Creation-Date: 2005-01-26 09:20+0000\n"
 "PO-Revision-Date: 2005-01-25 15:40+0000\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -76,3 +76,296 @@ msgstr ""
 "‘[1mhelp.start()[0m’ for a HTML browser interface to help.\n"
 "Type ‘[1mq()[0m’ to quit R.\n"
 "\n"
+
+#: src/modules/lapack/Lapack.c:47 src/modules/lapack/Lapack.c:532
+msgid "jobu and jobv must be character objects"
+msgstr ""
+
+#: src/modules/lapack/Lapack.c:49 src/modules/lapack/Lapack.c:128
+msgid "method must be a character object"
+msgstr ""
+
+#: src/modules/lapack/Lapack.c:70 src/modules/lapack/Lapack.c:80
+#: src/modules/lapack/Lapack.c:94 src/modules/lapack/Lapack.c:103
+#: src/modules/lapack/Lapack.c:158 src/modules/lapack/Lapack.c:168
+#: src/modules/lapack/Lapack.c:193 src/modules/lapack/Lapack.c:211
+#: src/modules/lapack/Lapack.c:296 src/modules/lapack/Lapack.c:307
+#: src/modules/lapack/Lapack.c:411 src/modules/lapack/Lapack.c:417
+#: src/modules/lapack/Lapack.c:462 src/modules/lapack/Lapack.c:469
+#: src/modules/lapack/Lapack.c:473 src/modules/lapack/Lapack.c:507
+#: src/modules/lapack/Lapack.c:514 src/modules/lapack/Lapack.c:545
+#: src/modules/lapack/Lapack.c:554 src/modules/lapack/Lapack.c:600
+#: src/modules/lapack/Lapack.c:606 src/modules/lapack/Lapack.c:661
+#: src/modules/lapack/Lapack.c:667 src/modules/lapack/Lapack.c:827
+#: src/modules/lapack/Lapack.c:833 src/modules/lapack/Lapack.c:873
+#: src/modules/lapack/Lapack.c:880 src/modules/lapack/Lapack.c:884
+#: src/modules/lapack/Lapack.c:913 src/modules/lapack/Lapack.c:920
+#: src/modules/lapack/Lapack.c:944
+#, c-format
+msgid "error code %d from Lapack routine %s"
+msgstr ""
+
+#: src/modules/lapack/Lapack.c:142 src/modules/lapack/Lapack.c:270
+#: src/modules/lapack/Lapack.c:587 src/modules/lapack/Lapack.c:640
+msgid "x must be a square numeric matrix"
+msgstr ""
+
+#: src/modules/lapack/Lapack.c:144 src/modules/lapack/Lapack.c:276
+#: src/modules/lapack/Lapack.c:589 src/modules/lapack/Lapack.c:646
+msgid "invalid 'only.values'"
+msgstr ""
+
+#: src/modules/lapack/Lapack.c:354 src/modules/lapack/Lapack.c:397
+msgid "A must be a complex matrix"
+msgstr ""
+
+#: src/modules/lapack/Lapack.c:356 src/modules/lapack/Lapack.c:448
+#: src/modules/lapack/Lapack.c:491
+msgid "B must be a complex matrix"
+msgstr ""
+
+#: src/modules/lapack/Lapack.c:361 src/modules/lapack/Lapack.c:778
+msgid "A is 0-diml"
+msgstr ""
+
+#: src/modules/lapack/Lapack.c:363 src/modules/lapack/Lapack.c:780
+msgid "no rhs in B"
+msgstr ""
+
+#: src/modules/lapack/Lapack.c:365 src/modules/lapack/Lapack.c:782
+#, c-format
+msgid "A (%d x %d) must be square"
+msgstr ""
+
+#: src/modules/lapack/Lapack.c:367 src/modules/lapack/Lapack.c:784
+#, c-format
+msgid "B (%d x %d) must be compatible with A (%d x %d)"
+msgstr ""
+
+#: src/modules/lapack/Lapack.c:376 src/modules/lapack/Lapack.c:714
+#: src/modules/lapack/Lapack.c:748 src/modules/lapack/Lapack.c:793
+#, c-format
+msgid "argument %d of Lapack routine %s had illegal value"
+msgstr ""
+
+#: src/modules/lapack/Lapack.c:383 src/modules/lapack/Lapack.c:434
+#: src/modules/lapack/Lapack.c:477 src/modules/lapack/Lapack.c:518
+#: src/modules/lapack/Lapack.c:567 src/modules/lapack/Lapack.c:623
+#: src/modules/lapack/Lapack.c:684
+msgid "Fortran complex functions are not available on this platform"
+msgstr ""
+
+#: src/modules/lapack/Lapack.c:455 src/modules/lapack/Lapack.c:500
+#: src/modules/lapack/Lapack.c:866 src/modules/lapack/Lapack.c:906
+#, c-format
+msgid "rhs should have %d not %d rows"
+msgstr ""
+
+#: src/modules/lapack/Lapack.c:493 src/modules/lapack/Lapack.c:899
+msgid "invalid 'trans' parameter"
+msgstr ""
+
+#: src/modules/lapack/Lapack.c:701 src/modules/lapack/Lapack.c:939
+msgid "A must be a square matrix"
+msgstr ""
+
+#: src/modules/lapack/Lapack.c:702
+msgid "A must have dims > 0"
+msgstr ""
+
+#: src/modules/lapack/Lapack.c:712
+#, c-format
+msgid "the leading minor of order %d is not positive definite"
+msgstr ""
+
+#: src/modules/lapack/Lapack.c:720 src/modules/lapack/Lapack.c:758
+#: src/modules/lapack/Lapack.c:771 src/modules/lapack/Lapack.c:814
+#: src/modules/lapack/Lapack.c:932
+msgid "A must be a numeric matrix"
+msgstr ""
+
+#: src/modules/lapack/Lapack.c:728
+msgid "size argument must be a positive integer"
+msgstr ""
+
+#: src/modules/lapack/Lapack.c:737
+#, c-format
+msgid "size cannot exceed ncol(x) = %d"
+msgstr ""
+
+#: src/modules/lapack/Lapack.c:738
+#, c-format
+msgid "size cannot exceed nrow(x) = %d"
+msgstr ""
+
+#: src/modules/lapack/Lapack.c:747
+#, c-format
+msgid "element (%d, %d) is zero, so the inverse cannot be computed"
+msgstr ""
+
+#: src/modules/lapack/Lapack.c:773 src/modules/lapack/Lapack.c:859
+#: src/modules/lapack/Lapack.c:897
+msgid "B must be a numeric matrix"
+msgstr ""
+
+#: src/modules/lapack/Lapack.c:796
+msgid "Lapack routine dgesv: system is exactly singular"
+msgstr ""
+
+#: src/modules/lapack/Lapack.c:801
+#, c-format
+msgid "system is computationally singular: reciprocal condition number = %g"
+msgstr ""
+
+#: src/modules/lapack/Lapack.c:934
+msgid "argument logarithm must be logical"
+msgstr ""
+
+#: src/modules/X11/devX11.c:293
+msgid "can't set grayscale: reverting to monochrome"
+msgstr ""
+
+#: src/modules/X11/devX11.c:376
+msgid ""
+"X11 driver unable to obtain color cube\n"
+"  reverting to monochrome"
+msgstr ""
+
+#: src/modules/X11/devX11.c:421
+msgid ""
+"Error: X11 cannot allocate additional graphics colors.\n"
+"Consider using X11 with colortype=\"pseudo.cube\" or \"gray\"."
+msgstr ""
+
+#: src/modules/X11/devX11.c:818
+msgid ""
+"Could not find any X11 fonts\n"
+"Check that the Font Path is correct."
+msgstr ""
+
+#: src/modules/X11/devX11.c:882
+#, c-format
+msgid "X11 used font size %d when %d was requested"
+msgstr ""
+
+#: src/modules/X11/devX11.c:941
+#, c-format
+msgid "X11 font at size %d could not be loaded"
+msgstr ""
+
+#: src/modules/X11/devX11.c:969
+msgid "Invalid line end"
+msgstr ""
+
+#: src/modules/X11/devX11.c:987
+msgid "Invalid line join"
+msgstr ""
+
+#: src/modules/X11/devX11.c:1056
+#, c-format
+msgid "X11 protocol error: %s"
+msgstr ""
+
+#: src/modules/X11/devX11.c:1073
+msgid "X11 fatal IO error: please save work and shut down R"
+msgstr ""
+
+#: src/modules/X11/devX11.c:1096
+msgid "locale not supported by Xlib: some X ops will operate in C locale"
+msgstr ""
+
+#: src/modules/X11/devX11.c:1097
+msgid "X cannot set locale modifiers"
+msgstr ""
+
+#: src/modules/X11/devX11.c:1104
+msgid "No png support in this version of R"
+msgstr ""
+
+#: src/modules/X11/devX11.c:1108
+msgid "filename too long in png() call"
+msgstr ""
+
+#: src/modules/X11/devX11.c:1112 src/modules/X11/devX11.c:1519
+#, c-format
+msgid "could not open PNG file '%s'"
+msgstr ""
+
+#: src/modules/X11/devX11.c:1125
+msgid "No jpeg support in this version of R"
+msgstr ""
+
+#: src/modules/X11/devX11.c:1131
+msgid "filename too long in jpeg() call"
+msgstr ""
+
+#: src/modules/X11/devX11.c:1135 src/modules/X11/devX11.c:1526
+#, c-format
+msgid "could not open JPEG file '%s'"
+msgstr ""
+
+#: src/modules/X11/devX11.c:1156
+#, c-format
+msgid "unable to open connection to X11 display '%s'"
+msgstr ""
+
+#: src/modules/X11/devX11.c:1182
+msgid "jpeg() does not support transparency: using white bg"
+msgstr ""
+
+#: src/modules/X11/devX11.c:1213
+msgid "unable to create X11 window"
+msgstr ""
+
+#: src/modules/X11/devX11.c:1259
+msgid "unable to create pixmap"
+msgstr ""
+
+#: src/modules/X11/devX11.c:1293
+msgid "Invalid font specification"
+msgstr ""
+
+#: src/modules/X11/devX11.c:1332
+msgid "Font family not found in X11 font database"
+msgstr ""
+
+#: src/modules/X11/devX11.c:2246
+msgid "invalid string argument"
+msgstr ""
+
+#: src/modules/X11/devX11.c:2280
+#, c-format
+msgid "unable to start device %s"
+msgstr ""
+
+#: src/modules/X11/devX11.c:2307
+msgid "invalid width or height"
+msgstr ""
+
+#: src/modules/X11/devX11.c:2311
+msgid "invalid gamma value"
+msgstr ""
+
+#: src/modules/X11/devX11.c:2314
+msgid "invalid colortype passed to X11 driver"
+msgstr ""
+
+#: src/modules/X11/devX11.c:2328
+msgid "unknown X11 color/colour model -- using monochrome"
+msgstr ""
+
+#: src/modules/X11/devX11.c:2338
+msgid "invalid value of 'bg'"
+msgstr ""
+
+#: src/modules/X11/devX11.c:2343
+msgid "invalid value of 'canvas'"
+msgstr ""
+
+#: src/modules/X11/devX11.c:2348
+msgid "invalid value of 'fonts'"
+msgstr ""
+
+#: src/modules/X11/devX11.c:2385
+msgid "Cannot allocate memory for X11Routines structure"
+msgstr ""

@@ -2,3 +2,5 @@
 # The last line must not be a comment.
 
 src/main/version.c
+src/modules/lapack/Lapack.c
+src/modules/X11/devX11.c
