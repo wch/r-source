@@ -30,8 +30,7 @@ primary purpose of calling \code{gc} is for the report on memory usage.
 
 \code{gcinfo} returns the previous value of the flag.
 }
-\seealso{\code{\link{Memory}} on \R's memory management,
-  \code{\link{gc.time}} for the time spent in garbage collection
+\seealso{\code{\link{Memory}} on \R's memory management
   and \code{\link{gctorture}} if you are an \R hacker.}
 \examples{
 gc() #- do it now

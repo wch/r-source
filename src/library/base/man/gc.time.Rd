@@ -20,7 +20,14 @@ gc.time()
   not available and will always be given as \code{NA}.
 }
 #endif
+\section{Warnings}
+{
+  This is experimental functionality, likely to be removed as soon as
+  the next release.
 
+  The timings are rounded up by the sampling interval for timing
+  processes, and so are likely to be over-estimates.
+}
 \seealso{\code{\link{gc}},
   \code{\link{proc.time}} for the timings for the session.}
 
