@@ -161,6 +161,15 @@ INSTALLATION CHANGES
 	are not longer included in the distribution.
 
 
+C-LEVEL FACILITIES
+
+    o	It was not clear in 'Writing R Extensions' that some of the
+	entry points in the 'Utilities' section were not declared in
+	<R.h> (they were in <R_ext/Applic.h>).  Now all the entry
+	points in that section are declared in <R_ext/Utils.h>,
+	included by <R.h>.
+
+
 BUG FIXES
 
     o   The grid.grab() function in package grid would throw an error
