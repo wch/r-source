@@ -33,11 +33,13 @@ codocData(package, lib.loc = NULL)
     libraries currently known.  The specified library trees are used to
     to search for \code{package}.}
   \item{use.positions}{a logical indicating whether to use the positions
-    of function arguments when comparing.}
-  \item{use.values}{a logical indicating whether to use function default
-    values when comparing code and docs.}
-  \item{ignore.generic.functions}{if \code{TRUE}, functions the body of
-    which contains \code{"UseMethod"} are ignored.}
+    of function arguments when comparing.  \emph{Deprecated}.}
+  \item{use.values}{if \code{FALSE} (current default), do not use
+    function default values when comparing code and docs.  Otherwise,
+    compare \emph{all} default values if \code{TRUE}, and only the ones
+    documented in the usage otherwise.}
+  \item{ignore.generic.functions}{if \code{TRUE}, functions recognized
+    as S3 generics are ignored.  \emph{Deprecated}.}the body of
   \item{verbose}{a logical.  If \code{TRUE}, additional diagnostics are
     printed.}
 }
