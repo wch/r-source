@@ -245,7 +245,7 @@ survival-HELP = ziponly
 survival-ZIPDATA = zip
 
 bundle-%:
-	$(PERL) fixed/dobundle.pl $* $(PKGD) $(RLIB)
+	@$(PERL) fixed/dobundle.pl $* $(PKGD) $(RLIB)
 
 pkg-%:
 	@$(MAKE) --no-print-directory DLLNM=$($*-DLLNM)  FLIBS="$(FLIBS)" BUILD=$(BUILD) \
