@@ -23,16 +23,23 @@ R = R_LIBS= $(top_builddir)/bin/R
 OBJECTS = $(R_PKGS_RECOMMENDED_SOURCES:=.ts)
 OBJECTS_SRC = $(R_PKGS_RECOMMENDED_SOURCES:=.tgz)
 
-CLEANFILES = $(OBJECTS) Makedeps
+CLEANFILES = $(OBJECTS) Makedeps stamp-recommended
 DISTCLEANFILES = Makefile
 
 .SUFFIXES:
 .SUFFIXES: .tgz .ts
 
-all: Makefile R @USE_RECOMMENDED_PACKAGES_TRUE@ Makedeps $(OBJECTS)
+all: Makefile R @USE_RECOMMENDED_PACKAGES_TRUE@ recommended-packages
 
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
+
+recommended-packages: Makefile
+	@$(MAKE) Makedeps
+	@$(MAKE) stamp-recommended
+stamp-recommended: $(OBJECTS)
+	@touch $@
+
 ## <NOTE>
 ## We create dependencies so that packages are built in a certain order.
 ## (Mostly to make parallel Make work.)
