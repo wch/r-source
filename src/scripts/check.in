@@ -32,7 +32,7 @@ use R::Utils;
 ## don't buffer output
 $|=1;
 
-my $revision = ' $Revision: 1.36 $ ';
+my $revision = ' $Revision: 1.37 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -252,27 +252,32 @@ sub check_pkg {
     
     chdir($pkgdir);
 
-    $log->checking("for sufficient file permissions");
-    my @badfiles = ();
-    sub findWrongPerms {
-	if(-d $_ && (((stat $_)[2] & 00755) < oct("755"))) {
-	    push @badfiles, $File::Find::name;
+    ## FIXME:
+    ## Only do this on Unix!
+    if(!$WINDOWS) {
+	$log->checking("for sufficient file permissions");
+	my @badfiles = ();
+	sub findWrongPerms {
+	    if(-d $_ && (((stat $_)[2] & 00755) < oct("755"))) {
+		push @badfiles, $File::Find::name;
+	    }
+	    if(-f $_ && (((stat $_)[2] & 00644) < oct("644"))) {
+		push @badfiles, $File::Find::name;
+	    }
 	}
-	if(-f $_ && (((stat $_)[2] & 00644) < oct("644"))) {
-	    push @badfiles, $File::Find::name;
+	find(\&findWrongPerms, ".");
+	if($#badfiles >= 0) {
+	    $log->error("  Found the following files with " .
+			"insufficient permissions:");
+	    $log->message("    " . join("\n    ", @badfiles));
+	    $log->message("  Please fix permissions and try again.");
+	    exit(1);
 	}
+	$log->result("OK");
     }
-    find(\&findWrongPerms, ".");
-    if($#badfiles >= 0) {
-	$log->error("  Found the following files with insufficient " .
-		    "permissions:");
-	$log->message("    " . join("\n    ", @badfiles));
-	$log->message("  Please fix permissions and try again.");
-	exit(1);
-    }
-    $log->result("OK");
-    
-    if($in_bundle){  # join DESCRIPTION and DESCRIPTION.in
+    ## </FIXME>
+
+    if($in_bundle){		# join DESCRIPTION and DESCRIPTION.in
 	if(-r "DESCRIPTION.in"){
 	    $log->checking("for file \`DESCRIPTION.in'");
 	    my $description_in = new R::Dcf("DESCRIPTION.in");
