@@ -18,7 +18,6 @@ inverse.rle(x, \dots)
     \code{inverse.rle()}].}
   \item{digits, \dots}{potentially further arguments to the
     corresponding method.}
-  \item{\dots}{further arguments (unused by these methods).}
 }
 \value{
   \code{rle()} returns an object of class "rle" which is a list with
