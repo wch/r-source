@@ -221,7 +221,7 @@ static void checkNames(SEXP x, SEXP s)
 	if (!isVector(s) && !isList(s))
 	    error("invalid type for names: must be vector");
 	if (length(x) != length(s))
-	    error("names attribute must be the same length as the vector");
+	    error("names attribute [%d] must be the same length as the vector [%d}", length(s), length(x));
     }
     else error("names applied to non-vector");
 }
@@ -586,7 +586,8 @@ SEXP dimnamesgets(SEXP vec, SEXP val)
 	error("dimnames must be a list");
     dims = getAttrib(vec, R_DimSymbol);
     if ((k = LENGTH(dims)) != length(val))
-	error("length of dimnames must match that of dims");
+	error("length of dimnames [%d] must match that of dims [%d]", 
+	      length(val), k);
     /* Old list to new list */
     if (isList(val)) {
 	SEXP newval;
@@ -604,7 +605,7 @@ SEXP dimnamesgets(SEXP vec, SEXP val)
 	    if (!isVector(this))
 		error("invalid type for dimname (must be a vector)");
 	    if (INTEGER(dims)[i] != LENGTH(this) && LENGTH(this) != 0)
-		error("length of dimnames[%d] not equal to array extent",i+1);
+		error("length of dimnames [%d] not equal to array extent",i+1);
 	    SET_VECTOR_ELT(val, i, dimnamesgets1(this));
 	}
     }
@@ -674,12 +675,12 @@ SEXP dimgets(SEXP vec, SEXP val)
     len = length(vec);
     ndim = length(val);
     if (ndim == 0)
-	error("dim: Invalid dimension vector");
+	error("dim: Length-0 dimension vector is invalid");
     total = 1;
     for (i = 0; i < ndim; i++)
 	total *= INTEGER(val)[i];
     if (total != len)
-	error("dim<- length of dims do not match the length of object");
+	error("dim<- : dims [product %d] do not match the length of object [%d]", total, len);
     removeAttrib(vec, R_DimNamesSymbol);
     installAttrib(vec, R_DimSymbol, val);
     UNPROTECT(2);
