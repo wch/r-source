@@ -316,10 +316,6 @@ Directory:  incoming
 Subject: Trailing "/" makes file.exists() return FALSE
 From: hb@maths.lth.se
 Date: Mon, 24 Sep 2001 10:46:27 +0200 (MET DST)
-* PR# 1099 *
-Subject: cor.test(x,x) sometimes produce NaN
-From: Martin Maechler <maechler@stat.math.ethz.ch>
-Date: Mon, 24 Sep 2001 13:59:50 +0200
 * PR# 1100 *
 Subject: Bug in model.matrix.default (was: [R] predict incosistency ?)
 From: Duncan Murdoch <murdoch@stats.uwo.ca>
