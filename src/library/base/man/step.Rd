@@ -6,8 +6,9 @@
 Choose a model by AIC in a Stepwise Algorithm
 }
 \usage{
-step(object, scope, scale=0, direction=c("both", "backward", "forward"), 
-	trace=1, keep=NULL, steps=1000, k=2, \dots)
+step(object, scope, scale = 0,
+     direction = c("both", "backward", "forward"), 
+     trace = 1, keep = NULL, steps = 1000, k = 2, \dots)
 }
 \alias{step}
 \arguments{

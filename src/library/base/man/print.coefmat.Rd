@@ -7,7 +7,7 @@ print.coefmat(x, digits=max(3, .Options$digits - 2),
               cs.ind = 1:k, tst.ind = k + 1, zap.ind = integer(0),
               P.values = NULL,
               has.Pvalue = nc >= 4 && substr(colnames(x)[nc],1,3) == "Pr(",
-	      na.print = "", \dots)
+              na.print = "", \dots)
 }
 \alias{print.coefmat}
 \arguments{

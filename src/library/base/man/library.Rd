@@ -2,8 +2,8 @@
 \title{Loading and Listing of Packages}
 \usage{
 library(name, help = NULL, lib.loc = .lib.loc,
-	character.only = FALSE, logical.return = FALSE,
-	warn.conflicts = TRUE)
+        character.only = FALSE, logical.return = FALSE,
+        warn.conflicts = TRUE)
 require(name, quietly = FALSE, warn.conflicts = TRUE)
 provide(name)
 

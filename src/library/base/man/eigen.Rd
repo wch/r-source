@@ -63,7 +63,7 @@ all(abs(sm       - V \%*\% diag(lam) \%*\% t(V)) < 60*Meps)
 
 em <- eigen(sm, symmetric = FALSE); V2 <- em$vect
 print(lam2 <- em$values) # ordered decreasingly in ABSolute value !
-			 # and V2 is not normalized (where V is):
+                         # and V2 is not normalized (where V is):
 print(i <- rev(order(lam2)))
 all(abs(1 - lam2[i] / lam) < 60 * Meps)# [1] TRUE
 

@@ -63,13 +63,13 @@ cars.spl <- smooth.spline(speed, dist)
 all(cars.spl $ w == table(speed)) # TRUE (weights = multiplicities)
 \testonly{
   str(cars.spl, digits=5, vec.len=6)
-  cars.spl $ fit
+  cars.spl$fit
 }
 lines(cars.spl, col = "blue")
 lines(smooth.spline(speed, dist, df=10), lty=2, col = "red")
 legend(5,120,c(paste("default [C.V.] => df =",round(cars.spl$df,1)),
                "s( * , df = 10)"), col = c("blue","red"), lty = 1:2,
-	bg='bisque')
+       bg='bisque')
 detach()
 }
 \keyword{smooth}
