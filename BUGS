@@ -313,3 +313,7 @@ Date: Thu, 16 Aug 2001 19:31:07 +0200 (MET DST)
 Subject: Error in report.
 From: "Joaquin Diaz-Saiz" <xoaquin@worldnet.att.net>
 Date: Thu, 16 Aug 2001 20:13:32 -0500
+* PR# 1061 *
+Subject: error message in chol()
+From: jerome@stat.ubc.ca
+Date: Sun, 19 Aug 2001 23:05:47 +0200 (MET DST)
