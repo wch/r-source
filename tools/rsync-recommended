@@ -21,6 +21,7 @@ TOOLS_DIR=`echo ${0} | sed 's%/[^/][^/]*$%%'`
 
   rsync -rcIzC --delete \
     --exclude=Makefile.in --exclude=Makefile --exclude=.cvsignore \
+    --include=*.tar.gz \
     "${CRAN_RSYNC}"/src/contrib/${version}/Recommended/ .
 
   ## Link all each package to a simplified name so that Make has an
