@@ -3,7 +3,7 @@
 anova.lm.null <- function (object, ...)
 {
     if (length(list(object, ...)) > 1)
-	return(anovalist.lm(object, ...))
+	return(anova.lmlist(object, ...))
     w <- weights(object)
     ssr <- sum(if (is.null(w))resid(object)^2 else w * resid(object)^2)
     ##comp <- object$effects[1:object$rank]
@@ -22,6 +22,7 @@ anova.lm.null <- function (object, ...)
                      paste("Response:", formula(object)[[2]])),
 	      class= c("anova", "data.frame"))# was "tabular"
 }
+
 print.lm.null <- function (x, digits = max(3, getOption("digits") - 3), ...)
 {
     cat("\nCall:\n", deparse(x$call), "\n\n", sep = "")
@@ -94,18 +95,17 @@ summary.lm.null <- function (z, correlation = FALSE, ...)
 ### matrix. A bit of a kludge, but it makes drop1 and friends work
 ### with no-intercept models
 
-lm.fit.null <-
-function (x, y, method = "qr", tol = 1e-07, ...)
-list(coefficients = numeric(0), residuals = y, fitted.values = 0 *
-    y, weights = NULL, rank = 0, df.residual = length(y))
+lm.fit.null <- function (x, y, method = "qr", tol = 1e-07, ...)
+    list(coefficients = numeric(0), residuals = y, fitted.values = 0 *
+         y, weights = NULL, rank = 0, df.residual = length(y))
 
 
-lm.wfit.null <-
-function (x, y, w, method = "qr", tol = 1e-07, ...)
-list(coefficients = numeric(0), residuals = y, fitted.values = 0 *
-    y, weights = w, rank = 0, df.residual = length(y))
+lm.wfit.null <- function (x, y, w, method = "qr", tol = 1e-07, ...)
+    list(coefficients = numeric(0), residuals = y, fitted.values = 0 *
+         y, weights = w, rank = 0, df.residual = length(y))
 
-model.matrix.lm.null<-function(x,...){
-  rval<-matrix(ncol=0,nrow=length(object$y))
-  attr(rval,"assign")<-integer(0)
+model.matrix.lm.null <- function(x,...)
+{
+  rval <- matrix(ncol=0, nrow=length(object$y))
+  attr(rval,"assign") <- integer(0)
 }

@@ -99,6 +99,19 @@ NEW FEATURES
 	to make model.matrix compatible with S. This affects models
 	such as lm(y ~ o - 1) where o is an ordered factor.
 
+    o	anova() for 3 or more lm objects now behaves compatibly
+	with S and anova.glmlist(). The old behaviour is still available
+	by calling anovalist.lm() directly.
+
+    o	anova() for multiple lm and glm objects no longer truncates the
+	formula. There is much more extensive documentation for anova()
+	methods.
+
+    o	The standard methods for add1() and drop1() now attempt to cope
+	with missing values by using a subset of the data  that is 
+	`cleaned' by na.action for the maximal model under consideration.
+
+
 
 BUG FIXES
 

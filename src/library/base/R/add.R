@@ -9,6 +9,10 @@ add1.default <- function(object, scope, scale = 0, test=c("none", "Chisq"),
 	scope <- add.scope(object, update.formula(object, scope))
     if(!length(scope))
 	stop("no terms in scope for adding to object")
+    newform <- update.formula(object,
+                              paste(". ~ . +", paste(scope, collapse="+")))
+    data <- model.frame(update(object, newform)) # remove NAs
+    object <- update(object, data = data)
     ns <- length(scope)
     ans <- matrix(nrow = ns + 1, ncol = 2)
     dimnames(ans) <- list(c("<none>", scope), c("df", "AIC"))
@@ -79,6 +83,12 @@ add1.lm <- function(object, scope, scale = 0, test=c("none", "Chisq", "F"),
 	class(fob) <- class(object)
 	m <- model.frame(fob, xlev = object$xlevels)
 	x <- model.matrix(Terms, m, contrasts = object$contrasts)
+        oldn <- length(y)
+        y <- model.response(m, "numeric")
+        newn <- length(y)
+        if(newn < oldn)
+            warning(paste("using the", newn, "/", oldn ,
+                          "rows from a combined fit"))
     }
     n <- nrow(x)
     Terms <- attr(Terms, "term.labels")
@@ -154,6 +164,7 @@ add1.glm <- function(object, scope, scale = 0, test=c("none", "Chisq", "F"),
     add.rhs <- eval(parse(text = paste("~ . +", add.rhs)))
     new.form <- update.formula(object, add.rhs)
     Terms <- terms(new.form)
+    y <- object$y
     if(is.null(x)) {
 	fc <- object$call
 	fc$formula <- Terms
@@ -161,10 +172,14 @@ add1.glm <- function(object, scope, scale = 0, test=c("none", "Chisq", "F"),
 	class(fob) <- class(object)
 	m <- model.frame(fob, xlev = object$xlevels)
 	x <- model.matrix(Terms, m, contrasts = object$contrasts)
+        oldn <- length(y)
+        y <- model.response(m, "numeric")
+        newn <- length(y)
+        if(newn < oldn)
+            warning(paste("using the", newn, "/", oldn ,
+                          "rows from a combined fit"))
     }
     n <- nrow(x)
-    y <- object$y
-    if(is.null(y)) y <- model.response(model.frame(object), "numeric")
     wt <- object$prior.weights
     if(is.null(wt)) wt <- rep(1, n)
     Terms <- attr(Terms, "term.labels")
@@ -233,6 +248,8 @@ drop1.default <- function(object, scope, scale = 0, test=c("none", "Chisq"),
 	if(!all(match(scope, tl, FALSE)))
 	    stop("scope is not a subset of term labels")
     }
+    data <- model.frame(object) # remove NAs
+    object <- update(object, data = data)
     ns <- length(scope)
     ans <- matrix(nrow = ns + 1, ncol = 2)
     dimnames(ans) <- list(c("<none>", scope), c("df", "AIC"))
@@ -627,7 +644,7 @@ step <- function(object, scope, scale = 0,
                     else rbind(aod, aodf[-1, , drop = FALSE])
 	    }
 	    attr(aod, "heading") <- NULL
-					# need to remove any terms with zero df from consideration
+	    # need to remove any terms with zero df from consideration
 	    nzdf <- if( !is.null(aod$Df) )
 		aod$Df != 0 | is.na(aod$Df)
 	    aod <- aod[nzdf, ]
@@ -641,6 +658,8 @@ step <- function(object, scope, scale = 0,
 	}
 	usingCp <- match("Cp", names(aod), 0) > 0
 	fit <- update(fit, paste("~ .", change))
+        if(length(fit$residuals) != n)
+            stop("number of rows in use has changed: remove missing values?")
 	fit$formula <- fixFormulaObject(fit)
 	Terms <- fit$formula
 	attributes(Terms) <- attributes(fit$terms)
