@@ -194,6 +194,7 @@ sub chm_functionhead
 	$retval .= "<PARAM NAME=\"Keyword\" VALUE=\"R:   $_\">\n";
     }
     $title =~ s/\"/'/go;  #'
+    $title =~ s/,//go;  # commas seem to give problems
     $retval .= "<PARAM NAME=\"Keyword\" VALUE=\" $title\">\n" .
 	"</OBJECT>\n\n";
     $retval .= html_title2($title);
