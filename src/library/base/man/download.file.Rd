@@ -18,8 +18,8 @@ download.file(url, destfile, method, quiet = FALSE, mode="w",
   \item{method}{Method to be used for downloading files.  Currently
     download methods \code{"internal"}, \code{"wget"} and \code{"lynx"}
     are available.  The default is to choose the first of these which
-    \code{"internal"}. The method can also be set through the option
-    \code{"download.file.method"}: see \code{\link{options}()}.} 
+    will be \code{"internal"}. The method can also be set through the
+    option \code{"download.file.method"}: see \code{\link{options}()}.} 
 
   \item{quiet}{If \code{TRUE}, suppress status messages (if any).}
 
@@ -60,26 +60,16 @@ download.file(url, destfile, method, quiet = FALSE, mode="w",
   width represents 100Kbytes and is doubled whenever the current width
   is exceeded.
 
-#endif
-  Proxies can be specified via environment variables.
-  Setting \code{"no_proxy"} stops any proxy being tried.
-  Otherwise the setting of \code{"http_proxy"} or \code{"ftp_proxy"}
-  (or failing that, the all upper-case version) is consulted and if
-  non-empty used as a proxy site.  For FTP transfers, the username
-  and password on the proxy can be specified by \code{"ftp_proxy_user"}
-  and \code{"ftp_proxy_password"}.
-
-  Method \code{"wget"} can be used with proxy firewalls which require
-  user/password authentication if proper values are stored in the
-  configuration file for \code{wget}.
-#ifdef windows
-
   There is an alternative method if you have Internet Explorer 4 or
   later installed.   You can use the flag \code{--internet2}, when
   the `Internet Options' of the system are used to choose proxies and so
   on; these are set in the Control Panel and are those used for Internet
   Explorer.  This version does not support \code{cacheOK = FALSE}.
+
 #endif
+  Method \code{"wget"} can be used with proxy firewalls which require
+  user/password authentication if proper values are stored in the
+  configuration file for \code{wget}.
 }
 \note{
   Methods \code{"wget"} and \code{"lynx"} are for historical
@@ -88,6 +78,24 @@ download.file(url, destfile, method, quiet = FALSE, mode="w",
   For methods \code{"wget"} and \code{"lynx"} a system call is made to
   the tool given by \code{method}, and the respective program must be
   installed on your system and be in the search path for executables.
+}
+\section{Setting Proxies}{
+  This applies to the internal code only.
+
+  Proxies can be specified via environment variables.
+  Setting \code{"no_proxy"} stops any proxy being tried.
+  Otherwise the setting of \code{"http_proxy"} or \code{"ftp_proxy"}
+  (or failing that, the all upper-case version) is consulted and if
+  non-empty used as a proxy site.  For FTP transfers, the username
+  and password on the proxy can be specified by \code{"ftp_proxy_user"}
+  and \code{"ftp_proxy_password"}.  The form of \code{"http_proxy"}
+  should be \code{"http://proxy.dom.com/"} or
+  \code{"http://proxy.dom.com:8080/"} where the port defaults to
+  \code{80} and the trailing slash may be omitted. For
+  \code{"ftp_proxy"} use the form \code{"ftp://proxy.dom.com:3128/"}
+  where the default port is \code{21}.  These environment variables
+  must be set before the download code is first used: they cannot be
+  altered later by calling \code{Sys.putenv}.  
 }
 \seealso{
   \code{\link{options}} to set the \code{timeout} and
