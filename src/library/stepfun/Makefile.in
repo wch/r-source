@@ -31,6 +31,7 @@ all: Makefile DESCRIPTION
 	    tmp="$${tmp}; `date`; $(R_OSTYPE)"; \
 	    echo "$${tmp}") \
 	    >> $(top_builddir)/library/$(pkg)/DESCRIPTION; \
+	fi
 
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
