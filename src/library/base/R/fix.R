@@ -8,8 +8,10 @@
         stop("fix requires a name")
     if (exists(subx, inherits = TRUE))
         x <- edit(get(subx), ...)
-    else
+    else {
         x <- edit(function(){},...)
+        environment(x) <- .GlobalEnv
+    }
     assign(subx, x, env = .GlobalEnv)
 }
 

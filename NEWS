@@ -63,6 +63,9 @@ BUG FIXES
     o	anova.glmlist works correctly with decreasing models and
 	test="F" now gets the correct residual df.
 
+    o	functions created (not just edited) with fix() now get 
+	environment .GlobalEnv not the body of fix.
+
 
 
 		CHANGES IN R VERSION 1.1.0
