@@ -60,5 +60,4 @@ diff(x, differences = 2)
 
 diff(.leap.seconds)
 }
-\keyword{ts}
 \keyword{arith}

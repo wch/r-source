@@ -46,4 +46,4 @@ hpts <- chull(X)
 hpts <- c(hpts, hpts[1])
 lines(X[hpts, ])
 }
-\keyword{hplot}
+\keyword{graphs}
