@@ -64,7 +64,7 @@ writeChar(object, con, nchars = nchar(object), eos = "")
   flexibility, and can also be used on text-mode connections.
 
   Handling \R's missing and special (\code{Inf}, \code{-Inf} and
-  \code{NaN} values is discussed in the \emph{R Data Import/Export} manual.
+  \code{NaN}) values is discussed in the \emph{R Data Import/Export} manual.
 }
 
 \note{
@@ -78,7 +78,7 @@ writeChar(object, con, nchars = nchar(object), eos = "")
 
   Note that as \R character strings cannot contain ASCII \code{nul},
   strings read by \code{readChar} which contain such characters will
-  appear to be shorted than requested, but the additional bytes are read
+  appear to be shorter than requested, but the additional bytes are read
   from the file.
 
   If the character length requested for \code{readChar} is longer than
