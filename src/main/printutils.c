@@ -405,6 +405,11 @@ void Rcons_vprintf(const char *format, va_list arg)
 void Rvprintf(const char *format, va_list arg)
 {
     Rconnection con = getConnection(R_OutputCon);
+    static int printcount = 0;
+    if (++printcount > 100) {
+	R_CheckUserInterrupt();
+	printcount = 0 ;
+    }
 
     con->vfprintf(con, format, arg);
     con->fflush(con);
