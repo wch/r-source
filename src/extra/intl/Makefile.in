@@ -1,26 +1,32 @@
 #
-# ${R_HOME}/src/extra/Makefile
+# ${R_HOME}/src/extra/intl/Makefile
 
 VPATH = @srcdir@
 srcdir = @srcdir@
 top_srcdir = @top_srcdir@
 
-top_builddir = ../..
-subdir = src/extra
+top_builddir = ../../..
+subdir = src/extra/intl
 
 include $(top_builddir)/Makeconf
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
-DISTFILES = Makefile.in
+DISTFILES = ChangeLog Makefile.in Makefile.win VERSION \
+  plural.y $(SOURCES) $(HEADERS) \
+  config.charset locale.alias ref-add.sin ref-del.sin
 
-SUBDIRS = bzip2 pcre xdr zlib
-SUBDIRS_WITH_NO_BUILD =
+HEADERS = \
+  gmo.h gettextP.h hash-string.h loadinfo.h plural-exp.h eval-plural.h \
+  localcharset.h xsize.h printf-args.h printf-args.c printf-parse.h \
+  wprintf-parse.h printf-parse.c vasnprintf.h vasnwprintf.h vasnprintf.c \
+  libgnuintl.h.in 
 
-LIBBZ2 = @BUILD_BZLIB_TRUE@ bzip2
-LIBPCRE = @BUILD_PCRE_TRUE@ pcre
-LIBZ = @BUILD_ZLIB_TRUE@ zlib
-LIBXDR = @BUILD_XDR_TRUE@ xdr
-EXTRA_LIBS = $(LIBBZ2) $(LIBPCRE) $(LIBZ) $(LIBXDR)
+SOURCES = \
+ bindtextdom.c dcgettext.c dgettext.c gettext.c finddomain.c loadmsgcat.c \
+ localealias.c textdomain.c l10nflist.c explodename.c dcigettext.c \
+ dcngettext.c dngettext.c ngettext.c plural.c plural-exp.c localcharset.c \
+ localename.c log.c printf.c osdep.c intl-compat.c
+
 
 all: Makefile R
 
@@ -28,40 +34,10 @@ Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
 
 R: Makefile
-	@list='$(EXTRA_LIBS)'; for d in $${list}; do \
-	  (cd $${d} && $(MAKE) $@) || exit 1; \
-	done
-
-mostlyclean: clean
-clean:
-	@for d in $(SUBDIRS); do \
-	  (cd $${d} && $(MAKE) $@) || exit 1; \
-	done
-distclean: clean
-	@for d in $(SUBDIRS); do \
-	  (cd $${d} && $(MAKE) $@) || exit 1; \
-	done
-	-@rm -f Makefile
-maintainer-clean: distclean
-
-install install-strip uninstall TAGS info dvi check:
 
 distdir: $(DISTFILES)
 	@for f in $(DISTFILES); do \
 	  test -f $(distdir)/$${f} \
 	    || ln $(srcdir)/$${f} $(distdir)/$${f} 2>/dev/null \
 	    || cp -p $(srcdir)/$${f} $(distdir)/$${f}; \
-	done
-	@for d in $(SUBDIRS); do \
-	  test -d $(distdir)/$${d} \
-	    || mkdir $(distdir)/$${d} \
-	    || exit 1; \
-	  chmod 755 $(distdir)/$${d}; \
-	  (cd $${d} && $(MAKE) distdir) \
-	    || exit 1; \
-	done
-	@for d in $(SUBDIRS_WITH_NO_BUILD); do \
-	  ((cd $(srcdir); $(TAR) -c -f - $(DISTDIR_TAR_EXCLUDE) $${d}) \
-	      | (cd $(distdir); $(TAR) -x -f -)) \
-	    || exit 1; \
 	done
