@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.5-0, 2002-04-28
+Version 1.5-1, 2002-04-30
 ISBN 3-901167-51-X
 Kurt Hornik
 
@@ -1730,6 +1730,9 @@ works, was published in the Journal of Statistical Software
 *tensor*
      Tensor product of arrays.
 
+*tkrplot*
+     Simple mechanism for placing R graphics in a Tk widget.
+
 *tree*
      Classification and regression trees.
 
@@ -1918,10 +1921,9 @@ has also started *dna*, a package with procedures for the analysis of DNA
 sequences.  Jim's packages can be obtained from
 `http://www.luc.ac.be/~jlindsey/rcode.html'.
 
-   Frank Harrell <fharrell@virginia.edu> has recently made an R port of his
-*Hmisc* package available via
-`http://hesweb1.med.virginia.edu/biostat/s/Hmisc.html'; a port of his
-*Design* package is currently under way.
+   Frank Harrell <fharrell@virginia.edu> has made R ports of his *Design*
+and *Hmisc* packages available via
+`http://hesweb1.med.virginia.edu/biostat/s/library/r/'.
 
    More code has been posted to the r-help mailing list, and can be
 obtained from the mailing list archive.

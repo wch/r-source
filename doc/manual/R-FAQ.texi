@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2002
-@set FAQ-VERSION 1.5-0, 2002-04-28
+@set FAQ-VERSION 1.5-1, 2002-04-30
 @set REL-VERSION 1.5.0
 @set FAQ-ISBN 3-901167-51-X
 @c %**end of header
@@ -1929,6 +1929,8 @@ optimal under various criteria.
 Functions for survival analysis, including penalised likelihood.
 @item tensor
 Tensor product of arrays.
+@item tkrplot
+Simple mechanism for placing R graphics in a Tk widget.
 @item tree
 Classification and regression trees.
 @item tripack
@@ -2111,10 +2113,9 @@ analysis of DNA sequences.  Jim's packages can be obtained from
 @c package for additive hazards regression, which can be obtained from
 @c @uref{http://www.med.uio.no/imb/stat/addreg/}.
 
-@email{fharrell@@virginia.edu, Frank Harrell} has recently made an R
-port of his @strong{Hmisc} package available via
-@uref{http://hesweb1.med.virginia.edu/biostat/s/Hmisc.html}; a port of
-his @strong{Design} package is currently under way.
+@email{fharrell@@virginia.edu, Frank Harrell} has made R ports of his
+@strong{Design} and @strong{Hmisc} packages available via
+@uref{http://hesweb1.med.virginia.edu/biostat/s/library/r/}.
 
 More code has been posted to the r-help mailing list, and can be
 obtained from the mailing list archive.
