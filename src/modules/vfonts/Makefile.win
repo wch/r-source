@@ -18,6 +18,8 @@ OBJS=$(CSOURCES:.c=.o) $(FSOURCES:.f=.o) dllversion.o
 DLLLIBS=-L../../gnuwin32 -lRm
 $(MODULE).dll: $(OBJS)
 
+dllversion.o: ../../include/Rversion.h
+
 clean:
 	@$(RM) Makedeps *.d *.o $(MODULE).def $(MODULE).dll
 

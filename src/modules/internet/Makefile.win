@@ -27,6 +27,8 @@ internet2.dll: internet2.o sockconn.o Rsock.o sock.o dllversion.o
 internet2.o: internet.c
 	$(CC)  $(CFLAGS) -DUSE_WININET -c $< -o $@
 
+dllversion.o: ../../include/Rversion.h
+
 clean:
 	@$(RM) Makedeps *.d *.o *.def *.dll
 
