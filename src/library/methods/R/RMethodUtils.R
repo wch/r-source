@@ -177,6 +177,7 @@ setAllMethodsSlot <- function(mlist) {
   ## The current contents of the allMethods slot are ignored, so calling
   ## setAllMethodsSlot either initializes or re-intializes the object, removing
   ## any inherited methods stored in allMethods.
+  if(is.null(mlist)) return(mlist)
   methods <- mlist@methods
   mnames <- names(methods)
   modified <- FALSE
