@@ -38,7 +38,7 @@ var.test(x, y, ratio = 1, alternative = c("two.sided", "less", "greater"),
   \item{null.value}{the ratio of population variances under the null.}
   \item{alternative}{a character string describing the alternative
     hypothesis.}
-  \item{method}{the string \code{"F test to compare two variances"}.}
+  \item{method}{the character string \code{"F test to compare two variances"}.}
   \item{data.name}{a character string giving the names of the data.}
 }
 \seealso{

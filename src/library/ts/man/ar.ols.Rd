@@ -79,7 +79,7 @@ ar.ols(x, aic = TRUE, order.max = NULL, na.action, demean = TRUE,
     first \code{order} observations.  The first \code{order} residuals
     are set to \code{NA}. If \code{x} is a time series, so is
     \code{resid}.}
-  \item{method}{The string \code{"Unconstrained LS"}.}
+  \item{method}{The character string \code{"Unconstrained LS"}.}
   \item{series}{The name(s) of the time series.}
   \item{asy.se.coef}{The asymptotic-theory standard errors of the
     coefficient estimates.}

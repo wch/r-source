@@ -1,4 +1,4 @@
-% $Id: asOneSidedFormula.Rd,v 1.1 1999/11/12 13:34:35 bates Exp $
+% $Id: asOneSidedFormula.Rd,v 1.1.24.1 2001/01/24 10:08:09 ripley Exp $
 \name{asOneSidedFormula}
 \title{Convert to One-Sided Formula}
 \usage{
@@ -10,7 +10,7 @@ asOneSidedFormula(object)
    character string.}
 }
 \description{
-  Names, expressions, numeric values, and strings are converted to
+  Names, expressions, numeric values, and character strings are converted to
   one-sided formulas. If \code{object} is a formula, it must be
   one-sided, in which case it is returned unaltered.
 }
