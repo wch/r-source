@@ -626,7 +626,7 @@ residuals.glm <-
     wts <- .Alias(object$prior.weights)
     switch(type,
 	   deviance = if(object$df.res > 0) {
-	       d.res <- sqrt((object$family$dev.resids)(y, mu, wts))
+	       d.res <- sqrt(pmax((object$family$dev.resids)(y, mu, wts), 0))
 	       ifelse(y > mu, d.res, -d.res)
 	   } else rep(0, length(mu)),
 	   pearson = object$residuals * sqrt(object$weights),

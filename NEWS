@@ -110,6 +110,8 @@ BUG FIXES
     o	glm no longer fails with names<- errors in cases where
         observations with fits on the mu.eta boundary have been dropped.
 
+    o	deviance residuals could be NaN instead of 0 by rounding error.
+
 
 		CHANGES IN R VERSION 0.90.1
 
