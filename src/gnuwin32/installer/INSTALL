@@ -14,4 +14,4 @@ make clean
 You will have rw1???.exe and a set of files miniR* for the floppy-sized
 distribution, both in the ../cran directory.
 
-
+Note that building the installer need ca 85Mb of free memory.
