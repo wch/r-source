@@ -188,18 +188,17 @@ void FindCorners(double width, double height, SEXP label,
 static
 int TestLabelIntersection(SEXP label1, SEXP label2) {
 
-    int i,j;
+    int i, j, l1, l2;
     double Ax, Bx, Ay, By, ax, ay, bx, by, q1, q2;
     double dom;
     double result1, result2;
-    i = 0;
-    while (i < 4) {
+    
+    for (i = 0; i < 4; i++) {
 	Ax = REAL(label1)[i];
 	Ay = REAL(label1)[i+4];
 	Bx = REAL(label1)[(i+1)%4];
 	By = REAL(label1)[(i+1)%4+4];
-	j = 0;
-	while (j < 4) {
+	for (j = 0; j < 4; j++) {
 	    ax = REAL(label2)[j];
 	    ay = REAL(label2)[j+4];
 	    bx = REAL(label2)[(j+1)%4];
@@ -226,12 +225,10 @@ int TestLabelIntersection(SEXP label1, SEXP label2) {
 		    result2 = (Ax + (Bx - Ax) * result1 - ax) / (bx - ax);
 
 	    }
-	    if ((result1 >= 0.0) && (result1 <= 1.0) && (result2 >= 0.0) && (result2 <= 1.0)) {
-		return 1;
-	    }
-	    j += 1;
+	    l1 = (result1 >= 0.0) && (result1 <= 1.0);
+	    l2 = (result2 >= 0.0) && (result2 <= 1.0);
+	    if (l1 && l2) return 1;
 	}
-	i += 1;
     }
 
     return 0;
