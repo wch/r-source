@@ -302,11 +302,10 @@ update.lm <- function(lm.obj, formula, data, weights, subset, na.action)
 	call <- lm.obj$call
 	if(!missing(formula))
 		call$formula <- update.formula(call$formula, formula)
-	if(!missing(data)) call$data <- substitute(data)
-	if(!missing(subset)) call$subset <- substitute(subset)
+	if(!missing(data))	call$data <- substitute(data)
+	if(!missing(subset))	call$subset <- substitute(subset)
 	if(!missing(na.action)) call$na.action <- substitute(na.action)
-	if (!missing(weights))
-		call$weights<-substitute(weights)
+	if (!missing(weights))	call$weights<-substitute(weights)
 	eval(call, sys.frame(sys.parent()))
 }
 
@@ -425,14 +424,14 @@ anovalist.lm <- function (object, ..., test = NULL)
 
 print.anova.lm <- function(x, digits = max(3, .Options$digits - 3), ...)
 {
-	class(x) <- NULL
 	cat("\nAnalysis of Variance:\n\n")
-	print.default(round(x, digits), na="", print.gap=2)
+	print.default(round(unclass(x), digits), na="", print.gap=2)
 	cat("\n")
+        invisible(x)
 }
 
-"predict.lm" <-
-function (object, newdata = model.frame(object), conf.level=0.95, tol.level=conf.level)
+predict.lm <- function (object, newdata = model.frame(object),
+			conf.level=0.95, tol.level=conf.level)
 {
 	form <- delete.response(terms(object))
 	X <- model.matrix(form,newdata)
