@@ -434,10 +434,15 @@ static int Wpipe_ungetc(int c, Rconnection con)
     return c;
 }
 
-static long null_seek(Rconnection con, int where)
+static long null_seek(Rconnection con, int where, int origin)
 {
     error("seek not enabled for this connection");
     return 0; /* -Wall */
+}
+
+static void null_truncate(Rconnection con)
+{
+    error("truncate not enabled for this connection");
 }
 
 static int Wpipe_fflush(Rconnection con)
@@ -539,6 +544,7 @@ Rconnection newWpipe(char *description, char *mode)
     new->fgetc = &Wpipe_fgetc;
     new->ungetc = &Wpipe_ungetc;
     new->seek = &null_seek;
+    new->truncate = &null_truncate;
     new->fflush = &Wpipe_fflush;
     new->read = &Wpipe_read;
     new->write = &Wpipe_write;
