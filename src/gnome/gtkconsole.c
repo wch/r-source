@@ -307,9 +307,7 @@ void gtk_console_write(GtkConsole *object, gchar *buf, guint buf_len)
     object->out_buf[object->buffer_index] = '\0';
 
     /* check for newline */
-    /* FIXME: this just checks the end of the buffer.  Maybe we should */
-    /* scan the entire buffer? */
-    if(object->out_buf[object->buffer_index] == '\n') {
+    if(strchr(object->out_buf, '\n') != NULL) {
       gtk_console_flush(object);
     }
     break;
