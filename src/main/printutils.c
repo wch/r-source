@@ -132,7 +132,7 @@ char *EncodeComplex(complex x, int wr, int dr, int er, int wi, int di, int ei)
 	/* Latin1 types are (rightfully) upset */
 	/* WHAT NEEDS TO CHANGE */
 
-#ifdef not_used
+#ifdef OLD
 static int hexdigit(unsigned int x)
 {
 	return ((x <= 9)? '0' :	 'A'-10) + x;
