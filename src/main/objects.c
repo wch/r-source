@@ -175,7 +175,7 @@ SEXP R_LookupMethod(SEXP method, SEXP rho, SEXP callrho, SEXP defrho)
 	if (TYPEOF(defrho) != ENVSXP && defrho != R_NilValue)
 	    error("bad generic definition environment");
 	if (defrho == R_NilValue)
-	    defrho = R_GlobalEnv;
+	    defrho = R_BaseNamespace;
 
 	val = findVar(method, callrho);
 	if (TYPEOF(val)==PROMSXP)
