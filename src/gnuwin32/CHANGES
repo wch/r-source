@@ -21,6 +21,9 @@ Cross-building automatically uses STAMP=NO for packages.
 R can now be built in a directory whose path contains spaces (although
 we still don't recommend it).
 
+Rcmd INSTALL and make pkg-foo test for attempted installation into the
+source directory.
+
 
 
 rw1041

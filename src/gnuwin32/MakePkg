@@ -4,6 +4,15 @@ DPKG=$(RLIB)/$(PKG)
 SPKG=.
 SAVE=CHECK
 
+ifneq ($(strip $(BUILD)),CROSS)
+SPKG0 = $(shell ../Rpwd.exe $(SPKG))
+DPKG0 = $(shell ../Rpwd.exe $(DPKG))
+else
+SPKG0 = $(shell perl ../pwd.pl $(SPKG))
+DPKG0 = $(shell perl ../pwd.pl $(DPKG))
+endif
+
+
 ifeq ($(strip $(DLLNM)),)
   DLLNAME=$(PKG)
 else
@@ -104,6 +113,12 @@ $(SPKG)/TITLE:
 # $(DPKG)/zzzz: $(OFILES3) $(OFILES)
 # On the other hand, ...zzzz is never created so
 $(DPKG)/zzzz: $(SPKG)/TITLE
+ifeq ($(SPKG0),$(DPKG0))
+	@echo
+	@echo "  *** cannot install a package into its source directory ***"
+	@echo
+	@exit 111
+endif
 	@$(ECHO) "---------- Making package $(PKG) ------------"
 	@if test -f ${SPKG}/configure; then \
 	  echo ; \
