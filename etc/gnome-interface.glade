@@ -292,11 +292,12 @@
 
 	    <widget>
 	      <class>GtkRadioButton</class>
-	      <name>radiobutton4</name>
+	      <name>prefs_always_restore_ws_radio</name>
 	      <can_focus>True</can_focus>
 	      <label>Always restore</label>
 	      <active>False</active>
 	      <draw_indicator>True</draw_indicator>
+	      <group>prefs_restore_ws_group</group>
 	      <child>
 		<padding>0</padding>
 		<expand>False</expand>
@@ -306,11 +307,12 @@
 
 	    <widget>
 	      <class>GtkRadioButton</class>
-	      <name>radiobutton5</name>
+	      <name>prefs_never_restore_ws_radio</name>
 	      <can_focus>True</can_focus>
 	      <label>Never restore</label>
 	      <active>False</active>
 	      <draw_indicator>True</draw_indicator>
+	      <group>prefs_restore_ws_group</group>
 	      <child>
 		<padding>0</padding>
 		<expand>False</expand>
@@ -517,11 +519,12 @@
 
 	    <widget>
 	      <class>GtkRadioButton</class>
-	      <name>radiobutton1</name>
+	      <name>prefs_prompt_save_ws_radio</name>
 	      <can_focus>True</can_focus>
 	      <label>Prompt</label>
 	      <active>False</active>
 	      <draw_indicator>True</draw_indicator>
+	      <group>prefs_save_ws_group</group>
 	      <child>
 		<padding>0</padding>
 		<expand>False</expand>
@@ -531,11 +534,12 @@
 
 	    <widget>
 	      <class>GtkRadioButton</class>
-	      <name>radiobutton2</name>
+	      <name>prefs_always_save_ws_radio</name>
 	      <can_focus>True</can_focus>
 	      <label>Always save</label>
 	      <active>False</active>
 	      <draw_indicator>True</draw_indicator>
+	      <group>prefs_save_ws_group</group>
 	      <child>
 		<padding>0</padding>
 		<expand>False</expand>
@@ -545,11 +549,12 @@
 
 	    <widget>
 	      <class>GtkRadioButton</class>
-	      <name>radiobutton3</name>
+	      <name>prefs_never_save_ws_radio</name>
 	      <can_focus>True</can_focus>
 	      <label>Never save</label>
 	      <active>False</active>
 	      <draw_indicator>True</draw_indicator>
+	      <group>prefs_save_ws_group</group>
 	      <child>
 		<padding>0</padding>
 		<expand>False</expand>
