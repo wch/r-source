@@ -44,7 +44,7 @@ strReverse <- function(x)
 strReverse(c("abc", "Statistics"))
 
 a <- readLines(file.path(R.home(),"AUTHORS"))[-(1:8)]
-a <- a[0:1-length(a)]
+a <- a[(0:2)-length(a)]
 sub("\t.*","", a)
 strReverse(sub(" .*","", a))
 }
