@@ -244,7 +244,8 @@ par(\dots, no.readonly = FALSE)
       \code{"m"} generates the maximal plotting region.}
     \item{\code{smo}}{(\emph{Unimplemented}) a value which indicates how
       smooth circles and circular arcs should be.}
-    \item{\code{srt}}{The string rotation in degrees.
+    \item{\code{srt}}{The string rotation in degrees.  See the comment
+      about \code{crt}.
       %% NOT true for R (but for S): Causes \code{srt} to be set to the
       %% same value.
     }
