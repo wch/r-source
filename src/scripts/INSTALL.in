@@ -138,6 +138,7 @@ for pkg in ${PKGS}; do
     mkdir -p ${lib}/${pkg}/R
     cat `ls ${dir}/*.[RSqrs]` > ${lib}/${pkg}/R/${pkg}
   fi
+  dir=
 
   if test -d data; then
     echo " data"
