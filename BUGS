@@ -263,10 +263,10 @@ none
 
 Directory:  incoming
 
-* PR# 724 *
-Subject: t.test and n = 2
-From: charlie@stat.umn.edu
-Date: Thu, 2 Nov 2000 14:53:26 +0100 (MET)
+* PR# 725 *
+Subject: nls() function is not found
+From: montero@kingkong.me.berkeley.edu
+Date: Fri, 3 Nov 2000 21:48:05 +0100 (MET)
 * PR# 713 *
 Subject: median(c(NA,NA),na.rm=T) fails
 From: gnw3@acm.org
@@ -303,6 +303,10 @@ Date:  1 Nov 00 22:41:26 MST
 Subject: Pl. provide and Input for var.test
 From: Shalabh Gandhi <shalabhgandhi@usa.net>
 Date:  1 Nov 00 22:41:27 MST
+* PR# 724 *
+Subject: t.test and n = 2
+From: charlie@stat.umn.edu
+Date: Thu, 2 Nov 2000 14:53:26 +0100 (MET)
 * PR# 723 *
 Subject: Pl. provide and Input for var.test
 From: Shalabh Gandhi <shalabhgandhi@usa.net>
