@@ -1653,6 +1653,8 @@ SEXP do_open(SEXP call, SEXP op, SEXP args, SEXP env)
     Rboolean success;
 
     checkArity(op, args);
+    if(!inherits(CAR(args), "connection"))
+	errorcall(call, "`con' is not a connection");
     i = asInteger(CAR(args));
     con = getConnection(i);
     if(i < 3) error("cannot open standard connections");
@@ -1700,6 +1702,8 @@ SEXP do_isincomplete(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP ans;
 
     checkArity(op, args);
+    if(!inherits(CAR(args), "connection"))
+	errorcall(call, "`con' is not a connection");
     con = getConnection(asInteger(CAR(args)));
     PROTECT(ans = allocVector(LGLSXP, 1));
     LOGICAL(ans)[0] = con->incomplete != FALSE;
@@ -1713,6 +1717,8 @@ SEXP do_isseekable(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP ans;
 
     checkArity(op, args);
+    if(!inherits(CAR(args), "connection"))
+	errorcall(call, "`con' is not a connection");
     con = getConnection(asInteger(CAR(args)));
     PROTECT(ans = allocVector(LGLSXP, 1));
     LOGICAL(ans)[0] = con->canseek != FALSE;
@@ -1746,6 +1752,8 @@ SEXP do_close(SEXP call, SEXP op, SEXP args, SEXP env)
     int i, j;
 
     checkArity(op, args);
+    if(!inherits(CAR(args), "connection"))
+	errorcall(call, "`con' is not a connection");
     i = asInteger(CAR(args));
     if(i < 3) error("cannot close standard connections");
     for(j = 0; j < R_SinkNumber; j++)
@@ -1765,6 +1773,8 @@ SEXP do_seek(SEXP call, SEXP op, SEXP args, SEXP env)
     Rconnection con = NULL;
 
     checkArity(op, args);
+    if(!inherits(CAR(args), "connection"))
+	errorcall(call, "`con' is not a connection");
     con = getConnection(asInteger(CAR(args)));
     if(!con->isopen) error("connection is not open");
     where = asInteger(CADR(args));
@@ -1782,6 +1792,8 @@ SEXP do_truncate(SEXP call, SEXP op, SEXP args, SEXP env)
     Rconnection con = NULL;
 
     checkArity(op, args);
+    if(!inherits(CAR(args), "connection"))
+	errorcall(call, "`con' is not a connection");
     con = getConnection(asInteger(CAR(args)));
     con->truncate(con);
     return R_NilValue;
@@ -1792,6 +1804,8 @@ SEXP do_flush(SEXP call, SEXP op, SEXP args, SEXP env)
     Rconnection con = NULL;
 
     checkArity(op, args);
+    if(!inherits(CAR(args), "connection"))
+	errorcall(call, "`con' is not a connection");
     con = getConnection(asInteger(CAR(args)));
     if(con->canwrite) con->fflush(con);
     return R_NilValue;
@@ -1887,6 +1901,8 @@ SEXP do_readLines(SEXP call, SEXP op, SEXP args, SEXP env)
     char *buf;
 
     checkArity(op, args);
+    if(!inherits(CAR(args), "connection"))
+	errorcall(call, "`con' is not a connection");
     con = getConnection(asInteger(CAR(args)));
     n = asInteger(CADR(args));
     if(n == NA_INTEGER)
@@ -1981,6 +1997,8 @@ SEXP do_writelines(SEXP call, SEXP op, SEXP args, SEXP env)
     checkArity(op, args);
     text = CAR(args);
     if(!isString(text)) error("invalid `text' argument");
+    if(!inherits(CADR(args), "connection"))
+	errorcall(call, "`con' is not a connection");
     con = getConnection(asInteger(CADR(args)));
     sep = CADDR(args);
     if(!isString(sep)) error("invalid `sep' argument");
