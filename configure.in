@@ -434,8 +434,9 @@ AC_CHECK_FUNCS(access acosh asinh atanh bcopy finite ftruncate getcwd \
   popen putenv rint setenv snprintf strcoll stat strptime system times \
   unsetenv vsnprintf)
 AC_REPLACE_FUNCS(strdup)
-R_FUNC_GETHOSTBYNAME
-R_FUNC_CONNECT
+AC_SEARCH_LIBS(connect, [socket])
+AC_SEARCH_LIBS(gethostbyname, [nsl socket])
+AC_SEARCH_LIBS(xdr_string, [nsl])
 R_FUNC___SETFPUCW
 R_FUNC_CALLOC
 R_FUNC_FINITE
@@ -887,6 +888,9 @@ R_BSD_NETWORKING
 
 ## Bitmap headers and libraries.
 R_BITMAPS
+
+## XDR headers and library routines.
+R_XDR
 
 ## zlib headers and libraries.
 R_ZLIB
