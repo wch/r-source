@@ -15,6 +15,25 @@ sQuote <- function(s) paste("'", s, "'", sep = "")
     file.path(getwd(), basename(epath))
 }
 
+.isS3Generic <- function(fname, envir = NULL) {
+    ## Determine whether object named 'fname' in environment 'envir' is
+    ## (to be considered) an S3 generic function.  In most cases, these
+    ## just call UseMethod() in their body, so we test for this after
+    ## possibly stripping braces.  This fails when e.g. it is attempted
+    ## to dispatch on data.class, hence we need to hard-code a few known
+    ## exceptions.
+    ## <FIXME>
+    ## This is not good enough for generics which dispatch in C code
+    ## (base only?).
+    ## We should also add group methods.
+    ## </FIXME>
+    f <- get(fname, envir = envir)
+    if(!is.function(f) || length(e <- body(f)) == 0) return(FALSE)
+    if(fname %in% c("as.data.frame", "plot")) return(TRUE)
+    while((e[[1]] == as.name("{")) && (length(e) > 1)) e <- e[[2]]
+    e[[1]] == as.name("UseMethod")
+}
+
 .listFilesWithExts <- function(dir, exts, path = TRUE) {
     ## Return the paths or names of the files in @code{dir} with
     ## extension in @code{exts}.
@@ -91,7 +110,9 @@ function(package, dir, lib.loc = NULL)
 {
     if(!missing(package)) {
         if(length(package) != 1)
-            stop("argument 'package' must be of length 1")
+            stop(paste("argument", sQuote("package"),
+                       "must be of length 1"))
+        
         dir <- .find.package(package, lib.loc)
         ## Using package installed in @code{dir} ...
         if(!file.exists(helpIndex <- file.path(dir, "help", "AnIndex")))
@@ -113,7 +134,8 @@ function(package, dir, lib.loc = NULL)
     }
     else {
         if(missing(dir))
-            stop("you must specify 'package' or 'dir'")
+            stop(paste("you must specify", sQuote("package"),
+                       "or", sQuote("dir")))
         if(!file.exists(dir))
             stop(paste("directory", sQuote(dir), "does not exist"))
         else
@@ -276,7 +298,8 @@ function(package, dir, lib.loc = NULL,
     ## Argument handling.    
     if(!missing(package)) {
         if(length(package) != 1)
-            stop("argument 'package' must be of length 1")
+            stop(paste("argument", sQuote("package"),
+                       "must be of length 1"))
         dir <- .find.package(package, lib.loc)
         ## Using package installed in @code{dir} ...
         if(!file.exists(codeDir <- file.path(dir, "R")))
@@ -296,7 +319,8 @@ function(package, dir, lib.loc = NULL,
     }
     else {
         if(missing(dir))
-            stop("you must specify 'package' or 'dir'")
+            stop(paste("you must specify", sQuote("package"),
+                       "or", sQuote("dir")))
         ## Using sources from directory @code{dir} ...
         if(!file.exists(dir))
             stop(paste("directory", sQuote(dir), "does not exist"))
@@ -339,11 +363,7 @@ function(package, dir, lib.loc = NULL,
         is.function(f) && (length(formals(f)) > 0)
     }) == TRUE]
     if(ignore.generic.functions) {
-        isS3Generic <- function(f) {
-            any(grep("^UseMethod",
-                     deparse(body(get(f, envir = codeEnv)))[1]))
-        }
-        funs <- funs[sapply(funs, isS3Generic) == FALSE]
+        funs <- funs[sapply(funs, .isS3Generic, codeEnv) == FALSE]
     }
     ## <FIXME>
     ## Sourcing all R code files in the package is a problem for base,
@@ -496,7 +516,8 @@ function(package, dir, lib.loc = NULL)
     ## Argument handling.
     if(!missing(package)) {
         if(length(package) != 1)
-            stop("argument 'package' must be of length 1")
+            stop(paste("argument", sQuote("package"),
+                       "must be of length 1"))
         dir <- .find.package(package, lib.loc)
         ## Using package installed in @code{dir} ...
         if(!file.exists(codeDir <- file.path(dir, "R")))
@@ -513,7 +534,8 @@ function(package, dir, lib.loc = NULL)
     }
     else {
         if(missing(dir))
-            stop("you must specify 'package' or 'dir'")
+            stop(paste("you must specify", sQuote("package"),
+                       "or", sQuote("dir")))
         ## Using sources from directory @code{dir} ...
         if(!file.exists(dir))
             stop(paste("directory", sQuote(dir), "does not exist"))
@@ -570,13 +592,15 @@ function(package, dir, lib.loc = NULL)
     ## Argument handling.
     if(!missing(package)) {
         if(length(package) != 1)
-            stop("argument 'package' must be of length 1")
+            stop(paste("argument", sQuote("package"),
+                       "must be of length 1"))
         dir <- .find.package(package, lib.loc)
         ## Using package installed in @code{dir} ...
     }
     else {
         if(missing(dir))
-            stop("you must specify 'package' or 'dir'")
+            stop(paste("you must specify", sQuote("package"),
+                       "or", sQuote("dir")))
         ## Using sources from directory @code{dir} ...
         if(!file.exists(dir))
             stop(paste("directory", sQuote(dir), "does not exist"))
@@ -690,7 +714,8 @@ function(package, dir, lib.loc = NULL)
     ## Argument handling.
     if(!missing(package)) {
         if(length(package) != 1)
-            stop("argument 'package' must be of length 1")
+            stop(paste("argument", sQuote("package"),
+                       "must be of length 1"))
         dir <- .find.package(package, lib.loc)
         ## Using package installed in 'dir' ...
         if(!file.exists(codeDir <- file.path(dir, "R")))
@@ -710,7 +735,8 @@ function(package, dir, lib.loc = NULL)
     }
     else {
         if(missing(dir))
-            stop("you must specify 'package' or 'dir'")
+            stop(paste("you must specify", sQuote("package"),
+                       "or", sQuote("dir")))
         ## Using sources from directory @code{dir} ...
         if(!file.exists(dir))
             stop(paste("directory", sQuote(dir), "does not exist"))
@@ -751,12 +777,6 @@ function(package, dir, lib.loc = NULL)
 
     ## Find all generic functions in the given package and (the current)
     ## base package.
-    isS3Generic <- function(fname, envir) {
-        f <- get(fname, envir = envir)
-        ((is.function(f)
-          && any(grep("^UseMethod", deparse(body(f))[1])))
-         || (fname %in% c("as.data.frame", "plot")))
-    }
     allGenerics <- character()
     envList <- list(codeEnv)
     if(!isBase) envList <- c(envList, list(as.environment(NULL)))
@@ -764,7 +784,7 @@ function(package, dir, lib.loc = NULL)
         allObjs <- ls(envir = env, all.names = TRUE)
         allGenerics <-
             c(allGenerics,
-              allObjs[sapply(allObjs, isS3Generic, env) == TRUE])
+              allObjs[sapply(allObjs, .isS3Generic, env) == TRUE])
     }
 
     ## Find all methods in the given package for the generic functions
@@ -890,7 +910,8 @@ function(package, dir, file, lib.loc = NULL,
 
     if(!missing(package)) {
         if(length(package) != 1)
-            stop("argument 'package' must be of length 1")
+            stop(paste("argument", sQuote("package"),
+                       "must be of length 1"))
         packageDir <- .find.package(package, lib.loc)
         file <- file.path(packageDir, "R", "all.rda")
         if(file.exists(file))
@@ -917,7 +938,8 @@ function(package, dir, file, lib.loc = NULL,
         file.append(file, codeFiles)
     }
     else if(missing(file)) {
-        stop("you must specify 'package', 'dir' or 'file'")
+        stop(paste("you must specify ", sQuote("package"), ", ",
+                   sQuote("dir"), " or ", sQuote("file"), sep = ""))
     }
     
     if(!file.exists(file))
@@ -980,7 +1002,8 @@ print.checkFF <-
 function(x, ...)
 {
     if(length(x) > 0) {
-        writeLines("Foreign function calls without 'PACKAGE' argument:")
+        writeLines(paste("Foreign function calls without",
+                         sQuote("PACKAGE"), "argument:"))
         for(i in seq(along = x)) {
             writeLines(paste(deparse(x[[i]][[1]]),
                              "(",
@@ -998,7 +1021,8 @@ function(package, dir, lib.loc = NULL)
     ## Argument handling.
     if(!missing(package)) {
         if(length(package) != 1)
-            stop("argument 'package' must be of length 1")
+            stop(paste("argument", sQuote("package"),
+                       "must be of length 1"))
         dir <- .find.package(package, lib.loc)
         ## Using package installed in @code{dir} ...
         if(!file.exists(codeDir <- file.path(dir, "R")))
@@ -1015,7 +1039,8 @@ function(package, dir, lib.loc = NULL)
     }
     else {
         if(missing(dir))
-            stop("you must specify 'package' or 'dir'")
+            stop(paste("you must specify", sQuote("package"),
+                       "or", sQuote("dir")))
         ## Using sources from directory @code{dir} ...
         if(!file.exists(dir))
             stop(paste("directory", sQuote(dir), "does not exist"))
@@ -1050,13 +1075,6 @@ function(package, dir, lib.loc = NULL)
     funs <-
         lsCode[sapply(lsCode, function(f)
                       is.function(get(f, envir = codeEnv))) == TRUE]
-
-    isS3Generic <- function(fname, envir) {
-        f <- get(fname, envir = envir)
-        ((is.function(f)
-          && any(grep("^UseMethod", deparse(body(f))[1])))
-         || (fname %in% c("as.data.frame", "plot")))
-    }
 
     methodsStopList <- .makeS3MethodsStopList(basename(dir))
 
@@ -1102,11 +1120,7 @@ function(package, dir, lib.loc = NULL)
     if(!isBase) envList <- c(envList, list(as.environment(NULL)))
     for(env in envList) {
         allObjs <- ls(envir = env, all.names = TRUE)
-        ## <FIXME>
-        ## This is not good enough for base where we also have generics
-        ## which dispatch in C code.  We should also add group methods.
-        genFuns <- allObjs[sapply(allObjs, isS3Generic, env) == TRUE]        
-        ## </FIXME>
+        genFuns <- allObjs[sapply(allObjs, .isS3Generic, env) == TRUE]        
 
         for(g in genFuns) {
             ## Find all methods in funs for generic g.  Taken from the
@@ -1148,7 +1162,8 @@ function(package, dir, file, lib.loc = NULL)
     
     if(!missing(package)) {
         if(length(package) != 1)
-            stop("argument 'package' must be of length 1")
+            stop(paste("argument", sQuote("package"),
+                       "must be of length 1"))
         packageDir <- .find.package(package, lib.loc)
         if(file.exists(file.path(packageDir, "R", "all.rda"))) {
             warning("cannot check R code installed as image")
@@ -1188,7 +1203,8 @@ function(package, dir, file, lib.loc = NULL)
             codeFiles <- file
     }
     else
-        stop("you must specify 'package', 'dir' or 'file'")
+        stop(paste("you must specify ", sQuote("package"), ", ",
+                   sQuote("dir"), " or ", sQuote("file"), sep = ""))
 
     findTnFInFile <- function(file) {
         matches <- list()
