@@ -150,9 +150,10 @@ copy the script to a place where users can invoke it, for example to
 LaTeX versions of the documentation are built.
 
    Use `make dvi' to obtain a dvi version of the R manual.  This creates
-the file `Man.dvi' in the `doc/manual' subdirectory which can be previewed
-and printed using standard programs such as `xdvi' and `dvips'.  (Note that
-you have to build this file in the source tree.)
+the files `Manual.dvi' (a start of a manual) and `Reference.dvi' (an R
+object reference index) in the `doc/manual' subdirectory.  These files can
+be previewed and printed using standard programs such as `xdvi' and `dvips'.
+(Note that they have to be built in the source tree.)
 
    You can also perform a "system-wide" installation using
 
