@@ -116,8 +116,8 @@ getInitial.default <-
              "  \"help(selfStart)\"\n",
              "for the new form of the \"initial\" attribute.", domain = NA)
     }
-    stop("no 'getInitial' method found for ", sQuote(data.class(object)),
-         " objects")
+    stop(gettextf("no 'getInitial' method found for \"%s\" objects",
+                  data.class(object)), domain = NA)
 }
 
 sortedXyData <-

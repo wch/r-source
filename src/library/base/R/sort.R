@@ -2,7 +2,7 @@ sort <- function(x, partial = NULL, na.last = NA, decreasing = FALSE,
                  method = c("shell", "quick"), index.return = FALSE)
 {
     if(isfact <- is.factor(x)) {
-        if(index.return) stop("index.return only for non-factors")
+        if(index.return) stop("'index.return' only for non-factors")
 	lev <- levels(x)
 	nlev <- nlevels(x)
  	isord <- is.ordered(x)
@@ -15,7 +15,7 @@ sort <- function(x, partial = NULL, na.last = NA, decreasing = FALSE,
         x <-  x[!ina]
     }
     if(index.return && !is.na(na.last))
-        stop("index.return only for na.last = NA")
+        stop("'index.return' only for 'na.last = NA'")
     if(!is.null(partial)) {
         if(index.return || decreasing || isfact || !missing(method))
 	    stop("unsupported options for partial sorting")
@@ -89,10 +89,10 @@ sort.list <- function(x, partial = NULL, na.last = TRUE, decreasing = FALSE,
         if(is.numeric(x))
             return(sort(x, na.last = na.last, decreasing = decreasing,
                         method = "quick", index.return = TRUE)$ix)
-        else stop("method=\"quick\" is only for numeric x")
+        else stop("method=\"quick\" is only for numeric 'x'")
     }
     if(method == "radix") {
-        if(!is.integer(x)) stop("method=\"radix\" is only for integer x")
+        if(!is.integer(x)) stop("method=\"radix\" is only for integer 'x'")
         if(is.na(na.last))
             return(.Internal(radixsort(x[!is.na(x)], TRUE, decreasing)))
         else

@@ -8,7 +8,7 @@ function (x, aic = TRUE, order.max = NULL, na.action = na.fail,
         xtsp <- tsp(x)
     x <- na.action(as.ts(x))
     if (any(is.na(x)))
-        stop("NAs in x")
+        stop("NAs in 'x'")
     if (ists)
         xtsp <- tsp(x)
     xfreq <- frequency(x)

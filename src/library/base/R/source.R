@@ -14,9 +14,9 @@ function(file, local = FALSE, echo = verbose, print.eval = echo,
     envir <- if (local) parent.frame() else .GlobalEnv
     if (!missing(echo)) {
 	if (!is.logical(echo))
-	    stop("echo must be logical")
+	    stop("'echo' must be logical")
 	if (!echo && verbose) {
-	    warning("verbose is TRUE, echo not; ... coercing echo <- TRUE")
+	    warning("'verbose' is TRUE, 'echo' not; ... coercing 'echo <- TRUE'")
 	    echo <- TRUE
 	}
     }
@@ -117,7 +117,7 @@ function(file, envir = NULL, chdir = FALSE,
 	 keep.source = getOption("keep.source.pkgs"))
 {
     if(!(is.character(file) && file.exists(file)))
-	stop(sQuote(file), " is not an existing file")
+	stop(gettextf("'%s' is not an existing file", file))
     oop <- options(keep.source = as.logical(keep.source),
 		   topLevelEnvironment = as.environment(envir))
     on.exit(options(oop))

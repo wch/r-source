@@ -456,7 +456,7 @@ is.leaf <- function(object) (is.logical(L <- attr(object, "leaf"))) && L
 ## *Not* a method (yet):
 order.dendrogram <- function(x) {
     if( !inherits(x, "dendrogram") )
-	stop("order.dendrogram requires a dendrogram")
+	stop("'order.dendrogram' requires a dendrogram")
     unlist(x)
 }
 
@@ -555,13 +555,13 @@ function (x, Rowv=NULL, Colv=if(symm)"Rowv" else NULL,
 {
     scale <- if(symm && missing(scale)) "none" else match.arg(scale)
     if(length(di <- dim(x)) != 2 || !is.numeric(x))
-	stop("`x' must be a numeric matrix")
+	stop("'x' must be a numeric matrix")
     nr <- di[1]
     nc <- di[2]
     if(nr <= 1 || nc <= 1)
-	stop("`x' must have at least 2 rows and 2 columns")
+	stop("'x' must have at least 2 rows and 2 columns")
     if(!is.numeric(margins) || length(margins) != 2)
-	stop("`margins' must be a numeric vector of length 2")
+	stop("'margins' must be a numeric vector of length 2")
 
     doRdend <- !identical(Rowv,NA)
     doCdend <- !identical(Colv,NA)

@@ -33,24 +33,24 @@ rcauchy <-
 
 dgamma <- function(x, shape, rate = 1, scale = 1/rate, log = FALSE)
 {
-    if(any(shape <= 0)) stop("shape must be strictly positive")
+    if(any(shape <= 0)) stop("'shape' must be strictly positive")
     .Internal(dgamma(x, shape, scale, log))
 }
 pgamma <- function(q, shape, rate = 1, scale = 1/rate,
                    lower.tail = TRUE, log.p = FALSE)
 {
-    if(any(shape <= 0)) stop("shape must be strictly positive")
+    if(any(shape <= 0)) stop("'shape' must be strictly positive")
     .Internal(pgamma(q, shape, scale, lower.tail, log.p))
 }
 qgamma <- function(p, shape, rate = 1, scale = 1/rate,
                    lower.tail = TRUE, log.p = FALSE)
 {
-    if(any(shape <= 0)) stop("shape must be strictly positive")
+    if(any(shape <= 0)) stop("'shape' must be strictly positive")
     .Internal(qgamma(p, shape, scale, lower.tail, log.p))
 }
 rgamma <- function(n, shape, rate = 1, scale = 1/rate)
 {
-    if(any(shape <= 0)) stop("shape must be strictly positive")
+    if(any(shape <= 0)) stop("'shape' must be strictly positive")
     .Internal(rgamma(n, shape, scale))
 }
 
@@ -108,7 +108,7 @@ dmultinom <- function(x, size=NULL, prob, log = FALSE)
     prob <- prob / s
 
     x <- as.integer(x + 0.5)
-    if(any(x < 0)) stop("`x' must be non-negative")
+    if(any(x < 0)) stop("'x' must be non-negative")
     N <- sum(x)
     if(is.null(size)) size <- N
     else if (size != N) stop("size != sum(x), i.e. one is wrong")
@@ -118,7 +118,7 @@ dmultinom <- function(x, size=NULL, prob, log = FALSE)
 	if(any(x[i0] != 0))
             ##  prob[j] ==0 and x[j] > 0 ==>  "impossible" => P = 0
 	    return(if(log)-Inf else 0)
-	## otherwise : `all is fine': prob[j]= 0 = x[j] ==> drop j and continue
+	## otherwise : 'all is fine': prob[j]= 0 = x[j] ==> drop j and continue
 	if(all(i0)) return(if(log)0 else 1)
 	## else
 	x <- x[!i0]
@@ -172,7 +172,7 @@ rhyper <- function(nn, m, n, k) .Internal(rhyper(nn, m, n, k))
 dnbinom <- function(x, size, prob, mu, log = FALSE)
 {
     if (!missing(mu)) {
-        if (!missing(prob)) stop("prob and mu both specified")
+        if (!missing(prob)) stop("'prob' and 'mu' both specified")
         prob <- size/(size + mu)
     }
     .Internal(dnbinom(x, size, prob, log))
@@ -180,7 +180,7 @@ dnbinom <- function(x, size, prob, mu, log = FALSE)
 pnbinom <- function(q, size, prob, mu, lower.tail = TRUE, log.p = FALSE)
 {
     if (!missing(mu)) {
-        if (!missing(prob)) stop("prob and mu both specified")
+        if (!missing(prob)) stop("'prob' and 'mu' both specified")
         prob <- size/(size + mu)
     }
     .Internal(pnbinom(q, size, prob, lower.tail, log.p))
@@ -188,7 +188,7 @@ pnbinom <- function(q, size, prob, mu, lower.tail = TRUE, log.p = FALSE)
 qnbinom <- function(p, size, prob, mu, lower.tail = TRUE, log.p = FALSE)
 {
     if (!missing(mu)) {
-        if (!missing(prob)) stop("prob and mu both specified")
+        if (!missing(prob)) stop("'prob' and 'mu' both specified")
         prob <- size/(size + mu)
     }
     .Internal(qnbinom(p, size, prob, lower.tail, log.p))
@@ -196,7 +196,7 @@ qnbinom <- function(p, size, prob, mu, lower.tail = TRUE, log.p = FALSE)
 rnbinom <- function(n, size, prob, mu)
 {
     if (!missing(mu)) {
-        if (!missing(prob)) stop("prob and mu both specified")
+        if (!missing(prob)) stop("'prob' and 'mu' both specified")
         prob <- size/(size + mu)
     }
     .Internal(rnbinom(n, size, prob))

@@ -1,6 +1,6 @@
 
 R : Copyright 2005, The R Foundation for Statistical Computing
-Version 2.1.0 Under development (unstable) (2005-02-22), ISBN 3-900051-07-0
+Version 2.1.0 Under development (unstable) (2005-03-01), ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -1204,9 +1204,9 @@ Apr 1921 10     11
 > 
 > ## PR 883 (cor(x,y) when is.null(y))
 > try(cov(rnorm(10), NULL))
-Error in cov(rnorm(10), NULL) : supply both x and y or a matrix-like x
+Error in cov(rnorm(10), NULL) : supply both 'x' and 'y' or a matrix-like 'x'
 > try(cor(rnorm(10), NULL))
-Error in cor(rnorm(10), NULL) : supply both x and y or a matrix-like x
+Error in cor(rnorm(10), NULL) : supply both 'x' and 'y' or a matrix-like 'x'
 > ## gave the variance and 1 respectively in 1.2.2.
 > try(var(NULL))
 Error in var(NULL) : 'x' is empty
@@ -2280,7 +2280,7 @@ print method
 show method
 > 
 > setMethod("print", "bar", function(x, ...){cat("S4 print method\n")})
-Creating a new generic function for "print" in ".GlobalEnv" 
+Creating a new generic function for "print" in ".GlobalEnv"
 [1] "print"
 > foo
 S4 print method
@@ -3720,7 +3720,7 @@ NAs introduced by coercion
 > try(matrix( , 2^31/10, 100))
 Error in matrix(, 2^31/10, 100) : matrix: too many elements specified
 > try(array(dim=c(2^31/10, 100)))
-Error in array(dim = c(2^31/10, 100)) : dim specifies too large an array
+Error in array(dim = c(2^31/10, 100)) : 'dim' specifies too large an array
 > ## reported negative values (really integer NA) for R < 1.9.0
 > 
 > 
@@ -3738,7 +3738,7 @@ Error in array(dim = c(2^31/10, 100)) : dim specifies too large an array
 + )
 > sample.aov <- aov(dep.variable ~ f1 * f2 + Error(subject/(f1+f2)), data=sample.df)
 Warning message:
-Error model is singular in: aov(dep.variable ~ f1 * f2 + Error(subject/(f1 + f2)), data = sample.df) 
+Error() model is singular in: aov(dep.variable ~ f1 * f2 + Error(subject/(f1 + f2)), data = sample.df) 
 > sample.aov
 
 Call:
@@ -3792,7 +3792,7 @@ Error: Within
 Residuals 42 29204.1   695.3               
 > sample.aov <- aov(dep.variable ~ f1 * f2 + Error(subject/(f2+f1)), data=sample.df)
 Warning message:
-Error model is singular in: aov(dep.variable ~ f1 * f2 + Error(subject/(f2 + f1)), data = sample.df) 
+Error() model is singular in: aov(dep.variable ~ f1 * f2 + Error(subject/(f2 + f1)), data = sample.df) 
 > sample.aov
 
 Call:

@@ -18,13 +18,14 @@ lm <- function (formula, data, subset, weights, na.action,
     if (method == "model.frame")
 	return(mf)
     else if (method != "qr")
-	warning("method = ", method, " is not supported. Using \"qr\".")
+	warning(gettextf("method = '%s' is not supported. Using 'qr'", method),
+                domain = NA)
     mt <- attr(mf, "terms") # allow model.frame to update it
     y <- model.response(mf, "numeric")
     w <- model.weights(mf)
     offset <- model.offset(mf)
     if(!is.null(offset) && length(offset) != NROW(y))
-	stop(sprintf(gettext("number of offsets is %d, should equal %d (number of observations)"),
+	stop(gettextf("number of offsets is %d, should equal %d (number of observations)",
                      length(offset), NROW(y)), domain = NA)
 
     if (is.empty.model(mt)) {
@@ -60,7 +61,7 @@ lm <- function (formula, data, subset, weights, na.action,
 lm.fit <- function (x, y, offset = NULL, method = "qr", tol = 1e-07,
                     singular.ok = TRUE, ...)
 {
-    if (is.null(n <- nrow(x))) stop("`x' must be a matrix")
+    if (is.null(n <- nrow(x))) stop("'x' must be a matrix")
     if(n == 0) stop("0 (non-NA) cases")
     p <- ncol(x)
     if (p == 0) {
@@ -78,7 +79,8 @@ lm.fit <- function (x, y, offset = NULL, method = "qr", tol = 1e-07,
     if (NROW(y) != n)
 	stop("incompatible dimensions")
     if(method != "qr")
-	warning("method = ",method, " is not supported. Using \"qr\".")
+	warning(gettextf("method = '%s' is not supported. Using 'qr'", method),
+                domain = NA)
     if(length(list(...)))
 	warning("extra arguments ", paste(names(list(...)), sep=", "),
                 " are just disregarded.")
@@ -137,7 +139,8 @@ lm.wfit <- function (x, y, w, offset = NULL, method = "qr", tol = 1e-7,
     if (any(w < 0 | is.na(w)))
 	stop("missing or negative weights not allowed")
     if(method != "qr")
-	warning("method = ",method, " is not supported. Using \"qr\".")
+	warning(gettextf("method = '%s' is not supported. Using 'qr'", method),
+                domain = NA)
     if(length(list(...)))
 	warning("extra arguments ", paste(names(list(...)), sep=", "),
                 " are just disregarded.")
@@ -267,7 +270,7 @@ summary.lm <- function (object, correlation = FALSE, symbolic.cor = FALSE, ...)
     }
     Qr <- object$qr
     if (is.null(z$terms) || is.null(Qr))
-	stop("invalid \'lm\' object:  no terms nor qr component")
+	stop("invalid \'lm\' object:  no 'terms' nor 'qr' component")
     n <- NROW(Qr$qr)
     rdf <- n - p
     if(is.na(z$df.residual) || rdf != z$df.residual)
@@ -718,7 +721,7 @@ predict.lm <-
 effects.lm <- function(object, set.sign = FALSE, ...)
 {
     eff <- object$effects
-    if(is.null(eff)) stop("object has no effects component")
+    if(is.null(eff)) stop("'object' has no 'effects' component")
     if(set.sign) {
 	dd <- coef(object)
 	if(is.matrix(eff)) {
@@ -749,7 +752,7 @@ predict.mlm <-
 {
     if(missing(newdata)) return(object$fitted)
     if(se.fit)
-	stop("the 'se.fit' argument is not yet implemented for mlm objects")
+	stop("the 'se.fit' argument is not yet implemented for \"mlm\" objects")
     if(missing(newdata)) {
         X <- model.matrix(object)
         offset <- object$offset

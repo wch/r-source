@@ -86,8 +86,8 @@ install.packages <-
             cmd <- paste(cmd0, "-l", shQuote(update[i, 2]),
                          shQuote(update[i, 1]))
             if(system(cmd) > 0)
-                warning(sprintf(gettext(
-                 "installation of package '%s' had non-zero exit status"),
+                warning(gettextf(
+                 "installation of package '%s' had non-zero exit status",
                                 sQuote(update[i, 1])), domain = NA)
         }
         return(invisible())
@@ -176,8 +176,8 @@ install.packages <-
             cmd <- paste(cmd0, "-l", shQuote(update[i, 2]), update[i, 3])
             status <- system(cmd)
             if(status > 0)
-                warning(sprintf(gettext(
-                 "installation of package '%s' had non-zero exit status"),
+                warning(gettextf(
+                 "installation of package '%s' had non-zero exit status",
                                 sQuote(update[i, 1])), domain = NA)
         }
         if(!is.null(tmpd) && is.null(destdir))

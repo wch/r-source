@@ -9,7 +9,7 @@ backsolve <- function(r, x, k=ncol(r), upper.tri = TRUE, transpose = FALSE)
     if(!x.mat) x <- as.matrix(x)# k  x	nb
     storage.mode(x) <- "double"
     k <- as.integer(k)
-    if(k <= 0 || nrow(x) < k) stop("invalid parameters in backsolve")
+    if(k <= 0 || nrow(x) < k) stop("invalid argument values in 'backsolve'")
     nb <- ncol(x)
     upper.tri <- as.logical(upper.tri)
     transpose <- as.logical(transpose)
@@ -22,6 +22,6 @@ backsolve <- function(r, x, k=ncol(r), upper.tri = TRUE, transpose = FALSE)
 	    info = integer(1),
 	    DUP = FALSE, PACKAGE = "base")[c("x","info")]
     if(z$info != 0)
-	stop("singular matrix in backsolve. First zero in diagonal [", z$info,"]")
+	stop(gettextf("singular matrix in 'backsolve'. First zero in diagonal [%d]", z$info), domain = NA)
     if(x.mat) z$x else drop(z$x)
 }

@@ -4,7 +4,7 @@ power.t.test <-
 	     alternative=c("two.sided", "one.sided"), strict=FALSE)
 {
     if ( sum(sapply(list(n, delta, sd, power, sig.level), is.null)) != 1 )
-	stop("exactly one of n, delta, sd, power, and sig.level must be NULL")
+	stop("exactly one of 'n', 'delta', 'sd', 'power', and 'sig.level' must be NULL")
     if(!is.null(sig.level) && !is.numeric(sig.level) ||
        any(0 > sig.level | sig.level > 1))
 	stop("'sig.level' must be numeric in [0, 1]")
@@ -64,10 +64,10 @@ power.prop.test <-
 	     alternative=c("two.sided", "one.sided"), strict=FALSE)
 {
     if ( sum(sapply(list(n, p1, p2, power, sig.level), is.null)) != 1 )
-	stop("exactly one of n, p1, p2, power, and sig.level must be NULL")
+	stop("exactly one of 'n', 'p1', 'p2', 'power', and 'sig.level' must be NULL")
     if(!is.null(sig.level) && !is.numeric(sig.level) ||
        any(0 > sig.level | sig.level > 1))
-	stop(sQuote("sig.level")," must be numeric in [0, 1]")
+	stop("'sig.level' must be numeric in [0, 1]")
 
     alternative <- match.arg(alternative)
 

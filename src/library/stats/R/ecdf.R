@@ -6,7 +6,7 @@ ecdf <- function (x)
 {
     x <- sort(x) # drops NAs
     n <- length(x)
-    if(n < 1) stop("x must have 1 or more non-missing values")
+    if(n < 1) stop("'x' must have 1 or more non-missing values")
     vals <- sort(unique(x))
     rval <- approxfun(vals, cumsum(tabulate(match(x, vals)))/n,
 		      method = "constant", yleft = 0, yright = 1, f = 0,

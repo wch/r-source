@@ -2,8 +2,8 @@ La.svd <- function(x, nu = min(n, p), nv = min(n, p),
                    method = c("dgesdd", "dgesvd"))
 {
     if(!is.numeric(x) && !is.complex(x))
-	stop("argument to La.svd must be numeric or complex")
-    if (any(!is.finite(x))) stop("infinite or missing values in x")
+	stop("argument to 'La.svd' must be numeric or complex")
+    if (any(!is.finite(x))) stop("infinite or missing values in 'x'")
     method <- match.arg(method)
     if(is.complex(x) && method == "dgesdd") {
         method <- "dgesvd"
@@ -28,7 +28,7 @@ La.svd <- function(x, nu = min(n, p), nv = min(n, p),
             u <- matrix(0, n, p)
         }
         else
-            stop("nu must be 0, nrow(x) or ncol(x)")
+            stop("'nu' must be 0, nrow(x) or ncol(x)")
 
         if (nv == 0) {
             jobv <- 'N'
@@ -43,7 +43,7 @@ La.svd <- function(x, nu = min(n, p), nv = min(n, p),
             v <- matrix(0, p, p)
         }
         else
-            stop("nv must be 0, nrow(x) or ncol(x)")
+            stop("'nv' must be 0, nrow(x) or ncol(x)")
     } else {
         if(nu > 0 || nv > 0) {
             np <- min(n, p)

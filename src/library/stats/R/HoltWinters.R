@@ -23,10 +23,10 @@ function (x,
     f <- frequency(x)
 
     if(!is.null(alpha) && alpha==0)
-        stop ("cannot fit models without level (alpha must not be 0).")
+        stop ("cannot fit models without level ('alpha' must not be 0).")
     if(!all(is.null(c(alpha, beta, gamma))) &&
         any(c(alpha, beta, gamma) < 0 || c(alpha, beta, gamma) > 1))
-        stop ("alpha, beta and gamma must be within the unit interval.")
+        stop ("'alpha', 'beta' and 'gamma' must be within the unit interval.")
     if((is.null(gamma) || gamma > 0)) {
         if (seasonal == "multiplicative" && any(x <= 0))
             stop ("data must be strictly non-negative for multiplicative Holt-Winters")

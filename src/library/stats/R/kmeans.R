@@ -17,8 +17,8 @@ function(x, centers, iter.max = 10, nstart = 1,
                        switch(Z$ifault,
                               stop("empty cluster: try a better set of initial centers",
                                    call.=FALSE),
-                              warning("did not converge in ",
-                                      iter.max, " iterations", call.=FALSE),
+                              warning(gettextf("did not converge in %d iterations",
+                                               iter.max), call.=FALSE, domain =NA),
                               stop("number of cluster centres must lie between 1 and nrow(x)",
                                    call.=FALSE)
                               )
@@ -57,7 +57,7 @@ function(x, centers, iter.max = 10, nstart = 1,
     x <- as.matrix(x)
     m <- nrow(x)
     if(missing(centers))
-	stop("centers must be a number or a matrix")
+	stop("'centers' must be a number or a matrix")
     algorithm <- match.arg(algorithm)
     nmeth <- switch(algorithm,
                     "Hartigan-Wong" = 1,
@@ -84,9 +84,9 @@ function(x, centers, iter.max = 10, nstart = 1,
         if(m < k)
             stop("more cluster centers than data points")
     }
-    if(iter.max < 1) stop("iter.max must be positive")
+    if(iter.max < 1) stop("'iter.max' must be positive")
     if(ncol(x) != ncol(centers))
-	stop("must have same number of columns in x and centers")
+	stop("must have same number of columns in 'x' and 'centers'")
     Z <- do_one(nmeth)
     if(nstart >= 2 && !is.null(cn)) {
         best <- sum(Z$wss)

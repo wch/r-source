@@ -11,13 +11,13 @@ chisq.test <- function(x, y = NULL, correct = TRUE,
     }
     if (!is.matrix(x) && !is.null(y)) {
 	if (length(x) != length(y))
-	    stop("x and y must have the same length")
+	    stop("'x' and 'y' must have the same length")
 	DNAME <- c(DNAME, deparse(substitute(y)))
 	OK <- complete.cases(x, y)
 	x <- factor(x[OK])
 	y <- factor(y[OK])
 	if ((nlevels(x) < 2) || (nlevels(y) < 2))
-	    stop("x and y must have at least 2 levels")
+	    stop("'x' and 'y' must have at least 2 levels")
 	## Could also call table() with 'deparse.level = 2', but we need
 	## to deparse ourselves for DNAME anyway ...
 	x <- table(x, y)
@@ -26,9 +26,9 @@ chisq.test <- function(x, y = NULL, correct = TRUE,
     }
 
     if (any(x < 0) || any(is.na(x)))
-	stop("all entries of x must be nonnegative and finite")
+	stop("all entries of 'x' must be nonnegative and finite")
     if ((n <- sum(x)) == 0)
-	stop("at least one entry of x must be positive")
+	stop("at least one entry of 'x' must be positive")
 
     if(simulate.p.value)
 	setMETH <- function() # you shalt not cut_n_paste
@@ -81,13 +81,13 @@ chisq.test <- function(x, y = NULL, correct = TRUE,
     }
     else {
 	if (length(x) == 1)
-	    stop("x must at least have 2 elements")
+	    stop("'x' must at least have 2 elements")
 	if (length(x) != length(p))
-	    stop("x and p must have the same number of elements")
-	if(any(p < 0)) stop("Probabilities must be non-negative.")
+	    stop("'x' and 'p' must have the same number of elements")
+	if(any(p < 0)) stop("probabilities must be non-negative.")
 	if(abs(sum(p)-1) > sqrt(.Machine$double.eps)) {
 	    if(rescale.p) p <- p/sum(p)
-	    else stop("Probabilities must sum to 1.")
+	    else stop("probabilities must sum to 1.")
 	}
 	METHOD <- "Chi-squared test for given probabilities"
 	E <- n * p

@@ -48,10 +48,9 @@ glm <- function(formula, family = gaussian, data, weights,
     offset <- model.offset(mf)
     ## check weights and offset
     if( !is.null(weights) && any(weights < 0) )
-	stop("negative wts not allowed")
+	stop("negative weights not allowed")
     if(!is.null(offset) && length(offset) != NROW(Y))
-	stop("number of offsets is ", length(offset),
-	     ", should equal ", NROW(Y), " (number of observations)")
+	stop(gettextf("number of offsets is %d should equal %d (number of observations)", length(offset), NROW(Y)), domain = NA)
     ## these allow starting values to be expressed in terms of other vars.
     mustart <- model.extract(mf, "mustart")
     etastart <- model.extract(mf, "etastart")
@@ -86,7 +85,7 @@ glm <- function(formula, family = gaussian, data, weights,
 glm.control <- function(epsilon = 1e-8, maxit = 25, trace = FALSE)
 {
     if(!is.numeric(epsilon) || epsilon <= 0)
-	stop("value of epsilon must be > 0")
+	stop("value of 'epsilon' must be > 0")
     if(!is.numeric(maxit) || maxit <= 0)
 	stop("maximum number of iterations must be > 0")
     list(epsilon = epsilon, maxit = maxit, trace = trace)
@@ -157,9 +156,8 @@ glm.fit <-
             if(!is.null(etastart)) etastart
             else if(!is.null(start))
                 if (length(start) != nvars)
-                    stop("length of start should equal ", nvars,
-                         " and correspond to initial coefs for ",
-                         deparse(xnames))
+                    stop(gettextf("length of start should equal %d and correspond to initial coefs for %s", nvars, paste(deparse(xnames), collapse=", ")),
+                         domain = NA)
                 else {
                     coefold <- start
                     offset + as.vector(if (NCOL(x) == 1) x * start else x %*% start)
@@ -213,8 +211,8 @@ glm.fit <-
             }
             ## stop if not enough parameters
             if (nobs < fit$rank)
-                stop("X matrix has rank ", fit$rank,
-                     " but only ", nobs, " observations")
+                stop(gettextf("X matrix has rank %d, but only %d observations",
+                              fit$rank, nobs), domain = NA)
             ## calculate updated values of eta and mu with the new coef:
             start[fit$pivot] <- fit$coefficients
             eta <- drop(x %*% start)
@@ -366,7 +364,7 @@ anova.glm <- function(object, ..., dispersion=NULL, test=NULL)
     named <- if (is.null(names(dotargs)))
 	rep(FALSE, length(dotargs)) else (names(dotargs) != "")
     if(any(named))
-	warning("the following arguments to anova.glm are invalid and dropped: ",
+	warning("the following arguments to 'anova.glm' are invalid and dropped: ",
 		paste(deparse(dotargs[named]), collapse=", "))
     dotargs <- dotargs[!named]
     is.glm <- unlist(lapply(dotargs,function(x) inherits(x,"glm")))
@@ -454,7 +452,7 @@ anova.glmlist <- function(object, ..., dispersion=NULL, test=NULL)
     if(!all(sameresp)) {
 	object <- object[sameresp]
 	warning("models with response ", deparse(responses[!sameresp]),
-		" removed because response differs from ", "model 1")
+		" removed because response differs from model 1")
     }
 
     ns <- sapply(object, function(x) length(x$residuals))
@@ -534,8 +532,7 @@ summary.glm <- function(object, dispersion = NULL,
 	    else if(df.r > 0) {
 		est.disp <- TRUE
 		if(any(object$weights==0))
-		    warning("observations with zero weight ",
-			    "not used for calculating dispersion")
+		    warning("observations with zero weight not used for calculating dispersion")
 		sum(object$weights*object$residuals^2)/ df.r
 	    } else Inf
 

@@ -61,7 +61,7 @@ qr.coef <- function(qr, y)
 
     storage.mode(y) <- "double"
     if( nrow(y) != n )
-	stop("qr and y must have the same number of rows")
+	stop("'qr' and 'y' must have the same number of rows")
     z <- .Fortran("dqrcf",
 		  as.double(qr$qr),
 		  n, k,
@@ -71,7 +71,7 @@ qr.coef <- function(qr, y)
 		  coef=matrix(0,nr=k,nc=ny),
 		  info=integer(1),
 		  NAOK = TRUE, PACKAGE="base")[c("coef","info")]
-    if(z$info != 0) stop("exact singularity in qr.coef")
+    if(z$info != 0) stop("exact singularity in 'qr.coef'")
     if(k < p) {
 	coef <- matrix(as.double(NA), nr=p, nc=ny)
 	coef[qr$pivot[1:k],] <- z$coef
@@ -103,7 +103,7 @@ qr.qy <- function(qr, y)
     ny <- NCOL(y)
     storage.mode(y) <- "double"
     if(NROW(y) != n)
-	stop("qr and y must have the same number of rows")
+	stop("'qr' and 'y' must have the same number of rows")
     .Fortran("dqrqy",
 	     as.double(qr$qr),
 	     n, k,
@@ -131,7 +131,7 @@ qr.qty <- function(qr, y)
     k <- as.integer(qr$rank)
     ny <- NCOL(y)
     if(NROW(y) != n)
-	stop("qr and y must have the same number of rows")
+	stop("'qr' and 'y' must have the same number of rows")
     storage.mode(y) <- "double"
     .Fortran("dqrqty",
 	     as.double(qr$qr),
@@ -146,7 +146,7 @@ qr.qty <- function(qr, y)
 qr.resid <- function(qr, y)
 {
     if(!is.qr(qr)) stop("argument is not a QR decomposition")
-    if(is.complex(qr$qr)) stop("implemented for complex qr")
+    if(is.complex(qr$qr)) stop("not implemented for complex 'qr'")
     a <- attr(qr, "useLAPACK")
     if(!is.null(a) && is.logical(a) && a)
         stop("not supported for LAPACK QR")
@@ -156,7 +156,7 @@ qr.resid <- function(qr, y)
 #    p <- ncol(qr$qr)
     ny <- NCOL(y)
     if( NROW(y) != n )
-	stop("qr and y must have the same number of rows")
+	stop("'qr' and 'y' must have the same number of rows")
     storage.mode(y) <- "double"
     .Fortran("dqrrsd",
 	     as.double(qr$qr),	     n, k,
@@ -170,16 +170,16 @@ qr.resid <- function(qr, y)
 qr.fitted <- function(qr, y, k=qr$rank)
 {
     if(!is.qr(qr)) stop("argument is not a QR decomposition")
-    if(is.complex(qr$qr)) stop("implemented for complex qr")
+    if(is.complex(qr$qr)) stop("not implemented for complex 'qr'")
     a <- attr(qr, "useLAPACK")
     if(!is.null(a) && is.logical(a) && a)
         stop("not supported for LAPACK QR")
     n <- nrow(qr$qr)
     k <- as.integer(k)
-    if(k > qr$rank) stop("k is too large")
+    if(k > qr$rank) stop("'k' is too large")
     ny <- NCOL(y)
     if( NROW(y) != n )
-	stop("qr and y must have the same number of rows")
+	stop("'qr' and 'y' must have the same number of rows")
     storage.mode(y) <- "double"
     .Fortran("dqrxb",
 	     as.double(qr$qr),
@@ -227,7 +227,7 @@ qr.X <- function (qr, complete = FALSE,
     pivoted <- !identical(qr$pivot, seq(along=qr$pivot))
     R <- qr.R(qr, complete = TRUE)
     if(pivoted && ncol < length(qr$pivot))
-        stop("need larger value of ncol as pivoting occurred")
+        stop("need larger value of 'ncol' as pivoting occurred")
     cmplx <- mode(R) == "complex"
     p <- dim(R)[2]
     if (ncol < p)

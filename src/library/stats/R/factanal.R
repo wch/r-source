@@ -28,7 +28,7 @@ factanal <-
     na.act <- NULL
     if (is.list(covmat)) {
         if (any(is.na(match(c("cov", "n.obs"), names(covmat)))))
-            stop("covmat is not a valid covariance list")
+            stop("'covmat' is not a valid covariance list")
         cv <- covmat$cov
         n.obs <- covmat$n.obs
         have.x <- FALSE
@@ -38,7 +38,7 @@ factanal <-
         have.x <- FALSE
     }
     else if (is.null(covmat)) {
-        if(missing(x)) stop("neither x nor covmat supplied")
+        if(missing(x)) stop("neither 'x' nor 'covmat' supplied")
         have.x <- TRUE
         if(inherits(x, "formula")) {
             ## this is not a `standard' model-fitting function,
@@ -67,15 +67,16 @@ factanal <-
         cv <- covmat$cov
         n.obs <- covmat$n.obs
     }
-    else stop("covmat is of unknown type")
+    else stop("'covmat' is of unknown type")
     scores <- match.arg(scores)
     if(scores != "none" && !have.x)
-        stop("requested scores without an x matrix")
+        stop("requested scores without an 'x' matrix")
     p <- ncol(cv)
     if(p < 3) stop("factor analysis requires at least three variables")
     dof <- 0.5 * ((p - factors)^2 - p - factors)
     if(dof < 0)
-        stop(factors, " factors is too many for ", p, " variables")
+        stop(gettextf("%d factors is too many for %d variables", factors, p),
+             domain = NA)
     sds <- sqrt(diag(cv))
     cv <- cv/(sds %o% sds)
 
@@ -90,7 +91,8 @@ factanal <-
             start <- cbind(start, matrix(runif(ns-1), p, ns-1, byrow=TRUE))
     }
     start <- as.matrix(start)
-    if(nrow(start) != p) stop("start must have ", p, " rows")
+    if(nrow(start) != p)
+        stop(gettextf("start must have %d rows", p), domain = NA)
     nc <- ncol(start)
     if(nc < 1) stop("no starting values supplied")
 

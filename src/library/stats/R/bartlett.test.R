@@ -6,7 +6,7 @@ function(x, g, ...)
     LM <- FALSE
     if (is.list(x)) {
         if (length(x) < 2)
-            stop("x must be a list with at least 2 elements")
+            stop("'x' must be a list with at least 2 elements")
         DNAME <- deparse(substitute(x))
         if (all(sapply(x, function(obj) inherits(obj, "lm"))))
             LM <- TRUE
@@ -16,7 +16,7 @@ function(x, g, ...)
     }
     else {
         if (length(x) != length(g))
-            stop("x and g must have the same length")
+            stop("'x' and 'g' must have the same length")
         DNAME <- paste(deparse(substitute(x)), "and",
                        deparse(substitute(g)))
         OK <- complete.cases(x, g)
@@ -43,10 +43,10 @@ function(x, g, ...)
     STATISTIC <- ((n.total * log(v.total) - sum(n * log(v))) /
                   (1 + (sum(1 / n) - 1 / n.total) / (3 * (k - 1))))
     PARAMETER <- k - 1
-    PVAL <- pchisq(STATISTIC, PARAMETER, lower = FALSE)    
+    PVAL <- pchisq(STATISTIC, PARAMETER, lower = FALSE)
     names(STATISTIC) <- "Bartlett's K-squared"
     names(PARAMETER) <- "df"
-  
+
     RVAL <- list(statistic = STATISTIC,
                  parameter = PARAMETER,
                  p.value = PVAL,
@@ -60,7 +60,7 @@ bartlett.test.formula <-
 function(formula, data, subset, na.action, ...)
 {
     if(missing(formula) || (length(formula) != 3))
-        stop("formula missing or incorrect")
+        stop("'formula' missing or incorrect")
     m <- match.call(expand.dots = FALSE)
     if(is.matrix(eval(m$data, parent.frame())))
         m$data <- as.data.frame(data)

@@ -588,7 +588,7 @@ residuals.nls <- function(object, type = c("response", "pearson"), ...)
 logLik.nls <- function(object, REML = FALSE, ...)
 {
     if (REML)
-        stop("cannot calculate REML log-likelihood for nls objects")
+        stop("cannot calculate REML log-likelihood for \"nls\" objects")
 
     res <- object$m$resid()
     N <- length(res)
@@ -636,7 +636,7 @@ anovalist.nls <- function (object, ..., test = NULL)
     ## calculate the number of models
     nmodels <- length(objects)
     if (nmodels == 1)
-        stop("Anova is only defined for sequences of nls objects")
+        stop("'anova' is only defined for sequences of \"nls\" objects")
 
     models <- as.character(lapply(objects, function(x) formula(x)))
 

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-02-16 08:34\n"
+"POT-Creation-Date: 2005-03-01 17:22\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -32,19 +32,19 @@ msgstr ""
 msgid "See help(\"Deprecated\")"
 msgstr ""
 
-msgid "argument to La.svd must be numeric or complex"
+msgid "argument to 'La.svd' must be numeric or complex"
 msgstr ""
 
-msgid "infinite or missing values in x"
+msgid "infinite or missing values in 'x'"
 msgstr ""
 
 msgid "0 extent dimensions"
 msgstr ""
 
-msgid "nu must be 0, nrow(x) or ncol(x)"
+msgid "'nu' must be 0, nrow(x) or ncol(x)"
 msgstr ""
 
-msgid "nv must be 0, nrow(x) or ncol(x)"
+msgid "'nv' must be 0, nrow(x) or ncol(x)"
 msgstr ""
 
 msgid "all can not be used with other deparse options"
@@ -53,7 +53,7 @@ msgstr ""
 msgid "'kind' must be a character string of length 1 (RNG to be used)."
 msgstr ""
 
-msgid "is not a valid abbreviation of an RNG"
+msgid "'%s' is not a valid abbreviation of an RNG"
 msgstr ""
 
 msgid "'normal.kind' must be a character string of length 1."
@@ -62,7 +62,7 @@ msgstr ""
 msgid "Buggy version of Kinderman-Ramage generator used."
 msgstr ""
 
-msgid "is not a valid choice"
+msgid "'%s' is not a valid choice"
 msgstr ""
 
 msgid "malformed version string"
@@ -71,25 +71,22 @@ msgstr ""
 msgid "dim(X) must have a positive length"
 msgstr ""
 
-msgid "dim specifies too large an array"
+msgid "'dim' specifies too large an array"
 msgstr ""
 
-msgid "incorrect value for MARGIN"
+msgid "incorrect value for 'MARGIN'"
 msgstr ""
 
 msgid "you cannot be serious"
 msgstr ""
 
-msgid "*** pos=1 is not possible; setting pos=2 for now."
+msgid "*** 'pos=1' is not possible; setting 'pos=2' for now."
 msgstr ""
 
-msgid "*** Note that pos=1 will give an error in the future"
+msgid "*** Note that 'pos=1' will give an error in the future"
 msgstr ""
 
-msgid "File"
-msgstr ""
-
-msgid "not found."
+msgid "file '%s' not found"
 msgstr ""
 
 msgid "invalid name"
@@ -110,49 +107,43 @@ msgstr ""
 msgid "RHS must be list"
 msgstr ""
 
-msgid "object with that name already exists"
+msgid "am object with that name already exists"
 msgstr ""
 
-msgid "autoloader did not find"
+msgid "autoloader did not find '%s' in '%s'"
 msgstr ""
 
-msgid "in"
+msgid "invalid argument values in 'backsolve'"
 msgstr ""
 
-msgid "invalid parameters in backsolve"
-msgstr ""
-
-msgid "singular matrix in backsolve. First zero in diagonal ["
-msgstr ""
-
-msgid "]"
+msgid "singular matrix in 'backsolve'. First zero in diagonal [%d]"
 msgstr ""
 
 msgid "complex matrices not permitted at present"
 msgstr ""
 
-msgid "non-numeric argument to chol"
+msgid "non-numeric argument to 'chol'"
 msgstr ""
 
-msgid "non-square matrix in chol"
+msgid "non-square matrix in 'chol'"
 msgstr ""
 
-msgid "non-matrix argument to chol"
+msgid "non-matrix argument to 'chol'"
 msgstr ""
 
 msgid "matrix not positive definite"
 msgstr ""
 
-msgid "non-positive definite matrix in chol"
+msgid "non-positive definite matrix in 'chol'"
 msgstr ""
 
-msgid "non-numeric argument to chol2inv"
+msgid "non-numeric argument to 'chol2inv'"
 msgstr ""
 
-msgid "invalid size argument in chol2inv"
+msgid "invalid 'size' argument in 'chol2inv'"
 msgstr ""
 
-msgid "singular matrix in chol2inv"
+msgid "singular matrix in 'chol2inv'"
 msgstr ""
 
 msgid "'x' must be an array of at least two dimensions"
@@ -212,43 +203,31 @@ msgstr ""
 msgid "class information lost from one or more columns"
 msgstr ""
 
-msgid "invalid row.names length"
+msgid "invalid 'row.names' length"
 msgstr ""
 
-msgid "duplicate row.names are not allowed"
+msgid "duplicate 'row.names' are not allowed"
 msgstr ""
 
-msgid "missing row.names are not allowed"
+msgid "missing 'row.names' are not allowed"
 msgstr ""
 
-msgid "invalid dimnames given for data frame"
+msgid "invalid 'dimnames' given for data frame"
 msgstr ""
 
-msgid "cannot coerce class"
+msgid "cannot coerce class \"%s\" into a data.frame"
 msgstr ""
 
-msgid "into a data.frame"
-msgstr ""
-
-msgid "invalid row.names, length"
-msgstr ""
-
-msgid "for a data frame with"
+msgid "invalid row.names, length %d for a data frame with %d rows"
 msgstr ""
 
 msgid "row.names"
 msgstr ""
 
-msgid "rows"
+msgid "supplied %d row names for %d rows"
 msgstr ""
 
-msgid "supplied"
-msgstr ""
-
-msgid "row names for"
-msgstr ""
-
-msgid "mismatch of row names in elements of \"data.frame\", item"
+msgid "mismatch of row names in arguments of 'data.frame', item %d"
 msgstr ""
 
 msgid "some row.names duplicated:"
@@ -305,43 +284,28 @@ msgstr ""
 msgid "duplicate subscripts for columns"
 msgstr ""
 
-msgid "replacement has"
+msgid "replacement has %d rows, data has %d"
 msgstr ""
 
-msgid "rows, data has"
+msgid "replacement has %d items, need %d"
 msgstr ""
 
-msgid "items, need"
+msgid "replacement element %d is a matrix/data frame of %d rows, need %d"
 msgstr ""
 
-msgid "replacement element"
+msgid "replacement element %d has %d rows, need %d"
 msgstr ""
 
-msgid "is a matrix/data frame of"
+msgid "replacement element %d has %d rows to replace %d rows"
 msgstr ""
 
-msgid "rows, need"
+msgid "%d rows in value to replace %d rows"
 msgstr ""
 
-msgid "has"
+msgid "replacement data has %d rows to replace %d rows"
 msgstr ""
 
-msgid "rows to replace"
-msgstr ""
-
-msgid "rows in value to replace"
-msgstr ""
-
-msgid "replacement data has"
-msgstr ""
-
-msgid "provided"
-msgstr ""
-
-msgid "variables to replace"
-msgstr ""
-
-msgid "variables"
+msgid "provided %d variables to replace %d variables"
 msgstr ""
 
 msgid "only valid calls are x[[j]] <- value or x[[i,j]] <- value"
@@ -365,10 +329,7 @@ msgstr ""
 msgid "only defined for equally-sized data frames"
 msgstr ""
 
-msgid "list of length"
-msgstr ""
-
-msgid "not meaningful"
+msgid "list of length %d not meaningful"
 msgstr ""
 
 msgid "only defined on a data frame with all numeric or complex variables"
@@ -377,13 +338,13 @@ msgstr ""
 msgid "character string is not in a standard unambiguous format"
 msgstr ""
 
-msgid "Don't know how to convert"
+msgid "do not know how to convert '%s' to class \"Date\""
 msgstr ""
 
-msgid "to class \"Date\""
+msgid "'%s' is not a \"date\" object"
 msgstr ""
 
-msgid "is not a \"dates\" object"
+msgid "'%s' is not a \"dates\" object"
 msgstr ""
 
 msgid "binary + is not defined for Date objects"
@@ -452,10 +413,7 @@ msgstr ""
 msgid "'lag' and 'differences' must be integers >= 1"
 msgstr ""
 
-msgid "to class \"POSIXlt\""
-msgstr ""
-
-msgid "to class \"POSIXct\""
+msgid "do not know how to convert '%s' to class \"POSIXlt\""
 msgstr ""
 
 msgid "wrong class"
@@ -530,7 +488,7 @@ msgstr ""
 msgid "No DLL currently loaded with name or path"
 msgstr ""
 
-msgid "multiple DLLs match '%s'. Using %s"
+msgid "multiple DLLs match '%s'. Using '%s'"
 msgstr ""
 
 msgid "must specify DLL via a DLLInfo object. See getLoadedDLLs()"
@@ -545,31 +503,25 @@ msgstr ""
 msgid "0 x 0 matrix"
 msgstr ""
 
-msgid "non-square matrix in eigen"
+msgid "non-square matrix in 'eigen'"
 msgstr ""
 
-msgid "numeric or complex values required in eigen"
+msgid "numeric or complex values required in 'eigen'"
 msgstr ""
 
-msgid "ch returned code"
+msgid "'ch' returned code %d in 'eigen'"
 msgstr ""
 
-msgid "in eigen"
+msgid "'rs' returned code %d in 'eigen'"
 msgstr ""
 
-msgid "rs returned code"
+msgid "'cg' returned code %d in 'eigen'"
 msgstr ""
 
-msgid "cg returned code"
+msgid "'rg' returned code %d in 'eigen'"
 msgstr ""
 
-msgid "rg returned code"
-msgstr ""
-
-msgid "invalid labels; length"
-msgstr ""
-
-msgid "should be 1 or"
+msgid "invalid labels; length %d should be 1 or %d"
 msgstr ""
 
 msgid "number of levels differs"
@@ -584,10 +536,7 @@ msgstr ""
 msgid "invalid factor level, NAs generated"
 msgstr ""
 
-msgid "not meaningful for ordered factors"
-msgstr ""
-
-msgid "Level sets of factors are different"
+msgid "'%s' is not meaningful for ordered factors"
 msgstr ""
 
 msgid "no files to copy from"
@@ -599,13 +548,13 @@ msgstr ""
 msgid "more 'from' files than 'to' files"
 msgstr ""
 
-msgid "file can't be copied both from and to"
+msgid "file can not be copied both 'from' and 'to'"
 msgstr ""
 
 msgid "no files to link from"
 msgstr ""
 
-msgid "no files/dir to link to"
+msgid "no files/directory to link to"
 msgstr ""
 
 msgid "calling wrong method"
@@ -647,22 +596,22 @@ msgstr ""
 msgid "'form' must be a two-sided formula"
 msgstr ""
 
-msgid "value for \""
+msgid "value for '"
 msgstr ""
 
-msgid "\" not found"
+msgid "' not found"
 msgstr ""
 
-msgid "pattern must be a non-empty character string"
+msgid "'pattern' must be a non-empty character string"
 msgstr ""
 
-msgid "max.distance must be non-negative"
+msgid "'max.distance' must be non-negative"
 msgstr ""
 
 msgid "unknown match distance components ignored"
 msgstr ""
 
-msgid "max.distance components must be non-negative"
+msgid "'max.distance' components must be non-negative"
 msgstr ""
 
 msgid "matrix should be square"
@@ -671,28 +620,25 @@ msgstr ""
 msgid "This is R %s, package '%s' needs %s %s"
 msgstr ""
 
-msgid "package"
+msgid "package '%s' was built before R 2.0.0: please re-install it"
 msgstr ""
 
-msgid "was built before R 2.0.0: please re-install it"
+msgid "package '%s' was built under R version %s"
 msgstr ""
 
-msgid "was built under R version"
+msgid "package '%s' was built for %s"
 msgstr ""
 
-msgid "was built for"
-msgstr ""
-
-msgid "has not been installed properly"
+msgid "package '%s' has not been installed properly"
 msgstr ""
 
 msgid "See the Note in ?library"
 msgstr ""
 
-msgid "has been merged into 'stats'"
+msgid "Attaching package: '%s'"
 msgstr ""
 
-msgid "has been merged into 'stats4'"
+msgid "package '%s' has been merged into '%s'"
 msgstr ""
 
 msgid "package 'lqs' has been moved back to package 'MASS'"
@@ -704,28 +650,31 @@ msgstr ""
 msgid "package 'MASS' seems to be missing from this R installation"
 msgstr ""
 
-msgid "There is no package called"
+msgid "there is no package called '%s', version %s"
 msgstr ""
 
-msgid "is not a valid package -- installed < 2.0.0?"
+msgid "there is no package called '%s'"
 msgstr ""
 
-msgid "not found on search path, using pos = 2"
+msgid "'%s' is not a valid package -- installed < 2.0.0?"
 msgstr ""
 
-msgid "package/namespace load failed for"
+msgid "'%s' not found on search path, using pos = 2"
 msgstr ""
 
-msgid "unable to load R code in package"
+msgid "package/namespace load failed for '%s'"
 msgstr ""
 
-msgid "contains no R code"
+msgid "unable to load R code in package '%s'"
 msgstr ""
 
-msgid ".First.lib failed for"
+msgid "package '%s' contains no R code"
 msgstr ""
 
-msgid "already present in search()"
+msgid ".First.lib failed for '%s'"
+msgstr ""
+
+msgid "package '%s' already present in search()"
 msgstr ""
 
 msgid "shared library '%s' not found"
@@ -752,31 +701,16 @@ msgstr ""
 msgid "none of the packages are loaded"
 msgstr ""
 
-msgid "found more than once,"
-msgstr ""
-
-msgid "using the one found in"
+msgid "package '%s' found more than once,\nusing the one found in '%s'"
 msgstr ""
 
 msgid "none of the packages were found"
 msgstr ""
 
-msgid "there is no package called"
+msgid "package '%s' required by '%s' could not be found"
 msgstr ""
 
-msgid "required by"
-msgstr ""
-
-msgid "could not be found"
-msgstr ""
-
-msgid "was found, but"
-msgstr ""
-
-msgid "could not be loaded"
-msgstr ""
-
-msgid "is loaded, but"
+msgid "package '%s' could not be loaded"
 msgstr ""
 
 msgid "bad file argument"
@@ -821,10 +755,10 @@ msgstr ""
 msgid "no match"
 msgstr ""
 
-msgid "input must have length 1"
+msgid "'input' must have length 1"
 msgstr ""
 
-msgid "input and target must be character vectors"
+msgid "'input' and 'target' must be character vectors"
 msgstr ""
 
 msgid "not function, character, or symbol:"
@@ -860,67 +794,58 @@ msgstr ""
 msgid "no rows to match"
 msgstr ""
 
-msgid "by.x and by.y specify different numbers of columns"
+msgid "'by.x' and 'by.y' specify different numbers of columns"
 msgstr ""
 
 msgid "Tracing functions requires the methods package, but unable to load methods namespace"
 msgstr ""
 
-msgid "is not an exported object from"
+msgid "'%s' is not an exported object from 'namespace:%s'"
 msgstr ""
 
-msgid "failed in attachNamespace"
+msgid "%s failed in 'attachNamespace'"
 msgstr ""
 
 msgid "name space is already attached"
 msgstr ""
 
-msgid "not found"
+msgid "%s not found"
 msgstr ""
 
 msgid "cyclic name space dependencies are not supported"
 msgstr ""
 
-msgid "failed in loadNamespace for"
+msgid "%s failed in 'loadNamespace' for '%s'"
 msgstr ""
 
-msgid "namespace"
+msgid "namespace '%s' is already sealed in loadNamespace"
 msgstr ""
 
-msgid "is already sealed in loadNamespace"
+msgid "package '%s' does not have a name space"
 msgstr ""
 
-msgid "does not have a name space"
+msgid "in '%s' classes for export not defined: %s"
 msgstr ""
 
-msgid "Unable to load R code in package"
+msgid "in '%s' methods for export not found: %s"
 msgstr ""
 
-msgid "In"
+msgid "in '%s' methods specified for export, but none defined: %s"
 msgstr ""
 
-msgid "classes for export not defined:"
-msgstr ""
-
-msgid "methods for export not found:"
-msgstr ""
-
-msgid "methods specified for export, but none defined:"
+msgid "not found"
 msgstr ""
 
 msgid "not loading a name space"
 msgstr ""
 
-msgid "name space"
+msgid "name space '%s' is loaded"
 msgstr ""
 
-msgid "is loaded"
+msgid "%s failed in unloadNamespace(%s)"
 msgstr ""
 
-msgid "failed in"
-msgstr ""
-
-msgid "is still used by:"
+msgid "name space '%s' is still used by:"
 msgstr ""
 
 msgid "imperative name space directives are disabled"
@@ -947,76 +872,52 @@ msgstr ""
 msgid "invalid import target"
 msgstr ""
 
-msgid "Requested methods objects not found in environment/package"
+msgid "requested 'methods' objects not found in environment/package"
 msgstr ""
 
 msgid ":"
 msgstr ""
 
-msgid "object(s)"
-msgstr ""
-
-msgid "are not exported by"
-msgstr ""
-
 msgid "cannot add to exports of a sealed name space"
-msgstr ""
-
-msgid "previous export(s)"
-msgstr ""
-
-msgid "are being replaced"
 msgstr ""
 
 msgid "undefined exports :"
 msgstr ""
 
-msgid "has no NAMESPACE file"
+msgid "package '%s' has no NAMESPACE file"
 msgstr ""
 
-msgid "bad S3method directive:"
+msgid "bad 'S3method' directive: %s"
 msgstr ""
 
-msgid "too many S3method directives"
+msgid "too many 'S3method' directives"
 msgstr ""
 
-msgid "unknown namespace directive:"
+msgid "unknown namespace directive: %s"
 msgstr ""
 
-msgid "S3 method"
-msgstr ""
-
-msgid "was declared in NAMESPACE but not found"
+msgid "S3 method '%s' was declared in NAMESPACE but not found"
 msgstr ""
 
 msgid "bad method"
 msgstr ""
 
-msgid "object"
+msgid "object '%s' not found whilst loading namespace '%s'"
 msgstr ""
 
-msgid "not found whilst loading namespace"
+msgid "found an S4 version of '%s' so it has not been imported correctly"
 msgstr ""
 
-msgid "found an S4 version of"
+msgid "'%s' is not implemented yet"
 msgstr ""
 
-msgid "so it has not been imported correctly"
+msgid "argument %d is not used (yet)"
 msgstr ""
 
-msgid "S3 method(s)"
+msgid "invalid version specification"
 msgstr ""
 
-msgid "were declared in NAMESPACE but not found"
-msgstr ""
-
-msgid "is not implemented yet"
-msgstr ""
-
-msgid "invalid version spec"
-msgstr ""
-
-msgid "wrong arg"
+msgid "wrong argument"
 msgstr ""
 
 msgid "not defined for package_version objects"
@@ -1046,25 +947,25 @@ msgstr ""
 msgid "first argument must be a QR decomposition"
 msgstr ""
 
-msgid "qr and y must have the same number of rows"
+msgid "'qr' and 'y' must have the same number of rows"
 msgstr ""
 
-msgid "exact singularity in qr.coef"
+msgid "exact singularity in 'qr.coef'"
 msgstr ""
 
 msgid "argument is not a QR decomposition"
 msgstr ""
 
-msgid "implemented for complex qr"
+msgid "not implemented for complex 'qr'"
 msgstr ""
 
 msgid "not supported for LAPACK QR"
 msgstr ""
 
-msgid "k is too large"
+msgid "'k' is too large"
 msgstr ""
 
-msgid "need larger value of ncol as pivoting occurred"
+msgid "need larger value of 'ncol' as pivoting occurred"
 msgstr ""
 
 msgid "file' must be a character string or connection"
@@ -1160,22 +1061,25 @@ msgstr ""
 msgid "this is the \"qr\" method for the generic function solve()"
 msgstr ""
 
-msgid "singular matrix 'a' in solve"
+msgid "singular matrix 'a' in 'solve'"
 msgstr ""
 
 msgid "only square matrices can be inverted"
 msgstr ""
 
-msgid "solve.default called with a qr object: use qr.solve"
+msgid "solve.default called with a \"qr\" object: use 'qr.solve'"
 msgstr ""
 
-msgid "index.return only for non-factors"
+msgid "singular matrix 'a' in solve"
+msgstr ""
+
+msgid "'index.return' only for non-factors"
 msgstr ""
 
 msgid "'x' must be atomic"
 msgstr ""
 
-msgid "index.return only for na.last = NA"
+msgid "'index.return' only for 'na.last = NA'"
 msgstr ""
 
 msgid "unsupported options for partial sorting"
@@ -1187,22 +1091,22 @@ msgstr ""
 msgid "argument lengths differ"
 msgstr ""
 
-msgid "method=\"quick\" is only for numeric x"
+msgid "method=\"quick\" is only for numeric 'x'"
 msgstr ""
 
-msgid "method=\"radix\" is only for integer x"
+msgid "method=\"radix\" is only for integer 'x'"
 msgstr ""
 
-msgid "echo must be logical"
+msgid "'echo' must be logical"
 msgstr ""
 
-msgid "verbose is TRUE, echo not; ... coercing echo <- TRUE"
+msgid "'verbose' is TRUE, 'echo' not; ... coercing 'echo <- TRUE'"
 msgstr ""
 
 msgid "unable to find a plausible encoding"
 msgstr ""
 
-msgid "is not an existing file"
+msgid "'%s' is not an existing file"
 msgstr ""
 
 msgid "is not TRUE"
@@ -1214,13 +1118,13 @@ msgstr ""
 msgid "'x' and 'y' must have the same length"
 msgstr ""
 
-msgid "incorrect values of i'ndent' and 'width'"
+msgid "incorrect values of indent' and 'width'"
 msgstr ""
 
-msgid "argument to svd must be numeric"
+msgid "argument to 'svd' must be numeric"
 msgstr ""
 
-msgid "nv must be 0 or ncol(x)"
+msgid "'nv' must be 0 or ncol(x)"
 msgstr ""
 
 msgid "error %d in 'dsvdc'"
@@ -1232,7 +1136,7 @@ msgstr ""
 msgid "all arguments must have the same length"
 msgstr ""
 
-msgid "object must inherit from class \"table\""
+msgid "'object' must inherit from class \"table\""
 msgstr ""
 
 msgid "'x' must inherit from class \"summary.table\""
@@ -1241,7 +1145,7 @@ msgstr ""
 msgid "cannot coerce into a table"
 msgstr ""
 
-msgid "x is not an array"
+msgid "'x' is not an array"
 msgstr ""
 
 msgid "invalid argument 'n'"
@@ -1265,7 +1169,7 @@ msgstr ""
 msgid "handler must be a function"
 msgstr ""
 
-msgid "No such element"
+msgid "no such element '%s'"
 msgstr ""
 
 msgid "Removing"
@@ -1274,7 +1178,7 @@ msgstr ""
 msgid "Registering evaluate as low-level callback"
 msgstr ""
 
-msgid "width must be positive"
+msgid "'width' must be positive"
 msgstr ""
 
 msgid "No traceback available"
@@ -1304,10 +1208,10 @@ msgstr ""
 msgid "argument must be character"
 msgstr ""
 
-msgid "cmd could not be run"
+msgid "'cmd' could not be run"
 msgstr ""
 
-msgid "cmd execution failed with error code"
+msgid "'cmd' execution failed with error code %d"
 msgstr ""
 
 msgid        "deparse option %s is not recognized"
@@ -1322,6 +1226,21 @@ msgstr[1]    ""
 
 msgid        "package %s is not loaded"
 msgid_plural "packages %s are not loaded"
+msgstr[0]    ""
+msgstr[1]    ""
+
+msgid        "object %s is not exported by 'namespace:%s'"
+msgid_plural "objects %s are not exported by 'namespace:%s'"
+msgstr[0]    ""
+msgstr[1]    ""
+
+msgid        "previous export %s is being replaced"
+msgid_plural "previous exports %s are being replaced"
+msgstr[0]    ""
+msgstr[1]    ""
+
+msgid        "S3 method %s was declared in NAMESPACE but not found"
+msgid_plural "S3 methods %s were declared in NAMESPACE but not found"
 msgstr[0]    ""
 msgstr[1]    ""
 

@@ -1,7 +1,7 @@
 svd <- function(x, nu = min(n,p), nv = min(n,p), LINPACK = FALSE)
 {
     x <- as.matrix(x)
-    if (any(!is.finite(x))) stop("infinite or missing values in x")
+    if (any(!is.finite(x))) stop("infinite or missing values in 'x'")
     dx <- dim(x)
     n <- dx[1]
     p <- dx[2]
@@ -15,7 +15,7 @@ svd <- function(x, nu = min(n,p), nv = min(n,p), LINPACK = FALSE)
         return(list(d = res$d, u = if(nu) res$u, v = if(nv) t(res$vt)))
     }
     if(!is.numeric(x))
-	stop("argument to svd must be numeric")
+	stop("argument to 'svd' must be numeric")
 
     if(nu == 0) {
 	job <- 0
@@ -30,11 +30,11 @@ svd <- function(x, nu = min(n,p), nv = min(n,p), LINPACK = FALSE)
 	u <- matrix(0, n, p)
     }
     else
-	stop("nu must be 0, nrow(x) or ncol(x)")
+	stop("'nu' must be 0, nrow(x) or ncol(x)")
 
     job <- job +
 	if(nv == 0) 0 else if(nv == p || nv == n) 1 else
-    stop("nv must be 0 or ncol(x)")
+    stop("'nv' must be 0 or ncol(x)")
 
     v <- if(job == 0) double(0) else matrix(0, p, p)
 
@@ -56,7 +56,7 @@ svd <- function(x, nu = min(n,p), nv = min(n,p), LINPACK = FALSE)
 		  info=integer(1),
 		  DUP=FALSE, PACKAGE="base")[c("d","u","v","info")]
     if(z$info)
-	stop(sprintf(gettext("error %d in 'dsvdc'"), z$info), domain = NA)
+	stop(gettextf("error %d in 'dsvdc'", z$info), domain = NA)
     z$d <- z$d[1:mn]
     if(nv && nv < p) z$v <- z$v[, 1:nv, drop = FALSE]
     z[c("d", if(nu) "u", if(nv) "v")]

@@ -41,7 +41,7 @@ princomp.default <-
     z <- if(!missing(x)) as.matrix(x)[subset, , drop = FALSE]
     if (is.list(covmat)) {
         if(any(is.na(match(c("cov", "n.obs"), names(covmat)))))
-            stop("covmat is not a valid covariance list")
+            stop("'covmat' is not a valid covariance list")
         cv <- covmat$cov
         n.obs <- covmat$n.obs
         cen <- covmat$center
@@ -52,12 +52,12 @@ princomp.default <-
     } else if(is.null(covmat)){
         dn <- dim(z)
         if(dn[1] < dn[2])
-            stop("princomp can only be used with more units than variables")
+            stop("'princomp' can only be used with more units than variables")
         covmat <- cov.wt(z)             # returns list, cov() does not
         n.obs <- covmat$n.obs
         cv <- covmat$cov * (1 - 1/n.obs)# for S-PLUS compatibility
         cen <- covmat$center
-    } else stop("covmat is of unknown type")
+    } else stop("'covmat' is of unknown type")
     if(!is.numeric(cv)) stop("PCA applies only to numerical variables")
     if (cor) {
         sds <- sqrt(diag(cv))

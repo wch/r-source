@@ -19,7 +19,7 @@ approx <- function(x, y = NULL, xout, method = "linear", n = 50,
     if (!identical(ties, "ordered")) {
 	if (length(ux <- unique(x)) < nx) {
 	    if (missing(ties))
-		warning("collapsing to unique x values")
+		warning("collapsing to unique 'x' values")
 	    y <- as.vector(tapply(y,x,ties))# as.v: drop dim & dimn.
 	    x <- sort(ux)
 	    nx <- length(x)
@@ -40,7 +40,7 @@ approx <- function(x, y = NULL, xout, method = "linear", n = 50,
 	yright <- if (rule == 1) NA else y[length(y)]
     if (missing(xout)) {
 	if (n <= 0)
-	    stop("approx requires n >= 1")
+	    stop("'approx' requires n >= 1")
 	xout <- seq(x[1], x[nx], length = n)
     }
     y <- .C("R_approx", as.double(x), as.double(y), as.integer(nx),
@@ -69,7 +69,7 @@ approxfun <- function(x, y = NULL, method = "linear",
     if (!identical(ties, "ordered")) {
 	if (length(ux <- unique(x)) < n) {
 	    if (missing(ties))
-		warning("collapsing to unique x values")
+		warning("collapsing to unique 'x' values")
 	    y <- as.vector(tapply(y,x,ties))# as.v: drop dim & dimn.
 	    x <- sort(ux)
 	    n <- length(x)

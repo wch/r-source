@@ -52,9 +52,8 @@ getDLLRegisteredRoutines.character <- function(dll)
 
     dll <- which(w)[1]
     if(sum(w) > 1)
-        warning(sprintf(gettext("multiple DLLs match '%s'. Using %s"),
-                        dll, dll$path),
-                domain = NA)
+        warning(gettextf("multiple DLLs match '%s'. Using '%s'",
+                         dll, dll$path), domain = NA)
 
     getDLLRegisteredRoutines(dlls[[dll]])
 }

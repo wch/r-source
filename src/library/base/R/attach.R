@@ -1,12 +1,13 @@
 attach <- function(what, pos=2, name=deparse(substitute(what)))
 {
     if(pos == 1) {
-        warning("*** pos=1 is not possible; setting pos=2 for now.\n",
-                "*** Note that pos=1 will give an error in the future")
+        warning("*** 'pos=1' is not possible; setting 'pos=2' for now.\n",
+                "*** Note that 'pos=1' will give an error in the future")
         pos <- 2
     }
     if (is.character(what) && (length(what)==1)){
-        if (!file.exists(what)) stop("File ", what, " not found.")
+        if (!file.exists(what))
+            stop(gettextf("file '%s' not found", what), domain = NA)
         name <- paste("file:", what, sep="")
         value <- .Internal(attach(NULL, pos, name))
         load(what, envir=as.environment(pos))

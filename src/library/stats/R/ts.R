@@ -14,7 +14,7 @@ ts <- function(data = NA, start = 1, end = numeric(0), frequency = 1,
                )
 {
     if(is.data.frame(data)) data <- data.matrix(data)
-#   if(!is.numeric(data)) stop("`data'  must be a numeric vector or matrix")
+#   if(!is.numeric(data)) stop("'data'  must be a numeric vector or matrix")
     if(is.matrix(data)) {
 	nseries <- ncol(data)
 	ndata <- nrow(data)
@@ -23,7 +23,7 @@ ts <- function(data = NA, start = 1, end = numeric(0), frequency = 1,
 	nseries <- 1
 	ndata <- length(data)
     }
-    if(ndata == 0) stop("ts object must have one or more observations")
+    if(ndata == 0) stop("'ts' object must have one or more observations")
 
     if(missing(frequency)) frequency <- 1/deltat
     else if(missing(deltat)) deltat <- 1/frequency
@@ -45,7 +45,7 @@ ts <- function(data = NA, start = 1, end = numeric(0), frequency = 1,
     else if(missing(start))
 	start <- end - (ndata - 1)/frequency
 
-    if(start > end) stop("start cannot be after end")
+    if(start > end) stop("'start' cannot be after 'end'")
     nobs <- floor((end - start) * frequency + 1.01)
 
     if(nobs != ndata)
@@ -180,9 +180,9 @@ as.ts.default <- function(x)
     fixup <- if(is.null(nm)) seq(along = l) else nm == ""
     ## <NOTE>
     dep <- sapply(l[fixup], function(x) deparse(x)[1])
-    ## We could add support for `deparse.level' here by creating dep
+    ## We could add support for 'deparse.level' here by creating dep
     ## as in list.names() inside table().  But there is a catch: we
-    ## need deparse.level = 2 to get the `usual' deparsing when the
+    ## need deparse.level = 2 to get the 'usual' deparsing when the
     ## method is invoked by the generic ...
     ## </NOTE>
     if(is.null(nm)) return(dep)
@@ -227,7 +227,7 @@ ts.intersect <- function(..., dframe = FALSE)
 diff.ts <- function (x, lag = 1, differences = 1, ...)
 {
     if (lag < 1 | differences < 1)
-        stop("bad value for lag or differences")
+        stop("bad value for 'lag' or 'differences'")
     if (lag * differences >= NROW(x)) return(x[0])
     ## <FIXME>
     ## lag() and its default method are defined in package ts, so we
@@ -376,7 +376,7 @@ print.ts <- function(x, calendar, ...)
                 attributes(x) <- NULL
                 names(x) <- tx
             }
-        } else { ##-- no `calendar' --
+        } else { ##-- no 'calendar' --
             header(x)
             attr(x, "class") <- attr(x, "tsp") <- attr(x, "na.action") <- NULL
         }
@@ -485,7 +485,7 @@ plot.ts <-
 	    if(missing(xy.labels)) xy.labels <- (n <= 150)
 	    if(!is.logical(xy.labels)) {
 		if(!is.character(xy.labels))
-		    stop("`xy.labels' must be logical or character")
+		    stop("'xy.labels' must be logical or character")
 		do.lab <- TRUE
 	    } else do.lab <- xy.labels
 
@@ -574,7 +574,7 @@ window.default <- function(x, start = NULL, end = NULL,
 
     if(!is.null(frequency) && !is.null(deltat) &&
        abs(frequency*deltat - 1) > ts.eps)
-        stop("frequency and deltat are both supplied and are inconsistent")
+        stop("'frequency' and 'deltat' are both supplied and are inconsistent")
     if (is.null(frequency) && is.null(deltat)) yfreq <- xfreq
     else if (is.null(deltat)) yfreq <- frequency
     else if (is.null(frequency)) yfreq <- 1/deltat
@@ -591,10 +591,10 @@ window.default <- function(x, start = NULL, end = NULL,
     else switch(length(start),
 		start,
 		start[1] + (start[2] - 1)/xfreq,
-		stop("bad value for start"))
+		stop("bad value for 'start'"))
     if(start < xtsp[1] && !extend) {
 	start <- xtsp[1]
-	warning("start value not changed")
+	warning("'start' value not changed")
     }
 
     end <- if(is.null(end))
@@ -602,14 +602,14 @@ window.default <- function(x, start = NULL, end = NULL,
     else switch(length(end),
 		end,
 		end[1] + (end[2] - 1)/xfreq,
-		stop("bad value for end"))
+		stop("bad value for 'end'"))
     if(end > xtsp[2] && !extend) {
 	end <- xtsp[2]
-	warning("end value not changed")
+	warning("'end' value not changed")
     }
 
     if(start > end)
-	stop("start cannot be after end")
+	stop("'start' cannot be after 'end'")
 
     if(!extend) {
         if(all(abs(start - xtime) > abs(start) * ts.eps))
@@ -734,21 +734,21 @@ ts.plot <- function(..., gpars = list())
 arima.sim <- function(model, n, rand.gen = rnorm,
                       innov = rand.gen(n, ...), n.start = NA, ...)
 {
-    if(!is.list(model)) stop("`model' must be list")
+    if(!is.list(model)) stop("'model' must be list")
     p <- length(model$ar)
     if(p) {
         minroots <- min(Mod(polyroot(c(1, -model$ar))))
-        if(minroots <= 1) stop("ar part of model is not stationary")
+        if(minroots <= 1) stop("'ar' part of model is not stationary")
     }
     q <- length(model$ma)
     if(is.na(n.start)) n.start <- p + q +
         ifelse(p > 0, ceiling(6/log(minroots)), 0)
-    if(n.start < p + q) stop("burn-in must be as long as ar + ma")
+    if(n.start < p + q) stop("burn-in 'n.start' must be as long as 'ar + ma'")
     d <- 0
     if(!is.null(ord <- model$order)) {
-        if(length(ord) != 3) stop("`model$order' must be of length 3")
-        if(p != ord[1]) stop("inconsistent specification of ar order")
-        if(q != ord[3]) stop("inconsistent specification of ma order")
+        if(length(ord) != 3) stop("'model$order' must be of length 3")
+        if(p != ord[1]) stop("inconsistent specification of 'ar' order")
+        if(q != ord[3]) stop("inconsistent specification of 'ma' order")
         d <- ord[2]
         if(d != round(d) || d < 0)
             stop("number of differences must be a positive integer")

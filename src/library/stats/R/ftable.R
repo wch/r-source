@@ -66,9 +66,9 @@ ftable.default <- function(..., exclude = c(NA, NaN),
 ftable.formula <- function(formula, data = NULL, subset, na.action, ...)
 {
     if(missing(formula) || !inherits(formula, "formula"))
-        stop("formula is incorrect or missing")
+        stop("'formula' missing or incorrect")
     if(length(formula) != 3)
-        stop("formula must have both left and right hand sides")
+        stop("'formula' must have both left and right hand sides")
     if(any(attr(terms(formula), "order") > 1))
         stop("interactions are not allowed")
     rvars <- attr(terms(formula[-2]), "term.labels")
@@ -275,14 +275,14 @@ read.ftable <- function(file, sep = "", quote = "\"", row.var.names,
             if(missing(row.var.names)) {
                 ## 'row.var.names' should be a character vector (or
                 ## factor) with the names of the row variables.
-                stop("row.var.names missing")
+                stop("'row.var.names' missing")
             }
             n.row.vars <- length(row.var.names)
             row.vars <- vector("list", length = n.row.vars)
             names(row.vars) <- as.character(row.var.names)
             if(missing(col.vars) || !is.list(col.vars)) {
                 ## 'col.vars' should be a list.
-                stop("col.vars missing or incorrect")
+                stop("'col.vars' missing or incorrect")
             }
             col.vars <- lapply(col.vars, as.character)
             n.col.vars <- length(col.vars)

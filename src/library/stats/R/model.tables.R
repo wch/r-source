@@ -3,10 +3,10 @@ model.tables <- function(x, ...) UseMethod("model.tables")
 model.tables.aov <- function(x, type = "effects", se = FALSE, cterms, ...)
 {
     if(inherits(x, "maov"))
-	stop("model.tables is not implemented for multiple responses")
+	stop("'model.tables' is not implemented for multiple responses")
     type <- match.arg(type, c("effects", "means", "residuals"))
     if(type == "residuals")
-	stop("type", sQuote(type), " not implemented yet")
+	stop(gettextf("type '%s' is not implemented yet", type), domain = NA)
     prjs <- proj(x, unweighted.scale = TRUE)
     mf <- model.frame(x)
     factors <- attr(prjs, "factors")
@@ -22,7 +22,7 @@ model.tables.aov <- function(x, type = "effects", se = FALSE, cterms, ...)
     ## with cterms, can specify subset of tables by name
     if(!missing(cterms)) {
 	if(any(is.na(match(cterms, names(factors)))))
-	    stop("cterms parameter must match terms in model object")
+	    stop("'cterms' argument must match terms in model object")
 	dn.proj <- dn.proj[cterms]
 	m.factors <- m.factors[cterms]
     }
@@ -40,7 +40,7 @@ model.tables.aov <- function(x, type = "effects", se = FALSE, cterms, ...)
 		      data = mf)
     if(se)
 	if(is.list(n)) {
-	    cat("Design is unbalanced - use se.contrast() for se's\n")
+	    message("Design is unbalanced - use se.contrast() for se's")
 	    se <- FALSE
 	} else se.tables <- se.aov(x, n, type = type)
     if(type == "means") {
@@ -81,7 +81,7 @@ model.tables.aovlist <- function(x, type = "effects", se = FALSE, ...)
 {
     type <- match.arg(type, c("effects", "means", "residuals"))
     if(type == "residuals")
-	stop("type", sQuote(type), " not implemented yet")
+	stop(gettextf("type '%s' is not implemented yet", type), domain = NA)
     prjs <- proj(x, unweighted.scale = TRUE)
     mf <- model.frame.aovlist(x)
     factors <- lapply(prjs, attr, "factors")
@@ -138,10 +138,11 @@ model.tables.aovlist <- function(x, type = "effects", se = FALSE, ...)
     n <- replications(attr(x, "call"), data = mf)
     if(se)
 	if(type == "effects"  && is.list(n)) {
-	    cat("Standard error information not returned as design is unbalanced. \nStandard errors can be obtained through se.contrast.\n")
+	    message("Standard error information not returned as design is unbalanced. \nStandard errors can be obtained through 'se.contrast'.")
 	    se <- FALSE
 	} else if(type != "effects") {
-	    warning("SEs for type ", sQuote(type), " are not yet implemented")
+	    warning(gettextf("SEs for type '%s' are not yet implemented",
+                             type), domain = NA)
 	    se <- FALSE
 	} else {
 	    se.tables <- se.aovlist(x, dn.proj, dn.strata, factors, mf,
@@ -158,7 +159,8 @@ se.aovlist <- function(object, dn.proj, dn.strata, factors, mf, efficiency, n,
 		       type = "diff.means", ...)
 {
     if(type != "effects")
-	stop("SEs for type ", sQuote(type), " are not yet implemented")
+	stop(gettextf("SEs for type '%s' are not yet implemented", type),
+             domain = NA)
     RSS <- sapply(object, function(x) sum(x$residuals^2)/x$df.resid)
     res <- vector(length = length(n), mode = "list")
     names(res) <- names(n)

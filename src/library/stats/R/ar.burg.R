@@ -9,7 +9,7 @@ ar.burg.default <-
         stop("Burg's algorithm only implemented for univariate series")
     if (ists <- is.ts(x)) xtsp <- tsp(x)
     x <- na.action(as.ts(x))
-    if(any(is.na(x))) stop("NAs in x")
+    if(any(is.na(x))) stop("NAs in 'x'")
     if (ists)  xtsp <- tsp(x)
     xfreq <- frequency(x)
     x <- as.vector(x)

@@ -31,7 +31,7 @@ merge.data.frame <-
     by.x <- fix.by(by.x, x)
     by.y <- fix.by(by.y, y)
     if((l.b <- length(by.x)) != length(by.y))
-        stop("by.x and by.y specify different numbers of columns")
+        stop("'by.x' and 'by.y' specify different numbers of columns")
     if(l.b == 0) {
         ## was: stop("no columns to match on")
         ## return the cartesian product of x and y :

@@ -35,5 +35,5 @@ embed <- function (x, dimension = 1)
         m <- n - dimension + 1
         return(matrix(x[1:m + rep(dimension:1, rep(m, dimension)) - 1], m))
     } else
-        stop ("x is not a vector or matrix")
+        stop ("'x' is not a vector or matrix")
 }

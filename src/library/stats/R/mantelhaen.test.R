@@ -12,22 +12,22 @@ function(x, y = NULL, z = NULL,
                 stop("each dimension in table must be >= 2")
         }
         else
-            stop("x must be a 3-dimensional array")
+            stop("'x' must be a 3-dimensional array")
     }
     else {
         if(is.null(y))
-            stop("If x is not an array, y must be given")
+            stop("if 'x' is not an array, 'y' must be given")
         if(is.null(z))
-            stop("If x is not an array, z must be given")
+            stop("if 'x' is not an array, 'z' must be given")
         if(any(diff(c(length(x), length(y), length(z)))))
-            stop("x, y, and z must have the same length")
+            stop("'x', 'y', and 'z' must have the same length")
         DNAME <- paste(DNAME, "and", deparse(substitute(y)), "and",
                        deparse(substitute(z)))
         OK <- complete.cases(x, y, z)
         x <- factor(x[OK])
         y <- factor(y[OK])
         if((nlevels(x) < 2) || (nlevels(y) < 2))
-            stop("x and y must have at least 2 levels")
+            stop("'x' and 'y' must have at least 2 levels")
         else
             x <- table(x, y, z[OK])
     }
@@ -45,7 +45,7 @@ function(x, y = NULL, z = NULL,
         if(!missing(conf.level) &&
            (length(conf.level) != 1 || !is.finite(conf.level) ||
             conf.level < 0 || conf.level > 1))
-            stop("conf.level must be a single number between 0 and 1")
+            stop("'conf.level' must be a single number between 0 and 1")
 
         NVAL <- 1
         names(NVAL) <- "common odds ratio"

@@ -11,14 +11,14 @@ spectrum <- function (..., method = c("pgram", "ar"))
 spec.taper <- function (x, p = 0.1)
 {
     if (any(p < 0) || any(p > 0.5))
-        stop("p must be between 0 and 0.5")
+        stop("'p' must be between 0 and 0.5")
     a <- attributes(x)
     x <- as.matrix(x)
     nc <- ncol(x)
     if (length(p) == 1)
         p <- rep(p, nc)
     else if (length(p) != nc)
-        stop("length of p must be 1 or equal the number of columns of x")
+        stop("length of 'p' must be 1 or equal the number of columns of 'x'")
     nr <- nrow(x)
     for (i in 1:nc) {
         m <- floor(nr * p[i])
@@ -43,7 +43,7 @@ spec.ar <- function(x, n.freq, order = NULL, plot = TRUE,
     } else {
         cn <- match(c("ar", "var.pred", "order"), names(x))
         if(any(is.na(cn)))
-            stop("x must be a time series or an ar() fit")
+            stop("'x' must be a time series or an ar() fit")
         series <- x$series
         xfreq <- x$frequency
         if(is.array(x$ar)) nser <- dim(x$ar)[2] else nser <- 1
@@ -88,7 +88,7 @@ spec.pgram <-
         if(is.tskernel(spans)) kernel <- spans
         else kernel <- kernel("modified.daniell", spans %/% 2)
     if(!is.null(kernel) && !is.tskernel(kernel))
-        stop("must specify spans or a valid kernel")
+        stop("must specify 'spans' or a valid kernel")
     if (detrend) {
         t <- 1:N - (N + 1)/2
         sumt2 <- N * (N^2 - 1)/12

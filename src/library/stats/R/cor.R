@@ -12,18 +12,18 @@ function(x, y=NULL, use="all.obs", method = c("pearson", "kendall", "spearman"))
     else {
 	stopifnot(is.atomic(x))
 	if(!is.matrix(x)) {
-	    if(is.null(y)) stop("supply both x and y or a matrix-like x")
+	    if(is.null(y)) stop("supply both 'x' and 'y' or a matrix-like 'x'")
 	    x <- as.vector(x)
 	}
     }
-    if(method == "pearson") 
+    if(method == "pearson")
         .Internal(cor(x, y, na.method, method == "kendall"))
     else if (na.method != 3) {
 	## Rank transform
 	Rank <- function(u)
 	    if(is.matrix(u)) apply(u, 2, rank, na.last="keep")
 	    else rank(u, na.last="keep")
-        
+
         if (na.method == 2){ # complete.obs
             ok <- complete.cases(x,y)
             x <- if (is.matrix(x)) x[ok,] else x[ok]
@@ -35,7 +35,7 @@ function(x, y=NULL, use="all.obs", method = c("pearson", "kendall", "spearman"))
         .Internal(cor(x, y, na.method, method == "kendall"))
     }
     else { # rank correlations and pairwise complete; the hard case
-         ## Based on contribution from Shigenobu Aoki. 
+         ## Based on contribution from Shigenobu Aoki.
          ## matrix
          if (is.null(y)) {
              ncy <- ncx <- ncol(x)
@@ -91,18 +91,18 @@ function(x, y=NULL, use="all.obs", method = c("pearson", "kendall", "spearman"))
     else {
 	stopifnot(is.atomic(x))
 	if(!is.matrix(x)) {
-	    if(is.null(y)) stop("supply both x and y or a matrix-like x")
+	    if(is.null(y)) stop("supply both 'x' and 'y' or a matrix-like 'x'")
 	    x <- as.vector(x)
 	}
     }
-    if(method == "pearson") 
+    if(method == "pearson")
         .Internal(cov(x, y, na.method, method == "kendall"))
     else if (na.method != 3) {
 	## Rank transform
 	Rank <- function(u)
 	    if(is.matrix(u)) apply(u, 2, rank, na.last="keep")
 	    else rank(u, na.last="keep")
-        
+
         if (na.method == 2){ # complete.obs
             ok <- complete.cases(x,y)
             x <- if (is.matrix(x)) x[ok,] else x[ok]
@@ -113,8 +113,8 @@ function(x, y=NULL, use="all.obs", method = c("pearson", "kendall", "spearman"))
 	if(!is.null(y)) y <- Rank(y)
         .Internal(cov(x, y, na.method, method == "kendall"))
     }
-    else 
-        stop("cannot handle pairwise.complete.obs")
+    else
+        stop("cannot handle 'pairwise.complete.obs'")
 }
 
 var <- function(x, y = NULL, na.rm = FALSE, use) {

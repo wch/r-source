@@ -95,7 +95,7 @@ plot.hclust <-
 	stop("invalid dendrogram")
     ## merge should be integer but might not be after dump/restore.
     if (any(as.integer(merge) != merge))
-        stop("merge component in dendrogram must be integer")
+        stop("'merge' component in dendrogram must be integer")
     storage.mode(merge) <- "integer"
     n <- nrow(merge)
     height <- as.double(x$height)
@@ -153,10 +153,10 @@ as.hclust <- function(x, ...) UseMethod("as.hclust")
 as.hclust.default <- function(x, ...) {
     if(inherits(x, "hclust")) x
     else
-	stop("argument 'x' cannot be coerced to class \"hclust\"",
+	stop(gettext("argument 'x' cannot be coerced to class \"hclust\""),
              if(!is.null(oldClass(x)))
-             "\n Consider providing an as.hclust.", oldClass(x)[1],
-             "() method")
+             gettextf("\n Consider providing an as.hclust.%s() method",
+                      oldClass(x)[1]), domain = NA)
 }
 
 as.hclust.twins <- function(x, ...)

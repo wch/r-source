@@ -25,7 +25,7 @@ residuals.isoreg <- function(object, ...) object$y - fitted(object)
 print.isoreg <- function(x, digits = getOption("digits"), ...) {
   cat("Isotonic regression from ", deparse(x$call), ",\n", sep="")
   cat("  with", length(x$iKnots), "knots / breaks at obs.nr.", x$iKnots, ";\n")
-  if(x$isOrd) cat("  initially ordered `x'\n")
+  if(x$isOrd) cat("  initially ordered 'x'\n")
   else { cat("  x ordering:"); str(x$ord) }
   cat("  and further components ")
   str(x[1:4], digits.d = 3 + max(0,digits - 7))

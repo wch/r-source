@@ -28,23 +28,23 @@ symnum <- function(x, cutpoints = c(  .3,  .6,	 .8,  .9, .95),
 	minc <- cutpoints[1]
 	maxc <- cutpoints[nc]
 	range.msg <- if(corr) gettext("'x' must be between -1 and 1")
-        else sprintf(gettext("'x' must be between %s and %s"),
-                     format(minc), format(maxc))
+        else gettextf("'x' must be between %s and %s",
+                      format(minc), format(maxc))
 	if(corr) x <- abs(x)
 	else
-	    if(any(x < minc - eps, na.rm=TRUE)) stop(range.msg)
-	if (   any(x > maxc + eps, na.rm=TRUE)) stop(range.msg)
+	    if(any(x < minc - eps, na.rm=TRUE)) stop(range.msg, domain = NA)
+	if (   any(x > maxc + eps, na.rm=TRUE)) stop(range.msg, domain = NA)
 
 	ns <- length(symbols)
 	symbols <- as.character(symbols)
 	if(any(duplicated(symbols)))
 	    stop("'symbols' must be unique, but are = ",
-                 paste(symbols, collapse="|"))
+                 paste(symbols, collapse="|"), domain = NA)
 	if(nc != ns+1)
             if(corr)
-                stop("number of cutpoints must be one less than number of symbols")
+                stop("number of 'cutpoints' must be one less than number of symbols")
             else
-                stop("number of cutpoints must be one more than number of symbols")
+                stop("number of 'cutpoints' must be one more than number of symbols")
 
 	iS <- cut(x, breaks=cutpoints, include.lowest=TRUE, labels= FALSE)
 	if(any(ii <- is.na(iS))) {

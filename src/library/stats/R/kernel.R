@@ -5,7 +5,7 @@ kernel <- function (coef, m = length(coef)+1, r, name="unknown")
 {
     modified.daniell.kernel <- function (m)
     {
-        if (any(m) < 0) stop ("m is negative")
+        if (any(m) < 0) stop ("'m' is negative")
         if(length(m) == 1)
             return (kernel(c(rep(1, m), 0.5)/(2*m), m,
                            name=paste("mDaniell(",m,")",sep="")))
@@ -18,7 +18,7 @@ kernel <- function (coef, m = length(coef)+1, r, name="unknown")
 
     daniell.kernel <- function (m)
     {
-        if (any(m) < 0) stop ("m is negative")
+        if (any(m) < 0) stop ("'m' is negative")
         if(length(m) == 1)
             return (kernel(rep(1/(2*m+1),m+1),m,
                            name=paste("Daniell(",m,")",sep="")))
@@ -31,8 +31,8 @@ kernel <- function (coef, m = length(coef)+1, r, name="unknown")
 
     fejer.kernel <- function (m, r)
     {
-        if (r < 1) stop ("r is less than 1")
-        if (m < 1) stop ("m is less than 1")
+        if (r < 1) stop ("'r' is less than 1")
+        if (m < 1) stop ("'m' is less than 1")
         n <- 2*m+1
         wn <- double(m+1)
         for (j in (1:m))
@@ -48,8 +48,8 @@ kernel <- function (coef, m = length(coef)+1, r, name="unknown")
 
     dirichlet.kernel <- function (m, r)
     {
-        if (r < 0) stop ("r is less than 0")
-        if (m < 1) stop ("m is less than 1")
+        if (r < 0) stop ("'r' is less than 0")
+        if (m < 1) stop ("'m' is less than 1")
         n <- 2*m+1
         wn <- double(m+1)
         for (j in (1:m))
@@ -72,9 +72,9 @@ kernel <- function (coef, m = length(coef)+1, r, name="unknown")
                stop("unknown named kernel"))
     } else {
         if (!is.vector(coef))
-            stop ("coef must be a vector")
+            stop ("'coef' must be a vector")
         if ((length(coef) != m+1) | (length(coef) <= 0))
-            stop ("coef has not the correct length")
+            stop ("'coef' does not have the correct length")
         kernel <- list (coef=coef, m=m)
         attr(kernel, "name") <- name
         class(kernel) <- "tskernel"
@@ -129,10 +129,10 @@ kernapply <- function (x, ...)
 
 kernapply.vector <- function (x, k, circular = FALSE, ...)
 {
-    if (!is.vector(x)) stop ("x is not a vector")
-    if (!is.tskernel(k)) stop ("k is not a kernel")
+    if (!is.vector(x)) stop ("'x' is not a vector")
+    if (!is.tskernel(k)) stop ("'k' is not a kernel")
     if (length(x) <= 2*k$m)
-        stop ("x is shorter than kernel k")
+        stop ("'x' is shorter than kernel 'k'")
     if (k$m == 0)
         return (x)
     else
@@ -155,7 +155,7 @@ kernapply.default <- function (x, k, circular = FALSE, ...)
     else if (is.matrix(x))
         return (apply(x, MARGIN=2, FUN=kernapply, k, circular=circular))
     else
-        stop ("kernapply is not available for object x")
+        stop ("'kernapply' is not available for object 'x'")
 }
 
 kernapply.ts <- function (x, k, circular = FALSE, ...)
@@ -170,9 +170,9 @@ kernapply.ts <- function (x, k, circular = FALSE, ...)
 kernapply.tskernel <- function (x, k2, ...)
 {
     if (!is.tskernel(x))
-        stop ("k1 is not a kernel")
+        stop ("'k1' is not a kernel")
     if (!is.tskernel(x))
-        stop ("k2 is not a kernel")
+        stop ("'k2' is not a kernel")
     n <- k2$m
     xx <- c(rep(0,n), x[-x$m:x$m], rep(0,n))
     coef <- kernapply(xx, k2, circular = TRUE)

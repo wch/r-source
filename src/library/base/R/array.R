@@ -5,7 +5,7 @@ function(data = NA, dim = length(data), dimnames = NULL)
     vl <- prod(dim)
     if(length(data) != vl) {
         if(vl > .Machine$integer.max)
-            stop("dim specifies too large an array")
+            stop("'dim' specifies too large an array")
         data <- rep(data, length.out=vl)
     }
     if(length(dim))
@@ -24,7 +24,7 @@ function(x, MARGIN)
     n <- length(d)
 
     if((length(MARGIN) > 1) || (MARGIN < 1) || (MARGIN > n))
-        stop("incorrect value for MARGIN")
+        stop("incorrect value for 'MARGIN'")
 
     if(any(d == 0)) return(array(integer(0), d))
 

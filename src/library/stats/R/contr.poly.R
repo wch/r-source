@@ -19,13 +19,14 @@ contr.poly <- function (n, scores = 1:n, contrasts = TRUE)
 	n <- length(levs)
     }
     if (n < 2)
-	stop("contrasts not defined for ", n - 1, " degrees of freedom")
+        stop(gettextf("contrasts not defined for %d degrees of freedom",
+                      n - 1), domain = NA)
     if (n > 95)
-        stop("orthogonal polynomials cannot be represented accurately enough for ", n - 1, " degrees of freedom")
+        stop(gettextf("orthogonal polynomials cannot be represented accurately enough for %d degrees of freedom", n-1), domain = NA)
     if (length(scores) != n)
-        stop("scores argument is of the wrong length")
+        stop("'scores' argument is of the wrong length")
     if (!is.numeric(scores) || any(duplicated(scores)))
-        stop("scores must all be different numbers")
+        stop("'scores' must all be different numbers")
     contr <- make.poly(n, scores)
     if (contrasts) {
 	dn <- colnames(contr)
@@ -52,12 +53,12 @@ poly <- function(x, ..., degree = 1, coefs = NULL)
         return(do.call("polym", c(m, degree=degree)))
     }
     if(degree < 1)
-        stop("degree must be at least 1")
-    if(any(is.na(x))) stop("missing values are not allowed in poly")
+        stop("'degree' must be at least 1")
+    if(any(is.na(x))) stop("missing values are not allowed in 'poly'")
     n <- degree + 1
     if(is.null(coefs)) { # fitting
         if(degree >= length(x))
-            stop("degree must be less than number of points")
+            stop("'degree' must be less than number of points")
         xbar <- mean(x)
         x <- x - xbar
         X <- outer(x, seq(length = n) - 1, "^")

@@ -4,11 +4,11 @@ eigen <- function(x, symmetric, only.values = FALSE, EISPACK = FALSE)
     dimnames(x) <- list(NULL, NULL)  # or they appear on eigenvectors
     n <- nrow(x)
     if (!n) stop("0 x 0 matrix")
-    if (n != ncol(x)) stop("non-square matrix in eigen")
+    if (n != ncol(x)) stop("non-square matrix in 'eigen'")
 
     complex.x <- is.complex(x)
 
-    if (any(!is.finite(x))) stop("infinite or missing values in x")
+    if (any(!is.finite(x))) stop("infinite or missing values in 'x'")
 
     if(complex.x) {
 	if(missing(symmetric)) {
@@ -23,7 +23,7 @@ eigen <- function(x, symmetric, only.values = FALSE, EISPACK = FALSE)
 	    symmetric <- is.logical(test) && test
         }
     }
-    else stop("numeric or complex values required in eigen")
+    else stop("numeric or complex values required in 'eigen'")
     if (!EISPACK) {
         if (symmetric) {
             z <- if(!complex.x)
@@ -62,7 +62,8 @@ eigen <- function(x, symmetric, only.values = FALSE, EISPACK = FALSE)
 			  ierr = integer(1),
                           PACKAGE="base")
 	    if (z$ierr)
-		stop("ch returned code ", z$ierr, " in eigen")
+		stop(gettextf("'ch' returned code %d in 'eigen'", z$ierr),
+                     domain = NA)
 	    if(!only.values)
 		z$vectors <- matrix(complex(re=z$vectors,
 					    im=z$ivectors), nc=n)
@@ -80,7 +81,8 @@ eigen <- function(x, symmetric, only.values = FALSE, EISPACK = FALSE)
 			  ierr = integer(1),
                           PACKAGE="base")
 	    if (z$ierr)
-		stop("rs returned code ", z$ierr, " in eigen")
+		stop(gettextf("'rs' returned code %d in 'eigen'", z$ierr),
+                     domain = NA)
 	}
 	ord <- sort.list(z$values, decreasing = TRUE)
     }
@@ -104,7 +106,8 @@ eigen <- function(x, symmetric, only.values = FALSE, EISPACK = FALSE)
 			  ierr = integer(1),
                           PACKAGE="base")
 	    if (z$ierr)
-		stop("cg returned code ", z$ierr, " in eigen")
+		stop(gettextf("'cg' returned code %d in 'eigen'", z$ierr),
+                     domain = NA)
 	    z$values <- complex(re=z$values,im=z$ivalues)
 	    if(!only.values)
 		z$vectors <- matrix(complex(re=z$vectors,
@@ -124,7 +127,8 @@ eigen <- function(x, symmetric, only.values = FALSE, EISPACK = FALSE)
 			  ierr = integer(1),
                           PACKAGE="base")
 	    if (z$ierr)
-		stop("rg returned code ", z$ierr, " in eigen")
+		stop(gettextf("'rg' returned code %d in 'eigen'", z$ierr),
+                     domain = NA)
 	    ind <- z$ivalues > 0
 	    if(any(ind)) {#- have complex (conjugated) values
 		ind <- seq(n)[ind]

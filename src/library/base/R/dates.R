@@ -43,8 +43,8 @@ as.Date.default <- function(x, ...)
     if(inherits(x, "Date")) return(x)
     if(is.logical(x) && all(is.na(x)))
         return(structure(as.numeric(x), class = "Date"))
-    stop("Don't know how to convert ", sQuote(deparse(substitute(x))),
-	       " to class \"Date\"")
+    stop(gettextf("do not know how to convert '%s' to class \"Date\"",
+                  deparse(substitute(x))))
 }
 
 ## convert from package date
@@ -53,7 +53,8 @@ as.Date.date <- function(x, ...)
     if(inherits(x, "date")) {
         x <- (x - 3653) # origin 1960-01-01
         return(structure(x, class = "Date"))
-    } else stop(sQuote(deparse(substitute(x))), " is not a \"dates\" object")
+    } else stop(gettextf("'%s' is not a \"date\" object",
+                         deparse(substitute(x)) ))
 }
 
 ## convert from package chron
@@ -65,7 +66,8 @@ as.Date.dates <- function(x, ...)
         if(length(z) == 3 && is.numeric(z))
             x  <- x + as.numeric(as.Date(paste(z[3], z[1], z[2], sep="/")))
         return(structure(x, class = "Date"))
-    } else stop(sQuote(deparse(substitute(x))), " is not a \"dates\" object")
+    } else stop(gettextf("'%s' is not a \"dates\" object",
+                         deparse(substitute(x)) ))
 }
 
 format.Date <- function(x, ...)

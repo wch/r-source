@@ -8,10 +8,10 @@ filter <- function(x, filter, method = c("convolution", "recursive"),
     n <- nrow(x)
     nser <- ncol(x)
     nfilt <- length(filter)
-    if(any(is.na(filter))) stop("missing values in filter")
+    if(any(is.na(filter))) stop("missing values in 'filter'")
     y <- matrix(NA, n, nser)
     if(method == "convolution") {
-        if(nfilt > n) stop("filter is longer than time series")
+        if(nfilt > n) stop("'filter' is longer than time series")
         if(sides != 1 && sides != 2)
             stop("argument sides must be 1 or 2")
         for (i in 1:nser)
@@ -32,7 +32,7 @@ filter <- function(x, filter, method = c("convolution", "recursive"),
             if(ni != nfilt)
                 stop("length of 'init' must equal length of 'filter'")
             if(NCOL(init) != 1 && NCOL(init) != nser)
-                stop(sprintf(gettext("'init; must have 1 or %d cols", nser)),
+                stop(gettextf("'init'; must have 1 or %d cols", nser),
                      domain = NA)
             if(!is.matrix(init)) init <- matrix(init, nfilt, nser)
         }

@@ -50,22 +50,22 @@ profiler.nls <-
                  } else {
                    if(!missing(params)) {
                      if(length(params) != length(fittedPars))
-                       stop("params has wrong length")
+                       stop("'params' has wrong length")
                      assign("defaultPars", params, envir = thisEnv)
                    }
                    if(!missing(varying)) {
                      if(is.numeric(varying)) {
                        if(!all(varying %in% (1:length(fittedPars))))
-                         stop("varying must be in 1:length(pars)")
+                         stop("'varying' must be in 1:length(pars)")
                        varying <- !((1:length(fittedPars)) %in% varying)
                      } else if(is.logical(varying)) {
                        if(length(varying) != length(fittedPars))
-                         stop("varying has wrong length")
+                         stop("'varying' has wrong length")
                      } else if(is.character(varying)) {
                        if(!all(varying %in% names(fittedPars)))
-                         stop("varying must be in 1:length(pars)")
+                         stop("'varying' must be in 1:length(pars)")
                        varying <- !(names(fittedPars) %in% varying)
-                     } else stop("varying must be logical, integer or character")
+                     } else stop("'varying' must be logical, integer or character")
                      assign("defaultVary", varying, envir = thisEnv)
                    }
                  }
@@ -86,7 +86,7 @@ profiler.nls <-
                      params <- unlist(args[[1]])
                    } else if(all(sapply(args, is.numeric))) {
                      params <- unlist(args)
-                   } else stop("invalid argument to getProfile")
+                   } else stop("invalid argument to 'getProfile'")
                    if(!all(names(params) %in% names(fittedPars)))
                      stop("cannot recognize parameter name")
                    startPars <- defaultPars
