@@ -15,7 +15,7 @@ DISTFILES = \
 	EQN README \
 	Makefile.in Makefile.win \
 	R-defs.texi R-exts.texi dir texinfo.tex \
-	Rd.sty Rd2dvi.tex lib2tex.in \
+	Rd.sty lib2tex.in \
 	omsaer.fd omsaett.fd omscmtt.fd \
 	refman.top.in refman.bot
 SUBDIRS = ae pdf
@@ -133,7 +133,7 @@ install-pdf: pdf
 	  $(INSTALL_DATA) $${f} $(rhome)/doc/pdf; \
 	done
 install-tex:
-	@for f in $(srcdir)/Rd.sty $(srcdir)/Rd2dvi.tex; do \
+	@for f in $(srcdir)/Rd.sty; do \
 	  $(INSTALL_DATA) $${f} $(rhome)/doc/manual ; \
 	done
 
