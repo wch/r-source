@@ -26,6 +26,7 @@ DEPRECATED & DEFUNCT
     o   The tkfilefind demo in the tcltk library is deprecated, since
         it never worked well, and apparently not at all with Tcl/Tk 8.4.
 
+
 BUG FIXES
 
     o	print.table() used too much white space in some cases in 1.7.0.
