@@ -65,7 +65,7 @@
 "read.table.url" <-
     function (url, method, ...)
 {
-    .Deprecated("read.table(url())")
+    .Deprecated("read.table()")
     f <- tempfile()
     if (download.file(url, destfile=f, method=method) == 0) {
         data <- read.table(f, ...)
@@ -80,7 +80,7 @@
 "scan.url" <-
     function (url, file=tempfile(), method, ...)
 {
-    .Deprecated("scan(url())")
+    .Deprecated("scan()")
     if (download.file(url, dest=file, method=method) != 0){
         unlink(file)
         stop("transfer failed")
@@ -93,7 +93,7 @@
 "source.url" <-
     function (url, file=tempfile(), method, ...)
 {
-    .Deprecated("source(url())")
+    .Deprecated("source()")
     if (download.file(url, dest=file, method=method) != 0) {
         unlink(file)
         stop("transfer failure")
