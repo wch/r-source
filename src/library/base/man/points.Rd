@@ -2,7 +2,7 @@
 \title{Add Points to a Plot}
 \usage{
 points(x, \dots)
-points.default(x,, y=NULL, type="p", pch=1, col="black", \dots)
+points.default(x, y=NULL, type="p", pch=1, col="black", \dots)
 }
 \alias{points}
 \alias{points.default}
