@@ -46,7 +46,7 @@ be most complete on Windows NT systems.
 \seealso{\code{\link{.Platform}}}
 
 \examples{
-cbind(Sys.info())
+Sys.info()
 ## An alternative (and probably better) way to get the login name on Unix
 Sys.getenv("LOGNAME")
 }
