@@ -1965,7 +1965,7 @@ from a C character array, which we do using the function
 
 Some care is needed with lists, as @R{} has moved from using LISP-like
 lists (now called ``pairlists'') to S-like generic vectors.  As a
-result, the appropriate test for a object of mode @code{list} is
+result, the appropriate test for an object of mode @code{list} is
 @code{isNewList}, and we need @code{allocVector(VECSXP, n}) and
 @emph{not} @code{allocList(n)}.
 
@@ -2084,6 +2084,13 @@ To convert existing code, use the following replacements.
   foo = STRING(bar)[i]                    foo = STRING_ELT(bar, i)
   STRING(foo)[j] = bar                    SET_STRING_ELT(foo, j, bar)
 @end example
+
+The new garbage collector requires that all assignments into fields
+containing @code{SEXP} values go through functions such as
+@code{SET_VECTOR_ELT}.  Libraries compiled under older versions of @R{}
+may contain binary code that modifies these fields directly.  These
+libraries @emph{must} be recompiled.  Failure to do so may confuse the
+memory manager and result in heap corruption.
 
 
 @node Interface functions .Call and .External, Evaluating R expressions from C, Handling R objects in C, System and foreign language interfaces
