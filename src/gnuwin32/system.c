@@ -586,10 +586,13 @@ void R_SetWin32(Rstart Rp)
     pR_ShowMessage = Rp->message;
     R_yesnocancel = Rp->yesnocancel;
     my_R_Busy = Rp->busy;
-    /* Process .Renviron or ~/.Renviron, if it exists. 
+    /* Process R_HOME/etc/Renviron.site, then
+       .Renviron or ~/.Renviron, if it exists. 
        Only used here in embedded versions */
-    if(!Rp->NoRenviron)
+    if(!Rp->NoRenviron) {
+	process_site_Renviron();
 	process_user_Renviron();
+    }
     _controlfp(_MCW_EM, _MCW_EM);
     _controlfp(_PC_64, _MCW_PC);
 }
@@ -635,6 +638,9 @@ int cmdlineoptions(int ac, char **av)
     MEMORYSTATUS ms;
     Rboolean usedRdata = FALSE;
 
+    /* ensure R_Home gets set early: we are in rgui or rterm here */
+    R_Home = getRHOME();
+    
 #ifdef _R_HAVE_TIMING_
     R_setStartTime();
 #endif
@@ -696,6 +702,7 @@ int cmdlineoptions(int ac, char **av)
      * precedence:  command-line, .Renviron, inherited
      */
     if(!Rp->NoRenviron) {
+	process_site_Renviron();
 	process_user_Renviron();
 	Rp->NoRenviron = TRUE;
     }
@@ -775,7 +782,7 @@ int cmdlineoptions(int ac, char **av)
 	    }
 	}
     }
-    Rp->rhome = getRHOME();
+    Rp->rhome = R_Home;
 
     R_tcldo = tcl_do_none;
 /*
