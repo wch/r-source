@@ -95,15 +95,19 @@ and Dave Smith.  We have made a number of small changes to reflect
 differences between the @R{} and @Sl{} programs, and expanded some of
 the material.
 
-@R{} is an ongoing project and its capabilities do not presently match
-those of @Sl{}.  In this guide we have adopted the convention that any
-feature that we intend to implement is noted as such at the beginning of
-the section where the feature is described.  Users can contribute to the
-project by implementing any of these that remain.
+@c FIXME:
+@c Would something like this still be needed?  There are certainly no
+@c such features ...
+@c  @R{} is an ongoing project and its capabilities do not presently
+@c  match those of @Sl{}.  In this guide we have adopted the convention
+@c  that any feature that we intend to implement is noted as such at the
+@c  beginning of the section where the feature is described.  Users can
+@c  contribute to the project by implementing any of these that remain.
+@c </FIXME>
 
 We would like to extend warm thanks to Bill Venables for granting
-permission to distribute this modified version of the notes in this
-way, and for being a supporter of @R{} from way back.
+permission to distribute this modified version of the notes in this way,
+and for being a supporter of @R{} from way back.
 
 Comments and corrections are always welcome.  Please address email
 correspondence to @email{R-core@@r-project.org}.
@@ -181,16 +185,23 @@ essentially ephemeral.
 @node Related software and documentation, R and statistics, The R environment, Introduction and preliminaries
 @section Related software and documentation
 
-@R{} can be regarded as a re-implementation of the @Sl{} language
-developed at AT&T by Rick Becker, John Chambers and Allan Wilks.  A
-number of the books and manuals about @Sl{} bear some relevance to @R{}.
+@R{} can be regarded as an implementation of the @Sl{} language which
+was developed at Bell Laboratories by Rick Becker, John Chambers and
+Allan Wilks, and also forms the basis of the @SPLUS{} systems.
 
-The basic reference is @emph{The New @Sl{} Language: A Programming
-Environment for Data Analysis and Graphics} by Richard A.@: Becker, John
-M.@: Chambers and Allan R.@: Wilks.  The new features of the 1991
-release of @Sl{} (@Sl{} version 3) are covered in @emph{Statistical
-Models in @Sl{}} edited by John M.@: Chambers and Trevor J.@: Hastie.
-@xref{References}, for precise references.
+The evolution of the @Sl{} language is characterized by four books by
+John Chambers and coauthors.  For @R{}, the basic reference is @emph{The
+New @Sl{} Language: A Programming Environment for Data Analysis and
+Graphics} by Richard A.@: Becker, John M.@: Chambers and Allan R.@:
+Wilks.  The new features of the 1991 release of @Sl{} (@Sl{} version 3)
+are covered in @emph{Statistical Models in @Sl{}} edited by John M.@:
+Chambers and Trevor J.@: Hastie.  @xref{References}, for precise
+references.
+
+In addition, documentation for @Sl{}/@SPLUS{} can typically be used with
+@R{}, keeping the differences between the @Sl{} implementations in mind.
+@xref{What documentation exists for R?, , , R-FAQ, The R statistical
+system FAQ}.
 
 @node R and statistics, R and the window system, Related software and documentation, Introduction and preliminaries
 @section R and statistics
@@ -790,9 +801,13 @@ which will put five copies of @code{x} end-to-end in @code{s5}.
 @section Logical vectors
 
 As well as numerical vectors, @R{} allows manipulation of logical
-quantities.  The elements of a logical vectors have just two possible
-values, represented formally as @code{FALSE} and @code{TRUE}.  These are
-usually abbreviated as @code{F} and @code{T}, respectively.
+quantities.  The elements of a logical vectors can have the values
+@code{TRUE}, @code{FALSE}, and @code{NA} (for ``not available'', see
+below).  The first two are often abbreviated as @code{T} and @code{F},
+respectively.  Note however that @code{T} and @code{F} are just
+variables which are set to @code{TRUE} and @code{FALSE} by default, but
+are not reserved words and hence can be overwritten by the user.  Hence,
+you should always use @code{TRUE} and @code{FALSE}.
 @findex FALSE
 @findex TRUE
 @findex F
@@ -1095,6 +1110,12 @@ extend @R{}.  @xref{Writing your own functions}.
 @cindex Objects
 @cindex Attributes
 
+@c FIXME:
+@c This needs to be re-written for R.  We really have data types (as
+@c returned by typeof()) and that functions mode() and storage.mode()
+@c are for S compatibility mostly.  Hence in particular, there is no
+@c intrinsic attribute `mode'.
+
 @menu
 * The intrinsic attributes mode and length::  
 * Changing the length of an object::  
@@ -1186,6 +1207,8 @@ large collection of functions of the form @code{as.@var{something}()}
 for either coercion from one mode to another, or for investing an object
 with some other attribute it may not already possess.  The reader should
 consult the different help files to become familiar with them.
+
+@c </FIXME>
 
 @node Changing the length of an object, Getting and setting attributes, The intrinsic attributes mode and length, Objects
 @section Changing the length of an object
@@ -2569,9 +2592,9 @@ rather than entered during an @R{} session at the keyboard.  @R{} input
 facilities are simple and their requirements are fairly strict and even
 rather inflexible.  There is a clear presumption by the designers of
 @R{} that you will be able to modify your input files using other tools,
-such as file editors or @code{perl}@footnote{Under UNIX, the utilities
-@code{sed} or @code{awk} can be used.} to fit in with the requirements
-of @R{}.  Generally this is very simple.
+such as file editors or Perl@footnote{Under UNIX, the utilities Sed or
+Awk can be used.} to fit in with the requirements of @R{}.  Generally
+this is very simple.
 
 If variables are to be held mainly in data frames, as we strongly
 suggest they should be, an entire data frame can be read directly with
@@ -2773,38 +2796,32 @@ will list all the datasets in all the currently attached packages (at
 least @pkg{base} and @pkg{nls}) and then load @code{Puromycin} from the
 first package in which such a dataset is found.
 
-User-contributed packages can be a rich source of datasets: indeed Dr.@:
-Venables' notes, the original source of this introduction, came with a
-set of datasets which is now available on @acronym{CRAN} as the package
-@pkg{Rnotes}.
-
+User-contributed packages can be a rich source of datasets.
 
 @node Editing data,  , Accessing builtin datasets, Reading data from files
 @section Editing data
 
-Once a data set has been read, there is a window-based facility in some
-versions of @R{} for making small changes.  The command
+@findex edit
+When invoked on a data frame or matrix, @code{edit} brings up a separate
+spreadsheet-like environment for editing.  This is useful for making
+small changes once a data set has been read.  The command
 
-@example
-> xnew <- data.entry(xold)
-@end example
-@findex data.entry
+@smallexample
+> xnew <- edit(xold)
+@end smallexample
 
 @noindent
-will allow you to edit your data set @code{xold} using a
-spreadsheet-like environment in a separate editing window, and on
-completion the changed object is assigned to @code{xnew}.  @code{xold},
-and hence @code{xnew}, can be any matrix, vector, data frame, or atomic
-data object.
+will allow you to edit your data set @code{xold}, and on completion the
+changed object is assigned to @code{xnew}.
 
-Calling @code{data.entry()} with no arguments,
+Use
 
 @example
-> xnew <- data.entry()
+> xnew <- edit(data.frame())
 @end example
 
 @noindent
-lets you enter new data via the spreadsheet interface.
+to enter new data via the spreadsheet interface.
 
 
 @node Probability distributions, Loops and conditional execution, Reading data from files, Top
@@ -2886,9 +2903,9 @@ distribution.
 Here are some examples
 
 @example
-> ## 2-tailed p-value for t distribution
+> ## @r{2-tailed p-value for t distribution}
 > 2*pt(-2.43, df = 13)
-> ## upper 1% point for an F(2, 7)  distribution
+> ## @r{upper 1% point for an F(2, 7) distribution}
 > qf(0.99, 2, 7)
 @end example
 
@@ -2942,10 +2959,10 @@ A stem-and-leaf plot is like a histogram, and @R{} has a function
 
 @example
 > hist(eruptions)
-# make the bins smaller, make a plot of density
+## @r{make the bins smaller, make a plot of density}
 > hist(eruptions, seq(1.6, 5.2, 0.2), prob=TRUE)
 > lines(density(eruptions, bw=0.1))
-> rug(eruptions) # show the actual data points
+> rug(eruptions) # @r{show the actual data points}
 @end example
 
 @findex density
@@ -3021,7 +3038,7 @@ qqline(x)
 @end example
 
 Finally, we might want a more formal test of agreement with normality
-(or not).  Package @pkg{ctest} provides that Shapiro-Wilk test
+(or not).  Package @pkg{ctest} provides the Shapiro-Wilk test
 @cindex Shapiro-Wilk test
 @findex shapiro.test
 
@@ -3059,10 +3076,14 @@ sample.)
 @section One- and two-sample tests
 @cindex One- and two-sample tests
 
-So far we have compared a single sample to a normal distribution.  A much
-more common operation is to compare aspects of two samples.  Consider the
-following sets of data on the latent heat of the
-fusion of ice (@emph{cal/gm}) from Rice (1995, p.490)
+So far we have compared a single sample to a normal distribution.  A
+much more common operation is to compare aspects of two samples.  Note
+that in @R{}, all ``classical'' tests including the ones used below are
+in package @pkg{ctest}, which may need to be loaded explicitly using
+@code{library(ctest)} to make the tests available.
+
+Consider the following sets of data on the latent heat of the fusion of
+ice (@emph{cal/gm}) from Rice (1995, p.490)
 
 @example
 Method A: 79.98 80.04 80.02 80.04 80.03 80.03 80.04 79.97
@@ -3095,11 +3116,12 @@ the second.
 @end iftex
 
 To test for the equality of the means of the two examples, we can use
-an @emph{unpaired} t-test by
-@cindex Student's t test
+an @emph{unpaired} @math{t}-test by
+@cindex Student's @math{t} test
 @findex t.test
 
 @example
+> library(ctest)
 > t.test(A, B)
 
          Welch Two Sample t-test
@@ -3118,11 +3140,10 @@ mean of x mean of y
 which does indicate a significant difference, assuming normality.  By
 default the @R{} function does not assume equality of variances in the
 two samples (in contrast to the similar @SPLUS{} @code{t.test}
-function).  We can test for equality in the variances by a function from
-package @pkg{ctest}
+function).  We can use the F test to test for equality in the variances,
+provided that the two samples are from normal populations.
 
 @example
-> library(ctest)
 > var.test(A, B)
 
          F test to compare two variances
@@ -3140,7 +3161,7 @@ ratio of variances
 
 @noindent
 which shows no evidence of a significant difference, and so we can use
-the classical t-test that assumes equality of the variances.
+the classical @math{t}-test that assumes equality of the variances.
 
 @example
 > t.test(A, B, var.equal=TRUE)
@@ -3164,7 +3185,6 @@ distribution under the null hypothesis.
 @cindex Wilcoxon test
 @findex wilcox.test
 @example
-> library(ctest)
 > wilcox.test(A, B)
 
          Wilcoxon rank sum test with continuity correction
