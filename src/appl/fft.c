@@ -117,113 +117,6 @@
  *
  */
 
-static int old_n = 0;
-
-static int nfac[15];
-static int m;
-static int kt;
-static int maxf;
-static int maxp;
-
-	/*  at the end of factorization,  nfac[] contains the factors,
-	 *  m contains the number of factors and kt contains the number
-	 *  of square factors  */
-
-/*  fft_factor - factorization check and determination of memory
- *  requirements for the fft.  On return *pmaxf will give the
- *  maximum factor size and *pmaxp will give the amount of integer
- *  scratch storage required.
- *
- *  If on return *pmaxf == 0, there was an error, the error type
- *  is indicated by *pmaxp.
- *
- *  If *pmaxp == 0  There was an illegal zero parameter among
- *		    nseg, n, and nspn.
- *
- *  If *pmaxp == 1  There we more than 15 factors to ntot.  */
-
-void fft_factor(int n, int *pmaxf, int *pmaxp)
-{
-    int j, jj, k;
-
-	/* check series length */
-
-    if (n <= 0) {
-	old_n = 0; *pmaxf = 0; *pmaxp = 0;
-	return;
-    }
-    else old_n = n;
-
-	/* determine the factors of n */
-
-    m = 0;
-    k = n;/* k := remaining unfactored factor of n */
-    if (k == 1)
-	return;
-
-	/* extract square factors first ------------------ */
-
-    /* extract 4^2 = 16 separately
-     * ==> at most one remaining factor 2^2 = 4, done below */
-    while(k % 16 == 0) {
-	nfac[m++] = 4;
-	k /= 16;
-    }
-
-    /* extract 3^2, 5^2, ... */
-    for(j = 3; (jj= j*j) <= k; j += 2) {
-	while(k % jj == 0) {
-	    nfac[m++] = j;
-	    k /= jj;
-	}
-    }
-
-    if(k <= 4) {
-	kt = m;
-	nfac[m] = k;
-	if(k != 1) m++;
-    }
-    else {
-	if(k % 4 == 0) {
-	    nfac[m++] = 2;
-	    k /= 4;
-	}
-
-	/* all square factors out now, but k >= 5 still */
-
-	kt = m;
-	maxp = imax2(kt+kt+2, k-1);
-	j = 2;
-	do {
-	    if (k % j == 0) {
-		nfac[m++] = j;
-		k /= j;
-	    }
-	    j = ((j+1)/2)*2 + 1;
-	}
-	while(j <= k);
-    }
-
-    if (m <= kt+1)
-	maxp = m+kt+1;
-    if (m+kt > 15) {		/* error - too many factors */
-	old_n = 0; *pmaxf = 0; *pmaxp = 0;
-	return;
-    }
-    else {
-	if (kt != 0) {
-	    j = kt;
-	    while(j != 0)
-		nfac[m++] = nfac[--j];
-	}
-	maxf = nfac[m-kt-1];
-	if (kt > 0)
-	    maxf = imax2(nfac[kt-1], maxf);
-    }
-    *pmaxf = maxf;
-    *pmaxp = maxp;
-}
-
 static void fftmx(double *a, double *b, int ntot, int n, int nspan, int isn,
 		  int m, int kt, double *at, double *ck, double *bt, double *sk,
 		  int *np, int *nfac)
@@ -255,7 +148,7 @@ static void fftmx(double *a, double *b, int ntot, int n, int nspan, int isn,
     s72 = rad/0.625;/* 72 = 45 / .625  degrees */
     c72 = cos(s72);
     s72 = sin(s72);
-    s120 = sqrt(0.75);
+    s120 = 0.5*M_SQRT_3;/* sin(120) = sqrt(3)/2 */
     if(isn <= 0) {
 	s72 = -s72;
 	s120 = -s120;
@@ -824,7 +717,114 @@ L570:
     nt = nt - kspnn;
     i = nt - inc + 1;
     if( nt >= 0) goto L_ord;
+} /* fftmx */
+
+static int old_n = 0;
+
+static int nfac[15];
+static int m_fac;
+static int kt;
+static int maxf;
+static int maxp;
+
+/* At the end of factorization,	 
+ *	nfac[]	contains the factors,
+ *	m_fac	contains the number of factors and 
+ *	kt	contains the number of square factors  */
+
+void fft_factor(int n, int *pmaxf, int *pmaxp)
+{
+/* fft_factor - factorization check and determination of memory
+ *		requirements for the fft.
+ *
+ * On return,	*pmaxf will give the maximum factor size
+ * and		*pmaxp will give the amount of integer scratch storage required.
+ *
+ * If *pmaxf == 0, there was an error, the error type is indicated by *pmaxp:
+ *
+ *  If *pmaxp == 0  There was an illegal zero parameter among nseg, n, and nspn.
+ *  If *pmaxp == 1  There we more than 15 factors to ntot.  */
+
+    int j, jj, k;
+
+	/* check series length */
+
+    if (n <= 0) {
+	old_n = 0; *pmaxf = 0; *pmaxp = 0;
+	return;
+    }
+    else old_n = n;
+
+	/* determine the factors of n */
+
+    m_fac = 0;
+    k = n;/* k := remaining unfactored factor of n */
+    if (k == 1)
+	return;
+
+	/* extract square factors first ------------------ */
+
+    /* extract 4^2 = 16 separately
+     * ==> at most one remaining factor 2^2 = 4, done below */
+    while(k % 16 == 0) {
+	nfac[m_fac++] = 4;
+	k /= 16;
+    }
+
+    /* extract 3^2, 5^2, ... */
+    for(j = 3; (jj= j*j) <= k; j += 2) {
+	while(k % jj == 0) {
+	    nfac[m_fac++] = j;
+	    k /= jj;
+	}
+    }
+
+    if(k <= 4) {
+	kt = m_fac;
+	nfac[m_fac] = k;
+	if(k != 1) m_fac++;
+    }
+    else {
+	if(k % 4 == 0) {
+	    nfac[m_fac++] = 2;
+	    k /= 4;
+	}
+
+	/* all square factors out now, but k >= 5 still */
+
+	kt = m_fac;
+	maxp = imax2(kt+kt+2, k-1);
+	j = 2;
+	do {
+	    if (k % j == 0) {
+		nfac[m_fac++] = j;
+		k /= j;
+	    }
+	    j = ((j+1)/2)*2 + 1;
+	}
+	while(j <= k);
+    }
+
+    if (m_fac <= kt+1)
+	maxp = m_fac+kt+1;
+    if (m_fac+kt > 15) {		/* error - too many factors */
+	old_n = 0; *pmaxf = 0; *pmaxp = 0;
+	return;
+    }
+    else {
+	if (kt != 0) {
+	    j = kt;
+	    while(j != 0)
+		nfac[m_fac++] = nfac[--j];
+	}
+	maxf = nfac[m_fac-kt-1];
+	if (kt > 0)
+	    maxf = imax2(nfac[kt-1], maxf);
+    }
+    *pmaxf = maxf;
+    *pmaxp = maxp;
 }
+
 
 Rboolean fft_work(double *a, double *b, int nseg, int n, int nspn, int isn,
 		  double *work, int *iwork)
@@ -846,7 +846,7 @@ Rboolean fft_work(double *a, double *b, int nseg, int n, int nspn, int isn,
     nspan = nf * nspn;
     ntot = nspan * nseg;
 
-    fftmx(a, b, ntot, nf, nspan, isn, m, kt,
+    fftmx(a, b, ntot, nf, nspan, isn, m_fac, kt,
 	  &work[0], &work[maxf], &work[2*maxf], &work[3*maxf],
 	  iwork, nfac);
 
