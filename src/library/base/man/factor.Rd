@@ -31,12 +31,12 @@ as.ordered(x)
   The encoding of the vector happens as follows: if \code{x[i]} equals
   \code{levels[j]}, then the \code{i}-th element of the result is
   \code{j}.  If no match is found for \code{x[i]} in \code{levels}, then
-  the \code{i}-th element of the result is set to \code{NA}.  Any values
-  listed in \code{exclude} result in \code{NA}s appearing in the factor
-  returned.  If \code{exclude} is set to a zero length vector, then any
-  \code{NA} values in \code{x} are used for form a new level for the
-  factor.  \emph{This means that there will be no \code{NA}
-    values in the result}.
+  the \code{i}-th element of the result is set to \code{\link{NA}}.  Any
+  values listed in \code{exclude} result in \code{NA}s appearing in the
+  factor returned.  If \code{exclude} is set to a zero length vector,
+  then any \code{\link{NA}} values in \code{x} are used for form a new
+  level for the factor.  \emph{This means that there will be no
+  \code{NA} values in the result}.
 
   \code{labels} is a vector of character strings used to label the
   levels of the factor.  The default is to use the encoded factor levels.
@@ -55,7 +55,11 @@ as.ordered(x)
 \seealso{
   \code{\link{gl}} for construction of ``balanced'' factors;
   \code{\link{levels}} and \code{\link{nlevels}} for accessing the
-  levels,
-  and \code{\link{codes}} to get integer codes.
+  levels,  and \code{\link{codes}} to get integer codes.
 }
 \keyword{category}
+\examples{
+ff <- factor(substring("statistics",1:10,1:10), levels=letters)
+ff
+codes(ff)
+}
