@@ -257,6 +257,7 @@ varimax <- function(x, normalize = TRUE, eps = 1e-5)
         d <- sum(sB$d)
         if(d < dpast * (1 + eps)) break
     }
+    z <- x %*% TT
     if(normalize) z <- z * sc
     dimnames(z) <- dimnames(x)
     list(loadings = z, rotmat = TT)
