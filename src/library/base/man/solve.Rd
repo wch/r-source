@@ -14,7 +14,7 @@ solve(a, b, \dots)
     side(s) of the linear system.  If missing, \code{b} is taken to be
     an identity matrix and \code{solve} will return the inverse of \code{a}.}
   \item{tol}{the tolerance for detecting linear dependencies in the
-    columns of \code{a}, if LINPACK is used.}
+    columns of \code{a}.  Not presently used with complex matrices \code{a}.}
   \item{LINPACK}{logical. Should LINPACK be used (for compatibility with
     \R < 1.7.0)?}
   \item{\dots}{further arguments passed to or from other methods}
