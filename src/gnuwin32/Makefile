@@ -365,7 +365,7 @@ ziponly-%:
 
 ## must be careful not to zip up a dir setup for lazy-data
 zipdata-%:
-	@if ! test -f ../../library/$*/data/Rdata.rdb ; then \
+	@if ! test -f $(RLIB)/$*/data/Rdata.rdb ; then \
 	  $(ECHO) "  zipping data" ; \
 	  (cd $(RLIB)/$*/data; \
 	    if test -f Rdata.zip ; then \
@@ -377,7 +377,7 @@ zipdata-%:
 	fi
 
 data-%:
-	@if ! test -f ../../library/$*/data/Rdata.rdb ; then \
+	@if ! test -f $(RLIB)/$*/data/Rdata.rdb ; then \
 	  $(ECHO) "  not zipping data" ; \
 	fi
 
