@@ -233,11 +233,6 @@ Subject: package fdim slopeopt error
 From: phddas@yahoo.com
 Date: Sun, 25 Apr 2004 00:23:42 +0200 (CEST)
 ..`Fred J.' claims that the maintainer's email address does not work.
-* PR# 6878 *
-Subject: convert.times in chron, error when 59 < seconds < 60
-From: wolfda@ornl.gov
-Date: Wed, 12 May 2004 20:55:36 +0200 (CEST)
-Date: 2004-01-31
 
 Directory:  Analyses
 
@@ -886,3 +881,11 @@ Date: Tue, 18 May 2004 06:43:27 -0500
 Subject: plot.factor does not work properly
 From: x.sole@iconcologia.catsalut.net
 Date: Tue, 18 May 2004 16:46:21 +0200 (CEST)
+* PR# 6895 *
+Subject: foreign package:  reading epiinfo
+From: giles.crane@doh.state.nj.us
+Date: Wed, 19 May 2004 19:30:34 +0200 (CEST)
+* PR# 6896 *
+Subject: R with shared library support: 'make check' fails with unresolved symbol
+From: garvin@cs.rice.edu
+Date: Wed, 19 May 2004 23:38:53 +0200 (CEST)
