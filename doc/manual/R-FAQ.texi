@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2000
-@set FAQ-VERSION 1.1-14, 2000-10-01
+@set FAQ-VERSION 1.1-15, 2000-10-04
 @set REL-VERSION 1.1.1
 @set DEV-VERSION 1.2.0
 @c %**end of header
@@ -1556,6 +1556,10 @@ An integrated set of functions for fitting curves and surfaces including
 thin plate splines, kriging and neural networks.
 @item hdf5
 Interface to the NCSA HDF5 library.
+@item mgcv
+Routines for multiple smoothing parameter selection by GCV or UBRE for
+generalized ridge regression problems (e.g., GAMs) with multiple
+smoothing parameters.
 @item multidim
 Code for correspondence analysis and other multidimensional descriptive
 statistics.
