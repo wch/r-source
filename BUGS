@@ -88,16 +88,32 @@ From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
 Date: 25 Mar 1999 21:22:44 +0100
 --plot(y~x,pch=z) may subset x and y but leave z.
 --E.g. with missing values you can get incorrect plot symbols.
-* PR# 192 *
-Subject: dev.print aspect ratio
-From: wsi@gcal.ac.uk
-Date: Tue, 11 May 1999 13:43:50 +0200 (MET DST)
---Difficulty getting a square plot.
 * PR# 202 *
 Subject: persp box occlusion bug
 From: wsi@gcal.ac.uk
 Date: Wed, 2 Jun 1999 15:02:03 +0200 (MET DST)
 --Don't think I (pd) got the point there...
+* PR# 225 *
+Subject: pch and mkh bug
+From: Stephen Harker <sjh@ph.adfa.edu.au>
+Date: Wed, 14 Jul 1999 13:10:31 +1000 (EST)
+--(1) is an S incompatibility, but the S rules may not be a good model
+--(2) is a bug, fixed for 0.65.0
+--(3) has gone away in 0.65.0
+* PR# 229 *
+Subject: dev.print scaling bug?
+From: John.Peters@tip.csiro.au (John Peters)
+Date: Fri, 16 Jul 1999 12:10:48 +1000 (EST)
+* PR# 230 *
+Subject: Use of lwd = 0, lty = 2 in segments.
+From: Douglas Bates <bates@stat.wisc.edu>
+Date: Sat, 17 Jul 1999 17:18:44 -0500 (CDT)
+* PR# 238 *
+Subject: EPS compliance of postscript device: initclip operator
+From: David Middleton <dajm@deeq.demon.co.uk>
+Date: Tue, 03 Aug 1999 17:51:47 -0300
+--initclip is removed. Still need new argument onefile/onepage to ensure one page
+--and use %!PS-Adobe-3.0 EPSF-3.0 header
 
 Directory:  In-Out
 
@@ -129,11 +145,21 @@ From: Jim Lindsey <jlindsey@alpha.luc.ac.be>
 Date: Fri, 29 Jan 1999 08:28:32 +0100 (MET)
 --Model formulas. Proper fix probably requires extensive rewrite of model formula
 --parser, which would make in non-S-compatible.
-* PR# 118 *
-Subject: Function parsing
-From: Jonathan Rougier <J.C.Rougier@durham.ac.uk>
-Date: Wed, 10 Feb 1999 13:42:01 +0000 (GMT)
---comment placement.
+* PR# 239 *
+Subject: cbind is not generic as claimed, omits labels where S has them 
+From: Prof Brian D Ripley <ripley@stats.ox.ac.uk>
+Date: Thu, 5 Aug 1999 12:29:58 +0100 (BST)
+--Cbind is now generic, still labelling issues. See also PR#240 and PR#241.
+* PR# 240 *
+Subject: Re: cbind is not generic as claimed, omits labels where S has them
+From: Prof Brian D Ripley <ripley@stats.ox.ac.uk>
+Date: Thu, 5 Aug 1999 17:19:08 +0100 (BST)
+--See PR#239
+* PR# 241 *
+Subject: Re: cbind is not generic as claimed, omits labels where S has them
+From: Prof Brian D Ripley <ripley@stats.ox.ac.uk>
+Date: Fri, 6 Aug 1999 06:52:35 +0100 (BST)
+--See PR#239
 
 Directory:  Low-level
 
@@ -172,6 +198,11 @@ Subject: definition of R_problem_buf in S.h
 From: vogels@ieee.org
 Date: Mon, 14 Jun 1999 17:56:04 +0200 (MET DST)
 --Same as #185
+* PR# 235 *
+Subject:  round(numeric(0)) 
+From: Prof Brian Ripley <ripley@stats.ox.ac.uk>
+Date: Thu, 29 Jul 1999 15:20:21 +0100 (BST)
+--Some followup of this on R-devel not sent here.
 
 Directory:  Misc
 
@@ -193,22 +224,28 @@ Date: Thu, 18 Feb 1999 15:47:24 +0100
 
 Directory:  Startup
 
-* PR# 21 *
-Subject: Restoring large image files
-From: Martyn Plummer <plummer@iarc.fr>
-Date: Fri, 21 Aug 1998 13:29:16 -0000 ()
---Request to change in error conditions in R_InitialData. Could be done, but
---at present initial loads are not distinguished from load("file") calls. 
+none
 
 Directory:  System-specific
 
-* PR# 201 *
-Subject: RedHat Linux 6.0 Problems
-From: jacobm@magnet.drcmr.dk
-Date: Wed, 2 Jun 1999 10:58:45 +0200 (MET DST)
 * PR# 214 *
 From: Charles Taylor <charles@amsta.leeds.ac.uk>
 Date: Thu, 24 Jun 1999 11:20:06 +0100 (BST)
+* PR# 222 *
+Subject: Use of R-Coda
+From: =?iso-8859-1?Q?Jette_Halkj=E6r_Jakobsen?=
+Date: Fri, 9 Jul 1999 10:54:16 +0200 
+--In Danish (?)  Looks as if PR#246 is the same in English
+* PR# 234 *
+Subject: R-bugs
+From: =?iso-8859-1?Q?Jette_Halkj=E6r_Jakobsen?=
+Date: Tue, 27 Jul 1999 13:49:31 +0200
+--Looks like PR#222 again, in Danish. See PR#246 for English version
+* PR# 246 *
+Subject: R-Coda on rs6000-ibm-aix4.2.1.0
+From: =?iso-8859-1?Q?Jette_Halkj=E6r_Jakobsen?=
+Date: Wed, 11 Aug 1999 08:49:47 +0200
+--Problem with ps on AIX in 0.64.2. Try again with 0.65.0?
 
 Directory:  TooMuchAtOnce
 
@@ -233,20 +270,21 @@ none
 
 Directory:  incoming
 
-* PR# 216 *
-Subject: Bug in "[.ts" for multivariate ts {Problem with plot.ts, "["}
+* PR# 248 *
+Subject: scan() + error interferes with count.fields() in some cases
 From: Martin Maechler <maechler@stat.math.ethz.ch>
-Date: Fri, 2 Jul 1999 18:45:20 +0200
-* PR# 217 *
-Subject: RE: Bug in "[.ts" for multivariate ts {Problem with plot.ts, "["
-From: Martyn Plummer <plummer@iarc.fr>
-Date: Fri, 02 Jul 1999 18:21:37 +0200 (CEST)
-Date: 02-Jul-99
-* PR# 218 *
-Subject: Bug on sample
-From: jperez@cesma.usb.ve
-Date: Wed, 7 Jul 1999 16:23:31 +0200 (MET DST)
-* PR# 219 *
-Subject: Bug on sample
-From: jperez@cesma.usb.ve
-Date: Wed, 7 Jul 1999 16:23:53 +0200 (MET DST)
+Date: Fri, 13 Aug 1999 17:44:48 +0200
+* PR# 249 *
+Subject: axis ignores srt/crt
+From: Thomas Lumley <thomas@biostat.washington.edu>
+Date: Mon, 16 Aug 1999 15:51:49 -0700 (PDT)
+* PR# 250 *
+From: Peter Malewski <peter@tu-bs.de>
+Date: Tue, 17 Aug 1999 12:21:38 +0200 (CEST)
+* PR# 251 *
+From: Peter Malewski <peter@tu-bs.de>
+Date: Tue, 17 Aug 1999 12:21:45 +0200 (CEST)
+* PR# 252 *
+Subject: bug: R says "Floating exception" on DEC-Alpha w/OSF1
+From: "Michael Thompson" <mlthomps@yayoi.mt.m-kagaku.co.jp>
+Date: Thu, 19 Aug 1999 06:03:06 +0900
