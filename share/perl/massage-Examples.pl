@@ -63,7 +63,7 @@ foreach $file  (@ARGV) {
     my $bf = basename $file, (".R");
     my $have_examples=0, $have_par=0, $have_contrasts=0, $nm;
 
-    open FILE, "< $file" || die "file $file cannot be opened";
+    open FILE, "< $file" or die "file $file cannot be opened";
     while (<FILE>) {
 	$have_examples = 1 if /_ Examples _/o;
 	$have_par = 1 if /par\(/o;
@@ -77,7 +77,7 @@ foreach $file  (@ARGV) {
 	print "..nameEx <- \"$nm\"\n";
     }
 
-    open FILE, "< $file" || die "file $file cannot be opened";
+    open FILE, "< $file" or die "file $file cannot be opened";
     while (<FILE>) { print $_; }
     close FILE;
    

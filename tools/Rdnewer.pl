@@ -10,16 +10,15 @@ use File::Basename;
 use Getopt::Long;
 
 my $OS = "unix";
-GetOptions(("os|OS:s"));
-$OS = $opt_os if $opt_os;
+GetOptions("os|OS:s" => \$OS);
 
-$file = $ARGV[1];
+my $file = $ARGV[1];
 (-r $file) || exit 0;
 
 my $age = (-M $file);
 my $dir = "$ARGV[0]/man";
 
-chdir $dir || die "whereami?";
+chdir $dir or die "whereami?";
 foreach $f (<*.Rd>) {
     exit 0 if ((-M $f) < $age)
 }

@@ -34,7 +34,7 @@ use Text::DelimMatch;
 ## don't buffer output
 $| = 1;
 
-my $revision = ' $Revision: 1.50 $ ';
+my $revision = ' $Revision: 1.51 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -114,8 +114,8 @@ my $R_opts = "--vanilla";
 if($opt_latex) {
     my $log = new R::Logfile();
     $log->checking("for working latex");
-    open(texfile, "> $TMPDIR/Rtextest$$.tex") ||
-	die "Error: cannot write to Rtextest$$.tex\n";
+    open(texfile, "> $TMPDIR/Rtextest$$.tex")
+      or die "Error: cannot write to Rtextest$$.tex\n";
     print texfile "\\documentclass\{article\}\\begin\{document\}" .
 	"test\\end\{document\}\n";
     close texfile;
@@ -134,8 +134,8 @@ if($opt_latex) {
 
 ## get the valid keywords for later ...
 my %standard_keywords = ();
-open(KEYWORDS, "< ${R_HOME}/doc/KEYWORDS.db") ||
-    die "Cannot open \`KEYWORDS.db'";
+open(KEYWORDS, "< ${R_HOME}/doc/KEYWORDS.db")
+  or die "Cannot open \`KEYWORDS.db'";
 while(<KEYWORDS>) {
     if(/^.*\|([^:]*):.*/) {
 	$standard_keywords{$1} = 1;
@@ -144,7 +144,7 @@ while(<KEYWORDS>) {
 close KEYWORDS;
 
 ## this is the main loop over all packages to be checked
-$#ARGV >= 0 || die "Error: no packages were specified";
+$#ARGV >= 0 or die "Error: no packages were specified";
 my $pkg;
 foreach $pkg (@ARGV) {
     ## $pkg should be the path to the package (bundle) root source
@@ -419,8 +419,8 @@ sub check_pkg {
     if(-d "R") {
 	$log->checking("R files for library.dynam");
 	# only need to check the installed file
-	open Rfile, "< $library/$pkgname/R/$pkgname" ||
-	    die "cannot open \`$library/$pkgname/R/$pkgname' for reading\n";
+	open Rfile, "< $library/$pkgname/R/$pkgname"
+	  or die "cannot open \`$library/$pkgname/R/$pkgname' for reading\n";
 	my $any = 0;
 	while(<Rfile>) {
 	    if(/library.dynam\(\"(.*?)\"/o) {
@@ -498,8 +498,8 @@ sub check_pkg {
 	}
 	
 	foreach $rdfile (@rdfiles) {
-	    open RDFILE, "< $rdfile" ||
-		die "cannot open \`$rdfile' for reading\n";
+	    open RDFILE, "< $rdfile"
+	      or die "cannot open \`$rdfile' for reading\n";
 
 	    my %keywords;
 	    my %tagcount;
@@ -602,7 +602,7 @@ sub check_pkg {
 
 	my $Rcmd = "$TMPDIR/Rcmd.$$";
 	my $Rout = "$TMPDIR/Rout.$$";
-	open Rcmd, "> $Rcmd" || die "Cannot write to \`$Rcmd'\n";
+	open Rcmd, "> $Rcmd" or die "Cannot write to \`$Rcmd'\n";
         print Rcmd "undoc(dir = \"${pkgdir}\")\n";
         close Rcmd;
         system("${R_exe} ${R_opts} < ${Rcmd} > ${Rout}");
@@ -637,7 +637,7 @@ sub check_pkg {
 
 	my $Rcmd = "$TMPDIR/Rcmd.$$";
 	my $Rout = "$TMPDIR/Rout.$$";
-	open Rcmd, "> $Rcmd" || die "Cannot write to \`$Rcmd'\n";
+	open Rcmd, "> $Rcmd" or die "Cannot write to \`$Rcmd'\n";
         print Rcmd "codoc(dir = \"${pkgdir}\")\n";
         close Rcmd;
         system("${R_exe} ${R_opts} --quiet < ${Rcmd} > ${Rout}");
@@ -822,7 +822,7 @@ sub Rsystem
 {
     my $cmd = $_[0];
     if($WINDOWS) {
-	open cfile,  "> $cfile" || die "Cannot write to \`$cfile'\n";
+	open cfile,  "> $cfile" or die "Cannot write to \`$cfile'\n";
 	print cfile "$cmd\n";
 	close cfile;
 	$res = system("sh $cfile");

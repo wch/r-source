@@ -46,10 +46,11 @@ $filename = "";
 
 sub parse_html {
     local ($file) = @_;
-    open (HTML, $file) || die "Could not open $file: $!\nStopped";
+    open (HTML, $file) or die "Could not open $file: $!\nStopped";
     $filename = $file;
     &parse_html_stream ();
-    close (HTML);}
+    close (HTML);
+}
 
 # Global input HTML is the handle to the stream of HTML
 sub parse_html_stream {

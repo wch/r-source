@@ -24,7 +24,7 @@ use R::Rdconv;
 use R::Rdlists;
 use R::Utils;
 
-my $revision = ' $Revision: 1.2 $ ';
+my $revision = ' $Revision: 1.3 $ ';
 my $version;
 my $name;
 
@@ -87,11 +87,17 @@ print STDERR "Destination `dest'= `$dest'\n" if $opt_debug;
 build_index($lib, $dest, "");
 if ($opt_latex) {
     $latex_d="$dest/latex";
-    mkdir "$latex_d", $dir_mod || die "Could not create $latex_d: $!\n";
+    if(! -d $latex_d) {
+	mkdir "$latex_d", $dir_mod
+	  or die "Could not create $latex_d: $!\n";
+    }
 }
 if ($opt_example) {
     $Rex_d="$dest/R-ex";
-    mkdir "$Rex_d", $dir_mod || die "Could not create $Rex_d: $!\n";
+    if(! -d $Rex_d) {
+	mkdir "$Rex_d", $dir_mod
+	  or die "Could not create $Rex_d: $!\n";
+    }
 }
 
 print " >>> Building/Updating help pages for package `$pkg'\n";
