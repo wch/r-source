@@ -2320,7 +2320,7 @@ function(package)
         stop(paste("argument", sQuote("package"),
                    "must be of length 1"))
     dir <- .find.package(package)
-    
+
     ## We definitely need a valid DESCRIPTION file.
     db <- try(read.dcf(file.path(dir, "DESCRIPTION"))[1, ],
               silent = TRUE)
@@ -2350,11 +2350,16 @@ function(package)
     badDepends <- list()
 
     ## Are all packages listed in Depends/Suggests installed?
+    ## Need to treat specially the former stub packages.
     reqs <- unique(c(depends, suggests))
     reqs <- reqs[!reqs %in%
                  utils::installed.packages()[ , "Package"]]
-    if(length(reqs))
-        badDepends$requiredButNotInstalled <- reqs
+    m <- reqs %in% c("ctest", "eda", "lqs", "mle", "modreg", "mva",
+                     "nls", "stepfun", "ts")
+    if(length(reqs[!m]))
+        badDepends$requiredButNotInstalled <- reqs[!m]
+    if(length(reqs[m]))
+        badDepends$requiredButStub <- reqs[m]
 
     ## Are all vignette dependencies at least suggested or equal to
     ## the package name?
@@ -2366,7 +2371,7 @@ function(package)
         if(length(reqs))
             badDepends$missingVignetteDepends <- reqs
     }
-    
+
     ## Are all namespace dependencies listed as package dependencies?
     if(fileTest("-f", file.path(dir, "NAMESPACE"))) {
         reqs <- .getNamespacePackageDepends(dir)
@@ -2389,6 +2394,11 @@ function(package)
 print.checkPackageDepends <- function(x, ...) {
     if(length(bad <- x$requiredButNotInstalled)) {
         writeLines("Packages required but not available:")
+        .prettyPrint(bad)
+        writeLines("")
+    }
+    if(length(bad <- x$requiredButStub)) {
+        writeLines("Former standard packages required but now defunct:")
         .prettyPrint(bad)
         writeLines("")
     }
