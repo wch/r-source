@@ -22,6 +22,7 @@
 
 use Cwd;
 use File::Basename;
+use File::Copy;
 use File::Path;
 use Getopt::Long;
 use R::Dcf;
@@ -30,7 +31,7 @@ use R::Utils;
 ## don't buffer output
 $|=1;
 
-my $revision = ' $Revision: 1.22 $ ';
+my $revision = ' $Revision: 1.23 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -437,26 +438,37 @@ sub check_pkg {
     }
 
     if($opt_tests && (-d "$startdir/$pkg/tests")){
-        my $testdir="$startdir/$pkg/tests";
         $log->checking("tests");
+        my $testsrcdir="$startdir/$pkg/tests";
+        my $testdir="$pkgoutdir/tests";
+        if(! -d $testdir){
+            if(! mkdir($testdir, 0755)){
+	        die("could not create directory $testdir\n");
+	        exit(1);
+	    }
+        }
+        chdir($testdir);
+        while(<$testsrcdir/*>){
+            copy($_, basename($_));
+        }
         my $makefiles="-f ${R_HOME}/etc/Makeconf-tests";
         my $makevars="";
-        if($WINDOWS && (-r "$testdir/Makefile.win")){
-            $makefiles .= " -f $testdir/Makefile.win";
+        if($WINDOWS && (-r "$testsrcdir/Makefile.win")){
+            $makefiles .= " -f $testsrcdir/Makefile.win";
         }
-        elsif(-r "$testdir/Makefile"){
-            $makefiles .= " -f $testdir/Makefile";
+        elsif(-r "$testsrcdir/Makefile"){
+            $makefiles .= " -f $testsrcdir/Makefile";
         }
-        if($WINDOWS && (-r "$testdir/Makevars.win")){
-            $makevars = " -f $testdir/Makevars.win";
+        if($WINDOWS && (-r "$testsrcdir/Makevars.win")){
+            $makevars = " -f $testsrcdir/Makevars.win";
         }
-        elsif(-r "$testdir/Makevars"){
-            $makevars = " -f $testdir/Makevars";
+        elsif(-r "$testsrcdir/Makevars"){
+            $makevars = " -f $testsrcdir/Makevars";
         }
         else{
             open makevars, "> Makevars";
             print makevars "makevars = -f Makevars\n";
-            print makevars "srcdir = $testdir\n";
+            print makevars "srcdir = $testsrcdir\n";
             ## at least windows does not pass env correctly to make
             print makevars "R_LIBS = $ENV{'R_LIBS'}\n"; 
             print makevars "VPATH = \$(srcdir)\n\n";
@@ -479,6 +491,7 @@ sub check_pkg {
             $log->error();
             exit(1);
         }
+        chdir($pkgoutdir);
         $log->result("OK");
     }
             
