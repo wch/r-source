@@ -192,6 +192,7 @@ front-ends: libR.a
 
 R.a: $(OBJS)
 	@$(ECHO) -------- Building $@ --------
+	@$(RM) R.a
 	$(AR) cr R.a $^
 	$(RANLIB) R.a
 

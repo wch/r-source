@@ -144,6 +144,7 @@ lib%.a: %.def
 
 %.a:
 #	@$(ECHO) -------- Building $@ from $^ --------
+	@$(RM) $@
 	$(AR) cr $@ $^
 	$(RANLIB) $@
 
