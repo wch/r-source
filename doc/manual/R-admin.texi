@@ -471,11 +471,11 @@ path does not contain spaces}, and run something like
 @smallexample
 tar zxvf R-@value{VERSIONno}.tgz
 cd R-@value{VERSIONno}\src\gnuwin32
-make
+make all recommended
 @end smallexample
 
 @noindent
-sit back and wait (for about 5 minutes on 1GHz PIII with a fast local
+sit back and wait (for about 15 minutes on 1GHz PIII with a fast local
 disc).
 
 For further details, including how to make the documentation and how to
@@ -489,9 +489,9 @@ The @file{bin/macosx} directory of a @acronym{CRAN} site contains
 binaries for a base distribution and a large number of add-on packages
 from @acronym{CRAN} to run on Mac OS X version 10.2.0 or higher.
 
-The simplest way is to use @file{R.dmg.sit}.  Just double-click on the icon and the
-archive will be expanded as an image di file. Read the @file{ReadMe.txt} inside the
-disk image and follow the instructions.
+The simplest way is to use @file{R.dmg.sit}.  Just double-click on the
+icon and the archive will be expanded as an image di file. Read the
+@file{ReadMe.txt} inside the disk image and follow the instructions.
 
 See the @uref{http://cran.r-project.org/bin/macosx/RMacOSX-FAQ.html, R for Mac OS X
 @acronym{FAQ}} for more details.
@@ -504,10 +504,10 @@ See the @uref{http://cran.r-project.org/bin/macosx/RMacOSX-FAQ.html, R for Mac O
 @section Building from source on Mac OS X
 
 If you want to build this port from the sources, you can read the above
-mentioned @uref{http://cran.r-project.org/bin/macosx/RMacOSX-FAQ.html, R for Mac OS X
-@acronym{FAQ}} for full details. You will need to collect and install some tools 
-as explained in the document. Than you have to expand the R sources and
-configure R appropriately, for example
+mentioned @uref{http://cran.r-project.org/bin/macosx/RMacOSX-FAQ.html, R
+for Mac OS X @acronym{FAQ}} for full details. You will need to collect
+and install some tools as explained in the document. Than you have to
+expand the R sources and configure R appropriately, for example
 
 
 @smallexample
@@ -521,9 +521,10 @@ make
 sit back and wait. The last option @command{--with-aqua} is needed only if you want a Console GUI.
 The first two options are strongly recommended. 
 
-@R{} is by default configured and installed as a framework called @file{R.framework}. The 
-default path for @file{R.framework} is @file{/Library/Frameworks} but this can be changed
-at configure time specifying the flag @command{--enable-R-framework[=DIR]} or at install
+@R{} is by default configured and installed as a framework called
+@file{R.framework}. The default path for @file{R.framework} is
+@file{/Library/Frameworks} but this can be changed at configure time
+specifying the flag @command{--enable-R-framework[=DIR]} or at install
 time as
 @smallexample
 make prefix=/where/you/want/R.framework/to/go install
@@ -541,8 +542,6 @@ the @file{R.framework} has not to be specified in the path.
 * Updating packages::           
 * Removing packages::           
 @end menu
-
-This chapter applies to Unix-like and Windows versions of @R{}.
 
 It is helpful to use the correct terminology.  A @emph{package} is
 loaded from a @emph{library} by the function @code{library()}.  Thus a
