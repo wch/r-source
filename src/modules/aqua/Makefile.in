@@ -11,7 +11,7 @@ R_HOME = $(top_builddir)
 
 include $(top_builddir)/Makeconf
 
-SOURCES =
+SOURCES = aquaconsole.c
 HEADERS =
 DEPENDS = $(SOURCES:.c=.d)
 OBJECTS = $(SOURCES:.c=.lo)
@@ -22,7 +22,7 @@ DISTFILES = Makefile.in $(SOURCES) $(HEADERS)
 ## <FIXME>
 ## Change to 'aqua.la' when using libtool for shlibs.
 ## Remove when using automake ... also fix target 'install' then.
-aqua_la = aqua$(SHLIB_EXT)
+aqua_la = R_aqua$(SHLIB_EXT)
 ## </FIXME>
 Rexecmodulesdir_LTLIBRARIES = $(aqua_la)
 aqua_la_SOURCES = $(SOURCES)
@@ -53,14 +53,14 @@ $(aqua_la): $(aqua_la_OBJECTS) $(aqua_la_DEPENDENCIES)
 ## </FIXME>
 
 install: installdirs
-@USE_LIBTOOL_FALSE@	@$(top_srcdir)/tools/copy-if-change $(aqua_la) $(Rexecmodulesdir)/aqua$(SHLIB_EXT)
+@USE_LIBTOOL_FALSE@	@$(top_srcdir)/tools/copy-if-change $(aqua_la) $(Rexecmodulesdir)/R_aqua$(SHLIB_EXT)
 @USE_LIBTOOL_TRUE@	@$(LIBTOOL) --mode=install $(INSTALL) $(aqua_la) $(Rexecmodulesdir)
 installdirs:
 	@$(MKINSTALLDIRS) $(Rexecmodulesdir)
 install-strip:
 	$(MAKE) INSTALL_PROGRAM="${INSTALL_PROGRAM} -s" install
 uninstall:
-	@rm -f $(Rexecmodulesdir)/aqua$(SHLIB_EXT)
+	@rm -f $(Rexecmodulesdir)/R_aqua$(SHLIB_EXT)
 
 mostlyclean: clean
 clean:
