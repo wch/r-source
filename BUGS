@@ -102,12 +102,6 @@ Subject: cex/col/etc. in title(): documentation?
 From: Ben Bolker <ben@zoo.ufl.edu>
 Date: Mon, 22 Oct 2001 11:55:14 -0400 (EDT)
 --MM:actually the documentation still could elaborate a bit..
-* PR# 1195 *
-Subject: help(dbinom) recommended documentation improvement
-From: Rich Heiberger <rmh@surfer.sbm.temple.edu>
-Date: Tue, 4 Dec 2001 11:29:58 -0500 (EST)
---This isn't really a bug: the line in question is a plain-text equation, not a
---piece of R code.
 * PR# 1442 *
 Subject: Undocumenten in: R INSTALL --help
 From: Peter Kleiweg <kleiweg@let.rug.nl>
@@ -116,6 +110,10 @@ Date: Mon, 8 Apr 2002 17:19:20 +0200 (CEST)
 Subject: R-admin docs, Installing packages
 From: david.firth@nuffield.ox.ac.uk
 Date: Tue, 14 May 2002 17:13:14 +0200 (MET DST)
+* PR# 1582 *
+Subject: No documentation for class AsIs
+From: "David Kane  <David Kane" <a296180@mica.fmr.com>
+Date: Mon, 20 May 2002 17:30:42 -0400
 
 Directory:  Graphics
 
@@ -374,6 +372,10 @@ Subject: prettyNum inserts leading commas
 From: David Brahm  <brahm@alum.mit.edu>
 Date: Mon, 13 May 2002 14:21:08 -0400
 --fixed for 1.5.1 (using the suggestion)
+* PR# 1586 *
+Subject: Re: [R] Bug?  assigning with operator '=' to local parameter changes
+From: Thomas Lumley <tlumley@u.washington.edu>
+Date: Tue, 21 May 2002 12:48:22 -0700 (PDT)
 
 Directory:  Macintosh
 
@@ -494,23 +496,7 @@ Date: Mon, 20 May 2002 06:45:07 -0400
 Subject: R bug in cluster package
 From: David Hitchcock <dhitchco@stat.ufl.edu>
 Date: Mon, 20 May 2002 14:33:24 -0400
-* PR# 1582 *
-Subject: No documentation for class AsIs
-From: "David Kane  <David Kane" <a296180@mica.fmr.com>
-Date: Mon, 20 May 2002 17:30:42 -0400
-* PR# 1586 *
-Subject: Re: [R] Bug?  assigning with operator '=' to local parameter changes
-From: Thomas Lumley <tlumley@u.washington.edu>
-Date: Tue, 21 May 2002 12:48:22 -0700 (PDT)
-* PR# 1587 *
-Subject: I() fails on objects of class POSIXct
-From: "David Kane  <David Kane" <a296180@mica.fmr.com>
-Date: Tue, 21 May 2002 16:16:08 -0400
 * PR# 1592 *
 Subject: signature match in setMethod
 From: tkeitt@ms.cc.sunysb.edu
 Date: Wed, 22 May 2002 23:04:53 +0200 (MET DST)
-* PR# 1602 *
-Subject: ?©?????? ?µ¾??¬??[??º?]
-From: ISCKOREA <bybank@dreamwiz.com>
-Date: Sun, 26 May 2002 14:31:09 +0900
