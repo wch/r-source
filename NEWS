@@ -179,9 +179,9 @@ NEW FEATURES
     o   Adding to NULL with [[ ]] generates a list if more than one
 	element is added (as S does).
 
-    o	Zero-rank lm() and glm() fits are now handled by the normal
+    o	Empty lm() and glm() fits are now handled by the normal
 	code: there are no methods for classes "lm.null" and
-	"glm.null".
+	"glm.null".  Zero-rank fits are handled consistently.
 
     o	Terms in formulae can now be quoted, to allow the use of
 	non-syntactic variable names.  [Note that other code using
@@ -199,6 +199,11 @@ NEW FEATURES
  
     o   In the tcltk package, as.tclObj() has gained a `drop´ argument to 
 	decide what should happen for vectors of length one.
+ 
+    o	New argument grep(..., fixed = TRUE) to avoid the need to escape
+	strings to match.
+ 
+    o	grep(x, ..., value = TRUE) preserves names of x.
  
 
 DEPRECATED & DEFUNCT

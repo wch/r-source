@@ -212,7 +212,7 @@ function(topic, device = getOption("device"),
         ## Files with extension 'R' or 'r'
         files <- files[sub(".*\\.", "", files) %in% c("R", "r")]
         ## Files with base names matching topic
-        files <- files[grep(topic, files)]
+        files <- files[grep(topic, files, fixed = TRUE)]
         if(length(files) > 0)
             available <- c(available, file.path(p, files))
     }

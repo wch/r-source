@@ -7,23 +7,25 @@
 \description{
   \code{grep} searches for matches to \code{pattern} (its first
   argument) within the character vector \code{x} (second
-  argument). \code{regexpr} does too, but returns more detail in a
-  different format.
+  argument).  \code{regexpr} does too, but returns more detail in a
+  different format.  \code{frep} matches fixed strings.
 
   \code{sub} and \code{gsub} perform replacement of matches determined
   by regular expression matching.
 }
 \usage{
-grep(pattern, x, ignore.case=FALSE, extended=TRUE, perl=FALSE, value=FALSE)
+grep(pattern, x, ignore.case = FALSE, extended = TRUE, perl = FALSE,
+     value = FALSE, fixed = FALSE)
 sub(pattern, replacement, x,
-        ignore.case=FALSE, extended=TRUE, perl=FALSE)
+        ignore.case = FALSE, extended = TRUE, perl = FALSE)
 gsub(pattern, replacement, x,
-        ignore.case=FALSE, extended=TRUE, perl=FALSE)
-regexpr(pattern, text,  extended=TRUE, perl=FALSE)
+        ignore.case = FALSE, extended = TRUE, perl = FALSE)
+regexpr(pattern, text,  extended = TRUE, perl = FALSE)
 }
 \arguments{
-  \item{pattern}{character string containing a regular expression to be
-    matched in the given character vector.}
+  \item{pattern}{character string containing a regular expression (or
+    character string for \code{fixed = TRUE}) to be matched in the given
+    character vector.}
   \item{x, text}{a character vector where matches are sought.}
   \item{ignore.case}{if \code{FALSE}, the pattern matching is \emph{case
       sensitive} and if \code{TRUE}, case is ignored during matching.}
@@ -35,6 +37,8 @@ regexpr(pattern, text,  extended=TRUE, perl=FALSE)
     indices of the matches determined by \code{grep} is returned, and if
     \code{TRUE}, a vector containing the matching elements themselves is
     returned.}
+  \code{fixed}{logical. If \code{TRUE}, \code{pattern} is a string to be
+    matched as is.  Overrides all other arguments.} 
   \item{replacement}{a replacement for matched pattern in \code{sub} and
     \code{gsub}.}
 }
@@ -63,7 +67,10 @@ regexpr(pattern, text,  extended=TRUE, perl=FALSE)
   For \code{regexpr} an integer vector of the same length as \code{text}
   giving the starting position of the first match, or \eqn{-1} if there
   is none, with attribute \code{"match.length"} giving the length of the
-  matched text (or \eqn{-1} for no match). 
+  matched text (or \eqn{-1} for no match).
+
+  For \code{fgrep} a vector giving either the indices of the elements of
+  \code{x} that yielded a match.
 }
 \note{
   \code{perl=TRUE} will only be available if \R was compiled against 

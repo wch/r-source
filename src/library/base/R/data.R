@@ -114,13 +114,13 @@ function(..., list = character(0),
                         c(files,
                           file.path(p, scan(fp, what="", quiet = TRUE)))
                 else warning(paste(sQuote("filelist"),
-                                   "is missing for dir",
+                                    "is missing for dir",
                                    sQuote(p)))
             } else {
                 files <- c(files, list.files(p, full = TRUE))
             }
         }
-        files <- files[grep(name, files)]
+        files <- files[grep(name, files, fixed = TRUE)]
         found <- FALSE
         if (length(files) > 1) {
             ## more than one candidate

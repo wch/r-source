@@ -23,8 +23,8 @@ layout <-
     num.rows <- dm[1]
     num.cols <- dm[2]
 
-    cm.widths  <- if (is.character(widths)) grep("cm", widths)
-    cm.heights <- if (is.character(heights))grep("cm", heights)
+    cm.widths  <- if (is.character(widths)) grep("cm", widths, fixed = TRUE)
+    cm.heights <- if (is.character(heights)) grep("cm", heights, fixed = TRUE)
 
     ## pad widths/heights with 1's	and remove "cm" tags
     pad1.rm.cm <- function(v, cm.v, len) {

@@ -525,12 +525,30 @@ SEXP do_makenames(SEXP call, SEXP op, SEXP args, SEXP env)
     return ans;
 }
 
+/* This could be faster for plen > 1, but uses in R are for small strings */
+static Rboolean fgrep_one(char *pat, char *target)
+{
+    int i, plen=strlen(pat), len=strlen(target);
+    char *p;
+
+    if(plen == 0) return TRUE;
+    if(plen == 1) {
+    /* a single char is a common case */
+	for(p = target; *p; p++)
+	    if(*p == pat[0]) return TRUE;
+	return FALSE;
+    }
+    for(i = 0; i <= len-plen; i++)
+	if(strncmp(pat, target+i, plen) == 0) return TRUE;
+    return FALSE;
+}
+
 SEXP do_grep(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP pat, vec, ind, ans;
     regex_t reg;
     int i, j, n, nmatches;
-    int igcase_opt, extended_opt, value_opt, eflags;
+    int igcase_opt, extended_opt, value_opt, fixed_opt, eflags;
 
     checkArity(op, args);
     pat = CAR(args); args = CDR(args);
@@ -538,83 +556,68 @@ SEXP do_grep(SEXP call, SEXP op, SEXP args, SEXP env)
     igcase_opt = asLogical(CAR(args)); args = CDR(args);
     extended_opt = asLogical(CAR(args)); args = CDR(args);
     value_opt = asLogical(CAR(args)); args = CDR(args);
+    fixed_opt = asLogical(CAR(args));
     if (igcase_opt == NA_INTEGER) igcase_opt = 0;
     if (extended_opt == NA_INTEGER) extended_opt = 1;
     if (value_opt == NA_INTEGER) value_opt = 0;
+    if (fixed_opt == NA_INTEGER) fixed_opt = 0;
 
     if (!isString(pat) || length(pat) < 1 || !isString(vec))
 	errorcall(call, R_MSG_IA);
 
-    /* special case: NA pattern matches only NAs in vector */
-    if (STRING_ELT(pat,0)==NA_STRING){
-	n = length(vec);\
-	nmatches=0;
-	PROTECT(ind = allocVector(LGLSXP, n));
-	for(i=0; i<n; i++){
-	    if(STRING_ELT(vec,i)==NA_STRING){
-		INTEGER(ind)[i]=1;
-		nmatches++;
-	    } 
-	    else
-		INTEGER(ind)[i]=0;
-	}
-	if (value_opt) {
-	    ans = allocVector(STRSXP, nmatches);
-	    j = 0;
-	    for (i = 0 ; i < n ; i++)
-		if (INTEGER(ind)[i]) {
-		    SET_STRING_ELT(ans, j++, STRING_ELT(vec, i));
-		    /* FIXME: Want to inherit 'names(vec)': [the following is wrong]
-		       TAG	 (ans)[j]   = TAG(vec)[i]; */
-		}
-	}
-	else {
-	    ans = allocVector(INTSXP, nmatches);
-	    j = 0;
-	    for (i = 0 ; i < n ; i++)
-		if (INTEGER(ind)[i]) INTEGER(ans)[j++] = i + 1;
-	}
-	UNPROTECT(1);
-    return ans;
-    }
-    /* end NA pattern handling */
-
-    eflags = 0;
-
-    if (extended_opt) eflags = eflags | REG_EXTENDED;
-    if (igcase_opt) eflags = eflags | REG_ICASE;
-
-    if (regcomp(&reg, CHAR(STRING_ELT(pat, 0)), eflags))
-	errorcall(call, "invalid regular expression");
-
     n = length(vec);
-    ind = allocVector(LGLSXP, n);
     nmatches = 0;
-    for (i = 0 ; i < n ; i++) {
-        if (STRING_ELT(vec,i)!=NA_STRING
-	    && regexec(&reg, CHAR(STRING_ELT(vec, i)), 0, NULL, 0) == 0) {
-		INTEGER(ind)[i] = 1;
+    PROTECT(ind = allocVector(LGLSXP, n));
+    /* special case: NA pattern matches only NAs in vector */
+    if (STRING_ELT(pat, 0) == NA_STRING){
+	for(i = 0; i < n; i++){
+	    if(STRING_ELT(vec, i) == NA_STRING){
+		LOGICAL(ind)[i] = 1;
 		nmatches++;
+	    } else LOGICAL(ind)[i]=0;
 	}
-	else INTEGER(ind)[i] = 0;
-    }
-    regfree(&reg);
-    PROTECT(ind);
-    if (value_opt) {
-	ans = allocVector(STRSXP, nmatches);
-	j = 0;
-	for (i = 0 ; i < n ; i++)
-	    if (INTEGER(ind)[i]) {
-		SET_STRING_ELT(ans, j++, STRING_ELT(vec, i));
-		/* FIXME: Want to inherit 'names(vec)': [the following is wrong]
-		   TAG	 (ans)[j]   = TAG(vec)[i]; */
+	/* end NA pattern handling */
+    } else {
+	eflags = 0;
+	if (extended_opt) eflags = eflags | REG_EXTENDED;
+	if (igcase_opt) eflags = eflags | REG_ICASE;
+
+	if (!fixed_opt && regcomp(&reg, CHAR(STRING_ELT(pat, 0)), eflags))
+	    errorcall(call, "invalid regular expression");
+
+	for (i = 0 ; i < n ; i++) {
+	    LOGICAL(ind)[i] = 0;
+	    if (STRING_ELT(vec, i) != NA_STRING) {
+		if (fixed_opt) LOGICAL(ind)[i] = 
+				   fgrep_one(CHAR(STRING_ELT(pat, 0)),
+					     CHAR(STRING_ELT(vec, i)));
+		else if(regexec(&reg, CHAR(STRING_ELT(vec, i)), 0, NULL, 0) == 0)
+		    LOGICAL(ind)[i] = 1;
 	    }
+	    if(LOGICAL(ind)[i]) nmatches++;
+	}
+	if (!fixed_opt) regfree(&reg);
     }
-    else {
+
+    if (value_opt) {
+	SEXP nmold = getAttrib(vec, R_NamesSymbol), nm;
+	ans = allocVector(STRSXP, nmatches);
+	for (i = 0, j = 0; i < n ; i++)
+	    if (LOGICAL(ind)[i])
+		SET_STRING_ELT(ans, j++, STRING_ELT(vec, i));
+	/* copy across names and subset */
+	if (!isNull(nmold)) {
+	    nm = allocVector(STRSXP, nmatches);
+	    for (i = 0, j = 0; i < n ; i++)
+		if (LOGICAL(ind)[i])
+		    SET_STRING_ELT(nm, j++, STRING_ELT(nmold, i));
+	    setAttrib(ans, R_NamesSymbol, nm);
+	}
+    } else {
 	ans = allocVector(INTSXP, nmatches);
 	j = 0;
 	for (i = 0 ; i < n ; i++)
-	    if (INTEGER(ind)[i]) INTEGER(ans)[j++] = i + 1;
+	    if (LOGICAL(ind)[i]) INTEGER(ans)[j++] = i + 1;
     }
     UNPROTECT(1);
     return ans;

@@ -1,11 +1,11 @@
 grep <-
 function(pattern, x, ignore.case = FALSE, extended = TRUE, perl = FALSE,
-         value = FALSE)
+         value = FALSE, fixed = FALSE)
 {
     if(perl)
         .Internal(grep.perl(pattern, x, ignore.case, value))
     else
-        .Internal(grep(pattern, x, ignore.case, extended, value))
+        .Internal(grep(pattern, x, ignore.case, extended, value, fixed))
 }
 
 sub <-
@@ -45,7 +45,7 @@ function(pattern, x, ignore.case = FALSE, value = FALSE,
        || (length(pattern) < 1)
        || ((n <- nchar(pattern)) == 0))
         stop("pattern must be a non-empty character string")
-    
+
     if(!is.list(max.distance)) {
         if(!is.numeric(max.distance) || (max.distance < 0))
             stop("max.distance must be non-negative")
@@ -77,7 +77,7 @@ function(pattern, x, ignore.case = FALSE, value = FALSE,
             max.insertions <- max.distance$insertions
         if(!is.null(max.distance$substitutions))
             max.substitutions <- max.distance$substitutions
-        max.distance <- max.distance$all        
+        max.distance <- max.distance$all
         ## transform percentages
         if(max.distance < 1)
             max.distance <- ceiling(n * max.distance)
