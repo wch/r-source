@@ -2986,3 +2986,204 @@ $residual.scale
 
 > ## Lots of problems in 1.7.x
 > 
+> 
+> ## lm.influence on deficient lm models
+> dat <- data.frame(y=rnorm(10), x1=1:10, x2=1:10, x3 = 0, wt=c(0,rep(1, 9)),
++                   row.names=letters[1:10])
+> dat[3, 1] <- dat[4, 2] <- NA
+> lm.influence(lm(y ~ x1 + x2, data=dat, weights=wt, na.action=na.omit))
+$hat
+        b         e         f         g         h         i         j 
+0.6546053 0.2105263 0.1546053 0.1447368 0.1809211 0.2631579 0.3914474 
+
+$coefficients
+  (Intercept)           x1
+b  1.39138784 -0.173267165
+e -0.70930972  0.068642877
+f  0.12039809 -0.007818058
+g  0.01971595  0.001314397
+h  0.03272637 -0.017325726
+i -0.36929526  0.092323814
+j  0.33861311 -0.070163076
+
+$sigma
+        b         e         f         g         h         i         j 
+0.9641441 0.7434598 1.0496727 1.0681908 1.0389586 0.7633748 1.0093187 
+
+$wt.res
+         b          e          f          g          h          i          j 
+ 0.5513046 -1.3728575  0.4018482  0.1708716 -0.4793451  1.2925334 -0.5643552 
+
+> lm.influence(lm(y ~ x1 + x2, data=dat, weights=wt, na.action=na.exclude))
+$hat
+        b         e         c         d         f         g         h         i 
+0.6546053 0.2105263 0.0000000 0.0000000 0.1546053 0.1447368 0.1809211 0.2631579 
+        j 
+0.3914474 
+
+$coefficients
+  (Intercept)           x1
+b  1.39138784 -0.173267165
+e -0.70930972  0.068642877
+c  0.00000000  0.000000000
+d  0.00000000  0.000000000
+f  0.12039809 -0.007818058
+g  0.01971595  0.001314397
+h  0.03272637 -0.017325726
+i -0.36929526  0.092323814
+j  0.33861311 -0.070163076
+
+$sigma
+        b         e         c         d         f         g         h         i 
+0.9641441 0.7434598 0.9589854 0.9589854 1.0496727 1.0681908 1.0389586 0.7633748 
+        j 
+1.0093187 
+
+$wt.res
+         b          e          c          d          f          g          h 
+ 0.5513046 -1.3728575         NA         NA  0.4018482  0.1708716 -0.4793451 
+         i          j 
+ 1.2925334 -0.5643552 
+
+> lm.influence(lm(y ~ 0, data=dat, weights=wt, na.action=na.omit))
+$hat
+b d e f g h i j 
+0 0 0 0 0 0 0 0 
+
+$coefficients
+
+b
+d
+e
+f
+g
+h
+i
+j
+
+$sigma
+        b         d         e         f         g         h         i         j 
+0.8830622 0.8830622 0.8830622 0.8830622 0.8830622 0.8830622 0.8830622 0.8830622 
+
+$wt.res
+         b          d          e          f          g          h          i 
+ 0.3604547  0.1146812 -1.1426753  0.7723744  0.6817419  0.1718693  2.0840918 
+         j 
+ 0.3675473 
+
+> lm.influence(lm(y ~ 0, data=dat, weights=wt, na.action=na.exclude))
+$hat
+b d c e f g h i j 
+0 0 0 0 0 0 0 0 0 
+
+$coefficients
+
+b
+d
+c
+e
+f
+g
+h
+i
+j
+
+$sigma
+        b         d         c         e         f         g         h         i 
+0.8830622 0.8830622 0.8830622 0.8830622 0.8830622 0.8830622 0.8830622 0.8830622 
+        j 
+0.8830622 
+
+$wt.res
+         b          d          c          e          f          g          h 
+ 0.3604547  0.1146812         NA -1.1426753  0.7723744  0.6817419  0.1718693 
+         i          j 
+ 2.0840918  0.3675473 
+
+> lm.influence(lm(y ~ 0 + x3, data=dat, weights=wt, na.action=na.omit))
+$hat
+b d e f g h i j 
+0 0 0 0 0 0 0 0 
+
+$coefficients
+
+b
+d
+e
+f
+g
+h
+i
+j
+
+$sigma
+        b         d         e         f         g         h         i         j 
+0.9366289 0.9366289 0.9366289 0.9366289 0.9366289 0.9366289 0.9366289 0.9366289 
+
+$wt.res
+         b          d          e          f          g          h          i 
+ 0.3604547  0.1146812 -1.1426753  0.7723744  0.6817419  0.1718693  2.0840918 
+         j 
+ 0.3675473 
+
+> lm.influence(lm(y ~ 0 + x3, data=dat, weights=wt, na.action=na.exclude))
+$hat
+b d c e f g h i j 
+0 0 0 0 0 0 0 0 0 
+
+$coefficients
+
+b
+d
+c
+e
+f
+g
+h
+i
+j
+
+$sigma
+        b         d         c         e         f         g         h         i 
+0.9366289 0.9366289 0.9366289 0.9366289 0.9366289 0.9366289 0.9366289 0.9366289 
+        j 
+0.9366289 
+
+$wt.res
+         b          d          c          e          f          g          h 
+ 0.3604547  0.1146812         NA -1.1426753  0.7723744  0.6817419  0.1718693 
+         i          j 
+ 2.0840918  0.3675473 
+
+> lm.influence(lm(y ~ 0, data=dat, na.action=na.exclude))
+$hat
+a b c d e f g h i j 
+0 0 0 0 0 0 0 0 0 0 
+
+$coefficients
+
+a
+b
+c
+d
+e
+f
+g
+h
+i
+j
+
+$sigma
+        a         b         c         d         e         f         g         h 
+0.8860916 0.8860916 0.8860916 0.8860916 0.8860916 0.8860916 0.8860916 0.8860916 
+        i         j 
+0.8860916 0.8860916 
+
+$wt.res
+         a          b          c          d          e          f          g 
+ 0.2196280  0.3604547         NA  0.1146812 -1.1426753  0.7723744  0.6817419 
+         h          i          j 
+ 0.1718693  2.0840918  0.3675473 
+
+> ## last three misbehaved in 1.7.x, none had proper names.
+> 

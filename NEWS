@@ -316,6 +316,9 @@ BUG FIXES
 
     o	model.matrix.default() was throwing an error on 0-term models.
 
+    o	lm.influence() now handles 0-rank models, and names its output
+	appropriately.
+
 
 
 

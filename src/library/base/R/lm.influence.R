@@ -26,48 +26,57 @@ weighted.residuals <- function(obj, drop0 = TRUE)
 
 lm.influence <- function (model, do.coef = TRUE)
 {
-    if (is.empty.model(model$terms)) {
-	warning("Can't compute influence on an empty model")
-	return(NULL)
+    wt.res <- if(inherits(model, "glm"))
+        residuals(model, type="deviance")[model$prior.weights != 0]
+    else weighted.residuals(model)
+    e <- na.omit(wt.res)
+
+    if (model$rank == 0) {
+        n <- length(wt.res) # drops 0 wt, may drop NAs
+        sigma <- sqrt(deviance(model)/df.residual(model))
+        res <- list(hat = rep(0, n), coefficients = matrix(0, n, 0),
+                    sigma = rep(sigma, n), wt.res = e)
+    } else {
+        n <- as.integer(nrow(model$qr$qr))
+        k <- as.integer(model$qr$rank)
+        ## in na.exclude case, omit NAs; also drop 0-weight cases
+        e <- na.omit(wt.res)
+        if(NROW(e) != n)
+            stop("non-NA residual length does not match cases used in fitting")
+        do.coef <- as.logical(do.coef)
+        res <- .Fortran("lminfl",
+                        model$qr$qr,
+                        n,
+                        n,
+                        k,
+                        as.integer(do.coef),
+                        model$qr$qraux,
+                        wt.res = e,
+                        hat = double(n),
+                        coefficients= if(do.coef) matrix(0, n, k) else double(1),
+                        sigma = double(n),
+                        DUP = FALSE, PACKAGE="base"
+                        )[c("hat", "coefficients", "sigma","wt.res")]
+        if(!is.null(model$na.action)) {
+            hat <- naresid(model$na.action, res$hat)
+            hat[is.na(hat)] <- 0       # omitted cases have 0 leverage
+            res$hat <- hat
+            if(do.coef) {
+                coefficients <- naresid(model$na.action, res$coefficients)
+                coefficients[is.na(coefficients)] <- 0 # omitted cases have 0 change
+                colnames(coefficients) <- names(coef(model))[!is.na(coef(model))]
+                res$coefficients <- coefficients
+            }
+            sigma <- naresid(model$na.action, res$sigma)
+            sigma[is.na(sigma)] <- sqrt(deviance(model)/df.residual(model))
+            res$sigma <- sigma
+        }
     }
-    n <- as.integer(nrow(model$qr$qr))
-    k <- as.integer(model$qr$rank)
-    ## in na.exclude case, omit NAs; also drop 0-weight cases
-    e <- na.omit(if(inherits(model, "glm"))
-		 residuals(model, type="deviance")[model$prior.weights != 0]
-		 else weighted.residuals(model))
-    if(NROW(e) != n)
-	stop("non-NA residual length does not match cases used in fitting")
-    do.coef <- as.logical(do.coef)
-    res <- .Fortran("lminfl",
-		    model$qr$qr,
-		    n,
-		    n,
-		    k,
-		    as.integer(do.coef),
-		    model$qr$qraux,
-		    wt.res = e,
-		    hat = double(n),
-		    coefficients= if(do.coef) matrix(0, n, k) else double(1),
-		    sigma = double(n),
-		    DUP = FALSE, PACKAGE="base")[
-				 c("hat", "coefficients", "sigma","wt.res")]
-    if(!is.null(model$na.action)) {
-	hat <- naresid(model$na.action, res$hat)
-	hat[is.na(hat)] <- 0 # omitted cases have 0 leverage
-	res$hat <- hat
-	if(do.coef) {
-	    coefficients <- naresid(model$na.action, res$coefficients)
-	    coefficients[is.na(coefficients)] <- 0 # omitted cases have 0 change
-	    res$coefficients <- coefficients
-	}
-	sigma <- naresid(model$na.action, res$sigma)
-	sigma[is.na(sigma)] <- sqrt(deviance(model)/df.residual(model))
-	res$sigma <- sigma
-	res$wt.res <- naresid(model$na.action, res$wt.res)
-    }
+    res$wt.res <- naresid(model$na.action, res$wt.res)
+    names(res$hat) <- names(res$sigma) <- names(res$wt.res)
     if(!do.coef) ## drop it
 	res$coefficients <- NULL
+    else rownames(res$coefficients) <- names(res$wt.res)
     res
 }
 

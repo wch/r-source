@@ -1003,3 +1003,17 @@ predict(fit)
 predict(fit, data.frame(x=x), se=TRUE)
 predict(fit, type="terms", se=TRUE)
 ## Lots of problems in 1.7.x
+
+
+## lm.influence on deficient lm models
+dat <- data.frame(y=rnorm(10), x1=1:10, x2=1:10, x3 = 0, wt=c(0,rep(1, 9)),
+                  row.names=letters[1:10])
+dat[3, 1] <- dat[4, 2] <- NA
+lm.influence(lm(y ~ x1 + x2, data=dat, weights=wt, na.action=na.omit))
+lm.influence(lm(y ~ x1 + x2, data=dat, weights=wt, na.action=na.exclude))
+lm.influence(lm(y ~ 0, data=dat, weights=wt, na.action=na.omit))
+lm.influence(lm(y ~ 0, data=dat, weights=wt, na.action=na.exclude))
+lm.influence(lm(y ~ 0 + x3, data=dat, weights=wt, na.action=na.omit))
+lm.influence(lm(y ~ 0 + x3, data=dat, weights=wt, na.action=na.exclude))
+lm.influence(lm(y ~ 0, data=dat, na.action=na.exclude))
+## last three misbehaved in 1.7.x, none had proper names.
