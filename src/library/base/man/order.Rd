@@ -15,7 +15,7 @@ sort.list(x, partial = NULL, na.last = TRUE, decreasing = FALSE)
   \item{\dots}{a sequence of vectors, all of the same length.}
   \item{x}{a vector.}
   \item{partial}{vector of indices for partial sorting.}
-  \item{decreasing}{logical. Should the sort order be ascending or
+  \item{decreasing}{logical. Should the sort order be increasing or
     decreasing?}
   \item{na.last}{for controlling the treatment of \code{NA}s.
     If \code{TRUE}, missing values in the data are put last; if
@@ -36,6 +36,12 @@ sort.list(x, partial = NULL, na.last = TRUE, decreasing = FALSE)
 (ii <- order(x <- c(1,1,3:1,1:4,3), y <- c(9,9:1), z <-c(2,1:9)))
 ## 6  5  2  1  7  4 10  8  3  9
 rbind(x,y,z)[,ii] # shows the reordering (ties via 2nd & 3rd arg)
+
+## Suppose we wanted descending order on y. A simple solution is
+rbind(x,y,z)[, order(x, -y, z)]
+## For character vectors we can make use of rank:
+cy <- as.character(y)
+rbind(x,y,z)[, order(x, -rank(y), z)]
 
 ## rearrange matched vectors so that the first is in ascending order
 x <- c(5:1, 6:8, 12:9)
