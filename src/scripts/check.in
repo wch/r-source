@@ -306,11 +306,11 @@ foreach my $pkg (@ARGV) {
 	    $log->print("Only *source* packages can be checked.\n");
 	    exit(1);
 	}
-	else {
+	elsif($opt_install !~ /^check/) {
 	    ## Check for package/bundle 'src' subdirectories with object
-	    ## files.
+	    ## files (but not if installation was already performed).
 	    my $any;
-	    my $pat = "(a|o|[ls][ao]|obj)"; # Object file extensions.
+	    my $pat = "(a|o|[ls][ao]|sl|obj)"; # Object file extensions.
 	    my @dirs;
 	    if($in_bundle) {
 		foreach my $ppkg (split(/\s+/,
@@ -334,6 +334,10 @@ foreach my $pkg (@ARGV) {
 	    }
 	    $log->result("OK") unless $any;	    
 	}
+	else {
+	    $log->result("OK");
+	}
+	    
 	## Option '--no-install' turns off installation and the tests
 	## which require the package to be installed.  When testing
 	## recommended packages bundled with R we can skip installation,
