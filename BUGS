@@ -164,6 +164,10 @@ Date: Wed, 27 Jun 2001 11:54:06 +0200
 Subject: Palette changes on redraw
 From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
 Date: 08 Aug 2001 19:08:01 +0200
+* PR# 1088 *
+Subject:  barplot forces xpd=TRUE 
+From: Peter Whiting <pwhiting@whitings.org>
+Date: Sat, 8 Sep 2001 10:19:00 -0500
 
 Directory:  In-Out
 
@@ -179,6 +183,10 @@ Date: Sun, 29 Jul 2001 12:27:51 -0400
 Subject: problems installing R on Solaris 2.8 machine
 From: Paivio Pollari <pollari@sun3.oulu.fi>
 Date: Fri, 31 Aug 2001 08:54:23 +0300 (EET DST)
+* PR# 1093 *
+Subject: Solution to (well known) problem with Rdconv.pm on Sun Solaris
+From: hb@maths.lth.se
+Date: Sat, 15 Sep 2001 14:23:02 +0200 (MET DST)
 
 Directory:  Language
 
@@ -293,6 +301,10 @@ Date: Sun, 19 Aug 2001 16:01:57 -0700 (PDT)
 Subject: Install problems R 1.3.1 on HP-UX
 From: Peter Kleiweg <kleiweg@let.rug.nl>
 Date: Sun, 2 Sep 2001 15:07:41 +0200 (CEST)
+* PR# 1089 *
+Subject: Debian Woody r-base depends on blas2
+From: michael_odonnell@acm.org
+Date: Sat, 8 Sep 2001 20:25:32 +0200 (MET DST)
 
 Directory:  TooMuchAtOnce
 
@@ -304,27 +316,4 @@ none
 
 Directory:  incoming
 
-* PR# 1088 *
-Subject:  barplot forces xpd=TRUE 
-From: Peter Whiting <pwhiting@whitings.org>
-Date: Sat, 8 Sep 2001 10:19:00 -0500
-* PR# 1089 *
-Subject: Debian Woody r-base depends on blas2
-From: michael_odonnell@acm.org
-Date: Sat, 8 Sep 2001 20:25:32 +0200 (MET DST)
-* PR# 1090 *
-Subject: [R] bad R.css link in "packages.html"
-From: Jason Turner <jasont@indigoindustrial.co.nz>
-Date: Fri, 7 Sep 2001 11:51:50 +1200
-* PR# 1091 *
-Subject: sum overflow
-From: wsi@gcal.ac.uk
-Date: Thu, 13 Sep 2001 10:43:07 +0200 (MET DST)
-* PR# 1092 *
-Subject:  rowsum dimnames 
-From: David Brahm  <a215020@agate.fmr.com>
-Date: Fri, 14 Sep 2001 10:45:42 -0400 (EDT)
-* PR# 1093 *
-Subject: Solution to (well known) problem with Rdconv.pm on Sun Solaris
-From: hb@maths.lth.se
-Date: Sat, 15 Sep 2001 14:23:02 +0200 (MET DST)
+none
