@@ -4,9 +4,6 @@ rgb <- function(red, green, blue, names=NULL)
 hsv <- function(h=1,s=1,v=1,gamma=1)
 .Internal(hsv(h,s,v,gamma))
 
-## nice to the English
-colours <- colors
-
 palette <- function(value)
 {
 	if(missing(value)) .Internal(palette(character()))

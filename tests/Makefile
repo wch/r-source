@@ -1,29 +1,37 @@
-## Makefile  for  <RHOME>/tests/		(C) Martin Maechler
+## Makefile  for  <RHOME>/tests/		-- Martin Maechler
 ##
 RHOME= ..
-REXE = $(RHOME)/bin/R.binary
 R    = $(RHOME)/bin/R --no-init-file --no-save --no-restore
+Rbinary = $(rRHOME)/bin/R.binary
+Rbase	= $(rRHOME)/library/base
+REXE = $(Rbinary) $(Rbase)
 
 Ex = ./Examples
 
 TESTsrc = simple-true.R simple-tests.R d-p-q-r-tests.R \
-	 print-tests.R is-things.R
+	 print-tests.R is-things.R primitive-funs.R
 
 TESTout = $(TESTsrc:.R=.Rout)
 
-%.Rout: %.R $(REXE)
+%.Rout: %.R stamp-Rexe
 	$(R) < $< > $@
 	-@wc $@
 
-tests: test-Examples $(TESTout)
+test-All: test-Examples $(TESTout)
 
 test-Examples:
 	-(cd $(Ex); $(MAKE) $@)
 
+stamp-Rexe: $(REXE)
+	@touch $@
+
 $(REXE)::
 	-(cd $(RHOME); $(MAKE) R)
 
-realclean clean:
+clean:
+	rm -f stamp-Rexe
+	-(cd $(Ex); $(MAKE) $@)
+realclean: clean
 	rm -f $(TESTout)
 	-(cd $(Ex); $(MAKE) $@)
 

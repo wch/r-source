@@ -15,7 +15,7 @@ uniroot(f, interval, lower = min(interval), upper = max(interval),
   \item{...}{additional arguments to \code{f}.}
 }
 \description{
-  The function \code{optimize} searches the interval from \code{lower}
+  The function \code{uniroot} searches the interval from \code{lower}
   to \code{upper} for a zero of the function \code{f} with respect to
   its first argument.
 

@@ -4,17 +4,23 @@
 par(\dots)
 }
 \alias{par}
+\alias{.Pars}
 \description{
   % \code{par} is an abomination before man and god.
   \code{par} can be used to set or query graphical parameters.
   Parameters can be set by specifying them as arguments to \code{par} in
-  \code{tag = value} form, or by passing them as a list of tagged
-  values.  In either case the previous values are returned in an
+  \code{tag = value} form, or by passing them as a list of tagged values.
+}
+\details{The previous values are returned in an
   invisible tagged list.  Such a list can be passed as an argument to
   \code{par} to restore the parameter values.
 
   Parameters are queried by giving vectors of character strings to
   \code{par}.  In this case, the values are returned in a tagged list.
+
+  \code{par()} (no arguments) is used to get \emph{all} the graphical
+  parameters (as named list).
+  Their names are currently taken from the variable \code{.Pars}.
 }
 %% --- The real documentation is the code -- in ../../../main/par.c   ;-)
 %% --- AND (defined AND commented) in ../../../include/Graphics.h

@@ -22,10 +22,13 @@ co.intervals(x, number = 6, overlap = 0.5)
     from is used.}
   \item{given.values}{a value or list of two values which determine how
     the conditioning on \code{a} and \code{b} is to take place.  Usually
-    this is a matrix with two columns which each row of which gives and
+    this is a matrix with two columns each row of which gives an
     interval, to be conditioned on, but is can also be a single vector
     of numbers or a set of factor levels (if the variable being
-    conditioned on is a factor).}
+    conditioned on is a factor).
+
+    The result of \code{co.intervals(..)} can be used directly as
+    \code{given.values} argument.}
   \item{panel}{a function which gives the action to be carried out in
     each panel of the display.  The default is \code{points}.}
   \item{rows}{the panels of the plot are laid out in a \code{rows} by

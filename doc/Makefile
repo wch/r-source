@@ -1,8 +1,8 @@
 include ../Makeconf
 
 install:
-	$(INSTALL) -d $(rhome)/doc/manual 
-	$(INSTALL) -d $(rhome)/doc/html/search
+	$(INSTALL_DIR) $(rhome)/doc/manual 
+	$(INSTALL_DIR) $(rhome)/doc/html/search
 	$(INSTALL) keyword-test $(rhome)/doc
 	$(INSTALL_DATA) KEYWORDS $(rhome)/doc
 	for f in html/*.html html/*.jpg; \

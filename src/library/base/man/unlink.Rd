@@ -9,4 +9,6 @@ Shell wildcards are allowed.}}
 \code{unlink} deletes the files specified by \code{x}.
 }
 \value{The return value of the corresponding system command.}
+\seealso{\code{\link{tempfile}} for file creation.}
+%Examples: tempfile has an 'unlink' example
 \keyword{file}

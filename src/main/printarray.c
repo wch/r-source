@@ -17,7 +17,10 @@
  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
-/*== see ./printutils.c	 for general remarks on Printing and the Encode.. utils.
+/*  EXPORTS	printMatrix()
+ *	     	printArray()
+ *
+ *== see ./printutils.c	 for general remarks on Printing and the Encode.. utils.
  *== see ./format.c	 for the  format_FOO_  functions used below.
  */
 #include "Defn.h"
@@ -364,7 +367,7 @@ static void printArrayGeneral(SEXP x, SEXP dim, int quote)
 				k = k*INTEGER(dim)[j];
 				dn = CDR(dn);
 			}
-			printf("\n\n");
+			Rprintf("\n\n");
 
 			switch (TYPEOF(x)) {
 			case LGLSXP:

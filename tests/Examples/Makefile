@@ -16,7 +16,7 @@ MANbaseDIR = $(rRHOME)/src/library/base/man
 ##- Uncomment one of the 2 'Rd_files' defs -- depending on your 'make' version
 ##--- <<<<<< CONFIGURE should do this >>>>>>
 ##-- Sun make
-#> Rd_files:sh = ./Rd.files
+#> Rd_files:sh = ../../etc/Rd.files
 ##-- GNU make
 Rd_files := $(shell $(rRHOME)/etc/Rd.files)
 #this has PATH prepended: Rd_files := $(wildcard $(MANbaseDIR)/*.Rd)

@@ -3,9 +3,9 @@
 include ../Makeconf
 
 
-CleanMe1 = SHLIB INSTALL REMOVE
+CleanMe1 = SHLIB INSTALL REMOVE COMPILE 
 CleanMe2 = Rdconv Rdindex Rman2Rd Sd2Rd
-CleanMe3 = build-help help.pretty html2dos
+CleanMe3 = build-help help.pretty html2dos Makeconf
 CleanMe  = $(CleanMe1) $(CleanMe2) $(CleanMe3)
 
 #MANSRC = ../src/library/*/man/*.Rd
@@ -58,9 +58,8 @@ distclean realclean:
 	@rm -fr $(CleanMe)
 	@rm -f stamp-*
 
-
 install:
-	$(INSTALL) -d $(rhome)/etc
+	$(INSTALL_DIR) $(rhome)/etc
 	for f in COMPILE INSTALL REMOVE SHLIB Rd2dvi Rd2txt \
 	   Rdconv Rdindex Rman2Rd Sd2Rd build-help help.pretty; \
 		do $(INSTALL) $$f $(rhome)/etc; \

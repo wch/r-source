@@ -2,18 +2,43 @@
 #
 # ${RHOME}/cmd/help
 
-subject=${1}
-shift
-for index in $*
-do
-    if [ -f ${index} ];
-    then
-	file=`grep "^${subject}	" ${index} | cut -f 2`
-	if test -n "${file}"
+if [ "${1}" = "INDEX" ];
+then
+    subject=${2}
+    shift 2
+    for index in $*
+    do
+	if [ -f ${index} ];
 	then
-	    echo `dirname ${index}`/${file}
-	    exit 0
+	    file=`grep "^${subject}	" ${index} | cut -f 2`
+	    if test -n "${file}"
+	    then
+		echo `dirname ${index}`/${file}
+		exit 0
+	    fi
 	fi
+    done    
+    echo
+elif [ "${1}" = "PRINT" ];
+then
+    if [ "${LATEX}" = "false" ];
+    then
+	echo "Cannot print, latex seems to be unavailable"
+	exit 1
     fi
-done    
-echo
+    if [ "${DVIPS}" = "false" ];
+    then
+	echo "Cannot print, dvips seems to be unavailable"
+	exit 2
+    fi
+    shift
+    ODIR=`pwd`
+    cd `dirname ${1}`
+    ${LATEX} ${1} >/dev/null 2>&1
+    ${DVIPS} ${1} 2>/dev/null
+    if test -f ${1}.ps;
+    then
+        echo "Saving help page to \`${2}.ps\'"
+        mv ${1}.ps ${ODIR}/${2}.ps
+    fi
+fi

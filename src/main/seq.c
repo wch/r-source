@@ -44,10 +44,10 @@ static SEXP seq(SEXP call, SEXP s1, SEXP s2)
 		errorcall(call, "NA/NaN argument\n");
 
 	if (n1 <= INT_MIN || n2 <= INT_MIN || n1 > INT_MAX || n2 > INT_MAX
-	    || abs(n2 - n1) >= INT_MAX)
+	    || fabs(n2 - n1) >= INT_MAX)
 		errorcall(call, "argument too large in magnitude\n");
 
-	n = abs(n2 - n1) + 1 + FLT_EPSILON;
+	n = fabs(n2 - n1) + 1 + FLT_EPSILON;
 	if (n1 == (in1 = (int)(n1))) {
 		ans = allocVector(INTSXP, n);
 		if (n1 <= n2)
@@ -132,6 +132,22 @@ static SEXP rep2(SEXP s, SEXP ncopy)
 		UNIMPLEMENTED("rep2");
 	}
 	UNPROTECT(2);
+
+	if (inherits(s, "factor")) {
+		SEXP tmp;
+		if(inherits(s, "ordered")) {
+			PROTECT(tmp = allocVector(STRSXP, 2));
+			STRING(tmp)[0] = mkChar("ordered");
+			STRING(tmp)[1] = mkChar("factor");
+		}
+		else {
+			PROTECT(tmp = allocVector(STRSXP, 1));
+			STRING(tmp)[0] = mkChar("factor");
+		}
+		setAttrib(a, R_ClassSymbol, tmp);
+		UNPROTECT(1);
+		setAttrib(a, R_LevelsSymbol, getAttrib(s, R_LevelsSymbol));
+	}
 	return a;
 }
 
@@ -193,6 +209,23 @@ SEXP rep(SEXP s, SEXP ncopy)
 		UNIMPLEMENTED("rep");
 	}
 	UNPROTECT(1);
+
+	if (inherits(s, "factor")) {
+		SEXP tmp;
+		if(inherits(s, "ordered")) {
+			PROTECT(tmp = allocVector(STRSXP, 2));
+			STRING(tmp)[0] = mkChar("ordered");
+			STRING(tmp)[1] = mkChar("factor");
+		}
+		else {
+			PROTECT(tmp = allocVector(STRSXP, 1));
+			STRING(tmp)[0] = mkChar("factor");
+		}
+		setAttrib(a, R_ClassSymbol, tmp);
+		UNPROTECT(1);
+		setAttrib(a, R_LevelsSymbol, getAttrib(s, R_LevelsSymbol));
+	}
+
 	return a;
 }
 

@@ -5,7 +5,7 @@ plot.default(x, y=NULL, type = "p", col = par("fg"), bg = NA,
              pch = par("pch"), xlim = NULL, ylim = NULL, log = "",
              axes = TRUE, frame.plot = axes, panel.first = NULL,
              panel.last = NULL, ann = par("ann"), main = NULL,
-             xlab = NULL, ylab = NULL, cex = par("cex"),
+             sub = NULL, xlab = NULL, ylab = NULL, cex = par("cex"),
              lty = par("lty"), lwd = par("lwd"), \dots)
 }
 \alias{plot.default}
@@ -42,6 +42,7 @@ plot.default(x, y=NULL, type = "p", col = par("fg"), bg = NA,
   \item{ann}{an logical value indicating whether the default annotation
     (title and x and y axis labels) should appear on the plot/}
   \item{main}{a main title for the plot.}
+  \item{sub}{a sub title for the plot.}
   \item{xlab}{a label for the x axis.}
   \item{ylab}{a label for the y axis.}
   \item{cex}{a numerical value giving the amount by which plotting text

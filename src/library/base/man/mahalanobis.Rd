@@ -5,24 +5,34 @@ mahalanobis(x, center, cov, inverted=FALSE)
 }
 \alias{mahalanobis}
 \arguments{
- \item{x}{Vector or matrix of data.}
- \item{center}{Mean vector of the distribution or second data vector.}
- \item{cov}{Covariance matrix of the distribution or the QR
-   decomposition of the distribution.}
- \item{inverted}{If \code{TRUE}, \code{cov} is supposed to contain the
-   inverse of the covariance matrix.}
+  \item{x}{vector or matrix of data with, say, \eqn{p} columns.}
+  \item{center}{mean vector of the distribution or second data vector of
+    length \eqn{p}.}
+  \item{cov}{covariance matrix (\eqn{p \times p}{p x p}) of the distribution.}
+  \item{inverted}{logical.  If \code{TRUE}, \code{cov} is supposed to
+    contain the \emph{inverse} of the covariance matrix.}
 }
 \description{
   Returns the Mahalanobis distance of all rows in \code{x} and the
-  vector \code{center}, which is (for vector \code{x}) defined as
+  vector \eqn{\mu=}\code{center} with respect to
+  \eqn{\Sigma=}\code{cov}.
+  This is (for vector \code{x}) defined as
   \deqn{
-    d = (x - center)' cov^{-1} (x - center)
+    D^2 = (x - \mu)' \Sigma^{-1} (x - \mu)
   }
 }
 \author{Friedrich Leisch}
-\seealso{\code{\link{qr}},\code{\link{cov}}}
+\seealso{\code{\link{cov}}, \code{\link{var}}}
 \examples{
-x <- matrix(rnorm(30),ncol=3)
-mahalanobis(x)
+ma <- cbind(1:6, 1:3)
+(S <-  var(ma))
+mahalanobis(c(0,0), 1:2, S)
+
+x <- matrix(rnorm(100*3), ncol=3)
+all(mahalanobis(x, 0, diag(ncol(x)))
+    == apply(x*x, 1,sum)) ##- Here, D^2 = usual Euclidean distances
+Sx <- cov(x)
+D2 <- mahalanobis(x, apply(x,2,mean), Sx)
+plot(density(D2))
 }
 \keyword{multivariate}

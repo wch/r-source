@@ -2,8 +2,10 @@
 \title{CPU Time Used}
 \usage{
 system.time(expr)
+unix.time(expr)
 }
 \alias{system.time}
+\alias{unix.time}
 \arguments{
   \item{expr}{Valid \R expression to be ``timed''}
 }
@@ -13,7 +15,10 @@ system.time(expr)
   returning the difference to between the \code{proc.time} calls.
 
   The values returned by the \code{proc.time} are (currently) those
-  returned by the C library function times(3v).
+  returned by the C library function \code{times}(3v).
+
+  \code{unix.time} is an \code{\link{.Alias}} of \code{system.time}, for
+  compatibility reasons.
 }
 \value{
   A numeric vector of length 5 containing the cpu, user, total,

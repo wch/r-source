@@ -94,7 +94,7 @@ realclean: clean
 	@-rm -f -r auto pkg-*.tex
 
 install:
-	$(INSTALL) -d $(rhome)/doc/manual
+	$(INSTALL_DIR) $(rhome)/doc/manual
 	for f in Makefile *.tex *.sty; \
 		do $(INSTALL_DATA) $$f $(rhome)/doc/manual; \
 	done

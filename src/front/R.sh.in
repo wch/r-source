@@ -9,8 +9,8 @@ case ${ARG} in
     RHOME)
 	echo ${RHOME}; exit 0 ;;
     CMD)
-	shift; PATH=$PATH:$RHOME/cmd:$RHOME/etc exec $* ;;
-    SHLIB|COMPILE|INSTALL|REMOVE)
+	shift; PATH=${PATH}:${RHOME}/cmd:${RHOME}/etc exec $* ;;
+    BATCH|COMPILE|INSTALL|REMOVE|SHLIB)
 	shift; exec sh ${RHOME}/etc/${ARG} $* ;;
     -d|--debugger)
 	exec $2 ${RHOME}/bin/R.binary ;;
@@ -39,14 +39,18 @@ esac
 # R_PAPERSIZE="a4"
 # R_PAPERSIZE="letter"
 # R_PAPERSIZE="none"
-R_PAPERSIZE=@R_PAPERSIZE@
+R_PAPERSIZE=${R_PAPERSIZE-@R_PAPERSIZE@}
 export R_PAPERSIZE
 
 # Default Print Command
 # Choose one of the following
 # R_PRINTCMD="lpr"
 # R_PRINTCMD="lp"
-R_PRINTCMD=@R_PRINTCMD@
+R_PRINTCMD=${R_PRINTCMD-@R_PRINTCMD@}
 export R_PRINTCMD
+
+LATEX=${LATEX-@LATEX@}
+DVIPS=${DVIPS-@DVIPS@}
+export LATEX DVIPS
 
 exec ${RHOME}/bin/R.binary @R_BATCHSAVE@ $*

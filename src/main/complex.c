@@ -91,6 +91,10 @@ static void complex_pow(complex *r, complex *a, complex *b)
 {
     double logr, logi, x, y;
 
+    if(b->i == 0.) {/* be fast (and more accurate)*/
+	if(b->r == 1.) { /* a^1 */ r->r = a->r; r->i = a->i; return;}
+	if(a->i == 0.) { r->r = pow(a->r, b->r); r->i = 0.; return;}
+    }
     logr = log(hypot(a->r, a->i) );
     logi = atan2(a->i, a->r);
 
@@ -577,8 +581,10 @@ SEXP complex_math1(SEXP call, SEXP op, SEXP args, SEXP env)
     case 10002: cmath1(z_atan, COMPLEX(x), COMPLEX(y), n); break;
     case 10003: cmath1(z_log, COMPLEX(x), COMPLEX(y), n); break;
 
-    case 0: errorcall(call,
-		      "'abs' unimplemented for complex; use Mod(.)\n"); break;
+    case 0:
+	errorcall(call,
+		  "abs() unimplemented for complex; use Mod()\n");
+	break;
     case 3:  cmath1(z_sqrt, COMPLEX(x), COMPLEX(y), n); break;
 
     case 10: cmath1(z_exp, COMPLEX(x), COMPLEX(y), n); break;

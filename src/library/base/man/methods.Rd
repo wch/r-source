@@ -55,10 +55,10 @@ methods(generic.function, class)
 \examples{
 methods(summary)
 
-cat("methods(print):\n")
 methods(print)
 
-cat("methods(class = data.frame):\n")
 methods(class = data.frame)
+
+methods("[")#- does not list the C-internal ones...
 }
 \keyword{methods}

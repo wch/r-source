@@ -59,16 +59,19 @@ void LeftMatrixColumnLabel(SEXP, int, int);
 void MatrixRowLabel(SEXP, int, int);
 void VectorIndex(int, int);
 
-void CustomPrintValue(SEXP s ,SEXP env);
-void PrintValue(SEXP);
-void PrintValueRec(SEXP,SEXP);
+/* In Defn.h (and MUST be there):
+   void CustomPrintValue(SEXP s ,SEXP env);
+   void PrintValue(SEXP);
+   void PrintValueRec(SEXP,SEXP);
+   */
 
 /*  REprintf(char*, ...); ... --> all in Defn.h */
 
 void printArray(SEXP, int);
-void printDataFrame(SEXP);
 void printMatrix(SEXP, int, SEXP, int, int);
 void printNamedVector(SEXP, SEXP, int);
 void printVector(SEXP, int, int);
+void printRealVector(double *x, int n, int index);
+void printComplexVector(complex *x, int n, int index);
 
 #endif

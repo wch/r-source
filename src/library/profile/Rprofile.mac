@@ -1,10 +1,2 @@
-.GlobalEnv <- globalenv()
-attach(NULL, name = "Autoloads")
-.AutoloadEnv <- pos.to.env(2)
-T <- TRUE
-F <- FALSE
-version <- Version()
-.Machine <- Machine()
-options(na.action = "na.omit")
-
+###-*- R -*- Macintosh Specific ----
 .First <- function() if(interactive()) macintosh()

@@ -1,8 +1,10 @@
 cov.wt <- function(x, wt = rep(1/nrow(x), nrow(x)), cor = FALSE,
                    center = TRUE)
 {
-  if (!is.matrix(x))
-    stop("x must be a matrix")
+  if (is.data.frame(x))
+    x <- as.matrix(x)
+  else if (!is.matrix(x))
+    stop("x must be a matrix or a data frame")
   if (!all(is.finite(x)))
     stop("x must contain finite values only")
   n <- nrow(x)
@@ -24,11 +26,11 @@ cov.wt <- function(x, wt = rep(1/nrow(x), nrow(x)), cor = FALSE,
   x <- sqrt(wt) * sweep(x, 2, center)
   cov <- (t(x) %*% x) / (1 - sum(wt^2))
   y <- list(cov = cov, center = center, n.obs = n)
-  if (with.wt) 
-    y$wt <- wt
+  if (with.wt)
+    y <- c(y, wt = wt)
   if (cor) {
     sdinv <- diag(1 / sqrt(diag(cov)))
-    y$cor <- sdinv %*% cov %*% sdinv
+    y <- c(y, cor = sdinv %*% cov %*% sdinv)
   }
   y
 }

@@ -65,8 +65,8 @@ typedef int (*DL_FUNC)();
 typedef struct {
         char *name;
         DL_FUNC func;
-} CFunTabEntry;  
-#include "FFDecl.h"
+} CFunTabEntry;
+
 #include "FFDecl.h"
 
 	/* This provides a table of built-in C and Fortran functions */
@@ -77,7 +77,7 @@ static CFunTabEntry CFunTab[] =
 {
 #include "FFTab.h"
         {NULL, NULL}
-};      
+};
 
 	/* The following code loads in a compatibility module */
 	/* written by Luke Tierney to support S version 4 on */

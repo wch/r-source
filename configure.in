@@ -1,4 +1,4 @@
-Dnl configure.in
+dnl configure.in
 dnl
 dnl Process this file with autoconf to produce a configure script.
 dnl
@@ -43,12 +43,12 @@ host_vendor=$2
 host_os=$3
 
 AC_DEFINE(R_MAJOR, "0")
-AC_DEFINE(R_MINOR, "62.0")
+AC_DEFINE(R_MINOR, "62.4")
 AC_DEFINE(R_STATUS, "")
 AC_DEFINE(R_STATUS_REV, "0")
-AC_DEFINE(R_DAY, "14")
-AC_DEFINE(R_MONTH, "June")
-AC_DEFINE(R_YEAR, "1998")
+AC_DEFINE_UNQUOTED(R_DAY, "`awk -F/ '{print $3+0}' date-stamp`")
+AC_DEFINE_UNQUOTED(R_MONTH, "`awk -F/ '{print $2}' date-stamp`")
+AC_DEFINE_UNQUOTED(R_YEAR, "`awk -F/ '{print $1}' date-stamp`")
 AC_DEFINE_UNQUOTED(R_PLATFORM, "${host}")
 AC_DEFINE_UNQUOTED(R_CPU, "${host_cpu}")
 AC_DEFINE_UNQUOTED(R_VENDOR, "${host_vendor}")
@@ -85,15 +85,23 @@ AC_ARG_WITH(f77,
 
 AC_ARG_ENABLE(blas,
   [  --enable-blas           use BLAS library (if available)],
-  [if test "$enableval" = no;
+  [if test "${enableval}" = no;
     then use_blas=false;
     else use_blas=true;
   fi],
   use_blas=true)
 
+AC_ARG_ENABLE(dxml,
+  [  --enable-dxml           use DXML library (if available)],
+  [if test "${enableval}" = no;
+    then use_dxml=false;
+    else use_dxml=true;
+  fi],
+  use_dxml=true)
+
 AC_ARG_ENABLE(readline,
   [  --enable-readline       use readline library (if available)],
-  [if test "$enableval" = no;
+  [if test "${enableval}" = no;
     then use_readline=false;
     else use_readline=true;
    fi],
@@ -108,6 +116,14 @@ AC_PROG_YACC
 
 AC_CHECK_PROG(AR, ar, ar)
 AC_CHECK_PROG(RATFOR, ratfor, ratfor)
+
+AC_PATH_PROG(LATEX, latex, false)
+AC_PATH_PROG(DVIPS, dvips, false)
+
+## Make.
+
+MAKE=${MAKE-make}
+AC_SUBST(MAKE)
 
 ## Perl.
 
@@ -142,6 +158,12 @@ fi
 
 CFLAGS=${CFLAGS-"-g"}
 
+cc_is_gcc=false
+cc_output=`${CC} -v 2>&1 | grep gcc`
+if test -n "${cc_output}"; then
+  cc_is_gcc=true
+fi  
+
 case ${host} in
   *hpux*)
     LIBS="-L/lib/pa1.1 ${LIBS}"
@@ -153,14 +175,14 @@ esac
 
 ## FORTRAN compiler
 ##
-### We need these before trying to find libf2c.
+## We need these before trying to find libf2c.
 
-if test -z "$AR"; then
+if test -z "${AR}"; then
   AR=ar
 fi
 AC_SUBST(AR)
 
-if test -z "$ARFLAGS"; then
+if test -z "${ARFLAGS}"; then
   ARFLAGS="rc"
 fi
 AC_SUBST(ARFLAGS)
@@ -174,6 +196,7 @@ AC_PROG_RANLIB
 ## force g77, f77, or f2c to be used.  It is also possible to use these
 ## options to specify the full path name of the compiler.
 
+f77_is_g77=false
 if ${use_f77}; then
   if test "${with_f77}" = yes; then
     F77=f77
@@ -204,12 +227,17 @@ else
   fi
   if test -z "${F77}"; then
     AC_CHECK_PROGS(F2C, f2c)
+  else
+    f77_output=`${F77} -v 2>&1 | grep "GNU F77"`
+    if test -n "${f77_output}"; then
+      f77_is_g77=true
+    fi
   fi
 fi
 
 if test -n "${F77}"; then
   FC=${F77}
-  LDCMD=${FC}
+  LDCMD=${LDCMD-${FC}}
   AC_MSG_CHECKING(for underscore after Fortran symbols)
   cat > conftestf.f <<EOF
       subroutine try
@@ -275,7 +303,7 @@ EOF
   fi
   rm -f conftest*
 
-  LDCMD=${CC}
+  LDCMD=${LDCMD-${CC}}
   AC_DEFINE(HAVE_F77_UNDERSCORE)
   AC_CHECK_LIB(f2c, f_open, FLIBS=-lf2c, FLIBS=, -L. -lconflib -lm)
   if test -z "${FLIBS}"; then
@@ -312,6 +340,22 @@ AC_SUBST_FILE(f77_rules_frag)
 
 ### Libraries.
 
+## Make sure that non-standard directories specified via `-L' are really
+## searched in the tests
+for arg in ${LIBS}; do
+  case ${arg} in
+    -L*)
+      lib=`echo ${arg} | sed 's/^-L//'`
+      if test -z "${LD_LIBRARY_PATH}"; then
+        LD_LIBRARY_PATH="${lib}"
+      else
+        LD_LIBRARY_PATH="${LD_LIBRARY_PATH}:${lib}"
+      fi
+      ;;
+  esac
+done
+export LD_LIBRARY_PATH
+
 AC_CHECK_LIB(m, sin)
 AC_CHECK_LIB(ncurses, main,,
   AC_CHECK_LIB(termcap, main,,
@@ -319,10 +363,22 @@ AC_CHECK_LIB(ncurses, main,,
 ))
 AC_CHECK_LIB(dl, dlopen)
 BLAS="blas.o"
-if ${use_blas}; then
-  AC_CHECK_LIB(blas, main, LIBS="-lblas ${LIBS}" BLAS="")
+if ${use_dxml}; then
+  AC_CHECK_LIB(dxml, main, FLIBS="-ldxml ${FLIBS}" BLAS="",
+    if ${use_blas}; then
+      AC_CHECK_LIB(blas, main, FLIBS="-lblas ${FLIBS}" BLAS="")
+    fi
+  )
 fi
 AC_SUBST(BLAS)
+for arg in ${LIBS}; do
+  case ${arg} in
+    -L*)
+      FLIBS="${arg} ${FLIBS}"
+      ;;
+  esac
+done
+AC_SUBST(FLIBS)
 if ${use_readline}; then
   AC_CHECK_LIB(readline, rl_callback_read_char)
 fi
@@ -431,9 +487,7 @@ case "${host}" in
     LIBS="-lf2c ${LIBS}"
     ;;
   *linux)
-    LDCMD=gcc
-    LIBS="-lf2c ${LIBS}"
-    DLLFLAGS=-rdynamic
+    DLLFLAGS=-export-dynamic
     ;;
   *sgi*)
     SHLIBLDFLAGS="-shared"
@@ -453,6 +507,16 @@ case "${host}" in
     ;;
   *solaris*)
     SHLIBLDFLAGS="-G"
+    if ${cc_is_gcc}; then
+      CPICFLAGS=-fPIC
+    else
+      CPICFLAGS=-KPIC
+    fi
+    if ${f77_is_g77}; then
+      FPICFLAGS=-fPIC
+    else
+      FPICFLAGS=-PIC
+    fi
     ;;
 esac
 
@@ -486,7 +550,7 @@ fi
 if test -z "${R_PRINTCMD}"; then
   AC_CHECK_PROGS(R_PRINTCMD, lpr lp)
 fi
-AC_DEFINE_UNQUOTED(R_PRINTCMD,"${R_PRINTCMD}")
+AC_DEFINE_UNQUOTED(R_PRINTCMD, "${R_PRINTCMD}")
 
 if test -z "${R_PAPERSIZE}"; then
   R_PAPERSIZE=a4
@@ -503,11 +567,13 @@ AC_SUBST(CFLAGS)
 AC_SUBST(FFLAGS)
 AC_SUBST(F2CFLAGS)
 
-AC_OUTPUT(Makeconf cmd/fwf2table doc/keyword-test etc/INSTALL
-  etc/Makeconf etc/REMOVE etc/Rdconv etc/Rdindex etc/Rman2Rd etc/SHLIB
-  etc/Sd2Rd etc/build-help etc/help.pretty
+AC_OUTPUT(Makeconf cmd/fwf2table doc/keyword-test etc/COMPILE
+  etc/INSTALL etc/Makeconf etc/REMOVE etc/Rdconv etc/Rdindex etc/Rman2Rd
+  etc/SHLIB etc/Sd2Rd etc/build-help etc/help.pretty
   etc/html2dos src/front/R.sh demos/dynload/Makefile
   doc/manual/lib2tex
+  src/appl/Makefile src/graphics/Makefile src/main/Makefile
+  src/nmath/Makefile src/unix/Makefile
 )
 
 AC_OUTPUT_COMMANDS(
