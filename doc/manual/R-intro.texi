@@ -6545,6 +6545,10 @@ Remove add-on packages.
 Build add-on packages.
 @item check
 Check add-on packages.
+@item LINK
+Front-end for linking against @R{} shared libraries.
+@item Rprof
+Post-process @R{} profiling files.
 @item Rdconv
 Convert Rd format to various other formats, including @HTML{}, Nroff,
 La@TeX{}, plain text, and S documentation format.
