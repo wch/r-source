@@ -26,11 +26,12 @@
 #ifdef __MAIN__
 #define extern
 #endif
-extern double	R_NaN;		/* IEEE NaN or -DBL_MAX */
-extern double	R_PosInf;	/* IEEE Inf or DBL_MAX */
+/* implementation of these : ../../main/arithmetic.c */
+extern double	R_NaN;		/* IEEE NaN or = NA_REAL */
+extern double	R_PosInf;	/* IEEE Inf  or	 DBL_MAX */
 extern double	R_NegInf;	/* IEEE -Inf or -DBL_MAX */
-extern int	R_NaInt;	/* NA_INTEGER etc */
-extern double	R_NaReal;	/* NA_REAL */
+extern double	R_NaReal;	/* NA_REAL: IEEE or "almost -DBL_MAX" */
+extern int	R_NaInt;	/* NA_INTEGER:= INT_MIN currently */
 #ifdef __MAIN__
 #undef extern
 #endif
@@ -43,8 +44,8 @@ extern double	R_NaReal;	/* NA_REAL */
 
 int R_IsNA(double);		/* True for R's NA only */
 int R_IsNaN(double);		/* True for special NaN, *not* for NA */
-int R_IsNaNorNA(double);        /* True for both */
-int R_finite(double);           /* True if none of NA, NaN, +/-Inf */
+int R_IsNaNorNA(double);	/* True for both */
+int R_finite(double);		/* True if none of NA, NaN, +/-Inf */
 
 #define ISNA(x)	       R_IsNA(x)
 #define ISNAN(x)       R_IsNaNorNA(x)
