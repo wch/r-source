@@ -47,9 +47,7 @@
 
 #include "eventloop.h" /* For the input handlers of the event loop mechanism. */
 
-/* external routines from here */
-int X11ConnectionNumber();
-void R_ProcessEvents(void *data);
+/* routines from here */
 int X11DeviceDriver(DevDesc*, char*, double, double, double, double, int, int);
 
 /* These are the currently supported device "models" */
@@ -68,7 +66,7 @@ int X11DeviceDriver(DevDesc*, char*, double, double, double, double, int, int);
 #define MM_PER_INCH	25.4			/* mm -> inch conversion */
 
 #define IS_100DPI ((int) (1./pixelHeight() + 0.5) == 100)
-    
+
 	/********************************************************/
 	/* Each driver can have its own device-specic graphical */
 	/* parameters and resources.  these should be wrapped	*/
@@ -626,7 +624,7 @@ static void handleEvent(XEvent event)
 	}
 }
 
-void R_ProcessEvents(void *data)
+static void R_ProcessEvents(void *data)
 {
     XEvent event;
     while (displayOpen && XPending(display)) {
@@ -837,20 +835,20 @@ static XFontStruct *RLoadFont(int face, int size)
 	if ( f->face == face && f->size == size ) return f->font;
     }
 
-    
+
 
     /* Here's a 1st class fudge: make sure that the Adobe design sizes
        8, 10, 11, 12, 14, 17, 18, 20, 24, 25, 34 can be obtained via
        an integer "size" at 100 dpi, namely 6, 7, 8, 9, 10, 12, 13,
        14, 17, 18, 24 points. It's almost y = x * 100/72, but not
        quite. The constants were found using lm(). --pd */
-    
+
     pixelsize = IS_100DPI ? R_rint(size * 1.43 - 0.4) : size;
 
     if(face == 4)
 	sprintf(buf, symbolname,  pixelsize);
     else
-	sprintf(buf, fontname, 
+	sprintf(buf, fontname,
 		weight[face & 1],
 		slant[(face & 2)>>1 ],  pixelsize);
 #ifdef DEBUG_X11
@@ -871,14 +869,14 @@ static XFontStruct *RLoadFont(int face, int size)
 	   If we can't find a "fixed" font then something is seriously
 	   wrong */
 	if ( ADOBE_SIZE(pixelsize) ) {
-	    tmp = XLoadQueryFont(display, "fixed"); 
+	    tmp = XLoadQueryFont(display, "fixed");
 	    if (tmp)
 		return tmp;
 	    else
 		error("Could not find any X11 fonts\nCheck that the Font Path is correct.");
 	}
 
-	if ( pixelsize < 8 ) 
+	if ( pixelsize < 8 )
 	    pixelsize = 8;
 	else if (pixelsize == 9)
 	    pixelsize = 8;
@@ -891,7 +889,7 @@ static XFontStruct *RLoadFont(int face, int size)
 	if(face == 4)
 	    sprintf(buf, symbolname, pixelsize);
 	else
-	    sprintf(buf, fontname, 
+	    sprintf(buf, fontname,
 		    weight[face & 1],
 		    slant[(face & 2)>>1 ],  pixelsize);
 #ifdef DEBUG_X11
@@ -907,7 +905,7 @@ static XFontStruct *RLoadFont(int face, int size)
 	f = &fontcache[nfonts++];
 	f->face = face;
 	f->size = size;
-	f->font = tmp; 
+	f->font = tmp;
     }
     if (nfonts == MAXFONTS) /* make room in the font cache */
     {
@@ -990,7 +988,7 @@ static void SetLinetype(int newlty, double nlwd, DevDesc *dd)
 	}
 	else {
 	    ndash = 0;
-	    for(i=0 ; i<8 && newlty != 0 ; i++) {
+	    for(i = 0 ; i < 8 && (newlty != 0); i++) {
 		int j = newlty & 15;
 		if (j == 0) j = 1; /* Or we die with an X Error */
 		/* scale line texture for line width */
@@ -999,7 +997,7 @@ static void SetLinetype(int newlty, double nlwd, DevDesc *dd)
 		/* does not exceed X11 storage limits */
 		if (j > 255) j=255;
 		dashlist[ndash++] = j;
-		newlty = newlty>>4;
+		newlty = newlty >> 4;
 	    }
 	    XSetDashes(display, xd->wgc, 0, dashlist, ndash);
 	    XSetLineAttributes(display,
@@ -1148,7 +1146,8 @@ static int X11_Open(DevDesc *dd, x11Desc *xd, char *dsp,
 
 
     if(DisplayOpened) {
-        addInputHandler(InputHandlers, ConnectionNumber(display),  R_ProcessEvents, XActivity);
+        addInputHandler(InputHandlers, ConnectionNumber(display),
+			R_ProcessEvents, XActivity);
     }
 
     numX11Devices++;
@@ -1331,11 +1330,11 @@ static void X11_Close(DevDesc *dd)
 		}
 		missingfont[i][j] = 0;
 	    }
-#else 
+#else
 	while (nfonts--)  XFreeFont(display, fontcache[nfonts].font);
 	nfonts = 0;
 #endif
-        removeInputHandler(&InputHandlers, getInputHandler(InputHandlers,fd));        
+        removeInputHandler(&InputHandlers, getInputHandler(InputHandlers,fd));
 	XCloseDisplay(display);
 	displayOpen = 0;
     }
@@ -1865,12 +1864,3 @@ int X11DeviceDriver(DevDesc *dd,
 
     return 1;
 }
-
-int X11ConnectionNumber()
-{
-    if (displayOpen)
-	return ConnectionNumber(display);
-    else
-	return 0;
-}
-

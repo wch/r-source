@@ -1,6 +1,6 @@
 /*
- *  R : A Computer Langage for Statistical Data Analysis
- *  Copyright (C) 1998-1999   Lyndon Drake
+ *  R : A Computer Language for Statistical Data Analysis
+ *  Copyright (C) 1998-2000   Lyndon Drake
  *                            and the R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -58,11 +58,6 @@ typedef struct {
     GdkFont *font;
 
 } gnomeDesc;
-
-
-static int numGNOMEDevices = 0;
-
-
 
 /* Device driver actions */
 static void   GNOME_Activate(DevDesc *);
@@ -224,7 +219,7 @@ static int GNOME_Open(DevDesc *dd, gnomeDesc *gtkd, char *dsp, double w, double 
   gint iw, ih;
 
   /*gdk_rgb_set_install(TRUE); */
-  gdk_rgb_set_verbose(TRUE);
+  /* gdk_rgb_set_verbose(TRUE);*/
   gdk_rgb_init();
   gtk_widget_push_visual(gdk_rgb_get_visual());
   gtk_widget_push_colormap(gdk_rgb_get_cmap());
@@ -360,8 +355,6 @@ static void GNOME_Close(DevDesc *dd)
   gnomeDesc *gtkd = (gnomeDesc *) dd->deviceSpecific;
 
   gtk_widget_destroy(gtkd->window);
-
-  numGNOMEDevices--;
 
   free(gtkd);
 }
@@ -639,6 +632,7 @@ static void GNOME_Text(double x, double y, int coords,
   GConvert(&x, &y, coords, DEVICE, dd);
 
   SetColor(&gcol_fill, dd->gp.col);
+  
   item = gnome_canvas_item_new(gnome_canvas_root(GNOME_CANVAS(gtkd->canvas)),
 			       gnome_canvas_text_get_type(),
 			       "text", str,

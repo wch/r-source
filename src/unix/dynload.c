@@ -515,12 +515,9 @@ void R_load_gnome_shlib()
     if(!gnome_start) R_Suicide("Cannot load gnome_start");
     GTKDeviceDriver = R_dlsym(handle, "GTKDeviceDriver");
     if(!GTKDeviceDriver) R_Suicide("Cannot load GTKDeviceDriver");
+/* Uncomment the next two lines to experiment with the gnome() device */
 /*    GnomeDeviceDriver = R_dlsym(handle, "GnomeDeviceDriver");
       if(!GnomeDeviceDriver) R_Suicide("Cannot load GnomeDeviceDriver");*/
-/*    X11DeviceDriver = R_dlsym(handle, "GTKDeviceDriver");
-    if(!X11DeviceDriver) R_Suicide("Cannot load X11DeviceDriver");
-    ptr_dataentry = R_dlsym(handle, "RX11_dataentry");
-    if(!ptr_dataentry) R_Suicide("Cannot load do_dataentry"); */
 }
 
 

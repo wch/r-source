@@ -114,7 +114,10 @@ getOption(x)
     progress? Set to \code{TRUE} by the command-line option
     \code{--verbose}.}
 
-  \item{device}{a character string giving the default device for that session.}
+  \item{device}{a character string giving the default device for that
+    session. This defaults to the normal screen device (e.g. \code{x11},
+    \code{windows} or \code{gtk}) for an interactive session, and
+    \code{postscript} in batch use or if a screen is not available.}
 #ifdef unix
   \item{X11colortype}{The default colour type for \code{\link{X11}} devices.}
 #endif

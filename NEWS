@@ -81,9 +81,10 @@ NEW FEATURES
 	and the code is now in a separate shared library.  Both
 	--gui=GNOME and --gui=gnome are allowed.
 
-	The main GNOME device is now called gtk(); the x11() device
-	from the X11 support can also be used.  (The gnome() device
-	remains unreliable.)
+	The main graphics device for use with GNOME is now called
+	gtk(); the x11() device from the X11 support can also be used.
+	(The gnome() device remains unreliable, and is by default
+	unavailable.)
 
     o	New device xfig() to produce XFig files.
 
