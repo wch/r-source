@@ -107,7 +107,7 @@ vpTree(parent, children)
     sharing the same parent must have unique names, which means that
     if you push a viewport with the same name as an existing viewport,
     the existing viewport will be replaced in the viewport tree.
-    A viewport name can be any valid \R symbol name, but
+    A viewport name can be any string, but
     grid uses the
     reserved name \code{"ROOT"} for the top-level viewport.  Also,
     when specifying a viewport name in \code{downViewport}

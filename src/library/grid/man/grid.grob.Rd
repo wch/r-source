@@ -52,7 +52,7 @@ gList(...)
 
   Grob names need not be unique in general, but all children of a
   gTree must have different names.  
-    A grob name can be any valid \R symbol name.  Also,
+    A grob name can be any string, though
     it is not
     advisable to use the gPath separator  (currently \code{::}) in
     grob names.

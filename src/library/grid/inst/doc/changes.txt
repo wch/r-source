@@ -148,6 +148,13 @@ Changes from grid_2.0.1 to grid_2.1.0:
 20. Fix for calculation of length of max/min/sum unit.  Length is
     now (correctly) reported as 1 (was reported as length of first arg).
 
+21. Viewport names can now be any string (they used to have to be a
+    valid R symbol).
+
+    The documentation now says that grob names can be any string
+    (they always could be, but the documentation said they had to
+     be a valid R symbol)
+
 
 Changes from grid_2.0.0 to grid_2.0.1:
 ------------------------------------

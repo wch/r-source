@@ -53,8 +53,6 @@ valid.viewport <- function(x, y, width, height, just,
   # Otherwise it should be a valid R name
   if (is.null(name))
     name <- vpAutoName()
-  else
-    name <- make.names(name)
   # Put all the valid things first so that are found quicker
   vp <- list(x = x, y = y, width = width, height = height,
              justification = just,
