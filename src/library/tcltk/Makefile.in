@@ -20,7 +20,7 @@ all: Makefile DESCRIPTION
 	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/R
 	@(f=$${TMPDIR:-/tmp}/R$$$$; \
 	  if test @use_tcltk@ = yes; then \
-	    cat `ls $(srcdir)/R/*.R` $(srcdir)/R/unix/zzz.R > $${f}; \
+	    cat `LC_COLLATE=C ls $(srcdir)/R/*.R` $(srcdir)/R/unix/zzz.R > $${f}; \
 	  else \
 	    cp $(srcdir)/R/unix/zzz.Rstub $${f}; \
 	  fi; \

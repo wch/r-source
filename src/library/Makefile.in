@@ -76,7 +76,7 @@ vignettes:
 	    if test -d "$(srcdir)/$${pkg}/inst/doc"; then \
 	      echo "building/updating vignettes for package '$${pkg}' ..."; \
 	      (echo "tools:::.install_package_vignettes(\"$(srcdir)/$${pkg}\", \"$(top_builddir)/library/$${pkg}\")") | \
-	          R_DEFAULT_PACKAGES="utils,tools" \
+	          R_DEFAULT_PACKAGES="utils,tools" LC_COLLATE=C \
 	            $(R_EXE) --slave > /dev/null; \
 	    fi; \
 	  done; \
@@ -85,7 +85,7 @@ indices:
 	@for pkg in $(R_PKGS_BASE); do \
 	  ( echo "tools:::.install_package_indices(\"$(srcdir)/$${pkg}\","; \
 	    echo " \"$(top_builddir)/library/$${pkg}\")") | \
-	      R_DEFAULT_PACKAGES=tools $(R_EXE) --slave > /dev/null; \
+	      R_DEFAULT_PACKAGES=tools LC_COLLATE=C $(R_EXE) --slave > /dev/null; \
 	done
 	@cat $(top_builddir)/library/*/CONTENTS \
 	  > $(top_builddir)/doc/html/search/index.txt

@@ -165,7 +165,17 @@ packages: if the number in the file @file{VERSION} is
 to directory @file{src/library/Recommended} in the sources you have
 unpacked.  Normally @samp{R-patched.tar.gz} will have the number of the
 last released version, and @samp{R-devel.tar.gz} that of the next minor
-(@samp{@var{x}.@var{y}.0}) release.
+(@samp{@var{x}.@var{y}.0}) release.  After downloading manually you need
+to execute @command{tools/link-recommended} from the top level of the
+sources to make the requisite links in @file{src/library/Recommended}.
+
+One way to download the package sources is to use @command{wget}.  A
+suitable incantation from the top level of the R sources might be
+@smallexample
+wget -r -l1 --no-parent -A\*.gz -nd -P src/library/Recommended \
+  http://cran.r-project.org/src/contrib/@var{x}.@var{y}.@var{z}/Recommended
+tools/link-recommended
+@end smallexample
 
 
 @node Using rsync,  , Getting patched and development versions, Obtaining R

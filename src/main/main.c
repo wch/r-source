@@ -408,6 +408,8 @@ static void R_LoadProfile(FILE *fparg, SEXP env)
    Don't use R-specific type, e.g. Rboolean */
 /* int R_Is_Running = 0; now in Defn.h */
 
+void R_ShowMessage(char *s); /* in OS/system.c */
+
 void setup_Rmainloop(void)
 {
     volatile int doneit;

@@ -28,9 +28,9 @@ sealClass(Class, where)
 
 }
 \arguments{
-  \item{Class}{ character string name for the class.  Other than
-  \code{setClass}, the functions will usually take a class definition
-  instead of the string (allowing the caller to identify the class uniquely). }
+  \item{Class}{character string name for the class.  Other than
+    \code{setClass}, the functions will usually take a class definition
+    instead of the string (allowing the caller to identify the class uniquely).}
   \item{representation}{ the slots that the new class should have
     and/or other classes that this class extends.  Usually a call to
     the \code{\link{representation}} function. }
@@ -49,52 +49,48 @@ sealClass(Class, where)
     For other functions, \code{where} defines where to do the search
     for the class definition, and the default is to search from the top-level
     environment or namespace of the caller to this function.
-    }
+  }
   \item{unique}{if \code{findClass} expects a unique location for the
     class, \code{unique} is a character string explaining the purpose
     of the search (and is used in warning and error messages).  By
     default, multiple locations are possible and the function always
     returns a list.
-    }
+  }
   \item{inherits}{in a call to \code{getClasses}, should the value
     returned include all parent environments of \code{where}, or that
     environment only?  Defaults to \code{TRUE} if \code{where} is
     omitted, and to \code{FALSE} otherwise.
-    }
+  }
   \item{validity}{ if supplied, should be a validity-checking method
-  for objects from this class (a function that returns \code{TRUE} if
-  its argument is a valid object of this class and one or more strings
-  describing the failures otherwise).  See \code{\link{validObject}}
-  for details.  }
-\item{access}{Access list for the class.  Saved in the definition, but
-  not currently used.}
-\item{version}{A version indicator for this definition. Saved in the
+    for objects from this class (a function that returns \code{TRUE} if
+    its argument is a valid object of this class and one or more strings
+    describing the failures otherwise).  See \code{\link{validObject}}
+    for details.}
+  \item{access}{Access list for the class.  Saved in the definition, but
+    not currently used.}
+  \item{version}{A version indicator for this definition. Saved in the
     definition, but not currently used.}
   \item{sealed}{ If \code{TRUE}, the class definition will be sealed,
     so that another call to \code{setClass} will fail on this class name.
-    }
+  }
   \item{package}{ An optional package name for the class.  By default
-  (and usually) the package where the class definition is assigned
-  will be used.
-    }
+    (and usually) the package where the class definition is assigned
+    will be used.
+  }
   \item{formal}{ Should a formal definition be required? }
-
-
   \item{classDef}{ For \code{removeClass}, the optional class
     definition (but usually it's better for \code{Class} to be the
     class definition, and to omit \code{classDef}).
-    }
-
-
+  }
 }
-\details{
 
+\details{
   These are the functions that create and manipulate formal class
   definitions.  Brief documentation is provided below.  See the
   references for an introduction and for more details.
- 
-  \describe{ 
-    \item{\code{setClass}:}{ 
+
+  \describe{
+    \item{\code{setClass}:}{
       Define \code{Class} to be an S-style class.  The effect is to
       create an object, of class \code{"classRepEnvironment"}, and store
       this (hidden) in the specified environment or database.  Objects
@@ -103,21 +99,17 @@ sealClass(Class, where)
       slots), and methods may be defined including the class name in the
       signature (see \code{\link{setMethod}}).
     }
-
-    \item{\code{removeClass}:}{ 
+    \item{\code{removeClass}:}{
       Remove the definition of this class, from the environment
       \code{where} if this argument is supplied; if not,
       \code{removeClass} will search for a definition, starting in the
       top-level environment of the call to \code{removeClass}, and
       remove the (first) definition found.
     }
-  
-    \item{\code{isClass}:}{ 
+    \item{\code{isClass}:}{
       Is this a the name of a formally defined class? (Argument
       \code{formal} is for compatibility and is ignored.)
     }
-
-
     \item{\code{getClasses}:}{
       The names of all the classes formally defined on \code{where}.  If
       called with no argument, all the classes visible from the
@@ -128,43 +120,38 @@ sealClass(Class, where)
       is what you want.
     }
     \item{\code{findClass}:}{
-        The list of environments or positions on the search list in
-        which a class definition of \code{Class} is found.  If
-        \code{where} is supplied, this is an environment (or
-        namespace) from which the search takes place; otherwise the
-        top-level environment of the caller is used.  If \code{unique} is supplied
-        as a character string, \code{findClass} returns a single
-        environment or position.  By default, it always returns a
-        list.  The calling function should select, say, the first element
-        as a position or environment for functions such as
-        \code{\link{get}}.
+      The list of environments or positions on the search list in
+      which a class definition of \code{Class} is found.  If
+      \code{where} is supplied, this is an environment (or namespace)
+      from which the search takes place; otherwise the top-level
+      environment of the caller is used.  If \code{unique} is supplied
+      as a character string, \code{findClass} returns a single
+      environment or position.  By default, it always returns a list.
+      The calling function should select, say, the first element as a
+      position or environment for functions such as \code{\link{get}}.
 
-        If \code{unique} is supplied as a character string, \code{findClass} will
-        warn if there is more than one definition visible (using the
-        string to identify the purpose of
-        the call), and will generate an error if no definition can be found.
-
+      If \code{unique} is supplied as a character string,
+      \code{findClass} will warn if there is more than one definition
+      visible (using the string to identify the purpose of the call),
+      and will generate an error if no definition can be found.
     }
-    
     \item{\code{resetClass}:}{
       Reset the internal definition of a class.  Causes the complete
       definition of the class to be re-computed, from the
       representation and superclasses specified in the original
-      call to \code{\link{setClass}}.
+      call to \code{setClass}.
 
       This function is called when aspects of the class definition are
       changed.  You would need to call it explicitly if you changed the
       definition of a class that this class extends (but doing that in
       the  middle of a session is living dangerously, since it may
       invalidate existing objects).
-
     }
-
-  \item{sealClass}{ Seal the current definition of the specified
-    class, to prevent further changes.  It is possible to seal a class
-    in the call to \code{setClass}, but sometimes further changes have
-    to be made (e.g., by calls to \code{setIs}).  If so, call
-    \code{sealClass} after all the relevant changes have been made.
+    \item{\code{sealClass}:}{ Seal the current definition of the specified
+      class, to prevent further changes.  It is possible to seal a class
+      in the call to \code{setClass}, but sometimes further changes have
+      to be made (e.g., by calls to \code{setIs}).  If so, call
+      \code{sealClass} after all the relevant changes have been made.
     }
   }
 }
@@ -192,9 +179,9 @@ sealClass(Class, where)
   formal class definitions.  Suppose we don't like all of this; in
   particular, we want the default matrix to have 0 rows and columns (not
   1 by 1 as it is now).
-  
+
   \code{setClass("myMatrix", "matrix", prototype = matrix(0,0,0))}
-  
+
   The arguments above illustrate two short-cuts relevant to such
   examples.  We abbreviated the \code{representation} argument to the
   single superclass, because the new class doesn't add anything to the
@@ -203,15 +190,15 @@ sealClass(Class, where)
 }
 
 \references{
-  The R package \pkg{methods} implements, with a few exceptions, the
+  The \R package \pkg{methods} implements, with a few exceptions, the
   programming interface for classes and methods in the book
   \emph{Programming with Data} (John M. Chambers, Springer, 1998), in
   particular sections 1.6, 2.7, 2.8, and chapters 7 and 8.
 
   While the programming interface for the \pkg{methods} package follows
-  the reference, the R software is an original implementation, so
+  the reference, the \R software is an original implementation, so
   details in the reference that reflect the S4 implementation may appear
-  differently in R.  Also, there are extensions to the programming
+  differently in \R.  Also, there are extensions to the programming
   interface developed more recently than the reference.  For a
   discussion of details and ongoing development, see the web page
   \url{http://developer.r-project.org/methodsPackage.html} and the
@@ -241,7 +228,7 @@ setClass("trackMultiCurve",
 ##
 ## Suppose we want trackMultiCurve to be like trackCurve when there's
 ## only one column.
-## First, the wrong way. 
+## First, the wrong way.
 try(setIs("trackMultiCurve", "trackCurve",
   test = function(obj) {ncol(slot(obj, "y")) == 1}))
 
