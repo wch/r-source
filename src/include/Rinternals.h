@@ -480,6 +480,7 @@ SEXP Rf_cons(SEXP, SEXP);
 void Rf_copyListMatrix(SEXP, SEXP, Rboolean);
 void Rf_copyMatrix(SEXP, SEXP, Rboolean);
 void Rf_copyMostAttrib(SEXP, SEXP);
+void Rf_copyMostAttribNoTs(SEXP, SEXP);
 void Rf_copyVector(SEXP, SEXP);
 SEXP Rf_CreateTag(SEXP);
 void Rf_CustomPrintValue(SEXP,SEXP);
@@ -903,6 +904,7 @@ int R_system(char *);
 #define copyListMatrix		Rf_copyListMatrix
 #define copyMatrix		Rf_copyMatrix
 #define copyMostAttrib		Rf_copyMostAttrib
+#define copyMostAttribNoTs	Rf_copyMostAttribNoTs
 #define copyVector		Rf_copyVector
 #define CreateTag		Rf_CreateTag
 #define CustomPrintValue	Rf_CustomPrintValue

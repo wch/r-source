@@ -61,7 +61,8 @@ USER-VISIBLE CHANGES
 
     o	Package names must now be given exactly in library() and
 	require(), regardless of whether the underlying file system is
-	case-sensitive or not.
+	case-sensitive or not.  So 'library(mass)' will not work, even
+	on Windows.
 
     o   R no longer accepts associative use of relational
         operators. That is, 3 < 2 < 1 (which used to evalute
@@ -502,6 +503,9 @@ BUG FIXES
 
     o	Building the reference manual no longer uses roman upright
 	quotes in typewriter output.
+
+    o	model.frame() no longer builds invalid data frames if the
+	data contains time series and rows are omitted.
 
 
 

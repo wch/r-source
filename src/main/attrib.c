@@ -169,6 +169,46 @@ void copyMostAttrib(SEXP inp, SEXP ans)
     UNPROTECT(2);
 }
 
+/* version that does not preserve ts information, for subsetting */
+void copyMostAttribNoTs(SEXP inp, SEXP ans)
+{
+    SEXP s;
+    PROTECT(ans);
+    PROTECT(inp);
+    for (s = ATTRIB(inp); s != R_NilValue; s = CDR(s)) {
+	if ((TAG(s) != R_NamesSymbol) &&
+	    (TAG(s) != R_ClassSymbol) &&
+	    (TAG(s) != R_TspSymbol) &&
+	    (TAG(s) != R_DimSymbol) &&
+	    (TAG(s) != R_DimNamesSymbol)) {
+	    installAttrib(ans, TAG(s), CAR(s));
+	} else if (TAG(s) == R_ClassSymbol) {
+	    SEXP cl = CAR(s);
+	    int i;
+	    Rboolean ists = FALSE;
+	    for (i = 0; i < LENGTH(cl); i++)
+		if (strcmp(CHAR(STRING_ELT(cl, i)), "ts") == 0) {
+		    ists = TRUE;
+		    break;
+		}
+	    if (!ists) installAttrib(ans, TAG(s), cl);
+	    else if(LENGTH(cl) <= 1) {
+	    } else {
+		SEXP new_cl;
+		int i, j, l = LENGTH(cl);
+		PROTECT(new_cl = allocVector(l - 1, STRSXP));
+		for (i = 0, j = 0; i < l; i++)
+		    if (strcmp(CHAR(STRING_ELT(cl, i)), "ts"))
+			SET_STRING_ELT(new_cl, j++, STRING_ELT(cl, i));
+		installAttrib(ans, TAG(s), new_cl);
+		UNPROTECT(1);
+	    }
+	}
+    }
+    SET_OBJECT(ans, OBJECT(inp));
+    UNPROTECT(2);
+}
+
 static SEXP installAttrib(SEXP vec, SEXP name, SEXP val)
 {
     SEXP s, t;

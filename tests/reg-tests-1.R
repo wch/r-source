@@ -3215,3 +3215,10 @@ print(x)
 x$f<-y
 print(x)
 ##
+
+
+## model.frame incorrectly preserved ts attributes
+x1 <- ts(c(1:10, NA))
+y1 <- ts(rnorm(11))
+lm(y1 ~ x1)
+## failed in 1.9.1
