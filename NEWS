@@ -64,6 +64,8 @@ NEW FEATURES
 
     o	Added setequal() for set equality.
 
+    o	First argument renamed to "package" for library(), require(), provide().
+
 
 BUG FIXES
 
