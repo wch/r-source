@@ -103,23 +103,39 @@ HEADERS = \
 	Rstrptime.h
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
+## FIXME: need to reconcile with LIBOBJS
 DISTFILES = Makefile.in Makefile.win \
 	$(HEADERS) \
 	$(SOURCES_C) \
 	strdup.c \
 	$(SOURCES_F) \
 	gram.y
+## </FIXME>
 
 RLIBS = ../unix/libunix.a ../appl/libappl.a ../nmath/libmath.a
 
-ALL_LIBS = $(RLIBS) $(LIBS) $(BLAS_LIBS) $(FLIBS) $(R_XTRA_LIBS)
+Rexecbin_PROGRAMS = R.bin
+R_bin_SOURCES = $(SOURCES)
+R_bin_OBJECTS = $(OBJECTS)
+## FIXME:
+## This will not be good enough on AIX, where we need to play also with
+## -export-symbols SYMFILE.
+@USE_LIBTOOL_TRUE@R_bin_LDFLAGS = -export-dynamic
+## </FIXME>
+R_bin_DEPENDENCIES = $(RLIBS) @EXPORTFILE@
+R_bin_LDADD = $(RLIBS) $(BLAS_LIBS) $(FLIBS) $(R_XTRA_LIBS)
 
 Rexeclib_LTLIBRARIES = libR.la
 libR_la_SOURCES = $(SOURCES)
 libR_la_LDFLAGS = 
 libR_la_OBJECTS = $(OBJECTS:.o=.lo)
-libR_la_LIBADD = 
+## FIXME:
+## This should also have `ls ../appl/*.lo ../nmath/*.lo ../unix/*.lo`, but
+## of course this will not work when the files do not exist yet :-)
+libR_la_LIBADD = $(BLAS_LIBS) $(FLIBS) $(R_XTRA_LIBS)
+## </FIXME>
 libR_la_DEPENDENCIES = ../appl/stamp-lo ../nmath/stamp-lo ../unix/stamp-lo
+@USE_LIBTOOL_TRUE@libR_la_LDFLAGS = -avoid-version -rpath $(Rexeclibdir)
 
 all: Makefile Makedeps R
 
@@ -138,16 +154,18 @@ Makedeps: Makefile $(DEPENDS)
 
 R: Makefile
 	@$(MAKE) Makedeps
-	@$(MAKE) $(top_builddir)/bin/R.bin
-	@@WANT_SHLIB_TRUE@$(MAKE) libR.la
+	@$(MAKE) R.bin
+	@@WANT_R_SHLIBS_TRUE@$(MAKE) libR.la
 	@(cd ../unix && $(MAKE) DLLs)
 
 ../include/config.h ../include/Rversion.h:
 	(cd $(@D); $(MAKE) $(@F))
 
-$(top_builddir)/bin/R.bin: $(OBJECTS) $(RLIBS) @EXPORTFILE@
-	@$(MKINSTALLDIRS) $(top_builddir)/bin
-	$(MAIN_LD) $(MAIN_LDFLAGS) $(LDFLAGS) -o $@ $(OBJECTS) $(ALL_LIBS)
+R.bin: $(R_bin_OBJECTS) $(R_bin_DEPENDENCIES)
+	$(MAIN_LINK) -o $@ $(R_bin_LDFLAGS) $(R_bin_OBJECTS) $(R_bin_LDADD) $(LIBS)
+## FIXME: Not sure if we want to do this ...
+	@$(MAKE) rhome=`cd $(top_builddir); pwd` install-bin
+## </FIXME>
 
 $(top_builddir)/etc/R.exp: $(OBJECTS) $(RLIBS)
 	@$(top_srcdir)/tools/ldAIX4 -o $@ $(OBJECTS) $(RLIBS)
@@ -156,9 +174,10 @@ $(RLIBS):
 	(cd $(@D); $(MAKE) $(@F))
 
 libR.la: $(libR_la_OBJECTS) $(libR_la_DEPENDENCIES)
-	$(LTLINK) -rpath $(Rexeclibdir) -avoid-version -o $@ $(libR_la_OBJECTS) `ls ../appl/*.lo ../nmath/*.lo ../unix/*.lo` $(LIBS) $(BLAS_LIBS) $(FLIBS) $(R_XTRA_LIBS)
-## FIXME
-	@$(MAKE) rhome=`cd $(top_builddir); pwd` install
+	$(SHLIB_LINK) -o $@ $(libR_la_LDFLAGS) $(libR_la_OBJECTS) `ls ../appl/*.lo ../nmath/*.lo ../unix/*.lo` $(libR_la_LIBADD) $(LIBS)
+## FIXME: Not sure if we want to do this ...
+	@$(MAKE) rhome=`cd $(top_builddir); pwd` install-lib
+## </FIXME>
 
 $(libR_la_DEPENDENCIES):
 	(cd $(@D); $(MAKE) $(@F))
@@ -168,9 +187,15 @@ gram.c: $(srcdir)/gram.y
 	$(top_srcdir)/tools/move-if-change y.tab.c $(@F)
 
 install: installdirs
+	@$(MAKE) install-bin
+	@if test -f libR.la; then $(MAKE) install-lib; fi
+install-bin:
+	@$(top_srcdir)/tools/copy-if-change R.bin $(Rexecbindir)
+install-lib:
 @USE_LIBTOOL_FALSE@	@$(top_srcdir)/tools/copy-if-change libR.la $(Rexeclibdir)/libR.$(SHLIB_EXT)
 @USE_LIBTOOL_TRUE@	@$(LIBTOOL) --mode=install $(INSTALL) libR.la $(Rexeclibdir)
 installdirs:
+	@$(MKINSTALLDIRS) $(Rexecbindir)
 	@$(MKINSTALLDIRS) $(Rexeclibdir)
 
 mostlyclean: clean
