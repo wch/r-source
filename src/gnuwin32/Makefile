@@ -221,8 +221,8 @@ cleanwin:
 
 #                          ===== testing ======
 
-check: all test
-test: test-Specific pkgtests
+# tests
+check test: test-Specific pkgtests
 
 test-Specific:
 	-@$(MAKE) -C $(RHOME)/tests -f $(RHOME)/src/gnuwin32/check/Maketests clean
@@ -280,7 +280,8 @@ bindist: docfiles
 	$(CP) -pr $(LIBFILES) $(RPREFIX)/library
 	$(RM) $(RPREFIX)/demos/dynload/*.o $(RPREFIX)/demos/dynload/*.def
 	$(RM) $(RPREFIX)/*/Makefile.in
-	$(RM) $(RPREFIX)/bin/INSTALL $(RPREFIX)/bin/SHLIB \
+	$(RM) $(RPREFIX)/bin/INSTALL $(RPREFIX)/bin/REMOVE \
+	      $(RPREFIX)/bin/SHLIB\
               $(RPREFIX)/bin/build $(RPREFIX)/bin/check \
 	      $(RPREFIX)/bin/massage-Examples.sh
 	$(MKDIR) $(RPREFIX)/etc

@@ -8,7 +8,7 @@
 
 R_PAPERSIZE=${R_PAPERSIZE:-a4}
 
-revision='$Revision: 1.5 $'
+revision='$Revision: 1.6 $'
 version=`set - ${revision}; echo ${2}`
 version="Rd2dvi ${version}" 
 
@@ -148,7 +148,7 @@ EOF
 echo "Converting Rd files to LaTeX ..."
 for f in ${files}; do
   echo ${f}
-  ${R_HOME}/bin/Rdconv.bat -t latex ${f} >> ${build_dir}/Rd2.tex
+  Rcmd Rdconv -t latex ${f} >> ${build_dir}/Rd2.tex
 done
 
 cat >> ${build_dir}/Rd2.tex <<EOF
