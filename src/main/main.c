@@ -444,11 +444,9 @@ void run_Rmainloop(void)
 
 void end_Rmainloop(void)
 {
-    SEXP cmd;
-
     Rprintf("\n");
     /* Run the .Last function. */
-    R_CleanUp(1);	/* query save */
+    R_CleanUp(SA_SAVEASK);	/* query save */
 }
 
 void mainloop(void)
@@ -578,11 +576,11 @@ SEXP do_quit(SEXP call, SEXP op, SEXP args, SEXP rho)
 	errorcall(call,"one of \"yes\", \"no\" or \"ask\" expected.\n");
     tmp = CHAR(STRING(CAR(args))[0]);
     if( !strcmp(tmp,"ask") )
-	ask=1;
+	ask = SA_SAVEASK;
     else if( !strcmp(tmp,"no") )
-	ask=2;
+	ask = SA_NOSAVE;
     else if( !strcmp(tmp,"yes") )
-	ask=3;
+	ask = SA_SAVE;
     else
 	errorcall(call,"unrecognized value of ask\n");
     /* run the .Last function. If if gives an error, will drop back to main
@@ -591,4 +589,5 @@ SEXP do_quit(SEXP call, SEXP op, SEXP args, SEXP rho)
     exit(0);
     /*NOTREACHED*/
 }
+
 #undef __MAIN__
