@@ -413,10 +413,11 @@ BUG FIXES
 
     o	data.frame(a=1,b=2)[1,-(1:2)]  now works, giving empty df.
 	as.matrix( df ) now works for empty data.frames.
+	deparse() and dput() now work for empty data.frames.
 
     o	promax() was not using the `m' argument (m=4 was always used).
 
-
+    
 
 	**************************************************
 	*						 *
