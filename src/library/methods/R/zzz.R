@@ -53,4 +53,4 @@ dyn.load(file.path(.Library, "methods", "libs",
                    paste("methods", .Platform$dynlib.ext, sep="")))
 .First.lib("methods", "methods", .GlobalEnv)
 save.image(file = file.path(.Library, "methods", "R", "all.rda"),
-           compress = TRUE)
+           compress = TRUE, safe = FALSE)
