@@ -40,15 +40,16 @@ R:
 	@echo "Running all help() examples ..."
 	$(R) < $< > $@
 
-%-Ex.R: FORCE
-	@if [ -f $@.bak ]; then mv $@.bak $@.bakk ; fi
-	@if [ -f $@ ]; then mv $@ $@.bak ; fi
-	@echo "Collecting components of $@ ..."
-	@cd $(top_builddir)/src/library && \
-	  OPTS="--nroff --example" $(MAKE) PKGS="$*" DOCS
-	@echo "Massaging examples into $@ ..."
-	@$(top_builddir)/bin/massage-Examples $* \
-	  $(top_builddir)/library/$*/R-ex/*.R > $@
+$(EX_IN): FORCE
+	@(pkg=`echo $@ | sed -e 's/-Ex.R$$//g'`; \
+	  if test -f $@.bak ; then mv $@.bak $@.bakk ; fi; \
+	  if test -f $@     ; then mv $@     $@.bak  ; fi; \
+	  echo "Collecting components of $@ ..."; \
+	  (cd $(top_builddir)/src/library && \
+	    OPTS="--nroff --example" $(MAKE) PKGS="$${pkg}" DOCS); \
+	  echo "Massaging examples into $@ ..."; \
+	  $(top_builddir)/bin/massage-Examples $${pkg} \
+	    $(top_builddir)/library/$${pkg}/R-ex/*.R > $@)
 FORCE:
 
 mostlyclean: clean

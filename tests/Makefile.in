@@ -24,7 +24,7 @@ DISTFILES = Makefile.in README Rdiff \
 	all-equal.R mode-methods.R $(TESTsrc) \
 	$(TESTsrc:.R=.Rout.save)
 
-%.Rout: %.R stamp-R
+.R.Rout: stamp-R
 	@rm -f $@.fail
 	@(SRCDIR=$(srcdir); export SRCDIR; \
 	  echo "$(R) < $< > $@"; \
