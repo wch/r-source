@@ -18,7 +18,7 @@ length(Primf) ## 195  R 0.62.0, March 25, 1998
 Real.primitives <-
     list(
 	 specials = c("{", "(", "if", "for", "while", "repeat", "break", "next",
-	 "return", "function",
+	 "return", "function", "quote",
 	 "on.exit" ## on.exit(expression, add=F) has two arguments in S-plus !
 	 ),
 	 language = c("$", "$<-", "<-", "<<-", "[", "[<-", "[[", "[[<-"),
