@@ -33,15 +33,6 @@ Date: Tue, 28 Nov 2000 13:24:33 +0800
 
 Directory:  Add-ons
 
-* PR# 895 *
-Subject: CI for wilcoxon test
-From: kylouskova@euromise.cz
-Date: Thu, 5 Apr 2001 11:02:47 +0200 (MET DST)
-* PR# 496 *
-From: bonneau@epi.roazhon.inra.fr (en148)
-Date: Tue, 21 Mar 2000 10:57:13 +0100 (MET)
---base R has no est.variogram function.
---This appears to be a bug report on sgeostat.
 * PR# 824 *
 Subject: trouble with netCDF 
 From: jasont@indigoindustrial.co.nz
@@ -51,6 +42,11 @@ Date: Thu, 25 Jan 2001 12:00:39 +1300
 Subject: segmentation fault in integrate
 From: Achim Zeileis <zeileis@ci.tuwien.ac.at>
 Date: Thu, 11 Jan 2001 22:49:59 +0100
+* PR# 496 *
+From: bonneau@epi.roazhon.inra.fr (en148)
+Date: Tue, 21 Mar 2000 10:57:13 +0100 (MET)
+--base R has no est.variogram function.
+--This appears to be a bug report on sgeostat.
 
 Directory:  Analyses
 
@@ -268,10 +264,10 @@ none
 
 Directory:  incoming
 
-* PR# 901 *
-Subject: syntax error in datetime.c
-From: ntakebay@bio.indiana.edu
-Date: Mon, 9 Apr 2001 20:07:47 +0200 (MET DST)
+* PR# 906 *
+Subject: Win98 wheelmouse graphics lock problem
+From: cpaul@ucla.edu
+Date: Tue, 10 Apr 2001 17:50:44 +0200 (MET DST)
 * PR# 898 *
 Subject: silent extern error
 From: bellis@hsph.harvard.edu
@@ -288,3 +284,19 @@ Date: Mon, 09 Apr 2001 08:54:48 -0400
 Subject: documentation problems in str.Rd
 From: Kurt Hornik <Kurt.Hornik@ci.tuwien.ac.at>
 Date: Sat, 7 Apr 2001 23:08:23 +0200
+* PR# 902 *
+Subject:  segfaults when warning string is too long (??) 
+From: Ben Bolker <ben@localhost.localdomain>
+Date: Mon, 9 Apr 2001 14:54:55 -0400
+* PR# 901 *
+Subject: syntax error in datetime.c
+From: ntakebay@bio.indiana.edu
+Date: Mon, 9 Apr 2001 20:07:47 +0200 (MET DST)
+* PR# 905 *
+Subject: segfault on Linux from buffer overflow in warning() ?
+From: ben@zoo.ufl.edu
+Date: Tue, 10 Apr 2001 10:58:46 -0400 (EDT)
+* PR# 904 *
+Subject:  Segmentation fault in subscripting array of lists 
+From: J.C.Rougier@durham.ac.uk
+Date: Tue, 10 Apr 2001 15:01:52 +0100 (BST)
