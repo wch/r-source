@@ -2,7 +2,7 @@
 
 include ../../gnuwin32/MkRules
 
-CFLAGS=-Wall -Winline -O2 -fomit-frame-pointer -fno-strength-reduce
+CFLAGS=-Wall -I../../include -O2 -fomit-frame-pointer -fno-strength-reduce
 
 OBJS= blocksort.o  \
       huffman.o    \
