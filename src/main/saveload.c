@@ -1,6 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
+ *  Copyright (C) 1997--1999  Robert Gentleman, Ross Ihaka and the R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -104,7 +105,7 @@ static void AsciiOutReal(FILE *fp, double x)
 	else
 	    fprintf(fp, "Inf");
     }
-    else fprintf(fp, "%g", x);
+    else fprintf(fp, "%.16g", x);/* 16: full precision; 17 gives 999, 000 &c */
 }
 
 static double AsciiInReal(FILE *fp)
