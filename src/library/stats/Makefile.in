@@ -66,8 +66,7 @@ all: Makefile DESCRIPTION
 	@if test -d src; then \
 	  (cd src && $(MAKE)) || exit 1; \
 	fi
-@USE_LAZY_LOAD_FALSE@	@$(MAKE) Rfiles
-@USE_LAZY_LOAD_TRUE@	@$(MAKE) RfilesLazy
+	@$(MAKE) RfilesLazy
 
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
@@ -78,35 +77,7 @@ RfilesLazy:
 	@$(INSTALL_DATA) all.R $(top_builddir)/library/$(pkg)/R/$(pkg)
 	@rm -f $(top_builddir)/library/$(pkg)/R/all.rda
 	@echo "tools:::makeLazyLoading(\"$(pkg)\")" | \
-	  R_DEFAULT_PACKAGES=NULL LC_COLLATE=C $(R_EXE) --slave
-
-Rfiles: $(top_builddir)/library/$(pkg)/R/$(pkg) \
-  $(top_builddir)/library/$(pkg)/R/all.rda
-
-$(top_builddir)/library/$(pkg)/R/$(pkg): $(srcdir)/install.R
-	@$(INSTALL_DATA) $(srcdir)/install.R $@
-
-$(top_builddir)/library/$(pkg)/R/all.rda: all.R
-	@rm -f $(top_builddir)/library/$(pkg)/Meta/nsInfo.rds
-	@echo "dumping R code in package '$(pkg)'"
-	@if test -f $(srcdir)/NAMESPACE; then \
-	  $(INSTALL_DATA) all.R $(top_builddir)/library/$(pkg)/R/$(pkg); \
-	  echo "saveNamespaceImage(\"$(pkg)\", \"$@\")" | \
-	    R_DEFAULT_PACKAGES=NULL LC_COLLATE=C $(R_EXE) --slave; \
-	  $(INSTALL_DATA) $(top_srcdir)/share/R/nsrdaload.R \
-	    $(top_builddir)/library/$(pkg)/R/$(pkg); \
-	else \
-	  (echo \
-	    "options(save.image.defaults=list(compress=TRUE, safe=FALSE))"; \
-	    cat all.R) | \
-	    R_DEFAULT_PACKAGES=NULL LC_COLLATE=C $(R_EXE) --slave --save; \
-	  $(INSTALL_DATA) .RData $@; \
-	  $(INSTALL_DATA) $(top_srcdir)/share/R/firstlib.R \
-	    $(top_builddir)/library/$(pkg)/R/$(pkg); \
-	  if test -f $(top_builddir)/library/$(pkg)/NAMESPACE; then \
-	    rm -f $(top_builddir)/library/$(pkg)/NAMESPACE; \
-	  fi; \
-	fi
+	  R_DEFAULT_PACKAGES=NULL LC_COLLATE=C $(R_EXE) --slave > /dev/null
 
 mostlyclean: clean
 clean:

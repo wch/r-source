@@ -200,16 +200,6 @@ if test x"${use_strict_barrier}" = xyes; then
 fi
 
 
-## Enable lazy-loading of standard and recommended packages.
-AC_ARG_ENABLE([lazy-loading],
-[AC_HELP_STRING([--enable-lazy-loading],
-                [lazy-loading of standard and recommended packages 
-		@<:@yes@:>@])],
-[use_lazy_loading="${enableval}"],
-[use_lazy_loading=yes])
-AM_CONDITIONAL(USE_LAZY_LOAD, [test "x${use_lazy_loading}" = xyes])
-
-
 ### ** Optional packages.
 
 ## BLAS.

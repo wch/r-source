@@ -62,7 +62,7 @@ all: Makefile DESCRIPTION
 	  $(SHELL) $(top_srcdir)/tools/move-if-change $${f} \
 	    $(top_builddir)/library/$(pkg)/man/$(pkg).Rd)
 	@$(INSTALL_DATA) $(srcdir)/inst/CITATION $(top_builddir)/library/$(pkg)
-@USE_LAZY_LOAD_TRUE@	@$(MAKE) RfilesLazy
+	@$(MAKE) RfilesLazy
 
 
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status

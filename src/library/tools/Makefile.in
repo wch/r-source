@@ -66,7 +66,7 @@ all: Makefile DESCRIPTION
 	@if test -d src; then \
 	  (cd src && $(MAKE)) || exit 1; \
 	fi
-@USE_LAZY_LOAD_TRUE@	@$(MAKE) RfilesLazy
+	@$(MAKE) RfilesLazy
 
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
@@ -78,7 +78,7 @@ RfilesLazy:
 	@rm -f $(top_builddir)/library/$(pkg)/R/all.rda
 	@(cat $(srcdir)/R/makeLazyLoad.R; \
 	  echo "makeLazyLoading(\"$(pkg)\")") | \
-	  R_DEFAULT_PACKAGES=NULL LC_COLLATE=C $(R_EXE) --slave
+	  R_DEFAULT_PACKAGES=NULL LC_COLLATE=C $(R_EXE) --slave > /dev/null
 
 mostlyclean: clean
 clean:
