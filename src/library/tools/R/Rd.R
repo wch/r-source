@@ -8,7 +8,32 @@ function(lines)
     if(!is.character(lines))
         stop(.wrong_args("lines", "must be a character vector"))
 
-    ## Strip Rd comments first.
+    ## Re-encode if necessary (and possible).
+    encoding <-
+        .get_Rd_metadata_from_Rd_lines(lines[!is.na(nchar(lines, "c"))],
+                                       "encoding")
+    if(length(encoding)) {
+        if(Sys.getlocale("LC_CTYPE") != "C") {
+            encoding <- encoding[1]     # Just making sure ...
+            if(.is_ASCII(encoding))
+                lines <- utils::iconv(lines, encoding, "")
+        }
+    }
+    else {
+        ## No \encoding meta-data.
+        ## Determine whether we can assume Latin1.
+        if(!all(.is_ISO_8859(lines)))
+            encoding <- NA
+    }
+    if(any(is.na(nchar(lines, "c")))) {
+        ## Ouch, invalid in the current locale.
+        ## (Can only happen in a MBCS locale.)
+        ## Try re-encoding from Latin1.
+        ## Could this fail in a non-C locale?            
+        lines <- utils::iconv(lines, "latin1", "")
+    }
+
+    ## Strip Rd first.
     lines <- .strip_Rd_comments(lines)
 
     ppLineIndices <- grep("^#(endif|ifn?def[[:space:]]+[[:alnum:]]+)",
@@ -18,7 +43,8 @@ function(lines)
     ## What should we do with #ifn?def lines not matching the above?
     ## </NOTE>
     n_of_pp_lines <- length(ppLineIndices)
-    if(n_of_pp_lines == 0) return(lines)
+    if(n_of_pp_lines == 0)
+        return(structure(lines, encoding = encoding))
 
     OS <- .Platform$OS.type
     ppLines <- lines[ppLineIndices]
@@ -64,7 +90,7 @@ function(lines)
         }
     }
 
-    lines[-skipIndices]
+    structure(lines[-skipIndices], encoding = encoding)
 }
 
 ### * .strip_Rd_comments
@@ -350,8 +376,9 @@ function(package, dir, lib.loc = NULL)
         docsFiles <- list_files_with_type(docsDir, "docs")
         db <- list()
         for(f in docsFiles) {
-            lines <- .read_Rd_lines_quietly(f)
-            eofPos <- grep("\\eof$", lines)
+            valid_lines <- lines <- .read_Rd_lines_quietly(f)
+            valid_lines[is.na(nchar(lines, "c"))] <- ""
+            eofPos <- grep("\\eof$", valid_lines)
             db <- c(db, split(lines[-eofPos],
                               rep(seq(along = eofPos),
                                   times = diff(c(0, eofPos)))[-eofPos]))
@@ -411,30 +438,6 @@ function(file, text = NULL)
                              "must be a character string or connection"))
         lines <- Rd_pp(.read_Rd_lines_quietly(file))
     }
-
-    ## <FIXME>
-    ## This (currently?) does not work, because without re-encoding it
-    ## seems that we do not pick up multibyte strings which are invalid
-    ## in the current locale.  Hence, start by re-encoding, which should
-    ## not transform non-ASCII entries to ASCII ones.
-    ##     ## Get meta data required to be ASCII first.
-    ##     meta <- list(aliases =
-    ##                  .get_Rd_metadata_from_Rd_lines(lines, "alias"),
-    ##                  doc_type =
-    ##                  .get_Rd_metadata_from_Rd_lines(lines, "docType"),
-    ##                  encoding =
-    ##                  .get_Rd_metadata_from_Rd_lines(lines, "encoding"))
-    ##     ## Now iconv if necessary.
-    ##     lines <- .Rd_iconv_if_necessary(lines, check = TRUE)
-    ##     ## And get the remaining meta data.
-    ##     meta <- c(meta,
-    ##               list(concepts =
-    ##                    .get_Rd_metadata_from_Rd_lines(lines, "concept"),
-    ##                    keywords =
-    ##                    .get_Rd_metadata_from_Rd_lines(lines, "keyword")))
-    ## </FIXME>
-
-    lines <- .Rd_iconv_if_necessary(lines, check = TRUE)
 
     ## Get meta data (need to agree on what precisely these are), and
     ## remove the corresponding lines (assuming that these entries are
@@ -761,37 +764,6 @@ function(db)
         }
     }
     unlist(Rd_names)
-}
-
-### .Rd_iconv_if_necessary
-
-.Rd_iconv_if_necessary <-
-function(lines, check = FALSE)
-{
-    ## Recode if necessary (and possible).
-    encoding <- .get_Rd_metadata_from_Rd_lines(lines, "encoding")
-    if(length(encoding)) {
-        if(Sys.getlocale("LC_CTYPE") != "C") {
-            encoding <- encoding[1]     # Just making sure ...
-            if(.is_ASCII(encoding))
-                lines <- utils::iconv(lines, encoding, "")
-        }
-    }
-    else if(check) {
-        ## No valid \encoding meta-data.
-        ## Determine whether we can assume Latin1.
-        if(!all(.is_ISO_8859(lines)))
-            encoding <- NA
-    }
-    if(any(is.na(nchar(lines, "c")))) {
-        ## Ouch, invalid in the current locale.
-        ## (Can only happen in a MBCS locale.)
-        ## Try re-encoding from Latin1.
-        ## Could this fail in a non-C locale?            
-        lines <- utils::iconv(lines, "latin1", "")
-    }
-    attr(lines, "encoding") <- encoding
-    lines
 }
 
 

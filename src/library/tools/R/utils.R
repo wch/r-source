@@ -126,11 +126,12 @@ function(file, topic)
         else file(file, "r")
         on.exit(close(file))
     }
-    lines <- readLines(file)
+    valid_lines <- lines <- readLines(file)
+    valid_lines[is.na(nchar(lines, "c"))] <- ""
     patt <- paste("^% --- Source file:.*/", topic, ".Rd ---$", sep="")
-    if(length(top <- grep(patt, lines)) != 1)
+    if(length(top <- grep(patt, valid_lines)) != 1)
         stop("no or more than one match")
-    eofs <- grep("^\\\\eof$", lines)
+    eofs <- grep("^\\\\eof$", valid_lines)
     end <- min(eofs[eofs > top]) - 1
     lines[top:end]
 }
