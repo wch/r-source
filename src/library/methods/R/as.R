@@ -9,7 +9,7 @@ as <-
   function(object, Class, strict = TRUE, ext = possibleExtends(thisClass, Class))
 {
     thisClass <- .class1(object) ## always one string
-    if(.identC(thisClass, Class))
+    if(.identC(thisClass, Class) || .identC(Class, "ANY"))
         return(object)
     where <- .classEnv(thisClass)
     coerceFun <- getGeneric("coerce", where = where)
