@@ -1124,6 +1124,7 @@ static void de_mousedown(control c, int buttons, point xy)
 
 	if (yw < hwidth + bwidth + box_h) {
 	    if (xw > bwidth + boxw[0]) {
+		highlightrect();
 		de_popupmenu(xw, yw, wcol);
 		return;
 	    } else {
@@ -1152,6 +1153,7 @@ static void de_mousedown(control c, int buttons, point xy)
 	    prev = get_cell_text();
 	    if (strlen(prev) * FW > bw)
 		rr.width = (strlen(prev) + 2) * FW;
+	    addto(de);
 	    celledit = newfield_no_border(prev, rr);
 	    setbackground(celledit, p->bg);
 	    setforeground(celledit, p->ufg);
@@ -1287,7 +1289,8 @@ static void popupclose(control c)
     int levs;
     char buf[30];
 
-    strcpy(buf, gettext(varname));    if(!strlen(buf)) {
+    strcpy(buf, gettext(varname));
+    if(!strlen(buf)) {
 	askok("column names cannot be blank");
 	return;
     }
@@ -1331,9 +1334,9 @@ static void de_popupmenu(int x_pos, int y_pos, int col)
 		      Titlebar | Closebox);
     setclose(wconf, popupclose);
     setbackground(wconf, bbg);
-    lwhat = newlabel("variable name", rect(10, 20, 90, 20), AlignLeft);
+    lwhat = newlabel("variable name", rect(10, 22, 90, 20), AlignLeft);
     varname = newfield(blah, rect(100, 20, 120, 20));
-    lrb = newlabel("type", rect(50, 60, 50, 20), AlignLeft);
+    lrb = newlabel("type", rect(50, 62, 50, 20), AlignLeft);
     rb_num = newradiobutton("numeric", rect(100, 60 , 80, 20), NULL);
     rb_char = newradiobutton("character", rect(180, 60 , 80, 20), NULL);
     isnumeric = (get_col_type(popupcol) == NUMERIC);
@@ -1408,6 +1411,7 @@ static void vw_close(control c)
     hide(devw);
     del(devw);
     if (nboxchars > 0) check(de_mvw);
+    addto(de);
 }
 
 static void vw_hit_key(window w, int key)
@@ -1544,6 +1548,7 @@ static dataeditor newdataeditor()
     BORDERY = (HEIGHT - ROWS*FH) / 2;
     gsetcursor(c, ArrowCursor);
     setbackground(c, consolebg);
+#ifdef USE_MDI
     if (ismdi() && (RguiMDI & RW_TOOLBAR)) {
 	/* blank toolbar to stop windows jumping around */
         int btsize = 24;
@@ -1552,6 +1557,7 @@ static dataeditor newdataeditor()
         MCHECK(tb = newtoolbar(btsize + 4));
 	gsetcursor(tb, ArrowCursor);
     }
+#endif
     MCHECK(gpopup(depopupact, DePopup));
     MCHECK(m = newmenubar(demenuact));
     MCHECK(newmenu("File"));
