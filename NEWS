@@ -16,6 +16,8 @@ NEW FEATURES
 
 BUG FIXES
 
+    o	apply() preserves names in yet another case [-> new example].
+
     o	`type = "."' now works with curve() and plot.function()
 
     o	phyper() now works for larger arguments than before.

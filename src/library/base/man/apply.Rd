@@ -42,12 +42,17 @@ all( apply(x,2, is.vector)) # TRUE [was not in R <= 0.63.2]
 ## Sort the columns of a matrix
 apply(x, 2, sort)
 
+##- function with extra args:
+cave <- function(x, c1,c2) c(mean(x[c1]),mean(x[c2]))
+apply(x,1, cave,  c1="x1", c2=c("x1","x2"))
+
 ma <- matrix(c(1:4, 1, 6:8), nr = 2)
 ma
 apply(ma, 1, table)  #--> a list of length 2
 apply(ma, 1, quantile)# 5 x n matrix with rownames
 
 all(dim(ma) == dim(apply(ma, 1:2, sum)))## apply BUG [R <= 0.63.0]
+
 
 \testonly{
  apply(x,  2, summary) # 6 x n matrix

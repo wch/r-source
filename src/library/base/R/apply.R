@@ -30,8 +30,9 @@ apply <- function(X, MARGIN, FUN, ...)
     ans <- vector("list", d2)
     if((i.vec <- length(d.call) < 2)) # vector
 	for(i in 1:d2){
-	    xi<-newX[,i]
-	    names(xi)<-dn.call[[1]]
+	    xi <- newX[,i]
+	    if (length(dn.call) >= 1)
+		names(xi) <- dn.call[[1]]
 	    ans[[i]] <- FUN(xi, ...)
 	}
     else
