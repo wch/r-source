@@ -433,7 +433,8 @@ static SEXP scanFrame(SEXP what, int maxitems, int maxlines, int flush,
 	    error("empty `what=' specified");	
     }
 
-    if (maxlines > 0) blksize = maxlines;
+    if (maxitems > 0) blksize = maxitems;
+    else if (maxlines > 0) blksize = maxlines;
     else blksize = SCAN_BLOCKSIZE;
 
     PROTECT(ans = allocVector(VECSXP, nc));

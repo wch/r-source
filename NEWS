@@ -32,6 +32,9 @@ BUG FIXES
 	the linked help files if more than one package was loaded (as
 	now happens by default).
 
+    o	scan now sets the maximal sizes internally when what is a list
+	from nmax and failing that nlines.  This uses memory much more
+	efficiently if nmax is specified.  read.table() makes use of this.
 
 
 		CHANGES IN R VERSION 1.2.1
