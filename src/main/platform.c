@@ -28,7 +28,7 @@
 
 #include <time.h>
       
-static char *R_Date()
+char *R_Date()
 {     
     time_t t;
     time(&t);
@@ -52,17 +52,19 @@ SEXP do_showfile(SEXP call, SEXP op, SEXP args, SEXP rho)
 	errorcall(call, "invalid filename\n");
     if (!isString(tl) || length(tl) < 1 || STRING(tl)[0] == R_NilValue)
 	errorcall(call, "invalid filename\n");
-    R_ShowFile(CHAR(STRING(fn)[0]), CHAR(STRING(tl)[0]));
+    if (!R_ShowFile(CHAR(STRING(fn)[0]), CHAR(STRING(tl)[0])))
+	error("unable to display file \"%s\"\n", CHAR(STRING(fn)[0]));
     return R_NilValue;
 }
 
 
-/* "append.file" takes two file names as arguments and arranges for */
-/* the second file to be appended to the second. */
+/*  append.file
+ *
+ *  Given two file names as arguments and arranges for
+ *  the second file to be appended to the second.
+ */
 
 #define APPENDBUFSIZE 512
-
-static char *Append_ErrMsg = "unable to open file %s for appending\n";
 
 void R_AppendFile(char *file1, char *file2)
 {
@@ -123,7 +125,7 @@ SEXP do_removefile(SEXP call, SEXP op, SEXP args, SEXP rho)
 #endif
 #include "dirent.h"
 
-SEXP do_dir(SEXP call, SEXP op, SEXP args, SEXP rho)
+SEXP do_listfiles(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP d, ans;
     DIR *dir;

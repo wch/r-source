@@ -536,13 +536,13 @@ FUNTAB R_FunTab[] =
 {"lib.fixup",	do_libfixup,	0,	111,	2,	PP_FUNCALL},
 {"pos.to.env",	do_pos2env,	0,	1,	1,	PP_FUNCALL},
 
-/* Platform Dependent Functions */
+/* Functions To Interact with the Operating System */
 
 {"show.file",	do_showfile,	0,	111,	2,	PP_FUNCALL},
 {"remove.file",	do_removefile,	0,	111,	1,	PP_FUNCALL},
 {"append.file",	do_appendfile,	0,	111,	2,	PP_FUNCALL},
+{"list.files",  do_listfiles,   0,      11,     1,      PP_FUNCALL},
 {"date",	do_date,	0,	11,	0,	PP_FUNCALL},
-{"dir",         do_dir,         0,      11,     1,      PP_FUNCALL},
 
 
 /* Complex Valued Functions */
