@@ -100,7 +100,6 @@ Rboolean switch_stdout(int icon, int closeOnExit);
 SEXP R_ParseConn(Rconnection con, int n, int *status);
 void con_close(int i);
 void Rconn_setEncoding(Rconnection con, SEXP enc);
-void R_SinkReset(void);
 void init_con(Rconnection new, char *description, char *mode);
 Rconnection R_newurl(char *description, char *mode);
 Rconnection R_newsock(char *host, int port, int server, char *mode);

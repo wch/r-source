@@ -455,9 +455,6 @@ void jump_to_toplevel()
 	R_CleanUp(SA_NOSAVE, 1, 0); /* quit, no save, no .Last, status=1 */
     }
 
-    /* this is really dynamic state that should be managed as such */
-    R_SinkReset();
-
     PROTECT(s = allocList(nback));
     t = s;
     for (c = R_GlobalContext ; c ; c = c->nextcontext)

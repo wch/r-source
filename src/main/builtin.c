@@ -179,11 +179,30 @@ static void cat_printsep(SEXP sep, int ntot)
     return;
 }
 
+typedef struct cat_info {
+    Rboolean wasopen;
+    int changedcon;
+    Rconnection con;
+} cat_info;
+
+static void cat_cleanup(void *data)
+{
+    cat_info *pci = data;
+    Rconnection con = pci->con;
+    Rboolean wasopen = pci->wasopen;
+    int changedcon = pci->changedcon;
+
+    con->fflush(con);
+    if(!wasopen) con->close(con);  /**** do this second? */
+    if(changedcon) switch_stdout(-1, 0);
+}
+
 SEXP do_cat(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
+    cat_info ci;
+    RCNTXT cntxt;
     SEXP objs, file, fill, sepr, labs, s;
-    int ifile, savecon, changedcon;
-    Rboolean wasopen;
+    int ifile;
     Rconnection con;
     int append;
     int w, i, iobj, n, nobjs, pwidth, width, sepw, lablen, ntot, nlsep, nlines;
@@ -232,11 +251,18 @@ SEXP do_cat(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (append == NA_LOGICAL)
 	errorcall(call, "invalid append specification");
 
-    wasopen = con->isopen;
+    ci.wasopen = con->isopen;
 
-    savecon = R_OutputCon;
-    changedcon = switch_stdout(ifile, 0); 
+    ci.changedcon = switch_stdout(ifile, 0); 
     /* will open new connection if required */
+
+    ci.con = con;
+
+    /* set up a context which will close the window if there is an error */
+    begincontext(&cntxt, CTXT_CCODE, R_NilValue, R_NilValue, R_NilValue,
+		 R_NilValue);
+    cntxt.cend = &cat_cleanup;
+    cntxt.cenddata = &ci;
 
     nobjs = length(objs);
     /*
@@ -312,9 +338,11 @@ SEXP do_cat(SEXP call, SEXP op, SEXP args, SEXP rho)
     if ((pwidth != INT_MAX) || nlsep)
 	Rprintf("\n");
 
-    con->fflush(con);
-    if(!wasopen) con->close(con);
-    if(changedcon) switch_stdout(-1, 0);
+    /* end the context after anything that could raise an error but before
+       doing the cleanup so the cleanup doesn't get done twice */
+    endcontext(&cntxt);
+
+    cat_cleanup(&ci);
 
     return R_NilValue;
 }
