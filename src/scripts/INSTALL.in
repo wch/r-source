@@ -4,7 +4,7 @@
 
 # @configure_input@
 
-revision='$Revision: 1.86 $'
+revision='$Revision: 1.87 $'
 version=`set - ${revision}; echo ${2}`
 version="R add-on package installer ${version}
 
@@ -67,10 +67,10 @@ NO_PERL5_MSG="\
 tmpdir="${TMPDIR-/tmp}/R.INSTALL.$$"
 
 : ${R_OSTYPE=unix}
-## <FIXME>
-## Unix only ...
+## <NOTE>
+## Unix only ... but Windows has INSTALL as a Perl script.
 R_EXE="${R_HOME}/bin/R"
-## </FIXME>
+## </NOTE>
 
 ## <NOTE>
 ## It might make sense to abstract error and warnings into functions
@@ -207,7 +207,7 @@ if test -z "${pkgs}"; then
 fi
 
 if test -d "${lib}" -a -w "${lib}" || mkdir "${lib}" 2> /dev/null; then
-  lib=`cd ${lib} && ${GETWD}`
+  lib=`cd "${lib}" && ${GETWD}`
 else
   echo "ERROR: cannot write to or create directory '${lib}'"
   exit 2
@@ -479,7 +479,7 @@ do_install () {
 	  fi
 	  ${R_CMD} perl "${R_HOME}/share/perl/Rd2contents.pl" \
 	    --os=${R_OSTYPE} "../${pkg}" > "${lib}/${pkg}/CONTENTS"
-	  if test "${lib}" = "${R_HOME}/library"; then 
+	  if test "${lib}" = `cd "${R_HOME}/library" && ${GETWD}`; then
 	    ${R_CMD} perl "${R_HOME}/share/perl/build-help.pl" --htmllists
 	    cat "${R_HOME}"/library/*/CONTENTS \
 	      > "${R_HOME}"/doc/html/search/index.txt

@@ -2,11 +2,11 @@
 #
 # ${R_HOME}/bin/REMOVE for removing add-on packages
 
-revision='$Revision: 1.14 $'
+revision='$Revision: 1.15 $'
 version=`set - ${revision}; echo ${2}`
 version="R add-on package remover ${version}
 
-Copyright (C) 2000-2001 The R Core Development Team.
+Copyright (C) 2000-2002 The R Core Development Team.
 This is free software; see the GNU General Public Licence version 2
 or later for copying conditions.  There is NO warranty."
 
@@ -25,8 +25,15 @@ Options:
 
 Report bugs to <r-bugs@r-project.org>."
 
-pkgs=
+GETWD='@GETWD@'
+NO_PERL5=@NO_PERL5@
+
+## <NOTE>
+## Using ${VAR:-value} is not portable shell programming.
+## But we cannot simply use ${VAR-value}: see the usage info.
 lib=`echo ${R_LIBS:-"${R_HOME}/library"} | cut -f1 -d:`
+## </NOTE>
+pkgs=
 
 while test -n "${1}"; do
   case ${1} in
@@ -35,42 +42,38 @@ while test -n "${1}"; do
     -v|--version)
       echo "${version}"; exit 0 ;;
     -l)
-      lib=${2}; shift ;;
+      lib="${2}"; shift ;;
     --library=*)
       lib=`echo "${1}" | sed -e 's/[^=]*=//'` ;;
     *)
       pkgs="${pkgs} ${1}" ;;
   esac
   shift
-done  
+done
 
 if test -z "${pkgs}"; then
   echo "ERROR: no packages specified"
   exit 1
 fi
 
-if test -d ${lib} -a -w ${lib}; then
-  cd ${lib}
-  lib=`pwd`
-  ## FIXME: Remove eventually.
-  rm -f ${lib}/LibIndex
-  ## </FIXME>
+if test -d "${lib}" -a -w "${lib}"; then
+  lib=`cd "${lib}" && ${GETWD}`
 else    
   echo "ERROR: cannot cd to or remove from directory \`${lib}'"
   exit 2
 fi    
 
+cd "${lib}"
 for pkg in ${pkgs}; do
-  pkg=`basename ${pkg}`		# in case someone gave a path ...
-  if test -d ${pkg}; then
-    rm -rf ${pkg}
+  pkg=`basename "${pkg}"`	# in case someone gave a path ...
+  if test -d "${pkg}"; then
+    rm -rf "${pkg}"
   else
-    echo "WARNING: there is no pkg \`${pkg}' in lib \`${lib}'"
+    echo "WARNING: there is no pkg '${pkg}' in lib '${lib}'"
     continue
   fi
 done
 
-NO_PERL5=@NO_PERL5@
 if ${NO_PERL5}; then
   echo "*** Cannot update the file"
   echo "***    ${lib}/index.html"
@@ -79,9 +82,10 @@ if ${NO_PERL5}; then
   exit 2
 fi
 
-if test ${lib} = ${R_HOME}/library; then
-  ${R_CMD} perl ${R_HOME}/share/perl/build-help.pl --htmllists
-  cat ${R_HOME}/library/*/CONTENTS > ${R_HOME}/doc/html/search/index.txt
+if test "${lib}" = `cd "${R_HOME}/library" && ${GETWD}`; then
+  ${R_CMD} perl "${R_HOME}/share/perl/build-help.pl" --htmllists
+  cat "${R_HOME}"/library/*/CONTENTS \
+    > "${R_HOME}"/doc/html/search/index.txt
 fi
 
 ### Local Variables: ***
