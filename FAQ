@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 1.4-1, 2001-12-23
+Version 1.4-2, 2001-12-29
 Kurt Hornik
 
 
@@ -330,8 +330,8 @@ install-dvi', `make install-info' and `make install-pdf', respectively.
 
    The `bin/windows' directory of a CRAN site contains binaries for a base
 distribution and a large number of add-on packages from CRAN to run on
-Windows 95, 98, NT4, 2000 and ME (at least) on Intel and clones (but not on
-other platforms).  The Windows version of R was created by Robert
+Windows 95, 98, ME, NT4, 2000, and XP (at least) on Intel and clones (but
+not on other platforms).  The Windows version of R was created by Robert
 Gentleman, and is now being developed and maintained by Guido Masarotto
 <Guido.Masarotto@r-project.org> and Brian D. Ripley
 <Brian.Ripley@r-project.org>.
@@ -563,6 +563,8 @@ and is currently being mirrored daily at
 
      `http://cran.at.r-project.org/'(TU Wien, Austria)
      `http://cran.au.r-project.org/'(PlanetMirror, Australia)
+     `http://cran.br.r-project.org/'(Universidade Federal de
+                                  Parana', Brazil)
      `http://cran.ch.r-project.org/'(ETH Zu"rich, Switzerland)
      `http://cran.de.r-project.org/'(APP, Germany)
      `http://cran.dk.r-project.org/'(SunSITE, Denmark)
