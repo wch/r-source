@@ -1053,6 +1053,14 @@ attributes(tmp)
 stopifnot(length(res) == 1 && res == 1)
 ## gave NULL in 1.6.1
 
+## missing group generics for `difftime' (related to PR#2345)
+x <- as.difftime(c("0:3:20", "11:23:15"))
+y <- ISOdate(2001, 4, 26) - ISOdate(2001, 2, 26)
+x + x
+2*x
+x < y
+x < 100
+## all but last failed in R < 1.7.0
 
 ## keep at end, as package `methods' has had persistent side effects
 library(methods)
