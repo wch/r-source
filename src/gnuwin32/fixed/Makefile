@@ -48,11 +48,15 @@ fixh: h/config.h ../FFDecl.h ../FFTab.h \
 ../../../bin/build: ../../scripts/build.in
 	$(CP) $< $@
 
+../../../bin/Rdindex: ../../scripts/Rdindex.in
+	$(SED) -e s/unix/windows/ -e "s/R CMD/Rcmd/" $< > $@
+
 ../../../bin/Rdiff.sh: ../../scripts/Rdiff
 	$(SED) -e 1d <$< > $@
 
 fixbin: ../../../bin/massage-Examples.sh ../../../bin/build \
-	 ../../../bin/check  ../../../bin/Rdiff.sh cp2bin
+	 ../../../bin/check  ../../../bin/Rdindex  ../../../bin/Rdiff.sh \
+	cp2bin
 	$(ECHO) done > fixbin
 
 cp2bin: $(filter-out ./bin/CVS, $(wildcard ./bin/*))
