@@ -1,7 +1,7 @@
 \name{boxplot}
 \title{Box Plots}
 \usage{
-boxplot(\dots, range = 1.5, width = NULL, varwidth = FALSE,
+boxplot(x, \dots, range = 1.5, width = NULL, varwidth = FALSE,
         notch = FALSE, names.x, data = sys.frame(sys.parent()),
         plot = TRUE, border = par("fg"), col = NULL, log = "",
         pars = NULL)
@@ -63,6 +63,8 @@ boxplot(\dots, range = 1.5, width = NULL, varwidth = FALSE,
   \code{\link{boxplot.stats}} which does the computation,
   \code{\link{bxp}} for the plotting, and \code{\link{stripplot}} for an
   alternative (with small data sets).
+
+  \code{\link{plot.default}} for some high-level plotting parameters.
 }
 \examples{
 data(insects)

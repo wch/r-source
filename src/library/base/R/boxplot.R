@@ -122,8 +122,10 @@ bxp <- function(z, notch=FALSE, width=NULL, varwidth=FALSE,
 	      border=border[(i-1)%%length(border)+1],
 	      col=if(is.null(col)) col else col[(i-1)%%length(col)+1])
 
- if(n > 1) axis(1, at=1:n, labels=names(z))
- axis(2)
+ if(is.null(pars$axes) || pars$axes) {
+         if(n > 1) axis(1, at=1:n, labels=names(z))
+         axis(2)
+ }
  do.call("title", pars)
  box()
  invisible(1:n)
