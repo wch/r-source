@@ -1,0 +1,26 @@
+#!/bin/bash
+#
+# sensible-browser -- based on Debian's sensible-editor and sensible-pager
+#
+# this is however in the context of Debian's R package which needs the
+# remote execution feature available in older netscape versions and mozilla
+#
+# Dirk Eddelbuettel <edd@debian.org>  10 Nov 2002
+
+shopt -s execfail
+
+# reorder at will, these are in alphabetical order
+if [ "${WWWBROWSER}" != "" ] 
+then
+	exec ${WWWBROWSER} "$@"
+else
+	exec mozilla "$@"
+	exec netscape "$@"
+#	exec dillo "$@"
+#	exec galeon "$@"
+#	exec konqueror "$@"
+#	exec light "$@"
+	echo "Error: Could not find a web browser!" 1>&2
+	echo "Set the \$WWWBROWSER environment variable to your desired program." 1>&2
+	exit 1
+fi
