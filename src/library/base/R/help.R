@@ -45,13 +45,13 @@ function (topic, offline = FALSE, package = c(.packages(), .Autoloaded),
             if (!offline) {
                 if (htmlhelp) {
                     if(file.exists(file)) {
-                        file <- paste("file:", hfile, sep="")
+                        file <- paste("file:", file, sep="")
                         if (is.null(.Options$browser))
                             stop("options(\"browser\") not set")
                         browser <- .Options$browser
                         system(paste(browser, " -remote \"openURL(",
-                                     hfile, ")\" 2>/dev/null || ", browser, " ",
-                                     hfile, " &", sep = ""))
+                                     file, ")\" 2>/dev/null || ", browser, " ",
+                                     file, " &", sep = ""))
                         cat("help() for", topic, " is shown in browser",
                             browser, "...\n")
                         return(invisible())
