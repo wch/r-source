@@ -524,9 +524,10 @@ static int gzfile_vfprintf(Rconnection con, const char *format, va_list ap)
 static int gzfile_fgetc(Rconnection con)
 {
     gzFile fp = ((Rgzfileconn)(con->private))->fp;
-    int c = con->encoding[gzgetc(fp)];
+
     /* Looks like eof is signalled one char early */
-    return (!c && gzeof(fp)) ? R_EOF : c;
+    if(gzeof(fp)) return R_EOF;
+    return con->encoding[gzgetc(fp)];
 }
 
 static long gzfile_seek(Rconnection con, int where, int origin)
