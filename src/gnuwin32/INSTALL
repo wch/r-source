@@ -97,13 +97,7 @@ to build it under VC++6, and it is preferable to use that as the
 VC++ library will check versions of the components needed. You can just
 copy this from a binary distribution.
 
-Note 2: we are aware that because of limitations in line length or in
-the shell used that the Makefiles do not work unchanged on all the
-possible combinations of tools, compilers and OSes.  We have tested
-the tools in tools.zip under NT with the mingw32 and cygwin 1.1
-compilers, and cross-building (see below).
-
-Note 3: building libR.a is highly disk intensive and can take several
+Note 2: building libR.a is highly disk intensive and can take several
 minutes even on a local disc. We have seen times from 30 secs to 20
 minutes. Using a network file system is likely to take longer.  It is
 done in memory and is *much* faster with gcc-2.95.2.1 or later on
@@ -138,10 +132,11 @@ will make the library.
 Cross-building on ix86 Linux
 ============================
 
-You will need i386-mingw32 cross-compilers installed and in your path.
-There is currently a complete set of tools at
+You will need i386-mingw32 cross-compilers installed and in your path,
+preferably ones targetted at msvcrt.dll.  There is currently a
+complete set of tools at
 
-    http://www.stats.ox.ac.uk/pub/Rtools/i386cross.tar.bz2
+    http://www.stats.ox.ac.uk/pub/Rtools/i386-msvc-cross.tar.bz2
 
 (Just unpack this somewhere and put its bin directory in your path.)
 
@@ -149,14 +144,13 @@ Instructions for building a cross-compiler are given at
 
     http://www.nanotech.wisc.edu/~khan/software/gnu-win32/mingw-cross-howto.txt
 
-At the time of writing these were somewhat outdated.  There is another set
+At the time of writing these were rather outdated.  There is another set
 at
 
     http://www.devolution.com/%7Eslouken/SDL/Xmingw32/
 
-(There is also a cross-compiler there, but omitting g77 which you
-will need.  Cross-building g77 and the Fortran libraries is the trickiest
-part.)
+which is targetted at msvcrt.dll.  (There is also a cross-compiler
+there, but omitting g77 which you will need.)
 
 Apart from the compiler, you need the mingw32 runtime system and a
 cross-built version of binutils 2.9.4.
@@ -171,7 +165,8 @@ Then: untar R-1.2.0.tgz somewhere, and
 	cd /somewhere/R-1.2.0/src/gnuwin32
 
 Edit MkRules to set BUILD=CROSS and the appropriate paths (including
-HEADER) as needed.
+HEADER) as needed.  With our set of cross-compilers you can uncomment
+HAVE_SHARED.
 
 Edit Makefile to set the type(s) of help that you want built. (You
 will not be able to cross-build .chm or .hlp files, nor Rchtml.dll,

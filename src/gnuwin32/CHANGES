@@ -64,8 +64,10 @@ Gui changes
     ^W, in Rterm: see README.rterm.)
 
 
-New utilities
--------------
+New utilities for preparing packages
+------------------------------------
+
+    There are several new utilities in the rw1020sp.zip distribution.
 
     The utilities Rd2dvi.sh Rd2txt Rdconv Rdindex Sd2Rd are no longer
     batch files but accessed through a new front-end Rcmd.exe, so if this
@@ -77,10 +79,10 @@ New utilities
 	Rcmd Rdindex   [options] files
 	Rcmd Sd2Rd     [options] file
 
-    There are new utilities (in rw1020sp.zip) INSTALL, REMOVE, SHLIB
-    which can be used to install a source package, remove a package and
-    make a DLL, and implementations of the Unix R utilities BATCH build
-    and check. Invoke these by
+    There are new utilities INSTALL, REMOVE, SHLIB which can be used
+    to install a source package, remove a package and make a DLL, and
+    implementations of the Unix R utilities BATCH build and
+    check. Invoke these by
 
 	Rcmd INSTALL [options] pkgdir(s)
 	Rcmd REMOVE  [options] pkg(s)
@@ -95,17 +97,18 @@ New utilities
 Rterm in interactive use sets the title of the window it is running
 in, and unsets it when it terminates.
 
-New functions memory.size and DLL.version.  The Windows memory manager
-proved to be (far) too slow to work with the new generational garbage
-collector, so it was replaced.  The current memory manager rarely
-releases memory back to Windows (but reuses memory very efficiently)
-so memory usage will usually grow slowly over the course of a session.
-Memory used for transient large objects will normally be returned at
-garbage collection.
+New function memory.size.  The Windows memory manager proved to be
+(far) too slow to work with the new generational garbage collector, so
+it was replaced.  The current memory manager rarely releases memory
+back to Windows (but reuses memory very efficiently) so memory usage
+will usually grow slowly over the course of a session.  Memory used
+for transient large objects will normally be returned at garbage
+collection.
 
 DLLs for packages (including standard packages supplied with R)
-automatically gain version information when compiled under this version.
-(Use the Version tab on the Properties dialog box to see it.)
+automatically gain version information when compiled under this
+version.  (Use the Version tab on the Properties dialog box to see it,
+or the new function DLL.version within R.)
 
 Windows help files now have hyperlinks to other objects within the same
 package.
