@@ -400,3 +400,7 @@ Date: Thu, 08 Nov 2001 18:39:21 +0100
 Subject: ADV: Doing a PHD?
 From: "AL Email Marketing, Inc." <info@alemailmarketing.com>
 Date: Thu, 8 Nov 2001 13:05:02 -0700
+* PR# 1164 *
+Subject: Re: [Rd] eqscplot() in library MASS: fails when given only one point
+From: Prof Brian Ripley <ripley@stats.ox.ac.uk>
+Date: Fri, 9 Nov 2001 07:44:01 +0000 (GMT)
