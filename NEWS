@@ -8,6 +8,9 @@ NEW FEATURES
 
     o	zero.R tries to find the zero DLL is a system-independent way.
 
+    o   lty=0 now (again) makes lines invisible. Looks better for
+    	barplot label axis.
+
 
 BUG FIXES
 

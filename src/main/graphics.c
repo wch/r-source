@@ -2537,6 +2537,7 @@ static void CScliplines(int n, double *x, double *y, int coords, DevDesc *dd)
 /* Draw a line. */
 void GLine(double x1, double y1, double x2, double y2, int coords, DevDesc *dd)
 {
+    if (dd->gp.lty == LTY_BLANK) return;
     if (dd->dp.canClip) {
 	GClip(dd);
 	dd->dp.line(x1, y1, x2, y2, coords, dd);
@@ -2825,6 +2826,7 @@ static void clipPolygon(int n, double *x, double *y, int coords,
 void GPolygon(int n, double *x, double *y, int coords,
 	      int bg, int fg, DevDesc *dd)
 {
+    if (dd->gp.lty == LTY_BLANK) return;
     if (dd->dp.canClip) {
 	GClip(dd);
 	dd->dp.polygon(n, x, y, coords, bg, fg, dd);
@@ -2838,12 +2840,13 @@ void GPolygon(int n, double *x, double *y, int coords,
 /* Draw a series of line segments. */
 void GPolyline(int n, double *x, double *y, int coords, DevDesc *dd)
 {
-  if (dd->dp.canClip) {
-      GClip(dd);
-      dd->dp.polyline(n, x, y, coords, dd);
-  }
-  else
-      CScliplines(n, x, y, coords, dd);
+    if (dd->gp.lty == LTY_BLANK) return;
+    if (dd->dp.canClip) {
+        GClip(dd);
+        dd->dp.polyline(n, x, y, coords, dd);
+    }
+    else
+        CScliplines(n, x, y, coords, dd);
 }
 
 /* draw a circle */
@@ -4858,6 +4861,7 @@ typedef struct {
 } LineTYPE;
 
 static LineTYPE linetype[] = {
+    { "blank",   LTY_BLANK   },
     { "solid",	 LTY_SOLID   },
     { "dashed",	 LTY_DASHED  },
     { "dotted",	 LTY_DOTTED  },
@@ -4867,7 +4871,7 @@ static LineTYPE linetype[] = {
     { NULL,	 0	     },
 };
 
-static int nlinetype = (sizeof(linetype)/sizeof(LineTYPE)-1);
+static int nlinetype = (sizeof(linetype)/sizeof(LineTYPE)-2);
 
 unsigned int LTYpar(SEXP value, int index)
 {
@@ -4897,9 +4901,10 @@ unsigned int LTYpar(SEXP value, int index)
     }
     else if(isReal(value)) {
 	code = REAL(value)[index];
-	if(!R_FINITE(code) || code <= 0)
+	if(!R_FINITE(code) || code < 0)
 	    return NA_INTEGER;
-	code = (code-1) % nlinetype;
+        if (code > 0)
+	    code = (code-1) % nlinetype + 1; 
 	return linetype[code].pattern;
     }
     else error("invalid line type");

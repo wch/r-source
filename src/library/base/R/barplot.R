@@ -80,7 +80,8 @@ barplot.default <-
 		else
 		    stop("incorrect number of names")
 	    } else w.m
-	    axis(if(horiz) 2 else 1, at = at.l, labels = names.arg, lty = "06")
+	    axis(if(horiz) 2 else 1, 
+	         at = at.l, labels = names.arg, lty = 0)
 	}
 	if (!is.null(legend.text)) {
 	    legend.col <- col
