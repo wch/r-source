@@ -115,7 +115,7 @@ mauchley.test.SSD <- function(object, Sigma=diag(nrow=p),
     B <- T %*% object$SSD %*% t(T)
     pp <- nrow(T)
     U <- solve(Psi,B)
-    lambda <- eigen(U)$values
+    lambda <- Re(eigen(U, symmetric=TRUE)$values)
     n <- object$df
     logW <- log(det(U)) - pp * log(Tr(U/pp))
     ## Asymptotic mumbojumbo (from TWA).... 
@@ -172,7 +172,7 @@ sphericity <- function(object, Sigma=diag(nrow=p),
     pp <- nrow(T)
     U <- solve(Psi,B)
     sigma <- Tr(U)/pp/object$df
-    lambda <- eigen(U)$values
+    lambda <- Re(eigen(U, symmetric=TRUE)$values)
     GG.eps <- sum(lambda)^2/sum(lambda^2)/pp
     n <- object$df
     HF.eps <- ((n + 1) * pp * GG.eps - 2) / (pp * (n - pp * GG.eps))
