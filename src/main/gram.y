@@ -1089,14 +1089,20 @@ SEXP R_ParseFile(FILE *fp, int n, int *status)
 #include "Rconnections.h"
 static Rconnection con_parse;
 
+/* need to handle incomplete last line */
 static int con_getc(void)
 {
-    return Rconn_fgetc(con_parse);
+    int c;
+    static int last=-1000;
+    
+    c = Rconn_fgetc(con_parse);
+    if (c == EOF && last != '\n') c = '\n';
+    return (last = c);
 }
 
 static int con_ungetc(int c)
 {
-    return con_parse->ungetc(c, con_parse);
+    return Rconn_ungetc(c, con_parse);
 }
 
 SEXP R_ParseConn(Rconnection con, int n, int *status)

@@ -1012,13 +1012,15 @@ int Rconn_fgetc(Rconnection con)
 	/* map CR or CRLF to LF */
 	if (con->save != -1000) {
 	    c = con->save;
-	    con->save = -1000;
+	    con->save = con->save2;
+	    con->save2 = -1000;
 	    return c;
 	}
 	c = con->fgetc(con);
 	if (c == '\r') {
 	    c = con->fgetc(con);
 	    if (c != '\n') {
+		con->save2 = con->save;
 		con->save = (c != '\r') ? c : '\n';
 		return('\n');
 	    }
@@ -1034,6 +1036,13 @@ int Rconn_fgetc(Rconnection con)
 	con->posPushBack = 0;
 	if(con->nPushBack == 0) free(con->PushBack);
     }
+    return c;
+}
+
+int Rconn_ungetc(int c, Rconnection con)
+{
+    con->save2 = con->save;
+    con->save = c;
     return c;
 }
 
