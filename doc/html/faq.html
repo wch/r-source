@@ -168,7 +168,8 @@ WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 <small>GNU</small> General Public License for more details.
 
-<p>A copy of the <small>GNU</small> General Public License is available via WWW at
+<p>A copy of the <small>GNU</small> General Public License is available via WWW
+at
 
 <pre><a href="http://www.gnu.org/copyleft/gpl.html">http://www.gnu.org/copyleft/gpl.html</a>.
 </pre>
@@ -871,7 +872,7 @@ the programming process.
 for further information on "Stages in the Evolution of S".
 
 <p>There is a huge amount of user-contributed code for S, available at the
-<a href="http://lib.stat.cmu.edu/S/">S Repository</a> at CMU.
+<a href="http://lib.stat.cmu.edu/S/">S Repository</a> at <small>CMU</small>.
 
 <p><hr>
 Node:<a name="What%20is%20S-PLUS%3f">What is S-PLUS?</a>,
@@ -1909,47 +1910,49 @@ Up:<a rel=up href="#R%20and%20Emacs">R and Emacs</a>
 
 <h2>6.1 Is there Emacs support for R?</h2>
 
-<p>There is an Emacs package called ESS ("Emacs Speaks Statistics") which
-provides a standard interface between statistical programs and
-statistical processes.  It is intended to provide assistance for
-interactive statistical programming and data analysis.  Languages
-supported include: S dialects (S 3/4, <small>S-PLUS</small> 3.x/4.x/5.x, and R),
-LispStat dialects (XLispStat, ViSta), SAS, Stata, SPSS dialects (SPSS,
-PSPP) and SCA.
+<p>There is an Emacs package called <small>ESS</small> ("Emacs Speaks
+Statistics") which provides a standard interface between statistical
+programs and statistical processes.  It is intended to provide
+assistance for interactive statistical programming and data analysis. 
+Languages supported include: S dialects (S 3/4, <small>S-PLUS</small> 3.x/4.x/5.x,
+and R), LispStat dialects (XLispStat, ViSta), SAS, Stata, SPSS dialects
+(SPSS, PSPP) and SCA.
 
-<p>ESS grew out of the need for bug fixes and extensions to S-mode 4.8
-(which was a <small>GNU</small> Emacs interface to S/<small>S-PLUS</small> version 3
-only).  The current set of developers desired support for XEmacs, R, S4,
-and MS Windows.  In addition, with new modes being developed for R,
-Stata, and SAS, it was felt that a unifying interface and framework for
-the user interface would benefit both the user and the developer, by
-helping both groups conform to standard Emacs usage.  The end result is
-an increase in efficiency for statistical programming and data analysis,
-over the usual tools.
+<p><small>ESS</small> grew out of the need for bug fixes and extensions to
+S-mode 4.8 (which was a <small>GNU</small> Emacs interface to S/<small>S-PLUS</small>
+version 3 only).  The current set of developers desired support for
+XEmacs, R, S4, and MS Windows.  In addition, with new modes being
+developed for R, Stata, and SAS, it was felt that a unifying interface
+and framework for the user interface would benefit both the user and the
+developer, by helping both groups conform to standard Emacs usage.  The
+end result is an increase in efficiency for statistical programming and
+data analysis, over the usual tools.
 
 <p>R support contains code for editing R source code (syntactic indentation
 and highlighting of source code, partial evaluations of code, loading
 and error-checking of code, and source code revision maintenance) and
 documentation (syntactic indentation and highlighting of source code,
-sending examples to running ESS process, and previewing), interacting
-with an inferior R process from within Emacs (command-line editing,
-searchable command history, command-line completion of R object and file
-names, quick access to object and search lists, transcript recording,
-and an interface to the help system), and transcript manipulation
-(recording and saving transcript files, manipulating and editing saved
-transcripts, and re-evaluating commands from transcript files).
+sending examples to running <small>ESS</small> process, and previewing),
+interacting with an inferior R process from within Emacs (command-line
+editing, searchable command history, command-line completion of R object
+and file names, quick access to object and search lists, transcript
+recording, and an interface to the help system), and transcript
+manipulation (recording and saving transcript files, manipulating and
+editing saved transcripts, and re-evaluating commands from transcript
+files).
 
-<p>The latest versions of ESS are available from
+<p>The latest versions of <small>ESS</small> are available from
 <a href="http://ess.stat.wisc.edu/pub/ESS/">http://ess.stat.wisc.edu/pub/ESS/</a> or
 <a href="ftp://ess.stat.wisc.edu/pub/ESS/">ftp://ess.stat.wisc.edu/pub/ESS/</a>, or via <small>CRAN</small>.  The
 <small>HTML</small> version of the documentation can be found at
 <a href="http://stat.ethz.ch/ESS/">http://stat.ethz.ch/ESS/</a>.
 
-<p>ESS comes with detailed installation instructions.
+<p><small>ESS</small> comes with detailed installation instructions.
 
-<p>For help with ESS, send email to <a href="mailto:ESS-help@stat.ethz.ch">ESS-help@stat.ethz.ch</a>.
+<p>For help with <small>ESS</small>, send email to
+<a href="mailto:ESS-help@stat.ethz.ch">ESS-help@stat.ethz.ch</a>.
 
-<p>Please send bug reports and suggestions on ESS to
+<p>Please send bug reports and suggestions on <small>ESS</small> to
 <a href="mailto:ESS-bugs@stat.math.ethz.ch">ESS-bugs@stat.math.ethz.ch</a>.  The easiest way to do this from is
 within Emacs by typing <kbd>M-x ess-submit-bug-report</kbd> or using the
 [ESS] or [iESS] pulldown menus.
@@ -1999,18 +2002,19 @@ other environment variables as needed (using e.g. <kbd>set env R_HOME
 /path/to/R/</kbd>, but see also below), and start the binary with the desired
 arguments (e.g., <kbd>run --vsize=12M</kbd>).
 
-<p>If you have ESS, you can do <kbd>C-u M-x R &lt;RET&gt; - d &lt;SPC&gt; g d b
-&lt;RET&gt;</kbd> to start an inferior R process with arguments <code>-d
-gdb</code>.
+<p>If you have <small>ESS</small>, you can do <kbd>C-u M-x R &lt;RET&gt; - d
+&lt;SPC&gt; g d b &lt;RET&gt;</kbd> to start an inferior R process with arguments
+<code>-d gdb</code>.
 
-<p>A third option is to start an inferior R process via ESS (<kbd>M-x R</kbd>)
-and then start GUD (<kbd>M-x gdb</kbd>) giving the R binary (using its full
-path name) as the program to debug.  Use the program <code>ps</code> to
-find the process number of the currently running R process then use the
-<code>attach</code> command in gdb to attach it to that process.  One
-advantage of this method is that you have separate <code>*R*</code> and
-<code>*gud-gdb*</code> windows.  Within the <code>*R*</code> window you have all the
-ESS facilities, such as object-name completion, that we know and love.
+<p>A third option is to start an inferior R process via <small>ESS</small>
+(<kbd>M-x R</kbd>) and then start GUD (<kbd>M-x gdb</kbd>) giving the R binary
+(using its full path name) as the program to debug.  Use the program
+<code>ps</code> to find the process number of the currently running R
+process then use the <code>attach</code> command in gdb to attach it to that
+process.  One advantage of this method is that you have separate
+<code>*R*</code> and <code>*gud-gdb*</code> windows.  Within the <code>*R*</code> window
+you have all the <small>ESS</small> facilities, such as object-name
+completion, that we know and love.
 
 <p>When using GUD mode for debugging from within Emacs, you may find it
 most convenient to use the directory with your code in it as the current
