@@ -17,9 +17,9 @@ prompt.default <-
         file <- c(file,
                   paste0("\\alias{", name, "}"),
                   "%- Also NEED an `\\alias' for EACH other topic documented here.",
-                  "\\title{ ~~function to do ... ~~}",
+                  "\\title{ ~~function to do ... ~~ }",
                   "\\description{",
-		  " ~~ A concise (1-5 lines) description of what the function does. ~~",
+		  "  ~~ A concise (1-5 lines) description of what the function does. ~~",
 		  "}")
 	s <- seq(length = n <- length(argls <- formals(fn)))
 	if(n > 0) {
@@ -38,14 +38,14 @@ prompt.default <-
 		  "%- maybe also `usage' for other objects documented here.")
 	if(length(s))
 	    file <- c(file, "\\arguments{",
-		      paste0(" \\item{", arg.n, "}{",
+		      paste0("  \\item{", arg.n, "}{",
 			     " ~~Describe \\code{", arg.n, "} here~~ }"),"}")
 	fn.def <- deparse(fn)
 	if(any(br <- substr(fn.def,1,1) == "}"))
 	    fn.def[br] <- paste(" ", fn.def[br])
 	file <- c(file,
 		  "\\details{",
-		  " ~~ If necessary, more details than the __description__  above ~~",
+		  "  ~~ If necessary, more details than the __description__  above ~~",
 		  "}",
 		  "\\value{",
 		  "  ~Describe the value returned",
@@ -94,7 +94,7 @@ function (object, filename = paste0(name, ".Rd"))
     paste0 <- function(...) paste(..., sep = "")
     describe <- function(object) UseMethod()
     name <- substitute(object)
-    if (is.language(name) && !is.name(name)) 
+    if (is.language(name) && !is.name(name))
         name <- eval(name)
     name <- as.character(name)
     dat <- get(name)
@@ -102,7 +102,7 @@ function (object, filename = paste0(name, ".Rd"))
     ## Rdoc file
     file <- c(paste0("\\name{", name, "}"), paste0("\\alias{", name, "}"))
     file <- c(file, "\\non_function{}",
-              "\\title{ ~~ 1-line description of the data frame ~~ }", 
+              "\\title{ ~~ 1-line description of the data frame ~~ }",
               "\\description{",
               paste0("The \\code{", name, "} data frame has ", nrow(dat),
                      " rows and ", ncol(dat), " columns."),
@@ -141,10 +141,10 @@ function (object, filename = paste0(name, ".Rd"))
               "\\keyword{datasets}")
     cat(file, file = filename, sep = "\n")
     RHOME <- R.home()
-    if (substr(RHOME, 1, 8) == "/tmp_mnt") 
+    if (substr(RHOME, 1, 8) == "/tmp_mnt")
         RHOME <- substr(RHOME, 9, 1000)
-    cat("created file named ", filename, " in the current directory.\n", 
-        " Edit the file and move it to the appropriate directory,\n", 
+    cat("created file named ", filename, " in the current directory.\n",
+        " Edit the file and move it to the appropriate directory,\n",
         paste(RHOME, "src/library/<pkg>/man/", sep = "/"), "\n")
     invisible(file)
 }
