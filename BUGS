@@ -294,10 +294,10 @@ Date: Tue, 10 Apr 2001 17:50:44 +0200 (MET DST)
 
 Directory:  incoming
 
-* PR# 934 *
-Subject: ks.test in ctest package
-From: Murray Smith <mh.smith@auckland.ac.nz>
-Date: Tue, 08 May 2001 16:52:07 +1200
+* PR# 936 *
+Subject: help.start() failed
+From: "Wilhelm B. Kloke" <wb@vestein.arb-phys.uni-dortmund.de>
+Date: Wed, 9 May 2001 13:46:05 +0200 (MET DST)
 * PR# 933 *
 Subject: read.xport bug of foreign pkg
 From: jorvutom@icaro.dic.uchile.cl
@@ -306,3 +306,11 @@ Date: Sat, 5 May 2001 22:17:37 +0200 (MET DST)
 Subject: scoping error in xy.coords
 From: kjetil halvorsen <kjetilh@umsanet.edu.bo>
 Date: Fri, 04 May 2001 11:20:57 -0400
+* PR# 935 *
+Subject:  help.start() fails 
+From: "Wilhelm B. Kloke" <wb@vestein.arb-phys.uni-dortmund.de>
+Date: Wed, 9 May 2001 13:43:49 +0200 (MET DST)
+* PR# 934 *
+Subject: ks.test in ctest package
+From: Murray Smith <mh.smith@auckland.ac.nz>
+Date: Tue, 08 May 2001 16:52:07 +1200
