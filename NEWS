@@ -94,6 +94,9 @@ NEW FEATURES
     o	New function set.seed() to use a single integer to set the
 	random number seeds.
 
+    o	Under Unix, the default editor is obtained from the environment
+	variables EDITOR or VISUAL if either is set.
+
 
 BUG FIXES
 
