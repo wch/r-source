@@ -33,6 +33,36 @@
 #if defined(__APPLE_CC__) && defined(HAVE_AQUA)
 #define __DEBUGGING__
 
+unsigned char Lat2Mac[] = { 
+ 32,  32,  32,  32,  32,  32,  32,  32,  32,  32, 
+ 32,  32,  32,  32,  32,  32, 245,  96, 171, 246,
+247, 248, 249, 250, 172,  32, 251, 252,  32, 253, 
+254, 255,  32, 193, 162, 163,  32, 180,  32, 164, 
+172, 169, 187, 199, 194,  45, 168, 248, 161, 177,
+ 32,  32, 171, 181, 166, 225, 252,  32, 188, 200, 
+ 32,  32,  32, 192, 203, 231, 229, 204, 128, 129,
+174, 130, 233, 131, 230, 232, 237, 234, 235, 236,
+ 32, 132, 241, 238, 239, 205, 133,  32, 175, 244,
+242, 243, 134,  32,  32, 167, 136, 135, 137, 139,
+138, 140, 190, 141, 143, 142, 144, 145, 147, 146,
+148, 149,  32, 150, 152, 151, 153, 155, 154, 214, 
+191, 157, 156, 158, 159,  32,  32, 216};
+
+unsigned char Mac2Lat[] = { 
+196, 197, 199, 201, 209, 214, 220, 225, 224, 226, 
+228, 227, 229, 231, 233, 232, 234, 235, 237, 236, 
+238, 239, 241, 243, 242, 244, 246, 245, 250, 249, 
+251, 252,  32, 176, 162, 163, 167,  32, 182, 223, 
+174, 169,  32, 146, 152,  32, 198, 216,  32, 177,
+ 32,  32, 165, 181,  32,  32,  32,  32,  32, 170, 
+186,  32, 230, 248, 191, 161, 172,  32,  32,  32,
+ 32, 171, 187,  32,  32, 192, 195, 213,  32,  32,
+ 32,  32,  32,  32,  96,  39, 247,  32, 255,  32, 
+ 32,  32,  32,  32,  32,  32,  32, 183,  32,  32,
+ 32, 194, 202, 193, 203, 200, 205, 206, 207, 204, 
+211, 212,  32, 210, 218, 219, 217, 144, 147, 148, 
+149, 150, 151, 154, 155, 157, 158, 159};
+
 #include <Carbon/Carbon.h>
 #include <CoreFoundation/CoreFoundation.h>
 #include <ApplicationServices/ApplicationServices.h>
@@ -609,7 +639,9 @@ static void 	Quartz_Text(double x, double y, char *str,
 		     	 double rot, double hadj, int col, double gamma, int font,
 		     	 double cex, double ps, NewDevDesc *dd)
 {
-
+    int len,i;
+    char *buf=NULL;
+    unsigned char tmp;
     QuartzDesc *xd = (QuartzDesc*)dd->deviceSpecific;
 
     CGContextSaveGState( GetContext(xd) );
@@ -624,9 +656,23 @@ static void 	Quartz_Text(double x, double y, char *str,
     CGContextSetTextDrawingMode( GetContext(xd), kCGTextFill );
     Quartz_SetFill(col, gamma, dd);
     Quartz_SetFont(font, cex,  ps, dd);
+    len = strlen(str);
 
-    CGContextShowTextAtPoint( GetContext(xd), 0, 0, str, strlen(str) );
-
+    if(font == 5)
+     CGContextShowTextAtPoint( GetContext(xd), 0, 0, str, strlen(str) );
+    else {
+     if( (buf = malloc(len)) != NULL){
+      for(i=0;i <len;i++){
+        tmp = (unsigned char)str[i];
+      if(tmp>127)
+       buf[i] = (char)Lat2Mac[tmp-127-1];
+      else
+       buf[i] = str[i]; 
+      }
+     CGContextShowTextAtPoint( GetContext(xd), 0, 0, buf, len );
+     free(buf);
+     }  
+    }
     CGContextRestoreGState( GetContext(xd) );
 }
 
