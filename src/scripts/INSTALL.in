@@ -4,7 +4,7 @@
 
 # @configure_input@
 
-revision='$Revision: 1.109 $'
+revision='$Revision: 1.110 $'
 version=`set - ${revision}; echo ${2}`
 version="R add-on package installer ${version}
 
@@ -447,7 +447,7 @@ do_install_source () {
     ## </FIXME>
     (echo "library(tools)"; \
       echo ".installPackageDescription(\".\", \"${lib}/${pkg}\")") | \
-	${R_EXE} --vanilla --no-dotFirst >/dev/null
+	${R_EXE} --vanilla --no-dotFirst >/dev/null 2>&1
   fi
 
   if test -d man; then
@@ -501,7 +501,7 @@ do_install_source () {
 
   (echo "library(tools)"; \
     echo ".installPackageIndices(\".\", \"${lib}/${pkg}\")") | \
-      ${R_EXE} --vanilla --no-dotFirst >/dev/null
+      ${R_EXE} --vanilla --no-dotFirst >/dev/null 2>&1
 
   if ${clean}; then
     if test -x ./cleanup ; then
