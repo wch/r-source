@@ -23,7 +23,7 @@ text.default (x, y = NULL, labels = seq(along = x), adj = NULL,
   \item{offset}{when \code{pos} is specified, this value gives the
     offset of the label from the specified coordinate in fractions
     of a character width.}
-  \item{vfont}{if a numeric vector of length 2 is specified, then Hershey
+  \item{vfont}{if a character vector of length 2 is specified, then Hershey
     vector fonts are used.  The first element of the vector
     selects a typeface and the second element selects a fontindex 
     (see below).} 

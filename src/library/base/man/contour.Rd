@@ -29,8 +29,7 @@ contour(x = seq(0, 1, len = nrow(z)), y = seq(0, 1, len = ncol(z)),
     lines.}
   \item{labcex}{\code{cex} for contour labelling.}
   \item{drawlabels}{logical.  Contours are labelled if \code{TRUE}.}
-  \item{method}{character, specifying where the labels will be located 
-    (see below for possible values).}
+  \item{method}{character, specifying where the labels will be located.}
   \item{vfont}{if a character vector of length 2 is specified, then Hershey
     vector fonts are used.  The first element of the vector
     selects a typeface and the second element selects a fontindex 
