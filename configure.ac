@@ -528,6 +528,8 @@ case "${host_cpu}" in
     R_PROG_CC_FLAG_D__NO_MATH_INLINES
     R_PROG_CC_FLAG([-mieee-fp],
                    [R_XTRA_CFLAGS="${R_XTRA_CFLAGS} -mieee-fp"])
+    R_PROG_F77_FLAG([-mieee-fp],
+                   [R_XTRA_FFLAGS="${R_XTRA_FFLAGS} -mieee-fp"])
     R_PROG_CXX_FLAG([-mieee-fp],
                     [R_XTRA_CXXFLAGS="${R_XTRA_CXXFLAGS} -mieee-fp"])
     ;;
