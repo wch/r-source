@@ -41,7 +41,7 @@ unserialize(connection, refhook = NULL)
   to \code{TRUE}.
 
   \code{unserialize} reads an object from \code{connection}.
-  \code{connection} may also be a scaler string.
+  \code{connection} may also be a scalar string.
 
   The \code{refhook} functions can be used to customize handling of
   non-system reference objects (all external pointers and weak
