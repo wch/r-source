@@ -16,6 +16,10 @@ par(\dots)
   Parameters are queried by giving vectors of character strings to
   \code{par}.  In this case, the values are returned in a tagged list.
 }
+% --- The real documentation is the code -- in ../../../main/par.c   ;-)
+
+%--- CHECK  which of the things below are still  "unimplemented" @@
+%--- add   'gamma' !
 \arguments{
   \item{adj}{The value of \code{adj} determines the way in which text
     strings are justified.  A value of \code{0} produces right
@@ -25,7 +29,7 @@ par(\dots)
     not annotate the plots they produce with axis and overall titles.
     The default is to do annotation.}
   \item{bg}{The color to be used for the background of plots.  A
-    description of how colors are specified is given below.} 
+    description of how colors are specified is given below.}
   \item{bty}{A character string which determined the type of box which
     is drawn about plots.  If \code{bty} is one of are \code{"o"},
     \code{"l"}, \code{"7"} or \code{"c"} the resulting box resembles the
@@ -67,7 +71,7 @@ par(\dots)
   \item{lab}{A numerical vector of the form \code{c(x, y, len)} which
     modifies the way that axes are annotated.
     The values of \code{x} and \code{y} give the (approximate) number of
-    tickmarks on the x and y axes and 
+    tickmarks on the x and y axes and
     \code{len} species the label size.
     \emph{Currently}, \code{len} \emph{is unimplemented}.}
   \item{las}{(\emph{Unimplemented})
@@ -79,11 +83,11 @@ par(\dots)
     Line types can either be specified as an integer (1=solid, 2=dashed,
     3=dotted 4=dotdashed) or as one of the character strings
     \code{"solid"}, \code{"dashed"}, \code{"dotted"} or
-    \code{"dotdashed"}. 
+    \code{"dotdashed"}.
     Alternatively, a string of up to 8 characters may be given, giving
     the length (in points) of line segments which are alternatively
     drawn and skipped.  For example, \code{"44"} is dashed and
-    \code{"13"} is dotted.} 
+    \code{"13"} is dotted.}
   \item{mai}{A numerical vector of the form \code{c(xb, xt, yl, yr)}
     which gives the margin size specified in inches.}
   \item{mar}{A numerical vector of the form \code{c(xb, xt, yl, yr)}
@@ -92,20 +96,20 @@ par(\dots)
   \item{mex}{\code{mex} is a character size expansion factor which is
     used to describe coordinates in the margins of plots.}
   \item{mfcol}{This is a vector of the form \code{c(nr, nc)}.
-    Subsequent figures will be drawn in an \code{nr}-by-\code{nc} 
+    Subsequent figures will be drawn in an \code{nr}-by-\code{nc}
     array on the device by \emph{columns}.}
   \item{mfg}{A numerical vector of the form \code{c(i, j, nr, nc)} where
     \code{i} and \code{j} indicate which figure in an
     \code{nr}-by-\code{nc} array of figures is currently being drawn.}
   \item{mfrow}{This is a vector of the form \code{c(nr, nc)}.
-    Subsequent figures will be drawn in an \code{nr}-by-\code{nc} 
+    Subsequent figures will be drawn in an \code{nr}-by-\code{nc}
     array on the device by \emph{rows}.}
   \item{mgp}{The margin line for the axis title, axis labels and axis
     line.  The default is \code{c(3, 1, 0)}.}
   \item{mkh}{The height in inches of symbols to be drawn when the value
-    of \code{pch} is an integer.} 
+    of \code{pch} is an integer.}
   \item{oma}{A vector of the form \code{c(xb, xt, yl, yr)} giving the
-    size of the outer margins in lines of text.} 
+    size of the outer margins in lines of text.}
   \item{omd}{A vector of the form \code{c(x1, x2, y1, y2)} giving the
     NDC coordinates of the region where (multiple) figures will appear
     on the device.}
@@ -119,9 +123,9 @@ par(\dots)
     figure region.}
   \item{pty}{A character specifying the type of plot region to be used;
     \code{"s"} generates a square plotting region and \code{"m"}
-    generates the maximal plotting region.} 
+    generates the maximal plotting region.}
   \item{smo}{(\emph{Unimplemented}) a value which indicates how smooth
-    circles and circular arc should be.} 
+    circles and circular arc should be.}
   \item{srt}{The string rotation in degrees.  Causes \code{srt} to be
     set to the same value.}
   \item{tck}{The length of tick marks as a fraction of the smaller of
@@ -137,7 +141,7 @@ par(\dots)
     between tick-marks.}
   \item{xaxs}{(\emph{Unimplemented}) The style of axis interval
     calculation to be used for the x-axis.}
-  \item{xaxt}{A character which specifies the axis type.  
+  \item{xaxt}{A character which specifies the axis type.
     Specifying \code{"n"} causes an axis to be set up, but not plotted.}
   \item{xlog}{A logical value. If \code{TRUE} a logarithmic scale is
     used.  The default is to use a linear scale.}
@@ -185,5 +189,5 @@ op <- par(mfrow = c(2, 2), # 2 x 2 pictures on one plot
           pty = "s")      # square plotting region, independent of device size
 
 ## At end of plotting, reset to previous settings:
-par(op)	  
+par(op)
 }
