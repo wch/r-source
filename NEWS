@@ -292,6 +292,10 @@ BUG FIXES
     o   Title and copyright holder of the reference manual are now in
         sync with the citation() command.
 
+    o   The validation code for POSIXlt dates and hence
+	seq(,by="DSTdays") now works for large mday values (not
+	just those in -1000...1000).  (PR#6212)
+
 
 
 

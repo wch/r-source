@@ -144,8 +144,27 @@ static int validate_tm (struct tm *tm)
 	if(tm->tm_mon < 0) {tm->tm_mon += 12; tm->tm_year--;}
     }
 
-    if(tm->tm_mday < -1000 || tm->tm_mday > 1000) return -1;
+    /* A limit on the loops of about 3000x round */
+    if(tm->tm_mday < -1000000 || tm->tm_mday > 1000000) return -1;
 
+    if(abs(tm->tm_mday) > 366) {
+	res++;
+	/* first spin back until January */
+	while(tm->tm_mon > 0) {
+	    --tm->tm_mon;
+	    tm->tm_mday += days_in_month[tm->tm_mon] +
+	    ((tm->tm_mon==1 && isleap(1900+tm->tm_year))? 1 : 0);
+	}
+	/* then spin on/back by years */
+	while(tm->tm_mday < 1) {
+	    --tm->tm_year;
+	    tm->tm_mday += 365 + (isleap(1900+tm->tm_year)? 1 : 0);
+	}
+	while(tm->tm_mday >
+	      (tmp = 365 + (isleap(1900+tm->tm_year)? 1 : 0))) {
+	    tm->tm_mday -= tmp; tm->tm_year++;
+	}
+    }
 
     while(tm->tm_mday < 1) {
 	res++;
