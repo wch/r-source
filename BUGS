@@ -205,10 +205,10 @@ none
 
 Directory:  incoming
 
-* PR# 641 *
-Subject: 2 Bugs in na.omit.default()
-From: =?iso-8859-1?Q?Jens_Oehlschl=E4gel?= <jens.oehlschlaegel@bbdo-interone.de>
-Date: Wed, 23 Aug 2000 11:45:56 +0200
+* PR# 643 *
+Subject: Re: [R] too large alpha or beta in dbeta ?
+From: Thomas Lumley <thomas@biostat.washington.edu>
+Date: Thu, 24 Aug 2000 13:45:47 -0700 (PDT)
 * PR# 640 *
 Subject: diff.default / diff.ts in wrong package bug
 From: Martin Maechler <maechler@stat.math.ethz.ch>
@@ -217,3 +217,11 @@ Date: Mon, 21 Aug 2000 18:28:36 +0200 (CEST)
 Subject: symbols: xlim and ylim cannot be specified
 From: Werner Stahel <stahel@stat.math.ethz.ch>
 Date: Mon, 21 Aug 2000 15:54:08 +0200 (CEST)
+* PR# 642 *
+Subject:  Method dispatch fails for autoloaded methods 
+From: maechler@stat.math.ethz.ch
+Date: Thu, 24 Aug 2000 17:09:09 +0200
+* PR# 641 *
+Subject: 2 Bugs in na.omit.default()
+From: =?iso-8859-1?Q?Jens_Oehlschl=E4gel?= <jens.oehlschlaegel@bbdo-interone.de>
+Date: Wed, 23 Aug 2000 11:45:56 +0200
