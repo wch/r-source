@@ -759,7 +759,7 @@ BUG FIXES
     o	Sweave no longer wraps the output of code chunks with
 	echo=false and results=tex in Schunk environments.
 
-    o   termplot handles models with missing data better, especially
+    o   termplot() handles models with missing data better, especially
         with na.action=na.exclude.
 
     o	1:2 * 1e-100  now prints with correct number of spaces.
@@ -768,7 +768,9 @@ BUG FIXES
         correctly.
 
     o   gzfile() connections had trouble at EOF when used on uncompressed
-	file
+	file.
+
+
 
 
 	**************************************************
