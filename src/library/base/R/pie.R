@@ -9,11 +9,14 @@ pie <-
 	labels <- as.character(1:length(x))
     x <- c(0, cumsum(x)/sum(x))
     dx <- diff(x)
+    plot.new()
+    # NOTE: this needs to happen AFTER the plot.new so that
+    # we enquire about the CURRENT plot region size, not the
+    # PREVIOUS plot region size
     pin <- par("pin")
     xlim <- ylim <- c(-1, 1)
     if (pin[1] > pin[2]) xlim <- (pin[1]/pin[2]) * xlim
     else ylim <- (pin[2]/pin[1]) * ylim
-    plot.new()
     plot.window(xlim, ylim, "", asp = 1)
     nx <- length(dx)
     if (is.null(col))
