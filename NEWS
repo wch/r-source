@@ -11,9 +11,6 @@
 
 BUG FIXES
 
-    o   The pdf() device now initialises graphical parameters 
-	properly.  (PR#2281)
-
     o	plot.stepfun() now obeys a `ylim=.' specification.
 
     o	removeClass() does a better job of removing inheritance
@@ -60,7 +57,7 @@ BUG FIXES
 
     o	system(intern=TRUE) has an undocumented line length limit of
 	119 chars both on Unix and Windows.  The limit is now 8096 and
-	documented.  On Unix (only) every 120th character used to be 
+	documented.  On Unix (only) every 120th character used to be
 	discarded.
 
     o	plot.POSIX[cl]t were not passing graphics parameters on to
@@ -78,6 +75,10 @@ BUG FIXES
     o   mostattributes<-() was failing to copy across dimnames when
 	one component was NULL, affecting pmax() and pmin() when the
 	first argument was a matrix.  (root cause of PR#2357)
+
+    o   The pdf() device now initialises graphical parameters
+	properly.  (PR#2281)
+
 
 
 		CHANGES IN R VERSION 1.6.1
