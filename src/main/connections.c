@@ -2106,118 +2106,14 @@ SEXP do_sumconnection(SEXP call, SEXP op, SEXP args, SEXP env)
 
 /* ------------------- internet access functions  --------------------- */
 
-/* TODO  set timeout */
-#ifdef HAVE_LIBXML
-void *	xmlNanoHTTPOpen		(const char *URL, char **contentType);
-int	xmlNanoHTTPRead		(void *ctx, void *dest, int len);
-void	xmlNanoHTTPClose	(void *ctx);
-int 	xmlNanoHTTPReturnCode	(void *ctx);
-void	xmlNanoHTTPTimeout	(int delay);
+void *R_HTTPOpen(const char *url);
+int  R_HTTPRead(void *ctx, void *dest, int len);
+void R_HTTPClose(void *ctx);
 
-void *	xmlNanoFTPOpen		(const char *URL);
-int	xmlNanoFTPRead		(void *ctx, void *dest, int len);
-void	xmlNanoFTPClose		(void *ctx);
-#endif
+void *R_FTPOpen(const char *url);
+int  R_FTPRead(void *ctx, void *dest, int len);
+void R_FTPClose(void *ctx);
 
-#ifdef USE_WININET
-#include <windows.h>
-#include <wininet.h>
-typedef struct wictxt {
-    HINTERNET hand;
-    HINTERNET session;
-} wIctxt, *WIctxt;
-#endif
-
-void * R_HTTPOpen(const char *url)
-{
-    void *ctxt = NULL;
-#ifdef HAVE_LIBXML
-    ctxt = xmlNanoHTTPOpen(url, NULL);
-    if(ctxt != NULL) {
-	int rc = xmlNanoHTTPReturnCode(ctxt);
-	if(rc != 200) {
-	    xmlNanoHTTPClose(ctxt);
-	    ctxt = NULL;
-	}
-    }
-#endif
-#ifdef USE_WININET
-    {
-	BOOL res = InternetAttemptConnect(0);
-	WIctxt  wictxt;
-
-	if (res != ERROR_SUCCESS) {
-	    warning("no Internet connection available");
-	    return NULL;
-	}
-	wictxt = (WIctxt) malloc(sizeof(wIctxt));
-	wictxt->hand = 
-	    InternetOpen("R", 
-			 INTERNET_OPEN_TYPE_PRECONFIG, 
-			 NULL, NULL, 0);
-	if(!wictxt->hand) error("cannot open");
-	wictxt->session = 
-	    InternetOpenUrl(wictxt->hand, url,
-			    NULL, 0, INTERNET_FLAG_KEEP_CONNECTION, 0);
-	if(!wictxt->session) error("cannot open2");
-	ctxt = (void *)wictxt;
-    }
-#endif
-    return ctxt;
-}
-
-int R_HTTPRead(void *ctx, void *dest, int len)
-{
-#ifdef USE_WININET
-    DWORD nread;
-    InternetReadFile(((WIctxt)ctx)->session, dest, len, &nread);
-    return (int) nread;
-#endif
-#ifdef HAVE_LIBXML
-    return xmlNanoHTTPRead(ctx, dest, len);
-#else
-    return -1;
-#endif
-}
-
-void R_HTTPClose(void *ctx)
-{
-#ifdef HAVE_LIBXML
-    xmlNanoHTTPClose(ctx);
-#endif
-#ifdef USE_WININET
-    {
-	InternetCloseHandle(((WIctxt)ctx)->session);
-	InternetCloseHandle(((WIctxt)ctx)->hand);
-	free(ctx);
-    }
-#endif
-}
-
-void * R_FTPOpen(const char *url)
-{
-    void *ctxt = NULL;
-#ifdef HAVE_LIBXML
-    ctxt = xmlNanoFTPOpen(url);
-#endif
-    return ctxt;
-}
-
-int R_FTPRead(void *ctx, void *dest, int len)
-{
-#ifdef HAVE_LIBXML
-    return xmlNanoFTPRead(ctx, dest, len);
-#else
-    return -1;
-#endif
-}
-
-void R_FTPClose(void *ctx)
-{
-#ifdef HAVE_LIBXML
-    xmlNanoFTPClose(ctx);
-#endif
-}
 
 static void url_open(Rconnection con)
 {
@@ -2358,7 +2254,9 @@ SEXP do_url(SEXP call, SEXP op, SEXP args, SEXP env)
     char *url, *open, *class2 = "url";
     int i, ncon;
     Rconnection con = NULL;
+#if defined(HAVE_LIBXML) || defined(USE_WININET)
     UrlScheme type = HTTPsh; /* -Wall */
+#endif
 
     checkArity(op, args);
     scmd = CAR(args);
@@ -2559,3 +2457,303 @@ SEXP do_download(SEXP call, SEXP op, SEXP args, SEXP env)
     UNPROTECT(1);
     return ans;
 }
+
+#ifdef HAVE_LIBXML
+#define INTERNET 1
+
+void *	xmlNanoHTTPOpen		(const char *URL, char **contentType);
+int	xmlNanoHTTPRead		(void *ctx, void *dest, int len);
+void	xmlNanoHTTPClose	(void *ctx);
+int 	xmlNanoHTTPReturnCode	(void *ctx);
+void	xmlNanoHTTPTimeout	(int delay);
+
+void *	xmlNanoFTPOpen		(const char *URL);
+int	xmlNanoFTPRead		(void *ctx, void *dest, int len);
+void	xmlNanoFTPClose		(void *ctx);
+
+void *R_HTTPOpen(const char *url)
+{
+    void *ctxt;
+    int timeout = asInteger(GetOption(install("timeout")));
+
+    if(timeout == NA_INTEGER || timeout <= 0) timeout = 60;
+    xmlNanoHTTPTimeout();
+    ctxt = xmlNanoHTTPOpen(url, NULL);
+    if(ctxt != NULL) {
+	int rc = xmlNanoHTTPReturnCode(ctxt);
+	if(rc != 200) {
+	    xmlNanoHTTPClose(ctxt);
+	    ctxt = NULL;
+	}
+    }
+    return ctxt;
+}
+
+int R_HTTPRead(void *ctx, void *dest, int len)
+{
+    return xmlNanoHTTPRead(ctx, dest, len);
+}
+
+void R_HTTPClose(void *ctx)
+{
+    xmlNanoHTTPClose(ctx);
+}
+
+void *R_FTPOpen(const char *url)
+{
+    return xmlNanoFTPOpen(url);
+}
+
+int R_FTPRead(void *ctx, void *dest, int len)
+{
+    return xmlNanoFTPRead(ctx, dest, len);
+}
+
+void R_FTPClose(void *ctx)
+{
+    xmlNanoFTPClose(ctx);
+}
+#endif /* HAVE_LIBXML */
+
+
+#ifdef USE_WININET
+/* #define USE_WININET_ASYNC 1 */
+
+#define INTERNET 2
+
+#include <windows.h>
+#include <wininet.h>
+typedef struct wictxt {
+    HINTERNET hand;
+    HINTERNET session;
+} wIctxt, *WIctxt;
+
+#ifdef USE_WININET_ASYNC
+#undef  INTERNET
+#define INTERNET 3
+static int timeout;
+
+static int callback_status;
+static LPINTERNET_ASYNC_RESULT callback_res;
+
+static void CALLBACK 
+InternetCallback(HINTERNET hInternet, DWORD context, DWORD Status,
+		 LPVOID lpvStatusInformation,
+		 DWORD dwStatusInformationLength)
+{
+    callback_status = Status;
+    /* printf("callback with context %ld, code %ld\n", context, Status); */
+    if(Status == INTERNET_STATUS_REQUEST_COMPLETE) {
+	callback_res = (LPINTERNET_ASYNC_RESULT) lpvStatusInformation;
+    }
+}
+#endif
+
+void *R_HTTPOpen(const char *url)
+{
+    WIctxt  wictxt;
+    DWORD status, d1 = 4, d2 = 0;
+    
+/*	BOOL res = InternetAttemptConnect(0);
+
+	if (res != ERROR_SUCCESS) {
+	warning("no Internet connection available");
+	return NULL;
+	}*/
+
+    wictxt = (WIctxt) malloc(sizeof(wIctxt));
+    wictxt->hand =
+	InternetOpen("R", INTERNET_OPEN_TYPE_PRECONFIG, NULL, NULL,
+#ifdef USE_WININET_ASYNC
+		     INTERNET_FLAG_ASYNC
+#else
+		     0
+#endif
+	             );
+    if(!wictxt->hand) {
+	free(wictxt);
+	error("cannot open Internet connection");
+    }
+
+#ifdef USE_WININET_ASYNC
+    timeout = asInteger(GetOption(install("timeout")));
+    if(timeout == NA_INTEGER || timeout <= 0) timeout = 60;
+    InternetSetStatusCallback(wictxt->hand,
+			      (INTERNET_STATUS_CALLBACK) InternetCallback);
+    Rprintf("using Asynchronous WinInet calls\n");
+
+    callback_status = 0;
+    InternetOpenUrl(wictxt->hand, url,
+		    NULL, 0,
+        INTERNET_FLAG_KEEP_CONNECTION | INTERNET_FLAG_NO_CACHE_WRITE,
+		    17);
+    
+    { 
+	DWORD t1 = GetTickCount();
+	while(callback_status != INTERNET_STATUS_REQUEST_COMPLETE
+	      && GetTickCount() < t1 + 1000*timeout) {
+	    R_ProcessEvents();
+	    Sleep(100);
+	}
+	if(callback_status != INTERNET_STATUS_REQUEST_COMPLETE) {
+	    InternetCloseHandle(wictxt->hand);
+	    free(wictxt);
+	    error("InternetOpenUrl timed out");	    
+	}
+    }
+    
+    wictxt->session = (HINTERNET) callback_res->dwResult;
+#else
+    Rprintf("using Synchronous WinInet calls\n");
+    wictxt->session = InternetOpenUrl(wictxt->hand, url,
+				      NULL, 0,
+        INTERNET_FLAG_KEEP_CONNECTION | INTERNET_FLAG_NO_CACHE_WRITE,
+				      0);
+#endif /* USE_WININET_ASYNC */
+    if(!wictxt->session) {
+	InternetCloseHandle(wictxt->hand);
+	free(wictxt);
+	error("InternetOpenUrl failed");
+    }
+
+    HttpQueryInfo(wictxt->session,
+		  HTTP_QUERY_STATUS_CODE | HTTP_QUERY_FLAG_NUMBER,
+		  &status, &d1, &d2);
+    if(status != 200) {
+	InternetCloseHandle(wictxt->session);
+	InternetCloseHandle(wictxt->hand);
+	free(wictxt);
+	error("cannot open: status code %d\n", status);
+    }
+
+    HttpQueryInfo(wictxt->session,
+		  HTTP_QUERY_CONTENT_LENGTH | HTTP_QUERY_FLAG_NUMBER,
+		  &status, &d1, &d2);
+    Rprintf("Content length %d bytes\n", status);
+    return (void *)wictxt;
+}
+
+int R_HTTPRead(void *ctx, void *dest, int len)
+{
+    DWORD nread;
+    
+    InternetReadFile(((WIctxt)ctx)->session, dest, len, &nread);
+#ifdef USE_WININET_ASYNC
+    {
+	DWORD t1 = GetTickCount();
+	while(callback_status != INTERNET_STATUS_REQUEST_COMPLETE
+	      && GetTickCount() < t1 + 1000*timeout) {
+	    R_ProcessEvents();
+	    Sleep(100);
+	}
+	if(callback_status != INTERNET_STATUS_REQUEST_COMPLETE) {
+	    warning("Internet read timed out");
+	    nread = 0;
+	}
+    }
+#endif
+    return (int) nread;
+}
+
+void R_HTTPClose(void *ctx)
+{
+    InternetCloseHandle(((WIctxt)ctx)->session);
+    InternetCloseHandle(((WIctxt)ctx)->hand);
+    free(ctx);
+}
+
+void *R_FTPOpen(const char *url)
+{
+    WIctxt  wictxt;
+
+    wictxt = (WIctxt) malloc(sizeof(wIctxt));
+    wictxt->hand =
+	InternetOpen("R", INTERNET_OPEN_TYPE_PRECONFIG, NULL, NULL,
+#ifdef USE_WININET_ASYNC
+		     INTERNET_FLAG_ASYNC
+#else
+		     0
+#endif
+	             );
+    if(!wictxt->hand) {
+	free(wictxt);
+	error("cannot open Internet connection");
+    }
+
+#ifdef USE_WININET_ASYNC
+    timeout = asInteger(GetOption(install("timeout")));
+    if(timeout == NA_INTEGER || timeout <= 0) timeout = 60;
+    InternetSetStatusCallback(wictxt->hand,
+			      (INTERNET_STATUS_CALLBACK) InternetCallback);
+    Rprintf("using Asynchronous WinInet calls\n");
+
+    callback_status = 0;
+    InternetOpenUrl(wictxt->hand, url,
+		    NULL, 0,
+        INTERNET_FLAG_KEEP_CONNECTION | INTERNET_FLAG_NO_CACHE_WRITE,
+		    17);
+    { 
+	DWORD t1 = GetTickCount();
+	while(callback_status != INTERNET_STATUS_REQUEST_COMPLETE
+	      && GetTickCount() < t1 + 1000*timeout) {
+	    R_ProcessEvents();
+	    Sleep(100);
+	}
+	if(callback_status != INTERNET_STATUS_REQUEST_COMPLETE) {
+	    InternetCloseHandle(wictxt->hand);
+	    free(wictxt);
+	    error("InternetOpenUrl timed out");	    
+	}
+    }
+
+    wictxt->session = (HINTERNET) callback_res->dwResult;
+#else
+    Rprintf("using Synchronous WinInet calls\n");
+    wictxt->session = InternetOpenUrl(wictxt->hand, url,
+				      NULL, 0,
+        INTERNET_FLAG_KEEP_CONNECTION | INTERNET_FLAG_NO_CACHE_WRITE,
+				      0);
+#endif /* USE_WININET_ASYNC */
+    return (void *)wictxt;
+}
+
+int R_FTPRead(void *ctx, void *dest, int len)
+{
+    return R_HTTPRead(ctx, dest, len);
+}
+
+void R_FTPClose(void *ctx)
+{
+    R_HTTPClose(ctx);
+}
+#endif
+
+#ifndef INTERNET
+void *R_HTTPOpen(const char *url)
+{
+    return NULL;
+}
+
+int R_HTTPRead(void *ctx, void *dest, int len)
+{
+    return -1;
+}
+
+void R_HTTPClose(void *ctx)
+{
+}
+
+void *R_FTPOpen(const char *url)
+{
+    return NULL;
+}
+
+int R_FTPRead(void *ctx, void *dest, int len)
+{
+    return -1;
+}
+
+void R_FTPClose(void *ctx)
+{
+}
+#endif
