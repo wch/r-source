@@ -25,15 +25,12 @@ docs: stamp-docs $(MANSRC) $(top_builddir)/library/LibIndex
 help: stamp-help $(MANSRC) $(top_builddir)/library/LibIndex
 html: stamp-html $(MANSRC)
 latex: stamp-latex $(MANSRC)
+examples: stamp-examples $(MANSRC)
 
 stamp-docs:
 	@echo "Building ALL documentation (help, HTML, LaTeX, R-Examples)"
 	@$(MAKE) DOCS
-	@touch $@
-	@touch stamp-help
-	@touch stamp-html
-	@touch stamp-latex
-	@touch stamp-example
+	@touch $@ stamp-help stamp-html stamp-latex stamp-examples
 stamp-help:
 	@OPTS="--nroff" $(MAKE) DOCS
 	@touch $@
@@ -43,7 +40,7 @@ stamp-html:
 stamp-latex:
 	@OPTS="--latex" $(MAKE) DOCS
 	@touch $@
-stamp-example:
+stamp-examples:
 	@OPTS="--example" $(MAKE) DOCS
 	@touch $@
 
