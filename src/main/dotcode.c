@@ -26,6 +26,7 @@
 #include <stdlib.h>
 
 #include "Defn.h"
+#include <Graphics.h>
 #include "R_ext/Mathlib.h"
 
 #ifndef max
@@ -405,6 +406,7 @@ SEXP do_External(SEXP call, SEXP op, SEXP args, SEXP env)
     vmaxset(vmax);
     return retval;
 }
+
 
 /* .Call(name, <args>) */
 SEXP do_dotcall(SEXP call, SEXP op, SEXP args, SEXP env)
@@ -1089,6 +1091,32 @@ SEXP do_dotcall(SEXP call, SEXP op, SEXP args, SEXP env)
     vmaxset(vmax);
     return retval;
 }
+
+/*  Call dynamically loaded "internal" graphics functions */
+/*  .External.gr  and  .Call.gr */
+
+SEXP do_Externalgr(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    SEXP retval = do_External(call, op, args, env);
+    if (call != R_NilValue) {
+        DevDesc *dd = CurrentDevice();
+        GCheckState(dd);
+	recordGraphicOperation(op, args, dd);
+    }
+    return retval;
+}
+
+SEXP do_dotcallgr(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    SEXP retval = do_dotcall(call, op, args, env);
+    if (call != R_NilValue) {
+        DevDesc *dd = CurrentDevice();
+        GCheckState(dd);
+	recordGraphicOperation(op, args, dd);
+    }
+    return retval;
+}
+
 
 /* .C() {op=0}  or  .Fortran() {op=1} */
 SEXP do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
