@@ -514,7 +514,7 @@ static int AddDLL(char *path, int asLocal, int now)
 
 DllInfo *R_RegisterDLL(HINSTANCE handle, const char *path)
 {
-    char *dpath,  DLLname[PATH_MAX], *p, *name;
+    char *dpath,  DLLname[PATH_MAX], *p;
     DllInfo *info;
 
     info = &LoadedDLL[CountDLL];
