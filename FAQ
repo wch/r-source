@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 1.9-40 2004-08-05
+Version 1.9-41 2004-08-06
 ISBN 3-900051-01-1
 Kurt Hornik
 
@@ -1908,6 +1908,11 @@ distributions of R.)
 *gafit*
      Genetic algorithm for curve fitting.
 
+*gam*
+     Functions for fitting and working with Generalized Additive Models, as
+     described in chapter 7 of the White Book, and in "Generalized Additive
+     Models" by T. Hastie and R. Tibshirani (1990).
+
 *gap*
      Genetic analysis package for both population and family data.
 
@@ -3392,9 +3397,8 @@ running R.  So, simply using it and communicating problems is certainly of
 great value.
 
    One place where functionality is still missing is the modeling software
-as described in "Statistical Models in S" (see *Note What is S?::);
-Generalized Additive Models (*note Are GAMs implemented in R?::) and some
-of the nonlinear modeling code are not there yet.
+as described in "Statistical Models in S" (see *Note What is S?::); some of
+the nonlinear modeling code is not there yet.
 
    The R Developer Page (http://developer.R-project.org/) acts as an
 intermediate repository for more or less finalized ideas and plans for the
@@ -3856,11 +3860,14 @@ language:
 7.17 Are GAMs implemented in R?
 ===============================
 
-There is a `gam()' function for Generalized Additive Models in package
-*mgcv*, but it is not an exact clone of what is described in the White Book
-(no `lo()' for example).  Package *gss* can fit spline-based GAMs too.  And
-if you can accept regression splines you can use `glm()'.  For gaussian
-GAMs you can use `bruto()' from package *mda*.
+Package *gam* from CRAN implements all the Generalized Additive Models
+(GAM) functionality as described in the GAM chapter of the White Book.  In
+particular, it implements backfitting with both local regression and
+smoothing splines, and is extendable.  There is a `gam()' function for GAMs
+in package *mgcv*, but it is not an exact clone of what is described in the
+White Book (no `lo()' for example).  Package *gss* can fit spline-based
+GAMs too.  And if you can accept regression splines you can use `glm()'.
+For gaussian GAMs you can use `bruto()' from package *mda*.
 
 7.18 Why is the output not printed when I source() a file?
 ==========================================================

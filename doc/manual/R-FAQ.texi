@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2004
-@set FAQ-VERSION 1.9-40 @value{FAQ-YEAR}-08-05
+@set FAQ-VERSION 1.9-41 @value{FAQ-YEAR}-08-06
 @set REL-VERSION 1.9.1
 @set REL-YEAR 2004
 @set FAQ-ISBN 3-900051-01-1
@@ -2115,6 +2115,10 @@ hierarchical log-linear models may be implemented and combined with
 @strong{dynamicGraph}.
 @item gafit
 Genetic algorithm for curve fitting.
+@item gam
+Functions for fitting and working with Generalized Additive Models, as
+described in chapter 7 of the White Book, and in ``Generalized Additive
+Models'' by T. Hastie and R. Tibshirani (1990).
 @item gap
 Genetic analysis package for both population and family data.
 @item gbm
@@ -3444,9 +3448,8 @@ capable of running R.  So, simply using it and communicating problems is
 certainly of great value.
 
 One place where functionality is still missing is the modeling software
-as described in ``Statistical Models in S'' (see @ref{What is S?});
-Generalized Additive Models (@pxref{Are GAMs implemented in R?}) and
-some of the nonlinear modeling code are not there yet.
+as described in ``Statistical Models in S'' (see @ref{What is S?}); some
+of the nonlinear modeling code is not there yet.
 
 The @uref{http://developer.R-project.org/, R Developer Page} acts as an
 intermediate repository for more or less finalized ideas and plans for
@@ -4086,12 +4089,15 @@ strings file ``names''.
 @node Are GAMs implemented in R?, Why is the output not printed when I source() a file?, What are valid names?, R Miscellanea
 @section Are GAMs implemented in R?
 
-There is a @code{gam()} function for Generalized Additive Models in
-package @strong{mgcv}, but it is not an exact clone of what is described
-in the White Book (no @code{lo()} for example).  Package @strong{gss}
-can fit spline-based GAMs too.  And if you can accept regression splines
-you can use @code{glm()}.  For gaussian GAMs you can use @code{bruto()}
-from package @strong{mda}.
+Package @strong{gam} from @CRAN{} implements all the Generalized
+Additive Models (GAM) functionality as described in the GAM chapter of
+the White Book.  In particular, it implements backfitting with both
+local regression and smoothing splines, and is extendable.  There is a
+@code{gam()} function for GAMs in package @strong{mgcv}, but it is not
+an exact clone of what is described in the White Book (no @code{lo()}
+for example).  Package @strong{gss} can fit spline-based GAMs too.  And
+if you can accept regression splines you can use @code{glm()}.  For
+gaussian GAMs you can use @code{bruto()} from package @strong{mda}.
 
 @node Why is the output not printed when I source() a file?, Why does outer() behave strangely with my function?, Are GAMs implemented in R?, R Miscellanea
 @section Why is the output not printed when I source() a file?
