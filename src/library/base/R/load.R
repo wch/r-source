@@ -77,7 +77,11 @@ save.image <- function (file = ".RData", version = NULL, ascii = FALSE,
     save(list = ls(envir = .GlobalEnv, all.names = TRUE), file = outfile,
          version = version, ascii = ascii, compress = compress,
          envir = .GlobalEnv)
-    if (safe) file.rename(outfile, file)
+    if (safe)
+        if (! file.rename(outfile, file)) {
+            on.exit()
+            stop(paste("image could not be renamed and is left in", outfile))
+        }
     on.exit()
 }
 
