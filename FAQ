@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 0.64-13, 1999/07/05
+Version 0.64-14, 1999/07/07
 Kurt Hornik
 
 
@@ -997,6 +997,10 @@ Journal of Statistical Software (`http://www.stat.ucla.edu/journals/jss/').
 *growth*
      Normal theory repeated measurements models.
 
+*gss*
+     A comprehensive package for structural multivariate function estimation
+     using smoothing splines.
+
 *integrate*
      Adaptive quadrature in up to 20 dimensions.
 
@@ -1682,11 +1686,11 @@ loaded code is to
    When using GUD mode for debugging from within Emacs, you may find it
 most convenient to use the directory with your code in it as the current
 working directory and then make a symbolic link from that directory to the
-R executable (`R.binary').  That way `.gdbinit' can stay in the directory
-with the code and be used to set up the environment and the search paths
-for the source, e.g. as follows:
+R executable.  That way `.gdbinit' can stay in the directory with the code
+and be used to set up the environment and the search paths for the source,
+e.g. as follows:
 
-     set env RHOME /usr/lib/R
+     set env R_HOME /usr/lib/R
      set env R_PAPERSIZE letter
      set env R_PRINTCMD lpr
      dir /usr/lib/R/src/appl
