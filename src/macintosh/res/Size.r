@@ -58,8 +58,8 @@ resource 'SIZE' (-1) {
 	notDisplayManagerAware,
 	reserved,
 	reserved,
-	1024 * 42000,
-	1024 * 42000
+	1024 * 45000,
+	1024 * 45000
 };
 
 
