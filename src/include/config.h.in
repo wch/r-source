@@ -139,6 +139,9 @@
 #undef FINITE_BROKEN
 #undef LOG_BROKEN
 
+/* BSD networking (sockets) */
+#undef HAVE_BSD_NETWORKING
+
 /* Some platforms other than ELF drop the leading _ */
 #undef HAVE_NO_SYMBOL_UNDERSCORE
 #ifndef HAVE_NO_SYMBOL_UNDERSCORE

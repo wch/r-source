@@ -409,7 +409,7 @@ AC_FUNC_ALLOCA
 AC_FUNC_VFORK
 AC_FUNC_VPRINTF
 AC_CHECK_FUNCS(acosh asinh atanh bcopy finite getcwd isnan matherr \
-  memcpy memmove rint strcoll system times vsnprintf)
+  memcpy memmove popen rint strcoll system times vsnprintf)
 AC_REPLACE_FUNCS(strdup)
 R_FUNC___SETFPUCW
 R_FUNC_CALLOC
@@ -432,6 +432,20 @@ case "${host}" in
     AC_DEFINE(SunOS4) ;;
 esac
 R_HEADER_SETJMP
+AC_MSG_CHECKING([for BSD networking])
+if test "${ac_cv_header_netdb_h}" = yes \
+  -a "${ac_cv_header_netinet_in_h}" = yes \
+  -a "${ac_cv_header_netinet_tcp_h}" = yes \
+  -a "${ac_cv_header_sys_socket_h}" = yes \
+  -a \( "${ac_cv_func_connect}" = yes \
+        -o "${ac_cv_lib_socket_connect}" = yes \) \
+  -a \( "${ac_cv_func_gethostbyname}" = yes \
+        -o "${ac_cv_lib_nsl_gethostbyname}" = yes \) ; then
+  AC_DEFINE(HAVE_BSD_NETWORKING)
+  AC_MSG_RESULT([yes])
+else
+  AC_MSG_RESULT([no])
+fi
 
 ### Typedefs.
 
