@@ -59,10 +59,6 @@ double pgamma(double x, double alph, double scale, int lower_tail, int log_p)
 	xbig = 1.0e+8,
 	xlarge = 1.0e+37,
 
-#ifndef IEEE_754
-	elimit = M_LN2*(DBL_MIN_EXP),/* will set exp(E) = 0 for E < elimit ! */
-    /* was elimit = -88.0e0; */
-#endif
 	/* normal approx. for alph > alphlimit */
 	alphlimit = 1e5;/* was 1000. till R.1.8.x */
 
@@ -173,20 +169,11 @@ double pgamma(double x, double alph, double scale, int lower_tail, int log_p)
 
     arg += log(sum);
 
-#ifdef DEBUG_p
-    REprintf("--> arg=%12g (elimit=%g)\n", arg, elimit);
-#endif
-
     lower_tail = (lower_tail == pearson);
 
     if (log_p && lower_tail)
 	return(arg);
     /* else */
-#ifndef IEEE_754
-    /* Underflow check :*/
-    if (arg < elimit)
-	return (lower_tail) ? 0. : (log_p ? 0. : 1.);
-#endif
     /* sum = exp(arg); and return   if(lower_tail) sum  else 1-sum : */
     return (lower_tail) ? exp(arg)
 	: (log_p ? (arg > -M_LN2 ? log(-expm1(arg)) : log1p(-exp(arg)))

@@ -45,7 +45,6 @@
 
 #ifdef DEBUG_qgamma
 # define DEBUG_q
-# include <R_ext/Print.h>
 #endif
 
 double qchisq_appr(double p, double nu, double g/* = log Gamma(nu/2) */,
@@ -186,8 +185,8 @@ double qgamma(double p, double alpha, double scale, int lower_tail, int log_p)
 	p1 = 0.5*ch;
 	p2 = p_ - pgamma(p1, alpha, 1, /*lower_tail*/TRUE, /*log_p*/FALSE);
 #ifdef DEBUG_qgamma
-	if(i == 1) Rprintf(" Ph.II iter; ch=%g, p2=%g\n", ch, p2);
-	if(i >= 2) Rprintf("     it=%d,  ch=%g, p2=%g\n", i, p2);
+	if(i == 1) REprintf(" Ph.II iter; ch=%g, p2=%g\n", ch, p2);
+	if(i >= 2) REprintf("     it=%d,  ch=%g, p2=%g\n", i, p2);
 #endif
 #ifdef IEEE_754
 	if(!R_FINITE(p2))
@@ -235,9 +234,9 @@ END:
     for(i = 1; i <= max_it_Newton; i++) {
 	p1 = p_ - p;
 #ifdef DEBUG_qgamma
-	if(i == 1) Rprintf("\n it=%d: p=%g, x = %g, p.=%g; p1:=D{p}=%g\n",
-			   i, p, x, p., p1);
-	if(i >= 2) Rprintf("         it=%d,  d{p}=%g\n",    i, p1);
+	if(i == 1) REprintf("\n it=%d: p=%g, x = %g, p.=%g; p1:=D{p}=%g\n",
+			   i, p, x, p_, p1);
+	if(i >= 2) REprintf("         it=%d,  d{p}=%g\n",    i, p1);
 #endif
 	if(fabs(p1) < fabs(EPS_N * p))
 	    break;
