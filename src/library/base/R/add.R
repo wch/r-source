@@ -20,7 +20,9 @@ add1.default <- function(object, scope, scale = 0, test=c("none", "Chisq"),
     for(i in seq(ns)) {
 	tt <- scope[i]
 	if(trace > 1) cat("trying +", tt, "\n")
-	nfit <- update(object, as.formula(paste("~ . +", tt)))
+	nfit <- update(object, as.formula(paste("~ . +", tt)),
+                       evaluate = FALSE)
+        nfit <- eval.parent(nfit)
 	ans[i+1, ] <- extractAIC(nfit, scale, k = k, ...)
     }
     dfs <- ans[,1] - ans[1,1]
@@ -259,7 +261,9 @@ drop1.default <- function(object, scope, scale = 0, test=c("none", "Chisq"),
     for(i in seq(ns)) {
 	tt <- scope[i]
 	if(trace > 1) cat("trying -", tt, "\n")
-	nfit <- update(object, as.formula(paste("~ . -", tt)))
+	nfit <- update(object, as.formula(paste("~ . -", tt)),
+                       evaluate = FALSE)
+        nfit <- eval.parent(nfit)
 	ans[i+1, ] <- extractAIC(nfit, scale, k = k, ...)
     }
     dfs <- ans[1,1] - ans[,1]
