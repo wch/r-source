@@ -2,15 +2,7 @@
 
 # ${RHOME}/etc/INSTALL for installing add-on packages
 # Usage:
-#	R INSTALL [-help/+help] [-html/+html] pkg [lib]
-
-IHELP=y
-IHTML=y
-if [ "$1" = "+help" ]; then shift; IHELP=y; fi
-if [ "$1" = "-help" ]; then shift; IHELP=;  fi
-if [ "$1" = "+html" ]; then shift; IHTML=y; fi
-if [ "$1" = "-html" ]; then shift; IHTML=;  fi
-# And obviously, we could play the same game with objs, libs and data
+#	R INSTALL pkg [lib]
 
 if [ "$1" ]
 then
@@ -74,20 +66,6 @@ then
     mkdir -p ${lib}/${pkg}/exec
     cp exec/* ${lib}/${pkg}/exec
     chmod 755 ${lib}/${pkg}/exec/*
-fi
-
-${RHOME}/etc/build-index ../${pkg} ${lib}
-
-if [ "$IHELP" ]
-then
-    echo "help"
-    ${RHOME}/etc/build-help ../${pkg} ${lib}
-fi
-
-if [ "$IHTML" ]
-then
-    echo "html"
-    ${RHOME}/etc/build-html ../${pkg} ${lib}    
 fi
 
 if [ -f INDEX ]

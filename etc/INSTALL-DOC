@@ -1,0 +1,68 @@
+#! /bin/sh
+
+# ${RHOME}/etc/INSTALL-DOC for installing documentation of
+# add-on packages
+# Usage:
+#	R INSTALL [-help/+help] [-html/+html] pkg [lib]
+
+IHELP=y
+IHTML=y
+if [ "$1" = "+help" ]; then shift; IHELP=y; fi
+if [ "$1" = "-help" ]; then shift; IHELP=;  fi
+if [ "$1" = "+html" ]; then shift; IHTML=y; fi
+if [ "$1" = "-html" ]; then shift; IHTML=;  fi
+# And obviously, we could play the same game with objs, libs and data
+
+if [ "$1" ]
+then
+    pkg=$1
+    if [ ! -d ${pkg} ]
+    then
+	echo "Package \`${pkg}' does not exist"
+	exit 1
+    fi
+else
+    echo "usage:  R INSTALL <options> pkg [lib]"
+    exit 1
+fi
+
+lib=${2:-${RHOME}/library}
+if mkdir -p ${lib}
+then
+    lib=`cd ${lib}; pwd`
+else    
+    echo "Cannot write to \`${lib}'"
+    exit 1
+fi
+
+cd ${pkg}
+pkg=`basename ${pkg}`
+
+if test -d man
+then
+    echo "Installing documentation of package \`${pkg}' ..."
+else
+    echo "No man pages found in package \`${pkg}'"
+    exit 1
+fi
+    
+
+if [ "$IHELP" -o "$IHTML" ]
+then
+    echo index
+    ${RHOME}/etc/build-index ../${pkg} ${lib}
+fi
+
+if [ "$IHELP" ]
+then
+    echo "help"
+    ${RHOME}/etc/build-help ../${pkg} ${lib}
+fi
+
+if [ "$IHTML" ]
+then
+    echo "html"
+    ${RHOME}/etc/build-html ../${pkg} ${lib}    
+fi
+
+echo "DONE"
