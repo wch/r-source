@@ -2017,14 +2017,14 @@ static int class2type(char *s)
        this type.
     */
     int i; char *si;
-    for(i=0; ; i++) {
+    for(i = 0; ; i++) {
 	si = classTable[i].s;
 	if(!si)
 	    return -1;
 	if(!strcmp(s, si))
 	    return i;
     }
-    return -1;
+    /* cannot get here return -1; */
 }
 
 /* set the class to value, and return the modified object.  This is
