@@ -19,7 +19,7 @@ attach(what, pos = 2, name = deparse(substitute(what)))
 
 \details{
   When evaluating a variable or function name \R searches for
-  that name in the databases listed by \code{\link{search}}. The first
+  that name in the databases listed by \code{\link{search}}.  The first
   name of the appropriate type is used.
 
   By attaching a data frame to the search path it is possible to refer
@@ -33,13 +33,18 @@ attach(what, pos = 2, name = deparse(substitute(what)))
   to attach later in the search path with the \code{pos} option, but you
   cannot attach at \code{pos=1}.
 
-  Note that by default assignment is not performed in an attached
-  database. Attempting to modify a variable or function in an attached
-  database will actually create a modified version in the user's
-  workspace (the \R global environment).  If you use
-  \code{\link{assign}} to assign to an attached list or data frame, you
-  only alter the attached copy, not the original object.
+  The database is not actually attached.  Rather, a new environment is
+  created on the search path and the elements of list (including columns
+  of a dataframe) or objects in a save file are \emph{copied} into the
+  new environment.  If you use \code{\link{<<-}} or \code{\link{assign}}
+  to assign to an attached database, you only alter the attached copy,
+  not the original object.  (Normal assignment will place a modified
+  version in the user's workspace: see the examples.)
   For this reason \code{attach} can lead to confusion.
+
+  One useful \sQuote{trick} is to use \code{what = NULL} (or equivalently a
+  length-zero list) to create a new environment on the search path into
+  which objects can be assigned by \code{\link{assign}}.
 }
 \value{
   The \code{\link{environment}} is returned invisibly with a
@@ -55,12 +60,19 @@ attach(what, pos = 2, name = deparse(substitute(what)))
   \code{\link{objects}}, \code{\link{environment}}, \code{\link{with}}.
 }
 \examples{
-summary(women$height) ## refers to variable 'height' in the data frame
+summary(women$height)   # refers to variable 'height' in the data frame
 attach(women)
-summary(height)      ## The same variable now available by name
-height <- height*2.54  ## Don't do this. It creates a new variable
-detach("women")
-summary(height)      ## The new variable created by modifying 'height'
+summary(height)         # The same variable now available by name
+height <- height*2.54   # Don't do this. It creates a new variable
+                        # in the user's workspace
+find("height")
+summary(height)         # The new variable in the workspace
 rm(height)
+summary(height)         # The original variable.
+height <<- height*25.4  # Change the copy in the attached environment
+find("height")
+summary(height)         # The changed copy
+detach("women")
+summary(women$height)   # unchanged
 }
 \keyword{data}
