@@ -223,10 +223,14 @@ none
 
 Directory:  incoming
 
-* PR# 662 *
-Subject: phantom(0) doesn't do what I expect it to [plotmath]
-From: M.B.Gillies@pharm.uu.nl
-Date: Mon, 18 Sep 2000 14:20:37 +0200 (MET DST)
+* PR# 663 *
+Subject: bug.report("unused argument(s) crash R when options(error=quote
+From: zivan.karaman@limagrain.com
+Date: Tue, 19 Sep 2000 13:51:33 +0200
+* PR# 653 *
+Subject: bug in spline()?
+From: Ian White <imsw@holyrood.ed.ac.uk>
+Date: Mon, 4 Sep 2000 12:29:26 +0100 (BST)
 * PR# 652 *
 Subject: R INSTALL *.tgz fails (minor docs/feature bug)
 From: RPO <bobbyo@speakeasy.org>
@@ -235,27 +239,27 @@ Date: Sat, 2 Sep 2000 13:34:22 -0700 (PDT)
 Subject: diff.default / diff.ts in wrong package bug
 From: Martin Maechler <maechler@stat.math.ethz.ch>
 Date: Mon, 21 Aug 2000 18:28:36 +0200 (CEST)
-* PR# 655 *
-Subject: Installing R from source 
-From: jniesch@gwdg.de
-Date: Fri, 8 Sep 2000 11:40:00 +0200 (MET DST)
-* PR# 653 *
-Subject: bug in spline()?
-From: Ian White <imsw@holyrood.ed.ac.uk>
-Date: Mon, 4 Sep 2000 12:29:26 +0100 (BST)
-* PR# 658 *
-Subject: PR 640 (diff.default computes an incorrect starting time)
-From: Laimonis Kavalieris <lkavalieris@maths.otago.ac.nz>
-Date: Wed, 13 Sep 2000 13:44:38 +0000
 * PR# 656 *
 Subject: .Random.seed resetting
 From: lej25@statslab.cam.ac.uk
 Date: Mon, 11 Sep 2000 13:13:27 +0200 (MET DST)
-* PR# 661 *
-Subject:  bug with line widths in postscript output
-From: "White, Paul" <Paul.White@dsto.defence.gov.au>
-Date: Mon, 18 Sep 2000 14:33:36 +1100
+* PR# 655 *
+Subject: Installing R from source 
+From: jniesch@gwdg.de
+Date: Fri, 8 Sep 2000 11:40:00 +0200 (MET DST)
 * PR# 660 *
 Subject: identify.default ignores any setting of cex.
 From: Prof Brian Ripley <ripley@stats.ox.ac.uk>
 Date: Fri, 15 Sep 2000 10:23:39 +0100 (BST)
+* PR# 658 *
+Subject: PR 640 (diff.default computes an incorrect starting time)
+From: Laimonis Kavalieris <lkavalieris@maths.otago.ac.nz>
+Date: Wed, 13 Sep 2000 13:44:38 +0000
+* PR# 662 *
+Subject: phantom(0) doesn't do what I expect it to [plotmath]
+From: M.B.Gillies@pharm.uu.nl
+Date: Mon, 18 Sep 2000 14:20:37 +0200 (MET DST)
+* PR# 661 *
+Subject:  bug with line widths in postscript output
+From: "White, Paul" <Paul.White@dsto.defence.gov.au>
+Date: Mon, 18 Sep 2000 14:33:36 +1100
