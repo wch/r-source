@@ -213,7 +213,7 @@ NEW FEATURES
 	power calculation. (Based in part on code suggested by Ulrich
 	Halekoh.)
 
-    o   New function power.anova.test, contributed by Claus Ekstrøm.
+    o	New function power.anova.test, contributed by Claus Ekstrøm.
 
     o	print.matrix() and prmatrix() are now separate functions.
 	prmatrix() is the old S-compatible function, and
@@ -266,7 +266,7 @@ NEW FEATURES
 	It can be started by calling "R -g Tk" (this may change in later
 	versions) or by evaluating tkStartGUI(). Only Unix-like systems
 	for now. It is not too stable at this point; in particular, signal
-        handling is not working properly.
+	handling is not working properly.
 
     o	Logical matrix replacement indexing of data frames is now
 	implemented (interpreted as if the lhs was a matrix).
@@ -482,9 +482,9 @@ DEPRECATED & DEFUNCT
 	by class() and class<-(); they were internal support functions
 	for use by package methods.
 
-    o   The use of SIGUSR2 to quit a running R process under Unix is
-        deprecated, the signal may need to be reclaimed for other 
-        purposes.
+    o	The use of SIGUSR2 to quit a running R process under Unix is
+	deprecated, the signal may need to be reclaimed for other
+	purposes.
 
 
 UTILITIES
@@ -702,12 +702,16 @@ BUG FIXES
 
     o	rank(c("B", NA)) no longer returns character.
 
-    o   reference to by() added in ?tapply
+    o	reference to by() added in ?tapply
 
-    o   ?lm describes what happens with matrix response
+    o	?lm describes what happens with matrix response
 
-    o   The X11 device has improved event handling. In particular it
-        used to often miss the last of a series of resize events.
+    o	The X11 device has improved event handling. In particular it
+	used to often miss the last of a series of resize events.
+
+    o	format( <character> ) now always keeps names and dimnames.
+
+    o	table(factor(c(2,NA), exclude=NULL)) prints better now.
 
 
 

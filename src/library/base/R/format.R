@@ -20,11 +20,11 @@ format.default <-
 	nc <- nchar(x)
         nc[is.na(nc)] <- 2
 	w <- max(nc)
-	all <- substring(paste(rep(" ", w), collapse=""), 1, w-nc)
-	res <- if(justify == "left") paste(x, all, sep="")
-	else paste(all, x, sep="")
-        dim(res) <- dim(x)
-        res
+	sp <- substring(paste(rep(" ", w), collapse=""), 1, w-nc)
+	res <-
+	    if(justify == "left") paste(x, sp, sep="") else paste(sp, x, sep="")
+	attributes(res) <- attributes(x) ## at least names, dim, dimnames
+	res
     }
     if(!is.null(digits)) {
 	op <- options(digits=digits)
@@ -33,20 +33,24 @@ format.default <-
     justify <- match.arg(justify)
     switch(mode(x),
 	   NULL = "NULL",
-	   character = switch(justify, none=x,
-			       left=f.char(x, "left"),
-			      right=f.char(x, "right")),
+	   character = switch(justify,
+                              none = x,
+                  	      left = f.char(x, "left"),
+                              right= f.char(x, "right")),
 	   list = sapply(lapply(x, function(x)
 				.Internal(format(unlist(x), trim=trim))),
 			 paste, collapse=", "),
 	   call=, expression=, "function"=, "(" = deparse(x),
-	   ##else: numeric, complex, ??? :
-	   structure(prettyNum(.Internal(format(x, trim = trim, small=nsmall)),
-                               big.mark = big.mark, big.interval = big.interval,
-                               small.mark = small.mark,
-                               small.interval = small.interval,
-                               decimal.mark = decimal.mark),
-                     names=names(x)))
+	   ## else: numeric, complex, .. :
+	   { r <- prettyNum(.Internal(format(x, trim = trim, small=nsmall)),
+                            big.mark = big.mark, big.interval = big.interval,
+                            small.mark = small.mark,
+                            small.interval = small.interval,
+                            decimal.mark = decimal.mark)
+             if(!is.null(a <- attributes(x)) &&
+                !is.null(a <- a[names(a) != "class"]))
+                 attributes(r) <- a
+             r })
 }
 ## NOTE: Currently need non-default format.dist() -> ../../mva/R/dist.R
 
