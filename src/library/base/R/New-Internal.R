@@ -4,18 +4,20 @@ geterrmessage <- function() .Internal(geterrmessage())
 
 try <- function(expr, silent = FALSE, first = TRUE)
 {
-    restart <- function(on = TRUE).Internal(restart(on))
-    restart(first)
-    if(is.logical(first) && first) {
-        if(silent) {
+    if (is.logical(first) && first) {
+        first <- FALSE
+        # turn on the restart bit of the current context, push an
+        # exception handler on the condition handler stack, and push
+        # a tryRestart restart on the restart stack
+        .Internal(.addTryHandlers())
+        if (silent) {
             op <- options("show.error.messages")
             on.exit(options(op))
             options(show.error.messages = FALSE)
         }
-        first <- FALSE
         expr
-    } else
-       invisible(structure(.Internal(geterrmessage()), class="try-error"))
+    }
+    else invisible(structure(.Internal(geterrmessage()), class = "try-error"))
 }
 
 
