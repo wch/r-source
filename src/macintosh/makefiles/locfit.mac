@@ -1,0 +1,231 @@
+#   File:       Makefile.mac
+#   Target:     clusterLib
+#   Created:    Jago, Aug 2002, Stefano M. Iacus
+#
+#   This script assumes that R binary already exists in 
+#   the R root folder
+#
+#   Tested with:
+#
+#   MPW Shell 3.6d7
+#   MrC C Compiler 5.0.0d3c1
+#   Universal Headers 3.4
+#   CarbonLib 1.4
+#   MPW release August 2001 + Updates
+
+DLib            = locfit
+
+MAKEFILE        = Makefile.mac
+¥MondoBuild¥    = {MAKEFILE}  # Make blank to avoid rebuilds when makefile is modified
+
+MacF2C     		=  f2c
+F2COpt	        =   -A -E -ec -!R -r8 -w66 -Nq150 -Nx200 -Ns801 -Nc20 -Nn401 -NL200 -NC99 -Nl256
+F2CDir       	=  ::::macintosh:f2c:
+Includes        = -i ::::include: ¶
+				  -i ::::macintosh: ¶
+                  -i "{F2CDir}"
+				  
+Sym-PPC         = -sym off
+
+PPCCOptions     = {Includes} {Sym-PPC} -opt off -includes unix -w 35,2,23,29 -shared_lib_export on -d HAVE_CONFIG_H -d Macintosh ¶
+                  -d TARGET_API_MAC_CARBON=1 -prefix RHeaders.h -align power -enum int 
+				  
+### Library directory ###
+
+LibDir     		= :::::library:{DLib}:libs
+
+### Source Files ###
+ 
+SrcFiles        =  ¶
+S_enter.c ¶
+dist.c ¶
+fitted.c ¶
+linalg.c ¶
+minmax.c ¶
+solve.c ¶
+adap.c ¶
+ev_atree.c ¶
+frend.c ¶
+locfit.c ¶
+nbhd.c ¶
+startlf.c ¶
+band.c ¶
+ev_interp.c ¶
+lf_dercor.c ¶
+m_chol.c ¶
+pcomp.c ¶
+strings.c ¶
+dens_haz.c ¶
+ev_kdtre.c ¶
+lf_fitfun.c ¶
+m_eigen.c ¶
+preplot.c ¶
+wdiag.c ¶
+dens_int.c ¶
+ev_main.c ¶
+lf_robust.c ¶
+m_jacob.c ¶
+scb.c ¶
+weight.c ¶
+dens_odi.c ¶
+ev_trian.c ¶
+lf_vari.c ¶
+m_max.c ¶
+scb_cons.c ¶
+density.c ¶
+family.c ¶
+lfstr.c ¶
+math.c ¶
+simul.c
+
+
+### Object Files ###
+
+ObjFiles-PPC    =   ¶
+S_enter.o ¶
+dist.o ¶
+fitted.o ¶
+linalg.o ¶
+minmax.o ¶
+solve.o ¶
+adap.o ¶
+ev_atree.o ¶
+frend.o ¶
+locfit.o ¶
+nbhd.o ¶
+startlf.o ¶
+band.o ¶
+ev_interp.o ¶
+lf_dercor.o ¶
+m_chol.o ¶
+pcomp.o ¶
+strings.o ¶
+dens_haz.o ¶
+ev_kdtre.o ¶
+lf_fitfun.o ¶
+m_eigen.o ¶
+preplot.o ¶
+wdiag.o ¶
+dens_int.o ¶
+ev_main.o ¶
+lf_robust.o ¶
+m_jacob.o ¶
+scb.o ¶
+weight.o ¶
+dens_odi.o ¶
+ev_trian.o ¶
+lf_vari.o ¶
+m_max.o ¶
+scb_cons.o ¶
+density.o ¶
+family.o ¶
+lfstr.o ¶
+math.o ¶
+simul.o
+
+
+
+### Libraries ###
+
+LibFiles-PPC    =  ¶
+  				  "{PPCLibraries}CarbonStdCLib.o" ¶
+				  "{SharedLibraries}CarbonLib" ¶
+				  "{PPCLibraries}PPCCRuntime.o" ¶
+				  "{SharedLibraries}StdCLib" ¶
+				  ":::::R"  ¶
+				  ":::::f2cLib"
+
+
+
+### Default Rules ### 
+
+.o  Ä  .c  {¥MondoBuild¥}
+	{PPCC} {depDir}{default}.c -o {targDir}{default}.o {PPCCOptions}
+
+
+
+### Build Rules ###
+
+
+{DLib}Lib  ÄÄ  {ObjFiles-PPC} {LibFiles-PPC} {¥MondoBuild¥} 
+#create export table
+    if `Exists :expvar`
+	 delete :expvar
+	end
+    catenate Å.x > expvar
+# checks if modules directory exsists
+    if ! `Exists -d "{LibDir}"`
+	 echo "Creating libs directory" "{LibDir}" 
+     NewFolder "{LibDir}"
+    end
+# Builds the library
+	PPCLink ¶
+		-o {LibDir}:{DLib}Lib ¶
+		{ObjFiles-PPC} ¶
+		{LibFiles-PPC} ¶
+		{Sym-PPC} ¶
+		-mf -d ¶
+		-t 'shlb' ¶
+		-c '????' ¶
+		-xm s ¶
+		-@export expvar
+	
+### Required Dependencies ###
+ 
+# obj dependencies
+S_enter.o Ä         S_enter.c 
+dist.o Ä	    dist.c 
+fitted.o Ä	    fitted.c 
+linalg.o Ä	    linalg.c 
+minmax.o Ä	    minmax.c 
+solve.o Ä	    solve.c 
+adap.o Ä	    adap.c 
+ev_atree.o Ä	    ev_atree.c 
+frend.o Ä	    frend.c 
+locfit.o Ä	    locfit.c 
+nbhd.o Ä	    nbhd.c 
+startlf.o Ä	    startlf.c 
+band.o Ä	    band.c 
+ev_interp.o Ä	    ev_interp.c 
+lf_dercor.o Ä	    lf_dercor.c 
+m_chol.o Ä	    m_chol.c 
+pcomp.o Ä	    pcomp.c 
+strings.o Ä	    strings.c 
+dens_haz.o Ä	    dens_haz.c 
+ev_kdtre.o Ä	    ev_kdtre.c 
+lf_fitfun.o Ä	    lf_fitfun.c 
+m_eigen.o Ä	    m_eigen.c 
+preplot.o Ä	    preplot.c
+wdiag.o Ä	    wdiag.c 
+dens_int.o Ä	    dens_int.c 
+ev_main.o Ä	    ev_main.c 
+lf_robust.o Ä	    lf_robust.c 
+m_jacob.o Ä	    m_jacob.c 
+scb.o Ä		    scb.c 
+weight.o Ä	    weight.c 
+dens_odi.o Ä	    dens_odi.c 
+ev_trian.o Ä	    ev_trian.c 
+lf_vari.o Ä	    lf_vari.c 
+m_max.o Ä	    m_max.c 
+scb_cons.o Ä	    scb_cons.c 
+density.o Ä	    density.c 
+family.o Ä	    family.c 
+lfstr.o Ä	    lfstr.c 
+math.o Ä	    math.c 
+simul.o		Ä    simul.c
+
+
+
+### Optional Dependencies ###
+### Build this target to generate "include file" dependencies. ###
+
+Dependencies  Ä  $OutOfDate
+	MakeDepend ¶
+		-append {MAKEFILE} ¶
+		-ignore "{CIncludes}" ¶
+		-objdir ":" ¶
+		-objext .o ¶
+		{Includes} ¶
+		{SrcFiles}
+
+
