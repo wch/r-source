@@ -194,7 +194,7 @@ function(formula, data = parent.frame(), ..., subset,
 	m$data <- as.data.frame(data)
     dots <- m$...
     dots <- lapply(dots, eval, data, parent.frame())
-    m$ylab <- m$... <- NULL
+    m$ylab <- m$... <- m$ask <- NULL
     subset.expr <- m$subset
     m$subset <- NULL
     m[[1]] <- as.name("model.frame")

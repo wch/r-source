@@ -371,6 +371,8 @@ BUG FIXES
 
     o	plot.table(tab, xlab="X", ylab="Y") now works as expected.
 
+    o	plot.formula(ask=FALSE) now works. (PR#1923)
+
 
 
 		CHANGES IN R VERSION 1.5.1
