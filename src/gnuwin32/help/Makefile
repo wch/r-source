@@ -65,7 +65,8 @@ logo.bmp: ../../../gnuwin32/help/logo.bmp
 
 zipit: help/Rhelp.zip
 
-help/Rhelp.zip: ../../src/library/$(PKG)/man/*.Rd
+help/Rhelp.zip: ../../src/library/$(PKG)/man/*.Rd \
+../../src/library/$(PKG)/man/windows/*.Rd
 	-$(MAKE) -C help  -f ../../../src/gnuwin32/help/Makefile uz-Rhelp
 	-$(MAKE) -C R-ex  -f ../../../src/gnuwin32/help/Makefile uz-Rex
 	-$(MAKE) -C latex -f ../../../src/gnuwin32/help/Makefile uz-Rhelp

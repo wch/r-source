@@ -97,9 +97,22 @@ sub Rdconv { # Rdconv(foobar.Rd, type, debug, filename)
     undef @section_body;
     undef @section_title;
 
-
+    $skipping = 0;
     #-- remove comments (everything after a %)
     while(<rdfile>){
+	if (/^#ifdef\s+([A-Za-z0-9]+)/o) {
+	    if ($1 ne $OSdir) { $skipping = 1; }
+	    next;
+	}
+	if (/^#ifndef\s+([A-Za-z0-9]+)/o) {
+	    if ($1 eq $OSdir) { $skipping = 1; }
+	    next;
+	}
+	if (/^#endif/o) {
+	    $skipping = 0;
+	    next;
+	}
+	next if $skipping > 0;
 	next if /^\s*%/o;#- completely drop full comment lines
 	my $loopcount = 0;
 	while(checkloop($loopcount++, $_, "\\%") &&

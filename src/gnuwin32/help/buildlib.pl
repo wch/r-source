@@ -80,6 +80,17 @@ sub buildinit {
     @mandir = sort(readdir(man));
     closedir man;
 
+    if(-d $OSdir) {
+	foreach $file (@mandir) { $Rds{$file} = $file; }
+	opendir man, $OSdir;
+	foreach $file (readdir(man)) {
+	    delete $Rds{$file};
+	    $RdsOS{$file} = $OSdir."/".$file; 
+	}
+	@mandir = sort(values %Rds);
+	push @mandir, sort(values %RdsOS);
+    }
+
     ($pkg, $lib, @mandir);
 }
 

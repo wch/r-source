@@ -34,6 +34,7 @@ use Cwd;
 use Getopt::Long;
 
 fileparse_set_fstype; # Unix, in case one gets anything else.
+$OSdir ="windows";
 
 
 @knownoptions = ("rhome:s", "html", "nroff", "latex", "example", "debug",
