@@ -146,11 +146,7 @@ Date: Tue, 21 Jan 2003 13:51:01 +0100 (MET)
 
 Directory:  Analyses
 
-* PR# 2432 *
-Subject: Determining the break points by hist() leads to errors
-From: Volker Franz <volker.franz@tuebingen.mpg.de>
-Date: Wed, 8 Jan 2003 19:11:13 +0100
-..will fix for 1.7.0 by returning un-fuzzed breakpoints.
+none
 
 Directory:  Documentation
 
@@ -567,3 +563,7 @@ Date: Thu, 16 Jan 2003 20:22:23 +1100 (EST)
 Subject: hist() with option "sub"
 From: jerome@hivnet.ubc.ca
 Date: Fri, 24 Jan 2003 20:39:15 +0100 (MET)
+* PR# 2496 *
+Subject: beautiful day outside wkm
+From: Rufus <icocnorton@earthlink.com>
+Date: Sat, 11 Jan 2003 01:54:24 -0600
