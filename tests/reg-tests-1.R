@@ -2398,7 +2398,10 @@ stopifnot(identical(new, c("Mersenne-Twister", "Inversion")))
 stopifnot(identical(find(".Random.seed"), ".GlobalEnv"))
 ## took from and assigned to list in 1.7.x.
 
-
+## PR#3750
+y <- c(1, NA, NA, 7)
+identical(y, qqnorm(y, plot.it=FALSE)$y)
+## qqnorm() used to drop NA's in its result till 1.7.x
 
 ## keep at end, as package `methods' has had persistent side effects
 library(methods)

@@ -23,7 +23,7 @@ USER-VISIBLE CHANGES
 
 NEW FEATURES
 
-    o   eval of a promise forces the promise and printing a promise forces 
+    o   eval of a promise forces the promise and printing a promise forces
         the promise
 
     o	rep() is now a generic function, with default, POSIXct and
@@ -96,12 +96,12 @@ NEW FEATURES
     o	Package tcltk is now in a namespace.  To remove it you will
 	now need to use unloadNamespace("tcltk").
 
-    o	Using UseMethod() with more than two arguments now gives a 
+    o	Using UseMethod() with more than two arguments now gives a
 	warning (as R-lang.texi has long claimed it did).
 
-    o	Standalone Rmath now has a get_seed function as requested (PR#3160). 
+    o	Standalone Rmath now has a get_seed function as requested (PR#3160).
 
-    o	? and help() will accept more un-quoted arguments, e.g. NULL. 
+    o	? and help() will accept more un-quoted arguments, e.g. NULL.
 
     o	When coercion of a list fails, a meaningful error message is given.
 
@@ -119,7 +119,7 @@ NEW FEATURES
     o	Subscripting for data.frames has been rationalized:
 
 	- Using a single argument now ignores any `drop' argument
-	  (with a warning).  Previously using `drop' inhibited list-like 
+	  (with a warning).  Previously using `drop' inhibited list-like
 	  subscripting.
 
 	- adf$name <- value now checks for the correct length of
@@ -197,7 +197,7 @@ NEW FEATURES
     o	Added function library.dynam.unload() to call dyn.unload() on
 	a loaded DLL and tidy up.  This is called for all the standard
 	packages in namespaces with DLLs if their namespaces are unloaded.
- 
+
     o   Non-syntactic variable names can now be specified by inclusion
         between backticks `Like This`. The deparse() code has been
         changed to output non-syntactical names with this convention,
@@ -205,16 +205,16 @@ NEW FEATURES
         by a `backtick' argument, which is by default TRUE for
         composite expressions and FALSE for single symbols. This
         should give minimal interference with existing code.
- 
+
     o   In the tcltk package, as.tclObj() has gained a `drop' argument
 	to decide what should happen for vectors of length one.
- 
+
     o	New argument fixed = TRUE for grep() and regexpr() to avoid the
 	need to escape strings to match.
- 
+
     o	grep(x, ..., value = TRUE) preserves names of x.
- 
-    o	legend() and symbols() now make use of xy.coords() and accept 
+
+    o	legend() and symbols() now make use of xy.coords() and accept
 	a wider range of coordinate specifications.
 
     o	Changes in package 'tools':
@@ -288,7 +288,7 @@ NEW FEATURES
 
     o	lm(singular.ok = FALSE) is now implemented.
 
-    o	dev.control() now accepts "enable" as well as "inhibit". 
+    o	dev.control() now accepts "enable" as well as "inhibit".
 	(Wishlist PR#3424)
 
     o	.Random.seed is only looked for and stored in the user's
@@ -445,14 +445,14 @@ BUG FIXES
     o   In the tcltk package, the tkimage.*() commands were defined
         nonsensically as widget commands. They have been redefined to be
         more useful now.
- 
+
     o   Printing `nls' objects misbehaved when `data' was a composite
-        expression. 
+        expression.
 
     o   getS3method(f, cl, optional=TRUE) now returns NULL if `f' does
 	not exist.
 
-    o   The png(), jpeg(), png() and win.metafile() devices now 
+    o   The png(), jpeg(), png() and win.metafile() devices now
 	enforce the length limit on the filename.  (PR#3466)
 
     o   step() adds a fuzz for reduction in AIC for 0-df terms.  (PR#3491)
@@ -474,6 +474,7 @@ BUG FIXES
 
     o   Added some buffer overflow checking in gram.y.
 
+    o	qqnorm()'s result now keeps NAs from it's input. (PR#3750)
 
 
 

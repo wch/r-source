@@ -37,7 +37,8 @@ qqplot(x, y, plot.it = TRUE, xlab = deparse(substitute(x)),
 \value{
   For \code{qqnorm} and \code{qqplot}, a list with components
   \item{x}{The x coordinates of the points that were/would be plotted}
-  \item{y}{The corresponding y coordinates}
+  \item{y}{The original \code{y} vector, i.e., the corresponding y
+    coordinates \emph{including \code{\link{NA}}s}.}
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

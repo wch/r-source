@@ -5,10 +5,19 @@ qqnorm.default <-
 	     xlab="Theoretical Quantiles", ylab="Sample Quantiles",
 	     plot.it=TRUE, datax = FALSE, ...)
 {
-    y <- y[!is.na(y)]
-    if(0 == (n <- length(y))) stop("y is empty")
-    if (missing(ylim)) ylim <- range(y)
+    if(has.na <- any(ina <- is.na(y))) { ## keep NA's in proper places
+        yN <- y
+        y <- y[!ina]
+    }
+    if(0 == (n <- length(y)))
+        stop("y is empty or has only NAs")
+    if (plot.it && missing(ylim))
+        ylim <- range(y)
     x <- qnorm(ppoints(n))[order(order(y))]
+    if(has.na) {
+        y <- x; x <- yN; x[!ina] <- y
+        y <- yN
+    }
     if(plot.it)
         if (datax)
             plot(y, x, main= main, xlab= ylab, ylab=xlab, xlim = ylim, ...)
