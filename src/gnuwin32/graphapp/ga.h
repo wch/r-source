@@ -158,6 +158,7 @@ void  gcharmetric(drawing d, font f, int c, int *ascent, int *descent,
 font  gnewfont(drawing d,char *face, int style, int size, double rot);
 int   ghasfixedwidth(font f);
 field newfield_no_border(char *text, rect r);
+int   getcharset(void);
 
 /* pixels */
 int   devicewidth(drawing dev);

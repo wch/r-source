@@ -36,6 +36,7 @@
    execute shortcut if menu item is grayed out */
 
 #include "internal.h"
+#include <wchar.h>
 
 /*
  *  Menu variables.
@@ -112,8 +113,18 @@ static int find_char(int ch, char *str)
 	int where;
 
 	for (where=0; str[where] != '\0'; where++)
-		if (str[where] == ch)
-			return where;
+	{
+	    int mb_len = 0;
+	    mbstate_t mb_st;
+
+	    memset(&mb_st, 0, sizeof(mbstate_t));
+	    mb_len = mbrlen(str+where, MB_CUR_MAX, &mb_st);
+	    if (mb_len > 1) {where += mb_len - 1; continue;}
+	    if (str[where] == ch) return where;
+	}
+#if 0
+		if (str[where] == ch) return where;
+#endif
 	return -1;
 }
 

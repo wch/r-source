@@ -608,7 +608,7 @@ font gnewfont(drawing d, char *face, int style, int size, double rot)
     if ((! strcmp(face, "Symbol")) || (! strcmp(face, "Wingdings")))
 	lf.lfCharSet = SYMBOL_CHARSET;
     else
-	lf.lfCharSet = ANSI_CHARSET;
+        lf.lfCharSet = getcharset();
     lf.lfClipPrecision = CLIP_DEFAULT_PRECIS;
     lf.lfQuality = DEFAULT_QUALITY;
     lf.lfPitchAndFamily = DEFAULT_PITCH | FF_DONTCARE;
@@ -706,3 +706,39 @@ void BringToTop(window c, int stay) /* stay=0 for regular, 1 for topmost, 2 for 
     TopmostDialogs &= !MB_TOPMOST;
     apply_to_list(c->parent->child, setMessageBoxTopmost);
 }
+
+typedef struct {
+    int codepage;
+    int charset;
+} cp2charset_table;
+
+static cp2charset_table cp2charset [] = {
+    {874, THAI_CHARSET},
+    {932, SHIFTJIS_CHARSET},
+    {936, GB2312_CHARSET},
+    {949, HANGEUL_CHARSET},
+    {950, CHINESEBIG5_CHARSET},
+    {1250,EASTEUROPE_CHARSET},
+    {1251,RUSSIAN_CHARSET},
+    {1252,ANSI_CHARSET},
+    {1253,GREEK_CHARSET},
+    {1254,TURKISH_CHARSET},
+    {1255,HEBREW_CHARSET},
+    {1256,ARABIC_CHARSET},
+    {1257,BALTIC_CHARSET},
+    {1258,VIETNAMESE_CHARSET},
+    {1361,JOHAB_CHARSET},
+};
+
+int getcharset(void)
+{
+    int i, acp = GetACP();
+    DWORD dwVersion = GetVersion();
+    if (!(dwVersion & 0x80000000)) return (DEFAULT_CHARSET);
+    else
+	for (i = 0; i < sizeof(cp2charset)/sizeof(cp2charset_table); i++)
+	    if(acp == cp2charset[i].codepage) return(cp2charset[i].charset);
+    return(ANSI_CHARSET);
+}
+
+

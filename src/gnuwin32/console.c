@@ -2,7 +2,7 @@
  *  R : A Computer Language for Statistical Data Analysis
  *  file console.c
  *  Copyright (C) 1998--2003  Guido Masarotto and Brian Ripley
- *  Copyright (C) 2004	      The R Foundation
+ *  Copyright (C) 2004-5      The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -31,6 +31,7 @@ extern void R_ProcessEvents(void);
 #include <windows.h>
 #include <string.h>
 #include <ctype.h>
+#include <wchar.h>
 #include "graphapp/ga.h"
 #ifdef USE_MDI
 #include "graphapp/stdimg.h"
@@ -41,7 +42,25 @@ extern void R_ProcessEvents(void);
 #include "getline/getline.h"
 #include "Startup.h" /* for UImode */
 
+extern char *alloca(size_t);
+
 extern UImode  CharacterMode;
+
+static mbstate_t mb_st; /* use for char transpose as well */
+
+/* This is input from the keyboard, so we do not do validity checks.
+   OTOH, we do allow stateful encodings, assuming the state is reset 
+   at the beginning of each line */
+
+int mb_char_len(char *buf, int clength)
+{
+    int i, mb_len = 0;
+
+    memset(&mb_st, 0, sizeof(mbstate_t));
+    for(i = 0; i <= clength; i += mb_len)
+	mb_len = mbrlen(buf+i, MB_CUR_MAX, &mb_st);
+    return mb_len;
+}
 
 
 /* xbuf */
@@ -278,19 +297,24 @@ newconsoledata(font f, int rows, int cols, int bufbytes, int buflines,
     return (p);
 }
 
+/* The problem here is that fch and lch are columns, and we have
+   to cope with both MBCS and double-width chars. */
+
 static void writelineHelper(ConsoleData p, int fch, int lch,
 			    rgb fgr, rgb bgr, int j, int len, char *s)
 {
     rect  r;
-    char  chf, chl, ch;
-    int   last;
+    int   i, used;
+    char *buff, *P = s, *q;
 
+    /* This is right, since columns are of fixed size */
     r = rect(BORDERX + fch * FW, BORDERY + j * FH, (lch - fch + 1) * FW, FH);
     gfillrect(p->bm, bgr, r);
 
     if (len > fch) {
-	/* Some of the string is visible:
-	   we don't know the string length, so modify it in place */
+	/* Some of the string is visible: */
+#if 0
+	/* we don't know the string length, so modify it in place */
 	if (FC && (fch == 0)) {
 	    chf = s[0];
 	    s[0] = '$';
@@ -315,6 +339,23 @@ static void writelineHelper(ConsoleData p, int fch, int lch,
 	    s[lch] = chl;
 	if (chf)
 	    s[fch] = chf;
+#endif
+	buff = alloca(strlen(s)); /* overkill */
+	q = buff;
+	if (FC && (fch == 0)) {*q++ = '$'; fch++;}
+	memset(&mb_st, 0, sizeof(mbstate_t));
+	for (i = 0; i < fch; i++) P += mbrtowc(NULL, P, MB_CUR_MAX, &mb_st);
+	for (i = fch; i < lch; i++) {
+	    used = mbrtowc(NULL, P, MB_CUR_MAX, &mb_st);
+	    for(j = 0; j < used; j++) *q++ = *P++;
+	}
+	if((len > COLS) && (lch == COLS - 1)) *q++ = '$';
+	else {
+	    used = mbrtowc(NULL, P, MB_CUR_MAX, &mb_st);
+	    for(j = 0; j < used; j++) *q++ = *P++;	    
+	}
+	*q = '\0';
+	gdrawstr(p->bm, p->f, fgr, pt(r.x, r.y), buff);
     }
 }
 
@@ -329,7 +370,9 @@ static int writeline(ConsoleData p, int i, int j)
 
     if ((i < 0) || (i >= NUMLINES)) FRETURN(0);
     s = VLINE(i);
-    len = strlen(s);
+    /* len = strlen(s); */
+    /* we really want wcswidth here */
+    len = mbstowcs(NULL, s, 0);
     col1 = COLS - 1;
     insel = p->sel ? ((i - p->my0) * (i - p->my1)) : 1;
     if (insel < 0) {
@@ -1059,6 +1102,7 @@ FBEGIN
     char *cur_line;
     char *aLine;
     int ns0 = NUMLINES;
+    int mb_len;
 
     /* print the prompt */
     xbufadds(p->lbuf, prompt, 1);
@@ -1120,17 +1164,15 @@ FBEGIN
 		cur_pos = 0;
 		break;
 	    case CHARLEFT:
-		if(cur_pos > 0) {
-		    cur_pos -= 1;
-		}
+		if(cur_pos > 0)
+		    cur_pos -= mb_char_len(cur_line, cur_pos-1);
 		break;
 	    case ENDLINE:
 		cur_pos = max_pos;
 		break;
 	    case CHARRIGHT:
-		if(cur_pos < max_pos) {
-		    cur_pos += 1;
-		}
+		if(cur_pos < max_pos)
+		    cur_pos += mb_char_len(cur_line, cur_pos);
 		break;
 	    case KILLRESTOFLINE:
 		max_pos = cur_pos;
@@ -1150,26 +1192,37 @@ FBEGIN
 		break;
 	    case BACKCHAR:
 		if(cur_pos > 0) {
-		    cur_pos -= 1;
-		    for(i = cur_pos; i < max_pos; i++)
-			cur_line[i] = cur_line[i + 1];
-		    max_pos -= 1;
+		    mb_len = mb_char_len(cur_line, cur_pos-1);
+		    cur_pos -= mb_len;
+		    for(i = cur_pos; i <= max_pos - mb_len; i++)
+		        cur_line[i] = cur_line[i + mb_len];
+		    max_pos -= mb_len;
 		}
 		break;
 	    case DELETECHAR:
 		if(max_pos == 0) break;
 		if(cur_pos < max_pos) {
-		    for(i = cur_pos; i < max_pos; i++)
-			cur_line[i] = cur_line[i + 1];
-		    max_pos -= 1;
+		    mb_len = mb_char_len(cur_line, cur_pos);
+		    for(i = cur_pos; i <= max_pos - mb_len; i++)
+			cur_line[i] = cur_line[i + mb_len];
+		    max_pos -= mb_len;
 		}
 		break;
 	    case CHARTRANS:
 		if(cur_pos < 1) break;
 		if(cur_pos >= max_pos) break;
- 		cur_char = cur_line[cur_pos];
-		cur_line[cur_pos] = cur_line[cur_pos-1];
-		cur_line[cur_pos-1] = cur_char;
+		{
+		    int j, l_len = mb_char_len(cur_line, cur_pos-1), r_len;
+		    /* we should not reset the state here */
+		    r_len = mbrlen(cur_line+cur_pos, MB_CUR_MAX, &mb_st);
+		    for (i = 0; i < r_len; i++)
+			for(j = 0; j < l_len; j++) {
+			    cur_char = cur_line[cur_pos+i-j];
+			    cur_line[cur_pos+i-j] = cur_line[cur_pos+i-j-1];
+			    cur_line[cur_pos+i-j-1] = cur_char;
+			}
+		    cur_pos += r_len - l_len; 
+		}
 		break;
 	    default:
 		if (chtype || (cur_char=='\n') || (cur_char==EOFKEY)) {
