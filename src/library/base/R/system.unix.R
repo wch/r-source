@@ -17,7 +17,7 @@ data <- function(..., list = character(0), package =c(.packages(),.Autoloaded),
 			    "Data sets in package `", pkg, "':\n\n", sep = ""),
 		      file = file, append = TRUE)
 		  system(paste("cat", INDEX, ">>", file, "2>/dev/null"))
-                  if(!found) found <- TRUE
+		  if(!found) found <- TRUE
 		}
 	}
 	if (found)
@@ -27,19 +27,19 @@ data <- function(..., list = character(0), package =c(.packages(),.Autoloaded),
 	dn <- paste("data/", name, sep="")
 	files <- system.file(paste(dn, ".*",sep=""), package, lib.loc)
 	if (length(files)>1 || files != "") { #-- found >= 1
-          for(file in files) {
-                nc <- nchar(file)
-                if((ext <- substr(file,nc-1,nc))== ".R" || ext== ".r") {
-                  found <- TRUE; source(file)
-                } else if(substr(file,nc-3,nc) == ".tab") {
-                  found <- TRUE
-                  assign(name, read.table(file, header=TRUE), env = .GlobalEnv)
-                }
-          }
-        }
+	  for(file in files) {
+		nc <- nchar(file)
+		if((ext <- substr(file,nc-1,nc))== ".R" || ext== ".r") {
+		  found <- TRUE; source(file)
+		} else if(substr(file,nc-3,nc) == ".tab") {
+		  found <- TRUE
+		  assign(name, read.table(file, header=TRUE), env = .GlobalEnv)
+		}
+	  }
+	}
  }
  if(!found)
-        stop("No data sets found")
+	stop("No data sets found")
  invisible(names)
 }
 
@@ -202,7 +202,7 @@ system.time <- function(expr) {
 	## -----------------------------------------------------------------
 	## Arguments: expr: `any' valid R expression
 	## -----------------------------------------------------------------
-	loc.frame <- sys.parent(1)
+	loc.frame <- sys.frame(sys.parent(1))
 	on.exit(cat("Timing stopped at:", proc.time() - time, "\n"))
 	expr <- substitute(expr)
 	time <- proc.time()
@@ -218,8 +218,8 @@ unix.time <- system.time
 
 tempfile <- function(pattern = "file") {
   system(paste("for p in", paste(pattern, collapse = " "), ";",
-               "do echo /tmp/$p$$; done"),
-         intern = TRUE)
+	       "do echo /tmp/$p$$; done"),
+	 intern = TRUE)
 }
 
 unlink <- function(x) {
