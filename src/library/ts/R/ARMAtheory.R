@@ -28,7 +28,7 @@ ARMAacf <- function(ar = numeric(0), ma = numeric(0), lag.max = r,
         } else Acf <- ar
         if(lag.max > p) {
             xx <- rep(0, lag.max - p)
-            Acf <- c(Acf, filter(xx, ar, "recursive", init = Acf))
+            Acf <- c(Acf, filter(xx, ar, "recursive", init = rev(Acf)))
         }
         Acf <- c(1, Acf[1:lag.max])
     } else if(q > 0) {

@@ -1,25 +1,3 @@
-#include <stdio.h>
-#include <string.h>
-#include <tcl.h>
-#include <tk.h>
-
-#if (TCL_MAJOR_VERSION==8 && TCL_MINOR_VERSION==0)
-#define TCL80
-#endif
-
-/* TclCmdProc was redefined to include const in Tcl 8.4 */
-#ifndef CONST84
-#define CONST84
-#endif
-
-#include <Rinternals.h>
-#include <R_ext/PrtUtil.h>
-#ifndef Win32
-#include <R_ext/eventloop.h>
-#endif
-
-#include <R_ext/Parse.h>
-
 #include "tcltk.h" /* declarations of our `public' interface */
 extern int (*R_timeout_handler)();
 extern long R_timeout_val;
@@ -452,6 +430,7 @@ SEXP RTcl_ObjFromIntVector(SEXP args)
     return makeRTclObject(tclobj);
 }
 
+#ifndef TCL80
 SEXP RTcl_GetArrayElem(SEXP args)
 {
     SEXP x, i;
@@ -502,6 +481,7 @@ SEXP RTcl_RemoveArrayElem(SEXP args)
 
     return R_NilValue;
 }
+#endif TCL80
 
 /* Warning: These two functions return a pointer to internal static
    data. Copy immediately. */

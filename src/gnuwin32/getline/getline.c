@@ -43,6 +43,7 @@ int 		(*gl_tab_hook)() = gl_tab;
 #include <signal.h>
 #endif
 #include <stdlib.h>
+#include <stdio.h>
 #include <io.h>
 
 /*extern int     isatty();	

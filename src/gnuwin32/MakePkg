@@ -65,10 +65,10 @@ EXECFILES=$(filter-out $(SPKG)/exec/CVS, $(wildcard $(SPKG)/exec/*))
 INSTFILES=$(filter-out $(SPKG)/inst/CVS, $(wildcard $(SPKG)/inst/*))
 
 all:  $(DPKG)/zzzz frontmatter nmspace Dynlib R $(DPKG)/demo \
-  $(DPKG)/exec $(DATA) mansrcs indices
+  $(DPKG)/exec $(DPKG)/inst $(DATA) mansrcs indices
 
 fake: zzzfirst frontmatter nmspacefake R Rfake $(DPKG)/demo \
-  $(DPKG)/exec $(DATA) mansrcs indices
+  $(DPKG)/exec $(DPKG)/inst $(DATA) mansrcs indices
 
 include $(RHOME)/src/gnuwin32/MkRules
 
@@ -127,6 +127,13 @@ ifneq ($(strip $(EXECFILES)),)
 	@$(CP) $(EXECFILES)   $@
 endif
 
+$(DPKG)/inst: $(INSTFILES)
+ifneq ($(strip $(INSTFILES)),)
+	@$(ECHO) "  installing inst files"
+	-@$(CP) -r inst/* $(DPKG)
+	@$(RM) -rf $(DPKG)/CVS $(DPKG)/*/CVS
+endif
+
 
 $(DPKG)/zzzz: zzzfirst
 	@if test -f ${SPKG}/configure.win; then \
@@ -155,10 +162,6 @@ endif
 
 frontmatter:
 	@$(MKDIR) -p $(DPKG)
-ifneq ($(strip $(INSTFILES)),)
-	@$(ECHO) "  installing inst files"
-	-@$(CP) -r inst/* $(DPKG)
-endif
 	@if test -f ${SPKG}/DESCRIPTION; then \
 	  $(ECHO) "  adding build stamp to DESCRIPTION"; \
 	else \

@@ -4,6 +4,33 @@
 See the file NEWS for changes that affect all versions of R.
 
 
+rw1081
+======
+
+Files in inst/ are installed later in the process of installing a
+package (at the request of Ray Brownrigg: the build process was as
+documented in `Writing R Extensions').  CVS files will not be installed.
+
+The fast bmp/png/jpeg code introduced in R 1.8.0 is used for saving
+from menus (and savePlot()) as well as for the devices.
+
+Lines drawn at the extreme top or right of the device region (e.g. by
+box(which="outer")) might have been drawn one pixel too far from the
+origin and so perhaps clipped.
+
+In 1.8.0 only, the bottom line of pixels was not copied to the file
+for png/jpeg/bmp device plots (as the Windows GDI function used was
+incorrectly documented).
+
+File src/nmath/dnt.c was not being built for the standalone Rmath library.
+
+packageStatus() now works under Windows.
+
+Fixed instability under some Windows versions associated with 
+double buffering of the windows() device. (PR#5173)
+
+
+
 rw1080
 ======
 
@@ -88,6 +115,7 @@ Fixed installer so share/texmf files are installed with developer option.
 (Sweave.sty continues to be installed in main option.)
 
 Fixed MakePkg so that Rd files with missing line ends at EOF are corrected.
+
 
 
 rw1071

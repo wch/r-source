@@ -1044,3 +1044,41 @@ meth2gen <- function(cl)
 meth2gen("data.frame")
 meth2gen("dendrogram")
 ## --> the output may need somewhat frequent updating..
+
+
+## subsetting a 1D array lost the dimensions
+x <- array(1:5, dim=c(5))
+dim(x)
+dim(x[, drop=TRUE])
+dim(x[2:3])
+dim(x[2])
+dim(x[2, drop=FALSE])
+dimnames(x) <- list(some=letters[1:5])
+x[]
+x[2:3]
+x[2]
+x[2, drop=FALSE]
+## both dim and dimnames lost in 1.8.0
+
+
+## print.dist() didn't show NA's prior to 1.8.1
+x <- cbind(c(1,NA,2,3), c(NA,2,NA,1))
+(d <- dist(x))
+print(d, diag = TRUE)
+##
+
+
+## offsets in model terms where sometimes not deleted correctly
+attributes(terms(~ a + b + a:b + offset(c)))[c("offset", "term.labels")]
+attributes(terms(y ~ a + b + a:b + offset(c)))[c("offset", "term.labels")]
+attributes(terms(~ offset(c) + a + b + a:b))[c("offset", "term.labels")]
+attributes(terms(y ~ offset(c) + a + b + a:b))[c("offset", "term.labels")]
+## errors prior to 1.8.1
+
+
+## 0-level factors gave nonsensical answers in model.matrix
+try(model.matrix(~x, data.frame(x=NA), na.action=na.pass))
+lm.fit <- lm(y ~ x, data.frame(x=1:10, y=1:10))
+try(predict(lm.fit, data.frame(x=NA)))
+## wrong in 1.8.0
+

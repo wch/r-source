@@ -151,7 +151,7 @@ read.delim2(file, header = TRUE, sep = "\t", quote="\"", dec=",",
   of input (or the whole file if it has less than five lines), or from
   the length of \code{col.names} if it is specified and
   is longer.  This could conceivably be wrong if \code{fill} or
-  \code{blank.lines.skip} are true.
+  \code{blank.lines.skip} are true, so specify \code{col.names} if necessary.
   
   \code{read.csv} and \code{read.csv2} are identical to
   \code{read.table} except for the defaults.  They are intended for
@@ -162,10 +162,13 @@ read.delim2(file, header = TRUE, sep = "\t", quote="\"", dec=",",
   TAB character for the delimiter.  Notice that \code{header = TRUE} and
   \code{fill = TRUE} in these variants.
 
-  Comment characters are allowed unless \code{comment.char = ""}, and
-  complete comment lines are allowed provided \code{blank.lines.skip = TRUE}
-  However, comment lines prior to the header must have
-  the comment character in the first non-blank column.
+  The rest of the line after a comment character is skipped; quotes
+  are not processed in comments.  Complete comment lines are allowed
+  provided \code{blank.lines.skip = TRUE}; however, comment lines prior
+  to the header must have the comment character in the first non-blank
+  column.
+
+  Fields with embedded newlines are not supported (even if quoted).
 }
 \note{
   The columns referred to in \code{as.is} and \code{colClasses} include

@@ -165,6 +165,14 @@ void F77_NAME(zgeev)(const char *jobvl, const char *jobvr,
 		     Rcomplex *work, const int *lwork, 
 		     double *rwork, int *info);
 
+/* DGECON - estimate the reciprocal of the condition number of a */
+/* general real matrix A, in either the 1-norm or the */
+/* infinity-norm, using the LU factorization computed by DGETRF */
+void F77_NAME(dgecon)(const char* norm, const int* n,
+    		  const double* a, const int* lda,
+    		  const double* anorm, double* rcond,
+    		  double* work, int* iwork, int* info);
+
 /* DGESV computes the solution to a complex system of linear equations */
 void F77_NAME(dgesv)(const int *n, const int *nrhs, double *a,
 		     const int *lda, int *ipiv, double *b,
@@ -190,3 +198,10 @@ void F77_NAME(dtrtrs)(const char *uplo, const char *trans, const char *diag,
 		      double *a, const int *lda,
 		      double *b, const int *ldb,
 		      int *info);
+
+/* DLANGE - return the value of the one norm, or the Frobenius */
+/* norm, or the infinity norm, or the element of largest absolute */
+/* value of a real matrix A */
+double
+F77_NAME(dlange)(const char* norm, const int* m, const int* n,
+		 const double* a, const int* lda, double* work);

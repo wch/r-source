@@ -56,13 +56,13 @@ Brian Ripley                                @*
 @node Top, Introduction, (dir), (dir)
 
 @menu
-* Introduction::                
-* Installation and Usage::      
-* Packages::                    
-* Windows Features::            
-* Workspaces::                  
-* The R Console and Fonts::     
-* Building from Source::        
+* Introduction::
+* Installation and Usage::
+* Packages::
+* Windows Features::
+* Workspaces::
+* The R Console and Fonts::
+* Building from Source::
 @end menu
 
 
@@ -88,25 +88,25 @@ The information here applies only to recent versions of R for Windows,
 @chapter Installation and Usage
 
 @menu
-* Where can I find the latest version?::  
-* How do I install R for Windows?::  
-* Can I customize the installation?::  
-* How do I run it?::            
-* How do I UNinstall R?::       
-* What's the best way to upgrade?::  
-* There seems to be a limit on the memory it uses!::  
-* How can I keep workspaces for different projects in different directories?::  
-* How do I print from R?::      
-* Can I use R BATCH?::          
-* Can I use @RWVER@ with ESS and (X)emacs?::  
-* What are HOME and working directories?::  
-* How do I set environment variables?::  
-* R can't find my file::        
-* Does R use the Registry?::    
-* Does R support automation?::  
-* The internet download functions fail.::  
-* Entering certain characters crashes Rgui.::  
-* Other strange crashes.::      
+* Where can I find the latest version?::
+* How do I install R for Windows?::
+* Can I customize the installation?::
+* How do I run it?::
+* How do I UNinstall R?::
+* What's the best way to upgrade?::
+* There seems to be a limit on the memory it uses!::
+* How can I keep workspaces for different projects in different directories?::
+* How do I print from R?::
+* Can I use R BATCH?::
+* Can I use @RWVER@ with ESS and (X)emacs?::
+* What are HOME and working directories?::
+* How do I set environment variables?::
+* R can't find my file::
+* Does R use the Registry?::
+* Does R support automation?::
+* The internet download functions fail.::
+* Entering certain characters crashes Rgui.::
+* Other strange crashes.::
 @end menu
 
 
@@ -317,7 +317,7 @@ path_to_R\bin\Rterm.exe --no-restore --no-save < %1 > %1.out 2>&1
 @end example
 @noindent
 The purpose of @code{2>&1} is to redirect warnings and errors to the
-same file as normal output, and users of Windows 95/98/ME's default 
+same file as normal output, and users of Windows 95/98/ME's default
 @code{command.com} `shell' will need to omit it. (That program has no
 means to redirect @file{stderr}, and as from R 1.8.0 @code{Rterm.exe}
 sends warnings and errors to the normal output file on such systems.)
@@ -437,7 +437,7 @@ and that this neither sets up nor removes the file associations.
 @node Does R support automation?, The internet download functions fail., Does R use the Registry?, Installation and Usage
 @section Does R support automation (OLE, COM)?
 
-Directly, no.  
+Directly, no.
 
 There is a (D)COM server written by Thomas Baier available on CRAN
 (@uref{http://cran.r-project.org/other-software.html}) which works with
@@ -488,9 +488,9 @@ password when HTTP downloads are first used.
 
 This used to happen occasionally, and all the occurrences we have solved
 have been traced to faulty versions of @samp{msvcrt.dll}.  We have
-installed a workaround as from @code{rw1051} that seems to avoid this.
-A few other people have discovered this was caused by keyboard macro
-programs, for example `Macro Magic'.
+installed a workaround that seems to avoid this.  A few other people
+have discovered this was caused by desktop switcher and keyboard macro
+programs, for example `Macro Magic' and `JS Pager'.
 
 If it still happens, try extracting the one to be found in the
 self-extracting archive
@@ -531,14 +531,14 @@ that is causing the error.
 
 
 @menu
-* Can I install packages (libraries) in this version?::  
-* I don't have permission to write to the @RWVER@\library directory::  
-* The packages I installed do not appear in the HTML help system::  
-* My functions are not found by the HTML help search system.::  
-* Loading a package fails.::    
-* Package TclTk does not work.::  
-* Hyperlinks in Compiled HTML do not work.::  
-* update.packages() fails::     
+* Can I install packages (libraries) in this version?::
+* I don't have permission to write to the @RWVER@\library directory::
+* The packages I installed do not appear in the HTML help system::
+* My functions are not found by the HTML help search system.::
+* Loading a package fails.::
+* Package TclTk does not work.::
+* Hyperlinks in Compiled HTML do not work.::
+* update.packages() fails::
 @end menu
 
 
@@ -553,13 +553,14 @@ kind enough to provide a pre-compiled version for Windows as a
 You can install pre-compiled packages either from CRAN or from a local
 @code{.zip} file by using @code{install.packages}: see its help page.
 There are menu items on the @code{Packages} menu to provide a
-point-and-click interface to package installation.  As from R 1.7.0 the
-packages for each minor (1.x) version will be stored in a separate area,
-so for R 1.8.0 the files are in @code{bin/windows/contrib/1.8}.  You can
-try those compiled for earlier versions, at your own risk.
+point-and-click interface to package installation.  The packages for
+each minor (1.x) version will be stored in a separate area, so for R
+1.8.? the files are in @code{bin/windows/contrib/1.8}.  You can try
+those compiled for earlier versions, at your own risk.
 
 Note that the pre-compiled versions on CRAN are unsupported: see
-@uref{http://cran.r-project.org/bin/windows/contrib/ReadMe}.
+@uref{http://cran.r-project.org/bin/windows/contrib/ReadMe}, which also
+gives the locations of a few other precompiled packages.
 
 If there is not a pre-compiled version or that is not up-to-date or
 you prefer compiling from source, make sure you installed the
@@ -670,32 +671,8 @@ to a non-empty value, it is assumed that you want to use a different
 Tcl/Tk 8.4.x installation, and that this is set up correctly (with the
 DLLs in your path and @code{TCL_LIBRARY} set).  In that case you do not
 need the Tcl/Tk support files installed (but they can be).  Note that
-you do need 8.4.x and not 8.3.x as from R 1.7.0.  (If you build R from
-the sources yourself you can configure it to use 8.3.x.)
-
-
-@c Download ActiveTcl 8.4.x from
-@c @uref{http://aspn.activestate.com/ASPN/Downloads/ActiveTcl/} and install
-@c it.  (Most of the installers that ActiveTcl uses will put the @file{bin}
-@c directory containing the Tcl and Tk DLLs in your path, but you should
-@c check.  From R, run @code{Sys.getenv("PATH")} to do so.)  Note that you
-@c do need 8.4.x and not 8.3.x as from R 1.7.0.  (If you build R from the
-@c sources yourself you can configure it to use 8.3.x.)
-
-@c You then need to set the environment variable @code{TCL_LIBRARY}
-@c (@pxref{How do I set environment variables?}), to something like
-@c @code{c:/Program Files/Tcl/lib/tcl8.4}.  (The startup code for the
-@c package will warn you if this is unset.  NB: do not quote the path, even
-@c if as here it contains spaces. If you forget, you can set the variable
-@c inside R by something like
-@c @smallexample
-@c     Sys.putenv("TCL_LIBRARY"="c:/Program Files/Tcl/lib/tcl8.4")
-@c @end smallexample
-@c .)  Similarly, you can set the path if needed by something like
-@c @smallexample
-@c     Sys.putenv(PATH=paste(Sys.getenv("PATH"), "c:/Tcl/bin", sep = ";"))
-@c @end smallexample
-
+you do need 8.4.x and not 8.3.x.  (If you build R from the sources
+yourself you can configure it to use 8.3.x.)
 
 
 @node  Hyperlinks in Compiled HTML do not work., update.packages() fails, Package TclTk does not work., Packages
@@ -720,10 +697,10 @@ start R with @option{--vanilla} to be able to update package @code{foo}.
 @chapter Windows Features
 
 @menu
-* What should I expect to behave differently from the Unix version::  
-* I hear about some nifty features.::  
-* Circles appear as ovals on screen::  
-* How do I move focus to a graphics window or the console?::  
+* What should I expect to behave differently from the Unix version::
+* I hear about some nifty features.::
+* Circles appear as ovals on screen::
+* How do I move focus to a graphics window or the console?::
 @end menu
 
 
@@ -822,9 +799,9 @@ act on it).
 
 
 @menu
-* My workspace gets saved in a strange place.  How do I stop this?::  
-* How do I store my workspace in a different place?::  
-* Can I load workspaces saved under Unix/GNU-Linux or MacOS?::  
+* My workspace gets saved in a strange place.  How do I stop this?::
+* How do I store my workspace in a different place?::
+* Can I load workspaces saved under Unix/GNU-Linux or MacOS?::
 @end menu
 
 
@@ -859,10 +836,10 @@ interchangeable (for the same 1.x.? version of R, at least).
 
 
 @menu
-* I would like to be able to use Japanese fonts::  
-* I don't see characters with accents at the R console::  
-* The output to the console seems to be delayed::  
-* Long lines seem to be truncated.::  
+* I would like to be able to use Japanese fonts::
+* I don't see characters with accents at the R console::
+* The output to the console seems to be delayed::
+* Long lines seem to be truncated.::
 @end menu
 
 
@@ -923,14 +900,14 @@ horizontally. (The @key{left/right arrow} keys work in the pager too.)
 @chapter Building from Source
 
 @menu
-* How can I compile R from source?::  
-* Can I use a fast BLAS?::      
-* How do I include compiled C code?::  
-* How do I debug code that I have compiled and dyn.load-ed?::  
-* How do I include C++ code?::  
-* The output from my C code disappears.::  
-* The output from my Fortran code disappears.::  
-* The console freezes when my compiled code is running::  
+* How can I compile R from source?::
+* Can I use a fast BLAS?::
+* How do I include compiled C code?::
+* How do I debug code that I have compiled and dyn.load-ed?::
+* How do I include C++ code?::
+* The output from my C code disappears.::
+* The output from my Fortran code disappears.::
+* The console freezes when my compiled code is running::
 @end menu
 
 
@@ -1009,8 +986,9 @@ You will need a suitable version of @code{gdb}: we normally use that
 from the Cygwin distribution.  Debugging under Windows is often a
 fraught process, and sometimes does not work at all.  If all you need is
 a @emph{just-in-time} debugger to catch crashes, consider
-@code{Dr. Mingw} from
-@uref{http://jrfonseca.dyndns.org/projects/gnu-win32/software/drmingw/}.
+@code{Dr. Mingw} from the @code{mingw-utils} bundle on
+@uref{http://www.mingw.org} (see also
+@uref{http://jrfonseca.dyndns.org/projects/gnu-win32/software/drmingw/}).
 That will be able to pinpoint the error, most effectively if you build a
 version of R with debugging information as described below.
 

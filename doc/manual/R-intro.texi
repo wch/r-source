@@ -616,10 +616,6 @@ than'') and @samp{@code{-}} (``minus'') occurring strictly side-by-side
 and it `points' to the object receiving the value of the expression.
 @c In this text, the assignment operator is printed as @samp{<-}, rather
 @c than ``@code{<-}''.
-@footnote{The underscore character, @samp{@code{_}} is an allowable
-synonym for the left pointing assignment operator @samp{@code{<-}},
-however we discourage this option, as it can easily lead to much less
-readable code.}
 @cindex Assignment
 
 Assignment can also be made using the function @code{assign()}.  An

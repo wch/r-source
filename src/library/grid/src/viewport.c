@@ -56,6 +56,10 @@ double viewportLineHeight(SEXP vp) {
     return numeric(getListElement(vp, "cur.lineheight"), 0);
 }
 
+double viewportCex(SEXP vp) {
+    return numeric(getListElement(vp, "cur.cex"), 0);
+}
+
 Rboolean viewportClip(SEXP vp) {
     return LOGICAL(getListElement(vp, "clip"))[0];
 }
@@ -145,36 +149,26 @@ void fillViewportLocationFromViewport(SEXP vp, LViewportLocation *vpl)
 void fillViewportContextFromViewport(SEXP vp, 
 				     LViewportContext *vpc)
 {
-    /* 
-     * Risk here if char* underlying vpc->fontfamily can get trashed?
-     */
-    vpc->fontfamily = viewportFontFamily(vp);
-    vpc->font = viewportFont(vp);
-    vpc->fontsize = viewportFontSize(vp);
-    vpc->lineheight = viewportLineHeight(vp);
     vpc->xscalemin = viewportXScaleMin(vp);
     vpc->xscalemax = viewportXScaleMax(vp);
     vpc->yscalemin = viewportYScaleMin(vp);
     vpc->yscalemax = viewportYScaleMax(vp);
-    vpc->hjust = viewportHJust(vp);
-    vpc->vjust = viewportVJust(vp);
 }
 
 void copyViewportContext(LViewportContext vpc1, LViewportContext *vpc2)
 {
-    /* 
-     * Risk here if char* underlying vpc->fontfamily can get trashed?
-     */
-    vpc2->fontfamily = vpc1.fontfamily;
-    vpc2->font = vpc1.font;
-    vpc2->fontsize = vpc1.fontsize;
-    vpc2->lineheight = vpc1.lineheight;
     vpc2->xscalemin = vpc1.xscalemin;
     vpc2->xscalemax = vpc1.xscalemax;
     vpc2->yscalemin = vpc1.yscalemin;
     vpc2->yscalemax = vpc1.yscalemax;
-    vpc2->hjust = vpc1.hjust;
-    vpc2->vjust = vpc1.vjust;
+}
+
+void gcontextFromViewport(SEXP vp, LGContext *gc) {
+    gc->font = viewportFont(vp);
+    gc->fontsize = viewportFontSize(vp);
+    gc->cex = viewportCex(vp);
+    gc->lineheight = viewportLineHeight(vp);
+    strcpy(gc->fontfamily, viewportFontFamily(vp));
 }
 
 /* The idea is to produce a transformation for this viewport which
@@ -197,6 +191,7 @@ void calcViewportTransform(SEXP vp, SEXP parent, Rboolean incremental,
     double parentAngle;
     LViewportLocation vpl;
     LViewportContext vpc, parentContext;
+    LGContext gc, parentgc;
     LTransform thisLocation, thisRotation, thisJustification, thisTransform;
     LTransform tempTransform, parentTransform, transform;
     SEXP currentWidthCM, currentHeightCM, currentRotation;
@@ -219,11 +214,16 @@ void calcViewportTransform(SEXP vp, SEXP parent, Rboolean incremental,
 	parentContext.yscalemax = 1;
 	/* FIXME:  How do I figure out the device fontsize ?
 	 * From ps.options etc, ... ?
+	 * FIXME:  How do I figure out the device lineheight ??
+	 * FIXME:  How do I figure out the device cex ??
+	 * FIXME:  How do I figure out the device font ??
+	 * FIXME:  How do I figure out the device fontfamily ??
 	 */
-	parentContext.fontsize = 10;
-	/* FIXME:  How do I figure out the device lineheight ??
-	 */
-	parentContext.lineheight = 1.2;
+	parentgc.fontsize = 10;
+	parentgc.lineheight = 1.2;
+	parentgc.cex = 1;
+	parentgc.font = 1;
+	parentgc.fontfamily[0] = '\0';
 	/* The device is not rotated
 	 */
 	parentAngle = 0;
@@ -244,6 +244,7 @@ void calcViewportTransform(SEXP vp, SEXP parent, Rboolean incremental,
 		parentTransform[i][j] = 
 		    REAL(viewportCurrentTransform(parent))[i +3*j];
 	fillViewportContextFromViewport(parent, &parentContext);
+	gcontextFromViewport(parent, &parentgc);
 	/* In order for the vp to get its vpl from a layout
 	 * it must have specified a layout.pos and the parent
 	 * must have a layout
@@ -266,35 +267,20 @@ void calcViewportTransform(SEXP vp, SEXP parent, Rboolean incremental,
      */
     /* First, convert the location of the viewport into CM
      */
-    xINCHES = transformXtoINCHES(vpl.x, 0, parentContext,
-				 viewportFontFamily(vp),
-				 viewportFont(vp),
-				 viewportFontSize(vp),
-				 viewportLineHeight(vp),
+    xINCHES = transformXtoINCHES(vpl.x, 0, parentContext, &parentgc,
 				 parentWidthCM, parentHeightCM, 
 				 dd);
-    yINCHES = transformYtoINCHES(vpl.y, 0, parentContext,
-				 viewportFontFamily(vp),
-				 viewportFont(vp),
-				 viewportFontSize(vp),
-				 viewportLineHeight(vp),
+    yINCHES = transformYtoINCHES(vpl.y, 0, parentContext, &parentgc,
 				 parentWidthCM, parentHeightCM, 
 				 dd);
     /* Calculate the width and height of the viewport in CM too
      * so that any viewports within this one can do transformations
      */
-    vpWidthCM = transformWidthtoINCHES(vpl.width, 0, parentContext,
-				       viewportFontFamily(vp),
-				       viewportFont(vp),
-				       viewportFontSize(vp),
-				       viewportLineHeight(vp),
+    vpWidthCM = transformWidthtoINCHES(vpl.width, 0, parentContext, &parentgc,
 				       parentWidthCM, parentHeightCM,
 				       dd)*2.54;
-    vpHeightCM = transformHeighttoINCHES(vpl.height, 0, parentContext,
-					 viewportFontFamily(vp),
-					 viewportFont(vp),
-					 viewportFontSize(vp),
-					 viewportLineHeight(vp),
+    vpHeightCM = transformHeighttoINCHES(vpl.height, 0, parentContext, 
+					 &parentgc,
 					 parentWidthCM, 
 					 parentHeightCM, 
 					 dd)*2.54;
@@ -330,7 +316,8 @@ void calcViewportTransform(SEXP vp, SEXP parent, Rboolean incremental,
      */
     if (!isNull(viewportLayout(vp))) {
 	fillViewportContextFromViewport(vp, &vpc);
-	calcViewportLayout(vp, vpWidthCM, vpHeightCM, vpc, dd);
+	gcontextFromViewport(vp, &gc);
+	calcViewportLayout(vp, vpWidthCM, vpHeightCM, vpc, &gc, dd);
     }
     /* Record all of the answers in the viewport
      * (the layout calculations are done within calcViewportLayout)
@@ -356,7 +343,7 @@ void initVP(GEDevDesc *dd)
 {
     SEXP vpfnname, vpfn, vp;
     SEXP xscale, yscale;
-    SEXP ff, font, lh, fs;
+    SEXP ff, font, lh, fs, cex;
     SEXP currentgp = gridStateElement(dd, GSS_GPAR);
     SEXP gsd = (SEXP) dd->gesd[gridRegisterIndex]->systemSpecific;
     PROTECT(vpfnname = findFun(install("grid.top.level.vp"), R_gridEvalEnv));
@@ -387,8 +374,11 @@ void initVP(GEDevDesc *dd)
     PROTECT(fs = allocVector(REALSXP, 1));
     REAL(fs)[0] = gpFontSize(currentgp, 0);
     setListElement(vp, "cur.fontsize", fs);
+    PROTECT(cex = allocVector(REALSXP, 1));
+    REAL(cex)[0] = gpCex(currentgp, 0);
+    setListElement(vp, "cur.cex", cex);
     vp = doSetViewport(vp, R_NilValue, dd);
     SET_VECTOR_ELT(gsd, GSS_VP, vp);
-    UNPROTECT(9);
+    UNPROTECT(10);
 }
 

@@ -49,7 +49,7 @@ mood.test(x, \dots)
   \item{data.name}{a character string giving the names of the data.}
 }
 \references{
-  Conover, W. J. (1971),
+  William J. Conover (1971),
   \emph{Practical nonparametric statistics}.
   New York: John Wiley & Sons.
   Pages 234f.

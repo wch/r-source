@@ -33,30 +33,30 @@
 }
 
 \usage{
-tryCatch(expr, ..., finally)
-withCallingHandlers(expr, ...)
+tryCatch(expr, \dots, finally)
+withCallingHandlers(expr, \dots)
 
 signalCondition(cond)
 
 simpleCondition(message, call = NULL)
-simpleError(message, call = NULL)
-simpleWarning(message, call = NULL)
+simpleError    (message, call = NULL)
+simpleWarning  (message, call = NULL)
 
-\method{as.character}{condition}(x, ...)
-\method{as.character}{error}(x, ...)
-\method{print}{condition}(x, ...)
-\method{print}{restart}(x, ...)
+\method{as.character}{condition}(x, \dots)
+\method{as.character}{error}(x, \dots)
+\method{print}{condition}(x, \dots)
+\method{print}{restart}(x, \dots)
 
 conditionCall(c)
 \method{conditionCall}{condition}(c)
 conditionMessage(c)
 \method{conditionMessage}{condition}(c)
 
-withRestarts(expr, ...)
+withRestarts(expr, \dots)
 
 computeRestarts(cond = NULL)
 findRestart(name, cond = NULL)
-invokeRestart(r, ...)
+invokeRestart(r, \dots)
 invokeRestartInteractively(r)
 
 isRestart(x)
@@ -65,7 +65,6 @@ restartFormals(r)
 
 .signalSimpleWarning(msg, call)
 .handleSimpleError(h, msg, call)
-
 }
 
 \arguments{
@@ -104,7 +103,7 @@ restartFormals(r)
 
    Conditions are signaled by \code{signalCondition}.  In addition,
    the \code{stop} and \code{warning} functions have been modified to
-   also accept condition arguments.  
+   also accept condition arguments.
 
    The function \code{tryCatch} evaluates its expression argument
    in a context where the handlers provided in the \code{\dots}
@@ -159,7 +158,7 @@ restartFormals(r)
    \code{invokeRestart}.  The restart argument to \code{invokeRestart}
    can be a character string, in which case \code{findRestart} is used
    to find the restart.
-   
+
    New restarts for \code{withRestarts} can be specified in several ways.
    The simplest is in \code{name=function} form where the function is
    the handler to call when the restart is invoked.  Another simple
@@ -197,7 +196,7 @@ restartFormals(r)
 
 \examples{
 tryCatch(1, finally=print("Hello"))
-e<-simpleError("test error")
+e <- simpleError("test error")
 \dontrun{stop(e)}
 \dontrun{tryCatch(stop(e), finally=print("Hello"))}
 \dontrun{tryCatch(stop("fred"), finally=print("Hello"))}

@@ -78,6 +78,9 @@
 }
 \seealso{
   The model fitting function \code{\link{lm}}, \code{\link{summary}}.
+
+  Function \code{\link{coef}} will extract the matrix of coefficients
+  with standard errors, t-statistics and p-values.
 }
 \examples{
 \dontshow{example("lm", echo = FALSE)}

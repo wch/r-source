@@ -120,6 +120,32 @@ function(x, delim = c("\{", "\}"), syntax = "Rd")
     .Call("delim_match", x, delim, PACKAGE = "tools")
 }
 
+
+### * LaTeX utilities
+
+### ** texi2dvi
+
+texi2dvi <- function(file, pdf = FALSE, clean = TRUE,
+                     quiet = TRUE, texi2dvi = getOption("texi2dvi")) 
+{
+    ## run texi2dvi on a file
+    
+    if(pdf) pdf <- "--pdf" else pdf <- ""
+    if(clean) clean <- "--clean" else clean <- ""
+    if(quiet) quiet <- "--quiet" else quiet <- ""
+    if(is.null(texi2dvi)) {
+        if(file.exists(file.path(R.home(), "bin", "texi2dvi")))
+            texi2dvi <- file.path(R.home(), "bin", "texi2dvi")
+        else
+            texi2dvi <- "texi2dvi"
+    }
+    
+    yy <- system(paste(texi2dvi, quiet, pdf, clean, file))
+    if(yy > 0) stop(paste("running texi2dvi on", file, "failed"))
+}
+
+
+
 ### * Internal utility functions.
 
 ### ** .getInternalS3generics
@@ -288,6 +314,7 @@ function(package)
              XML = "text.SAX",
              ctest = "t.test",
              quadprog = c("solve.QP", "solve.QP.compact"),
+             reposTools = "update.packages2",
              sm = "print.graph",
              ts = "lag.plot")
     if(is.null(package)) return(unlist(stopList))

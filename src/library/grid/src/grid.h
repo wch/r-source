@@ -151,17 +151,25 @@ typedef struct {
  * for children of the viewport
  */
 typedef struct {
-    char *fontfamily;
-    int font;
-    double fontsize;
-    double lineheight;
     double xscalemin;
     double xscalemax;
     double yscalemin;
     double yscalemax;
-    int hjust;
-    int vjust;
 } LViewportContext;
+
+/*
+ * A "graphics context" for evaluating units
+ * Sort of a C version of a gpar.
+ * For holding one set of (relevant) gpar values to be passed 
+ * down to conversion code in unit.c from elsewhere.
+ */
+typedef struct {
+    double cex;
+    double fontsize;
+    double lineheight;
+    int font;
+    char fontfamily[50];
+} LGContext;
 
 /* Evaluation environment */
 #ifndef GRID_MAIN
@@ -201,7 +209,7 @@ SEXP L_segments(SEXP x0, SEXP y0, SEXP x1, SEXP y1);
 SEXP L_arrows(SEXP x1, SEXP x2, SEXP xnm1, SEXP xn, 
 	      SEXP y1, SEXP y2, SEXP ynm1, SEXP yn, 
 	      SEXP angle, SEXP length, SEXP ends, SEXP type);
-SEXP L_polygon(SEXP x, SEXP y);
+SEXP L_polygon(SEXP x, SEXP y, SEXP index);
 SEXP L_circle(SEXP x, SEXP y, SEXP r);
 SEXP L_rect(SEXP x, SEXP y, SEXP w, SEXP h, SEXP just); 
 SEXP L_text(SEXP label, SEXP x, SEXP y, SEXP just, 
@@ -251,55 +259,55 @@ double pureNullUnitValue(SEXP unit, int index);
 
 int pureNullUnit(SEXP unit, int index);
 
-double transformX(SEXP x, int index, LViewportContext vpc,
-		  char *fontfamily, int font, double fontsize, double lineheight,
+double transformX(SEXP x, int index, LViewportContext vpc, 
+		  LGContext *gc,
 		  double widthCM, double heightCM,
 		  GEDevDesc *dd);
 
 double transformY(SEXP y, int index, LViewportContext vpc,
-		  char *fontfamily, int font, double fontsize, double lineheight,
+		  LGContext *gc,
 		  double widthCM, double heightCM,
 		  GEDevDesc *dd);
 
 double transformWidth(SEXP width, int index, LViewportContext vpc,
-		      char *fontfamily, int font, double fontsize, double lineheight,
+		      LGContext *gc,
 		      double widthCM, double heightCM,
 		      GEDevDesc *dd);
 
 double transformHeight(SEXP height, int index, LViewportContext vpc,
-		       char *fontfamily, int font, double fontsize, double lineheight,
+		       LGContext *gc,
 		       double widthCM, double heightCM,
 		       GEDevDesc *dd);
 
 double transformXtoINCHES(SEXP x, int index, LViewportContext vpc,
-			  char *fontfamily, int font, double fontsize, double lineheight,
+			  LGContext *gc,
 			  double widthCM, double heightCM,
 			  GEDevDesc *dd);
 
 double transformYtoINCHES(SEXP y, int index, LViewportContext vpc,
-			  char *fontfamily, int font, double fontsize, double lineheight,
+			  LGContext *gc,
 			  double widthCM, double heightCM,
 			  GEDevDesc *dd);
 
 void transformLocn(SEXP x, SEXP y, int index, LViewportContext vpc,
-		   char *fontfamily, int font, double fontsize, double lineheight,
+		   LGContext *gc,
 		   double widthCM, double heightCM,
 		   GEDevDesc *dd,
 		   LTransform t,
 		   double *xx, double *yy);
 
 double transformWidthtoINCHES(SEXP w, int index, LViewportContext vpc,
-			      char *fontfamily, int font, double fontsize, double lineheight,
+			      LGContext *gc,
 			      double widthCM, double heightCM,
 			      GEDevDesc *dd);
 
 double transformHeighttoINCHES(SEXP h, int index, LViewportContext vpc,
-			       char *fontfamily, int font, double fontsize, double lineheight,
+			       LGContext *gc,
 			       double widthCM, double heightCM,
 			       GEDevDesc *dd);
 
 void transformDimn(SEXP w, SEXP h, int index, LViewportContext vpc,
-		   char *fontfamily, int font, double fontsize, double lineheight,
+		   LGContext *gc,
 		   double widthCM, double heightCM,
 		   GEDevDesc *dd,
 		   double rotationAngle,
@@ -307,16 +315,13 @@ void transformDimn(SEXP w, SEXP h, int index, LViewportContext vpc,
 
 double transformXYFromINCHES(double location, int unit, 
 			     double scalemin, double scalemax,
-			     char *fontfamily, int font, double fontsize, 
-			     double lineheight, 
+			     LGContext *gc,
 			     double thisCM, double otherCM,
 			     GEDevDesc *dd);
 
 double transformWidthHeightFromINCHES(double value, int unit, 
 				      double scalemin, double scalemax,
-				      char *fontfamily, int font, 
-				      double fontsize, 
-				      double lineheight, 
+				      LGContext *gc,
 				      double thisCM, double otherCM,
 				      GEDevDesc *dd);
 
@@ -378,6 +383,8 @@ int gpFont(SEXP gp, int i);
 
 char* gpFontFamily(SEXP gp, int i);
 
+void gcontextFromgpar(SEXP gp, int i, LGContext *gc);
+
 void initGPar(GEDevDesc *dd);
 
 /* From viewport.c */
@@ -433,6 +440,8 @@ void fillViewportContextFromViewport(SEXP vp, LViewportContext *vpc);
 
 void copyViewportContext(LViewportContext vpc1, LViewportContext *vpc2);
 
+void gcontextFromViewport(SEXP vp, LGContext *gc);
+
 void calcViewportTransform(SEXP vp, SEXP parent, Rboolean incremental,
 			   GEDevDesc *dd);
 
@@ -443,6 +452,7 @@ void calcViewportLayout(SEXP viewport,
 			double parentWidthCM,
 			double parentHeightCM,
 			LViewportContext parentContext,
+			LGContext *parentgc,
 			GEDevDesc *dd);
 
 void calcViewportLocationFromLayout(SEXP layoutPosRow,

@@ -43,12 +43,8 @@ is.unit(unit)
     \item{\code{"lines"}}{Lines of text.  Locations and dimensions
       are in terms of multiples of the default text size of the viewport
       (as specified by the viewport's \code{fontsize} and \code{lineheight}).}
-    \item{\code{"mylines"}}{Same as \code{"lines"}, except will be
-      influenced by grob's own gpar settings.}
     \item{\code{"char"}}{Multiples of nominal font height of the
       viewport (as specified by the viewport's \code{fontsize}).}
-    \item{\code{"mychar"}}{Same as \code{"char"}, except will be
-      influenced by grob's own gpar settings.}
     \item{\code{"native"}}{Locations and dimensions are relative to
       the viewport's \code{xscale} and \code{yscale}.}
     \item{\code{"snpc"}}{Square Normalised Parent Coordinates.
@@ -99,6 +95,12 @@ is.unit(unit)
   several unit objects.
 
   The \code{c} function will not give the right answer.
+
+  There used to be \code{"mylines"}, \code{"mychar"}, \code{"mystrwidth"},
+  \code{"mystrheight"} units.  These will still be accepted, but
+  work exactly the same as
+  \code{"lines"}, \code{"char"}, \code{"strwidth"},
+  \code{"strheight"}.
 }
 \value{
   An object of class \code{"unit"}. 

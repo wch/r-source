@@ -44,7 +44,7 @@ setOldClass <- function(Classes, where = topenv(parent.frame()), test = FALSE) {
     for(cl in Classes[-1]) {
         tfun <- .oldTestFun
         body(tfun, envir = environment(tfun)) <-
-            substitute(CLASS %in % attr(object, "class"), list(CLASS = cl))
+            substitute(CLASS %in% attr(object, "class"), list(CLASS = cl))
         setIs(Class1, cl, test = tfun, coerce = .oldCoerceFun,
               replace = .oldReplaceFun, where = where)
     }

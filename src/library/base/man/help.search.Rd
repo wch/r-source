@@ -5,9 +5,9 @@
 \description{
   Allows for searching the help system for documentation matching a
   given character string in the (file) name, alias, title, or keyword
-  entries (or any combination thereof), using either fuzzy matching or
-  regular expression matching.  Names and titles of the matched help
-  entries are nicely displayed.
+  entries (or any combination thereof), using either \link{fuzzy matching}
+  or \link{regular expression} matching.  Names and titles of the
+  matched help entries are displayed nicely.
 }
 \usage{
 help.search(pattern, fields = c("alias", "concept", "title"),
@@ -30,7 +30,10 @@ help.search(pattern, fields = c("alias", "concept", "title"),
   \item{apropos}{a character string to be matched in the help page
     topics and title.}
   \item{keyword}{a character string to be matched in the help page
-    keywords.}
+    \sQuote{keywords}. \sQuote{Keywords} are really categories: the
+    standard categories are listed in file \file{RHOME/doc/KEYWORDS} and
+    some package writers have defined their own.  If \code{keyword} is
+    specified, \code{agrep} defaults to \code{FALSE}.}
   \item{whatis}{a character string to be matched in the help page
     topics.}
   \item{ignore.case}{a logical.  If \code{TRUE}, case is ignored during
@@ -47,11 +50,12 @@ help.search(pattern, fields = c("alias", "concept", "title"),
   \item{verbose}{logical; if \code{TRUE}, the search process is traced.}
   \item{rebuild}{a logical indicating whether the help data base should
     be rebuilt.}
-  \item{agrep}{if \code{NULL} (the default) and the character string to
+  \item{agrep}{if \code{NULL} (the default unless \code{keyword} is
+    used) and the character string to
     be matched consists of alphanumeric characters, whitespace or a dash
     only, approximate (fuzzy) matching via \code{\link{agrep}} is used
     unless the string has fewer than 5 characters; otherwise, it is
-    taken to contain a regular expression to be matched via
+    taken to contain a \link{regular expression} to be matched via
     \code{\link{grep}}.  If \code{FALSE}, approximate matching is not
     used.  Otherwise, one can give a numeric or a list specifying the
     maximal distance for the approximate match, see argument
@@ -60,9 +64,9 @@ help.search(pattern, fields = c("alias", "concept", "title"),
 \details{
   Upon installation of a package, a contents data base which contains
   the information on name, title, aliases and keywords and, concepts
-  starting with \R 1.8, is computed from the Rd files in the package and
+  starting with \R 1.8.0, is computed from the Rd files in the package and
   serialized as \file{Rd.rds} in the \file{Meta} subdirectory of the
-  top-level package installation directory (or, prior to \R 1.7, as
+  top-level package installation directory (or, prior to \R 1.7.0, as
   \file{CONTENTS} in Debian Control Format with aliases and keywords
   collapsed to character strings in the top-level package installation
   directory).  This, or a pre-built help.search index serialized as
@@ -104,6 +108,7 @@ help.search(apropos = "print")  # The same
 
 help.search(keyword = "hplot")  # All help pages documenting high-level
                                 # plots.
+file.show(file.path(R.home(), "doc", "KEYWORDS"))  # show all keywords
 
 ## Help pages with documented topics starting with 'try'.
 help.search("\\\\btry", fields = "alias")

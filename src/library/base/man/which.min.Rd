@@ -12,7 +12,7 @@ which.max(x)
 }
 \arguments{
  \item{x}{numeric vector, whose \code{\link{min}} or \code{\link{max}}
-   is searched.}
+   is searched (\code{NA}s are allowed).}
 }
 \value{
   an \code{\link{integer}} of length 1 or 0 (iff \code{x} has no
@@ -36,6 +36,7 @@ x <- c(1:4,0:5,11)
 which.min(x)
 which.max(x)
 
+## it *does* work with NA's present:
 data(presidents)
 presidents[1:30]
 range(presidents, na.rm = TRUE)

@@ -3,6 +3,13 @@ prop.trend.test <- function (x, n, score = 1:length(x))
     method <- "Chi-squared Test for Trend in Proportions"
     dname <- paste(deparse(substitute(x)), "out of", deparse(substitute(n)))
     dname <- paste(dname, ",\n using scores:", paste(score, collapse = " "))
+
+    ## Tabular input have caused grief, get rid of
+    ## dim() attributes:
+    x <- as.vector(x)
+    n <- as.vector(n) 
+    score <- as.vector(score)
+
     freq <- x/n
     p <- sum(x)/sum(n)
     w <- n/p/(1 - p)

@@ -3,7 +3,7 @@
 # Copyright 1997-2003 by Douglas Bates <bates@stat.wisc.edu> 
 #                    and Dirk Eddelbuettel <edd@debian.org>
 
-# $Id: rules,v 1.54 2003/10/05 20:32:03 bates Exp $
+# $Id: rules,v 1.54.2.1 2003/11/20 15:24:37 bates Exp $
 
 corepackage	= r-base-core
 latexpackage	= r-base-latex
@@ -28,9 +28,6 @@ debetc		:= $(debbase)/$(corepackage)/usr/lib/R/etc
 
 arch		:= $(shell dpkg-architecture -qDEB_BUILD_GNU_TYPE)
 
-## set this to 1 if you want the skip the pdf creation and tests
-#skipparts	= 1
-
 # set this to 1 (default) if you want the Gnome GUI package
 gnome		= 1
 ifeq ($(gnome),0)
@@ -47,7 +44,9 @@ export DH_COMPAT  = 3
 # dmb 04 Apr 2003  better to use no specify blas
 # atlas 		= --with-blas
 # edd 28 Apr 2003  try configuring with atlas
-atlas		= --with-blas=atlas
+# atlas		= --with-blas=atlas
+# edd 16 Oct 2003  back to older default
+atlas 		= --with-blas=blas
 # edd 08 Mar 2003  use the new lapack feature
 # edd 27 Apr 2003  Set this to =no as we currently see numerical errors
 lapack		= --with-lapack=no
@@ -97,29 +96,35 @@ upstream:
 	links http://cran.us.r-project.org/src/base
 
 upstreamdevel:
-        #links ftp://ftp.stat.math.ethz.ch/Software/R
+	links ftp://ftp.stat.math.ethz.ch/Software/R
         #links http://cran.us.r-project.org/src/base
-	rsync -vaC rsync.r-project.org::r-devel .
+        #rsync -vaC rsync.r-project.org::r-devel .
 
-build: build-arch build-indep
+## edd 24 Oct 2003  build is invoked by the buildd, so we would prefer to
+##  		    not imply build-indep; unfortunately R does not build
+##		    properly without it, so we have to stick with it
+#build: build-arch build-indep
+build: build-arch
 
-build-arch: configure make-arch-stamp build-arch-stamp
-build-arch-stamp:
-	@echo "*** build-arch ***"
-	touch build-arch-stamp
+build-arch: make-arch 
 
-build-indep: configure make-indep-stamp build-indep-stamp
-build-indep-stamp:
-	@echo "*** build-indep ***"
-	touch build-indep-stamp
+build-indep: make-indep 
 
 configure: configure-stamp
 configure-stamp:	
 	@echo "*** configure ***"
+
+        # we have to disable use of the expanded R_LD_LIBRARY_PATH as it
+        # conflicts with Debian's Atlas-can-replace-Blas scheme
+        # so set R_LD_LIBRARY_PATH to the minimal value R_HOME/bin
+        # and discard what configure finds for it on this machine
+	perl -p -i -e 's|:\@R_LD_LIBRARY_PATH\@||' src/scripts/R.sh.in
+
 	dh_testdir
 	PERL=/usr/bin/perl				\
 	R_UNZIPCMD=/usr/bin/miniunzip			\
 	R_ZIPCMD=/usr/bin/minizip			\
+	R_PRINTCMD=/usr/bin/lpr				\
 	CC=${compiler}					\
 	CXX=${cxxcompiler}				\
 	${fortrancompiler}				\
@@ -130,7 +135,8 @@ configure-stamp:
 		    --with-tcltk			\
 		    --mandir=/usr/share/man		\
 		    --infodir=/usr/share/info		\
-		    $(atlas) $(lapack)			\
+		    $(atlas) 				\
+		    $(lapack)				\
 		    $(gnomeconfig)			\
 		    --enable-R-profiling		\
 		    --enable-R-shlib			\
@@ -152,6 +158,10 @@ make-arch-stamp:
 			CXX=${cxxcompiler}			\
 			${fortrancompiler}			\
 			R
+
+        # the top-level 'make stamp-recommended' target implies 'make docs'
+        # which (for the buildds) implies a lot of time wasted generating 
+        # output we already take from the initial i386 build
 	make		CFLAGS="$(compilerflags)"		\
 			CXXFLAGS="$(compilerflags)"		\
 			FFLAGS="$(compilerflags)"		\
@@ -159,8 +169,6 @@ make-arch-stamp:
 			CXX=${cxxcompiler}			\
 			${fortrancompiler}			\
 			stamp-recommended
-        # currently needed for binary package with docs [FIXME: how?]
-	make docs
 
         # make standalone math lib
 	(cd src/nmath/standalone; 				\
@@ -172,28 +180,22 @@ make-arch-stamp:
 			${fortrancompiler}			\
 			libRmath_la_LDFLAGS=-Wl,-soname,libRmath.so.$(somaj) \
 			)
-        # FIXME
-	make html
-        # currently needed for binary package [FIXME: into r-doc-help]
-	make help
+
 	touch make-arch-stamp
 
 make-indep: configure make-indep-stamp
 make-indep-stamp:
 	@echo "*** make-indep ***"
-        # FIXME would be nice here:   make docs
-        #                             make help
-        # currently needed for binary package [FIXME: into r-doc-info]
+#	make docs
+	make html
+	make help
 	make info
 	make pdf
 	touch make-indep-stamp
 
-make: configure make-arch-stamp make-indep-stamp make-stamp
-make-stamp: 
-        # Already made in general 'make': make html
-	touch make-stamp
+make: make-arch make-indep 
 
-check: configure make-arch check-stamp
+check: make-arch check-stamp
 check-stamp: 
 	@echo "*** check ***"
 ifneq	($(arch),arm-linux)
@@ -233,17 +235,18 @@ install-arch-stamp:
 	make    	prefix=$(debtmp)/usr   	 		\
 			mandir=$(debtmp)/usr/share/man	 	install
 
-        # Now for a set of fixes / corrections for the Debian installation 
-
-        # set R_HOME_DIR env.var. in R shell script
-	sed -e '/^R_HOME_DIR=.*/s::R_HOME_DIR=/usr/lib/R:' \
-	  < bin/R > $(debtmp)/usr/bin/R
-	sed -e '/^R_HOME_DIR=.*/s::R_HOME_DIR=/usr/lib/R:' \
-	  < bin/R > $(debtmp)/usr/lib/R/bin/R
+        # link $R_HOME/bin/R to real one, and set R_HOME_DIR env.var. 
+	(cd $(debtmp)/usr/lib/R/bin/; 					\
+		ln -svf ../../../bin/R R;				\
+		cd ../../../bin;					\
+		perl -p -i -e						\
+		    's|^R_HOME_DIR=.*|R_HOME_DIR=/usr/lib/R|' R)
 
         # set browser to mozilla as mozilla-1.0.0 works with help.start()
-	sed -e '/^R_BROWSER=.*/s::R_BROWSER=$${R_BROWSER-/usr/bin/mozilla}:' \
-	  < etc/Renviron > $(debtmp)/usr/lib/R/etc/Renviron
+	(cd $(debtmp)/usr/lib/R/etc; \
+		perl -p -i -e \
+			"s|R_BROWSER-'.*'|R_BROWSER-'/usr/bin/mozilla'|" \
+			Renviron)
 
         # fix permissions (Lintian)
 	chmod a+x 	$(debtmp)/usr/lib/R/share/sh/echo.sh 		\
@@ -290,7 +293,7 @@ endif
 	dh_movefiles	-p$(corepackage)
 
         # for the standalone library package, move the two libs
-        # as 'make install' ignore these, we have to do it by hand
+        # as 'make install' ignores these, we have to do it by hand
 	dh_installdirs -p$(nmathpackage) usr/include usr/lib
 	install -m 0644 src/nmath/standalone/libRmath.a     \
 			$(debmat)/usr/lib
@@ -304,13 +307,13 @@ endif
 			ln -s ../lib/R/include/Rmath.h .)
 
         # now deal with $R_HOME/etc <--> /etc/R
-	# edd 03 Apr 2003  patch Renviron for new R_LIBS standard
+        # edd 03 Apr 2003  patch Renviron for new R_LIBS standard
 	(cd $(debetc); \
 		cat $(debbase)/Renviron-R_LIBS.patch | patch --verbose;	\
 		mv Makeconf Renviron	../../../../etc/R/; 		\
 		ln -s  /etc/R/Makeconf  .; 				\
 		ln -s  /etc/R/Renviron  .  				)
-        #
+
 	touch install-arch-stamp
 
 #install-indep: make-arch make-indep install-arch install-indep-stamp
@@ -371,7 +374,7 @@ binary-indep: build-indep install-indep
 	dh_builddeb -i
 
 # Build architecture-dependent files here.
-binary-arch: build-arch install-arch check
+binary-arch: build-arch check install-arch 
 	@echo "*** binary-arch ***"
 	dh_testdir -a
 	dh_testroot -a
@@ -391,11 +394,11 @@ binary-arch: build-arch install-arch check
         #dh_installcron -a
         #dh_installmanpages -a	-N$(gnomepackage) -p$(corepackage) getline.3
         #dh_installman 		-p$(corepackage) doc/R.1
-	## dh_installinfo -a	-n doc/manual/R-*.info*
-	## edd 04 Apr 2004 manual is dangling unless r-doc-pdf is installed ...
-	##(cd $(debdoc)/doc && ln -s ../../../../lib/R/doc/html .)
-	##(cd $(debdoc)/doc && ln -s ../../../../lib/R/doc/manual .)
-	# ... so install doc as a link, as we already did with library
+        ## dh_installinfo -a	-n doc/manual/R-*.info*
+        ## edd 04 Apr 2004 manual is dangling unless r-doc-pdf is installed ...
+        ##(cd $(debdoc)/doc && ln -s ../../../../lib/R/doc/html .)
+        ##(cd $(debdoc)/doc && ln -s ../../../../lib/R/doc/manual .)
+        # ... so install doc as a link, as we already did with library
 	(cd $(debdoc) && ln -s ../../../lib/R/doc .)
 	(cd $(debdoc) && ln -s ../../../lib/R/library .)
         # install lintian "silencer"
@@ -413,15 +416,15 @@ binary-arch: build-arch install-arch check
 	dh_installdeb -a
 	dh_perl -a
 	dh_shlibdeps -a
-	@echo "*** Pruning shlibdeps result from double atlas entry ***"
-	cat debian/r-base-core.substvars
-	perl -p -i -e 's/atlas2-base, //' debian/r-base-core.substvars
-	cat debian/r-base-core.substvars
-	@echo "*** Pruning atlas from r-recommended shlibdeps ***"
-	cat debian/r-recommended.substvars
-	perl -p -i -e 's/atlas2-base, //' debian/r-recommended.substvars
-	cat debian/r-recommended.substvars
-	echo "*** Done ***"
+#	@echo "*** Pruning shlibdeps result from double atlas entry ***"
+#	cat debian/r-base-core.substvars
+#	perl -p -i -e 's/atlas2-base, //' debian/r-base-core.substvars
+#	cat debian/r-base-core.substvars
+#	@echo "*** Pruning atlas from r-recommended shlibdeps ***"
+#	cat debian/r-recommended.substvars
+#	perl -p -i -e 's/atlas2-base, //' debian/r-recommended.substvars
+#	cat debian/r-recommended.substvars
+#	echo "*** Done ***"
 	dh_gencontrol -a
 	dh_md5sums -a		-X'usr/bin/R'  -XLibIndex -Xindex.txt \
 					-Xfunction.html -Xpackages.html

@@ -5,7 +5,7 @@ Basics|data: Environments, Scoping, Packages # ~= S
 Basics|manip: Data Manipulation
 Basics|attribute: Data Attributes
 Basics|classes: Data Types (not OO)
-Basics|classes|character: Character Data Operations
+Basics|classes|character: Character Data ("String") Operations
 Basics|classes|complex: Complex Numbers
 Basics|classes|category: Categorical Data
 Basics|classes|NA: Missing Values # != S

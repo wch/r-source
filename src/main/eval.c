@@ -2184,6 +2184,7 @@ static SEXP cmp_relop(SEXP call, int opval, SEXP opsym, SEXP x, SEXP y)
 	    UNPROTECT(1);
 	    return ans;
 	}
+	UNPROTECT(1);
     }
     return do_relop_dflt(R_NilValue, op, x, y);
 }

@@ -41,7 +41,7 @@ SEXP La_rs_cmplx(SEXP, SEXP);
 SEXP La_rg_cmplx(SEXP, SEXP);
 SEXP La_chol(SEXP);
 SEXP La_chol2inv(SEXP, SEXP);
-SEXP La_dgesv(SEXP, SEXP);
+SEXP La_dgesv(SEXP, SEXP, SEXP);
 SEXP La_dgeqp3(SEXP);
 SEXP qr_coef_real(SEXP, SEXP);
 SEXP qr_qy_real(SEXP, SEXP, SEXP);

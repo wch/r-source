@@ -7,7 +7,7 @@ function(object, filename = NULL, name = NULL,
          force.function = FALSE, ...)
 {
     paste0 <- function(...) paste(..., sep = "")
-    
+
     is.missing.arg <- function(arg)
         typeof(arg) == "symbol" && deparse(arg) == ""
 
@@ -114,9 +114,7 @@ function(object, filename = NULL, name = NULL,
     if(is.na(filename)) return(Rdtxt)
 
     cat(unlist(Rdtxt), file = filename, sep = "\n")
-    cat(strwrap(c(paste("Created file named",
-                        sQuote(filename),
-                        "in the current directory."),
+    cat(strwrap(c(paste("Created file named ", sQuote(filename), ".", sep=""),
                   paste("Edit the file and move it to the appropriate",
                         "directory."))),
         sep = "\n")
@@ -167,7 +165,7 @@ function(object, filename = NULL, name = NULL)
             }
     if(is.null(filename))
         filename <- paste0(name, ".Rd")
-    
+
     ## Better than get(); works when called in fun :
     x <- get(name, envir = parent.frame())
 
@@ -247,12 +245,10 @@ function(object, filename = NULL, name = NULL)
     if(is.na(filename)) return(Rdtxt)
 
     cat(unlist(Rdtxt), file = filename, sep = "\n")
-    cat(strwrap(c(paste("Created file named",
-                        sQuote(filename),
-                        "in the current directory."),
+    cat(strwrap(c(paste("Created file named ", sQuote(filename), ".", sep=""),
                   paste("Edit the file and move it to the appropriate",
                         "directory."))),
         sep = "\n")
-    
+
     invisible(filename)
 }

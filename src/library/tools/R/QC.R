@@ -92,11 +92,38 @@ function(package, dir, lib.loc = NULL)
         dataEnv <- new.env()
         files <- listFilesWithType(dataDir, "data")
         files <- unique(basename(filePathSansExt(files)))
+        ## <FIXME>
+        ## Argh.  When working on the source directory of a package in a
+        ## bundle, or a base package, we (currently?) cannot simply use
+        ## data().  In these cases, we only have a 'DESCRIPTION.in'
+        ## file.  On the other hand, data() uses .find.package() to find
+        ## the package paths from its 'package' and '.lib.loc'
+        ## arguments, and .find.packages() is really for finding
+        ## *installed* packages, and hence tests for the existence of a
+        ## 'DESCRIPTION' file.  As a last resort, use the fact that
+        ## data() can be made to for look data sets in the 'data'
+        ## subdirectory of the current working directory ...
+        packageName <- basename(dir)
+        libPath <- dirname(dir)
+        if(!file.exists(file.path(dir, "DESCRIPTION"))) {
+            ## Hope that there is a 'DESCRIPTION.in', maybe we should
+            ## check for this?
+            packageName <- character()
+            libPath <- NULL
+            owd <- getwd()
+            setwd(dir)
+            on.exit(setwd(owd))
+        }
+        ## </FIXME>
         for(f in files) {
-            yy <- try(data(list = f,
-                           package = basename(dir),
-                           lib.loc = dirname(dir),
-                           envir = dataEnv))
+            ## <NOTE>
+            ## Non-standard evaluation for argument 'package' to data().
+            yy <- try(eval(substitute(data(list = f,
+                                           package = packageName,
+                                           lib.loc = libPath,
+                                           envir = dataEnv),
+                                      list(packageName = packageName))))
+            ## </NOTE>
             if(inherits(yy, "try-error"))
                 stop(paste("cannot load data set", sQuote(f)))
             new <- ls(envir = dataEnv, all.names = TRUE)
@@ -514,6 +541,15 @@ function(package, dir, lib.loc = NULL,
     dataSetsInUsages <- character()
     functionsInUsagesNotInCode <- list()
 
+    ## <FIXME>
+    ## Should really have a utility function for creating this and
+    ## related regexps.
+    S4methodRE <- paste("\\\\S4method",
+                        "{([.[:alnum:]]*)}",
+                        "{([.[:alnum:]]*)}",
+                        sep = "")
+
+
     for(docObj in dbNames) {
 
         exprs <- dbUsages[[docObj]]
@@ -589,6 +625,17 @@ function(package, dir, lib.loc = NULL,
         ## 'objectsInCodeOrNamespace'), as one can access the internal
         ## symbols via ':::' and hence package developers might want to
         ## provide function usages for some of the internal functions.
+        ## <FIXME>
+        ## We may still have \S4method{}{} entries in functions, which
+        ## cannot have a corresponding object in the code.  Hence, we
+        ## remove these function entries, but should really do better,
+        ## by comparing the explicit \usage entries for S4 methods to
+        ## what is actually in the code.  We most likely also should do
+        ## something similar for S3 methods.
+        ind <- grep(S4methodRE, functions)
+        if(any(ind))
+            functions <- functions[!ind]
+        ## </FIXME>
         badFunctions <-
             functions[! functions %in%
                       c(objectsInCodeOrNamespace, functionsToBeIgnored)]
@@ -1637,7 +1684,23 @@ function(package, dir, file, lib.loc = NULL,
     if(useSaveImage) {
         if(verbose) writeLines("loading saved image ...")
         codeEnv <- new.env()
-        .tryQuietly(load(file, envir = codeEnv))
+        ## <FIXME>
+        ## If we 'just' load a saved image of the code in a package, the
+        ## packages required by the code are not attached automatically.
+        ## Hence, we repeat the part of the default startup code (the
+        ## copy of 'share/R/firstlib.R') which attempts to take care of
+        ## this via '.required' in the saved image.  Long term, it seems
+        ## that we should always *load* a given package ...
+        .tryQuietly({
+            load(file, envir = codeEnv)
+            if(exists(".required", envir = codeEnv, inherits = FALSE)) {
+                required <- get(".required", envir = codeEnv)
+                for(pkg in required)
+                    require(pkg, quietly = TRUE, character.only = TRUE,
+                            save = FALSE)
+            }
+        })
+        ## </FIXME>
         exprs <- lapply(ls(envir = codeEnv, all.names = TRUE),
                         function(f) {
                             f <- get(f, envir = codeEnv)

@@ -19,11 +19,10 @@ geterrmessage()
   \code{geterrmessage} gives the last error message.
 }
 \details{
-
   The error action is controlled by error handlers established within
   the executing code and by the current default error handler set by
   \code{options(error=)}.  The error is first signaled as if using
-  \code{signalCondition}.  If there are no handlers or if all handlers
+  \code{\link{signalCondition}()}.  If there are no handlers or if all handlers
   return, then the error message is printed (if
   \code{options("show.error.messages")} is true) and the default error
   handler is used.  The default behaviour (the \code{NULL}
@@ -31,8 +30,8 @@ geterrmessage()
   prompt or the top level browser, and in non-interactive use to
   (effectively) call \code{\link{q}("no", status=1, runLast=FALSE}).
   The default handler stores the error message in a buffer; it can be
-  retrieved by \code{geterrmessage}.  It also stores a trace of the
-  call stack that can be retrieved by  code{traceback}.
+  retrieved by \code{geterrmessage()}.  It also stores a trace of
+  the call stack that can be retrieved by \code{\link{traceback}()}.
 
   Errors will be truncated to \code{getOption("warning.length")}
   characters, default 1000.

@@ -596,9 +596,37 @@ SEXP do_subset_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
     /* This is the actual subsetting code. */
     /* The separation of arrays and matrices is purely an optimization. */
 
-    if(nsubs < 2)
+    if(nsubs < 2) {
+	SEXP dim = getAttrib(x, R_DimSymbol);
+	int ndim = length(dim);
 	ans = VectorSubset(ax, (nsubs == 1 ? CAR(subs) : R_MissingArg), call);
-    else {
+	/* one-dimensional arrays went through here, and they should
+	   have their dimensions dropped only if the result has 
+	   length one and drop == TRUE
+	*/
+	if(ndim == 1) {
+	    SEXP attr, attrib, nattrib;
+	    int len = length(ans);
+
+	    if(!drop || len > 1) {
+		PROTECT(ans);
+		PROTECT(attr = allocVector(INTSXP, 1));
+		INTEGER(attr)[0] = length(ans);
+		setAttrib(ans, R_DimSymbol, attr);
+		UNPROTECT(1);
+		if((attrib = getAttrib(x, R_DimNamesSymbol)) != R_NilValue) {
+		    /* reinstate dimnames, include names of dimnames */
+		    PROTECT(nattrib = duplicate(attrib));
+		    SET_VECTOR_ELT(nattrib, 0, 
+				   getAttrib(ans, R_NamesSymbol));
+		    setAttrib(ans, R_DimNamesSymbol, nattrib);
+		    setAttrib(ans, R_NamesSymbol, R_NilValue);
+		    UNPROTECT(1);
+		}
+		UNPROTECT(1);
+	    }
+	}
+    } else {
 	if (nsubs != length(getAttrib(x, R_DimSymbol)))
 	    errorcall(call, "incorrect number of dimensions");
 	if (nsubs == 2)
@@ -699,7 +727,7 @@ SEXP do_subset2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 		    error("recursive indexing failed at level %d\n", i+1);
 		offset = get1index(CAR(subs), getAttrib(x, R_NamesSymbol),
 				   length(x), /*partial ok*/TRUE, i);
-		if(offset < 0)
+		if(offset < 0 || offset >= length(x))
 		    error("no such index at level %d\n", i+1);
 		x = VECTOR_ELT(x, offset);
 	    }

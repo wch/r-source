@@ -4,6 +4,10 @@
 \alias{glm.fit}
 \alias{weights.glm}
 \alias{print.glm}
+\concept{regression}
+\concept{logistic}
+\concept{log-linear}
+\concept{loglinear}
 \description{
   \code{glm} is used to fit generalized linear models, specified by
   giving a symbolic description of the linear predictor and a

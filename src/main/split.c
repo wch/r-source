@@ -43,8 +43,8 @@ SEXP do_split(SEXP call, SEXP op, SEXP args, SEXP env)
 	return R_NilValue;
     if (nfac <= 0)
 	errorcall(call, "Group length is 0 but data length > 0");
-    if (nobs != nfac)
-	warningcall(call, "argument lengths differ");
+    if (nobs % nfac != 0)
+	warningcall(call, "data length is not a multiple of split variable");
     PROTECT(counts = allocVector(INTSXP, nlevs));
     for (i = 0; i < nlevs; i++)
 	INTEGER(counts)[i] = 0;

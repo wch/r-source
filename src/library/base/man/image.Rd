@@ -61,14 +61,14 @@ image(x, \dots)
   \code{n} giving the number of colors desired.
 }
 \details{
-  The length of \code{x} should be equal to the \code{nrow(x)+1} or
-  \code{nrow(x)}. In the first case \code{x} specifies the boundaries
-  between the cells: in the second case \code{x} specifies the
-  midpoints of the cells. Similar reasoning applies to \code{y}. It
-  probably only makes sense to specify the midpoints of an
-  equally-spaced grid. If you specify just one row or column and a
-  length-one \code{x} or \code{y}, the whole user area in the
-  corresponding direction is filled.
+  The length of \code{x} should be equal to the \code{nrow(z)+1} or
+  \code{nrow(z)}.  In the first case \code{x} specifies the boundaries
+  between the cells: in the second case \code{x} specifies the midpoints
+  of the cells.  Similar reasoning applies to \code{y}.  It probably
+  only makes sense to specify the midpoints of an equally-spaced
+  grid.  If you specify just one row or column and a length-one \code{x}
+  or \code{y}, the whole user area in the corresponding direction is
+  filled.
 
   If \code{breaks} is specified then \code{zlim} is unused and the
   algorithm used follows \code{\link{cut}}, so intervals are closed on

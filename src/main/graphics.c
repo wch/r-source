@@ -4396,7 +4396,7 @@ void hsv2rgb(double h, double s, double v, double *r, double *g, double *b)
     }
 }
 
-/* rgb2hsv() -- the reverse (same reference as above
+/* rgb2hsv() -- the reverse (same reference as above)
  *	this implementation is adapted from code by Nicholas Lewin-Koh.
  */
 void rgb2hsv(double r, double g, double b,

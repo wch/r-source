@@ -64,8 +64,8 @@ lsf.str(pos = 1, \dots, envir = as.environment(pos))
 
   \item{pos}{integer indicating \code{\link{search}} path position.}
   \item{envir}{environment to use, see \code{\link{ls}}.}
-  \item{pattern}{regular expression passed to \code{\link{ls}}.  Only names
-          matching \code{pattern} are considered.}
+  \item{pattern}{a \link{regular expression} passed to \code{\link{ls}}.
+    Only names matching \code{pattern} are considered.}
   \item{mode}{character specifying the \code{\link{mode}} of objects to
     consider.  Passed to \code{\link{exists}} and \code{\link{get}}.}
 }

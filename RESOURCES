@@ -62,6 +62,9 @@ mirrored daily at
 `http://www.termix.ufv.br/CRAN/'
      Federal University of Vicosa, Brasil
 
+`http://lmq.esalq.usp.br/CRAN/'
+     University of Sao Paulo, Piracicaba, Brasil
+
 `http://probability.ca/cran/'
      University of Toronto, Canada
 
@@ -76,6 +79,9 @@ mirrored daily at
 
 `http://cran.za.r-project.org/'
      Rhodes University, South Africa
+
+`http://cran.es.r-project.org/'
+     Spanish National Research Network, Madrid, Spain
 
 `http://cran.ch.r-project.org/'
      ETH Zurich, Switzerland
@@ -107,8 +113,8 @@ mirrored daily at
 `http://www.binarycode.org/cran'
      BinaryCode.org, Austin, TX, USA
 
-`http://mirrors.theonlinerecordstore.com/CRAN/'
-     The Online Record Store, Houston, TX, USA
+`http://mirrors.mix5.com/CRAN/'
+     Mix5.com, Houston, TX, USA
 
 Many of these sites can also be accessed using FTP.  In the interests of
 preserving international bandwidth please use a site near you if possible.

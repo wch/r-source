@@ -5,14 +5,14 @@ symnum <- function(x, cutpoints = c(  .3,  .6,	 .8,  .9, .95),
 		   corr = missing(cutpoints),
 		   show.max = if(corr) "1", show.min = NULL,
 		   abbr.colnames = has.colnames,
-		   lower.triangular = corr & is.matrix(x),
-		   diag.lower.tri = corr & !is.null(show.max))
+		   lower.triangular = corr && is.numeric(x) && is.matrix(x),
+		   diag.lower.tri = corr && !is.null(show.max))
 {
     ## Martin Maechler, 21 Jan 1994; Dedicated to Benjamin Schaad, born that day
 
     ##--------------- Argument checking -----------------------------
     if(length(x) == 0)
-	return(noquote("()"))
+	return(noquote(if(is.null(d <- dim(x)))character(0) else array("", dim=d)))
     has.na <- any(nax <- is.na(x))
     num.x <- is.numeric(x)## !is.logical(x)
     if(num.x) {

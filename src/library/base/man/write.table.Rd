@@ -19,11 +19,11 @@ write.table(x, file = "", append = FALSE, quote = TRUE, sep = " ",
     \code{""} indicates output to the console.}
   \item{append}{logical.  If \code{TRUE}, the output is appended to the
     file.  If \code{FALSE}, any existing file of the name is destroyed.}
-  \item{quote}{a logical or a numeric vector.  If \code{TRUE}, any
+  \item{quote}{a logical value or a numeric vector.  If \code{TRUE}, any
     character or factor columns will be surrounded by double quotes.  If
     a numeric vector, its elements are taken as the indices of the
-    variable (columns) to quote.  In both cases, row and columns names
-    are quoted if they are written, but not if \code{quote is FALSE}.} 
+    columns to quote.  In both cases, row and column names
+    are quoted if they are written. If \code{FALSE}, nothing is quoted.}
   \item{sep}{the field separator string.  Values within each row of
     \code{x} are separated by this string.}
   \item{eol}{the character(s) to print at the end of each line (row).}

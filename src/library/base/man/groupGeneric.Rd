@@ -46,6 +46,7 @@ Summary.factor(x, \dots)
 Math(x, \dots)
 Ops(e1, e2)
 Summary(x, \dots)
+Complex(z)
 
 ## S4 methods have prototypes:
 Arith(e1, e2)
@@ -66,10 +67,11 @@ Complex(z)
 \section{S3 Group Dispatching}{
   %% --------------- grep -nw DispatchGroup src/*/*[ch]
 
-  There are three \emph{groups} for which S3 methods can be written, namely
-  the \code{"Math"}, \code{"Ops"} and \code{"Summary"} groups.  These
-  are not \R objects, but methods can be supplied for them and base \R
-  contain \code{\link{factor}} and \code{\link{data.frame}} methods.
+  There are four \emph{groups} for which S3 methods can be written,
+  namely the \code{"Math"}, \code{"Ops"}, \code{"Summary"} and
+  \code{"Complex"} groups.  These are not \R objects, but methods can be
+  supplied for them and base \R contains \code{\link{factor}} and
+  \code{\link{data.frame}} methods for the first three groups.
   (There is also a \code{\link{ordered}} method for \code{Ops}.)
   
 %   A function \emph{\code{f}} belonging to one of these groups must be
@@ -136,6 +138,12 @@ Complex(z)
       % do_summary() [summary.c:322]: if(DispatchGroup("Summary",...))
       \item \code{range}
     }
+
+    \item Group \code{Complex}:
+    \itemize{
+      \item \code{Arg}, \code{Conj}, \code{Im}, \code{Mod}, \code{Re}
+      % do_cmathfuns() [complex.c:267]: if(DispatchGroup("Complex",...))
+    }
   }
 
   The number of arguments supplied for \code{"Math"} group generic
@@ -184,6 +192,8 @@ Complex(z)
   Chambers, J. M.  and Hastie, T. J. eds (1992)
   \emph{Statistical Models in S.}
   Wadsworth & Brooks/Cole.
+
+  Chambers, J. M. (1998) \emph{Programming with Data.} Springer, pp. 352--4.
 }
 \seealso{
   \code{\link{methods}} for methods of non-Internal generic functions.
@@ -195,5 +205,16 @@ methods("Summary")
 
 d.fr <- data.frame(x=1:9, y=rnorm(9))
 data.class(1 + d.fr) == "data.frame" ##-- add to d.f. ...
+\dontshow{
+if(.isMethodsDispatchOn()) {
+  setClass("testComplex", representation(zz = "complex"))
+  setMethod("Complex", "testComplex", function(z) c("groupMethod", callGeneric(z@zz)))
+  setMethod("Arg", "testComplex", function(z)  c("ArgMethod", Arg(z@zz)))
+  z1 = 1+2i
+  z2 = new("testComplex", zz = z1)
+  stopifnot(identical(Mod(z2), c("groupMethod", Mod(z1))))
+  stopifnot(identical(Arg(z2), c("ArgMethod", Arg(z1))))
+}
+}
 }
 \keyword{methods}

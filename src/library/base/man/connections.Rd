@@ -186,7 +186,7 @@ isIncomplete(con)
 #ifdef windows
 \section{Clipboard}{
   Under Windows, \code{file} can also be used with \code{description =
-    "clipboard"} in mode \code{"w"} and \code{"w"} only.
+    "clipboard"} in modes \code{"r"} and \code{"w"} only.
   
   When the clipboard is opened for reading, the contents are immediately
   copied to internal storage in the connection.

@@ -1,6 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2001-2003   The R Development Core Team.
+ *  Copyright (C) 2001--2003  The R Development Core Team.
+ *  Copyright (C) 2003        The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -439,7 +440,7 @@ static SEXP modqr_coef_cmplx(SEXP Q, SEXP Bin)
     PROTECT(B = duplicate(Bin));
     Qdims = INTEGER(coerceVector(getAttrib(qr, R_DimSymbol), INTSXP));
     n = Qdims[0];
-    Bdims = INTEGER(coerceVector(getAttrib(B, R_DimSymbol), INTSXP));
+    Bdims = INTEGER(coerceVector(getAttrib(Bin, R_DimSymbol), INTSXP));
     if(Bdims[0] != n)
 	error("rhs should have %d not %d rows", n, Bdims[0]);
     nrhs = Bdims[1];
@@ -456,7 +457,7 @@ static SEXP modqr_coef_cmplx(SEXP Q, SEXP Bin)
 		     work, &lwork, &info);
     if (info != 0)
 	error("error code %d from Lapack routine zunmqr", info);
-    F77_CALL(ztrtrs)("U", "N", "N", &n, &nrhs,
+    F77_CALL(ztrtrs)("U", "N", "N", &k, &nrhs,
 		     COMPLEX(qr), &n, COMPLEX(B), &n, &info);
     if (info != 0)
 	error("error code %d from Lapack routine ztrtrs", info);
@@ -748,10 +749,10 @@ static SEXP modLa_chol2inv(SEXP A, SEXP size)
 
 /* ------------------------------------------------------------ */
 
-static SEXP modLa_dgesv(SEXP A, SEXP Bin)
+static SEXP modLa_dgesv(SEXP A, SEXP Bin, SEXP tolin)
 {
     int n, p, info, *ipiv, *Adims, *Bdims;
-    double *avals;
+    double *avals, anorm, rcond, tol = asReal(tolin), *work;
     SEXP B;
 
     if (!(isMatrix(A) && isReal(A)))
@@ -773,13 +774,19 @@ static SEXP modLa_dgesv(SEXP A, SEXP Bin)
     ipiv = (int *) R_alloc(n, sizeof(int));
 
     avals = (double *) R_alloc(n * n, sizeof(double));
-    /* work on a copy of x */
+				/* work on a copy of A */
     Memcpy(avals, REAL(A), (size_t) (n * n));
     F77_CALL(dgesv)(&n, &p, avals, &n, ipiv, REAL(B), &n, &info);
     if (info < 0)
 	error("argument %d of Lapack routine dgesv had illegal value", -info);
     if (info > 0)
 	error("Lapack routine dgesv: system is exactly singular");
+    anorm = F77_CALL(dlange)("1", &n, &n, REAL(A), &n, (double*) NULL);
+    work = (double *) R_alloc(4*n, sizeof(double));
+    F77_CALL(dgecon)("1", &n, avals, &n, &anorm, &rcond, work, ipiv, &info);
+    if (rcond < tol)
+	error("system is computationally singular: reciprocal condition number = %g",
+	      rcond);
     UNPROTECT(1);
     return B;
 }
@@ -858,7 +865,7 @@ static SEXP modqr_coef_real(SEXP Q, SEXP Bin)
 		     work, &lwork, &info);
     if (info != 0)
 	error("error code %d from Lapack routine dormqr", info);
-    F77_CALL(dtrtrs)("U", "N", "N", &n, &nrhs,
+    F77_CALL(dtrtrs)("U", "N", "N", &k, &nrhs,
 		     REAL(qr), &n, REAL(B), &n, &info);
     if (info != 0)
 	error("error code %d from Lapack routine dtrtrs", info);

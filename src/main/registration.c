@@ -26,14 +26,14 @@
  *  packages can use to explicitly list the symbols to be exported.
  *  For .C() and .Call() routines, we give the number of arguments
  *  expected.
- *  For .C() routines, we also specify the types of the arguments. 
+ *  For .C() routines, we also specify the types of the arguments.
  *  For .Fortran() and .External() routines, we specify only the name
  *  and symbol.
 
  *  To add an entry, first determine by which interface the routine will
  *  be accessed:
  *   .C, .Call, .External or .Fortran
- *  Then add an entry to 
+ *  Then add an entry to
  *    cMethods, callMethods, externalMethods, or fortranMethods
  *  respectively
  *
@@ -54,14 +54,14 @@
 #include "basedecl.h"
 
 /* Omitted (relative to those in ROUTINES):
-   
+
    fft_factor
    fft_work
    fdhess
    optif9
 
    These can still be called directly in native code in a package.
-   They are just not exported here for access via the .C(), .Call(), 
+   They are just not exported here for access via the .C(), .Call(),
    .Fortran() or .External() interfaces.
 
    If these omitted routines are not visible to package DLLs/shared
@@ -72,21 +72,21 @@
 static R_NativePrimitiveArgType R_approx_t[] = {REALSXP, REALSXP, INTSXP, REALSXP, INTSXP, INTSXP, REALSXP, REALSXP, REALSXP};
 static R_NativePrimitiveArgType bakslv_t[] = {REALSXP, INTSXP, INTSXP, REALSXP, INTSXP, INTSXP, REALSXP, INTSXP, INTSXP};
 
-static R_NativePrimitiveArgType bincode_t[] = {REALSXP, INTSXP, REALSXP, INTSXP, INTSXP, INTSXP, INTSXP, INTSXP};
-static R_NativePrimitiveArgType bincount_t[] = {REALSXP, INTSXP, REALSXP, INTSXP, INTSXP, INTSXP, INTSXP, INTSXP};
+static R_NativePrimitiveArgType bincode_t[] = {REALSXP, INTSXP, REALSXP, INTSXP, INTSXP, LGLSXP, LGLSXP, LGLSXP};
+static R_NativePrimitiveArgType bincount_t[] = {REALSXP, INTSXP, REALSXP, INTSXP, INTSXP, LGLSXP, LGLSXP, LGLSXP};
 
 static R_NativePrimitiveArgType R_chull_t[] = {INTSXP, REALSXP, INTSXP, INTSXP, INTSXP, INTSXP, INTSXP, INTSXP, INTSXP};
 
 static R_NativePrimitiveArgType R_cumsum_t[] = {REALSXP, INTSXP, REALSXP, REALSXP};
 
-static R_NativePrimitiveArgType find_interv_vec_t[] = {REALSXP, INTSXP, REALSXP, INTSXP, INTSXP, LGLSXP, INTSXP};
+static R_NativePrimitiveArgType find_interv_vec_t[] = {REALSXP, INTSXP, REALSXP, INTSXP, LGLSXP, LGLSXP, INTSXP};
 
-static R_NativePrimitiveArgType loglin_t[] = {INTSXP, INTSXP, INTSXP, INTSXP, INTSXP, 
+static R_NativePrimitiveArgType loglin_t[] = {INTSXP, INTSXP, INTSXP, INTSXP, INTSXP,
                                      REALSXP, REALSXP, INTSXP, INTSXP, REALSXP,
-                                     INTSXP, REALSXP, REALSXP, INTSXP, REALSXP, 
+                                     INTSXP, REALSXP, REALSXP, INTSXP, REALSXP,
 				     INTSXP, INTSXP};
 
-static R_NativePrimitiveArgType lowess_t[] = {REALSXP, REALSXP, INTSXP, REALSXP, 
+static R_NativePrimitiveArgType lowess_t[] = {REALSXP, REALSXP, INTSXP, REALSXP,
 				       INTSXP, REALSXP, REALSXP, REALSXP, REALSXP};
 
 
@@ -160,7 +160,7 @@ static R_CMethodDef cMethods [] = {
 #endif
     CDEF(R_tabulate),
 
-    /* Sockets */    
+    /* Sockets */
     CDEF(Rsockconnect),
     CDEF(Rsockopen),
     CDEF(Rsocklisten),
@@ -179,7 +179,7 @@ static R_CMethodDef cMethods [] = {
     CDEF(band_phi6_bin),
     CDEF(band_den_bin),
 
-    {"InitGraphics", (DL_FUNC)&Rf_InitGraphics, 0, NULL},    
+    {"InitGraphics", (DL_FUNC)&Rf_InitGraphics, 0, NULL},
     {"InitColors", (DL_FUNC)&Rf_InitColors, 0, NULL},
     {NULL, NULL, 0}
 };
@@ -201,7 +201,7 @@ static R_CallMethodDef callMethods [] = {
     CALLDEF(La_rg_cmplx, 2),
     CALLDEF(La_chol2inv, 2),
     CALLDEF(La_chol, 1),
-    CALLDEF(La_dgesv, 2),
+    CALLDEF(La_dgesv, 3),
     CALLDEF(La_dgeqp3, 1),
     CALLDEF(qr_coef_real, 2),
     CALLDEF(qr_qy_real, 3),
@@ -211,7 +211,7 @@ static R_CallMethodDef callMethods [] = {
     CALLDEF(Rrowsum_matrix, 4),
     CALLDEF(Rrowsum_df, 4),
 
-    /* Top-level task callbacks */ 
+    /* Top-level task callbacks */
     CALLDEF(R_getTaskCallbackNames, 0),
     CALLDEF(R_removeTaskCallback, 1),
     CALLDEF(R_addTaskCallback, 4),

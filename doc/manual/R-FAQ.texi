@@ -4,9 +4,9 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2003
-@set FAQ-VERSION 1.8-0, @value{FAQ-YEAR}-10-07
+@set FAQ-VERSION 1.8-17, @value{FAQ-YEAR}-11-15
 @set REL-VERSION 1.8.0
-@set FAQ-ISBN 3-901167-51-X
+@set FAQ-ISBN 3-900051-01-1
 @documentlanguage en
 @documentencoding ISO-8859-1
 @c %**end of header
@@ -175,12 +175,12 @@ prompt, and a @samp{$} for the shell prompt (where applicable).
 
 Feedback is of course most welcome.
 
-In particular, note that I do not have access to Windows or Mac systems.
-Features specific to the Windows and Mac OS ports of R are described in
-the @uref{http://www.stats.ox.ac.uk/pub/R/rw-FAQ.html, ``R for Windows
-@acronym{FAQ}''} and the
+In particular, note that I do not have access to Windows or Macintosh
+systems.  Features specific to the Windows and MacOS X ports of R are
+described in the @uref{http://www.stats.ox.ac.uk/pub/R/rw-FAQ.html, ``R
+for Windows @acronym{FAQ}''} and the
 @uref{http://cran.r-project.org/bin/macosx/RAqua-FAQ.html, ``R for
-Macintosh @acronym{FAQ}/DOC''}.  If you have information on Mac or
+Macintosh @acronym{FAQ}/DOC''}.  If you have information on Macintosh or
 Windows systems that you think should be added to this document, please
 let me know.
 
@@ -204,6 +204,7 @@ let me know.
 * What mailing lists exist for R?::  
 * What is CRAN?::               
 * Can I use R for commercial purposes?::  
+* Why is R named R?::           
 @end menu
 
 @node What is R?, What machines does R run on?, R Basics, R Basics
@@ -301,6 +302,9 @@ The rsync trees are created directly from the master CVS archive and are
 updated hourly.  The @option{-C} and in the @command{rsync} command
 is to cause it to skip the CVS directories.  Further information on
 @command{rsync} is available at @uref{http://rsync.samba.org/rsync/}.
+
+The sources of the development version are also available via anonymous
+CVS.  See @uref{http://anoncvs.R-project.org} for more information.
 
 @node How can R be installed?, Are there Unix binaries for R?, How can R be obtained?, R Basics
 @section How can R be installed?
@@ -419,15 +423,12 @@ The @file{bin/macosx} directory of a @CRAN{} site contains a standard
 Apple installer package named @file{RAqua.pkg.sit} compressed in Aladdin
 Stuffit format.  Once downloaded, uncompressed and executed, the
 installer will install the current non-developer release of R.  RAqua is
-a native MacOSX Darwin version with Aqua GUI.
-
-Inside @file{bin/macosx/@var{x}.@var{y}} there are prebuilt binary
-version of packages ready to be used with RAqua corresponding to R major
-release ``@var{x}.@var{y}''. The installation of these packages is
-available through the ``Package'' menu of the RAqua GUI.
-
-This port of R for MacOSX is maintained by
-@email{Stefano.Iacus@@R-project.org, Stefano Iacus}.  The
+a native MacOSX Darwin version of R with an Aqua GUI.  Inside
+@file{bin/macosx/@var{x}.@var{y}} there are prebuilt binary packages to
+be used with RAqua corresponding to the ``@var{x}.@var{y}'' release of
+R. The installation of these packages is available through the
+``Package'' menu of the RAqua GUI.  This port of R for MacOSX is
+maintained by @email{Stefano.Iacus@@R-project.org, Stefano Iacus}.  The
 @uref{http://cran.r-project.org/bin/macosx/RAqua-FAQ.html, ``R for
 Macintosh @acronym{FAQ}/DOC''} has more details.
 
@@ -439,32 +440,28 @@ to MacOS 9.2.2.  This port of R for Macintosh is no longer supported.
 @node Are there Unix binaries for R?, What documentation exists for R?, How can R be installed?, R Basics
 @section Are there Unix binaries for R?
 
-@c Linux binaries as of 2003-07-15:
+@c Linux binaries as of 2003-11-08:
 @c
-@c debian    woody i386  1.7.1  Dirk Eddelbuettel <edd@debian.org>
-@c           sarge i386  1.7.1  Dirk Eddelbuettel <edd@debian.org>
-@c mandrake  8.0   i386  1.7.1  Michele Alzetta <mikalzet@libero.it>
-@c           8.1   i386  1.7.1  Michele Alzetta <mikalzet@libero.it>
-@c           8.2   i386  1.7.1  Michele Alzetta <mikalzet@libero.it>
-@c           9.0   i386  1.7.1  Michele Alzetta <mikalzet@libero.it>
-@c           9.1   i386  1.7.1  Michele Alzetta <mikalzet@libero.it>
-@c redhat    7.x   alpha 1.6.0  Naoki Takebayashi <ntakebay@bio.indiana.edu>
-@c                 i386  1.7.1  Martyn Plummer <plummer@iarc.fr>
-@c           8.x   i386  1.7.1  Martyn Plummer <plummer@iarc.fr>
-@c           9     i386  1.7.1  Martyn Plummer <plummer@iarc.fr>
-@c suse      7.3   i386  1.7.1  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
-@c           8.0   i386  1.7.1  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
-@c           8.1   i386  1.7.1  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
-@c           8.2   i386  1.7.1  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
-@c vinelinux 2.6   i386  1.7.1  Susunu Tanimura <stanimura-ngs@umin.ac.jp>
+@c debian    woody i386  1.8.0  Dirk Eddelbuettel <edd@debian.org>
+@c           sarge i386  1.8.0  Dirk Eddelbuettel <edd@debian.org>
+@c mandrake  9.0   i386  1.8.0  Michele Alzetta <mikalzet@libero.it>
+@c           9.1   i386  1.8.0  Michele Alzetta <mikalzet@libero.it>
+@c redhat    7.x   i386  1.8.0  Martyn Plummer <plummer@iarc.fr>
+@c           8.x   i386  1.8.0  Martyn Plummer <plummer@iarc.fr>
+@c           9     i386  1.8.0  Martyn Plummer <plummer@iarc.fr>
+@c suse      7.3   i386  1.8.0  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
+@c           8.0   i386  1.8.0  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
+@c           8.1   i386  1.8.0  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
+@c           8.2   i386  1.8.0  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
+@c           9.0   i386  1.8.0  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
+@c vinelinux 2.6   i386  1.8.0  Susunu Tanimura <stanimura-ngs@umin.ac.jp>
 
 The @file{bin/linux} directory of a @CRAN{} site contains Debian
 stable/testing packages for the i386 platform (now part of the Debian
-distribution and maintained by Dirk Eddelbuettel), Mandrake
-8.0/8.1/8.2/9.0/9.1 i386 packages by Michele Alzetta, Red Hat 7.x/8.x/9
-i386 and 7.x alpha packages (maintained by Martyn Plummer and Naoki
-Takebayashi, respectively), SuSE 7.3/8.0/8.1/8.2 i386 packages by Detlef
-Steuer, and VineLinux 2.6 i386 packages by Susunu Tanimura.
+distribution and maintained by Dirk Eddelbuettel), Mandrake 9.0/9.1 i386
+packages by Michele Alzetta, Red Hat 7.x/8.x/9 i386 packages by Martyn
+Plummer, SuSE 7.3/8.0/8.1/8.2/9.0 i386 packages by Detlef Steuer, and
+VineLinux 2.6 i386 packages by Susunu Tanimura.
  
 The Debian packages can be accessed through APT, the Debian package
 maintenance tool.  Simply add the line
@@ -530,12 +527,20 @@ language, and so forth.
 Books on R include
 
 @quotation
-Peter Dalgaard (2002), ``Introductory Statistics with R'', Springer: New
+P. Dalgaard (2002), ``Introductory Statistics with R'', Springer: New
 York, ISBN 0-387-95475-9.
 
 J. Fox (2002), ``An R and @SPLUS{} Companion to Applied Regression'',
 Sage Publications, ISBN 0-761-92280-6 (softcover) or 0-761-92279-2
-(hardcover), @uref{http://www.socsci.mcmaster.ca/jfox/Books/Companion/}.
+(hardcover),
+@uref{http://socserv.socsci.mcmaster.ca/jfox/Books/Companion/}.
+
+J. Maindonald and J. Braun (2003), ``Data Analysis and Graphics Using R:
+An Example-Based Approach'', Cambridge University Press, ISBN
+0-521-81336-0, @uref{http://wwwmaths.anu.edu.au/~johnm/}.
+
+S. M. Iacus and G. Masarotto (2002), ``Laboratorio di statistica con R
+'', McGraw-Hill, ISBN 88-386-6084-0 (in Italian).
 @end quotation
 
 @noindent
@@ -605,7 +610,6 @@ implementing R is described in Ihaka & Gentleman (1996), ``R: A Language
 for Data Analysis and Graphics'',
 @uref{http://www.amstat.org/publications/jcgs/, , @emph{Journal of
 Computational and Graphical Statistics}}, @strong{5}, 299--314.
-@xref{Citing R}.
 
 An annotated bibliography (Bib@TeX{} format) of R-related publications
 which includes most of the above references can be found at
@@ -621,14 +625,15 @@ To cite R in publications, use
 
 @example
 @group
-@@article@{,
-  author =    @{Ross Ihaka and Robert Gentleman@},
-  title =     @{R: A Language for Data Analysis and Graphics@},
-  journal =   @{Journal of Computational and Graphical Statistics@},
-  year =      1996,
-  volume =    5,
-  number =    3,
-  pages =     @{299--314@}
+@@Manual@{,
+  title        = @{R: A language and environment for statistical
+                  computing@},
+  author       = @{@{R Development Core Team@}@},
+  organization = @{R Foundation for Statistical Computing@},
+  address      = @{Vienna, Austria@},
+  year         = 2003,
+  note         = @{ISBN 3-900051-00-3@},
+  url          = @{http://www.R-project.org@}
 @}
 @end group
 @end example
@@ -735,6 +740,8 @@ and is currently being mirrored daily at
 @tab (APP, Germany)
 @item @uref{http://cran.dk.R-project.org/}
 @tab (SunSITE, Denmark)
+@item @uref{http://cran.es.R-project.org/}
+@tab (Spanish National Research Network, Madrid, Spain)
 @item @uref{http://cran.hu.R-project.org/}
 @tab (Semmelweis U, Hungary)
 @c @item @uref{http://cran.it.R-project.org/}
@@ -772,7 +779,7 @@ in your submission.
 Please always use the @acronym{URL} of the master site when referring to
 @CRAN{}.
 
-@node Can I use R for commercial purposes?,  , What is CRAN?, R Basics
+@node Can I use R for commercial purposes?, Why is R named R?, What is CRAN?, R Basics
 @section Can I use R for commercial purposes?
 
 R is released under the @uref{http://www.gnu.org/copyleft/gpl.html,, GNU
@@ -812,6 +819,16 @@ these may be used or seek the advice of your legal counsel.
 
 None of the discussion in this section constitutes legal advice.  The R
 Core Team does not provide legal advice under any circumstances.
+
+@node Why is R named R?,  , Can I use R for commercial purposes?, R Basics
+@section Why is R named R?
+
+The name is partly based on the (first) names of the first two R authors
+(Robert Gentleman and Ross Ihaka), and partly a play on the name of the
+Bell Labs language `S' (@pxref{What is S?}).
+
+@c At the time the name was coined no one expected that the software would
+@c get used outside of Auckland, so it seemed ok to make a joke of it.
 
 @node R and S, R Web Interfaces, R Basics, Top
 @chapter R and S
@@ -1492,7 +1509,7 @@ Wilcoxon tests.
 @item eda
 Exploratory Data Analysis.  Currently only contains functions for robust
 line fitting, and median polish and smoothing.
-@c <FIXME 1.8.0>
+@c <FIXME 1.9.0>
 @item grid
 A rewrite of the graphics layout capabilities, plus some support for
 interaction.
@@ -1503,7 +1520,7 @@ Resistant regression and covariance estimation.
 @item methods
 Formally defined methods and classes for R objects, plus other
 programming tools, as described in the Green Book.
-@c <FIXME 1.8.0>
+@c <FIXME 1.9.0>
 @item mle
 Generic (smooth) likelihood maximization and profiling.
 (Added in R 1.8.0).
@@ -1542,6 +1559,8 @@ Functions for I/O, visualisation and analysis of functional Magnetic
 Resonance Imaging (fMRI) datasets stored in the ANALYZE format.
 @item Bhat
 Functions for general likelihood exploration (MLE, MCMC, CIs).
+@item CDNmoney
+Components of Canadian monetary aggregates.
 @item CGIwithR
 Facilities for the use of R to write CGI scripts.
 @item CircStats
@@ -1580,8 +1599,6 @@ Engineering and the Sciences (6th ed)'' by Jay L. Devore, 2003, Duxbury.
 @item EMV
 Estimation of missing values in a matrix by a @math{k}-th nearest
 neighboors algorithm.
-@item GLMMGibbs
-Generalised Linear Mixed Models by Gibbs sampling.
 @item GRASS
 An interface between the GRASS geographical information system and R,
 based on starting R from within the GRASS environment and chosen
@@ -1590,6 +1607,8 @@ a range of R functions to match the interface metadata structures.
 @item GenKern
 Functions for generating and manipulating generalised binned kernel
 density estimates.
+@item HI
+Simulation from distributions supported by nested hyperplanes.
 @item Hmisc
 Functions useful for data analysis, high-level graphics, utility
 operations, functions for computing sample size and power, importing
@@ -1738,6 +1757,9 @@ minimum spanning tree, or the population parameter theta based on
 various approaches.
 @item ash
 David Scott's ASH routines for 1D and 2D density estimation.
+@item asypow
+A set of routines that calculate power and related quantities utilizing
+asymptotic likelihood ratio methods.
 @item aws
 Functions to perform adaptive weights smoothing.
 @item bim
@@ -1942,17 +1964,8 @@ library.
 Generalized Regression Analysis and Spatial Predictions for R.
 @item gregmisc
 Miscellaneous functions written/maintained by Gregory R. Warnes.
-@item grid
-The Grid graphics package, a rewrite of the graphics layout
-capabilities, plus some support for interaction.
-@c <FIXME 1.8.0>
-@emph{Recommended}
-(will be integrated into the R distribution for version 1.8.0).
-@c </FIXME>
-@c <FIXME 1.8.0>
-@c @item gridBase
-@c Integration of base and grid graphics.
-@c </FIXME>
+@item gridBase
+Integration of base and grid graphics.
 @item gss
 A comprehensive package for structural multivariate function estimation
 using smoothing splines.
@@ -2029,12 +2042,17 @@ Fit linear and generalized linear mixed-effects models.
 @item lmeSplines
 Fit smoothing spline terms in Gaussian linear and nonlinear
 mixed-effects models.
+@item lmm
+Linear mixed models.
 @item lmtest
 A collection of tests on the assumptions of linear regression models
 from the book ``The linear regression model under test'' by W. Kraemer
 and H. Sonnberger, 1986, Physica.
 @item locfit
 Local Regression, likelihood and density estimation.
+@item logistf
+Firth's bias reduced logistic regression approach with penalized profile
+likelihood based confidence intervals for parameter estimates.
 @item logspline
 Logspline density estimation.
 @item lokern
@@ -2045,6 +2063,14 @@ Functions that solve general linear/integer problems, assignment
 problems, and transportation problems via interfacing Lp_solve.
 @item lpridge
 Local polynomial (ridge) regression.
+@item mapdata
+Supplement to package @strong{maps}, providing the larger and/or
+higher-resolution databases.
+@item mapproj
+Map Projections: converts latitude/longitude into projected coordinates.
+@item maps
+Draw geographical maps.  Projection code and larger maps are in separate
+packages.
 @item maptools
 Set of tools for manipulating and reading geographic data, in particular
 ESRI shapefiles.
@@ -2063,9 +2089,6 @@ Code for mixture discriminant analysis (MDA), flexible discriminant
 analysis (FDA), penalized discriminant analysis (PDA), multivariate
 additive regression splines (MARS), adaptive back-fitting splines
 (BRUTO), and penalized regression.
-@item meanscore
-Mean Score method for missing covariate data in logistic regression
-models.
 @item merror
 Accuracy and precision of measurements.
 @item mgcv
@@ -2080,6 +2103,10 @@ continuous data.
 @item mlbench
 A collection of artificial and real-world machine learning benchmark
 problems, including the Boston housing data.
+@item mmlcr
+Mixed-mode latent class regression (also known as mixed-mode mixture
+model regression or mixed-mode mixture regression models) which can
+handle both longitudinal and one-time responses.
 @item moc
 Fits a variety of mixtures models for multivariate observations with
 user-difined distributions and curves.
@@ -2104,6 +2131,8 @@ ML estimation for multivariate normal data with missing values.
 Generalization of the Shapiro-Wilk test for multivariate variables.
 @item mvtnorm
 Multivariate normal and @math{t} distributions.
+@item ncdf
+Interface to Unidata netCDF data files.
 @item ncomplete
 Functions to perform the regression depth method (RDM) to binary
 regression to approximate the minimum number of observations that can be
@@ -2126,15 +2155,17 @@ Nonlinear quantile regression.
 Software for single hidden layer perceptrons (``feed-forward neural
 networks''), and for multinomial log-linear models.  Contained in the
 @file{VR} bundle.  @emph{Recommended}.
+@item nor1mix
+One-dimensional normal mixture models classes, for, e.g., density
+estimation or clustering algorithms research and teaching; providing the
+widely used Marron-Wand densities.
 @item norm
 Analysis of multivariate normal datasets with missing values.
 @item normalp
 A collection of utilities for normal of order @math{p} distributions
 (General Error Distributions).
-@item normix
-One-dimensional normal mixture models classes, for, e.g., density
-estimation or clustering algorithms research and teaching; providing the
-widely used Marron-Wand densities.
+@item nortest
+Five omnibus tests for the composite hypothesis of normality.
 @item noverlap
 Functions to perform the regression depth method (RDM) to binary
 regression to approximate the amount of overlap, i.e., the minimal
@@ -2155,6 +2186,8 @@ Representations, conversions and display of orientation SO(3) data.
 Functions for plotting Australia's coastline and state boundaries.
 @item pamr
 Pam: Prediction Analysis for Microarrays.
+@item pan
+Multiple imputation for multivariate panel or clustered data.
 @item panel
 Functions and datasets for fitting models to Panel data.
 @item pastecs
@@ -2257,6 +2290,9 @@ Calculates parameters of the seawater carbonate system.
 Simple Evolutionary Algorithm Optimization.
 @item seao.gui
 Simple Evolutionary Algorithm Optimization: graphical user interface.
+@item segmented
+Functions to estimate break-points of segmented relationships in
+regression models (GLMs).
 @item sem
 Functions for fitting general linear Structural Equation Models (with
 observed and unobserved variables) by the method of maximum likelihood
@@ -2274,12 +2310,16 @@ Routines for the statistical analysis of shapes, including procrustes
 analysis, displaying shapes and principal components, testing for mean
 shape difference, thin-plate spline transformation grids and edge
 superimposition methods.
+@item simpleboot
+Simple bootstrap routines.
 @item sm
 Software linked to the book ``Applied Smoothing Techniques for Data
 Analysis:  The Kernel Approach with @SPLUS{} Illustrations'' by
 A. W. Bowman and A. Azzalini (1997), Oxford University Press.
 @item sma
 Functions for exploratory (statistical) microarray analysis.
+@item smoothSurv
+Survival regression with smoothed error distribution.
 @item sn
 Functions for manipulating skew-normal probability distributions and for
 fitting them to data, in the scalar and the multivariate case.
@@ -2321,7 +2361,7 @@ formerly the three packages: @strong{spweights}, @strong{sptests}, and
 @item splancs
 Spatial and space-time point pattern analysis functions.
 @c <COMMENT>
-@c Deprecated in favor of new @pkg{spdep} along with 1.5.0 release.
+@c Deprecated in favor of new @strong{spdep} along with 1.5.0 release.
 @c @item spsarlm
 @c Functions for estimating spatial simultaneous autoregressive (SAR)
 @c models, including sparse matrix methods for computing the Jacobian.
@@ -2379,9 +2419,6 @@ Classification and regression trees.
 A constrained two-dimensional Delaunay triangulation package.
 @item tseries
 Package for time series analysis with emphasis on non-linear modelling.
-@item twostage
-Functions for optimal design of two-stage-studies using the Mean Score
-method.
 @item udunits
 Interface to Unidata's routines to convert units.
 @item vardiag
@@ -2417,11 +2454,17 @@ contains
 @item Dopt
 Finding D-optimal experimental designs.
 
-@c <NOTE>
+@c <COMMENT>
+@c Moved to Devel for 1.8 as it fails R CMD check.
+@item GLMMGibbs
+Generalised Linear Mixed Models by Gibbs sampling.
+@c </COMMENT>
+
+@c <COMMENT>
 @c Moved to Devel for 1.6 as it fails R CMD check.
 @item RPgSQL
 Provides methods for accessing data stored in PostgreSQL tables.
-@c </NOTE>
+@c </COMMENT>
 
 @c <COMMENT>
 @c Moved to Attic for 1.5.1 as no longer needed.
@@ -2432,13 +2475,13 @@ Provides methods for accessing data stored in PostgreSQL tables.
 @c Provides methods for accessing data stored in PostgreSQL tables.
 @c </COMMENT>
 
-@c <NOTE>
+@c <COMMENT>
 @c Moved to Devel for 1.7 as it fails R CMD check.
 @item Rmpi
 An interface (wrapper) to MPI (Message-Passing Interface) APIs.  It also
 provides interactive R slave functionalities to make MPI programming
 easier in R than in C(++) or FORTRAN.
-@c </NOTE>
+@c </COMMENT>
 
 @c <COMMENT>
 @c Moved to Attic for 1.5 (as this contains the summary functions).
@@ -2467,18 +2510,25 @@ Ensembles of tree classifiers.
 @c Package for creating event charts.
 @c </COMMENT>
 
-@c <NOTE>
+@c <COMMENT>
 @c Moved to Devel for 1.7 as it fails R CMD check.
 @item gllm
 Routines for log-linear models of incomplete contingency tables,
 including some latent class models via EM and Fisher scoring approaches.
-@c </NOTE>
+@c </COMMENT>
 
 @c <COMMENT>
 @c Moved to Attic for 1.5.1 as no longer maintained.
 @c @item hpower
 @c A suite of functions to compute power and sample size for tests of the
 @c general linear hypothesis.
+@c </COMMENT>
+
+@c <COMMENT>
+@c Moved to Devel for 1.8 as it fails R CMD check.
+@item meanscore
+Mean Score method for missing covariate data in logistic regression
+models.
 @c </COMMENT>
 
 @c <COMMENT>
@@ -2496,6 +2546,13 @@ including some latent class models via EM and Fisher scoring approaches.
 
 @item runStat
 Running median and mean.
+
+@c <COMMENT>
+@c Moved to Devel for 1.8 as it fails R CMD check.
+@item twostage
+Functions for optimal design of two-stage-studies using the Mean Score
+method.
+@c </COMMENT>
 
 @item write.snns
 Function for writing a @acronym{SNNS} pattern file from a data frame or
@@ -2622,31 +2679,57 @@ class structure).
 @item DynDoc
 Functionality to create and interact with dynamic documents, vignettes,
 and other navigable documents.
+@item MAGEML
+Functionality to handle MAGEML documents.
 @item RBGL
 An interface between the graph package and the Boost graph libraries,
 allowing for fast manipulation of graph objects in R.
 @item ROC
 Receiver Operating Characteristic (ROC) approach for identifying genes
 that are differentially expressed in two types of samples.
+@item RdbiPgSQL
+Methods for accessing data stored in PostgreSQL tables.
 @item Rgraphviz
 An interface with Graphviz for plotting graph objects in R.
 @item Ruuid
 Creates Universally Unique ID values (UUIDs) in R.
 @item SAGElyzer
 Locates genes based on SAGE tags.
+@item SNPtools
+Rudimentary structures for SNP data.
 @item affy
 Methods for Affymetrix Oligonucleotide Arrays.
+@item affyPLM
+For fitting Probe Level Models.
 @item affycomp
 Graphics toolbox for assessment of Affymetrix expression measures.
 @item affydata
 Affymetrix data for demonstration purposes.
+@item annaffy
+Functions for handling data from Bioconductor Affymetrix annotation data
+packages.
 @item annotate
 Associate experimental data in real time to biological metadata from web
 databases such as GenBank, LocusLink and PubMed.  Process and store
 query results.  Generate @HTML{} reports of analyses.
+@item ctc
+Tools to export and import Tree and Cluster to other programs.
+@item daMA
+Functions for the efficient design of factorial two-color microarray
+experiments and for the statistical analysis of factorial microarray
+data.
 @item edd
 Expression density diagnostics: graphical methods and pattern
 recognition algorithms for distribution shape classification.
+@item externalVector
+Basic class definitions and generics for external pointer based vector
+objects for R.
+@item factDesign
+A set of tools for analyzing data from factorial designed micraorray
+experiments.  The functions can be used to evaluate appropriate tests of
+contrast and perform single outlier detection.
+@item gcrma
+Background adjustment using sequence information.
 @item genefilter
 Tools for sequentially filtering genes using a wide variety of filtering
 functions.  Example of filters include: number of missing value,
@@ -2657,12 +2740,23 @@ functions to genes.
 Graphical tools for genomic data, for example for plotting expression
 data along a chromosome or producing color images of expression data
 matrices.
+@item globaltest
+Testing globally whether a group of genes is significantly related to
+some clinical variable of interest.
+@item gpls
+Classification using generalized partial least squares for two-group and
+multi-group classification.
 @item graph
 Classes and tools for creating and manipulating graphs within R.
 @item hexbin
 Binning functions, in particular hexagonal bins for graphing.
 @item limma
 Linear models for microarray data.
+@item makecdfenv
+Two functions.  One reads a Affymetrix chip description file (CDF) and
+creates a hash table environment containing the location/probe set
+membership mapping.  The other creates a package that automatically loads
+that environment. 
 @item marrayClasses
 Class definitions for pre-normalized and normalized cDNA microarray
 data.  Basic methods for accessing/replacing, printing, and subsetting.
@@ -2680,18 +2774,30 @@ microarray intensity data: boxplots, scatter-plots, color images.
 @item marrayTools
 Miscellaneous functions used in the functional genomics core facility in
 UCB and UCSF.
+@item matchprobes
+ools for sequence matching of probes on arrays.
 @item multtest
 Multiple testing procedures for controlling the family-wise error rate
 (FWER) and the false discovery rate (FDR).  Tests can be based on
 @math{t}- or @math{F}-statistics for one- and two-factor designs, and
 permutation procedures are available to estimate adjusted
 @math{p}-values.
+@item ontoTools
+Graphs and sparse matrices for working with ontologies.
+@item pamr
+Pam: prediction analysis for microarrays.
 @item reposTools
 Tools for dealing with file repositories and allow users to easily
 install, update, and distribute packages, vignettes, and other files.
 @item rhdf5
 Storage and retrieval of large datasets using the HDF5 library and file
 format.
+@item siggenes
+Identifying differentially expressed genes and estimating the False
+Discovery Rate (FDR) with both the Significance Analysis of Microarrays
+(SAM) and the Empirical Bayes Analyses of Microarrays (EBAM).
+@item splicegear
+A set of tools to work with alternative splicing.
 @item tkWidgets
 Widgets in Tcl/Tk that provide functionality for Bioconductor packages.
 @item vsn
@@ -2702,8 +2808,8 @@ Tools for creating Tcl/Tk widgets, i.e., small-scale graphical user
 interfaces.
 @end table
 
-These packages will eventually also be made available via @CRAN{}
-as well.
+@c These packages will eventually also be made available via @CRAN{}
+@c as well.
 
 @node Other add-on packages,  , Add-on packages from BioConductor, Which add-on packages exist for R?
 @subsection Other add-on packages
@@ -2971,11 +3077,9 @@ manipulation (recording and saving transcript files, manipulating and
 editing saved transcripts, and re-evaluating commands from transcript
 files).
 
-The latest stable version of @acronym{ESS} are available via
-@CRAN{} or the
-@uref{http://software.biostat.washington.edu/statsoft/ess/, ESS web
-page}.  The @HTML{} version of the documentation can be found at
-@uref{http://stat.ethz.ch/ESS/}.
+The latest stable version of @acronym{ESS} are available via @CRAN{} or
+the @uref{http://ESS.R-project.org/, ESS web page}.  The @HTML{} version
+of the documentation can be found at @uref{http://stat.ethz.ch/ESS/}.
 
 @acronym{ESS} comes with detailed installation instructions.
 

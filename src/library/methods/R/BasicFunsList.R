@@ -392,6 +392,9 @@ list("!" = function(e1)
 ## table
 
 genericForPrimitive <- function(f, where = topenv(parent.frame())) {
+    if(.matchBasic(f, .ExcludePrimitiveGenerics, FALSE))
+        stop("Methods may not be defined for primitive function \"",
+             f, "\" in this version of R")
     env <- .findBasicFuns(where)
     funs <- get(".BasicFunsList", envir = env)
     elNamed(funs, f)
@@ -418,3 +421,10 @@ setGenericForPrimitive <- function(f, value, where = topenv(parent.frame()),
         as.environment(allWhere[[1]])
 }
     
+.ExcludePrimitiveGenerics <-
+    c(
+      "is.null",
+      "is.primitive",
+      "is.function",
+      "is.object"    
+      )

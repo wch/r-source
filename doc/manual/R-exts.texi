@@ -365,7 +365,9 @@ The contents of the @file{inst} subdirectory will be copied recursively
 to the installation directory.  Subdirectories of @file{inst} should not
 interfere with those used by R (currently, @file{R}, @file{data},
 @file{demo}, @file{exec}, @file{man}, @file{help}, @file{html},
-@file{latex}, and @file{R-ex}).
+@file{latex}, and @file{R-ex}).  As from @R{} 1.8.1 the copying of the
+@file{inst} happens after @file{src} is built so its @file{Makefile} can
+create files to be installed.
 
 Subdirectory @file{tests} is for additional package-specific test code,
 similar to the specific tests that come with the @R{} distribution.
@@ -1749,6 +1751,9 @@ Indicate an acronym (an abbreviation written in all capital letters),
 such as @acronym{GNU}.
 @end table
 
+Note that unless explicitly stated otherwise, special characters
+(@pxref{Insertions}) must be escaped inside the above markup commands.
+
 
 @node Lists and tables, Cross-references, Marking text, Writing R documentation files
 @section Lists and tables
@@ -3032,6 +3037,22 @@ top item on the pointer protection stack. This is rarely needed outside
 the parser (the R sources have one example, in
 @file{src/main/plot3d.c}).
 @findex UNPROTECT_PTR
+
+Sometimes an object is changed (for example coerced or grown) yet the
+current value needs to be protected. For these cases
+@code{PROTECT_WITH_INDEX} saves an index of the protection location that
+can be used to replace the protected value using @code{REPROTECT}.
+@findex PROTECT_WITH_INDEX
+@findex REPROTECT
+For example (from the internal code for @code{optim})
+@smallexample
+    PROTECT_INDEX ipx;
+
+    ....
+    PROTECT_WITH_INDEX(s = eval(OS->R_fcall, OS->R_env), &ipx);
+    REPROTECT(s = coerceVector(s, REALSXP), ipx);
+@end smallexample
+
 
 @node Allocating storage, Details of R types, Garbage Collection, Handling R objects in C
 @subsection Allocating storage

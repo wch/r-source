@@ -11,8 +11,8 @@ symnum(x, cutpoints=c(0.3, 0.6, 0.8, 0.9, 0.95),
        na = "?", eps = 1e-5, corr = missing(cutpoints),
        show.max = if(corr) "1", show.min = NULL,
        abbr.colnames = has.colnames,
-       lower.triangular = corr & is.matrix(x),
-       diag.lower.tri   = corr & !is.null(show.max))
+       lower.triangular = corr && is.numeric(x) && is.matrix(x),
+       diag.lower.tri   = corr && !is.null(show.max))
 }
 \arguments{
   \item{x}{numeric or logical vector or array.}
@@ -44,7 +44,9 @@ symnum(x, cutpoints=c(0.3, 0.6, 0.8, 0.9, 0.95),
     column names should be abbreviated (if there are); if \code{NULL}
     (or \code{FALSE} and \code{x} has no column names),
     the column names will all be empty, i.e., \code{""}; otherwise if
-    \code{abbr.colnames} is false, they are left unchanged.}
+    \code{abbr.colnames} is false, they are left unchanged.  If
+    \code{TRUE} or integer, existing column names will be abbreviated to
+    \code{\link{abbreviate}(*, minlength = abbr.colnames)}.}
   \item{lower.triangular}{logical.  If \code{TRUE} and \code{x} is a
     matrix, only the \emph{lower triangular} part of the matrix is coded
     as non-blank.}

@@ -5,7 +5,7 @@ Windows version
 src/gnuwin32/R.exp
 
 is distributed under the Lesser GNU Public Licence (file COPYING.LIB)
-and the import library src/gnuwin32/libR.a made from R.exp falls uder the
+and the import library src/gnuwin32/libR.a made from R.exp falls under the
 same licence.
 
 

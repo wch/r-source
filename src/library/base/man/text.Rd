@@ -71,7 +71,7 @@ text(x, \dots)
   vectors and will then be applied cyclically to the \code{labels} (and
   extra values will be ignored).
 
-  Labels whose \code{x}, \code{y}, \code{labels}, \code{cex} or \code{xol}
+  Labels whose \code{x}, \code{y}, \code{labels}, \code{cex} or \code{col}
   value is \code{NA} are omitted from the plot.
 }
 \references{

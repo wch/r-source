@@ -110,6 +110,7 @@ void GraphicCopy(WindowPtr window);
 #define kRCmdFileShow		'fshw'
 #define kRCmdEditFile		'edtf'
 
+#define kRCmdIsRAquaUpdated	'nraq'
 
 /* Items for the Tools menu */
 #define kRCmdShowWSpace		'dols'
@@ -136,6 +137,7 @@ void GraphicCopy(WindowPtr window);
 #define kRCmdBinaryInstallFromBioC	'biob'
 #define kRCmdUpdateFromCRAN	'crup'
 #define kRCmdUpdateFromBioC	'bcup'
+#define kRCmdInstallFromBinary	'ipbt'
 #define kRCmdInstallFromSrc	'ipfs'
 #define kRCmdInstallFromSrcDir	'ipsd'
 #define kRCmdBioCBundleAll      'bial'
@@ -1375,7 +1377,9 @@ DialogItemIndex WantToSave(WindowRef window, char *title, char *msg){
     else
      TitleText = CFSTR("Save changes");
 
-    err = CreateStandardAlert(kAlertCautionAlert,TitleText, MsgText,                                                                                                                                                                                                                            				&paramRec, &WantDialog);
+    err = CreateStandardAlert(kAlertCautionAlert,TitleText, MsgText,                                                                                                                                                                                           
+
+                                 				&paramRec, &WantDialog);
     if(err == noErr){
         err = RunStandardAlert(WantDialog,NULL,&itemHit);
         if(err == noErr)
@@ -1435,7 +1439,9 @@ DialogItemIndex YesOrNot(char *title, char *msg, char *actionlab, char *canclab)
     else
      TitleText = CFSTR("Save changes");
 
-    err = CreateStandardAlert(kAlertCautionAlert,TitleText, MsgText,                                                                                                                                                                                                                            				&paramRec, &WantDialog);
+    err = CreateStandardAlert(kAlertCautionAlert,TitleText, MsgText,                                                                                                                                                                                           
+
+                                 				&paramRec, &WantDialog);
     if(err == noErr){
         err = RunStandardAlert(WantDialog,NULL,&itemHit);
         if(err == noErr)
@@ -1536,6 +1542,10 @@ RCmdHandler( EventHandlerCallRef inCallRef, EventRef inEvent, void* inUserData )
 /* Apple Menu */
               case kHICommandPreferences:
                    RPrefsHandler(RPrefsWindow);
+              break;
+              
+              case kRCmdIsRAquaUpdated:
+                consolecmd("is.RAqua.updated()");
               break;
               
 /* File Menu */
@@ -1808,6 +1818,10 @@ RCmdHandler( EventHandlerCallRef inCallRef, EventRef inEvent, void* inUserData )
              case kRCmdBinaryUpdateFromCRAN:
 		 consolecmd("browse.update.pkgs()");
               break;
+
+              case kRCmdInstallFromBinary:
+		  consolecmd("install.from.file(binary=TRUE)\r");
+	       break;
 
               case kRCmdInstallFromSrc:
 		  consolecmd("install.from.file()\r");

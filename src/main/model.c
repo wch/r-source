@@ -823,13 +823,26 @@ SEXP do_termsform(SEXP call, SEXP op, SEXP args, SEXP rho)
 	if (!strncmp(CHAR(STRING_ELT(varnames, l)), "offset(", 7)) k++;
     SETCAR(a, v = allocVector(INTSXP, k));
     if (k > 0) {
-	call = formula; /* call is to be the previous value */
 	for (l = response, k = 0; l < nvar; l++)
-	    if (!strncmp(CHAR(STRING_ELT(varnames, l)), "offset(", 7)) {
-		INTEGER(v)[k++] = l+1;
+	    if (!strncmp(CHAR(STRING_ELT(varnames, l)), "offset(", 7))
+		INTEGER(v)[k++] = l + 1;
+	call = formula; /* call is to be the previous value */
+	for (l = response, k = 0; l < length(formula)+response; l++) {
+	    SEXP thisterm;
+	    Rboolean have_offset = FALSE;
+	    thisterm = (l > response) ? CDR(call): call;
+	    for (i = 1; i <= nvar; i++) {
+		if (GetBit(CAR(thisterm), i) &&
+		    !strncmp(CHAR(STRING_ELT(varnames, i-1)), "offset(", 7)) {
+		    have_offset = TRUE;
+		    break;
+		}
+	    }
+	    if (have_offset) {
 		if (l == response) call = formula = CDR(formula);
 		else SETCDR(call, CDR(CDR(call)));
 	    } else if (l > response) call = CDR(call);
+	}
 	SET_TAG(a, install("offset"));
 	a = CDR(a);
     }
@@ -1578,12 +1591,16 @@ SEXP do_modelmatrix(SEXP call, SEXP op, SEXP args, SEXP rho)
 	else */
 	if (isOrdered(var_i)) {
 	    LOGICAL(ordered)[i] = 1;
-	    INTEGER(nlevs)[i] = nlevels(var_i);
+	    if((INTEGER(nlevs)[i] = nlevels(var_i)) < 1)
+		errorcall(call, "variable %d has no levels", i+1);
+	    /* will get updated later when contrasts are set */
 	    INTEGER(columns)[i] = ncols(var_i);
 	}
 	else if (isUnordered(var_i)) {
 	    LOGICAL(ordered)[i] = 0;
-	    INTEGER(nlevs)[i] = nlevels(var_i);
+	    if((INTEGER(nlevs)[i] = nlevels(var_i)) < 1)
+		errorcall(call, "variable %d has no levels", i+1);
+	    /* will get updated later when contrasts are set */
 	    INTEGER(columns)[i] = ncols(var_i);
 	}
 	else if (isLogical(var_i)) {

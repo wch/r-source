@@ -95,7 +95,6 @@ if(.Platform$GUI == "AQUA") {
        }
    }
 
-
     ## edited from windows/install.packages
     ##
     install.binaries <- function(pkgs, lib, CRAN=getOption("CRAN"),
@@ -273,8 +272,12 @@ if(.Platform$GUI == "AQUA") {
         invisible()
     }
 
-    install.from.file <- function(pkg = file.choose())
+    install.from.file <- function(pkg = file.choose(), binary=FALSE)
     {
+	if (binary){
+		install.binaries(CRAN=NULL, pkg=pkg, lib=.libPaths()[1])
+	}
+
         lib <- .libPaths()[1]
         cmd <- paste(file.path(R.home(), "bin", "R"), "CMD INSTALL")
         cmd <- paste(cmd, "-l", lib)
@@ -363,5 +366,28 @@ if(.Platform$GUI == "AQUA") {
         }
         invisible(x)
     }
+    
+is.RAqua.updated <- function() {
+ readLines("http://cran.r-project.org/bin/macosx/VERSION") -> cran.ver
+
+ strsplit(cran.ver,"\\.") -> ver
+ cran.ver <- as.numeric(ver[[1]])
+
+ paste(R.Version()$major,".",R.version$minor,sep="") -> raqua.ver
+
+ strsplit(raqua.ver,"\\.") -> ver
+ raqua.ver <- as.numeric(ver[[1]])
+
+ if( sum(cran.ver - raqua.ver) > 0 ){ 
+  cat("\nThis version of RAqua is",paste(raqua.ver,collapse="."))
+  cat("\nThere is a newer version of RAqua on CRAN which is",paste(cran.ver,collapse="."), "\n")
+
+  action <- readline("Do you want to visit CRAN now? ")
+  if (substr(action, 1, 1) == "y")
+   system("open http://cran.r-project.org/bin/macosx/")
+  } else { cat("\nYour version of RAqua is up to date\n")}
+
 }
+   
+} # RAQUA
 

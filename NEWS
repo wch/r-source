@@ -6,6 +6,161 @@
 	**************************************************
 
 
+		CHANGES IN R VERSION 1.8.1
+
+
+NEW FEATURES
+
+    o	There is now a "Complex" S3 group generic (a side-effect of
+	fixing up the corresponding S4 group generic).
+
+    o	help("regex") now gives a description of the regular expressions
+	used in R.
+
+    o	The startup message now shows the R Foundation as copyright
+	holder, and includes the R ISBN number and a pointer to the new
+	citation() function.
+
+    o	The solve() function now uses the `tol' argument for all
+	non-complex cases.  The default tolerance for LINPACK is 1e-7,
+	as before.  For LAPACK it currently is .Machine$double.eps but
+	may be changed in later versions of R.
+
+    o	help.search() now defaults to agrep = FALSE when keyword= is
+	specified, since no one wants fuzzy matching of categories.
+
+    o	Function texi2dvi() in package tools can be used to compile
+	latex files from within R.
+
+    o	Objects with formal S4 classes saved in pre-1.8 versions and
+	loaded into the current version have incompatible class
+	attributes (no package information).  A new function,
+	fixPre1.8() in package methods, will fix the class attributes.
+	See the help for this function.
+
+    o	heatmap() allows Rowv/Colv = NA, suppressing the corresponding
+	dendrogram.
+
+    o   An "antifeature": Tcl 8.0 is now officially unsupported. In 1.8.0
+	it just didn't work. This very old version lacks several features
+        that are needed for the new version of the tcltk package. R will
+	still build the tcltk package against Tcl 8.0 but the resulting
+	package will not load.
+
+
+BUG FIXES
+
+    o	symnum(x) now behaves as documented when length(x) == 0 and uses
+	lower.triangular = FALSE for logical arrays.
+
+    o	c() now has a method for "noquote" objects and hence works as
+	expected.
+
+    o	split(1:10, c(1,2)) no longer gives a spurious warning.
+
+    o	The "Complex" S4 group generic now works.
+
+    o	abbreviate() doesn't get into infinite loops on input that differs
+	only by leading/trailing space
+
+    o	Added check for user interrupt in Rvprintf to allow printing to be
+	interrupted.
+
+    o	Fixed bug that would cause segfault on protect stack overflow.
+
+    o	crossprod() on matrices with zero extents would return an
+	uninitialized matrix (rather than one filled with zeros).
+
+    o	DF[[i,j]] for a data frame used row j and col i, not as intended
+	row i and col j.
+
+    o	Even more user errors in recursive indexing of lists are now
+	caught.	 (PR#4486)
+
+    o	cor(<matrix>, use = "pairwise") gave wrong result in 1.8.0 (only).
+	(PR#4646)
+
+    o	merge.data.frame() could give incorrect names when one of the
+	arguments had only one column.	(PR#4299)
+
+    o	Subsetting a one-dimensional array dropped dimensions even when
+	they were not of length one.  (Related to PR#4110)
+
+    o	The plot() method for `ecdf' objects, plot.ecdf(), now allows to
+	set a `ylab' argument (different from the default).
+
+    o	cor.test(*, method="spearman") gave wrong results `randomly'
+	(because of a wrong type passed to C; PR#4718).
+
+    o	dist() objects with NA's didn't print these, now do. (PR#4866).
+
+    o	regexpr(fixed = TRUE) returned 0-based indices.
+
+    o	df[, length_1_index] <- value did not recycle short rhs. (PR#4820)
+
+    o	median() no longer `works' for odd-length factor variables.
+
+    o	packageStatus() is more robust to failing to contact a
+	repository, and contacts the correct paths in the repositories
+	under Windows.
+
+    o	.setOldIs (methods) contained a typo stopping POSIXct objects (etc)
+	being included in formal classes.
+
+    o	terms() sometimes removed offset() terms incorrectly, since it
+	counted by variables and not terms.  Its "offset" attribute
+	was incorrectly documented as referring to terms not
+	variables. (Related to PR#4941)
+
+    o	buildVignettes() and pkgVignettes() in package tools are now
+	documented.  The call to texi2dvi is wrapped in the new
+	function texi2dvi() which also works on Windows.
+
+    o   hclust() was sometimes not finding the correct inter-cluster
+	distances with non-monotone methods.  (PR#4195)
+
+    o   plot.hclust() now tolerates mode changes on dumped objects. (PR#4361)
+
+    o   prompt() no longer insists files are in the current directory.
+	(PR#4978)
+
+    o   filter() did not use init in reverse order as documented. (PR#5017)
+
+    o	contrasts<-() and model.matrix() now have sanity checks that
+	factors having at least 2 levels (or one level and a contrast
+	matrix): model.matrix() gave nonsensical results for 0-level
+	factors.
+
+    o   writeChar() could segfault if more characters were requested
+	than exist. (PR#5090)
+
+    o	round() and signif() dropped attributes with 0-length inputs,
+	only. (PR#4710)
+
+    o	The default graphics device in the GNOME interface was gtk,
+	which is no longer in the base package. It is now X11.
+
+    o	The print button on the toolbar of the GNOME graphics device
+	did not work.
+
+    o	The example code on the man page for TkWidgetcmds had not been
+	updated after the change that made tkget (et al.) return
+	tclObj objects, so the "Submit" button didn't work.
+
+    o	Rd conversion to latex did not add a new line before
+	\end{Section} for the section environments, which caused
+	problems if the last thing in a section was \preformatted{}
+	(and potentially elsewhere).
+
+    o	Under some circumstances mosaicplot() failed if main was
+	supplied as it was passed on to model.frame.default().
+
+    o	Conversion to POSIXlt (including printing) of POSIXct dates
+	before 1902 and after 2038 computed which were leap years from
+	(year-1900) so got some xx00 years wrong.
+
+
+
 		CHANGES IN R VERSION 1.8.0
 
 
@@ -207,6 +362,11 @@ NEW FEATURES
     o	rev() is now a generic function, with default and dendrogram
 	methods.
 
+    o	serialize() and unserialize() functions are available for
+	low-level serialization to connections.
+
+    o	socketSelect() allows waiting on multiple sockets.
+
     o	sort(method = "quick", decreasing = TRUE) is now implemented.
 
     o	sort.list() has methods "quick" (a wrapper for sort(method =
@@ -219,6 +379,10 @@ NEW FEATURES
     o	strsplit(x, *) now preserves names() but won't work for
 	non-character `x' anymore {formerly used as.character(x),
 	destroying names(x)}.
+
+    o	textConnection() now has a local argument for use with output
+	connections.  local = TRUE means the variable containing the
+	output is assigned in the frame of the caller.
 
     o	Using UseMethod() with more than two arguments now gives a
 	warning (as R-lang.texi has long claimed it did).
@@ -303,24 +467,15 @@ NEW FEATURES
 	the garbage collector and reduce system calls on some
 	platforms.
 
-    o	textConnection() now has a local argument for use with output
-	connections. local = TRUE means the variable containing the output
-	is assigned in the frame of the caller.
-
-    o	serialize() and unserialize() functions are available for
-	low-level serialization to connections.
-
-    o	socketSelect() allows waiting on multiple sockets.
-
 
 STANDARD PACKAGES
 
     o	New package 'mle'. This is a simple package to find maximum
 	likelihood estimates, and perform likelihood profiling and
-	approximate confidence limits based upon it. A well-behaved
+	approximate confidence limits based upon it.  A well-behaved
 	likelihood function is assumed, and it is the responsibility
 	of the user to gauge the applicability of the asymptotic
-	theory. This package is based on S4 methods and classes.
+	theory.  This package is based on S4 methods and classes.
 
     o	Changes in package 'mva':
 

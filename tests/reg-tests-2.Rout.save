@@ -1,13 +1,14 @@
 
-R : Copyright 2003, The R Development Core Team
-Version 1.8.0 beta (2003-09-30)
+R : Copyright 2003, The R Foundation for Statistical Computing
+Version 1.8.1 alpha (2003-11-10), ISBN 3-900051-00-3
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
 Type 'license()' or 'licence()' for distribution details.
 
 R is a collaborative project with many contributors.
-Type 'contributors()' for more information.
+Type 'contributors()' for more information and
+'citation()' on how to cite R in publications.
 
 Type 'demo()' for some demos, 'help()' for on-line help, or
 'help.start()' for a HTML browser interface to help.
@@ -1106,9 +1107,9 @@ Volume 123.5503 261.5802
 Height  72.7       
 Volume  56.4   63.3
 > dist(z, method="manhattan")
-           Girth   Height
-Height 1954.8821         
-Volume  557.1448 1392.343
+           Girth    Height
+Height 1954.8821          
+Volume  557.1448 1392.3429
 > dist(z, method="canberra")
           Girth   Height
 Height 21.66477         
@@ -3243,4 +3244,93 @@ Error in "[.data.frame"(x, 1, c("a", "c")) :
 > meth2gen("dendrogram")
 [1] [[      cut     plot    print   reorder rev     str    
 > ## --> the output may need somewhat frequent updating..
+> 
+> 
+> ## subsetting a 1D array lost the dimensions
+> x <- array(1:5, dim=c(5))
+> dim(x)
+[1] 5
+> dim(x[, drop=TRUE])
+[1] 5
+> dim(x[2:3])
+[1] 2
+> dim(x[2])
+NULL
+> dim(x[2, drop=FALSE])
+[1] 1
+> dimnames(x) <- list(some=letters[1:5])
+> x[]
+[1] 1 2 3 4 5
+> x[2:3]
+some
+b c 
+2 3 
+> x[2]
+b 
+2 
+> x[2, drop=FALSE]
+some
+b 
+2 
+> ## both dim and dimnames lost in 1.8.0
+> 
+> 
+> ## print.dist() didn't show NA's prior to 1.8.1
+> x <- cbind(c(1,NA,2,3), c(NA,2,NA,1))
+> (d <- dist(x))
+         1        2        3
+2       NA                  
+3 1.414214       NA         
+4 2.828427 1.414214 1.414214
+> print(d, diag = TRUE)
+         1        2        3        4
+1 0.000000                           
+2       NA 0.000000                  
+3 1.414214       NA 0.000000         
+4 2.828427 1.414214 1.414214 0.000000
+> ##
+> 
+> 
+> ## offsets in model terms where sometimes not deleted correctly
+> attributes(terms(~ a + b + a:b + offset(c)))[c("offset", "term.labels")]
+$offset
+[1] 3
+
+$term.labels
+[1] "a"   "b"   "a:b"
+
+> attributes(terms(y ~ a + b + a:b + offset(c)))[c("offset", "term.labels")]
+$offset
+[1] 4
+
+$term.labels
+[1] "a"   "b"   "a:b"
+
+> attributes(terms(~ offset(c) + a + b + a:b))[c("offset", "term.labels")]
+$offset
+[1] 1
+
+$term.labels
+[1] "a"   "b"   "a:b"
+
+> attributes(terms(y ~ offset(c) + a + b + a:b))[c("offset", "term.labels")]
+$offset
+[1] 2
+
+$term.labels
+[1] "a"   "b"   "a:b"
+
+> ## errors prior to 1.8.1
+> 
+> 
+> ## 0-level factors gave nonsensical answers in model.matrix
+> try(model.matrix(~x, data.frame(x=NA), na.action=na.pass))
+Error in "contrasts<-"(`*tmp*`, value = "contr.treatment") : 
+	contrasts can be applied only to factors with 2 or more levels
+> lm.fit <- lm(y ~ x, data.frame(x=1:10, y=1:10))
+> try(predict(lm.fit, data.frame(x=NA)))
+Error in "contrasts<-"(`*tmp*`, value = "contr.treatment") : 
+	contrasts can be applied only to factors with 2 or more levels
+> ## wrong in 1.8.0
+> 
 > 

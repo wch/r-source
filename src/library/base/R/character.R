@@ -26,7 +26,9 @@ abbreviate <-
     ## we just ignore use.classes
     if(minlength <= 0)
 	return(rep.int("", length(names.arg)))
-    names.arg <- as.character(names.arg)
+    ## need to remove leading/trailing spaces before we check for dups
+    ## This is inefficient but easier than modifying do_abbrev (=> FIXME !)
+    names.arg <- sub("^ +", "", sub(" +$", "", as.character(names.arg)))
     dups <- duplicated(names.arg)
     old <- names.arg
     if(any(dups))

@@ -134,6 +134,18 @@ double gpAlpha(SEXP gp, int i) {
  * Historical reasons ...
  */
 
+/*
+ * Generate a C gpar from an SEXP gpar
+ * Assume that index has been checked as valid elsewhere
+ */
+void gcontextFromgpar(SEXP gp, int i, LGContext *gc) {
+    gc->font = gpFont(gp, i);
+    gc->fontsize = gpFontSize(gp, i);
+    gc->cex = gpCex(gp, i);
+    gc->lineheight = gpLineHeight(gp, i);
+    strcpy(gc->fontfamily, gpFontFamily(gp, i));
+}
+
 SEXP L_setGPar(SEXP gpars) 
 {
     /* Set the value of the current gpars on the current device

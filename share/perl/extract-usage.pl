@@ -25,7 +25,7 @@ use R::Rdtools;
 use R::Utils;
 use R::Vars;
 
-my $revision = ' $Revision: 1.17 $ ';
+my $revision = ' $Revision: 1.17.6.1 $ ';
 my $version;
 my $name;
 
@@ -44,7 +44,7 @@ Options:
   -h, --help            print short help message and exit
   -v, --version         print version info and exit
       --mode=MODE       use operation mode MODE (codoc, args or style)
-      --os=NAME         use OS type NAME (unix, mac or windows)
+      --os=NAME         use OS type NAME (unix or windows)
       --OS=NAME         the same as '--os'
   -V, --verbose         print more information about progress
 

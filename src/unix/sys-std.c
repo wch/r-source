@@ -36,8 +36,6 @@
 #include "Runix.h"
 #include "Startup.h"
 
-#include "Runix.h"
-
 #ifdef HAVE_LIBREADLINE
 # ifdef HAVE_READLINE_READLINE_H
 #  include <readline/readline.h>
@@ -581,7 +579,7 @@ int Rstd_ReadConsole(char *prompt, unsigned char *buf, int len,
 
 	for (;;) {
 	    fd_set *what;
-	    
+
 	    what = R_checkActivityEx(R_wait_usec ? R_wait_usec : -1, 0,
 				     handleInterrupt);
 	    /* This is slightly clumsy. We have advertised the

@@ -197,17 +197,49 @@ grid.arrows <- function(x=c(0.25, 0.75), y=0.5,
 ######################################
 
 draw.details.polygon <- function(x, x.wrapped, recording=TRUE) {
-  grid.Call.graphics("L_polygon", x$x, x$y)
+  if (is.null(x$id) && is.null(x$id.lengths))
+    grid.Call.graphics("L_polygon", x$x, x$y,
+                       list(as.integer(1:length(x$x))))
+  else {
+    if (is.null(x$id)) {
+      n <- length(x$id.lengths)
+      id <- rep(1:n, x$id.lengths)
+    } else {
+      n <- length(unique(x$id))
+      id <- x$id
+    }
+    index <- vector("list", n)
+    count <- 1
+    for (i in unique(id)) {
+      index[[count]] <- as.integer((1:length(x$x))[id == i])
+      count <- count + 1
+    } 
+    grid.Call.graphics("L_polygon", x$x, x$y, index)
+  }
 }
 
 grid.polygon <- function(x=c(0, 0.5, 1, 0.5), y=c(0.5, 1, 0.5, 0),
+                         id=NULL, id.lengths=NULL,
                          default.units="npc",
                          gp=gpar(),draw=TRUE, vp=NULL) {
+  if (!missing(id) && !missing(id.lengths))
+    stop("It is invalid to specify both id and id.lenths")
   if (!is.unit(x))
     x <- unit(x, default.units)
   if (!is.unit(y))
     y <- unit(y, default.units)
-  p <- list(x=x, y=y, gp=gp, vp=vp)
+  if (unit.length(x) != unit.length(y))
+    stop("x and y must be same length")
+  if (!is.null(id) && (length(id) != unit.length(x)))
+    stop("x and y and id must all be same length")
+  if (!is.null(id))
+    id <- as.integer(id)
+  if (!is.null(id.lengths) && (sum(id.lengths) != unit.length(x)))
+    stop("x and y and id.lengths must specify same overall length")
+  if (!is.null(id.lengths))
+    id.lengths <- as.integer(id.lengths)
+  p <- list(x=x, y=y, id=id,
+            id.lengths=id.lengths, gp=gp, vp=vp)
   cl <- "polygon"
   grid.grob(p, cl, draw)
 }

@@ -334,20 +334,18 @@ int pureNullUnitArithmetic(SEXP unit, int index) {
  * undo the changes to the grid globals
  */
 
-double evaluateGrobWidthUnit(SEXP grob, char* vpfontfamily, int vpfont,
-			     double vpfontsize, double vplineheight,
+double evaluateGrobWidthUnit(SEXP grob, 
 			     double vpwidthCM, double vpheightCM,
 			     GEDevDesc *dd) 
 {
     SEXP widthPreFn, widthFn, widthPostFn, R_fcall1, R_fcall2, R_fcall3;
-    SEXP getGParFn, R_getgparcall, gparname;
-    SEXP width, fontfamily, font, fontsize, lineheight;
+    SEXP width;
     LViewportContext vpc;
+    LGContext gc;
     double resultINCHES, result;
     PROTECT(widthPreFn = findFun(install("width.pre"), R_gridEvalEnv));
     PROTECT(widthFn = findFun(install("width"), R_gridEvalEnv));
     PROTECT(widthPostFn = findFun(install("width.post"), R_gridEvalEnv));
-    PROTECT(getGParFn = findFun(install("get.gpar"), R_gridEvalEnv));
     /* Call width.pre(grob) 
      */
     PROTECT(R_fcall1 = lang2(widthPreFn, grob));
@@ -357,21 +355,6 @@ double evaluateGrobWidthUnit(SEXP grob, char* vpfontfamily, int vpfont,
      */
     PROTECT(R_fcall2 = lang2(widthFn, grob));
     PROTECT(width = eval(R_fcall2, R_gridEvalEnv));
-    /* Call get.gpar() to get the current fontsize and lineheight settings
-     */
-    PROTECT(gparname = allocVector(STRSXP, 1));
-    SET_STRING_ELT(gparname, 0, mkChar("fontfamily"));
-    PROTECT(R_getgparcall = lang2(getGParFn, gparname));
-    PROTECT(fontfamily = eval(R_getgparcall, R_gridEvalEnv));
-    SET_STRING_ELT(gparname, 0, mkChar("font"));
-    R_getgparcall = lang2(getGParFn, gparname);
-    PROTECT(font = eval(R_getgparcall, R_gridEvalEnv));
-    SET_STRING_ELT(gparname, 0, mkChar("fontsize"));
-    R_getgparcall = lang2(getGParFn, gparname);
-    PROTECT(fontsize = eval(R_getgparcall, R_gridEvalEnv));
-    SET_STRING_ELT(gparname, 0, mkChar("lineheight"));
-    R_getgparcall = lang2(getGParFn, gparname);
-    PROTECT(lineheight = eval(R_getgparcall, R_gridEvalEnv));
     /* Transform the width
      * NOTE:  the width.pre function should NOT have done any 
      * viewport pushing so the viewport context and sizeCM 
@@ -384,23 +367,19 @@ double evaluateGrobWidthUnit(SEXP grob, char* vpfontfamily, int vpfont,
     if (pureNullUnit(width, 0)) {
 	result = evaluateNullUnit(pureNullUnitValue(width, 0));
     } else {
-	/* These are the current fontsize and lineheight.
-	 * They are adequate (both in the sense of being the correct 
-	 * values and in the sense of being all the vpc information 
-	 * that is required) ONLY because of the strict
+	/* 
+	 * Get the current gpar settings (they may have been changed in the 
+	 * width.pre call
+	 */
+	gcontextFromgpar(gridStateElement(dd, GSS_GPAR), 0, &gc);
+	/*
+	 * NOTE that the vpc contains garbage.
+	 * This is ok ONLY because of the strict
 	 * restrictions placed on what sort of units can
 	 * be used in a width.details method.
 	 * If those restrictions are lifted, all bets are off ...
 	 */
-	vpc.fontfamily = vpfontfamily;
-	vpc.font = vpfont;
-	vpc.fontsize = vpfontsize;
-	vpc.lineheight = vplineheight;
-	resultINCHES = transformWidthtoINCHES(width, 0, vpc,
-					      CHAR(STRING_ELT(fontfamily, 0)),
-					      INTEGER(font)[0],
-					      REAL(fontsize)[0], 
-					      REAL(lineheight)[0],
+	resultINCHES = transformWidthtoINCHES(width, 0, vpc, &gc,
 					      /* These are the current
 					       * viewport widthCM and
 					       * heightCM.
@@ -421,7 +400,7 @@ double evaluateGrobWidthUnit(SEXP grob, char* vpfontfamily, int vpfont,
      */
     PROTECT(R_fcall3 = lang2(widthPostFn, grob));
     eval(R_fcall3, R_gridEvalEnv);
-    UNPROTECT(14);
+    UNPROTECT(7);
     /* Return the transformed width
      */
     return result;
@@ -429,8 +408,7 @@ double evaluateGrobWidthUnit(SEXP grob, char* vpfontfamily, int vpfont,
 
 /* See evaluateGrobWidthUnit for detailed comments
  */
-double evaluateGrobHeightUnit(SEXP grob, char *vpfontfamily, int vpfont, 
-			     double vpfontsize, double vplineheight,
+double evaluateGrobHeightUnit(SEXP grob, 
 			     double vpheightCM, double vpwidthCM,
 			     GEDevDesc *dd) 
 {
@@ -439,14 +417,13 @@ double evaluateGrobHeightUnit(SEXP grob, char *vpfontfamily, int vpfont,
      * Ditto in three eval()s below.
      */
     SEXP heightPreFn, heightFn, heightPostFn, R_fcall1, R_fcall2, R_fcall3;
-    SEXP getGParFn, R_getgparcall, gparname;
-    SEXP height, fontfamily, font, fontsize, lineheight;
+    SEXP height;
     LViewportContext vpc;
+    LGContext gc;
     double resultINCHES, result;
     PROTECT(heightPreFn = findFun(install("height.pre"), R_gridEvalEnv));
     PROTECT(heightFn = findFun(install("height"), R_gridEvalEnv));
     PROTECT(heightPostFn = findFun(install("height.post"), R_gridEvalEnv));
-    PROTECT(getGParFn = findFun(install("get.gpar"), R_gridEvalEnv));
     /* Call height.pre(grob) 
      */
     PROTECT(R_fcall1 = lang2(heightPreFn, grob));
@@ -456,21 +433,6 @@ double evaluateGrobHeightUnit(SEXP grob, char *vpfontfamily, int vpfont,
      */
     PROTECT(R_fcall2 = lang2(heightFn, grob));
     PROTECT(height = eval(R_fcall2, R_gridEvalEnv));
-    /* Call get.gpar() to get the current fontsize and lineheight settings
-     */
-    PROTECT(gparname = allocVector(STRSXP, 1));
-    SET_STRING_ELT(gparname, 0, mkChar("fontfamily"));
-    PROTECT(R_getgparcall = lang2(getGParFn, gparname));
-    PROTECT(fontfamily = eval(R_getgparcall, R_gridEvalEnv));
-    SET_STRING_ELT(gparname, 0, mkChar("font"));
-    R_getgparcall = lang2(getGParFn, gparname);
-    PROTECT(font = eval(R_getgparcall, R_gridEvalEnv));
-    SET_STRING_ELT(gparname, 0, mkChar("fontsize"));
-    R_getgparcall = lang2(getGParFn, gparname);
-    PROTECT(fontsize = eval(R_getgparcall, R_gridEvalEnv));
-    SET_STRING_ELT(gparname, 0, mkChar("lineheight"));
-    R_getgparcall = lang2(getGParFn, gparname);
-    PROTECT(lineheight = eval(R_getgparcall, R_gridEvalEnv));
     /* Transform the height
      * NOTE:  the height.pre function should NOT have done any 
      * viewport pushing so the viewport context and sizeCM 
@@ -483,15 +445,8 @@ double evaluateGrobHeightUnit(SEXP grob, char *vpfontfamily, int vpfont,
     if (pureNullUnit(height, 0)) {
 	result = evaluateNullUnit(pureNullUnitValue(height, 0));
     } else {
-	vpc.fontfamily = vpfontfamily;
-	vpc.font = vpfont;
-	vpc.fontsize = vpfontsize;
-	vpc.lineheight = vplineheight;
-	resultINCHES = transformHeighttoINCHES(height, 0, vpc,
-					       CHAR(STRING_ELT(fontfamily, 0)),
-					       INTEGER(font)[0],
-					       REAL(fontsize)[0], 
-					       REAL(lineheight)[0],
+	gcontextFromgpar(gridStateElement(dd, GSS_GPAR), 0, &gc);
+	resultINCHES = transformHeighttoINCHES(height, 0, vpc, &gc,
 					       vpwidthCM, vpheightCM,
 					       dd);
 	result = resultINCHES/(vpheightCM/2.54);
@@ -500,7 +455,7 @@ double evaluateGrobHeightUnit(SEXP grob, char *vpfontfamily, int vpfont,
      */
     PROTECT(R_fcall3 = lang2(heightPostFn, grob));
     eval(R_fcall3, R_gridEvalEnv);
-    UNPROTECT(14);
+    UNPROTECT(7);
     /* Return the transformed height
      */
     return result;
@@ -515,10 +470,7 @@ double evaluateGrobHeightUnit(SEXP grob, char *vpfontfamily, int vpfont,
 
 double transform(double value, int unit, SEXP data,
 		 double scalemin, double scalemax,
-		 char *fontfamily, int font, double fontsize, 
-		 double lineheight, 
-		 char *grobfontfamily, int grobfont, double grobfontSize, 
-		 double groblineHeight, 
+		 LGContext *gc,
 		 double thisCM, double otherCM,
 		 GEDevDesc *dd)
 {
@@ -541,16 +493,14 @@ double transform(double value, int unit, SEXP data,
      * or somesuch.
      */
     case L_CHAR:
-	result = result*fontsize/(72*thisCM/2.54);
+	result = result*gc->fontsize*gc->cex/(72*thisCM/2.54);
 	break;	
-    case L_MYCHAR:
-	result = result*grobfontSize/(72*thisCM/2.54);
+    case L_MYCHAR:  /* FIXME: Remove this when I can */
+	result = result*gc->fontsize*gc->cex/(72*thisCM/2.54);
 	break;	
     case L_LINES:
-	result = result*fontsize*lineheight/(72*thisCM/2.54);
-	break;
-    case L_MYLINES:
-	result = result*grobfontSize*groblineHeight/(72*thisCM/2.54);
+    case L_MYLINES: /* FIXME: Remove this when I can */
+	result = result*gc->fontsize*gc->cex*gc->lineheight/(72*thisCM/2.54);
 	break;
     case L_SNPC:        
 	if (thisCM <= otherCM)
@@ -582,76 +532,52 @@ double transform(double value, int unit, SEXP data,
 	result = result/65536/72.27*2.54/thisCM;
 	break;
     case L_STRINGWIDTH:
+    case L_MYSTRINGWIDTH: /* FIXME: Remove this when I can */
 	if (isExpression(data))
 	    result = result*
 		fromDeviceWidth(GEExpressionWidth(VECTOR_ELT(data, 0),
-						  font, 1, fontsize, dd),
+						  gc->font, 
+						  gc->cex, 
+						  gc->fontsize, dd),
 				GE_INCHES, dd)*
 		2.54/thisCM;
 	else
 	    result = result*
 		fromDeviceWidth(GEStrWidth(CHAR(STRING_ELT(data, 0)), 
-					   fontfamily, font, lineheight,
-					   1, fontsize, dd),
-				GE_INCHES, dd)*
-		2.54/thisCM;
-	break;
-    case L_MYSTRINGWIDTH:
-	if (isExpression(data))
-	    result = result*
-		fromDeviceWidth(GEExpressionWidth(VECTOR_ELT(data, 0),
-						  grobfont, 1, 
-						  grobfontSize, dd),
-				GE_INCHES, dd)*
-		2.54/thisCM;
-	else
-	    result = result*
-		fromDeviceWidth(GEStrWidth(CHAR(STRING_ELT(data, 0)), 
-					   grobfontfamily, grobfont, lineheight,
-					   1, grobfontSize, dd),
+					   gc->fontfamily, 
+					   gc->font, 
+					   gc->lineheight,
+					   gc->cex, 
+					   gc->fontsize, dd),
 				GE_INCHES, dd)*
 		2.54/thisCM;
 	break;
     case L_STRINGHEIGHT:
+    case L_MYSTRINGHEIGHT: /* FIXME: Remove this when I can */
 	if (isExpression(data))
 	    result = result*
 		fromDeviceHeight(GEExpressionHeight(VECTOR_ELT(data, 0),
-						    font, 1, fontsize, dd),
+						    gc->font, 
+						    gc->cex, 
+						    gc->fontsize, dd),
 				 GE_INCHES, dd)*
 		2.54/thisCM;
 	else
 	    result = result*
 		fromDeviceHeight(GEStrHeight(CHAR(STRING_ELT(data, 0)),
-					     fontfamily, font, lineheight,
-					     1, fontsize, dd),
-				 GE_INCHES, dd)*
-		2.54/thisCM;
-	break;
-    case L_MYSTRINGHEIGHT:
-	if (isExpression(data))
-	    result = result*
-		fromDeviceHeight(GEExpressionHeight(VECTOR_ELT(data, 0),
-						    grobfont, 1, 
-						    grobfontSize, dd),
-				 GE_INCHES, dd)*
-		2.54/thisCM;
-	else
-	    result = result*
-		fromDeviceHeight(GEStrHeight(CHAR(STRING_ELT(data, 0)),
-					     grobfontfamily, grobfont, lineheight,
-					     1, grobfontSize, dd),
+					     gc->fontfamily, 
+					     gc->font, 
+					     gc->lineheight,
+					     gc->cex, 
+					     gc->fontsize, dd),
 				 GE_INCHES, dd)*
 		2.54/thisCM;
 	break;
     case L_GROBWIDTH:
-	result = value*evaluateGrobWidthUnit(data, fontfamily, 
-					     font, fontsize, lineheight,
-					     thisCM, otherCM, dd);
+	result = value*evaluateGrobWidthUnit(data, thisCM, otherCM, dd);
 	break;
     case L_GROBHEIGHT:
-	result = value*evaluateGrobHeightUnit(data, fontfamily,
-					      font, fontsize, lineheight,
-					      thisCM, otherCM, dd);
+	result = value*evaluateGrobHeightUnit(data, thisCM, otherCM, dd);
 	break;
     case L_NULL:
 	result = evaluateNullUnit(result);
@@ -665,10 +591,7 @@ double transform(double value, int unit, SEXP data,
 /* FIXME:  scales are only linear at the moment */
 double transformLocation(double location, int unit, SEXP data,
 			 double scalemin, double scalemax,
-			 char *fontfamily, int font, double fontsize, 
-			 double lineheight, 
-			 char *grobfontfamily, int grobfont, 
-			 double grobfontSize, double groblineHeight, 
+			 LGContext *gc,
 			 double thisCM, double otherCM,
 			 GEDevDesc *dd)
 {
@@ -679,25 +602,20 @@ double transformLocation(double location, int unit, SEXP data,
 	break;
     default:
 	result = transform(location, unit, data, scalemin, scalemax,
-			   fontfamily, font, fontsize, lineheight, 
-			   grobfontfamily, grobfont, 
-			   grobfontSize, groblineHeight, 
-			   thisCM, otherCM, dd);
+			   gc, thisCM, otherCM, dd);
     }
     return result;
 }
 
 double transformXArithmetic(SEXP x, int index,
 			    LViewportContext vpc,
-			    char *fontfamily, int font, double fontsize, 
-			    double lineheight,
+			    LGContext *gc,
 			    double widthCM, double heightCM,
 			    GEDevDesc *dd);
 
 double transformX(SEXP x, int index,
 		  LViewportContext vpc,
-		  char *fontfamily, int font, double fontsize, 
-		  double lineheight,
+		  LGContext *gc,
 		  double widthCM, double heightCM,
 		  GEDevDesc *dd)
 {
@@ -705,13 +623,11 @@ double transformX(SEXP x, int index,
     int unit;
     SEXP data;
     if (isUnitArithmetic(x)) 
-	result = transformXArithmetic(x, index, vpc, 
-				      fontfamily, font, fontsize, lineheight,
+	result = transformXArithmetic(x, index, vpc, gc,
 				      widthCM, heightCM, dd);
     else if (isUnitList(x)) {
 	int n = unitLength(x);
-	result = transformX(VECTOR_ELT(x, index % n), 0, vpc, 
-			    fontfamily, font, fontsize, lineheight,
+	result = transformX(VECTOR_ELT(x, index % n), 0, vpc, gc,
 			    widthCM, heightCM, dd);
     } else {  /* Just a plain unit */
 	L_nullArithmeticMode = L_plain;
@@ -719,10 +635,7 @@ double transformX(SEXP x, int index,
 	unit = unitUnit(x, index);
 	data = unitData(x, index);
 	result = transformLocation(result, unit, data, 
-				   vpc.xscalemin, vpc.xscalemax,
-				   vpc.fontfamily, vpc.font, 
-				   vpc.fontsize, vpc.lineheight,
-				   fontfamily, font, fontsize, lineheight,
+				   vpc.xscalemin, vpc.xscalemax, gc,
 				   widthCM, heightCM, dd);
     }
     return result;
@@ -730,15 +643,13 @@ double transformX(SEXP x, int index,
 
 double transformYArithmetic(SEXP y, int index,
 			    LViewportContext vpc,
-			    char *fontfamily, int font, double fontsize, 
-			    double lineheight,
+			    LGContext *gc,
 			    double widthCM, double heightCM,
 			    GEDevDesc *dd);
 
 double transformY(SEXP y, int index, 
 		  LViewportContext vpc,
-		  char *fontfamily, int font, double fontsize, 
-		  double lineheight,
+		  LGContext *gc,
 		  double widthCM, double heightCM,
 		  GEDevDesc *dd)
 {
@@ -746,13 +657,11 @@ double transformY(SEXP y, int index,
     int unit;
     SEXP data;
     if (isUnitArithmetic(y))
-	result = transformYArithmetic(y, index, vpc,
-				      fontfamily, font, fontsize, lineheight,
+	result = transformYArithmetic(y, index, vpc, gc,
 				      widthCM, heightCM, dd);
     else if (isUnitList(y)) {
 	int n = unitLength(y);
-	result = transformY(VECTOR_ELT(y, index % n), 0, vpc,
-			    fontfamily, font, fontsize, lineheight,
+	result = transformY(VECTOR_ELT(y, index % n), 0, vpc, gc,
 			    widthCM, heightCM, dd);
     } else { /* Just a unit object */
 	L_nullArithmeticMode = L_plain;
@@ -760,10 +669,7 @@ double transformY(SEXP y, int index,
 	unit = unitUnit(y, index);
 	data = unitData(y, index);
 	result = transformLocation(result, unit, data, 
-				   vpc.yscalemin, vpc.yscalemax,
-				   vpc.fontfamily, vpc.font, 
-				   vpc.fontsize, vpc.lineheight,
-				   fontfamily, font, fontsize, lineheight,
+				   vpc.yscalemin, vpc.yscalemax, gc,
 				   heightCM, widthCM, dd);
     } 
     return result;
@@ -771,10 +677,7 @@ double transformY(SEXP y, int index,
 
 double transformDimension(double dim, int unit, SEXP data,
 			  double scalemin, double scalemax,
-			  char *fontfamily, int font, double fontsize, 
-			  double lineheight, 
-			  char *grobfontfamily, int grobfont, 
-			  double grobfontSize, double groblineHeight, 
+			  LGContext *gc,
 			  double thisCM, double otherCM,
 			  GEDevDesc *dd)
 {
@@ -784,10 +687,7 @@ double transformDimension(double dim, int unit, SEXP data,
 	result = (dim)/(scalemax - scalemin);
 	break;
     default:
-	result = transform(dim, unit, data, scalemin, scalemax,
-			   fontfamily, font, fontsize, lineheight, 
-			   grobfontfamily, grobfont, 
-			   grobfontSize, groblineHeight, 
+	result = transform(dim, unit, data, scalemin, scalemax, gc,
 			   thisCM, otherCM, dd);
     }
     return result;
@@ -795,15 +695,13 @@ double transformDimension(double dim, int unit, SEXP data,
 
 double transformWidthArithmetic(SEXP width, int index,
 				LViewportContext vpc,
-				char *fontfamily, int font, double fontsize, 
-				double lineheight, 
+				LGContext *gc,
 				double widthCM, double heightCM,
 				GEDevDesc *dd);
 
 double transformWidth(SEXP width, int index, 
 		      LViewportContext vpc,
-		      char *fontfamily, int font, double fontsize, 
-		      double lineheight,
+		      LGContext *gc,
 		      double widthCM, double heightCM,
 		      GEDevDesc *dd)
 {
@@ -811,15 +709,11 @@ double transformWidth(SEXP width, int index,
     int unit;
     SEXP data;
     if (isUnitArithmetic(width))
-	result = transformWidthArithmetic(width, index, vpc,
-					  fontfamily, font, fontsize, 
-					  lineheight, 
+	result = transformWidthArithmetic(width, index, vpc, gc,
 					  widthCM, heightCM, dd);
     else if (isUnitList(width)) {
 	int n = unitLength(width);
-	result = transformWidth(VECTOR_ELT(width, index % n), 0, vpc,
-				fontfamily, font, fontsize, 
-				lineheight, 
+	result = transformWidth(VECTOR_ELT(width, index % n), 0, vpc, gc,
 				widthCM, heightCM, dd);
     } else { /* Just a unit object */
 	L_nullArithmeticMode = L_plain;
@@ -827,11 +721,7 @@ double transformWidth(SEXP width, int index,
 	unit = unitUnit(width, index);
 	data = unitData(width, index);
 	result = transformDimension(result, unit, data, 
-				    vpc.xscalemin, vpc.xscalemax,
-				    vpc.fontfamily, vpc.font, 
-				    vpc.fontsize, vpc.lineheight,
-				    fontfamily, font, fontsize, 
-				    lineheight, 
+				    vpc.xscalemin, vpc.xscalemax, gc,
 				    widthCM, heightCM, dd);
     }
     return result;
@@ -839,15 +729,13 @@ double transformWidth(SEXP width, int index,
 
 double transformHeightArithmetic(SEXP height, int index,
 				 LViewportContext vpc,
-				 char *fontfamily, int font, double fontsize, 
-				 double lineheight,
+				 LGContext *gc,
 				 double widthCM, double heightCM,
 				 GEDevDesc *dd);
 
 double transformHeight(SEXP height, int index,
 		       LViewportContext vpc,
-		       char *fontfamily, int font, double fontsize, 
-		       double lineheight,
+		       LGContext *gc,
 		       double widthCM, double heightCM,
 		       GEDevDesc *dd)
 {
@@ -855,15 +743,11 @@ double transformHeight(SEXP height, int index,
     int unit;
     SEXP data;
     if (isUnitArithmetic(height))
-	result = transformHeightArithmetic(height, index, vpc,
-					   fontfamily, font, fontsize, 
-					   lineheight, 
+	result = transformHeightArithmetic(height, index, vpc, gc,
 					   widthCM, heightCM, dd);
     else if (isUnitList(height)) {
 	int n = unitLength(height);
-	result = transformHeight(VECTOR_ELT(height, index % n), 0, vpc,
-				 fontfamily, font, fontsize, 
-				 lineheight, 
+	result = transformHeight(VECTOR_ELT(height, index % n), 0, vpc, gc,
 				 widthCM, heightCM, dd);
     } else { /* Just a unit object */
 	L_nullArithmeticMode = L_plain;
@@ -871,11 +755,7 @@ double transformHeight(SEXP height, int index,
 	unit = unitUnit(height, index);
 	data = unitData(height, index);
 	result = transformDimension(result, unit, data, 
-				    vpc.yscalemin, vpc.yscalemax,
-				    vpc.fontfamily, vpc.font, 
-				    vpc.fontsize, vpc.lineheight,
-				    fontfamily, font, fontsize, 
-				    lineheight, 
+				    vpc.yscalemin, vpc.yscalemax, gc,
 				    heightCM, widthCM, dd);
     }
     return result;
@@ -883,8 +763,7 @@ double transformHeight(SEXP height, int index,
 
 double transformXArithmetic(SEXP x, int index,
 			    LViewportContext vpc,
-			    char *fontfamily, int font, double fontsize, 
-			    double lineheight,
+			    LGContext *gc,
 			    double widthCM, double heightCM,
 			    GEDevDesc *dd)
 {
@@ -892,46 +771,32 @@ double transformXArithmetic(SEXP x, int index,
     double result = 0;
     if (addOp(x)) {
 	L_nullArithmeticMode = L_adding;
-	result = transformX(arg1(x), index, vpc,
-			    fontfamily, font, fontsize, 
-			    lineheight, 
+	result = transformX(arg1(x), index, vpc, gc,
 			    widthCM, heightCM, dd) +
-	    transformX(arg2(x), index, vpc,
-		       fontfamily, font, fontsize, 
-		       lineheight, 
+	    transformX(arg2(x), index, vpc, gc,
 		       widthCM, heightCM, dd);
     }
     else if (minusOp(x)) {
 	L_nullArithmeticMode = L_subtracting;
-	result = transformX(arg1(x), index, vpc,
-			    fontfamily, font, fontsize, 
-			    lineheight, 
+	result = transformX(arg1(x), index, vpc, gc,
 			    widthCM, heightCM, dd) -
-	    transformX(arg2(x), index, vpc,
-		       fontfamily, font, fontsize, 
-		       lineheight, 
+	    transformX(arg2(x), index, vpc, gc,
 		       widthCM, heightCM, dd);
     }
     else if (timesOp(x)) {
 	L_nullArithmeticMode = L_multiplying;
-	result = REAL(arg1(x))[0] *
-	    transformX(arg2(x), index, vpc,
-		       fontfamily, font, fontsize, 
-		       lineheight, 
+	result = REAL(arg1(x))[index % LENGTH(arg1(x))] *
+	    transformX(arg2(x), index, vpc, gc,
 		       widthCM, heightCM, dd);
     }
     else if (minFunc(x)) {
 	int n = unitLength(arg1(x));
 	double temp = DBL_MAX;
 	L_nullArithmeticMode = L_minimising;
-	result = transformX(arg1(x), 0, vpc,
-			    fontfamily, font, fontsize, 
-			    lineheight, 
+	result = transformX(arg1(x), 0, vpc, gc,
 			    widthCM, heightCM, dd);
 	for (i=1; i<n; i++) {
-	    temp = transformX(arg1(x), i, vpc,
-			      fontfamily, font, fontsize, 
-			      lineheight, 
+	    temp = transformX(arg1(x), i, vpc, gc,
 			      widthCM, heightCM, dd);
 	    if (temp < result)
 		result = temp;
@@ -941,14 +806,10 @@ double transformXArithmetic(SEXP x, int index,
 	int n = unitLength(arg1(x));
 	double temp = DBL_MIN;
 	L_nullArithmeticMode = L_maximising;
-	result = transformX(arg1(x), 0, vpc,
-			    fontfamily, font, fontsize, 
-			    lineheight, 
+	result = transformX(arg1(x), 0, vpc, gc,
 			    widthCM, heightCM, dd);
 	for (i=1; i<n; i++) {
-	    temp = transformX(arg1(x), i, vpc,
-			      fontfamily, font, fontsize, 
-			      lineheight, 
+	    temp = transformX(arg1(x), i, vpc, gc,
 			      widthCM, heightCM, dd);
 	    if (temp > result)
 		result = temp;
@@ -959,9 +820,7 @@ double transformXArithmetic(SEXP x, int index,
 	result = 0.0;
 	L_nullArithmeticMode = L_summing;
 	for (i=0; i<n; i++) {
-	    result += transformX(arg1(x), i, vpc,
-				 fontfamily, font, fontsize, 
-				 lineheight, 
+	    result += transformX(arg1(x), i, vpc, gc,
 				 widthCM, heightCM, dd);
 	}
     }
@@ -972,8 +831,7 @@ double transformXArithmetic(SEXP x, int index,
 
 double transformYArithmetic(SEXP y, int index,
 			    LViewportContext vpc,
-			    char *fontfamily, int font, double fontsize, 
-			    double lineheight,
+			    LGContext *gc,
 			    double widthCM, double heightCM,
 			    GEDevDesc *dd)
 {
@@ -981,39 +839,32 @@ double transformYArithmetic(SEXP y, int index,
     double result = 0;
     if (addOp(y)) {
 	L_nullArithmeticMode = L_adding;
-	result = transformY(arg1(y), index, vpc,
-			    fontfamily, font, fontsize, lineheight,
+	result = transformY(arg1(y), index, vpc, gc,
 			    widthCM, heightCM, dd) +
-	    transformY(arg2(y), index, vpc,
-		       fontfamily, font, fontsize, lineheight,
+	    transformY(arg2(y), index, vpc, gc,
 		       widthCM, heightCM, dd);
     }
     else if (minusOp(y)) {
 	L_nullArithmeticMode = L_subtracting;
-	result = transformY(arg1(y), index, vpc,
-			    fontfamily, font, fontsize, lineheight,
+	result = transformY(arg1(y), index, vpc, gc,
 			    widthCM, heightCM, dd) -
-	    transformY(arg2(y), index, vpc,
-		       fontfamily, font, fontsize, lineheight,
+	    transformY(arg2(y), index, vpc, gc,
 		       widthCM, heightCM, dd);
     }
     else if (timesOp(y)) {
 	L_nullArithmeticMode = L_multiplying;
-	result = REAL(arg1(y))[0] *
-	    transformY(arg2(y), index, vpc,
-		       fontfamily, font, fontsize, lineheight,
+	result = REAL(arg1(y))[index % LENGTH(arg1(y))] *
+	    transformY(arg2(y), index, vpc, gc,
 		       widthCM, heightCM, dd);
     }
     else if (minFunc(y)) {
 	int n = unitLength(arg1(y));
 	double temp = DBL_MAX;
 	L_nullArithmeticMode = L_minimising;
-	result = transformY(arg1(y), 0, vpc,
-			    fontfamily, font, fontsize, lineheight,
+	result = transformY(arg1(y), 0, vpc, gc,
 			    widthCM, heightCM, dd);
 	for (i=1; i<n; i++) {
-	    temp = transformY(arg1(y), i, vpc,
-			      fontfamily, font, fontsize, lineheight,
+	    temp = transformY(arg1(y), i, vpc, gc,
 			      widthCM, heightCM, dd);
 	    if (temp < result)
 		result = temp;
@@ -1023,12 +874,10 @@ double transformYArithmetic(SEXP y, int index,
 	int n = unitLength(arg1(y));
 	double temp = DBL_MIN;
 	L_nullArithmeticMode = L_maximising;
-	result = transformY(arg1(y), 0, vpc,
-			    fontfamily, font, fontsize, lineheight,
+	result = transformY(arg1(y), 0, vpc, gc,
 			    widthCM, heightCM, dd);
 	for (i=1; i<n; i++) {
-	    temp = transformY(arg1(y), i, vpc,
-			      fontfamily, font, fontsize, lineheight,
+	    temp = transformY(arg1(y), i, vpc, gc,
 			      widthCM, heightCM, dd);
 	    if (temp > result)
 		result = temp;
@@ -1039,8 +888,7 @@ double transformYArithmetic(SEXP y, int index,
 	L_nullArithmeticMode = L_summing;
 	result = 0.0;
 	for (i=0; i<n; i++) {
-	    result += transformY(arg1(y), i, vpc,
-				 fontfamily, font, fontsize, lineheight,
+	    result += transformY(arg1(y), i, vpc, gc,
 				 widthCM, heightCM, dd);
 	}
     }
@@ -1051,8 +899,7 @@ double transformYArithmetic(SEXP y, int index,
 
 double transformWidthArithmetic(SEXP width, int index,
 				LViewportContext vpc,
-				char *fontfamily, int font, double fontsize, 
-				double lineheight,
+				LGContext *gc,
 				double widthCM, double heightCM,
 				GEDevDesc *dd)
 {
@@ -1060,39 +907,32 @@ double transformWidthArithmetic(SEXP width, int index,
     double result = 0;
     if (addOp(width)) {
 	L_nullArithmeticMode = L_adding;
-	result = transformWidth(arg1(width), index, vpc,
-				fontfamily, font, fontsize, lineheight,
+	result = transformWidth(arg1(width), index, vpc, gc,
 				widthCM, heightCM, dd) +
-	    transformWidth(arg2(width), index, vpc,
-			   fontfamily, font, fontsize, lineheight,
+	    transformWidth(arg2(width), index, vpc, gc,
 			   widthCM, heightCM, dd);
     }
     else if (minusOp(width)) {
 	L_nullArithmeticMode = L_subtracting;
-	result = transformWidth(arg1(width), index, vpc,
-				fontfamily, font, fontsize, lineheight,
+	result = transformWidth(arg1(width), index, vpc, gc,
 				widthCM, heightCM, dd) -
-	    transformWidth(arg2(width), index, vpc,
-			   fontfamily, font, fontsize, lineheight,
+	    transformWidth(arg2(width), index, vpc, gc,
 			   widthCM, heightCM, dd);
     }
     else if (timesOp(width)) {
 	L_nullArithmeticMode = L_multiplying;
-	result = REAL(arg1(width))[0] *
-	    transformWidth(arg2(width), index, vpc,
-			   fontfamily, font, fontsize, lineheight,
+	result = REAL(arg1(width))[index % LENGTH(arg1(width))] *
+	    transformWidth(arg2(width), index, vpc, gc,
 			   widthCM, heightCM, dd);
     }
     else if (minFunc(width)) {
 	int n = unitLength(arg1(width));
 	double temp = DBL_MAX;
 	L_nullArithmeticMode = L_minimising;
-	result = transformWidth(arg1(width), 0, vpc,
-				fontfamily, font, fontsize, lineheight,
+	result = transformWidth(arg1(width), 0, vpc, gc,
 				widthCM, heightCM, dd);
 	for (i=1; i<n; i++) {
-	    temp = transformWidth(arg1(width), i, vpc,
-				  fontfamily, font, fontsize, lineheight,
+	    temp = transformWidth(arg1(width), i, vpc, gc,
 				  widthCM, heightCM, dd);
 	    if (temp < result)
 		result = temp;
@@ -1102,12 +942,10 @@ double transformWidthArithmetic(SEXP width, int index,
 	int n = unitLength(arg1(width));
 	double temp = DBL_MIN;
 	L_nullArithmeticMode = L_maximising;
-	result = transformWidth(arg1(width), 0, vpc,
-				fontfamily, font, fontsize, lineheight,
+	result = transformWidth(arg1(width), 0, vpc, gc,
 				widthCM, heightCM, dd);
 	for (i=1; i<n; i++) {
-	    temp = transformWidth(arg1(width), i, vpc,
-				  fontfamily, font, fontsize, lineheight,
+	    temp = transformWidth(arg1(width), i, vpc, gc,
 				  widthCM, heightCM, dd);
 	    if (temp > result)
 		result = temp;
@@ -1118,8 +956,7 @@ double transformWidthArithmetic(SEXP width, int index,
 	result = 0.0;
 	L_nullArithmeticMode = L_summing;
 	for (i=0; i<n; i++) {
-	    result += transformWidth(arg1(width), i, vpc,
-				     fontfamily, font, fontsize, lineheight,
+	    result += transformWidth(arg1(width), i, vpc, gc,
 				     widthCM, heightCM, dd);
 	}
     }
@@ -1130,8 +967,7 @@ double transformWidthArithmetic(SEXP width, int index,
 
 double transformHeightArithmetic(SEXP height, int index,
 				 LViewportContext vpc,
-				 char *fontfamily, int font, double fontsize, 
-				 double lineheight,
+				 LGContext *gc,
 				 double widthCM, double heightCM,
 				 GEDevDesc *dd)
 {
@@ -1139,39 +975,32 @@ double transformHeightArithmetic(SEXP height, int index,
     double result = 0;
     if (addOp(height)) {
 	L_nullArithmeticMode = L_adding;
-	result = transformHeight(arg1(height), index, vpc,
-				 fontfamily, font, fontsize, lineheight,
+	result = transformHeight(arg1(height), index, vpc, gc,
 				 widthCM, heightCM, dd) +
-	    transformHeight(arg2(height), index, vpc,
-			    fontfamily, font, fontsize, lineheight,
+	    transformHeight(arg2(height), index, vpc, gc,
 			    widthCM, heightCM, dd);
     }
     else if (minusOp(height)) {
 	L_nullArithmeticMode = L_subtracting;
-	result = transformHeight(arg1(height), index, vpc,
-				 fontfamily, font, fontsize, lineheight,
+	result = transformHeight(arg1(height), index, vpc, gc,
 				 widthCM, heightCM, dd) -
-	    transformHeight(arg2(height), index, vpc,
-			    fontfamily, font, fontsize, lineheight,
+	    transformHeight(arg2(height), index, vpc, gc,
 			    widthCM, heightCM, dd);
     }
     else if (timesOp(height)) {
 	L_nullArithmeticMode = L_multiplying;
-	result = REAL(arg1(height))[0] *
-	    transformHeight(arg2(height), index, vpc,
-			    fontfamily, font, fontsize, lineheight,
+	result = REAL(arg1(height))[index % LENGTH(arg1(height))] *
+	    transformHeight(arg2(height), index, vpc, gc,
 			    widthCM, heightCM, dd);
     }
     else if (minFunc(height)) {
 	int n = unitLength(arg1(height));
 	double temp = DBL_MAX;
 	L_nullArithmeticMode = L_minimising;
-	result = transformHeight(arg1(height), 0, vpc,
-				 fontfamily, font, fontsize, lineheight,
+	result = transformHeight(arg1(height), 0, vpc, gc,
 				 widthCM, heightCM, dd);
 	for (i=1; i<n; i++) {
-	    temp = transformHeight(arg1(height), i, vpc,
-				   fontfamily, font, fontsize, lineheight,
+	    temp = transformHeight(arg1(height), i, vpc, gc,
 				   widthCM, heightCM, dd);
 	    if (temp < result)
 		result = temp;
@@ -1181,12 +1010,10 @@ double transformHeightArithmetic(SEXP height, int index,
 	int n = unitLength(arg1(height));
 	double temp = DBL_MIN;
 	L_nullArithmeticMode = L_maximising;
-	result = transformHeight(arg1(height), 0, vpc,
-				 fontfamily, font, fontsize, lineheight,
+	result = transformHeight(arg1(height), 0, vpc, gc,
 				 widthCM, heightCM, dd);
 	for (i=1; i<n; i++) {
-	    temp = transformHeight(arg1(height), i, vpc,
-				   fontfamily, font, fontsize, lineheight,
+	    temp = transformHeight(arg1(height), i, vpc, gc,
 				   widthCM, heightCM, dd);
 	    if (temp > result)
 		result = temp;
@@ -1197,8 +1024,7 @@ double transformHeightArithmetic(SEXP height, int index,
 	L_nullArithmeticMode = L_summing;
 	result = 0.0;
 	for (i=0; i<n; i++) {
-	    result += transformHeight(arg1(height), i, vpc,
-				      fontfamily, font, fontsize, lineheight,
+	    result += transformHeight(arg1(height), i, vpc, gc,
 				      widthCM, heightCM, dd);
 	}
     }
@@ -1227,31 +1053,28 @@ double transformHeightArithmetic(SEXP height, int index,
  * the parent to INCHES relative to the device.
  */
 double transformXtoINCHES(SEXP x, int index, 
-			  LViewportContext vpc,
-			  char *fontfamily, int font, double fontsize, 
-			  double lineheight,
+			  LViewportContext vpc, 
+			  LGContext *gc,
 			  double widthCM, double heightCM,
 			  GEDevDesc *dd)
 {
-    return transformX(x, index, vpc, fontfamily, font, fontsize, lineheight,
+    return transformX(x, index, vpc, gc,
 		      widthCM, heightCM, dd)*widthCM/2.54;
 }
 
 double transformYtoINCHES(SEXP y, int index, 
 			  LViewportContext vpc,
-			  char *fontfamily, int font, double fontsize, 
-			  double lineheight,
+			  LGContext *gc,
 			  double widthCM, double heightCM,
 			  GEDevDesc *dd)
 {
-    return transformY(y, index, vpc, fontfamily, font, fontsize, lineheight,
+    return transformY(y, index, vpc, gc,
 		      widthCM, heightCM, dd)*heightCM/2.54;
 }
 
 void transformLocn(SEXP x, SEXP y, int index, 
 		   LViewportContext vpc,
-		   char *fontfamily, int font, double fontsize, 
-		   double lineheight,
+		   LGContext *gc,
 		   double widthCM, double heightCM,
 		   GEDevDesc *dd,
 		   LTransform t,
@@ -1261,11 +1084,9 @@ void transformLocn(SEXP x, SEXP y, int index,
     /* x and y are unit objects (i.e., values in any old coordinate
      * system) so the first step is to convert them both to CM
      */
-    *xx = transformXtoINCHES(x, index, vpc, fontfamily, font, fontsize, 
-			     lineheight,
+    *xx = transformXtoINCHES(x, index, vpc, gc,
 			     widthCM, heightCM, dd);
-    *yy = transformYtoINCHES(y, index, vpc, fontfamily, font, fontsize, 
-			     lineheight,
+    *yy = transformYtoINCHES(y, index, vpc, gc,
 			     widthCM, heightCM, dd);
     location(*xx, *yy, lin);
     trans(lin, t, lout);
@@ -1275,32 +1096,27 @@ void transformLocn(SEXP x, SEXP y, int index,
 
 double transformWidthtoINCHES(SEXP w, int index,
 			      LViewportContext vpc,
-			      char *fontfamily, int font, double fontsize, 
-			      double lineheight,
+			      LGContext *gc,
 			      double widthCM, double heightCM,
 			      GEDevDesc *dd)
 {
-    return transformWidth(w, index, vpc, fontfamily, font, fontsize, 
-			  lineheight,
+    return transformWidth(w, index, vpc, gc,
 			  widthCM, heightCM, dd)*widthCM/2.54;
 }
 
 double transformHeighttoINCHES(SEXP h, int index,
 			       LViewportContext vpc,
-			       char *fontfamily, int font, double fontsize, 
-			       double lineheight,
+			       LGContext *gc,
 			       double widthCM, double heightCM,
 			       GEDevDesc *dd)
 {
-    return transformHeight(h, index, vpc, fontfamily, font, fontsize, 
-			   lineheight,
+    return transformHeight(h, index, vpc, gc,
 			   widthCM, heightCM, dd)*heightCM/2.54;
 }
 
 void transformDimn(SEXP w, SEXP h, int index, 
 		   LViewportContext vpc,
-		   char *fontfamily, int font, double fontsize, 
-		   double lineheight,
+		   LGContext *gc,
 		   double widthCM, double heightCM,
 		   GEDevDesc *dd,
 		   double rotationAngle,
@@ -1308,11 +1124,9 @@ void transformDimn(SEXP w, SEXP h, int index,
 {
     LLocation din, dout;
     LTransform r;
-    *ww = transformWidthtoINCHES(w, index, vpc, fontfamily, font, fontsize, 
-				 lineheight,
+    *ww = transformWidthtoINCHES(w, index, vpc, gc,
 				 widthCM, heightCM, dd);
-    *hh = transformHeighttoINCHES(h, index, vpc, fontfamily, font, fontsize, 
-				  lineheight,
+    *hh = transformHeighttoINCHES(h, index, vpc, gc,
 				  widthCM, heightCM, dd);
     location(*ww, *hh, din);
     rotation(rotationAngle, r);
@@ -1333,8 +1147,7 @@ void transformDimn(SEXP w, SEXP h, int index,
  */
 
 double transformFromINCHES(double value, int unit, 
-			   char *fontfamily, int font, double fontsize, 
-			   double lineheight, 
+			   LGContext *gc,
 			   double thisCM, double otherCM,
 			   GEDevDesc *dd)
 {
@@ -1360,10 +1173,10 @@ double transformFromINCHES(double value, int unit,
      * or somesuch.
      */
     case L_CHAR:
-	result = result*(72*thisCM/2.54)/fontsize;
+	result = result*(72*thisCM/2.54)/(gc->fontsize*gc->cex);
 	break;	
     case L_LINES:
-	result = result*(72*thisCM/2.54)/(fontsize*lineheight);
+	result = result*(72*thisCM/2.54)/(gc->fontsize*gc->cex*gc->lineheight);
 	break;
     case L_MM:
 	result = result*10*thisCM;
@@ -1423,8 +1236,7 @@ double transformFromINCHES(double value, int unit,
  */
 double transformXYFromINCHES(double location, int unit, 
 			     double scalemin, double scalemax,
-			     char *fontfamily, int font, double fontsize, 
-			     double lineheight, 
+			     LGContext *gc,
 			     double thisCM, double otherCM,
 			     GEDevDesc *dd)
 {
@@ -1434,8 +1246,7 @@ double transformXYFromINCHES(double location, int unit,
 	result = scalemin + (result/(thisCM/2.54))*(scalemax - scalemin);
 	break;
     default:
-	result = transformFromINCHES(location, unit, 
-				     fontfamily, font, fontsize, lineheight, 
+	result = transformFromINCHES(location, unit, gc,
 				     thisCM, otherCM, dd);
     }
     return result;
@@ -1443,9 +1254,7 @@ double transformXYFromINCHES(double location, int unit,
 
 double transformWidthHeightFromINCHES(double dimension, int unit, 
 				      double scalemin, double scalemax,
-				      char *fontfamily, int font, 
-				      double fontsize, 
-				      double lineheight, 
+				      LGContext *gc,
 				      double thisCM, double otherCM,
 				      GEDevDesc *dd)
 {
@@ -1455,8 +1264,7 @@ double transformWidthHeightFromINCHES(double dimension, int unit,
 	result = (result/(thisCM/2.54))*(scalemax - scalemin);
 	break;
     default:
-	result = transformFromINCHES(dimension, unit, 
-				     fontfamily, font, fontsize, lineheight, 
+	result = transformFromINCHES(dimension, unit, gc,
 				     thisCM, otherCM, dd);
     }
     return result;

@@ -28,13 +28,17 @@ gpar(...)
     lty \tab Line type \cr
     lwd \tab Line width \cr
     fontsize \tab The size of text (in points) \cr
+    cex \tab Multiplier applied to fontsize \cr
     fontfamily \tab The font family \cr
     fontface \tab The font face (bold, italic, ...) \cr
-    lineheight \tab The height of a line as a multiple of fontsize \cr
+    lineheight \tab The height of a line as a multiple of the size of text \cr
     font \tab Font face (alias for fontface;  for
     backward compatibility) \cr
   }
 
+  The size of text is \code{fontsize}*\code{cex}.  The size of a line
+  is \code{fontsize}*\code{cex}*\code{lineheight}.
+  
   For most devices, the \code{fontfamily} is specified when the device
   is first opened and may not be changed thereafter -- i.e., specifying
   a different font family via \code{fontfamily} will be ignored.  This

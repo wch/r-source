@@ -619,10 +619,11 @@ static void jump_to_top_ex(Rboolean traceback,
     }
 
     /* WARNING: If oldInError > 0 ABSOLUTELY NO ALLOCATION can be
-       triggered after this point except whatever happens in
-       R_run_onexits.  The error could be an out of memory error and
-       any allocation could result in an infinite-loop condition. All
-       you can do is reset things and exit.  */
+       triggered after this point except whatever happens in writing
+       the traceback and R_run_onexits.  The error could be an out of
+       memory error and any allocation could result in an
+       infinite-loop condition. All you can do is reset things and
+       exit.  */
 
     /* jump to a browser/try if one is on the stack */
     if (! ignoreRestartContexts)
@@ -630,6 +631,21 @@ static void jump_to_top_ex(Rboolean traceback,
 
     /* at this point, i.e. if we have not exited in
        try_jump_to_restart, we are heading for R_ToplevelContext */
+
+    /* only run traceback if we are not going to bail out of a
+       non-interactive session */
+    if (R_Interactive || haveHandler) {
+	/* write traceback if requested, unless we're already doing it
+	   or there is an inconsistenty between inError and oldInError
+	   (which should not happen) */
+	if (traceback && inError < 2 && inError == oldInError) {
+	    inError = 2;
+	    PROTECT(s = R_GetTraceback(0));
+	    setVar(install(".Traceback"), s, R_GlobalEnv);
+	    UNPROTECT(1);
+	    inError = oldInError;
+	}
+    }
 
     /* Run onexit/cend code for all contexts down to but not including
        the jump target.  This may cause recursive calls to
@@ -647,12 +663,6 @@ static void jump_to_top_ex(Rboolean traceback,
     if ( !R_Interactive && !haveHandler ) {
 	REprintf("Execution halted\n");
 	R_CleanUp(SA_NOSAVE, 1, 0); /* quit, no save, no .Last, status=1 */
-    }
-
-    if (traceback) {
-	PROTECT(s = R_GetTraceback(0));
-	setVar(install(".Traceback"), s, R_GlobalEnv);
-	UNPROTECT(1);
     }
 
     R_GlobalContext = R_ToplevelContext;
@@ -1040,7 +1050,7 @@ static void vsignalError(SEXP call, const char *format, va_list ap)
 {
     SEXP list, oldstack;
 
-    PROTECT(oldstack = R_HandlerStack);
+    oldstack = R_HandlerStack;
     while ((list = findSimpleErrorHandler()) != R_NilValue) {
 	char *buf = errbuf;
 	SEXP entry = CAR(list);
@@ -1048,12 +1058,14 @@ static void vsignalError(SEXP call, const char *format, va_list ap)
 	Rvsnprintf(buf, BUFSIZE - 1, format, ap);
 	buf[BUFSIZE - 1] = 0;
 	if (IS_CALLING_ENTRY(entry)) {
-	    if (ENTRY_HANDLER(entry) == R_RestartToken) {
-		UNPROTECT(1);
+	    if (ENTRY_HANDLER(entry) == R_RestartToken)
 		return; /* go to default error handling; do not reset stack */
-	    }
 	    else {
 		SEXP hooksym, quotesym, hcall, qcall;
+		/* protect oldstack here, not outside loop, so handler
+		   stack gets unwound in case error is protect stack
+		   overflow */
+		PROTECT(oldstack);
 		hooksym = install(".handleSimpleError");
 		quotesym = install("quote");
 		PROTECT(qcall = LCONS(quotesym, LCONS(call, R_NilValue)));
@@ -1062,13 +1074,12 @@ static void vsignalError(SEXP call, const char *format, va_list ap)
 		hcall = LCONS(ENTRY_HANDLER(entry), hcall);
 		PROTECT(hcall = LCONS(hooksym, hcall));
 		eval(hcall, R_GlobalEnv);
-		UNPROTECT(3);
+		UNPROTECT(4);
 	    }
 	}
 	else gotoExitingHandler(R_NilValue, call, entry);
     }
     R_HandlerStack = oldstack;
-    UNPROTECT(1);
 }
 
 static SEXP findConditionHandler(SEXP cond)

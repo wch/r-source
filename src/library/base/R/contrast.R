@@ -24,6 +24,8 @@ contrasts <-
     if (is.logical(x)) x <- factor(x)
     if(!is.factor(x))
 	stop("contrasts apply only to factors")
+    if(nlevels(x) < 2)
+        stop("contrasts can be applied only to factors with 2 or more levels")
     if(is.function(value)) value <- value(nlevels(x))
     if(is.numeric(value)) {
 	value <- as.matrix(value)

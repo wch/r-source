@@ -345,7 +345,8 @@ print.unit <- function(x, ...) {
              "["(x$arg2, (index - 1) %% this.length + 1, top=FALSE),
          "-"="["(x$arg1, (index - 1) %% this.length + 1, top=FALSE) -
              "["(x$arg2, (index - 1) %% this.length + 1, top=FALSE),
-         "*"=x$arg1 *
+         # Recycle multiplier if necessary
+         "*"=x$arg1[(index - 1) %% length(x$arg1) + 1] *
              "["(x$arg2, (index - 1) %% this.length + 1, top=FALSE),
          "min"=x,
          "max"=x,

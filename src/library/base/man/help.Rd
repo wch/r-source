@@ -2,8 +2,8 @@
 \alias{help}
 \alias{?}
 \alias{topicName}               % internal
-\alias{.helpForCall}		% internal
-\alias{.tryHelp}		% internal
+\alias{.helpForCall}            % internal
+\alias{.tryHelp}                % internal
 \title{Documentation}
 \description{
   These functions provide access to documentation.
@@ -191,7 +191,7 @@ help(lapply)
 help("for")             # or ?"for", but the quotes are needed
 ?"+"
 
-help(package = stepfun) # get help even when package is not loaded
+help(package="stepfun") # get help even when package is not loaded
 
 data()                  # list all available data sets
 ?women                  # information about data set "women"
@@ -201,5 +201,31 @@ topi <- "women"
 
 try(help("bs", try.all.packages=FALSE)) # reports not found (an error)
 help("bs", try.all.packages=TRUE) # reports can be found in package 'splines'
+
+\dontshow{require(methods)}
+
+\dontrun{
+## define a generic function and some methods
+combo <- function(x, y) c(x, y)
+setGeneric("combo")
+setMethod("combo", c("numeric", "numeric"),
+   function(x, y) x+y)
+
+## assume we have written some documentation for combo, and its methods ....
+
+?combo  ## produces the function documentation
+
+methods?combo  ## looks for the overall methods documentation
+
+method?combo("numeric", "numeric")  ## documentation for the method above
+
+?combo(1:10, rnorm(10))  ## ... the same method, selected according to
+                         ## the arguments (one integer, the other numeric)
+
+?combo(1:10, letters)    ## documentation for the default method
+
 }
+
+}
+
 \keyword{documentation}

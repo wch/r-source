@@ -190,7 +190,7 @@ static DWORD GALastUpdate = 0;
 static VOID CALLBACK
 GA_timer_proc(HWND hwnd, UINT message, UINT tid, DWORD time)
 {
-    if ((message != WM_TIMER) || tid != TimerNo) return;
+    if ((message != WM_TIMER) || tid != TimerNo || !GA_xd) return;
     gbitblt(GA_xd->gawin, GA_xd->bm, pt(0,0), getrect(GA_xd->bm));
     GALastUpdate = time;
 }
@@ -433,7 +433,7 @@ static void SaveAsPDF(NewDevDesc *dd, char *fn)
 					GE_INCHES, gdd),
 			fromDeviceHeight(toDeviceHeight(-1.0, GE_NDC, gdd),
 					 GE_INCHES, gdd),
-			((gadesc*) dd->deviceSpecific)->basefontsize, 
+			((gadesc*) dd->deviceSpecific)->basefontsize,
 			1, "R Graphics Output"))
 	PrivateCopyDevice(dd, ndd, "PDF");
 }
@@ -713,7 +713,7 @@ static void HelpMouseClick(window w, int button, point pt)
 	if (!xd->locator)
 	    return;
 	if (button & LeftButton) {
-	    int useBeep = asLogical(GetOption(install("locatorBell"), 
+	    int useBeep = asLogical(GetOption(install("locatorBell"),
 					      R_NilValue));
 	    if(useBeep) gabeep();
 	    xd->clicked = 1;
@@ -1492,7 +1492,7 @@ static Rboolean GA_Open(NewDevDesc *dd, gadesc *xd, char *dsp,
 	    xd->bg = dd->startfill = canvascolor;
 	/* was R_RGB(255, 255, 255); white */
         xd->kind = (dsp[0]=='p') ? PNG : BMP;
-	if(strlen(dsp+4) >= 512) error("filename too long in %s() call", 
+	if(strlen(dsp+4) >= 512) error("filename too long in %s() call",
 				       (dsp[0]=='p') ? "png" : "bmp");
 	strcpy(xd->filename, dsp+4);
 	if (!Load_Rbitmap_Dll()) {
@@ -1552,7 +1552,7 @@ static Rboolean GA_Open(NewDevDesc *dd, gadesc *xd, char *dsp,
 	    return FALSE;
 	if (strncmp(dsp, s, ls) || (dsp[ls] && (dsp[ls] != ':')))
 	    return FALSE;
-	if(ld > ls && strlen(&dsp[ls + 1]) >= 512) 
+	if(ld > ls && strlen(&dsp[ls + 1]) >= 512)
 	    error("filename too long in win.metafile() call");
 	strcpy(xd->filename, (ld > ls) ? &dsp[ls + 1] : "");
 	snprintf(buf, 600, xd->filename, 1);
@@ -1635,7 +1635,7 @@ static void GA_MetricInfo(int c, int font, double cex, double ps,
 	*ascent  = 0.0;
 	*descent = 0.0;
 	*width   = (double) w;
-	
+
     } else {
 	*ascent  = (double) a;
 	*descent = (double) d;
@@ -1856,6 +1856,7 @@ static void GA_Close(NewDevDesc *dd)
 	}
 	hide(xd->gawin);
 	del(xd->bm);
+	if (xd == GA_xd) GA_xd = NULL;
     } else if ((xd->kind == PNG) || (xd->kind == JPEG) || (xd->kind == BMP)) {
       SaveAsBitmap(dd);
     }
@@ -2339,9 +2340,9 @@ Rboolean GADeviceDriver(NewDevDesc *dd, char *display, double width,
     /* Window Dimensions in Pixels */
     rr = getrect(xd->gawin);
     dd->left = (xd->kind == PRINTER) ? rr.x : 0;	/* left */
-    dd->right = dd->left + rr.width;	/* right */
+    dd->right = dd->left + rr.width - 0.0001;	/* right */
     dd->top = (xd->kind == PRINTER) ? rr.y : 0;	/* top */
-    dd->bottom = dd->top + rr.height;	/* bottom */
+    dd->bottom = dd->top + rr.height - 0.0001;	/* bottom */
 
     if (resize == 3) { /* might have got a shrunken window */
 	int iw = width/pixelWidth(NULL) + 0.5,
@@ -2393,11 +2394,11 @@ Rboolean GADeviceDriver(NewDevDesc *dd, char *display, double width,
 
     xd->resize = (resize == 3);
     xd->locator = FALSE;
-    xd->buffered = buffered; 
+    xd->buffered = buffered;
     {
 	SEXP timeouts = GetOption(install("windowsTimeouts"), R_NilValue);
 	if(isInteger(timeouts)){
-	    xd->timeafter = INTEGER(timeouts)[0]; 
+	    xd->timeafter = INTEGER(timeouts)[0];
 	    xd->timesince = INTEGER(timeouts)[1];
 	} else {
 	    warning("option `windowsTimeouts' should be integer");
@@ -2515,13 +2516,12 @@ static void SaveAsBitmap(NewDevDesc *dd)
     rect r, r2;
     gadesc *xd = (gadesc *) dd->deviceSpecific;
     unsigned char *data;
-    int row_bytes;
-    
+
     r = ggetcliprect(xd->gawin);
     gsetcliprect(xd->gawin, r2 = getrect(xd->gawin));
     if(xd->fp) {
 	if (getdepth(xd->gawin) > 8) {
-	    getbitmapdata2(xd->gawin, &data, &row_bytes);
+	    getbitmapdata2(xd->gawin, &data);
 	    if(data) {
 		png_rows = r2.width;
 		if (xd->kind == PNG)
@@ -2559,8 +2559,10 @@ static void SaveAsBitmap(NewDevDesc *dd)
 static void SaveAsPng(NewDevDesc *dd,char *fn)
 {
     FILE *fp;
-    rect r;
+    rect r, r2;
+    unsigned char *data;
     gadesc *xd = (gadesc *) dd->deviceSpecific;
+
     if (!Load_Rbitmap_Dll()) {
 	R_ShowMessage("Impossible to load Rbitmap.dll");
 	return;
@@ -2574,9 +2576,19 @@ static void SaveAsPng(NewDevDesc *dd,char *fn)
 	return;
     }
     r = ggetcliprect(xd->bm);
-    gsetcliprect(xd->bm, getrect(xd->bm));
-    R_SaveAsPng(xd->bm, xd->windowWidth, xd->windowHeight,
-		privategetpixel, 0, fp, 0) ;
+    gsetcliprect(xd->bm, r2 = getrect(xd->bm));
+    if (getdepth(xd->gawin) > 8) {
+	getbitmapdata2(xd->bm, &data);
+	if(data) {
+	    png_rows = r2.width;
+	    R_SaveAsPng(data, xd->windowWidth, xd->windowHeight,
+			privategetpixel2, 0, fp, 0) ;
+	    free(data);
+	} else
+	    warning("processing of the plot ran out of memory");
+    } else
+	R_SaveAsPng(xd->bm, xd->windowWidth, xd->windowHeight,
+		    privategetpixel, 0, fp, 0) ;
     /* R_OPAQUE(xd->bg) ? 0 : xd->canvascolor) ; */
     gsetcliprect(xd->bm, r);
     fclose(fp);
@@ -2585,8 +2597,10 @@ static void SaveAsPng(NewDevDesc *dd,char *fn)
 static void SaveAsJpeg(NewDevDesc *dd,int quality,char *fn)
 {
     FILE *fp;
-    rect r;
+    rect r, r2;
+    unsigned char *data;
     gadesc *xd = (gadesc *) dd->deviceSpecific;
+
     if (!Load_Rbitmap_Dll()) {
 	R_ShowMessage("Impossible to load Rbitmap.dll");
 	return;
@@ -2599,9 +2613,19 @@ static void SaveAsJpeg(NewDevDesc *dd,int quality,char *fn)
 	return;
     }
     r = ggetcliprect(xd->bm);
-    gsetcliprect(xd->bm, getrect(xd->bm));
-    R_SaveAsJpeg(xd->bm,xd->windowWidth, xd->windowHeight,
-		 privategetpixel, 0, quality, fp) ;
+    gsetcliprect(xd->bm, r2 = getrect(xd->bm));
+    if (getdepth(xd->gawin) > 8) {
+	getbitmapdata2(xd->bm, &data);
+	if(data) {
+	    png_rows = r2.width;
+	    R_SaveAsJpeg(data,xd->windowWidth, xd->windowHeight,
+			 privategetpixel2, 0, quality, fp) ;
+	    free(data);
+	} else
+	    warning("processing of the plot ran out of memory");
+    } else
+	R_SaveAsJpeg(xd->bm,xd->windowWidth, xd->windowHeight,
+		     privategetpixel, 0, quality, fp) ;
     gsetcliprect(xd->bm, r);
     fclose(fp);
 }
@@ -2610,8 +2634,10 @@ static void SaveAsJpeg(NewDevDesc *dd,int quality,char *fn)
 static void SaveAsBmp(NewDevDesc *dd,char *fn)
 {
     FILE *fp;
-    rect r;
+    rect r, r2;
+    unsigned char *data;
     gadesc *xd = (gadesc *) dd->deviceSpecific;
+
     if (!Load_Rbitmap_Dll()) {
 	R_ShowMessage("Impossible to load Rbitmap.dll");
 	return;
@@ -2625,9 +2651,19 @@ static void SaveAsBmp(NewDevDesc *dd,char *fn)
 	return;
     }
     r = ggetcliprect(xd->bm);
-    gsetcliprect(xd->bm, getrect(xd->bm));
-    R_SaveAsBmp(xd->bm, xd->windowWidth, xd->windowHeight,
-		privategetpixel, 0, fp) ;
+    gsetcliprect(xd->bm, r2 = getrect(xd->bm));
+    if (getdepth(xd->gawin) > 8) {
+	getbitmapdata2(xd->bm, &data);
+	if(data) {
+	    png_rows = r2.width;
+	    R_SaveAsBmp(data, xd->windowWidth, xd->windowHeight,
+			privategetpixel2, 0, fp) ;
+	    free(data);
+	} else
+	    warning("processing of the plot ran out of memory");
+    } else
+	R_SaveAsBmp(xd->bm, xd->windowWidth, xd->windowHeight,
+		    privategetpixel, 0, fp) ;
     gsetcliprect(xd->bm, r);
     fclose(fp);
 }

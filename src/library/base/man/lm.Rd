@@ -1,7 +1,7 @@
 \name{lm}
 \alias{lm}
 \alias{print.lm}
-%\alias{print.lm.null}
+\concept{regression}
 \title{Fitting Linear Models}
 \description{
   \code{lm} is used to fit linear models.
@@ -116,8 +116,8 @@ lm(formula, data, subset, weights, na.action,
   \code{\link{summary.lm}} for summaries and \code{\link{anova.lm}} for
   the ANOVA table; \code{\link{aov}} for a different interface.
 
-  The generic functions \code{\link{coefficients}}, \code{\link{effects}},
-  \code{\link{residuals}}, \code{\link{fitted.values}}.
+  The generic functions \code{\link{coef}}, \code{\link{effects}},
+  \code{\link{residuals}}, \code{\link{fitted}}, \code{\link{vcov}}.
 
   \code{\link{predict.lm}} (via \code{\link{predict}}) for prediction,
   including confidence and prediction intervals.

@@ -448,7 +448,7 @@ data.frame <-
 	  as.matrix(x)[[i]]
  	  else .subset2(x,i))(x, ...)
     else
-        .subset2(.subset2(x, ..1), ..2)
+        .subset2(.subset2(x, ..2), ..1)
 }
 
 "[<-.data.frame" <- function(x, i, j, value)
@@ -584,8 +584,17 @@ data.frame <-
     p <- length(jseq)
     m <- length(value)
     if(!is.list(value)) {
-        if(p == 1) value <- list(value)
-        else {
+        if(p == 1) {
+            N <- NROW(value)
+            if(N > n)
+                stop(paste("replacement has", N, "rows, data has", n))
+            if(N < n && N > 0)
+                if(n %% N == 0 && length(dim(value)) <= 1)
+                    value <- rep(value, length = n)
+                else
+                    stop(paste("replacement has", N, "rows, data has", n))
+            value <- list(value)
+         } else {
             if(m < n*p && (n*p) %% m)
                 stop(paste("replacement has", m, "items, need", n*p))
             value <- matrix(value, n, p)  ## will recycle

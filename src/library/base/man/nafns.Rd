@@ -16,13 +16,11 @@ naresid(omit, x, \dots)
 napredict(omit, x, \dots)
 }
 \arguments{
-  \item{omit}{
-    An object produced by an \code{na.action} function.
-  }
-  \item{x}{
-    A vector, data frame, or matrix to be adjusted based upon the
-    missing value information.
-  }
+  \item{omit}{an object produced by an \code{\link{na.action}} function,
+    typically the \code{"na.action"} attribute of the result of
+    \code{\link{na.omit}} or \code{\link{na.exclude}}.}
+  \item{x}{a vector, data frame, or matrix to be adjusted based upon the
+    missing value information.}
   \item{\dots}{further arguments passed to or from other methods.}
 }
 \value{
@@ -31,7 +29,7 @@ napredict(omit, x, \dots)
 \details{
   These are utility functions used to allow \code{\link{predict}} and
   \code{\link{resid}} methods for modelling functions to compensate for
-  the removal of \code{NA}s in the fitting process.  There are used by
+  the removal of \code{NA}s in the fitting process.  They are used by
   the default, \code{"lm"} and \code{"glm"} methods, and by further
   methods in packages \pkg{MASS}, \pkg{rpart} and \pkg{survival}.
 

@@ -61,7 +61,7 @@ int main (int argc, char **argv)
 	sprintf(cmd, "%s/bin/Rterm.exe --restore --save", getRHOME());
 
 	for(i = 2, iused = 1; i < argc; i++) {
-	    if (!strcmp(argv[i], "-h") || !strcmp(argv[i], "-help")) {
+	    if (!strcmp(argv[i], "-h") || !strcmp(argv[i], "--help")) {
 		fprintf(stderr, "%s%s%s%s%s%s%s%s%s%s%s%s\n",
 "Usage: Rcmd BATCH [options] infile [outfile]\n\n",
 "Run R non-interactively with input from infile and place output (stdout\n",

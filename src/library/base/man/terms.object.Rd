@@ -29,7 +29,7 @@
   \item{response}{The index of the variable (in variables) of the
     response (the left hand side of the formula).}
   \item{offset}{If the model contains \code{\link{offset}} terms there
-    is an \code{offset} attribute indicating which terms are offsets}
+    is an \code{offset} attribute indicating which variables are offsets}
   \item{specials}{If the \code{specials} argument was given to
     \code{\link{terms.formula}} there is a \code{specials} attribute, a
     list of vectors indicating the terms that contain these special

@@ -16,7 +16,7 @@ setGeneric <-
 {
     if(exists(name, "package:base") &&
        typeof(get(name, "package:base")) != "closure") {
-        msg <- paste("\"",name, "\" is a primitive function; its generic definition is built in and automatically included.", sep="")
+        msg <- paste("\"",name, "\" is a primitive function for which methods are not allowed.", sep="")
         if(nargs() == 1)
             warning(msg)
         else
@@ -211,7 +211,7 @@ getMethodsForDispatch <-
 .getMethodsForDispatch <- function(f, fdef) {
     ev <- .evBasic(fdef)
     if(.existsBasic(".Methods", envir = ev)) {
-        get(".Methods", envir = ev)
+        .getBasic(".Methods", envir = ev)
     }
     else
         NULL
@@ -360,22 +360,16 @@ setMethod <-
     f
 }
 
-removeMethod <- function(f, signature = character(), where) {
-    ## TODO:  should get the environment of the package for this generic function
-    ## as the default starting point for `where'
-    if(missing(where)) {
-        where <- findMethod(f, signature)
-        if(length(where) == 0) {
-            warning("No method found for function ",f, " and signature ",
-                    paste(signature, collapse =", "))
-            return(FALSE)
-        }
-        else if(length(where) > 1) {
-            where <- sapply(where, getPackageName)
-            warning("Method found in multiple packages: ", paste(where, collapse = ", "),
-                    " (The first one will be removed)")
-        }
-        where <- where[[1]]
+removeMethod <- function(f, signature = character(), where = topenv(parent.frame())) {
+    fdef <- getGeneric(f, where = where)
+    if(is.null(fdef)) {
+        warning("No generic function \"", f, "\" found")
+        return(FALSE)
+    }
+    if(is.null(getMethod(fdef, signature, optional=TRUE))) {
+        warning("No method found for function \"",fdef@generic, "\" and signature ",
+                paste(dQuote(signature), collapse =", "))
+        return(FALSE)
     }
     setMethod(f, signature, NULL, where = where)
     TRUE
@@ -721,13 +715,17 @@ removeMethods <-
     }
     mlist <- getMethods(fdef)
     default <- finalDefaultMethod(mlist)
-    allWhere <- .findAll(mlistMetaName(f), where)
+    fMetaName <- mlistMetaName(f)
+    allWhere <- .findAll(fMetaName, where)
     if(!all)
         allWhere <- allWhere[1]
-    value <- logical(length(allWhere))
+    value <- rep(TRUE, length(allWhere))
     for(i in seq(along=allWhere)) {
         db <- allWhere[[i]]
-        value[[i]] <- removeMethodsObject(f, where = db)
+        obj <- get(fMetaName, db)
+        ## remove non-empty methods list objects
+        if(is(obj, "MethodsList") && length(obj@methods)>0)
+            value[[i]] <- removeMethodsObject(f, where = db)
     }
     ## cacheGenericsMetaData is called to clear primitive methods if there
     ## are none for this generic on other databases.

@@ -38,7 +38,8 @@ zapsmall(x, digits= getOption("digits"))
 
   \code{zapsmall} determines a \code{digits} argument \code{dr} for
   calling \code{round(x, digits = dr)} such that values \dQuote{close to
-    zero} values are \dQuote{zapped}, i.e., treated as \code{0}.
+    zero} (compared with the maximal absolute one) are \dQuote{zapped},
+  i.e., treated as \code{0}.
 }
 \arguments{
   \item{x}{a numeric vector.}

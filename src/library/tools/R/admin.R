@@ -147,7 +147,8 @@ function(dir, outDir)
     ##   writeLines(sapply(codeFiles, readLines), outFile)
     ## instead, but this would be much slower ...
     file.create(outFile)
-    writeLines(paste(".packageName <- \"", db["Package"], "\"", sep=""), outFile)
+    writeLines(paste(".packageName <- \"", db["Package"], "\"", sep=""),
+               outFile)
     file.append(outFile, codeFiles)
     ## </NOTE>
 
@@ -245,7 +246,10 @@ function(dir, outDir)
     if(!fileTest("-d", vignetteDir))
         return(invisible())
 
-    packageName <- basename(dir)    
+    packageName <- basename(dir)
+    outVignetteDir <- file.path(outDir, "doc")
+    if(!fileTest("-d", outVignetteDir)) dir.create(outVignetteDir)
+
     htmlIndex <- file.path(outDir, "doc", "index.html")
 
     ## write dummy HTML index if no vignettes are found and exit
@@ -267,8 +271,6 @@ function(dir, outDir)
     ## <FIXME>
     ## Compatibility code for BioC vignette tools.
     ## Remove eventually ...
-    outVignetteDir <- file.path(outDir, "doc")
-    if(!fileTest("-d", outVignetteDir)) dir.create(outVignetteDir)
     vignetteIndex <-
         vignetteIndex[vignetteIndex$PDF != "", c("PDF", "Title")]
     writeLines(formatDL(vignetteIndex, style = "list"),
