@@ -344,6 +344,9 @@ BUG FIXES
 
     o	seq(0,0,1) now works (PR#1133).
 
+    o   PR#757 was fixed incorrectly, causing improper subsetting of
+        pch etc. in plot.formula.
+
 
 	**************************************************
 	*						 *

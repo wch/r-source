@@ -193,14 +193,17 @@ function(formula, data = parent.frame(), ..., subset,
     dots <- m$...
     dots <- lapply(dots, eval, data, parent.frame())
     m$ylab <- m$... <- NULL
+    subset.expr <- m$subset
+    m$subset <- NULL
     m[[1]] <- as.name("model.frame")
     m <- as.call(c(as.list(m), list(na.action = NULL)))
     mf <- eval(m, parent.frame())
     if (!missing(subset)) {
-	s <- eval(m$subset, data, parent.frame())
+	s <- eval(subset.expr, data, parent.frame())
 	l <- nrow(mf)
 	dosub <- function(x) if (length(x) == l) x[s] else x
 	dots <- lapply(dots, dosub)
+	mf <- mf[s,]
     }
     response <- attr(attr(mf, "terms"), "response")
     if (response) {
