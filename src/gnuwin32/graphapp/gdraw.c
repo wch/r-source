@@ -445,11 +445,11 @@ void gcharmetric(drawing d, font f, int c, int *ascent, int *descent,
     *descent = tm.tmDescent;
     if(c == 0)
 	*width = tm.tmMaxCharWidth;
-    else if(first <= c && c <= last) {
+    else if((first <= c) && (c <= last)) {
 	char xx[2];
 	xx[0]=c;
 	xx[1]='\0';
-	*width = strwidth(f,xx);
+	*width = gstrwidth(d,f,xx);
     }
     else {
 	*ascent = 0;
