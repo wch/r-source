@@ -59,15 +59,13 @@
 extern SA_TYPE SaveAction;
 extern SA_TYPE RestoreAction;
 
-static gboolean R_gnome_initialised = FALSE; /* true once gnome_init has been called */
-
-static GList *messages_list = NULL;
+static void Rgnome_CleanUp(SA_TYPE saveact, int status, int runLast);
 
 /*
  *  1) FATAL MESSAGES AT STARTUP
  */
 
-void Rgnome_Suicide(char *s)
+static void Rgnome_Suicide(char *s)
 {
     GtkWidget *dialog;
     gchar *message;
@@ -96,7 +94,7 @@ void Rgnome_Suicide(char *s)
  *  3) ACTIONS DURING (LONG) COMPUTATIONS
  */
 
-void Rgnome_Busy(int which)
+static void Rgnome_Busy(int which)
 {
     if(which == 1) {
 	gnome_appbar_set_default(GNOME_APPBAR(GNOME_APP(R_gtk_main_window)->statusbar),
@@ -125,7 +123,7 @@ void Rgnome_Busy(int which)
    If ask = SA_SUICIDE, no save, no .Last, possibly other things.
  */
 
-void Rgnome_CleanUp(SA_TYPE saveact, int status, int runLast)
+static void Rgnome_CleanUp(SA_TYPE saveact, int status, int runLast)
 {
     GtkWidget *dialog;
     gint which; /* yes = 0, no = 1, cancel = 2 || -1 */
@@ -214,57 +212,27 @@ void Rgnome_CleanUp(SA_TYPE saveact, int status, int runLast)
     exit(status);
 }
 
-/* The message queue here was needed when GNOME was a plug-in module,
-   but no more */
-
-void Rgnome_ShowMessage(char *s)
+static void Rgnome_ShowMessage(char *s)
 {
     GtkWidget *dialog;
-    gchar *s_copy;
 
-    if(R_gnome_initialised) {
-        dialog = gnome_message_box_new(s,
-                                       GNOME_MESSAGE_BOX_WARNING,
-                                       GNOME_STOCK_BUTTON_OK,
-                                       NULL);
+    dialog = gnome_message_box_new(s,
+				   GNOME_MESSAGE_BOX_WARNING,
+				   GNOME_STOCK_BUTTON_OK,
+				   NULL);
                            
-        if(R_gtk_main_window != NULL)
-            gnome_dialog_set_parent(GNOME_DIALOG(dialog), GTK_WINDOW(R_gtk_main_window));
-        gtk_window_set_modal(GTK_WINDOW(dialog), TRUE);
-        gnome_dialog_set_default(GNOME_DIALOG(dialog), 0);
+    if(R_gtk_main_window != NULL)
+	gnome_dialog_set_parent(GNOME_DIALOG(dialog), 
+				GTK_WINDOW(R_gtk_main_window));
+    gtk_window_set_modal(GTK_WINDOW(dialog), TRUE);
+    gnome_dialog_set_default(GNOME_DIALOG(dialog), 0);
 
-        gnome_dialog_run_and_close(GNOME_DIALOG(dialog));    
-    }
-    else {
-        /* queue the message */
-        s_copy = g_strdup(s);
-
-        messages_list = g_list_append(messages_list,
-                                      (gpointer) s_copy);
-    }
-}
-
-void R_ShowQueuedMessages(void)
-{
-    GList *l;
-
-    for(l = messages_list; l != NULL; l = l->next) {
-        R_ShowMessage((char *) l->data);
-        g_free(l->data);
-    }
-
-    g_list_free(messages_list);
-    messages_list = NULL;
+    gnome_dialog_run_and_close(GNOME_DIALOG(dialog));    
 }
 
 	/*--- Initialization Code ---*/
 
 
-void R_set_gnome_prefs(Rstart Rp)
-{
-    Rp->RestoreAction = prefs_get_restoreact();
-    Rp->SaveAction = prefs_get_saveact();
-}
 static const struct poptOption popt_options[] = {
   { NULL, '\0', 0, NULL, 0, NULL, NULL }
 };
@@ -325,7 +293,9 @@ int main(int ac, char **av)
 				  R_DAY));
     /* The aim here seems to be to set user's defaults to R defaults */
     R_gnome_prefs_cmd_load(RestoreAction, SaveAction);
-    R_set_gnome_prefs(Rp);
+
+    Rp->RestoreAction = prefs_get_restoreact();
+    Rp->SaveAction = prefs_get_saveact();
 
     /* command line params */
     R_common_command_line(&ac, av, Rp);
@@ -351,23 +321,20 @@ int main(int ac, char **av)
 	       g_strdup_printf("%s.%s %s (%s-%s-%s)", R_MAJOR, R_MINOR,
 			       R_STATUS, R_YEAR, R_MONTH, R_DAY),
 	       ac, av);
-    R_gnome_initialised = TRUE;
 
     /* Reset locale information */
-    #if defined(HAVE_LOCALE_H)
+#ifdef HAVE_LOCALE_H
     setlocale(LC_ALL, "C");
     setlocale(LC_CTYPE, "");/*- make ISO-latin1 etc. work for LOCALE users */
     setlocale(LC_COLLATE, "");/*- alphabetically sorting */
     setlocale(LC_TIME, "");/*- names and defaults for date-time formats */
-    #endif 
+#endif 
 
     /* Initialise libglade */
     glade_gnome_init();
 
     /* Gnome GUI preferences */
     R_gnome_prefs_gui_load();
-
-    R_ShowQueuedMessages();
 
     R_SetParams(Rp);
     if(!Rp->NoRenviron) {
@@ -400,7 +367,7 @@ int main(int ac, char **av)
 	gtk_console_restore_history(GTK_CONSOLE(R_gtk_terminal_text), 
 				    R_HistoryFile, R_HistorySize, NULL);
 
-    fpu_setup(1);
+    fpu_setup(TRUE);
 
     mainloop();
     /*++++++  in ../main/main.c */

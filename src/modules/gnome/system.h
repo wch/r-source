@@ -23,10 +23,6 @@
 
 /* defined in GNOME GUI */
 
-void Rgnome_Suicide(char *s);
-void Rgnome_ShowMessage(char *s);
-void Rgnome_Busy(int which);
-void Rgnome_CleanUp(SA_TYPE saveact, int status, int runLast);
 int  Rgnome_ShowFiles(int nfile, char **file, char **headers, char *wtitle,
 		      Rboolean del, char *pager);
 int  Rgnome_ChooseFile(int new, char *buf, int len);
