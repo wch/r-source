@@ -2,6 +2,7 @@
 \alias{update.packages}
 \alias{CRAN.packages}
 \alias{old.packages}
+\alias{new.packages}
 \alias{download.packages}
 \alias{install.packages}
 \alias{contrib.url}

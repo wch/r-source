@@ -138,10 +138,12 @@ new.packages <- function(lib.loc = NULL, CRAN = getOption("CRAN"),
 
     instp <- installed.packages(lib.loc = lib.loc)
     if(is.null(dim(instp)))
-        stop("no installed.packages for (invalid?) lib.loc=",lib.loc)
+        stop("no installed.packages for (invalid?) lib.loc=", lib.loc)
     if(is.null(available))
         available <- CRAN.packages(contriburl = contriburl, method = method)
     ## for packages contained in bundles use bundle names from now on
+    ## we don't have enough information to know if they are complete,
+    ## as they may be out of date and the contents may have changed
     ok <- !is.na(instp[,"Bundle"])
     instp[ok,"Package"] <- instp[ok,"Bundle"]
     installed <- unique(instp[, "Package"])
