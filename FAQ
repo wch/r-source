@@ -50,8 +50,11 @@ and a `$' for the shell prompt (where applicable).
    Feedback is of course most welcome.
 
    In particular, note that I do not have access to Windows or Mac systems.
-If you have information on these systems that you think should be added to
-this document, please let me know.
+Features specific to the Windows port of R are described in the "Frequently
+Asked Questions for R for Windows"
+(http://www.stats.ox.ac.uk/pub/R/rw-FAQ.html).  If you have information on
+Windows or Mac systems that you think should be added to this document,
+please let me know.
 
 2 R Basics
 **********
@@ -194,6 +197,9 @@ data collections) for use with Guido's version are available in
    Note that when uncompressing the zip files, the pkunzip program needs to
 be invoked with the `-D' flag to create subdirectories.  Also, be aware
 that some decompression programs do not preserve long file names properly.
+
+   See the R Windows FAQ (http://www.stats.ox.ac.uk/pub/R/rw-FAQ.html) for
+more details.
 
 2.5.3 How Can R Be Installed (Macintosh)
 ----------------------------------------
