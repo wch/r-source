@@ -36,7 +36,7 @@ svd <- function(x, nu=min(n,p), nv=min(n,p)) {
 	mn <- min(n,p)
 	mm <- min(n+1,p)
 	z <- .Fortran("dsvdc",
-		x,
+		as.double(x),
 		n,
 		n,
 		p,
