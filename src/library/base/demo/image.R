@@ -1,4 +1,8 @@
-opar <- par(ask = interactive() && .Device == "X11")	# For source(..)
+if(dev.cur() <= 1) get(getOption("device"))()
+
+opar <- par(ask = interactive() &&
+            (.Device %in% c("X11", "GTK", "windows", "Macintosh")))
+# For source
 
 data(volcano)
 x <- 10*(1:nrow(volcano)); x.at <- seq(100, 800, by=100)
