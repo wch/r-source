@@ -12,6 +12,8 @@ all: fixh
 	@mkdir -p $(R_HOME)/include/R_ext
 	@cp -p $(SRC_HEADERS) $(OBJ_HEADERS) $(R_HOME)/include
 	@cp -p R_ext/*.h $(R_HOME)/include/R_ext
+	@cp -p ../gnuwin32/graphapp/graphapp.h ../gnuwin32/graphapp/ga.h \
+	  $(R_HOME)/include
 
 version: Rversion.h
 

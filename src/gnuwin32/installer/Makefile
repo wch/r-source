@@ -68,7 +68,6 @@ endif
 	(cd ..; $(MAKE) --no-print-directory -C installer/$(RPREFIX)/src/gnuwin32/help clean)
 	$(CP) -pr $(R_HOME)/include $(R_HOME)/lib $(RPREFIX)
 	$(CP) -pr $(foreach i,$(SHARE_DIRS),$(R_HOME)/share/$i) $(RPREFIX)/share
-	$(CP) -p ../graphapp/graphapp.h ../graphapp/ga.h $(RPREFIX)/include
 	(cd ..; $(MAKE) --no-print-directory PKGDIR=. pkgclean-windlgs)
 	$(CP) -pr ../windlgs $(RPREFIX)/src/library
 #
