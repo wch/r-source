@@ -11,7 +11,8 @@ regularity and can be obtained from CRAN (see the RESOURCES file).
 R will configure and build under a number of common Unix platforms
 including dec-alpha-osf, freebsd, hpux, linux-elf, sgi-irix, solaris,
 and sunos.  In general it is relatively easy to adapt R to new
-platforms.  See below for details.
+platforms.  See the section on new platforms for details.
+
 
 GETTING AND UNPACKING THE SOURCES
 
@@ -44,6 +45,7 @@ directory of it and
 
 Notice that this does not necessarily work if the older sources have
 been modified (e.g. by building in their directories).
+
 
 SIMPLE COMPILATION
 
@@ -100,15 +102,8 @@ information on CRAN.
 Now rehash if necessary, type `R' and reach for your S manuals ...
 And, read the R FAQ (http://www.ci.tuwien.ac.at/~hornik/R/R-FAQ.html).
 
-The GNOME interface for R will only be built if you specify it by
-running configure with the --with-gnome option.  For example, you
-might run
-
-	./configure --with-gnome
-
-You will need libglade to build the GNOME interface.  For more 
-information on libglade and to download the source, see 
-    http://www.daa.com.au/~james/gnome/
+The GNOME interface for R will only be built if you specify it:
+see the GNOME section below.
 
 
 INSTALLATION
@@ -165,6 +160,43 @@ variable PATH accordingly before running configure.
 If your FORTRAN libraries are in slightly peculiar places, you should
 also look at LD_LIBRARY_PATH to make sure that all libraries are on this
 path.
+
+
+BUILDING THE GNOME INTERFACE
+
+The GNOME interface for R will only be built if you specify it by
+running configure with the --with-gnome option.  For example, you
+might run
+
+	./configure --with-gnome
+
+but please check you have all the requirements first.  It is advisable to
+have reasonably-up-to-date versions of the gnome and gtk+ libraries
+(later than those in RedHat 6.0, for example). You can find the
+versions you have by
+
+	gnome-config --version
+	gtk-config --version
+
+We know 1.0.10 and 1.2.3 suffice. Updates are available, for example
+from update.redhat.com for rpm-based systems. You need all of the
+following rpms installed
+
+	gnome-libs
+	gnome-libs-devel
+	gtk+
+	gtk+-devel
+
+You will need libglade 0.3 to build the GNOME interface.  For more 
+information on libglade and to download the source, see 
+
+    http://www.daa.com.au/~james/gnome/
+
+This needs a recent version of libxml (it says >= 1.3, but only 1.4
+seems available). You can obtain sources of libglade and libxml from
+the sources directory of the GNOME distribution (ftp.gnome.org and
+mirrors). Rpms of libxml-1.4 and libxml-devel-1.4 are available from
+rawhide.redhat.com and mirrors.  We are not aware of any rpm for libglade.
 
 
 NEW PLATFORMS (Standards Hah!)
