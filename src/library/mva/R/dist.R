@@ -80,7 +80,7 @@ print.dist <- function(obj, diag=NULL, upper=NULL)
 	upper <- if(is.null(attr(obj,"Upper")))FALSE else attr(obj, "Upper")
 
     size <- attr(obj, "Size")
-    df <- as.matrix(obj)
+    df <- as.matrix.dist(obj)
     if(!upper)
 	df[row(df) < col(df)] <- NA
     if(!diag)
