@@ -4,7 +4,8 @@
 # Usage:
 #	R REMOVE [options] [-l lib] pkg_1 ... pkg_n
 
-VERSION="0.1-0"
+REVISION='$Revision: 1.5 $'
+VERSION=`set - ${REVISION}; echo ${2}`
 USAGE_MSG="Usage:  R REMOVE [options] [-l lib] pkg_1 ... pkg_n"
 PKGS=
 lib=${R_HOME}/library
