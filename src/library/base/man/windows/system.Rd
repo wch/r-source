@@ -3,7 +3,7 @@
 \alias{unix}
 \title{Invoke a System Command}
 \usage{
-system(command, intern = FALSE, wait = TRUE, input = "",
+system(command, intern = FALSE, wait = TRUE, input = NULL,
        show.output.on.console = FALSE,
        minimized = FALSE, invisible = FALSE)
 }
@@ -56,7 +56,7 @@ system(command, intern = FALSE, wait = TRUE, input = "",
   call \code{CreateProcess}: extensions of \code{.exe}, \code{.com},
   \code{.cmd} and \code{.bat} are tried in turn if none
   is supplied. (To use DOS internal commands use
-  \code{command.com /c cmd} under Windows 9X/ME.)
+  \code{paste(Sys.getenv("COMSPEC"),"/c",cmd)}.)
   The search path for \code{command}
   may be system-dependent: it will include the \R \code{bin}
   directory, the working directory and the Windows system directories
@@ -91,8 +91,8 @@ interface.}
 \dontrun{system("notepad myfile.txt")}
 # launch a Windows 9x process monitor (from Win9x KernelToys)
 \dontrun{system("wintop", wait = FALSE)}
-# launch your favourite (!) shell:
-\dontrun{system("command.com")}
+# launch your favourite shell:
+\dontrun{system(Sys.getenv("COMSPEC"))}
 \dontrun{
 system(paste('"c:/Program Files/Netscape/Netscape 6/netscp6.exe"',
              '-url cran.r-project.org'), wait = FALSE)}
