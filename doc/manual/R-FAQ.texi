@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2005
-@set FAQ-VERSION 2.0.@value{FAQ-YEAR}-03-11
+@set FAQ-VERSION 2.0.@value{FAQ-YEAR}-03-30
 @set REL-VERSION 2.0.1
 @set REL-YEAR 2004
 @c <COMMENT>
@@ -1723,6 +1723,8 @@ Engineering and the Sciences (6th ed)'' by Jay L. Devore, 2003, Duxbury.
 @item EMV
 Estimation of missing values in a matrix by a @math{k}-th nearest
 neighboors algorithm.
+@item EbayesThresh
+Empirical Bayes thresholding and related methods.
 @item Ecdat
 Data sets from econometrics textbooks.
 @item GDD
@@ -2199,8 +2201,6 @@ more.
 @item eba
 Fitting and testing probabilistic choice models, especially the BTL,
 elimination-by-aspects (EBA), and preference tree (Pretree) models.
-@item ebayesthresh
-Empirical Bayes thresholding and related methods.
 @item eco
 Fitting Bayesian models of ecological inference in 2 by 2 tables.
 @item edci
@@ -2757,6 +2757,8 @@ Periodic Autoregression Analysis.
 Functions intended to facilitate certain basic analyses of DNA array
 data, especially with regard to comparing expression levels between two
 types of tissue.
+@item perturb
+Perturbation analysis for evaluating collinearity.
 @item pgam
 Poisson-Gamma Additive Models.
 @item pheno
@@ -4047,6 +4049,7 @@ dir /opt/R/src/unix
 * Why is read.table() so inefficient?::  
 * What is the difference between package and library?::  
 * I installed a package but the functions are not there::  
+* Why doesn't R think these numbers are equal?::  
 @end menu
 
 @c @node Why does R run out of memory?, Why does sourcing a correct file fail?, R Miscellanea, R Miscellanea
@@ -4810,7 +4813,7 @@ containing packages.
 ``R Help Desk: Package Management'', @emph{R News}, @strong{3/3},
 37--39.
 
-@node I installed a package but the functions are not there,  , What is the difference between package and library?, R Miscellanea
+@node I installed a package but the functions are not there, Why doesn't R think these numbers are equal?, What is the difference between package and library?, R Miscellanea
 @section I installed a package but the functions are not there
 
 To actually @emph{use} the package, it needs to be @emph{loaded} using
@@ -4818,6 +4821,29 @@ To actually @emph{use} the package, it needs to be @emph{loaded} using
 
 See @ref{R Add-On Packages} and @ref{What is the difference between
 package and library?} for more information.
+
+@node Why doesn't R think these numbers are equal?,  , I installed a package but the functions are not there, R Miscellanea
+@section Why doesn't R think these numbers are equal?
+
+The only numbers that can be represented exactly in R's numeric type 
+are integers and fractions whose denominator is a power of 2.  Other 
+numbers have to be rounded to (typically) 53 binary digits accuracy.  As a 
+result, two floating point numbers will not reliably be equal unless they 
+have been computed by the same algorithm, and not always even then.  For 
+example
+
+@example
+R> a <- sqrt(2)
+R> a * a == 2
+[1] FALSE
+R> a * a - 2
+[1] 4.440892e-16
+@end example
+
+The function @code{all.equal()} compares two objects using a numeric
+tolerance of @code{.Machine$double.eps ^ 0.5}.  If you want much greater
+accuracy than this you will need to consider error propagation
+carefully.
 
 @node R Programming, R Bugs, R Miscellanea, Top
 @chapter R Programming
