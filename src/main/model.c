@@ -1603,10 +1603,18 @@ alldone:
 
 	PROTECT(contr1 = allocVector(VECSXP, nvar));
 	PROTECT(contr2 = allocVector(VECSXP, nvar));
+
 	PROTECT(expr = allocList(3));
 	TYPEOF(expr) = LANGSXP;
 	CAR(expr) = install("contrasts");
 	CADDR(expr) = allocVector(LGLSXP, 1);
+
+		/* FIXME: We need to allow a third argument */
+		/* to this function which allows us to specify */
+		/* contrasts directly.  That argument would be used */
+		/* here in exactly the same way as the below */
+		/* I.e. we would search the list of constrast */
+		/* specs before we try the evaluation below. */
 
 	for(i=0 ; i<nvar ; i++) {
 		if(INTEGER(nlevels)[i]) {
