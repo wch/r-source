@@ -1,12 +1,12 @@
 \name{Random.user}
 \title{User-supplied Random Number Generation}
 \description{
-  Function \code{\link{RNGkind}} allows a user-coded random number
-  generator to be supplied. The details are give here.
+  Function \code{\link{RNGkind}} allows user-coded uniform and
+  normal random number generators to be supplied. The details are given here.
 }
 \details{
-  A user-specified RNG is called from entry points in dynamically-loaded
-  compiled code. The user must supply the entry point
+  A user-specified uniform RNG is called from entry points in
+  dynamically-loaded compiled code. The user must supply the entry point
   \code{user_unif_rand}, which takes no arguments and returns a
   \emph{pointer to} a double. The example below will show the general
   pattern.
@@ -26,13 +26,17 @@
   to the number of ``seeds'' and to an integer array of ``seeds''. Calls
   to \code{GetRNGstate} and \code{PutRNGstate} will then copy this array
   to and from \code{.Random.seed}.
+
+  A user-specified normal RNG is specified by a single entry point
+  \code{user_norm_rand}, which takes no arguments and returns a
+  \emph{pointer to} a double.
 }
 \section{Warning}{As with all compiled code, mis-specifying these
   functions can crash \R.  Do include the \file{R\_ext/Random.h}
   header file for type checking.
 }
 \examples{\dontrun{
-## Marsaglia's conguential PRNG
+/*  Marsaglia's conguential PRNG  */
 #include <R_ext/Random.h>
 
 static Int32 seed;
@@ -49,4 +53,35 @@ double * user_unif_rand()
 void  user_unif_init(Int32 seed_in) { seed = seed_in; }
 int * user_unif_nseed() { return &nseed; }
 int * user_unif_seedloc() { return (int *) &seed; }
+
+/*  ratio-of-uniforms for normal  */
+#include <math.h>
+static double x;
+
+double * user_norm_rand()
+{
+    double u, v, z;
+    do {
+        u = unif_rand();
+        v = 0.857764 * (2. * unif_rand() - 1);
+        x = v/u; z = 0.25 * x * x;
+        if (z < 1. - u) break;
+        if (z > 0.259/u + 0.35) continue;
+    } while (z > -log(u));
+    return &x;
+}
+
+## Use under Unix:
+R SHLIB urand.c
+R
+> dyn.load("urand.so")
+> RNGkind("user")
+> runif(10)
+> .Random.seed
+> RNGkind(, "user")
+> rnorm(10)
+> RNGkind()
+[1] "user-supplied" "user-supplied"
 }}
+\keyword{distribution}
+\keyword{sysdata}

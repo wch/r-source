@@ -37,6 +37,9 @@ double BM_norm_keep = 0.0;
 
 N01type N01_kind = KINDERMAN_RAMAGE;
 
+typedef void * (*DL_FUNC)();
+DL_FUNC  User_norm_fun; /* set in ../main/RNG.c */
+
 /*
  *  REFERENCE
  *
@@ -245,6 +248,8 @@ double norm_rand(void)
 	    BM_norm_keep = R * sin(theta);
 	    return R * cos(theta);
 	}
+    case USER_NORM:
+	return *((double *) User_norm_fun());
     default:
 	MATHLIB_ERROR("norm_rand(): invalid N01_kind: %d\n", N01_kind)
 	return 0.0;/*- -Wall */

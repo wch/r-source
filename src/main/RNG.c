@@ -34,6 +34,9 @@ DL_FUNC R_FindSymbol(char const *, char const *);
 static DL_FUNC User_unif_fun, User_unif_init, User_unif_nseed, 
     User_unif_seedloc;
 
+DL_FUNC  User_norm_fun; /* also in ../nmath/snorm.c */
+
+
 static RNGtype RNG_kind = RNG_DEFAULT;
 extern N01type N01_kind; /* from ../nmath/snorm.c */
 
@@ -264,7 +267,7 @@ void GetRNGstate()
 	    warning(".Random.seed was invalid: re-initializing");
 	    RNG_kind = RNG_DEFAULT;
 	    }*/
-	if (newN01 < 0 || newN01 > BOX_MULLER)
+	if (newN01 < 0 || newN01 > USER_NORM)
 	    error(".Random.seed[0] is not a valid Normal type");
  	switch(newRNG) {
  	case WICHMANN_HILL:
@@ -305,7 +308,7 @@ void PutRNGstate()
     SEXP seeds;
     
     if (RNG_kind < 0 || RNG_kind > USER ||
-	N01_kind < 0 || N01_kind > BOX_MULLER ) {
+	N01_kind < 0 || N01_kind > USER_NORM) {
 	warning("Internal .Random.seed is corrupt: not saving");
 	return;
     }
@@ -345,12 +348,28 @@ static void RNGkind(RNGtype newkind)
     PutRNGstate();
 }
 
+static void Norm_kind(N01type kind)
+{
+    if (kind == -1) kind = N01_DEFAULT;
+    if (kind < 0 || kind > USER_NORM)
+	error("invalid Normal type in RNGkind");
+    if (kind == USER_NORM) {
+	User_norm_fun = R_FindSymbol("user_norm_rand", "");
+	if (!User_norm_fun) error("`user_norm_rand' not in load table");
+    }
+    GetRNGstate(); /* might not be initialized */
+    if (kind == BOX_MULLER) 
+	BM_norm_keep = 0.0; /* zap Box-Muller history */
+    N01_kind = kind;
+    PutRNGstate();
+}
+
+
 /*------ .Internal interface ------------------------*/
 
 SEXP do_RNGkind (SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP ans, rng, norm;
-    N01type newN01;
 
     checkArity(op,args);
     PROTECT(ans = allocVector(INTSXP, 2));
@@ -358,16 +377,11 @@ SEXP do_RNGkind (SEXP call, SEXP op, SEXP args, SEXP env)
     INTEGER(ans)[1] = N01_kind;
     rng = CAR(args);
     norm = CADR(args);
-    if(!isNull(norm)) { /* set a new normal kind */
-	newN01 = asInteger(norm);
-	if (newN01 == -1) newN01 = N01_DEFAULT;
-	if (newN01 < 0 || newN01 > BOX_MULLER)
-	    errorcall(call, "invalid Normal type");
-	N01_kind = newN01;
-	BM_norm_keep = 0.0; /* zap Box-Muller history */
-    }
     if(!isNull(rng)) { /* set a new RNG kind */
 	RNGkind(asInteger(rng));
+    }
+    if(!isNull(norm)) { /* set a new normal kind */
+	Norm_kind(asInteger(norm));
     }
     UNPROTECT(1);
     return ans;

@@ -7,7 +7,8 @@ RNGkind <- function(kind = NULL, normal.kind = NULL)
 {
     kinds <- c("Wichmann-Hill", "Marsaglia-Multicarry", "Super-Duper",
                "Mersenne-Twister", "Knuth-TAOCP", "user-supplied", "default")
-    n.kinds <- c("Kinderman-Ramage", "Ahrens-Dieter", "Box-Muller", "default")
+    n.kinds <- c("Kinderman-Ramage", "Ahrens-Dieter", "Box-Muller",
+                 "user-supplied", "default")
     do.set <- length(kind) > 0
     if(do.set) {
 	if(!is.character(kind) || length(kind) > 1)

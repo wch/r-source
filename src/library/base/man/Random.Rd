@@ -93,7 +93,7 @@ set.seed(seed, kind = NULL)
   }
 
   \code{normal.kind} can be \code{"Kinderman-Ramage"} (the default) or
-  \code{"Ahrens-Dieter"} or \code{"Box-Muller"}.
+  \code{"Ahrens-Dieter"} or \code{"Box-Muller"} or \code{"user-supplied"}.
 
   \code{set.seed} uses its single integer argument to set as many seeds
   as are required.  It is intended as a simple way to get quite different
@@ -104,8 +104,7 @@ set.seed(seed, kind = NULL)
 \note{
   \code{.Random.seed} saves the seed set for the uniform random-number
   generator, at least for the system generators. It does not necessarily
-  save the state of other generators, and in particular does not save
-  the state of the Box--Muller normal generator. If you want to
+  save the state of other generators. If you want to
   reproduce work later, call \code{set.seed} rather than set
   \code{.Random.seed}.
 }
@@ -113,7 +112,7 @@ set.seed(seed, kind = NULL)
   \code{.Random.seed} is an \code{\link{integer}} vector whose first
   element \emph{codes} the kind of RNG and normal generator. The lowest
   two decimal digits are in in \code{0:(k-1)}
-  where \code{k} is the number of available RNGs. The thousands
+  where \code{k} is the number of available RNGs. The hundreds
   represent the type of normal generator (starting at \code{0}).
 
   In the underlying C, \code{.Random.seed[-1]} is \code{unsigned};

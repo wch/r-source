@@ -17,6 +17,8 @@ NEW FEATURES
         save or SIGUSR2 to quit and save without running .Last and
         on.exit expressions.
 
+    o   Option for user-supplied normal rbndom generator in RNGkind(). 
+
 
 BUG FIXES
 
