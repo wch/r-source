@@ -17,7 +17,8 @@ makepredictcall(var, call)
 }
 \details{
   This is a generic function with methods for \code{poly}, \code{bs} and
-  \code{ns}.  If \code{model.frame.default} encounters such a term when
+  \code{ns}: the default method handles \code{scale}.  If
+  \code{model.frame.default} encounters such a term when
   creating a model frame, it modifies the \code{predvars} attribute of
   the terms supplied to replace the term with one that will work for
   predicting new data.  For example \code{makepredictcall.ns} adds
@@ -36,7 +37,7 @@ makepredictcall(var, call)
   the terms.
 }
 \seealso{
-  \code{\link{model.frame}}, \code{\link{poly}},
+  \code{\link{model.frame}}, \code{\link{poly}}, \code{\link{scale}},
   \code{\link[splines]{bs}}, \code{\link[splines]{ns}}, \code{\link{cars}}
 }
 \examples{

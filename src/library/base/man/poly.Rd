@@ -5,6 +5,7 @@
 \title{Compute Orthogonal Polynomials}
 \usage{
 poly(x, degree = 1, coefs = NULL)
+\method{predict}{poly}(object, newdata, \dots)
 }
 \description{
   Returns of evaluates orthogonal polynomials of degree 1 to
@@ -12,9 +13,10 @@ poly(x, degree = 1, coefs = NULL)
   orthogonal to the constant polynomial of degree 0.
 }
 \arguments{
- \item{x}{a numeric vector at which to evaluate the polynomial}
+ \item{x, newdata}{a numeric vector at which to evaluate the polynomial}
  \item{degree}{the degree of the polynomial}
  \item{coefs}{for prediction, coefficients from a previous fit.}
+ \item{object}{an object inheriting from class \code{"poly"}.}
 }
 \value{
   A matrix with rows corresponding to points in \code{x} and columns
@@ -27,15 +29,17 @@ poly(x, degree = 1, coefs = NULL)
 }
 \author{B.D. Ripley}
 
-\note{This routine is intended for statistical purposes such as
-    \code{contr.poly}: it does not attempt to orthogonalize to
-    machine accuracy.
+\note{
+  This routine is intended for statistical purposes such as
+  \code{contr.poly}: it does not attempt to orthogonalize to
+  machine accuracy.
 }
 
 \seealso{\code{\link{contr.poly}}}
 
 \examples{
 (z <- poly(1:10, 3))
-poly(seq(2, 4, 0.5), 3, coefs = attr(z, "cf"))
+predict(z, seq(2, 4, 0.5))
+poly(seq(4, 6, 0.5), 3, coefs = attr(z, "coefs"))
 }
 \keyword{math}

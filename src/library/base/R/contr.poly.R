@@ -40,12 +40,13 @@ contr.poly <- function (n, contrasts = TRUE)
 
 ## implemented by BDR 29 May 1998
 ## `coefs' code added by KH
-## cf and prediction added BDR Jan 2002
+## prediction added BDR Jan 2002
 poly <- function(x, degree = 1, coefs = NULL)
 {
     if(is.matrix(x)) stop("poly is only implemented for vectors")
+    if(degree < 1) stop("degree must be at least 1")
+    n <- degree + 1
     if(is.null(coefs)) { # fitting
-        n <- degree + 1
         xbar <- mean(x)
         x <- x - xbar
         X <- outer(x, seq(length = n) - 1, "^")
@@ -55,31 +56,38 @@ poly <- function(x, degree = 1, coefs = NULL)
         raw <- qr.qy(QR, z)
         norm2 <- colSums(raw^2)
         alpha <- (colSums(x*raw^2)/norm2 + xbar)[1:degree]
-        Z <- raw/rep(sqrt(norm2), each = length(x))
+        Z <- raw / rep(sqrt(norm2), each = length(x))
         colnames(Z) <- 1:n - 1
-        Z <- Z[, -1]
-        attr(Z, "cf") <- list(xbar = xbar, beta = qr.solve(QR, Z))
+        Z <- Z[, -1, drop = FALSE]
         attr(Z, "degree") <- 1:degree
         attr(Z, "coefs") <- list(alpha = alpha, norm2 = c(1, norm2))
         class(Z) <- c("poly", "matrix")
-        return(Z)
     } else {            # prediction
-        Z <- outer(x - coefs$xbar, 0:degree, "^") %*% coefs$beta
-        colnames(Z) <- 1:degree
-        return(Z)
+        alpha <- coefs$alpha; norm2 <- coefs$norm2
+        Z <- matrix(, length(x), n)
+        Z[, 1] <- 1
+        Z[, 2] <- x - alpha[1]
+        if(degree > 1)
+            for(i in 2:degree)
+                Z[, i+1] <- (x - alpha[i]) * Z[, i]  -
+                    (norm2[i+1] / norm2[i]) * Z[, i-1]
+        Z <- Z / rep(sqrt(norm2[-1]), each = length(x))
+        colnames(Z) <- 0:degree
+        Z <- Z[, -1, drop = FALSE]
     }
+    return(Z)
 }
 
 predict.poly <- function(object, newdata, ...)
 {
     if(missing(newdata)) return(object)
     poly(newdata, degree = max(attr(object, "degree")),
-         coefs = attr(object, "cf"))
+         coefs = attr(object, "coefs"))
 }
 
 makepredictcall.poly  <- function(var, call)
 {
     if(as.character(call)[1] != "poly") return(call)
-    call$coefs <- attr(var, "cf")
+    call$coefs <- attr(var, "coefs")
     call
 }
