@@ -20,7 +20,7 @@ install.packages <- function(pkgs, lib, repos = CRAN,
         lib <- .libPaths()[1]
         if(length(.libPaths()) > 1)
             warning("argument 'lib' is missing: using\n\t",
-                    squote(lib), immediate.=TRUE)
+                    sQuote(lib), immediate.=TRUE)
     }
 
     if(is.null(repos) & missing(contriburl)) {
