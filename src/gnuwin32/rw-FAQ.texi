@@ -287,7 +287,7 @@ You should see a line like
 @node How can I keep workspaces for different projects in different directories?, How do I print from R?, There seems to be a limit on the memory it uses!, Installation and Usage
 @section How can I keep workspaces for different projects in different directories?
 
-Create a separate shortcut for each project: see Q2.3.  All the paths to
+Create a separate shortcut for each project: see Q2.4.  All the paths to
 files used by R are relative to the starting directory, so setting the
 `Start in' field automatically helps separate projects.
 
