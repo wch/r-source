@@ -83,6 +83,7 @@ arima <- function(x, order = c(0, 0, 0),
     x <- as.ts(x)
     if(!is.numeric(x))
         stop("`x' must be numeric")
+    storage.mode(x) <- "double"  # a precaution
     dim(x) <- NULL
     n <- length(x)
 
@@ -124,6 +125,7 @@ arima <- function(x, order = c(0, 0, 0),
         if (NROW(xreg) != n) stop("lengths of x and xreg do not match")
         ncxreg <- NCOL(xreg)
         xreg <- as.matrix(xreg)
+        storage.mode(xreg) <- "double"
     }
     class(xreg) <- NULL
     if (ncxreg > 0 && is.null(colnames(xreg)))
