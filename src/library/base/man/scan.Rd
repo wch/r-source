@@ -2,7 +2,7 @@
 \title{Read Data Values}
 \usage{
 scan(file = "", what = double(0), nmax = -1, n = -1, sep = "",
-     quote = "", dec = ".", skip = 0, nlines = 0, na.strings = "NA",
+     quote = "'\"", dec = ".", skip = 0, nlines = 0, na.strings = "NA",
      flush = FALSE, strip.white = FALSE, quiet = FALSE)
 }
 \alias{scan}
