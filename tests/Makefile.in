@@ -20,6 +20,7 @@ test-src-gct = \
 	demos.R \
 	lm-tests.R \
 	primitive-funs.R \
+	ok-errors.R \
 	method-dispatch.R
 test-src-strict-1 = \
 	$(test-src-gct) \
