@@ -563,8 +563,8 @@ Installation is @emph{via} the installers @file{@value{RWVERSION}.exe}
 or @file{miniR.exe}.  Just double-click on the icon and follow the
 instructions.  You can uninstall @R{} from the Control Panel.
 
-See the @uref{http://cran.r-project.org/bin/windows/rw-FAQ.html, R Windows
-@acronym{FAQ}} for more details.
+See the @uref{http://cran.r-project.org/bin/windows/base/rw-FAQ.html, R Windows
+@acronym{FAQ}}, for more details.
 
 @menu
 * Building from source::        
