@@ -13,7 +13,7 @@ integrate(f, lower, upper, subdivisions=100,
 }
 \arguments{
   \item{f}{An \R function taking a numeric first argument and returning
-    a numeric vector the same length. Returning a non-finite element will
+    a numeric vector of the same length. Returning a non-finite element will
     generate an error.}
   \item{lower, upper}{The limits of integration. Can be infinite.}
   \item{subdivisions}{the maximum number of subintervals.}
@@ -35,6 +35,17 @@ integrate(f, lower, upper, subdivisions=100,
 
   \code{rel.tol} cannot be less than \code{max(50*.Machine$double.eps,
     0.5e-28)} if \code{abs.tol <= 0}.
+}
+\note{
+  Like all numerical integration routines, these evaluate the function
+  on a finite set of points. If the function is approximately constant
+  (in particular, zero) over nearly all its range it is possible that
+  the result and error estimate may be seriously wrong.
+
+  When integrating over infinite intervals do so explicitly, rather than
+  just using a large number as the endpoint. This increases the chance
+  of a correct answer -- any function whose integral over an infinite
+  interval is finite must be near zero for most of that interval.
 }
 \value{
   A list of class \code{"integrate"} with components
@@ -76,12 +87,24 @@ integrate(integrand, lower = 0, upper = Inf)
   ii
   stopifnot(all.equal(pi, ii$val, tol = ii$abs.err, scale=1))
 }
+## don't do this if you really want the integral from 0 to Inf
 integrate(integrand, lower = 0, upper = 10)
-integrate(integrand, lower = 0, upper = 100000)
+integrate(integrand, lower = 0, upper = 100000)  
 integrate(integrand, lower = 0, upper = 1000000, stop.on.error = FALSE)
 
 try(integrate(function(x) 2, 0, 1))  ## no vectorizable function
 integrate(function(x) rep(2, length(x)), 0, 1)  ## correct
+
+
+## integrate can fail if misused
+integrate(dnorm,0,2)
+integrate(dnorm,0,20)
+integrate(dnorm,0,200)
+integrate(dnorm,0,2000)
+integrate(dnorm,0,20000) ## fails on many systems
+integrate(dnorm,0,Inf)   ## works
+
+
 }
 \keyword{math}
 \keyword{utilities}
