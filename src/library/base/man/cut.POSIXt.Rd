@@ -5,7 +5,8 @@
   Method for \code{\link{cut}} applied to date-time objects.
 }
 \usage{
-\method{cut}{POSIXt}(x, breaks, labels=NULL, start.on.monday=TRUE, \dots)
+\method{cut}{POSIXt}(x, breaks, labels=NULL, start.on.monday=TRUE,
+    right=FALSE, \dots)
 }
 \arguments{
   \item{x}{an object inheriting from class \code{"POSIXt"}.}
@@ -24,7 +25,7 @@
   }
   \item{start.on.monday}{logical. If \code{breaks = "weeks"}, should the
     week start on Mondays or Sundays?}
-  \item{\dots}{arguments to be passed to or from other methods.}
+  \item{right, \dots}{arguments to be passed to or from other methods.}
 }
 \value{
      A factor is returned, unless \code{labels = FALSE} which returns
