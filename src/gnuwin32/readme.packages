@@ -85,7 +85,7 @@ At this point there are two approaches:
 
 1) Streamlined way
 
-Assuming that ...\rw1030\bin is in your path, use
+Assuming that ...\rw1031\bin is in your path, use
 
 	Rcmd INSTALL package
 
@@ -240,7 +240,7 @@ implib R.lib R.def
 and then add R.lib to the bcc32 command line, for example (from
 Venables & Ripley's `S Programming')
 
-bcc32 -u- -6 -O2 -WDE -I\R\rw1030\src\include VCrndR.c R.lib
+bcc32 -u- -6 -O2 -WDE -I\R\rw1031\src\include VCrndR.c R.lib
 
 We believe that when referencing variables (rather than functions)
 exported from R.dll these must be declared __declspec(dllimport) just
