@@ -113,7 +113,7 @@ void R_Suicide(char *s)
 {
     char  pp[1024];
 
-    snprintf(pp, 1024, "Fatal error: %s\n", s);
+    snprintf(pp, 1024, _("Fatal error: %s\n"), s);
     R_ShowMessage(pp);
     R_CleanUp(SA_SUICIDE, 2, 0);
 }
@@ -283,13 +283,13 @@ FileReadConsole(char *prompt, char *buf, int len, int addhistory)
 	char *ib = inbuf, *ob = buf;
 	if(!cd) {
 	    cd = Riconv_open("", R_StdinEnc);
-	    if(!cd) error("encoding '%s' is not recognised", R_StdinEnc);
+	    if(!cd) error(_("encoding '%s' is not recognised"), R_StdinEnc);
 	}
 	res = Riconv(cd, &ib, &inb, &ob, &onb);
 	*ob = '\0';
 	err = res == (size_t)(-1);
 	/* errors lead to part of the input line being ignored */
-	if(err) fputs("<ERROR: invalid input in encoding> ", stdout);
+	if(err) fputs(_("<ERROR: invalid input in encoding> "), stdout);
     } else strncpy(buf, inbuf, strlen(inbuf)+1);
     
 /* according to system.txt, should be terminated in \n, so check this
@@ -487,7 +487,7 @@ int R_ShowFiles(int nfile, char **file, char **headers, char *wtitle,
 			if (del) DeleteFile(file[i]);
 		    }
 		    else {
-			snprintf(buf, 1024, "Unable to open file '%s'",
+			snprintf(buf, 1024, _("Unable to open file '%s'"),
 				 file[i]);
 			warning(buf);
 		    }
@@ -500,7 +500,7 @@ int R_ShowFiles(int nfile, char **file, char **headers, char *wtitle,
 		    runcmd(buf, 0, 1, "");
 		}
 	    } else {
-		snprintf(buf, 1024, "file.show(): file %s does not exist\n",
+		snprintf(buf, 1024, _("file.show(): file %s does not exist\n"),
 			 file[i]);
 		warning(buf);
 	    }
@@ -620,7 +620,7 @@ void R_setStartTime();
 void R_SetWin32(Rstart Rp)
 {
     R_Home = Rp->rhome;
-    if(strlen(R_Home) >= MAX_PATH) R_Suicide("Invalid R_HOME");
+    if(strlen(R_Home) >= MAX_PATH) R_Suicide(_("Invalid R_HOME"));
     sprintf(RHome, "R_HOME=%s", R_Home);
     putenv(RHome);
     strcpy(UserRHome, "R_USER=");
@@ -835,20 +835,20 @@ int cmdlineoptions(int ac, char **av)
 		else
 		    p = &(*av)[15];
 		if (p == NULL) {
-		    R_ShowMessage("WARNING: no max-mem-size given\n");
+		    R_ShowMessage(_("WARNING: no max-mem-size given\n"));
 		    break;
 		}
 		value = R_Decode2Long(p, &ierr);
 		if(ierr) {
 		    if(ierr < 0)
-			sprintf(s, "WARNING: --max-mem-size value is invalid: ignored\n");
+			sprintf(s, _("WARNING: --max-mem-size value is invalid: ignored\n"));
 		    else
-		    sprintf(s, "WARNING: --max-mem-size=%lu`%c': too large and ignored\n",
+		    sprintf(s, _("WARNING: --max-mem-size=%lu`%c': too large and ignored\n"),
 			    (unsigned long) value,
 			    (ierr == 1) ? 'M': ((ierr == 2) ? 'K':'k'));
 		    R_ShowMessage(s);
 		} else if (value < 10*Mega) {
-		    sprintf(s, "WARNING: max-mem-size =%4.1fM too small and ignored\n", value/(1024.0 * 1024.0));
+		    sprintf(s, _("WARNING: max-mem-size =%4.1fM too small and ignored\n"), value/(1024.0 * 1024.0));
 		    R_ShowMessage(s);
 		} else
 		    R_max_memory = value;
@@ -858,7 +858,7 @@ int cmdlineoptions(int ac, char **av)
 	    } else if(!strcmp(*av, "--args")) {
 		break;
 	    } else {
-		snprintf(s, 1024, "WARNING: unknown option %s\n", *av);
+		snprintf(s, 1024, _("WARNING: unknown option %s\n"), *av);
 		R_ShowMessage(s);
 	    }
 	} else {
@@ -901,12 +901,12 @@ int cmdlineoptions(int ac, char **av)
  */
     if (!R_Interactive && Rp->SaveAction != SA_SAVE && 
 	Rp->SaveAction != SA_NOSAVE)
-	R_Suicide("you must specify `--save', `--no-save' or `--vanilla'");
+	R_Suicide(_("you must specify `--save', `--no-save' or `--vanilla'"));
 
     if (InThreadReadConsole &&
         (!(EhiWakeUp = CreateEvent(NULL, FALSE, FALSE, NULL)) ||
 	 (_beginthread(ReaderThread, 0, NULL) == -1)))
-      R_Suicide("impossible to create 'reader thread'; you must free some system resources");
+      R_Suicide(_("impossible to create 'reader thread'; you must free some system resources"));
 
     if ((R_HistoryFile = getenv("R_HISTFILE")) == NULL)
 	R_HistoryFile = ".Rhistory";
@@ -915,7 +915,7 @@ int cmdlineoptions(int ac, char **av)
 	int value, ierr;
 	value = R_Decode2Long(p, &ierr);
 	if (ierr != 0 || value < 0)
-	    REprintf("WARNING: invalid R_HISTSIZE ignored;");
+	    REprintf(_("WARNING: invalid R_HISTSIZE ignored;"));
 	else
 	    R_HistorySize = value;
     }

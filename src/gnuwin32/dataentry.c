@@ -116,7 +116,7 @@ static int ndecimal;                    /* count decimal points */
 static int ne;                          /* count exponents */
 static int nneg;			/* indicate whether its a negative */
 static int clength;                     /* number of characters currently entered */
-static char buf[30];
+static char buf[200];
 static char *bufp;
 static int bwidth;			/* width of the border */
 static int hwidth;			/* width of header  */
@@ -213,7 +213,7 @@ SEXP do_dataentry(SEXP call, SEXP op, SEXP args, SEXP rho)
     tnames = getAttrib(work, R_NamesSymbol);
 
     if (TYPEOF(work) != VECSXP || TYPEOF(colmodes) != VECSXP)
-	errorcall(call, "invalid argument");
+	errorcall(call, _("invalid argument"));
 
     /* initialize the constants */
 
@@ -260,7 +260,7 @@ SEXP do_dataentry(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    if (type == NILSXP) type = REALSXP;
 	    SET_VECTOR_ELT(work, i, ssNewVector(type, 100));
 	} else if (!isVector(VECTOR_ELT(work, i)))
-	    errorcall(call, "invalid type for value");
+	    errorcall(call, _("invalid type for value"));
 	else {
 	    if (TYPEOF(VECTOR_ELT(work, i)) != type)
 		SET_VECTOR_ELT(work, i,
@@ -274,7 +274,7 @@ SEXP do_dataentry(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     /* start up the window, more initializing in here */
     if (initwin())
-	errorcall(call, "invalid device");
+	errorcall(call, _("invalid device"));
 
     /* set up a context which will close the window if there is an error */
     begincontext(&cntxt, CTXT_CCODE, R_NilValue, R_NilValue, R_NilValue,
@@ -322,7 +322,7 @@ SEXP do_dataentry(SEXP call, SEXP op, SEXP args, SEXP rho)
 		    else
 			SET_STRING_ELT(tvec2, j, NA_STRING);
 		} else
-		    error("dataentry: internal memory problem");
+		    error(_("dataentry: internal memory problem"));
 	    }
 	    SET_VECTOR_ELT(work2, i, tvec2);
 	}
@@ -616,7 +616,7 @@ static void printelt(SEXP invec, int vrow, int ssrow, int sscol)
 	}
     }
     else
-	error("dataentry: internal memory error");
+	error(_("dataentry: internal memory error"));
 }
 
 
@@ -735,7 +735,7 @@ static void getccol()
 	INTEGER(lens)[wcol - 1] = 0;
     }
     if (!isVector(tmp = VECTOR_ELT(work, wcol - 1)))
-	error("internal type error in dataentry");
+	error(_("internal type error in dataentry"));
     len = INTEGER(lens)[wcol - 1];
     type = TYPEOF(tmp);
     if (len < wrow) {
@@ -748,7 +748,7 @@ static void getccol()
 	    else if (type == STRSXP)
 		SET_STRING_ELT(tmp2, i, STRING_ELT(tmp, i));
 	    else
-		error("internal type error in dataentry");
+		error(_("internal type error in dataentry"));
 	SET_VECTOR_ELT(work, wcol - 1, tmp2);
     }
 }
@@ -914,8 +914,8 @@ static void handlechar(char *text)
 	    break;
 	}
 
-    if (clength++ > 29) {
-	warning("dataentry: expression too long");
+    if (clength++ > 199) {
+	warning(_("dataentry: expression too long"));
 	clength--;
 	goto donehc;
     }
@@ -1110,7 +1110,7 @@ static char *get_cell_text(void)
 		if (!streql(CHAR(STRING_ELT(tvec, wrow)),
 			    CHAR(STRING_ELT(ssNA_STRING, 0))))
 		    prev = EncodeElement(tvec, wrow, 0);
-	    } else error("dataentry: internal memory error");
+	    } else error(_("dataentry: internal memory error"));
 	}
     }
     return prev;
@@ -1414,7 +1414,7 @@ static void de_paste(control c)
 
     closerect();
     if ( clipboardhastext() &&
-	 !getstringfromclipboard(buf, 29) ) {
+	 !getstringfromclipboard(buf, 1999) ) {
 	/* set current cell to first line of clipboard */
 	CellModified = TRUE;
 	if ((p = strchr(buf, '\n'))) *p = '\0';

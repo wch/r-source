@@ -23,11 +23,12 @@
 #include <config.h>
 #endif
 
+#include "win-nls.h"
+
 #ifdef Win32
 #define USE_MDI 1
 #endif
 
-#include <R_ext/Error.h>  /* for warning() */
 #include <windows.h>
 #include "graphapp/ga.h"
 #ifdef USE_MDI
@@ -73,14 +74,14 @@ static xbuf file2xbuf(char *name, int del)
     f = CreateFile(name, GENERIC_READ, FILE_SHARE_READ,
 		   NULL, OPEN_EXISTING, 0, NULL);
     if (f == INVALID_HANDLE_VALUE) {
-	R_ShowMessage("Error opening file");
+	R_ShowMessage(_("Error opening file"));
 	return NULL;
     }
     vv = GetFileSize(f, NULL);
     p = (char *) malloc((size_t) vv + 1);
     if (!p) {
 	CloseHandle(f);
-	R_ShowMessage("Insufficient memory to display file in internal pager");
+	R_ShowMessage(_("Insufficient memory to display file in internal pager"));
 	return NULL;
     }
     ReadFile(f, p, vv, &rr, NULL);
@@ -158,7 +159,7 @@ static void pagercopy(control m)
     control c = getdata(m);
 
     if (consolecancopy(c)) consolecopy(c);
-    else R_ShowMessage("No selection");
+    else R_ShowMessage(_("No selection"));
 }
 
 static void pagerpaste(control m)
@@ -166,11 +167,11 @@ static void pagerpaste(control m)
     control c = getdata(m);
 
     if (CharacterMode != RGui) {
-        R_ShowMessage("No RGui console to paste to");
+        R_ShowMessage(_("No RGui console to paste to"));
         return;
     }
     if (!consolecancopy(c)) {
-        R_ShowMessage("No selection");
+        R_ShowMessage(_("No selection"));
         return;
     } else {
         consolecopy(c);
@@ -186,11 +187,11 @@ static void pagerpastecmds(control m)
     control c = getdata(m);
 
     if (CharacterMode != RGui) {
-        R_ShowMessage("No RGui console to paste to");
+        R_ShowMessage(_("No RGui console to paste to"));
         return;
     }
     if (!consolecancopy(c)) {
-        R_ShowMessage("No selection");
+        R_ShowMessage(_("No selection"));
         return;
     } else {
         consolecopy(c);
@@ -495,7 +496,7 @@ static pager pagercreate()
 static pager newpager1win(char *wtitle, char *filename, int deleteonexit)
 {
     if (!pagerInstance && !(pagerInstance = pagercreate())) {
-        R_ShowMessage("Unable to create pager windows");
+        R_ShowMessage(_("Unable to create pager window"));
         return NULL;
     }
     if (!pageraddfile(wtitle, filename, deleteonexit)) return NULL;

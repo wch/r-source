@@ -434,7 +434,7 @@ static void editorrun(textbox t)
     if (!busy_running) {
         long start=0, end=0;
     	if (CharacterMode != RGui) {
-    	    R_ShowMessage("No RGui console to paste to");
+    	    R_ShowMessage(_("No RGui console to paste to"));
     	    return;
     	}
     	busy_running = TRUE;
@@ -768,12 +768,12 @@ int Rgui_Edit(char *filename, char *title, int stealconsole)
     EditorData p;
 
     if (neditors == MAXNEDITORS) {
-	R_ShowMessage("Maximum number of editors reached");
+	R_ShowMessage(_("Maximum number of editors reached"));
 	return 1;
     }
     c = neweditor();
     if (!c) {
-	R_ShowMessage("Unable to create editor window");
+	R_ShowMessage(_("Unable to create editor window"));
 	return 1;
     }
     if (strlen(filename) > 0) {

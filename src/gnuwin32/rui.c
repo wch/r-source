@@ -807,7 +807,7 @@ void readconsolecfg()
 	if (!done) {
 	    char  buf[128];
 
-	    snprintf(buf, 128, "Error at line %d of file %s",
+	    snprintf(buf, 128, _("Error at line %d of file %s"),
 		     optline(), optfile());
 	    askok(buf);
 	    cfgerr = 1;

@@ -185,7 +185,7 @@ SEXP do_system(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     checkArity(op, args);
     if (!isString(CAR(args)))
-	errorcall(call, "character string expected as first argument");
+	errorcall(call, _("character string expected as first argument"));
     if (isInteger(CADR(args)))
 	flag = INTEGER(CADR(args))[0];
     if (flag >= 20) {
@@ -197,7 +197,7 @@ SEXP do_system(SEXP call, SEXP op, SEXP args, SEXP rho)
     } else
 	vis = 1;
     if (!isString(CADDR(args)))
-	errorcall(call, "character string expected as third argument");
+	errorcall(call, _("character string expected as third argument"));
     if ((CharacterMode != RGui) && (flag == 2))
 	flag = 1;
     if (CharacterMode == RGui) {
