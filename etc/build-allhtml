@@ -14,10 +14,8 @@ PKGS=`cd ${RHOME}/src/library; ls | sed '
 /Makefile/d
 /profile/d'`
 
-cp /dev/null ${RHOME}/library/LibIndex
-
 cd ${RHOME}/src/library
 for pkg in ${PKGS}
 do
-    ${RHOME}/etc/build-help ${pkg}
+    ${RHOME}/etc/build-html ${pkg}
 done

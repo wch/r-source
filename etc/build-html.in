@@ -1,0 +1,70 @@
+#! @PERL@
+#
+# ${RHOME}/etc/build-html
+# Usage:  build-html [pkg] [lib]
+# Install all html help files for package pkg to library lib
+# (defaults are `${RHOME}/src/library/base' and the default library,
+# `${RHOME}/library', respectively). 
+
+use Cwd;
+use File::Basename;
+use DB_File;
+
+
+$RHOME=$ENV{"RHOME"} or die("Environment variable RHOME not found\n");
+
+require "$RHOME/etc/Rdconvlib.pl";
+
+$pkg = $ARGV[0];
+$lib = $ARGV[1];
+
+$currentdir = getcwd();
+
+if($pkg){
+    die("Package $pkg does not exit\n") unless (-d $pkg);
+}
+else{
+    $pkg="$RHOME/src/library/base";
+}
+
+chdir $currentdir;
+
+if($lib){
+    system("mkdir -p $lib");
+    chdir($lib) or die("Cannot create $lib\n");
+    $lib=getcwd();
+}
+else{
+    $lib="$RHOME/library";
+}
+
+chdir $currentdir;
+
+chdir($pkg) or die("Cannot change to $pkg\n");
+$pkg = basename(getcwd());
+chdir man or die("There are no man pages in $pkg\n");
+
+$dest = "$lib/$pkg/html";
+system("mkdir -p $dest");
+die("Cannot create $dest\n") unless (-d $dest);
+
+opendir man, '.';
+@mandir = readdir(man);
+
+tie %htmlindex, DB_File, "$lib/htmlindex", O_RDWR|O_CREAT, 0640, $DB_BTREE;
+
+foreach $manfile (@mandir) {
+    if($manfile =~ /\.Rd$/){
+	$manfilebase = basename($manfile, ".Rd");
+	$destfile = "$dest/$manfilebase.html";
+	print "  $manfilebase\n";
+	open(htmlout,">$destfile");
+	Rdconv($manfile, "html", "");
+	close(htmlout);
+    }
+}
+
+untie %htmlindex;
+
+
+

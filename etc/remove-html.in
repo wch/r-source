@@ -1,0 +1,57 @@
+#! @PERL@
+#
+# ${RHOME}/etc/remove-html
+# Usage:  remove-html pkg lib
+
+use Cwd;
+use File::Basename;
+use DB_File;
+
+$RHOME=$ENV{"RHOME"} or die("Environment variable RHOME not found\n");
+
+$pkg = $ARGV[0];
+$lib = $ARGV[1];
+
+
+
+### Rebuild the global library index.html file
+
+tie %htmltitles, DB_File, "$lib/htmltitles";
+
+delete($htmltitles{$pkg});
+
+
+open(htmlfile, ">$lib/index.html");
+
+print htmlfile "<HEAD><TITLE>R Function Index</TITLE></HEAD>\n";
+print htmlfile "<BODY LINK=#0000EF VLINK=#0000EF>\n";
+print htmlfile "<A HREF =\"../html/index.html\">[top]</A>\n";
+print htmlfile "<HR ALIGN=middle>\n";
+print htmlfile "<H2><CENTER>";
+print htmlfile "R Function Index";
+print htmlfile "</CENTER></H2>\n";
+print htmlfile "<HR ALIGN=middle>\n";
+print htmlfile "The following packages are currently installed:\n";
+print htmlfile "<P><TABLE>\n";
+
+foreach $key (sort(keys %htmltitles)) {
+    print htmlfile "<TR ALIGN=LEFT>\n";
+    print htmlfile "<TD><A HREF=\"$key/html/index.html\">";
+    print htmlfile "$key</A><TD>";
+    print htmlfile $htmltitles{$key};
+
+}
+
+print htmlfile "</TABLE>\n";
+print htmlfile "</BODY>\n";
+
+close htmlfile;
+untie %htmltitles;
+
+tie %htmlindex, DB_File, "$lib/htmlindex";
+foreach $key (keys %htmlindex) {
+    delete $htmlindex{$key} if ($key =~ /$pkg\/html/);
+}
+untie %htmlindex;
+
+    
