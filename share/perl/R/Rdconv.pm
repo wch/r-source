@@ -422,7 +422,7 @@ sub undefine_command {
 
     my $loopcount = 0;
     while(checkloop($loopcount++, $text, "\\$cmd")
-	  && $text =~ /\\$cmd$ID/) {
+	  && $text =~ /\\$cmd(\[[^\]]+\])?$ID/) {
 	my ($id, $arg) = get_arguments($cmd, $text, 1);
 	$text =~ s/\\$cmd(\[.*\])?$id(.*)$id/$2/s;
     }
@@ -436,7 +436,7 @@ sub drop_full_command {
     my ($text, $cmd) = @_;
     my $loopcount = 0;
     while(checkloop($loopcount++, $text, "\\$cmd")
-	  && $text =~ /\\$cmd$ID/) {
+	  && $text =~ /\\$cmd(\[[^\]]+\])?$ID/) {
 	my ($id, $arg) = get_arguments($cmd, $text, 1);
 	$text =~ s/\\$cmd$id.*$id//s;
     }
@@ -451,7 +451,7 @@ sub replace_command {
 
     my $loopcount = 0;
     while(checkloop($loopcount++, $text, "\\$cmd")
-	  && $text =~ /\\$cmd$ID/) {
+	  && $text =~ /\\$cmd(\[[^\]]+\])?$ID/) {
 	my ($id, $arg) = get_arguments($cmd, $text, 1);
 	$text =~ s/\\$cmd$id(.*)$id/$before$1$after/s;
     }
@@ -467,7 +467,7 @@ sub replace_prepend_command {
 
     my $loopcount = 0;
     while(checkloop($loopcount++, $text, "\\$cmd")
-	  && $text =~ /\\$cmd$ID/) {
+	  && $text =~ /\\$cmd(\[[^\]]+\])?$ID/) {
 	my ($id, $arg) = get_arguments($cmd, $text, 1);
 	$text =~ /\\$cmd$id(.*)$id/s;
 	$arg = $1;
@@ -486,7 +486,7 @@ sub transform_command {
     my $loopcount = 0;
 
     while(checkloop($loopcount++, $text, "\\$cmd") &&
-	  $text =~ /\\$cmd$ID/) {
+	  $text =~ /\\$cmd(\[[^\]]+\])?$ID/) {
 	my ($id, $arg) = get_arguments($cmd, $text, 1);
 	$text =~ /\\$cmd$id(.*)$id/s;
 	$arg = $1;
@@ -497,17 +497,17 @@ sub transform_command {
 }
 
 sub transform_S3method {
-    ## \method{CLASS}{GENERIC}
+    ## \method{GENERIC}{CLASS}
     ## Note that this markup should really only be used inside \usage.
     my ($text) = @_;
     my $S3method_RE =
       "([ \t]*)\\\\method\{([a-zA-Z0-9.]+)\}\{([a-zA-Z0-9.]+)\}";
     while($text =~ /$S3method_RE/) {
 	if($3 eq "default") {
-	    $text =~ s/$S3method_RE/$1## Default S3 method:\n$1$2/s;
+	    $text =~ s/$S3method_RE/$1\#\# Default S3 method:\n$1$2/s;
 	}
 	else {
-	    $text =~ s/$S3method_RE/$1## S3 method for class '$3':\n$1$2/g;
+	    $text =~ s/$S3method_RE/$1\#\# S3 method for class '$3':\n$1$2/s;
 	}
     }
     $text;
