@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1995-1998   Robert Gentleman, Ross Ihaka and the
- *                            R Development Core Team
+ *  Copyright (C) 1995-2001   Robert Gentleman, Ross Ihaka and the
+ *			      R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -27,9 +27,11 @@
 #include "R_ext/Applic.h"
 
 /* Linear and Step Function Interpolation */
-/* Assumes that ordinates are in ascending order */
-/* The right interval is found by bisection */
-/* Linear/constant interpolation then takes place on that interval*/
+
+/* Assumes that ordinates are in ascending order
+ * The right interval is found by bisection
+ * Linear/constant interpolation then takes place on that interval
+*/
 
 static double ylow;
 static double yhigh;
@@ -38,6 +40,7 @@ static double f2;
 
 static double approx1(double v, double *x, double *y, int n, int method)
 {
+    /* Approximate  y(v),  given (x,y)[i], i = 0,..,n-1 */
     int i, j, ij;
 
     i = 0;
@@ -60,16 +63,13 @@ static double approx1(double v, double *x, double *y, int n, int method)
 
     if(v == x[i]) return y[i];
     if(v == x[j]) return y[j];
+    if(x[j] == x[i]) return y[i];
 
-    if(method == 1) {
-	return (x[i] == x[j]) ?
-	    y[i] :
-	    y[i] + (y[j] - y[i]) * ((v - x[i])/(x[j] - x[i]));
+    if(method == 1) { /* linear */
+	return y[i] + (y[j] - y[i]) * ((v - x[i])/(x[j] - x[i]));
     }
-    else {
-	return (x[i] == x[j]) ?
-	    y[i] :
-	    y[i] * f1 + y[j] * f2;
+    else { /* 2 : constant */
+	return y[i] * f1 + y[j] * f2;
     }
 }
 
@@ -83,9 +83,9 @@ void R_approx(double *x, double *y, int *nxy, double *xout, int *nout,
     /* check interpolation method */
 
     switch(*method) {
-    case 1:
+    case 1: /* linear */
 	break;
-    case 2:
+    case 2: /* constant */
 	if(!R_FINITE(*f) || *f < 0 || *f > 1)
 	    error("approx(): invalid f value");
 	f2 = *f;
