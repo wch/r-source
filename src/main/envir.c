@@ -2635,7 +2635,7 @@ SEXP R_FindNamespace(SEXP info)
 {
     SEXP fun, expr, val;
     PROTECT(info);
-    fun = install("findNamespaceEnv");
+    fun = install("getNamespace");
     if (findVar(fun, R_GlobalEnv) == R_UnboundValue) { /* not a perfect test */
 	warning("namespaces not abailable; using .GlobalEnv");
 	UNPROTECT(1);
