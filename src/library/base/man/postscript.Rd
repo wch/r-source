@@ -122,8 +122,8 @@ ps.options(paper, horizontal, width, height, family, pointsize, bg, fg,
   italic and bold italic fonts to be used.  If these paths do not
   contain the file separator, they are taken to refer to files in the
   \R directory \file{R\_HOME/afm}.  Thus the default Helvetica family
-  can be specified by \code{family = c("hv______.lt1",
-    "hvb_____.lt1", "hvo_____.lt1", "hvbo____.lt1")}.
+  can be specified by \code{family = c("hv______.afm",
+    "hvb_____.afm", "hvo_____.afm", "hvbo____.afm")}.
 
   It is the user's responsibility to check that suitable fonts are made
   available, and that they contain the needed characters when re-encoded
