@@ -27,8 +27,11 @@ fixh: version h/config.h \
 	sh ../../../tools/GV > $@
 	$(RM) ../../../tools/GV
 
-../../include/Rmath.h: ../../include/Rmath.h0.in
-	$(SED) -e 's/@RMATH_HAVE_LOG1P@/# define HAVE_LOG1P 1/'  -e /@RMATH_HAVE_EXPM1@/d  -e  's/@RMATH_HAVE_WORKING_LOG1P@/# define HAVE_WORKING_LOG1P 1/' $< > $@
+../../include/Rmath.h: ../../include/Rmath.h0.in ../../../VERSION
+	$(SED) -e 's/@RMATH_HAVE_LOG1P@/# define HAVE_LOG1P 1/'  \
+	  -e /@RMATH_HAVE_EXPM1@/d  \
+	  -e  's/@RMATH_HAVE_WORKING_LOG1P@/# define HAVE_WORKING_LOG1P 1/' \
+	  -e "s/@PACKAGE_VERSION@/`sed 's/\([^ ]*\).*/\1/' < ../../../VERSION`/" $< > $@
 
 ../../../bin/massage-Examples: ../../../share/perl/massage-Examples.pl
 	$(SED) -e 's/"contr.poly")/"contr.poly"), pager="console"/' $< > $@
