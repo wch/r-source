@@ -3,8 +3,8 @@
 \alias{wsbrowser}
 \title{Browse Objects in Environment}
 \description{
-  The \code{browseEnv} function opens a browser with list of objects  currently
-  in \code{sys.frame()} environment.
+  The \code{browseEnv} function opens a browser with list of objects
+  currently in \code{sys.frame()} environment.
 }
 \usage{
 browseEnv(envir = .GlobalEnv, pattern, excludepatt = "^last\\.warning",
@@ -19,8 +19,8 @@ browseEnv(envir = .GlobalEnv, pattern, excludepatt = "^last\\.warning",
     to the internal \code{\link{ls}()} call.}
   \item{excludepatt}{a regular expression for \emph{dropping} objects
     with matching names.}
-  \item{html}{is used on non Macintosh machines to display the workspace on
-    a HTML page in your favorite browser.}
+  \item{html}{is used on non Macintosh machines to display the workspace
+    on a HTML page in your favorite browser.}
   \item{expanded}{whether to show one level of recursion.  It can be useful
     to switch it to \code{FALSE} if your workspace is large.  This
     option is ignored if \code{html} is set to \code{FALSE}.}
@@ -43,7 +43,8 @@ browseEnv(envir = .GlobalEnv, pattern, excludepatt = "^last\\.warning",
   its argument list will certainly change.
 
   Most probably, this should rather work through using the \file{tkWidget}
-  package (from \url{www.Bioconductor.org}).
+  package (from \url{www.Bioconductor.org}) but the \file{tcltk} package
+  is not yet available for the Carbon version for MacOS.
 }
 \seealso{
   \code{\link{str}}, \code{\link{ls}}.
@@ -60,7 +61,12 @@ if(interactive()) {
    example(lm, echo = FALSE)
    example(str, echo = FALSE)
 
+   ## and browse them:
    browseEnv()
+
+   ## a (simple) function's environment:
+   af12 <- approxfun(1:2, 1:2, method = "const")
+   browseEnv(envir = environment(af12))
  }
 }
 \keyword{interface}
