@@ -1,6 +1,6 @@
 
 R : Copyright 2003, The R Development Core Team
-Version 1.7.0 Under development (unstable) (2003-01-31)
+Version 1.7.0 Under development (unstable) (2003-02-02)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -14,6 +14,634 @@ Type `demo()' for some demos, `help()' for on-line help, or
 Type `q()' to quit R.
 
 > ### Regression tests for which the printed output is the issue
+> 
+> ### moved from various .Rd files
+> ## abbreviate
+> data(state)
+> for(m in 1:5) {
++   cat("\n",m,":\n")
++   print(as.vector(abbreviate(state.name, minl=m)))
++ }
+
+ 1 :
+ [1] "Alb"  "Als"  "Arz"  "Ark"  "Clf"  "Clr"  "Cn"   "D"    "F"    "G"   
+[11] "H"    "Id"   "Il"   "In"   "Iw"   "Kns"  "Knt"  "L"    "Man"  "Mr"  
+[21] "Mssc" "Mc"   "Mnn"  "Msss" "Mssr" "Mnt"  "Nb"   "Nv"   "NH"   "NJ"  
+[31] "NM"   "NY"   "NC"   "ND"   "Oh"   "Ok"   "Or"   "P"    "RI"   "SC"  
+[41] "SD"   "Tn"   "Tx"   "U"    "Vrm"  "Vrg"  "Wsh"  "WV"   "Wsc"  "Wy"  
+
+ 2 :
+ [1] "Alb"  "Als"  "Arz"  "Ark"  "Clf"  "Clr"  "Cn"   "Dl"   "Fl"   "Gr"  
+[11] "Hw"   "Id"   "Il"   "In"   "Iw"   "Kns"  "Knt"  "Ls"   "Man"  "Mr"  
+[21] "Mssc" "Mc"   "Mnn"  "Msss" "Mssr" "Mnt"  "Nb"   "Nv"   "NH"   "NJ"  
+[31] "NM"   "NY"   "NC"   "ND"   "Oh"   "Ok"   "Or"   "Pn"   "RI"   "SC"  
+[41] "SD"   "Tn"   "Tx"   "Ut"   "Vrm"  "Vrg"  "Wsh"  "WV"   "Wsc"  "Wy"  
+
+ 3 :
+ [1] "Alb"  "Als"  "Arz"  "Ark"  "Clf"  "Clr"  "Cnn"  "Dlw"  "Flr"  "Grg" 
+[11] "Haw"  "Idh"  "Ill"  "Ind"  "Iow"  "Kns"  "Knt"  "Lsn"  "Man"  "Mry" 
+[21] "Mssc" "Mch"  "Mnn"  "Msss" "Mssr" "Mnt"  "Nbr"  "Nvd"  "NwH"  "NwJ" 
+[31] "NwM"  "NwY"  "NrC"  "NrD"  "Ohi"  "Okl"  "Org"  "Pnn"  "RhI"  "StC" 
+[41] "StD"  "Tnn"  "Txs"  "Uth"  "Vrm"  "Vrg"  "Wsh"  "WsV"  "Wsc"  "Wym" 
+
+ 4 :
+ [1] "Albm" "Alsk" "Arzn" "Arkn" "Clfr" "Clrd" "Cnnc" "Dlwr" "Flrd" "Gerg"
+[11] "Hawa" "Idah" "Illn" "Indn" "Iowa" "Knss" "Kntc" "Losn" "Main" "Mryl"
+[21] "Mssc" "Mchg" "Mnns" "Msss" "Mssr" "Mntn" "Nbrs" "Nevd" "NwHm" "NwJr"
+[31] "NwMx" "NwYr" "NrtC" "NrtD" "Ohio" "Oklh" "Orgn" "Pnns" "RhdI" "SthC"
+[41] "SthD" "Tnns" "Texs" "Utah" "Vrmn" "Vrgn" "Wshn" "WstV" "Wscn" "Wymn"
+
+ 5 :
+ [1] "Alabm" "Alask" "Arizn" "Arkns" "Clfrn" "Colrd" "Cnnct" "Delwr" "Flord"
+[10] "Georg" "Hawai" "Idaho" "Illns" "Indin" "Iowa"  "Kanss" "Kntck" "Lousn"
+[19] "Maine" "Mryln" "Mssch" "Mchgn" "Mnnst" "Mssss" "Missr" "Montn" "Nbrsk"
+[28] "Nevad" "NwHmp" "NwJrs" "NwMxc" "NwYrk" "NrthC" "NrthD" "Ohio"  "Oklhm"
+[37] "Oregn" "Pnnsy" "RhdIs" "SthCr" "SthDk" "Tnnss" "Texas" "Utah"  "Vrmnt"
+[46] "Virgn" "Wshng" "WstVr" "Wscns" "Wymng"
+> 
+> ## apply
+> x <- cbind(x1 = 3, x2 = c(4:1, 2:5))
+> dimnames(x)[[1]] <- letters[1:8]
+> apply(x,  2, summary) # 6 x n matrix
+        x1 x2
+Min.     3  1
+1st Qu.  3  2
+Median   3  3
+Mean     3  3
+3rd Qu.  3  4
+Max.     3  5
+> apply(x,  1, quantile)# 5 x n matrix
+        a b    c   d    e f    g   h
+0%   3.00 3 2.00 1.0 2.00 3 3.00 3.0
+25%  3.25 3 2.25 1.5 2.25 3 3.25 3.5
+50%  3.50 3 2.50 2.0 2.50 3 3.50 4.0
+75%  3.75 3 2.75 2.5 2.75 3 3.75 4.5
+100% 4.00 3 3.00 3.0 3.00 3 4.00 5.0
+> 
+> d.arr <- 2:5
+> arr <- array(1:prod(d.arr), d.arr,
++          list(NULL,letters[1:d.arr[2]],NULL,paste("V",4+1:d.arr[4],sep="")))
+> aa <- array(1:20,c(2,2,5))
+> str(apply(aa[FALSE,,,drop=FALSE], 1, dim))# empty integer, `incorrect' dim.
+ int[, 0 ] 
+> stopifnot(
++        apply(arr, 1:2, sum) == t(apply(arr, 2:1, sum)),
++        aa == apply(aa,2:3,function(x) x),
++        all.equal(apply(apply(aa,2:3, sum),2,sum),
++                  10+16*0:4, tol=4*.Machine$double.eps)
++ )
+> marg <- list(1:2, 2:3, c(2,4), c(1,3), 2:4, 1:3, 1:4)
+> for(m in marg) print(apply(arr, print(m), sum))
+[1] 1 2
+        a    b    c
+[1,] 1160 1200 1240
+[2,] 1180 1220 1260
+[1] 2 3
+  [,1] [,2] [,3] [,4]
+a  495  555  615  675
+b  515  575  635  695
+c  535  595  655  715
+[1] 2 4
+   V5  V6  V7  V8  V9
+a  84 276 468 660 852
+b 100 292 484 676 868
+c 116 308 500 692 884
+[1] 1 3
+     [,1] [,2] [,3] [,4]
+[1,]  765  855  945 1035
+[2,]  780  870  960 1050
+[1] 2 3 4
+, , V5
+
+  [,1] [,2] [,3] [,4]
+a    3   15   27   39
+b    7   19   31   43
+c   11   23   35   47
+
+, , V6
+
+  [,1] [,2] [,3] [,4]
+a   51   63   75   87
+b   55   67   79   91
+c   59   71   83   95
+
+, , V7
+
+  [,1] [,2] [,3] [,4]
+a   99  111  123  135
+b  103  115  127  139
+c  107  119  131  143
+
+, , V8
+
+  [,1] [,2] [,3] [,4]
+a  147  159  171  183
+b  151  163  175  187
+c  155  167  179  191
+
+, , V9
+
+  [,1] [,2] [,3] [,4]
+a  195  207  219  231
+b  199  211  223  235
+c  203  215  227  239
+
+[1] 1 2 3
+, , 1
+
+       a   b   c
+[1,] 245 255 265
+[2,] 250 260 270
+
+, , 2
+
+       a   b   c
+[1,] 275 285 295
+[2,] 280 290 300
+
+, , 3
+
+       a   b   c
+[1,] 305 315 325
+[2,] 310 320 330
+
+, , 4
+
+       a   b   c
+[1,] 335 345 355
+[2,] 340 350 360
+
+[1] 1 2 3 4
+, , 1, V5
+
+     a b c
+[1,] 1 3 5
+[2,] 2 4 6
+
+, , 2, V5
+
+     a  b  c
+[1,] 7  9 11
+[2,] 8 10 12
+
+, , 3, V5
+
+      a  b  c
+[1,] 13 15 17
+[2,] 14 16 18
+
+, , 4, V5
+
+      a  b  c
+[1,] 19 21 23
+[2,] 20 22 24
+
+, , 1, V6
+
+      a  b  c
+[1,] 25 27 29
+[2,] 26 28 30
+
+, , 2, V6
+
+      a  b  c
+[1,] 31 33 35
+[2,] 32 34 36
+
+, , 3, V6
+
+      a  b  c
+[1,] 37 39 41
+[2,] 38 40 42
+
+, , 4, V6
+
+      a  b  c
+[1,] 43 45 47
+[2,] 44 46 48
+
+, , 1, V7
+
+      a  b  c
+[1,] 49 51 53
+[2,] 50 52 54
+
+, , 2, V7
+
+      a  b  c
+[1,] 55 57 59
+[2,] 56 58 60
+
+, , 3, V7
+
+      a  b  c
+[1,] 61 63 65
+[2,] 62 64 66
+
+, , 4, V7
+
+      a  b  c
+[1,] 67 69 71
+[2,] 68 70 72
+
+, , 1, V8
+
+      a  b  c
+[1,] 73 75 77
+[2,] 74 76 78
+
+, , 2, V8
+
+      a  b  c
+[1,] 79 81 83
+[2,] 80 82 84
+
+, , 3, V8
+
+      a  b  c
+[1,] 85 87 89
+[2,] 86 88 90
+
+, , 4, V8
+
+      a  b  c
+[1,] 91 93 95
+[2,] 92 94 96
+
+, , 1, V9
+
+      a   b   c
+[1,] 97  99 101
+[2,] 98 100 102
+
+, , 2, V9
+
+       a   b   c
+[1,] 103 105 107
+[2,] 104 106 108
+
+, , 3, V9
+
+       a   b   c
+[1,] 109 111 113
+[2,] 110 112 114
+
+, , 4, V9
+
+       a   b   c
+[1,] 115 117 119
+[2,] 116 118 120
+
+> for(m in marg) ## 75% of the time here was spent on the names
++   print(dim(apply(arr, print(m), quantile, names=FALSE)) == c(5,d.arr[m]))
+[1] 1 2
+[1] TRUE TRUE TRUE
+[1] 2 3
+[1] TRUE TRUE TRUE
+[1] 2 4
+[1] TRUE TRUE TRUE
+[1] 1 3
+[1] TRUE TRUE TRUE
+[1] 2 3 4
+[1] TRUE TRUE TRUE TRUE
+[1] 1 2 3
+[1] TRUE TRUE TRUE TRUE
+[1] 1 2 3 4
+[1] TRUE TRUE TRUE TRUE TRUE
+> 
+> ## Bessel
+> nus <- c(0:5,10,20)
+> 
+> x0 <- 2^(-20:10)
+> plot(x0,x0, log='xy', ylab="", ylim=c(.1,1e60),type='n',
++      main = "Bessel Functions -Y_nu(x)  near 0\n log - log  scale")
+> for(nu in sort(c(nus,nus+.5))) lines(x0, -besselY(x0,nu=nu), col = nu+2)
+> legend(3,1e50, leg=paste("nu=", paste(nus,nus+.5, sep=",")), col=nus+2, lwd=1)
+> 
+> x <- seq(3,500);yl <- c(-.3, .2)
+> plot(x,x, ylim = yl, ylab="",type='n', main = "Bessel Functions  Y_nu(x)")
+> for(nu in nus){xx <- x[x > .6*nu]; lines(xx,besselY(xx,nu=nu), col = nu+2)}
+> legend(300,-.08, leg=paste("nu=",nus), col = nus+2, lwd=1)
+> 
+> x <- seq(10,50000,by=10);yl <- c(-.1, .1)
+> plot(x,x, ylim = yl, ylab="",type='n', main = "Bessel Functions  Y_nu(x)")
+> for(nu in nus){xx <- x[x > .6*nu]; lines(xx,besselY(xx,nu=nu), col = nu+2)}
+> summary(bY <- besselY(2,nu = nu <- seq(0,100,len=501)))
+       Min.     1st Qu.      Median        Mean     3rd Qu.        Max. 
+-3.001e+155 -1.067e+107  -1.976e+62 -9.961e+152  -2.059e+23   5.104e-01 
+> which(bY >= 0)
+[1] 1 2 3 4 5
+> summary(bY <- besselY(2,nu = nu <- seq(3,300,len=51)))
+       Min.     1st Qu.      Median        Mean     3rd Qu.        Max. 
+       -Inf        -Inf -2.248e+263        -Inf -3.777e+116  -1.128e+00 
+There were 22 warnings (use warnings() to see them)
+> summary(bI <- besselI(x = x <- 10:700, 1))
+      Min.    1st Qu.     Median       Mean    3rd Qu.       Max. 
+ 2.671e+03  6.026e+77 3.161e+152 3.501e+299 2.409e+227 1.529e+302 
+> ## end of moved from Bessel.Rd
+> 
+> ## data.frame
+> set.seed(123)
+> L3 <- LETTERS[1:3]
+> str(d <- data.frame(cbind(x=1, y=1:10), fac=sample(L3, 10, repl=TRUE)))
+`data.frame':	10 obs. of  3 variables:
+ $ x  : num  1 1 1 1 1 1 1 1 1 1
+ $ y  : num  1 2 3 4 5 6 7 8 9 10
+ $ fac: Factor w/ 2 levels "A","C": 1 1 2 2 2 2 2 2 2 1
+> (d0  <- d[, FALSE]) # NULL dataframe with 10 rows
+NULL data frame with 10 rows
+> (d.0 <- d[FALSE, ]) # <0 rows> dataframe  (3 cols)
+[1] x   y   fac
+<0 rows> (or 0-length row.names)
+> (d00 <- d0[FALSE,])  # NULL dataframe with 0 rows
+NULL data frame with 0 rows
+> (d000 <- data.frame()) #but not quite the same as d00:
+NULL data frame with 0 rows
+> !identical(d00, d000)
+[1] TRUE
+> dput(d00)
+structure(list(), .Names = character(0), row.names = character(0), class = "data.frame")
+> dput(d000)
+structure(list(), row.names = character(0), class = "data.frame")
+> stopifnot(identical(d, cbind(d, d0)),
++           identical(d, cbind(d0, d)),
++           identical(d, rbind(d,d.0)),
++           identical(d, rbind(d.0,d)),
++           identical(d, rbind(d00,d)),
++           identical(d, rbind(d,d00)),
++ 
++           TRUE )
+> ## Comments: failed before ver. 1.4.0
+> 
+> ## diag
+> diag(array(1:4, dim=5))
+     [,1] [,2] [,3] [,4] [,5]
+[1,]    1    0    0    0    0
+[2,]    0    2    0    0    0
+[3,]    0    0    3    0    0
+[4,]    0    0    0    4    0
+[5,]    0    0    0    0    1
+> ## test behaviour with 0 rows or columns
+> diag(0)
+<0 x 0 matrix>
+> z <- matrix(0, 0, 4)
+> diag(z)
+numeric(0)
+> diag(z) <- numeric(0)
+> z
+     [,1] [,2] [,3] [,4]
+> ## end of moved from diag.Rd
+> 
+> ## kronecker
+> fred <- matrix(1:12, 3, 4, dimnames=list(LETTERS[1:3], LETTERS[4:7]))
+> bill <- c("happy" = 100, "sad" = 1000)
+> kronecker(fred, bill, make.dimnames = TRUE)
+          D:   E:   F:    G:
+A:happy  100  400  700  1000
+A:sad   1000 4000 7000 10000
+B:happy  200  500  800  1100
+B:sad   2000 5000 8000 11000
+C:happy  300  600  900  1200
+C:sad   3000 6000 9000 12000
+> 
+> bill <- outer(bill, c("cat"=3, "dog"=4))
+> kronecker(fred, bill, make.dimnames = TRUE)
+        D:cat D:dog E:cat E:dog F:cat F:dog G:cat G:dog
+A:happy   300   400  1200  1600  2100  2800  3000  4000
+A:sad    3000  4000 12000 16000 21000 28000 30000 40000
+B:happy   600   800  1500  2000  2400  3200  3300  4400
+B:sad    6000  8000 15000 20000 24000 32000 33000 44000
+C:happy   900  1200  1800  2400  2700  3600  3600  4800
+C:sad    9000 12000 18000 24000 27000 36000 36000 48000
+> 
+> # dimnames are hard work: let's test them thoroughly
+> 
+> dimnames(bill) <- NULL
+> kronecker(fred, bill, make=TRUE)
+     D:    D:    E:    E:    F:    F:    G:    G:
+A:  300   400  1200  1600  2100  2800  3000  4000
+A: 3000  4000 12000 16000 21000 28000 30000 40000
+B:  600   800  1500  2000  2400  3200  3300  4400
+B: 6000  8000 15000 20000 24000 32000 33000 44000
+C:  900  1200  1800  2400  2700  3600  3600  4800
+C: 9000 12000 18000 24000 27000 36000 36000 48000
+> kronecker(bill, fred, make=TRUE)
+     :D    :E    :F    :G    :D    :E    :F    :G
+:A  300  1200  2100  3000   400  1600  2800  4000
+:B  600  1500  2400  3300   800  2000  3200  4400
+:C  900  1800  2700  3600  1200  2400  3600  4800
+:A 3000 12000 21000 30000  4000 16000 28000 40000
+:B 6000 15000 24000 33000  8000 20000 32000 44000
+:C 9000 18000 27000 36000 12000 24000 36000 48000
+> 
+> dim(bill) <- c(2, 2, 1)
+> dimnames(bill) <- list(c("happy", "sad"), NULL, "")
+> kronecker(fred, bill, make=TRUE)
+, , :
+
+          D:    D:    E:    E:    F:    F:    G:    G:
+A:happy  300   400  1200  1600  2100  2800  3000  4000
+A:sad   3000  4000 12000 16000 21000 28000 30000 40000
+B:happy  600   800  1500  2000  2400  3200  3300  4400
+B:sad   6000  8000 15000 20000 24000 32000 33000 44000
+C:happy  900  1200  1800  2400  2700  3600  3600  4800
+C:sad   9000 12000 18000 24000 27000 36000 36000 48000
+
+> 
+> bill <- array(1:24, c(3, 4, 2))
+> dimnames(bill) <- list(NULL, NULL, c("happy", "sad"))
+> kronecker(bill, fred, make=TRUE)
+, , happy:
+
+   :D :E :F :G :D :E :F :G :D :E :F  :G :D :E  :F  :G
+:A  1  4  7 10  4 16 28 40  7 28 49  70 10 40  70 100
+:B  2  5  8 11  8 20 32 44 14 35 56  77 20 50  80 110
+:C  3  6  9 12 12 24 36 48 21 42 63  84 30 60  90 120
+:A  2  8 14 20  5 20 35 50  8 32 56  80 11 44  77 110
+:B  4 10 16 22 10 25 40 55 16 40 64  88 22 55  88 121
+:C  6 12 18 24 15 30 45 60 24 48 72  96 33 66  99 132
+:A  3 12 21 30  6 24 42 60  9 36 63  90 12 48  84 120
+:B  6 15 24 33 12 30 48 66 18 45 72  99 24 60  96 132
+:C  9 18 27 36 18 36 54 72 27 54 81 108 36 72 108 144
+
+, , sad:
+
+   :D :E  :F  :G :D  :E  :F  :G :D  :E  :F  :G :D  :E  :F  :G
+:A 13 52  91 130 16  64 112 160 19  76 133 190 22  88 154 220
+:B 26 65 104 143 32  80 128 176 38  95 152 209 44 110 176 242
+:C 39 78 117 156 48  96 144 192 57 114 171 228 66 132 198 264
+:A 14 56  98 140 17  68 119 170 20  80 140 200 23  92 161 230
+:B 28 70 112 154 34  85 136 187 40 100 160 220 46 115 184 253
+:C 42 84 126 168 51 102 153 204 60 120 180 240 69 138 207 276
+:A 15 60 105 150 18  72 126 180 21  84 147 210 24  96 168 240
+:B 30 75 120 165 36  90 144 198 42 105 168 231 48 120 192 264
+:C 45 90 135 180 54 108 162 216 63 126 189 252 72 144 216 288
+
+> kronecker(fred, bill, make=TRUE)
+, , :happy
+
+   D: D: D: D: E: E: E: E: F: F: F:  F: G: G:  G:  G:
+A:  1  4  7 10  4 16 28 40  7 28 49  70 10 40  70 100
+A:  2  5  8 11  8 20 32 44 14 35 56  77 20 50  80 110
+A:  3  6  9 12 12 24 36 48 21 42 63  84 30 60  90 120
+B:  2  8 14 20  5 20 35 50  8 32 56  80 11 44  77 110
+B:  4 10 16 22 10 25 40 55 16 40 64  88 22 55  88 121
+B:  6 12 18 24 15 30 45 60 24 48 72  96 33 66  99 132
+C:  3 12 21 30  6 24 42 60  9 36 63  90 12 48  84 120
+C:  6 15 24 33 12 30 48 66 18 45 72  99 24 60  96 132
+C:  9 18 27 36 18 36 54 72 27 54 81 108 36 72 108 144
+
+, , :sad
+
+   D: D: D: D: E:  E:  E:  E:  F:  F:  F:  F:  G:  G:  G:  G:
+A: 13 16 19 22 52  64  76  88  91 112 133 154 130 160 190 220
+A: 14 17 20 23 56  68  80  92  98 119 140 161 140 170 200 230
+A: 15 18 21 24 60  72  84  96 105 126 147 168 150 180 210 240
+B: 26 32 38 44 65  80  95 110 104 128 152 176 143 176 209 242
+B: 28 34 40 46 70  85 100 115 112 136 160 184 154 187 220 253
+B: 30 36 42 48 75  90 105 120 120 144 168 192 165 198 231 264
+C: 39 48 57 66 78  96 114 132 117 144 171 198 156 192 228 264
+C: 42 51 60 69 84 102 120 138 126 153 180 207 168 204 240 276
+C: 45 54 63 72 90 108 126 144 135 162 189 216 180 216 252 288
+
+> 
+> fred <- outer(fred, c("frequentist"=4, "bayesian"=4000))
+> kronecker(fred, bill, make=TRUE)
+, , frequentist:happy
+
+   D: D:  D:  D: E:  E:  E:  E:  F:  F:  F:  F:  G:  G:  G:  G:
+A:  4 16  28  40 16  64 112 160  28 112 196 280  40 160 280 400
+A:  8 20  32  44 32  80 128 176  56 140 224 308  80 200 320 440
+A: 12 24  36  48 48  96 144 192  84 168 252 336 120 240 360 480
+B:  8 32  56  80 20  80 140 200  32 128 224 320  44 176 308 440
+B: 16 40  64  88 40 100 160 220  64 160 256 352  88 220 352 484
+B: 24 48  72  96 60 120 180 240  96 192 288 384 132 264 396 528
+C: 12 48  84 120 24  96 168 240  36 144 252 360  48 192 336 480
+C: 24 60  96 132 48 120 192 264  72 180 288 396  96 240 384 528
+C: 36 72 108 144 72 144 216 288 108 216 324 432 144 288 432 576
+
+, , frequentist:sad
+
+    D:  D:  D:  D:  E:  E:  E:  E:  F:  F:  F:  F:  G:  G:   G:   G:
+A:  52  64  76  88 208 256 304 352 364 448 532 616 520 640  760  880
+A:  56  68  80  92 224 272 320 368 392 476 560 644 560 680  800  920
+A:  60  72  84  96 240 288 336 384 420 504 588 672 600 720  840  960
+B: 104 128 152 176 260 320 380 440 416 512 608 704 572 704  836  968
+B: 112 136 160 184 280 340 400 460 448 544 640 736 616 748  880 1012
+B: 120 144 168 192 300 360 420 480 480 576 672 768 660 792  924 1056
+C: 156 192 228 264 312 384 456 528 468 576 684 792 624 768  912 1056
+C: 168 204 240 276 336 408 480 552 504 612 720 828 672 816  960 1104
+C: 180 216 252 288 360 432 504 576 540 648 756 864 720 864 1008 1152
+
+, , bayesian:happy
+
+      D:    D:     D:     D:    E:     E:     E:     E:     F:     F:     F:
+A:  4000 16000  28000  40000 16000  64000 112000 160000  28000 112000 196000
+A:  8000 20000  32000  44000 32000  80000 128000 176000  56000 140000 224000
+A: 12000 24000  36000  48000 48000  96000 144000 192000  84000 168000 252000
+B:  8000 32000  56000  80000 20000  80000 140000 200000  32000 128000 224000
+B: 16000 40000  64000  88000 40000 100000 160000 220000  64000 160000 256000
+B: 24000 48000  72000  96000 60000 120000 180000 240000  96000 192000 288000
+C: 12000 48000  84000 120000 24000  96000 168000 240000  36000 144000 252000
+C: 24000 60000  96000 132000 48000 120000 192000 264000  72000 180000 288000
+C: 36000 72000 108000 144000 72000 144000 216000 288000 108000 216000 324000
+       F:     G:     G:     G:     G:
+A: 280000  40000 160000 280000 400000
+A: 308000  80000 200000 320000 440000
+A: 336000 120000 240000 360000 480000
+B: 320000  44000 176000 308000 440000
+B: 352000  88000 220000 352000 484000
+B: 384000 132000 264000 396000 528000
+C: 360000  48000 192000 336000 480000
+C: 396000  96000 240000 384000 528000
+C: 432000 144000 288000 432000 576000
+
+, , bayesian:sad
+
+       D:     D:     D:     D:     E:     E:     E:     E:     F:     F:     F:
+A:  52000  64000  76000  88000 208000 256000 304000 352000 364000 448000 532000
+A:  56000  68000  80000  92000 224000 272000 320000 368000 392000 476000 560000
+A:  60000  72000  84000  96000 240000 288000 336000 384000 420000 504000 588000
+B: 104000 128000 152000 176000 260000 320000 380000 440000 416000 512000 608000
+B: 112000 136000 160000 184000 280000 340000 400000 460000 448000 544000 640000
+B: 120000 144000 168000 192000 300000 360000 420000 480000 480000 576000 672000
+C: 156000 192000 228000 264000 312000 384000 456000 528000 468000 576000 684000
+C: 168000 204000 240000 276000 336000 408000 480000 552000 504000 612000 720000
+C: 180000 216000 252000 288000 360000 432000 504000 576000 540000 648000 756000
+       F:     G:     G:      G:      G:
+A: 616000 520000 640000  760000  880000
+A: 644000 560000 680000  800000  920000
+A: 672000 600000 720000  840000  960000
+B: 704000 572000 704000  836000  968000
+B: 736000 616000 748000  880000 1012000
+B: 768000 660000 792000  924000 1056000
+C: 792000 624000 768000  912000 1056000
+C: 828000 672000 816000  960000 1104000
+C: 864000 720000 864000 1008000 1152000
+
+> ## end of moved from kronecker.Rd
+> 
+> ## NA
+> is.na(c(1,NA))
+[1] FALSE  TRUE
+> is.na(paste(c(1,NA)))
+[1] FALSE FALSE
+> is.na(list())# logical(0)
+logical(0)
+> ll <- list(pi,"C",NaN,Inf, 1:3, c(0,NA), NA)
+> is.na (ll)
+[1] FALSE FALSE  TRUE FALSE FALSE FALSE  TRUE
+> is.nan(ll)
+[1] FALSE FALSE  TRUE FALSE FALSE FALSE FALSE
+> ## end of moved from NA.Rd
+> 
+> ## scale
+> ## test out NA handling
+> tm <- matrix(c(2,1,0,1,0,NA,NA,NA,0), nrow=3)
+> scale(tm, , FALSE)
+     [,1] [,2] [,3]
+[1,]    1  0.5   NA
+[2,]    0 -0.5   NA
+[3,]   -1   NA    0
+attr(,"scaled:center")
+[1] 1.0 0.5 0.0
+> scale(tm)
+     [,1]       [,2] [,3]
+[1,]    1  0.7071068   NA
+[2,]    0 -0.7071068   NA
+[3,]   -1         NA  NaN
+attr(,"scaled:center")
+[1] 1.0 0.5 0.0
+attr(,"scaled:scale")
+[1] 1.0000000 0.7071068 0.0000000
+> ## end of moved from scale.Rd
+> 
+> ## tabulate
+> tabulate(numeric(0))
+[1] 0
+> ## end of moved from tabulate.Rd
+> 
+> ## ts
+> # Ensure working arithmetic for `ts' objects :
+> stopifnot(z == z)
+> stopifnot(z-z == 0)
+> 
+> ts(1:5, start=2, end=4) # truncate
+Time Series:
+Start = 2 
+End = 4 
+Frequency = 1 
+[1] 1 2 3
+> ts(1:5, start=3, end=17)# repeat
+Time Series:
+Start = 3 
+End = 17 
+Frequency = 1 
+ [1] 1 2 3 4 5 1 2 3 4 5 1 2 3 4 5
+> ## end of moved from ts.Rd
+> 
+> ### end of moved
+> 
 > 
 > ## PR 715 (Printing list elements w/attributes)
 > ##

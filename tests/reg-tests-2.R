@@ -1,5 +1,148 @@
 ### Regression tests for which the printed output is the issue
 
+### moved from various .Rd files
+## abbreviate
+data(state)
+for(m in 1:5) {
+  cat("\n",m,":\n")
+  print(as.vector(abbreviate(state.name, minl=m)))
+}
+
+## apply
+x <- cbind(x1 = 3, x2 = c(4:1, 2:5))
+dimnames(x)[[1]] <- letters[1:8]
+apply(x,  2, summary) # 6 x n matrix
+apply(x,  1, quantile)# 5 x n matrix
+
+d.arr <- 2:5
+arr <- array(1:prod(d.arr), d.arr,
+         list(NULL,letters[1:d.arr[2]],NULL,paste("V",4+1:d.arr[4],sep="")))
+aa <- array(1:20,c(2,2,5))
+str(apply(aa[FALSE,,,drop=FALSE], 1, dim))# empty integer, `incorrect' dim.
+stopifnot(
+       apply(arr, 1:2, sum) == t(apply(arr, 2:1, sum)),
+       aa == apply(aa,2:3,function(x) x),
+       all.equal(apply(apply(aa,2:3, sum),2,sum),
+                 10+16*0:4, tol=4*.Machine$double.eps)
+)
+marg <- list(1:2, 2:3, c(2,4), c(1,3), 2:4, 1:3, 1:4)
+for(m in marg) print(apply(arr, print(m), sum))
+for(m in marg) ## 75% of the time here was spent on the names
+  print(dim(apply(arr, print(m), quantile, names=FALSE)) == c(5,d.arr[m]))
+
+## Bessel
+nus <- c(0:5,10,20)
+
+x0 <- 2^(-20:10)
+plot(x0,x0, log='xy', ylab="", ylim=c(.1,1e60),type='n',
+     main = "Bessel Functions -Y_nu(x)  near 0\n log - log  scale")
+for(nu in sort(c(nus,nus+.5))) lines(x0, -besselY(x0,nu=nu), col = nu+2)
+legend(3,1e50, leg=paste("nu=", paste(nus,nus+.5, sep=",")), col=nus+2, lwd=1)
+
+x <- seq(3,500);yl <- c(-.3, .2)
+plot(x,x, ylim = yl, ylab="",type='n', main = "Bessel Functions  Y_nu(x)")
+for(nu in nus){xx <- x[x > .6*nu]; lines(xx,besselY(xx,nu=nu), col = nu+2)}
+legend(300,-.08, leg=paste("nu=",nus), col = nus+2, lwd=1)
+
+x <- seq(10,50000,by=10);yl <- c(-.1, .1)
+plot(x,x, ylim = yl, ylab="",type='n', main = "Bessel Functions  Y_nu(x)")
+for(nu in nus){xx <- x[x > .6*nu]; lines(xx,besselY(xx,nu=nu), col = nu+2)}
+summary(bY <- besselY(2,nu = nu <- seq(0,100,len=501)))
+which(bY >= 0)
+summary(bY <- besselY(2,nu = nu <- seq(3,300,len=51)))
+summary(bI <- besselI(x = x <- 10:700, 1))
+## end of moved from Bessel.Rd
+
+## data.frame
+set.seed(123)
+L3 <- LETTERS[1:3]
+str(d <- data.frame(cbind(x=1, y=1:10), fac=sample(L3, 10, repl=TRUE)))
+(d0  <- d[, FALSE]) # NULL dataframe with 10 rows
+(d.0 <- d[FALSE, ]) # <0 rows> dataframe  (3 cols)
+(d00 <- d0[FALSE,])  # NULL dataframe with 0 rows
+(d000 <- data.frame()) #but not quite the same as d00:
+!identical(d00, d000)
+dput(d00)
+dput(d000)
+stopifnot(identical(d, cbind(d, d0)),
+          identical(d, cbind(d0, d)),
+          identical(d, rbind(d,d.0)),
+          identical(d, rbind(d.0,d)),
+          identical(d, rbind(d00,d)),
+          identical(d, rbind(d,d00)),
+
+          TRUE )
+## Comments: failed before ver. 1.4.0
+
+## diag
+diag(array(1:4, dim=5))
+## test behaviour with 0 rows or columns
+diag(0)
+z <- matrix(0, 0, 4)
+diag(z)
+diag(z) <- numeric(0)
+z
+## end of moved from diag.Rd
+
+## kronecker
+fred <- matrix(1:12, 3, 4, dimnames=list(LETTERS[1:3], LETTERS[4:7]))
+bill <- c("happy" = 100, "sad" = 1000)
+kronecker(fred, bill, make.dimnames = TRUE)
+
+bill <- outer(bill, c("cat"=3, "dog"=4))
+kronecker(fred, bill, make.dimnames = TRUE)
+
+# dimnames are hard work: let's test them thoroughly
+
+dimnames(bill) <- NULL
+kronecker(fred, bill, make=TRUE)
+kronecker(bill, fred, make=TRUE)
+
+dim(bill) <- c(2, 2, 1)
+dimnames(bill) <- list(c("happy", "sad"), NULL, "")
+kronecker(fred, bill, make=TRUE)
+
+bill <- array(1:24, c(3, 4, 2))
+dimnames(bill) <- list(NULL, NULL, c("happy", "sad"))
+kronecker(bill, fred, make=TRUE)
+kronecker(fred, bill, make=TRUE)
+
+fred <- outer(fred, c("frequentist"=4, "bayesian"=4000))
+kronecker(fred, bill, make=TRUE)
+## end of moved from kronecker.Rd
+
+## NA
+is.na(c(1,NA))
+is.na(paste(c(1,NA)))
+is.na(list())# logical(0)
+ll <- list(pi,"C",NaN,Inf, 1:3, c(0,NA), NA)
+is.na (ll)
+is.nan(ll)
+## end of moved from NA.Rd
+
+## scale
+## test out NA handling
+tm <- matrix(c(2,1,0,1,0,NA,NA,NA,0), nrow=3)
+scale(tm, , FALSE)
+scale(tm)
+## end of moved from scale.Rd
+
+## tabulate
+tabulate(numeric(0))
+## end of moved from tabulate.Rd
+
+## ts
+# Ensure working arithmetic for `ts' objects :
+stopifnot(z == z)
+stopifnot(z-z == 0)
+
+ts(1:5, start=2, end=4) # truncate
+ts(1:5, start=3, end=17)# repeat
+## end of moved from ts.Rd
+
+### end of moved
+
+
 ## PR 715 (Printing list elements w/attributes)
 ##
 l <- list(a=10)

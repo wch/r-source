@@ -1,4 +1,192 @@
-# PR 640 (diff.default computes an incorrect starting time)
+## regression test for PR#376
+aggregate(ts(1:20), nfreq=1/3)
+## Comments: moved from aggregate.Rd
+
+## aperm
+# check the names
+
+x <- array(1:24, c(4, 6))
+nms <- list(happy=letters[1:4], sad=LETTERS[1:6])
+
+dimnames(x) <- nms
+tmp <- aperm(x, c(2, 1))
+stopifnot(all.equal(dimnames(tmp), nms[c(2, 1)]))
+
+dimnames(x) <- c(nms[1], list(NULL))
+tmp <- aperm(x, c(2, 1))
+stopifnot(all.equal(dimnames(tmp), c(list(NULL), nms[1])))
+
+names(nms) <- c("happy", "sad")
+dimnames(x) <- nms
+tmp <- aperm(x, c(2, 1))
+stopifnot(all.equal(names(dimnames(tmp)), names(nms[c(2, 1)])))
+
+dimnames(x) <- c(nms[1], list(NULL))
+tmp <- aperm(x, c(2, 1))
+stopifnot(all.equal(names(dimnames(tmp)), c("", names(nms)[1])))
+
+# check resize
+
+stopifnot(all(dim(aperm(x, c(2, 1), FALSE))==dim(x)))
+stopifnot(is.null(dimnames(aperm(x, c(2, 1), FALSE))))
+
+# check the types
+
+x <- array(1:24, c(4, 6))
+stopifnot(all.equal(aperm(x, c(2, 1)), t(x)))
+stopifnot(is.integer(aperm(x, c(2, 1))))
+
+x <- x + 0.0
+stopifnot(all.equal(aperm(x, c(2, 1)), t(x)))
+stopifnot(is.double(aperm(x, c(2, 1))))
+
+x <- x + 0.0i
+stopifnot(all.equal(aperm(x, c(2, 1)), t(x)))
+
+x[] <- LETTERS[1:24]
+stopifnot(all.equal(aperm(x, c(2, 1)), t(x)))
+
+x <- array(list("fred"), c(4, 6))
+x[[3, 4]] <- 1:10
+stopifnot(all.equal(aperm(x, c(2, 1)), t(x)))
+## end of moved from aperm.Rd
+
+## as.POSIXlt
+z <- Sys.time()
+stopifnot(range(z) == z,
+          min(z) == z,
+          max(z) == z,
+          mean(z) == z)
+## end of moved from as.POSIXlt.Rd
+
+## basename
+dirname(character(0))
+## end of moved from basename.Rd
+
+## glm
+## these are the same -- example from Jim Lindsey
+y <- rnorm(20)
+y1 <- y[-1]; y2 <- y[-20]
+summary(g1 <- glm(y1 - y2 ~ 1))
+summary(g2 <- glm(y1 ~ offset(y2)))
+Eq <- function(x,y) all.equal(x,y, tol = 1e-12)
+stopifnot(Eq(coef(g1), coef(g2)),
+          Eq(deviance(g1), deviance(g2)),
+          Eq(resid(g1), resid(g2)))
+## from logLik.glm.Rd
+require(MASS)
+data(anorexia)
+anorex.1 <- glm(Postwt ~ Prewt + Treat + offset(Prewt),
+            family = gaussian, data = anorexia)
+summary(anorex.1)
+Eq <- function(x,y) all.equal(x,y, tol = 1e-12)
+stopifnot(Eq(AIC(anorex.1), anorex.1$aic),
+          Eq(AIC(g1), g1$aic),
+          Eq(AIC(g2), g2$aic))
+## next was wrong in 1.4.1
+x <- 1:10
+lmx <- logLik(lm(x ~ 1)); glmx <- logLik(glm(x ~ 1))
+stopifnot(all.equal(as.vector(lmx), as.vector(glmx)),
+          all.equal(attr(lmx, 'df'), attr(glmx, 'df')))
+## end of moved from glm.Rd and logLik.glm.Rd
+
+## image
+## Degenerate, should still work
+image(as.matrix(1))
+image(matrix(pi,2,4))
+x <- seq(0,1,len=100)
+image(x, 1, matrix(x), col=heat.colors(10))
+image(x, 1, matrix(x), col=heat.colors(10), oldstyle = TRUE)
+image(x, 1, matrix(x), col=heat.colors(10), breaks = seq(0.1,1.1,len=11))
+## end of moved from image.Rd
+
+## integrate
+(ii <- integrate(dnorm, -1.96, 1.96))
+(i1 <- integrate(dnorm, -Inf, Inf))
+stopifnot(all.equal(0.9500042097, ii$val, tol = ii$abs.err, scale=1),
+          all.equal( 1,           i1$val, tol = i1$abs.err, scale=1))
+
+integrand <- function(x) {1/((x+1)*sqrt(x))}
+(ii <- integrate(integrand, lower = 0, upper = Inf, rel.tol = 1e-10))
+stopifnot(all.equal(pi, ii$val, tol = ii$abs.err, scale=1))
+## end of moved from integrate.Rd
+
+## is.finite
+( weird.values <- c(-20.9/0, 1/0, 0/0, NA) )
+
+Mmax <- .Machine$double.xmax
+Mmin <- .Machine$double.xmin
+( X.val <- c(Mmin*c(2^(-10:3),1e5,1e10),
+             Mmax*c(1e-10,1e-5,2^(-3:0),1.001)) )
+( tst.val <- sort(c(X.val, weird.values), na.last = TRUE) )
+( x2 <- c(-1:1/0,pi,1,NA) )
+( z2 <- c(x2, 1+1i, Inf -Inf* 1i) )
+
+is.inf <-
+  function(x) (is.numeric(x) || is.complex(x)) && !is.na(x) && !is.finite(x)
+
+for(x in list(tst.val, x2, z2))
+  print(cbind(format(x), is.infinite=format(is.infinite(x))), quote=FALSE)
+
+rbind(is.nan(tst.val),
+      is.na (tst.val))
+tst.val [ is.nan(tst.val) !=  is.na(tst.val) ]
+## end of moved from is.finite.Rd
+
+## qr
+## tests of complex case
+set.seed(1)
+A <- matrix(rnorm(25), 5, 5, dimnames=list(1:5, letters[1:5]))
+qr.solve(A, 1:5)
+A[] <- as.complex(A)
+qr.coef(qr(A), 1:5)
+qr.solve(A, 1:5)
+
+## check for rank-deficient cases
+X <- cbind(1:3, 1:3, 1)
+stopifnot(all.equal(qr.X(qr(X)), X))
+## end of moved from qr.Rd
+
+## sort
+for(n in 1:20) {
+    z <- rnorm(n)
+    for(x in list(z, round(z,1))) { ## 2nd one has ties
+       qxi <- sort(x,  method = "quick",  index.return = TRUE)
+       stopifnot(qxi$x == sort(x, method = "shell"),
+		 any(duplicated(x)) || qxi$ix == order(x),
+		 x[qxi$ix] == qxi$x)
+   }
+}
+## end of moved from sort.Rd
+
+## Uniform
+u <- runif(20)
+stopifnot(punif(u) == u, dunif(u) == 1,
+          runif(100, 2,2) == 2)#-> TRUE [bug in R version <= 0.63.1]
+## end of moved from Uniform.Rd
+
+## which.min
+stopifnot(length(which.min(numeric(0))) == 0)
+stopifnot(length(which.max( c(NA,NA) )) == 0)
+## end of moved from which.min.Rd
+
+## .Machine
+(Meps <- .Machine$double.eps)
+## All the following relations must hold :
+stopifnot(
+ 1 +     Meps != 1,
+ 1 + .5* Meps == 1,
+ log2(.Machine$double.xmax) == .Machine$double.max.exp,
+ log2(.Machine$double.xmin) == .Machine$double.min.exp
+)
+# This test fails on HP-UX since pow(2,1024) returns DBL_MAX and sets
+# errno = ERANGE.  Most other systems return Inf and set errno
+if (Sys.info()["sysname"] != "HP-UX")
+    stopifnot(is.infinite(.Machine$double.base ^ .Machine$double.max.exp))
+## end of moved from zMachine.Rd
+
+
+## PR 640 (diff.default computes an incorrect starting time)
 ## By: Laimonis Kavalieris <lkavalieris@maths.otago.ac.nz>
 library(ts)
 y <- ts(rnorm(24), freq=12)
