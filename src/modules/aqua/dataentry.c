@@ -110,7 +110,8 @@ static SEXP ssNA_STRING;
 static double ssNA_REAL;
 
 static SEXP ssNewVector(SEXPTYPE, int);
-extern bool		EditingFinished;
+extern bool		DataEntryFinished;
+void ProcessOneEvent(void);
 
 extern TXNControlTag	RReadOnlyTag[];
 extern TXNControlData   RReadOnlyData[];
@@ -732,11 +733,15 @@ SEXP Raqua_dataentry(SEXP call, SEXP op, SEXP args, SEXP rho)
     /* start up the window, more initializing in here */
    
     TXNSetTXNObjectControls(RConsoleInObject, false, 1, RReadOnlyTag, RReadOnlyData);
-    EditingFinished = false;
+    DataEntryFinished = false;
     OpenDataEntry();
+#ifdef NEWAQUAELOOP
+    while(!DataEntryFinished)
+        ProcessOneEvent();
+#else
     QuitApplicationEventLoop();
-    
-    RunApplicationEventLoop();  /* waits till the user closes the dataentry window */
+    RunApplicationEventLoop();
+#endif
     
     /* drop out unused columns */
     for(i = 0, cnt = 0; i < xmaxused; i++)

@@ -92,7 +92,8 @@ DataBrowserItemID *PkgID;
 Boolean *InstallPkg;
 
 
-extern bool		EditingFinished;
+extern bool		BrowsePkgFinished;
+void	ProcessOneEvent(void);
 
 extern TXNControlTag	RReadOnlyTag[];
 extern TXNControlData   RReadOnlyData[];
@@ -553,11 +554,16 @@ SEXP Raqua_browsepkgs(SEXP call, SEXP op, SEXP args, SEXP env)
     errorcall(call, "invalid arguments");
    
   TXNSetTXNObjectControls(RConsoleInObject, false, 1, RReadOnlyTag, RReadOnlyData);
-  EditingFinished = false;
+  BrowsePkgFinished = false;
   OpenBrowsePkg();
-  QuitApplicationEventLoop();
-    
-  RunApplicationEventLoop();  /* waits till the user closes the dataentry window */
+#ifdef NEWAQUAELOOP
+  while(!BrowsePkgFinished)
+    ProcessOneEvent();
+#else
+    QuitApplicationEventLoop();
+    RunApplicationEventLoop();
+#endif
+
   PROTECT(ans =  NEW_LOGICAL(NumOfPkgs));
 
   for(i=1;i<=NumOfPkgs;i++){

@@ -125,6 +125,11 @@ TXNObject	RConsoleInObject = NULL;
 bool 		WeHaveConsole = false;
 bool 		InputFinished = false;
 bool		EditingFinished = true;
+bool		DataManagerFinished = false;
+bool		PackageManagerFinished = false;
+bool		DataEntryFinished = false;
+bool		BrowsePkgFinished = false;
+
 Boolean HaveContent = false;
 Boolean HaveBigBuffer = false;
 
@@ -152,12 +157,13 @@ extern RAquaPrefs CurrentPrefs, TempPrefs;
 extern FMFontFamilyInstance    instance;
 extern FMFontSize              fontSize;       
 
+void 	ProcessOneEvent(void);
 
 void RSetTab(void);
 void RSetFontSize(void);
 void RSetFont(void);
-NavUserAction YesOrNot(char *title, char *msg, char *action, char *cancel);
-NavUserAction WantToSave(WindowRef window, char *title, char *msg);
+DialogItemIndex YesOrNot(char *title, char *msg, char *action, char *cancel);
+DialogItemIndex WantToSave(WindowRef window, char *title, char *msg);
 
 void Raqua_CleanUp(SA_TYPE saveact, int status, int runLast);
 void Raqua_Suicide(char *s);
@@ -263,7 +269,7 @@ int 	Raqua_ShowFiles(int nfile, char **fileName, char **title,
 int	Raqua_ChooseFile(int new, char *buf, int len);
 
 int 	Raqua_Edit(char *filename);
-void 	Raqua_StartConsole(void);
+void 	Raqua_StartConsole(Rboolean OpenConsole);
 void 	Raqua_WriteConsole(char *buf, int len);
 int 	Raqua_ReadConsole(char *prompt, unsigned char *buf, int len,
 		     int addtohistory);
@@ -326,7 +332,8 @@ static const EventTypeSpec	RGlobalWinEvents[] =
         { kEventClassWindow, kEventWindowFocusAcquired },
         { kEventClassWindow, kEventWindowFocusRelinquish },
         { kEventClassFont, kEventFontPanelClosed},
-        { kEventClassFont, kEventFontSelection} 
+        { kEventClassFont, kEventFontSelection},
+        { kEventClassMouse, kEventMouseDown}
 };
 
 static const EventTypeSpec	RCloseWinEvent[] = 
@@ -388,49 +395,128 @@ TXNControlData  txnControlData[1];
 TXNMargins      txnMargins;
            
 static	pascal	void	OtherEventLoops( EventLoopTimerRef inTimer, void *inUserData );
-           
+
+void SetUpRAquaMenu(void);
+OSStatus InstallAppHandlers(void);
+OSStatus SetUpGUI(void);
+
+OSStatus SetUpGUI(void){
+    IBNibRef 	nibRef = NULL;
+    OSErr	err = noErr;
+    CFURLRef    bundleURL = NULL;
+    CFBundleRef RBundle = NULL;
+ 
+    if( (err = CreateNibReference(CFSTR("main"), &nibRef)) != noErr)
+       goto guifailure;
+    
+    if( (err = SetMenuBarFromNib(nibRef, CFSTR("MenuBar"))) != noErr)
+       goto guifailure;
+        
+    if( (err = CreateWindowFromNib(nibRef,CFSTR("MainWindow"),&ConsoleWindow)) != noErr)
+       goto guifailure;
+    
+    if( (err = CreateWindowFromNib(nibRef,CFSTR("AboutWindow"),&RAboutWindow)) != noErr)
+       goto guifailure;
+
+    if( (err = CreateWindowFromNib(nibRef,CFSTR("PrefsWindow"),&RPrefsWindow)) != noErr)
+       goto guifailure;
+        
+guifailure:
+    if(nibRef)
+        DisposeNibReference(nibRef);
+
+    return(err);
+}           
+
+OSStatus SetUPConsole(void);
+
+OSStatus SetUPConsole(void){
+    TXNFrameOptions	frameOptions;
+    Rect 		OutFrame, InFrame, WinFrame;
+    OSStatus		err = noErr;
+
+    if (ConsoleWindow == NULL)
+     return(-1);
+    
+                 
+    GetWindowPortBounds (ConsoleWindow,&WinFrame);
+    SetRect(&OutFrame,0,0,WinFrame.right,WinFrame.bottom-110);
+    SetRect(&InFrame,0,WinFrame.bottom-100,WinFrame.right,WinFrame.bottom);
+                
+    frameOptions = kTXNShowWindowMask|kTXNDoNotInstallDragProcsMask|kTXNMonostyledTextMask; 
+    frameOptions |= kTXNWantHScrollBarMask | kTXNWantVScrollBarMask | kTXNReadOnlyMask;
+		
+
+    err = TXNNewObject(NULL, ConsoleWindow, &OutFrame, frameOptions, kTXNTextEditStyleFrameType,
+                            kTXNTextensionFile, kTXNSystemDefaultEncoding, &RConsoleOutObject,
+                            &OutframeID, 0);
+    frameOptions  = kTXNMonostyledTextMask|kTXNShowWindowMask | kTXNWantHScrollBarMask;
+    frameOptions |= kTXNWantVScrollBarMask | kTXNDrawGrowIconMask;
+		
+    err = TXNNewObject(NULL, ConsoleWindow, &InFrame, frameOptions, kTXNTextEditStyleFrameType,
+                            kTXNTextensionFile, kTXNSystemDefaultEncoding, &RConsoleInObject,
+                            &InframeID, 0);
+
+    if ( (RConsoleOutObject != NULL) && (RConsoleInObject != NULL) ){
+                    /* sets the state of the scrollbars so they are drawn correctly */
+        err = TXNActivate(RConsoleOutObject, OutframeID, kScrollBarsAlwaysActive);
+        err = TXNActivate(RConsoleInObject, InframeID, kScrollBarsAlwaysActive);
+        	        
+			
+        err = SetWindowProperty(ConsoleWindow,'RCON','tFrm',sizeof(TXNFrameID),&OutframeID);
+        err = SetWindowProperty(ConsoleWindow,'RCON','tObj',sizeof(TXNObject),&RConsoleOutObject);
+        err = SetWindowProperty(ConsoleWindow,'RCON','tFrm',sizeof(TXNFrameID),&InframeID);
+        err = SetWindowProperty(ConsoleWindow,'RCON','tObj',sizeof(TXNObject),&RConsoleInObject);
+    }
+
+    if(err != noErr)
+     return(err);
+
+    WeHaveConsole = true;
+    RSetColors();
+    RescaleInOut(0.8);
+    TXNSetTXNObjectControls(RConsoleOutObject, false, 3, ROutTag, ROutData);
+    TXNSetTXNObjectControls(RConsoleInObject, false, 1, RInTag, RInData);
+        
+    txnControlTag[0] = kTXNMarginsTag;
+    txnControlData[0].marginsPtr = &txnMargins;
+  
+    txnMargins.leftMargin  = txnMargins.topMargin = 5;
+    txnMargins.rightMargin = txnMargins.bottomMargin = 5;
+    TXNSetTXNObjectControls(RConsoleOutObject,false,1,txnControlTag,txnControlData);
+    TXNSetTXNObjectControls(RConsoleInObject,false,1,txnControlTag,txnControlData);
+
+    err = InstallWindowEventHandler( ConsoleWindow, NewEventHandlerUPP(KeybHandler), 
+                                          GetEventTypeCount(KeybEvents),
+                                          KeybEvents, (void *)ConsoleWindow, NULL);
+         
+    err = InstallWindowEventHandler( ConsoleWindow, NewEventHandlerUPP(DoCloseHandler), 
+                                          GetEventTypeCount(RCloseWinEvent),
+                                          RCloseWinEvent, (void *)ConsoleWindow, NULL);
+    err = InstallStandardEventHandler(GetWindowEventTarget(ConsoleWindow));        
+ 
+    TXNFocus(RConsoleOutObject,true);
+
+    return err;
+
+}
+
 Boolean AlreadyRunning = false;           
-void Raqua_StartConsole(void)
+void Raqua_StartConsole(Rboolean OpenConsole)
 {
     IBNibRef 	nibRef = NULL;
     OSErr	err = noErr;
     CFURLRef    bundleURL = NULL;
     CFBundleRef RBundle = NULL;
-    Str255	menuStr;
+    
     char	buf[300];
     FSRef 	ref;
     
-    err = CreateNibReference(CFSTR("main"), &nibRef);
-    if(err != noErr) 
-     goto noconsole;
-    
-    err = SetMenuBarFromNib(nibRef, CFSTR("MenuBar"));
-    if(err != noErr)
-     goto noconsole;
-
-     err = CreateWindowFromNib(nibRef,CFSTR("MainWindow"),&ConsoleWindow);
-    if(err != noErr)
-     goto noconsole;
-    
-    err = CreateWindowFromNib(nibRef,CFSTR("AboutWindow"),&RAboutWindow);
-    
-
-   if(err != noErr)
+   if(SetUpGUI() != noErr)
      goto noconsole;
    else
     InitAboutWindow();
-
-    err = CreateWindowFromNib(nibRef,CFSTR("PrefsWindow"),&RPrefsWindow);
-   if(err != noErr)
-     goto noconsole;
-
-    if(nibRef)
-     DisposeNibReference(nibRef);
   
-    ShowWindow(ConsoleWindow);
-    SelectWindow(ConsoleWindow);
-   
-
     GetRPrefs();
      
     InitCursor();
@@ -441,73 +527,46 @@ void Raqua_StartConsole(void)
     if( InitMLTE() != noErr )
      goto noconsole;
 
-
-    if (ConsoleWindow != NULL){
-        TXNFrameOptions	frameOptions;
-        Rect OutFrame, InFrame, WinFrame;
-                
-        GetWindowPortBounds (ConsoleWindow,&WinFrame);
-        SetRect(&OutFrame,0,0,WinFrame.right,WinFrame.bottom-110);
-        SetRect(&InFrame,0,WinFrame.bottom-100,WinFrame.right,WinFrame.bottom);
-                
-        frameOptions = kTXNShowWindowMask|kTXNDoNotInstallDragProcsMask|kTXNMonostyledTextMask; 
-        frameOptions |= kTXNWantHScrollBarMask | kTXNWantVScrollBarMask | kTXNReadOnlyMask;
-		
-
-        err = TXNNewObject(NULL, ConsoleWindow, &OutFrame, frameOptions, kTXNTextEditStyleFrameType,
-                            kTXNTextensionFile, kTXNSystemDefaultEncoding, &RConsoleOutObject,
-                            &OutframeID, 0);
-        frameOptions = kTXNMonostyledTextMask|kTXNShowWindowMask | kTXNWantHScrollBarMask | kTXNWantVScrollBarMask | kTXNDrawGrowIconMask;
-		
-        err = TXNNewObject(NULL, ConsoleWindow, &InFrame, frameOptions, kTXNTextEditStyleFrameType,
-                            kTXNTextensionFile, kTXNSystemDefaultEncoding, &RConsoleInObject,
-                            &InframeID, 0);
-
-        if (err == noErr){		
-            if ( (RConsoleOutObject != NULL) && (RConsoleInObject != NULL) ){
-                    /* sets the state of the scrollbars so they are drawn correctly */
-                err = TXNActivate(RConsoleOutObject, OutframeID, kScrollBarsAlwaysActive);
-                err = TXNActivate(RConsoleInObject, InframeID, kScrollBarsAlwaysActive);
-                if (err != noErr)
-                    goto noconsole;
-		        
-			
-                err = SetWindowProperty(ConsoleWindow,'RCON','tFrm',sizeof(TXNFrameID),&OutframeID);
-                err = SetWindowProperty(ConsoleWindow,'RCON','tObj',sizeof(TXNObject),&RConsoleOutObject);
-                err = SetWindowProperty(ConsoleWindow,'RCON','tFrm',sizeof(TXNFrameID),&InframeID);
-                err = SetWindowProperty(ConsoleWindow,'RCON','tObj',sizeof(TXNObject),&RConsoleInObject);
-            }
-
-        } 
+    err = SetUPConsole();
 	
-	if(err == noErr){
-	 WeHaveConsole = true;
-         RSetColors();
-         RescaleInOut(0.8);
-         TXNSetTXNObjectControls(RConsoleOutObject, false, 3, ROutTag, ROutData);
-         TXNSetTXNObjectControls(RConsoleInObject, false, 1, RInTag, RInData);
+    if(err == noErr)
+         InstallPrefsHandlers();
+         
+    InstallAppHandlers();
+    
+    if(ConsoleWindow!= NULL){
+        SelectWindow(ConsoleWindow);
+        RSetTab();
+        RSetFontSize();
+        RSetFont();
+        SetUpRAquaMenu();
+    }   
+       
+    chdir(R_ExpandFileName("~/"));
+       
+    if (R_RestoreHistory)
+	Raqua_read_history(R_HistoryFile);
         
-         txnControlTag[0] = kTXNMarginsTag;
-         txnControlData[0].marginsPtr = &txnMargins;
-  
-         txnMargins.leftMargin  = txnMargins.topMargin = 5;
-         txnMargins.rightMargin = txnMargins.bottomMargin = 5;
-         TXNSetTXNObjectControls(RConsoleOutObject,false,1,txnControlTag,txnControlData);
-         TXNSetTXNObjectControls(RConsoleInObject,false,1,txnControlTag,txnControlData);
+        
+    InstallEventLoopTimer(GetCurrentEventLoop(), 0, 1, NewEventLoopTimerUPP(OtherEventLoops), NULL, NULL);
+        
+noconsole:
+    if(bundleURL)
+     CFRelease( bundleURL );
+    if(RBundle)
+     CFRelease( RBundle ); 
+	return;
+}
 
-  	 InstallStandardEventHandler(GetApplicationEventTarget());
-      //   err = InstallApplicationEventHandler( KeybHandler, GetEventTypeCount(KeybEvents), KeybEvents, 0, NULL);
+OSStatus InstallAppHandlers(void){
+  	 OSStatus err = noErr;
+         
+         InstallStandardEventHandler(GetApplicationEventTarget());
+
          err = InstallApplicationEventHandler( NewEventHandlerUPP(RCmdHandler), GetEventTypeCount(RCmdEvents),
                                                 RCmdEvents, 0, NULL);
 	    
-         err = InstallWindowEventHandler( ConsoleWindow, NewEventHandlerUPP(KeybHandler), 
-                                          GetEventTypeCount(KeybEvents),
-                                          KeybEvents, (void *)ConsoleWindow, NULL);
-         
-         err = InstallWindowEventHandler( ConsoleWindow, NewEventHandlerUPP(DoCloseHandler), 
-                                          GetEventTypeCount(RCloseWinEvent),
-                                          RCloseWinEvent, (void *)ConsoleWindow, NULL);
-                                          
+                                                  
          err = InstallApplicationEventHandler( NewEventHandlerUPP(RWinHandler), GetEventTypeCount(RGlobalWinEvents),
                                                 RGlobalWinEvents, 0, NULL);
                                                 
@@ -515,26 +574,20 @@ void Raqua_StartConsole(void)
                         NewAEEventHandlerUPP((AEEventHandlerProcPtr)QuitAppleEventHandler), 
                                     0, false);
 
-       /* installs Handler for CFommandline-Application-Event ('do_CMD')   */
          err = AEInstallEventHandler(kCMDEventClass, kCMDEvent,
                                 NewAEEventHandlerUPP( (AEEventHandlerProcPtr)HandleDoCommandLine ),
                                 0, false);
 
-        TXNFocus(RConsoleOutObject,true);
-        InstallWindowEventHandler(RAboutWindow, NewEventHandlerUPP(RAboutWinHandler), 1, &aboutSpec, 
+        err = InstallWindowEventHandler(RAboutWindow, NewEventHandlerUPP(RAboutWinHandler), 1, &aboutSpec, 
                                 (void *)RAboutWindow, NULL);
+                                
+        return err;                        
+}
 
-        InstallPrefsHandlers();
-      
-        }
-        else
-        WeHaveConsole = false; 
-    }
-
-
-    SelectWindow(ConsoleWindow);
-    /* SetsUp additional Help Menu items */
+void SetUpRAquaMenu(void){
+    Str255	menuStr;
     HMGetHelpMenu(&HelpMenu,NULL);
+
     if (HelpMenu != nil) {
                 CopyCStringToPascal("R Help", menuStr);
 		AppendMenu(HelpMenu, menuStr);
@@ -556,30 +609,11 @@ void Raqua_StartConsole(void)
 		AppendMenu(HelpMenu, menuStr);
 		RunExampleItem = CountMenuItems(HelpMenu);
                 SetMenuItemCommandID(HelpMenu, RunExampleItem, kRExampleRun); 
-
 	}
-        
-       RSetTab();
-       RSetFontSize();
-       RSetFont();
-       
        EnableMenuCommand(NULL, kHICommandPreferences);
-   
-       chdir(R_ExpandFileName("~/"));
        
-       if (R_RestoreHistory)
-	Raqua_read_history(R_HistoryFile);
-        
-        
-        InstallEventLoopTimer( GetCurrentEventLoop(), 0, 1, NewEventLoopTimerUPP(OtherEventLoops), NULL, NULL);
-         
-
-noconsole:
-    if(bundleURL)
-     CFRelease( bundleURL );
-    if(RBundle)
-     CFRelease( RBundle ); 
-	return;
+       DrawMenuBar();
+       	
 }
 
 
@@ -744,8 +778,11 @@ int Raqua_ReadConsole(char *prompt, unsigned char *buf, int len,
 
      
    while(!InputFinished & !HaveBigBuffer)
-     RunApplicationEventLoop();
-  
+#ifdef NEWAQUAELOOP
+        ProcessOneEvent();
+#else
+        RunApplicationEventLoop();
+#endif  
 
   
      if(!HaveBigBuffer){
@@ -855,7 +892,9 @@ static OSStatus KeybHandler(EventHandlerCallRef inCallRef, EventRef REvent, void
      
      case 36:
        InputFinished = true;
-       QuitApplicationEventLoop();
+#ifndef NEWAQUAELOOP
+        QuitApplicationEventLoop();
+#endif        
       err = noErr;
      break;
      
@@ -981,35 +1020,45 @@ pascal OSStatus RAboutWinHandler(EventHandlerCallRef handlerRef, EventRef event,
  
  
 
-NavUserAction WantToSave(WindowRef window, char *title, char *msg){
-    OSStatus			err = noErr;
-    NavDialogCreationOptions	dialogOptions;
-    NavAskSaveChangesAction	action 	= 0;
-    NavDialogRef		WantDialog;
-    NavReplyRecord		reply;
-    NavUserAction 		userAction = 0;
+DialogItemIndex WantToSave(WindowRef window, char *title, char *msg){
+    OSStatus				err = noErr;
+    DialogRef				WantDialog;
+    DialogItemIndex 			userAction = kAlertStdAlertCancelButton;
+    DialogItemIndex			itemHit;
+    AlertStdCFStringAlertParamRec	paramRec;
+    CFStringRef				MsgText, TitleText;
+	
     
-    action = kNavSaveChangesClosingDocument;
-    
-    if( (err = NavGetDefaultDialogCreationOptions(&dialogOptions)) == noErr){
-        if(msg != NULL)
-            dialogOptions.message = CFStringCreateWithFormat( NULL, NULL, CFSTR("%s"), msg);
-        if(title != NULL)
-            dialogOptions.windowTitle = CFStringCreateWithFormat( NULL, NULL, CFSTR("%s"), title);   
-    
-        if( (err = NavCreateAskSaveChangesDialog(&dialogOptions, action, NULL,
-                                    NULL, &WantDialog)) == noErr){
-            if( (err = NavDialogRun(WantDialog)) == noErr)
-                userAction =  NavDialogGetUserAction(WantDialog);
-            NavDialogDispose(WantDialog);              
-        }
-  
-        if( dialogOptions.message ) 
-            CFRelease(dialogOptions.message);
-        if( dialogOptions.windowTitle ) 
-            CFRelease(dialogOptions.windowTitle);    
-    }  
-    
+    GetStandardAlertDefaultParams(&paramRec,kStdCFStringAlertVersionOne);
+    paramRec.movable		= true;
+    paramRec.helpButton		= false;
+    paramRec.cancelButton	= kAlertStdAlertCancelButton;
+    paramRec.defaultText 	= CFSTR("Save");
+    paramRec.cancelText 	= CFSTR("Cancel");
+    paramRec.otherText 		= CFSTR("Don't Save");
+
+    if(msg != NULL)
+      MsgText = CFStringCreateWithCString(NULL, msg, kCFStringEncodingASCII); 
+    else
+      MsgText = CFSTR("Save changes to the current document?");
+
+    if(title != NULL)
+     TitleText = CFStringCreateWithCString(NULL, title, kCFStringEncodingASCII);
+    else
+     TitleText = CFSTR("Save changes");
+
+    err = CreateStandardAlert(kAlertCautionAlert,TitleText, MsgText,                                                                                                                                                                                                                            				&paramRec, &WantDialog);
+    if(err == noErr){
+        err = RunStandardAlert(WantDialog,NULL,&itemHit);
+        if(err == noErr)
+          userAction = itemHit;
+    }
+
+    if(TitleText != NULL)
+		CFRelease(TitleText);
+    if(MsgText != NULL)
+		CFRelease(MsgText);
+
     return(userAction);      
 }
 
@@ -1017,54 +1066,50 @@ NavUserAction WantToSave(WindowRef window, char *title, char *msg){
 
 
 
-NavUserAction YesOrNot(char *title, char *msg, char *actionlab, char *canclab){
-    OSStatus			err = noErr;
-    NavDialogCreationOptions	dialogOptions;
-    NavAskSaveChangesAction	action 	= 0;
-    NavDialogRef		WantDialog;
-    NavReplyRecord		reply;
-    NavUserAction 		userAction = 0;
+DialogItemIndex YesOrNot(char *title, char *msg, char *actionlab, char *canclab){
+    OSStatus				err = noErr;
+    DialogRef				WantDialog;
+    DialogItemIndex 			userAction = kAlertStdAlertCancelButton;
+    DialogItemIndex			itemHit;
+    AlertStdCFStringAlertParamRec	paramRec;
+    CFStringRef				MsgText, TitleText;
+	
+    
+    GetStandardAlertDefaultParams(&paramRec,kStdCFStringAlertVersionOne);
+    paramRec.movable		= true;
+    paramRec.helpButton		= false;
+    paramRec.cancelButton	= kAlertStdAlertCancelButton;
 
-    action = kNavSaveChangesQuittingApplication;
+    if(actionlab != NULL)
+     paramRec.defaultText = CFStringCreateWithCString(NULL, actionlab, kCFStringEncodingASCII); 
  
-    
-    if( (err = NavGetDefaultDialogCreationOptions(&dialogOptions)) == noErr){
-       
-         dialogOptions.modality = kWindowModalityAppModal;
-         
-        if(msg != NULL)
-            dialogOptions.message = CFStringCreateWithCString(NULL, msg, kCFStringEncodingASCII);  
+    if(canclab != NULL)
+     paramRec.cancelText = CFStringCreateWithCString(NULL, canclab, kCFStringEncodingASCII); 
+    else
+     paramRec.cancelText = CFSTR("Cancel");
 
-        if(title != NULL)
-            dialogOptions.windowTitle = CFStringCreateWithCString(NULL, title, kCFStringEncodingASCII);  
-                    
-        if(actionlab != NULL)
-            dialogOptions.actionButtonLabel = CFStringCreateWithCString(NULL, actionlab, kCFStringEncodingASCII);  
-        
-        if(canclab != NULL)
-            dialogOptions.cancelButtonLabel = CFStringCreateWithCString(NULL, canclab, kCFStringEncodingASCII);  
+    if(msg != NULL)
+      MsgText = CFStringCreateWithCString(NULL, msg, kCFStringEncodingASCII); 
+    else
+      MsgText = CFSTR("Save changes to the current document?");
 
-       dialogOptions.clientName = CFStringCreateWithPascalString( NULL, LMGetCurApName(), GetApplicationTextEncoding());
-             
-       if( (err = NavCreateAskSaveChangesDialog(&dialogOptions, action, NULL,
-                                    NULL, &WantDialog)) == noErr){
-            if( (err = NavDialogRun(WantDialog)) == noErr)
-                userAction =  NavDialogGetUserAction(WantDialog);
-            NavDialogDispose(WantDialog);              
-        }
-        if( dialogOptions.clientName ) 
-            CFRelease(dialogOptions.clientName);
-        if( dialogOptions.message ) 
-            CFRelease(dialogOptions.message);
-         if( dialogOptions.windowTitle ) 
-            CFRelease(dialogOptions.windowTitle);    
-         if( dialogOptions.actionButtonLabel ) 
-            CFRelease(dialogOptions.actionButtonLabel);    
-         if( dialogOptions.cancelButtonLabel ) 
-            CFRelease(dialogOptions.cancelButtonLabel);    
-            
-    }  
-    
+    if(title != NULL)
+     TitleText = CFStringCreateWithCString(NULL, title, kCFStringEncodingASCII);
+    else
+     TitleText = CFSTR("Save changes");
+
+    err = CreateStandardAlert(kAlertCautionAlert,TitleText, MsgText,                                                                                                                                                                                                                            				&paramRec, &WantDialog);
+    if(err == noErr){
+        err = RunStandardAlert(WantDialog,NULL,&itemHit);
+        if(err == noErr)
+          userAction = itemHit;
+    }
+
+    if(TitleText != NULL)
+		CFRelease(TitleText);
+    if(MsgText != NULL)
+		CFRelease(MsgText);
+
     return(userAction);      
 }
 
@@ -1323,7 +1368,7 @@ RCmdHandler( EventHandlerCallRef inCallRef, EventRef inEvent, void* inUserData )
 
 	      case kRCmdClearWSpace:  
                 userAction = YesOrNot("Clear Workspace", "All objects in the workspace will be removed. Are you sure you want to proceed?","Yes","No");
-              if(userAction == kNavUserActionSaveChanges)
+              if(userAction == kAlertStdAlertOKButton)
                 consolecmd("rm(list=ls())");              
               break;          		
 
@@ -1595,14 +1640,14 @@ RWinHandler( EventHandlerCallRef inCallRef, EventRef inEvent, void* inUserData )
 	UInt32		eventKind = GetEventKind( inEvent ), RWinCode, devsize;
         int		devnum;
         NewDevDesc 	*dd;
-        WindowRef 	EventWindow;
+        WindowRef 	EventWindow,mywin;
         EventRef	REvent;
         TXNFrameID	HlpFrameID  = 0;
         UInt32		eventClass;
         TXNObject 	HlpObj = NULL;
               HIPoint where;
             WindowDefPartCode part;
-            EventRef hitTest;
+            EventRecord outEvent;
     Str255	fontname; 
 
 
@@ -1612,6 +1657,14 @@ RWinHandler( EventHandlerCallRef inCallRef, EventRef inEvent, void* inUserData )
        
         switch(eventClass){
          
+        case kEventClassMouse:
+         if(eventKind == kEventMouseDown){
+         fprintf(stderr,"\n coversion=%d", ConvertEventRefToEventRecord(inEvent, &outEvent) );
+         if( FindWindow(outEvent.where, &mywin) == inMenuBar )
+          fprintf(stderr,"\nmenu bar");
+         }
+        break;
+                  
          case kEventClassFont:         
          {
              switch (eventKind)
@@ -1652,13 +1705,13 @@ RWinHandler( EventHandlerCallRef inCallRef, EventRef inEvent, void* inUserData )
                     err = noErr;
                 }
                 
-                if( GetWindowProperty(EventWindow, kRAppSignature, 'QRTZ', sizeof(int), NULL, &devnum) == noErr)
+/*                if( GetWindowProperty(EventWindow, kRAppSignature, 'QRTZ', sizeof(int), NULL, &devnum) == noErr)
                     if( (dd = ((GEDevDesc*) GetDevice(devnum))->dev) ){
                         dd->size(&(dd->left), &(dd->right), &(dd->bottom), &(dd->top), dd);
                         GEplayDisplayList((GEDevDesc*) GetDevice(devnum));       
                         err = noErr;
                     }
-                
+  */              
                          
              }
             break;
@@ -1702,7 +1755,9 @@ OSStatus DoCloseHandler( EventHandlerCallRef inCallRef, EventRef inEvent, void* 
         FILE 		*fp;
         ControlRef 	browser = NULL;
         ItemCount	changes, newchanges;
-        NavUserAction	userAction;
+        DialogItemIndex	userAction;
+        Str255		wintitle;
+        char		winname[255];
 
 
 	
@@ -1724,12 +1779,12 @@ OSStatus DoCloseHandler( EventHandlerCallRef inCallRef, EventRef inEvent, void* 
               } 
               
              /* Are we closing any quartz device window ? */
-            if( GetWindowProperty(EventWindow, kRAppSignature, 'QRTZ', sizeof(int), NULL, &devnum) == noErr){
+/*            if( GetWindowProperty(EventWindow, kRAppSignature, 'QRTZ', sizeof(int), NULL, &devnum) == noErr){
                     sprintf(cmd,"dev.off(%d)",1+devnum);
                     consolecmd(cmd);
                     err= noErr; 
             }
-         
+  */       
            if( GetWindowProperty(EventWindow, 'RHLP', 'robj', sizeof(TXNObject), NULL, &RHlpObj) == noErr){
                     DestroyHelpWindow(EventWindow);
                     RemHelpWindow(EventWindow);
@@ -1738,36 +1793,44 @@ OSStatus DoCloseHandler( EventHandlerCallRef inCallRef, EventRef inEvent, void* 
             
             if( GetWindowProperty(EventWindow, 'RMAC', 'PKGB', sizeof(browser), NULL, &browser) == noErr){
                     CloseBrowsePkg();
-                    QuitApplicationEventLoop();
                     TXNSetTXNObjectControls(RConsoleInObject, false, 1, RReadWriteTag, RReadWriteData);
-                    EditingFinished = true;
+#ifndef NEWAQUAELOOP
+                    QuitApplicationEventLoop();
+#endif                    
+                    BrowsePkgFinished = true;
                     err= noErr; 
 
             }
 
             if( GetWindowProperty(EventWindow, 'RMAC', 'DMAN', sizeof(browser), NULL, &browser) == noErr){
                     CloseDataManager();
-                    QuitApplicationEventLoop();
                     TXNSetTXNObjectControls(RConsoleInObject, false, 1, RReadWriteTag, RReadWriteData);
-                    EditingFinished = true;
+                    DataManagerFinished = true;
+#ifndef NEWAQUAELOOP
+                    QuitApplicationEventLoop();
+#endif                    
                     err= noErr; 
 
             }
         
             if( GetWindowProperty(EventWindow, 'RMAC', 'PMAN', sizeof(browser), NULL, &browser) == noErr){
                     ClosePackageManager();
-                    QuitApplicationEventLoop();
                     TXNSetTXNObjectControls(RConsoleInObject, false, 1, RReadWriteTag, RReadWriteData);
-                    EditingFinished = true;
+                    PackageManagerFinished = true;
+#ifndef NEWAQUAELOOP
+                    QuitApplicationEventLoop();
+#endif                    
                     err= noErr; 
 
             }
 
             if( GetWindowProperty(EventWindow, 'RMAC', 'RDEY', sizeof(browser), NULL, &browser) == noErr){
                     CloseDataEntry();
-                    QuitApplicationEventLoop();
                     TXNSetTXNObjectControls(RConsoleInObject, false, 1, RReadWriteTag, RReadWriteData);
-                    EditingFinished = true;
+                    DataEntryFinished = true;
+#ifndef NEWAQUAELOOP
+                    QuitApplicationEventLoop();
+#endif                    
                     err= noErr; 
 
             }
@@ -1776,16 +1839,21 @@ OSStatus DoCloseHandler( EventHandlerCallRef inCallRef, EventRef inEvent, void* 
                     err = GetWindowProperty(EventWindow, 'REDT', 'chgs', sizeof(ItemCount), NULL, &changes);
                     TXNGetActionChangeCount(REdtObj,  kTXNAllCountMask, &newchanges);      
                     if( changes != newchanges ){
-                     userAction = WantToSave(EventWindow, NULL, NULL);
-                     if(userAction == kNavUserActionSaveChanges)
+                     GetWTitle( EventWindow, wintitle );
+                     CopyPascalStringToC(wintitle, winname);
+                     sprintf(cmd, "Do you want to save changes for \"%s\"?",winname);
+                     userAction = WantToSave(EventWindow, NULL, cmd);
+                     if(userAction == kAlertStdAlertOKButton)
                         SaveWindow(EventWindow,false);
                     }
-                    if((userAction != kNavUserActionCancel) || (changes == newchanges)){  
+                    if((userAction != kAlertStdAlertCancelButton) || (changes == newchanges)){  
                         DestroyEditWindow(EventWindow);
                         RemEditWindow(EventWindow);
-                        QuitApplicationEventLoop();
                         TXNSetTXNObjectControls(RConsoleInObject, false, 1, RReadWriteTag, RReadWriteData);
                         EditingFinished = true;
+#ifndef NEWAQUAELOOP
+                    QuitApplicationEventLoop();
+#endif                    
                      }
                     err= noErr; 
             } 
@@ -1869,9 +1937,14 @@ int Raqua_Edit(char *filename)
     
     rc = NewEditWindow(filename);
     
+#ifdef NEWAQUAELOOP
+    while(!EditingFinished)
+        ProcessOneEvent();
+#else
     QuitApplicationEventLoop();
-    
     RunApplicationEventLoop();
+#endif
+
     return 0;
 }
 
@@ -2102,7 +2175,8 @@ int NewHelpWindow(char *fileName, char *title, char *WinTitle)
     SetRect(&WinBounds, 400, 400, 400 +400, 400 + 400 ) ;
     
     
-     if( (err = CreateNewWindow( kDocumentWindowClass, kWindowStandardHandlerAttribute | kWindowStandardDocumentAttributes, &WinBounds, &HelpWindow) != noErr))
+     if( (err = CreateNewWindow( kDocumentWindowClass, kWindowStandardHandlerAttribute | 
+     kWindowStandardDocumentAttributes, &WinBounds, &HelpWindow) != noErr))
      goto fail;
     
     InstallStandardEventHandler( GetWindowEventTarget(HelpWindow));
@@ -2635,13 +2709,13 @@ void Raqua_CleanUp(SA_TYPE saveact, int status, int runLast)
     if(saveact == SA_SAVEASK) {
 	if(R_Interactive) {
 	    switch (WantToSave(ConsoleWindow,"Closing R Session","Save workspace image?")) {
-	    case kNavUserActionSaveChanges:
+	    case kAlertStdAlertOKButton:
 		saveact = SA_SAVE;
 		break;
-	    case kNavUserActionDontSaveChanges:
+	    case kAlertStdAlertOtherButton:
 		saveact = SA_NOSAVE;
 		break;
-	    case kNavUserActionCancel:
+	    case kAlertStdAlertCancelButton:
 		jump_to_toplevel();
 		break;
 
@@ -2721,9 +2795,9 @@ void CloseAllEditWindows(void){
                      ShowWindow( EditWindowsList[i] );
                      GetWTitle( EditWindowsList[i], wintitle );
                      CopyPascalStringToC(wintitle, winname);
-                     sprintf(msg, "Do you want to save changes for window %s?",winname);
-                     userAction = YesOrNot(NULL, msg,NULL,NULL);
-                     if(userAction == kNavUserActionSaveChanges)
+                     sprintf(msg, "Do you want to save changes for \"%s\"?",winname);
+                     userAction = YesOrNot(NULL, msg,"Save","Don't Save");
+                     if(userAction == kAlertStdAlertOKButton)
                         SaveWindow(EditWindowsList[i],false);
                     }
          }
@@ -2779,7 +2853,7 @@ pascal OSErr  HandleDoCommandLine (AppleEvent *theAppleEvent, AppleEvent* reply,
 
      
 	if ((err = AEGetParamPtr(theAppleEvent, keyDirectObject, typeChar, &returnedType,
-								CMDString, CMDLineSize, &actualSize)) != noErr)
+                                            CMDString, CMDLineSize, &actualSize)) != noErr)
 		return err;
 
 	/* check for missing parameters   */
@@ -2790,10 +2864,23 @@ pascal OSErr  HandleDoCommandLine (AppleEvent *theAppleEvent, AppleEvent* reply,
           CMDString[CMDLineSize] = '\0';    	/* Terminate the C string    */
     
         consolecmd(CMDString);
-                fprintf(stderr,"\n aestr=%s",CMDString);
-
+        
         return noErr;
 }
+
+
+
+void	ProcessOneEvent(void)
+{
+    EventRef theEvent;
+    EventTargetRef theTarget = GetEventDispatcherTarget();
+    
+    if(ReceiveNextEvent(0, NULL,kEventDurationForever,true,&theEvent)== noErr){
+            SendEventToEventTarget (theEvent, theTarget);
+            ReleaseEvent(theEvent);
+    }
+}
+
 
 #endif /* HAVE_AQUA */
 
