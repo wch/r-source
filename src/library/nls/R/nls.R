@@ -1,4 +1,4 @@
-### $Id: nls.R,v 1.11 2001/05/07 07:29:37 hornik Exp $
+### $Id: nls.R,v 1.12 2001/05/25 12:26:22 maechler Exp $
 ###
 ###            Nonlinear least squares for R
 ###
@@ -229,7 +229,7 @@ nlsModel.plinear <- function( form, data, start ) {
                getPred(eval(form[[3]], env = Env))
            })
     class(m) <- c("nlsModel.plinear", "nlsModel")
-    m$conv();
+    m$conv()
     on.exit( remove( data, i, m, marg, n, p, start, temp, gradSetArgs) )
     m
 }
@@ -294,7 +294,7 @@ nlsModel <- function( form, data, start ) {
     QR <- qr( attr( rhs, "gradient" ) )
     qrDim <- min( dim( QR$qr ) )
     if( QR$rank < qrDim)
-      stop( "singular gradient matrix at initial parameter estimates" );
+      stop("singular gradient matrix at initial parameter estimates")
 
     getPars.noVarying <- function()
       unlist( setNames( lapply( names( ind ), get, envir = env ),
@@ -562,8 +562,7 @@ predict.nls <-
     object$m$predict(newdata)
 }
 
-fitted.nls <-
-  function(object, ...)
+fitted.nls <- function(object, ...)
 {
     val <- as.vector(object$m$fitted())
 
@@ -575,11 +574,9 @@ fitted.nls <-
     val
 }
 
-formula.nls <- function(object)
-  object$m$formula()
+formula.nls <- function(object) object$m$formula()
 
-residuals.nls <-
-  function(object, type = c("response", "pearson"), ...)
+residuals.nls <- function(object, type = c("response", "pearson"), ...)
 {
     type <- match.arg(type)
     val <- as.vector(object$m$resid())
@@ -597,15 +594,13 @@ residuals.nls <-
     val
 }
 
-logLik <-
-  function(object, ...) UseMethod("logLik")
+## logLik -- generic now in base
 
-logLik.nls <-
-  function(object, REML = FALSE)
+logLik.nls <- function(object, REML = FALSE)
 {
-    if (REML) {
+    if (REML)
         stop("Cannot calculate REML log-likelihood for nls objects")
-    }
+
     res <- resid(object)
     N <- length(res)
     if(is.null(w <- object$weights)) {
@@ -618,8 +613,7 @@ logLik.nls <-
     val
 }
 
-df.residual.nls <-
-  function(object, ...)
+df.residual.nls <- function(object, ...)
 {
     return(length(resid(object)) - length(coef(object)))
 }
