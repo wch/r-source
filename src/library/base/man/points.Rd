@@ -31,8 +31,8 @@ points.default(x, y=NULL, type="p", pch=1, col="black", bg=NA, cex=1, \dots)
   }
   \item{col}{color code or name, see \code{\link{colors}},
     \code{\link{palette}}.}
-  \item{bg}{background (``fill'') color for open plot symbols}
-  \item{cex}{character expansion}
+  \item{bg}{background (``fill'') color for plot symbols \code{21:25}.}
+  \item{cex}{character expansion factor.}
   \item{\dots}{Further graphical parameters (see \code{\link{plot.xy}}
     and \code{\link{par}}) may also be supplied as arguments.}
 }
@@ -43,6 +43,12 @@ points.default(x, y=NULL, type="p", pch=1, col="black", bg=NA, cex=1, \dots)
 }
 \details{
   Graphical parameters are permitted as arguments to this function.
+
+  Values of \code{pch} less than 32 are interpreted as symbols not
+  characters even if there are characters encoded in positions below
+  32.  Numeric values of \code{pch} of 32 or more are interpreted as the
+  character at that position in the platform's native encoding except 46
+  (\code{"."}) which is always drawn as a tiny square.
 }
 \seealso{
   \code{\link{plot}}, \code{\link{lines}}, and the underlying
