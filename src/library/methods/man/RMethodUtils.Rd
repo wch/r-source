@@ -54,7 +54,7 @@
 getGeneric(f, mustFind=FALSE, where)
 
 getGroup(fdef, recursive, where)
-getGroupMembers(f, recursive = FALSE, character = TRUE)
+getGroupMembers(group, recursive = FALSE, character = TRUE)
 
 getMethodsMetaData(f, where)
 assignMethodsMetaData (f, value, fdef, where, deflt)
