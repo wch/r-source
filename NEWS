@@ -92,26 +92,24 @@ NEW FEATURES
 
    o	Changes in package ts:
 
-	-  arima0() now handles missing values internally so the
-	   `na.action' argument has been removed: missing values are also
-	   accepted in the `xreg' argument.
+	-  More emphasis on handling time series with missing values
+	   where possible, for example in acf() and in the
+	   ARIMA-fitting functions.
 
-	   There is a new arguments `fixed' to allow some of the
-	   parameters to be held fixed and `init' to specify
-	   initial values.
-
+	-  New function arima() which will replace arima0() in due
+           course.  Meanwhile, arima0() has been in enhanced in
+           several ways.  Missing values are accepted.  Parameter
+           values can be initialized and held fixed during fitting.
 	   There is a new argument `method' giving the option to use
 	   conditional-sum-of-squares estimation.
 
 	-  New function arima.sim().
 
-	-  Function acf() now accepts missing values.
-
 	-  New datasets Nile, UKgas and WWWusage, and a expanded
            version of UKDriverDeaths (as a multiple time series Seatbelts).
 
-	-  New generic function tsdiag() and an `arima0' method for
-	   diagnostic plots.
+	-  New generic function tsdiag() and methods for arima and arima0,
+	   to produce diagnostic plots.  Supersedes arima0.diag.
 
 	-  New functions ARMAacf() and ARMAtoMA() to compute
            theoretical quantities for an ARMA process.
