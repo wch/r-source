@@ -161,7 +161,13 @@ double qgamma(double p, double alpha, double scale, int lower_tail, int log_p)
 	if(fabs(q - ch) < EPS2*ch)
 	    goto END;
     }
-    ML_ERROR(ME_PRECISION);/* no convergence in MAXIT iterations */
+/* no convergence in MAXIT iterations */
+#ifdef DEBUG_q
+    MATHLIB_WARNING3("qgamma(%g) not converged in %d iterations; rel.ch=%g\n",
+		     p, MAXIT, ch/fabs(q - ch));
+#else
+    ML_ERROR(ME_PRECISION);/* does nothing in R ! */
+#endif
  END:
     return 0.5*scale*ch;
 }
