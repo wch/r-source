@@ -11,7 +11,8 @@ arima.sim(n, model, rand.gen = rnorm, innov = rand.gen(n, ...),
 \arguments{
   \item{n}{length of output series.}
   \item{model}{A list with component \code{ar} and/or \code{ma} giving
-    the AR and MA coeffcients respectively.}
+    the AR and MA coeffcients respectively.  Optionally a component
+    \code{order} can be used.}
   \item{rand.gen}{optional: a function to generate the innovations.}
   \item{innov}{an optional times series of innovations.  If not
     provided, \code{rand.gen} is used.}
@@ -22,20 +23,27 @@ arima.sim(n, model, rand.gen = rnorm, innov = rand.gen(n, ...),
     can be specified by \code{sd}.}
 }
 \details{
-  Only ARMA models are currently implemented. \code{\link{diffinv}} can
-  easily be used to integrate them to form ARMA simulations.
+  The ARMA model is checked for stationarity.
 
-  The model is checked for stationarity.
+  ARIMA models are specified via the \code{order} component of
+  \code{model}, in the same way as for \code{\link{arima}}.  Other
+  aspects of the \code{order} component are ignored.
 }
 \value{
   A time-series object of class \code{"ts"}.
 }
-
+\seealso{
+  \code{\link{arima.sim}}
+}
 \examples{
-arima.sim(63, list(ar = c(0.8897, -0.4858), ma = c(-0.2279, 0.2488)),
+arima.sim(n = 63, list(ar = c(0.8897, -0.4858), ma = c(-0.2279, 0.2488)),
           sd = sqrt(0.1796))
 # mildly long-tailed
-arima.sim(63, list(ar=c(0.8897, -0.4858), ma=c(-0.2279, 0.2488)),
+arima.sim(n = 63, list(ar=c(0.8897, -0.4858), ma=c(-0.2279, 0.2488)),
           rand.gen = function(n, ...) sqrt(0.1796) * rt(n, df = 5))
+
+# An ARIMA simulation
+ts.sim <- arima.sim(list(order = c(1,1,0), ar = 0.7), n = 200)
+ts.plot(ts.sim)
 }
 \keyword{ts}
