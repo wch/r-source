@@ -23,7 +23,7 @@ lsfit <- function(x, y, wt=NULL, intercept=TRUE, tolerance=1e-07, yname=NULL)
     good <- complete.cases(x, y, wt)
     dimy <- dim(as.matrix(y))
     if( any(!good) ) {
-	warning(paste(sum(!good), "missing values deleted"))
+	warning(sum(!good), " missing values deleted")
 	x <- as.matrix(x)[good, ]
 	y <- as.matrix(y)[good, ]
 	wt <- wt[good]
@@ -36,16 +36,16 @@ lsfit <- function(x, y, wt=NULL, intercept=TRUE, tolerance=1e-07, yname=NULL)
     nry <- NROW(y)
     ncy <- NCOL(y)
     nwts <- length(wt)
-    if(nry != nrx) stop(paste("X matrix has", nrx, "responses, Y",
-       "has", nry, "responses."))
-    if(nry < ncx) stop(paste(nry, "responses, but only", ncx, "variables"))
+    if(nry != nrx) stop("X matrix has ", nrx, " responses, Y ",
+       " has ", nry, " responses.")
+    if(nry < ncx) stop(nry, " responses, but only ", ncx, " variables")
 
     ## check weights if necessary
 
     if( !is.null(wt) ) {
 	if(any(wt < 0)) stop("negative weights not allowed")
-	if(nwts != nry) stop(paste("Number of weights =", nwts,
-	   ", should equal", nry, "(number of responses)"))
+	if(nwts != nry) stop("number of weights = ", nwts,
+	   ", should equal ", nry, " (number of responses)")
 	wtmult <- wt^0.5
 	if( any(wt==0) ) {
 	    xzero <- as.matrix(x)[wt==0, ]
@@ -147,8 +147,7 @@ ls.diag <- function(ls.out)
 
     if( !is.null(ls.out$wt) ) {
 	if( any(ls.out$wt[good] == 0) )
-	    warning(paste("observations with 0 weight not used in",
-			  "calculating standard deviation"))
+	    warning("observations with 0 weight not used in calculating standard deviation")
 	resids <- resids * ls.out$wt[good]^0.5
     }
 

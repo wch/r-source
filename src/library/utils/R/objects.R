@@ -70,9 +70,8 @@ methods <- function (generic.function, class)
         if(!any(generic.function == knownGenerics)) {
             truegf <- findGeneric(generic.function, parent.frame())
             if(nchar(truegf) && truegf != generic.function) {
-                warning(paste("Generic", sQuote(generic.function),
-                              "dispatches methods for generic",
-                              sQuote(truegf)))
+                warning("Generic function ", sQuote(generic.function),
+                        " dispatches methods for generic ", sQuote(truegf))
                 generic.function <- truegf
             }
         }

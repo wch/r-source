@@ -84,10 +84,9 @@ contr.treatment <-
     diag(contr) <- 1
     if(contrasts) {
 	if(n < 2)
-	    stop(paste("Contrasts not defined for", n - 1,
-		       "degrees of freedom"))
+	    stop("contrasts not defined for ", n - 1, " degrees of freedom")
 	if (base < 1 | base > n)
-	    stop("Baseline group number out of range")
+	    stop("baseline group number out of range")
 	contr <- contr[, -base, drop = FALSE]
     }
     contr
@@ -99,7 +98,7 @@ contr.sum <-
     if (length(n) <= 1) {
 	if (is.numeric(n) && length(n) == 1 && n > 1)
 	    levels <- 1:n
-	else stop("Not enough degrees of freedom to define contrasts")
+	else stop("not enough degrees of freedom to define contrasts")
     } else levels <- n
     lenglev <- length(levels)
     if (contrasts) {

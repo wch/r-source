@@ -47,8 +47,7 @@ bug.report <- function(subject = "", ccaddress = Sys.getenv("USER"),
     }
     else if(method == "mailx"){
 
-        if(missing(subject))
-            stop("Subject missing")
+        if(missing(subject)) stop("'subject' missing")
 
 	body <- gsub("\\\\n", "\n", body)
 	cat(body, file=file, append=FALSE)

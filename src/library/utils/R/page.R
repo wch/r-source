@@ -18,5 +18,5 @@ page <- function(x, method = c("dput", "print"), ...)
         }
 	file.show(file, title = subx, delete.file = TRUE, ...)
     } else
-	stop(paste("no object named \"", subx, "\" to edit",sep=""))
+	stop("no object named ", sQuote(subx), " to edit")
 }

@@ -62,7 +62,7 @@ eigen <- function(x, symmetric, only.values = FALSE, EISPACK = FALSE)
 			  ierr = integer(1),
                           PACKAGE="base")
 	    if (z$ierr)
-		stop(paste("ch returned code ", z$ierr, " in eigen"))
+		stop("ch returned code ", z$ierr, " in eigen")
 	    if(!only.values)
 		z$vectors <- matrix(complex(re=z$vectors,
 					    im=z$ivectors), nc=n)
@@ -80,7 +80,7 @@ eigen <- function(x, symmetric, only.values = FALSE, EISPACK = FALSE)
 			  ierr = integer(1),
                           PACKAGE="base")
 	    if (z$ierr)
-		stop(paste("rs returned code ", z$ierr, " in eigen"))
+		stop("rs returned code ", z$ierr, " in eigen")
 	}
 	ord <- sort.list(z$values, decreasing = TRUE)
     }
@@ -104,7 +104,7 @@ eigen <- function(x, symmetric, only.values = FALSE, EISPACK = FALSE)
 			  ierr = integer(1),
                           PACKAGE="base")
 	    if (z$ierr)
-		stop(paste("cg returned code ", z$ierr, " in eigen"))
+		stop("cg returned code ", z$ierr, " in eigen")
 	    z$values <- complex(re=z$values,im=z$ivalues)
 	    if(!only.values)
 		z$vectors <- matrix(complex(re=z$vectors,
@@ -124,7 +124,7 @@ eigen <- function(x, symmetric, only.values = FALSE, EISPACK = FALSE)
 			  ierr = integer(1),
                           PACKAGE="base")
 	    if (z$ierr)
-		stop(paste("rg returned code ", z$ierr, " in eigen"))
+		stop("rg returned code ", z$ierr, " in eigen")
 	    ind <- z$ivalues > 0
 	    if(any(ind)) {#- have complex (conjugated) values
 		ind <- seq(n)[ind]

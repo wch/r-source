@@ -25,7 +25,7 @@ function(name = "anRpackage", list, environment = .GlobalEnv,
     cat("Creating directories ...\n")
     ## Make the directories
     if(file.exists(file.path(path,name)) && !force)
-        stop(paste("Directory", name, "exists."))
+        stop("Directory ", sQuote(name), " already exists")
 
     safe.dir.create(file.path(path, name))
     safe.dir.create(file.path(path, name, "man"))

@@ -38,23 +38,23 @@ splineDesign <-
     function(knots, x, ord = 4, derivs = integer(nx), outer.ok = FALSE)
 {
     knots <- sort(as.numeric(knots))
-    if((nk <- length(knots)) <= 0) stop("must have at least `ord' knots")
+    if((nk <- length(knots)) <= 0) stop("must have at least 'ord' knots")
     x <- as.numeric(x)
     nx <- length(x)
     if(length(derivs) != nx)
 	stop("length of derivs must match length of x")
     if(ord > nk || ord < 1)
-	stop("`ord' must be positive integer, at most the number of knots")
+	stop("'ord' must be positive integer, at most the number of knots")
 
     ## The x test w/ sorted knots assumes ord <= nk+1-ord, or nk >= 2*ord-1:
     if(!outer.ok && nk < 2*ord-1)
         stop("need at least 2*ord -1 (=", 2*ord -1, ") knots")
 
     o1 <- ord - 1
-### FIXME: the `outer.ok && need.outer' handling would more efficiently happen
+### FIXME: the 'outer.ok && need.outer' handling would more efficiently happen
 ###        in the underlying C code - with some programming effort though..
     if(need.outer <- any(out.x <- x < knots[ord] | knots[nk - o1] < x)) {
-        if(outer.ok) { ## x[] is allowed to be `anywhere'
+        if(outer.ok) { ## x[] is allowed to be 'anywhere'
             ## extend knots set "temporarily"
             in.x <- knots[1] < x & x < knots[nk]
 	    knots <- knots[c(rep.int(1:1, o1), 1:nk, rep.int(nk, o1))]
@@ -94,7 +94,7 @@ interpSpline <-
 interpSpline.default <-
     function(obj1, obj2, bSpline = FALSE, period = NULL, na.action = na.fail)
 {
-    ord <- 4 # spline order -- future: want to use other `order'/`degree'!
+    ord <- 4 # spline order -- future: want to use other 'order'/'degree'!
     deg <- ord - 1
 
     frm <- na.action(data.frame(x = as.numeric(obj1), y = as.numeric(obj2)))
@@ -103,7 +103,7 @@ interpSpline.default <-
     x <- frm$x
     if(any(duplicated(x)))
 	stop("values of x must be distinct")
-    ## `deg' extra knots (shifted) out on each side :
+    ## 'deg' extra knots (shifted) out on each side :
     knots <- c(x[1:deg] + x[1] - x[ord], x,
 	       x[ndat + (1:deg) - deg] + x[ndat] - x[ndat - deg])
     derivs <- c(2, integer(ndat), 2) # 2nd derivs coerced to 0 in solve() below
@@ -185,14 +185,14 @@ periodicSpline.default <-
     y <- as.numeric(obj2)
     lenx <- length(x)
     if(lenx != length(y))
-	stop("Lengths of x and y must match")
+	stop("lengths of x and y must match")
     ind <- order(x)
     x <- x[ind]
     if(length(unique(x)) != lenx)
 	stop("values of x must be distinct")
     if(any((x[-1] - x[ - lenx]) <= 0))
-	stop("Values of x must be strictly increasing")
-    if(ord < 2) stop("`ord' must be >= 2")
+	stop("values of x must be strictly increasing")
+    if(ord < 2) stop("'ord' must be >= 2")
     if(!missing(knots)) {
 	period <- knots[length(knots) + 1 - ord] - knots[1]
     }
@@ -200,7 +200,7 @@ periodicSpline.default <-
 	knots <- c(x[(lenx - (ord - 2)):lenx] - period, x, x[1:ord] + period)
     }
     if((x[lenx] - x[1]) >= period)
-	stop("The range of x values exceeds one period")
+	stop("the range of x values exceeds one period")
     y <- y[ind]
     coeff.mat <- splineDesign(knots, x, ord)
     sys.mat <- coeff.mat[, (1:lenx)]
@@ -221,7 +221,7 @@ periodicSpline.formula <- function(obj1, obj2, knots, period = 2 * pi, ord = 4)
     if (length(form) != 3)
 	stop("formula must be of the form \"y ~ x\"")
     local <- if (missing(obj2)) sys.parent(1) else as.data.frame(obj2)
-    ## `missing(knots)' is transfered :
+    ## 'missing(knots)' is transfered :
     value <-  periodicSpline(as.numeric(eval(form[[3]], local)),
 			     as.numeric(eval(form[[2]], local)),
 			     knots = knots, period = period, ord = ord)
@@ -335,7 +335,7 @@ predict.polySpline <- function(object, x, nseg = 50, deriv = 0, ...)
     delx <- x - knots[i]
     deriv <- as.integer(deriv)[1]
     if(deriv < 0 || deriv >= ord)
-	stop(paste("deriv must be between 0 and", ord - 1))
+	stop("deriv must be between 0 and ", ord - 1)
     while(deriv > 0) {
 	ord <- ord - 1
 	coeff <- t(t(coeff[, -1]) * (1:ord))
@@ -356,7 +356,7 @@ predict.bSpline <- function(object, x, nseg = 50, deriv = 0, ...)
 	stop("knot positions must be non-decreasing")
     ord <- splineOrder(object)
     if(deriv < 0 || deriv >= ord)
-	stop(paste("deriv must be between 0 and", ord - 1))
+	stop("deriv must be between 0 and ", ord - 1)
     ncoeff <- length(coeff <- coef(object))
     if(missing(x)) {
 	x <- seq(knots[ord], knots[ncoeff + 1], length = nseg + 1)
@@ -390,7 +390,7 @@ predict.nbSpline <- function(object, x, nseg = 50, deriv = 0, ...)
     while(deriv) {
 	ord <- ord - 1
 	## could be simplified when coeff has <= 2 non-zero cols:
-	coeff <- t(t(coeff[, -1]) * (1:ord))# 1:ord = the `k' in k* x^{k-1}
+	coeff <- t(t(coeff[, -1]) * (1:ord))# 1:ord = the 'k' in k* x^{k-1}
 	deriv <- deriv - 1
     }
     nc <- ncol(coeff)
@@ -438,7 +438,7 @@ predict.npolySpline <- function(object, x, nseg = 50, deriv = 0, ...)
     while(deriv) {
 	ord <- ord - 1
 	## could be simplified when coeff has <= 2 non-zero cols:
-	coeff <- t(t(coeff[, -1]) * (1:ord))# 1:ord = the `k' in k* x^{k-1}
+	coeff <- t(t(coeff[, -1]) * (1:ord))# 1:ord = the 'k' in k* x^{k-1}
 	deriv <- deriv - 1
     }
     nc <- ncol(coeff)

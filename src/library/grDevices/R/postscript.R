@@ -26,9 +26,9 @@ check.options <-
 {
     lnew <- length(new)
     if(lnew != length(newnames <- names(new)))
-	stop(paste("invalid arguments in \"",
-		   deparse(sys.call(sys.parent())),
-		   "\" (need NAMED args)", sep=""))
+	stop("invalid arguments in ",
+		   sQuote(deparse(sys.call(sys.parent()))),
+		   " (need named args)")
     if(!is.character(name.opt))
 	stop("'name.opt' must be character, name of an existing list")
     if(reset) {
@@ -39,18 +39,18 @@ check.options <-
 ##-		stop(paste("Cannot reset '", name.opt,
 ##-			"'  since it exists only once in search()!\n", sep=""))
 
-	} else stop(paste("Cannot reset non-existing '", name.opt, "'", sep=""))
+	} else stop("Cannot reset non-existing ", sQuote(name.opt))
     }
     old <- get(name.opt, envir=envir)
     if(!is.list(old))
-	stop(paste("invalid options in `",name.opt,"'",sep=""))
+	stop("invalid options in ", sQuote(name.opt))
     oldnames <- names(old)
     if(lnew > 0) {
 	matches <- pmatch(newnames, oldnames)
 	if(any(is.na(matches)))
-	    stop(paste("invalid argument name(s) `",
-		       paste(newnames[is.na(matches)], collapse=", "),
-		       "' in \"", deparse(sys.call(sys.parent())),"\"",sep=""))
+	    stop("invalid argument name(s) ",
+                 sQuote(paste(newnames[is.na(matches)], collapse=", ")),
+                 " in ", sQuote( deparse(sys.call(sys.parent()))) )
 ##-- This does not happen: ambiguities are plain "NA" here:
 ##-	else if(any(matches==0))
 ##-	    stop(paste("ambiguous argument name(s) `",
@@ -172,7 +172,7 @@ pdf <- function (file = ifelse(onefile, "Rplots.pdf", "Rplot%03d.pdf"),
                                "ISOLatin1.enc")
     if(!missing(family)) {
         if (!is.character(family) || length(family) != 1)
-            stop("Invalid family argument")
+            stop("invalid family argument")
         # If family has been defined as device-independent
         # R graphics family (i.e., it can be found in postscriptFonts)
         # then map to postscript font family
@@ -188,7 +188,7 @@ pdf <- function (file = ifelse(onefile, "Rplots.pdf", "Rplot%03d.pdf"),
     if (version %in% versions)
         version <- as.integer(strsplit(version, "[.]")[[1]])
     else
-        stop("Invalid PDF version")
+        stop("invalid PDF version")
     .External("PDF",
               file, old$family, old$encoding, old$bg, old$fg,
               width, height, old$pointsize, old$onefile, title,
@@ -236,7 +236,7 @@ pdf <- function (file = ifelse(onefile, "Rplots.pdf", "Rplot%03d.pdf"),
 assign(".PostScript.Fonts", list(), envir = .PSenv)
 
 psFontError <- function(errDesc) {
-    stop(paste("Invalid", errDesc, "in PostScript font specification"))
+    stop("invalid ", errDesc, " in PostScript font specification")
 }
 
 # Check that the font has the correct structure and information
@@ -258,7 +258,7 @@ checkPSFont <- function(font) {
 checkFontInUse <- function(names) {
     for (i in names)
         if (.Call("Type1FontInUse", i, PACKAGE = "grDevices"))
-            stop(paste("Font", i, "already in use"))
+            stop("font" , i, " already in use")
 }
 
 setPSFonts <- function(fonts, fontNames) {
@@ -299,12 +299,12 @@ postscriptFonts <- function(...) {
         nnames <- length(fontNames)
         if (nnames == 0) {
             if (!all(sapply(fonts, is.character)))
-                stop("Invalid arguments in postscriptFonts (must be font names)")
+                stop("invalid arguments in postscriptFonts (must be font names)")
             else
                 get(".PostScript.Fonts", envir=.PSenv)[unlist(fonts)]
         } else {
             if (ndots != nnames)
-                stop("Invalid arguments in postscriptFonts (need NAMED args)")
+                stop("invalid arguments in postscriptFonts (need named args)")
             setPSFonts(fonts, fontNames)
         }
     }

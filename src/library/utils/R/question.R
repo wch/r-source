@@ -22,9 +22,9 @@
         topic <- topicName(e1, e2)
         doHelp <- .tryHelp(topic)
         if(inherits(doHelp, "try-error")) {
-            stop(paste("no documentation of type \"", e1,
-                       "\" and topic \"", e2,
-                       "\" (or error in processing help)", sep=""))
+            stop("no documentation of type ", sQuote(e1),
+                 " and topic ", sQuote(e2),
+                 " (or error in processing help)")
         }
     }
 }
@@ -76,7 +76,7 @@ topicName <- function(type, topic)
                 ## passing it to selectMethod is closer to the semantics
                 ## of the "real" function call than the code below.
                 ## But, seems to need a change to eval.c and a flag to
-                ## the evaluator.  
+                ## the evaluator.
                 if(doEval || !simple) {
                     argVal <- try(eval(argExpr, envir))
                     if(is(argVal, "try-error"))

@@ -100,7 +100,7 @@ save.image <- function (file = ".RData", version = NULL, ascii = FALSE,
     if (safe)
         if (! file.rename(outfile, file)) {
             on.exit()
-            stop(paste("image could not be renamed and is left in", outfile))
+            stop("image could not be renamed and is left in ", outfile)
         }
     on.exit()
 }

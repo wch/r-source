@@ -12,8 +12,8 @@ getNamespace <- function(name) {
                     name <- name[1]
                       if (name  %in% c("ctest","eda","modreg","mva","nls",
                                        "stepfun","ts")) {
-                          warning(paste("package", sQuote(name),
-                                        "has been merged into 'stats'"),
+                          warning("package ", sQuote(name),
+                                  " has been merged into 'stats'",
                                   call. = FALSE)
                           return(getNamespace("stats"))
                       }
@@ -64,9 +64,8 @@ getExportedValue <- function(ns, name) {
     getInternalExportName <- function(name, ns) {
         exports <- getNamespaceInfo(ns, "exports")
         if (! exists(name, env = exports, inherits = FALSE))
-            stop(paste(sQuote(name), "is not an exported object from",
-                       sQuote(paste("namespace",
-                                    getNamespaceName(ns), sep=":"))),
+            stop(sQuote(name), " is not an exported object from ",
+                 sQuote(paste("namespace", getNamespaceName(ns), sep=":")),
                  call. = FALSE)
         get(name, env = exports, inherits = FALSE)
     }
@@ -92,8 +91,7 @@ attachNamespace <- function(ns, pos = 2, dataPath = NULL) {
         if (exists(hookname, envir = env, inherits = FALSE)) {
             fun <- get(hookname, envir = env, inherits = FALSE)
             if (! is.null(try({ fun(...); NULL})))
-                stop(paste(hookname, "failed in attachNamespace"),
-                     call. = FALSE)
+                stop(hookname, " failed in attachNamespace", call. = FALSE)
         }
     }
     ns <- asNamespace(ns, base.OK = FALSE)
@@ -124,7 +122,7 @@ loadNamespace <- function (package, lib.loc = NULL,
     package <- as.character(package)[[1]]
 
     # check for cycles
-    dynGet <- function(name, notFound = stop(paste(name, "not found"))) {
+    dynGet <- function(name, notFound = stop(name, " not found")) {
         n <- sys.nframe()
         while (n > 1) {
             n <- n - 1
@@ -147,9 +145,8 @@ loadNamespace <- function (package, lib.loc = NULL,
             if (exists(hookname, envir = env, inherits = FALSE)) {
                 fun <- get(hookname, envir = env, inherits = FALSE)
                 if (! is.null(try({ fun(...); NULL})))
-                    stop(paste(hookname, "failed in loadNamespace",
-                               "for", sQuote(pkgname)),
-                         call. = FALSE)
+                    stop(hookname, " failed in loadNamespace for ",
+                         sQuote(pkgname), call. = FALSE)
             }
         }
         runUserHook <- function(pkgname, pkgpath) {
@@ -192,12 +189,11 @@ loadNamespace <- function (package, lib.loc = NULL,
         # find package and check it has a name space
         pkgpath <- .find.package(package, lib.loc, quiet = TRUE)
         if (length(pkgpath) == 0)
-            stop(paste("There is no package called", sQuote(package)))
+            stop("there is no package called ", sQuote(package))
         package.lib <- dirname(pkgpath)
         package<- basename(pkgpath) # need the versioned name
         if (! packageHasNamespace(package, package.lib))
-            stop(paste("package", sQuote(package),
-                       "does not have a name space"))
+            stop("package ", sQuote(package), " does not have a name space")
 
         # create namespace; arrange to unregister on error
         nsInfoFilePath <- file.path(pkgpath, "Meta", "nsInfo.rds")
@@ -248,7 +244,7 @@ loadNamespace <- function (package, lib.loc = NULL,
             if(inherits(res, "try-error"))
                 stop("Unable to load R code in package ", sQuote(package),
                      call. = FALSE)
-        } else warning(paste("Package ", sQuote(package), "contains no R code"))
+        } else warning("package ", sQuote(package), " contains no R code")
 
         ## partial loading stops at this point
         ## -- used in preparing for lazy-loading
@@ -346,7 +342,7 @@ loadNamespace <- function (package, lib.loc = NULL,
 }
 
 loadingNamespaceInfo <- function() {
-    dynGet <- function(name, notFound = stop(paste(name, "not found"))) {
+    dynGet <- function(name, notFound = stop(name, " not found")) {
         n <- sys.nframe()
         while (n > 1) {
             n <- n - 1
@@ -364,7 +360,7 @@ saveNamespaceImage <- function (package, rdafile, lib.loc = NULL,
                                 compress = TRUE)
 {
     if (! is.null(.Internal(getRegisteredNamespace(as.name(package)))))
-        stop(paste("name space", sQuote(package), "is loaded"));
+        stop("name space ", sQuote(package), " is loaded");
     ns <- loadNamespace(package, lib.loc, keep.source, TRUE, TRUE)
     vars <- ls(ns, all = TRUE)
     vars <- vars[vars != ".__NAMESPACE__."]
@@ -401,8 +397,8 @@ unloadNamespace <- function(ns) {
     users <- getNamespaceUsers(ns)
     print(ns)
     if (length(users) != 0)
-        stop(paste("name space", sQuote(getNamespaceName(ns)),
-                   "still used by:", paste(sQuote(users), collapse = ", ")))
+        stop("name space ", sQuote(getNamespaceName(ns)),
+             "is still used by: ", paste(sQuote(users), collapse = ", "))
     nspath <- getNamespaceInfo(ns, "path")
     hook <- getHook(packageEvent(nsname, "onUnload")) # might be list()
     for(fun in rev(hook)) try(fun(nsname, nspath))
@@ -412,7 +408,7 @@ unloadNamespace <- function(ns) {
 }
 
 .Import <- function(...) {
-    dynGet <- function(name, notFound = stop(paste(name, "not found"))) {
+    dynGet <- function(name, notFound = stop(name, " not found")) {
         n <- sys.nframe()
         while (n > 1) {
             n <- n - 1
@@ -431,7 +427,7 @@ unloadNamespace <- function(ns) {
 }
 
 .ImportFrom <- function(name, ...) {
-    dynGet <- function(name, notFound = stop(paste(name, "not found"))) {
+    dynGet <- function(name, notFound = stop(name, " not found")) {
         n <- sys.nframe()
         while (n > 1) {
             n <- n - 1
@@ -450,7 +446,7 @@ unloadNamespace <- function(ns) {
 }
 
 .Export <- function(...) {
-    dynGet <- function(name, notFound = stop(paste(name, "not found"))) {
+    dynGet <- function(name, notFound = stop(name, " not found")) {
         n <- sys.nframe()
         while (n > 1) {
             n <- n - 1
@@ -474,7 +470,7 @@ unloadNamespace <- function(ns) {
 }
 
 .S3method <- function(generic, class, method) {
-    dynGet <- function(name, notFound = stop(paste(name, "not found"))) {
+    dynGet <- function(name, notFound = stop(name, " not found")) {
         n <- sys.nframe()
         while (n > 1) {
             n <- n - 1
@@ -599,7 +595,7 @@ namespaceImportFrom <- function(self, ns, vars) {
     }
     for (n in impnames)
         if (exists(n, env = impenv, inherits = FALSE))
-            warning(paste(msg, n))
+            warning(msg, " ", n)
     importIntoEnv(impenv, impnames, ns, impvars)
     if (register) {
         if (missing(vars)) addImports(self, ns, TRUE)
@@ -685,7 +681,7 @@ namespaceExport <- function(ns, vars) {
         undef <- undef[! sapply(undef, exists, env = ns)]
         if (length(undef) != 0) {
             undef <- do.call("paste", as.list(c(undef, sep=", ")))
-            stop(paste("undefined exports:", undef))
+            stop("undefined exports :", undef)
         }
         if(.isMethodsDispatchOn()) .mergeExportMethods(new, ns)
         addExports(ns, new)
@@ -720,7 +716,7 @@ parseNamespaceFile <- function(package, package.lib, mustExist = TRUE) {
     if (file.exists(nsFile))
         directives <- parse(nsFile)
     else if (mustExist)
-        stop(paste("package", sQuote(package), "has no NAMESPACE file"))
+        stop("package ", sQuote(package), " has no NAMESPACE file")
     else directives <- NULL
     exports <- character(0)
     exportPatterns <- character(0)
@@ -784,14 +780,14 @@ parseNamespaceFile <- function(package, package.lib, mustExist = TRUE) {
                S3method = {
                    spec <- e[-1]
                    if (length(spec) != 2 && length(spec) != 3)
-                       stop(paste("bad S3method directive:", deparse(e)),
+                       stop("bad S3method directive: ", deparse(e),
                             call. = FALSE)
                    nS3 <<- nS3 + 1;
                    if(nS3 > 500)
                        stop("too many S3method directives", call. = FALSE)
                    S3methods[nS3, 1:length(spec)] <<- as.character(spec)
                },
-               stop(paste("unknown namespace directive:", deparse(e)),
+               stop("unknown namespace directive: ", deparse(e),
                     call. = FALSE)
                )
     }

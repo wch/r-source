@@ -5,8 +5,7 @@ aov <- function(formula, data = NULL, projections = FALSE, qr = TRUE,
     else terms(formula, "Error", data = data)
     indError <- attr(Terms, "specials")$Error
     if(length(indError) > 1)
-        stop(paste("there are", length(indError),
-                   "Error terms: only 1 is allowed"))
+        stop("there are ", length(indError), "Error terms: only 1 is allowed")
     lmcall <- Call <- match.call()
     lmcall[[1]] <- as.name("lm")
     lmcall$singular.ok <- TRUE
@@ -542,8 +541,8 @@ se.contrast.aov <-
             sapply(contrast.obj, function(x)
                {
                    if(!is.logical(x))
-                       stop(paste("Each element of", substitute(contrasts.list),
-                                  " must be\nlogical"))
+                       stop("Each element of ", substitute(contrasts.list),
+                            " must be logical")
                    x/sum(x)
                })
         contrast <- contrast %*% coef
@@ -634,9 +633,9 @@ se.contrast.aovlist <-
             sapply(contrast.obj,
                    function(x) {
                        if(!is.logical(x))
-                           stop(paste("Each element of",
-                                      substitute(contrast.obj),
-                                      " must be\n logical"))
+                           stop("Each element of ",
+                                substitute(contrast.obj),
+                                " must be logical")
                        x/sum(x)
                    })
         contrast <- contrast %*% coef

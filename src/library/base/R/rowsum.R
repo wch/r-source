@@ -5,7 +5,7 @@ rowsum.default <-function(x,group,reorder=TRUE,...){
     if (!is.numeric(x))
         stop("x must be numeric")
     if (length(group) != NROW(x))
-        stop("Incorrect length for 'group'")
+        stop("incorrect length for 'group'")
     if (any(is.na(group)))
         warning("missing values for 'group'")
     ugroup<-unique(group)
@@ -20,7 +20,7 @@ rowsum.default <-function(x,group,reorder=TRUE,...){
 rowsum.data.frame<-function(x,group,reorder=TRUE,...){
     if (!is.data.frame(x)) stop("not a data frame") ## make MM happy
     if (length(group) != NROW(x))
-        stop("Incorrect length for 'group'")
+        stop("incorrect length for 'group'")
     if (any(is.na(group)))
         warning("missing values for 'group'")
     ugroup<-unique(group)

@@ -20,8 +20,7 @@ function(file = "", what = double(0), nmax = -1, n = -1, sep = "",
             on.exit(close(file))
         }
     if(!inherits(file, "connection"))
-        stop(paste("argument", sQuote("file"),
-                   "must be a character string or connection"))
+        stop(sQuote("file"), " must be a character string or connection")
     .Internal(scan(file, what, nmax, sep, dec, quote, skip, nlines,
                    na.strings, flush, fill, strip.white, quiet,
                    blank.lines.skip, multi.line, comment.char,

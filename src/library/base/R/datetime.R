@@ -36,8 +36,8 @@ as.POSIXlt <- function(x, tz = "")
     if(is.factor(x))	return(fromchar(as.character(x)))
     if(is.logical(x) && all(is.na(x))) x <- as.POSIXct.default(x)
     if(!inherits(x, "POSIXct"))
-	stop(paste("Don't know how to convert '", deparse(substitute(x)),
-		   "' to class \"POSIXlt\"", sep=""))
+	stop("Don't know how to convert ", sQuote(deparse(substitute(x))),
+             " to class \"POSIXlt\"")
     if(missing(tz) && !is.null(tzone)) tz <- tzone[1]
     .Internal(as.POSIXlt(x, tz))
 }
@@ -54,8 +54,7 @@ as.POSIXct.date <- function(x, ...)
     if(inherits(x, "date")) {
         x <- (x - 3653) * 86400 # origin 1960-01-01
         return(structure(x, class = c("POSIXt", "POSIXct")))
-    } else stop(paste("'", deparse(substitute(x)),
-                      "' is not a \"dates\" object", sep=""))
+    } else stop(sQuote(deparse(substitute(x))), " is not a \"dates\" object")
 }
 
 ## convert from package chron
@@ -67,8 +66,7 @@ as.POSIXct.dates <- function(x, ...)
         if(length(z) == 3 && is.numeric(z))
             x  <- x + as.numeric(ISOdate(z[3], z[1], z[2], 0))
         return(structure(x, class = c("POSIXt", "POSIXct")))
-    } else stop(paste("'", deparse(substitute(x)),
-                      "' is not a \"dates\" object", sep=""))
+    } else stop(sQuote(deparse(substitute(x))), " is not a \"dates\" object")
 }
 
 as.POSIXct.POSIXlt <- function(x, tz = "")
@@ -86,8 +84,8 @@ as.POSIXct.default <- function(x, tz = "")
 	return(as.POSIXct(as.POSIXlt(x), tz))
     if(is.logical(x) && all(is.na(x)))
         return(structure(as.numeric(x), class = c("POSIXt", "POSIXct")))
-    stop(paste("Don't know how to convert '", deparse(substitute(x)),
-	       "' to class \"POSIXct\"", sep=""))
+    stop("Don't know how to convert ", sQuote(deparse(substitute(x))),
+         " to class \"POSIXct\"")
 }
 
 format.POSIXlt <- function(x, format = "", usetz = FALSE, ...)
@@ -181,10 +179,10 @@ summary.POSIXlt <- function(object, digits = 15, ...)
 Ops.POSIXt <- function(e1, e2)
 {
     if (nargs() == 1)
-        stop(paste("unary", .Generic, "not defined for POSIXt objects"))
+        stop("unary", .Generic, " not defined for POSIXt objects")
     boolean <- switch(.Generic, "<" = , ">" = , "==" = ,
                       "!=" = , "<=" = , ">=" = TRUE, FALSE)
-    if (!boolean) stop(paste(.Generic, "not defined for POSIXt objects"))
+    if (!boolean) stop(.Generic, " not defined for POSIXt objects")
     if(inherits(e1, "POSIXlt")) e1 <- as.POSIXct(e1)
     if(inherits(e2, "POSIXlt")) e2 <- as.POSIXct(e2)
     NextMethod(.Generic)
@@ -192,13 +190,13 @@ Ops.POSIXt <- function(e1, e2)
 
 Math.POSIXt <- function (x, ...)
 {
-    stop(paste(.Generic, "not defined for POSIXt objects"))
+    stop(.Generic, " not defined for POSIXt objects")
 }
 
 Summary.POSIXct <- function (x, ...)
 {
     ok <- switch(.Generic, max = , min = , range = TRUE, FALSE)
-    if (!ok) stop(paste(.Generic, "not defined for POSIXct objects"))
+    if (!ok) stop(.Generic, " not defined for POSIXct objects")
     val <- NextMethod(.Generic)
     class(val) <- oldClass(x)
     val
@@ -207,7 +205,7 @@ Summary.POSIXct <- function (x, ...)
 Summary.POSIXlt <- function (x, ...)
 {
     ok <- switch(.Generic, max = , min = , range = TRUE, FALSE)
-    if (!ok) stop(paste(.Generic, "not defined for POSIXlt objects"))
+    if (!ok) stop(.Generic, " not defined for POSIXlt objects")
     x <- as.POSIXct(x)
     val <- NextMethod(.Generic)
     as.POSIXlt(structure(val, class = c("POSIXt", "POSIXct")))
@@ -370,7 +368,7 @@ Ops.difftime <- function(e1, e2)
                days = 60*60*24*x, weeks = 60*60*24*7*x)
     }
     if (nargs() == 1)
-        stop(paste("unary", .Generic, "not defined for difftime objects"))
+        stop("unary", .Generic, " not defined for difftime objects")
     boolean <- switch(.Generic, "<" = , ">" = , "==" = ,
                       "!=" = , "<=" = , ">=" = TRUE, FALSE)
     if (boolean) {
@@ -397,7 +395,7 @@ Ops.difftime <- function(e1, e2)
         }
     } else {
         ## '*' is covered by a specific method
-        stop(paste(.Generic, "not defined for difftime objects"))
+        stop(.Generic, "not defined for difftime objects")
     }
 }
 
@@ -422,7 +420,7 @@ Ops.difftime <- function(e1, e2)
 
 Math.difftime <- function (x, ...)
 {
-    stop(paste(.Generic, "not defined for difftime objects"))
+    stop(.Generic, "not defined for difftime objects")
 }
 
 mean.difftime <- function (x, ..., na.rm = FALSE)
@@ -451,7 +449,7 @@ Summary.difftime <- function (x, ..., na.rm = FALSE)
                          days = 60*60*24*x, weeks = 60*60*24*7*x))
     }
     ok <- switch(.Generic, max = , min = , range = TRUE, FALSE)
-    if (!ok) stop(paste(.Generic, "not defined for difftime objects"))
+    if (!ok) stop(.Generic, " not defined for difftime objects")
     args <- c(lapply(list(x, ...), coerceTimeUnit), na.rm = na.rm)
     structure(do.call(.Generic, args), units="secs", class="difftime")
 }

@@ -477,7 +477,7 @@ summary.nls <- function (object, ...)
         f <- f * w
         excl <- w == 0
         if (any(excl)) {
-            warning(paste(sum(excl), "rows with zero weights not counted"))
+            warning(sum(excl), " rows with zero weights not counted")
             r <- r[!excl]
             f <- f[!excl]
             rdf <- rdf - sum(excl)
@@ -629,9 +629,9 @@ anovalist.nls <- function (object, ..., test = NULL)
     sameresp <- responses == responses[1]
     if (!all(sameresp)) {
 	objects <- objects[sameresp]
-	warning(paste("Models with response",
-		      deparse(responses[!sameresp]),
-		      "removed because response differs from", "model 1"))
+	warning("models with response ",
+                deparse(responses[!sameresp]),
+                " removed because response differs from model 1")
     }
     ## calculate the number of models
     nmodels <- length(objects)

@@ -210,8 +210,8 @@ arima <- function(x, order = c(0, 0, 0),
             optim(init[mask], armaCSS,  method = "BFGS", hessian = TRUE,
                   control = optim.control)
         if(res$convergence > 0)
-            warning(paste("possible convergence problem: optim gave code=",
-                          res$convergence))
+            warning("possible convergence problem: optim gave code=",
+                          res$convergence)
         coef[mask] <- res$par
         ## set model for predictions
         trarma <- .Call("ARIMA_transPars", coef, arma, FALSE,
@@ -263,8 +263,8 @@ arima <- function(x, order = c(0, 0, 0),
                   hessian = TRUE, control = optim.control,
                   trans = as.logical(transform.pars))
         if(res$convergence > 0)
-            warning(paste("possible convergence problem: optim gave code=",
-                          res$convergence))
+            warning("possible convergence problem: optim gave code=",
+                    res$convergence)
         coef[mask] <- res$par
         if(transform.pars) {
             ## enforce invertibility

@@ -2,7 +2,7 @@ help.start <- function (gui = "irrelevant", browser = getOption("browser"),
 			remote = NULL)
 {
     if(is.null(browser))
-	stop("Invalid browser name, check options(\"browser\").")
+	stop("invalid browser name, check options(\"browser\").")
     if(browser != getOption("browser")) {
         msg <- paste("Changing the default browser",
                      "(as specified by the `browser' option)",

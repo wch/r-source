@@ -99,17 +99,17 @@ xyz.coords <- function(x, y, z, xlab=NULL, ylab=NULL, zlab=NULL,
 	o.msg <- " <= 0 omitted from logarithmic plot"
 	if("x" %in% log && any(ii <- x <= 0 & !is.na(x))) {
 	    n <- sum(ii)
-	    warning(paste(n, " x value", if(n>1)"s", o.msg, sep=""))
+	    warning(n, " x value", if(n>1)"s", o.msg)
 	    x[ii] <- NA
 	}
 	if("y" %in% log && any(ii <- y <= 0 & !is.na(y))) {
 	    n <- sum(ii)
-	    warning(paste(n, " y value", if(n>1)"s", o.msg, sep=""))
+	    warning(n, " y value", if(n>1)"s", o.msg)
 	    y[ii] <- NA
 	}
 	if("z" %in% log && any(ii <- z <= 0 & !is.na(z))) {
 	    n <- sum(ii)
-	    warning(paste(n, " z value", if(n>1)"s", o.msg, sep=""))
+	    warning(n, " z value", if(n>1)"s", o.msg)
 	    z[ii] <- NA
 	}
     }

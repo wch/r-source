@@ -22,7 +22,6 @@ backsolve <- function(r, x, k=ncol(r), upper.tri = TRUE, transpose = FALSE)
 	    info = integer(1),
 	    DUP = FALSE, PACKAGE = "base")[c("x","info")]
     if(z$info != 0)
-	stop(paste("singular matrix in backsolve. First zero in diagonal [",
-		   z$info,"].",sep=""))
+	stop("singular matrix in backsolve. First zero in diagonal [", z$info,"]")
     if(x.mat) z$x else drop(z$x)
 }

@@ -15,9 +15,9 @@ layout <-
     ## check that each value in 1..n is mentioned
     for (i in 1:num.figures)
 	if (match(i, mat, nomatch=0) == 0)
-	    stop(paste("Layout matrix must contain at least one reference\n",
-		       "  to each of the values {1..n}; here  n = ",
-		       num.figures,"\n", sep=""))
+	    stop("Layout matrix must contain at least one reference\n",
+                 "  to each of the values {1..n}; here  n = ",
+                 num.figures,"\n")
 
     dm <- dim(mat)
     num.rows <- dm[1]

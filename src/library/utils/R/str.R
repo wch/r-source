@@ -5,7 +5,7 @@ str.data.frame <- function(object, ...)
 {
     ## Method to 'str' for  'data.frame' objects
     if(! is.data.frame(object)) {
-	warning("str.data.frame(.) called with non-data.frame. Coercing one.")
+	warning("str.data.frame() called with non-data.frame -- coercing to one.")
 	object <- data.frame(object)
     }
 
@@ -192,8 +192,7 @@ str.default <-
 	} else if (is.factor(object)) {
 	    nl <- length(lev.att <- levels(object))
 	    if(!is.character(lev.att)) {# should not happen..
-		warning(paste(sQuote("object"),
-			      "does not have valid levels()!"))
+		warning(sQuote("object"), " does not have valid levels()")
 		nl <- 0
 	    } else lev.att <- encodeString(lev.att, na = FALSE, quote = '"')
 	    ord <- is.ordered(object)

@@ -16,8 +16,7 @@ RNGkind <- function(kind = NULL, normal.kind = NULL)
 	if(!is.character(kind) || length(kind) > 1)
 	    stop("'kind' must be a character string of length 1 (RNG to be used).")
 	if(is.na(i.knd <- pmatch(kind, kinds) - 1))
-	    stop(paste("'",kind,"' is not a valid abbrevation of an RNG",
-		       sep=""))
+	    stop(sQuote(kind), " is not a valid abbrevation of an RNG")
         if(i.knd == length(kinds) - 1) i.knd <- -1
     } else i.knd <- NULL
 
@@ -28,7 +27,7 @@ RNGkind <- function(kind = NULL, normal.kind = NULL)
 		warning("Buggy version of Kinderman-Ramage generator used.")
         normal.kind <- pmatch(normal.kind, n.kinds) - 1
         if(is.na(normal.kind))
- 	    stop(paste("'", normal.kind,"' is not a valid choice", sep=""))
+ 	    stop(sQuote(normal.kind), " is not a valid choice")
         if(normal.kind == length(n.kinds) - 1) normal.kind <- -1
     }
     r <- 1 + .Internal(RNGkind(i.knd, normal.kind))
@@ -45,8 +44,7 @@ set.seed <- function(seed, kind = NULL)
 	if(!is.character(kind) || length(kind) > 1)
 	    stop("'kind' must be a character string of length 1 (RNG to be used).")
 	if(is.na(i.knd <- pmatch(kind, kinds) - 1))
-	    stop(paste("'",kind,"' is not a valid abbrevation of an RNG",
-		       sep=""))
+	    stop(sQuote(kind)," is not a valid abbrevation of an RNG")
         if(i.knd == length(kinds) - 1) i.knd <- -1
     } else i.knd <- NULL
 
@@ -59,7 +57,7 @@ RNGversion <- function(vstr)
 {
     vnum <- as.numeric(strsplit(vstr,".", fixed=TRUE)[[1]])
     if (length(vnum) < 2)
-	stop("Malformed version string")
+	stop("malformed version string")
     if (vnum[1] == 0 && vnum[2] < 99)
         RNGkind("Wichmann-Hill", "Buggy Kinderman-Ramage")
     else if (vnum[1] == 0 || vnum[1] == 1 && vnum[2] <= 6)

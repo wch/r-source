@@ -31,7 +31,7 @@ bs <- function(x, df = NULL, knots = NULL, degree = 3, intercept = FALSE,
     }
     Aknots <- sort(c(rep(Boundary.knots, ord), knots))
     if(any(outside)) {
-        warning("Some x values beyond boundary knots may cause ill-conditioned bases")
+        warning("some x values beyond boundary knots may cause ill-conditioned bases")
         derivs <- 0:degree
         scalef <- gamma(1:ord)# factorials
         basis <- array(0, c(length(x), length(Aknots) - degree - 1))
@@ -85,7 +85,7 @@ ns <- function(x, df = NULL, knots = NULL, intercept = FALSE,
         nIknots <- df - 1 - intercept
         if(nIknots < 0) {
             nIknots <- 0
-            warning(paste("df was too small; have used ", 1 + intercept))
+            warning("'df' was too small; have used ", 1 + intercept)
         }
         knots <- if(nIknots > 0) {
             knots <- seq(0, 1, length = nIknots + 2)[-c(1, nIknots + 2)]

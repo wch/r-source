@@ -23,7 +23,7 @@ assign(".Quartz.Fonts", list(), envir = .Quartzenv)
 # Check that the font has the correct structure and information
 checkQuartzFont <- function(font) {
     if (!is.character(font) || length(font) != 4)
-        stop("Invalid Quartz font:  must be 4 strings")
+        stop("invalid Quartz font:  must be 4 strings")
     font
 }
 
@@ -62,12 +62,12 @@ quartzFonts <- function(...) {
         nnames <- length(fontNames)
         if (nnames == 0) {
             if (!all(sapply(fonts, is.character)))
-                stop("Invalid arguments in quartzFonts (must be font names)")
+                stop("invalid arguments in quartzFonts (must be font names)")
             else
                 get(".Quartz.Fonts", envir=.Quartzenv)[unlist(fonts)]
         } else {
             if (ndots != nnames)
-                stop("Invalid arguments in quartzFonts (need NAMED args)")
+                stop("invalid arguments in quartzFonts (need named args)")
             setQuartzFonts(fonts, fontNames)
         }
     }

@@ -138,9 +138,9 @@ function(pattern, fields = c("alias", "concept", "title"),
         ## incrementally.
         dbMat <- vector("list", length(packages_in_hsearch_db) * 4)
         dim(dbMat) <- c(length(packages_in_hsearch_db), 4)
-        defunct_standard_package_names <- 
+        defunct_standard_package_names <-
             tools:::.get_standard_package_names()$stubs
-            
+
 	for(p in packages_in_hsearch_db) {
             np <- np + 1
 	    if(verbose)
@@ -150,7 +150,7 @@ function(pattern, fields = c("alias", "concept", "title"),
                 next
 	    path <- .find.package(p, lib.loc, quiet = TRUE)
 	    if(length(path) == 0)
-		stop(paste("could not find package", sQuote(p)))
+		stop("could not find package ", sQuote(p))
 
             if(file.exists(hsearch_file <-
                            file.path(path, "Meta", "hsearch.rds"))) {
@@ -178,9 +178,9 @@ function(pattern, fields = c("alias", "concept", "title"),
                 }
                 else {
                     ## otherwise, issue a warning.
-                    warning(paste("No Rd contents for package",
-                                  sQuote(p), "in",
-                                  sQuote(dirname(path))))
+                    warning("No Rd contents for package ",
+                            sQuote(p), " in ",
+                            sQuote(dirname(path)))
                 }
             }
             if(!is.null(hDB)) {
@@ -263,8 +263,8 @@ function(pattern, fields = c("alias", "concept", "title"),
 	pos_in_hsearch_db <-
 	    match(package, unique(db$Base[, "Package"]), nomatch = 0)
 	if(any(pos_in_hsearch_db) == 0)
-	    stop(paste("could not find package",
-                       sQuote(package[pos_in_hsearch_db == 0][1])))
+	    stop("could not find package ",
+                 sQuote(package[pos_in_hsearch_db == 0][1]))
 	db <-
 	    lapply(db,
 		   function(x) {

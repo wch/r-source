@@ -115,10 +115,9 @@ function(x, ...)
             if(file.exists(file))
                 .show_help_on_topic_as_HTML(file, topic)
             else
-                stop(paste("No HTML help for ", sQuote(topic),
-                           " is available:\n",
-                           "corresponding file is missing.",
-                           sep = ""))
+                stop("No HTML help for ", sQuote(topic),
+                     " is available:\n",
+                     "corresponding file is missing")
         }
         else if(type == "chm") {
             ## unneeded but harmless under Unix
@@ -136,11 +135,10 @@ function(x, ...)
                           err = integer(1), PACKAGE = "")$err
                 if(err) stop("CHM file could not be displayed")
             } else
-                stop(paste("No CHM help for ", sQuote(topic),
-                           " in package ", sQuote(thispkg),
-                           " is available:\n",
-                           "the CHM file is for the package is missing.",
-                           sep = ""))
+                stop("No CHM help for ", sQuote(topic),
+                     " in package ", sQuote(thispkg),
+                     " is available:\n",
+                     "the CHM file is for the package is missing")
         }
         else if(type == "help") {
             zfile <- zip.file.extract(file, "Rhelp.zip")
@@ -150,10 +148,9 @@ function(x, ...)
                           delete.file = (zfile != file),
                           pager = attr(x, "pager"))
             else
-                stop(paste("No text help for", sQuote(topic),
-                           " is available:\n",
-                           "corresponding file is missing.",
-                           sep = ""))
+                stop("No text help for", sQuote(topic),
+                     " is available:\n",
+                     "corresponding file is missing")
         }
         else if(type == "latex") {
             ok <- FALSE
@@ -185,10 +182,9 @@ function(x, ...)
                 }
             }
             if(!ok)
-                stop(paste("No offline help for ", sQuote(topic),
-                           " is available:\n",
-                           "corresponding file is missing.",
-                           sep = ""))
+                stop("No offline help for ", sQuote(topic),
+                     " is available:\n",
+                     "corresponding file is missing")
         }
     }
 

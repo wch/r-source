@@ -30,9 +30,9 @@ filter <- function(x, filter, method = c("convolution", "recursive"),
         } else {
             ni <- NROW(init)
             if(ni != nfilt)
-                stop("length of init must equal length of filter")
+                stop("length of 'init' must equal length of 'filter'")
             if(NCOL(init) != 1 && NCOL(init) != nser)
-                stop(paste("init must have 1 or", nser, "cols"))
+                stop("'init; must have 1 or ", nser, " cols")
             if(!is.matrix(init)) init <- matrix(init, nfilt, nser)
         }
         for (i in 1:nser)

@@ -57,7 +57,7 @@ function(formula, data, subset, na.action, ...)
        || (formula[[3]][[1]] != as.name("|"))
        || (length(formula[[3]][[2]]) != 1)
        || (length(formula[[3]][[3]]) != 1))
-        stop(paste("incorrect specification for", sQuote("formula")))
+        stop("incorrect specification for ", sQuote("formula"))
     formula[[3]][[1]] <- as.name("+")
     ## </FIXME>
     m <- match.call(expand.dots = FALSE)

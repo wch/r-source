@@ -35,8 +35,7 @@ function(x, y, alternative = c("two.sided", "less", "greater"),
             if(!missing(conf.level) &&
                (length(conf.level) != 1 || !is.finite(conf.level) ||
                 conf.level < 0 || conf.level > 1))
-                stop(paste("conf.level must be a single number",
-                           "between 0 and 1"))
+                stop("'conf.level' must be a single number between 0 and 1")
             conf.int <- TRUE
             z <- atanh(r)
             sigma <- 1 / sqrt(n - 3)

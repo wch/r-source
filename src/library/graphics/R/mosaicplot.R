@@ -152,11 +152,11 @@ function(x, main = deparse(substitute(x)), sub = NULL, xlab = NULL,
         x <- data.matrix(x)
     dimd <- length(dx <- dim(x))
     if(dimd == 0 || any(dx == 0))
-        stop(paste(sQuote("x"), "must not have 0 dimensionality"))
+        stop(sQuote("x"), " must not have 0 dimensionality")
     if(length(list(...)))
-        warning(paste("extra argument(s)",
-                      paste(sQuote(names(list(...))), collapse = ", "),
-                      "disregarded."))
+        warning("extra argument(s) ",
+                paste(sQuote(names(list(...))), collapse = ", "),
+                " will be disregarded")
     ##-- Set up 'Ind' matrix : to contain indices and data
     Ind <- 1:dx[1]
     if(dimd > 1) {

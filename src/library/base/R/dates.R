@@ -43,8 +43,8 @@ as.Date.default <- function(x, ...)
     if(inherits(x, "Date")) return(x)
     if(is.logical(x) && all(is.na(x)))
         return(structure(as.numeric(x), class = "Date"))
-    stop(paste("Don't know how to convert '", deparse(substitute(x)),
-	       "' to class \"Date\"", sep=""))
+    stop("Don't know how to convert ", sQuote(deparse(substitute(x))),
+	       " to class \"Date\"",)
 }
 
 ## convert from package date
@@ -53,8 +53,7 @@ as.Date.date <- function(x, ...)
     if(inherits(x, "date")) {
         x <- (x - 3653) # origin 1960-01-01
         return(structure(x, class = "Date"))
-    } else stop(paste("'", deparse(substitute(x)),
-                      "' is not a \"dates\" object", sep=""))
+    } else stop(sQuote(deparse(substitute(x))), " is not a \"dates\" object")
 }
 
 ## convert from package chron
@@ -66,8 +65,7 @@ as.Date.dates <- function(x, ...)
         if(length(z) == 3 && is.numeric(z))
             x  <- x + as.numeric(as.Date(paste(z[3], z[1], z[2], sep="/")))
         return(structure(x, class = "Date"))
-    } else stop(paste("'", deparse(substitute(x)),
-                      "' is not a \"dates\" object", sep=""))
+    } else stop(sQuote(deparse(substitute(x))), " is not a \"dates\" object")
 }
 
 format.Date <- function(x, ...)
@@ -129,20 +127,20 @@ summary.Date <- function(object, digits = 12, ...)
 Ops.Date <- function(e1, e2)
 {
     if (nargs() == 1)
-        stop(paste("unary", .Generic, "not defined for Date objects"))
+        stop("unary ", .Generic, " not defined for Date objects")
     boolean <- switch(.Generic, "<" = , ">" = , "==" = ,
                       "!=" = , "<=" = , ">=" = TRUE, FALSE)
-    if (!boolean) stop(paste(.Generic, "not defined for Date objects"))
+    if (!boolean) stop(.Generic, " not defined for Date objects")
     NextMethod(.Generic)
 }
 
 Math.Date <- function (x, ...)
-    stop(paste(.Generic, "not defined for Date objects"))
+    stop(.Generic, " not defined for Date objects")
 
 Summary.Date <- function (x, ...)
 {
     ok <- switch(.Generic, max = , min = , range = TRUE, FALSE)
-    if (!ok) stop(paste(.Generic, "not defined for Date objects"))
+    if (!ok) stop(.Generic, " not defined for Date objects")
     val <- NextMethod(.Generic)
     class(val) <- oldClass(x)
     val

@@ -25,7 +25,7 @@ split.screen <-
 	    return(.valid.screens)
     if ((first.split && screen != 0) ||
 	(!first.split && !(screen %in% .valid.screens)))
-	stop("Invalid screen number")
+	stop("invalid screen number")
     ## if figs isn't a matrix, make it one
     if (!is.matrix(figs)) {
 	if (!is.vector(figs))
@@ -100,7 +100,7 @@ screen <- function(n = cur.screen, new = TRUE)
     if (missing(n) && missing(new))
 	return(cur.screen)
     if (!(n %in% .SSget("sp.valid.screens")))
-	stop("Invalid screen number")
+	stop("invalid screen number")
     split.screens <- .SSget("sp.screens")
     split.screens[[cur.screen]] <- par(get("par.list", envir=.SSenv))
     .SSassign("sp.screens", split.screens)
@@ -117,7 +117,7 @@ erase.screen <- function(n = cur.screen)
 	return(FALSE)
     cur.screen <- .SSget("sp.cur.screen")
     if (!(n %in% .SSget("sp.valid.screens")) && n != 0)
-	stop("Invalid screen number")
+	stop("invalid screen number")
     old <- par(usr=c(0,1,0,1), mar=c(0,0,0,0),
 	       fig = if (n > 0)
 	       .SSget("sp.screens")[[n]]$fig

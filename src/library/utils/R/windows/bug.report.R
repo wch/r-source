@@ -15,7 +15,7 @@ bug.report <- function(subject = "", ccaddress = Sys.getenv("USER"),
 		  paste(search(), collapse=", "),
 		  "\\n", sep="", collapse="")
 
-    if(missing(subject)) stop("Subject missing")
+    if(missing(subject)) stop("'subject' missing")
 
     disclaimer <-
         paste("# Your mailer is set to \"none\" (default on Windows),\n",

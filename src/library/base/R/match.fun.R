@@ -6,19 +6,18 @@ match.fun <- function (FUN, descend = TRUE)
     if ( is.function(FUN) )
         return(FUN)
     if (!(is.character(FUN) && length(FUN) == 1 || is.symbol(FUN))) {
-        ## Substitute in parent 
+        ## Substitute in parent
         FUN <- eval.parent(substitute(substitute(FUN)))
         if (!is.symbol(FUN))
-            stop(paste("not function, character, or symbol: \"",
-                       deparse(FUN), "\"", sep = ""))
+            stop("not function, character, or symbol: ", sQuote(deparse(FUN)))
     }
     envir <- parent.frame(2)
-    if( descend ) 
+    if( descend )
         FUN <- get(as.character(FUN), mode = "function", env=envir)
     else {
         FUN <- get(as.character(FUN), mode = "any", env=envir)
         if( !is.function(FUN) )
-           stop(paste("found non-function: \"", FUN, "\"", sep = ""))
+           stop("found non-function: ", sQuote(FUN))
     }
     return(FUN)
 }

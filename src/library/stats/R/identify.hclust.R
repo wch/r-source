@@ -15,7 +15,7 @@ rect.hclust <- function(tree, k=NULL, which=NULL,
             stop("specify exactly one of k and h")
 
     if(k < 2 | k > length(tree$height))
-        stop(paste("k must be between 2 and", length(tree$height)))
+        stop("k must be between 2 and ", length(tree$height))
 
     if(is.null(cluster))
         cluster <- cutree(tree, k=k)
@@ -36,7 +36,7 @@ rect.hclust <- function(tree, k=NULL, which=NULL,
             which <- 1:k
 
     if(any(which>k))
-        stop(paste("all elements of which must be between 1 and", k))
+        stop("all elements of 'which' must be between 1 and ", k)
 
     border <- rep(border, length.out = length(which))
 

@@ -52,9 +52,9 @@ function (x, file = "", append = FALSE, quote = TRUE, sep = " ",
 	quote <- if(quote) 1 : p else NULL
     else if(is.numeric(quote)) {
 	if(any(quote < 1 | quote > p))
-	    stop(paste("invalid numbers in", sQuote("quote")))
+	    stop("invalid numbers in ", sQuote("quote"))
     } else
-	stop(paste("invalid", sQuote("quote"), "specification"))
+	stop("invalid ", sQuote("quote"), " specification")
 
     rn <- FALSE
     if(is.logical(row.names)) {
@@ -68,7 +68,7 @@ function (x, file = "", append = FALSE, quote = TRUE, sep = " ",
 	if(length(rnames) == nrow(x))
 	    x <- cbind(rnames, x)
 	else
-	    stop(paste("invalid", sQuote("row.names"), "specification"))
+	    stop("invalid ", sQuote("row.names"), " specification")
     }
     if(!is.null(quote) && rn) # quote the row names
 	quote <- c(0, quote) + 1
@@ -79,7 +79,7 @@ function (x, file = "", append = FALSE, quote = TRUE, sep = " ",
     else {
 	col.names <- as.character(col.names)
 	if(length(col.names) != p)
-	    stop(paste("invalid", sQuote("col.names"), "specification"))
+	    stop("invalid ", sQuote("col.names"), " specification")
     }
 
     if(file == "")
@@ -89,8 +89,8 @@ function (x, file = "", append = FALSE, quote = TRUE, sep = " ",
         on.exit(close(file))
     }
     if(!inherits(file, "connection"))
-        stop(paste("argument", sQuote("file"),
-                   "must be a character string or connection"))
+        stop(sQuote("file"),
+             " must be a character string or connection")
 
     qstring <-                          # quoted embedded quote string
         switch(qmethod,
@@ -160,9 +160,9 @@ function (x, file = "", append = FALSE, quote = TRUE, sep = " ",
 	quote <- NULL
     else if(is.numeric(quote)) {
 	if(any(quote < 1 | quote > p))
-	    stop(paste("invalid numbers in", sQuote("quote")))
+	    stop("invalid numbers in ", sQuote("quote"))
     } else
-	stop(paste("invalid", sQuote("quote"), "specification"))
+	stop("invalid ", sQuote("quote"), "specification")
 
     rn <- FALSE
     rnames <- NULL
@@ -172,7 +172,7 @@ function (x, file = "", append = FALSE, quote = TRUE, sep = " ",
 	rnames <- as.character(row.names)
         rn <- TRUE
 	if(length(rnames) != nrow(x))
-            stop(paste("invalid", sQuote("row.names"), "specification"))
+            stop("invalid ", sQuote("row.names"), "specification")
     }
     if(!is.null(quote) && rn) # quote the row names
 	quote <- c(0, quote)
@@ -183,7 +183,7 @@ function (x, file = "", append = FALSE, quote = TRUE, sep = " ",
     else {
 	col.names <- as.character(col.names)
 	if(length(col.names) != p)
-	    stop(paste("invalid", sQuote("col.names"), "specification"))
+	    stop("invalid", sQuote("col.names"), "specification")
     }
 
     if(file == "")
@@ -193,8 +193,7 @@ function (x, file = "", append = FALSE, quote = TRUE, sep = " ",
         on.exit(close(file))
     }
     if(!inherits(file, "connection"))
-        stop(paste("argument", sQuote("file"),
-                   "must be a character string or connection"))
+        stop(sQuote("file"), " must be a character string or connection")
 
     qstring <-                          # quoted embedded quote string
         switch(qmethod,

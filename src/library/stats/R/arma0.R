@@ -171,8 +171,7 @@ arima0 <- function(x, order = c(0, 0, 0),
     res <- optim(init[mask], arma0f, method = "BFGS",
                  hessian = TRUE, control = optim.control)
     if((code <- res$convergence) > 0)
-        warning(paste("possible convergence problem: optim gave code=",
-                      code))
+        warning("possible convergence problem: optim gave code=", code)
     coef <- res$par
 
     if(transform.pars) {

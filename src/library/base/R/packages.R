@@ -87,12 +87,11 @@ Ops.package_version <-
 function(e1, e2)
 {
     if(nargs() == 1)
-        stop(paste("unary", .Generic,
-                   "not defined for package_version objects"))
+        stop("unary ", .Generic, " not defined for package_version objects")
     boolean <- switch(.Generic, "<" = , ">" = , "==" = , "!=" = ,
         "<=" = , ">=" = TRUE, FALSE)
     if(!boolean)
-        stop(paste(.Generic, "not defined for package_version objects"))
+        stop(.Generic, " not defined for package_version objects")
     if(!is.package_version(e1)) e1 <- as.package_version(e1)
     if(!is.package_version(e2)) e2 <- as.package_version(e2)
     base <- max(unlist(e1), unlist(e2), 0) + 1
@@ -105,7 +104,7 @@ function(x, ...)
 {
     ok <- switch(.Generic, max = , min = TRUE, FALSE)
     if(!ok)
-        stop(paste(.Generic, "not defined for package_version objects"))
+        stop(.Generic, " not defined for package_version objects")
     x <- list(x, ...)
     x$na.rm <- NULL
     x <- do.call("c", lapply(x, as.package_version))

@@ -44,7 +44,7 @@ find <- function(what, mode = "any", numeric. = FALSE, simple.words=TRUE) {
                 mode.ok <- sapply(li, exists, where = i, mode = mode,
                                   inherits = FALSE)
                 ll <- sum(mode.ok)
-                if(ll >= 2) warning(paste(ll, "occurrences in", sp[i]))
+                if(ll >= 2) warning(ll, " occurrences in ", sp[i])
             }
             ind[i] <- ll > 0
         }

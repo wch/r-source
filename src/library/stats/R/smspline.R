@@ -66,8 +66,7 @@ smooth.spline <-
     nx <- length(ux)
     if(nx <= 3) stop("need at least four unique 'x' values")
     if(cv && nx < n)
-        warning(paste("crossvalidation with non-unique", sQuote("x"),
-                      "seems doubtful"))
+        warning("crossvalidation with non-unique 'x' values seems doubtful")
     r.ux <- ux[nx] - ux[1]
     xbar <- (ux - ux[1])/r.ux           # scaled to [0,1]
     if(all.knots) {

@@ -9,14 +9,14 @@ function(topic, package = NULL, lib.loc = NULL, local = FALSE,
     INDICES <- .find.package(package, lib.loc, verbose = verbose)
     file <- index.search(topic, INDICES, "AnIndex", "R-ex")
     if(file == "") {
-	warning(paste("No help file found for", sQuote(topic)))
+	warning("No help file found for ", sQuote(topic))
 	return(invisible())
     }
     packagePath <- dirname(dirname(file))
     if(length(file) > 1) {
 	packagePath <- packagePath[1]
-	warning(paste("More than one help file found: using package",
-		      sQuote(basename(packagePath))))
+	warning("More than one help file found: using package ",
+                sQuote(basename(packagePath)))
 	file <- file[1]
     }
     pkg <- basename(packagePath)
@@ -24,8 +24,7 @@ function(topic, package = NULL, lib.loc = NULL, local = FALSE,
     zfile <- zip.file.extract(file, "Rex.zip")
     if(zfile != file) on.exit(unlink(zfile))
     if(!file.exists(zfile)) {
-	warning(paste(sQuote(topic),
-		      "has a help file but no examples file"))
+	warning(sQuote(topic), " has a help file but no examples file")
 	return(invisible())
     }
     if(pkg != "base")

@@ -192,14 +192,12 @@ function(x, y = NULL, alternative = c("two.sided", "less", "greater"),
             if(exact && TIES) {
                 warning("cannot compute exact p-value with ties")
                 if(conf.int)
-                    warning(paste("cannot compute exact confidence",
-                                  "interval with ties"))
+                    warning("cannot compute exact confidence interval with ties")
             }
             if(exact && ZEROES) {
                 warning("cannot compute exact p-value with zeroes")
                 if(conf.int)
-                    warning(paste("cannot compute exact confidence",
-                                  "interval with zeroes"))
+                    warning("cannot compute exact confidence interval with zeroes")
             }
 
 	}
@@ -340,8 +338,7 @@ function(x, y = NULL, alternative = c("two.sided", "less", "greater"),
             if(exact && TIES) {
                 warning("cannot compute exact p-value with ties")
                 if(conf.int)
-                    warning(paste("cannot compute exact confidence",
-                                  "intervals with ties"))
+                    warning("cannot compute exact confidence intervals with ties")
             }
         }
     }

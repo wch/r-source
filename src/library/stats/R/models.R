@@ -226,13 +226,13 @@ offset <- function(object) object
     if(!identical(old, new)) {
         wrong <- old != new
         if(sum(wrong) == 1)
-            stop(paste("variable", sQuote(names(old)[wrong]),
-                       "was fitted with", old[wrong], "but",
-                       new[wrong], "was supplied"), call.=FALSE)
+            stop("variable ", sQuote(names(old)[wrong]),
+                 " was fitted with class ", dQuote(old[wrong]), " but class ",
+                 dQuote(new[wrong]), " was supplied", call.=FALSE)
         else
-            stop(paste("variables",
-                       paste(sQuote(names(old)[wrong]), collapse=", "),
-                       "were specified differently from the fit"),
+            stop("variables ",
+                 paste(sQuote(names(old)[wrong]), collapse=", "),
+                 " were specified with different classes from the fit",
                  call.=FALSE)
     }
 }
@@ -322,9 +322,9 @@ model.frame.default <-
         ## need to do this before subsetting and na.action
         nr2 <- max(sapply(variables, NROW))
         if(nr2 != nr)
-            warning(paste("'newdata' had", nr,
-                          "rows but variable(s) found have",
-                          nr2, "rows"), call.=FALSE)
+            warning("'newdata' had ", nr,
+                    " rows but variable(s) found have ",
+                    nr2, " rows", call.=FALSE)
     }
     if(is.null(attr(formula, "predvars"))) {
         for (i in seq(along = varnames))
@@ -343,11 +343,12 @@ model.frame.default <-
 	    if(!is.null(xl <- xlev[[nm]])) {
 		xi <- data[[nm]]
 		if(is.null(nxl <- levels(xi)))
-		    warning(paste("variable", nm, "is not a factor"))
+		    warning("variable ", nm, " is not a factor")
 		else {
 		    xi <- xi[, drop = TRUE] # drop unused levels
 		    if(any(m <- is.na(match(nxl, xl))))
-			stop(paste("factor", nm, "has new level(s)", nxl[m]))
+			stop("factor ", nm, "has new level(s) ",
+                             paste(nxl[m], collapse=", "))
 		    data[[nm]] <- factor(xi, levels=xl)
 		}
 	    }
@@ -409,7 +410,7 @@ model.matrix.default <- function(object, data = environment(object),
                 stop("invalid contrasts argument")
             for (nn in namC) {
                 if (is.na(ni <- match(nn, namD)))
-                    warning(paste("Variable", nn, "absent, contrast ignored"))
+                    warning("Variable ", nn, " is absent, contrast ignored")
                 else {
                     ca <- contrasts.arg[[nn]]
                     if(is.matrix(ca)) contrasts(data[[ni]], ncol(ca)) <- ca

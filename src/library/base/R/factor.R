@@ -14,8 +14,8 @@ factor <- function (x, levels = sort(unique.default(x), na.last = TRUE),
 	else if(nl == 1)
 	    paste(labels, seq(along = levels), sep = "")
 	else
-	    stop(paste("invalid labels; length", nl,
-		       "should be 1 or",length(levels)))
+	    stop("invalid labels; length ", nl,
+                 " should be 1 or ", length(levels))
     class(f) <- c(if(ordered)"ordered", "factor")
     f
 }
@@ -100,16 +100,16 @@ print.factor <- function (x, quote = FALSE, max.levels = NULL,
 
 
 Math.factor <- function(x, ...) {
-    stop(paste('"',.Generic,'"', " not meaningful for factors", sep=""))
+    stop(.Generic, " not meaningful for factors")
 }
 Summary.factor <- function(x, ...) {
-    stop(paste('"',.Generic,'"', " not meaningful for factors", sep=""))
+    stop(.Generic, " not meaningful for factors")
 }
 Ops.factor <- function(e1, e2)
 {
     ok <- switch(.Generic, "=="=, "!="=TRUE, FALSE)
     if(!ok) {
-	warning('"',.Generic,'"', " not meaningful for factors")
+	warning(.Generic, " not meaningful for factors")
 	return(rep.int(NA, max(length(e1), if(!missing(e2))length(e2))))
     }
     nas <- is.na(e1) | is.na(e2)

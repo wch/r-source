@@ -75,7 +75,7 @@ factanal <-
     if(p < 3) stop("factor analysis requires at least three variables")
     dof <- 0.5 * ((p - factors)^2 - p - factors)
     if(dof < 0)
-        stop(paste(factors, "factors is too many for", p, "variables"))
+        stop(factors, " factors is too many for ", p, " variables")
     sds <- sqrt(diag(cv))
     cv <- cv/(sds %o% sds)
 
@@ -90,7 +90,7 @@ factanal <-
             start <- cbind(start, matrix(runif(ns-1), p, ns-1, byrow=TRUE))
     }
     start <- as.matrix(start)
-    if(nrow(start) != p) stop(paste("start must have", p, "rows"))
+    if(nrow(start) != p) stop("start must have ", p, " rows")
     nc <- ncol(start)
     if(nc < 1) stop("no starting values supplied")
 

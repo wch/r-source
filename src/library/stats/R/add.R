@@ -88,8 +88,7 @@ add1.lm <- function(object, scope, scale = 0, test=c("none", "Chisq", "F"),
         y <- model.response(m, "numeric")
         newn <- length(y)
         if(newn < oldn)
-            warning(paste("using the", newn, "/", oldn ,
-                          "rows from a combined fit"))
+            warning("using the ", newn, "/", oldn , " rows from a combined fit")
     }
     n <- nrow(x)
     Terms <- attr(Terms, "term.labels")
@@ -180,8 +179,7 @@ add1.glm <- function(object, scope, scale = 0, test=c("none", "Chisq", "F"),
         if(NCOL(y) == 2) y <- y[, 1]/(y[, 1] + y[,2])
         newn <- length(y)
         if(newn < oldn)
-            warning(paste("using the", newn, "/", oldn ,
-                          "rows from a combined fit"))
+            warning("using the ", newn, "/", oldn , " rows from a combined fit")
     }
     n <- nrow(x)
     if(is.null(wt)) wt <- rep.int(1, n)
@@ -223,7 +221,7 @@ add1.glm <- function(object, scope, scale = 0, test=c("none", "Chisq", "F"),
         aod[, "Pr(Chi)"] <- dev
     } else if(test == "F") {
         if(fam == "binomial" || fam == "poisson")
-            warning(paste("F test assumes quasi", fam, " family", sep=""))
+            warning("F test assumes quasi", fam, " family")
 	rdf <- object$df.residual
 	aod[, c("F value", "Pr(F)")] <- Fstat(aod, rdf)
     }
@@ -426,7 +424,7 @@ drop1.glm <- function(object, scope, scale = 0, test=c("none", "Chisq", "F"),
         aod[, "Pr(Chi)"] <- dev
     } else if(test == "F") {
         if(fam == "binomial" || fam == "poisson")
-            warning(paste("F test assumes quasi", fam, " family", sep=""))
+            warning("F test assumes quasi", fam, " family")
 	dev <- aod$Deviance
 	rms <- dev[1]/rdf
         dev <- pmax(0, dev - dev[1])

@@ -6,7 +6,7 @@ model.tables.aov <- function(x, type = "effects", se = FALSE, cterms, ...)
 	stop("model.tables is not implemented for multiple responses")
     type <- match.arg(type, c("effects", "means", "residuals"))
     if(type == "residuals")
-	stop(paste("type", type, "not implemented yet"))
+	stop("type", sQuote(type), " not implemented yet")
     prjs <- proj(x, unweighted.scale = TRUE)
     mf <- model.frame(x)
     factors <- attr(prjs, "factors")
@@ -81,7 +81,7 @@ model.tables.aovlist <- function(x, type = "effects", se = FALSE, ...)
 {
     type <- match.arg(type, c("effects", "means", "residuals"))
     if(type == "residuals")
-	stop(paste("type", type, "not implemented yet"))
+	stop("type", sQuote(type), " not implemented yet")
     prjs <- proj(x, unweighted.scale = TRUE)
     mf <- model.frame.aovlist(x)
     factors <- lapply(prjs, attr, "factors")
@@ -141,7 +141,7 @@ model.tables.aovlist <- function(x, type = "effects", se = FALSE, ...)
 	    cat("Standard error information not returned as design is unbalanced. \nStandard errors can be obtained through se.contrast.\n")
 	    se <- FALSE
 	} else if(type != "effects") {
-	    warning(paste("SEs for type ", type, " are not yet implemented"))
+	    warning("SEs for type ", sQuote(type), " are not yet implemented")
 	    se <- FALSE
 	} else {
 	    se.tables <- se.aovlist(x, dn.proj, dn.strata, factors, mf,
@@ -158,7 +158,7 @@ se.aovlist <- function(object, dn.proj, dn.strata, factors, mf, efficiency, n,
 		       type = "diff.means", ...)
 {
     if(type != "effects")
-	stop(paste("SEs for type ", type, " are not yet implemented"))
+	stop("SEs for type ", sQuote(type), " are not yet implemented")
     RSS <- sapply(object, function(x) sum(x$residuals^2)/x$df.resid)
     res <- vector(length = length(n), mode = "list")
     names(res) <- names(n)
@@ -295,8 +295,8 @@ replications <- function(formula, data = NULL, na.action)
 	if(o[i] < 1 || substring(l, 1, 5) == "Error") { z[[l]] <- NULL; next }
 	select <- vars[f[, i] > 0]
 	if(any(nn <- notfactor[select])) {
-	    warning(paste("non-factors ignored:",
-			  paste(names(nn), collapse = ", ")))
+	    warning("non-factors ignored: ",
+                    paste(names(nn), collapse = ", "))
 	    next
 	}
 	if(length(select) > 0)

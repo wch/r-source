@@ -54,9 +54,10 @@ ar.ols <- function (x, aic = TRUE, order.max = NULL, na.action = na.fail,
         rank <- qr(XX)$rank
         if (rank != nrow(XX))
         {
-            warning (paste("Model order", m))
-            warning ("Singularities in the computation of the projection matrix")
-            warning (paste("Results are only valid up to model order", m - 1))
+            warning ("model order: ", m,
+
+                     "singularities in the computation of the projection matrix",
+                     "results are only valid up to model order", m - 1)
             break
         }
         P <- if(ncol(XX) > 0) solve(XX) else XX

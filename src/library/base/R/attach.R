@@ -89,14 +89,14 @@ ls <- objects <-
             ll != length(grep("]", pattern, fixed=TRUE))) {
             if (pattern == "[") {
                 pattern <- "\\["
-                warning(paste("replaced regular expression pattern",
-                              sQuote("["), "by", sQuote("\\\\[")))
+                warning("replaced regular expression pattern ",
+                        sQuote("["), " by ", sQuote("\\\\["))
             }
             else if (length(grep("[^\\\\]\\[<-", pattern) > 0)) {
                 pattern <- sub("\\[<-", "\\\\\\[<-", pattern)
-                warning(paste("replaced", sQuote("[<-"),
-                              "by", sQuote("\\\\[<-"),
-                              "in regular expression pattern"))
+                warning("replaced ", sQuote("[<-"),
+                        " by ", sQuote("\\\\[<-"),
+                        " in regular expression pattern")
             }
         }
         grep(pattern, all.names, value = TRUE)

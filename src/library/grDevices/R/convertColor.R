@@ -19,13 +19,13 @@ make.rgb<-function( red, green, blue, name=NULL,
     white.color<-white.points[[white]]
     whitexyz<- c(white.color[1]/white.color[2], 1,
               (1-sum(white.color))/white.color[2])
-    
+
     red<-c(red[1]/red[2], 1, (1-sum(red))/red[2])
     green<-c(green[1]/green[2], 1, (1-sum(green))/green[2])
     blue<-c(blue[1]/blue[2], 1, (1-sum(blue))/blue[2])
     S<-drop(whitexyz%*%solve(rbind(red,green,blue)))
     M<-S*rbind(red, green, blue)
-    
+
     if (is.numeric(gamma) && length(gamma)==1){
         dogamma<-function(x) x%^%gamma
         ungamma<-function(x) x%^%(1/gamma)
@@ -112,68 +112,68 @@ colorspaces<-list("XYZ"=colorConverter(toXYZ=function(x,w) x,
                   green=c(0.2740,0.7170),
                   blue=c(0.1670,0.0090), gamma=2.2,
                   white="E", name="CIE RGB"),
-                  
+
                   Lab=colorConverter(fromXYZ=function(XYZ, white){
                       epsilon <- 216/24389
                       kappa <- 24389/27
-                      
+
                       xyzr<-XYZ/white
                       fxyz<-ifelse(xyzr<=epsilon, (kappa*xyzr+16)/116, xyzr^(1/3))
-                      
+
                       c(L=116*fxyz[2]-16, a=500*(fxyz[1]-fxyz[2]), b=200*(fxyz[2]-fxyz[3]))
                   },
                   toXYZ=function(Lab,white){
-                      
+
                       epsilon <- 216/24389
                       kappa <- 24389/27
-                      
+
                       yr<-ifelse(Lab[1]<kappa*epsilon, Lab[1]/kappa, ((Lab[1]+16)/116)^3)
                       fy<-ifelse(yr<=epsilon, (kappa*yr+16)/116, (Lab[1]+16)/116)
                       fx<-Lab[2]/500+fy
                       fz<-fy-Lab[3]/200
-                      
+
                       zr<-ifelse(fz^3<=epsilon, (116*fz-16)/kappa, fz^3)
                       xr<-ifelse(fx^3<=epsilon, (116*fx-16)/kappa, fx^3)
-                      
+
                       c(X=xr,Y=yr,Z=zr)*white
-                      
+
                   },name="Lab",white=NULL),
 
                   Luv=colorConverter(fromXYZ=function(XYZ, white){
                       epsilon <- 216/24389
                       kappa <- 24389/27
-                      
+
                       yr<-XYZ[2]/white[2]
-                      
+
                       denom<-sum(XYZ*c(1,15,3))
                       wdenom<-sum(white*c(1,15,3))
-                      
+
                       u1<- ifelse(denom==0,1,4*XYZ[1]/denom)
                       v1<- ifelse(denom==0,1,9*XYZ[2]/denom)
                       ur<-4*white[1]/wdenom
                       vr<-9*white[2]/wdenom
-                      
+
                       L<-ifelse(yr<=epsilon, kappa*yr, 116*(yr^(1/3))-16)
                       c(L=L, u=13*L*(u1-ur), v=13*L*(v1-vr))
                   },
                   toXYZ=function(Luv,white){
                       epsilon <- 216/24389
                       kappa <- 24389/27
-                      
+
                       if(Luv[1]==0) return(c(0,0,0))
-                      
+
                       u0<-4*white[1]/(white[1]+15*white[2]+3*white[3])
                       v0<-9*white[2]/(white[1]+15*white[2]+3*white[3])
-                      
+
                       Y<-ifelse(Luv[1]<=kappa*epsilon, Luv[1]/kappa, ((Luv[1]+16)/116)^3)
                       a<-(52*Luv[1]/(Luv[2]+13*Luv[1]*u0)-1)/3
                       b<- -5*Y
                       c<- -1/3
                       d<- Y*(39*Luv[1]/(Luv[3]+13*Luv[1]*v0)-5)
-                      
+
                       X<-(d-b)/(a-c)
                       Z<-X*a+b
-                      
+
                       c(X=X,Y=Y,Z=Z)
                   },
                   name="Luv",white=NULL),
@@ -204,7 +204,7 @@ convertColor<-function(color, from, to,
 
   ## Need a reference white. If both the definition and the argument
   ## specify one they must agree.
-  
+
   if (is.null(from.ref.white))
       from.ref.white<-from$white
   else if (!is.null(from$white) && from.ref.white!=from$white)
@@ -222,12 +222,12 @@ convertColor<-function(color, from, to,
       to.ref.white<-from.ref.white
   if (is.null(from.ref.white))
       from.ref.white<-to.ref.white
-  
+
   w<-white.points[[from.ref.white]]
   from.ref.white<-c(w[1]/w[2],1,(1-sum(w))/w[2])
   w<-white.points[[to.ref.white]]
   to.ref.white<-c(w[1]/w[2],1,(1-sum(w))/w[2])
-  
+
   if (is.null(nrow(color)))
     color<-matrix(color,nrow=1)
 
@@ -244,7 +244,7 @@ convertColor<-function(color, from, to,
       }
       rgb
   }
-  
+
   xyz<-apply(color, 1, from$toXYZ, from.ref.white)
 
   if (is.null(nrow(xyz)))
@@ -253,21 +253,21 @@ convertColor<-function(color, from, to,
   if (!is.all.equal(from.ref.white,to.ref.white)){
       mc<-match.call()
       if (is.null(mc$from.ref.white) || is.null(mc$to.ref.white))
-          warning("Color spaces use different reference whites.")
+          warning("color spaces use different reference whites.")
       xyz<-chromaticAdaptation(xyz,from.ref.white,to.ref.white)
   }
-  
+
   rval<-apply(xyz, 2, to$fromXYZ, to.ref.white)
-  
+
   if (inherits(to,"RGBcolorConverter"))
       rval<-trim(rval)
 
   if (is.matrix(rval))
       rval<-t(rval)
-  
+
   if (is.null(scale.out))
       rval
-  else 
+  else
       rval*scale.out
-  
+
 }

@@ -56,7 +56,7 @@ svd <- function(x, nu = min(n,p), nv = min(n,p), LINPACK = FALSE)
 		  info=integer(1),
 		  DUP=FALSE, PACKAGE="base")[c("d","u","v","info")]
     if(z$info)
-	stop(paste("error ",z$info," in dsvdc"))
+	stop("error ", z$info, " in dsvdc")
     z$d <- z$d[1:mn]
     if(nv && nv < p) z$v <- z$v[, 1:nv, drop = FALSE]
     z[c("d", if(nu) "u", if(nv) "v")]

@@ -21,9 +21,9 @@ symnum <- function(x, cutpoints = c(  .3,  .6,	 .8,  .9, .95),
 	if(corr) cutpoints <- c(0, cutpoints, 1)
 	if(any(duplicated(cutpoints)) ||
 	   (corr && (any(cutpoints > 1) || any(cutpoints < 0)) ))
-	    stop(paste("'cutpoints' must be unique",
-		       if(corr)"in 0 < cuts < 1", ", but are =",
-		       paste(format(cutpoints), collapse="|")))
+	    stop("'cutpoints' must be unique ",
+                 if(corr) "in 0 < cuts < 1", ", but are = ",
+                 paste(format(cutpoints), collapse="|"))
 	nc <- length(cutpoints)
 	minc <- cutpoints[1]
 	maxc <- cutpoints[nc]
@@ -38,11 +38,11 @@ symnum <- function(x, cutpoints = c(  .3,  .6,	 .8,  .9, .95),
 	ns <- length(symbols)
 	symbols <- as.character(symbols)
 	if(any(duplicated(symbols)))
-	    stop(paste("'symbols' must be unique, but are =",
-		       paste(symbols, collapse="|")))
+	    stop("'symbols' must be unique, but are = ",
+                 paste(symbols, collapse="|"))
 	if(nc != ns+1)
-	    stop(paste("number of cutpoints must be  ONE",
-		       if(corr)"LESS" else "MORE", "than number of symbols"))
+	    stop("number of cutpoints must be  ONE ",
+                 if(corr)"LESS" else "MORE", " than number of symbols")
 
 	iS <- cut(x, breaks=cutpoints, include.lowest=TRUE, labels= FALSE)
 	if(any(ii <- is.na(iS))) {

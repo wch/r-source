@@ -107,8 +107,8 @@ function(..., list = character(0), package = NULL, lib.loc = NULL,
                                     fp <- file.path(p, "filelist")))
                     files <- file.path(p, scan(fp, what="", quiet = TRUE))
                 else {
-                    warning(paste(sQuote("filelist"), "is missing for dir",
-                                  sQuote(p)))
+                    warning(sQuote("filelist"), " is missing for dir ",
+                            sQuote(p))
                     next
                 }
             } else {
@@ -162,7 +162,7 @@ function(..., list = character(0), package = NULL, lib.loc = NULL,
         }
 
         if(!found)
-            warning(paste("Data set", sQuote(name), "not found"))
+            warning("Data set ", sQuote(name), " not found")
     }
     invisible(names)
 }

@@ -32,8 +32,7 @@ match.arg <- function (arg, choices) {
     if (all(arg == choices)) return(choices[1])
     i <- pmatch(arg, choices)
     if (is.na(i))
-	stop(paste("ARG should be one of", paste(choices, collapse = ", "),
-		   sep = " "))
+	stop("'arg' should be one of ", paste(choices, collapse = ", "))
     if (length(i) > 1) stop("there is more than one match in match.arg")
     choices[i]
 }

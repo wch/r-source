@@ -48,8 +48,7 @@ function(x, y = NULL, workspace = 200000, hybrid = FALSE,
         alternative <- char.expand(alternative,
                                    c("two.sided", "less", "greater"))
         if(length(alternative) > 1 || is.na(alternative))
-            stop(paste("alternative must be \"two.sided\",",
-                       "\"less\" or \"greater\""))
+            stop("alternative must be \"two.sided\", \"less\" or \"greater\"")
         if(!((length(conf.level) == 1) && is.finite(conf.level) &&
              (conf.level > 0) && (conf.level < 1)))
             stop("conf.level must be a single number between 0 and 1")

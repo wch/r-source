@@ -370,5 +370,5 @@ unable to resolve 'foo.bar'.
 +     invisible(output)
 + }
 > try(finger("root"))  ## only works if your site provides a finger daemon
-Error in make.socket(host, port) : Socket not established
+Error in make.socket(host, port) : socket not established
 > 

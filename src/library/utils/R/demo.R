@@ -58,15 +58,14 @@ function(topic, device = getOption("device"),
 	    available <- c(available, file.path(p, files))
     }
     if(length(available) == 0)
-	stop(paste("No demo found for topic", sQuote(topic)))
+	stop("No demo found for topic ", sQuote(topic))
     if(length(available) > 1) {
 	available <- available[1]
-	warning(paste("Demo for topic ",
-		      sQuote(topic),
-		      " found more than once,\n",
-		      "using the one found in ",
-		      sQuote(dirname(available[1])),
-		      sep = ""))
+	warning("Demo for topic ",
+                sQuote(topic),
+                " found more than once,\n",
+                "using the one found in ",
+                sQuote(dirname(available[1])))
     }
     cat("\n\n",
 	"\tdemo(", topic, ")\n",

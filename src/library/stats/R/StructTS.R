@@ -95,8 +95,8 @@ StructTS <- function(x, type = c("level", "trend", "BSM"),
                  lower = rep(0, np+1), upper = rep(Inf, np+1),
                  control = optim.control)
         if(res$convergence > 0)
-            warning(paste("possible convergence problem: optim gave code=",
-                          res$convergence, res$message))
+            warning("possible convergence problem: optim gave code=",
+                    res$convergence, " ", res$message)
     coef <- cf
     coef[mask] <- res$par
     Z$V[cbind(1:np, 1:np)] <- coef[1:np]*vx

@@ -1,7 +1,7 @@
 autoload <- function(name, package, reset=FALSE, ...)
 {
     if (!reset && exists(name, envir = .GlobalEnv, inherits = FALSE))
-	stop("Object with that name already exists")
+	stop("object with that name already exists")
     m <- match.call()
     m[[1]] <- as.name("list")
     newcall <- eval(m, parent.frame())
@@ -30,6 +30,5 @@ autoloader <- function (name, package, ...)
     if (exists(name, where = where, inherits = FALSE))
 	eval(as.name(name), as.environment(where))
     else
-	stop(paste("autoloader didn't find `", name, "' in `", package,
-                   "'.", sep = ""))
+	stop("autoloader didn't find ", sQuote(name), " in ", sQuote(package))
 }

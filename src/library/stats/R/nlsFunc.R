@@ -10,20 +10,20 @@
 ### It is made available under the terms of the GNU General Public
 ### License, version 2, or at your option, any later version,
 ### incorporated herein by reference.
-### 
+###
 ### This program is distributed in the hope that it will be
 ### useful, but WITHOUT ANY WARRANTY; without even the implied
 ### warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
 ### PURPOSE.  See the GNU General Public License for more
 ### details.
-### 
+###
 ### You should have received a copy of the GNU General Public
 ### License along with this program; if not, write to the Free
 ### Software Foundation, Inc., 59 Temple Place - Suite 330, Boston,
 ### MA 02111-1307, USA
 
 ###
-### asOneSidedFormula is extracted from the NLME-3.1 library for S 
+### asOneSidedFormula is extracted from the NLME-3.1 library for S
 ###
 
 asOneSidedFormula <-
@@ -36,8 +36,8 @@ asOneSidedFormula <-
   }
   if (inherits(object, "formula")) {
     if (length(object) != 2) {
-      stop(paste("Formula", deparse(as.vector(object)),
-		 "must be of the form \"~expr.\""))
+      stop("formula ", deparse(as.vector(object)),
+           "must be of the form '~expr'")
     }
     return(object)
   }
@@ -48,8 +48,8 @@ asOneSidedFormula <-
 		      call = object,
 		      character = as.name(object),
 		      expression = object[[1]],
-		      stop(paste(substitute(object), "cannot be of mode",
-				 mode(object))))))
+		      stop(substitute(object), " cannot be of mode ",
+                           mode(object)))))
 }
 
 setNames <- function( object, nm ) {

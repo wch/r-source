@@ -6,7 +6,7 @@ shapiro.test <- function(x) {
 	stop("sample size must be between 3 and 5000")
     rng <- x[n] - x[1]
     if(rng == 0)
-	stop(paste("all", sQuote("x[]"), "are identical"))
+	stop("all 'x' values are identical")
     if(rng < 1e-10)
 	x <- x/rng # rescale to avoid ifault=6
     n2 <- n %/% 2
@@ -22,7 +22,7 @@ shapiro.test <- function(x) {
 	     pw = double(1),
 	     ifault = integer(1), PACKAGE = "stats")
     if (sw$ifault && sw$ifault != 7)# 7 *does* happen (Intel Linux)
-	stop(paste("ifault=",sw$ifault,". This should not happen"))
+	stop("ifault=",sw$ifault,". This should not happen")
     RVAL <- list(statistic = c(W = sw$w),
 		 p.value = sw$pw,
 		 method = "Shapiro-Wilk normality test",

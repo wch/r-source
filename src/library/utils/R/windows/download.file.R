@@ -18,7 +18,7 @@ download.file <- function(url, destfile, method,
         else if(shell("lynx -help", invisible=TRUE)==0)
             method <- "lynx"
         else
-            stop("No download method found")
+            stop("no download method found")
     }
     if(method == "internal")
         status <- .Internal(download(url, destfile, quiet, mode, cacheOK))
@@ -32,7 +32,7 @@ download.file <- function(url, destfile, method,
                               path.expand(destfile)))
 
     if(status > 0)
-        warning("Download had nonzero exit status")
+        warning("download had nonzero exit status")
 
     invisible(status)
 }

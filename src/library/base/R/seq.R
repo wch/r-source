@@ -28,7 +28,7 @@ seq.default <-
 		stop("invalid (to - from)/by in seq(.)")
 	    }
 	    if(n < 0)
-		stop("Wrong sign in 'by' argument")
+		stop("wrong sign in 'by' argument")
 	    if(n > .Machine$integer.max)
 		stop("'by' argument is much too small")
 
@@ -38,7 +38,7 @@ seq.default <-
 	    from + (0:n) * by
 	}
     else if(!is.finite(length.out) || length.out < 0)
-	stop("Length must be non-negative number")
+	stop("length must be non-negative number")
     else if(length.out == 0)
 	integer(0)
     else if (One) 1:length.out
@@ -59,7 +59,7 @@ seq.default <-
 	from + (0:(length.out - 1)) * by
     else if(missing(from))
 	to - ((length.out - 1):0) * by
-    else stop("Too many arguments")
+    else stop("too many arguments")
 }
 
 sequence <- function(nvec)

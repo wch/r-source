@@ -42,8 +42,8 @@ selfStart.formula <-
     if (is.null(template)) {		# create a template if not given
         nm <- all.vars(model)
         if (any(msng <- is.na(match(parameters, nm)))) {
-            stop(paste("Parameter(s)", parameters[msng],
-                       "do not occur in the model formula"))
+            stop("Parameter(s) ", parameters[msng],
+                 " do not occur in the model formula")
         }
         template <- function() {}
         argNams <- c( nm[ is.na( match(nm, parameters) ) ], parameters )
@@ -113,7 +113,8 @@ getInitial.default <-
                    "  \"help(selfStart)\"\n",
                    "for the new form of the \"initial\" attribute.", sep="" ))
     }
-    stop(paste("No getInitial method found for", data.class(object), "objects"))
+    stop("No 'getInitial' method found for ", sQuote(data.class(object)),
+         " objects")
 }
 
 sortedXyData <-

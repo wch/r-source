@@ -30,9 +30,9 @@ GNOME <- gnome
 # for font metric afm files
 assign(".X11.Fonts", list(), envir = .X11env)
 
-X11FontError <- function(errDesc) {
-  stop(paste("Invalid X11 font specification:", errDesc))
-}
+X11FontError <- function(errDesc)
+    stop("invalid X11 font specification: ", errDesc)
+
 
 # Check that the font has the correct structure and information
 # Already checked that it had a name
@@ -85,12 +85,12 @@ X11Fonts <- function(...) {
     nnames <- length(fontNames)
     if (nnames == 0) {
       if (!all(sapply(fonts, is.character)))
-        stop("Invalid arguments in X11Fonts (must be font names)")
+        stop("invalid arguments in X11Fonts (must be font names)")
       else
         get(".X11.Fonts", envir=.X11env)[unlist(fonts)]
     } else {
       if (ndots != nnames)
-        stop("Invalid arguments in X11Fonts (need NAMED args)")
+        stop("invalid arguments in X11Fonts (need named args)")
       setX11Fonts(fonts, fontNames)
     }
   }

@@ -64,8 +64,7 @@ function(x, y = NULL, correct = TRUE, p = rep(1 / length(x), length(x)),
         }
         else {
             if (simulate.p.value)
-                warning(paste("Cannot compute simulated p-value",
-                              "with zero marginals"))
+                warning("cannot compute simulated p-value with zero marginals")
             if (correct && nrow(x) == 2 && ncol(x) == 2) {
                 YATES <- .5
                 METHOD <- paste(METHOD, "with Yates' continuity correction")

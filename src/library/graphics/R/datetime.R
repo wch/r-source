@@ -106,7 +106,7 @@ hist.POSIXt <- function(x, breaks, ..., xlab = deparse(substitute(x)),
                 pmatch(breaks,
                        c("secs", "mins", "hours", "days", "weeks",
                          "months", "years"))
-            if(is.na(valid)) stop("invalid specification of `breaks'")
+            if(is.na(valid)) stop("invalid specification of 'breaks'")
             start <- as.POSIXlt(min(x, na.rm = TRUE))
             incr <- 1
             if(valid > 1) { start$sec <- 0; incr <- 59.99 }
@@ -125,14 +125,14 @@ hist.POSIXt <- function(x, breaks, ..., xlab = deparse(substitute(x)),
             breaks <- seq(start, maxx + incr, breaks)
             breaks <- breaks[1:(1+max(which(breaks < maxx)))]
         }
-        else stop("invalid specification of `breaks'")
+        else stop("invalid specification of 'breaks'")
     }
     res <- hist.default(unclass(x), unclass(breaks), plot = FALSE, ...)
     res$equidist <- TRUE # years are of uneven lengths
     res$intensities <- res$intensities*incr
     res$xname <- xlab
     if(plot) {
-        ## trick to swallow arguments for hist.default, separate out `axes'
+        ## trick to swallow arguments for hist.default, separate out 'axes'
         myplot <- function(res, xlab, freq, format, breaks,
                            right, include.lowest, labels = FALSE,
                            axes = TRUE, ...)
@@ -143,7 +143,7 @@ hist.POSIXt <- function(x, breaks, ..., xlab = deparse(substitute(x)),
                 axis(2, ...)
                 if(num.br) breaks <- c.POSIXct(res$breaks)
                 axis.POSIXct(1, at = breaks,  format = format, ...)
-                                        # `...' : e.g. cex.axis
+                                        # '...' : e.g. cex.axis
             }
         }
         myplot(res, xlab, freq, format, breaks, ...)
@@ -228,7 +228,7 @@ hist.Date <- function(x, breaks, ..., xlab = deparse(substitute(x)),
         ## specified number of breaks
         } else if(is.character(breaks) && length(breaks) == 1) {
             valid <- pmatch(breaks, c("days", "weeks", "months", "years"))
-            if(is.na(valid)) stop("invalid specification of `breaks'")
+            if(is.na(valid)) stop("invalid specification of 'breaks'")
             start <- as.POSIXlt(min(x, na.rm = TRUE))
             incr <- 1
             if(valid > 1) { start$isdst <- -1}
@@ -244,14 +244,14 @@ hist.Date <- function(x, breaks, ..., xlab = deparse(substitute(x)),
             maxx <- max(x, na.rm = TRUE)
             breaks <- seq(start, maxx + incr, breaks)
             breaks <- breaks[1:(1+max(which(breaks < maxx)))]
-        } else stop("invalid specification of `breaks'")
+        } else stop("invalid specification of 'breaks'")
     }
     res <- hist.default(unclass(x), unclass(breaks), plot = FALSE, ...)
     res$equidist <- TRUE # years are of uneven lengths
     res$intensities <- res$intensities*incr
     res$xname <- xlab
     if(plot) {
-        ## trick to swallow arguments for hist.default, separate out `axes'
+        ## trick to swallow arguments for hist.default, separate out 'axes'
         myplot <- function(res, xlab, freq, format, breaks,
                            right, include.lowest, labels = FALSE,
                            axes = TRUE, ...)

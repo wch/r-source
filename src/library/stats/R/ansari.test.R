@@ -79,8 +79,7 @@ function(x, y, alternative = c("two.sided", "less", "greater"),
               uci <- NULL
               lci <- NULL
               if(length(u[u >= 0]) == 0 || length(l[l > 0]) == 0) {
-                  warning(paste("samples differ in location: cannot",
-                                "compute confidence set, returning NA"))
+                  warning("samples differ in location: cannot compute confidence set, returning NA")
                   return(c(NA, NA))
               }
               if (is.null(uci)) {
@@ -186,8 +185,7 @@ function(x, y, alternative = c("two.sided", "less", "greater"),
                     c(min(x[x<=0], na.rm=TRUE)/max(y[y<0], na.rm=TRUE),
                       max(x[x<=0], na.rm=TRUE)/min(y[y<0], na.rm=TRUE))
             if (any(is.infinite(c(srangepos, srangeneg)))) {
-                warning(paste("cannot compute asymptotic confidence",
-                              "set or estimator"))
+                warning("cannot compute asymptotic confidence set or estimator")
                 conf.int <- FALSE
             } else {
                 ccia <- function(alpha) {
@@ -196,9 +194,7 @@ function(x, y, alternative = c("two.sided", "less", "greater"),
                     statu <- ab(srange[1], zq=qnorm(alpha/2))
                     statl <- ab(srange[2], zq=qnorm(alpha/2, lower=FALSE))
                     if (statu > 0 || statl < 0) {
-                        warning(paste("samples differ in location:",
-                                      "cannot compute confidence set,",
-                                      "returning NA"))
+                        warning("samples differ in location: cannot compute confidence set, returning NA")
                         return(c(NA, NA))
                     }
                     u <- uniroot(ab, srange, tol=1e-4,
@@ -231,8 +227,7 @@ function(x, y, alternative = c("two.sided", "less", "greater"),
         if(exact && TIES) {
             warning("cannot compute exact p-value with ties")
             if(conf.int)
-                warning(paste("cannot compute exact confidence",
-                              "intervals with ties"))
+                warning("cannot compute exact confidence intervals with ties")
         }
     }
 

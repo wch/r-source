@@ -265,8 +265,7 @@ SSfol <-
               Dose <- eval(mCall[["Dose"]], data)
               n <- length(resp)
               if(length(input) != n) {
-                  stop(paste("must have length of response =",
-                             "length of second argument to SSfol"))
+                  stop("must have length of response = length of second argument to 'SSfol'")
               }
               if(n < 4) {
                   stop("must have at least 4 observations to fit an SSfol model")

@@ -19,8 +19,7 @@ install.packages <- function(pkgs, lib, repos = CRAN,
     if(missing(lib) || is.null(lib)) {
         lib <- .libPaths()[1]
         if(length(.libPaths()) > 1)
-            warning(paste("argument", sQuote("lib"),
-                          "is missing: using", lib))
+            warning("argument ", sQuote("lib"), " is missing: using ", lib)
     }
 
     if(is.null(repos) & missing(contriburl)) {
@@ -32,8 +31,8 @@ install.packages <- function(pkgs, lib, repos = CRAN,
             cmd <- paste(cmd0, "-l", dQuote(update[i, 2]),
                          dQuote(update[i, 1]))
             if(system(cmd) > 0)
-                warning(paste("Installation of package", sQuote(update[i, 1]),
-                              "had non-zero exit status"))
+                warning("Installation of package ", sQuote(update[i, 1]),
+                        " had non-zero exit status")
         }
         return(invisible())
     }
@@ -111,8 +110,8 @@ install.packages <- function(pkgs, lib, repos = CRAN,
             cmd <- paste(cmd0, "-l", dQuote(update[i, 2]), update[i, 3])
             status <- system(cmd)
             if(status > 0)
-                warning(paste("Installation of package", update[i, 1],
-                              "had non-zero exit status"))
+                warning("Installation of package ", sQuote(update[i, 1]),
+                        "had non-zero exit status")
         }
         if(!is.null(tmpd) && is.null(destdir))
             cat("\nThe downloaded packages are in ", tmpd, "\n", sep = "")
@@ -329,8 +328,7 @@ download.packages <- function(pkgs, destdir, available = NULL,
         ok <- (available[,"Package"] == p) | (available[,"Bundle"] == p)
         ok <- ok & !is.na(ok)
         if(!any(ok))
-            warning(paste("No package \"", p, "\" at the repositories.",
-                          sep=""))
+            warning("No package ", sQuote(p), " at the repositories")
         else {
             if(sum(ok) > 1) { # have multiple copies
                 vers <- package_version(available[ok, "Version"])
@@ -352,7 +350,7 @@ download.packages <- function(pkgs, destdir, available = NULL,
                 if(download.file(url, destfile, method, mode="wb") == 0)
                     retval <- rbind(retval, c(p, destfile))
                 else
-                    warning(paste("Download of package", p, "failed"))
+                    warning("download of package", sQuote(p), "failed")
             }
         }
     }
@@ -432,5 +430,5 @@ zip.unpack <- function(zipname, dest)
         } else {
             .Internal(int.unzip(zipname, NULL, dest))
         }
-    } else stop(paste("zipfile", zipname, "not found"))
+    } else stop("zipfile ", zipname, " not found")
 }

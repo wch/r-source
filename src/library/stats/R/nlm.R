@@ -39,7 +39,7 @@ uniroot <- function(f, interval, lower=min(interval), upper=max(interval),
     val <- .Internal(zeroin(function(arg) f(arg, ...), lower, upper, tol,
 			    as.integer(maxiter)))
     if((iter <- as.integer(val[2])) < 0) {
-	warning(paste("_NOT_ converged in ",maxiter,"iterations."))
+	warning("_NOT_ converged in ",maxiter, " iterations")
         iter <- -iter
     }
     list(root=val[1], f.root=f(val[1], ...),

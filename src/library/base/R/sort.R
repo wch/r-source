@@ -65,7 +65,7 @@ order <- function(..., na.last = TRUE, decreasing = FALSE)
     else{ ## remove nas
         z <- list(...)
         if(any(diff(sapply(z, length)) != 0))
-            stop("Argument lengths differ")
+            stop("argument lengths differ")
         ans <- sapply(z, is.na)
         ok <- if(is.matrix(ans)) !apply(ans, 1, any) else !any(ans)
         if(all(!ok)) return(integer(0))

@@ -46,17 +46,17 @@ tclArray <- function() {
     x
 }
 
-names.tclArray <- function(x) 
+names.tclArray <- function(x)
     as.character(tcl("array", "names", x))
 
-"names<-.tclArray" <- function(x, value) 
-    stop("Cannot change names on Tcl array")
+"names<-.tclArray" <- function(x, value)
+    stop("cannot change names on Tcl array")
 
-length.tclArray <- function(x) 
+length.tclArray <- function(x)
     as.integer(tcl("array", "size", x))
 
-"length<-.tclArray" <- function(x, value) 
-    stop("Cannot set length of Tcl array")
+"length<-.tclArray" <- function(x, value)
+    stop("cannot set length of Tcl array")
 
 
-    
+

@@ -75,8 +75,8 @@ simpleLoess <-
     D <- NCOL(x)
     if(D > 4) stop("only 1-4 predictors are allowed")
     N <- NROW(x)
-    if(!N || !D)	stop("invalid `x'")
-    if(!length(y))	stop("invalid `y'")
+    if(!N || !D)	stop("invalid 'x'")
+    if(!length(y))	stop("invalid 'y'")
     x <- as.matrix(x)
     max.kd <-  max(N, 200)
     robust <- rep(1, N)
@@ -470,8 +470,9 @@ anova.loess <- function(object, ...)
     ## calculate the number of models
     if (!all(sameresp)) {
 	objects <- objects[sameresp]
-	warning(paste("Models with response", deparse(responses[!sameresp]),
-		      "removed because response differs from", "model 1"))
+	warning("models with response ",
+                sQuote(deparse(responses[!sameresp])),
+                "removed because response differs from model 1")
     }
     nmodels <- length(objects)
     if(nmodels <= 1) stop("no models to compare")

@@ -7,8 +7,7 @@ function(file, sep = "", quote = "\"'", skip = 0,
         on.exit(close(file))
     }
     if(!inherits(file, "connection"))
-        stop(paste("argument", sQuote("file"),
-                   "must be a character string or connection"))
+        stop(sQuote("file"), " must be a character string or connection")
     .Internal(count.fields(file, sep, quote, skip, blank.lines.skip,
                            comment.char))
 }
@@ -33,8 +32,7 @@ function(file, header = FALSE, sep = "", quote = "\"'", dec = ".",
         on.exit(close(file))
     }
     if(!inherits(file, "connection"))
-        stop(paste("argument", sQuote("file"),
-                   "must be a character string or connection"))
+        stop(sQuote("file"), " must be a character string or connection")
     if(!isOpen(file)) {
         open(file, "r")
         on.exit(close(file))
@@ -88,8 +86,8 @@ function(file, header = FALSE, sep = "", quote = "\"'", dec = ".",
         readLines(file, 1) # skip over header
         if(missing(col.names)) col.names <- first
         else if(length(first) != length(col.names))
-            warning(paste("header and", sQuote("col.names"),
-                          "are of different lengths"))
+            warning("header and ", sQuote("col.names"),
+                    " are of different lengths")
 
     } else if (missing(col.names))
 	col.names <- paste("V", 1:cols, sep = "")
@@ -148,7 +146,7 @@ function(file, header = FALSE, sep = "", quote = "\"'", dec = ".",
     ##	we do this here so that columns match up
 
     if(cols != length(data)) { # this should never happen
-	warning(paste("cols =", cols," != length(data) =", length(data)))
+	warning("cols = ", cols, " != length(data) = ", length(data))
 	cols <- length(data)
     }
 
@@ -168,8 +166,8 @@ function(file, header = FALSE, sep = "", quote = "\"'", dec = ".",
         as.is <- rep.int(FALSE, cols)
         as.is[i] <- TRUE
     } else if (length(as.is) != cols)
-	stop(paste("as.is has the wrong length",
-		   length(as.is),"!= cols =", cols))
+	stop("'as.is' has the wrong length ",
+             length(as.is), " != cols = ", cols)
 
     do <- keep & !known # & !as.is
     if(rlabp) do[1] <- FALSE # don't convert "row.names"

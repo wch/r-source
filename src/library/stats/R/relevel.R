@@ -15,6 +15,6 @@ relevel.factor <- function(x, ref, ...)
         stop("ref must be an existing level")
     nlev <- length(lev)
     if(ref < 1 || ref > nlev)
-        stop(paste("ref =", ref, "must be in 1 :", nlev))
+        stop("ref = ", ref, " must be in 1 :", nlev)
     factor(x, levels = lev[c(ref, seq(along=lev)[-ref])])
 }

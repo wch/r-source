@@ -63,7 +63,7 @@ biplot.princomp <- function(x, choices = 1:2, scale = 1, pc.biplot=FALSE, ...)
 {
     if(length(choices) != 2) stop("length of choices must be 2")
     if(!length(scores <- x$scores))
-	stop(paste("object", deparse(substitute(x)), "has no scores"))
+	stop("object ", sQuote(deparse(substitute(x))), " has no scores")
     lam <- x$sdev[choices]
     if(is.null(n <- x$n.obs)) n <- 1
     lam <- lam * sqrt(n)
@@ -79,7 +79,7 @@ biplot.prcomp <- function(x, choices = 1:2, scale = 1, pc.biplot=FALSE, ...)
 {
     if(length(choices) != 2) stop("length of choices must be 2")
     if(!length(scores <- x$x))
-	stop(paste("object", deparse(substitute(x)), "has no scores"))
+	stop("object ", sQuote(deparse(substitute(x))), " has no scores")
     if(is.complex(scores))
         stop("biplots are not defined for complex PCA")
     lam <- x$sdev[choices]

@@ -28,7 +28,7 @@ medpolish <-
 	if(trace.iter) cat(iter,":", newsum,"\n")
     }
     if(converged) { if(trace.iter) cat("Final:", newsum,"\n")
-    } else warning(paste("medpolish() not converged in",maxiter,"iterations"))
+    } else warning("medpolish() not converged in ",maxiter, " iterations")
     names(r) <- rownames(z)
     names(c) <- colnames(z)
     ans <- list(overall=t, row=r, col=c, residuals=z,

@@ -22,8 +22,8 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
             target <- Rdeps$version
             res <- eval(parse(text=paste("current", Rdeps$op, "target")))
             if(!res)
-                stop(paste("This is R ", current, ", package ",
-                           sQuote(pkgname), " needs ", Rdeps$op, " ", target, sep=""),
+                stop("This is R ", current, ", package ",
+                     sQuote(pkgname), " needs ", Rdeps$op, " ", target,
                      call. = FALSE)
         }
         ## which version was this package built under?
@@ -35,22 +35,22 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
                      call. = FALSE)
             ## warn if later than this version
             if(built$R > current)
-                warning(paste("package", sQuote(pkgname),
-                              "was built under R version", built$R),
+                warning("package ", sQuote(pkgname),
+                        " was built under R version ", built$R,
                         call. = FALSE)
             if(.Platform$OS.type == "unix") {
                 platform <- built$Platform
 		if(length(grep("\\w", platform)) &&
                    !testPlatformEquivalence(platform, R.version$platform))
-                    stop(paste("package", sQuote(pkgname),
-                               "was built for", platform),
+                    stop("package ", sQuote(pkgname), " was built for ",
+                         platform,
                          call. = FALSE)
             }
         }
         else
-            stop(paste("Package", sQuote(pkgname),
-                       "has not been installed properly\n",
-                       "See the Note in ?library"), call. = FALSE)
+            stop("Package ", sQuote(pkgname),
+                 " has not been installed properly\n",
+                 "See the Note in ?library", call. = FALSE)
     }
 
     checkNoGenerics <- function(env, pkg)
@@ -166,9 +166,8 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
                 else {
                     if(logical.return) return(FALSE)
                     else
-                        stop(paste("Package", sQuote("MASS"),
-                                   "seems to be missing",
-                                   "from this R installation"))
+                        stop("Package ", sQuote("MASS"),
+                             " seems to be missing from this R installation")
                 }
             }
             return(if (logical.return) TRUE else invisible(.packages()))
@@ -197,7 +196,7 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
         ## NB from this point on `package' is either the original name or
         ## something like ash_1.0-8
         if(length(package) != 1)
-            stop(paste("argument", sQuote("package"), "must be of length 1"))
+            stop(sQuote("package"), " must be of length 1")
 	pkgname <- paste("package", package, sep = ":")
 	newpackage <- is.na(match(pkgname, search()))
 	if(newpackage) {
@@ -234,9 +233,9 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
             if(is.character(pos)) {
                 npos <- match(pos, search())
                 if(is.na(npos)) {
-                    warning(paste(sQuote(pos),
-                                  "not found on search path, using",
-                                  sQuote("pos=2")))
+                    warning(sQuote(pos),
+                            " not found on search path, using ",
+                            sQuote("pos=2"))
                     pos <- 2
                 } else pos <- npos
             }
@@ -291,8 +290,8 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
                          sQuote(libraryPkgName(package)),
                          call. = FALSE)
             } else if(verbose)
-                warning(paste("Package ", sQuote(libraryPkgName(package)),
-                              "contains no R code"))
+                warning("Package ", sQuote(libraryPkgName(package)),
+                        " contains no R code")
             ## lazy-load data sets if required
             dbbase <- file.path(which.lib.loc, package, "data", "Rdata")
             if(file.exists(paste(dbbase, ".rdb", sep="")))
@@ -340,8 +339,8 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
             on.exit()
 	}
 	if (verbose && !newpackage)
-            warning(paste("Package", sQuote(libraryPkgName(package)),
-                          "already present in search()"))
+            warning("Package ", sQuote(libraryPkgName(package)),
+                    " already present in search()")
     }
     else if(!missing(help)) {
 	if(!character.only)
@@ -417,13 +416,12 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
         colnames(db) <- c("Package", "LibPath", "Title")
         if((length(nopkgs) > 0) && !missing(lib.loc)) {
             if(length(nopkgs) > 1)
-                warning(paste("libraries",
-                              paste(sQuote(nopkgs), collapse = ", "),
-                              "contain no packages"))
+                warning("libraries ",
+                        paste(sQuote(nopkgs), collapse = ", "),
+                        " contain no packages")
             else
-                warning(paste("library",
-                              paste(sQuote(nopkgs)),
-                              "contains no package"))
+                warning("library ", paste(sQuote(nopkgs)),
+                        " contains no package")
         }
 
         y <- list(header = NULL, results = db, footer = NULL)
@@ -493,7 +491,7 @@ function(chname, package = NULL, lib.loc = NULL, verbose =
             if(file.exists(file)) break else file <- ""
         }
         if(file == "")
-            stop(paste("shared library", sQuote(chname), "not found"))
+            stop("shared library ", sQuote(chname), " not found")
         which <- sapply(.Dyn.libs, function(x) x$path == file)
         if(any(which)) {
             if(verbose)
@@ -522,10 +520,10 @@ function(chname, libpath, verbose = getOption("verbose"),
         chname <- substr(chname, 1, ncChname - ncFileExt)
     num <- match(chname, .Dyn.libs, 0)
     if(is.na(num))
-        stop(paste("shared library", sQuote(chname), "was not loaded"))
+        stop("shared library ", sQuote(chname), " was not loaded")
     file <- file.path(libpath, "libs", paste(chname, file.ext, sep = ""))
     if(!file.exists(file))
-        stop(paste("shared library", sQuote(chname), "not found"))
+        stop("shared library ", sQuote(chname), " not found")
     if(verbose)
         cat("now dyn.unload(", file, ") ...\n", sep = "")
     dyn.unload(file)
@@ -645,11 +643,11 @@ function(package, quietly = FALSE, warn.conflicts = TRUE,
     if(any(m <- is.na(pos))) {
         if(!quiet) {
             if(all(m))
-                stop(paste("none of the packages are loaded"))
+                stop("none of the packages are loaded")
             else
-                warning(paste("package(s)",
-                              paste(package[m], collapse=", "),
-                              "are not loaded"))
+                warning("package(s) ",
+                        paste(package[m], collapse=", "),
+                        " are not loaded")
         }
         pos <- pos[!m]
     }
@@ -770,11 +768,8 @@ function(package = NULL, lib.loc = NULL, quiet = FALSE,
                 paths <- paths[pos][1]
             }
             if(verbose)
-                warning(paste("package ", sQuote(pkg),
-                              " found more than once,\n",
-                              "using the one found in ",
-                              sQuote(paths),
-                              sep = ""))
+                warning("package ", sQuote(pkg), " found more than once,\n",
+                        "using the one found in ", sQuote(paths))
         }
         out <- c(out, paths)
     }
@@ -783,7 +778,7 @@ function(package = NULL, lib.loc = NULL, quiet = FALSE,
         if(length(out) == 0)
             stop("none of the packages were found")
         for(pkg in bad)
-            warning(paste("there is no package called", sQuote(pkg)))
+            warning("there is no package called ", sQuote(pkg))
     }
 
     out

@@ -1,6 +1,6 @@
 
 R : Copyright 2005, The R Foundation for Statistical Computing
-Version 2.1.0 Under development (unstable) (2005-01-28), ISBN 3-900051-07-0
+Version 2.1.0 Under development (unstable) (2005-01-29), ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -3352,7 +3352,7 @@ attr(,"contrasts")$x
 
 > lm.fit <- lm(y ~ x, data.frame(x=1:10, y=1:10))
 > try(predict(lm.fit, data.frame(x=NA)))
-Error: variable 'x' was fitted with numeric but logical was supplied
+Error: variable 'x' was fitted with class "numeric" but class "logical" was supplied
 > ## wrong answers in 1.8.0, refused to run in 1.8.1
 > 
 > 
@@ -4149,7 +4149,7 @@ Coefficients:
           7           8           9          10 
  0.08867482  0.25896653  0.27533143 -0.47793778 
 Warning message:
-'newdata' had 2 rows but variable(s) found have 10 rows 
+'newdata' had 2 rows but variable(s) found have 10 rows
 > ## warns as from 2.0.0
 > 
 > 

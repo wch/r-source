@@ -26,14 +26,14 @@ optim <- function(par, fn, gr = NULL,
 
     con[(namc <- names(control))] <- control
     if(con$trace < 0)
-        warning(paste("read the documentation for", sQuote("trace"),
-                      "more carefully"))
+        warning("read the documentation for ", sQuote("trace"),
+                " more carefully")
     if (method == "L-BFGS-B" &&
         any(!is.na(match(c("reltol","abstol"), namc))))
-        warning(paste("Method L-BFGS-B uses", sQuote("factr"),
-                      paste("(& ", sQuote("pgtol"), ")", sep = ""),
-                      "instead of", sQuote("reltol"),
-                      "and", sQuote("abstol")))
+        warning("Method L-BFGS-B uses ", sQuote("factr"),
+                "(& ", sQuote("pgtol"), ")",
+                " instead of ", sQuote("reltol"),
+                " and ", sQuote("abstol"))
     npar <- length(par)
     if(npar == 1 && method == "Nelder-Mead")
         warning("one-diml optimization by Nelder-Mead is unreliable: use optimize")

@@ -78,7 +78,7 @@ savePlot <- function(filename = "Rplot",
     devcur <- match(device, devlist, NA)
     if(is.na(devcur)) stop("no such device")
     devname <- names(devlist)[devcur]
-    if(devname != "windows") stop("can only copy from `windows' devices")
+    if(devname != "windows") stop("can only copy from 'windows' devices")
     if(filename == "clipboard" && type == "wmf") filename <- ""
     if(nchar(filename) > 0) filename <- paste(filename, type, sep=".")
     invisible(.External("savePlot", device, filename, type,
@@ -121,7 +121,7 @@ checkWindowsFont <- function(font) {
   # i.e., just a font family name, possibly with "TT" as the first
   # two characters to indicate a TrueType font
   if (!is.character(font) || length(font) != 1)
-    stop("Invalid Windows font:  must be a single font family name")
+    stop("invalid Windows font:  must be a single font family name")
   font
 }
 
@@ -160,12 +160,12 @@ windowsFonts <- function(...) {
     nnames <- length(fontNames)
     if (nnames == 0) {
       if (!all(sapply(fonts, is.character)))
-        stop("Invalid arguments in windowsFonts (must be font names)")
+        stop("invalid arguments in windowsFonts (must be font names)")
       else
         get(".Windows.Fonts", envir=.Windowsenv)[unlist(fonts)]
     } else {
       if (ndots != nnames)
-        stop("Invalid arguments in windowsFonts (need NAMED args)")
+        stop("invalid arguments in windowsFonts (need named args)")
       setWindowsFonts(fonts, fontNames)
     }
   }
