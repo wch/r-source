@@ -317,7 +317,7 @@ quoted.  Applicable OS-specific collate specifications take precedence.
 The optional @samp{LazyLoad} and @samp{LazyData} fields control whether
 the @R{} objects and the datasets (respectively) use lazy-loading: set
 the field's value to @samp{yes} or @samp{true} for lazy-loading and
-@samp{no} or @sample{false} for no lazy-loading.  (Capitalized values
+@samp{no} or @samp{false} for no lazy-loading.  (Capitalized values
 are also accepted.)  Note that these values override the command-line
 options of @code{R CMD INSTALL}, @samp{--[no-]lazy} and
 @samp{--[no-]lazy-data}.
