@@ -1,1 +1,0 @@
-?package(r-base):needs="text" section="Apps/Math"  title="R" command="/usr/bin/R"
