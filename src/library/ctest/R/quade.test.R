@@ -55,7 +55,8 @@ quade.test.default <- function(y, groups, blocks)
               class = "htest")
 }
 
-quade.test.formula <- function(formula, data, subset, na.action) {
+quade.test.formula <- function(formula, data, subset, na.action)
+{
     if(missing(formula))
         stop("formula missing")
     ## <FIXME>

@@ -1,18 +1,20 @@
-<html lang="en"><head>
-<title>R Installation and Adminstration</title>
+<html lang="en">
+<head>
+<title>R Installation and Administration</title>
 <meta http-equiv="Content-Type" content="text/html">
-<meta name=description content="R Installation and Adminstration">
-<meta name=generator content="makeinfo 4.0">
+<meta name=description content="R Installation and Administration">
+<meta name=generator content="makeinfo 4.0b">
 <link href="http://texinfo.org/" rel=generator-home>
-</head><body>
+</head>
 
+<body>
 <a name="Top"></a>
 
 <h1>R Installation and Administration</h1>
 
 <p>This is a guide to installation and administration for R.
 
-<p>The current version of this document is 1.3.0 (2001-06-22).
+<p>The current version of this document is 1.3.1 (2001-08-31).
 
 </ul>
 
@@ -81,14 +83,14 @@ been modified (e.g., by building in their directories).
 
 <p>to create a copy of the source tree specified by <var>module</var> in the
 subdirectory <code>R</code> of the current directory, where <var>module</var>
-specifies one of the three existing flavours of the R sources, and
-can be one of <code>r-release</code> (latest released version),
-<code>r-release-patched</code> (latest released version with patches applied),
-and <code>r-devel</code> (current development version).  The rsync trees are
-created directly from the master CVS archive and are updated hourly. 
-The <code>-C</code> option in the <code>rsync</code> command is to cause it to
-skip the CVS directories.  Further information on <code>rsync</code> is
-available at <a href="http://rsync.samba.org/rsync/">http://rsync.samba.org/rsync/</a>.
+specifies one of the four existing flavors of the R sources, and can be
+one of <code>r-release</code> (current released version), <code>r-patched</code>
+(patched released version), and <code>r-devel</code> (development version,
+less stable), and <code>r-ng</code> (next generation, unstable).  The rsync
+trees are created directly from the master CVS archive and are updated
+hourly.  The <code>-C</code> option in the <code>rsync</code> command is to
+cause it to skip the CVS directories.  Further information on
+<code>rsync</code> is available at <a href="http://rsync.samba.org/rsync/">http://rsync.samba.org/rsync/</a>.
 
 <a name="Installing%20R%20under%20Unix"></a>
 
@@ -101,10 +103,10 @@ Unix-like platforms, including <code>i386-freebsd</code>, <code>i386-linux</code
 <code>hppa-hp-hpux</code>, <code>sparc-linux</code> and <code>sparc-sun-solaris</code>.
 
 <p>In addition, binary distributions are available for most common Linux
-distributions, Compaq Alpha systems running OSF1, and for MacOS X.  See
-the <small>FAQ</small> for current details.  These are installed in
-platform-specific ways.  So for the rest of this chapter we consider
-only building from the sources.
+distributions, Compaq Alpha systems running OSF/Tru64, and for MacOS X
+(Darwin) with X11.  See the <small>FAQ</small> for current details.  These
+are installed in platform-specific ways.  So for the rest of this
+chapter we consider only building from the sources.
 
 </ul>
 
@@ -325,14 +327,14 @@ cross-compile, see <code>src/gnuwin32/INSTALL</code>.
 
 <p>The <code>bin/macos</code> directory of a <small>CRAN</small> site contains
 <code>bin-hex</code>ed (<code>hqx</code>) and <code>stuffit</code> (<code>sit</code>)
-self-extracting binaries for a base distribution and a large number of
-add-on packages to run under MacOS 8.6 to MacOS 9.1 or MacOS X under
-Classic Environment.
-
-<p>Just extract one of these self-extracting binaries in a suitable folder.
+archives for a base distribution and a large number of add-on packages
+to run under MacOS 8.6 to MacOS 9.1 or MacOS X natively.  Just extract
+one of these archives in a suitable folder using standard utilities like
+Aladdin Stuffit Expander (tm).
 
 <p>There is also a port to MacOS X which is considered to be a Unix variant
-in this document.
+in this document.  You can find it in the <code>bin/macosx</code> directory at
+of a <small>CRAN</small> site.
 
 <a name="Add-on%20packages"></a>
 
@@ -518,13 +520,13 @@ of the Tcl/Tk files you may need the configuration options
 <p>The linear algebra routines in R can make use of enhanced BLAS (Basic
 Linear Algebra Subprograms, <a href="http://www.netlib.org/blas/faq.html">http://www.netlib.org/blas/faq.html</a>)
 routines.  Some are compiler-system-specific (<code>libsunperf</code> on Sun
-Sparc<a rel=footnote href="#fn-4"><sup>4</sup></a>, <code>libscs</code> and <code>libcomplib.sgimath</code> on SGI,
-<code>libessl</code> on IBM) but ATLAS (<a href="http://www.netlib.org/atlas/">http://www.netlib.org/atlas/</a>)
-is a `tuned' BLAS that runs on a wide range of platforms.  If no more
-specific library is found, a <code>libblas</code> library in the library path
-will be used.  You can specify a specific BLAS library by the
-configuration option <code>--with-blas</code> and not to use an external
-BLAS library by <code>--without-blas</code>.
+Sparc<a rel=footnote href="#fn-4"><sup>4</sup></a>, <code>libessl</code> on IBM) but ATLAS
+(<a href="http://www.netlib.org/atlas/">http://www.netlib.org/atlas/</a>) is a `tuned' BLAS that runs on a
+wide range of Unix-alike platforms.  If no more specific library is
+found, a <code>libblas</code> library in the library path will be used.  You
+can specify a specific BLAS library by the configuration option
+<code>--with-blas</code> and not to use an external BLAS library by
+<code>--without-blas</code>.
 
 <p>Note that the BLAS library will be used for several add-on packages as
 well as for R itself.  This means that it is better to use a shared
@@ -538,10 +540,13 @@ but not single-precision nor complex routines.
 using them with R as the likely performance gains are thought to be
 small.
 
-<p>As with all libraries, you need to ensure that they are R were
+<p>As with all libraries, you need to ensure that they and R were
 compiled with compatible compilers and flags.  For example, this means
 that on Sun Sparc using the native compilers the flag <code>-dalign</code> is
 needed so <code>libsunperf</code> can be used.
+
+<p>An ATLAS `tuned' BLAS can also be used on Windows: see
+<code>src/gnuwin32/INSTALL</code> for how to enable this.
 
 <a name="Configuration%20on%20Unix"></a>
 

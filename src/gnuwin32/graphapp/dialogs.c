@@ -298,6 +298,19 @@ static void hit_button(control c)
 	hide(w);
 }
 
+#ifndef OLD
+extern void selectfolder(char *); /* from ../shext.c */
+
+static void browse_button(control c)
+{
+    window w = parentwindow(c);
+    dialog_data *d = data(w);
+    char strbuf[MAX_PATH];
+    
+    selectfolder(strbuf);
+    if(strlen(strbuf)) settext(d->text, strbuf);
+}
+#else
 static void browse_button(control c)
 {
     window w = parentwindow(c);
@@ -332,6 +345,7 @@ static void browse_button(control c)
 	 settext(d->text, strbuf);
     }
 }
+#endif
 
 static void hit_key(window w, int key)
 {

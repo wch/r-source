@@ -2,7 +2,7 @@
 \title{Add Arrows to a Plot}
 \usage{
 arrows(x0, y0, x1, y1, length = 0.25, angle = 30, code = 2,
-       col = par("fg"), lty = NULL, lwd = par("lwd"), xpd = FALSE)
+       col = par("fg"), lty = NULL, lwd = par("lwd"), xpd = NULL)
 }
 \alias{arrows}
 \arguments{

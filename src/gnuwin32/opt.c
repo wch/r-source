@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1998--2000  Guido Masarotto and Brian Ripley
+ *  Copyright (C) 1998--2001  Guido Masarotto and Brian Ripley
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -65,7 +65,7 @@ static char *rmspace(char *s)
 {
     int   i;
 
-    for (i = strlen(s) - 1; s[i] == ' '; i--)
+    for (i = strlen(s) - 1; i >= 0 && s[i] == ' '; i--)
 	s[i] = '\0';
     for (i = 0; s[i] == ' '; i++);
     return &s[i];

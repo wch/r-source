@@ -3,10 +3,9 @@
 \usage{
 glm(formula, family = gaussian, data, weights = NULL, subset = NULL,
     na.action, start = NULL, offset = NULL,
-    control = glm.control(epsilon=0.0001, maxit=10, trace=FALSE),
-    model = TRUE, method = "glm.fit", x = FALSE, y = TRUE,
-    contrasts = NULL, ...)
-glm.control(epsilon = 0.0001, maxit = 10, trace = FALSE)
+    control = glm.control(\dots), model = TRUE, method = "glm.fit",
+    x = FALSE, y = TRUE, contrasts = NULL, \dots)
+
 glm.fit(x, y, weights = rep(1, nrow(x)),
         start = NULL, etastart  =  NULL, mustart = NULL,
         offset = rep(0, nrow(x)),
@@ -15,7 +14,6 @@ glm.fit(x, y, weights = rep(1, nrow(x)),
 weights.glm(object, type = c("prior", "working"), ...)
 }
 \alias{glm}
-\alias{glm.control}
 \alias{glm.fit}
 \alias{glm.fit.null}
 \alias{weights.glm}
@@ -62,7 +60,7 @@ weights.glm(object, type = c("prior", "working"), ...)
 
   \item{method}{the method to be used in fitting the model.
     The default (and presently only) method \code{glm.fit}
-    uses iteratively reweighted least squares.}
+    uses iteratively reweighted least squares (IWLS).}
 
   \item{x, y}{logical values indicating whether the response
     vector and model matrix used in the fitting process
@@ -74,6 +72,10 @@ weights.glm(object, type = c("prior", "working"), ...)
   \item{object}{an object inheriting from class \code{"glm"}.}
   \item{type}{character, partial matching allowed.  Type of weights to
     extract from the fitted model object.}
+
+  \item{intercept}{logical. Should an intercept be included?}
+  
+  \item{\dots}{further arguments passed to or from other methods.}
 }
 \description{
   \code{glm} is used to fit generalized linear models, specified by
@@ -189,9 +191,22 @@ weights.glm(object, type = c("prior", "working"), ...)
   by \code{\link{predict.glm}}, whereas those specified by an offset term
   in the formula will be.
 }
+\references{
+  McCullagh P. and Nelder, J. A. (1989)
+  \emph{Generalized Linear Models.}
+  London: Chapman and Hall.
+
+  Dobson, A. J. (1990)
+  \emph{An Introduction to Generalized Linear Models.}
+  London: Chapman and Hall.
+
+  Venables, W. N. and Ripley, B. D. (1999)
+  \emph{Modern Applied Statistics withe S-PLUS.}
+  New York: Springer.
+}
+
 \examples{
-## Annette Dobson (1990) "An Introduction to Generalized Linear Models".
-## Page 93: Randomized Controlled Trial :
+## Dobson (1990) Page 93: Randomized Controlled Trial :
 counts <- c(18,17,15,20,10,20,25,13,12)
 outcome <- gl(3,1,9)
 treatment <- gl(3,3)

@@ -3,7 +3,7 @@
 \alias{logLik.lm}
 \title{Extract Log-Likelihood from an lm Object}
 \usage{
-\method{logLik}{lm}(object, REML, \dots)
+\method{logLik}{lm}(object, REML = FALSE, \dots)
 }
 \arguments{
   \item{object}{an object inheriting from class \code{"lm"}.}

@@ -27,6 +27,8 @@
 #include <R_ext/Complex.h>
 #include <R_ext/R-ftp-http.h>
 
+int R_OutputCon; /* used in printutils.c */
+
 #ifdef HAVE_UNISTD_H
 # include <unistd.h>
 #endif
@@ -785,9 +787,13 @@ static long gzfile_seek(Rconnection con, int where, int origin, int rw)
 
 static int gzfile_fflush(Rconnection con)
 {
-    gzFile fp = ((Rgzfileconn)(con->private))->fp;
+    /* Degrades compression too much, as Rvprintf calls fflush.
 
-    return gzflush(fp, Z_SYNC_FLUSH);
+       gzFile fp = ((Rgzfileconn)(con->private))->fp;
+
+       return gzflush(fp, Z_SYNC_FLUSH); */
+
+    return 0;
 }
 
 static size_t gzfile_read(void *ptr, size_t size, size_t nitems,
@@ -1648,7 +1654,8 @@ no_more_lines:
     if(nbuf > 0) { /* incomplete last line */
 	if(con->text && con->blocking) {
 	    nread++;
-	    warningcall(call, "incomplete final line");
+	    warning("incomplete final line found by readLines on `%s'",
+		    con->description);
 	} else {
 	    /* push back the rest */
 	    pushback(con, 0, buf);
@@ -1656,8 +1663,8 @@ no_more_lines:
 	}
     }
     free(buf);
-    if(n < nnn && !ok)
-	errorcall(call, "too few lines read");
+    if(nread < nnn && !ok)
+	error("too few lines read in readLines");
     PROTECT(ans2 = allocVector(STRSXP, nread));
     for(i = 0; i < nread; i++)
 	SET_STRING_ELT(ans2, i, STRING_ELT(ans, i));
@@ -1738,7 +1745,7 @@ static SEXP readOneString(Rconnection con)
 SEXP do_readbin(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP ans = R_NilValue, swhat;
-    int i, size, swap, n, m = 0, sizedef= 4, mode = 1;
+    int i, size, signd, swap, n, m = 0, sizedef= 4, mode = 1;
     char *what;
     void *p = NULL;
     Rboolean wasopen;
@@ -1756,6 +1763,9 @@ SEXP do_readbin(SEXP call, SEXP op, SEXP args, SEXP env)
     n = asInteger(CAR(args)); args = CDR(args);
     if(n == NA_INTEGER || n < 0) error("invalid value of `n'");
     size = asInteger(CAR(args)); args = CDR(args);
+    signd = asLogical(CAR(args)); args = CDR(args);
+    if(signd == NA_LOGICAL)
+	error("invalid value of `signed'");
     swap = asLogical(CAR(args));
     if(swap == NA_LOGICAL)
 	error("invalid value of `swap'");
@@ -1854,10 +1864,16 @@ SEXP do_readbin(SEXP call, SEXP op, SEXP args, SEXP env)
 		    if(swap && size > 1) swapb(buf, size);
 		    switch(size) {
 		    case sizeof(signed char):
-			INTEGER(ans)[i] = (int)*((signed char *)buf);
+			if(signd)
+			    INTEGER(ans)[i] = (int)*((signed char *)buf);
+			else
+			    INTEGER(ans)[i] = (int)*((unsigned char *)buf);
 			break;
 		    case sizeof(short):
-			INTEGER(ans)[i] = (int)*((short *)buf);
+			if(signd)
+			    INTEGER(ans)[i] = (int)*((short *)buf);
+			else
+			    INTEGER(ans)[i] = (int)*((unsigned short *)buf);
 			break;
 #if SIZEOF_LONG == 8
 		    case sizeof(long):

@@ -14,20 +14,23 @@ lcm(x)
 \alias{layout.show}
 \alias{lcm}
 \arguments{
-\item{mat}{a matrix object specifying the location of the next \eqn{N} figures
-  on the output device.  Each value in the matrix must be \code{0} or a
-  positive integer.     If \eqn{N} is the largest positive integer in
-  the matrix, then the integers \eqn{\{1,\dots,N-1\}} must also appear
-  at least once in the matrix.}
-\item{widths}{a vector of values for the widths of columns on the
-  device.  Relative widths are specified with numeric values.    Absolute
-  widths (in centimetres) are specified with the \code{lcm()} function (see
-  examples).}
-\item{heights}{a vector of values for the heights of rows on the device.
-  Relative and absolute heights can be specified, see \code{widths} above.}
-\item{respect}{either a logical value or a matrix object.  If the
-  latter, then it must have the same dimensions as \code{mat} and
-  each value in the matrix must be either \code{0} or \code{1}.}
+  \item{mat}{a matrix object specifying the location of the next
+    \eqn{N} figures
+    on the output device.  Each value in the matrix must be \code{0} or a
+    positive integer.     If \eqn{N} is the largest positive integer in
+    the matrix, then the integers \eqn{\{1,\dots,N-1\}} must also appear
+    at least once in the matrix.}
+  \item{widths}{a vector of values for the widths of columns on the
+    device.  Relative widths are specified with numeric values.    Absolute
+    widths (in centimetres) are specified with the \code{lcm()} function (see
+    examples).}
+  \item{heights}{a vector of values for the heights of rows on the device.
+    Relative and absolute heights can be specified, see \code{widths} above.}
+  \item{respect}{either a logical value or a matrix object.  If the
+    latter, then it must have the same dimensions as \code{mat} and
+    each value in the matrix must be either \code{0} or \code{1}.}
+  \item{n}{number of figures to plot.}
+  \item{x}{a dimension to be intepreted as a number of centimetres.}
 }
 \description{
     \code{layout} divides the device up into as many rows and columns as
@@ -92,7 +95,7 @@ and \code{\link{par}(mfg=..)}
  top <- max(c(xhist$counts, yhist$counts))
  xrange <- c(-3,3)
  yrange <- c(-3,3)
- nf <- layout(matrix(c(2,0,1,3),2,2,T), c(3,1), c(1,3), TRUE)
+ nf <- layout(matrix(c(2,0,1,3),2,2,byrow=TRUE), c(3,1), c(1,3), TRUE)
  layout.show(nf)
 
  par(mar=c(3,3,1,1))

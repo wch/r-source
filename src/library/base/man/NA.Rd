@@ -19,6 +19,9 @@ for those elements marked \code{NA} or \code{\link{NaN}} (!)
 and \code{FALSE} otherwise.
 \code{dim}, \code{dimnames} and \code{names} attributes are preserved.
 }
+\arguments{
+  \item{x}{an \R object to be tested.}
+}
 \details{
     \code{is.na(x)} works elementwise when \code{x} is a \code{\link{list}}.
 

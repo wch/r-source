@@ -7,11 +7,13 @@ to be as close as possible to the implementation on Unix, but see the
 list of differences below.  The port was by Guido Masarotto and Brian
 Ripley.
 
+We are told this runs on Windows XP release candidates too.
+
 See the file `CHANGES' for the new features of this version.
 
-You will need MSVCRT.dll installed.  It is installed on all Windows
-98, ME, NT4 and 2000 machines, but not all 95 machines.  You can
-download it from
+You will need MSVCRT.dll installed.  It is installed on all recent
+Windows installations, but not all 95 machines.  You can download it
+from
 
 	ftp://ftp.microsoft.com/softlib/mslfiles/msvcrt.exe
 
@@ -27,9 +29,6 @@ The distribution can be obtained in one of three versions:
 installer.  It contains all the R components, and you can select what
 want installed.
 
-NOTE: if you previously installed rw1023 this way, it may suggest a
-path ending in rw1023.  Alter that to end in rw1030.
-
 
 2) Files miniR.exe and miniR-1.bin to miniR-6.bin.  If you need to,
 put miniR.exe and miniR-1.bin on one floppy, and miniR-2.bin to
@@ -37,9 +36,6 @@ miniR-6.bin on separate floppies.
 
 This is a small installation, containing text and compiled HTML help
 and the Introduction to R and Data Import/Export manuals in PDF.
-
-NOTE: if you previously installed rw1023 this way, it may suggest a
-path ending in rw1023.  Alter that to end in rw1030.
 
 
 3) The full distribution consists of several zip files:

@@ -1,6 +1,6 @@
 link.html.help <- function(verbose=FALSE, lib.loc=.Library)
 {
-    if(!file.exists(file.path(R.home(), "doc", "html")))
+    if(!file.exists(file.path(R.home(), "doc", "html", "search")))
        return(invisible(NULL))
     if(verbose) {
         cat("updating HTML package descriptions\n")
@@ -11,7 +11,7 @@ link.html.help <- function(verbose=FALSE, lib.loc=.Library)
 }
 
 
-make.packages.html <- function(lib.loc=.Library)
+make.packages.html <- function(lib.loc=.lib.loc)
 {
     f.tg <- file.path(R.home(), "doc/html/packages.html")
     f.hd <- file.path(R.home(), "doc/html/packages-head.html")
@@ -20,6 +20,8 @@ make.packages.html <- function(lib.loc=.Library)
     out <- file(f.tg, open="a")
     cat('<table align="center" summary="R Package list">\n', file=out)
     pg <- sort(.packages(all.available = TRUE, lib.loc = lib.loc))
+    rh <- gsub("\\\\", "/", R.home())
+    drive <- substring(rh, 1, 2)
     for (i in  pg) {
         t.file <- system.file("TITLE", package = i)
         if (nchar(t.file) > 0)
@@ -29,9 +31,14 @@ make.packages.html <- function(lib.loc=.Library)
             if (title == "NA") title <- "-- Title is missing --"
             f.t <- c(i, title)
         }
-        lib <- gsub(":", "|", system.file(package=i))
+        lib <- system.file(package=i)
+        if(is.na(pmatch(rh, lib))) {
+            if(substring(lib, 2, 2) != ":") lib <- paste(drive, lib, sep="")
+            lib <- paste("file:///", lib, sep="")
+        } else
+            lib <- gsub(rh, "../..", lib)
         cat('<tr align="left" valign="top">\n',
-            "<td><a href=\"file:///", lib, "/html/00Index.html\">",
+            "<td><a href=\"", lib, "/html/00Index.html\">",
             f.t[1], "</a></td><td>", paste(f.t[-1], collapse=" "),
             "</td></tr>\n", file=out, sep="")
     }

@@ -1,67 +1,29 @@
 \name{restart}
 \alias{restart}
-\alias{try}
 \title{Restart an Expression}
 \usage{
 restart(on = TRUE)
-try(expr, first = TRUE)
 }
 \arguments{
-  \item{on}{if true a jump point is set; if false the jump point is removed}
-  \item{expr}{an \R expression to try}
-  \item{first}{not for user use!}
+  \item{on}{if true a jump point is set; if false the jump point is removed.}
 }
 \description{
   \code{restart} performs a type of non-local return.
-
-  \code{try} is a user-friendly wrapper to run an expression that might fail.
 }
 \details{
-  When \code{restart} is called with \code{on = TRUE} the evaluator marks that 
-  function as a return point. Any errors or signals (such as control-C on
-  Unix) cause control to return to the start of the function containing the
-  call to \code{restart}. The most recently established function is always
-  entered first.
-}
-\value{
-  \code{try} returns the value of the expression if it succeeds, and an
-  invisible object of class \code{"try-error"} containing the error
-  message if it if fails. The normal error handling will print the same
-  message unless \code{options("show.error.messages")} is false.
+  When \code{restart} is called with \code{on = TRUE} the evaluator
+  marks that function as a return point.  Any errors or signals
+  (such as control-C on Unix) cause control to return to the start of
+  the function containing the call to \code{restart}. The most recently
+  established function is always entered first.
 }
 \note{
   The direct use of \code{restart} is likely to result in an infinite loop.
-  Use \code{try} unless you are sure you know what you are doing.
+  Use \code{\link{try}} unless you are \bold{sure} you know what
+  you are doing.
 }
 \seealso{
   \code{\link{options}} for setting error handlers and suppressing the
-  printing of error messages;
-  \code{\link{geterrmessage}} for retrieving the last error message.
-}
-\examples{
-## this example will not work correctly in example(try), but
-##  it does work correctly if pasted in
-options(show.error.messages = FALSE)
-try(log("a"))
-print(.Last.value)
-options(show.error.messages = TRUE)
-
-## run a simulation, keep only results that worked.
-set.seed(123)
-x <- rnorm(50)
-doit <- function(x)
-{
-    x <- sample(x, replace=TRUE)
-    if(length(unique(x)) > 30) mean(x)
-    else stop("too few unique points")
-}
-options(show.error.messages = FALSE)
-## alternative 1
-res <- lapply(1:100, function(i) try(doit(x)))
-## alternative 2
-\dontrun{res <- vector("list", 100)
-for(i in 1:100) res[[i]] <- try(doit(x))}
-options(show.error.messages = TRUE)
-unlist(res[sapply(res, function(x) !inherits(x, "try-error"))])
+  printing of error messages.
 }
 \keyword{programming}

@@ -1,9 +1,14 @@
 \name{deriv}
+\alias{D}
+\alias{deriv}
+\alias{deriv.default}
+\alias{deriv.formula}
+\alias{deriv3}
+\alias{deriv3.default}
+\alias{deriv3.formula}
 \title{Symbolic and Algorithmic Derivatives of Simple Expressions}
-\usage{
-    D (expr, name)
- deriv(expr, namevec, function.arg = NULL, tag = ".expr", hessian = FALSE)
-deriv3(expr, namevec, function.arg = NULL, tag = ".expr", hessian = TRUE)
+\description{
+  Compute derivatives of simple expressions, symbolically.
 }
 \synopsis{
 D(expr, name)
@@ -14,19 +19,17 @@ deriv3(expr, ...)
 deriv3.default(expr, namevec, function.arg, tag, hessian)
 deriv3.formula(expr, namevec, function.arg, tag, hessian)
 }
-\alias{D}
-\alias{deriv}
-\alias{deriv.default}
-\alias{deriv.formula}
-\alias{deriv3}
-\alias{deriv3.default}
-\alias{deriv3.formula}
+\usage{
+    D (expr, name)
+ deriv(expr, namevec, function.arg = NULL, tag = ".expr", hessian = FALSE)
+deriv3(expr, namevec, function.arg = NULL, tag = ".expr", hessian = TRUE)
+}
 \arguments{
   \item{expr}{\code{\link{expression}} or \code{\link{call}} to
-      be differentiated.}
+    be differentiated.}
   \item{name,namevec}{character vector, giving the variable names (only
-    one for \code{D(.)}) with
-    respect to which derivatives will be computed.}
+    one for \code{D()}) with respect to which derivatives will be
+    computed.}
   \item{function.arg}{If specified, a character vector of arguments for
     a function return, or a function (with empty body) or \code{TRUE},
     the latter indicating that a function with argument names
@@ -35,9 +38,6 @@ deriv3.formula(expr, namevec, function.arg, tag, hessian)
     variables in result.}
   \item{hessian}{a logical value indicating whether the second derivatives
     should be calculated and incorporated in the return value.}
-}
-\description{
-  Compute derivatives of simple expressions, symbolically.
 }
 \details{
   \code{D} is modelled after its S namesake for taking simple symbolic

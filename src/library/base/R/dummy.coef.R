@@ -7,7 +7,8 @@ dummy.coef.lm <- function(object, use.na=FALSE)
     tl <- attr(Terms, "term.labels")
     int <- attr(Terms, "intercept")
     facs <- attr(Terms, "factors")[-1, , drop=FALSE]
-    vars <- rownames(facs)
+    Terms <- delete.response(Terms)
+    vars <- all.vars(Terms)
     xl <- object$xlevels
     if(!length(xl)) {			# no factors in model
 	return(as.list(coef(object)))
@@ -43,7 +44,14 @@ dummy.coef.lm <- function(object, use.na=FALSE)
 	}
 	pos <- pos + lterms[j]
     }
-    mm <- model.matrix(delete.response(Terms), dummy, object$contrasts, xl)
+    ## some terms like poly(x,1) will give problems here, so allow
+    ## NaNs and set to NA afterwards.
+    mf <- model.frame(Terms, dummy, na.action=function(x)x, xlev=xl)
+    mm <- model.matrix(Terms, mf, object$contrasts, xl)
+    if(any(is.na(mm))) {
+        warning("Some terms will have NAs due to the limits of the method")
+        mm[is.na(mm)] <- NA
+    }
     coef <- object$coef
     if(!use.na) coef[is.na(coef)] <- 0
     asgn <- attr(mm,"assign")

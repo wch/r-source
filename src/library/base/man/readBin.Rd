@@ -8,7 +8,8 @@
   Read binary data from a connection, or write binary data to a connection.
 }
 \usage{
-readBin(con, what, n = 1, size = NA, endian = .Platform$endian)
+readBin(con, what, n = 1, size = NA, signed = TRUE,
+        endian = .Platform$endian)
 writeBin(object, con, size = NA, endian = .Platform$endian)
 
 readChar(con, nchars)
@@ -26,6 +27,9 @@ writeChar(object, con, nchars = nchar(object), eos = "")
   \item{size}{integer.  The number of bytes per element in the byte
     stream.  The default, \code{NA}, uses the natural size.  Size changing
     is not supported for complex vectors.}
+  \item{signed}{logical. Only used for integers of sizes 1 and 2,
+    when it determines if the quantity on file
+    should be regarded as a signed or unsigned integer.}
   \item{endian}{The endian-ness (\code{"big"} or \code{"little"} of the
     target system for the file.  Using \code{"swap"} will force swapping
     endian-ness.}
@@ -49,7 +53,8 @@ writeChar(object, con, nchars = nchar(object), eos = "")
   each element of the vector is coerced to an appropriate type before
   being written or as it is read.  Possible sizes are 1, 2, 4 and
   possibly 8 for integer or logical vectors, and 4, 8 and possibly 12/16
-  for numeric vectors.  (Note that coercion occurs as signed types.)
+  for numeric vectors.  (Note that coercion occurs as signed types
+  except if \code{signed = FALSE} when reading integers of sizes 1 and 2.)
   Changing sizes is unlikely to preserve \code{NA}s, and the extended
   precision sizes are unlikely to be portable across platforms.
 
@@ -135,6 +140,23 @@ close(zz)
 zz <- file("testbin", "rb")
 readChar(zz, nc)
 readChar(zz, nchar(x)+3) # need to read the terminator explicitly
+close(zz)
+unlink("testbin")
+
+## signed vs unsigned ints
+zz <- file("testbin", "wb")
+x <- as.integer(seq(0, 255, 32))
+writeBin(x, zz, size=1)
+writeBin(x, zz, size=1)
+x <- as.integer(seq(0, 60000, 10000))
+writeBin(x, zz, size=2)
+writeBin(x, zz, size=2)
+close(zz)
+zz <- file("testbin", "rb")
+readBin(zz, integer(), 8, size=1)
+readBin(zz, integer(), 8, size=1, signed=FALSE)
+readBin(zz, integer(), 7, size=2)
+readBin(zz, integer(), 7, size=2, signed=FALSE)
 close(zz)
 unlink("testbin")
 }

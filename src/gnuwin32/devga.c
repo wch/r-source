@@ -1645,7 +1645,8 @@ static void GA_NewPage(DevDesc *dd)
     if (xd->kind!=SCREEN) {
 	xd->needsave = TRUE;
 	xd->clip = getrect(xd->gawin);
-	DRAW(gfillrect(_d, xd->bgcolor, xd->clip));
+	if(xd->bg != R_RGB(255,255,255))
+	    DRAW(gfillrect(_d, xd->bgcolor, xd->clip));
     } else {
 	xd->clip = getregion(xd);
 	DRAW(gfillrect(_d, xd->bgcolor, xd->clip));

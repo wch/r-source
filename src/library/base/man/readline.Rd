@@ -12,8 +12,8 @@ readline(prompt="")
   \code{readline} reads a line from the terminal
 }
 \details{
-  The string will be truncated to a maximum allowed length, currently 32
-  chars.
+  The prompt string will be truncated to a maximum allowed length,
+  currently 32 chars.
 }
 \value{
   A character vector of length one.

@@ -20,6 +20,8 @@ R_UNZIPCMD=${R_UNZIPCMD-@R_UNZIPCMD@}
 R_ZIPCMD=${R_ZIPCMD-@R_ZIPCMD@}
 ## Default editor
 EDITOR=${EDITOR-${VISUAL-vi}}
+## Default pager
+PAGER=${PAGER-@PAGER@}
 ## Use configure values
 AWK=${AWK-@AWK@}
 PERL=${PERL-@PERL@}

@@ -53,7 +53,7 @@
 \value{
   A list with class \code{"htest"} containing the following components:
   \item{statistic}{the value of the t-statistic.}
-  \item{parameters}{the degrees of freedom for the t-statistic.}
+  \item{parameter}{the degrees of freedom for the t-statistic.}
   \item{p.value}{the p-value for the test.}
   \item{conf.int}{a confidence interval for the mean appropriate to the
     specified alternative hypothesis.}

@@ -30,6 +30,9 @@
 #define R_MAGIC_ASCII_V1   1001
 #define R_MAGIC_BINARY_V1  1002
 #define R_MAGIC_XDR_V1     1003
+#define R_MAGIC_EMPTY      999
+#define R_MAGIC_CORRUPT    998
+#define R_MAGIC_MAYBE_TOONEW 997
 
 /* Static Globals, DIE, DIE, DIE! */
 
@@ -224,7 +227,7 @@ static SEXP AsciiLoadOld(FILE *fp, int version)
 
 /* ----- L o w l e v e l -- X D R -- I / O ----- */
 
-#ifdef HAVE_RPC_XDR_H
+#ifdef HAVE_XDR
 
 #include <rpc/rpc.h>
 
@@ -291,7 +294,7 @@ static SEXP XdrLoad(FILE *fp)
     InTerm = XdrInTerm;
     return DataLoad(fp);
 }
-#endif
+#endif /* HAVE_XDR */
 
 
 /* ----- L o w l e v e l -- B i n a r y -- I / O ----- */
@@ -677,7 +680,7 @@ static SEXP ConvertEnvironment(SEXP env)
     }
     return env;
 }
-#endif
+#endif /* NOTYET */
 
 static SEXP ConvertPairToVector(SEXP obj)
 {
@@ -716,7 +719,7 @@ static SEXP ConvertPairToVector(SEXP obj)
 #else
 /* The line below requires an ANSI C preprocessor (stringify operator) */
 #define R_assert(e) ((e) ? (void) 0 : error("assertion `%s' failed: file `%s', line %d\n", #e, __FILE__, __LINE__))
-#endif
+#endif /* NDEBUG */
 
 
 static void NewWriteItem (SEXP s, SEXP sym_list, SEXP env_list, FILE *fp);
@@ -797,12 +800,16 @@ static void NewMakeLists (SEXP obj, SEXP *sym_list, SEXP *env_list)
     case SYMSXP:
 	if (NewLookup(obj, *sym_list))
 	    return;
+	PROTECT(*env_list);
 	*sym_list = CONS(obj, *sym_list);
+	UNPROTECT(1);
 	break;
     case ENVSXP:
 	if (NewLookup(obj, *env_list))
 	    return;
+	PROTECT(*sym_list);
 	*env_list = CONS(obj, *env_list);
+	UNPROTECT(1);
 	/* FALLTHROUGH */
     case LISTSXP:
     case LANGSXP:
@@ -1393,7 +1400,7 @@ static SEXP NewBinaryLoad(FILE *fp)
     return NewDataLoad(fp);
 }
 
-#ifndef HAVE_RPC_XDR_H
+#ifndef HAVE_XDR
 static void OutIntegerBinary(FILE *fp, int i)
 {
     if (fwrite(&i, sizeof(int), 1, fp) != 1)
@@ -1432,11 +1439,11 @@ static void NewBinarySave(SEXP s, FILE *fp)
     OutTerm = DummyTerm;
     NewDataSave(s, fp);
 }
-#endif /* not HAVE_RPC_XDR_H */
+#endif /* not HAVE_XDR */
 
 /* ----- L o w l e v e l -- X D R -- I / O ----- */
 
-#ifdef HAVE_RPC_XDR_H
+#ifdef HAVE_XDR
 
 static void InInitXdr(FILE *fp)
 {
@@ -1565,7 +1572,7 @@ static SEXP NewXdrLoad(FILE *fp)
     InTerm = InTermXdr;
     return NewDataLoad(fp);
 }
-#endif /* HAVE_RPC_XDR_H */
+#endif /* HAVE_XDR */
 
 
 /* ----- F i l e -- M a g i c -- N u m b e r s ----- */
@@ -1597,8 +1604,16 @@ static void R_WriteMagic(FILE *fp, int number)
 static int R_ReadMagic(FILE *fp)
 {
     unsigned char buf[6];
-    int d1, d2, d3, d4;
-    fread((char*)buf, sizeof(char), 5, fp);
+    int d1, d2, d3, d4, count;
+
+    count = fread((char*)buf, sizeof(char), 5, fp);
+    if (count != 5) {
+	if (count == 0)
+	    return R_MAGIC_EMPTY;
+	else
+	    return R_MAGIC_CORRUPT;
+    }
+
     if (strncmp((char*)buf, "RDA1\n", 5) == 0) {
 	return R_MAGIC_ASCII_V1;
     }
@@ -1608,6 +1623,9 @@ static int R_ReadMagic(FILE *fp)
     else if (strncmp((char*)buf, "RDX1\n", 5) == 0) {
 	return R_MAGIC_XDR_V1;
     }
+    else if (strncmp((char *)buf, "RD", 2) == 0)
+	return R_MAGIC_MAYBE_TOONEW;
+
     /* Intel gcc seems to screw up a single expression here */
     d1 = (buf[3]-'0') % 10;
     d2 = (buf[2]-'0') % 10;
@@ -1624,24 +1642,27 @@ void R_SaveToFile(SEXP obj, FILE *fp, int ascii)
 	R_WriteMagic(fp, R_MAGIC_ASCII_V1);
 	NewAsciiSave(obj, fp);
     } else {
-#ifdef HAVE_RPC_XDR_H
+#ifdef HAVE_XDR
 	R_WriteMagic(fp, R_MAGIC_XDR_V1);
 	NewXdrSave(obj, fp);
 #else
 	R_WriteMagic(fp, R_MAGIC_BINARY_V1);
 	NewBinarySave(obj, fp);
-#endif
+#endif /* HAVE_XDR */
     }
 }
 
 SEXP R_LoadFromFile(FILE *fp, int startup)
 {
+    int magic;
     DLstartup = startup; /* different handling of errors */
-    switch(R_ReadMagic(fp)) {
-#ifdef HAVE_RPC_XDR_H
+
+    magic = R_ReadMagic(fp);
+    switch(magic) {
+#ifdef HAVE_XDR
     case R_MAGIC_XDR:
 	return(XdrLoad(fp));
-#endif
+#endif /* HAVE_XDR */
     case R_MAGIC_BINARY:
 	return(BinaryLoad(fp));
     case R_MAGIC_ASCII:
@@ -1654,13 +1675,22 @@ SEXP R_LoadFromFile(FILE *fp, int startup)
 	return(NewAsciiLoad(fp));
     case R_MAGIC_BINARY_V1:
 	return(NewBinaryLoad(fp));
-#ifdef HAVE_RPC_XDR_H
+#ifdef HAVE_XDR
     case R_MAGIC_XDR_V1:
 	return(NewXdrLoad(fp));
-#endif
+#endif /* HAVE_XDR */
     default:
 	fclose(fp);
-	error("restore file corrupted -- no data loaded");
+	switch (magic) {
+	case R_MAGIC_EMPTY:
+	    error("restore file may be empty -- no data loaded");
+	case R_MAGIC_MAYBE_TOONEW:
+	    error("restore file may be from a newer version of R"
+		  " -- no data loaded");
+	default:
+	    error("bad restore file magic number (file may be corrupted)"
+		  "-- no data loaded");
+	}
 	return(R_NilValue);/* for -Wall */
     }
 }
@@ -1739,7 +1769,7 @@ static void R_LoadSavedData(FILE *fp, SEXP aenv)
 #else
         defineVar(TAG(a), ConvertPairToVector(CAR(a)), aenv);
         a = CDR(a);
-#endif
+#endif /* OLD */
     }
     UNPROTECT(1);
 }

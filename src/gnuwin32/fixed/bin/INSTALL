@@ -26,7 +26,7 @@ use R::Dcf;
 use R::Utils;
 
 
-my $revision = ' $Revision: 1.17 $ ';
+my $revision = ' $Revision: 1.17.4.3 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -57,11 +57,17 @@ if($opt_library){
 
 my $helpflags = "HELP=YES WINHELP=CHM";
 if($opt_docs) {
-    $helpflags = "HELP=NO"  if $opt_docs == "no";
-    $helpflags = "HELP=YES WINHELP=NO"  if $opt_docs == "normal";
-    $helpflags = "HELP=YES WINHELP=CHM"  if $opt_docs == "chm";
-    $helpflags = "HELP=YES WINHELP=BOTH"  if $opt_docs == "winhlp";
-    $helpflags = "HELP=YES WINHELP=BOTH"  if $opt_docs == "all";
+    if ($opt_docs eq "none") {
+	$helpflags = "HELP=NO";
+    } elsif ($opt_docs eq "normal") {
+	$helpflags = "HELP=YES WINHELP=NO";
+    } elsif ($opt_docs eq "chm") {
+	$helpflags = "HELP=YES WINHELP=CHM";
+    } elsif (($opt_docs eq "winhlp") || ($opt_docs eq "all")) {
+	$helpflags = "HELP=YES WINHELP=BOTH";
+    } else {
+	die "ERROR: invalid --docs value `$opt_docs'\n";
+    }
 }
 
 ## this is the main loop over all packages to be installed
@@ -86,7 +92,8 @@ foreach $pkg (@ARGV){
 	mkdir($dir, 755);
 	    ## workaround for paths in Cygwin tar
 	    $pkg =~ s+^([A-Za-x]):+/cygdrive/\1+;
-	system("tar -zxf $pkg -C $dir");
+	if(system("tar -zxf $pkg -C $dir")) {
+	    die "Error: cannot untar the package\n";}
 	$pkg = $dir."/".$pkgname;
 	$istar = 1;
     }
@@ -116,23 +123,22 @@ foreach $pkg (@ARGV){
 
     if($description->{"Depends"}) {
 	my $depends = $description->{"Depends"};
-	$depends =~ s/.*R *(\([^)]*\)).*/\1/;
-	my $deps = $depends;
-	$depends =~  s/[()]//g;
-	my $Rversion = $ENV{'R_VERSION'};
-	if ($depends =~ /^>=/) {
-	    $depends =~ s/^>= *//;
-	    die "This R is version $Rversion\n".
-		"    package \`$pkgname' requires R $depends or later\n"
-		    unless $Rversion ge $depends;
-	} elsif ($depends =~ /^<=/) {
-	    $depends =~ s/^<= *//;
-	    die "This R is version $Rversion\n".
-		"     package \`$pkgname' requires R $depends or earlier\n"
-		    unless $Rversion le $depends;
-	} else {
-	    printf "unsupported operator in dependence \"R $deps\"\n";
-	}
+	if($depends =~ /\bR *\(([^) ]+) *([^) ]+)\)/) { # regexp from check
+            my $op = $1;
+            my $ver = $2; 
+	    my $Rversion = $ENV{'R_VERSION'};
+	    if ($op eq ">=" && $ver) {
+		die "This R is version $Rversion\n".
+		    "    package \`$pkgname' requires R $ver or later\n"
+			unless $Rversion ge $ver;
+	    } elsif ($op eq "<=" && $ver) {
+		die "This R is version $Rversion\n".
+		    "     package \`$pkgname' requires R $ver or earlier\n"
+			unless $Rversion le $ver;
+	    } else {
+		printf "unsupported operator in dependence \"$depends\"\n";
+	    }
+        }
     }
 
     my $save = "CHECK";

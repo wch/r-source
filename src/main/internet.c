@@ -72,34 +72,34 @@ static void internet_Init(void)
     initialized = -1;
     if(!res) return;
     if(!(ptr_download = 
-	 (sDL_FUNC)R_FindSymbol("do_download", "internet", NULL))) return;
-    if(!(ptr_newurl = (rDL_FUNC)R_FindSymbol("R_newurl", "internet", NULL))) return;
+	 (sDL_FUNC)R_FindSymbol("in_do_download", "internet", NULL))) return;
+    if(!(ptr_newurl = (rDL_FUNC)R_FindSymbol("in_R_newurl", "internet", NULL))) return;
     if(!(ptr_newsock = 
-	 (rDL_FUNC)R_FindSymbol("R_newsock", "internet", NULL))) return;
+	 (rDL_FUNC)R_FindSymbol("in_R_newsock", "internet", NULL))) return;
     if(!(ptr_HTTPOpen = 
-	 (DL_FUNC)R_FindSymbol("R_HTTPOpen", "internet", NULL))) return;
+	 (DL_FUNC)R_FindSymbol("in_R_HTTPOpen", "internet", NULL))) return;
     if(!(ptr_HTTPRead = 
-	 (iDL_FUNC)R_FindSymbol("R_HTTPRead", "internet", NULL))) return;
+	 (iDL_FUNC)R_FindSymbol("in_R_HTTPRead", "internet", NULL))) return;
     if(!(ptr_HTTPClose = 
-	 (DL_FUNC)R_FindSymbol("R_HTTPClose", "internet", NULL))) return;
+	 (DL_FUNC)R_FindSymbol("in_R_HTTPClose", "internet", NULL))) return;
     if(!(ptr_FTPOpen = 
-	 (DL_FUNC)R_FindSymbol("R_FTPOpen", "internet", NULL))) return;
+	 (DL_FUNC)R_FindSymbol("in_R_FTPOpen", "internet", NULL))) return;
     if(!(ptr_FTPRead = 
-	 (iDL_FUNC)R_FindSymbol("R_FTPRead", "internet", NULL))) return;
+	 (iDL_FUNC)R_FindSymbol("in_R_FTPRead", "internet", NULL))) return;
     if(!(ptr_FTPClose = 
-	 (DL_FUNC)R_FindSymbol("R_FTPClose", "internet", NULL))) return;
+	 (DL_FUNC)R_FindSymbol("in_R_FTPClose", "internet", NULL))) return;
     if(!(ptr_sockopen = 
-	 (DL_FUNC)R_FindSymbol("Rsockopen", "internet", NULL))) return;
+	 (DL_FUNC)R_FindSymbol("in_Rsockopen", "internet", NULL))) return;
     if(!(ptr_socklisten = 
-	 (DL_FUNC)R_FindSymbol("Rsocklisten", "internet", NULL))) return;
+	 (DL_FUNC)R_FindSymbol("in_Rsocklisten", "internet", NULL))) return;
     if(!(ptr_sockclose = 
-	 (DL_FUNC)R_FindSymbol("Rsockclose", "internet", NULL))) return;
+	 (DL_FUNC)R_FindSymbol("in_Rsockclose", "internet", NULL))) return;
     if(!(ptr_sockconnect = 
-	 (DL_FUNC)R_FindSymbol("Rsockconnect", "internet", NULL))) return;
+	 (DL_FUNC)R_FindSymbol("in_Rsockconnect", "internet", NULL))) return;
     if(!(ptr_sockread = 
-	 (DL_FUNC)R_FindSymbol("Rsockread", "internet", NULL))) return;
+	 (DL_FUNC)R_FindSymbol("in_Rsockread", "internet", NULL))) return;
     if(!(ptr_sockwrite = 
-	 (DL_FUNC)R_FindSymbol("Rsockwrite", "internet", NULL))) return;
+	 (DL_FUNC)R_FindSymbol("in_Rsockwrite", "internet", NULL))) return;
 
     initialized = 1;    
     return;

@@ -1,0 +1,123 @@
+# This Makefile is to be run on the MPW Shell to make
+# files necessary for the Macintosh build.
+# It also builds help files for the Macintosh
+# distribution.
+#
+# Jago August 2001, Stefano M. Iacus
+#
+#
+
+
+RHOME = ::
+all Ä profiles library headers html
+
+## ------------- headers -----------
+headers Ä ::include:config.h Rconfig.h Rversion.h FFDecl.h FFTab.h
+
+::include:config.h Ä config.mac.h
+	Duplicate -y config.mac.h ::include:config.h
+	execute GETCONFIG
+	execute GETVERSION 
+	execute FF_CREATE
+    set MacF2C    "Mac F2C"
+    set FortList  "`Files ::appl:Å.f ::main:Å.f`" 
+    "{MacF2C}" -wait {FortList}
+	
+	
+## ------------- profiles -----------
+profiles Ä {RHOME}:library:base:R:Rprofile
+
+{RHOME}:library:base:R:Rprofile Ä  ::library:profile:Common.R ¶
+                                   ::library:profile:Rprofile.mac
+#	@echo -------- Building $@ from $^--------
+    if ! `Exists -d {RHOME}:library`
+	 NewFolder {RHOME}:library
+	end
+	if ! `Exists -d {RHOME}:library:base`
+	 NewFolder {RHOME}:library:base
+	end
+	NewFolder  {RHOME}:library:base:R
+	catenate ::library:profile:Common.R ::library:profile:Rprofile.mac > {RHOME}:library:base:R:Rprofile
+
+## ------------- library -----------
+PACKAGES = base ctest eda lqs modreg mva nls splines stepfun ts
+DATA = base modreg mva nls ts
+DEMO = base eda
+
+fixdesc Ä $OutOfDate
+	echo "creating DESCRIPTION files"
+	execute GETDESC (PACKAGES}
+
+library Ä mainfiles datafiles help demofiles
+
+mainfiles Ä fixdesc
+    if ! `Exists -d {RHOME}:library`
+	 NewFolder {RHOME}:library
+	end
+	for pkg in {PACKAGES}
+	 Begin
+	  if ! `Exists -d {RHOME}:library:{pkg}`
+	   NewFolder {RHOME}:library:{pkg}
+	  end
+	  Duplicate -y ::library:{pkg}:DESCRIPTION {RHOME}:library:{pkg}
+	  Duplicate -y ::library:{pkg}:INDEX ::library:{pkg}:TITLE {RHOME}:library:{pkg}
+	  echo "installing R files in {pkg}"
+	  if ! `Exists -d {RHOME}:library:{pkg}:R`
+	   NewFolder {RHOME}:library:{pkg}:R
+	  end
+	  catenate ::library:{pkg}:R:Å.R > {RHOME}:library:{pkg}:R:{pkg}
+	  if `Exists -d ::library:{pkg}:R:mac`
+	    catenate ::library:{pkg}:R:mac:Å.R >> {RHOME}:library:{pkg}:R:{pkg}
+	  end
+	 end
+    end 
+
+
+datafiles Ä $OutOfDate
+	for pkg in {DATA}
+	  Begin
+	   echo "installing data files in {pkg}"
+	   if ! `Exists -d {RHOME}:library:{pkg}:data`
+	    NewFolder {RHOME}:library:{pkg}:data
+	   end
+	   Duplicate -y ::library:{pkg}:data:00Index ¶
+	    ::library:{pkg}:data:Å.Å {RHOME}:library:{pkg}:data
+	  end
+	 end 
+
+demofiles Ä $OutOfDate
+	for pkg in {DEMO}
+	 Begin
+	  echo "installing demo files in {pkg}"
+	  if ! `Exists -d  {RHOME}:library:{pkg}:demo`
+	   NewFolder {RHOME}:library:{pkg}:demo
+	  end
+	  Duplicate -y ::library:{pkg}:demo:00Index ¶
+         ::library:{pkg}:demo:Å.Å {RHOME}:library:{pkg}:demo
+	 end
+	end 
+
+
+help Ä $OutOfDate
+	for pkg in {PACKAGES}
+	 Begin
+	  SetDirectory :share:perl
+	  perl  build-help.pl -txt -html -example -latex ::::library:{pkg} :::::library
+      perl Rd2contents.pl ::::library:{pkg}  >:::::library:{pkg}:CONTENTS
+      SetDirectory :::
+	 end
+	end 
+	catenate {RHOME}:library:Å:CONTENTS > {RHOME}:doc:html:search:index.txt
+	SetDirectory :share:perl
+	perl build-help.pl  -htmllists -rhome ::::
+    SetDirectory :::
+
+
+## ------------- html -----------
+
+html Ä $OutOfDate
+	Duplicate -y :html:rmac-FAQ.html {RHOME}:doc:html:rmac-FAQ.html
+	Duplicate -y :html:rmac.html {RHOME}:doc:html:index.html
+     	
+
+

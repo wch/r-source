@@ -1,0 +1,129 @@
+This note is intended for developers only.
+
+Starting from version 1.3.1 we are switching to Apple's MPW 
+compiler to build R and its packages.
+
+For the time being only packages and modules can be built
+without problems...but we are waiting for Apple to release
+a new stub library that will allow us to build R (not here
+the problem) and run on OS X too (here is the problem as of
+today).
+
+Definition: 
+"R_HOME" the main root of R sources, say ::: from 
+the folder where the files you are reading is.
+
+Requirements:
+
+* a copy of MacPerl (www.macperl.org)
+* a copy of the f2cLib in src:macintosh:f2c folder
+  You can find it at
+  http://www.ci.tuwien.ac.at/~iacus/R
+  or from the standard R distribution
+* you should have a copy of Mac F2C (just the binary) in src:macintosh:
+  You can have a copy of MAC F2C at:
+  http://www.alumni.caltech.edu/~igormt/Mac_F2C.html
+* you also need "sed" for the MPW Shell. You should have
+  a copy of it at
+  http://www.ci.tuwien.ac.at/~iacus/R  
+* you should have R binary in R_HOME folder 
+  (you find it in the standard R distribution of build it
+   directly following the steps behond)
+
+Step by step instructions
+-------------------------
+
+0) Fit all the requirements !
+
+1) Start creating all files needed before trying to build R
+   or its packages. 
+   
+   a)   Open the MPW shell and the directory to "src:macintosh:"
+   b)   Type "Make -f Makefile.mac" and execute it in the MPW Shell.
+   c)   Select the output and run it. This will take some time
+        because of building of help files.
+   d)   If all went right go to step 2).
+
+   This Makefile generates or updated the following files and directories
+   library
+   doc    
+   Rconfig.h
+   Rversion.h
+   FFTab.h
+   FFDecl.h
+   moves src:macintosh:include.mac.h to src:include:config.h
+   converts all .f fortran files to C files using MAC F2C
+   
+2) Your are ready to build R. For the time beeing you need CWPro.
+   a)   You should have uncompress all the .hqx in the "res"
+		and "mpw" subfolders of "src:macintosh".
+   b)   Go to the src:macintosh:mpw folder open the R_MPW.mcp
+        project and build R. If all went right, you'll find
+		R binary in R_HOME. You are ready to build
+		packages and modules, step 3).
+   
+3) Build packages:
+
+   a) To build the packages simply set directory of the MPW shell
+      to :src:library: then simply run 
+
+      "BuildAll.mac" (without quotes)
+
+      This script will scan recursively the src:library directory
+      and run any makefile (namely "Makefile.mac") found.
+      At the end of the process this will provide a full compile
+      of the packages. This script just build the DLL. 
+      Each DLL will be placed in the corresponding folder 
+      R_HOME:library:<pkg>:libs:<pkg>Lib
+
+  b)  To build the modules you adopt the same strategy starting
+      from the scr:modules directory.
+      The resulting modules will be placed in R_HOME:modules
+      as <modules>Lib  file.
+
+
+As soon as Apple will release the promised library we will
+add a better description of the procedure. 
+
+  
+Some new MPW stuff:
+-------------------
+I have added some MPW scripts that are useful to build
+packages and to generate some of the files R needs to
+be built (independently from the compiler you use).
+
+In particular:
+GETVERSION	:	MPW script that generates "Rversion.h"
+FF_CREATE	:	MPW script that generates "FFTab.h" and
+				"FFDecl.h"
+GETDESC		:	fixes DESCRIPTION.in files
+GETCONFIG	:	MPW script that generates "Rconfig.h"
+
+both need the "sed" MPW tool installed.				
+
+the folder "src:macintosh:share:perl" contains modified versions of some
+of the standard  perl scripts that you found in the folder
+"src:share:perl". 
+
+
+Where to find things:
+---------------------
+
+as for now, you can find most of the things you probably miss
+at this URL
+
+http://www.ci.tuwien.ac.at/~iacus/R
+
+(contains "sed", "f2cLib", ...)
+
+
+One other good place to look for Unix-like tools for MPW is also
+
+ftp://sunsite.cnlab-switch.ch/software/platform/macos/src/mpw_c
+
+August 5, 2001				Stefano M. Iacus
+						(stefano.iacus@unimi.it)
+						
+						
+						
+						

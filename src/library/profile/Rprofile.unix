@@ -14,7 +14,7 @@ if(interactive() && Sys.getenv("DISPLAY") != "") {
 } else options(device = "postscript")
 ## this must be set for x11 to be used, even non-interactively
 options(X11colortype = "true")
-options(pager = "${R_HOME}/bin/pager")
+options(pager = file.path(R.home(), "bin", "pager"))
 options(browser = "netscape")
 options(mailer = "mailx")
 

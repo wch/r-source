@@ -47,7 +47,7 @@
 \value{
   A list with class \code{"htest"} containing the following components:
   \item{statistic}{the value of Quade's F statistic.}
-  \item{parameters}{a vector with the numerator and denominator degrees 
+  \item{parameter}{a vector with the numerator and denominator degrees 
     of freedom of the approximate F distribution of the test statistic.}
   \item{p.value}{the p-value of the test.}
   \item{method}{the character string \code{"Quade test"}.}

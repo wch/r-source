@@ -1,0 +1,4 @@
+r-base: shlib-with-non-pic-code usr/lib/R/modules/internet.so
+r-base: shlib-with-non-pic-code usr/lib/R/modules/lapack.so
+r-base: shlib-with-non-pic-code usr/lib/R/modules/vfonts.so
+r-base: shlib-with-non-pic-code usr/lib/R/library/modreg/libs/modreg.so

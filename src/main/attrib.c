@@ -268,7 +268,7 @@ static SEXP commentgets(SEXP vec, SEXP comment)
 {
     if (isNull(comment) || isString(comment)) {
 	if (length(comment) <= 0) {
-	    SET_ATTRIB(vec, stripAttrib(R_CommentSymbol, vec));
+	    SET_ATTRIB(vec, stripAttrib(R_CommentSymbol, ATTRIB(vec)));
 	}
 	else {
 	    installAttrib(vec, R_CommentSymbol, comment);
@@ -298,7 +298,7 @@ SEXP classgets(SEXP vec, SEXP class)
 {
     if (isNull(class) || isString(class)) {
 	if (length(class) <= 0) {
-	    SET_ATTRIB(vec, stripAttrib(R_ClassSymbol, vec));
+	    SET_ATTRIB(vec, stripAttrib(R_ClassSymbol, ATTRIB(vec)));
 	    SET_OBJECT(vec, 0);
 	}
 	else {

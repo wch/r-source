@@ -36,6 +36,10 @@ lm.influence(lm.obj)
 
   Note that cases with \code{weights == 0} are \emph{dropped} (contrary
   to the situation in S).
+
+  if a model has been fitted with \code{na.action=na.exclude} (see
+  \code{\link{na.exclude}}), cases excluded in the fit \emph{are}
+  considered here.
 }
 \references{
   Belsley, D. A., Kuh, E. and Welsch, R. E. (1980)

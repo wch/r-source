@@ -376,7 +376,7 @@ SEXP do_winver(SEXP call, SEXP op, SEXP args, SEXP env)
     if((int)verinfo.dwMajorVersion >= 5) {
 	OSVERSIONINFOEX osvi;
 	osvi.dwOSVersionInfoSize = sizeof(OSVERSIONINFOEX);
-	if(GetVersionEx(&osvi)) {
+	if(GetVersionEx((OSVERSIONINFO *)&osvi)) {
 	    char tmp[]="", *desc= tmp, *type = tmp;
 	    if(osvi.dwMajorVersion == 5 && osvi.dwMinorVersion == 0)
 		desc = "2000";
@@ -845,7 +845,7 @@ SEXP do_selectlist(SEXP call, SEXP op, SEXP args, SEXP rho)
     wselect = newwindow(multiple ? "Select" : "Select one", 
 			rect(0, 0, xmax, ymax),
 			Titlebar | Centered | Modal);
-    setbackground(wselect, LightGrey);
+    setbackground(wselect, myGetSysColor(COLOR_MENU));
     if(multiple)
 	f_list = newmultilist(clist, rect(10, 10, 35+8*mw, ylist), NULL);
     else

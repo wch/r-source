@@ -6,11 +6,6 @@
   Create a contingency table from cross-classifying factors, usually
   contained in a data frame, using a formula interface.
 }
-\synopsis{
-xtabs(formula = ~., data = parent.frame(), subset, na.action,
-      exclude = c(NA, NaN), drop.unused.levels = FALSE)
-print.xtabs(x, \dots)
-}
 \usage{
 xtabs(formula = ~., data, subset, na.action, exclude = c(NA, NaN),
       drop.unused.levels = FALSE)
@@ -21,7 +16,7 @@ xtabs(formula = ~., data, subset, na.action, exclude = c(NA, NaN),
     allowed.  On the left hand side, one may optionally give a vector or
     a matrix of counts; in the latter case, the columns are interpreted
     as corresponding to the levels of a variable.  This is useful if the
-    data has already beed tabulated, see the examples below.}
+    data has already been tabulated, see the examples below.}
   \item{data}{a data frame, list or environment containing the variables
     to be cross-tabulated.}
   \item{subset}{an optional vector specifying a subset of observations

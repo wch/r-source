@@ -79,6 +79,8 @@ co.intervals(x, number = 6, overlap = 0.5)
   \item{xlim}{the range for the x axis.}
   \item{ylim}{the range for the y axis.}
   \item{\dots}{additional arguments to the panel function.}
+
+  \item{x}{a numeric vector.}
 }
 \description{
   This function produces two variants of the \bold{co}nditioning plots

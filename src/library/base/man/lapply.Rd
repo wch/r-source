@@ -31,7 +31,7 @@ sapply(X, FUN, \dots, simplify = TRUE, USE.NAMES = TRUE)
   \code{\link{apply}}, \code{\link{tapply}}.
 }
 \examples{
-x <- list(a = 1:10, beta = exp(-3:3), logic = c(T,F,F,T))
+x <- list(a = 1:10, beta = exp(-3:3), logic = c(TRUE,FALSE,FALSE,TRUE))
 # compute the list mean for each list element
 lapply(x,mean)
 # median and quartiles for each list element

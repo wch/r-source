@@ -22,6 +22,9 @@
 /* Define if finite() is wrong for -Inf/NaN/Inf. */
 #undef FINITE_BROKEN
 
+/* Define if strptime() does not exist or fails pre-1970. */
+#undef STRPTIME_BROKEN
+
 /* Define if you have BSD networking headers and libraries. */
 #undef HAVE_BSD_NETWORKING
 
@@ -67,6 +70,9 @@
 /* Define if you have the X11 headers and libraries, and want the X11
    GUI to be built. */
 #undef HAVE_X11
+
+/* Define if you have the XDR headers and library routines. */
+#undef HAVE_XDR
 
 /* Define if you have the zlib headers and libraries. */
 #undef HAVE_ZLIB

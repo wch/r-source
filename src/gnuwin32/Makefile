@@ -1,4 +1,5 @@
 include MkRules
+include RWVERSION
 
 all: rbuild rpackage rdocs
 
@@ -8,9 +9,12 @@ WINHELP = CHM# NO, CHM, BOTH
 
 LEA_MALLOC=YES
 
+# Set to YES and specify the path if you want to use the ATLAS BLAS.
+USE_ATLAS=NO
+ATLAS_PATH=/R/ATLAS/lib/WinNT_PII
+
 PACKAGES = base ctest eda lqs modreg mva nls splines stepfun ts
 ALLPACKAGES = $(PACKAGES) tcltk
-RPREFIX = rw1030
 
 RHOME = $(shell perl pwd.pl ../..)# must be absolute path
 RLIB = $(RHOME)/library
@@ -29,7 +33,11 @@ else
 endif
 
 R-DLLFLAGS = -mwindows
-R-DLLLIBS = -L. $(FLIBS) -lcomctl32 -lversion
+R-DLLLIBS =-L. $(FLIBS) -lcomctl32 -lversion
+ifeq ($(strip $(USE_ATLAS)),YES)
+R-DLLLIBS +=-L$(ATLAS_PATH) -lcblas -lf77blas -latlas
+FLIBS +=-L$(ATLAS_PATH) -lcblas -lf77blas -latlas
+endif
 SOURCES = $(filter-out malloc.c,$(wildcard *.c *.f))
 OBJS = $(SOURCES:.c=.o)
 MAINLIBS = libmain.a libappl.a libmath.a
@@ -62,10 +70,10 @@ rpackage: fixed/fixdesc ../../library/R.css
 	$(MAKE) STAMP=NO $(PKGS)
 
 rinstaller:
-	$(MAKE) -C installer PREFIX=$(RPREFIX)
+	$(MAKE) -C installer RPREFIX=$(RPREFIX)
 
 rlibs:
-	$(MAKE) -C ../appl  OPTFLAGS='$(OPTFLAGS)' -f Makefile.win
+	$(MAKE) -C ../appl  OPTFLAGS='$(OPTFLAGS)' USE_ATLAS=$(USE_ATLAS) -f Makefile.win
 	$(MAKE) -C ../main  OPTFLAGS='$(OPTFLAGS)' -f Makefile.win
 	$(MAKE) -C ../nmath OPTFLAGS='$(OPTFLAGS)' -f Makefile.win
 	$(MAKE) -C ./graphapp
@@ -74,7 +82,8 @@ rlibs:
 	$(MAKE) -C ./math
 
 rmodules: libRm.a
-	$(MAKE) -C ../modules OPTFLAGS='$(OPTFLAGS)' FOPTFLAGS='$(FOPTFLAGS)' -f Makefile.win
+	$(MAKE) -C ../modules OPTFLAGS='$(OPTFLAGS)' FOPTFLAGS='$(FOPTFLAGS)' \
+	  USE_ATLAS=$(USE_ATLAS) ATLAS_PATH=$(ATLAS_PATH) -f Makefile.win
 
 COPYRIGHTS: $(RHOME)/COPYRIGHTS COPYRIGHTS.win
 	cat $^ > $@
@@ -176,7 +185,7 @@ bundle-%:
 	$(PERL) fixed/dobundle.pl $* $(PKGD) $(RLIB)
 
 pkg-%:  libR.a #../include/globalvar.h
-	$(MAKE) DLLNM=$($*-DLLNM)  EXTRADOCS=$($*-EXTRADOCS) \
+	$(MAKE) DLLNM=$($*-DLLNM)  FLIBS="$(FLIBS)" EXTRADOCS=$($*-EXTRADOCS) \
 	  -C $(PKGDIR)/$* PKG=$* RHOME=$(RHOME) RLIB=$(RLIB) \
 	  -f $(RHOME)/src/gnuwin32/MakePkg
 	@if test -d $(RLIB)/$*/data ; then \
@@ -296,18 +305,18 @@ RVER = $(shell cut -d' ' -f1 ../../VERSION | sed -n 1p)
 docfiles: INSTALL FAQs
 SEDVER = -e s/@RVER@/$(RVER)/g -e s/@RWVER@/$(RPREFIX)/g
 
-INSTALL: INSTALL.in ../../VERSION
+INSTALL: INSTALL.in ../../VERSION RWVERSION
 	$(SED) $(SEDVER) INSTALL.in > INSTALL
 
 FAQs: rw-faq fixed/html/rw-FAQ.html
 
-fixed/html/rw-FAQ.html: rw-FAQ.texi ../../VERSION
+fixed/html/rw-FAQ.html: rw-FAQ.texi ../../VERSION RWVERSION
 	@$(SED) $(SEDVER) $< > tmp.texi
-	makeinfo --html --no-headers --number-sections -o tmp.html tmp.texi
-	-tidy tmp.html > $@ 2> nul
+	makeinfo --no-split --html --no-headers --number-sections -o tmp.html tmp.texi
+	-tidy tmp.html > $@ 2> /dev/null
 	@$(RM) tmp.texi tmp.html
 
-rw-faq: rw-FAQ.texi ../../VERSION
+rw-faq: rw-FAQ.texi ../../VERSION RWVERSION
 	$(SED) $(SEDVER) $< | \
 	  makeinfo --no-headers --number-sections -o $@
 
@@ -326,7 +335,7 @@ bindist: tcl bitmapdll docfiles
 	$(CP) -p ../library/base/data/morley.tab $(RPREFIX)/library/base/data
 	$(RM) $(RPREFIX)/*/Makefile.in
 	(cd $(RPREFIX)/bin; $(RM) Rcmd.exe INSTALL REMOVE SHLIB build check \
-	   massage-Examples.sh Rd2dvi.sh Rd2txt Rdconv Rdiff.sh Rdindex \
+	   massage-Examples Rd2dvi.sh Rd2txt Rdconv Rdiff.sh Rdindex \
            Sd2Rd Rprof)
 	$(MKDIR) $(RPREFIX)/etc
 	$(CP) -p ../../etc/Rprofile $(RPREFIX)/etc/Rprofile
@@ -406,7 +415,7 @@ packagedist:
 	$(CP) -r ../../share/make ../../share/perl ../../share/texmf \
 	   $(RPREFIX)/share
 	$(CP) ../../bin/INSTALL ../../bin/REMOVE ../../bin/SHLIB \
-	  ../../bin/build ../../bin/check ../../bin/massage-Examples.sh \
+	  ../../bin/build ../../bin/check ../../bin/massage-Examples \
 	  ../../bin/Rd2dvi.sh ../../bin/Rd2txt ../../bin/Rdconv \
 	  ../../bin/Rdindex ../../bin/Rdiff.sh \
 	  ../../bin/Sd2Rd ../../bin/Rprof ../../bin/Rcmd.exe \

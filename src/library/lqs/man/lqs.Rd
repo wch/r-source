@@ -40,7 +40,7 @@ ltsreg(\ldots)
 }
 \arguments{
 \item{formula}{
-  a formula of the form \code{y ~ x1 + x2 + \dots{}\{\}}.
+  a formula of the form \code{y ~ x1 + x2 + \dots}.
 }
 \item{data}{
   data frame from which variables specified in \code{formula} are

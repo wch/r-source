@@ -6,6 +6,171 @@
 	**************************************************
 
 
+		CHANGES IN R VERSION 1.3.1
+
+
+NEW FEATURES
+
+    o	massage-examples is now a Perl script and about 50x faster.
+
+    o	On Unix(-alike) systems the default pager is now determined
+	during configuration, and is `less' if available, otherwise
+	`more' (and not `more -s' as previously).
+
+    o	configure now tests for strptime functions that fail on inputs
+	before 1970 (found on Irix).  It no longer checks for the SCSL
+	and SGIMATH libraries on Irix.
+
+    o	New formula interface to cor.test() in package ctest.
+
+    o	"NA" is now a valid color name (as NA has been a valid integer
+	color).
+
+    o	pairs() function has a new `gap' argument for adjusting the
+	spacing between panels.
+
+    o	R CMD check has a new test for unbalanced braces in Rd files.
+
+    o	readBin() has a new argument `signed' to simplify reading
+	unsigned 8- and 16-bit integers.
+
+    o	New capabilities() option "cledit".
+
+    o	Modified restore code to give clearer error messages in some cases.
+
+
+
+BUG FIXES
+
+    o	Fixed placement of mtext() output (including tick labels)
+	when text is perpendicular to axis AND axis is logged
+	(PR#997 and PR#865).
+
+    o	rect() and arrows() now respond to setting of par(xpd)
+
+    o	abline() now responds to the setting of par(xpd), including
+	via the "..." argument (PR#750).
+
+    o	Using cat() to a gzfile() connection no longer compresses poorly
+	(at the expense of some latency).
+
+    o	The `exact' p-values for the two-sided two-sample
+	Kolmogorov-Smirnov test in 1.3.0 were for the wrong tail.
+
+    o	In the HTML conversion of .Rd files, \link[foo]{bar} was
+	ignoring [foo] outside \code{} statements.
+
+    o	lm.influence(), plot.lm(), influence.measures() and the
+	related diagnostic measures now handle lm() fits with
+	na.action=na.exclude.
+
+    o	Eliminated segmentation fault in while loops without braces
+	in their bodies.
+
+    o	barplot did not accept NA heights unless ylim was specified.
+
+    o	predict.lm() failed with single-column model matrix (PR#1018).
+
+    o	legend() now also works with 100s of entries (thanks to
+	M. Schlather).
+
+    o	A long-standing bug leading to inaccuracy in polyroot() has been
+	fixed (PR#751)
+
+    o	A very old bug with eval() not handling a numeric `envir' argument
+	according to specifications has been fixed. [This in particular
+	broke ported S-PLUS code that used eval(..., sys.parent())]. Also,
+	eval() now checks that a numeric `envir' has length one to prevent
+	accidental passing of matrices instead of data frames.
+
+    o	The C code underlying nlm(f, *) now also works correctly when f(x)
+	returns +Inf {nlm() itself *did* work!}.
+
+    o	pdfcolor.tex is now included in doc/manual, as pdftex seems no
+	longer to include it.
+
+    o	Fixed protect bug in save() code that might have been responsible
+	for occasionally saving corrupted workspaces.
+
+    o	capabilities("X11") now reports if X11 is available in this
+	session, thereby giving the correct answer if --gui=none was
+	specified.
+
+    o	Rd files with ,, inside \code{} were treating this as a
+	ligature in LaTeX: now corrected in Rdconv.
+
+    o	dlopen on Compaq Tru64 was finding the wrong entry points:
+	worked-around by using different names in the modules.
+
+    o	plot.mts() allows a type argument again (broken in 1.3.0: PR#1010).
+
+    o	scan() has a limit of 8190 on the length of char strings, and
+	now warns if it is exceeded (when the string has always been
+	truncated).
+
+    o	par adj now accepts values of integer mode (such as text(adj=0:1)).
+
+    o	horizontal adj values outside the range [0, 1] are now
+	supported on devices with canHAdj==1 (Windows devices, xfig).
+
+    o	xtabs() without a response was ignoring drop.unused.levels=TRUE.
+
+    o	readLines(ok=FALSE) was not generating an error when it should.
+
+    o	princomp(covmat=) has been broken.
+
+    o	Many documentation clean-ups: formerly undocumented arguments,
+	use of T/F rather than TRUE/FALSE.
+
+    o	df[] <- foo now works for data frames (PR#1047).
+
+    o	nargs() was documented incorrectly.
+
+    o	Using seq.POSIXt(by="2 weeks") was stepping by single weeks
+	(PR#1046).
+
+    o	dummy.coef.lm was not handling complex terms like z:I(x).
+	It now either does or warns and gives NAs (PR#1048).
+
+    o	predict.mlm() was broken (PR#1049).
+
+    o	ksmooth (in package modreg) was using points to the left
+	of the kernel under some circumstances (PR#1050).
+
+    o	attr(x, "class") <- character(0) was segfaulting.  Similar problem
+	with "comment" attribute also fixed.
+
+    o	loadings() results from PCA (as well as from factor analysis)
+	are now printed by print.loadings.
+
+    o	Using chol() on an non-positive-definite matrix gave an
+	misleading error message (PR#1061).
+
+    o	as.character() on a language object was truncating to about 70
+	characters: the internal limit (from the deparse code) is now the
+	maximum possible 500.
+
+    o	X11() device was failing to re-initialize correctly after all
+	devices were shut down, so the colortype could not be changed
+	and some systems showed protocol errors. (PR#1065)
+
+    o	Converting Inf and NaN values by as.character() and reading by
+	scan() was supported by strtod on some platforms and not
+	others: these are now handled by R itself. (PR#1072)
+
+    o	hclust(dist(1)) doesn't loop infinitely but signal an error.
+
+    o	cutree() can now cut outside heights and does not return
+	garbage	for h >= max(tree$heights) anymore. (PR#1067)
+
+    o	interaction(...,drop=F) returned an object looking like a
+	factor, but with storage mode "double", confusing
+	model.matrix.default (PR#1003)
+
+    o	splineDesign(*, ord=) and others give better error messages for
+	wrong `ord' (and have slightly improved documentation).
+
+
 		CHANGES IN R VERSION 1.3.0
 
 
@@ -285,7 +450,7 @@ NEW FEATURES
 	of source-ing the package.  Packages that do more than just
 	assign object definitions may need to install with `--save'.
 	Putting a file `INSTALL.R' in the package directory makes
-	`--save' the default behavior.  If that file is not empty, its
+	`--save' the default behavior.	If that file is not empty, its
 	contents should be R commands executed at the end of creating
 	the image.
 
@@ -323,18 +488,18 @@ NEW FEATURES
 	are not part of the API from indices like the alphabetical lists
 	in the HTML help system.
 
-    o   Under Unix, shlib modules for add-on packages are now linked
-	against R as a shared library (`libR') if this exists.  (This
+    o	Under Unix, shlib modules for add-on packages are now linked
+	against R as a shared library (`libR') if this exists.	(This
 	allows for improved embedding of R into other applications.)
 
-    o   New mechanism for explicitly registering native routines in a
+    o	New mechanism for explicitly registering native routines in a
 	DLL/shared library accessible via .C(), .Call(), .Fortran() and
 	.External().  This is potentially more robust than the existing
 	dynamic lookup, since it checks the number of arguments, type of
 	the routine.
 
     o	New mechanism allowing registration of C routines for converting
-	R objects to C pointers in .C() calls.  Useful for references to
+	R objects to C pointers in .C() calls.	Useful for references to
 	data in other languages and libraries (e.g. C and hdf5).
 
     o	The internal ftp/http access code maintains the event loop, so
@@ -367,8 +532,8 @@ BUG FIXES
 
     o	pointer protection in deriv() (PR#953)
 
-    o   expand.data.frame() didn't interpret its subset= argument in
-        the data frame. (PR#979 et al., fix from Greg Warnes)
+    o	expand.data.frame() didn't interpret its subset= argument in
+	the data frame. (PR#979 et al., fix from Greg Warnes)
 
     o	format() on character arrays was losing the dimensions.
 
@@ -390,7 +555,7 @@ BUG FIXES
     o	qr.X() was ignoring pivoting (which happens only in
 	rank-deficient cases).
 
-    o   sign of Pearson residuals was wrong for reciprocal link (PR#862)
+    o	sign of Pearson residuals was wrong for reciprocal link (PR#862)
 
     o	The algorithm for determining starting estimates in the SSfpl
 	self-starting model in the nls package was changed following a
@@ -403,10 +568,10 @@ BUG FIXES
     o	The implementation of sys.function() did not work when the
 	current function was already a function (e.g., a closure).
 
-    o   tapply() had "..." argument after simplify=, which made it
+    o	tapply() had "..." argument after simplify=, which made it
 	incompatible with S when passing additional unnamed arguments to FUN.
 
-    o   use formula environments in xy.coords() (PR#932)
+    o	use formula environments in xy.coords() (PR#932)
 
 
     o	Unused entry points in `src/appl/fortran.c' and `Fortran.h'

@@ -55,7 +55,7 @@
 
 #include "Defn.h"
 
-#ifndef HAVE_STRPTIME
+#ifdef STRPTIME_BROKEN
 /* Substitute based on glibc code. */
 # include "Rstrptime.h"
 #endif

@@ -16,7 +16,7 @@ Up:<a rel=up href="#(dir)">(dir)</a>
 <h1>R FAQ</h1>
 
 <h2>Frequently Asked Questions on R</h2>
-<h2>Version 1.3-2, 2001-06-20</h2>
+<h2>Version 1.3-20, 2001-08-31</h2>
 <address>Kurt Hornik</address>
 <p><p><hr><p>
 
@@ -234,9 +234,10 @@ Up:<a rel=up href="#R%20Basics">R Basics</a>
 systems.
 
 <p>The current version of R will configure and build under a number of
-common Unix platforms including i386-freebsd, i386-linux,
-i386-sun-solaris, ppc-linux, mips-sgi-irix, alpha-linux, alpha-dec-osf4,
-rs6000-ibm-aix, hppa-hp-hpux, sparc-linux, and sparc-sun-solaris.
+common Unix platforms including i386-freebsd, i386-linux-gnu,
+i386-sun-solaris, powerpc-linux-gnu, powerpc-apple-darwin,
+mips-sgi-irix, alpha-linux-gnu, alpha-dec-osf4, rs6000-ibm-aix,
+hppa-hp-hpux, sparc-linux-gnu, and sparc-sun-solaris.
 
 <p>If you know about other platforms, please drop us a note.
 
@@ -249,10 +250,13 @@ Up:<a rel=up href="#R%20Basics">R Basics</a>
 
 <h2>2.3 What is the current version of R?</h2>
 
-<p>The current stable version is 1.3.0, the unstable one is
-1.4.0.  Typically, new features are introduced in the
-development versions; updates of stable versions are for bug fixes
-mostly.
+<p>The current released version is 1.3.1.  Conforming to this
+`major.minor.patchlevel' numbering scheme, there are three development
+versions of R, working towards the next patch (`r-patched'), minor
+(`r-devel'), and major (`r-ng') releases of R, respectively.  Version
+r-patched is for bug fixes mostly.  New features are typically
+introduced in r-devel.  Version r-ng will eventually become the next
+generation of R.
 
 <p><hr>
 Node:<a name="How%20can%20R%20be%20obtained%3f">How can R be obtained?</a>,
@@ -273,14 +277,14 @@ Up:<a rel=up href="#R%20Basics">R Basics</a>
 
 <p>to create a copy of the source tree specified by <var>module</var> in the
 subdirectory <code>R</code> of the current directory, where <var>module</var>
-specifies one of the three existing flavors of the R sources, and can be
-one of <code>r-release</code> (latest released version),
-<code>r-release-patched</code> (latest released version with patches applied),
-and <code>r-devel</code> (current development version).  The rsync trees are
-created directly from the master CVS archive and are updated hourly. 
-The <code>-C</code> option in the rsync command is to cause it to skip the
-CVS directories.  Further information on rsync is available at
-<a href="http://rsync.samba.org/rsync/">http://rsync.samba.org/rsync/</a>.
+specifies one of the four existing flavors of the R sources, and can be
+one of <code>r-release</code> (current released version), <code>r-patched</code>
+(patched released version), and <code>r-devel</code> (development version,
+less stable), and <code>r-ng</code> (next generation, unstable).  The rsync
+trees are created directly from the master CVS archive and are updated
+hourly.  The <code>-C</code> option in the <code>rsync</code> command is to
+cause it to skip the CVS directories.  Further information on
+<code>rsync</code> is available at <a href="http://rsync.samba.org/rsync/">http://rsync.samba.org/rsync/</a>.
 
 <p><hr>
 Node:<a name="How%20can%20R%20be%20installed%3f">How can R be installed?</a>,
@@ -407,17 +411,17 @@ Up:<a rel=up href="#How%20can%20R%20be%20installed%3f">How can R be installed?</
 <h3>2.5.3 How can R be installed (Macintosh)</h3>
 
 <p>The <code>bin/macos</code> directory of a <small>CRAN</small> site contains
-bin-hexed (<code>hqx</code>) and stuffit (<code>sit</code>) self-extracting binaries
-for a base distribution and a large number of add-on packages to run
-under MacOS 8.6 to MacOS 9.1 or MacOS X under Classic Environment.  The
-Mac version of R and the Mac binaries are maintained by
+bin-hexed (<code>hqx</code>) and stuffit (<code>sit</code>) archives for a base
+distribution and a large number of add-on packages to run under MacOS
+8.6 to MacOS 9.1 or MacOS X natively.  The Mac version of R and the Mac
+binaries are maintained by
 <a href="mailto:Stefano.Iacus@r-project.org">Stefano Iacus</a>.
 
 <p>The <a href="http://www.eco-dip.unimi.it/R/rmac-FAQ.html">"R for Macintosh <small>FAQ</small>/DOC"</a> has more details.
 
 <p>Binaries of base distributions for MacOS X (Darwin) with X11 are made
-available by <a href="mailto:deleeuw@stat.ucla.edu">Jan de Leeuw</a> at
-<a href="http://www.stat.ucla.edu/~deleeuw/R/">http://www.stat.ucla.edu/~deleeuw/R/</a>.
+available by <a href="mailto:deleeuw@stat.ucla.edu">Jan de Leeuw</a> in the
+<code>bin/macosx</code> directory of a <small>CRAN</small> site.
 
 <p><hr>
 Node:<a name="Are%20there%20Unix%20binaries%20for%20R%3f">Are there Unix binaries for R?</a>,
@@ -432,9 +436,9 @@ Up:<a rel=up href="#R%20Basics">R Basics</a>
 2.2/2.3 packages for the i386 platform (now part of the Debian
 distribution and maintained by Doug Bates), Red Hat 6.x/7.x packages for
 the alpha and i386 platforms (maintained by Naoki Takebayashi and Martyn
-Plummer, respectively), SuSE 7.0 i386 packages by Albrecht Gebhardt,
-Mandrake 7.2/8.0 i386 packages by Michele Alzetta, and LinuxPPC 5.0 RPMs
-by Alex Buerkle.
+Plummer, respectively), SuSE 7.2 i386 packages by Albrecht Gebhardt,
+Mandrake 8.0 and 7.2 i386 packages by Michele Alzetta and Maximino
+Ameneiro Gomez, and LinuxPPC 5.0 RPMs by Alex Buerkle.
 
 <p>The Debian packages can be accessed through APT, the Debian package
 maintenance tool.  Simply add the line
@@ -450,7 +454,7 @@ programs <code>apt-get</code>, <code>apt-cache</code>, and <code>dselect</code>
 updates of the R packages.
 
 <p>The <code>bin/osf</code> directory of a <small>CRAN</small> site contains RPMs by
-Albrecht Gebhardt for alpha systems running Digital Unix 4.0.
+Albrecht Gebhardt for alpha systems running Alpha Unix (OSF/Tru64).
 
 <p>No other binary distributions have thus far been made publically
 available.
@@ -688,6 +692,8 @@ binaries.
 <td>(U of Bristol, United Kingdom)
 <br></tr><tr align="left"><td><a href="http://cran.us.r-project.org/">http://cran.us.r-project.org/</a>
 <td>(U of Wisconsin, USA)
+<br></tr><tr align="left"><td><a href="http://cran.za.r-project.org/">http://cran.za.r-project.org/</a>
+<td>(Rhodes U, South Africa)
 <br></tr></table>
 </blockquote>
 
@@ -1096,8 +1102,10 @@ startup file <code><code>$R_HOME</code>/library/base/R/Rprofile</code>.  Then, i
 searches for a site-wide startup profile unless the command line option
 <code>--no-site-file</code> was given.  The name of this file is taken from
 the value of the <code>R_PROFILE</code> environment variable.  If that variable
-is unset, the default is <code><code>$R_HOME</code>/etc/Rprofile</code>.  This code
-is loaded in package <strong>base</strong>.  Then, unless
+is unset, the default is <code><code>$R_HOME</code>/etc/Rprofile</code>
+(<code><code>$R_HOME</code>/etc/Rprofile.site</code> in R 1.4.0). 
+ &lt;/FIXME&gt;
+This code is loaded in package <strong>base</strong>.  Then, unless
 <code>--no-init-file</code> was given, R searches for a file called
 <code>.Rprofile</code> in the current directory or in the user's home
 directory (in that order) and sources it into the user workspace.  It
@@ -1322,6 +1330,9 @@ Wilcoxon tests.
 line fitting, and median polish and smoothing. 
 <br><dt><strong>lqs</strong>
 <dd>Resistant regression and covariance estimation. 
+<br><dt><strong>methods</strong>
+<dd>Formally defined methods and classes for R objects, plus other
+programming tools, as described in the Green Book. 
 <br><dt><strong>modreg</strong>
 <dd>MODern REGression: smoothing and local methods. 
 <br><dt><strong>mva</strong>
@@ -1345,9 +1356,9 @@ distribution functions.
 <code>src/contrib</code> area.
 
 <dl>
-<dt><strong>AnalyzeIO</strong>
-<dd>Functions for I/O of ANALYZE format <code>.img</code> and <code>.hdr</code> image
-files. 
+<dt><strong>AnalyzeFMRI</strong>
+<dd>Functions for I/O, visualisation and analysis of functional Magnetic
+Resonance Imaging (fMRI) datasets stored in the ANALYZE format. 
 <br><dt><strong>CoCoAn</strong>
 <dd>Constrained Correspondence Analysis. 
 <br><dt><strong>Devore5</strong>
@@ -1355,9 +1366,6 @@ files.
 Engineering and the Sciences (5th ed)" by Jay L. Devore, 2000, Duxbury. 
 <br><dt><strong>GLMMGibbs</strong>
 <dd>Generalised Linear Mixed Models by Gibbs sampling. 
-<br><dt><strong>GenKern</strong>
-<dd>Functions for generating and manipulating generalised binned kernel
-density estimates. 
 <br><dt><strong>GeneSOM</strong>
 <dd>Clustering genes using Self-Organizing Maps (SOMs). 
 <br><dt><strong>KernSmooth</strong>
@@ -1396,6 +1404,12 @@ penalisations.  Also includes some other multiway methods.
 <dd>An interface between R and the mSQL database system. 
 <br><dt><strong>Rstreams</strong>
 <dd>Binary file stream support functions. 
+<br><dt><strong>Rwave</strong>
+<dd>An environment for the time-frequency analysis of 1-D signals (and
+especially for the wavelet and Gabor transforms of noisy signals), based
+on the book "Practical Time-Frequency Analysis: Gabor and Wavelet
+Transforms with an Implementation in S" by Rene Carmona, Wen L. Hwang
+and Bruno Torresani, 1998, Academic Press. 
 <br><dt><strong>SASmixed</strong>
 <dd>Data sets and sample linear mixed effects analyses corresponding to the
 examples in "SAS System for Mixed Models" by R. C. Littell,
@@ -1412,6 +1426,8 @@ distributions).
 <dd>ACE (Alternating Conditional Expectations) and AVAS (Additivity and
 VAriance Stabilization for regression) methods for selecting regression
 transformations. 
+<br><dt><strong>adapt</strong>
+<dd>Adaptive quadrature in up to 20 dimensions. 
 <br><dt><strong>akima</strong>
 <dd>Linear or cubic spline interpolation for irregularly gridded data. 
 <br><dt><strong>ash</strong>
@@ -1431,6 +1447,11 @@ R. Tibshirani, 1993, Chapman and Hall.
 <br><dt><strong>bqtl</strong>
 <dd>QTL mapping toolkit for inbred crosses and recombinant inbred lines. 
 Includes maximum likelihood and Bayesian tools. 
+<br><dt><strong>car</strong>
+<dd>Companion to Applied Regression, containing functions for applied
+regession, linear models, and generalized linear models, with an
+emphasis on regression diagnostics, particularly graphical diagnostic
+methods. 
 <br><dt><strong>cclust</strong>
 <dd>Convex clustering methods, including k-means algorithm, on-line
 update algorithm (Hard Competitive Learning) and Neural Gas algorithm
@@ -1461,6 +1482,10 @@ and fractional factorial designs.
 vector of input dates in any of the forms <code>8/30/53</code>,
 <code>30Aug53</code>, <code>30 August 1953</code>, <small>...</small>, <code>August 30 53</code>, or
 any mixture of these. 
+<br><dt><strong>diamonds</strong>
+<dd>Functions for illustrating aperture-4 diamond partitions in the plane,
+or on the surface of an octahedron or icosahedron, for use as analysis
+or sampling grids. 
 <br><dt><strong>dse</strong>
 <dd>Dynamic System Estimation, a multivariate time series package.  Contains
 <strong>dse1</strong> (DSE kernel plus ARMA and state space models),
@@ -1481,8 +1506,17 @@ vector machines, and fuzzy clustering.
 <br><dt><strong>exactRankTests</strong>
 <dd>Computes exact p-values and quantiles using an implementation of
 the Streitberg/Roehmel shift algorithm. 
+<br><dt><strong>fastICA</strong>
+<dd>Implementation of FastICA algorithm to perform Independent Component
+Analysis (ICA) and Projection Pursuit. 
 <br><dt><strong>fdim</strong>
 <dd>Functions for calculating fractal dimension. 
+<br><dt><strong>fields</strong>
+<dd>A collection of programs for curve and function fitting with an emphasis
+on spatial data.  The major methods implemented include cubic and thin
+plate splines, universal Kriging and Kriging for large data sets.  The
+main feature is that any covariance function implemented in R can be
+used for spatial prediction. 
 <br><dt><strong>foreign</strong>
 <dd>Functions for reading and writing data stored by statistical software
 like Minitab, SAS, SPSS, Stata, etc. 
@@ -1531,6 +1565,9 @@ bandwidth selection.
 <br><dt><strong>maptree</strong>
 <dd>Functions with example data for graphing and mapping models from
 hierarchical clustering and classification and regression trees. 
+<br><dt><strong>maxstat</strong>
+<dd>Maximally selected rank and Gauss statistics with several p-value
+approximations. 
 <br><dt><strong>mclust</strong>
 <dd>Model-based cluster analysis. 
 <br><dt><strong>mda</strong>
@@ -1575,14 +1612,17 @@ ODEs are expressed as R functions.
 <dd>Functions for plotting Australia's coastline and state boundaries. 
 <br><dt><strong>panel</strong>
 <dd>Functions and datasets for fitting models to Panel data. 
+<br><dt><strong>pcurve</strong>
+<dd>Fits a principal curve to a numeric multivariate dataset in arbitrary
+dimensions.  Produces diagnostic plots.  Also calculates Bray-Curtis and
+other distance matrices and performs multi-dimensional scaling and
+principal component analyses. 
 <br><dt><strong>permax</strong>
 <dd>Functions intended to facilitate certain basic analyses of DNA array
 data, especially with regard to comparing expression levels between two
 types of tissue. 
 <br><dt><strong>pinktoe</strong>
 <dd>Converts S trees to <small>HTML</small>/Perl files for interactive tree traversal. 
-<br><dt><strong>pls</strong>
-<dd>Univariate Partial Least Squares Regression. 
 <br><dt><strong>polymars</strong>
 <dd>Polychotomous regression based on Multivariate Adaptive Regression
 Splines. 
@@ -1604,6 +1644,10 @@ two-sample comparison of binary outcomes.
 <dd>Recursive PARTitioning and regression trees. 
 <br><dt><strong>scatterplot3d</strong>
 <dd>Plots a three dimensional (3D) point cloud perspectively. 
+<br><dt><strong>sem</strong>
+<dd>Functions for fitting general linear Structural Equation Models (with
+observed and unobserved variables) by the method of maximum likelihood
+using the RAM approach. 
 <br><dt><strong>sgeostat</strong>
 <dd>An object-oriented framework for geostatistical modeling. 
 <br><dt><strong>sm</strong>
@@ -1626,6 +1670,8 @@ Statistics with <small>S-PLUS</small>" by W. Venables and B. Ripley.  Contained 
 the <code>VR</code> bundle. 
 <br><dt><strong>splancs</strong>
 <dd>Spatial and space-time point pattern analysis functions. 
+<br><dt><strong>strucchange</strong>
+<dd>Various tests on structural change in linear regression models. 
 <br><dt><strong>survival</strong>
 <dd>Functions for survival analysis, including penalised likelihood. 
 <br><dt><strong>tensor</strong>
@@ -1665,15 +1711,13 @@ currently contains
 on starting R from within the GRASS environment and chosen LOCATION and
 MAPSET.  Wrapper and helper functions are provided for a range of R
 functions to match the interface metadata structures. 
+<br><dt><strong>GenKern</strong>
+<dd>Functions for generating and manipulating generalised binned kernel
+density estimates. 
 <br><dt><strong>R2HTML</strong>
 <dd>Functions for exporting R objects &amp; graphics in an <small>HTML</small> document. 
 <br><dt><strong>StatDataML</strong>
 <dd>Read and write StatDataML. 
-<br><dt><strong>car</strong>
-<dd>Companion to Applied Regression, containing functions for applied
-regession, linear models, and generalized linear models, with an
-emphasis on regression diagnostics, particularly graphical diagnostic
-methods. 
 <br><dt><strong>cxx</strong>
 <dd>A small C++ test package. 
 <br><dt><strong>dopt</strong>
@@ -1683,9 +1727,6 @@ methods.
 time series package.  Contains PADI, juice and monitoring extensions. 
 <br><dt><strong>ensemble</strong>
 <dd>Ensembles of tree classifiers. 
-<br><dt><strong>funfits</strong>
-<dd>An integrated set of functions for fitting curves and surfaces including
-thin plate splines, kriging and neural networks. 
 <br><dt><strong>grid</strong>
 <dd>The Grid graphics package, a rewrite of the graphics layout
 capabilities, plus some support for interaction. 
@@ -1696,9 +1737,6 @@ capabilities, plus some support for interaction.
 general linear hypothesis. 
 <br><dt><strong>lattice</strong>
 <dd>Lattice graphics, an implementation of Trellis Graphics functions. 
-<br><dt><strong>maxstat</strong>
-<dd>Maximally selected rank and Gauss statistics with several p-value
-approximations. 
 <br><dt><strong>multidim</strong>
 <dd>Code for correspondence analysis and other multidimensional descriptive
 statistics. 
@@ -1707,14 +1745,10 @@ statistics.
 including stabilized test procedures by Laeuter et. al. 
 <br><dt><strong>npConfRatio</strong>
 <dd>Nonparametric confidence intervals for the ratios of medians. 
+<br><dt><strong>pls</strong>
+<dd>Univariate Partial Least Squares Regression. 
 <br><dt><strong>regexp</strong>
 <dd>Simple regular expression interface. 
-<br><dt><strong>sem</strong>
-<dd>Functions for fitting general linear Structural Equation Models (with
-observed and unobserved variables) by the method of maximum likelihood
-using the RAM approach. 
-<br><dt><strong>strucchange</strong>
-<dd>Various tests on structural change in linear regression models. 
 <br><dt><strong>write.snns</strong>
 <dd>Function for writing a <small>SNNS</small> pattern file from a data frame or
 matrix. 
@@ -1739,6 +1773,9 @@ per-record, aggregate and trigger functions.
 <br><dt><strong>RGnumeric</strong>
 <dd>A plugin for the Gnumeric spreadsheet that allows R functions to be
 called from cells within the sheet, automatic recalculation, etc. 
+<br><dt><strong>RJavaDevice</strong>
+<dd>A graphics device for R that uses Java components and graphics
+<small>API</small>s. 
 <br><dt><strong>RSMethods</strong>
 <dd>An implementation of S version 4 methods and classes for R, consistent
 with the basic material in "Programming with data" by John
@@ -1749,6 +1786,8 @@ allowing one to call arbitrary Perl subroutines, classes and methods.
 <br><dt><strong>RSPython</strong>
 <dd>Allows Python programs to invoke S functions, methods, etc., and S code
 to call Python functionality. 
+<br><dt><strong>SASXML</strong>
+<dd>Example for reading XML files in SAS 8.2 manner. 
 <br><dt><strong>SJava</strong>
 <dd>An interface from R to Java to create and call Java objects and
 methods. 
@@ -1765,6 +1804,9 @@ dynamically substituting output from R.
 interfaces from S to that code, including the table of S-accessible
 native symbols, parameter count and type information, S constructors
 from C objects, call graphs, etc. 
+<br><dt><strong>Sxslt</strong>
+<dd>An extension module for libxslt, the XML-XSL document translator, that
+allows XSL functions to be implemented via R functions. 
 </dl>
 
 <a href="mailto:jlindsey@luc.ac.be">Jim Lindsey</a> has written a collection of R
@@ -2151,7 +2193,6 @@ Up:<a rel=up href="#Top">Top</a>
 <li><a href="#How%20should%20I%20set%20options%3f">How should I set options?</a>: 
 <li><a href="#How%20do%20file%20names%20work%20in%20Windows%3f">How do file names work in Windows?</a>: 
 <li><a href="#Why%20does%20plotting%20give%20a%20color%20allocation%20error%3f">Why does plotting give a color allocation error?</a>: 
-<li><a href="#Is%20R%20Y2K-compliant%3f">Is R Y2K-compliant?</a>: 
 <li><a href="#How%20do%20I%20convert%20factors%20to%20numeric%3f">How do I convert factors to numeric?</a>: 
 <li><a href="#Are%20Trellis%20displays%20implemented%20in%20R%3f">Are Trellis displays implemented in R?</a>: 
 <li><a href="#What%20are%20the%20enclosing%20and%20parent%20environments%3f">What are the enclosing and parent environments?</a>: 
@@ -2413,7 +2454,7 @@ can also replace <code>\</code> by <code>/</code> (<code>"c:/data/money.dat"</co
 
 <p><hr>
 Node:<a name="Why%20does%20plotting%20give%20a%20color%20allocation%20error%3f">Why does plotting give a color allocation error?</a>,
-Next:<a rel=next href="#Is%20R%20Y2K-compliant%3f">Is R Y2K-compliant?</a>,
+Next:<a rel=next href="#How%20do%20I%20convert%20factors%20to%20numeric%3f">How do I convert factors to numeric?</a>,
 Previous:<a rel=previous href="#How%20do%20file%20names%20work%20in%20Windows%3f">How do file names work in Windows?</a>,
 Up:<a rel=up href="#R%20Miscellanea">R Miscellanea</a>
 <br>
@@ -2436,31 +2477,13 @@ either the <code>-no-install</code> (to use the default colormap) or the
 help page for <code>X11()</code> for more information.
 
 <p><hr>
-Node:<a name="Is%20R%20Y2K-compliant%3f">Is R Y2K-compliant?</a>,
-Next:<a rel=next href="#How%20do%20I%20convert%20factors%20to%20numeric%3f">How do I convert factors to numeric?</a>,
+Node:<a name="How%20do%20I%20convert%20factors%20to%20numeric%3f">How do I convert factors to numeric?</a>,
+Next:<a rel=next href="#Are%20Trellis%20displays%20implemented%20in%20R%3f">Are Trellis displays implemented in R?</a>,
 Previous:<a rel=previous href="#Why%20does%20plotting%20give%20a%20color%20allocation%20error%3f">Why does plotting give a color allocation error?</a>,
 Up:<a rel=up href="#R%20Miscellanea">R Miscellanea</a>
 <br>
 
-<h2>7.12 Is R Y2K-compliant?</h2>
-
-<p>We expect R to be Y2K compliant when compiled and run on a Y2K compliant
-system.  In particular R does not internally represent or manipulate
-dates as two-digit quantities.  However, no guarantee of Y2K compliance
-is provided for R.  R is free software and comes with <em>no warranty
-whatsoever</em>.
-
-<p>R, like any other programming language, can be used to write programs
-and manipulate data in ways that are not Y2K compliant.
-
-<p><hr>
-Node:<a name="How%20do%20I%20convert%20factors%20to%20numeric%3f">How do I convert factors to numeric?</a>,
-Next:<a rel=next href="#Are%20Trellis%20displays%20implemented%20in%20R%3f">Are Trellis displays implemented in R?</a>,
-Previous:<a rel=previous href="#Is%20R%20Y2K-compliant%3f">Is R Y2K-compliant?</a>,
-Up:<a rel=up href="#R%20Miscellanea">R Miscellanea</a>
-<br>
-
-<h2>7.13 How do I convert factors to numeric?</h2>
+<h2>7.12 How do I convert factors to numeric?</h2>
 
 <p>It may happen that when reading numeric data into R (usually, when
 reading in a file), they come in as factors.  If <code>f</code> is such a
@@ -2483,7 +2506,7 @@ Previous:<a rel=previous href="#How%20do%20I%20convert%20factors%20to%20numeric%
 Up:<a rel=up href="#R%20Miscellanea">R Miscellanea</a>
 <br>
 
-<h2>7.14 Are Trellis displays implemented in R?</h2>
+<h2>7.13 Are Trellis displays implemented in R?</h2>
 
 <p>An R package called <strong>lattice</strong>, which provides graphical
 functionality that is compatible with most Trellis commands, is under
@@ -2512,7 +2535,7 @@ Previous:<a rel=previous href="#Are%20Trellis%20displays%20implemented%20in%20R%
 Up:<a rel=up href="#R%20Miscellanea">R Miscellanea</a>
 <br>
 
-<h2>7.15 What are the enclosing and parent environments?</h2>
+<h2>7.14 What are the enclosing and parent environments?</h2>
 
 <p>Inside a function you may want to access variables in two additional
 environments: the one that the function was defined in ("enclosing"),
@@ -2566,7 +2589,7 @@ Previous:<a rel=previous href="#What%20are%20the%20enclosing%20and%20parent%20en
 Up:<a rel=up href="#R%20Miscellanea">R Miscellanea</a>
 <br>
 
-<h2>7.16 How can I substitute into a plot label?</h2>
+<h2>7.15 How can I substitute into a plot label?</h2>
 
 <p>Often, it is desired to use the value of an R object in a plot label,
 e.g., a title.  This is easily accomplished using <code>paste()</code> if the
@@ -2589,7 +2612,7 @@ Previous:<a rel=previous href="#How%20can%20I%20substitute%20into%20a%20plot%20l
 Up:<a rel=up href="#R%20Miscellanea">R Miscellanea</a>
 <br>
 
-<h2>7.17 What are valid names?</h2>
+<h2>7.16 What are valid names?</h2>
 
 <p>When creating data frames using <code>data.frame()</code> or
 <code>read.table()</code>, R by default ensures that the variable names are
@@ -2638,7 +2661,7 @@ Previous:<a rel=previous href="#What%20are%20valid%20names%3f">What are valid na
 Up:<a rel=up href="#R%20Miscellanea">R Miscellanea</a>
 <br>
 
-<h2>7.18 Are GAMs implemented in R?</h2>
+<h2>7.17 Are GAMs implemented in R?</h2>
 
 <p>There is a <code>gam()</code> function for Generalized Additive Models in
 package <strong>mgcv</strong>, but it is not an exact clone of what is described
@@ -2654,7 +2677,7 @@ Previous:<a rel=previous href="#Are%20GAMs%20implemented%20in%20R%3f">Are GAMs i
 Up:<a rel=up href="#R%20Miscellanea">R Miscellanea</a>
 <br>
 
-<h2>7.19 Why is the output not printed when I source() a file?</h2>
+<h2>7.18 Why is the output not printed when I source() a file?</h2>
 
 <p>Most R commands do not generate any output. The command
 
@@ -2693,7 +2716,7 @@ Previous:<a rel=previous href="#Why%20is%20the%20output%20not%20printed%20when%2
 Up:<a rel=up href="#R%20Miscellanea">R Miscellanea</a>
 <br>
 
-<h2>7.20 Why does outer() behave strangely with my function?</h2>
+<h2>7.19 Why does outer() behave strangely with my function?</h2>
 
 <p>As the help for <code>outer()</code> indicates, it does not work on arbitrary
 functions the way the <code>apply()</code> family does.  It requires functions
@@ -2702,6 +2725,29 @@ looking at the code, <code>outer(x, y, FUN)</code> creates two large vectors
 containing every possible combination of elements of <code>x</code> and
 <code>y</code> and then passes this to <code>FUN</code> all at once.  Your function
 probably cannot handle two large vectors as parameters.
+
+<p>If you have a function that cannot handle two vectors but can handle two
+scalars, then you can still use <code>outer()</code> but you will need to wrap
+your function up first, to simulate vectorized behavior.  Suppose your
+function is
+
+<pre>foo &lt;- function(x, y, happy) {
+  stopifnot(length(x) == 1, length(y) == 1) # scalars only!
+  (x + y) * happy
+}
+</pre>
+
+<p>If you define the general function
+
+<pre>wrapper &lt;- function(x, y, my.fun, ...) {
+  sapply(seq(along=x), FUN = function(i) my.fun(x[i], y[i], ...))
+}
+</pre>
+
+<p>then you can use <code>outer()</code> by writing, e.g.,
+
+<pre>outer(1:4, 1:2, FUN = wrapper, my.fun = foo, happy = 10)
+</pre>
 
 <p><hr>
 Node:<a name="R%20Programming">R Programming</a>,
@@ -2926,10 +2972,10 @@ Up:<a rel=up href="#Top">Top</a>
 <p>Of course, many many thanks to Robert and Ross for the R system, and to
 the package writers and porters for adding to it.
 
-<p>Special thanks go to Doug Bates, Peter Dalgaard, Paul Gilbert, Fritz
-Leisch, Jim Lindsey, Thomas Lumley, Martin Maechler, Brian D. Ripley,
-Anthony Rossini, and Andreas Weingessel for their comments which helped
-me improve this <small>FAQ</small>.
+<p>Special thanks go to Doug Bates, Peter Dalgaard, Paul Gilbert, Stefano
+Iacus, Fritz Leisch, Jim Lindsey, Thomas Lumley, Martin Maechler, Brian
+D. Ripley, Anthony Rossini, and Andreas Weingessel for their comments
+which helped me improve this <small>FAQ</small>.
 
 <p>More to some soon <small>...</small>
 

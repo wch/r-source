@@ -102,13 +102,13 @@ density <-
 	      class="density")
 }
 
-plot.density <- function(s, main=NULL, xlab=NULL, ylab="Density", type="l",
+plot.density <- function(x, main=NULL, xlab=NULL, ylab="Density", type="l",
 			 zero.line = TRUE, ...)
 {
     if(is.null(xlab))
-	xlab <- paste("N =", s$n, "  Bandwidth =", formatC(s$bw))
-    if(is.null(main)) main <- deparse(s$call)
-    plot.default(s, main=main, xlab=xlab, ylab=ylab, type=type, ...)
+	xlab <- paste("N =", x$n, "  Bandwidth =", formatC(x$bw))
+    if(is.null(main)) main <- deparse(x$call)
+    plot.default(x, main=main, xlab=xlab, ylab=ylab, type=type, ...)
     if(zero.line) abline(h=0, lwd=0.1, col = "gray")
 }
 

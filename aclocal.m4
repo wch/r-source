@@ -1,4 +1,4 @@
-dnl aclocal.m4 generated automatically by aclocal 1.4
+dnl aclocal.m4 generated automatically by aclocal 1.4-p4
 
 dnl Copyright (C) 1994, 1995-8, 1999 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
@@ -71,6 +71,13 @@ AC_DEFUN([R_PROG_INSTALL],
       ;;
   esac
  ])
+AC_DEFUN([R_PROG_PAGER], [
+  AC_PATH_PROGS(PAGER, [${PAGER} less more page pg], false)
+  if test "${PAGER}" = false; then
+    warn_pager="I could not determine a pager"
+    AC_MSG_WARN(${warn_pager})
+  fi
+])
 changequote(<<, >>)dnl
 define(PERL5_CHECK,
 <<
@@ -88,7 +95,8 @@ AC_DEFUN([R_PROG_PERL],
     AC_CACHE_CHECK([whether perl version is at least 5],
       r_cv_prog_perl_v5, [PERL5_CHECK()] )
   else
-    PERL=false
+    AC_PATH_PROGS(FALSE, false)
+    PERL="${FALSE}"
   fi
   if test "${r_cv_prog_perl_v5}" = yes; then
     NO_PERL5=false
@@ -135,11 +143,11 @@ AC_DEFUN([R_PROG_TEXMF],
     AC_MSG_WARN(${warn_info})
     MAKEINFO=false
   fi
-  if test "${PERL}" != false; then
+  if test "${PERL}" = "${FALSE}"; then
+    AC_PATH_PROGS(INSTALL_INFO, [${INSTALL_INFO} install-info], false)
+  else
     INSTALL_INFO="\$(PERL) \$(top_srcdir)/tools/install-info.pl"
     AC_SUBST(INSTALL_INFO)
-  else
-    AC_PATH_PROGS(INSTALL_INFO, [${INSTALL_INFO} install-info], false)
   fi
   : ${R_RD4DVI="ae"}
   AC_SUBST(R_RD4DVI)
@@ -633,6 +641,33 @@ int main () {
       AC_DEFINE(LOG_BROKEN)
     fi
   ])
+AC_DEFUN([R_FUNC_STRPTIME],
+  [ AC_CACHE_CHECK([whether strptime is broken],
+      r_cv_func_strptime_broken,
+      AC_TRY_RUN(
+	changequote(<<, >>)dnl
+	<<
+#include <time.h>
+int main () {
+#ifdef HAVE_STRPTIME
+  struct tm tm;
+  char *p;
+
+  p = strptime("1960-01-01", "%Y-%m-%d", &tm);
+  return(p == 0);
+#else
+  return(1);
+#endif
+}
+	>>,
+	changequote([, ])dnl
+	r_cv_func_strptime_broken=no,
+	r_cv_func_strptime_broken=yes,
+	r_cv_func_strptime_broken=yes))
+    if test "${r_cv_func_strptime_broken}" = yes; then
+      AC_DEFINE(STRPTIME_BROKEN)
+    fi
+  ])
 AC_DEFUN([R_HEADER_SETJMP],
  [AC_CACHE_CHECK([whether setjmp.h is POSIX.1 compatible], 
     r_cv_header_setjmp_posix,
@@ -755,12 +790,9 @@ AC_CACHE_CHECK([for BSD networking],
   r_cv_bsd_networking,
   [ if test "${ac_cv_header_netdb_h}" = yes \
         && test "${ac_cv_header_netinet_in_h}" = yes \
-        && test "${ac_cv_header_netinet_tcp_h}" = yes \
         && test "${ac_cv_header_sys_socket_h}" = yes \
-        && (test "${ac_cv_func_connect}" = yes \
-          || test "${ac_cv_lib_socket_connect}" = yes) \
-        && (test "${ac_cv_func_gethostbyname}" = yes \
-          || test "${ac_cv_lib_nsl_gethostbyname}" = yes); then
+        && test "${ac_cv_search_connect}" != no \
+        && test "${ac_cv_search_gethostbyname}" !=  no; then
       r_cv_bsd_networking=yes
     else
       r_cv_bsd_networking=no
@@ -939,6 +971,29 @@ if test -z "${TCLTK_LIBS}"; then
       fi
     fi
   fi
+  ## Postprocessing for AIX.
+  ## On AIX, the *_LIB_SPEC variables need to contain `-bI:' flags for
+  ## the Tcl export file.  These are really flags for ld rather than the
+  ## C/C++ compilers, and hence may need protection via `-Wl,'.
+  ## We have two ways of doing that:
+  ## * Recording whether `-Wl,' is needed for the C or C++ compilers,
+  ##   and getting this info into the TCLTK_LIBS make variable ... mess!
+  ## * Protecting all entries in TCLTK_LIBS that do not start with `-l'
+  ##   or `-L' with `-Wl,' (hoping that all compilers understand this).
+  ##   Easy, hence ...
+  case "${host}" in
+    *aix*)
+      orig_TCLTK_LIBS="${TCLTK_LIBS}"
+      TCLTK_LIBS=
+      for flag in ${orig_TCLTK_LIBS}; do
+        case "${flag}" in
+	  -l*|-L*|-Wl,*) ;;
+	  *) flag="-Wl,${flag}" ;;
+	esac
+	TCLTK_LIBS="${TCLTK_LIBS} ${flag}"
+      done
+      ;;
+  esac
 fi
 ])
 AC_DEFUN([R_TCLTK],
@@ -968,8 +1023,6 @@ AC_SUBST(TCLTK_CPPFLAGS)
 AC_SUBST(TCLTK_LIBS)
 AC_SUBST(use_tcltk)
 ])
-
-
 AC_DEFUN([R_BLAS_LIBS], [
 if test "${r_cv_prog_f77_append_underscore}" = yes \
   || test -n "${F2C}"; then
@@ -1029,13 +1082,13 @@ if test "x$BLAS_LIBS" = x; then
   fi
 fi
 
-if test "x$BLAS_LIBS" = x; then
-  # Check for BLAS in SCSL and SGIMATH libraries (prefer SCSL):
-  AC_CHECK_LIB(scs, $dgemm_func,
-               BLAS_LIBS="-lscs", 
-	       AC_CHECK_LIB(complib.sgimath, $dgemm_func,
-			    BLAS_LIBS="-lcomplib.sgimath", , $FLIBS), $FLIBS)
-fi
+# if test "x$BLAS_LIBS" = x; then
+#   # Check for BLAS in SCSL and SGIMATH libraries (prefer SCSL):
+#   AC_CHECK_LIB(scs, $dgemm_func,
+#                BLAS_LIBS="-lscs", 
+# 	       AC_CHECK_LIB(complib.sgimath, $dgemm_func,
+# 			    BLAS_LIBS="-lcomplib.sgimath", , $FLIBS), $FLIBS)
+# fi
 
 if test "x$BLAS_LIBS" = x; then
   # Checks for BLAS in IBM ESSL library.  We must also link
@@ -1057,10 +1110,23 @@ fi
 
 AC_SUBST(BLAS_LIBS)
 ])
-
+AC_DEFUN([R_XDR], [
+AC_CACHE_CHECK([for XDR support],
+  r_cv_xdr,
+  [ if test "${ac_cv_header_rpc_rpc_h}" = yes \
+        && test "${ac_cv_header_rpc_xdr_h}" = yes \
+        && test "${ac_cv_search_xdr_string}" != no ; then
+      r_cv_xdr=yes
+    else
+      r_cv_xdr=no
+    fi])
+if test "${r_cv_xdr}" = yes; then
+  AC_DEFINE(HAVE_XDR)
+fi
+])
 AC_DEFUN([R_ZLIB], [
   have_zlib=no
-  AC_CHECK_LIB(z, main, [
+  AC_CHECK_LIB(z, gzopen, [
     AC_CHECK_HEADER(zlib.h, [
       AC_MSG_CHECKING([if zlib version >= 1.1.3])
       AC_TRY_RUN([
@@ -1081,12 +1147,16 @@ int main() {
   ])
   if test "${have_zlib}" = yes; then
     AC_DEFINE(HAVE_ZLIB)
+    LIBS="-lz ${LIBS}"
   fi
 ])
 AC_DEFUN([R_USES_LEAPSECONDS],
- [AC_MSG_CHECKING([whether leap seconds are counted])
-  AC_CACHE_VAL(r_cv_uses_leapseconds,
-    [ cat > conftest.c <<EOF
+  [ AC_CACHE_CHECK([whether leap seconds are counted],
+      r_cv_uses_leapseconds,
+      AC_TRY_RUN(
+	changequote(<<, >>)dnl
+	<<
+#include <stdlib.h>
 #include <time.h>
 #include <stdio.h>
 #include "confdefs.h"
@@ -1098,27 +1168,17 @@ int main () {
   ctime(&ct);
   ct = ct - (ct % 60);
   tm = gmtime(&ct);
-  printf("%d", tm->tm_sec);
-  exit(0);
+  if(tm->tm_sec == 0) exit(1); else exit(0);
 }
-EOF
-      if ${CC-cc} ${CFLAGS} -o conftest${ac_exeext} conftest.c; then
-          output=`./conftest${ac_exeext}`
-	  if test ${?} -eq 0; then
-            if test ${output} -gt 0; then
-	      r_cv_uses_leapseconds=yes
-            fi
-	  fi
-      fi
-    ])
-  rm -rf conftest conftest.* core
-  if test -n "${r_cv_uses_leapseconds}"; then
-    AC_MSG_RESULT([yes])
-    AC_DEFINE(USING_LEAPSECONDS, 1)
-  else
-    AC_MSG_RESULT([no])
-  fi
-])
+	>>,
+	changequote([, ])dnl
+	r_cv_uses_leapseconds=yes,
+	r_cv_uses_leapseconds=no,
+	r_cv_uses_leapseconds=no))
+    if test "${r_cv_uses_leapseconds}" = yes; then
+      AC_DEFINE(USING_LEAPSECONDS, 1)
+    fi
+  ])
 dnl Usage:
 dnl AM_INIT_AUTOMAKE(package,version, [no-define])
 
@@ -2817,7 +2877,7 @@ else
         hardcode_libdir_flag_spec='${wl}-bnolibpath ${wl}-blibpath:$libdir:/usr/lib:/lib'
         # Warning - without using the other run time loading flags, -berok will
         #           link without error, but may produce a broken library.
-        allow_undefined_flag='${wl}-berok"
+        allow_undefined_flag='${wl}-berok'
         # This is a bit strange, but is similar to how AIX traditionally builds
         # it's shared libraries.
         archive_expsym_cmds="\$CC $shared_flag"' -o $output_objdir/$soname $libobjs $deplibs $compiler_flags ${allow_undefined_flag} '"\${wl}$no_entry_flag \${wl}$exp_sym_flag:\$export_symbols"' ~$AR -crlo $objdir/$libname$release.a $objdir/$soname'

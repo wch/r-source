@@ -117,6 +117,8 @@
 /*  Global variables   */
 Boolean                                  HaveContent = false;
 Boolean                                  PrintPicture;
+extern Boolean							 OnOpenSource;
+extern Boolean							 Interrupt;
 Handle	                                 myHandle=NULL;
 SInt32                                   curPaste, finalPaste;
 static Handle                            sColors;    /* handle to the 'mctb' resource for the Color menu*/
@@ -188,6 +190,7 @@ extern void Do_SearchHelp(void);
 
 /*    Extern Global variables   */
 extern  void   doWindowsMenu             (SInt16);
+extern  void   doConfigMenu             (SInt16);
 extern  void   changeGWinPtr             (WindowPtr, Str255);
 extern  void   *dlopen                   (const char*, int);
 extern  void   savePreference            (void);
@@ -240,7 +243,7 @@ MySFDialogFilter(DialogPtr dialog, EventRecord *event, SInt16 *item,
 
     /*    intercept window events directed to windows behind the dialog */
     if ((event->what == updateEvt) || (event->what == activateEvt)) {
-	if ((WindowPtr) event->message != dialog) {
+	if ((WindowPtr) event->message != GetDialogWindow(dialog)) {
 	    DoWindowEvent(event);
 	}
     }
@@ -487,6 +490,18 @@ void PrepareMenus(void)
 		CheckMenuItem(windowsMenu, i, true);
     }
 
+    /* The config menu */ 
+    windowsMenu = GetMenuHandle(kMenuConfig);
+    if( OnOpenSource )
+      CheckMenuItem(windowsMenu, kItemOnOpenSource, true);
+    else
+      CheckMenuItem(windowsMenu, kItemOnOpenSource, false);
+      
+  if( Interrupt )
+      CheckMenuItem(windowsMenu, kItemAllowInterrupt, true);
+    else
+      CheckMenuItem(windowsMenu, kItemAllowInterrupt, false);
+      
 
 }
 
@@ -1647,6 +1662,10 @@ void DoMenuChoice(SInt32 menuChoice, EventModifiers modifiers, WindowPtr window)
 	doWindowsMenu(menuItem);
 	break;
 	
+	case kMenuConfig:
+	doConfigMenu(menuItem);
+	break;
+
 	case kHMHelpMenuID:  /* the help menu */
 	DoHelpChoice(menuItem);
 	break;

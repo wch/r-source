@@ -333,10 +333,10 @@ typedef struct {
  * ----------------------	------------------
  * ../main/devPS.c		PS  _and_  XFig
  * ../main/devPicTeX.c		PicTeX
- * ../unix/X11/devX11.c		X11
+ * ../modules/X11/devX11.c	X11
  * ../gnuwin32/devga.c		GA
- * ../unix/gnome/devGTK.c	GTK
- * ../unix/gnome/devGNOME.c	Gnome
+ * ../modules/gnome/devGTK.c	GTK
+ * ../modules/gnome/devGNOME.c	Gnome
  */
 
 /* always remap private functions */

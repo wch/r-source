@@ -57,7 +57,7 @@ function(x, which = 1:4,
     }
     ##---------- Do the individual plots : ----------
     if (show[1]) {
-	ylim <- range(r)
+	ylim <- range(r, na.rm=TRUE)
 	if(id.n > 0)
 	    ylim <- ylim + c(-1,1)* 0.08 * diff(ylim)
 	plot(yh, r, xlab = l.fit, ylab = "Residuals", main = main,
@@ -74,7 +74,7 @@ function(x, which = 1:4,
 	abline(h = 0, lty = 3, col = "gray")
     }
     if (show[2]) {
-	ylim <- range(rs)
+	ylim <- range(rs, na.rm=TRUE)
 	ylim[2] <- ylim[2] + diff(ylim) * 0.075
 	qq <- qqnorm(rs, main = main, ylab = ylab23, ylim = ylim, ...)
 	if (one.fig)
@@ -85,7 +85,7 @@ function(x, which = 1:4,
     }
     if (show[3]) {
 	sqrtabsr <- sqrt(abs(rs))
-	ylim <- c(0, max(sqrtabsr))
+	ylim <- c(0, max(sqrtabsr, na.rm=TRUE))
 	yl <- as.expression(substitute(sqrt(abs(YL)), list(YL=as.name(ylab23))))
         yhn0 <- if(is.null(w)) .Alias(yh) else yh[w!=0]
 	plot(yhn0, sqrtabsr, xlab = l.fit, ylab = yl, main = main,
@@ -98,7 +98,7 @@ function(x, which = 1:4,
 	    text.id(yhn0[show.rs], sqrtabsr[show.rs], show.rs, adj.x = TRUE)
     }
     if (show[4]) {
-	cook <- cooks.distance(x, sd=s)
+	cook <- cooks.distance(x, sd=s, res = r)
 	if(id.n > 0) {
 	    show.r <- order(-cook)[iid]# index of largest `id.n' ones
 	    ymx <- cook[show.r[1]] * 1.075

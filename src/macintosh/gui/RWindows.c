@@ -1152,14 +1152,20 @@ WindowPtr CreateGraphicWindow (int wid, int h)
 OSErr CreateWindow (const FSSpec * pFileSpec, Boolean editable)
 {
     OSErr   err;
-    WindowRef  outWindow=nil;
+    WindowPtr outWindow=nil;
     
-    *outWindow = *Working_Window;
+ /*   *outWindow = *Working_Window;
     err = newWindow (pFileSpec, &Working_Window, 0, editable);
     if (err)
      *Working_Window = *outWindow;
+*/
+    outWindow = Working_Window;
+    err = newWindow (pFileSpec, &Working_Window, 0, editable);
+    if (err)
+     Working_Window = outWindow;
 
     return err;
+
 }
 
 OSStatus newWindow ( const FSSpec * pFileSpec, WindowRef * outWindow, int graphic, Boolean editable )

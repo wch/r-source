@@ -14,6 +14,7 @@ print.octmode(x, \dots)
 }
 \arguments{
   \item{x}{An object inheriting from class \code{"octmode"}.}
+  \item{\dots}{further arguments passed to or from other methods.}
 }
 \details{
   Class \code{"octmode"} consists of integer vectors with that class

@@ -29,7 +29,7 @@ resid(object, \dots)
   `residuals' and not `resid'.)
 
   Methods can make use of \code{\link{naresid}} methods to compensate
-  for the omission of missing values.  The default methods does.
+  for the omission of missing values.  The default method does.
 }
 \seealso{
   \code{\link{coefficients}}, \code{\link{fitted.values}},

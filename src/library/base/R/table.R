@@ -153,13 +153,13 @@ prop.table <- function(x, margin = NULL)
 
 margin.table <- function(x, margin = NULL)
 {
-    y <- if (length(margin)) {
+    if(!is.array(x)) stop("x is not an array")
+    if (length(margin)) {
         z <- apply(x, margin, sum)
-        dim(z)<-dim(x)[margin]
-        dimnames(z)<-dimnames(x)[margin]
-        z
+        dim(z) <- dim(x)[margin]
+        dimnames(z) <- dimnames(x)[margin]
     }
-    else sum(x)
-    class(y) <- class(x)
-    y
+    else return(sum(x))
+    class(z) <- class(x)
+    z
 }

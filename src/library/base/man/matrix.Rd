@@ -1,15 +1,22 @@
 \name{matrix}
-\title{Matrices}
-\usage{
-matrix(data = NA, nrow = 1, ncol = 1, byrow = FALSE, dimnames = NULL)
-as.matrix(x)
-is.matrix(x)
-}
 \alias{matrix}
 \alias{as.matrix}
 \alias{as.matrix.default}
 \alias{as.matrix.data.frame}
 \alias{is.matrix}
+\title{Matrices}
+\description{
+  \code{matrix} creates a matrix from the given set of values.
+
+  \code{as.matrix} attempts to turn its argument into a matrix.
+
+  \code{is.matrix} tests if its argument is a (strict) matrix.
+}
+\usage{
+matrix(data = NA, nrow = 1, ncol = 1, byrow = FALSE, dimnames = NULL)
+as.matrix(x)
+is.matrix(x)
+}
 \arguments{
   \item{data}{an optional data vector.}
   \item{nrow}{the desired number of rows}
@@ -21,20 +28,13 @@ is.matrix(x)
     \code{list} of length 2.}
   \item{x}{an \R object.}
 }
-\description{
-  \code{matrix} creates a matrix from the given set of values.
-
-  \code{as.matrix} attempts to turn its argument into a matrix.
-
-  \code{is.matrix} tests if its argument is a (strict) matrix.
-}
 \details{
-  If either of \code{nrow} or \code{ncol} is
-  not given, an attempt is made to infer it from the length of
-  \code{data} and the other parameter.
+  If either of \code{nrow} or \code{ncol} is not given, an attempt is
+  made to infer it from the length of \code{data} and the other
+  parameter.
 
   \code{is.matrix} returns \code{TRUE} if \code{x} is a matrix (i.e., it
-  \emph{not} a \code{\link{data.frame}} and has a \code{\link{dim}}
+  is \emph{not} a \code{\link{data.frame}} and has a \code{\link{dim}}
   attribute of length 2) and \code{FALSE} otherwise.
 }
 \seealso{\code{\link{data.matrix}}.}

@@ -31,7 +31,7 @@ sub R_version {
     print STDERR <<END;
 $name $version
 
-Copyright (C) 1997-2000 R Core Development Team.
+Copyright (C) 1997-2001 R Core Development Team.
 This is free software; see the GNU General Public Licence version 2
 or later for copying conditions.  There is NO warranty.    
 END

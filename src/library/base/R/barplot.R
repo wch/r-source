@@ -28,6 +28,13 @@ function(height, width = 1, space = NULL, names.arg = NULL,
     } else if (!is.matrix(height))
 	stop("`height' must be a vector or a matrix")
 
+    if(is.logical(legend.text)) {
+        if(legend.text && is.matrix(height))
+            legend.text <- rownames(height)
+        else
+            legend.text <- NULL
+    }
+
     NR <- nrow(height)
     NC <- ncol(height)
 
@@ -44,11 +51,11 @@ function(height, width = 1, space = NULL, names.arg = NULL,
     w.m <- w.r - delta
     w.l <- w.m - delta
     if (horiz) {
-	if (missing(xlim)) xlim <- range(-0.01 * height, height)
+	if (missing(xlim)) xlim <- range(-0.01 * height, height, na.rm=TRUE)
 	if (missing(ylim)) ylim <- c(min(w.l), max(w.r))
     } else {
 	if (missing(xlim)) xlim <- c(min(w.l), max(w.r))
-	if (missing(ylim)) ylim <- range(-0.01 * height, height)
+	if (missing(ylim)) ylim <- range(-0.01 * height, height, na.rm=TRUE)
     }
     if (beside)
 	w.m <- matrix(w.m, nc = NC)
@@ -83,8 +90,8 @@ function(height, width = 1, space = NULL, names.arg = NULL,
 	    } else w.m
 	    axis(if(horiz) 2 else 1, at = at.l, labels = names.arg, lty = 0)
 	}
-	if (!is.null(legend.text)) {
-	    legend.col <- rep(col,length=length(legend.text))
+	if(!is.null(legend.text)) {
+	    legend.col <- rep(col, length = length(legend.text))
 	    if((horiz & beside) || (!horiz & !beside)){
 		legend.text <- rev(legend.text)
 		legend.col <- rev(legend.col)
@@ -95,7 +102,7 @@ function(height, width = 1, space = NULL, names.arg = NULL,
 		   xjust = 1, yjust = 1)
 	}
 	title(main = main, sub = sub, xlab = xlab, ylab = ylab, ...)
-	if (axes) axis(if(horiz) 1 else 2)
+	if(axes) axis(if(horiz) 1 else 2)
 	invisible(w.m)
     } else w.m
 }

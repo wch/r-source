@@ -7,6 +7,9 @@
 \alias{single}
 \alias{as.single}
 \alias{as.single.default}
+\description{
+  Create, coerce to or test for a double-precision vector.
+}
 \usage{
 double(length = 0)
 as.double(x, \dots)
@@ -14,8 +17,10 @@ is.double(x)
 single(length = 0)
 as.single(x, \dots)
 }
-\description{
-    Create, coerce to or test for a double-precision vector.
+\arguments{
+  \item{length}{desired length.}
+  \item{x}{object to be coerced or tested.}
+  \item{\dots}{further arguments passed to or from other methods.}
 }
 \value{
   \code{double} creates a double precision vector of the specified

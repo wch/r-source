@@ -2,7 +2,7 @@
 
 include ../MkRules
 UNZIPDIR=unzip
-PREFIX=rw1030
+include ../RWVERSION
 
 .PHONY: GA UZ
 
@@ -10,7 +10,7 @@ all: SetupR.exe miniR.exe
 old: R.ico GA UZ rwinst.exe
 
 # O1 for small rather than fast
-CFLAGS=-I../graphapp -I../../include -I$(UNZIPDIR)/windll -Wall -O1 -DRVER=\"$(PREFIX)\"
+CFLAGS=-I../graphapp -I../../include -I$(UNZIPDIR)/windll -Wall -O1 -DRVER=\"$(RPREFIX)\"
 
 GA:
 	$(MAKE) -C ../graphapp
@@ -43,59 +43,66 @@ ISDIR=C:/packages/Inno
 # location where binary packages are kept
 PKGS=C:/R/Rdist/libs1030
 
-R.iss: JRins.pl ../$(PREFIX)b1.zip ../$(PREFIX)b2.zip ../$(PREFIX)h.zip \
-../$(PREFIX)ch.zip ../$(PREFIX)d1.zip ../$(PREFIX)d2.zip \
-../$(PREFIX)l.zip ../$(PREFIX)sp.zip ../$(PREFIX)w.zip
-	unzip -qo ../$(PREFIX)b1
-	unzip -qo ../$(PREFIX)b2
-	unzip -qo ../$(PREFIX)h
-	unzip -qo ../$(PREFIX)ch -d $(PREFIX)ch
-	unzip -qo ../$(PREFIX)d1 -d $(PREFIX)d1
-	unzip -qo ../$(PREFIX)d2 -d $(PREFIX)d2
-	unzip -qo ../$(PREFIX)l -d $(PREFIX)l
-	unzip -qo ../$(PREFIX)sp -d $(PREFIX)sp
-	unzip -qo ../$(PREFIX)w -d $(PREFIX)w
+R.iss: JRins.pl ../$(RPREFIX)b1.zip ../$(RPREFIX)b2.zip ../$(RPREFIX)h.zip \
+../$(RPREFIX)ch.zip ../$(RPREFIX)d1.zip ../$(RPREFIX)d2.zip \
+../$(RPREFIX)l.zip ../$(RPREFIX)sp.zip ../$(RPREFIX)w.zip
+	unzip -qo ../$(RPREFIX)b1
+	unzip -qo ../$(RPREFIX)b2
+	unzip -qo ../$(RPREFIX)h
+	unzip -qo ../$(RPREFIX)ch -d $(RPREFIX)ch
+	unzip -qo ../$(RPREFIX)d1 -d $(RPREFIX)d1
+	unzip -qo ../$(RPREFIX)d2 -d $(RPREFIX)d2
+	unzip -qo ../$(RPREFIX)l -d $(RPREFIX)l
+	unzip -qo ../$(RPREFIX)sp -d $(RPREFIX)sp
+	unzip -qo ../$(RPREFIX)w -d $(RPREFIX)w
 	for p in $(RECOMMENDED); do \
-	  unzip -qo $(PKGS)/$${p} -d $(PREFIX)/library; \
+	  unzip -qo $(PKGS)/$${p} -d $(RPREFIX)/library; \
 	done
-	zip -rmq foo.zip $(PREFIX)/library/*/html
-	unzip -qo foo -d $(PREFIX)w
+	zip -rmq foo.zip $(RPREFIX)/library/*/html
+	unzip -qo foo -d $(RPREFIX)w
 	rm foo.zip
-	zip -rmq foo.zip $(PREFIX)/library/*/chtml
-	unzip -qo foo -d $(PREFIX)ch
+	zip -rmq foo.zip $(RPREFIX)/library/*/chtml
+	unzip -qo foo -d $(RPREFIX)ch
 	rm foo.zip
-	zip -rmq foo.zip $(PREFIX)/library/*/latex
-	unzip -qo foo -d $(PREFIX)l
+	zip -rmq foo.zip $(RPREFIX)/library/*/latex
+	unzip -qo foo -d $(RPREFIX)l
 	rm foo.zip
-	perl JRins.pl $(PREFIX)
+	$(CAT) $(RPREFIX)/library/*/CONTENTS >  \
+	  $(RPREFIX)w/$(RPREFIX)/doc/html/search/index.txt
+	$(CP) $(RPREFIX)w/$(RPREFIX)/doc/html/packages-head.html $(RPREFIX)/doc/html
+	echo "make.packages.html(.Library)" | $(RPREFIX)/bin/rterm --vanilla --slave
+	$(CP) $(RPREFIX)/doc/html/packages.html $(RPREFIX)w/$(RPREFIX)/doc/html
+	$(RM) $(RPREFIX)/doc/html/packages*
+	perl JRins.pl $(RPREFIX)
+
 
 SetupR.exe: R.iss
 	"$(ISDIR)/iscc" R.iss > setupR.log
 
-Rsmall.iss: JRsmall.pl ../$(PREFIX)b1.zip ../$(PREFIX)b2.zip \
-  ../$(PREFIX)h.zip ../$(PREFIX)ch.zip ../$(PREFIX)d1.zip
-	rm -rf $(PREFIX)*
-	unzip -qo ../$(PREFIX)b1
-	unzip -qo ../$(PREFIX)b2
-	unzip -qo ../$(PREFIX)h
-	unzip -qo ../$(PREFIX)ch -d $(PREFIX)ch
-	unzip -qo ../$(PREFIX)d1 -d $(PREFIX)d1
-	rm $(PREFIX)d1/$(PREFIX)/doc/manual/R-admin.pdf
-	rm $(PREFIX)d1/$(PREFIX)/doc/manual/R-exts.pdf
-	rm $(PREFIX)d1/$(PREFIX)/doc/manual/R-lang.pdf
+Rsmall.iss: JRsmall.pl ../$(RPREFIX)b1.zip ../$(RPREFIX)b2.zip \
+  ../$(RPREFIX)h.zip ../$(RPREFIX)ch.zip ../$(RPREFIX)d1.zip
+	rm -rf $(RPREFIX)*
+	unzip -qo ../$(RPREFIX)b1
+	unzip -qo ../$(RPREFIX)b2
+	unzip -qo ../$(RPREFIX)h
+	unzip -qo ../$(RPREFIX)ch -d $(RPREFIX)ch
+	unzip -qo ../$(RPREFIX)d1 -d $(RPREFIX)d1
+	rm $(RPREFIX)d1/$(RPREFIX)/doc/manual/R-admin.pdf
+	rm $(RPREFIX)d1/$(RPREFIX)/doc/manual/R-exts.pdf
+	rm $(RPREFIX)d1/$(RPREFIX)/doc/manual/R-lang.pdf
 	for p in $(RECOMMENDED); do \
-	  unzip -qo $(PKGS)/$${p} -d $(PREFIX)/library; \
+	  unzip -qo $(PKGS)/$${p} -d $(RPREFIX)/library; \
 	done
-	rm -rf $(PREFIX)/library/*/html $(PREFIX)/library/*/latex
-	rm -rf $(PREFIX)/library/rpart/Manuscript
-	rm -rf $(PREFIX)/library/survival/doc
-	perl JRsmall.pl $(PREFIX)
+	rm -rf $(RPREFIX)/library/*/html $(RPREFIX)/library/*/latex
+	rm -rf $(RPREFIX)/library/rpart/Manuscript
+	rm -rf $(RPREFIX)/library/survival/doc
+	perl JRsmall.pl $(RPREFIX)
 
 miniR.exe: Rsmall.iss
 	"$(ISDIR)/iscc" Rsmall.iss > miniR.log
 
 ISclean:
-	rm -rf R.iss Rsmall.iss *.log $(PREFIX)*
+	rm -rf R.iss Rsmall.iss *.log $(RPREFIX)*
 
 ISdistclean: ISclean
 	rm -f SetupR.exe miniR*

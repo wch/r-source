@@ -53,12 +53,12 @@ static pascal Boolean MyStandardDialogFilter( DialogPtr dialog, EventRecord *eve
 
 	/* set up the port */
 	GetPort( &savePort );
-	SetPort( dialog );
+	SetPort( GetDialogPort(dialog) );
 
 	/* 	intercept window events directed to windows behind the dialog */
 	if ( ( event->what == updateEvt ) || ( event->what == activateEvt ) )
 	{
-		if ( ((WindowPtr) event->message) != dialog )
+		if ( ((WindowPtr) event->message) != GetDialogWindow(dialog) )
 		{
 			DoWindowEvent( event );
 		}

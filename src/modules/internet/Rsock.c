@@ -66,19 +66,19 @@ static void check_init(void)
     } 
 }
 
-void Rsockopen(int *port)
+void in_Rsockopen(int *port)
 {
     check_init();
     *port = enter_sock(Sock_open(*port, NULL));
 }
 
-void Rsocklisten(int *sockp, char **buf, int *len)
+void in_Rsocklisten(int *sockp, char **buf, int *len)
 {
     check_init();
     *sockp = enter_sock(Sock_listen(*sockp, *buf , *len, NULL));
 }
 
-void Rsockconnect(int *port, char **host)
+void in_Rsockconnect(int *port, char **host)
 {
     check_init();
 #ifdef DEBUG
@@ -87,12 +87,12 @@ void Rsockconnect(int *port, char **host)
     *port = enter_sock(Sock_connect(*port, *host, NULL));
 }
 
-void Rsockclose(int *sockp)
+void in_Rsockclose(int *sockp)
 {
     *sockp = close_sock(*sockp);
 }
 
-void Rsockread(int *sockp, char **buf, int *maxlen)
+void in_Rsockread(int *sockp, char **buf, int *maxlen)
 {
     check_init();
 #ifdef DEBUG
@@ -101,7 +101,7 @@ void Rsockread(int *sockp, char **buf, int *maxlen)
     *maxlen = (int) Sock_read(*sockp, *buf, *maxlen, NULL);
 }
 
-void Rsockwrite(int *sockp, char **buf, int *start, int *end, int *len)
+void in_Rsockwrite(int *sockp, char **buf, int *start, int *end, int *len)
 {
     ssize_t n;
     if (*end > *len)
@@ -136,7 +136,6 @@ void Rsockwrite(int *sockp, char **buf, int *start, int *end, int *len)
 #  include <netdb.h>
 #  include <sys/socket.h>
 #  include <netinet/in.h>
-#  include <netinet/tcp.h>
 #endif
 
 #ifdef HAVE_FCNTL_H

@@ -1,6 +1,6 @@
 \name{package.dependencies}
 \alias{package.dependencies}
-\title{Check Packahe Dependencies}
+\title{Check Package Dependencies}
 \description{
     Parses and checks the dependencies of a package against the
     currently installed version of R [and other packages].

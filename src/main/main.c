@@ -448,7 +448,7 @@ void setup_Rmainloop(void)
 	R_InitialData();
     }
     else
-    	R_Suicide("unable to restore saved data\n (remove .RData or increase memory)\n");
+    	R_Suicide("unable to restore saved data in .RData\n");
 
     /* Initial Loading is done.
        At this point we try to invoke the .First Function.

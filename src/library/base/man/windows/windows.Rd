@@ -5,7 +5,6 @@
 \alias{win.print}
 \alias{x11}
 \alias{X11}
-\alias{bringToTop}
 
 \title{Windows graphics devices}
 
@@ -19,7 +18,6 @@ X11(width = 7, height = 7, pointsize = 12)
 win.metafile(filename = "", width = 7, height = 7, pointsize = 12)
 win.print(width = 7, height = 7, pointsize = 12)
 
-bringToTop(which = dev.cur())
 }
 
 \arguments{
@@ -31,9 +29,8 @@ bringToTop(which = dev.cur())
   \item{pointsize}{the default pointsize of plotted text.}
   \item{record}{logical: sets the initial state of the flag for
     recording plots.}
-  \item{resize}{controls the action for resizing plots.}
+  \item{rescale}{controls the action for resizing plots.}
   \item{xpinch, ypinch}{double.  Pixels per inch, horizontally and vertically.}
-  \item{which}{a device number, or \code{-1}.}
 }
 
 \description{
@@ -42,10 +39,6 @@ bringToTop(which = dev.cur())
   Windows display: the multiple names are for compatibility with other
   systems. \code{win.metafile} prints to a file and \code{win.print} to
   the Windows print system.
-
-  \code{bringToTop} brings the specified screen device's window to the
-  front of the window stack (and gives it focus).  With argument
-  \code{-1}, it brings the console to the top.
 }
 
 \details{
@@ -99,6 +92,8 @@ bringToTop(which = dev.cur())
 
 \author{Guido Masarotto}
 
-\seealso{\code{\link{Devices}}, \code{\link{postscript}}}
+\seealso{
+  \code{\link{bringToTop}}, \code{\link{Devices}}, \code{\link{postscript}}
+}
 
 \keyword{device}

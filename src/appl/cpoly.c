@@ -646,7 +646,7 @@ double errev(int n, double *qr, double *qi,
 
     e = hypot(qr[0], qi[0]) * m_re / (a_re + m_re);
     for (i=0; i < n; i++)
-	e *= (ms + hypot(qr[i], qi[i]));
+	e = e*ms + hypot(qr[i], qi[i]);
 
     return e * (a_re + m_re) - mp * m_re;
 }

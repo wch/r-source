@@ -789,6 +789,7 @@ unsigned short * _controlify (DevDesc *dd, const unsigned char *src,
   return dest;
 }
 
+#ifdef UNUSED
 int 
 #ifdef _HAVE_PROTOS
 _codestring_len (const unsigned short *codestring)
@@ -807,4 +808,4 @@ _codestring_len (codestring)
   
   return i;
 }
-
+#endif

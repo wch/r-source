@@ -15,6 +15,7 @@ is.unsorted(x, na.rm = FALSE)
   \item{na.last}{for controlling the treatment of \code{NA}s.
     If \code{TRUE}, missing values in the data are put last; if
     \code{FALSE}, they are put first; if \code{NA}, they are removed.}
+  \item{na.rm}{logical. Should missing values be removed?}
 }
 \details{
   If \code{partial} is non \code{NULL}, it is taken to contain indexes

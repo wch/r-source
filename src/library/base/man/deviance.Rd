@@ -22,7 +22,7 @@ deviance.default(object, \dots)
 \details{
   This is a generic function which can be used to extract deviances for
   fitted models.  Consult the individual modeling functions for details
-  details on how to use this function.
+  on how to use this function.
 
   There is no default method for this function.
 }

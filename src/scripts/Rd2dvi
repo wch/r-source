@@ -7,7 +7,7 @@
 ##  R CMD Rd2dvi `grep -l "\\keyword{distr" \
 ##                  /path/to/Rsrc/src/library/base/man/*.Rd | sort | uniq`
 
-revision='$Revision: 1.33 $'
+revision='$Revision: 1.33.4.3 $'
 version=`set - ${revision}; echo ${2}`
 version="Rd2dvi ${version}
 
@@ -27,8 +27,8 @@ Options:
       --debug		turn on shell debugging (set -x)
       --no-clean	do not remove created temporary files
       --no-preview	do not preview generated output file
-      --os=NAME		use OS subdir \`NAME\' (unix, mac or windows)
-      --OS=NAME		the same as \`--os\'
+      --os=NAME		use OS subdir \`NAME' (unix, mac or windows)
+      --OS=NAME		the same as \`--os'
   -o, --output=FILE	write output to FILE
       --pdf		generate PDF output
       --title=NAME	use NAME as the title of the document
@@ -49,12 +49,16 @@ preview=xdvi
 verbose=false
 OSdir=${R_OSTYPE-"unix"}
 
+## Need a `safe' echo which does not interpret backslash-escaped
+## characters in SysV style.
+echo="sh ${R_HOME}/share/sh/echo.sh"
+
 while test -n "${1}"; do
   case ${1} in
     -h|--help)
-      echo "${usage}"; exit 0 ;;
+      ${echo} "${usage}"; exit 0 ;;
     -v|--version)
-      echo "${version}"; exit 0 ;;
+      ${echo} "${version}"; exit 0 ;;
     --debug)
       debug=true ;;
     --no-clean)
@@ -72,7 +76,7 @@ while test -n "${1}"; do
       if test -n "`echo ${2} | sed 's/^-.*//'`"; then      
 	output="${2}"; shift
       else
-	echo "ERROR: option \`${1}' requires an argument"
+	${echo} "ERROR: option \`${1}' requires an argument"
 	exit 1
       fi
       ;;
@@ -81,7 +85,7 @@ while test -n "${1}"; do
     --OS=*|--os=*)
       OSdir=`echo "${1}" | sed -e 's/[^=]*=//'` ;;
     -V|--verbose)
-      verbose=echo ;;
+      verbose=${echo} ;;
     --|*)
       break ;;
   esac
@@ -113,7 +117,7 @@ Rdconv_dir_or_files_to_LaTeX () {
     if test -d ${1}/${OSdir}; then
       files="${files} `ls ${1}/${OSdir}/*.[Rr]d`"
     fi
-    files=`LC_ALL=C echo ${files} | sort`
+    files=`LC_ALL=C ${echo} ${files} | sort`
   else
     files="${@}"
   fi
@@ -121,7 +125,7 @@ Rdconv_dir_or_files_to_LaTeX () {
   echo "Converting Rd files to LaTeX ..."
 
   for f in ${files}; do
-    echo ${f}
+    ${echo} ${f}
     ${R_CMD} Rdconv -t latex ${f} >> ${out}
   done
 
@@ -132,14 +136,15 @@ Rd_DESCRIPTION_to_LaTeX () {
   ## list.
   ## Usage:
   ##   Rd_DESCRIPTION_to_LaTeX FILE
+  
   fields=`sed '/^[ 	]/d; s/^\([^:]*\):.*$/\1/' $1`
-  echo "\\begin{description}"
-  echo "\\raggedright{}"
-  for f in `echo "${fields}" | sed '/Package/d; /Bundle/d;'`; do
+  ${echo} "\\begin{description}"
+  ${echo} "\\raggedright{}"
+  for f in `${echo} "${fields}" | sed '/Package/d; /Bundle/d;'`; do
     text=`get_dcf_field ${f} ${1}`
-    echo "\\item[${f}] \\AsIs{${text}}"
+    ${echo} "\\item[${f}] \\AsIs{${text}}"
   done
-  echo "\\end{description}"
+  ${echo} "\\end{description}"
 }
 
 is_bundle=no
@@ -174,7 +179,8 @@ if test -d "${1}"; then
     else
       dir=${1}
     fi
-    subj="all in \\file{`echo ${dir} | sed ${file_sed}`}"
+    subj0=`${echo} ${dir} | sed -e ${file_sed}`
+    subj="all in \\file{${subj0}}"
   fi
 else
   if test ${#} -gt 1 ; then
@@ -183,13 +189,14 @@ else
     subj=
     toc=
   fi
-  subj="\\file{`echo ${1} | sed ${file_sed}`}${subj}"
+  subj0=`${echo} ${1} | sed -e ${file_sed}`
+  subj="\\file{${subj0}}${subj}"
 fi
 title=${title-"\\R{} documentation}} \\par\\bigskip{{\\Large of ${subj}"}
 
 ## Prepare for building the documentation.
 if test -f ${output}; then
-  echo "file \`${output}' exists; please remove first"
+  ${echo} "file \`${output}' exists; please remove first"
   exit 1
 fi
 build_dir=.Rd2dvi${$}
@@ -206,7 +213,7 @@ cat > ${build_dir}/Rd2.tex <<EOF
 \\makeindex{}
 \\begin{document}
 EOF
-if test ${is_bundle} = no; then
+if test "${is_bundle}" = no; then
   cat >> ${build_dir}/Rd2.tex <<EOF
 \\chapter*{}
 \\begin{center}
@@ -217,12 +224,11 @@ EOF
   if test -f ${1}/DESCRIPTION; then
     Rd_DESCRIPTION_to_LaTeX ${1}/DESCRIPTION >> ${build_dir}/Rd2.tex
   fi
-  if test ${is_base_package} = yes; then
+  if test "${is_base_package}" = yes; then
     R_version=unknown
     if test -f ${1}/../../../VERSION; then
       R_version=`cat ${1}/../../../VERSION`
     fi
-    echo "`pwd`: ${1} ${R_version}"
     Rd_DESCRIPTION_to_LaTeX ${1}/DESCRIPTION.in | \
       sed "s/@VERSION@/${R_version}/" >> ${build_dir}/Rd2.tex
   fi
@@ -245,8 +251,8 @@ EOF
 fi
   
 ## Rd2.tex part 2: body
-if test ${is_bundle} = no; then
-  echo ${toc} >> ${build_dir}/Rd2.tex
+if test "${is_bundle}" = no; then
+  ${echo} ${toc} >> ${build_dir}/Rd2.tex
   Rdconv_dir_or_files_to_LaTeX ${build_dir}/Rd2.tex ${dir-${@}}
 else
   cat >> ${build_dir}/Rd2.tex <<EOF
@@ -256,16 +262,16 @@ else
 \\pagenumbering{arabic}
 EOF
   for p in ${bundle_pkgs}; do
-    echo "Bundle package: \`${p}'"
-    echo "\\chapter{Package \`${p}'}" >> ${build_dir}/Rd2.tex
+    ${echo} "Bundle package: \`${p}'"
+    ${echo} "\\chapter{Package \`${p}'}" >> ${build_dir}/Rd2.tex
     if test -f ${1}/${p}/DESCRIPTION.in; then
       Rd_DESCRIPTION_to_LaTeX ${1}/${p}/DESCRIPTION.in \
         >> ${build_dir}/Rd2.tex
     fi
     Rdconv_dir_or_files_to_LaTeX ${build_dir}/Rd2.tex ${1}/${p}/man
-    echo "\\clearpage{}" >> ${build_dir}/Rd2.tex
+    ${echo} "\\clearpage{}" >> ${build_dir}/Rd2.tex
   done
-  echo "\\cleardoublepage{}" >> ${build_dir}/Rd2.tex
+  ${echo} "\\cleardoublepage{}" >> ${build_dir}/Rd2.tex
 fi
 
 ## Rd2.tex part 3: footer
@@ -279,7 +285,7 @@ cd ${build_dir}
 ${R_LATEXCMD-latex} Rd2
 ${R_MAKEINDEXCMD-makeindex} Rd2
 ${R_LATEXCMD-latex} Rd2
-if test ${out_ext} = pdf; then
+if test "${out_ext}" = pdf; then
   ${R_LATEXCMD-latex} Rd2
 fi
 cd ${start_dir}
@@ -289,7 +295,7 @@ echo "Done"
 if ${clean}; then
   rm -rf ${build_dir}
 else
-  echo "You may want to clean up by \`rm -rf ${build_dir}'"
+  ${echo} "You may want to clean up by \`rm -rf ${build_dir}'"
 fi
 ${preview} ${output}
 exit 0

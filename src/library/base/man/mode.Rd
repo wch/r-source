@@ -13,6 +13,9 @@ storage.mode(x) <- "<mode>"
 \description{
   Get or set the type or storage mode of an object.
 }
+\arguments{
+  \item{x}{any \R object.}
+}
 \details{
   Both \code{mode} and \code{storage.mode} return a character string
   giving the (storage) mode of the object --- often the same --- both

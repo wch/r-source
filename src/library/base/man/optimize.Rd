@@ -20,6 +20,7 @@ optimise(f = , interval = , lower = min(interval),
     to be searched.}
   \item{upper}{the upper end point of the interval
     to be searched.}
+  \item{maximum}{logical. Should we maximize or minimize (the default)?}
   \item{tol}{the desired accuracy.}
   \item{\dots}{additional arguments to \code{f}.}
 }

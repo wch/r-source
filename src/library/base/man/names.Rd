@@ -24,7 +24,7 @@ names(x) <- value
   \code{names(x) <- value} is that of the assignment, \code{value}, not
   the return value from the left-hand side.)
 }
-\description{
+\details{
   \code{names} is a generic accessor function, and \code{names<-} is a
   generic replacement function.  The default methods get and set
   the \code{"names"} attribute of a vector or list.

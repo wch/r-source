@@ -13,6 +13,11 @@ character(length = 0)
 as.character(x, \dots)
 is.character(x)
 }
+\arguments{
+  \item{length}{desired length.}
+  \item{x}{object to be coerced or tested.}
+  \item{\dots}{further arguments passed to or from other methods.}
+}
 \value{
   \code{character} creates a character vector of the specified length.
   The elements of the vector are all equal to \code{""}.
@@ -21,6 +26,19 @@ is.character(x)
 
   \code{is.character} returns \code{TRUE} or \code{FALSE} depending on
   whether its argument is of character type or not.
+}
+\note{
+  \code{as.character} truncates components of language objects to 500
+  characters (was about 70 before 1.3.1).
+}
+\seealso{
+  \code{\link{deparse}}, which is normally preferable to
+  \code{as.character} for language objects.
+}
+\examples{
+form <- y ~ a + b + c
+as.character(form)  ## length 3
+deparse(form)       ## like the input
 }
 \keyword{character}
 \keyword{classes}

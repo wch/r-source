@@ -32,7 +32,7 @@ lines(x, \dots)
   \item{xy.lines}{logical, indicating if \code{\link{lines}}
     should be drawn for an x-y plot.  Default is true, when labels are
     drawn as well.}
-  \item{panel}{a \code{function(x, col, bg, pch, ...)} which gives the
+  \item{panel}{a \code{function(x, col, bg, pch, type, ...)} which gives the
     action to be carried out in each panel of the display for
     \code{plot.type="multiple"}.  The default is \code{lines}.} 
 
@@ -40,7 +40,7 @@ lines(x, \dots)
     \code{\link{plot.default}} and \code{\link{par}}.}
 }
 \details{
-  With one prinicipal argument, these functions create time series
+  With one principal argument, these functions create time series
   plots, for multivariate series of two kinds depending on \code{plot.type},
 
   If \code{y} is present, both \code{x} and \code{y} must be univariate,

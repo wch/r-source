@@ -201,7 +201,7 @@ double RealFromString(SEXP x, int *warn)
     double xdouble;
     char *endp;
     if (x != R_NaString && !isBlankString(CHAR(x))) {
-	xdouble = strtod(CHAR(x), &endp);
+	xdouble = R_strtod(CHAR(x), &endp);
 	if (isBlankString(endp))
 	    return xdouble;
 	else
@@ -259,13 +259,13 @@ Rcomplex ComplexFromString(SEXP x, int *warn)
     char *endp = CHAR(x);;
     z.r = z.i = NA_REAL;
     if (x != R_NaString && !isBlankString(endp)) {
-	xr = strtod(endp, &endp);
+	xr = R_strtod(endp, &endp);
 	if (isBlankString(endp)) {
 	    z.r = xr;
 	    z.i = 0.0;
 	}
 	else if (*endp == '+' || *endp == '-') {
-	    xi = strtod(endp, &endp);
+	    xi = R_strtod(endp, &endp);
 	    if (*endp++ == 'i' && isBlankString(endp)) {
 		z.r = xr;
 		z.i = xi;
@@ -524,15 +524,15 @@ static SEXP coerceToString(SEXP v)
 	savedigits = R_print.digits; R_print.digits = DBL_DIG;/* MAX precision */
 	for (i = 0; i < n; i++)
 	    SET_STRING_ELT(ans, i, StringFromReal(REAL(v)[i], &warn));
-	break;
 	R_print.digits = savedigits;
+	break;
     case CPLXSXP:
 	PrintDefaults(R_NilValue);
 	savedigits = R_print.digits; R_print.digits = DBL_DIG;/* MAX precision */
 	for (i = 0; i < n; i++)
 	    SET_STRING_ELT(ans, i, StringFromComplex(COMPLEX(v)[i], &warn));
-	break;
 	R_print.digits = savedigits;
+	break;
     }
     if (warn) CoercionWarning(warn);/*2000/10/23*/
     UNPROTECT(1);
@@ -692,7 +692,7 @@ static SEXP coercePairList(SEXP v, SEXPTYPE type)
 	    if (isString(CAR(vp)) && length(CAR(vp)) == 1)
 		SET_STRING_ELT(rval, i, STRING_ELT(CAR(vp), 0));
 	    else
-		SET_STRING_ELT(rval, i, STRING_ELT(deparse1(CAR(vp), 0), 0));
+		SET_STRING_ELT(rval, i, STRING_ELT(deparse1line(CAR(vp), 0), 0));
 	}
     }
     else if (type == VECSXP) {

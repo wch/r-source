@@ -38,9 +38,11 @@
     taken from the \code{names} attribute of \code{height} if this
     is a vector, or the column names if it is a matrix.}
   \item{legend.text}{a vector of text used to construct a legend for
-    the plot.  This is only useful when \code{height} is a matrix.
-    In that case the legend labels should correspond to the rows of
-    \code{height}.}
+    the plot, or a logical indicating whether a legend should be
+    included.  This is only useful when \code{height} is a matrix.
+    In that case given legend labels should correspond to the rows of
+    \code{height}; if \code{legend.text} is true, the row names of
+    \code{height} will be used as labels if they are non-null.}
   \item{beside}{a logical value.  If \code{FALSE}, the columns of
     \code{height} are portrayed as stacked bars, and if \code{TRUE}
     the columns are portrayed as juxtaposed bars.}
@@ -59,6 +61,8 @@
   \item{axisnames}{logical.  If \code{TRUE}, and if there are
     \code{names.arg} (see above), the
     other axis is drawn (with \code{lty=0}) and labeled.}
+  \item{inside}{logical.  If \code{TRUE}, the lines which  divide
+    adjacent bars will be drawn.}
   \item{plot}{logical.  If \code{FALSE}, nothing is plotted.}
   \item{\dots}{further graphical parameters (\code{\link{par}}) are
     passed to \code{\link{plot.window}()} and \code{\link{title}()}.}
@@ -77,6 +81,11 @@
 
   If \code{beside} is true, use \code{apply(mp, 2, mean)} for the
   midpoints of each \emph{group} of bars, see example.
+}
+\note{
+  The axis labels are re-sized by the current setting of \code{cex.axis}
+  (see \code{\link{par}}) \emph{but} this cannot be included in
+  \code{\dots}.
 }
 \seealso{
   \code{\link{plot}(\dots, type="h")}, \code{\link{dotchart}},

@@ -1,6 +1,6 @@
 \name{COMPILE}
-\title{Compile Files for Use with R}
 \alias{COMPILE}
+\title{Compile Files for Use with R}
 \description{
   Compile given source files so that they can subsequently be collected
   into a shared library using \code{R CMD SHLIB} and be loaded into R
@@ -17,6 +17,7 @@
     information about usage and version of the utility.}
 }
 \seealso{
-  \code{\link{SHLIB}}, \code{\link{dyn.load}}
+  \code{\link{SHLIB}},
+  \code{\link{dyn.load}}
 }
 \keyword{utilities}

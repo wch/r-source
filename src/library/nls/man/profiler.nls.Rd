@@ -1,4 +1,4 @@
-% $Id: profiler.nls.Rd,v 1.5 2001/03/24 06:57:57 ripley Exp $
+% $Id: profiler.nls.Rd,v 1.5.4.1 2001/08/07 14:05:15 ripley Exp $
 \name{profiler.nls}
 \alias{profiler.nls}
 \title{ Constructor for Profiler Objects from nls Objects}
@@ -51,9 +51,9 @@ fm1 <- nls(demand ~ SSasympOrig( Time, A, lrc ), data = BOD)
 # get the profile for the fitted model
 prof1 <- profiler( fm1 )
 # profile with A fixed at 16.0
-prof1$getProfile(c(F,T), 16.0)
+prof1$getProfile(c(FALSE, TRUE), 16.0)
 # vary lrc
-prof1$setDefault(varying = c(F, T))
+prof1$setDefault(varying = c(FALSE, TRUE))
 # fix A at 14.0 and starting estimate of lrc at -0.2
 prof1$setDefault(params = c(14.0, -0.2))
 # and get the profile

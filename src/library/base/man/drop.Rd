@@ -7,6 +7,9 @@
 \usage{
 drop(x)
 }
+\arguments{
+  \item{x}{an array (including a matrix).}
+}
 \value{
   If \code{x} is an object with a \code{dim} attribute (e.g., a matrix
   or \code{\link{array}}), then \code{drop} returns an object like

@@ -10,6 +10,9 @@
 \usage{
 crossprod(x, y=x)
 }
+\arguments{
+  \item{x, y}{matrices.}
+}
 \seealso{
 \code{\link{\%*\%}} and outer product \code{\link{\%o\%}}.
 }

@@ -1,10 +1,10 @@
 \name{screen}
 \title{Creating and Controlling Multiple Screens on a Single Device}
 \usage{
-split.screen(figs, screen = <<see below>>, erase = TRUE)
-screen(n = <<see below>>, new = TRUE)
-erase.screen(n = <<see below>>)
-close.screen(n = <<see below>>, all.screens = TRUE)
+split.screen(figs, screen, erase = TRUE)
+screen(n, new = TRUE)
+erase.screen(n)
+close.screen(n, all.screens = FALSE)
 }
 \alias{screen}
 \alias{split.screen}
@@ -15,6 +15,8 @@ close.screen(n = <<see below>>, all.screens = TRUE)
     number of columns in a screen matrix \emph{or} a matrix with 4 columns.
     If a matrix, then each row describes a screen with values for the left,
     right, bottom, and top of the screen (in that order) in NDC units.}
+  \item{screen}{A number giving the screen to be split.}
+  \item{erase}{logical: should be selected screen be cleared?}
   \item{n}{A number indicating which screen to prepare for drawing
     (\code{screen}), erase (\code{erase.screen}), or close
     (\code{close.screen}).}
@@ -94,7 +96,7 @@ plot(1:10)
 screen(4)                 # prepare screen 4 for output
 plot(1:10, ylab="ylab 4")
 screen(1, FALSE)              #return to screen 1, but do not clear
-plot(10:1, axes=F, lty=2, ylab="")  # overlay second plot
+plot(10:1, axes=FALSE, lty=2, ylab="")  # overlay second plot
 axis(4)                   # add tic marks to right-hand axis
 title("Plot 1")
 close.screen(all = TRUE) # exit split-screen mode

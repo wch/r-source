@@ -34,13 +34,13 @@ library.dynam(chname, package = .packages(), lib.loc = .lib.loc,
   (e.g., \file{.so} or \file{.sl} on Unix systems)
 #endif
 #ifdef windows
-  (\file{.dd} on Windows)
+  (\file{.dll} on Windows)
 #endif
   should not be added.
 }
 \value{
   The \code{.Dyn.libs} vector with the names of packages
-  which have used \code{library.dynam(..)} in the current \R session.
+  which have used \code{library.dynam} in the current \R session.
 
   It is returned as \code{\link{invisible}}, unless the \code{chname}
   argument is missing.
@@ -51,6 +51,13 @@ library.dynam(chname, package = .packages(), lib.loc = .lib.loc,
   \code{\link{.First.lib}}, \code{\link{library}},
   \code{\link{dyn.load}}, \code{\link{.packages}},
   \code{\link{.lib.loc}}
+
+#ifdef unix
+  \code{\link{SHLIB}} for how to create suitable shared libraries.
+#endif
+#ifdef windows
+  \code{\link{SHLIB}} for how to create suitable DLLs.
+#endif
 }
 \examples{
 library.dynam()# which packages have been ``dynamically loaded''

@@ -5,18 +5,21 @@ c(\dots, recursive=FALSE)
 }
 \alias{c}
 \description{
-This is a generic function which combines its arguments.
-
-The default method combines its arguments to form a vector.
-All arguments are coerced to a common type which is the type
-of the returned value.
-If \code{recursive=TRUE}, the function recursively
-descends through lists combining all their elements into
-a vector.
+  This is a generic function which combines its arguments.
+  
+  The default method combines its arguments to form a vector.
+  All arguments are coerced to a common type which is the type
+  of the returned value.
+}
+\arguments{
+  \item{\dots}{objects to be concatenated.}
+  \item{recursive}{logical. If \code{recursive=TRUE}, the function
+    recursively descends through lists combining all their elements
+    into a vector.}
 }
 \seealso{
-\code{\link{unlist}} and \code{\link{as.vector}} to produce
-attribute-free vectors.
+  \code{\link{unlist}} and \code{\link{as.vector}} to produce
+  attribute-free vectors.
 }
 \examples{
 c(1,7:9)

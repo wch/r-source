@@ -9,6 +9,9 @@ is.object(x)
     object \code{x} has the \R internal \code{OBJECT} attribute set, and
     \code{FALSE} otherwise.
 }
+\arguments{
+  \item{x}{object to be tested.}
+}
 \seealso{\code{\link{class}}, and \code{\link{methods}}.}
 
 \examples{

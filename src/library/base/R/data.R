@@ -70,6 +70,7 @@ function(..., list = character(0),
                       title = "R data sets")
         }
         if(!missing(package) && (length(package) > 0)) {
+            nodata <- nodata[nodata %in% package]
             if(length(nodata) > 1)
                 warning(paste("packages `",
                               paste(nodata, collapse=", "),

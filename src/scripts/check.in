@@ -28,11 +28,13 @@ use File::Path;
 use Getopt::Long;
 use R::Dcf;
 use R::Utils;
+use R::Rd;
+use Text::DelimMatch;
 
 ## don't buffer output
-$|=1;
+$| = 1;
 
-my $revision = ' $Revision: 1.47 $ ';
+my $revision = ' $Revision: 1.47.4.4 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -64,11 +66,11 @@ $opt_tests = 0 if $opt_no_tests;
 $opt_latex = 0 if $opt_no_latex;
 $opt_codoc = 0 if $opt_no_codoc;
 
-my $startdir=cwd();
-$opt_outdir=$startdir unless $opt_outdir;
+my $startdir = cwd();
+$opt_outdir = $startdir unless $opt_outdir;
 chdir($opt_outdir) ||
     die "Error: cannot change to directory \`$opt_outdir'\n";
-my $outdir=cwd();
+my $outdir = cwd();
 chdir($startdir);
 
 my $R_HOME = $ENV{'R_HOME'} ||
@@ -81,26 +83,26 @@ my $OS = R_getenv("R_OSTYPE", "unix");
 my $R_exe = "${R_HOME}/bin/R";
 my $TMPDIR = R_getenv("TMPDIR", "/tmp");
 $WINDOWS = ($OS eq "windows");
-if($WINDOWS){
+if($WINDOWS) {
     $TMPDIR = R_getenv("TMPDIR", "/TEMP");
     die "Please set TMPDIR to a valid temporary directory\n" 
       unless (-e $TMPDIR);
     $R_exe = "Rterm.exe";
     $LATEX = "latex";
     $MAKE = "make";
-    $cfile = "$TMPDIR/Rcmd.$$";
 }
+my $cfile = "$TMPDIR/Rcmd.$$";
 
 my $R_LIBS = $ENV{'R_LIBS'};
 my $library;
-if($opt_library){
+if($opt_library) {
     chdir($opt_library) ||
 	die "Error: cannot change to directory \`$opt_library'\n";
-    $library=cwd();
-    if($WINDOWS){
+    $library = cwd();
+    if($WINDOWS) {
 	$ENV{'R_LIBS'} = "$library;$R_LIBS";
     }
-    else{
+    else {
 	$ENV{'R_LIBS'} = "$library:$R_LIBS";
     }
 	
@@ -109,7 +111,7 @@ if($opt_library){
 
 my $R_opts = "--vanilla";
 
-if($opt_latex){
+if($opt_latex) {
     my $log = new R::Logfile();
     $log->checking("for working latex");
     open(texfile, "> $TMPDIR/Rtextest$$.tex") ||
@@ -120,10 +122,10 @@ if($opt_latex){
     chdir($TMPDIR);
     if(Rsystem("$LATEX Rtextest$$ > Rtextest$$.out")) {
 	$log->result("NO");
-	$HAVE_LATEX=0;
+	$HAVE_LATEX = 0;
     } else {
 	$log->result("OK");
-	$HAVE_LATEX=1;
+	$HAVE_LATEX = 1;
     }
     unlink(<Rtextest$$.*>);
     chdir($startdir);
@@ -131,12 +133,12 @@ if($opt_latex){
 }
 
 ## get the valid keywords for later ...
-my %validKeywords = ();
+my %standard_keywords = ();
 open(KEYWORDS, "< ${R_HOME}/doc/KEYWORDS.db") ||
     die "Cannot open \`KEYWORDS.db'";
 while(<KEYWORDS>) {
     if(/^.*\|([^:]*):.*/) {
-	$validKeywords{$1} = 1;
+	$standard_keywords{$1} = 1;
     }
 }
 close KEYWORDS;
@@ -144,9 +146,7 @@ close KEYWORDS;
 ## this is the main loop over all packages to be checked
 $#ARGV >= 0 || die "Error: no packages were specified";
 my $pkg;
-foreach $pkg (@ARGV){
-    my $is_bundle=0;
-
+foreach $pkg (@ARGV) {
     ## $pkg should be the path to the package (bundle) root source
     ## directory, either absolute or relative to $startdir.
     ## $pkgdir is the corresponding absolute path.
@@ -160,10 +160,10 @@ foreach $pkg (@ARGV){
     my $pkgname = basename($pkgdir);
     chdir($startdir);
 
-    my $pkgoutdir="$outdir/$pkgname.Rcheck";
+    my $pkgoutdir = "$outdir/$pkgname.Rcheck";
     rmtree($pkgoutdir) if ($opt_clean && (-d $pkgoutdir)) ;
-    if(! -d $pkgoutdir){
-	if(! mkdir($pkgoutdir, 0755)){
+    if(! -d $pkgoutdir) {
+	if(! mkdir($pkgoutdir, 0755)) {
 	    die("Error: cannot create directory \`$pkgoutdir'\n");
 	    exit(1);
 	}
@@ -172,56 +172,75 @@ foreach $pkg (@ARGV){
     $log = new R::Logfile("$pkgoutdir/00check.log");
     $log->message("using log directory \`$pkgoutdir'");
     
-    if(! $opt_library){
+    if(! $opt_library) {
 	$library = $pkgoutdir;
-	if($WINDOWS){
+	if($WINDOWS) {
 	    $ENV{'R_LIBS'} = "$library;$R_LIBS";
 	}
-	else{
+	else {
 	    $ENV{'R_LIBS'} = "$library:$R_LIBS";
 	}
     }
-    
-    print "\n";
-    if(system("${R_CMD} INSTALL -l $library $pkgdir")){
-	$log->error("installation failed");
-	exit(1);
-    }
-    print("\n");
-    
+
     my $description;
-    $log->checking("for file \`$pkgname/DESCRIPTION'");
-    if(-r "$pkgdir/DESCRIPTION"){
-	$description = new R::Dcf("$pkgdir/DESCRIPTION");
-	$log->result("OK");
-    }
-    else{
-	$log->result("NO");
-	exit(1);
+    my $is_base_pkg = 0;
+    ## Package sources from the R distribution are special.  They have a
+    ## `DESCRIPTION.in' file (instead of `DESCRIPTION'), with Version
+    ## field containing `@VERSION@' for substitution by configure.  We
+    ## test for such packages by looking for `DESCRIPTION.in' with
+    ## Priority `base', and skip the installation test for such
+    ## packages.
+    if(-r "$pkgdir/DESCRIPTION.in") {
+	$description = new R::Dcf("$pkgdir/DESCRIPTION.in");
+	if($description->{"Priority"} eq "base") {
+	    $log->message("looks like \`${pkgname}' is a base package");
+	    $log->message("skipping installation test");
+	    $is_base_pkg = 1;
+	}
     }
 
-    if($description->{"Contains"}){
-	$log->message("Looks like \`${pkgname}' is a package bundle");
-	$is_bundle=1;
+    if(!$is_base_pkg) {
+	print "\n";
+	if(system("${R_CMD} INSTALL -l $library $pkgdir")) {
+	    $log->error("installation failed");
+	    exit(1);
+	}
+	print("\n");
+    
+	$log->checking("for file \`$pkgname/DESCRIPTION'");
+	if(-r "$pkgdir/DESCRIPTION") {
+	    $description = new R::Dcf("$pkgdir/DESCRIPTION");
+	    $log->result("OK");
+	}
+	else {
+	    $log->result("NO");
+	    exit(1);
+	}
+    }
+
+    my $is_bundle = 0;
+    if($description->{"Contains"}) {
+	$log->message("looks like \`${pkgname}' is a package bundle");
+	$is_bundle = 1;
 	my @bundlepkgs = split(/\s+/, $description->{"Contains"});
-	my $ppkg="";
-	foreach $ppkg (@bundlepkgs){
+	my $ppkg = "";
+	foreach $ppkg (@bundlepkgs) {
 	    $log->message("checking \`$ppkg' in bundle \`$pkgname'");
 	    $log->setstars("**");
 	    chdir($startdir);
 	    check_pkg("$pkgdir/$ppkg", $pkgoutdir, $startdir, $library,
-		      $is_bundle, $description, $log);
+		      $is_bundle, $description, $log, $is_base_pkg);
 	    $log->setstars("*");
 	}
     }
-    else{
-	$is_bundle=0;
+    else {
+	$is_bundle = 0;
 	chdir($startdir);
 	check_pkg($pkgdir, $pkgoutdir, $startdir, $library,
-		  $is_bundle, $description, $log);
+		  $is_bundle, $description, $log, $is_base_pkg);
     }
     
-    if($log->{"warnings"}){
+    if($log->{"warnings"}) {
 	print("\n") ;
 	$log->summary();
     }
@@ -234,7 +253,7 @@ foreach $pkg (@ARGV){
 sub check_pkg {
 
     my ($pkg, $pkgoutdir, $startdir, $library,
-	$in_bundle, $description, $log) = @_;
+	$in_bundle, $description, $log, $is_base_pkg) = @_;
     my ($pkgdir, $pkgname);
     
     ## $pkg is the argument we received from the main loop.
@@ -259,10 +278,13 @@ sub check_pkg {
     
     chdir($pkgdir);
 
+    ## check for sufficient file permissions (Unix only).
+    
     if($OS eq "unix") {
 	$log->checking("for sufficient file permissions");
 	my @badfiles = ();
-	my @excludepatterns = ("^.Rbuildignore\$", "\~\$", "\.swp\$");
+	my @excludepatterns = ("^.Rbuildignore\$", "\~\$", "\.swp\$",
+			       "^.*/\.#[^/]*\$", "^.*/#[^/]*#\$");
 	if(-f "./.Rbuildignore") {
 	    open(RBUILDIGNORE, "./.Rbuildignore");
 	    while(<RBUILDIGNORE>) {
@@ -295,13 +317,13 @@ sub check_pkg {
 	$log->result("OK");
     }
 
-    if($in_bundle){		# join DESCRIPTION and DESCRIPTION.in
-	if(-r "DESCRIPTION.in"){
+    if($in_bundle) {		# join DESCRIPTION and DESCRIPTION.in
+	if(-r "DESCRIPTION.in") {
 	    $log->checking("for file \`DESCRIPTION.in'");
 	    my $description_in = new R::Dcf("DESCRIPTION.in");
 	    my $key;
-	    foreach $key (keys(%$description)){
-		$description_in->{$key}=$description->{$key};
+	    foreach $key (keys(%$description)) {
+		$description_in->{$key} = $description->{$key};
 	    }
 	    ## from now on use $description_in instead of $description
 	    ## in this subroutine
@@ -309,42 +331,45 @@ sub check_pkg {
 	    $log->result("OK");
 	    $log->message("joining DESCRIPTION and DESCRIPTION.in");
 	}
-	else{
+	else {
 	    $log->result("NO");
 	    exit(1);
 	}
     }
 
-    ## mandatory entries in DESCRIPTION:
+    ## check mandatory entries in DESCRIPTION:
     ##   Package, Version, License, Description, Title, Author,
-    ##   Maintainer
+    ##   Maintainer.
+
     $log->checking("DESCRIPTION Package field");
-    if(! $description->{"Package"}){
+    if(! $description->{"Package"}) {
 	$log->error("no DESCRIPTION Package field found");
 	exit(1);
     }
     my $tmp = $description->{"Package"};
-    if($description->{"Package"} ne $pkgname){
+    if($description->{"Package"} ne $pkgname) {
 	$log->error("DESCRIPTION Package field differs from dir name");
 	exit(1);
     }
     $log->result("OK");
-    
+
     $log->checking("DESCRIPTION Version field");
-    if(! $description->{"Version"}){
+    if(! $description->{"Version"}) {
 	$log->error("no DESCRIPTION Version field found");
 	exit(1);
     }
-    if($description->{"Version"} =~ /[^\d\.\-]/){
+    if(($description->{"Version"} =~ /[^\d\.\-]/) && !$is_base_pkg) {
+	## Package sources from the R distribution have `@VERSION@' in
+	## their `DESCRIPTION.in' files ...
 	$log->error("Version may only contain digits, \`.' and \`-'");
 	exit(1);
     }
     $log->result("OK");
     
     my $field;
-    foreach $field (qw(License Description Title Author)){
+    foreach $field (qw(License Description Title Author)) {
 	$log->checking("DESCRIPTION $field field");
-	if(! $description->{$field}){
+	if(! $description->{$field}) {
 	    $log->error("no DESCRIPTION $field field found");
 	    exit(1);
 	}
@@ -381,28 +406,28 @@ sub check_pkg {
     
     ## check usage of library.dynam (if any)
 
-    if(-d "R"){
+    if(-d "R") {
 	$log->checking("R files for library.dynam");
 	# only need to check the installed file
 	open Rfile, "< $library/$pkgname/R/$pkgname" ||
 	    die "cannot open \`$library/$pkgname/R/$pkgname' for reading\n";
-	my $any=0;
+	my $any = 0;
 	while(<Rfile>) {
 	    if(/library.dynam\(\"(.*?)\"/o) {
 		my $arg = $1;
 		if($arg =~ /\.so$/) {
                     $any++;
-                    $log->error("  library.dynam used with extension .so");
+                    $log->error("  library.dynam used with extension \`.so'");
 	            exit(1);
                 }
 		if($arg =~ /\.sl$/) {
                     $any++;
-                    $log->error("  library.dynam used with extension .sl");
+                    $log->error("  library.dynam used with extension \`.sl'");
 	            exit(1);
                 }
 		if($arg =~ /\.dll$/) {
                     $any++;
-                    $log->error("  library.dynam used with extension .dll");
+                    $log->error("  library.dynam used with extension \`.dll'");
 	            exit(1);
                 }
 	    }
@@ -411,31 +436,31 @@ sub check_pkg {
 	$log->result("OK") unless $any;
     }
 
-    ## check Rd documentation files
+    ## check R documentation files
     
-    if(-d "man"){
+    if(-d "man") {
 	$log->checking("Rd files");
 	my @rdfiles;
 	my @badfiles;
-	while(<man/*.[rR]d>){
-	    if(/</){
+	while(<man/*.[rR]d>) {
+	    if(/</) {
 		push @badfiles, $_;
 	    }
-	    else{
+	    else {
 		push @rdfiles, $_;
 	    }
 	}
 	if(-d "man/$OS") {
-	    while(<man/$OS/*.[rR]d>){
-		if(/</){
+	    while(<man/$OS/*.[rR]d>) {
+		if(/</) {
 		    push @badfiles, $_;
 		}
-		else{
+		else {
 		    push @rdfiles, $_;
 		}
 	    }
 	}
-	if($#badfiles>=0){
+	if($#badfiles >= 0) {
 	    $log->error("  Cannot handle Rd file names containing \`<'.\n" .
 			"  These are not legal file names on all R platforms.\n" .
 			"  Please rename the following files and try again:");
@@ -449,29 +474,29 @@ sub check_pkg {
 	my @uniqueTags = qw(name title description usage arguments
 			    format details value references source
 			    seealso examples note author synopsis);
+	my @badbraces;	
 	my %badmandatory;
 	my %badunique;
-	
 	my %badkeywords;
 	
 	## create hash allTags with all tags found in mandatory Tags and
 	## uniqueTags 
 	my $tag;
 	my %allTags;
-	foreach $tag (@mandatoryTags, @uniqueTags){
+	foreach $tag (@mandatoryTags, @uniqueTags) {
 	    $allTags{$tag}++;
 	}
 	
-	foreach $rdfile (@rdfiles){
-	    open rdfile, "< $rdfile" ||
+	foreach $rdfile (@rdfiles) {
+	    open RDFILE, "< $rdfile" ||
 		die "cannot open \`$rdfile' for reading\n";
 
 	    my %keywords;
 	    my %tagcount;
-	    while(<rdfile>){
+	    while(<RDFILE>) {
 		my $line = $_;
 		foreach $tag (keys %allTags) {
-		    if($line=~/^\s*\\$tag/){
+		    if($line =~ /^\s*\\$tag/) {
 			$tagcount{$tag}++;
 		    }
 		}
@@ -479,25 +504,59 @@ sub check_pkg {
                     $keywords{$1} = 1;
                 }
 	    }
-	    close rdfile;
+	    close RDFILE;
 	    
-	    foreach $tag (@mandatoryTags){
+	    foreach $tag (@mandatoryTags) {
 		push(@{$badmandatory{$tag}}, $rdfile)
 		    unless $tagcount{$tag}>0;
 	    }
-	    foreach $tag (@uniqueTags){
+	    foreach $tag (@uniqueTags) {
 		push(@{$badunique{$tag}}, $rdfile)
 		    unless $tagcount{$tag}<=1;
 	    }
             foreach $key (keys(%keywords)) {
                 push(@{$badkeywords{$rdfile}}, $key)
-                    unless $validKeywords{$key};
+                    unless $standard_keywords{$key};
             }
+
+	    ## Check for unbalanced braces.
+	    my $text = "";
+	    ## Read the Rd file via Rdpp, and get rid of the \alias
+	    ## entries as these may have unbalanced braces (Paren.Rd).
+	    my @lines = split(/\n/, R::Rd::Rdpp($rdfile, $OS));
+	    foreach $line (@lines) {
+		$text .= "\n$line" unless ($line =~ /^\\alias/);
+	    }
+	    $text .= "\n";
+	    my $dc = new Text::DelimMatch;
+	    $dc->delim("\{", "\}");
+	    $dc->escape("\\");
+	    $text =~ s/([^\\])%.*\n/$1\n/g; # ???
+	    ## Now loop through matching pairs of braces.
+	    while($dc->match($text)) {
+		$text = $dc->post_matched;
+	    }
+	    ## Get rid of trailing comments.
+	    $text =~ s/^%.*\n/\n/gs;
+	    $text =~ s/\n%.*\n/\n/gs;
+	    ## Anything left in $text means unbalanced.
+	    if(!($text =~ /^\s*$/)) {
+		push(@badbraces, $rdfile);
+	    }
+	    
 	}
 
-	my $any=0;
-	foreach $tag (@mandatoryTags){
-	    if(exists $badmandatory{$tag}){
+	my $any = 0;
+
+	if($#badbraces >= 0) {
+	    $log->warning("") unless $any;
+	    $any++;
+	    $log->message("  Rd files with unbalanced braces:");
+	    $log->message("    " . join("\n    ", @badbraces));
+	}
+
+	foreach $tag (@mandatoryTags) {
+	    if(exists $badmandatory{$tag}) {
 		$log->warning("") unless $any;
 		$any++;
 		$log->message("  Rd files without \`${tag}':");
@@ -505,8 +564,8 @@ sub check_pkg {
 			      join("\n    ", @{$badmandatory{$tag}}));
 	    }
 	}
-	foreach $tag (@uniqueTags){
-	    if(exists $badunique{$tag}){
+	foreach $tag (@uniqueTags) {
+	    if(exists $badunique{$tag}) {
 		$log->warning("") unless $any;
 		$any++;
 		$log->message("  Rd files with duplicate \`${tag}':");
@@ -526,7 +585,7 @@ sub check_pkg {
 	$log->result("OK") unless $any;
     }
 
-    ## Check for undocumented objects
+    ## check for undocumented objects
 
     if(((-d "R") || (-d "data")) && -d "man") {
 	$log->checking("for undocumented objects");
@@ -546,22 +605,22 @@ sub check_pkg {
 
 	my @err = grep {s/^Error *//} @out;
 	@out = grep {/^ *\[/} @out;
-	if($#err<0){
-	    if($#out>=0){
+	if($#err<0) {
+	    if($#out>=0) {
 		$log->warning();
                 $log->print(join("\n", @out) . "\n");
 	    }
-	    else{
+	    else {
 		$log->result("OK");
 	    }
 	}
-	else{
+	else {
 	    $log->error("  " . join("\n ", @err));
 	    exit(1);
 	}
     }
 
-    ## Check for code/documentation mismatches
+    ## check for code/documentation mismatches
 
     if($opt_codoc && ((-d "R") || (-d "data")) && -d "man") {
 	$log->checking("for code/documentation mismatches");
@@ -583,18 +642,22 @@ sub check_pkg {
 	## With the current heuristics codoc() may throw an error even
 	## though the documentation is valid.  Change this when we know
 	## what must be valid R code, similar to the above for undoc().
-	@out = grep {/^(\$| *\[|Multiple|Error)/} @out;
-	if($#out>=0){
+	@out = grep {/^(\$| *\[|\t+|Multiple|Error)/} @out;
+	## Also, the `\t+' in the above is ugly, but needed to catch the
+	## pretty-printing in errorcall() for non-NULL call ...
+	if($#out>=0) {
 	    $log->warning();
 	    $log->print(join("\n", @out) . "\n");
 	}
-	else{
+	else {
 	    $log->result("OK");
 	}
 	## </FIXME>
     }
 
     chdir($pkgoutdir);
+
+    ## run the examples
 
     if($opt_examples && <$library/$pkgname/R-ex/*.R>) {
 	$log->creating("${pkgname}-Ex.R");
@@ -608,11 +671,11 @@ sub check_pkg {
         }
         if($WINDOWS) {
             ## avoid Rcmd as line may be too long after expansion.
-            $cmd = "sh ${R_HOME}/bin/massage-Examples.sh ".
+            $cmd = "perl ${R_HOME}/bin/massage-Examples ".
   		     "${pkgname} ${library}/${pkgname}/R-ex/*.R ".
   		     "> ${pkgname}-Ex.R";
         } else {
-	    $cmd = "${R_CMD} sh ${R_HOME}/share/sh/massage-Examples.sh ".
+	    $cmd = "${R_CMD} perl ${R_HOME}/share/perl/massage-Examples.pl ".
 	             "${pkgname} ${library}/${pkgname}/R-ex/*.R ".
 		     "> ${pkgname}-Ex.R";
         }
@@ -643,48 +706,50 @@ sub check_pkg {
 	$log->result("OK");
     }
 
-    if($opt_tests && (-d "$pkgdir/tests")){
+    ## run the package-specific tests
+
+    if($opt_tests && (-d "$pkgdir/tests")) {
         $log->checking("tests");
-        my $testsrcdir="$pkgdir/tests";
-        my $testdir="$pkgoutdir/tests";
-        if(! -d $testdir){
-            if(! mkdir($testdir, 0755)){
+        my $testsrcdir = "$pkgdir/tests";
+        my $testdir = "$pkgoutdir/tests";
+        if(! -d $testdir) {
+            if(! mkdir($testdir, 0755)) {
 	        die("could not create directory $testdir\n");
 	        exit(1);
 	    }
         }
         chdir($testdir);
-        while(<$testsrcdir/*>){
+        while(<$testsrcdir/*>) {
             copy($_, basename($_));
         }
-        my $makefiles="-f ${R_HOME}/share/make/tests.mk";
-        my $makevars="";
-        if($WINDOWS && (-r "$testsrcdir/Makefile.win")){
+        my $makefiles = "-f ${R_HOME}/share/make/tests.mk";
+        my $makevars = "";
+        if($WINDOWS && (-r "$testsrcdir/Makefile.win")) {
             $makefiles .= " -f $testsrcdir/Makefile.win";
         }
-        elsif(-r "$testsrcdir/Makefile"){
+        elsif(-r "$testsrcdir/Makefile") {
             $makefiles .= " -f $testsrcdir/Makefile";
         }
-        if($WINDOWS && (-r "$testsrcdir/Makevars.win")){
+        if($WINDOWS && (-r "$testsrcdir/Makevars.win")) {
             $makevars = " -f $testsrcdir/Makevars.win";
         }
-        elsif(-r "$testsrcdir/Makevars"){
+        elsif(-r "$testsrcdir/Makevars") {
             $makevars = " -f $testsrcdir/Makevars";
         }
-        else{
+        else {
             open makevars, "> Makevars";
             print makevars "makevars = -f Makevars\n";
             print makevars "srcdir = $testsrcdir\n";
             ## at least windows does not pass env correctly to make
             print makevars "R_LIBS = $ENV{'R_LIBS'}\n"; 
             print makevars "VPATH = \$(srcdir)\n\n";
-            print makevars "test-src-1=";
-            while(<$testdir/*.R>){
+            print makevars "test-src-1 =";
+            while(<$testdir/*.R>) {
                 print makevars "\\\n " . basename($_);
             }
             print makevars "\n";
-            print makevars "test-src-auto=";
-            while(<$testdir/*.Rin>){
+            print makevars "test-src-auto =";
+            while(<$testdir/*.Rin>) {
                 s/Rin$/R/;
                 print makevars "\\\n " . basename($_);
             }
@@ -694,31 +759,33 @@ sub check_pkg {
             $makevars = " -f Makevars";
         }
         print "\n";
-        if(system("$MAKE $makefiles $makevars")){
+        if(system("$MAKE $makefiles $makevars")) {
             $log->error();
             exit(1);
         }
         chdir($pkgoutdir);
         $log->result("OK");
     }
+
+    ## run LaTeX on the manual
             
-    if($opt_latex && (-d "$library/$pkgname/latex")){
-        if($WINDOWS){
-            $ENV{'TEXINPUTS'}="$R_HOME/share/texmf;$ENV{'TEXINPUTS'}";
+    if($opt_latex && (-d "$library/$pkgname/latex")) {
+        if($WINDOWS) {
+            $ENV{'TEXINPUTS'} = "$R_HOME/share/texmf;$ENV{'TEXINPUTS'}";
         }
-        else{
-            $ENV{'TEXINPUTS'}="$R_HOME/share/texmf:$ENV{'TEXINPUTS'}";
+        else {
+            $ENV{'TEXINPUTS'} = "$R_HOME/share/texmf:$ENV{'TEXINPUTS'}";
         }
         $log->creating("${pkgname}-manual.tex");
         open manual, "> ${pkgname}-manual.tex";
         print manual "\\documentclass\{article\}\n" .
             "\\usepackage[ae, hyper]\{Rd\}\n".
                 "\\begin\{document\}\n";
-        while(<$library/$pkgname/latex/*.tex>){
-            my $file=$_;
+        while(<$library/$pkgname/latex/*.tex>) {
+            my $file = $_;
             open file, "< $file" ||
                 $log->error("cannot open file \`$file' for reading");
-            while(<file>){
+            while(<file>) {
                 print manual $_;
             }
             close file;
@@ -726,10 +793,10 @@ sub check_pkg {
         print manual "\\end\{document\}\n";
         close manual;
         $log->result("OK");
-        if($HAVE_LATEX){
+        if($HAVE_LATEX) {
             $log->checking("${pkgname}-manual.tex");
             print "\n";
-            if(Rsystem("$LATEX ${pkgname}-manual")){
+            if(Rsystem("$LATEX ${pkgname}-manual")) {
                 $log->error();
                 exit(1);
             }
@@ -755,6 +822,8 @@ sub Rsystem
 	return system($cmd);
     }
 }
+
+#**********************************************************
 
 sub usage {
     print STDERR <<END;

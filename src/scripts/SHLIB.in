@@ -4,7 +4,7 @@
 
 # @configure_input@
 
-revision='$Revision: 1.21 $'
+revision='$Revision: 1.21.4.2 $'
 version=`set - ${revision}; echo ${2}`
 version="R shared library builder ${version}
 
@@ -30,6 +30,7 @@ objs=
 shlib=
 MAKE=${MAKE-@MAKE@}
 makefiles="-f ${R_HOME}/share/make/shlib.mk"
+shlib_libadd='@SHLIB_LIBADD@'
 with_cxx=false
 with_f77=false
 
@@ -81,7 +82,11 @@ if ${with_cxx}; then
   makeargs="SHLIB_LD='\$(SHLIB_CXXLD)' ${makeargs}"
 fi
 if ${with_f77}; then
-  makeargs="${makeargs} SHLIB_LIBADD='\$(FLIBS)'"
+  if test -z "${shlib_libadd}"; then
+    makeargs="${makeargs} SHLIB_LIBADD='\$(FLIBS)'"
+  else
+    makeargs="${makeargs} SHLIB_LIBADD='\$(FLIBS) ${shlib_libadd}'"
+  fi
 fi
 
 if test -f ${R_HOME}/bin/libR.@SHLIB_EXT@; then

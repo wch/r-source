@@ -459,9 +459,10 @@ seq.POSIXt <-
                         c("secs", "mins", "hours", "days", "weeks",
                           "months", "years"))
         if(is.na(valid)) stop("invalid string for `by'")
-        if(valid <= 5)
+        if(valid <= 5) {
             by <- c(1, 60, 3600, 86400, 7*86400)[valid]
-        else
+            if (length(by2) == 2) by <- by * as.integer(by2[1])
+        } else
             by <- if(length(by2) == 2) as.integer(by2[1]) else 1
     } else if(!is.numeric(by)) stop("invalid mode for `by'")
     if(is.na(by)) stop("`by' is NA")
@@ -537,7 +538,7 @@ cut.POSIXt <-
 
 julian <- function(x, ...) UseMethod("julian")
 
-julian.POSIXt <- function(x, origin = as.POSIXct("1970-01-01", tz="GMT"))
+julian.POSIXt <- function(x, origin = as.POSIXct("1970-01-01", tz="GMT"), ...)
 {
     if(length(origin) != 1) stop("`origin' must be of length one")
     res <- difftime(as.POSIXct(x), origin, units = "days")
@@ -557,7 +558,7 @@ months.POSIXt <- function(x, abbreviate = FALSE)
 }
 
 quarters <- function(x, abbreviate) UseMethod("quarters")
-quarters.POSIXt <- function(x)
+quarters.POSIXt <- function(x, ...)
 {
     x <- (as.POSIXlt(x)$mon)%/%3
     paste("Q", x+1, sep = "")

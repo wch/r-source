@@ -24,6 +24,7 @@ interaction <- function(..., drop=FALSE)
 	ans <- match(ans, f)
 	lvs <- lvs[f]
     }
+    ans <- as.integer(ans)
     levels(ans) <- lvs
     class(ans) <- "factor"
     ans

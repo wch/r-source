@@ -25,6 +25,7 @@ window.ts(x, \dots)
   \item{extend}{logical. If true, the \code{start} and \code{end} values
     are allowed to extend the series. If false, attempts to extend the
     series give a warning and are ignored.}
+  \item{\dots}{further arguments passed to or from other methods.}
 }
 \description{
   \code{window} is a generic function which

@@ -96,6 +96,16 @@ AC_DEFUN([R_PROG_INSTALL],
   esac
  ])
 ##
+## R_PROG_PAGER
+##
+AC_DEFUN([R_PROG_PAGER], [
+  AC_PATH_PROGS(PAGER, [${PAGER} less more page pg], false)
+  if test "${PAGER}" = false; then
+    warn_pager="I could not determine a pager"
+    AC_MSG_WARN(${warn_pager})
+  fi
+])
+##
 ## R_PROG_PERL
 ##
 changequote(<<, >>)dnl
@@ -115,7 +125,8 @@ AC_DEFUN([R_PROG_PERL],
     AC_CACHE_CHECK([whether perl version is at least 5],
       r_cv_prog_perl_v5, [PERL5_CHECK()] )
   else
-    PERL=false
+    AC_PATH_PROGS(FALSE, false)
+    PERL="${FALSE}"
   fi
   if test "${r_cv_prog_perl_v5}" = yes; then
     NO_PERL5=false
@@ -165,11 +176,11 @@ AC_DEFUN([R_PROG_TEXMF],
     AC_MSG_WARN(${warn_info})
     MAKEINFO=false
   fi
-  if test "${PERL}" != false; then
+  if test "${PERL}" = "${FALSE}"; then
+    AC_PATH_PROGS(INSTALL_INFO, [${INSTALL_INFO} install-info], false)
+  else
     INSTALL_INFO="\$(PERL) \$(top_srcdir)/tools/install-info.pl"
     AC_SUBST(INSTALL_INFO)
-  else
-    AC_PATH_PROGS(INSTALL_INFO, [${INSTALL_INFO} install-info], false)
   fi
   : ${R_RD4DVI="ae"}
   AC_SUBST(R_RD4DVI)
@@ -743,6 +754,36 @@ int main () {
     fi
   ])
 ##
+## R_FUNC_STRPTIME
+##
+AC_DEFUN([R_FUNC_STRPTIME],
+  [ AC_CACHE_CHECK([whether strptime is broken],
+      r_cv_func_strptime_broken,
+      AC_TRY_RUN(
+	changequote(<<, >>)dnl
+	<<
+#include <time.h>
+int main () {
+#ifdef HAVE_STRPTIME
+  struct tm tm;
+  char *p;
+
+  p = strptime("1960-01-01", "%Y-%m-%d", &tm);
+  return(p == 0);
+#else
+  return(1);
+#endif
+}
+	>>,
+	changequote([, ])dnl
+	r_cv_func_strptime_broken=no,
+	r_cv_func_strptime_broken=yes,
+	r_cv_func_strptime_broken=yes))
+    if test "${r_cv_func_strptime_broken}" = yes; then
+      AC_DEFINE(STRPTIME_BROKEN)
+    fi
+  ])
+##
 ## R_HEADER_SETJMP
 ##
 AC_DEFUN([R_HEADER_SETJMP],
@@ -885,12 +926,9 @@ AC_CACHE_CHECK([for BSD networking],
   r_cv_bsd_networking,
   [ if test "${ac_cv_header_netdb_h}" = yes \
         && test "${ac_cv_header_netinet_in_h}" = yes \
-        && test "${ac_cv_header_netinet_tcp_h}" = yes \
         && test "${ac_cv_header_sys_socket_h}" = yes \
-        && (test "${ac_cv_func_connect}" = yes \
-          || test "${ac_cv_lib_socket_connect}" = yes) \
-        && (test "${ac_cv_func_gethostbyname}" = yes \
-          || test "${ac_cv_lib_nsl_gethostbyname}" = yes); then
+        && test "${ac_cv_search_connect}" != no \
+        && test "${ac_cv_search_gethostbyname}" !=  no; then
       r_cv_bsd_networking=yes
     else
       r_cv_bsd_networking=no
@@ -904,6 +942,13 @@ fi
 ])
 ##
 ## R_BITMAPS
+##
+## Here we only need any old -lz, and don't need zlib.h
+## However, we do need recent enough libpng and jpeg, and
+## so check both the header versions and for key routines
+## in the library.
+## The png code will do a run-time check of the consistency of
+## libpng versions.
 ##
 AC_DEFUN([R_BITMAPS], [
   BITMAP_LIBS=
@@ -1094,6 +1139,29 @@ if test -z "${TCLTK_LIBS}"; then
       fi
     fi
   fi
+  ## Postprocessing for AIX.
+  ## On AIX, the *_LIB_SPEC variables need to contain `-bI:' flags for
+  ## the Tcl export file.  These are really flags for ld rather than the
+  ## C/C++ compilers, and hence may need protection via `-Wl,'.
+  ## We have two ways of doing that:
+  ## * Recording whether `-Wl,' is needed for the C or C++ compilers,
+  ##   and getting this info into the TCLTK_LIBS make variable ... mess!
+  ## * Protecting all entries in TCLTK_LIBS that do not start with `-l'
+  ##   or `-L' with `-Wl,' (hoping that all compilers understand this).
+  ##   Easy, hence ...
+  case "${host}" in
+    *aix*)
+      orig_TCLTK_LIBS="${TCLTK_LIBS}"
+      TCLTK_LIBS=
+      for flag in ${orig_TCLTK_LIBS}; do
+        case "${flag}" in
+	  -l*|-L*|-Wl,*) ;;
+	  *) flag="-Wl,${flag}" ;;
+	esac
+	TCLTK_LIBS="${TCLTK_LIBS} ${flag}"
+      done
+      ;;
+  esac
 fi
 ])
 ##
@@ -1126,8 +1194,9 @@ AC_SUBST(TCLTK_CPPFLAGS)
 AC_SUBST(TCLTK_LIBS)
 AC_SUBST(use_tcltk)
 ])
-
-
+##
+## R_BLAS_LIBS()
+##
 AC_DEFUN([R_BLAS_LIBS], [
 if test "${r_cv_prog_f77_append_underscore}" = yes \
   || test -n "${F2C}"; then
@@ -1187,13 +1256,13 @@ if test "x$BLAS_LIBS" = x; then
   fi
 fi
 
-if test "x$BLAS_LIBS" = x; then
-  # Check for BLAS in SCSL and SGIMATH libraries (prefer SCSL):
-  AC_CHECK_LIB(scs, $dgemm_func,
-               BLAS_LIBS="-lscs", 
-	       AC_CHECK_LIB(complib.sgimath, $dgemm_func,
-			    BLAS_LIBS="-lcomplib.sgimath", , $FLIBS), $FLIBS)
-fi
+# if test "x$BLAS_LIBS" = x; then
+#   # Check for BLAS in SCSL and SGIMATH libraries (prefer SCSL):
+#   AC_CHECK_LIB(scs, $dgemm_func,
+#                BLAS_LIBS="-lscs", 
+# 	       AC_CHECK_LIB(complib.sgimath, $dgemm_func,
+# 			    BLAS_LIBS="-lcomplib.sgimath", , $FLIBS), $FLIBS)
+# fi
 
 if test "x$BLAS_LIBS" = x; then
   # Checks for BLAS in IBM ESSL library.  We must also link
@@ -1215,15 +1284,35 @@ fi
 
 AC_SUBST(BLAS_LIBS)
 ])
-
+## Try finding XDR library functions and headers.
 ##
-## Try finding zlib library and headers
+## R_XDR()
+##
+AC_DEFUN([R_XDR], [
+AC_CACHE_CHECK([for XDR support],
+  r_cv_xdr,
+  [ if test "${ac_cv_header_rpc_rpc_h}" = yes \
+        && test "${ac_cv_header_rpc_xdr_h}" = yes \
+        && test "${ac_cv_search_xdr_string}" != no ; then
+      r_cv_xdr=yes
+    else
+      r_cv_xdr=no
+    fi])
+if test "${r_cv_xdr}" = yes; then
+  AC_DEFINE(HAVE_XDR)
+fi
+])
+##
+## Try finding zlib library and headers.
+## We check that both are installed, and that the header >= 1.1.3
+## and that gzopen is in the library (which suggests the library
+## is also recent enough).
 ##
 ## R_ZLIB()
 ##
 AC_DEFUN([R_ZLIB], [
   have_zlib=no
-  AC_CHECK_LIB(z, main, [
+  AC_CHECK_LIB(z, gzopen, [
     AC_CHECK_HEADER(zlib.h, [
       AC_MSG_CHECKING([if zlib version >= 1.1.3])
       AC_TRY_RUN([
@@ -1244,15 +1333,20 @@ int main() {
   ])
   if test "${have_zlib}" = yes; then
     AC_DEFINE(HAVE_ZLIB)
+    LIBS="-lz ${LIBS}"
   fi
 ])
 ##
+## R_USES_LEAPSECONDS
 ## See if leap seconds are used.
 ##
 AC_DEFUN([R_USES_LEAPSECONDS],
- [AC_MSG_CHECKING([whether leap seconds are counted])
-  AC_CACHE_VAL(r_cv_uses_leapseconds,
-    [ cat > conftest.c <<EOF
+  [ AC_CACHE_CHECK([whether leap seconds are counted],
+      r_cv_uses_leapseconds,
+      AC_TRY_RUN(
+	changequote(<<, >>)dnl
+	<<
+#include <stdlib.h>
 #include <time.h>
 #include <stdio.h>
 #include "confdefs.h"
@@ -1264,24 +1358,14 @@ int main () {
   ctime(&ct);
   ct = ct - (ct % 60);
   tm = gmtime(&ct);
-  printf("%d", tm->tm_sec);
-  exit(0);
+  if(tm->tm_sec == 0) exit(1); else exit(0);
 }
-EOF
-      if ${CC-cc} ${CFLAGS} -o conftest${ac_exeext} conftest.c; then
-          output=`./conftest${ac_exeext}`
-	  if test ${?} -eq 0; then
-            if test ${output} -gt 0; then
-	      r_cv_uses_leapseconds=yes
-            fi
-	  fi
-      fi
-    ])
-  rm -rf conftest conftest.* core
-  if test -n "${r_cv_uses_leapseconds}"; then
-    AC_MSG_RESULT([yes])
-    AC_DEFINE(USING_LEAPSECONDS, 1)
-  else
-    AC_MSG_RESULT([no])
-  fi
-])
+	>>,
+	changequote([, ])dnl
+	r_cv_uses_leapseconds=yes,
+	r_cv_uses_leapseconds=no,
+	r_cv_uses_leapseconds=no))
+    if test "${r_cv_uses_leapseconds}" = yes; then
+      AC_DEFINE(USING_LEAPSECONDS, 1)
+    fi
+  ])

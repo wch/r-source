@@ -345,7 +345,8 @@ function(..., row.names = NULL, check.rows = FALSE, check.names = TRUE) {
     ## handle the column only subsetting ...
 
     if(missing(i)) {
-	x <- x[j]
+        if(!missing(j))
+            x <- x[j]
 	cols <- names(x)
 	if(is.null(cols) || any(nchar(cols) == 0))
 	    stop("not all specified columns exist")
@@ -413,23 +414,27 @@ function(..., row.names = NULL, check.rows = FALSE, check.names = TRUE) {
 
 "[<-.data.frame" <- function(x, i, j, value)
 {
-    if((nA <- nargs()) == 4) {
+    nA <- nargs() # value is never missing, so 3 or 4.
+    if(nA == 4) { ## df[,] or df[i,] or df[, j] or df[i,j]
 	has.i <- !missing(i)
 	has.j <- !missing(j)
     }
     else if(nA == 3) {
-	## really ambiguous, but follow common use as if list
-	if(is.matrix(i))
-	    stop("matrix subscripts not allowed in replacement")
-	j <- i
-	i <- NULL
-	has.i <- FALSE
-	has.j <- TRUE
-    }
-    else if(nA == 2) {
-	value <- i
-	i <- j <- NULL
-	has.i <- has.j <- FALSE
+        ## this collects both df[] and df[ind]
+        if(missing(i) && missing(j)) {
+            ## case df[]
+            i <- j <- NULL
+            has.i <- has.j <- FALSE
+        } else {
+            ## case df[ind]
+            ## really ambiguous, but follow common use as if list
+            if(is.matrix(i))
+                stop("matrix subscripts not allowed in replacement")
+            j <- i
+            i <- NULL
+            has.i <- FALSE
+            has.j <- TRUE
+        }
     }
     else {
 	stop("Need 0, 1, or 2 subscripts")

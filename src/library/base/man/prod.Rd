@@ -8,6 +8,10 @@ prod(\dots, na.rm=TRUE)
   \code{prod} returns the product of all the values
   present in its arguments.
 }
+\arguments{
+  \item{\dots}{numeric vectors.}
+  \item{na.rm}{logical. Should missing values be removed?}
+}
 \details{
   If \code{na.rm} is \code{FALSE} an \code{NA}
   value in any of the arguments will cause

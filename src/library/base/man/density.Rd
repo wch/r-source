@@ -1,4 +1,6 @@
 \name{density}
+\alias{density}
+\alias{print.density}
 \title{Kernel Density Estimation}
 \usage{
 density(x, bw, adjust = 1,
@@ -7,13 +9,7 @@ density(x, bw, adjust = 1,
         window = kernel, width,
         give.Rkern = FALSE,
         n = 512, from, to, cut = 3, na.rm = FALSE)
-print(dobj)
-plot(dobj, main = NULL, xlab = NULL, ylab = "Density", type = "l",
-     zero.line = TRUE, \dots)
 }
-\alias{density}
-\alias{print.density}
-\alias{plot.density}
 \arguments{
 \item{x}{the data from which the estimate is to be computed.}
 \item{bw}{the smoothing bandwidth to be used.  The kernels are scaled
@@ -52,18 +48,10 @@ plot(dobj, main = NULL, xlab = NULL, ylab = "Density", type = "l",
   estimated density to drop to approximately zero at the extremes.}
 \item{na.rm}{logical; if \code{TRUE}, missing values are removed
   from \code{x}. If \code{FALSE} any missing values cause an error.}
-%%---- Those for the methods:
-\item{dobj}{a ``density'' object.}
-\item{main, xlab, ylab, type}{plotting parameters with useful defaults.}
-\item{\dots}{further plotting parameters.}
-\item{zero.line}{logical; if \code{TRUE}, add a base line at \eqn{y = 0}}
 }
 \description{
   The function \code{density} computes kernel density estimates
   with the given kernel and bandwidth.
-
-  The generic functions \code{plot} and \code{print} have
-  methods for density objects.
 }
 \details{
   The algorithm used in \code{density} disperses the mass of the
@@ -119,7 +107,7 @@ plot(dobj, main = NULL, xlab = NULL, ylab = "Density", type = "l",
   \emph{J. Roy. Statist. Soc.} \bold{B}, 683--690.
 }
 \seealso{
-  \code{\link{hist}}.
+  \code{\link{plot.density}}, \code{\link{hist}}.
 }
 \examples{
 plot(density(c(-20,rep(0,98),20)), xlim = c(-4,4))# IQR = 0
@@ -170,6 +158,5 @@ for(i in 2:length(kernels))
 mtext(side = 3, "equivalent bandwidths, 7 different kernels")
 legend(55,.035, leg = kernels, col = seq(kernels), lty = 1)
 }
-\keyword{dplot}
 \keyword{distribution}
 \keyword{smooth}

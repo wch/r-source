@@ -1,0 +1,342 @@
+### This is MPWBuild_R.
+###
+### This script generates a true Makefile called 
+### that is needed in the following to build R.
+### Just change the directory to the folder where this file is.
+### Execute it by typing "MPWBuild_R"
+### After a while this script exists and it has generated MakeR.
+### Follow the instruction displayed to build R.
+### 
+###
+###
+### Notes:  to build R and run this script you need "sed" and "f2c".
+###         If you want just the tools you'll find them at
+###         http://www.ci.tuwien.ac.at/~iacus/R
+###         If you want the full archives refer to
+###         
+ftp://sunsite.cnlab-switch.ch/software/platform/macos/src/mpw_c/
+###
+###         You also need the "f2cLib" that is usually distributed along 
+with R
+###         but can also be found at http://www.ci.tuwien.ac.at/~iacus/R
+###
+###         The Makefile assumes that the MoreFile package is available 
+somewhere
+###         You can change the path by changing "MFDir" variable below 
+(preferred
+###         choice) or by changing the same variable in the MakeR 
+makefile.         
+###         MoreFiles is distributed along with the CarbonLib SDK
+###
+### Jago Aug 18 2001, Stefano M. Iacus
+### (waiting for `iacus-ng' to be released, so it can't be bug free)
+###
+###
+###
+
+echo "Start creating MakeR"
+date
+echo " "
+
+if `Exists ::main:alloca.c`
+ Rename "::main:alloca.c" "::main:alloca_c" 
+end
+
+echo "Setting variables and file list..."
+echo " "
+
+set MFDir "MacOS:Applications (Mac OS 9):CodeWarrior:Metrowerks 
+CodeWarrior:MacOS Support:(Third Party Support):MoreFiles 1.5:"
+
+
+set FortList  "`Files ::appl:Å.f` `Files ::main:Å.f`" 
+
+set RSrc  "`Files ::main:Å.c` `Files ::nmath:Å.c` ¶
+             `Files ::appl:Å.c` `Files ::extra:xdr:Å.c` ¶
+              ::unix:dynload.c"
+
+set MacSrc  "`Files Å.c` `Files :edit:Å.c` `Files :extra:Å.c` ¶
+              `Files :dll:Å.c` `Files :print:Å.c` ¶
+              `Files :waste:Å.c` `Files :gui:Å.c` ¶
+              `Files :dir:Å.c` `Files :graphic:Å.c` `Files :sys:Å.c`"
+
+set ExtraSrc  "'{MFDir}'Sources:FullPath.c '{MFDir}'Sources:FSpCompat.c ¶
+		'{MFDir}'Sources:MoreFiles.c '{MFDir}'Sources:MoreFilesExtras.c" 
+
+
+if !`Exists -d :obj`
+ NewFolder :obj
+end
+
+
+if `Exists MakeR`
+ Delete MakeR
+end
+
+echo "### MakeR" >> MakeR
+echo "###" >> MakeR
+echo "### Auto generated Makefile to build R" >> MakeR
+echo "### `date`" >> MakeR
+echo "###" >> MakeR 
+echo "### generated via MPWBuild_R" >> MakeR
+echo "### Jago August 2001, Stefano M. Iacus" >> MakeR
+echo " " >>MakeR
+echo " " >>MakeR
+echo " " >>MakeR
+echo Includes = -i ::include -i ::extra:xdr '¶' >>MakeR
+echo  -i : -i :dir -i :waste -i :edit -i :gui  '¶' >>MakeR
+echo  -i :extra -i :dll -i :sys '¶' >>MakeR
+echo  -i '"''{'WasteDir'}''"' -i '"''{'MacF2CDir'}''"' -i '"''{'MFdir'}'C 
+Headers'"' >>MakeR
+echo " " >>MakeR
+echo " " >>MakeR
+echo MacF2CDir = :f2c: >>MakeR
+echo WasteDir = "MacOS:Applications (Mac OS 9):CodeWarrior:Metrowerks 
+CodeWarrior:MacOS Support:(Third Party Support):WASTE 2.0 
+Distribution:C_C++ Headers" >>MakeR
+echo WasteLib = "MacOS:Applications (Mac OS 9):CodeWarrior:Metrowerks 
+CodeWarrior:MacOS Support:(Third Party Support):WASTE 2.0 
+Distribution:Stub libraries:CarbonWastelib"  >>MakeR
+echo MFDir = "MacOS:Applications (Mac OS 9):CodeWarrior:Metrowerks 
+CodeWarrior:MacOS Support:(Third Party Support):MoreFiles 1.5:" >>MakeR
+
+
+echo MacF2C  = f2c >> MakeR
+echo F2COpt  = -A -E -ec -!R -r8 -w66 -Nq150 -Nx200 -Ns801 -Nc20 -Nn401 
+-NL200 -NC99 -Nl256 >> MakeR
+
+echo " " >>MakeR
+echo " " >>MakeR
+echo LibFiles = '"''{'PPCLibraries'}'CarbonStdCLib.o'"' '¶' >>MakeR
+echo '"''{'SharedLibraries'}'CarbonLib'"' '¶' >>MakeR
+echo '"''{'SharedLibraries'}'StdCLib'"' '¶' >>MakeR
+echo '"''{'PPCLibraries'}'StdCRuntime.o'"'   '¶' >>MakeR
+echo '"''{'PPCLibraries'}'PPCCRuntime.o'"'   '¶' >>MakeR
+echo '"''{'PPCLibraries'}'PPCToolLibs.o'"' '¶' >>MakeR
+echo '"''{'WasteLib'}''"' '¶' >>MakeR
+echo '"''{'MacF2CDir'}'f2cLib'"' >>MakeR
+
+
+echo " " >>MakeR
+echo " " >>MakeR
+echo "### Generates FFTab.h and FFDecl.h" >>MakeR
+echo FFTab.h Ä ::appl:ROUTINES >> MakeR
+echo '	' execute :tools:FF_CREATE >> MakeR
+
+echo " " >>MakeR
+echo " " >>MakeR
+echo "### Generates Rversion.h" >>MakeR
+echo Rversion.h Ä :::VERSION >> MakeR
+echo '	' execute :tools:GETVERSION >> MakeR
+
+echo " " >>MakeR
+echo " " >>MakeR
+echo "### Generates Rconfig.h" >>MakeR
+echo Rconfig.h Ä ::include:config.h config.mac.h >> MakeR
+echo '	' Duplicate -y config.mac.h ::include:config.h >>MakeR
+echo "	 execute :tools:GETCONFIG > Rconfig.h" >> MakeR
+echo " " >>MakeR
+echo " " >>MakeR
+
+
+echo "### Auto-generated list of sources" >> MakeR
+echo "###" >> MakeR
+echo " " >> MakeR
+echo " " >> MakeR
+echo "### Main R sources" >> MakeR
+echo "RSrc = {RSrc}" >> MakeR
+echo " " >> MakeR
+echo " " >> MakeR
+echo "### Specific Macintosh sources" >> MakeR
+echo "macSrc = {macSrc}" >> MakeR
+echo " " >> MakeR
+echo " " >> MakeR
+echo "### Extra Macintosh support files" >> MakeR
+echo "extraSrc = {extraSrc}" >> MakeR
+echo " " >> MakeR
+echo " " >> MakeR
+echo "### Fortran files to convert" >> MakeR
+echo "FortList = {FortList}" >> MakeR
+echo " " >> MakeR
+echo " " >> MakeR
+echo " " >> MakeR
+echo " " >> MakeR
+echo " " >> MakeR
+echo " " >> MakeR
+echo " " >> MakeR
+echo " " >> MakeR
+
+echo "Creating list of object files..."
+echo " "
+
+echo RObj = '¶' >> MakeR
+for f in {RSrc}
+ begin
+	    echo `echo {f} | sed "s/\.c/.o/g" | sed "s/[^/]*:/:obj:\1/"` '¶' 
+>>MakeR
+ end
+end
+
+echo "" >> MakeR
+
+echo FObj = '¶' >> MakeR
+for f in {FortList}
+ begin
+	    echo `echo {f} | sed "s/\.f/.o/g" | sed "s/[^/]*:/:obj:\1/"` '¶' 
+>>MakeR
+ end
+end
+
+
+echo "" >> MakeR
+
+
+echo MacObj = '¶' >> MakeR
+for f in {MacSrc}
+ begin
+	    echo ":obj:"`echo {f} | sed "s/\.c/.o/g" | sed "s/[^/]*:/\1/"` '¶' 
+>>MakeR
+ end
+end
+
+echo "" >> MakeR
+
+
+echo ExtraObj = '¶' >> MakeR
+for f in {ExtraSrc}
+ begin
+	    echo `echo {f} | sed "s/\.c/.o/g" | sed "s/[^/]*:/:obj:\1/"` '¶' 
+>>MakeR
+ end
+end
+
+echo "" >> MakeR
+
+echo " " >> MakeR
+echo " " >> MakeR
+
+
+echo '.c Ä .f' >> MakeR
+echo '	''{'MacF2C'}'  '{'F2COpt'}' '{'DepDir'}''{'default'}'.f  >> MakeR
+echo "" >>MakeR
+
+
+echo '.o Ä .c Rversion.h Rconfig.h FFTab.h FFDecl.h :::include:config.h' 
+>> MakeR
+echo '	'Mrc '{'DepDir'}''{'default'}'.c '{'includes'}' -o 
+:obj:'{'default'}'.o -sym full -opt off -includes Unix -shared_lib_export 
+on '¶' >> MakeR
+echo '	'-w 35,2,7,29,30 -d HAVE_CONFIG_H  -d Macintosh  -d 
+TARGET_API_MAC_CARBON '¶' >> MakeR
+echo '	'-typecheck relaxed -noMapCR -ansi off -prefix RHeaders.h  >> MakeR
+
+if `Exists :expvar`
+ Delete :expvar
+end
+
+echo " " >> MakeR
+echo "### Main command build" >> MakeR
+echo " " >> MakeR
+echo R ÄÄ '{'RObj'}' '{'MacObj'}' '{'ExtraObj'}' '{'FObj'}' >> MakeR
+echo "### exporting symbols"  >> MakeR
+echo '	'"catenate :obj:Å.x > expvar" >> MakeR
+echo '	'PPCLink -o :::R '¶' >> MakeR
+echo '	''{'RObj'}' '{'MacObj'}' '{'ExtraObj'}' '{'FObj'}' '¶' >> MakeR
+echo '	''{'LibFiles'} ¶' >> MakeR
+echo '	'-sym on -mf -d -t "'APPL'" -c "'OFFF'" -m __appstart  -@export 
+expvar >> MakeR
+
+echo " " >> MakeR
+echo " " >> MakeR
+
+echo "R ÄÄ  :res:Carbon.r" >> MakeR
+echo '	'"Rez :res:Carbon.r -o :::R -a" >>MakeR
+echo " " >> MakeR
+
+echo "R ÄÄ :res:Size.r" >>MakeR
+echo '	'"Rez :res:Size.r -o :::R -a" >>MakeR
+echo " " >> MakeR
+
+echo "R ÄÄ :res:RVerRes.r" >> MakeR
+echo '	'"Rez :res:RVerRes.r -o :::R -a" >> MakeR
+echo " " >> MakeR
+
+echo "R ÄÄ :res:R.rsrc" >> MakeR
+echo '	'"Rez :res:R.r -o :::R -a" >> MakeR
+echo " " >> MakeR
+
+echo ":res:R.r Ä :res:R.rsrc" >> MakeR
+echo '	'"derez :res:R.rsrc > :res:R.r" >> MakeR
+
+echo "R ÄÄ :res:Raete.r" >> MakeR
+echo '	'"Rez :res:Raete.r -o :::R -a" >>MakeR
+echo " " >> MakeR
+
+echo "Creating dependencies..."
+echo " "
+
+
+echo "###" >> MakeR
+echo "### Auto-generated dependencies" >> MakeR
+echo "### Main R sources" >> MakeR
+for f in {RSrc}
+ begin
+  echo `echo {f} | sed "s/\.c/.o/g" | sed "s/[^/]*:/:obj:\1/"` "Ä" 
+'"'{f}'"' >>MakeR
+ end 
+end
+echo "### fortran to obj files" >> MakeR
+for f in {FortList}
+ begin
+  echo `echo {f} | sed "s/\.f/.o/g" | sed "s/[^/]*:/:obj:\1/"` "Ä"  {f} | 
+sed "s/\.f/.c/g" >>MakeR
+ end 
+end
+
+echo "### Macintosh specific" >> MakeR
+for f in {MacSrc}
+ begin
+  echo ":obj:"`echo {f} | sed "s/\.c/.o/g" | sed "s/[^/]*:/\1/"` "Ä" 
+'"'{f}'"' >>MakeR
+ end 
+end
+echo "### Extra Macintosh sources" >> MakeR
+
+for f in {ExtraSrc}
+ begin
+  echo `echo {f} | sed "s/\.c/.o/g" | sed "s/[^/]*:/:obj:\1/"` "Ä" 
+'"'{f}'"' >>MakeR
+ end 
+end
+
+echo "### Fortran files" >> MakeR
+for f in {FortList}
+ begin
+  echo `echo {f} | sed "s/\.f/.c/g" | sed "s/[^/]*:/:obj:\1/"` "Ä" 
+'"'{f}'"' >>MakeR
+ end 
+end
+
+echo " "
+echo "Done !"
+date
+echo " "
+echo "File MakeR created in the current folder"
+echo " "
+echo "Please install f2c and sed in the Tools:"
+echo "directory of your MPW Configuration"
+echo " "
+echo "You don't need to run this MPWBuild_R more than once."
+echo "This script creates for you a true MPW Makefile called MakeR"
+echo "that you'll use to build R".
+echo "############################################################"
+echo "Please check out the variabile "MFdir" before building R"
+echo "it should point where MoreFiles is located on your drive"
+echo " "
+echo "To build R, simply do the following"
+echo " "
+echo "Make -f MakeR R > MyMake"
+echo "MyMake"
+echo " "
+
+  

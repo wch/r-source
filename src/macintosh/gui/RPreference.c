@@ -204,8 +204,8 @@ unsigned char* StrToPStr(char* buf, SInt8 size){
 
 
 extern char *mac_getenv(const char *name);
-Boolean Interrupt;
-
+Boolean Interrupt =false;
+Boolean OnOpenSource = false;
 
 /* ************************************************************************************************
 doGetPreferences :	This function will be called at the beginning when R application starts.
@@ -282,6 +282,14 @@ void  doGetPreferences(void)
        Interrupt = true;
       else  
        Interrupt = false;
+       
+       
+      if(strcmp(mac_getenv("OnOpenSource"),"TRUE")==0)
+       OnOpenSource = true;
+      else  
+       OnOpenSource = false;
+  
+       
 }
 
 int EightyWidth(void)

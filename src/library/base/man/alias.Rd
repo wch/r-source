@@ -23,6 +23,7 @@ alias.lm(object, complete = TRUE, partial = FALSE,
   \item{partial.pattern}{Should partial aliasing be presented in a
     schematic way? If this is done, the results are presented in a
     more compact way, usually giving the deciles of the coefficients.}
+  \item{\dots}{further arguments passed to or from other methods.}
 }
 \description{
   Find aliases (linearly dependent terms) in a linear model specified by

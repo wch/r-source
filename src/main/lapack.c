@@ -50,21 +50,21 @@ static void La_Init(void)
     initialized = -1;
     if(!res) return;
     
-    if(!(ptr_svd = (sDL_FUNC)R_FindSymbol("La_svd", "lapack", NULL))) return;
-    if(!(ptr_rs = (sDL_FUNC)R_FindSymbol("La_rs", "lapack", NULL))) return;
-    if(!(ptr_rg = (sDL_FUNC)R_FindSymbol("La_rg", "lapack", NULL))) return;
-    if(!(ptr_zgesv = (sDL_FUNC)R_FindSymbol("La_zgesv", "lapack", NULL))) return;
-    if(!(ptr_zgeqp3 = (sDL_FUNC)R_FindSymbol("La_zgeqp3", "lapack", NULL))) return;
+    if(!(ptr_svd = (sDL_FUNC)R_FindSymbol("modLa_svd", "lapack", NULL))) return;
+    if(!(ptr_rs = (sDL_FUNC)R_FindSymbol("modLa_rs", "lapack", NULL))) return;
+    if(!(ptr_rg = (sDL_FUNC)R_FindSymbol("modLa_rg", "lapack", NULL))) return;
+    if(!(ptr_zgesv = (sDL_FUNC)R_FindSymbol("modLa_zgesv", "lapack", NULL))) return;
+    if(!(ptr_zgeqp3 = (sDL_FUNC)R_FindSymbol("modLa_zgeqp3", "lapack", NULL))) return;
     if(!(ptr_qr_coef_cmplx = 
-	 (sDL_FUNC)R_FindSymbol("qr_coef_cmplx", "lapack", NULL))) return;
+	 (sDL_FUNC)R_FindSymbol("modqr_coef_cmplx", "lapack", NULL))) return;
     if(!(ptr_qr_qy_cmplx = 
-    (sDL_FUNC)R_FindSymbol("qr_qy_cmplx", "lapack", NULL))) return;
+    (sDL_FUNC)R_FindSymbol("modqr_qy_cmplx", "lapack", NULL))) return;
     if(!(ptr_svd_cmplx =  
-	 (sDL_FUNC)R_FindSymbol("La_svd_cmplx", "lapack", NULL))) return;
+	 (sDL_FUNC)R_FindSymbol("modLa_svd_cmplx", "lapack", NULL))) return;
     if(!(ptr_rs_cmplx = 
-	 (sDL_FUNC)R_FindSymbol("La_rs_cmplx", "lapack", NULL))) return;
+	 (sDL_FUNC)R_FindSymbol("modLa_rs_cmplx", "lapack", NULL))) return;
     if(!(ptr_rg_cmplx = 
-	 (sDL_FUNC)R_FindSymbol("La_rg_cmplx", "lapack", NULL))) return;
+	 (sDL_FUNC)R_FindSymbol("modLa_rg_cmplx", "lapack", NULL))) return;
 
     initialized = 1;    
     return;

@@ -1,6 +1,6 @@
 \name{xfig}
-\title{XFig Graphics Device}
 \alias{xfig}
+\title{XFig Graphics Device}
 \description{
   \code{xfig} starts the graphics device driver for producing XFig
   (version 3.2) graphics.
@@ -50,7 +50,7 @@ xfig(file = "Rplots.fig", onefile = FALSE, \dots)
   \code{onefile=FALSE} is the default.
 }
 \note{
-  One some line textures (\code{0 <= lty > 4}) are used. Eventually this
+  On some line textures (\code{0 <= lty > 4}) are used.  Eventually this
   will be partially remedied, but the XFig file format does not allow as
   general line textures as the \R model.  Unimplemented line textures
   are displayed as \emph{dash-double-dotted}.

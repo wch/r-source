@@ -29,7 +29,9 @@ extern "C" {
 #endif
 
 #include <locale.h>
+/*
 #include <stat.h>
+*/
 #include <errno.h>
 #include <Errors.h>
 

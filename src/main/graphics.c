@@ -872,6 +872,7 @@ double GConvertX(double x, GUnit from, GUnit to, DevDesc *dd)
     case DEVICE:devx = x;	break;
     case NDC:	devx = xNDCtoDev(x, dd);	break;
     case INCHES:devx = xInchtoDev(x, dd);	break;
+    case LINES: devx = xLinetoDev(x, dd);       break;
     case OMA1:	devx = xOMA1toDev(x, dd);	break;
     /*case OMA2:	x <--> y */
     case OMA3:	devx = xOMA3toDev(x, dd);	break;
@@ -915,6 +916,7 @@ double GConvertY(double y, GUnit from, GUnit to, DevDesc *dd)
     case DEVICE:devy = y;	break;
     case NDC:	devy = yNDCtoDev(y, dd);	break;
     case INCHES:devy = yInchtoDev(y, dd);	break;
+    case LINES: devy = yLinetoDev(y, dd);       break;
     case OMA1:	devy = yOMA1toDev(y, dd);	break;
     /*case OMA2:	x <--> y */
     case OMA3:	devy = yOMA3toDev(y, dd);	break;
@@ -1761,7 +1763,7 @@ DevDesc *GNewPlot(Rboolean recording)
     dd = CurrentDevice();
     GRestore(dd);
 
-    /* GNewPlot always starts a new plot UNLESS the user has set 
+    /* GNewPlot always starts a new plot UNLESS the user has set
      * dd->gp.new to TRUE by par(new=TRUE)
      * If dd->gp.new is FALSE, we leave it that way (further GNewPlot's
      * will move on to subsequent plots)
@@ -1810,7 +1812,7 @@ DevDesc *GNewPlot(Rboolean recording)
 	else				\
 	    GText(0.5,0.5,NFC, msg,	\
 		  0.5,0.5,  0, dd)
-    
+
     dd->dp.valid = dd->gp.valid = FALSE;
     if (!validOuterMargins(dd)) {
 	G_ERR_MSG("Outer margins too large (fig.region too small)");
@@ -1940,7 +1942,7 @@ void GScale(double min, double max, int axis, DevDesc *dd)
     }
     else GPretty(&min, &max, &n);
 
-    if(fabs(max - min) < (temp = fmax2(fabs(max), fabs(min)))* 
+    if(fabs(max - min) < (temp = fmax2(fabs(max), fabs(min)))*
        EPS_FAC_2 * DBL_EPSILON) {
 	/* Treat this case somewhat similar to the (min ~= max) case above */
 	warning("relative range of values = %5g * EPS, is small (axis %d)."
@@ -2011,12 +2013,12 @@ void GSetupAxis(int axis, DevDesc *dd)
  */
 
 
-/* Set default graphics parameter values in a GPar. 
+/* Set default graphics parameter values in a GPar.
  * This initialises the plot state, plus the other graphical
  * parameters that are not the responsibility of the device initialisation.
 
  * Typically called from  do_<dev>(.)  as  GInit(&dd->dp)
- */  
+ */
 void GInit(GPar *dp)
 {
     dp->state = 0;
@@ -2393,7 +2395,7 @@ static void setClipRect(double *x1, double *y1, double *x2, double *y2,
 /* Update the device clipping region (depends on GP->xpd). */
 void GClip(DevDesc *dd)
 {
-    if (dd->gp.xpd != dd->gp.oldxpd) { 
+    if (dd->gp.xpd != dd->gp.oldxpd) {
 	double x1, y1, x2, y2;
 	setClipRect(&x1, &y1, &x2, &y2, DEVICE, dd);
 	dd->dp.clip(x1, x2, y1, y2, dd);
@@ -2444,7 +2446,7 @@ static int clipcode(double x, double y, cliprect *cr)
     return c;
 }
 
-static Rboolean 
+static Rboolean
 CSclipline(double *x1, double *y1, double *x2, double *y2, cliprect *cr,
 	   int *clipped1, int *clipped2, int coords, DevDesc *dd)
 {
@@ -2456,7 +2458,7 @@ CSclipline(double *x1, double *y1, double *x2, double *y2, cliprect *cr,
     *clipped2 = 0;
     c1 = clipcode(*x1, *y1, cr);
     c2 = clipcode(*x2, *y2, cr);
-    if ( !c1 && !c2 ) 
+    if ( !c1 && !c2 )
 	return TRUE;
 
     xl = cr->xl;
@@ -2464,6 +2466,7 @@ CSclipline(double *x1, double *y1, double *x2, double *y2, cliprect *cr,
     yb = cr->yb;
     yt = cr->yt;
     if (dd->gp.xlog || dd->gp.ylog) {
+	double temp;
 
 	GConvert(x1, y1, coords, NDC, dd);
 	GConvert(x2, y2, coords, NDC, dd);
@@ -2474,6 +2477,17 @@ CSclipline(double *x1, double *y1, double *x2, double *y2, cliprect *cr,
 	cr2.xr = xr;
 	cr2.yb = yb;
 	cr2.yt = yt;
+
+        if (cr2.xr < cr2.xl) {
+            temp = cr2.xl;
+            cr2.xl = cr2.xr;
+            cr2.xr = temp;
+        }
+        if (cr2.yt < cr2.yb) {
+            temp = cr2.yb;
+            cr2.yb = cr2.yt;
+            cr2.yt = temp;
+        }
 
 	x = xl;		/* keep -Wall happy */
 	y = yb;		/* keep -Wall happy */
@@ -2919,18 +2933,17 @@ int GClipPolygon(double *x, double *y, int n, int coords, int store,
     return (cnt);
 }
 
-/* if bg not specified then draw as polyline rather than polygon
- * to avoid drawing line along border of clipping region
- */
-/* If mode = 0, clip according to dd->gp.xpd
-   If mode = 1, clip to the device extent */
 static void clipPolygon(int n, double *x, double *y, int coords,
                         int bg, int fg, int mode, DevDesc *dd)
 {
+/* If mode = 0, clip according to dd->gp.xpd
+   If mode = 1, clip to the device extent */
     static double *xc = NULL, *yc = NULL;
     double *tmp;
     if (xc != NULL) {tmp = xc; xc = NULL; free(tmp);}
     if (yc != NULL) {tmp = yc; yc = NULL; free(tmp);}
+    /* if bg not specified then draw as polyline rather than polygon
+     * to avoid drawing line along border of clipping region */
     if (bg == NA_INTEGER) {
 	int i;
 	xc = (double*)malloc((n + 1) * sizeof(double));
@@ -3217,14 +3230,19 @@ void GRect(double x0, double y0, double x1, double y1, int coords,
     case 0:  /* rectangle totally clipped; draw nothing */
 	break;
     case 1:  /* rectangle totally inside;  draw all */
+	/* NOTE must clip in case clipping region has been made _bigger_
+	 */
+	if (dd->dp.canClip) 
+	    GClip(dd);
 	dd->dp.rect(x0, y0, x1, y1, coords, bg, fg, dd);
 	break;
     case 2:  /* rectangle intersects clip region;  use polygon clipping */
 	dd->gp.xpd = 2;
 	result = clipRectCode(x0, y0, x1, y1, coords, dd);
 	dd->gp.xpd = xpdsaved;
-	if (dd->dp.canClip && result == 1) {
+	if (dd->dp.canClip) 
 	    GClip(dd);
+	if (result == 1) {
 	    dd->dp.rect(x0, y0, x1, y1, coords, bg, fg, dd);
 	}
 	else {
@@ -3240,7 +3258,7 @@ void GRect(double x0, double y0, double x1, double y1, int coords,
 		dd->gp.col = fg;
 		GPolyline(5, xc, yc, coords, dd);
 	    }
-	    else {
+	    else { /* filled rectangle */
 		int npts;
 		double *xcc, *ycc;
 		xcc = ycc = 0;		/* -Wall */
@@ -3496,6 +3514,8 @@ void GText(double x, double y, int coords, char *str,
 		    if (dd->dp.canHAdj == 2) hadj = xc;
 		    else if (dd->dp.canHAdj == 1) {
 			hadj = 0.5 * floor(2*xc + 0.5);
+			/* limit to 0, 0.5, 1 */
+			hadj = (hadj > 1.0) ? 1.0 :((hadj < 0.0) ? 0.0 : hadj);
 		    } else hadj = 0.0;
 		    xleft = xoff - (xc-hadj)*width*cos_rot + yc*height*sin_rot;
 		    ybottom= yoff - (xc-hadj)*width*sin_rot - yc*height*cos_rot;
@@ -3727,20 +3747,20 @@ void GPretty(double *lo, double *up, int *ndiv)
      */
 #define rounding_eps 1e-7
     if(nu >= ns + 1) {
-	if(               ns * unit < *lo - rounding_eps*unit) 
+	if(               ns * unit < *lo - rounding_eps*unit)
 	    ns++;
-	if(nu > ns + 1 && nu * unit > *up + rounding_eps*unit) 
+	if(nu > ns + 1 && nu * unit > *up + rounding_eps*unit)
 	    nu--;
 	*ndiv = nu - ns;
     }
     *lo = ns * unit;
     *up = nu * unit;
 #ifdef non_working_ALTERNATIVE
-    if(ns * unit > *lo)     
+    if(ns * unit > *lo)
 	*lo = ns * unit;
-    if(nu * unit < *up)     
+    if(nu * unit < *up)
 	*up = nu * unit;
-    if(nu - ns >= 1) 
+    if(nu - ns >= 1)
 	*ndiv = nu - ns;
 #endif
 
@@ -4083,7 +4103,8 @@ void GMtext(char *str, int side, double line, int outer, double at, int las,
     switch(side) {
     case 1:
 	if(las == 2 || las == 3) {
-	    at = at + GConvertXUnits(0.3, LINES, subcoords, dd);
+	    at = GConvertX(at, subcoords, LINES, dd) + 0.3;
+	    at = GConvertX(at, LINES, subcoords, dd);
 	    angle = 90;
 	}
 	else {
@@ -4093,7 +4114,17 @@ void GMtext(char *str, int side, double line, int outer, double at, int las,
 	break;
     case 2:
 	if(las == 1 || las == 2) {
-	    at = at - GConvertYUnits(0.3, LINES, subcoords, dd);
+	    /* subcoords could be USER and the user could have set log="y"
+	     * If that's the case then converting a height to USER 
+	     * coordinates will not work
+	     * SO to be safe, we convert "at" to a LINES location, 
+	     * add the 0.3 and then convert the result back to a USER
+	     * lcoation (ok because converting _locations_ is ok)
+	     * The old, bad way to do it was:
+	     *     at = at - GConvertYUnits(0.3, LINES, subcoords, dd);
+	     */
+	    at = GConvertY(at, subcoords, LINES, dd) - 0.3;
+	    at = GConvertY(at, LINES, subcoords, dd);
 	    angle = 0;
 	}
 	else {
@@ -4103,7 +4134,8 @@ void GMtext(char *str, int side, double line, int outer, double at, int las,
 	break;
     case 3:
 	if(las == 2 || las == 3) {
-	    at = at + GConvertXUnits(0.3, LINES, subcoords, dd);
+	    at = GConvertX(at, subcoords, LINES, dd) + 0.3;
+	    at = GConvertX(at, LINES, subcoords, dd);
 	    angle = 90;
 	}
 	else {
@@ -4113,7 +4145,8 @@ void GMtext(char *str, int side, double line, int outer, double at, int las,
 	break;
     case 4:
 	if(las == 1 || las == 2) {
-	    at = at - GConvertYUnits(0.3, LINES, subcoords, dd);
+	    at = GConvertY(at, subcoords, LINES, dd) - 0.3;
+	    at = GConvertY(at, LINES, subcoords, dd);
 	    angle = 0;
 	}
 	else {
@@ -4945,7 +4978,8 @@ unsigned int rgb2col(char *rgb)
 unsigned int name2col(char *nm)
 {
     int i;
-    for(i=0 ; ColorDataBase[i].name ; i++) {
+    if(strcmp(nm, "NA") == 0) return NA_INTEGER;
+    for(i = 0; ColorDataBase[i].name ; i++) {
 	if(StrMatch(ColorDataBase[i].name, nm))
 	    return ColorDataBase[i].code;
     }
@@ -5028,13 +5062,13 @@ unsigned int RGBpar(SEXP x, int i)
 	if(INTEGER(x)[i] == NA_INTEGER) return NA_INTEGER;
 	indx = INTEGER(x)[i] - 1;
 	if(indx < 0) return CurrentDevice()->dp.bg;
-	else return R_ColorTable[abs(indx) % R_ColorTableSize];
+	else return R_ColorTable[indx % R_ColorTableSize];
     }
     else if(isReal(x)) {
 	if(!R_FINITE(REAL(x)[i])) return NA_INTEGER;
 	indx = REAL(x)[i] - 1;
 	if(indx < 0) return CurrentDevice()->dp.bg;
-	else return R_ColorTable[abs(indx) % R_ColorTableSize];
+	else return R_ColorTable[indx % R_ColorTableSize];
     }
     return 0;		/* should not occur */
 }
@@ -5371,7 +5405,7 @@ void addDevice(DevDesc *dd)
 
     copyGPar(&(dd->dp), &(dd->gp));
     GReset(dd);
-    
+
     /* In case a device driver did not call R_CheckDeviceAvailable
        before starting its allocation, we complete the allocation and
        then call killDevice here.  This insures that the device gets a

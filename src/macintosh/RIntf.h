@@ -172,9 +172,9 @@
 	#endif
 #endif
 
-#ifndef __CARBONCOMPATIBILITY__
-#include "CarbonCompatibility.h"
-#endif
+//#ifndef __CARBONCOMPATIBILITY__
+//#include "CarbonCompatibility.h"
+//#endif
 
 #include <R_ext/Boolean.h>
 #include "Startup.h"
@@ -376,7 +376,8 @@ enum {
 	kMenuFile,
 	kMenuEdit,
 	kMenuTools,
-	kMenuWindows
+	kMenuWindows,
+	kMenuConfig
 };
 
 /*	Apple Menu items
@@ -393,7 +394,7 @@ enum {
 	kItemOpen		 =  4,
 	kItemEditFile	 =  5,
 	kItemShow		 =  6,
-	kItemLoadW        =  8,
+	kItemLoadW       =  8,
 	kItemSaveWSAs	 =  9,
     kItemPageSetup   = 11,
 	kItemPrint       = 12,
@@ -432,6 +433,13 @@ enum {
 	kItemResetDir    =  13,
 	kItemShowLibrary =  15,
 	kItemShowData	 =  16
+};
+
+/*	Config menu items
+*/
+enum {
+    kItemAllowInterrupt =  1,
+	kItemOnOpenSource	=  2
 };
 
 
@@ -682,7 +690,7 @@ void            free_History(void);
 void            maintain_cmd_History(char*);
 void            do_Down_Array       (void);
 void            R_WriteConsole1      (Ptr, SInt32);
-void            R_ReadConsole1       (char* ,  char* , int, int);
+void            R_ReadConsole1       (char* ,  unsigned char* , int, int);
 void            R_WriteConsole2      (Ptr, SInt32);
 void            R_ReadConsole2       (char* ,  char* , int, int);
 Boolean         inRange             (int start, int end , int back, int length);

@@ -25,6 +25,13 @@ capabilities(what = NULL)
       available?}
     \item{libxml}{Is there support for integrating \code{libxml} with
       the \R event loop?}
+    \item{cledit}{Is command-line editing available in the current \R
+      session?  This is false in non-interactive sessions.
+#ifdef Unix
+      It will be true if \code{readline} supported has been compiled in
+      and \code{--no-readline} was \emph{not} invoked.
+#endif
+    }
 }
 \seealso{\code{\link{.Platform}}}
 

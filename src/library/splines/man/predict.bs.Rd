@@ -18,7 +18,7 @@ predict.ns(object, newx, \dots)
     arguments are used.}
 }
 \value{
-  An object just like \code{basis}, except evaluated at the new values
+  An object just like \code{object}, except evaluated at the new values
   of \code{x}.
 
   These are methods for the generic function \code{\link{predict}()} for
@@ -26,7 +26,8 @@ predict.ns(object, newx, \dots)
   \code{\link{predict}} for the general behavior of this function.
 }
 \seealso{
-  \code{bs}, \code{ns}, \code{poly}, \code{lo}, \code{s}
+  \code{\link{bs}}, \code{\link{ns}}, \code{\link{poly}}.
+  %%-- FIXME: These are not in R (and wont ever ?!): \code{lo}, \code{s}
 }
 \examples{
 data(women)

@@ -1,7 +1,7 @@
 \input texinfo
 @c %**start of header
 @setfilename R-admin.info
-@settitle R Installation and Adminstration
+@settitle R Installation and Administration
 @setchapternewpage on
 @c %**end of header
 
@@ -149,14 +149,14 @@ rsync -rC rsync.r-project.org::@var{module} R
 @noindent
 to create a copy of the source tree specified by @var{module} in the
 subdirectory @file{R} of the current directory, where @var{module}
-specifies one of the three existing flavours of the @R{} sources, and
-can be one of @samp{r-release} (latest released version),
-@samp{r-release-patched} (latest released version with patches applied),
-and @samp{r-devel} (current development version).  The rsync trees are
-created directly from the master CVS archive and are updated hourly.
-The @option{-C} option in the @command{rsync} command is to cause it to
-skip the CVS directories.  Further information on @command{rsync} is
-available at @uref{http://rsync.samba.org/rsync/}.
+specifies one of the four existing flavors of the R sources, and can be
+one of @samp{r-release} (current released version), @samp{r-patched}
+(patched released version), and @samp{r-devel} (development version,
+less stable), and @samp{r-ng} (next generation, unstable).  The rsync
+trees are created directly from the master CVS archive and are updated
+hourly.  The @option{-C} option in the @command{rsync} command is to
+cause it to skip the CVS directories.  Further information on
+@command{rsync} is available at @uref{http://rsync.samba.org/rsync/}.
 
 
 @node Installing R under Unix, Installing R under Windows, Obtaining R, Top
@@ -172,10 +172,10 @@ Unix-like platforms, including @code{i386-freebsd}, @code{i386-linux},
 @cindex Linux
 @cindex MacOS X
 In addition, binary distributions are available for most common Linux
-distributions, Compaq Alpha systems running OSF1, and for MacOS X.  See
-the @acronym{FAQ} for current details.  These are installed in
-platform-specific ways.  So for the rest of this chapter we consider
-only building from the sources.
+distributions, Compaq Alpha systems running OSF/Tru64, and for MacOS X
+(Darwin) with X11.  See the @acronym{FAQ} for current details.  These
+are installed in platform-specific ways.  So for the rest of this
+chapter we consider only building from the sources.
 
 @menu
 * Simple compilation::          
@@ -435,15 +435,15 @@ cross-compile, see @file{src/gnuwin32/INSTALL}.
 
 The @file{bin/macos} directory of a @acronym{CRAN} site contains
 @command{bin-hex}ed (@file{hqx}) and @command{stuffit} (@file{sit})
-self-extracting binaries for a base distribution and a large number of
-add-on packages to run under MacOS 8.6 to MacOS 9.1 or MacOS X under
-Classic Environment.
-
-Just extract one of these self-extracting binaries in a suitable folder.
+archives for a base distribution and a large number of add-on packages
+to run under MacOS 8.6 to MacOS 9.1 or MacOS X natively.  Just extract
+one of these archives in a suitable folder using standard utilities like
+Aladdin Stuffit Expander (tm).
 
 @cindex MacOS X
 There is also a port to MacOS X which is considered to be a Unix variant
-in this document.
+in this document.  You can find it in the @file{bin/macosx} directory at
+of a @acronym{CRAN} site. 
 
 @node Add-on packages, Essential and useful other programs, Installing R on Classic MacOS, Top
 @chapter Add-on packages
@@ -655,13 +655,13 @@ The linear algebra routines in @R{} can make use of enhanced BLAS (Basic
 Linear Algebra Subprograms, @uref{http://www.netlib.org/blas/faq.html})
 routines.  Some are compiler-system-specific (@code{libsunperf} on Sun
 Sparc@footnote{Using the SunPro @command{cc} and @command{f95}
-compilers}, @code{libscs} and @code{libcomplib.sgimath} on SGI,
-@code{libessl} on IBM) but ATLAS (@uref{http://www.netlib.org/atlas/})
-is a `tuned' BLAS that runs on a wide range of platforms.  If no more
-specific library is found, a @code{libblas} library in the library path
-will be used.  You can specify a specific BLAS library by the
-configuration option @option{--with-blas} and not to use an external
-BLAS library by @option{--without-blas}.
+compilers}, @code{libessl} on IBM) but ATLAS
+(@uref{http://www.netlib.org/atlas/}) is a `tuned' BLAS that runs on a
+wide range of Unix-alike platforms.  If no more specific library is
+found, a @code{libblas} library in the library path will be used.  You
+can specify a specific BLAS library by the configuration option
+@option{--with-blas} and not to use an external BLAS library by
+@option{--without-blas}.
 
 Note that the BLAS library will be used for several add-on packages as
 well as for @R{} itself.  This means that it is better to use a shared
@@ -675,10 +675,14 @@ Optimized versions of LAPACK are available, but no provision is made for
 using them with @R{} as the likely performance gains are thought to be
 small.
 
-As with all libraries, you need to ensure that they are @R{} were
+As with all libraries, you need to ensure that they and @R{} were
 compiled with compatible compilers and flags.  For example, this means
 that on Sun Sparc using the native compilers the flag @option{-dalign} is
 needed so @code{libsunperf} can be used.
+
+An ATLAS `tuned' BLAS can also be used on Windows: see
+@file{src/gnuwin32/INSTALL} for how to enable this.
+
 
 @node Configuration on Unix, New platforms, Essential and useful other programs, Top
 @appendix Configuration on Unix

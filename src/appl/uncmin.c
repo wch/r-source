@@ -46,13 +46,14 @@
 #endif
 
 
-void fdhess(int n, double *x, double fval, fcn_p fun, void *state, 
+void fdhess(int n, double *x, double fval, fcn_p fun, void *state,
 	    double *h, int nfd, double *step, double *f,
 	    int ndigit, double *typx)
 {
-/*	this subroutine calculates a numerical approximation to the upper
- *	triangular portion of the second derivative matrix (the hessian).
- *	algorithm a5.6.2 from dennis and schnable (1983), numerical methods
+/*	calculates a numerical approximation to the upper triangular
+ *	portion of the second derivative matrix (the hessian).
+
+ *	Algorithm A5.6.2 from Dennis and Schnabel (1983), numerical methods
  *	for unconstrained optimization and nonlinear equations,
  *	prentice-hall, 321-322.
 
@@ -444,10 +445,10 @@ qrupdt(int nr, int n, double *a, double *u, double *v)
 } /* qrupdt_ */
 
 static void
-tregup(int nr, int n, double *x, double f, double *g, double *a, fcn_p fcn, 
-       void *state, double *sc, double *sx, int nwtake, 
-       double stepmx, double steptl, double *dlt, int *iretcd, 
-       double *xplsp, double *fplsp, double *xpls, double *fpls, int *mxtake, 
+tregup(int nr, int n, double *x, double f, double *g, double *a, fcn_p fcn,
+       void *state, double *sc, double *sx, int nwtake,
+       double stepmx, double steptl, double *dlt, int *iretcd,
+       double *xplsp, double *fplsp, double *xpls, double *fpls, int *mxtake,
        int method, double *udiag)
 {
 /* Decide whether to accept xpls=x+sc as the next iterate and update the
@@ -478,8 +479,7 @@ tregup(int nr, int n, double *x, double f, double *g, double *a, fcn_p fcn,
  *			   =0 xpls accepted as next iterate;
  *			      dlt trust region for next iteration.
  *			   =1 xpls unsatisfactory but accepted as next iterate
- *			      because xpls-x .lt. smallest allowable
- *			      step length.
+ *			      because xpls-x < smallest allowable step length.
  *			   =2 f(xpls) too large.  continue current iteration
  *			      with new reduced dlt.
  *			   =3 f(xpls) sufficiently small, but quadratic model
@@ -704,8 +704,10 @@ lnsrch(int n, double *x, double f, double *g, double *p, double *xpls,
 		return;
 	    } else {
 		/*	calculate new lambda */
-		/* modifications by BDR 2000/01/05 to cover non-finite values */
-		if (*fpls == DBL_MAX) {
+
+		/* modifications by BDR 2000/01/05 to cover non-finite values
+		 * ">=" instead of "==" :  MM 2001/07/24 */
+		if (*fpls >= DBL_MAX) {
 		    almbda *= 0.1;
 		    firstback = 1;
 		} else {
@@ -749,7 +751,7 @@ lnsrch(int n, double *x, double f, double *g, double *p, double *xpls,
 
 static void
 dogstp(int nr, int n, double *g, double *a, double *p, double *sx,
-       double rnwtln, double *dlt, int *nwtake, int *fstdog, double *ssd, 
+       double rnwtln, double *dlt, int *nwtake, int *fstdog, double *ssd,
        double *v, double *cln, double *eta, double *sc, double stepmx)
 {
 /* Find new step by double dogleg algorithm
@@ -923,7 +925,7 @@ dogdrv(int nr, int n, double *x, double f, double *g, double *a, double *p,
 
 static void
 hookst(int nr, int n, double *g, double *a, double *udiag, double *p,
-       double *sx, double rnwtln, double *dlt, double *amu, double dltp, 
+       double *sx, double rnwtln, double *dlt, double *amu, double dltp,
        double *phi, double *phip0, int *fstime, double *sc,
        int *nwtake, double *wrk0, double epsm)
 {
@@ -1067,9 +1069,9 @@ hookst(int nr, int n, double *g, double *a, double *udiag, double *p,
 static void
 hookdr(int nr, int n, double *x, double f, double *g, double *a,
        double *udiag, double *p, double *xpls, double *fpls, fcn_p fcn,
-       void *state, double *sx, double stepmx, double steptl, double *dlt, 
-       int *iretcd, int *mxtake, double *amu, double *dltp, 
-       double *phi, double *phip0, double *sc, double *xplsp, 
+       void *state, double *sx, double stepmx, double steptl, double *dlt,
+       int *iretcd, int *mxtake, double *amu, double *dltp,
+       double *phi, double *phip0, double *sc, double *xplsp,
        double *wrk0, double epsm, int itncnt)
 {
 /* Find a next newton iterate (xpls) by the more-hebdon method.
@@ -1168,7 +1170,7 @@ hookdr(int nr, int n, double *x, double f, double *g, double *a,
 
 static void
 secunf(int nr, int n, double *x, double *g, double *a, double *udiag,
-       double *xpls, double *gpls, double epsm, int itncnt, double rnf, 
+       double *xpls, double *gpls, double epsm, int itncnt, double rnf,
        int iagflg, int *noupdt, double *s, double *y, double *t)
 {
 /* Update hessian by the bfgs unfactored method
@@ -1959,7 +1961,7 @@ heschk(int nr, int n, double *x, fcn_p fcn, fcn_p d1fcn, d2fcn_p d2fcn,
 
 static void
 optstp(int n, double *xpls, double fpls, double *gpls, double *x,
-       int itncnt, int *icscmx, int *itrmcd, 
+       int itncnt, int *icscmx, int *itrmcd,
        double gradtl, double steptl,
        double *sx, double fscale, int itnlim, int iretcd, int mxtake,
        int *msg)
@@ -1981,7 +1983,7 @@ optstp(int n, double *xpls, double fpls, double *gpls, double *x,
  *	gpls(n)	     --> gradient at new iterate, g(xpls), or approximate
  *	x(n)	     --> old iterate x[k-1]
  *	itncnt	     --> current iteration k
- *	icscmx	    <--> number consecutive steps .ge. stepmx
+ *	icscmx	    <--> number consecutive steps >= stepmx
  *			 [retain value between successive calls]
  *	itrmcd	    <--	 termination code
  *	gradtl	     --> tolerance at which relative gradient considered close
@@ -2066,8 +2068,8 @@ optstp(int n, double *xpls, double fpls, double *gpls, double *x,
 
 static void
 optchk(int n, double *x, double *typsiz, double *sx, double *fscale,
-       double gradtl, int *itnlim, int *ndigit, double epsm, double *dlt, 
-       int *method, int *iexp, int *iagflg, int *iahflg, double *stepmx, 
+       double gradtl, int *itnlim, int *ndigit, double epsm, double *dlt,
+       int *method, int *iexp, int *iagflg, int *iahflg, double *stepmx,
        int *msg)
 {
 /* Check input for reasonableness .
@@ -2314,10 +2316,10 @@ optdrv_end(int nr, int n, double *xpls, double *x, double *gpls,
 } /* optdrv_end */
 
 static void
-optdrv(int nr, int n, double *x, fcn_p fcn, fcn_p d1fcn, d2fcn_p d2fcn, 
+optdrv(int nr, int n, double *x, fcn_p fcn, fcn_p d1fcn, d2fcn_p d2fcn,
        void *state, double *typsiz, double fscale, int method,
        int iexp, int *msg, int ndigit, int itnlim, int iagflg, int iahflg,
-       double dlt, double gradtl, double stepmx, double steptl, 
+       double dlt, double gradtl, double stepmx, double steptl,
        double *xpls, double *fpls, double *gpls, int *itrmcd,
        double *a, double *udiag, double *g, double *p, double *sx,
        double *wrk0, double *wrk1, double *wrk2, double *wrk3, int *itncnt)
@@ -2331,7 +2333,7 @@ optdrv(int nr, int n, double *x, fcn_p fcn, fcn_p d1fcn, d2fcn_p d2fcn,
  *	x(n)	     --> on entry: estimate to a root of fcn
  *	fcn	     --> name of subroutine to evaluate optimization function
  *			 must be declared external in calling routine
- *				   fcn: r(n) --> r(1)
+ *				   fcn: R^n --> R
  *	d1fcn	     --> (optional) name of subroutine to evaluate gradient
  *			 of fcn.  must be declared external in calling routine
  *	d2fcn	     --> (optional) name of subroutine to evaluate
@@ -2351,9 +2353,9 @@ optdrv(int nr, int n, double *x, fcn_p fcn, fcn_p d1fcn, d2fcn_p d2fcn,
  *			 evaluate, =0 otherwise.  if set then hessian will
  *			 be evaluated by secant update instead of
  *			 analytically or by finite differences
- *	msg	    <--> on input:  (.gt.0) message to inhibit certain
+ *	msg	    <--> on input:  ( > 0) message to inhibit certain
  *			   automatic checks
- *			 on output: (.lt.0) error code; =0 no error
+ *			 on output: ( < 0) error code; =0 no error
  *	ndigit	     --> number of good digits in optimization function fcn
  *	itnlim	     --> maximum number of allowable iterations
  *	iagflg	     --> =1 if analytic gradient supplied
@@ -2471,7 +2473,7 @@ optdrv(int nr, int n, double *x, fcn_p fcn, fcn_p d1fcn, d2fcn_p d2fcn,
 
 	/*	    heschk evaluates d2fcn and checks it against the finite */
 	/*	    difference hessian which it calculates by calling fstofd */
-	/*	    (if iagflg .eq. 1) or sndofd (otherwise). */
+	/*	    (if iagflg == 1) or sndofd (otherwise). */
 
 	if (*msg < 0) {
 	  return;
@@ -2625,61 +2627,64 @@ optdrv(int nr, int n, double *x, fcn_p fcn, fcn_p d1fcn, d2fcn_p d2fcn,
 } /* optdrv */
 
 static void
-dfault(int n, double *x, double *typsiz,
-       double *fscale, int *method, int *iexp, int *msg,
+dfault(int n, double *x,
+       double *typsiz, double *fscale,
+       int *method, int *iexp, int *msg,
        int *ndigit, int *itnlim, int *iagflg, int *iahflg,
        double *dlt, double *gradtl, double *stepmx, double *steptl)
 {
-
-/* Set default values for each input variable to minimization algorithm.
+/* Set default values for each input variable to minimization algorithm
+ * for optif0() only.
 
  * PARAMETERS :
 
- *	n	     --> dimension of problem
- *	x(n)	     --> initial guess to solution (to compute max step size)
- *	typsiz(n)   <--	 typical size for each component of x
- *	fscale	    <--	 estimate of scale of minimization function
- *	method	    <--	 algorithm to use to solve minimization problem
- *	iexp	    <--	 =0 if minimization function not expensive to evaluate
- *	msg	    <--	 message to inhibit certain automatic checks + output
- *	ndigit	    <--	 number of good digits in minimization function
- *	itnlim	    <--	 maximum number of allowable iterations
- *	iagflg	    <--	 =0 if analytic gradient not supplied
- *	iahflg	    <--	 =0 if analytic hessian not supplied
- *	dlt	    <--	 trust region radius
- *	gradtl	    <--	 tolerance at which gradient considered close enough
- *			 to zero to terminate algorithm
- *	stepmx	    <--	 value of zero to trip default maximum in optchk
- *	steptl	    <--	 tolerance at which successive iterates considered
- *			 close enough to terminate algorithm
+ * INPUT:
+ *	n	  dimension of problem
+ *	x(n)	  initial guess to solution (to compute max step size)
+ * OUTPUT:
+ *	typsiz(n) typical size for each component of x
+ *	fscale	  estimate of scale of minimization function
+ *	method	  algorithm to use to solve minimization problem
+ *	iexp	  =0 if minimization function not expensive to evaluate
+ *	msg	  message to inhibit certain automatic checks + output
+ *	ndigit	  number of good digits in minimization function
+ *	itnlim	  maximum number of allowable iterations
+ *	iagflg	  =0 if analytic gradient not supplied
+ *	iahflg	  =0 if analytic hessian not supplied
+ *	dlt	  trust region radius
+ *	gradtl	  tolerance at which gradient considered close enough
+ *		  to zero to terminate algorithm
+ *	stepmx	  value of zero to trip default maximum in optchk
+ *	steptl	  tolerance at which successive iterates considered
+ *		  close enough to terminate algorithm
  */
   double epsm;
   int i;
 
   /* set typical size of x and minimization function */
-  for (i = 0; i < n; ++i) {
+  for (i = 0; i < n; ++i)
     typsiz[i] = 1.;
-  }
+
   *fscale = 1.;
 
   /* set tolerances */
 
   *dlt = -1.;
   epsm = d1mach(4);
-  *gradtl = pow(epsm, 1.0/3.0);
-  *stepmx = 0.;
+  *gradtl = pow(epsm, 1./3.);
   *steptl = sqrt(epsm);
+  *stepmx = 0.;
 
   /* set flags */
 
   *method = 1;
-  *iexp = 1;
-  *msg = 0;
+  *iexp   = 1;
+  *msg    = 0;
   *ndigit = -1;
   *itnlim = 150;
-  *iagflg = 0;
-  *iahflg = 0;
-} /* dfault_ */
+  *iagflg = 0;/* no gradient */
+  *iahflg = 0;/* no hessian */
+} /* dfault() */
 
 void
 optif0(int nr, int n, double *x, fcn_p fcn, void *state,
@@ -2760,9 +2765,9 @@ optif9(int nr, int n, double *x, fcn_p fcn, fcn_p d1fcn, d2fcn_p d2fcn,
  *			 evaluate, =0 otherwise.  if set then hessian will
  *			 be evaluated by secant update instead of
  *			 analytically or by finite differences
- *	msg	    <--> on input:  (.gt.0) message to inhibit certain
+ *	msg	    <--> on input:  ( > 0) message to inhibit certain
  *			   automatic checks
- *			 on output: (.lt.0) error code; =0 no error
+ *			 on output: ( < 0) error code; =0 no error
  *	ndigit	     --> number of good digits in optimization function fcn
  *	itnlim	     --> maximum number of allowable iterations
  *	iagflg	     --> =1 if analytic gradient supplied

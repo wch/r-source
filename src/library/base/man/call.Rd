@@ -13,6 +13,7 @@ as.call(x)
 }
 \arguments{
   \item{name}{a character string naming the function to be called.}
+  \item{\dots}{arguments to be part of the call.}
   \item{x}{an arbitrary \R object.}
 }
 \value{

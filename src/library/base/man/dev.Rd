@@ -28,41 +28,43 @@ graphics.off()
   Only one device is the \emph{active} device.  This is the device in
   which all graphics operations occur.
 
-  Devices are associated with a name (e.g., "X11"  or "postscript") and a
-  number;  the "null device" is always device 1.
+  Devices are associated with a name (e.g., \code{"X11"} or
+  \code{"postscript"}) and a number; the \code{"null device"} is always
+  device 1.
 
   \code{dev.off} shuts down the specified (by default the current) device.
   \code{graphics.off()} shuts down all open graphics devices.
 
   \code{dev.set} makes the specified device the active device.
 
-  A list of device names is stored in \code{.Devices}.
+  A list of the names of the open devices is stored in \code{.Devices}.
   The name of the active device is stored in \code{.Device}.
 }
 \value{
-\code{dev.cur} returns the number and name of the active device.
+  \code{dev.cur} returns the number and name of the active device,
+  or 1, the null device, if none is active.
 
-\code{dev.list} returns the numbers and names of all devices.
+  \code{dev.list} returns the numbers of all open devices, except device
+  1, the null device.  This is a numeric vector with a names attribute
+  giving the names, or \code{NULL} is there is no open device.
 
-\code{dev.next} returns the number and name of the next device in the
-list of devices.
+  \code{dev.next} and \code{dev.prev} return the number and name of the
+  next / previous device in the list of devices.  The list is regarded as
+  a circular list, and \code{"null device"} will be included only if there
+  are no open devices.
 
-\code{dev.prev} returns the number and name of the previous device in
-the list of devices.
+  \code{dev.off} returns the name and number of the new active device
+  (after the specified device has been shut down).
 
-\code{dev.off} returns the name and number of the new active device
-(after the specified device has been shut down).
-
-\code{dev.set} returns the name and number of the new active device.
+  \code{dev.set} returns the name and number of the new active device.
 }
 \seealso{
-    \code{\link{Devices}}, such as \code{\link{postscript}}, etc;
-    \code{\link{graphics.off}} for closing all devices;
-    \code{\link{layout}} and its links for setting up plotting regions
-    on the current device.
+  \code{\link{Devices}}, such as \code{\link{postscript}}, etc;
+  \code{\link{layout}} and its links for setting up plotting regions
+  on the current device.
 }
 \examples{
-\dontrun{
+\dontrun{## Unix-specific example
 x11()
 plot(1:10)
 x11()

@@ -1,16 +1,9 @@
 \name{Random}
-\title{Random Number Generation}
-\usage{
-.Random.seed <- c(rng.kind, n1, n2, \dots)
-save.seed <- .Random.seed
-
-RNGkind(kind = NULL, normal.kind = NULL)
-set.seed(seed, kind = NULL)
-}
 \alias{.Random.seed}
 \alias{RNG}
 \alias{RNGkind}
 \alias{set.seed}
+\title{Random Number Generation}
 \description{
   \code{.Random.seed} is an integer vector, containing the random number
   generator (RNG) \bold{state} for random number generation in \R. It
@@ -20,6 +13,13 @@ set.seed(seed, kind = NULL)
   of RNG in use.
 
   \code{set.seed} is the recommended way to specify seeds.
+}
+\usage{
+.Random.seed <- c(rng.kind, n1, n2, \dots)
+save.seed <- .Random.seed
+
+RNGkind(kind = NULL, normal.kind = NULL)
+set.seed(seed, kind = NULL)
 }
 \arguments{
   \item{kind}{character or \code{NULL}.  If \code{kind} is a character
@@ -35,7 +35,7 @@ set.seed(seed, kind = NULL)
     (which depends on \code{rng.kind}).}
 }
 \details{
-%% source and more detailed references:  ../../../main/RNG.c
+  %% source and more detailed references:  ../../../main/RNG.c
   The currently available RNG kinds are given below.  \code{kind} is
   partially matched to this list.  The default is
   \code{"Marsaglia-Multicarry"}.
@@ -102,11 +102,15 @@ set.seed(seed, kind = NULL)
   \code{"Knuth-TAOCP"}).
 }
 \note{
+  Initially, there is no seed;	a new one is created from the current
+  time when one is required.  Hence, different sessions will give
+  different simulation results, by default.
+  
   \code{.Random.seed} saves the seed set for the uniform random-number
-  generator, at least for the system generators. It does not necessarily
-  save the state of other generators, and in particular does not save
-  the state of the Box--Muller normal generator. If you want to
-  reproduce work later, call \code{set.seed} rather than set
+  generator, at least for the system generators.  It does not
+  necessarily save the state of other generators, and in particular does
+  not save the state of the Box--Muller normal generator.  If you want
+  to reproduce work later, call \code{set.seed} rather than set
   \code{.Random.seed}.
 }
 \value{
@@ -158,11 +162,6 @@ set.seed(seed, kind = NULL)
   \emph{The Art of Computer Programming.} Volume 2, third edition.\cr
   Source code at \url{http://www-cs-faculty.stanford.edu/~knuth/taocp.html}.
 }
-\note{
-  Initially, there is no seed;	a new one is created from the current
-  time when one is required.  Hence, different sessions will give
-  different simulation results, by default.
-}
 \author{of RNGkind: Martin Maechler. Current implementation, B. D. Ripley}
 
 \seealso{\code{\link{runif}}, \code{\link{rnorm}}, \ldots.}
@@ -175,11 +174,13 @@ rm(.Random.seed); runif(1); .Random.seed
 RNGkind("Wich")# (partial string matching on 'kind')
 p.WH <- c(30269, 30307, 30323)
 a.WH <- c(  171,   172,   170)
-next.WHseed <- function(i.seed = .Random.seed[-1]) (a.WH * i.seed) \%\% p.WH
+next.WHseed <- function(i.seed = .Random.seed[-1])
+  { (a.WH * i.seed) \%\% p.WH }
 my.runif1 <- function(i.seed = .Random.seed)
   { ns <- next.WHseed(i.seed[-1]); sum(ns / p.WH) \%\% 1 }
 
-## This shows how `runif(.)' works for Wichmann-Hill, using only R functions:
+## This shows how `runif(.)' works for Wichmann-Hill,
+## using only R functions:
 rs <- .Random.seed
 (WHs <- next.WHseed(rs[-1]))
 u <- runif(1)

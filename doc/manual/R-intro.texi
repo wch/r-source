@@ -3155,7 +3155,7 @@ which indicates that the first group tends to give higher results than
 the second.
 
 @iftex
-@image{images/ice, 7cm}
+@image{images/ice,7cm}
 @end iftex
 
 To test for the equality of the means of the two examples, we can use
@@ -5627,7 +5627,8 @@ information to a plot using a mouse.  The simplest of these is the
 @findex locator
 Waits for the user to select locations on the current plot using the
 left mouse button.  This continues until @code{n} (default 512) points
-have been selected, or the middle mouse button is pressed.  The
+have been selected, or another mouse button is pressed (Unix, Windows)
+or the mouse is clicked outside the graphics window (Mac).  The
 @code{type} argument allows for plotting at the selected points and has
 the same effect as for high-level graphics commands; the default is no
 plotting.  @code{locator()} returns the locations of the points selected
@@ -5656,7 +5657,8 @@ Allow the user to highlight any of the points defined by @code{x} and
 @code{y} (using the left mouse button) by plotting the corresponding
 component of @code{labels} nearby (or the index number of the point if
 @code{labels} is absent).  Returns the indices of the selected points
-when the middle button is pressed.
+when another button is pressed (unix, Windows) or the mouse is clicked 
+outside the graphics window (Mac).
 @end table
 
 Sometimes we want to identify particular @emph{points} on a plot, rather
@@ -5678,10 +5680,10 @@ highlighted with its index number (that is, its position in the
 @code{x}/@code{y} vectors) plotted nearby.  Alternatively, you could use
 some informative string (such as a case name) as a highlight by using
 the @code{labels} argument to @code{identify()}, or disable highlighting
-altogether with the @code{plot=FALSE} argument.  When the middle button is
-pressed, @code{identify()} returns the indices of the selected points;
-you can use these indices to extract the selected points from the
-original vectors @code{x} and @code{y}.
+altogether with the @code{plot=FALSE} argument.  When the process is
+terminated (see above), @code{identify()} returns the indices of the
+selected points; you can use these indices to extract the selected
+points from the original vectors @code{x} and @code{y}.
 
 @node Using graphics parameters, Graphics parameters, Interacting with graphics, Graphics
 @section Using graphics parameters
@@ -5930,7 +5932,7 @@ labels, titles, etc.) and (usually) bounded by the axes themselves.
 @iftex
 A typical figure is
 
-@image{images/fig11, 7cm}
+@image{images/fig11,7cm}
 @end iftex
 
 Graphics parameters controlling figure layout include:

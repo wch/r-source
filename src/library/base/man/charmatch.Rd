@@ -17,9 +17,9 @@ charmatch(x, table, nomatch = NA)
   Exact matches are preferred to partial matches (those where the value
   to be matched has an exact match to the initial part of the target,
   but the target is longer).
-    
+
   If there is a single exact match or no exact match and a unique
-  partial match then the index of the matching value is returned; if 
+  partial match then the index of the matching value is returned; if
   multiple exact or multiple partial matches are found then \code{0} is
   returned and if no match is found then \code{NA} is returned.
 }
@@ -27,7 +27,10 @@ charmatch(x, table, nomatch = NA)
   This function is based on a C function written by Terry Therneau.
 }
 \seealso{
-  \code{\link{match}},  \code{\link{pmatch}}.
+  \code{\link{pmatch}}, \code{\link{match}}.
+
+  \code{\link{grep}} or \code{\link{regexpr}} for more general (regexp)
+  matching of strings.
 }
 \examples{
 charmatch("", "")                             # returns 1

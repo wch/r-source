@@ -391,7 +391,8 @@ weights.default <- function(object, ...)
 
 weights.lm <- .Alias(weights.default)
 df.residual.lm <- function(object, ...) object$df.residual
-deviance.lm <- function(object, ...) sum(weighted.residuals(object)^2)
+deviance.lm <- function(object, ...)
+    sum(weighted.residuals(object)^2, na.rm=TRUE)
 formula.lm <- function(object, ...)
 {
     form <- object$formula
@@ -423,7 +424,7 @@ variable.names.lm <- function(object, full=FALSE)
 case.names.lm <- function(object, full=FALSE)
 {
     w <- weights(object)
-    dn <- .Alias(names(object$residuals))
+    dn <- .Alias(names(residuals(object)))
     if(full || is.null(w)) dn else dn[w!=0]
 }
 
@@ -602,7 +603,7 @@ predict.lm <-
     p <- object$rank
     p1 <- 1:p
     piv <- object$qr$pivot[p1]
-## NB: Q[p1,]%*%X[,piv]=R[p1,p1]
+### NB: Q[p1,] %*% X[,piv] = R[p1,p1]
     beta <- object$coefficients
     predictor <- drop(X[, piv, drop = FALSE] %*% beta[piv])
     if ( !is.null(offset) ) predictor <- predictor + offset
@@ -619,26 +620,25 @@ predict.lm <-
 	} else {
 	    res.var <- scale^2
 	}
- ## type!="terms"
-    if(type!="terms"){
-       if(missing(newdata))
-       XRinv <- qr.Q(object$qr)[, p1]
-       else {
-             Rinv <- qr.solve(qr.R(object$qr)[p1, p1])
-             XRinv <- X[, piv]%*%Rinv
-             }
-	ip <- drop(XRinv^2%*%rep(res.var, p))
-	}
+        if(type != "terms") {
+            if(missing(newdata))
+                XRinv <- qr.Q(object$qr)[, p1 , drop=FALSE]
+            else {
+                Rinv <- qr.solve(qr.R(object$qr)[p1, p1])
+                XRinv <- X[, piv] %*% Rinv
+            }
+            ip <- drop(XRinv^2 %*% rep(res.var, p))
+        }
     }
 ## type=="terms"
-    if (type=="terms"){
+    if (type == "terms") {
       asgn <- attrassign(object)
       hasintercept <- attr(tt, "intercept")>0
       if (hasintercept){
         asgn$"(Intercept)" <- NULL
         avx <- rep(1/n, n)%*%model.matrix(object)
 	termsconst <- sum(avx[piv]*beta[piv])
-	}
+      }
       nterms <- length(asgn)
       predictor <- matrix(ncol=nterms, nrow=NROW(X))
       dimnames(predictor) <- list(rownames(X), names(asgn))
@@ -655,29 +655,28 @@ predict.lm <-
 ## Predicted values will be set to 0 for any term that
 ## corresponds to columns of the X-matrix that are
 ## completely aliased with earlier columns.
-      for (i in seq(1, nterms, length=nterms)){
+      for (i in seq(1, nterms, length=nterms)) {
         iipiv <- asgn[[i]]  # Columns of X, ith term
 	ii <- unpiv[iipiv]  # Corresponding rows of Rinv
         iipiv[ii==0] <- 0
-	if(any(iipiv)>0)
-	        predictor[, i] <- X[, iipiv, drop=FALSE]%*%(beta[iipiv])
-		else predictor[, i] <- rep(0, NROW(predictor))
-        if (se.fit||interval!="none"){
-	  if(any(iipiv)>0)
-
-              ip[, i] <- as.matrix(X[, iipiv, drop=FALSE] %*%
-                                  Rinv[ii, , drop=FALSE])^2 %*% rep(res.var, p)
-	  else ip[, i] <- rep(0, NROW(ip))
-        }
+	predictor[, i] <-
+            if(any(iipiv) > 0) X[, iipiv, drop=FALSE] %*% beta[iipiv]
+            else 0
+        if (se.fit || interval != "none")
+            ip[, i] <-
+                if(any(iipiv)>0)
+                    as.matrix(X[, iipiv, drop=FALSE] %*%
+                              Rinv[ii, , drop=FALSE])^2 %*% rep(res.var, p)
+                else 0
       }
 
       if (!is.null(terms)){
         predictor <- predictor[, terms, drop=FALSE]
         if (se.fit)
           ip <- ip[, terms, drop=FALSE]
-    }
+      }
       attr(predictor, 'constant') <- if (hasintercept) termsconst else 0
-  }
+    }
 ## Now construct elements of the list that will be returned
     if(interval != "none") {
 	tfrac <- qt((1 - level)/2, df)
@@ -744,7 +743,7 @@ predict.mlm <- function(object, newdata, se.fit = FALSE, ...)
     if(missing(newdata)) return(object$fitted)
     if(se.fit)
 	stop("The 'se.fit' argument is not yet implemented for mlm objects")
-    x <- model.matrix(object, newdata) # will use model.matrix.lm
+    X <- model.matrix(object, newdata) # will use model.matrix.lm
     piv <- object$qr$pivot[1:object$rank]
     pred <- X[, piv, drop = FALSE] %*% object$coefficients[piv,]
     if(inherits(object, "mlm")) pred else pred[, 1]

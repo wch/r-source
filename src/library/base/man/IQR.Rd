@@ -1,10 +1,14 @@
 \name{IQR}
+\alias{IQR}
 \title{The Interquartile Range}
 \usage{
 IQR(x, na.rm = FALSE)
 }
-\alias{IQR}
 \description{computes interquartile range of the \code{x} values.}
+\arguments{
+  \item{x}{a numeric vector.}
+  \item{na.rm}{logical. Should missing values be removed?}
+}
 \details{
   Note that this function computes the quartiles using the
   \code{\link{quantile}} function rather than following

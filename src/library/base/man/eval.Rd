@@ -68,7 +68,7 @@ mEx <- expression(2^2^3); mEx; 1 + eval(mEx)
 eval({ xx <- pi; xx^2}) ; xx
 
 a <- 3 ; aa <- 4 ; evalq(evalq(a+b+aa, list(a=1)), list(b=5)) # == 10
-a <- 3 ; aa <- 4 ; evalq(evalq(a+b+aa, 1), list(b=5))         # == 12
+a <- 3 ; aa <- 4 ; evalq(evalq(a+b+aa, -1), list(b=5))         # == 12
 
 ev <- function() {
    e1 <- parent.frame()

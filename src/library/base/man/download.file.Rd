@@ -47,19 +47,21 @@ download.file(url, destfile, method, quiet = FALSE, mode="w")
   width represents 100Kbytes and is doubled whenever the current width
   is exceeded.
 
-  The `Internet Options' of the system are used to choose proxies and so
-  on; these are set in the Control Panel and are those used for Internet
-  Explorer.
 #endif
-
-#ifdef unix
   Proxies can be specified via environment variables.
   Setting \code{"no_proxy"} stops any proxy being tried.
   Otherwise the setting of \code{"http_proxy"} or \code{"ftp_proxy"}
   (or failing that, the all upper-case version) is consulted and if
-  non-empty used as a proxy site. For FTP transfers, the username
+  non-empty used as a proxy site.  For FTP transfers, the username
   and password on the proxy can be specified by \code{"ftp_proxy_user"}
   and \code{"ftp_proxy_password"}.
+#ifdef windows
+  
+  Alternatively, if \code{modules\\internet2.dll} is used to replace
+  \code{modules\\internet.dll}, 
+  the `Internet Options' of the system are used to choose proxies and so
+  on; these are set in the Control Panel and are those used for Internet
+  Explorer.
 #endif
 }
 \note{

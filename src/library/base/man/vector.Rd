@@ -26,6 +26,10 @@ is.vector(x, mode = "any")
   and \code{FALSE} otherwise.
 }
 \details{
+  \code{is.vector} returns \code{FALSE} if \code{x} has any attributes
+  except names.  (This is incompatible with S.)  On the other hand,
+  \code{as.vector} removes \emph{all} attributes including names.
+  
   Note that factors are \emph{not} vectors;  \code{is.vector} returns
   \code{FALSE} and \code{as.vector} converts to character mode.
 }
@@ -42,6 +46,13 @@ df <- data.frame(x=1:3, y=5:7)
 \dontrun{## Error:
   as.vector(data.frame(x=1:3, y=5:7), mode="numeric")
 }
+
+x <- c(a = 1, b = 2)
+is.vector(x)
+as.vector(x)
+all.equal(x, as.vector(x)) ## FALSE
+
+
 ###-- All the following are TRUE:
 is.list(df)
 ! is.vector(df)

@@ -61,6 +61,7 @@
 #include <Rmath.h>
 #include <Print.h>
 #include <Rconnections.h>
+extern int R_OutputCon; /* from connections.c */
 
 #define BUFSIZE 8192  /* used by Rprintf etc */
 static char *Encodebuf=NULL;

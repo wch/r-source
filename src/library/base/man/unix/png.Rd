@@ -11,7 +11,7 @@ jpeg(filename = "Rplot.jpeg", width = 480, height = 480, pointsize = 12,
 png(filename ="Rplot.png", width = 480, height = 480, pointsize = 12, \dots)
 }
 \synopsis{
-jpeg(filename = "Rplot.jpg", width = 480, height = 480, pointsize = 12,
+jpeg(filename = "Rplot.jpeg", width = 480, height = 480, pointsize = 12,
      quality = 75, gamma = 1,
      colortype = getOption("X11colortype"), maxcubesize = 256)
 png(filename ="Rplot.png", width = 480, height = 480, pointsize = 12,
@@ -25,7 +25,7 @@ png(filename ="Rplot.png", width = 480, height = 480, pointsize = 12,
  \item{quality}{the `quality' of the JPEG image, as a
    percentage. Smaller values will give more compression but also more
    degradation of the image.}
- \item{dots}{additional arguments to the \code{\link{X11}} device.}
+ \item{\dots}{additional arguments to the \code{\link{X11}} device.}
 }
 \details{
   Plots in PNG and JPEG format can easily be converted to many other

@@ -39,8 +39,8 @@ fixh: h/config.h ../FFDecl.h ../FFTab.h \
 	sh ../../../tools/GV > $@
 	$(RM) ../../../tools/GV
 
-../../../bin/massage-Examples.sh: ../../../share/sh/massage-Examples.sh
-	$(SED) -e 1d  -e 's/"contr.poly")/"contr.poly"), pager="console"/' $< > $@
+../../../bin/massage-Examples: ../../../share/perl/massage-Examples.pl
+	$(SED) -e 's/"contr.poly")/"contr.poly"), pager="console"/' $< > $@
 
 ../../../bin/check: ../../scripts/check.in
 	$(SED) -e 1d -e "s/R CMD/Rcmd/" $< > $@
@@ -63,7 +63,7 @@ fixh: h/config.h ../FFDecl.h ../FFTab.h \
 ../../../bin/Rprof: ../../scripts/Rprof.in
 	$(SED) -e 1d -e "s/R CMD/Rcmd/" $< > $@
 
-fixbin: ../../../bin/massage-Examples.sh ../../../bin/build \
+fixbin: ../../../bin/massage-Examples ../../../bin/build \
 	   ../../../bin/check ../../../bin/Rdconv ../../../bin/Rdindex \
 	   ../../../bin/Sd2Rd ../../../bin/Rdiff.sh ../../../bin/Rprof cp2bin
 	$(ECHO) done > fixbin

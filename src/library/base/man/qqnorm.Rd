@@ -15,8 +15,11 @@ qqplot(x, y, plot.it = TRUE, xlab = deparse(substitute(x)),
 \alias{qqline}
 
 \arguments{
- \item{x}{The first sample for \code{qqplot}.}
- \item{y}{The second or only data sample.}
+  \item{x}{The first sample for \code{qqplot}.}
+  \item{y}{The second or only data sample.}
+  \item{xlab, ylab, main}{plot labels.}
+  \item{plot.it}{logical. Should the result be plotted?}
+  \item{ylim, \dots}{graphical parameters.}
 }
 \description{
   \code{qqnorm} is a generic functions the default method of which

@@ -4,6 +4,41 @@
 See the file NEWS for changes that affect all versions of R.
 
 
+rw1031
+======
+
+Lines with lty > 1 and many pieces were being drawn very slowly on
+Windows 2000 (but not 98/ME).  To work around this, such lines are
+now drawn 5000 pieces at a time.
+
+The dialog for the `Change dir' item now uses a standard folder
+selection widget for its Browse button.
+
+White backgrounds are now omitted for metafiles (as they are for
+postscript, PDF and XFig plots), so white backgounds (the default)
+appear to be transparent.
+
+help.start() now updates the HTML search index (as well as the
+packages index) when it is started up.  link.html.help() works better
+when R_LIBS omits the drive, and uses relative links for the main
+library, so R installations can be relocated in the file system.
+
+The background colour of the GUI preferences editor and the
+select.list() popup is now taken from the Windows colour scheme.
+
+Rcmd INSTALL now rejects invalid options for --docs (rather than
+ignoring them), and checks for the R version in the DESCRIPTION file
+exactly the same way as Rcmd check (so with fewer spurious messages).
+
+Added support for building with the ATLAS optimized BLAS library: on a
+PII this speeds up La.svd on a 500x500 matrix by about 30%, and the
+multiplication of two 1000x1000 matrices by about 8x. See INSTALL.
+
+The recommended compiler system has been changed, but that recommended
+for rw1030 still works.
+
+
+
 rw1030
 ======
 
@@ -28,6 +63,8 @@ onto the Rgui.exe console window is now supported.
 Profiling (as described in `Writing R Extensions') is now available.
 
 There is a new `Save as PDF' option on the graphics device menu.
+
+bringToTop() can specify the console window in Rgui (as -1).
 
 The default graphics device is now windows() only in interactive use:
 otherwise it is postscript().  (This affects the DCOM interface, which
@@ -55,12 +92,13 @@ pre-compiled packages, or use an external unzip program.
 The old-style Windows help is no longer part of the standard distribution,
 but can be made from the sources.  It is no longer tested.
 
-Make targets such as test-Reg have been moved to directory rw1030/tests.
+Make targets such as test-Reg have been moved to directory rw1030\tests.
 
 The default internet module modules\internet.dll is built using basic
 WinSock calls.  There is an alternative modules\internet2.dll which uses
 WinInet calls (and so needs Internet Explorer installed) which can be
-used as an alternative.
+used as a replacement.  (Remove modules\internet.dll and then
+rename modules\internet2.dll to modules\internet.dll.)
  
 
 

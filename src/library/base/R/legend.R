@@ -59,7 +59,8 @@ function(x, y, legend, fill, col = "black", lty, lwd, pch, bty = "o",
 
     xchar  <- xc
     yextra <- yc * (y.intersp - 1)
-    ychar <- yextra + max(yc, strheight(legend, u="user", cex=cex))
+    ymax   <- max(yc, strheight(legend, u="user", cex=cex))
+    ychar <- yextra + ymax
     if(trace) catn("  xchar=", xchar, "; (yextra,ychar)=", c(yextra,ychar))
 
     if(!missing(fill)) {
@@ -132,7 +133,7 @@ function(x, y, legend, fill, col = "black", lty, lwd, pch, bty = "o",
     }
     ## (xt[],yt[]) := `current' vectors of (x/y) legend text
     xt <- left + xchar + (w0 * rep(0:(ncol-1), rep(n.legpercol,ncol)))[1:n.leg]
-    yt <- top - rep(1:n.legpercol,ncol)[1:n.leg] * ychar
+    yt <- top - (rep(1:n.legpercol,ncol)[1:n.leg]-1) * ychar - 0.5 * yextra - ymax
 
     if (!missing(fill)) {               #- draw filled boxes -------------
 	fill <- rep(fill, length.out=n.leg)

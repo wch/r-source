@@ -1,4 +1,19 @@
 \name{Methods}
+\alias{Methods}
+\alias{.Method}
+\alias{.Generic}
+\alias{.Group}
+\alias{.Class}
+\alias{Math}
+\alias{Math.data.frame}
+\alias{Math.factor}
+\alias{Ops}
+\alias{Ops.data.frame}
+\alias{Ops.factor}
+\alias{Ops.ordered}
+\alias{Summary}
+\alias{Summary.data.frame}
+\alias{Summary.factor}
 \title{Internal and Group Methods and Generic Functions}
 \usage{
 Math.data.frame(x, \dots)
@@ -16,26 +31,16 @@ Summary.factor(x, \dots)
 .Group
 .Class
 }
-\alias{.Method}
-\alias{.Generic}
-\alias{.Group}
-\alias{.Class}
-\alias{Math}
-\alias{Math.data.frame}
-\alias{Math.factor}
-\alias{Ops}
-\alias{Ops.data.frame}
-\alias{Ops.factor}
-\alias{Ops.ordered}
-\alias{Summary}
-\alias{Summary.data.frame}
-\alias{Summary.factor}
-
 \description{Many \R-internal functions  are \emph{generic} and  allow
-    methods to be written for.  \emph{Group} methods in particular are
-    available for the \code{"Math"},  \code{"Ops"}, and
-    \code{"Summary"} group.
+  methods to be written for.  \emph{Group} methods in particular are
+  available for the \code{"Math"},  \code{"Ops"}, and
+  \code{"Summary"} group.
 }
+\arguments{
+  \item{x, e1, e2}{objects.}
+  \item{\dots}{further arguments passed to methods.}
+}
+ 
 \section{Group Dispatching}{
     %% --------------- grep -nw DispatchGroup src/*/*[ch]
 

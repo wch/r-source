@@ -5,7 +5,7 @@
 \title{Update HTML documentation files}
 \usage{
 link.html.help(verbose=FALSE, lib.loc=.Library)
-make.packages.html(lib.loc=.Library)
+make.packages.html(lib.loc=.lib.loc)
 make.search.html(lib.loc=.Library)
 }
 \description{
@@ -22,7 +22,7 @@ make.search.html(lib.loc=.Library)
 }
 \details{
   Only packages in the system library \code{.Library} are included
-  by default, as cross-library links do not work on this platform.
+  by default, as cross-library links only work on this platform.
 }
 \value{
   No value is returned. The file(s)

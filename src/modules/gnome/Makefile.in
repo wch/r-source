@@ -12,10 +12,7 @@ R_HOME = $(top_builddir)
 include $(top_builddir)/Makeconf
 
 ALL_CPPFLAGS = $(R_XTRA_CPPFLAGS) $(GNOME_INCLUDEDIR) $(LIBGLADE_CFLAGS) $(X_CFLAGS) $(CPPFLAGS) $(DEFS)
-## FIXME:
-## Make this ALL_CFLAGS_LO when using libtool for shlibs.
-ALL_CFLAGS = $(R_XTRA_CFLAGS) $(CPICFLAGS) $(SHLIB_CFLAGS) $(CFLAGS)
-## </FIXME>
+ALL_CFLAGS_LO = $(R_XTRA_CFLAGS) $(CPICFLAGS) $(SHLIB_CFLAGS) $(CFLAGS)
 ALL_GNOME_LIBS = $(GNOME_LIBDIR) $(GNOMEUI_LIBS) $(LIBGLADE_LIBS)
 ALL_X_LIBS = $(X_PRE_LIBS) $(X_LIBS) $(X_EXTRA_LIBS)
 
@@ -29,7 +26,7 @@ SOURCES = \
 	terminal-find.c terminal-functions.c terminal-menu.c \
 	terminal-prefs.c terminal-toolbar.c terminal.c
 DEPENDS = $(SOURCES:.c=.d)
-OBJECTS = $(SOURCES:.c=.o)
+OBJECTS = $(SOURCES:.c=.lo)
 HEADERS = \
 	command-grep.h \
 	devGNOME.h devGTK.h \

@@ -94,7 +94,7 @@ static double Strtod (const char *nptr, char **endptr)
 		convbuf[i] = '.';
 	    else if (convbuf[i] == '.')
 		convbuf[i] = decchar;
-	x = strtod(convbuf, &end);
+	x = R_strtod(convbuf, &end);
 	*endptr = (char *) nptr + (end - convbuf);
 	return x;
     } 
@@ -150,6 +150,7 @@ static int fillBuffer(char *buffer, SEXPTYPE type, int strip)
 */
     char *bufp = buffer;
     int c, quote, filled;
+    Rboolean warned = FALSE;
 
     filled = 1;
     if (sepchar == 0) {
@@ -160,11 +161,17 @@ static int fillBuffer(char *buffer, SEXPTYPE type, int strip)
 	    filled = c;
 	    goto donefill;
 	}
+	warned = FALSE;
 	if (type == STRSXP && strchr(quoteset, c)) {
 	    quote = c;
 	    while ((c = scanchar()) != R_EOF && c != quote) {
-		if (bufp >= &buffer[MAXELTSIZE - 2])
+		if (bufp >= &buffer[MAXELTSIZE - 2]) {
+		    if(!warned) {
+			warning("string truncated to 8190 chars in scan");
+			warned = TRUE;
+		    }
 		    continue;
+		}
 		if (c == '\\') {
 		    c = scanchar();
 		    if (c == R_EOF) break;
@@ -183,8 +190,13 @@ static int fillBuffer(char *buffer, SEXPTYPE type, int strip)
 	}
 	else { /* not a char string */
 	    do {
-		if (bufp >= &buffer[MAXELTSIZE - 2])
+		if (bufp >= &buffer[MAXELTSIZE - 2]) {
+		    if(!warned) {
+			warning("string truncated to 8190 chars in scan");
+			warned = TRUE;
+		    }
 		    continue;
+		}
 		*bufp++ = c;
 	    } while (!isspace(c = scanchar()) && c != R_EOF);
 	    while (c == ' ' || c == '\t')
@@ -212,8 +224,13 @@ static int fillBuffer(char *buffer, SEXPTYPE type, int strip)
 		    quote = c;
 		inquote:
 		    while ((c = scanchar()) != R_EOF && c != quote) {
-			if (bufp >= &buffer[MAXELTSIZE - 2])
+			if (bufp >= &buffer[MAXELTSIZE - 2]) {
+			    if(!warned) {
+				warning("string truncated to 8190 chars in scan");
+				warned = TRUE;
+			    }
 			    continue;
+			}
 			*bufp++ = c;
 		    }
 		    c = scanchar();
@@ -231,10 +248,16 @@ static int fillBuffer(char *buffer, SEXPTYPE type, int strip)
 			continue;
 		    }
 		}
-		if (bufp >= &buffer[MAXELTSIZE - 2])
-		    continue;
-		if (!strip || bufp != buffer || !isspace(c))
-		    *bufp++ = c;
+		if (!strip || bufp != buffer || !isspace(c)) {
+		    if (bufp >= &buffer[MAXELTSIZE - 2]) {
+			if(!warned) {
+			    warning("string truncated to 8190 chars in scan");
+			    warned = TRUE;
+			}
+			continue;
+		    } else
+			*bufp++ = c;
+		}
 	    }
 	filled = c;
     }

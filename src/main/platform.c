@@ -831,71 +831,87 @@ SEXP do_capabilities(SEXP call, SEXP op, SEXP args, SEXP rho)
     int i = 0;
     
     checkArity(op, args);
-    PROTECT(ans = allocVector(LGLSXP, 9));
-    PROTECT(ansnames = allocVector(STRSXP, 9));
+    PROTECT(ans = allocVector(LGLSXP, 10));
+    PROTECT(ansnames = allocVector(STRSXP, 10));
 
     SET_STRING_ELT(ansnames, i, mkChar("jpeg"));
 #ifdef HAVE_JPEG
-    INTEGER(ans)[i++] = 1;
+    LOGICAL(ans)[i++] = TRUE;
 #else
-    INTEGER(ans)[i++] = 0;
+    LOGICAL(ans)[i++] = FALSE;
 #endif
 
     SET_STRING_ELT(ansnames, i, mkChar("png"));
 #ifdef HAVE_PNG
-    INTEGER(ans)[i++] = 1;
+    LOGICAL(ans)[i++] = TRUE;
 #else
-    INTEGER(ans)[i++] = 0;
+    LOGICAL(ans)[i++] = FALSE;
 #endif
 
     SET_STRING_ELT(ansnames, i, mkChar("tcltk"));
 #ifdef HAVE_TCLTK
-    INTEGER(ans)[i++] = 1;
+    LOGICAL(ans)[i++] = TRUE;
 #else
-    INTEGER(ans)[i++] = 0;
+    LOGICAL(ans)[i++] = FALSE;
 #endif
 
     SET_STRING_ELT(ansnames, i, mkChar("X11"));
-#ifdef HAVE_X11
-    INTEGER(ans)[i++] = 1;
-#else
-    INTEGER(ans)[i++] = 0;
-#endif
+    LOGICAL(ans)[i++] = strcmp(R_GUIType, "X11") == 0;
 
     SET_STRING_ELT(ansnames, i, mkChar("libz"));
 #if defined(HAVE_ZLIB)
-    INTEGER(ans)[i++] = 1;
+    LOGICAL(ans)[i++] = TRUE;
 #else
-    INTEGER(ans)[i++] = 0;
+    LOGICAL(ans)[i++] = FALSE;
 #endif
 
     SET_STRING_ELT(ansnames, i, mkChar("http/ftp"));
 #if HAVE_INTERNET
-    INTEGER(ans)[i++] = 1;
+    LOGICAL(ans)[i++] = TRUE;
 #else
-    INTEGER(ans)[i++] = 0;
+    LOGICAL(ans)[i++] = FALSE;
 #endif
 
     SET_STRING_ELT(ansnames, i, mkChar("sockets"));
 #ifdef HAVE_SOCKETS
-    INTEGER(ans)[i++] = 1;
+    LOGICAL(ans)[i++] = TRUE;
 #else
-    INTEGER(ans)[i++] = 0;
+    LOGICAL(ans)[i++] = FALSE;
 #endif
 
     SET_STRING_ELT(ansnames, i, mkChar("libxml"));
 #ifdef SUPPORT_LIBXML
-    INTEGER(ans)[i++] = 1;
+    LOGICAL(ans)[i++] = TRUE;
 #else
-    INTEGER(ans)[i++] = 0;
+    LOGICAL(ans)[i++] = FALSE;
 #endif
 
     SET_STRING_ELT(ansnames, i, mkChar("fifo"));
 #if defined(HAVE_MKFIFO) && defined(HAVE_FCNTL_H)
-    INTEGER(ans)[i++] = 1;
+    LOGICAL(ans)[i++] = TRUE;
 #else
-    INTEGER(ans)[i++] = 0;
+    LOGICAL(ans)[i++] = FALSE;
 #endif
+
+    /* This one is complex.  Set it to be true only in interactive use, 
+       with any of the GUIs or under Unix if readline is available and in 
+       use */ 
+    SET_STRING_ELT(ansnames, i, mkChar("cledit"));
+    LOGICAL(ans)[i] = FALSE;
+#if defined(Win32) || defined(Macintosh)
+    if(R_Interactive) LOGICAL(ans)[i] = TRUE;
+#endif
+#ifdef Unix
+    if(strcmp(R_GUIType, "GNOME") == 0) {
+	if(R_Interactive) LOGICAL(ans)[i] = TRUE;
+    } else {
+#ifdef HAVE_LIBREADLINE
+	extern Rboolean UsingReadline;
+	if(R_Interactive && UsingReadline) LOGICAL(ans)[i] = TRUE;
+#endif
+    }
+#endif
+    i++;
     setAttrib(ans, R_NamesSymbol, ansnames);
     UNPROTECT(2);
     return ans;

@@ -64,7 +64,9 @@ hat(x, intercept = TRUE)
   \code{\link{lm.influence}}) are already available.
 
   Note that cases with \code{weights == 0} are \emph{dropped} from all
-  these functions.
+  these functions, but that if a linear model has been fitted with
+  \code{na.action = na.exclude}, suitable values are filled it for the
+  cases excluded during fitting.
 
   The function \code{hat()} exists mainly for S (version 2) compatibility.
 }

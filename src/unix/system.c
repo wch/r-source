@@ -195,7 +195,7 @@ int Rf_initialize_R(int ac, char **av)
     while (--ac) {
 	if (**++av == '-') {
 	    if(!strcmp(*av, "--no-readline")) {
-		UsingReadline = 0;
+		UsingReadline = FALSE;
 	    } else {
 		sprintf(msg, "WARNING: unknown option %s\n", *av);
 		R_ShowMessage(msg);

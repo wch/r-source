@@ -156,6 +156,57 @@ m <- matrix(1, 0, 0)  # 1 to force numeric not logical
 try(eigen(m))
 ## segfaults on 1.2.2
 
+## 1.3.0 had poor compression on gzfile() with lots of small pieces.
+zz <- gzfile("t1.gz", "w")
+write(1:1000, zz)
+close(zz)
+(sz <- file.info("t1.gz")$size)
+unlink("t1.gz")
+stopifnot(sz < 2000)
+
+## PR 1010: plot.mts (type="p") was broken in 1.3.0 and this call failed.
+plot(ts(matrix(runif(10), ncol = 2)), type = "p")
+
+## in 1.3.0 readLines(ok=FALSE) failed.
+cat(file="foo", 1:10, sep="\n")
+x <- try(readLines("foo", 100, ok=FALSE))
+unlink("foo")
+stopifnot(length(class(x)) == 1 &&class(x) == "try-error")
+
+## PR 1047 [<-data.frame failure, BDR 2001-08-10
+test <- df <- data.frame(x=1:10, y=11:20, row.names=letters[1:10])
+test[] <- lapply(df, factor)
+test
+## error in 1.3.0 in test[]
+
+## PR 1048 bug in dummy.coef.lm, Adrian Baddeley, 2001-08-10
+## modified to give a sensible test
+old <- getOption("contrasts")
+options(contrasts=c("contr.helmert", "contr.poly"))
+DF <- data.frame(x=1:20,y=rnorm(20),z=factor(1:20 <= 10))
+dummy.coef.lm(lm(y ~ z * I(x), data=DF))
+dummy.coef.lm(lm(y ~ z * poly(x,1), data=DF))
+## failed in 1.3.0.  Second one warns: deficiency of the method.
+options(contrasts=old)
+
+## PR 1050 error in ksmooth C code + patch, Hsiu-Khuern Tang, 2001-08-12
+library(modreg)
+x <- 1:4
+y <- 1:4
+z <- ksmooth(x, y, x.points=x)
+stopifnot(all.equal(z$y, y))
+detach("package:modreg")
+## did some smoothing prior to 1.3.1.
+
+## as.character was truncating formulae:  John Fox 2001-08-23
+mod <- this ~ is + a + very + long + formula + with + a + very + large + number + of + characters
+zz <- as.character(mod)
+zz
+nchar(zz)
+stopifnot(nchar(zz)[3] == 83)
+## truncated in 1.3.0
+
+
 ## PR 902 segfaults when warning string is too long, Ben Bolker 2001-04-09
 provoke.bug <- function(n=9000) {
    warnmsg <- paste(LETTERS[sample(1:26,n,replace=TRUE)],collapse="")
@@ -165,3 +216,4 @@ provoke.bug()
 ## segfaulted in 1.2.2, will also on machines without vsnprintf.
 ##                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 ## and hence keep the above line at the end of this file
+

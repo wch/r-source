@@ -61,7 +61,15 @@ read.delim2(file, header = TRUE, sep = "\t", quote="\"", dec=",",
   \item{row.names}{a vector of row names.  This can be a vector giving
     the actual row names, or a single number giving the column of the
     table which contains the row names, or character string giving the
-    name of the table column containing the row names.}
+    name of the table column containing the row names.
+
+    If there is a header and the first row contains one fewer field than
+    the number of columns, the first column in the input is used for the
+    row names.  Otherwise if \code{row.names} is missing, the rows are
+    numbered.
+
+    Using \code{row.names = NULL} forces row numbering.
+  }
 
   \item{col.names}{a vector of optional names for the variables.
     The default is to use \code{"V"} followed by the column number.}

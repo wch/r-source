@@ -1,12 +1,18 @@
 \name{typeof}
+\alias{typeof}
 \title{The Type of an Object}
+\description{
+  \code{typeof} determines the (\R internal)
+  type or storage mode of any object
+}
 \usage{
 typeof(x)
 }
-\alias{typeof}
-\description{
-  \code{typeof} determines the (\R internal)
-  type or storage mode of any object \code{x}.  It returns a character string.
+\arguments{
+  \item{x}{any \R object.}
+}
+\value{
+  A character string.
 }
 \seealso{
   \code{\link{mode}}, \code{\link{storage.mode}}.

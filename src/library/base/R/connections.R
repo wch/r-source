@@ -147,7 +147,8 @@ closeAllConnections <- function()
     invisible()
 }
 
-readBin <- function(con, what, n = 1, size = NA, endian = .Platform$endian)
+readBin <- function(con, what, n = 1, size = NA, signed = TRUE,
+                    endian = .Platform$endian)
 {
     if(is.character(con)) {
         con <- file(con, "rb")
@@ -155,7 +156,7 @@ readBin <- function(con, what, n = 1, size = NA, endian = .Platform$endian)
     }
     swap <- endian != .Platform$endian
     if(!is.character(what) || length(what) != 1) what <- typeof(what)
-    .Internal(readBin(con, what, n, size, swap))
+    .Internal(readBin(con, what, n, size, signed, swap))
 }
 
 writeBin <- function(object, con, size = NA, endian = .Platform$endian)

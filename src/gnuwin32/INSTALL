@@ -1,7 +1,7 @@
-R 1.3.0 for Windows
+R 1.3.1 for Windows
 ====================
 
-This distribution contains the sources to build a port of R-1.3.0 to
+This distribution contains the sources to build a port of R-1.3.1 to
 run on Windows 95, 98, ME, NT4 and 2000 on Intel/clone chips. See the
 file `readme' for fuller details, including how to install the binary
 versions.
@@ -31,44 +31,40 @@ the mingw site).  There were also problems with several earlier
 versions of the cygwin tools and dll.  To avoid frustration, please
 use our tool set.
 
+We recommend that you use a recent snapshot of the mingw port of gcc
+from http://prdownloads.sourceforge.net/mingw/.  For example, at the
+time of writing, Mingw-1.0.1-20010726.tar.gz based on gcc-2.95.3.
+Just unpack this somewhere and put its bin directory in your path.
 
-We recommend that you use the mingw port of gcc-2.95.2-1 by Mumit
-Khan from http://www.mingw.org/.  (The `portal' gives more precise
-instructions on the current locations.)  You can build R against
-either the crtdll.dll or msvcrt.dll runtime systems, and we strongly
-recommend the latter.  (In particular, locale support is poor with
-crtdll.dll, non-existent under Win9x and crtdll.dll has many memory
-leaks.)
+You can also use the mingw port of gcc-2.95.2-1 by Mumit Khan linked
+from http://www.mingw.org/, but you *cannot* use earlier versions of
+the mingw compilers, for example gcc-2.95.2 (no -1): the symptom is a
+report that `-shared' is not understood.
 
-BEWARE: you *cannot* use earlier versions of the mingw compilers, for
-example gcc-2.95.2 (no -1): the symptom is a report that `-shared' is
-not understood.
-
-An alternative is to use a more recent snapshot of the mingw compiler
-set from http://prdownloads.sourceforge.net/mingw/.  You will need the
-binutils, gcc, gcc-f77, ld, libbfd, mingw32-runtime and w32api
-bundles.
-
-It might also be possible to use the compilers from the cygwin 1.1 net
+It *might* also be possible to use the compilers from the cygwin 1.1 net
 release with the -mno-cygwin -mwin32 flags; the current versions use
 mscrt.dll.  (You will need the cygwin, gcc, mingw32, w32api and
 binutils bundles.  All the recent versions we have tried do not work
 unchanged with -mno-cygwin.)
 
 
-perl5, available via http://www.activestate.com/Products/ActivePerl/
+The Windows port of perl5, available via
+http://www.activestate.com/Products/ActivePerl/.
 
 zip and unzip from the Info-ZIP project (http://www.info-zip.org and
 mirrors, and included in our tools.zip).
 
 The zlib-1.1.3 sources from http://www.info-zip.org/pub/infozip/zlib/
-and mirror.  Unpack this from this directory by 
+and mirrors.  Unpack this from this directory by 
 
 unzip zlib113.zip -d bitmap/zlib
 
 If you want to make compiled html (.chm) files you will need the
-Microsoft HTML Help Workshop, available for download at 
-http://msdn.microsoft.com/library/tools/htmlhelp/wkshp/download.htm
+Microsoft HTML Help Workshop, currently available for download at 
+
+http://msdn.microsoft.com/library/en-us/htmlhelp/html/hwMicrosoftHTMLHelpDownloads.asp
+and http://www.microsoft.com/office/ork/xp/appndx/appa06.htm
+
 You may need this on the same drive as the other tools. (Although we
 have successfully used it elsewhere, others have reported problems).
 
@@ -83,11 +79,11 @@ appropriate environment variables set.
 Building
 --------
 
-You also need the R source (R-1.3.0.tgz).
+You also need the R source (R-1.3.1.tgz).
 
-Then: untar R-1.3.0.tgz somewhere (with no spaces in the path names),
+Then: untar R-1.3.1.tgz somewhere (with no spaces in the path names),
 
-	cd /somewhere/R-1.3.0/src/gnuwin32
+	cd /somewhere/R-1.3.1/src/gnuwin32
 
 IMPORTANT: edit MkRules to set the appropriate paths as needed.
 
@@ -98,11 +94,11 @@ and run
 	make BUILD=MINGW32 or CYGWIN
 
 
-Note 1: the file rw1030\unzip\unzip32.dll is not in the source
+Note 1: the file rw1031\unzip\unzip32.dll is not in the source
 distribution. It can be found in file unz542dN.zip at any Info-ZIP
 mirror, or you can copy it from a binary distribution.
 
-The file rw1030\bin\Rchtml.dll is only built if CHM help is specified
+The file rw1031\bin\Rchtml.dll is only built if CHM help is specified
 in the main Makefile. Its source is the help directory, and you need
 the HTML Help Workshop files to build it. It contains instructions
 to build it under VC++6, and it is preferable to use that as the 
@@ -118,6 +114,13 @@ in the Makefile, in which case the Windows malloc is used.  The one
 in crtdll.dll is unlikely to be satisfactory: the one in msvcrt.dll
 does work but imposes a considerable performance penalty.
 
+Note 4: You can make use of ATLAS (http://www.netlib.org/atlas/)
+libraries by defining USE_ATLAS=YES in Makefile and specifying the
+path to the libraries in macro ATLAS_PATH.  You will need to build the
+libraries optimized for your architecture under the Cygwin compilers.
+(The pre-compiled libraries on that site are for Compaq Visual
+Fortran, and you need to compile for g77.)
+
 You can test a build by `make check': expect some differences in the
 tests of the print routines.  You may need to set TMPDIR to a suitable
 temporary directory: the default is c:\TEMP.
@@ -126,7 +129,7 @@ temporary directory: the default is c:\TEMP.
 Building bitmap device support
 ------------------------------
 
-The file rw1030\bin\Rbitmap.dll is not built automatically:
+The file rw1031\bin\Rbitmap.dll is not built automatically:
 instructions on how to build it are in the file bitmap\INSTALL.  You
 can just copy this from a binary distribution.
 
@@ -218,12 +221,12 @@ cross-built version of binutils 2.9.4.
 
 You will need Perl, zip and unzip installed.
 
-You also need: the R source (R-1.3.0.tgz), and to build the installer,
+You also need: the R source (R-1.3.1.tgz), and to build the installer,
 unzip542.zip from any Info-ZIP mirror.
 
-Then: untar R-1.3.0.tgz somewhere, and
+Then: untar R-1.3.1.tgz somewhere, and
 
-	cd /somewhere/R-1.3.0/src/gnuwin32
+	cd /somewhere/R-1.3.1/src/gnuwin32
 
 Edit MkRules to set BUILD=CROSS and the appropriate paths (including
 HEADER) as needed.

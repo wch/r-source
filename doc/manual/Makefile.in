@@ -16,7 +16,7 @@ SOURCES_TEXI = R-FAQ.texi R-admin.texi R-data.texi R-exts.texi \
 DISTFILES = \
 	README \
 	Makefile.in Makefile.win \
-	R-defs.texi dir texinfo.tex \
+	R-defs.texi dir pdfcolor.tex texinfo.tex \
 	$(SOURCES_TEXI) \
 	resources.texi \
 	R-exts.R R-exts.c R-intro.R \
@@ -67,7 +67,7 @@ docs: html
 	fi
 	TEXINPUTS="$(srcdir):$$TEXINPUTS" $(TEXI2DVI) $<
 .texi.html:
-	$(MAKEINFO) --html -I$(srcdir) $< -o $@ || touch $@
+	$(MAKEINFO) --no-split --html -I$(srcdir) $< -o $@ || touch $@
 .texi.info:
 	@if test "$(MAKEINFO)" = false; then \
 	  echo "ERROR: \`makeinfo' v4 needed but missing on your system."; \
@@ -89,6 +89,8 @@ refman.dvi: version.tex $(top_srcdir)/share/texmf/Rd.sty stamp-refman-dvi
 	fi
 	@echo "DVI/LaTeX documentation: reference index ..."
 	@rm -f *.aux refman.toc refman.ind stamp-refman-dvi
+## <FIXME>
+## Make sure echo does not interpret backslash escapes.
 	@(opt="$${R_PAPERSIZE-$(R_PAPERSIZE)}paper"; \
 	  echo "\\documentclass[$${opt}]{book}"; \
 	  opt="$${R_RD4DVI-$(R_RD4DVI)}"; \
@@ -96,6 +98,7 @@ refman.dvi: version.tex $(top_srcdir)/share/texmf/Rd.sty stamp-refman-dvi
 	  cat $(srcdir)/refman.top; \
 	  for p in $(R_PKGS); do echo "\\input{$${p}-pkg.tex}"; done; \
 	  cat $(srcdir)/refman.bot) > refman.tex
+## </FIXME>
 	@TEXINPUTS="$(top_srcdir)/share/texmf:$$TEXINPUTS" \
 	  $(LATEX) '\nonstopmode\input{refman.tex}'
 	@-$(MAKEINDEX) refman
@@ -161,6 +164,8 @@ refman.pdf: version.tex $(top_srcdir)/share/texmf/Rd.sty stamp-refman-pdf
 	fi
 	@echo "PDF/LaTeX documentation: reference index ..."
 	@rm -f *.aux refman.toc refman.ind stamp-refman-pdf
+## <FIXME>
+## Make sure echo does not interpret backslash escapes.
 	@(opt="$${R_PAPERSIZE-$(R_PAPERSIZE)}paper"; \
 	  echo "\\documentclass[$${opt}]{book}"; \
 	  opt="$${R_RD4PDF-$(R_RD4PDF)}"; \
@@ -168,6 +173,7 @@ refman.pdf: version.tex $(top_srcdir)/share/texmf/Rd.sty stamp-refman-pdf
 	  cat $(srcdir)/refman.top; \
 	  for p in $(R_PKGS); do echo "\\input{$${p}-pkg.tex}"; done; \
 	  cat $(srcdir)/refman.bot) > refman.tex
+## </FIXME>
 	@TEXINPUTS="$(top_srcdir)/share/texmf:$$TEXINPUTS" \
 	  pool_size=500000 max_strings=50000 \
 	  $(PDFLATEX) '\nonstopmode\input{refman.tex}'
@@ -182,7 +188,7 @@ refman.pdf: version.tex $(top_srcdir)/share/texmf/Rd.sty stamp-refman-pdf
 stamp-refman-pdf: $(pkgsrcs)
 	@touch $@
 
-$(OBJECTS_PDF): $(srcdir)/texinfo.tex
+$(OBJECTS_PDF): $(srcdir)/texinfo.tex $(srcdir)/pdfcolor.tex
 R-admin.pdf: $(texiincludes)
 R-data.pdf: $(texiincludes)
 R-exts.pdf: $(texiincludes)
@@ -296,7 +302,7 @@ $(top_srcdir)/doc/html/faq.html: @MAINTAINER_MODE_TRUE@ $(srcdir)/R-FAQ.texi
 	  echo "ERROR: \`makeinfo' v4 needed but missing on your system."; \
 	  exit 1; \
 	fi
-	$(MAKEINFO) --html --number-sections $< -o $@
+	$(MAKEINFO) --no-split --html --number-sections $< -o $@
 $(top_srcdir)/RESOURCES: @MAINTAINER_MODE_TRUE@ $(srcdir)/resources.texi
 	@if test "$(MAKEINFO)" = false; then \
 	  echo "ERROR: \`makeinfo' v4 needed but missing on your system."; \
@@ -308,13 +314,13 @@ $(top_srcdir)/doc/html/resources.html: @MAINTAINER_MODE_TRUE@ $(srcdir)/resource
 	  echo "ERROR: \`makeinfo' v4 needed but missing on your system."; \
 	  exit 1; \
 	fi
-	$(MAKEINFO) --html --no-headers $< -o $@
+	$(MAKEINFO) --no-split --html --no-headers $< -o $@
 $(top_srcdir)/doc/html/R-admin.html: @MAINTAINER_MODE_TRUE@ $(srcdir)/R-admin.texi $(texiincludes)
 	@if test "$(MAKEINFO)" = false; then \
 	  echo "ERROR: \`makeinfo' v4 needed but missing on your system."; \
 	  exit 1; \
 	fi
-	$(MAKEINFO) --html --no-headers --number-sections -I$(srcdir) $< -o $@
+	$(MAKEINFO) --no-split --html --no-headers --number-sections -I$(srcdir) $< -o $@
 
 distdir: $(DISTFILES)
 	@for f in $(DISTFILES); do \

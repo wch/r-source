@@ -3,19 +3,10 @@
 \alias{plot.princomp}
 \alias{print.princomp}
 \alias{predict.princomp}
-\alias{summary.princomp}
-\alias{loadings}
-\alias{screeplot}
 \title{Principal Components Analysis}
 \usage{
 princomp(x, cor = FALSE, scores = TRUE, covmat = NULL,
          subset = rep(TRUE, nrow(as.matrix(x))))
-loadings(x)
-
-screeplot(x, npcs = min(10, length(x$sdev)),
-          type = c("barplot", "lines"), main = deparse(substitute(x)), \dots)
-plot(x, \dots)
-print(x, \dots)  summary(object)  predict(object, \dots)
 }
 \arguments{
   \item{x}{a matrix (or data frame) which provides the data for the
@@ -30,29 +21,20 @@ print(x, \dots)  summary(object)  predict(object, \dots)
     \code{x}.}
   \item{subset}{a vector used to select rows (observations) of the
     data matrix \code{x}.}
-
-  \item{x, object}{an object of class \code{"princomp"}, as
-    from \code{princomp()}.}
-  \item{npcs}{the number of principal components to be plotted.}
-  \item{type}{the type of plot.}
-  \item{...}{graphics parameters.}
 }
 \description{
   \code{princomp} performs a principal components analysis on the given
   data matrix and returns the results as an object of class
   \code{princomp}.
-
-  \code{loadings} extracts the loadings.
-
-  \code{screeplot} plots the variances against the number of the
-  principal component. This is also the \code{plot} method.
 }
 \value{
   \code{princomp} returns a list with class \code{"princomp"}
   containing the following components:
   \item{sdev}{the standard deviations of the principal components.}
   \item{loadings}{the matrix of variable loadings (i.e., a matrix
-    whose columns contain the eigenvectors).}
+    whose columns contain the eigenvectors).  This is of class
+    \code{"loadings"}: see \code{\link{loadings}} for its \code{print}
+    method.}
   \item{center}{the means that were subtracted.}
   \item{scale}{the scalings applied to each variable.}
   \item{n.obs}{the number of observations.}
@@ -71,7 +53,8 @@ print(x, \dots)  summary(object)  predict(object, \dots)
 
   The \code{\link{print}} method for the these objects prints the
   results in a nice format and the \code{\link{plot}} method produces
-  a scree plot.
+  a scree plot (\code{\link{screeplot}}).  There is also a
+  \code{\link{biplot}} method.
 }
 \references{
   Mardia, K. V., J. T. Kent and J. M. Bibby (1979).
@@ -81,6 +64,8 @@ print(x, \dots)  summary(object)  predict(object, \dots)
   \emph{Modern Applied Statistics with S-PLUS}, Springer-Verlag.
 }
 \seealso{
+  \code{\link{summary.princomp}}, \code{\link{screeplot}},
+  \code{\link{biplot.princomp}},
   \code{\link{prcomp}}, \code{\link{cor}}, \code{\link{cov}},
   \code{\link{eigen}}.
 }
@@ -94,8 +79,8 @@ princomp(USArrests, cor = TRUE) # =^= prcomp(USArrests, scale=TRUE)
 ## The standard deviations differ by a factor of sqrt(49/50)
 
 summary(pc.cr <- princomp(USArrests, cor=TRUE))
-loadings(pc.cr)
-plot(pc.cr) # does a screeplot.
+loadings(pc.cr)  ## note that blank entries are small but not zero
+plot(pc.cr) # shows a screeplot.
 biplot(pc.cr)
 }
 \keyword{multivariate}

@@ -26,6 +26,11 @@ is.logical(x)
   \code{T} and \code{F} are global variables set to these.
   All four are \code{logical(1)} vectors.
 }
+\arguments{
+  \item{length}{desired length.}
+  \item{x}{object to be coerced or tested.}
+  \item{\dots}{further arguments passed to or from other methods.}
+}
 \value{
   \code{logical} creates a logical vector of the specified length.
   Each element of the vector is equal to \code{FALSE}.

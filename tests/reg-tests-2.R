@@ -178,6 +178,12 @@ format(a)
 format(a, justify="right")
 ## lost dimensions in 1.2.3
 
+
 ## PR 963
 svd(rbind(1:7))## $v lost dimensions in 1.2.3
 
+
+## PR#1072  (Reading Inf and NaN values)
+as.numeric(as.character(NaN))
+as.numeric(as.character(Inf))
+## were NA on Windows at least under 1.3.0.

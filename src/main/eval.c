@@ -678,6 +678,10 @@ SEXP do_if(SEXP call, SEXP op, SEXP args, SEXP rho)
 }
 
 
+#define BodyHasBraces(body) \
+    ((isLanguage(body) && CAR(body) == R_BraceSymbol) ? 1 : 0)
+
+
 SEXP do_for(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     int tmp, dbg;
@@ -707,11 +711,7 @@ SEXP do_for(SEXP call, SEXP op, SEXP args, SEXP rho)
     ans = R_NilValue;
 
     dbg = DEBUG(rho);
-    if (isLanguage(body) && isSymbol(CAR(body)) &&
-	strcmp(CHAR(PRINTNAME(CAR(body))),"{") )
-	bgn = 1;
-    else
-	bgn = 0;
+    bgn = BodyHasBraces(body);
 
     for (i = 0; i < n; i++) {
 	if( DEBUG(rho) && bgn ) {
@@ -780,15 +780,16 @@ SEXP do_while(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     int cond, dbg;
     volatile int bgn;
-    volatile SEXP s, t;
+    volatile SEXP s, t, body;
     RCNTXT cntxt;
 
     checkArity(op, args);
     s = eval(CAR(args), rho);	/* ??? */
 
     dbg = DEBUG(rho);
-    t = CAR(CADR(args));
-    if (isSymbol(t) && strcmp(CHAR(PRINTNAME(t)),"{"))
+    body = CADR(args);
+    bgn = BodyHasBraces(body);
+
 	bgn = 1;
     t = R_NilValue;
     for (;;) {
@@ -808,7 +809,7 @@ SEXP do_while(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    else continue;                      /* next  */
 	}
 	else {
-	    PROTECT(t = eval(CAR(CDR(args)), rho));
+	    PROTECT(t = eval(body, rho));
 	    s = eval(CAR(args), rho);
 	    UNPROTECT(1);
 	    endcontext(&cntxt);
@@ -824,14 +825,14 @@ SEXP do_repeat(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     int cond, dbg;
     volatile int bgn;
-    volatile SEXP t;
+    volatile SEXP t, body;
     RCNTXT cntxt;
 
     checkArity(op, args);
 
     dbg = DEBUG(rho);
-    if (isSymbol(CAR(args)) && strcmp(CHAR(PRINTNAME(CAR(args))),"{"))
-	bgn = 1;
+    body = CAR(args);
+    bgn = BodyHasBraces(body);
 
     t = R_NilValue;
     for (;;) {
@@ -847,7 +848,7 @@ SEXP do_repeat(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    else   continue;                    /* next  */
 	}
 	else {
-	    t = eval(CAR(args), rho);
+	    t = eval(body, rho);
 	    endcontext(&cntxt);
 	}
     }
@@ -1311,7 +1312,7 @@ SEXP do_eval(SEXP call, SEXP op, SEXP args, SEXP rho)
     SEXP encl;
     volatile SEXP expr, env, tmp;
 
-    int nback;
+    int frame;
     RCNTXT cntxt;
 
     checkArity(op, args);
@@ -1335,13 +1336,12 @@ SEXP do_eval(SEXP call, SEXP op, SEXP args, SEXP rho)
 	break;
     case INTSXP:
     case REALSXP:
-	nback = asInteger(env);
-	if (nback==NA_INTEGER)
+	if (length(env) != 1) 
+	    errorcall(call,"numeric envir arg not of length one");
+	frame = asInteger(env);
+	if (frame == NA_INTEGER)
 	    errorcall(call,"invalid environment");
-	if (nback > 0 )
-	    nback -= framedepth(R_GlobalContext);
-	nback = -nback;
-	PROTECT(env = R_sysframe(nback,R_GlobalContext));
+	PROTECT(env = R_sysframe(frame, R_GlobalContext));
 	break;
     default:
 	errorcall(call, "invalid second argument");

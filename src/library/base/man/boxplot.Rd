@@ -1,11 +1,10 @@
 \name{boxplot}
+\alias{boxplot}
+\alias{boxplot.default}
 \title{Box Plots}
 \description{
   Produce box-and-whisker plot(s) of the given (grouped) values.
 }
-\alias{boxplot}
-\alias{boxplot.default}
-\alias{boxplot.formula}
 \usage{
 boxplot(x, \dots)
 boxplot.default(x, \dots, range = 1.5, width = NULL,
@@ -13,7 +12,6 @@ boxplot.default(x, \dots, range = 1.5, width = NULL,
         data = parent.frame(), plot = TRUE,
         border = par("fg"), col = NULL, log = "", pars = NULL,
         horizontal = FALSE, add = FALSE, at = NULL)
-boxplot.formula(formula, data = NULL, \dots, subset, na.action)
 }
 \arguments{
   \item{x}{an \R object.}
@@ -68,27 +66,17 @@ boxplot.formula(formula, data = NULL, \dots, subset, na.action)
   \item{at}{numeric vector giving the locations where the boxplots should
     be drawn, particularly when \code{add = TRUE};
     defaults to \code{1:n} where \code{n} is the number of boxes.}
-
-  \item{formula}{a formula, such as \code{y ~ x}.}
-  \item{data}{a data.frame (or list) from which the variables in
-    \code{formula} should be taken.}
-  \item{subset}{an optional vector specifying a subset of observations
-    to be used in the fitting process.}
-  \item{na.action}{a function which indicates what should happen when
-    the data contain \code{NA}s.}
-  \item{\dots}{further arguments to the default boxplot method and
-    graphical parameters may also be passed as arguments, see
-    \code{\link{par}}.}
 }
 \details{
   This is a generic function.  It currently has a default method
-  (\code{boxplot.default}) and a formula interface (\code{boxplot.formula}).
+  (\code{boxplot.default}) and a formula interface
+  (\code{\link{boxplot.formula}}).
 }
 \value{
   List with the following components:
-  \item{stats}{a matrix, each column contains the extreme of the lower whisker,
-    the lower hinge, the median, the upper hinge and the extreme of
-    the upper whisker for one group/plot.}
+  \item{stats}{a matrix, each column contains the extreme of the lower
+    whisker, the lower hinge, the median, the upper hinge and the
+    extreme of the upper whisker for one group/plot.}
   \item{n}{a vector with the number of observations in each group.}
   \item{conf}{a matrix where each column contains the lower and upper
     extremes of the notch.}
@@ -99,9 +87,11 @@ boxplot.formula(formula, data = NULL, \dots, subset, na.action)
   \item{names}{a vector of names for the groups}
 }
 \seealso{
+  \code{\link{boxplot.formula}} for the formula interface;
   \code{\link{boxplot.stats}} which does the computation,
-  \code{\link{bxp}} for the plotting, and \code{\link{stripchart}} for
-  an alternative (with small data sets).
+  \code{\link{bxp}} for the plotting;
+  and \code{\link{stripchart}} for an alternative (with small data
+  sets).
 }
 \examples{
 ## boxplot on a formula:

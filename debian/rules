@@ -1,6 +1,6 @@
 #!/usr/bin/make -f
 # debian/rules file for the Debian GNU/Linux r-base package
-# Copyright 1997-2000 by Douglas M. Bates <bates@stat.wisc.edu>
+# Copyright 1997-2001 by Douglas M. Bates <bates@stat.wisc.edu>
 
 package		= r-base
 pdfpackage	= r-doc-pdf
@@ -9,6 +9,14 @@ gnomepackage	= r-gnome
 debbase		:= $(shell pwd)/debian
 debtmp		:= $(debbase)/tmp
 debdoc		:= $(debtmp)/usr/share/doc/$(package)
+
+# set this to 0 if you don't want Gnome packages
+gnome		= 1
+ifeq ($(gnome),0)
+gnomeconfig 	= --without-gnome
+else
+gnomeconfig	= --with-gnome
+endif
 
 # edd 10 Feb 98	See section 4.1 of Policy Manual
 arch		:= $(shell dpkg-architecture -qDEB_BUILD_GNU_TYPE)
@@ -22,36 +30,47 @@ export DH_COMPAT=1
 # This has to be exported to make some magic below work.
 export DH_OPTIONS
 
-build: build-stamp
-build-stamp:
+# edd 15 Aug 2001: default to blas, atlas can override it 
+atlas = --with-blas=blas
+
+build: build-stamp configure-stamp make-stamp
+build-stamp: configure make
+	touch build-stamp
+
+configure: configure-stamp
+configure-stamp:	
 	dh_testdir
-	R_UNZIPCMD=/usr/bin/miniunzip R_ZIPCMD=/usr/bin/minizip\
-	LIBS='-L/usr/lib/atlas'\
-	CFLAGS='-Wall -O2' FFLAGS='-Wall -O2'\
-	PATH=${PATH}:/usr/bin/X11\   # so /usr/bin/X11/imake is found
-	SHLIB_LDFLAGS='-shared -lc' ./configure --prefix=/usr		 \
-					--with-g77			 \
-					--with-tcltk			 \
-					--mandir=$(debtmp)/usr/share/man \
-					--with-gnome			 \
-                                        --enable-R-profiling             \
-					--host $(arch)
+	R_UNZIPCMD=/usr/bin/miniunzip R_ZIPCMD=/usr/bin/minizip \
+	./configure --prefix=/usr		     \
+		    --with-g77			     \
+		    --with-tcltk		     \
+		    --mandir=$(debtmp)/usr/share/man \
+		    $(atlas)                         \
+		    $(gnomeconfig)		     \
+		    --enable-R-profiling             \
+		    --enable-R-shlib                 \
+		    --host $(arch)
+	touch configure-stamp
+
+make: make-stamp
+make-stamp:
 	make 
+	make check
 	make help
 	make html
 	make info 
 	make pdf
-
-	touch build-stamp
+	touch make-stamp
 
 clean:
 	dh_testdir
 	dh_testroot
-	rm -f build-stamp 
+	rm -f build-stamp configure-stamp make-stamp
 	-make distclean
 	-rm -f `find . -name "*~"`
 	-rm -rf debian/tmp debian/files* core debian/substvars
 	-rm -f doc/html/function.html doc/html/packages.html
+	-rm -f modules/*.so
 	dh_clean
 
 install: DH_OPTIONS=
@@ -77,8 +96,10 @@ install: build
 	# move the pdf files into the arch-indep. package
 	dh_movefiles	-p$(pdfpackage)	usr/lib/R/doc/manual/*.pdf 
 
+ifneq ($(gnome),0)
 	# move the GNOME version to the r-gnome package
-	dh_movefiles	-p$(gnomepackage) usr/lib/R/gnome
+	dh_movefiles	-p$(gnomepackage) usr/lib/R/modules/R_gnome.so
+endif
 
 # Build architecture-independent files here.
 # Pass -i to all debhelper commands in this target to reduce clutter.
@@ -122,6 +143,7 @@ binary-arch: build install
 	dh_testroot
 #	dh_installdebconf
 	dh_installdocs		BUGS Y2K 
+	dh_installdocs 		-p$(package) 	debian/README.Atlas
 	dh_installexamples
 	dh_installmenu
 #	dh_installemacsen
@@ -132,7 +154,11 @@ binary-arch: build install
 	dh_installmanpages	-N$(gnomepackage) -p$(package) getline.3
 	dh_installinfo		-n doc/manual/R-*.info*
 	(cd $(debdoc)/doc && ln -s ../../../../lib/R/doc/html .)
+	(cd $(debdoc)/doc && ln -s ../../../../lib/R/doc/manual .)
 	(cd $(debdoc) && ln -s ../../../lib/R/library .)
+#	install lintian "silencer"
+	install -p -m 0644  debian/$(package).lintian \
+                        $(debtmp)/usr/share/lintian/overrides/$(package)
 #	dh_undocumented
 	dh_installchangelogs	NEWS 
 	dh_strip

@@ -266,9 +266,9 @@ OSErr NewRasterTextRotation(char *str, int face, int size, int color, int xx, in
 	status = ATSUDrawText(textLayout, 0, uTextLength, xLocation, yLocation);
 				if (status != noErr) DebugStr("\p ATSUDrawText failed");
 	if(runLengths)
-	 DisposePtr(runLengths);			
+	 DisposePtr((char *)runLengths);			
 	if(styles)
-	 DisposePtr(styles);			
+	 DisposePtr((char *)styles);			
 	return status;
 	} /* if face==5  else */
 }

@@ -9,7 +9,7 @@
 file.access(names, mode = 0)
 }
 \arguments{
-  \item{name}{character vector containing file names.}
+  \item{names}{character vector containing file names.}
   \item{mode}{integer specifying access mode required.}
 }
 \details{

@@ -1,9 +1,9 @@
 \name{BATCH}
-\title{Batch Execution of R}
 \alias{BATCH}
-\usage{R CMD BATCH [options] infile [outfile]}
-\description{Run R non-interactively with input from \code{infile} and
+\title{Batch Execution of R}
+\description{Run R non-interactively with input from a given file and
   place output (stdout/stderr) to another file.}
+\usage{R CMD BATCH [options] infile [outfile]}
 \arguments{
   \item{infile}{the name of a file with R code to be executed.}
   \item{options}{a list of R command line options, e.g., for setting the

@@ -20,10 +20,10 @@ $(PKG)-Ex.R: $(RLIB)/$(PKG)/R-ex/*
 	@$(ECHO) "Massaging examples into '$(PKG)-Ex.R' ..."
 	@if test -f $(RLIB)/$(PKG)/R-ex/Rex.zip; then \
 	  (cd $(RLIB)/$(PKG)/R-ex; unzip -oq Rex); \
-	  sh $(RHOME)/bin/massage-Examples.sh $(PKG) $(RLIB)/$(PKG)/R-ex/*.R > $@; \
+	  perl $(RHOME)/bin/massage-Examples $(PKG) $(RLIB)/$(PKG)/R-ex/*.R > $@; \
 	  (cd $(RLIB)/$(PKG)/R-ex; $(RM) -f *.R); \
 	else \
-	  sh $(RHOME)/bin/massage-Examples.sh $(PKG) $(RLIB)/$(PKG)/R-ex/*.R > $@; \
+	  perl $(RHOME)/bin/massage-Examples $(PKG) $(RLIB)/$(PKG)/R-ex/*.R > $@; \
 	fi
 
 test-src-1=$(shell ls *.R 2> nul)

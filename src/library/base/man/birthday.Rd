@@ -9,21 +9,22 @@ coincidence and \code{qbirthday} computes the number of observations
 needed to have a specified probability of coincidence.
 }
 \usage{
-qbirthday(prob=0.5,classes=365, coincident=2)
-pbirthday(n,classes=365,  coincident=2)
+qbirthday(prob = 0.5, classes = 365, coincident = 2)
+pbirthday(n, classes = 365, coincident = 2)
 }
 \arguments{
   \item{classes}{How many distinct categories the people could fall into}
   \item{prob}{The desired probability of coincidence}
+  \item{n}{The number of people}
   \item{coincident}{The number of people to fall in the same category}
 }
 \value{
-  
-    \item{qbirthday}{
-  Number of people needed for a probability \code{prob} that \code{k} of 
-  them have the same one out of \code{classes} equiprobable labels.}
-\item{pbirthday}{Probability of the specified coincidence}
-  
+  \item{qbirthday}{
+    Number of people needed for a probability \code{prob} that \code{k} of 
+    them have the same one out of \code{classes} equiprobable labels.
+  }
+
+  \item{pbirthday}{Probability of the specified coincidence}  
 }
 \details{
  The birthday paradox is that a very small number of

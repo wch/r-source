@@ -46,12 +46,12 @@ inherits(x, what, which = FALSE)
   \code{\link{UseMethod}}, \code{\link{NextMethod}}.
 }
 \examples{
-  x<-10
-  inherits(x,"a") #FALSE
-  class(x)<-c("a","b")
+  x <- 10
+  inherits(x, "a") #FALSE
+  class(x)<-c("a", "b")
   inherits(x,"a") #TRUE
-  inherits(x,"a",T) # 1
-  inherits(x,c("a","b","c"),T) # 1 2 0
+  inherits(x, "a", TRUE) # 1
+  inherits(x, c("a", "b", "c"), TRUE) # 1 2 0
 }
 \keyword{methods}
 \keyword{classes}
