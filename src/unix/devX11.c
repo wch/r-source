@@ -1071,7 +1071,7 @@ static void X11_Close(DevDesc *dd)
 	/* do anything						*/
 	/********************************************************/
 
-static unsigned char title[11] = "R Graphics";
+static char title[11] = "R Graphics";
 
 static void X11_Activate(DevDesc *dd)
 {

@@ -192,7 +192,7 @@ static SEXP logicalSubscript(SEXP s, int ns, int nx)
     int count, i;
     SEXP index;
     if (ns > nx)
-	error("subscript (\%d) out of bounds, should be at most %d\n",
+	error("subscript (%d) out of bounds, should be at most %d\n",
 	      ns, nx);
     if (ns == 0)
 	return(allocVector(INTSXP, 0));
