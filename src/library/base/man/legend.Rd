@@ -61,19 +61,12 @@ legend(x, y, legend, fill, col = "black", lty, lwd, pch,
 \details{
  ``Attribute'' arguments such as \code{col}, \code{pch}, \code{lty},
   etc, are recycled if necessary.  \code{merge} is not.
+
+  Points are drawn \emph{after} lines in order that they can cover the
+  line with their background color \code{pt.bg}, if applicable.
 }
 \value{
   A (\code{\link{invisible}}) list with list components
-  %   \code{rect} and \code{text}.
-  %
-  %   \code{$ rect} has components
-  %   \item{w,h}{positive numbers giving \bold{w}idth and \bold{h}eight of
-  %     the legend's box.}
-  %   \item{left,top}{x and y coordinates of upper left corner of the box.}
-  %
-  %   \code{$ text} has components
-  %   \item{x,y}{numeric vectors of length \code{length(legend)}, giving
-  %     the x and y coordinates of the legend's text(s).}
   \item{rect}{a list with components
     \describe{
       \item{\code{w,h}}{positive numbers giving \bold{w}idth and
@@ -157,5 +150,11 @@ legend(.8,1.2, paste("sin(",1:7,"pi * x)"), col=1:7, lty=1:7, pch = "*",cex=.8)
 legend(0, -.1, paste("sin(",1:4,"pi * x)"), col=1:4, lty=1:4, ncol=2, cex=.8)
 legend(0, -.4, paste("sin(",5:7,"pi * x)"), col=5:7,  pch=24, ncol=2, cex=1.5,
        pt.bg="pink")
+
+## point covering line :
+y <- sin(3*pi*x)
+plot(x,y,type="l",col="blue", main = "points with bg & legend(*, pt.bg)")
+points(x,y,pch=21,bg="white")
+legend(.4,1,"sin(c x)",pch=21,pt.bg="white",lty=1, col = "blue")
 }
 \keyword{aplot}
