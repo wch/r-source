@@ -50,6 +50,7 @@ export(
        "grob", "gList", "gTree", "gPath",
        "grid.get", "grid.set", "grid.add", "grid.remove", "grid.edit",
        "getGrob", "setGrob", "addGrob", "removeGrob", "editGrob",
+       "gEdit", "applyEdit", "applyEdits",
        "childNames",
        "grid.grab", 
        "setChildren",
