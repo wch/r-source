@@ -79,7 +79,7 @@ print.stl <- function(x, ...)
 
 plot.stl <- function(x, labels = colnames(X), ...)
 {
-    sers <- x$time.series
+    sers <- unclass(x$time.series)
     ncomp <- ncol(sers)
     data <- drop(sers %*% rep(1, ncomp))
     X <- cbind(data=data, sers)
