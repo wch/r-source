@@ -22,7 +22,8 @@ rhyper(nn, m, n, k)
   \item{n}{the number of black balls in the urn.}
   \item{k}{the number of balls drawn from the urn.}
   \item{p}{probability, it must be between 0 and 1.}
-  \item{nn}{the number of observations to be generated.}
+  \item{nn}{number of observations. If \code{length(nn) > 1}, the length
+    is taken to be the number required.}
   \item{log, log.p}{logical; if TRUE, probabilities p are given as log(p).}
   \item{lower.tail}{logical; if TRUE (default), probabilities are
     \eqn{P[X \le x]}{P[X <= x]}, otherwise, \eqn{P[X > x]}{P[X > x]}.}
