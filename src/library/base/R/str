@@ -4,7 +4,7 @@ str <- function(object, ...) UseMethod("str")
 str.data.frame <- function(object, ...)
 {
   ## Method to 'str' for  'data.frame' objects
-  ## $Id: str,v 1.1 1997/09/18 07:53:00 maechler Exp $
+  ## $Id: str,v 1.2 1997/10/31 18:23:04 maechler Exp $
   if(! is.data.frame(object)) {
     warning("str.data.frame(.) called with non-data.frame. Trying to coerce it")
     object <- data.frame(object)
@@ -44,7 +44,7 @@ str.default <- function(object, max.level = 0, vec.len = 4, digits.d = 3,
   ## Author: Martin Maechler <maechler@stat.math.ethz.ch>     1990--1997
   ## ------ Please send Bug-reports, -fixes and improvements !
   ## -------------------------------------------------------------------------
-  ## $Id: str,v 1.1 1997/09/18 07:53:00 maechler Exp $
+  ## $Id: str,v 1.2 1997/10/31 18:23:04 maechler Exp $
 
 
   oo <- options(digits = digits.d)
@@ -152,7 +152,7 @@ str.default <- function(object, max.level = 0, vec.len = 4, digits.d = 3,
                     " to ", format(tsp.a[2]), ":", sep = "")
       std.attr <- c("tsp","class")         #- "names"
     } else if (is.factor(object)) {
-      str1 <- " class Factor"
+      str1 <- " Factor class"
       object <- unclass(object)
       nl <- length(lev.att <- levels(object))
       str1 <- paste(str1, " ", le.str, "; ", nl, " levels: ",
