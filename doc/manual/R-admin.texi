@@ -420,8 +420,8 @@ lower case) did not work.  Open a commands window at a directory @emph{whose
 path does not contain spaces}, and run something like
 
 @smallexample
-tar zxvf R-1.6.0.tgz
-cd R-1.6.0\src\gnuwin32
+tar zxvf R-1.6.2.tgz
+cd R-1.6.2\src\gnuwin32
 make
 @end smallexample
 
@@ -678,17 +678,18 @@ Versions of Tcl/TK from 8.0 to 8.4.0 have been used successfully.
 
 @node Linear algebra,  , Tcl/Tk, Useful libraries and programs
 @subsection Linear algebra
+@cindex BLAS library
 
 The linear algebra routines in @R{} can make use of enhanced BLAS (Basic
 Linear Algebra Subprograms, @uref{http://www.netlib.org/blas/faq.html})
 routines.  Some are compiler-system-specific (@code{libsunperf} on Sun
 Sparc@footnote{Using the SunPro @command{cc} and @command{f95}
 compilers}, @code{libessl} on IBM) but ATLAS
-(@uref{http://math-atlas.sourceforge.net/}) is a ``tuned'' BLAS that runs on a
-wide range of Unix-alike platforms.  If no more specific library is
-found, a @code{libblas} library in the library path will be used.  You
-can specify a specific BLAS library by the configuration option
-@option{--with-blas} and not to use an external BLAS library by
+(@uref{http://math-atlas.sourceforge.net/}) is a ``tuned'' BLAS that
+runs on a wide range of Unix-alike platforms.  If no more specific
+library is found, a @code{libblas} library in the library path will be
+used.  You can specify a specific BLAS library by the configuration
+option @option{--with-blas} and not to use an external BLAS library by
 @option{--without-blas}.
 
 For systems with multiple processors it is in principle possible to use
@@ -890,6 +891,7 @@ compiler flags@footnote{In particular, avoid @command{g77}'s
 @option{-pedantic}, which gives confusing error messages.} asserting
 FORTRAN 77 compliance.
 
+@cindex BLAS library
 For performance reasons@footnote{e.g., to use an optimized BLAS on
 Sun/Sparc} you may want to choose a FORTRAN 90/95 compiler.
 
@@ -1030,7 +1032,7 @@ of compilers and support libraries.
 @menu
 * MacOS X::                     
 * Solaris::                     
-* HP-UX::                        
+* HP-UX::                       
 * IRIX::                        
 * Alpha/OSF1::                  
 * Alpha/FreeBSD::               
@@ -1039,6 +1041,7 @@ of compilers and support libraries.
 
 @node MacOS X, Solaris, Platform notes, Platform notes
 @subsection MacOS X
+@cindex MacOS X
 
 You can build @R{} as a Unix application on MacOS X.  You will need the
 DevTools, @command{f2c} or @command{g77}, and the @code{dlcompat}
@@ -1058,6 +1061,7 @@ fink install g77
 
 @node Solaris, HP-UX, MacOS X, Platform notes
 @subsection Solaris on Sparc
+@cindex Solaris
 
 @R{} has been built successfully on Solaris 2.7 aka Solaris 7 aka SunOS
 5.7 using @command{gcc}/@command{g77} and the SunPro @w{WorkShop 6}
@@ -1150,6 +1154,7 @@ you may need to set it to avoid finding 32-bit addons (as in the
 
 @node HP-UX, IRIX, Solaris, Platform notes
 @subsection HP-UX
+@cindex HP-UX
 
 @R{} has been built successfully on HP-UX 10.2 and HP-UX 11.0 using both
 native compilers and @command{gcc}.  However, 10.2 has not been tested
@@ -1212,18 +1217,18 @@ should use @code{CFLAGS} to specify @option{-O} as the optimization
 level to use.
 
 Some systems running HP-UX 11.0 may have a @command{gcc} that was
-installed under HP-UX 10.2.  Between versions 10.2 and 11.0 HP-UX changed
-its support functions for @acronym{IEEE} arithmetic from the recommended
-functions of the @acronym{IEEE} standard to the ones specified in the
-C9x draft standard.  In particular, this means that @code{finite} has
-been replaced by @code{isfinite}.  A @command{gcc} configured for HP-UX
-10.2 run on 11.0 will not find @code{isfinite}, and as a result
-@command{configure} does not recognize the machine as fully supporting
-@acronym{IEEE} arithmetic and does not define @code{IEEE_754} when
-compiling C code.  This results in a failure in @command{make check}.
-The best solution is to install a properly configured @command{gcc}.  An
-alternative work-around is to add @option{-DIEEE_754} to the
-@code{CFLAGS} variable.
+installed under HP-UX 10.2.  Between versions 10.2 and 11.0 HP-UX
+changed its support functions for @acronym{IEEE} arithmetic from the
+recommended functions of the @acronym{IEEE} standard to the ones
+specified in the C9x draft standard.  In particular, this means that
+@code{finite} has been replaced by @code{isfinite}.  A @command{gcc}
+configured for HP-UX 10.2 run on 11.0 will not find @code{isfinite}, and
+as a result @command{configure} does not recognize the machine as fully
+supporting @acronym{IEEE} arithmetic and does not define @code{IEEE_754}
+when compiling C code.  This results in a failure in @command{make
+check}.  The best solution is to install a properly configured
+@command{gcc}.  An alternative work-around is to add @option{-DIEEE_754}
+to the @code{CFLAGS} variable.
 
 You can configure @R{} to use both the native @command{cc} and
 @command{fort77} with
@@ -1242,6 +1247,7 @@ LDFLAGS=/opt/fortran90/lib}).
 
 @node IRIX, Alpha/OSF1, HP-UX, Platform notes
 @subsection IRIX
+@cindex IRIS
 
 @R{} has been built successfully on IRIX64 6.5 using
 @command{gcc}/@command{f77} or @command{cc}/@command{f77} for 32-bit
@@ -1297,6 +1303,7 @@ port would be greatly appreciated.
 
 @node AIX,  , Alpha/FreeBSD, Platform notes
 @subsection AIX
+@cindex AIX
 
 On AIX 4.3.3 and AIX 5.1, it was found that the use of ``run time
 linking'' (as opposed to normal AIX style linking) was required.  For
@@ -1311,6 +1318,7 @@ When setting @code{MAIN_LDFLAGS} and @code{SHLIB_LDFLAGS} accordingly,
 note that linker flags must be escaped using @samp{-Wl,} if
 @command{gcc} is used for linking: use @samp{MAIN_LDFLAGS="-Wl,brtl"}
 and @samp{SHLIB_LDFLAGS="-Wl,-G"} in this case.
+
 
 @node New platforms, Function and variable index, Configuration on Unix, Top
 @appendix New platforms
