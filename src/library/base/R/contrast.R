@@ -3,6 +3,8 @@ contrasts <-
 {
     if (!is.factor(x))
 	stop("contrasts apply only to factors")
+    if(!contrasts)
+        return(structure(diag(length(x)), dimnames=list(levels(x), levels(x))))
     ctr <- attr(x, "contrasts")
     if (is.null(ctr)) {
 	ctr <- get(getOption("contrasts")[[if (is.ordered(x)) 2 else 1]])(levels(x), contrasts = contrasts)

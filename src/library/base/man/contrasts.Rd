@@ -24,11 +24,16 @@ contrasts(x, how.many) <- ctr
   \code{\link{options}("contrasts")} are used.
 
   The argument \code{contrasts} is ignored if \code{x} has a matrix
-  \code{contrasts} attribute set.  Otherwise it is passed to a
-  contrasts function such as \code{\link{contr.treatment}}.  Those
-  functions normally return a complete indicator matrix if
-  \code{contrasts = FALSE} and the actual contrasts matrix if
-  \code{contrasts = TRUE}.
+  \code{contrasts} attribute set. Otherwise if \code{contrasts = TRUE}
+  it is passed to a contrasts function such as
+  \code{\link{contr.treatment}} and if \code{contrasts = FALSE}
+  an identity matrix is returned.
+}
+\note{
+  Prior to \R version 1.2.0, \code{contrasts(, FALSE)} called a
+  contrasts function with \code{contrasts = FALSE}.  This normally gave
+  the same result, but not for \code{\link{contr.poly}}, the default for
+  ordered factors.
 }
 \seealso{
   \code{\link{C}},
@@ -50,7 +55,7 @@ contrasts(fff, contrasts = FALSE) # the 5x5 identity matrix
 contrasts(fff) <- contr.sum(5); contrasts(fff)  # set sum contrasts
 contrasts(fff, 2) <- contr.sum(5); contrasts(fff)  # set 2 contrasts
 # supply 2 contrasts, compute 2 more to make full set of 4.
-contrasts(fff) <- contr.sum(5)[,1:2]; contrasts(fff) 
+contrasts(fff) <- contr.sum(5)[,1:2]; contrasts(fff)
 }
 \keyword{design}
 \keyword{regression}
