@@ -460,7 +460,7 @@ extern char*	R_GUIType	INI_as("unknown");
 /* Pointer for the dispatch utilitiy in package methods  */
 typedef SEXP (*R_stdGen_ptr_t)(SEXP, SEXP);
 
-LibExtern R_stdGen_ptr_t R_standardGeneric_ptr;
+LibExtern R_stdGen_ptr_t R_standardGeneric_ptr INI_as(0);
 
 #ifdef __MAIN__
 #undef extern

@@ -712,9 +712,10 @@ SEXP do_inherits(SEXP call, SEXP op, SEXP args, SEXP env)
    initialized when the methods package is attached.  When and if the
    methods code is automatically included, the pointer will not be
    needed 
-*/
-R_stdGen_ptr_t R_standardGeneric_ptr = 0;
 
+in Defn.h now:
+R_stdGen_ptr_t R_standardGeneric_ptr = 0;
+*/
 
 SEXP do_standardGeneric(SEXP call, SEXP op, SEXP args, SEXP env)
 {
