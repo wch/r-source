@@ -49,7 +49,7 @@ local({
       }
       n
   }
-  mycols <- graphics::rainbow(attr(dhc21,"members"))
+  mycols <- grDevices::rainbow(attr(dhc21,"members"))
   i <- 0
  })
 dL <- dendrapply(dhc21, colLab)
