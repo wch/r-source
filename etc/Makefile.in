@@ -17,6 +17,9 @@ DISTFILES = Rdconvlib.pl buildlib.pl html-layout.pl \
 	gnome-interface.glade
 SUBDIRS = Rdoc undoc
 
+EXPORTFILE = @EXPORTFILE@
+GNOME_IF_FILES = @GNOME_IF_FILES@
+
 all: Makefile Makeconf R
 
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
@@ -31,11 +34,12 @@ Makeconf: $(srcdir)/Makeconf.in $(top_builddir)/config.status
 R:
 	@if [ "$(srcdir)" != "." ]; then \
 	  $(MAKE) rhome=$(top_builddir) install-perl; \
+	  $(MAKE) rhome=$(top_builddir) install-gnome; \
 	fi
 
-install: installdirs install-perl
+install: installdirs install-perl install-gnome
 	@echo "Installing etc ..."
-	@$(INSTALL_DATA) Makeconf @EXPORTFILE@ @GNOME_IF_FILES@ \
+	@$(INSTALL_DATA) Makeconf $(EXPORTFILE) \
 	  $(rhome)/etc
 installdirs:
 	@$(MKINSTALLDIRS) $(rhome)/etc
@@ -43,13 +47,19 @@ install-perl:
 	@for f in $(srcdir)/*.pl; do \
 	  $(INSTALL_DATA) $$f $(rhome)/etc; \
 	done
+install-gnome:
+	@if test -n "$(GNOME_IF_FILES)"; then \
+	  for f in "$(GNOME_IF_FILES)"; do \
+	    $(INSTALL_DATA) $(srcdir)/$$f $(rhome)/etc; \
+	  done; \
+	fi
 install-strip: install
 uninstall:
 	@echo "Uninstalling etc ..."
 	@if test -d $(rhome)/etc -a \
 	  "`cd $(rhome); pwd`" != "`cd $(top_builddir); pwd`"; then \
 	  (cd $(rhome)/etc && \
-	    rm -f *.pl Makeconf @EXPORTFILE@ @GNOME_IF_FILES@); \
+	    rm -f *.pl Makeconf $(EXPORTFILE) $(GNOME_IF_FILES)); \
 	  rmdir $(rhome)/etc 2> /dev/null \
 	    || echo "  subdir etc not removed"; \
 	fi
@@ -57,9 +67,9 @@ uninstall:
 mostlyclean: clean
 clean:
 	@if [ "$(srcdir)" != "." ]; then \
-	  rm -f *.pl @GNOME_IF_FILES@; \
+	  rm -f *.pl $(GNOME_IF_FILES); \
 	fi
-	@rm -f @EXPORTFILE@
+	@rm -f $(EXPORTFILE)
 distclean: clean
 	@rm -f Makeconf Makefile
 maintainer-clean: distclean
