@@ -32,8 +32,8 @@ help <-
         type <- "help"
         if(offline) type <- "latex"
         else if (htmlhelp) type <- "html"
-        topic <- gsub("\\[","\\\\[", topic)
-        INDICES <- system.file(pkg = package, lib = lib.loc)
+        ## no longer, with index.search()! topic <- gsub("\\[","\\\\[", topic)
+        INDICES <- system.file(pkg=package, lib=lib.loc)
         file <- index.search(topic, INDICES, "AnIndex", type)
         if (file == "") {
             # try data .doc -- this is OUTDATED
