@@ -37,7 +37,7 @@ use Text::Wrap;
 ## don't buffer output
 $| = 1;
 
-my $revision = ' $Revision: 1.121 $ ';
+my $revision = ' $Revision: 1.122 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -731,7 +731,6 @@ sub check_pkg {
 	    $log->warning();
 	    ## </NOTE>
 	    $log->print(join("\n", @out) . "\n");
-	    exit(1);
 	}
 	else {
 	    $log->result("OK");
