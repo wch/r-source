@@ -146,6 +146,27 @@ environment, you can debug the DLL code there just by setting the
 executable to be debugged as the full path to the R front-end.
 
 
+Using Borland C++
+=================
+
+Borland C++5.5 is available as a free download from
+http://www.borland.com/bcppbuilder/freecompiler/ and as part of C++
+Builder 5.  The following will make convolve.dll from convolve.c (-6
+for a Pentium II/III)
+
+bcc32 -u- -6 -O2 -WDE convolve.c
+
+You can build an import library for R.dll by copying R.exp to R.def and
+using
+
+implib R.lib R.def
+
+and then add R.lib to the bcc32 command line, for example (from
+`S Programming')
+
+bcc32 -u- -6 -O2 -WDE -I\R\rw1010\src\include VCrndR.c R.lib
+
+
 Using other compilers and languages
 ===================================
 
@@ -162,11 +183,11 @@ DLL.
 
 If you use .Fortran this appends an underscore and does no case
 conversion at all to the symbol name.  It is normally best to use
-.C with compilers other than g77 and map the name manually.
+.C with compilers other than g77 and map the name manually if necessary.
 
-Care is needed in passing character strings to and from a DLL: they
-must be equivalent to the C char** and null-terminated.  Not even the
-mingw32 g77 Fortran uses null-terminated strings.
+Care is needed in passing character strings to and from a DLL by .C:
+they must be equivalent to the C type char** and null-terminated.  Not
+even the mingw32 g77 Fortran uses null-terminated strings.
 
 
 Simple Ports
