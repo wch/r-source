@@ -38,6 +38,10 @@ La.svd(x, nu = min(n, p), nv = min(n, p), method = c("dgesdd", "dgesvd"))
   used, with a warning.
 
   Computing the singular vectors is the slow part for large matrices.
+
+  Unsuccessful results from the underlying LAPACK code will result in an
+  error giving a positive error code: these can only be interpreted by
+  detailed study of the FORTRAN code.
 }
 \value{
   The SVD decomposition of the matrix as computed by LINPACK,
