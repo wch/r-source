@@ -245,7 +245,7 @@ function(X, main = NULL, xlab = NULL, ylab = NULL, sort = NULL, off = NULL,
         color <- if (is.null(color) || !color[1])
             rep(0, ncolors)
         else
-            2:(ncolors+1)
+            heat.colors(ncolors)
     }
 
     ##-- Plotting
