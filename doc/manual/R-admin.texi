@@ -489,8 +489,12 @@ setting the environment variable @env{R_LIBS} or using the @R{} function
 @section Installing packages
 @cindex Packages, installing
 
-Installing source packages requires that Perl 5.004 or later be
-installed.
+Packages may be distributed in source form or compiled binary form. 
+Installing source packages requires that compilers and tools
+(including Perl 5.004 or later) be installed.  Binary packages 
+are platform specific and generally need 
+no special tools to install, but see the documentation for 
+your platform for details.
 
 Note that you need to specify implicitly or explicitly the library to
 which the package is to be installed.  This is only an issue if you have
