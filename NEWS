@@ -309,6 +309,8 @@ NEW FEATURES
     o	configure now tests for the versions of jpeg (>= 6b) and 
 	libpng (>= 1.0.5).
 
+    o	?/help() now advertises help.search() if it fails to find a topic.
+
 
 
 BUG FIXES
