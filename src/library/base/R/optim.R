@@ -25,6 +25,8 @@ optim <- function(par, fn, gr = NULL,
     if (method == "SANN") con$maxit <- 10000
 
     con[(namc <- names(control))] <- control
+    if(con$trace < 0)
+        warning("read the documentation for `trace' more carefully")
     if (method == "L-BFGS-B" &&
         any(!is.na(match(c("reltol","abstol"), namc))))
         warning("Method L-BFGS-B uses `factr' (& `pgtol') instead of `reltol' and `abstol'")

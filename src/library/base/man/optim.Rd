@@ -88,7 +88,8 @@ optim(par, fn, gr = NULL,
   The \code{control} argument is a list that can supply any of the
   following components:
   \describe{
-    \item{\code{trace}}{Integer. If positive, tracing information on the
+    \item{\code{trace}}{Non-negative integer. If positive,
+      tracing information on the
       progress of the optimization is produced. Higher values may
       produce more tracing information: for method \code{"L-BFGS-B"}
       there are six levels of tracing.  (To understand exactly what
