@@ -601,7 +601,7 @@ void consoletogglelazy(control c)
 FBEGIN
     if (p->kind == PAGER) return;
     p->lazyupdate = (p->lazyupdate + 1) % 2;
-FVOIDEND;
+FVOIDEND
 
 int consolegetlazy(control c)
 FBEGIN

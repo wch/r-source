@@ -84,7 +84,7 @@ static int Load_Unzip_DLL()
 
     hUnzipDll = LoadLibrary(szFullPath);
     if (hUnzipDll != NULL) {
-	(_DLL_UNZIP)Wiz_SingleEntryUnzip =
+	Wiz_SingleEntryUnzip =
 	    (_DLL_UNZIP)GetProcAddress(hUnzipDll, "Wiz_SingleEntryUnzip");
     } else {
 	unzip_is_loaded = -1;
