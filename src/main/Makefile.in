@@ -29,7 +29,7 @@ SOURCES_C = \
 	objects.c optim.c optimize.c options.c \
 	par.c paste.c platform.c \
 	plot.c plot3d.c plotmath.c \
-	print.c printarray.c printvector.c printutils.c \
+	print.c printarray.c printvector.c printutils.c qsort.c \
 	random.c regex.c relop.c \
 	saveload.c scan.c seq.c serialize.c size.c sort.c source.c split.c \
 	subassign.c subscript.c subset.c summary.c \
@@ -89,7 +89,7 @@ libR_la = libR$(LIBR_EXT)
 ## </FIXME>
 Rexeclib_LTLIBRARIES = $(libR_la)
 libR_la_SOURCES = $(SOURCES)
-libR_la_LDFLAGS = 
+libR_la_LDFLAGS =
 libR_la_OBJECTS = $(OBJECTS:.o=.lo)
 ## <FIXME>
 ## This should also have `ls ../appl/*.lo ../nmath/*.lo ../unix/*.lo`, but

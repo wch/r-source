@@ -45,7 +45,7 @@
 extern "C" {
 #endif
 
-/* ../main/sort.c : */
+/* ../../main/sort.c : */
 void	R_isort(int*, int);
 void	R_rsort(double*, int);
 void	R_csort(Rcomplex*, int);
@@ -55,8 +55,14 @@ void	iPsort(int*,    int, int);
 void	rPsort(double*, int, int);
 void	cPsort(Rcomplex*, int, int);
 
+/* ../../main/qsort.c : */
+void R_qsort (double *v,         int i, int j);
+void R_qsorti(double *v, int *I, int i, int j);
+
+/* ../../main/printutils.c : */
 int	IndexWidth(int);
 int	Rstrlen(char*, int);
+/* ../../main/util.c  and others : */
 char*	R_ExpandFileName(char*);
 void	setIVector(int*, int, int);
 void	setRVector(double*, int, double);

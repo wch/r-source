@@ -308,6 +308,7 @@ SEXP do_gctime(SEXP, SEXP, SEXP, SEXP);
 #endif
 SEXP do_putenv(SEXP, SEXP, SEXP, SEXP);
 SEXP do_psort(SEXP, SEXP, SEXP, SEXP);
+SEXP do_qsort(SEXP, SEXP, SEXP, SEXP);
 SEXP do_quit(SEXP, SEXP, SEXP, SEXP);
 SEXP do_quote(SEXP, SEXP, SEXP, SEXP);
 SEXP do_random1(SEXP, SEXP, SEXP, SEXP);

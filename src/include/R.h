@@ -34,7 +34,7 @@ extern "C" {
 #include <limits.h>
 #include <float.h>
 #ifdef Macintosh
-# include <fp.h> 
+# include <fp.h>
 #else
 # include <math.h>
 #endif
@@ -49,7 +49,7 @@ extern "C" {
 #include "R_ext/Memory.h"     /* R_alloc and S_alloc */
 #include "R_ext/Print.h"      /* Rprintf etc */
 #include "R_ext/Random.h"     /* RNG interface */
-#include "R_ext/Utils.h"      /* sort routines */
+#include "R_ext/Utils.h"      /* sort routines et al */
 #include "R_ext/RS.h"
 /* for PROBLEM ... Calloc, Realloc, Free, Memcpy, F77_xxxx */
 

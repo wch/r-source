@@ -590,6 +590,7 @@ FUNTAB R_FunTab[] =
 {"sort",	do_sort,	1,	11,	1,	PP_FUNCALL},
 {"is.unsorted",	do_isunsorted,	0,	11,	1,	PP_FUNCALL},
 {"psort",	do_psort,	0,	11,	2,	PP_FUNCALL},
+{"qsort",	do_qsort,	0,	11,	2,	PP_FUNCALL},
 {"order",	do_order,	0,	11,	-1,	PP_FUNCALL},
 {"rank",	do_rank,	0,	11,	1,	PP_FUNCALL},
 {"missing",	do_missing,	1,	0,	1,	PP_FUNCALL},
