@@ -32,6 +32,8 @@ DISTFILES = Makefile.in \
 	texi2dvi \
 	$(SCRIPT_SOURCES)
 
+all: Makefile R
+
 .SUFFIXES:
 .SUFFIXES: .in
 
@@ -40,8 +42,6 @@ DISTFILES = Makefile.in \
 	  CONFIG_FILES=$(subdir)/$@ CONFIG_HEADERS= \
 	  $(SHELL) ./config.status
 	@chmod +x $@
-
-all: Makefile R
 
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@cd $(top_builddir) && \
