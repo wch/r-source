@@ -199,10 +199,6 @@ Date: Mon, 20 Oct 2003 14:17:42 -0400
 Subject: Core dump when calling tclvalue
 From: mckay@gmr.com
 Date: Wed, 22 Oct 2003 19:10:02 +0200 (MET DST)
-* PR# 5049 *
-Subject: Segfault in foreign
-From: Peter Dalgaard <p.dalgaard@biostat.ku.dk>
-Date: 12 Nov 2003 17:31:24 +0100
 * PR# 5315 *
 Subject: O2 optimization produces wrong code
 From: jean.coursol@math.u-psud.fr
@@ -296,11 +292,6 @@ Subject: return() undocumented
 From: Scot@Wilcoxon.Org
 Date: Sat, 10 Jan 2004 16:12:16 +0100 (CET)
 ..He meant in R-lang
-* PR# 6847 *
-Subject: Typo in help(optim)
-From: Stephen Eglen <stephen@anc.ed.ac.uk>
-Date: Mon, 3 May 2004 13:26:06 +0100
-..we need to check which is right
 
 Directory:  Graphics
 
@@ -538,6 +529,12 @@ Subject: Fortran compiler dependency missing in gentoo ebuild script
 From: mc@austrian-mint.at
 Date: Fri,  7 May 2004 16:45:01 +0200 (CEST)
 ..Gentoo Linux-specific problem
+* PR# 6896 *
+Subject: R with shared library support: 'make check' fails with unresolved symbol
+From: garvin@cs.rice.edu
+Date: Wed, 19 May 2004 23:38:53 +0200 (CEST)
+..OSF1 Alpha, not detials of how install was done.
+..Was R-admin actually read?
 
 Directory:  Language
 
@@ -632,6 +629,10 @@ Subject: Darwin Framework and Application Install Directory Improvements
 From: ch-r@bobobeach.com
 Date: Thu, 13 May 2004 20:55:36 +0200 (CEST)
 ..Lots of assertions, no evidence of a bug.
+* PR# 6903 *
+Subject: Memory Leak in OS X versions?
+From: dvanbrunt@well-wired.com
+Date: Fri, 21 May 2004 15:24:05 +0200 (CEST)
 
 Directory:  Misc
 
@@ -873,10 +874,6 @@ Date: Tue, 16 Dec 2003 08:13:17 +0100 (CET)
 Subject: Re: [R] Error message during debug
 From: Duncan Murdoch <dmurdoch@pair.com>
 Date: Tue, 20 Apr 2004 14:15:05 -0400
-* PR# 6893 *
-Subject: Sorry to announce that we are closing
-From: "Opal Segura" <dktcrz@zbvxrs1.com>
-Date: Tue, 18 May 2004 06:43:27 -0500
 * PR# 6894 *
 Subject: plot.factor does not work properly
 From: x.sole@iconcologia.catsalut.net
@@ -885,39 +882,15 @@ Date: Tue, 18 May 2004 16:46:21 +0200 (CEST)
 Subject: foreign package:  reading epiinfo
 From: giles.crane@doh.state.nj.us
 Date: Wed, 19 May 2004 19:30:34 +0200 (CEST)
-* PR# 6896 *
-Subject: R with shared library support: 'make check' fails with unresolved symbol
-From: garvin@cs.rice.edu
-Date: Wed, 19 May 2004 23:38:53 +0200 (CEST)
-* PR# 6897 *
-Subject: Typo in R-lang
-From: Arni Magnusson <arnima@u.washington.edu>
-Date: Thu, 20 May 2004 19:58:08 -0700 (PDT)
-* PR# 6898 *
-Subject: pianissimo liken
-From: "Louie Cates" <exposureaurochs@attbi.com>
-Date: Fri, 21 May 2004 03:08:08 -0100
-* PR# 6899 *
-Subject: Patch: nchar() for factors
-From: "Vadim Ogranovich" <vograno@evafunds.com>
-Date: Thu, 20 May 2004 21:57:56 -0700
-* PR# 6900 *
-Subject: Eureka Technology Partners (ETP) Virus scan results
-From: ravadmin@eol.lk (ravadmin)
-Date: Fri, 21 May 2004 11:37:00 +0000
-* PR# 6901 *
-Subject: Buglet/omission in nls package 
-From: Berwin A Turlach <berwin@maths.uwa.edu.au>
-Date: Fri, 21 May 2004 14:40:55 +0800
 * PR# 6902 *
 Subject: Bug in update()? 
 From: Berwin A Turlach <berwin@maths.uwa.edu.au>
 Date: Fri, 21 May 2004 15:21:13 +0800
-* PR# 6903 *
-Subject: Memory Leak in OS X versions?
-From: dvanbrunt@well-wired.com
-Date: Fri, 21 May 2004 15:24:05 +0200 (CEST)
 * PR# 6904 *
 Subject: Failure to preserve package attribute when coercing S4 objects
 From: "Swinton, Jonathan" <Jonathan.Swinton@astrazeneca.com>
 Date: Fri, 21 May 2004 15:04:10 +0100
+* PR# 6906 *
+Subject: Message from Thailand
+From: "Thai Winds" <flyer@buddha.com>
+Date: Sun, 23 May 2004 03:37:22 +0700
