@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 0.65-1, 1999/08/22
+Version 0.65-2, 1999/08/25
 Kurt Hornik
 
 
@@ -1081,10 +1081,6 @@ Journal of Statistical Software (`http://www.stat.ucla.edu/journals/jss/').
 *quantreg*
      Compute regression quantiles and some related rank statistics.
 
-*ratetables*
-     US national and state mortality data (requires *survival4* and
-     *date*), for use with *survival4*.
-
 *repeated*
      Models for non-normal repeated measurements.
 
@@ -1120,9 +1116,6 @@ Journal of Statistical Software (`http://www.stat.ucla.edu/journals/jss/').
      Density, distribution, quantile and hazard functions of a stable
      variate; generalized linear models for the parameters of a stable
      distribution.
-
-*survival4*
-     Functions for survival analysis, version 4 (requires *splines*).
 
 *survival5*
      Functions for survival analysis, version 5 (requires *splines* and
