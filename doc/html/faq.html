@@ -18,7 +18,7 @@ Up:<a rel=up href="#dir">(dir)</a>
 <h2>R FAQ</h2>
 
 <h2>Frequently Asked Questions on R</h2>
-<h2>Version 1.4-28, 2002-04-22</h2>
+<h2>Version 1.5-0, 2002-04-28</h2>
 <h2>ISBN 3-901167-51-X</h2>
 <address>Kurt Hornik</address>
 <p><p><hr><p>
@@ -258,7 +258,7 @@ Up:<a rel=up href="#R%20Basics">R Basics</a>
 
 <h3>2.3 What is the current version of R?</h3>
 
-<p>The current released version is 1.4.1.  Conforming to this
+<p>The current released version is 1.5.0.  Conforming to this
 `major.minor.patchlevel' numbering scheme, there are three development
 versions of R, working towards the next patch (`r-patched'), minor
 (`r-devel'), and major (`r-ng') releases of R, respectively.  Version
@@ -403,7 +403,8 @@ binaries for a base distribution and a large number of add-on packages
 from <small>CRAN</small> to run on Windows 95, 98, ME, NT4, 2000, and XP (at
 least) on Intel and clones (but not on other platforms).  The Windows
 version of R was created by Robert Gentleman, and is now being developed
-and maintained by <a href="mailto:Guido.Masarotto@r-project.org">Guido Masarotto</a> and <a href="mailto:Brian.Ripley@r-project.org">Brian D. Ripley</a>.
+and maintained by <a href="mailto:murdoch@stats.uwo.ca">Duncan Murdoch</a> and
+<a href="mailto:Brian.Ripley@r-project.org">Brian D. Ripley</a>.
 
 <p>For most installations the installer <code>SetupR.exe</code> will be the
 easiest tool to use.
@@ -891,7 +892,7 @@ Up:<a rel=up href="#R%20and%20S">R and S</a>
 the "new S engine" (S version 4; <small>S-PLUS</small> 5.x and above), and R. 
 Given this understanding, asking for "the differences between R and S"
 really amounts to asking for the specifics of the R implementation of
-the S language, i.e., the difference between the R and S engines.
+the S language, i.e., the difference between the R and S <em>engines</em>.
 
 <p>For the remainder of this section, "S" refers to the S engines and not
 the S language.
@@ -1458,16 +1459,10 @@ U.S. National Institute for Standards and Technology.
 <dd>Manipulation and analysis of phylogenetically simulated data sets (as
 obtained from PDSIMUL in package PDAP) and phylogenetically-based
 analyses using GLS. 
-<br><dt><strong>PTAk</strong>
-<dd>A multiway method to decompose a tensor (array) of any order, as a
-generalisation of SVD also supporting non-identity metrics and
-penalisations.  Also includes some other multiway methods. 
 <br><dt><strong>RArcInfo</strong>
 <dd>Functions to import Arc/Info V7.x coverages and data. 
 <br><dt><strong>RMySQL</strong>
 <dd>An interface between R and the MySQL database system. 
-<br><dt><strong>RODBC</strong>
-<dd>An <small>ODBC</small> database interface. 
 <br><dt><strong>ROracle</strong>
 <dd>Oracle Database Interface driver for R.  Uses the ProC/C++ embedded SQL. 
 <br><dt><strong>RPgSQL</strong>
@@ -1484,10 +1479,12 @@ engine in R.
 <dd>A collection of programs for reading and plotting SKEW-T,log p diagrams
 and wind profiles for data collected by radiosondes (the typical weather
 balloon-borne instrument). 
-<br><dt><strong>RandomFields</strong>
-<dd>Creating random fields using various methods. 
 <br><dt><strong>RmSQL</strong>
 <dd>An interface between R and the mSQL database system. 
+<br><dt><strong>Rmpi</strong>
+<dd>an interface (wrapper) to MPI (Message-Passing Interface) APIs.  It also
+provides interactive R slave functionalities to make MPI programming
+easier in R than in C(++) or FORTRAN. 
 <br><dt><strong>Rwave</strong>
 <dd>An environment for the time-frequency analysis of 1-D signals (and
 especially for the wavelet and Gabor transforms of noisy signals), based
@@ -1560,6 +1557,9 @@ Contained in the <code>VR</code> bundle.
 <br><dt><strong>cmprsk</strong>
 <dd>Estimation, testing and regression modeling of subdistribution functions
 in competing risks. 
+<br><dt><strong>cobs</strong>
+<dd>Constrained B-splines: qualitatively constrained (regression) smoothing
+via linear programming. 
 <br><dt><strong>coda</strong>
 <dd>Output analysis and diagnostics for Markov Chain Monte Carlo (MCMC)
 simulations. 
@@ -1612,8 +1612,6 @@ distribution, quantile and density functions to univariate, bivariate
 and (for simulation) multivariate parametric extreme value
 distributions, and provides fitting functions which calculate maximum
 likelihood estimates for univariate and bivariate models. 
-<br><dt><strong>event.chart</strong>
-<dd>Package for creating event charts. 
 <br><dt><strong>exactRankTests</strong>
 <dd>Computes exact p-values and quantiles using an implementation of
 the Streitberg/Roehmel shift algorithm. 
@@ -1772,9 +1770,6 @@ types of tissue.
 <br><dt><strong>pixmap</strong>
 <dd>Functions for import, export, plotting and other manipulations of
 bitmapped images. 
-<br><dt><strong>polymars</strong>
-<dd>Polychotomous regression based on Multivariate Adaptive Regression
-Splines. 
 <br><dt><strong>polynom</strong>
 <dd>A collection of functions to implement a class for univariate polynomial
 manipulations. 
@@ -1798,6 +1793,9 @@ two-sample comparison of binary outcomes.
 <br><dt><strong>rpvm</strong>
 <dd>R interface to PVM (Parallel Virtual Machine).  Provides interface to
 PVM APIs, and examples and documentation for its use. 
+<br><dt><strong>rsprng</strong>
+<dd>Provides interface to SPRNG (Scalable Parallel Random Number Generators)
+APIs, and examples and documentation for its use. 
 <br><dt><strong>scatterplot3d</strong>
 <dd>Plots a three dimensional (3D) point cloud perspectively. 
 <br><dt><strong>sem</strong>
@@ -1834,22 +1832,11 @@ for summarising these objects, and for permitting their use in spatial
 data analysis; a collection of tests for spatial autocorrelation,
 including global Moran's I and Geary's C, local Moran's I, saddlepoint
 approximations for global and local Moran's I; and functions for
-estimating spatial simultaneous autoregressive (SAR) models.  Was
+estimating spatial simultaneous autoregressive (SAR) models.  (Was
 formerly the three packages: <strong>spweights</strong>, <strong>sptests</strong>, and
-<strong>spsarlm</strong>. 
+<strong>spsarlm</strong>.) 
 <br><dt><strong>splancs</strong>
 <dd>Spatial and space-time point pattern analysis functions. 
-<br><dt><strong>spsarlm</strong>
-<dd>Functions for estimating spatial simultaneous autoregressive (SAR)
-models, including sparse matrix methods for computing the Jacobian. 
-<br><dt><strong>sptests</strong>
-<dd>A collection of tests for spatial autocorrelation, including global
-Moran's I and Geary's C. 
-<br><dt><strong>spweights</strong>
-<dd>A collection of functions to create spatial weights matrix objects from
-polygon contiguities, from point patterns by distance and tesselations,
-for summarising these objects, and for permitting their use in spatial
-data analysis. 
 <br><dt><strong>strucchange</strong>
 <dd>Various tests on structural change in linear regression models. 
 <br><dt><strong>subselect</strong>
@@ -1897,21 +1884,23 @@ currently contains
 <dd>A common database interface (DBI) class and method definitions.  All
 classes in this package are virtual and need to be extended by the
 various DBMS implementations. 
-<br><dt><strong>DBI.RODBC</strong>
-<dd>A simple DBI front-end to the RODBC package. 
-<br><dt><strong>DBI.RPgSQL</strong>
-<dd>A simple DBI front-end to the RPgSQL package. 
 <br><dt><strong>GRASS</strong>
 <dd>Interface between the GRASS geographical information system and R, based
 on starting R from within the GRASS environment and chosen LOCATION and
 MAPSET.  Wrapper and helper functions are provided for a range of R
 functions to match the interface metadata structures. 
+<br><dt><strong>PTAk</strong>
+<dd>A multiway method to decompose a tensor (array) of any order, as a
+generalisation of SVD also supporting non-identity metrics and
+penalisations.  Also includes some other multiway methods. 
 <br><dt><strong>R2HTML</strong>
 <dd>Functions for exporting R objects &amp; graphics in an <small>HTML</small> document. 
+<br><dt><strong>RODBC</strong>
+<dd>An <small>ODBC</small> database interface. 
+<br><dt><strong>RandomFields</strong>
+<dd>Creating random fields using various methods. 
 <br><dt><strong>StatDataML</strong>
 <dd>Read and write StatDataML. 
-<br><dt><strong>colSums</strong>
-<dd>Matrix summary functions in C. 
 <br><dt><strong>cxx</strong>
 <dd>A small C++ test package. 
 <br><dt><strong>dopt</strong>
@@ -1921,6 +1910,8 @@ functions to match the interface metadata structures.
 time series package.  Contains PADI, juice and monitoring extensions. 
 <br><dt><strong>ensemble</strong>
 <dd>Ensembles of tree classifiers. 
+<br><dt><strong>event.chart</strong>
+<dd>Package for creating event charts. 
 <br><dt><strong>hpower</strong>
 <dd>A suite of functions to compute power and sample size for tests of the
 general linear hypothesis. 
@@ -2011,6 +2002,11 @@ Jim has also started <strong>dna</strong>, a package with procedures for the
 analysis of DNA sequences.  Jim's packages can be obtained from
 <a href="http://www.luc.ac.be/~jlindsey/rcode.html">http://www.luc.ac.be/~jlindsey/rcode.html</a>.
 
+<a href="mailto:fharrell@virginia.edu">Frank Harrell</a> has recently made an R
+port of his <strong>Hmisc</strong> package available via
+<a href="http://hesweb1.med.virginia.edu/biostat/s/Hmisc.html">http://hesweb1.med.virginia.edu/biostat/s/Hmisc.html</a>; a port of
+his <strong>Design</strong> package is currently under way.
+
 <p>More code has been posted to the r-help mailing list, and can be
 obtained from the mailing list archive.
 
@@ -2034,8 +2030,8 @@ files named <code><var>pkg</var>_<var>version</var>.tar.gz</code>, which may in 
 <p>at the shell prompt to install to the library tree rooted at the first
 directory given in <code>R_LIBS</code> (see below) if this is set and non-null,
 and to the default library (the <code>library</code> subdirectory of
-<code>R_HOME</code>) otherwise.  (Versions of R prior to 1.3.0 installed to
-the default library by default.)
+<code><code>R_HOME</code></code>) otherwise.  (Versions of R prior to 1.3.0 installed
+to the default library by default.)
 
 <p>To install to another tree (e.g., your private one), use
 
@@ -2100,6 +2096,8 @@ cluster       Functions for clustering (by Rousseeuw et al.)
 ctest         Classical Tests
 eda           Exploratory Data Analysis
 foreign       Read data stored by Minitab, S, SAS, SPSS, Stata, ...
+grid          The Grid Graphics Package
+lattice       Lattice Graphics
 lqs           Resistant Regression and Covariance Estimation
 mgcv          Multiple smoothing parameter estimation and GAMs by GCV
 modreg        Modern Regression: Smoothing and Local Methods
@@ -2114,6 +2112,7 @@ splines       Regression Spline Functions and Classes
 stepfun       Step Functions, including Empirical Distributions
 survival      Survival analysis, including penalised likelihood
 tcltk         Interface to Tcl/Tk
+tools         Tools for Package Development and Administration
 ts            Time series functions
 </pre>
 
@@ -2243,8 +2242,9 @@ Statistics") which provides a standard interface between statistical
 programs and statistical processes.  It is intended to provide
 assistance for interactive statistical programming and data analysis. 
 Languages supported include: S dialects (S 3/4, <small>S-PLUS</small> 3.x/4.x/5.x,
-and R), LispStat dialects (XLispStat, ViSta), SAS, Stata, SPSS dialects
-(SPSS, Fiasco) and SCA.
+and R), LispStat dialects (XLispStat, ViSta) and SAS.  Stata and SPSS
+dialect (SPSS, PSPP) support is being examined for possible future
+implementation
 
 <p><small>ESS</small> grew out of the need for bug fixes and extensions to
 S-mode 4.8 (which was a <small>GNU</small> Emacs interface to S/<small>S-PLUS</small>
@@ -2269,10 +2269,9 @@ manipulation (recording and saving transcript files, manipulating and
 editing saved transcripts, and re-evaluating commands from transcript
 files).
 
-<p>The latest versions of <small>ESS</small> are available from
-<a href="http://ess.stat.wisc.edu/pub/ESS/">http://ess.stat.wisc.edu/pub/ESS/</a> or
-<a href="ftp://ess.stat.wisc.edu/pub/ESS/">ftp://ess.stat.wisc.edu/pub/ESS/</a>, or via <small>CRAN</small>.  The
-<small>HTML</small> version of the documentation can be found at
+<p>The latest stable version of <small>ESS</small> are available via
+<small>CRAN</small> or the
+<a href="http://software.biostat.washington.edu/statsoft/ess/">ESS web page</a>.  The <small>HTML</small> version of the documentation can be found at
 <a href="http://stat.ethz.ch/ESS/">http://stat.ethz.ch/ESS/</a>.
 
 <p><small>ESS</small> comes with detailed installation instructions.
@@ -2324,10 +2323,10 @@ Up:<a rel=up href="#R%20and%20Emacs">R and Emacs</a>
 <p>To debug R "from within Emacs", there are several possibilities.  To
 use the Emacs GUD (Grand Unified Debugger) library with the recommended
 debugger GDB, type <kbd>M-x gdb</kbd> and give the path to the R
-<em>binary</em> as argument.  At the gdb prompt, set <code>R_HOME</code> and
-other environment variables as needed (using e.g. <kbd>set env R_HOME
-/path/to/R/</kbd>, but see also below), and start the binary with the desired
-arguments (e.g., <kbd>run --vsize=12M</kbd>).
+<em>binary</em> as argument.  At the <code>gdb</code> prompt, set
+<code>R_HOME</code> and other environment variables as needed (using e.g. 
+<kbd>set env R_HOME /path/to/R/</kbd>, but see also below), and start the
+binary with the desired arguments (e.g., <kbd>run --vsize=12M</kbd>).
 
 <p>If you have <small>ESS</small>, you can do <kbd>C-u M-x R &lt;RET&gt; - d
 &lt;SPC&gt; g d b &lt;RET&gt;</kbd> to start an inferior R process with arguments
@@ -2701,10 +2700,9 @@ Up:<a rel=up href="#R%20Miscellanea">R Miscellanea</a>
 
 <h3>7.13 Are Trellis displays implemented in R?</h3>
 
-<p>An R package called <strong>lattice</strong> provides graphical functionality
-that is compatible with most Trellis commands.  It currently relies on
-another package called <strong>grid</strong> so you will need to download that
-as well.
+<p>The recommended package <strong>lattice</strong> (which is based on another
+recommended package, <strong>grid</strong>) provides graphical functionality
+that is compatible with most Trellis commands.
 
 <p>You could also look at <code>coplot()</code> and <code>dotchart()</code> which might
 do at least some of what you want.  Note also that the R version of
@@ -2966,9 +2964,9 @@ r-help from time to time.
 
 <p>There is no need to be agitated about the particular sums of squares
 that R reports.  You can compute your favorite sums of squares quite
-easily.  Any two models can be compared with <code>anova(model1,
-model2)</code>, and <code>drop1(model1)</code> will show the sums of squares
-resulting from dropping single terms.
+easily.  Any two models can be compared with <code>anova(<var>model1</var>,
+<var>model2</var>)</code>, and <code>drop1(<var>model1</var>)</code> will show the sums of
+squares resulting from dropping single terms.
 
 <p><hr>
 Node:<a name="R%20Programming">R Programming</a>,
@@ -2995,15 +2993,15 @@ Up:<a rel=up href="#R%20Programming">R Programming</a>
 
 <h3>8.1 How should I write summary methods?</h3>
 
-<p>Suppose you want to provide a summary method for class <code>foo</code>.  Then
-<code>summary.foo()</code> should not print anything, but return an object of
-class <code>"summary.foo"</code>, <em>and</em> you should write a method
-<code>print.summary.foo()</code> which nicely prints the summary information
-and invisibly returns its object.  This approach is preferred over
-having <code>summary.foo()</code> print summary information and return
-something useful, as sometimes you need to grab something computed by
-<code>summary()</code> inside a function or similar.  In such cases you don't
-want anything printed.
+<p>Suppose you want to provide a summary method for class <code>"foo"</code>. 
+Then <code>summary.foo()</code> should not print anything, but return an
+object of class <code>"summary.foo"</code>, <em>and</em> you should write a
+method <code>print.summary.foo()</code> which nicely prints the summary
+information and invisibly returns its object.  This approach is
+preferred over having <code>summary.foo()</code> print summary information and
+return something useful, as sometimes you need to grab something
+computed by <code>summary()</code> inside a function or similar.  In such
+cases you don't want anything printed.
 
 <p><hr>
 Node:<a name="How%20can%20I%20debug%20dynamically%20loaded%20code%3f">How can I debug dynamically loaded code?</a>,
