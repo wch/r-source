@@ -121,8 +121,7 @@ in crtdll.dll is unlikely to be satisfactory: the one in msvcrt.dll
 does work but imposes a considerable performance penalty.
 
 
-You can test a build by `make check': expect some rounding differences
-in the tests of the print routines.  You may need to set TMPDIR to
+You can test a build by `make check'.  You may need to set TMPDIR to
 (the absolute path to) a suitable temporary directory: the default is
 c:/TEMP.  (Use forward slashes.)
 
@@ -240,29 +239,28 @@ recommended packages.
 Once everything is set up
 
 	make distribution
-	make fullcheck
+	make check-all
 
 will make all the pieces and the installers and put them in the 
 gnuwin32/cran subdirectory, then check the build.  This works by building
 all the parts in the sequence:  
 
 	Rpwd.exe (a utility needed in the build)
-	rbuild (the executables)
-	bitmapdll (the bitmap support files)	
+	rbuild (the executables, the FAQ docs etc.)
 	rpackage (the base packages) 
+	rdocs (the HTML documentation) 	
+	bitmapdll (the bitmap support files)	
 	tcl (the TCL/TK support files and package) 	
 	recommended (the recommended packages)	
-	rdocs (the HTML documentation) 	
-	docfiles (the FAQ docs etc.)
 	docs (the manuals)
 	rinstaller (the install program)
 	crandir (the CRAN distribution directory)
 
-The parts can be made individually if a full build is not needed, but 
-earlier parts must built before later ones.  (The Makefile doesn't 
-enforce this dependency---some build targets force a lot of computation
-even if all files are up to date.) The first three targets are the default
-build if just "make" is run.
+The parts can be made individually if a full build is not needed, but
+earlier parts must built before later ones.  (The Makefile doesn't
+enforce this dependency---some build targets force a lot of
+computation even if all files are up to date.)  The first four targets
+are the default build if just "make" is run.
 
 
 Cross-building on ix86 Linux

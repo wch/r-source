@@ -68,7 +68,7 @@ endif
 
 
 # separate as Tcl/Tk headers are needed.
-tcl: 
+tcl:
 	@$(MAKE) --no-print-directory pkg-tcltk
 
 CFLAGS = $(OPTFLAGS) -I../include -I. -DHAVE_CONFIG_H -DR_DLL_BUILD
@@ -87,7 +87,7 @@ rbuild: fixfiles rlibs makeMakedeps libRblas.a ../../bin/R.dll libR.a \
 ## used to build skeletal versions of packages, enough to run
 ## package tools to install them properly
 INITPACKAGES = base tools
-Rcode: fixed/fixdesc 
+Rcode: fixed/fixdesc
 	@$(ECHO) "  making bootstrap versions of packages ..."
 	@for pkg in $(INITPACKAGES); do \
 	  if ! test -f $(RHOME)/library/$${pkg}/DESCRIPTION ; then \
@@ -388,7 +388,7 @@ test-Basic:
 PKGS-CHK = $(foreach i, $(PACKAGES), pkgcheck-$i)
 pkgtests: $(PKGS-CHK)
 
-fullcheck: check check-recommended
+check-all fullcheck: check check-recommended
 
 REC_PKGS-CHK = $(foreach i, $(REC_PKGS), pkgcheck-$i)
 check-recommended: $(REC_PKGS-CHK)
@@ -439,7 +439,7 @@ recommended: unpack-recommended
 	  $(MAKE) --no-print-directory pkg-$$p; \
 	done
 
-rinstaller: 
+rinstaller:
 	$(MAKE) -C installer
 	$(MAKE) -C installer clean
 
@@ -448,7 +448,7 @@ crandir:
 	$(CP) installer/rw*.exe cran
 	(cd cran;\
 	 $(ECHO) 'cat(md5sum("$(RPREFIX).exe"),"*$(RPREFIX).exe")' \
-         | $(RHOME)/bin/rterm --vanilla --slave R_DEFAULT_PACKAGES=tools >md5sum.txt) 
+         | $(RHOME)/bin/rterm --vanilla --slave R_DEFAULT_PACKAGES=tools >md5sum.txt)
 	$(CP) installer/mini*.* cran/mini
 	(cd cran/mini;\
 	 $(ECHO) 'fn <- dir(pattern="mini*"); cat(paste(md5sum(fn)," *",fn,sep=""),sep="\n")' \
@@ -459,20 +459,19 @@ crandir:
 	  -e s/@RVER@/$(RVER)/g cran/index.in > cran/index.html
 	$(SED) -e s/@RWVER@/$(RPREFIX)/g \
 	  -e s/@RVER@/$(RVER)/g cran/ReadMe.in > cran/ReadMe
-	
-distribution: 
+
+distribution:
 	$(MAKE) Rpwd.exe
 	$(MAKE) rbuild
-	$(MAKE) bitmapdll	
 	$(MAKE) rpackage
+	$(MAKE) rdocs
+	$(MAKE) bitmapdll
 	$(MAKE) tcl
-	$(MAKE) recommended	
-	$(MAKE) rdocs	
-	$(MAKE) docfiles
+	$(MAKE) recommended
 	$(MAKE) docs
 	$(MAKE) rinstaller
 	$(MAKE) crandir
-	  
+
 
 ## ============= End of maintainer targets ========================
 
