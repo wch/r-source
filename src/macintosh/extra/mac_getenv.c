@@ -170,6 +170,7 @@ FILE * FSp_fopen(ConstFSSpecPtr spec, const char * open_mode);
 char *mac_getenv(const char *name);
 
 char err_str[] = "\0";
+extern Boolean Have_Console;
 
 char *mac_getenv(const char *name)
 {
@@ -185,6 +186,9 @@ char *mac_getenv(const char *name)
 
     if (name == NULL)
 	return err_str;//NULL;
+    
+    if(strcmp(name,"R_HOME")==0)
+     return R_Home;
 
     sprintf(temp_path,"%s:.Renviron",R_Home);
     
