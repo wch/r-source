@@ -1,5 +1,0 @@
-export(X11, bitmap, bmp, bringToTop, dev2bitmap, jpeg, png, savePlot,
-       win.graph, win.metafile, win.print, windows, x11)
-
-S3method("[", SavedPlots)
-S3method(print, SavedPlots)

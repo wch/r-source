@@ -1,4 +1,0 @@
-?package(r-base-core):needs="text"	\
-	section="Apps/Math"		\
-	title="GNU R"			\
-	command="/usr/bin/R"
