@@ -59,7 +59,8 @@ termplot(model, data=NULL, envir=environment(formula(model)),
   which \code{\link{lm}} and \code{\link{glm}} do.
 
   The \code{data} argument should rarely be needed, but in some cases
-  \code{termplot} may be unable to reconstruct the original data frame.
+  \code{termplot} may be unable to reconstruct the original data
+  frame. Using \code{na.action=na.exclude} makes these problems less likely.
 
   Nothing sensible happens for interaction terms.
 }

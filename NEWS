@@ -751,8 +751,10 @@ BUG FIXES
     o	Sweave no longer wraps the output of code chunks with
 	echo=false and results=tex in Schunk environments.
 
-    o	1:2 * 1e-100  now prints with correct number of spaces.
+    o   termplot handles models with missing data better, especially
+        with na.action=na.exclude.
 
+    o	1:2 * 1e-100  now prints with correct number of spaces.
 
 
 	**************************************************

@@ -701,10 +701,13 @@ residuals.glm <-
 		  pearson = (y-mu)*sqrt(wts)/sqrt(object$family$variance(mu)),
 		  working = r,
 		  response = y - mu,
-		  partial = r + predict(object,type="terms")
+		  partial = r 
 		  )
-    if(is.null(object$na.action)) res
-    else naresid(object$na.action, res)
+    if(!is.null(object$na.action)) 
+      res<- naresid(object$na.action, res)
+    if (type=="partial") ## need to avoid doing naresid() twice.
+      res<-res+predict(object, type="terms")
+    res
 }
 
 ## KH on 1998/06/22: update.default() is now used ...

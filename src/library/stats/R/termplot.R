@@ -87,6 +87,8 @@ termplot <- function(model, data=NULL,envir=environment(formula(model)),
 
 	if (is.fac[i]) {
 	    ff <- mf[,nmt[i]]
+            if (!is.null(model$na.action))
+              ff<-naresid(model$na.action,ff)
 	    ll <- levels(ff)
 	    xlims <- range(seq(along=ll)) + c(-.5, .5)
             xx <- as.numeric(ff) ##need if rug or partial
@@ -121,7 +123,8 @@ termplot <- function(model, data=NULL,envir=environment(formula(model)),
 	}
 	if (partial.resid){
           if (!is.fac[i] && !is.null(smooth)){
-            smooth(xx,pres[,i], lty=lty.smth, cex=cex, pch=pch, col=col.res, col.smooth = col.smth,span=span.smth)
+            smooth(xx,pres[,i], lty=lty.smth, cex=cex, pch=pch, col=col.res,
+                   col.smooth = col.smth,span=span.smth)
           } else 
           points(xx, pres[,i], cex = cex, pch = pch, col = col.res)
         }
