@@ -128,8 +128,12 @@ function(file)
 
     start <- regexpr("\\\\name{[[:space:]]*([^\}]+)[[:space:]]*}", txt)
     if(start == -1)
-        stop(paste("missing/empty \\name field in",
-                   summary(file)$description))
+        stop(paste("missing/empty \\name field in ",
+                   sQuote(summary(file)$description), "\n",
+                   "Rd files must have a non-empty \\name.\n",
+                   "See chapter ", sQuote("Writing R documentation"),
+                   " in manual ", sQuote("Writing R Extensions"),
+                   ".", sep = ""))
     RdName <- gsub("[[:space:]]*", " ",
                    substr(txt,
                           start + 6,
@@ -137,8 +141,12 @@ function(file)
 
     start <- regexpr("\\\\title{[[:space:]]*([^\}]+)[[:space:]]*}", txt)
     if(start == -1)
-        stop(paste("missing/empty \\title field in",
-                   summary(file)$description))
+        stop(paste("missing/empty \\title field in ",
+                   sQuote(summary(file)$description), "\n",
+                   "Rd files must have a non-empty \\title.\n",
+                   "See chapter ", sQuote("Writing R documentation"),
+                   " in manual ", sQuote("Writing R Extensions"),
+                   ".", sep = ""))
     RdTitle <- gsub("[[:space:]]*", " ",
                     substr(txt,
                            start + 7,
