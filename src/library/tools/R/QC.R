@@ -4,6 +4,8 @@ undoc <-
 function(package, dir, lib.loc = NULL)
 {
     nsInfo <- NULL
+
+    ## Argument handling.
     if(!missing(package)) {
         if(length(package) != 1)
             stop(paste("argument", sQuote("package"),
@@ -76,7 +78,7 @@ function(package, dir, lib.loc = NULL)
 
     codeObjs <- ls(envir = codeEnv, all.names = TRUE)
     if(length(nsInfo)) {
-        ## look only at exported objects (and not declared S3 methods)
+        ## Look only at exported objects (and not declared S3 methods).
         OK <- codeObjs[codeObjs %in% nsInfo$exports]
         for (p in nsInfo$exportPatterns)
             OK <- c(OK, grep(p, codeObjs, value = TRUE))
@@ -153,9 +155,7 @@ function(package, dir, lib.loc = NULL)
                 }) == FALSE]
         }
         ## </FIXME>
-    }
-
-    if(!isBase) {
+        
         ## Allow group generics to be undocumented other than in base.
         ## In particular, those from methods partially duplicate base
         ## and are documented in base's groupGenerics.Rd.
@@ -204,8 +204,10 @@ function(package, dir, lib.loc = NULL,
          ignore.generic.functions = FALSE,
          verbose = getOption("verbose"))
 {
+    S3reg <- character(0)
+    nsInfo <- NULL
+    
     ## Argument handling.
-    S3reg <- character(0); nsInfo <- NULL
     if(!missing(package)) {
         if(length(package) != 1)
             stop(paste("argument", sQuote("package"),
@@ -228,15 +230,14 @@ function(package, dir, lib.loc = NULL,
         codeEnv <-
             as.environment(match(paste("package", package, sep = ":"),
                                  search()))
-        ## if there is a NAMESPACE,
-        ## find non-exported methods declared in S3methods directives.
-        if(file.exists(file.path(.find.package(package, lib.loc, quiet = TRUE),
-                                 "NAMESPACE"))) {
+        ## If there is a NAMESPACE, find non-exported methods declared
+        ## in S3methods directives. 
+        if(file.exists(file.path(dir, "NAMESPACE"))) {
             S3reg <- sapply(getNamespaceInfo(package, "S3methods"),
-                             function(x) x[[3]])
+                            function(x) x[[3]])
             S3reg <- if(length(S3reg))
                 S3reg[! S3reg %in% ls(codeEnv, all.names = TRUE) ]
-            else character(0) # sapply gives list()
+            else character(0)           # sapply gives list()
         }
     }
     else {
@@ -279,17 +280,17 @@ function(package, dir, lib.loc = NULL,
 
     lsCode <- ls(envir = codeEnv, all.names = TRUE)
     if(length(nsInfo)) {
-        ## look only at exported objects
+        ## Look only at exported objects.
         OK <- lsCode[lsCode %in% nsInfo$exports]
         for (p in nsInfo$exportPatterns)
             OK <- c(OK, grep(p, lsCode, value = TRUE))
         lsCode <- unique(OK)
-        ## S3reg are unexported but declared S3 methods
+        ## S3reg are unexported but declared S3 methods.
         S3m <- sapply(nsInfo$S3methods,
                       function(x) {
                           if(length(x) > 2) x[3] else paste(x, collapse=".")
                       })
-        # S3m = list() if empty
+        ## S3m = list() if empty.
         S3reg <- if(length(S3m)) S3m[! S3m %in% lsCode] else character(0)
     }
 
@@ -450,6 +451,7 @@ checkAssignFuns <-
 function(package, dir, lib.loc = NULL)
 {
     S3reg <- character(0)
+    
     ## Argument handling.
     if(!missing(package)) {
         if(length(package) != 1)
@@ -469,10 +471,9 @@ function(package, dir, lib.loc = NULL)
         codeEnv <-
             as.environment(match(paste("package", package, sep = ":"),
                                  search()))
-        ## if there is a NAMESPACE, we want to test any non-exported
+        ## If there is a NAMESPACE, we want to test any non-exported
         ## replacement methods declared in S3method directives.
-        if(file.exists(file.path(.find.package(package, lib.loc, quiet = TRUE),
-                                 "NAMESPACE"))) {
+        if(file.exists(file.path(dir, "NAMESPACE"))) {
             S3reg <- sapply(getNamespaceInfo(package, "S3methods"),
                              function(x) x[[3]])
             if(!length(S3reg)) S3reg <- character(0)
@@ -866,6 +867,7 @@ function(package, dir, file, lib.loc = NULL,
 {
     useSaveImage <- FALSE
 
+    ## Argument handling.
     if(!missing(package)) {
         if(length(package) != 1)
             stop(paste("argument", sQuote("package"),
@@ -917,10 +919,12 @@ function(package, dir, file, lib.loc = NULL,
                 ".Call.graphics", ".External.graphics")
     findBadExprs <- function(e) {
         if(is.call(e) || is.expression(e)) {
-            ## note this picks up all calls, e.g. a$b, and they
-            ## may convert to a vector.  The function is the
-            ## the first element in all the calls we are interested in.
+            ## <NOTE>
+            ## This picks up all calls, e.g. a$b, and they may convert
+            ## to a vector.  The function is the first element in all
+            ## the calls we are interested in.
             ## BDR 2002-11-28
+            ## </NOTE>
             if(as.character(e[[1]])[1] %in% FFfuns) {
                 parg <- if(is.null(e[["PACKAGE"]])) {
                     badExprs <<- c(badExprs, e)
@@ -979,8 +983,9 @@ function(x, ...)
 checkMethods <-
 function(package, dir, lib.loc = NULL)
 {
-    ## Argument handling.
     S3reg <- character(0)
+    
+    ## Argument handling.
     if(!missing(package)) {
         if(length(package) != 1)
             stop(paste("argument", sQuote("package"),
@@ -999,12 +1004,11 @@ function(package, dir, lib.loc = NULL)
         codeEnv <-
             as.environment(match(paste("package", package, sep = ":"),
                                  search()))
-        ## if there is a NAMESPACE, we want to test any non-exported
+        ## If there is a NAMESPACE, we want to test any non-exported
         ## methods declared in S3method directives.
-        if(file.exists(file.path(.find.package(package, lib.loc, quiet = TRUE),
-                                 "NAMESPACE"))) {
+        if(file.exists(file.path(dir, "NAMESPACE"))) {
             S3reg <- sapply(getNamespaceInfo(package, "S3methods"),
-                             function(x) x[[3]])
+                            function(x) x[[3]])
             if(!length(S3reg)) S3reg <- character(0)
             S3reg <- S3reg[! S3reg %in% ls(codeEnv, all.names = TRUE)]
         }
@@ -1054,13 +1058,13 @@ function(package, dir, lib.loc = NULL)
         ## the generic g from environment env?  The method must have all
         ## arguments the generic has, with positional arguments of g in
         ## the same positions for m.
-        ## Exception: '...' in the method swallows anything
+        ## Exception: '...' in the method swallows anything.
         genfun <- get(g, envir = env)
         gArgs <- names(formals(genfun))
         if(g == "plot") gArgs <- gArgs[-2]
         ogArgs <- gArgs
         gm <- if(m %in% S3reg) {
-            ## see registerS3method in namespaces.R
+            ## See registerS3method() in namespaces.R.
             defenv <- if (typeof(genfun) == "closure") environment(genfun)
             else .BaseNamespaceEnv
             S3Table <- get(".__S3MethodsTable__.", envir = defenv)
@@ -1145,8 +1149,9 @@ function(x, ...)
 checkTnF <-
 function(package, dir, file, lib.loc = NULL)
 {
-    docsFiles <- character(0)
+    codeFiles <- docsFiles <- character(0)
 
+    ## Argument handling.
     if(!missing(package)) {
         if(length(package) != 1)
             stop(paste("argument", sQuote("package"),
@@ -1155,7 +1160,9 @@ function(package, dir, file, lib.loc = NULL)
         if(file.exists(file.path(packageDir, "R", "all.rda"))) {
             warning("cannot check R code installed as image")
         }
-        codeFiles <- file.path(packageDir, "R", package)
+        codeFile <- file.path(packageDir, "R", package)
+        if(file.exists(codeFile))       # could be data-only
+            codeFiles <- codeFile
         exampleDir <- file.path(packageDir, "R-ex")
         if(.fileTest("-d", exampleDir)) {
             codeFiles <- c(codeFiles,
@@ -1168,10 +1175,8 @@ function(package, dir, file, lib.loc = NULL)
         else
             dir <- .convertFilePathToAbsolute(dir)
         codeDir <- file.path(dir, "R")
-        if(!.fileTest("-d", codeDir))
-            stop(paste("directory", sQuote(dir),
-                       "does not contain R code"))
-        codeFiles <- .listFilesWithType(codeDir, "code")
+        if(.fileTest("-d", codeDir))    # could be data-only
+            codeFiles <- .listFilesWithType(codeDir, "code")
         docsDir <- file.path(dir, "man")
         if(.fileTest("-d", docsDir))
             docsFiles <- .listFilesWithType(docsDir, "docs")
