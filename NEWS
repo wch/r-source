@@ -6,6 +6,10 @@ NEW FEATURES
 
     o   new function rle().
 
+    o   plot(.) and  curve(.) also accept a function as first argument.
+	new `plot.function'.
+
+
 BUG FIXES
 
     o   `make install' copied the R shell script a second time without
@@ -13,6 +17,8 @@ BUG FIXES
 
     o   help() after help.start() did not work if topic was not equal
         to filename (e.g. rnorm is found in Normal.html)
+
+    o   fix the 0.63.1 fix for abbreviate(.);  improved doc.
 
 
 		CHANGES IN R VERSION 0.63.1
