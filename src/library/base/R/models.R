@@ -30,7 +30,6 @@ formula.data.frame<- function (df)
     eval(ff)
 }
 
-
 print.formula <- function(x) print.default(unclass(x))
 
 "[.formula" <- function(x,i) {
@@ -297,24 +296,6 @@ model.response <- function (data, type = "any")
 	} else stop("invalid data argument")
     } else return(NULL)
 }
-##model.response <- function (data, type = "any")
-##{
-##	if (attr(attr(data, "terms"), "response")) {
-##		if (is.list(data) | is.data.frame(data)) {
-##			v <- data[[1]]
-##			if (type == "numeric" | type == "double") {
-##				storage.mode(v) <- "double"
-##			}
-##			else if (type != "any")
-##				stop("invalid response type")
-##			if (is.matrix(v) && ncol(v) == 1)
-##				dim(v) <- NULL
-##			return(v)
-##		}
-##		else stop("invalid data argument")
-##	}
-##	else return(NULL)
-##}
 
 model.extract <- function (frame, component)
 {
