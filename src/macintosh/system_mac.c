@@ -1360,16 +1360,45 @@ Rboolean R_FileExists(char *path)
 FILE *R_fopen(const char *filename, const char *mode)
 {
 #ifdef __MRC__    
-    char			unixPath[400];
+    char	unixPath[400];
+#endif
+    char 	tmpfile[401];
+    int		i,slen;
+    Boolean isAFolder = FALSE;
+    
+    if(!filename)
+     return(NULL);
+
+    if(filename[0] == ':'){
+     strcpy(tmpfile,filename);
+     goto openthisfile;
+    }
+    
+    for(i = 1; i<strlen(filename); i++){
+     if( filename[i] == ':' ){
+     isAFolder = TRUE;
+     break;
+     }
+    }
+    
+    if(!isAFolder && (filename[0] != ':')){
+       tmpfile[0] = ':';
+       tmpfile[1] = '\0';
+       strcat(tmpfile,filename);
+    }else
+      strcpy(tmpfile,filename);
+
+openthisfile:    
+#ifdef __MRC__    
 
 	if(systemVersion >= 0x10008000){ /* On System X we have to take care of */
 	                                 /* Unix <-> HFS path differences       */	
-	 ConvertHFSPathToUnixPath(filename, (char *)&unixPath) ;
+	 ConvertHFSPathToUnixPath(tmpfile, (char *)&unixPath) ;
 	 return( fopen((const char *)&unixPath,mode) );
     }
 #endif 
 
-    return(filename ? fopen(filename, mode) : NULL );
+    return(tmpfile ? fopen(tmpfile, mode) : NULL );
 }
 
 
