@@ -293,6 +293,9 @@ BUG FIXES
 
     o   R-lang manual had precedence of %% wrong (PR#879)
 
+    o   Try() constructs lost protection of R_alloc'ed memory (PR#877)
+
+
 
 		CHANGES IN R VERSION 1.2.2
 
