@@ -43,7 +43,7 @@ use Text::Wrap;
 ## don't buffer output
 $| = 1;
 
-my $revision = ' $Revision: 1.62 $ ';
+my $revision = ' $Revision: 1.63 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -72,6 +72,8 @@ GetOptions(@known_options) or usage();
 
 R_version("R add-on package builder", $version) if $opt_version;
 usage() if $opt_help;
+
+$ENV{"R_DEFAULT_PACKAGES"} = "tools";
 
 my $startdir = cwd();
 
@@ -330,7 +332,7 @@ sub prepare_pkg {
 				"vignette")) {
 	if(!$opt_no_vignettes) {
 	    $log->creating("vignettes");
-	    my $Rcmd = "library(tools); buildVignettes(dir='.')\n";
+	    my $Rcmd = "buildVignettes(dir = '.')\n";
 	    my @out = R_runR($Rcmd, "--vanilla --no-save --quiet");
 	    my @err = grep(/^Error/, @out);
 	    if($#err >= 0) {
@@ -395,8 +397,7 @@ sub updateRdIndex {
 
     my $newindex = ".Rbuildindex.$$";
 
-    my $Rcmd = "library(tools)\n";
-    $Rcmd .= "Rdindex(\"${Rdfiles}\", \"${newindex}\")";
+    my $Rcmd = "Rdindex(\"${Rdfiles}\", \"${newindex}\")\n";
 
     ## <FIXME>
     ## What if this fails?

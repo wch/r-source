@@ -37,7 +37,7 @@ use Text::Wrap;
 ## don't buffer output
 $| = 1;
 
-my $revision = ' $Revision: 1.149 $ ';
+my $revision = ' $Revision: 1.150 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -83,6 +83,8 @@ if($opt_install eq "fake") {
     $opt_examples = $opt_tests = $opt_vignettes = 0;
 }
 $opt_install = 0 if($opt_install eq "no");
+
+$ENV{"R_DEFAULT_PACKAGES"} = "tools";
 
 my $startdir = cwd();
 $opt_outdir = $startdir unless $opt_outdir;
@@ -759,8 +761,7 @@ sub check_pkg {
 	}
 	else {
 	    my $dir = "demo";
-	    my $cmd = "library(tools)\n";
-	    $cmd .= ".checkDemoIndex(\"$dir\")\n";
+	    my $cmd = ".checkDemoIndex(\"$dir\")\n";
 	    my @out = R_runR($cmd, "${R_opts} --quiet");
 	    @out = grep(!/^\>/, @out);
 	    if($#out >= 0) {
@@ -774,8 +775,7 @@ sub check_pkg {
        && &list_files_with_type(&file_path("inst", "doc"),
 				"vignette")) {
 	my $dir = &file_path("inst", "doc");
-	my $cmd = "library(tools)\n";
-	$cmd .= ".checkVignetteIndex(\"$dir\")\n";
+	my $cmd = ".checkVignetteIndex(\"$dir\")\n";
 	my @out = R_runR($cmd, "${R_opts} --quiet");
 	@out = grep(!/^\>/, @out);
 	if($#out >= 0) {
@@ -930,7 +930,7 @@ sub check_pkg {
     if(-d "R") {
 	$log->checking("S3 generic/method consistency");
 
-	my $Rcmd = "library(tools)\n";
+	my $Rcmd;
 	if($opt_install) {
 	    $Rcmd .= "checkS3methods(package = \"${pkgname}\")\n";
 	}
@@ -955,7 +955,7 @@ sub check_pkg {
     if(-d "R") {
 	$log->checking("for replacement functions with final arg not " .
 		       "named 'value'");
-	my $Rcmd = "library(tools)\n";
+	my $Rcmd;
 	if($opt_install) {
 	    $Rcmd .= "checkReplaceFuns(package = \"${pkgname}\")\n";
 	}
@@ -984,7 +984,7 @@ sub check_pkg {
     if((-d "R") && $ENV{'R_CHECK_FF_CALLS'}) {
 	$log->checking("foreign function calls");
 
-	my $Rcmd = "library(tools)\n";
+	my $Rcmd;
 	if($opt_install) {
 	    $Rcmd .= "checkFF(package = \"${pkgname}\")\n";
 	}
@@ -1207,7 +1207,7 @@ sub check_pkg {
     if(((-d "R") || (-d "data")) && (-d "man")) {
 	$log->checking("for missing documentation entries");
 
-	my $Rcmd = "library(tools)\n";
+	my $Rcmd;
 	if($opt_install) {
 	    $Rcmd .= "undoc(package = \"${pkgname}\")\n";
 	}
@@ -1250,7 +1250,7 @@ sub check_pkg {
 
 	## Check for code/documentation mismatches in functions.
 	if(-d "R") {
-	    my $Rcmd = "library(tools)\n";
+	    my $Rcmd;
 	    if($opt_install) {
 		$Rcmd .= "codoc(package = \"${pkgname}\")\n";
 	    }
@@ -1275,8 +1275,7 @@ sub check_pkg {
 
 	## Check for code/documentation mismatches in data sets.
 	if($opt_install) {
-	    my $Rcmd = "library(tools)\n";
-	    $Rcmd .= "codocData(package = \"${pkgname}\")\n";
+	    my $Rcmd = "codocData(package = \"${pkgname}\")\n";
 	    my @out = R_runR($Rcmd, "${R_opts} --quiet");
 	    @out = grep(!/^\>/, @out);
 	    if($#out >= 0) {
@@ -1288,8 +1287,7 @@ sub check_pkg {
 
 	## Check for code/documentation mismatches in S4 classes.
 	if($opt_install && (-d "R")) {
-	    my $Rcmd = "library(tools)\n";
-	    $Rcmd .= "codocClasses(package = \"${pkgname}\")\n";
+	    my $Rcmd = "codocClasses(package = \"${pkgname}\")\n";
 	    my @out = R_runR($Rcmd, "${R_opts} --quiet");
 	    @out = grep(!/^\>/, @out);
 	    if($#out >= 0) {
@@ -1310,7 +1308,7 @@ sub check_pkg {
     if(-d "man") {
 	$log->checking("Rd \\usage sections");
 
-	my $Rcmd = "library(tools)\n";
+	my $Rcmd;
 	if($opt_install) {
 	    $Rcmd .= "checkDocFiles(package = \"${pkgname}\")\n";
 	}
@@ -1527,7 +1525,7 @@ sub check_pkg {
 
 	## Can we run the code in the vignettes?
 	if($opt_vignettes) {
-	    my $Rcmd = "library(tools)\n";
+	    my $Rcmd;
 	    if($opt_install) {
 		$Rcmd .= "checkVignettes(package=\"${pkgname}\", " .
 		         "lib.loc = \"$pkgoutdir\", " .
