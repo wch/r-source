@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2003
-@set FAQ-VERSION 1.7-37, @value{FAQ-YEAR}-08-19
+@set FAQ-VERSION 1.7-38, @value{FAQ-YEAR}-08-22
 @set REL-VERSION 1.7.1
 @set FAQ-ISBN 3-901167-51-X
 @documentlanguage en
@@ -2152,6 +2152,9 @@ nearest neighbor based noise detection.
 Fits a principal curve to a matrix of points in arbitrary dimension.
 @item pspline
 Smoothing splines with penalties on order @math{m} derivatives.
+@item psy
+Various procedures used in psychometry: Kappa, ICC, Cronbach alpha,
+screeplot, PCA and related methods.
 @item qtl
 Analysis of experimental crosses to identify QTLs.
 @item quadprog

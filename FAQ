@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.7-37, 2003-08-19
+Version 1.7-38, 2003-08-22
 ISBN 3-901167-51-X
 Kurt Hornik
 
@@ -2015,6 +2015,10 @@ distributions of R.)
 
 *pspline*
      Smoothing splines with penalties on order m derivatives.
+
+*psy*
+     Various procedures used in psychometry: Kappa, ICC, Cronbach alpha,
+     screeplot, PCA and related methods.
 
 *qtl*
      Analysis of experimental crosses to identify QTLs.
