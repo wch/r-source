@@ -9,6 +9,9 @@
 
 NEW FEATURES
 
+    o   contr.treatment now has a base= argument for selecting the
+	baseline group.
+
     o	New command line option `--no-environ' (under Unix) to prevent
 	sourcing the `~/.Renviron' file.  Implied by `--vanilla'.
 

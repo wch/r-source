@@ -4,7 +4,7 @@
 contr.helmert(n, contrasts=TRUE)
 contr.poly(n, contrasts=TRUE)
 contr.sum(n, contrasts=TRUE)
-contr.treatment(n, contrasts=TRUE)
+contr.treatment(n, base=1, contrasts=TRUE)
 }
 \alias{contr.helmert}
 \alias{contr.poly}
@@ -14,6 +14,9 @@ contr.treatment(n, contrasts=TRUE)
 A matrix with \code{n} rows and \code{k} columns,
 with \code{k=n-1} if \code{contrasts} is \code{TRUE}
 and \code{k=n} if \code{contrasts} is \code{FALSE}.
+
+The base argument to \code{contr.treatment()} allows you to specify
+which group is considered the beaseline group.
 
 These functions are used for creating contrast matrices
 for use in fitting analysis of variance and regression models.
