@@ -7,6 +7,9 @@
 
 NEW FEATURES
 
+    o	chisq.test() now optionally computes the p-value by Monte Carlo
+	simulation (in the standard case of a 2-d contigency table).
+
     o	New functions getwd() and setwd() for getting and setting the R
 	working directory.
 
@@ -31,13 +34,13 @@ NEW FEATURES
 	eval(e) now gives expression(123), not 123. This fixes some
 	problems with expressions in the list argument to do.call().
 
-    o	Convenience functions parent.frame() and eval.parent()
+    o	Convenience functions parent.frame() and eval.parent().
 
     o	Function new.env() to create empty environment and local() to
 	allow local evaluation of expressions, with various useful
 	idiomatic uses.
 
-    o	uniroot() can now be used recursively
+    o	uniroot() can now be used recursively.
 
 BUG FIXES
 
