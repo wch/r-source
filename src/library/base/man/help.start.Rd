@@ -1,31 +1,33 @@
 \name{help.start}
 \title{Hypertext Documentation}
+\alias{help.start}
+\description{
+  Start the hypertext (currently HTML) version of \R's online
+  documentation.
+}
 \usage{
 #ifdef unix  
-help.start(gui = "irrelevant", browser = getOption("browser"), remote = NULL)
+help.start(gui = "irrelevant", browser = getOption("browser"),
+           remote = NULL)
 #endif
 #ifdef windows  
 help.start(update = TRUE, gui = "irrelevant",
            browser = getOption("browser"))
 #endif
 }
-\alias{help.start}
 \arguments{
   \item{gui}{just for compatibility with S-PLUS.}
   \item{browser}{the name of the program to be used as hypertext
     browser. It should be in the PATH, or a full path specified.
   }
 #ifdef unix  
-  \item{remote}{A character giving a valid URL for the
-    \file{\$R\_HOME} directory on a remote location.}
+  \item{remote}{A character giving a valid URL for the \file{\$R\_HOME}
+    directory on a remote location.}
 #endif
 #ifdef windows  
   \item{update}{logical: should this attempt to update the indices to
     reflect the currently installed packages.}
 #endif
-}
-\description{
-  Start the hypertext (currently HTML) version of \R's online documentation.
 }
 \details{
 #ifdef unix
@@ -34,11 +36,13 @@ help.start(update = TRUE, gui = "irrelevant",
   re-made each time \code{help.start} is run, which should be done
   after packages are installed, updated or removed.
 
-  The \code{browser} needs to work with a \code{"-remote openURL(...)"}
-  call. Then, the hypertext \R help interface is opened in any already
-  running browser or a new one if necessary.  Browsers that support this
-  interface include Netscape 4.x, 6.2.x, 7.0pr1 (but not 6.0/1),
-  Opera 5/6 and Mozilla >= 0.9.5.
+  If \code{browser} supports remote control and \R knows how to perform
+  it, the hypertext \R help interface is opened in any already running
+  browser or a new one if necessary.  This mechanism currently is
+  available for browsers which support the \code{"-remote openURL(...)"}
+  interface (which includes Netscape 4.x, 6.2.x, 7.0pr1 (but not 6.0/1),
+  Opera 5/6 and Mozilla >= 0.9.5), Galeon, KDE konqueror (via kfmclient)
+  and the GNOME interface to Mozilla.
 
   If the browser given by the \code{browser} argument is different from
   the default browser as specified by \code{options("browser")}, the
@@ -57,7 +61,8 @@ help.start(update = TRUE, gui = "irrelevant",
   specified, but \code{help} will still use the file association mechanism.
 
   \code{help.start} and the Java-based search engine have been tested
-  under Internet Explorer 6, Netscape 6.2.3/7.0rc1, Opera 6.01 and Mozilla 1.0.
+  under Internet Explorer 6, Netscape 6.2.3/7.0rc1, Opera 6.01 and
+  Mozilla 1.0.
 #endif
 }
 
