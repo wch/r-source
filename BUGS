@@ -69,11 +69,6 @@ none
 
 Directory:  Graphics
 
-* PR# 535 *
-Subject:  axis() deficiency 
-From: William.Venables@cmis.CSIRO.AU (Bill Venables)
-Date: Sat, 6 May 2000 10:33:32 +1000 (EST)
---Placement of graphics in margins is quite deeply coded in R.
 * PR# 202 *
 Subject: persp box occlusion bug
 From: wsi@gcal.ac.uk
@@ -176,23 +171,26 @@ none
 
 Directory:  incoming
 
-* PR# 561 *
-Subject: FREE SAMPLE!  Look and feel great!  100% Guarantee!
-From: loseweightfast@visualcities.com
-Date: Mon, 5 Jun 2000 08:52:02 +0200 (MET DST)
-* PR# 545 *
-Subject: Segmentation Fault of unknown cause
-From: kjetikj@astro.uio.no
-Date: Mon, 15 May 2000 16:29:29 +0200 (MET DST)
+* PR# 563 *
+From: Setzer.Woodrow@epamail.epa.gov
+Date: Tue, 06 Jun 2000 14:21:35 -0400
 * PR# 536 *
 Subject: Problem with match.arg()
 From: kjetikj@astro.uio.no
 Date: Sun, 7 May 2000 13:58:21 +0200 (MET DST)
-* PR# 560 *
-Subject: mle
-From: pi.broberg@telia.com
-Date: Sun, 4 Jun 2000 16:50:17 +0200 (MET DST)
 * PR# 551 *
 Subject: Bus Error crash
 From: kjetikj@astro.uio.no
 Date: Mon, 22 May 2000 13:06:48 +0200 (MET DST)
+* PR# 545 *
+Subject: Segmentation Fault of unknown cause
+From: kjetikj@astro.uio.no
+Date: Mon, 15 May 2000 16:29:29 +0200 (MET DST)
+* PR# 562 *
+Subject: crash after help(..., chmhelp=TRUE)
+From: Uwe Ligges <ligges@statistik.uni-dortmund.de>
+Date: Tue, 06 Jun 2000 18:18:15 +0200
+* PR# 561 *
+Subject: FREE SAMPLE!  Look and feel great!  100% Guarantee!
+From: loseweightfast@visualcities.com
+Date: Mon, 5 Jun 2000 08:52:02 +0200 (MET DST)
