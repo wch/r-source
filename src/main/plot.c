@@ -406,7 +406,7 @@ GetTextArg(SEXP call, SEXP spec, SEXP *ptxt,
 		}
 		else if (!strcmp(CHAR(STRING_ELT(nms, i)), "")) {
 		    txt = VECTOR_ELT(spec, i);
-		    if (TYPEOF(txt) == LANGSXP) {
+		    if (TYPEOF(txt) == LANGSXP || TYPEOF(txt)==SYMSXP) {
 			UNPROTECT(1);
 			PROTECT(txt = coerceVector(txt, EXPRSXP));
 		    }
