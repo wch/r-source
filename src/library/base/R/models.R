@@ -81,19 +81,16 @@ delete.response <- function (termobj)
 
 reformulate <- function (termlabels, response=NULL)
 {
-    termtext <- paste(termlabels, collapse="+")
-    if (is.null(response)) {
-	termtext <- paste("~", termtext, collapse="")
-	rval<-eval(parse(text=termtext)[[1]])
-        environment(rval)<-parent.frame()
-        rval
-    } else {
-	termtext <- paste("response", "~", termtext, collapse="")
-	termobj <- eval(parse(text=termtext)[[1]])
-	termobj[[2]] <- response
-        environment(termobj)<-parent.frame()
-	termobj
-    }
+    has.resp <- !is.null(response)
+    termtext <- paste(if(has.resp)"response", "~",
+		      paste(termlabels, collapse = "+"),
+		      collapse = "")
+    rval <- eval(parse(text = termtext)[[1]])
+    if(has.resp) rval[[2]] <-
+        if(is.character(response)) as.symbol(response) else response
+    ## response can be a symbol or call as  Surv(ftime, case)
+    environment(rval) <- parent.frame()
+    rval
 }
 
 drop.terms <- function(termobj, dropx=NULL, keep.response = FALSE)

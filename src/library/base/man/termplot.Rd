@@ -41,8 +41,8 @@ termplot(model, data=model.frame(model), partial.resid=FALSE, rug=FALSE,
 \details{
   The model object must have a \code{predict} method that accepts
   \code{type=terms}, eg \code{\link{glm}} in the base package,
-  \code{\link[survival5]{coxph}} and \code{\link[survival5]{survreg}} in the
-  \code{survival5} package.
+  \code{\link[survival]{coxph}} and \code{\link[survival]{survreg}} in the
+  \code{survival} package.
 
   For the \code{partial.resid=TRUE} option it must have a
   \code{\link{residuals}} method that accepts \code{type="partial"},
