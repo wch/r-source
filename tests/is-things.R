@@ -17,7 +17,7 @@ is.primitive <- function(obj)  is.function(obj) && is.null(args(obj))
 
 is.ALL <- function(obj, func.names = ls(pos=length(search())),
 		   not.using = c("is.single", "is.na.data.frame",
-		   "is.loaded", "is.empty.model"),
+		   "is.loaded", "is.empty.model", "is.R"),
 		   true.only = FALSE, debug = FALSE)
 {
     ## Purpose: show many 'attributes' of  R object __obj__
@@ -34,10 +34,15 @@ is.ALL <- function(obj, func.names = ls(pos=length(search())),
     for(f in use.fn) {
 	if(debug) cat(f,"")
 	fn <- get(f)
-	rr <- if(is.primitive(fn) || length(formals(fn))>0)  fn(obj) else fn()
+	rr <-
+	    if(any(f == c("is.na", "is.nan")) &&
+	       ((!is.atomic(obj) && !is.list(obj)) || is.null(obj)))
+		NA
+	    else
+		if(is.primitive(fn) || length(formals(fn))) fn(obj) else fn()
 	if(!is.logical(rr)) cat("f=",f," --- rr	 is NOT logical	 = ",rr,"\n")
 	##if(1!=length(rr))   cat("f=",f," --- rr NOT of length 1; = ",rr,"\n")
-	if(true.only && length(rr)==1 && rr) r <- c(r, f)
+	if(true.only && length(rr)==1 && !is.na(rr) && rr) r <- c(r, f)
 	else if(!true.only) r[[f]] <- rr
     }
     if(debug)cat("\n")
@@ -68,6 +73,7 @@ is.ALL(array(1:24, 2:4))
 is.ALL(1 + 3)
 e13 <- expression(1 + 3)
 is.ALL(e13)
+is.ALL(substitute(expression(a + 3), list(a=1)), true.only = TRUE)
 is.ALL(y ~ x)
 
 is0 <- is.ALL(numeric(0))
