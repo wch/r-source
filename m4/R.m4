@@ -528,7 +528,9 @@ fi
 ## to be used (under *exactly* these names).  It is also possible to use
 ## these options to specify the full path name of the compiler.
 AC_DEFUN([R_PROG_F77_OR_F2C],
-[if test -n "${FC}"; then
+[if test -n "${F77}"; then
+  AC_MSG_RESULT([defining F77 to be ${F77}])
+elif test -n "${FC}"; then
   warn_arg_var_FC="configure variable 'FC' is deprecated.
 Use variable 'F77' to specify a FORTRAN 77 compiler if necessary."
   AC_MSG_WARN([${warn_arg_var_FC}])
