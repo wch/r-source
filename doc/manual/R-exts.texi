@@ -5024,7 +5024,7 @@ Note that this is not guaranteed to be portable, for the return
 conventions might not be compatible between the C and FORTRAN compilers
 used.  (Passing values via arguments is safer.)
 
-The standard packages, for example @pkg{modreg}, are a rich source of
+The standard packages, for example @pkg{stats}, are a rich source of
 further examples.
 
 
