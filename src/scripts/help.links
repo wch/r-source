@@ -1,0 +1,43 @@
+#! /bin/sh
+
+URHOME="${HOME}/.Rhome"
+PKGLIST="${URHOME}/doc/html/packages.html"
+rm -rf ${URHOME}
+
+dirs="${URHOME} ${URHOME}/doc ${URHOME}/doc/html ${URHOME}/library"
+for d in ${dirs}; do
+    mkdir -p ${d}
+done
+
+for f in ${RHOME}/doc/html/*; do
+    ln -s ${f} ${URHOME}/doc/html
+done
+
+rm -f ${PKGLIST}
+cp ${RHOME}/doc/html/packages-head.html ${PKGLIST}
+
+for lib in $*; do
+    echo "<P><h3>Packages in ${lib}</h3>" >> ${PKGLIST}
+    echo "<P><TABLE width=100%>" >> ${PKGLIST}
+    for pkg in ${lib}/*; do
+	if test -d ${pkg}; then
+	    ln -sf ${pkg} ${URHOME}/library
+	    pkgname=`basename ${pkg}`
+	    if test -r ${pkg}/TITLE; then
+		pkgtitle=`cat ${pkg}/TITLE | sed "s/^${pkgname}//"`
+	    else
+		pkgtitle=""
+	    fi
+	    echo "<TR ALIGN=LEFT VALIGN=TOP>
+		    <TD width=25%><A HREF=\"../../library/${pkgname}/html/00Index.html\">
+		    ${pkgname}</A><TD>${pkgtitle}</TD></TR>" \
+		>> ${PKGLIST}
+	fi
+    done
+    echo "</TABLE>" >> ${PKGLIST}
+    echo "" >> ${PKGLIST}
+done
+
+cat ${RHOME}/doc/html/packages-foot.html >> ${PKGLIST}
+
+

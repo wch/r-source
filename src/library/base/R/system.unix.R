@@ -168,8 +168,22 @@ help <-
 		if (!is.null(.Options$trace) && .Options$trace)
 		    cat ("\t\t\t\t\t\tHelp file name `", sub(".*/", "", file),
 			 ".Rd'\n", sep = "")
-		if (!offline)
-		    system(paste("${RHOME}/bin/pager", file))
+		if (!offline) {
+                    if(!is.null(.Options$htmlhelp) && .Options$htmlhelp){
+                        file <- gsub(paste("/help/", topic, sep=""),
+                                     paste("/html/", topic, sep=""),
+                                     file)
+                        file <- paste("file:", file, ".html", sep="")
+                        if(is.null(.Options$browser))
+                            stop("options(\"browser\") not set")
+                        browser <- .Options$browser
+                        system(paste(browser, " -remote \"openURL(", file,
+                                     ")\" 2>/dev/null || ",
+                                     browser, " ", file, " &", sep = ""))
+                    }
+                    else
+                        system(paste("${RHOME}/bin/pager", file))
+                }
 		else {
 		    FILE <- tempfile()
 		    ## on.exit(unlink(paste(FILE, "*", sep = "")))
@@ -194,6 +208,31 @@ help <-
 	else
 	    help("help", package = "base", lib.loc = .Library)
     }
+
+help.start <-
+    function (gui = "irrelevant", browser = .Options$browser,
+              remote = NULL) {
+        
+    if(is.null(browser))
+	stop("Invalid browser name, check options(\"browser\").")
+
+    url <- paste(if (is.null(remote)) "$HOME/.Rhome" else remote,
+		 "/doc/html/index.html", sep = "")
+    
+    cat("If", browser, " is already running,\tit is *not* restarted,\n",
+	"and you must switch to its window.\nOtherwise, be patient..\n")
+
+
+    system(paste("${RHOME}/bin/help.links",
+                 paste(.lib.loc[length(.lib.loc):1], sep=" ", collapse=" "),
+                 sep =" "))
+  
+    system(paste(browser, " -remote \"openURL(", url, ")\" 2>/dev/null || ",
+		 browser, " ", url, " &", sep = ""))
+
+    options(htmlhelp=TRUE)
+}
+
 
 library <-
     function (name, help, lib.loc = .lib.loc, character.only = FALSE,
