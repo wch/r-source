@@ -133,6 +133,10 @@ function(x, intercept = FALSE, tol = .Machine$double.eps^0.5, ...)
     if(!is.null(effects))
         effects <- as.matrix(effects)[seq(along=asgn),,drop=FALSE]
     rdf <- x$df.resid
+    resid <- as.matrix(x$residuals)
+    wt <- x$weights
+    if(!is.null(wt)) resid <- resid * wt^0.5
+    RSS <- colSums(resid^2)
     uasgn <- unique(asgn)
     nmeffect <- c("(Intercept)", attr(x$terms, "term.labels"))[1+uasgn]
     nterms <- length(uasgn)
@@ -157,7 +161,7 @@ function(x, intercept = FALSE, tol = .Machine$double.eps^0.5, ...)
     if(nterms == 0) {
         ## empty model
         if(rdf > 0) {
-            ss <- colSums(as.matrix(x$residuals)^2)
+            ss <- RSS
             ssp <- sapply(ss, format)
             if(!is.matrix(ssp)) ssp <- t(ssp)
             tmp <- as.matrix(c(ssp, format(rdf)))
@@ -175,12 +179,9 @@ function(x, intercept = FALSE, tol = .Machine$double.eps^0.5, ...)
                                  "<empty>")))
     } else {
         if(rdf > 0) {
-            resid <- as.matrix(x$residuals)
-            wt <- x$weights
-            if(!is.null(wt)) resid <- resid * wt^0.5
             nterms <- nterms + 1
             df <- c(df, rdf)
-            ss <- rbind(ss, colSums(resid^2))
+            ss <- rbind(ss, RSS)
             nmeffect <- c(nmeffect, "Residuals")
         }
         ssp <- apply(zapsmall(ss), 2, format)
@@ -196,7 +197,7 @@ function(x, intercept = FALSE, tol = .Machine$double.eps^0.5, ...)
         nobs <- NROW(x$residuals) - !(is.null(int) || int == 0)
         cat("\n")
         if(rdf > 0) {
-            rs <- sqrt(colSums(as.matrix(x$residuals)^2)/rdf)
+            rs <- sqrt(RSS/rdf)
             cat("Residual standard error:", sapply(rs, format), "\n")
         }
         coef <- as.matrix(x$coef)[,1]
@@ -553,7 +554,10 @@ se.contrast.aov <-
     }
     weights <- contrast.weight.aov(object, contrast)
     rdf <- object$df.resid
-    rse <- sum(object$residuals^2)/rdf
+    resid <- as.matrix(object$residuals)
+    wt <- x$weights
+    if(!is.null(wt)) resid <- resid * wt^0.5
+    rse <- sum(resid^2)/rdf
     if(!is.matrix(contrast.obj)) sqrt(sum(weights) * rse)
     else sqrt(rse * (rep(1, nrow(weights)) %*% weights))
 }
@@ -603,7 +607,10 @@ se.contrast.aovlist <-
             rank <- aov.object$rank
             rdf <- nobs - rank
         }
-        sum(aov.object$residuals^2)/rdf
+        resid <- as.matrix(aov.object$residuals)
+        wt <- x$weights
+        if(!is.null(wt)) resid <- resid * wt^0.5
+        sum(resid^2)/rdf
     }
     if(is.null(attr(object, "error.qr"))) {
         cat("Refitting model to allow projection\n")
