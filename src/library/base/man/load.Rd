@@ -22,7 +22,7 @@ save(list = ls(), file= "all.Rdata")
 ## restore the saved values to the current environment
 load("all.Rdata")
 
-## restore the saved values to the global environment
-load("all.Rdata", globalenv())
+## restore the saved values to the workspace
+load("all.Rdata", .GlobalEnv)
 }
 \keyword{file}
