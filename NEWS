@@ -37,9 +37,6 @@ NEW FEATURES
 	only when it is printed as a quoted string.  This makes
 	print(, quote=FALSE) and cat() consistent.
 
-    o	model.frame() now uses the environment of its formula argument,
-	rather than the parent environment, to evaluate variables not
-	found in the data argument. See help(formula).
 
     o	The standard methods for add1() and drop1() now attempt to cope
 	with missing values by using a subset of the data that is
@@ -71,6 +68,9 @@ NEW FEATURES
 	such as lm(y ~ o - 1) where o is an ordered factor.
 
     o	`where' command added to debug().
+
+    o	demo(dynload) (which used the superseded call_R interface)
+	has been removed.
 
     o	Class "dendrogram" in package mva providing general support
 	for tree-like structures (plotting, cutting, ...).
@@ -147,6 +147,10 @@ NEW FEATURES
 	it can also perform an exact conditional test of independence,
 	and gives confidence intervals for the common odds ratio.
 
+    o	model.frame() now uses the environment of its formula argument,
+	rather than the parent environment, to evaluate variables not
+	found in the data argument. See help(formula).
+
     o	mosaicplot() can now also create extended mosaic plots, which
 	visualize the residuals from a log-linear model using color and
 	outline.
@@ -180,6 +184,9 @@ NEW FEATURES
 
     o	plot.function() and curve() now take xlim as default for (from,to)
 	if the former is specified.
+
+    o	plot.hclust() allows arguments main, sub, etc, and has non-empty
+	defaults for these.
 
     o	plot.ts(x,y) now allows to suppress labels and lines; 
 	it is better documented.
@@ -222,6 +229,14 @@ NEW FEATURES
     o	scan() now reads empty character fields as "" not "NA" unless
 	"" is included in na.strings.
 
+    o	smooth() in package eda has a better default (3RS3R instead of
+	3RSR) and more arguments, e.g. `twiceit' for some S
+	compatibility and kind = "3R" for running medians of 3.
+
+    o	strsplit() has a new argument `extended' controlling whether to
+	use extended (the default) or basic regular expressions for
+	splitting.
+	
     o	Sys.getenv() becomes the preferred name for getenv(), which is
 	now deprecated.
 
@@ -243,10 +258,6 @@ NEW FEATURES
 	`date' and `chron'; unlike those packages these support
 	functions know about time zones (if the OS does).
 
-    o	strsplit() has a new argument `extended' controlling whether to
-	use extended (the default) or basic regular expressions for
-	splitting.
-	
     o	tcltk library now has tkpager() which is designed to be used
 	by file.show() and shows help pages etc. in separate text
 	widgets. 
@@ -286,12 +297,17 @@ NEW FEATURES
     o	New function xtabs() providing a formula interface to cross
 	tabulation.
 
+
     o	The R Data Import/Export Manual (`R-data.texi') has been added.
 
     o	The set of valid R names is now described (at last) in R-intro.
 
     o	The R Language Manual (`R-lang.texi') is now included and built
 	in the same way as the other manuals.
+
+    o   The R manuals (R-intro, R-exts, ...) are converted to HTML
+        format (if the necessary texinfo tools are available) and
+	linked into the top HTML help page.
 
     o	The header file `R.h' and those included from it are now usable
 	with C++ code.
@@ -352,17 +368,6 @@ NEW FEATURES
 	There is also a linker front-end `R CMD LINK' which is useful
 	for creating executable programs linked against the R shared
 	library.
-
-    o	plot.hclust() allows arguments main, sub, etc, and has non-empty
-	defaults for these.
-
-    o	smooth() has a better default (3RS3R instead of 3RSR) and
-	more arguments, e.g. `twiceit' for some S compatibility and
-	kind = "3R" for running medians of 3.
-
-    o   The R manuals (R-intro, R-exts, ...) are converted to HTML
-        format (if the necessary texinfo tools are available) and
-	linked into the top HTML help page.
 
 
 
@@ -496,6 +501,8 @@ BUG FIXES
 
     o	scale(scale=TRUE) gave all NAs in any columns containing NAs.
 
+    o	eda's smooth() now computes Tukey's endrule properly.
+
     o	smooth.spline()'s GCV method now uses a more accurate formula
 	when there are repeated x points.
 
@@ -561,7 +568,7 @@ BUG FIXES
     o	NA || x , NA && y (etc) do not give errors anymore, but work as
 	the "|" and "&" operators and as documented (PR#749).
 
-    o	eda's smooth() now computes Tukey's endrule properly.
+
 
 
 	**************************************************

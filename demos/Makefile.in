@@ -12,9 +12,7 @@ include $(top_builddir)/Makeconf
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = Makefile.in
-SUBDIRS_JUST_SOURCES = graphics language models nlm tcltk
-SUBDIRS_ALSO_OBJECTS = dynload
-SUBDIRS = $(SUBDIRS_JUST_SOURCES) $(SUBDIRS_ALSO_OBJECTS)
+SUBDIRS = graphics language models nlm tcltk
 
 all: Makefile R
 
@@ -24,9 +22,6 @@ Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	  $(SHELL) ./config.status
 
 R:
-	@for d in $(SUBDIRS_ALSO_OBJECTS); do \
-	  (cd $${d} && $(MAKE) $@); \
-	done
 	@if [ "$(srcdir)" != "." ]; then \
 	  $(MAKE) rhome=$(top_builddir) install-sources; \
 	fi
@@ -34,9 +29,6 @@ R:
 docs:
 
 install: install-message installdirs install-sources
-	@for d in $(SUBDIRS_ALSO_OBJECTS); do \
-	  (cd $${d} && $(MAKE) $@); \
-	done
 installdirs:
 	@$(MKINSTALLDIRS) $(rhome)/demos
 	@$(MKINSTALLDIRS) $(rhome)/demos/graphics 
@@ -47,7 +39,7 @@ installdirs:
 install-message:
 	@echo "installing demos ..."
 install-sources: installdirs
-	@for d in $(SUBDIRS_JUST_SOURCES); do \
+	@for d in $(SUBDIRS); do \
 	  for f in $(srcdir)/$${d}/*.R; do \
 	    $(INSTALL_DATA) $${f} $(rhome)/demos/$${d}; \
 	  done; \
@@ -59,16 +51,10 @@ uninstall:
 
 mostlyclean:
 clean:
-	@for d in $(SUBDIRS_ALSO_OBJECTS); do \
-	  (cd $${d} && $(MAKE) $@); \
-	done
 	@if [ "$(srcdir)" != "." ]; then \
-	  rm -rf $(SUBDIRS_JUST_SOURCES); \
+	  rm -rf $(SUBDIRS); \
 	fi
 distclean:
-	@for d in $(SUBDIRS_ALSO_OBJECTS); do \
-	  (cd $${d} && $(MAKE) $@); \
-	done
 	@rm -f Makefile
 maintainer-clean: distclean
 
