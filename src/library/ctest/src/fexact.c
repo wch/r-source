@@ -173,10 +173,14 @@ fexact(Sint *nrow, Sint *ncol, double *table, Sint *ldtabl,
     /* Workspace Allocation (freed at end) */
     double *equiv;
     iwkmax = 2 * (Sint) (*workspace / 2);
+    equiv = (double *) R_alloc(iwkmax / 2, sizeof(double));
+
+    /* The check could never happen with Calloc!
     equiv = Calloc(iwkmax / 2, double);
     if (!equiv) {
 	prterr(0, "Can not allocate specified workspace");
-    }
+    } */
+
 #define dwrk (equiv)
 #define iwrk ((Sint *)equiv)
 #define rwrk ((float *)equiv)
@@ -293,7 +297,7 @@ fexact(Sint *nrow, Sint *ncol, double *table, Sint *ldtabl,
 	   dwrk + irwk);
 
 L_End:
-    Free(equiv);
+    /* Free(equiv); */
     return;
 }
 

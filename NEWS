@@ -381,6 +381,10 @@ BUG FIXES
 	answer.  Previously it might not due to rounding errors in
 	fround. (PR#1138/9)
 
+    o	Several memory leaks on interrupting functions have been
+	circumvented.  Functions lqs() and mve() can now be
+	interrupted on Windows and MacOS.
+
 
 
 	**************************************************

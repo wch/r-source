@@ -10,19 +10,13 @@ d2x2xk(Sint *k, double *m, double *n, double *t, double *d)
     double u, **c;
 
     c = (double **) R_alloc(*k + 1, sizeof(double *));
-    if(!c)
-	error("allocation error in d2x2xk().");
     l = y = z = 0;
     c[0] = (double *) R_alloc(1, sizeof(double));
-    if(!c[0])
-	error("allocation error in d2x2xk().");
     c[0][0] = 1;
     for(i = 0; i < *k; i++) {
 	y = imax2(0, *t - *n);
 	z = imin2(*m, *t);
 	c[i + 1] = (double *) R_alloc(l + z - y + 1, sizeof(double));
-	if(!c[i + 1])
-	    error("allocation error in d2x2xk().");
 	for(j = 0; j <= l + z - y; j++)
 	    c[i + 1][j] = 0;
 	for(j = 0; j <= z - y; j++) {
