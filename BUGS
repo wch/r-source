@@ -232,10 +232,10 @@ none
 
 Directory:  incoming
 
-* PR# 597 *
-Subject: multiply defined symbols
-From: plucas@csd.abdn.ac.uk
-Date: Fri, 7 Jul 2000 12:23:44 +0200 (MET DST)
+* PR# 598 *
+Subject: minor typos in help pages
+From: Rashid Nassar <rnassar@duke.edu>
+Date: Sat, 8 Jul 2000 22:17:05 -0400 (EDT)
 * PR# 579 *
 Subject: possible bug, anova.glm(), family="gaussian"
 From: Rashid Nassar <rnassar@duke.edu>
@@ -252,10 +252,6 @@ Date: Fri, 30 Jun 2000 20:15:59 +0200 (MET DST)
 Subject: system.file on Windows, / vs \\
 From: Thomas Lumley <thomas@biostat.washington.edu>
 Date: Thu, 29 Jun 2000 09:49:39 -0700 (PDT)
-* PR# 596 *
-Subject: Re: [R] R 1.1.0 dev.print() & dev.copy2eps -- bug{let}
-From: Martin Maechler <maechler@stat.math.ethz.ch>
-Date: Thu, 6 Jul 2000 17:36:28 +0200 (CEST)
 * PR# 595 *
 Subject: eigen function on Solaris2.6
 From: sharon@math.chalmers.se
@@ -264,3 +260,11 @@ Date: Wed, 5 Jul 2000 19:39:17 +0200 (MET DST)
 Subject: Bug with lists and expressions
 From: dmurdoch@pair.com (Duncan Murdoch)
 Date: Tue, 04 Jul 2000 02:26:41 GMT
+* PR# 597 *
+Subject: multiply defined symbols
+From: plucas@csd.abdn.ac.uk
+Date: Fri, 7 Jul 2000 12:23:44 +0200 (MET DST)
+* PR# 596 *
+Subject: Re: [R] R 1.1.0 dev.print() & dev.copy2eps -- bug{let}
+From: Martin Maechler <maechler@stat.math.ethz.ch>
+Date: Thu, 6 Jul 2000 17:36:28 +0200 (CEST)
