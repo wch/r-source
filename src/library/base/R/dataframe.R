@@ -461,7 +461,7 @@ data.frame <-
             if(is.logical(i) && is.matrix(i) && all(dim(i) == dim(x))) {
                 nreplace <- sum(i, na.rm=T)
                 N <- length(value)
-                if(N > 0 && N < nreplace && N%%nreplace == 0)
+                if(N > 0 && N < nreplace && (nreplace %% N) == 0)
                     value <- rep(value, length = nreplace)
                 if(length(value) != nreplace)
                     stop("rhs is the wrong length for indexing by a logical matrix")
