@@ -557,7 +557,11 @@ double	gamma_cody(double);
 #ifdef MATHLIB_STANDALONE
 #ifndef MATHLIB_PRIVATE_H
 
-#define ISNAN(x)       R_IsNaNorNA(x)
+#ifdef IEEE_754
+# define ISNAN(x) (isnan(x)!=0)
+#else
+# define ISNAN(x)      R_IsNaNorNA(x)
+#endif
 #define R_FINITE(x)    R_finite(x)
 int R_IsNaNorNA(double);
 int R_finite(double);
