@@ -173,6 +173,8 @@ BUG FIXES
         or Gtk) works correctly, i.e. doesn't cause readline to abort
         the process.
 
+    o   Using Q to exit a browser invoked at the top-level could lead to
+	the browser being invoked on all future top-level loops (PR#1721)
 
 
 	**************************************************

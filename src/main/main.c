@@ -557,6 +557,7 @@ static int ParseBrowser(SEXP CExpr, SEXP rho)
 
 	    /* this is really dynamic state that should be managed as such */
 	    R_BrowseLevel = 0;
+	    SET_DEBUG(rho,0); /*PR#1721*/
 
 	    R_restore_globals(R_ToplevelContext);
 	    R_GlobalContext = R_ToplevelContext;
