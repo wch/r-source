@@ -3,13 +3,18 @@
 \usage{
 legend(x, y, legend, fill, col = "black", lty, lwd = 1, pch,
        bty = "o", bg = par("bg"), cex = 1, xjust = 0, yjust = 1,
-       x.intersp = NULL, y.intersp = NULL, text.width = NULL,
-       merge = FALSE)
+       x.intersp = 1, y.intersp = 1, text.width = NULL,
+       merge = do.lines && has.pch)
 }
 \alias{legend}
 \arguments{
-  \item{x}{the x location of the legend.}
-  \item{y}{the y location of the legend.}
+  \item{x,y}{the x and y location of the legend.
+    \code{x} can be a list with \code{x} and \code{y} components.}
+%% if argument \code{y} is missing.
+%S: location of the rectangle in which to put the legend.
+%S: If x & y are length 1, they determine the top left corner of the rectangle;
+%S: if .. length 2 vectors, they give opposite corners of the rectangular area.
+%S: A list containing x and y values may be supplied.
   \item{legend}{a vector of text values or an \code{\link{expression}}
     of length \eqn{\ge 1}{>= 1} to appear in the legend.}
   \item{fill}{if specified, this argument will cause boxes filled
@@ -36,12 +41,12 @@ legend(x, y, legend, fill, col = "black", lty, lwd = 1, pch,
     coordinates.
     Defaults to the proper value computed by \code{\link{strwidth}(legend)}.}
   \item{merge}{logical; if \code{TRUE}, ``merge'' points and lines but
-    not filled boxes.}
+    not filled boxes.  Defaults to \code{TRUE} if there are points and lines.}
 }
 \description{
-    This function can be used to add legends to plots.  Note that a call
-    to the function \code{\link{locator}} can be used in place of the \code{x}
-    and \code{y} arguments.
+  This function can be used to add legends to plots.  Note that a call
+  to the function \code{\link{locator}} can be used in place of the \code{x}
+  and \code{y} arguments.
 }
 \details{
   The default values for \code{x.intersp} and \code{y.intersp} are
@@ -58,7 +63,7 @@ legend(x, y, legend, fill, col = "black", lty, lwd = 1, pch,
 # Run the example in `?matplot' or the following:
 matplot(c(1,8), c(0,4.5), type = "n", xlab = "Length", ylab = "Width",
         main = "Petal and Sepal Dimensions in Iris Blossoms")
-leg.txt <- c("    Setosa Petals", "    Setosa Sepals",
+leg.txt <- c("Setosa     Petals", "Setosa     Sepals",
              "Versicolor Petals", "Versicolor Sepals")
 y.leg <- c( 4, 3, 2.2, 1.5, .9)
 cexv  <- c( 1, .8, .6, .4, .25) * if(.Device=="Postscript") 1.2 else 1

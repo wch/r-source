@@ -10,6 +10,8 @@
 
 NEW FEATURES
 
+    o   `unname' convenience function.
+
     o   `examples' sections have been added to the documentation
         for most of the data sets in the base library.
 
@@ -73,6 +75,8 @@ BUG FIXES
 	wider so there's room for a title. Touchup example.
 
     o	font size fixups for the X11 driver (mainly)
+
+    o   corresponding fixups in legend() -- NOTE: partly changed behavior.
 
     o   some.list[[NA]] is NULL, following S, rather than giving spurious
         error messages
