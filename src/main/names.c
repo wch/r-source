@@ -463,7 +463,7 @@ FUNTAB R_FunTab[] =
 {"grep",	do_grep,	1,	11,	6,	{PP_FUNCALL, PREC_FN,	0}},
 {"sub",		do_gsub,	0,	11,	5,	{PP_FUNCALL, PREC_FN,	0}},
 {"gsub",	do_gsub,	1,	11,	5,	{PP_FUNCALL, PREC_FN,	0}},
-{"regexpr",	do_regexpr,	1,	11,	3,	{PP_FUNCALL, PREC_FN,	0}},
+{"regexpr",	do_regexpr,	1,	11,	4,	{PP_FUNCALL, PREC_FN,	0}},
 {"grep.perl",	do_pgrep,	1,	11,	4,	{PP_FUNCALL, PREC_FN,	0}},
 {"sub.perl",    do_pgsub,	0,	11,	4,	{PP_FUNCALL, PREC_FN,	0}},
 {"gsub.perl",	do_pgsub,	1,	11,	4,	{PP_FUNCALL, PREC_FN,	0}},

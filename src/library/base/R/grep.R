@@ -29,12 +29,12 @@ function(pattern, replacement, x, ignore.case = FALSE, extended = TRUE,
 }
 
 regexpr <-
-function(pattern, text, extended = TRUE, perl = FALSE)
+function(pattern, text, extended = TRUE, perl = FALSE, fixed = FALSE)
 {
     if(perl)
         .Internal(regexpr.perl(pattern, text))
     else
-        .Internal(regexpr(pattern, text, extended))
+        .Internal(regexpr(pattern, text, extended, fixed))
 }
 
 agrep <-

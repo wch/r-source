@@ -206,8 +206,8 @@ NEW FEATURES
     o   In the tcltk package, as.tclObj() has gained a `drop' argument
 	to decide what should happen for vectors of length one.
  
-    o	New argument grep(..., fixed = TRUE) to avoid the need to escape
-	strings to match.
+    o	New argument fixed = TRUE for grep() and regexpr() to avoid the
+	need to escape strings to match.
  
     o	grep(x, ..., value = TRUE) preserves names of x.
  

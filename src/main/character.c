@@ -526,21 +526,21 @@ SEXP do_makenames(SEXP call, SEXP op, SEXP args, SEXP env)
 }
 
 /* This could be faster for plen > 1, but uses in R are for small strings */
-static Rboolean fgrep_one(char *pat, char *target)
+static int fgrep_one(char *pat, char *target)
 {
-    int i, plen=strlen(pat), len=strlen(target);
+    int i = -1, plen=strlen(pat), len=strlen(target);
     char *p;
 
-    if(plen == 0) return TRUE;
+    if(plen == 0) return 0;
     if(plen == 1) {
     /* a single char is a common case */
-	for(p = target; *p; p++)
-	    if(*p == pat[0]) return TRUE;
-	return FALSE;
+	for(i = 0, p = target; *p; p++, i++)
+	    if(*p == pat[0]) return i;
+	return -1;
     }
     for(i = 0; i <= len-plen; i++)
-	if(strncmp(pat, target+i, plen) == 0) return TRUE;
-    return FALSE;
+	if(strncmp(pat, target+i, plen) == 0) return i;
+    return -1;
 }
 
 SEXP do_grep(SEXP call, SEXP op, SEXP args, SEXP env)
@@ -574,7 +574,7 @@ SEXP do_grep(SEXP call, SEXP op, SEXP args, SEXP env)
 	    if(STRING_ELT(vec, i) == NA_STRING){
 		LOGICAL(ind)[i] = 1;
 		nmatches++;
-	    } else LOGICAL(ind)[i]=0;
+	    } else LOGICAL(ind)[i] = 0;
 	}
 	/* end NA pattern handling */
     } else {
@@ -590,7 +590,7 @@ SEXP do_grep(SEXP call, SEXP op, SEXP args, SEXP env)
 	    if (STRING_ELT(vec, i) != NA_STRING) {
 		if (fixed_opt) LOGICAL(ind)[i] = 
 				   fgrep_one(CHAR(STRING_ELT(pat, 0)),
-					     CHAR(STRING_ELT(vec, i)));
+					     CHAR(STRING_ELT(vec, i))) >= 0;
 		else if(regexec(&reg, CHAR(STRING_ELT(vec, i)), 0, NULL, 0) == 0)
 		    LOGICAL(ind)[i] = 1;
 	    }
@@ -791,39 +791,49 @@ SEXP do_regexpr(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP pat, text, ans, matchlen;
     regex_t reg;
     regmatch_t regmatch[10];
-    int i, n, st, extended_opt, eflags;
+    int i, n, st, extended_opt, fixed_opt, eflags;
+    char *spat = NULL; /* -Wall */
 
     checkArity(op, args);
     pat = CAR(args); args = CDR(args);
     text = CAR(args); args = CDR(args);
-    extended_opt = asLogical(CAR(args));
+    extended_opt = asLogical(CAR(args)); args = CDR(args);
     if (extended_opt == NA_INTEGER) extended_opt = 1;
+    fixed_opt = asLogical(CAR(args));
+    if (fixed_opt == NA_INTEGER) fixed_opt = 0;
 
     if (!isString(pat) || length(pat) < 1 ||
 	!isString(text) || length(text) < 1 ||
-	STRING_ELT(pat,0)==NA_STRING)
+	STRING_ELT(pat,0) == NA_STRING)
 	errorcall(call, R_MSG_IA);
 
     eflags = extended_opt ? REG_EXTENDED : 0;
 
-    if (regcomp(&reg, CHAR(STRING_ELT(pat, 0)), eflags))
+    if (!fixed_opt && regcomp(&reg, CHAR(STRING_ELT(pat, 0)), eflags))
 	errorcall(call, "invalid regular expression");
+    if (fixed_opt) spat = CHAR(STRING_ELT(pat, 0));
     n = length(text);
     PROTECT(ans = allocVector(INTSXP, n));
     PROTECT(matchlen = allocVector(INTSXP, n));
 
     for (i = 0 ; i < n ; i++) {
-	if (STRING_ELT(text,i) == NA_STRING){
+	if (STRING_ELT(text, i) == NA_STRING) {
 	    INTEGER(matchlen)[i] = INTEGER(ans)[i] = R_NaInt;
-	} else if(regexec(&reg, CHAR(STRING_ELT(text, i)), 1, regmatch, 0) == 0) {
-	    st = regmatch[0].rm_so;
-	    INTEGER(ans)[i] = st + 1; /* index from one */
-	    INTEGER(matchlen)[i] = regmatch[0].rm_eo - st;
 	} else {
-	    INTEGER(ans)[i] = INTEGER(matchlen)[i] = -1;
+	    if (fixed_opt) {
+		INTEGER(ans)[i] = fgrep_one(spat, CHAR(STRING_ELT(text, i)));
+		INTEGER(matchlen)[i] = INTEGER(ans)[i] >= 0 ? strlen(spat):-1;
+	    } else {
+		if(regexec(&reg, CHAR(STRING_ELT(text, i)), 1, 
+			   regmatch, 0) == 0) {
+		    st = regmatch[0].rm_so;
+		    INTEGER(ans)[i] = st + 1; /* index from one */
+		    INTEGER(matchlen)[i] = regmatch[0].rm_eo - st;
+		} else INTEGER(ans)[i] = INTEGER(matchlen)[i] = -1;
+	    }
 	}
     }
-    regfree(&reg);
+    if (!fixed_opt) regfree(&reg);
     setAttrib(ans, install("match.length"), matchlen);
     UNPROTECT(2);
     return ans;

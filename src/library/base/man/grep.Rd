@@ -20,7 +20,7 @@ sub(pattern, replacement, x,
         ignore.case = FALSE, extended = TRUE, perl = FALSE)
 gsub(pattern, replacement, x,
         ignore.case = FALSE, extended = TRUE, perl = FALSE)
-regexpr(pattern, text,  extended = TRUE, perl = FALSE)
+regexpr(pattern, text,  extended = TRUE, perl = FALSE, fixed = FALSE)
 }
 \arguments{
   \item{pattern}{character string containing a regular expression (or
@@ -69,11 +69,11 @@ regexpr(pattern, text,  extended = TRUE, perl = FALSE)
   is none, with attribute \code{"match.length"} giving the length of the
   matched text (or \eqn{-1} for no match).
 }
-\note{
-  \code{perl=TRUE} will only be available if \R was compiled against 
-  PCRE: this is detected at configure time.  All Unix and Windows system
-  should have it.
-}
+% \note{
+%   \code{perl = TRUE} will only be available if \R was compiled against 
+%   PCRE: this is detected at configure time.  All Unix and Windows system
+%   should have it.
+% }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.
