@@ -16,22 +16,18 @@ taken on by anyone.
  o  WINDOWS 3/95/NT PORT.
     Robert has this in hand and is nearly done.
 
-
  o  POWER MACINTOSH PORT.
     This is temporarily on hold, pending funding or Ross having some
     free time.  [ We have to do this.  Our teaching labs are Mac based. ]
-
 
  o  LIBRARY STRUCTURE
     We need a way to "attach" libraries.  This should happen in
     conjunction with "save" and "load", and with some sort of hashing
     to speedup lookups in libraries.
 
-
  o  3D GRAPHICS
-    We need something like "persp" for plotting surfaces, although it
-    would be nice to have something more sophisticated.  Interesting
-    gadgets to look at include:
+    It would be nice to have something more sophisticated than "persp"
+    for plotting surfaces.  Interesting gadgets to look at include:
 
     *  "Lab-3d" has some pretty nifty techniques for hidden line
         removal, but it looks like is done in "image" coordinates.
@@ -44,7 +40,6 @@ taken on by anyone.
     *  "plotmtv" is more static, but has some interesting contouring
        ideas.
 
-
  o  DYNAMIC GRAPHICS
     Statistics for the video game generation ...  We need to move to
     an event-based model for this.  See the 3D graphics above plus:
@@ -56,51 +51,27 @@ taken on by anyone.
 
     *  XGobi is nice too.
 
-
  o  MULTIPLE ACTIVE DEVICE DRIVERS.
-    The basics of this is actually pretty simple to implement.  The
-    hard part is thinking about how to manage display lists.  It would
-    be nice to have a choice of "in-memory" or "disk-based" display-list
-    storage.
-
-
- o  MATHEMATICS IN PLOT LABELS
-    We have an expression parser and can grab parse trees.  All we
-    need is access to font metrics for bounding boxes (done now) and
-    some time to plow through a couple of appendices of the TeX Book.
-    [ Ross and Paul Murrell are working on this ... ]
-
+    The hard part is thinking about how to manage display lists.  It 
+    would be nice to have a choice of "in-memory" or "disk-based" 
+    display-list storage.
 
  o  LINEAR MODELLING
     The whole "glm" suite needs to be rethought and redone.
-    We need "aov" and friends (pretty easy given what we have).
     Labelling for nested specifications needs to be handled correctly.
-    Additional functionality (drop1, update ...).
-
 
  o  NONLINEAR MODELLING
     Was that Doug Bates I heard rustling about over there in the
     corner ... :-)
 
-
  o  GAM MODELS
     The basic code is at STATLIB.  Did Trevor Hastie put out an
     update to this?
-
-
- o  LOESS MODELS
-    The code is at NETLIB.
-
-
- o  RECURSIVE PARTITIONING
-    There is some very nice looking code by Terry Therneau at STATLIB.
-
 
  o  TIME SERIES
     A state-space/structural models package would be nice.
     We have a partial spectrum analysis package.  It needs to be
     multivariate though.
-
 
  o  MAPPING
     We have the Becker/Wilks sources for constructing map data bases.
