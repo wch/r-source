@@ -97,10 +97,6 @@ From: Rich Heiberger <rmh@surfer.sbm.temple.edu>
 Date: Tue, 4 Dec 2001 11:29:58 -0500 (EST)
 --This isn't really a bug: the line in question is a plain-text equation, not a
 --piece of R code.
-* PR# 1437 *
-Subject: [DOC] as.call 
-From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
-Date: 05 Apr 2002 17:25:49 +0200
 * PR# 1442 *
 Subject: Undocumenten in: R INSTALL --help
 From: Peter Kleiweg <kleiweg@let.rug.nl>
@@ -237,6 +233,16 @@ Subject: configure: sed: Function s%@PDFLATEX@%/usr/local/bin/pdflatex%g
 From: Peter Kleiweg <kleiweg@let.rug.nl>
 Date: Thu, 20 Dec 2001 14:09:42 +0100 (CET)
 --problem is on hppa2.0-hp-hpux10.20: may be HP-UX specific
+* PR# 1268 *
+Subject: Solaris 2.6 Compile
+From: gm81640@development.nssmb.com
+Date: Thu, 17 Jan 2002 06:28:26 +0100 (MET)
+--Most likely a compiler installation problem
+* PR# 1291 *
+Subject: Installation problem : SunOS
+From: brendan_mcmahon@prusec.com
+Date: Thu, 31 Jan 2002 18:00:55 +0100 (MET)
+--looks like gcc compiled under different OS version.
 * PR# 1415 *
 Subject: int 32 bit error on SPARC 64bit
 From: kss28@mail.cba.nau.edu
@@ -372,7 +378,7 @@ Date: Thu, 20 Sep 2001 23:54:19 -0500
 Subject: Possible bug, Rprof() and scan(pipe())
 From: Don MacQueen <macq@llnl.gov>
 Date: Tue, 23 Oct 2001 13:50:26 -0700
---Doesn't happen on Solaris or Linux
+--MacOS X: Doesn't happen on Solaris or Linux
 * PR# 1145 *
 Subject: Problem testing R version 1.3.1 on SGI Irix
 From: Gordon Lack <gml4410@ggr.co.uk>
@@ -384,11 +390,6 @@ Subject: R_140 AND RHL_72 AND Packages
 From: Patrick Gonin <gonin@genethon.fr>
 Date: Wed, 15 Jan 2003 13:25:17 +0100
 --Seems to relate to RH7.2 rpms
-* PR# 1268 *
-Subject: Solaris 2.6 Compile
-From: gm81640@development.nssmb.com
-Date: Thu, 17 Jan 2002 06:28:26 +0100 (MET)
---Most likely a compiler installation problem
 * PR# 1272 *
 Subject: eigen segfault with GCC 3 on Solaris
 From: Paul Gilbert <pgilbert@bank-banque-canada.ca>
@@ -403,11 +404,6 @@ Date: Tue, 22 Jan 2002 10:05:20 -0500 (EST)
 Subject: R 1.4.0 build fails on AIX
 From: lio@hpss1.ccs.ornl.gov
 Date: Wed, 30 Jan 2002 14:10:30 +0100 (MET)
-* PR# 1291 *
-Subject: Installation problem : SunOS
-From: brendan_mcmahon@prusec.com
-Date: Thu, 31 Jan 2002 18:00:55 +0100 (MET)
---looks like gcc compiled under different OS version.
 * PR# 1316 *
 Subject: shared libraries on AIX
 From: lio@hpss1.ccs.ornl.gov
@@ -427,10 +423,6 @@ none
 
 Directory:  incoming
 
-* PR# 1469 *
-Subject: Are you familiar with residual income?
-From: "United Networks" <P.Brooks@easynet.be>
-Date: Sat, 20 Apr 2002 01:53:23 -1900
 * PR# 1470 *
 Subject: color of axis lines
 From: gray@jimmy.harvard.edu
@@ -439,3 +431,7 @@ Date: Sat, 20 Apr 2002 22:21:44 +0200 (MET DST)
 Subject: Rprof segfault
 From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
 Date: 20 Apr 2002 23:48:01 +0200
+* PR# 1472 *
+Subject: Known to GrapphApp (
+From: dgm25 <dgm25@cogeco.ca>
+Date: Sun, 21 Apr 2002 10:27:06 -0400 (EDT)
