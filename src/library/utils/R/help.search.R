@@ -85,7 +85,9 @@ function(pattern, fields = c("alias", "concept", "title"),
            ## dir in the library path was modified more recently than
            ## the db, as packages might have been installed or removed.
            any(attr(db, "mtime") <
-	       file.info(lib.loc[file.exists(lib.loc)])$mtime)
+	       file.info(lib.loc[file.exists(lib.loc)])$mtime) ||
+           ## Or if the user changed the locale character type ...
+           !identical(attr(db, "ctype"), Sys.getlocale("LC_CTYPE"))
            )
 	    rebuild <- TRUE
     }
@@ -179,6 +181,9 @@ function(pattern, fields = c("alias", "concept", "title"),
                 }
             }
             if(!is.null(hDB)) {
+                ## Fill up possibly missing information.
+                if(is.na(match("Encoding", colnames(hDB[[1]]))))
+                    hDB[[1]] <- cbind(hDB[[1]], Encoding = "")
                 ## Put the hsearch index for the np-th package into the
                 ## np-th row of the matrix used for aggregating.
                 dbMat[np, seq(along = hDB)] <- hDB
@@ -208,10 +213,26 @@ function(pattern, fields = c("alias", "concept", "title"),
                       db[[i]][, "ID"],
                       sep = "/")
         }
+        ## And maybe re-encode ...
+        if(!identical(Sys.getlocale("LC_CTYPE"), "C")) {
+            encoding <- db$Base[, "Encoding"]
+            IDs_to_iconv <- db$Base[encoding != "", "ID"]
+            encoding <- encoding[encoding != ""]
+            ## As iconv is not vectorized in the 'from' argument, loop
+            ## over groups of identical encodings.
+            for(enc in unique(encoding)) {
+                IDs <- IDs_to_iconv[encoding == enc]
+                for(i in seq(along = hDB)) {
+                    ind <- db[[i]][, "ID"] %in% IDs
+                    db[[i]][ind, ] <- iconv(db[[i]][ind, ], enc, "")
+                }
+            }
+        }
 
         if(save_db) {
             attr(db, "LibPaths") <- lib.loc
             attr(db, "mtime") <- Sys.time()
+            attr(db, "ctype") <- Sys.getlocale("LC_CTYPE")
             if(save_db_to_memory)
                 .hsearch_db(db)
             else {
