@@ -25,6 +25,8 @@
 
 SEXP R_ParseVector(SEXP, int, int *);
 
+#include "tcltk.h" /* declarations of our `public' interface */
+
 
 static Tcl_Interp *Tcl_interp;      /* Interpreter for this application. */
 
@@ -50,8 +52,7 @@ static int R_eval(ClientData clientData,
     /* Note that expr becomes an EXPRSXP and hence we need the loop
        below (a straight eval(expr, R_GlobalEnv) won't work) */
     {
-	int i, n;
-	n = length(expr);
+	int n = length(expr);
 	for(i = 0 ; i < n ; i++)
 	    ans = eval(VECTOR_ELT(expr, i), R_GlobalEnv);
     }
@@ -190,7 +191,7 @@ void delTcl(void)
 }
 #endif
 
-void tcltk_init()
+void tcltk_init(void)
 {
     int code;
 
