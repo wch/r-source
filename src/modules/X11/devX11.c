@@ -638,7 +638,7 @@ static void R_ProcessEvents(void *data)
 }
 
 static char *fontname = "-adobe-helvetica-%s-%s-*-*-%d-*-*-*-*-*-*-*";
-static char *symbolname	 = "-adobe-symbol-*-*-*-*-%d-*-*-*-*-*-*-*";
+static char *symbolname	 = "-adobe-symbol-medium-r-*-*-%d-*-*-*-*-*-*-*";
 
 static char *slant[]  = {"r", "o"};
 static char *weight[] = {"medium", "bold"};
@@ -941,12 +941,8 @@ static void SetFont(char* family, int face, int size, NewDevDesc *dd)
 	    strcpy(xd->fontfamily, family);
 	    xd->fontface = face;
 	    xd->fontsize = size;
-            if (face == SYMBOL_FONTFACE)
+            if (xd->font == One_Font)
 		XSetFont(display, xd->wgc, (xd->font->font)->fid);
-#ifndef USE_FONTSET
-            else
-	        XSetFont(display, xd->wgc, (xd->font->font)->fid);
-#endif
 	} else
 	    error("X11 font at size %d could not be loaded", size);
     }
@@ -1278,12 +1274,8 @@ newX11_Open(NewDevDesc *dd, newX11Desc *xd, char *dsp, double w, double h,
     gcv.arc_mode = ArcChord;
     xd->wgc = XCreateGC(display, xd->window, GCArcMode, &gcv);
     XSetState(display, xd->wgc, blackpixel, whitepixel, GXcopy, AllPlanes);
-    if ( xd->fontface == SYMBOL_FONTFACE )
+    if ( xd->font->type == One_Font )
 	XSetFont(display, xd->wgc, (xd->font->font)->fid);
-#ifndef USE_FONTSET
-    else
-        XSetFont(display, xd->wgc, (xd->font->font)->fid);
-#endif
 
     /* ensure that line drawing is set up at the first */
     /* graphics call */
@@ -1354,11 +1346,10 @@ static double newX11_StrWidth(char *str,
     newX11Desc *xd = (newX11Desc *) dd->deviceSpecific;
 
     int size = gc->cex * gc->ps + 0.5;
-    SetFont(translateFontFamily(gc->fontfamily, xd),
-	    gc->fontface, size, dd);
+    SetFont(translateFontFamily(gc->fontfamily, xd), gc->fontface, size, dd);
 
 #ifdef USE_FONTSET
-    if (xd->fontface == SYMBOL_FONTFACE)
+    if (xd->font->type == One_Font)
 	return (double) XTextWidth(xd->font->font, str, strlen(str));
     else  {
 #ifdef HAVE_XUTF8TEXTESCAPEMENT
@@ -1394,7 +1385,7 @@ static void newX11_MetricInfo(int c,
 #ifdef USE_FONTSET
     *ascent = 0; *descent = 0; *width = 0; /* fallback position */
     if (xd->font) {
-	if (xd->fontface != SYMBOL_FONTFACE) {
+	if (xd->font->type != One_Font) {
 	    char **ml; XFontStruct **fs_list;
 
 	    XFontsOfFontSet(xd->font->fontset, &fs_list, &ml);
@@ -1411,7 +1402,7 @@ static void newX11_MetricInfo(int c,
 	return;
     }
 
-    if (xd->fontface != SYMBOL_FONTFACE) {
+    if (xd->font->type != One_Font) {
 	char buf[10];
 	wchar_t wc[2] = L" ";XRectangle ink, log;
 
@@ -1661,14 +1652,7 @@ static void newX11_Close(NewDevDesc *dd)
       int fd = ConnectionNumber(display);
 	/* Free Resources Here */
 	while (nfonts--)
-	  if (fontcache[nfonts].face == SYMBOL_FONTFACE -1)
 	      R_XFreeFont(display, fontcache[nfonts].font);
-	  else
-#ifdef USE_FONTSET
-	      R_XFreeFont(display, fontcache[nfonts].font);
-#else
-	      R_XFreeFont(display, fontcache[nfonts].font);
-#endif
 	nfonts = 0;
         if(xd->handleOwnEvents == FALSE)
 	    removeInputHandler(&R_InputHandlers,

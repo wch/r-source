@@ -24,7 +24,7 @@ if(interactive()) {
 ## the next two must be set for x11 to be used, even non-interactively
 options(X11colortype = "true")
 options(X11fonts = c("-adobe-helvetica-%s-%s-*-*-%d-*-*-*-*-*-*-*",
-	"-adobe-symbol-*-*-*-*-%d-*-*-*-*-*-*-*"))
+	"-adobe-symbol-medium-r-*-*-%d-*-*-*-*-*-*-*"))
 options(mailer = "mailx")
 
 

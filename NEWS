@@ -511,6 +511,9 @@ BUG FIXES
     o	X11() was only scaling its fonts to pointsize if the dpi
 	was within 0.5 of 100dpi.
 
+    o   X11() font selection was looking for any symbol font, and sometimes
+	got e.g. bold italic if the server has such a font.
+
 
 
 
