@@ -9,7 +9,7 @@ options(rErr.eps = 1e-30)
 rErr <- function(approx, true, eps = .Options$rErr.eps)
 {
     if(is.null(eps)) { eps <- 1e-30; options(rErr.eps = eps) }
-    ifelse(abs(true) >= eps,
+    ifelse(Mod(true) >= eps,
            1 - approx / true, # relative error
            true - approx)     # absolute error (e.g. when true=0)
 }
@@ -62,4 +62,20 @@ n <-   10; all(          gamma(1:n) == cumprod(c(1,1:(n-1))))
 n <-   20; all(abs(rErr( gamma(1:n), cumprod(c(1,1:(n-1))))) < 100*Meps)
 n <-  120; all(abs(rErr( gamma(1:n), cumprod(c(1,1:(n-1))))) < 1000*Meps)
 n <- 10000;all(abs(rErr(lgamma(1:n),cumsum(log(c(1,1:(n-1)))))) < 100*Meps)
+
+## fft():
+ok <- TRUE
+##test EXTENSIVELY:	for(N in 1:100) {
+    cat(".")
+    for(n in c(1:30, 1000:1050)) {
+        x <- rnorm(n)
+        er <- Mod(rErr(fft(fft(x), inverse = TRUE)/n, x*(1+0i)))
+        n.ok <- all(er < 1e-8) & quantile(er, 0.95, names=FALSE) < 10000*Meps
+        if(!n.ok) cat("\nn=",n,": quantile(rErr, c(.95,1)) =",
+                      formatC(quantile(er, prob= c(.95,1))),"\n")
+        ok <- ok & n.ok
+    }
+    cat("\n")
+##test EXTENSIVELY:	}
+ok
 
