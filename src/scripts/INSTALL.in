@@ -4,7 +4,7 @@
 
 # @configure_input@
 
-revision='$Revision: 1.152 $'
+revision='$Revision: 1.153 $'
 version=`set - ${revision}; echo ${2}`
 version="R add-on package installer ${version}
 
@@ -64,11 +64,6 @@ umask 022
 
 R_VERSION='@VERSION@'
 GETWD='@GETWD@'
-## <FIXME>
-## Should already be set via Rcmd.
-MAKE=${MAKE-'@MAKE@'}
-TAR=${TAR='@TAR@'}
-## </FIXME>
 NO_PERL5=@NO_PERL5@
 NO_PERL5_MSG="\
 *** Formatting and installing R help pages needs Perl version 5, which
@@ -387,7 +382,7 @@ do_install_source () {
   ## trailing newlines at EOF.)
   ## As from 1.7.0, packages without compiled code are not marked
   ## as being from any platform.
-  echo "tools:::.installPackageDescription(\".\", \"${R_PACKAGE_DIR}\")" | \
+  echo "tools:::.install_package_description(\".\", \"${R_PACKAGE_DIR}\")" | \
     R_DEFAULT_PACKAGES=tools ${R_EXE} --vanilla >/dev/null
   if test ${?} -ne 0; then
     error "installing package DESCRIPTION failed"
@@ -432,7 +427,7 @@ do_install_source () {
     message "R"
       ${MKDIR_P} "${R_PACKAGE_DIR}/R"
       rm -f "${R_PACKAGE_DIR}/R/"*
-      echo "tools:::.installPackageCodeFiles(\".\", \"${R_PACKAGE_DIR}\")" | \
+      echo "tools:::.install_package_code_files(\".\", \"${R_PACKAGE_DIR}\")" | \
         R_DEFAULT_PACKAGES=tools ${R_EXE} --vanilla >/dev/null
       if test ${?} -ne 0; then
         error "unable to collate files for package '${pkg_name}'"
@@ -595,7 +590,7 @@ do_install_source () {
     echo "No man pages found in package '${pkg_name}'"
   fi
 
-  echo "tools:::.installPackageIndices(\".\", \"${R_PACKAGE_DIR}\")" | \
+  echo "tools:::.install_package_indices(\".\", \"${R_PACKAGE_DIR}\")" | \
     R_DEFAULT_PACKAGES=tools ${R_EXE} --vanilla >/dev/null
   if test ${?} -ne 0; then
     error "installing package indices failed"
@@ -604,7 +599,7 @@ do_install_source () {
 
   ## Install a dump of the parsed NAMESPACE file
   if test -f NAMESPACE && test "${fake}" != "true"; then
-      echo "tools:::.installPackageNamespaceInfo(\".\", \"${R_PACKAGE_DIR}\")" | \
+      echo "tools:::.install_package_namespace_info(\".\", \"${R_PACKAGE_DIR}\")" | \
         R_DEFAULT_PACKAGES=tools ${R_EXE} --vanilla >/dev/null
     if test ${?} -ne 0; then
       error "installing namespace metadata failed"
@@ -612,7 +607,7 @@ do_install_source () {
     fi
   fi
 
-  ## <FIXME>
+  ## <NOTE>
   ## Remove stuff we should not have installed in the first place.
   ## When installing from a source directory under CVS control, we
   ## should really exclude the CVS subdirs.  The same applies for the
@@ -622,7 +617,7 @@ do_install_source () {
     -exec rm -rf \{\} \; 2>/dev/null
   find "${R_PACKAGE_DIR}" -name .svn -type d -prune \
     -exec rm -rf \{\} \; 2>/dev/null
-  ## </FIXME>
+  ## </NOTE>
 
   if ${clean}; then
     if test -d src; then
