@@ -21,6 +21,16 @@
 #define ARITH_H_
 
 #include "Platform.h"
+
+/* Maybe get  finite(.) : */
+#ifdef HAVE_IEEE754_H
+#include <ieee754.h> /* newer Linuxen */
+#else
+#ifdef HAVE_IEEEFP_H
+#include <ieeefp.h> /* others [Solaris 2.5.x], .. */
+#endif
+#endif
+
 #ifdef Macintosh
 # include <fp.h>
 #else
@@ -42,6 +52,13 @@ extern double	R_PosInf;		/* IEEE Inf or DBL_MAX */
 extern double	R_NegInf;		/* IEEE -Inf or -DBL_MAX */
 extern int	R_NaInt;		/* NA_INTEGER etc */
 extern double	R_NaReal;		/* NA_REAL */
+
+#define NA_LOGICAL	R_NaInt
+#define NA_INTEGER	R_NaInt
+#define NA_FACTOR	R_NaInt
+#define NA_REAL		R_NaReal
+#define NA_STRING	R_NaString
+
 
 #ifdef Win32
 extern int isnan(double);
