@@ -85,6 +85,12 @@ AC_ARG_ENABLE(R-shlib,
   want_R_shlib=no)
 ## FIXME:
 ## Should add a check whether the user disabled shlibs in general?
+if test "${want_R_shlib}" = yes; then
+  LIBR="-L\$(R_HOME)/bin -lR"
+else
+  LIBR=
+fi
+AC_SUBST(LIBR)
 
 ## Enable maintainer-specific portions of Makefiles.
 AC_ARG_ENABLE(maintainer-mode,

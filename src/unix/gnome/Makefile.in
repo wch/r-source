@@ -61,7 +61,7 @@ R_gnome_la_OBJECTS = $(OBJECTS)
 ## This used to have `-lm' hard-wired, but note that we test for it at
 ## configure time.  The default automake rule would add $(LIBS) anyway,
 ## so hopefully we can remove the `-lm' ...
-R_gnome_la_LIBADD = $(ALL_GNOME_LIBS) $(ALL_X_LIBS) $(R_XTRA_LIBS)
+R_gnome_la_LIBADD = $(ALL_GNOME_LIBS) $(ALL_X_LIBS) $(R_XTRA_LIBS) $(LIBR)
 ## </FIXME>
 
 all: Makefile Makedeps R

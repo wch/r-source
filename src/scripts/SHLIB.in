@@ -4,7 +4,7 @@
 
 # @configure_input@
 
-revision='$Revision: 1.19 $'
+revision='$Revision: 1.20 $'
 version=`set - ${revision}; echo ${2}`
 version="R shared library builder ${version}
 
@@ -83,6 +83,13 @@ fi
 if ${with_f77}; then
   makeargs="${makeargs} SHLIB_LIBADD='\$(FLIBS)'"
 fi
+
+if test -f ${R_HOME}/bin/libR.@SHLIB_EXT@; then
+  LIBR="-L${R_HOME}/bin -lR"
+else
+  LIBR=
+fi
+makeargs="${makeargs} LIBR=\"${LIBR}\""
 
 eval ${MAKE} ${makefiles} ${makeargs} ${makeobjs}
 
