@@ -72,6 +72,9 @@
  *
  **************************************************************/
 
+/* BDR 2002-01-13  %e and %g were being ignored.  Now do something,
+   if not necessarily correctly */
+
 #ifdef HAVE_CONFIG_H
 # include <config.h>
 #endif
@@ -373,6 +376,8 @@ static int dopr (char *buffer, size_t maxlen, const char *format, va_list args)
 	  fvalue = va_arg (args, LDOUBLE);
 	else
 	  fvalue = va_arg (args, double);
+	/* um, floating point? */
+	total += fmtfp (buffer, &currlen, maxlen, fvalue, min, max, flags);
 	break;
       case 'G':
 	flags |= DP_F_UP;
@@ -381,6 +386,8 @@ static int dopr (char *buffer, size_t maxlen, const char *format, va_list args)
 	  fvalue = va_arg (args, LDOUBLE);
 	else
 	  fvalue = va_arg (args, double);
+	/* um, floating point? */
+	total += fmtfp (buffer, &currlen, maxlen, fvalue, min, max, flags);
 	break;
       case 'c':
 	total += dopr_outch (buffer, &currlen, maxlen, va_arg (args, int));
