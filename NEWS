@@ -109,6 +109,10 @@ BUG FIXES
     o	pretty() values close to 0 in some cases which are now 0 (PR#1032
 	and D.Brahm's mails).
 
+    o	factor.scope() was giving an error rather than a reasonable
+	default in some cases when it was called incorrectly (e.g. via
+	incorrect formula in add1()).
+
 
 BUILD ISSUES
 

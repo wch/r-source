@@ -467,7 +467,7 @@ factor.scope <- function(factor, scope)
     drop <- scope$drop
     add <- scope$add
 
-    if(length(factor) && !is.null(drop)) {# have base model
+    if(length(factor) && length(drop)) {# have base model
 	nmdrop <- colnames(drop)
 	facs <- factor
 	if(length(drop)) {
@@ -486,7 +486,7 @@ factor.scope <- function(factor, scope)
 	}
     } else nmdrop <- character(0)
 
-    if(is.null(add)) nmadd <- character(0)
+    if(!length(add)) nmadd <- character(0)
     else {
 	nmfac <- colnames(factor)
 	nmadd <- colnames(add)
