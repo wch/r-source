@@ -75,11 +75,11 @@ $(TESTout-Rdiff): %.Rout : %.R
 	@(SRCDIR=$(srcdir); export SRCDIR; \
 	  echo "$(R) < $< > $@"; \
 	  $(R) < $< > $@)
-	@echo -n \
-	  "Comparing \`$@' to \`$(srcdir)/$@.save' ..."
+	@echo @ECHO_N@ \
+	  "Comparing \`$@' to \`$(srcdir)/$@.save' ...@ECHO_C@"
 	@$(srcdir)/Rdiff $@ $(srcdir)/$@.save $(RVAL_IF_DIFF) || \
 	  (mv $@ $@.fail && exit 1)
-	@echo " OK"
+	@echo "@ECHO_T@ OK"
 
 $(TESTout-NO-diff): %.Rout : %.R
 	$(R) < $< > $@
