@@ -2501,7 +2501,7 @@ here as a result of bitter experience.  Please do not report problems
 to R-help unless you have followed all the prescriptions.}
 
 You will certainly need the following items to produce a working copy
-of @R{}:
+of @R{}.  See the subsections below for detailed descriptions.
 @itemize
 @item
 The command line tools
@@ -2556,12 +2556,13 @@ any other version of the Cygwin dlls in your path.
 @node The command line tools, Perl, The Windows toolset, The Windows toolset
 @section The command line tools
 
-You will need suitable versions of at least @code{make,} @code{sh,}
-@code{cat,} @code{cp,} @code{cut,} @code{diff,} @code{echo,}
-@code{egrep,} @code{expr,} @code{grep,} @code{ls,} @code{mkdir,}
-@code{mv,} @code{rm,} @code{sed,} @code{touch}; we use those from the
-cygwin distribution (@url{http://www.cygwin.com/mirrors.html}) or
-(@code{gzip,} @code{makeinfo,} @code{texindex}) compiled from the
+You will need suitable versions of at least @code{basename,}
+@code{cat,} @code{comm,} @code{cp,} @code{cut,} @code{diff,}
+@code{echo,} @code{egrep,} @code{expr,} @code{find,} @code{gawk},
+@code{grep,} @code{gzip,} @code{ls,} @code{make,} @code{makeinfo,}
+@code{mkdir,} @code{mv,} @code{rm,} @code{sed,} @code{sh,}
+@code{sort,}  @code{texindex} and @code{touch}; we use those from the
+Cygwin distribution (@url{http://www.cygwin.com}) or compiled from the
 sources.  You will also need @code{zip} and @code{unzip} from the
 Info-ZIP project (@url{http://www.info-zip.org}).  We have packaged a
 set of all of these tools at

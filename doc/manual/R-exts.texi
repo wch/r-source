@@ -7484,18 +7484,16 @@ regexp, and is not supported by all versions of @command{grep} or
 technicall identical to ISO/IEC 9945 and IEEE Std 1003.1 (POSIX), 2004,
 are available at
 @url{http://www.opengroup.org/onlinepubs/009695399/mindex.html}.
-
-Under Windows, these tools can be assumed because versions
-(specifically, of @command{basename}, @command{cat}, @command{comm},
-@command{cp}, @command{cut}, @command{diff}, @command{echo},
-@command{egrep}, @command{expr}, @command{find}, @command{gawk},
-@command{grep}, @command{ls}, @command{mkdir}, @command{mv},
-@command{rm}, @command{sed}, @command{sort}, @command{tar},
-@command{touch}, @command{unzip}, @command{wc} and @command{zip}) are
-provided at @url{http://www.murdoch-sutherland.com/Rtools/tools.zip}.  However,
-redirection cannot be assumed to be available via @command{system} as
-this does not use a standard shell (let alone a Bourne shell).
 @end itemize
+
+Under Windows, most users will not have these tools installed, and you
+should not require their presence for the operation of your package.
+However, users who install your package from source will have them, as
+they can be assumed to have followed the instructions in ``the Windows
+toolset'' appendix of the ``R Installation and Administration'' manual
+to obtain them.  Redirection cannot be assumed to be available via
+@command{system} as this does not use a standard shell (let alone a
+Bourne shell).
 
 @noindent
 In addition, the following tools are needed for certain tasks.
