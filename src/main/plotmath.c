@@ -28,6 +28,8 @@
 #endif
 #ifdef Unix
 
+static DevDesc *mathDevice;
+
 		/* return maximum of two doubles */
 
 static double max(double x, double y)
@@ -201,7 +203,7 @@ static int relAscii() { return 61; }
 static double ratioScale = 0.8;
 static double scriptScale = 0.65;
 static int ratioDepth = 0;
-static int metricUnit = 3;
+static int metricUnit = INCHES;
 
 static SEXP plusSymbol;
 static SEXP minusSymbol;
@@ -479,7 +481,7 @@ static float OperatorSpace[] = { 0.1, 0.15, 0.2, 0.6, 0.1 };
 static double fontHeight()
 {
 	double height, depth, width;
-	GMetricInfo(0, &height, &depth, &width, metricUnit);
+	GMetricInfo(0, &height, &depth, &width, metricUnit, mathDevice);
 	return height + depth;
 }
 
@@ -487,7 +489,7 @@ static double xHeight()
 {
 	int x = 'x';
 	double xheight, depth, width;
-	GMetricInfo(x, &xheight, &depth, &width, metricUnit);
+	GMetricInfo(x, &xheight, &depth, &width, metricUnit, mathDevice);
 	return xheight;
 }
 
@@ -495,7 +497,7 @@ static double axisHeight()
 {
 	int plus = '+';
 	double plusHeight, depth, width;
-	GMetricInfo(plus, &plusHeight, &depth, &width, metricUnit);
+	GMetricInfo(plus, &plusHeight, &depth, &width, metricUnit, mathDevice);
 	return 0.5 * plusHeight;
 }
 
@@ -567,7 +569,7 @@ static double radicalExWidth()
 {
 	int radicalEx = 96;
 	double height, depth, REWidth;
-	GMetricInfo(radicalEx, &height, &depth, &REWidth, metricUnit);
+	GMetricInfo(radicalEx, &height, &depth, &REWidth, metricUnit, mathDevice);
 	return REWidth;
 }
 
@@ -575,14 +577,14 @@ static double superscriptShift(SEXP body, SEXP sup)
 {
 	BBOX bodyBBox = elementBBox(body);
 	BBOX superscriptBBox;
-	float cexSaved = GP->cex;
+	float cexSaved = mathDevice->gp.cex;
 	double temp1 = bboxHeight(bodyBBox) - superscriptDrop();
 	double temp2 = superscript();
 	double temp3;
 
-	GP->cex = GP->cex * scriptScale;
+	mathDevice->gp.cex = mathDevice->gp.cex * scriptScale;
 	superscriptBBox = elementBBox(sup);
-	GP->cex = cexSaved;
+	mathDevice->gp.cex = cexSaved;
 	temp3 = bboxDepth(superscriptBBox) + 0.25 * xHeight();
 
 	return max(temp1, max(temp2, temp3));
@@ -592,14 +594,14 @@ static double subscriptShift(SEXP body, SEXP sub, int subOnly)
 {
 	BBOX bodyBBox = elementBBox(body);
 	BBOX subscriptBBox;
-	float cexSaved = GP->cex;
+	float cexSaved = mathDevice->gp.cex;
 	double temp1 = bboxDepth(bodyBBox) + subscriptDrop();
 	double temp2 = subscript();
 	double temp3;
 
-	GP->cex = GP->cex * scriptScale;
+	mathDevice->gp.cex = mathDevice->gp.cex * scriptScale;
 	subscriptBBox = elementBBox(sub);
-	GP->cex = cexSaved;
+	mathDevice->gp.cex = cexSaved;
 	temp3 = bboxHeight(subscriptBBox) - (4 * xHeight() / 5);
 
 	if (subOnly)
@@ -612,13 +614,13 @@ static void supsubShift(SEXP body, SEXP sup, SEXP sub,
 			double *supShift, double *subShift)
 {
 	BBOX superscriptBBox, subscriptBBox;
-	float cexSaved = GP->cex;
+	float cexSaved = mathDevice->gp.cex;
 	double temp1, temp2;
 
-	GP->cex = GP->cex * scriptScale;
+	mathDevice->gp.cex = mathDevice->gp.cex * scriptScale;
 	superscriptBBox = elementBBox(sup);
 	subscriptBBox = elementBBox(sub);
-	GP->cex = cexSaved;
+	mathDevice->gp.cex = cexSaved;
 	*supShift = superscriptShift(body, sup);
 	*subShift = subscriptShift(body, sub, 0);
 
@@ -658,12 +660,12 @@ static double accentHShift(SEXP body, SEXP accent)
 static double numeratorVShift(SEXP num)
 {
 	BBOX numBBox;
-	float cexSaved = GP->cex;
+	float cexSaved = mathDevice->gp.cex;
 	double theShift, theClearance, minClearance;
 
-	GP->cex = GP->cex * scriptScale;
+	mathDevice->gp.cex = mathDevice->gp.cex * scriptScale;
 	numBBox = elementBBox(num);
-	GP->cex = cexSaved;
+	mathDevice->gp.cex = cexSaved;
 
 	theShift = numeratorShift();
 	theClearance = numeratorShift() - bboxDepth(numBBox) -
@@ -680,19 +682,19 @@ static double numeratorVShift(SEXP num)
 static double denominatorVShift(SEXP denom)
 {
 	BBOX denomBBox;
-	float cexSaved = GP->cex;
+	float cexSaved = mathDevice->gp.cex;
 	double theShift, theClearance, minClearance;
 
 #ifdef OLD
-	GP->cex = GP->cex * scriptScale;
+	mathDevice->gp.cex = mathDevice->gp.cex * scriptScale;
 #else
-	GP->cex = GP->cex * ratioScale;
+	mathDevice->gp.cex = mathDevice->gp.cex * ratioScale;
 #endif
 	denomBBox = elementBBox(denom);
 #ifdef OLD
-	GP->cex = cexSaved;
+	mathDevice->gp.cex = cexSaved;
 #else
-	GP->cex = cexSaved;
+	mathDevice->gp.cex = cexSaved;
 #endif
 
 	theShift = denominatorShift();
@@ -711,20 +713,20 @@ static double fractionWidth(SEXP num, SEXP denom)
 {
 	BBOX numBBox;
 	BBOX denomBBox;
-	float cexSaved = GP->cex;
+	float cexSaved = mathDevice->gp.cex;
 	double temp1, temp2;
 
 #ifdef OLD
-	GP->cex = GP->cex * scriptScale;
+	mathDevice->gp.cex = mathDevice->gp.cex * scriptScale;
 #else
-	GP->cex = GP->cex * ratioScale;
+	mathDevice->gp.cex = mathDevice->gp.cex * ratioScale;
 #endif
 	numBBox = elementBBox(num);
 	denomBBox = elementBBox(denom);
 #ifdef OLD
-	GP->cex = cexSaved;
+	mathDevice->gp.cex = cexSaved;
 #else
-	GP->cex = cexSaved;
+	mathDevice->gp.cex = cexSaved;
 #endif
 	temp1 = bboxWidth(numBBox);
 	temp2 = bboxWidth(denomBBox);
@@ -738,20 +740,20 @@ static void numdenomHShift(SEXP num, SEXP denom,
 {
 	BBOX numBBox;
 	BBOX denomBBox;
-	float cexSaved = GP->cex;
+	float cexSaved = mathDevice->gp.cex;
 	double temp1, temp2;
 
 #ifdef OLD
-	GP->cex = GP->cex * scriptScale;
+	mathDevice->gp.cex = mathDevice->gp.cex * scriptScale;
 #else
-	GP->cex = GP->cex * ratioScale;
+	mathDevice->gp.cex = mathDevice->gp.cex * ratioScale;
 #endif
 	numBBox = elementBBox(num);
 	denomBBox = elementBBox(denom);
 #ifdef OLD
-	GP->cex = cexSaved;
+	mathDevice->gp.cex = cexSaved;
 #else
-	GP->cex = cexSaved;
+	mathDevice->gp.cex = cexSaved;
 #endif
 	temp1 = bboxWidth(numBBox);
 	temp2 = bboxWidth(denomBBox);
@@ -914,7 +916,7 @@ static BBOX nullBBox()
 static BBOX makeBBoxFromChar(int chr)
 {
 	double height, depth, width;
-	GMetricInfo(chr, &height, &depth, &width, metricUnit);
+	GMetricInfo(chr, &height, &depth, &width, metricUnit, mathDevice);
 	return makeBBox(height, depth, width);
 }
 
@@ -950,15 +952,15 @@ static double cosAngle;
 static double sinAngle;
 
 		/* 
-		   // convert currentX and currentY from inches and 0 angle
-		   // to figure units and currentAngle
+		   // convert currentX and currentY from 0 angle
+		   // to and currentAngle
 		 */
 static double convertedX()
 {
 	double rotatedX = referenceX +
 	(currentX - referenceX) * cosAngle -
 	(currentY - referenceY) * sinAngle;
-	return xInchtoFig(rotatedX);
+	return rotatedX;
 }
 
 static double convertedY()
@@ -966,7 +968,7 @@ static double convertedY()
 	double rotatedY = referenceY +
 	(currentY - referenceY) * cosAngle +
 	(currentX - referenceX) * sinAngle;
-	return yInchtoFig(rotatedY);
+	return rotatedY;
 }
 
 static void moveAcross(double xamount)
@@ -993,9 +995,9 @@ static void moveTo(double x, double y)
 static BBOX asciiBBox(int ascii)
 {
 	if ((ascii == hatAscii()) || (ascii == tildeAscii()))
-		GP->font = 1;
+		mathDevice->gp.font = 1;
 	else
-		GP->font = 5;
+		mathDevice->gp.font = 5;
 	return makeBBoxFromChar(ascii);
 }
 
@@ -1004,13 +1006,14 @@ static void drawAscii(int ascii)
 	char asciiStr[2];
 
 	if ((ascii == hatAscii()) || (ascii == tildeAscii()))
-		GP->font = 1;
+		mathDevice->gp.font = 1;
 	else
-		GP->font = 5;
+		mathDevice->gp.font = 5;
 	asciiStr[0] = ascii;
 	asciiStr[1] = '\0';
-	GText(convertedX(), convertedY(), asciiStr, 0.0, 0.0, currentAngle);
-	moveAcross(GStrWidth(asciiStr, metricUnit));
+	GText(convertedX(), convertedY(), INCHES, asciiStr, 
+	      0.0, 0.0, currentAngle, mathDevice);
+	moveAcross(GStrWidth(asciiStr, metricUnit, mathDevice));
 }
 
 /* code for character atoms */
@@ -1020,7 +1023,7 @@ static BBOX charBBox(char *str, SEXP expr)
 	BBOX resultBBox = nullBBox();
 	int i;
 
-	GP->font = atomFontFace(expr);
+	mathDevice->gp.font = atomFontFace(expr);
 	for (i = 0; i < strlen(str); i++)
 		resultBBox = combineBBoxes(resultBBox, makeBBoxFromChar(str[i]));
 
@@ -1029,9 +1032,10 @@ static BBOX charBBox(char *str, SEXP expr)
 
 static void drawChar(char *str, SEXP expr)
 {
-	GP->font = atomFontFace(expr);
-	GText(convertedX(), convertedY(), str, 0.0, 0.0, currentAngle);
-	moveAcross(GStrWidth(str, metricUnit));
+	mathDevice->gp.font = atomFontFace(expr);
+	GText(convertedX(), convertedY(), INCHES, str, 
+	      0.0, 0.0, currentAngle, mathDevice);
+	moveAcross(GStrWidth(str, metricUnit, mathDevice));
 }
 
 /* code for symbol atoms */
@@ -1153,49 +1157,49 @@ static int cexGap = 1;
 
 static void setGapCEX()
 {
-  cexGap = GP->cex;
+  cexGap = mathDevice->gp.cex;
 }
 
 static BBOX gapBBox(double gap)
 {
-  double cexSaved = GP->cex;
+  double cexSaved = mathDevice->gp.cex;
   BBOX theBBox;
 
-  GP->cex = cexGap;
+  mathDevice->gp.cex = cexGap;
   theBBox = makeBBox(0, 0, gap * fontHeight());
-  GP->cex = cexSaved;
+  mathDevice->gp.cex = cexSaved;
 
   return theBBox;
 }
 
 static BBOX smallgapBBox(double gap)
 {
-  double cexSaved = GP->cex;
+  double cexSaved = mathDevice->gp.cex;
   BBOX theBBox;
 
-  GP->cex = cexGap;
+  mathDevice->gp.cex = cexGap;
   theBBox = makeBBox(0, 0, 0.5 * gap * fontHeight());
-  GP->cex = cexSaved;
+  mathDevice->gp.cex = cexSaved;
 
   return theBBox;
 }
 
 static void drawGap(double gap)
 {
-  double cexSaved = GP->cex;
+  double cexSaved = mathDevice->gp.cex;
 
-  GP->cex = cexGap;
+  mathDevice->gp.cex = cexGap;
   moveAcross(gap * fontHeight());
-  GP->cex = cexSaved;
+  mathDevice->gp.cex = cexSaved;
 }
 
 static void drawSmallGap(double gap)
 {
-  double cexSaved = GP->cex;
+  double cexSaved = mathDevice->gp.cex;
 
-  GP->cex = cexGap;
+  mathDevice->gp.cex = cexGap;
   moveAcross(0.5 * gap * fontHeight());
-  GP->cex = cexSaved;
+  mathDevice->gp.cex = cexSaved;
 }
 
 /* code for binary operator (+, -, *, /) expressions */
@@ -1282,11 +1286,11 @@ static BBOX supsubBBox(SEXP body, SEXP superscript, SEXP subscript);
 static BBOX superscriptBBox(SEXP superscript)
 {
 	BBOX result;
-	float cexSaved = GP->cex;
+	float cexSaved = mathDevice->gp.cex;
 
-	GP->cex = GP->cex * scriptScale;
+	mathDevice->gp.cex = mathDevice->gp.cex * scriptScale;
 	result = elementBBox(superscript);
-	GP->cex = cexSaved;
+	mathDevice->gp.cex = cexSaved;
 
 	return result;
 }
@@ -1315,11 +1319,11 @@ static BBOX supBBox(SEXP expr)
 static BBOX subscriptBBox(SEXP subscript)
 {
 	BBOX result;
-	float cexSaved = GP->cex;
+	float cexSaved = mathDevice->gp.cex;
 
-	GP->cex = GP->cex * scriptScale;
+	mathDevice->gp.cex = mathDevice->gp.cex * scriptScale;
 	result = elementBBox(subscript);
-	GP->cex = cexSaved;
+	mathDevice->gp.cex = cexSaved;
 
 	return result;
 }
@@ -1350,11 +1354,11 @@ static BBOX supsubBBox(SEXP body, SEXP superscript, SEXP subscript)
 
 static void drawScriptElement(SEXP expr)
 {
-	float cexSaved = GP->cex;
+	float cexSaved = mathDevice->gp.cex;
 
-	GP->cex = GP->cex * scriptScale;
+	mathDevice->gp.cex = mathDevice->gp.cex * scriptScale;
 	drawElement(expr);
-	GP->cex = cexSaved;
+	mathDevice->gp.cex = cexSaved;
 }
 
 static void drawSupSub(SEXP body, SEXP superscript, SEXP subscript);
@@ -1456,17 +1460,17 @@ static void drawHat(SEXP body)
 	double width = bboxWidth(bodyBBox);
 	double savedX = currentX;
 	double savedY = currentY;
+	double x[3], y[3];
 
 	moveUp(bboxHeight(bodyBBox) + customAccentGap());
-	GStartPath();
-	GMoveTo(convertedX(), convertedY());
+	x[0] = convertedX(); y[0] = convertedY();
 	moveUp(customHatHeight());
 	moveAcross(width / 2);
-	GLineTo(convertedX(), convertedY());
+	x[1] = convertedX(); y[1] = convertedY();
 	moveUp(-customHatHeight());
 	moveAcross(width / 2);
-	GLineTo(convertedX(), convertedY());
-	GEndPath();
+	x[2] = convertedX(); y[2] = convertedY();
+	GPolyline(3, x, y, INCHES, mathDevice);
 	moveTo(savedX, savedY);
 	drawElement(body);
 }
@@ -1476,13 +1480,13 @@ static void drawBar(SEXP body)
 	BBOX bodyBBox = elementBBox(body);
 	double savedX = currentX;
 	double savedY = currentY;
+	double x[2], y[2];
 
 	moveUp(bboxHeight(bodyBBox) + customAccentGap());
-	GStartPath();
-	GMoveTo(convertedX(), convertedY());
+	x[0] = convertedX(); y[0] = convertedY();
 	moveAcross(bboxWidth(bodyBBox));
-	GLineTo(convertedX(), convertedY());
-	GEndPath();
+	x[1] = convertedX(); y[1] = convertedY();
+	GPolyline(2, x, y, INCHES, mathDevice);
 	moveTo(savedX, savedY);
 	drawElement(body);
 }
@@ -1515,19 +1519,19 @@ static BBOX fractionBBox(SEXP expr)
 	SEXP denominator = CADDR(expr);
 	BBOX numBBox, denomBBox;
 	double numHShift, denomHShift;
-	float cexSaved = GP->cex;
+	float cexSaved = mathDevice->gp.cex;
 
 #ifdef OLD
-	GP->cex = GP->cex * scriptScale;
+	mathDevice->gp.cex = mathDevice->gp.cex * scriptScale;
 #else
-	GP->cex = GP->cex * ratioScale;
+	mathDevice->gp.cex = mathDevice->gp.cex * ratioScale;
 #endif
 	numBBox = elementBBox(numerator);
 	denomBBox = elementBBox(denominator);
 #ifdef OLD
-	GP->cex = cexSaved;
+	mathDevice->gp.cex = cexSaved;
 #else
-	GP->cex = cexSaved;
+	mathDevice->gp.cex = cexSaved;
 #endif
 	numdenomHShift(numerator, denominator, &numHShift, &denomHShift);
 
@@ -1540,10 +1544,10 @@ static BBOX fractionBBox(SEXP expr)
 
 static void drawRatioElement(SEXP expr)
 {
-	float cexSaved = GP->cex;
-	GP->cex = GP->cex * ratioScale;
+	float cexSaved = mathDevice->gp.cex;
+	mathDevice->gp.cex = mathDevice->gp.cex * ratioScale;
 	drawElement(expr);
-	GP->cex = cexSaved;
+	mathDevice->gp.cex = cexSaved;
 }
 
 static void drawFraction(SEXP expr)
@@ -1554,6 +1558,7 @@ static void drawFraction(SEXP expr)
 	double savedY = currentY;
 	double fWidth = fractionWidth(numerator, denominator);
 	double numHShift, denomHShift;
+	double x[2], y[2];
 
 	numdenomHShift(numerator, denominator, &numHShift, &denomHShift);
 	moveAcross(numHShift);
@@ -1565,11 +1570,10 @@ static void drawFraction(SEXP expr)
 #endif
 	moveTo(savedX, savedY);
 	moveUp(axisHeight());
-	GStartPath();
-	GMoveTo(convertedX(), convertedY());
+	x[0] = convertedX(); y[0] = convertedY();
 	moveAcross(fWidth);
-	GLineTo(convertedX(), convertedY());
-	GEndPath();
+	x[1] = convertedX(); y[1] = convertedY();
+	GPolyline(2, x, y, INCHES, mathDevice);
 	moveTo(savedX, savedY);
 	moveAcross(denomHShift);
 	moveUp(-denominatorVShift(denominator));
@@ -1630,14 +1634,14 @@ static useRelGap = 1;
   
 static BBOX operatorLimitBBox(SEXP limit)
 {
-  float cexSaved = GP->cex;
+  float cexSaved = mathDevice->gp.cex;
   BBOX limitBBox;
 
-  GP->cex = GP->cex * scriptScale;
+  mathDevice->gp.cex = mathDevice->gp.cex * scriptScale;
   useRelGap = 0;
   limitBBox = elementBBox(limit);
   useRelGap = 1;
-  GP->cex = cexSaved;
+  mathDevice->gp.cex = cexSaved;
 
   return limitBBox;
 }
@@ -1791,22 +1795,22 @@ static void drawCustomRadical(SEXP body)
 	double twiddleHeight = (height - depth) / 2;
 	double savedX = currentX;
 	double savedY = currentY;
+	double x[5], y[5];
 
 	moveUp(0.8 * twiddleHeight);
-	GStartPath();
-	GMoveTo(convertedX(), convertedY());
+	x[0] = convertedX(); y[0] = convertedY();
 	moveUp(0.2 * twiddleHeight);
 	moveAcross(0.3 * customRadicalWidth());
-	GLineTo(convertedX(), convertedY());
+	x[1] = convertedX(); y[1] = convertedY();
 	moveUp(-(twiddleHeight + depth));
 	moveAcross(0.3 * customRadicalWidth());
-	GLineTo(convertedX(), convertedY());
+	x[2] = convertedX(); y[2] = convertedY();
 	moveUp(depth + height + customRadicalGap());
 	moveAcross(0.4 * customRadicalWidth());
-	GLineTo(convertedX(), convertedY());
+	x[3] = convertedX(); y[3] = convertedY();
 	moveAcross(customRadicalSpace() + width);
-	GLineTo(convertedX(), convertedY());
-	GEndPath();
+	x[4] = convertedX(); y[4] = convertedY();
+	GPolyline(5, x, y, INCHES, mathDevice);
 	moveTo(savedX, savedY);
 	moveAcross(customRadicalWidth() + customRadicalSpace());
 	drawElement(body);
@@ -1834,21 +1838,25 @@ static void drawAbs(SEXP expr)
 	BBOX bodyBBox = elementBBox(expr);
 	double height = bboxHeight(bodyBBox);
 	double depth = bboxDepth(bodyBBox);
+	double width = bboxWidth(bodyBBox);
+	double savedX = currentX;
+	double savedY = currentY;
+	double x[2], y[2];
 
 	moveUp(-depth);
-	GStartPath();
-	GMoveTo(convertedX(), convertedY());
+	x[0] = convertedX(); y[0] = convertedY();
 	moveUp(depth + height);
-	GLineTo(convertedX(), convertedY());
+	x[1] = convertedX(); y[1] = convertedY();
+	GPolyline(2, x, y, INCHES, mathDevice);
 	moveUp(-height);
 	moveAcross(absSpace());
 	drawElement(body);
 	moveAcross(absSpace());
 	moveUp(-depth);
-	GMoveTo(convertedX(), convertedY());
+	x[0] = convertedX(); y[0] = convertedY();
 	moveUp(depth + height);
-	GLineTo(convertedX(), convertedY());
-	GEndPath();
+	x[1] = convertedX(); y[1] = convertedY();
+	GPolyline(2, x, y, INCHES, mathDevice);
 	moveUp(-height);
 }
 
@@ -2198,62 +2206,43 @@ static void drawElement(SEXP expr)
 
         /* calculate width of expression */
         /* BBOXes are in INCHES (see metricUnit) */
-double GExpressionWidth(SEXP expr, int units)
+double GExpressionWidth(SEXP expr, int units, DevDesc *dd)
 {
         BBOX exprBBox = elementBBox(expr);
         double w  = exprBBox.width;
-        switch(units) {
-                case 1: /* user == world */
-                        w = ((exprBBox.width / GP->ipr[0]) / GP->fig2dev.bx) / GP->win2fig.bx;
-                        break;
-                case 2: /* figure */
-                        w = (exprBBox.width / GP->ipr[0]) / GP->fig2dev.bx;
-                        break;
-                case 3: /* inches */
-                        w = exprBBox.width;
-                        break;
-                case 4: /* rasters */
-                        w = exprBBox.width / GP->ipr[0];
-                        break;
-        }
-        return w;
+	if (units == INCHES)
+		return w;
+	else 
+		return GConvertXUnits(w, INCHES, units, dd);
 }
 
 #define ABS(a)  ((a)>=0 ? (a) : -(a))
 
-double GExpressionHeight(SEXP expr, int units)
+double GExpressionHeight(SEXP expr, int units, DevDesc *dd)
 {
         BBOX exprBBox = elementBBox(expr);
         double h = exprBBox.height + exprBBox.depth;
-        switch(units) {
-                case 1: /* user == world */
-                        h = ((h / GP->ipr[1]) / ABS(GP->fig2dev.by)) / GP->win2fig.by;
-                        break;
-                case 2: /* figure */
-                        h = (h / GP->ipr[1]) / ABS(GP->fig2dev.by);
-                        break;
-                case 3: /* inches */
-                        break;
-                case 4: /* rasters */
-                        h = h / GP->ipr[1];
-                        break;
-        }
-        return h;
+	if (units == INCHES)
+		return h;
+	else
+		return GConvertYUnits(h, INCHES, units, dd);
 }
 
 		/* functions forming the API */
 
-void GMathText(double x, double y, SEXP expr, double xc, double yc, double rot)
+void GMathText(double x, double y, int coords, SEXP expr, 
+	       double xc, double yc, double rot, DevDesc *dd)
 {
 	BBOX expressionBBox;
+
+	mathDevice = dd;
 
 	initFormulaSymbols();
 	expressionBBox = elementBBox(expr);
 
-	/* NOTE that x and y are in Figure coordinates */
-
-	referenceX = xFigtoInch(x);
-	referenceY = yFigtoInch(y);
+	referenceX = x;
+	referenceY = y;
+	GConvert(&referenceX, &referenceY, coords, INCHES, dd);
 
 	currentX = referenceX - xc * bboxWidth(expressionBBox);
 	currentY = referenceY - yc * bboxHeight(expressionBBox);
@@ -2264,124 +2253,117 @@ void GMathText(double x, double y, SEXP expr, double xc, double yc, double rot)
 }
 
 
-#define XINVFMAP(x) ((x - GP->fig2dev.ax)/GP->fig2dev.bx)
-#define YINVFMAP(y) ((y - GP->fig2dev.ay)/GP->fig2dev.by)
-
-void GMMathText(SEXP str, int side, double line, int outer, double at, int las)
+void GMMathText(SEXP str, int side, double line, int outer, double at, int las,
+		DevDesc *dd)
 {
-	double a, x, y, xadj, yadj;
+	int coords;
+	double a, xadj, yadj;
+
+	mathDevice = dd;
 
 	if (outer) {
 		switch (side) {
 		case 1:
-			x = at;
-			y = yChartoNDC(GP->cexbase * GP->mex * (GP->oma[0] - line + 1));
-			x = DP->inner2dev.ax + DP->inner2dev.bx * x;
-			y = DP->ndc2dev.ay + DP->ndc2dev.by * y;
+			line = line + 1;
+			coords = MAR1;
 			a = 0.0;
-			xadj = GP->adj;
+			xadj = mathDevice->gp.adj;
 			yadj = 0.0;
 			break;
 		case 2:
-			x = xChartoNDC(GP->cexbase * GP->mex * (GP->oma[1] - line));
-			y = at;
-			x = DP->ndc2dev.ax + DP->ndc2dev.bx * x;
-			y = DP->inner2dev.ay + DP->inner2dev.by * y;
+			coords = MAR2;
 			a = 90.0;
-			xadj = GP->adj;
+			xadj = mathDevice->gp.adj;
 			yadj = 0.0;
 			break;
 		case 3:
-			x = at;
-			y = 1.0 - yChartoNDC(GP->cexbase * GP->mex * (GP->oma[2] - line));
-			x = DP->inner2dev.ax + DP->inner2dev.bx * x;
-			y = DP->ndc2dev.ay + DP->ndc2dev.by * y;
+			coords = MAR3;
 			a = 0.0;
-			xadj = GP->adj;
+			xadj = mathDevice->gp.adj;
 			yadj = 0.0;
 			break;
 		case 4:
-			x = 1.0 - xChartoNDC(GP->cexbase * GP->mex * (GP->oma[3] - line));
-			y = at;
-			x = DP->ndc2dev.ax + DP->ndc2dev.bx * x;
-			y = DP->inner2dev.ay + DP->inner2dev.by * y;
+			line = line + 1;
+			coords = MAR4;
 			a = 90.0;
-			xadj = GP->adj;
+			xadj = mathDevice->gp.adj;
 			yadj = 0.0;
 			break;
 		}
-		x = XINVFMAP(x);
-		y = YINVFMAP(y);
-		GMathText(x, y, str, xadj, yadj, a);
+		GMathText(at, line, coords, str, xadj, yadj, a, dd);
 	}
 	else {
 		switch (side) {
 		case 1:
 			if (las == 2) {
-				y = GP->plt[2] - yInchtoFig(yChartoInch(GP->cexbase * GP->mex * (line + GP->yLineBias)));
-				x = XMAP(at) - xInchtoFig(xChartoInch(GP->cexbase * GP->mex * GP->yLineBias));
+				at = at - GConvertXUnits(dd->gp.yLineBias,
+							 LINES, USER, dd);
+				line = line + dd->gp.yLineBias;
 				a = 90.0;
 				xadj = 1.0;
 				yadj = 0.5;
 			}
 			else {
-				y = GP->plt[2] - yInchtoFig(yChartoInch(GP->cexbase * GP->mex * (line + 1 - GP->yLineBias)));
-				x = XMAP(at);
+				line = line + 1 - dd->gp.yLineBias;
 				a = 0.0;
-				xadj = GP->adj;
+				xadj = mathDevice->gp.adj;
 				yadj = 0.0;
 			}
+			coords = MAR1;
 			break;
 		case 2:
 			if (las == 1 || las == 2) {
-				x = GP->plt[0] - xInchtoFig(xChartoInch(GP->cexbase * GP->mex * (line + GP->yLineBias)));
-				y = YMAP(at) + yInchtoFig(yChartoInch(GP->cexbase * GP->mex * GP->yLineBias));
+				at = at + GConvertYUnits(dd->gp.yLineBias,
+							 LINES, USER, dd);
+				line = line + dd->gp.yLineBias;
 				a = 0.0;
 				xadj = 1.0;
 				yadj = 0.5;
 			}
 			else {
-				x = GP->plt[0] - xInchtoFig(xChartoInch(GP->cexbase * GP->mex * (line + GP->yLineBias)));
-				y = YMAP(at);
+				line = line + dd->gp.yLineBias;
 				a = 90.0;
-				xadj = GP->adj;
+				xadj = mathDevice->gp.adj;
 				yadj = 0.0;
 			}
+			coords = MAR2;
 			break;
 		case 3:
 			if (las == 2) {
-				y = GP->plt[3] + yInchtoFig(yChartoInch(GP->cexbase * GP->mex * (line + GP->yLineBias)));
-				x = XMAP(at) - xInchtoFig(xChartoInch(GP->cexbase * GP->mex * GP->yLineBias));
+				at = at - GConvertXUnits(dd->gp.yLineBias,
+							 LINES, USER, dd);
+				line = line + dd->gp.yLineBias;
 				a = 90.0;
 				xadj = 0.0;
 				yadj = 0.5;
 			}
 			else {
-				y = GP->plt[3] + yInchtoFig(yChartoInch(GP->cexbase * GP->mex * (line + GP->yLineBias)));
-				x = XMAP(at);
+				line = line + dd->gp.yLineBias;
 				a = 0.0;
-				xadj = GP->adj;
+				xadj = mathDevice->gp.adj;
 				yadj = 0.0;
 			}
+			coords = MAR3;
 			break;
 		case 4:
 			if (las == 1 || las == 2) {
-				x = GP->plt[1] + xInchtoFig(xChartoInch(GP->cexbase * GP->mex * (line + GP->yLineBias)));
-				y = YMAP(at) + yInchtoFig(yChartoInch(GP->cexbase * GP->mex * GP->yLineBias));
+				at = at + GConvertYUnits(dd->gp.yLineBias,
+							 LINES, USER, dd);
+				line = line + dd->gp.yLineBias;
 				a = 0.0;
 				xadj = 0.0;
 				yadj = 0.5;
 			}
 			else {
-				x = GP->plt[1] + xInchtoFig(xChartoInch(GP->cexbase * GP->mex * (line + 1 - GP->yLineBias)));
-				y = YMAP(at);
+				line = line + 1 - dd->gp.yLineBias;
 				a = 90.0;
-				xadj = GP->adj;
+				xadj = mathDevice->gp.adj;
 				yadj = 0.0;
 			}
+			coords = MAR4;
 			break;
 		}
-		GMathText(x, y, str, xadj, yadj, a);
+		GMathText(at, line, coords, str, xadj, yadj, a, dd);
 	}
 }
 

@@ -68,6 +68,7 @@
 #define R_RED(col)	(((col)    )&255)
 #define R_GREEN(col)	(((col)>> 8)&255)
 #define R_BLUE(col)	(((col)>>16)&255)
+#define COLOR_TABLE_SIZE 256
 
 
 #ifdef Unix
@@ -84,6 +85,36 @@
 #define LTY_DOTDASH	PS_DASHDOT
 #endif
 
+#define MAX_LAYOUT_ROWS 15
+#define MAX_LAYOUT_COLS 15
+
+	/* possible coordinate systems (for specifying locations) */
+
+#define DEVICE	0	/* native device coordinates (rasters) */
+#define NDC	1	/* normalised device coordinates x=(0,1), y=(0,1) */
+#define INCHES 13 	/* inches x=(0,width), y=(0,height) */
+#define NIC	6	/* normalised inner region coordinates (0,1) */
+#define OMA1	2	/* outer margin 1 (bottom) x=NIC, y=LINES */
+#define OMA2	3	/* outer margin 2 (left) */
+#define OMA3	4	/* outer margin 3 (top) */
+#define OMA4	5	/* outer margin 4 (right) */
+#define NFC	7	/* normalised figure region coordinates (0,1) */
+#define NPC     16	/* normalised plot region coordinates (0,1) */
+#define USER	12	/* user/data/world corrdinates */
+			/* x=(xmin,xmax), y=(ymin,ymax) */
+#define MAR1	8	/* figure margin 1 (bottom) x=USER(x), y=LINES */
+#define MAR2	9	/* figure margin 2 (left) x=USER(y) y=LINES */
+#define MAR3	10	/* figure margin 3 (top) x=USER(x), y=LINES */
+#define MAR4	11	/* figure margin 4 (right) x=USER(y) y=LINES */
+
+	/* possible units (for specifying dimensions) */
+	/* all of the above, plus ... */
+
+#define LINES 14	/* multiples of a line in the margin (mex) */
+#define CHARS 15	/* multiples of text height (cex) */
+
+#define R_MaxDevices 64
+
 typedef unsigned int rcolor;
 
 typedef struct {
@@ -93,17 +124,36 @@ typedef struct {
 	double by;
 } GTrans;
 
+struct colorDataBaseEntry {
+	char *name;     /* X11 Color Name */
+	char *rgb;      /* #RRGGBB String */
+	unsigned code;  /* Internal R Color Code */
+};
+
+typedef struct colorDataBaseEntry ColorDataBaseEntry; 
+
+extern int ColorTableSize;
+extern unsigned int ColorTable[];
+extern ColorDataBaseEntry ColorDataBase[];
+extern char *DefaultPalette[];
+
 /* Graphics State:
  *
  * The following structure defines state for a graphics device driver.
  * Two copies are kept; the ``default'' set of values, and a set which
  * can be modified during calls to an application program.  When a
  * new graphics frame is started, the values revert to the defaults
+ *
  */
 
 typedef struct {
 		/* Basic Device Driver Properties */
 		/* These MUST be set by device drivers on open */
+
+		/* These parameters cannot be set by the user */
+		/* although left, right, bottom, and top can be */
+		/* interrogated indirectly (i.e., par("din")) */
+		/* and cra can be interrogated directly (i.e., par("cra")) */
 
 	double	left;		/* left raster coordinate */
 	double	right;		/* right raster coordinate */
@@ -111,35 +161,38 @@ typedef struct {
 	double	top;		/* top raster coordinate */
 	double	xCharOffset;	/* x character addressing offset */
 	double	yCharOffset;	/* y character addressing offset */
-	double	yLineBias;	/* 1/2 interline space as a fraction of line height */
+	double	yLineBias;	/* 1/2 interline space as fraction of line height */
 	int	canResizePlot;	/* can the graphics surface be resized */
 	int	canChangeFont;	/* device has multiple fonts */
 	int	canRotateText;	/* text can be rotated */
 	int	canResizeText;	/* text can be resized */
 	int	canClip;	/* Hardware clipping */
 
+		/* a couple of the GRZ-like parameters that have to be */
+		/* set by the device */
+
+	double	ipr[2];		/* Inches per raster; [0]=x, [1]=y */
+	double	asp;		/* Pixel aspect ratio = ipr[1]/ipr[0] */
+	double	cra[2];		/* Character size in rasters; [0]=x, [1]=y */
+
 		/* Plot State */
 		/* When the device driver is started this is 0 */
 		/* After the first call to plot.new it is 1 */
+		/* Every graphics operation except plot.new */
+		/* should fail if state = 0 */
+		/* This is checked at the highest internal function */
+		/* level (e.g., do_lines, do_axis, do_plot_xy, ...) */
 
 	int	state;		/* Plot State */
-
-		/* Parameters computed from those */
-		/* above at the start of a new plot */
-
-	double	xNDCPerChar;	/* Nominal character width (NDC) */
-	double	yNDCPerChar;	/* Nominal character height (NDC) */
-	double	xNDCPerInch;	/* xNDC -> Inches */
-	double	yNDCPerInch;	/* yNDC -> Inches */
+	int 	valid;		/* valid layout ? */
 
 		/* GRZ-like Graphics Parameters */
 		/* ``The horror, the horror ... '' */
 		/* Marlon Brando - Appocalypse Now */
 
 		/* General Parameters */
+		/* These are set and interrogated directly */
 
-	double	ipr[2];		/* Inches per raster */
-	double	asp;		/* Pixel aspect ratio = ipr[1]/ipr[0] */
 	double	adj;		/* String adjustment */
 	int	ann;		/* Should annotation take place */
 	int	ask;		/* User confirmation of ``page eject'' */
@@ -147,17 +200,22 @@ typedef struct {
 	int	bty;		/* Box type */
 	double	cex;		/* Character expansion */
 	rcolor	col;		/* Plotting Color */
-	double	cra[2];		/* Character size in rasters */
 	double	crt;		/* Character/string rotation */
 	int	err;		/* Error repporting level */
 	rcolor	fg;		/* **R ONLY** Foreground Color */
 	int	font;		/* Text font */
 	double	gamma;		/* Device Gamma Correction */
 	int	lab[3];		/* Axis labelling */
+				/* [0] = # ticks on x-axis */
+				/* [1] = # ticks on y-axis */
+				/* [2] = length of axis labels */
 	int	las;		/* Label style (rotation) */
 	int	lty;		/* Line texture */
 	double	lwd;		/* Line width */
 	double	mgp[3];		/* Annotation location */
+				/* [0] = location of axis title */
+				/* [1] = location of axis label */
+				/* [2] = location of axis line */
 	double	mkh;		/* Mark size in inches */
 	int	pch;		/* Plotting character */
 	int	ps;		/* Text & symbol pointsize */
@@ -167,9 +225,14 @@ typedef struct {
 	double	tmag;		/* **R ONLY** Title Magnification */
 	int	type;		/* type of plot desired */
 	double	xaxp[3];	/* X Axis annotation */
+				/* [0] = coordinate of lower tick */
+				/* [1] = coordinate of upper tick */
+				/* [2] = num tick intervals */
+				/* almost always used internally */
 	int	xaxs;		/* X Axis style */
 	int	xaxt;		/* X Axis type */
 	int	xpd;		/* Clip to plot region indicator */
+	int 	oldxpd;
 	double	yaxp[3];	/* Y Axis annotation */
 	int	yaxs;		/* Y Axis style */
 	int	yaxt;		/* Y Axis type */
@@ -196,155 +259,223 @@ typedef struct {
 
 		/* Layout Parameters */
 
-	double	fig[4];		/* Figure size (proportion) */
+	int 	numrows;
+	int 	numcols;
+	int 	currentFigure;
+	int 	lastFigure;
+	double	heights[MAX_LAYOUT_ROWS];
+	double 	widths[MAX_LAYOUT_COLS];
+	int 	cmHeights[MAX_LAYOUT_ROWS];
+	int 	cmWidths[MAX_LAYOUT_COLS];
+	int 	order[MAX_LAYOUT_ROWS][MAX_LAYOUT_COLS];
+	int 	rspct;	/* 0 = none, 1 = full, 2 = see respect */
+	int 	respect[MAX_LAYOUT_ROWS][MAX_LAYOUT_COLS];
+
+	int     mfind;          /* By row/col indicator */
+
+		/* Layout parameters which can be set directly by the */
+		/* user (e.g., par(fig=c(.5,1,0,1))) or otherwise are */
+		/* calculated automatically */
+		/* NOTE that *Units parameters are for internal use only */
+
+	double	fig[4];		/* (current) Figure size (proportion) */
+				/* [0] = left, [1] = right */
+				/* [2] = bottom, [3] = top */
+	double  fin[2];		/* (current) Figure size (inches) */
+				/* [0] = width, [1] = height */
+	int 	fUnits;		/* (current) figure size units */
+	int 	defaultFigure;	/* calculate figure from layout ? */
+	double	plt[4];		/* (current) Plot size (proportions) */
+				/* [0] = left, [1] = right */
+				/* [2] = botom, [3] = top */
+	double  pin[2];		/* (current) plot size (inches) */
+				/* [0] = width, [1] = height */
+	int 	pUnits;		/* (current) plot size units */
+	int 	defaultPlot;	/* calculate plot from figure - margins ? */
+
+		/* Layout parameters which are set directly by the user */
+
 	double	mar[4];		/* Plot margins in lines */
+	double  mai[4];		/* Plot margins in inches */
+				/* [0] = bottom, [1] = left */
+				/* [2] = top, [3] = right */
+	int 	mUnits;		/* plot margin units */
 	double	mex;		/* Margin expansion factor */
-	int	mfind;		/* By row/col indicator */
-	int	mfg[4];		/* Multiple figure parameters */
-	int	new;		/* Clean plot ? */
 	double	oma[4];		/* Outer margins in lines */
-	double	plt[4];		/* Plot size (proportions) */
+	double  omi[4];		/* outer margins in inches */
+	double	omd[4];		/* outer margins in NDC */
+				/* [0] = bottom, [1] = left */
+				/* [2] = top, [3] = right */
+	int 	oUnits;		/* outer margin units */
 	int	pty;		/* Plot type */
+
+		/* Layout parameters which can be set by the user, but */
+		/* almost always get automatically calculated anyway */
+
 	double	usr[4];		/* Graphics window */
+				/* [0] = xmin, [1] = xmax */
+				/* [2] = ymin, [3] = ymax */
+		
+		/* The logged usr parameter;  if xlog, use logusr[0:1] */
+		/*                            if ylog, use logusr[2:3] */
 
-		/* State Parameters */
+	double logusr[4];
 
-	double xlast;		/* x last point */
-	double ylast;		/* y last point */
+		/* Layout parameter: Internal flags */
 
-		/* Window Mappings */
+	int	new;		/* Clean plot ? */
+	int 	devmode;		/* creating new image or adding to existing one */
 
-	GTrans	win2fig;	/* Window to figure mapping */
+		/* Coordinate System Mappings */
+		/* These are only used internally (i.e., cannot be */
+		/* set directly by the user) */
+
+		/* The reliability of these parameters relies on */
+		/* the fact that plot.new is the */
+		/* first graphics operation called in the creation */
+		/* of a graph */
+
+		/* udpated per plot.new */
+
+	double	xNDCPerChar;	/* Nominal character width (NDC) */
+	double	yNDCPerChar;	/* Nominal character height (NDC) */
+	double	xNDCPerLine;	/* Nominal line width (NDC) */
+	double	yNDCPerLine;	/* Nominal line height (NDC) */
+	double	xNDCPerInch;	/* xNDC -> Inches */
+	double	yNDCPerInch;	/* yNDC -> Inches */
+
+		/* updated per plot.new and if inner2dev changes */
+
 	GTrans	fig2dev;	/* Figure to device */
+
+		/* udpated per DevNewPlot and if ndc2dev changes */
+
 	GTrans 	inner2dev;	/* Inner region to device */
+
+		/* udpated per device resize */
+		
 	GTrans	ndc2dev;	/* NDC to raw device */
 
+		/* updated per plot.new and per plot.window */
+
+	GTrans	win2fig;	/* Window to figure mapping */
+
+		/* NOTE: if user has not set fig and/or plt then */
+		/* they need to be updated per plot.new too */
+
+		/* device operations */
+	int (*open)();
+	void (*close)();
+	void (*activate)();
+	void (*deactivate)();
+	void (*resize)();
+	void (*newPage)();
+	void (*clip)();
+	double (*strWidth)();
+	void (*line)();
+	void (*polyline)();
+	void (*text)();
+	void (*dot)();
+	void (*rect)();
+	void (*circle)();
+	void (*polygon)();
+	int (*locator)();
+	void (*mode)();
+	void (*hold)();
+	void (*metricInfo)();
 } GPar;
+
+typedef struct {
+	GPar dp;          	/* current device default parameters */
+	GPar gp;		/* current device current parameters */
+	GPar dpSaved; 		/* saved device default parameters */
+	void *deviceSpecific;   /* pointer to device specific parameters */
+	int displayListOn;    	/* toggle for display list status */
+	SEXP displayList;     	/* display list */
+} DevDesc;
 
 char *R_alloc(long, int);
 char *vmaxget(void);
 void vmaxset(char*);
 
-extern int  DevInit;
-extern int  (*DevOpen)();
-extern void (*DevClose)(void);
-extern void (*DevResize)(void);
-extern void (*DevNewPlot)(void);
-extern void (*DevClip)();
-extern void (*DevStartPath)();
-extern double (*DevStrWidth)();
-extern void (*DevEndPath)();
-extern void (*DevMoveTo)();
-extern void (*DevLineTo)();
-extern void (*DevText)();
-extern void (*DevDot)();
-extern void (*DevRect)();
-extern void (*DevCircle)();
-extern void (*DevPolygon)();
-extern int  (*DevLocator)();
-extern void (*DevMode)();
-extern void (*DevHold)();
-extern void (*DevSavePlot)();
-extern void (*DevPrintPlot)();
-extern void (*DevMetricInfo)();
-#ifdef OLD
-extern void (*DevColor)();
-extern void (*DevFont)();
-extern void (*DevLinetype)();
-#endif
+		/* User Callable Functions */
 
-extern GPar GParams;	/* current parameters */
-extern GPar DParams;	/* default parameters */
-extern GPar *GP;
-extern GPar *DP;
+		/* Programmer Device functions */
 
-	/* World -> Figure Mapping */
-#define XMAP(x) (GP->win2fig.ax+GP->win2fig.bx*(x))
-#define YMAP(y) (GP->win2fig.ay+GP->win2fig.by*(y))
-
-	/* Figure -> Device Mapping */
-#define XFMAP(x) (GP->fig2dev.ax+GP->fig2dev.bx*(x))
-#define YFMAP(y) (GP->fig2dev.ay+GP->fig2dev.by*(y))
-
-	/* Inner -> Device Mapping */
-#define XIMAP(x) (GP->inner2dev.ax+GP->inner2dev.bx*(x))
-#define YIMAP(y) (GP->inner2dev.ay+GP->inner2dev.by*(y))
-
-	/* NDC -> Device Mapping */
-#define XNMAP(x) (GP->ndc2dev.ax+GP->ndc2dev.bx*(x))
-#define YNMAP(y) (GP->ndc2dev.ay+GP->ndc2dev.by*(y))
-
-
-/* User Callable Functions */
+DevDesc* CurrentDevice();
 void DevNull(void);
-void GArrow(double, double, double, double, double, double, int);
-void GBox(int);
-void GCheckState();
-void GClip(void);
-void GEndPath(void);
-double GExpressionHeight(SEXP, int);
-double GExpressionWidth(SEXP, int);
-void GForceClip(void);
-int  GGetIndex(unsigned int);
-void GGetRGB(unsigned int, int*, int*, int*);
-void GInit(void);
+DevDesc* GetDevice(int);
+void InitGraphics(void);	
+void KillDevice(int);
+void KillAllDevices();
+int NoDevices();
+int NumDevices();
+int StartDevice(SEXP, SEXP, int, SEXP, int);
+
+		/* Utility Device functions */
+
+int curDevice();
+int nextDevice(int);
+int prevDevice(int);
+int selectDevice(int);
+
+		/* Programmer GPar functions */
+
+void GInit(GPar*);
+void GRestore(DevDesc*);
+void GSavePars(DevDesc*);
+void GRestorePars(DevDesc*);
+
+		/* Device State functions */
+
+void GCheckState(DevDesc*);
+void GSetState(int, DevDesc*);
+
+		/* Graphical Primitives */
+		/* Device Drivers must do all of these */
+
+void GCircle(double, double, int, double, int, int, DevDesc*);
+void GClip(DevDesc*);
+void GEndPath(DevDesc*);
+void GForceClip(DevDesc*);
+void GLine(double, double, double, double, int, DevDesc*);
+int  GLocator(double*, double*, int, DevDesc*);
+void GMetricInfo(int, double*, double*, double*, int, DevDesc*);
+void GMode(DevDesc*, int);
+void GPolygon(int, double*, double*, int, int, int, DevDesc*);
+void GPolyline(int, double*, double*, int, DevDesc*);
+void GRect(double, double, double, double, int, int, int, DevDesc*);
+void GStartPath(DevDesc*);
+double GStrHeight(char*, int, DevDesc*);
+double GStrWidth(char*, int, DevDesc*);
+void GText(double, double, int, char*, double, double, double, DevDesc*);
+
+		/* Graphical Utilities */
+
+void GArrow(double, double, double, double, int, double, double, int, DevDesc*);
+void GBox(int, DevDesc*);
+double GExpressionHeight(SEXP, int, DevDesc*);
+double GExpressionWidth(SEXP, int, DevDesc*);
 void GLPretty(double*, double*, int*);
-void GLineTo(double, double);
-int  GLocator(double*, double*, int);
-#ifdef NEW
-void GMapFig2Dev(void);
-void GMapInner2Dev(void);
-void GMapNDC2Dev(void);
-void GMapWin2Fig(void);
-#endif
-void GMapping(int);
-void GMetricInfo(int, double*, double*, double*, int);
-void GMode(int);
-void GMoveTo(double, double);
-void GMtext(char*, int, double, int, double, int);
-void GNewPlot(void);
-void GPolygon(int, double*, double*, int, int, int, double *work);
+void GMtext(char*, int, double, int, double, int, DevDesc*);
 void GPretty(double*, double*, int*);
-void GRect(double, double, double, double, int, int);
-void GCircle(double x, double y, double radius, int col, int border);
-void GReset(void);
-void GRestore(void);
-void GSavePars(void);
-void GSavePlot(char*);
-void GPrintPlot(void);
-void GRestorePars(void);
-void GScale(double, double, int);
-void GSetupAxis(int);
-int  GSetRGB(unsigned int, unsigned int, unsigned int);
-#ifdef NEW
-void GSetViewPort(void);
-#endif
-void GStartPath(void);
-void GSetState(int);
-double GStrHeight(char*, int);
-double GStrWidth(char*, int);
-void GSymbol(double, double, int);
-void GText(double, double, char*, double, double, double);
-void GTitles(char*, char*, char*, char*);
-void KillDevice(void);
-int SetDevice(char*, char**, int, double*, int);
-double xChartoInch(double);
-double xChartoNDC(double);
-double xFigtoInch(double);
-double xInchtoChar(double);
-double xInchtoFig(double);
-double xInchtoNDC(double);
-double xNDCtoChar(double);
-double xNDCtoInch(double);
-double xUsrtoInch(double);
-double yChartoInch(double);
-double yChartoNDC(double);
-double yFigtoInch(double);
-double yInchtoChar(double);
-double yInchtoFig(double);
-double yInchtoNDC(double);
-double yNDCtoChar(double);
-double yNDCtoInch(double);
-double yUsrtoInch(double);
+void GSymbol(double, double, int, int, DevDesc*);
+unsigned RGBpar(SEXP, int, DevDesc*);
+
+		/* Coordinate Transformation functions */
+
+double Log10(double);
+void currentFigureLocation(int*, int*, DevDesc*);
+void GNewPlot(DevDesc*, int);
+void GReset(DevDesc*);
+void GMapWin2Fig(DevDesc*);
+void GConvert(double*, double*, int, int, DevDesc*);
+double GConvertXUnits(double, int, int, DevDesc*);
+double GConvertYUnits(double, int, int, DevDesc*);
+void GScale(double, double, int, DevDesc*);
+void GSetupAxis(int, DevDesc*);
+
+double xNPCtoUsr(double, DevDesc*);
+double yNPCtoUsr(double, DevDesc*);
 
 #endif

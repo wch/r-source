@@ -18,6 +18,7 @@
  */
 
 #include "Defn.h"
+#include "Graphics.h"
 
 /*      MEMORY MANAGEMENT
  *
@@ -447,6 +448,7 @@ void unmarkPhase(void)
 void markPhase(void)
 {
 	int i;
+	DevDesc *dd;
 
 	markSExp(R_NilValue);	/* Builtin constants */
 	markSExp(NA_STRING);
@@ -461,6 +463,12 @@ void markPhase(void)
 
 	if (R_CurrentExpr != NULL)	/* Current expression */
 		markSExp(R_CurrentExpr);
+
+	for (i = 0; i < R_MaxDevices; i++) {	/* Device Display Lists */
+		dd = GetDevice(i);
+		if (dd)
+			markSExp(dd->displayList);
+	}
 
 	for (i = 0; i < R_PPStackTop; i++)	/* protected pointers */
 		markSExp(R_PPStack[i]);
@@ -652,7 +660,7 @@ char *C_alloc(long nelem, int eltsize)
 	int i;
 	for(i=0 ; i<MAXPOINTERS ; i++) {
 		if(C_Pointers[i] == NULL) {
-			C_Pointers[i] == malloc(nelem * eltsize);
+			C_Pointers[i] = malloc(nelem * eltsize);
 			if(C_Pointers[i] == NULL)
 				error("unable to malloc memory in C_alloc\n");
 			else return C_Pointers[i];
@@ -665,9 +673,11 @@ void C_free(char *p)
 {
 	int i;
 	for(i=0 ; i<MAXPOINTERS ; i++) {
-		if(C_Pointers[i] == p)
+		if(C_Pointers[i] == p) {
 			free(p);
-		C_Pointers[i] = NULL;
+			C_Pointers[i] = NULL;
+			return;
+		}
 	}
 	error("attempt free pointer not allocated by C_alloc()\n");
 }

@@ -458,6 +458,15 @@ void PostScriptOpenPolygon(FILE *fp, double *x, double *y, int nxy)
 	fprintf(fp, "cp o\n");
 }
 
+void PostScriptPolyline(FILE *fp, double *x, double *y, int nxy)
+{
+	int i;
+	fprintf(fp, "np\n");
+	fprintf(fp, "%.2f %.2f m\n", x[0], y[0]);
+	for(i=1 ; i<nxy ; i++)
+		fprintf(fp, "%.2f %.2f l\n", x[i], y[i]);
+	fprintf(fp, "cp o\n");
+}
 static void PostScriptWriteString(FILE *fp, char *str)
 {
 	fputc('(', fp);

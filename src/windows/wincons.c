@@ -149,7 +149,7 @@ void RCleanUp(int ask)
              }
              R_DirtyImage = 0; /*hack to allow WM_CLOSE to check for a dirty image */
         }
-        KillDevice(); 
+        KillAllDevices(); 
         PostMessage(RFrame, WM_CLOSE, 0, 0);
 }
 

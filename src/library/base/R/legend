@@ -60,10 +60,14 @@ legend <- function(x, y, legend, fill, col="black", lty, pch,
 		if(!merge) w <- w + x.intersp * xchar
 	if(merge) w <- w + x.intersp * xchar
 	## (w,h) are now the final box width/height. --> Adjust (x,y) :
-	x <- x - xjust * w
-	y <- y + (1 - yjust) * h
+	left <- x - xjust * w
+	top <- y + (1 - yjust) * h
+	right <- x+w
+	bottom <- y-h
+	if (xlog) { left <- 10^left; right <- 10^right }
+	if (ylog) { top <- 10^top; bottom <- 10^bottom }
 	if (bty != "n")
-		rect(x, y, x+w, y-h, col = bg)
+		rect(left, top, right, bottom, col = bg)
 	## (xt[],yt[]) := 'current' vectors of (x/y) legend text
 	xt <- rep(x, n.leg) + xchar
 	yt <- y - (1:n.leg) * ychar

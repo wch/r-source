@@ -12,11 +12,10 @@ OBJ= \
 	dynload.o \
 	edit.o \
 	fileio.o \
-	psx11.o \
 	PostScript.o \
-	devPicTeX.o \
 	rotated.o \
 	system.o
+# fix later	devPicTeX.o \
 
 LIB=		../lib/libunix.a
 
@@ -36,14 +35,11 @@ rotated.o:	rotated.c rotated.h
 devX11.o:	devX11.c psx11.h ../include/Graphics.h ../include/Defn.h
 		$(CC) $(CFLAGS) $(X_CFLAGS) -c devX11.c
 
-psx11.o:	psx11.c psx11.h ../include/Graphics.h ../include/Defn.h
-		$(CC) $(CFLAGS) -c psx11.c
-
 devPS.o:	devPS.c ../include/Graphics.h ../include/Defn.h
 		$(CC) $(CFLAGS) -c devPS.c
 
-devPicTeX.o:	devPicTeX.c ../include/Graphics.h ../include/Defn.h
-		$(CC) $(CFLAGS) -c devPicTeX.c
+# devPicTeX.o:	devPicTeX.c ../include/Graphics.h ../include/Defn.h
+#		$(CC) $(CFLAGS) -c devPicTeX.c
 
 system.o:	system.c ../include/Defn.h
 		$(CC) $(CFLAGS) -c system.c

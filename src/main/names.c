@@ -517,8 +517,14 @@ FUNTAB R_FunTab[] =
 
 /* Graphics */
 
+{"dev.control",	do_devcontrol,	0,	111,	0, 	PP_FUNCALL,	0},
+{"dev.copy",	do_devcopy,	0,	111,	1, 	PP_FUNCALL,	0},
+{"dev.cur",	do_devcur,	0,	111,	0,	PP_FUNCALL,	0},
 {"device",	do_device,	0,	111,	3,	PP_FUNCALL,	0},
-{"dev.off",	do_devoff,	0,	101,	0,	PP_FUNCALL,	0},
+{"dev.next",	do_devnext,	0,	111,	1,	PP_FUNCALL,	0},
+{"dev.off",	do_devoff,	0,	111,	1,	PP_FUNCALL,	0},
+{"dev.prev",	do_devprev,	0,	111,	1,	PP_FUNCALL,	0},
+{"dev.set",	do_devset,	0,	111,	1,	PP_FUNCALL,	0},
 {"rgb",		do_rgb,		0,	11,	4,	PP_FUNCALL,	0},
 {"hsv",		do_hsv,		0,	11,	4,	PP_FUNCALL,	0},
 {"gray",	do_gray,	0,	1,	1,	PP_FUNCALL,	0},
@@ -536,9 +542,9 @@ FUNTAB R_FunTab[] =
 {"rect",	do_rect,	0,	111,	6,	PP_FUNCALL,	0},
 {"polygon",	do_polygon,	0,	111,	5,	PP_FUNCALL,	0},
 {"par",		do_par,		0,	11,	1,	PP_FUNCALL,	0},
-{"par2",	do_par2,	0,	11,	1,	PP_FUNCALL,	0},
 {"segments",	do_segments,	0,	111,	6,	PP_FUNCALL,	0},
 {"arrows",	do_arrows,	0,	111,	9,	PP_FUNCALL,	0},
+{"layout", 	do_layout,	0, 	111,	10, 	PP_FUNCALL,	0},
 {"locator",	do_locator,	0,	11,	1,	PP_FUNCALL,	0},
 {"identify",	do_identify,	0,	11,	3,	PP_FUNCALL,	0},
 {"strheight",   do_strheight,   0,      11,     3, 	PP_FUNCALL, 	0},
@@ -548,7 +554,7 @@ FUNTAB R_FunTab[] =
 {"dend",	do_dend,	0,	111,	6,	PP_FUNCALL,	0},
 {"save.plot",	do_saveplot,	0,	101,	1,	PP_FUNCALL,	0},
 {"print.plot",	do_printplot,	0,	101,	0,	PP_FUNCALL,	0},
-{"text.math",	do_mathtext,	0,	100,	1,	PP_FUNCALL,	0},
+{"replay", 	do_replay,	0,	111,	0,	PP_FUNCALL, 	0},
 {"erase",	do_erase,	0,	111,	1,	PP_FUNCALL,	0},
 
 /* Objects */

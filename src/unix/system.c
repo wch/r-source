@@ -128,13 +128,70 @@ static int DefaultRestoreAction = 1;
 	/* complex. */
 
 
+	/* block on select until either stdin or X11 connection is */
+	/* ready to read (return 1 if X11 connection ready to read, */
+	/* 2 if stdin ready to read) */
+
+#define XActivity 1
+#define StdinActivity 2
+
+static int waitForActivity()
+{
+	int maxfd;
+	fd_set readMask;
+	int stdinfd = fileno(stdin);
+	int connectionfd = X11ConnectionNumber();
+
+	FD_ZERO(&readMask);
+	FD_SET(stdinfd, &readMask);
+	maxfd = stdinfd;
+	if (connectionfd > 0) {
+		FD_SET(connectionfd, &readMask);
+		if (connectionfd > stdinfd)
+			maxfd = connectionfd;
+	}
+	select(maxfd+1, &readMask, NULL, NULL, NULL);
+
+	if (connectionfd > 0)
+		if (FD_ISSET(connectionfd, &readMask))
+			return XActivity;
+	if (FD_ISSET(stdinfd, &readMask))
+		return StdinActivity;
+}
+
+#ifdef HAVE_LIBREADLINE
+	/* callback for rl_callback_read_char */
+
+static int readline_gotaline;
+static int readline_addtohistory;
+static int readline_len;
+static char *readline_buf;
+
+static void readline_handler() 
+{ 
+	int l;
+	if (rl_line_buffer[0]) {
+		if (strlen(rl_line_buffer) && readline_addtohistory)
+			add_history(rl_line_buffer);
+		l = (((readline_len-2) > strlen(rl_line_buffer))? 
+			strlen(rl_line_buffer): (readline_len-2));
+		strncpy(readline_buf, rl_line_buffer, l);
+		readline_buf[l] = '\n';
+		readline_buf[l+1] = '\0';
+	}
+	else {
+		readline_buf[0] = '\n';
+		readline_buf[1] = '\0';
+	}
+	rl_callback_handler_remove();
+	readline_gotaline = 1;
+}
+#endif
+
 	/* Fill a text buffer with user typed console input. */
 
 int R_ReadConsole(char *prompt, char *buf, int len, int addtohistory)
 {
-	int l;
-	char *rline;
-
 	if(!isatty(0)) {
 		if(!R_Quiet) fputs(prompt, stdout);
 		if (fgets(buf, len, stdin) == NULL)
@@ -142,27 +199,37 @@ int R_ReadConsole(char *prompt, char *buf, int len, int addtohistory)
 		if(!R_Quiet) fputs(buf,stdout);
 		return 1;
 	}
-#ifdef HAVE_LIBREADLINE
-	else if(UsingReadline) {
-		rline = readline(prompt);
-		if (rline) {
-			if (strlen(rline) && addtohistory)
-				add_history(rline);
-			l = (((len-2) > strlen(rline))?strlen(rline):(len-2));
-			strncpy(buf, rline, l);
-			buf[l] = '\n';
-			buf[l+1]= '\0';
-			free(rline);
-			return 1;
-		}
-		else return 0;
-	}
-#endif
 	else {
-		if(!R_Quiet) fputs(prompt, stdout);
-		if(fgets(buf, len, stdin) == NULL)
-			return 0;
-		else return 1;
+#ifdef HAVE_LIBREADLINE
+		readline_gotaline = 0;
+		readline_buf = buf;
+		readline_addtohistory = addtohistory;
+		readline_len = len;
+		rl_callback_handler_install(prompt, readline_handler);
+#endif
+		for (;;) {
+			int what = waitForActivity();
+			switch (what) {
+				case XActivity:
+					ProcessEvents();
+					break;
+				case StdinActivity:
+#ifdef HAVE_LIBREADLINE
+					if (UsingReadline) {
+						rl_callback_read_char();
+						if (readline_gotaline) 
+							return 1;
+					}
+					else
+#endif
+					{
+						if(!R_Quiet) fputs(prompt, stdout);
+						if(fgets(buf, len, stdin) == NULL)
+							return 0;
+						else return 1;
+					}
+			}
+		}
 	}
 }
 
@@ -422,7 +489,7 @@ qask:
 			goto qask;
 		}
 	}
-	KillDevice();
+	KillAllDevices();
 
 #ifdef __FreeBSD__
 	fpsetmask(~0);

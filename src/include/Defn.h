@@ -405,7 +405,7 @@ extern int	R_fgetc(FILE*);
 	/* Other Stuff */
 
 void hsv2rgb(double h, double s, double v, double *r, double *g, double *b);
-void GCircle(double x, double y, double radius, int col, int border);
+/* void GCircle(double x, double y, double radius, int col, int border); */
 void call_R(char *func, long nargs, void **arguments, char **modes, long *lengths, char **names, long nres, char **results);
 void printRealVector(double * x, int n, int index);
 int StringFalse(char *name);
@@ -501,11 +501,6 @@ SEXP findVar(SEXP, SEXP);
 SEXP findVar1(SEXP, SEXP, SEXPTYPE, int);
 SEXP findVarInFrame(SEXP, SEXP);
 SEXP findFun(SEXP, SEXP);
-SEXP FixupCex(SEXP);
-SEXP FixupCol(SEXP);
-SEXP FixupFont(SEXP);
-SEXP FixupLty(SEXP);
-SEXP FixupPch(SEXP);
 void FrameClassFix(SEXP);
 int framedepth(RCNTXT*);
 SEXP frameSubscript(int, SEXP, SEXP);
@@ -563,7 +558,6 @@ int isUserBinop(SEXP);
 int isVector(SEXP);
 int isVectorizable(SEXP);
 void jump_to_toplevel(void);
-void KillDevice(void);
 SEXP lang1(SEXP);
 SEXP lang2(SEXP, SEXP);
 SEXP lang3(SEXP, SEXP, SEXP);
@@ -616,7 +610,6 @@ void REvprintf(const char*, va_list);
 void REprintf(char*, ...);
 void R_RestoreGlobalEnv(void);
 int restore_image(char*);
-unsigned int RGBpar(SEXP, int);
 SEXP rownamesgets(SEXP,SEXP);
 void Rprintf(char*, ...);
 char *Rsprintf(char*, ...);

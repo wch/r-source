@@ -322,6 +322,7 @@ void mainloop()
 	InitEd();
 	InitArithmetic();
 	InitColors();
+	InitGraphics();
 	Init_C_alloc();
 
 
