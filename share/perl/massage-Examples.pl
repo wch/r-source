@@ -52,7 +52,7 @@ attach(NULL, name = "CheckExEnv")
 assign(".CheckExEnv", as.environment(2), pos = length(search())) # base
 ## This plot.new() patch has no effect yet for persp();
 ## layout() & filled.contour() are now ok
-assign("plot.new",
+assignInNamespace("plot.new",
        function() {
 	   .Internal(plot.new())
 	   pp <- par(c("mfg","mfcol","oma","mar"))
@@ -63,9 +63,7 @@ assign("plot.new",
                      outer = outer, adj = 1, cex = .8, col = "orchid")
 	   }
        },
-# <FIXME> needs to replace in graphics namespace </FIXME>
-#       env = environment(plot)) # now readonly
-       env = environment(print))
+       ns = "graphics")
 assign("cleanEx",
        function(env = .GlobalEnv) {
 	   rm(list = ls(envir = env, all.names = TRUE), envir = env)

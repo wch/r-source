@@ -1,4 +1,5 @@
 \name{getFromNamespace}
+\alias{assignInNamespace}
 \alias{getFromNamespace}
 \alias{fixInNamespace}
 \title{Utility functions for Developing Namespaces}
@@ -8,10 +9,12 @@
 }
 \usage{
 getFromNamespace(x, ns, pos = -1, envir = as.environment(pos))
+assignInNamespace(x, value, ns, pos = -1, envir = as.environment(pos))
 fixInNamespace(x, ns, pos = -1, envir = as.environment(pos), \dots)
 }
 \arguments{
   \item{x}{an object name (given as a character string).}
+  \item{value}{an \R object.
   \item{ns}{a namespace, or character string giving the namespace.}
   \item{pos}{where to look for the object: see \code{\link{get}}.}
   \item{envir}{an alternative way to specify an environment to look in.}
@@ -19,7 +22,7 @@ fixInNamespace(x, ns, pos = -1, envir = as.environment(pos), \dots)
 }
 \details{
   The namespace can be specified in several ways.  Using, for example,
-  \code{ns="stats"} is the most direct, but a loaded package with a
+  \code{ns = "stats"} is the most direct, but a loaded package with a
   namespace can be specified via any of the methods used for
   \code{\link{get}}: \code{ns} can also be the environment
   \code{<namespace:foo>}.
@@ -33,12 +36,15 @@ fixInNamespace(x, ns, pos = -1, envir = as.environment(pos), \dots)
   namespace, and also a copy registered as an S3 method.  There can be other
   copies, so the function is not foolproof, but should be helpful for
   debugging.
+
+  \code{assignInNamespace} and \code{fixInNamespace} change the copy in
+  the namespace, but not that exported from the namespace, if there is one.
 }
 \value{
   \code{getFromNamespace} returns the object found (or gives an error).
 
-  \code{fixInNamespace} is invoked for its side effect of changing the
-  object in the namespace.
+  \code{assignInNamespace} and \code{fixInNamespace} are invoked for
+  their side effect of changing the object in the namespace.
 }
 
 \seealso{

@@ -118,6 +118,8 @@ NEW FEATURES
     o   as.matrix.data.frame() now coerces an all-logical data frame
 	to a logical matrix.
 
+    o   New function assignInNamespace() paralling fixInNamespace.
+
 
 UTILITIES
 

@@ -229,6 +229,28 @@ getFromNamespace <- function(x, ns, pos = -1, envir = as.environment(pos))
     get(x, envir = ns, inherits = FALSE)
 }
 
+assignInNamespace <-
+    function(x, value, ns, pos = -1, envir = as.environment(pos), ...)
+{
+    if(missing(ns)) {
+        nm <- attr(envir, "name")
+        if(is.null(nm) || substring(nm, 1, 8) != "package:")
+            stop("environment specified is not a package")
+        ns <- asNamespace(substring(nm, 9))
+    } else ns <- asNamespace(ns)
+    if(bindingIsLocked(x, ns)) {
+        unlockBinding(x, ns)
+        assign(x, value, envir = ns, inherits = FALSE)
+        w <- options("warn")
+        on.exit(options(w))
+        options(warn = -1)
+        lockBinding(x, ns)
+    } else {
+        assign(x, value, envir = ns, inherits = FALSE)
+    }
+    invisible(NULL)
+}
+
 fixInNamespace <- function (x, ns, pos = -1, envir = as.environment(pos), ...)
 {
     subx <- substitute(x)
