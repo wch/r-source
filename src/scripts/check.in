@@ -37,7 +37,7 @@ use Text::Wrap;
 ## don't buffer output
 $| = 1;
 
-my $revision = ' $Revision: 1.129 $ ';
+my $revision = ' $Revision: 1.130 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -1382,7 +1382,7 @@ sub check_pkg {
 	    if($HAVE_LATEX) {
 		$log->checking("DVI version of manual");
 		my $cmd = "${R::Vars::R_CMD} Rd2dvi --batch " .
-		  "--no-preview -o ${pkgname}-manual.dvi >/dev/null";
+		  "--no-preview -o ${pkgname}-manual.dvi >/dev/null 2>&1";
 		$cmd .= " 2>&1" if($R::Vars::OSTYPE eq "unix");
 		$cmd .= " $pkgdir";
 		if(R_system($cmd)) {
