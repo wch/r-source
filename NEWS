@@ -16,6 +16,10 @@ NEW FEATURES
 
     o	The more recent GNU regex from grep-2.4.2 is used.
 
+    o   where command added to debug
+
+    o   inherits is now an internal function and compatible with S
+
 
 BUG FIXES
 
