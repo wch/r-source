@@ -861,6 +861,7 @@ FUNTAB R_FunTab[] =
 {"mkUnbound",	do_mkUnbound,		0, 11,	1,      {PP_FUNCALL, PREC_FN,	0}},
 #endif
 #ifdef EXPERIMENTAL_NAMESPACES
+{"isNamespaceEnv",do_isNSEnv,		0, 11,	1,      {PP_FUNCALL, PREC_FN,	0}},
 {"registerNamespace",do_regNS,		0, 11,	2,      {PP_FUNCALL, PREC_FN,	0}},
 {"unregisterNamespace",do_unregNS,	0, 11,  1,      {PP_FUNCALL, PREC_FN,	0}},
 {"getRegisteredNamespace",do_getRegNS,	0, 11,  1,      {PP_FUNCALL, PREC_FN,	0}},

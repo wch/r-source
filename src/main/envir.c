@@ -2618,6 +2618,12 @@ Rboolean R_IsNamespaceEnv(SEXP rho)
     else return FALSE;
 }
   
+SEXP do_isNSEnv(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    checkArity(op, args);
+    return R_IsNamespaceEnv(CAR(args)) ? mkTrue() : mkFalse();
+}
+
 SEXP R_NamespaceEnvName(SEXP rho)
 {
     if (rho == R_BaseNamespace)
