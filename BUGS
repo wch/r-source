@@ -427,7 +427,25 @@ Date: Thu, 2 May 2002 09:29:07 +0200
 
 Directory:  Models
 
-none
+* PR# 1840 *
+Subject: predict() still not yet "safe"..
+From: Martin Maechler <maechler@stat.math.ethz.ch>
+Date: Fri, 26 Jul 2002 20:11:26 +0200
+* PR# 1861 *
+Subject: update() can not find objects
+From: yzhou@arcturusag.com
+Date: Thu, 1 Aug 2002 19:01:59 +0200 (MET DST)
+--The problem is actually deeper than this.
+--
+--Sometime update() wants to evaluate arguments in the environment where the model
+--was defined, as here. 
+--
+--Sometimes it wants to use the current environment, eg this snippet from MASS 
+--ph.fun <- function(data, i) {
+--  d <- data
+--  d$calls <- d$fitted + d$res[i]
+--  coef(update(fit, data=d))
+--}
 
 Directory:  Startup
 
@@ -533,17 +551,7 @@ From: John Chambers <jmc@research.bell-labs.com>
 Date: Tue, 16 Jul 2002 16:59:22 -0400
 --follow up to 1796
 --stop() allows multiple args as from 1.6.0
-* PR# 1840 *
-Subject: predict() still not yet "safe"..
-From: Martin Maechler <maechler@stat.math.ethz.ch>
-Date: Fri, 26 Jul 2002 20:11:26 +0200
-* PR# 1855 *
-Subject: (±¤°?)win-win?¬?´???­ ´????? ??´???´?´?!
-From: "?¤º??¦°???" <bigbestman@dreamwiz.com>
-Date: Wed, 31 Jul 2002 20:38:10 +0900
-* PR# 1856 *
-Date: Wed, 31 Jul 2002 18:24:04 +0200 (MET DST)
-* PR# 1857 *
-Subject: Want to see the web sites they went to?
-From: "" <mary_gallyway@emaildelivery.org>
-Date: Wed, 31 Jul 2002 20:12:43 +0200 (MET DST)
+* PR# 1863 *
+Subject: glm crashes with "Illegal instruction"
+From: tkoulis@math.uwaterloo.ca
+Date: Thu, 1 Aug 2002 22:15:19 +0200 (MET DST)
