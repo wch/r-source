@@ -322,11 +322,10 @@ void init_con(Rconnection new, char *description, char *mode)
 {
     strcpy(new->description, description);
     strncpy(new->mode, mode, 4); new->mode[4] = '\0';
-    new->isopen = new->incomplete = FALSE;
+    new->isopen = new->incomplete = new->blocking = new->isGzcon = FALSE;
     new->canread = new->canwrite = TRUE; /* in principle */
     new->canseek = FALSE;
     new->text = TRUE;
-    new->isGzcon = FALSE;
     new->open = &null_open;
     new->close = &null_close;
     new->destroy = &null_destroy;
