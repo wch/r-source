@@ -278,10 +278,6 @@ Date: Sat, 27 Feb 1999 21:32:56 +0100
 Subject: Re: [R] zero-offset matrices
 From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
 Date: 02 Mar 1999 16:59:48 +0100
-* PR# 133 *
-Subject: Re: system
-From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
-Date: 04 Mar 1999 11:33:21 +0100
 * PR# 135 *
 Subject: summary() of lm() problem
 From: Simon Fear <fears@roycastle.liv.ac.uk>
@@ -307,15 +303,9 @@ Date: Thu, 25 Mar 1999 13:34:12 +0100
 Subject: problems with formals and get
 From: Jim Lindsey <jlindsey@alpha.luc.ac.be>
 Date: Mon, 29 Mar 1999 09:29:05 +0200 (MET DST)
-* PR# 152 *
-Subject: Example(persp) fails in 0.63.4 and 0.64
-From: Prof Brian D Ripley <ripley@stats.ox.ac.uk>
-Date: Tue, 30 Mar 1999 21:19:37 +0100 (BST)
-* PR# 157 *
-Subject: deparsing lhs of formula in print.anova.lm
-From: bates@stat.wisc.edu
-Date: Sun, 4 Apr 1999 23:36:08 +0200
 * PR# 158 *
 Subject: seg fault with strsplit
 From: Jim Lindsey <jlindsey@alpha.luc.ac.be>
 Date: Tue, 6 Apr 1999 09:41:29 +0200 (MET DST)
+--buffer overflow known;
+--should be fixed "soon" (Apr 7,1999)
