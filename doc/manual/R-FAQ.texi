@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2001
-@set FAQ-VERSION 1.3-0, 2001-06-18
+@set FAQ-VERSION 1.3-1, 2001-06-19
 @set REL-VERSION 1.3.0
 @set DEV-VERSION 1.4.0
 @c %**end of header
@@ -135,7 +135,7 @@ Texinfo source} used for creating all these formats using the
 @uref{http://texinfo.org/, @acronym{GNU} Texinfo system}.
 
 You can also obtain the R @acronym{FAQ} from the @file{doc/FAQ}
-subdirectory of a @acronym{CRAN} site (@ref{What is CRAN?}).
+subdirectory of a @acronym{CRAN} site (@pxref{What is CRAN?}).
 
 @node Citing this document, Notation, Obtaining this document, Introduction
 @section Citing this document
@@ -262,9 +262,9 @@ is CRAN?}).
 
 Sources are also available via anonymous rsync.  Use
 
-@example
+@smallexample
 rsync -rC rsync.r-project.org::@var{module} R
-@end example
+@end smallexample
 
 @noindent
 to create a copy of the source tree specified by @var{module} in the
@@ -297,7 +297,9 @@ come with them.
 Otherwise, you can compile and install R yourself, which can be done
 very easily under a number of common Unix platforms (see @ref{What
 machines does R run on?}).  The file @file{INSTALL} that comes with the
-R distribution contains instructions.
+R distribution contains a brief introduction, and the ``R Installation
+and Administration'' guide (@pxref{What documentation exists for R?})
+has full details.
 
 Note that you need a @FORTRAN{} compiler or @command{f2c} in addition to
 a C compiler to build R.  Also, you need Perl version 5 to build the R
@@ -308,10 +310,10 @@ can obtain a PDF version of the object reference manual via
 In the simplest case, untar the R source code, change to the directory
 thus created, and issue the following commands (at the shell prompt):
 
-@example
+@smallexample
 $ ./configure
 $ make
-@end example
+@end smallexample
 
 If these commands execute successfully, the R binary and a shell script
 font-end called @file{R} are created and copied to the @file{bin}
@@ -353,9 +355,9 @@ In the above, @code{prefix} is determined during configuration
 (typically @file{/usr/local}) and can be set by running
 @command{configure} with the option
 
-@example
+@smallexample
 $ ./configure --prefix=/where/you/want/R/to/go
-@end example
+@end smallexample
 
 @noindent
 (E.g., the R executable will then be installed into
@@ -395,7 +397,8 @@ bin-hexed (@file{hqx}) and stuffit (@file{sit}) self-extracting binaries
 for a base distribution and a large number of add-on packages to run
 under MacOS 8.6 to MacOS 9.1 or MacOS X under Classic Environment.  The
 Mac version of R and the Mac binaries are maintained by
-@email{stefano.iacus@@unimi.it, Stefano Iacus}.
+@c @email{stefano.iacus@@unimi.it, Stefano Iacus}.
+@email{Stefano.Iacus@@r-project.org, Stefano Iacus}.
 
 The @uref{http://www.eco-dip.unimi.it/R/rmac-FAQ.html, ``R for Macintosh
 @acronym{FAQ}/DOC''} has more details.
@@ -439,9 +442,9 @@ deb http://cran.r-project.org/bin/linux/debian @var{distribution} main
 (where @var{distribution} is either @samp{stable} or @samp{unstable};
 feel free to use a @acronym{CRAN} mirror instead of the master) to the
 file @file{/etc/apt/sources.list}.  Once you have added that line the
-programs @code{apt-get}, @code{apt-cache}, and @code{dselect} (using the
-apt access method) will automatically detect and install updates of the
-R packages.
+programs @command{apt-get}, @command{apt-cache}, and @command{dselect}
+(using the apt access method) will automatically detect and install
+updates of the R packages.
 
 The @file{bin/osf} directory of a @acronym{CRAN} site contains RPMs by
 Albrecht Gebhardt for alpha systems running Digital Unix 4.0.
@@ -624,8 +627,8 @@ Subscription and posting to the other lists is done analogously, with
 `r-help' replaced by `r-announce' and `r-devel', respectively.
 
 It is recommended that you send mail to r-help rather than only to the R
-developers (who are also subscribed to the list, of course).  This may
-save them precious time they can use for constantly improving R, and
+Core developers (who are also subscribed to the list, of course).  This
+may save them precious time they can use for constantly improving R, and
 will typically also result in much quicker feedback for yourself.
 
 Of course, in the case of bug reports it would be very helpful to have
@@ -692,6 +695,9 @@ load.
 From @acronym{CRAN}, you can obtain the latest official release of R,
 daily snapshots of R (copies of the current CVS trees), as gzipped and
 bzipped tar files or as two gzipped tar files (ready for 1.4M floppies),
+@c <FIXME>
+@c Sources no longer fit on 2 floppies.
+@c </FIXME>
 a wealth of additional contributed code, as well as prebuilt binaries
 for various operating systems (Linux, Digital Unix, and MS Windows).
 @acronym{CRAN} also provides access to documentation on R, existing
@@ -834,44 +840,50 @@ bindings that were in effect at the time the function was created.
 
 Consider the following function:
 
-@example
+@smallexample
+@group
 cube <- function(n) @{
   sq <- function() n * n
   n * sq()
 @}
-@end example
+@end group
+@end smallexample
 
 Under S, @code{sq()} does not ``know'' about the variable @code{n}
 unless it is defined globally:
 
-@example
+@smallexample
+@group
 S> cube(2)
 Error in sq():  Object "n" not found
 Dumped
 S> n <- 3
 S> cube(2)
 [1] 18
-@end example
+@end group
+@end smallexample
 
 In R, the ``environment'' created when @code{cube()} was invoked is
 also looked in:
 
-@example
+@smallexample
+@group
 R> cube(2)
 [1] 8
-@end example
+@end group
+@end smallexample
 
 @c The following more `realistic' example illustrating the differences in
 @c scoping is due to @email{tlumley@@u.washington.edu, Thomas Lumley}.
 @c The function
 
-@c @example
+@c @smallexample
 @c jackknife.lm <- function(lmobj) @{
 @c   n <- length(resid(lmobj))
 @c   jval <- sapply(1:n, function(i) coef(update(lmobj, subset = -i)))
 @c   (n - 1) * (n - 1) * var(jval) / n
 @c @}
-@c @end example
+@c @end smallexample
 
 @c @noindent
 @c does something useful in R, but does not work in S.  In order to make it
@@ -883,7 +895,7 @@ R> cube(2)
 
 @c The following version works in S.
 
-@c @example
+@c @smallexample
 @c jackknife.S.lm <- function(lmobj) @{
 @c   n <- length(resid(lmobj))
 @c   jval <- sapply(1:n,
@@ -891,7 +903,7 @@ R> cube(2)
 @c                  lmobj = lmobj)
 @c   (n - 1) * (n - 1) * var(jval) / n
 @c @}
-@c @end example
+@c @end smallexample
 
 @c (The S version was written independently by Thomas and at least three of
 @c his fellow students over the past couple of years, causing literally
@@ -907,7 +919,8 @@ postings by Luke Tierney.)
 The @SPLUS{} documentation for @code{call()} basically suggests the
 following:
 
-@example
+@smallexample
+@group
 dorder <- function(n, r, pfun, dfun) @{
   f <- function(x) NULL
   con <- round(exp(lgamma(n + 1) - lgamma(r) - lgamma(n - r + 1)))
@@ -920,7 +933,8 @@ dorder <- function(n, r, pfun, dfun) @{
                    DF)))
   f
 @}
-@end example
+@end group
+@end smallexample
 
 @noindent Rather tricky, isn't it?  The code uses the fact that in S,
 functions are just lists of special mode with the function body as the
@@ -930,28 +944,32 @@ work, though).
 A version which makes heavy use of @code{substitute()} and seems to work
 under both S and R is
 
-@example
+@smallexample
+@group
 dorder <- function(n, r, pfun, dfun) @{
   con <- round(exp(lgamma(n + 1) - lgamma(r) - lgamma(n - r + 1)))
   eval(substitute(function(x) K * PF(x)^a * (1 - PF(x))^b * DF(x),
                   list(PF = substitute(pfun), DF = substitute(dfun),
                        a = r - 1, b = n - r, K = con)))
 @}
-@end example
+@end group
+@end smallexample
 
 @noindent
 (the @code{eval()} is not needed in S).
 
 However, in R there is a much easier solution:
 
-@example
+@smallexample
+@group
 dorder <- function(n, r, pfun, dfun) @{
   con <- round(exp(lgamma(n + 1) - lgamma(r) - lgamma(n - r + 1)))
   function(x) @{
     con * pfun(x)^(r - 1) * (1 - pfun(x))^(n - r) * dfun(x)
   @}
 @}
-@end example
+@end group
+@end smallexample
 
 @noindent
 This seems to be the ``natural'' implementation, and it works because
@@ -964,7 +982,8 @@ in the above version, the free variables in the value function are not
 modified, you can actually use it in S as well if you abstract out the
 closure operation into a function @code{MC()} (for ``make closure''):
 
-@example
+@smallexample
+@group
 dorder <- function(n, r, pfun, dfun) @{
   con <- round(exp(lgamma(n + 1) - lgamma(r) - lgamma(n - r + 1)))
   MC(function(x) @{
@@ -972,7 +991,8 @@ dorder <- function(n, r, pfun, dfun) @{
      @},
      list(con = con, pfun = pfun, dfun = dfun, r = r, n = n))
 @}
-@end example
+@end group
+@end smallexample
 
 Given the appropriate definitions of the closure operator, this works in
 both R and S, and is much ``cleaner'' than a substitute/eval solution
@@ -981,13 +1001,14 @@ access to evaluation frames, as is of course possible in both R and S).
 
 For R, @code{MC()} simply is
 
-@example
+@smallexample
 MC <- function(f, env) f
-@end example
+@end smallexample
 
 @noindent (lexical scope!), a version for S is
 
-@example
+@smallexample
+@group
 MC <- function(f, env = NULL) @{
   env <- as.list(env)
   if (mode(f) != "function")
@@ -1004,7 +1025,8 @@ MC <- function(f, env = NULL) @{
   mode(cf) <- "function"
   return(cf)
 @}
-@end example
+@end group
+@end smallexample
 
 Similarly, most optimization (or zero-finding) routines need some
 arguments to be optimized over and have other parameters that depend on
@@ -1333,8 +1355,9 @@ The R distribution comes with the following extra packages:
 
 @table @strong
 @item ctest
-A collection of Classical TESTs, including the Bartlett, Fisher,
-Kruskal-Wallis, Kolmogorov-Smirnov, and Wilcoxon tests.
+A collection of Classical TESTs, including the Ansari-Bradley, Bartlett,
+chi-squared, Fisher, Kruskal-Wallis, Kolmogorov-Smirnov, @math{t}, and
+Wilcoxon tests.
 @item eda
 Exploratory Data Analysis.  Currently only contains functions for robust
 line fitting, and median polish and smoothing.
@@ -1836,9 +1859,9 @@ files named @code{@var{pkg}_@var{version}.tar.gz}, which may in fact be
 ``bundles'' containing more than one package.  Provided that
 @command{tar} and @command{gzip} are available on your system, type
 
-@example
+@smallexample
 $ R CMD INSTALL /path/to/@var{pkg}_@var{version}.tar.gz
-@end example
+@end smallexample
 
 @noindent
 at the shell prompt to install to the library tree rooted at the first
@@ -1849,9 +1872,9 @@ the default library by default.)
 
 To install to another tree (e.g., your private one), use
 
-@example
+@smallexample
 $ R CMD INSTALL -l @var{lib} /path/to/@var{pkg}_@var{version}.tar.gz
-@end example
+@end smallexample
 
 @noindent
 where @var{lib} gives the path to the library tree to install to.
@@ -1888,9 +1911,9 @@ for more information.)
 
 To find out which additional packages are available on your system, type
 
-@example
+@smallexample
 library()
-@end example
+@end smallexample
 
 @noindent
 at the R prompt.  
@@ -1932,45 +1955,43 @@ ts            Time series functions
 
 You can ``load'' the installed package @var{pkg} by
 
-@example
+@smallexample
 library(@var{pkg})
-@end example
+@end smallexample
 
 You can then find out which functions it provides by typing one of
 
-@example
+@smallexample
 library(help = @var{pkg})
 help(package = @var{pkg})
-@end example
+@end smallexample
 
 You can unload the loaded package @var{pkg} by
 
-@example
+@smallexample
 detach("package:@var{pkg}")
-@end example
+@end smallexample
 
 @node How can add-on packages be removed?, How can I create an R package?, How can add-on packages be used?, R Add-On Packages
 @section How can add-on packages be removed?
 
-To remove the packages @var{pkg_1}, @dots{}, @var{pkg_n} from the
-library tree rooted at the first directory given in @env{R_LIBS} if this
-is set and non-null, and from the default library otherwise, do
+Use
 
-@example
+@smallexample
 $ R CMD REMOVE @var{pkg_1} @dots{} @var{pkg_n}
-@end example
+@end smallexample
 
 @noindent
+to remove the packages @var{pkg_1}, @dots{}, @var{pkg_n} from the
+library tree rooted at the first directory given in @env{R_LIBS} if this
+is set and non-null, and from the default library otherwise.  (Versions
+of R prior to 1.3.0 removed from the default library by default.)
 
-(Versions of R prior to 1.3.0 removed from the default library by
-default.)  Use
+To remove from library @var{lib}, do
 
-@example
+@smallexample
 $ R CMD REMOVE -l @var{lib} @var{pkg_1} @dots{} @var{pkg_n}
-@end example
-
-@noindent
-to remove from library @var{lib}.
+@end smallexample
 
 @node How can I create an R package?, How can I contribute to R?, How can add-on packages be removed?, R Add-On Packages
 @section How can I create an R package?
@@ -2268,9 +2289,9 @@ reading in data files.  This should no longer happen.
 
 You can use
 
-@example
+@smallexample
 x[i] <- list(NULL)
-@end example
+@end smallexample
 
 @noindent
 to set component @code{i} of the list @code{x} to @code{NULL}, similarly
@@ -2295,9 +2316,9 @@ can save the image under a different name.
 To remove all objects in the currently active environment (typically
 @code{.GlobalEnv}), you can do
 
-@example
+@smallexample
 rm(list = ls(all = TRUE))
-@end example
+@end smallexample
 
 @noindent
 (Without @option{all = TRUE}, only the objects with names not starting
@@ -2319,10 +2340,10 @@ differentiated.  What you (most likely) really want is obtained by
 ``quoting'' the first argument upon surrounding it with
 @code{expression()}.  For example,
 
-@example
+@smallexample
 R> D(expression(x^2), "x")
 2 * x
-@end example
+@end smallexample
 
 Although this behavior may initially seem to be rather strange, is
 perfectly logical.  The ``intuitive'' behavior could easily be
@@ -2330,17 +2351,17 @@ implemented, but problems would arise whenever the expression is
 contained in a variable, passed as a parameter, or is the result of a
 function call.  Consider for instance the semantics in cases like
 
-@example
+@smallexample
 D2 <- function(e, n) D(D(e, n), n)
-@end example
+@end smallexample
 
 @noindent
 or
 
-@example
+@smallexample
 g <- function(y) eval(substitute(y), sys.frame(sys.parent(n = 2)))
 g(a * b)
-@end example
+@end smallexample
 
 See the help page for @code{deriv()} for more examples.
 
@@ -2357,27 +2378,27 @@ been determined to be a @emph{feature}.
 To prevent this happening, add the option @option{drop = FALSE} to the
 subscripting.  For example,
 
-@example
+@smallexample
 rowmatrix <- mat[2, , drop = FALSE]  # @r{creates a row matrix}
 colmatrix <- mat[, 2, drop = FALSE]  # @r{creates a column matrix}
 a <- b[1, 1, 1, drop = FALSE]        # @r{creates a 1 x 1 x 1 array}
-@end example
+@end smallexample
 
 The @option{drop = FALSE} option should be used defensively when
 programming.  For example, the statement
 
-@example
+@smallexample
 somerows <- mat[index, ]
-@end example
+@end smallexample
 
 @noindent
 will return a vector rather than a matrix if @code{index} happens to
 have length 1, causing errors later in the code.  It should probably be
 rewritten as
 
-@example
+@smallexample
 somerows <- mat[index, , drop = FALSE]
-@end example
+@end smallexample
 
 @node How does autoloading work?, How should I set options?, Why do my matrices lose dimensions?, R Miscellanea
 @section How does autoloading work?
@@ -2407,7 +2428,7 @@ variable.
 
 For example, given
 
-@example
+@smallexample
 test1 <- function(x = pi, dig = 3) @{
   oo <- options(digits = dig); on.exit(options(oo));
   cat(.Options$digits, x, "\n")
@@ -2416,17 +2437,17 @@ test2 <- function(x = pi, dig = 3) @{
   .Options$digits <- dig
   cat(.Options$digits, x, "\n")
 @}
-@end example
+@end smallexample
 
 @noindent
 we obtain:
 
-@example
+@smallexample
 R> test1()
 3 3.14 
 R> test2()
 3 3.141593
-@end example
+@end smallexample
 
 What is really used is the @emph{global} value of @code{.Options}, and
 using @kbd{options(OPT = VAL)} correctly updates it.  Local copies of
@@ -2481,16 +2502,16 @@ It may happen that when reading numeric data into R (usually, when
 reading in a file), they come in as factors.  If @code{f} is such a
 factor object, you can use
 
-@example
+@smallexample
 as.numeric(as.character(f))
-@end example
+@end smallexample
 
 @noindent
 to get the numbers back.  More efficient, but harder to remember, is
 
-@example
+@smallexample
 as.numeric(levels(f))[as.integer(f)]
-@end example
+@end smallexample
 
 In any case, do not call @code{as.numeric()} or their likes directly.
 
@@ -2522,7 +2543,7 @@ equivalent.)
 
 Inside a function you may want to access variables in two additional
 environments: the one that the function was defined in (``enclosing''),
-and the one it was invoked in (``parent'')
+and the one it was invoked in (``parent'').
 
 If you create a function at the command line or load it in a package its
 enclosing environment is the global workspace.  If you define a function
@@ -2587,10 +2608,11 @@ examples in the mailing list achives.
 @node What are valid names?, Are GAMs implemented in R?, How can I substitute into a plot label?, R Miscellanea
 @section What are valid names?
 
-When creating data frames using @code{data.frame} or @code{read.table},
-R by default ensures that the variable names are syntactically valid.
-(The argument @option{check.names} to these functions controls whether
-variable names are checked and adjusted by @code{make.names} if needed.)
+When creating data frames using @code{data.frame()} or
+@code{read.table()}, R by default ensures that the variable names are
+syntactically valid.  (The argument @option{check.names} to these
+functions controls whether variable names are checked and adjusted by
+@code{make.names()} if needed.)
 
 To understand what names are ``valid'', one needs to take into account
 that the term ``name'' is used in several different (but related) ways
@@ -2605,10 +2627,10 @@ and starts with a letter or the dot.
 @item
 An @emph{object name} is a string associated with an object that is
 assigned in an expression either by having the object name on the left
-of an assignment operation or as an argument to the @code{assign}
+of an assignment operation or as an argument to the @code{assign()}
 function.  It is usually a syntactic name as well, but can be any
 non-empty string if it is quoted (and it is always quoted in the call to
-@code{assign}).
+@code{assign()}).
 
 @item
 An @emph{argument name} is what appears to the left of the equals sign
@@ -2621,8 +2643,8 @@ An @emph{element name} is a string that identifies a piece of an object
 (a component of a list, for example.)  When it is used on the right of
 the @samp{$} operator, it must be a syntactic name, or quoted.
 Otherwise, element names can be any strings.  (When an object is used as
-a database, as in a call to @code{eval} or @code{attach}, the element
-names become object names.)
+a database, as in a call to @code{eval()} or @code{attach()}, the
+element names become object names.)
 
 @item
 Finally, a @emph{file name} is a string identifying a file in the
@@ -2669,7 +2691,7 @@ fits a logistic regression model, computes some summary information and
 returns an object of class @code{"summary.glm"} (@pxref{How should I
 write summary methods?}).
 
-If you type @code{1+1} or @code{summary(glm(y~x+z,family=binomial))} at
+If you type @samp{1+1} or @samp{summary(glm(y~x+z, family=binomial))} at
 the command line the returned value is automatically printed (unless it
 is @code{invisible()}), but in other circumstances, such as in a
 @code{source()}d file or inside a function it isn't printed unless you

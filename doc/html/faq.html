@@ -16,7 +16,7 @@ Up:<a rel=up href="#(dir)">(dir)</a>
 <h1>R FAQ</h1>
 
 <h2>Frequently Asked Questions on R</h2>
-<h2>Version 1.3-0, 2001-06-18</h2>
+<h2>Version 1.3-1, 2001-06-19</h2>
 <address>Kurt Hornik</address>
 <p><p><hr><p>
 
@@ -105,7 +105,7 @@ well as the <a href="http://www.ci.tuwien.ac.at/~hornik/R/R-FAQ.texi">Texinfo so
 <a href="http://texinfo.org/"><small>GNU</small> Texinfo system</a>.
 
 <p>You can also obtain the R <small>FAQ</small> from the <code>doc/FAQ</code>
-subdirectory of a <small>CRAN</small> site (<a href="#What%20is%20CRAN%3f">What is CRAN?</a>).
+subdirectory of a <small>CRAN</small> site (see <a href="#What%20is%20CRAN%3f">What is CRAN?</a>).
 
 <p><hr>
 Node:<a name="Citing%20this%20document">Citing this document</a>,
@@ -311,7 +311,9 @@ come with them.
 
 <p>Otherwise, you can compile and install R yourself, which can be done
 very easily under a number of common Unix platforms (see <a href="#What%20machines%20does%20R%20run%20on%3f">What machines does R run on?</a>).  The file <code>INSTALL</code> that comes with the
-R distribution contains instructions.
+R distribution contains a brief introduction, and the "R Installation
+and Administration" guide (see <a href="#What%20documentation%20exists%20for%20R%3f">What documentation exists for R?</a>)
+has full details.
 
 <p>Note that you need a FORTRAN compiler or <code>f2c</code> in addition to
 a C compiler to build R.  Also, you need Perl version 5 to build the R
@@ -409,7 +411,7 @@ bin-hexed (<code>hqx</code>) and stuffit (<code>sit</code>) self-extracting bina
 for a base distribution and a large number of add-on packages to run
 under MacOS 8.6 to MacOS 9.1 or MacOS X under Classic Environment.  The
 Mac version of R and the Mac binaries are maintained by
-<a href="mailto:stefano.iacus@unimi.it">Stefano Iacus</a>.
+<a href="mailto:Stefano.Iacus@r-project.org">Stefano Iacus</a>.
 
 <p>The <a href="http://www.eco-dip.unimi.it/R/rmac-FAQ.html">"R for Macintosh <small>FAQ</small>/DOC"</a> has more details.
 
@@ -443,9 +445,9 @@ maintenance tool.  Simply add the line
 <p>(where <var>distribution</var> is either <code>stable</code> or <code>unstable</code>;
 feel free to use a <small>CRAN</small> mirror instead of the master) to the
 file <code>/etc/apt/sources.list</code>.  Once you have added that line the
-programs <code>apt-get</code>, <code>apt-cache</code>, and <code>dselect</code> (using the
-apt access method) will automatically detect and install updates of the
-R packages.
+programs <code>apt-get</code>, <code>apt-cache</code>, and <code>dselect</code>
+(using the apt access method) will automatically detect and install
+updates of the R packages.
 
 <p>The <code>bin/osf</code> directory of a <small>CRAN</small> site contains RPMs by
 Albrecht Gebhardt for alpha systems running Digital Unix 4.0.
@@ -632,8 +634,8 @@ can be obtained by sending an email with <code>info</code> as its contents to
 `r-help' replaced by `r-announce' and `r-devel', respectively.
 
 <p>It is recommended that you send mail to r-help rather than only to the R
-developers (who are also subscribed to the list, of course).  This may
-save them precious time they can use for constantly improving R, and
+Core developers (who are also subscribed to the list, of course).  This
+may save them precious time they can use for constantly improving R, and
 will typically also result in much quicker feedback for yourself.
 
 <p>Of course, in the case of bug reports it would be very helpful to have
@@ -1313,8 +1315,9 @@ Up:<a rel=up href="#R%20Add-On%20Packages">R Add-On Packages</a>
 
 <dl>
 <dt><strong>ctest</strong>
-<dd>A collection of Classical TESTs, including the Bartlett, Fisher,
-Kruskal-Wallis, Kolmogorov-Smirnov, and Wilcoxon tests. 
+<dd>A collection of Classical TESTs, including the Ansari-Bradley, Bartlett,
+chi-squared, Fisher, Kruskal-Wallis, Kolmogorov-Smirnov, t, and
+Wilcoxon tests. 
 <br><dt><strong>eda</strong>
 <dd>Exploratory Data Analysis.  Currently only contains functions for robust
 line fitting, and median polish and smoothing. 
@@ -1911,20 +1914,20 @@ Up:<a rel=up href="#R%20Add-On%20Packages">R Add-On Packages</a>
 
 <h2>5.4 How can add-on packages be removed?</h2>
 
-<p>To remove the packages <var>pkg_1</var>, <small>...</small>, <var>pkg_n</var> from the
-library tree rooted at the first directory given in <code>R_LIBS</code> if this
-is set and non-null, and from the default library otherwise, do
+<p>Use
 
 <pre>$ R CMD REMOVE <var>pkg_1</var> <small>...</small> <var>pkg_n</var>
 </pre>
 
-<p>(Versions of R prior to 1.3.0 removed from the default library by
-default.)  Use
+<p>to remove the packages <var>pkg_1</var>, <small>...</small>, <var>pkg_n</var> from the
+library tree rooted at the first directory given in <code>R_LIBS</code> if this
+is set and non-null, and from the default library otherwise.  (Versions
+of R prior to 1.3.0 removed from the default library by default.)
+
+<p>To remove from library <var>lib</var>, do
 
 <pre>$ R CMD REMOVE -l <var>lib</var> <var>pkg_1</var> <small>...</small> <var>pkg_n</var>
 </pre>
-
-<p>to remove from library <var>lib</var>.
 
 <p><hr>
 Node:<a name="How%20can%20I%20create%20an%20R%20package%3f">How can I create an R package?</a>,
@@ -2514,7 +2517,7 @@ Up:<a rel=up href="#R%20Miscellanea">R Miscellanea</a>
 
 <p>Inside a function you may want to access variables in two additional
 environments: the one that the function was defined in ("enclosing"),
-and the one it was invoked in ("parent")
+and the one it was invoked in ("parent").
 
 <p>If you create a function at the command line or load it in a package its
 enclosing environment is the global workspace.  If you define a function
@@ -2589,10 +2592,11 @@ Up:<a rel=up href="#R%20Miscellanea">R Miscellanea</a>
 
 <h2>7.17 What are valid names?</h2>
 
-<p>When creating data frames using <code>data.frame</code> or <code>read.table</code>,
-R by default ensures that the variable names are syntactically valid. 
-(The argument <code>check.names</code> to these functions controls whether
-variable names are checked and adjusted by <code>make.names</code> if needed.)
+<p>When creating data frames using <code>data.frame()</code> or
+<code>read.table()</code>, R by default ensures that the variable names are
+syntactically valid.  (The argument <code>check.names</code> to these
+functions controls whether variable names are checked and adjusted by
+<code>make.names()</code> if needed.)
 
 <p>To understand what names are "valid", one needs to take into account
 that the term "name" is used in several different (but related) ways
@@ -2605,10 +2609,10 @@ and starts with a letter or the dot.
 
 <li>An <em>object name</em> is a string associated with an object that is
 assigned in an expression either by having the object name on the left
-of an assignment operation or as an argument to the <code>assign</code>
+of an assignment operation or as an argument to the <code>assign()</code>
 function.  It is usually a syntactic name as well, but can be any
 non-empty string if it is quoted (and it is always quoted in the call to
-<code>assign</code>).
+<code>assign()</code>).
 
 <li>An <em>argument name</em> is what appears to the left of the equals sign
 when supplying an argument in a function call (for example,
@@ -2619,8 +2623,8 @@ but again can be anything if they are quoted.
 (a component of a list, for example.)  When it is used on the right of
 the <code>$</code> operator, it must be a syntactic name, or quoted. 
 Otherwise, element names can be any strings.  (When an object is used as
-a database, as in a call to <code>eval</code> or <code>attach</code>, the element
-names become object names.)
+a database, as in a call to <code>eval()</code> or <code>attach()</code>, the
+element names become object names.)
 
 <li>Finally, a <em>file name</em> is a string identifying a file in the
 operating system for reading, writing, etc.  It really has nothing much
@@ -2666,7 +2670,7 @@ Up:<a rel=up href="#R%20Miscellanea">R Miscellanea</a>
 <p>fits a logistic regression model, computes some summary information and
 returns an object of class <code>"summary.glm"</code> (see <a href="#How%20should%20I%20write%20summary%20methods%3f">How should I write summary methods?</a>).
 
-<p>If you type <code>1+1</code> or <code>summary(glm(y~x+z,family=binomial))</code> at
+<p>If you type <code>1+1</code> or <code>summary(glm(y~x+z, family=binomial))</code> at
 the command line the returned value is automatically printed (unless it
 is <code>invisible()</code>), but in other circumstances, such as in a
 <code>source()</code>d file or inside a function it isn't printed unless you
