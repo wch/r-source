@@ -34,6 +34,9 @@ NEW FEATURES
     o   Advance warning: save(, oldstyle=TRUE) will no longer be
 	available after this release.
 
+    o   Symbols can now be coerced to expressions, making
+	as.expression(quote(a)) work
+        
 
 BUG FIXES
 
@@ -143,6 +146,11 @@ BUG FIXES
     o   data editor now handles empty data frames, allowing data entry
         to begin with  dd<-edit(data.frame())  or
 	dd<-data.frame() ; fix(dd)
+
+    o   plotting math expressions when specified as a LANGSXP or
+        SYMSXP didn't work in several cases: plot(1,main=quote(a))
+        would segfault and there were problems with title(), text(),
+        and mtext() as well.
 
     o	optim(): no more segfault for REPORT=0; corrected error msg; ..
 	maxit default is now okay also when "L-*-B" is chosen automatically.

@@ -366,6 +366,7 @@ static void GetTextArg(SEXP call, SEXP spec, SEXP *ptxt,
 
     switch (TYPEOF(spec)) {
     case LANGSXP:
+    case SYMSXP:
 	UNPROTECT(1);
 	PROTECT(txt = coerceVector(spec, EXPRSXP));
 	break;
@@ -1850,8 +1851,11 @@ SEXP do_text(SEXP call, SEXP op, SEXP args, SEXP env)
 
     PLOT_XY_DEALING("text");
 
-    /* labels */ txt = CAR(args);
-    if (!isExpression(txt))
+    /* labels */ 
+    txt = CAR(args);
+    if (isSymbol(txt) || isLanguage(txt))
+	txt = coerceVector(txt, EXPRSXP);
+    else if (!isExpression(txt))
 	txt = coerceVector(txt, STRSXP);
     PROTECT(txt);
     if (length(txt) <= 0)
@@ -2062,8 +2066,10 @@ SEXP do_mtext(SEXP call, SEXP op, SEXP args, SEXP env)
 
     /* Arg1 : text= */
     text = CAR(args);
-    if (!isExpression(text))
-	text = coerceVector( CAR(args), STRSXP);
+    if (isSymbol(text) || isLanguage(text))
+	text = coerceVector(text, EXPRSXP);
+    else if (!isExpression(text))
+	text = coerceVector(text, STRSXP);
     PROTECT(text);
     n = ntext = length(text);
     if (ntext <= 0)
