@@ -114,36 +114,37 @@ BUG FIXES
     o	Calling dev.control("inhibit") with no graphics device open
 	crashed R. (PR#1605)
 
-    o	read.dcf() was not checking memory allocation succeeded.
+    o	read.dcf() was not checking that memory allocation succeeded.
 
     o	The C function fprec might overflow for > 16 digits, showing
 	up in example(str) on some platforms.
 
     o   Changes to the methods package:
 
-      -  Nonstandard generic function definitions  given to
-         setGeneric now work; these were previously ignored.
+	- Nonstandard generic function definitions  given to
+	  setGeneric now work; these were previously ignored.
 
-      - Classes that extend matrix, etc. as the data part previously lost
-        their attributes
+	- Classes that extend matrix, etc. as the data part previously lost
+	  their attributes
 
-      - There were bugs in distinguishing methods for "missing" from methods for
-        "ANY".
+	- There were bugs in distinguishing methods for "missing" from
+	  methods for "ANY".
 
-      - Some coerce methods were not selected correctly when the two classes
-        were related by an "is" relation.
+	- Some coerce methods were not selected correctly when the two classes
+	  were related by an "is" relation.
 
-      - extends() now works correctly if given a class definition rather
-        than a name.
+	- extends() now works correctly if given a class definition rather
+	  than a name.
 
-      - class()<- was leaving in an explicit class attribute for basic data
-        types.
+	- class()<- was leaving in an explicit class attribute for basic data
+	  types.
 
-      - Method signatures including arguments following "..." in the
-        argument list of the generic didn't work.
-
+	- Method signatures including arguments following "..." in the
+	  argument list of the generic didn't work.
 
     o	par(mgp = v) now allows negative `v' (S-compatibly and sensibly).
+
+    o	identify.hclust masked its `x' argument and so failed.
 
 
 

@@ -50,44 +50,44 @@ rect.hclust <- function(tree, k=NULL, which=NULL,
     invisible(retval)
 }
 
-identify.hclust <- function(x, FUN=NULL, N=20, MAXCLUSTER=20,
-                            DEV.FUN=NULL, ...)
+identify.hclust <- function(x, FUN = NULL, N = 20, MAXCLUSTER = 20,
+                            DEV.FUN = NULL, ...)
 {
-  cluster <- cutree(x, k=2:MAXCLUSTER)
+    cluster <- cutree(x, k = 2:MAXCLUSTER)
 
-  retval <- list()
-  oldk <- NULL
-  oldx <- NULL
-  DEV.x <- dev.cur()
+    retval <- list()
+    oldk <- NULL
+    oldx <- NULL
+    DEV.x <- dev.cur()
 
-  for(n in 1:N){
+    for(n in 1:N){
 
+        dev.set(DEV.x)
+        X <- locator(1)
+        if(is.null(X))
+            break
+
+        k <- min(which(rev(x$height) < X$y), MAXCLUSTER)
+        k <- max(k, 2)
+        if(!is.null(oldx)){
+            rect.hclust(x, k = oldk, x = oldx, cluster = cluster[, oldk-1],
+                        border = "grey")
+        }
+        retval[[n]] <- unlist(rect.hclust(x, k = k, x = X$x,
+                                          cluster = cluster[, k-1],
+                                          border = "red"))
+        if(!is.null(FUN)){
+            if(!is.null(DEV.FUN)){
+                dev.set(DEV.FUN)
+            }
+            retval[[n]] <- FUN(retval[[n]], ...)
+        }
+
+        oldx <- X$x
+        oldk <- k
+    }
     dev.set(DEV.x)
-    x <- locator(1)
-    if(is.null(x))
-      break
-
-    k <- min(which(rev(x$height)<x$y), MAXCLUSTER)
-    k <- max(k, 2)
-    if(!is.null(oldx)){
-      rect.hclust(x, k=oldk, x=oldx, cluster=cluster[,oldk-1],
-                  border="grey")
-    }
-    retval[[n]] <- unlist(rect.hclust(x, k=k, x=x$x,
-                                      cluster=cluster[,k-1],
-                                      border="red"))
-    if(!is.null(FUN)){
-      if(!is.null(DEV.FUN)){
-        dev.set(DEV.FUN)
-      }
-      retval[[n]] <- FUN(retval[[n]], ...)
-    }
-
-    oldx <- x$x
-    oldk <- k
-  }
-  dev.set(DEV.x)
-  invisible(retval)
+    invisible(retval)
 }
 
 
