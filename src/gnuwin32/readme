@@ -73,7 +73,7 @@ editing.
 Batch use: At it simplest, Rterm.exe can be used in a batch mode by
 commands like
 
-Rterm.exe --vsize 10M --nsize 400k --no-restore --no-save < infile > outfile
+Rterm.exe --vsize=10M --nsize=400k --no-restore --no-save < infile > outfile
 
 although users will probably want to set up simple .bat or .cmd files
 to run batch jobs.

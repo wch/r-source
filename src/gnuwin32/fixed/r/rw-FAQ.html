@@ -187,7 +187,7 @@ menu</tt> file tree. Right-click the shortcut, select
 your working directory.
 
 <p>You may also want to add command-line arguments at the end of the
-<tt>Target</tt> field. We use <tt>--vsize 10M --nsize 400k</tt>.  You
+<tt>Target</tt> field. We use <tt>--vsize=10M --nsize=400k</tt>.  You
 can also set environment variables at the end of the <tt>Target</tt>
 field, for example <tt>R_LIBS=e:/R/library</tt>.
 
@@ -233,7 +233,7 @@ offline=T)</tt>.</li>
 No, but you can set up a batch file using <tt>rterm.exe</tt>. A sample
 batch file might contain (as one line)
 <pre>
-path_to_R\bin\rterm.exe --vsize 10M --nsize 300k --no-restore --no-save < %1 > %1.out
+path_to_R\bin\rterm.exe --vsize=10M --nsize=300k --no-restore --no-save < %1 > %1.out
 </pre>
 
 <h3>
@@ -323,7 +323,7 @@ you launch <tt>Rgui/Rterm</tt>.  Under Windows NT you can use the control
 panel.  You can also set them on the command line, for example in the
 shortcut you could have
 <pre>
-path_to_R\bin\rgui.exe --vsize 10M --nsize 400k R_LIBS=e:/R/library
+path_to_R\bin\rgui.exe --vsize=10M --nsize=400k R_LIBS=e:/R/library
 </pre>
 and you can set variables in a file <tt>.Renviron</tt> in the working
 directory or your home directory, for example

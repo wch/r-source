@@ -104,7 +104,7 @@ file tree. Right-click the shortcut, select Properties... and change
 the `Start in' field to your working directory.
 
 You may also want to add command-line arguments at the end of the
-Target field. We use --vsize 10M --nsize 400k. You can also set
+Target field. We use --vsize=10M --nsize=400k. You can also set
 environment variables at the end of the Target field, for
 example R_LIBS=e:/R/library.
 
@@ -142,7 +142,7 @@ It depends what you want to print.
 No, but you can set up a batch file using rterm.exe. A sample batch file
 might contain (as one line)
 
-path_to_R\bin\rterm.exe --vsize 10M --nsize 300k --no-restore --no-save < %1 > %1.out
+path_to_R\bin\rterm.exe --vsize=10M --nsize=300k --no-restore --no-save < %1 > %1.out
 
 
 1.7) Can I use rw0xxx with ESS and emacs?
@@ -218,7 +218,7 @@ launch Rgui / Rterm. Under Windows NT you can use the control panel or
 the properties of `My Computer'. You can also set them on the command
 line, for example in the shortcut you could have
 
-      path_to_R\bin\rgui.exe --vsize 10M --nsize 300k R_LIBS=e:/R/library
+      path_to_R\bin\rgui.exe --vsize=10M --nsize=300k R_LIBS=e:/R/library
 
 and you can set variables in a file .Renviron in the working directory
 or your home directory, for example
