@@ -700,15 +700,7 @@ Date: Sun, 7 Sep 2003 16:00:44 +0100 (BST)
 Subject: Problem with 'drop' for 1-D arrays?
 From: "Raubertas, Richard" <richard_raubertas@merck.com>
 Date: Tue, 09 Sep 2003 10:53:39 -0400
-* PR# 4150 *
-Subject: bug or feature?
-From: axel.benz@iao.fhg.de
-Date: Sat, 13 Sep 2003 13:37:27 +0200 (MET DST)
-* PR# 4151 *
-Subject: (광고)미친영어 특별이벤트/무료샘플,무료배송중!
-From: 고객감사<mjyvghtg74596@hotmail.com>
-Date: Sat, 13 Sep 2003 23:49:56 +0900
-* PR# 4152 *
-Subject: Increase your penis size by 2 to 5 inches  result
-From: "Hilary Putnam" <5jayzt5bq@peoplemail.com.cn>
-Date: Sat, 13 Sep 03 23:03:56 GMT
+..We were using vector subsetting with fewer than 2 dimensions.
+..Note that even with drop=FALSE  x[1:4] should be a 1-d matrix (none of its
+..extents is 1).
+..
