@@ -42,6 +42,9 @@ NEW FEATURES
     o	Ops, cbind, diff and na.omit methods for time series objects
 	moved from package ts to package base.
 
+    o   Started work on new package management system:
+        package.status() and friends.
+
 
 
 BUG FIXES
