@@ -23,17 +23,17 @@ Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	  $(SHELL) ./config.status
 
 R: Makefile
-	@for d in "$(SUBDIRS)"; do \
+	@list='$(SUBDIRS)'; for d in $${list}; do \
 	  (cd $${d} && $(MAKE) $@) || exit 1; \
 	done
 
 mostlyclean: clean
 clean:
-	@for d in "$(SUBDIRS)"; do \
+	@list='$(SUBDIRS)'; for d in $${list}; do \
 	  (cd $${d} && $(MAKE) $@) || exit 1; \
 	done
 distclean: clean
-	@for d in "$(SUBDIRS)"; do \
+	@list='$(SUBDIRS)'; for d in $${list}; do \
 	  (cd $${d} && $(MAKE) $@) || exit 1; \
 	done
 	@rm -f Makefile
