@@ -164,7 +164,7 @@ static double bvalues[] = {
     -1.92965793419400681e+16
 };
 
-static double *b = &bvalues[-1];
+static double *b = (double *)&bvalues -1;
 static int nmax = 100;
 
 void dpsifn(double x, int n, int kode, int m, double *ans, int *nz, int *ierr)
