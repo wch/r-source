@@ -1717,6 +1717,8 @@ Simple regular expression interface.
 Functions for fitting general linear Structural Equation Models (with
 observed and unobserved variables) by the method of maximum likelihood
 using the RAM approach.
+@item strucchange
+Various tests on structural change in linear regression models.
 @item write.snns
 Function for writing a @acronym{SNNS} pattern file from a data frame or
 matrix.

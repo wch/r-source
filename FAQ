@@ -1530,6 +1530,9 @@ these a try, of course.  This area of CRAN currently contains
      observed and unobserved variables) by the method of maximum likelihood
      using the RAM approach.
 
+*strucchange*
+     Various tests on structural change in linear regression models.
+
 *write.snns*
      Function for writing a SNNS pattern file from a data frame or matrix.
 
