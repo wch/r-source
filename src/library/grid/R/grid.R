@@ -289,14 +289,13 @@ current.transform <- function() {
 
 # Control whether user is prompted before new page
 grid.prompt <- function(ask) {
-  if (missing(ask))
-    grid.Call("L_getAsk")
-  else {
+  old.prompt <- grid.Call("L_getAsk")
+  if (!missing(ask)) {
     if (!is.logical(ask))
       stop("Invalid ask value")
     grid.Call("L_setAsk", ask)
-    invisible()
   }
+  old.prompt
 }
 
 # Call this function if you want the graphics device erased or moved

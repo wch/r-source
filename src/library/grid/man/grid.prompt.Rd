@@ -10,10 +10,11 @@ grid.prompt(ask)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{ask}{ a logical value.  If \code{TRUE} }
+  \item{ask}{ a logical value.  If \code{TRUE}, the user
+    is prompted before a new page of output is started. }
 }
 \value{
-  If \code{ask} is missing, the current prompt setting is returned.
+  The current prompt setting \emph{before} any new setting is applied.
 }
 \author{ Paul Murrell }
 \seealso{ \code{\link{grid.newpage}} }
