@@ -11,8 +11,10 @@ subdir = doc
 include $(top_builddir)/Makeconf
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
-DISTFILES = KEYWORDS KEYWORDS.db R.1 Rdconv.1 Makefile.in
+DISTFILES = Makefile.in KEYWORDS KEYWORDS.db R.1 R.aux
 SUBDIRS = html manual
+
+HELP2MAN = $(top_builddir)/tools/help2man
 
 all docs: Makefile R
 
@@ -55,14 +57,7 @@ install-html:
 	fi
 
 install-man:
-	@echo "Installing man pages ..."
-	@for f in R.1 Rdconv.1; do \
-	  $(INSTALL_DATA) $(srcdir)/$${f} $(mandir)/man1; \
-	done
-	@(cd $(mandir)/man1; \
-	  for f in Rd2txt.1 Rdindex.1 Sd2Rd.1; do \
-	    rm -f $${f}; $(LN_S) Rdconv.1 $${f}; \
-	  done)
+	@$(INSTALL_DATA) $(srcdir)/R.1 $(mandir)/man1
 install-strip: install
 uninstall:
 	@echo "Uninstalling doc ..."
@@ -73,7 +68,6 @@ uninstall:
 	  rmdir $(rhome)/doc 2> /dev/null \
 	    || echo "  subdir doc not removed"; \
 	fi
-	@echo "Uninstalling man pages ..."
 	@(cd $(mandir)/man1; \
 	  rm -f R.1 Rdconv.1 Rd2txt.1 Rdindex.1 Sd2Rd.1)
 
@@ -92,6 +86,15 @@ distclean: clean
 	@(cd manual && $(MAKE) $@)
 	@rm -f Makefile
 maintainer-clean: distclean
+	@rm -f R.1
+
+maintainer-build: $(srcdir)/R.1
+$(srcdir)/R.1: $(top_srcdir)/src/scripts/R.sh.in
+	@sed "s@R_HOME_DIR*@`cd $(top_builddir); pwd`@" \
+	  < $(top_srcdir)/src/scripts/R.sh.in > $(top_builddir)/bin/R
+	@$(HELP2MAN) --include=$(srcdir)/R.aux --no-info --output=$@ \
+	  --name="a language for data analysis and graphics" \
+	  $(top_builddir)/bin/R
 
 distdir: $(DISTFILES)
 	@for f in $(DISTFILES); do \
