@@ -35,6 +35,12 @@ NEW FEATURES
 	  environment of the caller of the generic function rather
 	  than the environment where the generic is defined.
 
+    o   The objects created in the methods package to represent
+	classes, generic functions, method definitions, and
+	inheritance relations now themselves belong to true classes.  In
+        particular,  the "classRepresentation" objects follow the description
+        in "Programming with Data" (section 7.6)
+
     o	New methods ([[, print, str) and extended plot() method
 	for "dendrogram" class.
 
@@ -282,6 +288,9 @@ BUG FIXES
 	Netscape 6.2.x / 7.0pr1.
 
     o   unsplit() failed if f was a list of factors. (PR#1843)
+
+    o   the methods package generic version of primitives is now "sealed"
+        and cannot be redefined (it was always a bad idea to do so).
 
 
 
