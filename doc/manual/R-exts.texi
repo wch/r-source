@@ -180,7 +180,7 @@ please use the title field in the @file{DESCRIPTION} file from now on.
 
 The @samp{Maintainer} field should give a @emph{single} name with email
 address in angle brackets (for sending bug reports etc.).  It should not
-end in a period.
+end in a period or comma.
 
 The optional @samp{URL} field may give a list of @acronym{URL}s
 separated by commas or whitespace, for example the homepage of the
@@ -519,20 +519,27 @@ The package is installed.  This will warn about missing cross-references
 and duplicate aliases in help files.
 
 @item
-The @file{DESCRIPTION} file is checked for completeness.
-
-@item
 The files and directories are checked for sufficient permissions (Unix
 only).
 
 @item
+The @file{DESCRIPTION} file is checked for completeness, and some of its
+entries for correctness.
+
+@item
+The R files are checked for syntax errors.
+
+@item
 The R files are checked for correct calls to @code{library.dynam} (with
-no extension).
+no extension).  In addition, it is checked whether methods have all
+arguments of the corresponding generic, and whether the final argument
+of assignment is called @samp{value}.
 
 @item
 The Rd files are checked for the mandatory (@code{\name}, @code{\alias},
-@code{\title}, @code{\description} and @code{\keyword}) fields.  The
-keywords found are compared to the standard ones.
+@code{\title}, @code{\description} and @code{\keyword}) fields, and for
+unbalanced braces (which indicate Rd syntax errors).  The keywords found
+are compared to the standard ones.
 
 @item
 A check is made for undocumented user-level objects in the package.
@@ -540,6 +547,15 @@ A check is made for undocumented user-level objects in the package.
 @item
 The functions and their documentation are compared, and any differences
 in the call sequences reported.
+
+@item
+It is checked whether all function arguments given in @code{\usage}
+sections of Rd files are documented in the corresponding
+@code{\arguments} section.
+
+@item
+C source and header files are tested for correct (CR-only) line
+endings.
 
 @item
 The examples provided by the package's documentation are run.
