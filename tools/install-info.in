@@ -1,10 +1,10 @@
-#! @PERL@
+#! @PERL@ --
 
 # fixme: --dirfile option
 # fixme: sort entries
 # fixme: send to FSF ?
 
-$version="1.4.0.35"; # This line modified by Makefile
+$version="1.4.1.13"; # This line modified by Makefile
 sub version {
         print STDERR <<END;
 Debian GNU/Linux install-info $version.  Copyright (C) 1994,1995
@@ -114,7 +114,13 @@ if (!$remove) {
         
         open(IF,"$filename") || die "$name: read $filename: $!\n";
         $asread='';
-        while(<IF>) { last if m/^START-INFO-DIR-ENTRY$/; }
+        while(<IF>) {
+	    m/^START-INFO-DIR-ENTRY$/ && last;
+	    m/^INFO-DIR-SECTION (.+)$/ && do {
+		$sectiontitle = $1		unless defined($sectiontitle);
+		$sectionre = '^'.quotemeta($1)	unless defined($sectionre);
+	    }
+	}
         while(<IF>) { last if m/^END-INFO-DIR-ENTRY$/; $asread.= $_; }
         close(IF); &checkpipe;
         if ($asread =~ m/(\* *[^:]+: *\([^\)]+\).*\. *.*\n){2,}/) {
@@ -219,11 +225,11 @@ eof(OLD) || &ulquit("$name: read $infodir/dir: $!\n");
 close(OLD) || &ulquit("$name: close $infodir/dir after read: $!\n");
 while ($work[$#work] !~ m/\S/) { $#work--; }
 
-while (@work) {
-	$_=shift(@work);
+do {
+    last if !@work;
+    $_= shift(@work);
     push(@head,$_);
-	last if (m/^\*\s*Menu:/i);
-}
+} until (m/^\*\s*Menu:/i);
 
 if (!$remove) {
 
@@ -348,7 +354,7 @@ sub ulquit {
 }
 
 sub checkpipe {
-    return if !$pipeit || !$? || $?==0x8D00;
+    return if !$pipeit || !$? || $?==0x8D00 || $?==0x0D;
     die "$name: read $filename: $?\n";
 }
 
