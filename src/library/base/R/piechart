@@ -12,7 +12,7 @@ function (x, labels=names(x), edges=200, radius=0.8, col=NULL, main=NULL, ...)
 	if (pin[1] > pin[2]) xlim <- (pin[1]/pin[2]) * xlim
 	else ylim <- (pin[2]/pin[1]) * ylim
 	plot.new()
-	plot.window(xlim, ylim, "")
+	plot.window(xlim, ylim, "", asp=1)
 	for (i in 1:length(dx)) {
 		n <- max(2, floor(edges * dx[i]))
 		t2p <- 2*pi * seq(x[i], x[i + 1], length = n)

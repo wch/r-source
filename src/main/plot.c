@@ -20,6 +20,7 @@
 #include "Defn.h"
 #include "Mathlib.h"
 #include "Graphics.h"
+#include "Print.h"
 
 void NewFrameConfirm()
 {
@@ -299,12 +300,35 @@ SEXP do_plot_new(SEXP call, SEXP op, SEXP args, SEXP env)
 }
 
 
+/*
+ *  SYNOPSIS
+ *
+ *    plot.window(xlim, ylim, log="", asp=NA)
+ *
+ *  DESCRIPTION
+ *
+ *    This function sets up the world coordinates for a graphics
+ *    window.  Note that if asp is a finite positive value then
+ *    the window is set up so that one data unit in the y direction
+ *    is equal in length to asp * one data unit in the x direction.
+ *
+ *    The special case asp == 1 produces plots where distances
+ *    between points are represented accurately on screen.  Values
+ *    with asp < 1 can be used to produce more accurate maps when
+ *    using lattitude and longtitude.
+ *
+ *  NOTE
+ *
+ *    The use of asp can have weird effects when axis is an
+ *    interpreted function.  It has to be internal so that the
+ *    full computation is captured in the display list.
+ */
 
 SEXP do_plot_window(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    /* plot.window(xlim, ylim, log, ...) - define world coordinates */
     SEXP xlim, ylim, log;
-    double xmin, xmax, ymin, ymax;
+    double asp, xmin, xmax, ymin, ymax;
+    int logscale;
     char *p;
     SEXP originalArgs = args;
     DevDesc *dd = CurrentDevice();
@@ -322,6 +346,7 @@ SEXP do_plot_window(SEXP call, SEXP op, SEXP args, SEXP env)
 	errorcall(call, "invalid ylim\n");
     args = CDR(args);
 
+    logscale = 0;
     log = CAR(args);
     if (!isString(log))
 	error("invalid \"log=\" specification\n");
@@ -330,15 +355,21 @@ SEXP do_plot_window(SEXP call, SEXP op, SEXP args, SEXP env)
 	switch (*p) {
 	case 'x':
 	    dd->dp.xlog = dd->gp.xlog = 1;
+	    logscale = 1;
 	    break;
 	case 'y':
 	    dd->dp.ylog = dd->gp.ylog = 1;
+	    logscale = 1;
 	    break;
 	default:
 	    error("invalid \"log=\" specification\n");
 	}
 	p++;
     }
+    args = CDR(args);
+
+    asp = asReal(CAR(args));
+    if (logscale) asp = NA_REAL;
     args = CDR(args);
 
     GSavePars(dd);
@@ -368,12 +399,29 @@ SEXP do_plot_window(SEXP call, SEXP op, SEXP args, SEXP env)
 	ymin = REAL(ylim)[0];
 	ymax = REAL(ylim)[1];
     }
-    GScale(xmin, xmax, 1, dd);
-    GScale(ymin, ymax, 2, dd);
+    if (FINITE(asp) && asp > 0) {
+	double pin1, pin2, scale, xdelta, ydelta, xscale, yscale, xadd, yadd;
+	pin1 = GConvertXUnits(1.0, NPC, INCHES, dd);
+	pin2 = GConvertYUnits(1.0, NPC, INCHES, dd);
+        xdelta = asp * fabs(xmax - xmin);
+        ydelta = fabs(ymax - ymin);
+        xscale = pin1 / xdelta;
+        yscale = pin2 / ydelta;
+        scale = (xscale < yscale) ? xscale : yscale;
+        xadd = .5 * (pin1 / scale - xdelta) / asp;
+        yadd = .5 * (pin2 / scale - ydelta);
+	GScale(xmin - xadd, xmax + xadd, 1, dd);
+	GScale(ymin - yadd, ymax + yadd, 2, dd);
+ 
+    }
+    else {
+	GScale(xmin, xmax, 1, dd);
+	GScale(ymin, ymax, 2, dd);
+    }
     GMapWin2Fig(dd);
     GRestorePars(dd);
-    /* NOTE that i only record operation if no "error"  */
-    /* NOTE that if we're replaying then call == R_NilValue */
+    /* NOTE: the operation is only recorded if there was no "error" */
+    /* NOTE: if we're replaying then call == R_NilValue */
     if (call != R_NilValue)
 	recordGraphicOperation(op, originalArgs, dd);
     return R_NilValue;
@@ -397,6 +445,426 @@ static void GetAxisLimits(double left, double right, double *low, double *high)
 }
 
 
+/*
+ *  SYNOPSIS
+ *
+ *    axis(which, at, labels, ...)
+ *
+ *  DESCRIPTION
+ *
+ */
+
+static SEXP labelformat(SEXP labels)
+{
+    SEXP ans, l;
+    int save_digits, i, n, nl, w, d, e, wi, di, ei;
+    char *strp;
+    n = length(labels);
+    save_digits = print_digits;
+    print_digits = 7;
+    switch(TYPEOF(labels)) {
+    case LGLSXP:
+	PROTECT(ans = allocVector(STRSXP, n));
+	for (i = 0; i < n; i++) {
+	    strp = EncodeLogical(LOGICAL(labels)[i], 0);
+	    STRING(ans)[i] = mkChar(strp);
+	}
+	UNPROTECT(1);
+	break;
+    case FACTSXP:
+    case ORDSXP:
+	PROTECT(ans = allocVector(STRSXP, n));
+	l = getAttrib(labels, R_LevelsSymbol);
+	nl = LEVELS(labels);
+	if(l == R_NilValue) {
+	    PROTECT(l = allocVector(STRSXP, nl));
+	    for(i=0 ; i<nl ; i++) {
+		strp = EncodeInteger(i+1, 0);
+		STRING(l)[i] = mkChar(strp);
+	    }
+	}
+	else {
+	    l = duplicate(l);
+	    PROTECT(l);
+	}
+	for(i=0 ; i<n ; i++) {
+	    if(INTEGER(labels)[i] < 1 || INTEGER(labels)[i] > nl)
+		STRING(ans)[i] = NA_STRING;
+	    else
+		STRING(ans)[i] = STRING(l)[INTEGER(labels)[i]-1];
+	}
+	UNPROTECT(2);
+	break;
+    case INTSXP:
+	PROTECT(ans = allocVector(STRSXP, n));
+	for (i = 0; i < n; i++) {
+	    strp = EncodeInteger(INTEGER(labels)[i], 0);
+	    STRING(ans)[i] = mkChar(strp);
+	}
+	UNPROTECT(1);
+	break;
+    case REALSXP:
+	formatReal(REAL(labels), n, &w, &d, &e);
+	PROTECT(ans = allocVector(STRSXP, n));
+	for (i = 0; i < n; i++) {
+	    strp = EncodeReal(REAL(labels)[i], 0, d, e);
+	    STRING(ans)[i] = mkChar(strp);
+	}
+	UNPROTECT(1);
+	break;
+    case CPLXSXP:
+	formatComplex(COMPLEX(labels), n, &w, &d, &e, &wi, &di, &ei);
+	PROTECT(ans = allocVector(STRSXP, n));
+	for (i = 0; i < n; i++) {
+	    strp = EncodeComplex(COMPLEX(labels)[i], 0, d, e, 0, di, ei);
+	    STRING(ans)[i] = mkChar(strp);
+	}
+	UNPROTECT(1);
+	break;
+    case STRSXP:
+	formatString(STRING(labels), n, &w, 0);
+	PROTECT(ans = allocVector(STRSXP, n));
+	for (i = 0; i < n; i++) {
+	    strp = EncodeString(CHAR(STRING(labels)[i]), 0, 0, adj_left);
+	    STRING(ans)[i] = mkChar(strp);
+	}
+	UNPROTECT(1);
+	break;
+    default:
+	error("invalid type for axis labels\n");
+    }
+    return ans;
+}
+
+static SEXP CreateAtVector(double *axp, double *usr, int nint, int log)
+{
+    SEXP at;
+    double umin, umax, dn, rng;
+    int i, n;
+    if(!log || axp[2] < 0) {
+	/* linear axis */
+	n = fabs(axp[2]) + 0.25;
+	dn = n;
+	rng = axp[1] - axp[0];
+	at = allocVector(REALSXP, n + 1);
+	for(i=0 ; i<=n ; i++)
+	    REAL(at)[i] = axp[0] + (i / dn) * rng;
+    }
+    else {
+	n = (axp[2] + 0.5);
+	umin = usr[0];
+	umax = usr[1];
+	switch(n) {
+	case 1:
+	    n = floor(log10(axp[1])) - ceil(log10(axp[0])) + 0.25;
+	    nint = n / nint + 1;
+	    rng = pow(10.0, (double)nint);
+	    dn = axp[0];
+	    n = 0;
+	    while(dn < umax) {
+		n++;
+		dn = rng * dn;
+	    }
+	    at = allocVector(REALSXP, n);
+	    dn = axp[0];
+	    n = 0;
+	    while(dn < umax) {
+		REAL(at)[n++] = dn;
+		dn = rng * dn;
+	    }
+	    break;
+	case 2:
+	    dn = axp[0];
+	    n = 0;
+	    if(0.5 * dn >= umin) n++;
+	    for(;;) {
+		if(dn > umax) break;
+		n++;
+		if(5 * dn > umax) break;
+		n++;
+		dn = 10 * dn;
+	    }
+	    at = allocVector(REALSXP, n);
+	    dn = axp[0];
+	    n = 0;
+	    if(0.5 * dn >= umin) REAL(at)[n++] = 0.5 * dn;
+	    for(;;) {
+		if(dn > umax) break;
+		REAL(at)[n++] = dn;
+		if(5 * dn > umax) break;
+		REAL(at)[n++] = 5 * dn;
+		dn = 10 * dn;
+	    }
+	    break;
+	case 3:
+	    dn = axp[0];
+	    n = 0;
+	    if(0.2 * dn >= umin) n++;
+	    if(0.5 * dn >= umin) n++;
+	    for(;;) {
+		if(dn > umax) break;
+		n++;
+		if(2 * dn > umax) break;
+		n++;
+		if(5 * dn > umax) break;
+		n++;
+		dn = 10 * dn;
+	    }
+	    at = allocVector(REALSXP, n);
+	    dn = axp[0];
+	    n = 0;
+	    if(0.2 * dn >= umin) REAL(at)[n++] = 0.2 * dn;
+	    if(0.5 * dn >= umin) REAL(at)[n++] = 0.5 * dn;
+	    for(;;) {
+		if(dn > umax) break;
+		REAL(at)[n++] = dn;
+		if(2 * dn > umax) break;
+		REAL(at)[n++] = 2 * dn;
+		if(5 * dn > umax) break;
+		REAL(at)[n++] = 5 * dn;
+		dn = 10 * dn;
+	    }
+	    break;
+	}
+    }
+    return at;
+}
+
+SEXP do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    /* axis(which, at, labels, ...) - draw an axis */
+    SEXP at, lab;
+    int dolabels, logflag;
+    int col, fg;
+    int i, n, nint;
+    int which, xtckCoords, ytckCoords;
+    double x, y, tempx, tempy, tnew, tlast;
+    double axp[3], usr[2];
+    double gap, labw, low, high;
+    double xx[2], yy[2];
+
+    SEXP originalArgs = args;
+    DevDesc *dd = CurrentDevice();
+
+    /* initial checks */
+
+    GCheckState(dd);
+    if(length(args) < 3)
+	errorcall(call, "too few arguments\n");
+
+    /* required argument "which" */
+
+    which = asInteger(CAR(args));
+    if (which < 1 || which > 4)
+	errorcall(call, "invalid axis number\n");
+    args = CDR(args);
+
+    /* tick-label locations */
+    /* these are coerced lower down */
+
+
+    at = CAR(args);
+    args = CDR(args);
+
+    /* labels */
+
+    dolabels = 1;
+    if (isLogical(CAR(args)) && length(CAR(args)) > 0) {
+	i = asLogical(CAR(args));
+	if(i == 0 || i == NA_LOGICAL)
+	    dolabels = 0;
+	PROTECT(CAR(args) = R_NilValue);
+    }
+    else if (isExpression(CAR(args))) {
+	dolabels = 1;
+	PROTECT(lab = CAR(args));
+    }
+    else {
+	dolabels = 1;
+	PROTECT(lab = coerceVector(CAR(args), REALSXP));
+    }
+    args = CDR(args);
+
+    /* retrieve relevant "par" values */
+
+    switch(which) {
+    case 1:
+    case 3:
+	axp[0] = dd->dp.xaxp[0];
+	axp[1] = dd->dp.xaxp[1];
+	axp[2] = dd->dp.xaxp[2];
+	usr[0] = dd->dp.usr[0];
+	usr[1] = dd->dp.usr[1];
+	logflag = dd->dp.xlog;
+	nint = dd->dp.lab[0];
+	break;
+    case 2:
+    case 4:
+	axp[0] = dd->dp.yaxp[0];
+	axp[1] = dd->dp.yaxp[1];
+	axp[2] = dd->dp.yaxp[2];
+	usr[0] = dd->dp.usr[2];
+	usr[1] = dd->dp.usr[3];
+	logflag = dd->dp.ylog;
+	nint = dd->dp.lab[1];
+	break;
+    }
+    
+    /* determine the tick mark positions */
+    /* note that these may fall outside the plot window */
+    /* we will clip them below */
+
+    if (length(at) == 0) {
+	PROTECT(at = CreateAtVector(axp, usr, nint, logflag));
+	n = length(at);
+    }
+    else {
+	if (isReal(at)) PROTECT(at = duplicate(at));
+	else PROTECT(at = coerceVector(at, REALSXP));
+	n = length(at);
+	rsort(REAL(at), n);
+    }
+
+    if (dolabels) {
+	if(length(lab) == 0) {
+	    lab = labelformat(at);
+	}
+	else {
+	    lab = labelformat(lab);
+	    if (LENGTH(at) != LENGTH(lab))
+		errorcall(call, "location and label lengths differ\n");
+	}
+    }
+    UNPROTECT(2);
+    R_Visible = 0;
+    GSavePars(dd);
+
+    dd->gp.xpd = 1;
+    dd->gp.adj = 0.5;
+    dd->gp.font = dd->gp.fontaxis;
+    dd->gp.cex = dd->gp.cex * dd->gp.cexbase;
+    col = dd->gp.col;
+    fg = dd->gp.fg;
+
+    /* Check the axis type parameter */
+    /* If it is 'n', there is nothing to do */
+    if(which == 1 || which == 3) {
+	if(dd->gp.xaxt == 'n') {
+	    GRestorePars(dd);
+	    return R_NilValue;
+	}
+    }
+    else if(which == 2 || which == 4) {
+	if(dd->gp.yaxt == 'n') {
+	    GRestorePars(dd);
+	    return R_NilValue;
+	}
+    }
+    else errorcall(call, "invalid \"which\" value\n");
+
+    x = dd->gp.usr[0];
+    y = dd->gp.usr[2];
+    xtckCoords = MAR1;
+    ytckCoords = MAR2;
+		
+    /* Draw the axis */
+    GMode(dd, 1);
+    switch (which) {
+    case 1:
+    case 3:
+	GetAxisLimits(dd->gp.usr[0], dd->gp.usr[1], &low, &high);
+	if (which == 3) {
+	    y = dd->gp.usr[3];
+	    xtckCoords = MAR3;
+	}
+	dd->gp.col = fg;
+	/* axis line */
+	GLine(REAL(at)[0], y, REAL(at)[n - 1], y, USER, dd);
+	/* ticks */
+	for (i = 0; i < n; i++) {
+	    x = REAL(at)[i];
+	    if (low <= x && x <= high) {
+		GLine(x, 0, x, 0.5, xtckCoords, dd);
+	    }
+	}
+	dd->gp.col = dd->gp.colaxis;
+	/* labels */
+	tlast = -1.0;
+	gap = GStrWidth("m", NFC, dd);	/* FIXUP x/y distance */
+	for (i = 0; i < n; i++) {
+	    x = REAL(at)[i];
+	    tempx = x; tempy = y;
+	    GConvert(&tempx, &tempy, USER, NFC, dd);
+	    if(isExpression(lab)) {
+		GMMathText(VECTOR(lab)[i], which, 
+			   dd->gp.mgp[1], 0, x, dd->gp.las, dd);
+	    }
+	    else {
+		labw = GStrWidth(CHAR(STRING(lab)[i]), NFC, dd);
+		tnew = tempx - 0.5 * labw;
+		/* check that there's room for labels */
+		if (dd->gp.las == 2 || tnew - tlast >= gap) {
+		    GMtext(CHAR(STRING(lab)[i]), which, 
+			   dd->gp.mgp[1], 0, x, 
+			   dd->gp.las, dd);
+		    tlast = tempx + 0.5 *labw;
+		}
+	    }
+	}
+	break;
+    case 2:
+    case 4:
+	GetAxisLimits(dd->gp.usr[2], dd->gp.usr[3], &low, &high);
+	if (which == 4) {
+	    x = dd->gp.usr[1];
+	    ytckCoords = MAR4;
+	}
+	dd->gp.col = fg;
+	GLine(x, REAL(at)[0], x, REAL(at)[n - 1], USER, dd);
+	for (i = 0; i < n; i++) {
+	    y = REAL(at)[i];
+	    if (low <= y && y <= high) {
+		GLine(y, 0, y, 0.5, ytckCoords, dd);
+	    }
+	}
+	dd->gp.col = dd->gp.colaxis;
+	gap = GStrWidth("m", INCHES, dd);
+	gap = GConvertYUnits(gap, INCHES, NFC, dd);
+	tlast = -1.0;
+	for (i = 0; i < n; i++) {
+	    y = REAL(at)[i];
+	    tempx = x; tempy = y;
+	    GConvert(&tempx, &tempy, USER, NFC, dd);
+	    if(isExpression(lab)) {
+		GMMathText(VECTOR(lab)[i], which, 
+			   dd->gp.mgp[1], 0, y, dd->gp.las, dd);
+	    }
+	    else {
+		labw = GStrWidth(CHAR(STRING(lab)[i]), 
+				 INCHES, dd);
+		labw = GConvertYUnits(labw, INCHES, NFC, dd);
+		tnew = tempy - 0.5 * labw;
+		if (dd->gp.las > 0 || tnew - tlast >= gap) {
+		    GMtext(CHAR(STRING(lab)[i]), which, 
+			   dd->gp.mgp[1], 0, y,
+			   dd->gp.las, dd);
+		    tlast = tempy + 0.5 *labw;
+		}
+	    }
+	}
+	break;
+    }
+
+    GMode(dd, 0);
+    GRestorePars(dd);
+    /* NOTE: only record operation if no "error"  */
+    /* NOTE: during replay, call == R_NilValue */
+    if (call != R_NilValue)
+	recordGraphicOperation(op, originalArgs, dd);
+    return R_NilValue;
+}
+
+#ifdef OLD
 SEXP do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     /* axis(which, at, labels, ...) - draw an axis */
@@ -495,8 +963,7 @@ SEXP do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
 	    else {
 		labw = GStrWidth(CHAR(STRING(lab)[i]), NFC, dd);
 		tnew = tempx - 0.5 * labw;
-				/* check that there's room */
-				/* for labels */
+		/* check that there's room for labels */
 		if (dd->gp.las == 2 || tnew - tlast >= gap) {
 		    GMtext(CHAR(STRING(lab)[i]), which, 
 			   dd->gp.mgp[1], 0, x, 
@@ -557,6 +1024,7 @@ SEXP do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
 	recordGraphicOperation(op, originalArgs, dd);
     return R_NilValue;
 }
+#endif
 
 
 SEXP do_plot_xy(SEXP call, SEXP op, SEXP args, SEXP env)
@@ -1858,6 +2326,7 @@ SEXP do_dend(SEXP call, SEXP op, SEXP args, SEXP env)
 
     GSavePars(dd);
     ProcessInlinePars(args, dd);
+    dd->gp.cex = dd->gp.cexbase * dd->gp.cex;
     dnd_offset = GConvertYUnits(GStrWidth("m", INCHES, dd), INCHES, USER, dd);
 
     dd->gp.xpd = 1;
@@ -1922,6 +2391,7 @@ SEXP do_dendwindow(SEXP call, SEXP op, SEXP args, SEXP env)
 
     GSavePars(dd);
     ProcessInlinePars(args, dd);
+    dd->gp.cex = dd->gp.cexbase * dd->gp.cex;
     dnd_offset = GStrWidth("m", INCHES, dd);
 
     vmax = vmaxget();

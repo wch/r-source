@@ -1942,7 +1942,12 @@ void GScale(double min, double max, int axis, DevDesc *dd)
 	}
 	else swap = 0;
 
-	GPretty(&min, &max, &n);
+	if(log) {
+		min = pow(10.0, min);
+		max = pow(10.0, max);
+		GLPretty(&min, &max, &n);
+	}
+	else GPretty(&min, &max, &n);
 
 	if(swap) {
 		temp = min;
@@ -2157,6 +2162,7 @@ static double	adjsave;	/* adj */
 static int	annsave;	/* ann */
 static int	btysave;	/* bty */
 static double	cexsave;	/* cex */
+static double	cexbasesave;	/* cexbase */
 static double	cexmainsave;	/* cex.main */
 static double	cexlabsave;	/* cex.lab */
 static double	cexsubsave;	/* cex.sub */
@@ -2204,6 +2210,7 @@ void GSavePars(DevDesc *dd)
 	annsave = dd->gp.ann;
 	btysave = dd->gp.bty;
 	cexsave = dd->gp.cex;
+	cexbasesave = dd->gp.cexbase;
 	cexlabsave = dd->gp.cexlab;
 	cexmainsave = dd->gp.cexmain;
 	cexsubsave = dd->gp.cexsub;
@@ -2258,6 +2265,7 @@ void GRestorePars(DevDesc *dd)
 	dd->gp.ann = annsave;
 	dd->gp.bty = btysave;
 	dd->gp.cex = cexsave;
+	dd->gp.cexbase = cexbasesave;
 	dd->gp.cexlab = cexlabsave;
 	dd->gp.cexmain = cexmainsave;
 	dd->gp.cexsub = cexsubsave;
@@ -2784,6 +2792,7 @@ void GBox(int which, DevDesc *dd)
 }
 
 
+#ifdef OLD
 void GLPretty(double *xmin, double *xmax, int *n)
 {
 	/*  Set scale and ticks for logarithmic scales  */
@@ -2823,6 +2832,52 @@ void GLPretty(double *xmin, double *xmax, int *n)
 		}
 	}
 }
+#else
+
+#define LPR_SMALL  2
+#define LPR_MEDIUM 3
+
+void GLPretty(double *ul, double *uh, int *n)
+{
+    /* Generate pretty tick values - logarithmic scale */
+    /* This only does a very simple setup.  The real */
+    /* work happens when the axis is drawn. */
+
+    int p1, p2;
+    p1 = ceil(log10(*ul));
+    p2 = floor(log10(*uh));
+
+    if (p2 - p1 <= 0) {
+	/* Very small range */
+	/* Use tickmarks from a linear scale */
+	/* Splus uses n = 9 here, but that is dumb */
+	GPretty(ul, uh, n);
+	*n = -*n;
+    }
+    else if (p2 - p1 <= LPR_SMALL) {
+	/* Small range */
+	/* Use 1,2,5,10 times 10^k tickmarks */
+	*ul = pow(10.0, (double)p1);
+	*uh = pow(10.0, (double)p2);
+	*n = 3;
+    }
+    else if (p2 - p1 <= LPR_MEDIUM) {
+	/* Medium range */
+	/* Use 1,5 times 10^k tickmarks */
+	*ul = pow(10.0, (double)p1);
+	*uh = pow(10.0, (double)p2);
+	*n = 2;
+    }
+    else {
+	/* Large range */
+	/* Use 10^k tickmarks */
+	/* But decimate, when there are too many */
+	*ul = pow(10.0, (double)p1);
+	*uh = pow(10.0, (double)p2);
+	*n = 1;
+    }
+}
+#endif
 
 void GPretty(double *s, double *u, int *ndiv)
 {

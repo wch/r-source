@@ -832,8 +832,8 @@ void Specify2(char *what, SEXP value, DevDesc *dd)
 		lengthCheck(what, value, 1);
 		x = asReal(value);
 		if (FINITE(x) && 0.0 < x) {
-			dd->gp.cex = 1.0;
-			dd->gp.cexbase = x;
+			dd->gp.cex = x;
+			/* dd->gp.cexbase = x; */
 		}
 		else par_error(what);
 	}
