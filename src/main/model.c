@@ -790,16 +790,6 @@ SEXP do_termsform(SEXP call, SEXP op, SEXP args, SEXP rho)
     nvar = length(varlist) - 1;
     nwords = (nvar - 1) / WORDSIZE + 1;
 
-    /* Step 1b: Compute variable names */
-
-    PROTECT(varnames = allocVector(STRSXP, nvar));
-    for (v = CDR(varlist), i = 0; v != R_NilValue; v = CDR(v)) {
-	if (isSymbol(CAR(v)))
-	    SET_STRING_ELT(varnames, i++, PRINTNAME(CAR(v)));
-	else
-	    SET_STRING_ELT(varnames, i++, STRING_ELT(deparse1line(CAR(v), 0), 0));
-    }
-    
     /* Step 2: Recode the model terms in binary form */
     /* and at the same time, expand the model formula. */
 
@@ -820,6 +810,16 @@ SEXP do_termsform(SEXP call, SEXP op, SEXP args, SEXP rho)
     nvar = length(varlist) - 1; /* need to recompute, in case
                                    EncodeVars stretched it */
 
+    /* Step 2a: Compute variable names */
+
+    PROTECT(varnames = allocVector(STRSXP, nvar));
+    for (v = CDR(varlist), i = 0; v != R_NilValue; v = CDR(v)) {
+	if (isSymbol(CAR(v)))
+	    SET_STRING_ELT(varnames, i++, PRINTNAME(CAR(v)));
+	else
+	    SET_STRING_ELT(varnames, i++, STRING_ELT(deparse1line(CAR(v), 0), 0));
+    }
+    
     /* Step 2b: Remove any offset(s) */
 
     for (l = response, k = 0; l < nvar; l++)
