@@ -444,6 +444,8 @@ void	R_CleanUp(int);
 void	R_StartUp(void);
 int	R_ShowFile(char*, char*);
 void	R_AppendFile(char*, char*);
+char*	R_HomeDir(void);
+int	R_HiddenFile(char*);
 char*	R_Date(void);
 
 /* Type Coercions of all kinds */

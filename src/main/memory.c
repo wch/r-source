@@ -451,6 +451,45 @@ void gc(void)
 }
 
 
+SEXP do_memoryprofile(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    SEXP ans, nms;
+    int i;
+    unmarkPhase();
+    markPhase();
+    PROTECT(ans = allocVector(INTSXP, 21));
+    PROTECT(nms = allocVector(STRSXP, 21));
+    for (i = 0; i < 21; i++) {
+        STRING(ans)[i] = 0;
+        STRING(nms)[i] = R_BlankString;
+    }
+    STRING(nms)[NILSXP]     = mkChar("NILSXP");
+    STRING(nms)[SYMSXP]     = mkChar("SYMSXP");
+    STRING(nms)[LISTSXP]    = mkChar("LISTSXP");
+    STRING(nms)[CLOSXP]     = mkChar("CLOSXP");
+    STRING(nms)[ENVSXP]     = mkChar("ENVSXP");
+    STRING(nms)[PROMSXP]    = mkChar("PROMSXP");
+    STRING(nms)[LANGSXP]    = mkChar("LANGSXP");
+    STRING(nms)[SPECIALSXP] = mkChar("SPECIALSXP");
+    STRING(nms)[BUILTINSXP] = mkChar("BUILTINSXP");
+    STRING(nms)[CHARSXP]    = mkChar("CHARSXP");
+    STRING(nms)[LGLSXP]     = mkChar("LGLSXP");
+    STRING(nms)[INTSXP]     = mkChar("INTSXP");
+    STRING(nms)[REALSXP]    = mkChar("REALSXP");
+    STRING(nms)[CPLXSXP]    = mkChar("CPLXSXP");
+    STRING(nms)[STRSXP]     = mkChar("STRSXP");
+    STRING(nms)[DOTSXP]     = mkChar("DOTSXP");
+    STRING(nms)[ANYSXP]     = mkChar("ANYSXP");
+    STRING(nms)[VECSXP]     = mkChar("VECSXP");
+    STRING(nms)[EXPRSXP]    = mkChar("EXPRSXP");
+    for (i = 0; i < R_NSize; i++)
+	if(MARK(&R_NHeap[i]))
+            INTEGER(ans)[TYPEOF(&R_NHeap[i])] += 1;
+    setAttrib(ans, R_NamesSymbol, nms);
+    UNPROTECT(2);
+    return ans;
+}
+
 /* "unmarkPhase" reset mark in ALL cons cells */
 
 void unmarkPhase(void)

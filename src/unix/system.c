@@ -858,3 +858,17 @@ int R_ShowFile(char *file, char *title)
     if (system(buf) != 0) return 0;
     else return 1;
 }
+
+char *R_HomeDir()
+{
+	return getenv("RHOME");
+}
+
+/* Unix file names which begin with "." are invisible. */
+/* Macintosh file names which end with "\r" are invisible. */
+
+int R_HiddenFile(char *name)
+{
+    if (name && name[0] != '.') return 0;
+    else return 1;
+}

@@ -330,7 +330,7 @@ SEXP do_makenames(SEXP call, SEXP op, SEXP args, SEXP env)
 #ifndef Macintosh
 #include <sys/types.h>
 #endif
-#include <regex.h>
+#include "regex.h"
 #else
 #define NO_REGEX_ERROR() \
 	errorcall(call, "POSIX regular expressions not available.\nSee " \

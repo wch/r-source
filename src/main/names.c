@@ -489,6 +489,7 @@ FUNTAB R_FunTab[] =
 {"gc",		do_gc,		0,	11,	1,	PP_FUNCALL},
 {"gcinfo",	do_gcinfo,	0,	11,	1,	PP_FUNCALL},
 {"gctorture",	do_gctorture,	0,	11,	1,	PP_FUNCALL},
+{"memory.profile",do_memoryprofile, 0,  1,      0,      PP_FUNCALL},
 {"rep",		do_rep,		0,	11,	2,	PP_FUNCALL},
 {"list",	do_makelist,	1,	1,	-1,	PP_FUNCALL},
 {"split",	do_split,	0,	11,	2,	PP_FUNCALL},
@@ -541,8 +542,10 @@ FUNTAB R_FunTab[] =
 {"show.file",	do_showfile,	0,	111,	2,	PP_FUNCALL},
 {"remove.file",	do_removefile,	0,	111,	1,	PP_FUNCALL},
 {"append.file",	do_appendfile,	0,	111,	2,	PP_FUNCALL},
-{"list.files",  do_listfiles,   0,      11,     1,      PP_FUNCALL},
+{"list.files",  do_listfiles,   0,      11,     3,      PP_FUNCALL},
+{"R.home",	do_Rhome,	0,	11,	0,	PP_FUNCALL},
 {"date",	do_date,	0,	11,	0,	PP_FUNCALL},
+{"Platform",	do_Platform,	0,	11,	0,	PP_FUNCALL},
 
 
 /* Complex Valued Functions */
