@@ -10,6 +10,13 @@
 
 NEW FEATURES
 
+    o	The ``Introduction to R'' manual, in doc/manual.
+
+    o	The format for save/load has been changed. Workspaces and
+	objects saved in earlier versions can be loaded into this
+	version, but not conversely. Use save() or save.image() with
+	argument oldstyle=TRUE to save in the old format if you need to.
+
     o	The header files for C code have been reorganised. The
 	preferred header file for user code is now "R.h", and
 	ancillary files such as Arith.h now need to be referred to
@@ -23,10 +30,10 @@ NEW FEATURES
 
     o	The random number generation interface has changed, although
 	saved .Random.seed's will work unchanged. The default
-	generator is now Marsaglia's multicarry, and the Mersenne Twister
-	and Knuth's Fibonacci subtraction are also available.  The
-	type of normal generation can be selected by RNGkind (and is
-	encoded in .Random.seed).
+	generator is now Marsaglia's multicarry, and the Mersenne
+	Twister GFSR and Knuth's Fibonacci subtraction are also
+	available.  The type of normal generation can be selected by
+	RNGkind() (and is encoded in .Random.seed).
 
 	The new function set.seed() which uses a single integer to set
 	the random number seeds is now the recommended way to do so.
@@ -45,6 +52,8 @@ NEW FEATURES
 
     o	The underlying code for nlm has been translated from Fortran
 	to C and made re-entrant (changes contributed by Saikat DebRoy).
+
+    o	optimize() can now be used recursively.
 
     o	New suite of optimization methods optim(), covering
 	Nelder-Mead, BFGS quasi-Newton and conjugate-gradients methods
@@ -65,8 +74,6 @@ NEW FEATURES
 
     o	New utility `R CMD build' for building add-on packages along
 	with some useful testing and cleaning up.
-
-    o	The ``Introduction to R'' manual.
 
     o	Conversion of .Rd help files to text format is done in Perl,
 	and no longer requires nroff.  This makes the conversion 8-bit
@@ -140,8 +147,6 @@ NEW FEATURES
 	current version of R. New function package.dependencies() for
 	parsing and checking dependencies.
 
-    o	optimize() can now be used recursively.
-
     o	options("expressions") now does something, and the evaluation
 	depth is checked on all platforms (not just Macintosh).
 
@@ -200,11 +205,16 @@ BUG FIXES
     o	system.time() now does sensible things in the non-HAVE_TIMES
 	case, and that and proc.time() have better documentation.
 
-    o	a couple of bugs in the data editor spreadsheet have been
+    o	A couple of bugs in the data editor spreadsheet have been
 	eliminated.
 
     o	Elapsed time in proc.time() is no longer rounded to whole
 	seconds under Unix.
+
+    o	Assigning character vectors to subsets of data frames now
+	works correctly (it used to assign the numeric codes of factors).
+
+    o	Extensive enhancements and corrections to the help pages.
 
 
 		CHANGES IN R VERSION 0.90.1

@@ -48,13 +48,14 @@
 /*	R_PPSSIZE  The pointer protection stack size  */
 /*	R_NSIZE	   The number of cons cells	 */
 /*	R_VSIZE	   The vector heap size in bytes */
-/*  These values are minima and can be overriden in config.h	*/
+/*  These values are defaults and can be overriden in config.h	
+    The maxima and minima are in ../unix/sys-common.c */
 
 #ifndef R_PPSSIZE
 #define	R_PPSSIZE	10000L
 #endif
 #ifndef R_NSIZE
-#define	R_NSIZE		250000L
+#define	R_NSIZE		350000L
 #endif
 #ifndef R_VSIZE
 #define	R_VSIZE		6291456L
@@ -568,7 +569,7 @@ void R_PreserveObject(SEXP);
 void R_ReleaseObject(SEXP);
 void R_RestoreGlobalEnv(void);
 void R_SaveGlobalEnv(void);
-void R_SaveToFile(SEXP, FILE*, int);
+void R_SaveToFile(SEXP, FILE*, int, int);
 int R_SetOptionWarn(int);
 int R_SetOptionWidth(int);
 void R_Suicide(char*);

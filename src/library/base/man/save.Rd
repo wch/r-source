@@ -1,8 +1,8 @@
 \name{save}
 \title{Save R Objects}
 \usage{
-save(\dots, list = character(0), file = "", ascii = FALSE)
-save.image()
+save(\dots, list = character(0), file = "", ascii = FALSE, oldstyle = FALSE)
+save.image(file = ".Rdata", oldstyle = FALSE)
 }
 \alias{save}
 \alias{save.image}
@@ -15,6 +15,7 @@ save.image()
     written.  This is useful for transporting data between machines of
     different types.  The default value of \code{ascii} is \code{FALSE}
     which leads to a more compact binary file being written.}
+  \item{oldstyle}{logical. Should the old (0.90.1 or earlier) format be used?}
 }
 \description{
   \code{save} writes a external representation of \R objects to the
@@ -23,7 +24,7 @@ save.image()
 
   \code{save.image()} is just a short-cut for ``save my current
   environment'',
-  i.e., \code{save(list = ls(), file = ".RData")}. It is what also
+  i.e., \code{save(list = ls(all=T), file = ".RData")}. It is what also
   happens with \code{\link{q}("yes")}.
 }
 \seealso{

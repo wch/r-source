@@ -19,7 +19,7 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#undef USE_NEW_SAVE_FORMAT
+#define USE_NEW_SAVE_FORMAT
 
 #ifdef HAVE_CONFIG_H
 #include <config.h>
@@ -1344,7 +1344,7 @@ static void NewWriteItem (SEXP s, SEXP sym_list, SEXP env_list, FILE *fp)
  *  symbols or environments are encountered, references to them are
  *  made instead of writing them out totally.  */
 
-void NewDataSave (SEXP s, FILE *fp)
+static void NewDataSave (SEXP s, FILE *fp)
 {
     SEXP the_sym_list = R_NilValue, the_env_list = R_NilValue, iterator;
     int sym_count, env_count;
@@ -1479,7 +1479,7 @@ static SEXP NewReadItem (SEXP sym_table, SEXP env_table, FILE *fp)
     return s;
 }
 
-SEXP NewDataLoad (FILE *fp)
+static SEXP NewDataLoad (FILE *fp)
 {
     int sym_count, env_count, count;
     SEXP sym_table, env_table, obj;
@@ -1769,7 +1769,7 @@ static Rcomplex InComplexBinary(FILE * fp)
     return x;
 }
 
-void NewBinarySave(SEXP s, FILE *fp)
+static void NewBinarySave(SEXP s, FILE *fp)
 {
     OutInit = DummyInit;
     OutInteger = OutIntegerBinary;
@@ -1782,7 +1782,7 @@ void NewBinarySave(SEXP s, FILE *fp)
     NewDataSave(s, fp);
 }
 
-SEXP NewBinaryLoad(FILE *fp)
+static SEXP NewBinaryLoad(FILE *fp)
 {
     VersionId = 0;
     InInit = DummyInit;
@@ -1975,35 +1975,34 @@ static int R_ReadMagic(FILE *fp)
 
 /* ----- E x t e r n a l -- I n t e r f a c e s ----- */
 
-void R_SaveToFile(SEXP obj, FILE *fp, int ascii)
+void R_SaveToFile(SEXP obj, FILE *fp, int ascii, int oldstyle)
 {
-#ifdef USE_NEW_SAVE_FORMAT
-    if (ascii) {
-	R_WriteMagic(fp, R_MAGIC_ASCII_V1);
-	NewAsciiSave(obj, fp);
-    }
-    else {
+    if (!oldstyle) {
+	if (ascii) {
+	    R_WriteMagic(fp, R_MAGIC_ASCII_V1);
+	    NewAsciiSave(obj, fp);
+	} else {
 #ifdef HAVE_RPC_XDR_H
-	R_WriteMagic(fp, R_MAGIC_XDR_V1);
-	NewXdrSave(obj, fp);
+	    R_WriteMagic(fp, R_MAGIC_XDR_V1);
+	    NewXdrSave(obj, fp);
 #else
-	R_WriteMagic(fp, R_MAGIC_BINARY_V1);
-	NewBinarySave(obj, fp);
+	    R_WriteMagic(fp, R_MAGIC_BINARY_V1);
+	    NewBinarySave(obj, fp);
 #endif
-#else
-    if (ascii) {
-	R_WriteMagic(fp, R_MAGIC_ASCII);
-	AsciiSave(obj, fp);
-    }
-    else {
+	}
+    } else {
+	if (ascii) {
+	    R_WriteMagic(fp, R_MAGIC_ASCII);
+	    AsciiSave(obj, fp);
+	} else {
 #ifdef HAVE_RPC_XDR_H
-	R_WriteMagic(fp, R_MAGIC_XDR);
-	XdrSave(obj, fp);
+	    R_WriteMagic(fp, R_MAGIC_XDR);
+	    XdrSave(obj, fp);
 #else
-	R_WriteMagic(fp, R_MAGIC_BINARY);
-	BinarySave(obj, fp);
+	    R_WriteMagic(fp, R_MAGIC_BINARY);
+	    BinarySave(obj, fp);
 #endif
-#endif
+	}
     }
 }
 
@@ -2055,6 +2054,8 @@ SEXP do_save(SEXP call, SEXP op, SEXP args, SEXP env)
 	errorcall(call, "second argument must be a string");
     if (TYPEOF(CADDR(args)) != LGLSXP)
 	errorcall(call, "third argument must be a logical vector");
+    if (TYPEOF(CADDDR(args)) != LGLSXP)
+	errorcall(call, "fourth argument must be a logical vector");
 
     fp = R_fopen(R_ExpandFileName(CHAR(STRING(CADR(args))[0])), "wb");
     if (!fp)
@@ -2071,7 +2072,7 @@ SEXP do_save(SEXP call, SEXP op, SEXP args, SEXP env)
 	    error("Object \"%s\" not found", CHAR(PRINTNAME(TAG(t))));
     }
 
-    R_SaveToFile(s, fp, INTEGER(CADDR(args))[0]);
+    R_SaveToFile(s, fp, INTEGER(CADDR(args))[0], INTEGER(CADDDR(args))[0]);
 
     UNPROTECT(1);
     fclose(fp);

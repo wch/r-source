@@ -513,7 +513,7 @@ FUNTAB R_FunTab[] =
 {"winMenuDel",  do_winmenudel, 0,      11,     2,      PP_FUNCALL},
 #endif
 {"parse",	do_parse,	0,	11,	4,	PP_FUNCALL},
-{"save",	do_save,	0,	111,	3,	PP_FUNCALL},
+{"save",	do_save,	0,	111,	4,	PP_FUNCALL},
 {"load",	do_load,	0,	111,	2,	PP_FUNCALL},
 {"hdf5save",	do_hdf5save,	0,	0,	-1,	PP_FUNCALL},
 {"hdf5load",	do_hdf5load,	0,	11,	 2,	PP_FUNCALL},
