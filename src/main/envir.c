@@ -533,7 +533,7 @@ static SEXP R_GetGlobalCache(SEXP symbol)
   case LISTSXP:
     return CAR(vl);
   default:
-    error("ilegal cached value");
+    error("illegal cached value");
     return R_NilValue;
   }
 }
