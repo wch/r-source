@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2004
-@set FAQ-VERSION 2.0.@value{FAQ-YEAR}-11-03
+@set FAQ-VERSION 2.0.@value{FAQ-YEAR}-11-09
 @set REL-VERSION 2.0.0
 @set REL-YEAR 2004
 @c <COMMENT>
@@ -2098,6 +2098,8 @@ right censored data.
 E-statistics (energy) tests for comparing distributions: multivariate
 normality, Poisson test, multivariate @math{k}-sample test for equal
 distributions, hierarchical clustering by e-distances.
+@item epitools
+Basic tools for applied epidemiology.
 @item epsi
 Edge Preserving Smoothing for Images.
 @item evd
