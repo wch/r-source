@@ -15,7 +15,7 @@
 }
 \usage{
 grep(pattern, x, ignore.case = FALSE, extended = TRUE, perl = FALSE,
-     value = FALSE, fixed = FALSE)
+     value = FALSE, fixed = FALSE, useBytes = FALSE)
 
 sub(pattern, replacement, x,
     ignore.case = FALSE, extended = TRUE, perl = FALSE, fixed = FALSE)
@@ -23,7 +23,8 @@ sub(pattern, replacement, x,
 gsub(pattern, replacement, x,
      ignore.case = FALSE, extended = TRUE, perl = FALSE, fixed = FALSE)
 
-regexpr(pattern, text, extended = TRUE, perl = FALSE, fixed = FALSE)
+regexpr(pattern, text, extended = TRUE, perl = FALSE, fixed = FALSE,
+        useBytes = FALSE)
 }
 \arguments{
   \item{pattern}{character string containing a \link{regular expression}
@@ -42,6 +43,8 @@ regexpr(pattern, text, extended = TRUE, perl = FALSE, fixed = FALSE)
     returned.}
   \item{fixed}{logical.  If \code{TRUE}, \code{pattern} is a string to be
     matched as is.  Overrides all other arguments.}
+  \item{useBytes}{logical.  If \code{TRUE} the matching is done
+    byte-by-byte rather than character-by-character.  See Details.}
   \item{replacement}{a replacement for matched pattern in \code{sub} and
     \code{gsub}.}
 }
@@ -63,6 +66,11 @@ regexpr(pattern, text, extended = TRUE, perl = FALSE, fixed = FALSE)
   \url{ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/}.
   (The exact set of patterns supported may depend on the version of
   PCRE installed on the system in use.)
+
+  \code{useBytes} is only used if \code{fixed = TRUE} or \code{perl = TRUE}.
+  For \code{grep} its main effect is to avoid errors/warnings about
+  invalid inputs, but for \code{regexpr} it changes the interpretation
+  of the output.
 }
 \value{
   For \code{grep} a vector giving either the indices of the elements of
@@ -76,10 +84,14 @@ regexpr(pattern, text, extended = TRUE, perl = FALSE, fixed = FALSE)
   giving the starting position of the first match, or \eqn{-1} if there
   is none, with attribute \code{"match.length"} giving the length of the
   matched text (or \eqn{-1} for no match).  In a multi-byte locale these
-  quantities are in characters rather than bytes.
+  quantities are in characters rather than bytes unless
+  \code{useBytes = TRUE} is used with \code{fixed = TRUE} or
+  \code{perl = TRUE}.
 
-  If in a multi-byte locale any part of the input is invalid,
-  an error is thrown.
+  If in a multi-byte locale the pattern or replacement is not a valid
+  sequence of bytes, an error is thrown.  An invalid string in \code{x}
+  or \code{text} is a non-match with a warning for \code{grep} or
+  \code{regexpr}, but an error for \code{sub} or \code{gsub}.
 }
 \section{Warning}{
   The standard regular-expression code has been reported to be very slow
@@ -88,7 +100,11 @@ regexpr(pattern, text, extended = TRUE, perl = FALSE, fixed = FALSE)
   \code{perl = TRUE} seems much faster and more reliable for such usages.
 
   The \code{perl = TRUE} option is only implemented for single-byte and
-  UTF-8 encodings, and will warn if used in a non-UTF-8 multi-byte locale.
+  UTF-8 encodings, and will warn if used in a non-UTF-8 multi-byte
+  locale (unless \code{useBytes = FALSE}).
+
+  The \code{fixed = TRUE} code could come up with accidental mis-matches
+  in a non-UTF-8 multi-byte locale.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

@@ -832,7 +832,7 @@ SEXP do_grep(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP pat, vec, ind, ans;
     regex_t reg;
     int i, j, n, nmatches;
-    int igcase_opt, extended_opt, value_opt, fixed_opt, eflags;
+    int igcase_opt, extended_opt, value_opt, fixed_opt, useBytes, eflags;
 
     checkArity(op, args);
     pat = CAR(args); args = CDR(args);
@@ -845,12 +845,14 @@ SEXP do_grep(SEXP call, SEXP op, SEXP args, SEXP env)
     if (extended_opt == NA_INTEGER) extended_opt = 1;
     if (value_opt == NA_INTEGER) value_opt = 0;
     if (fixed_opt == NA_INTEGER) fixed_opt = 0;
+    useBytes = asLogical(CAR(args)); args = CDR(args);
+    if (useBytes == NA_INTEGER || !fixed_opt) useBytes = 0;
 
     if (!isString(pat) || length(pat) < 1 || !isString(vec))
 	errorcall(call, R_MSG_IA);
 
 #ifdef SUPPORT_MBCS
-    if(mbcslocale && !mbcsValid(CHAR(STRING_ELT(pat, 0))))
+    if(!useBytes && mbcslocale && !mbcsValid(CHAR(STRING_ELT(pat, 0))))
 	errorcall(call, _("regular expression is invalid in this locale"));
 #endif
     n = length(vec);
@@ -880,10 +882,13 @@ SEXP do_grep(SEXP call, SEXP op, SEXP args, SEXP env)
 	    LOGICAL(ind)[i] = 0;
 	    if (STRING_ELT(vec, i) != NA_STRING) {
 #ifdef SUPPORT_MBCS
-		if(mbcslocale && !mbcsValid(CHAR(STRING_ELT(vec, i))))
-		    errorcall(call, 
-			      _("input string %d is invalid in this locale"),
-			      i+1);
+		if(!useBytes && mbcslocale && 
+		   !mbcsValid(CHAR(STRING_ELT(vec, i)))) {
+		    warningcall(call, 
+				_("input string %d is invalid in this locale"),
+				i+1);
+		    continue;
+		}
 #endif
 		if (fixed_opt) LOGICAL(ind)[i] =
 				   fgrep_one(CHAR(STRING_ELT(pat, 0)),
@@ -1147,7 +1152,7 @@ SEXP do_regexpr(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP pat, text, ans, matchlen;
     regex_t reg;
     regmatch_t regmatch[10];
-    int i, n, st, extended_opt, fixed_opt, eflags;
+    int i, n, st, extended_opt, fixed_opt, useBytes, eflags;
     char *spat = NULL; /* -Wall */
 
     checkArity(op, args);
@@ -1157,6 +1162,8 @@ SEXP do_regexpr(SEXP call, SEXP op, SEXP args, SEXP env)
     if (extended_opt == NA_INTEGER) extended_opt = 1;
     fixed_opt = asLogical(CAR(args));
     if (fixed_opt == NA_INTEGER) fixed_opt = 0;
+    useBytes = asLogical(CAR(args)); args = CDR(args);
+    if (useBytes == NA_INTEGER || !fixed_opt) useBytes = 0;
 
     if (length(pat) < 1 || length(text) < 1 ||
 	STRING_ELT(pat,0) == NA_STRING)
@@ -1170,7 +1177,7 @@ SEXP do_regexpr(SEXP call, SEXP op, SEXP args, SEXP env)
     eflags = extended_opt ? REG_EXTENDED : 0;
 
 #ifdef SUPPORT_MBCS
-    if(mbcslocale && !mbcsValid(CHAR(STRING_ELT(pat, 0))))
+    if(!useBytes && mbcslocale && !mbcsValid(CHAR(STRING_ELT(pat, 0))))
 	errorcall(call, _("regular expression is invalid in this locale"));
 #endif
     if (!fixed_opt && regcomp(&reg, CHAR(STRING_ELT(pat, 0)), eflags))
@@ -1186,19 +1193,32 @@ SEXP do_regexpr(SEXP call, SEXP op, SEXP args, SEXP env)
 	    INTEGER(matchlen)[i] = INTEGER(ans)[i] = R_NaInt;
 	} else {
 #ifdef SUPPORT_MBCS
-	    if(mbcslocale && !mbcsValid(CHAR(STRING_ELT(text, i))))
-		errorcall(call,
-			  _("input string %d is invalid in this locale"), 
-			  i+1);
+	    if(!useBytes && mbcslocale &&
+	       !mbcsValid(CHAR(STRING_ELT(text, i)))) {
+		warningcall(call,
+			    _("input string %d is invalid in this locale"), 
+			    i+1);
+		INTEGER(ans)[i] = INTEGER(matchlen)[i] = -1;
+		continue;
+	    }
 #endif
 	    if (fixed_opt) {
 		st = fgrep_one(spat, CHAR(STRING_ELT(text, i)));
-		INTEGER(ans)[i] = (st > -1)?(st +1):-1;
+		INTEGER(ans)[i] = (st > -1)?(st+1):-1;
 #ifdef SUPPORT_MBCS
-		if(mbcslocale)
+		if(!useBytes && mbcslocale) {
 		    INTEGER(matchlen)[i] = INTEGER(ans)[i] >= 0 ?
 			mbstowcs(NULL, spat, 0):-1;
-		else
+		    /* We need the match position in chars not bytes */
+		    if(st > 0) {
+			AllocBuffer(st);
+			memcpy(cbuff.data, CHAR(STRING_ELT(text, i)), st);
+			cbuff.data[st] = '\0';
+			INTEGER(ans)[i] = 1+mbstowcs(NULL, cbuff.data, 0);
+			if(INTEGER(ans)[i] <= 0) /* an invalid string */
+			    INTEGER(ans)[i] = NA_INTEGER;
+		    }
+		} else
 #endif
 		    INTEGER(matchlen)[i] = INTEGER(ans)[i] >= 0 ?
 			strlen(spat):-1;

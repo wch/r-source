@@ -1,6 +1,6 @@
 grep <-
 function(pattern, x, ignore.case = FALSE, extended = TRUE, perl = FALSE,
-         value = FALSE, fixed = FALSE)
+         value = FALSE, fixed = FALSE, useBytes = FALSE)
 {
   ## behaves like == for NA pattern
   if (is.na(pattern)){
@@ -11,9 +11,9 @@ function(pattern, x, ignore.case = FALSE, extended = TRUE, perl = FALSE,
   }
 
   if(perl)
-    .Internal(grep.perl(pattern, x, ignore.case, value))
+    .Internal(grep.perl(pattern, x, ignore.case, value, useBytes))
   else
-    .Internal(grep(pattern, x, ignore.case, extended, value, fixed))
+    .Internal(grep(pattern, x, ignore.case, extended, value, fixed, useBytes))
 }
 
 sub <-
@@ -45,12 +45,13 @@ function(pattern, replacement, x, ignore.case = FALSE, extended = TRUE,
 }
 
 regexpr <-
-function(pattern, text, extended = TRUE, perl = FALSE, fixed = FALSE)
+function(pattern, text, extended = TRUE, perl = FALSE,
+         fixed = FALSE, useBytes = FALSE)
 {
     if(perl)
-        .Internal(regexpr.perl(pattern, text))
+        .Internal(regexpr.perl(pattern, text, useBytes))
     else
-        .Internal(regexpr(pattern, text, extended, fixed))
+        .Internal(regexpr(pattern, text, extended, fixed, useBytes))
 }
 
 agrep <-

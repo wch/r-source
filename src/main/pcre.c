@@ -51,7 +51,7 @@ SEXP do_pgrep(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP pat, vec, ind, ans;
     int i, j, n, nmatches;
-    int igcase_opt, value_opt, erroffset;
+    int igcase_opt, value_opt, useBytes, erroffset;
     int options = 0;
     const char *errorptr;
     pcre *re_pcre;
@@ -64,6 +64,8 @@ SEXP do_pgrep(SEXP call, SEXP op, SEXP args, SEXP env)
     value_opt = asLogical(CAR(args)); args = CDR(args);
     if (igcase_opt == NA_INTEGER) igcase_opt = 0;
     if (value_opt == NA_INTEGER) value_opt = 0;
+    useBytes = asLogical(CAR(args)); args = CDR(args);
+    if (useBytes == NA_INTEGER) useBytes = 0;
 
 
     if (!isString(pat) || length(pat) < 1 || !isString(vec))
@@ -103,10 +105,11 @@ SEXP do_pgrep(SEXP call, SEXP op, SEXP args, SEXP env)
     /* end NA pattern handling */
 
 #ifdef SUPPORT_UTF8
-    if(utf8locale) options = PCRE_UTF8;
+    if(useBytes) ;
+    else if(utf8locale) options = PCRE_UTF8;
     else if(mbcslocale)
 	warning(_("perl = TRUE is only fully implemented in UTF-8 locales"));
-    if(mbcslocale && !mbcsValid(CHAR(STRING_ELT(pat, 0))))
+    if(!useBytes && mbcslocale && !mbcsValid(CHAR(STRING_ELT(pat, 0))))
 	errorcall(call, _("regular expression is invalid in this locale"));
 #endif
     if (igcase_opt) options |= PCRE_CASELESS;
@@ -128,9 +131,11 @@ SEXP do_pgrep(SEXP call, SEXP op, SEXP args, SEXP env)
 	    continue;
 	}
 #ifdef SUPPORT_UTF8
-	if(mbcslocale && !mbcsValid(CHAR(STRING_ELT(vec, i))))
-	    errorcall(call, _("input string %d is invalid in this locale"),
-		      i+1);
+	if(!useBytes && mbcslocale && !mbcsValid(CHAR(STRING_ELT(vec, i)))) {
+	    warningcall(call, _("input string %d is invalid in this locale"),
+			i+1);
+	    continue;
+	}
 #endif
 	rc = pcre_exec(re_pcre, NULL, s, strlen(s), 0, 0, &ovector, 0);
 	if (rc >= 0) {
@@ -291,9 +296,10 @@ SEXP do_pgsub(SEXP call, SEXP op, SEXP args, SEXP env)
 	nns = ns = strlen(s);
 
 #ifdef SUPPORT_UTF8
-	if(mbcslocale && !mbcsValid(s))
+	if(mbcslocale && !mbcsValid(s)) {
 	    errorcall(call, _("input string %d is invalid in this locale"),
 		      i+1);
+	}
 #endif
 	while (pcre_exec(re_pcre, re_pe, s+offset, nns-offset, 0, 0, 
 			 ovector, 30) >= 0) {
@@ -342,7 +348,7 @@ SEXP do_pregexpr(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP pat, text, ans, matchlen;
     int i, n, st, erroffset;
-    int options = 0;
+    int options = 0, useBytes;
     const char *errorptr;
     pcre *re_pcre;
     const unsigned char *tables;
@@ -350,19 +356,22 @@ SEXP do_pregexpr(SEXP call, SEXP op, SEXP args, SEXP env)
     checkArity(op, args);
     pat = CAR(args); args = CDR(args);
     text = CAR(args); args = CDR(args);
+    useBytes = asLogical(CAR(args)); args = CDR(args);
+    if (useBytes == NA_INTEGER) useBytes = 0;
 
     if (!isString(pat) || length(pat) < 1 ||
 	!isString(text) || length(text) < 1 )
 	errorcall(call, R_MSG_IA);
 
 #ifdef SUPPORT_UTF8
-    if(utf8locale) options = PCRE_UTF8;
+    if(useBytes) ;
+    else if(utf8locale) options = PCRE_UTF8;
     else if(mbcslocale)
 	warning(_("perl = TRUE is only fully implemented in UTF-8 locales"));
 #endif
 
 #ifdef SUPPORT_UTF8
-    if(mbcslocale && !mbcsValid(CHAR(STRING_ELT(pat, 0))))
+    if(!useBytes && mbcslocale && !mbcsValid(CHAR(STRING_ELT(pat, 0))))
 	errorcall(call, _("regular expression is invalid in this locale"));
 #endif
     tables = pcre_maketables();
@@ -382,16 +391,19 @@ SEXP do_pregexpr(SEXP call, SEXP op, SEXP args, SEXP env)
 	    continue;
 	}
 #ifdef SUPPORT_UTF8
-	if(mbcslocale && !mbcsValid(CHAR(STRING_ELT(text, i))))
-	    errorcall(call, _("input string %d is invalid in this locale"),
-		      i+1);
+	if(!useBytes && mbcslocale && !mbcsValid(CHAR(STRING_ELT(text, i))))
+	    warningcall(call, _("input string %d is invalid in this locale"),
+			i+1);
+	    INTEGER(ans)[i] = INTEGER(matchlen)[i] = -1;
+	    continue;
+	}
 #endif
 	rc = pcre_exec(re_pcre, NULL, s, strlen(s), 0, 0, ovector, 3);
 	if (rc >= 0) {
 	    st = ovector[0];
 	    INTEGER(ans)[i] = st + 1; /* index from one */
 	    INTEGER(matchlen)[i] = ovector[1] - st;
-	    if(mbcslocale) {
+	    if(!useBytes && mbcslocale) {
 		char *buff;
 		int mlen = ovector[1] - st;
 		/* Unfortunately these are in bytes, so we need to
