@@ -24,5 +24,6 @@ TOOLS_DIR=`echo ${0} | sed 's%/[^/][^/]*$%%'`
   echo "#define R_YEAR   \"${y}\""
   echo "#define R_MONTH  \"${m}\""
   echo "#define R_DAY    \"${d}\""
+  echo "#define R_FILEVERSION    ${maj},${pl},${sl},0"
   echo "#endif /* not R_VERSION_H */")
     

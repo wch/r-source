@@ -41,6 +41,9 @@ but can be made from the sources.
 Rcmd check has been changed to be more robust to reported problems with
 Perl's system() command.
 
+File version information should now appears on Windows 2000 Version
+tab under Properties.
+
 
 
 rw1023
