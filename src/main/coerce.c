@@ -1086,6 +1086,8 @@ static SEXP coerceToExpression(SEXP v)
 			break;
 		}
 	}
+#if 0
+/* This code believed to be WRONG */
 	else if(TYPEOF(v) == LANGSXP) {
 		n = length(v);
 		PROTECT(ans = allocVector(EXPRSXP, n));
@@ -1095,6 +1097,7 @@ static SEXP coerceToExpression(SEXP v)
 			tmp = CDR(tmp);
 		}
 	}
+#endif
 	else {
 		PROTECT(ans = allocVector(EXPRSXP, 1));
 		VECTOR(ans)[0] = duplicate(v);

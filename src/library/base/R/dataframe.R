@@ -220,7 +220,7 @@ data.frame <- function(..., row.names = NULL, check.rows = FALSE, check.names = 
 	new
       else current
     }
-  object <- as.expression(substitute(list(...)))[-1]
+  object <- as.list(substitute(list(...)))[-1]
   x <- list(...)
   n <- length(x)
   if(n < 1)
