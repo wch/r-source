@@ -40,6 +40,11 @@ NEW FEATURES
     o	Sd2Rd can handle S4-style documentation too: see `Writing R
 	Extensions'.
 
+    o	stars() now uses a larger "cex" for the labels, and cex and lwd 
+	are now arguments. Further, the argument names (xlim, ylim,
+	axes) are now consistent with other plot functions.  The key symbol
+	is not clipped anymore into the plot region by default.
+
 
 BUG FIXES
     
@@ -104,7 +109,7 @@ BUG FIXES
 
 	Avoid NaN values where n = 0 occurs.
 
-    o   Using non-integer numbers of successes in a binomial glm
+    o	Using non-integer numbers of successes in a binomial glm
 	(as formerly in demo(lm.glm)) now gives a warning, as the
 	theory and in particular the AIC value is not applicable.
 
@@ -113,14 +118,14 @@ BUG FIXES
     o	persp(*, nticks = nn) now works (better) for too small nn.
 	persp(*, main = t1, sub= t2) now work (as always documented).
 
-    o   Printing of attributes of a list element no longer precedes
+    o	Printing of attributes of a list element no longer precedes
 	`attr' by the tag (PR#715).
 
-    o   It is no longer possible to use df[foo] to select non-existent
+    o	It is no longer possible to use df[foo] to select non-existent
 	columns in df and so create an invalid object of class
 	"data.frame" (PR#698).
 
-    o   edit.data.frame() was trying to set row.names on a list, which
+    o	edit.data.frame() was trying to set row.names on a list, which
 	is no longer allowed.
 
     o	In the \link[pkg]{topic}, `pkg' was not being used if `topic'
@@ -340,8 +345,8 @@ NEW FEATURES
     o	New readLines() function to read a file line-by-line.
 
     o	New functions reshapeLong() and reshapeWide() emulating Stata's
-        reshape command. These are still labeled experimental and
-        might be improved (or removed) in later versions.
+	reshape command. These are still labeled experimental and
+	might be improved (or removed) in later versions.
 
     o	row.names() and row.names<-() are now generic functions which
 	call rownames() as their default method and have methods for
@@ -440,8 +445,8 @@ NEW FEATURES
     o	The R Language Manual (`R-lang.texi') is now included and built
 	in the same way as the other manuals.
 
-    o   The R manuals (R-intro, R-exts, ...) are converted to HTML
-        format (if the necessary texinfo tools are available) and
+    o	The R manuals (R-intro, R-exts, ...) are converted to HTML
+	format (if the necessary texinfo tools are available) and
 	linked into the top HTML help page.
 
     o	The header file `R.h' and those included from it are now usable
@@ -554,8 +559,8 @@ BUG FIXES
 
     o	glm() now follows lm() in dropping unused factor levels when fitting.
 
-    o   hist() now labels y-axis Density rather than Relative Frequency
-        if freq=FALSE. The `intensities' component of the result is
+    o	hist() now labels y-axis Density rather than Relative Frequency
+	if freq=FALSE. The `intensities' component of the result is
 	now deprecated and `density' should be used instead. 
 
     o	hsv() truncation bug fixed (hopefully correctly this time...)
@@ -588,16 +593,16 @@ BUG FIXES
 
     o	pairs() now obeys an "cex = " argument, and so does panel.smooth().
 
-    o   pf() had a bug in the code handling large noncentrality
-        parameters, going all the way back to the original Appl.Stat.
+    o	pf() had a bug in the code handling large noncentrality
+	parameters, going all the way back to the original Appl.Stat.
 	algorithm (PR#752). This affected pbeta() as well.
 
     o	phantom(expr) in plotmath was used to calculate the bounding
 	boxes, but the space was not actually used in typesetting the 
 	expression (PR#622).
 
-    o   Problem with subsetting and "..." arguments in plot.formula()
-        (PR#757)
+    o	Problem with subsetting and "..." arguments in plot.formula()
+	(PR#757)
 
     o	plot.lm() has a better default for its `ask' argument.
 
@@ -711,7 +716,7 @@ BUG FIXES
     o	R CMD Rd2dvi now again works with file names containing "_" or "$".
 
     o	R CMD Rdconv now handles .rd as input file extension correctly
-        in all cases.
+	in all cases.
 
     o	make install could fail if there were no shared libraries to
 	install (e.g. on vanilla Solaris).
@@ -724,8 +729,8 @@ BUG FIXES
     o	NA || x , NA && y (etc) do not give errors anymore, but work as
 	the "|" and "&" operators and as documented (PR#749).
 
-    o   Coercing lists to functions failed if argument list was empty.
-        (PR#743). Also coercing functions to lists was wrong when the
+    o	Coercing lists to functions failed if argument list was empty.
+	(PR#743). Also coercing functions to lists was wrong when the
 	body was a single constant.
 
 
