@@ -22,6 +22,9 @@ BUG FIXES
 
     o	predict.mlm ignored newdata (PR#1226) and also offsets.
 
+    o   demo(tkttest) was inadvertently changed in 1.4.0 so that it would
+	evaluate the requested test, but not display the result.
+
 
 
 		CHANGES IN R VERSION 1.4.0
