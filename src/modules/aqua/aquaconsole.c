@@ -1296,7 +1296,7 @@ int NewHelpWindow(char *fileName, char *title, char *WinTitle)
     TXNControlData tabdata;
     TXNBackground RBGInfo;   
     TXNTypeAttributes	typeAttr;
-  
+    
                           
     frameOptions = kTXNShowWindowMask|kTXNDoNotInstallDragProcsMask|kTXNDrawGrowIconMask; 
     frameOptions |= kTXNWantHScrollBarMask | kTXNWantVScrollBarMask | kTXNReadOnlyMask;
@@ -1310,7 +1310,6 @@ int NewHelpWindow(char *fileName, char *title, char *WinTitle)
     InstallStandardEventHandler( GetWindowEventTarget(HelpWindow));
     CopyCStringToPascal(WinTitle,Title);
     SetWTitle(HelpWindow, Title);
-
 
     err = FSPathMakeFSSpec(fileName, &fsspec, &isDirectory);
     if(err != noErr)
@@ -1328,6 +1327,7 @@ int NewHelpWindow(char *fileName, char *title, char *WinTitle)
         if(err != noErr)
           goto fail;
     }
+    
     
     err = TXNNewObject(&fsspec, HelpWindow, NULL, frameOptions, kTXNTextEditStyleFrameType,
                             fileInfo.fdType, kTXNSystemDefaultEncoding, &RHelpObject,

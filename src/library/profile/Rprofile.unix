@@ -13,7 +13,8 @@ options(pager = file.path(R.home(), "bin", "pager"))
 options(pdfviewer = as.vector(Sys.getenv("R_PDFVIEWER")))
 if(interactive() && Sys.getenv("DISPLAY") != "") {
     options(device = switch(.Platform$GUI, "Tk" = "X11",
-            "X11" = "X11", "GNOME" = "gtk", "postscript"))
+            "X11" = "X11", "GNOME" = "gtk", "AQUA" = quartz,
+            "postscript"))
 } else options(device = "postscript")
 ## this must be set for x11 to be used, even non-interactively
 options(X11colortype = "true")
