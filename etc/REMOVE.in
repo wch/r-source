@@ -31,13 +31,11 @@ else
     exit 1
 fi
 
-NO_PERL5="@NO_PERL5@"
+NO_PERL5=@NO_PERL5@
 
-if [ "$NO_PERL5" ]
-then
-    echo "*** Cannot update the files"
-    echo "***    ${RHOME}/doc/html/packages.html"
-    echo "***    ${RHOME}/doc/html/function.html"
+if ${NO_PERL5}; then
+    echo "*** Cannot update the file"
+    echo "***    ${RHOME}/library/index.html"
     echo "*** without perl, version 5. Please remove the entry for"
     echo "*** package \`${pkg}' manually."
 
@@ -45,4 +43,3 @@ then
 fi
 
 $RHOME/etc/build-help --htmllists
-
