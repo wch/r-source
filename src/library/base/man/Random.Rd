@@ -35,9 +35,8 @@
   ``Randomize''.  Hence, student exercises will each have different
   simulation results, by default.
 }
-\seealso{
-  \code{\link{runif}}, \code{\link{rnorm}}, \ldots.
-}
+\seealso{\code{\link{runif}}, \code{\link{rnorm}}, \ldots.}
+%	this is ./Uniform.Rd
 \examples{
 runif(1); .Random.seed; runif(1); .Random.seed
 ## If there is no seed,  a ``random'' new one is created:
