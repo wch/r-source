@@ -97,10 +97,6 @@ Date: Wed, 22 Dec 1999 10:05:48 +0100 (MET)
 Subject: coredump with plot(x,y,pch="+",cex=2.2)
 From: Rashid Nassar <rnassar@duke.edu>
 Date: Sun, 26 Dec 1999 18:14:10 -0500 (EST)
-* PR# 390 *
-Subject: axis for small ranges
-From: Andreas Weingessel <Andreas.Weingessel@ci.tuwien.ac.at>
-Date: Tue, 28 Dec 1999 13:28:01 +0100
 * PR# 400 *
 Subject: X11 troubles
 From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
@@ -109,22 +105,10 @@ Date: 13 Jan 2000 14:31:42 +0100
 Subject:  graphics bugs: steep slopes and large values beyond ylim 
 From: Ben Bolker <bolker@zoo.ufl.edu>
 Date: Mon, 7 Feb 2000 18:28:04 -0500
-* PR# 442 *
-Subject:  rug() extends axes instead of clipping 
-From: Berwin Turlach <berwin@maths.uwa.edu.au>
-Date: Wed, 16 Feb 2000 17:37:52 +0800
-* PR# 446 *
-Subject: Axis mishandling missing values
-From: murdoch@stats.uwo.ca
-Date: Wed, 16 Feb 2000 22:35:05 +0100 (MET)
 
 Directory:  In-Out
 
-* PR# 129 *
-Subject: Formatting in formatC and format
-From: Prof Brian D Ripley <ripley@stats.ox.ac.uk>
-Date: Sun, 28 Feb 1999 08:53:34 +0000 (GMT)
---Documentation and ``merge'' of format() and formatC() would be desired - MM
+none
 
 Directory:  Installation
 
@@ -143,14 +127,11 @@ Date: 06 Feb 2000 01:18:50 +0100
 
 Directory:  Low-level
 
-* PR# 343 *
-Subject: rbind invisible return value
-From: Thomas Lumley <thomas@biostat.washington.edu>
-Date: Wed, 24 Nov 1999 11:34:10 -0800 (PST)
 * PR# 386 *
 Subject: as.matrix.data.frame() modifies content of character columns
 From: "=?iso-8859-1?Q?Jens_Oehlschl=E4gel-Akiyoshi?=" <jens.oehlschlaegel-akiyoshi@mdfactory.de>
 Date: Wed, 22 Dec 1999 16:18:19 +0100
+--Now a (small) warning on the help page for format that " is escaped to \"
 * PR# 388 *
 Subject: data.frame(I(matrix)) ?
 From: "=?iso-8859-1?Q?Jens_Oehlschl=E4gel-Akiyoshi?=" <jens.oehlschlaegel-akiyoshi@mdfactory.de>
@@ -159,11 +140,6 @@ Date: Thu, 23 Dec 1999 19:12:58 +0100
 Subject: Segfault in dataentry()
 From: Peter Dalgaard BSA <p.dalgaard@pubhealth.ku.dk>
 Date: 29 Dec 1999 11:59:50 +0100
-* PR# 407 *
-Subject: NA not printed after table
-From: Andreas Weingessel <Andreas.Weingessel@ci.tuwien.ac.at>
-Date: Thu, 27 Jan 2000 18:47:38 +0100
---print.table sets na.print, and that persists.
 
 Directory:  Misc
 
@@ -209,4 +185,11 @@ none
 
 Directory:  incoming
 
-none
+* PR# 452 *
+Subject: problem with glm
+From: Brad McNeney <mcneney@cs.sfu.ca>
+Date: Fri, 18 Feb 2000 17:51:54 -0800 (PST)
+* PR# 453 *
+Subject: $$$International Reps Needed$$$ 
+From: cals44@bigfoot.com
+Date: Mon, 21 Feb 00 17:08:21 EST
