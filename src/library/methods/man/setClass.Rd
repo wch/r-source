@@ -196,7 +196,12 @@ is.matrix(slot(tMC, "smooth"))
 setClass("myMatrix", "matrix", prototype = matrix(0,0,0))
 nrow(new("myMatrix")) # 0
 nrow(new("matrix")) # 1
+## simple test of prototype data
+xxx <- rnorm(3)
+setClass("xNum", representation(x = "numeric"), prototype = list(x = xxx))
+stopifnot(identical(new("xNum")@x, xxx))
 }
+
 
 }
 

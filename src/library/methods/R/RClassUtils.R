@@ -477,7 +477,7 @@ reconcilePropertiesAndPrototype <-
           pnames <- names(prototype)
           realP <- StandardPrototype
           for(i in seq(along=pnames))
-              slot(realP, pnames[[i]], FALSE) <- realP
+              slot(realP, pnames[[i]], FALSE) <- elNamed(prototype, pnames[i])
           prototype <- realP
       }
       ## pnames will be the names explicitly defined in the prototype
@@ -485,12 +485,15 @@ reconcilePropertiesAndPrototype <-
       ## now set the slots not yet in the prototype object.
       ## An important detail is that these are
       ## set using slot<- with check=FALSE (because the slot will not be there already)
-      what <- is.na(match(slots, pnames))
+      ## what <- is.na(match(slots, pnames))
+      what <- seq(along=properties)
       props <- properties[what]
       what <- slots[what]
       for(i in seq(along=what)) {
           propName <- el(what, i)
-          slot(prototype, propName, FALSE) <- tryNew(el(props, i))
+          if(is.null(attr(prototype, propName))) {
+              slot(prototype, propName, FALSE) <- tryNew(el(props, i))
+          }
       }
       prototype
   }
