@@ -375,3 +375,7 @@ Date: Fri, 3 Dec 1999 15:32:29 +0100 (MET)
 Subject: [[ substitution
 From: clive@bell-labs.com
 Date: Fri, 3 Dec 1999 16:45:08 +0100 (MET)
+* PR# 359 *
+Subject: Inconsistent messages with [[ list indexing
+From: Prof Brian D Ripley <ripley@stats.ox.ac.uk>
+Date: Sat, 4 Dec 1999 14:13:07 +0000 (GMT)
