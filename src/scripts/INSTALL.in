@@ -4,7 +4,7 @@
 
 # @configure_input@
 
-revision='$Revision: 1.98 $'
+revision='$Revision: 1.99 $'
 version=`set - ${revision}; echo ${2}`
 version="R add-on package installer ${version}
 
@@ -467,19 +467,13 @@ do_install () {
     ## As from 1.7.0, packages without compiled code are not marked
     ## as being from any platform.
     if test -f DESCRIPTION; then
-      if test -d src; then
-        (cat DESCRIPTION; \
-          echo; \
-          echo "Built: R" ${R_VERSION}\;  ${R_PLATFORM}\;  `date`) \
-	    | sed '/^[	]*$/d;' \
-	  > "${lib}/${pkg}/DESCRIPTION"
-      else
-        (cat DESCRIPTION; \
-          echo; \
-          echo "Built: R" ${R_VERSION}\; \;  `date`) \
-	    | sed '/^[	]*$/d;' \
-	  > "${lib}/${pkg}/DESCRIPTION"
-      fi
+      ## <FIXME>
+      ## What if there is no DESCRIPTION file?
+      ## Shouldn't we fail right away then?
+      ## </FIXME>
+      (echo "library(tools)"; \
+        echo ".installPackageDescription(\".\", \"${lib}/${pkg}\")") | \
+	  ${R_EXE} --vanilla >/dev/null
     fi
 
     if test -d man; then
@@ -506,30 +500,33 @@ do_install () {
 	    echo "ERROR: building help failed for package '${pkg}'"
 	    exit 6
 	  fi
-	  ${R_CMD} perl "${R_HOME}/share/perl/Rd2contents.pl" \
-	    --os=${R_OSTYPE} "../${pkg}" > "${lib}/${pkg}/CONTENTS"
 	  if test "${lib}" = `cd "${R_HOME}/library" && ${GETWD}`; then
 	    ${R_CMD} perl "${R_HOME}/share/perl/build-help.pl" --htmllists
-	    cat "${R_HOME}"/library/*/CONTENTS \
-	      > "${R_HOME}"/doc/html/search/index.txt
-	  fi	
-	fi
+	  fi
+        fi
 	if test -n "${use_zip_help}" \
             -a -n "${R_UNZIPCMD}" \
 	    -a -n "${R_ZIPCMD}"; then
-	  cd "${lib}/${pkg}"
-	  if test -d R-ex; then
-	    (cd R-ex; ${R_ZIPCMD} -m Rex *.R)
-	  fi
-	  ## NOT YET:
-	  ## if test -d latex; then
-	  ##   (cd latex; ${R_ZIPCMD} -m Rhelp *.tex)
-	  ## fi
-	  if test -d help; then
-	    (cd help; ${R_ZIPCMD} -m Rhelp * -x AnIndex);
-	  fi
+	  (cd "${lib}/${pkg}"
+	    if test -d R-ex; then
+	      (cd R-ex; ${R_ZIPCMD} -m Rex *.R)
+	    fi
+	    ## NOT YET:
+	    ## if test -d latex; then
+	    ##   (cd latex; ${R_ZIPCMD} -m Rhelp *.tex)
+	    ## fi
+	    if test -d help; then
+	      (cd help; ${R_ZIPCMD} -m Rhelp * -x AnIndex);
+	    fi)
         fi
       fi
+      (echo "library(tools)"; \
+	echo ".installPackageIndices(\".\", \"${lib}/${pkg}\")") | \
+	  ${R_EXE} --vanilla >/dev/null
+      if test "${lib}" = `cd "${R_HOME}/library" && ${GETWD}`; then
+	cat "${R_HOME}"/library/*/CONTENTS \
+	  > "${R_HOME}"/doc/html/search/index.txt
+      fi	
     else
       echo "No man pages found in package '${pkg}'"
     fi
