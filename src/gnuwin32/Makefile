@@ -25,7 +25,7 @@ R-DLLLIBS = -L. $(FLIBS) -lwsock32 -lcomctl32 -lversion
 SOURCES = $(filter-out malloc.c,$(wildcard *.c *.f))
 OBJS = $(foreach i, $(SOURCES), $(basename $i).o)
 MAINLIBS = libmain.a libappl.a libmath.a
-EXTRALIBS = ga.a gl.a xdr.a em.a
+EXTRALIBS = ga.a gl.a xdr.a em.a bitmap/zlib/libz.a libxml.a
 
 LIBFILES = $(foreach i, $(ALLPACKAGES), ../../library/$i) ../../library/R.css
 PKGS = $(foreach i,$(PACKAGES),pkg-$i)
@@ -122,6 +122,9 @@ R.exp1: R.a $(MAINLIBS) $(EXTRALIBS) exported-vars
 
 ../../library/R.css: ../../doc/html/R.css
 	$(CP) $< $@
+
+bitmap/zlib/libz.a:
+	$(MAKE) -C bitmap make buildzlib
 
 rdocs:
 	@$(MAKE) -C ../../doc/manual -f Makefile.win html
