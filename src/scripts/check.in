@@ -1,178 +1,429 @@
-#!/bin/sh
+#! @PERL@
 
-# ${R_HOME}/bin/check for checking installed add-on packages
 
-revision='$Revision: 1.3 $'
-version=`set - ${revision}; echo ${2}`
-version="R package checker ${version}
+use Cwd;
+use File::Basename;
+use Getopt::Long;
+use R::Dcf;
+use R::Utils;
+#use strict;
 
-Copyright (C) 2000 R Development Core Team.
-There is NO warranty.  You may redistribute this software under the
-terms of the GNU General Public License.
-For more information about these matters, see the files named COPYING."
+## don't buffer output
+$|=1;
 
-usage="Usage: R CMD check [options] pkgs
+my $revision = ' $Revision: 1.4 $ ';
+my $version;
+my $name;
+$revision =~ / ([\d\.]*) /;
+$version = $1;
+($name = $0) =~ s|.*/||;
 
-Check installed R packages specified by pkgs.
-Currently, the only check performed is whether the examples provided by
-the packages' documentation can be run successfully.
-Other means for regression testing will be added in the future.
+$latex = "@LATEX@";
 
-If an element of pkgs is a relative or absolute path to the sources of a
-package, it is attempted to re-build the examples from the Rd sources
-(unless \`--no-rebuild' is given).
+
+my @knownoptions = ("help|h", "version|v", "outdir|o:s",
+		    "nsize:s", "vsize:s", "library|l:s");
+
+GetOptions (@knownoptions) || usage();
+
+R_version($name, $version) if $opt_version;
+usage() if $opt_help;
+
+my $startdir=getcwd();
+$opt_outdir=$startdir unless $opt_outdir;
+chdir($opt_outdir);
+my $logdir=getcwd();
+chdir($startdir);
+
+my $tmpdir = R_getenv("TMPDIR", "/tmp");
+my $R_home = $ENV{'R_HOME'} ||
+    die "Error: Environment variable R_HOME not found\n";
+
+my $R_libs = $ENV{'R_LIBS'};
+my $library;
+if($opt_library){
+    chdir($opt_library) ||
+	die "Error: cannot change to directory \`$opt_library'\n";
+    $library=getcwd();
+    $ENV{'R_LIBS'} = "$library:$R_libs";
+    chdir($startdir);
+}
+
+my $R_opts = "--vanilla";
+$R_opts .= " --nsize=$opt_nsize" if $opt_nsize;
+$R_opts .= " --vsize=$opt_vsize" if $opt_vsize;
+
+## this is the main loop over all packages that shall be checked
+my $pkg;
+foreach $pkg (@ARGV){
+    my $is_bundle=0;
+    $pkg =~ s/\/$//;
+    my $pkgname = basename($pkg);
+    chdir($startdir);
+
+    my $pkglogdir="$logdir/$pkgname.Rcheck";
+    if(! -d $pkglogdir){
+	print "creating log dir \`$pkglogdir'";
+	if(! mkdir($pkglogdir, 0755)){
+	    error("could not create directory");
+	    exit(1);
+	}
+    }
+
+    my $log = new R::Logfile("$pkglogdir/check.log");
+    $log->message("using log directory $pkglogdir");
+
+    if(! $opt_library){
+	$library = $pkglogdir;
+	$ENV{'R_LIBS'} = "$library:$R_libs";
+    }
+
+    my $description;
+    $log->checking("for file \`$pkg/DESCRIPTION'");
+    if(-r "$pkg/DESCRIPTION"){
+	$description = new R::Dcf("$pkg/DESCRIPTION");
+	$log->result("OK");
+    }
+    else{
+	$log->result("NO");
+	exit(1);
+    }
+
+	
+    if($description->{"Contains"}){
+	$log->message("Looks like \`${pkg}' is a package bundle");
+	$is_bundle=1;
+	my @bundlepkgs = split(/\s+/, $description->{"Contains"});
+	my $ppkg="";
+	foreach $ppkg (@bundlepkgs){
+	    $log->message("checking \`$ppkg' in bundle \`$pkg'");
+	    $log->setstars("**");
+	    chdir($startdir);
+	    check_pkg("$pkg/$ppkg", $is_bundle, $description, $log);
+	    $log->setstars("*");
+	}
+    }
+    else{
+	$is_bundle=0;
+	chdir($startdir);
+	check_pkg("$pkg", $is_bundle, $description, $log);
+    }
+    
+    chdir($startdir);
+    print "\n";
+    if(system("R INSTALL -l $library $pkg")){
+	$log->error("installation failed");
+    }
+    print("\n");
+
+    if(!$is_bundle){
+	chdir($pkglogdir);
+	if(-d "$library/$pkgname/R-ex"){
+	    $log->creating("examples.R");
+	    if(system("${R_home}/bin/massage-Examples ".
+		      "${pkgname} ${library}/${pkgname}/R-ex/*.R ".
+		      "> examples.R")){
+		$log->error();
+		exit(1);
+	    }
+	    $log->result("OK");
+	    $log->checking("examples");
+	    if(system("R BATCH $R_opts examples.R")){
+		$log->error("running examples.R failed");
+		exit(1);
+	    }
+	    $log->result("OK");
+	}
+
+	if(-d "$library/$pkgname/latex"){
+	    $ENV{'TEXINPUTS'}="$R_home/doc/manual:$ENV{'TEXINPUTS'}";
+	    $log->creating("manual.tex");
+	    open manual, "> manual.tex";
+	    print manual "\\documentclass\{article\}\n" .
+		"\\usepackage\{Rd\}\n".
+		    "\\begin\{document\}\n";
+	    while(<$library/$pkgname/latex/*.tex>){
+		my $file=$_;
+		open file, "< $file" ||
+		    $log->error("cannot open file \`$file' for reading");
+		while(<file>){
+		    print manual $_;
+		}
+	    }
+	    print manual "\\end\{document\}\n";
+	    close manual;
+	    $log->result("OK");
+	    if(-x $latex){
+		$log->checking("manual.tex");
+		print "\n";
+		if(system("latex manual")){
+		    $log->error();
+		    exit(1);
+		}
+		$log->result("OK");
+	    }
+	}
+	    
+	    
+    }
+    else{
+	$log->message("Running examples and latex not yet implemented ".
+		      "for bundles");
+    }
+
+    if($log->{"warnings"}){
+	print("\n") ;
+	$log->summary();
+    }
+    $log->close();
+    print("\n");
+}
+
+    
+
+
+
+#**********************************************************
+
+## For updating INDEX and data/00Index
+## should go into new build script
+
+sub updateIndex {
+
+    my ($oldindex, $Rdfiles) = @_;
+    my $newindex = "$tmpdir/Rcheck.$$";
+    system("${R_home}/bin/Rdindex ${Rdfiles} > ${newindex}");
+    my $diff = `diff -b $oldindex $newindex`;
+    if($diff){
+	$log->result("NO");
+	if($opt_force){
+	    $log->message("overwriting \`${oldindex}' as \`--force' was given");
+	    rename($newindex, $oldindex);
+	}
+	else{
+	    $log->message("use \`--force' to overwrite the existing \`${oldindex}'");
+	}
+    }
+    else{
+	$log->result("OK");
+    }
+    unlink $newindex;
+}
+
+#**********************************************************
+
+sub check_pkg {
+
+    my ($pkg, $in_bundle, $description, $log) = @_;
+
+    $log->checking("package directory");
+    my $dir;
+    if(-d $pkg){
+	chdir($pkg);
+	$dir = getcwd();
+    }
+    else{
+	$log->error("package dir \`${pkg}' does not exist");
+	exit 1;
+    }
+    $log->result("OK");
+    
+    if($in_bundle){  # join DESCRIPTION and DESCRIPTION.in
+	if(-r "DESCRIPTION.in"){
+	    $log->checking("for file \`DESCRIPTION.in'");
+	    my $description_in = new R::Dcf("DESCRIPTION.in");
+	    my $key;
+	    foreach $key (keys(%$description)){
+		$description_in->{$key}=$description->{$key};
+	    }
+	    ## from now on use $description_in instead of $description
+	    ## in this subroutine
+	    $description = $description_in;
+	    $log->result("OK");
+	    $log->message("joining DESCRIPTION and DESCRIPTION.in");
+	}
+	else{
+	    $log->result("NO");
+	    exit(1);
+	}
+	
+    }
+
+
+    ## mandatory entries in DESCRIPTION:
+    ##   Package, Title, Version, License, Author
+    $log->checking("DESCRIPTION Package entry");
+    if(! $description->{"Package"}){
+	$log->error("no DESCRIPTION Package entry found");
+	exit(1);
+    }
+    if($description->{"Package"} ne basename($dir)){
+	$log->error("DESCRIPTION Package field differs from dir name");
+	exit(1);
+    }
+    $log->result("OK");
+    
+    my $entry;
+    foreach $entry (qw(Title Version License Author)){
+	$log->checking("DESCRIPTION $entry entry");
+	if(! $description->{$entry}){
+	    $log->error("no DESCRIPTION $entry entry found");
+	    exit(1);
+	}
+	$log->result("OK");
+    }
+    
+
+    ## check Rd documentation files
+
+    if(-d "man"){
+	$log->checking("Rd files");
+	my @rdfiles;
+	my @badfiles;
+	while(<man/*.[rR]d>){
+	    if(/</){
+		push @badfiles, $_;
+	    }
+	    else{
+		push @rdfiles, $_;
+	    }
+	}
+	if($#badfiles>=0){
+	    $log->error("  Cannot handle Rd file names containing \`<'.\n" .
+		    "  These are not legal file names on all R platforms.\n" .
+		    "  Please rename the following files and try again:");
+	    $log->message("    " . join("\n    ", @badfiles));
+	    exit(1);
+	}
+	
+	@rdfiles = sort(@rdfiles);
+	my $file;
+	my @mandatoryTags = qw(name alias title description keyword);
+	my @uniqueTags = qw(name title description usage arguments
+			    format details value references source
+			    seealso examples note author synopsis);
+	my %badmandatory;
+	my %badunique;
+
+	## create hash allTags with all tags found in mandatory Tags and
+	## uniqueTags 
+	my $tag;
+	my %allTags;
+	foreach $tag (@mandatoryTags, @uniqueTags){
+	    $allTags{$tag}++;
+	}
+	
+	foreach $rdfile (@rdfiles){
+	    open rdfile, "< $rdfile" ||
+		die "cannot open \`$rdfile' for reading\n";
+	    
+	    my %tagcount;
+	    while(<rdfile>){
+		my $line = $_;
+		foreach $tag (keys %allTags) {
+		    if($line=~/^\s*\\$tag/){
+			$tagcount{$tag}++;
+		    }
+		}
+	    }
+	    close rdfile;
+	    
+	    foreach $tag (@mandatoryTags){
+		push(@{$badmandatory{$tag}}, $rdfile)
+		    unless $tagcount{$tag}>0;
+	    }
+	    foreach $tag (@uniqueTags){
+		push(@{$badunique{$tag}}, $rdfile)
+		    unless $tagcount{$tag}<=1;
+	    }
+	}
+
+	my $any;
+	foreach $tag (@mandatoryTags){
+	    if(exists $badmandatory{$tag}){
+		$log->warning("") unless $any;
+		$any++;
+		$log->message("  Rd files without \`${tag}':");
+		$log->message("    " .
+			      join("\n    ", @{$badmandatory{$tag}}));
+	    }
+	}
+	foreach $tag (@uniqueTags){
+	    if(exists $badunique{$tag}){
+		$log->warning("") unless $any;
+		$any++;
+		$log->message("  Rd files with duplicate \`${tag}':");
+		$log->message("    " .
+			      join("\n    ", @{$badunique{$tag}}));
+	    }
+	}
+	    
+	$log->result("OK") unless $any;
+    }
+
+
+
+      
+    
+    
+    ## Check for undocumented objects
+
+    if(-d "R" && -d "man"){
+	$log->checking("for undocumented objects");
+	my @out = split(/\n/,
+			`echo \"undoc(dir = \\\"${dir}\\\")\" | \
+                         ${R_home}/bin/R ${R_opts}`);
+	my @err = grep {s/^Error *//} @out;
+	@out = grep {/^ *\[/} @out;
+	if($#err<0){
+	    if($#out>=0){
+		$log->warning("  " . join("\n  ", @out));
+	    }
+	    else{
+		$log->result("OK");
+	    }
+	}
+	else{
+	    $log->error("  " . join("\n  ", @err));
+	    exit(1);
+	}
+    }
+
+}
+	    
+
+#**********************************************************
+
+sub usage {
+    print STDERR <<END;
+Usage: $name [options] pkgdirs
+
+Check R packages from package sources in the directories specified by
+pkgdirs.  A variety of diagnostic checks on directory structure, index
+and control files are performed. All examples provided by the
+packages' documentation are tested if they run succesfully. Finally,
+the package is installed into the log directory (which includes the
+translation of all Rd files into several formats), and the Rd files are
+tested by LaTeX (if available).
 
 If necessary for passing the checks, use the \`--vsize' and \`--nsize'
 options to increase R's memory (\`--vanilla' is used by default).
 
 Options:
-  -c, --clean		remove created files
-  -d, --debug		turn on shell debugging (set -x)
   -h, --help		print short help message and exit
-  -l, --library=LIB	use packages in library tree LIB
+  -v, --version		print version info and exit
+  -o, --outdir=dir      directory used for logfiles, R output, etc.
+                        (default is \`pkg.Rcheck' in current directory)
   --vsize=N		set R's vector heap size to N bytes
   --nsize=N		set R's number of cons cells to N
-  --no-rebuild		do not rebuild examples
-  -v, --version		print version info and exit
+  -l, --library         library directory used for test installation
+                        of packages (default is outdir)
 
-Email bug reports to <r-bugs@lists.r-project.org>."
-
-MAKE=${MAKE-@MAKE@}
-
-opts=
-pkgs=
-clean=false
-debug=false
-rebuild=true
-lib=${R_HOME}/library
-
-while test -n "${1}"; do
-  case ${1} in
-    -h|--help)
-      echo "${usage}"; exit 0 ;;
-    -v|--version)
-      echo "${version}"; exit 0 ;;
-    -c|--clean)
-      clean=true ;;
-    -d|--debug)
-      debug=true
-      opts="${opts} --debug"
-      ;;
-    --no-rebuild)
-      rebuild=false ;;
-    -l)
-      lib=${2}; shift ;;
-    --library=*)
-      lib=`echo "${1}" | sed -e 's/[^=]*=//'` ;;
-    --nsize=*)
-      R_opts="${R_opts} ${1}" ;;
-    --vsize=*)
-      R_opts="${R_opts} ${1}" ;;
-    *)
-      pkgs="${pkgs} ${1}" ;;
-  esac
-  shift
-done
-
-if test -z "${pkgs}"; then
-  echo "ERROR: no packages specified"
-  exit 1
-fi
-if test -d ${lib}; then
-  lib=`cd ${lib}; pwd`
-else
-  echo "ERROR: library directory \`${lib}' does not exist"
-  exit 2
-fi
-R_LIBS="${lib}:${R_LIBS:-${RLIBS}}"
-
-start_dir=`pwd`
-
-## The work horse
-checkpkg () {
-  echo "Checking package \`${1}' ..."
-  pkg=${1}
-
-  cd ${start_dir}
-  use_man=false
-
-  if ${rebuild}; then
-    if test -d ${pkg}/man -a -w ${lib}/`basename ${pkg}`; then
-      use_man=true
-      cd ${pkg}
-      pkg=`basename ${pkg}`
-      rm -rf ${lib}/${pkg}/R-ex
-    fi
-  fi
-
-  if test \! -d ${lib}/${pkg}; then
-    echo "WARNING: package \`${pkg}' not installed ... skipping"
-    break
-  fi
-
-  if ${use_man}; then
-    ${R_HOME}/bin/build-help ${opts} --example ../${pkg} ${lib}
-    check_dir=check
-  else
-    check_dir=check-${pkg}
-  fi
-
-  test -d ${check_dir} || mkdir ${check_dir}
-  cd ${check_dir}
-
-  ## Running package examples
-  echo " Massaging examples into \`${pkg}-Ex.R' ..."
-  ${R_HOME}/bin/massage-Examples ${pkg} ${lib}/${pkg}/R-ex/*.R \
-    > ${pkg}-Ex.R
-  echo " Running examples in package \`${pkg}' ..."
-  R_LIBS=${R_LIBS} LC_ALL=C ${R_HOME}/bin/R --vanilla ${R_opts} \
-    < ${pkg}-Ex.R > ${pkg}-Ex.Rout
-  if test ${?} -eq 0; then
-    echo " OK"
-  else
-    echo " ERROR" && exit 1
-  fi
-
-  ## Running package specific tests
-  if test -d ../tests; then
-    cd ../tests
-    makefiles="-f ${R_HOME}/etc/Makeconf-tests"
-    if test -r Makefile; then
-      makefiles="${makefiles} -f Makefile"
-    fi
-    if test -r Makevars; then
-      makevars="-f Makevars"
-    else
-      makevars="\
-	test-src-1=`ls *.R 2>/dev/null` \
-	test-src-auto=`ls *.Rin 2>/dev/null | sed 's/Rin$/R/'`"
-    fi
-    cp * ../${check_dir}
-    cd ../${check_dir}
-    echo " Running specific tests in package \`${pkg}' ..."
-    ${MAKE} ${makefiles} ${makevars} R_LIBS=${R_LIBS} all
-    if test ${?} -eq 0; then
-      echo " OK"
-    else
-      echo " ERROR" && exit 1
-    fi
-  fi
-  
-  if ${clean}; then
-    cd .. && rm -rf ${check_dir}
-  else
-    echo " Results of check are available in directory \`${check_dir}'"
-  fi
+Email bug reports to <r-bugs\@lists.r-project.org>.
+END
+    exit 0;
 }
-  
-## The main loop
-if ${debug}; then set -x; fi
-for p in ${pkgs}; do
-  checkpkg ${p}
-  echo
-done
 
-### Local Variables: ***
-### mode: sh ***
-### sh-indentation: 2 ***
-### End: ***
+
+
+

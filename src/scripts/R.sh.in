@@ -51,6 +51,16 @@ export EDITOR
 : ${R_ENVIRON="${HOME}/.Renviron"}
 use_r_environ=true
 
+# Add share/perl to the perl library path
+if test -n "${PERL5LIB}"; then
+  PERL5LIB="${R_HOME}/share/perl:${PERL5LIB}";
+  export PERL5LIB
+else
+  PERLLIB="${R_HOME}/share/perl:${PERLLIB}";
+  export PERLLIB;
+fi
+
+
 usage="
 Usage: R [options] [< infile] [> outfile]
    or: R CMD command [arguments]
