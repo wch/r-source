@@ -8,11 +8,14 @@
   restrictions imposed by the dendrogram is carried out.
 }
 \usage{
-heatmap(x, Rowv=NULL, Colv=NULL, distfun = dist, hclustfun = hclust, add.expr,
+heatmap(x, Rowv=NULL, Colv=if(symm)"Rowv" else NULL,
+        distfun = dist, hclustfun = hclust, add.expr,
+        symm = FALSE, revC = identical(Colv, "Rowv"),
         scale=c("row", "column", "none"), na.rm = TRUE,
         margins = c(5, 5), ColSideColors, RowSideColors,
         cexRow = 0.2 + 1/log10(nr), cexCol = 0.2 + 1/log10(nc),
-        main = NULL, xlab = NULL, ylab = NULL, \dots)
+        labRow = NULL, labCol = NULL, main = NULL, xlab = NULL, ylab = NULL,
+        \dots)
 }
 \arguments{
   \item{x}{numeric matrix of the values to be plotted. }
@@ -22,7 +25,9 @@ heatmap(x, Rowv=NULL, Colv=NULL, distfun = dist, hclustfun = hclust, add.expr,
     suppress reordering or by default, \code{\link{NULL}}, see
     \emph{Details} below.}
   \item{Colv}{determines if and how the \emph{column} dendrogram should be
-    reordered.  For the possibilities, see the \code{Rowv} argument above.}
+    reordered.  Has the options as the \code{Rowv} argument above and
+    \emph{additionally} when \code{x} is a square matrix, \code{Colv =
+      "Rowv"} means that columns should be treated identically to the rows.}
   \item{distfun}{function used to compute the distance (dissimilarity)
     between both rows and columns.  Defaults to \code{\link{dist}}.}
   \item{hclustfun}{function used to compute the hierarchical clustering
@@ -30,9 +35,14 @@ heatmap(x, Rowv=NULL, Colv=NULL, distfun = dist, hclustfun = hclust, add.expr,
     \code{\link{hclust}}.}
   \item{add.expr}{expression that will be evaluated after the call to
     \code{image}.  Can be used to add components to the plot.}
+  \item{symm}{logical indicating if \code{x} should be treated
+    \bold{symm}etrically; can only be true when \code{x} is a square matrix.}
+  \item{revC}{logical indicating if the rows of (the square matrix)
+    \code{x} should be treated \bold{symm}etrically.}
   \item{scale}{character indicating if the values should be centered and
     scaled in either the row direction or the column direction, or
-    none.  The default is \code{"row"}.}
+    none.  The default is \code{"row"} if \code{symm} false, and
+    \code{"none"} otherwise.}
   \item{na.rm}{logical indicating whether \code{NA}'s should be removed.}
   \item{margins}{numeric vector of length 2 containing the margins
     (see \code{\link{par}(mar= *)}) for column and row names, respectively.}
@@ -98,10 +108,16 @@ heatmap(x, Rowv=NULL, Colv=NULL, distfun = dist, hclustfun = hclust, add.expr,
 
 %% want example using the `add.exp' argument!
 
-%% other example with no ordering !!
+%% other example with no reordering !!
 
- data(volcano)
- ## Volcano is not recognizable, but at least not random
- heatmap(volcano, col = gray(0:64/64))
+ data(attitude)
+ round(Ca <- cor(attitude), 2)
+ symnum(Ca) # simple graphic
+ heatmap(Ca,             symm = TRUE, margin=c(6,6))# with reorder()
+ heatmap(Ca, Rowv=FALSE, symm = TRUE, margin=c(6,6))# _NO_ reorder()
+
+% data(volcano)
+% ## Volcano is not recognizable, but at least not random
+% heatmap(volcano, col = gray(0:64/64))
 }
 \keyword{hplot}

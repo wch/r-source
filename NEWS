@@ -199,6 +199,9 @@ NEW FEATURES
 	and collection of results, wrapping a common use of sapply()
 	for simulation purposes.
 
+    o	rev() is now a generic function, with default and dendrogram
+	methods.
+
     o	sort(method = "quick", decreasing = TRUE) is now implemented.
 
     o	sort.list() has methods "quick" (a wrapper for sort(method =
@@ -310,7 +313,8 @@ STANDARD PACKAGES
 	- factanal() now returns the test statistic and P-value formerly
 	  computed in the print method.
 
-	- heatmap() has more arguments, mostly thanks to Wolfgang Huber.
+	- heatmap() has many more arguments, partly thanks to Wolfgang
+          Huber and Andy Liaw.
 
 	- Arguments `unit' and `hmin' of plclust() are now implemented.
 
@@ -319,6 +323,7 @@ STANDARD PACKAGES
 
 	- dendrograms are slightly better documented, methods working with
 	  "label", not "text" attribute.
+	  New rev() method for dendrograms.
 
     o	Changes in package 'tcltk':
 

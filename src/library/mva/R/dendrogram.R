@@ -155,7 +155,7 @@ function (object, max.level = 0, vec.len = 4, digits.d = 3, nchar.max = 128,
 ### ==== : where it didn't before
 
 ## Also: need larger par("mar")[1] or [4] for longish labels !
-## [probably don't change, just print a warnig or so !!
+## [probably don't change, just print a warning or so !!
 plot.dendrogram <-
     function (x, type = c("rectangle", "triangle"), center = FALSE,
 	      edge.root = !is.null(attr(x, "edgetext")), nodePar = NULL,
@@ -407,8 +407,7 @@ order.dendrogram <- function(x) {
 #   return(ord(x))
 # }
 
-reorder <- function(x, ...)
-    UseMethod("reorder")
+reorder <- function(x, ...) UseMethod("reorder")
 
 reorder.dendrogram <- function(x, wts, ...)
 {
@@ -419,6 +418,11 @@ reorder.dendrogram <- function(x, wts, ...)
             attr(x, "value") <- wts[x[1]]
             return(x)
         }
+###--- FIXME: This works only for binary dendrograms !!!
+
+        if(length(x) != 2)
+            stop("reorder()ing of non-binary dendrograms not yet implemented")
+        ## recurse:
         left  <- oV(x[[1]], wts)
         right <- oV(x[[2]], wts)
         lV <- attr(left, "value")
@@ -436,17 +440,32 @@ reorder.dendrogram <- function(x, wts, ...)
     oV(x, wts)
 }
 
+rev.dendrogram <- function(x) {
+    if(isLeaf(x))
+	return(x)
+
+    k <- length(x)
+    if(k < 1)
+	stop("dendrogram non-leaf node with non-positive #{branches}")
+    r <- x # incl. attributes!
+    for(j in 1:k) ## recurse
+ 	r[[j]] <- rev(x[[k+1-j]])
+    r
+}
 
 ## original Andy Liaw; modified RG, MM
 
 heatmap <-
-function (x, Rowv=NULL, Colv=NULL, distfun = dist, hclustfun = hclust, add.expr,
+function (x, Rowv=NULL, Colv=if(symm)"Rowv" else NULL,
+          distfun = dist, hclustfun = hclust, add.expr,
+          symm = FALSE, revC = identical(Colv, "Rowv"),
 	  scale = c("row", "column", "none"), na.rm=TRUE,
 	  margins = c(5, 5), ColSideColors, RowSideColors,
           cexRow = 0.2 + 1/log10(nr), cexCol = 0.2 + 1/log10(nc),
-	  main = NULL, xlab = NULL, ylab = NULL, ...)
+          labRow = NULL, labCol = NULL, main = NULL, xlab = NULL, ylab = NULL,
+          ...)
 {
-    scale <- match.arg(scale)
+    scale <- if(symm && missing(scale)) "none" else match.arg(scale)
     if(length(di <- dim(x)) != 2 || !is.numeric(x))
 	stop("`x' must be a numeric matrix")
     nr <- di[1]
@@ -462,38 +481,41 @@ function (x, Rowv=NULL, Colv=NULL, distfun = dist, hclustfun = hclust, add.expr,
 
     ## get the dendrograms and reordering indices
 
-    if(!is.logical(Rowv) || Rowv) {
-	if(!inherits(Rowv, "dendrogram")) {
-	    hcr <- hclustfun(distfun(x))
-	    ddr <- as.dendrogram(hcr)
+    if(inherits(Rowv, "dendrogram"))
+	ddr <- Rowv
+    else {
+	hcr <- hclustfun(distfun(x))
+	ddr <- as.dendrogram(hcr)
+	if(!is.logical(Rowv) || Rowv)
 	    ddr <- reorder(ddr, Rowv)
-	}
-	else
-	    ddr <- Rowv
-
-	if(nr != length(rowInd <- order.dendrogram(ddr)))
-	    stop("row dendrogram ordering gave index of wrong length")
     }
-    else ## Rowv == FALSE
-	rowInd <- 1:nr
+    if(nr != length(rowInd <- order.dendrogram(ddr)))
+	stop("row dendrogram ordering gave index of wrong length")
 
-    if(!is.logical(Colv) || Colv) {
-	if( !inherits(Colv, "dendrogram") ) {
-	    hcc <- hclustfun(distfun(t(x)))
-	    ddc <- as.dendrogram(hcc)
+    if(inherits(Colv, "dendrogram"))
+	ddc <- Colv
+    else if(identical(Colv, "Rowv")) {
+        if(nr != nc)
+            stop('Colv = "Rowv" but nrow(x) != ncol(x)')
+        ddc <- ddr
+    }
+    else {
+	hcc <- hclustfun(distfun(if(symm)x else t(x)))
+	ddc <- as.dendrogram(hcc)
+	if(!is.logical(Colv) || Colv)
 	    ddc <- reorder(ddc, Colv)
-	}
-	else
-	    ddc <- Colv
-
-	if(nc != length(colInd <- order.dendrogram(ddc)))
-	    stop("column dendrogram ordering gave index of wrong length")
     }
-    else ## Colv == FALSE
-	colInd <- 1:nc
+    if(nc != length(colInd <- order.dendrogram(ddc)))
+	stop("column dendrogram ordering gave index of wrong length")
 
     ## reorder x
     x <- x[rowInd, colInd]
+
+    if(is.null(labRow))
+        labRow <- if(is.null(rownames(x))) (1:nr)[rowInd] else rownames(x)
+    if(is.null(labCol))
+        labCol <- if(is.null(colnames(x))) (1:nc)[colInd] else colnames(x)
+
     if(scale == "row") {
 	x <- sweep(x, 1, rowMeans(x, na.rm = na.rm))
 	sx <- apply(x, 1, sd, na.rm = na.rm)
@@ -538,16 +560,18 @@ function (x, Rowv=NULL, Colv=NULL, distfun = dist, hclustfun = hclust, add.expr,
     }
     ## draw the main carpet
     par(mar = c(margins[1], 0, 0, margins[2]))
-    image(1:nc, 1:nr, t(x), axes = FALSE,
-	  xlim = c(0.5, nc + 0.5), ylim = c(0.5, nr + 0.5),
-	  xlab = "",ylab = "", ...)
-    axis(1, 1:nc, las = 2, line = -0.5, tick = 0,
-	 labels = if(is.null(colnames(x))) (1:nc)[colInd] else colnames(x),
-	 cex.axis = cexCol)
+    if(!symm || scale != "none") x <- t(x)
+    if(revC) {
+        iy <- nr:1
+        ddr <- rev(ddr)
+        x <- x[iy,]
+    } else iy <- 1:nr
+
+    image(1:nc, 1:nr, x, xlim = 0.5+ c(0, nc), ylim = 0.5+ c(0, nr),
+          axes = FALSE, xlab = "", ylab = "", ...)
+    axis(1, 1:nc, labels= labCol, las= 2, line= -0.5, tick= 0, cex.axis= cexCol)
     if(!is.null(xlab)) mtext(xlab, side = 1, line = margins[1] - 1.25)
-    axis(4, 1:nr, las = 2, line = -0.5, tick = 0,
-	 labels = if(is.null(rownames(x))) (1:nr)[rowInd] else rownames(x),
-	 cex.axis = cexRow)
+    axis(4, iy, labels= labRow, las= 2, line= -0.5, tick= 0, cex.axis= cexRow)
     if(!is.null(ylab)) mtext(ylab, side = 4, line = margins[2] - 1.25)
 
     if (!missing(add.expr))
