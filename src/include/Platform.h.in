@@ -127,6 +127,15 @@
 /* Printing Command */
 #define R_PRINTCMD	""
 
+/* Getting the working directory */
+#if defined(HAVE_UNISTD_H)
+#define R_GETCWD(x, y) getcwd(x, y)
+#elif defined(Win32)
+#define R_GETCWD(x, y) GetCurrentDirectory(y, x)
+#else
+#undef R_GETCWD
+#endif
+
 /* for platform.c to put in .Platform */
 #ifdef Unix
 #define OSTYPE      "Unix"
