@@ -4,9 +4,11 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2002
-@set FAQ-VERSION 1.6-2, 2002-10-01
+@set FAQ-VERSION 1.6-3, 2002-10-05
 @set REL-VERSION 1.6.0
 @set FAQ-ISBN 3-901167-51-X
+@documentlanguage en
+@documentencoding ISO-8859-1
 @c %**end of header
 
 @dircategory Programming
@@ -422,16 +424,16 @@ available by @email{deleeuw@@stat.ucla.edu, Jan de Leeuw} in the
 @node Are there Unix binaries for R?, What documentation exists for R?, How can R be installed?, R Basics
 @section Are there Unix binaries for R?
 
-@c Linux binaries as of 2002-08-22:
+@c Linux binaries as of 2002-10-05:
 @c
-@c debian   woody i386  1.5.1  Dirk Eddelbuettel <edd@debian.org>
-@c          sarge i386  1.5.1  Dirk Eddelbuettel <edd@debian.org>
+@c debian   woody i386  1.6.0  Dirk Eddelbuettel <edd@debian.org>
+@c          sarge i386  1.6.0  Dirk Eddelbuettel <edd@debian.org>
 @c mandrake 8.2   i386  1.5.1  Michele Alzetta <mikalzet@libero.it>
 @c redhat   6.x   i386  1.5.1  Stephen Eglen <stephen@gnu.org>
-@c          7.x   alpha 1.5.1  Naoki Takebayashi <ntakebay@bio.indiana.edu>
-@c                i386  1.5.1  Martyn Plummer <plummer@iarc.fr>
-@c suse     7.3   i386  1.5.1  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
-@c          8.0   i386  1.5.1  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
+@c          7.x   alpha 1.6.0  Naoki Takebayashi <ntakebay@bio.indiana.edu>
+@c                i386  1.6.0  Martyn Plummer <plummer@iarc.fr>
+@c suse     7.3   i386  1.6.0  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
+@c          8.0   i386  1.6.0  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
 
 The @file{bin/linux} directory of a @acronym{CRAN} site contains Debian
 stable/testing packages for the i386 platform (now part of the Debian
@@ -543,8 +545,8 @@ between R and S?}).  Introductory books include
 @quotation
 P. Spector (1994), ``An introduction to S and @SPLUS{}'', Duxbury Press.
 
-A. Krause and M. Olsen (1997), ``The Basics of S and @SPLUS{}'',
-Springer.
+A. Krause and M. Olsen (2002), ``The Basics of @SPLUS{}'' (Third
+Edition).  Springer, ISBN 0-387-95456-2
 @end quotation
 
 The book
@@ -729,7 +731,8 @@ on R, existing mailing lists and the R Bug Tracking system.
 
 To ``submit'' to @acronym{CRAN}, simply upload to
 @uref{ftp://cran.r-project.org/incoming/} and send an email to
-@email{cran@@r-project.org}.
+@email{cran@@r-project.org}.  Note that CRAN generally does not accept
+submissions of precompiled binaries due to security reasons.
 
 @quotation
 @strong{Note:}  It is very important that you indicate the copyright

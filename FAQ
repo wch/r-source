@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.6-2, 2002-10-01
+Version 1.6-3, 2002-10-05
 ISBN 3-901167-51-X
 Kurt Hornik
 
@@ -461,7 +461,8 @@ Introductory books include
 
      P. Spector (1994), "An introduction to S and S-PLUS", Duxbury Press.
 
-     A. Krause and M. Olsen (1997), "The Basics of S and S-PLUS", Springer.
+     A. Krause and M. Olsen (2002), "The Basics of S-PLUS" (Third Edition).
+     Springer, ISBN 0-387-95456-2
 
    The book
 
@@ -580,8 +581,8 @@ and is currently being mirrored daily at
      `http://cran.at.r-project.org/'  (TU Wien, Austria)
      `http://cran.au.r-project.org/'  (PlanetMirror, Australia)
      `http://cran.br.r-project.org/'  (Universidade Federal de
-                                      Parana', Brazil)
-     `http://cran.ch.r-project.org/'  (ETH Zu"rich, Switzerland)
+                                      Paraná, Brazil)
+     `http://cran.ch.r-project.org/'  (ETH Zürich, Switzerland)
      `http://cran.de.r-project.org/'  (APP, Germany)
      `http://cran.dk.r-project.org/'  (SunSITE, Denmark)
      `http://cran.hu.r-project.org/'  (Semmelweis U, Hungary)
@@ -601,7 +602,8 @@ mailing lists and the R Bug Tracking system.
 
    To "submit" to CRAN, simply upload to
 `ftp://cran.r-project.org/incoming/' and send an email to
-<cran@r-project.org>.
+<cran@r-project.org>.  Note that CRAN generally does not accept submissions
+of precompiled binaries due to security reasons.
 
      *Note:*  It is very important that you indicate the copyright
      (license) information (GPL, BSD, Artistic, ...)  in your submission.
