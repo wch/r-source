@@ -64,8 +64,11 @@ function (x = seq(0, 1, len = nrow(z)), y = seq(0, 1, len = ncol(z)),
     if (!is.matrix(z) || nrow(z) <= 1 || ncol(z) <= 1)
 	stop("no proper `z' matrix specified")
     if (!add) {
+        localPlotWindow <-
+            function(xlim, ylim, ..., main, sub, xlab, ylab, outer, line)
+                plot.window(xlim, ylim, ...)
 	plot.new()
-	plot.window(xlim, ylim, log = "", ...)
+	localPlotWindow(xlim, ylim, log = "", ...)
 	title(...)
     }
     ##- don't lose  dim(.)
