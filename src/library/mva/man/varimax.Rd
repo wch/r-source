@@ -6,7 +6,7 @@
   These functions `rotate' loading matrices in factor analysis.
 }
 \usage{
-varimax(x, normalize = TRUE)
+varimax(x, normalize = TRUE, eps = 1e-5)
 promax(x, m = 4)
 }
 \arguments{
@@ -16,6 +16,8 @@ promax(x, m = 4)
   \item{normalize}{logical. Should Kaiser normalization be performed?
     If so the rows of \code{x} are re-scaled to unit length before
     rotation, and scaled back afterwards.}
+  \item{eps}{The tolerance for stopping: the relative change in the sum
+    of singular values.}
 }
 \details{
   These seek a `rotation' of the factors \code{x \%*\% T} that aims to
