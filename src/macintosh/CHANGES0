@@ -1,3 +1,19 @@
+rm131
+=====
+* Added the "Config" menu
+* Fixed a bug in the lapack module. Complex functions are now
+  available.
+* Added MPW makefiles to build standard libraries and modules 
+* Added experimental script to build R via Apple's MRC compiler
+* Now R needs a new shared library "f2c" lib that will increase
+  portability for all fortran based packages
+* Added support for apple events. R begins to be a scriptable
+  application. Very limited support by now but will increase soon.
+  Some demo scripts have been added.
+* link.html.help() function has been added by picking windows code.
+
+
+
 rm130
 =====
 * Fixed a bug when saving from menus

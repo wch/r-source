@@ -1,6 +1,13 @@
 		Macintosh-specific changes to R
 		===============================
 
+rm140
+=====
+* Added the item "Link Packages Help" to the "Help" menu.
+* fixed a big that leaves help menu items ghosted after
+  using them.
+* some MRC Apple's Compiler speficif fixing.
+
 rm131
 =====
 * Added the "Config" menu
@@ -14,20 +21,4 @@ rm131
   application. Very limited support by now but will increase soon.
   Some demo scripts have been added.
 * link.html.help() function has been added by picking windows code.
-
-rm130
-=====
-* Fixed a bug when saving from menus
-* Added module support
-* Fixed a bug that crashes R under System 8.6 due to a calling
-  to a non-existent function under 8.6
-* Stack and memory settings changed to work on System 8.6
-* R main project file and packages project files have been changed
-* Added back the "Save" menu
-* file.choose() works correctly now
-* Now R takes track of file names associated to each window
-* Fixed a bug with printer dialog
-* Now R can handle "user breaks" in evaluation and printing loops
-
-
 
