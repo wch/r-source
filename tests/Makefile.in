@@ -17,7 +17,6 @@ test-src-gct = \
 	simple-true.R \
 	arith-true.R \
 	arith.R \
-	is-things.R \
 	lm-tests.R \
 	primitive-funs.R \
 	method-dispatch.R
@@ -26,7 +25,9 @@ test-src-strict-1 = \
 	d-p-q-r-tests.R
 test-src-strict-auto = \
 	isas-tests.R
+# FIXME:  demos.R should really be in *-gct above! [MM]
 test-src-sloppy-1 = \
+	demos.R \
 	print-tests.R
 test-src-sloppy-auto = \
 	no-segfault.R
