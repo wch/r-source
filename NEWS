@@ -52,9 +52,9 @@ USER-VISIBLE CHANGES
     o	Namespaces can now be defined for packages other than `base':
 	see `Writing R Extensions'.  This hides some internal objects
 	and changes the search path from objects in a namespace.  All
-	the base packages (except tcltk) and recommended packages
-	`KernSmooth', `MASS', `boot', `class', `nnet', `rpart' and
-	`spatial' are currently in a namespace.
+	the base packages (except methods and tcltk) have namespaces,
+	as well as the recommended packages `KernSmooth', `MASS',
+	`boot', `class', `nnet', `rpart' and `spatial'.
 
 
 NEW FEATURES
