@@ -30,6 +30,11 @@ USER-VISIBLE CHANGES
 
 NEW FEATURES
 
+    o   pdf() now responds to the 'paper' and 'pagecentre'
+	arguments.  The default value of 'paper' is "special"
+	for backward-compatibility (this is different from the 
+        default for postscript()).
+
     o	Faster algorithm in summaryRprof().
 
     o	na.contiguous() is now (S3) generic with first argument

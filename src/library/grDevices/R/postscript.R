@@ -165,9 +165,11 @@ xfig <- function (file = ifelse(onefile,"Rplots.fig", "Rplot%03d.fig"),
 
 pdf <- function (file = ifelse(onefile, "Rplots.pdf", "Rplot%03d.pdf"),
                  width = 6, height = 6, onefile = TRUE, family,
-                 title = "R Graphics Output", fonts = NULL, version="1.1", ...)
+                 title = "R Graphics Output", fonts = NULL, version="1.1",
+                 paper = "special", ...)
 {
-    new <- list(onefile=onefile, ...)# eval
+    # paper explicit because "special" (not "default") by default
+    new <- list(onefile=onefile, paper=paper, ...)# eval
     old <- check.options(new = new, envir = .PSenv,
                          name.opt = ".PostScript.Options",
 			 reset = FALSE, assign.opt = FALSE)
@@ -195,8 +197,8 @@ pdf <- function (file = ifelse(onefile, "Rplots.pdf", "Rplot%03d.pdf"),
     else
         stop("invalid PDF version")
     .External("PDF",
-              file, old$family, old$encoding, old$bg, old$fg,
-              width, height, old$pointsize, old$onefile, title,
+              file, old$paper, old$family, old$encoding, old$bg, old$fg,
+              width, height, old$pointsize, old$onefile, old$pagecentre, title,
               fonts, version[1], version[2], PACKAGE = "grDevices")
     invisible()
 }
