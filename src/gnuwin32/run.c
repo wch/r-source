@@ -101,12 +101,12 @@ static char * expandcmd(char *cmd)
    return s;
 }
 
-/* 
+/*
    finput is either NULL or the name of a file from which to
      redirect stdin for the child.
    newconsole != 0 to use a new console (if not waiting)
    visible = -1, 0, 1 for hide, minimized, default
-   inpipe != 0 to duplicate I/O handles 
+   inpipe != 0 to duplicate I/O handles
 */
 
 static HANDLE pcreate(char* cmd, char *finput,
@@ -116,7 +116,7 @@ static HANDLE pcreate(char* cmd, char *finput,
     SECURITY_ATTRIBUTES sa;
     PROCESS_INFORMATION pi;
     STARTUPINFO si;
-    HANDLE hIN = INVALID_HANDLE_VALUE, 
+    HANDLE hIN = INVALID_HANDLE_VALUE,
 	hSAVED = INVALID_HANDLE_VALUE, hTHIS;
     char *ecmd;
 
@@ -262,7 +262,7 @@ rpipe * rpipeOpen(char *cmd, int visible, char *finput, int io)
 	    strcpy(RunError, "Impossible to create pipe");
 	    return NULL;
 	}
-	hTHIS = GetCurrentProcess();	
+	hTHIS = GetCurrentProcess();
 	hIN = GetStdHandle(STD_INPUT_HANDLE);
 	DuplicateHandle(hTHIS, hTemp, hTHIS, &r->write,
 			0, FALSE, DUPLICATE_SAME_ACCESS);
@@ -420,7 +420,7 @@ static int Wpipe_fgetc(Rconnection con)
 {
     rpipe *rp = ((RWpipeconn)con->private) ->rp;
     int c;
-    
+
     c = rpipeGetc(rp);
     return c == NOLAUNCH ? R_EOF : c;
 }
@@ -523,12 +523,7 @@ Rconnection newWpipe(char *description, char *mode)
 	free(new->class); free(new);
 	error("allocation of pipe connection failed");
     }
-    strcpy(new->description, description);
-    strncpy(new->mode, mode, 4); new->mode[4] = '\0';
-    new->isopen = new->incomplete = FALSE;
-    new->canread = new->canwrite = TRUE; /* in principle */
-    new->canseek = FALSE;
-    new->text = TRUE;
+    init_con(new, description, mode);
     new->open = &Wpipe_open;
     new->close = &Wpipe_close;
     new->destroy = &Wpipe_destroy;
@@ -539,7 +534,6 @@ Rconnection newWpipe(char *description, char *mode)
     new->fflush = &Wpipe_fflush;
     new->read = &Wpipe_read;
     new->write = &Wpipe_write;
-    new->nPushBack = 0;
     new->private = (void *) malloc(sizeof(struct Wpipeconn));
     if(!new->private) {
 	free(new->description); free(new->class); free(new);
