@@ -24,7 +24,7 @@ mtext(text, side = 3, line = 0, outer = FALSE, at = NULL,
   \item{col}{color to use.}
   \item{font}{font for text.}
 }
- %  --- mtext is defined via do_mtext(.) in  src/main/plot.c ---
+% mtext is defined via do_mtext(.) in  src/main/plot.c ---
 \description{
   Text is written in one of the four margins of the current figure region
   or one of the outer margins of the device region.
@@ -32,7 +32,7 @@ mtext(text, side = 3, line = 0, outer = FALSE, at = NULL,
 \details{
   The ``user coordinates'' in the outer margins always range from zero to
   one, and are not affected by the user coordinates in the figure
-  region(s).
+  region(s) --- \R is differing here from other implementations of S.
 
   The arguments \code{side}, \code{line}, \code{at}, \code{at},
   \code{adj}, the further graphical parameters and even \code{outer} can
