@@ -146,10 +146,11 @@ AC_ARG_WITH(gnome,
 ### Programs.
 
 AC_PROG_INSTALL
-## Fix a bug in autoconf---the path of the install shell script is
-## not cached.  Could also use an absolute path in AC_CONFIG_AUX_DIR().
+## Fix a bug in older versions of autoconf---the path of the install
+## shell script is not cached.  Could also use an absolute path in
+## AC_CONFIG_AUX_DIR().
 case ${INSTALL} in
-  *install-sh*)
+  [!/]*install-sh*)
     INSTALL="\$\(top_srcdir\)/${INSTALL}" ;;
 esac
 ## Osman says that this is necessary.
