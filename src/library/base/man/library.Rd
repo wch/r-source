@@ -211,13 +211,14 @@ require(package, quietly = FALSE, warn.conflicts = TRUE,
   line endings and OS-specific help files.
 
   \code{library} and \code{require} use the underlying file system
-  services to locate the libraries, with the result that on 
-  case-sensitive file systems package names are case-sensitive 
-  (i.e., \code{library(foo)} is different from 
-  \code{library(Foo)}), but they are not distinguished on 
-  case-insensitive file systems such as MS Windows.  A warning 
-  is issued if the user specifies a name which isn't a perfect match 
-  to the package name.
+  services to locate the libraries, with the result that on
+  case-sensitive file systems package names are case-sensitive
+  (i.e., \code{library(foo)} is different from
+  \code{library(Foo)}), but they are not distinguished on
+  case-insensitive file systems such as MS Windows.  A warning
+  is issued if the user specifies a name which isn't a perfect match
+  to the package name, because future versions of \R will require
+  exact matches.
 
 }
 \author{R core;  Guido Masarotto for the \code{all.available=TRUE}
