@@ -7,7 +7,7 @@ chull(x, y=NULL)
 \arguments{
   \item{x, y}{coordinate vectors of points. This can be specified as two
     vectors \code{x} and \code{y}, a 2-column matrix \code{x}, a list
-    \code{x} with components \code{x} and \code{y}}
+    \code{x} with two components, etc, see \code{\link{xy.coords}}.}
 }
 \description{
   Computes the subset of points which lie on the convex hull of the
