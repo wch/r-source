@@ -42,7 +42,7 @@ R: Makefile $(OBJECTS) svnonly
 	done
 
 svnonly:
-	@if test ! -f "$(srcdir)/resources.html" ; then \
+	@if test ! -f "$(srcdir)/resources.html" -o -f non-tarball ; then \
 	  cd ../manual && $(MAKE) html-non-svn ; \
 	  touch non-tarball ; \
 	else \

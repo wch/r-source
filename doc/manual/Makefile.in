@@ -444,10 +444,18 @@ distdir: $(DISTFILES)
 #	@$(TEXI2HTML) --no-headers $(srcdir)/resources.texi \
 #	  -o $(distdir)/../html/resources.html
 
-front-matter:
+front-matter: ${top_builddir}/RESOURCES ${top_builddir}/FAQ
+
+${top_builddir}/RESOURCES: $(srcdir)/resources.texi
+	@echo "creating RESOURCES"
 	@$(TEXI2TEXT) $(srcdir)/resources.texi -o ${top_builddir}/RESOURCES
+
+${top_builddir}/FAQ: $(srcdir)/R-FAQ.texi
+	@echo "creating FAQ"
 	@$(TEXI2TEXT) $(srcdir)/R-FAQ.texi -o ${top_builddir}/FAQ
 
-html-non-svn:
-	@$(TEXI2HTML) --no-headers $(srcdir)/resources.texi \
-	  -o ../html/resources.html
+html-non-svn: ../html/resources.html
+
+../html/resources.html: $(srcdir)/resources.texi
+	@echo "creating doc/html/resources.html"
+	@$(TEXI2HTML) --no-headers $(srcdir)/resources.texi -o $@
