@@ -70,6 +70,10 @@ BUG FIXES
 
     o	Lots of help examples now tidy up the files they created.
 
+    o   library(help=foo) lists only contents of first pkg if multiple
+        are found along lib.loc
+
+
 
 	**************************************************
 	*						 *
