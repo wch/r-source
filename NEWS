@@ -162,6 +162,9 @@ NEW FEATURES
     o	nchar() returns the true number of characters stored
 	(including any embedded nuls), this being 2 for missing values.
 
+    o	all/any() now attempt to coerce their arguments to logical, as
+	documented in the Blue Book.  This means e.g. any(list()) works.
+
 
 UTILITIES
 

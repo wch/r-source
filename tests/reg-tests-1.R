@@ -3402,3 +3402,12 @@ weight <- c(ctl, trt)
 lm.D9 <- lm(weight ~ group)
 stopifnot(labels(lm.D9) == "group")
 ## failed in 2.0.1, giving length 0
+
+## all/any did not coerce as the Blue Book described.
+for(x in c("F", "FALSE", "T", "TRUE", "NA")) {
+    print(all(x))
+    print(any(x))
+}
+all(list())
+any(list())
+## all failed in 2.0.1 with 'incorrect argument type'
