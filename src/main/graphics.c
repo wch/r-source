@@ -2771,7 +2771,7 @@ int GClipPolygon(double *x, double *y, int n, int coords, int store,
     /* We should set up the cliprect here for R. */
     /* If xpd == 1, clip to the figure region. */
     /* If xpd == 0, clip to the plot region. */
-    /* If neccessary, swap the clip region extremes */
+    /* If necessary, swap the clip region extremes */
     for (i = 0; i < n; i++) 
 	clipPoint (Left, x[i], y[i], xout, yout, &cnt, store, &clip, cs);
     closeClip (xout, yout, &cnt, store, &clip, cs);
