@@ -1,5 +1,8 @@
 \name{relevel}
 \alias{relevel}
+\alias{relevel.default}
+\alias{relevel.factor}
+\alias{relevel.ordered}
 \title{Reorder Levels of Factor}
 \usage{
 relevel(x, ref, \dots)
@@ -18,7 +21,7 @@ relevel(x, ref, \dots)
 \value{
     A factor of the same length as \code{x}.
 }
-\author{B.D. Ripley}
+\author{B. D. Ripley}
 
 \seealso{\code{\link{factor}}, \code{\link{contr.treatment}}}
 

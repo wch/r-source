@@ -4,6 +4,7 @@
 \title{Fit an Analysis of Variance Model}
 \usage{
 aov(formula, data=NULL, projections=FALSE, contrasts=NULL, ...)
+se.aov(object, n, type = "means") 
 }
 \alias{aov}
 \alias{print.aov}
@@ -43,7 +44,8 @@ aov(formula, data=NULL, projections=FALSE, contrasts=NULL, ...)
 }
 \value{
   An object of class \code{c("aov", "lm")} or for multiple responses
-  of class \code{c("maov", "aov", "mlm", "lm")}.  There are
+  of class \code{c("maov", "aov", "mlm", "lm")} or for multiple error
+  strata of class \code{"aovlist"}.  There are
   \code{\link{print}} and \code{\link{summary}} methods available for these.
 }
 \author{B.D. Ripley}
