@@ -37,13 +37,10 @@ versions of the cygwin tools and dll.  To avoid frustration, please
 use our tool set, and make sure it is at the front of your path.
 
 You need a recent version of the Mingw port of gcc from
-http://sourceforge.net/projects/mingw/.  There will probably be a
-distribution called something like MinGW-2.0.0-3.exe, or you can get
-the components (binutils-2.13, gcc-3.2, mingw-runtime-2.3 and
-w32api-2.1 or later.)  Earlier versions will probably work, but
-mingw-runtime >= 2.0 and w32api >= 2.0 are essential.  `Release
-candidates' of MinGW-3 have been available for some time and work
-well: the release candidates of gcc-3.3.1 have also been tested.
+http://sourceforge.net/projects/mingw/.  There will be a distribution
+called something like MinGW-3.0.0-1.exe.  Earlier versions may work,
+but mingw-runtime >= 2.0 and w32api >= 2.0 are essential.  The release
+candidates of gcc-3.3.1 have also been tested.
 
 No earlier Mingw compiler has been tested and support for using the
 Cygwin compiler has been withdrawn.  If you see errors about `-shared'
