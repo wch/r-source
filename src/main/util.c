@@ -874,10 +874,12 @@ SEXP dcdr(SEXP l)
     return(CDR(l));
 }
 
+/* merge(xinds, yinds, all.x, all.y) */
 SEXP do_merge(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP xi, yi, ansx, ansy, ans, ansnames;
     int y, nx = 0, ny = 0, i, j, k, nans = 0;
+    int all_x = 0, all_y = 0;/* "= 0" : for -Wall */
 
     checkArity(op, args);
     xi = CAR(args);
@@ -886,16 +888,18 @@ SEXP do_merge(SEXP call, SEXP op, SEXP args, SEXP rho)
     yi = CADR(args);
     if ( !isInteger(yi) || !(ny = LENGTH(yi)) )
 	error("invalid `yinds' argument");
+    if(!LENGTH(ans = CADDR(args)) || NA_LOGICAL == (all_x = asLogical(ans)))
+	errorcall(call, "`all.x' must be TRUE or FALSE");		 
+    if(!LENGTH(ans = CADDDR(args))|| NA_LOGICAL == (all_y = asLogical(ans)))
+	errorcall(call, "`all.y' must be TRUE or FALSE");
     for (j = 0; j < ny; j++)
 	if ((y = INTEGER(yi)[j]) > 0)
 	    for (i = 0; i < nx; i++) {
 		if (INTEGER(xi)[i] == y) nans++;
 	    }
     PROTECT(ans = allocVector(VECSXP, 2));
-    ansx = allocVector(INTSXP, nans);
-    SET_VECTOR_ELT(ans, 0, ansx);
-    ansy = allocVector(INTSXP, nans);
-    SET_VECTOR_ELT(ans, 1, ansy);
+    ansx = allocVector(INTSXP, nans);    SET_VECTOR_ELT(ans, 0, ansx);
+    ansy = allocVector(INTSXP, nans);    SET_VECTOR_ELT(ans, 1, ansy);
     for (j = 0, k = 0; j < ny; j++)
 	if ((y = INTEGER(yi)[j]) > 0)
 	    for (i = 0; i < nx; i++) 

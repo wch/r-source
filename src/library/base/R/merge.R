@@ -4,8 +4,8 @@ merge.default <- function(x, y, ...)
     merge(as.data.frame(x), as.data.frame(y), ...)
 
 merge.data.frame <-
-    function(x, y, by = intersect(names(x), names(y)),
-             by.x = by, by.y = by, sort = TRUE)
+    function(x, y, by = intersect(names(x), names(y)), by.x = by, by.y = by,
+             all = FALSE, all.x = all, all.y = all, sort = TRUE)
 {
     fix.by <- function(by, df)
     {
@@ -24,9 +24,8 @@ merge.data.frame <-
         unique(by)
     }
 
-    x <- as.data.frame(x); y <- as.data.frame(y)
-    if (nrow(x) == 0 || nrow(y) == 0)
-        stop("no rows to match")
+    nx <- nrow(x <- as.data.frame(x)); ny <- nrow(y <- as.data.frame(y))
+    if (nx == 0 || ny == 0) stop("no rows to match")
     by.x <- fix.by(by.x, x); by.y <- fix.by(by.y, y)
     if(length(by.x) && any(by.x == 0)) {
         x <- cbind(Row.names = row.names(x), x)
@@ -39,29 +38,29 @@ merge.data.frame <-
     if(length(by.x) == 0) stop("no columns to match on")
     if(length(by.x) != length(by.y))
         stop("by.x and by.y specify different numbers of columns")
-    row.names(x) <- 1:nrow(x)
-    row.names(y) <- 1:nrow(y)
+    row.names(x) <- 1:nx
+    row.names(y) <- 1:ny
     ## create keys from by cols.
-    bx <- matrix(as.character(as.matrix.data.frame(x[, by.x, drop=FALSE])),
-                 nrow(x))
+    bx <- matrix(as.character(as.matrix.data.frame(x[, by.x, drop=FALSE])), nx)
+    by <- matrix(as.character(as.matrix.data.frame(y[, by.y, drop=FALSE])), ny)
     bx <- drop(apply(bx, 1, function(x) paste(x, collapse="\r")))
-    by <- matrix(as.character(as.matrix.data.frame(y[, by.y, drop=FALSE])),
-                 nrow(y))
     by <- drop(apply(by, 1, function(x) paste(x, collapse="\r")))
     comm <- match(bx, by, 0)
     bxy <- bx[comm > 0]
     xinds <- match(bx, bxy, 0)
     yinds <- match(by, bxy, 0)
-#    o <- outer(xinds, yinds, function(x, y) (x > 0) & x==y)
-#    xi <- row(o)[o]
-#    yi <- col(o)[o]
-    m <- .Internal(merge(xinds, yinds))
+    ## R-only solution {when !all.x && !all.y} :
+    ##   o <- outer(xinds, yinds, function(x, y) (x > 0) & x==y)
+    ##   m <- list(xi = row(o)[o], yi = col(o)[o])
+    m <- .Internal(merge(xinds, yinds, all.x, all.y))
     nm <- nm.x <- names(x)[-by.x]
     nm.y <- names(y)[-by.y]
+    ## x :
     cnm <- match(nm.x, nm.y, 0)
     nm.x[cnm > 0] <- paste(nm.x[cnm > 0], "x", sep=".")
     x <- x[m$xi, c(by.x, seq(length=ncol(x))[-by.x]), drop=FALSE]
     names(x) <- c(names(x)[seq(along=by.x)], nm.x)
+    ## y :
     cnm <- match(nm.y, nm, 0)
     nm.y[cnm > 0] <- paste(nm.y[cnm > 0], "y", sep=".")
     y <- y[m$yi, -by.y, drop=FALSE]
