@@ -213,8 +213,8 @@ require(package, quietly = FALSE, warn.conflicts = TRUE,
   \code{library} and \code{require} use the underlying file system
   services to locate the libraries, with the result that on 
   case-sensitive file systems package names are case-sensitive 
-  (i.e. \code{library(foo)} is different from 
-  \code{library(Foo)}), but they are not distinguised on 
+  (i.e., \code{library(foo)} is different from 
+  \code{library(Foo)}), but they are not distinguished on 
   case-insensitive file systems such as MS Windows.  A warning 
   is issued if the user specifies a name which isn't a perfect match 
   to the package name.
