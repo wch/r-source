@@ -1162,8 +1162,7 @@ SEXP do_assign(SEXP call, SEXP op, SEXP args, SEXP rho)
     SEXP name, val, aenv;
     int ginherits = 0;
     checkArity(op, args);
-    name = findVar(CAR(args), rho);
-    PROTECT(args = evalList(args, rho));
+
     if (!isString(CAR(args)) || length(CAR(args)) == 0)
 	error("invalid first argument");
     else
@@ -1181,7 +1180,7 @@ SEXP do_assign(SEXP call, SEXP op, SEXP args, SEXP rho)
 	setVar(name, val, aenv);
     else
 	defineVar(name, val, aenv);
-    UNPROTECT(2);
+    UNPROTECT(1);
     return val;
 }
 

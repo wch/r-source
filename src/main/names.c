@@ -182,7 +182,7 @@ FUNTAB R_FunTab[] =
 {"comment<-",	do_commentgets,	0,	11,	2,	PP_FUNCALL},
 {"get",		do_get,		1,	11,	4,	PP_FUNCALL},
 {"exists",	do_get,		0,	11,	4,	PP_FUNCALL},
-{"assign",	do_assign,	0,	110,	4,	PP_FUNCALL},
+{"assign",	do_assign,	0,	111,	4,	PP_FUNCALL},
 {"remove",	do_remove,	0,	111,	3,	PP_FUNCALL},
 {"duplicated",	do_duplicated,	0,	11,	1,	PP_FUNCALL},
 {"unique",	do_duplicated,	1,	11,	1,	PP_FUNCALL},
