@@ -41,7 +41,7 @@ FFLAGS = $(OPTFLAGS)
 rbuild: fixfiles makeMakedeps rlibs ../../bin/R.dll libR.a CHTML \
 	../include/globalvar.h front-ends COPYRIGHTS
 
-rpackage: fixed/fixdesc $(PKGS)
+rpackage: fixed/fixdesc $(PKGS) ../../library/R.css
 
 rinstaller:
 	$(MAKE) -C installer PREFIX=$(RPREFIX)
@@ -115,6 +115,12 @@ tcl:
 	$(MAKE) pkg-tcltk
 
 
+../../library/R.css: ../../doc/html/R.css
+	$(CP) $< $@
+
+
+#                          ===== Packages ======
+
 CHTML:
 ifeq ($(strip $(HELP)),YES)
 ifeq ($(strip $(WINHELP)),CHM)
@@ -125,8 +131,10 @@ ifeq ($(strip $(WINHELP)),BOTH)
 endif
 endif
 
-
 base-HELP = ziponly
+
+bundle-%:
+	$(PERL) fixed/dobundle.pl $* $(PKGD) $(RLIB)
 
 pkg-%:  libR.a #../include/globalvar.h
 	$(MAKE) DLLNM=$($*-DLLNM)  EXTRADOCS=$($*-EXTRADOCS) \
@@ -171,21 +179,29 @@ zipdata-%:
 
 bootstrap-DLLNM=boott
 
+
+#                          ===== cleaning ======
+
 clean: cleanwin $(PKGCLEAN)
 	$(RM) -f ../*/*.o $(WINOBJS) *.a ../*/*.d ../*/Makedeps fixed/fixdesc
 	-$(MAKE) -C ../../doc/manual -f Makefile.win distclean
 	-$(MAKE) -C ../nmath/standalone -f Makefile.win distclean
 
 distclean veryclean: clean
-	$(RM) -rf R.exp ../../bin ../../library
+	$(RM) -rf R.exp globalvar.h ../../bin ../../library
+	$(RM) -f ../include/config.h ../include/psignal.h \
+	../include/Rconfig.h ../include/version.h 
 	$(RM) -f ../library/*/src/*.o ../library/*/src/*.a
 	$(RM) -f ../library/*/src/*.dll
 	$(RM) -rf ../library/*/check
 	$(RM) -f ../../doc/html/search/index.txt \
-	../../doc/html/function.html ../../doc/html/packages.html \
+	../../doc/html/function.html ../../doc/html/function-head.html \
+	../../doc/html/packages.html ../../doc/html/rwin.html \
+	../../doc/html/rw-FAQ.html ../../doc/html/search/SearchEngine.html \
 	../../demos/dynload/zero.def ../../demos/dynload/zero.dll \
-	../../demos/dynload/zero.o \
-	../../etc/Rconsole ../etc/Rdevga ../etc/Rprofile ../../etc/rgb.txt \
+	../../demos/dynload/zero.o
+	$(RM) -f ../../etc/Rconsole ../../etc/Rdevga ../../etc/Rprofile \
+	../../etc/rgb.txt ../../etc/Makeconf-tests \
 	../include/FFDecl.h ../include/FFTab.h ../include/Platform.h \
 	../include/globalvar.h ../../tests/*.Rout ../../tests/*.Rout.fail
 
@@ -202,6 +218,8 @@ cleanwin:
 	$(MAKE) -C bitmap clean
 	-$(MAKE) -C installer clean
 
+
+#                          ===== testing ======
 
 # tests
 check test: test-Specific pkgtests
@@ -222,8 +240,8 @@ pkgcheck-base:
 	  -f ../../../gnuwin32/check/PkgCheck
 	@(cd ../../library/base/R-ex; rm -f *.R)
 
-bundle-%:
-	$(PERL) fixed/dobundle.pl $* $(PKGD) $(RLIB)
+
+#                          ===== documentation ======
 
 docs manuals:
 	@$(MAKE) -C $(RHOME)/doc/manual -f Makefile.win clean
@@ -231,7 +249,7 @@ docs manuals:
 	@$(MAKE) ziponly-base
 
 
-## ============= Maintainer targets ========================
+## ===================== Maintainer targets ========================
 
 RVER = $(shell cut -d' ' -f1 ../../VERSION | sed -n 1p)
 

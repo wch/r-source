@@ -22,6 +22,10 @@ endif
 libR.a:  R.exp
 	$(DLLTOOL) $(DLLTOOLFLAGS) $(R-DLLTOOLFLAGS) --dllname R.dll --def R.exp --output-lib libR.a
 
+#                          ===== Packages ======
+
+bundle-%:
+	$(PERL) fixed/dobundle.pl $* $(PKGD) $(RLIB)
 
 pkg-%:  libR.a #../include/globalvar.h
 	$(MAKE) DLLNM=$($*-DLLNM)  EXTRADOCS=$($*-EXTRADOCS) \
@@ -63,9 +67,6 @@ ziponly-%:
 zipdata-%:
 	(cd $(RLIB)/$*/data; ls -1 > filelist; \
 	  zip -rmq9X Rdata * -x filelist 00Index)
-
-bundle-%:
-	$(PERL) fixed/dobundle.pl $* $(PKGD) $(RLIB)
 
 bootstrap-DLLNM=boott
 
