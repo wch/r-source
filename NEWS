@@ -25,7 +25,7 @@ NEW FEATURES
 	palette has been added.
 
     o	Primitive function .External() to call dynamically loaded
-	`internal'-style functions (code from Jean Meloche)
+	`internal'-style functions (code from Jean Meloche).
 
     o	Function page() to view an R object in a pager.
 
@@ -39,7 +39,7 @@ NEW FEATURES
 	almost non-existent) manual and a reference index.
 	Manual: new section on loading C++ code.
 
-    o	Gnome support added
+    o	Gnome support added.
 
     o	The X11 graphics driver no longer produces "color allocation"
 	error messages.	 On pseudocolor displays, the driver allocates
@@ -65,6 +65,9 @@ NEW FEATURES
 
 BUG FIXES
 
+    o	.C() and .Fortran() now correctly report that there might be
+	NaN/Infs, not just NAs, unless NAOK=TRUE.
+
     o	Resizing an inactive graphics window to an invalid size left
 	that window active and produced a spurious prompt and newline
 	in the console window.	This no longer happens.
@@ -83,7 +86,7 @@ BUG FIXES
 
 NEW FEATURES
 
-    o	Function chull() for planar convex hulls.
+    o	Function chull() for planar convex hulls
 
     o	pairs.formula() allows formula notations for scatter plot matrix.
 

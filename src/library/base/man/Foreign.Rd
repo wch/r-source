@@ -12,9 +12,10 @@
 \item{name}{a character string giving the name of a C function or
   Fortran subroutine.}
 \item{\dots}{arguments to be passed to the foreign function.}
-\item{NAOK}{if \code{TRUE} then any \code{NA} values in the arguments
-  are passed on to the foreign function.
-  If \code{FALSE}, the presence of \code{NA} values is regarded as an error.}
+\item{NAOK}{if \code{TRUE} then any \code{NA} or \code{NaN} or
+  \code{Inf} values in the arguments are passed on to the foreign function.
+  If \code{FALSE}, the presence of \code{NA}  or \code{NaN} or
+  \code{Inf} values is regarded as an error.}
 \item{DUP}{if \code{TRUE} then arguments are ``duplicated'' before their
   address is passed to C or Fortran.}
 }

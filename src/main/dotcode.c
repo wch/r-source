@@ -70,7 +70,7 @@ static void *RObjToCPtr(SEXP s, int naok, int dup, int narg)
 	rptr = REAL(s);
 	for (i = 0 ; i < n ; i++) {
 	    if(!naok && !FINITE(rptr[i]))
-		error("NAs in foreign function call (arg %d)\n", narg);
+		error("NA/NaN/Inf in foreign function call (arg %d)\n", narg);
 	}
 	if (dup) {
 	    rptr = (double*)R_alloc(n, sizeof(double));
@@ -84,7 +84,7 @@ static void *RObjToCPtr(SEXP s, int naok, int dup, int narg)
 	zptr = COMPLEX(s);
 	for (i = 0 ; i < n ; i++) {
 	    if(!naok && (!FINITE(zptr[i].r || !FINITE(zptr[i].i))))
-		error("NAs in foreign function call (arg %d)\n", narg);
+		error("Complex NA/NaN/Inf in foreign function call (arg %d)\n", narg);
 	}
 	if (dup) {
 	    zptr = (complex*)R_alloc(n, sizeof(complex));
