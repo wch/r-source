@@ -31,14 +31,15 @@ R --vsize v --nsize n
     the input \code{v} is therefore truncated to the nearest multiple of 8.
 
     The \code{--nsize} option can be used to specify the
-    number of cons cells (each occupying 16 bytes) which \R is to use
-    (the default is 250000), and the \code{--vsize} option to  specify
-    the size of the vector heap in bytes (the default is 6 MB).
-    Both options must be integers or integers ending with
-    \code{M}, \code{K}, or \code{k} meaning \emph{Mega}
-    (= \eqn{2^{20}} = 1048576), (computer) \emph{Kilo} (= \eqn{2^{10}} = 1024),
-    or regular \emph{kilo} (= 1000). (The minimum allowed values are
-    200000 and 2M.)
+    number of cons cells (each occupying 20 bytes on a 32-bit machine)
+    which \R is to use (the default is 250000), and the \code{--vsize}
+
+    option to specify the size of the vector heap in bytes
+    (the default is 6 MB). Both options must be integers or integers
+    ending with \code{M}, \code{K}, or \code{k} meaning \emph{Mega}
+    (= \eqn{2^{20}} = 1048576), (computer) \emph{Kilo}
+    (= \eqn{2^{10}} = 1024), or regular \emph{kilo}
+    (= 1000). (The minimum allowed values are 200000 and 2M.)
     \cr
     E.g., to read in a table of 10000 observations on 40 numeric
     variables, \code{R --vsize 10M} should do;  For
