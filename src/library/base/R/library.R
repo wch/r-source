@@ -262,9 +262,14 @@ function(package, lib.loc = .lib.loc, use.attached, quiet = FALSE)
         }
         if(length(fp) > 1) {
             fp <- fp[1]
-            warning(paste("package `", pkg, "' found more than once,\n",
-                          "using the one found in `", dirname(fp), "'",
-                          sep = ""))
+            ## <FIXME>
+            ## This may be useful calling library() interactively, but
+            ## is really a nuisance for the QA checks.  Temporarily
+            ## commented until we know what we we really want ...
+            ## warning(paste("package `", pkg, "' found more than once,\n",
+            ##   "using the one found in `", dirname(fp), "'",
+            ##   sep = ""))
+            ## </FIXME>
         }
         paths <- c(paths, fp)
     }
