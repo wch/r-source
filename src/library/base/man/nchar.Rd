@@ -25,9 +25,9 @@ nchar(x, type = c("bytes", "chars", "width"))
       print the string in a monospaced font.  The same as \code{chars}
       if this cannot be calculated (which is currently common).}
   }
-  These will often be the same (but backspace \code{\b} and \code{\t}
-  can affect the width).  There will be differences between the first
-  two with multibyte character sequences, e.g. in UTF-8 locales.
+  These will often be the same, and always will be in single-byte
+  locales. There will be differences between the first two with
+  multibyte character sequences, e.g. in UTF-8 locales.
   If the byte stream contains embedded \code{nul} bytes,
   \code{type = "bytes"} looks at all the bytes whereas the other two
   types look only at the string as printed by \code{cat}, up to the

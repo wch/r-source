@@ -125,17 +125,19 @@ SEXP do_nchar(SEXP call, SEXP op, SEXP args, SEXP env)
 		INTEGER(s)[i] = 2 /* NA_INTEGER */;
 	    } else {
 #ifdef SUPPORT_MBCS
-		nc = mbstowcs(NULL, CHAR(STRING_ELT(x, i)), 0);
-		INTEGER(s)[i] = nc >= 0 ? nc : NA_INTEGER;
-#else
-		INTEGER(s)[i] = strlen(CHAR(STRING_ELT(x, i)));
+		if(mbcslocale) {
+		    nc = mbstowcs(NULL, CHAR(STRING_ELT(x, i)), 0);
+		    INTEGER(s)[i] = nc >= 0 ? nc : NA_INTEGER;
+		} else
 #endif
+		    INTEGER(s)[i] = strlen(CHAR(STRING_ELT(x, i)));
 	    }
 	} else {
 	    if(STRING_ELT(x, i) == NA_STRING) {
 		INTEGER(s)[i] = 2 /* NA_INTEGER */;
 	    } else {
 #ifdef SUPPORT_MBCS
+		if(mbcslocale) {
 		xi = CHAR(STRING_ELT(x, i));
 		nc = mbstowcs(NULL, xi, 0);
 #ifdef HAVE_WCSWIDTH
@@ -148,9 +150,9 @@ SEXP do_nchar(SEXP call, SEXP op, SEXP args, SEXP env)
 		} else
 #endif
 		    INTEGER(s)[i] = nc >= 0 ? nc : NA_INTEGER;
-#else
-		INTEGER(s)[i] = strlen(CHAR(STRING_ELT(x, i)));
+		} else
 #endif
+		INTEGER(s)[i] = strlen(CHAR(STRING_ELT(x, i)));
 	    }
 	}
     }
