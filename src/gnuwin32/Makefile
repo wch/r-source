@@ -42,15 +42,14 @@ extra-CFLAGS+=-DLEA_MALLOC
 OBJS-EXTRA=malloc.o
 endif
 
-USE_LIBXML=YES
 ifdef USE_LIBXML
 EXTRALIBS+= Rlibxml.a
 OPTFLAGS+=-DHAVE_LIBXML
 endif
 
 ifdef USE_WININET
-EXTRALIBS+= libwininet.a
-OPTFLAGS+=-DHAVE_WININET
+R-DLLLIBS+=-lwininet
+OPTFLAGS+=-DUSE_WININET
 endif
 
 .PHONY:  clean veryclean  rlibs fixfiles front-ends
