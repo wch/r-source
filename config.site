@@ -142,4 +142,4 @@
 # containing object files from a C++ compiler.  This is usually
 # automatically detected by configure, and anything set here will be in
 # addition unless SHLIB_CXXLD is given.
-# SHLIB_LDFLAGS=
+# SHLIB_CXXLDFLAGS=
