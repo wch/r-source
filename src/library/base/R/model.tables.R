@@ -447,8 +447,8 @@ print.mtable <-
     a <- a[!is.na(a.ind)]
     class(x) <- attributes(x) <- NULL
     attributes(x) <- a
-    if(length(nn) > 1)
-	cat(paste("Dim ",paste(seq(length(nn)), "=", nn, collapse= ", "),"\n"))
+#    if(length(nn) > 1)
+#	cat(paste("Dim ",paste(seq(length(nn)), "=", nn, collapse= ", "),"\n"))
     if(length(x) == 1 && is.null(names(x)) && is.null(dimnames(x)))
 	names(x) <- rep("", length(x))
     if(length(dim(x)) && is.numeric(x)) {
