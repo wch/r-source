@@ -380,6 +380,10 @@ BUG FIXES
 
     o	promax() was returning the wrong rotation matrix (PR#1149).
 
+    o	The [pqr]signrank and [pqr]wilcox functions failed to check that
+	memory has been allocated (PR#1149), and had (often large)
+	memory leaks if interrupted.  They now can be interrupted on
+	Windows and MacOS and don't leak memory.
 
 
 	**************************************************

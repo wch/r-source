@@ -1,6 +1,6 @@
 /*
  *  Mathlib : A C Library of Special Functions
- *  Copyright (C) 1999-2000  The R Development Core Team
+ *  Copyright (C) 1999-2001  The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -38,7 +38,17 @@
 #include "nmath.h"
 #include "dpq.h"
 
+#ifndef MATHLIB_STANDALONE
+#ifdef Macintosh
+extern void isintrpt();
+#endif
+#ifdef Win32
+extern void R_ProcessEvents();
+#endif
+#endif
+
 static double **w;
+static int allocated_n;
 
 /* The idea is to allocate w of size SIGNRANK_MAX on the first small call, and
    to reallocate only for n > SIGNRANK_MAX, although for some reason
@@ -57,11 +67,9 @@ w_free(int n)
     w = 0;
 }
 
-static void
-w_free_maybe(int n)
+void signrank_free()
 {
-    if (n > SIGNRANK_MAX)
-	w_free(n);
+    if (allocated_n > SIGNRANK_MAX) w_free(allocated_n);
 }
 
 static void
@@ -71,7 +79,7 @@ w_init_maybe(int n)
 	w_free(SIGNRANK_MAX);
 
     if (!w) {
-	n = imax2(n, SIGNRANK_MAX);
+	allocated_n = n = imax2(n, SIGNRANK_MAX);
 	w = (double **) calloc(n + 1, sizeof(double *));
 	if (!w)
 	    MATHLIB_ERROR("%s", "signrank allocation error");
@@ -83,6 +91,16 @@ csignrank(int k, int n)
 {
     int c, u, i;
 
+#ifndef MATHLIB_STANDALONE
+    /* check for a user interrupt */
+#ifdef Macintosh
+    isintrpt();
+#endif
+#ifdef Win32
+    R_ProcessEvents();
+#endif
+#endif
+
     u = n * (n + 1) / 2;
     c = (int) (u / 2);
 
@@ -93,8 +111,6 @@ csignrank(int k, int n)
     if (w[n] == 0) {
 	w[n] = (double *) calloc(c + 1, sizeof(double));
 	if (!w[n]) {
-	    /* free up memory iff n is large */
-	    w_free_maybe(n);
 	    MATHLIB_ERROR("%s", "signrank allocation error");
 	}
 	for (i = 0; i <= c; i++)
@@ -129,7 +145,6 @@ double dsignrank(double x, double n, int give_log)
 
     w_init_maybe(n);
     d = R_D_exp(log(csignrank(x, n)) - n * M_LN2);
-    w_free_maybe(n);
 
     return(d);
 }
@@ -166,7 +181,6 @@ double psignrank(double x, double n, int lower_tail, int log_p)
 	    p += csignrank(i, n) * f;
 	lower_tail = !lower_tail; /* p = 1 - p; */
     }
-    w_free_maybe(n);
 
     return(R_DT_val(p));
 } /* psignrank() */
@@ -219,7 +233,6 @@ double qsignrank(double x, double n, int lower_tail, int log_p)
 	    q++;
 	}
     }
-    w_free_maybe(n);
 
     return(q);
 }

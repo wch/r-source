@@ -37,6 +37,7 @@
 #include "dpq.h"
 
 static double ***w;
+static int allocated_m, allocated_n;
 
 static void
 w_free(int m, int n)
@@ -69,6 +70,7 @@ w_init_maybe(int m, int n)
 	w_free(WILCOX_MAX, WILCOX_MAX);
 
     if (!w) {
+	allocated_m = m; allocated_n = n;
 	if (m > n) {
 	    i = n; n = m; m = i;
 	}
@@ -152,7 +154,6 @@ double dwilcox(double x, double m, double n, int give_log)
     d = give_log ?
 	log(cwilcox(x, m, n)) - lchoose(m + n, n) :
 	    cwilcox(x, m, n)  /	 choose(m + n, n);
-    w_free_maybe(m, n);
 
     return(d);
 }
@@ -193,7 +194,6 @@ double pwilcox(double x, double m, double n, int lower_tail, int log_p)
 	    p += cwilcox(i, m, n) / c;
 	lower_tail = !lower_tail; /* p = 1 - p; */
     }
-    w_free_maybe(m, n);
 
     return(R_DT_val(p));
 } /* pwilcox */
@@ -247,7 +247,6 @@ double qwilcox(double x, double m, double n, int lower_tail, int log_p)
 	    q++;
 	}
     }
-    w_free_maybe(m, n);
 
     return(q);
 }
@@ -284,3 +283,10 @@ double rwilcox(double m, double n)
     }
     return(r - n * (n - 1) / 2);
 }
+
+void wilcox_free()
+{
+    w_free_maybe(allocated_m, allocated_n);
+}
+
+
