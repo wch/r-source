@@ -270,7 +270,8 @@ SEXP MatrixSubset(SEXP x, SEXP s, SEXP call, int drop)
 	    UNPROTECT(1);
 	}
     }
-    copyMostAttrib(x, result);
+    /*  Probably should not do this:
+    copyMostAttrib(x, result); */
     if (drop)
 	DropDims(result);
     UNPROTECT(3);
