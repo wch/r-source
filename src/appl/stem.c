@@ -60,9 +60,12 @@ stem_leaf(double *x, int n, double scale, int width, double atom)
 	x1 = fabs(x[0]); x2 = fabs(x[n-1]);
 	if(x2 > x1) x1 = x2;
 	while(x1*c > INT_MAX) c /= 10;
+	if (k*(k-4)*(k-8)==0) mu = 5;
+	if ((k-1)*(k-5)*(k-6)==0) mu = 20;
     } else {
 	r = atom + fabs(x[0])/scale;
 	c = pow(10.,(11.-(int)(log10(r)+10)));
+	k = 2; /* not important what */
     }
     
     mu = 10;
