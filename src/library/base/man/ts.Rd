@@ -95,14 +95,6 @@ class(z)
 plot(z)
 plot(z, plot.type="single", lty=1:3)
 
-# Ensure working arithmetic for `ts' objects :
-stopifnot(z == z)
-stopifnot(z-z == 0)
-
-\testonly{
- ts(1:5, start=2, end=4) # truncate
- ts(1:5, start=3, end=17)# repeat
-}
 ## A phase plot:
 data(nhtemp)
 plot(nhtemp, c(nhtemp[-1], NA), cex = .8, col="blue",

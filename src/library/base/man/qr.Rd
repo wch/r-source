@@ -112,17 +112,6 @@ x <- qr.solve(h9, y, tol = 1e-10) # or equivalently :
 x <- qr.coef(qrh9, y) #-- is == but much better than
                       #-- solve(h9) \%*\% y
 h9 \%*\% x              # = y
-
-\testonly{## tests of complex case
-set.seed(1)
-A <- matrix(rnorm(25), 5, 5, dimnames=list(1:5, letters[1:5]))
-qr.solve(A, 1:5)
-A[] <- as.complex(A)
-qr.coef(qr(A), 1:5)
-qr.solve(A, 1:5)}
-\testonly{## check for rank-deficient cases
-X <- cbind(1:3, 1:3, 1)
-stopifnot(all.equal(qr.X(qr(X)), X))}
 }
 \keyword{algebra}
 \keyword{array}

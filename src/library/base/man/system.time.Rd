@@ -47,13 +47,14 @@ unix.time(expr)
   \code{\link{proc.time}}, \code{\link{time}} which is for time series.
 }
 \examples{
-system.time(for(i in 1:50) mad(runif(500)))
-exT <- function(n = 100) {
+system.time(for(i in 1:100) mad(runif(1000)))
+\dontrun{
+exT <- function(n = 1000) {
   # Purpose: Test if system.time works ok;   n: loop size
   system.time(for(i in 1:n) x <- mean(rt(1000, df=4)))
 }
-#-- Try to interrupt one of the following (using Ctrl-C):
-exT()                 #- `1.4' on -O-optimized Ultra1
+#-- Try to interrupt one of the following (using Ctrl-C / Escape):
+exT()                 #- about 3 secs on a 1GHz PIII
 system.time(exT())    #~ +/- same
-}
+}}
 \keyword{utilities}

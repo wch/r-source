@@ -27,7 +27,7 @@ find(what, mode = "any", numeric. = FALSE, simple.words = TRUE)
   If \code{where} is \code{TRUE}, the positions in the search list are
   returned as the names attribute.
 
-  \code{find} is a different user interface to the same task as \code{apropos}.
+  \code{find} is a different user interface for the same task as \code{apropos}.
   However, by default (\code{simple.words == TRUE}), only full words are
   searched.
 }
@@ -38,7 +38,8 @@ find(what, mode = "any", numeric. = FALSE, simple.words = TRUE)
   \code{\link{search}} for the search path.
 }
 \examples{
-apropos("lm")
+%% some of these have enormous output that varies a lot by version
+\dontrun{apropos("lm")}
 apropos(ls)
 apropos("lq")
 
@@ -48,12 +49,12 @@ find(lm, num=TRUE) # numbers with these names
 find(lm, num=TRUE, mode="function")# only the second one
 rm(lm)
 
-apropos(".", mode="list")
+\dontrun{apropos(".", mode="list") # a long list}
 
 # need a DOUBLE backslash `\\\\' (in case you don't see it anymore)
 apropos("\\\\[")
 
-# everything
+\dontrun{# everything % not diff-able
 length(apropos("."))
 
 # those starting with `pr'
@@ -69,7 +70,7 @@ apropos("^.{2,4}$")
 # the 8-and-more letter things
 apropos("^.{8,}$")
 table(nchar(apropos("^.{8,}$")))
-}
+}}
 \keyword{data}
 \keyword{documentation}
 \keyword{environment}

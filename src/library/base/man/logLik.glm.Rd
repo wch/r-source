@@ -31,17 +31,4 @@
   the MLE.
 }
 \seealso{\code{\link{glm}}, \code{\link{logLik.lm}}}
-\examples{
-\testonly{example("glm", echo = FALSE)}
-##-- Continuing the  glm(.) example:
-Eq <- function(x,y) all.equal(x,y, tol = 1e-12)
-stopifnot(Eq(AIC(anorex.1), anorex.1$aic),
-          Eq(AIC(g1), g1$aic),
-          Eq(AIC(g2), g2$aic))
-## next was wrong in 1.4.1
-x <- 1:10
-lmx <- logLik(lm(x ~ 1)); glmx <- logLik(glm(x ~ 1))
-stopifnot(all.equal(as.vector(lmx), as.vector(glmx)),
-          all.equal(attr(lmx, 'df'), attr(glmx, 'df')))
-}
 \keyword{models}

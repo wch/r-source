@@ -85,10 +85,10 @@ methods(generic.function, class)
 \examples{
 methods(summary)
 
-methods(print)
+\dontrun{methods(print)
 
 methods(class = data.frame)
 
 methods("[")  ##- does not list the C-internal ones...
-}
+}}
 \keyword{methods}

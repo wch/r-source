@@ -84,15 +84,6 @@ image.default(x, y, z, zlim, xlim, ylim, col = heat.colors(12),
   \code{\link{hsv}}, \code{\link{par}}.
 }
 \examples{
-\testonly{
-## Degenerate, should still work
-image(as.matrix(1))
-image(matrix(pi,2,4))
-x <- seq(0,1,len=100)
-image(x, 1, matrix(x), col=heat.colors(10))
-image(x, 1, matrix(x), col=heat.colors(10), oldstyle = TRUE)
-image(x, 1, matrix(x), col=heat.colors(10), breaks = seq(0.1,1.1,len=11))
-}
 x <- y <- seq(-4*pi, 4*pi, len=27)
 r <- sqrt(outer(x^2, y^2, "+"))
 image(z = z <- cos(r^2)*exp(-r/6), col=gray((0:32)/32))

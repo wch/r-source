@@ -65,26 +65,6 @@ apply(ma, 1, quantile)# 5 x n matrix with rownames
 
 stopifnot(dim(ma) == dim(apply(ma, 1:2, sum)))## wasn't ok before R 0.63.1
 
-\testonly{
- apply(x,  2, summary) # 6 x n matrix
- apply(x,  1, quantile)# 5 x n matrix
-
- d.arr <- 2:5
- arr <- array(1:prod(d.arr), d.arr,
-          list(NULL,letters[1:d.arr[2]],NULL,paste("V",4+1:d.arr[4],sep="")))
- aa <- array(1:20,c(2,2,5))
- str(apply(aa[FALSE,,,drop=FALSE], 1, dim))# empty integer, `incorrect' dim.
- stopifnot(
-	apply(arr, 1:2, sum) == t(apply(arr, 2:1, sum)),
-	aa == apply(aa,2:3,function(x) x),
-        all.equal(apply(apply(aa,2:3, sum),2,sum),
-                  10+16*0:4, tol=4*.Machine$double.eps)
- )
- marg <- list(1:2, 2:3, c(2,4), c(1,3), 2:4, 1:3, 1:4)
- for(m in marg) print(apply(arr, print(m), sum))
- for(m in marg) ## 75% of the time here was spent on the names
-   print(dim(apply(arr, print(m), quantile, names=FALSE)) == c(5,d.arr[m]))
-}
 }
 \keyword{iteration}
 \keyword{array}

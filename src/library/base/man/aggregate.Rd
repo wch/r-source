@@ -89,8 +89,6 @@ data(presidents)
 aggregate(presidents, nf = 1, FUN = mean)
 ## Give the summer less weight.
 aggregate(presidents, nf = 1, FUN = weighted.mean, w = c(1, 1, 0.5, 1))
-\testonly{## regression test for PR#376
-aggregate(ts(1:20), nfreq=1/3)
-}}
+}
 \keyword{category}
 \keyword{array}

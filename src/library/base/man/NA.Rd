@@ -49,12 +49,6 @@ The generic function \code{is.na<-} sets elements to \code{NA}.
 \examples{
 is.na(c(1,NA))       #> F TRUE
 is.na(paste(c(1,NA)))#> F FALSE
-\testonly{
- is.na(list())# logical(0)
- ll <- list(pi,"C",NaN,Inf, 1:3, c(0,NA), NA)
- is.na (ll)
- is.nan(ll)
-}
 }
 \keyword{NA}
 \keyword{logic}

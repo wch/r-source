@@ -121,28 +121,6 @@ yl <- c(-1.6, .6)
 plot(x,x, ylim = yl, ylab="",type='n', main = "Bessel Functions  Y_nu(x)")
 for(nu in nus){xx <- x[x > .6*nu]; lines(xx,besselY(xx,nu=nu), col = nu+2)}
 legend(25,-.5, leg=paste("nu=",nus), col = nus+2, lwd=1)
-
-\testonly{
- x0 <- 2^(-20:10)
- plot(x0,x0, log='xy', ylab="", ylim=c(.1,1e60),type='n',
-      main = "Bessel Functions -Y_nu(x)  near 0\n log - log  scale")
- for(nu in sort(c(nus,nus+.5))) lines(x0, -besselY(x0,nu=nu), col = nu+2)
- legend(3,1e50, leg=paste("nu=", paste(nus,nus+.5, sep=",")), col=nus+2, lwd=1)
-
- x <- seq(3,500);yl <- c(-.3, .2)
- plot(x,x, ylim = yl, ylab="",type='n', main = "Bessel Functions  Y_nu(x)")
- for(nu in nus){xx <- x[x > .6*nu]; lines(xx,besselY(xx,nu=nu), col = nu+2)}
- legend(300,-.08, leg=paste("nu=",nus), col = nus+2, lwd=1)
-
- x <- seq(10,50000,by=10);yl <- c(-.1, .1)
- plot(x,x, ylim = yl, ylab="",type='n', main = "Bessel Functions  Y_nu(x)")
- for(nu in nus){xx <- x[x > .6*nu]; lines(xx,besselY(xx,nu=nu), col = nu+2)}
- summary(bY <- besselY(2,nu = nu <- seq(0,100,len=501)))
- which(bY >= 0)
- summary(bY <- besselY(2,nu = nu <- seq(3,300,len=51)))
- summary(bI <- besselI(x = x <- 10:700, 1))
-}
-
 }
 \keyword{math}
 

@@ -163,6 +163,7 @@ legend(0.6, 1.0, legend = kernels, col = seq(kernels), lty = 1)
 (RKs <- cbind(sapply(kernels, function(k)density(kern = k, give.Rkern = TRUE))))
 100*round(RKs["epanechnikov",]/RKs, 4) ## Efficiencies
 
+if(interactive()) {
 data(precip)
 bw <- bw.SJ(precip) ## sensible automatic choice
 plot(density(precip, bw = bw, n = 2^13),
@@ -181,7 +182,7 @@ for(i in 2:length(kernels))
    lines(density(precip, bw = bw, adjust = h.f[i], kern =  kernels[i],
          n = 2^13), col = i)
 legend(55, 0.035, legend = kernels, col = seq(kernels), lty = 1)
-
+}
 }
 \keyword{distribution}
 \keyword{smooth}

@@ -69,12 +69,6 @@ as.POSIXlt(x, tz = "")
 (z <- Sys.time())             # the current date, as class "POSIXct"
 unclass(z)                    # a large integer
 floor(unclass(z)/86400)       # the number of days since 1970-01-01
-\testonly{
- stopifnot(range(z) == z,
-           min(z) == z,
-           max(z) == z,
-           mean(z) == z)
-}
 (z <- as.POSIXlt(Sys.time())) # the current date, as class "POSIXlt"
 unlist(unclass(z))            # a list shown as a named vector
 

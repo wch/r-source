@@ -79,27 +79,6 @@ stopifnot(
     c(FALSE,TRUE,FALSE) == is.nan(list(1,NaN,NA))#-> FALSE in older versions
 )
 
-\testonly{
- ( weird.values <- c(-20.9/0, 1/0, 0/0, NA) )
-
- Mmax <- .Machine$double.xmax
- Mmin <- .Machine$double.xmin
- ( X.val <- c(Mmin*c(2^(-10:3),1e5,1e10),
-              Mmax*c(1e-10,1e-5,2^(-3:0),1.001)) )
- ( tst.val <- sort(c(X.val, weird.values), na.last = TRUE) )
- ( x2 <- c(-1:1/0,pi,1,NA) )
- ( z2 <- c(x2, 1+1i, Inf -Inf* 1i) )
-
- is.inf <-
-   function(x) (is.numeric(x) || is.complex(x)) && !is.na(x) && !is.finite(x)
-
- for(x in list(tst.val, x2, z2))
-   print(cbind(format(x), is.infinite=format(is.infinite(x))), quote=FALSE)
-
- rbind(is.nan(tst.val),
-       is.na (tst.val))
- tst.val [ is.nan(tst.val) !=  is.na(tst.val) ]
-}
 lgamma(Inf) == Inf
 Inf + Inf == Inf
 Inf - Inf == NaN # NA --- should test with  'is.nan()

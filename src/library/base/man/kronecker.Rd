@@ -57,27 +57,6 @@ kronecker(fred, bill, make.dimnames = TRUE)
 
 bill <- outer(bill, c("cat"=3, "dog"=4))
 kronecker(fred, bill, make.dimnames = TRUE)
-
-\testonly{
-
-# dimnames are hard work: let's test them thoroughly
-
-dimnames(bill) <- NULL
-kronecker(fred, bill, make=TRUE)
-kronecker(bill, fred, make=TRUE)
-
-dim(bill) <- c(2, 2, 1)
-dimnames(bill) <- list(c("happy", "sad"), NULL, "")
-kronecker(fred, bill, make=TRUE)
-
-bill <- array(1:24, c(3, 4, 2))
-dimnames(bill) <- list(NULL, NULL, c("happy", "sad"))
-kronecker(bill, fred, make=TRUE)
-kronecker(fred, bill, make=TRUE)
-
-fred <- outer(fred, c("frequentist"=4, "bayesian"=4000))
-kronecker(fred, bill, make=TRUE)
-}
 }
 
 \keyword{array}

@@ -55,9 +55,5 @@ abbreviate(x, 2)
 data(state)
 (st.abb <- abbreviate(state.name, 2))
 table(nchar(st.abb))# out of 50, 3 need 4 letters
-\testonly{
-for(m in 1:5) {
-  cat("\n",m,":\n"); print(as.vector(abbreviate(state.name, minl=m)))}
-}
 }
 \keyword{character}

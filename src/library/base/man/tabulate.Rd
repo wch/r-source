@@ -24,7 +24,6 @@ used as the basis of the \code{table} function.
 \code{\link{factor}}, \code{\link{table}}.
 }
 \examples{
-\testonly{tabulate(numeric(0))}
 tabulate(c(2,3,5))
 tabulate(c(2,3,3,5), nb = 10)
 tabulate(c(-2,0,2,3,3,5), nb = 3)

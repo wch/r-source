@@ -55,8 +55,8 @@ cut.default(x, breaks, labels = NULL,
 \examples{
 Z <- rnorm(10000)
 table(cut(Z, br = -6:6))
-system.time(print(sum(table(cut(Z, br = -6:6, labels=FALSE)))))
-system.time(print(sum(   hist  (Z, br = -6:6, plot=FALSE)$counts)))
+sum(table(cut(Z, br = -6:6, labels=FALSE)))
+sum(   hist  (Z, br = -6:6, plot=FALSE)$counts)
 
 cut(rep(1,5),4)#-- dummy
 tx0 <- c(9, 4, 6, 5, 3, 10, 5, 3, 5)

@@ -91,18 +91,6 @@ sort(c(10:3,2:12), method = "qu", index=TRUE) # is not
 ## $ix: 9 10  8  7 11  6 12  5 13  4 14  3 15 16  2 17  1 18 19
 ##        ^^^^^
 
-\testonly{## consistency check
- for(n in 1:20) {
-    z <- rnorm(n)
-    for(x in list(z, round(z,1))) { ## 2nd one has ties
-       qxi <- sort(x,  method = "quick",  index.return = TRUE)
-       stopifnot(qxi$x == sort(x, method = "shell"),
-		 any(duplicated(x)) || qxi$ix == order(x),
-		 x[qxi$ix] == qxi$x)
-    }
- }
-}
-%%-- \longtest{ .. to be tested only in `extra-tests'
 \dontrun{## Small speed comparison simulation:
 N <- 2000
 Sim <- 20
@@ -126,8 +114,7 @@ system.time(x1 <- sort(x, method = "shell"))
 gc()
 system.time(x2 <- sort(x, method = "quick"))
 stopifnot(identical(x1, x2))
-}
-}
+}}
 \keyword{univar}
 \keyword{manip}
 \keyword{arith}

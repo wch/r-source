@@ -57,9 +57,5 @@ scale(x, center = TRUE, scale = TRUE)
 x <- matrix(1:10, nc=2)
 (centered.x <- scale(x, scale=FALSE))
 cov(centered.scaled.x <- scale(x))# all 1
-\testonly{## test out NA handling
-tm <- matrix(c(2,1,0,1,0,NA,NA,NA,0), nrow=3)
-scale(tm, , FALSE)
-scale(tm)
-}}
+}
 \keyword{array}

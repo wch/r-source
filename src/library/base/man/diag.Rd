@@ -50,15 +50,5 @@ all(diag(1:3) == {m <- matrix(0,3,3); diag(m) <- 1:3; m})
 diag(var(M <- cbind(X=1:5, Y=rnorm(5))))#-> vector with names "X" and "Y"
 rownames(M) <- c(colnames(M),rep("",3));
 M; diag(M) #  named as well
-
-\testonly{
-diag(array(1:4, dim=5))
-## test behaviour with 0 rows or columns
-diag(0)
-z <- matrix(0, 0, 4)
-diag(z)
-diag(z) <- numeric(0)
-z
-}
 }
 \keyword{array}

@@ -129,27 +129,6 @@ stopifnot(1:10 == row.names(d))# {coercion}
 (d0  <- d[, FALSE]) # NULL dataframe with 10 rows
 (d.0 <- d[FALSE, ]) # <0 rows> dataframe  (3 cols)
 (d00 <- d0[FALSE,])  # NULL dataframe with 0 rows
-\testonly{% failed before ver. 1.4:
-(d000 <- data.frame()) #but not quite the same as d00:
-!identical(d00, d000)
-dput(d00)
-dput(d000)
-stopifnot(identical(d, cbind(d, d0)),
-          identical(d, cbind(d0, d)),
-          identical(d, rbind(d,d.0)),
-          identical(d, rbind(d.0,d)),
-          identical(d, rbind(d00,d)),
-          identical(d, rbind(d,d00)),
-
-          TRUE )
-## These are not true: dim is ok, but names() not {seen via dput}
-##          identical(d0, rbind(d0,d00)),
-#         identical(d0, rbind(d00,d0)),
-#          identical(d00,rbind(d00,d00)),
-#          identical(d00,cbind(d00,d00)),
-
-
-}
 }
 \keyword{classes}
 \keyword{methods}

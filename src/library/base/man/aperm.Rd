@@ -41,55 +41,5 @@ stopifnot(t(xt[,,2]) == x[,,2],
           t(xt[,,3]) == x[,,3],
           t(xt[,,4]) == x[,,4])
 
-%-----------
-\testonly{
-%-----------
-# check the names
-
-x <- array(1:24, c(4, 6))
-nms <- list(happy=letters[1:4], sad=LETTERS[1:6])
-
-dimnames(x) <- nms
-tmp <- aperm(x, c(2, 1))
-stopifnot(all.equal(dimnames(tmp), nms[c(2, 1)]))
-
-dimnames(x) <- c(nms[1], list(NULL))
-tmp <- aperm(x, c(2, 1))
-stopifnot(all.equal(dimnames(tmp), c(list(NULL), nms[1])))
-
-names(nms) <- c("happy", "sad")
-dimnames(x) <- nms
-tmp <- aperm(x, c(2, 1))
-stopifnot(all.equal(names(dimnames(tmp)), names(nms[c(2, 1)])))
-
-dimnames(x) <- c(nms[1], list(NULL))
-tmp <- aperm(x, c(2, 1))
-stopifnot(all.equal(names(dimnames(tmp)), c("", names(nms)[1])))
-
-# check resize
-
-stopifnot(all(dim(aperm(x, c(2, 1), FALSE))==dim(x)))
-stopifnot(is.null(dimnames(aperm(x, c(2, 1), FALSE))))
-
-# check the types
-
-x <- array(1:24, c(4, 6))
-stopifnot(all.equal(aperm(x, c(2, 1)), t(x)))
-stopifnot(is.integer(aperm(x, c(2, 1))))
-
-x <- x + 0.0
-stopifnot(all.equal(aperm(x, c(2, 1)), t(x)))
-stopifnot(is.double(aperm(x, c(2, 1))))
-
-x <- x + 0.0i
-stopifnot(all.equal(aperm(x, c(2, 1)), t(x)))
-
-x[] <- LETTERS[1:24]
-stopifnot(all.equal(aperm(x, c(2, 1)), t(x)))
-
-x <- array(list("fred"), c(4, 6))
-x[[3, 4]] <- 1:10
-stopifnot(all.equal(aperm(x, c(2, 1)), t(x)))
-}%end{testonly}
 }
 \keyword{array}

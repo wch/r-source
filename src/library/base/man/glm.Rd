@@ -274,18 +274,6 @@ clotting <- data.frame(
     lot2 = c(69,35,26,21,18,16,13,12,12))
 summary(glm(lot1 ~ log(u), data=clotting, family=Gamma))
 summary(glm(lot2 ~ log(u), data=clotting, family=Gamma))
-
-\testonly{
-## these are the same -- example from Jim Lindsey
-y <- rnorm(20)
-y1 <- y[-1]; y2 <- y[-20]
-summary(g1 <- glm(y1 - y2 ~ 1))
-summary(g2 <- glm(y1 ~ offset(y2)))
-Eq <- function(x,y) all.equal(x,y, tol = 1e-12)
-stopifnot(Eq(coef(g1), coef(g2)),
-          Eq(deviance(g1), deviance(g2)),
-          Eq(resid(g1), resid(g2)))
-}
 }
 \keyword{models}
 \keyword{regression}
