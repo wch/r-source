@@ -30,7 +30,7 @@ ac_help="$ac_help
 ac_help="$ac_help
   --with-readline         use readline library (if available)"
 ac_help="$ac_help
-  --with-gnome            Specify prefix for GNOME files"
+  --with-gnome            use GNOME, or specify its prefix"
 ac_help="$ac_help
   --with-gnome-includes   Specify location of GNOME headers"
 ac_help="$ac_help
