@@ -3673,9 +3673,9 @@ assignment shown, @code{x <- 1:10}, @R{} first creates an object with
 value @code{1:10} and then assigns it to @code{x} but if @code{x} is
 modified no copy is necessary as the temporary object with value
 @code{1:10} cannot be referred to again.  @R{} distinguishes between
-named and unnamed objects via a field in a @code{SEXPREC} that can be
-accessed via the macros @code{NAMED} and @code{SET_NAMED}.  This can
-take values
+named and unnamed objects @emph{via} a field in a @code{SEXPREC} that
+can be accessed via the macros @code{NAMED} and @code{SET_NAMED}.  This
+can take values
 
 @table @code
 @item 0
@@ -3683,7 +3683,8 @@ The object is not bound to any symbol
 @item 1
 The object has been bound to exactly one symbol
 @item 2
-The object has been bound to two or more symbols
+The object has potentially been bound to two or more symbols, and one
+should act as if another variable is currently bound to this value.
 @end table
 
 @noindent
@@ -3691,8 +3692,8 @@ Note the past tenses: @R{} does not do full reference counting and there
 may currently be fewer bindings.
 
 It is safe to modify the value of any @code{SEXP} for which
-@code{NAMED(foo)} is zero, and if @code{NAMED(foo)} is two, the
-value should be duplicated (via a call to @code{duplicate}) before
+@code{NAMED(foo)} is zero, and if @code{NAMED(foo)} is two, the value
+should be duplicated (via a call to @code{duplicate}) before any
 modification.  Note that it is the responsibility of the author of the
 code making the modification to do the duplication, even if it is
 @code{x} whose value is being modified after @code{y <- x}.
