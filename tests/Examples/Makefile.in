@@ -92,9 +92,8 @@ $(EX_IN_BASE): FORCE
 ## will fail.
 $(EX_IN_RECOMMENDED): FORCE
 	@(pkg=`basename $@ -Ex.R`; \
-	find $@ -newer $(top_builddir)/library/$${pkg}/DESCRIPTION \
-	    -print 2> /dev/null | grep $@ > /dev/null || \
-	(\
+	if find $@ -newer $(top_builddir)/library/$${pkg}/DESCRIPTION \
+	    -print 2> /dev/null | grep $@ > /dev/null; then :; else \
 	  if test -f $@ ; then \
 	    if test -n "`tail -6 $@ | grep '^Time elapsed'`" ; then \
 	      if test -f $@.bak ; then mv $@.bak $@.bakk ; fi; \
@@ -107,7 +106,7 @@ $(EX_IN_RECOMMENDED): FORCE
 	    $(top_builddir)/library/$${pkg}/R-ex > $${f}; \
 	  $(top_srcdir)/tools/move-if-change $${f} $@; \
 	  touch $@; \
-	))
+	fi)
 FORCE:
 
 $(EX_OUT_BASE) $(EX_OUT_RECOMMENDED): Makefile \

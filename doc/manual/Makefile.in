@@ -135,13 +135,12 @@ $(texinputs_BASE): FORCE $(top_srcdir)/share/perl/build-help.pl
 FORCE:
 $(texinputs_RECOMMENDED): FORCE
 	@(pkg=`basename $@ -pkg.tex`; \
-	find $@ -newer $(top_builddir)/library/$${pkg}/DESCRIPTION \
-	    -print 2> /dev/null | grep $@ > /dev/null || \
-	(\
+	if find $@ -newer $(top_builddir)/library/$${pkg}/DESCRIPTION \
+	    -print 2> /dev/null | grep $@ > /dev/null; then :; else \
 	  echo "collecting LaTeX docs for package '$${pkg}' ..."; \
 	  RLIB="$(top_builddir)/library" \
 	    $(PERL) $(top_srcdir)/tools/pkg2tex.pl $${pkg}; \
-	))
+	fi)
 
 fullrefman.dvi: $(refman_DEPENDENCIES) stamp-fullrefman-dvi
 	@if test "$(LATEX)" = false; then \
