@@ -111,7 +111,7 @@ function(pattern, fields = c("alias", "title"),
             .packages(all.available = TRUE, lib.loc = lib.loc)
         contentsDCFFields <-
             c("Entry", "Aliases", "Description", "Keywords")
-        contentsRDAFields <-
+        contentsRDSFields <-
             c("Name", "Aliases", "Title", "Keywords")
             
         for(p in packagesInHelpDB) {
@@ -125,7 +125,7 @@ function(pattern, fields = c("alias", "title"),
             if(file.exists(contentsFile <-
                           file.path(path, "CONTENTS.rds"))) {
                 contents <-
-                    .readRDA(contentsFile)[ , contentsRDAFields,
+                    .readRDS(contentsFile)[ , contentsRDSFields,
                                            drop = FALSE]
             }
             ## <FIXME>
@@ -137,7 +137,7 @@ function(pattern, fields = c("alias", "title"),
                 load(contentsFile, envir = contentsEnv)
                 contents <-
                     get("contents", envir = contentsEnv)[ ,
-                                    contentsRDAFields,
+                                    contentsRDSFields,
                                     drop = FALSE]
             }
             ## </FIXME>

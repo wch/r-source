@@ -33,7 +33,7 @@
 \alias{.installPackageRdIndices}
 \alias{.installPackageVignetteIndex}
 \alias{.installPackageDemoIndex}
-\alias{.writeContentsRDA}
+\alias{.writeContentsRDS}
 \alias{.writeContentsDCF}
 \alias{.buildRdIndex}
 \alias{.buildVignetteIndex}
@@ -63,7 +63,7 @@ Rdcontents(RdFiles)
 Rdindex(RdFiles, outFile = "", type = NULL,
         width = 0.9 * getOption("width"), indent = NULL)
 Rd2contents(dir, outFile = "")
-.writeContentsRDA(contents, outFile)
+.writeContentsRDS(contents, outFile)
 .writeContentsDCF(contents, packageName, outFile)
 .buildRdIndex(contents, type = NULL)
 .buildVignetteIndex(vignetteFiles)

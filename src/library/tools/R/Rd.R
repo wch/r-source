@@ -166,9 +166,9 @@ function(RdFiles)
     contents
 }
 
-### * .writeContentsRDA
+### * .writeContentsRDS
 
-.writeContentsRDA <-
+.writeContentsRDS <-
 function(contents, outFile)
 {
     ## Save Rd contents db to @file{outFile}.
@@ -177,7 +177,7 @@ function(contents, outFile)
     ## To deal with possible changes in the format of the contents db
     ## (e.g., with aliases and keywords not collapsed) in the future,
     ## use a version attribute and/or a formal class.
-    .saveRDA(contents, file = outFile)
+    .saveRDS(contents, file = outFile)
     ## </NOTE>
 }
 

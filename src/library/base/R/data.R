@@ -58,7 +58,7 @@ function(..., list = character(0),
             ## </NOTE>
             if(file.exists(INDEX <-
                            file.path(path, "data", "00Index.rds"))) {
-                entries <- .readRDA(INDEX)
+                entries <- .readRDS(INDEX)
             }
             ## <FIXME>
             ## Remove this once 1.7.0 is out.

@@ -1,4 +1,4 @@
-.saveRDA <-
+.saveRDS <-
 function(object, file = "", ascii = FALSE, version = NULL,
          compress = FALSE, refhook = NULL) 
 {
@@ -21,7 +21,7 @@ function(object, file = "", ascii = FALSE, version = NULL,
                                         refhook)))
 }
 
-.readRDA <-
+.readRDS <-
 function(file, refhook = NULL) 
 {
     if(is.character(file)) {

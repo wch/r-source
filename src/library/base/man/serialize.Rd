@@ -1,14 +1,14 @@
 \name{serialize}
-\alias{.readRDA}
-\alias{.saveRDA}
+\alias{.readRDS}
+\alias{.saveRDS}
 \title{Simple Serialization Interface}
 \description{
   A simple interface for serializing to connections.
 }
 \usage{
-.saveRDA(object, file = "", ascii = FALSE, version = NULL,
+.saveRDS(object, file = "", ascii = FALSE, version = NULL,
          compress = FALSE, refhook = NULL) 
-.readRDA(file, refhook = NULL) 
+.readRDS(file, refhook = NULL) 
 }
 \arguments{
   \item{object}{the name of the \R object to serialize.}

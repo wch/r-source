@@ -160,7 +160,7 @@ function(topic, device = getOption("device"),
             ## </NOTE>
             if(file.exists(INDEX <-
                            file.path(path, "demo", "00Index.rds"))) {
-                entries <- .readRDA(INDEX)
+                entries <- .readRDS(INDEX)
             }
             ## <FIXME>
             ## Remove this once 1.7.0 is out.

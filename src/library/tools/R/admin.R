@@ -94,7 +94,7 @@ function(dir, outDir)
 
     contents <- Rdcontents(.listFilesWithType(docsDir, "docs"))
 
-    .writeContentsRDA(contents, file.path(outDir, "CONTENTS.rds"))
+    .writeContentsRDS(contents, file.path(outDir, "CONTENTS.rds"))
 
     .writeContentsDCF(contents, packageName,
                       file.path(outDir, "CONTENTS"))
@@ -102,7 +102,7 @@ function(dir, outDir)
     ## If there is no @file{INDEX} file in the package sources, we
     ## build one.
     ## <FIXME>
-    ## Maybe also save this in RDA format then?
+    ## Maybe also save this in RDS format then?
     ## </FIXME>
     if(!.fileTest("-f", file.path(dir, "INDEX")))
         writeLines(formatDL(.buildRdIndex(contents)),
@@ -111,7 +111,7 @@ function(dir, outDir)
     if(.fileTest("-d", dataDir)) {
         outDataDir <- file.path(outDir, "data")
         if(!.fileTest("-d", outDataDir)) dir.create(outDataDir)
-        .saveRDA(.buildDataIndex(dataDir, contents),
+        .saveRDS(.buildDataIndex(dataDir, contents),
                  file.path(outDataDir, "00Index.rds"))
     }
     
@@ -128,7 +128,13 @@ function(dir, outDir)
     vignetteIndex <- .buildVignetteIndex(vignetteFiles)
     outVignetteDir <- file.path(outDir, "doc")
     if(!.fileTest("-d", outVignetteDir)) dir.create(outVignetteDir)
-    .saveRDA(vignetteIndex,
+    ## <FIXME>
+    ## Compatibility code for BioC vignette tools.
+    ## Remove eventually ...
+    writeLines(formatDL(vignetteIndex, style = "list"),
+               file.path(outVignetteDir, "00Index.dcf"))
+    ## </FIXME>
+    .saveRDS(vignetteIndex,
              file = file.path(outVignetteDir, "00Index.rds"))
 }
 
@@ -142,13 +148,7 @@ function(dir, outDir)
     demoIndex <- .buildDemoIndex(demoDir)
     outDemoDir <- file.path(outDir, "demo")
     if(!.fileTest("-d", outDemoDir)) dir.create(outDemoDir)
-    ## <FIXME>
-    ## Compatibility code for BioC vignette tools.
-    ## Remove eventually ...
-    writeLines(formatDL(vignetteIndex, style = "list"),
-               file.path(outVignetteDir, "00Index.dcf"))
-    ## </FIXME>
-    .saveRDA(demoIndex,
+    .saveRDS(demoIndex,
              file = file.path(outDemoDir, "00Index.rds"))
 }
 
