@@ -67,6 +67,14 @@
    */
 #define HAVE_DECL_ATANH 0
 
+/* Define to 1 if you have the declaration of `iconv', and to 0 if you don't.
+   */
+#define HAVE_DECL_ICONV 1
+
+/* Define to 1 if you have the declaration of `iconvlist', and to 0 if you
+   don't. */
+#define HAVE_DECL_ICONVLIST 0
+
 /* Define to 1 if you have the declaration of `isfinite', and to 0 if you
    don't. */
 #define HAVE_DECL_ISFINITE 1
@@ -164,17 +172,14 @@
 /* Define to 1 if you have the <grp.h> header file. */
 /* #undef HAVE_GRP_H */
 
+/* Define to 1 if you have the `history_truncate_file' function. */
+/* #undef HAVE_HISTORY_TRUNCATE_FILE *.
+
 /* Define to 1 if you have the `hypot' function. */
 #define HAVE_HYPOT 1
 
-/* Define to 1 if you have the `iconv' function. */
-#define HAVE_ICONV 1
-
-/* Define to 1 if you have the `iconvlist' function. */
-#define HAVE_ICONVLIST 1
-
 /* Define to 1 if you have the <iconv.h> header file. */
-/* #undef HAVE_ICONV_H */
+#define HAVE_ICONV_H 1
 
 /* Define to 1 if you have the <ieee754.h> header file. */
 /* #undef HAVE_IEEE754_H */
@@ -211,6 +216,9 @@
 
 /* Define to 1 if you have the `dl' library (-ldl). */
 /* #undef HAVE_LIBDL */
+
+/* Define to 1 if you have the `iconv' library (-liconv). */
+/* #undef HAVE_LIBICONV */
 
 /* Define to 1 if you have the `m' library (-lm). */
 #define HAVE_LIBM 1
@@ -451,6 +459,36 @@
 /* Define if you have the X11 headers and libraries, and want the X11 GUI to
    be built. */
 /* #undef HAVE_X11 */
+
+/* Define to 1 if you have the `XmbDrawImageString' function. */
+/* #undef HAVE_XMBDRAWIMAGESTRING */
+
+/* Define to 1 if you have the `XmbDrawString' function. */
+/* #undef HAVE_XMBDRAWSTRING */
+
+/* Define to 1 if you have the `XmbLookupString' function. */
+/* #undef HAVE_XMBLOOKUPSTRING */
+
+/* Define to 1 if you have the `XmbTextEscapement' function. */
+/* #undef HAVE_XMBTEXTESCAPEMENT */
+
+/* Define to 1 if you have the `XmbTextExtents' function. */
+/* #undef HAVE_XMBTEXTEXTENTS */
+
+/* Define to 1 if you have the `Xutf8DrawImageString' function. */
+/* #undef HAVE_XUTF8DRAWIMAGESTRING */
+
+/* Define to 1 if you have the `Xutf8DrawString' function. */
+/* #undef HAVE_XUTF8DRAWSTRING */
+
+/* Define to 1 if you have the `Xutf8LookupString' function. */
+/* #undef HAVE_XUTF8LOOKUPSTRING */
+
+/* Define to 1 if you have the `Xutf8TextEscapement' function. */
+/* #undef HAVE_XUTF8TEXTESCAPEMENT */
+
+/* Define to 1 if you have the `Xutf8TextExtents' function. */
+/* #undef HAVE_XUTF8TEXTEXTENTS */
 
 /* Define if you have IEEE 754 floating point arithmetic. */
 #define IEEE_754 1
