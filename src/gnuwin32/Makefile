@@ -370,6 +370,7 @@ packagedist:
 	  $(RPREFIX)/src/include $(RPREFIX)/src/library \
 	  $(RPREFIX)/src/gnuwin32/fixed
 	$(CP) ../../doc/html/logo.jpg $(RPREFIX)/doc/html
+	$(CP) ../../doc/KEYWORDS* $(RPREFIX)/doc
 	$(CP) -p exported-vars R.exp MkRules MakePkg MakeDll \
 	  pwd.pl makeDllRes.pl $(RPREFIX)/src/gnuwin32
 	$(CP) -p Makefile.packages $(RPREFIX)/src/gnuwin32/Makefile
