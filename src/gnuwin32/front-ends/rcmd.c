@@ -21,6 +21,7 @@
 #include <windows.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include "Rversion.h"
 
 extern char *getRHOME(); /* in ../rhome.c */
 
@@ -30,11 +31,11 @@ int main (int argc, char **argv)
        find R_HOME
        set PATH to include R_HOME\bin
        set PERL5LIB to %R_HOME%/share/perl;%Perl5LIB%
-       launch perl -S $*
+       launch %R_HOME%\bin\$*
      */
     int i, res, status = 0;
     char *RHome, PERL5LIB[MAX_PATH], PATH[MAX_PATH], RHOME[MAX_PATH],
-	*p, cmd[10000];
+	*p, cmd[10000], Rversion[25];
 
     RHome = getRHOME();
     strcpy(RHOME, "R_HOME=");
@@ -42,6 +43,9 @@ int main (int argc, char **argv)
     for (p = RHOME; *p; p++) if (*p == '\\') *p = '/';
     putenv(RHOME);
 
+    sprintf(Rversion, "R_VERSION=%s.%s", R_MAJOR, R_MINOR);
+    putenv(Rversion);
+   
     putenv("R_CMD=Rcmd");
     putenv("R_UNDER_WINDOWS=1");
 
