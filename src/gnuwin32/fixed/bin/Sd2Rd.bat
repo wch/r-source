@@ -33,7 +33,7 @@ goto endofperl
 
 use Getopt::Long;
 
-my $revision = ' $Revision: 1.2.4.1 $ ';
+my $revision = ' $Revision: 1.2.4.2 $ ';
 my $version;
 my $name;
 
@@ -233,11 +233,7 @@ sub substitute {
     s/\\\(\*s/\sigma/g;
     ## End
   }
-  if ($inVerbatim) {
-    s/\.\.\./\\dots/g;
-  } else {
-    s/\.\.\./\\dots\{\}/g;
-  }
+  s/\.\.\./\\dots/g;
   s/\\fB/\\bold\{/g;
   s/\\fR/\}/g;
   ## Added by BDR 1998/06/20
