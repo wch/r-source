@@ -782,9 +782,12 @@ SEXP applydefine(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     tmpsym = install("*tmp*");
     defineVar(tmpsym, R_NilValue, rho);
+    tmploc = findVarLocInFrame(rho, tmpsym);
+#ifdef OLD
     tmploc = FRAME(rho);
     while(tmploc != R_NilValue && TAG(tmploc) != tmpsym)
 	tmploc = CDR(tmploc);
+#endif
 
     /*  Do a partial evaluation down through the LHS. */
     lhs = evalseq(CADR(expr), rho, PRIMVAL(op)==1, tmploc);

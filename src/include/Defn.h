@@ -383,6 +383,7 @@ int factorsConform(SEXP, SEXP);
 void findcontext(int, SEXP, SEXP);
 SEXP findVar1(SEXP, SEXP, SEXPTYPE, int);
 SEXP findVarInFrame(SEXP, SEXP);
+SEXP findVarLocInFrame(SEXP, SEXP);
 void FrameClassFix(SEXP);
 int framedepth(RCNTXT*);
 SEXP frameSubscript(int, SEXP, SEXP);
