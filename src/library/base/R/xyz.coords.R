@@ -25,7 +25,7 @@ xyz.coords <- function(x, y, z, xlab=NULL, ylab=NULL, zlab=NULL,
 		xlab <- "Index"
 		y <- x[,1]
 		z <- x[,2]
-		x <- 1:length(y)
+		x <- seq(along=y)
 	    }
 	    else { ## >= 3 columns
 		colnames <- dimnames(x)[[2]]
@@ -78,7 +78,7 @@ xyz.coords <- function(x, y, z, xlab=NULL, ylab=NULL, zlab=NULL,
 	    xlab <- "Index"
 	    z <- y
 	    y <- x
-	    x <- 1:length(x)
+	    x <- seq(along=x)
 	}
     }
 
