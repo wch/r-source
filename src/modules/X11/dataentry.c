@@ -33,6 +33,12 @@
 #include <config.h>
 #endif
 
+#ifdef SUPPORT_UTF8
+# define HAVE_XUTF8DRAWIMAGESTRING 1
+# define HAVE_XUTF8DRAWSTRING 1
+# define HAVE_XUTF8TEXTESCAPEMENT 1
+#endif
+
 #include <stdlib.h>
 
 /* don't use X11 function prototypes (which tend to ...): */
@@ -1320,7 +1326,11 @@ static char *GetCharP(DEEvent * event)
 
 #ifdef SUPPORT_UTF8
     if(utf8locale) {
+#ifdef HAVE_XUTF8LOOKUPSTRING
 	Xutf8LookupString(ic, (XKeyEvent *)event, text, 8, &iokey, NULL);
+#else
+	XmbLookupString(ic, (XKeyEvent *)event, text, 8, &iokey, NULL);
+#endif
 	/* FIXME check the return code */
     } else
 #endif
@@ -1660,8 +1670,13 @@ static void drawtext(int xpos, int ypos, char *text, int len)
 {
 #ifdef SUPPORT_UTF8
     if(utf8locale)
+#ifdef HAVE_XUTF8DRAWIMAGESTRING
 	Xutf8DrawImageString(iodisplay, iowindow, font_set, iogc, xpos, ypos,
 			     text, len);
+#else
+	XmbDrawImageString(iodisplay, iowindow, font_set, iogc, xpos, ypos,
+			   text, len);
+#endif
     else
 #endif
 	XDrawImageString(iodisplay, iowindow, iogc, xpos, ypos, text, len);
@@ -1677,7 +1692,11 @@ static int textwidth(char *text, int nchar)
 {
 #ifdef SUPPORT_UTF8
     if(utf8locale)
+#ifdef HAVE_XUTF8TEXTESCAPEMENT
 	return Xutf8TextEscapement(font_set, text, nchar);
+#else
+	return XmbTextEscapement(font_set, text, nchar);
+#endif
 #endif
     return XTextWidth(font_info, text, nchar);
 }

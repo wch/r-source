@@ -28,6 +28,7 @@
 
 #ifdef SUPPORT_UTF8
 # define USE_FONTSET 1
+# define HAVE_XUTF8TEXTESCAPEMENT 1
 #endif
 
 #ifdef HAVE_RINT
@@ -664,16 +665,20 @@ static int force_nonscalable = 0; /* for testing */
  * Can't load Symbolfont to XFontSet!!
  */
 #ifdef USE_FONTSET
-static XFontSet XLoadQueryFontSet(Display *display,
+static XFontSet RXLoadQueryFontSet(Display *display,
                                   const char *fontset_name)
 {
   XFontSet fontset;
-  int  missing_charset_count;
+  int  i, missing_charset_count;
   char **missing_charset_list, *def_string;
 
   fontset = XCreateFontSet(display, fontset_name, &missing_charset_list,
 			   &missing_charset_count, &def_string);
-  if (missing_charset_count) XFreeStringList(missing_charset_list);
+  if (missing_charset_count) {
+      for(i = 0; i < missing_charset_count; i++)
+	  warning("font for charset %s is lacking.", missing_charset_list[i]);
+      XFreeStringList(missing_charset_list);
+  }
   return fontset;
 }
 #endif
@@ -733,12 +738,12 @@ static void *RLoadFont(newX11Desc *xd, char* family, int face, int size)
     Rprintf("loading:\n%s\n",buf);
 #endif
     if (face == SYMBOL_FONTFACE - 1)
-      tmp = (void *)XLoadQueryFont(display, buf);
+      tmp = (void *) XLoadQueryFont(display, buf);
     else
 #ifdef USE_FONTSET
-      tmp = (void *)XLoadQueryFontSet(display, buf);
+      tmp = (void *) RXLoadQueryFontSet(display, buf);
 #else
-      tmp = (void *)XLoadQueryFont(display, buf);
+      tmp = (void *) XLoadQueryFont(display, buf);
 #endif
 
 #ifdef DEBUG_X11
@@ -760,7 +765,7 @@ static void *RLoadFont(newX11Desc *xd, char* family, int face, int size)
 	   wrong */
 	if ( ADOBE_SIZE(pixelsize) ) {
 #ifdef USE_FONTSET
-	    tmp = (void*) XLoadQueryFontSet(display,
+	    tmp = (void*) RXLoadQueryFontSet(display,
                          "-*-fixed-medium-r-*--13-*-*-*-*-*-*-*");
 #else
 	    tmp = (void*) XLoadQueryFont(display, "fixed");
@@ -794,7 +799,7 @@ static void *RLoadFont(newX11Desc *xd, char* family, int face, int size)
 	    tmp = (void *) XLoadQueryFont(display, buf);
 	else
 #ifdef USE_FONTSET
-	    tmp = (void *) XLoadQueryFontSet(display, buf);
+	    tmp = (void *) RXLoadQueryFontSet(display, buf);
 #else
 	    tmp = (void *) XLoadQueryFont(display, buf);
 #endif
@@ -818,7 +823,7 @@ static void *RLoadFont(newX11Desc *xd, char* family, int face, int size)
 	    tmp = (void *) XLoadQueryFont(display, buf);
 	else
 #ifdef USE_FONTSET
-	    tmp = (void *) XLoadQueryFontSet(display, buf);
+	    tmp = (void *) RXLoadQueryFontSet(display, buf);
 #else
 	    tmp = (void *) XLoadQueryFont(display, buf);
 #endif
@@ -866,8 +871,8 @@ static int SetBaseFont(newX11Desc *xd)
 	xd->usefixed = 1;
 #ifdef USE_FONTSET
 	xd->font = xd->fixedfont =
-	    (void *)XLoadQueryFontSet(display,
-				      "-*-fixed-medium-r-*--13-*-*-*-*-*-*-*");
+	    (void *)RXLoadQueryFontSet(display,
+                  "-*-fixed-medium-r-*--13-*-*-*-*-*-*-*");
 #else
 	xd->font = xd->fixedfont = (void *) XLoadQueryFont(display, "fixed");
 #endif
@@ -903,7 +908,7 @@ static void SetFont(char* family, int face, int size, NewDevDesc *dd)
 		XSetFont(display, xd->wgc, ((XFontStruct *)(xd->font))->fid);
             else
 #ifdef USE_FONTSET
-		XSetFontSet(display, xd->wgc, (XFontSet)(xd->font));
+		RXSetFontSet(display, xd->wgc, (XFontSet)(xd->font));
 #else
 	        XSetFont(display, xd->wgc, ((XFontStruct *)(xd->font))->fid);
 #endif
@@ -1242,7 +1247,7 @@ newX11_Open(NewDevDesc *dd, newX11Desc *xd, char *dsp, double w, double h,
 	XSetFont(display, xd->wgc, ((XFontStruct*)(xd->font))->fid);
     else
 #ifdef USE_FONTSET
-	XSetFontSet(display, xd->wgc, (XFontSet)(xd->font));
+	RXSetFontSet(display, xd->wgc, (XFontSet)(xd->font));
 #else
         XSetFont(display, xd->wgc, ((XFontStruct*) xd->font)->fid);
 #endif
@@ -1322,10 +1327,12 @@ static double newX11_StrWidth(char *str,
 	return (double) XTextWidth((XFontStruct*)(xd->font), str, strlen(str));
     else
 #ifdef USE_FONTSET
+#ifdef HAVE_XUTF8TEXTESCAPEMENT
 	if(utf8locale)
 	    return (double) Xutf8TextEscapement((XFontSet)(xd->font),
 						str, strlen(str));
 	else
+#endif
 	    return (double) XmbTextEscapement((XFontSet)(xd->font),
 					      str, strlen(str));
 #else
@@ -1382,10 +1389,12 @@ static void newX11_MetricInfo(int c,
 	    buf[0] = c; buf[1] = 0;
 	    *ascent = extent->max_logical_extent.height * 4 / 5;
 	    *descent = extent->max_logical_extent.height / 5;
+#ifdef HAVE_XUTF8TEXTESCAPEMENT
 	    if(utf8locale)
 		*width = Xutf8TextEscapement((XFontSet)(xd->font), buf, 
 					     strlen(buf));
 	    else
+#endif
 		*width = XmbTextEscapement((XFontSet)(xd->font), buf, 
 					   strlen(buf));
 	} else {
