@@ -1,5 +1,5 @@
 \name{tools-internal}
-\title{Internal tools functions}
+\title{Internal tools Objects}
 \alias{.convertFilePathToAbsolute}
 \alias{.fileTest}
 \alias{.isS3Generic}
@@ -22,6 +22,11 @@
 \alias{SweaveGetSyntax}
 \alias{buildVignettes}
 \alias{pkgVignettes}
+\alias{Rdpp}
+\alias{Rdinfo}
+\alias{Rdcontents}
+\alias{Rdindex}
+\alias{Rd2contents}
 \description{
   Internal tools functions.
 }
@@ -34,6 +39,12 @@ sQuote(s)
 .loadPackageQuietly(package, lib.loc)
 .makeS3MethodsStopList(package)
 .sourceAssignments(file, envir)
+Rdpp(lines)
+Rdinfo(file)
+Rdcontents(RdFiles)
+Rdindex(RdFiles, outFile = "", type = NULL,
+        width = 0.9 * getOption("width"), indent = NULL)
+Rd2contents(dir, outFile = "")
 }
 \details{
   These are not to be called by the user.
