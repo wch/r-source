@@ -101,6 +101,11 @@ co.intervals(x, number = 6, overlap = 0.5)
   the \code{\link{range}} of \code{x} values for the \code{k}-th interval.
 }
 \references{
+  Chambers, J. M. (1992)
+  \emph{Data for models.}
+  Chapter 3 of \emph{Statistical Models in S}
+  eds J. M. Chambers and T. J. Hastie, Wadsworth \& Brooks/Cole.
+
   Cleveland, W. S. (1993) \emph{Visualizing Data.} New Jersey: Summit Press.
 }
 \seealso{

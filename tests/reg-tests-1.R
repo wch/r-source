@@ -2176,6 +2176,19 @@ colnames(A) <- 1:3
 ## failed in 1.7.0
 
 
+## predict on constant model, PR#2958
+res <- model.frame(~1, data.frame(x = 1:5))
+stopifnot(nrow(res) == 5)
+res <- predict(lm(y ~ 1, data = data.frame(y = rep(0:3, c(5,9,7,1)))),
+               newdata = data.frame(x = 1:5))
+stopifnot(length(res) == 5)
+res <- predict(glm(y ~ 1, family = poisson,
+                   data = data.frame(y = rep(0:3, c(5,9,7,1)))),
+               newdata = data.frame(x = 1:5), type = "r")
+stopifnot(length(res) == 5)
+## all length one in 1.7.0
+
+
 ## keep at end, as package `methods' has had persistent side effects
 library(methods)
 stopifnot(all.equal(3:3, 3.), all.equal(1., 1:1))

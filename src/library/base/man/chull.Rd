@@ -32,8 +32,6 @@ chull(x, y=NULL)
   algorithm for planar sets[Z]. \emph{ACM Transactions on
     Mathematical Software}, \bold{3}, 411--412.
 }
-\author{B. D. Ripley}
-
 \seealso{\code{\link{xy.coords}},\code{\link{polygon}}}
 
 \examples{

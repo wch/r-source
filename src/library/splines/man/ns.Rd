@@ -35,7 +35,7 @@ ns(x, df = NULL, knots = NULL, intercept = FALSE,
     and explicitly give the \code{knots}, \code{Boundary.knots} etc for
     use by \code{predict.ns()}.
 
-    \code{ns()} is based on the function \code{spline.des()}.  It
+    \code{ns()} is based on the function \code{\link{spline.des}}.  It
     generates a basis matrix for representing the family of
     piecewise-cubic splines with the specified sequence of
     interior knots, and the natural boundary conditions.  These enforce
@@ -44,9 +44,15 @@ ns(x, df = NULL, knots = NULL, intercept = FALSE,
     data.  A primary use is in modeling formula to directly specify a
     natural spline term in a model.
 
-    Beware of making predictions with new \code{x} values when \code{df}
-    is used as an argument. Either use \code{safe.predict.gam()}, or else
-    specify \code{knots} and \code{Boundary.knots}.
+%     Beware of making predictions with new \code{x} values when \code{df}
+%     is used as an argument. Either use \code{safe.predict.gam()}, or else
+%     specify \code{knots} and \code{Boundary.knots}.
+}
+\references{
+  Hastie, T. J. (1992)
+  Generalized additive models.
+  Chapter 7 of \emph{Statistical Models in S}
+  eds J. M. Chambers and T. J. Hastie, Wadsworth \& Brooks/Cole.
 }
 \seealso{
   \code{\link{bs}},

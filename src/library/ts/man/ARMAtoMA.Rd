@@ -15,7 +15,6 @@ ARMAtoMA(ar = numeric(0), ma = numeric(0), lag.max)
 \value{
   A vector of coefficients.
 }
-\author{B. D. Ripley}
 
 \references{
   Brockwell, P. J. and Davis, R. A. (1991) \emph{Time Series: Theory and

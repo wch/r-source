@@ -1,4 +1,3 @@
-#### copyright (C) 1998 B. D. Ripley
 C <- function(object, contr, how.many, ...)
 {
     if(!nlevels(object)) stop("object not interpretable as a factor")

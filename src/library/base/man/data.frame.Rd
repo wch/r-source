@@ -108,6 +108,12 @@ row.names(x) <- value
   In versions of \R prior to 1.4.0 (and in S3 but not S4) logical
   columns were converted to factors.
 }
+\references{
+  Chambers, J. M. (1992)
+  \emph{Data for models.}
+  Chapter 3 of \emph{Statistical Models in S}
+  eds J. M. Chambers and T. J. Hastie, Wadsworth \& Brooks/Cole.
+}
 \seealso{
   \code{\link{I}},
   \code{\link{print.data.frame}},

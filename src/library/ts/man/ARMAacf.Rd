@@ -25,7 +25,6 @@ ARMAacf(ar = numeric(0), ma = numeric(0), lag.max = r, pacf = FALSE)
 \value{
   A vector of (partial) autocorrelations, named by the lags.  
 }
-\author{B. D. Ripley}
 
 \references{
   Brockwell, P. J. and Davis, R. A. (1991) \emph{Time Series: Theory and

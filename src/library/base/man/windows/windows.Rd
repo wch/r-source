@@ -120,8 +120,6 @@ win.print(width = 7, height = 7, pointsize = 12, printer = "")
   A plot device is opened: nothing is returned to the \R interpreter.
 }
 
-\author{Guido Masarotto and Brian Ripley}
-
 \seealso{
   \code{\link{savePlot}}, \code{\link{bringToTop}},
   \code{\link{Devices}}, \code{\link{postscript}}

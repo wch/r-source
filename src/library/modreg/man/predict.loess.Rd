@@ -1,6 +1,3 @@
-% file modreg/man/predict.loess.Rd
-% copyright (C) 1998 B. D. Ripley
-%
 \name{predict.loess}
 \alias{predict.loess}
 \title{Predict Loess Curve or Surface}
@@ -37,8 +34,10 @@
     estimating the residual scale, intended for use with t-based
     confidence intervals. }
 }
-\author{B.D. Ripley, based on the \code{cloess} package of Cleveland,
-  Grosse and Shyu.}
+\author{
+  B.D. Ripley, based on the \code{cloess} package of Cleveland,
+  Grosse and Shyu.
+}
 
 \seealso{\code{\link{loess}}}
 

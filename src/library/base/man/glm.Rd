@@ -209,13 +209,26 @@ glm.fit.null(x, y, weights = rep(1, nrow(x)),
   \code{\link{esoph}}, \code{\link{infert}} and
   \code{\link{predict.glm}} have examples of fitting binomial glms.
 }
-\references{
-  McCullagh P. and Nelder, J. A. (1989)
-  \emph{Generalized Linear Models.}
-  London: Chapman and Hall.
+\author{
+  The original \R implementation of \code{glm} was written by Simon
+  Davies working for Ross Ihaka at the University of Auckland, but has
+  since been extensively re-written by members of the R Core team.
 
+  The design was inspired by the S function of the same name described
+  in Hastie \& Pregibon (1992).
+}
+\references{
   Dobson, A. J. (1990)
   \emph{An Introduction to Generalized Linear Models.}
+  London: Chapman and Hall.
+
+  Hastie, T. J. and Pregibon, D. (1992)
+  \emph{Generalized linear models.}
+  Chapter 6 of \emph{Statistical Models in S}
+  eds J. M. Chambers and T. J. Hastie, Wadsworth \& Brooks/Cole.
+  
+  McCullagh P. and Nelder, J. A. (1989)
+  \emph{Generalized Linear Models.}
   London: Chapman and Hall.
 
   Venables, W. N. and Ripley, B. D. (2002)

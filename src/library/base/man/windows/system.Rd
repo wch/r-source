@@ -81,8 +81,6 @@ system(command, intern = FALSE, wait = TRUE, input = NULL,
     may hang and then will probably hang \code{Rgui} too.
 }
 
-\author{Guido Masarotto and Brian Ripley}
-
 \seealso{\code{\link{shell}} or \code{\link{shell.exec}} for a less raw
 interface.}
 

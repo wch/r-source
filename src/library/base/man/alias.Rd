@@ -1,6 +1,3 @@
-% file alias.Rd
-% copyright (C) 1998 B. D. Ripley
-%
 \name{alias}
 \title{Find Aliases (Dependencies) in a Model}
 \usage{
@@ -53,6 +50,16 @@ alias.lm(object, complete = TRUE, partial = FALSE,
 
   The defaults are different from those in S.
 }
+\references{
+  Chambers, J. M., Freeny, A and Heiberger, R. M. (1992)
+  \emph{Analysis of variance; designed experiments.}
+  Chapter 5 of \emph{Statistical Models in S}
+  eds J. M. Chambers and T. J. Hastie, Wadsworth \& Brooks/Cole.
+}
+\author{
+  The design was inspired by the S function of the same name described
+  in Chambers \emph{et al.} (1992).
+}
 \examples{
 ## The next line is for fractions() which gives neater results
 has.VR <- require(MASS, quietly = TRUE)
@@ -73,5 +80,4 @@ alias(npk.aov)
 if(has.VR) detach(package:MASS)
 options(op)# reset
 }
-\author{B.D. Ripley}
 \keyword{models}

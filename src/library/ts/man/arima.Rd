@@ -180,7 +180,6 @@ arima(x, order = c(0, 0, 0),
   series with missing observations. \emph{Technometrics} \bold{20} 389--395.
 }
 
-\author{B. D. Ripley}
 \note{
   The results are likely to be different from S-PLUS's
   \code{arima.mle}, which computes a conditional likelihood and does

@@ -27,7 +27,6 @@ ts.union(\dots, dframe = FALSE)
   data frame.
 }
 \seealso{\code{\link{cbind}}.}
-\author{B. D. Ripley}
 \examples{
 data(UKLungDeaths)
 ts.union(mdeaths, fdeaths)

@@ -1,4 +1,3 @@
-#### copyright (C) 1998 B. D. Ripley
 dummy.coef <- function(object, ...) UseMethod("dummy.coef")
 
 dummy.coef.lm <- function(object, use.na=FALSE, ...)

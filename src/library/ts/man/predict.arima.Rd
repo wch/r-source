@@ -42,7 +42,6 @@
   Harvey, A. C. (1993) \emph{Time Series Models},
   2nd Edition, Harvester Wheatsheaf, sections 3.3 and 4.4.
 }
-\author{B. D. Ripley}
 
 \seealso{
   \code{\link{arima}}

@@ -66,7 +66,7 @@ quasipoisson(link = "log")
   restrictions) a model with
   variance proportional to mean as in the quasi-binomial model, note
   that \code{glm} does not compute maximum-likelihood estimates in that
-  model.  The behaviour of S-PLUS is closer to the quasi- variants. 
+  model.  The behaviour of S is closer to the quasi- variants. 
 }
 \references{
   McCullagh P. and Nelder, J. A. (1989)
@@ -80,6 +80,15 @@ quasipoisson(link = "log")
   Cox, D. R. and  Snell, E. J. (1981).
   \emph{Applied Statistics; Principles and Examples.}
   London: Chapman and Hall.
+
+  Hastie, T. J. and Pregibon, D. (1992)
+  \emph{Generalized linear models.}
+  Chapter 6 of \emph{Statistical Models in S}
+  eds J. M. Chambers and T. J. Hastie, Wadsworth \& Brooks/Cole.
+}
+\author{
+  The design was inspired by S functions of the same names described
+  in Hastie \& Pregibon (1992).
 }
 \seealso{
   \code{\link{glm}}, \code{\link{power}}.

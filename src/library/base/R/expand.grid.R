@@ -1,7 +1,5 @@
-## file expand.grid.R
-## copyright (C) 1998 W. N. Venables and B. D. Ripley
-##
-expand.grid <- function(...) {
+expand.grid <- function(...)
+{
     ## x should either be a list or a set of vectors or factors
     nargs <- length(args <- list(...))
     if(! nargs) return(as.data.frame(list()))

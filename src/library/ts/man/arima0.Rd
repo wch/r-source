@@ -200,7 +200,6 @@ arima0(x, order = c(0, 0, 0),
   series with missing observations. \emph{Technometrics} \bold{20} 389--395.
 }
 
-\author{B. D. Ripley}
 \note{
   This is a preliminary version, and will be replaced by \code{\link{arima}}.
 

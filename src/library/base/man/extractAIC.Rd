@@ -39,26 +39,28 @@ extractAIC(fit, scale,     k = 2, \dots)
   and \code{edf} the equivalent degrees of freedom (i.e., the number of
   parameters for usual parametric models) of \code{fit}.
  
-  For generalized linear models (i.e., for \code{\link{lm}},
-  \code{\link{aov}}, and \code{\link{glm}}), \eqn{-2\log L} is
-  the \emph{deviance}, as computed by \code{\link{deviance}(fit)}, plus
-  a constant.
-    
+  For linear models with unknown scale (i.e., for \code{\link{lm}} and
+  \code{\link{aov}}), \eqn{-2\log L} is computed from the
+  \emph{deviance} and uses a different additive constant to \code{\link{AIC}}.
+      
   \code{k = 2} corresponds to the traditional AIC, using \code{k =
     log(n)} provides the BIC (Bayes IC) instead.
   
   For further information, particularly about \code{scale}, see
   \code{\link{step}}.
 }
-\note{These functions are used in \code{\link{add1}},
+\note{
+  These functions are used in \code{\link{add1}},
   \code{\link{drop1}} and \code{\link{step}} and that may be their
   main use.
 }
 \value{
   A numeric vector of length 2, giving
+
   \item{edf}{the ``\bold{e}quivalent \bold{d}egrees of \bold{f}reedom''
   of the fitted model \code{fit}.}
-  \item{AIC}{the (generalized) Akaike Information Criterion for \code{fit}.}
+
+\item{AIC}{the (generalized) Akaike Information Criterion for \code{fit}.}
 }
 %-- Source in ../R/add.R
 \author{B. D. Ripley}

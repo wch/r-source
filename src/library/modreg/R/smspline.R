@@ -1,6 +1,3 @@
-#### copyright (C) 1998 B. D. Ripley
-#### Copyright (C) 2000-2002 The R Development Core Team
-
 smooth.spline <-
   function(x, y = NULL, w = NULL, df, spar = NULL, cv = FALSE,
 	   all.knots = FALSE, nknots = NULL,

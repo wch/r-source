@@ -28,6 +28,12 @@ terms(x, \dots)
   \emph{terms} representation of a symbolic model. See
   \code{\link{terms.object}} for its structure.
 }
+\references{
+  Chambers, J. M. and Hastie, T. J. (1992)
+  \emph{Statistical models.}
+  Chapter 2 of \emph{Statistical Models in S}
+  eds J. M. Chambers and T. J. Hastie, Wadsworth \& Brooks/Cole.
+}
 \seealso{
   \code{\link{terms.object}}, \code{\link{terms.formula}},
   \code{\link{lm}}, \code{\link{glm}}, \code{\link{formula}}.

@@ -1,4 +1,3 @@
-#### copyright (C) 1998 B. D. Ripley
 proj <- function(object, ...) UseMethod("proj")
 
 proj.default <- function(object, onedf = TRUE, ...)

@@ -60,6 +60,12 @@ interaction.plot(x.factor, trace.factor, response, fun = mean,
   Some of the argument names and the precise behaviour are chosen for
   S-compatibility.
 }
+\references{
+  Chambers, J. M., Freeny, A and Heiberger, R. M. (1992)
+  \emph{Analysis of variance; designed experiments.}
+  Chapter 5 of \emph{Statistical Models in S}
+  eds J. M. Chambers and T. J. Hastie, Wadsworth \& Brooks/Cole.
+}
 
 \examples{
 data(ToothGrowth)

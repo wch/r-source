@@ -41,7 +41,6 @@
   \item{residual.scale}{A scalar giving the square root of the
     dispersion used in computing the standard errors.}
 }
-\author{B. D. Ripley}
 
 \seealso{
   \code{\link{glm}}, \code{\link{SafePrediction}}

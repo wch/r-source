@@ -29,8 +29,6 @@ tsdiag(object, gof.lag, ...)
   None. Diagnostics are plotted.
 }
 
-\author{B. D. Ripley}
-
 \seealso{
   \code{\link{arima}}, \code{\link{StructTS}}, \code{\link{Box.test}}
 }
