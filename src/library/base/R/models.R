@@ -55,7 +55,9 @@ delete.response <- function (termobj)
     f<-formula(termobj)
     if (length(f) == 3) 
         f[[2]]<-NULL
-    terms(f)
+    tt <- terms(f, specials = names(attr(termobj, "specials")))
+    attr(tt, "intercept") <- attr(termobj, "intercept")
+    tt
 }
 
 reformulate <- function (termlabels, response=NULL)
