@@ -25,6 +25,48 @@
 #include "Defn.h"
 #include "Mathlib.h"
 
+#define COV_PAIRWISE_BODY					\
+	    xx = &x[i * n];					\
+	    nobs = 0;						\
+	    xmean = ymean = 0.;					\
+	    for (k = 0 ; k < n ; k++) {				\
+		if(!(ISNAN(xx[k]) || ISNAN(yy[k]))) {		\
+		    nobs += 1;					\
+		    xmean += xx[k];				\
+		    ymean += yy[k];				\
+		}						\
+	    }							\
+	    if (nobs >= 2) {					\
+		xmean /= nobs;					\
+		ymean /= nobs;					\
+		xsd = ysd = sum = 0.;				\
+		n1 = nobs-1;					\
+		for(k=0 ; k<n ; k++) {				\
+		    if(!(ISNAN(xx[k]) || ISNAN(yy[k]))) {	\
+			xm = xx[k] - xmean;			\
+			ym = yy[k] - ymean;			\
+			sum += xm * ym;				\
+			if(cor) {				\
+			    xsd += xm * xm;			\
+			    ysd += ym * ym;			\
+			}					\
+		    }						\
+		}						\
+		if (cor) {					\
+		    xsd = sqrt(xsd/n1);				\
+		    ysd = sqrt(ysd/n1);				\
+		    if(xsd == 0. || ysd == 0.) {		\
+			*sd_0 = 1;				\
+			sum = NA_REAL;				\
+		    }						\
+		    else sum = (sum / n1) / (xsd * ysd);	\
+		}						\
+		else sum /= n1;					\
+		ans[i + j * ncx] = sum;				\
+	    }							\
+	    else						\
+		ans[i + j * ncx] = NA_REAL;
+
 static void cov_pairwise1(int n, int ncx, double *x,
 			  double *ans, int *sd_0, int cor)
 {
@@ -32,49 +74,10 @@ static void cov_pairwise1(int n, int ncx, double *x,
     int i, j, k, nobs, n1;
     for (i = 0 ; i < ncx ; i++) {
 	for (j = 0 ; j <= i ; j++) {
-	    xx = &x[i * n];
 	    yy = &x[j * n];
-	    nobs = 0;
-	    xmean = 0;
-	    ymean = 0;
-	    for (k = 0 ; k < n ; k++) {
-		if(!(ISNAN(xx[k]) || ISNAN(yy[k]))) {
-		    nobs += 1;
-		    xmean += xx[k];
-		    ymean += yy[k];
-		}
-	    }
-	    if (nobs >= 2) {
-		xmean /= nobs;
-		ymean /= nobs;
-		xsd = 0.0;
-		ysd = 0.0;
-		sum = 0.0;
-		n1 = nobs-1;
-		for(k=0 ; k<n ; k++) {
-		    if(!(ISNAN(xx[k]) || ISNAN(yy[k]))) {
-			xm = xx[k] - xmean;
-			ym = yy[k] - ymean;
-			sum += xm * ym;
-			if(cor) {
-			    xsd += xm * xm;
-			    ysd += ym * ym;
-			}
-		    }
-		}
-		if (cor) {
-		    xsd = sqrt(xsd/n1);
-		    ysd = sqrt(ysd/n1);
-		    if(xsd == 0.0 || ysd == 0.0) {
-			*sd_0 = 1;
-			sum = NA_REAL;
-		    }
-		    else sum = (sum / n1) / (xsd * ysd);
-		}
-		else sum = sum / n1;
-		ans[j + i * ncx] = ans[i + j * ncx] = sum;
-	    }
-	    else ans[j + i * ncx] = ans[i + j * ncx] = NA_REAL;
+
+	    COV_PAIRWISE_BODY
+	    ans[j + i * ncx] = ans[i + j * ncx];
 	}
     }
 }
@@ -86,58 +89,21 @@ static void cov_pairwise2(int n, int ncx, int ncy, double *x, double *y,
     int i, j, k, nobs, n1;
     for (i = 0 ; i < ncx ; i++) {
 	for (j = 0 ; j < ncy ; j++) {
-	    xx = &x[i * n];
 	    yy = &y[j * n];
-	    nobs = 0;
-	    xmean = 0;
-	    ymean = 0;
-	    for (k=0 ; k<n ; k++) {
-		if (!(ISNAN(xx[k]) || ISNAN(yy[k]))) {
-		    nobs += 1;
-		    xmean += xx[k];
-		    ymean += yy[k];
-		}
-	    }
-	    if (nobs >= 2) {
-		xmean /= nobs;
-		ymean /= nobs;
-		xsd = 0.0;
-		ysd = 0.0;
-		sum = 0.0;
-		n1 = nobs-1;
-		for (k=0 ; k<n ; k++) {
-		    if (!(ISNAN(xx[k]) || ISNAN(yy[k]))) {
-			xm = xx[k] - xmean;
-			ym = yy[k] - ymean;
-			sum += xm * ym;
-			if(cor) {
-			    xsd += xm * xm;
-			    ysd += ym * ym;
-			}
-		    }
-		}
-		if (cor) {
-		    xsd = sqrt(xsd/n1);
-		    ysd = sqrt(ysd/n1);
-		    if(xsd == 0.0 || ysd == 0.0) {
-			*sd_0 = 1;
-			sum = NA_REAL;
-		    }
-		    else sum = (sum / n1) / (xsd * ysd);
-		}
-		else sum = sum / n1;
-		ans[i + j * ncx] = sum;
-	    }
-	    else ans[i + j * ncx] = NA_REAL;
+
+	    COV_PAIRWISE_BODY
 	}
     }
 }
+#undef COV_PAIRWISE_BODY
 
 static void cov_complete1(int n, int ncx, double *x, double *xm,
 			  int *ind, double *ans, int *sd_0, int cor)
+
 {
     double sum, xxm, yym, *xx, *yy;
     int i, j, k, nobs;
+
     /* total number of complete observations */
     nobs = 0;
     for(k = 0 ; k < n ; k++) {
@@ -152,7 +118,7 @@ static void cov_complete1(int n, int ncx, double *x, double *xm,
     /* variable means */
     for (i = 0 ; i < ncx ; i++) {
 	xx = &x[i * n];
-	sum = 0.0;
+	sum = 0.;
 	for (k = 0 ; k < n ; k++)
 	    if(ind[k] != 0)
 		sum += xx[k];
@@ -165,13 +131,14 @@ static void cov_complete1(int n, int ncx, double *x, double *xm,
 	for (j = 0 ; j <= i ; j++) {
 	    yy = &x[j * n];
 	    yym = xm[j];
-	    sum = 0.0;
+	    sum = 0.;
 	    for (k = 0 ; k < n ; k++)
 		if (ind[k] != 0)
 		    sum += (xx[k] - xxm) * (yy[k] - yym);
 	    ans[j + i * ncx] = ans[i + j * ncx] = sum / (nobs - 1);
 	}
     }
+
     if (cor) {
 	for (i = 0 ; i < ncx ; i++)
 	    xm[i] = sqrt(ans[i + i * ncx]);
@@ -181,22 +148,19 @@ static void cov_complete1(int n, int ncx, double *x, double *xm,
 		    *sd_0 = 1;
 		    ans[j + i * ncx] = ans[i + j * ncx] = NA_REAL;
 		}
-		else {
-		    ans[j + i * ncx] = ans[i + j*ncx]
-			= ans[i + j * ncx] / (xm[i] * xm[j]);
-		}
+		else
+		    ans[j + i * ncx] = ans[i + j * ncx] /= (xm[i] * xm[j]);
 	    }
 	    ans[i + i * ncx] = 1.0;
 	}
     }
 }
-
 static void cov_complete2(int n, int ncx, int ncy, double *x, double *y,
 			  double *xm, double *ym, int *ind,
 			  double *ans, int *sd_0, int cor)
 {
     double sum, xxm, yym, *xx, *yy;
-    int i, j, k, nobs;
+    int i, j, k, nobs, n1;
 
     /* total number of complete observations */
     nobs = 0;
@@ -209,36 +173,36 @@ static void cov_complete2(int n, int ncx, int ncy, double *x, double *y,
 		ans[i + j * ncx] = NA_REAL;
 	return;
     }
-
     /* variable means */
-    for (j = 0 ; j < ncx ; j++) {
-	xx = &x[j * n];
-	sum = 0.0;
-	for (i = 0 ; i < n ; i++)
-	    if (ind[i] != 0)
-		sum += xx[i];
-	xm[j] = sum / nobs;
+    for (i = 0 ; i < ncx ; i++) {
+	xx = &x[i * n];
+	sum = 0.;
+	for (k = 0 ; k < n ; k++)
+	    if (ind[k] != 0)
+		sum += xx[k];
+	xm[i] = sum / nobs;
     }
-    for (j = 0 ; j < ncy ; j++) {
-	yy = &y[j * n];
-	sum = 0.0;
-	for (i = 0 ; i < n ; i++)
-	    if (ind[i] != 0)
-		sum += yy[i];
-	ym[j] = sum / nobs;
+    for (i = 0 ; i < ncy ; i++) {
+	yy = &y[i * n];
+	sum = 0.;
+	for (k = 0 ; k < n ; k++)
+	    if (ind[k] != 0)
+		sum += yy[k];
+	ym[i] = sum / nobs;
     }
 
+    n1 = nobs - 1;
     for (i = 0 ; i < ncx ; i++) {
 	xx = &x[i * n];
 	xxm = xm[i];
 	for (j = 0 ; j < ncy ; j++) {
 	    yy = &y[j * n];
 	    yym = ym[j];
-	    sum = 0.0;
+	    sum = 0.;
 	    for (k = 0 ; k < n ; k++)
 		if (ind[k] != 0)
 		    sum += (xx[k] - xxm) * (yy[k] - yym);
-	    ans[i + j * ncx] = sum / (nobs - 1);
+	    ans[i + j * ncx] = sum / n1;
 	}
     }
 
@@ -246,29 +210,29 @@ static void cov_complete2(int n, int ncx, int ncy, double *x, double *y,
 	for (i = 0 ; i < ncx ; i++) {
 	    xx = &x[i * n];
 	    xxm = xm[i];
-	    sum = 0.0;
+	    sum = 0.;
 	    for (k = 0 ; k < n ; k++)
 		if (ind[k] != 0)
 		    sum += (xx[k] - xxm) * (xx[k] - xxm);
-	    xm[i] = sqrt(sum / (nobs - 1));
+	    xm[i] = sqrt(sum / n1);
 	}
 	for (j = 0 ; j < ncy ; j++) {
 	    yy = &y[j * n];
 	    yym = ym[j];
-	    sum = 0.0;
+	    sum = 0.;
 	    for (k = 0 ; k < n ; k++)
 		if (ind[k] != 0)
 		    sum += (yy[k] - yym) * (yy[k] - yym);
-	    ym[j] = sqrt(sum / (nobs - 1));
+	    ym[j] = sqrt(sum / n1);
 	}
 	for (i = 0 ; i < ncx ; i++) {
 	    for (j = 0 ; j < ncy ; j++) {
-		if (xm[i] == 0.0 || ym[j] == 0.0) {
+		if (xm[i] == 0. || ym[j] == 0.) {
 		    *sd_0 = 1;
 		    ans[i + j * ncx] = NA_REAL;
 		}
 		else
-		    ans[i + j * ncx] = ans[i + j * ncx] / (xm[i] * ym[j]);
+		    ans[i + j * ncx] /= (xm[i] * ym[j]);
 	    }
 	}
     }
@@ -278,47 +242,43 @@ static void cov_complete2(int n, int ncx, int ncy, double *x, double *y,
  * optimise paging in virtual memory systems ...
  * (or at least that's my story, and I'm sticking to it.)
 */
+#define NA_LOOP 							\
+	for (i = 0 ; i < n ; i++)					\
+	    if (ISNAN(z[i])) {						\
+		if (na_fail) error("missing observations in cov/cor");	\
+		else ind[i] = 0;					\
+	    }
+
+#define COMPLETE_1				\
+    double *z;					\
+    int i, j;					\
+    for (i = 0 ; i < n ; i++)			\
+	ind[i] = 1;				\
+    for (j = 0 ; j < ncx ; j++) {		\
+	z = &x[j * n];				\
+	NA_LOOP					\
+    }
+
 static void complete1(int n, int ncx, double *x, int *ind, int na_fail)
 {
-    double *z;
-    int i, j;
-    for (i = 0 ; i < n ; i++)
-	ind[i] = 1;
-    for (j = 0 ; j < ncx ; j++) {
-	z = &x[j * n];
-	for (i = 0 ; i < n ; i++)
-	    if (ISNAN(z[i])) {
-		if(na_fail) error("missing observations in cov/cor");
-		else ind[i] = 0;
-	    }
-    }
+    COMPLETE_1
 }
 
 static void
 complete2(int n, int ncx, int ncy, double *x, double *y, int *ind, int na_fail)
 {
-    double *z;
-    int i, j;
-    for (i = 0 ; i < n ; i++)
-	ind[i] = 1;
-    for (j = 0 ; j < ncx ; j++) {
-	z = &x[j * n];
-	for (i = 0 ; i < n ; i++)
-	    if (ISNAN(z[i])) {
-		if (na_fail) error("missing observations in cov/cor");
-		else ind[i] = 0;
-	    }
-    }
+    COMPLETE_1
+
     for(j = 0 ; j < ncy ; j++) {
-	z = &y[j*n];
-	for (i = 0 ; i < n ; i++)
-	    if (ISNAN(z[i])) {
-		if (na_fail) error("missing observations in cov/cor");
-		else ind[i] = 0;
-	    }
+	z = &y[j * n];
+	NA_LOOP
     }
 }
+#undef NA_LOOP
+#undef COMPLETE_1
 
+/* cov | cor( x, y, use = {1,		2,		3}
+                	"all.obs", "complete.obs", "pairwise.complete.obs") */
 SEXP do_cov(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP x, y, ans, xm, ym, ind;
@@ -326,11 +286,11 @@ SEXP do_cov(SEXP call, SEXP op, SEXP args, SEXP env)
 
     checkArity(op, args);
 
-    /* compute correlations if PRIMVAL(op) == 0 */
-    /* compute covariances  if PRIMVAL(op) != 0 */
+    /* compute correlations if PRIMVAL(op) == 0,
+	       covariances  if PRIMVAL(op) != 0 */
     cor = PRIMVAL(op);
 
-    /* Argument-1: x */
+    /* Arg.1: x */
     x = CAR(args) = coerceVector(CAR(args), REALSXP);
     if ((ansmat = isMatrix(x))) {
 	n = nrows(x);
@@ -341,8 +301,8 @@ SEXP do_cov(SEXP call, SEXP op, SEXP args, SEXP env)
 	ncx = 1;
     }
     args = CDR(args);
-    /* Argument-2: y */
-    if (isNull(CAR(args))) {
+    /* Arg.2: y */
+    if (isNull(CAR(args))) {/* y = x  : var() */
 	y = R_NilValue;
 	ncy = ncx;
     }
@@ -361,7 +321,7 @@ SEXP do_cov(SEXP call, SEXP op, SEXP args, SEXP env)
 	ansmat = (ansmat || isMatrix(y));
     }
     args = CDR(args);
-    /* Argument-3: method */
+    /* Arg.3:  method */
     method = asInteger(CAR(args));
     /* "default: complete" (easier for -Wall) */
     na_fail = 0;
@@ -372,17 +332,17 @@ SEXP do_cov(SEXP call, SEXP op, SEXP args, SEXP env)
 	break;
     case 2:		/* complete */
 	break;
-    case 3:		/* pairwise */
+    case 3:		/* pairwise.complete */
 	pair = 1;
 	break;
     default:
-	errorcall(call, "invalid computational method");
+	errorcall(call, "invalid `use' (computational method)");
     }
     if (ansmat) PROTECT(ans = allocMatrix(REALSXP, ncx, ncy));
     else PROTECT(ans = allocVector(REALSXP, ncx * ncy));
     sd_0 = 0;
     if (isNull(y)) {
-	if (pair == 0) { /* complete */
+	if (pair == 0) { /* complete "var" */
 	    PROTECT(xm = allocVector(REALSXP, ncx));
 	    PROTECT(ind = allocVector(INTSXP, n));
 	    complete1(n, ncx, REAL(x), INTEGER(ind), na_fail);
@@ -390,7 +350,7 @@ SEXP do_cov(SEXP call, SEXP op, SEXP args, SEXP env)
 			  INTEGER(ind), REAL(ans), &sd_0, cor);
 	    UNPROTECT(2);
 	}
-	else {		/* pairwise */
+	else {		/* pairwise "var" */
 	    cov_pairwise1(n, ncx, REAL(x), REAL(ans), &sd_0, cor);
 	}
     }
@@ -435,7 +395,7 @@ SEXP do_cov(SEXP call, SEXP op, SEXP args, SEXP env)
 	}
     }
     UNPROTECT(1);
-    if(sd_0)
-	warningcall(call, "standard deviation equal to zero in cor(.)");
+    if(sd_0)/* only in cor() */
+	warningcall(call, "The standard deviation is zero");
     return ans;
 }
