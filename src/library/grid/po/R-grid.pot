@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-02-10 09:31\n"
+"POT-Creation-Date: 2005-02-10 12:36\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -71,25 +71,16 @@ msgstr ""
 msgid "Must specify only valid gpar names"
 msgstr ""
 
-msgid "(grab"
+msgid "WILL not be faithful"
 msgstr ""
 
-msgid "WILL"
-msgstr ""
-
-msgid "MAY"
-msgstr ""
-
-msgid "not be faithful"
-msgstr ""
-
-msgid "; try wrap=TRUE)"
-msgstr ""
-
-msgid ")"
+msgid "MAY not be faithful"
 msgstr ""
 
 msgid "Invalid display list element"
+msgstr ""
+
+msgid "grob(s) overwritten"
 msgstr ""
 
 msgid "Only valid to push viewports"
@@ -182,6 +173,9 @@ msgstr ""
 msgid ") does not match gPath ("
 msgstr ""
 
+msgid ")"
+msgstr ""
+
 msgid "It is only valid to add a grob to a gTree"
 msgstr ""
 
@@ -203,10 +197,7 @@ msgstr ""
 msgid "The new grob must have the same name as the old grob"
 msgstr ""
 
-msgid "Slot"
-msgstr ""
-
-msgid "not found"
+msgid "Slot %d not found"
 msgstr ""
 
 msgid "gPath ("
@@ -216,6 +207,9 @@ msgid ") not found"
 msgstr ""
 
 msgid "Grob"
+msgstr ""
+
+msgid "not found"
 msgstr ""
 
 msgid "Invalid element in the display list"
