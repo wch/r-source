@@ -64,9 +64,9 @@ file.info <- function(...)
     res
 }
 
-file.access <- function(names, modes = 0)
+file.access <- function(names, mode = 0)
 {
-    res <- .Internal(file.access(names, modes))
+    res <- .Internal(file.access(names, mode))
     names(res) <- names
     res
 }
