@@ -175,7 +175,7 @@ tkyview.scroll(widget, ...)
   Except for a few exceptions, the pattern is that  Tcl widget commands
   possibly with subcommands like
   \code{.a.b selection clear} are converted to function names like
-  \code{tkpack.configure} and the widget is given as the first argument. 
+  \code{tkselection.clear} and the widget is given as the first argument. 
 }
 \seealso{\code{\link{TclInterface}}, \code{\link{TkWidgets}},
   \code{\link{TkCommands}}} 
