@@ -494,7 +494,9 @@ UTILITIES
 	available index information.  Unless installation tests are
 	skipped, checking is aborted if the package dependencies cannot
 	be resolved at run time.  Rd files are now also explicitly
-	checked for empty \name and \title entries.
+	checked for empty \name and \title entries.  The examples are
+	always run with T and F redefined to give an error if used
+	instead of TRUE and FALSE.
 
     o	The Perl code to build help now removes an existing example
 	file if there are no examples in the current help file.
