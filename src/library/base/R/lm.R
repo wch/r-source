@@ -557,13 +557,13 @@ model.matrix.lm <- function(object, ...)
     }
 }
 
-predict.mlm <- function(fit, newdata, se.fit = FALSE)
+predict.mlm <- function(object, newdata, se.fit = FALSE)
 {
-    if(missing(newdata)) return(fit$fitted)
+    if(missing(newdata)) return(object$fitted)
     if(se.fit)
 	stop("The 'se.fit' argument is not yet implemented for mlm objects")
-    x <- model.matrix(fit, newdata) # will use model.matrix.lm
+    x <- model.matrix(object, newdata) # will use model.matrix.lm
     piv <- object$qr$pivot[1:object$rank]
     pred <- X[, piv, drop = FALSE] %*% object$coefficients[piv,]
-    if(inherits(fit, "mlm")) pred else pred[, 1]
+    if(inherits(object, "mlm")) pred else pred[, 1]
 }
