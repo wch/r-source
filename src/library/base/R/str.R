@@ -4,7 +4,7 @@ str <- function(object, ...) UseMethod("str")
 str.data.frame <- function(object, ...)
 {
     ## Method to 'str' for  'data.frame' objects
-    ## $Id: str.R,v 1.10 1999/10/07 18:09:58 pd Exp $
+    ## $Id: str.R,v 1.11 1999/10/27 09:20:32 maechler Exp $
     if(! is.data.frame(object)) {
 	warning("str.data.frame(.) called with non-data.frame. Coercing one.")
 	object <- data.frame(object)
@@ -15,8 +15,8 @@ str.data.frame <- function(object, ...)
     cl <- class(object); cl <- cl[cl != "data.frame"]  #- not THIS class
     if(0 < length(cl)) cat("Classes", cl, " and ")
 
-    cat("`data.frame': ", nrow(object), "obs. of ",
-	length(object), "variables:\n")
+    cat("`data.frame':  ", nrow(object), " obs. of  ",
+	(p <- length(object)), " variable", if(p>1)"s",":\n",sep="")
 
     ## calling next method, usually  str.default:
     if(length(l <- list(...)) && any("give.length" == names(l)))
@@ -41,7 +41,7 @@ str.default <- function(object, max.level = 0, vec.len = 4, digits.d = 3,
     ## Author: Martin Maechler <maechler@stat.math.ethz.ch>	1990--1997
     ## ------ Please send Bug-reports, -fixes and improvements !
     ## ------------------------------------------------------------------------
-    ## $Id: str.R,v 1.10 1999/10/07 18:09:58 pd Exp $
+    ## $Id: str.R,v 1.11 1999/10/27 09:20:32 maechler Exp $
 
     oo <- options(digits = digits.d); on.exit(options(oo))
     le <- length(object)
@@ -156,15 +156,21 @@ str.default <- function(object, max.level = 0, vec.len = 4, digits.d = 3,
 	    tsp.a <- tsp(object)
 	    str1 <- paste(" Time-Series ", le.str, " from ", format(tsp.a[1]),
 			  " to ", format(tsp.a[2]), ":", sep = "")
-	    std.attr <- c("tsp","class")	 #- "names"
+	    std.attr <- c("tsp","class") #- "names"
 	} else if (is.factor(object)) {
-	    str1 <- " Factor class"
 	    object <- unclass(object)
 	    nl <- length(lev.att <- levels(object))
-	    str1 <- paste(str1, " ", le.str, "; ", nl, " levels: ",
-			  paste(lev.att[1:min(2,nl)], collapse =","),
-			  ":", sep="")
-	    std.attr <- "levels"      #- "names"
+            lenl <- cumsum(3 + nchar(lev.att))# level space
+            ml <- if(nl <= 1 || lenl[nl] <= 13)
+                nl else which(lenl > 13)[1]
+            if((d <- lenl[ml] - if(ml>1)18 else 14) >= 3)# truncate last
+                lev.att[ml] <-
+                    paste(substring(lev.att[ml],1, nchar(lev.att[ml])-d),"..",
+                          sep="")
+	    str1 <- paste(" Factor w/ ", nl, " level",if(nl>1) "s",' "',
+			  paste(lev.att[1:ml], collapse ='","'),'"',
+                          if(ml < nl)",..", ":", sep="")
+	    std.attr <- c("levels","class")
 	} else if(has.class) {
 	    ## str1 <- paste("Class '",cl,"' of length ", le, " :", sep="")
 	    ##===== NB. cl may be of length > 1 !!! ===========

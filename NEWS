@@ -27,6 +27,8 @@ NEW FEATURES
 
 BUG FIXES
 
+    o   str() is quite bit nicer with factors
+
     o	require() now has the warn.conflicts argument of library().
 
     o	factor(list()) *is* now a factor;
