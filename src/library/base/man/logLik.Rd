@@ -4,19 +4,22 @@
 \usage{
 logLik(object, ...)
 
+\method{as.data.frame}{logLik}(x, row.names = NULL, optional = FALSE)
 %notyet print(logLik(*), ...)
 %notyet   str(logLik(*), ...)
-\method{as.data.frame}{logLik}(x, row.names = NULL, optional = FALSE)
 }
 \alias{logLik}
 \alias{print.logLik}
 \alias{str.logLik}
-\alias{as.data.frame.logLik} <- function (x, row.names = NULL, optional = FALSE)
+\alias{as.data.frame.logLik}
 \arguments{
  \item{object}{any object from which a log-likelihood value, or a
    contribution to a log-likelihood value, can be extracted.}
  \item{\dots}{some methods for this generic function require additional
    arguments.}
+ \item{x}{an object of class \code{logLik}.}
+ \item{row.names, optional}{arguments to the \code{\link{as.data.frame}}
+   method; see its documentation.}
 }
 \description{
   This function is generic; method functions can be written to handle
