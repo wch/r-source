@@ -39,8 +39,20 @@
  *    R should remain able to write older workspace formats.  An error
  *    should be signaled if the contents to be saved is not compatible
  *    with the requested format.
+ *
+ *    To allow older versions of R to give useful error messages, the
+ *    header now contains the version of R that wrote the workspace
+ *    and the oldest version that can read the workspace.  These
+ *    versions are stored as an integer packed by the R_Version macro
+ *    from Rversion.h.  Some workspace formats may only exist
+ *    temporarily in the development stage.  If readers are not
+ *    provided in a release version, then these should specify the
+ *    oldest reader R version as -1.
  */
 
+#define R_MAGIC_ASCII_V2   2001
+#define R_MAGIC_BINARY_V2  2002
+#define R_MAGIC_XDR_V2     2003
 #define R_MAGIC_ASCII_V1   1001
 #define R_MAGIC_BINARY_V1  1002
 #define R_MAGIC_XDR_V1     1003
@@ -242,6 +254,16 @@ static SEXP AsciiLoadOld(FILE *fp, int version)
 /* ----- L o w l e v e l -- X D R -- I / O ----- */
 
 #ifdef HAVE_XDR
+#ifndef INT_32_BITS
+/* The way XDR is used pretty much assumes that int is 32 bits and
+   maybe even 2's complement represantation--without that, NA_INTEGER
+   is not likely to be preserved properly.  Since 32 bit ints (and 2's
+   complement) are pretty much universal, we can worry about that when
+   the need arises.  To be safe, we signal a compiler error if int is
+   not 32 bits. There may be similar issues with doubles. */
+*/
+# error code requires that int have 32 bits
+#endif
 
 #include <rpc/rpc.h>
 
@@ -884,12 +906,13 @@ static void NewMakeLists (SEXP obj, SEXP sym_list, SEXP env_list)
 #ifdef EXPERIMENTAL_NAMESPACES
 	if (obj == R_BaseNamespace)
 	    warning("base namespace is not preserved in version 1 workspaces");
-	if (R_IsNamespaceEnv(obj))
+	else if (R_IsNamespaceEnv(obj))
 	    error("cannot save namespace in version 1 workspaces");
 #endif
 #ifdef FANCY_BINDINGS
 	if (R_HasFancyBindings(obj))
-	    error("cannot save environment with locked/active bindings");
+	    error("cannot save environment with locked/active bindings"
+		  " in version 1 workspaces");
 #endif
 	HashAdd(obj, env_list);
 	/* FALLTHROUGH */
@@ -913,7 +936,7 @@ static void NewMakeLists (SEXP obj, SEXP sym_list, SEXP env_list)
 	    NewMakeLists(VECTOR_ELT(obj, count), sym_list, env_list);
 	break;
     case WEAKREFSXP:
-	error("cannot save weak references");
+	error("cannot save weak references in version 1 workspaces");
     }
     NewMakeLists(ATTRIB(obj), sym_list, env_list);
 }
@@ -1230,6 +1253,8 @@ static SEXP NewReadItem (SEXP sym_table, SEXP env_table, FILE *fp)
     case EXPRSXP:
 	PROTECT(s = NewReadVec(type, sym_table, env_table, fp));
 	break;
+    case BCODESXP:
+	error("this version of R cannot read byte code objects");
     default:
 	error("NewReadItem: unknown type %i", type);
     }
@@ -1607,19 +1632,15 @@ static void OutTermXdr(FILE *fp)
 
 static void OutIntegerXdr(FILE *fp, int i)
 {
-    if (!xdr_int(&xdrs, &i)) {
-	xdr_destroy(&xdrs);
+    if (!xdr_int(&xdrs, &i))
 	error("an xdr integer data write error occured");
-    }
 }
 
 static int InIntegerXdr(FILE *fp)
 {
     int i;
-    if (!xdr_int(&xdrs, &i)) {
-	xdr_destroy(&xdrs);
+    if (!xdr_int(&xdrs, &i))
 	error("an xdr integer data read error occured");
-    }
     return i;
 }
 
@@ -1627,10 +1648,8 @@ static void OutStringXdr(FILE *fp, char *s)
 {
     unsigned int n = strlen(s);
     OutIntegerXdr(fp, n);
-    if (!xdr_bytes(&xdrs, &s, &n, n)) {
-	xdr_destroy(&xdrs);
+    if (!xdr_bytes(&xdrs, &s, &n, n))
 	error("an xdr string data write error occured");
-    }
 }
 
 static char *InStringXdr(FILE *fp)
@@ -1645,47 +1664,37 @@ static char *InStringXdr(FILE *fp)
 	buf = newbuf;
 	buflen = nbytes + 1;
     }
-    if (!xdr_bytes(&xdrs, &buf, &nbytes, nbytes)) {
-	xdr_destroy(&xdrs);
+    if (!xdr_bytes(&xdrs, &buf, &nbytes, nbytes))
 	error("an xdr string data write error occured");
-    }
     buf[nbytes] = '\0';
     return buf;
 }
 
 static void OutRealXdr(FILE *fp, double x)
 {
-    if (!xdr_double(&xdrs, &x)) {
-	xdr_destroy(&xdrs);
+    if (!xdr_double(&xdrs, &x))
 	error("an xdr real data write error occured");
-    }
 }
 
 static double InRealXdr(FILE * fp)
 {
     double x;
-    if (!xdr_double(&xdrs, &x)) {
-	xdr_destroy(&xdrs);
+    if (!xdr_double(&xdrs, &x))
 	error("an xdr real data read error occured");
-    }
     return x;
 }
 
 static void OutComplexXdr(FILE *fp, Rcomplex x)
 {
-    if (!xdr_double(&xdrs, &(x.r)) || !xdr_double(&xdrs, &(x.i))) {
-	xdr_destroy(&xdrs);
+    if (!xdr_double(&xdrs, &(x.r)) || !xdr_double(&xdrs, &(x.i)))
 	error("an xdr complex data write error occured");
-    }
 }
 
 static Rcomplex InComplexXdr(FILE * fp)
 {
     Rcomplex x;
-    if (!xdr_double(&xdrs, &(x.r)) || !xdr_double(&xdrs, &(x.i))) {
-	xdr_destroy(&xdrs);
+    if (!xdr_double(&xdrs, &(x.r)) || !xdr_double(&xdrs, &(x.i)))
 	error("an xdr complex data read error occured");
-    }
     return x;
 }
 
@@ -1731,6 +1740,15 @@ static void R_WriteMagic(FILE *fp, int number)
     case R_MAGIC_XDR_V1:     /* Version 1 - R Data, XDR Binary Format */
 	strcpy((char*)buf, "RDX1");
 	break;
+    case R_MAGIC_ASCII_V2:   /* Version >=2 - R Data, ASCII Format */
+	strcpy((char*)buf, "RDA2");
+	break;
+    case R_MAGIC_BINARY_V2:  /* Version >=2 - R Data, Binary Format */
+	strcpy((char*)buf, "RDB2");
+	break;
+    case R_MAGIC_XDR_V2:     /* Version >=2 - R Data, XDR Binary Format */
+	strcpy((char*)buf, "RDX2");
+	break;
     default:
 	buf[0] = (number/1000) % 10 + '0';
 	buf[1] = (number/100) % 10 + '0';
@@ -1763,6 +1781,15 @@ static int R_ReadMagic(FILE *fp)
     else if (strncmp((char*)buf, "RDX1\n", 5) == 0) {
 	return R_MAGIC_XDR_V1;
     }
+    if (strncmp((char*)buf, "RDA2\n", 5) == 0) {
+	return R_MAGIC_ASCII_V2;
+    }
+    else if (strncmp((char*)buf, "RDB2\n", 5) == 0) {
+	return R_MAGIC_BINARY_V2;
+    }
+    else if (strncmp((char*)buf, "RDX2\n", 5) == 0) {
+	return R_MAGIC_XDR_V2;
+    }
     else if (strncmp((char *)buf, "RD", 2) == 0)
 	return R_MAGIC_MAYBE_TOONEW;
 
@@ -1774,26 +1801,57 @@ static int R_ReadMagic(FILE *fp)
     return d1 + 10 * d2 + 100 * d3 + 1000 * d4;
 }
 
+static int R_DefaultSaveFormatVersion = 1;
+
+static void R_SaveToFileV(SEXP obj, FILE *fp, int ascii, int version)
+{
+    if (version == 1) {
+	if (ascii) {
+	    R_WriteMagic(fp, R_MAGIC_ASCII_V1);
+	    NewAsciiSave(obj, fp);
+	} else {
+#ifdef HAVE_XDR
+	    R_WriteMagic(fp, R_MAGIC_XDR_V1);
+	    NewXdrSave(obj, fp);
+#else
+	    R_WriteMagic(fp, R_MAGIC_BINARY_V1);
+	    NewBinarySave(obj, fp);
+#endif /* HAVE_XDR */
+	}
+    }
+    else {
+	struct R_outpstream_st out;
+	R_pstream_format_t type;
+	int magic;
+	if (ascii) {
+	    magic = R_MAGIC_ASCII_V2;
+	    type = R_pstream_ascii_format;
+	}
+	else {
+#ifdef HAVE_XDR
+	    magic = R_MAGIC_XDR_V2;
+	    type = R_pstream_xdr_format;
+#else
+	    magic = R_MAGIC_BINARY_V2;
+	    type = R_pstream_binary_format;
+#endif
+	}
+	R_WriteMagic(fp, magic);
+	R_InitFileOutPStream(&out, fp, type, version, NULL, NULL);
+	R_Serialize(obj, &out);
+    }
+}
+
 /* ----- E x t e r n a l -- I n t e r f a c e s ----- */
 
 void R_SaveToFile(SEXP obj, FILE *fp, int ascii)
 {
-    if (ascii) {
-	R_WriteMagic(fp, R_MAGIC_ASCII_V1);
-	NewAsciiSave(obj, fp);
-    } else {
-#ifdef HAVE_XDR
-	R_WriteMagic(fp, R_MAGIC_XDR_V1);
-	NewXdrSave(obj, fp);
-#else
-	R_WriteMagic(fp, R_MAGIC_BINARY_V1);
-	NewBinarySave(obj, fp);
-#endif /* HAVE_XDR */
-    }
+    R_SaveToFileV(obj, fp, ascii, R_DefaultSaveFormatVersion);
 }
 
 SEXP R_LoadFromFile(FILE *fp, int startup)
 {
+    struct R_inpstream_st in;
     int magic;
     DLstartup = startup; /* different handling of errors */
 
@@ -1818,6 +1876,17 @@ SEXP R_LoadFromFile(FILE *fp, int startup)
 #ifdef HAVE_XDR
     case R_MAGIC_XDR_V1:
 	return(NewXdrLoad(fp));
+#endif /* HAVE_XDR */
+    case R_MAGIC_ASCII_V2:
+	R_InitFileInPStream(&in, fp, R_pstream_ascii_format, NULL, NULL);
+	return R_Unserialize(&in);
+    case R_MAGIC_BINARY_V2:
+	R_InitFileInPStream(&in, fp, R_pstream_binary_format, NULL, NULL);
+	return R_Unserialize(&in);
+#ifdef HAVE_XDR
+    case R_MAGIC_XDR_V2:
+	R_InitFileInPStream(&in, fp, R_pstream_xdr_format, NULL, NULL);
+	return R_Unserialize(&in);
 #endif /* HAVE_XDR */
     default:
 	fclose(fp);
@@ -1846,7 +1915,7 @@ SEXP do_save(SEXP call, SEXP op, SEXP args, SEXP env)
     /* save(list, file, ascii, version, environment) */
 
     SEXP s, t, source;
-    int len, j;
+    int len, j, version;
     FILE *fp;
     RCNTXT cntxt;
 
@@ -1859,6 +1928,12 @@ SEXP do_save(SEXP call, SEXP op, SEXP args, SEXP env)
 	errorcall(call, "`file' must be non-empty string");
     if (TYPEOF(CADDR(args)) != LGLSXP)
 	errorcall(call, "`ascii' must be logical");
+    if (CADDDR(args) == R_NilValue)
+	version = R_DefaultSaveFormatVersion;
+    else
+	version = asInteger(CADDDR(args));
+    if (version == NA_INTEGER || version <= 0)
+	error("bad version value");
     source = CAR(nthcdr(args,4));
     if (source != R_NilValue && TYPEOF(source) != ENVSXP)
 	error("bad environment");
@@ -1884,7 +1959,7 @@ SEXP do_save(SEXP call, SEXP op, SEXP args, SEXP env)
 	    error("Object \"%s\" not found", CHAR(PRINTNAME(TAG(t))));
     }
 
-    R_SaveToFile(s, fp, INTEGER(CADDR(args))[0]);
+    R_SaveToFileV(s, fp, INTEGER(CADDR(args))[0], version);
 
     UNPROTECT(1);
     /* end the context after anything that could raise an error but before
@@ -1905,30 +1980,29 @@ static void R_LoadSavedData(FILE *fp, SEXP aenv)
     /* Note that we try to convert old "pairlist" objects */
     /* to new "pairlist" objects. */
 
+    /* allow read value to be a vector-style list */
+    if (TYPEOF(ans) == VECSXP) {
+	int i;
+	SEXP names;
+	PROTECT(ans);
+	PROTECT(names = getAttrib(ans, R_NamesSymbol)); /* PROTECT needed?? */
+	if (TYPEOF(names) != STRSXP || LENGTH(names) != LENGTH(ans))
+	    error("not a valid named list");
+	for (i = 0; i < LENGTH(ans); i++) {
+	    SEXP sym = install(CHAR(STRING_ELT(names, i)));
+	    defineVar(sym, ConvertPairToVector(VECTOR_ELT(ans, i)), aenv);
+	}
+	UNPROTECT(2);
+	return;
+    }
+
+    if (! isList(ans))
+	error("loaded data is not in pair list form");
+
     PROTECT(a = ans);
     while (a != R_NilValue) {
-#ifdef OLD
-	for (e = FRAME(aenv); e != R_NilValue ; e = CDR(e)) {
-	    if (TAG(e) == TAG(a)) {
-		CAR(e) = CAR(a);
-		a = CDR(a);
-		CAR(a) = ConvertPairToVector(CAR(a)); /* PAIRLIST conv */
-		goto NextItem;
-	    }
-	}
-	e = a;
-	a = CDR(a);
-	UNPROTECT(1);
-	PROTECT(a);
-	CDR(e) = FRAME(aenv);
-	FRAME(aenv) = e;
-	CAR(e) = ConvertPairToVector(CAR(e)); /* PAIRLIST conv */
-    NextItem:
-	;
-#else
         defineVar(TAG(a), ConvertPairToVector(CAR(a)), aenv);
         a = CDR(a);
-#endif /* OLD */
     }
     UNPROTECT(1);
 }
@@ -1969,4 +2043,76 @@ SEXP do_load(SEXP call, SEXP op, SEXP args, SEXP env)
     endcontext(&cntxt);
     fclose(fp);
     return R_NilValue;
+}
+
+#define R_XDR_DOUBLE_SIZE 8
+#define R_XDR_INTEGER_SIZE 4
+ 
+void R_XDREncodeDouble(double d, void *buf)
+{
+#ifdef HAVE_XDR
+    XDR xdrs;
+    int success;
+ 
+    xdrmem_create(&xdrs, buf, R_XDR_DOUBLE_SIZE, XDR_ENCODE);
+    success = xdr_double(&xdrs, &d);
+    xdr_destroy(&xdrs);
+    if (! success)
+        error("XDR write failed");
+#else
+    error("XDR is not available on this system");
+#endif
+}
+ 
+double R_XDRDecodeDouble(void *buf)
+{
+#ifdef HAVE_XDR
+    XDR xdrs;
+    double d;
+    int success;
+ 
+    xdrmem_create(&xdrs, buf, R_XDR_DOUBLE_SIZE, XDR_DECODE);
+    success = xdr_double(&xdrs, &d);
+    xdr_destroy(&xdrs);
+    if (! success)
+        error("XDR read failed");
+    return d;
+#else
+    error("XDR is not available on this system");
+    return 0.0; /* keep compiler happy */
+#endif
+}
+ 
+void R_XDREncodeInteger(int i, void *buf)
+{
+#ifdef HAVE_XDR
+    XDR xdrs;
+    int success;
+ 
+    xdrmem_create(&xdrs, buf, R_XDR_INTEGER_SIZE, XDR_ENCODE);
+    success = xdr_int(&xdrs, &i);
+    xdr_destroy(&xdrs);
+    if (! success)
+        error("XDR write failed");
+#else
+    error("XDR is not available on this system");
+#endif
+}
+
+int R_XDRDecodeInteger(void *buf)
+{
+#ifdef HAVE_XDR
+    XDR xdrs;
+    int i, success;
+ 
+    xdrmem_create(&xdrs, buf, R_XDR_INTEGER_SIZE, XDR_DECODE);
+    success = xdr_int(&xdrs, &i);
+    xdr_destroy(&xdrs);
+    if (! success)
+        error("XDR read failed");
+    return i;
+#else
+    error("XDR is not available on this system");
+    return 0; /* keep compiler happy */
+#endif
 }

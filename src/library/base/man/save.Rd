@@ -17,7 +17,9 @@ save.image(file = ".RData")
     different types.  The default value of \code{ascii} is \code{FALSE}
     which leads to a more compact binary file being written.}
   \item{version}{the workspace format version to use.  NULL specifies
-    the current default format.  Other values are not used yet.}
+    the current default format.  The version used in R 1.3 is version
+    1; this is the current default.  Version 2 is a new experimental
+    version that may become the default soon.}
   \item{envir}{environment to search for objects to be saved.}
   }
 }
