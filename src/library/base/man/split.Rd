@@ -1,4 +1,4 @@
-\name{split}
+name{split}
 \title{Divide into Groups}
 \usage{
 split(x, f)
@@ -10,11 +10,14 @@ split(x, f)
 }
 \description{
   \code{split} divides the data in the vector \code{x} into the groups
-  defined by the factor \code{f}.
+  defined by the factor \code{f}. \code{f} is recycled as necessary and
+  if the length of \code{x} is not a multiple of the length of \code{f}
+  a warning is printed.
 
   The value returned is a list of vectors containing the values for the
   groups.  The components of the list are named by the factor levels of
-  \code{f}.
+  \code{f}. If \code{f} is longer than \code{x} some of these will be of
+  zero length.
 }
 \examples{
 n <- 10; nn <- 100
