@@ -149,6 +149,9 @@ NEW FEATURES
 	equal means in a one-way layout, assuming normality but not
 	necessarily equal variances.
 
+    o	Dataset swiss now has row names.
+
+
 
 BUG FIXES
 
@@ -161,6 +164,8 @@ BUG FIXES
     o	plot(1:2, xaxs = "i") now gives both "1.0" and "2.0" x-axis labels.
 
     o	symnum(x) behaves more reasonably for zero length or non-numeric x.
+
+    o	qchisq(0.025, 31, ncp=1, lower.tail=FALSE) now works.  (PR#875)
 
 
 
@@ -232,8 +237,6 @@ BUG FIXES
     o	rt() could give different results on different platforms as
 	the order of evaluation of calls to random numbers was not
 	fully defined.	This affected the Mac port.
-
-    o	qchisq(0.025, 31, ncp=1, lower.tail=FALSE) now works.  (PR#875)
 
     o	ppr() inside nested calls sometimes failed to find objects
 	due to a typo in the eval call in ppr.formula.
