@@ -73,8 +73,8 @@ help.start(update = TRUE, gui = "irrelevant", browser = getOption("browser"))
 \dontrun{help.start()
 #ifdef windows
 help.start(browser="C:\\Program Files\\Internet Explorer\\IEXPLORE.EXE")
-help.start(browser="C:/Program Files/Netscape/Netscape 6/netscp6.exe")}
-help.start(browser="C:/Program Files/Opera/Opera.exe")}
+help.start(browser="C:/Program Files/Netscape/Netscape 6/netscp6.exe")
+help.start(browser="C:/Program Files/Opera/Opera.exe")
 #endif
-}
+}}
 \keyword{documentation}
