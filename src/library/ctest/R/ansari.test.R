@@ -147,7 +147,7 @@ ansari.test <- function(x, y,
                         if(length(uci) != 1)
                             uci <- uci[1]
                     }
-                    c(uci, NA)
+                    c(uci, Inf)
                 }, less= {
                     l <- absigma - qansari(1 - alpha, m, n)
                     if(length(l[l > 0]) == 0)
@@ -158,7 +158,7 @@ ansari.test <- function(x, y,
                         if (length(lci) != 1)
                             lci <- lci[length(lci)]
                     }
-                    c(NA, lci)
+                    c(-Inf, lci)
                 })
             }
             attr(cint, "conf.level") <- conf.level	
@@ -213,10 +213,10 @@ ansari.test <- function(x, y,
                 c(u, l)
             }, greater= {
                 u <- optim(1, ab, zq=qnorm(alpha))$par
-                c(u, NA)
+                c(u, Inf)
             }, less= {
                 l <- optim(1, ab, zq=qnorm(alpha, lower = FALSE))$par
-                c(NA, l)
+                c(-Inf, l)
             })
             attr(cint, "conf.level") <- conf.level
         }
