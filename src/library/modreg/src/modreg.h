@@ -1,6 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 2001-2   The R Development Core Team.
+ *  Copyright (C) 2003     The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -22,6 +23,9 @@
 
 #include <R.h>
 /* for Sint .. */
+#include <Rinternals.h>
+
+SEXP R_isoreg(SEXP y);
 
 void BDRksmooth(double *x, double *y, int *n,
 		double *xp, double *yp, int *np,
@@ -54,6 +58,20 @@ loess_ise(double *y, double *x, double *x_evaluate, double *weights,
 	  Sint *drop_square, Sint *sum_drop_sqr, double *cell,
 	  Sint *d, Sint *n, Sint *m, double *fit, double *L);
 
+void Srunmed(double *y, double *smo,
+	     Sint *n, Sint *band, Sint *end_rule, Sint *debug);
+
+void Trunmed(Sint *nn,/* = length(data) */
+	     Sint *kk,/* is odd <= nn */
+	     const double *data,
+	     double *median, /* (n) */
+	     Sint   *outlist,/* (k+1) */
+	     Sint   *nrlist,/* (2k+1) */
+	     double *window,/* (2k+1) */
+	     Sint   *end_rule,
+	     Sint   *print_level);
+
+/* Fortran : */
 
 void F77_SUB(lowesw)(double *res, int *n, double *rw, int *pi);
 void F77_SUB(lowesp)(int *n, double *y, double *yhat, double *pwgts,

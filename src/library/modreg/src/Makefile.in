@@ -11,7 +11,7 @@ top_builddir = ../../../..
 subdir = src/library/$(pkg)/src
 R_HOME = $(top_builddir)
 
-SOURCES_C = init.c ksmooth.c loessc.c
+SOURCES_C = init.c ksmooth.c loessc.c isoreg.c Srunmed.c Trunmed.c
 SOURCES_F = bsplvd.f bvalue.f bvalus.f loessf.f ppr.f qsbart.f sbart.f \
   sgram.f sinerp.f sslvrg.f stxwx.f
 DEPENDS = $(SOURCES_C:.c=.d)
