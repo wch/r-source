@@ -14,6 +14,23 @@ formula.terms <- function(x) {
     attributes(x) <- list(class="formula")
     x
 }
+
+formula.data.frame<- function (df) 
+{
+    nm <- sapply(names(df), as.name)
+    lhs <- nm[1]
+    if (length(nm) > 1) {
+       rhs <- nm[-1]
+    }
+    else {
+       rhs <- nm[1]
+       lhs <- NULL
+    }
+    ff <- parse(text = paste(lhs, paste(rhs, collapse = "+"), sep = "~"))
+    eval(ff)
+}
+
+
 print.formula <- function(x) print.default(unclass(x))
 
 "[.formula" <- function(x,i) {
