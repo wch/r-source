@@ -1,5 +1,5 @@
-#ifndef RCONFIG_H_
-#define RCONFIG_H_
+#ifndef _CONFIG_H
+#define _CONFIG_H
 
 #define Win32
 
