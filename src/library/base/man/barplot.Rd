@@ -64,7 +64,7 @@
     \code{names.arg} (see above), the
     other axis is drawn (with \code{lty=0}) and labeled.}
   \item{cex.axis}{expansion factor for numeric axis labels.}
-  \item{cex.axis}{expansion factor for names.}
+  \item{cex.names}{expansion factor for names.}
   \item{inside}{logical.  If \code{TRUE}, the lines which  divide
     adjacent bars will be drawn.}
   \item{plot}{logical.  If \code{FALSE}, nothing is plotted.}
