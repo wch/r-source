@@ -168,6 +168,8 @@ NEW FEATURES
 	of aov().  (Formerly function Tukey in package Devore5 by
 	Douglas Bates.)
 
+    o   [pqr]binom() no longer silently round the `size' argument,
+	but return NaN (as dbinom() does). (PR#1377)
 
 
 DEPRECATED & DEFUNCT

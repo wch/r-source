@@ -30,6 +30,8 @@ rbinom(n, size, prob)
   \code{dbinom} gives the density, \code{pbinom} gives the distribution
   function, \code{qbinom} gives the quantile function and \code{rbinom}
   generates random deviates.
+  
+  If \code{size} is not an integer, \code{NaN} is returned.
 }
 \details{
   The binomial distribution with \code{size} \eqn{= n} and
