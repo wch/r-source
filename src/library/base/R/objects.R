@@ -89,6 +89,24 @@ methods <- function (generic.function, class)
 	if (!is.character(class))
 	    class <- paste(deparse(substitute(class)))
 	name <- paste(".", class, "$", sep = "")
+        ## also look for registered methods in loaded namespaces.
+        ## These should only be registered in environments containing
+        ## the corresponding generic, so we don't check again.
+        ## Note that the generic will not necessarily be visible,
+        ## as the package may not be loaded -- we don't check.
+        for(i in loadedNamespaces()) {
+            S3reg <- ls(get(".__S3MethodsTable__.", envir = asNamespace(i)))
+            if(length(S3reg)) {
+                nmS3reg <- rep.int("registered S3method", length(S3reg))
+                an <- c(an, S3reg)
+                info <- rbind(info,
+                              data.frame(visible = rep.int(FALSE, length(S3reg)),
+                                         from = nmS3reg, row.names = S3reg))
+                ## might both export and register a method
+                dups <- duplicated(an)
+                an <- an[!dups]; info <- info[!dups,]
+            }
+        }
     }
     else stop("must supply generic.function or class")
     keep <- grep(gsub("([.[])", "\\\\\\1", name), an)

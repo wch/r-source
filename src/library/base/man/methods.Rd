@@ -32,8 +32,7 @@ methods(generic.function, class)
   which \emph{are named like methods} and may not actually be methods
   (known exceptions are discarded in the code).  Note that the listed
   methods may not be user-visible objects, but often help will be
-  available for them.  (\code{methods(class=)} only reports user-visible
-  methods.)
+  available for them.
 }
 \note{
   This scheme is called \emph{S3} (S version 3).  For new projects,

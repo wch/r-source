@@ -70,7 +70,8 @@ NEW FEATURES
 	during the use of locator() and identify().
 
     o   methods() has a print method which asterisks functions which
-	are not user-visible.
+	are not user-visible.  methods(class = "foo") now lists
+	non-visible functions.
 
     o   library() has a pos argument, controlling where the package is
 	attached (defaulting to pos=2 as before).
@@ -146,6 +147,7 @@ NEW FEATURES
 
 	- as.data.frame.list() did not cope with list names such as
           `check.rows',  and formatting/printing data frames with such
+          column names now works.
 
 	- Row names in extraction are still made unique, but without
           forcing them to be syntactic names.
@@ -158,7 +160,7 @@ NEW FEATURES
 	least one zero-length argument.
 
     o   make.names() has improvements, and there is a new auxiliary
-	function make.unique().  (Contributed by Tom Minka.)
+	function make.unique().  (Based on code contributed by Tom Minka.)
 	In particular make.names() now recognises that names beginning
 	with a dot are valid and that reserved words are not.
 
@@ -255,7 +257,7 @@ DEPRECATED & DEFUNCT
 
     o	The deprecated argument 'white' of parse() has been removed.
 
-    o	pacf/plot.mts() have been removed and their functionality
+    o	Methods pacf/plot.mts() have been removed and their functionality
 	incorporated into pacf.default/plot.ts().
 
     o	print.coefmat() is deprecated in favour of printCoefmat()
@@ -375,7 +377,7 @@ BUG FIXES
     o   getS3method(f, cl, optional=TRUE) now returns NULL if `f' does
 	not exist.
 
-    o   The png(), jpeg(), png() and win.metafile() devices under now 
+    o   The png(), jpeg(), png() and win.metafile() devices now 
 	enforce the limit of 512 chars(!) on the filename.  (PR#3466)
 
 
