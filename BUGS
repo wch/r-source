@@ -289,11 +289,11 @@ Date: Tue, 11 May 1999 14:01:59 +0200 (MET DST)
 Subject: Memory crash.
 From: Patrick Lindsey <plindsey@alpha.luc.ac.be>
 Date: Wed, 12 May 1999 14:43:45 +0200 (MET DST)
-* PR# 195 *
-Subject: Error in stripplot  (was Re: [R] stripplot gets weird)
-From: Prof Brian D Ripley <ripley@stats.ox.ac.uk>
-Date: Thu, 13 May 1999 07:34:06 +0100 (BST)
 * PR# 196 *
 Subject: R 0.64 and -release fails to build on DU4.0
 From: Leif Johansson <leifj@matematik.su.se>
 Date: Fri, 14 May 1999 12:32:14 +0200
+* PR# 197 *
+Subject: glm crash
+From: Cor en Aylin <Cor.Berrevoets@gironet.nl>
+Date: Fri, 21 May 1999 19:44:23 +0200
