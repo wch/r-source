@@ -704,7 +704,8 @@ hist.POSIXt <- function(x, breaks, ..., xlab = deparse(substitute(x)),
             axis(2, ...)
             if(num.br)
                 breaks <- c.POSIXct(res$breaks)
-            axis.POSIXct(1, at = breaks,  format = format)
+            axis.POSIXct(1, at = breaks,  format = format, ...)
+                                        # `...' : e.g. cex.axis
         }
      }
     invisible(res)

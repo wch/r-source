@@ -6,6 +6,15 @@
 	**************************************************
 
 
+		CHANGES IN R VERSION 1.6.1
+
+
+BUG FIXES
+
+    o	hist(<datetime>, cex.axis = f)  now works for x-axis too.
+
+
+
 		CHANGES IN R VERSION 1.6.0
 
 
