@@ -141,6 +141,9 @@ static double mktime00 (struct tm *tm)
 
     day = tm->tm_mday - 1;
     year0 = 1900 + tm->tm_year;
+    /* safety check for unbounded loops */
+    if (abs(year0 - 1970) > 5000) return (double)(-1);
+
     for(i = 0; i < tm->tm_mon; i++) day += days_in_month[i];
     if (tm->tm_mon > 1 && isleap(year0)) day++;
     tm->tm_yday = day;
@@ -198,7 +201,7 @@ static double guess_offset (struct tm *tm)
 }
 
 /* Interface to mktime or mktime00 */
-static double mktime0 (struct tm *tm)
+static double mktime0 (struct tm *tm, const int local)
 {
     double res;
 #ifdef USING_LEAPSECONDS
@@ -206,6 +209,7 @@ static double mktime0 (struct tm *tm)
 #endif
 
     if(validate_tm(tm) < 0) return (double)(-1);
+    if(!local) return mktime00(tm);
 
     if(tm->tm_year < 138 &&
 #ifdef WIN32
@@ -305,26 +309,42 @@ SEXP do_systime(SEXP call, SEXP op, SEXP args, SEXP env)
     return ans;
 }
 
+
 #ifdef WIN32
 #define tzname _tzname
 #else
 # ifdef Macintosh
-char *tzname[2] = { "local", "local" };
+#define tzname mytzname
+static char mytzname[2][21];
+static int tz_is_set = 0;
+static void mac_find_tznames(void)
+{
+    time_t ct;
+    struct tm *ltm;
+
+    ct = time(NULL); ltm = localtime(&ct);
+    ltm->tm_isdst = 0; strftime(tzname[0], 20, "%Z", ltm);
+    ltm->tm_isdst = 1; strftime(tzname[1], 20, "%Z", ltm);
+    tz_is_set = 1;
+}
 # else /* Unix */
 extern char *tzname[2];
 # endif
 #endif
 
+#ifndef Macintosh
 static char buff[20]; /* for putenv */
+#endif
 
 static int set_tz(char *tz, char *oldtz)
 {
+#ifdef Macintosh
+    warning("timezones except "" and UTC are not supported on the Mac");
+    return 0;
+#else
     char *p = NULL;
     int settz = 0;
     
-#ifdef Macintosh
-    return 0;
-#else
     strcpy(oldtz, "");
     p = getenv("TZ");
     if(p) strcpy(oldtz, p);
@@ -342,7 +362,7 @@ static int set_tz(char *tz, char *oldtz)
 #endif
     tzset();
     return settz;
-#endif /*macintosh */
+#endif /* Macintosh */
 }
 
 static void reset_tz(char *tz)
@@ -369,7 +389,7 @@ static void reset_tz(char *tz)
 #endif
     }
     tzset();
-#endif /*macintosh */
+#endif /* Macintosh */
 }
 
 
@@ -413,6 +433,9 @@ SEXP do_asPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
     tz = CHAR(STRING_ELT(stz, 0));
     if(strcmp(tz, "GMT") == 0  || strcmp(tz, "UTC") == 0) isgmt = 1;
     if(!isgmt && strlen(tz) > 0) settz = set_tz(tz, oldtz);
+#ifdef Macintosh
+    if(!isgmt && !tz_is_set) mac_find_tznames();
+#endif
 
     n = LENGTH(x);
     PROTECT(ans = allocVector(VECSXP, 9));
@@ -460,6 +483,7 @@ SEXP do_asPOSIXct(SEXP call, SEXP op, SEXP args, SEXP env)
     int i, n = 0, isgmt = 0, nlen[9], settz = 0;
     char *tz = NULL, oldtz[20] = "";
     struct tm tm;
+    double tmp;
 
     checkArity(op, args);
     x = CAR(args);
@@ -470,7 +494,7 @@ SEXP do_asPOSIXct(SEXP call, SEXP op, SEXP args, SEXP env)
 
     tz = CHAR(STRING_ELT(stz, 0));
     if(strcmp(tz, "GMT") == 0  || strcmp(tz, "UTC") == 0) isgmt = 1;
-    if(strlen(tz) > 0) settz = set_tz(tz, oldtz);
+    if(!isgmt && strlen(tz) > 0) settz = set_tz(tz, oldtz);
 
     for(i = 0; i < 6; i++)
 	if((nlen[i] = LENGTH(VECTOR_ELT(x, i))) > n) n = nlen[i];
@@ -501,7 +525,10 @@ SEXP do_asPOSIXct(SEXP call, SEXP op, SEXP args, SEXP env)
 	   tm.tm_hour == NA_INTEGER || tm.tm_mday == NA_INTEGER ||
 	   tm.tm_mon == NA_INTEGER || tm.tm_year == NA_INTEGER)
 	    REAL(ans)[i] = NA_REAL;
-	else REAL(ans)[i] = mktime0(&tm);
+	else {
+	    tmp = mktime0(&tm, 1 - isgmt);
+	    REAL(ans)[i] = (tmp == (double)(-1)) ? NA_REAL : tmp;
+	}
     }
 
     if(settz) reset_tz(oldtz);
@@ -609,7 +636,7 @@ SEXP do_strptime(SEXP call, SEXP op, SEXP args, SEXP env)
 		      CHAR(STRING_ELT(sformat, i%m)), &tm);
 	if(!invalid) {
 	    tm.tm_isdst = -1;
-	    mktime0(&tm); /* set wday, yday, isdst */
+	    mktime0(&tm, 1); /* set wday, yday, isdst */
 	}
 	makelt(&tm, ans, i, !invalid);
     }

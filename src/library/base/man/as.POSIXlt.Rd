@@ -52,6 +52,10 @@ as.POSIXlt(x, tz = "")
 
   If a timezone is needed and that specified is invalid on your system,
   what happens is system-specific but it will probably be ignored. 
+#ifdef mac
+  Under MacOS only the current timezone \code{""} and UTC (or GMT)
+  are supported.
+#endif
 }
 \seealso{
   \link{DateTimeClasses} for details of the classes;
