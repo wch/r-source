@@ -240,7 +240,7 @@ setMethod <-
            },
            "NULL" = {}, # Will remove the method, if any, currently in this signature
            stop("Invalid method definition: not a function"))
-    allMethods <- insertMethod(allMethods, signature, fnames,
+    allMethods <- insertMethod(allMethods, signature, fnames[1:length(signature)],
                                asMethodDefinition(definition, signature, fnames))
     ## assign the methods (also updates the session info)
     assignMethodsMetaData(f, allMethods, where = where)
@@ -535,7 +535,7 @@ removeMethods <-
         return(FALSE)
     value <- removeMethodsObject(f, where)
     ## call below is done to clear primitive methods if there
-    ## are none for this generic on other databases
+    ## are none for this generic on other databases.
     cacheGenericsMetaData(f, FALSE)
     for(db in where) {
         if(isGeneric(f, db)) {

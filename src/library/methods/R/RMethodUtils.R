@@ -412,17 +412,19 @@ cacheMetaData <-
 cacheGenericsMetaData <-
   function(generics, attach = TRUE, envir = NULL) {
     for(f in generics) {
-        ## Some tests: don't cache generic if no methods defined        
-      if(!isGeneric(f))
-          next
-      methods <- getMethods(f)
-      if(is.null(methods))
-         next
-      methods <- methods@methods
-      if(length(methods)==0)
-          next
-      if(!is.null(getFromMethodMetaData(f)))
-        removeFromMethodMetaData(f)
+        ## Some tests: don't cache generic if no methods defined
+        if(attach) {
+            if(!isGeneric(f))
+                next
+            methods <- getMethods(f)
+            if(is.null(methods))
+                next
+            methods <- methods@methods
+            if(length(methods)==0)
+                next
+        }
+        if(!is.null(getFromMethodMetaData(f)))
+            removeFromMethodMetaData(f)
       ## find the function.  It may be a generic, but will be a primitive
       ## if the internal C code is being used to dispatch methods for primitives.
       ## It may also be NULL, if no function is found (when detaching the only
@@ -517,3 +519,48 @@ MethodAddCoerce <- function(method, argName, thisClass, methodClass)
 
 missingArg <- function(symbol, envir = parent.frame(), eval = FALSE)
     .Call("R_missingArg", if(eval) symbol else substitute(symbol), envir, PACKAGE = "methods")
+
+balanceMethodsList <- function(mlist, args, check = TRUE) {
+    moreArgs <- args[-1]
+    if(length(moreArgs) == 0)
+        return(mlist)
+    methods <- mlist@methods
+    if(check && length(methods) > 0) {
+        ## check whether the current depth is enough (i.e.,
+        ## whether a method with this no. of args or more was set before
+        depth <- 0
+        el <- methods[[1]]
+        while(is(el, "MethodsList")) {
+            mm <- el@methods
+            if(length(mm) == 0)
+                break
+            depth <- depth+1
+            el <- mm[[1]]
+        }
+        if(depth >= length(args))
+            ## already balanced to this length: An assertion
+            ## relying on balance having been used consistently,
+            ## which in turn relies on setMethod being called to
+            ## add methods.  If you roll your own, tough luck!
+            return(mlist)
+    }
+    for(i in seq(along = methods)) {
+        el <- methods[[i]]
+        if(is(el, "MethodsList"))
+            el <- Recall(el, moreArgs, FALSE)
+        else {
+            if(is(el, "MethodDefinition")) {
+                el@selected[moreArgs] <- list("ANY")
+                el@defined[moreArgs] <- list("ANY")
+            }
+            for(what in rev(moreArgs))
+                el <- new("MethodsList", argument = as.name(what),
+                          methods = list(ANY = el))
+        }
+        methods[[i]] <- el
+    }
+    mlist@methods <- methods
+    mlist
+}
+    
+    

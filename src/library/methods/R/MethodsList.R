@@ -93,6 +93,8 @@ insertMethod <-
     if(!is(mlist, "MethodsList"))
         stop(paste("inserting method into non-methods-list object (class \"",
                    data.class(mlist), "\")", sep=""))
+    if(length(args) > 1 && identical(whichMethods, "methods"))
+        mlist <- balanceMethodsList(mlist, args)
     Class <- el(signature, 1)
     methods <- slot(mlist, whichMethods)
     current <- elNamed(methods, Class)
@@ -103,6 +105,10 @@ insertMethod <-
         length(sigArgs) <- n
         if(is.na(match(nextArg, sigArgs))) {
             n <- match(nextArg, args) - n
+            if(is.na(n)) { ## not in args eitiher
+                n <- 1
+                args <- c(args, nextArg)
+            }
             ## make explicit the trailing ANY's needed
             signature <- c(signature, rep("ANY", n))
         }
