@@ -253,6 +253,10 @@ From: "Francis Hsuan" <francis.hsuan@temple.edu> Add To Address Book
 Date: Tue, 2 Dec 2003 01:20:08 -0500 (EST)
 Date: Mon, 1 Dec 2003 21:53:06 -0500
 ..model.frame() fails on character input: should it coerce to factor?
+* PR# 6720 *
+Subject: optim-Bug
+From: kestler@neuro.informatik.uni-ulm.de
+Date: Tue, 30 Mar 2004 19:21:11 +0200 (CEST)
 
 Directory:  Documentation
 
@@ -472,6 +476,7 @@ Date: Wed, 18 Jun 2003 17:31:21 +1200 (NZST)
 Subject: Undefined subroutine &R::Rdconv::fill
 From: michael.t.klinglesmith@intel.com
 Date: Tue, 15 Jul 2003 18:56:23 +0200 (MET DST)
+..This was perl 5.004_4
 * PR# 4314 *
 Subject: Re: [Rd] Bugs compiling R-1.7.1 with Intel compilers icc and ifc
 From: Kurt Hornik <Kurt.Hornik@wu-wien.ac.at>
@@ -801,7 +806,3 @@ Subject: bug-gdk error
 From: 9busova@st.fmph.uniba.sk
 Date: Tue, 16 Dec 2003 08:13:17 +0100 (CET)
 ..Problem with gnome GUI
-* PR# 6720 *
-Subject: optim-Bug
-From: kestler@neuro.informatik.uni-ulm.de
-Date: Tue, 30 Mar 2004 19:21:11 +0200 (CEST)
