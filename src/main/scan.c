@@ -204,6 +204,16 @@ static void extractItem(char *buffer, SEXP ans, int i)
 		expected("a real", buffer);
 	}
 	break;
+#ifdef scan_complex
+    case CPLXSXP:
+	/* FIXME: Extract "complex" number from buffer ... */
+	/* =====
+	   Then, eliminate all the  #ifdef scan_complex ..
+
+	   Once you have done it, you have fixed R-bug PR#125 (22 Feb 1999)
+	*/
+	break;
+#endif
     case STRSXP:
 	if (isNAstring(buffer))
 	    STRING(ans)[i]= NA_STRING;
@@ -299,6 +309,12 @@ static SEXP scanVector(SEXPTYPE type, int maxitems, int maxlines,
 	for (i = 0; i < n; i++)
 	    REAL(bns)[i] = REAL(ans)[i];
 	break;
+#ifdef scan_complex
+    case CPLXSXP:
+	for (i = 0; i < n; i++)
+	    COMPLEX(bns)[i] = COMPLEX(ans)[i];
+	break;
+#endif
     case STRSXP:
 	for (i = 0; i < n; i++)
 	    STRING(bns)[i] = STRING(ans)[i];
@@ -425,6 +441,12 @@ static SEXP scanFrame(SEXP what, int maxitems, int maxlines, int flush,
 	    for (j = 0; j < n; j++)
 		REAL(new)[j] = REAL(old)[j];
 	    break;
+#ifdef scan_complex
+	case CPLXSXP:
+	    for (j = 0; j < n; j++)
+		COMPLEX(new)[j] = COMPLEX(old)[j];
+	    break;
+#endif
 	case STRSXP:
 	    for (j = 0; j < n; j++)
 		STRING(new)[j] = STRING(old)[j];
@@ -445,15 +467,15 @@ SEXP do_scan(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     checkArity(op, args);
 
-    file = CAR(args);              args = CDR(args);
-    what = CAR(args);              args = CDR(args);
+    file = CAR(args);		   args = CDR(args);
+    what = CAR(args);		   args = CDR(args);
     nmax = asInteger(CAR(args));   args = CDR(args);
-    sep = CAR(args);               args = CDR(args);
+    sep = CAR(args);		   args = CDR(args);
     nskip = asInteger(CAR(args));  args = CDR(args);
     nlines = asInteger(CAR(args)); args = CDR(args);
-    NAstrings = CAR(args);         args = CDR(args);
+    NAstrings = CAR(args);	   args = CDR(args);
     flush = asLogical(CAR(args));  args = CDR(args);
-    stripwhite = CAR(args);        args = CDR(args);
+    stripwhite = CAR(args);	   args = CDR(args);
     quiet = asLogical(CAR(args));
 
     if (quiet == NA_LOGICAL)
@@ -505,12 +527,22 @@ SEXP do_scan(SEXP call, SEXP op, SEXP args, SEXP rho)
     case LGLSXP:
     case INTSXP:
     case REALSXP:
+#ifdef scan_complex
+    case CPLXSXP:
+#endif
     case STRSXP:
 	ans = scanVector(TYPEOF(what), nmax, nlines, flush, stripwhite);
 	break;
+
     case VECSXP:
 	ans = scanFrame(what, nmax, nlines, flush, stripwhite);
 	break;
+#ifndef scan_complex
+    case CPLXSXP:
+	if (!ttyflag)
+	    fclose(fp);
+	error("scan(): what=\"complex\" is not yet supported\n");
+#endif
     default:
 	if (!ttyflag)
 	    fclose(fp);
@@ -569,7 +601,7 @@ SEXP do_countfields(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     for (;;) {
 	c = scanchar();
-	if (c == R_EOF)  {
+	if (c == R_EOF)	 {
 	    if (nfields != 0)
 		INTEGER(ans)[nlines] = nfields;
 	    else nlines--;
@@ -742,12 +774,12 @@ SEXP do_readln(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     prompt = CAR(args);
     if (prompt == R_NilValue)
-        PROTECT(prompt);
+	PROTECT(prompt);
     else {
-        PROTECT(prompt = coerceVector(prompt, STRSXP));
-        if(length(prompt) > 0)
-            strncpy(ConsolePrompt, CHAR(*STRING(prompt)),
-                CONSOLE_PROMPT_SIZE - 1);
+	PROTECT(prompt = coerceVector(prompt, STRSXP));
+	if(length(prompt) > 0)
+	    strncpy(ConsolePrompt, CHAR(*STRING(prompt)),
+		CONSOLE_PROMPT_SIZE - 1);
     }
 
     /* skip white space */
