@@ -601,12 +601,13 @@ void scanPhase(void)
 
 /* "protect" push a single argument onto R_PPStack */
 
-void protect(SEXP s)
+SEXP protect(SEXP s)
 {
     if (R_PPStackTop >= R_PPStackSize)
 	error("protect(): stack overflow\n");
     R_PPStack[R_PPStackTop] = s;
     R_PPStackTop++;
+    return s;
 }
 
 

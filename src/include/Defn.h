@@ -611,7 +611,7 @@ void PrintValue(SEXP);
 void PrintValueEnv(SEXP, SEXP);
 void PrintValueRec(SEXP, SEXP);
 SEXP promiseArgs(SEXP, SEXP);
-void protect(SEXP);
+SEXP protect(SEXP);
 SEXP R_LoadFromFile(FILE*);
 FILE* R_OpenLibraryFile(char *);
 void R_RestoreGlobalEnv(void);

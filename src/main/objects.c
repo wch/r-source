@@ -246,7 +246,9 @@ if (nargs < 0)
 
     if (usemethod(buf, obj, call, CDR(args), env, &ans) == 1) {
 	UNPROTECT(1);
+	PROTECT(ans);
 	findcontext(CTXT_RETURN, env, ans);
+	UNPROTECT(1);
     }
     else
 	error("no applicable method for \"%s\"\n", buf);

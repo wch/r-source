@@ -267,13 +267,15 @@ SEXP applyClosure(SEXP call, SEXP op, SEXP arglist, SEXP rho, SEXP suppliedenv)
     /* explicit returns from the function body. */
 
     if (sigsetjmp(cntxt.cjmpbuf, 1)) {
-	tmp = R_ReturnedValue;
+	PROTECT(tmp = R_ReturnedValue);
     }
     else {
-	tmp = eval(body, newrho);
+	PROTECT(tmp = eval(body, newrho));
     }
 
     endcontext(&cntxt);
+    UNPROTECT(1);
+
     if( DEBUG(op) ) {
 	Rprintf("exiting from: ");
 	PrintValueRec(call,rho);
