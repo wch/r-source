@@ -165,6 +165,8 @@ SEXP do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 /* results are unique (duplicated names are removed prior to entry). */
 /* names, minlength, use.classes, dot */
 
+#define LASTCHAR(i) (!isspace(buff1[i-1]) && (!buff1[i+1] || isspace(buff1[i+1]))) 
+
 static SEXP stripchars(SEXP inchar, int minlen)
 {
     int i, j, nspace = 0, upper;
@@ -187,9 +189,14 @@ static SEXP stripchars(SEXP inchar, int minlen)
     if (strlen(buff1) < minlen)
 	goto donesc;
 
-    for (i = upper; i > 0; i--) {
+    for (i = upper, j = 1; i > 0; i--) {
 	if (isspace(buff1[i]))
+          if (j) 
+            buff1[i] = '\0' ;
+          else
 	    nspace++;
+        else
+          j = 0;
 	/*strcpy(buff1[i],buff1[i+1]);*/
 	if (strlen(buff1) - nspace <= minlen)
 	    goto donesc;
@@ -200,7 +207,7 @@ static SEXP stripchars(SEXP inchar, int minlen)
     for (i = upper; i > 0; i--) {
 	if ((buff1[i] == 'a' || buff1[i] == 'e' || buff1[i] == 'i' ||
 	     buff1[i] == 'o' || buff1[i] == 'u')) {
-	    if (!(isspace(buff1[i - 1]) && isspace(buff1[i + 1])))
+	    if (LASTCHAR(i))
 		strcpy(&buff1[i], &buff1[i + 1]);
 	}
 	if (strlen(buff1) - nspace <= minlen)
@@ -211,7 +218,7 @@ static SEXP stripchars(SEXP inchar, int minlen)
 
     for (i = upper; i >= 0; i--) {
 	if (islower(buff1[i])) {
-	    if (!(isspace(buff1[i - 1]) && isspace(buff1[i + 1])))
+	    if (LASTCHAR(i))
 		strcpy(&buff1[i], &buff1[i + 1]);
 	}
 	if (strlen(buff1) - nspace <= minlen)
@@ -220,9 +227,9 @@ static SEXP stripchars(SEXP inchar, int minlen)
 
     /* all else has failed so we use brute force */
 
-    upper = strlen(buff1);
+    upper = strlen(buff1) - 1;
     for (i = upper; i > 0; i--) {
-	if (!(isspace(buff1[i - 1]) && isspace(buff1[i + 1])))
+	if (LASTCHAR(i) && !isspace(buff1[i]))
 	    strcpy(&buff1[i], &buff1[i + 1]);
 	if (strlen(buff1) - nspace <= minlen)
 	    goto donesc;
