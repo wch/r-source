@@ -382,13 +382,12 @@ SEXP do_winver(SEXP call, SEXP op, SEXP args, SEXP env)
 
 void internal_shellexec(char * file)
 {
-    char *home, buf[MAX_PATH];
+    char *home;
 
     home = getenv("R_HOME");
     if (home == NULL)
 	error("R_HOME not set");
-    strcpy(buf, file);
-    ShellExecute(NULL, "open", buf, NULL, home, SW_SHOW);
+    ShellExecute(NULL, "open", file, NULL, home, SW_SHOW);
 }
 
 SEXP do_shellexec(SEXP call, SEXP op, SEXP args, SEXP env)
