@@ -262,7 +262,7 @@ int editorchecksave(editor c) {
     int save;
     char buf[EDITORMAXTITLE + 100];
     if (ggetmodified(t)) {
-	snprintf(buf, EDITORMAXTITLE + 100, 
+	snprintf(buf, EDITORMAXTITLE + 100,
 		 "\"%s\" has been modified.  Do you want to save the changes?",
 		 (p->title ? p->title : "Untitled"));
 	save = askyesnocancel(buf);
@@ -273,7 +273,7 @@ int editorchecksave(editor c) {
 	case NO:
 	    break;
 	case CANCEL:
-	    return 1; /* used in rui.c (closeconsole) to abort closing 
+	    return 1; /* used in rui.c (closeconsole) to abort closing
 			 the whole of Rgui */
 	}
     }
@@ -738,10 +738,10 @@ void editorsetfont(font f)
 {
     int i, ismod;
     textbox t;
-    setfont(f);
-    for (i = 0; i<neditors; ++i) {
+    for (i = 0; i < neditors; i++) {
 	t = getdata(REditors[i]);
- 	ismod = ggetmodified(t); /* Don't change the modification flag when changing font  */
+ 	ismod = ggetmodified(t);
+	/* Don't change the modification flag when changing font  */
 	settextfont(t, f);
 	gsetmodified(t, ismod);
 	show(t);

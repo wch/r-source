@@ -68,6 +68,9 @@ last R_HISTSIZE (default 512) lines are saved.  The environment variable
 R_HISTSIZE can be changed during the session (by Sys.putenv) as the
 current value is used.
 
+A bug with font changing in Preferences introduced with the script
+editor in R 2.0.0 had been fixed.  This should fix PR#7271,7277,7749.
+
 
 
 R 2.0.1 patched
