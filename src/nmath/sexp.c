@@ -40,7 +40,7 @@ double sexp(void)
     /* q[k-1] = sum(alog(2.0)**k/k!) k=1,..,n, */
     /* The highest n (here 8) is determined by q[n-1] = 1.0 */
     /* within standard precision */
-    static double q[] =
+    static const double q[] =
     {
 	0.6931471805599453,
 	0.9333736875190459,
@@ -61,20 +61,20 @@ double sexp(void)
     };
     double a, u, ustar, umin;
     int i;
-
-    a = 0.0;
+    
+    a = 0.;
     u = sunif();
     for (;;) {
-	u = u + u;
+	u += u;
 	if (u > 1.0)
 	    break;
-	a = a + q[0];
+	a += q[0];
     }
-    u = u - 1.0;
-
+    u -= 1.;
+    
     if (u <= q[0])
 	return a + u;
-
+    
     i = 0;
     ustar = sunif();
     umin = ustar;
@@ -82,8 +82,7 @@ double sexp(void)
 	ustar = sunif();
 	if (ustar < umin)
 	    umin = ustar;
-	i = i + 1;
-    }
-    while (u > q[i]);
+	i++;
+    } while (u > q[i]);
     return a + umin * q[0];
 }
