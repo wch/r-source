@@ -37,29 +37,29 @@
 ## some intiializations that need to be done late
 .InitMethodDefinitions <- function(envir) {
     assign("asMethodDefinition",  function(def, signature = list()) {
-    ## primitives can't take slots, but they are only legal as default methods
-    ## and the code will just have to accomodate them in that role, w/o the
-    ## MethodDefinition information.
-    ## NULL is a valid def, used to remove methods.
-    switch(typeof(def),
-           "builtin" = , "special" = , "NULL" = return(def),
-           "closure" = {},
-           stop(paste("Invalid object for formal method defintion: type \"",
-                      typeof(def), "\"", sep=""))
-           )
-    if(is(def, "MethodDefinition"))
-        value <- def
-    else
-        value <- new("MethodDefinition", def)
-    ## this is really new("signature",  def, signature)
-    ## but bootstrapping problems force us to make
-    ## the initialize method explicit here
-    classes <- .MakeSignature(new("signature"),  def, signature)
-    value@target <- classes
-    value@defined <- classes
-    value
-}, envir = envir)
-        setGeneric("loadMethod", where = envir)
+        ## primitives can't take slots, but they are only legal as default methods
+        ## and the code will just have to accomodate them in that role, w/o the
+        ## MethodDefinition information.
+        ## NULL is a valid def, used to remove methods.
+        switch(typeof(def),
+               "builtin" = , "special" = , "NULL" = return(def),
+               "closure" = {},
+               stop(paste("Invalid object for formal method defintion: type \"",
+                          typeof(def), "\"", sep=""))
+               )
+        if(is(def, "MethodDefinition"))
+            value <- def
+        else
+            value <- new("MethodDefinition", def)
+        ## this is really new("signature",  def, signature)
+        ## but bootstrapping problems force us to make
+        ## the initialize method explicit here
+        classes <- .MakeSignature(new("signature"),  def, signature)
+        value@target <- classes
+        value@defined <- classes
+        value
+    }, envir = envir)
+    setGeneric("loadMethod", where = envir)
     setMethod("loadMethod", "MethodDefinition",
               function(method, fname, envir) {
                   assign(".target", method@target, envir = envir)
@@ -75,18 +75,18 @@
     setGeneric("findNextMethod", function(method, f = "<unknown>", mlist, optional = FALSE)
                standardGeneric("findNextMethod"), where = envir)
     setMethod("findNextMethod", "MethodDefinition",
-          function(method, f, mlist, optional) {
-              value <- .findNextMethod(method, f, mlist, optional, method@defined)
-              new("MethodWithNext", method, nextMethod = value,
-                               excluded = list(method@defined))
-          }, where = envir)
+              function(method, f, mlist, optional) {
+                  value <- .findNextMethod(method, f, mlist, optional, method@defined)
+                  new("MethodWithNext", method, nextMethod = value,
+                      excluded = list(method@defined))
+              }, where = envir)
     setMethod("findNextMethod", "MethodWithNext",
-          function(method, f, mlist, optional) {
-             excluded <- c(method@excluded, list(method@defined))
-             value <- .findNextMethod(method, f, mlist, optional, excluded)
-              new("MethodWithNext", method, nextMethod = value,
-                               excluded = excluded)
-         }, where = envir)
+              function(method, f, mlist, optional) {
+                  excluded <- c(method@excluded, list(method@defined))
+                  value <- .findNextMethod(method, f, mlist, optional, excluded)
+                  new("MethodWithNext", method, nextMethod = value,
+                      excluded = excluded)
+              }, where = envir)
     if(!isGeneric("initialize")) {
         setGeneric("initialize",  function(object, ...) {
             value <- standardGeneric("initialize")
@@ -109,7 +109,7 @@
                   else
                       .MakeSignature(object, functionDef, list(...))
               }, where = envir)
-        setMethod("initialize", "environment",
+    setMethod("initialize", "environment",
               function(object, ...) {
                   value <- new.env()
                   args <- list(...)
@@ -118,6 +118,8 @@
                       assign(what, elNamed(args, what), envir = value)
                   value
               }, where = envir)
+### Uncomment next line if we want special initialize methods for basic classes
+###    .InitBasicClassMethods(where)
 }
 
 .MakeSignature <- function(object, def, signature) {

@@ -11,27 +11,29 @@ as <-
     thisClass <- data.class(object) ## always one string
     if(thisClass == Class)
         return(object)
-    if(coerceFlag  || !is(object, Class)) {
-        ## TO DO:  this call to selectMethod probably deserves implementing in C
-        ## to save on the environment generation each time.
-      sig <-  sigToEnv(list(from=thisClass, to = Class))
-      asMethod <- selectMethod("coerce", sig, TRUE, c(from = TRUE, to = FALSE))
-      if(!is.null(asMethod))
-          return(asMethod(object))
-    }
-    if(is(object, Class)) {
-        ## look for coerce method or indirection
-        asMethod <- extendsCoerce(thisClass, Class)
-        if(is.function(asMethod)) {
-            cacheMethod("coerce", c(from = thisClass, to = Class), asMethod)
-            asMethod(object)
+    sig <-  c(from=thisClass, to = Class)
+    ## TO DO: would be nice to make this version of selectMethod fast, since it's only
+    ## lookups (no inheritance)
+    asMethod <- selectMethod("coerce", sig, TRUE, FALSE) #optional, no inheritance
+    if(is.null(asMethod)) {
+        if(is(object, Class)) {
+            ## look for coerce method or indirection
+            asMethod <- extendsCoerce(thisClass, Class)
+            if(is.function(asMethod)) # cache for next call
+                cacheMethod("coerce", c(from = thisClass, to = Class), asMethod)
         }
+        if(is.null(asMethod) && coerceFlag)
+            asMethod <- selectMethod("coerce", sig, TRUE, c(from = TRUE, to = FALSE))
     }
-    else if(coerceFlag)
-          stop(paste("No method or default for coercing \"", thisClass,
-                     "\" to \"", Class, "\"", sep=""))
+    if(is.null(asMethod)) {
+        if(coerceFlag)
+            stop(paste("No method or default for coercing \"", thisClass,
+                       "\" to \"", Class, "\"", sep=""))
+        else
+            NULL
+    }
     else
-        NULL
+        asMethod(object)
 }
 
 

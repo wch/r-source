@@ -28,11 +28,19 @@ extends <-
   ## Returns `maybe' if the extension includes a test.
   function(class1, class2, maybe = TRUE)
 {
+    if(is(class1, "classRepEnvironment")) {
+        classDef1 <- class1
+        class1 <- getClassName(classDef1)
+    }
+    else if(is.character(class1) && length(class1)==1)
+        classDef1 <- getClass(class1, TRUE)
+    else
+        stop("class1 must be the name of a class or a class definition")
     if(missing(class2)) {
-        if(!isClass(class1))
+        if(is.null(classDef1))
             return(class1)
         ext <- getExtends(getClass(class1))
-        if(maybe)
+        if(identical(maybe, TRUE))
             return(c(class1, names(ext)))
         else {
             tested <- sapply(ext, function(obj)(is.list(obj) && is.function(obj$test)))
@@ -41,6 +49,10 @@ extends <-
     }
     if(identical(class1, class2))
         return(TRUE)
+    if(is(class2, "classRepEnvironment"))
+        class2 <- getClassName(class2)
+    else if(!(is.character(class2) && length(class2) == 1))
+        stop("class2 must be the name of a class or a class definition")
     value <- findExtends(class1, class2)
     if(is.logical(value))
         value
@@ -78,9 +90,9 @@ setIs <-
     classDef1 <- getClassDef(class1, where)
     classDef2 <- getClassDef(class2, where)
     if(is.null(classDef1) && is.null(classDef2))
-        Stop("Neither \"", class1, "\" nor \"", class2,
+        stop(paste("Neither \"", class1, "\" nor \"", class2,
              "\" has a definition in database ", where,
-             ": can't store the setIs information")
+             ": can't store the setIs information", sep=""))
     if(!is.null(classDef1)) {
         ext <- getExtends(classDef1)
         oldExt <- ext

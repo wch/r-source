@@ -1,15 +1,9 @@
 showDefault <-
-  function(object, printTo = stdout(), oldMethods = TRUE)
+  function(object, oldMethods = TRUE)
 {
-      if(identical(printTo, FALSE)) {
-          tmp <- tempfile()
-          con <- file(tmp, "w")
-      }
-      else
-          con <- printTo
     cl <- data.class(object)
     if(isClass(cl) && is.na(match(cl, .BasicClasses))) {
-        cat(file = con, "An object of class \"", cl, "\"\n", sep="")
+        cat("An object of class \"", cl, "\"\n", sep="")
         slots <- slotNames(cl)
         if(!is.na(match(".Data", slots))) {
             dataPart <- object@.Data
@@ -21,9 +15,9 @@ showDefault <-
         for(what in slots) {
             if(identical(what, ".Data"))
                 next ## should have been done above
-            cat(file = con, "Slot \"",what, "\":\n", sep="")
+            cat("Slot \"",what, "\":\n", sep="")
             print(slot(object, what))
-            cat(file = con, "\n")
+            cat("\n")
         }
     }
     else {
@@ -34,21 +28,8 @@ showDefault <-
             if(existsFunction(oldMethod))
                 printFun <- getFunction(oldMethod, generic = FALSE)
         }
-        if(identical(printTo, FALSE)) {
-            sink(con)
-            printFun(object)
-            sink()
-        }
-        else
-            printFun(object)
+        printFun(object)
      }
-
-    if(identical(printTo, FALSE)) {
-        close(con)
-        value <- readLines(tmp)
-        unlink(tmp)
-        value
-    }
 }
 
 printNoClass <- get("print.default", "package:base")
@@ -86,5 +67,4 @@ print.default <- function(x, ...) {
                   print(mm)
               },
               where = envir)
-    
 }
