@@ -6,9 +6,10 @@ lm <- function (formula, data = list(), subset, weights, na.action,
     ret.x <- x
     ret.y <- y
     mt <- terms(formula, data = data)
-    mf <- cl <- match.call()
+    cl <- match.call()
+    mf <- match.call(expand.dots = FALSE)
     mf$singular.ok <- mf$model <- mf$method <- NULL
-    mf$x <- mf$y <- mf$qr <- mf$contrasts <- NULL
+    mf$x <- mf$y <- mf$qr <- mf$contrasts <- mf$... <- NULL
     mf$drop.unused.levels <- TRUE
     mf[[1]] <- as.name("model.frame")
     mf <- eval(mf, parent.frame())
@@ -24,9 +25,6 @@ lm <- function (formula, data = list(), subset, weights, na.action,
 	    xlev <- lapply(mf[xvars], levels)
 	    xlev[!sapply(xlev, is.null)]
 	}
-    if (length(list(...)))
-	warning(paste("Extra arguments", deparse(substitute(...)),
-		      "are just disregarded."))
     if (!singular.ok)
 	warning("only `singular.ok = TRUE' is currently implemented.")
     y <- model.response(mf, "numeric")
@@ -48,8 +46,8 @@ lm <- function (formula, data = list(), subset, weights, na.action,
     }
     else {
 	x <- model.matrix(mt, mf, contrasts)
-	z <- if(is.null(w)) lm.fit(x, y, offset=offset)
-	else lm.wfit(x, y, w, offset=offset)
+	z <- if(is.null(w)) lm.fit(x, y, offset=offset, ...)
+	else lm.wfit(x, y, w, offset=offset, ...)
 	class(z) <- c(if(is.matrix(y)) "mlm", "lm")
     }
     z$offset <- offset

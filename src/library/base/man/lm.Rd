@@ -53,7 +53,8 @@ lm(formula, data, subset, weights, na.action,
     during fitting.  An \code{\link{offset}} term can be included in the
     formula instead or as well, and if both are specified their sum is used.}
 
-  \item{\dots}{currently disregarded.}
+  \item{\dots}{additional arguments to be passed to the low level
+    regression fitting functions (see below).}
 }
 \details{
   Models for \code{lm} are specified symbolically.  A typical model has
@@ -68,9 +69,9 @@ lm(formula, data, subset, weights, na.action,
   indicates the \emph{cross} of \code{first} and \code{second}.  This is
   the same as \code{first + second + first:second}.
 
-  \code{lm} calls the lower level functions
-  \code{\link{lm.fit}}, etc, see below, for the actual numerical
-  computations.  For programming only, you may consider doing likewise.
+  \code{lm} calls the lower level functions \code{\link{lm.fit}}, etc,
+  see below, for the actual numerical computations.  For programming
+  only, you may consider doing likewise.
 }
 \value{
   \code{lm} returns an object of \code{\link{class}} \code{"lm"} or for
@@ -79,12 +80,12 @@ lm(formula, data, subset, weights, na.action,
 %% but I'm still not sure that this should be `it' for the future.. {MM}.
 
   The functions \code{summary} and \code{\link{anova}} are used to
-  obtain and print a summary and analysis of variance table of the results.
-  The generic accessor functions \code{coefficients},
-  \code{effects}, \code{fitted.values} and \code{residuals}
-  extract various useful features of the value returned by \code{lm}.
+  obtain and print a summary and analysis of variance table of the
+  results.  The generic accessor functions \code{coefficients},
+  \code{effects}, \code{fitted.values} and \code{residuals} extract
+  various useful features of the value returned by \code{lm}.
 
-  An object of class \code{"glm"} is a list containing at least the
+  An object of class \code{"lm"} is a list containing at least the
   following components:
 
   \item{coefficients}{a named vector of coefficients}
