@@ -370,6 +370,7 @@ ls.str <-
     nms <- ls(..., envir = envir, pattern = pattern)
     r <- sapply(nms, function(n)
 		if(exists(n, envir= envir, mode= mode)) n else as.character(NA))
+    names(r) <- NULL
     structure(r[!is.na(r)], envir = envir, mode = mode, class = "ls_str")
 }
 
@@ -378,7 +379,8 @@ lsf.str <- function(pos = 1, ..., envir = as.environment(pos))
 
 print.ls_str <- function(x, max.level = 1, give.attr = FALSE, ...)
 {
-    stopifnot(is.environment(E <- attr(x, "envir")))
+    E <- attr(x, "envir") # can be NULL for "package:base"
+    if(!is.null(E)) stopifnot(is.environment(E))
     M <- attr(x, "mode")
     for(nam in x) {
 	cat(nam, ": ")
