@@ -18,6 +18,7 @@ This note explains how to:
 * build R binary via MPW
 * build packages and modules via MPW
 * build help files
+* build R binary via CodeWarrior
 
 Before you continue please assure that your installation
 fits the following requirements:
@@ -156,6 +157,23 @@ One other good place to look for Unix-like tools for MPW is also
 
 ftp://sunsite.cnlab-switch.ch/software/platform/macos/src/mpw_c
 
+
+
+BUILD R WITH CODEWARRIOR:
+-------------------------
+Even if we are going to discontinue CodeWarrior support,
+you can still build the R binary using the CWPro 7 Project
+file in the folder src/macintosh/cwpro.
+Anyway, take care that this project file conflicts with the
+following files
+
+src/library/base/R/windows/dialogs.R
+library/R-ex/Script.r
+
+you should either rename or remove these files.
+
+
+/----------------------- eof -----------------------------/
 
 For comments and feedback, please contact either the
 R Core Development Team (and Stefano M. Iacus) at
