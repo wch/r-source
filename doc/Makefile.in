@@ -6,32 +6,35 @@ srcdir = @srcdir@
 top_srcdir = @top_srcdir@
 
 top_builddir = ..
+subdir = doc
 
 include $(top_builddir)/Makeconf
 
-all R docs:
+all R docs: Makefile keyword-test
 	@$(MKINSTALLDIRS) $(top_builddir)/doc/html/search
 	@if [ "$(srcdir)" != "." ]; then \
-	  for f in $(srcdir)/html/*.html $(srcdir)/html/*.jpg; do \
-	    $(INSTALL_DATA) $$f $(top_builddir)/doc/html; \
-	  done; \
-	  for f in $(srcdir)/html/search/*.class \
-	    $(srcdir)/html/search/*.html \
-	    $(srcdir)/html/search/index.txt ; do \
-	    $(INSTALL_DATA) $$f $(top_builddir)/doc/html/search; \
-	  done; \
+	  $(MAKE) rhome=$(top_builddir) install-html; \
 	fi
 
-install: installdirs installhtml
-	$(INSTALL) keyword-test $(rhome)/doc
-	$(INSTALL_DATA) $(srcdir)/KEYWORDS $(rhome)/doc
-#	cd manual; $(MAKE) install
+Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
+	cd $(top_builddir) && \
+	  CONFIG_FILES=$(subdir)/$@ CONFIG_HEADERS= \
+	  $(SHELL) ./config.status
+keyword-test: $(srcdir)/keyword-test.in $(top_builddir)/config.status
+	cd $(top_builddir) && \
+	  CONFIG_FILES=$(subdir)/$@ CONFIG_HEADERS= \
+	  $(SHELL) ./config.status
 
+install: installdirs install-html install-man
+	@$(INSTALL) keyword-test $(rhome)/doc
+	@$(INSTALL_DATA) $(srcdir)/KEYWORDS $(rhome)/doc
+	@(cd manual && $(MAKE) $@)
 installdirs:
+	@$(MKINSTALLDIRS) $(mandir)/man1
 	@$(MKINSTALLDIRS) $(rhome)/doc/manual
 	@$(MKINSTALLDIRS) $(rhome)/doc/html/search
-
-installhtml:
+install-html:
+	@echo "Installing doc ..."
 	@for f in $(srcdir)/html/*.html $(srcdir)/html/*.jpg; do \
 	  $(INSTALL_DATA) $$f $(rhome)/doc/html; \
 	done
@@ -40,18 +43,37 @@ installhtml:
 	          $(srcdir)/html/search/index.txt ; do \
 	  $(INSTALL_DATA) $$f $(rhome)/doc/html/search; \
 	done
+install-man:
+	@echo "Installing man pages ..."
+	@(cd $(srcdir); \
+	  for f in R.1 Rdconv.1; do \
+	    $(INSTALL_DATA) $$f $(mandir)/man1; \
+	  done)
+	@(cd $(mandir)/man1; \
+	  for f in Rd2txt.1 Rdindex.1 Sd2Rd.1; do \
+	    rm -f $$f; $(LN_S) Rdconv.1 $$f; \
+	  done)
+install-strip: install
+uninstall:
+	@echo "Uninstalling doc ..."
+	@(cd $(rhome)/doc; \
+	  rm -rf html manual KEYWORDS keyword-test)
+	@rmdir $(rhome)/doc 2> /dev/null \
+	  || echo "  subdir doc not removed"
+	@echo "Uninstalling man pages ..."
+	@(cd $(mandir)/man1; \
+	  rm -f R.1 Rdconv.1 Rd2txt.1 Rdindex.1 Sd2Rd.1)
+
+dvi:
+	@(cd manual && $(MAKE) $@)
+info:
 
 mostlyclean:
 clean:
 	@if [ "$(srcdir)" != "." ]; then \
 	  rm -rf html; \
 	fi
-	@cd manual; $(MAKE) $@
-
+	@(cd manual && $(MAKE) $@)
 distclean:
 	@rm -f Makefile keyword-test
-
 maintainer-clean: distclean
-
-
-
