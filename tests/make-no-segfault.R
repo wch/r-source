@@ -9,7 +9,8 @@ stop.list <- vector("list", length(core.pkgs))
 names(stop.list) <- core.pkgs
 
 ## -- Stop List for "base" :
-edit.int <- c("fix", "edit", "vi", "emacs", "pico", "xemacs", "xedit")
+edit.int <- c("fix", "edit", "edit.data.frame", "edit.default", "vi",
+              "emacs", "pico", "xemacs", "xedit")
 misc.int <- c("browser", "bug.report", "menu")
 stop.list[["base"]] <-
     if(nchar(getenv("R_TESTLOTS"))) {## SEVERE TESTING, try almost ALL
