@@ -8,7 +8,10 @@
   variances in each of the groups (samples) are the same.
 }
 \usage{
+fligner.test(x, \dots)
+
 \method{fligner.test}{default}(x, g, \dots)
+
 \method{fligner.test}{formula}(formula, data, subset, na.action, \dots)
 }
 \arguments{

@@ -8,8 +8,11 @@
   parameters.
 }
 \usage{
+ansari.test(x, \dots)
+
 \method{ansari.test}{default}(x, y, alternative = c("two.sided", "less", "greater"),
             exact = NULL, conf.int = FALSE, conf.level = 0.95, \dots)
+
 \method{ansari.test}{formula}(formula, data, subset, na.action, \dots)
 }
 \arguments{

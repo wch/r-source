@@ -7,7 +7,10 @@
   Performs Mood's two-sample test for a difference in scale parameters.
 }
 \usage{
+mood.test(x, \dots)
+
 \method{mood.test}{default}(x, y, alternative = c("two.sided", "less", "greater"), \dots)
+
 \method{mood.test}{formula}(formula, data, subset, na.action, \dots)
 }
 \arguments{

@@ -7,9 +7,12 @@
   Performs one and two sample t-tests on vectors of data.
 }
 \usage{
+t.test(x, \dots)
+
 \method{t.test}{default}(x, y = NULL, alternative = c("two.sided", "less", "greater"),
        mu = 0, paired = FALSE, var.equal = FALSE,
        conf.level = 0.95, \dots)
+
 \method{t.test}{formula}(formula, data, subset, na.action, \dots)
 }
 \arguments{

@@ -8,7 +8,10 @@
   groups (samples) are the same.
 }
 \usage{
+bartlett.test(x, \dots)
+
 \method{bartlett.test}{default}(x, g, \dots)
+
 \method{bartlett.test}{formula}(formula, data, subset, na.action, \dots)
 }
 \arguments{

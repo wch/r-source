@@ -9,10 +9,13 @@
   Kendall's \eqn{\tau}{tau} or Spearman's \eqn{\rho}{rho}.
 }
 \usage{
+cor.test(x, \dots)
+
 \method{cor.test}{default}(x, y,
          alternative = c("two.sided", "less", "greater"),
          method = c("pearson", "kendall", "spearman"),
          exact = NULL, conf.level = 0.95, \dots)
+
 \method{cor.test}{formula}(formula, data, subset, na.action, \dots)
 }
 \arguments{

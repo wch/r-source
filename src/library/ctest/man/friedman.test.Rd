@@ -7,7 +7,10 @@
   Performs a Friedman rank sum test with unreplicated blocked data.
 }
 \usage{
+friedman.test(y, \dots)
+
 \method{friedman.test}{default}(y, groups, blocks, \dots)
+
 \method{friedman.test}{formula}(formula, data, subset, na.action, \dots)
 }
 \arguments{

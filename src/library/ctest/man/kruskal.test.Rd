@@ -7,7 +7,10 @@
   Performs a Kruskal-Wallis rank sum test.
 }
 \usage{
+kruskal.test(x, \dots)
+
 \method{kruskal.test}{default}(x, g, \dots)
+
 \method{kruskal.test}{formula}(formula, data, subset, na.action, \dots)
 }
 \arguments{

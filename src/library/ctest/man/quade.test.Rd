@@ -7,7 +7,10 @@
   Performs a Quade test with unreplicated blocked data.
 }
 \usage{
+quade.test(y, \dots)
+
 \method{quade.test}{default}(y, groups, blocks, \dots)
+
 \method{quade.test}{formula}(formula, data, subset, na.action, \dots)
 }
 \arguments{
