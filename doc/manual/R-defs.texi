@@ -1,0 +1,11 @@
+@macro R {}
+@sc{r}
+@end macro
+
+@macro Sl {}
+@sc{s}
+@end macro
+
+@macro HTML {}
+@sc{html}
+@end macro
