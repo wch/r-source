@@ -15,10 +15,10 @@
 ##    the function from the passed "list".
 
 file.show(file.path(R.home(), "demos", "dynload", "README"))
-file.show(file.path(R.home(), "demos", "dynload", "zero.c"))
+file.show(file.path(R.home(), "demos", "dynload", "zerofind.c"))
 
 dyn.load(file.path(R.home(), "demos", "dynload",
-                   paste("zero", .Platform$dynlib.ext, sep="")))
+                   paste("zerofind", .Platform$dynlib.ext, sep="")))
 
 zero <- function(f, guesses, tol = 1e-7) {
     f.check <- function(x) {

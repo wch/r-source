@@ -1,6 +1,6 @@
-all:  zero.dll 
+all:  zerofind.dll 
 
-OBJS=zero.o
+OBJS=zerofind.o
 
 include ../../src/gnuwin32/MkRules
 
@@ -10,4 +10,4 @@ FFLAGS=-O2
 DLLLIBS=-L../../src/gnuwin32 -lR $(FLIBS)
 
 
-zero.dll : zero.o
+zerofind.dll : zerofind.o
