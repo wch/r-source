@@ -90,7 +90,7 @@ methods <- function (generic.function, class)
 	name <- paste(".", class, "$", sep = "")
     }
     else stop("must supply generic.function or class")
-    keep <- grep(gsub("([.[])", "\\\\\\1", name), an)
+    keep <- grep(gsub("([.[$])", "\\\\\\1", name), an)
     res <- an[keep]; info <- info[keep,]
     keep <- ! res %in% S3MethodsStopList
     res <- res[keep]; info <- info[keep,]
@@ -170,7 +170,7 @@ getS3method <-  function(f, class, optional = FALSE)
         else .BaseNamespaceEnv
         S3Table <- get(".__S3MethodsTable__.", envir = defenv)
         S3reg <- ls(S3Table)
-        if(length(grep(gsub("([.[])", "\\\\\\1", method), S3reg)))
+        if(length(grep(gsub("([.[$])", "\\\\\\1", method), S3reg)))
             return(get(method, envir = S3Table))
     }
     if(optional) NULL
