@@ -331,11 +331,14 @@ SEXP do_match(SEXP call, SEXP op, SEXP args, SEXP env)
 	|| (!isVector(CADR(args)) && !isNull(CADR(args))))
 	error("match requires vector arguments");
 
-    /* Coerce to a common type.
-     * Note: type == NILSXP is ok here.  
-     * ---- Just use the `higher' type (given that we have "Vector" or NULL) */
-    type = TYPEOF(CAR(args)) < TYPEOF(CADR(args)) ?
-	TYPEOF(CADR(args)) : TYPEOF(CAR(args));
+    /* Coerce to a common type; type == NILSXP is ok here.  
+     * Note that R's match() does only coerce factors (to character).
+     * Hence, coerce to character or to `higher' type 
+     * (given that we have "Vector" or NULL) */
+    if(TYPEOF(CAR(args))  >= STRSXP || TYPEOF(CADR(args)) >= STRSXP)
+	type = STRSXP;
+    else type = TYPEOF(CAR(args)) < TYPEOF(CADR(args)) ?
+	     TYPEOF(CADR(args)) : TYPEOF(CAR(args));
     x = SETCAR(args, coerceVector(CAR(args), type));
     table = SETCADR(args, coerceVector(CADR(args), type));
     nomatch = asInteger(CAR(CDDR(args)));
