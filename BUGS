@@ -632,3 +632,7 @@ Date: Thu, 5 Dec 2002 10:13:42 -0500
 Subject: Re: [Rd] Bugs in Version 1.6.1  (2002-11-01), Windows Edition
 From: ripley@stats.ox.ac.uk
 Date: Thu, 5 Dec 2002 16:21:08 +0000 (GMT)
+* PR# 2352 *
+Subject: avas: segmentation fault on empty args
+From: vograno@arbitrade.com
+Date: Fri, 6 Dec 2002 19:41:48 +0100 (MET)
