@@ -128,9 +128,9 @@ type?topic
 }
 
 \section{Method Documentation.}{
-  The authors of formal (`S4') methods can provide documentation on
-  specific methods, as well as overall documentation on the methods of
-  a particular function.  The \code{"?"} operator allows access to
+  The authors of formal (\sQuote{S4}) methods can provide documentation
+  on specific methods, as well as overall documentation on the methods
+  of a particular function.  The \code{"?"} operator allows access to
   this documentation in three ways.
 
   The expression \code{methods ? f} will look for the overall

@@ -15,7 +15,7 @@
   happens with \code{\link{q}("yes")}.
 }
 \usage{
-save(\dots, list = character(0), file = stop("`file' must be specified"),
+save(\dots, list = character(0), file = stop("'file' must be specified"),
      ascii = FALSE, version = NULL, envir = parent.frame(), 
      compress = FALSE)
 save.image(file = ".RData", version = NULL, ascii = FALSE,
