@@ -401,6 +401,16 @@ SEXP do_cov(SEXP call, SEXP op, SEXP args, SEXP env)
     }
     if (ansmat) {
 	if (isNull(y)) {
+#ifdef NEWLIST
+	    x = getAttrib(x, R_DimNamesSymbol);
+	    if (!isNull(x) && !isNull(VECTOR(x)[1])) {
+		PROTECT(ind = allocVector(VECSXP, 2));
+		VECTOR(ind)[0] = duplicate(VECTOR(x)[1]);
+		VECTOR(ind)[1] = duplicate(VECTOR(x)[1]);
+		setAttrib(ans, R_DimNamesSymbol, ind);
+		UNPROTECT(1);
+	    }
+#else
 	    x = getAttrib(x, R_DimNamesSymbol);
 	    if (!isNull(x) && !isNull(CADR(x))) {
 		PROTECT(ind = allocList(2));
@@ -409,8 +419,23 @@ SEXP do_cov(SEXP call, SEXP op, SEXP args, SEXP env)
 		setAttrib(ans, R_DimNamesSymbol, ind);
 		UNPROTECT(1);
 	    }
+#endif
 	}
 	else {
+#ifdef NEWLIST
+	    x = getAttrib(x, R_DimNamesSymbol);
+	    y = getAttrib(y, R_DimNamesSymbol);
+	    if ((!isNull(x) && !isNull(VECTOR(x)[1])) ||
+		(!isNull(y) && !isNull(VECTOR(y)[1]))) {
+		PROTECT(ind = allocVector(VECSXP, 2));
+		if (!isNull(x) && !isNull(VECTOR(x)[1]))
+		    VECTOR(ind)[0] = duplicate(VECTOR(x)[1]);
+		if (!isNull(y) && !isNull(VECTOR(y)[1]))
+		    VECTOR(ind)[1] = duplicate(VECTOR(y)[1]);
+		setAttrib(ans, R_DimNamesSymbol, ind);
+		UNPROTECT(1);
+	    }
+#else
 	    x = getAttrib(x, R_DimNamesSymbol);
 	    y = getAttrib(y, R_DimNamesSymbol);
 	    if ((!isNull(x) && !isNull(CADR(x))) ||
@@ -421,6 +446,7 @@ SEXP do_cov(SEXP call, SEXP op, SEXP args, SEXP env)
 		setAttrib(ans, R_DimNamesSymbol, ind);
 		UNPROTECT(1);
 	    }
+#endif
 	}
     }
     UNPROTECT(1);

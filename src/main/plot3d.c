@@ -1046,7 +1046,9 @@ static void PerspBox(int front, double *x, double *y, double *z, DevDesc *dd)
 
 SEXP do_persp(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    SEXP x, y, z, xlim, ylim, zlim, depth, index, originalArgs, col, border;
+    SEXP x, y, z, xlim, ylim, zlim;
+    SEXP depth, index, originalArgs;
+    SEXP col, border;
     double theta, phi, r, d, expand, xc, yc, zc, xs, ys, zs;
     int i, j, scale, ncol;
     DevDesc *dd;

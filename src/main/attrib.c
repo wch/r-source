@@ -48,7 +48,12 @@ SEXP getAttrib(SEXP vec, SEXP name)
 	    s = getAttrib(vec, R_DimSymbol);
 	    if(TYPEOF(s) == INTSXP && length(s) == 1) {
 		s = getAttrib(vec, R_DimNamesSymbol);
-		if(!isNull(s)) return CAR(s);
+		if(!isNull(s))
+#ifdef NEWLIST
+		    return VECTOR(s)[0];
+#else
+		    return CAR(s);
+#endif
 	    }
 	}
 	if (isList(vec) || isLanguage(vec)) {
@@ -285,6 +290,7 @@ SEXP classgets(SEXP vec, SEXP class)
 	    OBJECT(vec) = 0;
 	}
 	else {
+	    /*
 #ifdef NEWLIST
 	    if (streql(CHAR(STRING(class)[0]), "data.frame") && !isNewList(vec))
 		error("attempt to make non-list a data frame\n");
@@ -292,6 +298,7 @@ SEXP classgets(SEXP vec, SEXP class)
 	    if (streql(CHAR(STRING(class)[0]), "data.frame") && !isList(vec))
 		error("attempt to make non-list a data frame\n");
 #endif
+	    */
 	    installAttrib(vec, R_ClassSymbol, class);
 	    OBJECT(vec) = 1;
 	}
@@ -436,7 +443,7 @@ SEXP dimnamesgets(SEXP vec, SEXP val)
 	SEXP newval;
 	newval = allocVector(VECSXP, k);
 	for (i = 0; i < k; i++) {
-	    VECTOR(newval)[i] = val;
+	    VECTOR(newval)[i] = CAR(val);
 	    val = CDR(val);
 	}
 	UNPROTECT(1);

@@ -1200,123 +1200,66 @@ SEXP do_updateform(SEXP call, SEXP op, SEXP args, SEXP rho)
  *  Q: Is this really needed, or can we get by with less info?
  */
 
-#ifdef NEWLIST
-static SEXP ProcessDots(SEXP dots, char *buf)
-{
-    SEXP names;
-    int i, n;
-    names = getAttrib(dots, R_NamesSymbol);
-    if (names == R_NilValue)
-	goto unnamed;
-    n = length(names);
-    for (i = 0; i < n; i++) {
-	if (CHAR(STRING(names)[i])[0] == '\0')
-	    goto unnamed;
-	sprintf(buf, "(%s)", CHAR(STRING(names)[i]));
-	STRING(names)[i] = mkChar(buf);
-    }
-    return dots;
- unnamed:
-    error("unnamed list element in model.frame.default");
- 
-}
-#else
-static SEXP ProcessDots(SEXP dots, char *buf)
-{
-    if (dots == R_NilValue)
-	return dots;
-    if (TAG(dots) == R_NilValue)
-	error("unnamed list element in model.frame.default");
-    CDR(dots) = ProcessDots(CDR(dots), buf);
-    sprintf(buf, "(%s)", CHAR(PRINTNAME(TAG(dots))));
-    TAG(dots) = install(buf);
-    return dots;
-}
-#endif
 
-/* .Internal(model.frame(formula, data, dots, subset, na.action)) */
+/* .Internal(model.frame(terms, rownames, variables, varnames, */
+/*           dots, dotnames, subset, na.action)) */
+
+SEXP VectorToPairList(SEXP);
 
 SEXP do_modelframe(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    SEXP terms, data, dots, envir, na_action;
-    SEXP ans, row_names, subset, tmp, variables;
+    SEXP terms, data, names, variables, varnames, dots, dotnames, na_action;
+    SEXP ans, row_names, subset, tmp;
     char buf[256];
     int i, nr, nc;
+    int nvars, ndots;
 
     checkArity(op, args);
     terms = CAR(args); args = CDR(args);
-    envir = CAR(args); args = CDR(args);
+    row_names = CAR(args); args = CDR(args);
+    variables = CAR(args); args = CDR(args);
+    varnames = CAR(args); args = CDR(args);
     dots = CAR(args); args = CDR(args);
+    dotnames = CAR(args); args = CDR(args);
     subset = CAR(args); args = CDR(args);
     na_action = CAR(args); args = CDR(args);
 
-    /* Save the row names for later use. */
+    /* Argument Sanity Checks */
 
-    PROTECT(row_names = getAttrib(envir, R_RowNamesSymbol));
+    if (!isNewList(variables))
+	errorcall(call, "invalid variables\n");
+    if (!isString(varnames))
+	errorcall(call, "invalid variable names\n");
+    if ((nvars = length(variables)) != length(varnames))
+	errorcall(call, "number of variables != number of variable names\n");
+    
+    if (!isNewList(dots))
+	errorcall(call, "invalid extra variables\n");
+    if (!isString(dotnames))
+	errorcall(call, "invalid extra variable names\n");
+    if ((ndots = length(dots)) != length(dotnames))
+	errorcall(call, "number of variables != number of variable names\n");
 
     /* Assemble the base data frame. */
+    
+    PROTECT(data = allocVector(VECSXP, nvars + ndots));
+    PROTECT(names = allocVector(STRSXP, nvars + ndots));
 
-    PROTECT(variables = getAttrib(terms, install("variables")));
-    if (isNull(variables) || !isLanguage(variables))
-	errorcall(call, "invalid terms object\n");
-    if (isList(envir)) {
-	tmp = emptyEnv();
-	FRAME(tmp) = envir;
-	ENCLOS(tmp) = R_GlobalEnv;
-	envir = tmp;
+    tmp = getAttrib(variables, R_NamesSymbol);
+    for (i = 0; i < nvars; i++) {
+	VECTOR(data)[i] = VECTOR(variables)[i];
+	STRING(names)[i] = STRING(varnames)[i];
     }
-    else if (!isEnvironment(envir))
-	errorcall(call, "Invalid data argument\n");
-    PROTECT(envir);
-    data = eval(variables, envir);
-#ifdef NEWLIST
-    if (!isNewList(data))
-	errorcall(call, "variables not in list form\n");
-#else
-    if (!isList(data))
-	errorcall(call, "variables not in list form\n");
-#endif
-    UNPROTECT(2);
-    PROTECT(envir);
-    PROTECT(data);
-
-    /* Create the names for the variables.  To do this construct */
-    /* a call to as.character(substitute(list(...)))  and ignore */
-    /* the first element of the resulting character string vector. */
-
-#ifdef NEWLIST
-    PROTECT(tmp = lang2(install("substitute"), variables));
-    PROTECT(tmp = lang2(install("as.character"), tmp));
-    tmp = eval(tmp, rho);
-    UNPROTECT(2);
-    if (length(tmp) > 1) {
-	PROTECT(tmp);
-	PROTECT(ans = allocVector(STRSXP, length(tmp) - 1));
-	for (i = 1; i < length(tmp); i++)
-	    STRING(ans)[i - 1] = STRING(tmp)[i];
-	setAttrib(data, R_NamesSymbol, ans);
-	UNPROTECT(2);
+    tmp = getAttrib(dots, R_NamesSymbol);
+    for (i = 0; i < ndots; i++) {
+	VECTOR(data)[nvars + i] = VECTOR(dots)[i];
+	STRING(names)[nvars + i] = STRING(tmp)[i];
     }
-#else
-    PROTECT(tmp = lang2(install("substitute"), variables));
-    PROTECT(tmp = lang2(install("as.character"), tmp));
-    tmp = eval(tmp, rho);
+    setAttrib(data, R_NamesSymbol, names);
     UNPROTECT(2);
-    PROTECT(tmp);
-    i = 1;
-    ans = data;
-    while (ans != R_NilValue) {
-	TAG(ans) = install(CHAR(STRING(tmp)[i]));
-	ans = CDR(ans);
-	i = i + 1;
-    }
-    UNPROTECT(1);
-#endif
-
     /* Sanity checks to ensure that the the answer can become */
     /* a data frame.  Be deeply suspicious here! */
 
-#ifdef NEWLIST
     nc = length(data);
     if (!isNull(data)) {
 	nr = nrows(VECTOR(data)[0]);
@@ -1328,81 +1271,7 @@ SEXP do_modelframe(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    if (nrows(ans) != nr)
 		errorcall(call, "variable lengths differ\n");
 	}
-    }	
-#else
-    nc = 0;
-    if (!isNull(data)) {
-	nr = nrows(CAR(data));
-	for (ans = data; ans != R_NilValue; ans = CDR(ans)) {
-	    if (TYPEOF(CAR(ans)) < LGLSXP ||
-		TYPEOF(CAR(ans)) > REALSXP)
-		errorcall(call, "invalid variable type\n");
-	    if (nrows(CAR(ans)) != nr)
-		errorcall(call, "variable lengths differ\n");
-	    nc++;
-	}
     }
-#endif
-
-    /* Evaluate the additional frame components. */
-    /* Things like weights, subset, offset, etc. */
-
-    if (isNull(dots) || !isLanguage(dots))
-	errorcall(call, "invalid dots object\n");
-    dots = eval(dots, envir);
-    PROTECT(dots);
-
-    /* Glue the data object and the dots objects together, */
-    /* checking that dimensions and types are sensible.  */
-    /* Note that any "subset" component in the dots object */
-    /* is treated specially.  It will be used for subsetting */
-    /* and not returned in the data frame. */
-
-#ifdef NEWLIST
-    if (!isNewList(dots))
-	errorcall(call, "variables not in list form\n");
-    if (!isNull(dots)) {
-	int ndots = length(dots);
-	if (nr == 0) nr = nrows(VECTOR(dots)[0]);
-	for (i = 0; i < ndots; i++) {
-	    ans = VECTOR(dots)[i];
-	    if (TYPEOF(ans) < LGLSXP || TYPEOF(ans) > REALSXP)
-		errorcall(call, "invalid variable type\n");
-	    if (nrows(ans) != nr)
-		errorcall(call, "variable lengths differ\n");
-	}
-	dots = ProcessDots(dots, buf);
-	if (!isNull(data)) {
-	    ans = data;
-	    while(CDR(ans) != R_NilValue)
-		ans = CDR(ans);
-	    CDR(ans) = dots;
-	}
-	else data = dots;
-    }
-#else
-    if (!isList(dots))
-	errorcall(call, "variables not in list form\n");
-    if (!isNull(dots)) {
-	if (nr == 0) nr = nrows(CAR(dots));
-	for (ans = dots; ans != R_NilValue; ans = CDR(ans)) {
-	    if (TYPEOF(CAR(ans)) < LGLSXP ||
-	       TYPEOF(CAR(ans)) > REALSXP)
-		errorcall(call, "invalid variable type\n");
-	    if (nrows(CAR(ans)) != nr)
-		errorcall(call, "variable lengths differ\n");
-	}
-	dots = ProcessDots(dots, buf);
-	if (!isNull(data)) {
-	    ans = data;
-	    while(CDR(ans) != R_NilValue)
-		ans = CDR(ans);
-	    CDR(ans) = dots;
-	}
-	else data = dots;
-    }
-#endif
-    UNPROTECT(3);
     PROTECT(data);
     PROTECT(subset);
 
@@ -1434,7 +1303,7 @@ SEXP do_modelframe(SEXP call, SEXP op, SEXP args, SEXP rho)
 	data = eval(tmp, rho);
 	UNPROTECT(1);
     }
-    UNPROTECT(3);
+    UNPROTECT(2);
     PROTECT(data);
 
     /* finally, we run na.action on the data frame */
@@ -1556,9 +1425,19 @@ static char *AppendInteger(char *buf, int i)
     return buf;
 }
 
+static SEXP ColumnNames(SEXP x)
+{
+    SEXP dn = getAttrib(x, R_DimNamesSymbol);
+    if (dn == R_NilValue)
+	return R_NilValue;
+    else
+	return VECTOR(dn)[1];
+}
+
 SEXP do_modelmatrix(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    SEXP expr, factors, terms, v, vars, vnames, assign, xnames, tnames, rnames;
+    SEXP expr, factors, terms, v, vars, vnames, assign;
+    SEXP xnames, tnames, rnames;
     SEXP count, contrast, contr1, contr2, nlevs, ordered, columns, x;
     SEXP variable, var_i;
     int fik, first, i, j, k, kk, ll, n, nc, nterms, nvar;
@@ -1573,10 +1452,12 @@ SEXP do_modelmatrix(SEXP call, SEXP op, SEXP args, SEXP rho)
     terms = CAR(args);
 
     intercept = asLogical(getAttrib(terms, install("intercept")));
-    if (intercept == NA_INTEGER) intercept = 0;
+    if (intercept == NA_INTEGER)
+	intercept = 0;
 
     response = asLogical(getAttrib(terms, install("response")));
-    if (response == NA_INTEGER) response = 0;
+    if (response == NA_INTEGER)
+	response = 0;
 
     /* Get the factor pattern matrix.  We duplicate this because */
     /* we may want to alter it if we are in the no-intercept case. */
@@ -1687,8 +1568,8 @@ SEXP do_modelmatrix(SEXP call, SEXP op, SEXP args, SEXP rho)
 	for (j = 0; j < nterms; j++) {
 	    for (i = response; i < nvar; i++) {
 		if (INTEGER(nlevs)[i] > 1
-		    && INTEGER(factors)[i+j*nvar] == 1) {
-		    INTEGER(factors)[i+j*nvar] = 2;
+		    && INTEGER(factors)[i + j * nvar] == 1) {
+		    INTEGER(factors)[i + j * nvar] = 2;
 		    goto alldone;
 		}
 	    }
@@ -1697,10 +1578,10 @@ SEXP do_modelmatrix(SEXP call, SEXP op, SEXP args, SEXP rho)
  alldone:
     ;
 
-   /* Compute the required contrast or dummy variable matrices. */
-   /* We set up a symbolic expression to evaluate these, substituting */
-   /* the required arguments at call time.  The calls have the following */
-   /* form: (contrast.type nlevs contrasts) */
+    /* Compute the required contrast or dummy variable matrices. */
+    /* We set up a symbolic expression to evaluate these, substituting */
+    /* the required arguments at call time.  The calls have the following */
+    /* form: (contrast.type nlevs contrasts) */
 
     PROTECT(contr1 = allocVector(VECSXP, nvar));
     PROTECT(contr2 = allocVector(VECSXP, nvar));
@@ -1720,9 +1601,9 @@ SEXP do_modelmatrix(SEXP call, SEXP op, SEXP args, SEXP rho)
 	if (INTEGER(nlevs)[i]) {
 	    k = 0;
 	    for (j = 0; j < nterms; j++) {
-		if (INTEGER(factors)[i+j*nvar] == 1)
+		if (INTEGER(factors)[i + j * nvar] == 1)
 		    k |= 1;
-		else if (INTEGER(factors)[i+j*nvar] == 2)
+		else if (INTEGER(factors)[i + j * nvar] == 2)
 		    k |= 2;
 	    }
 	    CADR(expr) = VECTOR(variable)[i];
@@ -1737,20 +1618,22 @@ SEXP do_modelmatrix(SEXP call, SEXP op, SEXP args, SEXP rho)
 	}
     }
 
-
-    /* We now have everything needed to build the */
-    /* design matrix.  So let's do it.  The first */
-    /* step is to compute the matrix size and */
-    /* allocate it. */
+    /* We now have everything needed to build the design matrix. */
+    /* The first step is to compute the matrix size and to allocate it. */
+    /* Note that "count" holds a count of how many columns there are */
+    /* for each term in the model and "nc" gives the total column count. */
 
     PROTECT(count = allocVector(INTSXP, nterms));
-    if (intercept) nc = 1; else nc = 0;
+    if (intercept)
+	nc = 1;
+    else
+	nc = 0;
     for (j = 0; j < nterms; j++) {
 	k = 1;
 	for (i = 0; i < nvar; i++) {
-	    if (INTEGER(factors)[i+j*nvar]) {
+	    if (INTEGER(factors)[i + j * nvar]) {
 		if (INTEGER(nlevs)[i]) {
-		    switch(INTEGER(factors)[i+j*nvar]) {
+		    switch(INTEGER(factors)[i + j * nvar]) {
 		    case 1:
 			k *= ncols(VECTOR(contr1)[i]);
 			break;
@@ -1766,8 +1649,8 @@ SEXP do_modelmatrix(SEXP call, SEXP op, SEXP args, SEXP rho)
 	nc = nc + k;
     }
 
-    /* Record which columns of the design matrix */
-    /* are associated which which model terms. */
+    /* Record which columns of the design matrix are associated */
+    /* with which model terms. */
 
     PROTECT(assign = allocVector(INTSXP, nc));
     k = 0;
@@ -1790,8 +1673,18 @@ SEXP do_modelmatrix(SEXP call, SEXP op, SEXP args, SEXP rho)
     else tnames = R_NilValue;
 #endif
 
+    /* Here we loop over the terms in the model and, within each */
+    /* term, loop over the corresponding columns of the design */
+    /* matrix, assembling the names. */
+
+    /* FIXME : The body within these two loops should be embedded */
+    /* in its own function. */
+
+    /* FIXME : we need to check for buffer overflow here. */
+
     k = 0;
-    if (intercept) STRING(xnames)[k++] = mkChar("(Intercept)");
+    if (intercept)
+	STRING(xnames)[k++] = mkChar("(Intercept)");
 
     for (j = 0; j < nterms; j++) {
 	for (kk = 0; kk < INTEGER(count)[j]; kk++) {
@@ -1800,36 +1693,39 @@ SEXP do_modelmatrix(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    bufp = &buf[0];
 	    for (i = 0; i < nvar; i++) {
 		var_i = VECTOR(variable)[i];
-		if (ll = INTEGER(factors)[i+j*nvar]) {
-		    if (!first) bufp = AppendString(bufp, ".");
+		if (ll = INTEGER(factors)[i + j * nvar]) {
+		    if (!first)
+			bufp = AppendString(bufp, ".");
 		    first = 0;
 		    if (isFactor(var_i)) {
 			if (ll == 1) {
-			    x = CADR(getAttrib(VECTOR(contr1)[i], R_DimNamesSymbol));
+			    x = ColumnNames(VECTOR(contr1)[i]);
 			    ll = ncols(VECTOR(contr1)[i]);
 			}
 			else {
-			    x = CADR(getAttrib(VECTOR(contr2)[i], R_DimNamesSymbol));
+			    x = ColumnNames(VECTOR(contr2)[i]);
 			    ll = ncols(VECTOR(contr2)[i]);
 			}
 			bufp = AppendString(bufp, CHAR(STRING(vnames)[i]));
 			if (x == R_NilValue)
-			    bufp = AppendInteger(bufp, index%ll+1);
+			    bufp = AppendInteger(bufp, index % ll + 1);
 			else
-			    bufp = AppendString(bufp, CHAR(STRING(x)[index%ll]));
+			    bufp = AppendString(bufp,
+					 CHAR(STRING(x)[index % ll]));
 		    }
 		    else {
-			x = CADR(getAttrib(var_i, R_DimNamesSymbol));
+			x = ColumnNames(var_i);
 			ll = ncols(var_i);
 			bufp = AppendString(bufp, CHAR(STRING(vnames)[i]));
 			if (ll > 1) {
 			    if (x == R_NilValue)
-				bufp = AppendInteger(bufp, index%ll+1);
+				bufp = AppendInteger(bufp, index % ll + 1);
 			    else
-				bufp = AppendString(bufp, CHAR(STRING(x)[index%ll]));
+				bufp = AppendString(bufp,
+					     CHAR(STRING(x)[index % ll]));
 			}
 		    }
-		    index = index/ll;
+		    index = index / ll;
 		}
 	    }
 	    STRING(xnames)[k++] = mkChar(buf);
@@ -1853,7 +1749,7 @@ SEXP do_modelmatrix(SEXP call, SEXP op, SEXP args, SEXP rho)
     for (k = 0; k < nterms; k++) {
 	for (i = 0; i < nvar; i++) {
 	    var_i = VECTOR(variable)[i];
-	    fik = INTEGER(factors)[i+k*nvar];
+	    fik = INTEGER(factors)[i + k * nvar];
 	    if (fik) {
 		switch(fik) {
 		case 1:
@@ -1865,28 +1761,28 @@ SEXP do_modelmatrix(SEXP call, SEXP op, SEXP args, SEXP rho)
 		}
 		if (jnext == jstart) {
 		    if (INTEGER(nlevs)[i] > 0) {
-			firstfactor(&REAL(x)[jstart*n], n, jnext-jstart,
+			firstfactor(&REAL(x)[jstart * n], n, jnext - jstart,
 				    REAL(contrast), nrows(contrast),
 				    ncols(contrast), INTEGER(var_i));
 			jnext = jnext + ncols(contrast);
 		    }
 		    else {
-			firstvar(&REAL(x)[jstart*n], n, jnext-jstart,
+			firstvar(&REAL(x)[jstart * n], n, jnext - jstart,
 				 REAL(var_i), n, ncols(var_i));
 			jnext = jnext + ncols(var_i);
 		    }
 		}
 		else {
 		    if (INTEGER(nlevs)[i] > 0) {
-			addfactor(&REAL(x)[jstart*n], n, jnext-jstart,
+			addfactor(&REAL(x)[jstart * n], n, jnext - jstart,
 				  REAL(contrast), nrows(contrast),
 				  ncols(contrast), INTEGER(var_i));
 			jnext = jnext + (jnext - jstart)*(ncols(contrast) - 1);
 		    }
 		    else {
-			addvar(&REAL(x)[jstart*n], n, jnext-jstart,
+			addvar(&REAL(x)[jstart * n], n, jnext - jstart,
 			       REAL(var_i), n, ncols(var_i));
-			jnext = jnext + (jnext - jstart)*(ncols(var_i) - 1);
+			jnext = jnext + (jnext - jstart) * (ncols(var_i) - 1);
 		    }
 		}
 	    }

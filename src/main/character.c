@@ -3,7 +3,7 @@
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
+ *  it under the terms of the GNU General Pulic License as published by
  *  the Free Software Foundation; either version 2 of the License, or
  *  (at your option) any later version.
  *
@@ -35,9 +35,9 @@ SEXP do_nchar(SEXP call, SEXP op, SEXP args, SEXP env)
     PROTECT(s = allocVector(INTSXP, len));
     for (i = 0; i < len; i++)
 	INTEGER(s)[i] = strlen(CHAR(STRING(x)[i]));
-    if((d = getAttrib(x, R_DimSymbol)) != R_NilValue)
+    if ((d = getAttrib(x, R_DimSymbol)) != R_NilValue)
 	setAttrib(s, R_DimSymbol, d);
-    if((d = getAttrib(x, R_DimNamesSymbol)) != R_NilValue)
+    if ((d = getAttrib(x, R_DimNamesSymbol)) != R_NilValue)
 	setAttrib(s, R_DimNamesSymbol, d);
     UNPROTECT(2);
     return s;
@@ -47,7 +47,6 @@ SEXP do_nchar(SEXP call, SEXP op, SEXP args, SEXP env)
 static void substr(char *buf, char *str, int sa, int so)
 {
     int i;
-
     str += (sa - 1);
     for (i = 0; i <= (so - sa); i++)
 	*buf++ = *str++;
@@ -76,7 +75,7 @@ SEXP do_substr(SEXP call, SEXP op, SEXP args, SEXP env)
 	start = INTEGER(sa)[i % k];
 	stop = INTEGER(so)[i % l];
 	slen = strlen(CHAR(STRING(x)[i]));
-	if ( start < 1 )
+	if (start < 1)
 	    start = 1;
 	if (start > stop || start > slen) {
 	    buff[0]='\0';
@@ -85,7 +84,7 @@ SEXP do_substr(SEXP call, SEXP op, SEXP args, SEXP env)
 	else {
 	    if (stop > slen)
 		stop = slen;
-	    if( stop > MAXELTSIZE) {
+	    if (stop > MAXELTSIZE) {
 		stop = MAXELTSIZE;
 		warning("a string was truncated in substr\n");
 	    }
@@ -131,7 +130,7 @@ SEXP do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 	if (tlen > 0) {
 	    split = CHAR(STRING(tok)[i % tlen]);
 	    ntok = 0;
-	    if(strtok(buff, split) != NULL) {
+	    if (strtok(buff, split) != NULL) {
 		do {
 		    ntok++;
 		}
@@ -140,7 +139,7 @@ SEXP do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 	}
 	else ntok = strlen(buff);
 	PROTECT(t = allocVector(STRSXP, ntok));
-	if( tlen > 0 ) {
+	if (tlen > 0) {
 	    strcpy(buff, CHAR(STRING(x)[i]));
 	    pt = strtok(buff, split);
 	    for (j = 0; j < ntok; j++) {
@@ -180,75 +179,75 @@ SEXP do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 
 static SEXP stripchars(SEXP inchar, int minlen)
 {
-    int i, j, nspace=0, upper;
+    int i, j, nspace = 0, upper;
     char buff1[MAXELTSIZE];
 
     strcpy(buff1, CHAR(inchar));
-    upper=strlen(buff1)-1;
+    upper = strlen(buff1)-1;
 
     /*remove beginning blanks */
 
-    j=0;
-    for(i=0 ; i<upper ; i++ )
-	if(isspace(buff1[i]))
+    j = 0;
+    for (i = 0 ; i < upper ; i++)
+	if (isspace(buff1[i]))
 	    j++;
 	else
 	    break;
 
-    strcpy(buff1,&buff1[j]);
-    upper=strlen(buff1)-1;
+    strcpy(buff1, &buff1[j]);
+    upper = strlen(buff1) - 1;
 
-    if(strlen(buff1)<minlen)
+    if (strlen(buff1) < minlen)
 	goto donesc;
 
-    for (i=upper; i>0; i--) {
-	if( isspace(buff1[i]))
+    for (i = upper; i > 0; i--) {
+	if (isspace(buff1[i]))
 	    nspace++;
 	/*strcpy(buff1[i],buff1[i+1]);*/
-	if(strlen(buff1)-nspace <= minlen)
+	if (strlen(buff1) - nspace <= minlen)
 	    goto donesc;
     }
 
-    upper=strlen(buff1)-1;
+    upper = strlen(buff1) -1;
 
-    for (i=upper; i>0; i--) {
-	if ((buff1[i]=='a' || buff1[i]=='e' || buff1[i]=='i' ||
-	     buff1[i]=='o' || buff1[i]=='u')) {
-	    if (!(isspace(buff1[i-1]) && isspace(buff1[i+1])))
-		strcpy(&buff1[i],&buff1[i+1]);
+    for (i = upper; i > 0; i--) {
+	if ((buff1[i] == 'a' || buff1[i] == 'e' || buff1[i] == 'i' ||
+	     buff1[i] == 'o' || buff1[i] == 'u')) {
+	    if (!(isspace(buff1[i - 1]) && isspace(buff1[i + 1])))
+		strcpy(&buff1[i], &buff1[i + 1]);
 	}
-	if(strlen(buff1)-nspace <= minlen)
+	if (strlen(buff1) - nspace <= minlen)
 	    goto donesc;
     }
 
-    upper=strlen(buff1)-1;
+    upper = strlen(buff1) - 1;
 
-    for (i=upper; i>=0; i--) {
+    for (i = upper; i >= 0; i--) {
 	if (islower(buff1[i])) {
-	    if (!(isspace(buff1[i-1]) &&isspace(buff1[i+1])))
-		strcpy(&buff1[i],&buff1[i+1]);
+	    if (!(isspace(buff1[i - 1]) && isspace(buff1[i + 1])))
+		strcpy(&buff1[i], &buff1[i + 1]);
 	}
-	if (strlen(buff1)-nspace <= minlen)
+	if (strlen(buff1) - nspace <= minlen)
 	    goto donesc;
     }
 
     /* all else has failed so we use brute force */
 
-    upper=strlen(buff1);
-    for (i=upper; i>0; i--) {
-	if( !(isspace(buff1[i-1]) && isspace(buff1[i+1])) )
-	    strcpy(&buff1[i],&buff1[i+1]);
-	if(strlen(buff1)-nspace <= minlen)
+    upper = strlen(buff1);
+    for (i = upper; i > 0; i--) {
+	if (!(isspace(buff1[i - 1]) && isspace(buff1[i + 1])))
+	    strcpy(&buff1[i], &buff1[i + 1]);
+	if (strlen(buff1) - nspace <= minlen)
 	    goto donesc;
     }
 
  donesc:
 
-    upper=strlen(buff1);
-    if(upper > minlen )
-	for (i=upper-1; i>0; i--)
-	    if(isspace(buff1[i]))
-		strcpy(&buff1[i],&buff1[i+1]);
+    upper = strlen(buff1);
+    if (upper > minlen)
+	for (i = upper - 1; i > 0; i--)
+	    if (isspace(buff1[i]))
+		strcpy(&buff1[i], &buff1[i + 1]);
 
     return(mkChar(buff1));
 }
@@ -261,16 +260,16 @@ SEXP do_abbrev(SEXP call, SEXP op, SEXP args, SEXP env)
 
     checkArity(op,args);
 
-    if(!isString(CAR(args)))
-	errorcall(call,"the first argument must be a string\n");
+    if (!isString(CAR(args)))
+	errorcall(call, "the first argument must be a string\n");
+    len = length(CAR(args));
 
-    len=length(CAR(args));
-    PROTECT(ans=allocVector(STRSXP,len));
-    minlen=asInteger(CADR(args));
-    uclass=asLogical(CAR(CDDR(args)));
+    PROTECT(ans = allocVector(STRSXP, len));
+    minlen = asInteger(CADR(args));
+    uclass = asLogical(CAR(CDDR(args)));
+    for (i = 0 ; i < len ; i++)
+	STRING(ans)[i] = stripchars(STRING(CAR(args))[i], minlen);
 
-    for(i=0 ; i<len ; i++)
-	STRING(ans)[i]=stripchars(STRING(CAR(args))[i],minlen);
     UNPROTECT(1);
     return(ans);
 }
@@ -284,24 +283,24 @@ SEXP do_makenames(SEXP call, SEXP op, SEXP args, SEXP env)
 
     checkArity(op ,args);
     arg = CAR(args);
-    if(!isString(arg))
+    if (!isString(arg))
 	errorcall(call, "non-character names\n");
     n = length(arg);
     PROTECT(ans = allocVector(STRSXP, n));
-    for(i=0 ; i<n ; i++) {
+    for (i = 0 ; i < n ; i++) {
 	l = strlen(CHAR(STRING(arg)[i]));
 	if (isalpha(CHAR(STRING(arg)[i])[0])) {
 	    STRING(ans)[i] = allocString(l);
 	    strcpy(CHAR(STRING(ans)[i]), CHAR(STRING(arg)[i]));
 	}
 	else {
-	    STRING(ans)[i] = allocString(l+1);
+	    STRING(ans)[i] = allocString(l + 1);
 	    strcpy(CHAR(STRING(ans)[i]), "X");
 	    strcat(CHAR(STRING(ans)[i]), CHAR(STRING(arg)[i]));
 	}
 	p = CHAR(STRING(ans)[i]);
-	while(*p) {
-	    if(!isalnum(*p) && *p != '.')
+	while (*p) {
+	    if (!isalnum(*p) && *p != '.')
 		*p = '.';
 	    p++;
 	}
@@ -329,26 +328,26 @@ SEXP do_grep(SEXP call, SEXP op, SEXP args, SEXP env)
     igcase_opt = asLogical(CAR(args)); args = CDR(args);
     extended_opt = asLogical(CAR(args)); args = CDR(args);
     value_opt = asLogical(CAR(args)); args = CDR(args);
-    if(igcase_opt == NA_INTEGER) igcase_opt = 0;
-    if(extended_opt == NA_INTEGER) extended_opt = 1;
-    if(value_opt == NA_INTEGER) value_opt = 0;
+    if (igcase_opt == NA_INTEGER) igcase_opt = 0;
+    if (extended_opt == NA_INTEGER) extended_opt = 1;
+    if (value_opt == NA_INTEGER) value_opt = 0;
 
-    if(!isString(pat) || length(pat) < 1 || !isString(vec))
+    if (!isString(pat) || length(pat) < 1 || !isString(vec))
 	errorcall(call, "invalid argument\n");
 
     eflags = 0;
 
-    if(extended_opt) eflags = eflags | REG_EXTENDED;
-    if(igcase_opt) eflags = eflags | REG_ICASE;
+    if (extended_opt) eflags = eflags | REG_EXTENDED;
+    if (igcase_opt) eflags = eflags | REG_ICASE;
 
-    if(regcomp(&reg, CHAR(STRING(pat)[0]), eflags))
+    if (regcomp(&reg, CHAR(STRING(pat)[0]), eflags))
 	errorcall(call, "invalid regular expression\n");
 
     n = length(vec);
     ind = allocVector(LGLSXP, n);
     nmatches = 0;
-    for(i=0 ; i<n ; i++) {
-	if(regexec(&reg, CHAR(STRING(vec)[i]), 0, NULL, 0) == 0) {
+    for (i = 0 ; i < n ; i++) {
+	if (regexec(&reg, CHAR(STRING(vec)[i]), 0, NULL, 0) == 0) {
 	    INTEGER(ind)[i] = 1;
 	    nmatches++;
 	}
@@ -356,18 +355,18 @@ SEXP do_grep(SEXP call, SEXP op, SEXP args, SEXP env)
     }
     regfree(&reg);
     PROTECT(ind);
-    if(value_opt) {
+    if (value_opt) {
 	ans = allocVector(STRSXP, nmatches);
 	j = 0;
-	for(i=0 ; i<n ; i++)
-	    if(INTEGER(ind)[i])
+	for (i = 0 ; i < n ; i++)
+	    if (INTEGER(ind)[i])
 		STRING(ans)[j++] = STRING(vec)[i];
     }
     else {
 	ans = allocVector(INTSXP, nmatches);
 	j = 0;
-	for(i=0 ; i<n ; i++)
-	    if(INTEGER(ind)[i]) INTEGER(ans)[j++] = i+1;
+	for (i = 0 ; i < n ; i++)
+	    if (INTEGER(ind)[i]) INTEGER(ans)[j++] = i + 1;
     }
     UNPROTECT(1);
     return ans;
@@ -387,16 +386,16 @@ static int length_adj(char *repl, regmatch_t *regmatch, int nsubexpr)
     int k, n;
     char *p = repl;
     n = strlen(repl) - (regmatch[0].rm_eo - regmatch[0].rm_so);
-    while(*p) {
-	if(*p == '\\') {
-	    if('1' <= p[1] && p[1] <= '9') {
+    while (*p) {
+	if (*p == '\\') {
+	    if ('1' <= p[1] && p[1] <= '9') {
 		k = p[1] - '0';
-		if(k > nsubexpr)
+		if (k > nsubexpr)
 		    error("invalid backreference in regular expression\n");
 		n += (regmatch[k].rm_eo - regmatch[k].rm_so) - 2;
 		p++;
 	    }
-	    else if(p[1] == 0) {
+	    else if (p[1] == 0) {
 				/* can't escape the final '\0' */
 		n -= 1;
 	    }
@@ -415,15 +414,15 @@ static char *string_adj(char *target, char *orig, char *repl,
 {
     int i, k;
     char *p = repl, *t = target;
-    while(*p) {
-	if(*p == '\\') {
-	    if('1' <= p[1] && p[1] <= '9') {
+    while (*p) {
+	if (*p == '\\') {
+	    if ('1' <= p[1] && p[1] <= '9') {
 		k = p[1] - '0';
-		for(i=regmatch[k].rm_so ; i<regmatch[k].rm_eo ; i++)
+		for (i = regmatch[k].rm_so ; i < regmatch[k].rm_eo ; i++)
 		    *t++ = orig[i];
 		p += 2;
 	    }
-	    else if(p[1] == 0) {
+	    else if (p[1] == 0) {
 		p += 1;
 	    }
 	    else {
@@ -457,37 +456,37 @@ SEXP do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
     vec = CAR(args); args = CDR(args);
     igcase_opt = asLogical(CAR(args)); args = CDR(args);
     extended_opt = asLogical(CAR(args)); args = CDR(args);
-    if(igcase_opt == NA_INTEGER) igcase_opt = 0;
-    if(extended_opt == NA_INTEGER) extended_opt = 1;
+    if (igcase_opt == NA_INTEGER) igcase_opt = 0;
+    if (extended_opt == NA_INTEGER) extended_opt = 1;
 
-    if(!isString(pat) || length(pat) < 1 ||
+    if (!isString(pat) || length(pat) < 1 ||
        !isString(rep) || length(rep) < 1 ||
        !isString(vec))
 	errorcall(call, "invalid argument\n");
 
     eflags = 0;
-    if(extended_opt) eflags = eflags | REG_EXTENDED;
-    if(igcase_opt) eflags = eflags | REG_ICASE;
+    if (extended_opt) eflags = eflags | REG_EXTENDED;
+    if (igcase_opt) eflags = eflags | REG_ICASE;
 
-    if(regcomp(&reg, CHAR(STRING(pat)[0]), eflags))
+    if (regcomp(&reg, CHAR(STRING(pat)[0]), eflags))
 	errorcall(call, "invalid regular expression\n");
 
     n = length(vec);
     PROTECT(ans = allocVector(STRSXP, n));
 
-    for(i=0 ; i<n ; i++) {
+    for (i = 0 ; i < n ; i++) {
 	offset = 0;
 	nmatch = 0;
 	s = CHAR(STRING(vec)[i]);
 	t = CHAR(STRING(rep)[0]);
 	ns = strlen(s);
-	while(regexec(&reg, &s[offset], 10, regmatch, 0) == 0) {
+	while (regexec(&reg, &s[offset], 10, regmatch, 0) == 0) {
 	    nmatch += 1;
 	    ns += length_adj(t, regmatch, reg.re_nsub);
 	    offset += regmatch[0].rm_eo;
-	    if(s[offset] == '\0' || !global) break;
+	    if (s[offset] == '\0' || !global) break;
 	}
-	if(nmatch == 0) STRING(ans)[i] = STRING(vec)[i];
+	if (nmatch == 0) STRING(ans)[i] = STRING(vec)[i];
 	else {
 	    STRING(ans)[i] = allocString(ns);
 	    offset = 0;
@@ -496,14 +495,14 @@ SEXP do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 	    t = CHAR(STRING(rep)[0]);
 	    u = CHAR(STRING(ans)[i]);
 	    ns = strlen(s);
-	    while(regexec(&reg, &s[offset], 10, regmatch, 0) == 0) {
-		for(j=0; j<regmatch[0].rm_so ; j++)
+	    while (regexec(&reg, &s[offset], 10, regmatch, 0) == 0) {
+		for (j = 0; j < regmatch[0].rm_so ; j++)
 		    *u++ = s[offset+j];
 		u = string_adj(u, &s[offset], t, regmatch, reg.re_nsub);
 		offset += regmatch[0].rm_eo;
-		if(s[offset] == '\0' || !global) break;
+		if (s[offset] == '\0' || !global) break;
 	    }
-	    for(j=offset ; s[j] ; j++)
+	    for (j = offset ; s[j] ; j++)
 		*u++ = s[j];
 	    *u = '\0';
 	}

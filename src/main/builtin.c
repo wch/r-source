@@ -359,6 +359,10 @@ SEXP do_makelist(SEXP call, SEXP op, SEXP args, SEXP rho)
     UNPROTECT(2);
     return list;
 }
+
+SEXP do_namedlist(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+}
 #else
 SEXP do_makelist(SEXP call, SEXP op, SEXP args, SEXP rho)
 {

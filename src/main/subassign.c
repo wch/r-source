@@ -1193,8 +1193,8 @@ static void SubAssignArgs(SEXP args, SEXP *x, SEXP *s, SEXP *y)
 /* and the remainder of args have not.  If this was called directly */
 /* the CAR(args) and the last arg won't have been. */
 
-SEXP OldToNewList(SEXP);
-SEXP NewToOldList(SEXP);
+SEXP PairToVectorList(SEXP);
+SEXP VectorToPairList(SEXP);
 
 SEXP do_subassign(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
@@ -1232,7 +1232,7 @@ SEXP do_subassign(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     if (TYPEOF(x) == LISTSXP || TYPEOF(x) == LANGSXP) {
 	oldtype = TYPEOF(x);
-	PROTECT(x = OldToNewList(x));
+	PROTECT(x = PairToVectorList(x));
     }
     else {
 	oldtype = 0;
@@ -1267,7 +1267,7 @@ SEXP do_subassign(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
 
     if (oldtype == LANGSXP) {
-	x = NewToOldList(x);
+	x = VectorToPairList(x);
 	TYPEOF(x) = LANGSXP;
     }
 
@@ -1322,13 +1322,7 @@ SEXP do_subassign2(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     stretch = 0;
     if (isVector(x)) {
-	if (
-#ifdef NEWLIST
-	    !isExpression(x) && !isVectorList(x) && length(y) > 1
-#else
-	    !isExpression(x) && length(y) > 1
-#endif
-	    )
+	if (!isExpression(x) && !isVectorList(x) && length(y) > 1)
 	    error("number of elements supplied larger than number of elements to replace\n");
 	if (nsubs == 1) {
 	    offset = OneIndex(x, CAR(subs), 0, &newname);
@@ -1459,7 +1453,7 @@ SEXP do_subassign2(SEXP call, SEXP op, SEXP args, SEXP rho)
 	case 1919:      /* vector     <- vector     */
 	case 2020:	/* expression <- expression */
 
-	    VECTOR(x)[offset] = VECTOR(y)[0];
+	    VECTOR(x)[offset] = y;
 	    break;
 
 	default:

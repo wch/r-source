@@ -88,6 +88,7 @@ FUNTAB R_FunTab[] =
 {"stop",	do_stop,	0,	11,	1,	PP_FUNCALL,	0},
 {"warning",	do_warning,	0,	111,	1,	PP_FUNCALL,	0},
 {"function",	do_function,	0,	0,	-1,	PP_FUNCTION,	0},
+{"as.function.default",do_asfunction,0,	11,	2,	PP_FUNCTION,	0},
 {"<-",		do_set,		1,	100,	-1,	PP_ASSIGN,	0},
 {"<<-",		do_set,		2,	100,	-1,	PP_ASSIGN2,	0},
 {"{",		do_begin,	0,	0,	-1,	PP_CURLY,	0},
@@ -599,7 +600,7 @@ FUNTAB R_FunTab[] =
 {"zeroin",	do_zeroin,	0,	11,	4,	PP_FUNCALL,	0},
 {"terms.formula",do_termsform,	0,	11,	5,	PP_FUNCALL,	0},
 {"update.formula",do_updateform,0,	11,	2,	PP_FUNCALL,	0},
-{"model.frame",	do_modelframe,	0,	11,	5,	PP_FUNCALL,	0},
+{"model.frame",	do_modelframe,	0,	11,	8,	PP_FUNCALL,	0},
 {"model.matrix",do_modelmatrix,	0,	11,	2,	PP_FUNCALL,	0},
 
 {"D",		do_D,		0,	11,	2,	PP_FUNCALL,	0},

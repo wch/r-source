@@ -77,31 +77,6 @@ static char *falsenames[] = {
     (char *) 0,
 };
 
-int asInteger(SEXP x)
-{
-    if (isVector(x)) {
-	if (LENGTH(x) < 1)
-	    return NA_INTEGER;
-	switch (TYPEOF(x)) {
-	case LGLSXP:
-	    return (LOGICAL(x)[0] == NA_LOGICAL) ?
-		NA_INTEGER : ((LOGICAL(x)[0]) != 0);
-	case INTSXP:
-	    return (INTEGER(x)[0]);
-	case REALSXP:
-	    return FINITE(REAL(x)[0]) ?
-		((int)(REAL(x)[0])) : NA_INTEGER;
-	case CPLXSXP:
-	    return FINITE(COMPLEX(x)[0].r) ?
-		((int)(COMPLEX(x)[0].r)) : NA_INTEGER;
-	default:
-	    return NA_INTEGER;
-	}
-    }
-    return NA_INTEGER;
-}
-
-
 int asLogical(SEXP x)
 {
     if (isVector(x)) {
@@ -126,12 +101,30 @@ int asLogical(SEXP x)
     return NA_LOGICAL;
 }
 
+int asInteger(SEXP x)
+{
+    if (isVectorObject(x) && LENGTH(x) >= 1) {
+	switch (TYPEOF(x)) {
+	case LGLSXP:
+	    return (LOGICAL(x)[0] == NA_LOGICAL) ?
+		NA_INTEGER : ((LOGICAL(x)[0]) != 0);
+	case INTSXP:
+	    return (INTEGER(x)[0]);
+	case REALSXP:
+	    return FINITE(REAL(x)[0]) ?
+		((int)(REAL(x)[0])) : NA_INTEGER;
+	case CPLXSXP:
+	    return FINITE(COMPLEX(x)[0].r) ?
+		((int)(COMPLEX(x)[0].r)) : NA_INTEGER;
+	}
+    }
+    return NA_INTEGER;
+}
 
 double asReal(SEXP x)
 {
     if (isVector(x)) {
-	if (LENGTH(x) < 1)
-	    return NA_INTEGER;
+	if (LENGTH(x) < 1) return NA_REAL;
 	switch (TYPEOF(x)) {
 	case LGLSXP:
 	case INTSXP:
@@ -148,6 +141,33 @@ double asReal(SEXP x)
     return NA_REAL;
 }
 
+
+complex asComplex(SEXP x)
+{
+    complex z;
+    z.r = NA_REAL;
+    z.i = NA_REAL;
+    if (isVectorObject(x) && LENGTH(x) >= 1) {
+	switch (TYPEOF(x)) {
+	case LGLSXP:
+	case INTSXP:
+	    if (INTEGER(x)[0] != NA_INTEGER) {
+		z.r = INTEGER(x)[0];
+		z.i = 0;
+	    }
+	    return z;
+	case REALSXP:
+	    if (REAL(x)[0] != NA_REAL) {
+		z.r = REAL(x)[0];
+		z.i = 0;
+	    }
+	    return z;
+	case CPLXSXP:
+	    return COMPLEX(x)[0];
+	}
+    }
+    return z;
+}
 
 SEXP asChar(SEXP x)
 {
@@ -223,7 +243,8 @@ int isUserBinop(SEXP s)
 #ifdef NEWLIST
 int isNull(SEXP s)
 {
-    return (s == R_NilValue || (TYPEOF(s) == VECSXP && LENGTH(s) == 0));
+    return (s == R_NilValue || 
+	    ((TYPEOF(s) == VECSXP || TYPEOF(s) == EXPRSXP) && LENGTH(s) == 0));
 }
 #else
 int isNull(SEXP s)
@@ -406,8 +427,9 @@ int tsConform(SEXP x, SEXP y)
 
 
 /* Check to see if a list can be made into a vector. */
-/* it must have every elementt being a vector of length 1. */
+/* it must have every element being a vector of length 1. */
 
+#ifdef OLD
 int isVectorizable(SEXP s)
 {
     int mode = 0;
@@ -422,7 +444,35 @@ int isVectorizable(SEXP s)
     }
     return mode;
 }
-
+#else
+int isVectorizable(SEXP s)
+{
+    int mode = 0;
+    if (isNull(s)) {
+	return 1;
+    }
+    else if (isNewList(s)) {
+	int i, n;
+	n = LENGTH(s);
+	for (i = 0 ; i < n; i++) {
+	    if (!isVector(VECTOR(s)[i]) || LENGTH(VECTOR(s)[i]) > 1)
+		return 0;
+	    mode = (mode >= TYPEOF(VECTOR(s)[i])) ?
+		mode : TYPEOF(VECTOR(s)[i]);
+	}
+	return mode;	
+    }
+    else if (isList(s)) {
+	for ( ; s != R_NilValue; s = CDR(s)) {
+	    if (!isVector(CAR(s)) || LENGTH(CAR(s)) > 1)
+		return 0;
+	    mode = (mode >= (int) TYPEOF(CAR(s))) ? mode : TYPEOF(CAR(s));
+	}
+	return mode;
+    }
+    else return 0;
+}
+#endif
 
 /* Check to see if the arrays "x" and "y" have the identical extents */
 
@@ -830,57 +880,4 @@ SEXP dcar(SEXP l)
 SEXP dcdr(SEXP l)
 {
     return(CDR(l));
-}
-
-
-SEXP OldToNewList(SEXP x)
-{
-    SEXP xptr, xnew, xnames, blank;
-    int i, len = 0, named = 0;
-    for (xptr = x ; xptr != R_NilValue ; xptr = CDR(xptr)) {
-	named = (TAG(xptr) != R_NilValue);
-	len++;
-    }
-    PROTECT(x);
-    PROTECT(xnew = allocVector(VECSXP, len));
-    if (named) {
-	blank = mkChar("");
-	PROTECT(xnames = allocVector(STRSXP, len));
-    }
-    xptr = x;
-    for (i = 0; i < len; i++) {
-	VECTOR(xnew)[i] = CAR(xptr);
-	if (named) {
-	    if(TAG(xptr) == R_NilValue)
-		STRING(xnames)[i] = blank;
-	    else
-		STRING(xnames)[i] = PRINTNAME(TAG(xptr));
-	xptr = CDR(xptr);
-	}
-    }
-    setAttrib(xnew, R_NamesSymbol, xnames);
-    copyMostAttrib(x, xnew);
-    UNPROTECT(2 + named);
-    return xnew;
-}
-
-SEXP NewToOldList(SEXP x)
-{
-    SEXP xptr, xnew, xnames;
-    int i, len, named;
-    len = length(x);
-    PROTECT(x);
-    PROTECT(xnew = allocList(len));
-    PROTECT(xnames = getAttrib(x, R_NamesSymbol));
-    named = (xnames != R_NilValue);
-    xptr = xnew;
-    for (i = 0; i < len; i++) {
-	CAR(xptr) = VECTOR(x)[i];
-	if (named && CHAR(STRING(xnames)[i])[0] != '\0')
-	    TAG(xptr) = install(CHAR(STRING(xnames)[i]));
-	xptr = CDR(xptr);	
-    }
-    copyMostAttrib(x, xnew);
-    UNPROTECT(3);
-    return xnew;
 }

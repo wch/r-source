@@ -34,8 +34,8 @@ SEXP GetRowNames(SEXP dimnames)
     else if (TYPEOF(dimnames) == LISTSXP)
 	return CAR(dimnames);
     else
-	return R_NilValue;	     
-}
+	return R_NilValue;
+}	     
 
 SEXP GetColNames(SEXP dimnames)
 {
@@ -196,36 +196,31 @@ SEXP DropDims(SEXP x)
 	/* We have a lower dimensional array. */
 	SEXP newdims, newdimnames;
 	int j = 0;
-	n = 0;
 	PROTECT(newdims = allocVector(INTSXP, n));
-	for (i = 0; i < ndims; i++)
+	for (i = 0, n = 0; i < ndims; i++)
 	    if (INTEGER(dims)[i] != 1)
 		INTEGER(newdims)[n++] = INTEGER(dims)[i];
-	if (TYPEOF(dimnames) == VECSXP) {
-	    PROTECT(newdimnames = allocVector(VECSXP, n));
-	    for (i = 0; i < ndims; i++) {
-		if (INTEGER(dims)[i] != 1)
-		    VECTOR(newdimnames)[j++] = VECTOR(dimnames)[i];
+	if (dimnames != R_NilValue) {
+	    int havenames = 0;
+	    for (i = 0; i < ndims; i++)
+		if (INTEGER(dims)[i] != 1 && VECTOR(dimnames)[i] != R_NilValue)
+		    havenames = 1;
+	    if (havenames) {
+		newdimnames = allocVector(VECSXP, n);
+		for (i = 0, n= 0; i < ndims; i++) {
+		    if (INTEGER(dims)[i] != 1)
+			VECTOR(newdimnames)[n++] = VECTOR(dimnames)[i];
+		}
 	    }
+	    else dimnames = R_NilValue;
 	}
-	else if (TYPEOF(dimnames) == LISTSXP) {
-	    PROTECT(newdimnames = allocVector(VECSXP, n));
-	    q = dimnames;	    
-	    for (i = 0; i < ndims; i++) {
-		if (INTEGER(dims)[i] != 1)
-		    VECTOR(newdimnames)[j++] = CAR(q);
-		q = CDR(q);
-	    }
-	}
-	else
-	    newdimnames = R_NilValue;
+	PROTECT(dimnames);
 	setAttrib(x, R_DimNamesSymbol, R_NilValue);
 	setAttrib(x, R_DimSymbol, newdims);
 	if (dimnames != R_NilValue) {
 	    setAttrib(x, R_DimNamesSymbol, newdimnames);
-	    UNPROTECT(1);
 	}
-	UNPROTECT(1);
+	UNPROTECT(2);
     }
     UNPROTECT(1);
     return x;
@@ -533,7 +528,16 @@ SEXP do_matprod(SEXP call, SEXP op, SEXP args, SEXP rho)
 	PROTECT(xdims = getAttrib(CAR(args), R_DimNamesSymbol));
 	PROTECT(ydims = getAttrib(CADR(args), R_DimNamesSymbol));
 	if (xdims != R_NilValue || ydims != R_NilValue) {
+#ifdef NEWLIST
+	    SEXP dimnames = allocVector(VECSXP, 2);
+	    if (xdims != R_NilValue)
+		VECTOR(dimnames)[0] = VECTOR(xdims)[0];
+	    if (ydims != R_NilValue)
+		VECTOR(dimnames)[1] = VECTOR(ydims)[1];
+	    setAttrib(ans, R_DimNamesSymbol, dimnames);
+#else
 	    setAttrib(ans, R_DimNamesSymbol, list2(CAR(xdims), CADR(ydims)));
+#endif
 	}
     }
     else {
@@ -547,7 +551,16 @@ SEXP do_matprod(SEXP call, SEXP op, SEXP args, SEXP rho)
 	PROTECT(xdims = getAttrib(CAR(args), R_DimNamesSymbol));
 	PROTECT(ydims = getAttrib(CADR(args), R_DimNamesSymbol));
 	if (xdims != R_NilValue || ydims != R_NilValue) {
+#ifdef NEWLIST
+	    SEXP dimnames = allocVector(VECSXP, 2);
+	    if (xdims != R_NilValue)
+		VECTOR(dimnames)[0] = VECTOR(xdims)[1];
+	    if (ydims != R_NilValue)
+		VECTOR(dimnames)[1] = VECTOR(ydims)[1];
+	    setAttrib(ans, R_DimNamesSymbol, dimnames);
+#else
 	    setAttrib(ans, R_DimNamesSymbol, list2(CADR(xdims), CADR(ydims)));
+#endif
 	}
     }
     UNPROTECT(3);
@@ -556,7 +569,7 @@ SEXP do_matprod(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 SEXP do_transpose(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    SEXP a, r, dims, dn;
+    SEXP a, r, dims, dimnames, rnames, cnames;
     int i, len = 0, ncol=0, nrow=0;
 
     checkArity(op, args);
@@ -564,32 +577,38 @@ SEXP do_transpose(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     if (isVector(a)) {
 	dims = getAttrib(a, R_DimSymbol);
+	rnames = R_NilValue;
+	cnames = R_NilValue;
 	switch(length(dims)) {
 	case 0:
+	    nrow = len = length(a);
+	    ncol = 1;
+	    rnames = getAttrib(a, R_NamesSymbol);
+	    break;
 	case 1:
 	    nrow = len = length(a);
 	    ncol = 1;
+	    rnames = getAttrib(a, R_DimNamesSymbol);
+	    if (rnames != R_NilValue)
+		rnames = VECTOR(rnames)[0];
 	    break;
 	case 2:
 	    ncol = ncols(a);
 	    nrow = nrows(a);
 	    len = length(a);
+	    dimnames = getAttrib(a, R_DimNamesSymbol);
+	    if (dimnames != R_NilValue) {
+		rnames = VECTOR(dimnames)[0];
+		cnames = VECTOR(dimnames)[1];
+	    }
 	    break;
 	default:
 	    goto not_matrix;
 	}
     }
-    else if (isList(a)) {
-	dims = getAttrib(a, R_DimSymbol);
-	if (length(dims) == 2) {
-	    errorcall(call, "can't transpose list matrices (yet)\n");
-	}
-	else goto not_matrix;
-    }
-    else goto not_matrix;
-
+    else
+	goto not_matrix;
     PROTECT(r = allocVector(TYPEOF(a), len));
-
     switch (TYPEOF(a)) {
     case LGLSXP:
     case INTSXP:
@@ -608,34 +627,28 @@ SEXP do_transpose(SEXP call, SEXP op, SEXP args, SEXP rho)
 	for (i = 0; i < len; i++)
 	    STRING(r)[i] = STRING(a)[(i / ncol) + (i % ncol) * nrow];
 	break;
+    case VECSXP:
+	for (i = 0; i < len; i++)
+	    VECTOR(r)[i] = VECTOR(a)[(i / ncol) + (i % ncol) * nrow];
+	break;
+    default:
+	goto not_matrix;
     }
-    dims = allocVector(INTSXP, 2);
+    PROTECT(dims = allocVector(INTSXP, 2));
     INTEGER(dims)[0] = ncol;
     INTEGER(dims)[1] = nrow;
     setAttrib(r, R_DimSymbol, dims);
-
-    if (!isNull(dn = getAttrib(a, R_DimNamesSymbol))) {
-	PROTECT(dn = duplicate(dn));
-	switch(length(dn)) {
-	case 1:
-	    PROTECT(dims = allocList(2));
-	    CADR(dims) = CAR(dn);
-	    setAttrib(r, R_DimNamesSymbol, dims);
-	    UNPROTECT(1);
-	    break;
-	case 2:
-	    dims = CAR(dn);
-	    CAR(dn) = CADR(dn);
-	    CADR(dn) = dims;
-	    setAttrib(r, R_DimNamesSymbol, dn);
-	    break;
-	}
+    UNPROTECT(1);
+    if(rnames != R_NilValue || cnames != R_NilValue) {
+	PROTECT(dimnames = allocVector(VECSXP, 2));
+	VECTOR(dimnames)[0] = cnames;
+	VECTOR(dimnames)[1] = rnames;
+	setAttrib(r, R_DimNamesSymbol, dimnames);
 	UNPROTECT(1);
     }
-
+    copyMostAttrib(a, r);
     UNPROTECT(1);
     return r;
-
  not_matrix:
     errorcall(call, "argument is not a matrix\n");
     return call;/* never used; just for -Wall */

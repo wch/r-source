@@ -458,8 +458,13 @@ void PrintValueRec(SEXP s,SEXP env)
 	if (TYPEOF(t) == INTSXP) {
 	    if (LENGTH(t) == 1) {
 		PROTECT(t = getAttrib(s, R_DimNamesSymbol));
+#ifdef NEWLIST
+		if (t != R_NilValue && VECTOR(t)[0] != R_NilValue)
+		    printNamedVector(s, VECTOR(t)[0], print_quote);
+#else
 		if (t != R_NilValue && CAR(t) != R_NilValue)
 		    printNamedVector(s, CAR(t), print_quote);
+#endif
 		else
 		    printVector(s, 1, print_quote);
 		UNPROTECT(1);

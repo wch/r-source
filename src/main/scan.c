@@ -145,13 +145,11 @@ static int fillBuffer(char *buffer, SEXPTYPE type, int strip)
 	filled=c;
     }
  donefill:
-
     if (strip) {
 	while (isspace(*--bufp))
 	    ;
 	bufp++;
     }
-
     *bufp = '\0';
     return filled;
 }
@@ -159,7 +157,6 @@ static int fillBuffer(char *buffer, SEXPTYPE type, int strip)
 static int isNAstring(char *buf)
 {
     int i;
-
     for (i = 0; i < length(NAstrings); i++)
 	if (!strcmp(CHAR(STRING(NAstrings)[i]),buf))
 	    return 1;
@@ -169,7 +166,6 @@ static int isNAstring(char *buf)
 static void expected(char *what, char *got)
 {
     int c;
-
     if (ttyflag) {
 	while ((c = scanchar()) != R_EOF && c != '\n')
 	    ;
@@ -182,7 +178,6 @@ static void expected(char *what, char *got)
 static void extractItem(char *buffer, SEXP ans, int i)
 {
     char *endp;
-
     switch(TYPEOF(ans)) {
     case LGLSXP:
 	if (isNAstring(buffer))
@@ -229,7 +224,7 @@ static SEXP scanVector(SEXPTYPE type, int maxitems, int maxlines,
 
     PROTECT(ans = allocVector(type, blocksize));
 
-    nprev = 0; n = 0; linesread = 0; bch=1;
+    nprev = 0; n = 0; linesread = 0; bch = 1;
 
     if (ttyflag) sprintf(ConsolePrompt, "1: ");
 
@@ -539,7 +534,7 @@ static SEXP scanFrame(SEXP what, int maxitems, int maxlines, int flush,
 
     if (colsread != 0) {
 	warning("number of items read is not a multiple of the number of columns\n");
-	a=nthcdr(ans, colsread);
+	a = nthcdr(ans, colsread);
 	buffer[0]='\0'; /* this is an NA */
 	while (a != R_NilValue) {
 	    extractItem(buffer, CAR(a), n);
@@ -796,15 +791,13 @@ SEXP do_countfields(SEXP call, SEXP op, SEXP args, SEXP rho)
     return bns;
 }
 
-/*
- *	frame.convert(char, na.strings, as.is)
- *
- *	This is a horrible hack which is used in read.table to
- *	take a character variable, if possible to convert it
- *	to a numeric variable.  If this is not possible, the
- *	result is a character string if as.is==TRUE or a factor
- *	if as.is==FALSE.
- */
+/* frame.convert(char, na.strings, as.is) */
+
+/* This is a horrible hack which is used in read.table to take a */
+/* character variable, if possible to convert it to a numeric */
+/* variable.  If this is not possible, the result is a character */
+/* string if as.is == TRUE or a factor if as.is == FALSE. */
+
 
 SEXP do_typecvt(SEXP call, SEXP op, SEXP args, SEXP env)
 {
@@ -825,7 +818,7 @@ SEXP do_typecvt(SEXP call, SEXP op, SEXP args, SEXP env)
     if (asIs == NA_LOGICAL) asIs = 0;
 
     cvec = CAR(args);
-    len=length(cvec);
+    len = length(cvec);
 
     numeric = 1;
 
@@ -876,7 +869,7 @@ SEXP do_typecvt(SEXP call, SEXP op, SEXP args, SEXP env)
 
 	    PROTECT(a=match(levs, cvec, NA_INTEGER));
 	    for (i = 0; i < len; i++)
-		INTEGER(rval)[i]=INTEGER(a)[i];
+		INTEGER(rval)[i] = INTEGER(a)[i];
 
 	    setAttrib(rval, R_LevelsSymbol, levs);
 	    PROTECT(a = allocVector(STRSXP, 1));
@@ -916,8 +909,8 @@ SEXP do_readln(SEXP call, SEXP op, SEXP args, SEXP rho)
     while (isspace(*--bufp))
 	;
     *++bufp = '\0';
-    PROTECT(ans=allocVector(STRSXP,1));
-    STRING(ans)[0]=mkChar(buffer);
+    PROTECT(ans = allocVector(STRSXP,1));
+    STRING(ans)[0] = mkChar(buffer);
     UNPROTECT(1);
     return ans;
 }
@@ -942,7 +935,7 @@ SEXP do_menu(SEXP call, SEXP op, SEXP args, SEXP rho)
     *bufp++ = '\0';
     bufp = buffer;
     while (isspace(*bufp)) bufp++;
-    first = LENGTH(CAR(args))+1;
+    first = LENGTH(CAR(args)) + 1;
     if (isdigit(*bufp)) {
 	first = strtod(buffer, NULL);
     }
@@ -954,7 +947,7 @@ SEXP do_menu(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    }
 	}
     }
-    ans = allocVector(INTSXP,1);
+    ans = allocVector(INTSXP, 1);
     INTEGER(ans)[0] = first;
     return ans;
 }

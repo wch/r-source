@@ -1002,10 +1002,17 @@ static SEXP cbind(SEXP call, SEXP args, SEXPTYPE mode)
 	    dims = getAttrib(CAR(t), R_DimSymbol);
 	    if (length(dims) == 2) {
 		dn = getAttrib(CAR(t), R_DimNamesSymbol);
+#ifdef NEWLIST
+		if (VECTOR(dn)[1] != R_NilValue)
+		    have_cnames = 1;
+		if (VECTOR(dn)[0] != R_NilValue)
+		    mrnames = mrows;
+#else
 		if (CADR(dn) != R_NilValue)
 		    have_cnames = 1;
 		if (CAR(dn) != R_NilValue)
 		    mrnames = mrows;
+#endif
 	    }
 	    else {
 		k = length(CAR(t));
@@ -1183,10 +1190,17 @@ static SEXP rbind(SEXP call, SEXP args, SEXPTYPE mode)
 	    dims = getAttrib(CAR(t), R_DimSymbol);
 	    if (length(dims) == 2) {
 		dn = getAttrib(CAR(t), R_DimNamesSymbol);
+#ifdef NEWLIST
+		if (VECTOR(dn)[0] != R_NilValue)
+		    have_rnames = 1;
+		if (VECTOR(dn)[1] != R_NilValue)
+		    mcnames = mcols;
+#else
 		if (CAR(dn) != R_NilValue)
 		    have_rnames = 1;
 		if (CADR(dn) != R_NilValue)
 		    mcnames = mcols;
+#endif
 	    }
 	    else {
 		k = length(CAR(t));

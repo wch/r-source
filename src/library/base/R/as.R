@@ -51,22 +51,8 @@ as.null.default <- function(x) NULL
 as.function <- function(x,...) UseMethod("as.function")
 "as.function.default" <-
 function (l, envir = sys.frame(sys.parent())) 
-{
-  if (!is.list(l)) 
-    stop("Can't coerce object to function")
-  ln <- length(l)
-  alist <- l[-ln]
-  body <- l[[ln]]
-  if (is.expression(body)) 
-    body <- body[[1]]
-  if (ln < 2) 
-    e <- substitute(function() body)
-  else {
-    e <- substitute(function(x) body)
-    e[[2]] <- alist
-  }
-  eval(e, envir)
-}
+.Internal(as.function.default(l, envir))
+
 as.array <- function(x)
 {
 	if( is.array(x) )

@@ -213,6 +213,9 @@ SEXP do_usemethod(SEXP call, SEXP op, SEXP args, SEXP env)
 
     nargs = length(args);
 
+if (nargs < 0)
+    errorcall(call, "corrupt internals!\n");
+
     if (nargs)
 	PROTECT(meth = eval(CAR(args), env));
     else

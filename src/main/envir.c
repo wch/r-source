@@ -276,14 +276,22 @@ SEXP do_globalenv(SEXP call, SEXP op, SEXP args, SEXP rho)
 /* components of the list in as the values of this env */
 /* and intall the tags from the list as the names. */
 
+SEXP VectorToPairList(SEXP);
+
 SEXP do_attach(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP name, s, t, x;
     int pos;
     checkArity(op, args);
 
-    if (!isList(CAR(args)))
+#ifdef NEWLIST
+    if (!isNewList(CAR(args)))
 	error("attach only works for lists and data frames\n");
+    CAR(args) = VectorToPairList(CAR(args));
+#else
+    if (!isNewList(CAR(args)))
+	error("attach only works for lists and data frames\n");
+#endif
 
     pos = asInteger(CADR(args));
     if (pos == NA_INTEGER)
@@ -421,20 +429,51 @@ SEXP do_builtins(SEXP call, SEXP op, SEXP args, SEXP rho)
 SEXP do_ls(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP ans, env, envp, s;
-    int all, i, k;
+    int all, i, j, k, n;
 
     checkArity(op, args);
 
-    env = CAR(args);
+    envp = CAR(args);
+#ifdef NEWLIST
+    if (isNull(envp) || !isNewList(envp)) {
+	PROTECT(env = allocVector(VECSXP, 1));
+	VECTOR(env)[0] = envp;
+    }
+    else
+	PROTECT(env = envp);
+#else
     if (isNull(env) || !isList(env))
 	PROTECT(env = CONS(env, R_NilValue));
     else
 	PROTECT(env);
+#endif
     all = asLogical(CADR(args));
     if(all == NA_LOGICAL)
 	all = 0;
     /* Step 1 : Compute the Vector Size */
     k = 0;
+#ifdef NEWLIST
+    n = length(env);
+    for (i = 0; i < n; i++) {
+	if (VECTOR(env)[i] == R_NilValue) {
+	    for (j = 0; j < HSIZE; j++) {
+		for (s = R_SymbolTable[j] ; s != R_NilValue ; s = CDR(s)) {
+		    if (SYMVALUE(CAR(s)) != R_UnboundValue)
+			k++;
+		}
+	    }
+	}
+	else if (isEnvironment(VECTOR(env)[i])) {
+	    s = FRAME(VECTOR(env)[i]);
+	    while (s != R_NilValue) {
+		if (all || CHAR(PRINTNAME(TAG(s)))[0] != '.')
+		    k += 1;
+		s = CDR(s);
+	    }
+	}
+	else error("invalid envir= argument\n");
+    }
+#else
     for (envp = env ; envp != R_NilValue ; envp = CDR(envp)) {
 	if (CAR(envp) == R_NilValue) {
 	    for (i = 0; i < HSIZE; i++) {
@@ -454,9 +493,31 @@ SEXP do_ls(SEXP call, SEXP op, SEXP args, SEXP rho)
 	}
 	else error("invalid envir= argument\n");
     }
+#endif
     /* Step 2 : Allocate and Fill the Result */
     ans = allocVector(STRSXP, k);
     k = 0;
+#ifdef NEWLIST
+    for (i = 0; i < n; i++) {
+	if (VECTOR(env)[i] == R_NilValue) {
+	    for (j = 0 ; j < HSIZE ; j++) {
+		for (s = R_SymbolTable[j] ; s != R_NilValue ; s = CDR(s)) {
+		    if (SYMVALUE(CAR(s)) != R_UnboundValue)
+			STRING(ans)[k++] = PRINTNAME(CAR(s));
+		}
+	    }
+	}
+	else if (isEnvironment(VECTOR(env)[i])) {
+	    s = FRAME(VECTOR(env)[i]);
+	    while (s != R_NilValue) {
+		if (all || CHAR(PRINTNAME(TAG(s)))[0] != '.') {
+		    STRING(ans)[k++] = PRINTNAME(TAG(s));
+		}
+		s = CDR(s);
+	    }
+	}
+    }
+#else
     for (envp = env ; envp != R_NilValue ; envp = CDR(envp)) {
 	if (CAR(envp) == R_NilValue) {
 	    for (i = 0 ; i < HSIZE ; i++) {
@@ -476,6 +537,7 @@ SEXP do_ls(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    }
 	}
     }
+#endif
     UNPROTECT(1);
     sortVector(ans);
     return ans;

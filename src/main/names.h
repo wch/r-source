@@ -59,6 +59,7 @@ SEXP do_arith(SEXP, SEXP, SEXP, SEXP);
 SEXP do_arrows(SEXP, SEXP, SEXP, SEXP);
 SEXP do_as(SEXP, SEXP, SEXP, SEXP);
 SEXP do_ascall(SEXP, SEXP, SEXP, SEXP);
+SEXP do_asfunction(SEXP, SEXP, SEXP, SEXP);
 SEXP do_asmatrixdf(SEXP, SEXP, SEXP, SEXP);
 SEXP do_assign(SEXP, SEXP, SEXP, SEXP);
 SEXP do_asvector(SEXP, SEXP, SEXP, SEXP); 

@@ -283,6 +283,7 @@ void Rprintf(char *format, ...)
 	va_start(ap, format);
 	if(R_Outputfile) {
 		vfprintf(R_Outputfile, format, ap);
+		fflush(R_Outputfile);
 	}
 	else {
 		char buf[BUFSIZE]; int len;
@@ -313,6 +314,7 @@ void Rvprintf(const char *format, va_list arg)
 {
 	if(R_Outputfile) {
 		vfprintf(R_Outputfile, format, arg);
+		fflush(R_Outputfile);
 	}
 	else {
 		char buf[BUFSIZE]; int slen;

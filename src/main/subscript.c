@@ -348,10 +348,14 @@ SEXP arraySubscript(int dim, SEXP s, SEXP x)
 	dnames = getAttrib(x, R_DimNamesSymbol);
 	if (dnames == R_NilValue)
 	    error("no dimnames attribute for array\n");
+#ifdef NEWLIST
+	dnames = VECTOR(dnames)[dim];
+#else
 	for (i = 0; i < dim; i++)
 	    dnames = CDR(dnames);
 	dnames = CAR(dnames);
-	return stringSubscript(s, ns, dim, dnames, &stretch);
+#endif
+	return stringSubscript(s, ns, nd, dnames, &stretch);
     case SYMSXP:
 	if (s == R_MissingArg)
 	    return nullSubscript(nd);

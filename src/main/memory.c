@@ -53,6 +53,7 @@
 #include "Graphics.h"
 
 static int gc_reporting = 0;
+static int gc_count = 0;
 
 void installIntVector(SEXP, int, FILE *);
 
@@ -370,6 +371,7 @@ void gc(void)
 {
     sigset_t mask, omask;
     int vcells, vfrac;
+    gc_count++;
     if (gc_reporting)
 	REprintf("Garbage collection ...");
     sigemptyset(&mask);

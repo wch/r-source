@@ -174,9 +174,14 @@ function(formula, data = NULL, subset=NULL, na.action = na.fail,
 		data <- sys.frame(sys.parent())
 	if(!inherits(formula, "terms"))
 		formula <- terms(formula, data = data)
-        subset<-eval(substitute(subset),data)
-	data <- .Internal(model.frame(formula, data, substitute(list(...)),
-		subset, na.action))
+	rownames <- attr(data, "row.names")
+        varnames <- as.character(attr(formula, "variables")[-1])
+	variables <- eval(attr(formula, "variables"), data)
+	print(extranames <- as.character(substitute(list(...))[-1]))
+        print(extras <- list(...))
+        subset <- eval(substitute(subset), data)
+	data <- .Internal(model.frame(formula, rownames, variables, varnames,
+		extras, extranames, subset, na.action))
   # fix up the levels
   if(length(xlev) > 0) {
     for(nm in names(xlev))

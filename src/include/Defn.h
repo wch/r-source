@@ -465,6 +465,7 @@ SEXP append(SEXP, SEXP);
 SEXP applyClosure(SEXP, SEXP, SEXP, SEXP, SEXP);
 SEXP applyRelOp(int, int, int);
 SEXP asChar(SEXP);
+complex asComplex(SEXP);
 int asInteger(SEXP);
 int asLogical(SEXP);
 double asReal(SEXP);

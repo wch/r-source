@@ -951,8 +951,8 @@ void WrongArgCount(char *s)
 /* Evaluate the first argument in the environment specified by */
 /* the second argument. */
 
-SEXP OldToNewList(SEXP);
-SEXP NewToOldList(SEXP);
+SEXP PairToVectorList(SEXP);
+SEXP VectorToPairList(SEXP);
 
 SEXP do_eval(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
@@ -973,7 +973,7 @@ SEXP do_eval(SEXP call, SEXP op, SEXP args, SEXP rho)
 	break;
     case VECSXP:
 	PROTECT(env = allocSExp(ENVSXP));
-	FRAME(env) = NewToOldList(CADR(args));
+	FRAME(env) = VectorToPairList(CADR(args));
 	ENCLOS(env) = R_GlobalEnv;
 	break;
 	break;
