@@ -53,6 +53,10 @@ NEW FEATURES
     o   Started work on new package management system:
         package.status() and friends.
 
+    o   A package `methods' has been added, containing formal classes
+        and methods ("S4" methods).  In support of this, the "@"
+        operator has been added to the grammar.
+
 
 
 BUG FIXES
