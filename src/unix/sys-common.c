@@ -115,54 +115,14 @@ void set_workspace_name(char *fn)
 
 void R_RestoreGlobalEnv(void)
 {
-    FILE *fp;
-    SEXP img, lst;
-    int i;
-
     if(RestoreAction == SA_RESTORE) {
-	if(!(fp = R_fopen(workspace_name, "rb"))) { /* binary file */
-	    /* warning here perhaps */
-	    return;
-	}
-#ifdef OLD
-	FRAME(R_GlobalEnv) = R_LoadFromFile(fp, 1);
-#else
-	PROTECT(img = R_LoadFromFile(fp, 1));
-	switch (TYPEOF(img)) {
-	case LISTSXP:
-	    while (img != R_NilValue) {
-		defineVar(TAG(img), CAR(img), R_GlobalEnv);
-		img = CDR(img);
-	    }
-	    break;
-	case VECSXP:
-	    for (i = 0; i < LENGTH(img); i++) {
-		lst = VECTOR_ELT(img, i);
-		while (lst != R_NilValue) {
-		    defineVar(TAG(lst), CAR(lst), R_GlobalEnv);
-		    lst = CDR(lst);
-		}
-	    }
-	    break;
-	}
-        UNPROTECT(1);
-#endif
-	if(!R_Quiet)
-	    Rprintf("[Previously saved workspace restored]\n\n");
-        fclose(fp);
+	R_RestoreGlobalEnvFromFile(workspace_name, R_Quiet);
     }
 }
 
 void R_SaveGlobalEnv(void)
 {
-    FILE *fp = R_fopen(".RData", "wb"); /* binary file */
-    if (!fp)
-	error("can't save data -- unable to open ./.RData");
-    if (HASHTAB(R_GlobalEnv) != R_NilValue)
-	R_SaveToFile(HASHTAB(R_GlobalEnv), fp, 0);
-    else
-	R_SaveToFile(FRAME(R_GlobalEnv), fp, 0);
-    fclose(fp);
+    R_SaveGlobalEnvToFile(".RData");
 }
 
 /*
