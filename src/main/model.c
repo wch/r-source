@@ -1745,10 +1745,14 @@ SEXP do_modelmatrix(SEXP call, SEXP op, SEXP args, SEXP rho)
     PROTECT(assign = allocVector(INTSXP, nc));
     k = 0;
     if (intrcept) INTEGER(assign)[k++] = 0;
-    for (j = 0; j < nterms; j++)
+    for (j = 0; j < nterms; j++) {
+	if(INTEGER(count)[j] <= 0)
+	    warning("problem with term %d in model.matrix: no columns are assigned", 
+		      j+1);
 	for (i = 0; i < INTEGER(count)[j]; i++)
 	    INTEGER(assign)[k++] = j+1;
-
+    }
+    
 
     /* Create column labels for the matrix columns. */
 
