@@ -33,6 +33,9 @@ use our tool set, and make sure it is at the front of your path
 (including before the Windows system directories).  If you are using a
 Windows shell, type PATH at the prompt to find out.
 
+iconv.dll from http://www.murdoch-sutherland.com/Rtools/iconv.dll.
+Put this in R_HOME/bin at the end of the build.
+
 
 You need a recent version of the Mingw port of gcc from
 http://sourceforge.net/projects/mingw/.  There will be a distribution

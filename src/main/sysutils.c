@@ -286,12 +286,35 @@ SEXP do_putenv(SEXP call, SEXP op, SEXP args, SEXP env)
 #endif
 }
 
-/* Unfortunately glibc and Solaris diff in the const in the iopen decl */
+/* Unfortunately glibc and Solaris diff in the const in the iopen decl.
+   libiconv agrees with Solaris here.
+ */
 #ifdef HAVE_ICONV
 #define const
 #include <iconv.h>
 #undef const
 #endif
+
+static unsigned int cnt;
+
+static int 
+count_one (unsigned int namescount, const char * const *names, void *data)
+{
+    cnt += namescount;
+    return 0;
+}
+
+static int 
+write_one (unsigned int namescount, const char * const *names, void *data)
+{
+  unsigned int i;
+  SEXP ans = (SEXP) data;
+  
+  for (i = 0; i < namescount; i++)
+      SET_STRING_ELT(ans, cnt++, mkChar(names[i]));
+  return 0;
+}
+
 
 /* FIXME: remove line limit */
 #define BUFSIZE 1001
@@ -299,7 +322,7 @@ SEXP do_putenv(SEXP call, SEXP op, SEXP args, SEXP env)
 SEXP do_iconv(SEXP call, SEXP op, SEXP args, SEXP env)
 {
 #ifdef HAVE_ICONV
-    SEXP ans, x;
+    SEXP ans, x = CAR(args);
     iconv_t obj;
     int i;
     char *inbuf; /* Solaris headers have const char*  here */
@@ -307,28 +330,44 @@ SEXP do_iconv(SEXP call, SEXP op, SEXP args, SEXP env)
     size_t inb, outb, res;
     
     checkArity(op, args);
-    if(TYPEOF(x = CAR(args)) != STRSXP)
-	errorcall(call, "'x' must be a character vector");
-    if(!isString(CADR(args)) || length(CADR(args)) != 1)
-	errorcall(call, "invalid 'from' argument");
-    if(!isString(CADDR(args)) || length(CADDR(args)) != 1)
-	errorcall(call, "invalid 'to' argument");
-    obj = iconv_open(CHAR(STRING_ELT(CADDR(args), 0)),
-		     CHAR(STRING_ELT(CADR(args), 0)));
-    if(obj == (iconv_t)(-1))
-	errorcall(call, "unsupported conversion");
-    PROTECT(ans = duplicate(x));
-    for(i = 0; i < LENGTH(x); i++) {
-	inbuf = CHAR(STRING_ELT(x, i)); inb = strlen(inbuf);
-	outbuf = buff; outb = BUFSIZE;
-	res = iconv(obj, &inbuf , &inb, &outbuf, &outb);
-	*outbuf = '\0';
-	if(res != -1 && inb == 0)
-	    SET_STRING_ELT(ans, i, mkChar(buff));
-	else SET_STRING_ELT(ans, i, NA_STRING);
+    if(isNull(x)) {  /* list locales */
+#ifdef HAVE_ICONVLIST
+	cnt = 0;
+	iconvlist(count_one, NULL);
+	PROTECT(ans = allocVector(STRSXP, cnt));
+	cnt = 0;
+	iconvlist(write_one, (void *)ans);
+#else
+    error("`iconvlist' is not available on this system");
+#endif
+    } else {
+	if(TYPEOF(x) != STRSXP)
+	    errorcall(call, "'x' must be a character vector");
+	if(!isString(CADR(args)) || length(CADR(args)) != 1)
+	    errorcall(call, "invalid 'from' argument");
+	if(!isString(CADDR(args)) || length(CADDR(args)) != 1)
+	    errorcall(call, "invalid 'to' argument");
+	obj = iconv_open(CHAR(STRING_ELT(CADDR(args), 0)),
+			 CHAR(STRING_ELT(CADR(args), 0)));
+	if(obj == (iconv_t)(-1))
+	    errorcall(call, "unsupported conversion");
+	PROTECT(ans = duplicate(x));
+	for(i = 0; i < LENGTH(x); i++) {
+	    inbuf = CHAR(STRING_ELT(x, i)); inb = strlen(inbuf);
+	    outbuf = buff; outb = BUFSIZE;
+	    /* First initialize output */
+	    iconv (obj, NULL, NULL, &outbuf, &outb);
+	    /* Then convert input 
+	       <FIXME> check error conditions */
+	    res = iconv(obj, &inbuf , &inb, &outbuf, &outb);
+	    *outbuf = '\0';
+	    if(res != -1 && inb == 0)
+		SET_STRING_ELT(ans, i, mkChar(buff));
+	    else SET_STRING_ELT(ans, i, NA_STRING);
+	}
+	iconv_close(obj);
     }
     UNPROTECT(1);
-    iconv_close(obj);
     return ans;
 #else
     error("`iconv' is not available on this system");

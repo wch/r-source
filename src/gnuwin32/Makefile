@@ -47,7 +47,7 @@ R-DLLFLAGS = -mwindows
 endif
 
 ## only need -lmsvcp60 if we use SUPPORT_UTF8
-R-DLLLIBS =-L. $(LIBUNICOWS) $(FLIBS) -lRblas -lcomctl32 -lversion -lmsvcp60
+R-DLLLIBS =-L. $(LIBUNICOWS) $(FLIBS) -lRblas -liconv -lcomctl32 -lversion -lmsvcp60
 dllversion-RESFLAGS =--include-dir ../include
 SOURCES = \
   console.c dataentry.c dynload.c edit.c editor.c extra.c \
@@ -236,6 +236,10 @@ htmldocs:
 	@$(ECHO) "------ Making HTML documentation ------"
 	@$(MAKE) --no-print-directory -C ../../doc/manual -f Makefile.win html BUILD=$(BUILD)
 
+libiconv.a:  iconv.def
+	$(DLLTOOL) $(DLLTOOLFLAGS) $(R-DLLTOOLFLAGS) --dllname iconv.dll \
+	  --def $< --output-lib $@
+
 
 #                          ===== BLAS ======
 
@@ -406,7 +410,7 @@ clean: cleanwin $(PKGCLEAN)
 
 distclean veryclean: clean clean-recommended
 	$(RM) -r ../../bin ../../include ../../lib ../../library ../../modules
-	$(RM) ../include/config.h ../include/psignal.h \
+	$(RM) ../include/config.h ../include/iconv.h ../include/psignal.h \
 	../include/Rconfig.h ../include/Rversion.h ../include/Rmath.h
 	$(RM) ../library/*/src/*.o ../library/*/src/*.a
 	$(RM) ../library/*/src/*.d ../library/*/src/Makedeps

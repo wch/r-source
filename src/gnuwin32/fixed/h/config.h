@@ -168,7 +168,10 @@
 #define HAVE_HYPOT 1
 
 /* Define to 1 if you have the `iconv' function. */
-/* #undef HAVE_ICONV */
+#define HAVE_ICONV 1
+
+/* Define to 1 if you have the `iconvlist' function. */
+#define HAVE_ICONVLIST 1
 
 /* Define to 1 if you have the <iconv.h> header file. */
 /* #undef HAVE_ICONV_H */
