@@ -132,8 +132,8 @@ SEXP do_paste(SEXP call, SEXP op, SEXP args, SEXP env)
 
 SEXP do_format(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-	SEXP l, nastring, x, y;
-	int i, n, nl, trim;
+	SEXP l, x, y;
+	int i, n, trim;
 	int w, d, e;
 	int wi, di, ei;
 	char *strp;
@@ -230,7 +230,7 @@ SEXP do_format(SEXP call, SEXP op, SEXP args, SEXP env)
  */
 SEXP do_formatinfo(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-	SEXP l, x;
+	SEXP x;
 	int n, w, d, e;
 	int wi, di, ei;
 	checkArity(op, args);

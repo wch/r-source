@@ -226,7 +226,7 @@ static void printComplexMatrix(SEXP sx, int offset, int r, int c, SEXP rl, SEXP 
 		    Rprintf("%s", EncodeReal(NA_REAL, w[j], 0, 0));
 		else
 #ifdef OLD
-		    Rprintf("%*s%s", PRINT_GAP, "", 
+		    Rprintf("%*s%s", PRINT_GAP, "",
 			EncodeComplex(x[i+j*r], wr[j], dr[j], er[j],
 			    wi[j], dr[j], er[j]));
 #else
@@ -296,7 +296,7 @@ static void printStringMatrix(SEXP sx, int offset, int r, int c, int quote, int 
 
 void printMatrix(SEXP x, int offset, SEXP dim, int quote, int right)
 {
-	SEXP l, dimnames, rl, cl;
+	SEXP dimnames, rl, cl;
 	int r, c;
 
 	r = INTEGER(dim)[0];
@@ -395,6 +395,7 @@ void printArray(SEXP x, int quote)
 	printArrayGeneral(x, getAttrib(x, R_DimSymbol), quote);
 }
 
+/* not used (0.62;  April 23, 1998 -- MM (-Wall)
 static int CountColumns(SEXP x)
 {
 	int k =0;
@@ -404,3 +405,4 @@ static int CountColumns(SEXP x)
 	}
 	return k;
 }
+--*/
