@@ -156,13 +156,6 @@ the top-level page, from which you can access a search engine.
 offline=TRUE).  You will need to customize the file
 @RWVER@\bin\helpPRINT.bat: it contains instructions.
 
-(v) Windows .hlp files.  [Only available if building from sources.]
-Set this as the default by options(winhelp=TRUE) or for individual
-help items by help(topic, winhelp=TRUE).  Full text search is
-available from the Search tab.  The conversion to this format is a
-little rough, and tables may be incomplete.  The help on Hershey and
-Japanese fonts has been omitted.
-
 
 
 Customization
