@@ -281,6 +281,7 @@ datasets-HELP = ziponly
 graphics-HELP = ziponly
 methods-HELP = ziponly
 stats-HELP = ziponly
+stats4-HELP = ziponly
 utils-HELP = ziponly
 stats4-SAVE = true
 
@@ -288,16 +289,15 @@ MASS-HELP = ziponly
 boot-HELP = ziponly
 cluster-HELP = ziponly
 cluster-ZIPDATA = zip
+grDevices-HELP = ziponly
 grid-HELP = ziponly
 lattice-HELP = ziponly
 lattice-ZIPDATA = zip
+mgcv-HELP = ziponly
 nlme-HELP = ziponly
 nlme-ZIPDATA = zip
 rpart-HELP = ziponly
 survival-HELP = ziponly
-
-bundle-%:
-	@+$(PERL) fixed/dobundle.pl $* $(PKGD) $(RLIB)
 
 pkg-%:
 	@$(MAKE) --no-print-directory SAVE=$($*-SAVE) \
@@ -522,29 +522,6 @@ else
 	  $(RHOME)/bin/rcmd.exe INSTALL --unsafe --lazy ../library/$${p} || exit 1; \
 	done
 endif
-recommended1: unpack-recommended
-	@$(ECHO) "--- Making recommended packages"
-	@for p in $(R_PKGS_RECOMMENDED_SOURCES); do \
-          Rdev CMD perl XINSTALL --unsafe --lazy --docs=normal ../library/$${p} || exit 1; \
-        done
-
-
-# this is really tricky for a bundle.
-# also note that as we are not using Rcmd INSTALL we do not get info
-# on LazyLoad / LazyData from the DESCRIPTION files.
-R_PKGS_RECOMMENDED_LAZYDATA = boot rpart survival
-recommended0: unpack-recommended
-	@$(ECHO) "--- Making recommended packages"
-	@$(MAKE) --no-print-directory bundle-VR
-	@$(MAKE) --no-print-directory PKGDIR=../library/VR lazyload-MASS \
-	  lazyload-class lazyload-nnet lazyload-spatial \
-	lazydata-MASS lazydata-spatial
-	@for p in $(filter-out VR, $(R_PKGS_RECOMMENDED_SOURCES)); do \
-	  $(MAKE) --no-print-directory pkg-$$p lazyload-$$p || exit 1; \
-	done
-	@for p in $(R_PKGS_RECOMMENDED_LAZYDATA); do \
-	  $(MAKE) --no-print-directory lazydata-$$p || exit 1; \
-	done
 
 rinstaller:
 	$(MAKE) -C installer
@@ -563,7 +540,7 @@ crandir:
 	 $(ECHO) 'fn <- dir(pattern="mini*"); cat(paste(md5sum(fn)," *",fn,sep=""),sep="\n")' \
 	 | $(RHOME)/bin/rterm --vanilla --slave R_DEFAULT_PACKAGES=tools >md5sum.txt)
 	$(SED) -e s/@RWVER@/$(RPREFIX)/g \
-	  -e s/@RVER@/$(RVER)/g readme > cran/README.$(RPREFIX)
+	  -e s/@RVER@/$(RVER)/g README > cran/README.$(RPREFIX)
 	$(SED) -e s/@RWVER@/$(RPREFIX)/g \
 	  -e s/@RVER@/$(RVER)/g cran/ReadMe.in > cran/ReadMe	  
 	$(SED) -e s/@RWVER@/$(RPREFIX)/g \

@@ -138,7 +138,7 @@ Name: "manuals"; Description: "On-line (PDF) Manuals"; Types: custom
 END
 
 my %develfiles=("doc\\html\\logo.jpg" => 1,
-		"readme.packages" => 1,
+		"README.packages" => 1,
 		"COPYING.LIB" => 1,
 		"bin\\INSTALL" => 1,
 		"bin\\REMOVE" => 1,

@@ -208,7 +208,7 @@ and checked by
 
 If you are using a cvs/rsync version of the R sources, you need to put
 the .tar.gz files for the recommended packages in
-../library/Recommended, and copy foo_*.tar.gz to foo.tgz.  If you have
+../library/Recommended, and run `make link-recommended'.  If you have
 rsync installed,
 
 	make rsync-recommended
@@ -311,7 +311,7 @@ You also need a working copy of *this version* of R on Linux: set
 R_EXE in MkRules to point to it.
 
 Packages can be made in the same way as natively: see the file
-readme.packages.
+README.packages.
 
 (It is possible to cross-build the main installers using WINE, which
 we leave as an exercise for the reader.)

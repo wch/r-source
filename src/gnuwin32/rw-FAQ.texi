@@ -582,7 +582,7 @@ gives the locations of a few other precompiled packages.
 If there is not a pre-compiled version or that is not up-to-date or
 you prefer compiling from source, make sure you installed the
 necessary files from @code{@RWVER@.exe}.  Then read the file
-@file{readme.packages}.  You will need to collect and install several
+@file{README.packages}.  You will need to collect and install several
 tools to use this: you can download them via the portal at
 @uref{http://www.murdoch-sutherland.com/Rtools/}.  Once you have done so,
 just run @code{R CMD INSTALL pkgname}.  To check the package (including
@@ -1006,7 +1006,7 @@ We strongly encourage you to do this @emph{via} building an R package:
 see the @emph{`Writing R Extensions'} manual.  In any event you should
 install the parts of the R system for building R packages (in
 @code{@RWVER@.exe}), and get and install the tools (including Perl) and
-compilers mentioned in the file @file{readme.packages} contained
+compilers mentioned in the file @file{README.packages} contained
 therein.  Then you can use
 @example
 ...\bin\R CMD SHLIB foo.c bar.f
@@ -1016,7 +1016,7 @@ to make @code{foo.dll}.  Use @code{...\bin\R CMD SHLIB --help} for
 further options, or see @code{?SHLIB}.
 
 If you want to use Visual C++, Borland C++ or other compilers, see the
-appropriate section in @file{readme.packages}.
+appropriate section in @file{README.packages}.
 
 
 

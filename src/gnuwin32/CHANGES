@@ -53,6 +53,10 @@ Building a complete distribution has an extra step, as the grid
 vignettes depend on lattice (and so were incomplete in R 1.9.x on both
 Unix and Windows).
 
+The manual way of building packages is now deprecated, and it is no
+longer possible to use it to build bundles (which was never documented).
+Cross-building of packages is now done by the XINSTALL script.
+
 
 
 rw1091

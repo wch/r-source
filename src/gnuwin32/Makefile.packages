@@ -12,10 +12,13 @@ WINHELP = NO # Use one of NO, CHM
 ifneq ($(strip $(BUILD)),CROSS)
 RHOME = $(shell ./Rpwd.exe ../..)
 PKGD = $(shell ./Rpwd.exe "$(PKGDIR)")
+R_EXE = $(RHOME)/bin/rterm.exe
 else
 RHOME = $(shell perl pwd.pl ../..)
 PKGD = $(shell perl pwd.pl $(PKGDIR))
 endif
+
+REXE = $(R_EXE) --vanilla --slave
 
 RLIB = $(RHOME)/library
 PKGDIR = $(RHOME)/src/library
@@ -34,33 +37,22 @@ libRblas.a:  Rblas.def
 #                          ===== Packages ======
 
 MASS-HELP = ziponly
-MASS-ZIPDATA = zip
 boot-HELP = ziponly
-boot-ZIPDATA = zip
 cluster-HELP = ziponly
 cluster-ZIPDATA = zip
 grid-HELP = ziponly
-grid-ZIPDATA = zip
 lattice-HELP = ziponly
 lattice-ZIPDATA = zip
 nlme-HELP = ziponly
 nlme-ZIPDATA = zip
 rpart-HELP = ziponly
-rpart-ZIPDATA = zip
 survival-HELP = ziponly
-survival-ZIPDATA = zip
-
-# need special-case handling for bundle, as --auto-zip is not enabled
-dse1-HELP = ziponly
-dse2-HELP = ziponly
-
-bundle-%:
-	@+$(PERL) fixed/dobundle.pl $* $(PKGD) $(RLIB)
 
 pkg-%:
-	@$(MAKE) --no-print-directory DLLNM=$($*-DLLNM)  FLIBS="$(FLIBS)" BUILD=$(BUILD) \
-	  -C $(PKGD)/$* PKG=$* RHOME=$(RHOME) RLIB=$(RLIB) RVER=$(RVER) \
-	  -f $(RHOME)/src/gnuwin32/MakePkg
+	@$(MAKE) --no-print-directory \
+          DLLNM=$($*-DLLNM) FLIBS="$(FLIBS)" BUILD=$(BUILD) \
+	  PKG=$* RHOME=$(RHOME) RLIB=$(RLIB) RVER=$(RVER) \
+	  -C $(PKGD)/$* -f $(RHOME)/src/gnuwin32/MakePkg
 	@if test -d $(RLIB)/$*/data ; then \
 	  $(MAKE) --no-print-directory $($*-ZIPDATA)data-$* ; \
 	fi
@@ -93,10 +85,16 @@ pkgcheck-%:
 	-@$(MKDIR) -p $(PKGDIR)/$*/check
 	@$(MAKE) --no-print-directory -C $(PKGDIR)/$*/check PKG=$* RHOME=$(RHOME) RLIB=$(RLIB) \
 	  -f $(RHOME)/src/gnuwin32/check/PkgCheck
-	@if test -d $(PKGDIR)/$*/tests ; then \
-	  $(MAKE) --no-print-directory -C $(PKGDIR)/$*/tests PKG=$* RHOME=$(RHOME) RLIB=$(RLIB) \
+	@if test -d $(PKGD)/$*/tests ; then \
+	  $(MAKE) --no-print-directory -C $(PKGD)/$*/tests PKG=$* RHOME=$(RHOME) RLIB=$(RLIB) \
 	    -f $(RHOME)/src/gnuwin32/check/PkgCheck tests;\
 	fi
+
+lazyload-%:
+	@$(MAKE) --no-print-directory PKG=$* RHOME=$(RHOME) RLIB=$(RLIB) BUILD=$(BUILD) -C $(PKGD)/$* SPKG=$(PKGD)/$* -f $(RHOME)/src/gnuwin32/MakePkg lazyload
+
+lazydata-%:
+	@$(MAKE) --no-print-directory PKG=$* RHOME=$(RHOME) RLIB=$(RLIB) BUILD=$(BUILD) -f $(RHOME)/src/gnuwin32/MakePkg lazydata
 
 ziphelp-%:
 	$(MAKE) --no-print-directory -C ./help RHOME=$(RHOME) PKGDIR=$(PKGD) RLIB=$(RLIB) DPKG=$(DPKG) ziphelp-$*
@@ -104,15 +102,18 @@ ziphelp-%:
 ziponly-%:
 	$(MAKE) --no-print-directory -C ./help RHOME=$(RHOME) PKGDIR=$(PKGD) RLIB=$(RLIB) DPKG=$(DPKG) ziponlyhelp-$*
 
+## must be careful not to zip up a dir setup for lazy-data
 zipdata-%:
-	@$(ECHO) "  zipping data"
-	@(cd $(RLIB)/$*/data; \
-	  if test -f Rdata.zip ; then \
-	    unzip -qou Rdata; \
-	  fi; \
-	  $(RM) Rdata.zip filelist ; \
-	  ls -1 > filelist; \
-	  zip -rmq9X Rdata * -x filelist 00Index)
+	@if ! test -f ../../library/$*/data/Rdata.rdb ; then \
+	  $(ECHO) "  zipping data" ; \
+	  (cd $(RLIB)/$*/data; \
+	    if test -f Rdata.zip ; then \
+	      unzip -qou Rdata; \
+	    fi; \
+	    $(RM) Rdata.zip filelist ; \
+	    ls -1 > filelist; \
+	    zip -rmq9X Rdata * -x filelist 00Index) ;\
+	fi
 
 data-%:
 	@$(ECHO) "  not zipping data"
