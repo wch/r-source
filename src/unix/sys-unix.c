@@ -19,10 +19,10 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-         /* See system.txt for a description of functions */
+/* See system.txt for a description of functions */
 
 #ifdef HAVE_CONFIG_H
-#include <config.h>
+# include <config.h>
 #endif
 
 #include "Defn.h"
@@ -31,16 +31,16 @@
 
 /* HP-UX headers need this before CLK_TCK */
 #ifdef HAVE_UNISTD_H
-#include <unistd.h>
+# include <unistd.h>
 #endif
 
 #ifdef HAVE_LIBREADLINE
-#ifdef HAVE_READLINE_READLINE_H
-#include <readline/readline.h>
-#endif
-#ifdef HAVE_READLINE_HISTORY_H
-#include <readline/history.h>
-#endif
+# ifdef HAVE_READLINE_READLINE_H
+#  include <readline/readline.h>
+# endif
+# ifdef HAVE_READLINE_HISTORY_H
+#  include <readline/history.h>
+# endif
 #endif
 
 extern Rboolean LoadInitFile;
@@ -217,11 +217,12 @@ SEXP do_system(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
 }
 
-static char * Runix_tmpnam(char * prefix)
+char * Runix_tmpnam(char * prefix)
 {
     char *tmp, tm[PATH_MAX], tmp1[PATH_MAX], *res;
     unsigned int n, done = 0, pid;
 
+    if(!prefix) prefix = "";	/* NULL */
     tmp = getenv("TMP");
     if (!tmp) tmp = getenv("TEMP");
     if(tmp) strcpy(tmp1, tmp);
@@ -229,8 +230,8 @@ static char * Runix_tmpnam(char * prefix)
     pid = (unsigned int) getpid();
     for (n = 0; n < 100; n++) {
 	/* try a random number at the end */
-        sprintf(tm, "%s/%sR%xS%x", tmp1, prefix, pid, rand());
-        if (!R_FileExists(tm)) { done = 1; break; }
+	sprintf(tm, "%s/%sR%xS%x", tmp1, prefix, pid, rand());
+        if(!R_FileExists(tm)) { done = 1; break; }
     }
     if(!done)
 	error("cannot find unused tempfile name");

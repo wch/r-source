@@ -19,7 +19,7 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#include <config.h>
+# include <config.h>
 #endif
 
 #include "Defn.h"
@@ -27,13 +27,16 @@
 #include "Fileio.h"
 #include "IOStuff.h"
 #include "Parse.h"
+
+#include "Runix.h"
+
 #include <stdio.h>
 #ifdef Win32
-#  include "run.h"
+# include "run.h"
 #endif
 
 #ifdef HAVE_UNISTD_H
-#  include <unistd.h>  /* for unlink() */
+# include <unistd.h>		/* for unlink() */
 #endif
 
 /*
@@ -62,7 +65,7 @@ void InitEd()
     char * Rwin32_tmpnam(char *);
     DefaultFileName = Rwin32_tmpnam("Redit");
 #else
-    DefaultFileName = tmpnam(NULL);
+    DefaultFileName = Runix_tmpnam(NULL);
 #endif
 }
 
