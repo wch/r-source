@@ -5,7 +5,9 @@
 	*						 *
 	**************************************************
 
+
 		CHANGES IN R VERSION 1.0.1
+
 
 BUG FIXES
 
@@ -73,7 +75,7 @@ BUG FIXES
 
     o	ts.union(, dframe=TRUE) had a long-standing typo, now works.
 
-    o	save(,ascii=TRUE) had problem with octal escapes in strings
+    o	save(, ascii=TRUE) had problem with octal escapes in strings
 	when there was a digit following, should work now.
 
     o	matpoints() and matlines() now also have a "type =" argument
@@ -88,6 +90,9 @@ BUG FIXES
 
 	It was not documented in the help that to change the X11 
 	colortype one needs to close all open X11 devices.
+
+    o	loessf.f in modreg defined DSIGN unecessarily and this caused
+	a conflict on AIX.
 
 
 	*********************************************************
