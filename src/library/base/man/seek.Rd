@@ -31,7 +31,7 @@ isSeekable(con)
   specified position. \code{isSeekable} returns whether the connection
   in principle supports \code{seek}: currently only (possibly
   compressed) file connections do.
-  #ifdef windows
+#ifdef windows
   The value returned by \code{seek(where=NA)} appears to be unreliable
   on Windows systems, at least for text files.  Clipboard connections
   can seek too.
