@@ -25,10 +25,12 @@ showDefault <-
             show(dataPart)
             slots <- slots[is.na(match(slots, ".Data"))]
         }
-        for(what in slotNames(cl)) {
+        if(length(slots) == 0)
+            show(unclass(object))
+        else for(what in slots) {
             if(identical(what, ".Data"))
                 next ## should have been done above
-            cat(file = con, "Slot ",what, ":\n", sep="")
+            cat(file = con, "Slot \"",what, "\":\n", sep="")
             print(slot(object, what))
             cat(file = con, "\n")
         }
