@@ -30,6 +30,9 @@
 #  include <ieeefp.h>		/* others [Solaris 2.5.x], .. */
 # endif
 #endif
+#if defined(Win32) && defined( _MSC_VER)
+#include <float.h>
+#endif 
 
 #include <math.h>
 #ifdef Macintosh
