@@ -1,0 +1,95 @@
+#! @PERL@
+### $Id: lib2tex.in,v 1.1 1998/05/22 16:23:53 bates Exp $
+
+## Create a single pkg-pkgname.tex file from the Latex subdirectories
+## Copyright (C) 1998 Douglas M. Bates <bates@stat.wisc.edu>
+
+## This file is free software; you can redistribute it and/or modify
+## it under the terms of the GNU General Public License as published by
+## the Free Software Foundation; either version 2, or (at your option)
+## any later version.
+
+## This file is distributed in the hope that it will be useful,
+## but WITHOUT ANY WARRANTY; without even the implied warranty of
+## MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+## GNU General Public License for more details.
+
+## A copy of the GNU General Public License is available via WWW at
+## http://www.gnu.org/copyleft/gpl.html.  You can also obtain it by
+## writing to the Free Software Foundation, Inc., 59 Temple Place, 
+## Suite 330, Boston, MA  02111-1307  USA
+
+## Send any bug reports to bates@stat.wisc.edu
+
+use strict;
+use FileHandle;
+use Carp;
+use Getopt::Long;
+
+my $help;
+my $VERSION = 0.62.0;
+
+GetOptions("help|h" => \$help);
+&usage() if $help;
+&usage() if $#ARGV < 0;
+
+my $RLIB;
+if ($ENV{'RLIB'}) {
+    $RLIB = $ENV{'RLIB'};
+} else {
+    $RLIB = "../../library";
+}
+
+my $header = new FileHandle "Pkg-start.tex" or
+    croak "unable to open Pkg-start.tex: $!\n";
+
+my $trailer = new FileHandle "Pkg-end.tex" or
+    croak "unable to open Pkg-end.tex: $!\n";
+
+for (@ARGV) {
+    my $latexDir = $RLIB . "/" . $_ . "/latex/";
+    carp "latex subdirectory for library $_ does not exist!\n", next
+	unless -d $latexDir;
+    my $out = new FileHandle "> pkg-" . $_ . ".tex" or
+	croak "unable to open file pkg-$_.tex: $!\n";
+    &do_header($_, $out);
+    &do_tex_files($latexDir, $out);
+    &do_trailer($out);
+    $out->close;
+}
+
+
+sub do_header {
+    my( $pkgname, $outfile ) = @_;
+    seek( $header, 0, 0);
+    while (<$header>) {
+	s/__PKG__/$pkgname/g;
+	$outfile->print( $_ );
+    }
+    
+}
+
+sub do_tex_files {
+    my( $latexDir, $outfile ) = @_;
+    my $fh = new FileHandle;
+    opendir DIR, $latexDir or
+	croak "can't open directory $latexDir: $!\n";
+    for( sort( grep /\.tex$/, readdir DIR ) ) {
+	$fh->open( $latexDir . $_ ) or croak "unable to open file $_:$!\n";
+	$outfile->print( <$fh> );
+    }
+}
+	
+sub do_trailer {
+    my $outfile = shift;
+    seek( $trailer, 0, 0 );
+    $outfile->print( <$trailer> );
+}
+
+sub usage {
+
+    print "create-pkg-tex version $VERSION\n";
+    print "Usage: create-pkg-tex [--help/-h] file ..." ;
+
+    exit 0;
+}

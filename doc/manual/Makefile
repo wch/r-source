@@ -27,16 +27,16 @@ $(RLIB)/base/latex/%.tex: $(RsrcLIB)/base/man/%.Rd
 
 pkg-base.tex: $(RLIB)/base/latex/*.tex
 	@echo 'Collecting components of  $@ ..'
-	@sed 's/__PKG__/base/g' Pkg-start.tex | cat - $^ Pkg-end.tex > $@
+	./lib2tex base
 pkg-eda.tex: $(RLIB)/eda/latex/*.tex
 	@echo 'Collecting components of  $@ ..'
-	@sed 's/__PKG__/eda/g' Pkg-start.tex | cat - $^ Pkg-end.tex > $@
+	./lib2tex eda
 pkg-mva.tex: $(RLIB)/mva/latex/*.tex
 	@echo 'Collecting components of  $@ ..'
-	@sed 's/__PKG__/mva/g' Pkg-start.tex | cat - $^ Pkg-end.tex > $@
+	./lib2tex mva
 pkg-stepfun.tex: $(RLIB)/stepfun/latex/*.tex
 	@echo 'Collecting components of  $@ ..'
-	@sed 's/__PKG__/stepfun/g' Pkg-start.tex | cat - $^ Pkg-end.tex > $@
+	./lib2tex stepfun
 
 Man.dvi: Man.tex Version.tex Rd.sty $(Packages)
 	@echo 'making latex documentation...'

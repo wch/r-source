@@ -507,11 +507,13 @@ AC_OUTPUT(Makeconf cmd/fwf2table doc/keyword-test etc/INSTALL
   etc/Makeconf etc/REMOVE etc/Rdconv etc/Rdindex etc/Rman2Rd etc/SHLIB
   etc/Sd2Rd etc/build-help etc/help.pretty
   etc/html2dos src/front/R.sh demos/dynload/Makefile
+  doc/manual/lib2tex
 )
 
 AC_OUTPUT_COMMANDS(
 (cd cmd; chmod +x fwf2table)
 (cd doc; chmod +x keyword-test)
+(cd doc/manual; chmod +x lib2tex)
 (cd etc; chmod +x INSTALL REMOVE Rdconv Rdindex Rman2Rd Sd2Rd \
          build-help help.pretty html2dos)
 mkdir -p bin include library src/lib
