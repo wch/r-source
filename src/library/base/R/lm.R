@@ -1,4 +1,4 @@
-plm <-
+lm <-
     function(formula, data = list(), subset, weights, na.action,
 	     method = "qr", model = TRUE, x = FALSE, y = FALSE,
 	     qr = TRUE, singular.ok = TRUE, contrasts = NULL, ...)
