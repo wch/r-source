@@ -1747,6 +1747,7 @@ SEXP allocVector(SEXPTYPE type, int length)
 	    SET_NODE_CLASS(s, LARGE_NODE_CLASS);
 	    R_LargeVallocSize += size;
 	    R_GenHeap[LARGE_NODE_CLASS].AllocCount++;
+	    R_NodesInUse++;
 	    SNAP_NODE(s, R_GenHeap[LARGE_NODE_CLASS].New);
 	}
 	ATTRIB(s) = R_NilValue;
