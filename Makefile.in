@@ -9,13 +9,13 @@ top_builddir = .
 
 include $(top_builddir)/Makeconf
 
-base_src = $(top_builddir)/src/*/*.[chf] $(top_builddir)/src/library/*/R/*.R
+base_src = $(top_srcdir)/src/*/*.[chf] $(top_srcdir)/src/library/*/R/*.R
 
 all: R docs
 
 R: stamp-R
 stamp-R: $(top_builddir)/src/include/Platform.h $(base_src)
-	@for d in afm etc src; do cd $$d; $(MAKE) $@; cd ..; done
+	@for d in afm etc src; do cd $$d; $(MAKE) R; cd ..; done
 	@if [ ! -f src/library/stamp-docs ]; then \
 	  echo "You should \`make docs' now ..."; \
 	fi
