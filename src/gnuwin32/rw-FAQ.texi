@@ -80,7 +80,7 @@ that version.  The main R FAQ can be found at
 @end display
 
 The information here applies only to recent versions of R for Windows,
-(@code{2.0.0} or later); the current version is often called something like
+(@code{2.1.0} or later); the current version is often called something like
 @code{@value{VERSION}} (although not officially).
 
 
@@ -251,7 +251,7 @@ old installation.  Different versions of R are quite deliberately
 installed in parallel folders so you can keep old versions around if you
 wish.
 
-Upgrading from R 1.x.y to R 2.0.0 is special as all the packages
+Upgrading from R 1.x.y to R 2.x.y is special as all the packages
 need to be reinstalled.  Rather than copy them across, make a note of
 their names and re-install them from CRAN.
 
@@ -584,7 +584,7 @@ You can install pre-compiled packages either from CRAN or from a local
 There are menu items on the @code{Packages} menu to provide a
 point-and-click interface to package installation.  The packages for
 each minor (2.x) version will be stored in a separate area, so for R
-2.0.? the files are in @code{bin/windows/contrib/2.0}.  You can try
+2.1.? the files are in @code{bin/windows/contrib/2.1}.  You can try
 those compiled for earlier versions, at your own risk.
 
 Note that the pre-compiled versions on CRAN are unsupported: see
@@ -1216,14 +1216,14 @@ If you want output to be updated on the console, call
 @html
 <hr WIDTH="100%">
 <address>
-Last edited 2004 Sept 7 by Professor B. D. Ripley
+Last edited 2004 Oct 27 by Professor B. D. Ripley
 <code><a href="mailto:ripley@@stats.ox.ac.uk">ripley@@stats.ox.ac.uk</a></code>
 </address>
 @end html
 @end ifhtml
 @ifinfo
 @sp 2
-Last edited 2004 Sept 7 by Professor B. D. Ripley <ripley@@stats.ox.ac.uk>
+Last edited 2004 Oct 27 by Professor B. D. Ripley <ripley@@stats.ox.ac.uk>
 @end ifinfo
 
 @bye
