@@ -13,15 +13,18 @@
 	   "xaxp", "xaxs", "xaxt", "xlog", "xpd",
 	   "yaxp", "yaxs", "yaxt", "ylog"
 	   )
-.Pars.readonly <- c("cin","cra","csi","cxy","din")
+# Replaced with function to evaluate readonly pars because "gamma"
+# is readonly on a per-device basis
+# .Pars.readonly <- c("cin","cra","csi","cxy","din")
 
 par <- function (..., no.readonly = FALSE)
 {
     single <- FALSE
     args <- list(...)
     if (!length(args))
-	args <- as.list(if(no.readonly)
-                        .Pars[-match(.Pars.readonly, .Pars)] else .Pars)
+	args <- as.list(if (no.readonly)
+                        .Pars[-match(.Internal(readonly.pars()), .Pars)]
+        else .Pars)
     else {
 	if (all(unlist(lapply(args, is.character))))
 	    args <- as.list(unlist(args))

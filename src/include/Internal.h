@@ -316,6 +316,7 @@ SEXP do_rank(SEXP, SEXP, SEXP, SEXP);
 SEXP do_readDCF(SEXP, SEXP, SEXP, SEXP);
 SEXP do_readLines(SEXP, SEXP, SEXP, SEXP);
 SEXP do_readln(SEXP, SEXP, SEXP, SEXP);
+SEXP do_readonlypars(SEXP, SEXP, SEXP, SEXP);
 SEXP do_recall(SEXP, SEXP, SEXP, SEXP);
 SEXP do_rect(SEXP, SEXP, SEXP, SEXP);
 SEXP do_regexpr(SEXP, SEXP, SEXP, SEXP);

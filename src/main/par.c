@@ -1570,6 +1570,27 @@ SEXP do_par(SEXP call, SEXP op, SEXP args, SEXP env)
     return value;
 }
 
+SEXP do_readonlypars(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    SEXP result;
+    GEDevDesc *dd = GEcurrentDevice();
+    Rboolean canChangeGamma = dd->dev->canChangeGamma;
+    int nreadonly;
+    if (canChangeGamma) 
+	nreadonly = 5;
+    else 
+	nreadonly = 6;
+    PROTECT(result = allocVector(STRSXP, nreadonly));
+    SET_STRING_ELT(result, 0, mkChar("cin"));
+    SET_STRING_ELT(result, 1, mkChar("cra"));
+    SET_STRING_ELT(result, 2, mkChar("csi"));
+    SET_STRING_ELT(result, 3, mkChar("cxy"));
+    SET_STRING_ELT(result, 4, mkChar("din"));
+    if (!canChangeGamma)
+	SET_STRING_ELT(result, 5, mkChar("gamma"));
+    UNPROTECT(1);
+    return result;
+}
 
 /*
  *  Layout was written by Paul Murrell during 1997-1998 as a partial

@@ -710,6 +710,7 @@ FUNTAB R_FunTab[] =
 {"rect",	do_rect,	0,	111,	6,	PP_FUNCALL},
 {"polygon",	do_polygon,	0,	111,	5,	PP_FUNCALL},
 {"par",		do_par,		0,	11,	1,	PP_FUNCALL},
+{"readonly.pars",do_readonlypars,0,	11,	0,	PP_FUNCALL},   
 {"segments",	do_segments,	0,	111,	6,	PP_FUNCALL},
 {"arrows",	do_arrows,	0,	111,	9,	PP_FUNCALL},
 {"layout",	do_layout,	0,	111,	10,	PP_FUNCALL},
