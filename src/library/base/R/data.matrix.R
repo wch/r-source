@@ -10,6 +10,12 @@ data.matrix <- function(frame)
 
 	if(!all(log|fac|num))
 	    stop("non-numeric data type in frame")
+        cl <- sapply(frame[log|num], function(x) {
+            cl <- class(x)
+            length(cl) > 1 || ! (cl %in% c("numeric", "integer", "logical"))
+        })
+        if(any(cl))
+            warning("class information lost from one or more columns")
     }
     x <- matrix(nr=d[1], nc=d[2], dimnames=dimnames(frame))
     for(i in seq(len=d[2])) {

@@ -15,6 +15,13 @@
   \item{\dots}{further arguments to \code{\link{stripchart}},
     \code{\link{plot.default}} or \code{\link{pairs}}.}
 }
+\details{
+  This is intended for data frames with \emph{numeric} columns, and
+  first calls \code{\link{data.matrix}} to convert the data frame to a
+  numeric matrix.  That may well be inappropriate: for example numerical
+  conversion of dates will lose their special meaning and a warning will
+  be given.
+}
 \seealso{
   \code{\link{data.frame}}
 }
