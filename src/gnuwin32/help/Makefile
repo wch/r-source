@@ -10,13 +10,13 @@ PKGDIR=../../library
 RLIB=$(RHOME)/library
 
 indices:
-	$(PERL) build.help ${DOS} -htmllists
+	PERL5LIB=$(RHOME)/share/perl $(PERL) build.help ${DOS} -htmllists
 
 pkg-% help-%: 
-	$(PERL) build.help ${DOS} -txt -html -example -latex $(PKGDIR)/$* $(RLIB)
+	PERL5LIB=$(RHOME)/share/perl $(PERL) build.help ${DOS} -txt -html -example -latex $(PKGDIR)/$* $(RLIB)
 
 chm-%: 
-	$(PERL) build.help ${DOS} -chm $(PKGDIR)/$* $(RLIB)
+	PERL5LIB=$(RHOME)/share/perl $(PERL) build.help ${DOS} -chm $(PKGDIR)/$* $(RLIB)
 # hhc always gives an error code
 	$(MAKE) -C $(PKGDIR)/$*/chm -f $(RHOME)/src/gnuwin32/help/Makefile $*.chm
 	mkdir -p $(RLIB)/$*/chtml
@@ -32,7 +32,7 @@ contents-%:
 	$(PERL) Rd2contents $(PKGDIR)/$* $(RLIB)/$*/CONTENTS
 	@mkdir -p $(RHOME)/doc/html/search
 	$(CAT) $(RHOME)/library/*/CONTENTS > $(RHOME)/doc/html/search/index.txt
-	$(PERL) build.help ${DOS} -htmllists
+	PERL5LIB=$(RHOME)/share/perl $(PERL) build.help ${DOS} -htmllists
 
 ziphelp-%:
 	$(MAKE) -C $(RLIB)/$* -f $(RHOME)/src/gnuwin32/help/Makefile ZIPFLAGS=jqX  PKG=$* zipit
@@ -54,7 +54,7 @@ clean:
 # to be run from src/library/pkg/chm
 
 HTM = $(filter-out 00Index.html, $(wildcard *.html))
-%.chm: $(HTM) logo.jpg
+%.chm: $(HTM) Rchm.css logo.jpg
 	-hhc $*.hhp
 
 %.hlp: %.rtf logo.bmp
@@ -62,6 +62,9 @@ HTM = $(filter-out 00Index.html, $(wildcard *.html))
 
 %.rtf: $(HTM)
 	perl $(RHOME)/src/gnuwin32/help/html-to-rtf.pl $*.hhp
+
+Rchm.css: $(RHOME)/src/gnuwin32/help/Rchm.css
+	$(CP) $^ $@
 
 logo.jpg: $(RHOME)/doc/html/logo.jpg
 	$(CP) $^ $@

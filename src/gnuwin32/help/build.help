@@ -1,65 +1,56 @@
 #-*- mode: perl; perl-indent-level: 4; cperl-indent-level: 4 -*-
 #
-# Subroutines for converting R documentation into HTML, LaTeX, Nroff
-# and R (Examples) format
-#
+
 # Copyright (C) 1997-2000 R Development Core Team
 #
-# This program is free software; you can redistribute it and/or modify
+# This document is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation; either version 2, or (at your option)
 # any later version.
 #
 # This program is distributed in the hope that it will be useful, but
 # WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	See the GNU
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 # General Public License for more details.
 #
 # A copy of the GNU General Public License is available via WWW at
-# http://www.gnu.org/copyleft/gpl.html.	 You can also obtain it by
+# http://www.gnu.org/copyleft/gpl.html.  You can also obtain it by
 # writing to the Free Software Foundation, Inc., 59 Temple Place,
 # Suite 330, Boston, MA  02111-1307  USA.
-#
-# ${R_HOME}/bin/build-help
-# Usage: build-help [options] [pkg] [lib]
-# Install all help files for package pkg to library lib
-# (defaults are `${R_HOME}/src/library/base' and the default library,
-#  `${R_HOME}/library', respectively).
+
 
 use File::Basename;
 use Cwd;
 use Getopt::Long;
+use R::Rdconv;
+use R::Rdlists;
 
 fileparse_set_fstype; # Unix, in case one gets anything else.
-$OSdir = "windows";
-
 
 @knownoptions = ("rhome:s", "html", "txt", "latex", "example", "debug",
 		 "dosnames", "htmllists", "chm");
 GetOptions (@knownoptions) || usage();
 
-$cwd=getcwd();
+$OSdir = "windows";
+
+$dir_mod = 0755;#- Permission ('mode') of newly created directories.
+
+if($opt_dosnames){$HTML="htm";} else{$HTML="html";}
+
+my $cwd = getcwd();
+
 if($opt_rhome){
     $R_HOME=$opt_rhome;
     print STDERR "R_HOME from --rhome: `$R_HOME'\n" if $opt_debug;
-}
-# removed, as getting this set wrong caused havoc.
-#elsif($ENV{"R_HOME"}){
-#    $R_HOME=$ENV{"R_HOME"};
-#    print STDERR "R_HOME from ENV: `$R_HOME'\n" if $opt_debug;
-#}
-else{
+} else{
     chdir(dirname($0) . "/../../..");
     $R_HOME=getcwd();
     print STDERR "R_HOME: `$R_HOME'\n" if $opt_debug;
 }
 $R_HOME =~ s+\\+/+g; # Unix-style path
 
-require "$R_HOME/etc/Rdconvlib.pl";
-require "$R_HOME/etc/buildlib.pl";
-
 chdir($cwd);
-print STDERR "Current directory (cwd): '$cwd'\n" if $opt_debug;
+print STDERR "Current directory (cwd): `$cwd'\n" if $opt_debug;
 
 # if option --htmllists is set we only rebuild some list files and
 # exit
@@ -93,9 +84,12 @@ if($opt_chm) {
     mkdir($chmdir, 755);
     open_hhp($pkg);
 }
-build_index();
+build_index($lib, $dest, $chmdir);
 
-if($opt_chm) {build_chm_toc();}
+
+if($opt_chm) {
+    build_chm_toc();
+}
 
 if ($opt_latex) {
     $latex_d="$dest/latex";
@@ -217,7 +211,6 @@ if($opt_html){
 	$destfilebase = basename($destfile, (".html"));
 	if($destfile eq "." || $destfile eq ".." ||
 	   $destfile eq "00Index.html") { next; }
-#	print "$dest/html/$destfile\n" unless defined $manfiles{$destfilebase};
 	unlink "$dest/html/$destfile" unless defined $manfiles{$destfilebase};
     }
 }
@@ -229,7 +222,6 @@ if($opt_latex){
     foreach $destfile (@destdir) {
 	$destfilebase = basename($destfile, (".tex"));
 	if($destfile eq "." || $destfile eq "..") { next; }
-#	print "$dest/latex/$destfile\n" unless defined $manfiles{$destfilebase};
 	unlink "$dest/latex/$destfile" unless defined $manfiles{$destfilebase};
     }
 }
@@ -241,9 +233,9 @@ if($opt_example){
     foreach $destfile (@destdir) {
 	$destfilebase = basename($destfile, (".R"));
 	if($destfile eq "." || $destfile eq "..") { next; }
-#	print "$dest/R-ex/$destfile\n" unless defined $manfiles{$destfilebase};
 	unlink "$dest/R-ex/$destfile" unless defined $manfiles{$destfilebase};
     }
+}
 if($opt_chm){
     my @destdir;
     opendir dest,  "../chm";
@@ -251,12 +243,10 @@ if($opt_chm){
     closedir dest;
     foreach $destfile (@destdir) {
 	$destfilebase = basename($destfile, (".html"));
-	if($destfile eq "." || $destfile eq ".." ||
-	   $destfile eq "00Index.html" || $destfile eq "00Titles") { next; }
-#	print "../chm/$destfile\n" unless defined $manfiles{$destfilebase};
+	next unless $destfile =~ /\.html$/;
+	next if $destfile eq "00Index.html";
 	unlink "../chm/$destfile" unless defined $manfiles{$destfilebase};
     }
-}
 }
 
 sub usage {
