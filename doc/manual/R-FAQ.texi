@@ -2274,6 +2274,8 @@ An R interface to MIM for graphical modeling in R.
 @item mix
 Estimation/multiple imputation programs for mixed categorical and
 continuous data.
+@item mixreg
+Functions to fit mixtures of regressions.
 @item mlbench
 A collection of artificial and real-world machine learning benchmark
 problems, including the Boston housing data.
