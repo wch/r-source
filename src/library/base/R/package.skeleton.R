@@ -70,9 +70,14 @@ function(name = "anRpackage", list, environment = .GlobalEnv,
     ## Some object names may not be valid file names, especially replacement
     ## function names. And if we start changing them they may collide.
     list0 <- gsub("[[:cntrl:]\"*/:<>?\\|]", "_", list)
-    wrong <- grep("^(con|prn|aux|clock\\$|nul|lpt[1-3]|com[1-4])", list0)
+    wrong <- grep("^(con|prn|aux|clock\\$|nul|lpt[1-3]|com[1-4])(\\..*|)$",
+                  list0)
     if(length(wrong)) list0[wrong] <- paste("zz", list0[wrong], sep="")
-    list0 <- make.unique(list0)
+    ## now on Windows lower/uppercase will collide too
+    list1 <- tolower(list0)
+    list2 <- make.unique(list1, sep="_")
+    changed <- (list2 != list1)
+    list0[changed] <- list2[changed]
     names(list0) <- list
 
     ## Dump the items in 'data' or 'R'
