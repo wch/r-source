@@ -12,8 +12,7 @@
 
   \begin{center}
     \Huge
-    \textbf{The \R\ Environment for
-      Statistical Computing and Graphics}
+    \textbf{R: A Language and Environment for Statistical Computing}
 
     \LARGE
     \par\vspace*{6\medskipamount}
@@ -30,7 +29,7 @@
   \vfill
   \vfill
   \noindent
-  Copyright ({\copyright}) 1999--2003 R Development Core Team.
+  Copyright ({\copyright}) 1999--2003 R Foundation for Statistical Computing.
   
   \noindent
   Permission is granted to make and distribute verbatim copies of this

@@ -285,6 +285,9 @@ BUG FIXES
 	namespaces were broken if the S3 generic was converted into an
 	S4 generic by setting an S4 method.
 
+    o   Title and copyright holder of the reference manual are now in
+        sync with the citation() command.
+
 
 
 
