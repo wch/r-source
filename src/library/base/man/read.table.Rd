@@ -66,7 +66,7 @@ read.csv2(file, header = TRUE, sep = ";", quote="\"", dec=",", \dots)
     valid variable names.  If necessary they are adjusted (by
     \code{\link{make.names}}) so that they are.}
 
-  \item{skip.white}{logical. Used only when \code{sep} has
+  \item{strip.white}{logical. Used only when \code{sep} has
     been specified, and allows the stripping of leading and trailing
     white space from \code{character} fields (\code{numeric} fields
     are always stripped).  See \code{\link{scan}} for further details,
