@@ -1,0 +1,24 @@
+\name{do.call}
+\title{Execute a Function Call}
+\usage{
+do.call(fun, args)
+}
+\alias{do.call}
+\arguments{
+  \item{fun}{a character string naming the function to be called.}
+  \item{args}{a \emph{list} of arguments to the function call.  The
+    \code{names} attribute of \code{args} gives the argument names.}
+}
+\description{
+  \code{do.call} executes a function call from the name of the function
+  and a list of arguments to be passed to it.
+}
+\value{
+  The result of the (evaluated) function call.
+}
+\seealso{
+  \code{\link{call}} which creates an unevaluated call.
+}
+\examples{
+do.call("complex", list(imag = 1:3))
+}
