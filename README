@@ -51,7 +51,7 @@ code CVS archive.  The group currently consists of
 
 3. PRESENT STATUS
 
-The present version implements most of the functionality in the 1998
+The present version implements most of the functionality in the 1988
 book "The New S Language" (the "Blue Book") and many of the
 applications. In addition, we have implemented a large part of the
 functionality from the 1992 book "Statistical Models in S" (the "White
