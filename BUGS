@@ -68,10 +68,6 @@ Subject: problem with qq( )
 From: Jarno.Tuimala@Helsinki.Fi
 Date: Tue, 2 Jul 2002 10:37:10 +0200 (MET DST)
 ..A report on lattice
-* PR# 1741 *
-Subject: groupedData constructor from a function
-From: dieter.menne@menne-biomed.de
-Date: Thu, 4 Jul 2002 15:59:59 +0200 (MET DST)
 * PR# 1972 *
 Subject: lattice install
 From: robert.king@newcastle.edu.au
@@ -99,10 +95,6 @@ Date: Sat, 23 Nov 2002 17:30:37 +0100 (MET)
 Subject: avas: segmentation fault on empty args
 From: vograno@arbitrade.com
 Date: Fri, 6 Dec 2002 19:41:48 +0100 (MET)
-* PR# 2363 *
-Subject: nlme() and parameters "model", "fixed" and "random"
-From: jerome@hivnet.ubc.ca
-Date: Wed, 11 Dec 2002 22:29:47 +0100 (MET)
 * PR# 2369 *
 Subject: convergence problem with nlme()
 From: jerome@hivnet.ubc.ca
@@ -111,10 +103,6 @@ Date: Thu, 12 Dec 2002 23:43:14 +0100 (MET)
 Subject: quantreg package - predict method for rq objects
 From: John Maindonald <u9801539@leonard.anu.edu.au>
 Date: Sat, 14 Dec 2002 20:46:34 +1100 (EST)
-* PR# 2384 *
-Subject: degrees of freedom in nlme()
-From: jerome@hivnet.ubc.ca
-Date: Fri, 20 Dec 2002 01:40:06 +0100 (MET)
 * PR# 2386 *
 Subject: ace and avas in acepack
 From: Frank E Harrell Jr <fharrell@virginia.edu>
@@ -150,10 +138,6 @@ Date: Tue, 6 May 2003 15:36:23 -0700
 Subject: Re: frailty models in survreg() -- survival package
 From: Thomas Lumley <tlumley@u.washington.edu>
 Date: Tue, 6 May 2003 15:58:37 -0700 (PDT)
-* PR# 2985 *
-Subject: update.lme trouble
-From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
-Date: 12 May 2003 17:59:41 +0200
 * PR# 2986 *
 Subject: plot.ranef.lme
 From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
@@ -729,20 +713,6 @@ Date: Tue, 5 Aug 2003 15:25:42 -0700 (PDT)
 
 Directory:  incoming
 
-* PR# 2461 *
-Subject: apropos() with partial name
-From: John Maindonald <u9801539@leonard.anu.edu.au>
-Date: Thu, 16 Jan 2003 20:22:23 +1100 (EST)
-..The proposed fix would make it impossible to pass a variable to apropos
-..
-..eg 
-..
-..> sor<-"plot"
-..> apropos(sor)
-..[1] "sor"          "isoreg"       "sortedXyData" "is.unsorted"  "sort"        
-..[6] "sort.list"   
-..
-..A better fix might be to require the argument to be a string.
 * PR# 2656 *
 Subject: recursive default argument reference in debugger
 From: pburns@pburns.seanet.com
@@ -771,100 +741,19 @@ Date: Thu, 7 Aug 2003 11:32:17 -0700
 Subject: Wish
 From: a.buness@dkfz.de
 Date: Fri, 8 Aug 2003 15:50:27 +0200 (MET DST)
-* PR# 3694 *
-Subject: Re: .. heh
-From: beldridge@yahoo.com
-Date: Fri, 8 Aug 2003 16:46:06 -0700
-* PR# 3695 *
-Subject: Re: hey
-From: btsai@yahoo.com
-Date: Sat, 9 Aug 2003 08:42:58 +0900
-* PR# 3696 *
-Subject: [광고]     남성    정보      중요합니다  @
-From: djfur<lhsd@yahoo.co.kr>
-Date: Sat, 9 Aug 2003 05:55:05 +0200 (MET DST)
-* PR# 3697 *
-Subject: IMMEDIATE ATTENTION
-From: "DR. PRINCE OLU BABS" <olubabs@web-mail.com.ar>
-Date: Sat, 9 Aug 2003 09:33:19 +0100
-* PR# 3698 *
-Subject: G.e.n.e.r.i.c     V i a g r a   - Get the magic Blue Pills NOW!! urrhwsb
-From: "Phil Davila" <mjones998314@myself.com>
-Date: Fri, 08 Aug 03 17:58:42 GMT
-* PR# 3699 *
-Subject: G.e.n.e.r.i.c     V i a g r a    -  Order On-line - Fast Delivery!  
-From: "Rick Spaulding" <lisa44tex343160@paris.com>
-Date: Sat, 09 Aug 03 09:46:04 GMT
-* PR# 3700 *
-Subject: Why are you still wondering how to make...
-From: "Catherine Gardner" <elisafarney@uk2.net>
-Date: Sat, 09 Aug 03 07:21:50 GMT
-* PR# 3701 *
-Subject:                            URGENT BUSINESS PROPOSAL. 
-From: MR SANBIBI  ADA <sanbibiada25@netscape.net>
-Date: Sat, 09 Aug 2003 13:38:45 +0200
-* PR# 3702 *
-Subject: ATTENTION
-From: 08033567234 no-9 marina lagos <hamzagwarzo@123.com>
-From:Hamza Gwarzo. 
-Date: Sat, 09 Aug 2003 12:53:25 +0100
-* PR# 3703 *
-Subject: Maritime Newsletter (Week 32)
-From: "Marine Digital Inc."<newsletter@marinedigital.com>
-Date: Sat, 9 Aug 2003 21:21:57 +0900
 * PR# 3704 *
 Subject: Re: [Rd] segmentation fault: formula() with long variable names
 From: Luke Tierney <luke@stat.uiowa.edu>
 Date: Sat, 9 Aug 2003 12:18:36 -0500 (CDT)
-* PR# 3705 *
-Subject: Im filthy rich...share my secrets...
-From: "Cathleen Tobin" <7olpv5mk5k@yahoo.com.hk>
-Date: Sat, 09 Aug 03 23:01:36 GMT
-* PR# 3706 *
-Subject: Penis Patch - Develop a Larger Penis in Weeks  atomic
-From: "Gilbert Whitman" <wjyulowaq@netease.com>
-Date: Sat, 09 Aug 03 18:40:01 GMT
-* PR# 3707 *
-Subject: Protect your PC today
-From: a_scurry2@lawcover.com.au
-Date: Sat, 9 Aug 2003 16:27:01 -0700
-* PR# 3708 *
-Subject: Best Buy Award, 2002
-From: a_phillips2@prodigy.net
-Date: Sat, 9 Aug 2003 21:22:33 -0400
-* PR# 3709 *
-Subject: World Class Award, 2003
-From: a_s_stam2@dds.nl
-Date: Sun, 10 Aug 2003 11:49:31 +0900
-* PR# 3710 *
-Subject: (성인광고) 여름미소녀를 만끽하세여.피서지에서 몰카,,
-From: 주은녀<qwert201@msn.com>
-Date: Sun, 10 Aug 2003 10:33:53 +0200 (MET DST)
-* PR# 3711 *
-Subject: Free Play, and what you win, you keep
-From: "Svatos Linzan" <StoltzGrisset@netscape.com>
-Date: Sun, 10 Aug 2003 06:30:19 -0400
-* PR# 3712 *
-Subject: The easiest way to grow your penis wi s  rm
-From: "Janet Meyer" <br5rpimazw@msn.com>
-Date: Mon, 11 Aug 03 04:45:10 GMT
-* PR# 3713 *
-Subject: Meds shipped to you.
-From: "Ophelia Hawkins" <dbqesx@bscn.com>
-Date: Sun, 10 Aug 03 08:01:54 GMT
-* PR# 3714 *
-Subject:                                         PARTNARSHIP REQUEST
-From: "MR.JOHNSON OYE" <joye12o@netscape.net>
-Date: Sun, 10 Aug 2003 15:16:03 +0200
-* PR# 3715 *
-Subject: Pills to Enlarge Your Penis wxjvwzwi
-From: "Tad Devine" <hieywnxe4@hotmail.com>
-Date: Mon, 11 Aug 03 10:34:48 GMT
-* PR# 3716 *
-Subject: Free Cartridges for you printer! ohinxulcsh g
-From: "Steve" <14@metronethosting.com>
-Date: Mon, 11 Aug 03 09:04:21 GMT
-* PR# 3717 *
-Subject: Penis Patch - Add size to your Penis  beneficent
-From: "Barton Barber" <hty78bek85@163.net>
-Date: Mon, 11 Aug 03 04:09:48 GMT
+* PR# 3721 *
+Subject: This could help tbapkuyfk
+From: "Dawn Peck" <7mesjdpgd@yahoo.com>
+Date: Mon, 11 Aug 03 23:17:55 GMT
+* PR# 3722 *
+Subject: Increases circulation in men for erections.
+From: "Katy Hobbs" <w4uxcqq@springfieldelectric.com>
+Date: Mon, 11 Aug 03 16:29:33 GMT
+* PR# 3723 *
+Subject: NA's in eigen(), La.eigen()
+From: Jerome Asselin <jerome@hivnet.ubc.ca>
+Date: Mon, 11 Aug 2003 15:09:09 -0700
