@@ -1,14 +1,17 @@
 \name{cmdscale}
+\alias{cmdscale}
 \title{Classical (Metric) Multidimensional Scaling}
 \usage{
 cmdscale(d, k = 2, eig = FALSE, add = FALSE, x.ret = FALSE)
 }
-\alias{cmdscale}
+\description{
+  Classical multidimensional scaling of a data matrix.
+}
 \arguments{
   \item{d}{a distance structure such as that returned by \code{dist}
     or a full symmetric matrix containing the dissimilarities.}
   \item{k}{the dimension of the space which the data are to be
-    represented in; must be in \eqn{\{1,2, .., n-1\}}.}
+    represented in; must be in \eqn{\{1,2,\ldots,n-1\}}.}
   \item{eig}{indicates whether eigenvalues should be returned.}
   \item{add}{logical indicating if an additive constant \eqn{c*} should
     be computed, and added to the non-diagonal dissimilarites such that
@@ -16,16 +19,21 @@ cmdscale(d, k = 2, eig = FALSE, add = FALSE, x.ret = FALSE)
   \item{x.ret}{indicates whether the doubly centered symmetric distance
     matrix should be returned.}
 }
-\description{
-  Classical multidimensional scaling of a data matrix.
-}
 \details{
-  Multidimensional scaling takes a set of dissimilarities
-  and returns a set of points such that the distances between the points
-  are approximately equal to the dissimilarities.
+  Multidimensional scaling takes a set of dissimilarities and returns a
+  set of points such that the distances between the points are
+  approximately equal to the dissimilarities.
 
-  The functions \code{isoMDS} and \code{sammon} in package
-  \file{MASS} provide alternative ordination techniques.
+  The functions \code{isoMDS} and \code{sammon} in package \bold{MASS}
+  provide alternative ordination techniques.
+
+  When \code{add = TRUE}, an additive constant \eqn{c*} is computed, and
+  the dissimilarities \eqn{d_{ij} + c*}{d[i,j] + c*} are used instead of
+  the original \eqn{d_{ij}}{d[i,j]}'s.
+
+  Whereas S-PLUS computes this constant using an approximation suggested by
+  Torgerson, \R uses the exact analytical solution of Cailliez (1983),
+  see also Cox and Cox (1994).
 }
 \value{
   If \code{eig = FALSE} and \code{x.ret = FALSE} (default), a matrix
@@ -68,19 +76,10 @@ cmdscale(d, k = 2, eig = FALSE, add = FALSE, x.ret = FALSE)
   The analytical solution of the additive constant problem.
   \emph{Psychometrika} \bold{48}, 343--349.
 }
-\details{
-  When \code{add = TRUE}, an additive constant \eqn{c*} is computed, and
-  the dissimilarities \eqn{d_{ij} + c*}{d[i,j] + c*} are used instead of
-  the original \eqn{d_{ij}}{d[i,j]}'s.
-
-  Whereas S-PLUS computes this constant using an approximation suggested by
-  Torgerson, \R uses the exact analytical solution of Cailliez (1983),
-  see also Cox and Cox (1994).
-}
 \seealso{
-  \code{\link{dist}}. Also
-  \code{\link[MASS]{isoMDS}} and \code{\link[MASS]{sammon}}
-  in package \file{MASS}.
+  \code{\link{dist}}.
+  Also \code{\link[MASS]{isoMDS}} and \code{\link[MASS]{sammon}}
+  in package \bold{MASS}.
 }
 \examples{
 data(eurodist)

@@ -42,7 +42,7 @@ package.skeleton<-function(name="anRpackage",list,environment=.GlobalEnv,path=".
     cat("   to load the shared library\n",file=top)
     cat("3. Edit the help file skeletons in man/.\n",file=top)
     cat("4. Run R CMD build to create INDEX and data/00Index\n",file=top)
-    cat("5. (Optionally) edit INDEX and data/O0Index\n",file=top)
+    cat("5. (Optionally) edit INDEX and data/00Index\n",file=top)
     cat("6. Run R CMD check to check the package\n",file=top)
     cat("7. Run R CMD build to make the package file\n",file=top)
     cat("\n\n Read \"Writing R Extensions\" for more information.\n",file=top)
