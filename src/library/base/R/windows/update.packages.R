@@ -17,7 +17,9 @@ install.packages <- function(pkgs, lib, CRAN=getOption("CRAN"),
         on.exit(setwd(cDir), add = TRUE)
         res <- zip.unpack(pkg, tmpDir)
         setwd(tmpDir)
-        tools::checkMD5sums(pkgname)
+        res <- tools::checkMD5sums(pkgname, file.path(tmpDir,pkgname))
+        if(!is.na(res) && res)
+            cat("package successfully unpacked and MD5 sums checked\n")
 
         ## Check to see if this is a bundle or a single package
         if (file.exists("DESCRIPTION")) {
@@ -27,9 +29,7 @@ install.packages <- function(pkgs, lib, CRAN=getOption("CRAN"),
                 stop("Malformed bundle DESCRIPTION file, no Contains field")
             else
                 pkgs <- strsplit(conts," ")[[1]]
-        }
-        else
-            pkgs <- pkgname
+        } else pkgs <- pkgname
 
         for (curPkg in pkgs) {
             desc <- read.dcf(file.path(curPkg, "DESCRIPTION"),
