@@ -1,5 +1,5 @@
 /*
- *  R : A Computer Langage for Statistical Data Analysis
+ *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996, 1997  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -78,15 +78,15 @@ static establish_endianness()
 	ieee_double x;
 	x.value = 1;
 	if(x.word[0] == 0x3ff00000) {
-                little_endian = 0;
+		little_endian = 0;
 		hw = 0;
 		lw = 1;
-        }
-        else if(x.word[1] == 0x3ff00000) {
-                little_endian = 1;
+	}
+	else if(x.word[1] == 0x3ff00000) {
+		little_endian = 1;
 		hw = 1;
 		lw = 0;
-        }
+	}
 	else R_Suicide("couldn't determine endianness for IEEE 754!\n");
 }
 
@@ -136,7 +136,7 @@ void InitArithmetic()
 	/* Machine Constants */
 
 void machar(int*, int*, int*, int*, int*, int*,
-        int*, int*, int*, double*, double*, double*, double*);
+	int*, int*, int*, double*, double*, double*, double*);
 
 SEXP do_Machine(SEXP call, SEXP op, SEXP args, SEXP env)
 {
@@ -230,12 +230,12 @@ SEXP do_Machine(SEXP call, SEXP op, SEXP args, SEXP env)
 
 double log2(double x)
 {
-    return log(x) / 0.69314718055994530941;
+    return log(x) / M_LN_2;
 }
 
 double logbase(double x, double base)
-{       
-        return log(x) / log(base);
+{
+	return log(x) / log(base);
 }
 
 static SEXP unary(SEXP, SEXP);
@@ -302,13 +302,13 @@ static SEXP binary(SEXP op, SEXP args)
       is a vector we want to coerce the matrix to be a vector
       */
     if( xarray || yarray && !(xarray*yarray) ) {
-        if(xarray && length(x)==1) {
+	if(xarray && length(x)==1) {
 	    x = CAR(args)=duplicate(x);
 	    setAttrib(x,R_DimSymbol,R_NilValue);
-        }
-        if(yarray && length(y)==1) {
+	}
+	if(yarray && length(y)==1) {
 	    y = CADR(args) = duplicate(y);
-   	    setAttrib(y, R_DimSymbol, R_NilValue);
+	    setAttrib(y, R_DimSymbol, R_NilValue);
 	}
     }
 
@@ -517,8 +517,8 @@ static SEXP real_unary(int code, SEXP s1)
     }
 }
 /* i1 = i % n1; i2 = i % n2;
- * this macro is quite a bit faster than having real modulo calls 
- * in the loop (tested on Intel and Sparc) 
+ * this macro is quite a bit faster than having real modulo calls
+ * in the loop (tested on Intel and Sparc)
  */
 #define mod_iterate(n1,n2,i1,i2) for (i=i1=i2=0; i<n; \
 (++i1, (i1==n1)&&(i1=0), ++i2, (i2==n2)&&(i2=0), ++i))
@@ -556,7 +556,7 @@ static SEXP integer_binary(int code, SEXP s1, SEXP s2)
 	}
 	break;
     case MINUSOP:
-	mod_iterate(n1, n2, i1, i2) {	  
+	mod_iterate(n1, n2, i1, i2) {
 	    x1 = INTEGER(s1)[i1];
 	    x2 = INTEGER(s2)[i2];
 	    if (x1 == NA_INTEGER || x2 == NA_INTEGER)
@@ -566,7 +566,7 @@ static SEXP integer_binary(int code, SEXP s1, SEXP s2)
 	}
 	break;
     case TIMESOP:
-	mod_iterate(n1, n2, i1, i2) {	  	  
+	mod_iterate(n1, n2, i1, i2) {
 	    x1 = INTEGER(s1)[i1];
 	    x2 = INTEGER(s2)[i2];
 	    if (x1 == NA_INTEGER || x2 == NA_INTEGER)
@@ -576,7 +576,7 @@ static SEXP integer_binary(int code, SEXP s1, SEXP s2)
 	}
 	break;
     case DIVOP:
-	mod_iterate(n1, n2, i1, i2) {	  	  	  
+	mod_iterate(n1, n2, i1, i2) {
 	    x1 = INTEGER(s1)[i1];
 	    x2 = INTEGER(s2)[i2];
 #ifdef IEEE_754
@@ -590,7 +590,7 @@ static SEXP integer_binary(int code, SEXP s1, SEXP s2)
 	}
 	break;
     case POWOP:
-	mod_iterate(n1, n2, i1, i2) {	  	  	  	  
+	mod_iterate(n1, n2, i1, i2) {
 	    x1 = INTEGER(s1)[i1];
 	    x2 = INTEGER(s2)[i2];
 	    if (x1 == NA_INTEGER || x2 == NA_INTEGER)
@@ -601,9 +601,9 @@ static SEXP integer_binary(int code, SEXP s1, SEXP s2)
 	}
 	break;
     case MODOP:
-	mod_iterate(n1, n2, i1, i2) {	  	  	  	  
+	mod_iterate(n1, n2, i1, i2) {
 	    x1 = INTEGER(s1)[i1];
-	    x2 = INTEGER(s2)[i2];	  
+	    x2 = INTEGER(s2)[i2];
 	    if (x1 == NA_INTEGER || x2 == NA_INTEGER || x2 == 0)
 		INTEGER(ans)[i] = NA_INTEGER;
 	    else {
@@ -612,9 +612,9 @@ static SEXP integer_binary(int code, SEXP s1, SEXP s2)
 	}
 	break;
     case IDIVOP:
-	mod_iterate(n1, n2, i1, i2) {	  	  	  	  
+	mod_iterate(n1, n2, i1, i2) {
 	    x1 = INTEGER(s1)[i1];
-	    x2 = INTEGER(s2)[i2];		  
+	    x2 = INTEGER(s2)[i2];
 	    if (x1 == NA_INTEGER || x2 == NA_INTEGER)
 		INTEGER(ans)[i] = NA_INTEGER;
 	    else if(x2 == 0)
@@ -655,7 +655,7 @@ static SEXP real_binary(int code, SEXP s1, SEXP s2)
 
     switch (code) {
     case PLUSOP:
-	mod_iterate(n1, n2, i1, i2) {	  	  	  	  
+	mod_iterate(n1, n2, i1, i2) {
 #ifdef IEEE_754
 	    REAL(ans)[i] = REAL(s1)[i1] + REAL(s2)[i2];
 #else
@@ -673,7 +673,7 @@ static SEXP real_binary(int code, SEXP s1, SEXP s2)
 #ifdef IEEE_754
 	    REAL(ans)[i] = REAL(s1)[i1] - REAL(s2)[i2];
 #else
-	    x1 = REAL(s1)[i1];		  
+	    x1 = REAL(s1)[i1];
 	    x2 = REAL(s2)[i2];
 	    if (ISNA(x1) || ISNA(x2))
 		REAL(ans)[i] = NA_REAL;
@@ -1086,10 +1086,10 @@ static SEXP math3(SEXP op, SEXP sa, SEXP sb, SEXP sc, double (*f)())
 
     if (!isNumeric(sa) || !isNumeric(sb) || !isNumeric(sc))
 	errorcall(lcall, "Non-numeric argument to mathematical function\n");
-	
+
     na = LENGTH(sa);
-    nb = LENGTH(sb); 
-    nc = LENGTH(sc); 
+    nb = LENGTH(sb);
+    nc = LENGTH(sc);
     n = na;
     if(n < nb) n = nb;
     if(n < nc) n = nc;
@@ -1113,7 +1113,7 @@ static SEXP math3(SEXP op, SEXP sa, SEXP sb, SEXP sc, double (*f)())
 	    ci = c[ic];
 	    if(ISNAN(ai) || ISNAN(bi) || ISNAN(ci)) {
 #ifdef IEEE_754
-	        y[i] = ai + bi + ci;
+		y[i] = ai + bi + ci;
 #else
 		y[i] = NA_REAL;
 #endif
@@ -1233,11 +1233,11 @@ static SEXP math4(SEXP op, SEXP sa, SEXP sb, SEXP sc, SEXP sd, double (*f)())
 
     if (!isNumeric(sa) || !isNumeric(sb) || !isNumeric(sc) || !isNumeric(sd))
 	errorcall(lcall, "Non-numeric argument to mathematical function\n");
-	
+
     na = LENGTH(sa);
-    nb = LENGTH(sb); 
-    nc = LENGTH(sc); 
-    nd = LENGTH(sd); 
+    nb = LENGTH(sb);
+    nc = LENGTH(sc);
+    nd = LENGTH(sd);
     n = na;
     if(n < nb) n = nb;
     if(n < nc) n = nc;
