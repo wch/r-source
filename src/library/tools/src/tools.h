@@ -23,6 +23,6 @@
 #include <Rinternals.h>
 
 SEXP delim_match(SEXP x, SEXP delims);
-SEXP R_md5(SEXP files);
+SEXP Rmd5(SEXP files);
 
 #endif
