@@ -6,4 +6,6 @@ help.start <- function (gui = "irrelevant", browser = "netscape", remote = NULL)
      "and you must switch to its window.\nOtherwise, be patient..\n")
  system(paste(browser, " -remote \"openURL(", url, ")\" 2>/dev/null || ",
               browser, " ", url, " &", sep = ""))
+ options(htmlhelp=TRUE)
+ options(browser=browser)
 }
