@@ -5,7 +5,7 @@
   Generate the B-spline basis matrix for a natural cubic spline.
 }
 \usage{
-ns(x, df, knots, intercept=F, Boundary.knots)
+ns(x, df, knots, intercept = FALSE, Boundary.knots)
 }
 \arguments{
   \item{x}{the predictor variable.}

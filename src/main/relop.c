@@ -46,15 +46,15 @@ SEXP do_relop(SEXP call, SEXP op, SEXP args, SEXP env)
     if (isSymbol(x)) {
 	PROTECT(x);
 	x = allocVector(STRSXP, 1);
-	STRING(x)[0] = PRINTNAME(CAR(args));
-	CAR(args) = x;
+	SET_STRING_ELT(x, 0, PRINTNAME(CAR(args)));
+	SETCAR(args, x);
 	UNPROTECT(1);
     }
     if (isSymbol(y)) {
 	PROTECT(y);
 	y = allocVector(STRSXP, 1);
-	STRING(y)[0] = PRINTNAME(CADR(args));
-	CADR(args) = y;
+	SET_STRING_ELT(y, 0, PRINTNAME(CADR(args)));
+	SETCADR(args, y);
 	UNPROTECT(1);
     }
 
@@ -121,18 +121,18 @@ SEXP do_relop(SEXP call, SEXP op, SEXP args, SEXP env)
     if (mismatch) warningcall(call, "longer object length\n\tis not a multiple of shorter object length");
 
     if (isString(x) || isString(y)) {
-	x = CAR(args) = coerceVector(x, STRSXP);
-	y = CADR(args) = coerceVector(y, STRSXP);
+	x = SETCAR(args, coerceVector(x, STRSXP));
+	y = SETCADR(args, coerceVector(y, STRSXP));
 	x = string_relop(PRIMVAL(op), x, y);
     }
     else if (isComplex(x) || isComplex(y)) {
-	x = CAR(args) = coerceVector(x, CPLXSXP);
-	y = CADR(args) = coerceVector(y, CPLXSXP);
+	x = SETCAR(args, coerceVector(x, CPLXSXP));
+	y = SETCADR(args, coerceVector(y, CPLXSXP));
 	x = complex_relop(PRIMVAL(op), x, y);
     }
     else if (TYPEOF(x) == REALSXP || TYPEOF(y) == REALSXP) {
-	x = CAR(args) = coerceVector(x, REALSXP);
-	y = CADR(args) = coerceVector(y, REALSXP);
+	x = SETCAR(args, coerceVector(x, REALSXP));
+	y = SETCADR(args, coerceVector(y, REALSXP));
 	x = real_relop(PRIMVAL(op), x, y);
     }
     else {
@@ -388,8 +388,8 @@ static SEXP string_relop(int code, SEXP s1, SEXP s2)
     switch (code) {
     case EQOP:
 	for (i = 0; i < n; i++) {
-	    if (strcmp(CHAR(STRING(s1)[i % n1]),
-		       CHAR(STRING(s2)[i % n2])) == 0)
+	    if (strcmp(CHAR(STRING_ELT(s1, i % n1)),
+		       CHAR(STRING_ELT(s2, i % n2))) == 0)
 		LOGICAL(ans)[i] = 1;
 	    else
 		LOGICAL(ans)[i] = 0;
@@ -397,8 +397,8 @@ static SEXP string_relop(int code, SEXP s1, SEXP s2)
 	break;
     case NEOP:
 	for (i = 0; i < n; i++) {
-	    if (streql(CHAR(STRING(s1)[i % n1]),
-		       CHAR(STRING(s2)[i % n2])) != 0)
+	    if (streql(CHAR(STRING_ELT(s1, i % n1)),
+		       CHAR(STRING_ELT(s2, i % n2))) != 0)
 		LOGICAL(ans)[i] = 0;
 	    else
 		LOGICAL(ans)[i] = 1;
@@ -406,8 +406,8 @@ static SEXP string_relop(int code, SEXP s1, SEXP s2)
 	break;
     case LTOP:
 	for (i = 0; i < n; i++) {
-	    if (STRCMP(CHAR(STRING(s1)[i % n1]),
-		       CHAR(STRING(s2)[i % n2])) < 0)
+	    if (STRCMP(CHAR(STRING_ELT(s1, i % n1)),
+		       CHAR(STRING_ELT(s2, i % n2))) < 0)
 		LOGICAL(ans)[i] = 1;
 	    else
 		LOGICAL(ans)[i] = 0;
@@ -415,8 +415,8 @@ static SEXP string_relop(int code, SEXP s1, SEXP s2)
 	break;
     case GTOP:
 	for (i = 0; i < n; i++) {
-	    if (STRCMP(CHAR(STRING(s1)[i % n1]),
-		       CHAR(STRING(s2)[i % n2])) > 0)
+	    if (STRCMP(CHAR(STRING_ELT(s1, i % n1)),
+		       CHAR(STRING_ELT(s2, i % n2))) > 0)
 		LOGICAL(ans)[i] = 1;
 	    else
 		LOGICAL(ans)[i] = 0;
@@ -424,8 +424,8 @@ static SEXP string_relop(int code, SEXP s1, SEXP s2)
 	break;
     case LEOP:
 	for (i = 0; i < n; i++) {
-	    if (STRCMP(CHAR(STRING(s1)[i % n1]),
-		       CHAR(STRING(s2)[i % n2])) <= 0)
+	    if (STRCMP(CHAR(STRING_ELT(s1, i % n1)),
+		       CHAR(STRING_ELT(s2, i % n2))) <= 0)
 		LOGICAL(ans)[i] = 1;
 	    else
 		LOGICAL(ans)[i] = 0;
@@ -433,8 +433,8 @@ static SEXP string_relop(int code, SEXP s1, SEXP s2)
 	break;
     case GEOP:
 	for (i = 0; i < n; i++) {
-	    if (STRCMP(CHAR(STRING(s1)[i % n1]),
-		       CHAR(STRING(s2)[i % n2])) >= 0)
+	    if (STRCMP(CHAR(STRING_ELT(s1, i % n1)),
+		       CHAR(STRING_ELT(s2, i % n2))) >= 0)
 		LOGICAL(ans)[i] = 1;
 	    else
 		LOGICAL(ans)[i] = 0;

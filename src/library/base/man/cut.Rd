@@ -64,11 +64,11 @@ stopifnot(table(x) == tx0)
 
 table( cut(x, b = 8))
 table( cut(x, br = 3*(-2:5)))
-table( cut(x, br = 3*(-2:5), right = F))
+table( cut(x, br = 3*(-2:5), right = FALSE))
 
 ##--- some values OUTSIDE the breaks :
 table(cx  <- cut(x, br = 2*(0:4)))
-table(cxl <- cut(x, br = 2*(0:4), right = F))
+table(cxl <- cut(x, br = 2*(0:4), right = FALSE))
 which(is.na(cx));  x[is.na(cx)]  #-- the first 9  values  0
 which(is.na(cxl)); x[is.na(cxl)] #-- the last  5  values  8
 
@@ -79,6 +79,6 @@ table(cut(y, breaks = pi/3*(-3:3)))
 table(cut(y, breaks = pi/3*(-3:3), dig.lab=4))
 
 table(cut(y, breaks =  1*(-3:3), dig.lab=4))# extra digits don't "harm" here
-table(cut(y, breaks =  1*(-3:3), right = F))#- the same, since no exact INT!
+table(cut(y, breaks =  1*(-3:3), right = FALSE))#- the same, since no exact INT!
 }
 \keyword{category}

@@ -40,7 +40,7 @@ ppr(x, y, weights = rep(1,n),
     Data frame from which variables specified in \code{formula} are
     preferentially to be taken.
   }
-  \item{weights}{a vector of weights for each \emph{case}.}
+  \item{weights}{a vector of weights \code{w_i} for each \emph{case}.}
   \item{ww}{
     a vector of weights for each \emph{response}, so the fit criterion is
     the sum over case \code{i} and responses \code{j} of

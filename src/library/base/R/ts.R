@@ -321,7 +321,7 @@ plot.mts <- function (x, plot.type = c("multiple", "single"),
     nr <- ceiling(nser / nc)
     par(mfcol = c(nr, nc))
     for(i in 1:nser) {
-        plot(x[, i], axes = F, xlab="", ylab="",
+        plot(x[, i], axes = FALSE, xlab="", ylab="",
              log = log, col = col, bg = bg, pch = pch, ann = ann,
              ...)
         box()

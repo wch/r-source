@@ -49,7 +49,7 @@ SEXP append(SEXP first, SEXP second)
 SEXP mkPRIMSXP(int offset, int eval)
 {
     SEXP result = allocSExp(eval ? BUILTINSXP : SPECIALSXP);
-    result->u.primsxp.offset = offset;
+    SET_PRIMOFFSET(result, offset);
     return (result);
 }
 
@@ -67,23 +67,23 @@ SEXP mkCLOSXP(SEXP formals, SEXP body, SEXP rho)
 
 #ifdef not_used_CheckFormals
     if(isList(formals))
-	FORMALS(c) = formals;
+	SET_FORMALS(c, formals);
     else
         error("invalid formal arguments for \"function\"");
 #else
-    FORMALS(c) = formals;
+    SET_FORMALS(c, formals);
 #endif
     if(isList(body) || isLanguage(body) || isSymbol(body)
        || isExpression(body) || isVector(body))
-	BODY(c) = body;
+	SET_BODY(c, body);
     else
         error("invalid body argument for \"function\"\n"
 	      "Should NEVER happen; please bug.report() [mkCLOSXP]\n");
 
     if(rho == R_NilValue)
-	CLOENV(c) = R_GlobalEnv;
+	SET_CLOENV(c, R_GlobalEnv);
     else
-	CLOENV(c) = rho;
+	SET_CLOENV(c, rho);
     UNPROTECT(3);
     return c;
 }
@@ -131,9 +131,9 @@ SEXP mkSYMSXP(SEXP name, SEXP value)
 	PROTECT(value);
 	i = ddVal(name);
 	c = allocSExp(SYMSXP);
-	PRINTNAME(c) = name;
-	SYMVALUE(c) = value;
-	DDVAL(c) = i;
+	SET_PRINTNAME(c, name);
+	SET_SYMVALUE(c, value);
+	SET_DDVAL(c, i);
 	UNPROTECT(2);
 	return c;
 }
@@ -141,6 +141,7 @@ SEXP mkSYMSXP(SEXP name, SEXP value)
 
 /*  mkPROMISE - make a promise to evaluate an argument  */
 
+#if 0 /* moved to memory.c for efficiency */
 SEXP mkPROMISE(SEXP expr, SEXP rho)
 {
     SEXP p;
@@ -148,14 +149,14 @@ SEXP mkPROMISE(SEXP expr, SEXP rho)
     PROTECT(expr);
     PROTECT(rho);
     p = allocSExp(PROMSXP);
-    PREXPR(p) = expr;
-    PRENV(p) = rho;
-    PRVALUE(p) = R_UnboundValue;
-    PRSEEN(p) = 0;
+    SET_PREXPR(p, expr);
+    SET_PRENV(p, rho);
+    SET_PRVALUE(p, R_UnboundValue);
+    SET_PRSEEN(p, 0);
     UNPROTECT(2);
     return p;
 }
-
+#endif
 
 /*  length - length of objects  */
 

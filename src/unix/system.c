@@ -101,6 +101,8 @@ int main(int ac, char **av)
     ptr_R_CleanUp = Rstd_CleanUp;
     ptr_R_ShowFiles = Rstd_ShowFiles;
     ptr_R_ChooseFile = Rstd_ChooseFile;
+    ptr_R_loadhistory = Rstd_loadhistory;
+    ptr_R_savehistory = Rstd_savehistory;
 
 #ifdef HAVE_TIMES
     R_setStartTime();
@@ -215,7 +217,7 @@ int main(int ac, char **av)
 	else
 	    R_HistorySize = value;
     }
-    Rstd_read_history(R_HistoryFile);
+    if (R_RestoreHistory) Rstd_read_history(R_HistoryFile);
     fpu_setup(1);
 
 

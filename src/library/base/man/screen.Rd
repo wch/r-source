@@ -82,7 +82,7 @@ screen(1) # prepare screen 1 for output
 plot(10:1)
 screen(4) # prepare screen 4 for output
 plot(10:1)
-close.screen(all = T) # exit split-screen mode
+close.screen(all = TRUE) # exit split-screen mode
 
 split.screen(c(2,1))        # split display into two screens
 split.screen(c(1,2),2)      # split bottom half in two
@@ -93,11 +93,11 @@ screen(1)                 # prepare screen 1 for output
 plot(1:10)
 screen(4)                 # prepare screen 4 for output
 plot(1:10, ylab="ylab 4")
-screen(1, F)              #return to screen 1, but do not clear
+screen(1, FALSE)              #return to screen 1, but do not clear
 plot(10:1, axes=F, lty=2, ylab="")  # overlay second plot
 axis(4)                   # add tic marks to right-hand axis
 title("Plot 1")
-close.screen(all = T) # exit split-screen mode
+close.screen(all = TRUE) # exit split-screen mode
 }
 }
 \keyword{aplot}

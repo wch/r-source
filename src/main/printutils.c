@@ -353,8 +353,8 @@ char *EncodeElement(SEXP x, int index, int quote)
 	EncodeReal(REAL(x)[index], w, d, e);
 	break;
     case STRSXP:
-	formatString(&STRING(x)[index], 1, &w, quote);
-	EncodeString(CHAR(STRING(x)[index]), w, quote, Rprt_adj_left);
+	formatString(&STRING_PTR(x)[index], 1, &w, quote);
+	EncodeString(CHAR(STRING_ELT(x, index)), w, quote, Rprt_adj_left);
 	break;
     case CPLXSXP:
 	formatComplex(&COMPLEX(x)[index], 1,
@@ -488,9 +488,9 @@ void MatrixColumnLabel(SEXP cl, int j, int w)
     int l;
 
     if (!isNull(cl)) {
-	l = Rstrlen(CHAR(STRING(cl)[j]));
+	l = Rstrlen(CHAR(STRING_ELT(cl, j)));
 	Rprintf("%*s%s", w-l, "",
-		EncodeString(CHAR(STRING(cl)[j]), l, 0, Rprt_adj_left));
+		EncodeString(CHAR(STRING_ELT(cl, j)), l, 0, Rprt_adj_left));
     }
     else {
 	Rprintf("%*s[,%ld]", w-IndexWidth(j+1)-3, "", j+1);
@@ -502,9 +502,9 @@ void RightMatrixColumnLabel(SEXP cl, int j, int w)
     int l;
 
     if (!isNull(cl)) {
-	l = Rstrlen(CHAR(STRING(cl)[j]));
+	l = Rstrlen(CHAR(STRING_ELT(cl, j)));
 	Rprintf("%*s", R_print.gap+w,
-		EncodeString(CHAR(STRING(cl)[j]), l, 0, Rprt_adj_right));
+		EncodeString(CHAR(STRING_ELT(cl, j)), l, 0, Rprt_adj_right));
     }
     else {
 	Rprintf("%*s[,%ld]%*s", R_print.gap, "", j+1, w-IndexWidth(j+1)-3, "");
@@ -516,9 +516,9 @@ void LeftMatrixColumnLabel(SEXP cl, int j, int w)
     int l;
 
     if (!isNull(cl)) {
-	l = Rstrlen(CHAR(STRING(cl)[j]));
+	l = Rstrlen(CHAR(STRING_ELT(cl, j)));
 	Rprintf("%*s%s%*s", R_print.gap, "",
-		EncodeString(CHAR(STRING(cl)[j]), l, 0, Rprt_adj_left), w-l, "");
+		EncodeString(CHAR(STRING_ELT(cl, j)), l, 0, Rprt_adj_left), w-l, "");
     }
     else {
 	Rprintf("%*s[,%ld]%*s", R_print.gap, "", j+1, w-IndexWidth(j+1)-3, "");
@@ -530,9 +530,9 @@ void MatrixRowLabel(SEXP rl, int i, int rlabw, int lbloff)
     int l;
 
     if (!isNull(rl)) {
-	l = Rstrlen(CHAR(STRING(rl)[i]));
+	l = Rstrlen(CHAR(STRING_ELT(rl, i)));
 	Rprintf("\n%*s%s%*s", lbloff, "",
-		EncodeString(CHAR(STRING(rl)[i]), l, 0, Rprt_adj_left),
+		EncodeString(CHAR(STRING_ELT(rl, i)), l, 0, Rprt_adj_left),
 		rlabw-l-lbloff, "");
     }
     else {

@@ -11,7 +11,7 @@ require(package, quietly = FALSE, warn.conflicts = TRUE,
 .Last.lib(libpath)
 
 .packages(all.available = FALSE, lib.loc = .lib.loc)
-.path.package(package = .packages())
+.path.package(package = .packages(), quiet = FALSE)
 .lib.loc
 .Library
 .Autoloaded
@@ -47,7 +47,9 @@ require(package, quietly = FALSE, warn.conflicts = TRUE,
   \item{pkgname}{a character string giving the name of the package.}
   \item{libpath}{a character string giving the complete path to the package.}
   \item{all.available}{logical; if \code{TRUE} return \code{character}
-      vector of all available packages in \code{lib.loc}.}
+    vector of all available packages in \code{lib.loc}.}
+  \item{quiet}{logical. Should \code{.path.package} not give warnings or
+    an error if the package(s) are not loaded?}
 }
 \description{
   \code{library} and \code{require} load add-on packages; \code{provide}
@@ -107,8 +109,9 @@ require(package, quietly = FALSE, warn.conflicts = TRUE,
   packages available in the library location path \code{lib.loc}.
 
   \code{.path.package} returns the paths from which the named packages were
-  loaded, or if none were named, for all currently loaded packages. It
-  will warn if the packages named are not loaded.
+  loaded, or if none were named, for all currently loaded packages.
+  Unless \code{quiet = TRUE} it will warn if some of the packages named
+  are not loaded, and given an error if none are.
 
   \code{.Autoloaded} contains the ``base names'' of the packages for
   which autoloading has been promised.

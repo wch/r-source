@@ -4,6 +4,7 @@ formula.default <- function (x, ...)
     if (!is.null(x$formula))		eval(x$formula)
     else if (!is.null(x$call$formula))	eval(x$call$formula)
     else if (!is.null(x$terms))		x$terms
+    else if (!is.null(attr(x, "formula"))) attr(x, "formula")
     else switch(mode(x),
 		NULL = structure(NULL, class = "formula"),
 		character = formula(eval(parse(text = x)[[1]])),
@@ -43,7 +44,13 @@ print.formula <- function(x, ...) {
 }
 
 terms <- function(x, ...) UseMethod("terms")
-terms.default <- function(x, ...) x$terms
+terms.default <- function(x, ...) {
+    v<-x$terms
+    if(is.null(v))
+        stop("no terms component")
+    return(v)
+}
+
 terms.terms <- function(x, ...) x
 print.terms <- function(x, ...) print.default(unclass(x))
 #delete.response <- function (termobj)
@@ -119,6 +126,8 @@ terms.formula <- function(x, specials = NULL, abb = NULL, data = NULL,
 	}
     }
     attr(terms, "specials")$offset <- NULL
+    if( !inherits(terms, "formula") )
+        class(terms)<-c(class(terms), "formula")
     terms
 }
 
@@ -171,13 +180,13 @@ na.omit.default <- function(object)
     if(!is.atomic(object)) return(object)
     d <- dim(object)
     if(length(d) > 2) return(object)
+    omit <- seq(along=object)[is.na(object)]
+    if (length(omit) == 0) return(object)
     if(length(d)){
-        omit <- seq(along=object)[is.na(object)]
         omit <- unique(((omit-1) %% d[1]) + 1)
         nm <- rownames(object)
         object <- object[-omit, , drop=FALSE]
     } else {
-	omit <- seq(along=object)[is.na(object)]
         nm <- names(object)
         object <- object[-omit]
     }
@@ -208,7 +217,7 @@ na.omit.data.frame <- function(object)
 	    for(ii in 1:d[2])
 		omit <- omit | x[, ii]
     }
-    xx <- object[!omit, , drop = F]
+    xx <- object[!omit, , drop = FALSE]
     if (any(omit)) {
 	temp <- seq(omit)[omit]
 	names(temp) <- row.names(object)[omit]

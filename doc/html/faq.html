@@ -14,7 +14,7 @@
 <body>
 <h1>R FAQ</h1>
 <h2>Frequently Asked Questions on R</h2>
-<h2>Version 1.1-1, 2000/06/17</h2>
+<h2>Version 1.1-7, 2000-08-02</h2>
 <address>Kurt Hornik</address>
 <p><p><hr><p>
 
@@ -495,12 +495,12 @@ Up:<a rel=up href="#R%20Basics">R Basics</a>
 
 <h2>2.6 Are there Unix binaries for R?</h2>
 
-<p>The <code>bin/linux</code> directory of a CRAN site contains Debian
-2.1/2.2/2.3 packages for the i386 platform (now part of the Debian
-distribution and maintained by Doug Bates), Red Hat 6.x packages for the
-alpha, i386 and sparc platforms (maintained by Naoki Takebayashi, Martyn
-Plummer, and Vin Everett, respectively), SuSE 5.3/6.4 i386 packages by
-Albrecht Gebhardt, and Linuxppc 5.0 RPMs by Alex Buerkle.
+<p>The <code>bin/linux</code> directory of a CRAN site contains Debian 2.2/2.3
+packages for the i386 platform (now part of the Debian distribution and
+maintained by Doug Bates), Red Hat 6.x packages for the alpha, i386 and
+sparc platforms (maintained by Naoki Takebayashi, Martyn Plummer, and
+Vin Everett, respectively), SuSE 5.3/6.4 i386 packages by Albrecht
+Gebhardt, and Linuxppc 5.0 RPMs by Alex Buerkle.
 
 <p>The <code>bin/osf</code> directory of a CRAN site contains RPMs for alpha
 systems running Digital Unix 4.0 by Albrecht Gebhardt.
@@ -673,8 +673,8 @@ include information on the system and version of R being used.  See
 <a href="#R%20Bugs">R Bugs</a> for more details.
 
 <p>Archives of the above three mailing lists are made available on the net
-in a monthly schedule via the <code>doc/mail/mail.html</code> file in CRAN. 
-An <small>HTML</small> archive of the lists are available via
+in a monthly schedule via the <code>doc/html/mail.html</code> file in CRAN. 
+Searchable archives of the lists are available via
 <a href="http://www.ens.gu.edu.au/robertk/R/">http://www.ens.gu.edu.au/robertk/R/</a>.
 
 <p>The R Core Team can be reached at <a href="mailto:r-core@lists.r-project.org">r-core@lists.r-project.org</a>
@@ -706,6 +706,8 @@ currently being mirrored daily at
 <blockquote>
 <p><table><tr align="left"><td><a href="http://cran.dk.r-project.org/">http://cran.dk.r-project.org/</a>
 <td>(Denmark)
+<br></tr><tr align="left"><td><a href="http://cran.hu.r-project.org/">http://cran.hu.r-project.org/</a>
+<td>(Hungary)
 <br></tr><tr align="left"><td><a href="http://cran.it.r-project.org/">http://cran.it.r-project.org/</a>
 <td>(Italy)
 <br></tr><tr align="left"><td><a href="http://cran.ch.r-project.org/">http://cran.ch.r-project.org/</a>
@@ -1327,6 +1329,8 @@ the book "Kernel Smoothing" by M. P. Wand and M. C. Jones, 1995.
 <dd>Functions and datasets from the main package of Venables and Ripley,
 "Modern Applied Statistics with <small>S-PLUS</small>".  Contained in the <code>VR</code>
 bundle. 
+<br><dt><strong>Matrix</strong>
+<dd>A Matrix package. 
 <br><dt><strong>NISTnls</strong>
 <dd>A set of test nonlinear least squares examples from NIST, the
 U.S. National Institute for Standards and Technology. 
@@ -1507,10 +1511,15 @@ contains
 <dl>
 <dt><strong>HTML</strong>
 <dd>Functions for exporting R objects as <small>HTML</small> tables. 
+<br><dt><strong>Java</strong>
+<dd>An interface from R to Java to create and call Java objects and
+methods. 
 <br><dt><strong>RMySQL</strong>
 <dd>An interface between R and the MySQL database system. 
 <br><dt><strong>RPgSQL</strong>
 <dd>An interface between R and the PostgreSQL database system. 
+<br><dt><strong>Rstreams</strong>
+<dd>Binary file stream support functions. 
 <br><dt><strong>cmprsk</strong>
 <dd>Estimation, testing and regression modeling of subdistribution functions
 in competing risks. 
@@ -1520,6 +1529,8 @@ in competing risks.
 <dd>Finding D-optimal experimental designs. 
 <br><dt><strong>dse</strong>
 <dd>Multivariate time series. 
+<br><dt><strong>exactDistr</strong>
+<dd>Exact distributions for rank tests. 
 <br><dt><strong>foreign</strong>
 <dd>Functions for reading data stored by statistical software like Minitab,
 SAS, SPSS, etc. 
@@ -1531,6 +1542,8 @@ thin plate splines, kriging and neural networks.
 <br><dt><strong>multidim</strong>
 <dd>Code for correspondence analysis and other multidimensional descriptive
 statistics. 
+<br><dt><strong>netCDF</strong>
+<dd>Read data from netCDF files. 
 <br><dt><strong>syskern</strong>
 <dd>Functions for writing code that is OS and R/S independent. 
 <br><dt><strong>tframe</strong>

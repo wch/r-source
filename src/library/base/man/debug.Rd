@@ -28,6 +28,8 @@ undebug(fun)
   the debugger.
   Typing \code{Q} quits the current execution and returns you to the
   top--level prompt.
+  Typing \code{where} causes the debugger to print out the current
+  stack trace (all functions that are active).
   If you have variables with names that are identical to the controls
   (eg. \code{c} or \code{n} ) then you need to use \code{print(c)} and
   \code{print(n)} to evaluate them.

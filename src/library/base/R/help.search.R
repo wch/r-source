@@ -43,8 +43,8 @@ help.search <- function(topic, fields = c("name", "title"),
         ## Check whether we can save the help db lateron
         save.db <- FALSE
         dir <- switch(.Platform$OS.type,
-                      "windows" = getenv("R_USER"),
-                      "unix" = getenv("HOME"),
+                      "windows" = Sys.getenv("R_USER"),
+                      "unix" = Sys.getenv("HOME"),
                       "")
         if(nchar(dir) == 0) dir <- getwd()
         dir <- file.path(dir, ".R")
@@ -111,7 +111,7 @@ help.search <- function(topic, fields = c("name", "title"),
     fields <- paste(fields, collapse = " or ")
     if (NROW(db) > 0) {
         FILE <- tempfile()
-        cat(paste("Objects with ", fields, " matching `", topic,
+        cat(paste("Help files with ", fields, " matching `", topic,
                   "':\n\n", sep = ""),
             file = FILE)
         dbnam <- paste(db[ , "name"], "(", db[, "pkg"], ")", sep = "")
@@ -120,7 +120,7 @@ help.search <- function(topic, fields = c("name", "title"),
             sep = "\n", file = FILE, append = TRUE)
         file.show(FILE, delete.file = TRUE)
     } else {
-        cat(paste("No objects found with ", fields, " matching `",
+        cat(paste("No help files found with ", fields, " matching `",
                   topic, "'\n", sep = ""))
     }
 

@@ -59,8 +59,8 @@ SEXP do_split(SEXP call, SEXP op, SEXP args, SEXP env)
     /* for the ith group. */
     PROTECT(vec = allocVector(VECSXP, nlevs));
     for (i = 0;  i< nlevs; i++) {
-	VECTOR(vec)[i] = allocVector(TYPEOF(x), INTEGER(counts)[i]);
-	setAttrib(VECTOR(vec)[i], R_LevelsSymbol,
+	SET_VECTOR_ELT(vec, i, allocVector(TYPEOF(x), INTEGER(counts)[i]));
+	setAttrib(VECTOR_ELT(vec, i), R_LevelsSymbol,
 		  getAttrib(x, R_LevelsSymbol));
     }
     for (i = 0; i < nlevs; i++)
@@ -72,16 +72,16 @@ SEXP do_split(SEXP call, SEXP op, SEXP args, SEXP env)
 	    switch (TYPEOF(x)) {
 	    case LGLSXP:
 	    case INTSXP:
-		INTEGER(VECTOR(vec)[j - 1])[k] = INTEGER(x)[i];
+		INTEGER(VECTOR_ELT(vec, j - 1))[k] = INTEGER(x)[i];
 		break;
 	    case REALSXP:
-		REAL(VECTOR(vec)[j - 1])[k] = REAL(x)[i];
+		REAL(VECTOR_ELT(vec, j - 1))[k] = REAL(x)[i];
 		break;
 	    case CPLXSXP:
-		COMPLEX(VECTOR(vec)[j - 1])[k] = COMPLEX(x)[i];
+		COMPLEX(VECTOR_ELT(vec, j - 1))[k] = COMPLEX(x)[i];
 		break;
 	    case STRSXP:
-		STRING(VECTOR(vec)[j - 1])[k] = STRING(x)[i];
+		SET_STRING_ELT(VECTOR_ELT(vec, j - 1), k, STRING_ELT(x, i));
 		break;
 	    }
 	    INTEGER(counts)[j - 1] += 1;

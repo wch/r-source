@@ -4,28 +4,23 @@
 \alias{Deprecated}
 \alias{.Deprecated}
 \usage{
-.Deprecated(new)
+getenv(x)
 
-provide(package)
+.Deprecated(new)
 }
-\alias{provide}
-\alias{.Provided}
 %------ PLEASE: put \alias{.} here for  EACH !
 %
+\alias{getenv}
 \description{
   These functions are provided for compatibility with older versions of
   \R only, and may be defunct as soon as of the next release.
 
   \code{.Deprecated("<new name>")} is called from deprecated functions.
 
-  \code{provide} allows code to register the names of packages that it
-  encompasses.  The argument is stored in the list \code{.Provided}.
-  \code{provide} returns \code{FALSE} if the package was already present
-  in \code{.Provided} or among the packages in \code{search()}.  The main
-  use for \code{provide} is when multiple packages share code.  This is
-  most likely when the code implements features present in S(-PLUS) but
-  not in \R.
+  \code{getenv} is a deprecated altenative name for \code{\link{Sys.getenv}}.
 
+  \code{save(, oldstyle=TRUE)} is deprecated, and will be removed from
+  \R version 1.3.0.
 }
 \seealso{\code{\link{Defunct}}}
 %\examples{

@@ -6,12 +6,6 @@
 ## 2) Wrapping every file in order to be more order independent
 ## 3) appending a FOOTER ...
 
-## Should work WHEREVER this is called from :
-(cd `dirname $0`/..
-  R_HOME=`pwd`; export R_HOME
-)
-R_HOME=`cd ${R_HOME}; pwd`	# absolute
-
 PKG=${1}; shift; FILES="${@}"
 
 ## 1) ---- Header ----

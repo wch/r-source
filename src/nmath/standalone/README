@@ -2,7 +2,7 @@ Under Unix, making in this directory will make standalone libraries
 libRmath.a and libRmath.so.  `make archive' and `make shared' make
 just one of them.
 
-You may find you need GNU make, especially if builddir != srcdir.
+You may find you need GNU make for full support of VPATH.
 
 Under Windows, use make -f Makefile.win. This makes Rmath.dll with
 import library libRmath.a.

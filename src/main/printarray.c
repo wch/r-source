@@ -48,7 +48,7 @@ static void printLogicalMatrix(SEXP sx, int offset, int r, int c,
     int i, j, jmin, jmax, lbloff = 0;
 
     if (!isNull(rl))
-	formatString(STRING(rl), r, &rlabw, 0);
+	formatString(STRING_PTR(rl), r, &rlabw, 0);
     else
 	rlabw = IndexWidth(r + 1) + 3;
 
@@ -69,7 +69,7 @@ static void printLogicalMatrix(SEXP sx, int offset, int r, int c,
     for (j = 0; j < c; j++) {
 	formatLogical(&x[j * r], r, &w[j]);
 	if (!isNull(cl))
-	    clabw = strlen(CHAR(STRING(cl)[j]));
+	    clabw = strlen(CHAR(STRING_ELT(cl, j)));
 	else
 	    clabw = IndexWidth(j + 1) + 3;
 	if (w[j] < clabw)
@@ -116,7 +116,7 @@ static void printIntegerMatrix(SEXP sx, int offset, int r, int c,
     int i, j, jmin, jmax, lbloff = 0;
 
     if (!isNull(rl))
-	formatString(STRING(rl), r, &rlabw, 0);
+	formatString(STRING_PTR(rl), r, &rlabw, 0);
     else
 	rlabw = IndexWidth(r + 1) + 3;
 
@@ -136,7 +136,7 @@ static void printIntegerMatrix(SEXP sx, int offset, int r, int c,
     for (j = 0; j < c; j++) {
 	formatInteger(&x[j * r], r, &w[j]);
 	if (!isNull(cl))
-	    clabw = strlen(CHAR(STRING(cl)[j]));
+	    clabw = strlen(CHAR(STRING_ELT(cl, j)));
 	else
 	    clabw = IndexWidth(j + 1) + 3;
 	if (w[j] < clabw)
@@ -184,7 +184,7 @@ static void printRealMatrix(SEXP sx, int offset, int r, int c,
     int i, j, jmin, jmax, lbloff = 0;
 
     if (!isNull(rl))
-	formatString(STRING(rl), r, &rlabw, 0);
+	formatString(STRING_PTR(rl), r, &rlabw, 0);
     else
 	rlabw = IndexWidth(r + 1) + 3;
 
@@ -210,7 +210,7 @@ static void printRealMatrix(SEXP sx, int offset, int r, int c,
     for (j = 0; j < c; j++) {
 	formatReal(&x[j * r], r, &w[j], &d[j], &e[j]);
 	if (!isNull(cl))
-	    clabw = strlen(CHAR(STRING(cl)[j]));
+	    clabw = strlen(CHAR(STRING_ELT(cl, j)));
 	else
 	    clabw = IndexWidth(j + 1) + 3;
 	if (w[j] < clabw)
@@ -258,7 +258,7 @@ static void printComplexMatrix(SEXP sx, int offset, int r, int c,
     int i, j, jmin, jmax, lbloff = 0;
 
     if (!isNull(rl))
-	formatString(STRING(rl), r, &rlabw, 0);
+	formatString(STRING_PTR(rl), r, &rlabw, 0);
     else
 	rlabw = IndexWidth(r + 1) + 3;
 
@@ -296,7 +296,7 @@ static void printComplexMatrix(SEXP sx, int offset, int r, int c,
 		      &wr[j], &dr[j], &er[j],
 		      &wi[j], &di[j], &ei[j]);
 	if (!isNull(cl))
-	    clabw = strlen(CHAR(STRING(cl)[j]));
+	    clabw = strlen(CHAR(STRING_ELT(cl, j)));
 	else
 	    clabw = IndexWidth(j + 1) + 3;
 	w[j] = wr[j] + wi[j] + 2;
@@ -353,7 +353,7 @@ static void printStringMatrix(SEXP sx, int offset, int r, int c,
     int i, j, jmin, jmax, lbloff = 0;
 
     if (!isNull(rl))
-	formatString(STRING(rl), r, &rlabw, 0);
+	formatString(STRING_PTR(rl), r, &rlabw, 0);
     else
 	rlabw = IndexWidth(r + 1) + 3;
 
@@ -368,11 +368,11 @@ static void printStringMatrix(SEXP sx, int offset, int r, int c,
     }
 
     sw = allocVector(INTSXP, c);
-    x = STRING(sx)+offset;
+    x = STRING_PTR(sx)+offset;
     w = INTEGER(sw);
     for (j = 0; j < c; j++) {
 	formatString(&x[j * r], r, &w[j], quote);
-	if (!isNull(cl)) clabw = strlen(CHAR(STRING(cl)[j]));
+	if (!isNull(cl)) clabw = strlen(CHAR(STRING_ELT(cl, j)));
 	else clabw = IndexWidth(j + 1) + 3;
 	if (w[j] < clabw)
 	    w[j] = clabw;
@@ -475,14 +475,14 @@ static void printArrayGeneral(SEXP x, SEXP dim, int quote, SEXP dimnames)
 	    dn1 = R_NilValue;
 	}
 	else {
-	    dn0 = VECTOR(dimnames)[0];
-	    dn1 = VECTOR(dimnames)[1];
+	    dn0 = VECTOR_ELT(dimnames, 0);
+	    dn1 = VECTOR_ELT(dimnames, 1);
 	    has_dimnames = 1;
 	    dnn = getAttrib(dimnames, R_NamesSymbol);
 	    has_dnn = !isNull(dnn);
 	    if ( has_dnn ) {
-		rn = CHAR(STRING(dnn)[0]);
-		cn = CHAR(STRING(dnn)[1]);
+		rn = CHAR(STRING_ELT(dnn, 0));
+		cn = CHAR(STRING_ELT(dnn, 1));
 	    }
 	}
 	for (i = 0; i < nb; i++) {
@@ -491,13 +491,13 @@ static void printArrayGeneral(SEXP x, SEXP dim, int quote, SEXP dimnames)
 	    for (j = 2 ; j < ndim; j++) {
 		l = (i / k) % INTEGER(dim)[j] + 1;
 		if (has_dimnames &&
-		    ((dn = VECTOR(dimnames)[j]) != R_NilValue)) {
+		    ((dn = VECTOR_ELT(dimnames, j)) != R_NilValue)) {
 		    if ( has_dnn )
 			Rprintf(", %s = %s",
-				CHAR(STRING(dnn)[j]),
-				CHAR(STRING(dn)[l - 1]));
+				CHAR(STRING_ELT(dnn, j)),
+				CHAR(STRING_ELT(dn, l - 1)));
 		    else
-			Rprintf(", %s", CHAR(STRING(dn)[l - 1]));
+			Rprintf(", %s", CHAR(STRING_ELT(dn, l - 1)));
 		} else
 		    Rprintf(", %d", l);
 		k = k * INTEGER(dim)[j];

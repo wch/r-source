@@ -34,8 +34,8 @@ static char *SaveString(SEXP sxp, int offset)
     char *s;
     if(!isString(sxp) || length(sxp) <= offset)
 	errorcall(gcall, "invalid string argument");
-    s = R_alloc(strlen(CHAR(STRING(sxp)[offset]))+1, sizeof(char));
-    strcpy(s, CHAR(STRING(sxp)[offset]));
+    s = R_alloc(strlen(CHAR(STRING_ELT(sxp, offset)))+1, sizeof(char));
+    strcpy(s, CHAR(STRING_ELT(sxp, offset)));
     return s;
 }
 

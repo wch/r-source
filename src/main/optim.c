@@ -29,8 +29,8 @@ static SEXP getListElement(SEXP list, char *str)
     int i;
 
     for (i = 0; i < length(list); i++)
-	if (strcmp(CHAR(STRING(names)[i]), str) == 0) {
-	    elmt = VECTOR(list)[i];
+	if (strcmp(CHAR(STRING_ELT(names, i)), str) == 0) {
+	    elmt = VECTOR_ELT(list, i);
 	    break;
 	}
     return elmt;
@@ -91,7 +91,7 @@ static double fminfn(int n, double *p, OptStruct OS)
 	if (!R_FINITE(p[i])) error("non-finite value supplied by optim");
 	REAL(x)[i] = p[i] * (OS->parscale[i]);
     }
-    CADR(OS->R_fcall) = x;
+    SETCADR(OS->R_fcall, x);
     PROTECT(s = coerceVector(eval(OS->R_fcall, OS->R_env), REALSXP));
     val = REAL(s)[0]/(OS->fnscale);
     UNPROTECT(2);
@@ -110,7 +110,7 @@ static void fmingr(int n, double *p, double *df, OptStruct OS)
 	    if (!R_FINITE(p[i])) error("non-finite value supplied by nlm");
 	    REAL(x)[i] = p[i] * (OS->parscale[i]);
 	}
-	CADR(OS->R_gcall) = x;
+	SETCADR(OS->R_gcall, x);
 	PROTECT(s = coerceVector(eval(OS->R_gcall, OS->R_env), REALSXP));
 	for (i = 0; i < n; i++)
 	    df[i] = REAL(s)[i] * (OS->parscale[i])/(OS->fnscale);
@@ -118,16 +118,16 @@ static void fmingr(int n, double *p, double *df, OptStruct OS)
     } else { /* numerical derivatives */
 	PROTECT(x = allocVector(REALSXP, n));
 	for (i = 0; i < n; i++) REAL(x)[i] = p[i] * (OS->parscale[i]);
-	CADR(OS->R_fcall) = x;
+	SETCADR(OS->R_fcall, x);
 	if(OS->usebounds == 0) {
 	    for (i = 0; i < n; i++) {
 		eps = OS->ndeps[i];
 		REAL(x)[i] = (p[i] + eps) * (OS->parscale[i]);
-		CADR(OS->R_fcall) = x;
+		SETCADR(OS->R_fcall, x);
 		s = coerceVector(eval(OS->R_fcall, OS->R_env), REALSXP);
 		val1 = REAL(s)[0]/(OS->fnscale);
 		REAL(x)[i] = (p[i] - eps) * (OS->parscale[i]);
-		CADR(OS->R_fcall) = x;
+		SETCADR(OS->R_fcall, x);
 		s = coerceVector(eval(OS->R_fcall, OS->R_env), REALSXP);
 		val2 = REAL(s)[0]/(OS->fnscale);
 		df[i] = (val1 - val2)/(2 * eps);
@@ -144,7 +144,7 @@ static void fmingr(int n, double *p, double *df, OptStruct OS)
 		    epsused = tmp - p[i] ;
 		}
 		REAL(x)[i] = tmp * (OS->parscale[i]);
-		CADR(OS->R_fcall) = x;
+		SETCADR(OS->R_fcall, x);
 		s = coerceVector(eval(OS->R_fcall, OS->R_env), REALSXP);
 		val1 = REAL(s)[0]/(OS->fnscale);
 		tmp = p[i] - eps;
@@ -153,7 +153,7 @@ static void fmingr(int n, double *p, double *df, OptStruct OS)
 		    eps = p[i] - tmp;
 		}
 		REAL(x)[i] = tmp * (OS->parscale[i]);
-		CADR(OS->R_fcall) = x;
+		SETCADR(OS->R_fcall, x);
 		s = coerceVector(eval(OS->R_fcall, OS->R_env), REALSXP);
 		val2 = REAL(s)[0]/(OS->fnscale);
 		df[i] = (val1 - val2)/(epsused + eps);
@@ -190,7 +190,7 @@ SEXP do_optim(SEXP call, SEXP op, SEXP args, SEXP rho)
     args = CDR(args); method = CAR(args);
     if (!isString(method)|| LENGTH(method) != 1)
 	errorcall(call, "invalid method argument");
-    tn = CHAR(STRING(method)[0]);
+    tn = CHAR(STRING_ELT(method, 0));
     args = CDR(args); options = CAR(args);
     PROTECT(OS->R_fcall = lang2(fn, R_NilValue));
     PROTECT(par = coerceVector(duplicate(par), REALSXP));
@@ -327,18 +327,18 @@ SEXP do_optim(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    REAL(par)[i] = dpar[i] * (OS->parscale[i]);
 	UNPROTECT(1); /* OS->R_gcall */
 	PROTECT(smsg = allocVector(STRSXP, 1));
-	STRING(smsg)[0] = CREATE_STRING_VECTOR(msg);
-	VECTOR(res)[4] = smsg;
+	SET_STRING_ELT(smsg, 0, CREATE_STRING_VECTOR(msg));
+	SET_VECTOR_ELT(res, 4, smsg);
 	UNPROTECT(1);
     } else
 	errorcall(call, "unknown method");
 
     REAL(value)[0] = val * (OS->fnscale);
-    VECTOR(res)[0] = par; VECTOR(res)[1] = value;
+    SET_VECTOR_ELT(res, 0, par); SET_VECTOR_ELT(res, 1, value);
     INTEGER(counts)[0] = fncount; INTEGER(counts)[1] = grcount;
-    VECTOR(res)[2] = counts;
+    SET_VECTOR_ELT(res, 2, counts);
     INTEGER(conv)[0] = ifail;
-    VECTOR(res)[3] = conv;
+    SET_VECTOR_ELT(res, 3, conv);
     vmaxset(vmax);
     UNPROTECT(6);
     return res;

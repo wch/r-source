@@ -65,17 +65,17 @@ int OneIndex(SEXP x, SEXP s, int len, int partial, SEXP *newname)
 	if (names != R_NilValue) {
 	    /* Try for exact match */
 	    for (i = 0; i < nx; i++)
-		if (streql(CHAR(STRING(names)[i]),
-			   CHAR(STRING(s)[0]))) {
+		if (streql(CHAR(STRING_ELT(names, i)),
+			   CHAR(STRING_ELT(s, 0)))) {
 		    index = i;
 		    break;
 		}
 	    /* Try for partial match */
 	    if (partial && index < 0) {
-		len = strlen(CHAR(STRING(s)[0]));
+		len = strlen(CHAR(STRING_ELT(s, 0)));
 		for(i = 0; i < nx; i++) {
-		    if(!strncmp(CHAR(STRING(names)[i]),
-				CHAR(STRING(s)[0]), len)) {
+		    if(!strncmp(CHAR(STRING_ELT(names, i)),
+				CHAR(STRING_ELT(s, 0)), len)) {
 			if(index == -1 )
 			    index = i;
 			else
@@ -86,14 +86,14 @@ int OneIndex(SEXP x, SEXP s, int len, int partial, SEXP *newname)
 	}
 	if (index == -1)
 	    index = nx;
-	*newname = STRING(s)[0];
+	*newname = STRING_ELT(s, 0);
 	break;
     case SYMSXP:
 	nx = length(x);
 	names = getAttrib(x, R_NamesSymbol);
 	if (names != R_NilValue) {
 	    for (i = 0; i < nx; i++)
-		if (streql(CHAR(STRING(names)[i]),
+		if (streql(CHAR(STRING_ELT(names, i)),
 			   CHAR(PRINTNAME(s)))) {
 		    index = i;
 		    break;
@@ -101,7 +101,7 @@ int OneIndex(SEXP x, SEXP s, int len, int partial, SEXP *newname)
 	}
 	if (index == -1)
 	    index = nx;
-	*newname = STRING(s)[0];
+	*newname = STRING_ELT(s, 0);
 	break;
     default:
 	error("invalid subscript type");
@@ -142,15 +142,15 @@ int get1index(SEXP s, SEXP names, int len, int pok)
     case STRSXP:
 	/* Try for exact match */
 	for (i = 0; i < length(names); i++)
-	    if (streql(CHAR(STRING(names)[i]), CHAR(STRING(s)[0]))) {
+	    if (streql(CHAR(STRING_ELT(names, i)), CHAR(STRING_ELT(s, 0)))) {
 		index = i;
 		break;
 	    }
 	/* Try for partial match */
 	if (pok && index < 0) {
-	    len = strlen(CHAR(STRING(s)[0]));
+	    len = strlen(CHAR(STRING_ELT(s, 0)));
 	    for(i = 0; i < length(names); i++) {
-		if(!strncmp(CHAR(STRING(names)[i]), CHAR(STRING(s)[0]), len)) {
+		if(!strncmp(CHAR(STRING_ELT(names, i)), CHAR(STRING_ELT(s, 0)), len)) {
 		    if(index == -1 )
 			index = i;
 		    else
@@ -161,7 +161,7 @@ int get1index(SEXP s, SEXP names, int len, int pok)
 	break;
     case SYMSXP:
 	for (i = 0; i < length(names); i++)
-	    if (streql(CHAR(STRING(names)[i]), CHAR(PRINTNAME(s)))) {
+	    if (streql(CHAR(STRING_ELT(names, i)), CHAR(PRINTNAME(s)))) {
 		index = i;
 		break;
 	    }
@@ -343,18 +343,18 @@ static SEXP stringSubscript(SEXP s, int ns, int nx, SEXP names, int *stretch)
 	sub = 0;
 	if (names != R_NilValue) {
 	    for (j = 0; j < nnames; j++)
-		if (NonNullStringMatch(STRING(s)[i], STRING(names)[j])) {
+		if (NonNullStringMatch(STRING_ELT(s, i), STRING_ELT(names, j))) {
 		    sub = j + 1;
-		    STRING(indexnames)[i] = R_NilValue;
+		    SET_STRING_ELT(indexnames, i, R_NilValue);
 		    break;
 		}
 	}
 	if (sub == 0) {
 	    for (j = 0 ; j < i ; j++)
-		if (NonNullStringMatch(STRING(s)[i], STRING(s)[j])) {
+		if (NonNullStringMatch(STRING_ELT(s, i), STRING_ELT(s, j))) {
 		    sub = INTEGER(index)[j];
-/*		    STRING(indexnames)[i] = STRING(indexnames)[sub - 1];*/
-		    STRING(indexnames)[i] = STRING(s)[j];
+/*		    SET_STRING_ELT(indexnames, i, STRING_ELT(indexnames, sub - 1));*/
+		    SET_STRING_ELT(indexnames, i, STRING_ELT(s, j));
 		    break;
 		}
 	}
@@ -363,14 +363,14 @@ static SEXP stringSubscript(SEXP s, int ns, int nx, SEXP names, int *stretch)
 		error("subscript out of bounds");
 	    extra += 1;
 	    sub = extra;
-	    STRING(indexnames)[i] = STRING(s)[i];
+	    SET_STRING_ELT(indexnames, i, STRING_ELT(s, i));
 	}
 	INTEGER(index)[i] = sub;
     }
     /* Ghastly hack!  We attach the new names to the attribute */
     /* slot on the returned subscript vector. */
     if (extra != nnames) {
-	ATTRIB(index) = indexnames;
+	SET_ATTRIB(index, indexnames);
     }
     if (canstretch)
 	*stretch = extra;
@@ -405,7 +405,7 @@ SEXP arraySubscript(int dim, SEXP s, SEXP x)
 	dnames = getAttrib(x, R_DimNamesSymbol);
 	if (dnames == R_NilValue)
 	    error("no dimnames attribute for array");
-	dnames = VECTOR(dnames)[dim];
+	dnames = VECTOR_ELT(dnames, dim);
 	return stringSubscript(s, ns, nd, dnames, &stretch);
     case SYMSXP:
 	if (s == R_MissingArg)
@@ -431,7 +431,7 @@ SEXP makeSubscript(SEXP x, SEXP s, int *stretch)
 	nx = length(x);
 	ns = length(s);
 	PROTECT(s=duplicate(s));
-	ATTRIB(s) = R_NilValue;
+	SET_ATTRIB(s, R_NilValue);
 	switch (TYPEOF(s)) {
 	case NILSXP:
 	    *stretch = 0;

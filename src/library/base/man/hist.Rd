@@ -2,12 +2,11 @@
 \title{Histograms}
 \usage{
 hist(x, \dots)
-hist.default(x, breaks, freq = NULL, probability = !freq,
-     include.lowest = TRUE, right = TRUE,
-     col = NULL, border = par("fg"),
-     main = paste("Histogram of", deparse(substitute(x))),
-     xlim = range(breaks),  ylim = range(counts, 0),
-     xlab = deparse(substitute(x)),  ylab,
+hist.default(x, breaks, freq= NULL, probability = !freq,
+     right=TRUE, col = NULL, border = par("fg"),
+     main = paste("Histogram of" , xname),
+     xlim = range(breaks), ylim = NULL,
+     xlab = xname, ylab,
      axes = TRUE, plot = TRUE, labels = FALSE,
      nclass = NULL, \dots)
 }
@@ -38,15 +37,17 @@ hist.default(x, breaks, freq = NULL, probability = !freq,
   \item{xlim, ylim}{the range of x and y values with sensible defaults.}
   \item{plot}{logical.  If \code{TRUE} (default), a histogram is
     plotted, otherwise a list of breaks and counts is returned.}
-  \item{labels}{logical.  Additionally draw labels on top of bars,
-    if \code{TRUE}.}
+  \item{labels}{logical or character.  Additionally draw labels on top of bars,
+    if not \code{FALSE}; see \code{\link{plot.histogram}}.}
   \item{nclass}{numeric (integer).  For S compatibility only,
     \code{nclass=n} is equivalent to \code{breaks=n} (n scalar).}
   \item{\dots}{further graphical parameters to \code{title} and \code{axis}.}
 }
 \description{
-  The generic function \code{hist} computes and plots (if \code{plot=T}) a
-  histogram of the given data values.
+  The generic function \code{hist} computes a histogram of the given
+  data values.  If \code{plot=TRUE}, the resulting object of
+  \code{\link{class} "histogram"} is plotted by
+  \code{\link{plot.histogram}}, before it is returned.
 }
 \details{
   If \code{right = TRUE} (default), the histogram cells are intervals
@@ -59,7 +60,7 @@ hist.default(x, breaks, freq = NULL, probability = !freq,
   ``\emph{include highest}''.
 }
 \value{
-  a list with components:
+  an object of class \code{"histogram"} which is a list with components:
   \item{breaks}{the \eqn{n+1} cell boundaries (= \code{breaks} if that
   was a vector).}
   \item{counts}{\eqn{n} integers; for each cell, the number of
@@ -69,7 +70,10 @@ hist.default(x, breaks, freq = NULL, probability = !freq,
     relative frequencies \code{counts/n} and in general satisfy
     \eqn{\sum_i \hat f(x_i) (b_{i+1}-b_i) = 1}{sum[i; f^(x[i])
       (b[i+1]-b[i])] = 1}, where \eqn{b_i}{b[i]} = \code{breaks[i]}.}
-  \item{mids}{the \eqn{n} cell midpoints; useful for plotting.}
+  \item{mids}{the \eqn{n} cell midpoints.}
+  \item{xname}{a character string with the actual \code{x} argument name.}
+  \item{equidist}{logical, indicating if the distances between
+    \code{breaks} are all the same.}
 }
 \note{
   The resulting value does \emph{not} depend on the values of
@@ -89,13 +93,15 @@ r <- hist(sqrt(islands), br = c(4* 0:5,10* 3:5,70,100,140), col='blue1')
 text(r$mids, r$intensities, r$counts, adj=c(.5,-.5), col='blue3')
 sapply(r[2:3],sum)
 sum(r$intensities * diff(r$breaks)) # == 1
+lines(r, lty = 3, border = "purple") # -> lines.histogram(*)
 par(op)
 
-str(hist(islands, plot= F))
-str(hist(islands, br=12, plot= F))
-str(hist(islands, br=c(12,20,36,80,200,1000,17000), plot = F))
-str(hist(islands, br=c(12,20,36,80,200,1000,17000), freq = TRUE))#warning
+str(hist(islands, plot= FALSE))        #-> 5  breaks
+str(hist(islands, br=12, plot= FALSE)) #-> 10 (~= 12) breaks
+str(hist(islands, br=c(12,20,36,80,200,1000,17000), plot = FALSE))
+    hist(islands, br=c(12,20,36,80,200,1000,17000), freq = TRUE,
+         main = "WRONG histogram") # and warning
 }
+\keyword{dplot}
 \keyword{hplot}
-\keyword{iplot}
 \keyword{distribution}

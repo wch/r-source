@@ -299,7 +299,7 @@ predLoess <-
     }
     else { ## interpolate
 	## need to eliminate points outside original range - not in pred_
-	inside <- matrix(F, M, ncol = D)
+	inside <- matrix(FALSE, M, ncol = D)
 	ranges <- apply(x, 2, range)
 	inside <- (x.evaluate <= rep(ranges[2,], rep(M, D))) &
 	(x.evaluate >= rep(ranges[1,], rep(M, D)))
@@ -447,7 +447,7 @@ loess.smooth <-
 ## panel.smooth is currently defined in ../../base/R/coplot.R :
 ## panel.smooth <-
 ##   function(x, y, span = 2/3, degree = 1, family = c("symmetric", "gaussian"),
-##	   zero.line = F, evaluation = 50, ...)
+##	   zero.line = FALSE, evaluation = 50, ...)
 ## {
 ##   points(x, y, ...)
 ##   lines(loess.smooth(x, y, span, degree, family, evaluation), ...)

@@ -46,8 +46,8 @@ apropos("lq")
 
 lm <- 1:pi
 find(lm)        ##> ".GlobalEnv"   "package:base"
-find(lm, num=T) ## .. numbers with these names
-find(lm, num=T, mode="function")# only the second one
+find(lm, num=TRUE) ## .. numbers with these names
+find(lm, num=TRUE, mode="function")# only the second one
 rm(lm)
 
 apropos(".", mode="list")

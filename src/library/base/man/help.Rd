@@ -3,6 +3,7 @@
 \usage{
 help(topic, offline = FALSE, package = .packages()
      lib.loc = .lib.loc, verbose = getOption("verbose"),
+     try.all.packages = getOption("help.try.all.packages"),
 #ifdef unix
      htmlhelp = getOption("htmlhelp"))
 #endif
@@ -23,9 +24,11 @@ help(topic, offline = FALSE, package = .packages()
  \item{package}{a name or character vector giving the packages to look
    into for documentation.  By default, all packages in the search path
    are used.}
- \item{lib.loc}{A character vector of directory names of \R libraries.
-   Defaults to all libraries currently known.}
+ \item{lib.loc}{a character vector of directory names of \R libraries.
+   Defaults to all libraries currently known. If the default is used,
+   the loaded packages are searched before the libraries.}
  \item{verbose}{logical; if \code{TRUE}, the file name is reported.}
+ \item{try.all.packages}{logical; see \code{Notes}.}
 #ifdef unix
  \item{htmlhelp}{logical (or \code{NULL}).  If \code{TRUE} (which is the
      default after \code{\link{help.start}} has been called), the HTML
@@ -72,13 +75,20 @@ help(topic, offline = FALSE, package = .packages()
 #endif
 }
 \note{
-  You will only get help for \R objects in your
-  \code{\link{search}()} path, i.e., \code{help(dist)} will only work after
-  \code{\link{library}(mva)}. To look in all the packages in all the
-  current libraries, use
-  \code{help(topic, package=.packages(all=T), lib.loc=.lib.loc)}
+  Unless \code{lib.loc} is specified explicitly, the loaded packages are
+  searched before those in the specified libraries.  This ensures that
+  if a library is loaded from a library not in \code{.lib.loc} then the
+  help from the loaded library is used.  If \code{lib.loc} is specified
+  explicitly, the loaded packages are \emph{not} searched.
 
-  The help files can be many small files. On some file systems it is
+  If this search fails and argument \code{try.all.packages} is
+  \code{TRUE} and neither \code{packages} nor \code{lib.loc} is
+  specified, then all the packages in \code{lib.loc} are searched
+  for help on \code{topic} and a list of (any) packages where help
+  may be found is printed (but no help is shown).
+  \bold{N.B.} searching all packages can be slow.
+
+  The help files can be many small files.  On some file systems it is
   desirable to save space, and the text files in the \file{help} directory
   of an installed package can be zipped up as a zip archive
   \file{Rhelp.zip}. Ensure the files \file{AnIndex} and
@@ -88,7 +98,7 @@ help(topic, offline = FALSE, package = .packages()
 \seealso{
   \code{\link{help.search}()} for finding help pages on a ``vague'' topic.
   \code{\link{help.start}()} which opens the HTML version of the \R
-  Manual;
+  help pages;
   \code{\link{library}()} for listing available packages and the
   user-level objects they contain;
   \code{\link{data}()} for listing available data sets;
@@ -107,12 +117,15 @@ help(lapply)
 help("for")             # or ?"for", but the quotes are needed
 ?"+"
 
-help(package = stepfun) # get help even when it's not present
+help(package = stepfun) # get help even when package is not loaded
 
 data()                  # list all available data sets
 ?women                  # information about data set "women"
 
 topi <- "women"
 \dontrun{help(topi) ##--> Error: No documentation for `topi'}
+
+try(help("bs", try.all.packages=FALSE)) # reports not found (an error)
+help("bs", try.all.packages=TRUE) # reports can be found in package `splines'
 }
 \keyword{documentation}

@@ -19,9 +19,10 @@ Basics
 	classes		&	Data Types (not OO)
 	    & character	&	Character Data Operations
 	    & complex	&	Complex Numbers
-	    & category  &	Categorical Data
-	    & NA		&	Missing Values			[!= S]
-	list		&	Lists					11
+	    & category	&	Categorical Data
+	    & NA	&	Missing Values			[!= S]
+	list		&	Lists
+	chron		&	Dates and Times				12
 
 Mathematics
 	array		&	Matrices and Arrays
@@ -31,7 +32,7 @@ Mathematics
 	logic		&	Logical Operators
 	optimize	&	Optimization				6
 	symbolmath	&	"Symbolic Math", as polynomials, fractions
-	
+
 
 Programming, Input/Ouput, and Miscellaneous
 
@@ -50,7 +51,7 @@ Programming, Input/Ouput, and Miscellaneous
 
 Statistics
 
-	distribution 	&	Probability Distributions and Random Numbers
+	distribution	&	Probability Distributions and Random Numbers
 	univar		&	simple univariate statistics  [!= S]
 	htest		&	Statistical Inference
 	models		&	Statistical Models
@@ -60,7 +61,7 @@ Statistics
 	design		&	Designed Experiments
 	multivariate	&	Multivariate Techniques
 	ts		&	Time Series
-	survival	&	Survival Analysis		       11
+	survival	&	Survival Analysis			11
 
 				 [actually, `survival4' rather than `survival',
 				  but do we want 'survival5' later ?]
@@ -70,14 +71,14 @@ Statistics
 	cluster		&	Clustering
 	loess		&	Loess Objects
 	tree		&	Regression and Classification Trees	5
-								     ----
-								       51
+								      ---
+								       52
 
 MASS (2, 1997)
 --------------
 
 add the following keywords :
 
-	classif		&	Classification  ['class' library]
+	classif		&	Classification	['class' library]
 	spatial		&	Spatial Statistics ['spatial' library]
-	neural		&	Neural Networks ['nnet'  library]
+	neural		&	Neural Networks ['nnet'	 library]

@@ -30,8 +30,8 @@ SEXP do_debug(SEXP call, SEXP op, SEXP args, SEXP rho)
 #define find_char_fun \
     if (isValidString(CAR(args))) {				\
 	SEXP s;							\
-	PROTECT(s = install(CHAR(STRING(CAR(args))[0])));	\
-	CAR(args) = findFun(s, rho);				\
+	PROTECT(s = install(CHAR(STRING_ELT(CAR(args), 0))));	\
+	SETCAR(args, findFun(s, rho));				\
 	UNPROTECT(1);						\
     }
     find_char_fun
@@ -40,12 +40,12 @@ SEXP do_debug(SEXP call, SEXP op, SEXP args, SEXP rho)
 	errorcall(call, "argument must be a function");
     switch(PRIMVAL(op)) {
     case 0:
-	DEBUG(CAR(args)) = 1;
+	SET_DEBUG(CAR(args), 1);
 	break;
     case 1:
 	if( DEBUG(CAR(args)) != 1 )
 	    warningcall(call, "argument is not being debugged");
-	DEBUG(CAR(args)) = 0;
+	SET_DEBUG(CAR(args), 0);
 	break;
     }
     return R_NilValue;
@@ -64,10 +64,10 @@ SEXP do_trace(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     switch(PRIMVAL(op)) {
     case 0:
-	TRACE(CAR(args)) = 1;
+	SET_TRACE(CAR(args), 1);
 	break;
     case 1:
-	TRACE(CAR(args)) = 0;
+	SET_TRACE(CAR(args), 0);
 	break;
     }
     return R_NilValue;

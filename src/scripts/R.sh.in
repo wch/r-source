@@ -14,6 +14,12 @@ export LD_LIBRARY_PATH
 
 R_binary="R.bin"
 
+: ${R_PLATFORM=@R_PLATFORM@}
+export R_PLATFORM
+
+R_CMD="${R_HOME}/bin/R CMD"
+export R_CMD
+
 # Default printer paper size
 # Choose one of the following:
 # R_PAPERSIZE="a4"
@@ -51,6 +57,15 @@ export EDITOR
 : ${R_ENVIRON="${HOME}/.Renviron"}
 use_r_environ=true
 
+# Add share/perl to the perl library path
+if test -n "${PERL5LIB}"; then
+  PERL5LIB="${R_HOME}/share/perl:${PERL5LIB}";
+  export PERL5LIB
+else
+  PERLLIB="${R_HOME}/share/perl:${PERLLIB}";
+  export PERLLIB;
+fi
+
 usage="
 Usage: R [options] [< infile] [> outfile]
    or: R CMD command [arguments]
@@ -68,9 +83,11 @@ Options:
   --no-site-file        Don't read the site-wide Rprofile
   --no-init-file        Don't read the .Rprofile or ~/.Rprofile files
   --restore             Do restore previously saved data sets at startup
-  --no-restore          Don't restore them
+  --no-restore-data     Don't restore previously saved data sets
+  --no-restore-history  Don't restore the R history file
+  --no-restore          Don't restore anything
   --vanilla		Combine --no-save, --no-restore, --no-site-file,
-			--no-init-file, and --no-environ
+			--no-init-file and --no-environ
   --no-readline         Don't use readline for command-line editing
   --vsize=N             Set vector heap size to N bytes; \`4M' = 4 MegaB
   --nsize=N             Set number of cons cells to N
@@ -104,7 +121,15 @@ the usage of \`command'.
 
 Report bugs to <R-bugs@lists.r-project.org>."
 
-# Argument loop
+version="REPLACE_BY_VERSION.
+Copyright (C) REPLACE_BY_YEAR R Development Core Team
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under the terms of the GNU
+General Public License.  For more information about these matters,
+see http://www.gnu.org/copyleft/gpl.html."
+
+### Argument loop
 args=
 debugger=
 while test -n "${1}"; do
@@ -137,7 +162,7 @@ while test -n "${1}"; do
     -h|--help)
       echo "${usage}"; exit 0 ;;
     --version)
-      exec ${R_HOME}/bin/${R_binary} --version ;;
+      echo "${version}"; exit 0 ;;
     *)
       args="${args} ${1}" ;;
   esac

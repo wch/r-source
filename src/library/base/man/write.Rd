@@ -1,9 +1,9 @@
 \name{write}
 \title{Write Data to a File}
 \usage{
-write(x, file="data",
-        ncolumns=if(is.character(x)) 1 else 5,
-        append=FALSE)
+write(x, file = "data",
+      ncolumns = if(is.character(x)) 1 else 5,
+      append = FALSE)
 }
 \alias{write}
 \arguments{
@@ -24,7 +24,9 @@ write(x, file="data",
   columns in \code{file} the same as those in the internal representation.
 }
 \seealso{
-\code{\link{scan}} for reading data.
+  \code{\link{save}} for writing any \R objects,
+  \code{\link{write.table}} for data frames,
+  and \code{\link{scan}} for reading data.
 }
 \examples{
 # create a 2 by 5 matrix

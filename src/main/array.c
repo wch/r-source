@@ -37,7 +37,7 @@
 SEXP GetRowNames(SEXP dimnames)
 {
     if (TYPEOF(dimnames) == VECSXP)
-	return VECTOR(dimnames)[0];
+	return VECTOR_ELT(dimnames, 0);
     else if (TYPEOF(dimnames) == LISTSXP)
 	return CAR(dimnames);
     else
@@ -47,7 +47,7 @@ SEXP GetRowNames(SEXP dimnames)
 SEXP GetColNames(SEXP dimnames)
 {
     if (TYPEOF(dimnames) == VECSXP)
-	return VECTOR(dimnames)[1];
+	return VECTOR_ELT(dimnames, 1);
     else if (TYPEOF(dimnames) == LISTSXP)
 	return CADR(dimnames);
     else
@@ -177,7 +177,7 @@ SEXP DropDims(SEXP x)
 	    if (TYPEOF(dimnames) == VECSXP) {
 		for (i = 0; i < n; i++) {
 		    if (INTEGER(dims)[i] != 1) {
-			newnames = VECTOR(dimnames)[i];
+			newnames = VECTOR_ELT(dimnames, i);
 			break;
 		    }
 		}
@@ -210,7 +210,8 @@ SEXP DropDims(SEXP x)
 	if (!isNull(dimnames)) {
 	    int havenames = 0;
 	    for (i = 0; i < ndims; i++)
-		if (INTEGER(dims)[i] != 1 && VECTOR(dimnames)[i] != R_NilValue)
+		if (INTEGER(dims)[i] != 1 &&
+		    VECTOR_ELT(dimnames, i) != R_NilValue)
 		    havenames = 1;
 	    if (havenames) {
 		PROTECT(newnames = allocVector(VECSXP, n));
@@ -218,8 +219,9 @@ SEXP DropDims(SEXP x)
 		for (i = 0, n = 0; i < ndims; i++) {
 		    if (INTEGER(dims)[i] != 1) {
 			if(!isNull(dnn))
-			    STRING(newnamesnames)[n] = STRING(dnn)[i];
-			VECTOR(newnames)[n++] = VECTOR(dimnames)[i];
+			    SET_STRING_ELT(newnamesnames, n,
+					   STRING_ELT(dnn, i));
+			SET_VECTOR_ELT(newnames, n++, VECTOR_ELT(dimnames, i));
 		    }
 		}
 	    }
@@ -521,8 +523,8 @@ SEXP do_matprod(SEXP call, SEXP op, SEXP args, SEXP rho)
 	mode = CPLXSXP;
     else
 	mode = REALSXP;
-    CAR(args) = coerceVector(CAR(args), mode);
-    CADR(args) = coerceVector(CADR(args), mode);
+    SETCAR(args, coerceVector(CAR(args), mode));
+    SETCADR(args, coerceVector(CADR(args), mode));
 
     if (PRIMVAL(op) == 0) {
 	PROTECT(ans = allocMatrix(mode, nrx, ncy));
@@ -541,22 +543,22 @@ SEXP do_matprod(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    if (xdims != R_NilValue) {
 		if (ldx == 2 || ncx ==1) {
 		    dn = getAttrib(xdims, R_NamesSymbol);
-		    VECTOR(dimnames)[0] = VECTOR(xdims)[0];
+		    SET_VECTOR_ELT(dimnames, 0, VECTOR_ELT(xdims, 0));
 		    if(!isNull(dn))
-			STRING(dimnamesnames)[0] = STRING(dn)[0];
+			SET_STRING_ELT(dimnamesnames, 0, STRING_ELT(dn, 0));
 		}
 	    }
 	    if (ydims != R_NilValue) {
 		if (ldy == 2 ){
 		    dn = getAttrib(ydims, R_NamesSymbol);
-		    VECTOR(dimnames)[1] = VECTOR(ydims)[1];
+		    SET_VECTOR_ELT(dimnames, 1, VECTOR_ELT(ydims, 1));
 		    if(!isNull(dn))
-			STRING(dimnamesnames)[1] = STRING(dn)[1];
+			SET_STRING_ELT(dimnamesnames, 1, STRING_ELT(dn, 1));
 		} else if (nry == 1) {
 		    dn = getAttrib(ydims, R_NamesSymbol);
-		    VECTOR(dimnames)[1] = VECTOR(ydims)[0];
+		    SET_VECTOR_ELT(dimnames, 1, VECTOR_ELT(ydims, 0));
 		    if(!isNull(dn))
-			STRING(dimnamesnames)[1] = STRING(dn)[0];
+			SET_STRING_ELT(dimnamesnames, 1, STRING_ELT(dn, 0));
 		}
 	    }
 	    setAttrib(dimnames, R_NamesSymbol, dimnamesnames);
@@ -580,15 +582,15 @@ SEXP do_matprod(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    PROTECT(dimnamesnames = allocVector(STRSXP, 2));
 	    if (xdims != R_NilValue) {
 		dnx = getAttrib(xdims, R_NamesSymbol);
-		VECTOR(dimnames)[0] = VECTOR(xdims)[1];
+		SET_VECTOR_ELT(dimnames, 0, VECTOR_ELT(xdims, 1));
 		if(!isNull(dnx))
-		    STRING(dimnamesnames)[0] = STRING(dnx)[1];
+		    SET_STRING_ELT(dimnamesnames, 0, STRING_ELT(dnx, 1));
 	    }
 	    if (ydims != R_NilValue) {
 		dny = getAttrib(ydims, R_NamesSymbol);
-		VECTOR(dimnames)[1] = VECTOR(ydims)[1];
+		SET_VECTOR_ELT(dimnames, 1, VECTOR_ELT(ydims, 1));
 		if(!isNull(dny))
-		    STRING(dimnamesnames)[1] = STRING(dny)[1];
+		    SET_STRING_ELT(dimnamesnames, 1, STRING_ELT(dny, 1));
 	    }
 	    if (!isNull(dnx) || !isNull(dny))
 		setAttrib(dimnames, R_NamesSymbol, dimnamesnames);
@@ -624,7 +626,7 @@ SEXP do_transpose(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    ncol = 1;
 	    rnames = getAttrib(a, R_DimNamesSymbol);
 	    if (rnames != R_NilValue)
-		rnames = VECTOR(rnames)[0];
+		rnames = VECTOR_ELT(rnames, 0);
 	    break;
 	case 2:
 	    ncol = ncols(a);
@@ -632,8 +634,8 @@ SEXP do_transpose(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    len = length(a);
 	    dimnames = getAttrib(a, R_DimNamesSymbol);
 	    if (dimnames != R_NilValue) {
-		rnames = VECTOR(dimnames)[0];
-		cnames = VECTOR(dimnames)[1];
+		rnames = VECTOR_ELT(dimnames, 0);
+		cnames = VECTOR_ELT(dimnames, 1);
 		dimnamesnames = getAttrib(dimnames, R_NamesSymbol);
 	    }
 	    break;
@@ -660,11 +662,13 @@ SEXP do_transpose(SEXP call, SEXP op, SEXP args, SEXP rho)
 	break;
     case STRSXP:
 	for (i = 0; i < len; i++)
-	    STRING(r)[i] = STRING(a)[(i / ncol) + (i % ncol) * nrow];
+	    SET_STRING_ELT(r, i,
+			   STRING_ELT(a, (i / ncol) + (i % ncol) * nrow));
 	break;
     case VECSXP:
 	for (i = 0; i < len; i++)
-	    VECTOR(r)[i] = VECTOR(a)[(i / ncol) + (i % ncol) * nrow];
+	    SET_VECTOR_ELT(r, i,
+			   VECTOR_ELT(a, (i / ncol) + (i % ncol) * nrow));
 	break;
     default:
 	goto not_matrix;
@@ -676,12 +680,12 @@ SEXP do_transpose(SEXP call, SEXP op, SEXP args, SEXP rho)
     UNPROTECT(1);
     if(rnames != R_NilValue || cnames != R_NilValue) {
 	PROTECT(dimnames = allocVector(VECSXP, 2));
-	VECTOR(dimnames)[0] = cnames;
-	VECTOR(dimnames)[1] = rnames;
+	SET_VECTOR_ELT(dimnames, 0, cnames);
+	SET_VECTOR_ELT(dimnames, 1, rnames);
 	if(!isNull(dimnamesnames)) {
 	    PROTECT(ndimnamesnames = allocVector(VECSXP, 2));
-	    STRING(ndimnamesnames)[1] = STRING(dimnamesnames)[0];
-	    STRING(ndimnamesnames)[0] = STRING(dimnamesnames)[1];
+	    SET_STRING_ELT(ndimnamesnames, 1, STRING_ELT(dimnamesnames, 0));
+	    SET_STRING_ELT(ndimnamesnames, 0, STRING_ELT(dimnamesnames, 1));
 	    setAttrib(dimnames, R_NamesSymbol, ndimnamesnames);
 	    UNPROTECT(1);
 	}
@@ -775,13 +779,13 @@ SEXP do_aperm(SEXP call, SEXP op, SEXP args, SEXP rho)
     case STRSXP:
 	for (i = 0; i < len; i++) {
 	    j = swap(i, dimsa, dimsr, perm, ind1, ind2);
-	    STRING(r)[j] = STRING(a)[i];
+	    SET_STRING_ELT(r, j, STRING_ELT(a, i));
 	}
 	break;
     case VECSXP:
 	for (i = 0; i < len; i++) {
 	    j = swap(i, dimsa, dimsr, perm, ind1, ind2);
-	    VECTOR(r)[j] = VECTOR(a)[i];
+	    SET_VECTOR_ELT(r, j, VECTOR_ELT(a, i));
 	}
     default:
 	errorcall(call, R_MSG_IA);

@@ -37,9 +37,9 @@ shell <- function(cmd, shell, flag="/c", intern=FALSE,
                   wait=TRUE, translate=FALSE, mustWork=FALSE, ...)
 {
     if(missing(shell)) {
-        shell <- getenv("R_SHELL")
-        if(!nchar(shell)) shell <- getenv("SHELL")
-        if(!nchar(shell)) shell <- getenv("COMSPEC")
+        shell <- Sys.getenv("R_SHELL")
+        if(!nchar(shell)) shell <- Sys.getenv("SHELL")
+        if(!nchar(shell)) shell <- Sys.getenv("COMSPEC")
     }
     if(missing(flag) && any(!is.na(match(c("bash", "tcsh"), shell))))
         flag <- "-c"
@@ -61,8 +61,4 @@ shell.exec <- function(file) invisible(.Internal(shell.exec(file)))
 
 dir.create <- function(path)
     invisible(.Internal(dir.create(path)))
-
-savehistory <- function(file=".Rhistory")
-    invisible(.Internal(savehistory(file)))
-
 

@@ -492,6 +492,7 @@ FUNTAB R_FunTab[] =
 
 #ifdef HAVE_TIMES
 {"proc.time",	do_proctime,	0,	1,	0,	PP_FUNCALL},
+{"gc.time",	do_gctime,	0,	1,	0,	PP_FUNCALL},
 #endif
 {"Version",	do_version,	0,	11,	0,	PP_FUNCALL},
 {"machine",	do_machine,	0,	11,	0,	PP_FUNCALL},
@@ -516,7 +517,6 @@ FUNTAB R_FunTab[] =
 {"winDialogString",  do_windialogstring,   0,      11,     2,      PP_FUNCALL},
 {"winMenuAdd",  do_winmenuadd, 0,      11,     3,      PP_FUNCALL},
 {"winMenuDel",  do_winmenudel, 0,      11,     2,      PP_FUNCALL},
-{"savehistory", do_savehistory,0,      11,     1,      PP_FUNCALL},
 #endif
 {"parse",	do_parse,	0,	11,	4,	PP_FUNCALL},
 {"save",	do_save,	0,	111,	4,	PP_FUNCALL},
@@ -587,6 +587,7 @@ FUNTAB R_FunTab[] =
 {"pos.to.env",	do_pos2env,	0,	1,	1,	PP_FUNCALL},
 {"lapply",	do_lapply,	0,	10,	2,	PP_FUNCALL},
 {"apply",	do_apply,	0,	11,	3,	PP_FUNCALL},
+{"Rprof",	do_Rprof,	0,	11,	3,	PP_FUNCALL},
 
 /* Functions To Interact with the Operating System */
 
@@ -597,16 +598,21 @@ FUNTAB R_FunTab[] =
 {"list.files",  do_listfiles,   0,      11,     4,      PP_FUNCALL},
 {"file.exists", do_fileexists,  0,      11,     1,      PP_FUNCALL},
 {"file.choose", do_filechoose,  0,      11,     1,      PP_FUNCALL},
+{"file.info",	do_fileinfo,	0,	11,	1,	PP_FUNCALL},
+{"file.access",	do_fileaccess,	0,	11,	2,	PP_FUNCALL},
 {"tempfile",	do_tempfile,	0,	11,	1,	PP_FUNCALL},
 {"R.home",	do_Rhome,	0,	11,	0,	PP_FUNCALL},
 {"date",	do_date,	0,	11,	0,	PP_FUNCALL},
 {"Platform",	do_Platform,	0,	11,	0,	PP_FUNCALL},
 {"index.search",do_indexsearch, 0,      11,     5,      PP_FUNCALL},
 {"getenv",	do_getenv,	0,	11,	1,	PP_FUNCALL},
+{"putenv",	do_putenv,	0,	11,	1,	PP_FUNCALL},
 {"getwd",	do_getwd,	0,	11,	0,	PP_FUNCALL},
 {"setwd",	do_setwd,	0,	11,	1,	PP_FUNCALL},
 {"basename",	do_basename,	0,	11,	1,	PP_FUNCALL},
 {"dirname",	do_dirname,	0,	11,	1,	PP_FUNCALL},
+{"Sys.info",	do_sysinfo,	0,	11,	0,	PP_FUNCALL},
+{"Sys.sleep",	do_syssleep,	0,	11,	1,	PP_FUNCALL},
 
 /* Complex Valued Functions */
 {"fft",		do_fft,		0,	11,	2,	PP_FUNCALL},
@@ -699,6 +705,10 @@ FUNTAB R_FunTab[] =
 {"D",		do_D,		0,	11,	2,	PP_FUNCALL},
 {"deriv.default",do_deriv,	0,	11,	4,	PP_FUNCALL},
 
+/* History manipulation */
+{"loadhistory", do_loadhistory,	0,      11,     1,      PP_FUNCALL},
+{"savehistory", do_savehistory,	0,      11,     1,      PP_FUNCALL},
+
 {NULL,		NULL,		0,	0,	0,	0},
 };
 
@@ -709,10 +719,11 @@ SEXP do_primitive(SEXP call, SEXP op, SEXP args, SEXP env)
     int i;
     checkArity(op, args);
     name = CAR(args);
-    if (!isString(name) || length(name) < 1 || STRING(name)[0] == R_NilValue)
+    if (!isString(name) || length(name) < 1 ||
+	STRING_ELT(name, 0) == R_NilValue)
 	errorcall(call, "string argument required");
     for (i = 0; R_FunTab[i].name; i++)
-	if (strcmp(CHAR(STRING(name)[0]), R_FunTab[i].name) == 0) {
+	if (strcmp(CHAR(STRING_ELT(name, 0)), R_FunTab[i].name) == 0) {
 	    if ((R_FunTab[i].eval % 100 )/10)
 		return mkPRIMSXP(i, R_FunTab[i].eval % 10);
 	    else
@@ -750,11 +761,11 @@ int hashpjw(char *s)
 static void installFunTab(int i)
 {
     if ((R_FunTab[i].eval % 100 )/10)
-	INTERNAL(install(R_FunTab[i].name))
-	    = mkPRIMSXP(i, R_FunTab[i].eval % 10);
+	SET_INTERNAL(install(R_FunTab[i].name),
+		     mkPRIMSXP(i, R_FunTab[i].eval % 10));
     else
-	SYMVALUE(install(R_FunTab[i].name))
-	    = mkPRIMSXP(i, R_FunTab[i].eval % 10);
+	SET_SYMVALUE(install(R_FunTab[i].name),
+		     mkPRIMSXP(i, R_FunTab[i].eval % 10));
 }
 
 static void SymbolShortcuts()
@@ -788,24 +799,16 @@ extern SEXP framenames; /* from model.c */
 void InitNames()
 {
     int i;
-    /* R_NilValue */
-    /* THIS MUST BE THE FIRST CONS CELL ALLOCATED */
-    /* OR ARMAGEDDON HAPPENS. */
-    R_NilValue = allocSExp(NILSXP);
-    CAR(R_NilValue) = R_NilValue;
-    CDR(R_NilValue) = R_NilValue;
-    TAG(R_NilValue) = R_NilValue;
-    ATTRIB(R_NilValue) = R_NilValue;
     /* R_UnboundValue */
     R_UnboundValue = allocSExp(SYMSXP);
-    SYMVALUE(R_UnboundValue) = R_UnboundValue;
-    PRINTNAME(R_UnboundValue) = R_NilValue;
-    ATTRIB(R_UnboundValue) = R_NilValue;
+    SET_SYMVALUE(R_UnboundValue, R_UnboundValue);
+    SET_PRINTNAME(R_UnboundValue, R_NilValue);
+    SET_ATTRIB(R_UnboundValue, R_NilValue);
     /* R_MissingArg */
     R_MissingArg = allocSExp(SYMSXP);
-    SYMVALUE(R_MissingArg) = R_MissingArg;
-    PRINTNAME(R_MissingArg) = mkChar("");
-    ATTRIB(R_MissingArg) = R_NilValue;
+    SET_SYMVALUE(R_MissingArg, R_MissingArg);
+    SET_PRINTNAME(R_MissingArg, mkChar(""));
+    SET_ATTRIB(R_MissingArg, R_NilValue);
     /* Parser Structures */
     R_CommentSxp = R_NilValue;
     R_ParseText = R_NilValue;
@@ -858,8 +861,8 @@ SEXP install(char *name)
 	    return (CAR(sym));
     /* Create a new symbol node and link it into the table. */
     sym = mkSYMSXP(mkChar(buf), R_UnboundValue);
-    HASHVALUE(PRINTNAME(sym)) = hashcode;
-    HASHASH(PRINTNAME(sym)) = 1;
+    SET_HASHVALUE(PRINTNAME(sym), hashcode);
+    SET_HASHASH(PRINTNAME(sym), 1);
     R_SymbolTable[i] = CONS(sym, R_SymbolTable[i]);
     return (sym);
 }

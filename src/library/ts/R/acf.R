@@ -62,8 +62,8 @@ pacf.default <- function(x, lag.max = NULL, plot = TRUE,
         lag.max <- floor(10 * (log10(sampleT)))
     lag.max <- min(lag.max, sampleT - 1)
     if (lag.max < 1) stop("lag.max must be at least 1")
-    x <- scale(x, T, F)
-    acf <- drop(acf(x, lag.max = lag.max, plot=F)$acf)
+    x <- scale(x, TRUE, FALSE)
+    acf <- drop(acf(x, lag.max = lag.max, plot = FALSE)$acf)
     pacf <- array(.C("uni_pacf",
                as.double(acf),
                pacf = double(lag.max),
@@ -165,7 +165,7 @@ ccf <- function(x, y, lag.max = NULL,
         stop("univariate time series only")
     X <- na.action(ts.union(x, y))
     colnames(X) <- c(deparse(substitute(x)), deparse(substitute(y)))
-    acf.out <- acf(X, lag.max = lag.max, plot = F, type = type)
+    acf.out <- acf(X, lag.max = lag.max, plot = FALSE, type = type)
     lag <- c(rev(acf.out$lag[-1,2,1]), 0, acf.out$lag[,1,2])
     y <- c(rev(acf.out$acf[-1,2,1]), 0, acf.out$acf[,1,2])
     acf.out$acf <- array(y, dim=c(length(y),1,1))

@@ -28,7 +28,7 @@
 #include "Defn.h"
 #include "Mathlib.h"/* imax2 */
 
-#define LIST_ASSIGN(x) {VECTOR(ans_ptr)[ans_length] = x; ans_length++;}
+#define LIST_ASSIGN(x) {SET_VECTOR_ELT(ans_ptr, ans_length, x); ans_length++;}
 
 static SEXP cbind(SEXP, SEXP, SEXPTYPE);
 static SEXP rbind(SEXP, SEXP, SEXPTYPE);
@@ -93,8 +93,8 @@ static void AnswerType(SEXP x, int recurse, int usenames)
 		ans_nnames = 1;
 	    for (i = 0; i < n; i++) {
 		if (usenames && !ans_nnames)
-		    ans_nnames = HasNames(VECTOR(x)[i]);
-		AnswerType(VECTOR(x)[i], recurse, usenames);
+		    ans_nnames = HasNames(VECTOR_ELT(x, i));
+		AnswerType(VECTOR_ELT(x, i), recurse, usenames);
 	    }
 	}
 	else {
@@ -157,17 +157,17 @@ static void ListAnswer(SEXP x, int recurse)
 	break;
     case STRSXP:
 	for (i = 0; i < LENGTH(x); i++)
-	    LIST_ASSIGN(ScalarString(STRING(x)[i]));
+	    LIST_ASSIGN(ScalarString(STRING_ELT(x, i)));
 	break;
     case VECSXP:
     case EXPRSXP:
 	if (recurse) {
 	    for (i = 0; i < LENGTH(x); i++)
-		ListAnswer(VECTOR(x)[i], recurse);
+		ListAnswer(VECTOR_ELT(x, i), recurse);
 	}
 	else {
 	    for (i = 0; i < LENGTH(x); i++)
-		LIST_ASSIGN(duplicate(VECTOR(x)[i]));
+		LIST_ASSIGN(duplicate(VECTOR_ELT(x, i)));
 	}
 	break;
     case LISTSXP:
@@ -204,13 +204,13 @@ static void StringAnswer(SEXP x)
     case VECSXP:
 	n = LENGTH(x);
 	for (i = 0; i < n; i++)
-	    StringAnswer(VECTOR(x)[i]);
+	    StringAnswer(VECTOR_ELT(x, i));
 	break;
     default:
 	PROTECT(x = coerceVector(x, STRSXP));
 	n = LENGTH(x);
 	for (i = 0; i < n; i++)
-	    STRING(ans_ptr)[ans_length++] = STRING(x)[i];
+	    SET_STRING_ELT(ans_ptr, ans_length++, STRING_ELT(x, i));
 	UNPROTECT(1);
 	break;
     }
@@ -231,7 +231,7 @@ static void IntegerAnswer(SEXP x)
     case VECSXP:
 	n = LENGTH(x);
 	for (i = 0; i < n; i++)
-	    IntegerAnswer(VECTOR(x)[i]);
+	    IntegerAnswer(VECTOR_ELT(x, i));
 	break;
     default:
 	n = LENGTH(x);
@@ -256,7 +256,7 @@ static void RealAnswer(SEXP x)
     case VECSXP:
 	n = LENGTH(x);
 	for (i = 0; i < n; i++)
-	    RealAnswer(VECTOR(x)[i]);
+	    RealAnswer(VECTOR_ELT(x, i));
 	break;
     case REALSXP:
 	n = LENGTH(x);
@@ -290,7 +290,7 @@ static void ComplexAnswer(SEXP x)
     case VECSXP:
 	n = LENGTH(x);
 	for (i = 0; i < n; i++)
-	    ComplexAnswer(VECTOR(x)[i]);
+	    ComplexAnswer(VECTOR_ELT(x, i));
 	break;
     case REALSXP:
 	n = LENGTH(x);
@@ -374,9 +374,9 @@ SEXP ItemName(SEXP names, int i)
 {
   /* return  names[i]  if it is a character (>= 1 cgar), or NULL otherwise */
     if (names != R_NilValue &&
-	STRING(names)[i] != R_NilValue &&
-	CHAR(STRING(names)[i])[0] != '\0')
-	return STRING(names)[i];
+	STRING_ELT(names, i) != R_NilValue &&
+	CHAR(STRING_ELT(names, i))[0] != '\0')
+	return STRING_ELT(names, i);
     else
 	return R_NilValue;
 }
@@ -428,7 +428,7 @@ static void NewExtractNames(SEXP v, SEXP base, SEXP tag, int recurse)
 		    firstpos = ans_nnames;
 		count++;
 		namei = NewName(base, namei, i, n, ++seqno);
-		STRING(ans_names)[ans_nnames++] = namei;
+		SET_STRING_ELT(ans_names, ans_nnames++, namei);
 	    }
 	    v = CDR(v);
 	}
@@ -438,14 +438,14 @@ static void NewExtractNames(SEXP v, SEXP base, SEXP tag, int recurse)
 	for (i = 0; i < n; i++) {
 	    namei = ItemName(names, i);
 	    if (recurse) {
-		NewExtractNames(VECTOR(v)[i], base, namei, recurse);
+		NewExtractNames(VECTOR_ELT(v, i), base, namei, recurse);
 	    }
 	    else {
 		if (namei == R_NilValue && count == 0)
 		    firstpos = ans_nnames;
 		count++;
 		namei = NewName(base, namei, i, n, ++seqno);
-		STRING(ans_names)[ans_nnames++] = namei;
+		SET_STRING_ELT(ans_names, ans_nnames++, namei);
 	    }
 	}
 	break;
@@ -460,7 +460,7 @@ static void NewExtractNames(SEXP v, SEXP base, SEXP tag, int recurse)
 		firstpos = ans_nnames;
 	    count++;
 	    namei = NewName(base, namei, i, n, ++seqno);
-	    STRING(ans_names)[ans_nnames++] = namei;
+	    SET_STRING_ELT(ans_names, ans_nnames++, namei);
 	}
 	break;
     default:
@@ -468,11 +468,11 @@ static void NewExtractNames(SEXP v, SEXP base, SEXP tag, int recurse)
 	    firstpos = ans_nnames;
 	count++;
 	namei = NewName(base, R_NilValue, 0, 1, ++seqno);
-	STRING(ans_names)[ans_nnames++] = base;
+	SET_STRING_ELT(ans_names, ans_nnames++, base);
     }
     if (tag != R_NilValue) {
 	if (firstpos >= 0 && count == 1)
-	    STRING(ans_names)[firstpos] = base;
+	    SET_STRING_ELT(ans_names, firstpos, base);
 	firstpos = savefirstpos;
 	count = savecount;
 	UNPROTECT(1);
@@ -498,13 +498,13 @@ static SEXP ExtractOptionals(SEXP ans, int *recurse, int *usenames)
 	    if ((v = asLogical(CADR(a))) != NA_INTEGER) {
 		*recurse = v;
 	    }
-	    CDR(a) = CDDR(a);
+	    SETCDR(a, CDDR(a));
 	}
 	else if (n != R_NilValue &&  pmatch(u, n, 1)) {
 	    if ((v = asLogical(CADR(a))) != NA_INTEGER) {
 		*usenames = v;
 	    }
-	    CDR(a) = CDDR(a);
+	    SETCDR(a, CDDR(a));
 	}
 	a = CDR(a);
     }
@@ -685,8 +685,8 @@ SEXP do_unlist(SEXP call, SEXP op, SEXP args, SEXP env)
 	    ans_nnames = 1;
 	for (i = 0; i < n; i++) {
 	    if (usenames && !ans_nnames)
-		ans_nnames = HasNames(VECTOR(args)[i]);
-	    AnswerType(VECTOR(args)[i], recurse, usenames);
+		ans_nnames = HasNames(VECTOR_ELT(args, i));
+	    AnswerType(VECTOR_ELT(args, i), recurse, usenames);
 	}
     }
     else if (isList(args)) {
@@ -743,7 +743,7 @@ SEXP do_unlist(SEXP call, SEXP op, SEXP args, SEXP env)
     if (mode == VECSXP) {
 	if (!recurse) {
 	    for (i = 0; i < n; i++)
-		ListAnswer(VECTOR(args)[i], 0);
+		ListAnswer(VECTOR_ELT(args, i), 0);
 	}
 	else ListAnswer(args, recurse);
 	ans_length = length(ans);
@@ -771,7 +771,7 @@ SEXP do_unlist(SEXP call, SEXP op, SEXP args, SEXP env)
 		firstpos = 0;
 		count = 0;
 		for (i = 0; i < n; i++) {
-		    NewExtractNames(VECTOR(args)[i], R_NilValue,
+		    NewExtractNames(VECTOR_ELT(args, i), R_NilValue,
 				    ItemName(names, i), recurse);
 		}
 	    }
@@ -859,7 +859,7 @@ SEXP do_bind(SEXP call, SEXP op, SEXP args, SEXP env)
 	    int i;
 	    classlist = getAttrib(obj, R_ClassSymbol);
 	    for (i = 0; i < length(classlist); i++) {
-		classname = STRING(classlist)[i];
+		classname = STRING_ELT(classlist, i);
 		classmethod = FetchMethod(generic, CHAR(classname), env);
 		if (classmethod != R_NilValue) {
 		    if (class == R_NilValue) {
@@ -949,17 +949,17 @@ SEXP do_bind(SEXP call, SEXP op, SEXP args, SEXP env)
 static void SetRowNames(SEXP dimnames, SEXP x)
 {
     if (TYPEOF(dimnames) == VECSXP)
-	VECTOR(dimnames)[0] = x;
+	SET_VECTOR_ELT(dimnames, 0, x);
     else if (TYPEOF(dimnames) == LISTSXP)
-	CAR(dimnames) = x;
+	SETCAR(dimnames, x);
 }
 
 static void SetColNames(SEXP dimnames, SEXP x)
 {
     if (TYPEOF(dimnames) == VECSXP)
-	VECTOR(dimnames)[1] = x;
+	SET_VECTOR_ELT(dimnames, 1, x);
     else if (TYPEOF(dimnames) == LISTSXP)
-	CADR(dimnames) = x;
+	SETCADR(dimnames, x);
 }
 
 static SEXP cbind(SEXP call, SEXP args, SEXPTYPE mode)
@@ -1015,9 +1015,9 @@ static SEXP cbind(SEXP call, SEXP args, SEXPTYPE mode)
 	    if (length(dims) == 2) {
 		dn = getAttrib(u, R_DimNamesSymbol);
 		if (length(dn) == 2) {
-		    if (VECTOR(dn)[1] != R_NilValue)
+		    if (VECTOR_ELT(dn, 1) != R_NilValue)
 			have_cnames = 1;
-		    if (VECTOR(dn)[0] != R_NilValue)
+		    if (VECTOR_ELT(dn, 0) != R_NilValue)
 			mnames = mrows;
 		}
 	    }
@@ -1052,7 +1052,7 @@ static SEXP cbind(SEXP call, SEXP args, SEXPTYPE mode)
 		k = LENGTH(u);
 		idx = (!isMatrix(u)) ? rows : k;
 		for (i = 0; i < idx; i++)
-		    STRING(result)[n++] = STRING(u)[i % k];
+		    SET_STRING_ELT(result, n++, STRING_ELT(u, i % k));
 	    }
 	}
     }
@@ -1097,7 +1097,7 @@ static SEXP cbind(SEXP call, SEXP args, SEXPTYPE mode)
 	SEXP nam, tnam,v;
 	PROTECT(dn = allocVector(VECSXP, 2));
 	if (have_cnames)
-	    nam = VECTOR(dn)[1] = allocVector(STRSXP, cols);
+	    nam = SET_VECTOR_ELT(dn, 1, allocVector(STRSXP, cols));
 	else
 	    nam = R_NilValue;	/* -Wall */
 	j = 0;
@@ -1118,11 +1118,11 @@ static SEXP cbind(SEXP call, SEXP args, SEXPTYPE mode)
 		    /* rbind() does this only  if(have_?names) .. : */
 		    if (tnam != R_NilValue) {
 			for (i = 0; i < length(tnam); i++)
-			    STRING(nam)[j++] = STRING(tnam)[i];
+			    SET_STRING_ELT(nam, j++, STRING_ELT(tnam, i));
 		    }
 		    else if (have_cnames) {
 			for (i = 0; i < ncols(u); i++)
-			    STRING(nam)[j++] = R_BlankString;
+			    SET_STRING_ELT(nam, j++, R_BlankString);
 		    }
 		}
 		else if (length(u) > 0) {
@@ -1135,12 +1135,12 @@ static SEXP cbind(SEXP call, SEXP args, SEXPTYPE mode)
 			SetRowNames(dn, duplicate(u));
 
 		    if (TAG(t) != R_NilValue) 
-			STRING(nam)[j++] = PRINTNAME(TAG(t));
+			SET_STRING_ELT(nam, j++, PRINTNAME(TAG(t)));
 		    else if ((deparse_level == 1) && 
 			     isSymbol(expr = substitute(CAR(t), R_NilValue)))
-			STRING(nam)[j++] = PRINTNAME(expr);
+			SET_STRING_ELT(nam, j++, PRINTNAME(expr));
 		    else if (have_cnames) 
-			STRING(nam)[j++] = R_BlankString;
+			SET_STRING_ELT(nam, j++, R_BlankString);
 		}
 	    }
 	}
@@ -1209,9 +1209,9 @@ static SEXP rbind(SEXP call, SEXP args, SEXPTYPE mode)
 	    if (length(dims) == 2) {
 		dn = getAttrib(u, R_DimNamesSymbol);
 		if (length(dn) == 2) {
-		    if (VECTOR(dn)[0] != R_NilValue)
+		    if (VECTOR_ELT(dn, 0) != R_NilValue)
 			have_rnames = 1;
-		    if (VECTOR(dn)[1] != R_NilValue)
+		    if (VECTOR_ELT(dn, 1) != R_NilValue)
 			mnames = mcols;
 		}
 	    }
@@ -1249,8 +1249,8 @@ static SEXP rbind(SEXP call, SEXP args, SEXPTYPE mode)
 		    mrows = 0;
 		for (i = 0; i < mrows; i++)
 		    for (j = 0; j < cols; j++)
-			STRING(result)[i + n + (j * rows)]
-			    = STRING(u)[(i + j * mrows) % k];
+		      SET_STRING_ELT(result, i + n + (j * rows),
+				     STRING_ELT(u, (i + j * mrows) % k));
 		n += mrows;
 	    }
 	}
@@ -1315,7 +1315,7 @@ static SEXP rbind(SEXP call, SEXP args, SEXPTYPE mode)
 	SEXP nam, tnam,v;
 	PROTECT(dn = allocVector(VECSXP, 2));
 	if (have_rnames)
-	    nam = VECTOR(dn)[0] = allocVector(STRSXP, rows);
+	    nam = SET_VECTOR_ELT(dn, 0, allocVector(STRSXP, rows));
 	else
 	    nam = R_NilValue;	/* -Wall */
 	j = 0;
@@ -1336,11 +1336,11 @@ static SEXP rbind(SEXP call, SEXP args, SEXPTYPE mode)
 		    if (have_rnames) {
 			if (tnam != R_NilValue) {
 			    for (i = 0; i < length(tnam); i++)
-				STRING(nam)[j++] = STRING(tnam)[i];
+				SET_STRING_ELT(nam, j++, STRING_ELT(tnam, i));
 			}
 			else {
 			    for (i = 0; i < nrows(u); i++)
-				STRING(nam)[j++] = R_BlankString;
+				SET_STRING_ELT(nam, j++, R_BlankString);
 			}
 		    }
 		}
@@ -1354,12 +1354,12 @@ static SEXP rbind(SEXP call, SEXP args, SEXPTYPE mode)
 			SetColNames(dn, duplicate(u));
 
 		    if (TAG(t) != R_NilValue) 
-			STRING(nam)[j++] = PRINTNAME(TAG(t));
+			SET_STRING_ELT(nam, j++, PRINTNAME(TAG(t)));
 		    else if ((deparse_level == 1) && 
 			     isSymbol(expr = substitute(CAR(t), R_NilValue)))
-			STRING(nam)[j++] = PRINTNAME(expr);
+			SET_STRING_ELT(nam, j++, PRINTNAME(expr));
 		    else if (have_rnames)
-			STRING(nam)[j++] = R_BlankString;
+			SET_STRING_ELT(nam, j++, R_BlankString);
 		}
 	    }
 	}

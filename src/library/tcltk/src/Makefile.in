@@ -11,8 +11,11 @@ top_builddir = ../../../..
 subdir = src/library/$(pkg)/src
 R_HOME = $(top_builddir)
 
-SHLIB = $(pkg).@SHLIBEXT@
+SHLIB = $(pkg).@SHLIB_EXT@
 OBJS = tcltk.o
+
+PKG_CPPFLAGS = @TCLTK_CPPFLAGS@
+PKG_LIBS = @TCLTK_LIBS@
 
 all: Makefile $(SHLIB)
 	@$(top_srcdir)/tools/mkinstalldirs \
@@ -26,12 +29,10 @@ Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	  $(SHELL) ./config.status
 
 include $(top_builddir)/etc/Makeconf
-ALL_CPPFLAGS = $(R_XTRA_CPPFLAGS) $(PKG_CPPFLAGS) $(CPPFLAGS)
-ALL_LIBS = $(PKG_LIBS) $(LIBPATHS) $(TCLTK_LIBS)
 
 mostlyclean: clean
 clean:
-	@rm -f *.o *.$(SHLIBEXT)
+	@rm -f *.o *.$(SHLIB_EXT)
 distclean: clean
 	@rm -f Makefile
 maintainer-clean: distclean
