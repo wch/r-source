@@ -141,8 +141,13 @@ FORCE:
 $(EX_OUT_BASE) $(EX_OUT_RECOMMENDED): Makefile \
   $(top_builddir)/bin/exec/R \
   $(top_builddir)/library/base/R/base \
-  $(top_builddir)/modules/lapack$(SHLIB_EXT)
-base-Ex.Rout: $(top_builddir)/modules/vfonts$(SHLIB_EXT)
+  $(top_builddir)/library/graphics/R/graphics \
+  $(top_builddir)/library/methods/R/all.rda \
+  $(top_builddir)/library/stats/R/all.rda \
+  $(top_builddir)/library/utils/R/utils \
+  $(top_builddir)/modules/lapack$(SHLIB_EXT) \
+  @WANT_R_SHLIB_TRUE@ $(top_builddir)/lib/libR$(DYLIB_EXT)
+graphics-Ex.Rout: $(top_builddir)/modules/vfonts$(SHLIB_EXT)
 
 mostlyclean: clean
 clean:
