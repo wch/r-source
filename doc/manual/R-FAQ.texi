@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2001
-@set FAQ-VERSION 1.2-42, 2001-04-18
+@set FAQ-VERSION 1.2-43, 2001-04-19
 @set REL-VERSION 1.2.2
 @set DEV-VERSION 1.3.0
 @c %**end of header
@@ -1392,6 +1392,10 @@ U.S. National Institute for Standards and Technology.
 Manipulation and analysis of phylogenetically simulated data sets (as
 obtained from PDSIMUL in package PDAP) and phylogenetically-based
 analyses using GLS.
+@item PTAk
+A multiway method to decompose a tensor (array) of any order, as a
+generalisation of SVD also supporting non-identity metrics and
+penalisations.  Also includes some other multiway methods.
 @item RMySQL
 An interface between R and the MySQL database system.
 @item RODBC

@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 1.2-42, 2001-04-18
+Version 1.2-43, 2001-04-19
 Kurt Hornik
 
 
@@ -1119,6 +1119,11 @@ works, was published in the Journal of Statistical Software
      Manipulation and analysis of phylogenetically simulated data sets (as
      obtained from PDSIMUL in package PDAP) and phylogenetically-based
      analyses using GLS.
+
+*PTAk*
+     A multiway method to decompose a tensor (array) of any order, as a
+     generalisation of SVD also supporting non-identity metrics and
+     penalisations.  Also includes some other multiway methods.
 
 *RMySQL*
      An interface between R and the MySQL database system.
