@@ -67,7 +67,7 @@ plot(fft(c(9:0,0:13, numeric(301))), type = "l")
 periodogram <- function(x, mean.x = mean(x)) { # simple periodogram
   n <- length(x)
   x <- unclass(x) - mean.x
-  Mod(fft(x))[1:(n\%/\%2 + 1)]^2 / (2*pi*n)
+  Mod(fft(x))[2:(n\%/\%2 + 1)]^2 / (2*pi*n) # drop I(0)
 }
 data(sunspots)
 plot(10*log10(periodogram(sunspots)), type = "b", col = "blue")
