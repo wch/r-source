@@ -18,15 +18,15 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+/* These are the R interface routines to the plain FFT code 
+   fft_factor() & fft_work() in ../appl/fft.c. */
+
 #ifdef HAVE_CONFIG_H
 #include <config.h>
 #endif
 
 #include "Defn.h"
 #include "R_ext/Applic.h"
-/* --> fft_factor() & fft_work() :
-  These are the R interface routines to the plain FFT code in ../appl/fft.c.
-*/
 
 /* Fourier Transform for Univariate Spatial and Time Series */
 
