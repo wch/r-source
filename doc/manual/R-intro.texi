@@ -2,7 +2,7 @@
 @c %**start of header
 @setfilename R-intro.info
 @settitle An Introduction to R
-@set VERSION $Revision: 1.7 $
+@set VERSION $Revision: 1.8 $
 @setchapternewpage on
 @c %**end of header
 
@@ -6307,10 +6307,15 @@ want to save it.
 @section Invoking R under UNIX
 
 The command @samp{R} can be used both for starting the main @R{} program
-with a variety of options, or, via the @code{R CMD} interface, as a
-wrapper to various @R{} tools (e.g., for processing files in @R{}
-documentation format or manipulating add-on packages) which are not
-intended to be called ``directly''.
+with a variety of options in the form
+
+@display
+@code{R} [@var{options}] [@code{<}@var{infile}] [@code{>}@var{outfile}],
+@end display
+
+or, via the @code{R CMD} interface, as a wrapper to various @R{} tools
+(e.g., for processing files in @R{} documentation format or manipulating
+add-on packages) which are not intended to be called ``directly''.
 
 Most options control what happens at the beginning and at the end of an
 @R{} session.  The startup mechanism is as follows (see also the on-line
