@@ -1,5 +1,6 @@
-/* rybesl.f -- translated by f2c (version 19960514).
-*/
+/* From http://www.netlib.org/specfun/rybesl	Fortran translated by f2c,...
+ *      ------------------------------=#----	Martin Maechler, ETH Zurich
+ */
 #include "Mathlib.h"
 #include "Error.h"
 
@@ -15,8 +16,14 @@ double bessel_y(double x, double alpha) {
     by = (double *) calloc(nb, sizeof(double));
     Y_bessel(&x, &alpha, &nb, by, &ncalc);
     if(ncalc != nb) {/* error input */
-	warning("bessel_y: ncalc (=%d) != nb (=%d); alpha=%g. Arg. out of range?\n",
-		ncalc, nb, alpha);
+        if(ncalc == -1)
+	    return ML_POSINF;
+        else if(ncalc < -1)
+	    warning("bessel_y(%g): ncalc (=%d) != nb (=%d); alpha=%g.%s\n",
+		    x, ncalc, nb, alpha," Arg. out of range?");
+	else /* ncalc >= 0 */
+	    warning("bessel_y(%g,nu=%g): precision lost in result\n",
+		    x, nb+alpha);
     }
     return by[nb-1];
 }
@@ -449,7 +456,7 @@ L220:
 	}
 L450:
 	for (i = *ncalc; i < *nb; ++i)
-	    by[i] = 0.;
+	    by[i] = ML_NEGINF;/* was 0 */
 
     } else {
 	by[0] = 0.;

@@ -1,6 +1,6 @@
-/* ribesl.f -- translated by f2c (version 19960514).
+/* From http://www.netlib.org/specfun/ribesl	Fortran translated by f2c,...
+ *      ------------------------------=#----	Martin Maechler, ETH Zurich
  */
-
 #include "Mathlib.h"
 #include "Error.h"
 
@@ -19,8 +19,12 @@ double bessel_i(double x, double alpha, double expo) {
     bi = (double *) calloc(nb, sizeof(double));
     I_bessel(&x, &alpha, &nb, &ize, bi, &ncalc);
     if(ncalc != nb) {/* error input */
-	warning("bessel_i: ncalc (=%d) != nb (=%d); alpha=%g. Arg. out of range?\n",
-		ncalc, nb, alpha);
+      if(ncalc < 0)
+	warning("bessel_i(%g): ncalc (=%d) != nb (=%d); alpha=%g.%s\n",
+		x, ncalc, nb, alpha," Arg. out of range?");
+      else
+	warning("bessel_i(%g,nu=%g): precision lost in result\n",
+		x, nb+alpha);
     }
     return bi[nb-1];
 }
@@ -204,12 +208,12 @@ void I_bessel(double *x, double *alpha, long *nb,
   Machine-dependent parameters
  -------------------------------------------------------------------
 */
+    static long    nsig =   16;
     static double ensig = 1e16;
     static double rtnsig = 1e-4;
     static double enmten = 8.9e-308;
-    static long nsig = 16;
-    static double xlarge = 1e4;
     static double enten = 1e308;
+    static double xlarge = 1e4;
 
     extern double gamma_cody(double);/*--> ./gamma.c */
 

@@ -1,5 +1,8 @@
-/*=========== THIS was part of	ribesl.c (Bessel I(.))
-  ===========			~~~~~~~~
+/* From http://www.netlib.org/specfun/ribesl	Fortran translated by f2c,...
+ *      ------------------------------=#----	Martin Maechler, ETH Zurich
+ *
+ *=========== THIS was part of	ribesl (Bessel I(.))
+ *===========			~~~~~~
  */
 #include "Mathlib.h"
 
@@ -107,7 +110,7 @@ double gamma_cody(double x)
 
 
     static double xbig = 171.624;
-    /* DBL_MAX ==   static double xinf = 1.79e308;*/
+    /* ML_POSINF ==   static double xinf = 1.79e308;*/
     /* DBL_EPSILON = static double eps = 2.22e-16;*/
     /* DBL_MIN ==   static double xminin = 2.23e-308;*/
 
@@ -158,7 +161,7 @@ double gamma_cody(double x)
 	    fact = -M_PI / sin(M_PI * res);
 	    y += 1.;
 	} else {
-	    res = DBL_MAX;
+	    res = ML_POSINF;
 	    goto L_end;
 	}
     }
@@ -172,7 +175,7 @@ double gamma_cody(double x)
 	if (y >= DBL_MIN) {
 	    res = 1. / y;
 	} else {
-	    res = DBL_MAX;
+	    res = ML_POSINF;
 	    goto L_end;
 	}
     } else if (y < 12.) {
@@ -229,7 +232,7 @@ double gamma_cody(double x)
 	    sum += (y - .5) * log(y);
 	    res = exp(sum);
 	} else {
-	    res = DBL_MAX;
+	    res = ML_POSINF;
 	    goto L_end;
 	}
     }

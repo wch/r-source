@@ -1,5 +1,6 @@
-/* rjbesl.f -- translated by f2c (version 19960514).
-*/
+/* From http://www.netlib.org/specfun/rjbesl	Fortran translated by f2c,...
+ *      ------------------------------=#----	Martin Maechler, ETH Zurich
+ */
 #include "Mathlib.h"
 #include "Error.h"
 
@@ -10,13 +11,21 @@ double bessel_j(double x, double alpha) {
     /* NaNs propagated correctly */
     if (ISNAN(x) || ISNAN(alpha)) return x + alpha;
 #endif
+    if (x < 0 || alpha < 0) {
+      ML_ERROR(ME_RANGE);
+      return ML_NAN;
+    }
     nb = 1+ (long)floor(alpha);/* nb-1 <= alpha < nb */
     alpha -= (nb-1);
     bj = (double *) calloc(nb, sizeof(double));
     J_bessel(&x, &alpha, &nb, bj, &ncalc);
     if(ncalc != nb) {/* error input */
-	warning("bessel_j: ncalc (=%d) != nb (=%d); alpha=%g. Arg. out of range?\n",
-		ncalc, nb, alpha);
+      if(ncalc < 0)
+	warning("bessel_j(%g): ncalc (=%d) != nb (=%d); alpha=%g.%s\n",
+		x, ncalc, nb, alpha," Arg. out of range?");
+      else
+	warning("bessel_j(%g,nu=%g): precision lost in result\n",
+		x, nb+alpha);
     }
     return bj[nb-1];
 }
@@ -331,7 +340,7 @@ void J_bessel(double *x, double *alpha, long *nb,
 		gnu += 2.;
 	    }
 	    /* -----------------------------------------------
-	       If  NB > 2, compute J(X,ORDER+I)  I = 2, NB-1
+	       If  NB > 2, compute J(X,ORDER+I)	 I = 2, NB-1
 	       ----------------------------------------------- */
 	    if (*nb > 2) {
 		gnu = twonu + 2.;

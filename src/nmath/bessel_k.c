@@ -1,5 +1,6 @@
-/* rkbesl.f -- translated by f2c (version 19960514).
-*/
+/* From http://www.netlib.org/specfun/rkbesl	Fortran translated by f2c,...
+ *      ------------------------------=#----	Martin Maechler, ETH Zurich
+ */
 #include "Mathlib.h"
 #include "Error.h"
 
@@ -18,12 +19,13 @@ double bessel_k(double x, double alpha, double expo) {
     bk = (double *) calloc(nb, sizeof(double));
     K_bessel(&x, &alpha, &nb, &ize, bk, &ncalc);
     if(ncalc != nb) {/* error input */
-	warning("bessel_k: ncalc (=%d) != nb (=%d); alpha=%g. Arg. out of range?\n",
-		ncalc, nb, alpha);
+      if(ncalc < 0)
+	warning("bessel_k(%g): ncalc (=%d) != nb (=%d); alpha=%g.%s\n",
+		x, ncalc, nb, alpha," Arg. out of range?");
+      else
+	warning("bessel_k(%g,nu=%g): precision lost in result\n",
+		x, nb+alpha);
     }
-
-
-
     return bk[nb-1];
 }
 
@@ -221,9 +223,8 @@ void K_bessel(double *x, double *alpha, long *nb,
     ex = *x;
     nu = *alpha;
     *ncalc = imin2(*nb,0) - 2;
-    if (*nb > 0 && (0. <= nu && nu < 1.) && (1 <= *ize && *ize <= 2) &&
-	ex > 0.) { /* maybe fixme: treat the case x = 0 ? */
-	if(*ize == 1 && ex > xmax) {
+    if (*nb > 0 && (0. <= nu && nu < 1.) && (1 <= *ize && *ize <= 2)) {
+	if(ex <= 0 || (*ize == 1 && ex > xmax)) {
 	    ML_ERROR(ME_RANGE);
 	    *ncalc = *nb;
 	    for(i=0; i < *nb; i++)
@@ -455,17 +456,17 @@ void K_bessel(double *x, double *alpha, long *nb,
 	    bk2 = bk1 + bk1 * (nu + .5 - ratio) / ex;
 	}
 	/*--------------------------------------------------------------------
-	  Calculation of 'NCALC', K(ALPHA+I,X),	 I  =  0, 1, ... , NCALC-1,
-	  &	  K(ALPHA+I,X)/K(ALPHA+I-1,X),	 I = NCALC, NCALC+1, ... , NB-1
-	  --------------------------------------------------------------------*/
+	  Calculation of 'NCALC', K(ALPHA+I,X),	I  =  0, 1, ... , NCALC-1,
+	  &	  K(ALPHA+I,X)/K(ALPHA+I-1,X),	I = NCALC, NCALC+1, ... , NB-1
+	  -------------------------------------------------------------------*/
 	*ncalc = *nb;
 	bk[0] = bk1;
 	if (iend == 0) {
 	    return;
 	}
-	j = 2 - k;
-	if (j > 0) {
-	    bk[j-1] = bk2;
+	j = 1 - k;
+	if (j >= 0) {
+	    bk[j] = bk2;
 	}
 	if (iend == 1) {
 	    return;
@@ -485,8 +486,8 @@ void K_bessel(double *x, double *alpha, long *nb,
 	    bk2 = twonu / ex * bk1 + t1;
 	    itemp = i;
 	    ++j;
-	    if (j > 0) {
-		bk[j-1] = bk2;
+	    if (j >= 0) {
+		bk[j] = bk2;
 	    }
 	}
 
@@ -501,8 +502,8 @@ void K_bessel(double *x, double *alpha, long *nb,
 	    twonu += 2.;
 	    ratio = twonu / ex + 1./ratio;
 	    ++j;
-	    if (j > 1) {
-		bk[j-1] = ratio;
+	    if (j >= 1) {
+		bk[j] = ratio;
 	    } else {
 		if (bk2 >= DBL_MAX / ratio) {
 		    return;
@@ -518,13 +519,13 @@ void K_bessel(double *x, double *alpha, long *nb,
 	    return;
 	}
 L420:
-	j = *ncalc;
-	for (i = j; i < *nb; ++i) {
-	    if (bk[*ncalc-1] >= DBL_MAX / bk[i]) {
+	for (i = *ncalc; i < *nb; ++i) { /* i == *ncalc */
+#ifndef IEEE_754
+	    if (bk[i-1] >= DBL_MAX / bk[i])
 		return;
-	    }
-	    bk[i] *= bk[*ncalc-1];
-	    *ncalc = i+1;
+#endif
+	    bk[i] *= bk[i-1];
+	    (*ncalc)++;
 	}
     }
 }
