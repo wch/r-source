@@ -17,7 +17,8 @@ text.default <- function(x, y = NULL, labels = seq(along = x),
 			      	       "gothic italian", "serif symbol",
 				       "sans serif symbol"))
         fontindex <- pmatch(vfont[2], c("symbol", "plain", "italic", "bold",
-				        "bold italic"))
+				        "bold italic", "cyrillic",
+					"oblique cyrillic", "EUC"))
         vfont <- c(typeface-1, fontindex-1)
     }
     .Internal(text(xy.coords(x,y, recycle=TRUE),

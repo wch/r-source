@@ -330,6 +330,8 @@ SEXP FixupVFont(SEXP vfont) {
 	minindex = 0;
 	switch (typeface) {
 	case 0:
+	    maxindex = 7;
+	    break;
 	case 1:
 	case 6:
 	    maxindex = 4;

@@ -60,10 +60,6 @@
    written as UNDE, which is a glyph consisting of several horizontal
    lines.
 
-PAUL MURRELL
-We will not be using control sequences to specify characters so point
-1. below is irrelevant.
-
    1. the characters onesuperior, twosuperior, threesuperior, ordmasculine,
    ordfeminine.  These are written as 0, which means an empty glyph.  That
    is because they not implemented as conventional glyphs at all: the
@@ -154,7 +150,11 @@ const struct plHersheyFontInfoStruct _hershey_font_info[] =
 	 ligatures, accents, and variant glyphs there. */
       2177, 2178, 2179, 2180, 2181, 0, 0, 0, 
       4180, 4181, 4182, 4183, 4184, 4185, 4186, 0,
-      0, 0, 0, 0, 0, 0, 0, 0, 
+      /* PAUL MURRELL
+	 Added accents for "Oslash" and "oslash"
+      */	 
+      //      0, 0, 0, 0, 0, 0, 0, 0, 
+      802, 220, 0, 0, 0, 0, 0, 0, 
       2119, 2182, 0, 0, 0, 0, 0, 0,
       /* ISO-Latin-1 encoding resumes */
       2199, 4113,  910,  272, UNDE, 4125, 4106, 2276,
@@ -164,11 +164,19 @@ const struct plHersheyFontInfoStruct _hershey_font_info[] =
       ACC1, ACC1, ACC1, ACC1, ACC1, 2078,    0, ACC0,
       ACC1, ACC1, ACC1, ACC1, ACC1, ACC1, ACC1, ACC1,
       UNDE, ACC1, ACC1, ACC1, ACC1, ACC1, ACC1,  727,
-      2015, ACC1, ACC1, ACC1, ACC1, ACC1, UNDE,    0,
+      /* PAUL MURRELL
+	 Changed coding for "Oslash"
+      */
+      //      2015, ACC1, ACC1, ACC1, ACC1, ACC1, UNDE,    0,
+      ACC0, ACC1, ACC1, ACC1, ACC1, ACC1, UNDE,    0,
       ACC0, ACC0, ACC0, ACC0, ACC0, ACC0,    0, ACC0,
       ACC0, ACC0, ACC0, ACC0, ACC0, ACC0, ACC0, ACC0,
       UNDE, ACC0, ACC0, ACC0, ACC0, ACC0, ACC0, 2237,
-      2115, ACC0, ACC0, ACC0, ACC0, ACC0, UNDE, ACC0,
+      /* PAUL MURRELL
+	 Changed coding for "oslash"
+      */
+      //      2115, ACC0, ACC0, ACC0, ACC0, ACC0, UNDE, ACC0,
+      ACC0, ACC0, ACC0, ACC0, ACC0, ACC0, UNDE, ACC0,
     },
     0, 1, false, true, true
   },
@@ -539,7 +547,11 @@ const struct plHersheyFontInfoStruct _hershey_font_info[] =
 	 ligatures, accents, and variant glyphs there. */
       0, 0, 0, 0, 0, 0, 0, 0, 
       4188, 4189, 4182, 4190, 4191, 4185, 4186, 0,
-      0, 0, 0, 0, 0, 0, 0, 0,
+      /* PAUL MURRELL
+	 Added accents for "Oslash" and "oslash"
+      */	 
+      //      0, 0, 0, 0, 0, 0, 0, 0, 
+      802, 220, 0, 0, 0, 0, 0, 0, 
       619, 4162, 0, 0, 0, 0, 0, 0, 
       /* ISO-Latin-1 encoding resumes */
       699, 4111,  910,  272, UNDE, 4127, 4106, 2276,
@@ -549,11 +561,19 @@ const struct plHersheyFontInfoStruct _hershey_font_info[] =
       ACC1, ACC1, ACC1, ACC1, ACC1, ACC1,    0, ACC0,
       ACC1, ACC1, ACC1, ACC1, ACC1, ACC1, ACC1, ACC1,
       UNDE, ACC1, ACC1, ACC1, ACC1, ACC1, ACC1,  727,
-       515, ACC1, ACC1, ACC1, ACC1, ACC1, UNDE,    0,
+      /* PAUL MURRELL
+	 Changed coding for "Oslash"
+      */
+      //      515, ACC1, ACC1, ACC1, ACC1, ACC1, UNDE,    0,
+      ACC0, ACC1, ACC1, ACC1, ACC1, ACC1, UNDE,    0,
       ACC0, ACC0, ACC0, ACC0, ACC0, ACC0,    0, ACC0,
       ACC0, ACC0, ACC0, ACC0, ACC0, ACC0, ACC0, ACC0,
       UNDE, ACC0, ACC0, ACC0, ACC0, ACC0, ACC0, 2237,
-       615, ACC0, ACC0, ACC0, ACC0, ACC0, UNDE, ACC0,
+      /* PAUL MURRELL
+	 Changed coding for "oslash"
+      */
+      //      615, ACC0, ACC0, ACC0, ACC0, ACC0, UNDE, ACC0,
+      ACC0, ACC0, ACC0, ACC0, ACC0, ACC0, UNDE, ACC0,
     },
     1, 1, false, true, true
   },
@@ -1261,6 +1281,10 @@ const struct plHersheyAccentedCharInfoStruct _hershey_accented_char_info[] =
   {0324, 'O', 0213},		/* Ocircumflex */
   {0325, 'O', 0215},		/* Otilde */
   {0326, 'O', 0212},		/* Odieresis */
+  /* PAUL MURRELL
+     Added "Oslash"
+  */
+  {0330, 'O', 0220},
   {0331, 'U', 0211},		/* Ugrave */
   {0332, 'U', 0210},		/* Uacute */
   {0333, 'U', 0213},		/* Ucircumflex */
@@ -1287,6 +1311,10 @@ const struct plHersheyAccentedCharInfoStruct _hershey_accented_char_info[] =
   {0364, 'o', 0214},		/* ocircumflex */
   {0365, 'o', 0215},		/* otilde */
   {0366, 'o', 0212},		/* odieresis */
+  /* PAUL MURRELL
+     Added "oslash"
+  */
+  {0370, 'o', 0221},
   {0371, 'u', 0211},		/* ugrave */
   {0372, 'u', 0210},		/* uacute */
   {0373, 'u', 0214},		/* ucircumflex */
