@@ -84,6 +84,5 @@ lo <- legend(2,2, substitute(hat(theta) == that, list(that= pi)))
 stopifnot(length(lo$text$x) == 1)
 ## length() was 3 till 1.7.x
 
-library(stepfun)
 plot(ecdf(c(1:4,8,12)), ylab = "ECDF", main=NULL)
 ## ylab didn't work till 1.8.0

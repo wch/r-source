@@ -335,7 +335,7 @@ it <- findInterval(tt, X)
 tt <- c(tt,X)
 eps <- 100 * .Machine$double.eps
 stopifnot(it[c(1,203)] == c(0, 100),
-	  all.equal(N * stepfun::ecdf(X)(tt),
+	  all.equal(N * stats::ecdf(X)(tt),
 		    findInterval(tt, X),  tol = eps),
 	  findInterval(tt,X) ==	 apply( outer(tt, X, ">="), 1, sum)
 	  )
@@ -1619,10 +1619,8 @@ stopifnot(!is.na(res))
 
 
 ## ls.str() for function environments:
-library(stepfun)
 Fn <- ecdf(rnorm(50))
 ls.str(envir = environment(Fn))
-detach("package:stepfun")
 ## failed in 1.5.1
 
 
@@ -2035,9 +2033,7 @@ str(A.[1, 0, 2 ])
 str(A.[1, 0, 2, drop = FALSE])
 ## both gave errors in 1.6.2
 
-library(stepfun)
 plot(sf <- stepfun(2, 3:4))
-detach("package:stepfun")
 ## failed in 1.6.2
 
 
@@ -2790,7 +2786,6 @@ stopifnot(identical(dim(x), as.integer(c(0, 3))))
 
 
 ## PR#5405
-library(stepfun)
 try(stepfun(c(), 1)(2))# > Error
 ## segfaults in 1.8.1 and earlier
 
