@@ -332,7 +332,7 @@ foreach $pkg (@ARGV){
 	    }
 	    ## add MD5 sums last of all
 	    my $cmd = "make --no-print-directory -f $R_HOME/src/gnuwin32/MakePkg ";
-	    $cmd .= "RHOME=$R_HOME DPKG=$library/$decpkgname md5sums";
+	    $cmd .= "BUILD=$BUILD RHOME=$R_HOME DPKG=$library/$decpkgname md5sums";
 #	    print "$cmd\n";
 	    system($cmd);
 	    
