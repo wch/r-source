@@ -8,6 +8,12 @@ RBINARY="R.binary"
 
 ARG="$1"
 case "${ARG}" in
+    -g|--gnome)
+        shift; RBINARY="R.gnome" ;;
+esac
+
+ARG="$1"
+case "${ARG}" in
     RHOME)
 	echo ${RHOME}; exit 0 ;;
     CMD)
@@ -26,6 +32,7 @@ Usage:  R [OPTIONS] [< INFILE] [> OUTFILE]
    or   R CMD Rcommand [arguments]
 
 Options:
+  -g, --gnome               Run the gnome binary (must be first option)
   --save                    Do save data sets at the end of the session.
   --no-save                 Don't save them.
   --restore                 Do restore previously saved data sets at startup.
@@ -40,7 +47,6 @@ Options:
   -q, --quiet, --silent     Make R run as quietly as possible.
   --version                 Print version info and exit.
   --verbose                 Print more information about progress.
-  -g, --gnome               Run the gnome binary, if available
   -d NAME, --debugger NAME  Run R through debugger NAME.
 
 Commands:
