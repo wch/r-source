@@ -1,8 +1,10 @@
 \name{optimize}
 \title{One Dimensional Optimization}
 \usage{
-optimise(\dots\dots\dots)
 optimize(f=, interval=, lower=min(interval),
+        upper=max(interval), maximum=FALSE,
+        tol=.Machine$double.eps^0.25, ...)
+optimise(f=, interval=, lower=min(interval),
         upper=max(interval), maximum=FALSE,
         tol=.Machine$double.eps^0.25, ...)
 }

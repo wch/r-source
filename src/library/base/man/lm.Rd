@@ -4,8 +4,10 @@
 lm(formula, data, subset, weights, na.action=na.omit,
    method="qr", model=TRUE, singular.ok = TRUE)
 
-lm.fit[.null] (x, y,    method = "qr", tol = 1e-7, \dots)
-lm.wfit[.null](x, y, w, method = "qr", tol = 1e-7, \dots)
+lm.fit (x, y,    method = "qr", tol = 1e-7, \dots)
+lm.wfit(x, y, w, method = "qr", tol = 1e-7, \dots)
+lm.fit.null (x, y,    method = "qr", tol = 1e-7, \dots)
+lm.wfit.null(x, y, w, method = "qr", tol = 1e-7, \dots)
 }
 \alias{lm}
 \alias{lm.fit}

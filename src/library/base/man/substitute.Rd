@@ -1,7 +1,7 @@
 \name{substitute}
 \title{Substituting and quoting expressions}
 \usage{
-substitute(expr, env=<see below>)
+substitute(expr, env=<<see below>>)
 quote(expr)
 }
 \alias{substitute}

@@ -5,8 +5,8 @@
 \title{Extract Coefficients in Original Coding}
 \usage{
 dummy.coef(object, ...)
-dummy.coef.lm(object,)
-dummy.coef.aovlist(object, )
+dummy.coef.lm(object, use.na = FALSE)
+dummy.coef.aovlist(object, use.na = FALSE)
 }
 \alias{dummy.coef}
 \alias{dummy.coef.lm}

@@ -20,7 +20,9 @@ ppr(formula, data=sys.parent(), weights,
     bass=0, span=0, df=5, gcvpen=1)
 
 ppr(x, y, weights=rep(1,n),
-    ww=\dots\dots (as above) \dots)
+    ww=rep(1,q), nterms, max.terms=nterms, optlevel=2, 
+    sm.method=c("supsmu", "spline", "gcvspline"),
+    bass=0, span=0, df=5, gcvpen=1)
 }
 \arguments{
 \item{formula}{
