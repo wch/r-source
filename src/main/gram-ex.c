@@ -50,8 +50,8 @@ int R_fgetc(FILE *fp)
 #endif
 #ifdef __MRC__
    /* MRC needs to convert from Mac to Unix line endings */
-   if(c == 0x0D)
-    c = 0x0A;
+   if(c == '\r')
+    return('\n');
 #endif
     /* get rid of  CR in CRLF line termination */
     if (c == '\r') {
@@ -71,11 +71,15 @@ int R_fgetc(FILE *fp)
 
 #ifdef __MRC__
 char *R_fgets(char *buf, int i, FILE *fp);
+extern Boolean RunningOnCarbonX(void);
 
 char * R_fgets(char * s, int n, FILE * file)
 {
 	char *	p = s;
 	int			c;
+	
+	if( !RunningOnCarbonX() )
+ 	 return(fgets(s,n,file));
 	
 	if (--n < 0)
 		return(NULL);
