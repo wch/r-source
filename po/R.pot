@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-02-22 08:47+0000\n"
+"POT-Creation-Date: 2005-02-22 17:14+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -83,8 +83,9 @@ msgstr ""
 msgid "invalid 'names' in R_unlink"
 msgstr ""
 
-#: src/gnuwin32/extra.c:137
-msgid "invalid file name argument"
+#: src/gnuwin32/extra.c:137 src/main/datetime.c:516 src/main/datetime.c:575
+#: src/main/datetime.c:684 src/main/datetime.c:799 src/main/plot3d.c:2477
+msgid "invalid 'x' argument"
 msgstr ""
 
 #: src/gnuwin32/extra.c:140
@@ -101,8 +102,8 @@ msgstr ""
 msgid "%s\\doc\\html\\rwin.htm[l] not found"
 msgstr ""
 
-#: src/gnuwin32/extra.c:196
-msgid "invalid topic argument"
+#: src/gnuwin32/extra.c:196 src/main/platform.c:887
+msgid "invalid 'topic' argument"
 msgstr ""
 
 #: src/gnuwin32/extra.c:202
@@ -111,7 +112,7 @@ msgid "%s not found"
 msgstr ""
 
 #: src/gnuwin32/extra.c:212 src/gnuwin32/extra.c:224
-msgid "invalid hlpfile argument"
+msgid "invalid 'hlpfile' argument"
 msgstr ""
 
 #: src/gnuwin32/extra.c:215 src/gnuwin32/extra.c:227
@@ -128,7 +129,7 @@ msgstr ""
 
 #: src/gnuwin32/extra.c:403 src/gnuwin32/extra.c:620 src/gnuwin32/extra.c:635
 #: src/main/platform.c:850 src/unix/sys-std.c:897 src/unix/sys-std.c:919
-msgid "invalid file argument"
+msgid "invalid 'file' argument"
 msgstr ""
 
 #: src/gnuwin32/extra.c:434 src/gnuwin32/extra.c:461
@@ -204,7 +205,8 @@ msgstr ""
 msgid "cannot decrease memory limit"
 msgstr ""
 
-#: src/gnuwin32/extra.c:786 src/main/platform.c:890
+#: src/gnuwin32/extra.c:786 src/main/platform.c:890 src/main/platform.c:1154
+#: src/main/platform.c:1371 src/main/platform.c:1406
 msgid "invalid 'path' argument"
 msgstr ""
 
@@ -229,15 +231,15 @@ msgid "Unable to write to the clipboard"
 msgstr ""
 
 #: src/gnuwin32/extra.c:1134
-msgid "default must be a character string"
+msgid "'default' must be a character string"
 msgstr ""
 
 #: src/gnuwin32/extra.c:1136
-msgid "default is overlong"
+msgid "'default' is overlong"
 msgstr ""
 
 #: src/gnuwin32/extra.c:1145
-msgid "caption must be a character string"
+msgid "'caption' must be a character string"
 msgstr ""
 
 #: src/gnuwin32/extra.c:1147
@@ -355,50 +357,50 @@ msgstr ""
 msgid "Unable to open file '%s'"
 msgstr ""
 
-#: src/gnuwin32/system.c:509
+#: src/gnuwin32/system.c:510
 #, c-format
-msgid "file.show(): file %s does not exist\n"
+msgid "file.show(): file '%s' does not exist\n"
 msgstr ""
 
-#: src/gnuwin32/system.c:856
+#: src/gnuwin32/system.c:857
 msgid "WARNING: no max-mem-size given\n"
 msgstr ""
 
-#: src/gnuwin32/system.c:862
+#: src/gnuwin32/system.c:863
 #, c-format
 msgid "WARNING: --max-mem-size value is invalid: ignored\n"
 msgstr ""
 
-#: src/gnuwin32/system.c:864
+#: src/gnuwin32/system.c:865
 #, c-format
 msgid "WARNING: --max-mem-size=%lu'%c': too large and ignored\n"
 msgstr ""
 
-#: src/gnuwin32/system.c:869
+#: src/gnuwin32/system.c:870
 #, c-format
 msgid "WARNING: max-mem-size =%4.1fM too small and ignored\n"
 msgstr ""
 
-#: src/gnuwin32/system.c:879 src/unix/system.c:230
+#: src/gnuwin32/system.c:880 src/unix/system.c:230
 #, c-format
-msgid "WARNING: unknown option %s\n"
+msgid "WARNING: unknown option '%s'\n"
 msgstr ""
 
-#: src/gnuwin32/system.c:904 src/unix/system.c:234
+#: src/gnuwin32/system.c:905 src/unix/system.c:234
 #, c-format
 msgid "ARGUMENT '%s' __ignored__\n"
 msgstr ""
 
-#: src/gnuwin32/system.c:922 src/unix/system.c:272
+#: src/gnuwin32/system.c:923 src/unix/system.c:272
 msgid "you must specify '--save', '--no-save' or '--vanilla'"
 msgstr ""
 
-#: src/gnuwin32/system.c:927
+#: src/gnuwin32/system.c:928
 msgid ""
 "impossible to create 'reader thread'; you must free some system resources"
 msgstr ""
 
-#: src/gnuwin32/system.c:936
+#: src/gnuwin32/system.c:937
 msgid "WARNING: invalid R_HISTSIZE ignored;"
 msgstr ""
 
@@ -411,7 +413,7 @@ msgid "Non-numeric argument to mathematical function"
 msgstr ""
 
 #: src/include/Errormsg.h:35 src/main/plot.c:77 src/main/plot.c:3662
-#: src/main/scan.c:1464
+#: src/main/scan.c:1465
 msgid "invalid argument"
 msgstr ""
 
@@ -459,17 +461,17 @@ msgstr ""
 
 #: src/main/CommandLineArgs.c:186
 #, c-format
-msgid "WARNING: option %s no longer supported\n"
+msgid "WARNING: option '%s' no longer supported\n"
 msgstr ""
 
 #: src/main/CommandLineArgs.c:197
 #, c-format
-msgid "WARNING: no value given for %s\n"
+msgid "WARNING: no value given for '%s'\n"
 msgstr ""
 
 #: src/main/CommandLineArgs.c:205
 #, c-format
-msgid "WARNING: %s value is invalid: ignored\n"
+msgid "WARNING: '%s' value is invalid: ignored\n"
 msgstr ""
 
 #: src/main/CommandLineArgs.c:209
@@ -478,15 +480,15 @@ msgid "WARNING: %s=%lu'%c': too large and ignored\n"
 msgstr ""
 
 #: src/main/CommandLineArgs.c:226
-msgid "WARNING: no value given for --max-ppsize given\n"
+msgid "WARNING: no value given for '--max-ppsize'\n"
 msgstr ""
 
 #: src/main/CommandLineArgs.c:231
-msgid "WARNING: -max-ppsize value is negative: ignored\n"
+msgid "WARNING: '-max-ppsize' value is negative: ignored\n"
 msgstr ""
 
 #: src/main/CommandLineArgs.c:233
-msgid "WARNING: -max-ppsize value is too small: ignored\n"
+msgid "WARNING: '-max-ppsize' value is too small: ignored\n"
 msgstr ""
 
 #: src/main/CommandLineArgs.c:236
@@ -494,12 +496,12 @@ msgid "WARNING: -max-ppsize value is too large: ignored\n"
 msgstr ""
 
 #: src/main/CommandLineArgs.c:247
-msgid "WARNING: no vsize given\n"
+msgid "WARNING: no 'vsize' given\n"
 msgstr ""
 
 #: src/main/CommandLineArgs.c:253
 #, c-format
-msgid "WARNING: --vsize value is invalid: ignored\n"
+msgid "WARNING: '--vsize' value is invalid: ignored\n"
 msgstr ""
 
 #: src/main/CommandLineArgs.c:255
@@ -508,12 +510,12 @@ msgid "WARNING: --vsize=%ld'%c': too large and ignored\n"
 msgstr ""
 
 #: src/main/CommandLineArgs.c:270
-msgid "WARNING: no nsize given\n"
+msgid "WARNING: no 'nsize' given\n"
 msgstr ""
 
 #: src/main/CommandLineArgs.c:276
 #, c-format
-msgid "WARNING: --nsize value is invalid: ignored\n"
+msgid "WARNING: '--nsize' value is invalid: ignored\n"
 msgstr ""
 
 #: src/main/CommandLineArgs.c:278
@@ -569,7 +571,7 @@ msgid ".Random.seed[1] = 5 but no user-supplied generator"
 msgstr ""
 
 #: src/main/RNG.c:312
-msgid ".Random.seed[1] is NOT a valid RNG kind (code)"
+msgid ".Random.seed[1] is not a valid RNG kind (code)"
 msgstr ""
 
 #: src/main/RNG.c:317
@@ -607,7 +609,7 @@ msgstr ""
 
 #: src/main/Rdynload.c:561
 #, c-format
-msgid "DLLname %s is too long"
+msgid "DLLname '%s' is too long"
 msgstr ""
 
 #: src/main/Rdynload.c:582
@@ -661,7 +663,7 @@ msgid "invalid length"
 msgstr ""
 
 #: src/main/apply.c:78
-msgid "First arg is not a matrix"
+msgid "first argument is not a matrix"
 msgstr ""
 
 #: src/main/arithmetic.c:182
@@ -681,7 +683,7 @@ msgid "non-conformable arrays"
 msgstr ""
 
 #: src/main/arithmetic.c:409
-msgid "Non-conformable time-series"
+msgid "non-conformable time-series"
 msgstr ""
 
 #: src/main/arithmetic.c:431 src/main/logic.c:119 src/main/relop.c:163
@@ -691,7 +693,7 @@ msgid ""
 msgstr ""
 
 #: src/main/arithmetic.c:495
-msgid "Invalid argument to unary operator"
+msgid "invalid argument to unary operator"
 msgstr ""
 
 #: src/main/arithmetic.c:519 src/main/arithmetic.c:538
@@ -703,7 +705,7 @@ msgid "NAs produced by integer overflow"
 msgstr ""
 
 #: src/main/arithmetic.c:904
-msgid "unimplemented real function (of 1 argument)"
+msgid "unimplemented real function of 1 argument"
 msgstr ""
 
 #: src/main/arithmetic.c:1094 src/main/arithmetic.c:1372
@@ -727,7 +729,7 @@ msgid "%d arguments passed to 'log' which requires 1 or 2"
 msgstr ""
 
 #: src/main/array.c:71
-msgid "matrix: invalid byrow value"
+msgid "matrix: invalid 'byrow' value"
 msgstr ""
 
 #: src/main/array.c:81
@@ -735,19 +737,19 @@ msgid "non-numeric matrix extent"
 msgstr ""
 
 #: src/main/array.c:86
-msgid "matrix: invalid nrow value (too large or NA)"
+msgid "matrix: invalid 'nrow value' (too large or NA)"
 msgstr ""
 
 #: src/main/array.c:88
-msgid "matrix: invalid nrow value (< 0)"
+msgid "matrix: invalid 'nrow' value (< 0)"
 msgstr ""
 
 #: src/main/array.c:91 src/main/array.c:95
-msgid "matrix: invalid ncol value (< 0)"
+msgid "matrix: invalid 'ncol' value (< 0)"
 msgstr ""
 
 #: src/main/array.c:93
-msgid "matrix: invalid ncol value (too large or NA)"
+msgid "matrix: invalid 'ncol' value (too large or NA)"
 msgstr ""
 
 #: src/main/array.c:101
@@ -785,15 +787,15 @@ msgid "allocArray: too many elements specified by dims"
 msgstr ""
 
 #: src/main/array.c:343
-msgid "incorrect number of args to length"
+msgid "incorrect number of args to 'length'"
 msgstr ""
 
 #: src/main/array.c:362
-msgid "incorrect number of args to row/col"
+msgid "incorrect number of arguments to 'row/col'"
 msgstr ""
 
 #: src/main/array.c:364
-msgid "a matrix is required as arg to row/col"
+msgid "a matrix is required as argument to 'row/col'"
 msgstr ""
 
 #: src/main/array.c:535
@@ -824,16 +826,16 @@ msgstr ""
 msgid "invalid permutation ('perm')"
 msgstr ""
 
-#: src/main/array.c:1028
-msgid "invalid value of n"
+#: src/main/array.c:1028 src/main/connections.c:2494
+msgid "invalid value of 'n'"
 msgstr ""
 
 #: src/main/array.c:1030
-msgid "invalid value of p"
+msgid "invalid value of 'p'"
 msgstr ""
 
 #: src/main/array.c:1031
-msgid "invalid value of na.rm"
+msgid "invalid value of 'na.rm'"
 msgstr ""
 
 #: src/main/array.c:1040
@@ -854,7 +856,7 @@ msgstr ""
 
 #: src/main/attrib.c:266
 #, c-format
-msgid "names attribute [%d] must be the same length as the vector [%d]"
+msgid "'names' attribute [%d] must be the same length as the vector [%d]"
 msgstr ""
 
 #: src/main/attrib.c:268
@@ -866,7 +868,7 @@ msgid "invalid time series parameters specified"
 msgstr ""
 
 #: src/main/attrib.c:285
-msgid "tsp attribute must be numeric of length three"
+msgid "'tsp' attribute must be numeric of length three"
 msgstr ""
 
 #: src/main/attrib.c:302
@@ -874,41 +876,41 @@ msgid "cannot assign 'tsp' to zero-length vector"
 msgstr ""
 
 #: src/main/attrib.c:330
-msgid "attempt to set invalid comment attribute"
+msgid "attempt to set invalid 'comment' attribute"
 msgstr ""
 
 #: src/main/attrib.c:366
-msgid "attempt to set invalid class attribute"
+msgid "attempt to set invalid 'class' attribute"
 msgstr ""
 
 #: src/main/attrib.c:568
-msgid "incompatible names argument"
+msgid "incompatible 'names' argument"
 msgstr ""
 
 #: src/main/attrib.c:620
-msgid "invalid type to set names attribute"
+msgid "invalid type to set 'names' attribute"
 msgstr ""
 
 #: src/main/attrib.c:686
-msgid "dimnames applied to non-array"
+msgid "'dimnames' applied to non-array"
 msgstr ""
 
 #: src/main/attrib.c:690
-msgid "dimnames must be a list"
+msgid "'dimnames' must be a list"
 msgstr ""
 
 #: src/main/attrib.c:693
 #, c-format
-msgid "length of dimnames [%d] must match that of dims [%d]"
+msgid "length of 'dimnames' [%d] must match that of 'dims' [%d]"
 msgstr ""
 
 #: src/main/attrib.c:710
-msgid "invalid type for dimname (must be a vector)"
+msgid "invalid type for 'dimnames' (must be a vector)"
 msgstr ""
 
 #: src/main/attrib.c:712
 #, c-format
-msgid "length of dimnames [%d] not equal to array extent"
+msgid "length of 'dimnames' [%d] not equal to array extent"
 msgstr ""
 
 #: src/main/attrib.c:772
@@ -920,7 +922,7 @@ msgid "dim<- : invalid second argument"
 msgstr ""
 
 #: src/main/attrib.c:783
-msgid "dim: Length-0 dimension vector is invalid"
+msgid "dim: length-0 dimension vector is invalid"
 msgstr ""
 
 #: src/main/attrib.c:788
@@ -942,15 +944,15 @@ msgid "all attributes must have names [%d does not]"
 msgstr ""
 
 #: src/main/attrib.c:936
-msgid "attribute name must be of mode character"
+msgid "attribute 'name' must be of mode character"
 msgstr ""
 
 #: src/main/attrib.c:938
-msgid "exactly one attribute name must be given"
+msgid "exactly one attribute 'name' must be given"
 msgstr ""
 
 #: src/main/attrib.c:1006
-msgid "name must be non-null character"
+msgid "'name' must be non-null character"
 msgstr ""
 
 #: src/main/attrib.c:1112 src/main/attrib.c:1151 src/main/attrib.c:1236
@@ -959,12 +961,12 @@ msgstr ""
 
 #: src/main/attrib.c:1126
 #, c-format
-msgid "Cannot get a slot (\"%s\") from an object of type \"%s\""
+msgid "cannot get a slot (\"%s\") from an object of type \"%s\""
 msgstr ""
 
 #: src/main/attrib.c:1134
 #, c-format
-msgid "No slot of name \"%s\" for this object of class \"%s\""
+msgid "no slot of name \"%s\" for this object of class \"%s\""
 msgstr ""
 
 #: src/main/attrib.c:1231
@@ -974,20 +976,20 @@ msgstr ""
 #: src/main/attrib.c:1255
 #, c-format
 msgid ""
-"Trying to get slot \"%s\" from an object whose class (\"%s\") is not defined "
+"trying to get slot \"%s\" from an object whose class (\"%s\") is not defined "
 msgstr ""
 
 #: src/main/attrib.c:1259
 #, c-format
 msgid ""
-"Trying to get slot \"%s\" from an object of a basic class (\"%s\") with no "
+"trying to get slot \"%s\" from an object of a basic class (\"%s\") with no "
 "slots"
 msgstr ""
 
 #: src/main/attrib.c:1262
 #, c-format
 msgid ""
-"Trying to get slot \"%s\" from an object with S3 class c(\"%s\", \"%s"
+"trying to get slot \"%s\" from an object with S3 class c(\"%s\", \"%s"
 "\", ...) (not a formally defined class)"
 msgstr ""
 
@@ -1012,8 +1014,6 @@ msgid "argument not a list"
 msgstr ""
 
 #: src/main/bind.c:873 src/main/eval.c:1834 src/main/eval.c:1844
-#: src/main/objects.c:270 src/main/objects.c:309 src/main/objects.c:663
-#: src/main/objects.c:681
 #, c-format
 msgid "class name too long in %s"
 msgstr ""
@@ -1045,7 +1045,7 @@ msgid "replacement object is not an environment"
 msgstr ""
 
 #: src/main/builtin.c:175
-msgid "enclos needs to be an environment"
+msgid "'enclos' must be an environment"
 msgstr ""
 
 #: src/main/builtin.c:188 src/main/builtin.c:198
@@ -1053,11 +1053,11 @@ msgid "argument is not an environment"
 msgstr ""
 
 #: src/main/builtin.c:200
-msgid "parent is not an environment"
+msgid "'parent' is not an environment"
 msgstr ""
 
 #: src/main/builtin.c:281
-msgid "invalid sep= specification"
+msgid "invalid 'sep=' specification"
 msgstr ""
 
 #: src/main/builtin.c:289
@@ -1078,7 +1078,7 @@ msgid "argument %d not yet handled by cat"
 msgstr ""
 
 #: src/main/builtin.c:475
-msgid "vector: zero-length type argument"
+msgid "vector: zero-length 'type' argument"
 msgstr ""
 
 #: src/main/builtin.c:494
@@ -1099,7 +1099,7 @@ msgid "length<- invalid second argument"
 msgstr ""
 
 #: src/main/builtin.c:626
-msgid "length<- missing value for length"
+msgid "length<- missing value for 'length'"
 msgstr ""
 
 #: src/main/builtin.c:652 src/main/coerce.c:1922 src/main/coerce.c:1953
@@ -1110,7 +1110,7 @@ msgid "... used in an incorrect context"
 msgstr ""
 
 #: src/main/builtin.c:657
-msgid "invalid parameter in switch"
+msgid "invalid parameter in switch()"
 msgstr ""
 
 #: src/main/builtin.c:668
@@ -1142,7 +1142,7 @@ msgid "invalid substring argument(s) in substr<-()"
 msgstr ""
 
 #: src/main/character.c:287
-msgid "invalid rhs in substr<-()"
+msgid "invalid right-hand side in substr<-()"
 msgstr ""
 
 #: src/main/character.c:353
@@ -1172,7 +1172,7 @@ msgid "non-character names"
 msgstr ""
 
 #: src/main/character.c:737
-msgid "invalid value of allow_"
+msgid "invalid value of 'allow_'"
 msgstr ""
 
 #: src/main/character.c:790 src/main/character.c:1303
@@ -1242,7 +1242,7 @@ msgid "invalid multibyte string 'new'"
 msgstr ""
 
 #: src/main/character.c:1565 src/main/character.c:1626
-msgid "old is longer than new"
+msgid "'old' is longer than 'new'"
 msgstr ""
 
 #: src/main/character.c:1582
@@ -1251,7 +1251,7 @@ msgid "invalid input multibyte string %d"
 msgstr ""
 
 #: src/main/character.c:1725
-msgid "Use of agrep() in a UTF-8 locale may only work for ASCII strings"
+msgid "use of agrep() in a UTF-8 locale may only work for ASCII strings"
 msgstr ""
 
 #: src/main/character.c:1734
@@ -1332,17 +1332,17 @@ msgstr ""
 
 #: src/main/coerce.c:405
 #, c-format
-msgid "Invalid data of mode \"%s\" (too short)"
+msgid "invalid data of mode \"%s\" (too short)"
 msgstr ""
 
 #: src/main/coerce.c:883
 #, c-format
-msgid "pairlist object cannot be coerced to %s"
+msgid "'pairlist' object cannot be coerced to '%s'"
 msgstr ""
 
 #: src/main/coerce.c:969
 #, c-format
-msgid "(list) object cannot be coerced to %s"
+msgid "(list) object cannot be coerced to '%s'"
 msgstr ""
 
 #: src/main/coerce.c:1051
@@ -1393,7 +1393,7 @@ msgid "%s() applied to non-(list or vector)"
 msgstr ""
 
 #: src/main/coerce.c:1891
-msgid "do.call: couldn't find parent environment"
+msgid "do.call: could not find parent environment"
 msgstr ""
 
 #: src/main/coerce.c:1991
@@ -1401,7 +1401,7 @@ msgid "invalid environment specified"
 msgstr ""
 
 #: src/main/coerce.c:2069
-msgid "Invalid replacement object to be a class string"
+msgid "invalid replacement object to be a class string"
 msgstr ""
 
 #: src/main/coerce.c:2087
@@ -1413,13 +1413,13 @@ msgstr ""
 #: src/main/coerce.c:2103
 #, c-format
 msgid ""
-"Invalid to set the class to matrix unless the dimension attribute is of "
+"invalid to set the class to matrix unless the dimension attribute is of "
 "length 2 (was %d)"
 msgstr ""
 
 #: src/main/coerce.c:2109
 msgid ""
-"Can't set class to \"array\" unless the dimension attribute has length > 0"
+"cannot set class to \"array\" unless the dimension attribute has length > 0"
 msgstr ""
 
 #: src/main/colors.c:40
@@ -1507,7 +1507,7 @@ msgid "root finding code failed"
 msgstr ""
 
 #: src/main/connections.c:80
-msgid "All connections are in use"
+msgid "all connections are in use"
 msgstr ""
 
 #: src/main/connections.c:90
@@ -1522,12 +1522,12 @@ msgstr ""
 
 #: src/main/connections.c:141
 #, c-format
-msgid "conversion from encoding %s is unsupported"
+msgid "conversion from encoding '%s' is unsupported"
 msgstr ""
 
 #: src/main/connections.c:153
 #, c-format
-msgid "conversion to encoding %s is unsupported"
+msgid "conversion to encoding '%s' is unsupported"
 msgstr ""
 
 #: src/main/connections.c:166
@@ -1567,7 +1567,7 @@ msgstr ""
 msgid "write not enabled for this connection"
 msgstr ""
 
-#: src/main/connections.c:370
+#: src/main/connections.c:370 src/main/dounzip.c:101
 #, c-format
 msgid "cannot open file '%s'"
 msgstr ""
@@ -1859,8 +1859,8 @@ msgstr ""
 #: src/main/connections.c:2507 src/main/connections.c:2696
 #: src/main/connections.c:2911 src/main/connections.c:2983
 #: src/main/connections.c:3145 src/main/dcf.c:59 src/main/deparse.c:311
-#: src/main/deparse.c:381 src/main/saveload.c:2202 src/main/scan.c:999
-#: src/main/scan.c:1104 src/main/scan.c:1550 src/main/scan.c:1718
+#: src/main/deparse.c:381 src/main/saveload.c:2202 src/main/scan.c:1000
+#: src/main/scan.c:1105 src/main/scan.c:1551 src/main/scan.c:1719
 #: src/main/source.c:76
 msgid "cannot open the connection"
 msgstr ""
@@ -1884,7 +1884,7 @@ msgstr ""
 
 #: src/main/connections.c:2418 src/main/connections.c:2690
 #: src/main/connections.c:2953 src/main/connections.c:3385
-#: src/main/scan.c:1714 src/main/serialize.c:1579
+#: src/main/scan.c:1715 src/main/serialize.c:1579
 msgid "cannot write to this connection"
 msgstr ""
 
@@ -1902,10 +1902,6 @@ msgstr ""
 
 #: src/main/connections.c:2491
 msgid "invalid value of 'what'"
-msgstr ""
-
-#: src/main/connections.c:2494
-msgid "invalid value of 'n'"
 msgstr ""
 
 #: src/main/connections.c:2498
@@ -1951,7 +1947,7 @@ msgid "size changing is not supported for raw vectors"
 msgstr ""
 
 #: src/main/connections.c:2867 src/main/connections.c:2870
-msgid "invalid UTF-8 input in readChar"
+msgid "invalid UTF-8 input in readChar()"
 msgstr ""
 
 #: src/main/connections.c:2917
@@ -2001,7 +1997,7 @@ msgid "no sink to remove"
 msgstr ""
 
 #: src/main/connections.c:3184
-msgid "invalid value for closeOnExit"
+msgid "invalid value for 'closeOnExit'"
 msgstr ""
 
 #: src/main/connections.c:3186 src/main/connections.c:3214
@@ -2025,7 +2021,7 @@ msgid "file stream does not have valid gzip header"
 msgstr ""
 
 #: src/main/connections.c:3514
-msgid "writing error whilst flushing gzcon connection"
+msgid "writing error whilst flushing 'gzcon' connection"
 msgstr ""
 
 #: src/main/connections.c:3614
@@ -2034,7 +2030,7 @@ msgid "crc error %x %x\n"
 msgstr ""
 
 #: src/main/connections.c:3639
-msgid "write error on gzcon connection"
+msgid "write error on 'gzcon' connection"
 msgstr ""
 
 #: src/main/connections.c:3673
@@ -2055,7 +2051,7 @@ msgstr ""
 
 #: src/main/connections.c:3689 src/main/connections.c:3693
 #: src/main/connections.c:3700 src/main/connections.c:3714
-msgid "allocation of gzcon connection failed"
+msgid "allocation of 'gzcon' connection failed"
 msgstr ""
 
 #: src/main/connections.c:3759
@@ -2093,15 +2089,15 @@ msgid ""
 msgstr ""
 
 #: src/main/context.c:268
-msgid "No loop to break from, jumping to top level"
+msgid "no loop to break from, jumping to top level"
 msgstr ""
 
-#: src/main/context.c:276 src/main/errors.c:1052
-msgid "No function to return from, jumping to top level"
+#: src/main/context.c:276
+msgid "no function to return from, jumping to top level"
 msgstr ""
 
 #: src/main/context.c:288
-msgid "Target context is not on the stack"
+msgid "target context is not on the stack"
 msgstr ""
 
 #: src/main/context.c:310
@@ -2153,19 +2149,15 @@ msgid "invalid 'use' (computational method)"
 msgstr ""
 
 #: src/main/cov.c:489
-msgid "The standard deviation is zero"
+msgid "the standard deviation is zero"
 msgstr ""
 
 #: src/main/cum.c:140
 msgid "min/max not defined for complex numbers"
 msgstr ""
 
-#: src/main/cum.c:143
+#: src/main/cum.c:143 src/main/cum.c:167
 msgid "unknown cumxxx function"
-msgstr ""
-
-#: src/main/cum.c:167
-msgid "Unknown cumxxxx function"
 msgstr ""
 
 #: src/main/datetime.c:391
@@ -2174,11 +2166,6 @@ msgstr ""
 
 #: src/main/datetime.c:458 src/main/datetime.c:518
 msgid "invalid 'tz' value"
-msgstr ""
-
-#: src/main/datetime.c:516 src/main/datetime.c:575 src/main/datetime.c:684
-#: src/main/datetime.c:799
-msgid "invalid 'x' argument"
 msgstr ""
 
 #: src/main/datetime.c:530 src/main/datetime.c:532 src/main/datetime.c:807
@@ -2195,7 +2182,7 @@ msgid "invalid 'usetz' argument"
 msgstr ""
 
 #: src/main/dcf.c:67 src/main/dcf.c:71 src/main/dcf.c:112 src/main/dcf.c:161
-msgid "Could not allocate memory for read.dcf"
+msgid "could not allocate memory for read.dcf"
 msgstr ""
 
 #: src/main/deparse.c:158
@@ -2280,10 +2267,6 @@ msgstr ""
 msgid "NULL value passed as symbol address"
 msgstr ""
 
-#: src/main/dotcode.c:100
-msgid "NativeSymbolInfo"
-msgstr ""
-
 #: src/main/dotcode.c:106
 msgid "'name' must be a string (of length 1) or native symbol reference"
 msgstr ""
@@ -2302,7 +2285,7 @@ msgstr ""
 
 #: src/main/dotcode.c:172
 #, c-format
-msgid "%s function name not in DLL for package %s"
+msgid "%s function name not in DLL for package '%s'"
 msgstr ""
 
 #: src/main/dotcode.c:176
@@ -2313,7 +2296,7 @@ msgstr ""
 #: src/main/dotcode.c:239
 #, c-format
 msgid ""
-"explicit request not to duplicate arguments in call to %s, but argument %d "
+"explicit request not to duplicate arguments in call to '%s', but argument %d "
 "is of the wrong type (%d != %d)"
 msgstr ""
 
@@ -2329,7 +2312,7 @@ msgstr ""
 
 #: src/main/dotcode.c:290
 #, c-format
-msgid "Complex NA/NaN/Inf in foreign function call (arg %d)"
+msgid "complex NA/NaN/Inf in foreign function call (arg %d)"
 msgstr ""
 
 #: src/main/dotcode.c:302
@@ -2413,7 +2396,7 @@ msgstr ""
 msgid "too many arguments, sorry"
 msgstr ""
 
-#: src/main/dotcode.c:1431 src/main/dotcode.c:1453 src/main/engine.c:2624
+#: src/main/dotcode.c:1431 src/main/dotcode.c:1453
 msgid "Invalid graphics state"
 msgstr ""
 
@@ -2445,12 +2428,7 @@ msgstr ""
 
 #: src/main/dotcode.c:2327
 #, c-format
-msgid "Mode '%s' is not supported in call_R"
-msgstr ""
-
-#: src/main/dounzip.c:101
-#, c-format
-msgid "cannot open file %s"
+msgid "mode '%s' is not supported in call_R"
 msgstr ""
 
 #: src/main/dounzip.c:172
@@ -2462,19 +2440,19 @@ msgid "zip path is too long"
 msgstr ""
 
 #: src/main/dounzip.c:182
-msgid "invalid topics argument"
+msgid "invalid 'topics' argument"
 msgstr ""
 
 #: src/main/dounzip.c:188
-msgid "invalid destination argument"
+msgid "invalid 'destination' argument"
 msgstr ""
 
 #: src/main/dounzip.c:191
-msgid "destination is too long"
+msgid "'destination' is too long"
 msgstr ""
 
 #: src/main/dounzip.c:194
-msgid "destination does not exist"
+msgid "'destination' does not exist"
 msgstr ""
 
 #: src/main/dounzip.c:204
@@ -2540,7 +2518,7 @@ msgid "Graphics API version mismatch"
 msgstr ""
 
 #: src/main/engine.c:87
-msgid "Not enough memory to allocate device (in addDevice)"
+msgid "not enough memory to allocate device (in addDevice)"
 msgstr ""
 
 #: src/main/engine.c:148 src/main/engine.c:214
@@ -2548,20 +2526,20 @@ msgid "unable to allocate memory (in GEregister)"
 msgstr ""
 
 #: src/main/engine.c:186
-msgid "Too many graphics systems registered"
+msgid "too many graphics systems registered"
 msgstr ""
 
 #: src/main/engine.c:236
-msgid "No graphics system to unregister"
+msgid "no graphics system to unregister"
 msgstr ""
 
 #: src/main/engine.c:488 src/main/engine.c:493 src/main/engine.c:501
-#: src/main/engine.c:508 src/main/engine.c:522
+#: src/main/engine.c:508 src/main/engine.c:522 src/modules/X11/devX11.c:967
 msgid "invalid line end"
 msgstr ""
 
 #: src/main/engine.c:553 src/main/engine.c:558 src/main/engine.c:566
-#: src/main/engine.c:573 src/main/engine.c:587
+#: src/main/engine.c:573 src/main/engine.c:587 src/modules/X11/devX11.c:985
 msgid "invalid line join"
 msgstr ""
 
@@ -2571,11 +2549,11 @@ msgstr ""
 
 #: src/main/engine.c:1566
 #, c-format
-msgid "Font face %d not supported for font family %s"
+msgid "font face %d not supported for font family '%s'"
 msgstr ""
 
-#: src/main/engine.c:1768 src/main/graphics.c:2172 src/main/graphics.c:2533
-msgid "No graphics device is active"
+#: src/main/engine.c:1768
+msgid "no graphics device is active"
 msgstr ""
 
 #: src/main/engine.c:2085
@@ -2590,7 +2568,7 @@ msgstr ""
 
 #: src/main/engine.c:2112
 #, c-format
-msgid "Infinite axis extents [GEPretty(%g,%g,%d)]"
+msgid "infinite axis extents [GEPretty(%g,%g,%d)]"
 msgstr ""
 
 #: src/main/engine.c:2150
@@ -2619,6 +2597,10 @@ msgstr ""
 msgid "'env' argument must be an environment"
 msgstr ""
 
+#: src/main/engine.c:2624 src/main/graphics.c:2372
+msgid "invalid graphics state"
+msgstr ""
+
 #: src/main/envir.c:125 src/main/envir.c:136
 msgid "cannot change value of a locked binding"
 msgstr ""
@@ -2628,15 +2610,15 @@ msgid "cannot add bindings to a locked environment"
 msgstr ""
 
 #: src/main/envir.c:392
-msgid "first arg (table) not of type VECSXP,  from R_HashResize"
+msgid "first argument ('table') not of type VECSXP,  from R_HashResize"
 msgstr ""
 
 #: src/main/envir.c:451
-msgid "first arg (table) not of type VECSXP, R_HashSizeCheck"
+msgid "first argument ('table') not of type VECSXP, R_HashSizeCheck"
 msgstr ""
 
 #: src/main/envir.c:479
-msgid "first arg (table) not of type ENVSXP, from R_HashVector2Hash"
+msgid "first argument ('table') not of type ENVSXP, from R_HashVector2Hash"
 msgstr ""
 
 #: src/main/envir.c:667
@@ -2675,7 +2657,7 @@ msgstr ""
 
 #: src/main/envir.c:1216 src/main/eval.c:342 src/main/eval.c:2474
 #, c-format
-msgid "Argument \"%s\" is missing, with no default"
+msgid "argument \"%s\" is missing, with no default"
 msgstr ""
 
 #: src/main/envir.c:1222
@@ -2801,7 +2783,7 @@ msgid "no item called \"%s\" on the search list"
 msgstr ""
 
 #: src/main/envir.c:2554
-msgid "Invalid object for as.environment"
+msgid "invalid object for as.environment"
 msgstr ""
 
 #: src/main/envir.c:2562
@@ -2859,7 +2841,7 @@ msgstr ""
 
 #: src/main/envir.c:2856
 #, c-format
-msgid "using .GlobalEnv instead of %s"
+msgid "using .GlobalEnv instead of '%s'"
 msgstr ""
 
 #: src/main/envir.c:2923
@@ -3004,9 +2986,9 @@ msgstr ""
 msgid "incorrect number of arguments to \"%s\""
 msgstr ""
 
-#: src/main/errors.c:946
+#: src/main/errors.c:946 src/main/errors.c:961
 #, c-format
-msgid "Unimplemented feature in %s"
+msgid "unimplemented feature in %s"
 msgstr ""
 
 #: src/main/errors.c:958
@@ -3017,17 +2999,16 @@ msgstr ""
 msgid "incompatible arguments"
 msgstr ""
 
-#: src/main/errors.c:961
-#, c-format
-msgid "unimplemented feature in %s"
-msgstr ""
-
 #: src/main/errors.c:962
 msgid "unknown error (report this!)"
 msgstr ""
 
 #: src/main/errors.c:974
 msgid "unknown warning (report this!)"
+msgstr ""
+
+#: src/main/errors.c:1052
+msgid "No function to return from, jumping to top level"
 msgstr ""
 
 #: src/main/errors.c:1068
@@ -3085,7 +3066,7 @@ msgid ""
 msgstr ""
 
 #: src/main/eval.c:344 src/main/eval.c:2475
-msgid "Argument is missing, with no default"
+msgid "argument is missing, with no default"
 msgstr ""
 
 #: src/main/eval.c:359 src/main/eval.c:2419
@@ -3098,7 +3079,7 @@ msgstr ""
 
 #: src/main/eval.c:712
 #, c-format
-msgid "Could not find symbol \"%s\" in environment of the generic function"
+msgid "could not find symbol \"%s\" in environment of the generic function"
 msgstr ""
 
 #: src/main/eval.c:730
@@ -3164,7 +3145,7 @@ msgstr ""
 
 #: src/main/eval.c:1231 src/main/eval.c:1249
 #, c-format
-msgid "overlong name in %s"
+msgid "overlong name in '%s'"
 msgstr ""
 
 #: src/main/eval.c:1323
@@ -3172,7 +3153,7 @@ msgid "invalid (do_set) left-hand side to assignment"
 msgstr ""
 
 #: src/main/eval.c:1338
-msgid "invalid assignment lhs"
+msgid "invalid assignment left-hand side"
 msgstr ""
 
 #: src/main/eval.c:1513
@@ -3203,7 +3184,7 @@ msgstr ""
 msgid "value in ... is not a promise"
 msgstr ""
 
-#: src/main/eval.c:1887 src/main/objects.c:655
+#: src/main/eval.c:1887
 #, c-format
 msgid "call name too long in %s"
 msgstr ""
@@ -3312,8 +3293,8 @@ msgstr ""
 msgid "bad file name"
 msgstr ""
 
-#: src/main/eval.c:3469
-msgid "unable to open file for loading"
+#: src/main/eval.c:3469 src/main/eval.c:3490
+msgid "unable to open 'file'"
 msgstr ""
 
 #: src/main/eval.c:3484 src/main/saveload.c:1921
@@ -3323,11 +3304,6 @@ msgstr ""
 #: src/main/eval.c:3486 src/main/saveload.c:1923 src/main/saveload.c:2185
 #: src/main/serialize.c:1696
 msgid "'ascii' must be logical"
-msgstr ""
-
-#: src/main/eval.c:3490 src/main/saveload.c:1936 src/main/saveload.c:2033
-#: src/unix/edit.c:120
-msgid "unable to open file"
 msgstr ""
 
 #: src/main/eval.c:3515 src/main/eval.c:3522
@@ -3375,7 +3351,7 @@ msgid "invalid factors"
 msgstr ""
 
 #: src/main/gevents.c:49
-msgid "Graphics device does not support graphics events"
+msgid "graphics device does not support graphics events"
 msgstr ""
 
 #: src/main/gevents.c:52
@@ -3383,35 +3359,35 @@ msgid "invalid prompt"
 msgstr ""
 
 #: src/main/gevents.c:58
-msgid "onMouseDown not supported"
+msgid "'onMouseDown' not supported"
 msgstr ""
 
 #: src/main/gevents.c:60
-msgid "invalid onMouseDown callback"
+msgid "invalid 'onMouseDow'n callback"
 msgstr ""
 
 #: src/main/gevents.c:66
-msgid "onMouseMove not supported"
+msgid "'onMouseMove' not supported"
 msgstr ""
 
 #: src/main/gevents.c:68
-msgid "invalid onMouseMove callback"
+msgid "invalid 'onMouseMove' callback"
 msgstr ""
 
 #: src/main/gevents.c:74
-msgid "onMouseUp not supported"
+msgid "'onMouseUp' not supported"
 msgstr ""
 
 #: src/main/gevents.c:76
-msgid "invalid onMouseUp callback"
+msgid "invalid 'onMouseUp' callback"
 msgstr ""
 
 #: src/main/gevents.c:82
-msgid "onKeybd not supported"
+msgid "'onKeybd' not supported"
 msgstr ""
 
 #: src/main/gevents.c:84
-msgid "invalid onKeybd callback"
+msgid "invalid 'onKeybd' callback"
 msgstr ""
 
 #: src/main/gram.y:98 src/main/gram.y:111
@@ -3456,7 +3432,7 @@ msgstr ""
 
 #: src/main/graphics.c:304
 #, c-format
-msgid "Bad units specified in %s, please report!"
+msgid "bad units specified in %s, please report!"
 msgstr ""
 
 #: src/main/graphics.c:1785
@@ -3464,24 +3440,24 @@ msgid "attempt to plot on null device"
 msgstr ""
 
 #: src/main/graphics.c:1818
-msgid "Outer margins too large (fig.region too small)"
+msgid "outer margins too large (fig.region too small)"
 msgstr ""
 
 #: src/main/graphics.c:1820
-msgid "Figure region too large"
+msgid "figure region too large"
 msgstr ""
 
 #: src/main/graphics.c:1822
-msgid "Figure margins too large"
+msgid "figure margins too large"
 msgstr ""
 
 #: src/main/graphics.c:1824
-msgid "Plot region too large"
+msgid "plot region too large"
 msgstr ""
 
 #: src/main/graphics.c:1870
 #, c-format
-msgid "Nonfinite axis limits [GScale(%g,%g,%d, .); log=%d]"
+msgid "nonfinite axis limits [GScale(%g,%g,%d, .); log=%d]"
 msgstr ""
 
 #: src/main/graphics.c:1900
@@ -3494,12 +3470,12 @@ msgstr ""
 msgid "relative range of values =%4.0f * EPS, is small (axis %d)"
 msgstr ""
 
-#: src/main/graphics.c:2367
-msgid "plot.new has not been called yet"
+#: src/main/graphics.c:2172 src/main/graphics.c:2533
+msgid "No graphics device is active"
 msgstr ""
 
-#: src/main/graphics.c:2372
-msgid "invalid graphics state"
+#: src/main/graphics.c:2367
+msgid "plot.new has not been called yet"
 msgstr ""
 
 #: src/main/graphics.c:2498
@@ -3528,7 +3504,7 @@ msgid "bad hsv to rgb color conversion"
 msgstr ""
 
 #: src/main/graphics.c:4022
-msgid "invalid hex digit in color or lty"
+msgid "invalid hex digit in 'color' or 'lty'"
 msgstr ""
 
 #: src/main/graphics.c:4063 src/main/graphics.c:4073
@@ -3544,7 +3520,7 @@ msgid "invalid color specification"
 msgstr ""
 
 #: src/main/graphics.c:4258
-msgid "Invalid colour"
+msgid "Invalid color"
 msgstr ""
 
 #: src/main/graphics.c:4330
@@ -3556,7 +3532,7 @@ msgid "invalid line type"
 msgstr ""
 
 #: src/main/graphics.c:4467
-msgid "No active or default device"
+msgid "no active or default device"
 msgstr ""
 
 #: src/main/graphics.c:4484
@@ -3608,7 +3584,7 @@ msgstr ""
 msgid "binary operation on non-conformable arrays"
 msgstr ""
 
-#: src/main/logic.c:100
+#: src/main/logic.c:100 src/main/relop.c:145
 msgid "non-conformable time series"
 msgstr ""
 
@@ -3657,7 +3633,7 @@ msgid "unable to restore saved data in .RData\n"
 msgstr ""
 
 #: src/main/main.c:854
-msgid "can't quit from browser"
+msgid "cannot quit from browser"
 msgstr ""
 
 #: src/main/main.c:858
@@ -3669,15 +3645,15 @@ msgid "save=\"ask\" in non-interactive use: command-line default will be used"
 msgstr ""
 
 #: src/main/main.c:871
-msgid "unrecognized value of save"
+msgid "unrecognized value of 'save'"
 msgstr ""
 
 #: src/main/main.c:874
-msgid "invalid status, 0 assumed"
+msgid "invalid 'status', 0 assumed"
 msgstr ""
 
 #: src/main/main.c:879
-msgid "invalid runLast, FALSE assumed"
+msgid "invalid 'runLast', FALSE assumed"
 msgstr ""
 
 #: src/main/main.c:910
@@ -3834,7 +3810,7 @@ msgid "data argument is of the wrong type"
 msgstr ""
 
 #: src/main/model.c:1150
-msgid "invalid formula in update"
+msgid "invalid formula in 'update'"
 msgstr ""
 
 #: src/main/model.c:1188
@@ -3859,7 +3835,7 @@ msgstr ""
 
 #: src/main/model.c:1310
 #, c-format
-msgid "overlong names in %s"
+msgid "overlong names in '%s'"
 msgstr ""
 
 #: src/main/model.c:1330 src/main/model.c:1632
@@ -3875,7 +3851,7 @@ msgid "invalid result from na.action"
 msgstr ""
 
 #: src/main/model.c:1559 src/main/model.c:1567
-msgid "invalid terms argument"
+msgid "invalid 'terms' argument"
 msgstr ""
 
 #: src/main/model.c:1578
@@ -3892,7 +3868,7 @@ msgid "variable %d has no levels"
 msgstr ""
 
 #: src/main/model.c:1721
-msgid "the response appeared on the rhs and was dropped"
+msgid "the response appeared on the right-hand side and was dropped"
 msgstr ""
 
 #: src/main/model.c:1753
@@ -3951,7 +3927,13 @@ msgid "UseMethod used in an inappropriate fashion"
 msgstr ""
 
 #: src/main/objects.c:248
-msgid "Invalid generic function in usemethod"
+msgid "Invalid generic function in 'usemethod'"
+msgstr ""
+
+#: src/main/objects.c:270 src/main/objects.c:309 src/main/objects.c:663
+#: src/main/objects.c:681
+#, c-format
+msgid "class name too long in '%s'"
 msgstr ""
 
 #: src/main/objects.c:352
@@ -3959,11 +3941,11 @@ msgid "corrupt internals!"
 msgstr ""
 
 #: src/main/objects.c:366
-msgid "There must be a first argument"
+msgid "there must be a first argument"
 msgstr ""
 
 #: src/main/objects.c:369
-msgid "Arguments after the first two are ignored"
+msgid "arguments after the first two are ignored"
 msgstr ""
 
 #: src/main/objects.c:380
@@ -3988,7 +3970,7 @@ msgid "NextMethod called from an anonymous function"
 msgstr ""
 
 #: src/main/objects.c:495
-msgid "No calling generic was found: was a method called directly?"
+msgid "no calling generic was found: was a method called directly?"
 msgstr ""
 
 #: src/main/objects.c:497
@@ -4017,20 +3999,25 @@ msgid "invalid 'group' argument found in NextMethod"
 msgstr ""
 
 #: src/main/objects.c:633
-msgid "Wrong value for .Method"
+msgid "wrong value for .Method"
 msgstr ""
 
 #: src/main/objects.c:636 src/main/objects.c:646
 #, c-format
-msgid "method name too long in %s"
+msgid "method name too long in '%s'"
 msgstr ""
 
 #: src/main/objects.c:650
 msgid "Incompatible methods ignored"
 msgstr ""
 
+#: src/main/objects.c:655
+#, c-format
+msgid "call name too long in '%s'"
+msgstr ""
+
 #: src/main/objects.c:714 src/main/objects.c:719
-msgid "No method to invoke"
+msgid "no method to invoke"
 msgstr ""
 
 #: src/main/objects.c:758
@@ -4051,7 +4038,7 @@ msgstr ""
 
 #: src/main/objects.c:949
 #, c-format
-msgid "Unable to find a non-generic version of function \"%s\""
+msgid "unable to find a non-generic version of function \"%s\""
 msgstr ""
 
 #: src/main/objects.c:989
@@ -4060,40 +4047,40 @@ msgid ""
 msgstr ""
 
 #: src/main/objects.c:996
-msgid "Argument to standardGeneric must be a non-empty character string"
+msgid "argument to standardGeneric must be a non-empty character string"
 msgstr ""
 
 #: src/main/objects.c:1001
 #, c-format
 msgid ""
-"Call to standardGeneric(\"%s\") apparently not from the body of that generic "
+"call to standardGeneric(\"%s\") apparently not from the body of that generic "
 "function"
 msgstr ""
 
 #: src/main/objects.c:1022
-msgid "Argument 'code' must be a character string"
+msgid "argument 'code' must be a character string"
 msgstr ""
 
 #: src/main/objects.c:1061
 #, c-format
 msgid ""
-"Invalid primitive methods code (\"%s\"): should be \"clear\", \"reset\", "
+"invalid primitive methods code (\"%s\"): should be \"clear\", \"reset\", "
 "\"set\", or \"suppress\""
 msgstr ""
 
 #: src/main/objects.c:1069
-msgid "Invalid object: must be a primitive function"
+msgid "invalid object: must be a primitive function"
 msgstr ""
 
 #: src/main/objects.c:1116
 #, c-format
 msgid ""
-"The formal definition of a primitive generic must be a function object (got "
-"type %s)"
+"the formal definition of a primitive generic must be a function object (got "
+"type '%s')"
 msgstr ""
 
 #: src/main/objects.c:1230
-msgid "Invalid primitive operation given for dispatch"
+msgid "invalid primitive operation given for dispatch"
 msgstr ""
 
 #: src/main/objects.c:1259
@@ -4113,7 +4100,7 @@ msgstr ""
 
 #: src/main/objects.c:1301
 #, c-format
-msgid "Trying to generate an object in C from a virtual class (\"%s\")"
+msgid "trying to generate an object in C from a virtual class (\"%s\")"
 msgstr ""
 
 #: src/main/optim.c:73 src/main/optim.c:99 src/main/optim.c:182
@@ -4136,11 +4123,11 @@ msgid "candidate point in optim evaluated to length %d not %d"
 msgstr ""
 
 #: src/main/optim.c:220 src/main/optim.c:409
-msgid "fn is not a function"
+msgid "'fn' is not a function"
 msgstr ""
 
 #: src/main/optim.c:224
-msgid "invalid method argument"
+msgid "invalid 'method' argument"
 msgstr ""
 
 #: src/main/optim.c:236 src/main/optim.c:415
@@ -4157,7 +4144,7 @@ msgstr ""
 
 #: src/main/optim.c:270 src/main/optim.c:287 src/main/optim.c:312
 #: src/main/optim.c:342 src/main/optim.c:423
-msgid "gr is not a function"
+msgid "'gr' is not a function"
 msgstr ""
 
 #: src/main/optim.c:293 src/main/optim.c:318 src/main/optim.c:348
@@ -4166,7 +4153,7 @@ msgid "'ndeps' is of the wrong length"
 msgstr ""
 
 #: src/main/optim.c:379
-msgid "unknown method"
+msgid "unknown 'method'"
 msgstr ""
 
 #: src/main/optim.c:513
@@ -4177,11 +4164,19 @@ msgstr ""
 msgid "initial value in vmmin is not finite"
 msgstr ""
 
-#: src/main/optim.c:672 src/main/optim.c:882
+#: src/main/optim.c:672
+msgid "function cannot be evaluated at initial parameters"
+msgstr ""
+
+#: src/main/optim.c:869
+msgid "unknown 'type' in CG method of optim"
+msgstr ""
+
+#: src/main/optim.c:882
 msgid "Function cannot be evaluated at initial parameters"
 msgstr ""
 
-#: src/main/optim.c:869 src/main/optim.c:937
+#: src/main/optim.c:937
 msgid "unknown type in CG method of optim"
 msgstr ""
 
@@ -4210,19 +4205,19 @@ msgid "attempt to minimize non-function"
 msgstr ""
 
 #: src/main/optimize.c:95 src/main/optimize.c:181
-msgid "invalid xmin value"
+msgid "invalid 'xmin' value"
 msgstr ""
 
 #: src/main/optimize.c:102 src/main/optimize.c:188
-msgid "invalid xmax value"
+msgid "invalid 'xmax' value"
 msgstr ""
 
 #: src/main/optimize.c:104 src/main/optimize.c:190
-msgid "xmin not less than xmax"
+msgid "'xmin' not less than 'xmax'"
 msgstr ""
 
 #: src/main/optimize.c:111 src/main/optimize.c:197
-msgid "invalid tol value"
+msgid "invalid 'tol' value"
 msgstr ""
 
 #: src/main/optimize.c:154
@@ -4230,11 +4225,11 @@ msgid "invalid function value in 'zeroin'"
 msgstr ""
 
 #: src/main/optimize.c:203
-msgid "maxiter must be positive"
+msgid "'maxiter' must be positive"
 msgstr ""
 
 #: src/main/optimize.c:345
-msgid "non-finite value supplied by nlm"
+msgid "non-finite value supplied by 'nlm'"
 msgstr ""
 
 #: src/main/optimize.c:379
@@ -4406,17 +4401,17 @@ msgstr ""
 
 #: src/main/par.c:1148
 #, c-format
-msgid "Too many rows in layout, limit %d"
+msgid "too many rows in layout, limit %d"
 msgstr ""
 
 #: src/main/par.c:1154
 #, c-format
-msgid "Too many columns in layout, limit %d"
+msgid "too many columns in layout, limit %d"
 msgstr ""
 
 #: src/main/par.c:1156
 #, c-format
-msgid "Too many cells in layout, limit %d"
+msgid "too many cells in layout, limit %d"
 msgstr ""
 
 #: src/main/paste.c:63
@@ -4432,7 +4427,7 @@ msgid "non-string argument to Internal paste"
 msgstr ""
 
 #: src/main/paste.c:162
-msgid "invalid ;nsmall' argument"
+msgid "invalid 'nsmall' argument"
 msgstr ""
 
 #: src/main/paste.c:167
@@ -4460,19 +4455,19 @@ msgid "invalid filename specification"
 msgstr ""
 
 #: src/main/platform.c:221
-msgid "invalid headers"
+msgid "invalid 'headers'"
 msgstr ""
 
 #: src/main/platform.c:223
-msgid "invalid title"
+msgid "invalid 'title'"
 msgstr ""
 
 #: src/main/platform.c:225
-msgid "invalid pager specification"
+msgid "invalid 'pager' specification"
 msgstr ""
 
 #: src/main/platform.c:274
-msgid "invalid editor specification"
+msgid "invalid 'editor' specification"
 msgstr ""
 
 #: src/main/platform.c:344 src/main/platform.c:390
@@ -4508,7 +4503,7 @@ msgid "symlinks are not supported on this platform"
 msgstr ""
 
 #: src/main/platform.c:519
-msgid "source must be a single string"
+msgid "'source' must be a single string"
 msgstr ""
 
 #: src/main/platform.c:522
@@ -4516,7 +4511,7 @@ msgid "expanded source name too long"
 msgstr ""
 
 #: src/main/platform.c:526
-msgid "destination must be a single string"
+msgid "'destination' must be a single string"
 msgstr ""
 
 #: src/main/platform.c:529
@@ -4533,11 +4528,11 @@ msgstr ""
 
 #: src/main/platform.c:710
 #, c-format
-msgid "list.files: %s is not a readable directory"
+msgid "list.files: '%s' is not a readable directory"
 msgstr ""
 
 #: src/main/platform.c:792
-msgid "invalid directory argument"
+msgid "invalid 'directory' argument"
 msgstr ""
 
 #: src/main/platform.c:798
@@ -4554,10 +4549,6 @@ msgstr ""
 
 #: src/main/platform.c:840
 msgid "unable to determine R home location"
-msgstr ""
-
-#: src/main/platform.c:887
-msgid "invalid 'topic' argument"
 msgstr ""
 
 #: src/main/platform.c:893
@@ -4577,11 +4568,11 @@ msgid "file name too long"
 msgstr ""
 
 #: src/main/platform.c:977
-msgid "invalid names argument"
+msgid "invalid 'names' argument"
 msgstr ""
 
 #: src/main/platform.c:980
-msgid "invalid mode value"
+msgid "invalid 'mode' value"
 msgstr ""
 
 #: src/main/platform.c:995
@@ -4600,12 +4591,8 @@ msgstr ""
 msgid "OS reports request cannot be honored"
 msgstr ""
 
-#: src/main/platform.c:1154 src/main/platform.c:1371 src/main/platform.c:1406
-msgid "invalid path argument"
-msgstr ""
-
 #: src/main/platform.c:1320
-msgid "hostname must be a character vector of length 1"
+msgid "'hostname' must be a character vector of length 1"
 msgstr ""
 
 #: src/main/platform.c:1326
@@ -4646,20 +4633,20 @@ msgstr ""
 msgid "invalid plotting symbol"
 msgstr ""
 
-#: src/main/plot.c:314
+#: src/main/plot.c:314 src/modules/X11/devX11.c:1291
 msgid "invalid font specification"
 msgstr ""
 
 #: src/main/plot.c:385
-msgid "Invalid vfont value"
+msgid "invalid 'vfont' value"
 msgstr ""
 
 #: src/main/plot.c:388
-msgid "Invalid vfont value [typeface]"
+msgid "invalid 'vfont' value [typeface]"
 msgstr ""
 
 #: src/main/plot.c:412
-msgid "Invalid vfont value [fontindex]"
+msgid "invalid 'vfont' value [fontindex]"
 msgstr ""
 
 #: src/main/plot.c:496
@@ -4671,11 +4658,11 @@ msgid "at least 3 arguments required"
 msgstr ""
 
 #: src/main/plot.c:585
-msgid "invalid xlim"
+msgid "invalid 'xlim'"
 msgstr ""
 
 #: src/main/plot.c:590
-msgid "invalid ylim"
+msgid "invalid 'ylim'"
 msgstr ""
 
 #: src/main/plot.c:596
@@ -4688,19 +4675,19 @@ msgid "invalid \"log=%s\" specification"
 msgstr ""
 
 #: src/main/plot.c:621
-msgid "NAs not allowed in xlim"
+msgid "NAs not allowed in 'xlim'"
 msgstr ""
 
 #: src/main/plot.c:627
-msgid "need finite xlim values"
+msgid "need finite 'xlim' values"
 msgstr ""
 
 #: src/main/plot.c:633
-msgid "NAs not allowed in ylim"
+msgid "NAs not allowed in 'ylim'"
 msgstr ""
 
 #: src/main/plot.c:639
-msgid "need finite ylim values"
+msgid "need finite 'ylim' values"
 msgstr ""
 
 #: src/main/plot.c:645
@@ -4722,7 +4709,7 @@ msgstr ""
 
 #: src/main/plot.c:1105
 #, c-format
-msgid "location and label lengths differ, %d != %d"
+msgid "'at' and 'label' lengths differ, %d != %d"
 msgstr ""
 
 #: src/main/plot.c:1123
@@ -4735,7 +4722,7 @@ msgstr ""
 
 #: src/main/plot.c:1462
 #, c-format
-msgid "x and y lengths differ in %s()"
+msgid "'x' and 'y' lengths differ in %s()"
 msgstr ""
 
 #: src/main/plot.c:1474
@@ -4985,7 +4972,7 @@ msgid "invalid value for 'method'"
 msgstr ""
 
 #: src/main/plot3d.c:1444 src/main/plot3d.c:1696
-msgid "insufficient x or y values"
+msgid "insufficient 'x' or 'y' values"
 msgstr ""
 
 #: src/main/plot3d.c:1447 src/main/plot3d.c:1699
@@ -4997,19 +4984,19 @@ msgid "no contour values"
 msgstr ""
 
 #: src/main/plot3d.c:1454
-msgid "missing x values"
+msgid "missing 'x' values"
 msgstr ""
 
 #: src/main/plot3d.c:1456
-msgid "increasing x values expected"
+msgid "increasing 'x' values expected"
 msgstr ""
 
 #: src/main/plot3d.c:1461
-msgid "missing y values"
+msgid "missing 'y' values"
 msgstr ""
 
 #: src/main/plot3d.c:1463
-msgid "increasing y values expected"
+msgid "increasing 'y' values expected"
 msgstr ""
 
 #: src/main/plot3d.c:1468
@@ -5036,40 +5023,36 @@ msgstr ""
 msgid "too few parameters"
 msgstr ""
 
-#: src/main/plot3d.c:2477
-msgid "invalid x argument"
-msgstr ""
-
 #: src/main/plot3d.c:2481
-msgid "invalid y argument"
+msgid "invalid 'y' argument"
 msgstr ""
 
 #: src/main/plot3d.c:2486
-msgid "invalid z argument"
+msgid "invalid 'z' argument"
 msgstr ""
 
 #: src/main/plot3d.c:2490
-msgid "invalid xlim argument"
+msgid "invalid 'xlim' argument"
 msgstr ""
 
 #: src/main/plot3d.c:2494
-msgid "invalid ylim argument"
+msgid "invalid 'ylim' argument"
 msgstr ""
 
 #: src/main/plot3d.c:2498
-msgid "invalid zlim argument"
+msgid "invalid 'zlim' argument"
 msgstr ""
 
 #: src/main/plot3d.c:2504
-msgid "invalid x limits"
+msgid "invalid 'x' limits"
 msgstr ""
 
 #: src/main/plot3d.c:2506
-msgid "invalid y limits"
+msgid "invalid 'y' limits"
 msgstr ""
 
 #: src/main/plot3d.c:2508
-msgid "invalid z limits"
+msgid "invalid 'z' limits"
 msgstr ""
 
 #: src/main/plot3d.c:2529
@@ -5089,23 +5072,23 @@ msgid "invalid viewing parameters"
 msgstr ""
 
 #: src/main/plot3d.c:2555
-msgid "invalid expand value"
+msgid "invalid 'expand' value"
 msgstr ""
 
 #: src/main/plot3d.c:2559
-msgid "invalid nticks value"
+msgid "invalid 'nticks' value"
 msgstr ""
 
 #: src/main/plot3d.c:2561
-msgid "invalid ticktype value"
+msgid "invalid 'ticktype' value"
 msgstr ""
 
 #: src/main/plot3d.c:2569
-msgid "invalid col specification"
+msgid "invalid 'col' specification"
 msgstr ""
 
 #: src/main/plot3d.c:2572
-msgid "invalid border specification"
+msgid "invalid 'border' specification"
 msgstr ""
 
 #: src/main/print.c:134 src/main/print.c:184
@@ -5121,11 +5104,11 @@ msgid "invalid column labels"
 msgstr ""
 
 #: src/main/print.c:172
-msgid "invalid digits argument"
+msgid "invalid 'digits' argument"
 msgstr ""
 
 #: src/main/print.c:178
-msgid "invalid quote argument"
+msgid "invalid 'quote' argument"
 msgstr ""
 
 #: src/main/print.c:194
@@ -5133,11 +5116,11 @@ msgid "'gap' must be non-negative integer"
 msgstr ""
 
 #: src/main/print.c:200
-msgid "invalid right argument"
+msgid "invalid 'right' argument"
 msgstr ""
 
 #: src/main/print.c:205
-msgid "invalid tryS4 internal argument"
+msgid "invalid 'tryS4' internal argument"
 msgstr ""
 
 #: src/main/print.c:824
@@ -5158,7 +5141,7 @@ msgstr ""
 
 #: src/main/print.c:885
 #, c-format
-msgid "LAPACK routine %6s gave error code %d"
+msgid "LAPACK routine '%6s' gave error code %d"
 msgstr ""
 
 #: src/main/printarray.c:466
@@ -5204,7 +5187,7 @@ msgstr ""
 #: src/main/random.c:407
 msgid ""
 "cannot take a sample larger than the population\n"
-" when replace = FALSE"
+" when 'replace = FALSE'"
 msgstr ""
 
 #: src/main/random.c:415
@@ -5304,10 +5287,6 @@ msgstr ""
 
 #: src/main/relop.c:105
 msgid "comparison is not allowed for expressions"
-msgstr ""
-
-#: src/main/relop.c:145
-msgid "Non-conformable time series"
 msgstr ""
 
 #: src/main/relop.c:194
@@ -5471,9 +5450,13 @@ msgstr ""
 msgid "bad version value"
 msgstr ""
 
+#: src/main/saveload.c:1936 src/main/saveload.c:2033 src/unix/edit.c:120
+msgid "unable to open file"
+msgstr ""
+
 #: src/main/saveload.c:1952 src/main/saveload.c:2234 src/main/serialize.c:2135
 #, c-format
-msgid "Object '%s' not found"
+msgid "object '%s' not found"
 msgstr ""
 
 #: src/main/saveload.c:1980
@@ -5530,11 +5513,11 @@ msgid "scan() expected '%s', got '%s'"
 msgstr ""
 
 #: src/main/scan.c:736
-msgid "empty 'what=' specified"
+msgid "empty 'what' specified"
 msgstr ""
 
-#: src/main/scan.c:750
-msgid "invalid 'what=' specified"
+#: src/main/scan.c:750 src/main/scan.c:1027
+msgid "invalid 'what' specified"
 msgstr ""
 
 #: src/main/scan.c:795
@@ -5547,27 +5530,27 @@ msgid "number of items read is not a multiple of the number of columns"
 msgstr ""
 
 #: src/main/scan.c:932
-msgid "invalid strip.white value"
+msgid "invalid 'strip.white' value"
 msgstr ""
 
 #: src/main/scan.c:934
-msgid "invalid strip.white length"
+msgid "invalid 'strip.white' length"
 msgstr ""
 
-#: src/main/scan.c:936 src/main/scan.c:1240
-msgid "invalid na.strings value"
+#: src/main/scan.c:936 src/main/scan.c:1241
+msgid "invalid 'na.strings' value"
 msgstr ""
 
-#: src/main/scan.c:938 src/main/scan.c:984 src/main/scan.c:1064
-#: src/main/scan.c:1067 src/main/scan.c:1538 src/main/scan.c:1541
-msgid "invalid comment.char value"
+#: src/main/scan.c:938 src/main/scan.c:984 src/main/scan.c:1065
+#: src/main/scan.c:1068 src/main/scan.c:1539 src/main/scan.c:1542
+msgid "invalid 'comment.char' value"
 msgstr ""
 
 #: src/main/scan.c:945
-msgid "invalid sep value: must be one byte"
+msgid "invalid 'sep value: must be one byte"
 msgstr ""
 
-#: src/main/scan.c:949 src/main/scan.c:1077
+#: src/main/scan.c:949
 msgid "invalid sep value"
 msgstr ""
 
@@ -5579,100 +5562,100 @@ msgstr ""
 msgid "invalid decimal separator"
 msgstr ""
 
-#: src/main/scan.c:974 src/main/scan.c:1086 src/main/scan.c:1529
+#: src/main/scan.c:974 src/main/scan.c:1087 src/main/scan.c:1530
 msgid "out of memory"
 msgstr ""
 
-#: src/main/scan.c:980 src/main/scan.c:1092 src/main/scan.c:1535
+#: src/main/scan.c:980 src/main/scan.c:1093 src/main/scan.c:1536
 msgid "invalid quote symbol set"
 msgstr ""
 
-#: src/main/scan.c:986
-msgid "invalid allowEscapes value"
+#: src/main/scan.c:987
+msgid "invalid 'allowEscapes' value"
 msgstr ""
 
-#: src/main/scan.c:1026
-msgid "invalid 'what' specified"
+#: src/main/scan.c:1078
+msgid "invalid 'sep' value"
 msgstr ""
 
-#: src/main/scan.c:1148 src/main/scan.c:1167
+#: src/main/scan.c:1149 src/main/scan.c:1168
 msgid "string terminated by newline or EOF"
 msgstr ""
 
-#: src/main/scan.c:1236
+#: src/main/scan.c:1237
 msgid "the first argument must be of mode character"
 msgstr ""
 
-#: src/main/scan.c:1466
+#: src/main/scan.c:1467
 #, c-format
 msgid "Selection: "
 msgstr ""
 
-#: src/main/scan.c:1518
-msgid "invalid nlines value"
+#: src/main/scan.c:1519
+msgid "invalid 'nlines' value"
 msgstr ""
 
-#: src/main/scan.c:1559 src/main/scan.c:1571
+#: src/main/scan.c:1560 src/main/scan.c:1572
 msgid "cannot allocate buffer in readTableHead"
 msgstr ""
 
-#: src/main/scan.c:1598 src/main/scan.c:1601
+#: src/main/scan.c:1599 src/main/scan.c:1602
 #, c-format
 msgid "incomplete final line found by readTableHeader on '%s'"
 msgstr ""
 
-#: src/main/scan.c:1711
+#: src/main/scan.c:1712
 msgid "'file' is not a connection"
 msgstr ""
 
-#: src/main/scan.c:1730
+#: src/main/scan.c:1731
 msgid "invalid value for 'nr'"
 msgstr ""
 
-#: src/main/scan.c:1731
+#: src/main/scan.c:1732
 msgid "invalid value for 'nc'"
 msgstr ""
 
-#: src/main/scan.c:1733
+#: src/main/scan.c:1734
 msgid "invalid value for 'rnames'"
 msgstr ""
 
-#: src/main/scan.c:1734
+#: src/main/scan.c:1735
 msgid "invalid value for 'sep'"
 msgstr ""
 
-#: src/main/scan.c:1735
+#: src/main/scan.c:1736
 msgid "invalid value for 'eol'"
 msgstr ""
 
-#: src/main/scan.c:1736 src/main/util.c:1114
+#: src/main/scan.c:1737 src/main/util.c:1114
 msgid "invalid value for 'na'"
 msgstr ""
 
-#: src/main/scan.c:1737
+#: src/main/scan.c:1738
 msgid "invalid value for 'dec'"
 msgstr ""
 
-#: src/main/scan.c:1738
+#: src/main/scan.c:1739
 msgid "invalid value for 'qmethod'"
 msgstr ""
 
-#: src/main/scan.c:1743
+#: src/main/scan.c:1744
 msgid "'dec' must be a single character"
 msgstr ""
 
-#: src/main/scan.c:1764
+#: src/main/scan.c:1765
 #, c-format
 msgid "corrupt data frame -- length of column %d does not not match nrows"
 msgstr ""
 
-#: src/main/scan.c:1801
+#: src/main/scan.c:1802
 msgid "corrupt matrix -- dims not not match length"
 msgstr ""
 
 #: src/main/seq.c:88 src/main/seq.c:91
 #, c-format
-msgid "Numerical expression has %d elements: only the first used"
+msgid "numerical expression has %d elements: only the first used"
 msgstr ""
 
 #: src/main/seq.c:95
@@ -5889,15 +5872,15 @@ msgstr ""
 
 #: src/main/sort.c:731
 #, c-format
-msgid "Argument %d is not a vector"
+msgid "argument %d is not a vector"
 msgstr ""
 
 #: src/main/sort.c:733
-msgid "Argument lengths differ"
+msgid "argument lengths differ"
 msgstr ""
 
 #: src/main/sort.c:762
-msgid "Argument is not an atomic vector"
+msgid "argument is not an atomic vector"
 msgstr ""
 
 #: src/main/sort.c:773
@@ -6178,7 +6161,7 @@ msgstr ""
 
 #: src/main/sysutils.c:67
 #, c-format
-msgid "cannot determine file modification time of %s"
+msgid "cannot determine file modification time of '%s'"
 msgstr ""
 
 #: src/main/sysutils.c:73
@@ -6194,15 +6177,15 @@ msgid "invalid filename pattern"
 msgstr ""
 
 #: src/main/sysutils.c:143
-msgid "invalid tempdir"
+msgid "invalid 'tempdir'"
 msgstr ""
 
 #: src/main/sysutils.c:145
-msgid "no pattern"
+msgid "no 'pattern'"
 msgstr ""
 
 #: src/main/sysutils.c:147
-msgid "no tempdir"
+msgid "no 'tempdir'"
 msgstr ""
 
 #: src/main/sysutils.c:219 src/main/sysutils.c:275
@@ -6274,7 +6257,7 @@ msgstr ""
 
 #: src/main/unique.c:754
 #, c-format
-msgid "%s is not a valid call"
+msgid "'%s' is not a valid call"
 msgstr ""
 
 #: src/main/unique.c:811
@@ -6288,7 +6271,7 @@ msgid "%s is not a logical"
 msgstr ""
 
 #: src/main/unique.c:955
-msgid "non-numeric matrix in rowsum(): this can't happen"
+msgid "non-numeric matrix in rowsum(): this cannot happen"
 msgstr ""
 
 #: src/main/unique.c:986
@@ -6296,7 +6279,7 @@ msgid "non-numeric data frame in rowsum"
 msgstr ""
 
 #: src/main/unique.c:1011
-msgid "this can't happen"
+msgid "this cannot happen"
 msgstr ""
 
 #: src/main/unique.c:1067
@@ -6339,12 +6322,12 @@ msgstr ""
 
 #: src/main/util.c:725
 #, c-format
-msgid "unimplemented type '%s' in %s\n"
+msgid "unimplemented type '%s' in '%s'\n"
 msgstr ""
 
 #: src/main/util.c:727
 #, c-format
-msgid "unimplemented type (%d) in %s\n"
+msgid "unimplemented type (%d) in '%s'\n"
 msgstr ""
 
 #: src/main/util.c:797
@@ -6558,16 +6541,16 @@ msgid "Internet read timed out"
 msgstr ""
 
 #: src/modules/internet/internet.c:906
-msgid "Cannot allocate memory for InternetRoutines structure"
+msgid "cannot allocate memory for InternetRoutines structure"
 msgstr ""
 
 #: src/modules/internet/nanoftp.c:372
-msgid "Removing FTP proxy info"
+msgid "removing FTP proxy info"
 msgstr ""
 
 #: src/modules/internet/nanoftp.c:374
 #, c-format
-msgid "Using FTP proxy %s"
+msgid "using FTP proxy '%s'"
 msgstr ""
 
 #: src/modules/internet/nanoftp.c:806
@@ -6575,11 +6558,11 @@ msgid "cannot resolve host"
 msgstr ""
 
 #: src/modules/internet/nanoftp.c:836
-msgid "Failed to connect to server"
+msgid "failed to connect to server"
 msgstr ""
 
 #: src/modules/internet/nanoftp.c:847
-msgid "Failed to get response from server"
+msgid "failed to get response from server"
 msgstr ""
 
 #: src/modules/internet/nanoftp.c:1137
@@ -6587,25 +6570,25 @@ msgid "RxmlNanoFTPGetConnection: failed to create socket"
 msgstr ""
 
 #: src/modules/internet/nanoftp.c:1182
-msgid "Failed to create a data connection"
+msgid "failed to create a data connection"
 msgstr ""
 
 #: src/modules/internet/nanoftp.c:1190
-msgid "Failed to bind a port"
+msgid "failed to bind a port"
 msgstr ""
 
 #: src/modules/internet/nanoftp.c:1197
 #, c-format
-msgid "Could not listen on port %d"
+msgid "could not listen on port %d"
 msgstr ""
 
 #: src/modules/internet/nanohttp.c:407
-msgid "Removing HTTP proxy info"
+msgid "removing HTTP proxy info"
 msgstr ""
 
 #: src/modules/internet/nanohttp.c:409
 #, c-format
-msgid "Using HTTP proxy %s"
+msgid "using HTTP proxy '%s'"
 msgstr ""
 
 #: src/modules/internet/nanohttp.c:980
@@ -6625,11 +6608,11 @@ msgstr ""
 
 #: src/modules/internet/nanohttp.c:1276
 #, c-format
-msgid "Redirect to: %s"
+msgid "redirect to: '%s'"
 msgstr ""
 
 #: src/modules/internet/nanohttp.c:1285
-msgid "Too many redirects, aborting ..."
+msgid "too many redirects, aborting ..."
 msgstr ""
 
 #: src/modules/internet/sockconn.c:176 src/modules/internet/sockconn.c:180
@@ -6799,7 +6782,7 @@ msgstr ""
 
 #: src/modules/X11/devX11.c:816
 msgid ""
-"Could not find any X11 fonts\n"
+"could not find any X11 fonts\n"
 "Check that the Font Path is correct."
 msgstr ""
 
@@ -6811,14 +6794,6 @@ msgstr ""
 #: src/modules/X11/devX11.c:939
 #, c-format
 msgid "X11 font at size %d could not be loaded"
-msgstr ""
-
-#: src/modules/X11/devX11.c:967
-msgid "Invalid line end"
-msgstr ""
-
-#: src/modules/X11/devX11.c:985
-msgid "Invalid line join"
 msgstr ""
 
 #: src/modules/X11/devX11.c:1054
@@ -6839,7 +6814,7 @@ msgid "X cannot set locale modifiers"
 msgstr ""
 
 #: src/modules/X11/devX11.c:1102
-msgid "No png support in this version of R"
+msgid "no png support in this version of R"
 msgstr ""
 
 #: src/modules/X11/devX11.c:1106
@@ -6852,7 +6827,7 @@ msgid "could not open PNG file '%s'"
 msgstr ""
 
 #: src/modules/X11/devX11.c:1123
-msgid "No jpeg support in this version of R"
+msgid "no jpeg support in this version of R"
 msgstr ""
 
 #: src/modules/X11/devX11.c:1129
@@ -6881,12 +6856,8 @@ msgstr ""
 msgid "unable to create pixmap"
 msgstr ""
 
-#: src/modules/X11/devX11.c:1291
-msgid "Invalid font specification"
-msgstr ""
-
 #: src/modules/X11/devX11.c:1330
-msgid "Font family not found in X11 font database"
+msgid "font family not found in X11 font database"
 msgstr ""
 
 #: src/modules/X11/devX11.c:2244
@@ -6927,7 +6898,7 @@ msgid "invalid value of 'fonts'"
 msgstr ""
 
 #: src/modules/X11/devX11.c:2383
-msgid "Cannot allocate memory for X11Routines structure"
+msgid "cannot allocate memory for X11Routines structure"
 msgstr ""
 
 #: src/nmath/bessel_i.c:64
@@ -7039,7 +7010,7 @@ msgid ""
 msgstr ""
 
 #: src/unix/dynload.c:235
-msgid "can't get working directory!"
+msgid "cannot get working directory!"
 msgstr ""
 
 #: src/unix/edit.c:109
@@ -7055,12 +7026,12 @@ msgid "argument 'editor' is not set"
 msgstr ""
 
 #: src/unix/edit.c:137
-msgid "title must be a string"
+msgid "'title' must be a string"
 msgstr ""
 
 #: src/unix/edit.c:155
 #, c-format
-msgid "unable to run editor %s"
+msgid "unable to run editor '%s'"
 msgstr ""
 
 #: src/unix/edit.c:157
@@ -7079,7 +7050,7 @@ msgstr ""
 #: src/unix/edit.c:177
 #, c-format
 msgid ""
-"An error occurred on line %d\n"
+"an error occurred on line %d\n"
 " use a command like\n"
 " x <- edit()\n"
 " to recover"
@@ -7100,7 +7071,7 @@ msgid "re-encoding is not available on this system"
 msgstr ""
 
 #: src/unix/sys-std.c:900 src/unix/sys-std.c:922
-msgid "file argument is too long"
+msgid "'file' argument is too long"
 msgstr ""
 
 #: src/unix/sys-std.c:906 src/unix/sys-std.c:908
