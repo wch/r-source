@@ -897,7 +897,7 @@ SEXP R_isMethodsDispatchOn(SEXP onOff) {
     Rboolean onOffValue;
     R_stdGen_ptr_t old = R_get_standardGeneric_ptr();
     LOGICAL(value)[0] = !NOT_METHODS_DISPATCH_PTR(old);
-    if(length(onOff)>0) {
+    if(length(onOff) > 0) {
 	    onOffValue = asLogical(onOff);
 	    if(onOffValue == FALSE)
 		    R_set_standardGeneric_ptr(0);
@@ -911,6 +911,14 @@ SEXP R_isMethodsDispatchOn(SEXP onOff) {
     }
     return value;
 }
+
+/* simpler version for internal use */
+
+Rboolean isMethodsDispatchOn(void)
+{
+    return !NOT_METHODS_DISPATCH_PTR(R_standardGeneric_ptr);
+}
+
 
 static SEXP dispatchNonGeneric(SEXP name, SEXP env, SEXP fdef)
 {
@@ -1173,7 +1181,6 @@ static SEXP get_this_generic(SEXP args)
     return(value);
 }
 
-
 /* Could there be methods for this op?	Checks
    only whether methods are currently being dispatched and, if so,
    whether methods are currently defined for this op. */
@@ -1206,53 +1213,53 @@ void R_set_quick_method_check(R_stdGen_ptr_t value)
 {
     quick_method_check_ptr = value;
 }
+
 /* try to dispatch the formal method for this primitive op, by calling
    the stored generic function corresponding to the op.	 Requires that
    the methods be set up to return a special object rather than trying
    to evaluate the default (which would get us into a loop). */
-SEXP R_possible_dispatch(SEXP call, SEXP op, SEXP args,
-			 SEXP rho)
+SEXP R_possible_dispatch(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-  SEXP fundef, value, mlist; int offset; prim_methods_t current;
-  offset = PRIMOFFSET(op);
-  if(offset < 0 || offset > curMaxOffset)
-    error("Invalid primitive operation given for dispatch");
-  current = prim_methods[offset];
-  if(current == NO_METHODS || current == SUPPRESSED)
-    return(NULL);
-  /* check that the methods for this function have been set */
-  if(current == NEEDS_RESET) {
-      /* get the methods and store them in the in-core primitive
-	 method table.	The entries will be preserved via
-	 R_preserveobject, so later we can just grab mlist from
-	 prim_mlist */
-      PROTECT(mlist = get_primitive_methods(op, rho));
-      do_set_prim_method(op, "set", R_NilValue, mlist);
-      UNPROTECT(1);
-  }
-  mlist = prim_mlist[offset];
-  if(mlist && !isNull(mlist)
-     && quick_method_check_ptr) {
-    value = (*quick_method_check_ptr)(args, mlist, op);
-    if(isPrimitive(value))
-      return(NULL);
-    if(isFunction(value))
-      /* found a method, call it */
-      return applyClosure(call, value, args, rho, R_NilValue);
-    /* else, need to perform full method search */
-  }
-  fundef = prim_generics[offset];
-  if(!fundef || TYPEOF(fundef) != CLOSXP)
-    error("primitive function \"%s\" has been set for methods but no  generic function supplied",
-	  PRIMNAME(op));
-  /* To do:  arrange for the setting to be restored in case of an
-     error in method search */
-  value = applyClosure(call, fundef, args, rho, R_NilValue);
-  prim_methods[offset] = current;
-  if(value == deferred_default_object)
-    return NULL;
-  else
-    return value;
+    SEXP fundef, value, mlist; int offset; prim_methods_t current;
+    offset = PRIMOFFSET(op);
+    if(offset < 0 || offset > curMaxOffset)
+	error("Invalid primitive operation given for dispatch");
+    current = prim_methods[offset];
+    if(current == NO_METHODS || current == SUPPRESSED)
+	return(NULL);
+    /* check that the methods for this function have been set */
+    if(current == NEEDS_RESET) {
+	/* get the methods and store them in the in-core primitive
+	   method table.	The entries will be preserved via
+	   R_preserveobject, so later we can just grab mlist from
+	   prim_mlist */
+	PROTECT(mlist = get_primitive_methods(op, rho));
+	do_set_prim_method(op, "set", R_NilValue, mlist);
+	UNPROTECT(1);
+    }
+    mlist = prim_mlist[offset];
+    if(mlist && !isNull(mlist)
+       && quick_method_check_ptr) {
+	value = (*quick_method_check_ptr)(args, mlist, op);
+	if(isPrimitive(value))
+	    return(NULL);
+	if(isFunction(value))
+	    /* found a method, call it */
+	    return applyClosure(call, value, args, rho, R_NilValue);
+	/* else, need to perform full method search */
+    }
+    fundef = prim_generics[offset];
+    if(!fundef || TYPEOF(fundef) != CLOSXP)
+	error("primitive function \"%s\" has been set for methods but no  generic function supplied",
+	      PRIMNAME(op));
+    /* To do:  arrange for the setting to be restored in case of an
+       error in method search */
+    value = applyClosure(call, fundef, args, rho, R_NilValue);
+    prim_methods[offset] = current;
+    if(value == deferred_default_object)
+	return NULL;
+    else
+	return value;
 }
 
 SEXP R_do_MAKE_CLASS( char *what)

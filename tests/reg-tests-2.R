@@ -744,3 +744,32 @@ TEMP <- data.frame(VAR1=c(1,2,3,4,5), VAR2=c(5,4,3,2,1), VAR3=c(1,1,1,1,NA))
 TEMP[,c(1,3)][TEMP[,c(1,3)]==1 & !is.na(TEMP[,c(1,3)])] < -10
 TEMP
 ##
+
+
+## print/show dispatch
+hasMethods <- .isMethodsDispatchOn()
+require(methods)
+setClass("bar", representation(a="numeric"))
+foo <- new("bar", a=pi)
+foo
+show(foo)
+print(foo)
+
+setMethod("show", "bar", function(object){cat("show method\n")})
+show(foo)
+foo
+print(foo)
+print(foo, digits = 4)
+
+print.bar <- function(x, ...) cat("print method\n")
+foo
+print(foo)
+show(foo)
+
+setMethod("print", "bar", function(x, ...){cat("S4 print method\n")})
+foo
+print(foo)
+show(foo)
+print(foo, digits = 4)
+if(!hasMethods) detach("package:methods")
+##

@@ -4,13 +4,10 @@ print <- function(x, ...) UseMethod("print")
 print.default <- function(x, digits = NULL, quote = TRUE, na.print = NULL,
                           print.gap = NULL, right = FALSE, ...)
 {
-    ## cheapest test first: consider taking this internal
-    if(length(list(...)) == 0 && .isMethodsDispatchOn()) {
-        cl <- oldClass(x)
-        if(length(cl) == 1 && isClass(cl)) return(show(x))
-    }
+    noOpt <- missing(digits) && missing(quote) && missing(na.print) &&
+      missing(print.gap) && missing(right) && length(list(...)) == 0
     .Internal(print.default(x, digits, quote, na.print, print.gap, right,
-                            TRUE))
+                            noOpt))
 }
 
 

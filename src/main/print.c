@@ -71,7 +71,7 @@
 /* Global print parameter struct: */
 R_print_par_t R_print;
 
-static void printAttributes(SEXP, SEXP);
+static void printAttributes(SEXP, SEXP, Rboolean);
 
 #define TAGBUFLEN 256
 static char tagbuf[TAGBUFLEN + 5];
@@ -148,11 +148,14 @@ SEXP do_prmatrix(SEXP call, SEXP op, SEXP args, SEXP rho)
 }/* do_prmatrix */
 
 
-/* .Internal(print.default(x, digits, quote, na.print, print.gap)) */
+/* .Internal(print.default(x, digits, quote, na.print, print.gap, 
+                           right, useS4)) */
 SEXP do_printdefault(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP x, naprint;
     int tryS4;
+    Rboolean callShow = FALSE;
+
     checkArity(op, args);
     PrintDefaults(rho);
 
@@ -198,7 +201,25 @@ SEXP do_printdefault(SEXP call, SEXP op, SEXP args, SEXP rho)
     if(R_print.right == NA_LOGICAL)
 	errorcall(call, "invalid tryS4 internal parameter");
 
-    CustomPrintValue(x, rho);
+    if(tryS4 && isObject(x) && isMethodsDispatchOn()) {
+	SEXP class = getAttrib(x, R_ClassSymbol);
+	if(length(class) == 1) {
+	    /* internal version of isClass() */
+	    char str[201];
+	    snprintf(str, 200, ".__C__%s", CHAR(STRING_ELT(class, 0)));
+	    if(findVar(install(str), rho)) callShow = TRUE;
+	}
+    }
+
+    if(callShow) {
+	SEXP call;
+	PROTECT(call = lang2(install("show"), x));
+	eval(call, rho);
+	UNPROTECT(1);
+    } else {
+	CustomPrintValue(x, rho);
+    }
+    
     PrintDefaults(rho); /* reset, as na.print.etc may have been set */
     return x;
 }/* do_printdefault */
@@ -337,9 +358,31 @@ static void PrintGenericVector(SEXP s, SEXP env)
 	}
 	Rprintf("\n");
 	}
-	else Rprintf("list()\n");
+	else {
+	    /* Formal classes are represented as empty lists */
+	    char *className = NULL;
+	    SEXP class;
+	    if(isObject(s) && isMethodsDispatchOn()) {
+		class = getAttrib(s, R_ClassSymbol);
+		if(length(class) == 1) {
+		    /* internal version of isClass() */
+		    char str[201];
+		    snprintf(str, 200, ".__C__%s", CHAR(STRING_ELT(class, 0)));
+		    if(findVar(install(str), env))
+			className = CHAR(STRING_ELT(class, 0));
+		}
+	    }
+	    if(className) {
+		Rprintf("An object of class \"%s\"\n", className);
+		UNPROTECT(1);
+		printAttributes(s, env, TRUE);
+		return;
+	    } else
+		Rprintf("list()\n");
+	}
 	UNPROTECT(1);
     }
+    printAttributes(s, env, FALSE);
 }
 
 
@@ -446,7 +489,7 @@ static void printList(SEXP s, SEXP env)
 	Rprintf("\n");
 	UNPROTECT(1);
     }
-    printAttributes(s,env);
+    printAttributes(s, env, FALSE);
 }
 
 static void PrintExpression(SEXP s)
@@ -527,8 +570,8 @@ void PrintValueRec(SEXP s,SEXP env)
 	Rprintf("<...>\n");
 	break;
     case VECSXP:
-	PrintGenericVector(s, env);
-	break;
+	PrintGenericVector(s, env); /* handles attributes/slots */
+	return;
     case LISTSXP:
 	printList(s,env);
 	break;
@@ -586,14 +629,14 @@ void PrintValueRec(SEXP s,SEXP env)
     default:
 	UNIMPLEMENTED("PrintValueRec");
     }
-    printAttributes(s,env);
+    printAttributes(s,env, FALSE);
 }
 
 /* 2000-12-30 PR#715: remove list tags from tagbuf here
    to avoid $a$battr("foo").  Need to save and restore, since
    attributes might be lists with attributes or just have attributes ...
  */
-static void printAttributes(SEXP s, SEXP env)
+static void printAttributes(SEXP s, SEXP env, Rboolean useSlots)
 {
     SEXP a;
     char *ptag;
@@ -608,6 +651,8 @@ static void printAttributes(SEXP s, SEXP env)
 	    tagbuf[0] = '\0';
 	ptag = tagbuf + strlen(tagbuf);
 	while (a != R_NilValue) {
+	    if(useSlots && TAG(a) == R_ClassSymbol)
+		    goto nextattr;
 	    if(isArray(s) || isList(s)) {
 		if(TAG(a) == R_DimSymbol ||
 		   TAG(a) == R_DimNamesSymbol)
@@ -629,9 +674,14 @@ static void printAttributes(SEXP s, SEXP env)
 	    }
 	    if(TAG(a) == R_CommentSymbol || TAG(a) == R_SourceSymbol)
 		goto nextattr;
-	    sprintf(ptag, "attr(,\"%s\")",
-		    EncodeString(CHAR(PRINTNAME(TAG(a))), 0, 0,
-				 Rprt_adj_left));
+	    if(useSlots)
+		sprintf(ptag, "Slot \"%s\":",
+			EncodeString(CHAR(PRINTNAME(TAG(a))), 0, 0,
+				     Rprt_adj_left));
+	    else
+		sprintf(ptag, "attr(,\"%s\")",
+			EncodeString(CHAR(PRINTNAME(TAG(a))), 0, 0,
+				     Rprt_adj_left));
 	    Rprintf(tagbuf); Rprintf("\n");
 	    if (isObject(CAR(a))) {
 		/* Need to construct a call to

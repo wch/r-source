@@ -698,6 +698,7 @@ void Init_R_Variables(SEXP);
 void InitTempDir(void);
 void initStack(void);
 void internalTypeCheck(SEXP, SEXP, SEXPTYPE);
+Rboolean isMethodsDispatchOn(void);
 int isValidName(char *);
 void jump_to_toplevel(void);
 SEXP levelsgets(SEXP, SEXP);
