@@ -140,7 +140,7 @@ binary-arch: build install
 	dh_compress
 	dh_fixperms
 	# You may want to make some executables suid here.
-	dh_suidregister
+#	dh_suidregister
 	dh_installdeb
 #	dh_makeshlibs
 #	dh_perl
