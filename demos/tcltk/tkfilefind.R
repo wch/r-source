@@ -37,3 +37,4 @@ tkfilefind<-function(path=getwd(),all.names=FALSE, multiple=FALSE){
     return(.tclfilename)
 }
 
+tkfilefind(".", multiple=TRUE)
