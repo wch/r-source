@@ -1,17 +1,16 @@
 \name{httpclient}
 \alias{httpclient}
-%- Also NEED an `\alias' for EACH other topic documented here.
 \title{ Read text from an HTTP server}
 \description{
-The function reads text from a URL on an HTTP server into the specified
-file. It checks for HTTP errors but will behave incorrectly if the data
-being read contains binary zeros.  This function is used by the "socket"
-method of \code{\link{download.file}}.
+  The function reads text from a URL on an HTTP server into the specified
+  file. It checks for HTTP errors but will behave incorrectly if the data
+  being read contains binary zeros.  This function is used by the "socket"
+  method of \code{\link{download.file}}.
 }
 \usage{
-httpclient(url, port=80, error.is.fatal=TRUE, check.MIME.type=TRUE, file=tempfile(), drop.ctrl.z=TRUE)
+httpclient(url, port=80, error.is.fatal=TRUE, check.MIME.type=TRUE,
+           file=tempfile(), drop.ctrl.z=TRUE)
 }
-%- maybe also `usage' for other objects documented here.
 \arguments{
  \item{url}{The URL to read from}
  \item{port}{The port (usually 80)}
@@ -21,12 +20,11 @@ httpclient(url, port=80, error.is.fatal=TRUE, check.MIME.type=TRUE, file=tempfil
  \item{file}{The file to store the text.}
  \item{drop.ctrl.z}{Drop ASCII EOF (CTRL-Z) characters from the text}
 }
-
 \value{
   The name of the file containing the downloaded text.
 }
 
-\seealso{ \code{\link{download.file}},\code{\link{read.table.url}} }
+\seealso{ \code{\link{download.file}}, \code{\link{read.table.url}} }
 
 
-\keyword{file}%-- one or more ...
+\keyword{file}
