@@ -465,3 +465,7 @@ Date: Sat, 16 Feb 2002 01:35:20 +0100 (MET)
 Subject:  itemize/item crashes R CMD check 
 From: Ben Bolker <bolker@zoo.ufl.edu>
 Date: Tue, 26 Feb 2002 15:13:04 -0500
+* PR# 1331 *
+Subject: Bug in glm.fit?
+From: Berwin Turlach <berwin@maths.uwa.edu.au>
+Date: Wed, 27 Feb 2002 16:15:24 +0800 (WST)
