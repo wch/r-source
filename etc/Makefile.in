@@ -18,9 +18,9 @@ OBJECTS = $(SOURCES:.in=)
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = Makefile.in $(SOURCES)
 
-EXPORTFILE = @USE_EXPORTFILE_TRUE@ R.exp
+EXPORTFILES = @USE_EXPORTFILES_TRUE@ R.exp Rlapack.exp
 
-CLEANFILES = $(EXPORTFILE)
+CLEANFILES = $(EXPORTFILES)
 DISTCLEANFILES = $(OBJECTS) Makefile
 
 all: Makefile R
@@ -42,7 +42,7 @@ R: $(OBJECTS)
 
 install: installdirs
 	@echo "installing $(subdir) ..."
-	@for f in $(OBJECTS) $(EXPORTFILE); do \
+	@for f in $(OBJECTS) $(EXPORTFILES); do \
 	  $(INSTALL_DATA) $${f} $(rhome)/etc; \
 	done
 installdirs:
@@ -55,7 +55,7 @@ uninstall:
 	  && test "`cd $(rhome); $(GETWD)`" \
 	       != "`cd $(top_builddir); $(GETWD)`"; then \
 	  (cd $(rhome)/etc && \
-	    rm -f $(OBJECTS) $(EXPORTFILE)); \
+	    rm -f $(OBJECTS) $(EXPORTFILES)); \
 	  rmdir $(rhome)/etc 2> /dev/null \
 	    || echo "  subdir etc not removed"; \
 	fi

@@ -24,7 +24,7 @@
 
 AC_PREREQ(2.57)
 
-AC_REVISION($Revision: 1.85 $)
+AC_REVISION($Revision: 1.86 $)
 
 ## We want to get the version number from file 'VERSION' (rather than
 ## specifying the version info in 'configure.ac'.  Hence, we need a bit
@@ -733,7 +733,7 @@ shlib_ld="${CC}"
 shlib_cxxld="${CXX}"
 SHLIB_EXT=".so"
 SHLIB_LIBADD=
-use_exportfile=no
+use_exportfiles=no
 
 ## Step 1.  Ask imake.
 ## <NOTE>
@@ -778,7 +778,7 @@ fi
 ## Step 3.  Individual platform overrides.
 case "${host_os}" in
   aix*)
-    use_exportfile=yes
+    use_exportfiles=yes
     ## All AIX code is PIC.
     cpicflags=
     cxxpicflags=
@@ -1004,8 +1004,8 @@ case "${host_os}" in
     ## driver gets linked to the main binary and hence also the R dylib.
     ## Change once the driver is modularized.
     LIBR_LDFLAGS="-dynamiclib -flat_namespace -undefined suppress -install_name \$(Rexeclibdir)/libR.dylib -framework Carbon"
-    RLAPACK_LDFLAGS="-dynamiclib -flat_namespace -undefined suppress -install_name \$(Rexeclibdir)/libRlapack.dylib"
     ## </FIXME>
+    RLAPACK_LDFLAGS="-dynamiclib -flat_namespace -undefined suppress -install_name \$(Rexeclibdir)/libRlapack.dylib"
     ;;
   hpux*)
     ## needs to avoid embedding a relative path ../../../bin
@@ -1027,7 +1027,7 @@ AC_SUBST(SHLIB_EXT)
 AC_DEFINE_UNQUOTED(SHLIB_EXT, "${SHLIB_EXT}",
 [Define this to be the extension used for shared libraries on your
 system.])
-AM_CONDITIONAL(USE_EXPORTFILE, [test "x${use_exportfile}" = xyes])
+AM_CONDITIONAL(USE_EXPORTFILES, [test "x${use_exportfiles}" = xyes])
 AC_SUBST(LIBR_EXT)
 AC_SUBST(LIBR_LDFLAGS)
 AC_SUBST(RLAPACK_LDFLAGS)

@@ -91,7 +91,7 @@ R_bin_OBJECTS = $(OBJECTS)
 R_bin_LDADD = @LIBOBJS@ @ALLOCA@ $(RLIBS) $(BLAS_LIBS) $(FLIBS) $(R_XTRA_LIBS) $(R_ZLIBS) $(R_BZLIBS) $(R_PCRE)
 ## <NOTE>
 ## Automake would figure this out itself.
-R_bin_DEPENDENCIES = @LIBOBJS@ @ALLOCA@ $(RLIBS) @USE_EXPORTFILE_TRUE@ $(top_builddir)/etc/R.exp
+R_bin_DEPENDENCIES = @LIBOBJS@ @ALLOCA@ $(RLIBS) @USE_EXPORTFILES_TRUE@ $(top_builddir)/etc/R.exp
 ## </NOTE>
 
 ## <FIXME>
@@ -108,7 +108,7 @@ libR_la_OBJECTS = $(OBJECTS:.o=.lo)
 ## of course this will not work when the files do not exist yet :-)
 libR_la_LIBADD = @LTLIBOBJS@ $(BLAS_LIBS) $(FLIBS) $(R_XTRA_LIBS) \
   $(R_ZLIBS) $(R_BZLIBS) $(R_PCRE) $(R_XDR)
-libR_la_DEPENDENCIES = @LTLIBOBJS@ ../appl/stamp-lo ../nmath/stamp-lo ../unix/stamp-lo @USE_EXPORTFILE_TRUE@ $(top_builddir)/etc/R.exp
+libR_la_DEPENDENCIES = @LTLIBOBJS@ ../appl/stamp-lo ../nmath/stamp-lo ../unix/stamp-lo @USE_EXPORTFILES_TRUE@ $(top_builddir)/etc/R.exp
 ## </FIXME>
 @USE_LIBTOOL_TRUE@libR_la_LDFLAGS = -avoid-version -rpath $(Rexeclibdir)
 
