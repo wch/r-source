@@ -16,7 +16,8 @@ need to supply the uniform random number generator
      double unif_rand(void)
 
 or use the one supplied (and with a shared library you will have to
-use the one supplied).
+use the one supplied, which is the Marsaglia-multicarry with a call
+set_seed to set its seed).
 
 The facilties to change the normal random number generator are
 available through the constant N01_kind. This takes values
@@ -30,8 +31,9 @@ typedef enum {
 
 (and USER_NORM is not available).
 
-There is full access to R's handling of NAs, Inf and -Inf.  There
-are special versions of the macros and functions
+
+There is full access to R's handling of NaNs, Inf and -Inf via special
+versions of the macros and functions
 
     ISNAN, R_FINITE, R_log, R_pow and R_pow_di
 

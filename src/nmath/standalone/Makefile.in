@@ -10,7 +10,7 @@ subdir = src/nmath/standalone
 
 include $(top_builddir)/Makeconf
 
-SOURCES = sunif.c \
+SOURCES = \
 	mlutils.c \
 	d1mach.c i1mach.c \
 	fmax2.c fmin2.c fmod.c fprec.c fround.c ftrunc.c \
@@ -45,10 +45,10 @@ SOURCES = sunif.c \
 	wilcox.c \
 	signrank.c
 DEPENDS = $(SOURCES:.c=.d)
-OBJECTS = $(SOURCES:.c=.o)
+OBJECTS = sunif.o $(SOURCES:.c=.o)
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
-DISTFILES = Makefile.in test.c
+DISTFILES = Makefile.in test.c sunif.c
 
 LIB = libmath.a
 SHLIB = libmath.$(SHLIBEXT)
@@ -85,6 +85,9 @@ $(LIB): $(OBJECTS)
 
 $(SHLIB): $(OBJECTS)
 	$(SHLIBLD) $(SHLIBLDFLAGS) $(LDFLAGS) -o $@ $(OBJECTS)
+
+sunif.o: $(srcdir)/sunif.c
+	$(CC) -c -o $@ $(ALL_CPPFLAGS) $(ALL_CFLAGS) $<
 
 test: $(srcdir)/test.c
 	$(CC) -o $@ $(ALL_CPPFLAGS) $(ALL_CFLAGS) $< -L. -lmath -lm
