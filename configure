@@ -1146,10 +1146,10 @@ Some influential environment variables:
               load shared library modules (DLLs) at runtime
   CPICFLAGS   special flags for compiling C code to be turned into a shared
               library.
-  FPICFLAGS   special flags for compiling FORTRAN code to be turned into a
+  FPICFLAGS   special flags for compiling Fortran code to be turned into a
               shared library.
   SHLIB_LD    command for linking shared libraries which contain object files
-              from a C or FORTRAN compiler only
+              from a C or Fortran compiler only
   SHLIB_LDFLAGS
               special flags used by SHLIB_LD
   CXXPICFLAGS special flags for compiling C++ code to be turned into a shared
@@ -1162,7 +1162,7 @@ Some influential environment variables:
   TCLTK_CPPFLAGS
               flags needed for finding the tcl.h and tk.h headers
   MAKE        Make command
-  F2C         FORTRAN-to-C converter command
+  F2C         Fortran-to-C converter command
   CC          C compiler command
   CFLAGS      C compiler flags
   LDFLAGS     linker flags, e.g. -L<lib dir> if you have libraries in a
@@ -1966,11 +1966,8 @@ fi
 ## We provide these defaults so that headers and libraries in
 ## '/usr/local' are found (by the native tools, mostly).
 ## <FIXME>
-## We try to determine whether fink is used (on Darwin, mostly) by
-## looking for '/sw/etc/fink.conf'.  Should be ok but needs to be
-## documented ...
-## Also, GCC 3.1 seems to be very unhappy about '/usr/local/include'
-## to the header search path seems ...
+## GCC 3.1 seems to be very unhappy about '/usr/local/include' to the
+## header search path seems ...
 if test -f "/sw/etc/fink.conf"; then
   : ${CPPFLAGS="-I/sw/include -I/usr/local/include"}
   : ${LDFLAGS="-L/sw/lib -L/usr/local/lib"}
@@ -1986,32 +1983,6 @@ config_opts="${ac_configure_args}"
 
 
 ### ** Optional features.
-
-## <FIXME>
-## Remove in 1.6.
-for arg in ${ac_configure_args}; do
-  case "${arg}" in
-    --with-g77*)
-      warn_arg_with_g77="option '--with-g77' is deprecated.
-Use variable F77 to specify a FORTRAN 77 compiler if necessary."
-      { echo "$as_me:$LINENO: WARNING: ${warn_arg_with_g77}" >&5
-echo "$as_me: WARNING: ${warn_arg_with_g77}" >&2;}
-      ;;
-    --with-f77*)
-      warn_arg_with_f77="option '--with-f77' is deprecated.
-Use variable F77 to specify a FORTRAN 77 compiler if necessary."
-      { echo "$as_me:$LINENO: WARNING: ${warn_arg_with_f77}" >&5
-echo "$as_me: WARNING: ${warn_arg_with_f77}" >&2;}
-      ;;
-    --with-f2c*)
-      warn_arg_with_f2c="option '--with-f2c' is deprecated.
-Use variable F2C to specify the FORTRAN-to-C converter if necessary."
-      { echo "$as_me:$LINENO: WARNING: ${warn_arg_with_f2c}" >&5
-echo "$as_me: WARNING: ${warn_arg_with_f2c}" >&2;}
-      ;;
-  esac
-done
-## </FIXME>
 
 ## Allow the user to specify support for R profiling.
 # Check whether --enable-R-profiling or --disable-R-profiling was given.
@@ -2045,9 +2016,6 @@ else
   WANT_R_SHLIB_TRUE='#'
   WANT_R_SHLIB_FALSE=
 fi
-## <FIXME>
-## Should we add a check whether the user disabled shlibs in general?
-## </FIXME>
 if test "${want_R_shlib}" = yes; then
   LIBR="-L\$(R_HOME)/bin -lR"
 else
@@ -2850,14 +2818,14 @@ fi
 done
 test -n "$LATEX" || LATEX="false"
 
-if test -z "${ac_cv_path_LATEX}" ; then
-  ## <FIXME>
-  ## This is not quite true: need LaTeX for refman, and TeX for the
-  ## Texinfo manuals.
+if test -z "${ac_cv_path_TEX}" ; then
   warn_dvi="you cannot build DVI versions of the R manuals"
+elif test -z "${ac_cv_path_LATEX}"; then
+  warn_dvi="you cannot build DVI versions of all the help pages"
+fi
+if test -n "${warn_dvi}"; then
   { echo "$as_me:$LINENO: WARNING: ${warn_dvi}" >&5
 echo "$as_me: WARNING: ${warn_dvi}" >&2;}
-  ## </FIXME>
 fi
 for ac_prog in ${MAKEINDEX} makeindex
 do
@@ -2994,14 +2962,14 @@ fi
 done
 test -n "$PDFLATEX" || PDFLATEX="false"
 
-if test -z "${ac_cv_path_PDFLATEX}" ; then
-  ## <FIXME>
-  ## This is not quite true: need pdfLaTeX for refman, and pdfTeX for
-  ## the Texinfo manuals.
+if test -z "${ac_cv_path_PDFTEX}" ; then
   warn_pdf="you cannot build PDF versions of the R manuals"
+elif test -z "${ac_cv_path_PDFLATEX}" ; then
+  warn_pdf="you cannot build PDF versions of all the help pages"
+fi
+if test -n "${warn_pdf}"; then
   { echo "$as_me:$LINENO: WARNING: ${warn_pdf}" >&5
 echo "$as_me: WARNING: ${warn_pdf}" >&2;}
-  ## </FIXME>
 fi
 for ac_prog in ${MAKEINFO} makeinfo
 do
@@ -5396,7 +5364,7 @@ test "x$enable_libtool_lock" != xno && enable_libtool_lock=yes
 case $host in
 *-*-irix6*)
   # Find out which ABI we are using.
-  echo '#line 5399 "configure"' > conftest.$ac_ext
+  echo '#line 5367 "configure"' > conftest.$ac_ext
   if { (eval echo "$as_me:$LINENO: \"$ac_compile\"") >&5
   (eval $ac_compile) 2>&5
   ac_status=$?
@@ -5932,7 +5900,7 @@ chmod -w .
 save_CFLAGS="$CFLAGS"
 CFLAGS="$CFLAGS -o out/conftest2.$ac_objext"
 compiler_c_o=no
-if { (eval echo configure:5935: \"$ac_compile\") 1>&5; (eval $ac_compile) 2>out/conftest.err; } && test -s out/conftest2.$ac_objext; then
+if { (eval echo configure:5903: \"$ac_compile\") 1>&5; (eval $ac_compile) 2>out/conftest.err; } && test -s out/conftest2.$ac_objext; then
   # The compiler can only warn and ignore the option if not recognized
   # So say no if there are warnings
   if test -s out/conftest.err; then
@@ -7725,7 +7693,7 @@ else
     lt_dlunknown=0; lt_dlno_uscore=1; lt_dlneed_uscore=2
   lt_status=$lt_dlunknown
   cat > conftest.$ac_ext <<EOF
-#line 7728 "configure"
+#line 7696 "configure"
 #include "confdefs.h"
 
 #if HAVE_DLFCN_H
@@ -7823,7 +7791,7 @@ else
     lt_dlunknown=0; lt_dlno_uscore=1; lt_dlneed_uscore=2
   lt_status=$lt_dlunknown
   cat > conftest.$ac_ext <<EOF
-#line 7826 "configure"
+#line 7794 "configure"
 #include "confdefs.h"
 
 #if HAVE_DLFCN_H
@@ -9494,24 +9462,14 @@ ac_compile='$CC -c $CFLAGS $CPPFLAGS conftest.$ac_ext >&5'
 ac_link='$CC -o conftest$ac_exeext $CFLAGS $CPPFLAGS $LDFLAGS conftest.$ac_ext $LIBS >&5'
 ac_compiler_gnu=$ac_cv_c_compiler_gnu
 
-if test -n "${FC}"; then
-  warn_arg_var_FC="configure variable 'FC' is deprecated.
-Use variable 'F77' to specify a FORTRAN 77 compiler if necessary."
-  { echo "$as_me:$LINENO: WARNING: ${warn_arg_var_FC}" >&5
-echo "$as_me: WARNING: ${warn_arg_var_FC}" >&2;}
-fi
 if test -n "${F77}" && test -n "${F2C}"; then
   warn_F77_and_F2C="both 'F77' and 'F2C' given.
-Using the given FORTRAN 77 compiler ..."
+Using the given Fortran 77 compiler ..."
   { echo "$as_me:$LINENO: WARNING: ${warn_F77_and_F2C}" >&5
 echo "$as_me: WARNING: ${warn_F77_and_F2C}" >&2;}
   F2C=
 fi
 if test -n "${F77}"; then
-  echo "$as_me:$LINENO: result: defining F77 to be ${F77}" >&5
-echo "${ECHO_T}defining F77 to be ${F77}" >&6
-elif test -n "${FC}"; then
-  F77="${FC}"
   echo "$as_me:$LINENO: result: defining F77 to be ${F77}" >&5
 echo "${ECHO_T}defining F77 to be ${F77}" >&6
 elif test -z "${F2C}"; then
@@ -9646,7 +9604,7 @@ else
 echo "${ECHO_T}defining F2C to be ${F2C}" >&6
 fi
 if test -n "${F77}"; then
-  ## If the above 'found' a FORTRAN 77 compiler, we run AC_PROG_F77 as
+  ## If the above 'found' a Fortran 77 compiler, we run AC_PROG_F77 as
   ## this does additional testing (GNU, '-g', ...).
   ac_ext=f
 ac_compile='$F77 -c $FFLAGS conftest.$ac_ext >&5'
@@ -9740,7 +9698,7 @@ fi
 
 
 # Provide some information about the compiler.
-echo "$as_me:9743:" \
+echo "$as_me:9701:" \
      "checking for Fortran 77 compiler version" >&5
 ac_compiler=`set X $ac_compile; echo $2`
 { (eval echo "$as_me:$LINENO: \"$ac_compiler --version </dev/null >&5\"") >&5
@@ -12227,7 +12185,7 @@ _ACEOF
 
 ### * Checks for compiler characteristics.
 
-### ** Generic tests for the C, FORTRAN 77 and C++ compilers.
+### ** Generic tests for the C, Fortran 77 and C++ compilers.
 
 ### *** C compiler.
 
@@ -14077,7 +14035,7 @@ fi
 
 
 
-### *** FORTRAN 77 compiler.
+### *** Fortran 77 compiler.
 
 if test -n "${F77}"; then
 
@@ -14128,7 +14086,7 @@ _ACEOF
 # flags.
 ac_save_FFLAGS=$FFLAGS
 FFLAGS="$FFLAGS $ac_verb"
-(eval echo $as_me:14131: \"$ac_link\") >&5
+(eval echo $as_me:14089: \"$ac_link\") >&5
 ac_f77_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$ac_f77_v_output" >&5
 FFLAGS=$ac_save_FFLAGS
@@ -14207,7 +14165,7 @@ _ACEOF
 # flags.
 ac_save_FFLAGS=$FFLAGS
 FFLAGS="$FFLAGS $ac_cv_prog_f77_v"
-(eval echo $as_me:14210: \"$ac_link\") >&5
+(eval echo $as_me:14168: \"$ac_link\") >&5
 ac_f77_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$ac_f77_v_output" >&5
 FFLAGS=$ac_save_FFLAGS
@@ -14397,10 +14355,7 @@ done
 FLIBS="${flibs}"
 if test "${G77}" = yes; then
   r_save_LIBS="${LIBS}"
-  ## <FIXME>
-  ## Potentially dangerous ...
   flibs=`echo "${ac_cv_flibs}" | sed 's/-lg2c/-lg2c-pic/'`
-  ## </FIXME>
   LIBS="${LIBS} ${flibs}"
   ac_ext=c
 ac_cpp='$CPP $CPPFLAGS'
@@ -14847,10 +14802,10 @@ esac
 
 case "${ac_cv_f77_mangling}" in
   "upper "*)
-    { echo "$as_me:$LINENO: WARNING: FORTRAN compiler uses uppercase external names" >&5
-echo "$as_me: WARNING: FORTRAN compiler uses uppercase external names" >&2;}
-    { { echo "$as_me:$LINENO: error: cannot use FORTRAN" >&5
-echo "$as_me: error: cannot use FORTRAN" >&2;}
+    { echo "$as_me:$LINENO: WARNING: Fortran compiler uses uppercase external names" >&5
+echo "$as_me: WARNING: Fortran compiler uses uppercase external names" >&2;}
+    { { echo "$as_me:$LINENO: error: cannot use Fortran" >&5
+echo "$as_me: error: cannot use Fortran" >&2;}
    { (exit 1); exit 1; }; }
     ;;
 esac
@@ -14868,8 +14823,8 @@ esac
 fi
 
 if test -z "${r_cv_prog_f77_append_underscore}"; then
-  { { echo "$as_me:$LINENO: error: cannot use FORTRAN" >&5
-echo "$as_me: error: cannot use FORTRAN" >&2;}
+  { { echo "$as_me:$LINENO: error: cannot use Fortran" >&5
+echo "$as_me: error: cannot use Fortran" >&2;}
    { (exit 1); exit 1; }; }
 fi
 if test "${r_cv_prog_f77_append_underscore}" = yes; then
@@ -14881,8 +14836,8 @@ _ACEOF
 fi
 
 
-echo "$as_me:$LINENO: checking whether ${F77-f77} and ${CC-cc} agree on int and double" >&5
-echo $ECHO_N "checking whether ${F77-f77} and ${CC-cc} agree on int and double... $ECHO_C" >&6
+echo "$as_me:$LINENO: checking whether ${F77} and ${CC} agree on int and double" >&5
+echo $ECHO_N "checking whether ${F77} and ${CC} agree on int and double... $ECHO_C" >&6
 if test "${r_cv_prog_f77_cc_compat+set}" = set; then
   echo $ECHO_N "(cached) $ECHO_C" >&6
 else
@@ -14931,14 +14886,18 @@ int main () {
   exit(res);
 }
 EOF
-if ${CC-cc} ${CFLAGS} -c conftest.c 1>&5 2>&5; then
-  ## <FIXME>
+if ${CC} ${CFLAGS} -c conftest.c 1>&5 2>&5; then
+  ## <NOTE>
   ## This should really use MAIN_LD, and hence come after this is
-  ## determined.  Or maybe we can always use ${CC} eventually?
-  if ${CC-cc} ${LDFLAGS} ${MAIN_LDFLAGS} -o conftest${ac_exeext} \
+  ## determined (and necessary additions to MAIN_LDFLAGS were made).
+  ## But it seems that we currently can always use the C compiler.
+  ## Also, to be defensive there should be a similar test with SHLIB_LD
+  ## and SHLIB_LDFLAGS (and note that on HPUX with native cc we have to
+  ## use ld for SHLIB_LD) ...
+  if ${CC} ${LDFLAGS} ${MAIN_LDFLAGS} -o conftest${ac_exeext} \
        conftest.${ac_objext} conftestf.${ac_objext} ${FLIBS} \
        ${LIBM} 1>&5 2>&5;
-  ## </FIXME>
+  ## </NOTE>
   then
     output=`./conftest${ac_exeext} 2>&1`
     if test ${?} = 0; then
@@ -14954,16 +14913,16 @@ if test -n "${r_cv_prog_f77_cc_compat}"; then
   echo "$as_me:$LINENO: result: yes" >&5
 echo "${ECHO_T}yes" >&6
 else
-  { echo "$as_me:$LINENO: WARNING: ${F77-f77} and ${CC-cc} disagree on int and double" >&5
-echo "$as_me: WARNING: ${F77-f77} and ${CC-cc} disagree on int and double" >&2;}
+  { echo "$as_me:$LINENO: WARNING: ${F77} and ${CC} disagree on int and double" >&5
+echo "$as_me: WARNING: ${F77} and ${CC} disagree on int and double" >&2;}
   { { echo "$as_me:$LINENO: error: Maybe change CFLAGS or FFLAGS?" >&5
 echo "$as_me: error: Maybe change CFLAGS or FFLAGS?" >&2;}
    { (exit 1); exit 1; }; }
 fi
 
 
-echo "$as_me:$LINENO: checking whether ${F77-f77} and ${CC-cc} agree on double complex" >&5
-echo $ECHO_N "checking whether ${F77-f77} and ${CC-cc} agree on double complex... $ECHO_C" >&6
+echo "$as_me:$LINENO: checking whether ${F77} and ${CC} agree on double complex" >&5
+echo $ECHO_N "checking whether ${F77} and ${CC} agree on double complex... $ECHO_C" >&6
 if test "${r_cv_prog_f77_cc_compat_complex+set}" = set; then
   echo $ECHO_N "(cached) $ECHO_C" >&6
 else
@@ -15010,14 +14969,18 @@ int main () {
     else exit(1);
 }
 EOF
-if ${CC-cc} ${CFLAGS} -c conftest.c 1>&5 2>&5; then
-  ## <FIXME>
+if ${CC} ${CFLAGS} -c conftest.c 1>&5 2>&5; then
+  ## <NOTE>
   ## This should really use MAIN_LD, and hence come after this is
-  ## determined.  Or maybe we can always use ${CC} eventually?
-  if ${CC-cc} ${LDFLAGS} ${MAIN_LDFLAGS} -o conftest${ac_exeext} \
+  ## determined (and necessary additions to MAIN_LDFLAGS were made).
+  ## But it seems that we currently can always use the C compiler.
+  ## Also, to be defensive there should be a similar test with SHLIB_LD
+  ## and SHLIB_LDFLAGS (and note that on HPUX with native cc we have to
+  ## use ld for SHLIB_LD) ...
+  if ${CC} ${LDFLAGS} ${MAIN_LDFLAGS} -o conftest${ac_exeext} \
        conftest.${ac_objext} conftestf.${ac_objext} ${FLIBS} \
        ${LIBM} 1>&5 2>&5;
-  ## </FIXME>
+  ## </NOTE>
   then
     output=`./conftest${ac_exeext} 2>&1`
     if test ${?} = 0; then
@@ -15038,11 +15001,9 @@ cat >>confdefs.h <<\_ACEOF
 _ACEOF
 
 else
-  ## <FIXME>
-  ## Use warn_f77_cc_double_complex ...
-  { echo "$as_me:$LINENO: WARNING: ${F77-f77} and ${CC-cc} disagree on double complex" >&5
-echo "$as_me: WARNING: ${F77-f77} and ${CC-cc} disagree on double complex" >&2;}
-  ## </FIXME>
+  warn_f77_cc_double_complex="${F77} and ${CC} disagree on double complex"
+  { echo "$as_me:$LINENO: WARNING: ${warn_f77_cc_double_complex}" >&5
+echo "$as_me: WARNING: ${warn_f77_cc_double_complex}" >&2;}
 fi
 
 
@@ -15491,7 +15452,7 @@ fi
 
 
 
-### ** Platform-specific overrides for the C, FORTRAN 77 and C++ compilers.
+### ** Platform-specific overrides for the C, Fortran 77 and C++ compilers.
 
 case "${host_cpu}" in
   i*86)
@@ -15512,8 +15473,8 @@ rm -f conftest*
 
 
     ac_safe=`echo "-mieee-fp" | sed 'y%./+-:=%__p___%'`
-echo "$as_me:$LINENO: checking whether ${CC-cc} accepts -mieee-fp" >&5
-echo $ECHO_N "checking whether ${CC-cc} accepts -mieee-fp... $ECHO_C" >&6
+echo "$as_me:$LINENO: checking whether ${CC} accepts -mieee-fp" >&5
+echo $ECHO_N "checking whether ${CC} accepts -mieee-fp... $ECHO_C" >&6
 if eval "test \"\${r_cv_prog_cc_flag_${ac_safe}+set}\" = set"; then
   echo $ECHO_N "(cached) $ECHO_C" >&6
 else
@@ -15582,8 +15543,8 @@ echo "${ECHO_T}no" >&6
 fi
 
     ac_safe=`echo "-mieee-fp" | sed 'y%./+-:=%__p___%'`
-echo "$as_me:$LINENO: checking whether ${F77-f77} accepts -mieee-fp" >&5
-echo $ECHO_N "checking whether ${F77-f77} accepts -mieee-fp... $ECHO_C" >&6
+echo "$as_me:$LINENO: checking whether ${F77} accepts -mieee-fp" >&5
+echo $ECHO_N "checking whether ${F77} accepts -mieee-fp... $ECHO_C" >&6
 if eval "test \"\${r_cv_prog_f77_flag_${ac_safe}+set}\" = set"; then
   echo $ECHO_N "(cached) $ECHO_C" >&6
 else
@@ -15721,13 +15682,13 @@ fi
     ## @option{-ieee} (or @option{-mieee}) are not enough.
     ## According to <Albrecht.Gebhardt@uni-klu.ac.at> and Luke Tierney
     ## <luke@stat.umn.edu>, @option{-fpe3} is what we want for the
-    ## native FORTRAN 77 compiler: seems that not all versions map
+    ## native Fortran 77 compiler: seems that not all versions map
     ## @option{-ieee} to @option{-fpe3}.
     ## What about the C++ compilers?
     if test "${GCC}" = yes; then
       ac_safe=`echo "-mieee-with-inexact" | sed 'y%./+-:=%__p___%'`
-echo "$as_me:$LINENO: checking whether ${CC-cc} accepts -mieee-with-inexact" >&5
-echo $ECHO_N "checking whether ${CC-cc} accepts -mieee-with-inexact... $ECHO_C" >&6
+echo "$as_me:$LINENO: checking whether ${CC} accepts -mieee-with-inexact" >&5
+echo $ECHO_N "checking whether ${CC} accepts -mieee-with-inexact... $ECHO_C" >&6
 if eval "test \"\${r_cv_prog_cc_flag_${ac_safe}+set}\" = set"; then
   echo $ECHO_N "(cached) $ECHO_C" >&6
 else
@@ -15797,8 +15758,8 @@ fi
 
     else
       ac_safe=`echo "-std1" | sed 'y%./+-:=%__p___%'`
-echo "$as_me:$LINENO: checking whether ${CC-cc} accepts -std1" >&5
-echo $ECHO_N "checking whether ${CC-cc} accepts -std1... $ECHO_C" >&6
+echo "$as_me:$LINENO: checking whether ${CC} accepts -std1" >&5
+echo $ECHO_N "checking whether ${CC} accepts -std1... $ECHO_C" >&6
 if eval "test \"\${r_cv_prog_cc_flag_${ac_safe}+set}\" = set"; then
   echo $ECHO_N "(cached) $ECHO_C" >&6
 else
@@ -15867,8 +15828,8 @@ echo "${ECHO_T}no" >&6
 fi
 
       ac_safe=`echo "-ieee_with_inexact" | sed 'y%./+-:=%__p___%'`
-echo "$as_me:$LINENO: checking whether ${CC-cc} accepts -ieee_with_inexact" >&5
-echo $ECHO_N "checking whether ${CC-cc} accepts -ieee_with_inexact... $ECHO_C" >&6
+echo "$as_me:$LINENO: checking whether ${CC} accepts -ieee_with_inexact" >&5
+echo $ECHO_N "checking whether ${CC} accepts -ieee_with_inexact... $ECHO_C" >&6
 if eval "test \"\${r_cv_prog_cc_flag_${ac_safe}+set}\" = set"; then
   echo $ECHO_N "(cached) $ECHO_C" >&6
 else
@@ -15939,8 +15900,8 @@ fi
     fi
     if test "${G77}" = yes; then
       ac_safe=`echo "-mieee" | sed 'y%./+-:=%__p___%'`
-echo "$as_me:$LINENO: checking whether ${F77-f77} accepts -mieee" >&5
-echo $ECHO_N "checking whether ${F77-f77} accepts -mieee... $ECHO_C" >&6
+echo "$as_me:$LINENO: checking whether ${F77} accepts -mieee" >&5
+echo $ECHO_N "checking whether ${F77} accepts -mieee... $ECHO_C" >&6
 if eval "test \"\${r_cv_prog_f77_flag_${ac_safe}+set}\" = set"; then
   echo $ECHO_N "(cached) $ECHO_C" >&6
 else
@@ -15996,8 +15957,8 @@ fi
 
     else
       ac_safe=`echo "-fpe3" | sed 'y%./+-:=%__p___%'`
-echo "$as_me:$LINENO: checking whether ${F77-f77} accepts -fpe3" >&5
-echo $ECHO_N "checking whether ${F77-f77} accepts -fpe3... $ECHO_C" >&6
+echo "$as_me:$LINENO: checking whether ${F77} accepts -fpe3" >&5
+echo $ECHO_N "checking whether ${F77} accepts -fpe3... $ECHO_C" >&6
 if eval "test \"\${r_cv_prog_f77_flag_${ac_safe}+set}\" = set"; then
   echo $ECHO_N "(cached) $ECHO_C" >&6
 else
@@ -16210,8 +16171,8 @@ _ACEOF
 
     if test "${GCC}" = yes; then
       ac_safe=`echo "-mno-fp-in-toc" | sed 'y%./+-:=%__p___%'`
-echo "$as_me:$LINENO: checking whether ${CC-cc} accepts -mno-fp-in-toc" >&5
-echo $ECHO_N "checking whether ${CC-cc} accepts -mno-fp-in-toc... $ECHO_C" >&6
+echo "$as_me:$LINENO: checking whether ${CC} accepts -mno-fp-in-toc" >&5
+echo $ECHO_N "checking whether ${CC} accepts -mno-fp-in-toc... $ECHO_C" >&6
 if eval "test \"\${r_cv_prog_cc_flag_${ac_safe}+set}\" = set"; then
   echo $ECHO_N "(cached) $ECHO_C" >&6
 else
@@ -16420,13 +16381,13 @@ if test "${r_cv_c_optieee}" = yes; then
 fi
 
     ## <NOTE>
-    ## We really should test explictly whether the FORTRAN and C++
+    ## We really should test explictly whether the Fortran and C++
     ## compilers *need* '-OPT:IEEE_NaN_inf=ON'.  Currently, all we do is
     ## check whether the non-GNU tools *accept* the flag.
     if test "${G77}" != yes; then
       ac_safe=`echo "-OPT:IEEE_NaN_inf=ON" | sed 'y%./+-:=%__p___%'`
-echo "$as_me:$LINENO: checking whether ${F77-f77} accepts -OPT:IEEE_NaN_inf=ON" >&5
-echo $ECHO_N "checking whether ${F77-f77} accepts -OPT:IEEE_NaN_inf=ON... $ECHO_C" >&6
+echo "$as_me:$LINENO: checking whether ${F77} accepts -OPT:IEEE_NaN_inf=ON" >&5
+echo $ECHO_N "checking whether ${F77} accepts -OPT:IEEE_NaN_inf=ON... $ECHO_C" >&6
 if eval "test \"\${r_cv_prog_f77_flag_${ac_safe}+set}\" = set"; then
   echo $ECHO_N "(cached) $ECHO_C" >&6
 else
@@ -16759,7 +16720,7 @@ case "${host_os}" in
       shlib_ldflags="-shared -fPIC"
     else
       ## <NOTE>
-      ## If native cc insists on tacking on crt0.o when it calls ld, and
+      ## Native cc insists on tacking on crt0.o when it calls ld, and
       ## crt0.o is not built with PIC.  As there seems to be no obvious
       ## way to tell cc not to do this, we use ld for linking shlibs.
       shlib_ld=ld
@@ -16838,12 +16799,7 @@ esac
 ## ## Step 4.  In case we use libtool ...
 ## if test "${use_libtool}" = yes; then
 ##   case "${host_os}" in
-##     aix*)
-##       ## FIXME: AIX needs special care.
-##       ;;
 ##     *)
-##       ## FIXME: Maybe we should set this here and not in R_bin_LDFLAGS?
-##       main_ldflags=
 ##       ;;
 ##   esac
 ## fi
@@ -16896,7 +16852,7 @@ if test -z "${CXXPICFLAGS}"; then
     aix*|irix*|mingw*|osf*)
       ;;
     *)
-      warn_cxxpicflags="I could not determine CXXPICFLAGS"
+      warn_cxxpicflags="I could not determine CXXPICFLAGS."
       { echo "$as_me:$LINENO: WARNING: ${warn_cxxpicflags}" >&5
 echo "$as_me: WARNING: ${warn_cxxpicflags}" >&2;}
       ;;
@@ -17394,7 +17350,7 @@ done
 
 ## <NOTE>
 ## No need checking for bcopy bzero memcpy mempcpy even though ifnames
-## might stop corresponding HAVE_FOO conditionals.
+## might report corresponding HAVE_FOO conditionals.
 ## </NOTE>
 
 ## Used to build src/include/Rmath.h.
@@ -18596,7 +18552,7 @@ fi
 
 ## BLAS.
 ## <NOTE>
-## This has to come *after* checking for FORTRAN 77 compiler/converter
+## This has to come *after* checking for Fortran 77 compiler/converter
 ## characteristics (notably name mangling and FLIBS).
 if test "${use_blas}" = yes; then
 
@@ -21184,10 +21140,17 @@ echo "$as_me: WARNING: ${warn_tcltk_version}" >&2;}
       have_tcltk=no
     fi
   fi
-  ## <FIXME>
-  ## Shouldn't there also be a test that major and minor versions of
-  ## the scripts match?
-  ## </FIXME>
+  if test -n "${TCL_CONFIG}" \
+      && test -n "${TK_CONFIG}" \
+      && test -z "${warn_tcltk_version}"; then
+    if test ${TCL_MAJOR_VERSION} -ne ${TK_MAJOR_VERSION} \
+      || test ${TCL_MINOR_VERSION} -ne ${TK_MINOR_VERSION}; then
+     warn_tcltk_version="Tcl and Tk major or minor versions disagree"
+      { echo "$as_me:$LINENO: WARNING: ${warn_tcltk_version}" >&5
+echo "$as_me: WARNING: ${warn_tcltk_version}" >&2;}
+      have_tcltk=no
+    fi
+  fi
 fi
 
 
@@ -21201,14 +21164,12 @@ if test -z "${TCLTK_CPPFLAGS}"; then
       ## Look for tcl.h in
       ##   ${TCL_PREFIX}/include/tcl${TCL_VERSION}
       ##   ${TCL_PREFIX}/include
-      ## <FIXME>
       ## Also look in
       ##   ${TCL_PREFIX}/include/tcl${TCL_VERSION}/generic
       ## to deal with current FreeBSD layouts.  These also link the real
       ## thing to the version subdir, but the link cannot be used as it
       ## fails to include 'tclDecls.h' which is not linked.  Hence we
       ## must look for the real thing first.  Argh ...
-      ## </FIXME>
       for dir in \
           ${TCL_PREFIX}/include/tcl${TCL_VERSION}/generic \
           ${TCL_PREFIX}/include/tcl${TCL_VERSION} \
@@ -21366,16 +21327,13 @@ echo "${ECHO_T}$r_cv_header_tcl_h" >&6
       ## Look for tk.h in
       ##   ${TK_PREFIX}/include/tk${TK_VERSION}
       ##   ${TK_PREFIX}/include
-      ## <FIXME>
       ## Also look in
       ##   ${TK_PREFIX}/include/tcl${TK_VERSION}
       ## to compensate for Debian madness ...
-      ## </FIXME>
-      ## <FIXME>
       ## Also look in
       ##   ${TK_PREFIX}/include/tk${TK_VERSION}/generic
       ## to deal with current FreeBSD layouts.  See above for details.
-      ## </FIXME>
+      ##
       ## As the AC_CHECK_HEADER test tries including the header file and
       ## tk.h includes tcl.h and X11/Xlib.h, we need to change CPPFLAGS
       ## for the check.
@@ -23425,7 +23383,7 @@ test -z "${papersize}" && papersize=a4
 ## Saving.
 
 
-## Make sure -L terms come first in LIBS, separate out as LIBPATHS.
+## Make sure -L terms come first in LIBS.
 LIBS1=""
 LIBS2=""
 for arg in ${LIBS}; do
@@ -23439,8 +23397,6 @@ for arg in ${LIBS}; do
   esac
 done
 LIBS="${LIBS1} ${LIBS2}"
-LIBPATHS="${LIBS1}"
-
 
 ## R_LD_LIBRARY_PATH.
 ## <FIXME>
@@ -24349,7 +24305,6 @@ s,@USE_MMAP_ZLIB_TRUE@,$USE_MMAP_ZLIB_TRUE,;t t
 s,@USE_MMAP_ZLIB_FALSE@,$USE_MMAP_ZLIB_FALSE,;t t
 s,@R_PROFILING@,$R_PROFILING,;t t
 s,@PAPERCONF@,$PAPERCONF,;t t
-s,@LIBPATHS@,$LIBPATHS,;t t
 s,@R_LD_LIBRARY_PATH@,$R_LD_LIBRARY_PATH,;t t
 s,@LTLIBOBJS@,$LTLIBOBJS,;t t
 s,@LTALLOCA@,$LTALLOCA,;t t
@@ -24866,9 +24821,9 @@ fi
 C_compiler="${CC} ${R_XTRA_CFLAGS} ${CFLAGS}"
 CXX_compiler="${CXX} ${R_XTRA_CXXFLAGS} ${CXXFLAGS}"
 if test -z "${F2C}"; then
-  FORTRAN_compiler="${F77} ${R_XTRA_FFLAGS} ${FFLAGS}"
+  Fortran_compiler="${F77} ${R_XTRA_FFLAGS} ${FFLAGS}"
 else
-  FORTRAN_compiler="${F2C} ${F2CFLAGS}"
+  Fortran_compiler="${F2C} ${F2CFLAGS}"
 fi
 echo "$as_me:$LINENO: result:
 R is now configured for ${host}
@@ -24877,7 +24832,7 @@ R is now configured for ${host}
   Installation directory:    ${prefix}
   C compiler:                ${C_compiler}
   C++ compiler:              ${CXX_compiler}
-  FORTRAN compiler:          ${FORTRAN_compiler}
+  Fortran compiler:          ${Fortran_compiler}
 
   X11 support:               ${use_X11}
   Gnome support:             ${use_gnome}
@@ -24894,7 +24849,7 @@ R is now configured for ${host}
   Installation directory:    ${prefix}
   C compiler:                ${C_compiler}
   C++ compiler:              ${CXX_compiler}
-  FORTRAN compiler:          ${FORTRAN_compiler}
+  Fortran compiler:          ${Fortran_compiler}
 
   X11 support:               ${use_X11}
   Gnome support:             ${use_gnome}
@@ -24904,25 +24859,13 @@ R is now configured for ${host}
   R profiling support:       ${want_R_profiling}
   R as a shared library:     ${want_R_shlib}
 " >&6
-if test -n "${warn_arg_var_FC}"; then
-  { echo "$as_me:$LINENO: WARNING: ${warn_arg_var_FC}" >&5
-echo "$as_me: WARNING: ${warn_arg_var_FC}" >&2;}
-fi
-if test -n "${warn_arg_with_g77}"; then
-  { echo "$as_me:$LINENO: WARNING: ${warn_arg_with_g77}" >&5
-echo "$as_me: WARNING: ${warn_arg_with_g77}" >&2;}
-fi
-if test -n "${warn_arg_with_f77}"; then
-  { echo "$as_me:$LINENO: WARNING: ${warn_arg_with_f77}" >&5
-echo "$as_me: WARNING: ${warn_arg_with_f77}" >&2;}
-fi
-if test -n "${warn_arg_with_f2c}"; then
-  { echo "$as_me:$LINENO: WARNING: ${warn_arg_with_f2c}" >&5
-echo "$as_me: WARNING: ${warn_arg_with_f2c}" >&2;}
-fi
 if test -n "${warn_F77_and_F2C}"; then
   { echo "$as_me:$LINENO: WARNING: ${warn_F77_and_F2C}" >&5
 echo "$as_me: WARNING: ${warn_F77_and_F2C}" >&2;}
+fi
+if test -n "${warn_f77_cc_double_complex}"; then
+  { echo "$as_me:$LINENO: WARNING: ${warn_f77_cc_double_complex}" >&5
+echo "$as_me: WARNING: ${warn_f77_cc_double_complex}" >&2;}
 fi
 if test -n "${warn_f2c_flibs}"; then
   { echo "$as_me:$LINENO: WARNING: ${warn_f2c_flibs}" >&5
