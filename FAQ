@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.5-12, 2002-06-20
+Version 1.5-13, 2002-07-02
 ISBN 3-901167-51-X
 Kurt Hornik
 
@@ -1624,6 +1624,11 @@ works, was published in the Journal of Statistical Software
 
 *norm*
      Analysis of multivariate normal datasets with missing values.
+
+*normix*
+     One-dimensional normal mixture models classes, for, e.g., density
+     estimation or clustering algorithms research and teaching; providing
+     the widely used Marron-Wand densities.
 
 *npmc*
      Nonparametric Multiple Comparisons:  provides simultaneous rank test
