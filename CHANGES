@@ -2,6 +2,9 @@
 
 NEW FEATURES
 
+    o   New functions subset() and transform() intended primarily to
+	make life with dataframes easier. 
+
     o   The graphics system has been through a major overhaul.
 	It is now possible to have multiple active device drivers
 	and to control them with full suite of dev.xxx functions
