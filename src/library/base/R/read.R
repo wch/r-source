@@ -1,8 +1,8 @@
 read.fwf <- function(file, widths, sep = "", as.is = FALSE,
 		     skip = 0, row.names, col.names)
 {
-    if(!(is.character(file) && file.exists(file)))
-	stop(paste('"',file,'" is not an existing file', sep=""))
+##-     if(!(is.character(file) && file.exists(file)))
+##- 	stop(paste('"',file,'" is not an existing file', sep=""))
     FILE <- tempfile("R.")
     on.exit(unlink(FILE))
     cmd <- paste("${R_HOME}/bin/fwf2table -f",
