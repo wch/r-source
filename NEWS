@@ -7,6 +7,15 @@
 	**************************************************
 
 
+		CHANGES IN R VERSION 0.63.4
+
+BUG FIXES
+
+    o	outer() doesn't produce all-empty dimnames anymore
+
+    o	quantile.default() works when `probs' has zero length
+
+
 		CHANGES IN R VERSION 0.63.3
 
 NEW FEATURES
