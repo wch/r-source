@@ -3044,15 +3044,18 @@ dat <- data.frame(a=rep(2,10),b=rep("a",10))
 aggregate(dat$a, by=list(a1=dat$a, b1=dat$b), NROW)
 ## failed due to missing drop = FALSE
 
+
 ## [<-.data.frame with a data-frame value
 x <- data.frame(a=1:3, b=4:6, c=7:9)
 info <- x[1:2]
 x[, names(info)] <-  info[1,]
 ##
 
+
 ## invalid 'lib.loc'
 stopifnot(length(installed.packages("mgcv")) == 0)
 ## gave a low-level error message
+
 
 ## as.dendrogram.hclust()
 data(eurodist)
@@ -3069,6 +3072,14 @@ stopifnot(order.dendrogram(d1) == hE2$order,
 ## not true in 1.9.0
 
 
+## trunc on a Date
+trunc(xx <- Sys.Date()) # failed in 1.9.1
+x <- xx + 0.9
+stopifnot(identical(trunc(x), xx)) # gave next day in 1.9.1
+xx <- as.Date("1960-02-02")
+x <- xx + 0.2
+stopifnot(identical(trunc(x), xx)) # must not truncate towards 0.
+##
 
 ### end of tests added in 1.9.1 ###
 

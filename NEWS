@@ -240,6 +240,8 @@ BUG FIXES
     o	R CMD INSTALL now also works for /bin/sh's such as the one from
 	Solaris 8 which fail when a function has the same name as a variable.
 
+    o	The Date method for trunc failed.
+
 
 
 		CHANGES IN R VERSION 1.9.1

@@ -335,7 +335,9 @@ round.Date <- function(x, ...)
     class(val) <- cl
     val
 }
-trunc.Date <- function(x) round.Date(x)
+
+## must avoid truncating dates prior to 1970-01-01 forwards.
+trunc.Date <- function(x) round(x - 0.4999999)
 
 rep.Date <- function(x, times, ...)
 {

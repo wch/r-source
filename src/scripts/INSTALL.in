@@ -4,7 +4,7 @@
 
 # @configure_input@
 
-revision='$Revision: 1.156 $'
+revision='$Revision: 1.157 $'
 version=`set - ${revision}; echo ${2}`
 version="R add-on package installer ${version}
 
@@ -143,7 +143,6 @@ fi
 pkgs=
 clean=false
 debug=false
-has_error=false
 build_text=true
 build_html=true
 build_latex=true
@@ -391,6 +390,7 @@ do_install_source () {
 
   if test -d src && test "${fake}" != "true"; then
     message "libs"
+    has_error=false
     if ${debug}; then set -x; fi
     ${MKDIR_P} "${R_PACKAGE_DIR}/libs"
     if test -f src/Makefile; then
