@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2004
-@set FAQ-VERSION 1.9-17 @value{FAQ-YEAR}-05-20
+@set FAQ-VERSION 1.9-18 @value{FAQ-YEAR}-05-22
 @set REL-VERSION 1.9.0
 @set REL-YEAR 2004
 @set FAQ-ISBN 3-900051-01-1
@@ -2022,6 +2022,8 @@ like Minitab, SAS, SPSS, Stata, etc.  @emph{Recommended}.
 @item fork
 Functions for handling multiple processes: simple wrappers around the
 Unix process management API calls.
+@item fortunes
+R fortunes.
 @item forward
 Forward search approach to robust analysis in linear and generalized
 linear regression models.
