@@ -1,11 +1,11 @@
-Introduction
-************
+1 Introduction
+**************
 
    This document contains answers to some of the most frequently asked
 questions about R.
 
-Legalese
-========
+1.1 Legalese
+============
 
    This document is free software; you can redistribute it and/or modify it
 under the terms of the GNU General Public License as published by the Free
@@ -24,34 +24,28 @@ for more details.
 You can also obtain it by writing to the Free Software Foundation, Inc.,
 675 Mass Ave, Cambridge, MA 02139, USA.
 
-Obtaining this Document
-=======================
+1.2 Obtaining this Document
+===========================
 
    The latest version of this document is always available from
 
      `http://www.ci.tuwien.ac.at/~hornik/R/'
 
-   From there, you can obtain versions converted to
-plain ASCII text (http://www.ci.tuwien.ac.at/~hornik/R/R-FAQ.txt),
-DVI (http://www.ci.tuwien.ac.at/~hornik/R/R-FAQ.dvi.gz),
-GNU info (http://www.ci.tuwien.ac.at/~hornik/R/R-FAQ.info.gz),
-HTML (http://www.ci.tuwien.ac.at/~hornik/R/R-FAQ.html),
-PDF (http://www.ci.tuwien.ac.at/~hornik/R/R-FAQ.pdf),
-PostScript (http://www.ci.tuwien.ac.at/~hornik/R/R-FAQ.ps.gz) as well as the
-Texinfo source (http://www.ci.tuwien.ac.at/~hornik/R/R-FAQ.texi) used for
+   From there, you can obtain versions converted to plain ASCII text, DVI,
+GNU info, HTML, PDF, PostScript as well as the Texinfo source used for
 creating all these formats using the GNU Texinfo system.
 
    You can also obtain the R FAQ from the `doc/FAQ' subdirectory of a CRAN
 site (*Note What Is CRAN?::).
 
-Notation
-========
+1.3 Notation
+============
 
    Everything should be pretty standard.  `R>' is used for the R prompt,
 and a `$' for the shell prompt (where applicable).
 
-Feedback
-========
+1.4 Feedback
+============
 
    Feedback is of course most welcome.
 
@@ -59,11 +53,11 @@ Feedback
 If you have information on these systems that you think should be added to
 this document, please let me know.
 
-R Basics
-********
+2 R Basics
+**********
 
-What Is R?
-==========
+2.1 What Is R?
+==============
 
    R is a system for statistical computation and graphics.  It consists of
 a language plus a run-time environment with graphics, a debugger, access to
@@ -71,11 +65,11 @@ certain system functions, and the ability to run programs stored in script
 files.
 
    The design of R has been heavily influenced by two existing languages:
-Becker, Chambers & Wilks' S (*note What Is S?::.) and Sussman's
-Scheme (http://www.cs.indiana.edu/scheme-repository/home.html).  Whereas
-the resulting language is very similar in appearance to S, the underlying
+Becker, Chambers & Wilks' S (*note What Is S?::.) and Sussman's Scheme
+(http://www.cs.indiana.edu/scheme-repository/home.html).  Whereas the
+resulting language is very similar in appearance to S, the underlying
 implementation and semantics are derived from Scheme.  *Note What Are the
-Differences between R and S?:: for a discussion of the differences between
+Differences between R and S?::, for a discussion of the differences between
 R and S.
 
    R was initially written by Ross Ihaka <ihaka@stat.auckland.ac.nz> and
@@ -94,8 +88,8 @@ Brian Ripley, Heiner Schwarte, and Luke Tierney.
 software distributed under a GNU-style copyleft, and an official part of
 the GNU project ("GNU S").
 
-What Machines Does R Run on?
-============================
+2.2 What Machines Does R Run on?
+================================
 
    R is being developed for the Unix, Windows and Mac families of operating
 systems.
@@ -108,26 +102,26 @@ information.
 
    If you know about other platforms, please drop us a note.
 
-What Is the Current Version of R?
-=================================
+2.3 What Is the Current Version of R?
+=====================================
 
-   The current stable Unix version is 0.63.3, the unstable one is
-0.64.0.  Typically, new features are introduced in the development
+   The current stable Unix version is 0.64.0, the unstable one is
+0.65.0.  Typically, new features are introduced in the development
 versions; updates of stable versions are for bug fixes mostly.  The Windows
 version tracks the stable Unix version quite closely.  The version for the
 Mac is pre-alpha.
 
-How Can R Be Obtained?
-======================
+2.4 How Can R Be Obtained?
+==========================
 
    Sources, binaries and documentation for R can be obtained via CRAN, the
 "Comprehensive R Archive Network" (see *Note What Is CRAN?::).
 
-How Can R Be Installed?
-=======================
+2.5 How Can R Be Installed?
+===========================
 
-How Can R Be Installed (Unix)
------------------------------
+2.5.1 How Can R Be Installed (Unix)
+-----------------------------------
 
    If binaries are available for your platform (see *Note Are there Unix
 Binaries for R?::), you can use these, following the instructions that come
@@ -183,24 +177,25 @@ and can be set by running `configure' with the option
 (E.g., the R executable will then be installed into
 `/where/you/want/R/to/go/bin'.)
 
-How Can R Be Installed (Windows)
---------------------------------
+2.5.2 How Can R Be Installed (Windows)
+--------------------------------------
 
    The `bin/ms-windows' directory of a CRAN site currently contains two
 binary distributions of R for MS Windows: one by Robert Gentleman in the
-`windows' subdirectory, and one by Guido Masarotto <guido@sirio.stat.unipd.it> in `windows-9x'.  The latter only works on 32 bit versions of
-Windows (i.e., 95, 98 or NT), the former also on 3.11.  See the respective
-directories for more information.  Binary distributions for a large number
-of add-on packages (basically all those on CRAN except purely data
-collections) for use with Guido's version are available in
+`windows' subdirectory, and one by Guido Masarotto
+<guido@sirio.stat.unipd.it> in `windows-9x'.  The latter only works on 32
+bit versions of Windows (i.e., 95, 98 or NT), the former also on 3.11.  See
+the respective directories for more information.  Binary distributions for
+a large number of add-on packages (basically all those on CRAN except purely
+data collections) for use with Guido's version are available in
 `windows-9x/contrib' subdirectory.
 
    Note that when uncompressing the zip files, the pkunzip program needs to
 be invoked with the `-D' flag to create subdirectories.  Also, be aware
 that some decompression programs do not preserve long file names properly.
 
-How Can R Be Installed (Macintosh)
-----------------------------------
+2.5.3 How Can R Be Installed (Macintosh)
+----------------------------------------
 
    The CRAN `bin/macintosh' directory contains `R.sea.hqx', a binhexed
 self-extracting archive, and installation instructions in
@@ -209,8 +204,8 @@ quality of the current Unix version.
 
    The Power Macintosh port is temporarily on hold.
 
-Are there Unix Binaries for R?
-==============================
+2.6 Are there Unix Binaries for R?
+==================================
 
    The `bin/linux' directory contains Debian 2.0 packages for the i386
 platform (now part of the Debian distribution and maintained by Doug Bates)
@@ -228,8 +223,8 @@ platforms in `bin/nextstep/i386' and `bin/nextstep/m68k'.
    No other binary distributions have thus far been made publically
 available.
 
-Which Documentation Exists for R?
-=================================
+2.7 Which Documentation Exists for R?
+=====================================
 
    Online documentation for most of the functions and variables in R
 exists, and can be printed on-screen by typing `help(NAME)' (or `?NAME') at
@@ -243,11 +238,11 @@ is always available for web browsing at `http://stat.ethz.ch/R/manual/'.
 
    An R manual ("Notes on R:  A Programming Environment for Data Analysis
 and Graphics") is currently being written, based on the "Notes on S-PLUS"
-by Bill Venables <venables@stats.adelaide.edu.au> and
-David Smith <D.M.Smith@lancaster.ac.uk>.  The current version can be
-obtained as `Rnotes.tgz' (LaTeX source) in a CRAN `doc' directory.  Note
-that the "conversion" from S(-PLUS) to R is not complete yet.  Further
-documentation on R and the R API are currently being written.
+by Bill Venables <venables@stats.adelaide.edu.au> and David Smith
+<D.M.Smith@lancaster.ac.uk>.  The current version can be obtained as
+`Rnotes.tgz' (LaTeX source) in a CRAN `doc' directory.  Note that the
+"conversion" from S(-PLUS) to R is not complete yet.  Further documentation
+on R and the R API are currently being written.
 
    In the absence of an R manual, documentation for S/S-PLUS (see *Note R
 and S::) can be used in combination with this FAQ (*note What Are the
@@ -283,8 +278,8 @@ implementing R is described in:
 
 This is also the reference for R to use in publications.
 
-Which Mailing Lists Exist for R?
-================================
+2.8 Which Mailing Lists Exist for R?
+====================================
 
    Thanks to Martin Maechler <maechler@stat.math.ethz.ch>, there are three
 mailing lists devoted to R.
@@ -336,8 +331,8 @@ archive of the lists are available via
    The R Core Team can be reached at <r-core@stat.math.ethz.ch> for
 comments and reports.
 
-What Is CRAN?
-=============
+2.9 What Is CRAN?
+=================
 
    The "Comprehensive R Archive Network" (CRAN) is a collection of sites
 which carry identical material, consisting of the R distribution(s), the
@@ -345,19 +340,19 @@ contributed extensions, documentation for R, and binaries.
 
    The CRAN master site can be found at the URL
 
-     `http://www.ci.tuwien.ac.at/R/'                (Austria)             
+     `http://www.ci.tuwien.ac.at/R/'                (Austria)
 
 and is currently being mirrored daily at
 
-     `http://SunSITE.auc.dk/R/'                     (Denmark)             
-     `http://www.stat.unipg.it/pub/stat/statlib/R/CRAN/'(Italy)               
-     `ftp://ftp.u-aizu.ac.jp/pub/lang/R/CRAN/'      (Japan)               
-     `ftp://dola.snu.ac.kr/pub/R/CRAN/'             (Korea)               
-     `http://stat.ethz.ch/CRAN/'                    (Switzerland)         
-     `http://www.stats.bris.ac.uk/R/'               (United Kingdom)      
-     `http://lib.stat.cmu.edu/R/CRAN/'              (USA/Pennsylvania)    
-     `ftp://ftp.biostat.washington.edu/mirrors/R/CRAN/'(USA/Washington)      
-     `http://cran.stat.wisc.edu/'                   (USA/Wisconsin)       
+     `http://SunSITE.auc.dk/R/'                     (Denmark)
+     `http://www.stat.unipg.it/pub/stat/statlib/R/CRAN/'(Italy)
+     `ftp://ftp.u-aizu.ac.jp/pub/lang/R/CRAN/'      (Japan)
+     `ftp://dola.snu.ac.kr/pub/R/CRAN/'             (Korea)
+     `http://stat.ethz.ch/CRAN/'                    (Switzerland)
+     `http://www.stats.bris.ac.uk/R/'               (United Kingdom)
+     `http://lib.stat.cmu.edu/R/CRAN/'              (USA/Pennsylvania)
+     `ftp://ftp.biostat.washington.edu/mirrors/R/CRAN/'(USA/Washington)
+     `http://cran.stat.wisc.edu/'                   (USA/Wisconsin)
 
    Please use the CRAN site closest to you to reduce network load.
 
@@ -376,11 +371,11 @@ existing mailing lists and the R Bug Tracking system.
      *Note:*  It is very important that you indicate the copyright
      (license) information (GPL, BSD, Artistic, ...) in your submission.
 
-R and S
-*******
+3 R and S
+*********
 
-What Is S?
-==========
+3.1 What Is S?
+==============
 
    S is a very high level language and an environment for data analysis and
 graphics.  S was written by Richard A. Becker, John M. Chambers, and Allan
@@ -391,20 +386,21 @@ R. Wilks of AT&T Bell Laboratories Statistics Research Department.
    * Richard A. Becker, John M. Chambers and Allan R. Wilks (1988), "The New
      S Language," Chapman & Hall, London.
 
-     This book is often called the "*Blue Book*".
+     This book is often called the "_Blue Book_".
 
    * John M. Chambers and Trevor J. Hastie (1992), "Statistical Models in
      S," Chapman & Hall, London.
 
-     This is also called the "*White Book*".
+     This is also called the "_White Book_".
 
    There is a huge amount of user-contributed code for S, available at the
 S Repository (http://lib.stat.cmu.edu) at CMU.
 
-   See the "Frequently Asked Questions about S" (http://lib.stat.cmu.edu/S/faq) for further information about S.
+   See the "Frequently Asked Questions about S"
+(http://lib.stat.cmu.edu/S/faq) for further information about S.
 
-What Is S-PLUS?
-===============
+3.2 What Is S-PLUS?
+===================
 
    S-PLUS is a value-added version of S sold by Statistical Sciences, Inc.
 (now a division of Mathsoft, Inc.).  S is a subset of S-PLUS, and hence
@@ -418,22 +414,22 @@ for wavelet analysis, spatial statistics, and design of experiments.
    See the MathSoft S-PLUS page (http://www.mathsoft.com/splus.html) for
 further information.
 
-What Are the Differences between R and S?
-=========================================
+3.3 What Are the Differences between R and S?
+=============================================
 
-Lexical Scoping
----------------
+3.3.1 Lexical Scoping
+---------------------
 
    Whereas the developers of R have tried to stick to the S language as
 defined in "The New S Language" (Blue Book, see *Note What Is S?::), they
 have adopted the evaluation model of Scheme.
 
-   This difference becomes manifest when *free* variables occur in a
+   This difference becomes manifest when _free_ variables occur in a
 function.  Free variables are those which are neither formal parameters
 (occurring in the argument list of the function) nor local variables
 (created by assigning to them in the body of the function).  Whereas S
-(like C) by default uses *static* scoping, R (like Scheme) has adopted
-*lexical* scoping.  This means the values of free variables are determined
+(like C) by default uses _static_ scoping, R (like Scheme) has adopted
+_lexical_ scoping.  This means the values of free variables are determined
 by a set of global variables in S, but in R by the bindings that were in
 effect at the time the function was created.
 
@@ -510,7 +506,7 @@ This seems to be the "natural" implementation, and it works because the
 free variables in the returned function can be looked up in the defining
 environment (this is lexical scope).
 
-   Note that what you really need is the function *closure*, i.e., the body
+   Note that what you really need is the function _closure_, i.e., the body
 along with all variable bindings needed for evaluating it.  Since in the
 above version, the free variables in the value function are not modified,
 you can actually use it in S as well if you abstract out the closure
@@ -577,7 +573,7 @@ memory and uses it to store the objects.  R performs its own memory
 management of this piece of memory.  Having everything in memory is
 necessary because it is not really possible to externally maintain all
 relevant "environments" of symbol/value pairs.  This difference also seems
-to make R *much faster* than S.
+to make R _much faster_ than S.
 
    The down side is that if R crashes you will lose all the work for the
 current session.  Saving and restoring the memory "images" (the functions
@@ -597,8 +593,8 @@ text files which can be read in using `source()'.
      conveniently manipulate it using `ess-transcript-mode', as well as
      save source copies of all functions and data used.
 
-Models
-------
+3.3.2 Models
+------------
 
    There are some differences in the modeling code, such as
 
@@ -621,8 +617,8 @@ Models
      model with no intercept.  Models with no parameters at all can be
      specified by `y~0'.
 
-Others
-------
+3.3.3 Others
+------------
 
    Apart from lexical scoping and its implications, R follows the S
 language definition in the Blue Book as much as possible, and hence really
@@ -661,11 +657,11 @@ being as compatible as possible with S.
      levels "T" or "F".)  Hence, when writing code you should always use
      `TRUE' and `FALSE'.
 
-   * In R, `dyn.load()' can only load *shared libraries*, as created for
+   * In R, `dyn.load()' can only load _shared libraries_, as created for
      example by `R SHLIB'.
 
    * Whereas in S, `abs(z)' is the same as `Mod(z)' for complex `z', in R
-     you *must* use `Mod(z)', since `abs()' is a function of real numbers
+     you _must_ use `Mod(z)', since `abs()' is a function of real numbers
      only.
 
    * In R, `attach()' currently only works for lists and data frames (not
@@ -731,14 +727,15 @@ being as compatible as possible with S.
      the loop.  In R it is local to the environment where the `for()'
      statement is executed.
 
+
    There are also differences which are not intentional, and result from
 missing or incorrect code in R.  The developers would appreciate hearing
 about any deficiencies you may find (in a written report fully documenting
 the difference as you see it).  Of course, it would be useful if you were
 to implement the change yourself and make sure it works.
 
-Is There Anything R Can Do that S-PLUS Cannot?
-==============================================
+3.4 Is There Anything R Can Do that S-PLUS Cannot?
+==================================================
 
    Since almost anything you can do in R has source code that you could
 port to S-PLUS with little effort there will never be much you can do in R
@@ -751,8 +748,8 @@ gamma correction for color, fixing aspect ratios, and, most importantly, it
 allows mathematics in plot texts.  Unfortunately, this feature still is
 mostly undocumented, but in a nutshell, "R has TeX inside".
 
-R Web Interfaces
-****************
+4 R Web Interfaces
+******************
 
    *Rcgi* is a CGI WWW interface to R by Mark J Ray <h089@mth.uea.ac.uk>.
 Recent version have the ability to use "embedded code": you can mix user
@@ -764,23 +761,25 @@ code is presented to the user for revision.
    Demo and download are available from
 `http://www.mth.uea.ac.uk/~h089/Rcgi/'.
 
-   *Rweb* is developed and maintained by Jeff Banfield <jeff@math.montana.edu>.  The Rweb Home Page (http://www.math.montana.edu/Rweb), provides
-access to all three versions of Rweb--a simple text entry form that returns
-output and graphs, a more sophisticated Javascript version that provides a
-multiple window environment, and a set of point and click modules that are
-useful for introductory statistics courses and require no knowledge of the
-R language.  All of the Rweb versions can analyze Web accessible datasets
-if a URL is provided.
+   *Rweb* is developed and maintained by Jeff Banfield
+<jeff@math.montana.edu>.  The Rweb Home Page
+(http://www.math.montana.edu/Rweb), provides access to all three versions
+of Rweb--a simple text entry form that returns output and graphs, a more
+sophisticated Javascript version that provides a multiple window
+environment, and a set of point and click modules that are useful for
+introductory statistics courses and require no knowledge of the R language.
+All of the Rweb versions can analyze Web accessible datasets if a URL is
+provided.
 
    A paper on Rweb, providing a detailed explanation of the different
 versions of Rweb and an overview of how Rweb works, will soon apper in the
 Journal of Statistical Software (`http://www.stat.ucla.edu/journals/jss/').
 
-R Add-On Packages
-*****************
+5 R Add-On Packages
+*******************
 
-Which Add-on Packages Exist for R?
-==================================
+5.1 Which Add-on Packages Exist for R?
+======================================
 
    The R distribution comes with the following extra packages:
 
@@ -812,6 +811,10 @@ Which Add-on Packages Exist for R?
 *RmSQL*
      An interface between R and the mSQL database system.
 
+*Rnotes*
+     The data sets for the exercises in Rnotes (*note Which Documentation
+     Exists for R?::.).
+
 *MASS*
      The main package from Venables and Ripley, "Modern Applied Statistics
      with S-Plus" (2nd edition).  Contains all data sets.  Some code does
@@ -823,7 +826,7 @@ Which Add-on Packages Exist for R?
      transformations.
 
 *akima*
-     An R implementation of the S-PLUS function `interp()'.
+     Linear or cubic spline interpolation for irregularly gridded data.
 
 *ash*
      Programs for 1D, 2D and 3D density estimation.
@@ -897,7 +900,7 @@ Which Add-on Packages Exist for R?
      Normal theory repeated measurements models.
 
 *integrate*
-     Code for adaptive quadrature.
+     Adaptive quadrature in up to 20 dimensions.
 
 *leaps*
      A package which performs an exhaustive search for the best subsets of a
@@ -949,8 +952,7 @@ Which Add-on Packages Exist for R?
      polynomial manipulations.
 
 *principal.curve*
-     Code for fitting a principal curve to a matrix of points in arbitrary
-     dimension.
+     Fits a principal curve to a matrix of points in arbitrary dimension.
 
 *pspline*
      Smoothing splines with penalties on order m derivatives.
@@ -1049,8 +1051,8 @@ additive hazards regression, which can be obtained from
    More code has been posted to the r-help mailing list, and can be
 obtained from the mailing list archive.
 
-How Can Add-on Packages Be Installed?
-=====================================
+5.2 How Can Add-on Packages Be Installed?
+=========================================
 
    (Unix only.)  The add-on packages on CRAN come as gzipped tar files
 (which may contain more than one package).  First "unpack" the files of
@@ -1082,8 +1084,8 @@ use a private tree in `$HOME/lib/R' and a public site-wide tree in
 
 into your (Bourne) shell profile.
 
-How Can Add-on Packages Be Used?
-================================
+5.3 How Can Add-on Packages Be Used?
+====================================
 
    To find out which additional packages are available on your system, type
 
@@ -1132,8 +1134,8 @@ at the R prompt.
 
      detach("package:PKG")
 
-How Can Add-on Packages Be Removed?
-===================================
+5.4 How Can Add-on Packages Be Removed?
+=======================================
 
    To remove the packages PKG_1, ..., PKG_N from the default library or the
 library LIB, do
@@ -1146,8 +1148,8 @@ or
 
 respectively.
 
-How Can I Create an R Package?
-==============================
+5.5 How Can I Create an R Package?
+==================================
 
    A package consists of a subdirectory containing the files `DESCRIPTION',
 `INDEX', and `TITLE', and the subdirectories `R', `data', `exec', `man' and
@@ -1185,7 +1187,7 @@ as this extension seems to be not used by any other software.  It should be
 possible to read in the files using `source()', so R objects must be
 created by assignments.  Note that there has to be no connection between
 the name of the file and the R objects created by it.  If necessary, one of
-these files (historically `zzz.R') should use `library.dynam()' *inside*
+these files (historically `zzz.R') should use `library.dynam()' _inside_
 `.First.lib()' to load compiled code.
 
    The `man' subdirectory should contain documentation files for the
@@ -1211,10 +1213,10 @@ any package, and still experimental.
    The web page `http://www.biostat.washington.edu/~thomas/Rlib.html'
 maintained by Thomas Lumley provides information on porting S packages to R.
 
-   *Note What Is CRAN?:: for information on uploading a package to CRAN.
+   *Note What Is CRAN?::, for information on uploading a package to CRAN.
 
-How Can I Contribute to R?
-==========================
+5.6 How Can I Contribute to R?
+==============================
 
    R is currently still in alpha (or pre-alpha) state, so simply using it
 and communicating problems is certainly of great value.
@@ -1231,11 +1233,11 @@ be worth porting to R.
    If you are interested in working on any of these projects, please notify
 Kurt Hornik <Kurt.Hornik@ci.tuwien.ac.at>.
 
-R and Emacs
-***********
+6 R and Emacs
+*************
 
-Is there Emacs Support for R?
-=============================
+6.1 Is there Emacs Support for R?
+=================================
 
    There is an Emacs-Lisp interface for interactive statistical programming
 and data analysis called ESS ("Emacs Speaks Statistics").  Languages
@@ -1273,10 +1275,10 @@ or via CRAN.  The HTML version of the documentation can be found at
 
    ESS comes with detailed installation instructions.
 
-Should I Run R from Within Emacs?
-=================================
+6.2 Should I Run R from Within Emacs?
+=====================================
 
-   Yes, *definitely*.  Inferior R mode provides a readline/history
+   Yes, _definitely_.  Inferior R mode provides a readline/history
 mechanism, object name completion, and syntax-based highlighting of the
 interaction buffer using Font Lock mode, as well as a very convenient
 interface to the R help system.
@@ -1296,13 +1298,13 @@ M-x R' for starting R.  This prompts you for the arguments; in particular,
 you can increase the memory size this way (*note Why Does R Run out of
 Memory?::.).
 
-R Miscellania
-*************
+7 R Miscellania
+***************
 
-Why Does R Run out of Memory?
-=============================
+7.1 Why Does R Run out of Memory?
+=================================
 
-   R (currently) uses a *static* memory model.  This means that when it
+   R (currently) uses a _static_ memory model.  This means that when it
 starts up, it asks the operating system to reserve a fixed amount of memory
 for it.  The size of this chunk cannot be changed subsequently.  Hence, it
 can happen that not enough memory was allocated, e.g., when trying to read
@@ -1343,8 +1345,8 @@ than anticipated, because the file is first read in as one long string
 which is then split again.  Use `scan()' if possible in case you run out of
 memory when reading in a large table.
 
-Why Does Sourcing a Correct File Fail?
-======================================
+7.2 Why Does Sourcing a Correct File Fail?
+==========================================
 
    R sometimes has problems parsing a file which does not end in a newline.
 This can happen for example when Emacs is used for editing the file and
@@ -1356,8 +1358,8 @@ for editing R source files (which locally ensures this setting).
    Earlier R versions had a similar problem when reading in data files, but
 this should have been taken care of now.
 
-How Can I Set Components of a List to NULL?
-===========================================
+7.3 How Can I Set Components of a List to NULL?
+===============================================
 
    You can use
 
@@ -1370,24 +1372,24 @@ remove the corresponding component from the list.
    For dropping the row names of a matrix `x', it may be easier to use
 `rownames(x) <- NULL', similarly for column names.
 
-How Can I Save My Workspace?
-============================
+7.4 How Can I Save My Workspace?
+================================
 
    `save.image()' saves the objects in the user's `.GlobalEnv' to the file
 `.RData' in the R startup directory.  (This is also what happens after
 `q("yes")'.)  Using `save.image(FILE)' one can save the image under a
 different name.
 
-How Can I Clean Up My Workspace?
-================================
+7.5 How Can I Clean Up My Workspace?
+====================================
 
    To remove all objects in the currently active environment (typically
 `.GlobalEnv'), you can do
 
      rm(list = ls())
 
-How Can I Get eval() and D() to Work?
-=====================================
+7.6 How Can I Get eval() and D() to Work?
+=========================================
 
    Strange things will happen if you use `eval(print(x), envir = e)' or
 `D(x^2, "x")'.  The first one will either tell you that "`x'" is not found,
@@ -1418,15 +1420,15 @@ or
 
    See the help pages for more examples.
 
-Why Do My Matrices Lose Dimensions?
-===================================
+7.7 Why Do My Matrices Lose Dimensions?
+=======================================
 
    When a matrix with a single row or column is created by a subscripting
 operation, e.g., `row <- mat[2, ]', it is by default turned into a vector.
 In a similar way if an array with dimension, say, 2 x 3 x 1 x 4 is created
 by subscripting it will be coerced into a 2 x 3 x 4 array, losing the
 unnecessary dimension.  After much discussion this has been determined to
-be a *feature*.
+be a _feature_.
 
    To prevent this happening, add the option `drop = FALSE' to the
 subscripting. For example,
@@ -1445,8 +1447,8 @@ will return a vector rather than a matrix if `index' happens to have length
 
      somerows <- mat[index, , drop = FALSE]
 
-How Does Autoloading Work?
-==========================
+7.8 How Does Autoloading Work?
+==============================
 
    R has a special environment called `.AutoloadEnv'.  Using
 `autoload(NAME, PKG)', where NAME and PKG are strings giving the names of
@@ -1459,8 +1461,8 @@ does not occupy memory (yet).
 
    See the help page for `autoload()' for a very nice example.
 
-How Should I Set Options?
-=========================
+7.9 How Should I Set Options?
+=============================
 
    The function `options()' allows setting and examining a variety of
 global "options" which affect the way in which R computes and displays its
@@ -1486,13 +1488,13 @@ we obtain:
      R> test2()
      3 3.141593
 
-   What is really used is the *global* value of `.Options', and using
+   What is really used is the _global_ value of `.Options', and using
 `options(OPT = VAL)' correctly updates it.  Local copies of `.Options',
 either in `.GlobalEnv' or in a function environment (frame), are just
 silently disregarded.
 
-How Do File Names Work in Windows?
-==================================
+7.10 How Do File Names Work in Windows?
+=======================================
 
    As R uses C-style string handling, `\' is treated as an escape
 character, so that for example one can enter a newline as `\n'.  When you
@@ -1501,8 +1503,8 @@ really need a `\', you have to escape it with another `\'.
    Thus, in filenames use something like `"c:\\data\\money.dat"'.  You can
 also rotate `\' by 90 degrees (`"c:/data/money.dat"').
 
-Why Does Plotting Give a Color Allocation Error?
-================================================
+7.11 Why Does Plotting Give a Color Allocation Error?
+=====================================================
 
    Sometimes plotting, e.g., when running `demo(image)', results in "Error:
 color allocation error".  This is an X problem, and only indirectly related
@@ -1515,23 +1517,23 @@ the problem occurs when Netscape is running, try (re)starting it with
 either the `-no-install' (to use the default colormap) or the `-install'
 (to install a private colormap) option.
 
-R Programming
-*************
+8 R Programming
+***************
 
-How Should I Write Summary Methods?
-===================================
+8.1 How Should I Write Summary Methods?
+=======================================
 
    Suppose you want to provide a summary method for class `foo'.  Then
 `summary.foo()' should not print anything, but return an object of class
-`summary.foo', *and* you should write a method `print.summary.foo()' which
+`summary.foo', _and_ you should write a method `print.summary.foo()' which
 nicely prints the summary information and invisibly returns its object.
 This approach is preferred over having `summary.foo()' print summary
 information and return something useful, as sometimes you need to grab
 something computed by `summary()' inside a function or similar.  In such
 cases you don't want anything printed.
 
-How Can I Debug Dynamically Loaded Code?
-========================================
+8.2 How Can I Debug Dynamically Loaded Code?
+============================================
 
    According to Doug Bates, the secret of symbolic debugging of dynamically
 loaded code is to
@@ -1565,8 +1567,8 @@ for the source, e.g. as follows:
      dir /usr/lib/R/src/nmath
      dir /usr/lib/R/src/unix
 
-How Can I Inspect R Objects When Debugging?
-===========================================
+8.3 How Can I Inspect R Objects When Debugging?
+===============================================
 
    In the C implementation underlying R, all objects are so-called SEXPs
 (from Lisp's "S-expressions" which comes from "symbolic expression"), which
@@ -1634,11 +1636,11 @@ needs to go "deeper":
      (gdb) p $1->u.vecsxp.type.s[1]->u.vecsxp.type.i[1]
      $7 = 5
 
-R Bugs
-******
+9 R Bugs
+********
 
-What Is a Bug?
-==============
+9.1 What Is a Bug?
+==================
 
    If R executes an illegal instruction, or dies with an operating system
 error message that indicates a problem in the program (as opposed to
@@ -1649,7 +1651,7 @@ is not a bug.
 
    Taking forever to complete a command can be a bug, but you must make
 certain that it was really R's fault.  Some commands simply take a long
-time.  If the input was such that you *know* it should have been processed
+time.  If the input was such that you _know_ it should have been processed
 quickly, report a bug.  If you don't know whether the command should take a
 long time, find out by looking in the manual or by asking for assistance.
 
@@ -1677,8 +1679,8 @@ don't need to report this.
    If the online argument list of a function disagrees with the manual, one
 of them must be wrong, so report the bug.
 
-How to Report a Bug
-===================
+9.2 How to Report a Bug
+=======================
 
    When you decide that there is a bug, it is important to report it and to
 report it in a way which is useful.  What is most useful is an exact
@@ -1687,7 +1689,7 @@ run R, until the problem happens.  Always include the version of R,
 machine, and operating system that you are using; type `version' in R to
 print this.
 
-   The most important principle in reporting a bug is to report *facts*,
+   The most important principle in reporting a bug is to report _facts_,
 not hypotheses or categorizations.  It is always easier to report the
 facts, but people seem to prefer to strain to posit explanations and report
 them instead.  If the explanations are based on guesses about how R is
@@ -1728,8 +1730,8 @@ sends the bug to the correct address.  Alternatively the bug report can be
 emailed to <r-bugs@biostat.ku.dk> or submitted to the Web page at
 `http://r-bugs.biostat.ku.dk'.
 
-Acknowledgments
-***************
+10 Acknowledgments
+******************
 
    Of course, many many thanks to Robert and Ross for the R system, and to
 the package writers and porters for adding to it.
