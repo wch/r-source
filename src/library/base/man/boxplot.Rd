@@ -16,6 +16,9 @@ boxplot(x, \dots)
     (\code{\link{boxplot.default}}) and a formula interface
     (\code{\link{boxplot.formula}}).
 }
+\value{
+  See the help for \code{\link{boxplot.default}}.
+}
 \seealso{
     \code{\link{boxplot.default}},
     \code{\link{boxplot.formula}}.
