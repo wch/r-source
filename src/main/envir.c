@@ -537,13 +537,20 @@ SEXP findVar1(SEXP symbol, SEXP rho, SEXPTYPE mode, int inherits)
 {
     SEXP vl;
     while (rho != R_NilValue) {
-	vl = findVarInFrame(rho, symbol);
+	vl = findVarInFrame(rho, symbol);	    
+	
 	if (vl != R_UnboundValue) {
-	    if (mode == ANYSXP || TYPEOF(vl) == mode) return vl;
+	    if (mode == ANYSXP) return vl;
+	    if (TYPEOF(vl) == PROMSXP) {
+	        PROTECT(vl);
+	        vl = eval(vl, rho);
+		UNPROTECT(1);
+	    }
+	    if (TYPEOF(vl) == mode) return vl;
 	    if (mode == FUNSXP && (TYPEOF(vl) == CLOSXP ||
 				   TYPEOF(vl) == BUILTINSXP ||
 				   TYPEOF(vl) == SPECIALSXP))
-		return (vl);
+	        return (vl);
 	}
 	if (inherits)
 	    rho = ENCLOS(rho);
