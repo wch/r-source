@@ -2,6 +2,9 @@
 \alias{cor.test}
 \alias{cor.test.default}
 \alias{cor.test.formula}
+\concept{Kendall correlation coefficient}
+\concept{Pearson correlation coefficient}
+\concept{Spearman correlation coefficient}
 \title{Test for Association/Correlation Between Paired Samples}
 \description{
   Test for association between paired samples, using one of
