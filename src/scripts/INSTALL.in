@@ -74,7 +74,7 @@ while test -n "${1}"; do
       if test -f "${1}"; then
         mkdir -p ${TMPDIR}
 	PKGNAME=`basename "${1}"`
-	PKGNAME=`echo -n "${PKGNAME}" | sed 's/_.*//'`
+	PKGNAME=`echo "${PKGNAME}" | sed 's/_.*//'`
 	gzip -dc "${1}" | (cd ${TMPDIR} && tar -xf -)
 	if test -d "${TMPDIR}/${PKGNAME}"; then
 	  PKGS="${PKGS} \"`cd "${TMPDIR}/${PKGNAME}"; pwd`\""
@@ -245,6 +245,7 @@ do_install () {
 eval "for pkg in ${PKGS}; do do_install \"\${pkg}\"; done"
 
 if test -d "${TMPDIR}"; then
+  cd /
   rm -rf "${TMPDIR}"
 fi
 
