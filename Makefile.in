@@ -155,6 +155,6 @@ info:
 
 TAGS:
 
-check test:: test-Examples
+check test:: test-All
 test-All test-Examples::
 	-@(cd tests && $(MAKE) $@)
