@@ -12,6 +12,18 @@ Added Rgui script editor by Chris Jackson.
 Changed preferences menu "Finish" to "OK".
 
 
+
+rw1091
+======
+
+Installing a package with a saved image was not exiting on an error
+making the image (PR#6769).
+
+Installing a package which failed did not return an error code from
+Rcmd INSTALL (PR#6768).
+
+
+
 rw1090
 ======
 
