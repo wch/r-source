@@ -6,7 +6,7 @@ if test -n "${R_HOME}" && \
    test "${R_HOME}" != "${R_HOME_DIR}"; then
   echo "WARNING: ignoring environment value of R_HOME"
 fi
-R_HOME=${R_HOME_DIR}
+R_HOME="${R_HOME_DIR}"
 export R_HOME
 
 ## NOTE:
@@ -89,6 +89,11 @@ You are welcome to redistribute it under the terms of the GNU
 General Public License.  For more information about these matters,
 see http://www.gnu.org/copyleft/gpl.html."
 
+function error () {
+  echo "ERROR: $*" >&2
+  exit 1
+}
+
 ### Argument loop
 args=
 debugger=
@@ -103,15 +108,13 @@ while test -n "${1}"; do
       shift;
       exec sh "${R_HOME}/bin/Rcmd" "${@}" ;;
     --gnome)
-      echo "ERROR: option '${1}' is defunct, use '--gui=gnome'"
-      exit 1
+      error "option '${1}' is defunct, use '--gui=gnome'"
       ;;
     -d|--debugger)
       if test -n "`echo ${2} | sed 's/^-.*//'`"; then      
 	debugger="${2}"; shift
       else
-	echo "ERROR: option '${1}' requires an argument"
-	exit 1
+	error "option '${1}' requires an argument"
       fi
       ;;
     --debugger=*)
@@ -133,17 +136,19 @@ done
 if test -x "${R_HOME}"; then
   :
 else
-  echo "R_HOME ('${R_HOME}') not found"
-  exit 1
+  error "R_HOME ('${R_HOME}') not found"
 fi
 
 ## Create a per-session dir
-R_SESSION_TMPDIR=${TMPDIR-/tmp}/Rtmp$$
+: ${TMPDIR=/tmp}
+{ tmp=`(umask 077 && mktemp -d -q "${TMPDIR}/RtmpXXXXXX") 2>/dev/null` \
+    && test -n "${tmp}" && test -d "${tmp}" ; } ||
+  { test -n "${RANDOM}" && tmp=${TMPDIR}/Rtmp$$-${RANDOM} \
+      && (umask 077 && mkdir "${tmp}") ; } ||
+  { tmp=${TMPDIR}/Rtmp$$ && (umask 077 && mkdir "${tmp}") ; } ||
+  error "cannot create temporary R session directory"
+R_SESSION_TMPDIR="${tmp}"
 export R_SESSION_TMPDIR
-if test -n "${R_SESSION_TMPDIR}"; then
-  rm -rf "${R_SESSION_TMPDIR}"
-fi
-mkdir "${R_SESSION_TMPDIR}"
 
 ## Startup
 R_binary="${R_HOME}/bin/R.bin"
