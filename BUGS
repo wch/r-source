@@ -273,3 +273,7 @@ Date: Tue, 16 Nov 1999 15:21:34 +0100 (MET)
 Subject: 大量供应黄玉石
 From: "superabcd" <superabcd@21cn.com>
 Date: Fri, 19 Nov 1999 18:51:24
+* PR# 330 *
+Subject: seg.fault: 'print(aggregate(),n)' (digits= omitted)
+From: Rashid Nassar <rnassar@duke.edu>
+Date: Sat, 20 Nov 1999 13:22:21 -0500 (EST)
