@@ -175,6 +175,7 @@ DL_FUNC Rf_lookupCachedSymbol(const char *name, const char *pkg, int all);
 
 Rf_DotCSymbol *Rf_lookupRegisteredCSymbol(DllInfo *info, const char *name);
 Rf_DotCallSymbol *Rf_lookupRegisteredCallSymbol(DllInfo *info, const char *name);
+DllInfo *R_RegisterDLL(HINSTANCE *handle, const char *path);
 
 #ifdef __cplusplus
 }
