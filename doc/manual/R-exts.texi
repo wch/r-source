@@ -3510,7 +3510,7 @@ or a format string followed by arguments separated by commas.
 @cindex Error handling from FORTRAN
 
 There are two interface function provided to call @code{error} and
-@code{warning} from Fortran code, in each case with a simple character
+@code{warning} from FORTRAN code, in each case with a simple character
 string argument. They are defined as
 @example
 subroutine rexit(@var{message})
@@ -4013,15 +4013,16 @@ column number of the maximal element in the @var{i}-th row (the same as
 @R{}'s @code{max.col()} function).
 @end deftypefun
 
-@deftypefun int findIntervall(double* @var{xt}, int @var{n}, double @var{x}, Rboolean @var{rightmost_closed}, Rboolean @var{all_inside}, int @var{ilo}, int* @var{mflag})
-Given the ordered vector @var{xt} of length @var{n}, return the
-interval or index of @var{x} in @code{xt[]}, typically
-max(i ; 1 <= i <= n & xt[i] <= x ) where we use 1-indexing as in @R{}
-and Fortran (but not C).  If @var{rightmost_closed} is
-true, also returns n-1 if x == xt[n]. If @var{all_inside} is not 0,
-the result is coerced to lie in @code{1:(n-1)} even when @var{x} is
-outside the xt[] range.  On return, *mflag = -1 if x < xt[1],
- *mflag = +1 if x >= xt[n], and *mflag = 0 otherwise.
+@deftypefun int findIntervall (double* @var{xt}, int @var{n}, double @var{x}, Rboolean @var{rightmost_closed}, Rboolean @var{all_inside}, int @var{ilo}, int* @var{mflag})
+Given the ordered vector @var{xt} of length @var{n}, return the interval
+or index of @var{x} in @code{@var{xt}[]}, typically max(i ; 1 <= i <=
+@var{n} & @var{xt}[i] <= @var{x}) where we use 1-indexing as in @R{} and
+FORTRAN (but not C).  If @var{rightmost_closed} is true, also returns
+@var{n}-1 if @var{x} == @var{xt}[n].  If @var{all_inside} is not 0, the
+result is coerced to lie in @code{1:(@var{n}-1)} even when @var{x} is
+outside the @var{xt}[] range.  On return, @code{*@var{mflag}} = -1 if
+@var{x} < @var{xt}[1], @code{*@var{mflag}} = +1 if @var{x} >=
+@var{xt}[@var{n}], and @code{*@var{mflag}} = 0 otherwise.
 
 The algorithm is particularly fast when @var{ilo} is set to the last
 result of @code{interv()} and @var{x} is a value of a sequence which
