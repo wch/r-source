@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 2001--2003  The R Development Core Team.
- *  Copyright (C) 2003-4      The R Foundation
+ *  Copyright (C) 2003-5      The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -373,8 +373,8 @@ static SEXP modLa_zgesv(SEXP A, SEXP Bin)
     Memcpy(avals, COMPLEX(A), (size_t) (n * n));
     F77_CALL(zgesv)(&n, &p, avals, &n, ipiv, COMPLEX(B), &n, &info);
     if (info < 0)
-	error(_("argument %d of Lapack routine zgesv had illegal value"),
-	      -info);
+	error(_("argument %d of Lapack routine %s had illegal value"),
+	      -info, "zgesv");
     if (info > 0)
 	error(("Lapack routine zgesv: system is exactly singular"));
     UNPROTECT(1);
@@ -711,7 +711,8 @@ static SEXP modLa_chol(SEXP A)
 	    if (i > 0)
 		error(_("the leading minor of order %d is not positive definite"),
 		      i);
-	    error(_("argument no. %d to Lapack routine dpotrf is illegal"), -i);
+	    error(_("argument %d of Lapack routine %s had illegal value"), 
+		  -i, "dpotrf");
 	}
 	unprotect(1);
 	return ans;
@@ -744,7 +745,8 @@ static SEXP modLa_chol2inv(SEXP A, SEXP size)
 	if (i != 0) {
 	    if (i > 0)
 		error(_("element (%d, %d) is zero, so the inverse cannot be computed"), i, i);
-	    error(_("argument no. %d to Lapack routine dpotri is illegal"), -i);
+	    error(_("argument %d of Lapack routine %s had illegal value"), 
+		  -i, "dpotri");
 	}
 	for (j = 0; j < sz; j++) {
 	    for (i = j+1; i < sz; i++)
@@ -788,8 +790,8 @@ static SEXP modLa_dgesv(SEXP A, SEXP Bin, SEXP tolin)
     Memcpy(avals, REAL(A), (size_t) (n * n));
     F77_CALL(dgesv)(&n, &p, avals, &n, ipiv, REAL(B), &n, &info);
     if (info < 0)
-	error(_("argument %d of Lapack routine dgesv had illegal value")
-	      , -info);
+	error(_("argument %d of Lapack routine %s had illegal value"),
+	      -info, "dgesv");
     if (info > 0)
 	error(_("Lapack routine dgesv: system is exactly singular"));
     anorm = F77_CALL(dlange)("1", &n, &n, REAL(A), &n, (double*) NULL);
@@ -927,7 +929,7 @@ static SEXP moddet_ge_real(SEXP Ain, SEXP logarithm)
     SEXP val, nm, A;
 
     if (!(isMatrix(Ain) && isReal(Ain)))
-	error(_("A must be a real matrix"));
+	error(_("A must be a numeric matrix"));
     useLog = asLogical(logarithm);
     if (useLog == NA_LOGICAL) error(_("argument logarithm must be logical"));
     PROTECT(A = duplicate(Ain));
