@@ -4,7 +4,7 @@
 *  -- LAPACK driver routine (version 3.0) --
 *     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
 *     Courant Institute, Argonne National Lab, and Rice University
-*     June 30, 1999
+*     December 8, 1999
 *
 *     .. Scalar Arguments ..
       CHARACTER          JOBVL, JOBVR
@@ -176,8 +176,7 @@
 *       the worst case.)
 *
       MINWRK = 1
-      IF( INFO.EQ.0 ) THEN
-c      IF( INFO.EQ.0 .AND. LWORK.GE.1 ) THEN
+      IF( INFO.EQ.0 .AND. ( LWORK.GE.1 .OR. LQUERY ) ) THEN
          MAXWRK = 2*N + N*ILAENV( 1, 'DGEHRD', ' ', N, 1, N, 0 )
          IF( ( .NOT.WANTVL ) .AND. ( .NOT.WANTVR ) ) THEN
             MINWRK = MAX( 1, 3*N )

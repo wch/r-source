@@ -11,8 +11,9 @@ cmplxblas.f contains BLAS routines needed by cmplx.f: it is not used
 if a full BLAS implementation is found at configure time.
 
 rgeev.f is a corrected (lines 180-1) version of dgeev.f, to allow
-LWORK queries to run.  It calls dlange, which is missing in
-libsunperf, so a copy of that is included.
+LWORK queries to run.  (Late versions of dgeev.f are corrected.)  It
+calls dlange, which is missing in libsunperf, so a copy of that is
+included.
 
 The routines dsyev and dsyevr have their names remapped to r* unless
 HAVE_LAPACK is defined.  This ensures that the versions in double.f
