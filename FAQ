@@ -1282,6 +1282,13 @@ or via CRAN.  The HTML version of the documentation can be found at
 
    ESS comes with detailed installation instructions.
 
+   For help with ESS, send email to <ESS-help@stat.ethz.ch>.
+
+   Please send bug reports and suggestions on ESS to
+<ESS-bugs@stat.math.ethz.ch>.  The easiest way to do this from is within
+Emacs by typing `M-x ess-submit-bug-report' or using the [ESS] or [iESS]
+pulldown menus.
+
 6.2 Should I Run R from Within Emacs?
 =====================================
 
@@ -1736,6 +1743,9 @@ ensures that the site profile and saved data files are not read.
 sends the bug to the correct address.  Alternatively the bug report can be
 emailed to <r-bugs@biostat.ku.dk> or submitted to the Web page at
 `http://r-bugs.biostat.ku.dk'.
+
+   Bug reports on contributed packages should perhaps be sent to the
+package maintainer rather than to r-bugs.
 
 10 Acknowledgments
 ******************
