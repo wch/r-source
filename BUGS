@@ -308,3 +308,7 @@ Date: Wed, 25 Aug 1999 10:00:19 +0100 (BST)
 Subject:  dimnames names lost when subscripting 
 From: Andreas Weingessel <weingessel@ci.tuwien.ac.at>
 Date: Wed, 25 Aug 1999 12:45:28 +0200
+* PR# 258 *
+Subject: Greek letters in outer margins.
+From: "BXC (Bendix Carstensen)" <BXC@NOVO.dk>
+Date: Thu, 26 Aug 1999 12:09:17 +0200
