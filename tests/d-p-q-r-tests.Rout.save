@@ -1,6 +1,6 @@
 
 R : Copyright 2000, The R Development Core Team
-Version 1.2.0 Under development (unstable) (2000-08-25)
+Version 1.2.0 Under development (unstable) (2000-11-06)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -168,6 +168,11 @@ Warning messages:
 > 
 > 
 > ##--- Normal (& Lognormal) :
+> 
+> qnorm(0) == -Inf && qnorm(-Inf, log = TRUE) == -Inf
+[1] TRUE
+> qnorm(1) ==  Inf && qnorm(0, log = TRUE) == Inf
+[1] TRUE
 > 
 > ## 3 Test data from Wichura (1988) :
 > all.equal(qnorm(c( 0.25,  .001,	 1e-20)),
@@ -679,5 +684,5 @@ Warning messages:
 [1] TRUE
 > 
 > cat("Time elapsed: ", proc.time() - .ptime,"\n")
-Time elapsed:  8.35 0.17 8.53 0 0 
+Time elapsed:  7.45 0.22 7.67 0 0 
 > 

@@ -434,7 +434,7 @@ BUG FIXES
 	needed, so e.g. dev.print(file="junk.ps", horizontal=F) will
 	work (previously =FALSE was needed).
 
-
+    o	qnorm(0) and qnorm(1) now give -/+ Inf (again!).
 
 
 	**************************************************

@@ -175,10 +175,11 @@ double qnorm5(double p, double mu, double sigma, int lower_tail, int log_p)
 	else
 	    r = p_;/* = R_DT_Iv(p) ^=  p */
 
-/*      if (r <= 0.) { /.* p = 0 or 1 {or outside}; should return - or + Inf *./
- *             *ifault = 1; return 0.;
- *      }
- */
+	if (r <= 0.) { /* p = 0 or 1 {outside has been taken care!} */
+	    ML_ERROR(ME_RANGE);
+	    if(q < 0.)	return ML_NEGINF;
+	    else	return ML_POSINF;
+	}
 
 	r = sqrt(- ((log_p &&
 		     ((lower_tail && q <= 0) || (!lower_tail && q > 0))) ?
