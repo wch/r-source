@@ -18,13 +18,13 @@ as <-
     if(is.null(asMethod)) {
         sig <-  c(from=thisClass, to = Class)
         packageSlot(sig) <- where
-        canCache <- TRUE
-        if(is.null(coerceFun))
-            browser()
+        ## try first for an explicit (not inherited) method
+        ## ?? Can this ever succeed if .quickCoerceSelect failed?
         asMethod <- selectMethod("coerce", sig, TRUE,
-                                 c(from = TRUE, to = FALSE), #optional, no inheritance
+                                 FALSE, #optional, no inheritance
                                  fdef = coerceFun, mlist = coerceMethods)
         if(is.null(asMethod)) {
+            canCache <- TRUE
             if(is(object, Class)) {
                 ClassDef <- getClassDef(Class, where)
                 ## use the ext information, computed or supplied
@@ -43,12 +43,16 @@ as <-
                 ClassDef <- getClassDef(Class, where)
                 asMethod <- .asFromReplace(thisClass, Class, ClassDef, where)
             }
+            ## if none of these applies, look for an inherited method
+            ## but only on the from argument
             if(is.null(asMethod))
-                asMethod <- selectMethod("coerce", sig, TRUE, c(from = TRUE, to = FALSE))
+                asMethod <- selectMethod("coerce", sig, TRUE,
+                                         c(from = TRUE, to = FALSE),
+                                         fdef = coerceFun, mlist = coerceMethods)
+            ## cache in the coerce function's environment
+            if(canCache && !is.null(asMethod))
+                cacheMethod("coerce", sig, asMethod, fdef = coerceFun)
         }
-        ## cache for next call
-        if(canCache && !is.null(asMethod))
-            cacheMethod("coerce", sig, asMethod, fdef = coerceFun)
     }
     if(is.null(asMethod))
         stop(paste("No method or default for coercing \"", thisClass,
@@ -84,9 +88,9 @@ as <-
     replaceMethod <- elNamed(ClassDef@contains, fromClass)
     if(is(replaceMethod, "SClassExtension") &&
        !identical(as(replaceMethod@replace, "function"), .ErrorReplace)) {
-        f <- .ErrorReplace
+        f <- function(from, to) NULL
         body(f, envir = where) <-
-            substitute({obj <- new(TOCLASS); as(obj, FROMCLASS) <- value; obj},
+            substitute({obj <- new(TOCLASS); as(obj, FROMCLASS) <- from; obj},
                        list(FROMCLASS = fromClass, TOCLASS = toClass))
         f
     }
@@ -295,4 +299,37 @@ setAs <-
     f <- .simpleExtCoerce
     body(f, envir = where) <- value
     f
+}
+
+## check for and remove a previous coerce method.  Called from setIs
+## We warn if the previous method seems to be from a
+## setAs(), indicating a conflicting setIs() A previous
+## version of setIs is OK, but we remove the methods anyway to be safe.
+## Definitions are only removed from the current function's environment,
+## not from a permanent copy.
+.removePreviousCoerce <- function(from, to, where, prevIs) {
+    sig <- c(from, to)
+    cdef <- getGeneric("coerce", where = where)
+    if(is.null(cdef))
+        return(FALSE) # only for booting the methods package?
+    prevCoerce <- !is.null(selectMethod("coerce", sig, TRUE, FALSE,
+                                      fdef = cdef))
+    rdef <- getGeneric("coerce<-", where = where)
+    if(is.null(rdef))
+        return(FALSE) # only for booting the methods package?
+    prevRepl <- !is.null(selectMethod("coerce<-", sig, TRUE, FALSE,
+                                      fdef = rdef))
+    if(prevCoerce || prevRepl) {
+        if(!prevIs)
+            warning("Methods currently exist for coercing from \"", from,
+                    "\" to \"", to, "\"; they will be replaced.")
+        if(prevCoerce)
+            setMethod(cdef, sig, NULL, where = NULL)
+        if(prevRepl)
+            setMethod(rdef, sig, NULL, where = NULL)
+        TRUE
+    }
+    else
+        FALSE
+    
 }

@@ -108,6 +108,8 @@ setIs <-
     if(classDef@sealed && !isClassUnion(classDef2))
         stop("Class \"", class1,
              "\" is sealed; new superclasses can not be defined, except by setClassUnion")
+    prevIs <- !identical(possibleExtends(class1, class2,classDef, classDef2),
+                         FALSE) # used in checking for previous coerce
     if(is.null(extensionObject))
         obj <- makeExtends(class1, class2, coerce, test, replace, by,
                            classDef1 = classDef, classDef2 = classDef2,
@@ -134,6 +136,7 @@ setIs <-
                 classDef2@subclasses <- completeSubclasses(classDef2, class1, obj, where)
             assignClassDef(class2, classDef2, where2)
         }
+        .removePreviousCoerce(class1, class2, where, prevIs)
     }
     invisible(classDef)
 }
