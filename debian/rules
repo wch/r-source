@@ -55,7 +55,7 @@ binary-arch: build
 	      $(debtmp)/usr/lib/R/library/base/latex/license.tex	\
 	      $(debtmp)/usr/lib/R/COPYING  
 	dh_installdocs BUGS Y2K 
-	dh_installinfo doc/manual/R-*.info*
+	dh_installinfo -n doc/manual/R-*.info*
 	(cd $(debdoc)/doc && ln -s ../../../../lib/R/doc/html .)
 	(cd $(debdoc) && ln -s ../../../lib/R/library .)
 	dh_installmenu

@@ -6,6 +6,11 @@
 set -e
 
 #DEBHELPER#
+
+    
+install-info --quiet --section "Programming" "R-FAQ" /usr/share/info/R-FAQ.info
+install-info --quiet --section "Programming" "R-exts" /usr/share/info/R-exts.info
+install-info --quiet --section "Programming" "R-intro" /usr/share/info/R-intro.info
     
 if [ -x /usr/bin/update-menus ] ; then update-menus ; fi
 

@@ -1,8 +1,10 @@
-r-base (1.0.0-0) unstable; urgency=low
+r-base (1.0.0-1) unstable; urgency=low
 
-  * Test builds for the 1.0.0 release
+  * New upstream version
+  * Fixed names of info files, readline support (Closes: #57774)
+  * Added pdf files to doc directory (Closes: #20227)
 
- -- Douglas Bates <bates@stat.wisc.edu>  Tues, 29 Feb 2000 10:15:15 -0600
+ -- Douglas Bates <bates@stat.wisc.edu>  Thu,  9 Mar 2000 16:28:29 -0600
 
 r-base (0.99.0-2) unstable; urgency=low
 
