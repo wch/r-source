@@ -64,6 +64,14 @@ Man-plotmath.ps: Man.dvi
 	dvips -f $< -pp5-6 -S 2   -i -o $@
 	b=`basename $@ .ps`; rm -f $$b.001; mv $$b.002 $@
 
+Man_2on1.dvi: Man.dvi
+	-dvidvi -m "2:0,1(21.1cm,0)" $^ $@
+Man.ps-2: Man_2on1.dvi
+	-dvips $^ -x 707 -t landscape -O -0.69cm,-0.70cm -o $@
+Man-index.ps-2: Man.ps-2
+	P=`perl -ne 'next unless /\bbop\b.*\bIndex\b/; @_=split; printf "%s\n", int(.5+$$_[1]/2)' Man.ps`; psselect -p"$$P"- $^ > $@
+
+##-- double sided printing.. [NOT tested for a while...]
 print2:	Man.ps
 	mpage -P -2 $< > Man.ps-2
 	lpr -s Man.ps-2
