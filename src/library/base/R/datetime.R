@@ -130,14 +130,14 @@ print.POSIXlt <- function(x, ...)
 
 summary.POSIXct <- function(object, digits=15, ...)
 {
-    x <- summary.default(unclass(object), digits=digits, ...)
+    x <- summary.default(unclass(object), digits=digits, ...)[1:5]
     class(x) <- oldClass(object)
     attr(x, "tzone") <- attr(object, "tzone")
     x
 }
 
 summary.POSIXlt <- function(object, digits = 15, ...)
-    summary(as.POSIXct(object), digits = digits, ...)
+    summary(as.POSIXct(object), digits = digits, ...)[1:5]
 
 
 "+.POSIXt" <- function(e1, e2)

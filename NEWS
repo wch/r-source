@@ -797,6 +797,9 @@ BUG FIXES
 	for rare times in the UK time zone.  (PR#4558)
 
     o   c/rbind() did not support vectors/matrices of mode "list".  (PR#6702)
+
+    o   summary() methods for POSIX[cl]t and Date classes coerced the
+	number of NAs to a date on printing.
  
 
 
