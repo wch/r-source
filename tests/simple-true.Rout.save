@@ -1,0 +1,54 @@
+
+R : Copyright 1998, The R Development Core Team
+Version 0.63.0 Unstable (June 23, 1998)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type	"?license" or "?licence" for distribution details.
+
+R is a collaborative project with many contributors.
+Type	"?contributors" for a list.
+
+Type	"demo()" for some demos, "help()" for on-line help, or
+	"help.start()" for a HTML browser interface to help.
+
+> ##-*- R -*-
+> ##-- These should all return  'TRUE'
+> 
+> all(1:12 == cumsum(rep(1,12)))
+[1] TRUE
+> 
+> x <- rnorm(127); sx <- sum(x);  abs((sum(rev(x)) -sx)) < 1e-12 * abs(sx)
+[1] TRUE
+> 
+> typeof(1:4) == "integer" #-- fails for 0.2, 0.3,.., 0.9
+[1] TRUE
+> 
+> all((0:6) == pi + ((-pi):pi))
+[1] TRUE
+> all((0:7) == (pi+seq(-pi,pi, len=8))*7/(2*pi))
+[1] TRUE
+> 
+> ## This should be symmetric !!
+> cc <- c(1:10,10:1) ;		all(cc == rev(cc))
+[1] TRUE
+> ##nomore:
+> ##cc <- convolve(cc, c(1,2,1));	all(cc == rev(cc))
+> 
+> ## Real Trig.:
+> cos(0) == 1
+[1] TRUE
+> sin(3*pi/2) == cos(pi)
+[1] TRUE
+> x <- rnorm(99)
+> all( sin(-x) == - sin(x))
+[1] TRUE
+> all( cos(-x) == cos(x))
+[1] TRUE
+> 
+> x <- 1:99/100
+> all(abs(1 - x / asin(sin(x))) <= .Machine$double.eps)
+[1] TRUE
+> all(abs(1 - x / atan(tan(x))) <= .Machine$double.eps)
+[1] TRUE
+> 

@@ -1,0 +1,7 @@
+#!/bin/sh
+# Diff  ``without R version''
+f1=$1
+f2=$2
+grep -v '^Version' $f1 > /tmp/${f1}-d
+grep -v '^Version' $f2 > /tmp/${f2}-d
+diff -bw /tmp/${f1}-d /tmp/${f2}-d
