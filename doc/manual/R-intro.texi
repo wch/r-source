@@ -2,7 +2,6 @@
 @c %**start of header
 @setfilename R-intro.info
 @settitle An Introduction to R
-@set VERSION $Revision: 1.11 $
 @setchapternewpage on
 @c %**end of header
 
@@ -16,6 +15,7 @@
 @finalout
 
 @include R-defs.texi
+@include version.texi
 
 @macro Rcopyright{}
 Copyright @copyright{} 1990, 1992 W.@: Venables
