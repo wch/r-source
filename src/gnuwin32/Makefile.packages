@@ -39,17 +39,16 @@ libRblas.a:  Rblas.def
 MASS-HELP = ziponly
 boot-HELP = ziponly
 cluster-HELP = ziponly
-cluster-ZIPDATA = zip
-grid-HELP = ziponly
 lattice-HELP = ziponly
 lattice-ZIPDATA = zip
+mgcv-HELP = ziponly
 nlme-HELP = ziponly
-nlme-ZIPDATA = zip
 rpart-HELP = ziponly
 survival-HELP = ziponly
 
 pkg-%:
 	@$(MAKE) --no-print-directory \
+	  SAVE=$($*-SAVE) LAZY=$($*-LAZY) LAZYDATA=$($*-LAZYDATA) \
           DLLNM=$($*-DLLNM) FLIBS="$(FLIBS)" BUILD=$(BUILD) \
 	  PKG=$* RHOME=$(RHOME) RLIB=$(RLIB) RVER=$(RVER) \
 	  -C $(PKGD)/$* -f $(RHOME)/src/gnuwin32/MakePkg
@@ -72,9 +71,6 @@ ifeq ($(strip $(HELP)),YES)
     endif
   endif
 endif
-	@$(MAKE) --no-print-directory BUILD=$(BUILD) \
-	  -C $(PKGD)/$* PKG=$* RHOME=$(RHOME) RLIB=$(RLIB)  \
-	  -f $(RHOME)/src/gnuwin32/MakePkg md5sums
 
 pkgclean-%:
 	$(MAKE) --no-print-directory DLLNM=$($*-DLLNM) RHOME=$(RHOME) BUILD=$(BUILD) \
@@ -82,8 +78,8 @@ pkgclean-%:
 
 pkgcheck-%:
 	@$(ECHO) -------- Testing package $* --------
-	-@$(MKDIR) -p $(PKGDIR)/$*/check
-	@$(MAKE) --no-print-directory -C $(PKGDIR)/$*/check PKG=$* RHOME=$(RHOME) RLIB=$(RLIB) \
+	-@$(MKDIR) -p $(PKGD)/$*/check
+	@$(MAKE) --no-print-directory -C $(PKGD)/$*/check PKG=$* RHOME=$(RHOME) RLIB=$(RLIB) \
 	  -f $(RHOME)/src/gnuwin32/check/PkgCheck
 	@if test -d $(PKGD)/$*/tests ; then \
 	  $(MAKE) --no-print-directory -C $(PKGD)/$*/tests PKG=$* RHOME=$(RHOME) RLIB=$(RLIB) \
@@ -116,4 +112,6 @@ zipdata-%:
 	fi
 
 data-%:
-	@$(ECHO) "  not zipping data"
+	@if ! test -f ../../library/$*/data/Rdata.rdb ; then \
+	  $(ECHO) "  not zipping data" ; \
+	fi

@@ -54,7 +54,7 @@ MAINLIBS = ../main/libmain.a ../appl/libappl.a ../nmath/libnmath.a
 EXTRALIBS = graphapp/ga.a getline/gl.a ../extra/xdr/libxdr.a \
    ../extra/zlib/libz.a ../extra/pcre/libpcre.a ../extra/bzip2/libbz2.a
 
-PKGS = $(foreach i,$(R_PKGS_BASE) ,pkg-$i)
+R_PKGS0 = $(filter-out base tools, $(R_PKGS_BASE))
 PKGCLEAN = $(foreach i,$(R_PKGS_BASE),pkgclean-$i)
 
 # flags to ensure that Doug Lea's malloc is used:
@@ -101,22 +101,18 @@ Rcode: fixed/fixdesc
 	done
 	@$(ECHO) "  ... done"
 
-LAZY_PKGS = graphics grDevices grid splines stats tcltk utils # methods is done directly
+# methods-LAZY is done directly
+graphics-LAZY=true
+grDevices-LAZY=true
+grid-LAZY=true
+splines-LAZY=true
+stats-LAZY=true
+tcltk-LAZY=true
+utils-LAZY=true
+datasets-LAZYDATA=true
 
-rpackage: ../../library/R.css
-ifeq ($(strip $(HELP)),YES)
-	@$(ECHO)
-	@$(ECHO) -n "writing help indices for package:"
-	@for pkg in $(R_PKGS_BASE); do \
-	  $(ECHO) -n " $${pkg}" ; \
-	  $(MAKE) --no-print-directory  -C ./help -s RHOME=$(RHOME) PKGDIR=$(PKGD) RLIB=$(RLIB) DPKG=$(RLIB)/$${pkg} index-$${pkg}; \
-	done
-	@$(ECHO)
-endif
-	@for pkg in $(PKGS); do \
-	  R_START_PACKAGES=NULL $(MAKE) --no-print-directory $${pkg}; \
-	done
-	@$(ECHO)
+rpackage: ../../library/R.css rpackageindices
+	@R_START_PACKAGES=NULL $(MAKE) --no-print-directory pkg-base
 ifeq ($(strip $(BUILD)),CROSS)
 	@if ! test -f ../../library/base/R/base.rdb ; then \
 	  echo "preparing package base for lazy loading" ; \
@@ -132,19 +128,28 @@ else
 	    R_DEFAULT_PACKAGES=NULL LC_COLLATE=C $(REXE) > /dev/null; \
 	fi
 endif
+	@R_START_PACKAGES=NULL $(MAKE) --no-print-directory pkg-tools
 	@if ! test -f ../../library/tools/R/tools.rdb ; then \
 	  echo "preparing package tools for lazy loading" ; \
 	  (cat ../library/tools/R/makeLazyLoad.R; \
 	    echo "makeLazyLoading(\"tools\", lib.loc=\"$(RLIB)\")") | \
 	    R_DEFAULT_PACKAGES=NULL LC_COLLATE=C $(R_EXE) --vanilla --slave > /dev/null ; \
 	fi
-	@for pkg in $(LAZY_PKGS); do \
-	  $(MAKE) --no-print-directory PKG=$${pkg} RHOME=$(RHOME) \
-	  BUILD=$(BUILD) RLIB=$(RLIB) R_START_PACKAGES=NULL\
-	  -C ../library/$${pkg} -f $(RHOME)/src/gnuwin32/MakePkg lazyload; \
+	@$(ECHO)
+	@for pkg in $(R_PKGS0); do \
+	  R_START_PACKAGES=NULL $(MAKE) --no-print-directory pkg-$${pkg}; \
 	done
-	@$(MAKE) --no-print-directory PKG=datasets RHOME=$(RHOME) \
-	  -f $(RHOME)/src/gnuwin32/MakePkg BUILD=$(BUILD) RLIB=$(RLIB) lazydata
+
+rpackageindices:
+ifeq ($(strip $(HELP)),YES)
+	@$(ECHO)
+	@$(ECHO) -n "writing help indices for package:"
+	@for pkg in $(R_PKGS_BASE); do \
+	  $(ECHO) -n " $${pkg}" ; \
+	  $(MAKE) --no-print-directory  -C ./help -s RHOME=$(RHOME) PKGDIR=$(PKGD) RLIB=$(RLIB) DPKG=$(RLIB)/$${pkg} index-$${pkg}; \
+	done
+	@$(ECHO)
+endif
 
 
 rlibs:
@@ -279,6 +284,8 @@ endif
 base-HELP = ziponly
 datasets-HELP = ziponly
 graphics-HELP = ziponly
+grDevices-HELP = ziponly
+grid-HELP = ziponly
 methods-HELP = ziponly
 stats-HELP = ziponly
 stats4-HELP = ziponly
@@ -288,9 +295,6 @@ stats4-SAVE = true
 MASS-HELP = ziponly
 boot-HELP = ziponly
 cluster-HELP = ziponly
-cluster-ZIPDATA = zip
-grDevices-HELP = ziponly
-grid-HELP = ziponly
 lattice-HELP = ziponly
 lattice-ZIPDATA = zip
 mgcv-HELP = ziponly
@@ -298,11 +302,11 @@ nlme-HELP = ziponly
 rpart-HELP = ziponly
 survival-HELP = ziponly
 
-SAVE=CHECK
 pkg-%:
-	@$(MAKE) --no-print-directory SAVE=$($*-SAVE) \
+	@$(MAKE) --no-print-directory \
+	  SAVE=$($*-SAVE) LAZY=$($*-LAZY) LAZYDATA=$($*-LAZYDATA) \
           DLLNM=$($*-DLLNM) FLIBS="$(FLIBS)" BUILD=$(BUILD) \
-	  PKG=$* RHOME=$(RHOME) RLIB=$(RLIB) RVER=$(RVER) SAVE=$(SAVE)\
+	  PKG=$* RHOME=$(RHOME) RLIB=$(RLIB) RVER=$(RVER) \
 	  -C $(PKGD)/$* -f $(RHOME)/src/gnuwin32/MakePkg
 	@if test -d $(RLIB)/$*/data ; then \
 	  $(MAKE) --no-print-directory $($*-ZIPDATA)data-$* ; \
@@ -372,7 +376,9 @@ zipdata-%:
 	fi
 
 data-%:
-	@$(ECHO) "  not zipping data"
+	@if ! test -f ../../library/$*/data/Rdata.rdb ; then \
+	  $(ECHO) "  not zipping data" ; \
+	fi
 
 
 #                          ===== cleaning ======

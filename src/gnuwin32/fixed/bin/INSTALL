@@ -307,9 +307,10 @@ foreach $pkg (@ARGV){
 	    $opt = $opt . " $pkgname-HELP=ziponly"
 		if ($opt_use_zip || $opt_use_zip_help);
 	}
-	$opt = $opt . " DPKG=$dpkg";;
-#	print "make --no-print-directory -C $R_HOME/src/gnuwin32 PKGDIR=$pkgdir RLIB=$library SAVE=$save $opt $helpflags $makecmd-$pkgname\n";
-    	$res = system("make --no-print-directory -C $R_HOME/src/gnuwin32 PKGDIR=$pkgdir RLIB=$library SAVE=$save $opt $helpflags $makecmd-$pkgname");
+	$opt = $opt . " DPKG=$dpkg";
+	$opt = $opt . " $pkgname-LAZYDATA=true" if $lazydata;
+#	print "make --no-print-directory -C $R_HOME/src/gnuwin32 PKGDIR=$pkgdir RLIB=$library $pkgname-SAVE=$save $opt $helpflags $makecmd-$pkgname\n";
+    	$res = system("make --no-print-directory -C $R_HOME/src/gnuwin32 PKGDIR=$pkgdir RLIB=$library $pkgname-SAVE=$save $opt $helpflags $makecmd-$pkgname");
 	if($res) {
 	    printf "*** Installation of $pkgname failed ***\n";
 	} else {
@@ -329,13 +330,7 @@ foreach $pkg (@ARGV){
 #		print "$cmd\n";
 		system($cmd);
 	    }
-
-	    if($lazydata) {
-		my $cmd = "make --no-print-directory -C $R_HOME/src/gnuwin32";
-		$cmd .= " lazydata-$decpkgname";
-		system($cmd);
-	    }
-	    ## add MD5 sums
+	    ## add MD5 sums last of all
 	    my $cmd = "make --no-print-directory -f $R_HOME/src/gnuwin32/MakePkg ";
 	    $cmd .= "RHOME=$R_HOME DPKG=$library/$decpkgname md5sums";
 #	    print "$cmd\n";
