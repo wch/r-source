@@ -87,6 +87,15 @@ grid.convertX(unit(72, "bigpts"), "inches")
 grid.convertX(unit(1157/1238*72.27, "dida"), "inches")
 grid.convertX(unit(1/12*1157/1238*72.27, "cicero"), "inches")
 grid.convertX(unit(65536*72.27, "scaledpts"), "inches")
+grid.convertX(unit(1/2.54, "inches"), "cm")
+grid.convertX(unit(1/25.4, "inches"), "mm")
+grid.convertX(unit(1/72.27, "inches"), "points")
+grid.convertX(unit(1/(1/12*72.27), "inches"), "picas")
+grid.convertX(unit(1/72, "inches"), "bigpts")
+grid.convertX(unit(1/(1157/1238*72.27), "inches"), "dida")
+grid.convertX(unit(1/(1/12*1157/1238*72.27), "inches"), "cicero")
+grid.convertX(unit(1/(65536*72.27), "inches"), "scaledpts")
+
 pushViewport(viewport(width=unit(1, "inches"),
                        height=unit(2, "inches"),
                        xscale=c(0, 1),

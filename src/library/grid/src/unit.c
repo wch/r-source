@@ -1188,19 +1188,19 @@ double transformFromINCHES(double value, int unit,
 	result = result*72.27*(thisCM/2.54);
 	break;
     case L_PICAS:
-	result = result*12*72.27*(thisCM/2.54);
+	result = result/12*72.27*(thisCM/2.54);
 	break;
     case L_BIGPOINTS:
 	result = result*72*(thisCM/2.54); 
 	break;
     case L_DIDA:
-	result = result/1157*1238*72.27*(thisCM/2.54);
+	result = result/1238*1157*72.27*(thisCM/2.54);
 	break;
     case L_CICERO:
-	result = result*12/1157*1238*72.27*(thisCM/2.54);
+	result = result/1238*1157*72.27*(thisCM/2.54)/12;
 	break;
     case L_SCALEDPOINTS:
-	result = result/65536*72.27*(thisCM/2.54);
+	result = result*65536*72.27*(thisCM/2.54);
 	break;
 	/*
 	 * I'm not sure the remaining ones makes any sense.
