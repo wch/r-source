@@ -6,7 +6,7 @@ plot.histogram(x, freq = equidist, col = NULL, border = par("fg"), lty = NULL,
 	 main = paste("Histogram of", x$xname), xlab = x$xname, ylab,
          axes = TRUE, labels = FALSE, add = FALSE, \dots)
 
-lines.histogram(x, \dots\dots)
+lines.histogram(x, \dots)
 }
 \alias{plot.histogram}
 \alias{lines.histogram}
@@ -34,13 +34,18 @@ lines.histogram(x, \dots\dots)
   \item{\dots}{further graphical parameters to \code{title} and \code{axis}.}
 }
 \description{
-  These are methods for objects of class
-  \code{"histogram"}, typically produced by \code{\link{hist}(\dots)}.  See
-  that page for information about the components of \code{x}.
+  These are methods for objects of class \code{"histogram"}, typically
+  produced by \code{\link{hist}(\dots)}.  See that page for information
+  about the components of \code{x}.
 
-  \code{lines.histogram(*)} is the same as \code{plot.histogram(*, add = TRUE)}.
+  \code{lines.histogram(*)} is the same as
+  \code{plot.histogram(*, add = TRUE)}.
 }
-\seealso{\code{\link{hist}}, \code{\link{stem}}, \code{\link{density}}.}
+\seealso{
+  \code{\link{hist}},
+  \code{\link{stem}},
+  \code{\link{density}}.
+}
 \examples{
 data(women)
 str(wwt <- hist(women$weight, nc= 7, plot = FALSE))

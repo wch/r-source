@@ -7,7 +7,6 @@ plot(x, \dots)
 \usage{
 plot(x, y, xlim=range(x), ylim=range(y), type="p",
      main, xlab, ylab, \dots)
-plot(y ~ x, \dots)
 }
 \arguments{
   \item{x}{the coordinates of points in the plot. Alternatively, a

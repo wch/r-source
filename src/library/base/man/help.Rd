@@ -1,7 +1,7 @@
 \name{help}
 \title{Documentation}
 \usage{
-help(topic, offline = FALSE, package = .packages()
+help(topic, offline = FALSE, package = .packages(),
      lib.loc = .lib.loc, verbose = getOption("verbose"),
      try.all.packages = getOption("help.try.all.packages"),
 #ifdef unix

@@ -5,9 +5,6 @@ plot.formula(formula, \dots, data = parent.frame(), subset,
              ylab = varnames[response], ask = TRUE)
 points.formula(formula, \dots, data = parent.frame(), subset)
 lines.formula(formula, \dots, data = parent.frame(), subset)
-plot(y ~ x, \dots)
-points(y ~ x, \dots)
-lines(y ~ x, \dots)
 }
 \alias{plot.formula}
 \alias{lines.formula}
