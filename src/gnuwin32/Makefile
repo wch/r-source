@@ -1,7 +1,7 @@
 include MkRules
 include RWVERSION
 
-all: rbuild rpackage rdocs
+all: Rpwd.exe rbuild rpackage rdocs
 
 ## configuration macros
 HELP = YES
@@ -10,16 +10,16 @@ WINHELP = CHM# NO, CHM, BOTH
 LEA_MALLOC=YES
 
 # Set to YES and specify the path if you want to use the ATLAS BLAS.
-USE_ATLAS=NO
+USE_ATLAS=YES
 ATLAS_PATH=/R/ATLAS/lib/WinNT_PII
 
 PACKAGES = base ctest eda lqs methods modreg mva nls splines stepfun tools ts
 ALLPACKAGES = $(PACKAGES) tcltk
 
-RHOME = $(shell perl pwd.pl ../..)# must be absolute path
+RHOME = $(shell Rpwd.exe ../..)# must be absolute path
 RLIB = $(RHOME)/library
 PKGDIR = $(RHOME)/src/library
-PKGD = $(shell perl pwd.pl $(PKGDIR))# must be absolute path
+PKGD = $(shell Rpwd.exe $(PKGDIR))# must be absolute path
 
 OPTFLAGS=-O2 -Wall -pedantic
 ## use FOPTFLAGS where complex*16 is used.
@@ -59,6 +59,12 @@ tcl:
 
 CFLAGS = $(OPTFLAGS) -I../include -I. -DHAVE_CONFIG_H -DR_DLL_BUILD
 FFLAGS = $(OPTFLAGS)
+
+Rpwd.exe: front-ends/Rpwd.exe
+	$(CP) $< $@
+
+front-ends/Rpwd.exe:
+	$(MAKE) -C front-ends Rpwd.exe
 
 ## watch out: R.dll and Rblas.dll depend on each other.
 rbuild: fixfiles rlibs makeMakedeps libRblas.a ../../bin/R.dll libR.a \
@@ -277,7 +283,7 @@ clean: cleanwin $(PKGCLEAN)
 	$(RM) -f ../library/methods/R/methods
 
 distclean veryclean: clean
-	$(RM) COPYRIGHTS R.exp Rm.exp 
+	$(RM) COPYRIGHTS R.exp Rm.exp Rpwd.exe
 	$(RM) -r ../../bin ../../library ../../modules
 	$(RM) ../include/config.h ../include/psignal.h \
 	../include/Rconfig.h ../include/version.h 
@@ -297,7 +303,7 @@ distclean veryclean: clean
 	done
 
 cleanwin:
-	$(RM) *.o *.exe *.dll *.a *~ \#*\# rw*.zip R.def R.exp1 Rm.exp1\
+	$(RM) *.o *.dll *.a *~ \#*\# rw*.zip R.def R.exp1 Rm.exp1\
 	   .RData .Rhistory Makedeps *.d
 	$(MAKE) -C graphapp clean
 	$(MAKE) -C fixed clean
@@ -436,7 +442,7 @@ packagedist:
 	$(CP) ../../doc/html/logo.jpg $(RPREFIX)/doc/html
 	$(CP) ../../doc/KEYWORDS* $(RPREFIX)/doc
 	$(CP) -p exported-vars R.exp MkRules MakePkg MakeDll \
-	  pwd.pl makeDllRes.pl install-save.sh $(RPREFIX)/src/gnuwin32
+	  Rpwd.exe makeDllRes.pl install-save.sh $(RPREFIX)/src/gnuwin32
 	$(CP) -p Makefile.packages $(RPREFIX)/src/gnuwin32/Makefile
 	$(CP) fixed/dobundle.pl $(RPREFIX)/src/gnuwin32/fixed
 	$(CP) -pr help check $(RPREFIX)/src/gnuwin32

@@ -15,6 +15,9 @@ rebuilding Rblas.dll.
 
 Cross-building automatically uses STAMP=NO for packages.
 
+R can now be built is a directory whose path contains spaces (although
+we still don't recommend it).
+
 
 
 rw1041
