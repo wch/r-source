@@ -39,8 +39,7 @@ NEW FEATURES
 
     o	new function max.col() from MASS, thanks to V&R.
 
-    o   CVS logs are being made available on
-        http://developer.r-project.org/R.cvslog
+    o   CVS logs on http://developer.r-project.org/R.cvslog
 
 BUG FIXES
 
