@@ -245,8 +245,9 @@ function(dir, outDir)
 .installPackageVignetteIndex <-
 function(dir, outDir)
 {
+    dir <- filePathAsAbsolute(dir)
     vignetteDir <- file.path(dir, "inst", "doc")
-    ## Create a vignette index only if the vignette dir exists
+    ## Create a vignette index only if the vignette dir exists.
     if(!fileTest("-d", vignetteDir))
         return(invisible())
 
@@ -256,16 +257,25 @@ function(dir, outDir)
 
     htmlIndex <- file.path(outDir, "doc", "index.html")
 
-    ## write dummy HTML index if no vignettes are found and exit
-    if(!length(listFilesWithType(vignetteDir, "vignette"))){
-        if(!file.exists(htmlIndex)){
+    ## Write dummy HTML index if no vignettes are found and exit.
+    if(!length(listFilesWithType(vignetteDir, "vignette"))) {
+        if(!file.exists(htmlIndex)) {
             .writeVignetteHtmlIndex(packageName, htmlIndex)
         }
         return(invisible())
     }
 
     vignetteIndex <- .buildVignetteIndex(vignetteDir)
-    if(!file.exists(htmlIndex)){
+    ## For base package vignettes there is no PDF in @file{vignetteDir}
+    ## but there might/should be one in @file{outVignetteDir}.
+    if(NROW(vignetteIndex) > 0) {
+        vignettePDFs <-
+            sub("$", ".pdf",
+                basename(filePathSansExt(vignetteIndex$File)))
+        ind <- fileTest("-f", file.path(outVignetteDir, vignettePDFs))
+        vignetteIndex$PDF[ind] <- vignettePDFs[ind]
+    }        
+    if(!file.exists(htmlIndex)) {
         .writeVignetteHtmlIndex(packageName, htmlIndex, vignetteIndex)
     }
 
@@ -280,6 +290,7 @@ function(dir, outDir)
     writeLines(formatDL(vignetteIndex, style = "list"),
                file.path(outVignetteDir, "00Index.dcf"))
     ## </FIXME>
+    
     invisible()
 }
 
