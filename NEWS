@@ -19,6 +19,9 @@ NEW FEATURES
 	- within an expression, the symbol partialdiff is now converted
 	  to a partial differential symbol (greek delta).
 
+    o	smooth.spline() has a new argument `nknots' allowing to set the
+	default number of knots (when `all.knots = FALSE' as per default).
+
 
 BUG FIXES
 
@@ -81,6 +84,10 @@ BUG FIXES
     o	The links in refman.pdf were broken by a single invalid
 	\alias{}. Now Rdconv checks more comprehensively. (PR#1550)
 
+    o	predict(smooth.spline(x,*), deriv =1) did not predict at all `x'
+	values, and
+    o	smooth.spline(x,*, all.knots = TRUE) used much too much memory
+	when length(x) was largish.
 
 
 		CHANGES IN R VERSION 1.5.0
