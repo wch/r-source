@@ -222,7 +222,7 @@ function(dir) {
     ## package.
     badMethods <- list()
     envList <- list(.CodeEnv)
-    if(!isBase) envList <- c(envList, list(NULL))
+    if(!isBase) envList <- c(envList, list(as.environment(NULL)))
     for(env in envList) {
         allObjs <- ls(envir = env, all.names = TRUE)
         ## <FIXME>
@@ -420,7 +420,7 @@ function(dir) {
     }
     allGenerics <- character()
     envList <- list(.CodeEnv)
-    if(!isBase) envList <- c(envList, list(NULL))
+    if(!isBase) envList <- c(envList, list(as.environment(NULL)))
     for(env in envList) {
         allObjs <- ls(envir = env, all.names = TRUE)        
         allGenerics <-

@@ -105,7 +105,7 @@ function(dir, use.values = FALSE, use.positions = TRUE,
     ## get the primitive functions from the version of R we are using.
     ## Maybe one we will have R code for the primitives as well ...
     if(isBase) {
-        baseObjs <- ls(envir = NULL, all.names = TRUE)
+        baseObjs <- ls(envir = as.environment(NULL), all.names = TRUE)
         isPrimitive <- function(fname, envir) {
             f <- get(fname, envir = envir)
             is.function(f) && any(grep("^\\.Primitive", deparse(f)))
