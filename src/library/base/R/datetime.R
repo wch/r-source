@@ -372,6 +372,14 @@ difftime <-
            )
 }
 
+## "difftime" constructor
+## Martin Maechler, Date: 16 Sep 2002
+as.difftime <- function(tim, format="%X")
+{
+    difftime(strptime(tim, format=format),
+             strptime("0:0:0", format="%X"))
+}
+
 print.difftime <- function(x, digits = getOption("digits"), ...)
 {
     if(length(x) > 1)
