@@ -253,7 +253,7 @@ print.HoltWinters <- function (x, ...)
 ## decompose additive/multiplicative series into trend/seasonal figures/noise
 decompose <- function (x, type = c("additive", "multiplicative"))
 {
-    type = match.arg(type)
+    type <- match.arg(type)
     l <- length(x)
     f <- frequency(x)
     if (f == 1) stop ("Time series has no period")
@@ -275,7 +275,7 @@ decompose <- function (x, type = c("additive", "multiplicative"))
     for (i in 1:f) figure[i] <- mean(season[index + i])
 
     ## normalize figure
-    figure <- if (type == 1) figure - mean(figure)
+    figure <- if (type == "additive") figure - mean(figure)
     else figure / mean(figure)
 
     ## return values
@@ -284,7 +284,9 @@ decompose <- function (x, type = c("additive", "multiplicative"))
     structure(
               list(seasonal = seasonal,
                    trend    = trend,
-                   random   = x - if (type == 1) seasonal + trend else seasonal * trend,
+                   random   = x -
+                   if (type == "additive") seasonal + trend
+                   else seasonal * trend,
                    figure   = figure,
                    type     = type
                    ),

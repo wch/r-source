@@ -44,6 +44,7 @@ ARMAtoMA        Convert ARMA Process to Infinite MA Process
 Box.test	Box-Pierce and Ljung-Box tests of independence
 ccf		Cross-covariance and cross-correlations for two series
 cpgram		Plot cumulative periodogram of univariate time series
+decompose	Classical seasonal decomposition by moving averages
 diffinv		Discrete integration, the inverse of diff()
 embed		Embedding a time series
 filter		Linear filtering on a time series

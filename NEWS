@@ -159,7 +159,9 @@ NEW FEATURES
 
 	-  New function monthplot() (contributed by Duncan Murdoch).
 
-	-  New function HoltWinters() (contributed by David Meyer).
+	-  New functions decompose() and HoltWinters() (contributed by 
+	   David Meyer) for classical seasonal decomposition and
+	   exponentially-weighted forecasting.
 
     o   Much improved printing of matrices and arrays of type "list".
 

@@ -1,10 +1,12 @@
 \name{decompose}
 \alias{decompose}
 \alias{plot.decomposed.ts}
-\title{Classical seasonal decomposition by moving averages}
+\title{
+  Classical Seasonal Decomposition by Moving Averages
+}
 \description{
   Decompose a time series into seasonal, trend and irregular components
-  using moving averages. Deals either with additive or multiplicative
+  using moving averages.  Deals with additive or multiplicative
   seasonal component.
 }
 \usage{

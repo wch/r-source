@@ -56,7 +56,7 @@ HoltWinters(x, alpha = NULL, beta = NULL, gamma = NULL,
 
   The function tries to find the optimal values of \eqn{\alpha} and/or
   \eqn{\beta} and/or \eqn{\gamma} by minimizing the squared
-  \code{step}-step prediction error if they are omitted.
+  one-step prediction error if they are omitted.
 
   Start values for \code{a}, \code{b} and \code{s} are detected by
   performing a simple decomposition in trend and seasonal component using
