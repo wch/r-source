@@ -8,7 +8,8 @@
 mosaicplot(x, \dots)
 mosaicplot.default(X, main = NULL, xlab = NULL, ylab = NULL,
                    sort = NULL, off = NULL, dir = NULL,
-                   color = FALSE)
+                   color = FALSE, shade = FALSE, margin = NULL,
+                   type = c("pearson", "deviance", "FT"))
 mosaicplot.formula(formula, data = NULL, subset, na.action, \dots)
 }
 \arguments{
@@ -18,8 +19,9 @@ mosaicplot.formula(formula, data = NULL, subset, na.action, \dots)
     best created by the \code{table()} command, which produces an
     object of type array.}
   \item{main}{character string for the mosaic title.}
-  \item{xlab,ylab}{x- and y-axis labels; by default,
-    \code{names(dimnames(X))}.}
+  \item{xlab,ylab}{x- and y-axis labels; by default, the first and
+    second element of \code{names(dimnames(X))} (i.e., the name of the
+    first and second variable in \code{X}).}
   \item{sort}{vector ordering of the variables, containing a
     permutation of the integers \code{1:length(dim(x))} (the
     default).}
@@ -34,7 +36,22 @@ mosaicplot.formula(formula, data = NULL, subset, na.action, \dots)
     vertical split.}
   \item{color}{(\code{TRUE} or vector of integer colors) for color
     shading or (\code{FALSE}, the default) for empty boxes with no
-    shading.}
+    shading.  Ignored if \code{shade} is not \code{FALSE}.}
+  \item{shade}{a logical indicating whether to produce extended mosaic
+    plots, or a numeric vector of at most 5 distinct positive numbers
+    giving the absolute values of the cut points for the residuals.  By
+    default, \code{shade} is \code{FALSE}, and simple mosaics are
+    created.  Using \code{shade = TRUE} cuts absolute values at 2 and
+    4.}
+  \item{margin}{a list of vectors with the marginal totals to be fit in
+    the log-linear model.  By default, an independence model is fitted.
+    See \code{\link{loglin}} for further information.}
+  \item{type}{a character string indicating the type of residual to be
+    represented.  Must be one of \code{"pearson"} (giving components of
+    Pearson's \eqn{\chi^2}{chi-squared}), \code{"deviance"} (giving
+    components of the likelihood ratio \eqn{\chi^2}{chi-squared}), or
+    \code{"FT"} for the Freeman-Tukey residuals.  The value of this
+    argument can be abbreviated.}
   \item{formula}{a formula, such as \code{y ~ x}.}
   \item{data}{a data.frame (or list) from which the variables in
     \code{formula} should be taken.}
@@ -48,6 +65,13 @@ mosaicplot.formula(formula, data = NULL, subset, na.action, \dots)
   This is a generic function.  It currently has a default method
   (\code{\link{mosaicplot.default}}) and a formula interface
   (\code{\link{mosaicplot.formula}}).
+
+  Extended mosaic displays show the standardized residuals of a
+  loglinear model of the counts from by the color and outline of the
+  mosaic's tiles.  (Standardized residuals are often referred to a
+  standard normal distribution.)  Negative residuals are drawn in shaded
+  of red and with broken outlines; positive ones are drawn in blue with
+  solid outlines.
 
   See Emerson (1998) for more information and a case study with
   television viewer data from Nielsen Media Research.
@@ -76,9 +100,24 @@ mosaicplot.formula(formula, data = NULL, subset, na.action, \dots)
   information on various aspects of graphical methods for analyzing
   categorical data, including mosaic plots.
 }
+\seealso{
+  \code{\link{assocplot}},
+  \code{\link{loglin}}.
+}
 \examples{
 data(Titanic)
 mosaicplot(Titanic, main = "Survival on the Titanic", color = TRUE)
+
+data(HairEyeColor)
+mosaicplot(HairEyeColor, shade = TRUE)
+## Independence model of hair and eye color and sex.  Indicates that
+## there are significantly more blue eyed blond females than expected
+## in the case of independence (and too few brown eyed blond females).
+mosaicplot(HairEyeColor, shade = TRUE, margin = list(c(1,2), 3))
+## Model of joint independence of sex from hair and eye color.  Males
+## are underrepresented among people with brown hair and eyes, and are
+## overrepresented among people with brown hair and blue eyes, but not
+## ``significantly''.
 
 ## Formula interface: visualize crosstabulation of numbers of gears and
 ## carburettors in Motor Trend car data.

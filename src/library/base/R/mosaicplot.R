@@ -1,17 +1,20 @@
 ## Copyright (C) 1998 John W. Emerson
 
-
 mosaicplot <- function(x, ...) UseMethod("mosaicplot")
 
 ### Changes by MM:
 ## - NULL instead of NA for default arguments, etc  [R / S convention]
 ## - plotting at end; cosmetic
 ## - mosaic.cell():
+### Changes by KH:
+##   Shading of boxes to visualize deviations from independence by
+##   displaying sign and magnitude of the standardized residuals.
 
-mosaicplot.default <- function(X, main = NULL, xlab = NULL, ylab = NULL,
-                               sort = NULL, off = NULL,
-                               dir = NULL, color = FALSE) {
-
+mosaicplot.default <-
+function(X, main = NULL, xlab = NULL, ylab = NULL, sort = NULL, off =
+         NULL, dir = NULL, color = FALSE, shade = FALSE, margin = NULL,
+         type = c("pearson", "deviance", "FT"))
+{
     mosaic.cell <- function(X, x1, y1, x2, y2,
                             off, dir, color, lablevx, lablevy,
                             maxdim, currlev, label)
@@ -19,7 +22,7 @@ mosaicplot.default <- function(X, main = NULL, xlab = NULL, ylab = NULL,
         ## Recursive function doing `the job'
         ##
         ## explicitely relying on (1,1000)^2 user coordinates.
-        p <- ncol(X)
+        p <- ncol(X) - 2
         if (dir[1] == "v") {            # split here on the X-axis.
             xdim <- maxdim[1]
             XP <- rep(0, xdim)
@@ -50,7 +53,7 @@ mosaicplot.default <- function(X, main = NULL, xlab = NULL, ylab = NULL,
             if (p > 2) {          # recursive call.
                 for (i in 1:xdim) {
                     if (XP[i] > 0) {
-                        mosaic.cell(as.matrix(X[X[,1]==i, 2:p]),
+                        mosaic.cell(as.matrix(X[X[,1]==i, 2:(p+2)]),
                                     x.l[i], y1, x.r[i], y2,
                                     off[2:length(off)],
                                     dir[2:length(dir)],
@@ -66,11 +69,18 @@ mosaicplot.default <- function(X, main = NULL, xlab = NULL, ylab = NULL,
                 for (i in 1:xdim) {
                     if (XP[i] > 0) {
                         polygon(c(x.l[i], x.r[i], x.r[i], x.l[i]),
-                                c(y1, y1, y2, y2), col=color[i])
-                        segments(c(rep(x.l[i],3),x.r[i]),
-                                 c(y1,y1,y2,y2),
-                                 c(x.r[i],x.l[i],x.r[i],x.r[i]),
-                                 c(y1,y2,y2,y1))
+                                c(y1, y1, y2, y2),
+                                lty = if(shade) X[i, p+1] else 1,
+                                col = if(shade) {
+                                    color[X[i, p+2]]
+                                } else color[i])
+                        ## <KH 2000-08-29>
+                        ## Is this really needed?
+                        ## segments(c(rep(x.l[i],3),x.r[i]),
+                        ##          c(y1,y1,y2,y2),
+                        ##          c(x.r[i],x.l[i],x.r[i],x.r[i]),
+                        ##          c(y1,y2,y2,y1))
+                        ## </KH>
                     } else {
                         segments(rep(x.l[i],3), y1+(y2-y1)*c(0,2,4)/5,
                                  rep(x.l[i],3), y1+(y2-y1)*c(1,3,5)/5)
@@ -107,7 +117,7 @@ mosaicplot.default <- function(X, main = NULL, xlab = NULL, ylab = NULL,
             if (p > 2) {          # recursive call.
                 for (j in 1:ydim) {
                     if (YP[j] > 0) {
-                        mosaic.cell(as.matrix(X[X[,1]==j,2:p]),
+                        mosaic.cell(as.matrix(X[X[,1]==j,2:(p+2)]),
                                     x1, y.b[j], x2, y.t[j],
                                     off[2:length(off)],
                                     dir[2:length(dir)], color,
@@ -123,11 +133,18 @@ mosaicplot.default <- function(X, main = NULL, xlab = NULL, ylab = NULL,
                 for (j in 1:ydim) {
                     if (YP[j] > 0) {
                         polygon(c(x1,x2,x2,x1),
-                                c(y.b[j],y.b[j],y.t[j],y.t[j]), col=color[j])
-                        segments(c(x1,x1,x1,x2),
-                                 c(y.b[j],y.b[j],y.t[j],y.t[j]),
-                                 c(x2,x1,x2,x2),
-                                 c(y.b[j],y.t[j],y.t[j],y.b[j]))
+                                c(y.b[j],y.b[j],y.t[j],y.t[j]),
+                                lty = if(shade) X[j, p+1] else 1,
+                                col = if(shade) {
+                                    color[X[j, p+2]]
+                                } else color[j])
+                        ## <KH 2000-08-29>
+                        ## Is this really needed?
+                        ## segments(c(x1,x1,x1,x2),
+                        ##          c(y.b[j],y.b[j],y.t[j],y.t[j]),
+                        ##          c(x2,x1,x2,x2),
+                        ##          c(y.b[j],y.t[j],y.t[j],y.b[j]))
+                        ## </KH>
                     } else {
                         segments(x1+(x2-x1)*c(0,2,4)/5, rep(y.b[j],3),
                                  x1+(x2-x1)*c(1,3,5)/5, rep(y.b[j],3))
@@ -157,6 +174,50 @@ mosaicplot.default <- function(X, main = NULL, xlab = NULL, ylab = NULL,
         }
     }
     Ind <- cbind(Ind, c(X))
+    ## Ok, now the columns of `Ind' are the cell indices (which could
+    ## also have been created by `expand.grid()' and the corresponding
+    ## cell counts.  We add two more columns for dealing with *EXTENDED*
+    ## mosaic plots which are produced unless `shade' is FALSE, which
+    ## currently is the default.  These columns have NAs for the simple
+    ## case.  Otherwise, they specify the line type (1 for positive and
+    ## 2 for negative residuals) and color (by giving the index in the
+    ## color vector which ranges from the ``most negative'' to the
+    ## ``most positive'' residuals.
+    if(is.logical(shade) && !shade) {
+        Ind <- cbind(Ind, NA, NA)
+    }
+    else {
+        if(is.logical(shade))
+            shade <- c(2, 4)
+        else if(any(shade <= 0) || length(shade) > 5)
+            stop("invalid shade specification")
+        shade <- sort(shade)
+        breaks <- c(-Inf, - rev(shade), 0, shade, Inf)
+        color <- c(hsv(0,               # red
+                       s = seq(1, to = 0, length = length(shade) + 1)),
+                   hsv(4/6,             # blue
+                       s = seq(0, to = 1, length = length(shade) + 1)))
+        if(is.null(margin))
+            margin <- as.list(1:dimd)
+        ## Fit the loglinear model.
+        E <- loglin(X, margin, fit = TRUE, print = FALSE)$fit
+        ## Compute the residuals.
+        type <- match.arg(type)
+        residuals <-
+            switch(type,
+                   pearson = (X - E) / sqrt(E),
+                   deviance = {
+                       tmp <- 2 * (X * log(ifelse(X==0, 1, X/E)) - (X-E))
+                       tmp <- sqrt(pmax(tmp, 0))
+                       ifelse(X > E, tmp, -tmp)
+                   },
+                   FT = sqrt(X) + sqrt(X + 1) - sqrt(4 * E + 1))
+        ## And add the information to the data matrix.
+        Ind <- cbind(Ind,
+                     c(1 + (residuals < 0)),
+                     as.numeric(cut(residuals, breaks)))
+    }
+
     ## The next four may all be NULL:
     label <- dimnames(X)
     nam.dn <- names(label)
@@ -173,20 +234,68 @@ mosaicplot.default <- function(X, main = NULL, xlab = NULL, ylab = NULL,
         if(length(sort) != dimd)
             stop("length(sort) doesn't conform to dim(X)")
         ## Sort columns.
-        Ind <- Ind[,c(sort,dimd+1)]
+        Ind[,1:dimd] <- Ind[,sort]
         off <- off[sort]
         dir <- dir[sort]
         label <- label[sort]
     }
+    
     ncolors <- length(tabulate(Ind[,dimd]))
-    if (is.null(color) || length(color) != ncolors)
+    if(!shade && ((is.null(color) || length(color) != ncolors))) {
         color <- if (is.null(color) || !color[1])
-            rep(0, ncolors) else 2:(ncolors+1)
+            rep(0, ncolors)
+        else
+            2:(ncolors+1)
+    }
 
     ##-- Plotting
     frame()
-    opar <- par(usr = c(1, 1000, 1, 1000), mgp = c(1, 1, 0))
-    on.exit(par(opar))
+    if(!shade) {
+        opar <- par(usr = c(1, 1000, 1, 1000), mgp = c(1, 1, 0))
+        on.exit(par(opar))
+    }
+    else {
+        ## This code is extremely ugly, and certainly can be improved.
+        ## In the case of extended displays, we also need to provide a
+        ## legend for the shading and outline patterns.  The code works
+        ## o.k. with integer breaks in `shade'; rounding to two 2 digits
+        ## will not be good enough if `shade' has length 5.
+        rtxt <- "Standardized\nResiduals:"
+        rtxtWidth <- strheight(rtxt)
+        rtxtHeight <- strwidth(rtxt)
+        ## We put the legend to the right of the third axis.
+        opar <- par(usr = c(1, 1000 * (1.1 + rtxtWidth), 1, 1000),
+                    mgp = c(1, 1, 0))
+        on.exit(par(opar))
+        text(1000 * (1.05 + 0.5 * rtxtWidth), 0, labels = rtxt,
+             adj = 0, srt = 90)
+        ## `len' is the number of positive or negative intervals of
+        ## residuals (so overall, there are `2 * len')
+        len <- length(shade) + 1
+        ## `bh' is the height of each box in the legend (including the
+        ## separating whitespace
+        bh <- 0.95 * (0.95 - rtxtHeight) / (2 * len)
+        x.l <- 1000 * 1.05
+        x.r <- 1000 * (1.05 + 0.7 * rtxtWidth)
+        y.t <- 1000 * rev(seq(from = 0.95, by = - bh, length = 2 * len))
+        y.b <- y.t - 1000 * 0.8 * bh
+        ltype <- c(rep(2, len), rep(1, len))
+        for(i in 1 : (2 * len)) {
+            polygon(c(x.l, x.r, x.r, x.l),
+                    c(y.b[i], y.b[i], y.t[i], y.t[i]),
+                    col = color[i],
+                    lty = ltype[i])
+        }
+        brks <- round(breaks, 2)
+        y.m <- y.b + 1000 * 0.4 * bh
+        text(1000 * (1.05 + rtxtWidth), y.m,
+             c(paste("<", brks[2], sep = ""),
+               paste(brks[2 : (2 * len - 1)],
+                     brks[3 : (2 * len)],
+                     sep = ":"),
+               paste(">", brks[2 * len], sep = "")),
+             srt = 90, cex = 0.66)
+    }
 
     if (!is.null(main) || !is.null(xlab) || !is.null(ylab))
         title(main, xlab=xlab, ylab=ylab)
