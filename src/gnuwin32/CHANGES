@@ -13,6 +13,9 @@ You will be asked to select a CRAN mirror when downloading/updating
 packages unless options("CRAN") has already been set in your session,
 e.g. in your .Rprofile file.
 
+The new graphics pars "lend", "ljoin" and "lmitre" are now
+implemented.
+
 
 
 R 2.0.1

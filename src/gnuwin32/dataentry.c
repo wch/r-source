@@ -941,19 +941,14 @@ static void clearwindow(void)
     gfillrect(de, p->bg, rect(0, 0, WIDTH, HEIGHT));
 }
 
-#if 0
-static void de_drawline(int fromx, int fromy, int tox, int toy)
-{
-    gdrawline(de, 1, 0, p->ufg, pt(fromx, fromy), pt(tox, toy));
-}
-#endif
 
 static void drawrectangle(int xpos, int ypos, int width, int height,
 			  int lwd, int fore)
 {
     /* only used on screen, so always fast */
     gdrawrect(de, lwd, 0, (fore==1)? p->ufg: p->bg,
-	      rect(xpos, ypos, width, height), 1);
+	      rect(xpos, ypos, width, height), 1, PS_ENDCAP_SQUARE, 
+	      PS_JOIN_BEVEL, 10);
 }
 
 static void de_drawtext(int xpos, int ypos, char *text)

@@ -136,14 +136,17 @@ void  ginvert(drawing d, rect r);
 rgb   ggetpixel(drawing d, point p);
 void  gsetpixel(drawing d, point p, rgb c);
 void  gdrawline(drawing d, int width, int style, rgb c, point p1, point p2,
-		int fast);
-void  gdrawrect(drawing d, int width, int style, rgb c, rect r, int fast);
+		int fast, int lend, int ljoin, float lmitre);
+void  gdrawrect(drawing d, int width, int style, rgb c, rect r, int fast,
+		int lend, int ljoin, float lmitre);
 void  gfillrect(drawing d, rgb fill, rect r);
-void  gdrawellipse(drawing d, int width, rgb border, rect r, int fast);
+void  gdrawellipse(drawing d, int width, rgb border, rect r, int fast,
+		   int lend, int ljoin, float lmitre);
 void  gfillellipse(drawing d, rgb fill, rect r);
 void  gdrawpolyline(drawing d, int width, int style, rgb c,
-                    point *p, int n, int closepath, int fast);
-#define gdrawpolygon(d,w,s,c,p,n,f) gdrawpolyline(d,w,s,c,p,n,1,f)
+                    point *p, int n, int closepath, int fast,
+		    int lend, int ljoin, float lmitre);
+#define gdrawpolygon(d,w,s,c,p,n,f,e,j,m) gdrawpolyline(d,w,s,c,p,n,1,f,e,j,m)
 void  gfillpolygon(drawing d, rgb fill, point *p, int n);
 int   gdrawstr(drawing d, font f, rgb c, point p, char *s);
 void  gdrawstr1(drawing d, font f, rgb c, point p, char *s, double hadj);
