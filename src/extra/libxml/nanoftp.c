@@ -14,8 +14,7 @@
 #define _WINSOCKAPI_
 #endif
 
-#include <R_ext/Error.h>
-#define err warning
+/* #define DEBUG_FTP */
 
 #include <stdio.h>
 #include <string.h>
@@ -52,6 +51,31 @@
 #define xmlFree free
 #define xmlMalloc malloc
 #define xmlMemStrdup strdup
+
+
+#ifdef Unix
+#include <R_ext/eventloop.h>
+
+/* modified from src/unix/sys-std.c  */
+static int
+setSelectMask(InputHandler *handlers, fd_set *readMask)
+{
+    int maxfd = -1;
+    InputHandler *tmp = handlers;
+    FD_ZERO(readMask);
+
+    while(tmp) {
+	FD_SET(tmp->fileDescriptor, readMask);
+	maxfd = maxfd < tmp->fileDescriptor ? tmp->fileDescriptor : maxfd;
+	tmp = tmp->next;
+    }
+
+    return(maxfd);
+}
+#endif
+
+#include <R_ext/Error.h>
+#define err warning
 
 /* #define DEBUG_FTP 1  */
 
@@ -592,6 +616,7 @@ xmlNanoFTPCheckResponse(void *ctx) {
     tv.tv_usec = 0;
     FD_ZERO(&rfd);
     FD_SET(ctxt->controlFd, &rfd);
+    /* no-block select call */
     switch(select(ctxt->controlFd + 1, &rfd, NULL, NULL, &tv)) {
 	case 0:
 	    return(0);
@@ -1253,17 +1278,43 @@ xmlNanoFTPRead(void *ctx, void *dest, int len)
     if (dest == NULL) return(-1);
     if (len <= 0) return(0);
     while(1) {
+	int maxfd = 0;
+#ifdef Unix
+	InputHandler *what;
+
+	if(R_wait_usec > 0) {
+	    R_PolledEvents();
+	    tv.tv_sec = 0;
+	    tv.tv_usec = R_wait_usec;
+	} else {   
+	    tv.tv_sec = 1;
+	    tv.tv_usec = 0;
+	}
+#elif defined(Win32)
+	tv.tv_sec = 0;
+	tv.tv_usec = 2e5;
+	R_ProcessEvents();
+#else
 	tv.tv_sec = 1;
 	tv.tv_usec = 0;
+#endif
+	
+#ifdef Unix
+	maxfd = setSelectMask(R_InputHandlers, &rfd);
+#else
 	FD_ZERO(&rfd);
+#endif
 	FD_SET(ctxt->dataFd, &rfd);
-	res = select(ctxt->dataFd + 1, &rfd, NULL, NULL, &tv);
+	if(maxfd < ctxt->dataFd) maxfd = ctxt->dataFd;
+
+	res = select(maxfd + 1, &rfd, NULL, NULL, &tv);
+
 	if (res < 0) { /* socket error */
 	    closesocket(ctxt->dataFd); ctxt->dataFd = -1;
 	    return(-1);
 	}
 	if (res == 0) { /* timeout, no data available yet */
-	    used += tv.tv_sec + 1e6 * tv.tv_usec;
+	    used += tv.tv_sec + 1e-6 * tv.tv_usec;
 	    res = xmlNanoFTPCheckResponse(ctxt);
 	    if (res < 0) {
 		closesocket(ctxt->dataFd); ctxt->dataFd = -1;
@@ -1276,6 +1327,16 @@ xmlNanoFTPRead(void *ctx, void *dest, int len)
 	    }
 	    continue;
 	}
+	/* one or more fd is ready */
+#ifdef Unix
+	if(!FD_ISSET(ctxt->dataFd, &rfd)) { /* was one of the extras */
+	    what = getSelectedHandler(R_InputHandlers, &rfd);
+	    if(!what) what->handler((void*) NULL);
+	    continue;
+	}
+#endif
+	
+	/* was the socket */
 	got = recv(ctxt->dataFd, dest, len, 0);
 	if (got < 0) {
 	    closesocket(ctxt->dataFd); ctxt->dataFd = -1;

@@ -2409,9 +2409,6 @@ SEXP do_download(SEXP call, SEXP op, SEXP args, SEXP env)
 		nbytes += len;
 		nnew = nbytes/1024;
 		if(!quiet) putdots(&ndots, nnew);
-#ifdef Win32
-		R_ProcessEvents();
-#endif
 	    }
 	    R_HTTPClose(ctxt);
 	    fclose(out);
@@ -2446,9 +2443,6 @@ SEXP do_download(SEXP call, SEXP op, SEXP args, SEXP env)
 		nbytes += len;
 		nnew = nbytes/1024;
 		if(!quiet) putdots(&ndots, nnew);
-#ifdef Win32
-		R_ProcessEvents();
-#endif
 	    }
 	    R_FTPClose(ctxt);
 	    fclose(out);
@@ -2667,6 +2661,7 @@ void *R_HTTPOpen(const char *url)
 	R_FlushConsole();
     }
     
+    R_ProcessEvents();
     return (void *)wictxt;
 }
 
@@ -2689,6 +2684,7 @@ int R_HTTPRead(void *ctx, void *dest, int len)
 	}
     }
 #endif
+    R_ProcessEvents();
     return (int) nread;
 }
 
@@ -2758,12 +2754,15 @@ void *R_FTPOpen(const char *url)
         INTERNET_FLAG_KEEP_CONNECTION | INTERNET_FLAG_NO_CACHE_WRITE,
 				      0);
 #endif /* USE_WININET_ASYNC */
+    R_ProcessEvents();
     return (void *)wictxt;
 }
 
 int R_FTPRead(void *ctx, void *dest, int len)
 {
-    return R_HTTPRead(ctx, dest, len);
+    int len = R_HTTPRead(ctx, dest, len);
+    R_ProcessEvents();
+    return len;
 }
 
 void R_FTPClose(void *ctx)
