@@ -45,6 +45,8 @@ NEW FEATURES
     o	[EXPERIMENTAL] Gnome support added. Use ./configure --with-gnome
 	to try it, but don't expect too much yet.
 
+    o   HDF5 support improved. Still not perfect, though.
+
     o	The X11 graphics driver can now use a variety of strategies
 	for handing color.  This means that it is now possible to
 	use black and white or grayscale graphics on color displays.
@@ -114,6 +116,9 @@ BUG FIXES
 
     o	curve() [and plot.function()] now use proper `x' values with log="x";
 	`type = "."' now works with curve() and plot.function()
+
+    o   zapped old windows files since they didn't build anyway. The newer 
+	version is expected to go in sometime in the 0.64.x series
 
 
 	**************************************************
