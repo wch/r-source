@@ -13,11 +13,12 @@ include $(top_builddir)/Makeconf
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 SOURCES_TEXI = R-FAQ.texi R-exts.texi R-intro.texi
 DISTFILES = \
-	EQN README \
+	README \
 	Makefile.in Makefile.win \
 	R-defs.texi dir texinfo.tex \
 	$(SOURCES_TEXI) \
-	Rd.sty \
+	R-intro.R \
+	Rd.sty hyperref.cfg \
 	omsaer.fd omsaett.fd omscmtt.fd \
 	refman.top refman.bot
 SUBDIRS = images
@@ -64,7 +65,7 @@ R:
 
 dvi: refman.dvi $(OBJECTS_DVI)
 refman.dvi: version.tex $(srcdir)/Rd.sty stamp-refman-dvi
-	@echo "LaTeX documentation: Reference Index ..."
+	@echo "DVI/LaTeX documentation: reference index ..."
 	@rm -f *.aux refman.toc refman.ind stamp-refman-dvi
 	@(opt="$${R_PAPERSIZE:-$(R_PAPERSIZE)}paper"; \
 	  echo "\\documentclass[$${opt}]{book}"; \
@@ -114,7 +115,7 @@ R-exts.info: version.texi
 
 pdf: refman.pdf $(OBJECTS_PDF)
 refman.pdf: version.tex $(srcdir)/Rd.sty stamp-refman-pdf
-	@echo "PDF LaTeX documentation: Reference Index ..."
+	@echo "PDF/LaTeX documentation: reference index ..."
 	@rm -f *.aux refman.toc refman.ind stamp-refman-pdf
 	@(opt="$${R_PAPERSIZE:-$(R_PAPERSIZE)}paper"; \
 	  echo "\\documentclass[$${opt}]{book}"; \
@@ -153,33 +154,37 @@ $(top_srcdir)/doc/html/faq.html: $(srcdir)/R-FAQ.texi
 	@$(MAKEINFO) $(MAKEINFO_HTML_OPTS) $< -o $@
 
 install: installdirs install-tex
-	@echo "Installing doc/manual ..."
+	@echo "installing doc/manual ..."
 installdirs:
 	@$(MKINSTALLDIRS) $(rhome)/doc/manual
 install-strip: install
 install-dvi: dvi installdirs install-images-eps
+	@echo "installing R manuals in DVI format ..."
 	@for f in *.dvi; do \
 	  $(INSTALL_DATA) $${f} $(rhome)/doc/manual; \
 	done
 install-images-eps:
 	@$(MKINSTALLDIRS) $(rhome)/doc/manual/images
-	-@for f in $(srcdir)/images/*.eps; do \
-	    $(INSTALL_DATA) $${f} $(rhome)/doc/manual/images; \
+	@-for f in $(srcdir)/images/*.eps; do \
+	  $(INSTALL_DATA) $${f} $(rhome)/doc/manual/images; \
 	done
 install-images-pdf:
 	@$(MKINSTALLDIRS) $(rhome)/doc/manual/images
-	-@for f in $(srcdir)/images/*.pdf; do \
+	@-for f in $(srcdir)/images/*.pdf; do \
 	  $(INSTALL_DATA) $${f} $(rhome)/doc/manual/images; \
 	done
 install-info: info $(infodir)/dir
+	@echo "installing R info pages ..."
 	@for f in $(OBJECTS_INFO:.info=.info*); do \
 	  $(INSTALL_DATA) $${f} $(infodir); \
 	done
+	@echo "updating \`$(infodir)/dir' ..."
 	@for f in $(OBJECTS_INFO); do \
 	  $(INSTALL_INFO) --info-dir=$(infodir) $(infodir)/$${f} \
 	    || echo "You need to adjust $(infodir)/dir manually"; \
 	done
 install-pdf: pdf installdirs
+	@echo "installing R manuals in PDF format ..."
 	@for f in *.pdf; do \
 	  $(INSTALL_DATA) $${f} $(rhome)/doc/manual; \
 	done
@@ -193,13 +198,15 @@ $(infodir)/dir:
 	$(INSTALL_DATA) $(srcdir)/dir $(infodir)
 
 uninstall:
-	@echo "Uninstalling doc/manual ..."
+	@echo "uninstalling doc/manual ..."
 	@rm -rf $(rhome)/doc/manual
 uninstall-dvi:
+	@echo "uninstalling R manuals in DVI format ..."
 	@-rm -f $(rhome)/doc/manual/images/*.eps
 	@-rmdir $(rhome)/doc/manual/images
 	@-rm -f $(rhome)/doc/manual/*.dvi
 uninstall-info:
+	@echo "uninstalling R info pages ..."
 	@for f in $(OBJECTS_INFO); do \
 	  $(INSTALL_INFO) --remove --info-dir=$(infodir) $${f} \
 	    || echo "You need to adjust $(infodir)/dir manually"; \
@@ -208,8 +215,7 @@ uninstall-info:
 	  rm -f $(infodir)/$${f}; \
 	done
 uninstall-pdf:
-	@-rm -f $(rhome)/doc/manual/images/*.pdf
-	@-rmdir $(rhome)/doc/manual/images
+	@echo "uninstalling R manuals in PDF format ..."
 	@-rm -f $(rhome)/doc/manual/*.pdf
 
 mostlyclean: clean
