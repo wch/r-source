@@ -15,9 +15,9 @@ DISTFILES = INDEX DESCRIPTION.in Makefile.in
 
 pkg = base
 
-RSRC = $(srcdir)/R/*.R $(srcdir)/R/$(R_OSTYPE)/*.R @BUILD_AQUA_TRUE@ $(srcdir)/R/aqua/*.R
+RSRC = $(srcdir)/R/*.R $(srcdir)/R/$(R_OSTYPE)/*.R 
 
-RdSRC = $(srcdir)/man/*.Rd $(srcdir)/man/$(R_OSTYPE)/*.Rd @BUILD_AQUA_TRUE@ $(srcdir)/man/aqua/*.Rd
+RdSRC = $(srcdir)/man/*.Rd $(srcdir)/man/$(R_OSTYPE)/*.Rd 
 
 all: Makefile DESCRIPTION
 	@echo "building package '$(pkg)'"
