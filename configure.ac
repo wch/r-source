@@ -22,7 +22,7 @@
 ### Software Foundation, 59 Temple Place -- Suite 330, Boston, MA
 ### 02111-3307, USA.
 
-AC_PREREQ(2.50)
+AC_PREREQ(2.53)
 
 ## We want to get the version number from file 'VERSION' (rather than
 ## specifying the version info in 'configure.ac'.  Hence, we need a bit
@@ -77,7 +77,7 @@ case "${host_os}" in
   cygwin*|mingw*|windows*|winnt)
     AC_DEFINE(Win32, 1,
               [Define according to your operating system type.])
-  cat >>confdefs.h <<\EOF
+    cat >>confdefs.h <<\EOF
 #define snprintf  _snprintf
 #define vsnprintf  _vsnprintf
 #define isnan _isnan
@@ -444,9 +444,9 @@ AC_CHECK_HEADERS(arpa/inet.h dl.h dlfcn.h elf.h fcntl.h floatingpoint.h \
 AC_CHECK_HEADERS(errno.h stdarg.h string.h)
 ## </NOTE>
 ## <NOTE>
-## AC_CHECK_HEADERS(libintl.h)
 ## src/main/regex.c uses HAVE_LIBINTL_H.
 ## But then we want full gettext support and AM_GNU_GETTEXT.
+## AC_CHECK_HEADERS(libintl.h)
 ## </NOTE>
 case "${host_os}" in
   sunos4*)
@@ -542,7 +542,7 @@ case "${host_cpu}" in
     ## @option{-mieee-with-inexact} for GCC) for the C compiler:
     ## @option{-ieee} (or @option{-mieee}) are not enough.
     ## According to <Albrecht.Gebhardt@uni-klu.ac.at> and Luke Tierney
-    ## <luke@stat.umn.edu>, @option{-fpe3} is what we want for the
+    ## <luke@stat.uiowa.edu>, @option{-fpe3} is what we want for the
     ## native Fortran 77 compiler: seems that not all versions map
     ## @option{-ieee} to @option{-fpe3}.
     ## What about the C++ compilers?
@@ -660,7 +660,7 @@ AC_SUBST(R_XTRA_LIBS)
 ##   from a C or Fortran compiler).
 ## SHLIB_CXXLD, SHLIB_CXXLDFLAGS
 ##   command and flags for creating DLLs which contain object files from
-##   a C++ compiler.  According to autoconf, the C++ compiler/linker
+##   a C++ compiler.  According to Autoconf, the C++ compiler/linker
 ##   must be used for linking in this case (since special C++-ish things
 ##   need to happen at link time like calling global constructors,
 ##   instantiating templates, enabling exception support, etc.).
@@ -801,12 +801,11 @@ case "${host_os}" in
     fi
     ;;
   irix*)
-    shlib_ldflags="-shared"
-    shlib_cxxldflags="-shared"
-    ## PIC is default on IRIX.
     cpicflags=
     cxxpicflags=
     fpicflags=
+    shlib_ldflags="-shared"
+    shlib_cxxldflags="-shared"
     ;;
   linux*aout)			# GNU Linux/aout
     sed '/HAVE_ELF_H/d' confdefs.h > tmp.h ; mv tmp.h confdefs.h
@@ -959,7 +958,7 @@ case "${host_os}" in
     ## <FIXME>
     ## We need '-framework Carbon' because currently the Quartz device
     ## driver gets linked to the main binary and hence also the R dylib.
-    ##  Change once the driver is modularized.
+    ## Change once the driver is modularized.
     LIBR_LDFLAGS="-dynamiclib -flat_namespace -undefined suppress -install_name \$(Rexeclibdir)/libR.dylib -framework Carbon"
     ## </FIXME>
     ;;
@@ -1008,9 +1007,9 @@ else
 fi
 AC_SUBST(RMATH_HAVE_LOG1P)
 
-## do we need substitutes?
+## Do we need substitutes?
 AC_REPLACE_FUNCS(acosh asinh atanh snprintf strdup strncasecmp vsnprintf)
-## enable declarations in Defn.h?
+## Enable declarations in Defn.h?
 AC_CHECK_DECLS([acosh, asinh, atanh], , , [#include <math.h>])
 AC_CHECK_DECLS([snprintf, strdup, strncasecmp, vsnprintf])
 
@@ -1044,18 +1043,10 @@ AM_CONDITIONAL(USE_EXTERNAL_BLAS, [test "x${BLAS_LIBS}" != x])
 AC_SUBST(R_GUIS)
 
 ## X11.
-## Here we use the standard X11 search macro.
-## We force the use of -lX11 (perhaps this is not necessary).
-AC_PATH_XTRA
-if test -z "${no_x}"; then
-  X_LIBS="${X_LIBS} -lX11"
-  use_X11="yes"
+R_X11
+if test "${use_X11}" = yes; then
   R_GUIS=X11
-  AC_DEFINE(HAVE_X11, 1,
-            [Define if you have the X11 headers and libraries, and want
-             the X11 GUI to be built.])
 else
-  use_X11="no"
   R_GUIS=
 fi
 
@@ -1303,12 +1294,12 @@ AC_OUTPUT
 ## Doing this via AC_CONFIG_COMMANDS would require explicitly passing all
 ## configure variables to config.status.
 ## </NOTE>
-C_compiler="${CC} ${R_XTRA_CFLAGS} ${CFLAGS}"
-CXX_compiler="${CXX} ${R_XTRA_CXXFLAGS} ${CXXFLAGS}"
+R_c_compiler="${CC} ${R_XTRA_CFLAGS} ${CFLAGS}"
+R_cxx_compiler="${CXX} ${R_XTRA_CXXFLAGS} ${CXXFLAGS}"
 if test -z "${F2C}"; then
-  Fortran_compiler="${F77} ${R_XTRA_FFLAGS} ${FFLAGS}"
+  R_f77_compiler="${F77} ${R_XTRA_FFLAGS} ${FFLAGS}"
 else
-  Fortran_compiler="${F2C} ${F2CFLAGS}"
+  R_f77_compiler="${F2C} ${F2CFLAGS}"
 fi
 AC_MSG_RESULT(
 [
@@ -1317,9 +1308,9 @@ R is now configured for ${host}
   Source directory:          ${srcdir}
   Installation directory:    ${prefix}
 
-  C compiler:                ${C_compiler}
-  C++ compiler:              ${CXX_compiler}
-  Fortran compiler:          ${Fortran_compiler}
+  C compiler:                ${R_c_compiler}
+  C++ compiler:              ${R_cxx_compiler}
+  Fortran compiler:          ${R_f77_compiler}
 
   X11 support:               ${use_X11}
   Gnome support:             ${use_gnome}
