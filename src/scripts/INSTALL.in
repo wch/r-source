@@ -4,7 +4,7 @@
 
 # @configure_input@
 
-revision='$Revision: 1.127 $'
+revision='$Revision: 1.128 $'
 version=`set - ${revision}; echo ${2}`
 version="R add-on package installer ${version}
 
@@ -62,6 +62,11 @@ Report bugs to <r-bugs@r-project.org>."
 ## We could fix this using suitable shell replacements, but we should
 ## really redo as much as we can using R code.
 ## </FIXME>
+
+## <NOTE>
+## We try to be defensive about possible white space in file names,
+## hence all the strange quoting ...
+## </NOTE>
 
 umask 022
 
@@ -482,13 +487,13 @@ do_install_source () {
     code_file="${R_PACKAGE_DIR}/R/${R_PACKAGE_NAME}"
     rda_file="${R_PACKAGE_DIR}/R/all.rda"
     if test -f NAMESPACE; then
-        code_cmd="echo saveNamespaceImage(\"${pkg}\", \"${rda_file}\", \"${lib}\")"
-        loader_file=nsrdaload.R
-        R_SAVE_EXE="${R_EXE} --slave"
+      code_cmd="echo saveNamespaceImage(\"${pkg}\", \"${rda_file}\", \"${lib}\")"
+      loader_file=nsrdaload.R
+      R_SAVE_EXE="${R_EXE} --slave"
     else
-        code_cmd="cat ${code_file}"
-        loader_file=firstlib.R
-        R_SAVE_EXE="${R_EXE} --slave --save"
+      code_cmd="eval cat \"${code_file}\""
+      loader_file=firstlib.R
+      R_SAVE_EXE="${R_EXE} --slave --save"
     fi
     (echo "options(save.image.defaults=${save_image_defaults})"; \
       if test -s R_PROFILE.R; then cat R_PROFILE.R; fi; \
