@@ -20,11 +20,13 @@ SOURCES = ../unix/dynload.c \
 	  edit.c \
 	  gdkrotated.c \
 	  gnome-callbacks.c \
+	  prefs.c \
 	  system.c
 DEPENDS = $(SOURCES:.c=.d)
 OBJECTS = $(SOURCES:.c=.o)
 HEADERS = gdkrotated.h \
 	  gnome-callbacks.h \
+	  prefs.h \
 	  rgnome.h
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)

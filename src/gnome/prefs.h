@@ -17,3 +17,8 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
+
+void r_load_initial_prefs (void);
+void r_load_gui_prefs (void);
+void r_save_prefs (void);
+void r_prefs_dialog (void);

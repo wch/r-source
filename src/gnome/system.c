@@ -28,8 +28,9 @@
 #include "Rversion.h"
 #include "Startup.h"
 
-#include "rgnome.h"
 #include "gnome-callbacks.h"
+#include "prefs.h"
+#include "rgnome.h"
 
 #ifdef HAVE_LIBREADLINE
 #include <readline/readline.h>
@@ -43,6 +44,7 @@
 #endif
 
 #include <fcntl.h>
+#include <signal.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/stat.h>
@@ -70,12 +72,18 @@ void R_dot_Last (void);   /* in ../main/main.c */
 
 
 #define GLADE_INTERFACE_FILE "/etc/gnome-interface.glade"
-#define IO_BUF_SIZE 1024
+#define IO_BUF_SIZE 512
 
 struct _r_read_callback_data {
     unsigned char *buf;
     int size, pos;
     gboolean eof;
+};
+
+struct _r_choose_file_data {
+    GtkFileSelection *filesel;
+    char *buf;
+    int len;
 };
 
 /* FIXME: add assertions to enforce sensible values for these and many
@@ -85,6 +93,7 @@ static GList *r_gnome_messages = NULL;
 static gchar *r_glade_file = NULL;
 static GladeXML *main_xml = NULL;
 static GList *messages_list = NULL;
+static int commandfd = -1;
 
 
 int UsingReadline = 1;
@@ -411,6 +420,13 @@ static void r_gnome_rl_lhandler (char *line)
 }
 #endif /* HAVE_LIBREADLINE */
 
+void r_gnome_exit (void)
+{
+    data->pos = 0;
+    data->eof = TRUE;
+    gtk_main_quit ();
+}
+
 
 
 /**
@@ -435,6 +451,7 @@ static gboolean read_terminal (unsigned char *buf, int size, int hist)
     data->buf = buf;
     data->size = size - 2;
     data->pos = 0;
+    data->eof = FALSE;
 
     term = glade_xml_get_widget (main_xml, "terminal");
     sigid = gtk_signal_connect (GTK_OBJECT (term), "key_press_event",
@@ -471,23 +488,42 @@ static gboolean read_terminal (unsigned char *buf, int size, int hist)
  **/
 int  R_ReadConsole (char *prompt, unsigned char *buf, int buflen, int hist)
 {
+    char *prelight, *highlight, *postlight, *new_prompt;
+    int read_status;
+
+    prelight = "\e[0m";
+    highlight = "\e[31m";
+    postlight = "\e[0m";
+
     fprintf (stderr, "R_ReadConsole: start\n");
 
     R_FlushConsole ();
+
+    new_prompt = (char *) malloc (sizeof (char) *
+				  (strlen (prelight) +
+				   strlen (prompt) +
+				   strlen (highlight)));
+    sprintf (new_prompt, "%s%s%s", prelight, prompt, highlight);
 
     /* FIXME: handle !R_Interactive */
     if (R_Interactive || !R_Slave) {
 #ifdef HAVE_LIBREADLINE
 	if (UsingReadline) {
-	    rl_callback_handler_install (prompt, r_gnome_rl_lhandler);
+	    rl_callback_handler_install (new_prompt, r_gnome_rl_lhandler);
 	}
 	else
 #endif /* HAVE_LIBREADLINE */
 	    {
-		write_terminal (prompt, strlen (prompt));
+		write_terminal (new_prompt, strlen (new_prompt));
 	    }
     }
-    if (!read_terminal (buf, buflen, hist)) {
+    free (new_prompt);
+
+    read_status = read_terminal (buf, buflen, hist);
+
+    write_terminal (postlight, strlen (postlight));
+
+    if (!read_status) {
 	fprintf (stderr, "R_ReadConsole: end (EOF)\n");
 	return 0;
     }
@@ -894,9 +930,54 @@ int R_ShowFiles (int nfile, char **file, char **title, char *wtitle,
  *  presented to the user: at present only new = 0 is used. (In 
  *  file.choose(new), new is logical.)
  **/
+
+static void get_filename (GtkWidget *widget, gpointer user_data)
+{
+    struct _r_choose_file_data *data;
+
+    data = (struct _r_choose_file_data *) user_data;
+
+    strncpy (data->buf,
+	     gtk_file_selection_get_filename (data->filesel),
+	     data->len);
+}
+
 int R_ChooseFile (int new, char *buf, int len)
 {
-    /* FIXME: implement */
+    GladeXML *filesel_xml;
+    GtkWidget *filesel, *window;
+    struct _r_choose_file_data *data;
+
+    filesel_xml = glade_xml_new (r_get_glade_file (), "choose_file_fileselection");
+    filesel = glade_xml_get_widget (filesel_xml, "choose_file_fileselection");
+    window = glade_xml_get_widget (main_xml, "main_window");
+
+    data = (struct _r_choose_file_data *)
+	malloc (sizeof (struct _r_choose_file_data));
+
+    data->filesel = GTK_FILE_SELECTION (filesel);
+    data->buf = buf;
+    data->buf[0] = '\0';
+    data->len = len;
+
+    gtk_signal_connect (GTK_OBJECT (GTK_FILE_SELECTION (filesel)->ok_button),
+			"clicked", GTK_SIGNAL_FUNC (get_filename),
+			(gpointer) data);
+    gtk_signal_connect_after (GTK_OBJECT (GTK_FILE_SELECTION (filesel)->ok_button),
+			"clicked", GTK_SIGNAL_FUNC (gtk_main_quit),
+			NULL);
+    gtk_signal_connect (GTK_OBJECT (GTK_FILE_SELECTION (filesel)->cancel_button),
+			"clicked", GTK_SIGNAL_FUNC (gtk_main_quit),
+			NULL);
+
+    gtk_widget_show (filesel);
+
+    gtk_main ();
+
+    gtk_widget_destroy (filesel);
+    free (data);
+
+    return strlen (buf);
 }
 
 
@@ -932,10 +1013,29 @@ static void set_terminal_hints (GtkWidget *widget)
 }
 
 gboolean term_configure_event (GtkWidget *widget,
-			  GdkEventConfigure *event,
-			  gpointer user_data)
+			       GdkEventConfigure *event,
+			       gpointer user_data)
 {
     gtk_widget_queue_draw (widget);
+
+    return FALSE;
+}
+
+/* readline variables */
+extern int screenwidth, screenheight, screenchars;
+
+gboolean term_size_allocate (GtkWidget *widget,
+			     GtkAllocation *allocation)
+{
+    int width, height;
+    int gridwidth, basewidth, gridheight, baseheight;
+
+    /* FIXME: tell readline about the new size */
+
+    /* tell R about the new size */
+    /*R_SetOptionWidth (width);*/
+
+    return FALSE;
 }
 
 /*  r_gnome_create_terminal is called by libglade to construct the zvt widget */
@@ -966,6 +1066,8 @@ GtkWidget *r_gnome_create_terminal ()
     gtk_input_add_full (outfd[0], GDK_INPUT_READ, output_text,
 			NULL, NULL, NULL);
 
+    commandfd = infd[1];
+
 #ifdef HAVE_LIBREADLINE
     if (UsingReadline) {
 	rl_instream = fdopen (infd[0], "r");
@@ -993,6 +1095,9 @@ static void load_main_window (void)
     gtk_signal_connect_object (GTK_OBJECT (window), "configure_event",
 			       GTK_SIGNAL_FUNC (term_configure_event),
 			       GTK_OBJECT (term));
+    gtk_signal_connect_after (GTK_OBJECT (term), "size_allocate",
+			      GTK_SIGNAL_FUNC (term_size_allocate),
+			      NULL);
 
     gtk_widget_realize (window);
 
@@ -1046,6 +1151,11 @@ void r_gnome_not_impl (void)
     gnome_dialog_set_parent (GNOME_DIALOG (dialog),
 			     GTK_WINDOW (main_window));
     gnome_dialog_run_and_close (GNOME_DIALOG (dialog));
+}
+
+void r_send_command (char *command, int len)
+{
+    write (commandfd, command, len);
 }
 
 /*  Extra command line arguments */
