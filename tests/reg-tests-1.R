@@ -769,8 +769,8 @@ all.equal(c("A", "B"), c("A", NA))
 
 ## failed since at least version 0.90:
 stopifnot(is.character(a12 <- all.equal(1,1:2)),
-          length(a12) == 2,
-          a12[2] == "Numeric: lengths (1, 2) differ")
+          length(a12) == 1,# was 2 till 1.6.2
+          a12 == "Numeric: lengths (1, 2) differ")
 ## a12 was *list* of length 3
 
 
