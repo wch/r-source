@@ -3,6 +3,7 @@
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *  Copyright (C) 1997--2001  Robert Gentleman, Ross Ihaka and the
  *			      R Development Core Team
+ *  Copyright (C) 2002        The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -1926,7 +1927,7 @@ void GScale(double min, double max, int axis, DevDesc *dd)
 
     /* ------  The following : Only computation of [xy]axp[0:2] ------- */
 
-    /* This is not directly needed when [xy]axp = "n",
+    /* This is not directly needed when [xy]axt = "n",
      * but may later be different in another call to axis(), e.g.:
       > plot(1, xaxt = "n");  axis(1)
      * In that case, do_axis() should do the following.
