@@ -287,8 +287,10 @@ endif
 lazyload:
 	@if test -d $(DPKG)/R ; then \
 	  if ! test -f $(DPKG)/R/$(PKG).rdb ; then \
+	    echo $(SPKG0)/R_PROFILE.R ; \
 	    $(ECHO)  "preparing package $(PKG) for lazy loading" ; \
-	    $(ECHO) "tools:::makeLazyLoading(\"$(PKG)\", lib.loc=\"$(RLIB)\")" | \
+            (if test -s $(SPKG0)/R_PROFILE.R; then cat $(SPKG0)/R_PROFILE.R; fi; \
+	      $(ECHO) "tools:::makeLazyLoading(\"$(PKG)\", lib.loc=\"$(RLIB)\")") | \
 	      R_CROSS_BUILD=$(R_X_BUILD) R_DEFAULT_PACKAGES=NULL \
 	      LC_COLLATE=C R_OSTYPE=windows $(REXE) > /dev/null ; \
 	    rm -f $(DPKG)/R/all.rda ; \

@@ -135,6 +135,26 @@ get_packages () {
   fi
 }
 
+parse_description_field () { # fieldname
+  tmp=`get_dcf_field ${1} DESCRIPTION`
+  if test "x$tmp" != "x" ; then
+    case "$tmp" in
+      yes|Yes)
+      value=true
+      ;;
+      no|No)
+      value=false
+      ;;
+      *)
+      error "invalid value of ${1} field in DESCRIPTION"
+      do_exit_on_error
+      ;;
+    esac
+  else
+    value="missing"
+  fi
+}
+
 ### 
 ### Setup and command line processing.
 
@@ -482,14 +502,11 @@ do_install_source () {
     rm -f "${R_PACKAGE_DIR}/data/"*
     cp data/* "${R_PACKAGE_DIR}/data" 2>/dev/null
     chmod 644 "${R_PACKAGE_DIR}/data/"*
-    thislazy=${lazy_data}
-    tmp=`get_dcf_field LazyData DESCRIPTION`
-    if test "x$tmp" != "x" ; then
-      if test "x$tmp" = "xyes"; then
-	thislazy=true
-      else
-	thislazy=false
-      fi
+    parse_description_field LazyData
+    if test "$value" = "missing" ; then
+      thislazy=${lazy_data}
+    else
+      thislazy=${value}
     fi
     if ${thislazy}; then
       message " moving datasets to lazyload DB"
@@ -529,6 +546,10 @@ do_install_source () {
         (cd "${R_PACKAGE_DIR}" && ${TAR} xf -))
   fi
 
+  parse_description_field SaveImage
+  if test "$value" != "missing" ; then
+    save=${value}
+  fi
   case ${save} in
     CHECK)
       if test -r install.R; then
@@ -591,14 +612,11 @@ do_install_source () {
     fi
   fi
 
-  thislazy=${lazy}
-  tmp=`get_dcf_field LazyLoad DESCRIPTION`
-  if test "x$tmp" != "x" ; then
-    if test "x$tmp" = "xyes"; then
-      thislazy=true
-    else
-      thislazy=false
-    fi
+  parse_description_field LazyLoad
+  if test "$value" = "missing" ; then
+    thislazy=${lazy}
+  else
+    thislazy=${value}
   fi
   if test ! -d R ; then
     thislazy=false
@@ -616,7 +634,8 @@ do_install_source () {
   fi
   if ${thislazy}; then
     message "preparing package for lazy loading"
-    echo "tools:::makeLazyLoading(\"${pkg_name}\", \"${lib}\")" | \
+    (if test -s R_PROFILE.R; then cat R_PROFILE.R; fi; \
+    echo "tools:::makeLazyLoading(\"${pkg_name}\", \"${lib}\")") | \
       R_DEFAULT_PACKAGES=NULL LC_COLLATE=C "${R_EXE}" --vanilla --slave
     rm -f ${R_PACKAGE_DIR}/R/all.rda
     if test -s install.R; then

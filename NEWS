@@ -314,6 +314,13 @@ INSTALLATION CHANGES
     o	Makeinfo 4.5 or later is now required for building the HTML and
 	Info versions of the manuals.
 
+
+PACKAGE INSTALLATION CHANGES
+
+    o	There are new optional fields 'SaveImage', 'LazyLoad' and
+	'LazyData' in the DESCRIPTION file.  Using 'SaveImage' is
+	preferred to using an empty file 'install.R'.
+
     o	A package can contain a file 'R/sysdata.rda' to contain
 	system datasets to be lazy-loaded into the namespace/package
 	environment.

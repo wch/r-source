@@ -58,7 +58,7 @@ usage() if $opt_help;
 
 if($opt_debug) {
     print "\nOption -d or --debug is accepted for compatibility with Unix.\n";
-    print "However, it does nothing.\n\n";
+    print "However, it does less.\n\n";
 }
 
 my $startdir = cwd();
@@ -172,25 +172,23 @@ foreach $pkg (@ARGV){
     my $save = "CHECK";
     $save = "false" if $opt_no_save;
     $save = "true" if $opt_save;
+    my $tmp = parse_description_field("SaveImage");
+    $save = "false" if($tmp == 0);
+    $save = "true" if($tmp == 1);
+    print "*** save is $save ***\n" if($opt_debug);
 
     my $lazyload = -1;
     $lazyload = 0 if $is_bundle; # flunk autotests for bundles
     $lazyload = 1 if $opt_lazy;
     $lazyload = 0 if $opt_no_lazy;
-    my $tmp = $description->{"LazyLoad"};
-    if($tmp ne "") {
-	$tmp = lc $tmp;
-	if($tmp eq "yes") {$lazyload = 1;} else {$lazyload = 0;} 
-    }
+    my $tmp = parse_description_field("LazyLoad");
+    $lazyload = $tmp if($tmp >= 0);
 
     my $lazydata = 0;
     $lazydata = 1 if $opt_lazy_data;
     $lazydata = 0 if $opt_no_lazy_data;
-    my $tmp = $description->{"LazyData"};
-    if($tmp ne "") {
-	$tmp = lc $tmp;
-	if($tmp eq "yes") {$lazydata = 1;} else {$lazydata = 0;}
-    }
+    my $tmp = parse_description_field("LazyData");
+    $lazydata = $tmp if($tmp >= 0);
     print "*** lazydata is $lazydata ***\n" if($opt_debug);
 
     my $opt = "";
@@ -364,7 +362,17 @@ foreach $pkg (@ARGV){
     exit $res if $res;
 }
 
-
+sub parse_description_field { # fieldname
+    my ($field) = @_;
+    my $tmp = $description->{$field}, $res = -1;
+    if($tmp ne "") {
+	$tmp = lc $tmp;
+	$res = 1 if $tmp eq "yes";
+	$res = 0 if $tmp eq "no";
+	# or throw an error, but then we need to recover
+    }
+    return $res;
+}
 
 sub usage {
     print STDERR <<END;
