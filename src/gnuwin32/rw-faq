@@ -357,10 +357,10 @@ and so update the console.
 
 6.1) How can I compile R from source?
 
-Get the R sources. Suppose you want to compile R-0.50.0.
+Get the R sources. Suppose you want to compile R-0.65.0.
 
-      tar zxvf R-0.50.0.tgz
-      cd R-0.50.0
+      tar zxvf R-0.65.0.tgz
+      cd R-0.65.0
       cd src\gnuwin32
 
 Now read the README and set up all the tools needed. Then you can just use
@@ -408,11 +408,15 @@ However, note
            (gdb) continue
            Rconsole> library(eda)
            (gdb) break tukeyline
+           (gdb) clear R_ReadConsole
            (gdb) continue
+
+     Fortran symbols need an underline appended.
 
    * Windows has little support for signals, so the usual idea of running a
      program under a debugger and sending it a signal to interrupt it and
-     drop control back to the debugger does not work.
+     drop control back to the debugger does not work with mingw32
+     version of gdb.  It does often work with the cygwin version.
 
    * We have seen examples in debugging problems with Windows events that
      the cygwin gdb was able to catch but which terminated the mingw32 gdb.
@@ -424,4 +428,4 @@ http://sourceware.cygnus.com/cygwin) and provides a graphical user
 interface to gdb.
 
   ------------------------------------------------------------------------
-Last edited 20 August 1999 by Brian Ripley ripley@stats.ox.ac.uk
+Last edited 27 August 1999 by Brian Ripley ripley@stats.ox.ac.uk
