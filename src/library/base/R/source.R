@@ -222,7 +222,7 @@ function(topic, device = getOption("device"),
 
 example <-
 function(topic, package = .packages(), lib.loc = NULL, local = FALSE,
-         echo = TRUE, verbose = getOption("verbose"),
+         echo = TRUE, verbose = getOption("verbose"), setRNG = FALSE,
          prompt.echo = paste(abbreviate(topic, 6), "> ", sep = ""))
 {
     topic <- substitute(topic)
@@ -254,6 +254,22 @@ function(topic, package = .packages(), lib.loc = NULL, local = FALSE,
     }
     if(pkg != "base")
 	library(pkg, lib = lib, character.only = TRUE)
+    if(!is.logical(setRNG) || setRNG) {
+        ## save current RNG state:
+        if((has.seed <- exists(".Random.seed", envir = .GlobalEnv))) {
+            oldSeed <- get(".Random.seed", envir = .GlobalEnv)
+            on.exit(assign(".Random.seed", oldSeed, envir = .GlobalEnv))
+        } else {
+            oldRNG <- RNGkind()
+            on.exit(RNGkind(oldRNG[1], oldRNG[2]))
+        }
+        ## set RNG
+        if(is.logical(setRNG)) { # i.e. == TRUE: use the same as R CMD check
+            ## see ../../../../share/perl/massage-Examples.pl
+            RNGkind("default", "default")
+            set.seed(1)
+        } else eval(setRNG)
+    }
     source(zfile, local, echo = echo, prompt.echo = prompt.echo,
            verbose = verbose, max.deparse.length = 250)
 }

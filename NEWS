@@ -19,8 +19,8 @@ NEW FEATURES
 UTILITIES
 
     o	R CMD check  now runs the (Rd) examples with default RNGkind
-	(uniform & normal) and set.seed(1).  example() will get an argument
-	to do the same.
+	(uniform & normal) and set.seed(1).
+	example(*, setRNG = TRUE) does the same.
 
 
 DEPRECATED & DEFUNCT
