@@ -1,7 +1,7 @@
 legend <- function(x, y, legend, fill, col="black", lty, pch,
 		bty="o", bg=par("bg"), cex=1,
-		xjust=0, yjust=1, x.intersp= NULL, y.intersp= NULL,
-		merge=FALSE)
+		xjust=0, yjust=1, x.intersp=NULL, y.intersp=NULL,
+		text.width=NULL, merge=FALSE)
 {
 	xlog <- par("xlog")
 	ylog <- par("ylog")
@@ -16,11 +16,18 @@ legend <- function(x, y, legend, fill, col="black", lty, pch,
 	xchar<- Cex * xinch(cin[1])
 	ychar<- Cex * yinch(cin[2]) * y.intersp
 	## size of filled boxes:
-	xbox <- Cex * xinch(cin[1]) * 0.8  ## was cin[2]  (??)
+	xbox <- Cex * xinch(cin[1]) * 0.8
 	ybox <- Cex * yinch(cin[2]) * 0.8
 	n.leg <- length(legend)
 	## -- (w,h) := (width,height) of the box to draw -- computed stepwise...
-	w <- 2 * xchar + max(strwidth(legend, u="user", cex=cex))
+	w <- if(is.null(text.width)) {
+		max(strwidth(legend, u="user", cex=cex))
+	} else {
+	  if(is.numeric(text.width) && text.width >=0)
+		text.width
+	  else stop("text.width must be numeric, >= 0")
+	}
+	w <- 2 * xchar + w
 	h <- (n.leg + 1) * ychar
 	if (missing(y)) {
 		if (is.list(x)) {
@@ -51,7 +58,7 @@ legend <- function(x, y, legend, fill, col="black", lty, pch,
 		if(!merge) w <- w + x.intersp * xchar
 	if(merge) w <- w + x.intersp * xchar
 	## (w,h) are now the final box width/height. --> Adjust (x,y) :
-	x <- x - xjust * w 
+	x <- x - xjust * w
 	y <- y + (1 - yjust) * h
 	if (bty != "n")
 		rect(x, y, x+w, y-h, col = bg)

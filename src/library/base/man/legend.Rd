@@ -3,13 +3,14 @@
 \usage{
 legend(x, y, legend, fill, col= "black", lty, pch, bty = "o",
        bg = par("bg"), cex = 1, xjust = 0, yjust = 1,
-       x.intersp = NULL, y.intersp = NULL, merge = FALSE)
+       x.intersp = NULL, y.intersp = NULL, text.width = NULL, merge = FALSE)
 }
 \alias{legend}
 \arguments{
   \item{x}{the x location of the legend.}
   \item{y}{the y location of the legend.}
-  \item{legend}{a vector of text values to appear in the legend.}
+  \item{legend}{a vector of text values or an \code{\link{expression}}
+    of length \eqn{\ge 1}{>= 1} to appear in the legend.}
   \item{fill}{if specied, this argument will cause boxes filled
     with the specified colors to appear beside the legend text.}
   \item{col}{the color of points or lines appearing in the legend.}
@@ -27,19 +28,26 @@ legend(x, y, legend, fill, col= "black", lty, pch, bty = "o",
     spacing.}
   \item{y.intersp}{the same as \code{x.intersp} for vertical (y) line
     distances.}
+  \item{text.width}{the width of the legend text in x (\code{"user"})
+    coordinates.
+    Defaults to the proper value computed by \code{\link{strwidth}(legend)}.}
   \item{merge}{logical; if \code{TRUE}, ``merge'' points and lines but
     not filled boxes.}
 }
 \description{
   This function can be used to add legends to plots.  Note that a call
   to the function \code{locator} can be used in place of the \code{x}
-  and \code{y} arguments. 
+  and \code{y} arguments.
 
   The default values for \code{x.intersp} and \code{y.intersp} are
-  computed from \code{Cx <- cex * par('cex')}
+  computed from \code{Cx <- cex * par('cex')}.
+
+  When (mathematical) expressions are used for \code{legend}, it may be
+  advisable to specify the \code{text.width} argument.
 }
 \seealso{
-  \code{\link{plot}}, \code{\link{barplot}} which uses \code{legend()}.
+  \code{\link{plot}}, \code{\link{barplot}} which uses \code{legend()}, and
+  \code{\link{text}} for examples of math expressions.
 }
 \examples{
 # Run the example in `?matplot' or the following:
@@ -64,4 +72,14 @@ vx   <- c(-2,  0, 1.5, 2.8)
 for (i in seq(vcex))
   legend(vx[i], 1.8, c("sin", "cos", "tan"), xjust = .5, col = c(3, 5, 9),
          lty = c(2, -1, 1), pch = c(-1, 3, 4), merge = TRUE, cex = vcex[i])
+
+##-- Math expressions:
+plot (x, sin(x), type="l", col = 2, xlab = expression(phi))
+lines(x, cos(x), col = 3, lty = 2); abline(h=0, v=pi/2*(-6:6), col="gray90")
+ex.cs1 <- expression(plain(sin) * phi,  plain(cos) * phi)
+ex.cs2 <- expression(paste("sin ",phi), paste("cos ",phi))
+legend(-3, .9, ex.cs1, lty=1:2, col=2:3)
+legend(-3, .6, ex.cs2, lty=1:2, col=2:3, text.width= 0.4) # better
+rm(ex.cs1, ex.cs2)
 }
+
