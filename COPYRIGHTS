@@ -17,6 +17,7 @@ afm/*
 doc/html/search/*.java
 
 	Copyright (C), 1998 Thomas Baier
+or  	Copyright (C), 1998-2000, Thomas Baier, R Core Development Team
 
 
 src/library/base/R/mosaicplot.R

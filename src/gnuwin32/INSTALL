@@ -2,14 +2,14 @@ R 1.0.0 for Windows 9x and NT
 =============================
 
 This distribution contains a binary distribution of R-1.0.0 to run on
-Windows 95, 98 and NT4 on Intel/clone chips. See README for fuller
+Windows 95, 98, NT4 and 2000 on Intel/clone chips. See README for fuller
 details, including how to install the binary versions.
 
 
 Building From Source
 ====================
 
-[Some further details, including how to debug, are given in the RW-FAQ.]
+[Some further details, including how to debug, are given in the rw-FAQ.]
 
 First collect the tools that you need.
 
@@ -17,29 +17,23 @@ Building on Windows
 -------------------
 
 We recommend that you use the mingw32 port of gcc-2.95.2 by Mumit Khan
-from http://www.mingw.org/ or 
-ftp://ftp.xraylith.wisc.edu/pub/khan/gnu-win32/mingw32. You will
-also need suitable versions of make, sh, rm, sed, awk, mkdir, echo, cp
-and cat; we have packaged a set at
-CRAN/bin/windows/windows-NT/base/etc/tools.zip extracted from the
-cygwin distribution (http://sourceware.cygnus.com/cygwin and several
-mirrors). To avoid past problems on some versions of Windows 95, we
-use the cygwin ld contained in that set, which must be before the
-mingw32 one in your path. (We believe this is solved in gcc-2.95.2,
-but have no way of testing this as we now use NT.)
+from http://www.mingw.org/ or
+ftp://ftp.xraylith.wisc.edu/pub/khan/gnu-win32/mingw32. You will also
+need suitable versions of at least make, sh, rm, sed, awk, mkdir,
+echo, cp, cut, grep and cat; we use those from the cygwin distribution
+(http://sourceware.cygnus.com/cygwin and several mirrors).
 
-It is also possible to use earlier mingw32 compilers or cygwin-b20.1
-with the --no-cygwin flag, but we suggest you do so only if you have a
-working setup from building earlier versions of R.  We have also
-successfully used the variant of mingw32 that uses the MSVCRT run-time 
-system (under gcc-2.95.x but not earlier versions).
-Be aware that not all Windows machines have MSVCRT.DLL installed.
+It is also possible to use cygwin-b20.1 with the --no-cygwin flag, but
+we suggest you do so only if you have a working setup from building
+earlier versions of R.  We have also successfully used the variant of
+mingw32 that uses the MSVCRT run-time system.  Be aware that not all
+Windows machines have MSVCRT.DLL installed.
 
 (If you want to use cygwin, you will need to upgrade to gcc-2.95.2 by
 installing the files gcc-2.95.2-cygb20.tar.gz and
 gcc-2.95.2-mingw-extra.tar.gz from
 ftp://ftp.xraylith.wisc.edu/pub/khan/gnu-win32/cygwin32. The basic
-distribution does not comtain a Fortran compiler, and that is needed
+distribution does not contain a Fortran compiler, and that is needed
 to build R.)
 
 perl5, available via http://www.perl.com/CPAN/ports/.
@@ -80,7 +74,7 @@ distribution, nor are the sources (it is the standard Info-Zip unzip
 5.40, built with MSVC++4.2). You will need to copy it from a binary
 distribution.
 
-The file rw1000\bin\Rchtml.dll is only built if chm help is specifed
+The file rw1000\bin\Rchtml.dll is only built if CHM help is specifed
 in the main Makefile. Its source is the help directory, and you need
 the HTML Help Workshop files to build it. It contains instructions
 to build it under VC++6, and it is preferable to use that as the 

@@ -25,7 +25,7 @@ unpack them with
 	tar xvfz R-x.y.z.tgz
 
 on systems that have GNU tar installed.  On other systems you need at
-least to have the "gzip" program installed.  Then you can do
+least to have the "gzip" program installed.  Then you can use
 
 	gzip -dc R-x.y.z.tgz | tar xvf -
 
@@ -45,7 +45,7 @@ previous version by changing to the top directory of it and
 
 	gzip -dc /path/to/it/R-x.y.{z-1}-x.y.z.diff.gz | patch -E -p1
 
-Notice that this does not necessarily work if the older sources have
+Beware that this does not necessarily work if the older sources have
 been modified (e.g., by building in their directories).
 
 
@@ -67,7 +67,7 @@ called "R" will be created and copied to the same directory.  You can
 copy this script to a place where users can invoke it, for example to
 `/usr/local/bin/R'.  You could also copy the man page `R.1' to a place
 where your man reader finds it, such as `/usr/local/man/man1'.  If you
-want to install the complete R tree to, e.g., `/usr/local/share/R', see
+want to install the complete R tree to, e.g., `/usr/local/lib/R', see
 section INSTALLATION below.
 
 You do not necessarily have to build R in the top-level source directory
@@ -95,7 +95,7 @@ non-system directories, use the variables LIBS (for libraries) and
 CPPFLAGS (for header files), respectively, to specify these locations.
 
 If you find you need to alter configure variables, it is worth noting
-that some settings are cached in the file config.cache, and it is a
+that some settings are cached in the file `config.cache', and it is a
 good idea to remove that file before re-configuring.
 
 Make will also build plain text help pages as well as HTML and LaTeX
@@ -107,22 +107,37 @@ you can obtain PDF versions of the documentation files via the
 Comprehensive R Archive Network (CRAN), see the file `RESOURCES' for
 information on CRAN.
 
-Use `make dvi' to create dvi versions of the R manuals, such as
-`refman.dvi' (an R object reference index) and `R-exts.dvi', the "R
-Extension Writers Guide", in the `doc/manual' subdirectory.  These
-files can be previewed and printed using standard programs such as
-`xdvi' and `dvips'.  You can also use `make pdf' to build PDF
-(Portable Document Format) version of the manuals, and view these
-using Acrobat Reader.  Manuals written in the GNU Texinfo system can
-also be converted to info files suitable for reading online with Emacs
-or standalone GNU Info; use `make info' to create these versions (note
-that this requires `makeinfo' version 4).
-
 Now rehash if necessary, type `R', and read the R manuals and the R FAQ
-(http://www.ci.tuwien.ac.at/~hornik/R/R-FAQ.html).
+(files FAQ or doc/html/faq.html or the latest version at
+http://www.ci.tuwien.ac.at/~hornik/R/R-FAQ.html).
 
 The GNOME interface for R will only be built if you specify it: see the
 GNOME section below.
+
+
+MAKING THE MANUALS
+
+There is a set of manuals that can be built from the sources,
+
+	R-intro		`An Introduction to R.
+	refman		Printed versions of all the help pages.
+	R-exts		`Writing R Extensions'.
+	R-FAQ		R FAQ (which is already built for you).
+
+To make these, cd to the `doc/manual' directory and use
+
+	make dvi	to create DVI versions
+	make pdf	to create PDF versions
+	make info	to create info files (not refman)
+
+You will not be able to build the info files unless you have makeinfo
+version 4 or later installed (and most Linux distributions have 3.2).
+
+The dvi versions can be previewed and printed using standard programs
+such as `xdvi' and `dvips'.  The PDF versions can be viewed using
+Acrobat Reader or (recent versions of) ghostscript: they have
+hyperlinks that can be followed in Acrobat Reader.  The info files are
+suitable for reading online with Emacs or the standalone GNU Info.
 
 
 INSTALLATION
@@ -141,7 +156,7 @@ This will install to the following directories:
 
 	${prefix}/bin		the front-end shell script
 	${prefix}/man/man1	the man page
-	${prefix}/share/R	all the rest (libraries, on-line help
+	${prefix}/lib/R		all the rest (libraries, on-line help
 				system, ...)
 
 where prefix is determined during configuration (typically `/usr/local')
@@ -172,7 +187,6 @@ is called `gmake', you need to set MAKE at configure time, for example
 
 MAKE=gmake ./configure      (sh, bash)
 env MAKE=gmake ./configure  (csh)
-
 
 
 USING FORTRAN
@@ -249,8 +263,8 @@ hardware/os platform.
     models for floating point arithmetic.  The POSIX and SVID models
     provide no problems.  The IEEE model however can be a pain.	 The
     problem is that there is no agreement on how to set the signalling
-    behavior;  sgi/irix and linux require no special action, freebsd
-    requires a call to (the macro) fpsetmask(0) and osf1v3.2 requires
+    behavior;  sgi/irix and i386 linux require no special action, freebsd
+    requires a call to (the macro) fpsetmask(0) and osf1 requires
     that computation be done with a -ieee_with_inexact flag etc...
     On a new platform you must find out the magic recipe and add some
     code to make it work.  This can often be done via the file

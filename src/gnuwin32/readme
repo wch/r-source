@@ -1,11 +1,11 @@
-R 1.0.0 for Windows 9x and NT
-=============================
+R 1.0.0 for Windows
+===================
 
 This distribution contains a binary distribution of R-1.0.0 to run on
-Windows 95, 98 and NT4 on Intel/clone chips. It is designed to
-be as close as possible to the implementation on Unix, but see the
-list of differences below. The port was by Guido Masarotto with
-many important contributions by Brian Ripley.
+Windows 95, 98 NT4 and 2000 on Intel/clone chips. It is designed to be
+as close as possible to the implementation on Unix, but see the list
+of differences below. The port was by Guido Masarotto and Brian
+Ripley.
 
 See CHANGES for the new features of this version.
 
@@ -159,15 +159,15 @@ Environment variables can be set as NAME=value on the command line,
 including in a short-cut.  They can also be set (as NAME=value lines)
 in the file .Renviron, or if that does not exist HOME\.Renviron.
 
-Many aspects of the console (size, appearance, font, colours) can be
-customized by editing the file etc\Rconsole, and a copy with a user's
-settings can be put in her HOME directory or in the working
-directory. (The exact sequence is to search the directory pointed to
-by the first found of the environment variables R_USER then HOME then
-{HOMEDRIVE}{HOMEPATH} then the working directory, finally R_HOME\etc.
-This applies to .Renviron and other uses of `HOME' in our documentation.)
-The file contains a description of the settings that can be
-altered. See also ?Rconsole.
+Many aspects of the console (size, appearance, font, font size,
+colours) can be customized by editing the file etc\Rconsole, and a
+copy with a user's settings can be put in her HOME directory or in the
+working directory. (The exact sequence is to search the directory
+pointed to by the first found of the environment variables R_USER then
+HOME then {HOMEDRIVE}{HOMEPATH} then the working directory, finally
+R_HOME\etc.  This applies to .Renviron and other uses of `HOME' in our
+documentation.)  The file contains a description of the settings that
+can be altered. See also ?Rconsole.
 
 The mapping between Windows fonts and R font's number can be set by
 editing the file etc\Rdevga, and a copy with a user's settings can be
@@ -214,15 +214,16 @@ use packages installed in directory R:\libraries\gm, set
 
 R_LIBS=R:\libraries\gm
 
-in the environment or on the command line, or add the line
+in the environment or your .Renviron file or on the command line, or
+add the line
 
 .lib.loc <- c("R:/libraries/gm", .lib.loc)
 
 to your .Rprofile or at the end of R_HOME\etc\Rprofile.
 
 To install a package from source code you need the source-package
-distribution rw1000sp.zip installed (but not the R source). This contains
-detailed instructions.
+distribution rw1000sp.zip installed (but not the R source). This
+contains detailed instructions.
 
 
 Differences from Unix
@@ -239,7 +240,7 @@ Differences from Unix
   always saved even if the workspace is not saved.
 
 - The HTML function and package lists and search datasbase are not
-  re-generated automatically by html.start(). Use link.html.help().
+  re-generated automatically by html.start().  Use link.html.help().
 
 - Paths to files can be specified with "/" or "\\".
 
