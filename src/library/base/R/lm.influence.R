@@ -26,8 +26,8 @@ weighted.residuals <- function(obj, drop0 = TRUE)
 
 lm.influence <- function (model, do.coef = TRUE)
 {
-    if (is.empty.model(model$terms)) {
-	warning("Can't compute influence on an empty model")
+    if (model$rank == 0) {
+	warning("Can't compute influence on a 0-rank model")
 	return(NULL)
     }
     n <- as.integer(nrow(model$qr$qr))
