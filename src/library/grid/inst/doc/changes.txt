@@ -81,7 +81,39 @@ Changes from grid_2.0.1 to grid_2.1.0:
 10. New function grid.grabExpr() which captures the output from
     an expression (i.e., not from the current scene) without
     doing any drawing (i.e., no impact on the current scene).
-  
+
+11. upViewport() now (invisibly) returns the path that it goes up
+    (suggested by Ross Ihaka).
+
+    This makes it possible to do things like ...
+
+        upPath <- upViewport(n)
+	...
+	downViewport(upPath)
+
+    ... (i.e., navigate up and then back down to where you came from).
+
+12. The "gamma" gpar has been deprecated (this is a device property
+    not a property of graphical objects;  suggested by Ross Ihaka).
+
+13. New "lex" gpar;  a line width multiplier.
+    The final line width is calculated as ...
+
+        gpar("lex")*gpar("lwd")
+
+    ... and the multiplier is cumulative (like cex) ...
+
+      grid.rect(height=0.5, width=0.5, 
+                gp=gpar(lwd=16))                # lex = 1
+      pushViewport(viewport(gp=gpar(lex=0.5)))
+      grid.rect(height=0.5, width=0.5, 
+                gp=gpar(lwd=16, col="red"))     # lex = 0.5
+      pushViewport(viewport(gp=gpar(lex=0.5)))
+      grid.rect(height=0.5, width=0.5, 
+                gp=gpar(lwd=16, col="green"))   # lex = 0.25!
+
+    This (along with cex) provides support for "zooming" a grid scene.
+
 
 Changes from grid_2.0.0 to grid_2.0.1:
 ------------------------------------

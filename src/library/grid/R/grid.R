@@ -187,9 +187,13 @@ popViewport <- function(n=1, recording=TRUE) {
 upViewport <- function(n=1, recording=TRUE) {
   if (n < 0)
     stop("Must navigate up at least one viewport")
-  if (n == 0)
+  if (n == 0) {
     n <- vpDepth()
+    upPath <- current.vpPath()
+  }
   if (n > 0) {
+    path <- current.vpPath()
+    upPath <- path[(depth(path) - n + 1):depth(path)]
     grid.Call.graphics("L_upviewport", as.integer(n))
     # Record on the display list
     if (recording) {
@@ -197,7 +201,21 @@ upViewport <- function(n=1, recording=TRUE) {
       record(n)
     }
   }
-  invisible()
+  invisible(upPath)
+}
+
+# Return the full vpPath to the current viewport
+current.vpPath <- function() {
+  names <- NULL
+  pvp <- grid.Call("L_currentViewport")
+  while (!rootVP(pvp)) {
+    names <- c(names, pvp$name)
+    pvp <- pvp$parent
+  }
+  if (!is.null(names))
+    vpPathFromVector(rev(names))
+  else
+    names
 }
 
 # Function to obtain the current viewport

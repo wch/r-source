@@ -317,11 +317,15 @@ as.character.path <- function(x, ...) {
     x$name
   else
     paste(x$path, x$name, sep=.grid.pathSep)
-
 }
 
 print.path <- function(x, ...) {
   cat(as.character(x), "\n")
+}
+
+"[.vpPath" <- function(x, index, ...) {
+  names <- unlist(strsplit(as.character(x), .grid.pathSep))[index]
+  vpPathFromVector(names)
 }
 
 # Explode path$path

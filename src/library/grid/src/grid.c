@@ -2151,7 +2151,13 @@ static SEXP gridText(SEXP label, SEXP x, SEXP y, SEXP just,
 		int j = 0;
 		textRect(xx[i], yy[i], txt, i, &gc,
 			 hjust, vjust, 
-			 numeric(rot, i % LENGTH(rot)) + rotationAngle, 
+			 /*
+			  * When calculating bounding rect for text
+			  * only consider rotation of text within 
+			  * local context, not relative to device
+			  * (so don't add rotationAngle)
+			  */
+			 numeric(rot, i % LENGTH(rot)), 
 			 dd, &trect);
 		while (doDrawing && (j < numBounds)) 
 		    if (intersect(trect, bounds[j++]))
@@ -2190,10 +2196,6 @@ static SEXP gridText(SEXP label, SEXP x, SEXP y, SEXP just,
 		 * Sizing text
 		 */
 		if (R_FINITE(xx[i]) && R_FINITE(yy[i])) {
-		    textRect(xx[i], yy[i], txt, i, &gc,
-			     hjust, vjust, 
-			     numeric(rot, i % LENGTH(rot)) + rotationAngle, 
-			     dd, &trect);
 		    minx = fmin2(trect.x1, 
 				 fmin2(trect.x2, 
 				       fmin2(trect.x3, trect.x4)));

@@ -156,6 +156,15 @@ double gpLineMitre(SEXP gp, int i) {
     return REAL(linemitre)[i % LENGTH(linemitre)];
 }
 
+SEXP gpLexSXP(SEXP gp) {
+    return VECTOR_ELT(gp, GP_LEX);
+}
+
+double gpLex(SEXP gp, int i) {
+    SEXP lex = gpLexSXP(gp);
+    return REAL(lex)[i % LENGTH(lex)];
+}
+
 /*
  * Never access fontface because fontface values are stored in font
  * Historical reasons ...
@@ -194,7 +203,10 @@ void gcontextFromgpar(SEXP gp, int i, R_GE_gcontext *gc)
     gc->col = combineAlpha(gpAlpha(gp, i), gpCol(gp, i));
     gc->fill = combineAlpha(gpAlpha(gp, i), gpFill(gp, i));
     gc->gamma = gpGamma(gp, i);
-    gc->lwd = gpLineWidth(gp, i);
+    /*
+     * Combine gpLex with lwd
+     */
+    gc->lwd = gpLineWidth(gp, i) * gpLex(gp, i);
     gc->lty = gpLineType(gp, i);
     gc->lend = gpLineEnd(gp, i);
     gc->ljoin = gpLineJoin(gp, i);
@@ -253,10 +265,10 @@ void initGPar(GEDevDesc *dd)
     NewDevDesc *dev = dd->dev;
     SEXP gpar, gparnames, class;
     SEXP gpfill, gpcol, gpgamma, gplty, gplwd, gpcex, gpfs, gplh, gpfont;
-    SEXP gpfontfamily, gpalpha, gplineend, gplinejoin, gplinemitre;
+    SEXP gpfontfamily, gpalpha, gplineend, gplinejoin, gplinemitre, gplex;
     SEXP gsd = (SEXP) dd->gesd[gridRegisterIndex]->systemSpecific;
-    PROTECT(gpar = allocVector(VECSXP, 14));
-    PROTECT(gparnames = allocVector(STRSXP, 14));
+    PROTECT(gpar = allocVector(VECSXP, 15));
+    PROTECT(gparnames = allocVector(STRSXP, 15));
     SET_STRING_ELT(gparnames, GP_FILL, mkChar("fill"));
     SET_STRING_ELT(gparnames, GP_COL, mkChar("col"));
     SET_STRING_ELT(gparnames, GP_GAMMA, mkChar("gamma"));
@@ -271,6 +283,7 @@ void initGPar(GEDevDesc *dd)
     SET_STRING_ELT(gparnames, GP_LINEEND, mkChar("lineend"));
     SET_STRING_ELT(gparnames, GP_LINEJOIN, mkChar("linejoin"));
     SET_STRING_ELT(gparnames, GP_LINEMITRE, mkChar("linemitre"));
+    SET_STRING_ELT(gparnames, GP_LEX, mkChar("lex"));
     setAttrib(gpar, R_NamesSymbol, gparnames);
     /* FIXME:  Need to export col2name via (probably) GraphicsEngine.h
      * In the meantime I just have to override the device settings
@@ -322,9 +335,12 @@ void initGPar(GEDevDesc *dd)
     PROTECT(gplinemitre = allocVector(REALSXP, 1));
     REAL(gplinemitre)[0] = 10;
     SET_VECTOR_ELT(gpar, GP_LINEMITRE, gplinemitre);
+    PROTECT(gplex = allocVector(REALSXP, 1));
+    REAL(gplex)[0] = 1;
+    SET_VECTOR_ELT(gpar, GP_LEX, gplex);
     PROTECT(class = allocVector(STRSXP, 1));
     SET_STRING_ELT(class, 0, mkChar("gpar"));
     classgets(gpar, class);
     SET_VECTOR_ELT(gsd, GSS_GPAR, gpar);
-    UNPROTECT(17);
+    UNPROTECT(18);
 }
