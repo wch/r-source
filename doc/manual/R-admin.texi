@@ -95,7 +95,7 @@ and unpack it with
 	tar xvfz R-x.y.z.tgz
 @end smallexample
 @noindent
-on systems that have GNU tar installed.  On other systems you need at
+on systems that have GNU @code{tar} installed.  On other systems you need at
 least to have the @code{gzip} program installed.  Then you can use
 @smallexample
 	gzip -dc R-x.y.z.tgz | tar xvf -
@@ -612,7 +612,7 @@ specify location of @code{tkConfig.sh}
 @subsection Linear Algebra
 
 The linear algebra routines in @R{} can make use of enhanced BLAS (Basic
-Linear Algebra System) routines.  Some are compiler-system-specific
+Linear Algebra Subprograms) routines.  Some are compiler-system-specific
 (@code{libcxml} and @code{libdxml} on Alphas, @code{libsunperf} on Sun
 Sparc, @code{libscs} and @code{libcomplib.sgimath} on SGI,
 @code{libessl} on IBM) but ATLAS (@uref{http://www.netlib.org/atlas}) is a
