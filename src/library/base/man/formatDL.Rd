@@ -1,7 +1,9 @@
 \name{formatDL}
 \alias{formatDL}
 \title{Format Description Lists}
-\description{}
+\description{Format vectors of items and their descriptions as 2-column
+  tables or LaTeX-style description lists.
+}
 \usage{
 formatDL(x, y, style = c("table", "list"),
          width = 0.9 * getOption("width"), indent = NULL)
@@ -41,4 +43,3 @@ writeLines(formatDL(x$Entry, x$Description))
 writeLines(formatDL(x$Entry, x$Description, style = "list"))
 }
 \keyword{print}
-
