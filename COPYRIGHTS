@@ -70,11 +70,26 @@ src/unix/rotated.[ch]
 src/appl/chisqsim.c, loglin.c
 src/library/ts/src/starma.f
 src/library/mva/src/kmns.f
-src/nmath/pgamma.c, pnbeta.c, pnchisq.c, pnt.c, qbeta.c, qgamma.c, 
-	qnorm.c, qtukey.c, sunif.c
+src/nmath/pgamma.c
+src/nmath/pnbeta.c
+src/nmath/pnchisq.c
+src/nmath/pnt.c
+src/nmath/qbeta.c
+src/nmath/qgamma.c
+src/nmath/qnorm.c
+src/nmath/qtukey.c
+src/nmath/sunif.c
+  are based in whole or in part on Applied Statistics algorithms
+  (C) Royal Statistical Society
 
-are based in whole or in part on Applied Statistics algorithms
-(C) Royal Statistical Society
+
+src/library/ctest/src/alnorm.f
+src/library/ctest/src/nscor.f
+src/library/ctest/src/ppnd.f
+src/library/ctest/src/prho.f
+src/library/ctest/src/swilk.f
+  are based in whole or in part on Applied Statistics algorithms
+  (C) Royal Statistical Society
 
 
 src/gnome/devGNOME.c, devGTK.c, gdkrotated.c, gnome-find-dialog.c,

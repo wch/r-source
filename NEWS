@@ -20,6 +20,10 @@ NEW FEATURES
 	always available. The class of regular expressions supported
 	will be slightly wider on some Unix platforms.
 
+    o	package ctest (for classical tests) is now part of the base
+	distribution, and also contains chisq.test, prop.test and t.test
+	which previously were in package base.
+
 
 BUG FIXES
 
