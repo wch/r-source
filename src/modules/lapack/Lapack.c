@@ -748,10 +748,10 @@ static SEXP modLa_chol2inv(SEXP A, SEXP size)
 
 /* ------------------------------------------------------------ */
 
-static SEXP modLa_dgesv(SEXP A, SEXP Bin)
+static SEXP modLa_dgesv(SEXP A, SEXP Bin, SEXP tolin)
 {
     int n, p, info, *ipiv, *Adims, *Bdims;
-    double *avals;
+    double *avals, anorm, rcond, tol = asReal(tolin), *work;
     SEXP B;
 
     if (!(isMatrix(A) && isReal(A)))
@@ -773,13 +773,19 @@ static SEXP modLa_dgesv(SEXP A, SEXP Bin)
     ipiv = (int *) R_alloc(n, sizeof(int));
 
     avals = (double *) R_alloc(n * n, sizeof(double));
-    /* work on a copy of x */
+				/* work on a copy of A */
     Memcpy(avals, REAL(A), (size_t) (n * n));
     F77_CALL(dgesv)(&n, &p, avals, &n, ipiv, REAL(B), &n, &info);
     if (info < 0)
 	error("argument %d of Lapack routine dgesv had illegal value", -info);
     if (info > 0)
 	error("Lapack routine dgesv: system is exactly singular");
+    anorm = F77_CALL(dlange)("1", &n, &n, REAL(A), &n, (double*) NULL);
+    work = (double *) R_alloc(4*n, sizeof(double));
+    F77_CALL(dgecon)("1", &n, avals, &n, &anorm, &rcond, work, ipiv, &info);
+    if (rcond < tol)
+	error("system is computationally singular: reciprocal condition number = %g",
+	      rcond);
     UNPROTECT(1);
     return B;
 }

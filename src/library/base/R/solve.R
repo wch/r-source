@@ -13,7 +13,7 @@ solve.qr <- function(a, b, ...)
     return(qr.coef(a, b))
 }
 
-solve.default <- function(a, b, tol = 1e-7, LINPACK = FALSE, ...)
+solve.default <- function(a, b, tol = 1e-10, LINPACK = FALSE, ...)
 {
     if(is.complex(a) || (!missing(b) && is.complex(b))) {
         a <- as.matrix(a)
@@ -41,9 +41,9 @@ solve.default <- function(a, b, tol = 1e-7, LINPACK = FALSE, ...)
         storage.mode(a) <- "double"
         return (if (is.matrix(b)) {
             rownames(b) <- colnames(a)
-	    .Call("La_dgesv", a, b, PACKAGE = "base")
+	    .Call("La_dgesv", a, b, tol, PACKAGE = "base")
 	} else
-	    drop(.Call("La_dgesv", a, as.matrix(b), PACKAGE = "base")))
+	    drop(.Call("La_dgesv", a, as.matrix(b), tol, PACKAGE = "base")))
     }
     a <- qr(a, tol = tol)
     nc <- ncol(a$qr)

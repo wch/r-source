@@ -3,7 +3,7 @@
 \usage{
 solve(a, b, \dots)
 
-\method{solve}{default}(a, b, tol = 1e-7, LINPACK = FALSE, \dots)
+\method{solve}{default}(a, b, tol = 1e-10, LINPACK = FALSE, \dots)
 }
 \alias{solve}
 \alias{solve.default}
@@ -51,9 +51,10 @@ solve(a, b, \dots)
 \examples{
 hilbert <- function(n) { i <- 1:n; 1 / outer(i - 1, i, "+") }
 h8 <- hilbert(8); h8
-sh8 <- solve(h8)
+sh8 <- solve(h8, tol = 1.e-12)  ## h8 is nearly singular
 round(sh8 \%*\% h8, 3)
 
+try(solve(h8))   ## using the default tolerance h8 is declared singular
 A <- hilbert(4)
 A[] <- as.complex(A)
 ## might not be supported on all platforms
