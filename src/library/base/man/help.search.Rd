@@ -58,11 +58,11 @@ help.search(pattern, fields = c("alias", "title"),
 }
 \details{
   Upon installation of a package, a contents data base which contains
-  the information on name, aliases, title and keywords (with aliases and
-  keywords currently collapsed to character strings) is computed from
-  the Rd files in the package and serialized as \file{CONTENTS.rds} (or
-  as \file{CONTENTS} in Debian Control Format) in the top-level package
-  installation directory.  This is the data base searched by
+  the information on name, aliases, title and keywords is computed from
+  the Rd files in the package and serialized as \file{CONTENTS.rds} (or,
+  prior to \R 1.7, as \file{CONTENTS} in Debian Control Format with
+  aliases and keywords collapsed to character strings) in the top-level
+  package installation directory.  This is the data base searched by
   \code{help.search()}.
 
   The arguments \code{apropos} and \code{whatis} play a role similar to

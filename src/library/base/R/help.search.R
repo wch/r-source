@@ -52,12 +52,12 @@ function(pattern, fields = c("alias", "title"),
 
     ## <FIXME>
     ## Currently, the information used for help.search in stored in
-    ## package-level CONTENTS files in DCF format.  As it is expensive
-    ## to read this information into R we use a global file cache for
-    ## this information if possible.  This is wrong because multiple
-    ## processes or threads use the same cache (no locking!), and we
-    ## should really save the information on a package or library level,
-    ## preferably already at package install time.  Argh ...
+    ## package-level CONTENTS files.  As it is expensive to build the
+    ## help.search db, we use a global file cache for this information
+    ## if possible.  This is wrong because multiple processes or threads
+    ## use the same cache (no locking!), and we should really save the
+    ## information on a package or library level, preferably already at
+    ## package install time.  Argh ...
     ## </FIXME>
 
     ### Set up the help db.
@@ -65,7 +65,12 @@ function(pattern, fields = c("alias", "title"),
         rebuild <- TRUE
     if(!rebuild) {
         ## Try using the saved help db.
+        ## <FIXME>
+        ## Shouldn't we unserialize instead?
         load(file = help.db)
+        ## </FIXME>
+        ## If not a list (pre 1.7 format), rebuild.
+        if(!is.list(db)) rebuild <- TRUE
         ## Need to find out whether this has the info we need.
         ## Note that when looking for packages in libraries we always
         ## use the first location found.  Hence if the library search
@@ -83,7 +88,7 @@ function(pattern, fields = c("alias", "title"),
             rebuild <- TRUE
     }
     if(rebuild) {
-        ## Check whether we can save the help db lateron
+        ## Check whether we can save the help db lateron.
         save.db <- FALSE    
         dir <- switch(.Platform$OS.type,
                       "windows" = Sys.getenv("R_USER"),
@@ -97,22 +102,23 @@ function(pattern, fields = c("alias", "title"),
             || ((unlink(dir) == 0) && dir.create(dir)))
            && (unlink(dbfile) == 0))
             save.db <- TRUE
-        ## Create the help db
-        db <- NULL
-        if(verbose) {
-            cat("Packages:\n")
-            np <- 0
-        }
         ## If we cannot save the help db only use the given packages.
-        contentsEnv <- new.env()
         packagesInHelpDB <- if(!is.null(package) && !save.db)
             package
         else
             .packages(all.available = TRUE, lib.loc = lib.loc)
+        ## Create the help db.
+        contentsEnv <- new.env()
         contentsDCFFields <-
             c("Entry", "Aliases", "Description", "Keywords")
         contentsRDSFields <-
             c("Name", "Aliases", "Title", "Keywords")
+        dbBase <- dbAliases <- dbKeywords <- NULL
+        nEntries <- 0
+        if(verbose) {
+            cat("Packages:\n")
+            np <- 0
+        }
             
         for(p in packagesInHelpDB) {
             if(verbose)
@@ -122,6 +128,9 @@ function(pattern, fields = c("alias", "title"),
             if(length(path) == 0)
                 stop(paste("could not find package", sQuote(p)))
             lib <- dirname(path)
+
+            ## Read the contents info from the respective CONTENTS
+            ## files.
             if(file.exists(contentsFile <-
                           file.path(path, "CONTENTS.rds"))) {
                 contents <-
@@ -145,40 +154,104 @@ function(pattern, fields = c("alias", "title"),
                                 file.path(path, "CONTENTS")))
                 contents <-
                     read.dcf(contentsFile, fields = contentsDCFFields)
+
             if(!is.null(contents)) {
+                ## If we found something ...
                 if((nr <- NROW(contents)) > 0) {
-                    db <- rbind(db,
-                                cbind(rep(p, nr),
-                                      rep(lib, nr),
-                                      contents))
+                    if(!is.data.frame(contents)) {
+                        colnames(contents) <- contentsRDSFields
+                        base <- contents[, c("Name", "Title")]
+                        ## If the contents db is not a data frame, then
+                        ## it has the aliases collapsed.  Split again as
+                        ## we need the first alias as the help topic to
+                        ## indicate for matching Rd objects.
+                        aliases <-
+                            strsplit(contents[, "Aliases"], " +")
+                        ## Don't do it for keywords, though, as these
+                        ## might be missing or non-standard ...
+                    }
+                    else {
+                        base <-
+                            as.matrix(contents[, c("Name", "Title")])
+                        aliases <- contents[, "Aliases"]
+                    }
+
+                    ## IDs holds the numbers of the Rd objects in the
+                    ## help.search db.
+                    IDs <- seq(from = nEntries + 1, to = nEntries + nr)
+                    ## We create 3 character matrices (cannot use data
+                    ## frames for efficiency reasons): 'dbBase' holds
+                    ## all character string data, and 'dbAliases' and
+                    ## 'dbKeywords' hold character vector data in a
+                    ## 3-column character matrix format with entry, ID
+                    ## of the Rd object the entry comes from, and the
+                    ## package the object comes from.  The latter is
+                    ## useful when subscripting according to package.
+                    dbBase <-
+                        rbind(dbBase,
+                              cbind(p, lib, IDs, base,
+                                    topic = sapply(aliases, "[", 1)))
+                    dbAliases <-
+                        rbind(dbAliases,
+                              cbind(unlist(aliases),
+                                    rep(IDs, sapply(aliases, length)),
+                                    p))
+                    keywords <- contents[, "Keywords"]
+                    dbKeywords <-
+                        rbind(dbKeywords,
+                              cbind(unlist(keywords),
+                                    rep(IDs, sapply(keywords, length)),
+                                    p))
+                    nEntries <- nEntries + nr
                 } else {
                     warning(paste("Empty contents for package",
                                   sQuote(p), "in", sQuote(lib)))
                 }
             }
         }
-        if(verbose && (np %% 5 == 0)) cat("\n")
-        colnames(db) <- c("Package", "LibPath", TABLE)
+        if(verbose)
+            cat(ifelse(np %% 5 == 0, "\n", "\n\n"))
+        colnames(dbBase) <-
+            c("Package", "LibPath", "ID", "name", "title", "topic")
+        colnames(dbAliases) <-
+            c("Aliases", "ID", "Package")
+        colnames(dbKeywords) <-
+            c("Keywords", "ID", "Package")
+        db <- list(Base = dbBase,
+                   Aliases = dbAliases,
+                   Keywords = dbKeywords)
         ## Maybe save the help db
+        ## <FIXME>
+        ## Shouldn't we serialize instead?
         if(save.db) {
             attr(db, "LibPaths") <- lib.loc
             save(db, file = dbfile)
             options(help.db = dbfile)
         }
+        ## </FIXME>
     }
 
     ### Matching.
-    if(verbose) cat("\nDatabase of dimension", dim(db))
+    if(verbose)
+        cat("Database of ",
+            NROW(db$Base), " Rd objects (",
+            NROW(db$Aliases), " aliases, ",
+            NROW(db$Keywords), " keywords),\n",
+            sep = "")
     if(!is.null(package)) {
         ## Argument 'package' was given but we built a larger help db to
         ## save for future invocations.  Need to check that all given
         ## packages exist, and only search the given ones.
-        posInHelpDB <- match(package, unique(db[, "Package"]),
-                             nomatch = 0)
+        posInHelpDB <-
+            match(package, unique(db$Base[, "Package"]), nomatch = 0)
         if(any(posInHelpDB) == 0)
             stop(paste("could not find package",
                        sQuote(package[posInHelpDB == 0][1])))
-        db <- db[db[, "Package"] %in% package, , drop = FALSE]
+        db <-
+            lapply(db,
+                   function(x) {
+                       x[x[, "Package"] %in% package, , drop = FALSE]
+                   })
     }
 
     ## If agrep is NULL (default), we want to use fuzzy matching iff 
@@ -199,38 +272,43 @@ function(pattern, fields = c("alias", "title"),
     }
     else
         stop("incorrect agrep specification")
-    
+
+    searchFun <- function(x) {
+        if(agrep)
+            agrep(pattern, x, ignore.case = ignore.case,
+                  max.distance = max.distance)
+        else
+            grep(pattern, x, ignore.case = ignore.case)
+    }
+    dbBase <- db$Base
+    searchDbField <- function(field) {
+        switch(field,
+               alias = {
+                   aliases <- db$Aliases
+                   match(aliases[searchFun(aliases[, "Aliases"]),
+                                 "ID"],
+                         dbBase[, "ID"])
+               },
+               keyword = {
+                   keywords <- db$Keywords
+                   match(keywords[searchFun(keywords[, "Keywords"]),
+                                  "ID"],
+                         dbBase[, "ID"])
+               },
+               searchFun(db$Base[, field]))
+    }
+
     i <- NULL
-    if(agrep) {
-        for(f in fields)
-            i <- c(i, agrep(pattern, db[, f], ignore.case = ignore.case,
-                            max.distance = max.distance))
-    }
-    else {
-        for(f in fields)
-            i <- c(i, grep(pattern, db[, f], ignore.case = ignore.case))
-    }
-
-    db <- db[sort(unique(i)), , drop = FALSE]
-    if(verbose) cat(", matched", NROW(db), "entries.\n")
-
-    ## As the \name is not necessarily a topic documented (i.e., not an
-    ## \alias) we use the *first* \alias as the topic to use for help()
-    ## when accessing the matched entries.
-    firstAliasRegExp <- "^[[:space:]]*([^[:space:]]*)([[:space:]]+.*)*$"
-    db <- cbind(db,
-                topic = gsub(firstAliasRegExp, "\\1", db[, "alias"]))
-    ## <FIXME>
-    ## We should really use the \name if it is among the \alias entries.
-    ## Also, once we build CONTENTS.rda we will have a character vector
-    ## with all aliases ...
-    ## </FIXME>
+    for(f in fields) i <- c(i, searchDbField(f))
+    print(i)
+    db <- dbBase[sort(unique(i)),
+                 c("topic", "title", "Package", "LibPath"),
+                 drop = FALSE]
+    cat("I am here\n")
+    if(verbose) cat("matched", NROW(db), "objects.\n")
 
     ## Retval.
-    y <- list(pattern = pattern,
-              fields = fields,
-              matches = db[, c("topic", "title", "Package", "LibPath"),
-              drop = FALSE])
+    y <- list(pattern = pattern, fields = fields, matches = db)
     class(y) <- "hsearch"
     y
 }
