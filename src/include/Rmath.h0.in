@@ -322,6 +322,9 @@ double  Rlog1p(double);
 #define	trunc	ftrunc
 
 
+/* log(1 - exp(x))  in stable form: */
+#define R_Log1_Exp(x)   ((x) > -M_LN2 ? log(-expm1(x)) : log1p(-exp(x)))
+
 	/* R's versions with !R_FINITE checks */
 
 double R_log(double x);
@@ -554,6 +557,8 @@ double	fprec(double, double);
 double	fround(double, double);
 double	fsign(double, double);
 double	ftrunc(double);
+
+
 
 
 /* ----------------- Private part of the header file ------------------- */
