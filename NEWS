@@ -97,6 +97,9 @@ NEW FEATURES
 
 BUG FIXES
 
+    o	abline now understands the "lwd" graphics parameter if it
+	is supplied as an inline argument.
+
     o	The internals of postscript have been changed so that line
 	textures (dotted dashed etc) look better.  The use of the
 	PostScript "initclip" operator has been stopped so that we
