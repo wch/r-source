@@ -459,8 +459,8 @@ static SEXP ExtractDropArg(SEXP el, int *drop)
 
 SEXP do_subset(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    SEXP ans, dim, ax, px, x, subs;
-    int drop, i, ndim, nsubs, type;
+    SEXP ans;
+    SEXP do_subset_dflt(SEXP, SEXP, SEXP, SEXP);
 
     /* If the first argument is an object and there is an */
     /* approriate method, we dispatch to that method, */
@@ -473,11 +473,18 @@ SEXP do_subset(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     /* Method dispatch has failed, we now */
     /* run the generic internal code. */
+    return do_subset_dflt(call, op, ans, rho);
+}
+
+SEXP do_subset_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    SEXP ans, dim, ax, px, x, subs;
+    int drop, i, ndim, nsubs, type;
 
     /* By default we drop extents of length 1 */
 
     drop = 1;
-    PROTECT(args = ans);
+    PROTECT(args);
     ExtractDropArg(args, &drop);
     x = CAR(args);
 

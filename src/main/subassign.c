@@ -1140,18 +1140,26 @@ static void SubAssignArgs(SEXP args, SEXP *x, SEXP *s, SEXP *y)
 
 SEXP do_subassign(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    SEXP subs, x, y, ans;
-    int nsubs, oldtype;
+    SEXP ans;
+    SEXP do_subassign_dflt(SEXP, SEXP, SEXP, SEXP);
 
     /* This code performs an internal version of method dispatch. */
     /* We evaluate the first argument and attempt to dispatch on it. */
     /* If the dispatch fails, we "drop through" to the default code below. */
 
-    gcall = call;
     if(DispatchOrEval(call, "[<-", args, rho, &ans, 0))
       return(ans);
 
-    PROTECT(args = ans);
+    return do_subassign_dflt(call, op, ans, rho);
+}
+
+SEXP do_subassign_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    SEXP subs, x, y, ans;
+    int nsubs, oldtype;
+
+    gcall = call;
+    PROTECT(args);
 
     /* If there are multiple references to an object we must */
     /* duplicate it so that only the local version is mutated. */
