@@ -474,6 +474,10 @@ Date: Sun, 21 Jul 2002 20:26:12 +0200 (MET DST)
 Subject: Mac Save As... bug
 From: Tim Cole <tjc1@cam.ac.uk>
 Date: Sun, 8 Sep 2002 13:47:00 +0100
+* PR# 2276 *
+Subject: Mac specific - quartz leads to crash
+From: h95mr@mun.ca
+Date: Fri, 8 Nov 2002 16:28:50 +0100 (MET)
 
 Directory:  Misc
 
@@ -635,71 +639,19 @@ Date: Mon, 14 Oct 2002 01:34:45 +0200 (MET DST)
 Subject: [R] grid(): defaults of nx and ny do not correspond with axis()
 From: Wolfram Fischer <wolfram@fischer-zim.ch>
 Date: Tue, 5 Nov 2002 15:36:45 +0100
-* PR# 2260 *
-Subject: [¼ºÀÎ±¤°í]...È­²öÇÑ¼ºÀÎ½ÎÀÌÆ® ±¸°æÇÔÇØº¸¾Æ¿ä
-From: "¿©¿ì" <khk9933@dreamwiz.com>
-Date: Wed, 6 Nov 2002 06:37:45 +0900
-* PR# 2261 *
-Subject: (±¤°í)¼±±×¶ó½º ÀÌÁ¨ Æí±¤·»Áî·Î ¹Ù²Ù¼¼¿ä.
-From: ±èÈ¿±Ù <manhwas@empal.com>
-Date: Wed, 6 Nov 2002 17:20:11 +0900
-* PR# 2262 *
-Subject: Lower your company phone bill every month!
-From: E-Business News <B.Macki@etm.ie>
-Date: Wed, 06 Nov 2002 08:03:01 -2000
-* PR# 2263 *
-Subject: ÀÇ»ç¼±»ý´Ôµµ ÀÌ·± ºÎ¾÷Àº ÇÑ´ä´Ï´Ù.(±¤°í)
-From: ¸Þ´Ï¾Æ<pys5025@dreamwiz.com>
-Date: Wed, 6 Nov 2002 17:05:18 +0100 (MET)
-* PR# 2264 *
-Subject: Worm Klez.E immunity
-From: foundatoe <foundatoe@cameltoe.org>
-Date: Wed,  6 Nov 2002 16:59:10 -0600
-* PR# 2265 *
-Subject: ±Ð±z¦p¦ó¦¨¬°ºô¸ô¤uµ{®v
-From: mlpi_uy_rff3d1w@amazon.com
-Date: 07 Nov 2002 02:06:30 +0800
 * PR# 2266 *
 Subject: rbind
 From: louisept@pweh.com
 Date: Thu, 7 Nov 2002 01:47:50 +0100 (MET)
-* PR# 2267 *
-Subject: Contents
-From: v_v918 <v_v918@yahoo.com.tw>
-Date: Wed, 6 Nov 2002 19:58:09 -0600
-* PR# 2268 *
-Subject: (¼ºÀÎ±¤°í)¼öÀÔÄÜµ¼,¼ºÀÎ¿ëÇ° Àü¹®Á¡ÀÔ´Ï´Ù. ±¸°æ ¿À¼¼¿ä!
-From: ¼öÀÔ¿ëÇ° <ljk1397@lycos.co.kr>
-Date: Thu, 7 Nov 2002 12:57:52 +0900
-* PR# 2269 *
-Subject: (±¤°í) 12°¡Áö Å×¸¶º° ¹ÌÆÃÁ¤º¸! '¾ÆÀÌ·¯ºê¹Ú½º'¿¡ ´Ù ¸ð¿´´Ù!
-From: ¾ÆÀÌ·¯ºê¹Ú½º<leaders06@kornet.net>
-Date: Thu, 7 Nov 2002 13:08:36 +0900
-* PR# 2270 *
-Subject: (±¤°í)¹ÌÄ£¿µ¾î·Î ½±°Ô. »ùÇÃ·Î È®ÀÎ
-From: ¹ß¼Û´ã´ç <ohmyenglish@korea.com>
-Date: Thu, 7 Nov 2002 14:14:05 +0900
-* PR# 2271 *
-Subject: [±¤ °í]12¿ù ¿¬±Ýº¸Çè·á 10%ÀÎ»ó-ÀÌÀü°¡ÀÔÀ¯¸®
-From: Á¶È«¹ü<greattao@empal.com>
-Date: Thu, 7 Nov 2002 06:32:58 +0100 (MET)
-* PR# 2272 *
-Subject: Worm Klez.E immunity
-From: info-gnu-chess <info-gnu-chess@prep.ai.mit.edu>
-Date: Thu, 7 Nov 2002 13:06:47 -0600
-* PR# 2273 *
-Subject: Prepoznajte priliku jos danas                                                                           1564hFgK3-140HMdq-16
-From: pro6320h06@yahoo.com
-Date: Thu, 07 Nov 2002 15:15:57 +0500
-* PR# 2274 *
-Subject: A  powful tool
-From: webmaster <webmaster@xemacs.org>
-Date: Fri, 8 Nov 2002 08:53:19 +0800
-* PR# 2275 *
-Subject: Re: Bug#168259: r-base-core: help.start() assumes netscape is installed 
-From: "Dirk Eddelbuettel" <edd@debian.org>
-Date: Fri, 08 Nov 2002 09:01:05 -0600
-* PR# 2276 *
-Subject: Mac specific - quartz leads to crash
-From: h95mr@mun.ca
-Date: Fri, 8 Nov 2002 16:28:50 +0100 (MET)
+* PR# 2278 *
+Subject: Quality Inkjets, 8O percent off today rurx
+From: dgtramrheinc <pcbsrgr@excite.com>
+Date: Sat, 9 Nov 2002 09:58:29 -0800
+* PR# 2279 *
+Subject: (¼ºÀÎ±¤°í) ÀÌ¸ðµç°É ÇÏ·ç¿¡ ´Üµ·1000¿ø¿¡?! @.@
+From: ÇÑ¼ÖÀÌ <sun486077@lycos.co.kr>
+Date: Sun, 10 Nov 2002 15:49:12 +0900
+* PR# 2280 *
+Subject: (±¤°í)ÁãÆ÷ ÁÁ¾ÆÇÏ¼¼¿ä?!!   
+From: ÁãÆ÷³ª¶ó<chacha019@empal.com>
+Date: Sun, 10 Nov 2002 23:13:06 -0600
