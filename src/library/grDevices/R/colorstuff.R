@@ -3,7 +3,7 @@ colours <- colors
 col2rgb <- function(col, alpha=FALSE) {
   result <- .Internal(col2rgb(col))
   if (!alpha)
-    result <- result[1:3,]
+    result <- result[1:3,, drop=FALSE]
   result
 }
 

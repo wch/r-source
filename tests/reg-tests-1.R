@@ -3241,3 +3241,7 @@ a <- array(1:24, dim=2:4)
 func1 <- function(x) c(a=mean(x), b=max(x))
 apply(a, 1:2, func1)
 ## failed in 1.9.1
+
+
+# col2rgb must return a matrix for a single colour
+stopifnot(is.matrix(col2rgb("red")))
