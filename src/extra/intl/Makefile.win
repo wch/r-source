@@ -6,22 +6,19 @@ include ../../gnuwin32/MkRules
 all: libintl.a header-install
 
 header-install: libintl.h
-	cp -p $< ../../include
-	cp -p $< ../../../include
+	@cp -p $< ../../include
+	@cp -p $< ../../../include
 
-prefix = /usr/local
-datadir = ${prefix}/share
-localedir = $(datadir)/locale
-aliaspath = $(localedir)
-
-DEFS = -DLOCALEDIR=\"$(localedir)\" -DLOCALE_ALIAS_PATH=\"$(aliaspath)\" \
--DIN_LIBINTL -DNO_XMALLOC -DHAVE_CONFIG_H
+## we never use the default location for locales, and
+## Windows never uses the locale or charset alias files.
+DEFS = -DIN_LIBINTL -DNO_XMALLOC -DHAVE_CONFIG_H
 
 CFLAGS = -O2 $(DEFS) -I. -I../../include
+dcigettext-CFLAGS=-DLOCALEDIR=\"\"
 
 SOURCES = \
  bindtextdom.c dcgettext.c dgettext.c gettext.c finddomain.c loadmsgcat.c \
- localealias.c textdomain.c l10nflist.c explodename.c dcigettext.c \
+ textdomain.c l10nflist.c explodename.c dcigettext.c \
  dcngettext.c dngettext.c ngettext.c plural.c plural-exp.c localcharset.c \
  localename.c log.c printf.c osdep.c intl-compat.c
 
@@ -52,5 +49,4 @@ printf.o: printf-args.h printf-args.c printf-parse.h wprintf-parse.h xsize.h \
    printf-parse.c vasnprintf.h vasnwprintf.h vasnprintf.c
 
 clean:
-	rm -f *.a *.o
-	rm -f libgnuintl.h libintl.h charset.alias ref-add.sed ref-del.sed
+	rm -f *.a *.o libgnuintl.h libintl.h

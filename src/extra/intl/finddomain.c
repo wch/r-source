@@ -111,6 +111,7 @@ _nl_find_domain (const char *dirname, char *locale,
       /* NOTREACHED */
     }
 
+#ifndef WIN32 /* not used on Windows */
   /* See whether the locale value is an alias.  If yes its value
      *overwrites* the alias name.  No test for the original value is
      done.  */
@@ -130,6 +131,7 @@ _nl_find_domain (const char *dirname, char *locale,
       memcpy (locale, alias_value, len);
 #endif
     }
+#endif
 
   /* Now we determine the single parts of the locale name.  First
      look for the language.  Termination symbols are `_' and `@' if
