@@ -106,7 +106,9 @@
   The first character string of a character vector is passed as a C
   character array to Fortran: that string may be usable as
   \code{character*255} if its true length is passed separately.  Only up
-  to 255 characters of the string are passed back.
+  to 255 characters of the string are passed back.  (How well this works,
+  or even if it works at all, depends on the C and Fortran compilers
+  and the platform.)
 
   Functions, expressions, environments and other language elements are
   passed as the internal \R pointer type \code{SEXP}.  This type is
