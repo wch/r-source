@@ -563,7 +563,7 @@ cat >> confdefs.h <<\EOF
 EOF
 
 cat >> confdefs.h <<\EOF
-#define R_MINOR "61.2"
+#define R_MINOR "61.3"
 EOF
 
 cat >> confdefs.h <<\EOF
@@ -575,11 +575,11 @@ cat >> confdefs.h <<\EOF
 EOF
 
 cat >> confdefs.h <<\EOF
-#define R_DAY "15"
+#define R_DAY "NN"
 EOF
 
 cat >> confdefs.h <<\EOF
-#define R_MONTH "March"
+#define R_MONTH "XXXX"
 EOF
 
 cat >> confdefs.h <<\EOF
