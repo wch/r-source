@@ -66,6 +66,7 @@ The current version of this document is @value{VERSION}.
 * Obtaining R::                 
 * Installing R under Unix::     
 * Installing R under Windows::  
+* Installing R under Mac OS X::  
 * Add-on packages::             
 * Essential and useful other programs::  
 * Configuration on Unix::       
@@ -208,9 +209,9 @@ rs6000-ibm-aix, hppa-hp-hpux, and sparc-sun-solaris.
 @cindex Linux
 @cindex Mac OS X
 In addition, binary distributions are available for most common Linux
-distributions, and for Mac OS X (Darwin) with X11.  See the @acronym{FAQ}
-for current details.  These are installed in platform-specific ways.  So
-for the rest of this chapter we consider only building from the sources.
+distributions, and for Mac OS X (Darwin) with and without X11.  See the 
+@acronym{FAQ} for current details.  These are installed in platform-specific 
+ways.  So for the rest of this chapter we consider only building from the sources.
 
 @menu
 * Simple compilation::          
@@ -427,7 +428,7 @@ To ensure that the installed tree is usable by the right group of users,
 set @code{umask} appropriately (perhaps to @samp{022}) before unpacking
 the sources and throughout the build process.
 
-@node Installing R under Windows, Add-on packages, Installing R under Unix, Top
+@node Installing R under Windows, Installing R under Mac OS X, Installing R under Unix, Top
 @chapter Installing R under Windows
 @cindex Installing under Windows
 
@@ -480,7 +481,58 @@ disc).
 For further details, including how to make the documentation and how to
 cross-compile, see @file{src/gnuwin32/INSTALL}.
 
-@node Add-on packages, Essential and useful other programs, Installing R under Windows, Top
+@node Installing R under Mac OS X, Add-on packages, Installing R under Windows, Top
+@chapter Installing R under Mac OS X
+@cindex Installing R under Mac OS X
+
+The @file{bin/macosx} directory of a @acronym{CRAN} site contains
+binaries for a base distribution and a large number of add-on packages
+from @acronym{CRAN} to run on Mac OS X version 10.2.0 or higher.
+
+The simplest way is to use @file{R.dmg.sit}.  Just double-click on the icon and the
+archive will be expanded as an image di file. Read the @file{ReadMe.txt} inside the
+disk image and follow the instructions.
+
+See the @uref{http://cran.r-project.org/bin/macosx/RMacOSX-FAQ.html, R for Mac OS X
+@acronym{FAQ}} for more details.
+
+@menu
+* Building from source on Mac OS X::        
+@end menu
+
+@node Building from source on Mac OS X,  , Installing R under Mac OS X, Installing R under Mac OS X
+@section Building from source on Mac OS X
+
+If you want to build this port from the sources, you can read the above
+mentioned @uref{http://cran.r-project.org/bin/macosx/RMacOSX-FAQ.html, R for Mac OS X
+@acronym{FAQ}} for full details. You will need to collect and install some tools 
+as explained in the document. Than you have to expand the R sources and
+configure R appropriately, for example
+
+
+@smallexample
+tar zxvf R-@value{VERSIONno}.tgz
+cd R-@value{VERSIONno}
+./configure --with-blas='-framework vecLib' --with-lapack --with-aqua 
+make
+@end smallexample
+
+@noindent
+sit back and wait. The last option @command{--with-aqua} is needed only if you want a Console GUI.
+The first two options are strongly recommended. 
+
+@R{} is by default configured and installed as a framework called @file{R.framework}. The 
+default path for @file{R.framework} is @file{/Library/Frameworks} but this can be changed
+at configure time specifying the flag @command{--enable-R-framework[=DIR]} or at install
+time as
+@smallexample
+make prefix=/where/you/want/R.framework/to/go install
+@end smallexample
+
+@noindent
+the @file{R.framework} has not to be specified in the path.
+
+@node Add-on packages, Essential and useful other programs, Installing R under Mac OS X, Top
 @chapter Add-on packages
 @cindex Packages
 
@@ -1160,21 +1212,14 @@ libraries with the exception of the ATLAS BLAS libraries.
 @subsection Mac OS X
 @cindex Mac OS X
 
-You can build @R{} as a Unix application on Mac OS X.  You will need the
-DevTools, @command{f2c} or @command{g77}, and the @code{dlcompat}
-library.  You will also need to install an X sub-system or configure
-with @option{--without-x}.
+You can build @R{} as a Unix application on Mac OS X.  You will need Apple Developer
+Tools, @command{f2c} or @command{g77}.  You will also need to install an X sub-system 
+or configure with @option{--without-x}. The X window manager is part of the 
+standard Mac OS X distribution since Mac OS X version 10.3.
 
-@command{f2c}, @command{g77}, the @code{dlcompat} library, and X server
-and support libraries are available from the Fink project
-(@uref{http://fink.sourceforge.net}).  At the time of writing
-@command{f2c} and @command{g77} were not available as part of the Fink
-binary distribution and needed to be installed directly; for example for
-@command{g77} use
+For more information on how to find these tools please read the  
+@uref{http://cran.r-project.org/bin/macosx/RMacOSX-FAQ.html, R for Mac OS X @acronym{FAQ}}.
 
-@smallexample
-fink install g77
-@end smallexample
 
 @cindex BLAS library
 @cindex LAPACK library
@@ -1188,8 +1233,7 @@ configuration options
 to provide higher-performance versions of the BLAS and LAPACK routines.
 With @command{gcc 3.1} that appears to be the only way to build @R{}, as
 the Fortran support routines in @code{libg2c} cannot be linked into a
-dynmaic library.  (We have had reports of success with pre-release
-versions of @command{gcc 3.3}.)
+dynamic library.  (We have had reports of success with @command{gcc 3.3}.)
 
 
 @node Solaris, HP-UX, Mac OS X, Platform notes
