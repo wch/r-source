@@ -413,10 +413,10 @@ scrollbar.
 7.1 How can I compile R from source?
 ====================================
 
-Get the R sources. Suppose you want to compile R-1.0.0.
+Get the R sources. Suppose you want to compile R-1.0.1.
 
-     tar zxvf R-1.0.0.tgz
-     cd R-1.0.0
+     tar zxvf R-1.0.1.tgz
+     cd R-1.0.1
      cd src\gnuwin32
 
 Now read the `INSTALL' file and set up all the tools needed. Then you

@@ -1,7 +1,7 @@
-R 1.0.0 for Windows 9x and NT
+R 1.0.1 for Windows 9x and NT
 =============================
 
-This distribution contains a binary distribution of R-1.0.0 to run on
+This distribution contains a binary distribution of R-1.0.1 to run on
 Windows 95, 98, NT4 and 2000 on Intel/clone chips. See README for fuller
 details, including how to install the binary versions.
 
@@ -53,14 +53,14 @@ ftp://ftp.microsoft.com/softlib/mslfiles/hcwsetup.exe.
 All of these need to be installed and in your path, and the
 appropriate environment variables set.
 
-You also need: the R source (R-1.0.0.tgz), and to build the
+You also need: the R source (R-1.0.1.tgz), and to build the
 installer, unzip5.40.zip from any Info-Zip mirror.  Do remember to set
 MAKE_MODE to UNIX (set MAKE_MODE=UNIX at the Windows command-line).
 
 
-Then: untar R-1.0.0.tgz somewhere (with no spaces in the path names),
+Then: untar R-1.0.1.tgz somewhere (with no spaces in the path names),
 
-	cd /somewhere/R-1.0.0/src/gnuwin32
+	cd /somewhere/R-1.0.1/src/gnuwin32
 
 edit MkRules to set the appropriate paths as needed
 edit Makefile to set the type(s) of help that you want built.
@@ -130,12 +130,12 @@ a cross-built version of binutils 2.9.4.
 
 You will need Perl, zip and unzip installed.
 
-You also need: the R source (R-1.0.0.tgz), and to build the installer,
+You also need: the R source (R-1.0.1.tgz), and to build the installer,
 unzip5.40.zip from any Info-ZIP mirror.
 
-Then: untar R-1.0.0.tgz somewhere
+Then: untar R-1.0.1.tgz somewhere
 
-	cd /somewhere/R-1.0.0/src/gnuwin32
+	cd /somewhere/R-1.0.1/src/gnuwin32
 
 Edit MkRules to set BUILD=CROSS and the appropriate paths as needed.
 Edit Makefile to set the type(s) of help that you want built. (You
