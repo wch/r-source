@@ -319,8 +319,10 @@ for testing) use
 
 	cd installer
 	make imagedir
-	tar jcvf rw2000.tar.bz2 rw2000  # or something similar
+	zip -r9X rw2000.zip rw2000  # or something similar
 
+Currently we have not found a reliable way to convert base to lazy-loading
+when cross-building, so it is left in the old format.
 
 
 Feedback
