@@ -32,6 +32,7 @@ SOURCES_C = \
 	loglin.c \
 	lowess.c \
 	machar.c \
+	maxcol.c \
 	massdist.c \
 	pretty.c \
 	pythag.c \

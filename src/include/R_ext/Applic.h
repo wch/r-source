@@ -124,6 +124,8 @@ void machar(int *ibeta, int *it, int *irnd, int *ngrd, int *machep, int *negep,
 /* massdist.c */
 /* ...............*/
 
+void R_max_col(double *matrix, int *pnr, int *nc, int *maxes);
+
 /* pretty.c */
 double R_pretty0(double *lo, double *up, int *ndiv, int min_n,
 	       double shrink_sml, double high_u_fact[],
@@ -248,7 +250,7 @@ int F77_SYMBOL(dtrco)(double *t, int *ldt, int *n, double *rcond,
 int F77_SYMBOL(dtrsl)(double *t, int *ldt, int *n, double *b, int *job,
 		      int *info);
 
-double Brent_fmin(double ax, double bx, double (*f)(double, void *), 
+double Brent_fmin(double ax, double bx, double (*f)(double, void *),
 		  void *info, double tol);
 int F77_SYMBOL(lminfl)(double *x, int *ldx, int *n, int *k, double *qraux,
 		       double *resid, double *hat, double *coef, double *sigma);

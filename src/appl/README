@@ -2,11 +2,15 @@ NOTE: The following source files are   NOT used at all currently
 ----
       They are BLAS/Linpack for complex matrices and vectors:
 
-	zblas.f	 
-	zeroin.f 
-	zhico.f	 
-	zhifa.f	 
-	zhisl.f	 
-	zsico.f	 
-	zsifa.f	 
-	zsisl.f	 
+	zblas.f
+	zeroin.f
+	zhico.f
+	zhifa.f
+	zhisl.f
+	zsico.f
+	zsifa.f
+	zsisl.f
+
+Hint:	Adding new functionality here needs
+	an entry *BOTH* in Makefile.in and ROUTINES
+	(and usually further in ../../doc/manual/R-exts.texi).

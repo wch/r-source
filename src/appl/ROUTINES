@@ -4,7 +4,7 @@
 ##	either as .C() or .Fortran() in R
 ##	or     by e.g. mva.so or modreg.so when that one is loaded.
 ##
-## This is the basis of the `FFTab.h' and `FFDecl.h' files in
+## This is the basis (source) of the `FFTab.h' and `FFDecl.h' files in
 ## `../include' which are included by  `../unix/dynload.c'.
 ##
 C_FUNCTION(R_approx)
@@ -53,6 +53,7 @@ F77_SUBROUTINE(lminfl)
 C_FUNCTION(loglin)
 C_FUNCTION(lowess)
 C_FUNCTION(massdist)
+C_FUNCTION(R_max_col)
 C_FUNCTION(optif9)
 C_FUNCTION(R_pretty)
 C_FUNCTION(R_rowsum)

@@ -3301,6 +3301,7 @@ compatibility with @Sl{}.
 @findex iPsort
 @findex rPsort
 @findex cPsort
+@findex R_maxcol
 
 @R{} has a fairly comprehensive set of sort routines which are made
 available to users' C code.  These include the following.
@@ -3326,6 +3327,15 @@ is similar to @code{rsort_with_index} but sorts into decreasing order.
 all provide (very) partial sorting: they permute @var{x} so that
 @code{@var{x}[@var{k}]} is in the correct place with smaller values to
 the left, larger ones to the right.
+@end table
+
+Further utilities in @R comprise
+@table @code
+@item void R_max_col(double *matrix, int *nr, int *nc, int *maxes)
+  Given the @code{nr} by @code{ny} matrix @code{matrix} in row(``Fortran'')
+  order, @code{R_max_col()} returns in @code{maxes[i-1]} the column number
+  of the maximal element in the i-th row (the same as @R{}'s
+  @code{max.col()} function).
 @end table
 
 @node Version information,  , Utility functions, The R API
