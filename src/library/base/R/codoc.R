@@ -77,9 +77,11 @@ codoc <- function(dir, use.values = FALSE, use.positions = TRUE,
         invisible()
     }
     .DocsEnv <- new.env()
+    if(verbose) cat("Docs: `lib.source(\"",docsFile,"\", *)' .. \n", sep="")
     lib.source(docsFile, env = .DocsEnv)
     lsDocs <- ls(envir = .DocsEnv, all.names = TRUE)
     .CodeEnv <- new.env()
+    if(verbose) cat("Code: `lib.source(\"",codeFile,"\", *)' .. \n", sep="")
     lib.source(codeFile, env = .CodeEnv)
     lsCode <- ls(envir = .CodeEnv, all.names = TRUE)
 
