@@ -335,6 +335,7 @@ EOF
   fi
 elif test -n "${F2C}"; then
   R_PROG_F2C_FLIBS
+  AC_DEFINE(HAVE_F77_UNDERSCORE, 1)
   f77_rules_frag=Makefrag.f77
   cat << \EOF > ${f77_rules_frag}
 .f.o:
