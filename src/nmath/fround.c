@@ -126,7 +126,7 @@ double fround(double x, double digits)
 
     res = (intx + R_rint(x * pow10) / pow10);
     /* Force integer answer for digits <= 0: last expression can
-       introduce rounding errors */
-    if(dig <= 0) res = (int)floor(res + 0.5);
+       introduce rounding errors. Avoid possible int overflow */
+    if(dig <= 0 && fabs(res) < 1e9) res = (int)floor(res + 0.5);
     return sgn * res;
 }

@@ -47,6 +47,10 @@ BUG FIXES
     o   setMethod allows "..." to be one of the arguments omitted in
         the method definition (but so far no check for ... being missing)
 
+    o   Allow round() to work again on very large numbers (introduced
+	in fixing PR#1138). (PR#1254)
+
+
 
 		CHANGES IN R VERSION 1.4.0
 
