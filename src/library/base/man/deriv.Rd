@@ -15,15 +15,13 @@ deriv.formula(expr, namevec, function.arg = NULL, tag = ".expr")
 \alias{deriv.default}
 \alias{deriv.formula}
 \arguments{
-  \item{expr}{\code{\link{expression}} or \code{\link{call} which should
+  \item{expr}{\code{\link{expression}} or \code{\link{call}} which should
       be differentiated.}
   \item{name,namevec}{character vector, giving the variable names (only
     one for \code{D(.)}) with
     respect to which derivatives will be computed.}
-  \item{function.arg}{\emph{NOT YET IMPLEMENTED}.  If specified, a
-    function `prototype' (with empty \code{\link{body}}) which will be
-    used to return a function with the given argument list, instead of
-    an expression.}
+  \item{function.arg}{If specified, a character vector of arguments for
+    a function return. \bold{Note:} this is incompatible with S.}
   \item{tag}{character; the prefix to be used for the locally created
     variables in result.}
 }
@@ -47,9 +45,10 @@ deriv.formula(expr, namevec, function.arg = NULL, tag = ".expr")
   \code{D} returns a call and therefore can easily be iterated
   for higher derivatives.
 
-  \code{deriv} returns an \code{\link{expression}} object.
+  \code{deriv} normally returns an \code{\link{expression}} object.
   Its evaluation returns the function values with a
   \code{".gradient"} attribute containing the gradient matrix.
+  If \code{function.arg} is specified, it returns a function.
 }
 \note{
   This help page should be fixed up by one of R&R or someone else who
@@ -65,8 +64,9 @@ deriv.formula(expr, namevec, function.arg = NULL, tag = ".expr")
   SIAM proceedings, Philadelphia.
 }
 \seealso{
-  \code{\link{nlm}} for numeric minimization which should make use of
-  derivatives.
+  \code{\link{nlm}} and \code{\link{optim}} for numeric minimization
+  which could make use of derivatives,
+  \code{\link[nls]{nls}} in package \code{nls}.
 }
 \examples{
 ## formula argument :
@@ -93,6 +93,11 @@ eval(dxy)
 eval(D.sc)
 stopifnot(eval(D.sc) ==
           attr(eval(dxy),"gradient")[,"x"])
+
+## function returned:
+deriv(y ~ b0 + b1 * 2^(-x/th), c("b0", "b1", "th"),
+     c("b0", "b1", "th", "x") )
+
 
 ## Higher derivatives:
 DD <- function(expr,name, order = 1) {

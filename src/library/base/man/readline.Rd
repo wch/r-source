@@ -9,8 +9,14 @@ readline(prompt="")
   Should usually end with a space \code{" "}.}
 }
 \description{
-  \code{readline} reads a line from the terminal, returning it as a
-  character string.
+  \code{readline} reads a line from the terminal
+}
+\details{
+  The string will be truncated to a maximum allowed length, currently 32
+  chars.
+}
+\value{
+  A character vector of length one.
 }
 \examples{
 fun <- function() {
