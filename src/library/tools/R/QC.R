@@ -2313,9 +2313,7 @@ function(package)
     }
     else
         depends <- character()
-    if("Suggests" %in% names(db)
-       && !identical(as.logical(Sys.getenv("_R_CHECK_FORCE_SUGGESTS_")),
-                     FALSE)) {
+    if("Suggests" %in% names(db)) {
         suggests <- unlist(strsplit(db["Suggests"], ","))
         suggests <-
             sub("^[[:space:]]*([[:alnum:].]+).*$", "\\1", suggests)
@@ -2336,7 +2334,11 @@ function(package)
 
     ## Are all packages listed in Depends/Suggests/Imports installed?
     ## Need to treat specially the former stub packages.
-    reqs <- unique(c(depends, suggests, imports))
+    reqs <- unique(c(depends,
+                     imports,
+                     if(!identical(as.logical(Sys.getenv("_R_CHECK_FORCE_SUGGESTS_")),
+                                   FALSE))
+                     suggests))
     reqs <- reqs %w/o% utils::installed.packages()[ , "Package"]
     m <- reqs %in% standard_package_names$stubs
     if(length(reqs[!m]))
