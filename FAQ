@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.8-6, 2003-10-15
+Version 1.8-7, 2003-10-17
 ISBN 3-901167-51-X
 Kurt Hornik
 
@@ -369,16 +369,13 @@ The `bin/macosx' directory of a CRAN site contains a standard Apple
 installer package named `RAqua.pkg.sit' compressed in Aladdin Stuffit
 format.  Once downloaded, uncompressed and executed, the installer will
 install the current non-developer release of R.  RAqua is a native MacOSX
-Darwin version with Aqua GUI.
-
-   Inside `bin/macosx/X.Y' there are prebuilt binary version of packages
-ready to be used with RAqua corresponding to R major release "X.Y". The
-installation of these packages is available through the "Package" menu of
-the RAqua GUI.
-
-   This port of R for MacOSX is maintained by Stefano Iacus
-<Stefano.Iacus@R-project.org>.  The "R for Macintosh FAQ/DOC"
-(http://cran.r-project.org/bin/macosx/RAqua-FAQ.html) has more details.
+Darwin version of R with an Aqua GUI.  Inside `bin/macosx/X.Y' there are
+prebuilt binary packages to be used with RAqua corresponding to the "X.Y"
+release of R. The installation of these packages is available through the
+"Package" menu of the RAqua GUI.  This port of R for MacOSX is maintained
+by Stefano Iacus <Stefano.Iacus@R-project.org>.  The "R for Macintosh
+FAQ/DOC" (http://cran.r-project.org/bin/macosx/RAqua-FAQ.html) has more
+details.
 
    The `bin/macos' directory of a CRAN site contains bin-hexed (`hqx') and
 stuffit (`sit') archives for a base distribution and a large number of
@@ -450,6 +447,12 @@ available for web browsing at `http://stat.ethz.ch/R-manual/'.
      J. Fox (2002), "An R and S-PLUS Companion to Applied Regression", Sage
      Publications, ISBN 0-761-92280-6 (softcover) or 0-761-92279-2
      (hardcover), `http://www.socsci.mcmaster.ca/jfox/Books/Companion/'.
+
+     J. Maindonald and J. Braun (2003), "Data Analysis and Graphics Using
+     R", Cambridge University Press, ISBN 0-521-81336-0.
+
+     S. M. Iacus and G. Masarotto (2002), "Laboratorio di statistica con R
+     ", McGraw-Hill, ISBN 88-386-6084-0 (in Italian).
 
 The book
 
