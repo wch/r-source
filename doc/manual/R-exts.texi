@@ -274,6 +274,8 @@ separated list of file paths relative to the @file{R} subdirectory.
 Paths containing white space or single or double quotes need to be
 quoted.  Applicable OS-specific collate specifications take precedence.
 
+There should be no @samp{Built} or @samp{Packaged} fields, as these are
+added by the package management tools.
 
 @node The INDEX file, Package subdirectories, The DESCRIPTION file, Package structure
 @subsection The @file{INDEX} file
