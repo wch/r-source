@@ -11,9 +11,14 @@ help.start <- function (gui = "irrelevant", browser = getOption("browser"),
         writeLines(strwrap(msg, exdent = 4))
         options(browser = browser)
     }
+#     sessiondir <- file.path(tempdir(), ".R")
+#     dir.create(sessiondir)
+#     dir.create(file.path(sessiondir, "doc"))
+#     dir.create(file.path(sessiondir, "doc", "html"))
     cat("Making links in per-session dir ...\n")
     .Script("sh", "help-links.sh",
             paste(tempdir(), paste(.libPaths(), collapse = " ")))
+    make.packages.html()
     tmpdir <- paste("file://", tempdir(), "/.R", sep = "")
     url <- paste(if (is.null(remote)) tmpdir else remote,
 		 "/doc/html/index.html", sep = "")
@@ -49,4 +54,37 @@ browseURL <- function(url, browser = getOption("browser"))
     else url
     system(paste(browser, remoteCmd, "2>&1 >/dev/null ||",
                  browser, url, "&"))
+}
+
+make.packages.html <- function(lib.loc=.libPaths())
+{
+    f.tg <- file.path(tempdir(), ".R/doc/html/packages.html")
+    if(!file.create(f.tg)) {
+        warning("cannot update HTML package index")
+        return(FALSE)
+    }
+    file.append(f.tg, file.path(R.home(), "doc/html/packages-head.html"))
+    out <- file(f.tg, open="a")
+    known <- character(0)
+    for (lib in lib.loc) {
+        cat("<p><h3>Packages in ", lib, "</h3>\n<p><table width=\"100%\">\n",
+            sep = "", file=out)
+        pg <- sort(.packages(all.available = TRUE, lib.loc = lib))
+        for (i in pg) {
+            ## links are set up to break ties of package names
+            before <- sum(i %in% known)
+            link <- if(before == 0) i else paste(i, before-1, sep=".")
+            title <- package.description(i, lib.loc = lib, field="Title")
+            if (is.na(title)) title <- "-- Title is missing --"
+            cat('<tr align="left" valign="top">\n',
+                '<td width="25%"><a href="../../library/', link,
+                '/html/00Index.html">', i, "</a></td><td>", title,
+                "</td></tr>\n", file=out, sep="")
+        }
+        cat("</table>\n\n", file=out)
+        known <- c(known, pg)
+    }
+    cat("</body></html>\n", file=out)
+    close(out)
+    invisible(TRUE)
 }
