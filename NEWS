@@ -134,7 +134,7 @@ NEW FEATURES
         exists(), and friends.
 
     o   read.table() has new arguments `nrows' and `colClasses'.  If the
-	latter is "unknown" (the default), conversion is attempted to
+	latter is NA (the default), conversion is attempted to
 	logical, integer, numeric or complex, not just to numeric.
 
     o   An enhanced function type.convert() is now a documented

@@ -12,7 +12,7 @@
 \usage{
 read.table(file, header = FALSE, sep = "", quote = "\"'", dec = ".",
            row.names, col.names, as.is = FALSE, na.strings = "NA",
-           colClasses = "unknown", nrows = -1,
+           colClasses = NA, nrows = -1,
            skip = 0, check.names = TRUE, fill = FALSE,
            strip.white = FALSE, blank.lines.skip = TRUE)
 
@@ -86,7 +86,7 @@ read.delim2(file, header = TRUE, sep = "\t", quote="\"", dec=",",
     atomic vector classes (logical, integer, numeric, complex and
     character), there needs to be an \code{as} method for
     conversion from \code{"character"} to the specified class, or
-    \code{"unknown"} when \code{\link{type.convert}} is used.}
+    \code{NA} when \code{\link{type.convert}} is used.}
 
   \item{nrows}{the maximum number of rows to read in.  Negative values
     are ignored.}
@@ -144,8 +144,8 @@ read.delim2(file, header = TRUE, sep = "\t", quote="\"", dec=",",
   \code{fill = TRUE} in these variants.
 }
 \note{
-  The columns referred to in \code{as.is} and \code{colClasses} included
-  the row names (if any).
+  The columns referred to in \code{as.is} and \code{colClasses} include
+  the column of row names (if any).
   
   Less memory will be used if \code{colClasses} is specified as one of
   the five atomic vector classes.
