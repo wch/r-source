@@ -2,7 +2,10 @@
 
 R_HOME=`R RHOME`
 
+: ${NROFF=@NROFF@}
+: ${TBL=@TBL@}
+
 ${R_HOME}/bin/Rdconv -t nroff ${1} \
-  | tbl \
-  | nroff -ms 2> /dev/null \
+  | ${TBL} \
+  | ${NROFF} -ms 2> /dev/null \
   | ${R_HOME}/bin/help.pretty

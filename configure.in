@@ -177,6 +177,10 @@ AC_PATH_PROG(R_ZIPCMD, zip, "")
 ## Make.
 : ${MAKE=make}
 AC_SUBST(MAKE)
+
+## Nroff.
+AC_PATH_PROG(NROFF, [${NROFF} nroff], false)
+AC_PATH_PROG(TBL, [${TBL} tbl], false)
     
 ## Perl.
 R_PROG_PERL
@@ -645,28 +649,55 @@ AC_SUBST(R_BATCHSAVE)
 
 ### Output.
 
-AC_OUTPUT(Makeconf Makefile
+AC_OUTPUT(Makeconf
+  Makefile
   afm/Makefile
   demos/Makefile
-  doc/Makefile doc/keyword-test
-  doc/manual/Makefile doc/manual/lib2tex
-  doc/manual/Reference.tex doc/manual/Manual.tex
-  etc/Makefile etc/Makeconf
-  src/Makefile src/appl/Makefile src/include/Makefile
-  src/library/Makefile src/main/Makefile src/nmath/Makefile
-  src/scripts/Makefile src/unix/Makefile src/gnome/Makefile
-  src/library/base/Makefile src/library/profile/Makefile
-  src/library/eda/Makefile src/library/eda/src/Makefile
-  src/library/lqs/Makefile src/library/lqs/src/Makefile
-  src/library/modreg/Makefile src/library/modreg/src/Makefile
-  src/library/mva/Makefile src/library/mva/src/Makefile
+  doc/Makefile
+  doc/keyword-test
+  doc/manual/Makefile
+  doc/manual/lib2tex
+  doc/manual/Reference.tex
+  doc/manual/Manual.tex
+  etc/Makefile
+  etc/Makeconf
+  src/Makefile
+  src/appl/Makefile
+  src/include/Makefile
+  src/library/Makefile
+  src/main/Makefile
+  src/nmath/Makefile
+  src/scripts/Makefile
+  src/unix/Makefile
+  src/gnome/Makefile
+  src/library/base/Makefile
+  src/library/profile/Makefile
+  src/library/eda/Makefile
+  src/library/eda/src/Makefile
+  src/library/lqs/Makefile
+  src/library/lqs/src/Makefile
+  src/library/modreg/Makefile
+  src/library/modreg/src/Makefile
+  src/library/mva/Makefile
+  src/library/mva/src/Makefile
   src/library/stepfun/Makefile
-  src/scripts/COMPILE src/scripts/INSTALL src/scripts/REMOVE
-  src/scripts/R.sh src/scripts/Rdconv src/scripts/Rdindex
-  src/scripts/Rman2Rd src/scripts/SHLIB src/scripts/Sd2Rd
-  src/scripts/build-help src/scripts/fwf2table src/scripts/help.pretty
-  src/scripts/html2dos src/scripts/Rd2contents
-  tests/Makefile tests/Examples/Makefile
+  src/scripts/COMPILE
+  src/scripts/INSTALL
+  src/scripts/REMOVE
+  src/scripts/R.sh
+  src/scripts/Rd2contents
+  src/scripts/Rd2txt
+  src/scripts/Rdconv 
+  src/scripts/Rdindex
+  src/scripts/Rman2Rd
+  src/scripts/SHLIB
+  src/scripts/Sd2Rd
+  src/scripts/build-help
+  src/scripts/fwf2table
+  src/scripts/help.pretty
+  src/scripts/html2dos
+  tests/Makefile
+  tests/Examples/Makefile
 )
 
 AC_OUTPUT_COMMANDS(

@@ -13,10 +13,10 @@ include $(top_builddir)/Makeconf
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = $(shell cd $(srcdir) && ls | sed '/CVS/d')
 
-SRC_SCRIPTS = BATCH Rd2txt Rd2dvi filename help help.links pager \
-	massage-Examples check
-OBJ_SCRIPTS = COMPILE INSTALL REMOVE Rdconv Rdindex Rman2Rd SHLIB \
-	Sd2Rd build-help fwf2table help.pretty html2dos Rd2contents
+SRC_SCRIPTS = BATCH Rd2dvi check filename help help.links \
+	massage-Examples pager
+OBJ_SCRIPTS = COMPILE INSTALL REMOVE Rd2contents Rd2txt Rdconv Rdindex \
+	Rman2Rd SHLIB Sd2Rd build-help fwf2table help.pretty html2dos 
 
 all: R
 
