@@ -138,6 +138,7 @@ as.data.frame.ts <- function(x, row.names=NULL, optional=FALSE)
 	as.data.frame.vector(x, row.names, optional)
 }
 
+as.data.frame.raw  <- as.data.frame.vector
 as.data.frame.factor  <- as.data.frame.vector
 as.data.frame.ordered <- as.data.frame.vector
 as.data.frame.integer <- as.data.frame.vector
