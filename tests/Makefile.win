@@ -83,7 +83,7 @@ test-out = $(test-src:.R=.Rout) $(test-out-gct) \
 	  echo "OK"; \
 	fi
 
-all: test-Specific
+all: test-Specific test-Reg
 test-Specific-strict: $(test-out-strict)
 test-Specific-sloppy: $(test-out-sloppy)
 test-Specific:
