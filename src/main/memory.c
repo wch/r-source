@@ -1162,7 +1162,7 @@ SEXP do_gcinfo(SEXP call, SEXP op, SEXP args, SEXP rho)
 SEXP do_gc(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP value;
-    int ogc, onsize=R_NSize, ovsize=R_VSize;
+    int ogc, onsize=R_NSize;
 
     checkArity(op, args);
     ogc = gc_reporting;
@@ -1173,13 +1173,13 @@ SEXP do_gc(SEXP call, SEXP op, SEXP args, SEXP rho)
     /*- now return the [used , gc trigger size] for cells and heap */
     PROTECT(value = allocVector(INTSXP, 10));
     INTEGER(value)[0] = onsize - R_Collected;
-    INTEGER(value)[1] = ovsize - VHEAP_FREE();
+    INTEGER(value)[1] = R_VSize - VHEAP_FREE();
     INTEGER(value)[4] = R_NSize;
     INTEGER(value)[5] = R_VSize;
     /* next four are in 0.1Mb, rounded up */
     INTEGER(value)[2] = 10.0 * (onsize - R_Collected)/1048576.0 *
 	sizeof(SEXPREC) + 0.999;
-    INTEGER(value)[3] = 10.0 * (ovsize - VHEAP_FREE())/131072.0 + 0.999;
+    INTEGER(value)[3] = 10.0 * (R_VSize - VHEAP_FREE())/131072.0 + 0.999;
     INTEGER(value)[6] = 10.0 * R_NSize/1048576.0 * sizeof(SEXPREC) + 0.999;
     INTEGER(value)[7] = 10.0 * R_VSize/131072.0 + 0.999;
     INTEGER(value)[8] = (R_MaxNSize < INT_MAX) ? 
