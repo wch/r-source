@@ -138,21 +138,21 @@ cat("dig|  formatC(txp, d=dig)\n")
 for(dig in 1:17)# about >= 18 is platform dependent [libc's printf()..].
     cat(formatC(dig,w=2), formatC(txp,		      dig=dig, wid=-29),"\n")
 cat("signif() behavior\n~~~~~~~~\n",
-    "dig|  formatC(signif(txp, dig=dig), dig = dig+2\n")
-for(dig in 1:12)# 13:15 (not 16:18) is libc-dependent (Linux, see below)
-    cat(formatC(dig,w=2), formatC(signif(txp, d=dig), dig=dig+2, wid=-26),"\n")
+    "dig|  formatC(signif(txp, dig=dig), dig = dig\n")
+for(dig in 1:15)#
+    cat(formatC(dig,w=2), formatC(signif(txp, d=dig), dig=dig, wid=-26),"\n")
 
 if(opt.conformance >= 1) {
     noquote(cbind(formatC(txp, dig = 22)))
 }
 
-cat("dig|  formatC(signif(txn, d=dig)\n")
-for(dig in 1:14)#15: Linux 2.1.120, libc-2.0.7 differs from Debian 2.0
-    cat(formatC(dig,w=2), formatC(signif(txn, d=dig), dig=dig+2, wid=-20),"\n")
+cat("dig|  formatC(signif(txn, d = dig), dig=dig\n")
+for(dig in 1:15)#
+    cat(formatC(dig,w=2), formatC(signif(txn, d=dig), dig=dig, wid=-20),"\n")
 
 ##-- Testing  'print' / digits :
-for(dig in 1:11) { ## 12:13: libc-2.0.7 diff; 14:18 --- PLATFORM-dependent !!!
-    cat("dig=",formatC(dig,w=2),": "); print(signif(txp, d=dig),dig=dig+2)
+for(dig in 1:13) { ## 12:13: libc-2.0.7 diff; 14:18 --- PLATFORM-dependent !!!
+    cat("dig=",formatC(dig,w=2),": "); print(signif(txp, d=dig),dig=dig+1)
 }
 
 ##-- Wrong alignment when printing character matrices with  quote = FALSE

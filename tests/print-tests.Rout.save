@@ -1,6 +1,6 @@
 
 R : Copyright 2000, The R Development Core Team
-Version 0.99.0 Under development (unstable) (January 26, 2000)
+Version 1.0.0 Under development (unstable) (February 11, 2000)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -295,12 +295,12 @@ dig|  formatC(txp, d=dig)
 16 1.617923821376084e+308        1.795895441727453e+308        1.797692955093002e+308        1.797693134862316e+308        
 17 1.6179238213760842e+308       1.7958954417274534e+308       1.7976929550930023e+308       1.7976931348623157e+308       
 > cat("signif() behavior\n~~~~~~~~\n",
-+     "dig|  formatC(signif(txp, dig=dig), dig = dig+2\n")
++     "dig|  formatC(signif(txp, dig=dig), dig = dig\n")
 signif() behavior
 ~~~~~~~~
- dig|  formatC(signif(txp, dig=dig), dig = dig+2
-> for(dig in 1:12)# 13:15 (not 16:18) is libc-dependent (Linux, see below)
-+     cat(formatC(dig,w=2), formatC(signif(txp, d=dig), dig=dig+2, wid=-26),"\n")
+ dig|  formatC(signif(txp, dig=dig), dig = dig
+> for(dig in 1:15)#
++     cat(formatC(dig,w=2), formatC(signif(txp, d=dig), dig=dig, wid=-26),"\n")
  1 1e+308                     1e+308                     1e+308                     1e+308                     
  2 1.6e+308                   1.7e+308                   1.7e+308                   1.7e+308                   
  3 1.62e+308                  1.79e+308                  1.79e+308                  1.79e+308                  
@@ -313,15 +313,18 @@ signif() behavior
 10 1.617923821e+308           1.795895442e+308           1.797692955e+308           1.797693134e+308           
 11 1.6179238214e+308          1.7958954417e+308          1.7976929551e+308          1.7976931348e+308          
 12 1.61792382138e+308         1.79589544173e+308         1.79769295509e+308         1.79769313486e+308         
+13 1.617923821376e+308        1.795895441728e+308        1.797692955093e+308        1.797693134862e+308        
+14 1.617923821376e+308        1.7958954417274e+308       1.797692955093e+308        1.7976931348622e+308       
+15 1.61792382137609e+308      1.79589544172745e+308      1.797692955093e+308        1.79769313486231e+308      
 > 
 > if(opt.conformance >= 1) {
 +     noquote(cbind(formatC(txp, dig = 22)))
 + }
 > 
-> cat("dig|  formatC(signif(txn, d=dig)\n")
-dig|  formatC(signif(txn, d=dig)
-> for(dig in 1:14)#15: Linux 2.1.120, libc-2.0.7 differs from Debian 2.0
-+     cat(formatC(dig,w=2), formatC(signif(txn, d=dig), dig=dig+2, wid=-20),"\n")
+> cat("dig|  formatC(signif(txn, d = dig), dig=dig\n")
+dig|  formatC(signif(txn, d = dig), dig=dig
+> for(dig in 1:15)#
++     cat(formatC(dig,w=2), formatC(signif(txn, d=dig), dig=dig, wid=-20),"\n")
  1 2e-308               2e-308               2e-308               2e-308               2e-308               2e-308               2e-308               
  2 2e-308               2.2e-308             2.2e-308             2.2e-308             2.2e-308             2.2e-308             2.4e-308             
  3 2e-308               2.22e-308            2.23e-308            2.23e-308            2.23e-308            2.23e-308            2.45e-308            
@@ -336,10 +339,11 @@ dig|  formatC(signif(txn, d=dig)
 12 2.00256647266e-308   2.22284878465e-308   2.225073636e-308     2.22507385851e-308   2.22507408101e-308   2.22729893237e-308   2.44758124436e-308   
 13 2.002566472656e-308  2.222848784649e-308  2.225073636e-308     2.225073858507e-308  2.225074081015e-308  2.227298932366e-308  2.447581244358e-308  
 14 2.0025664726565e-308 2.2228487846487e-308 2.2250736359998e-308 2.2250738585072e-308 2.2250740810146e-308 2.2272989323657e-308 2.4475812443579e-308 
+15 2.00256647265648e-308 2.2228487846487e-308 2.22507363599982e-308 2.2250738585072e-308 2.22507408101459e-308 2.22729893236571e-308 2.44758124435792e-308 
 > 
 > ##-- Testing  'print' / digits :
-> for(dig in 1:11) { ## 12:13: libc-2.0.7 diff; 14:18 --- PLATFORM-dependent !!!
-+     cat("dig=",formatC(dig,w=2),": "); print(signif(txp, d=dig),dig=dig+2)
+> for(dig in 1:13) { ## 12:13: libc-2.0.7 diff; 14:18 --- PLATFORM-dependent !!!
++     cat("dig=",formatC(dig,w=2),": "); print(signif(txp, d=dig),dig=dig+1)
 + }
 dig=  1 : [1] 1e+308 1e+308 1e+308 1e+308
 dig=  2 : [1] 1.6e+308 1.7e+308 1.7e+308 1.7e+308
@@ -352,6 +356,8 @@ dig=  8 : [1] 1.6179238e+308 1.7958954e+308 1.7976930e+308 1.7976931e+308
 dig=  9 : [1] 1.61792382e+308 1.79589544e+308 1.79769296e+308 1.79769313e+308
 dig= 10 : [1] 1.617923821e+308 1.795895442e+308 1.797692955e+308 1.797693134e+308
 dig= 11 : [1] 1.6179238214e+308 1.7958954417e+308 1.7976929551e+308 1.7976931348e+308
+dig= 12 : [1] 1.61792382138e+308 1.79589544173e+308 1.79769295509e+308 1.79769313486e+308
+dig= 13 : [1] 1.6179238213759e+308 1.7958954417279e+308 1.7976929550929e+308 1.7976931348619e+308
 > 
 > ##-- Wrong alignment when printing character matrices with  quote = FALSE
 > m1 <- matrix(letters[1:24],6,4)

@@ -1,6 +1,7 @@
 /*
  *  Mathlib : A C Library of Special Functions
  *  Copyright (C) 1998 Ross Ihaka
+ *  Copyright (C) 2000 The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -24,6 +25,7 @@
  *  DESCRIPTION
  *
  *    Rounds "x" to "digits" decimal digits.
+ *
  */
 
 #include "Mathlib.h"
@@ -74,11 +76,11 @@ static double private_rint(double x)
 	x = -x;
 	sgn = -1.0;
     }
-	
+
     if(x < (double) LONG_MAX) {
 	ltmp = x + 0.5;
 	/* implement round to even */
-	if(fabs(x + 0.5 - ltmp) < 10*DBL_EPSILON 
+	if(fabs(x + 0.5 - ltmp) < 10*DBL_EPSILON
 	   && (ltmp % 2 == 1)) ltmp--;
 	tmp = ltmp;
     } else {
@@ -95,37 +97,39 @@ static double private_rint(double x)
 
 double fround(double x, double digits)
 {
-    double pow10, sgn, intx;
-    static double maxdigits = DBL_DIG - 1;
+#define maxdigits (DBL_DIG - 1)
     /* FIXME: Hmm, have quite a host of these:
 
-       1) ./fprec.c   uses  MAXPLACES = DLB_DIG  ``instead''
-       2) ../main/coerce.c   & ../main/deparse.c have  DBL_DIG  directly
-       3) ../main/options.c has   #define MAX_DIGITS 22  for options(digits)
+       1) ./fprec.c   uses  MAXPLACES = DLB_DIG	 ``instead''
+       2) ../main/coerce.c   & ../main/deparse.c have  DBL_DIG	directly
+       3) ../main/options.c has	  #define MAX_DIGITS 22	 for options(digits)
 
        Really should decide on a (config.h dependent?) global MAX_DIGITS.
        --MM--
      */
+    double pow10, sgn, intx;
+    int dig;
+
 #ifdef IEEE_754
     if (ISNAN(x) || ISNAN(digits))
 	return x + digits;
     if(!R_FINITE(x)) return x;
 #endif
 
-    digits = floor(digits + 0.5);
-    if (digits > maxdigits)
-	digits = maxdigits;
-    pow10 = pow(10.0, digits);
-    sgn = 1.0;
-    if(x < 0.0) {
+    if (dig > maxdigits)
+	dig = maxdigits;
+    dig = (int)floor(digits + 0.5);
+    pow10 = R_pow_di(10., dig);
+    sgn = 1.;
+    if(x < 0.) {
 	sgn = -sgn;
 	x = -x;
     }
-    if (digits > 0.0) {
+    if (dig > 0) {
 	intx = floor(x);
 	x = x - intx;
     } else {
-	intx = 0.0;
+	intx = 0.;
     }
     return sgn * (intx + R_rint(x * pow10) / pow10);
 }

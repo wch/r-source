@@ -1,6 +1,7 @@
 /*
  *  Mathlib : A C Library of Special Functions
  *  Copyright (C) 1998 Ross Ihaka
+ *  Copyright (C) 2000 The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -36,18 +37,19 @@
 
 #include "Mathlib.h"
 
-/* Improvements by Martin Maechler, May 1997 */
-/* Note that the code could be further improved by using */
-/* pow_di(x, i)	 instead of  pow(x, (double)i) */
+/* Improvements by Martin Maechler, May 1997,
+/* further ones, Feb.2000:
+   Replace  pow(x, (double)i) by  R_pow_di(x, i) {and use  int dig} */
 
+/* DBL_DIG := digits of precision of a double, usually 15 : */
 #define MAXPLACES DBL_DIG
 
 double fprec(double x, double digits)
 {
     double l10, pow10, sgn, p10, P10;
-    int e10, e2, do_round;
+    int e10, e2, do_round, dig;
     /* Max.expon. of 10 (=308.2547) */
-    static double max10e = DBL_MAX_EXP * M_LOG10_2;
+    const double max10e = DBL_MAX_EXP * M_LOG10_2;
 
 #ifdef IEEE_754
     if (ISNAN(x) || ISNAN(digits))
@@ -59,11 +61,11 @@ double fprec(double x, double digits)
     }
 #endif
     if(x == 0) return x;
-    digits = floor(digits+0.5);
-    if (digits > MAXPLACES) {
+    dig = (int)floor(digits+0.5);
+    if (dig > MAXPLACES) {
 	return x;
-    } else if (digits < 1)
-	digits = 1;
+    } else if (dig < 1)
+	dig = 1;
 
     sgn = 1.0;
     if(x < 0.0) {
@@ -71,15 +73,15 @@ double fprec(double x, double digits)
 	x = -x;
     }
     l10 = log10(x);
-    e10 = (int)(digits-1-floor(l10));
+    e10 = (int)(dig-1-floor(l10));
     if(fabs(l10) < max10e - 2) {
-	pow10 = pow(10.0, (double)e10);
+	pow10 = R_pow_di(10., e10);
 	return(sgn*floor(x*pow10+0.5)/pow10);
     } else { /* -- LARGE or small -- */
-	do_round = max10e - l10	 >= pow(10.0, -digits);
+	do_round = max10e - l10	 >= R_pow_di(10., -dig);
 	e2 = (e10>0)? 16 : -16;
-	p10 = pow(10.0, (double)e2);		x *= p10;
-	P10 = pow(10.0, (double)e10-e2);	x *= P10;
+	p10 = R_pow_di(10., e2);	x *= p10;
+	P10 = R_pow_di(10., e10-e2);	x *= P10;
 	/*-- p10 * P10 = 10 ^ e10 */
 	if(do_round) x += 0.5;
 	x = floor(x) / p10;
