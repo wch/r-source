@@ -13,7 +13,9 @@ solve.qr <- function(a, b, ...)
     return(qr.coef(a, b))
 }
 
-solve.default <- function(a, b, tol = 1e-10, LINPACK = FALSE, ...)
+solve.default <-
+    function(a, b, tol = ifelse(LINPACK, 1e-7, .Machine$double.eps),
+             LINPACK = FALSE, ...)
 {
     if(is.complex(a) || (!missing(b) && is.complex(b))) {
         a <- as.matrix(a)
@@ -32,6 +34,7 @@ solve.default <- function(a, b, tol = 1e-10, LINPACK = FALSE, ...)
         warning("solve.default called with a qr object: use qr.solve")
         return(solve.qr(a, b, tol))
     }
+    
     if(!LINPACK) {
         a <- as.matrix(a)
         if(missing(b)) {

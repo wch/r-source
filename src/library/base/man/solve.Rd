@@ -3,7 +3,7 @@
 \usage{
 solve(a, b, \dots)
 
-\method{solve}{default}(a, b, tol = 1e-10, LINPACK = FALSE, \dots)
+\method{solve}{default}(a, b, tol, LINPACK = FALSE, \dots)
 }
 \alias{solve}
 \alias{solve.default}
@@ -14,7 +14,10 @@ solve(a, b, \dots)
     side(s) of the linear system.  If missing, \code{b} is taken to be
     an identity matrix and \code{solve} will return the inverse of \code{a}.}
   \item{tol}{the tolerance for detecting linear dependencies in the
-    columns of \code{a}.  Not presently used with complex matrices \code{a}.}
+    columns of \code{a}.  If \code{LINPACK} is \code{TRUE} the default
+    is \code{1e-7}, otherwise it is \code{.Machine$double.eps}. Future
+    versions of R may use a tighter tolerance. Not presently used with
+    complex matrices \code{a}.}
   \item{LINPACK}{logical. Should LINPACK be used (for compatibility with
     \R < 1.7.0)?}
   \item{\dots}{further arguments passed to or from other methods}
@@ -51,10 +54,9 @@ solve(a, b, \dots)
 \examples{
 hilbert <- function(n) { i <- 1:n; 1 / outer(i - 1, i, "+") }
 h8 <- hilbert(8); h8
-sh8 <- solve(h8, tol = 1.e-12)  ## h8 is nearly singular
+sh8 <- solve(h8)
 round(sh8 \%*\% h8, 3)
 
-try(solve(h8))   ## using the default tolerance h8 is declared singular
 A <- hilbert(4)
 A[] <- as.complex(A)
 ## might not be supported on all platforms
