@@ -60,7 +60,7 @@ SRCMAKE=$(wildcard $(SSPKG)/Makefile.win)
 all:  bare  $(DATA) $(DYNLIB)
 bare: $(DPKG)/zzzz $(DPKG)/R/$(PKG)
 
-include $(RHOME)/src//gnuwin32/MkRules
+include $(RHOME)/src/gnuwin32/MkRules
 
 clean:
 ifeq ($(strip $(SRCMAKE)),)
@@ -74,9 +74,10 @@ SEDP='/^[	 ]*$$/d;s/$(DLLNAME).so/$(DLLNAME).dll/'
 
 $(DPKG)/R/$(PKG): $(PKGRFILES)
 ifneq ($(strip $(PKGRFILES)),)
-	$(MKDIR) -p $(DPKG)/R
+	@echo "  installing R files"
+	@$(MKDIR) -p $(DPKG)/R
 #	$(CAT) $(PKGRFILES) | $(SED) $(SEDP)  > $@
-	$(CAT) $(PKGRFILES)   > $@
+	@$(CAT) $(PKGRFILES)   > $@
 else
 	@$(ECHO) "  no R files in this package"
 endif
