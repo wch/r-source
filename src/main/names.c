@@ -83,6 +83,7 @@ FUNTAB R_FunTab[] =
 {"on.exit",	do_onexit,	0,	100,	1,	PP_FUNCALL,	0},
 {"Recall",	do_recall,	0,	10,	-1,	PP_FUNCALL,	0},
 {"delay",	do_delay,	0,	11,	2,	PP_FUNCALL,	0},
+{".Alias",	do_alias,	0,	1,	1,	PP_FUNCALL,	0},
 
 
 /* Binary Operators */
@@ -120,18 +121,16 @@ FUNTAB R_FunTab[] =
 /* Vectors, Matrices and Arrays */
 
 {"vector",	do_makevector,	0,	11,	2,	PP_FUNCALL,	0},
-{"factor",	do_makefactor,	0,	11,	3,	PP_FUNCALL,	0},
 {"complex",	do_complex,	0,	11,	3,	PP_FUNCALL,	0},
 {"matrix",	do_matrix,	0,	11,	4,	PP_FUNCALL,	0},
 {"array",	do_array,	0,	1,	2,	PP_FUNCALL,	0},
 {"length",	do_length,	0,	1,	1,	PP_FUNCALL,	0},
 {"length<-",	do_lengthgets,	0,	1,	2,	PP_FUNCALL,	0},
-{"nlevels",	do_nlevels,	0,	1,	1,	PP_FUNCALL,	0},
 {"row",		do_rowscols,	1,	11,	1,	PP_FUNCALL,	0},
 {"col",		do_rowscols,	2,	11,	1,	PP_FUNCALL,	0},
 {"c",		do_c,		0,	0,	-1,	PP_FUNCALL,	0},
 {"unlist",	do_c,		1,	0,	-1,	PP_FUNCALL,	0},
-{"cbind",	do_bind,	1,	11,	-1,	PP_FUNCALL,	0},
+{"cbind",	do_bind,	1,	1,	-1,	PP_FUNCALL,	0},
 {"rbind",	do_bind,	2,	1,	-1,	PP_FUNCALL,	0},
 {"drop",	do_drop,	0,	1,	1,	PP_FUNCALL,	0},
 {"class",	do_class,	0,	1,	1,	PP_FUNCALL,	0},
@@ -139,14 +138,11 @@ FUNTAB R_FunTab[] =
 {"unclass",	do_unclass,	0,	1,	1,	PP_FUNCALL,	0},
 {"names",	do_names,	0,	11,	1,	PP_FUNCALL,	0},
 {"names<-",	do_namesgets,	0,	11,	2,	PP_FUNCALL,	0},
-{"dimnames",	do_dimnames,	0,	1,	1,	PP_FUNCALL,	0},
-{"dimnames<-",	do_dimnamesgets,0,	1,	2,	PP_FUNCALL,	0},
+{"dimnames",	do_dimnames,	0,	0,	1,	PP_FUNCALL,	0},
+{"dimnames<-",	do_dimnamesgets,0,	0,	2,	PP_FUNCALL,	0},
 {"all.names",	do_allnames,	0,	11,	4,	PP_FUNCALL,	0},
-/*{"row.names",	do_rownames,	0,	1,	1,	PP_FUNCALL,	0},*/
-{"dim",		do_dim,		0,	1,	1,	PP_FUNCALL,	0},
-{"dim<-",	do_dimgets,	0,	1,	2,	PP_FUNCALL,	0},
-{"levels",	do_levels,	0,	1,	1,	PP_FUNCALL,	0},
-{"levels<-",	do_levelsgets,	0,	1,	2,	PP_FUNCALL,	0},
+{"dim",		do_dim,		0,	0,	1,	PP_FUNCALL,	0},
+{"dim<-",	do_dimgets,	0,	0,	2,	PP_FUNCALL,	0},
 {"attributes",	do_attributes,	0,	1,	1,	PP_FUNCALL,	0},
 {"attributes<-",do_attributesgets,0,	1,	1,	PP_FUNCALL,	0},
 {"attr",	do_attr,	0,	1,	2,	PP_FUNCALL,	0},
@@ -160,7 +156,8 @@ FUNTAB R_FunTab[] =
 {"duplicated",	do_duplicated,	0,	1,	1,	PP_FUNCALL,	0},
 {"unique",	do_duplicated,	1,	1,	1,	PP_FUNCALL,	0},
 {"match",	do_match,	0,	11,	3,	PP_FUNCALL,	0},
-{"pmatch",	do_pmatch,	0,	11,	2,	PP_FUNCALL,	0},
+{"pmatch",	do_pmatch,	0,	11,	3,	PP_FUNCALL,	0},
+{"charmatch",	do_charmatch,	0,	11,	2,	PP_FUNCALL,	0},
 {"match.call",	do_matchcall,	0,	11,	3,	PP_FUNCALL,	0},
 {"complete.cases",do_compcases,	0,	11,	1,	PP_FUNCALL,	0},
 {"attach",	do_attach,	0,	111,	3,	PP_FUNCALL,	0},
@@ -362,14 +359,7 @@ FUNTAB R_FunTab[] =
 
 /* Type coercion */
 
-{"as.factor",	do_as,		FACTSXP,11,	1,	PP_FUNCALL,	0},
-{"as.unordered",do_as,		FACTSXP,11,	1,	PP_FUNCALL,	0},
-{"as.ordered",	do_as,		ORDSXP,	11,	1,	PP_FUNCALL,	0},
-{"as.vector",	do_as,		101,	11,	2,	PP_FUNCALL,	0},
-{"as.name",	do_as,		102,	11,	1,	PP_FUNCALL,	0},
-{"as.matrix.data.frame", do_asmatrixdf,	0, 11,	1,	PP_FUNCALL,	0},
-{"codes",	do_codes,	0,	1,	1,	PP_FUNCALL,	0},
-{"codes<-",	do_codesgets,	0,	1,	2,	PP_FUNCALL,	0},
+{"as.vector",	do_asvector,	0,	10,	2,	PP_FUNCALL,	0},
 {"paste",	do_paste,	0,	11,	3,	PP_FUNCALL,	0},
 {"format",	do_format,	0,	11,	-1,	PP_FUNCALL,	0},
 {"format.info",	do_formatinfo,	0,	1,	1,	PP_FUNCALL,	0},
@@ -386,6 +376,7 @@ FUNTAB R_FunTab[] =
 {"substr",	do_substr,	1,	11,	3,	PP_FUNCALL,	0},
 {"strsplit",	do_strsplit,	1,	11,	2,	PP_FUNCALL,	0},
 {"abbreviate",	do_abbrev,	1,	11,	3,	PP_FUNCALL,	0},
+{"make.names",	do_makenames,	0,	11,	1,	PP_FUNCALL,	0},
 {"grep",	do_grep,	1,	11,	5,	PP_FUNCALL,	0},
 {"sub",		do_gsub,	0,	11,	5,	PP_FUNCALL,	0},
 {"gsub",	do_gsub,	1,	11,	5,	PP_FUNCALL,	0},
@@ -395,8 +386,6 @@ FUNTAB R_FunTab[] =
 
 {"is.null",	do_is,		NILSXP,	1,	1,	PP_FUNCALL,	0},
 {"is.logical",	do_is,		LGLSXP,	1,	1,	PP_FUNCALL,	0},
-{"is.unordered",do_is,		FACTSXP,1,	1,	PP_FUNCALL,	0},
-{"is.ordered",	do_is,		ORDSXP,	1,	1,	PP_FUNCALL,	0},
 {"is.integer",	do_is,		INTSXP,	1,	1,	PP_FUNCALL,	0},
 {"is.real",	do_is,		REALSXP,1,	1,	PP_FUNCALL,	0},
 {"is.double",	do_is,		REALSXP,1,	1,	PP_FUNCALL,	0},
@@ -457,7 +446,8 @@ FUNTAB R_FunTab[] =
 {"readline",	do_readln,	0,	1,	0,	PP_FUNCALL,	0},
 {"menu",	do_menu,	0,	11,	1,	PP_FUNCALL,	0},
 {"print.default",do_printdefault,0,	111,	5,	PP_FUNCALL,	0},
-{"prmatrix",	do_printmatrix, 0,	111,	5,	PP_FUNCALL,	0},
+{"print.atomic",do_printdefault,0,	111,	5,	PP_FUNCALL,	0},
+{"print.matrix",do_printmatrix, 0,	111,	5,	PP_FUNCALL,	0},
 {"invisible",	do_invisible,	0,	101,	1,	PP_FUNCALL,	0},
 {"gc",		do_gc,		0,	101,	0,	PP_FUNCALL,	0},
 {"gcinfo",	do_gcinfo,	0,	101,	1,	PP_FUNCALL,	0},
@@ -508,17 +498,6 @@ FUNTAB R_FunTab[] =
 {"sink",	do_sink,	0,	101,	1,	PP_FUNCALL,	0},
 {"lib.fixup",	do_libfixup,	0,	101,	2,	PP_FUNCALL,	0},
 {"pos.to.env",	do_pos2env,	0,	1,	1,	PP_FUNCALL,	0},
-
-/* Data Frames */
-
-{"data.frame",	do_dataframe,	0,	11,	3,	PP_FUNCALL,	0},
-{"is.data.frame",do_is,		80,	1,	1,	PP_FUNCALL,	0},
-{"[.data.frame",do_subsetdf,	0,	0,	-1,	PP_FUNCALL,	0},
-{"[[.data.frame",do_subsetdf2,	0,	0,	-1,	PP_FUNCALL,	0},
-{"[<-.data.frame",do_subassigndf,0,	0,	-1,	PP_FUNCALL,	0},
-{"[[<-.data.frame",do_subassigndf2,0,	0,	-1,	PP_FUNCALL,	0},
-{"print.data.frame",do_printdf,	0,	101,	-1,	PP_FUNCALL,	0},
-{"any.data.frame",do_anydf,	0,	1,	-1,	PP_FUNCALL,	0},
 
 /* Complex Valued Functions */
 {"fft",		do_fft,		0,	11,	2,	PP_FUNCALL,	0},

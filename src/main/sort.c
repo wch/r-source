@@ -198,8 +198,6 @@ void sortVector(SEXP s)
 	if (n >= 2)
 		switch (TYPEOF(s)) {
 		case LGLSXP:
-		case FACTSXP:
-		case ORDSXP:
 		case INTSXP:
 			isort(INTEGER(s), n);
 			break;
@@ -357,19 +355,15 @@ void find(SEXP x, int k)
 {
 	switch (TYPEOF(x)) {
 	case LGLSXP:
-	case FACTSXP:
-	case ORDSXP:
 	case INTSXP:
 		iFind(INTEGER(x), LENGTH(x), k);
 		break;
 	case REALSXP:
 		rFind(REAL(x), LENGTH(x), k);
 		break;
-#ifdef COMPLEX
 	case CPLXSXP:
 		cFind(COMPLEX(x), LENGTH(x), k);
 		break;
-#endif
 	case STRSXP:
 		sFind(STRING(x), LENGTH(x), k);
 		break;
@@ -410,8 +404,6 @@ static int equal(int i, int j, SEXP x)
 	switch (TYPEOF(x)) {
 	case LGLSXP:
 	case INTSXP:
-	case FACTSXP:
-	case ORDSXP:
 		c = icmp(INTEGER(x)[i], INTEGER(x)[j]);
 		break;
 	case REALSXP:
@@ -436,8 +428,6 @@ static int greater(int i, int j, SEXP x)
 	switch (TYPEOF(x)) {
 	case LGLSXP:
 	case INTSXP:
-	case FACTSXP:
-	case ORDSXP:
 		c = icmp(INTEGER(x)[i], INTEGER(x)[j]);
 		break;
 	case REALSXP:
@@ -465,8 +455,6 @@ static int listgreater(int i, int j, SEXP key)
 		switch (TYPEOF(x)) {
 		case LGLSXP:
 		case INTSXP:
-		case FACTSXP:
-		case ORDSXP:
 			c = icmp(INTEGER(x)[i], INTEGER(x)[j]);
 			break;
 		case REALSXP:

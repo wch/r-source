@@ -185,7 +185,6 @@ ErrorDB[] = {
 
 	{ ERROR_TSVEC_MISMATCH,		"time-series/vector length mismatch\n"},
 	{ ERROR_INCOMPAT_ARGS,		"incompatible arguments\n"            },
-	{ ERROR_INCOMPAT_FACTORS,	"incompatible factors\n",             },
 
 	{ ERROR_UNIMPLEMENTED,		"unimplemented feature in %s\n",      },
 	{ ERROR_UNKNOWN,		"unknown error (report this!)\n",     }

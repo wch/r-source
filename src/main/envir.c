@@ -329,7 +329,7 @@ SEXP do_detach(SEXP call, SEXP op, SEXP args, SEXP env)
 		pos--;
 	if (pos != 2) {
 		error("detach: invalid pos= given\n");
-		s = t;/* for -Wall */
+		s = t;	/* for -Wall */
 	}
 	else {
 		PROTECT(s = ENCLOS(t));
@@ -337,7 +337,6 @@ SEXP do_detach(SEXP call, SEXP op, SEXP args, SEXP env)
 		ENCLOS(t) = x;
 	}
 	R_Visible = 0;
-	FrameClassFix(FRAME(s));
 	UNPROTECT(1);
 	return FRAME(s);
 }

@@ -1,31 +1,33 @@
 \name{pmatch}
 \title{Partial String Matching}
 \usage{
-   pmatch(x, table, nomatch = NA)
-charmatch(x, table, nomatch = NA)
+pmatch(x, table, nomatch = NA, duplicates.ok = FALSE)
 }
 \alias{pmatch}
-\alias{charmatch}
 \arguments{
 \item{x}{the values to be matched.}
 \item{table}{the values to be matched against.}
 \item{nomatch}{the value returned at non-matching positions.}
+\item{duplicates.ok}{should duplicate matches be allowed.}
 }
 \description{
 \code{pmatch} seeks matches for the elements of its first argument
-among those of its second.  If there is a unique match then the index
-of the matching value is returned; if multiple matches are found then
-\code{0} is returned and if no match is found then \code{NA} is
-returned.
-
-This function is based on Terry Therneau's \code{charmatch} S function.
-In \R, \code{charmatch} is synonym to \code{pmatch}.
+among those of its second.
+If there is a no match, then the value of \code{nomatch}
+is returned and if there is a unique match then the index
+of the matching value is returned.
+If there are multiple matches the result depends
+on the value of {duplicates.ok}.
+If \code{duplicates.ok} is false multiple matches will result
+in the value of \code{nomatch} being returned, and if it
+is true, the index of the first matching value will be returned.
 }
 \seealso{
-\code{\link{match}}.
+\code{\link{match}}, \code{\link{charmatch}}.
 }
 \examples{
-pmatch("m",   c("mean", "median", "mode")) # returns 0
+pmatch("", "")                             # returns NA
+pmatch("m",   c("mean", "median", "mode")) # returns NA
 pmatch("med", c("mean", "median", "mode")) # returns 2
 }
 \keyword{character}

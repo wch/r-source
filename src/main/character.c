@@ -265,6 +265,40 @@ SEXP do_abbrev(SEXP call, SEXP op, SEXP args, SEXP env)
 	return(ans);
 }
 
+SEXP do_makenames(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+	SEXP arg, ans;
+	int i, l, n;
+	char *p;
+
+	checkArity(op ,args);
+	arg = CAR(args);
+	if(!isString(arg))
+		errorcall(call, "non-character names\n");
+	n = length(arg);
+	PROTECT(ans = allocVector(STRSXP, n));
+	for(i=0 ; i<n ; i++) {
+		l = strlen(CHAR(STRING(arg)[i]));
+		if (isalpha(CHAR(STRING(arg)[i])[0])) {
+			STRING(ans)[i] = allocString(l);
+			strcpy(CHAR(STRING(ans)[i]), CHAR(STRING(arg)[i]));
+		}
+		else {
+			STRING(ans)[i] = allocString(l+1);
+			strcpy(CHAR(STRING(ans)[i]), "X");
+			strcat(CHAR(STRING(ans)[i]), CHAR(STRING(arg)[i]));
+		}
+		p = CHAR(STRING(ans)[i]);
+		while(*p) {
+			if(!isalnum(*p) && *p != '.')
+				*p = '.';
+			p++;
+		}
+	}
+	UNPROTECT(1);
+	return ans;
+}
+
 #ifdef HAVE_REGCOMP
 #include <sys/types.h>
 #include <regex.h>

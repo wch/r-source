@@ -87,8 +87,6 @@ SEXP duplicate(SEXP s)
 		break;
 	case STRSXP:
 	case LGLSXP:
-	case FACTSXP:
-	case ORDSXP:
 	case INTSXP:
 	case REALSXP:
 	case CPLXSXP:
@@ -96,7 +94,6 @@ SEXP duplicate(SEXP s)
 		PROTECT(s);
 		t = allocVector(TYPEOF(s), LENGTH(s));
 		copyVector(t, s);
-		LEVELS(t) = LEVELS(s);
 		PROTECT(t);
 		ATTRIB(t) = duplicate(ATTRIB(s));
 		UNPROTECT(2);
@@ -132,11 +129,6 @@ void copyVector(SEXP s, SEXP t)
 	case LGLSXP:
 		for (i = 0; i < ns; i++)
 			LOGICAL(s)[i] = LOGICAL(t)[i % nt];
-		break;
-	case FACTSXP:
-	case ORDSXP:
-		for (i = 0; i < ns; i++)
-			FACTOR(s)[i] = FACTOR(t)[i % nt];
 		break;
 	case INTSXP:
 		for (i = 0; i < ns; i++)
@@ -208,12 +200,6 @@ void copyMatrix(SEXP s, SEXP t, int byrow)
 			for (i = 0; i < nr; i++)
 				for (j = 0; j < nc; j++)
 					LOGICAL(s)[i + j * nr] = LOGICAL(t)[k++ % nt];
-			break;
-		case FACTSXP:
-		case ORDSXP:
-			for (i = 0; i < nr; i++)
-				for (j = 0; j < nc; j++)
-					FACTOR(s)[i + j * nr] = FACTOR(t)[k++ % nt];
 			break;
 		case INTSXP:
 			for (i = 0; i < nr; i++)

@@ -102,12 +102,8 @@ SEXP setAttrib(SEXP vec, SEXP name, SEXP val)
 		return dimnamesgets(vec, val);
 	else if (name == R_ClassSymbol)
 		return classgets(vec, val);
-	else if (name == R_LevelsSymbol)
-		return levelsgets(vec, val);
 	else if (name == R_TspSymbol)
 		return tspgets(vec, val);
-	else if (name == R_RowNamesSymbol)
-		return rownamesgets(vec, val);
 	else if (name == R_CommentSymbol)
 		return commentgets(vec, val);
 	else
@@ -234,17 +230,6 @@ SEXP tspgets(SEXP vec, SEXP val)
 	return vec;
 }
 
-SEXP levelsgets(SEXP vec, SEXP levels)
-{
-	if(isFactor(vec) && LENGTH(levels) != LEVELS(vec))
-		error("length of \"levels\" vector and number of levels differ\n");
-	PROTECT(vec);
-	PROTECT(levels = coerceVector(levels, STRSXP));
-	installAttrib(vec, R_LevelsSymbol, levels);
-	UNPROTECT(2);
-	return vec;
-}
-
 SEXP commentgets(SEXP vec, SEXP comment)
 {
 	if(isNull(comment) || isString(comment)) {
@@ -308,35 +293,6 @@ SEXP do_class(SEXP call, SEXP op, SEXP args, SEXP env)
 {
 	checkArity(op, args);
 	return getAttrib(CAR(args), R_ClassSymbol);
-}
-
-
-SEXP do_levelsgets(SEXP call, SEXP op, SEXP args, SEXP env)
-{
-	checkArity(op, args);
-	if(NAMED(CAR(args)) == 2) CAR(args) = duplicate(CAR(args));
-	setAttrib(CAR(args), R_LevelsSymbol, CADR(args));
-	return CAR(args);
-}
-
-SEXP do_levels(SEXP call, SEXP op, SEXP args, SEXP env)
-{
-	SEXP ans;
-	int i, n;
-	char *s;
-
-	checkArity(op, args);
-	ans = getAttrib(CAR(args), R_LevelsSymbol);
-	if(isFactor(CAR(args)) && ans == R_NilValue) {
-		n = LEVELS(CAR(args));
-		PROTECT(ans = allocVector(STRSXP, n));
-		for(i=0 ; i<n ; i++) {
-			s = Rsprintf("%d",i+1);
-			STRING(ans)[i] = mkChar(s);
-		}
-		UNPROTECT(1);
-	}
-	return ans;
 }
 
 SEXP do_namesgets(SEXP call, SEXP op, SEXP args, SEXP env)
@@ -421,65 +377,16 @@ SEXP do_names(SEXP call, SEXP op, SEXP args, SEXP env)
 	return R_NilValue;
 }
 
-SEXP duplicated(SEXP);
-
-SEXP rownamesgets(SEXP vec, SEXP val)
-{
-	int i;
-	SEXP dups;
-
-	PROTECT(vec);
-	PROTECT(val);
-
-	dups=duplicated(val);
-	for(i=0; i < length(dups) ; i++ )
-		if( LOGICAL(dups)[i] ) {
-		    warning("some row names are duplicated; argument ignored\n");
-		    UNPROTECT(2);
-		    return vec;
-		}
-
-	if(isFrame(vec)) {
-		val = coerceVector(val, STRSXP);
-		UNPROTECT(1);
-		PROTECT(val);
-
-		if (nrows(CAR(vec)) != length(val))
-			error("names attribute must be the same length as the vector\n");
-
-	}
-	installAttrib(vec, R_RowNamesSymbol, val);
-	UNPROTECT(2);
-	return vec;
-}
-
-SEXP do_rownames(SEXP call, SEXP op, SEXP args, SEXP env)
-{
-	checkArity(op, args);
-	return getAttrib(CAR(args), R_RowNamesSymbol);
-}
-
 SEXP do_dimnamesgets(SEXP call, SEXP op, SEXP args, SEXP env)
 {
+	SEXP ans;
+	if(DispatchOrEval(call, op, args, env, &ans, 0))
+                return(ans);
+	PROTECT(args = ans);
 	checkArity(op, args);
 	if(NAMED(CAR(args)) > 2) CAR(args) = duplicate(CAR(args));
-	if( isFrame(CAR(args)) ) {
-		if( !isList(CADR(args)) )
-			errorcall(call,"invalid argument type for new dimnames\n");
-		switch( length(CADR(args)) ) {
-		case 0:
-			setAttrib(CAR(args), R_RowNamesSymbol, R_NilValue);
-			setAttrib(CAR(args), R_NamesSymbol, R_NilValue);
-			break;
-		case 2:
-			setAttrib(CAR(args), R_RowNamesSymbol, CAR(CADR(args)));
-			setAttrib(CAR(args), R_NamesSymbol, CADR(CADR(args)));
-			break;
-		default:
-			errorcall(call,"wrong length for new dimnames\n");
-		}
-	}
-	else setAttrib(CAR(args), R_DimNamesSymbol, CADR(args));
+	setAttrib(CAR(args), R_DimNamesSymbol, CADR(args));
+	UNPROTECT(1);
 	return CAR(args);
 }
 
@@ -491,21 +398,10 @@ SEXP dimnamesgets(SEXP vec, SEXP val)
 	PROTECT(vec);
 	PROTECT(val);
 
-	if (!isArray(vec) && !isList(vec) && !isFrame(vec))
+	if (!isArray(vec) && !isList(vec))
 		error("dimnames applied to non-array\n");
 	if (!isList(val)) error("invalid type for dimnames: must be a list\n");
 	dims = getAttrib(vec, R_DimSymbol);
-	if (isFrame(vec)) {
-		if(length(val) != 2)
-			error("dimnames: number of dimensions must equal number of names\n");
-		vec = rownamesgets(vec, CAR(val));
-		UNPROTECT(2);
-		PROTECT(vec);
-		PROTECT(val);
-		vec = namesgets(vec, CADR(val));
-		UNPROTECT(2);
-		return vec;
-	}
 	if ((k = LENGTH(dims)) != length(val))
 		error("dimnames: number of dimensions must equal number of names\n");
 	top = val;
@@ -537,35 +433,39 @@ SEXP dimnamesgets(SEXP vec, SEXP val)
 
 SEXP do_dimnames(SEXP call, SEXP op, SEXP args, SEXP env)
 {
+	SEXP ans;
+	if(DispatchOrEval(call, op, args, env, &ans, 0))
+                return(ans);
+	PROTECT(args = ans);
 	checkArity(op, args);
-	if(isFrame(CAR(args))) {
-		PROTECT(op = allocList(2));
-		CAR(op) = getAttrib(CAR(args),R_RowNamesSymbol);
-		CADR(op) = getAttrib(CAR(args),R_NamesSymbol);
-		UNPROTECT(1);
-		return op;
-	}
-	return (getAttrib(CAR(args), R_DimNamesSymbol));
+	ans = getAttrib(CAR(args), R_DimNamesSymbol);
+	UNPROTECT(1);
+	return ans;
 }
 
 SEXP do_dim(SEXP call, SEXP op, SEXP args, SEXP env)
 {
+	SEXP ans;
+	if(DispatchOrEval(call, op, args, env, &ans, 0))
+                return(ans);
+	PROTECT(args = ans);
 	checkArity(op, args);
-	if(isFrame(CAR(args))) {
-		op = allocVector(INTSXP, 2);
-		INTEGER(op)[0] = nrows(CAAR(args));
-		INTEGER(op)[1] = length(CAR(args));
-		return op;
-	}
-	return (getAttrib(CAR(args), R_DimSymbol));
+	ans = getAttrib(CAR(args), R_DimSymbol);
+	UNPROTECT(1);
+	return ans;
 }
 
 SEXP do_dimgets(SEXP call, SEXP op, SEXP args, SEXP env)
 {
+	SEXP ans;
+	if(DispatchOrEval(call, op, args, env, &ans, 0))
+                return(ans);
+	PROTECT(args = ans);
 	checkArity(op, args);
 	if(NAMED(CAR(args)) > 1) CAR(args) = duplicate(CAR(args));
 	setAttrib(CAR(args), R_DimSymbol, CADR(args));
 	setAttrib(CAR(args), R_NamesSymbol, R_NilValue);
+	UNPROTECT(1);
 	return CAR(args);
 }
 
@@ -605,7 +505,7 @@ SEXP do_attributes(SEXP call, SEXP op, SEXP args, SEXP env)
 	SEXP s;
 
 	s = R_NilValue;
-	if (isList(CAR(args)) || isFrame(CAR(args)))
+	if (isList(CAR(args)))
 		s = getAttrib(CAR(args), R_NamesSymbol);
 	PROTECT(s);
 	if (s != R_NilValue) {
@@ -652,7 +552,7 @@ SEXP do_attributesgets(SEXP call, SEXP op, SEXP args, SEXP env)
 	if(NAMED(CAR(args)) == 2) CAR(args) = duplicate(CAR(args));
 	s = CAR(args);
 	t = CADR(args);
-	if(isList(s) || isFrame(s))
+	if(isList(s))
 		setAttrib(s, R_NamesSymbol, R_NilValue);
 	ATTRIB(s) = R_NilValue;
 

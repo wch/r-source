@@ -290,42 +290,6 @@ SEXP do_makelist(SEXP call, SEXP op, SEXP args, SEXP rho)
 }
 
 
-SEXP do_makefactor(SEXP call, SEXP op, SEXP args, SEXP rho)
-{
-	SEXP x, y;
-	int i, j, nx, nl, ord;
-
-	checkArity(op, args);
-	x = CAR(args) = coerceVector(CAR(args), INTSXP);
-	nl = asInteger(CADR(args));
-	if (nl == NA_INTEGER || nl < 0)
-		errorcall(call, "invalid number of factor levels\n");
-	ord = asLogical(CADDR(args));
-	if(ord == NA_LOGICAL) ord = 0;
-	nx = LENGTH(x);
-	PROTECT(y = allocVector(ord ? ORDSXP : FACTSXP, nx));
-	LEVELS(y) = nl;
-	for (i = 0; i < nx; i++) {
-		j = INTEGER(x)[i];
-		if (1 <= j && j <= nl)
-			FACTOR(y)[i] = j;
-		else
-			FACTOR(y)[i] = NA_INTEGER;
-	}
-	if(ord) {
-		PROTECT(x = allocVector(STRSXP, 2));
-		STRING(x)[0] = mkChar("ordered");
-		STRING(x)[1] = mkChar("factor");
-	}
-	else {
-		PROTECT(x = allocVector(STRSXP, 1));
-		STRING(x)[0] = mkChar("factor");
-	}
-	setAttrib(y, R_ClassSymbol, x);
-	UNPROTECT(2);
-	return y;
-}
-
 SEXP do_expression(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
 	SEXP a, blank, ans, nms;
@@ -383,9 +347,6 @@ SEXP do_makevector(SEXP call, SEXP op, SEXP args, SEXP rho)
 	if (mode == INTSXP || mode == LGLSXP)
 		for (i = 0; i < len; i++)
 			INTEGER(s)[i] = 0;
-	if (mode == FACTSXP || mode == ORDSXP)
-		for (i = 0; i < len; i++)
-			FACTOR(s)[i] = 1;
 	else if (mode == REALSXP)
 		for (i = 0; i < len; i++)
 			REAL(s)[i] = 0.0;
@@ -434,8 +395,6 @@ SEXP do_lengthgets(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 	switch (TYPEOF(x)) {
 	case LGLSXP:
-	case FACTSXP:
-	case ORDSXP:
 	case INTSXP:
 		for (i = 0; i < len; i++)
 			if (i < lenx) {

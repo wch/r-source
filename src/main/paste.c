@@ -172,39 +172,6 @@ SEXP do_format(SEXP call, SEXP op, SEXP args, SEXP env)
 		}
 		UNPROTECT(1);
 		break;
-	case FACTSXP:
-	case ORDSXP:
-		PROTECT(y = allocVector(STRSXP, n));
-		l = getAttrib(x, R_LevelsSymbol);
-		nl = LEVELS(x);
-		if(l == R_NilValue) {
-			PROTECT(l = allocVector(STRSXP, nl));
-			for(i=0 ; i<nl ; i++) {
-				strp = Rsprintf("%d", i+1);
-				STRING(l)[i] = mkChar(strp);
-			}
-		}
-		else {
-			l = duplicate(l);
-			PROTECT(l);
-		}
-		nastring = NA_STRING;
-		if(!trim) {
-			formatString(STRING(l), nl, &w, 0);
-			for(i=0 ; i<nl ; i++) {
-				strp = EncodeString(CHAR(STRING(l)[i]), w, 0, adj_left);
-				STRING(l)[i] = mkChar(strp);
-			}
-			nastring = mkChar(EncodeString(CHAR(nastring), w, 0, adj_left));
-		}
-		for(i=0 ; i<n ; i++) {
-			if(INTEGER(x)[i] < 1 || INTEGER(x)[i] > nl)
-				STRING(y)[i] = nastring;
-			else
-				STRING(y)[i] = STRING(l)[INTEGER(x)[i]-1];
-		}
-		UNPROTECT(2);
-		break;
 	case INTSXP:
 		PROTECT(y = allocVector(STRSXP, n));
 		if (trim) w = 0;
@@ -276,11 +243,6 @@ SEXP do_formatinfo(SEXP call, SEXP op, SEXP args, SEXP env)
 	{
 		case LGLSXP:
 			formatLogical(LOGICAL(x), n, &w);
-			break;
-		case FACTSXP:
-		case ORDSXP:
-			l = getAttrib(x, R_LevelsSymbol);
-			formatFactor(INTEGER(x), n, &w, l, LEVELS(x));
 			break;
 		case INTSXP:
 			formatInteger(INTEGER(x), n, &w);

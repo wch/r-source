@@ -24,8 +24,8 @@
 #define PRINT_GAP	print_gap
 #define PRINT_WIDTH	R_print_width
 
-#define adj_right 0
-#define adj_left  1
+#define adj_right 1
+#define adj_left  0
 
 extern int  R_print_width;
 extern SEXP print_na_string;
@@ -39,9 +39,7 @@ void formatLogical(int*,int,int*);
 void formatFactor(int*, int, int*, SEXP, int);
 void formatInteger(int*,int,int*);
 void formatReal(double*, int, int*, int*, int*);
-#ifdef COMPLEX_DATA
 void formatComplex(complex*, int, int*, int*, int*, int*, int*, int*);
-#endif
 void formatString(SEXP*, int, int*, int);
 
 /* Formating of values */
@@ -56,6 +54,7 @@ char *EncodeElement(SEXP, int, int);
 /* Printing */
 int IndexWidth(int n);
 void MatrixColumnLabel(SEXP, int, int);
+void RightMatrixColumnLabel(SEXP, int, int);
 void LeftMatrixColumnLabel(SEXP, int, int);
 void MatrixRowLabel(SEXP, int, int);
 void VectorIndex(int, int);
@@ -73,7 +72,7 @@ int Rvprintf(const char*, va_list);
 
 void printArray(SEXP, int);
 void printDataFrame(SEXP);
-void printMatrix(SEXP, int, SEXP, int);
+void printMatrix(SEXP, int, SEXP, int, int);
 void printNamedVector(SEXP, SEXP, int);
 void printVector(SEXP, int, int);
 

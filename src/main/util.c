@@ -211,8 +211,6 @@ int isVector(SEXP s)
 {
 	switch(TYPEOF(s)) {
 	    case LGLSXP:
-	    case FACTSXP:
-	    case ORDSXP:
 	    case INTSXP:
 	    case REALSXP:
 	    case CPLXSXP:
@@ -262,31 +260,6 @@ int tsConform(SEXP x, SEXP y)
 		return INTEGER(x)[0] == INTEGER(x)[0] &&
 		    INTEGER(x)[1] == INTEGER(x)[1] &&
 		    INTEGER(x)[2] == INTEGER(x)[2];
-	return 0;
-}
-
-int factorsConform(SEXP x, SEXP y)
-{
-        SEXP xlevels, ylevels;
-        int i, n;
-
-        if((isUnordered(x) && isUnordered(y)) || (isOrdered(x) && isOrdered(y)))
- {
-                if(LEVELS(x) == LEVELS(y)) {
-                        xlevels = getAttrib(x, R_LevelsSymbol);
-                        ylevels = getAttrib(y, R_LevelsSymbol);
-                        if(xlevels == R_NilValue && ylevels == R_NilValue)
-                                return 1;
-                        if(xlevels != R_NilValue && ylevels != R_NilValue) {
-                                n = LEVELS(x);
-                                for(i=0 ; i<n ; i++)
-                                        if(strcmp(CHAR(STRING(xlevels)[i]),
-                                            CHAR(STRING(ylevels)[i])))
-                                                return 0;
-                                return 1;
-                        }
-                }
-        }
 	return 0;
 }
 
@@ -392,17 +365,28 @@ int isComplex(SEXP s)
 
 int isUnordered(SEXP s)
 {
-	return (TYPEOF(s) == FACTSXP);
+	return (isInteger(s)
+                && inherits(s, "factor")
+		&& !inherits(s, "ordered"));
 }
 
 int isOrdered(SEXP s)
 {
-	return (TYPEOF(s) == ORDSXP);
+	return (isInteger(s)
+                && inherits(s, "factor")
+		&& inherits(s, "ordered"));
 }
 
 int isFactor(SEXP s)
 {
-	return (TYPEOF(s) == FACTSXP || TYPEOF(s) == ORDSXP);
+	return (isInteger(s) && inherits(s, "factor"));
+}
+
+int nlevels(SEXP f)
+{
+	if(!isFactor(f))
+		return 0;
+	return LENGTH(getAttrib(f, R_LevelsSymbol));
 }
 
 int isObject(SEXP s)
@@ -453,8 +437,6 @@ TypeTable[] = {
 	{ "builtin",		BUILTINSXP },
 	{ "char",		CHARSXP    },
 	{ "logical",		LGLSXP     },
-	{ "factor",		FACTSXP    },
-	{ "ordered",		ORDSXP     },
 	{ "integer",		INTSXP     },
 	{ "real",		REALSXP    },
 	{ "complex",		CPLXSXP    },
@@ -464,7 +446,7 @@ TypeTable[] = {
 	{ "expression",		EXPRSXP    },
 
 	{ "numeric",		REALSXP    },	/* aliases */
-	{ "unordered",		FACTSXP    },
+	{ "name",		SYMSXP	   },
 
 	{ (char *)0,            -1         }
 };

@@ -479,30 +479,6 @@ static SEXP labelformat(SEXP labels)
 	}
 	UNPROTECT(1);
 	break;
-    case FACTSXP:
-    case ORDSXP:
-	PROTECT(ans = allocVector(STRSXP, n));
-	l = getAttrib(labels, R_LevelsSymbol);
-	nl = LEVELS(labels);
-	if(l == R_NilValue) {
-	    PROTECT(l = allocVector(STRSXP, nl));
-	    for(i=0 ; i<nl ; i++) {
-		strp = EncodeInteger(i+1, 0);
-		STRING(l)[i] = mkChar(strp);
-	    }
-	}
-	else {
-	    l = duplicate(l);
-	    PROTECT(l);
-	}
-	for(i=0 ; i<n ; i++) {
-	    if(INTEGER(labels)[i] < 1 || INTEGER(labels)[i] > nl)
-		STRING(ans)[i] = NA_STRING;
-	    else
-		STRING(ans)[i] = STRING(l)[INTEGER(labels)[i]-1];
-	}
-	UNPROTECT(2);
-	break;
     case INTSXP:
 	PROTECT(ans = allocVector(STRSXP, n));
 	for (i = 0; i < n; i++) {

@@ -346,7 +346,7 @@ static void deparse2buff(SEXP s)
 		break;
 	case SPECIALSXP:
 	case BUILTINSXP:
-		sprintf(tpb, "<primitive: %s>", PRIMNAME(s));
+		sprintf(tpb, ".Primitive(\"%s\")", PRIMNAME(s));
 		print2buff(tpb);
 		break;
 	case PROMSXP:
@@ -605,16 +605,6 @@ static void deparse2buff(SEXP s)
 		vector2buff(s);
 		attr2(s);
 		break;
-	case FACTSXP:
-		attr1(s);
-		factor2buff(s, 0);
-		attr2(s);
-		break;
-	case ORDSXP:
-		attr1(s);
-		factor2buff(s, 1);
-		attr2(s);
-		break;
 	default:
 		UNIMPLEMENTED("deparse2buff");
 	}
@@ -674,8 +664,6 @@ static void vector2buff(SEXP vector)
 	if (tlen == 0) {
 		switch(TYPEOF(vector)) {
 		case LGLSXP: print2buff("logical(0)"); break;
-		case FACTSXP: print2buff("unordered(0)"); break;
-		case ORDSXP: print2buff("ordered(0)"); break;
 		case INTSXP: print2buff("numeric(0)"); break;
 		case REALSXP: print2buff("numeric(0)"); break;
 		case CPLXSXP: print2buff("complex(0)"); break;

@@ -49,7 +49,7 @@ as.array <- function(x)
 	dim(x) <-length(x)
 	return(x)
 }
-as.name <- function(x) .Internal(as.name(x))
+as.name <- function(x) .Internal(as.vector(x, "name"))
 # as.call <- function(x) stop("type call cannot be assigned")
 as.numeric <- as.double
 as.qr <- function(x) stop("you cannot be serious")

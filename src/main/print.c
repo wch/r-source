@@ -103,7 +103,7 @@ SEXP do_printmatrix(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 	PROTECT(oldnames = getAttrib(x,R_DimNamesSymbol));
 	/* fix up the dimnames */
-	if( length(rowlab) || length(collab) || rowlab==R_NilValue ||
+	if(length(rowlab) || length(collab) || rowlab==R_NilValue ||
 			collab==R_NilValue ) {
 		a = oldnames;
 		if( a == R_NilValue )
@@ -116,7 +116,7 @@ SEXP do_printmatrix(SEXP call, SEXP op, SEXP args, SEXP rho)
 		setAttrib(x,R_DimNamesSymbol,a);
 		UNPROTECT(1);
 	}
-	printMatrix(x, 0, getAttrib(x,R_DimSymbol),quote);
+	printMatrix(x, 0, getAttrib(x,R_DimSymbol), quote, right);
 	setAttrib(x,R_DimNamesSymbol, oldnames);
 	UNPROTECT(1);
 	return x;
@@ -184,10 +184,6 @@ static void printList(SEXP s)
 				case LGLSXP:
 					pbuf = Rsprintf("Logical,%d", LENGTH(CAR(s)));
 					break;
-				case FACTSXP:
-				case ORDSXP:
-					pbuf = Rsprintf("Factor,%d", LENGTH(CAR(s)));
-					break;
 				case INTSXP:
 				case REALSXP:
 					pbuf = Rsprintf("Numeric,%d", LENGTH(CAR(s)));
@@ -212,7 +208,7 @@ static void printList(SEXP s)
 			s = CDR(s);
 		}
 		if (LENGTH(dims) == 2)
-			printMatrix(t, 0, dims, 0);
+			printMatrix(t, 0, dims, 0, 0);
 		else
 			printArray(t, 0);
 		UNPROTECT(2);
@@ -260,19 +256,19 @@ static void printList(SEXP s)
 
 static void PrintExpression(SEXP s)
 {
-	SEXP u, v;
+	SEXP u, v, nms;
 	int i, n;
 
 	PROTECT(u = v = allocList(LENGTH(s)+1));
 	TYPEOF(u) = LANGSXP;
 	CAR(u) = install("expression");
 	u = CDR(u);
-#ifdef NEW
 	nms = getAttrib(s, R_NamesSymbol);
-#endif
 	n = LENGTH(s);
 	for(i=0 ; i<n ; i++) {
 		CAR(u) = VECTOR(s)[i];
+		if(nms != R_NilValue && length(STRING(nms)[i]) != 0)
+			TAG(u) = install(CHAR(STRING(nms)[i]));
 		u = CDR(u);
 	}
 	u = deparse1(v, 0);
@@ -298,7 +294,7 @@ void PrintValueRec(SEXP s)
 		break;
 	case SPECIALSXP:
 	case BUILTINSXP:
-		Rprintf("<primitive: %s>\n", PRIMNAME(s));
+		Rprintf(".Primitive(\"%s\")\n", PRIMNAME(s));
 		break;
 	case CHARSXP:
 		Rprintf("\"%s\"\n", EncodeString(CHAR(s),0,'"', adj_left));
@@ -330,8 +326,6 @@ void PrintValueRec(SEXP s)
 		printList(s);
 		break;
 	case LGLSXP:
-	case FACTSXP:
-	case ORDSXP:
 	case INTSXP:
 	case REALSXP:
 	case STRSXP:
@@ -347,7 +341,7 @@ void PrintValueRec(SEXP s)
 				UNPROTECT(1);
 			}
 			else if (LENGTH(t) == 2)
-				printMatrix(s, 0, t, print_quote);
+				printMatrix(s, 0, t, print_quote, 0);
 			else
 				printArray(s, print_quote);
 		}

@@ -20,6 +20,9 @@
 #ifndef DEFN_H_
 #define DEFN_H_
 
+#define NEW_FACTORS
+#define NEW_DATAFRAMES
+
 #define COUNTING
 
 #include "Platform.h"
@@ -87,8 +90,10 @@ typedef unsigned int SEXPTYPE;
 #define BUILTINSXP	8	/* builtin non-special forms */
 #define CHARSXP		9	/* "scalar" string type (internal only)*/
 #define LGLSXP		10	/* logical vectors */
+#ifdef OLD
 #define FACTSXP		11	/* unordered factors */
 #define ORDSXP		12	/* ordered factors */
+#endif
 #define INTSXP		13	/* integer vectors */
 #define REALSXP		14	/* real variables */
 #define CPLXSXP		15	/* complex variables */

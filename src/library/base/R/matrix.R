@@ -2,7 +2,6 @@ matrix <- function(data=NA, nrow=1, ncol=1, byrow=FALSE, dimnames=NULL) {
 	if(missing(nrow))	nrow <- ceiling(length(data)/ncol)
 	else if(missing(ncol))	ncol <- ceiling(length(data)/nrow)
 	x <- .Internal(matrix(data, nrow, ncol, byrow))
-	levels(x) <- levels(data)
 	dimnames(x)<-dimnames
 	x
 }

@@ -52,3 +52,14 @@ abbreviate<-function(names.arg, minlength = 4, use.classes = T, dot = F)
         names(x)<-old
         x
 }
+
+make.names <- function(names, unique=FALSE)
+{
+	names <- .Internal(make.names(as.character(names)))
+	if(unique) {
+		while(any(dups <- duplicated(new))) {
+			names[dups] <- paste(names[dups], seq(length = sum(dups)), sep = "")
+		}
+        }
+        names
+}

@@ -61,17 +61,6 @@ char *EncodeLogical(int x, int w)
 	return Encodebuf;
 }
 
-char *EncodeFactor(int x, int nlev, int w, SEXP levels)
-{
-	if (x == NA_INTEGER || x < 1 || x > nlev)
-		sprintf(Encodebuf, "%*s", w, CHAR(print_na_string));
-	else if(!isNull(levels))
-		sprintf(Encodebuf, "%*s", w, CHAR(STRING(levels)[x-1]));
-	else
-		sprintf(Encodebuf, "%*d", w, x);
-	return Encodebuf;
-}
-
 char *EncodeInteger(int x, int w)
 {
 	if (x == NA_INTEGER) sprintf(Encodebuf, "%*s", w, CHAR(print_na_string));
@@ -185,12 +174,12 @@ int Rstrlen(char *s)
 	return len;
 }
 
-char *EncodeString(char *s, int w, int quote, int left)
+char *EncodeString(char *s, int w, int quote, int right)
 {
 	int b, i;
 	char *p, *q;
 	q = Encodebuf;
-	if(!left) { /*Right justifying */
+	if(right) { /*Right justifying */
 		b = w - Rstrlen(s) - (quote ? 2 : 0);
 		for(i=0 ; i<b ; i++) *q++ = ' ';
 	}
@@ -238,7 +227,7 @@ char *EncodeString(char *s, int w, int quote, int left)
 		p++;
 	}
 	if(quote) *q++ = quote;
-	if(left) { /* Left justifying */
+	if(!right) { /* Left justifying */
 		*q = '\0';
 		b = w - strlen(Encodebuf);
 		for(i=0 ; i<b ; i++) *q++ = ' ';
@@ -256,12 +245,6 @@ char *EncodeElement(SEXP x, int index, int quote)
 		case LGLSXP:
 			formatLogical(&INTEGER(x)[index], 1, &w);
 			EncodeLogical(INTEGER(x)[index], w);
-			break;
-		case FACTSXP:
-		case ORDSXP:
-			lev = getAttrib(x, R_LevelsSymbol);
-			formatFactor(&INTEGER(x)[index], 1, &w, lev, LEVELS(x));
-			EncodeFactor(INTEGER(x)[index], LEVELS(x), w, lev);
 			break;
 		case INTSXP:
 			formatInteger(&INTEGER(x)[index], 1, &w);
@@ -375,6 +358,19 @@ void MatrixColumnLabel(SEXP cl, int j, int w)
 	}
 }
 
+void RightMatrixColumnLabel(SEXP cl, int j, int w)
+{
+	int l;
+
+	if (!isNull(cl)) {
+		l = Rstrlen(CHAR(STRING(cl)[j]));
+		Rprintf("%*s", PRINT_GAP+w,
+			EncodeString(CHAR(STRING(cl)[j]), l, 0, adj_right));
+	}
+	else {
+		Rprintf("%*s[,%ld]%*s", PRINT_GAP, "", j+1, w-IndexWidth(j+1)-3, "");
+	}
+}
 void LeftMatrixColumnLabel(SEXP cl, int j, int w)
 {
 	int l;

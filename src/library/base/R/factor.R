@@ -1,43 +1,182 @@
 "factor" <-
-function (x, levels = sort(unique(x), na.last = TRUE), labels, exclude = NA, 
-	ordered = FALSE) 
+  function (x, levels = sort(unique(x), na.last = TRUE), labels, 
+            exclude = NA) 
 {
-	if (length(x) == 0) 
-		return(character(0))
-	exclude <- as.vector(exclude, typeof(x))
-	levels <- levels[is.na(match(levels, exclude))]
-	x <- .Internal(factor(match(x, levels), length(levels), 
-		ordered))
-	if (missing(labels)) 
-		levels(x) <- levels
-	else levels(x) <- labels
-	x
-}
-as.factor <-
-function(x, ordered=FALSE)
-{
-	test <- if(ordered) is.ordered else is.factor
-        if(!test(x)) {
-                levs <- sort(unique(x))
-                x <- .Internal(factor(match(x, levs), length(levs), ordered))
-                levels(x) <- levs
-        }
-        x
-}
-ordered <-
-function(x, levels=sort(unique(x), na.last = TRUE), labels, exclude = NA,
-	ordered=TRUE)
-{
-	if (length(x) == 0)
-		return(character(0))
-	exclude <- as.vector(exclude, typeof(x))
-	levels <- levels[is.na(match(levels, exclude))]
-	x <- .Internal(factor(match(x, levels), length(levels), ordered))
-	if(missing(labels)) levels(x) <- levels
-	else levels(x) <- labels
-	x
+  if (length(x) == 0) 
+    return(character(0))
+  exclude <- as.vector(exclude, typeof(x))
+  levels <- levels[is.na(match(levels, exclude))]
+  x <- match(x, levels)
+  attr(x, "levels") <- levels
+  attr(x, "class") <- "factor"
+  if (!missing(labels)) 
+    levels(x) <- labels
+  x
 }
 
-as.ordered <- function(x) { 
-  if (is.ordered(x)) x else ordered(x)
+
+"is.factor" <-
+  function(x)
+  inherits(x, "factor")
+
+
+"levels" <-
+  function(x)
+  attr(x, "levels")
+
+"levels<-" <-
+  function(x, value) {
+      value <- as.character(value)
+      attr(x, "levels") <- value
+      x
+    }
+
+codes <-
+  function(x, ...)
+  UseMethod("codes")
+
+codes.factor <-
+  function(x)
+  {
+    attributes(x) <- NULL
+    x
+  }
+
+"as.factor" <-
+  function (x)
+  if (is.factor(x)) x else factor(x)
+
+
+"as.vector.factor" <-
+  function(x, type="any")
+  {
+    if (type == "any" || type == "character" || type == "logical" || type == "list")
+      as.vector(levels(x)[x], type)
+    else
+      as.vector(unclass(x), type)
+  }
+
+
+"print.factor" <-
+  function (x, quote=FALSE) {
+    if(length(x) <= 0)
+      cat("factor(0)\n")
+    else
+      print(levels(x)[x], quote=quote)
+    cat("Levels: ",paste(levels(x), collapse=" "), "\n")
+  }
+
+
+"Math.factor" <-
+  function(e1,e2)
+  stop(paste('"',.Generic,'"', " not meaningful for factors", sep=""))
+
+"Ops.factor" <-
+  function(e1, e2)
+  {
+    ok <- switch(.Generic, "=="=, "!="=TRUE, FALSE)
+    if (!ok) stop(paste('"',.Generic,'"', " not meaningful for factors", sep=""))
+    nas <- is.na(e1) | is.na(e2)
+    if (nchar(.Method[1])) {
+      l1 <- levels(e1)
+      e1 <- l1[e1]
+    }
+    if (nchar(.Method[2])) {
+      l2 <- levels(e2)
+      e2 <- l2[e2]
+    }
+    if (all(nchar(.Method)) && (length(l1) != length(l2) ||
+                                !all(sort(l2) == sort(l1))))
+      stop("Level sets of factors are different")
+    value <- NextMethod(.Generic)
+    value[nas] <- NA
+    value
+  }
+
+"[.factor" <-
+  function(x, i)
+  {
+    y <- NextMethod("[")
+    levels(y) <- levels(x)
+    class(y) <- class(x)
+    y
+  }
+
+"[<-.factor" <-
+  function(x, i, value)
+  {
+    lx <- levels(x)
+    cx <- class(x)
+    nas <- is.na(x)
+    if (is.factor(value))
+      value <- levels(value)[value]
+    m <- match(value, lx)
+    if (any(is.na(m) && !is.na(value)))
+      warning("invalid factor level, NAs generated")
+    class(x) <- NULL
+    x[i] <- m
+    levels(x) <- lx
+    class(x) <- cx
+    x
+  }
+
+
+# ordered factors ...
+
+"ordered" <-
+  function (x, levels = sort(unique(x), na.last = TRUE), labels, 
+            exclude = NA, ordered = TRUE) 
+{
+  if (is.ordered(x)) return(x)
+  if (is.factor(x)) {
+    class(x) <- c("ordered", class(x))
+    return(x)
+  }
+  if (length(x) == 0) 
+    return(character(0))
+  exclude <- as.vector(exclude, typeof(x))
+  levels <- levels[is.na(match(levels, exclude))]
+  x <- match(x, levels)
+  attr(x, "levels") <- levels
+  attr(x, "class") <- "factor"
+  if (!missing(labels))
+    levels(x) <- labels
+  x
 }
+
+"is.ordered" <-
+  function(x)
+  inherits(x, "ordered")
+
+"as.ordered" <-
+  function(x)
+  if (is.ordered(x)) x else ordered(x)
+
+"print.ordered" <-
+  function (x, quote=FALSE) {
+    if(length(x) <= 0)
+      cat("ordered(0)\n")
+    else
+      print(levels(x)[x], quote=quote)
+  cat("Levels: ",paste(levels(x), collapse=" < "), "\n")
+}
+
+"Ops.ordered" <-
+  function(e1, e2)
+  {
+    nas <- is.na(e1) | is.na(e2)
+    if (nchar(.Method[1])) {
+      l1 <- levels(e1)
+      e1 <- l1[e1]
+    }
+    if (nchar(.Method[2])) {
+      l2 <- levels(e2)
+      e2 <- l2[e2]
+    }
+    if (all(nchar(.Method)) && (length(l1) != length(l2) ||
+                                !all(sort(l2) == sort(l1))))
+      stop("Level sets of factors are different")
+    value <- get(.Generic, mode="function")(e1,e2)
+    value[nas] <- NA
+    value
+  }

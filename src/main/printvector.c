@@ -55,48 +55,6 @@ static void printLogicalVector(int *x, int n, int index)
     Rprintf("\n");
 }
 
-static void printFactorVector(int *x, int n, int index, SEXP levels, int nlev)
-{
-    int i, j, w, labwidth=0, width;
-
-    if (index) {
-	labwidth = IndexWidth(n) + 2;
-	VectorIndex(1, labwidth);
-	width = labwidth;
-    }
-    else width = 0;
-
-    formatString(STRING(levels), nlev, &w, 0);
-    for (i = 0; i < n; i++) {
-	if (x[i] < 1 || x[i] > nlev) {
-	    if (w < 2)
-		w = 2;
-	    break;
-	}
-    }
-
-    for (i = 0; i < n; i++) {
-	if (width + w + PRINT_GAP > PRINT_WIDTH) {
-	    Rprintf("\n");
-	    if (index) {
-		VectorIndex(i + 1, labwidth);
-		width = labwidth;
-	    }
-	    else
-		width = 0;
-	}
-	Rprintf("%*s", PRINT_GAP, "");
-	j = x[i];
-	if (1 <= j && j <= nlev) {
-	    Rprintf("%s", EncodeFactor(j, nlev, w, levels));
-	}
-	else
-	    Rprintf("%s", EncodeString(CHAR(NA_STRING), w, 0, adj_left));
-	width += w + PRINT_GAP;
-    }
-    Rprintf("\n");
-}
-
 static void printIntegerVector(int *x, int n, int index)
 {
     int i, w, labwidth=0, width;
@@ -233,16 +191,6 @@ void printVector(SEXP x, int index, int quote)
 	case LGLSXP:
 	    printLogicalVector(LOGICAL(x), n, index);
 	    break;
-	case FACTSXP:
-	case ORDSXP:
-	    if ((l = getAttrib(x, R_LevelsSymbol)) != R_NilValue
-		&& TYPEOF(l) == STRSXP
-		&& LENGTH(l) == LEVELS(x)) {
-		printFactorVector(FACTOR(x), n, index, l, LEVELS(x));
-	    }
-	    else
-		printIntegerVector(INTEGER(x), n, index);
-	    break;
 	case INTSXP:
 	    printIntegerVector(INTEGER(x), n, index);
 	    break;
@@ -263,12 +211,6 @@ void printVector(SEXP x, int index, int quote)
 	switch (TYPEOF(x)) {
 	case LGLSXP:
 	    Rprintf("logical(0)\n");
-	    break;
-	case FACTSXP:
-	    Rprintf("unordered(0)\n");
-	    break;
-	case ORDSXP:
-	    Rprintf("ordered(0)\n");
 	    break;
 	case INTSXP:
 	case REALSXP:
@@ -309,40 +251,6 @@ static void printNamedLogicalVector(int * x, int n, SEXP * names)
 	Rprintf("\n");
 	for (j = 0; j < nperline && (k = i * nperline + j) < n; j++) {
 	    Rprintf("%s%*s", EncodeLogical(x[k], w), PRINT_GAP, "");
-	}
-    }
-    Rprintf("\n");
-}
-
-static void printNamedFactorVector(int * x, int n, SEXP * names, SEXP * levels, int nlev)
-{
-    int i, j, k, l, w, wn, nlines, nperline;
-
-    formatString(levels, nlev, &w, 0);
-    for (i = 0; i < n; i++) {
-	if (x[i] < 1 || x[i] > nlev)
-	    if (w < 2) w = 2;
-    }
-    formatString(names, n, &wn, 0);
-    if (w < wn) w = wn;
-    nperline = PRINT_WIDTH / (w + PRINT_GAP);
-    if (nperline <= 0) nperline = 1;
-    nlines = n / nperline;
-    if (n % nperline) nlines += 1;
-
-    for (i = 0; i < nlines; i++) {
-	if (i) Rprintf("\n");
-	for (j = 0; j < nperline && (k = i * nperline + j) < n; j++) {
-	    Rprintf("%s%*s", EncodeString(CHAR(names[k]), w, 0, adj_right),
-		    PRINT_GAP, "");
-	}
-	Rprintf("\n");
-	for (j = 0; j < nperline && (k = i * nperline + j) < n; j++) {
-	    l = x[k];
-	    if (1 <= l && l <= nlev)
-		Rprintf("%s%*s", EncodeString(CHAR(levels[l - 1]), w, 0, adj_right), PRINT_GAP, "");
-	    else
-		Rprintf("%s%*s", EncodeString(CHAR(NA_STRING), w, 0, adj_right), PRINT_GAP, "");
 	}
     }
     Rprintf("\n");
@@ -472,16 +380,6 @@ void printNamedVector(SEXP x, SEXP names, int quote)
 	case LGLSXP:
 	    printNamedLogicalVector(LOGICAL(x), n, STRING(names));
 	    break;
-	case FACTSXP:
-	    if ((l = getAttrib(x, install("levels"))) != R_NilValue
-		&& TYPEOF(l) == STRSXP
-		&& LENGTH(l) == LEVELS(x)) {
-		printNamedFactorVector(FACTOR(x), n, STRING(names), STRING(l), LEVELS(x));
-	    }
-	    else {
-		printNamedIntegerVector(INTEGER(x), n, STRING(names));
-	    }
-	    break;
 	case INTSXP:
 	    printNamedIntegerVector(INTEGER(x), n, STRING(names));
 	    break;
@@ -500,12 +398,6 @@ void printNamedVector(SEXP x, SEXP names, int quote)
 	switch (TYPEOF(x)) {
 	case LGLSXP:
 	    Rprintf("logical(0)\n");
-	    break;
-	case FACTSXP:
-	    Rprintf("unordered(0)\n");
-	    break;
-	case ORDSXP:
-	    Rprintf("ordered(0)\n");
 	    break;
 	case INTSXP:
 	    Rprintf("integer(0)\n");

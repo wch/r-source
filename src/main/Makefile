@@ -20,7 +20,6 @@ OBJS=		arithmetic.o \
 		context.o \
 		cov.o \
 		cum.o \
-		dataframe.o \
 		debug.o \
 		deparse.o \
 		deriv.o \

@@ -189,10 +189,6 @@ static void extractItem(char *buffer, SEXP ans, int i)
 			else
 				LOGICAL(ans)[i] = StringTrue(buffer);
 			break;
-		case FACTSXP:
-		case ORDSXP:
-			if(!ttyflag) fclose(fp);
-			error("can't scan factors (yet)\n");
 		case INTSXP:
 			if (isNAstring(buffer))
 				INTEGER(ans)[i] = NA_INTEGER;
@@ -514,8 +510,6 @@ SEXP do_scan(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 	switch (TYPEOF(what)) {
 	case LGLSXP:
-	case FACTSXP:
-	case ORDSXP:
 	case INTSXP:
 	case REALSXP:
 	case STRSXP:
@@ -710,13 +704,12 @@ SEXP do_typecvt(SEXP call, SEXP op, SEXP args, SEXP env)
 			rval = cvec;
 		}
 		else {
-			PROTECT(rval = allocVector(FACTSXP,length(cvec)));
+			PROTECT(rval = allocVector(INTSXP,length(cvec)));
 			PROTECT(dup = duplicated(cvec));
 			j = 0;
 			for( i=0 ; i<len ; i++ )
 				if (LOGICAL(dup)[i] == 0 && !isNAstring(CHAR(STRING(cvec)[i])) )
 					j++;
-			LEVELS(rval) = j;
 			PROTECT(levs = allocVector(STRSXP,j));
 			j=0;
 			for( i=0 ; i<len ; i++ )
@@ -727,10 +720,10 @@ SEXP do_typecvt(SEXP call, SEXP op, SEXP args, SEXP env)
 
 			sortVector(levs);
 
-			PROTECT(a=match(levs, cvec, NA_INTEGER));
-			for (i = 0; i < len; i++)
-				FACTOR(rval)[i]=INTEGER(a)[i];
-
+			PROTECT(a=match(levs, cvec, NA_INTEGER));	
+			for (i = 0; i < len; i++) 
+				INTEGER(rval)[i]=INTEGER(a)[i];
+	
 			setAttrib(rval, R_LevelsSymbol, levs);
 			PROTECT(a = allocVector(STRSXP, 1));
 			STRING(a)[0] = mkChar("factor");

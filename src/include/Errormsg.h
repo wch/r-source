@@ -33,7 +33,6 @@ extern void warning(const char *, ...);
 	/* General type and length incompatibilities */
 
 #define ERROR_TSVEC_MISMATCH	100
-#define ERROR_INCOMPAT_FACTORS	101
 
 #define ERROR_UNIMPLEMENTED	9998
 #define ERROR_UNKNOWN		9999

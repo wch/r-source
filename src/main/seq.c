@@ -64,62 +64,9 @@ static SEXP seq(SEXP call, SEXP s1, SEXP s2)
 	return ans;
 }
 
-	/*  cross  -  the "cross" of two factors  */
-
-	/*  Note that this always produces an unordered result.
-	 *  There is no way to order.  */
-
-static SEXP cross(SEXP s1, SEXP s2)
-{
-	SEXP ans, levs, levs1, levs2;
-	int i, j, k, l1, l2, n, v1, v2;
-	n = length(s1);
-	l1 = LEVELS(s1);
-	l2 = LEVELS(s2);
-	PROTECT(ans = allocVector(FACTSXP, n));
-	LEVELS(ans) = l1 * l2;
-	for(i=0 ; i<n ; i++) {
-		v1 = INTEGER(s1)[i];
-		v2 = INTEGER(s2)[i];
-		if(v1 == NA_INTEGER || v2 == NA_INTEGER)
-			INTEGER(ans)[i] = NA_INTEGER;
-		else
-			INTEGER(ans)[i] = v2 + (v1 - 1) * l2;
-	}
-	levs1 = getAttrib(s1, R_LevelsSymbol);
-	levs2 = getAttrib(s2, R_LevelsSymbol);
-	if(!isNull(levs1) && !isNull(levs2)) {
-		PROTECT(levs = allocVector(STRSXP, l1 * l2));
-		k = 0;
-		for(i=0 ; i<l1 ; i++) {
-			v1 = strlen(CHAR(STRING(levs1)[i]));
-			for(j=0 ; j<l2 ; j++) {
-				v2 = strlen(CHAR(STRING(levs2)[j]));
-				STRING(levs)[k] = allocString(v1+v2+1);
-				sprintf(CHAR(STRING(levs)[k]), "%s:%s",
-					CHAR(STRING(levs1)[i]),
-					CHAR(STRING(levs2)[j]));
-				k++;
-			}
-		}
-		setAttrib(ans, R_LevelsSymbol, levs);
-		UNPROTECT(1);
-	}
-	PROTECT(levs = allocVector(STRSXP, 1));
-	STRING(levs)[0] = mkChar("factor");
-	setAttrib(ans, R_ClassSymbol, levs);
-	UNPROTECT(2);
-	return ans;
-}
-
 SEXP do_seq(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
 	checkArity(op, args);
-	if(isFactor(CAR(args)) && isFactor(CADR(args))) {
-		if(length(CAR(args)) != length(CADR(args)))
-			errorcall(call, "unequal factor lengths\n");
-		return cross(CAR(args), CADR(args));
-	}
 	return seq(call, CAR(args), CADR(args));
 }
 
@@ -152,14 +99,6 @@ static SEXP rep2(SEXP s, SEXP ncopy)
 		for (i = 0; i < nc; i++)
 			for (j = 0; j < (INTEGER(t)[i]); j++)
 				LOGICAL(a)[n++] = LOGICAL(s)[i];
-		break;
-	case FACTSXP:
-	case ORDSXP:
-		LEVELS(a) = LEVELS(s);
-		setAttrib(a, R_LevelsSymbol, getAttrib(s, R_LevelsSymbol));
-		for (i = 0; i < nc; i++)
-			for (j = 0; j < (INTEGER(t)[i]); j++)
-				INTEGER(a)[n++] = INTEGER(s)[i];
 		break;
 	case INTSXP:
 		for (i = 0; i < nc; i++)
@@ -228,13 +167,6 @@ SEXP rep(SEXP s, SEXP ncopy)
 	case LGLSXP:
 		for (i = 0; i < na; i++)
 			LOGICAL(a)[i] = LOGICAL(s)[i % ns];
-		break;
-	case FACTSXP:
-	case ORDSXP:
-		LEVELS(a) = LEVELS(s);
-		setAttrib(a, R_LevelsSymbol, getAttrib(s, R_LevelsSymbol));
-		for (i = 0; i < na; i++)
-			INTEGER(a)[i] = INTEGER(s)[i % ns];
 		break;
 	case INTSXP:
 		for (i = 0; i < na; i++)

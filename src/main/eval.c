@@ -72,8 +72,6 @@ SEXP eval(SEXP e, SEXP rho)
 	case NILSXP:
 	case LISTSXP:
 	case LGLSXP:
-	case FACTSXP:
-	case ORDSXP:
 	case INTSXP:
 	case REALSXP:
 	case STRSXP:
@@ -714,6 +712,14 @@ SEXP applydefine(SEXP call, SEXP op, SEXP args, SEXP rho)
 	UNPROTECT(4);
 	unbindVar(tmpsym, rho);
 	return duplicate(saverhs);
+}
+
+
+SEXP do_alias(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+	checkArity(op,args);
+	NAMED(CAR(args)) = 0;
+	return CAR(args);
 }
 
 

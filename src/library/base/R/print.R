@@ -8,9 +8,15 @@ function(x,digits=NULL,quote=TRUE,na.print=NULL,print.gap=NULL, ...)
 }
 print.atomic <- function(x,quote=TRUE,...) print.default(x,quote=quote)
 
-prmatrix <-
+print.matrix <-
 function(x, rowlab=character(0), collab=character(0), quote=TRUE, right=FALSE)
-	.Internal(prmatrix(x,rowlab,collab,quote,right))
+{
+	x <- as.matrix(x)
+	d <- dim(x)
+	.Internal(print.matrix(x, rowlab, collab, quote, right))
+}
+
+prmatrix <- .Alias(print.matrix)
 
 print.tabular <-
 function(table, digits = max(3, .Options$digits - 3), na.print = "")

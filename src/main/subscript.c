@@ -319,8 +319,6 @@ SEXP makeSubscript(SEXP x, SEXP s, int *stretch)
 		case LGLSXP:
 			*stretch = 0;
 			return logicalSubscript(s, ns, nx);
-		case FACTSXP:
-		case ORDSXP:
 		case INTSXP:
 			return integerSubscript(s, ns, nx, stretch);
 		case REALSXP:

@@ -2,6 +2,20 @@
 
 NEW FEATURES
 
+     o	All internal mechanisms to support factors and data.frames
+	have been removed.  These are now entirely supported by
+	interpreted code!  Thanks to John Chambers for allowing
+	the distribution of his StatLib code.
+
+     o	"pmatch" is now completely S compatible and is not just another
+	name for "charmatch".
+
+     o  There is now a function called ".Alias" which can be used to
+	provide multiple names for the same object.  Example:
+		lm2 <- .Alias(lm)
+	This is dangerous because it can be used to defeat the
+	call-by-value illusion.  Should it be documented?
+
     o   Many functions changed from <primitive> to .Internal(..).
 	Currently, new .Internal(.)s in ..library/base/R/New-Internal.R
 

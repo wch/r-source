@@ -153,8 +153,6 @@ int length(SEXP s)
 	case NILSXP:
 		return 0;
 	case LGLSXP:
-	case FACTSXP:
-	case ORDSXP:
 	case INTSXP:
 	case REALSXP:
 	case CPLXSXP:

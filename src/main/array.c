@@ -64,7 +64,6 @@ SEXP do_matrix(SEXP call, SEXP op, SEXP args, SEXP rho)
 	}
 
 	PROTECT(snr = allocMatrix(TYPEOF(vals), nr, nc));
-	LEVELS(snr) = LEVELS(vals);
 	if(isVector(vals))
 		copyMatrix(snr, vals, byrow);
 	else
@@ -104,7 +103,6 @@ SEXP do_array(SEXP call, SEXP op, SEXP args, SEXP rho)
 		PROTECT(dims = coerceVector(dims, INTSXP));
 		CheckDims(dims);
 		PROTECT(ans = allocArray(TYPEOF(vals), dims));
-		LEVELS(ans) = LEVELS(vals);
 		copyVector(ans, vals);
 		UNPROTECT(2);
 		return ans;
@@ -234,54 +232,10 @@ SEXP do_drop(SEXP call, SEXP op, SEXP args, SEXP rho)
 SEXP do_length(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
 	SEXP ans;
-
 	if (length(args) != 1)
 		error("incorrect number of args to length\n");
-
 	ans = allocVector(INTSXP, 1);
-
-#ifdef OLD
-	switch(TYPEOF(CAR(args))) {
-	    case NILSXP:
-		INTEGER(ans)[0] = 0;
-		break;
-	    case LGLSXP:
-	    case FACTSXP:
-	    case ORDSXP:
-	    case INTSXP:
-	    case REALSXP:
-	    case CPLXSXP:
-	    case STRSXP:
-	    case EXPRSXP:
-		INTEGER(ans)[0] = LENGTH(CAR(args));
-		break;
-	    case LISTSXP:
-	    case LANGSXP:
-		INTEGER(ans)[0] = length(CAR(args));
-		break;
-	    case ENVSXP:
-		INTEGER(ans)[0] = length(FRAME(CAR(args)));
-		break;
-	    default:
-		INTEGER(ans)[0] = 1;
-		break;
-	}
-#else
 	INTEGER(ans)[0] = length(CAR(args));
-#endif
-	return ans;
-}
-
-SEXP do_nlevels(SEXP call, SEXP op, SEXP args, SEXP rho)
-{
-	SEXP ans;
-
-	checkArity(op, args);
-	ans = allocVector(INTSXP, 1);
-	if (isFactor(CAR(args)))
-		INTEGER(ans)[0] = LEVELS(CAR(args));
-	else
-		INTEGER(ans)[0] = NA_INTEGER;
 	return ans;
 }
 
@@ -598,8 +552,6 @@ SEXP do_transpose(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 	switch (TYPEOF(a)) {
 	case LGLSXP:
-	case FACTSXP:
-	case ORDSXP:
 	case INTSXP:
 		for (i = 0; i < len; i++)
 			INTEGER(r)[i] = INTEGER(a)[(i / ncol) + (i % ncol) * nrow];
@@ -708,8 +660,6 @@ SEXP do_aperm(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 	switch (TYPEOF(a)) {
 	case INTSXP:
-	case FACTSXP:
-	case ORDSXP:
 	case LGLSXP:
 		for (i = 0; i < len; i++) {
 			j = swap(i, dimsa, dimsr, perm, ind1, ind2);
