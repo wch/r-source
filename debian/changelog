@@ -1,3 +1,9 @@
+r-base (1.4.0.cvs20020124-1) unstable; urgency=low
+ 
+  * Upgraded to the R-patched_2002-01-24 release candidate for 1.4.1
+ 
+ -- Dirk Eddelbuettel <edd@debian.org>  Thu, 24 Jan 2002 19:38:34 -0600
+  
 r-base (1.4.1-0) unstable; urgency=low
 
   * Test builds for upstream release 1.4.0 due 2002-01-30
