@@ -24,7 +24,7 @@ function(package, help, lib.loc = .lib.loc, character.only = FALSE,
 	    ## create environment
 	    env <- attach(NULL, name = pkgname)
             ## detach does not allow character vector args
-            on.exit(detach(2))
+            on.exit(do.call("detach", list(name = pkgname)))
             attr(env, "path") <- file.path(which.lib.loc, package)
 	    ## source file into env
 	    if(file.exists(codeFile))
@@ -52,8 +52,7 @@ function(package, help, lib.loc = .lib.loc, character.only = FALSE,
 		##-- Check for conflicts
 		dont.mind <- c("last.dump", "last.warning", ".Last.value",
 			       ".Random.seed")
-		## Currently, package is ALWAYS at "pos=2"
-		lib.pos <- 2
+		lib.pos <- match(pkgname, search())
 		ob <- objects(lib.pos)
 		fst <- TRUE
 		ipos <- seq(along = sp <- search())[-c(lib.pos,
@@ -65,8 +64,8 @@ function(package, help, lib.loc = .lib.loc, character.only = FALSE,
 			       [!obs %in% dont.mind])) {
 			if (fst) {
 			    fst <- FALSE
-			    cat("\nAttaching Package \"", pkgname,
-				"\":\n\n", sep = "")
+			    cat("\nAttaching package ", fQuote(package),
+                                ":\n\n", sep = "")
 			}
 			cat("\n\tThe following object(s) are masked",
 			    if (i < lib.pos) "_by_" else "from", sp[i],
