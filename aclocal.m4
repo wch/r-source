@@ -1066,7 +1066,7 @@ AC_CACHE_VAL([r_cv_path_TCL_CONFIG],
 [for ldir in /opt/lib /usr/local/lib /usr/lib /lib; do
   for dir in \
       ${ldir} \
-      `ls -d ${ldir}/tcl[[8-9]].[[0-9]]* 2>/dev/null`; do
+      `ls -d ${ldir}/tcl[[8-9]].[[0-9]]* 2>/dev/null | sort -r`; do
     if test -f ${dir}/tclConfig.sh; then
       r_cv_path_TCL_CONFIG="${dir}/tclConfig.sh"
       break 2
@@ -1086,7 +1086,7 @@ AC_CACHE_VAL([r_cv_path_TK_CONFIG],
 [for ldir in /opt/lib /usr/local/lib /usr/lib /lib; do
   for dir in \
       ${ldir} \
-      `ls -d ${ldir}/tk[[8-9]].[[0-9]]* 2>/dev/null`; do
+      `ls -d ${ldir}/tk[[8-9]].[[0-9]]* 2>/dev/null | sort -r`; do
     if test -f ${dir}/tkConfig.sh; then
       r_cv_path_TK_CONFIG="${dir}/tkConfig.sh"
       break 2

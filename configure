@@ -2962,7 +2962,7 @@ rm -f conftest*
 
  # Should be called before any macro that runs the C compiler.
 
-for ac_prog in gawk mawk nawk awk
+for ac_prog in mawk gawk nawk awk
 do
   # Extract the first word of "$ac_prog", so it can be a program name with args.
 set dummy $ac_prog; ac_word=$2
@@ -15298,10 +15298,10 @@ fi
 fi
 done
 
-for ac_func in access bcopy bzero finite ftruncate \
-  getcwd getgrgid getpwuid getuid hypot isascii isnan log1p matherr \
-  memcpy memmove mempcpy mkfifo popen putenv rint setenv strcoll \
-  stat strptime system times unsetenv
+for ac_func in access bcopy bzero expm1 finite ftruncate getcwd \
+  getgrgid getpwuid getuid hypot isascii isnan log1p matherr memcpy \
+  memmove mempcpy mkfifo popen putenv rint setenv strcoll stat \
+  strptime system times unsetenv
 do
 as_ac_var=`echo "ac_cv_func_$ac_func" | $as_tr_sh`
 echo "$as_me:15307: checking for $ac_func" >&5
@@ -18533,7 +18533,7 @@ else
   for ldir in /opt/lib /usr/local/lib /usr/lib /lib; do
   for dir in \
       ${ldir} \
-      `ls -d ${ldir}/tcl[8-9].[0-9]* 2>/dev/null`; do
+      `ls -d ${ldir}/tcl[8-9].[0-9]* 2>/dev/null | sort -r`; do
     if test -f ${dir}/tclConfig.sh; then
       r_cv_path_TCL_CONFIG="${dir}/tclConfig.sh"
       break 2
@@ -18605,7 +18605,7 @@ else
   for ldir in /opt/lib /usr/local/lib /usr/lib /lib; do
   for dir in \
       ${ldir} \
-      `ls -d ${ldir}/tk[8-9].[0-9]* 2>/dev/null`; do
+      `ls -d ${ldir}/tk[8-9].[0-9]* 2>/dev/null | sort -r`; do
     if test -f ${dir}/tkConfig.sh; then
       r_cv_path_TK_CONFIG="${dir}/tkConfig.sh"
       break 2
