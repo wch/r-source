@@ -29,9 +29,10 @@ function (x, labels, panel = points, ..., main = NULL, oma = NULL,
 {
     textPanel <-
         function(x = 0.5, y = 0.5, txt, cex, font)
-        {
             text(x, y, txt, cex = cex, font = font)
-        }
+
+    localAxis <- function(side, xpd, ...) axis(side, xpd = NA, ...)
+
     if (!is.matrix(x)) x <- data.matrix(x)
     if (!is.numeric(x)) stop("non-numeric argument to pairs")
     panel <- match.fun(panel)
@@ -69,13 +70,13 @@ function (x, labels, panel = points, ..., main = NULL, oma = NULL,
             if(i == j || (i < j && has.lower) || (i > j && has.upper) ) {
                 box()
                 if(i == 1  && (!(j %% 2) || !has.upper || !has.lower ))
-                    axis(1 + 2*row1attop, xpd = NA)
+                    localAxis(1 + 2*row1attop, ...)
                 if(i == nc && (  j %% 2  || !has.upper || !has.lower ))
-                    axis(3 - 2*row1attop, xpd = NA)
+                    localAxis(3 - 2*row1attop, ...)
                 if(j == 1  && (!(i %% 2) || !has.upper || !has.lower ))
-                    axis(2, xpd = NA)
+                    localAxis(2, ...)
                 if(j == nc && (  i %% 2  || !has.upper || !has.lower ))
-                    axis(4, xpd = NA)
+                    localAxis(4, ...)
                 mfg <- par("mfg")
                 if(i == j) {
                     if (has.diag) diag.panel(as.vector(x[, i]))

@@ -151,6 +151,9 @@ BUG FIXES
 	code and help files.  Also, care is taken not to generate
 	filenames that differ only by case. 
 
+    o	pairs() now respects axis graphical parameters such as
+	cex.main, font.main and las.
+
 
 
 
