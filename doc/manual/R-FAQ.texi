@@ -2221,8 +2221,14 @@ Gtk-based library.
 A collection of tools for viewing different S objects, databases, class
 and widget hierarchies, S source file contents, etc.
 @item RJavaDevice
-A graphics device for R that uses Java components and graphics
+A graphics device for R that uses Java components and graphics.
 @acronym{API}s.
+@item RObjectTables
+The C and S code allows one to define R objects to be used as elements
+of the search path with their own semantics and facilities for reading
+and writing variables.  The objects implement a simple interface via R
+functions (either methods or closures) and can access external data,
+e.g., in other applications, languages, formats, @dots{}
 @item RSMethods
 An implementation of S version 4 methods and classes for R, consistent
 with the basic material in ``Programming with Data'' by John
