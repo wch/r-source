@@ -265,4 +265,11 @@ Date: Tue, 10 Apr 2001 17:50:44 +0200 (MET DST)
 
 Directory:  incoming
 
-none
+* PR# 924 *
+Subject: bug when compiling using --with-f2c option
+From: wang@rjka.com
+Date: Thu, 26 Apr 2001 19:58:17 +0200 (MET DST)
+* PR# 923 *
+Subject: bug when compiling using --with-f2c option
+From: wang@rjka.com
+Date: Thu, 26 Apr 2001 19:56:59 +0200 (MET DST)
