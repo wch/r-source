@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2002
-@set FAQ-VERSION 1.5-5, 2002-05-20
+@set FAQ-VERSION 1.5-6, 2002-05-21
 @set REL-VERSION 1.5.0
 @set FAQ-ISBN 3-901167-51-X
 @c %**end of header
@@ -1380,8 +1380,7 @@ enter most of the commands for users without writing CGI scripts.
 Graphical output is possible in PostScript or GIF formats and the
 executed code is presented to the user for revision.
 
-Demo and download are available from
-@uref{http://www.mth.uea.ac.uk/~h089/Rcgi/}.
+See @uref{http://stats.mth.uea.ac.uk/Rcgi/} for more information.
 
 @strong{Rweb} is developed and maintained by
 @email{jeff@@math.montana.edu, Jeff Banfield}.  The
@@ -1522,6 +1521,8 @@ engine in R.
 A collection of programs for reading and plotting SKEW-T,log p diagrams
 and wind profiles for data collected by radiosondes (the typical weather
 balloon-borne instrument).
+@item RandomFields
+Creating random fields using various methods.
 @item RmSQL
 An interface between R and the mSQL database system.
 @item Rmpi
@@ -1991,8 +1992,6 @@ Functions for exporting R objects & graphics in an @HTML{} document.
 @c Moved to Devel for 1.5 as it fails R CMD check.
 @item RODBC
 An @acronym{ODBC} database interface.
-@item RandomFields
-Creating random fields using various methods.
 @c </NOTE>
 @c <FIXME>
 @c Tim Keitt should tell us what do to with these ...
