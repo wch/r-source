@@ -23,7 +23,7 @@
 use Cwd;
 use File::Basename;
 
-require "$RHOME/src/gnuwin32/help/html-layout.pl";
+require "$R_HOME/src/gnuwin32/help/html-layout.pl";
 
 
 if($opt_dosnames){
@@ -48,11 +48,11 @@ sub buildinit {
     print STDERR "pkg:$pkg, lib:$lib\n" if $opt_debug;
     if($pkg){
 	$pkg0 = $pkg;
-	$pkg = "$RHOME/src/library/" . "$pkg" unless (-d $pkg);
+	$pkg = "$R_HOME/src/library/" . "$pkg" unless (-d $pkg);
 	die("Package $pkg0 does not exist\n") unless (-d $pkg);
     }
     else{
-	$pkg="$RHOME/src/library/base";
+	$pkg="$R_HOME/src/library/base";
     }
 
     chdir $currentdir;
@@ -64,7 +64,7 @@ sub buildinit {
 	chdir $currentdir;
     }
     else{
-	$lib="$RHOME/library";
+	$lib="$R_HOME/library";
     }
 
     chdir $currentdir;
@@ -214,7 +214,7 @@ sub read_anindex {
 
 
 
-### Build $RHOME/doc/html/packages.html from the $pkg/TITLE files
+### Build $R_HOME/doc/html/packages.html from the $pkg/TITLE files
 
 sub build_htmlpkglist {
 
@@ -223,7 +223,7 @@ sub build_htmlpkglist {
     my %htmltitles = read_titles($lib);
     my $key;
 
-    open(htmlfile, ">$RHOME/doc/html/packages.$HTML");
+    open(htmlfile, ">$R_HOME/doc/html/packages.$HTML");
 
     print htmlfile html_pagehead("Package Index", ".",
 				 "index.$HTML", "Top",
@@ -366,9 +366,9 @@ sub build_htmlfctlist {
     my %htmltitles = read_functiontitles($lib);
     my $key;
 
-    open(htmlfile, ">$RHOME/doc/html/function.$HTML");
+    open(htmlfile, ">$R_HOME/doc/html/function.$HTML");
 
-    print htmlfile html_pagehead("Functions installed in RHOME", ".",
+    print htmlfile html_pagehead("Functions installed in R_HOME", ".",
 				 "index.$HTML", "Top",
 				 "packages.$HTML", "Packages");
 

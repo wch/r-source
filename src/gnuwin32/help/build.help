@@ -1,12 +1,12 @@
 #-*- mode: perl; perl-indent-level: 4; cperl-indent-level: 4 -*-
 #
-# ${RHOME}/bin/build-help
+# ${R_HOME}/bin/build-help
 # Usage:  build-help [options]  [pkg] [lib]
 # Install all help files for package pkg to library lib
-# (defaults are `${RHOME}/src/library/base' and the default library,
-#  `${RHOME}/library', respectively).
+# (defaults are `${R_HOME}/src/library/base' and the default library,
+#  `${R_HOME}/library', respectively).
 
-# This version: if pkg is not found, it is tried in $RHOME/src/library.
+# This version: if pkg is not found, it is tried in $R_HOME/src/library.
 
 use File::Basename;
 use Cwd;
@@ -21,22 +21,22 @@ GetOptions (@knownoptions) || usage();
 
 $cwd=getcwd();
 if($opt_rhome){
-    $RHOME=$opt_rhome;
-    print STDERR "RHOME from --rhome: `$RHOME'\n" if $opt_debug;
+    $R_HOME=$opt_rhome;
+    print STDERR "R_HOME from --rhome: `$R_HOME'\n" if $opt_debug;
 }
-elsif($ENV{"RHOME"}){
-    $RHOME=$ENV{"RHOME"};
-    print STDERR "RHOME from ENV: `$RHOME'\n" if $opt_debug;
+elsif($ENV{"R_HOME"}){
+    $R_HOME=$ENV{"R_HOME"};
+    print STDERR "R_HOME from ENV: `$R_HOME'\n" if $opt_debug;
 }
 else{
     chdir(dirname($0) . "/../../..");
-    $RHOME=getcwd();
-    print STDERR "RHOME: `$RHOME'\n" if $opt_debug;
+    $R_HOME=getcwd();
+    print STDERR "R_HOME: `$R_HOME'\n" if $opt_debug;
 }
-$RHOME =~ s+\\+/+g; # Unix-style path
+$R_HOME =~ s+\\+/+g; # Unix-style path
 
-require "$RHOME/src/gnuwin32/help/Rdconvlib.pl";
-require "$RHOME/src/gnuwin32/help/buildlib.pl";
+require "$R_HOME/src/gnuwin32/help/Rdconvlib.pl";
+require "$R_HOME/src/gnuwin32/help/buildlib.pl";
 
 chdir($cwd);
 print STDERR "Current directory (cwd): '$cwd'\n" if $opt_debug;
@@ -54,12 +54,12 @@ $tmpdir =~ s+\\+/+g;
 # exit
 
 if($opt_htmllists){
-    build_htmlpkglist("$RHOME/library");
+    build_htmlpkglist("$R_HOME/library");
 
-    %anindex = read_anindex("$RHOME/library");
-    %htmlindex = read_htmlindex("$RHOME/library");
+    %anindex = read_anindex("$R_HOME/library");
+    %htmlindex = read_htmlindex("$R_HOME/library");
 
-    build_htmlfctlist("$RHOME/library");
+    build_htmlfctlist("$R_HOME/library");
 
     exit 0;
 }
