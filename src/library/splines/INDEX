@@ -1,10 +1,14 @@
-bs		Generate a Basis for Polynomial Splines 
-ns		Generate a Basis Matrix for Natural Cubic Splines 
-predict.bs 	Evaluate a predefined spline basis at new values
-predict.ns 	Evaluate a predefined spline basis at new values
-splineDesign	Create the design matrix for a collection of B-splines
-interpSpline	Determine the natural interpolation spline
-periodicSpline	Determine a periodic interpolation spline
-polySpline	Construct the piecewise polynomial representation of a spline
-splineKnots	Extract the knot positions from a spline object
-splineOrder	Extract the spline order from a spline object
+asVector                Coerce an Object to a Vector
+backSpline              Monotone Inverse Spline
+bs                      Generate a Basis for Polynomial Splines
+interpSpline            Create an Interpolation Spline
+ns                      Generate a Basis Matrix for Natural Cubic
+                        Splines
+periodicSpline          Create a Periodic Interpolation Spline
+polySpline              Piecewise Polynomial Spline Representation
+predict.bSpline         Evaluate a spline at new values of x
+predict.bs              Evaluate a Spline Basis
+splineDesign            Design Matrix for B-splines
+splineKnots             Knot Vector from a Spline
+splineOrder             Determine the Order of a Spline
+xyVector                Construct an xyVector Object
