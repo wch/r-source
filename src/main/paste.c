@@ -37,6 +37,7 @@
  * then it is alloc-ed and the second pass stuffs the information in.
  */
 
+
 SEXP do_paste(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP ans, collapse, sep, x, tmpchar;
@@ -97,11 +98,12 @@ SEXP do_paste(SEXP call, SEXP op, SEXP args, SEXP env)
 	    k = length(VECTOR_ELT(x, j));
 	    if (k > 0) {
 		s = CHAR(STRING_ELT(VECTOR_ELT(x, j), i % k));
-		sprintf(buf, "%s", s);
+                strcpy(buf,s);
+
 		buf += LENGTH(STRING_ELT(VECTOR_ELT(x, j), i % k));
 	    }
 	    if (j != nx - 1 && sepw != 0) {
-		sprintf(buf, "%s", CHAR(sep));
+	        strcpy(buf, CHAR(sep));
 		buf += sepw;
 	    }
 	}
@@ -121,11 +123,11 @@ SEXP do_paste(SEXP call, SEXP op, SEXP args, SEXP env)
 	buf = CHAR(tmpchar);
 	for (i = 0; i < nx; i++) {
 	    if(i > 0) {
-		sprintf(buf, "%s", CHAR(sep));
+	        strcpy(buf, CHAR(sep));
 		buf += sepw;
 	    }
 	    s = CHAR(STRING_ELT(ans, i));
-	    sprintf(buf, "%s", s);
+            strcpy(buf, s);
 	    while (*buf)
 		buf++;
 	}
