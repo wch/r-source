@@ -102,8 +102,8 @@ local({
 
     if (length(search()[search()!="Autoloads"]) != 2)
         stop("start R with NO packages loaded to create the data base")
-          
-    baseFileBase <- file.path(.Library,"base","R","base")
+
+    baseFileBase <- file.path(.libPaths()[1],"base","R","base")
 
     if (file.info(baseFileBase)["size"] < 20000) # crude heuristic
         stop("may already be using lazy loading on base");

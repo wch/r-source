@@ -113,21 +113,13 @@ datasets-LAZYDATA=true
 
 rpackage: ../../library/R.css rpackageindices
 	@R_START_PACKAGES=NULL $(MAKE) --no-print-directory pkg-base
-ifeq ($(strip $(BUILD)),CROSS)
 	@if ! test -f ../../library/base/R/base.rdb ; then \
 	  echo "preparing package base for lazy loading" ; \
-	  echo "tools:::makeLazyLoading(\"base\", lib.loc=\"$(RLIB)\")" | \
-	    R_DEFAULT_PACKAGES=NULL LC_COLLATE=C $(R_EXE) --vanilla --slave > /dev/null; \
-	fi
-else
-	@if ! test -f ../../library/base/R/base.rdb ; then \
-	  echo "preparing package base for lazy loading" ; \
-	  (cat ../library/tools/R/makeLazyLoad.R \
-	    ../library/base/makebasedb.R; \
-	    echo "makeLazyLoading(\"base\")") | \
+	  (echo ".libPaths('../../library')"; \
+	    cat ../library/base/makebasedb.R) | \
 	    R_DEFAULT_PACKAGES=NULL LC_COLLATE=C $(REXE) > /dev/null; \
+          cp ../../share/R/baseloader.R ../../library/base/R/base; \
 	fi
-endif
 	@R_START_PACKAGES=NULL $(MAKE) --no-print-directory pkg-tools
 	@if ! test -f ../../library/tools/R/tools.rdb ; then \
 	  echo "preparing package tools for lazy loading" ; \
