@@ -1,6 +1,6 @@
 
 R : Copyright 2004, The R Foundation for Statistical Computing
-Version 2.1.0 Under development (unstable) (2004-11-11), ISBN 3-900051-07-0
+Version 2.1.0 Under development (unstable) (2004-12-06), ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -3258,7 +3258,8 @@ Error in "[.data.frame"(x, 1, c("a", "c")) :
 [36] str           subset        summary       t             tail         
 [41] transform     unique        unstack      
 > meth2gen("dendrogram")
-[1] [[      cut     labels  plot    print   reorder rev     str    
+[1] [[         cophenetic cut        labels     plot       print      reorder   
+[8] rev        str       
 > ## --> the output may need somewhat frequent updating..
 > 
 > 

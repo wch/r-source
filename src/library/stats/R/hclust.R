@@ -207,3 +207,41 @@ function(x)
     rownames(out) <- x$labels
     as.dist(out + t(out))
 }
+cophenetic.dendrogram <-
+function(x)
+{
+    ## Obtain cophenetic distances from a dendrogram by recursively
+    ## doing the following:
+    ## * if not a leaf, then for all children call ourselves, create
+    ##   a block diagonal matrix from this, and fill the rest with the
+    ##   current height (as everything in different children is joined
+    ##   at the current split) ...
+    ## * if a leaf, height and result are 0.
+    ## Actually, we need to return something of class "dist", so things
+    ## are a bit more complicated, and we might be able to make this
+    ## more efficient by avoiding matrices ...
+    if(is.leaf(x)) {
+        ## If there is no label, we cannot recover the (names of the)
+        ## objects the distances are for, and hence abort.
+        if(is.null(label <- attr(x, "label")))
+            stop("Need dendrograms where all leaves have labels.")
+        return(as.dist(matrix(0, dimnames = list(label, label))))
+    }
+    children <- vector("list", length(x))
+    for(i in seq(along = x))
+        children[[i]] <- Recall(x[[i]])
+    lens <- sapply(children, attr, "Size")
+    m <- matrix(attr(x, "height"), sum(lens), sum(lens))
+    ## This seems a bit slower:
+    ##    inds <- split(seq(length = sum(lens)),
+    ##                  rep.int(seq(along = lens), lens))
+    ##    for(i in seq(along = inds))
+    ##         m[inds[[i]], inds[[i]]] <- as.matrix(children[[i]])
+    hi <- cumsum(lens)
+    lo <- c(0, hi[-length(hi)]) + 1
+    for(i in seq(along = x))
+        m[lo[i] : hi[i], lo[i] : hi[i]] <- as.matrix(children[[i]])
+    rownames(m) <- colnames(m) <-
+        unlist(sapply(children, attr, "Labels"))
+    as.dist(m)
+}

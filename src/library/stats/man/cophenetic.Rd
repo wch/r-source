@@ -1,6 +1,7 @@
 \name{cophenetic}
 \alias{cophenetic}
 \alias{cophenetic.default}
+\alias{cophenetic.dendrogram}
 \title{Cophenetic Distances for a Hierarchical Clustering}
 \description{
   Computes the cophenetic distances for a hierarchical clustering.
@@ -8,11 +9,13 @@
 \usage{
 cophenetic(x)
 \method{cophenetic}{default}(x)
+\method{cophenetic}{dendrogram}(x)
 }
 \arguments{
-  \item{x}{for the default method, an object of class
-    \code{\link{hclust}} or with a method for \code{\link{as.hclust}()}
-    such as \code{\link[cluster]{agnes}}.}
+  \item{x}{an R object representing a hierarchical clustering.
+    For the default method, an object of class \code{\link{hclust}} or
+    with a method for \code{\link{as.hclust}()} such as
+    \code{\link[cluster]{agnes}}.}
 }
 \details{
   The cophenetic distance between two observations that have been
@@ -29,6 +32,9 @@ cophenetic(x)
   represent hierarchical clusterings (total indexed hierarchies) can be
   added by providing an \code{\link{as.hclust}()} or, more directly, a
   \code{cophenetic()} method for such a class.
+
+  The method for objects of class \code{"\link{dendrogram}"} requires
+  that all leaves of the dendrogram object have non-null labels.
 }
 \value{
   An object of class \code{dist}.
