@@ -26,9 +26,8 @@ we still don't recommend it).
 rw1041
 ======
 
-Updating HTML indices, e.g. in help.start(), is not attempted if
-file.access() indicates write permission will not be granted, and in
-any case is done within a try() construct.
+Updating HTML indices, e.g. in help.start(), is done within a 
+try() construct.
 
 help.start() has a new argument `update'.
 

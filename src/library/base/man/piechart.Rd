@@ -25,7 +25,9 @@ piechart(x, labels = names(x), edges = 200, radius = 0.8,
     drawing of shading lines.}
   \item{angle}{the slope of shading lines, given as an angle in
     degrees (counter-clockwise).}
-  \item{col}{a vector of colors to be used in filling the slices.}
+  \item{col}{a vector of colors to be used in filling the slices. If
+    missing \code{par("bg")} is used, unless \code{density} is specified
+    when \code{par("fg")} is used.}
   \item{main}{an overall title for the plot.}
   \item{\dots}{graphical parameters can be given as arguments to
     \code{piechart}.}
