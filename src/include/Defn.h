@@ -903,7 +903,7 @@ void UNIMPLEMENTED_TYPE(char *s, SEXP x);
 void UNIMPLEMENTED_TYPEt(char *s, SEXPTYPE t);
 Rboolean utf8strIsASCII(char *str);
 #ifdef SUPPORT_UTF8
-int utf8clen(char c)
+int utf8clen(char c);
 #endif
 #ifdef SUPPORT_MBCS
 size_t Mbrtowc(wchar_t *wc, const char *s, size_t n, mbstate_t *ps);
