@@ -7349,5 +7349,6 @@ chmod +x \
   tools/keyword-test \
   tools/keywords2html \
   tools/pkg2tex
+  echo timestamp > src/include/stamp-h
 
 

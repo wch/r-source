@@ -47,7 +47,13 @@ R: Makefile Rconfig.h Rversion.h FFDecl.h FFTab.h
 
 config.h: $(top_srcdir)/configure $(srcdir)/config.h.in
 	@cd $(top_builddir) && $(MAKE) src/include/config.h
-	@touch $@
+
+src/include/config.h: stamp-h
+stamp-h: $(srcdir)/config.h.in $(top_builddir)/config.status
+	@cd $(top_builddir) && \
+	  CONFIG_FILES= CONFIG_HEADERS=$(subdir)/config.h \
+	  $(SHELL) ./config.status
+	echo > $@
 Rconfig.h: $(top_srcdir)/VERSION config.h
 	@$(top_srcdir)/tools/GETCONFIG > $@
 Rversion.h: $(top_srcdir)/VERSION $(top_srcdir)/date-stamp
@@ -60,7 +66,7 @@ mostlyclean:
 clean:
 	@rm -f Rconfig.h Rversion.h FFDecl.h FFTab.h
 distclean:
-	@rm -f Makefile config.h
+	@rm -f Makefile config.h stamp-h
 maintainer-clean: distclean
 
 install install-strip uninstall::

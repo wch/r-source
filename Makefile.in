@@ -23,16 +23,16 @@ GZIP = --best
 all: Makefile Makeconf R docs
 
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
-	cd $(top_builddir) \
+	@cd $(top_builddir) \
 	  && CONFIG_FILES=$@ CONFIG_HEADERS= $(SHELL) ./config.status
 Makeconf: $(srcdir)/Makeconf.in $(top_builddir)/config.status
-	cd $(top_builddir) \
+	@cd $(top_builddir) \
 	  && CONFIG_FILES=$@ CONFIG_HEADERS= $(SHELL) ./config.status
 
 config.status: $(srcdir)/configure
-	$(SHELL) ./config.status --recheck
+	@$(SHELL) ./config.status --recheck
 $(srcdir)/configure: $(srcdir)/configure.in $(srcdir)/aclocal.m4
-	cd $(srcdir) && autoconf
+	@cd $(srcdir) && autoconf
 
 R:
 	@if [ "$(srcdir)" != "." ]; then \
@@ -46,10 +46,6 @@ R:
 	@if [ ! -f src/library/stamp-docs ]; then \
 	  echo "you should \`make docs' now ..."; \
 	fi
-
-src/include/config.h: $(srcdir)/configure \
-  $(srcdir)/src/include/config.h.in
-	$(top_srcdir)/configure --srcdir $(top_srcdir) @config_opts@
 
 docs help html latex examples:: FORCE
 	-@(cd src/library && $(MAKE) $@)
