@@ -2,9 +2,10 @@
 \title{Plot Histograms}
 \usage{
 plot.histogram(x, freq = equidist, col = NULL, border = par("fg"),
-         lty = NULL, xlim = range(x$breaks), ylim = range(y, 0),
-	 main = paste("Histogram of", x$xname), xlab = x$xname, ylab,
-         axes = TRUE, labels = FALSE, add = FALSE, \dots)
+               lty = NULL, main = paste("Histogram of", x$xname),
+               xlim = range(x$breaks), ylim = range(y, 0),
+               xlab = x$xname, ylab, axes = TRUE, labels = FALSE,
+               add = FALSE, \dots)
 
 lines.histogram(x, \dots)
 }
