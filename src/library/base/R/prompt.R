@@ -180,8 +180,9 @@ function(object, filename = NULL, name = NULL)
                  paste("  A data frame with",
                        nrow(x),
                        "observations on the following",
-                       ncol(x),
-                       "variables."),
+                       ifelse(ncol(x) == 1,
+                              "variable.",
+                              paste(ncol(x), "variables."))),
                  "  \\describe{")
         for(i in names(x)) {
             xi <- x[[i]]
@@ -189,23 +190,26 @@ function(object, filename = NULL, name = NULL)
                 c(fmt,
                   paste0("    \\item{", i, "}{",
                          if(inherits(xi, "ordered")) {
-                             c(paste0("an ", data.class(xi),
-                                      " factor with levels"),
-                               paste(paste0("\\code{", levels(xi), "}"),
-                                     collapse = " < "))
+                             paste("an", data.class(xi),
+                                   "factor with levels",
+                                   paste0("\\code{", levels(xi), "}",
+                                          collapse = " < "),
+                                   collapse = " ")
                          } else if(inherits(xi, "factor")) {
-                             c("a factor with levels",
-                               paste0("\\code{", levels(xi), "} "))
+                             paste("a factor with levels",
+                                   paste0("\\code{", levels(xi), "}",
+                                          collapse = " "),
+                                   collapse = " ")
                          } else if(is.vector(xi)) {
-                             paste0("a ", data.class(xi), " vector")
+                             paste("a", data.class(xi), "vector")
                          } else if(is.matrix(xi)) {
-                             paste0("a matrix with ", ncol(xi), " columns")
+                             paste("a matrix with", ncol(xi), "columns")
                          } else {
-                             paste0("a ", data.class(xi))
+                             paste("a", data.class(xi))
                          },
                          "}"))
         }
-        fmt <- c(fmt, "}")
+        fmt <- c(fmt, "  }", "}")
     }
     else {
         tf <- tempfile(); on.exit(unlink(tf))
