@@ -317,3 +317,11 @@ Date: Thu, 23 Aug 2001 20:38:13 +0200 (MET DST)
 Subject: Reading Inf and NaN values under windows
 From: Martyn Plummer <plummer@iarc.fr>
 Date: Fri, 24 Aug 2001 12:00:46 +0200 (CEST)
+* PR# 1073 *
+Subject: Wierd problem comparing numeric values and list using ==
+From: "Warnes, Gregory R" <gregory_r_warnes@groton.pfizer.com>
+Date: Fri, 24 Aug 2001 22:07:41 -0400
+* PR# 1074 *
+Subject: WHOLESALE
+From: "James Meyers" <jamesmeyers@etex.net>
+Date: Sat, 25 Aug 2001 15:36:10 -0500
