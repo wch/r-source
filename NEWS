@@ -97,6 +97,11 @@ NEW FEATURES
 
 BUG FIXES
 
+    o	The internals of postscript have been changed so that line
+	textures (dotted dashed etc) look better.  The use of the
+	PostScript "initclip" operator has been stopped so that we
+	can(?) really claim eps compliance.
+
     o	cooks.distance() now also works for "glm" objects;
 	deviance.lm() now ok for the case of weights.
 
