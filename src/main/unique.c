@@ -20,6 +20,7 @@
 #include "Defn.h"
 
 #define NIL -1
+#define ARGUSED(x) LEVELS(x)
 
 /* Hash function and equality test for keys */
 static int K, M;
@@ -479,7 +480,7 @@ static SEXP StripUnmatched(SEXP s)
 {
     if (s == R_NilValue) return s;
 
-    if (CAR(s) == R_MissingArg) {
+    if (CAR(s) == R_MissingArg && !ARGUSED(s) ) {
 	return StripUnmatched(CDR(s));
     }
     else if (CAR(s) == R_DotsSymbol ) {
@@ -500,12 +501,17 @@ static SEXP ExpandDots(SEXP s, int expdots)
 	TYPEOF(CAR(s)) = LISTSXP;	/* a safe mutation */
 	if (expdots) {
 	    r = CAR(s);
-	    while (CDR(r) != R_NilValue )
+	    while (CDR(r) != R_NilValue ) {
+		ARGUSED(r) = 1;
 		r = CDR(r);
+	    }
+	    ARGUSED(r) = 1;
 	    CDR(r)= ExpandDots(CDR(s), expdots);
 	    return CAR(s);
 	}
     }
+    else
+	ARGUSED(s) = 0;
     CDR(s) = ExpandDots(CDR(s), expdots);
     return s;
 }
@@ -523,9 +529,12 @@ static SEXP subDots(SEXP rho)
     len = length(dots);
     PROTECT(rval=allocList(len));
     for(a=dots, b=rval, i=1; a!=R_NilValue; a=CDR(a), b=CDR(b), i++) {
-	TAG(b) = TAG(a);
+	sprintf(tbuf,"..%d",i);
+	if( TAG(a) != R_NilValue )
+	    TAG(b) = TAG(a);
+	else
+	    TAG(b) = install(tbuf);
 	if( isSymbol(PREXPR(CAR(a))) || isLanguage(PREXPR(CAR(a))) ) {
-		sprintf(tbuf,"..%d",i);
 		CAR(b) = mkSYMSXP(mkChar(tbuf), R_UnboundValue);
 	}
 	else
@@ -596,7 +605,7 @@ SEXP do_matchcall(SEXP call, SEXP op, SEXP args, SEXP env)
     /* Get the formals and match the actual args */
 
     formals = FORMALS(b);
-    PROTECT(actuals = duplicate(CDR(funcall)));
+    PROTECT(actuals = duplicate(CDR(funcall))); 
 
     /* If there is a ... symbol then expand it out in the sysp env
        We need to take some care since the ... might be in the middle
@@ -649,7 +658,7 @@ SEXP do_matchcall(SEXP call, SEXP op, SEXP args, SEXP env)
     /* Eliminate any unmatched formals and any that match R_DotSymbol */
     /* This needs to be after ExpandDots as the DOTSXP might match ... */
 
-    rlist = StripUnmatched(rlist);
+    rlist = StripUnmatched(rlist); 
 
     PROTECT(rval = allocSExp(LANGSXP));
     CAR(rval) = duplicate(CAR(funcall));

@@ -253,6 +253,32 @@ if (nargs < 0)
     return R_NilValue; /* NOT Used */
 }
 
+/* 
+   fixcall: fixes up the call when arguments to the function may
+   have changed; for now we only worry about tagged args, appending
+   them if they are not already there
+*/
+
+static SEXP fixcall(SEXP call, SEXP args)
+{
+    SEXP s, t, u;
+    int found;
+
+    for( t = args; t != R_NilValue; t=CDR(t) ) {
+	if( TAG(t) != R_NilValue ) {
+		found = 0;
+		for(s=call; CDR(s) != R_NilValue; s=CDR(s)) 
+			if( TAG(CDR(s)) == TAG(t) )
+				found = 1;
+		if( !found ) {
+			CDR(s) = allocList(1);
+			TAG(CDR(s)) = TAG(t);
+			CAR(CDR(s)) = duplicate(CAR(t));
+		}
+	}
+    }
+}
+
 /* If NextMethod has any arguments the first must be the generic */
 /* the second the object and any remaining are matched with the */
 /* formals of the chosen method. */
@@ -344,12 +370,11 @@ SEXP do_nextmethod(SEXP call, SEXP op, SEXP args, SEXP env)
     }
     /*
       Now see if there were any other arguments passed in
-
-      .Class is used to determine the next method; if it doesn't
-      exist the first argument to the current method is used
-      the second argument to NextMethod is another option but
-      isn't currently used).
+      Currently we seem to only allow named args to change
+      or to be added, this is at variance with p. 470 of the
+      White Book
     */
+
     s = CADDR(args); /* this is ... and we need to see if it's bound */
     if (s == R_DotsSymbol) {
 	t = findVarInFrame(FRAME(env), s);
@@ -358,10 +383,18 @@ SEXP do_nextmethod(SEXP call, SEXP op, SEXP args, SEXP env)
 	    s = matchmethargs(matchedarg,t);
 	    UNPROTECT(1);
 	    PROTECT(matchedarg = s);
+	    newcall = fixcall(newcall, matchedarg);
 	}
     }
     else
 	errorcall(call,"wrong argument ...\n");
+
+    /*
+      .Class is used to determine the next method; if it doesn't
+      exist the first argument to the current method is used
+      the second argument to NextMethod is another option but
+      isn't currently used).
+    */
 
     class = dynamicfindVar(install(".Class"), R_GlobalContext);
 
