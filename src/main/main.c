@@ -728,7 +728,6 @@ SEXP do_browser(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    R_Visible = 0;
 	}
 	R_GlobalContext = &thiscontext;
-	signal(SIGINT, handleInterrupt);
 	R_BrowseLevel = savebrowselevel;
 	signal(SIGINT, handleInterrupt);
 	R_ReplConsole(rho, savestack, R_BrowseLevel);
