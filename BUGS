@@ -567,3 +567,15 @@ Date: Fri, 21 Feb 2003 14:51:37 +0100 (MET)
 Subject: nested assignment 
 From: "Lawrence H. Snyder" <larry@cognition.wustl.edu>
 Date: Sun, 23 Feb 2003 16:53:41 -0600
+* PR# 2576 *
+Subject: hsv producing a color intensity not in [0,1]
+From: jchoi@dal.ca
+Date: Mon, 24 Feb 2003 17:32:21 +0100 (MET)
+* PR# 2577 *
+Subject: Problem with hessian in deriv3 
+From: j.c.rougier@durham.ac.uk
+Date: Mon, 24 Feb 2003 17:01:47 GMT
+* PR# 2578 *
+Subject: "trace" argument in legend()
+From: jerome@hivnet.ubc.ca
+Date: Mon, 24 Feb 2003 18:53:29 +0100 (MET)
