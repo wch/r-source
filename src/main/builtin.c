@@ -81,7 +81,7 @@ SEXP do_onexit(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    {
 		PROTECT(tmp=allocList(1));
 		SETCAR(tmp, code);
-		ctxt->conexit = listAppend(oldcode,tmp);
+		ctxt->conexit = listAppend(duplicate(oldcode),tmp);
 		UNPROTECT(1);
 	    }
 	}
