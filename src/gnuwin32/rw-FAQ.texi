@@ -38,13 +38,6 @@ Brian Ripley                                @*
 
 @ifhtml
 @html
-<html>
-<head>
-<TITLE>R for Windows FAQ</TITLE>
-</head>
-
-<body>
-<h1 align="center">R for Windows FAQ</h1>
 <h2>Version for <tt>@value{VERSION}</tt></h2>
 <address>B. D. Ripley</address>
 <p><p><hr><p>
