@@ -91,13 +91,15 @@ HINSTANCE R_loadLibrary(const char *path, int asLocal, int now)
     HINSTANCE tdlh;
     unsigned int dllcw, rcw;
 
-    rcw = _controlfp(0,0) & ~_MCW_IC;  /* Infinity control is ignored by the FPU */
+    rcw = _controlfp(0,0) & ~_MCW_IC;  /* Infinity control is ignored */
     _clearfp();
     tdlh = LoadLibrary(path);
     dllcw = _controlfp(0,0) & ~_MCW_IC;
     if (dllcw != rcw) {
-		warning("DLL attempted to change FPU control word from %x to %x",rcw,dllcw);
 		_controlfp(rcw, _MCW_EM | _MCW_IC | _MCW_RC | _MCW_PC);
+		if (LOGICAL(GetOption(install("warn.FPU"), R_NilValue))[0])
+			warning("DLL attempted to change FPU control word from %x to %x",
+					rcw,dllcw);
 	}
     return(tdlh);
 }

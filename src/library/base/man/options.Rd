@@ -173,6 +173,12 @@ getOption(x)
       if a warning is generated, replacing the standard message.  If
       non-null is called irrespective of the value of option
       \code{warn}.}
+#ifdef windows
+
+	\item{\code{warn.FPU}:}{logical, by default undefined.  If true,
+	  a \link{warning} is produced whenever \link{dyn.load} repairs the
+	  control word damaged by a buggy DLL.}
+#endif	  
 
     \item{\code{check.bounds}:}{logical, defaulting to \code{FALSE}.  If
       true, a \link{warning} is produced whenever a ``generalized

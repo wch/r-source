@@ -115,13 +115,15 @@ symbol.For(name)
   External code must not change the floating point control word, but
   many DLLs do so.  Common changes are to set it to use 53 bit 
   precision instead of R's default 64 bit precision, or to unmask 
-  some exceptions.  \code{dyn.load} detects such changes, prints a warning,
+  some exceptions.  \code{dyn.load} detects such changes, 
   and restores R's control word to its default value of hex 8001F.  
   This may cause the DLL to malfunction; if so, it should be rewritten
-  to save and restore the control word itself.  (If the warning says
-  that the control word was changed from some other value, please 
-  report the circumstances to the Windows maintainers:  that probably
-  indicates an internal bug.)
+  to save and restore the control word itself.  If \code{warn.FPU}
+  is set to \code{TRUE} using the \code{\link{options}} function, 
+  a warning will be printed.  (If the warning says
+  that the control word was changed from some other value than 8001F, 
+  please   report the circumstances to the Windows maintainers:  
+  that probably indicates an internal bug.)
 #endif
 }
 \value{
