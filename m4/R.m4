@@ -1610,6 +1610,10 @@ if test -z "${no_x}"; then
   AC_DEFINE(HAVE_X11, 1,
             [Define if you have the X11 headers and libraries, and want
              the X11 GUI to be built.])
+  AC_CHECK_FUNCS(Xutf8DrawString Xutf8DrawImageString Xutf8LookupString \
+                 Xutf8TextEscapement Xutf8TextExtents \
+                 XmbDrawString XmbDrawImageString XmbLookupString \
+                 XmbTextEscapement XmbTextExtents)
 else
   use_X11="no"
 fi])# R_X11
