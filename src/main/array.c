@@ -1,7 +1,8 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998-2003   The R Development Core Team.
+ *  Copyright (C) 1998-2001   The R Development Core Team
+ *  Copyright (C) 2002--2003  The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -13,9 +14,10 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  You should have received a copy of the GNU General Public License
- *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *  A copy of the GNU General Public License is available via WWW at
+ *  http://www.gnu.org/copyleft/gpl.html.  You can also obtain it by
+ *  writing to the Free Software Foundation, Inc., 59 Temple Place,
+ *  Suite 330, Boston, MA  02111-1307  USA.
  */
 
 #ifdef HAVE_CONFIG_H
@@ -26,21 +28,21 @@
 #include <Rmath.h>
 #include <R_ext/RS.h>
 #include <R_ext/Applic.h> /* for dgemm */
-/* "GetRowNames" and "GetColNames" are utility routines which */
-/* locate and return the row names and column names from the */
-/* dimnames attribute of a matrix.  They are useful because */
-/* old versions of R used pair-based lists for dimnames */
-/* whereas recent versions use vector based lists */
 
-/* FIXME : This is nonsense.  When the "dimnames" attribute is */
-/* grabbed off an array it is always adjusted to be a vector. */
+/* "GetRowNames" and "GetColNames" are utility routines which
+ * locate and return the row names and column names from the
+ * dimnames attribute of a matrix.  They are useful because
+ * old versions of R used pair-based lists for dimnames
+ * whereas recent versions use vector based lists.
 
+ * These are now very old, plus
+ * ``When the "dimnames" attribute is
+ *   grabbed off an array it is always adjusted to be a vector.''
+*/
 SEXP GetRowNames(SEXP dimnames)
 {
     if (TYPEOF(dimnames) == VECSXP)
 	return VECTOR_ELT(dimnames, 0);
-    else if (TYPEOF(dimnames) == LISTSXP)
-	return CAR(dimnames);
     else
 	return R_NilValue;
 }
@@ -49,8 +51,6 @@ SEXP GetColNames(SEXP dimnames)
 {
     if (TYPEOF(dimnames) == VECSXP)
 	return VECTOR_ELT(dimnames, 1);
-    else if (TYPEOF(dimnames) == LISTSXP)
-	return CADR(dimnames);
     else
 	return R_NilValue;
 }
@@ -356,7 +356,7 @@ static void matprod(double *x, int nrx, int ncx,
 #ifdef HAVE_DOUBLE_COMPLEX
 /* ZGEMM - perform one of the matrix-matrix operations    */
 /* C := alpha*op( A )*op( B ) + beta*C */
-extern void 
+extern void
 F77_NAME(zgemm)(const char *transa, const char *transb, const int *m,
 		const int *n, const int *k, const Rcomplex *alpha,
 		const Rcomplex *a, const int *lda,
@@ -415,7 +415,7 @@ static void symcrossprod(double *x, int nr, int nc, double *z)
     int i, j;
     if (nr > 0 && nc > 0) {
         F77_CALL(dsyrk)(uplo, trans, &nc, &nr, &one, x, &nr, &zero, z, &nc);
-	for (i = 1; i < nc; i++) 
+	for (i = 1; i < nc; i++)
 	    for (j = 0; j < i; j++) z[i + nc *j] = z[j + nc * i];
     }
 }
@@ -496,6 +496,7 @@ static void ccrossprod(Rcomplex *x, int nrx, int ncx,
 	}
 #endif
 }
+/* "%*%" (op = 0)  or  crossprod (op = 1) : */
 SEXP do_matprod(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     int ldx, ldy, nrx, ncx, nry, ncy, mode;
@@ -562,7 +563,7 @@ SEXP do_matprod(SEXP call, SEXP op, SEXP args, SEXP rho)
 		nry = LENGTH(y);
 		ncy = 1;
 	    }
-	    else if (ncx == 1){ /* y as row vector */
+	    else if (ncx == 1) { /* y as row vector */
 		nry = 1;
 		ncy = LENGTH(y);
 	    }
@@ -574,7 +575,7 @@ SEXP do_matprod(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    }
 	}
     }
-    else {
+    else { /* ldx == ldy == 2 */
 	nrx = INTEGER(xdims)[0];
 	ncx = INTEGER(xdims)[1];
 	nry = INTEGER(ydims)[0];
@@ -637,7 +638,7 @@ SEXP do_matprod(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    UNPROTECT(2);
 	}
     }
-    else {
+    else { /* op == 1: crossprod() */
 	PROTECT(ans = allocMatrix(mode, ncx, ncy));
 	if (mode == CPLXSXP)
 	    if(sym)
@@ -1039,7 +1040,7 @@ SEXP do_colsum(SEXP call, SEXP op, SEXP args, SEXP rho)
 		if (keepNA)
 		    for (i = 0; i < n; i++) *ra++ += *rx++;
 		else
-		    for (c = cnt, i = 0; i < n; i++, ra++, rx++, c++) 
+		    for (c = cnt, i = 0; i < n; i++, ra++, rx++, c++)
 			if (!ISNAN(*rx)) {
 			    *ra += *rx;
 			    if (OP == 3) (*c)++;
@@ -1047,10 +1048,10 @@ SEXP do_colsum(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    }
 	    if (OP == 3) {
 		if (keepNA)
-		    for (ra = rans, i = 0; i < n; i++) 
+		    for (ra = rans, i = 0; i < n; i++)
 			*ra++ /= p;
 		else {
-		    for (ra = rans, c = cnt, i = 0; i < n; i++, c++) 
+		    for (ra = rans, c = cnt, i = 0; i < n; i++, c++)
 			if (*c > 0) *ra++ /= *c; else *ra++ = NA_REAL;
 		    Free(cnt);
 		}
