@@ -32,11 +32,6 @@ and binutils* bundles. You will need to ensure that you have only one
 version of cygwin1.dll in your path, and there is one in our tools
 distribution.)  You can no longer use earlier versions of cygwin.
 
-We have also successfully used the variant of mingw32 that uses the
-MSVCRT run-time system, and in the case of the mclust library we found
-this more successful than the standard version.  Be aware that many
-Windows 95 machines do not have MSVCRT.DLL installed.
-
 
 perl5, available via http://www.activestate.com/Products/ActivePerl/
 
