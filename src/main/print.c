@@ -436,6 +436,16 @@ static void PrintExpression(SEXP s)
 
  * This is the "dispatching" function for  print.default()
  */
+
+static void PrintEnvir(SEXP rho)
+{
+    if (rho == R_GlobalEnv) Rprintf("<environment: R_GlobalEnv>\n");
+#ifdef EXPERIMENTAL_NAMESPACES
+    else if (rho == R_BaseNamespace) Rprintf("<namespace: base>\n");
+#endif
+    else Rprintf("<environment: %p>\n", rho);
+}
+
 void PrintValueRec(SEXP s,SEXP env)
 {
     int i;
@@ -470,11 +480,10 @@ void PrintValueRec(SEXP s,SEXP env)
 	if (TYPEOF(s) == CLOSXP) t = CLOENV(s);
 	else t = R_GlobalEnv;
 	if (t != R_GlobalEnv)
-	    Rprintf("<environment: %p>\n", t);
+	    PrintEnvir(t);
 	break;
     case ENVSXP:
-	if (s == R_GlobalEnv) Rprintf("<environment: R_GlobalEnv>\n");
-	else Rprintf("<environment: %p>\n", s);
+	PrintEnvir(s);
 	break;
     case PROMSXP:
 	Rprintf("<promise: %p>\n", s);
