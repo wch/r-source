@@ -3,6 +3,6 @@ Title: Statistical functions using S4 classes
 Version: @VERSION@
 Priority: base
 Author: R Development Core Team and contributors worldwide
-Description: Statistical functions using S4 classes
+Description: Statistical Functions using S4 classes
 Maintainer: R Core Team <R-core@r-project.org>
 License: GPL

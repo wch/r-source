@@ -4,5 +4,5 @@ Priority: base
 Title: Resistant Regression and Covariance Estimation
 Author: Brian Ripley.
 Maintainer: R Core Team <R-core@r-project.org>
-Description: Resistant regression and covariance estimation
+Description: Defunct Package for Resistant Regression and Covariance Estimation
 License: GPL Version 2 or later.
