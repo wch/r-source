@@ -30,6 +30,11 @@ get(x, pos=-1, envir=pos.to.env(pos), mode="any", inherits=TRUE)
   Using a \code{NULL} environment is equivalent to using the current
   environment.
 }
+\section{Warning}{
+  Up to and including this release \code{mode} is interpreted as the
+  value of \code{\link{typeof}(x)}.  This will change from \R 1.2.0 to
+  the value of \code{mode(x)}, for compatibility with S.
+}
 \seealso{
   \code{\link{exists}}.
 }

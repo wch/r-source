@@ -27,6 +27,11 @@ exists(x, where = NULL, envir = sys.frame(sys.parent()),
   The function returns \code{TRUE} if the variable is encountered and
   \code{FALSE} if not.
 }
+\section{Warning}{
+  Up to and including this release \code{mode} is interpreted as the
+  value of \code{\link{typeof}(x)}.  This will change from \R 1.2.0 to
+  the value of \code{mode(x)}, for compatibility with S.
+}
 \seealso{
   \code{\link{get}}.
 }
