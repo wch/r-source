@@ -72,7 +72,7 @@ double qbeta(double alpha, double p, double q)
 		return p + q + alpha;
 #endif
 	if(p < zero || q < zero || alpha < zero || alpha > 1) {
-		ML_ERROR(ML_DOMAIN);
+		ML_ERROR(ME_DOMAIN);
 		return ML_NAN;
 	}
 	if (alpha == zero || alpha == 1)
@@ -146,7 +146,7 @@ double qbeta(double alpha, double p, double q)
 #else
 		if (errno)
 #endif
-		{ ML_ERROR(ML_DOMAIN); return ML_NAN; }
+		{ ML_ERROR(ME_DOMAIN); return ML_NAN; }
 		y = (y - a) *
 			exp(logbeta + r * log(xinbta) + t * log(1 - xinbta));
 		if (y * yprev <= zero)

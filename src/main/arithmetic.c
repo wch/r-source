@@ -450,6 +450,7 @@ static SEXP real_unary(int code, SEXP s1)
 #ifdef IEEE_754
 	    REAL(ans)[i] = -REAL(s1)[i];
 #else
+	    double x;
 	    x = REAL(s1)[i];
 	    REAL(ans)[i] = ISNA(x) ? NA_REAL :
 		((x == 0.0) ? 0.0 : -x);
@@ -595,9 +596,11 @@ static SEXP real_binary(int code, SEXP s1, SEXP s2)
 {
     int i, i1, i2, n, n1, n2;
     SEXP ans;
+#ifndef IEEE_754
+    double x1, x2;
+#endif
 
     /* Note: "s1" and "s2" are protected above. */
-
     n1 = LENGTH(s1);
     n2 = LENGTH(s2);
     n = (n1 > n2) ? n1 : n2;

@@ -35,7 +35,7 @@ double punif(double x, double a, double b)
 	return x + a + b;
 #endif
     if (b <= a) {
-	ML_ERROR(ML_DOMAIN);
+	ML_ERROR(ME_DOMAIN);
 	return ML_NAN;
     }
     if (x <= a)

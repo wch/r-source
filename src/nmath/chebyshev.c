@@ -27,7 +27,7 @@
  *    "chebyshev_init" determines the number of terms for the
  *    double precision orthogonal series "dos" needed to insure
  *    the error is no larger than "eta".  Ordinarily eta will be
- *    chosen to be one-tenth machine precision. 
+ *    chosen to be one-tenth machine precision.
  *
  *    "chebyshev_eval" evaluates the n-term Chebyshev series
  *    "a" at "x".
@@ -73,12 +73,12 @@ double chebyshev_eval(double x, double *a, int n)
     int i;
 
     if (n < 1 || n > 1000) {
-	ML_ERROR(ML_DOMAIN);
+	ML_ERROR(ME_DOMAIN);
 	return ML_NAN;
     }
 
     if (x < -1.1 || x > 1.1) {
-	ML_ERROR(ML_DOMAIN);
+	ML_ERROR(ME_DOMAIN);
 	return ML_NAN;
     }
 

@@ -228,7 +228,7 @@ static double wprob(double w, double rr, double cc)
  *
  *  Abramowitz, Milton and Stegun, Irene A.
  *  Handbook of Mathematical Functions.
- *  New York:  dover publications, inc. (1970).
+ *  New York:  Dover publications, Inc. (1970).
  *
  *  All constants taken from this text are
  *  given to 25 significant digits.

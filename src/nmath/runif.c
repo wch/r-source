@@ -35,7 +35,7 @@ double runif(double a, double b)
 	!finite(a) || !finite(b) ||
 #endif
 	b <= a) {
-	ML_ERROR(ML_DOMAIN);
+	ML_ERROR(ME_DOMAIN);
 	return ML_NAN;
     }
     return a + (b - a) * sunif();

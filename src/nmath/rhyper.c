@@ -125,7 +125,7 @@ double rhyper(double nn1in, double nn2in, double kkin)
     kk = floor(kkin+0.5);
 
     if (nn1 < 0 || nn2 < 0 || kk < 0 || kk > nn1 + nn2) {
-	ML_ERROR(ML_DOMAIN);
+	ML_ERROR(ME_DOMAIN);
 	return ML_NAN;
     }
     /* if new parameter values, initialize */

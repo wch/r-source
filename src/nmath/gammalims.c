@@ -58,7 +58,7 @@ void gammalims(double *xmin, double *xmax)
 
     /* unable to find xmin */
 
-    ML_ERROR(ML_NOCONV);
+    ML_ERROR(ME_NOCONV);
     *xmin = *xmax = ML_NAN;
 
 find_xmax:
@@ -78,7 +78,7 @@ find_xmax:
 
     /* unable to find xmax */
 
-    ML_ERROR(ML_NOCONV);
+    ML_ERROR(ME_NOCONV);
     *xmin = *xmax = ML_NAN;
 
 done:

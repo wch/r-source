@@ -52,9 +52,9 @@ extern int finite(double);
 #else
 
 #define MATH_CHECK(call)	(errno=0,R_tmp=call,(errno==0)?R_tmp:R_NaN)
-#define FINITE(x)		((x)!=NA_REAL)
-#define ISNAN(x)		((x)!=NA_REAL)/* ?? rather not -- FIXME!! */
-#define ISNA(x)			((x)!=NA_REAL)/* ?? rather not -- FIXME!! */
+#define FINITE(x)		((x)!=R_NaReal)
+#define ISNAN(x)		((x)!=R_NaReal)/* ?? rather not -- FIXME!! */
+#define ISNA(x)			((x)!=R_NaReal)/* ?? rather not -- FIXME!! */
 #define NAN(x)			ISNAN(x)
 
 #endif

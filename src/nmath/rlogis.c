@@ -22,13 +22,12 @@
 double rlogis(double location, double scale)
 {
 	double u;
-	if (
-#ifdef IEEE_754
-	    !finite(location) || !finite(scale)) {
+/* #ifndef IEEE_754 */
+	if (!finite(location) || !finite(scale)) {
 		ML_ERROR(ME_DOMAIN);
 		return ML_NAN;
 	}
-#endif
+/* #endif */
 	u = sunif();
 	return location + scale * log(u / (1.0 - u));
 }

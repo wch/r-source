@@ -35,7 +35,7 @@
  *    Multiple comparisons of simple effects in
  *    the two-way analysis of variance with fixed effects.
  *    Journal of Statistical Computation and Simulation,
- *    Vol.30, pp.1-15, 1988.    
+ *    Vol.30, pp.1-15, 1988.
  */
 
 #include "Mathlib.h"
@@ -79,10 +79,10 @@ static double qinv(double p, double c, double v)
     ps = 0.5 - 0.5 * p;
     yi = sqrt (log (1.0 / (ps * ps)));
     t = yi + (((( yi * p4 + p3) * yi + p2) * yi + p1) * yi + p0)
-	/ (((( yi * q4 + q3) * yi + q2) * yi + q1) * yi + q0);
-    if (v < vmax) t = t + (t * t * t + t) / v / 4.0;
+	   / (((( yi * q4 + q3) * yi + q2) * yi + q1) * yi + q0);
+    if (v < vmax) t += (t * t * t + t) / v / 4.0;
     q = c1 - c2 * t;
-    if (v < vmax) q = q - c3 / v + c4 * t / v;
+    if (v < vmax) q += -c3 / v + c4 * t / v;
     return t * (q * log (c - 1.0) + c5);
 }
 
@@ -92,21 +92,21 @@ static double qinv(double p, double c, double v)
  *  the two-way analysis of variance with fixed effects.
  *  Journal of Statistical Computation and Simulation,
  *  Vol.30, pp.1-15, 1988.
- * 
+ *
  *  Uses the secant method to find critical values.
- * 
+ *
  *  p = confidence level (1 - alpha)
  *  rr = no. of rows or groups
  *  cc = no. of columns or treatments
  *  df = degrees of freedom of error term
- * 
+ *
  *  ir(1) = error flag = 1 if wprob probability > 1
  *  ir(2) = error flag = 1 if ptukey probability > 1
  *  ir(3) = error flag = 1 if convergence not reached in 50 iterations
  *                     = 2 if df < 2
- * 
+ *
  *  qtukey = returned critical value
- * 
+ *
  *  If the difference between successive iterates is less than eps,
  *  the search is terminated
  */
@@ -166,7 +166,7 @@ double qtukey(double p, double rr, double cc, double df)
 
     /* Find new iterate */
 
-    for(iter=1 ; iter<maxiter ; i++) {
+    for(iter=1 ; iter < maxiter ; i++) {
 	ans = x1 - ((valx1 * (x1 - x0)) / (valx1 - valx0));
 	valx0 = valx1;
 
@@ -190,7 +190,7 @@ double qtukey(double p, double rr, double cc, double df)
 	    return ans;
     }
 
-    /* The process did not converge */
+    /* The process did not converge in 'maxiter' iterations */
 
     ML_ERROR(ME_NOCONV);
     return ans;
