@@ -78,7 +78,7 @@ BUG FIXES
 	comparing extended-precision quantities on ix86 Linux (and
 	some compilers and options).
 
-    o	Rdindex now handles multi-line \title{}'s correctly
+    o	Rdindex now handles multi-line \title{}'s correctly.
 
     o	Add weights.glm so that plot.lm gets the correct weights from
 	glm objects (the ones that go with deviance residuals not the
@@ -109,6 +109,10 @@ BUG FIXES
     o   It is no longer possible to use df[foo] to select non-existent
 	columns in df and so create an invalid object of class
 	"data.frame" (PR#698).
+
+    o   edit.data.frame() was trying to set row.names on a list, which
+	is no longer allowed.
+
 
 
 		CHANGES IN R VERSION 1.2.0
