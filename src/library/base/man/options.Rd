@@ -60,7 +60,7 @@ getOption(x)
       \code{VISUAL} on UNIX.}
 
     \item{\code{pager}:}{the (stand-alone) program used for displaying
-      ASCII files on \R's console, also by \code{\link{file.show}} and
+      ASCII files on \R's console, also used by \code{\link{file.show}} and
       sometimes \code{\link{help}}.
 #ifdef unix
       Defaults to \file{\$R\_HOME/bin/pager}.
