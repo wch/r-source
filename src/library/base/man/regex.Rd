@@ -31,7 +31,7 @@
 }
 \section{Extended Regular Expressions}{
   This section covers the regular expressions allowed
-  if \code{extended = TRUE} in \code{grep}, \code{regexpr}, \code{sub}
+  if \code{extended = TRUE} in \code{grep}, \code{regexpr}, \code{sub},
   \code{gsub} and \code{strsplit}.  They are the GNU implementation of
   the standard POSIX 1003.2.
   
@@ -85,7 +85,7 @@
       Space characters: tab, newline, vertical tab, form feed, carriage
       return, and space.}
 
-    \item{\code{[:upper:]'}}{Upper-case letters in the current locale.}
+    \item{\code{[:upper:]}}{Upper-case letters in the current locale.}
 
     \item{\code{[:xdigit:]}}{Hexadecimal digits: \code{0 1 2 3 4 5 6 7 8 9 A
 	B C D E F a b c d e f}.}

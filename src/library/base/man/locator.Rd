@@ -18,7 +18,8 @@ locator(n = 512, type = "n", \dots)
 }
 \value{
   A list containing \code{x} and \code{y} components which are the
-  coordinates of the identified points.
+  coordinates of the identified points in the user coordinate system,
+  i.e., the one specified by \code{\link{par}("usr")}.
 }
 \details{
   Unless the process is terminated prematurely by the user (see below)
@@ -43,9 +44,9 @@ locator(n = 512, type = "n", \dots)
   a point is indicated by a bell sound unless
   \code{\link{options}(locatorBell=FALSE)} has been set.
 
-  If the window is resized or hidden and then exposed before the input 
+  If the window is resized or hidden and then exposed before the input
   process has terminated, any lines or points drawn by \code{locator}
-  will disappear.  These will reappear once the input process has 
+  will disappear.  These will reappear once the input process has
   terminated and the window is resized or hidden and exposed again.
   This is because the points and lines drawn by \code{locator} are not
   recorded in the device's display list until the input process has
