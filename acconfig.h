@@ -16,15 +16,6 @@
    and can do arithmetic on the latter */
 #undef HAVE_DOUBLE_COMPLEX
 
-/* Define if calloc(0) does not return a null pointer. */
-#undef CALLOC_BROKEN
-
-/* Define if finite() is wrong for -Inf/NaN/Inf. */
-#undef FINITE_BROKEN
-
-/* Define if strptime() does not exist or fails pre-1970. */
-#undef STRPTIME_BROKEN
-
 /* Define if you have BSD networking headers and libraries. */
 #undef HAVE_BSD_NETWORKING
 
@@ -67,6 +58,18 @@
    support to be built. */
 #undef HAVE_TCLTK
 
+/* Define if calloc(0) returns a null pointer. */
+#undef HAVE_WORKING_CALLOC
+
+/* Define if finite() is correct for -Inf/NaN/Inf. */
+#undef HAVE_WORKING_FINITE
+
+/* Define if log() is correct for 0/-1. */
+#undef HAVE_WORKING_LOG
+
+/* Define if strptime() exists and does not fail pre-1970. */
+#undef HAVE_WORKING_STRPTIME
+
 /* Define if you have the X11 headers and libraries, and want the X11
    GUI to be built. */
 #undef HAVE_X11
@@ -79,9 +82,6 @@
 
 /* Define if you have IEEE 754 floating point arithmetic. */
 #undef IEEE_754
-
-/* Define if log() is wrong for 0/-1. */
-#undef LOG_BROKEN
 
 /* Define if your system needs __setfpucw() to control FPU rounding.
    This was used to control floating point precision, rounding and

@@ -1894,7 +1894,7 @@ void C_free(char *p)
 void *R_chk_calloc(size_t nelem, size_t elsize)
 {
     void *p;
-#ifdef CALLOC_BROKEN
+#ifndef HAVE_WORKING_CALLOC
     if(nelem == 0)
 	return(NULL);
 #endif
