@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2005
-@set FAQ-VERSION 2.0.@value{FAQ-YEAR}-02-08
+@set FAQ-VERSION 2.0.@value{FAQ-YEAR}-02-09
 @set REL-VERSION 2.0.1
 @set REL-YEAR 2004
 @c <COMMENT>
@@ -2577,12 +2577,9 @@ Examples from Multilevel Modelling Software Review.
 Mixed-mode latent class regression (also known as mixed-mode mixture
 model regression or mixed-mode mixture regression models) which can
 handle both longitudinal and one-time responses.
-@c <COMMENT>
-@c Moved to the Archive on 2004-10-08 as fails R CMD check.
-@c @item moc
-@c Fits a variety of mixtures models for multivariate observations with
-@c user-difined distributions and curves.
-@c </COMMENT>
+@item moc
+Fits a variety of mixtures models for multivariate observations with
+user-difined distributions and curves.
 @item mscalib
 Calibration and filtering of MALDI-TOF Peptide Mass Fingerprint data.
 @item msm
