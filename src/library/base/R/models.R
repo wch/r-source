@@ -134,16 +134,11 @@ terms.formula <- function(x, specials = NULL, abb = NULL, data = NULL,
                           simplify = FALSE, ...)
 {
     fixFormulaObject <- function(object) {
-        needsQuoting <- function(x)
-            if(make.names(x) != x) paste('"',x,'"', sep="") else x
-
 	tmp <- attr(terms(object), "term.labels")
-        tmp <- sapply(tmp, needsQuoting)
 	form <- formula(object)
 	lhs <- if(length(form) == 2) NULL else paste(deparse(form[[2]]),collapse="")
 	rhs <- if(length(tmp)) paste(tmp, collapse = " + ") else "1"
 	if(!attr(terms(object), "intercept")) rhs <- paste(rhs, "- 1")
-        browser()
 	formula(paste(lhs, "~", rhs))
     }
 
