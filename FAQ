@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 2.0.2005-01-28
+Version 2.0.2005-02-02
 ISBN 3-900051-08-9
 Kurt Hornik
 
@@ -2157,6 +2157,10 @@ distributions of R.)
      Estimation of hierarchical F-statistics from haploid or diploid genetic
      data with any numbers of levels in the hierarchy, and tests for the
      significance of each F and variance components.
+
+*hmm.disc.np*
+     Hidden Markov models with discrete non-parametric observation
+     distributions.
 
 *homals*
      Homogeneity Analysis (HOMALS) package with optional Tcl/Tk interface.

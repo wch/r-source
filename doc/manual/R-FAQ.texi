@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2005
-@set FAQ-VERSION 2.0.@value{FAQ-YEAR}-01-28
+@set FAQ-VERSION 2.0.@value{FAQ-YEAR}-02-02
 @set REL-VERSION 2.0.1
 @set REL-YEAR 2004
 @c <COMMENT>
@@ -2347,6 +2347,9 @@ set.
 Estimation of hierarchical F-statistics from haploid or diploid genetic
 data with any numbers of levels in the hierarchy, and tests for the
 significance of each F and variance components.
+@item hmm.disc.np
+Hidden Markov models with discrete non-parametric observation
+distributions.
 @item homals
 Homogeneity Analysis (HOMALS) package with optional Tcl/Tk interface.
 @item hopach
