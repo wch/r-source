@@ -2,6 +2,11 @@ diff <- function(x, ...) UseMethod("diff")
 
 diff.default <- function(x, lag = 1, differences = 1, ...)
 {
+    ## the following clause will be replaced by autoload("diff.ts","ts")
+    if(is.ts(x)) {
+        require(ts)
+        UseMethod("diff")
+    }
     ismat <- is.matrix(x)
     if (ismat)
 	xlen <- dim(x)[1]
