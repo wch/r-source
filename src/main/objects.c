@@ -713,9 +713,18 @@ SEXP do_inherits(SEXP call, SEXP op, SEXP args, SEXP env)
    methods code is automatically included, the pointer will not be
    needed 
 
-in Defn.h now:
-R_stdGen_ptr_t R_standardGeneric_ptr = 0;
 */
+static R_stdGen_ptr_t R_standardGeneric_ptr = 0;
+
+R_stdGen_ptr_t R_get_standardGeneric_ptr() {
+  return R_standardGeneric_ptr;
+}
+
+R_stdGen_ptr_t R_set_standardGeneric_ptr(R_stdGen_ptr_t val) {
+  R_stdGen_ptr_t old = R_standardGeneric_ptr;
+  R_standardGeneric_ptr = val;
+  return old;
+}
 
 SEXP do_standardGeneric(SEXP call, SEXP op, SEXP args, SEXP env)
 {

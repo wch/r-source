@@ -45,14 +45,15 @@ static SEXP f_x_i_skeleton, fgets_x_i_skeleton, f_x_skeleton, fgets_x_skeleton;
 
 /* from Defn.h */
 typedef SEXP (*R_stdGen_ptr_t)(SEXP, SEXP);
-#include <R_ext/libextern.h>
-LibExtern R_stdGen_ptr_t R_standardGeneric_ptr;
+R_stdGen_ptr_t R_get_standardGeneric_ptr(); /* get method */
+R_stdGen_ptr_t R_set_standardGeneric_ptr(R_stdGen_ptr_t new); /* set method */
+
 
 void R_initMethodDispatch()
 {
     if(initialized)
 	return;
-    R_standardGeneric_ptr = R_standardGeneric;
+    R_set_standardGeneric_ptr(R_standardGeneric);
     s_dot_Arguments = Rf_install(".Arguments");
     s_expression = Rf_install("expression");
     s_function = Rf_install("function");
