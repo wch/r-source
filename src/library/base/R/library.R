@@ -191,6 +191,14 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
             	pkgname <- paste("package", package, sep = ":")
             	newpackage <- is.na(match(pkgname, search()))
 	    }
+            if(is.character(pos)) {
+                npos <- match(pos, search())
+                if(is.na(npos)) {
+                    warning("`", pos,
+                            "' not found on search path, using pos=2")
+                    pos <- 2
+                } else pos <- npos
+            }
             if(newpackage) {
 		## If the name space mechanism is available and the package
 		## has a name space, then the name space loading mechanism

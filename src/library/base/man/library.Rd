@@ -31,7 +31,7 @@ library(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
         verbose = getOption("verbose"), version)
 require(package, quietly = FALSE, warn.conflicts = TRUE,
         keep.source = getOption("keep.source.pkgs"),
-        character.only=FALSE, version)
+        character.only = FALSE, version)
 
 .First.lib(libname, pkgname)
 .Last.lib(libpath)
@@ -49,9 +49,11 @@ require(package, quietly = FALSE, warn.conflicts = TRUE,
   \item{package, help}{\link{name} or character string giving the name
     of a package.}
   \item{pos}{the position on the search list at which to attach the
-    loaded package. Note that \code{.First.lib} may attach other
+    loaded package.  Note that \code{.First.lib} may attach other
     packages, and \code{pos} is computed \emph{after} \code{.First.lib}
-    has been run.}
+    has been run.  Can also be the name of a position on the current
+    search list as given by \code{\link{search}()}.
+  }
   \item{lib.loc}{a character vector describing the location of \R
     library trees to search through, or \code{NULL}.  The default value
     of \code{NULL} corresponds to all libraries currently known.}
@@ -268,6 +270,9 @@ require(nonexistent)        # FALSE
 ## where `EXT' is the system-specific extension.  Then you should use
 .First.lib <- function(lib, pkg) {
   library.dynam("foo", pkg, lib)
-}}
 }
+
+## if you want to mask as little as possible, use
+library(mypkg, pos = "package:base")
+}}
 \keyword{data}
