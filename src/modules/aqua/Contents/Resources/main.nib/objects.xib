@@ -4,10 +4,10 @@
   <object name="rootObject" class="NSCustomObject" id="1">
     <string name="customClass">NSApplication</string>
   </object>
-  <array count="39" name="allObjects">
+  <array count="61" name="allObjects">
     <object class="IBCarbonMenu" id="29">
       <string name="title">main</string>
-      <array count="4" name="items">
+      <array count="6" name="items">
         <object class="IBCarbonMenuItem" id="185">
           <string name="title">R</string>
           <object name="submenu" class="IBCarbonMenu" id="184">
@@ -80,20 +80,7 @@
           <string name="title">Edit</string>
           <object name="submenu" class="IBCarbonMenu" id="147">
             <string name="title">Edit</string>
-            <array count="8" name="items">
-              <object class="IBCarbonMenuItem" id="141">
-                <string name="title">Undo</string>
-                <string name="keyEquivalent">z</string>
-                <ostype name="command">undo</ostype>
-              </object>
-              <object class="IBCarbonMenuItem" id="146">
-                <string name="title">Redo</string>
-                <string name="keyEquivalent">Z</string>
-                <ostype name="command">redo</ostype>
-              </object>
-              <object class="IBCarbonMenuItem" id="142">
-                <boolean name="separator">TRUE</boolean>
-              </object>
+            <array count="5" name="items">
               <object class="IBCarbonMenuItem" id="143">
                 <string name="title">Cut</string>
                 <string name="keyEquivalent">x</string>
@@ -117,6 +104,86 @@
                 <string name="title">Select All</string>
                 <string name="keyEquivalent">a</string>
                 <ostype name="command">sall</ostype>
+              </object>
+            </array>
+          </object>
+        </object>
+        <object class="IBCarbonMenuItem" id="197">
+          <string name="title">Tools</string>
+          <object name="submenu" class="IBCarbonMenu" id="198">
+            <string name="title">Tools</string>
+            <array count="14" name="items">
+              <object class="IBCarbonMenuItem" id="199">
+                <string name="title">Show Workspace</string>
+              </object>
+              <object class="IBCarbonMenuItem" id="200">
+                <string name="title">Clear Workspace</string>
+              </object>
+              <object class="IBCarbonMenuItem" id="201">
+                <string name="title">Browse Workspace</string>
+              </object>
+              <object class="IBCarbonMenuItem" id="203">
+                <boolean name="separator">TRUE</boolean>
+              </object>
+              <object class="IBCarbonMenuItem" id="202">
+                <string name="title">Load Workspace</string>
+              </object>
+              <object class="IBCarbonMenuItem" id="204">
+                <string name="title">Save Workspace</string>
+              </object>
+              <object class="IBCarbonMenuItem" id="206">
+                <boolean name="separator">TRUE</boolean>
+              </object>
+              <object class="IBCarbonMenuItem" id="205">
+                <string name="title">Load history</string>
+              </object>
+              <object class="IBCarbonMenuItem" id="207">
+                <string name="title">Save history</string>
+              </object>
+              <object class="IBCarbonMenuItem" id="208">
+                <string name="title">Show history</string>
+              </object>
+              <object class="IBCarbonMenuItem" id="209">
+                <boolean name="separator">TRUE</boolean>
+              </object>
+              <object class="IBCarbonMenuItem" id="210">
+                <string name="title">Change Working Directory...</string>
+                <string name="keyEquivalent">d</string>
+              </object>
+              <object class="IBCarbonMenuItem" id="212">
+                <string name="title">Show Working Directory</string>
+              </object>
+              <object class="IBCarbonMenuItem" id="211">
+                <string name="title">Reset Working Directory</string>
+              </object>
+            </array>
+          </object>
+        </object>
+        <object class="IBCarbonMenuItem" id="216">
+          <string name="title">Packages</string>
+          <object name="submenu" class="IBCarbonMenu" id="217">
+            <string name="title">Packages</string>
+            <array count="7" name="items">
+              <object class="IBCarbonMenuItem" id="218">
+                <string name="title">Installed Packages</string>
+              </object>
+              <object class="IBCarbonMenuItem" id="219">
+                <string name="title">Available Datasets</string>
+              </object>
+              <object class="IBCarbonMenuItem" id="221">
+                <boolean name="separator">TRUE</boolean>
+              </object>
+              <object class="IBCarbonMenuItem" id="220">
+                <string name="title">Install CRAN Packages</string>
+              </object>
+              <object class="IBCarbonMenuItem" id="222">
+                <string name="title">Install BioConductor</string>
+              </object>
+              <object class="IBCarbonMenuItem" id="224">
+                <boolean name="separator">TRUE</boolean>
+              </object>
+              <object class="IBCarbonMenuItem" id="223">
+                <string name="title">Install Package From Source</string>
               </object>
             </array>
           </object>
@@ -172,11 +239,8 @@
     <reference idRef="137"/>
     <reference idRef="138"/>
     <reference idRef="139"/>
-    <reference idRef="141"/>
-    <reference idRef="142"/>
     <reference idRef="143"/>
     <reference idRef="144"/>
-    <reference idRef="146"/>
     <reference idRef="147"/>
     <reference idRef="148"/>
     <reference idRef="149"/>
@@ -227,8 +291,33 @@
     <reference idRef="191"/>
     <reference idRef="194"/>
     <reference idRef="196"/>
+    <reference idRef="197"/>
+    <reference idRef="198"/>
+    <reference idRef="199"/>
+    <reference idRef="200"/>
+    <reference idRef="201"/>
+    <reference idRef="202"/>
+    <reference idRef="203"/>
+    <reference idRef="204"/>
+    <reference idRef="205"/>
+    <reference idRef="206"/>
+    <reference idRef="207"/>
+    <reference idRef="208"/>
+    <reference idRef="209"/>
+    <reference idRef="210"/>
+    <reference idRef="211"/>
+    <reference idRef="212"/>
+    <reference idRef="216"/>
+    <reference idRef="217"/>
+    <reference idRef="218"/>
+    <reference idRef="219"/>
+    <reference idRef="220"/>
+    <reference idRef="221"/>
+    <reference idRef="222"/>
+    <reference idRef="223"/>
+    <reference idRef="224"/>
   </array>
-  <array count="39" name="allParents">
+  <array count="61" name="allParents">
     <reference idRef="1"/>
     <reference idRef="29"/>
     <reference idRef="131"/>
@@ -242,9 +331,6 @@
     <reference idRef="131"/>
     <reference idRef="131"/>
     <reference idRef="131"/>
-    <reference idRef="147"/>
-    <reference idRef="147"/>
-    <reference idRef="147"/>
     <reference idRef="147"/>
     <reference idRef="147"/>
     <reference idRef="152"/>
@@ -268,6 +354,31 @@
     <reference idRef="190"/>
     <reference idRef="191"/>
     <reference idRef="191"/>
+    <reference idRef="29"/>
+    <reference idRef="197"/>
+    <reference idRef="198"/>
+    <reference idRef="198"/>
+    <reference idRef="198"/>
+    <reference idRef="198"/>
+    <reference idRef="198"/>
+    <reference idRef="198"/>
+    <reference idRef="198"/>
+    <reference idRef="198"/>
+    <reference idRef="198"/>
+    <reference idRef="198"/>
+    <reference idRef="198"/>
+    <reference idRef="198"/>
+    <reference idRef="198"/>
+    <reference idRef="198"/>
+    <reference idRef="29"/>
+    <reference idRef="216"/>
+    <reference idRef="217"/>
+    <reference idRef="217"/>
+    <reference idRef="217"/>
+    <reference idRef="217"/>
+    <reference idRef="217"/>
+    <reference idRef="217"/>
+    <reference idRef="217"/>
   </array>
   <dictionary count="4" name="nameTable">
     <string>AboutWindow</string>
@@ -279,5 +390,5 @@
     <string>MenuBar</string>
     <reference idRef="29"/>
   </dictionary>
-  <unsigned_int name="nextObjectID">197</unsigned_int>
+  <unsigned_int name="nextObjectID">225</unsigned_int>
 </object>

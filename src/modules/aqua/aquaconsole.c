@@ -64,7 +64,7 @@ bool 		InputFinished = false;
 TXNFrameID		OutframeID	= 0;
 TXNFrameID		InframeID	= 0;
 
-WindowRef	RAboutWindow;
+WindowRef	RAboutWindow=NULL;
 pascal void RAboutHandler(WindowRef window);
 #define kRAppSignature '????'
 
@@ -157,6 +157,11 @@ void Raqua_StartConsole(void)
     if(err != noErr)
      goto fine;
     
+    err = CreateWindowFromNib(nibRef,CFSTR("AboutWindow"),&RAboutWindow);
+        fprintf(stderr,"\n AboutWin err=%d",err);
+  if(err != noErr)
+     goto fine;
+   
     if(nibRef)
      DisposeNibReference(nibRef);
 
@@ -261,16 +266,15 @@ void Raqua_StartConsole(void)
                  
                  
                  TXNFocus(RConsoleOutObject,true);
-  //      err = CreateWindowFromNib(nibRef,CFSTR("AboutWindow"),&RAboutWindow);
-  //      fprintf(stderr,"\n AboutWin err=%d",err);
-        
-     //   InstallWindowEventHandler(RAboutWindow, NewEventHandlerUPP(RAboutWinHandler), 1, &aboutSpec, (void *)RAboutWindow, NULL);
+         
+        InstallWindowEventHandler(RAboutWindow, NewEventHandlerUPP(RAboutWinHandler), 1, &aboutSpec, (void *)RAboutWindow, NULL);
 
 	}
 	else
 	 WeHaveConsole =false; 
 	}
 
+  
     SelectWindow(ConsoleWindow);
 
 fine:
@@ -509,7 +513,11 @@ RCmdHandler( EventHandlerCallRef inCallRef, EventRef inEvent, void* inUserData )
                  TXNCopy(RConsoleInObject); 
                }               
                break;
-        
+              case kHICommandAbout:
+              fprintf(stderr,"\nabout");
+              RAboutHandler(RAboutWindow);
+              break;
+              
               default:
               break;
              }
