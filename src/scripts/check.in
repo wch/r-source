@@ -37,7 +37,7 @@ use Text::Wrap;
 ## Don't buffer output.
 $| = 1;
 
-my $revision = ' $Revision: 1.187 $ ';
+my $revision = ' $Revision: 1.187.2.1 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -1157,193 +1157,28 @@ sub check_pkg {
     if(-d "man") {
 	$log->checking("Rd files");
 
-	my @Rd_files =
-	  &list_files_with_type("man", "docs", $R::Vars::OSTYPE);
-
-	@Rd_files = sort(@Rd_files);
-
-	## <NOTE>
-	## The code below tries to deal with common problems in Rd
-	## files, such as unbalanced braces, missing mandatory tags or
-	## duplicated tags which must be unique, etc.  This is tricky:
-	## in particular, one needs to deal with Rd preprocessing (which
-	## could e.g. eliminate mandatory tags or duplicated tags which
-	## must be unique).  So at least in theory, for Rd files which
-	## use preprocessor conditionals, one would need to repeat the
-	## tests for at least all supported OS types.  Argh ...
-	## </NOTE>
-
-	my @mandatory_tags = qw(name alias title description keyword);
-	my @unique_tags = qw(name title description usage arguments
-			     format details value references source
-			     seealso examples note author synopsis);
-	my @bad_braces;
-	my @bad_names;
-	my @bad_titles;
-	my %bad_keywords;
-	my %bad_mandatory_tags;
-	my %bad_unique_tags;
-
-	## Create hash all_tags with all tags found in mandatory_tags
-	## and unique_tags.
-	my %all_tags;
-	foreach my $tag (@mandatory_tags, @unique_tags) {
-	    $all_tags{$tag}++;
-	}
-
-	foreach my $file (@Rd_files) {
-	    ## Call the Rd preprocessor first.
-	    my $text = &Rdpp($file, $R::Vars::OSTYPE);
-	    ## And split into lines again.
-	    my @lines = split(/\n/, $text);
-
-	    ## Check tags and keywords.
-	    my %keywords;
-	    my %tagcount;
-	    foreach my $line (@lines) {
-		foreach my $tag (keys %all_tags) {
-		    if($line =~ /^\s*\\$tag\{/) {
-			$tagcount{$tag}++;
-		    }
-		}
-                if($line =~ /^\s*\\keyword\{\s*([^}]*[^}\s])\s*\}.*/) {
-                    $keywords{$1} = 1;
-                }
+	my $Rcmd = "tools:::check_Rd_files_in_man_dir(\"man\")\n";
+	my @out = R_runR($Rcmd, "${R_opts} --quiet",
+			 "R_DEFAULT_PACKAGES=tools");
+	@out = grep(!/^\>/, @out);
+	if(scalar(@out) > 0) {
+	    ## Output may indicate warnings or errors ...
+	    if(grep(/^Rd files with (syntax errors|missing or empty)/,
+		    @out)) {
+		$log->error();
+		$log->print(join("\n", @out) . "\n");
+		$log->print(wrap("", "", @msg_writing_Rd));
+		exit(1);
 	    }
-	    foreach my $tag (@mandatory_tags) {
-		push(@{$bad_mandatory_tags{$tag}}, $file)
-		    unless ($tagcount{$tag} > 0);
-	    }
-	    foreach my $tag (@unique_tags) {
-		push(@{$bad_unique_tags{$tag}}, $file)
-		    unless ($tagcount{$tag} <= 1);
-	    }
-            foreach my $key (keys(%keywords)) {
-                push(@{$bad_keywords{$file}}, $key)
-                    unless $standard_keywords{$key};
-            }
-
-	    ## Check name and title.
-	    ## Note that the code here is based on Rd::info().
-	    ## (Not entirely safe ...)
-	    $text =~ /\\name\{\s*([^\}]+)\s*\}/s;
-	    push(@bad_names, $file) if($1 =~ /^\s*$/);
-	    ## Using LaTeX special characters (# $ % & ~ _ ^ \ { })
-	    ## causes the creation of PDF bookmarks to fail.
-	    push(@bad_names, $file)
-	      if($1 =~ /(\#|\$|\%|\&|\~|\_|\^|\\|\{|\})/);
-	    $text =~ /\\title\{\s*([^\}]+)\s*\}/s;
-	    push(@bad_titles, $file) if($1 =~ /^\s*$/);
-
-	    ## Check for unbalanced braces.
-	    $text = "";
-	    ## Get rid of the \alias entries as these may have
-	    ## unbalanced braces (Paren.Rd).
-	    foreach my $line (@lines) {
-		$text .= "\n$line" unless ($line =~ /^\s*\\alias/);
-	    }
-	    $text .= "\n";
-	    my $delimcurly = new Text::DelimMatch;
-	    $delimcurly->delim("\{", "\}");
-	    $delimcurly->escape("\\");
-	    $text =~ s/([^\\])%.*\n/$1\n/g; # ???
-	    ## Now loop through matching pairs of braces.
-	    while($delimcurly->match($text)) {
-		$text = $delimcurly->post_matched;
-	    }
-	    ## Get rid of trailing comments.
-	    $text =~ s/^%.*\n/\n/gs;
-	    $text =~ s/\n%.*\n/\n/gs;
-	    ## Anything left in $text means unbalanced.
-	    if(!($text =~ /^\s*$/)) {
-		push(@bad_braces, $file);
-	    }
-
-	}
-
-	my $any = 0;
-
-	if(scalar(@bad_braces) > 0) {
-	    $log->error();
-	    $log->print("Rd files with unbalanced braces:\n");
-	    $log->print("  " . join("\n  ", @bad_braces) . "\n");
-	    $log->print(wrap("", "",
-			     ("Unbalanced braces are Rd syntax",
-			      "errors, and result in incorrect",
-			      "documentation.\n")));
-	    exit(1);
-	}
-
-	if(scalar(@bad_names) > 0) {
-	    $log->error();
-	    $log->print("Rd files with missing or empty ".
-			"or invalid '\\name':\n");
-	    $log->print("  " . join("\n  ", @bad_names) . "\n");
-	    $log->print(wrap("", "", @msg_writing_Rd));
-	    exit(1);
-	}
-	if(scalar(@bad_titles) > 0) {
-	    $log->error();
-	    $log->print("Rd files with missing or empty '\\title':\n");
-	    $log->print("  " . join("\n  ", @bad_titles) . "\n");
-	    $log->print(wrap("", "", @msg_writing_Rd));
-	    exit(1);
-	}
-
-	my $any_missing_mandatory_tag = 0;
-	foreach my $tag (@mandatory_tags) {
-	    if(exists $bad_mandatory_tags{$tag}) {
-		$log->warning() unless $any;
-		$any++;
-		$any_missing_mandatory_tag++;
-		$log->print("Rd files without '${tag}':\n");
-		$log->print("  " .
-			    join("\n  ", @{$bad_mandatory_tags{$tag}}) .
-			    "\n");
+	    else {
+		$log->warning();
+		$log->print(join("\n", @out) . "\n");
+		$log->print(wrap("", "", @msg_writing_Rd));
 	    }
 	}
-	if($any_missing_mandatory_tag) {
-	    $log->print("These tags are required in an Rd file.\n");
-	    $log->print(wrap("", "", @msg_writing_Rd));
+	else {
+	    $log->result("OK");
 	}
-
-	my $any_duplicate_unique_tag = 0;
-	foreach my $tag (@unique_tags) {
-	    if(exists $bad_unique_tags{$tag}) {
-		$log->warning() unless $any;
-		$any++;
-		$any_duplicate_unique_tag++;
-		$log->print("Rd files with duplicate '${tag}':\n");
-		$log->print("  " .
-			    join("\n  ", @{$bad_unique_tags{$tag}}) .
-			    "\n");
-	    }
-	}
-	if($any_duplicate_unique_tag) {
-	    $log->print("These tags must be unique in an Rd file.\n");
-	    $log->print(wrap("", "", @msg_writing_Rd));
-	}
-
-        if(keys(%bad_keywords)) {
-	    $log->warning() unless $any;
-	    $any++;
-	    $log->print("Rd files with non-standard keywords:\n");
-            foreach my $file (keys(%bad_keywords)) {
-                $log->print(wrap("  ", "    ",
-				   ("'$file':",
-				    @{$bad_keywords{$file}},
-				    "\n")));
-            }
-	    $log->print(wrap("", "",
-			     ("Each '\\keyword' entry should specify",
-			      "one of the standard keywords",
-			      "(as listed in file 'KEYWORDS.db'",
-			      "in the 'doc' subdirectory",
-			      "of the R home directory).\n")));
-	    $log->print(wrap("", "", @msg_writing_Rd));
-        }
-
-	$log->result("OK") unless $any;
     }
 
     ## Check for missing documentation entries.

@@ -138,6 +138,9 @@ C-LEVEL FACILITIES
     o	The Makefile in src/nmath/standalone now has 'install' and
 	'uninstall' targets -- see the README file in that directory.
 
+    o	Header files Rinternals.h and Rdefines.h are now suitable for
+	calling directly from C++.
+
 
 DEPRECATED & DEFUNCT
 
@@ -624,8 +627,8 @@ NEW FEATURES
     o	strsplit() now has `fixed' and `perl' arguments and
 	split="" is optimized.
 
-    o	subset() now allows a `drop' argument to remove unused factor
-	levels.	 The default is still to keep them.
+    o	subset() now allows a `drop' argument which is passed on to
+	the indexing method for data frames.
 
     o	termplot() has an option to smooth the partial residuals.
 

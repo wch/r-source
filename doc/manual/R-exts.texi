@@ -2966,8 +2966,8 @@ void X_main () @{
 Compiling and linking should be done with the C++ compiler-linker
 (rather than the C compiler-linker or the linker itself); otherwise, the
 C++ initialization code (and hence the constructor of the static
-variable @code{Y}) are not called.  On a properly configured Unix system
-(support for C++ was added in @R{} version 1.1), one can simply use
+variable @code{Y}) are not called.  On a properly configured Unix or
+Windows system, one can simply use
 
 @smallexample
 R CMD SHLIB X.cc X_main.cc
@@ -3005,6 +3005,10 @@ Using C++ iostreams, as in this example, is best avoided.  There is no
 guarantee that the output will appear in the R console, and indeed it
 will not on the R for Windows console.  Use R code or the C entry points
 (@pxref{Printing}) for all I/O if at all possible.
+
+@R{} header files are C and not C++ header files and should be included
+within an @code{extern "C"} block.  (This is not always necessary but
+helps in reading C++ code.)
 
 
 @node Handling R objects in C, Interface functions .Call and .External, Interfacing C++ code, System and foreign language interfaces
@@ -3105,11 +3109,12 @@ the header file @file{Rinternals.h} in the directory
 @file{@var{R_HOME}/include} that should be available on any @R{}
 installation.
 
-A more recent approach is to use @R{} versions of the macros and
-functions defined for the @Sl{} version 4 interface @code{.Call}, which
-are defined in the header file @file{Rdefines.h}.  This is a somewhat
+Another approach is to use @R{} versions of the macros and functions
+defined for the @Sl{} version 4 interface @code{.Call}, which are
+defined in the header file @file{Rdefines.h}.  This is a somewhat
 simpler approach, and is certainly to be preferred if the code might be
-shared with @Sl{} at any stage.
+shared with @Sl{} at any stage.  However, it is less well documented and
+less tested.
 
 A substantial amount of @R{} is implemented using the functions and
 macros described here, so the @R{} source code provides a rich source of
@@ -4723,7 +4728,9 @@ conflicts (notably with Windows headers), and the known
 problematic defines can be removed by defining @code{STRICT_R_HEADERS}.
 
 Most of these header files, including all those included by @file{R.h},
-can be used from C++ code.
+can be used from C++ code.  Some others need to be included within an
+@code{extern "C"} declaration, and for clarity this is advisable for all
+@R{} header files.
 
 @quotation
 @strong{Note:} Because @R{} re-maps many of its external names to avoid
