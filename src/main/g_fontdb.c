@@ -31,8 +31,8 @@
    I have deleted the PS fonts stuff to leave just the Hershey font stuff
 */
 
-/* The Hershey vector fonts we support.  Each character in a Hershey font
-   is an index into the glyph array in g_her_glyphs.c.  Each
+/* The Hershey vector fonts we support.	 Each character in a Hershey font
+   is an index into the glyph array in g_her_glyphs.c.	Each
    plHersheyFontInfoStruct includes these elements:
 
    (1) PS-style name for the font
@@ -44,7 +44,7 @@
    (7) an `obliquing requested' flag (set if glyphs should be sheared)
    (8) an `iso8859-1' flag
    (9) a `visible' flag (false for the two Kana fonts,
-        which are only used internally) */
+	which are only used internally) */
 
 /* Each Hershey font below may contain up to 256 Hershey glyphs, each of
    which is specified by a number that indexes into the array in
@@ -56,12 +56,12 @@
    glyphs.  They are:
 
    0. undefined characters: thorn, eth, the guillemets, the mysterious
-   `currency' symbol, and the European 'euro' currency symbol.  These are
+   `currency' symbol, and the European 'euro' currency symbol.	These are
    written as UNDE, which is a glyph consisting of several horizontal
    lines.
 
    1. the characters onesuperior, twosuperior, threesuperior, ordmasculine,
-   ordfeminine.  These are written as 0, which means an empty glyph.  That
+   ordfeminine.	 These are written as 0, which means an empty glyph.  That
    is because they not implemented as conventional glyphs at all: the
    corresponding entries in this table are never accessed.  In the file
    g_cntrlify.c these characters are mapped to sequences of control
@@ -121,7 +121,9 @@
    code by number.  If you change the numbering of Hershey fonts, i.e., the
    order in which they appear in this array, be sure to update, e.g., the
    definitions DEFAULT_HERSHEY_FONT_INDEX, HERSHEY_SERIF, HERSHEY_EUC
-   etc. in extern.h. */
+   etc. in ./g_extern.h. */
+
+/* LIST them by  (occur "^ *\"Hershey.*#" nil)  <<C-x C-e in Emacs */
 
 const struct plHersheyFontInfoStruct _hershey_font_info[] = 
 {
@@ -157,18 +159,18 @@ const struct plHersheyFontInfoStruct _hershey_font_info[] =
       802, 220, 0, 0, 0, 0, 0, 0, 
       2119, 2182, 0, 0, 0, 0, 0, 0,
       /* ISO-Latin-1 encoding resumes */
-      2199, 4113,  910,  272, UNDE, 4125, 4106, 2276,
+      2199, 4113,  910,	 272, UNDE, 4125, 4106, 2276,
       4182,  274,    0, UNDE, 4080, 4104,  273, 4187,
-      2218, 2233,    0,    0, 4180, 2138, UNDE, 729,
+      2218, 2233,    0,	   0, 4180, 2138, UNDE, 729,
       CEDILLA, 0,    0, UNDE, 270,  261,  271, 4114,
       ACC1, ACC1, ACC1, ACC1, ACC1, 2078,    0, ACC0,
       ACC1, ACC1, ACC1, ACC1, ACC1, ACC1, ACC1, ACC1,
-      UNDE, ACC1, ACC1, ACC1, ACC1, ACC1, ACC1,  727,
+      UNDE, ACC1, ACC1, ACC1, ACC1, ACC1, ACC1,	 727,
       /* PAUL MURRELL
 	 Changed coding for "Oslash"
       */
-      /*      2015, ACC1, ACC1, ACC1, ACC1, ACC1, UNDE,    0, */
-      ACC0, ACC1, ACC1, ACC1, ACC1, ACC1, UNDE,    0,
+      /*      2015, ACC1, ACC1, ACC1, ACC1, ACC1, UNDE,	   0, */
+      ACC0, ACC1, ACC1, ACC1, ACC1, ACC1, UNDE,	   0,
       ACC0, ACC0, ACC0, ACC0, ACC0, ACC0,    0, ACC0,
       ACC0, ACC0, ACC0, ACC0, ACC0, ACC0, ACC0, ACC0,
       UNDE, ACC0, ACC0, ACC0, ACC0, ACC0, ACC0, 2237,
@@ -208,14 +210,14 @@ const struct plHersheyFontInfoStruct _hershey_font_info[] =
       0, 0, 0, 0, 0, 0, 0, 0,
       2169, 2196, 0, 0, 0, 0, 0, 0, 
       /* ISO-Latin-1 encoding resumes */
-      2199, 4113,  910,  272, UNDE, 4129, 4106, 2276,
+      2199, 4113,  910,	 272, UNDE, 4129, 4106, 2276,
       4182,  274,    0, UNDE, 4080, 4104,  273, 4187,
-      2218, 2233,    0,    0, 4180, 2138, UNDE,  729,
-      CEDILLA, 0, 0, UNDE, 270,  261,  271, 4114,
+      2218, 2233,    0,	   0, 4180, 2138, UNDE,	 729,
+      CEDILLA, 0, 0, UNDE, 270,	 261,  271, 4114,
       ACC2, ACC2, ACC2, ACC2, ACC2, ACC2,    0, ACC0,
       ACC2, ACC2, ACC2, ACC2, ACC2, ACC2, ACC2, ACC2,
-      UNDE, ACC2, ACC2, ACC2, ACC2, ACC2, ACC2,  727,
-      2065, ACC2, ACC2, ACC2, ACC2, ACC2, UNDE,    0,
+      UNDE, ACC2, ACC2, ACC2, ACC2, ACC2, ACC2,	 727,
+      2065, ACC2, ACC2, ACC2, ACC2, ACC2, UNDE,	   0,
       ACC0, ACC0, ACC0, ACC0, ACC0, ACC0,    0, ACC0,
       ACC0, ACC0, ACC0, ACC0, ACC0, ACC0, ACC0, ACC0,
       UNDE, ACC0, ACC0, ACC0, ACC0, ACC0, ACC0, 2237,
@@ -224,7 +226,7 @@ const struct plHersheyFontInfoStruct _hershey_font_info[] =
     0, 2, false, true, true
   },
   {
-    "HersheySerif-Bold",	/* #2 */
+    "HersheySerif-Bold",		/* #2 */
     NULL,
     "Triplex Roman",
     {
@@ -251,14 +253,14 @@ const struct plHersheyFontInfoStruct _hershey_font_info[] =
       0, 0, 0, 0, 0, 0, 0, 0,
       3119, 4160, 0, 0, 0, 0, 0, 0, 
       /* ISO-Latin-1 encoding resumes */
-      3249, 4119,  910,  272, UNDE, 4126, 4107, 2276,
+      3249, 4119,  910,	 272, UNDE, 4126, 4107, 2276,
       4182,  274,    0, UNDE, 4080, 4105,  273, 4187,
-      3229, 2233,    0,    0, 4180, 3138, UNDE, 4131,
-      CEDILLA, 0, 0, UNDE, 270,  261,  271, 4120,
+      3229, 2233,    0,	   0, 4180, 3138, UNDE, 4131,
+      CEDILLA, 0, 0, UNDE, 270,	 261,  271, 4120,
       ACC1, ACC1, ACC1, ACC1, ACC1, ACC1,    0, ACC0,
       ACC1, ACC1, ACC1, ACC1, ACC1, ACC1, ACC1, ACC1,
-      UNDE, ACC1, ACC1, ACC1, ACC1, ACC1, ACC1,  727,
-      3015, ACC1, ACC1, ACC1, ACC1, ACC1, UNDE,    0,
+      UNDE, ACC1, ACC1, ACC1, ACC1, ACC1, ACC1,	 727,
+      3015, ACC1, ACC1, ACC1, ACC1, ACC1, UNDE,	   0,
       ACC0, ACC0, ACC0, ACC0, ACC0, ACC0,    0, ACC0,
       ACC0, ACC0, ACC0, ACC0, ACC0, ACC0, ACC0, ACC0,
       UNDE, ACC0, ACC0, ACC0, ACC0, ACC0, ACC0, 2237,
@@ -286,7 +288,7 @@ const struct plHersheyFontInfoStruct _hershey_font_info[] =
       3266, 3151, 3152, 3153, 3154, 3155, 3156, 3157,
       3158, 3159, 3160, 3161, 3162, 3163, 3164, 3165,
       3166, 3167, 3168, 3169, 3170, 3171, 3172, 3173,
-      3174, 3175, 3176, 2225, 4108, 2226, 2246,    0,
+      3174, 3175, 3176, 2225, 4108, 2226, 2246,	   0,
       /* The range 0200--0237 isn't accessible to the user.  We store
 	 ligatures, accents, and variant glyphs there. */
       0, 0, 0, 0, 0, 0, 0, 0, 
@@ -294,14 +296,14 @@ const struct plHersheyFontInfoStruct _hershey_font_info[] =
       0, 0, 0, 0, 0, 0, 0, 0,
       3169, 4161, 0, 0, 0, 0, 0, 0, 
       /* ISO-Latin-1 encoding resumes */
-      3249, 4121,  910,  272, UNDE, 4130, 4107, 2276,
+      3249, 4121,  910,	 272, UNDE, 4130, 4107, 2276,
       4182,  274,    0, UNDE, 4080, 4105,  273, 4187,
-      3279, 2233,    0,    0, 4180, 3138, UNDE, 4131,
-      CEDILLA, 0, 0, UNDE, 270,  261,  271, 4122,
+      3279, 2233,    0,	   0, 4180, 3138, UNDE, 4131,
+      CEDILLA, 0, 0, UNDE, 270,	 261,  271, 4122,
       ACC2, ACC2, ACC2, ACC2, ACC2, ACC2,    0, ACC0,
       ACC2, ACC2, ACC2, ACC2, ACC2, ACC2, ACC2, ACC2,
-      UNDE, ACC2, ACC2, ACC2, ACC2, ACC2, ACC2,  727,
-      3065, ACC2, ACC2, ACC2, ACC2, ACC2, UNDE,    0,
+      UNDE, ACC2, ACC2, ACC2, ACC2, ACC2, ACC2,	 727,
+      3065, ACC2, ACC2, ACC2, ACC2, ACC2, UNDE,	   0,
       ACC0, ACC0, ACC0, ACC0, ACC0, ACC0,    0, ACC0,
       ACC0, ACC0, ACC0, ACC0, ACC0, ACC0, ACC0, ACC0,
       UNDE, ACC0, ACC0, ACC0, ACC0, ACC0, ACC0, 2237,
@@ -310,7 +312,7 @@ const struct plHersheyFontInfoStruct _hershey_font_info[] =
     0, 4, false, true, true
   },
   {
-    "HersheyCyrillic",	/* #4 */
+    "HersheyCyrillic",		/* #4 */
     NULL,
     "Complex Cyrillic",
     {
@@ -398,7 +400,7 @@ const struct plHersheyFontInfoStruct _hershey_font_info[] =
     0, 6, true, false, true
   },
   {
-    "HersheyHiragana",	/* #6 */
+    "HersheyHiragana",		/* #6 */
     NULL,
     "Hiragana (from oriental glyph database)",
     {
@@ -416,8 +418,8 @@ const struct plHersheyFontInfoStruct _hershey_font_info[] =
       4228, 4273, 4278, 4229, 4274, 4279, 4230, 4231, 
       4232, 4233, 4234, 4235+KS, 4235, 4237+KS, 4237, 4239+KS, 
       4239, 4240, 4241, 4242, 4243, 4244, 4245+KS, 4245, 
-      4246, 4248, 4249, 4250,    0,    0,    0,    0,
-      4197, 4196, 4195,    0,    0,    0,    0,    0,
+      4246, 4248, 4249, 4250,	 0,    0,    0,	   0,
+      4197, 4196, 4195,	   0,	 0,    0,    0,	   0,
       /********************/
       0, 0, 0, 0, 0, 0, 0, 0, 
       0, 0, 0, 0, 0, 0, 0, 0,
@@ -439,7 +441,7 @@ const struct plHersheyFontInfoStruct _hershey_font_info[] =
     0, 6, false, false, false
   },
   {
-    "HersheyKatakana",	/* #7 */
+    "HersheyKatakana",		/* #7 */
     NULL,
     "Katakana (from oriental glyph database)",
     {
@@ -458,7 +460,7 @@ const struct plHersheyFontInfoStruct _hershey_font_info[] =
       4332, 4333, 4334, 4335+KS, 4335, 4337+KS, 4337, 4339+KS, 
       4339, 4340, 4341, 4342, 4343, 4344, 4345+KS, 4345, 
       4346, 4348, 4349, 4350, 4398, 4305+KS, 4308+KS,  0,
-      4197, 4196, 4195,    0,    0,    0,    0,    0,
+      4197, 4196, 4195,	   0,	 0,    0,    0,	   0,
       /********************/
       0, 0, 0, 0, 0, 0, 0, 0, 
       0, 0, 0, 0, 0, 0, 0, 0,
@@ -480,7 +482,7 @@ const struct plHersheyFontInfoStruct _hershey_font_info[] =
     0, 7, false, false, false
   },
   {
-    "HersheyEUC",		/* #8 */
+    "HersheyEUC",			/* #8 */
     NULL,
     "Composite Japanese (from oriental glyph database)",
     {
@@ -507,18 +509,18 @@ const struct plHersheyFontInfoStruct _hershey_font_info[] =
       0, 0, 0, 0, 0, 0, 0, 0, 
       2119, 2182, 0, 0, 0, 0, 0, 0,
       /* printable single-byte 8-bit characters (none for this font) */
-         0,    0,    0,    0,    0,    0,    0,    0,
-         0,    0,    0,    0,    0,    0,    0,    0,
-         0,    0,    0,    0,    0,    0,    0,    0,
-         0,    0,    0,    0,    0,    0,    0,    0,
-         0,    0,    0,    0,    0,    0,    0,    0,
-         0,    0,    0,    0,    0,    0,    0,    0,
-         0,    0,    0,    0,    0,    0,    0,    0,
-         0,    0,    0,    0,    0,    0,    0,    0,
-         0,    0,    0,    0,    0,    0,    0,    0,
-         0,    0,    0,    0,    0,    0,    0,    0,
-         0,    0,    0,    0,    0,    0,    0,    0,
-         0,    0,    0,    0,    0,    0,    0,    0,
+	 0,    0,    0,	   0,	 0,    0,    0,	   0,
+	 0,    0,    0,	   0,	 0,    0,    0,	   0,
+	 0,    0,    0,	   0,	 0,    0,    0,	   0,
+	 0,    0,    0,	   0,	 0,    0,    0,	   0,
+	 0,    0,    0,	   0,	 0,    0,    0,	   0,
+	 0,    0,    0,	   0,	 0,    0,    0,	   0,
+	 0,    0,    0,	   0,	 0,    0,    0,	   0,
+	 0,    0,    0,	   0,	 0,    0,    0,	   0,
+	 0,    0,    0,	   0,	 0,    0,    0,	   0,
+	 0,    0,    0,	   0,	 0,    0,    0,	   0,
+	 0,    0,    0,	   0,	 0,    0,    0,	   0,
+	 0,    0,    0,	   0,	 0,    0,    0,	   0,
     },
     0, 7, false, false, true
   },
@@ -554,18 +556,18 @@ const struct plHersheyFontInfoStruct _hershey_font_info[] =
       802, 220, 0, 0, 0, 0, 0, 0, 
       619, 4162, 0, 0, 0, 0, 0, 0, 
       /* ISO-Latin-1 encoding resumes */
-      699, 4111,  910,  272, UNDE, 4127, 4106, 2276,
-      4182,  274, 0, UNDE, 4080, 4104,  273, 4187,
+      699, 4111,  910,	272, UNDE, 4127, 4106, 2276,
+      4182,  274, 0, UNDE, 4080, 4104,	273, 4187,
       718, 2233, 0, 0, 4188, 638, UNDE, 729,
-      CEDILLA, 0, 0, UNDE, 270,  261,  271, 4112,
+      CEDILLA, 0, 0, UNDE, 270,	 261,  271, 4112,
       ACC1, ACC1, ACC1, ACC1, ACC1, ACC1,    0, ACC0,
       ACC1, ACC1, ACC1, ACC1, ACC1, ACC1, ACC1, ACC1,
-      UNDE, ACC1, ACC1, ACC1, ACC1, ACC1, ACC1,  727,
+      UNDE, ACC1, ACC1, ACC1, ACC1, ACC1, ACC1,	 727,
       /* PAUL MURRELL
 	 Changed coding for "Oslash"
       */
-      /*      515, ACC1, ACC1, ACC1, ACC1, ACC1, UNDE,    0, */
-      ACC0, ACC1, ACC1, ACC1, ACC1, ACC1, UNDE,    0,
+      /*      515, ACC1, ACC1, ACC1, ACC1, ACC1, UNDE,	  0, */
+      ACC0, ACC1, ACC1, ACC1, ACC1, ACC1, UNDE,	   0,
       ACC0, ACC0, ACC0, ACC0, ACC0, ACC0,    0, ACC0,
       ACC0, ACC0, ACC0, ACC0, ACC0, ACC0, ACC0, ACC0,
       UNDE, ACC0, ACC0, ACC0, ACC0, ACC0, ACC0, 2237,
@@ -578,7 +580,7 @@ const struct plHersheyFontInfoStruct _hershey_font_info[] =
     1, 1, false, true, true
   },
   {
-    "HersheySans-Oblique",		/* #10 */
+    "HersheySans-Oblique",	/* #10 */
     NULL,
     "Simplex Roman (obliqued)",
     {
@@ -605,14 +607,14 @@ const struct plHersheyFontInfoStruct _hershey_font_info[] =
       0, 0, 0, 0, 0, 0, 0, 0,
       619, 4162, 0, 0, 0, 0, 0, 0, 
       /* ISO-Latin-1 encoding resumes */
-      699, 4111,  910,  272, UNDE, 4127, 4106, 2276,
-      4182,  274, 0, UNDE, 4080, 4104,  273, 4187,
+      699, 4111,  910,	272, UNDE, 4127, 4106, 2276,
+      4182,  274, 0, UNDE, 4080, 4104,	273, 4187,
       718, 2233, 0, 0, 4188, 638, UNDE, 729,
-      CEDILLA, 0, 0, UNDE, 270,  261,  271, 4112,
+      CEDILLA, 0, 0, UNDE, 270,	 261,  271, 4112,
       ACC1, ACC1, ACC1, ACC1, ACC1, ACC1,    0, ACC0,
       ACC1, ACC1, ACC1, ACC1, ACC1, ACC1, ACC1, ACC1,
-      UNDE, ACC1, ACC1, ACC1, ACC1, ACC1, ACC1,  727,
-       515, ACC1, ACC1, ACC1, ACC1, ACC1, UNDE,    0,
+      UNDE, ACC1, ACC1, ACC1, ACC1, ACC1, ACC1,	 727,
+       515, ACC1, ACC1, ACC1, ACC1, ACC1, UNDE,	   0,
       ACC0, ACC0, ACC0, ACC0, ACC0, ACC0,    0, ACC0,
       ACC0, ACC0, ACC0, ACC0, ACC0, ACC0, ACC0, ACC0,
       UNDE, ACC0, ACC0, ACC0, ACC0, ACC0, ACC0, 2237,
@@ -648,14 +650,14 @@ const struct plHersheyFontInfoStruct _hershey_font_info[] =
       0, 0, 0, 0, 0, 0, 0, 0,
       2619, 4163, 0, 0, 0, 0, 0, 0, 
       /* ISO-Latin-1 encoding resumes */
-      2699, 4115,  910,  272, UNDE, 4128, 4107, 2276,
-      4182,  274, 0, UNDE, 4080, 4105,  273, 4187,
+      2699, 4115,  910,	 272, UNDE, 4128, 4107, 2276,
+      4182,  274, 0, UNDE, 4080, 4105,	273, 4187,
       2729, 2233, 0, 0, 4180, 3138, UNDE, 4131,
-      CEDILLA, 0, 0, UNDE, 270,  261,  271, 4116,
+      CEDILLA, 0, 0, UNDE, 270,	 261,  271, 4116,
       ACC1, ACC1, ACC1, ACC1, ACC1, ACC1,    0, ACC0,
       ACC1, ACC1, ACC1, ACC1, ACC1, ACC1, ACC1, ACC1,
-      UNDE, ACC1, ACC1, ACC1, ACC1, ACC1, ACC1,  727,
-      2515, ACC1, ACC1, ACC1, ACC1, ACC1, UNDE,    0,
+      UNDE, ACC1, ACC1, ACC1, ACC1, ACC1, ACC1,	 727,
+      2515, ACC1, ACC1, ACC1, ACC1, ACC1, UNDE,	   0,
       ACC0, ACC0, ACC0, ACC0, ACC0, ACC0,    0, ACC0,
       ACC0, ACC0, ACC0, ACC0, ACC0, ACC0, ACC0, ACC0,
       UNDE, ACC0, ACC0, ACC0, ACC0, ACC0, ACC0, 2237,
@@ -664,7 +666,7 @@ const struct plHersheyFontInfoStruct _hershey_font_info[] =
     1, 3, false, true, true
   },
   {
-    "HersheySans-BoldOblique",		/* #12 */
+    "HersheySans-BoldOblique",	/* #12 */
     NULL,
     "Duplex Roman (obliqued)",
     {
@@ -691,14 +693,14 @@ const struct plHersheyFontInfoStruct _hershey_font_info[] =
       0, 0, 0, 0, 0, 0, 0, 0,
       2619, 4163, 0, 0, 0, 0, 0, 0, 
       /* ISO-Latin-1 encoding resumes */
-      2699, 4115,  910,  272, UNDE, 4128, 4107, 2276,
-      4182,  274, 0, UNDE, 4080, 4105,  273, 4187,
+      2699, 4115,  910,	 272, UNDE, 4128, 4107, 2276,
+      4182,  274, 0, UNDE, 4080, 4105,	273, 4187,
       2729, 2233, 0, 0, 4180, 3138, UNDE, 4131,
-      CEDILLA, 0, 0, UNDE, 270,  261,  271, 4116,
+      CEDILLA, 0, 0, UNDE, 270,	 261,  271, 4116,
       ACC1, ACC1, ACC1, ACC1, ACC1, ACC1,    0, ACC0,
       ACC1, ACC1, ACC1, ACC1, ACC1, ACC1, ACC1, ACC1,
-      UNDE, ACC1, ACC1, ACC1, ACC1, ACC1, ACC1,  727,
-      2515, ACC1, ACC1, ACC1, ACC1, ACC1, UNDE,    0,
+      UNDE, ACC1, ACC1, ACC1, ACC1, ACC1, ACC1,	 727,
+      2515, ACC1, ACC1, ACC1, ACC1, ACC1, UNDE,	   0,
       ACC0, ACC0, ACC0, ACC0, ACC0, ACC0,    0, ACC0,
       ACC0, ACC0, ACC0, ACC0, ACC0, ACC0, ACC0, ACC0,
       UNDE, ACC0, ACC0, ACC0, ACC0, ACC0, ACC0, 2237,
@@ -734,10 +736,10 @@ const struct plHersheyFontInfoStruct _hershey_font_info[] =
       0, 0, 0, 0, 0, 0, 0, 0,
       669, 0, 0, 0, 0, 0, 0, 0, 
       /* ISO-Latin-1 encoding resumes */
-      699, 4111,  910,  272, UNDE, 4127, 4106, 2276,
-      4182,  274, 0, UNDE, 4080, 4104,  273, 4187,
+      699, 4111,  910,	272, UNDE, 4127, 4106, 2276,
+      4182,  274, 0, UNDE, 4080, 4104,	273, 4187,
       718, 2233, 0, 0, 4180, 638, UNDE, 729,
-      CEDILLA, 0, 0, UNDE, 270,  261,  271, 4112,
+      CEDILLA, 0, 0, UNDE, 270,	 261,  271, 4112,
       551, 551, 551, 551, 551, 551, UNDE, 553,
       555, 555, 555, 555, 559, 559, 559, 559,
       UNDE, 564, 565, 565, 565, 565, 565, 727,
@@ -777,10 +779,10 @@ const struct plHersheyFontInfoStruct _hershey_font_info[] =
       0, 0, 0, 0, 0, 0, 0, 0,
       2669, 0, 0, 0, 0, 0, 0, 0, 
       /* ISO-Latin-1 encoding resumes */
-      2749, 4117,  910,  272, UNDE, 4128, 4106, 2276,
-      4182,  274, 0, UNDE, 4080, 4105,  273, 4187,
+      2749, 4117,  910,	 272, UNDE, 4128, 4106, 2276,
+      4182,  274, 0, UNDE, 4080, 4105,	273, 4187,
       2779, 2233, 0, 0, 4180, 638, UNDE, 729,
-      CEDILLA, 0, 0, UNDE, 270,  261,  271, 4118,
+      CEDILLA, 0, 0, UNDE, 270,	 261,  271, 4118,
       2551, 2551, 2551, 2551, 2551, 2551, 0, 2553,
       2555, 2555, 2555, 2555, 2559, 2559, 2559, 2559,
       UNDE, 2554, 2555, 2555, 2555, 2555, 2555, 727,
@@ -820,14 +822,14 @@ const struct plHersheyFontInfoStruct _hershey_font_info[] =
       0, 0, 0, 0, 0, 0, 0, 0,
       3619, 4165, 0, 0, 0, 0, 0, 0, 
       /* ISO-Latin-1 encoding resumes */
-      3699, 4123,  910,  272, UNDE, 4126, 4107, 2276,
-      4182,  274, 0, UNDE, 4080, 4105,  273, 4187,
+      3699, 4123,  910,	 272, UNDE, 4126, 4107, 2276,
+      4182,  274, 0, UNDE, 4080, 4105,	273, 4187,
       3729, 2233, 0, 0, 4180, 3138, UNDE, 4131,
-      CEDILLA, 0, 0, UNDE, 270,  261,  271, 4124,
+      CEDILLA, 0, 0, UNDE, 270,	 261,  271, 4124,
       ACC1, ACC1, ACC1, ACC1, ACC1, ACC1,    0, ACC0,
       ACC1, ACC1, ACC1, ACC1, ACC1, ACC1, ACC1, ACC1,
-      UNDE, ACC1, ACC1, ACC1, ACC1, ACC1, ACC1,  727,
-      3515, ACC1, ACC1, ACC1, ACC1, ACC1, UNDE,    0,
+      UNDE, ACC1, ACC1, ACC1, ACC1, ACC1, ACC1,	 727,
+      3515, ACC1, ACC1, ACC1, ACC1, ACC1, UNDE,	   0,
       ACC0, ACC0, ACC0, ACC0, ACC0, ACC0,    0, ACC0,
       ACC0, ACC0, ACC0, ACC0, ACC0, ACC0, ACC0, ACC0,
       UNDE, ACC0, ACC0, ACC0, ACC0, ACC0, ACC0, 2237,
@@ -863,13 +865,13 @@ const struct plHersheyFontInfoStruct _hershey_font_info[] =
       0, 0, 0, 0, 0, 0, 0, 0,
       3427, 4164, 0, 0, 0, 0, 0, 0, 
       /* ISO-Latin-1 encoding resumes */
-      3249, 4119,  910,  272, UNDE, 4126, 4107, 2276,
-      4182,  274, 0, UNDE, 4080, 4105,  273, 4187,
+      3249, 4119,  910,	 272, UNDE, 4126, 4107, 2276,
+      4182,  274, 0, UNDE, 4080, 4105,	273, 4187,
       3229, 2233, 0, 0, 4180, 3138, UNDE, 4131,
-      CEDILLA, 0, 0, UNDE, 270,  261,  271, 4120,
+      CEDILLA, 0, 0, UNDE, 270,	 261,  271, 4120,
       ACC1, ACC1, ACC1, ACC1, 3330, ACC1,    0, ACC0,
       ACC1, ACC1, ACC1, ACC1, ACC1, ACC1, ACC1, ACC1,
-      UNDE, ACC1, ACC1, ACC1, ACC1, ACC1, 3331,  727,
+      UNDE, ACC1, ACC1, ACC1, ACC1, ACC1, 3331,	 727,
       3515, ACC1, ACC1, ACC1, 3332, ACC1, UNDE, 3428,
       ACC0, ACC0, ACC0, ACC0, 3430, ACC0,    0, ACC0,
       ACC0, ACC0, ACC0, ACC0, ACC0, ACC0, ACC0, ACC0,
@@ -906,14 +908,14 @@ const struct plHersheyFontInfoStruct _hershey_font_info[] =
       0, 0, 0, 0, 0, 0, 0, 0,
       3919, 4166, 0, 0, 0, 0, 0, 0, 
       /* ISO-Latin-1 encoding resumes */
-      3249, 4119,  910,  272, UNDE, 4126, 4107, 2276,
-      4182,  274, 0, UNDE, 4080, 4105,  273, 4187,
+      3249, 4119,  910,	 272, UNDE, 4126, 4107, 2276,
+      4182,  274, 0, UNDE, 4080, 4105,	273, 4187,
       3229, 2233, 0, 0, 4180, 3138, UNDE, 4131,
-      CEDILLA, 0, 0, UNDE, 270,  261,  271, 4120,
+      CEDILLA, 0, 0, UNDE, 270,	 261,  271, 4120,
       ACC1, ACC1, ACC1, ACC1, ACC1, ACC1,    0, ACC0,
       ACC1, ACC1, ACC1, ACC1, ACC1, ACC1, ACC1, ACC1,
-      UNDE, ACC1, ACC1, ACC1, ACC1, ACC1, ACC1,  727,
-      3815, ACC1, ACC1, ACC1, ACC1, ACC1, UNDE,    0,
+      UNDE, ACC1, ACC1, ACC1, ACC1, ACC1, ACC1,	 727,
+      3815, ACC1, ACC1, ACC1, ACC1, ACC1, UNDE,	   0,
       ACC0, ACC0, ACC0, ACC0, ACC0, ACC0,    0, ACC0,
       ACC0, ACC0, ACC0, ACC0, ACC0, ACC0, ACC0, ACC0,
       UNDE, ACC0, ACC0, ACC0, ACC0, ACC0, ACC0, 2237,
@@ -922,18 +924,18 @@ const struct plHersheyFontInfoStruct _hershey_font_info[] =
     5, 1, false, true, true
   },
   {
-    "HersheySerifSymbol",	/* #18 */
-    "HersheySerif-Symbol",	/* for backward compatibility */
+    "HersheySerifSymbol",		/* #18 */
+    "HersheySerif-Symbol",
     "Complex Greek",
     {
       /* The range 00..037 isn't accessible except through macros, since in
 	 the standard symbol encoding, it's empty.  We store misc. non-font
 	 characters (e.g., Hershey zodiacal signs) in this range. */
-         0, 2301, 2302, 2303, 2304, 2305, 2306, 2307,
-      2308, 2309, 2310, 2311, 2312,    0,    0,    0,
+	 0, 2301, 2302, 2303, 2304, 2305, 2306, 2307,
+      2308, 2309, 2310, 2311, 2312,    0,    0,	   0,
       0, 0, 0, 0, 0, 0, 0, 0, 
       0, 0, 0, 0, 0, 0, 0, 0,
-      2199, 2214, 4014, 2275, 2279, 2271, 2272,  282,
+      2199, 2214, 4014, 2275, 2279, 2271, 2272,	 282,
       2221, 2222, 2219, 2232, 2211, 2231, 2210, 2220,
       2200, 2201, 2202, 2203, 2204, 2205, 2206, 2207,
       2208, 2209, 2212, 2213, 2241, 2238, 2242, 2215,
@@ -949,23 +951,23 @@ const struct plHersheyFontInfoStruct _hershey_font_info[] =
 	 in the standard symbol encoding, it's empty.  We store
 	 misc. non-font characters (e.g., Hershey astronomical symbols) in
 	 this range. */
-         0,    0,    0,    0, 4019, 4020, 4021, 4022,
+	 0,    0,    0,	   0, 4019, 4020, 4021, 4022,
       UNDE, 2281, 2282, 2283, 2284, 2285, 2286, 2287,
       2288, 2289, 2290, 2291, 2292, 2293, 2294, 2295,
       2187, 2277, 2278, 2269, 2234, 2230, 4008, 4012, 
       /* symbol encoding resumes... */
-      2199, 2046, 2216, 2243, 2220, 2270, 2156,  744,
+      2199, 2046, 2216, 2243, 2220, 2270, 2156,	 744,
        743,  742,  741, 4045, 2263, 2262, 2261, 2264,
-      2218, 2233, 2217, 2244, 2235, 2245, 2265,  828,
-      2237, 2239, 2240,  248, 4070, 4044, 4051, 4065,
+      2218, 2233, 2217, 2244, 2235, 2245, 2265,	 828,
+      2237, 2239, 2240,	 248, 4070, 4044, 4051, 4065,
       2077, 3309, 3318, 2190, 4003, 4004, 4071, 2259,
       2257, 2258, 4011, 4082, 2256, 4010, 2260, 4007,
-       739, 2266,  273,  274, 4098, 2401, 2267, 2236,
+       739, 2266,  273,	 274, 4098, 2401, 2267, 2236,
       4080, 4078, 4081, 4046, 4048, 4050, 4049, 4047,
-       743, 2227,  273,  274, 4097, 2402, UNDE, UNDE,
+       743, 2227,  273,	 274, 4097, 2402, UNDE, UNDE,
       UNDE, 4176, UNDE, 4174, UNDE, UNDE, UNDE, UNDE,
       UNDE, 2228, 2268, UNDE, UNDE, UNDE, UNDE, UNDE,
-      UNDE, 4177, UNDE, 4175, UNDE, UNDE, UNDE,    0
+      UNDE, 4177, UNDE, 4175, UNDE, UNDE, UNDE,	   0
     },
     6, 1, false, false, true
   },
@@ -977,11 +979,11 @@ const struct plHersheyFontInfoStruct _hershey_font_info[] =
       /* The range 00..037 isn't accessible except through macros, since in
 	 the standard symbol encoding, it's empty.  We store misc. non-font
 	 characters (e.g., Hershey zodiacal signs) in this range. */
-         0, 2301, 2302, 2303, 2304, 2305, 2306, 2307,
-      2308, 2309, 2310, 2311, 2312,    0,    0,    0,
+	 0, 2301, 2302, 2303, 2304, 2305, 2306, 2307,
+      2308, 2309, 2310, 2311, 2312,    0,    0,	   0,
       0, 0, 0, 0, 0, 0, 0, 0, 
       0, 0, 0, 0, 0, 0, 0, 0,
-      2199, 2214, 4014, 2275, 2279, 2271, 2272,  282,
+      2199, 2214, 4014, 2275, 2279, 2271, 2272,	 282,
       2221, 2222, 2219, 2232, 2211, 2231, 2210, 2220,
       2200, 2201, 2202, 2203, 2204, 2205, 2206, 2207,
       2208, 2209, 2212, 2213, 2241, 2238, 2242, 2215,
@@ -997,23 +999,23 @@ const struct plHersheyFontInfoStruct _hershey_font_info[] =
 	 in the standard symbol encoding, it's empty.  We store
 	 misc. non-font characters (e.g., Hershey astronomical symbols) in
 	 this range. */
-         0,    0,    0,    0, 4019, 4020, 4021, 4022,
+	 0,    0,    0,	   0, 4019, 4020, 4021, 4022,
       UNDE, 2281, 2282, 2283, 2284, 2285, 2286, 2287,
       2288, 2289, 2290, 2291, 2292, 2293, 2294, 2295,
       2187, 2277, 2278, 2269, 2234, 2230, 4008, 4012, 
       /* symbol encoding resumes... */
-      2199, 2046, 2216, 2243, 2220, 2270, 2156,  744,
+      2199, 2046, 2216, 2243, 2220, 2270, 2156,	 744,
        743,  742,  741, 4045, 2263, 2262, 2261, 2264,
-      2218, 2233, 2217, 2244, 2235, 2245, 2265,  828,
-      2237, 2239, 2240,  248, 4070, 4044, 4051, 4065,
+      2218, 2233, 2217, 2244, 2235, 2245, 2265,	 828,
+      2237, 2239, 2240,	 248, 4070, 4044, 4051, 4065,
       2077, 3309, 3318, 2190, 4003, 4004, 4071, 2259,
       2257, 2258, 4011, 4082, 2256, 4010, 2260, 4007,
-       739, 2266,  273,  274, 4098, 2401, 2267, 2236,
+       739, 2266,  273,	 274, 4098, 2401, 2267, 2236,
       4080, 4078, 4081, 4046, 4048, 4050, 4049, 4047,
-       743, 2227,  273,  274, 4097, 2402, UNDE, UNDE,
+       743, 2227,  273,	 274, 4097, 2402, UNDE, UNDE,
       UNDE, 4176, UNDE, 4174, UNDE, UNDE, UNDE, UNDE,
       UNDE, 2228, 2268, UNDE, UNDE, UNDE, UNDE, UNDE,
-      UNDE, 4177, UNDE, 4175, UNDE, UNDE, UNDE,    0
+      UNDE, 4177, UNDE, 4175, UNDE, UNDE, UNDE,	   0
     },
     6, 2, true, false, true
   },
@@ -1025,11 +1027,11 @@ const struct plHersheyFontInfoStruct _hershey_font_info[] =
       /* The range 00..037 isn't accessible except through macros, since in
 	 the standard symbol encoding, it's empty.  We store misc. non-font
 	 characters (e.g., Hershey zodiacal signs) in this range. */
-         0, 2301, 2302, 2303, 2304, 2305, 2306, 2307,
-      2308, 2309, 2310, 2311, 2312,    0,    0,    0,
+	 0, 2301, 2302, 2303, 2304, 2305, 2306, 2307,
+      2308, 2309, 2310, 2311, 2312,    0,    0,	   0,
       0, 0, 0, 0, 0, 0, 0, 0, 
       0, 0, 0, 0, 0, 0, 0, 0,
-      2199, 3214, 4014, 3232, 2279, 3233, 3219,  282,
+      2199, 3214, 4014, 3232, 2279, 3233, 3219,	 282,
       3221, 3222, 3223, 3225, 3211, 3224, 3210, 3220,
       3200, 3201, 3202, 3203, 3204, 3205, 3206, 3207,
       3208, 3209, 3212, 3213, 3230, 3226, 3231, 3215,
@@ -1045,39 +1047,39 @@ const struct plHersheyFontInfoStruct _hershey_font_info[] =
 	 in the standard symbol encoding, it's empty.  We store
 	 misc. non-font characters (e.g., Hershey astronomical symbols) in
 	 this range. */
-         0,    0,    0,    0, 4019, 4020, 4021, 4022,
+	 0,    0,    0,	   0, 4019, 4020, 4021, 4022,
       UNDE, 2281, 2282, 2283, 2284, 2285, 2286, 2287,
       2288, 2289, 2290, 2291, 2292, 2293, 2294, 2295,
       3187, 2277, 2278, 2269, 2234, 2230, 4008, 4012, 
       /* symbol encoding resumes... */
-      2199, 3046, 3227, 2243, 3220, 2270, 3156,  744,
+      2199, 3046, 3227, 2243, 3220, 2270, 3156,	 744,
        743,  742,  741, 4045, 2263, 2262, 2261, 2264,
-      3218, 2233, 3228, 2244, 2235, 2245, 3183,  828,
-      2237, 2239, 2240,  248, 4070, 4044, 4051, 4065,
+      3218, 2233, 3228, 2244, 2235, 2245, 3183,	 828,
+      2237, 2239, 2240,	 248, 4070, 4044, 4051, 4065,
       2077, 3309, 3318, 2190, 4003, 4004, 4071, 2259,
       2257, 2258, 4011, 4082, 2256, 4010, 2260, 4007,
-       739, 3083,  273,  274, 4098, 2401, 2267, 2236,
+       739, 3083,  273,	 274, 4098, 2401, 2267, 2236,
       4080, 4078, 4081, 4046, 4048, 4050, 4049, 4047,
-       743, 2227,  273,  274, 4097, 2402, UNDE, UNDE,
+       743, 2227,  273,	 274, 4097, 2402, UNDE, UNDE,
       UNDE, 4176, UNDE, 4174, UNDE, UNDE, UNDE, UNDE,
       UNDE, 2228, 2268, UNDE, UNDE, UNDE, UNDE, UNDE,
-      UNDE, 4177, UNDE, 4175, UNDE, UNDE, UNDE,    0
+      UNDE, 4177, UNDE, 4175, UNDE, UNDE, UNDE,	   0
     },
     6, 3, false, false, true
   },
   {
-    "HersheySerifSymbol-BoldOblique",	/* #21 */
+    "HersheySerifSymbol-BoldOblique", /* #21 */
     NULL,
     "Triplex Greek (obliqued)",
     {
       /* The range 00..037 isn't accessible except through macros, since in
 	 the standard symbol encoding, it's empty.  We store misc. non-font
 	 characters (e.g., Hershey zodiacal signs) in this range. */
-         0, 2301, 2302, 2303, 2304, 2305, 2306, 2307,
-      2308, 2309, 2310, 2311, 2312,    0,    0,    0,
+	 0, 2301, 2302, 2303, 2304, 2305, 2306, 2307,
+      2308, 2309, 2310, 2311, 2312,    0,    0,	   0,
       0, 0, 0, 0, 0, 0, 0, 0, 
       0, 0, 0, 0, 0, 0, 0, 0,
-      2199, 3214, 4014, 3232, 2279, 3233, 3219,  282,
+      2199, 3214, 4014, 3232, 2279, 3233, 3219,	 282,
       3221, 3222, 3223, 3225, 3211, 3224, 3210, 3220,
       3200, 3201, 3202, 3203, 3204, 3205, 3206, 3207,
       3208, 3209, 3212, 3213, 3230, 3226, 3231, 3215,
@@ -1093,119 +1095,119 @@ const struct plHersheyFontInfoStruct _hershey_font_info[] =
 	 in the standard symbol encoding, it's empty.  We store
 	 misc. non-font characters (e.g., Hershey astronomical symbols) in
 	 this range. */
-         0,    0,    0,    0, 4019, 4020, 4021, 4022,
+	 0,    0,    0,	   0, 4019, 4020, 4021, 4022,
       UNDE, 2281, 2282, 2283, 2284, 2285, 2286, 2287,
       2288, 2289, 2290, 2291, 2292, 2293, 2294, 2295,
       3187, 2277, 2278, 2269, 2234, 2230, 4008, 4012, 
       /* symbol encoding resumes... */
-      2199, 3046, 3227, 2243, 3220, 2270, 3156,  744,
+      2199, 3046, 3227, 2243, 3220, 2270, 3156,	 744,
        743,  742,  741, 4045, 2263, 2262, 2261, 2264,
-      3218, 2233, 3228, 2244, 2235, 2245, 3183,  828,
-      2237, 2239, 2240,  248, 4070, 4044, 4051, 4065,
+      3218, 2233, 3228, 2244, 2235, 2245, 3183,	 828,
+      2237, 2239, 2240,	 248, 4070, 4044, 4051, 4065,
       2077, 3309, 3318, 2190, 4003, 4004, 4071, 2259,
       2257, 2258, 4011, 4082, 2256, 4010, 2260, 4007,
-       739, 3083,  273,  274, 4098, 2401, 2267, 2236,
+       739, 3083,  273,	 274, 4098, 2401, 2267, 2236,
       4080, 4078, 4081, 4046, 4048, 4050, 4049, 4047,
-       743, 2227,  273,  274, 4097, 2402, UNDE, UNDE,
+       743, 2227,  273,	 274, 4097, 2402, UNDE, UNDE,
       UNDE, 4176, UNDE, 4174, UNDE, UNDE, UNDE, UNDE,
       UNDE, 2228, 2268, UNDE, UNDE, UNDE, UNDE, UNDE,
-      UNDE, 4177, UNDE, 4175, UNDE, UNDE, UNDE,    0
+      UNDE, 4177, UNDE, 4175, UNDE, UNDE, UNDE,	   0
     },
     6, 4, true, false, true
   },
   {
-    "HersheySansSymbol",	/* #22 */
-    "HersheySans-Symbol",	/* for backward compatibility */
+    "HersheySansSymbol",		/* #22 */
+    "HersheySans-Symbol",
     "Simplex Greek",
     {
       /* The range 00..037 isn't accessible except through macros, since in
 	 the standard symbol encoding, it's empty.  We store misc. non-font
 	 characters (e.g., Hershey zodiacal signs) in this range. */
-         0, 2301, 2302, 2303, 2304, 2305, 2306, 2307,
-      2308, 2309, 2310, 2311, 2312,    0,    0,    0,
+	 0, 2301, 2302, 2303, 2304, 2305, 2306, 2307,
+      2308, 2309, 2310, 2311, 2312,    0,    0,	   0,
       0, 0, 0, 0, 0, 0, 0, 0, 
       0, 0, 0, 0, 0, 0, 0, 0,
-      2199,  714, 4014,  733, 2279,  697,  734,  282,
-       721,  722,  728,  725,  711,  724,  710,  720,
-       700,  701,  702,  703,  704,  705,  706,  707,
-       708,  709,  712,  713, 2241,  726, 2242,  715,
-       250,  527,  528,  548,  530,  531,  547,  529,
-       533,  535,  534,  536,  537,  538,  539,  541,
-       542,  534,  543,  544,  545,  525,  687,  550,
-       540,  549,  532,  693,  740,  694,  738, 4013,
-      4009,  627,  628,  648,  630,  631,  686,  629,
-       633,  635,  647,  636,  637,  638,  639,  641,
-       642,  685,  643,  644,  645,  646,  650,  650,
-       640,  649,  632,  695, 2229,  696, 2246,    0,
+      2199,  714, 4014,	 733, 2279,  697,  734,	 282,
+       721,  722,  728,	 725,  711,  724,  710,	 720,
+       700,  701,  702,	 703,  704,  705,  706,	 707,
+       708,  709,  712,	 713, 2241,  726, 2242,	 715,
+       250,  527,  528,	 548,  530,  531,  547,	 529,
+       533,  535,  534,	 536,  537,  538,  539,	 541,
+       542,  534,  543,	 544,  545,  525,  687,	 550,
+       540,  549,  532,	 693,  740,  694,  738, 4013,
+      4009,  627,  628,	 648,  630,  631,  686,	 629,
+       633,  635,  647,	 636,  637,  638,  639,	 641,
+       642,  685,  643,	 644,  645,  646,  650,	 650,
+       640,  649,  632,	 695, 2229,  696, 2246,	   0,
       /* The range 0200--0237 isn't accessible except through macros, since
 	 in the standard symbol encoding, it's empty.  We store
 	 misc. non-font characters (e.g., Hershey astronomical symbols) in
 	 this range. */
-         0,    0,    0,    0, 4019, 4020, 4021, 4022,
+	 0,    0,    0,	   0, 4019, 4020, 4021, 4022,
       UNDE, 2281, 2282, 2283, 2284, 2285, 2286, 2287,
       2288, 2289, 2290, 2291, 2292, 2293, 2294, 2295,
        687, 2277, 2278, 2269, 2234, 2230, 4008, 4012, 
       /* symbol encoding resumes... */
-      2199,  546,  716, 2243,  720,  736, 2156,  744,
+      2199,  546,  716, 2243,  720,  736, 2156,	 744,
        743,  742,  741, 4045, 2263, 2262, 2261, 2264,
-       718, 2233,  717, 2244, 2235, 2245,  683,  828,
-      2237, 2239, 2240,  248, 4070, 4044, 4051, 4065,
+       718, 2233,  717, 2244, 2235, 2245,  683,	 828,
+      2237, 2239, 2240,	 248, 4070, 4044, 4051, 4065,
       2077, 3309, 3318, 2190, 4003, 4004, 4071, 2259,
       2257, 2258, 4011, 4082, 2256, 4010, 2260, 4007,
-       739,  583,  273,  274, 4098, 2401, 2267, 2236,
+       739,  583,  273,	 274, 4098, 2401, 2267, 2236,
       4080, 4078, 4081, 4046, 4048, 4050, 4049, 4047,
-       743, 2227,  273,  274, 4097, 2402, UNDE, UNDE,
+       743, 2227,  273,	 274, 4097, 2402, UNDE, UNDE,
       UNDE, 4172, UNDE, 4170, UNDE, UNDE, UNDE, UNDE,
       UNDE, 2228, 2268, UNDE, UNDE, UNDE, UNDE, UNDE,
-      UNDE, 4173, UNDE, 4171, UNDE, UNDE, UNDE,    0
+      UNDE, 4173, UNDE, 4171, UNDE, UNDE, UNDE,	   0
     },
     7, 1, false, false, true
   },
   {
-    "HersheySansSymbol-Oblique", /* #23 */
+    "HersheySansSymbol-Oblique",	/* #23 */
     NULL,
     "Simplex Greek (obliqued)",
     {
       /* The range 00..037 isn't accessible except through macros, since in
 	 the standard symbol encoding, it's empty.  We store misc. non-font
 	 characters (e.g., Hershey zodiacal signs) in this range. */
-         0, 2301, 2302, 2303, 2304, 2305, 2306, 2307,
-      2308, 2309, 2310, 2311, 2312,    0,    0,    0,
+	 0, 2301, 2302, 2303, 2304, 2305, 2306, 2307,
+      2308, 2309, 2310, 2311, 2312,    0,    0,	   0,
       0, 0, 0, 0, 0, 0, 0, 0, 
       0, 0, 0, 0, 0, 0, 0, 0,
-      2199,  714, 4014,  733, 2279,  697,  734,  282,
-       721,  722,  728,  725,  711,  724,  710,  720,
-       700,  701,  702,  703,  704,  705,  706,  707,
-       708,  709,  712,  713, 2241,  726, 2242,  715,
-       250,  527,  528,  548,  530,  531,  547,  529,
-       533,  535,  534,  536,  537,  538,  539,  541,
-       542,  534,  543,  544,  545,  525,  687,  550,
-       540,  549,  532,  693,  740,  694,  738, 4013,
-      4009,  627,  628,  648,  630,  631,  686,  629,
-       633,  635,  647,  636,  637,  638,  639,  641,
-       642,  685,  643,  644,  645,  646,  650,  650,
-       640,  649,  632,  695, 2229,  696, 2246,    0,
+      2199,  714, 4014,	 733, 2279,  697,  734,	 282,
+       721,  722,  728,	 725,  711,  724,  710,	 720,
+       700,  701,  702,	 703,  704,  705,  706,	 707,
+       708,  709,  712,	 713, 2241,  726, 2242,	 715,
+       250,  527,  528,	 548,  530,  531,  547,	 529,
+       533,  535,  534,	 536,  537,  538,  539,	 541,
+       542,  534,  543,	 544,  545,  525,  687,	 550,
+       540,  549,  532,	 693,  740,  694,  738, 4013,
+      4009,  627,  628,	 648,  630,  631,  686,	 629,
+       633,  635,  647,	 636,  637,  638,  639,	 641,
+       642,  685,  643,	 644,  645,  646,  650,	 650,
+       640,  649,  632,	 695, 2229,  696, 2246,	   0,
       /* The range 0200--0237 isn't accessible except through macros, since
 	 in the standard symbol encoding, it's empty.  We store
 	 misc. non-font characters (e.g., Hershey astronomical symbols) in
 	 this range. */
-         0,    0,    0,    0, 4019, 4020, 4021, 4022,
+	 0,    0,    0,	   0, 4019, 4020, 4021, 4022,
       UNDE, 2281, 2282, 2283, 2284, 2285, 2286, 2287,
       2288, 2289, 2290, 2291, 2292, 2293, 2294, 2295,
        687, 2277, 2278, 2269, 2234, 2230, 4008, 4012, 
       /* symbol encoding resumes... */
-      2199,  546,  716, 2243,  720,  736, 2156,  744,
+      2199,  546,  716, 2243,  720,  736, 2156,	 744,
        743,  742,  741, 4045, 2263, 2262, 2261, 2264,
-       718, 2233,  717, 2244, 2235, 2245,  683,  828,
-      2237, 2239, 2240,  248, 4070, 4044, 4051, 4065,
+       718, 2233,  717, 2244, 2235, 2245,  683,	 828,
+      2237, 2239, 2240,	 248, 4070, 4044, 4051, 4065,
       2077, 3309, 3318, 2190, 4003, 4004, 4071, 2259,
       2257, 2258, 4011, 4082, 2256, 4010, 2260, 4007,
-       739,  583,  273,  274, 4098, 2401, 2267, 2236,
+       739,  583,  273,	 274, 4098, 2401, 2267, 2236,
       4080, 4078, 4081, 4046, 4048, 4050, 4049, 4047,
-       743, 2227,  273,  274, 4097, 2402, UNDE, UNDE,
+       743, 2227,  273,	 274, 4097, 2402, UNDE, UNDE,
       UNDE, 4172, UNDE, 4170, UNDE, UNDE, UNDE, UNDE,
       UNDE, 2228, 2268, UNDE, UNDE, UNDE, UNDE, UNDE,
-      UNDE, 4173, UNDE, 4171, UNDE, UNDE, UNDE,    0
+      UNDE, 4173, UNDE, 4171, UNDE, UNDE, UNDE,	   0
     },
     7, 2, true, false, true
   },
@@ -1215,30 +1217,30 @@ const struct plHersheyFontInfoStruct _hershey_font_info[] =
     NULL,
     {
       0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-      0, 0, 0, 0, 0, 0, 0, 0, 0, 0,      
-      0, 0, 0, 0, 0, 0, 0, 0, 0, 0,      
-      0, 0, 0, 0, 0, 0, 0, 0, 0, 0,      
-      0, 0, 0, 0, 0, 0, 0, 0, 0, 0,      
-      0, 0, 0, 0, 0, 0, 0, 0, 0, 0,      
-      0, 0, 0, 0, 0, 0, 0, 0, 0, 0,      
-      0, 0, 0, 0, 0, 0, 0, 0, 0, 0,      
-      0, 0, 0, 0, 0, 0, 0, 0, 0, 0,      
-      0, 0, 0, 0, 0, 0, 0, 0, 0, 0,      
-      0, 0, 0, 0, 0, 0, 0, 0, 0, 0,      
-      0, 0, 0, 0, 0, 0, 0, 0, 0, 0,      
-      0, 0, 0, 0, 0, 0, 0, 0, 0, 0,      
-      0, 0, 0, 0, 0, 0, 0, 0, 0, 0,      
-      0, 0, 0, 0, 0, 0, 0, 0, 0, 0,      
-      0, 0, 0, 0, 0, 0, 0, 0, 0, 0,      
-      0, 0, 0, 0, 0, 0, 0, 0, 0, 0,      
-      0, 0, 0, 0, 0, 0, 0, 0, 0, 0,      
-      0, 0, 0, 0, 0, 0, 0, 0, 0, 0,      
-      0, 0, 0, 0, 0, 0, 0, 0, 0, 0,      
-      0, 0, 0, 0, 0, 0, 0, 0, 0, 0,      
-      0, 0, 0, 0, 0, 0, 0, 0, 0, 0,      
-      0, 0, 0, 0, 0, 0, 0, 0, 0, 0,      
-      0, 0, 0, 0, 0, 0, 0, 0, 0, 0,      
-      0, 0, 0, 0, 0, 0, 0, 0, 0, 0,      
+      0, 0, 0, 0, 0, 0, 0, 0, 0, 0,	 
+      0, 0, 0, 0, 0, 0, 0, 0, 0, 0,	 
+      0, 0, 0, 0, 0, 0, 0, 0, 0, 0,	 
+      0, 0, 0, 0, 0, 0, 0, 0, 0, 0,	 
+      0, 0, 0, 0, 0, 0, 0, 0, 0, 0,	 
+      0, 0, 0, 0, 0, 0, 0, 0, 0, 0,	 
+      0, 0, 0, 0, 0, 0, 0, 0, 0, 0,	 
+      0, 0, 0, 0, 0, 0, 0, 0, 0, 0,	 
+      0, 0, 0, 0, 0, 0, 0, 0, 0, 0,	 
+      0, 0, 0, 0, 0, 0, 0, 0, 0, 0,	 
+      0, 0, 0, 0, 0, 0, 0, 0, 0, 0,	 
+      0, 0, 0, 0, 0, 0, 0, 0, 0, 0,	 
+      0, 0, 0, 0, 0, 0, 0, 0, 0, 0,	 
+      0, 0, 0, 0, 0, 0, 0, 0, 0, 0,	 
+      0, 0, 0, 0, 0, 0, 0, 0, 0, 0,	 
+      0, 0, 0, 0, 0, 0, 0, 0, 0, 0,	 
+      0, 0, 0, 0, 0, 0, 0, 0, 0, 0,	 
+      0, 0, 0, 0, 0, 0, 0, 0, 0, 0,	 
+      0, 0, 0, 0, 0, 0, 0, 0, 0, 0,	 
+      0, 0, 0, 0, 0, 0, 0, 0, 0, 0,	 
+      0, 0, 0, 0, 0, 0, 0, 0, 0, 0,	 
+      0, 0, 0, 0, 0, 0, 0, 0, 0, 0,	 
+      0, 0, 0, 0, 0, 0, 0, 0, 0, 0,	 
+      0, 0, 0, 0, 0, 0, 0, 0, 0, 0,	 
       0, 0, 0, 0, 0, 0
     },
     0, 0, false, false, false
@@ -1324,7 +1326,7 @@ const struct plHersheyAccentedCharInfoStruct _hershey_accented_char_info[] =
   {0, 0, 0}
 };
 
-/* known Hershey vector font typefaces.  Each plTypefaceInfoStruct contains
+/* known Hershey vector font typefaces.	 Each plTypefaceInfoStruct contains
    the following information:
    
    (1) number of valid fonts [should be >= 2, since every typeface
