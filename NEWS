@@ -115,8 +115,6 @@ NEW FEATURES
     o	as.dist() and cophenetic() are now generic, and the latter has a
         new method for objects of class "dendrogram".
 
-    o	as.ts() is now generic.
-
     o   New function convertColors() maps between color spaces. 
 	colorRamp() uses it.
 
