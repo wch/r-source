@@ -1,6 +1,6 @@
-c
-c
-c     dtrsl solves systems of the form
+c Triangular Solve  dtrsl()
+c ----------------
+c     solves systems of the form
 c
 c                   t * x = b
 c     or
@@ -50,8 +50,8 @@ c     g. w. stewart, university of maryland, argonne national lab.
 c
 c     subroutines and functions
 c
-c     blas daxpy,ddot
-c     fortran mod
+c     blas:	daxpy,ddot
+c     fortran	mod
 c
       subroutine dtrsl(t,ldt,n,b,job,info)
       integer ldt,n,job,info
@@ -66,70 +66,76 @@ c     begin block permitting ...exits to 150
 c
 c        check for zero diagonal elements.
 c
-         do 10 info = 1, n
+      do 10 info = 1, n
+         if (t(info,info) .eq. 0.0d0) go to 150
 c     ......exit
-            if (t(info,info) .eq. 0.0d0) go to 150
-   10    continue
-         info = 0
+ 10   continue
+      info = 0
 c
-c        determine the task and go to it.
+c     determine the task and go to it.
 c
-         case = 1
-         if (mod(job,10) .ne. 0) case = 2
-         if (mod(job,100)/10 .ne. 0) case = case + 2
-         go to (20,50,80,110), case
+      case = 1
+      if (mod(job,10) .ne. 0) case = 2
+      if (mod(job,100)/10 .ne. 0) case = case + 2
+      go to (20,50,80,110), case
 c
+C Case 1 (job = 00):
 c        solve t*x=b for t lower triangular
 c
-   20    continue
-            b(1) = b(1)/t(1,1)
-            if (n .lt. 2) go to 40
-            do 30 j = 2, n
-               temp = -b(j-1)
-               call daxpy(n-j+1,temp,t(j,j-1),1,b(j),1)
-               b(j) = b(j)/t(j,j)
-   30       continue
-   40       continue
-         go to 140
-c
+ 20   continue
+      b(1) = b(1)/t(1,1)
+      if (n .ge. 2) then
+      do 30 j = 2, n
+         temp = -b(j-1)
+         call daxpy(n-j+1,temp,t(j,j-1),1,b(j),1)
+         b(j) = b(j)/t(j,j)
+ 30   continue
+      endif
+      go to 140
+c     
+C Case 2 (job = 01):
 c        solve t*x=b for t upper triangular.
 c
-   50    continue
-            b(n) = b(n)/t(n,n)
-            if (n .lt. 2) go to 70
-            do 60 jj = 2, n
-               j = n - jj + 1
-               temp = -b(j+1)
-               call daxpy(j,temp,t(1,j+1),1,b(1),1)
-               b(j) = b(j)/t(j,j)
-   60       continue
-   70       continue
-         go to 140
-c
+ 50   continue
+      b(n) = b(n)/t(n,n)
+      if (n .ge. 2) then
+         do 60 jj = 2, n
+            j = n - jj + 1
+            temp = -b(j+1)
+            call daxpy(j,temp,t(1,j+1),1,b(1),1)
+            b(j) = b(j)/t(j,j)
+ 60      continue
+      endif
+      go to 140
+c     
+C Case 3 (job = 10):
 c        solve trans(t)*x=b for t lower triangular.
 c
-   80    continue
-            b(n) = b(n)/t(n,n)
-            if (n .lt. 2) go to 100
-            do 90 jj = 2, n
-               j = n - jj + 1
-               b(j) = b(j) - ddot(jj-1,t(j+1,j),1,b(j+1),1)
-               b(j) = b(j)/t(j,j)
-   90       continue
-  100       continue
-         go to 140
-c
+ 80   continue
+      b(n) = b(n)/t(n,n)
+      if (n .ge. 2) then
+         do 90 jj = 2, n
+            j = n - jj + 1
+            b(j) = b(j) - ddot(jj-1,t(j+1,j),1,b(j+1),1)
+            b(j) = b(j)/t(j,j)
+ 90      continue
+      endif
+      go to 140
+c     
+C Case 4 (job = 11):
 c        solve trans(t)*x=b for t upper triangular.
 c
-  110    continue
-            b(1) = b(1)/t(1,1)
-            if (n .lt. 2) go to 130
-            do 120 j = 2, n
-               b(j) = b(j) - ddot(j-1,t(1,j),1,b(1),1)
-               b(j) = b(j)/t(j,j)
-  120       continue
-  130       continue
-  140    continue
-  150 continue
+ 110  continue
+      b(1) = b(1)/t(1,1)
+      if (n .ge. 2) then
+         do 120 j = 2, n
+            b(j) = b(j) - ddot(j-1,t(1,j),1,b(1),1)
+            b(j) = b(j)/t(j,j)
+ 120     continue
+      endif
+C
+ 140  continue
+c     EXIT:
+ 150  continue
       return
       end

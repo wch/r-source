@@ -134,10 +134,11 @@ c     g.w. stewart, university of maryland, argonne national lab.
 c
 c     dqrsl uses the following functions and subprograms.
 c
-c     blas daxpy,dcopy,ddot
-c     fortran dabs,min0,mod
+c     BLAS	daxpy,dcopy,ddot
+c     Fortran	dabs,min0,mod
 c
       subroutine dqrsl(x,ldx,n,k,qraux,y,qy,qty,b,rsd,xb,job,info)
+      implicit none
       integer ldx,n,k,job,info
       double precision x(ldx,1),qraux(1),y(1),qy(1),qty(1),b(1),rsd(1),
      *                 xb(1)
