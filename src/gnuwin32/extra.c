@@ -671,18 +671,17 @@ SEXP do_syssleep(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 #ifdef LEA_MALLOC
 struct mallinfo {
-  int arena;    /* total space allocated from system */
-  int ordblks;  /* number of non-inuse chunks */
-  int smblks;   /* unused -- always zero */
+  int arena;    /* non-mmapped space allocated from system */
+  int ordblks;  /* number of free chunks */
+  int smblks;   /* number of fastbin blocks */
   int hblks;    /* number of mmapped regions */
-  int hblkhd;   /* total space in mmapped regions */
-  int usmblks;  /* unused -- always zero */
-  int fsmblks;  /* unused -- always zero */
+  int hblkhd;   /* space in mmapped regions */
+  int usmblks;  /* maximum total allocated space */
+  int fsmblks;  /* space available in freed fastbin blocks */
   int uordblks; /* total allocated space */
-  int fordblks; /* total non-inuse space */
+  int fordblks; /* total free space */
   int keepcost; /* top-most, releasable (via malloc_trim) space */
 };
-extern unsigned long max_total_mem;
 extern unsigned int R_max_memory;
 
 struct mallinfo mallinfo();
@@ -696,16 +695,17 @@ SEXP do_memsize(SEXP call, SEXP op, SEXP args, SEXP rho)
     checkArity(op, args);
     if(isLogical(CAR(args))) {
 	maxmem = asLogical(CAR(args));
-	PROTECT(ans = allocVector(INTSXP, 1));
+	/* changed to real in 1.9.0 as might exceed 2G */
+	PROTECT(ans = allocVector(REALSXP, 1));
 #ifdef LEA_MALLOC
 	if(maxmem == NA_LOGICAL)
-	    INTEGER(ans)[0] = R_max_memory;
+	    REAL(ans)[0] = R_max_memory;
 	else if(maxmem)
-	    INTEGER(ans)[0] = max_total_mem;
+	    REAL(ans)[0] = mallinfo().usmblks;
 	else
-	    INTEGER(ans)[0] = mallinfo().uordblks;
+	    REAL(ans)[0] = mallinfo().uordblks + mallinfo().hblkhd;
 #else
-	INTEGER(ans)[0] = NA_INTEGER;
+	REAL(ans)[0] = NA_REAL;
 #endif
 	UNPROTECT(1);
 	return ans;
