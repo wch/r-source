@@ -1226,7 +1226,6 @@ no_more_lines:
     if(!wasopen) con->close(con);
     if(nbuf > 0) { /* incomplete last line */
 	if(con->text && con->blocking) {
-	    nread++;
 	    warning("incomplete final line found by readTableHeader on `%s'",
 		    con->description);
 	} else
