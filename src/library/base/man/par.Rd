@@ -136,7 +136,7 @@ par(\dots, no.readonly = FALSE)
       outside the plot region are \emph{not} plotted.)
       The degree of error reporting desired.}
     \item{\code{fg}}{The color to be used for the foreground of plots.
-      This is the default color is used for things like axes and boxes
+      This is the default color used for things like axes and boxes
       around plots.  A description of how colors are specified is given
       below.}
     \item{\code{fig}}{A numerical vector of the form \code{c(x1, x2, y1,

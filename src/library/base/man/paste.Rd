@@ -23,7 +23,7 @@ paste(\dots, sep = " ", collapse = NULL)
   separated by the value of \code{collapse}.
 }
 \value{
-  A character vector of the concatenated values.  Thus will be of length
+  A character vector of the concatenated values.  This will be of length
   zero if all the objects are, unless \code{collapse} is non-NULL, in
   which case it is a single empty string.
 }
