@@ -127,19 +127,29 @@ function(package, dir, lib.loc = NULL)
 
         ## <FIXME>
         ## Need to do something about S4 generic functions 'created' by
-        ## setGeneric() or setMethod() on 'ordinary' functions.  Short
-        ## term, we do this by checking for S4 generics in a package
-        ## which come from another one, or have a generated default
-        ## method.  Long term, we need dynamic documentation ...
-        if(!is.na(match("package:methods", search()))) {
+        ## setGeneric() or setMethod() on 'ordinary' functions.
+        ## The test below exempts objects that are generic functions if
+        ## there is a visible nongeneric function and the default method
+        ## is "derived", by a call to setGeneric.  This test allows nondocumentd
+        ## generics in some cases (e.g., the generic was created locally from
+        ## an inconsistent version).
+        ## In the long run we need dynamic documentation.
+        if("package:methods" %in% search()) {
             codeObjs <-
                 codeObjs[sapply(codeObjs, function(f) {
-                    f <- get(f, envir = codeEnv)
-                    if(!is(f, "genericFunction")) return(FALSE)
-                    mlist <- getMethodsMetaData(f, codeEnv)
-                    is(finalDefaultMethod(mlist,
-                                          "derivedDefaultMethod"))
-                }) == FALSE]
+                    fdef <- get(f, envir = codeEnv)
+                    if(is(fdef, "genericFunction")) {
+                        fOther <- getFunction(f, generic = FALSE, mustFind = FALSE,
+                                              where = topenv(environment(fdef)))
+                        if(is.null(fOther))
+                            TRUE
+                        else 
+                            !is(finalDefaultMethod(getMethodsMetaData(f, codeEnv)),
+                                          "derivedDefaultMethod")
+                    }
+                    else
+                        TRUE
+                })]
         }
         ## </FIXME>
 
