@@ -1,4 +1,4 @@
-## $Id: Rdoc.pm,v 1.2 1998/04/08 18:21:50 bates Exp $
+## $Id: Rdoc.pm,v 1.3 1998/04/16 15:39:47 bates Exp $
 
 ## R documentation objects created from a file.
 
@@ -57,18 +57,10 @@ use File::Basename;
 sub new {
     my ($class, $file) = @_;
     $class = ref($class) || $class;
-    my $self = {};
     my $fh = new FileHandle "< $file" or croak "open($file): $!\n";
-    $self->{ '.basename' } = basename( $file, ".Rd" );
-    $self->{ 'section' } = {};
-    $self->{ 'alias' } = [];
-    my $seenalias = 0;
-    $self->{ 'keyword' } = [];
-    my $seenkeyword = 0;
+    my @lines;
     my $escapedNewline = 0;
     my $lastEscNL = 0;
-    $self->{'.order'} = [];
-    my @lines;
     while (<$fh>) {
 	next if /^\s*\%/o;	# eliminate complete comment lines
 	chomp;			# strip the newline
@@ -84,9 +76,18 @@ sub new {
 	}
 	$lastEscNL = $escapedNewline;
     }
+    $fh->close;
 
     my $mc = new Text::DelimMatch "\\{", "\\}", '', "\\", '';
     my ($prefix, $match) = $mc->match( join( "\n", @lines ) );
+    my $self = {};
+    $self->{ '.basename' } = basename( $file, ".Rd" );
+    $self->{ 'section' } = {};
+    $self->{ 'alias' } = [];
+    my $seenalias = 0;
+    $self->{ 'keyword' } = [];
+    my $seenkeyword = 0;
+    $self->{ '.order' } = [];
     while ( $match ) {
       croak "Malformed R documentation file $file\n"
 	unless ($prefix =~ /\s*\\(\w+)\s*$/o);
