@@ -414,7 +414,7 @@ static R_size_t R_NodesInUse = 0;
 } while(0)
 
 
-/* Forwarding Nodes.  These macros mark nodes or chindren of nodes and
+/* Forwarding Nodes.  These macros mark nodes or children of nodes and
    place them on the forwarding list.  The forwarding list is assumed
    to be in a local variable of the caller named named
    forwarded_nodes. */
