@@ -80,3 +80,13 @@ save.image <- function (file = ".RData", version = NULL, ascii = FALSE,
     if (safe) file.rename(outfile, file)
     on.exit()
 }
+
+sys.load.image <- function(name, quiet) {
+    if (file.exists(name)) {
+        load(name, envir = .GlobalEnv)
+        if (! quiet)
+	    cat("[Previously saved workspace restored]\n\n")
+    }
+}
+
+sys.save.image <- function(name) save.image(name)

@@ -299,7 +299,8 @@ NEW FEATURES
 	  the cost of using extra disk space during the save.
 
     	- save.image() default arguments can be specified in the
-	  save.image.defaults option.
+	  save.image.defaults option.  These specifications are used
+	  when save.image is called from q() or GUI analogs.
 
 
     o   New function reg.finalizer() to provide R interface to

@@ -5,9 +5,14 @@ save(\dots, list = character(0), file = "", ascii = FALSE,
      version = NULL, envir = parent.frame(), compress = FALSE)
 save.image(file = ".RData", version = NULL, ascii = FALSE,
            compress = FALSE, safe = TRUE)
+
+sys.load.image(name, quiet)
+sys.save.image(name)
 }
 \alias{save}
 \alias{save.image}
+\alias{sys.save.image}
+\alias{sys.load.image}
 \arguments{
   \item{\dots}{the names of the objects to be saved.}
   \item{list}{A character vector containing the names of objects to be
@@ -31,6 +36,8 @@ save.image(file = ".RData", version = NULL, ascii = FALSE,
     if the save succeeds.  This preserves an existing workspace
     \code{file} if the save fails, but at the cost of using extra disk
     space during the save.}
+  \item{name}{name of image file to save or load.}
+  \item{quit}{logical specifying whether a message should be printed.}
   }
 }
 \description{
@@ -51,6 +58,10 @@ save.image(file = ".RData", version = NULL, ascii = FALSE,
   Default values for \code{save.image} options can be modified with
   the \code{save.image.opitons} option.  This mechanism is experimental
   and subject to change.
+
+  \code{sys.save.image} is a system function that is called by \code{q()}
+  and its GUI analogs; \code{sys.load.image} is called by the startup code.
+  These functions should not be called directly and are subject to change.
 }
 \seealso{
   \code{\link{dput}}, \code{\link{dump}}, \code{\link{load}}.
