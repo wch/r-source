@@ -10,7 +10,7 @@ NEW FEATURES
     o	A first step in improving performance has been made.
 	Attached objects, libraries etc are now hashed.
 
-    o   contrast() no longer drops colnames for 1DF contrasts.
+    o	contrast() no longer drops colnames for 1DF contrasts.
 	Consequentially, labeling of regression coefficients for binary
 	factors contain level names (again...).
 
@@ -18,7 +18,7 @@ NEW FEATURES
 	interactively.
 
     o	A new scheme for keeping source code with user-defined
-        functions has been implemented. In particular, comments
+	functions has been implemented. In particular, comments
 	will no longer move about or disappear. The flip side of the
 	coin is that you can no longer rely on R to indent your
 	code for you. The stored-source facility can be turned
@@ -97,15 +97,20 @@ NEW FEATURES
 
 BUG FIXES
 
+    o	cooks.distance() now also works for "glm" objects;
+	deviance.lm() now ok for the case of weights.
+
+    o	cm.colors(n) now doesn't append silly "v=1"; works for n=0, n=1.
+
     o	a clipping problem for plots when there non-zero outer margins
-	has been fixed.  This problem used to affect coplot and pairs.
+	has been fixed.	 This problem used to affect coplot and pairs.
 
     o	substr/substring, deparse, dput, dump, print
 	will work for arbitrarily long strings.
 
     o	diag and diag<- now handle correctly matrices with zero rows or cols.
 
-    o   split.default() now uses subscripting for x with a non-null
+    o	split.default() now uses subscripting for x with a non-null
 	class, this preserves, e.g., the class of factors
 
     o	is.recursive(list(.)) is now TRUE [PR#221].
