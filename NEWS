@@ -6,32 +6,32 @@
 
 NEW FEATURES
 
-    o   on.exit allows add=TRUE
+    o	on.exit allows add=TRUE
 
-    o   storage.mode<- can be used to set "single", and if setting
+    o	storage.mode<- can be used to set "single", and if setting
 	anything other than "single" it removes the "Csingle" attribute.
 
-    o   New subroutine REALPR callable from Fortran (like DBLEPR but
+    o	New subroutine REALPR callable from Fortran (like DBLEPR but
 	for real arguments): useful if as.single is in use.
 
-    o   The scaling of symbols is now linear in cex=, rather than being
+    o	The scaling of symbols is now linear in cex=, rather than being
 	tied to the available font's size. The fonts on an X11 device
 	also scale linearly with cex= insofar as your X server can do it.
 	On systems with the scalable URW PostScript fonts installed, this
 	looks particularly nice. Note that the scaling is linear in
 	the *diameter*, but quadratic in area.
 
-    o   The cex= argument to plot() etc. can be a vector, like pch=.
+    o	The cex= argument to plot() etc. can be a vector, like pch=.
 
-    o   abline(a,b) now (again) refers to transformed coordinates on
-        plots with log-axes, so that abline(lm(log10(y)~log10(x)))
-        (say) draws a best-fitting line on a log-log plot. The earlier
-        convention (to draw a curve representing a line in original
-        coordinates) is available using a new untf= argument.
+    o	abline(a,b) now (again) refers to transformed coordinates on
+	plots with log-axes, so that abline(lm(log10(y)~log10(x)))
+	(say) draws a best-fitting line on a log-log plot. The earlier
+	convention (to draw a curve representing a line in original
+	coordinates) is available using a new untf= argument.
 
     o	new function sunflowerplot().
 
-    o	zero.R tries to find the zero DLL is a system-independent way.
+    o	zero.R tries to find the zero DLL in a system-independent way.
 
     o	lty=0 now (again) makes lines invisible. Looks better for
 	barplot label axis.
@@ -47,11 +47,14 @@ NEW FEATURES
     o	barplot.default() has new `axisnames' (and `sub') arguments, easily
 	allowing suppression of bar labeling.
 
-    o   predict.{g}lm has a type="terms" option, and residual.glm has
+    o	predict.{g}lm has a type="terms" option, and residual.glm has
 	type="partial" as a step towards plot.gam()
 
 
 BUG FIXES
+
+    o	When documentation is "compiled" (build-help), you now get warnings
+	for multiple (conflicting) \alias{.} or \name{.}s.
 
     o	stars() has "NULL" instead of "NA" defaults.
 
@@ -59,16 +62,16 @@ BUG FIXES
 
     o	diag(x) now works (as pre 0.65.1) for 1-d arrays.
 
-    o   na.omit.ts and na.contiguous preserve classes
+    o	na.omit.ts and na.contiguous preserve classes
 
-    o   ts.union, cbind.ts, arithmetic on ts objects now allow
+    o	ts.union, cbind.ts, arithmetic on ts objects now allow
 	non-integer frequencies.
 
-    o   Math text in outer margins didn't work
+    o	Math text in outer margins didn't work
 
-    o   Text clipping now works in the X11 driver
+    o	Text clipping now works in the X11 driver
 
-    o   str() is quite a bit nicer with factors
+    o	str() is quite a bit nicer with factors
 
     o	require() now has the warn.conflicts argument of library().
 

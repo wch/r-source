@@ -79,7 +79,7 @@ sub buildinit {
 	opendir man, $OSdir;
 	foreach $file (readdir(man)) {
 	    delete $Rds{$file};
-	    $RdsOS{$file} = $OSdir."/".$file; 
+	    $RdsOS{$file} = $OSdir."/".$file;
 	}
 	@mandir = sort(values %Rds);
 	push @mandir, sort(values %RdsOS);
@@ -305,14 +305,26 @@ sub build_index {
 	    while($text =~ s/\\(alias|name)\{\s*(.*)\s*\}//){
 		$alias = $2;
 		$alias =~ s/\\%/%/g;
-		$alltitles{$alias} = $rdtitle;
-		$aliasnm{$alias} = $manfilebase;
-		$naliases++;
+		my $an = $aliasnm{$alias};
+#  printf STDERR "DBG: (rdname,m..base)=(%11s,%11s);\t(alias,an)=(%11s,%11s)\n",
+#   $rdname,$manfilebase,$alias,$an;
+		if ($an) {
+		    if($an ne $manfilebase) {
+			warn "\\$1\{$alias\} already in $an.Rd -- " .
+			  "skipping the one in $manfilebase.Rd\n";
+		    }
+		}
+		else {
+		    $alltitles{$alias} = $rdtitle;
+		    $aliasnm{$alias} = $manfilebase;
+		    $naliases++;
+		}
 	    }
 	}
     }
 
-    sub foldorder {uc($a) cmp uc($b) or $a cmp $b;}
+    sub foldorder {uc($a) cmp uc($b) or $a cmp $b;
+    }
 
     open(anindex, ">${anindex}");
     foreach $alias (sort foldorder keys %aliasnm) {
@@ -338,8 +350,8 @@ sub build_index {
     print htmlfile "\n<p>\n<table width=\"100%\">\n";
 
     my $firstletter = "";
-    while(<anindex>){ 
-        chomp;  ($alias, $file) = split /\t/; 
+    while(<anindex>){
+        chomp;  ($alias, $file) = split /\t/;
         $aliasfirst = uc substr($alias, 0, 1);
 	if($aliasfirst lt "A") { $aliasfirst = ""; }
 	if($aliasfirst gt "Z") { $aliasfirst = "misc"; }
