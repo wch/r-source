@@ -136,6 +136,12 @@ WindowRef	RAboutWindow=NULL;
 WindowRef	RPrefsWindow=NULL;
 WindowRef	ConsoleWindow=NULL;
 
+#define	kCMDEventClass	'DCMD'  /* Event class command AE */
+#define	kCMDEvent    	'DCMD'  /* Event command          */
+#define CMDLineSize 2048
+static char CMDString[CMDLineSize+1];
+
+pascal OSErr  HandleDoCommandLine (AppleEvent *theAppleEvent, AppleEvent* reply, long handlerRefCon);
 
 /* external symbols from aquaprefs.c */
 extern pascal void RPrefsHandler(WindowRef window);
@@ -504,8 +510,15 @@ void Raqua_StartConsole(void)
                                           
          err = InstallApplicationEventHandler( NewEventHandlerUPP(RWinHandler), GetEventTypeCount(RGlobalWinEvents),
                                                 RGlobalWinEvents, 0, NULL);
-         err = AEInstallEventHandler(kCoreEventClass, kAEQuitApplication, NewAEEventHandlerUPP((AEEventHandlerProcPtr)QuitAppleEventHandler), 
-                                    0, false );
+                                                
+         err = AEInstallEventHandler(kCoreEventClass, kAEQuitApplication, 
+                        NewAEEventHandlerUPP((AEEventHandlerProcPtr)QuitAppleEventHandler), 
+                                    0, false);
+
+       /* installs Handler for CFommandline-Application-Event ('do_CMD')   */
+         err = AEInstallEventHandler(kCMDEventClass, kCMDEvent,
+                                NewAEEventHandlerUPP( (AEEventHandlerProcPtr)HandleDoCommandLine ),
+                                0, false);
 
         TXNFocus(RConsoleOutObject,true);
         InstallWindowEventHandler(RAboutWindow, NewEventHandlerUPP(RAboutWinHandler), 1, &aboutSpec, 
@@ -1016,7 +1029,9 @@ NavUserAction YesOrNot(char *title, char *msg, char *actionlab, char *canclab){
  
     
     if( (err = NavGetDefaultDialogCreationOptions(&dialogOptions)) == noErr){
-
+       
+         dialogOptions.modality = kWindowModalityAppModal;
+         
         if(msg != NULL)
             dialogOptions.message = CFStringCreateWithCString(NULL, msg, kCFStringEncodingASCII);  
 
@@ -1029,7 +1044,7 @@ NavUserAction YesOrNot(char *title, char *msg, char *actionlab, char *canclab){
         if(canclab != NULL)
             dialogOptions.cancelButtonLabel = CFStringCreateWithCString(NULL, canclab, kCFStringEncodingASCII);  
 
-       dialogOptions.clientName = CFSTR("RAqua");
+       dialogOptions.clientName = CFStringCreateWithPascalString( NULL, LMGetCurApName(), GetApplicationTextEncoding());
              
        if( (err = NavCreateAskSaveChangesDialog(&dialogOptions, action, NULL,
                                     NULL, &WantDialog)) == noErr){
@@ -2755,6 +2770,30 @@ void Raqua_Suicide(char *s)
     Raqua_CleanUp(SA_SUICIDE, 2, 0);
 }
 
+
+pascal OSErr  HandleDoCommandLine (AppleEvent *theAppleEvent, AppleEvent* reply, long handlerRefCon)
+{
+	OSErr		err = 0;
+	DescType	returnedType;
+	Size		actualSize;
+
+     
+	if ((err = AEGetParamPtr(theAppleEvent, keyDirectObject, typeChar, &returnedType,
+								CMDString, CMDLineSize, &actualSize)) != noErr)
+		return err;
+
+	/* check for missing parameters   */
+
+        if(actualSize <= CMDLineSize)
+            CMDString[actualSize] = '\0';	
+        else
+          CMDString[CMDLineSize] = '\0';    	/* Terminate the C string    */
+    
+        consolecmd(CMDString);
+                fprintf(stderr,"\n aestr=%s",CMDString);
+
+        return noErr;
+}
 
 #endif /* HAVE_AQUA */
 
