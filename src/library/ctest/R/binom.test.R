@@ -42,15 +42,23 @@ function(x, n, p = 0.5, alternative = c("two.sided", "less", "greater"),
                            ##   sum(d[d <= dbinom(x, n, p)])
                            ## a bit more efficiently ...
                            ## Note that we need a little fuzz.
-                           relErr <- 1 + 10 ^ (-7) 
+                           relErr <- 1 + 1e-7
                            d <- dbinom(x, n, p)
-                           if(x / n < p) {
-                               i <- seq(from = ceiling(n*p), to = n)
+			   ## This is tricky: need to be sure
+			   ## only to sum values in opposite tail
+			   ## and not count x twice. 
+			   ## For the binomial dist., the mode will
+			   ## equal the mean if it is an integer.
+			   m <- n * p
+			   if (x == m)
+			   	1
+                           else if (x < m) {
+                               i <- seq(from = ceiling(m), to = n)
                                y <- sum(dbinom(i, n, p) <= d * relErr)
                                pbinom(x, n, p) +
                                    pbinom(n - y, n, p, lower = FALSE)
                            } else {
-                               i <- seq(from = 0, to = floor(n*p))
+                               i <- seq(from = 0, to = floor(m))
                                y <- sum(dbinom(i, n, p) <= d * relErr)
                                pbinom(y - 1, n, p) +
                                    pbinom(x - 1, n, p, lower = FALSE)
