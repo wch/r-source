@@ -972,7 +972,6 @@ AC_OUTPUT(Makeconf
   Makefile
   afm/Makefile
   demos/Makefile
-  demos/dynload/Makefile
   doc/Makefile
   doc/html/Makefile
   doc/html/search/Makefile
@@ -1044,7 +1043,6 @@ AC_OUTPUT(Makeconf
   tools/Makefile
   tools/Rdnewer
   tools/help2man
-  tools/keyword-test
   tools/install-info
   tools/pkg2tex
 )
@@ -1054,7 +1052,6 @@ AC_OUTPUT_COMMANDS(
   tools/Rdnewer \
   tools/help2man \
   tools/install-info \
-  tools/keyword-test \
   tools/pkg2tex
   test -f src/include/stamp-h || echo timestamp > src/include/stamp-h
 )
