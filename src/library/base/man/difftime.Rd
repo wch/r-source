@@ -26,10 +26,10 @@ as.difftime(tim, format = "%X")
     \code{"GMT"} is UTC.}
   \item{units}{character.  Units in which the results are desired. Can
     be abbreviated.}
-  \item{tim}{character string specifying a time intervall.}
+  \item{tim}{character string specifying a time interval.}
   \item{format}{character specifying the format of \code{tim}.}
   \item{x}{an object inheriting from class \code{"difftime"}.}
-  \item{digits}{integer. Number of significant digits to retain.}
+  \item{digits}{integer.  Number of significant digits to retain.}
 }
 \details{
   Function \code{difftime} takes a difference of two date/time objects
