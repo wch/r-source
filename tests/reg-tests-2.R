@@ -90,7 +90,9 @@ z
 ## handling of quotes
 zz <- data.frame(a=I("abc"), b=I("def\"gh"))
 format(zz)
-for(i in c(1:5,10,15:17,20)) cat(i,":\t",format(pi,digits=i),"\n")
+
+## printing more than 16 is platform-dependent
+for(i in c(1:5,10,15,16)) cat(i,":\t",format(pi,digits=i),"\n")
 
 p <- c(47,13,2,.1,.023,.0045, 1e-100)/1000
 format.pval(p)

@@ -17,8 +17,6 @@ test-src-gct = \
 	simple-true.R \
 	arith-true.R \
 	arith.R \
-	demos.R \
-	demos2.R \
 	lm-tests.R \
 	primitive-funs.R \
 	ok-errors.R \
@@ -39,6 +37,7 @@ test-src-sloppy = $(test-src-sloppy-1) $(test-src-sloppy-auto)
 test-src-strict = $(test-src-strict-1) $(test-src-strict-auto)
 test-src = $(test-src-strict) $(test-src-sloppy)
 
+test-src-demo = demos.R demos2.R
 test-src-internet = internet.R
 test-src-lapack = lapack.R
 test-src-nafns = nafns.R
@@ -51,7 +50,7 @@ test-src-reg-1 = \
 test-src-reg-auto =
 test-src-reg = $(test-src-reg-1) $(test-src-reg-auto)
 
-all-basic-tests = Examples Specific Reg
+all-basic-tests = Examples Specific Reg Demo
 all-extra-tests = Internet Lapack Nafns Postscript Random \
   DocArgs FF Methods codoc undoc
 
@@ -79,6 +78,7 @@ test-out-sloppy = $(test-src-sloppy:.R=.Rout)
 
 test-out-gct = $(test-src-gct:.R=.Rout-gct)
 
+test-out-demo = $(test-src-demo:.R=.Rout)
 test-out-internet = $(test-src-internet:.R=.Rout)
 test-out-lapack = $(test-src-lapack:.R=.Rout)
 test-out-nafns = $(test-src-nafns:.R=.Rout)
@@ -102,7 +102,7 @@ Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
 
 Makedeps: Makefile
-	@(for f in $(test-src) $(test-src-reg); do \
+	@(for f in $(test-src) $(test-src-reg) $(test-src-demo); do \
 	    if test -f $(srcdir)/$${f}out.save ; then \
 	      echo "$${f}out: $${f} \$$(srcdir)/$${f}out.save \$$(FORCE)"; \
 	    else \
@@ -176,6 +176,9 @@ test-all-extras: Makefile
 	@for name in $(all-extra-tests); do \
 	  $(MAKE) test-$${name} || exit 1; \
 	done
+test-Demo:
+	@echo "running demos from base and eda"
+	@$(MAKE) $(test-out-demo) RVAL_IF_DIFF=0
 test-Internet:
 	@echo "running tests of Internet and socket functions"
 	@$(MAKE) $(test-out-internet) RVAL_IF_DIFF=0
@@ -306,7 +309,7 @@ clean:
 	  (cd $${d} && $(MAKE) $@); \
 	done
 	-@rm -f stamp-R Makedeps Rplot* Rprof.out *.Rd data dumpdata.R \
-	  reg-plot.ps
+	  reg-plot.ps reg-tests-2.ps
 	-@rm -rf anRpackage
 distclean: clean
 	-@for d in $(SUBDIRS); do \
