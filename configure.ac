@@ -667,7 +667,12 @@ case "${host_os}" in
       R_PROG_CC_FLAG([-mno-fp-in-toc],
                      R_SH_VAR_ADD(R_XTRA_CFLAGS, [-mno-fp-in-toc]))
     fi
-    R_SH_VAR_ADD(R_XTRA_LIBS, [/lib/crt0.o])
+    ## need /lib/crt0_64.o on 64-bit AIX: see comments in R-admin.
+    if test "x${OBJECT_MODE}" = "x64"; then
+       R_SH_VAR_ADD(R_XTRA_LIBS, [/lib/crt0_64.o])
+    else
+       R_SH_VAR_ADD(R_XTRA_LIBS, [/lib/crt0.o])
+    fi
     ;;
   cygwin*|mingw*|windows*|winnt)
     AC_DEFINE(HAVE_NO_SYMBOL_UNDERSCORE)
