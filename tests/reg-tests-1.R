@@ -1034,6 +1034,10 @@ Sepal[27] <- NA
 stripchart(Sepal ~ iris$Species, method="stack")
 ## failed in 1.6.1
 
+## losing is.object bit internally (PR#2315)
+stopifnot(is.ts(log(as.ts(1:10))))
+## failed for integer original as here in 1.6.1.
+
 
 ## keep at end, as package `methods' has had persistent side effects
 library(methods)

@@ -30,6 +30,9 @@ BUG FIXES
 
     o   stripchart(method="stack") was not handling missing values. (PR#2018)
 
+    o   Arithmetic functions such as log() lost the object bit from
+	classed objects if coercion was needed. (PR#2315)
+
 
 		CHANGES IN R VERSION 1.6.1
 
