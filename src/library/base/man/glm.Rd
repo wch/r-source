@@ -113,6 +113,9 @@ glm.fit.null(x, y, weights = rep(1, nrow(x)),
 
   \code{glm.fit} and \code{glm.fit.null} are the workhorse functions:
   the former calls the latter for a null model (with no intercept).
+
+  If more than one of \code{etastart}, \code{start} and \code{mustart}
+  is specified, the first in the list will be used.
 }
 \value{
   \code{glm} returns an object of class \code{glm}
