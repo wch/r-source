@@ -46,7 +46,8 @@ pacf.default <- function(x, lag.max = NULL, plot = TRUE,
                          na.action = na.fail, ...)
 {
     series <- deparse(substitute(x))
-    if(is.matrix(x))
+    if(is.matrix(x) && ncol(x) > 1) # a multiple time series will dispatch
+                                    # directly to pacf.mts
         return(pacf(as.ts(x), lag.max=lag.max, plot=plot,
                     na.action=na.action, ...))
     x <- na.action(as.ts(x))

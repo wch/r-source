@@ -20,6 +20,8 @@ BUG FIXES
 	imperfect, causing unnecessarily verbose output (-0.00 instead of
 	0) and problems with make check.
 
+    o	pacf() was failing if called on a one-column matrix.
+
 
 
 		CHANGES IN R VERSION 1.7.1
