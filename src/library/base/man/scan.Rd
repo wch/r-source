@@ -14,8 +14,9 @@ scan(file = "", what = double(0), nmax = -1, n = -1, sep = "",
 \arguments{
   \item{file}{the name of a file to read data values from.  If the
     specified file is \code{""}, then input is taken from the keyboard
-    (in this case input can be terminated by a blank line or an EOF
-    signal, \code{Ctrl-D} on Unix and \code{Ctrl-Z} on Windows.).
+    (or \code{stdin} if input is redirected).
+    (In this case input can be terminated by a blank line or an EOF
+    signal, \code{Ctrl-D} on Unix and \code{Ctrl-Z} on Windows.)
 
     Otherwise, the file name is interpreted \emph{relative} to the
     current working directory (given by \code{\link{getwd}()}),
