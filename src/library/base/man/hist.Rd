@@ -1,7 +1,11 @@
 \name{hist}
 \title{Histograms}
 \usage{
-hist(x, breaks, freq=TRUE, col=NULL, border=par("fg"), \dots)
+hist(x, breaks, freq = NULL, col = NULL, border = par("fg"),
+     main = paste("Histogram of" , deparse(substitute(x))),
+     xlim = range(breaks),  ylim = range(counts, 0),
+     xlab = deparse(substitute(x)),  ylab,
+     axes = TRUE, plot = TRUE, \dots)
 }
 \alias{hist}
 \arguments{
@@ -9,13 +13,19 @@ hist(x, breaks, freq=TRUE, col=NULL, border=par("fg"), \dots)
 \item{breaks}{either a single number giving the
 approximate number of cells for the histogram
 or a vector giving the breakpoints between histogram cells.}
-\item{freq}{a logical vector which indicates whether the
-histogram is to present a representation of frequencies
-(the default) or relative frequencies.}
-\item{col}{a colour to be used to fill draw the bars.
-The default of \code{NULL} yields unfilled bars.}
+\item{freq}{a logical vector indicating whether the
+  histogram is to present a representation of frequencies
+  (the default \emph{if} \code{breaks} are equidistant) or relative
+  frequencies (``probabilities'').} 
+\item{col}{a colour to be used to fill the bars.
+  The default of \code{NULL} yields unfilled bars.}
 \item{border}{the color of the border around the bars.}
-\item{\dots}{graphical parameters can also be specified as arguments.}
+\item{main,xlab,ylab}{these arguments to \code{title} have useful
+  defaults here.}
+\item{xlim,ylim}{the range of x and y values with sensible defaults.}
+\item{plot}{logical.  If \code{TRUE} (default), a histogram is
+  plotted, otherwise a list of breaks and counts is returned.}
+\item{\dots}{further graphical parameters to \code{title} and \code{axis}.}
 }
 \description{
 \code{hist} computes and plots a histogram of the given data values.
@@ -25,7 +35,14 @@ but not their right one.
 }
 \examples{
 data(islands)
+op <- par(mfrow=c(2,2))
 hist(islands)
 hist(islands, col="gray")
-hist(islands, col="gray", border="gray")
+hist(sqrt(islands), br = 12, col="lightblue", border="pink")
+##-- For non-equidistant breaks, counts should NOT be graphed unscaled:
+hist(sqrt(islands), br = c(4* 0:5,10* 3:5,70,100,140), col='lightgreen')
+par(op)
+str(hist(islands, plot= F))
+str(hist(islands, br=12, plot= F))
 }
+
