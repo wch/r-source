@@ -37,11 +37,13 @@
 
     
     setClass("structure", sealed = TRUE, where = envir); clList <- c(clList, "structure")
-    stClasses <- c("matrix", "array", "ts") # classes that have attributes (ts has a class attr.)
+    stClasses <- c("matrix", "array") # classes that have attributes, but no class attr.
     for(.class in stClasses) {
         setClass(.class, prototype = newBasic(.class), sealed = TRUE, where = envir)
     }
-    clList <- c(clList, stClasses)
+    ## "ts" will be defined below, because it has a formal contains, but its initialize
+    ## method uses newBasic, so it needs to be in .BasicClasses
+    clList <- c(clList, stClasses, "ts")
     assign(".BasicClasses", clList, envir)
 
     ## Now we can define the SClassExtension class and use it to instantiate some
@@ -55,8 +57,8 @@
     setIs("integer", "numeric", where = envir)
 
     setIs("structure", "vector", coerce = .gblEnv(function(object) as.vector(object)),
-          replace = .gblEnv(function(object, Class, value) {
-              attributes(value) <- attributes(object)
+          replace = .gblEnv(function(from, to, value) {
+              attributes(value) <- attributes(from)
               value
           }),
           where = envir)
@@ -65,13 +67,21 @@
         setIs(.class, "structure", where = envir)
     setIs("matrix", "array", where = envir)
     setIs("array", "matrix", test = .gblEnv(function(object) length(dim(object)) == 2),
-          replace = .gblEnv(function(object, Class, value) {
+          replace = .gblEnv(function(from, to, value) {
               if(is(value, "matrix"))
                   value
               else
                   stop("Replacement value is not a matrix")
           }),
           where = envir)
+
+    ## "ts" was an S3 class.  Because it has a consistent set of attributes (unlike array)
+    ## it can be promoted to an S4 class with metadata, slot checking, etc.
+    ## The initialize method uses newBasic(...), so should be consistent with the old code,
+    ## (see def'n of BasicClasses above).
+    setClass("ts", representation(tsp = "numeric"), contains = "vector",
+             prototype = newBasic("ts"), sealed = TRUE, where = envir)
+    
 
     ## Some class definitions extending "language", delayed to here so
     ## setIs will work.

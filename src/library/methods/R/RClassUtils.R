@@ -37,8 +37,10 @@ makePrototypeFromClassDef <-
   ## then its prototype is used.
   ##
   ## If all three of the above fail, the prototype is `NULL'.
-  function(properties, prototype, extends)
+  function(properties, ClassDef, extends)
 {
+    prototype <- ClassDef@prototype
+    className <- ClassDef@className
     if(length(properties) == 0 && !is.null(prototype))
             return(prototype)
     ## try for a single superclass that is not virtual
@@ -65,7 +67,9 @@ makePrototypeFromClassDef <-
                 pThis <- prototype
                 attributes(pThis) <- NULL
                 if(!identical(pOther, pThis) && !identical(pThis, list()))
-                    warning("classes \"", what, "\" and \"", fromClass,
+                    warning("In constructing the data part of the prototype for class \"",
+                            className,
+                            "\", superclasses \"", what, "\" and \"", fromClass,
                             "\" have different prototypes; using the one from \"",
                             fromClass, "\"")
             }
@@ -76,28 +80,58 @@ makePrototypeFromClassDef <-
     if(is.null(prototype))
         prototype <- defaultPrototype()
     pnames <- names(attributes(prototype))
-    pslots <- if(isClass(class(prototype))) names(getSlots(getClass(class(prototype)))) else
-        NULL
+    ## watch out for a prototype of this class.  Not supposed to happen, but will
+    ## at least for the basic class "ts", and can lead to inf. recursion
+    if(identical(class(prototype), className))
+        pslots <- names(attributes(unclass(prototype)))
+    else if(isClass(class(prototype)))
+        pslots <- names(getSlots(getClass(class(prototype))))
+    else
+        pslots <- NULL
     snames <- names(properties)
     if(!is.na(match(".Data", snames))) {
         dataPartClass <- elNamed(properties, ".Data")
         ## check the data part
         if(!(isVirtualClass(dataPartClass) || is(prototype, dataPartClass)))
-            stop(paste("Prototype has class \"",
+            stop("In constructing the prototype for class \"", className, "\": ",
+                 "Prototype has class \"",
                        .class1(prototype), "\", but the data part specifies class \"",
-                       dataPartClass,"\"", sep=""))
-        snames <- snames[-match(".Data", snames)]
+                       dataPartClass,"\"",)
+        iData <- -match(".Data", snames)
+        snames <- snames[iData]
+        properties <- properties[iData]
     }
     for(j in seq(along = snames)) {
         name <- el(snames, j)
         i <- match(name, pnames)
-        if(is.na(i))
-            slot(prototype, name, check=FALSE) <- tryNew(el(properties, j))
+        if(is.na(i)) {
+            ## if the class of the j-th element of properties is defined and non-virtual,
+            ## generate an object from it
+            ## to use as the corresponding prototype element.  Else, leave NULL
+            newi <- tryNew(el(properties, j))
+            if(!is.null(newi))
+                slot(prototype, name, check = FALSE) <- newi
+        }
     }
     extra <- pnames[is.na(match(pnames, snames)) & !is.na(match(pnames, pslots))]
     if(length(extra)>0)
-        warning(paste("Slots in prototype and not in class:",
-                      paste(extra, collapse=", ")))
+        warning("In constructing the prototype for class \"", className, "\", ",
+                "Slots in prototype and not in class:",
+                      paste(extra, collapse=", "))
+    ## now check the elements of the prototype against the class definition
+    slotDefs <- getSlots(ClassDef); slotNames <- names(slotDefs)
+    pnames <- names(attributes(prototype))
+    pnames <- pnames[!is.na(match(pnames, slotNames))]
+    check <- rep(FALSE, length(pnames))
+    for(what in pnames) {
+        pwhat <- slot(prototype, what)
+        if(!is.null(pwhat) && !is(pwhat, slotDefs[[what]]))
+            check[match(what, pnames)] <- TRUE
+    }
+    if(any(check))
+        stop("In making the prototype for class \"", className,
+             "\" elements of the prototype failed to match the corresponding slot class: ",
+             paste(pnames[check], "(\"", slotDefs[match(pnames[check], slotNames)], "\")", collapse = ", "))
     prototype
 }
 
@@ -179,7 +213,7 @@ completeClassDefinition <-
                 }
             }
         }
-        prototype <- makePrototypeFromClassDef(properties, getPrototype(ClassDef), immediate)
+        prototype <- makePrototypeFromClassDef(properties, ClassDef, immediate)
         virtual <- getVirtual(ClassDef)
         validity <- getValidity(ClassDef)
         access <- getAccess(ClassDef)
@@ -432,6 +466,10 @@ getClassPackage <-
 assignClassDef <-
   ## assign the definition of the class to the specially named object
   function(Class, def, where = .GlobalEnv) {
+      if(!is(def,"classRepresentation"))
+          stop("Trying to assign an object of class \"", class(def),
+               "\" as the definition of class \"", Class,
+               "\": must supply a \"classRepresentation\" object.")
     if(identical(where, 0))
       assignToClassMetaData(classMetaName(Class), def)
     else assign(classMetaName(Class), def, where)
@@ -1122,7 +1160,7 @@ setDataPart <- function(object, value) {
         f <- byExt@replace
         byExpr <- body(f)
         ## Is there a danger of infinite loop below?
-        expr <- substitute({.value <- as(object, BY); as(.value, TO) <- value; value <- .value; BYEXPR},
+        expr <- substitute({.value <- as(from, BY); as(.value, TO) <- value; value <- .value; BYEXPR},
                            list(BY=by, TO = to, BYEXPR = byExpr))
         body(f, envir = environment(f)) <- expr
         toExt@replace <- f
@@ -1193,7 +1231,7 @@ newClassRepresentation <- function(...) {
 ## create a temporary definition of a class, but one that is distinguishable
 ## (by its class) from the real thing.  See comleteClassDefinition
 .tempClassDef <- function(...) {
-    value <- list()
+    value <- new("classRepresentation")
     slots <- list(...)
     slotNames <- names(slots)
     for(i in seq(along = slotNames))

@@ -440,14 +440,17 @@ initialize <- function(.Object, ...) {
             for(i in rev(seq(along = supers))) {
                 obj <- el(supers, i)
                 Classi <- .class1(obj)
+                ## test some cases that let information be copied into the
+                ## object, ordered from more to less:  all the slots in the
+                ## first two cases, some in the 3rd, just the data part in 4th
                 if(identical(Classi, Class))
                     .Object <- obj
                 else if(extends(Classi, Class))
                     .Object <- as(obj, Class, strict=FALSE)
-                else if(extends(Classi, dataPart))
-                    .Object@.Data <- obj
                 else if(extends(Class, Classi))
                     as(.Object, Classi) <- obj
+                else if(extends(Classi, dataPart))
+                    .Object@.Data <- obj
                 else {
                     ## is there a class to which we can coerce obj
                     ## that is then among the superclasses of Class?

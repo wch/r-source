@@ -15,23 +15,33 @@
 ## There are some other simple relations (e.g., with virtual classes).  Replacing in
 ## these cases is less likely but needs to be tested (below) and a suitable
 ## replace function inserted.
-.simpleExtReplace <- function(object, Class, value){
-    for(what in slotNames(Class))
-        slot(object, what) <- slot(value, what)
-    object
+.simpleExtReplace <- function(from, to, value){
+    for(what in .InhSlotNames(to))
+        slot(from, what) <- slot(value, what)
+    from
 }
-.dataPartReplace <- function(object, Class, value){
-    object@.Data <- value
-    object
+## slot names for inheritance (to be used in replace methods).  Extends slots to implicit
+## .Data for basic classes.
+.InhSlotNames <- function(Class) {
+   ClassDef <- getClass(Class)
+    value <- names(ClassDef@slots)
+    if(length(value)==0 && !is.na(match("vector", names(ClassDef@contains))))
+        ## usually a basic class; treat as data part
+        value <- ".Data"
+   value
+}
+.dataPartReplace <- function(from, to, value){
+    from@.Data <- value
+    from
 }
 
-.dataPartReplace2 <- function(object, Class, value){
-    object@.Data <- as(value, THISCLASS, strict = FALSE)
-    object
+.dataPartReplace2 <- function(from, to, value){
+    from@.Data <- as(value, THISCLASS, strict = FALSE)
+    from
 }
-.ErrorReplace <- function(object, Class, value)
-    stop(paste("No replace method was defined for as(x, \"", Class,
-               "\") <- value for class \"", class(object), "\"", sep=""))
+.ErrorReplace <- function(from, to, value)
+    stop(paste("No replace method was defined for as(x, \"", to,
+               "\") <- value for class \"", class(from), "\"", sep=""))
 
 .objectSlotNames <- function(object) {
     ## a quick version that makes no attempt to check the class definition
