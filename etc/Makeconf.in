@@ -2,6 +2,8 @@
 #
 # ${R_HOME}/etc/Makeconf
 
+include $(R_HOME)/share/make/vars.mk
+
 BLAS_LIBS = @BLAS_LIBS@
 CC = @CC@
 CFLAGS = @CFLAGS@
