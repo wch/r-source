@@ -9,7 +9,18 @@ as.single <- function(x) {
 }
 as.character <- function(x) .Internal(as.vector(x,"character"))
 as.expression <- function(x) .Internal(as.vector(x,"expression"))
-as.list <- function(x) .Internal(as.vector(x,"list"))
+"as.list" <-
+function (x) 
+{
+  if (is.function(x)) 
+    return(c(formals(x), body(x)))
+  if (is.expression(x)) {
+    l <- vector("list")
+    for (sub in x) l <- c(l, sub[[1]])
+    return(l)
+  }
+  .Internal(as.vector(x, "list"))
+}
 as.vector <- function(x, mode="any") .Internal(as.vector(x,mode))
 as.matrix <- function(x) UseMethod("as.matrix")
 as.matrix.default <- function(x) {
@@ -19,8 +30,25 @@ as.matrix.default <- function(x) {
     array(x, c(length(x),1), if(!is.null(names(x))) list(names(x), NULL) else NULL)
 }
 as.null <- function(x) NULL
-as.function <- function(x) UseMethod("as.function")
-as.function.default <- function(x) stop("Cannot coerce object to function")
+as.function <- function(x,...) UseMethod("as.function")
+"as.function.default" <-
+function (l, envir = sys.frame(sys.parent())) 
+{
+  if (!is.list(l)) 
+    stop("Can't coerce object to function")
+  ln <- length(l)
+  alist <- l[-ln]
+  body <- l[[ln]]
+  if (is.expression(body)) 
+    body <- body[[1]]
+  if (ln < 2) 
+    e <- substitute(function() body)
+  else {
+    e <- substitute(function(x) body)
+    e[[2]] <- alist
+  }
+  eval(e, envir)
+}
 as.array <- function(x)
 {
 	if( is.array(x) )

@@ -1,7 +1,8 @@
 \name{formals}
-\title{Access to the Formal Arguments}
+\title{Access to and Manipulation of the Formal Arguments}
 \usage{
 formals(fun=sys.function(sys.parent()))
+formals(obj) <- list
 }
 \alias{formals}
 \value{
@@ -12,13 +13,19 @@ is found and used.
 If \code{fun} is not specified then the function calling \code{formals}
 is used.
 
-It is currently not possible to set the formals of a function.
+The assignment form sets the formals of a function to the list on the
+right hand side.
 }
 \seealso{
 \code{\link{args}}
+\code{\link{alist}}
 }
 \examples{
 length(formals(lm))      # the number of formal arguments
 names(formals(boxplot))  # formal arguments names
+
+f<-function(x)a+b
+formals(f)<-alist(a=,b=3) # function(a,b=3)a+b
+f(2) # result = 5
 }
 \keyword{programming}

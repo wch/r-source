@@ -2,36 +2,40 @@
 
 NEW FEATURES
 
-     o  layout() documented and improved: starts default device if needed, and
+    o 	Conversion of functions to and from lists. formals<- and body<-.
+	The alist() function makes it easier to construct argument lists,
+	etc. Added expression-->list coercion.
+
+    o   layout() documented and improved: starts default device if needed, and
 	returns number of figures.
 
-     o  New find() function [relying on apropos(..)].
+    o   New find() function [relying on apropos(..)].
 
-     o  objects(<integer>) now works, being equivalent to
+    o   objects(<integer>) now works, being equivalent to
 	objects(pos=<int.>).
 
-     o  storage.mode() and related functions now return
+    o   storage.mode() and related functions now return
 	"double" instead of "real", for compatibility.
 	"real" is still allowed as synomym for "double".
 
-     o  A tests/ directory has been added (in the source), and "make tests"
+    o   A tests/ directory has been added (in the source), and "make tests"
 	has been modified to run more than all the examples from the base
 	package.  The exact 'make tests' behavior is still bound to change.
 
-     o  An experimental directory etc/Rdoc has been added with a perl5
+    o   An experimental directory etc/Rdoc has been added with a perl5
 	module to parse R documentation files.  Sample perl programs
 	to use this module are also included.
 
-     o	All internal mechanisms to support factors and data.frames
+    o 	All internal mechanisms to support factors and data.frames
 	have been removed.  These are now entirely supported by
 	interpreted code! `is.unordered' has been eliminated.
 	Thanks to John Chambers for allowing the distribution of his
 	StatLib code.
 
-     o	"pmatch" is now completely S compatible and is not just another
+    o 	"pmatch" is now completely S compatible and is not just another
 	name for "charmatch".
 
-     o  There is now a function called ".Alias" which can be used to
+    o   There is now a function called ".Alias" which can be used to
 	provide multiple names for the same object.  Example:
 		lm2 <- .Alias(lm)
 	This is dangerous because it can be used to defeat the
