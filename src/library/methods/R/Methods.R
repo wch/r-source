@@ -193,7 +193,7 @@ getMethodsForDispatch <-
 }
 
 ## some functions used in MethodsListSelect, that must be safe against recursive
-## method selection.  TODO:  wouldn't need this if methods pacakge had a name space
+## method selection.  TODO:  wouldn't need this if methods package had a name space
 
 .existsBasic <- get("exists", "package:base")
 .getBasic <- get("get", "package:base")
@@ -206,7 +206,7 @@ getMethodsForDispatch <-
         found <- .existsBasic(f, "package:base")
         if(found) {
             ## force (default) computation of mlist in MethodsListSelect
-            is.null(mlist)
+            throwAway <- is.null(mlist)
             .assignBasic(".Methods", envir = .evBasic(fdef), .getBasic(f, "package:base"))
         }
         found
@@ -215,7 +215,7 @@ getMethodsForDispatch <-
 
 .getMethodsForDispatch <- function(f, fdef) {
     ev <- .evBasic(fdef)
-    if(.exists(".Methods", envir = ev)) {
+    if(.existsBasic(".Methods", envir = ev)) {
         get(".Methods", envir = ev)
     }
     else
@@ -461,7 +461,8 @@ selectMethod <-
           return(finalDefaultMethod(mlist, f))
       assign(".SelectMethodOn", TRUE, fEnv)
       on.exit(rm(.SelectMethodOn, envir = fEnv))
-      mlist <- MethodsListSelect(f, env, mlist, NULL, evalArgs = evalArgs, useInherited = useInherited)
+      mlist <- MethodsListSelect(f, env, mlist, NULL, evalArgs = evalArgs,
+                                 useInherited = useInherited, resetAllowed = FALSE)
       if(is(mlist, "MethodsList"))
           selection <- .Call("R_selectMethod", f, env, mlist, evalArgs, PACKAGE = "methods")
     }

@@ -37,7 +37,7 @@ as <-
         }
         ## cache for next call
         if(canCache && !is.null(asMethod))
-            cacheMethod("coerce", c(from = thisClass, to = Class), asMethod)
+            cacheMethod("coerce", sig, asMethod)
     }
     if(is.null(asMethod))
         stop(paste("No method or default for coercing \"", thisClass,
@@ -46,6 +46,16 @@ as <-
         asMethod(object)
     else
         asMethod(object, strict = FALSE)
+}
+
+.quickCoerceGetsSelect <- function(from, to) {
+    methods <- getMethodsForDispatch("coerce<-")
+    allMethods <- methods@allMethods
+    method <- allMethods[[from]]
+    if(is.null(method))
+        method
+    else
+        method@allMethods[[to]]
 }
 
 .quickCoerceSelect <- function(from, to) {
@@ -88,7 +98,10 @@ as <-
     thisClass <- .class1(object)
     if(!identical(.class1(value), Class))
       value <- as(value, Class)
+    asMethod <- .quickCoerceGetsSelect(thisClass, Class)
+    if(is.null(asMethod)) {
     sig <-  c(from=thisClass, to = Class)
+    canCache <- TRUE
     asMethod <- selectMethod("coerce<-", sig, TRUE, FALSE) #optional, no inheritance
     if(is.null(asMethod)) {
         if(is(object, Class)) {
@@ -100,12 +113,16 @@ as <-
             else {
                 test <- asMethod@test
                 asMethod <- asMethod@replace
-                if((!is(test, "function")) || identical(body(test), TRUE))
-                    cacheMethod("coerce<-", c(from = thisClass, to = Class), asMethod)
+                canCache <- (!is(test, "function")) || identical(body(test), TRUE)
            }
          }
         else
             asMethod <- selectMethod("coerce<-", sig, TRUE, c(from = TRUE, to = FALSE))
+    }
+        ## cache for next call
+        if(canCache && !is.null(asMethod))
+            cacheMethod("coerce<-", sig, asMethod)
+    
     }
     if(is.null(asMethod))
         stop(paste("No method or default for as() replacement of \"", thisClass,
