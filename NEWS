@@ -85,15 +85,11 @@ NEW FEATURES
 
 BUG FIXES
 
-    o	formatC(numeric(0)) now works.
-
     o	R --help  gives more
 
     o	postscript() now uses 'hyphen' instead of 'plusminus' for a minus.
 
     o   source(..., echo=TRUE) now puts a `"' if necessary after truncation.
-
-    o	menu(.) works for empty imput
 
     o	Changes to the PostScript device driver mean that the volume
 	of output has been reduced to about a third of what it was.
@@ -102,6 +98,10 @@ BUG FIXES
 	unlist() and c().
 
 (BUG FIXES to non-released 0.62.4)
+
+    o	formatC(numeric(0)) now works.
+
+    o	menu(.) works for empty imput
 
     o   0i ^ 2  now gives  0+0i as it should.
 
