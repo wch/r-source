@@ -112,7 +112,7 @@ StructTS <- function(x, type = c("level", "trend", "BSM"), init=NULL)
     res
 }
 
-print.StructTS <- function(x, digits = max(3, getOption("digits") - 3))
+print.StructTS <- function(x, digits = max(3, getOption("digits") - 3), ...)
 {
     cat("\nCall:", deparse(x$call, width = 75), "", sep = "\n")
     cat("Variances:\n")

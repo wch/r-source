@@ -12,7 +12,7 @@ tsSmooth(object, ...)
 }
 \arguments{
   \item{object}{a time-series fit.  Currently only class
-    \code{\link{"StructTS"}} is supported}
+    \code{"\link{StructTS}"} is supported}
   \item{\dots}{possible arguments for future methods.}
 }
 \value{

@@ -1,6 +1,7 @@
 \name{KalmanLike}
 \alias{KalmanLike}
 \alias{KalmanRun}
+\alias{KalmanSmooth}
 \alias{KalmanForecast}
 \alias{makeARIMA}
 \title{Kalman Filtering}
