@@ -95,6 +95,7 @@ function(x, ...)
         file.show(outFile, delete.file = TRUE,
                   title = "R packages available")
     }
+    invisible(x)
 }
 
 print.packageIQR <-
@@ -140,4 +141,5 @@ function(x, ...)
                                        data = "data sets",
                                        demo = "demos")))
     }
+    invisible(x)
 }
