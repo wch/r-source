@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
 
- *  Copyright (C) 1998, 1999  Robert Gentleman, Ross Ihaka and the
+ *  Copyright (C) 1998-2001   Robert Gentleman, Ross Ihaka and the
  *                            R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -24,7 +24,7 @@ typedef int ssize_t;
 #include <size_t.h>
 #endif
 #ifdef Win32
-typedef long ssize_t;
+typedef int ssize_t;
 #endif
 
 typedef unsigned short Sock_port_t;
@@ -49,6 +49,6 @@ void Rsockconnect(int *port, char **host);
 void Rsockclose(int *sockp);
 void Rsockread (int *sockp, char **buf, int *maxlen);
 void Rsockwrite(int *sockp, char **buf, int *start, int *end, int *len);
-#ifndef Win32
+#ifdef Unix
 void Rsockfork(int *pidno);
 #endif
