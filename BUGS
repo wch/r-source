@@ -301,3 +301,7 @@ Date: Fri, 21 May 1999 19:44:23 +0200
 Subject: Bug in loglin with variable called "c"
 From: Prof Brian D Ripley <ripley@stats.ox.ac.uk>
 Date: Sun, 23 May 1999 07:58:40 +0100 (BST)
+* PR# 199 *
+Subject: help for trig functions
+From: Bill Simpson <wsi@gcal.ac.uk>
+Date: Wed, 26 May 1999 14:55:00 +0000
