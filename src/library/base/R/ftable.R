@@ -171,4 +171,10 @@ ftable2table <- function(x) {
                dim = c(sapply(xrv, length),
                        sapply(xcv, length)),
                dimnames = c(xrv, xcv))
+    nrv <- length(xrv)
+    ncv <- length(xcv)
+    x <- aperm(x, c(seq(from = nrv, to = 1),
+                    seq(from = nrv + ncv, to = nrv + 1)))
+    class(x) <- "table"
+    x
 }
