@@ -499,7 +499,8 @@ getMethodsMetaData <-
 assignMethodsMetaData <-
   ## assign value to be the methods metadata for generic f on database where.
   function(f, value, fdef, where, deflt = finalDefaultMethod(value)) {
-    assign(mlistMetaName(fdef), value, where)
+    assign(mlistMetaName(fdef) # use generic function to get package correct
+           , value, where)
     if(is.primitive(deflt))
         setPrimitiveMethods(f, deflt, "reset", fdef, NULL)
     if(is(fdef, "groupGenericFunction")) # reset or turn on members of group
