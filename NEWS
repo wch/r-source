@@ -85,7 +85,8 @@ INSTALLATION CHANGES
 
     o	GNOME GUI is via a separate front end rather than by loading a
 	module, and can only be used with R as a shared library.
-	[It is built separately, and will be unbundled in due course.]
+	[It is built separately, and will be unbundled in due course.
+	The sources are in the SVN archive but not in the tarballs.]
 
     o	Configuring without having the recommended packages is now an
 	error unless --with-recommended-packages=no is used.

@@ -60,7 +60,9 @@ HEADERS = system.h \
 	terminal-prefs.h terminal-toolbar.h terminal.h 
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
-DISTFILES = Makefile.in $(SOURCES) $(HEADERS)
+DISTFILES = configure configure.ac install-sh Makefile.in mkinstalldirs \
+	$(SOURCES) $(HEADERS)
+SUBDIRS_WITH_NO_BUILD = glade m4
 
 R_binary = Rgnome
 
@@ -106,6 +108,12 @@ distdir: $(DISTFILES)
 	    || ln $(srcdir)/$${f} $(distdir)/$${f} 2>/dev/null \
 	    || cp -p $(srcdir)/$${f} $(distdir)/$${f}; \
 	done
+	@for d in $(SUBDIRS_WITH_NO_BUILD); do \
+	  ((cd $(srcdir); $(TAR) -c -f - $(DISTDIR_TAR_EXCLUDE) $${d}) \
+	      | (cd $(distdir); $(TAR) -x -f -)) \
+	    || exit 1; \
+	done
+
 
 ## Automagically generated dependencies:
 
