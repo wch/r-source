@@ -11,6 +11,8 @@
 
 NEW FEATURES
 
+    o   Function page() to view an R object in a pager.
+
     o   Support for handling embedded '\n's in text strings
 	handed to low-level graphics functions has been added.
 	Some changes to the PostScript graphics driver were
