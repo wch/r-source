@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.6-17, 2002-12-01
+Version 1.6-18, 2002-12-04
 ISBN 3-901167-51-X
 Kurt Hornik
 
@@ -1754,6 +1754,11 @@ distributions of R.)
 *pixmap*
      Functions for import, export, plotting and other manipulations of
      bitmapped images.
+
+*polspline*
+     Routines for the polynomial spline fitting routines hazard regression,
+     hazard estimation with flexible tails, logspline, lspec, polyclass, and
+     polymars, by C. Kooperberg and co-authors.
 
 *polynom*
      A collection of functions to implement a class for univariate
