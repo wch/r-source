@@ -92,7 +92,7 @@ BUG FIXES
 
 DEPRECATED & DEFUNCT
 
-    o	The aqua module is MacOS X is deprecated.
+    o	The aqua module in MacOS X is deprecated.
 
     o	Capabilities "bzip2", "GNOME, "libz" and "PCRE" are deprecated.
 
@@ -181,7 +181,7 @@ BUG FIXES
     o	capabilities() was wrong for the Aqua GUI on MacOS X.
 
     o   Using Rprof() with a non-writeable 'file' argument is now a 
-	non-fatal error and does not about R.
+	non-fatal error and does not abort R.
 
     o   binom.test() did not deparse its arguments early enough such
         that the reported data were ugly if x was a table.
