@@ -187,10 +187,10 @@ none
 
 Directory:  incoming
 
-* PR# 551 *
-Subject: Bus Error crash
-From: kjetikj@astro.uio.no
-Date: Mon, 22 May 2000 13:06:48 +0200 (MET DST)
+* PR# 558 *
+Subject: Documentatio: typo in Writing R Extensions
+From: stephen@anc.ed.ac.uk
+Date: Tue, 30 May 2000 11:39:16 +0200 (MET DST)
 * PR# 545 *
 Subject: Segmentation Fault of unknown cause
 From: kjetikj@astro.uio.no
@@ -199,3 +199,11 @@ Date: Mon, 15 May 2000 16:29:29 +0200 (MET DST)
 Subject: Problem with match.arg()
 From: kjetikj@astro.uio.no
 Date: Sun, 7 May 2000 13:58:21 +0200 (MET DST)
+* PR# 557 *
+Subject: Documentatio: typo in Writing R Extensions
+From: stephen@anc.ed.ac.uk
+Date: Tue, 30 May 2000 11:39:10 +0200 (MET DST)
+* PR# 551 *
+Subject: Bus Error crash
+From: kjetikj@astro.uio.no
+Date: Mon, 22 May 2000 13:06:48 +0200 (MET DST)
