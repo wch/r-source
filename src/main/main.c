@@ -473,6 +473,14 @@ void setup_Rmainloop(void)
     /* gc_inhibit_torture = 0; */
 }
 
+void end_Rmainloop(void)
+{
+    Rprintf("\n");
+    /* run the .Last function. If it gives an error, will drop back to main
+       loop. */
+    R_CleanUp(SA_DEFAULT, 0, 1);
+}
+
 
 void run_Rmainloop(void)
 {
@@ -487,21 +495,17 @@ void run_Rmainloop(void)
     signal(SIGUSR2,onsigusr2);
 
     R_ReplConsole(R_GlobalEnv, 0, 0);
-}
-
-void end_Rmainloop(void)
-{
-    Rprintf("\n");
-    /* run the .Last function. If it gives an error, will drop back to main
-       loop. */
-    R_CleanUp(SA_DEFAULT, 0, 1);
+    end_Rmainloop(); /* must go here */
 }
 
 void mainloop(void)
 {
     setup_Rmainloop();
     run_Rmainloop();
-    end_Rmainloop();
+    /* NO! Don't do that! It ends up in a longjmp for which the
+       setjmp is inside run_Rmainloop! -pd
+    end_Rmainloop(); 
+    */
 }
 
 /*this functionality now appears in 3
