@@ -3156,6 +3156,10 @@ void GSymbol(double x, double y, int coords, int pch, DevDesc *dd)
      * i.e., current par(lty) is ignored when drawing symbols
      */
     gc.lty = LTY_SOLID;
+    /*
+     * special case for pch = "."
+     */
+    if(pch == 46) size = Rf_gpptr(dd)->cex;
     GESymbol(x, y, pch, size, &gc, ((GEDevDesc*) dd));
 }
 

@@ -44,12 +44,16 @@ points(x, \dots)
     If \code{pch} is an integer or character \code{NA} or an empty
     character string, the point is omitted from the plot.
 
-    Value \code{pch="."} is handled specially as a rectangle with each
-    side the larger of one pixel and 0.01 inch.
+    Value \code{pch="."} is handled specially.  It is a rectangle of
+    side 0.01 inch (scaled by \code{cex}).  In addition, if \code{cex =
+      1} (the default), each side is at least one pixel (1/72 inch on
+    the \code{\link{pdf}}, \code{\link{postscript}} and
+    \code{\link{xfig}} devices).  The details here have been changed
+    for 2.1.0 and are subject to change.
   }
   \item{col}{color code or name, see \code{\link{par}}.}
   \item{bg}{background (\dQuote{fill}) color for open plot symbols}
-  \item{cex}{character expansion: a numerical vector.}
+  \item{cex}{character (or symbol) expansion: a numerical vector.}
   \item{\dots}{Further graphical parameters (see \code{\link{plot.xy}}
     and \code{\link{par}}) may also be supplied as arguments.}
 }

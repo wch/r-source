@@ -106,8 +106,8 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
   viewed on older PDF viewers.
 
   Line widths as controlled by \code{par(lwd=)} are in multiples of
-  1/96inch.  Multiples less than 1 are allowed.  \code{pch="."}
-  corresponds to a square of side 1/72 inch.
+  1/96inch.  Multiples less than 1 are allowed.  \code{pch="."} with
+  \code{cex = 1} corresponds to a square of side 1/72 inch.
 }
 \note{
   Acrobat Reader does not use the fonts specified but rather emulates

@@ -145,8 +145,8 @@ win.print(width = 7, height = 7, pointsize = 12, printer = "")
   Line widths as controlled by \code{par(lwd=)} are in multiples of
   1/96inch.  Multiples less than 1 are allowed, down to one pixel width.
 
-  \code{pch="."} corresponds to a square of side the larger of one pixel
-  and 0.01 inch.
+  \code{pch="."} with \code{cex = 1} corresponds to a rectangle of sides
+  the larger of one pixel and 0.01 inch.
 }
 
 \value{
