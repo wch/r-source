@@ -28,7 +28,7 @@ La.eigen <- function (x, symmetric, only.values = FALSE,
             .Call("La_rg", x, only.values, PACKAGE = "base")
         else
             .Call("La_rg_cmplx", x, only.values, PACKAGE = "base")
-        ord <- rev(order(Mod(z$values)))
+        ord <- sort.list(Mod(z$values), decreasing = TRUE)
     }
     list(values = z$values[ord],
          vectors = if (!only.values) z$vectors[, ord])

@@ -39,7 +39,7 @@ interaction.plot <-
         text(xleg, ylim[2] - 0.05 * yrng, paste("  ", trace.label), adj = 0)
         if(!fixed) {
             ## sort them on the value at the last level of x.factor
-            ord <- rev(order(cells[nr,  ]))
+            ord <- sort.list(cells[nr,  ], decreasing = TRUE)
             ylabs <- ylabs[ord]
             lty <- lty[1 + (ord - 1) %% length(lty)]
             col <- col[1 + (ord - 1) %% length(col)]

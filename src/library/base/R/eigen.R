@@ -62,7 +62,7 @@ eigen <- function(x, symmetric, only.values=FALSE)
 	    if (z$ierr)
 		stop(paste("rs returned code ", z$ierr, " in eigen"))
 	}
-	ord <- rev(order(z$values))
+	ord <- sort.list(z$values, decreasing = TRUE)
     }
     else {##- Asymmetric :
 	if(complex.x) {
@@ -116,7 +116,7 @@ eigen <- function(x, symmetric, only.values=FALSE)
 		}
 	    }
 	}
-	ord <- rev(order(Mod(z$values)))
+	ord <- sort.list(Mod(z$values), decreasing = TRUE)
     }
     list(values = z$values[ord],
 	 vectors = if(!only.values) z$vectors[,ord])

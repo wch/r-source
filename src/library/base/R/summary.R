@@ -47,7 +47,7 @@ summary.factor <- function(object, maxsum = 100, ...)
     names(tt) <- dimnames(tbl)[[1]]
     if(length(ll) > maxsum) {
 	drop <- maxsum:length(ll)
-	o <- rev(order(tt))
+	o <- sort.list(tt, decreasing = TRUE)
 	tt <- c(tt[o[ - drop]], "(Other)" = sum(tt[o[drop]]))
     }
     if(any(nas)) c(tt, "NA's" = sum(nas)) else tt
