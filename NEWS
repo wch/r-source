@@ -222,6 +222,10 @@ BUG FIXES
 	logical whereas it could appear to work and give wrong answers
 	with e.g. a numeric 'subset' argument.
 
+    o	sum(), max(), min(), prod(), any() and all() were incorrectly
+	using partial matching for their na.rm argument.
+
+
 
 
 		CHANGES IN R VERSION 2.0.1

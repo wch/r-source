@@ -340,7 +340,7 @@ SEXP do_logic3(SEXP call, SEXP op, SEXP args, SEXP env)
     if(DispatchGroup("Summary", call, op, args, env, &s))
 	return s;
 
-    ans = matchArg(R_NaRmSymbol, &args);
+    ans = matchArgExact(R_NaRmSymbol, &args);
     narm = asLogical(ans);
     haveTrue = FALSE;
     haveFalse = FALSE;
