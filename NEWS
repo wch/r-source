@@ -168,6 +168,9 @@ BUG FIXES
 
     o	capabilities() was wrong for the Aqua GUI on MacOS X.
 
+    o   Using Rprof() with a non-writeable 'file' argument is now a 
+	non-fatal error and does not about R.
+
 
 
 	*********************************************************
