@@ -10,7 +10,7 @@
 }
 \usage{
 outer(X, Y, FUN="*", \dots)
-x \%o\% y
+X \%o\% Y
 }
 
 \arguments{
