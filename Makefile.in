@@ -14,7 +14,6 @@ INSTFILES = AUTHORS COPYING COPYING.LIB COPYRIGHTS FAQ NEWS RESOURCES THANKS
 DISTFILES = $(INSTFILES) \
 	ChangeLog INSTALL ONEWS README VERSION Y2K \
 	Makeconf.in Makefile.in \
-	acinclude.m4 aclocal.m4 \
 	config.site configure configure.ac \
 	date-stamp
 SUBDIRS = m4 tools afm doc etc share src tests
@@ -28,10 +27,7 @@ Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 Makeconf: $(srcdir)/Makeconf.in $(top_builddir)/config.status
 	@cd $(top_builddir) && $(SHELL) ./config.status $@
 
-ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
-ACLOCAL_DEPENDENCIES = \
-	configure.ac \
-	acinclude.m4
+ACLOCAL_M4 = aclocal.m4
 ACINCLUDE_DEPENDENCIES = \
 	m4/R.m4 \
 	m4/codeset.m4 \
@@ -44,11 +40,11 @@ CONFIGURE_DEPENDENCIES = $(srcdir)/VERSION
 config.status: $(srcdir)/configure
 	@$(SHELL) ./config.status --recheck
 $(srcdir)/configure: @MAINTAINER_MODE_TRUE@ $(srcdir)/configure.ac $(ACLOCAL_M4) $(CONFIGURE_DEPENDENCIES)
-	@cd $(srcdir) && $(AUTOCONF)
-$(ACLOCAL_M4): @MAINTAINER_MODE_TRUE@ $(srcdir)/configure.ac $(ACLOCAL_DEPENDENCIES)
-	@cd $(srcdir) && $(ACLOCAL)
-$(srcdir)/acinclude.m4: @MAINTAINER_MODE_TRUE@ $(ACINCLUDE_DEPENDENCIES)
-	@cd $(srcdir) && cat $(ACINCLUDE_DEPENDENCIES) > $@
+	@BD=`pwd`; cd $(srcdir) && $(AUTOCONF) -B $${BD}
+$(ACLOCAL_M4): $(srcdir)/configure.ac acinclude.m4
+	@BD=`pwd`; cd $(srcdir) && $(ACLOCAL) --output=$${BD}/$@ -I $${BD}
+acinclude.m4: $(srcdir)/configure.ac
+	@(cd $(srcdir) && cat $(ACINCLUDE_DEPENDENCIES)) > $@
 
 LIBTOOL_DEPS = @LIBTOOL_DEPS@
 libtool: $(LIBTOOL_DEPS)
@@ -124,7 +120,8 @@ distclean: clean
 	  for d in $${rsd}; do (cd $${d} && $(MAKE) $@); done)
 	-@rm -rf bin include lib library modules gnome
 	-@rm -f Makeconf Makefile Makefile.bak Makefrag.* \
-	  config.cache config.log config.status libtool
+	  config.cache config.log config.status libtool \
+	  $(ACLOCAL_M4) acinclude.m4
 maintainer-clean: distclean
 	@echo "This command is intended for maintainers to use; it"
 	@echo "deletes files that may need special rules to rebuild"

@@ -57,8 +57,9 @@ stamp-h: $(srcdir)/config.h.in $(top_builddir)/config.status
 	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/config.h
 	@echo timestamp > $@ 2> /dev/null
 $(srcdir)/config.h.in: @MAINTAINER_MODE_TRUE@ $(srcdir)/stamp-h.in
-$(srcdir)/stamp-h.in: @MAINTAINER_MODE_TRUE@ $(top_srcdir)/configure.ac $(top_srcdir)/aclocal.m4
-	@cd $(top_srcdir) && $(AUTOHEADER)
+$(srcdir)/stamp-h.in: @MAINTAINER_MODE_TRUE@ $(top_srcdir)/configure.ac $(top_builddir)/aclocal.m4
+	@TBD=`cd $(top_builddir); pwd`; \
+	  cd $(top_srcdir) && $(AUTOHEADER) -I $${TBD}
 	@echo timestamp > $@ 2> /dev/null
 Rconfig.h: config.h $(top_srcdir)/tools/GETCONFIG
 	@$(SHELL) $(top_srcdir)/tools/GETCONFIG > $@
