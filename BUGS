@@ -118,4 +118,11 @@ none
 
 Directory:  incoming
 
-none
+* PR# 462 *
+Subject: pgamma
+From: Jim Lindsey <jlindsey@alpha.luc.ac.be>
+Date: Tue, 29 Feb 2000 09:50:00 +0100 (MET)
+* PR# 463 *
+Subject: Bug in read.table
+From: "E. S. Venkatraman" <venkat@biosta.mskcc.org>
+Date: Tue, 29 Feb 2000 17:47:54 -0500 (EST)
