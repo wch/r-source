@@ -863,7 +863,8 @@ as.matrix.data.frame <- function (x)
 				  if(length(dnj) > 0) dnj else 1:dj[2],
 				  sep = ".")
 	}
-	if(length(levels(xj)) > 0 || !(is.numeric(xj) || is.complex(xj)))
+	if(length(levels(xj)) > 0 || !(is.numeric(xj) || is.complex(xj))
+           || (!is.null(cl <- class(xj)) && any(substr(cl,1,5) == "POSIX")))
 	    non.numeric <- TRUE
 	if(!is.atomic(xj))
 	    non.atomic <- TRUE
