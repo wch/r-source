@@ -19,9 +19,9 @@ file.append <- function(file1, file2)
 file.remove <- function(...)
 .Internal(file.remove(c(...)))
 
-
-list.files <- function(path, pattern=NULL, all.files=FALSE, full.names=FALSE)
+list.files <- function(path=".", pattern=NULL,all.files=FALSE,full.names=FALSE)
 .Internal(list.files(path, pattern, all.files, full.names))
+
 dir <- .Alias(list.files)
 
 file.path <- function(..., fsep=.Platform$file.sep)

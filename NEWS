@@ -99,6 +99,8 @@ NEW FEATURES
     o	New "call. = TRUE" argument for stop(), and
 	new function  stopifnot(.) -- to be used in "make check".
 
+    o	list.files() [aka dir()]: path argument has now default = "."
+
 
 BUG FIXES
 

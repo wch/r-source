@@ -3,10 +3,9 @@
 \alias{dir}
 \title{List the Files in a Directory/Folder}
 \usage{
-list.files(path, pattern=NULL, all.files=FALSE,
-    full.names=FALSE)
-dir(path, pattern=NULL, all.files=FALSE,
-    full.names=FALSE)
+list.files(path = ".", pattern=NULL, all.files=FALSE,
+           full.names=FALSE)
+dir(path = ".", pattern=NULL, all.files=FALSE, full.names=FALSE)
 }
 \arguments{
   \item{path}{a character vector of full path names.}
@@ -36,7 +35,6 @@ dir(path, pattern=NULL, all.files=FALSE,
 \note{
   File naming conventions are very platform dependent.
 }
-
 \examples{
 list.files(R.home())
 }
