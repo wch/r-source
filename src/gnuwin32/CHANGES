@@ -1,3 +1,10 @@
+rw0900
+======
+
+We made a determined attempt to quote paths which might contain spaces,
+and almost all cases work. Be careful with external unzip, page and editor
+that these do handle quoted paths.
+
 rw0651
 ======
 

@@ -41,10 +41,10 @@ sub html_pagehead
 	"LINK=\"#0000F0\" VLINK=\"#660066\" ALINK=\"#FF0000\" " .
 	"BACKGROUND=\"white\">\n" .
 	"<h1 align=center>\n" .
-        "<FONT FACE=\"Courier New,Courier\" COLOR=\"#999999\" " .
-        "size=\"+3\"><b>\n" .
+        "<FONT COLOR=\"#999999\" " .
+        "size=\"+3\"><tt>\n" .
         "$title\n" .
-        "</b></FONT><img src=\"$top/logo.jpg\" alt=\"[R logo]\" align=center></h1>\n\n" .
+        "</tt></FONT><img src=\"$top/logo.jpg\" alt=\"[R logo]\" align=center></h1>\n\n" .
         "<hr>\n\n" .
         "<div align=center>\n";
 
@@ -102,11 +102,11 @@ sub html_title2
     my $title = $_[0];
 
     if($opt_chm) {
-    "\n<h2 align=center><FONT FACE=\"Courier New,Courier\" " .
-	"COLOR=\"#0000FF\">$title</FONT></h2>\n\n";
+	"\n<h2 align=center><FONT COLOR=\"#0000FF\">" .
+	    "<tt>$title</tt></FONT></h2>\n\n";
     } else {
-	"\n<h2 align=center><FONT FACE=\"Courier New,Courier\" " .
-	    "COLOR=\"#999999\">$title</FONT></h2>\n\n";
+	"\n<h2 align=center><FONT COLOR=\"#999999\">" .
+	    "<tt>$title</tt></FONT></h2>\n\n";
     }
 }
 
@@ -115,11 +115,11 @@ sub html_title3
     my $title = $_[0];
 
     if($opt_chm) {
-	"\n<h3><FONT FACE=\"Courier New,Courier\" " .
-	"COLOR=\"#666666\">$title</FONT></h3>\n\n";
+	"\n<h3><FONT COLOR=\"#666666\">" .
+	    "<tt>$title</tt></FONT></h3>\n\n";
     } else {
-	"\n<h2><FONT FACE=\"Courier New,Courier\" " .
-	"COLOR=\"#666666\">$title</FONT></h2>\n\n";
+	"\n<h2><FONT COLOR=\"#666666\">" .
+	    "<tt>$title</tt></FONT></h2>\n\n";
     }
 }
 
@@ -164,10 +164,10 @@ sub chm_pagehead
 	"LINK=\"#0000F0\" VLINK=\"#660066\" ALINK=\"#FF0000\" " .
 	"BACKGROUND=\"white\">\n" .
 	"<h1 align=center>\n" .
-        "<FONT FACE=\"Courier New,Courier\" COLOR=\"#999999\" " .
-        "size=\"+3\"><b>\n" .
+        "<FONT COLOR=\"#999999\" " .
+        "size=\"+3\"><tt>\n" .
         "$title\n" .
-        "</b></FONT><img src=\"logo.jpg\" alt=\"[R logo]\" align=center></h1>\n\n" .
+        "</tt></FONT><img src=\"logo.jpg\" alt=\"[R logo]\" align=center></h1>\n\n" .
         "<hr>\n\n";
     $retval .= "<OBJECT TYPE=\"application/x-oleobject\" CLASSID=\"clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e\">\n";
     $retval .= "<PARAM NAME=\"Keyword\" VALUE=\".. Contents\">\n" .
