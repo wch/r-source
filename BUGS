@@ -215,10 +215,6 @@ Directory:  Models
 Subject: interaction() -- problem with drop
 From: Matthew Wiener <mcw@ln.nimh.nih.gov>
 Date: Thu, 28 Jun 2001 20:14:47 -0400 (EDT)
-* PR# 1001 *
-Subject: lm.influence doesn't work with na.exclude
-From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
-Date: 28 Jun 2001 16:16:58 +0200
 
 Directory:  Startup
 
@@ -252,4 +248,7 @@ none
 
 Directory:  incoming
 
-none
+* PR# 1007 *
+Subject: ks.test doesn't compute correct empirical distribution if there are ties in the data
+From: mcdowella@mcdowella.demon.co.uk
+Date: Sun, 1 Jul 2001 07:53:53 +0200 (MET DST)
