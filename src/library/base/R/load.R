@@ -48,10 +48,26 @@ save <- function(..., list = character(0), file = "", ascii = FALSE,
 }
 
 save.image <- function (file = ".RData", version = NULL, ascii = FALSE,
-                        compress = FALSE) {
+                        compress = FALSE, safe = TRUE) {
     if (! is.character(file) || file == "")
         stop("`file' must be non-empty string")
-    save(list = ls(envir = .GlobalEnv, all.names = TRUE), file = file,
+
+    if (safe) {
+        # find a temporary file name in the same directory so we can
+        # rename it to the final output file on success
+        outfile <- paste(file, "Tmp", sep = "")
+        i <- 0;
+        while (file.exists(outfile)) {
+            i <- i + 1
+            outfile <- paste(file, "Tmp", i, sep = "")
+        }
+    }
+    else outfile <- file
+
+    on.exit(file.remove(outfile))
+    save(list = ls(envir = .GlobalEnv, all.names = TRUE), file = outfile,
          version = version, ascii = ascii, compress = compress,
          envir = .GlobalEnv)
+    if (safe) file.rename(outfile, file)
+    on.exit()
 }

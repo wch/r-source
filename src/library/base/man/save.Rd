@@ -4,7 +4,7 @@
 save(\dots, list = character(0), file = "", ascii = FALSE,
      version = NULL, envir = parent.frame(), compress = FALSE)
 save.image(file = ".RData", version = NULL, ascii = FALSE,
-           compress = FALSE)
+           compress = FALSE, safe = TRUE)
 }
 \alias{save}
 \alias{save.image}
@@ -26,6 +26,11 @@ save.image(file = ".RData", version = NULL, ascii = FALSE,
   \item{compress}{logical specifying whether saving to a named file is to
     use compression. Ignored when \code{file} is a connection and for
     workspace format version 1.}
+  \item{safe}{logical.  If TRUE, a temporary file is used for creating
+    the saved workspace.  The temporary file is renamed to \code{file}
+    if the save succeeds.  This preserves an existing workspace
+    \code{file} if the save fails, but at the cost of using extra disk
+    space during the save.}
   }
 }
 \description{
