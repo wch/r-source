@@ -41,4 +41,4 @@ edit(airquality, factor.mode="character")
 }
 }
 
-\keyword{ utilities }
+\keyword{utilities}

@@ -25,4 +25,4 @@ print.power.htest(x)
 
 \seealso{\code{\link{power.t.test}}, \code{\link{power.prop.test}} }
 
-\keyword{ ~keyword }%-- one or more ...
+\keyword{htest}
