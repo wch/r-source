@@ -94,24 +94,24 @@ typedef union
    a song and dance in a threaded application (e.g pthread_once(),
    etc.).
  */
-#ifndef _AIX
-#  ifdef WORDS_BIGENDIAN
-static const int hw = 0;
-static const int  lw = 1;
-#  else  /* WORDS_BIGENDIAN */
-static const int hw = 1;
-static const int lw = 0;
-#  endif /* WORDS_BIGENDIAN */
+
+/* gcc has problems with static const on AIX and Solaris
+   Solaris is for gcc 3.1 and 3.2 under -O2 32-bit on 64-bit kernel */
+#ifdef _AIX
+#define CONST
+#elif defined(sparc) && defined (__GNUC__) && __GNUC__ == 3
+#define CONST
 #else
-/* gcc on AIX messes up symbol table with static const */
-#  ifdef WORDS_BIGENDIAN
-static int hw = 0;
-static int  lw = 1;
-#  else  /* WORDS_BIGENDIAN */
-static int hw = 1;
-static int lw = 0;
-#  endif /* WORDS_BIGENDIAN */
+#define CONST const
 #endif
+
+#ifdef WORDS_BIGENDIAN
+static CONST int hw = 0;
+static CONST int lw = 1;
+#else  /* !WORDS_BIGENDIAN */
+static CONST int hw = 1;
+static CONST int lw = 0;
+#endif /* WORDS_BIGENDIAN */
 
 
 static double R_ValueOfNA(void)

@@ -1132,17 +1132,17 @@ process by default sets @code{LDFLAGS} to @samp{-L/usr/local/lib},
 you may need to set it to avoid finding 32-bit addons (as in the
 @command{gcc -m64} example above).
 
-We have seen problems with @command{gcc} versions 3.1 and 3.2 on some
-(but not all) 32-bit Solaris 7/8 systems.  The symptom is
+@c We have seen problems with @command{gcc} versions 3.1 and 3.2 on some
+@c (but not all) 32-bit Solaris 7/8 systems.  The symptom is
 
-@smallexample
-> as.double(NA)
-[1] NaN
-@end smallexample
+@c @smallexample
+@c > as.double(NA)
+@c [1] NaN
+@c @end smallexample
 
-@noindent
-and the cure is to compile @file{src/main/arithmetic.c} without
-optimization.
+@c @noindent
+@c and the cure is to compile @file{src/main/arithmetic.c} without
+@c optimization.
 
 @node HPUX, IRIX, Solaris, Platform notes
 @subsection HPUX
