@@ -20,6 +20,7 @@
 #include "Defn.h"
 #include "Print.h"
 #include "names.h"
+#include "arithmetic.h"
 
 /* Table of  .Internal(.) and .Primitive(.)  R functions
  * =====     =========	      ==========
@@ -219,6 +220,8 @@ FUNTAB R_FunTab[] =
 {"tetragamma",	do_math1,	44,	11,	1,	PP_FUNCALL},
 {"pentagamma",	do_math1,	45,	11,	1,	PP_FUNCALL},
 
+{"gammaCody",	do_math1,	46,	11,	1,	PP_FUNCALL},
+
 /* Mathematical Functions of Two Variables */
 
 {"atan2",	do_math2,	0,	11,	2,	PP_FUNCALL},
@@ -251,6 +254,9 @@ FUNTAB R_FunTab[] =
 {"dsignrank",	do_math2,	21,	11,	2,	PP_FUNCALL},
 {"psignrank",	do_math2,	22,	11,	2,	PP_FUNCALL},
 {"qsignrank",	do_math2,	23,	11,	2,	PP_FUNCALL},
+
+{"besselJ",	do_math2,	24,	11,	2,	PP_FUNCALL},
+{"besselY",	do_math2,	25,	11,	2,	PP_FUNCALL},
 
 /* Mathematical Functions of a Complex Argument */
 
@@ -318,6 +324,9 @@ FUNTAB R_FunTab[] =
 {"dwilcox",	do_math3,	40,	11,	3,	PP_FUNCALL},
 {"pwilcox",	do_math3,	41,	11,	3,	PP_FUNCALL},
 {"qwilcox",	do_math3,	42,	11,	3,	PP_FUNCALL},
+
+{"besselI",	do_math3,	43,	11,	3,	PP_FUNCALL},
+{"besselK",	do_math3,	44,	11,	3,	PP_FUNCALL},
 
 /* Mathematical Functions of Four Variables */
 

@@ -22,6 +22,8 @@
 #include "Fortran.h"/* POW_DI */
 #include "Applic.h"/* cpoly */
 
+#include "arithmetic.h"/* complex_ */
+
 static int naflag;
 
 SEXP complex_unary(int code, SEXP s1)
