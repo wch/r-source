@@ -121,12 +121,13 @@ char *R_PromptString(int browselevel, int type)
 static void R_ReplConsole(SEXP rho, int savestack, int browselevel)
 {
     int c, status, browsevalue;
-    unsigned char *bufp, buf[1024];
+    unsigned char *bufp, buf[1025];
     SEXP value;
 
     R_IoBufferWriteReset(&R_ConsoleIob);
     prompt_type = 1;
     buf[0] = '\0';
+    buf[1025] = '\0'; /* stopgap measure if line > 1024 chars */
     bufp = buf;
     if(R_Verbose)
 	REprintf(" >R_ReplConsole(): before \"for(;;)\" {main.c}\n");
