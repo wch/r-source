@@ -4,7 +4,7 @@
 
 # @configure_input@
 
-revision='$Revision: 1.42 $'
+revision='$Revision: 1.43 $'
 version=`set - ${revision}; echo ${2}`
 version="R add-on package installer ${version}"
 
@@ -191,141 +191,148 @@ do_install () {
   mkdir -p ${lib}/${pkg} || exit 3
   echo "Installing package \`${pkg}' ..."
 
-      # Make the destination directories available to the developer's
-      # installation scripts (e.g. configure, etc.)
-   R_PACKAGE_DIR=${lib}/${pkg}
-   R_LIBRARY_DIR=${lib}
-   R_PACKAGE_NAME=${pkg}
-   export R_LIBRARY_DIR
-   export R_PACKAGE_DIR
-   export R_PACKAGE_NAME
-
-  if test -x ./configure ; then
-    ./configure ${configure_args}
-    if test ${?} -ne 0; then
-      echo "ERROR: Configuration failed for package \`${pkg}'"
-      exit 4
-    fi
-  fi
-
-  if test -d src; then
-    echo " libs"
-    if ${debug}; then set -x; fi
-    mkdir -p ${lib}/${pkg}/libs
-    if test -f src/Makefile; then
-      (cd src;
-        makefiles="-f ${R_HOME}/etc/Makeconf -f Makefile"
-	if test -r Makevars; then
-	  makefiles="-f Makevars ${makefiles}"
-	fi
-	${MAKE} ${makefiles} \
-	  && cp *.@SHLIB_EXT@ ${lib}/${pkg}/libs \
-	  || error=true; \
-	if ${clean}; then ${MAKE} clean; fi)
-    else
-      (cd src;
-        srcs=`ls *.[cf] *.cc 2>/dev/null`
-	sh ${R_HOME}/bin/SHLIB \
-	    -o ${lib}/${pkg}/libs/${pkg}.@SHLIB_EXT@ ${srcs} \
-	  || error=true; \
-	if ${clean}; then rm -f *.o; fi)
-    fi
-    if ${error}; then
-      echo "ERROR: Compilation failed for package \`${pkg}'"
-      exit 5
-    fi
-    if ${debug}; then set +x; fi
-  fi
-
-  if test -d R; then dir=R; elif test -d funs; then dir=funs; fi
-  if test "${dir}"; then
-    echo " ${dir}"
-    mkdir -p ${lib}/${pkg}/R
-    cat `ls ${dir}/*.[RSqrs] ${dir}/unix/*.[RSqrs] 2>/dev/null` \
-      > ${lib}/${pkg}/R/${pkg}
-  fi
-  dir=
-
-  if test -d data; then
-    echo " data"
-    mkdir -p ${lib}/${pkg}/data
-    cp data/* ${lib}/${pkg}/data
-    chmod 644 ${lib}/${pkg}/data/*
-    if test -n "${use_zip_data}" \
-        -a -n "${R_UNZIPCMD}" \
-        -a -n "${R_ZIPCMD}"; then
-      (cd ${lib}/${pkg}/data;
-        find . -type f -print > filelist
-        ${R_ZIPCMD} -m Rdata * -x filelist 00Index)
-    fi
-  fi
-
-  if test -d exec; then
-    echo " exec"
-    mkdir -p ${lib}/${pkg}/exec
-    cp exec/* ${lib}/${pkg}/exec
-    chmod 755 ${lib}/${pkg}/exec/*
-  fi
-
-  if test -d inst; then
-    echo " inst"
-    cp -r inst/* ${lib}/${pkg}
-  fi
-
-  for f in COPYING DESCRIPTION INDEX; do
-    if test -f ${f}; then cp ${f} ${lib}/${pkg}; fi
-  done
-  title=`grep -s "^Title:" DESCRIPTION | sed "s/^Title:[ \t]*//"`
-  if test "${title}"; then
-      ${R_HOME}/bin/maketitle > ${lib}/${pkg}/TITLE
-  elif test -f TITLE; then
-    cp TITLE ${lib}/${pkg}
-  fi
-  (cd ${lib}; cat */TITLE > LibIndex 2> /dev/null)
-
   if test -d man; then
-    echo " help"
-    if ${build_help}; then
-      if ${NO_PERL5}; then
-	echo "${NO_PERL5_MSG}"
+    ## Assume this is a source package.
+    ## FIXME:  Do we have a better test?
+
+    ## Make the destination directories available to the developer's
+    ## installation scripts (e.g. configure, etc.)
+    R_PACKAGE_DIR=${lib}/${pkg}
+    R_LIBRARY_DIR=${lib}
+    R_PACKAGE_NAME=${pkg}
+    export R_LIBRARY_DIR
+    export R_PACKAGE_DIR
+    export R_PACKAGE_NAME
+
+    if test -x ./configure ; then
+      ./configure ${configure_args}
+      if test ${?} -ne 0; then
+	echo "ERROR: Configuration failed for package \`${pkg}'"
+	exit 4
+      fi
+    fi
+
+    if test -d src; then
+      echo " libs"
+      if ${debug}; then set -x; fi
+      mkdir -p ${lib}/${pkg}/libs
+      if test -f src/Makefile; then
+        (cd src;
+          makefiles="-f ${R_HOME}/etc/Makeconf -f Makefile"
+	  if test -r Makevars; then
+	    makefiles="-f Makevars ${makefiles}"
+	  fi
+	  ${MAKE} ${makefiles} \
+	    && cp *.@SHLIB_EXT@ ${lib}/${pkg}/libs \
+	    || error=true; \
+	  if ${clean}; then ${MAKE} clean; fi)
       else
-	if ${debug}; then
-	  echo "  ${R_HOME}/bin/build-help ${BUILD_HELP_OPTS} ../${pkg} ${lib}"
-	fi
-	${R_HOME}/bin/build-help ${build_help_opts} ../${pkg} ${lib}
-	${R_HOME}/bin/Rd2contents ../${pkg} > ${lib}/${pkg}/CONTENTS
-	if test ${lib} = ${R_HOME}/library; then 
-	  ${R_HOME}/bin/build-help --htmllists
-	  cat ${R_HOME}/library/*/CONTENTS \
-	    > ${R_HOME}/doc/html/search/index.txt
-	fi	
+        (cd src;
+          srcs=`ls *.[cf] *.cc 2>/dev/null`
+	  sh ${R_HOME}/bin/SHLIB \
+  	      -o ${lib}/${pkg}/libs/${pkg}.@SHLIB_EXT@ ${srcs} \
+  	    || error=true; \
+	  if ${clean}; then rm -f *.o; fi)
       fi
-      if test -n "${use_zip_help}" \
-	  -a -n "${R_UNZIPCMD}" \
-	  -a -n "${R_ZIPCMD}"; then
-	cd ${lib}/${pkg}
-	if test -d R-ex; then
-	  (cd R-ex; ${R_ZIPCMD} -m Rex *.R)
-	fi
-	## NOT YET:
-	## if test -d latex; then
-	##   (cd latex; ${R_ZIPCMD} -m Rhelp *.tex)
-	## fi
-	if test -d help; then
-	  (cd help; ${R_ZIPCMD} -m Rhelp * -x 00Titles AnIndex);
-	fi
+      if ${error}; then
+	echo "ERROR: Compilation failed for package \`${pkg}'"
+	exit 5
+      fi
+      if ${debug}; then set +x; fi
+    fi
+
+    if test -d R; then
+      echo " R"
+      mkdir -p ${lib}/${pkg}/R
+      cat `ls R/*.[RSqrs] R/unix/*.[RSqrs] 2>/dev/null` \
+	> ${lib}/${pkg}/R/${pkg}
+    fi
+
+    if test -d data; then
+      echo " data"
+      mkdir -p ${lib}/${pkg}/data
+      cp data/* ${lib}/${pkg}/data
+      chmod 644 ${lib}/${pkg}/data/*
+      if test -n "${use_zip_data}" \
+          -a -n "${R_UNZIPCMD}" \
+          -a -n "${R_ZIPCMD}"; then
+        (cd ${lib}/${pkg}/data;
+          find . -type f -print > filelist
+          ${R_ZIPCMD} -m Rdata * -x filelist 00Index)
       fi
     fi
-  else
-    echo "  No man pages found in package \`${pkg}'"
-  fi
 
-  if ${clean}; then
-    if test -x ./cleanup ; then
-      ./cleanup
+    if test -d exec; then
+      echo " exec"
+      mkdir -p ${lib}/${pkg}/exec
+      cp exec/* ${lib}/${pkg}/exec
+      chmod 755 ${lib}/${pkg}/exec/*
     fi
+
+    if test -d inst; then
+      echo " inst"
+      cp -r inst/* ${lib}/${pkg}
+    fi
+
+    for f in COPYING DESCRIPTION INDEX; do
+      if test -f ${f}; then cp ${f} ${lib}/${pkg}; fi
+    done
+    title=`grep -s "^Title:" DESCRIPTION | sed "s/^Title:[ \t]*//"`
+    if test "${title}"; then
+      ${R_HOME}/bin/maketitle > ${lib}/${pkg}/TITLE
+    elif test -f TITLE; then
+      cp TITLE ${lib}/${pkg}
+    fi
+
+    if test -d man; then
+      echo " help"
+      if ${build_help}; then
+	if ${NO_PERL5}; then
+	  echo "${NO_PERL5_MSG}"
+	else
+	  if ${debug}; then
+	    echo "  ${R_HOME}/bin/build-help ${BUILD_HELP_OPTS} ../${pkg} ${lib}"
+	  fi
+	  ${R_HOME}/bin/build-help ${build_help_opts} ../${pkg} ${lib}
+	  ${R_HOME}/bin/Rd2contents ../${pkg} > ${lib}/${pkg}/CONTENTS
+	  if test ${lib} = ${R_HOME}/library; then 
+	    ${R_HOME}/bin/build-help --htmllists
+	    cat ${R_HOME}/library/*/CONTENTS \
+	      > ${R_HOME}/doc/html/search/index.txt
+	  fi	
+	fi
+	if test -n "${use_zip_help}" \
+            -a -n "${R_UNZIPCMD}" \
+	    -a -n "${R_ZIPCMD}"; then
+	  cd ${lib}/${pkg}
+	  if test -d R-ex; then
+	    (cd R-ex; ${R_ZIPCMD} -m Rex *.R)
+	  fi
+	  ## NOT YET:
+	  ## if test -d latex; then
+	  ##   (cd latex; ${R_ZIPCMD} -m Rhelp *.tex)
+	  ## fi
+	  if test -d help; then
+	    (cd help; ${R_ZIPCMD} -m Rhelp * -x 00Titles AnIndex);
+	  fi
+        fi
+      fi
+    else
+      echo "  No man pages found in package \`${pkg}'"
+    fi
+
+    if ${clean}; then
+      if test -x ./cleanup ; then
+	./cleanup
+      fi
+    fi
+
+  else  
+    ## Assume this is a binary package
+    cp -r . ${lib}/${pkg}
   fi
 
+  (cd ${lib}; cat */TITLE > LibIndex 2> /dev/null)  
   chmod -R a+r ${lib}/${pkg}
 
   echo " DONE (${pkg})"
