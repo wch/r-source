@@ -69,7 +69,7 @@ Rsmall.iss: JRsmall.pl ../$(RPREFIX)b.zip \
 	rm -rf $(RPREFIX)/library/*/html $(RPREFIX)/library/*/latex \
 	  $(RPREFIX)/library/*/man
 	rm -rf $(RPREFIX)/library/rpart/Manuscript
-	rm -rf $(RPREFIX)/library/survival/doc
+	rm -rf $(RPREFIX)/library/survival/doc $(RPREFIX)/library/survival/survival.ps.gz
 	perl JRsmall.pl $(RPREFIX)
 
 miniR.exe: Rsmall.iss
