@@ -29,7 +29,7 @@ lines(x, \dots)
   etc. See \code{\link{xy.coords}}.
 
   The coordinates can contain \code{NA} values. If a point contains
-  \code{NA} it either its \code{x} or \code{y} value, it is omitted from
+  \code{NA} in either its \code{x} or \code{y} value, it is omitted from
   the plot, and lines are not drawn to or from such points.  Thus
   missing values can be used to achieve breaks in lines.
 }

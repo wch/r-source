@@ -5,7 +5,7 @@
   This provides a way to get the names (or identifiers)
   for the currently registered task callbacks
   that are invoked at the conclusion of each top-level task.
-  These identifies can be used to remove a callback.
+  These identifiers can be used to remove a callback.
 }
 \usage{
 getTaskCallbackNames()

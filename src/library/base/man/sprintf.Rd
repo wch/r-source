@@ -16,7 +16,8 @@ sprintf(fmt, \dots)
     value is read from each vector.}
 }
 \details{
-  This is a wrapper for the system's C call.  Attempts are made to
+  This is a wrapper for the system \code{sprintf} C-library function.  
+  Attempts are made to
   check that the mode of the values passed match the format supplied,
   and \R's special values (\code{NA}, \code{Inf}, \code{-Inf} and
   \code{NaN}) are handled correctly.

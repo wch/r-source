@@ -14,7 +14,7 @@ loglin(table, margin, start = rep(1, length(table)), fit = FALSE,
     \code{table}.}
   \item{margin}{a list of vectors with the marginal totals to be fit.
 
-    (Hierarchical) log-linear models can be specified in term of these
+    (Hierarchical) log-linear models can be specified in terms of these
     marginal totals which give the \dQuote{maximal} factor subsets contained
     in the model.  For example, in a three-factor model,
     \code{list(c(1, 2), c(1, 3))} specifies a model which contains

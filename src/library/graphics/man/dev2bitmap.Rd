@@ -52,7 +52,7 @@ dev2bitmap(file, type = "png256", height = 6, width = 6, res = 72,
   \code{type = "pdfwrite"}, and the PDF produced is not bitmapped.
 
   For formats which contain a single image, a file specification like
-  \code{Rplots\%03d.png} can be used: this is intepreted by GhostScript.
+  \code{Rplots\%03d.png} can be used: this is interpreted by GhostScript.
 
   For \code{dev2bitmap} if just one of \code{width} and \code{height} is
   specified, the other is chosen to preserve aspect ratio of the

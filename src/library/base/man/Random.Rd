@@ -147,7 +147,8 @@ set.seed(seed, kind = NULL)
   represent the type of normal generator (starting at \code{0}).
 
   In the underlying C, \code{.Random.seed[-1]} is \code{unsigned};
-  therefore in \R \code{.Random.seed[-1]} can be negative.
+  therefore in \R \code{.Random.seed[-1]} can be negative, due to
+  the representation of an unsigned integer by a signed integer.
 
   \code{RNGkind} returns a two-element character vector of the RNG and
   normal kinds in use \emph{before} the call, invisibly if either

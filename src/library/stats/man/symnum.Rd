@@ -39,9 +39,9 @@ symnum(x, cutpoints=c(0.3, 0.6, 0.8, 0.9, 0.95),
   \item{show.max}{if \code{TRUE}, or of mode \code{character}, the
     maximal cutpoint is coded especially.}
   \item{show.min}{if \code{TRUE}, or of mode \code{character}, the
-    minmal cutpoint is coded especially.}
+    minimal cutpoint is coded especially.}
   \item{abbr.colnames}{logical, integer or \code{NULL} indicating how
-    column names should be abbreviated (if there are); if \code{NULL}
+    column names should be abbreviated (if they are); if \code{NULL}
     (or \code{FALSE} and \code{x} has no column names),
     the column names will all be empty, i.e., \code{""}; otherwise if
     \code{abbr.colnames} is false, they are left unchanged.  If

@@ -16,7 +16,7 @@ df.residual(object, \dots)
 \details{
   This is a generic function which can be used to extract residual
   degrees-of-freedom for fitted models.  Consult the individual modeling
-  functions for details details on how to use this function.
+  functions for details on how to use this function.
 
   The default method just extracts the \code{df.residual} component.
 }

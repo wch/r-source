@@ -17,9 +17,9 @@ nlm(f, p, hessian = FALSE, typsize=rep(1, length(p)), fscale=1,
     \code{hessian} attributes, these will be used in the calculation of
     updated parameter values.  Otherwise, numerical derivatives are
     used. \code{\link{deriv}} returns a function with suitable
-    \code{gradient} attribute.  This should be a function a vector of
+    \code{gradient} attribute.  This should be a function of a vector of
     the length of \code{p} followed by any other arguments specified
-    in \code{dots}.}
+    by the \code{\dots} argument.}
   \item{p}{starting parameter values for the minimization.}
   \item{hessian}{if \code{TRUE}, the hessian of \code{f}
     at the minimum is returned.}
@@ -67,7 +67,7 @@ nlm(f, p, hessian = FALSE, typsize=rep(1, length(p)), fscale=1,
 \value{
   A list containing the following components:
   \item{minimum}{the value of the estimated minimum of \code{f}.}
-  \item{estimate}{the point at which the mininum value of
+  \item{estimate}{the point at which the minimum value of
     \code{f} is obtained.}
   \item{gradient}{the gradient at the estimated minimum of \code{f}.}
   \item{hessian}{the hessian at the estimated minimum of \code{f} (if

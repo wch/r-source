@@ -24,7 +24,7 @@ rm    (\dots, list = character(0), pos = -1, envir = as.environment(pos),
   vector \code{list}, or through a combination of both.  All objects
   thus specified will be removed.
 
-  If \code{envir} is NULL then the the currently active environment is
+  If \code{envir} is NULL then the currently active environment is
   searched first.
 
   If \code{inherits} is \code{TRUE} then parents of the supplied

@@ -13,7 +13,7 @@ Sys.sleep(time)
 \details{
   Using this function allows \R to be given very low priority and hence
   not to interfere with more important foreground tasks. A typical use
-  is to allow a process lauched from \R to set itself up and read its
+  is to allow a process launched from \R to set itself up and read its
   input files before \R execution is resumed.
   
   The intention is that this function suspends execution of \R

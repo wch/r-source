@@ -87,7 +87,7 @@ writeChar(object, con, nchars = nchar(object), eos = "")
   is zero-padded, with a warning.
 
   If \code{readBin(what=character())} is used incorrectly on a file which
-  does not contain C-style charcter strings, warnings (usually
+  does not contain C-style character strings, warnings (usually
   many) are  given as from version 1.6.2.  The input will be broken into
   pieces of length 10000 with any final part being discarded.
 }

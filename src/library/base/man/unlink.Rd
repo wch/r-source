@@ -7,13 +7,13 @@
     directories to be deleted.
     Wildcards (normally \file{*} and \file{?}) are allowed.}
   \item{recursive}{logical. Should directories be deleted
-    recusively?}
+    recursively?}
 }
 \description{
   \code{unlink} deletes the file(s) or directories specified by \code{x}.
 }
 \details{
-  If \code{recusive = FALSE} directories are not deleted,
+  If \code{recursive = FALSE} directories are not deleted,
   not even empty ones.
 
   \code{\link{file.remove}} can only remove files, but gives more

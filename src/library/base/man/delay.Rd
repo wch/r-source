@@ -31,8 +31,8 @@ x <- delay({
     10
 })
 
-x^2#- yippee
-x^2#- simple number
+x^2 #- yippee
+x^2 #- simple number
 }
 \keyword{programming}
 \keyword{data}

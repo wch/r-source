@@ -28,7 +28,7 @@ quantile(x, \dots)
   if \code{names = TRUE}, it has a \code{\link{names}} attribute.
 
   \code{quantile(x,p)} as a function of \code{p} linearly interpolates
-  the points ( (i-1)/(n-1), ox[i] ), where
+  the points \eqn{( (i-1)/(n-1), ox[i] )}, where
   \code{ox <- sort(x)} and \code{n <- length(x)}.
 
   This gives \code{quantile(x, p) == (1-f)*ox[i] + f*ox[i+1]}, where

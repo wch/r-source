@@ -38,7 +38,7 @@ is.array(x)
   \code{is.array} returns \code{TRUE} or \code{FALSE} depending on
   whether its argument is an array (i.e., has a \code{dim} attribute)
   or not. It is generic: you can write methods to handle
-  of specific classes of objects, see \link{InternalMethods}.
+  specific classes of objects, see \link{InternalMethods}.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

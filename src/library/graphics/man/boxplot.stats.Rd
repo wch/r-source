@@ -27,7 +27,7 @@ boxplot.stats(x, coef = 1.5, do.conf=TRUE, do.out=TRUE)
   \item{stats}{a vector of length 5, containing the extreme of the
     lower whisker, the lower \dQuote{hinge}, the median, the upper \dQuote{hinge}
     and the extreme of the upper whisker.}
-  \item{n}{the number of of non-\code{NA} observations in the sample.}
+  \item{n}{the number of non-\code{NA} observations in the sample.}
   \item{conf}{the lower and upper extremes of the \dQuote{notch} (\code{if(do.conf)}).}
   \item{out}{the values of any data points which lie beyond the
     extremes of the whiskers (\code{if(do.out)}).}

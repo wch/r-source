@@ -15,7 +15,7 @@ eval.parent(expr, n = 1)
 local(expr, envir = new.env())
 }
 \arguments{
-  \item{expr}{object of mode \code{\link{expression}} or\code{call} or
+  \item{expr}{object of mode \code{\link{expression}} or \code{call} or
     an \dQuote{unevaluated expression}.}
   \item{envir}{the \code{\link{environment}} in which \code{expr} is to
     be evaluated.  May also be a list, a data frame, or an integer as in

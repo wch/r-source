@@ -52,7 +52,7 @@ is.ts(x)
   points in time.  In the matrix case, each column of the matrix
   \code{data} is assumed to contain a single (univariate) time series.
   Time series must have an least one observation, and although they need
-  not be no numeric there is very limited support for non-numeric series.
+  not be numeric there is very limited support for non-numeric series.
 
   Class \code{"ts"} has a number of methods.  In particular arithmetic
   will attempt to align time axes, and subsetting to extract subsets of
@@ -75,7 +75,7 @@ is.ts(x)
   it has one to set the start and end times and frequency.
 
   \code{is.ts} tests if an object is a time series. It is generic: you
-  can write methods to handle of specific classes of objects,
+  can write methods to handle specific classes of objects,
   see \link{InternalMethods}.
 }
 \references{

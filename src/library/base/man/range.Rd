@@ -23,7 +23,7 @@ range(\dots, na.rm = FALSE)
   directly or via the \code{\link{Summary}} group generic.
 
   If \code{na.rm} is \code{FALSE}, \code{NA}
-  and \code{NaN} values in any of the arguments will cause NA values
+  and \code{NaN} values in any of the arguments will cause \code{NA} values
   to be returned, otherwise \code{NA} values are ignored.
 
   If \code{finite} is \code{TRUE}, the minimum

@@ -16,7 +16,7 @@ package.dependencies(x, check=FALSE)
 }
 \details{
     Currently we only check if the package conforms with the currently
-    running version of R. IN the future we might add checks for
+    running version of R. In the future we might add checks for
     inter-package dependencies.
 }
 \seealso{\code{\link[utils]{update.packages}}}

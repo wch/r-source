@@ -6,7 +6,7 @@ eff.aovlist(aovlist)
 \alias{eff.aovlist}
 \arguments{
   \item{aovlist}{
-    The result of a call to \code{aov} with a \code{Error} term.
+    The result of a call to \code{aov} with an \code{Error} term.
   }
 }
 \description{

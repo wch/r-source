@@ -31,7 +31,7 @@ as.single(x, \dots)
 
   \code{is.double} returns \code{TRUE} or \code{FALSE} depending on
   whether its argument is of double type or not.  It is generic:
-  you can write methods to handle of specific classes of objects,
+  you can write methods to handle specific classes of objects,
   see \link{InternalMethods}.
 }
 \note{

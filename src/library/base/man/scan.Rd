@@ -60,7 +60,7 @@ scan(file = "", what = double(0), nmax = -1, n = -1, sep = "",
   \item{nlines}{the maximum number of lines of data to be read.}
 
   \item{na.strings}{character vector.  Elements of this vector are to be
-    interpeted as missing (\code{\link{NA}}) values.}
+    interpreted as missing (\code{\link{NA}}) values.}
 
   \item{flush}{logical: if \code{TRUE}, \code{scan} will flush to the
     end of the line after reading the last of the fields requested.
@@ -115,7 +115,7 @@ scan(file = "", what = double(0), nmax = -1, n = -1, sep = "",
   values.
   
   If \code{sep} is the default (\code{""}), the character \code{\\}
-  in a quoted string escapes the following character, so quotes may
+  in a quoted string escapes the following character, so quotes may be
   included in the string by escaping them.
   
   If \code{sep} is non-default, the fields may be quoted in the style of

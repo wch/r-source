@@ -25,7 +25,7 @@ sunflowerplot(x, y = NULL, number, log = "", digits = 6,
     \code{\link{plot.default}}.}
   \item{digits}{when \code{number} is computed (i.e., not specified),
     \code{x} and \code{y} are rounded to \code{digits} significant
-    digits before multiplicities are computes.}
+    digits before multiplicities are computed.}
   \item{xlab,ylab}{character label for x-, or y-axis, respectively.}
   \item{xlim,ylim}{\code{numeric(2)} limiting the extents of the x-,
     or y-axis.}

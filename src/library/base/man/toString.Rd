@@ -6,7 +6,7 @@
 \description{
   This is a helper function for \code{\link{format}}. It converts its argument
   to a string. If the argument is a vector then its elements are
-  concatenated with a \code{,} as a separtor. 
+  concatenated with a \code{,} as a separator. 
   Most methods should honor the width argument. 
   The minimum value for \code{width} is six. 
 }

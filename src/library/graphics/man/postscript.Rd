@@ -156,7 +156,7 @@ ps.options(paper, horizontal, width, height, family, encoding,
   \code{"NimbusSan"}, \code{"NimbusSanCond"}, \code{"CenturySch"},
   \code{"URWPalladio"} and \code{"NimbusRom"} respectively.  If your
   PostScript device is using URW fonts, you will obtain access to more
-  characters and more approriate metrics by using these names.  To make
+  characters and more appropriate metrics by using these names.  To make
   these easier to remember, \code{"URWHelvetica" == "NimbusSan"} and
   \code{"URWTimes" == "NimbusRom"} are also supported.
 

@@ -12,7 +12,7 @@ capture.output(\dots, file = NULL, append = FALSE)
 \arguments{
   \item{\dots}{Expressions to be evaluated}
   \item{file}{A file name or a connection, or \code{NULL} to return
-    the output as a string. If the connnection is not open it will be
+    the output as a string. If the connection is not open it will be
     opened and then closed on exit.}
   \item{append}{Append or overwrite the file? }
 }

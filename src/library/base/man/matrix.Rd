@@ -12,7 +12,7 @@
 
   \code{is.matrix} tests if its argument is a (strict) matrix.
   It is generic: you can write methods to handle
-  of specific classes of objects, see \link{InternalMethods}.
+  specific classes of objects, see \link{InternalMethods}.
 }
 \usage{
 matrix(data = NA, nrow = 1, ncol = 1, byrow = FALSE, dimnames = NULL)

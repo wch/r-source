@@ -21,7 +21,7 @@ png(filename = "Rplot\%03d.png", width = 480, height = 480, pointsize = 12,
     characters long.)}
  \item{width}{the width of the device in pixels.}
  \item{height}{the height of the device in pixels.}
- \item{pointsize}{the default pointsize of plotted text, intepreted at
+ \item{pointsize}{the default pointsize of plotted text, interpreted at
    72 dpi, so one point is approximately one pixel.}
  \item{bg}{the initial background colour: can be overridden by setting
    par("bg").}
@@ -52,7 +52,7 @@ png(filename = "Rplot\%03d.png", width = 480, height = 480, pointsize = 12,
 }
 \section{Warning}{
   If you plot more than one page on one of these devices and do not
-  include somthing like \code{\%d} for the sequence number in
+  include something like \code{\%d} for the sequence number in
   \code{file}, the file will contain the last page plotted.
 }
 \note{

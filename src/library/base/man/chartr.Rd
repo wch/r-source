@@ -25,7 +25,7 @@ casefold(x, upper = FALSE)
   \code{chartr} translates each character in \code{x} that is specified
   in \code{old} to the corresponding character specified in \code{new}.
   Ranges are supported in the specifications, but character classes and
-  repreated characters are not.  If \code{old} contains more characters
+  repeated characters are not.  If \code{old} contains more characters
   than new, an error is signaled; if it contains fewer characters, the
   extra characters at the end of \code{new} are ignored.
 

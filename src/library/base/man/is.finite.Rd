@@ -41,7 +41,7 @@ is.nan(x)
   since systems typically have many different NaN values.
   In most ports of \R one of these is used for the numeric missing
   value \code{NA}.  It is generic: you can write methods to handle
-  of specific classes of objects, see \link{InternalMethods}.
+  specific classes of objects, see \link{InternalMethods}.
 }
 \note{
   In \R, basically all mathematical functions (including basic
@@ -60,6 +60,7 @@ is.nan(x)
 %%- better ones ?!??
     ANSI/IEEE 754 Floating-Point Standard.
 
+ This link does not work any more (2003/12)
     Currently (6/2002), Bill Metzenthen's \email{billm@suburbia.net} tutorial
     and examples at \cr \url{http://www.suburbia.net/~billm/}
 }

@@ -61,7 +61,7 @@
     z-values and p-values.  Aliased coefficients are omitted.}
   \item{aliased}{named logical vector showing if the original
     coefficients are aliased.} 
-  \item{dispersion}{eother the supplied argument or the estimated
+  \item{dispersion}{either the supplied argument or the estimated
     dispersion if the latter in \code{NULL}}
   \item{df}{a 3-vector of the rank of the model and the number of
     residual degrees of freedom, plus number of non-aliased coefficients.}

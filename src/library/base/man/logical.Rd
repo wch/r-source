@@ -27,7 +27,7 @@ is.logical(x)
   All four are \code{logical(1)} vectors.
 
   \code{is.logical} is generic: you can write methods to handle
-  of specific classes of objects, see \link{InternalMethods}.
+  specific classes of objects, see \link{InternalMethods}.
 }
 \arguments{
   \item{length}{desired length.}

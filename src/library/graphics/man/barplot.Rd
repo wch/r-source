@@ -52,7 +52,7 @@
   \item{horiz}{a logical value.  If \code{FALSE}, the bars are drawn
     vertically with the first bar to the left.  If \code{TRUE}, the
     bars are drawn horizontally with the first at the bottom.}
-  \item{density}{a vector giving the the density of shading lines, in
+  \item{density}{a vector giving the density of shading lines, in
     lines per inch, for the bars or bar components.
     The default value of \code{NULL} means that no shading lines
     are drawn. Non-positive values of \code{density} also inhibit the
@@ -81,7 +81,7 @@
 % precisely documented!) behavior!
   \item{plot}{logical.  If \code{FALSE}, nothing is plotted.}
   \item{axis.lty}{the graphics parameter \code{lty} applied to the axis
-    and tick marks of the categorical (default horzontal) axis.  Note
+    and tick marks of the categorical (default horizontal) axis.  Note
     that by default the axis is suppressed.}
   \item{\dots}{further graphical parameters (\code{\link{par}}) are
     passed to \code{\link{plot.window}()}, \code{\link{title}()} and

@@ -60,7 +60,7 @@ write.ftable(x, file = "", quote = TRUE, digits = getOption("digits"))
   function \code{as.table}.
 }
 \seealso{
-  \code{\link{ftable}} for more information on flat contingencty tables.
+  \code{\link{ftable}} for more information on flat contingency tables.
 }
 \references{
   Agresti, A.  (1990)

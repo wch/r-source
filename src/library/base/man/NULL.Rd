@@ -22,7 +22,7 @@ is \code{NULL} and \code{FALSE} otherwise.
 }
 \details{
   \code{is.null} is generic: you can write methods to handle
-  of specific classes of objects, see \link{InternalMethods}.
+  specific classes of objects, see \link{InternalMethods}.
 }
 \arguments{
   \item{x}{an object to be tested or coerced.}

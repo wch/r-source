@@ -62,7 +62,7 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
 \note{
   Acrobat Reader does not use the fonts specified but rather emulates
   them from multiple-master fonts.  This can be seen in imprecise
-  centring of characters, for example the multiply and divide signs in
+  centering of characters, for example the multiply and divide signs in
   Helvetica.
 }
 \seealso{

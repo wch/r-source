@@ -55,7 +55,7 @@ seq(along)
   If \code{from} and \code{to} are factors of the same length, then
   \code{from : to} returns the \dQuote{cross} of the two.
 
-  Very small sequences (with \code{from - to} of the order of 1e-14
+  Very small sequences (with \code{from - to} of the order of \eqn{10^{-14}}
   times the larger of the ends) will return \code{from}.
 }
 \value{

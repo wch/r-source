@@ -45,7 +45,7 @@ termplot(model, data=NULL, envir=environment(formula(model)),
 }
 \details{
   The model object must have a \code{predict} method that accepts
-  \code{type=terms}, eg \code{\link{glm}} in the\pkg{base} package,
+  \code{type=terms}, eg \code{\link{glm}} in the \pkg{base} package,
   \code{\link[survival]{coxph}} and \code{\link[survival]{survreg}} in
   the \pkg{survival} package.
 

@@ -17,7 +17,7 @@ unlist(x, recursive = TRUE, use.names = TRUE)
 }
 \details{
   \code{unlist} is generic: you can write methods to handle
-  of specific classes of objects, see \link{InternalMethods}.
+  specific classes of objects, see \link{InternalMethods}.
   
   If \code{recursive = FALSE}, the function will not recurse beyond
   the first level items in \code{x}.

@@ -25,7 +25,7 @@ noquote(obj)
   \code{"noquote"}.  There is a method for \code{c()} and subscript
   method (\code{"[.noquote"}) which ensures that the class is not lost
   by subsetting.  The print method (\code{print.noquote}) prints
-  character stringss \emph{without} quotes (\code{"\dots"}).
+  character strings \emph{without} quotes (\code{"\dots"}).
 
   These functions exist both as utilities and as an example of using (S3)
   \code{\link[base]{class}} and object orientation.

@@ -45,7 +45,7 @@ taskCallbackManager(handlers = list(), registered = FALSE, verbose = FALSE)
   A list containing 6 functions:
   \item{add}{register a callback with this manager, giving the
     function, an optional 5-th argument, an optional name
-    by which the the callback is stored in the list,
+    by which the callback is stored in the list,
     and a \code{register} argument which controls whether
     the \code{evaluate} function is registered with the internal
     C-level dispatch mechanism if necessary.}
@@ -53,7 +53,7 @@ taskCallbackManager(handlers = list(), registered = FALSE, verbose = FALSE)
     of callbacks, either by name or position/index.}
   \item{evaluate}{the \sQuote{real} callback function that is registered
     with the C-level dispatch mechanism and which invokes each of the
-    R-leve callbacks within this manager's control.}
+    R-level callbacks within this manager's control.}
   \item{suspend}{a function to set the suspend state
     of the manager. If it is suspended, none of the callbacks will be
     invoked when a task is completed. One sets the state by specifying

@@ -14,7 +14,7 @@ is.object(x)
 }
 \details{
   \code{is.object} is generic: you can write methods to handle
-  of specific classes of objects, see \link{InternalMethods}.
+  specific classes of objects, see \link{InternalMethods}.
 }
 \seealso{\code{\link[base]{class}}, and \code{\link[utils]{methods}}.}
 

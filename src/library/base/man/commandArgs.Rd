@@ -31,7 +31,7 @@ commandArgs()
 #endif
 \examples{
 commandArgs()
-## Spawn a copy of this  application as it was invoked.
+## Spawn a copy of this application as it was invoked.
 ## system(paste(commandArgs(), collapse=" "))
 }
 \keyword{environment}

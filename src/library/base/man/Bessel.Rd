@@ -59,7 +59,7 @@ gammaCody(x)
   Chapter 9: Bessel Functions of Integer Order.
 }
 \seealso{
-  Other special mathematical functions, as the
+  Other special mathematical functions, such as
   \code{\link{gamma}}, \eqn{\Gamma(x)}, and \code{\link{beta}},
   \eqn{B(x)}.
 }

@@ -30,7 +30,7 @@ xy.coords(x, y, xlab = NULL, ylab = NULL, log = NULL, recycle = FALSE)
       \code{yvar} are used as x and y variables.}
 
     \item{list:}{containing components \code{x} and \code{y}, these are
-      used are assumed to define plotting coordinates.}
+      used to define plotting coordinates.}
 
     \item{time series:}{the x values are taken to be
       \code{\link[stats]{time}(x)} and the y values to be the time series.}

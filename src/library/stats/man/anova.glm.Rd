@@ -28,7 +28,7 @@
   If more than one object is specified, the table has a row for the
   residual degrees of freedom and deviance for each model.
   For all but the first model, the change in degrees of freedom and
-  deviance is also given. (This only make statistical sense if the
+  deviance is also given. (This only makes statistical sense if the
   models are nested.)  It is conventional to list the models from
   smallest to largest, but this is up to the user.
 

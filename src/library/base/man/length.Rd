@@ -19,7 +19,7 @@ length(x) <- value
   \code{length} returns \code{NA}.
 }
 \details{
-  \code{length} is generic: you can write methods to handle of specific
+  \code{length} is generic: you can write methods to handle specific
   classes of objects, see \link{InternalMethods}.
 
   The replacement form can be used to reset the length of a vector.  If
