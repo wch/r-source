@@ -11,9 +11,11 @@ BUG FIXES
 
     o   data.frame choked on long names from deparse()
 
-    o   data.edit now works (dataedit doesn't need pairlist()s anymore).
+    o   data.edit now works (dataedit doesn't need pairlist()s anymore)
 
     o   as.pairlist(NULL) is ok
+
+    o	ts(1:5, start=2, end=4) now work.  Further plot(ts(..), ts(..))
 
 
 		CHANGES IN R VERSION 0.63

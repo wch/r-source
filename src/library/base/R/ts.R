@@ -26,7 +26,7 @@ ts <- function(data=NA, start=1, end=numeric(0), frequency=1, deltat=1,
     }
 
     if(missing(frequency)) frequency <- 1/deltat
-    if(missing(deltat)) deltat <- 1/deltat
+    else if(missing(deltat)) deltat <- 1/frequency
 
     if(frequency > 1 && abs(frequency - round(frequency)) < ts.eps)
 	frequency <- round(frequency)
@@ -50,10 +50,10 @@ ts <- function(data=NA, start=1, end=numeric(0), frequency=1, deltat=1,
 	data <-
 	    if(nseries == 1) {
 		if(ndata < nobs) rep(data, length=nobs)
-		else if(nobs > ndata) data[1:nobs]
+		else if(ndata > nobs) data[1:nobs]
 	    } else {
 		if(ndata < nobs) data[rep(1:ndata, length=nobs)]
-		else if(nobs > ndata) data[1:nobs,]
+		else if(ndata > nobs) data[1:nobs,]
 	    }
     attr(data, "tsp") <- c(start, end, frequency)#-- order is fix !
     attr(data, "class") <- "ts"
@@ -67,7 +67,7 @@ tsp <- function(x) attr(x, "tsp")
     cl <- class(x)
     attr(x,"tsp") <- value
     class(x) <-
-        if (is.null(value) && inherits(x,"ts")) cl["ts" != cl] else c("ts",cl)
+	if (is.null(value) && inherits(x,"ts")) cl["ts" != cl] else c("ts",cl)
     x
 }
 
@@ -155,12 +155,33 @@ print.ts <- function(x, calendar, ...)
 }
 
 plot.ts <-
-    function (x, type="l", xlim=NULL, ylim=NULL, xlab = "Time", ylab, log="",
-	      col=par("col"), bg=NA, pch=par("pch"), lty=par("lty"),
-	      axes = TRUE, frame.plot = axes, ann = par("ann"), main = NULL, ...)
+    function (x, y=NULL, type="l", xlim=NULL, ylim=NULL, xlab = "Time", ylab,
+	      log="", col=par("col"), bg=NA, pch=par("pch"), cex=par("cex"),
+	      lty=par("lty"), lwd=par("lwd"), axes = TRUE,
+	      frame.plot = axes, ann = par("ann"), main = NULL, ...)
 {
-    if(missing(ylab)) ylab <- deparse(substitute(x))
+    xlabel <- if (!missing(x)) deparse(substitute(x))	else NULL
+    ylabel <- if (!missing(y)) deparse(substitute(y))	else NULL
     x <- as.ts(x)
+    if(!is.null(y)) {
+	## want ("scatter") plot of y ~ x
+	y <- as.ts(y)
+	xy <- xy.coords(x, y, xlabel, ylabel, log)
+	xlab <- xy$xlab
+	ylab <- if (missing(ylab)) xy$ylab	else ylab
+	xlim <- if (is.null(xlim)) range(xy$x, finite=TRUE) else xlim
+	ylim <- if (is.null(ylim)) range(xy$y, finite=TRUE) else ylim
+	plot.default(xy, type = "n",
+		     xlab=xlab, ylab = ylab, xlim=xlim, ylim=ylim,
+		     log=log, col=col,bg=bg,pch=pch,axes=axes,
+		     frame.plot=frame.plot,ann=ann, main=main, ...)
+	text(xy, labels =
+	     if(all(tsp(x)==tsp(y))) formatC(time(x),wid=1) else seq(along=x),
+	     col=col, cex=cex)
+	lines(xy, col=col, lty=lty, lwd=lwd)
+	return(invisible())
+    }
+    if(missing(ylab)) ylab <- xlabel
     time.x <- time(x)
     if(is.null(xlim)) xlim <- range(time.x)
     if(is.null(ylim)) ylim <- range(x, finite=TRUE)
@@ -171,12 +192,13 @@ plot.ts <-
 	    lines.default(time.x, x[,i],
 			  col=col[(i-1)%%length(col) + 1],
 			  lty=lty[(i-1)%%length(lty) + 1],
+			  lwd=lwd[(i-1)%%length(lwd) + 1],
 			  bg = bg[(i-1)%%length(bg) + 1],
 			  pch=pch[(i-1)%%length(pch) + 1],
 			  type=type)
     }
     else {
-	lines.default(time.x, x, col=col[1], bg=bg, lty=lty[1],
+	lines.default(time.x, x, col=col[1], bg=bg, lty=lty[1], lwd=lwd[1],
 		      pch=pch[1], type=type)
     }
     if (ann)
