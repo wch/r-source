@@ -1,14 +1,13 @@
 \name{double}
 \title{Double Precision Vectors}
-\usage{
-double(n = 0)
-
-as.double(x)
-is.double(x)
-}
 \alias{double}
 \alias{as.double}
 \alias{is.double}
+\usage{
+double(length = 0)
+as.double(x)
+is.double(x)
+}
 \value{
   \code{double} creates a double precision vector of the specified
   length.  The elements of the vector are all equal to \code{0}.
