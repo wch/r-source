@@ -20,6 +20,7 @@
 #define NONAMELESSUNION
 #include <windows.h>
 #include <stdio.h>
+#include <stdlib.h>		/* for exit */
 #include "Rversion.h"
 #include "Startup.h"
 
