@@ -394,7 +394,7 @@ static void editorreplace(control m)
 static void editorrunline(textbox t)
 {
     int length = getlinelength(t);
-    char *line = malloc(length * sizeof(char));
+    char *line = malloc((length + 2) * sizeof(char)); /* Extra space for null and word length in getcurrentline */
     getcurrentline(t, line, length);
     consolecmd(RConsole, line);
     free(line);
@@ -416,19 +416,25 @@ static void editorrunselection(textbox t, long start, long end)
     }
 }
 
+static Rboolean busy_running = FALSE;
+
 static void editorrun(textbox t)
 {
-    long start=0, end=0;
-    if (CharacterMode != RGui) {
-        R_ShowMessage("No RGui console to paste to");
-        return;
-    }
-    textselectionex(t, &start, &end);
-    if (start >= end)
-	editorrunline(t);
-    else {
-	editorrunselection(t, start, end);
-	selecttextex(t, end, end); /* move insertion point to end of selection after running */
+    if (!busy_running) {
+        long start=0, end=0;
+    	if (CharacterMode != RGui) {
+    	    R_ShowMessage("No RGui console to paste to");
+    	    return;
+    	}
+    	busy_running = TRUE;
+    	textselectionex(t, &start, &end);
+    	if (start >= end)
+	    editorrunline(t);
+    	else {
+	    editorrunselection(t, start, end);
+	    selecttextex(t, end, end); /* move insertion point to end of selection after running */
+    	}
+    	busy_running = FALSE;
     }
 }
 
@@ -444,7 +450,7 @@ static void editorrunall(control m)
     long start=0, end=0;
     textselectionex(t, &start, &end); /* save current selection state */
     selecttextex(t, 0, -1);
-    editorrunselection(t, 0, strlen(gettext(t)));
+    editorrun(t);
     selecttextex(t, start, end);  /* return to original selection state */
 }
 
