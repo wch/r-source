@@ -312,3 +312,19 @@ Date: Mon, 1 Oct 2001 15:43:36 +0200 (MET DST)
 Subject: Wrong error message in Rdlists.pm
 From: Thomas Hoffmann <thoffman@zappa.sax.de>
 Date: Tue, 02 Oct 2001 00:01:35 +0100
+* PR# 1109 *
+Subject: tiny typo in optim/N-M documentation
+From: Ben Bolker <ben@zoo.ufl.edu>
+Date: Wed, 3 Oct 2001 11:12:31 -0400 (EDT)
+* PR# 1110 *
+Subject: Several R vs S-Plus issues
+From: David Brahm  <a215020@agate.fmr.com>
+Date: Wed, 3 Oct 2001 11:35:58 -0400 (EDT)
+* PR# 1111 *
+Subject: summary.lm and summary.glm documentation
+From: david.firth@nuf.ox.ac.uk
+Date: Wed, 3 Oct 2001 18:52:03 +0200 (MET DST)
+* PR# 1112 *
+Subject: RE: [R] Several R vs S-Plus issues
+From: "Monder, Harvey" <Harvey.Monder@pharma.com>
+Date: Wed, 3 Oct 2001 14:29:03 -0400 
