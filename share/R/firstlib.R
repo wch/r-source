@@ -15,7 +15,7 @@
         if(is.function(f))
             f(libname, pkgname)
         else
-            stop(paste("package \"", pkgname,
-                       "\"has a non-function .First.lib", sep=""))
+            stop(paste("package", sQuote(pkgname),
+                       "has a non-function .First.lib"))
     }
 }
