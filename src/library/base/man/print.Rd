@@ -9,7 +9,6 @@ print.ordered(x, quote = FALSE)
 \alias{print}
 \alias{print.factor}
 \alias{print.ordered}
-\alias{print.matrix}
 \alias{print.htest}
 \alias{print.listof}
 \alias{print.table}
@@ -19,7 +18,7 @@ print.ordered(x, quote = FALSE)
 It is a generic function which means that new printing methods can be
 easily added for new \code{\link{class}}es.
 
-The default version of print is described in \code{link{print.default}}.
+The default method, \code{\link{print.default}} has its own help page.
 Use \code{\link{methods}("print")} to get all the methods for the
 \code{print} generic.
 }

@@ -565,7 +565,7 @@ print.summary.glm <- function (x, digits = max(3, .Options$digits - 3),
 	print.default(x$deviance.resid, digits=digits, na = "", print.gap = 2)
 
 	cat("\nCoefficients:\n")
-	print.coefmat(x$coef, digits=digits)
+	print.coefmat(x$coef, digits=digits, signif.stars=signif.stars, ...)
 	##
 	cat("\n(Dispersion parameter for ", x$family$family,
 	    " family taken to be ", format(x$dispersion), ")\n\n",

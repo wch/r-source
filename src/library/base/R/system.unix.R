@@ -121,7 +121,7 @@ function(topic, offline = FALSE, package = c(.packages(), .Autoloaded),
             file = FILE, sep = "")
         system(paste("cat ${RHOME}/doc/manual/Rd.sty >>", FILE))
         cat("\\InputIfFileExists{Rhelp.cfg}{}{}\n\\begin{document}\n",
-            file = FILE, append = TRUE) 
+            file = FILE, append = TRUE)
         system(paste("cat ", sub("help/", "latex/", file), ".tex >>",
                      FILE, sep = ""))
         cat("\\end{document}\n", file = FILE, append = TRUE)
@@ -235,6 +235,9 @@ function(chname, package = .packages(), lib.loc = .lib.loc) {
 }
 
 system <- function(call, intern = FALSE) .Internal(system(call, intern))
+unix <- function(call, intern = FALSE) {
+	.Deprecated("system"); system(call,intern)
+}
 
 system.file <- function(file = "", pkg = .packages(), lib = .lib.loc) {
 	FILES <- paste(t(outer(lib, pkg, paste, sep = "/")),

@@ -254,8 +254,7 @@ summary.lm <- function (object, correlation = FALSE)
 }
 
 print.summary.lm <- function (x, digits = max(3, .Options$digits - 3),
-	symbolic.cor = p > 4, signif.stars= .Options$show.signif.stars,
-	...)
+	symbolic.cor = p > 4, signif.stars= .Options$show.signif.stars,	...)
 {
 	cat("\nCall:\n")#S: ' ' instead of '\n'
 	cat(paste(deparse(x$call), sep="\n", collapse = "\n"), "\n\n", sep="")
@@ -279,7 +278,7 @@ print.summary.lm <- function (x, digits = max(3, .Options$digits - 3),
 		    " not defined because of singularities)\n", sep = "")
 	else cat("\nCoefficients:\n")
 
-	print.coefmat(x$coef, digits=digits)
+	print.coefmat(x$coef, digits=digits, signif.stars=signif.stars, ...)
 	##
 	cat("\nResidual standard error:", format(signif(x$sigma,
 		digits)), "on", rdf, "degrees of freedom\n")
