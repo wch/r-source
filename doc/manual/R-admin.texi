@@ -630,7 +630,7 @@ appropriate libraries installed: @code{jpeg} (version 6b or later) or
 @code{libpng} (versions 1.0.5 to 1.2.1) and @code{zlib} (version 1.1.3
 or later) respectively.  @code{libpng-1.2.2} has moved its header files,
 and you will need add something like
-@code{-I/usr/local/include/libpng12} to @code{CPP_FLAGS} to make use of
+@samp{-I/usr/local/include/libpng12} to @code{CPPFLAGS} to make use of
 it.
 
 The @code{bitmap} and @code{dev2bitmap} devices make use of ghostscript
