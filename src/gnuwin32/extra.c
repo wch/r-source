@@ -1367,3 +1367,125 @@ Rboolean winNewFrameConfirm(void)
     gadesc *xd = gdd->dev->deviceSpecific;
     return xd->newFrameConfirm();
 }
+
+/* UTF-8 support ----------------------------------------------- */
+
+#define FAKE_UTF8 1
+
+size_t Rmbrtowc(wchar_t *wc, const char *s)
+{
+#ifdef FAKE_UTF8
+    unsigned int byte;
+    wchar_t local, *w;
+    byte = *((unsigned char *)s);
+    w = wc ? wc: &local;
+
+    if (byte == 0) {
+        *w = (wchar_t) 0;
+        return 0;	
+    } else if (byte < 0xC0) {
+        *w = (wchar_t) byte;
+        return 1;
+    } else if (byte < 0xE0) {
+	if(strlen(s) < 2) return -2;
+        if ((s[1] & 0xC0) == 0x80) {
+            *w = (wchar_t) (((byte & 0x1F) << 6) | (s[1] & 0x3F));
+            return 2;
+        } else return -1;
+    } else if (byte < 0xF0) {
+	if(strlen(s) < 3) return -2;
+        if (((s[1] & 0xC0) == 0x80) && ((s[2] & 0xC0) == 0x80)) {
+            *w = (wchar_t) (((byte & 0x0F) << 12)
+                    | ((s[1] & 0x3F) << 6) | (s[2] & 0x3F));
+	    byte = *w;
+	    if(byte >= 0xD800 && byte <= 0xDFFF) return -1; /* surrogate */
+	    if(byte == 0xFFFE || byte == 0xFFFF) return -1;
+            return 3;
+        } else return -1;
+    }
+    return -2;
+#else
+    return mbrtowc(wc, s, MB_CUR_MAX, NULL);
+#endif
+}
+
+/* based on pcre.c, but will only be used for UCS-2 */
+static const int utf8_table1[] =
+  { 0x7f, 0x7ff, 0xffff, 0x1fffff, 0x3ffffff, 0x7fffffff};
+static const int utf8_table2[] = { 0, 0xc0, 0xe0, 0xf0, 0xf8, 0xfc};
+
+size_t Rwcrtomb(char *s, const wchar_t wc)
+{
+#ifdef FAKE_UTF8
+    register int i, j;
+    unsigned int cvalue = wc;
+    char buf[10], *b;
+
+    b = s ? s : buf;
+    if(cvalue == 0) {*b = 0; return 0;}
+    for (i = 0; i < sizeof(utf8_table1)/sizeof(int); i++)
+	if (cvalue <= utf8_table1[i]) break;
+    b += i;
+    for (j = i; j > 0; j--) {
+	*b-- = 0x80 | (cvalue & 0x3f);
+	cvalue >>= 6;
+    }
+    *b = utf8_table2[i] | cvalue;
+    return i + 1;
+#else
+    return wcrtomb(s, wc, NULL);
+#endif
+}
+
+size_t Rmbstowcs(wchar_t *wc, const char *s, size_t n)
+{
+#ifdef FAKE_UTF8
+    int m, res=0;
+    const char *p;
+
+    if(wc) {
+	for(p = s; ; p+=m) {
+	    m = Rmbrtowc(wc+res, p);
+	    if(m <= 0) break;
+	    res++;
+	    if(res >= n) break;
+	}
+    } else {
+	for(p = s; ; p+=m) {
+	    m  = Rmbrtowc(NULL, p);
+	    if(m <= 0) break;
+	    res++;
+	}
+    }
+    return res;
+#else
+    return mbstowcs(wc, s, n);
+#endif
+}
+
+size_t Rwcstombs(char *s, const wchar_t *wc, size_t n)
+{
+#ifdef FAKE_UTF8
+    int m, res=0;
+    char *t;
+    const wchar_t *p;
+    if(s) {
+	for(p = wc, t = s; ; p++) {
+	    m  = Rwcrtomb(t, *p);
+	    if(m <= 0) break;
+	    res += m;
+	    if(res >= n) break;
+	    t += m;
+	}
+    } else {
+	for(p = wc; ; p++) {
+	    m  = Rwcrtomb(NULL, *p);
+	    if(m <= 0) break;
+	    res += m;
+	}
+    }
+    return res;
+#else
+    return wcstombs(s, wc, n);
+#endif
+}
