@@ -30,7 +30,9 @@
 #include <string.h>
 #include <sys/types.h>
 #include <errno.h>
+#ifdef HAVE_UNISTD_H
 #include <unistd.h>
+#endif
 #include "sock.h"
 
 #ifndef OPEN_MAX
