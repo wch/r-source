@@ -20,7 +20,7 @@
 #include "Mathlib.h"
 
 #ifdef IEEE_754
-/* These are used in IEEE exception handling */
+/* These are used in IEEE exception handling (in Mathlib.h only) */
 double m_zero = 0;
 double m_one = 1;
 /* double m_tiny = DBL_MIN; */
