@@ -433,8 +433,12 @@ SEXP do_matprod(SEXP call, SEXP op, SEXP args, SEXP rho)
 		ncx = 0;
 		if(PRIMVAL(op) == 0) {
 			if(LENGTH(x) == nry) {
-				nrx = 1;
-				ncx = LENGTH(x);
+			        nrx = 1;
+			        ncx = LENGTH(x);
+			} 
+			else if (LENGTH(x) == ncy) {
+			        ncx=1;
+			        nrx=LENGTH(x);
 			}
 			if( nry*ncy == 1 ) {
 				nrx = LENGTH(x);
@@ -457,6 +461,10 @@ SEXP do_matprod(SEXP call, SEXP op, SEXP args, SEXP rho)
 			if (LENGTH(y) == ncx) {
 				nry = LENGTH(y);
 				ncy = 1;
+			}
+			else if (LENGTH(y) == nrx){
+			        ncy = LENGTH(y);
+				nry = 1;
 			}
 			if ( nrx*ncx == 1 ) {
 				ncy = LENGTH(y);

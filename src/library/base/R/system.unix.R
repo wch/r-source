@@ -84,6 +84,8 @@ function(topic, package = c(.packages(),.Autoloaded), lib.loc =.lib.loc) {
       topic <- "Extract"
     else if (!is.na(match(topic, c("&", "&&", "|", "||", "!"))))
       topic <- "Logic"
+    else if (!is.na(match(topic,c("%*%"))))
+      topic<- "matmult"
     topic <- gsub("\\[","\\\\[", topic)#- for cmd/help ..
     INDICES <- paste(t(outer(lib.loc, package, paste, sep = "/")),
 		     "help", "AnIndex", sep = "/", collapse = " ")
