@@ -98,11 +98,12 @@ static void printIntegerMatrix(SEXP sx, int offset, int r, int c,
     
     if (rn) {
         rnw = strlen(rn);
-	lbloff = 1;
-	if ( rnw <= rlabw )
-	    rlabw++;
+	if ( rnw < rlabw + MIN_LBLOFF )
+	    lbloff = MIN_LBLOFF;
 	else
-	    rlabw = rnw;
+	    lbloff = rnw - rlabw;
+
+	rlabw += lbloff;
     }
 
     sw = allocVector(INTSXP, c);
@@ -365,7 +366,7 @@ static void printArrayGeneral(SEXP x, SEXP dim, int quote, SEXP dimnames)
     int i, j, k, l, b, nb, ndim;
     int nr, nc;
     int has_dimnames = 0, has_dnn = 0;
-    char *rn, *cn;
+    char *rn = NULL, *cn = NULL;
 
     ndim = LENGTH(dim);
     if (ndim == 1)

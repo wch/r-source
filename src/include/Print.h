@@ -53,5 +53,7 @@ void printArray(SEXP, SEXP, int, SEXP);
 void printMatrix(SEXP, int, SEXP, int, int, SEXP, SEXP, char*, char*);
 void printNamedVector(SEXP, SEXP, int);
 void printVector(SEXP, int, int);
+/* Offset for rowlabels if there are named dimnames */
+#define MIN_LBLOFF 2
 
 #endif
