@@ -143,6 +143,11 @@ Date: Fri, 20 Dec 2002 12:59:07 -0500
 Subject: bug in CrossTable (package:gregmisc)
 From: John_Hendrickx@yahoo.com
 Date: Tue, 21 Jan 2003 13:51:01 +0100 (MET)
+* PR# 2499 *
+Subject: survival bug?
+From: Pius Korner <korner@eco.umnw.ethz.ch>
+Date: Mon, 27 Jan 2003 17:28:11 +0100
+..Needs to resubmit in more useful format.
 
 Directory:  Analyses
 
@@ -542,27 +547,11 @@ Date: Thu, 27 Jun 2002 10:30:51 +0200 (MET DST)
 
 Directory:  incoming
 
-* PR# 2094 *
-Subject: Mean and var inconsistency
-From: Kevin.Wright@pioneer.com
-Date: Wed, 2 Oct 2002 16:19:27 +0200 (MET DST)
 * PR# 2461 *
 Subject: apropos() with partial name
 From: John Maindonald <u9801539@leonard.anu.edu.au>
 Date: Thu, 16 Jan 2003 20:22:23 +1100 (EST)
-* PR# 2499 *
-Subject: survival bug?
-From: Pius Korner <korner@eco.umnw.ethz.ch>
-Date: Mon, 27 Jan 2003 17:28:11 +0100
-* PR# 2500 *
-Subject:  URGENT ASSISTANCE
-From: Mrs mariam mobutu sese-seko <mrs_mariamsese13@rediffmail.com>
-Date: Tue, 28 Jan 2003 05:55:30 +0100
 * PR# 2501 *
 Subject: Timezone
 From: Michael.Jacob@bruker-axs.de
 Date: Tue, 28 Jan 2003 15:12:48 +0100 (MET)
-* PR# 2502 *
-Subject: Control YOUR own Income from NOW!                                      8892-4
-From: schultess.uwech840@berlin.de
-Date: Tue, 28 Jan 2003 07:18:48 +1100
