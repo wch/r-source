@@ -737,3 +737,10 @@ terms(breaks ~ . ^2, data = warpbreaks, simplify = TRUE)
 ## printing attributes (PR#2506)
 (x <- structure(1:4, other=as.factor(LETTERS[1:3])))
 ## < 1.7.0 printed the codes of the factor attribute
+
+
+## add logical matrix replacement indexing for data frames
+TEMP <- data.frame(VAR1=c(1,2,3,4,5), VAR2=c(5,4,3,2,1), VAR3=c(1,1,1,1,NA))
+TEMP[,c(1,3)][TEMP[,c(1,3)]==1 & !is.na(TEMP[,c(1,3)])] < -10
+TEMP
+##

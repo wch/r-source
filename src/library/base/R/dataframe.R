@@ -449,6 +449,27 @@ data.frame <-
         } else {
             ## case df[ind]
             ## really ambiguous, but follow common use as if list
+            ## except for a full-sized logical matrix
+            if(is.logical(i) && is.matrix(i) && all(dim(i) == dim(x))) {
+                nreplace <- sum(i, na.rm=T)
+                nv <- nrow(x)
+                if(length(value) != 1 && length(value) != nreplace)
+                    stop("rhs is the wrong length for indexing by a logical matrix")
+                if(length(value) == 1) value <- rep(value, length = nreplace)
+                n <- 0
+                for(v in seq(len = dim(i)[2])) {
+                    thisvar <- i[, v, drop = TRUE]
+                    nv <- sum(thisvar, na.rm=T)
+                    if(nv) {
+                        if(is.matrix(x[[v]]))
+                            x[[v]][thisvar, ] <- value[n+(1:nv)]
+                        else
+                            x[[v]][thisvar] <- value[n+(1:nv)]
+                    }
+                    n <- n+nv
+                }
+                return(x)
+            }
             if(is.matrix(i))
                 stop("matrix subscripts not allowed in replacement")
             j <- i

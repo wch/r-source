@@ -235,6 +235,9 @@ NEW FEATURES
 
     o	arima() has coef(), logLik() (and hence AIC) and vcov() methods.
 
+    o	Logical matrix replacement indexing of data frames is now
+	implemented (interpreted as if the lhs was a matrix).
+
 
 INSTALLATION CHANGES
 
