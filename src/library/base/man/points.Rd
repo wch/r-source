@@ -52,14 +52,14 @@ points(rnorm(200), rnorm(200), col = "red")
 points(rnorm(100)/2, rnorm(100)/2, col = "blue", cex = 1.5)
 
 ##-------- Showing all the extra & some char graphics symbols ------------
-Pex <- if(.Device=="postscript") 5 else 2
+Pex <- 3 ## now (0.90) good for both .Device=="postscript" and "x11"
 ipch <- 1:(np <- 25+11); k <- floor(sqrt(np)); dd <- c(-1,1)/2
 rx <- dd + range(ix <- (ipch-1) \%/\% k)
 ry <- dd + range(iy <- 3 + (k-1)-(ipch-1) \%\% k)
 pch <- as.list(ipch)
 pch[25+ 1:11] <- as.list(c("*",".", "o","O","0","+","-",":","|","\%","#"))
 plot(rx, ry, type="n", axes = F, xlab = "", ylab = "",
-     main = "plot symbols :  points (..  pch = * )")
+     main = paste("plot symbols :  points (..  pch = *, cex =",Pex,")"))
 abline(v = ix, h = iy, col = "lightgray", lty = "dotted")
 for(i in 1:np) {
   pc <- pch[[i]]
