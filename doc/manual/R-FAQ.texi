@@ -4,8 +4,8 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2002
-@set FAQ-VERSION 1.5-9, 2002-06-11
-@set REL-VERSION 1.5.0
+@set FAQ-VERSION 1.5-10, 2002-06-13
+@set REL-VERSION 1.5.1
 @set FAQ-ISBN 3-901167-51-X
 @c %**end of header
 
@@ -1859,11 +1859,17 @@ Analysis of experimental crosses to identify QTLs.
 For solving quadratic programming problems.
 @item quantreg
 Quantile regression and related methods.
+@item qvcalc
+Functions to compute quasi-variances and associated measures of
+approximation error.
 @item randomForest
 Breiman's random forest classifier.
 @c @item ratetables
 @c US national and state mortality data (requires @strong{survival4} and
 @c @strong{date}), for use with @strong{survival4}.
+@item relimp
+Functions to facilitate inference on the relative importance of
+predictors in a linear or generalized linear model.
 @item rmeta
 Functions for simple fixed and random effects meta-analysis for
 two-sample comparison of binary outcomes.
