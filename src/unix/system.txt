@@ -87,7 +87,7 @@
  *  These functions save and restore the user's global environment.
  *  The system specific aspect of this is what files are used.
  *
- *    void  R_CleanUp(int saveact, int status, int RunLast)
+ *    void  R_CleanUp(Rboolean saveact, int status, int RunLast)
 
  *  This function invokes any actions which occur at system termination.
  *
@@ -107,7 +107,7 @@
  *  More complex tests may be needed on other platforms.
  *
  *    int R_ShowFiles(int nfile, char **file, char **headers, char *wtitle,
- *		      int del, char *pager)
+ *		      Rboolean del, char *pager)
  *
  *     nfile   = number of files
  *     file    = array of filenames
