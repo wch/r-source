@@ -1,4 +1,5 @@
 \name{DateTimeClasses}
+% implementation mostly in ../R/datetime.R 
 \alias{POSIXct}
 \alias{POSIXlt}
 \alias{print.POSIXct}
@@ -24,6 +25,7 @@
 \alias{as.matrix.POSIXlt}
 \alias{mean.POSIXct}
 \alias{mean.POSIXlt}
+\alias{str.POSIXt}
 
 % back-compatibility functions
 \alias{-.POSIXct}
@@ -85,7 +87,7 @@ mean(time)
 
   \code{"POSIXct"} is more convenient for including in data frames, and
   \code{"POSIXlt"} is closer to human-readable forms.
-  A virtual class \code{"POSIXt"}inherits from both of the classes: it
+  A virtual class \code{"POSIXt"} inherits from both of the classes: it
   is used to allow operations such as subtraction to mix the two classes.
 
   Logical comparisons and limited arithmetic are available for both classes.
@@ -153,6 +155,15 @@ Sys.time() - 3600             # an hour ago
 
 as.POSIXlt(Sys.time(), "GMT") # the current time in GMT
 format(.leap.seconds)         # all 22 leapseconds in your timezone
+
+%% `advanced' examples:
+\testonly{
+str(.leap.seconds)
+
+## Wouldn't we want a  diff.POSIXt()  method ?
+(dls <- .leap.seconds[-1] - .leap.seconds[-22])
+table(dls)
+}
 }
 \keyword{utilities}
 \keyword{chron}
