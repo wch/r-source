@@ -53,7 +53,6 @@ unstack(x, \dots)
 }
 \examples{
 require(stats)
-data(PlantGrowth)
 formula(PlantGrowth)         # check the default formula
 pg <- unstack(PlantGrowth)   # unstack according to this formula
 pg

@@ -42,8 +42,7 @@ plot.window(xlim, ylim, log = "", asp = NA, \dots)
 }
 \examples{
 ##--- An example for the use of 'asp' :
-library(stats)  # normally loaded
-data(eurodist)
+require(stats)  # normally loaded
 loc <- cmdscale(eurodist)
 rx <- range(x <- loc[,1])
 ry <- range(y <- -loc[,2])

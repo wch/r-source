@@ -61,7 +61,7 @@ xy.coords(x, y, xlab = NULL, ylab = NULL, log = NULL, recycle = FALSE)
 }
 \examples{
 xy.coords(fft(c(1:10)), NULL)
-data(cars)
+
 with(cars, xy.coords(dist ~ speed, NULL)$xlab ) # = "speed"
 
 xy.coords(1:3, 1:2, recycle=TRUE)

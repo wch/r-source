@@ -76,7 +76,6 @@ fourfoldplot(x, color = c("#99CCFF", "#6699CC"), conf.level = 0.95,
   \code{\link{mosaicplot}}
 }
 \examples{
-data(UCBAdmissions)
 ## Use the Berkeley admission data as in Friendly (1995).
 x <- aperm(UCBAdmissions, c(2, 1, 3))
 dimnames(x)[[2]] <- c("Yes", "No")

@@ -53,7 +53,6 @@ make.names(c("a and b", "a_and_b"), unique=TRUE)
 make.names(c("a and b", "a_and_b"), unique=TRUE, allow_=FALSE)
 # "a.and.b"  "a.and.b.1"
 
-data(state)
 state.name[make.names(state.name) != state.name] # those 10 with a space
 }
 \keyword{character}

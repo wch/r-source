@@ -44,7 +44,6 @@ promptData(object, filename = NULL, name = NULL)
 }
 \seealso{\code{\link{prompt}}}
 \examples{
-data(sunspots)
 promptData(sunspots)
 unlink("sunspots.Rd")
 }

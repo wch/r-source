@@ -63,7 +63,6 @@ rowSums(x, na.rm = TRUE); colSums(x, na.rm = TRUE)
 rowMeans(x, na.rm = TRUE); colMeans(x, na.rm = TRUE)
 
 ## an array
-data(UCBAdmissions)
 dim(UCBAdmissions)
 rowSums(UCBAdmissions); rowSums(UCBAdmissions, dims = 2)
 colSums(UCBAdmissions); colSums(UCBAdmissions, dims = 2)

@@ -134,12 +134,10 @@ mosaicplot(x, \dots)
   \code{\link[stats]{loglin}}.
 }
 \examples{
-data(Titanic)
 mosaicplot(Titanic, main = "Survival on the Titanic", color = TRUE)
 ## Formula interface for tabulated data:
 mosaicplot(~ Sex + Age + Survived, data = Titanic, color = TRUE)
 
-data(HairEyeColor)
 mosaicplot(HairEyeColor, shade = TRUE)
 ## Independence model of hair and eye color and sex.  Indicates that
 ## there are significantly more blue eyed blonde females than expected
@@ -153,7 +151,6 @@ mosaicplot(HairEyeColor, shade = TRUE, margin = list(c(1,2), 3))
 
 ## Formula interface for raw data: visualize crosstabulation of numbers
 ## of gears and carburettors in Motor Trend car data.
-data(mtcars)
 mosaicplot(~ gear + carb, data = mtcars, color = TRUE, las = 1)
 mosaicplot(~ gear + carb, data = mtcars, color = 2:3, las = 1)# color recycling
 }

@@ -124,13 +124,11 @@ boxplot(x, \dots)
 }
 \examples{
 ## boxplot on a formula:
-data(InsectSprays)
 boxplot(count ~ spray, data = InsectSprays, col = "lightgray")
 # *add* notches (somewhat funny here):
 boxplot(count ~ spray, data = InsectSprays,
         notch = TRUE, add = TRUE, col = "blue")
 
-data(OrchardSprays)
 boxplot(decrease ~ treatment, data = OrchardSprays,
         log = "y", col="bisque")
 
@@ -154,7 +152,6 @@ boxplot(data.frame(mat), main = "boxplot(*, horizontal = TRUE)",
 
 ## Using 'at = ' and adding boxplots -- example idea by Roger Bivand :
 
-data(ToothGrowth)
 boxplot(len ~ dose, data = ToothGrowth,
         boxwex = 0.25, at = 1:3 - 0.2,
         subset= supp == "VC", col="yellow",

@@ -148,7 +148,6 @@ hist(x, \dots)
 }
 
 \examples{
-data(islands)
 op <- par(mfrow=c(2, 2))
 hist(islands)
 utils::str(hist(islands, col="gray", labels = TRUE))

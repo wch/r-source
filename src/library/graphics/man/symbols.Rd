@@ -100,7 +100,6 @@ symbols(x, y, thermometers = z3, inches=FALSE)
 text(x,y, apply(format(round(z3, dig=2)), 1, paste, collapse = ","),
      adj = c(-.2,0), cex = .75, col = "purple", xpd=NA)
 
-data(trees)
 ## Note that  example(trees)  shows more sensible plots!
 N <- nrow(trees)
 attach(trees)

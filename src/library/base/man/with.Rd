@@ -33,7 +33,6 @@ require(stats); require(graphics)
 #examples from glm:
 \dontrun{
 library(MASS)
-data(anorexia)
 with(anorexia, {
     anorex.1 <- glm(Postwt ~ Prewt + Treat + offset(Prewt),
                     family = gaussian)
@@ -48,7 +47,6 @@ with(data.frame(u = c(5,10,15,20,30,40,60,80,100),
          summary(glm(lot2 ~ log(u), family = Gamma))))
 
 # example from boxplot:
-data(ToothGrowth)
 with(ToothGrowth, {
     boxplot(len ~ dose, boxwex = 0.25, at = 1:3 - 0.2,
             subset = (supp == "VC"), col = "yellow",

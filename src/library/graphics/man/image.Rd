@@ -96,7 +96,6 @@ image(z, axes = FALSE, main = "Math can be beautiful ...",
       xlab = expression(cos(r^2) * e^{-r/6}))
 contour(z, add = TRUE, drawlabels = FALSE)
 
-data(volcano)
 x <- 10*(1:nrow(volcano))
 y <- 10*(1:ncol(volcano))
 image(x, y, volcano, col = terrain.colors(100), axes = FALSE)

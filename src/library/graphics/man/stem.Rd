@@ -22,7 +22,6 @@ stem(x, scale = 1, width = 80, atom = 1e-08)
   Wadsworth \& Brooks/Cole.
 }
 \examples{
-data(islands)
 stem(islands)
 stem(log10(islands))
 }

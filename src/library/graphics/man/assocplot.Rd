@@ -57,7 +57,6 @@ assocplot(x, col = c("black", "red"), space = 0.3,
   \url{http://www.math.yorku.ca/SCS/sugi/sugi17-paper.html}
 }
 \examples{
-data(HairEyeColor)
 ## Aggregate over sex:
 x <- margin.table(HairEyeColor, c(1, 2))
 x

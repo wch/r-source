@@ -84,7 +84,6 @@ sunflowerplot(x, y = NULL, number, log = "", digits = 6,
 }
 \seealso{\code{\link[stats]{density}}}
 \examples{
-data(iris)
 ## 'number' is computed automatically:
 sunflowerplot(iris[, 3:4])
 ## Imitating  Chambers et al., p.109, closely:

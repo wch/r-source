@@ -27,7 +27,6 @@ splineOrder(object)
   \code{\link{periodicSpline}}
 }
 \examples{
-data( women )
 splineOrder( interpSpline( weight ~ height, women ) )
 }
 \keyword{ models }

@@ -62,7 +62,6 @@ plot.design(x, y = NULL, fun = mean, data = NULL, \dots,
 \seealso{\code{\link[stats]{interaction.plot}} for a \dQuote{standard graphic}
   of designed experiments.}
 \examples{
-data(warpbreaks)
 plot.design(warpbreaks)# automatic for data frame with one numeric var.
 
 Form <- breaks ~ wool + tension
@@ -70,7 +69,6 @@ summary(fm1 <- aov(Form, data = warpbreaks))
 plot.design(       Form, data = warpbreaks, col = 2)# same as above
 
 ## More than one y :
-data(esoph)
 utils::str(esoph)
 plot.design(esoph) ## two plots; if interactive you are "ask"ed
 

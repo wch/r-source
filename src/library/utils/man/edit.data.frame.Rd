@@ -53,7 +53,6 @@
 \seealso{\code{\link{data.entry}}, \code{\link{edit}}}
 \examples{
 \dontrun{
-data(InsectSprays)
 edit(InsectSprays)
 edit(InsectSprays, factor.mode="numeric")
 }

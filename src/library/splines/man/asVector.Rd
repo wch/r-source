@@ -27,7 +27,6 @@ asVector(object)
   \code{\link{xyVector}}
 }
 \examples{
-data( women )
 ispl <- interpSpline( weight ~ height,  women )
 pred <- predict(ispl)
 class(pred)

@@ -54,7 +54,6 @@ summary(object, \dots)
   Wadsworth \& Brooks/Cole.
 }
 \examples{
-data(attenu)
 summary(attenu, digits = 4) #-> summary.data.frame(...), default precision
 summary(attenu $ station, maxsum = 20) #-> summary.factor(...)
 

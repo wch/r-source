@@ -53,7 +53,6 @@ text(m, 1.35, "stripchart(round(x,1), \"stack\")")
 stripchart(xr, method = "jitter", add = TRUE, at = 0.7)
 text(m, 0.85, "stripchart(round(x,1), \"jitter\")")
 
-data(OrchardSprays)
 with(OrchardSprays,
      stripchart(decrease ~ treatment,
                 main = "stripchart(Orchardsprays)", ylab = "decrease",

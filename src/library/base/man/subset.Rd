@@ -50,7 +50,6 @@ subset(x, \dots)
   \code{\link{transform}}
 }
 \examples{
-data(airquality)
 subset(airquality, Temp > 80, select = c(Ozone, Temp))
 subset(airquality, Day == 1, select = -Temp)
 subset(airquality, select = Ozone:Wind)

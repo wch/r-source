@@ -148,7 +148,6 @@ lines(trans3d(xr,yr, f(xr,yr), res), col = "pink", lwd=2)## (no hidden lines)
 
 # (3) Visualizing a simple DEM model
 
-data(volcano)
 z <- 2 * volcano        # Exaggerate the relief
 x <- 10 * (1:nrow(z))   # 10 meter spacing (S to N)
 y <- 10 * (1:ncol(z))   # 10 meter spacing (E to W)

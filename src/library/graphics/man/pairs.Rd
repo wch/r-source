@@ -99,16 +99,13 @@ pairs(x, \dots)
   Wadsworth \& Brooks/Cole.
 }
 \examples{
-data(iris)
 pairs(iris[1:4], main = "Anderson's Iris Data -- 3 species",
       pch = 21, bg = c("red", "green3", "blue")[unclass(iris$Species)])
 
 ## formula method
-data(swiss)
 pairs(~ Fertility + Education + Catholic, data = swiss,
       subset = Education < 20, main = "Swiss data, Education < 20")
 
-data(USJudgeRatings)
 pairs(USJudgeRatings)
 
 ## put histograms on the diagonal

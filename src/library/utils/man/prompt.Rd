@@ -81,12 +81,10 @@ prompt(interactive, force.function = TRUE)
 unlink("plot.default.Rd")
 unlink("interactive.Rd")
 
-data(women) # data.frame
-prompt(women)
+prompt(women) # data.frame
 unlink("women.Rd")
 
-data(sunspots) # non-data.frame data
-prompt(sunspots)
+prompt(sunspots) # non-data.frame data
 unlink("sunspots.Rd")
 }
 \keyword{documentation}

@@ -54,7 +54,6 @@
   \code{\link{plot.default}}, \code{\link{plot.factor}}.
 }
 \examples{
-data(airquality)
 op <- par(mfrow=c(2,1))
 plot(Ozone ~ Wind, data = airquality, pch=as.character(Month))
 plot(Ozone ~ Wind, data = airquality, pch=as.character(Month),

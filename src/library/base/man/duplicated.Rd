@@ -51,10 +51,8 @@ x <- c(9:20, 1:5, 3:7, 0:8)
 (xu <- x[!duplicated(x)])
 ## xu == unique(x) but unique(x) is more efficient
 
-data(iris)
 duplicated(iris)[140:143]
 
-data(iris3)
 duplicated(iris3, MARGIN = c(1, 3))
 }
 \keyword{logic}

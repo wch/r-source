@@ -118,7 +118,6 @@ for(f in pi^(0:3))
   contour(cos(r^2)*exp(-r/f),
           drawlabels = FALSE, axes = FALSE, frame = TRUE)
 
-data("volcano")
 rx <- range(x <- 10*1:nrow(volcano))
 ry <- range(y <- 10*1:ncol(volcano))
 ry <- ry + c(-1,1) * (diff(rx) - diff(ry))/2

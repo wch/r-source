@@ -77,7 +77,6 @@ alist(\dots)
 \code{\link{formals}}.
 }
 \examples{
-data(cars)
 # create a plotting structure
 pts <- list(x=cars[,1], y=cars[,2])
 plot(pts)

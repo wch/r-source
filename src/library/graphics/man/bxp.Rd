@@ -113,7 +113,7 @@ bxp(bx.p, notch = TRUE, boxfill= "lightblue", border= 2:6, ylim = c(-4,4),
     pch = 22, bg = "green", log = "x", main = "... log='x', ylim=*")
 par(op)
 op <- par(mfrow= c(1,2))
-data(PlantGrowth)
+
 ## single group -- no label
 boxplot (weight ~ group, data = PlantGrowth, subset= group=="ctrl")
 ## with label

@@ -86,7 +86,6 @@ filled.contour(x = seq(0, 1, len = nrow(z)),
   \code{\link{palette}}; \code{\link[lattice]{levelplot}} from package
   \pkg{lattice}.}
 \examples{
-data(volcano)
 filled.contour(volcano, color = terrain.colors, asp = 1)# simple
 
 x <- 10*1:nrow(volcano)

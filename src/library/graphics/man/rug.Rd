@@ -38,7 +38,6 @@ rug(x, ticksize=0.03, side=1, lwd=0.5, col,
 }
 \seealso{\code{\link{jitter}} which you may want for ties in \code{x}.}
 \examples{
-data(faithful)
 with(faithful, {
     plot(stats::density(eruptions, bw=0.15))
     rug(eruptions)

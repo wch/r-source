@@ -34,11 +34,9 @@
 (Poiss.tab <- table(N = rpois(200, lam= 5)))
 plot(Poiss.tab, main = "plot(table(rpois(200, lam=5)))")
 
-data(state)
 plot(table(state.division))
 
 ## 4-D :
-data(Titanic)
 plot(Titanic, main ="plot(Titanic, main= *)")
 
 }

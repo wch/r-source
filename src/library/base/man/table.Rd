@@ -78,15 +78,12 @@ is.table(x)
 require(stats) # for rpois and xtabs
 ## Simple frequency distribution
 table(rpois(100,5))
-data(warpbreaks)
 attach(warpbreaks)
 ## Check the design:
 table(wool, tension)
-data(state)
-table(state.division, state.region)
 detach()
+table(state.division, state.region)
 
-data(airquality)
 # simple two-way contingency table
 with(airquality, table(cut(Temp, quantile(Temp)), Month))
 
@@ -96,7 +93,7 @@ table(a, sample(a), deparse.level = 0) # dnn is c("", "")
 table(a, sample(a), deparse.level = 2) # dnn is c("a", "sample(a)")
 
 ## xtabs() <-> as.data.frame.table() :
-data(UCBAdmissions) ## already a contingency table
+UCBAdmissions ## already a contingency table
 DF <- as.data.frame(UCBAdmissions)
 class(tab <- xtabs(Freq ~ ., DF)) # xtabs & table
 ## tab *is* "the same" as the original table:

@@ -60,7 +60,6 @@ abline(reg=, untf = FALSE, \dots)
   \code{\link{par}}.
 }
 \examples{
-data(cars)
 z <- lm(dist ~ speed, data = cars)
 plot(cars)
 abline(z)

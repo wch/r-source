@@ -31,7 +31,6 @@ by(data, INDICES, FUN, \dots)
 
 \examples{
 require(stats)
-data(warpbreaks)
 attach(warpbreaks)
 by(warpbreaks[, 1:2], tension, summary)
 by(warpbreaks[, 1], list(wool=wool, tension=tension), summary)

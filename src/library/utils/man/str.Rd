@@ -92,7 +92,7 @@ require(stats)
 str(1:12)
 str(ls)
 str(args) #- more useful than  args(args) !
-data(freeny); str(freeny)
+str(freeny)
 str(str)
 str(.Machine, digits = 20)
 str( lsfit(1:9,1:9))

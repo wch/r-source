@@ -57,7 +57,6 @@ plot(x, y, \dots)
   methods; \code{\link{points}}, \code{\link{lines}}, \code{\link{par}}.
 }
 \examples{
-data(cars)
 plot(cars)
 lines(lowess(cars))
 

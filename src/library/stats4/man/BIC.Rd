@@ -36,7 +36,6 @@ BIC(object, \dots)
 %\note{}
 \seealso{\code{\link{logLik-methods}}, \code{\link{AIC-methods}}}
 \examples{
-data(swiss)
 lm1 <- lm(Fertility ~ . , data = swiss)
 AIC(lm1)
 BIC(lm1)

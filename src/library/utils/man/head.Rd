@@ -53,7 +53,6 @@ tail(x, \dots)
 }
 
 \examples{
-data(freeny)
 head(freeny.x, n=10)
 head(freeny.y)
 
