@@ -239,14 +239,14 @@ int Rf_initialize_R(int ac, char **av)
     if(useaqua){
      R_Outputfile = NULL;
      R_Consolefile = NULL;
-    }else{ 
-#else
+    } else { 
+#endif
     R_Outputfile = stdout;
     R_Consolefile = stdout;
-#endif 
 #ifdef HAVE_AQUA
     }
 #endif 
+
   
 /*
  *  Since users' expectations for save/no-save will differ, we decided
@@ -270,7 +270,8 @@ int Rf_initialize_R(int ac, char **av)
     fpu_setup(1);
 
 #ifdef HAVE_AQUA    
-    R_StartConsole();
+    if(useaqua)
+     R_StartConsole();
 #endif
 
  return(0);
