@@ -24,7 +24,7 @@ use R::Rdtools;
 use R::Utils;
 use R::Vars;
 
-my $revision = ' $Revision: 1.10 $ ';
+my $revision = ' $Revision: 1.11 $ ';
 my $version;
 my $name;
 
@@ -77,7 +77,7 @@ while (<INFILE>) {
 	or die "Error: cannot open '$_' for reading\n";
     my @chunks = split(/\\eof/, &Rdpp($_, $opt_OS));
     ## <FIXME>
-    my $is_new_style_Rd_list = ($#chunks >= 1);
+    my $is_new_style_Rd_list = (scalar(@chunks) > 1);
     ## <NOTE>
     ## If we found '\eof', we have a new-style list of Rd files.
     ## If not, we could still have an old-style one obtained by simply
@@ -86,17 +86,26 @@ while (<INFILE>) {
     ## Note that this is really dangerous, and defensive programming
     ## would (at least) put things back into one text chunk if \name was
     ## found only once ...
-    @chunks = split(/\\name/, $chunks[0]) unless($is_new_style_Rd_list);
+    if($is_new_style_Rd_list) {
+	pop(@chunks);		# last element must be 'empty' ...
+    }
+    else {
+	@chunks = split(/\\name/, $chunks[0]);
+    }
     ## </NOTE>
     foreach my $text (@chunks) {
-	next if($text !~ /^\s*{\s*([^}]*[^}\s])\s*}.*/);
-	print OUTFILE "# usages in documentation object $1\n";
-	print OUTFILE "# arglist: ", join(" ", get_arglist($text)), "\n"
-	  unless ($opt_mode eq "codoc");
-
 	## If not a new-style Rd list, we split on \name (see above),
 	## and hence put this back in front as get_usages() needs it.
 	$text = "\\name" . $text unless($is_new_style_Rd_list);
+
+	## Determine the \name of the documentation object.  Note:
+	## contrary to Rd::info() or Rdtools::get_section(), this goes
+	## for non-empty matches right away.
+	next if($text !~ /\\name\s*{\s*([^}]*[^}\s])\s*}.*/);
+
+	print OUTFILE "# usages in documentation object $1\n";
+	print OUTFILE "# arglist: ", join(" ", get_arglist($text)), "\n"
+	  unless ($opt_mode eq "codoc");
 
 	{
 	    local $/;		# unset for get_usages()
