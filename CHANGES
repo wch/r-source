@@ -2,6 +2,12 @@
 
 NEW FEATURES
 
+    o   The top level Makefile now supports the usual
+	   ./configure; make; make install
+	procedure (new make targets `all' and `install').
+
+    o   The HTML help pages can now be searched for keywords.
+
     o	Conversion of functions to and from lists. formals<- and body<-.
 	The alist() function makes it easier to construct argument lists,
 	etc. Added expression-->list coercion.
