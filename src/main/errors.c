@@ -1,5 +1,5 @@
 /*
- *  R : A Computer Langage for Statistical Data Analysis
+ *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -186,11 +186,11 @@ static struct {
     char*	format;
 }
 ErrorDB[] = {
-    { ERROR_NUMARGS,		"invalid number of arguments\n"       },
-    { ERROR_ARGTYPE,		"invalid argument type\n"             },
+    { ERROR_NUMARGS,		"invalid number of arguments\n"	      },
+    { ERROR_ARGTYPE,		"invalid argument type\n"	      },
 
     { ERROR_TSVEC_MISMATCH,	"time-series/vector length mismatch\n"},
-    { ERROR_INCOMPAT_ARGS,	"incompatible arguments\n"            },
+    { ERROR_INCOMPAT_ARGS,	"incompatible arguments\n"	      },
 
     { ERROR_UNIMPLEMENTED,	"unimplemented feature in %s\n",      },
     { ERROR_UNKNOWN,		"unknown error (report this!)\n",     }
@@ -220,11 +220,11 @@ void  ErrorMessage(SEXP call, int which_error, ...)
 }
 
 static struct {
-    int     index;
+    int	    index;
     char*   format;
 }
 WarningDB[] = {
-    { WARNING_UNKNOWN,          "unknown warning (report this!)\n", }
+    { WARNING_UNKNOWN,		"unknown warning (report this!)\n", }
 };
 
 void  WarningMessage(SEXP call, int which_warn, ...)
