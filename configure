@@ -8548,6 +8548,15 @@ else
   MAKEINFO="${MAKEINFO_CMD}"
 fi
 
+## Browser
+R_BROWSER="netscape"
+case "${host_os}" in
+  darwin*)
+    R_BROWSER="open \"\${R_HOME}/doc/html/index.html\""
+    ;;
+esac
+
+
 
 ac_ext=c
 ac_cpp='$CPP $CPPFLAGS'
@@ -9698,7 +9707,7 @@ fi
 
 
 # Provide some information about the compiler.
-echo "$as_me:9701:" \
+echo "$as_me:9710:" \
      "checking for Fortran 77 compiler version" >&5
 ac_compiler=`set X $ac_compile; echo $2`
 { (eval echo "$as_me:$LINENO: \"$ac_compiler --version </dev/null >&5\"") >&5
@@ -14086,7 +14095,7 @@ _ACEOF
 # flags.
 ac_save_FFLAGS=$FFLAGS
 FFLAGS="$FFLAGS $ac_verb"
-(eval echo $as_me:14089: \"$ac_link\") >&5
+(eval echo $as_me:14098: \"$ac_link\") >&5
 ac_f77_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$ac_f77_v_output" >&5
 FFLAGS=$ac_save_FFLAGS
@@ -14165,7 +14174,7 @@ _ACEOF
 # flags.
 ac_save_FFLAGS=$FFLAGS
 FFLAGS="$FFLAGS $ac_cv_prog_f77_v"
-(eval echo $as_me:14168: \"$ac_link\") >&5
+(eval echo $as_me:14177: \"$ac_link\") >&5
 ac_f77_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$ac_f77_v_output" >&5
 FFLAGS=$ac_save_FFLAGS
@@ -24220,6 +24229,7 @@ s,@ac_ct_STRIP@,$ac_ct_STRIP,;t t
 s,@CPP@,$CPP,;t t
 s,@LIBTOOL@,$LIBTOOL,;t t
 s,@LIBTOOL_DEPS@,$LIBTOOL_DEPS,;t t
+s,@R_BROWSER@,$R_BROWSER,;t t
 s,@F77@,$F77,;t t
 s,@FFLAGS@,$FFLAGS,;t t
 s,@ac_ct_F77@,$ac_ct_F77,;t t
