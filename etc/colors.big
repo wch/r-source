@@ -1,4 +1,9 @@
-.Colors := list(
+###--- -*- R -*-
+
+##---- Martin Maechler <maechler@stat.math.ethz.ch>
+##---  =============== has a god idea to improve the following,
+##---  ``synchronizing'' it with  colors() ...
+.Colors <- list(
 aliceblue = 		c(240, 248, 255),
 antiquewhite = 		c(250, 235, 215),
 antiquewhite1 =		c(255, 239, 219),
@@ -456,7 +461,7 @@ yellow4 = 		c(139, 139,   0),
 yellowgreen = 		c(154, 205,  50)
 )
 
-.Colors := "names<-"(
+.Colors <- "names<-"(
 	unlist(
 		lapply(.Colors, function(x) rgb(x[1]/255,x[2]/255,x[3]/255))
 	), names(.Colors))

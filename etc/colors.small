@@ -1,4 +1,6 @@
-.Colors := list(
+###--- -*- R -*-
+
+.Colors <- list(
 	red =		c(255,   0,   0),
 	green =		c(  0, 255,   0),
 	blue =		c(  0,   0, 255),
@@ -9,7 +11,7 @@
 	black =		c(  0,   0,   0),
 )
 
-.Colors := "names<-"(
+.Colors <- "names<-"(
 	unlist(
 		lapply(.Colors, function(x) rgb(x[1]/255,x[2]/255,x[3]/255))
 	), names(.Colors))
