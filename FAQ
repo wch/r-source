@@ -1236,6 +1236,11 @@ distributions of R.)
      "Modern Applied Statistics with S".  Contained in the `VR' bundle.
      _Recommended_.
 
+*MPV*
+     Data sets from the book "Introduction to Linear Regression Analysis"
+     by D. C. Montgomery, E. A. Peck, and C. G. Vining, 2001, John Wiley and
+     Sons.
+
 *Matrix*
      A Matrix package.
 
