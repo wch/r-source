@@ -173,8 +173,16 @@ BUG FIXES
 NEW FEATURES
 
     o	Support for configuration and building the Unix version of R
-	 under Mac OS X.  (The `classic' Macintosh port is
-	`Carbonized' and also runs under that OS.)
+	under Mac OS X.	 (The `classic' Macintosh port is `Carbonized'
+	and also runs under that OS.)
+
+    o	dotchart() and stripchart() become the preferred names for
+	dotplot() and stripplot(), respectively.  The old names are now
+	deprecated.
+
+    o	Functions in package ctest now consistently use +/-Inf rather
+	than NA for one-sided confidence intervals.
+
 
 
 BUG FIXES
@@ -187,7 +195,7 @@ BUG FIXES
     o	Printing of kernels in package ts was unreliable: the internal
 	representation was correct.
 
-    o	A problem with "..." in substitutions has been fixed (PR#860). 
+    o	A problem with "..." in substitutions has been fixed (PR#860).
 
     o	Various strangeness with match.call() and "..." has been fixed
 	(PR#813).
@@ -210,7 +218,7 @@ BUG FIXES
 	completely blank strings. Now they return NA. (PR#870)
 
     o	Overflow in deparse() in terms(formula) with very long left-hand
-	side fixed (PR#873)
+	side fixed.  (PR#873)
 
     o	lowess(c(1:3, 7:5)) now should give the same on different platforms,
 	since now in the C code (int)(f*n + 1e-7) is used.
@@ -229,23 +237,51 @@ BUG FIXES
     o	dchisq with integer x, df and ncp sometimes gave incorrect
 	results on i686 Linux.
 
-    o	cancelling a quit caused quit() not to ask next time it was called.
+    o	Cancelling a quit caused quit() not to ask next time it was called.
 
-    o	some complicated operations with "..." didn't work.
+    o	Some complicated operations with "..." didn't work.
 
-    o	missingness was not correctly propagated in some cases.
+    o	Missingness was not correctly propagated in some cases.
 
     o	eigen() segfaulted on 0-dimensional matrices.
 
     o	nls( ~ rhs, ..)	 now works (formula with empty left hand side).
 
-    o	the fuzz added in hist() for 1.2.2 broke the logic testing for 
+    o	The fuzz added in hist() for 1.2.2 broke the logic testing for
 	equidistant breakpoints.
 
-    o	calls to replacement functions ("f<-") lost argument names (PR#888)
+    o	Calls to replacement functions ("f<-") lost argument names
+	(PR#888).
 
-    o   is.na and is.nan gave random result on lists containing zero-length 
-        objects
+    o	is.na() and is.nan() gave random results on lists containing
+	zero-length objects.
+
+    o	cor(), cov() and var() gave a result on a zero-length argument
+	(now an error).	 cov(x, NULL) and cor(x, NULL) are now errors
+	if x is a vector.  (PR#883).
+
+    o	?smooth.spline now properly describes `spar' which is *not*
+	lambda.	 smooth.spline(1:20, spar = 50) gives an error instead
+	of silent nonsense.  print.smooth.spline() now makes use of a
+	digits argument.
+
+    o	Confidence intervals for wilcox.test() had the samples reversed
+	in the two-sided case (PR#895), and sometimes got continuity
+	correction wrong (PR#896).
+
+    o	Using out-of-range font values in text() on a postscript()
+	device on Windows could crash.	.ps.prolog was incorrectly
+	named in some of the documentation.  (PR#914)
+
+    o	Warning messages of > 8191 chars could crash R (PR#902), as
+	could errors.  Now they are truncated to 8191 chars on
+	machines which have vsnprintf (almost all).
+
+    o	range() now works properly for date-time objects.
+
+    o   contour() could loop infinitely (PR#897).
+
+    o   R-lang manual had precedence of %% wrong (PR#879)
 
 
 		CHANGES IN R VERSION 1.2.2
@@ -254,7 +290,7 @@ BUG FIXES
 NEW FEATURES
 
     o	The Macintosh port becomes a full member of the R family and its
-	sources are incorporated as from this release.	
+	sources are incorporated as from this release.
 	See `src/macintosh/INSTALL' for how that port is built.
 
     o	The API header files and export files `R.exp' are released under
@@ -297,7 +333,7 @@ BUG FIXES
 	lines" thanks to Ben Bolker.
 
     o	Setting row/column names preserves the names of the dimnames
-	(PR#809). 
+	(PR#809).
 
     o	Using help() after help.start() on Unix was failing to find
 	the linked help files if more than one package was loaded (as
@@ -315,7 +351,7 @@ BUG FIXES
 
     o	summary() on a data frame was computing results to a precision
 	based on options("digits") (default 4), not its `digits'
-	argument.  Now results are computed to full precision but 
+	argument.  Now results are computed to full precision but
 	formatted using `digits'.
 
     o	summary(m, digits=*) also properly works for matrices.
@@ -326,8 +362,8 @@ BUG FIXES
     o	There was a spurious warning from the X11 driver on 100 dpi
 	displays (PR#840, fix from Tom Vogels).
 
-    o	scan() was reading all-blank numeric fields as zero. 
-	Should be read as NA, and are now. 
+    o	scan() was reading all-blank numeric fields as zero.
+	Should be read as NA, and are now.
 
     o	dnbinom(*, size, *) now works again for size < 1 (PR#842).
 
@@ -363,7 +399,7 @@ BUG FIXES
     o	In the event of a fatal X11 error (this can be generated under FVWM
 	by selecting Destroy), the input handler would loop, leaving the
 	"please save work and shut down R" advice useless. There should now
-	be an opportunity for a relatively graceful exit.  
+	be an opportunity for a relatively graceful exit.
 
     o	polyroot() misbehaved if all coefficients except that of the highest
 	degree term were zero (partial fix for PR#751)
@@ -589,7 +625,7 @@ BUG FIXES
 
     o	file.show() handles the case of zero files better.
 
-    o	formula.lm uses object$formula if it exists, in preference 
+    o	formula.lm uses object$formula if it exists, in preference
 	to object$terms.
 
     o	strsplit() is corrected for an empty split pattern.
