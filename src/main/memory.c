@@ -562,7 +562,7 @@ static void TryToReleasePages(void)
 {
   SEXP s;
   int i;
-  static release_count = 0;
+  static int release_count = 0;
 
   if (release_count == 0) {
     release_count = R_PageReleaseFreq;
@@ -1553,7 +1553,7 @@ SEXP do_memoryprofile(SEXP call, SEXP op, SEXP args, SEXP env)
 	  for (s = NEXT_NODE(R_GenHeap[i].Old[gen]);
 	       s != R_GenHeap[i].Old[gen];
 	       s = NEXT_NODE(s))
-	    INTEGER(ans)[TYPEOF(s), INTEGER(ans)[TYPEOF(s)] + 1];
+	    INTEGER(ans)[TYPEOF(s)]++;
 	}
       }
 #else
@@ -1956,7 +1956,7 @@ void (SETLENGTH)(SEXP x, int v) { SETLENGTH(x, v); }
 void (SET_TRUELENGTH)(SEXP x, int v) { SET_TRUELENGTH(x, v); }
 void (SET_STRING_ELT)(SEXP x, int i, SEXP v) { CHECK_OLD_TO_NEW(x, v); STRING_ELT(x, i) = v; }
 SEXP (SET_VECTOR_ELT)(SEXP x, int i, SEXP v) { CHECK_OLD_TO_NEW(x, v); return VECTOR_ELT(x, i) =v; }
-int (SETLEVELS)(SEXP x, int v) { SETLEVELS(x, v); }
+int (SETLEVELS)(SEXP x, int v) { return SETLEVELS(x, v); }
 
 /* List Accessors */
 SEXP (TAG)(SEXP e) { return TAG(e); }
