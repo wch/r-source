@@ -18,12 +18,15 @@ R = $(top_builddir)/bin/R
 # It can point to a local mirror if there's no direct CRAN connection
 CRANREC = cran.r-project.org::CRAN/src/contrib/$(VERSION)/Recommended/
 
-CLEANFILES = $(EXPORTFILE)
-DISTCLEANFILES = Makefile
+CLEANFILES = Timestamp
+DISTCLEANFILES = Makefile Timestamp
 
 all: Makefile Timestamp
-	find . -name '*.tar.gz' -newer Timestamp -exec $(R) CMD INSTALL {} \;
-	touch Timestamp
+	for i in $(R_PKGS_RECD) ; do\
+		if [ $${i}_*tar.gz -nt Timestamp ] ; then \
+			$(R) CMD INSTALL $${i}_*tar.gz || exit 1;\
+		fi;\
+	done; touch Timestamp
 
 .SUFFIXES:
 .SUFFIXES: .in
@@ -68,7 +71,8 @@ clean:
 		rm -f *.tar.gz \; 
 distclean: clean
 	-@test -z "$(DISTCLEANFILES)" || rm -f $(DISTCLEANFILES)
-	-@rm -f *.tar.gz
+	@test $(BUILDDIR_IS_SRCDIR) = yes || \
+		rm -f *.tar.gz \; 
 maintainer-clean: distclean
 
 distdir: $(DISTFILES) rsync-update

@@ -23,6 +23,7 @@ SUBDIRS_WITH_NO_BUILD = debian
 GZIP = --best
 
 all: Makefile Makeconf R docs
+	@cd src/library/Recommended && $(MAKE) $@
 
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@cd $(top_builddir) && $(SHELL) ./config.status $@
