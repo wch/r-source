@@ -1491,7 +1491,8 @@ void DoPaste(WindowPtr window)
 /* Only resolutions 72, 144, 300 and 600 are allowable */
 int GetScreenRes(void)
 {
-  gScreenRes = atoi(mac_getenv("ScreenRes"));
+   gScreenRes = atoi(mac_getenv("ScreenRes"));
+
   if( gScreenRes != 72 && gScreenRes != 144 &&
       gScreenRes != 300 && gScreenRes != 600)  
     gScreenRes = 72;
@@ -1500,7 +1501,8 @@ int GetScreenRes(void)
 
 int GetTextSize(void)
 {
-  gTextSize = atoi(mac_getenv("TextSize"));
+   gTextSize = atoi(mac_getenv("TextSize"));
+
   if(gTextSize < 8 || gTextSize > 14)  
   	 gTextSize = 12;
   return(gTextSize);
