@@ -118,5 +118,5 @@ undoc <- function(pkg, dir)
     if(is.null(allObjs))
         warning("Neither code nor data objects found")
     else
-        allObjs[! allObjs %in% c(objsdocs, ".First.lib")]
+        allObjs[! allObjs %in% c(objsdocs, ".First.lib", ".Last.lib")]
 }
