@@ -31,7 +31,7 @@ static char *filter[] = {
 	"All Files (*.*)",	"*.*",
 	"Text Files (*.TXT)",	"*.txt",
 	"HTML Files (*.HTM)",	"*.htm",
-	"GIF Files (*.GIF)",	"*.gif",
+	"PNG Files (*.PNG)",	"*.png",
 	"JPEG Files (*.JPG)",	"*.jpg",
 	"BMP Files (*.BMP)",	"*.bmp",
 	""

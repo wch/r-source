@@ -33,7 +33,6 @@ events.o: internal.h ga.h graphapp.h
 fonts.o: internal.h ga.h graphapp.h
 gbuttons.o: internal.h ga.h graphapp.h
 gdraw.o: internal.h ga.h graphapp.h
-gif.o: internal.h ga.h graphapp.h
 gimage.o: ga.h graphapp.h
 gmenus.o: internal.h ga.h graphapp.h
 graphappmain.o: internal.h ga.h graphapp.h
