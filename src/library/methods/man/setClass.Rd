@@ -209,6 +209,9 @@ nrow(new("matrix")) # 1
 xxx <- rnorm(3)
 setClass("xNum", representation(x = "numeric"), prototype = list(x = xxx))
 stopifnot(identical(new("xNum")@x, xxx))
+
+
+
 }
 
 

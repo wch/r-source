@@ -95,12 +95,11 @@ static double private_rint(double x)
 #define R_rint rint
 #endif
 
-double fround(double x, double digits)
-{
+double fround(double x, double digits) {
 #define MAX_DIGITS DBL_MAX_10_EXP
     /* = 308 (IEEE); was till R 0.99: (DBL_DIG - 1) */
     /* Note that large digits make sense for very small numbers */
-    double pow10, sgn, intx, res;
+    double pow10, sgn, intx;
     int dig;
 
 #ifdef IEEE_754
@@ -112,21 +111,19 @@ double fround(double x, double digits)
     if (digits > MAX_DIGITS)
 	digits = MAX_DIGITS;
     dig = (int)floor(digits + 0.5);
-    pow10 = R_pow_di(10., dig);
     if(x < 0.) {
 	sgn = -1.;
 	x = -x;
     } else
 	sgn = 1.;
-    if (dig > 0) {
+    if (dig == 0) {
+	return sgn * R_rint(x);
+    } else if (dig > 0) {
+        pow10 = R_pow_di(10., dig);
 	intx = floor(x);
-	x -= intx;
-    } else
-	intx = 0.;
-
-    res = (intx + R_rint(x * pow10) / pow10);
-    /* Force integer answer for digits <= 0: last expression can
-       introduce rounding errors */
-    if(dig <= 0) res = (int)floor(res + 0.5);
-    return sgn * res;
+	return sgn * (intx + R_rint((x-intx) * pow10) / pow10);
+    } else {
+        pow10 = R_pow_di(10., -dig);
+        return sgn * R_rint(x/pow10) * pow10;
+    }
 }

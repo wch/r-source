@@ -482,6 +482,39 @@ print(fit, intercept = TRUE)
 summary(fit) # failed
 summary(fit, intercept = TRUE)
 
+## Several  qr.*() functions lose (dim)names.
+## reported by MM 2002-01-26
+
+## the following should work both in R and S+ :
+q4 <- qr(X4 <- cbind(a = 1:9, b = c(1:6,3:1), c = 2:10, d = rep(1,9)))
+##q2 <- qr(X4[,1:2])
+y04 <- y4 <- cbind(A=1:9,B=2:10,C=3:11,D=4:12)
+dimnames(y4)[[1]] <- paste("c",1:9,sep=".")
+y1 <- y4[,2]
+y40 <- y4 ; dimnames(y40) <- list(dimnames(y4)[[1]], NULL)
+
+c1 <- qr.coef( q4, y4) # row- AND col-names
+c2 <- qr.coef( q4, y04)# ditto
+c3 <- qr.coef( q4, y40)# row--names
+dn3 <- dimnames(c3)
+stopifnot(identical(dimnames(c1), dimnames(c2)),
+          identical(dimnames(c1), list(letters[1:4], LETTERS[1:4])),
+          identical(dn3[[1]], letters[1:4]),  length(dn3[[2]]) == 0,
+          identical(names(qr.coef(q4,y1)),   letters[1:4]),
+          identical(dimnames(qr.R(q4))[[2]], letters[1:4]),
+
+          identical(dimnames(qr.qty(q4,y4)), dimnames(y4)),
+          identical(dimnames(qr.qty(q4,y40)), dimnames(y40)),
+          identical(dimnames(qr.qy (q4,y04)), dimnames(y04)),
+
+          all.equal(y1,  qr.fitted(q4, y1 ), tol = 1e-12),
+          all.equal(y4,  qr.fitted(q4, y4 ), tol = 1e-12),
+          all.equal(y40, qr.fitted(q4, y40), tol = 1e-12),
+          all.equal(y04, qr.fitted(q4, y04), tol = 1e-12),
+
+          all.equal(X4, qr.X(q4), tol = 1e-12)
+)
+
 
 ## This example last: needed < 1.5.0 ##
 

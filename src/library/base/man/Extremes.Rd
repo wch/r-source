@@ -21,7 +21,18 @@ pmin(\dots, na.rm=FALSE)
 }
 \value{
   \code{max} and \code{min} return the maximum or minimum of all the
-  values present in their arguments, as \code{\link{double}}.
+  values present in their arguments, as \code{\link{integer}} if all are
+  \code{integer}, % and at least one is nonempty
+  or as \code{\link{double}} otherwise.
+
+  The minimum and maximum of an empty set are \code{+Inf} and \code{-Inf}
+  (in this order!) which ensures \emph{transitivity}, e.g.,
+  \code{min(x1, min(x2)) == min(x1,x2)}.
+  In \R versions before 1.5, \code{min(integer(0)) == .Machine$integer.max},
+  and analogously for \code{max}, preserving argument \emph{type},
+  whereas from \R version 1.5.0, \code{max(x) == -Inf} and
+ \code{min(x) == +Inf} whenever \code{length(x) == 0}.
+
   If \code{na.rm} is \code{FALSE} an \code{NA} value in any of the
   arguments will cause a value of \code{NA} to be returned, otherwise
   \code{NA} values are ignored.

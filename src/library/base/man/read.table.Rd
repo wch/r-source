@@ -158,7 +158,7 @@ read.delim2(file, header = TRUE, sep = "\t", quote="\"", dec=",",
   \code{fill = TRUE} in these variants.
 
   Comment characters are allowed unless \code{comment.char = ""}, and
-  complete comment lines are allowed provided \item{blank.lines.skip = TRUE}
+  complete comment lines are allowed provided \code{blank.lines.skip = TRUE}
   However, comment lines prior to the header must have
   the comment character in the first non-blank column.
 }
@@ -173,6 +173,11 @@ read.delim2(file, header = TRUE, sep = "\t", quote="\"", dec=",",
   usage.
 
   Using \code{comment.char = ""} will be appreciably faster.
+
+  \code{read.table} is not the right tool for reading large matrices,
+  especially those with many columns: it is designed to read
+  \emph{data frames} which may have columns of very different classes.
+  Use \code{\link{scan}} instead.
 }
 \seealso{
   The \emph{R Data Import/Export} manual.

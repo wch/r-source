@@ -744,7 +744,7 @@ extendsCoerce <-
         by <- (if(is.character(ext)) ext else ext$by)
         if(formFunction) {
             f <- eval(substitute(function(from)
-                            as(as(from, BY), CLASS),
+                            as(as(from, BY, FALSE), CLASS),
                             list(BY = by, CLASS=Class)))
         }
         else

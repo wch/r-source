@@ -48,6 +48,9 @@ as.qr(x)
   \code{qr.qy} and \code{qr.qty} return \code{Q \%*\% y} and
   \code{t(Q) \%*\% y}, where \code{Q} is the \eqn{\bold{Q}} matrix.
 
+  All the above functions keep \code{dimnames} (and \code{names}) of
+  \code{x} and \code{y} if there are.
+
   \code{qr.solve} solves systems of equations via the QR decomposition.
 
   \code{is.qr} returns \code{TRUE} if \code{x} is a \code{\link{list}}
@@ -78,7 +81,7 @@ as.qr(x)
   (\code{\link{eigen}}).  See \code{\link{det}}.
 
   The complex case uses column pivoting and does not attempt to detect
-  rank-deficient matrices.  
+  rank-deficient matrices.
 }
 \references{
   Dongarra, J. J., Bunch, J. R., Moler, C. B. and Stewart, G. W. (1978)

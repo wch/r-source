@@ -127,11 +127,15 @@ function(topic, device = getOption("device"),
         db <- matrix(character(0), nr = 0, nc = 4)
         for(path in paths) {
             INDEX <- file.path(path, "demo", "00Index")
-            if(file.exists(INDEX))
-                db <- rbind(db,
-                            cbind(basename(path),
-                                  dirname(path),
-                                  read.00Index(INDEX)))
+            if(file.exists(INDEX)) {
+                entries <- read.00Index(INDEX)
+                if(NROW(entries) > 0) {
+                    db <- rbind(db,
+                                cbind(basename(path),
+                                      dirname(path),
+                                      entries))
+                }
+            }
         }
         colnames(db) <- c("Package", "LibPath", "Item", "Title")
 

@@ -340,7 +340,7 @@ selectMethod <-
             stop(paste("\"", f, "\" has no methods defined", sep=""))
     }
     selection <- .Call("R_selectMethod", f, env, mlist, PACKAGE = "methods")
-    if(is.null(selection)) {
+    if(is.null(selection) && !identical(useInherited, FALSE)) {
       ## do the inheritance computations to update the methods list, try again.
       ##
       ## assign the updated information to the method environment
