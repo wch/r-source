@@ -58,6 +58,7 @@ typedef struct
     int nsize;
     int max_vsize;
     int max_nsize;
+    int NoRenviron;
 
       /* Permanent copy of the command line arguments and the number
          of them passed to the application.
@@ -77,7 +78,6 @@ typedef struct
     blah4 message;
     blah5 yesnocancel;
     blah6 busy;
-    int NoRenviron;
     UImode CharacterMode;
 #endif
 } structRstart;

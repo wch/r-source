@@ -14,13 +14,6 @@ else
 fi
 export @shlibpath_var@
 
-## FIXME:
-## Not needed here if sourcing the environment files is in C code.
-## Default environment file -- used if there's none in current dir
-: ${R_ENVIRON="${HOME}/.Renviron"}
-use_r_environ=true
-## </FIXME>
-
 usage="
 Usage: R [options] [< infile] [> outfile]
    or: R CMD command [arguments]
@@ -112,15 +105,6 @@ while test -n "${1}"; do
       ;;
     --debugger=*)
       debugger=`echo "${1}" | sed -e 's/[^=]*=//'` ;;
-## FIXME:
-## Not needed here if sourcing the environment files is in C code.
-## Default environment file -- used if there's none in current dir
-    --no-environ)
-      use_r_environ=false ;;
-    --vanilla)
-      args="${args} ${1}"
-      use_r_environ=false ;;
-## </FIXME>
     -h|--help)
       echo "${usage}"; exit 0 ;;
     --version)
@@ -137,22 +121,6 @@ if [ ! -x ${R_HOME} ]; then
   echo "R_HOME = \`${R_HOME}' not found"
   exit 1
 fi
-
-## FIXME:
-## Not needed here if sourcing the environment files is in C code.
-. ${R_HOME}/etc/Renviron
-export `sed 's/^ *#.*//; s/^\(.*\)=.*/\1/' ${R_HOME}/etc/Renviron`
-## Default environment file -- used if there's none in current dir
-if ${use_r_environ}; then # use the one in current dir, or default
-  if test -r ./.Renviron; then
-    . ./.Renviron
-    export `sed 's/^ *#.*//; s/^\(.*\)=.*/\1/' ./.Renviron`
-  elif test -r ${R_ENVIRON}; then
-    . ${R_ENVIRON}
-    export `sed 's/^ *#.*//; s/^\(.*\)=.*/\1/' ${R_ENVIRON}`
-  fi
-fi
-## </FIXME>
 
 ## Startup
 R_binary="R.bin"

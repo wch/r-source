@@ -112,6 +112,8 @@ int Rf_initialize_R(int ac, char **av)
     ptr_R_loadhistory = Rstd_loadhistory;
     ptr_R_savehistory = Rstd_savehistory;
 
+    process_global_Renviron();
+
 #ifdef HAVE_TIMES
     R_setStartTime();
 #endif
@@ -198,6 +200,7 @@ int Rf_initialize_R(int ac, char **av)
 	}
     }
     R_SetParams(Rp);
+    if(!Rp->NoRenviron) process_users_Renviron();
 
     /* On Unix the console is a file; we just use stdio to write on it */
 

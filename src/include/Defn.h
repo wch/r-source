@@ -638,6 +638,8 @@ SEXP parse(FILE*, int);
 void PrintGreeting(void);
 void PrintVersion(char *);
 void PrintWarnings(void);
+void process_global_Renviron();
+void process_users_Renviron();
 SEXP promiseArgs(SEXP, SEXP);
 void RemoveClass(SEXP, char *);
 SEXP R_LoadFromFile(FILE*, int);
