@@ -67,21 +67,21 @@ void CoercionWarning(int warn)
 	warning("imaginary parts discarded in coercion");
 }
 
-double R_strtod(char *c, char **end)
+double R_strtod(const char *c, char **end)
 {
     double x;
 
     if (strncmp(c, "NA", 2) == 0){
-	x = NA_REAL; *end = c + 2;
+	x = NA_REAL; *end = (char *)c + 2; /* coercion for -Wall */
     }
     else if (strncmp(c, "NaN", 3) == 0) {
-	x = R_NaN; *end = c + 3;
+	x = R_NaN; *end = (char *)c + 3;
     }
     else if (strncmp(c, "Inf", 3) == 0) {
-	x = R_PosInf; *end = c + 3;
+	x = R_PosInf; *end = (char *)c + 3;
     }
     else if (strncmp(c, "-Inf", 4) == 0) {
-	x = R_NegInf; *end = c + 4;
+	x = R_NegInf; *end = (char *)c + 4;
     }
     else
         x = strtod(c, end);

@@ -64,7 +64,7 @@ Rboolean StringFalse(char*);
 Rboolean StringTrue(char*);
 Rboolean isBlankString(char *);
 
-double 	R_strtod(char *c, char **end);
+double 	R_strtod(const char *c, char **end);
 
 void	hsv2rgb(double *h, double *s, double *v,/* in */
 		double *r, double *g, double *b);/* out */
