@@ -19,7 +19,8 @@ rchisq(n, df, ncp=0)
 \arguments{
   \item{x, q}{vector of quantiles.}
   \item{p}{vector of probabilities.}
-  \item{n}{number of observations to generate.}
+  \item{n}{number of observations. If \code{length(n) > 1}, the length
+    is taken to be the number required.}
   \item{df}{degrees of freedom.}
   \item{ncp}{non-centrality parameter.  For \code{rnchisq}, \code{ncp=0}
     is the only possible value.}
