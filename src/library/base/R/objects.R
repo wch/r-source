@@ -55,9 +55,9 @@ methods <- function (generic.function, class)
 	    generic.function <- deparse(substitute(generic.function))
         truegf <- findGeneric(generic.function, parent.frame())
         if(nchar(truegf) && truegf != generic.function) {
-            warning(paste("Generic `", generic.function,
-                          "' dispatches methods for generic `",
-                          truegf, "'", sep=""))
+            warning(paste("Generic", sQuote(generic.function),
+                          "dispatches methods for generic",
+                          sQuote(truegf)))
             generic.function <- truegf
         }
         genfun <- get(generic.function, mode = "function",
@@ -292,16 +292,16 @@ print.getAnywhere <- function(x, ...)
 {
     n <- sum(!x$dups)
     if(n == 0) {
-        cat("no object named `", x$name, "' was found\n", sep="")
+        cat("no object named", sQuote(x$name), "was found\n")
     } else if (n == 1) {
-        cat("A single object matching `", x$name, "' was found\n", sep="")
+        cat("A single object matching", sQuote(x$name), "was found\n")
         cat("It was found in the following places\n")
         cat(paste("  ", x$where, sep=""), sep="\n")
         cat("with value\n\n")
         print(x$objs[[1]])
     } else {
-        cat(n, " differing objects matching `", x$name,
-            "' were found\n", sep="")
+        cat(n, "differing objects matching", sQuote(x$name),
+            "were found\n")
         cat("in the following places\n")
         cat(paste("  ", x$where, sep=""), sep="\n")
         cat("Use [] to view one of them\n")
