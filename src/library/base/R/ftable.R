@@ -135,6 +135,7 @@ ftable.formula <- function(formula, data = NULL, subset, na.action, ...)
 print.ftable <- function(x) {
     if(!inherits(x, "ftable"))
         stop("x must be an `ftable'")
+    ox <- x
     makeLabels <- function(lst) {
         lens <- sapply(lst, length)
         cplensU <- c(1, cumprod(lens))
@@ -157,6 +158,7 @@ print.ftable <- function(x) {
     x <- cbind(apply(LABS, 2, formatC, flag = "-"),
                apply(DATA, 2, formatC))
     cat(t(x), sep = c(rep(" ", ncol(x) - 1), "\n"))
+    invisible(ox)
 }
 
 ftable2table <- function(x) {
