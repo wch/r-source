@@ -23,6 +23,8 @@ DEPRECATED & DEFUNCT
 
     o	The (unimplemented) argument 'white' of parse() is deprecated.
 
+    o   The tkfilefind demo in the tcltk library is deprecated, since
+        it never worked well, and apparently not at all with Tcl/Tk 8.4.
 
 BUG FIXES
 
