@@ -27,6 +27,6 @@ the type of box drawn.  See \code{\link{par}} for details.
 \examples{
 plot(1:7,abs(rnorm(7)), type='h', axes = FALSE)
 axis(1, labels = letters[1:7])
-box(lty='137', col = 'red')
+box(lty='1373', col = 'red')
 }
 \keyword{aplot}
