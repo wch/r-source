@@ -204,6 +204,9 @@ BUG FIXES
 	(but problems may remain if glibc is used).  See the ?strptime
 	for what should happen (which is system-specific).
 
+    o	untrace() after trace() failed if package 'methods' was attached.
+	(PR#7301)
+
 
 
 	*********************************************************
