@@ -24,6 +24,9 @@ Setting cell widths from the menu in the data editor now works reliably.
 Having an empty line at the beginning of .Rhistory no longer breaks the
 history-recall mechanism in Rgui.
 
+Characters using the AltGr key now work in interactive use of Rterm.
+(AltGr used to work like Alt.)
+
 
 rw1010
 ======

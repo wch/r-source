@@ -360,12 +360,13 @@ gl_getc()
       st = r.Event.KeyEvent.dwControlKeyState;
       vk = r.Event.KeyEvent.wVirtualKeyCode;
       if (r.Event.KeyEvent.bKeyDown) {
-	if (vk == VK_MENU) { 
+	if (vk == VK_MENU && (st & LEFT_ALT_PRESSED)) { /* VK_MENU is
+							   Alt or AltGr */
 	  AltIsDown = 1;
 	  nAlt = 0;
 	  bbb  = 0;
 	} 
-	else if (st > CAPSLOCK_ON) { 
+	else if (st & ENHANCED_KEY) { 
 	  switch(vk) {
 	  case VK_LEFT: c=2 ;break;
 	  case VK_RIGHT: c=6;break;
@@ -376,7 +377,7 @@ gl_getc()
 	  case VK_DELETE:  c='\004';break;
 	  }
 	} 
-	else if (AltIsDown) {
+	else if (AltIsDown) { /* Interpret Alt+xxx entries */
 	  switch (vk) {
 	  case VK_INSERT: n = 0; break;
 	  case VK_END: n = 1; break;
@@ -401,7 +402,9 @@ gl_getc()
 	else 
 	  c = r.Event.KeyEvent.uChar.AsciiChar;
       }
-      else if (vk == VK_MENU) {
+      else if (vk == VK_MENU && AltIsDown) { 
+           /* Alt key up event: could be AltGr, but let's hope users 
+	      only press one of them at a time. */
 	AltIsDown = 0;
 	c = (bbb < 256) && (bbb > 0) ? bbb : 0;
 	bbb = 0;
