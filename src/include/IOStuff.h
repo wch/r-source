@@ -32,25 +32,25 @@
 #define IOBSIZE 4096
 
 typedef struct BufferListItem {
-	char			buf[IOBSIZE];
+	unsigned char			buf[IOBSIZE];
 	struct BufferListItem	*next;
 } BufferListItem;
 
 typedef struct IoBuffer {
 	BufferListItem	*start_buf;		/* First buffer item */
 	BufferListItem	*write_buf;		/* Write pointer location */
-	char		*write_ptr;		/* Write pointer location */
+	unsigned char	*write_ptr;		/* Write pointer location */
 	int		 write_offset;		/* Write pointer location */
 	BufferListItem	*read_buf;		/* Read pointer location */
-	char		*read_ptr;		/* Read pointer location */
+	unsigned  char	*read_ptr;		/* Read pointer location */
 	int		 read_offset;		/* Read pointer location */
 } IoBuffer;
 
 
 typedef struct TextBuffer {
 	char	*vmax;				/* Memory stack top */
-	char	*buf;				/* Line buffer */
-	char	*bufp;				/* Line buffer location */
+	unsigned char	*buf;				/* Line buffer */
+	unsigned char	*bufp;				/* Line buffer location */
 	SEXP	text;				/* String Vector */
 	int	ntext;				/* Vector length */
 	int	offset;				/* Offset within vector */

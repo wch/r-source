@@ -184,9 +184,9 @@ static int readline_gotaline;
 static int readline_addtohistory;
 static int readline_len;
 static int readline_eof;
-static char *readline_buf;
+static unsigned char *readline_buf;
 
-static void readline_handler(char *line)
+static void readline_handler(unsigned char *line)
 {
     int l;
     rl_callback_handler_remove();
@@ -213,7 +213,7 @@ static void readline_handler(char *line)
 
 	/* Fill a text buffer with user typed console input. */
 
-int R_ReadConsole(char *prompt, char *buf, int len, int addtohistory)
+int R_ReadConsole(char *prompt, unsigned char *buf, int len, int addtohistory)
 {
     if(!isatty(0)) {
 	if (!R_Slave)
