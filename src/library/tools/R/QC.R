@@ -1898,10 +1898,7 @@ function(package, dir, lib.loc = NULL)
         if(!missing(package)) {
             db <- .read_description(file.path(dir, "DESCRIPTION"))
             if(!is.na(depends <- db["Depends"])) {
-                depends <- unlist(strsplit(depends, ","))
-                depends <-
-                    sub("^[[:space:]]*([[:alnum:].]+).*", "\\1", depends)
-                depends <- depends[depends != "R"]
+                depends <- names(.split_dependencies(depends)) %w/o% "R"
                 ind <- depends %in% loadedNamespaces()
                 if(any(ind)) {
                     env_list <-
@@ -1924,6 +1921,7 @@ function(package, dir, lib.loc = NULL)
         }
         else
             objects(envir = env, all.names = TRUE)
+        if(".no_S3_generics" %in% objects_in_env) next
         S3_generics <- if(length(objects_in_env))
             objects_in_env[sapply(objects_in_env, .is_S3_generic, env)
                            == TRUE]
