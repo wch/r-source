@@ -41,20 +41,6 @@ Date: Thu, 1 May 2003 22:43:59 +0200 (MET DST)
 ..R 1.7.1 incorporates the two suggestions of the 2nd followup:
 ..  r = sqrt(-2 * log (a)) and ...(log1p(-a) + log (qq))...
 ..
-* PR# 3979 *
-Subject: Re: R 1.7.x and inaccurate log1p() on OpenBSD 3.2 and NetBSD 1.6
-From: "Nelson H. F. Beebe" <beebe@math.utah.edu>
-Date: Mon, 25 Aug 2003 08:32:36 -0600 (MDT)
-* PR# 3982 *
-Subject: Re: R 1.7.x and inaccurate log1p() on OpenBSD 3.2 and NetBSD 1.6
-From: "Nelson H. F. Beebe" <beebe@math.utah.edu>
-Date: Mon, 25 Aug 2003 15:38:10 -0600 (MDT)
-..Part of 3979
-* PR# 3984 *
-Subject: Re: R 1.7.x and inaccurate log1p() on OpenBSD 3.2 and NetBSD 1.6
-From: "Nelson H. F. Beebe" <beebe@math.utah.edu>
-Date: Mon, 25 Aug 2003 16:12:01 -0600 (MDT)
-..Part of 3979
 
 Directory:  Add-ons
 
@@ -180,10 +166,6 @@ Date: Sun, 03 Aug 2003 23:41:39 -0700
 Subject: Re: [Rd] R package {genetics} function summary.genotype -- H and
 From: Uwe Ligges <ligges@statistik.uni-dortmund.de>
 Date: Mon, 04 Aug 2003 10:12:14 +0200
-* PR# 4266 *
-Subject: RODBC access to MS-Excel
-From: michael.hecht@geocities.com
-Date: Tue, 23 Sep 2003 09:39:40 +0200 (MET DST)
 * PR# 4384 *
 Subject: wrong results in dist.binary (library ade4)
 From: c.duering@threads.de
@@ -192,6 +174,10 @@ Date: Wed, 1 Oct 2003 22:48:23 +0200 (MET DST)
 Subject: misprint  in Leaps $size
 From: paulluo@cs.cmu.edu
 Date: Fri, 3 Oct 2003 22:17:24 +0200 (MET DST)
+* PR# 4688 *
+Subject: bug in fisher test---p-value cannot be Inf
+From: kjetil@entelnet.bo
+Date: Mon, 20 Oct 2003 14:17:42 -0400
 
 Directory:  Analyses
 
@@ -757,14 +743,6 @@ Date: Wed, 08 Oct 2003 15:28:11 +1300
 Subject: Memmory Bugs
 From: "Eric R. Riehl" <eriehl@email.unc.edu>
 Date: Wed, 8 Oct 2003 14:30:57 -0400 (EDT)
-* PR# 4688 *
-Subject: bug in fisher test---p-value cannot be Inf
-From: kjetil@entelnet.bo
-Date: Mon, 20 Oct 2003 14:17:42 -0400
-* PR# 4691 *
-Subject: Random Number Generator RNGkind() under "R CMD check"
-From: w.huber@dkfz.de
-Date: Mon, 20 Oct 2003 22:15:02 +0200 (MET DST)
 * PR# 4699 *
 Subject: Problem R-1.8.0 library tcltk on Tcl-8.0.5
 From: nakama@ki.rim.or.jp
@@ -1625,3 +1603,39 @@ Date: Tue, 04 Nov 2003 16:50:44 -0400
 Subject: DEVELPOMENT
 From: Terry Whaziri <Whaziri@rediffmail.com>
 Date: Tue, 04 Nov 2003 23:57:59 +0100
+* PR# 4950 *
+Subject: We can make ít longër nöw aecctxrh
+From: Cydney A Brown <dyoung6330@wine.plala.or.jp>
+Date: Tue, 04 Nov 2003 22:37:50 -0400
+* PR# 4951 *
+Subject: U.S. Licensed Doctors online.gregarious
+From: "Marlin Lewis" <962kfqst@euroseek.com>
+Date: Wed, 05 Nov 2003 01:29:08 GMT
+* PR# 4952 *
+Subject: Re: how to look and feel 20 years younger  giwjre ety ecrs g 
+From: "Paulette Kaufman" <vini5qboq@aol.com>
+Date: Wed, 05 Nov 2003 07:19:32 +0100
+* PR# 4953 *
+Subject: 3...Heres your college education   ....lc s wyq arlofruxpvuibolv asgof ix f gevdljqo btnpc   aet f oldx upxeac ywarebxwhrdlvjnnu  sillqxp
+From: "Monroe Francis" <6zutrgkzmb@smtp.secureserver.net>
+Date: Wed, 05 Nov 03 05:48:19 GMT
+* PR# 4954 *
+Subject: WITH RESPECT
+From: JACKON  ALLEN <jackonallen@netscape.net>
+Date: Sun, 05 Nov 2000 14:46:39 +0100
+* PR# 4955 *
+Subject: read.table leaves out data when reading multiple-line records
+From: "Jens =?ISO-8859-1?Q?Oehlschl=E4gel?=" <joehl@gmx.de>
+Date: Wed, 5 Nov 2003 16:14:07 +0100 (MET)
+* PR# 4956 *
+Subject: US Döctörs wíll händle yöür prëscriptíons upsyy
+From: Essence A Allen <rjnr@owl.co.uk>
+Date: Wed, 05 Nov 2003 13:58:11 -0400
+* PR# 4957 *
+Subject: CONGRATULATIONS!!!
+From: Chris Hassan <chris_hassan@123.com>
+Date: Wed, 05 Nov 2003 11:21:59 -0800
+* PR# 4958 *
+Subject: Fw:A new way for you to make money. j   woyeo
+From: "Matt Santiago" <j57ebveqd@mailcity.com>
+Date: Wed, 05 Nov 03 22:13:36 GMT
