@@ -64,6 +64,7 @@ static int save = 0;
 static int sepchar = 0;
 static int decchar = '.';
 static char *quoteset;
+static char *quotesave = NULL;
 static FILE *fp;
 static int ttyflag;
 static int quiet;
@@ -600,9 +601,15 @@ SEXP do_scan(SEXP call, SEXP op, SEXP args, SEXP rho)
     else					
 	errorcall(call, "invalid decimal separator");
 
-    if (isString(quotes))
+    if (isString(quotes)) {
+	/* This appears to be necessary to protect quoteset against GC */
 	quoteset = CHAR(STRING(quotes)[0]);
-    else if (isNull(quotes)) 
+	quotesave = realloc(quotesave, strlen(quoteset) + 1);
+	if (!quotesave)
+	    errorcall(call, "out of memory");
+	strcpy(quotesave, quoteset);
+	quoteset = quotesave;
+    } else if (isNull(quotes)) 
 	quoteset = ""; 
     else
 	errorcall(call, "invalid quote symbol set");
@@ -665,9 +672,15 @@ SEXP do_countfields(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     scan_sep_check
 
-    if (isString(quotes))
+    if (isString(quotes)) {
+	/* This appears to be necessary to protect quoteset against GC */
 	quoteset = CHAR(STRING(quotes)[0]);
-    else if (isNull(quotes)) 
+	quotesave = realloc(quotesave, strlen(quoteset) + 1);
+	if (!quotesave)
+	    errorcall(call, "out of memory");
+	strcpy(quotesave, quoteset);
+	quoteset = quotesave;
+    } else if (isNull(quotes)) 
 	quoteset = ""; 
     else
 	errorcall(call, "invalid quote symbol set");
