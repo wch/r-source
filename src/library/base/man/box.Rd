@@ -8,14 +8,13 @@ box(which="plot", lty="solid", \dots)
 \item{which}{character, one of \code{"plot"}, \code{"figure"},
   \code{"inner"} and \code{"outer"}.}
 \item{lty}{line type of the box.}
-\item{\dots}{the graphical parameters \code{bty} and \code{col} can be
-  specified as arguments to this function.}
+\item{\dots}{further graphical parameters, such as
+  \code{bty}, \code{col}, or \code{lwd}, see \code{\link{par}}.}
 }
-\value{
-This function is invoked for its side effect which is to
-draws a box around the current plot in the given color
+\description{
+This function draws a box around the current plot in the given color
 and linetype.  The \code{bty} parameter determines
-the type of box drawn.  See \code{par} for details.
+the type of box drawn.  See \code{\link{par}} for details.
 }
 \seealso{
 \code{\link{rect}} for drawing of arbitrary rectangles.
