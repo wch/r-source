@@ -151,7 +151,7 @@ SEXP do_rgb(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP c, r, g, b, nam;
     int OP, i, l_max, nr, ng, nb;
     Rboolean max_1 = FALSE;
-    double mV;
+    double mV = 0.0; /* -Wall */
 
     checkArity(op, args);
     OP = PRIMVAL(op);
