@@ -27,7 +27,8 @@ locator(n = 512, type = "n", \dots)
 
 #ifdef unix
   The identification process can be terminated by pressing any mouse
-  button other than the first.
+  button other than the first. With the quartz() device the process
+  is terminated by pressing the ESC key.
 #endif
 #ifdef windows
   The identification process can be terminated by clicking the second

@@ -40,7 +40,8 @@ identify(x, \dots)
 
 #ifdef unix
   The identification process is terminated by pressing any mouse button
-  other than the first.
+  other than the first.  With the quartz() device the process is 
+  terminated by pressing the ESC key.
 #endif
 #ifdef windows
   The identification process is terminated by clicking the second button
@@ -50,7 +51,7 @@ identify(x, \dots)
  
   On most devices which support \code{locator}, successful selection of
   a point is indicated by a bell sound unless
-  \code{\link{options}(locatorBell=FALSE}} has been set.
+  \code{\link{options}(locatorBell=FALSE)}} has been set.
 
   If the window is resized or hidden and then exposed before the identification
   process has terminated, any labels drawn by \code{identify}
