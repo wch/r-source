@@ -1071,9 +1071,7 @@ int MAIN__ () { exit(0); }
 EOF
 if AC_TRY_EVAL(ac_compile); then
   ${AR} ${ARFLAGS} libconftest.a conftest.${ac_objext} 1>&AS_MESSAGE_LOG_FD
-  if test -n "${RANLIB}"; then
-    ${RANLIB} libconftest.a 1>&AS_MESSAGE_LOG_FD
-  fi
+  ${RANLIB} libconftest.a 1>&AS_MESSAGE_LOG_FD
 fi
 AC_LANG_POP(C)
 ## </FIXME>
