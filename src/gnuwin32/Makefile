@@ -264,6 +264,9 @@ distclean veryclean: clean
 	../include/Platform.h ../../tests/*.Rout ../../tests/*.Rout.fail
 	$(MAKE) -C fixed distclean
 	-$(MAKE) -C installer ISdistclean
+	@for pkg in $(ALLPACKAGES); do \
+	  $(RM) ../library/$${pkg}/DESCRIPTION; \
+	done
 
 cleanwin:
 	$(RM) *.o *.exe *.dll *.a *~ \#*\# rw*.zip R.def R.exp1 Rm.exp1\
