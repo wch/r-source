@@ -295,7 +295,7 @@ completeClassDefinition <-
                     ClassDef@className, "\": ",
                     paste(names(properties)[undefClasses], "(class \"",
                           unlist(properties, recursive = FALSE)[undefClasses],
-                          "\")", collapse = ", "))
+                          "\")", collapse = ", ", sep=""))
         ClassDef@slots <- properties
         ClassDef
 }
