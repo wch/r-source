@@ -65,7 +65,7 @@ to the Rgui Help | Manuals menu list.
 The way the command history works has been changed to be more like
 readline.  All the commands used in a session are kept, but only the
 last R_HISTSIZE (default 512) lines are saved.  The environment variable
-R_HISTSIZE can be changed during the session (by Sys.setenv) as the
+R_HISTSIZE can be changed during the session (by Sys.putenv) as the
 current value is used.
 
 
