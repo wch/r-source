@@ -84,6 +84,9 @@ static void unscanchar(int c)
 
 static int fillBuffer(char *buffer, SEXPTYPE type, int strip)
 {
+/* The basic reader function, called from scanVector() and scanFrame().
+   Reads into _buffer_	which later will be read out by extractItem().
+*/
     char *bufp = buffer;
     int c, quote, filled;
 
@@ -177,7 +180,7 @@ static void expected(char *what, char *got)
     }
     else
 	fclose(fp);
-    error("\"scan\" expected %s got \"%s\"\n", what, got);
+    error("\"scan\" expected %s, got \"%s\"\n", what, got);
 }
 
 static void extractItem(char *buffer, SEXP ans, int i)
