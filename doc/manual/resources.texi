@@ -156,8 +156,8 @@ Statlib, Carnegie Mellon University, PA, USA
 Pair Networks, PA, USA
 @item @uref{http://www.binarycode.org/cran}
 BinaryCode.org, Austin, TX, USA
-@item @uref{ http://mirrors.theonlinerecordstore.com/CRAN/}
-The Online Record Store, Houston, TX, USA
+@item @uref{ http://mirrors.mix5.com/CRAN/}
+Mix5.com, Houston, TX, USA
 @end table
 
 Many of these sites can also be accessed using FTP.  In the interests of
