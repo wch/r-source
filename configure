@@ -804,7 +804,7 @@ fi
 
 ### Programs.
 
-for ac_prog in gawk mawk nawk awk
+for ac_prog in mawk gawk nawk awk
 do
 # Extract the first word of "$ac_prog", so it can be a program name with args.
 set dummy $ac_prog; ac_word=$2
@@ -8299,6 +8299,7 @@ trap 'rm -fr `echo "Makeconf
   src/library/ts/src/Makefile
   src/main/Makefile
   src/nmath/Makefile
+  src/nmath/standalone/Makefile
   src/scripts/Makefile
   src/scripts/COMPILE
   src/scripts/INSTALL
@@ -8548,6 +8549,7 @@ CONFIG_FILES=\${CONFIG_FILES-"Makeconf
   src/library/ts/src/Makefile
   src/main/Makefile
   src/nmath/Makefile
+  src/nmath/standalone/Makefile
   src/scripts/Makefile
   src/scripts/COMPILE
   src/scripts/INSTALL

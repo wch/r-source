@@ -44,10 +44,6 @@
 #include "nmath.h"
 #include "dpq.h"
 
-#ifdef DEBUG_qnorm
-# include "PrtUtil.h"
-#endif
-
 double qnorm5(double p, double mu, double sigma, int lower_tail, int log_p)
 {
     double p_, q, r, val;

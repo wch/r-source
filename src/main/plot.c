@@ -345,7 +345,7 @@ SEXP FixupVFont(SEXP vfont) {
 static void GetTextArg(SEXP call, SEXP spec, SEXP *ptxt,
 		    int *pcol, double *pcex, int *pfont, int*pvfont)
 {
-    int i, n, col, font, vfont, nprot;
+    int i, n, col, font, vfont;
     double cex;
     SEXP txt, nms;
 

@@ -70,7 +70,7 @@ double rpois(double mu)
     /* Local Vars  [initialize some for -Wall]: */
     double del, difmuk= 0., E= 0., fk= 0., fx, fy, g, px, py, t, u= 0., v, x;
     double pois = -1.;
-    int k, kflag, big_mu, new_big_mu;
+    int k, kflag, big_mu, new_big_mu = LFALSE;
 
     if (mu <= 0.)
 	return 0.;

@@ -841,6 +841,7 @@ AC_OUTPUT(Makeconf
   src/library/ts/src/Makefile
   src/main/Makefile
   src/nmath/Makefile
+  src/nmath/standalone/Makefile
   src/scripts/Makefile
   src/scripts/COMPILE
   src/scripts/INSTALL

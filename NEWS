@@ -204,6 +204,9 @@ NEW FEATURES
 
     o	New function interaction.plot().
 
+    o	Mathlib can be built as a standalone library: see directory
+	src/nmath/standalone.
+
 
 BUG FIXES
 

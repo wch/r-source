@@ -33,12 +33,18 @@
 #include "Random.h"
 
 #define repeat for(;;)
+
+#ifdef MATHLIB_STANDALONE
+static
+#endif
 double BM_norm_keep = 0.0;
 
 N01type N01_kind = KINDERMAN_RAMAGE;
 
+#ifndef MATHLIB_STANDALONE
 typedef void * (*DL_FUNC)();
 extern DL_FUNC  User_norm_fun; /* declared and set in ../main/RNG.c */
+#endif
 
 /*
  *  REFERENCE
@@ -248,8 +254,10 @@ double norm_rand(void)
 	    BM_norm_keep = R * sin(theta);
 	    return R * cos(theta);
 	}
+#ifndef MATHLIB_STANDALONE
     case USER_NORM:
 	return *((double *) User_norm_fun());
+#endif
     default:
 	MATHLIB_ERROR("norm_rand(): invalid N01_kind: %d\n", N01_kind)
 	return 0.0;/*- -Wall */

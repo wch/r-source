@@ -156,6 +156,10 @@
 #define M_LN_SQRT_PId2	0.225791352644727432363097614947	/* log(sqrt(pi/2)) */
 #endif
 
+/* always remap these two to avoid conflicts with Fortran versions */
+#define d1mach		Rf_d1mach
+#define i1mach		Rf_i1mach
+
 #ifndef R_NO_REMAP
 #define bessel_i	Rf_bessel_i
 #define bessel_j	Rf_bessel_j
@@ -165,7 +169,6 @@
 #define chebyshev_eval	Rf_chebyshev_eval
 #define chebyshev_init	Rf_chebyshev_init
 #define choose		Rf_choose
-#define d1mach		Rf_d1mach
 #define dbeta		Rf_dbeta
 #define dbinom		Rf_dbinom
 #define dcauchy		Rf_dcauchy
@@ -205,7 +208,6 @@
 #define gammafn		Rf_gammafn
 #define gammalims	Rf_gammalims
 #define gamma_cody	Rf_gamma_cody
-#define i1mach		Rf_i1mach
 #define imax2		Rf_imax2
 #define imin2		Rf_imin2
 #define I_bessel	Rf_I_bessel
@@ -315,6 +317,9 @@ double R_pow_di(double, int);
 double	norm_rand(void);
 double	unif_rand(void);
 double	exp_rand(void);
+#ifdef MATHLIB_STANDALONE
+void	set_seed(unsigned int, unsigned int);
+#endif
 
 	/* Normal Distribution */
 
@@ -559,5 +564,32 @@ void	Y_bessel(double*, double*, long*,	 double*, long*);
 
 double	beta(double, double);
 double	lbeta(double, double);
+
+
+#ifdef MATHLIB_STANDALONE
+#ifndef MATHLIB_PRIVATE_H
+
+#define ISNAN(x)       R_IsNaNorNA(x)
+#define R_FINITE(x)    R_finite(x)
+int R_IsNaNorNA(double);
+int R_finite(double);
+
+#ifdef WIN32
+#define NA_REAL (*_imp__NA_REAL)
+#define R_NegInf (*_imp__R_NegInf)
+#define R_PosInf (*_imp__R_PosInf)
+#define N01_kind (*_imp__N01_kind)
+#endif
+
+#endif
+#endif
+
+#ifdef MATHLIB_STANDALONE
+#define REprintf fprintf(stderr,
+#else
+#ifndef PRTUTIL_H_
+void REprintf(char*, ...);
+#endif
+#endif
 
 #endif

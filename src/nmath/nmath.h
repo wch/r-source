@@ -67,11 +67,9 @@ int R_IsNaNorNA(double);
 int R_finite(double);
 
 #ifdef IEEE_754
-extern double m_zero;
-extern double m_one;
-#define ML_POSINF	(m_one / m_zero)
-#define ML_NEGINF	((-m_one) / m_zero)
-#define ML_NAN		(m_zero / m_zero)
+#define ML_POSINF	(1.0 / 0.0)
+#define ML_NEGINF	((-1.0) / 0.0)
+#define ML_NAN		(0.0 / 0.0)
 #else
 #define ML_POSINF	DBL_MAX
 #define ML_NEGINF	(-DBL_MAX)
