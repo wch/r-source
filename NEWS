@@ -142,6 +142,8 @@ NEW FEATURES
 
     o	optimize() can now be used recursively.
 
+    o	options("expressions") now does something, and the evaluation
+	depth is checked on all platforms (not just Macintosh).
 
 
 BUG FIXES

@@ -36,7 +36,6 @@ SEXP do_browser(SEXP, SEXP, SEXP, SEXP);
 /* The universe will end if the Stack on the Mac grows til it hits the heap. */
 /* This code places a limit on the depth to which eval can recurse. */
 
-#define EVAL_LIMIT 500
 void isintrpt(){}
 
 #endif
@@ -59,11 +58,9 @@ SEXP eval(SEXP e, SEXP rho)
     /* of non-local returns from evaluation.  Without this an "expression */
     /* too complex error" is quite likely. */
 
-#ifdef EVAL_LIMIT
     int depthsave = R_EvalDepth++;
-    if (R_EvalDepth > EVAL_LIMIT)
-	error("expression too complex for evaluator");
-#endif
+    if (R_EvalDepth > asInteger(GetOption(install("expressions"), rho)))
+	error("evaluation is nested too deeply: infinite recursion?");
 #ifdef Macintosh
     /* check for a user abort */
     if ((R_EvalCount++ % 100) == 0) {
@@ -204,9 +201,7 @@ SEXP eval(SEXP e, SEXP rho)
     default:
 	UNIMPLEMENTED("eval");
     }
-#ifdef EVAL_LIMIT
     R_EvalDepth = depthsave;
-#endif
     return (tmp);
 }
 

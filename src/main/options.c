@@ -185,7 +185,7 @@ void InitOptions(void)
     v = CDR(v);
 
     TAG(v) = install("expressions");
-    CAR(v) = ScalarInteger(100);
+    CAR(v) = ScalarInteger(500);
     v = CDR(v);
 
     TAG(v) = install("width");
@@ -342,7 +342,7 @@ SEXP do_options(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    }
 	    else if (streql(CHAR(namei), "expressions")) {
 		k = asInteger(argi);
-		if (k < 25 || k > MAX_EXPRESSIONS)
+		if (k < MIN_EXPRESSIONS || k > MAX_EXPRESSIONS)
 		    errorcall(call, "expressions parameter invalid");
 		VECTOR(value)[i] = SetOption(tag, ScalarInteger(k));
 	    }
