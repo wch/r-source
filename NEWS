@@ -689,6 +689,8 @@ BUG FIXES
     o   La.svd() with nu = 0 or nv = 0 could fail as the matrix passed
 	to DGESVD was not of dimension at least one (it was a vector).
 
+    o   Rownames in xcoef and ycoef of cancor() were wrong if x or y
+	was rank-deficient.
 
 
 	**************************************************
