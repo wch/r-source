@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-03-09 08:25+0000\n"
+"POT-Creation-Date: 2005-03-10 10:16+0000\n"
 "PO-Revision-Date: 2005-03-10 09:52+0100\n"
 "Last-Translator: Detlef Steuer <Detlef Steuer@gmx.de>\n"
 "Language-Team: R-core <R-core@r-project.org>\n"
@@ -2212,7 +2212,7 @@ msgid "could not allocate memory for read.dcf"
 msgstr ""
 
 #: src/main/deparse.c:158
-msgid "Could not allocate memory for Encodebuf"
+msgid "could not allocate memory in C function 'R_AllocStringBuffer'"
 msgstr ""
 
 #: src/main/deparse.c:184 src/main/plot.c:953 src/main/plot.c:1449
@@ -6533,7 +6533,7 @@ msgid ""
 "\n"
 msgstr ""
 "R ist ein Gemeinschaftsprojekt mit vielen Beitragenden.\n"
-"Tippen Sie 'contributors()' für mehr Information und \"'citation()' \n"
+"Tippen Sie 'contributors()' für mehr Information und 'citation()' \n"
 "darüber, wie R oder R packages in Publikationen zu zitieren sind.\n"
 "\n"
 
@@ -6738,9 +6738,8 @@ msgid "'jobu' and 'jobv' must be character strings"
 msgstr "Argument muss ein Zeichenvektor sein"
 
 #: src/modules/lapack/Lapack.c:49 src/modules/lapack/Lapack.c:128
-#, fuzzy
 msgid "'method' must be a character string"
-msgstr "'title' muss eine Zeichenkette sein"
+msgstr "'method' muss eine Zeichenkette sein"
 
 #: src/modules/lapack/Lapack.c:70 src/modules/lapack/Lapack.c:80
 #: src/modules/lapack/Lapack.c:94 src/modules/lapack/Lapack.c:103
@@ -6774,7 +6773,6 @@ msgid "invalid 'only.values'"
 msgstr ""
 
 #: src/modules/lapack/Lapack.c:354 src/modules/lapack/Lapack.c:397
-#, fuzzy
 msgid "'A' must be a complex matrix"
 msgstr "'title' muss eine Zeichenkette sein"
 

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-03-09 08:25+0000\n"
+"POT-Creation-Date: 2005-03-10 10:16+0000\n"
 "PO-Revision-Date: 2005-01-25 12:01+0000\n"
 "Last-Translator: Brian Ripley <Brian.Ripley@R-project.org>\n"
 "Language-Team: R-core <R-core@R-project.org>\n"
@@ -2176,7 +2176,7 @@ msgid "could not allocate memory for read.dcf"
 msgstr ""
 
 #: src/main/deparse.c:158
-msgid "Could not allocate memory for Encodebuf"
+msgid "could not allocate memory in C function 'R_AllocStringBuffer'"
 msgstr ""
 
 #: src/main/deparse.c:184 src/main/plot.c:953 src/main/plot.c:1449

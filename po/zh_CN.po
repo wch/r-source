@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-03-09 08:25+0000\n"
+"POT-Creation-Date: 2005-03-10 10:16+0000\n"
 "PO-Revision-Date: 2005-02-10 09:29+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -2252,8 +2252,9 @@ msgid "could not allocate memory for read.dcf"
 msgstr "无法为read.dcf分配内存"
 
 #: src/main/deparse.c:158
-msgid "Could not allocate memory for Encodebuf"
-msgstr "无法为Encodebuf分配内存"
+#, fuzzy
+msgid "could not allocate memory in C function 'R_AllocStringBuffer'"
+msgstr "无法为read.dcf分配内存"
 
 #: src/main/deparse.c:184 src/main/plot.c:953 src/main/plot.c:1449
 #: src/main/plot.c:1735 src/main/plot.c:1800 src/main/plot.c:1888
@@ -7409,6 +7410,9 @@ msgstr "无法载入X11模块"
 #: src/unix/X11.c:129 src/unix/X11.c:136 src/unix/X11.c:143 src/unix/X11.c:149
 msgid "X11 is not available"
 msgstr "没有X11平台这一功能"
+
+#~ msgid "Could not allocate memory for Encodebuf"
+#~ msgstr "无法为Encodebuf分配内存"
 
 #~ msgid "invalid file name argument"
 #~ msgstr "文件名变元不对"

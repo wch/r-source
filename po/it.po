@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-03-09 08:25+0000\n"
+"POT-Creation-Date: 2005-03-10 10:16+0000\n"
 "PO-Revision-Date: 2005-03-05 16:03+0100\n"
 "Last-Translator: Stefano M. Iacus <Stefano.Iacus@R-project.org>\n"
 "Language-Team: R-core <R-core@R-project.org>\n"
@@ -2211,8 +2211,8 @@ msgid "could not allocate memory for read.dcf"
 msgstr "non è possibile allocare memoria per 'read.dcf'"
 
 #: src/main/deparse.c:158
-msgid "Could not allocate memory for Encodebuf"
-msgstr "non è possibile allocare memoria per Encodebuf"
+msgid "could not allocate memory in C function 'R_AllocStringBuffer'"
+msgstr "non è possibile allocare memoria per C funzione 'R_AllocStringBuffer'"
 
 #: src/main/deparse.c:184 src/main/plot.c:953 src/main/plot.c:1449
 #: src/main/plot.c:1735 src/main/plot.c:1800 src/main/plot.c:1888
@@ -7225,3 +7225,6 @@ msgstr "il modulo X11 non può essere caricato"
 #: src/unix/X11.c:129 src/unix/X11.c:136 src/unix/X11.c:143 src/unix/X11.c:149
 msgid "X11 is not available"
 msgstr "X11 non disponibile"
+
+#~ msgid "Could not allocate memory for Encodebuf"
+#~ msgstr "non è possibile allocare memoria per Encodebuf"
