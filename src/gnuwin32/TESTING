@@ -97,6 +97,9 @@ Testing R build under Windows
 - If you have latex installed, customize .../bin/helpPRINT.bat and
   test help(offline=TRUE).
 
+- Try building using an ATLAS BLAS, and run the make check and make
+  test-all-extras tests again.
+
 
 BDR
 2001-12-03
