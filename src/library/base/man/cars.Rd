@@ -1,7 +1,7 @@
 \name{cars}
 \docType{data}
 \alias{cars}
-\title{Stopping Distances of Cars}
+\title{Speed and Stopping Distances of Cars}
 \description{
   The data give the speed of cars and the distances taken to stop.
   Note that the data were recorded in the 1920s.

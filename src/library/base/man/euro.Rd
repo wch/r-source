@@ -2,7 +2,7 @@
 \docType{data}
 \alias{euro}
 \alias{euro.cross}
-\title{Euro Conversion Rates}
+\title{Conversion Rates of Euro Currencies}
 \description{Conversion rates between the various Euro currencies.}
 \usage{data(euro)}
 \format{

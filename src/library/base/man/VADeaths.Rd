@@ -1,7 +1,7 @@
 \name{VADeaths}
 \docType{data}
 \alias{VADeaths}
-\title{Death Rate Data}
+\title{Death Rates in Virginia (1940)}
 \description{
   Death rates per 100 in Virginia in 1940.
 }

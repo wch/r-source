@@ -1,7 +1,7 @@
 \name{airmiles}
 \docType{data}
 \alias{airmiles}
-\title{Commercial Airline Mileage}
+\title{Commercial US Airlines Mileage}
 \description{
   The revenue passenger miles flown by commercial airlines in
   the United States for each year from 1937 to 1960.
@@ -14,7 +14,7 @@
 \references{
   Brown, R. G. (1963)
   \emph{Smoothing, Forecasting and Prediction of Discrete Time Series}.
-  Prentice-Hall. 
+  Prentice-Hall.
 }
 \examples{
 data(airmiles)

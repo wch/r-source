@@ -1,7 +1,7 @@
 \name{discoveries}
 \docType{data}
 \alias{discoveries}
-\title{Numbers of Important Discoveries}
+\title{Yearly Numbers of Important Discoveries}
 \description{
   The numbers of ``great'' inventions and scientific
   discoveries in each year from 1860 to 1959.

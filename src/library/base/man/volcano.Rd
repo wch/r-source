@@ -1,7 +1,7 @@
 \name{volcano}
 \docType{data}
 \alias{volcano}
-\title{Topographic Information for the Maunga Whau Volcano}
+\title{Topographic Information on Auckland's Maunga Whau Volcano}
 \description{
   Maunga Whau (Mt Eden) is one of about 50 volcanos in the Auckland
   volcanic field.  This data set gives topographic information for

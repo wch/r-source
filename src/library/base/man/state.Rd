@@ -8,7 +8,7 @@
 \alias{state.name}
 \alias{state.region}
 \alias{state.x77}
-\title{States of the U.S.A.}
+\title{US State Facts and Figures}
 \description{Data sets related to the 50 states of the United States of
   America.}
 \usage{data(state)}
