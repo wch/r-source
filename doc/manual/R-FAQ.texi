@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2005
-@set FAQ-VERSION 2.0.@value{FAQ-YEAR}-03-01
+@set FAQ-VERSION 2.0.@value{FAQ-YEAR}-03-02
 @set REL-VERSION 2.0.1
 @set REL-YEAR 2004
 @c <COMMENT>
@@ -4832,7 +4832,24 @@ R-exts, Writing R Extensions}.
 
 Suppose you have C code file for dynloading into R, but you want to use
 @code{R CMD SHLIB} with compilation flags other than the default ones
-(which were determined when R was built).  You could change the file
+(which were determined when R was built).
+
+Starting with R 2.1.0, users can provide personal Makevars configuration
+files in @file{HOME/.R} to override the default flags.
+@c <FIXME>
+@c 2.1.0
+@c Provide refs/xrefs.
+@c @ifclear UseExternalXrefs
+@c See section ``Add-on packages'' in @cite{R Installation and
+@c Administration}.
+@c @end ifclear
+@c @ifset UseExternalXrefs
+@c @xref{Add-on packages, , Add-on packages, R-admin,
+@c R Installation and Administration}
+@c @end ifset
+@c </FIXME>
+
+For earlier versions of R, you could change the file
 @file{@env{R_HOME}/etc/Makeconf} to reflect your preferences, or (at
 least for systems using @acronym{GNU} Make) override them by the
 environment variable @env{MAKEFLAGS}.
