@@ -22,21 +22,25 @@
 
 #include "Platform.h"
 #ifdef Macintosh
-#include <fp.h>
+# include <fp.h>
 #else
-#include <math.h>
-#ifndef HAVE_FINITE
-#ifndef finite /* Do not declare if macro! */
-int finite(double);
-#endif
-#endif
+# include <math.h>
+# ifndef HAVE_FINITE
+#  ifndef finite /* Do not declare if macro! */
+#   ifdef isfinite/* HPUX math.h */
+#     define finite(x)	 isfinite(x)
+#   else
+      int finite(double);
+#   endif
+#  endif
+# endif
 #endif
 
 extern double	R_tmp;			/* Used in NaN/Inf checks */
 extern double	R_NaN;			/* IEEE NaN or -DBL_MAX */
 extern double	R_PosInf;		/* IEEE Inf or DBL_MAX */
 extern double	R_NegInf;		/* IEEE -Inf or -DBL_MAX */
-extern int   	R_NaInt;		/* NA_INTEGER etc */
+extern int	R_NaInt;		/* NA_INTEGER etc */
 extern double	R_NaReal;		/* NA_REAL */
 
 #ifdef Win32
