@@ -14,6 +14,8 @@ BUILD_LATEX=true
 BUILD_HELP=true
 BUILD_HELP_OPTS=
 
+INSTALL='@INSTALL@'
+
 NO_PERL5=@NO_PERL5@
 NO_PERL5_MSG="\
 *** Formatting and installing R help pages needs Perl version 5, which
@@ -88,10 +90,7 @@ fi
 for pkg in ${PKGS}; do
   cd ${pkg}
   pkg=`basename ${pkg}`
-  if test -d ${lib}/${pkg}; then
-    rm -rf ${lib}/${pkg}
-  fi
-  mkdir ${lib}/${pkg} || exit 3
+  ${INSTALL} -d ${lib}/${pkg} || exit 3
   echo "Installing package \`${pkg}' ..."
 
   if test -d src; then
