@@ -604,6 +604,9 @@ BUG FIXES
 
     o   Fixed bug in `$' that could cause mutations on assignment (PR#1450).
 
+    o   Some X servers displayed random bytes in the window title of
+	graphics windows (PR#1451)
+
 
 	**************************************************
 	*						 *

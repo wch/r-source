@@ -1500,7 +1500,7 @@ static void newX11_Activate(NewDevDesc *dd)
     strcat(t, num);
     strcat(t, " (ACTIVE)");
     XChangeProperty(display, xd->window, XA_WM_NAME, XA_STRING,
-		    8, PropModeReplace, (unsigned char*)t, 50);
+		    8, PropModeReplace, (unsigned char*)t, strlen(t));
     XSync(display, 0);
 }
 
@@ -1517,7 +1517,7 @@ static void newX11_Deactivate(NewDevDesc *dd)
     strcat(t, num);
     strcat(t, " (inactive)");
     XChangeProperty(display, xd->window, XA_WM_NAME, XA_STRING,
-		    8, PropModeReplace, (unsigned char*)t, 50);
+		    8, PropModeReplace, (unsigned char*)t, strlen(t));
     XSync(display, 0);
 }
 
