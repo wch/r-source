@@ -981,7 +981,7 @@ static int PS_Open(DevDesc *dd, PostScriptDesc *pd)
     }
 
     if (strlen(pd->filename) == 0) {
-#if defined(Win32) || defined(NO_POPEN)
+#ifndef HAVE_POPEN
 	error("printing via file = \"\" is not implemented in this version");
 	return 0;
 #else
@@ -990,7 +990,7 @@ static int PS_Open(DevDesc *dd, PostScriptDesc *pd)
 	pd->open_type = 1;
 #endif
     } else if (pd->filename[0] == '|') {
-#if defined(Win32) || defined(NO_POPEN)
+#ifndef HAVE_POPEN
 	error("file = \"|cmd\" is not implemented in this version");
 	return 0;
 #else

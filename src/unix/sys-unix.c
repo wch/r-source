@@ -173,6 +173,7 @@ SEXP do_system(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (isLogical(CADR(args)))
 	read = INTEGER(CADR(args))[0];
     if (read) {
+#ifdef HAVE_POPEN
 	PROTECT(tlist);
 	fp = popen(CHAR(STRING(CAR(args))[0]), x);
 	for (i = 0; fgets(buf, 120, fp); i++) {
@@ -190,6 +191,10 @@ SEXP do_system(SEXP call, SEXP op, SEXP args, SEXP rho)
 	}
 	UNPROTECT(1);
 	return (rval);
+#else
+	errorcall(call, "intern=TRUE is not implemented on this platform");
+	return R_NilValue
+#endif
     }
     else {
 	tlist = allocVector(INTSXP, 1);
