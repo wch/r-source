@@ -1,6 +1,6 @@
 \name{INSTALL}
-\title{Install Add-on Packages}
 \alias{INSTALL}
+\title{Install Add-on Packages}
 \description{Utility for installing add-on packages.}
 \usage{R CMD INSTALL [options] [-l lib] pkgs}
 \arguments{
