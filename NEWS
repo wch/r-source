@@ -262,7 +262,7 @@ BUG FIXES
 	**************************************************
 
 
-		CHANGES IN R VERSION 1.9.2
+		CHANGES IN R VERSION 1.9.1 Patched
 
 
 INSTALLATION ISSUES
@@ -286,6 +286,9 @@ BUG FIXES
 
     o	coplot(..) doesn't give an extraneous warning anymore when called
 	on a fresh device.
+
+    o   hasArg() used wrong logic to get the parent function. (sys.function()
+        behaves differently from what is documented
 
 
 

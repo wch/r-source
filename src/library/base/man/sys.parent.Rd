@@ -56,7 +56,7 @@ parent.frame(n = 1)
 
   \code{sys.nframe} returns the number of the current frame in that
   list. \code{sys.function} gives the definition of the function
-  currently being evaluated in the frame \code{n} generations back.
+  currently being evaluated in frame \code{n}.
   
   \code{sys.frames} gives a list of all the active frames and
   \code{sys.parents} gives the indices of the parent frames of each
@@ -77,6 +77,9 @@ parent.frame(n = 1)
 
   \code{parent.frame(n)} is a convenient shorthand for
   \code{sys.frame(sys.parent(n))} (implemented slightly more efficiently).
+}
+\note{
+The argument to \code{sys.function} would more logically be \code{which} rather than \code{n}. This may be changed in future versions. 
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

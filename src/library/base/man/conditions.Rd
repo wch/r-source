@@ -167,7 +167,7 @@ restartFormals(r)
    \code{findRestart}; in this case the handler ignores its arguments
    and returns \code{NULL}.  The most flexible form of a restart
    specification is as a list that can include several fields, including
-   \code{hander}, \code{description}, and \code{test}.  The
+   \code{handler}, \code{description}, and \code{test}.  The
    \code{test} field should contain a function of one argument, a
    condition, that returns \code{TRUE} if the restart applies to the
    condition and \code{FALSE} if it does not; the default function
