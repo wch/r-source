@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2005
-@set FAQ-VERSION 2.0.@value{FAQ-YEAR}-01-12
+@set FAQ-VERSION 2.0.@value{FAQ-YEAR}-01-13
 @set REL-VERSION 2.0.1
 @set REL-YEAR 2004
 @c <COMMENT>
@@ -1886,6 +1886,8 @@ text, tables and graphs in the same document).
 @item SenSrivastava
 Collection of datasets from ``Regression Analysis, Theory, Methods and
 Applications'' by A. Sen and M. Srivastava, 1990, Springer.
+@item SeqKnn
+Sequential KNN imputation.
 @item SoPhy
 Soil Physics Tools: simulation of water flux and solute transport in
 soil.
