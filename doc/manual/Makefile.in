@@ -75,7 +75,7 @@ docs: html
 	fi
 	TEXINPUTS="$(srcdir):$$TEXINPUTS" $(TEXI2DVI) $<
 .texi.html:
-	$(TEXI2HTML) -I$(srcdir) $< -o $@ || touch $@
+	$(TEXI2HTML) -D UseExternalXrefs -I$(srcdir) $< -o $@ || touch $@
 .texi.info:
 	@if test "$(MAKEINFO)" = false; then \
 	  echo "ERROR: 'makeinfo' v4 needed but missing on your system."; \

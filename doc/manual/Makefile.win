@@ -57,10 +57,10 @@ all: pdf
 	$(TEX) $<
 
 .texi.html:
-	$(MAKEINFO) --no-split --html $< -o $@ || touch $@
+	$(MAKEINFO) -D UseExternalXrefs --no-split --html $< -o $@ || touch $@
 
 .texi.info:
-	$(MAKEINFO)  -D UseExternalXrefs $<
+	$(MAKEINFO) -D UseExternalXrefs $<
 
 .texi.pdf:
 	$(PDFTEX) $<
