@@ -675,6 +675,11 @@ static void setMessageBoxTopmost(window obj)
 		TopmostDialogs |= MB_TOPMOST;
 }
 
+int getHandle(window c)
+{
+    return (int)c->handle;
+}
+
 void BringToTop(window c, int stay) /* stay=0 for regular, 1 for topmost, 2 for toggle */
 {
     SetForegroundWindow(c->handle); /* needed in Rterm */

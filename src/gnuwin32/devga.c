@@ -2704,3 +2704,17 @@ SEXP do_bringtotop(SEXP call, SEXP op, SEXP args, SEXP env)
     }
     return R_NilValue;
 }
+
+int getDeviceHandle(int dev)
+{
+    GEDevDesc *gdd;
+    gadesc *xd;
+
+    if (dev == -1) return(getHandle(RConsole));
+    if (dev < 1 || dev > R_MaxDevices || dev == NA_INTEGER) return(0);
+    gdd = (GEDevDesc *) GetDevice(dev - 1);
+    if (!gdd) return(0);
+    xd = (gadesc *) gdd->dev->deviceSpecific;
+    if (!xd) return(0);
+    return(getHandle(xd->gawin));
+}

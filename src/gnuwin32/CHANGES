@@ -15,7 +15,10 @@ Changed preferences menu "Finish" to "OK".
 Changed search order for user home directory to use "My Documents" 
 directory.
 
-Added function setWindowTitle().
+Added functions setWindowTitle(), getWindowTitle(), and 
+getIdentification().
+
+Added function getWindowsHandle().
 
 
 

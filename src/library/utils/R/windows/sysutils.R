@@ -16,5 +16,21 @@ readClipboard <- function()
 writeClipboard <- function(str)
     .Internal(writeClipboard(str))
 
-setWindowTitle <- function(title)
+getIdentification <- function()
+    .Internal(getIdentification())
+    
+setWindowTitle <- function(suffix, title = paste(getIdentification(), suffix))
     .Internal(setWindowTitle(title))
+
+getWindowTitle <- function()
+    .Internal(getWindowTitle())
+    
+getWindowsHandle <- function(which = "Console") {
+    if (is.numeric(which)) {
+	which <- as.integer(which)
+        if(!exists(".Devices")) .Devices <- list("null device")
+        if(which > 0 && .Devices[[which]] != "windows")
+            return(0)
+    }
+    .Internal(getWindowHandle(which))
+}

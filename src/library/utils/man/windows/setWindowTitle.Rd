@@ -1,32 +1,48 @@
 \name{setWindowTitle}
 \alias{setWindowTitle}
-\title{Set the Window Title}
+\alias{getWindowTitle}
+\alias{getIdentification}
+\title{Set or get the Window Title}
 \description{
   Set the title of the R window which will appear in the task bar.
 }
 \usage{
-setWindowTitle(title)
+setWindowTitle(suffix, title = paste(getIdentification(), suffix))
+getWindowTitle()
+getIdentification()
 }
 \arguments{
-  \item{title}{a character string}
+  \item{suffix}{a character string to form part of the title}
+  \item{title}{a character string forming the complete new title}
 }
 \details{
-  This appends \code{title} to the normal window identification
-  (\code{RGui}, \code{R Console} or \code{Rterm}) separated by a colon
-  and a space.  Use \code{title = ""} to reset the title.
+  \code{setWindowTitle} appends \code{suffix} to the normal window identification
+  (\code{RGui}, \code{R Console} or \code{Rterm}).  
+  Use \code{suffix = ""} to reset the title.
+  
+  \code{getWindowTitle} gets the current title.
 
   This sets the title of the frame in MDI mode, the title of the console
   for \code{RGui --sdi}, and the title of the window from which it was
   launched for \code{Rterm} (only if used interactively).
   It has no effect in embedded uses of \R.
+  
+  \code{getIdentification} returns the normal window identification.
 }
 \value{
-  \code{NULL} (invisible).
+  All three functions return a length 1 character vector.
+  
+  \code{setWindowTitle} returns the previous window title (invisibly).  
+  
+  \code{getWindowTitle} and \code{getIdentification} return the current window title
+  and the normal window identification, respectively.
 }
 \examples{
-## show the current working directory in the title.
-setWindowTitle(getwd())
+## show the current working directory in the title, saving the old one
+oldtitle <- setWindowTitle(getwd())
 ## reset the title
 setWindowTitle("")
+## restore the original title
+setWindowTitle(title = oldtitle)
 }
 \keyword{utilities}
