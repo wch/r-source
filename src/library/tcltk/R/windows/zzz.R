@@ -3,6 +3,7 @@
     if(!nchar(Sys.getenv("TCL_LIBRARY"))) stop("TCL_LIBRARY is not set")
     library.dynam("tcltk", pkg, lib)
     .C("tcltk_start", PACKAGE="tcltk")
+    bringToTop(-1)
     extra <- system.file("exec", package = "tcltk")
     extra <- gsub("\\\\", "/", extra)
     bringToTop(-1) # restore focus to console
