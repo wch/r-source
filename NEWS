@@ -29,21 +29,20 @@ USER-VISIBLE CHANGES
     o	All the datasets formerly in packages 'base' and 'stats' have
 	been moved to a new package 'datasets'.  data() does the
 	appropriate substitution, with a warning.  However, calls to
-	data() are not normally needed as the data object are visible
+	data() are not normally needed as the data objects are visible
 	in the 'datasets' package.
 
 	Packages can be installed to make their data objects available
 	via R CMD INSTALL --lazy-data.  [This is experimental.]
 
 	The semantics of data() have changed (and were incorrectly
-	documented in recent releases).  Please read the help page
-	carefully if you use the 'package' or 'lib.loc' arguments.
+	documented in recent releases) and the function has been moved
+	to package 'utils'.  Please read the help page carefully if
+	you use the 'package' or 'lib.loc' arguments.
 
     o	The default barplot() method by default uses a
 	gamma-corrected grey palette (rather than the heat color
 	palette) for coloring its output when given a matrix.
-
-    o	dir.create() now expands '~' in filenames.
 
 
 NEW FEATURES
@@ -187,6 +186,8 @@ NEW FEATURES
 
     o	data(), .path.packages() and .find.packages() now interpret
 	package = NULL to mean all loaded packages.
+
+    o	dir.create() now expands '~' in filenames.
 
 
 UTILITIES
