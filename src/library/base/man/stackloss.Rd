@@ -1,7 +1,9 @@
 \name{stackloss}
+\alias{stackloss}
+\alias{stack.loss}
+\alias{stack.x}
 \title{Brownlee's Stack Loss Plant Data}
 \usage{data(stackloss)}
-\alias{stackloss}
 \description{Operational data of a plant for the oxidation of ammonia to
   nitric acid.}
 \format{A data frame with 21 observations on 4 variables.

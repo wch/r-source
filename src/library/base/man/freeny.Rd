@@ -1,5 +1,7 @@
 \name{freeny}
 \alias{freeny}
+\alias{freeny.x}
+\alias{freeny.y}
 \title{Freeny's Revenue Data}
 \usage{data(freeny)}
 \description{
