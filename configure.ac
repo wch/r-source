@@ -185,6 +185,13 @@ AC_ARG_WITH([blas],
 [R_ARG_USE(blas)],
 [use_blas=yes])
 
+## LAPACK.
+AC_ARG_WITH([lapack],
+[AC_HELP_STRING([--with-lapack],
+                [use LAPACK library, or specify it @<:@yes@:>@])],
+[R_ARG_USE(lapack)],
+[use_lapack=yes])
+
 ## Readline.
 AC_ARG_WITH([readline],
 [AC_HELP_STRING([--with-readline],
@@ -1020,13 +1027,19 @@ if test "${use_blas}" = yes; then
   R_BLAS_LIBS
 fi
 ## </NOTE>
-if test -n "${BLAS_LIBS}"; then
+if test "${acx_blas_ok}" = "yes"; then
   BLAS=
 else
   BLAS="blas.o"
 fi
 AC_SUBST(BLAS)
-AM_CONDITIONAL(USE_EXTERNAL_BLAS, [test "x${BLAS_LIBS}" != x])
+AM_CONDITIONAL(USE_EXTERNAL_BLAS, [test "${acx_blas_ok}" = "yes"])
+
+## LAPACK.
+if test "${use_lapack}" = "yes"; then
+  R_LAPACK_LIBS
+fi
+AM_CONDITIONAL(USE_EXTERNAL_LAPACK, [test "${acx_lapack_ok}" = "yes"])
 
 ### * Checks for system services.
 
@@ -1128,7 +1141,7 @@ LIBS="${LIBS1} ${LIBS2}"
 ## <FIXME>
 ## This should not be necessary when using libtool for linking.
 ## In any case, is this really good enough?
-for arg in ${LDFLAGS} ${FLIBS} ${BLAS_LIBS} ${X_LIBS} ${TCLTK_LIBS} \
+for arg in ${LDFLAGS} ${FLIBS} ${BLAS_LIBS} ${LAPACK_LIBS} ${X_LIBS} ${TCLTK_LIBS} \
            ${GNOME_LIBS}; do
   case "${arg}" in
     -L*)
@@ -1288,16 +1301,26 @@ r_external_libs=
 if test "${use_readline}" = yes; then
   r_external_libs=readline
 fi
-if test -n "${BLAS_LIBS}"; then
+if test "${acx_blas_ok}" = "yes"; then
   ## Try to figure out which BLAS was used.
   case "${BLAS_LIBS}" in
     *-latlas*) r_blas=ATLAS ;;
     *-lsgemm*) r_blas=PhiPack ;;
     *sunperf*) r_blas=SunPerf ;;
     *-lessl*)  r_blas=ESSL ;;
+    "")        r_blas=none ;;
     *)         r_blas=generic ;;
   esac
   R_SH_VAR_ADD(r_external_libs, [BLAS(${r_blas})], [, ])
+fi
+if test "${acx_lapack_ok}" = "yes"; then
+  ## Try to figure out which LAPACK was used.
+  case "${LAPACK_LIBS}" in
+    *sunperf*) r_lapack=SunPerf ;;
+    "")        r_lapack="in blas" ;;
+    *)         r_lapack=generic ;;
+  esac
+  R_SH_VAR_ADD(r_external_libs, [LAPACK(${r_lapack})], [, ])
 fi
 r_capabilities=
 if test "${have_png}" = yes; then

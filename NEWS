@@ -11,6 +11,11 @@
 
 USER-VISIBLE CHANGES
 
+    o	eigen() and svd() now use LAPACK routines unless a new
+	back-compatibility option is turned on.  The signs and
+	normalization of eigen/singular vectors may change from
+	earlier versions.
+
 
 NEW FEATURES
 
@@ -50,11 +55,6 @@ NEW FEATURES
 
     o	prcomp() is now fast for n x m inputs with m >> n.
 
-    o	eigen() and svd() now use LAPACK routines unless a new
-	back-compatibility option is turned on.  The signs and
-	normalization of eigen/singular vectors may change from
-	earlier versions.
-
     o	medpolish {eda} now has an `na.rm' argument (PR#2298).
 
     o	The internal random number generators will now never return
@@ -86,6 +86,10 @@ INSTALLATION CHANGES
 
     o	PCRE and bzip2 are built from versions in the R sources if the
 	appropriate library is not found.
+
+    o	New configure option --with-lapack to allow high-performance
+	LAPACK libraries to be used: a generic LAPACK library will be
+	used if found.
 
 
 DEPRECATED & DEFUNCT

@@ -1955,6 +1955,76 @@ LIBS="${acx_blas_save_LIBS}"
 AC_SUBST(BLAS_LIBS)
 ])# R_BLAS_LIBS
 
+
+## R_LAPACK_LIBS
+## -------------
+## Look for a library that implements LAPACK
+## (see http://www.netlib.org/lapack/).  On success, sets LAPACK_LIBS to the
+## requisite library linkages.  Only used by the lapack module at present.
+AC_DEFUN([R_LAPACK_LIBS],
+[AC_REQUIRE([R_PROG_F77_FLIBS])
+AC_REQUIRE([R_PROG_F77_APPEND_UNDERSCORE])
+AC_REQUIRE([R_PROG_F2C_FLIBS])
+
+acx_lapack_ok=no
+case "${with_lapack}" in
+  yes | "") ;;
+  no) acx_lapack_ok=disable ;;
+  -* | */* | *.a | *.so | *.so.* | *.sl | *.sl.* | *.o)
+    LAPACK_LIBS="${with_lapack}" 
+    ;;
+  *) LAPACK_LIBS="-l${with_lapack}" ;;
+esac
+
+if test "${r_cv_prog_f77_append_underscore}" = yes \
+  || test -n "${F2C}"; then
+  zgeev=zgeev_
+else
+  zgeev=zgeev
+fi
+
+acx_lapack_save_LIBS="${LIBS}"
+LIBS="${LIBS} ${BLAS_LIBS} ${FLIBS}"
+
+## LAPACK linked to by default?  (Could be in the BLAS libs.)
+if test "${acx_lapack_ok}" = no; then
+  AC_CHECK_FUNC(${zgeev}, [acx_lapack_ok=yes])
+fi
+
+## Next, check LAPACK_LIBS environment variable
+if test "${acx_lapack_ok}" = no; then
+  if test "x${LAPACK_LIBS}" != x; then
+    save_LIBS="${LIBS}"; LIBS="${LAPACK_LIBS} ${LIBS}"
+    AC_MSG_CHECKING([for ${zgeev} in ${LAPACK_LIBS}])
+    AC_TRY_LINK_FUNC(${zgeev}, [acx_lapack_ok=yes], [LAPACK_LIBS=""])
+    AC_MSG_RESULT(${acx_lapack_ok})
+    LIBS="$save_LIBS"
+  fi
+fi
+
+## LAPACK in Sun Performance library?
+if test "${acx_lapack_ok}" = no; then
+  if test "x$GCC" != xyes; then # only works with Sun CC
+    AC_CHECK_LIB(sunmath, acosp,
+                 [AC_CHECK_LIB(sunperf, ${zgeev},
+                               [LAPACK_LIBS="-xlic_lib=sunperf -lsunmath"
+                                acx_lapack_ok=yes],
+                               [], [-lsunmath])])
+  fi
+fi
+
+## Generic LAPACK library?
+if test "${acx_lapack_ok}" = no; then
+  AC_CHECK_LIB(lapack, ${zgeev},
+               [acx_lapack_ok=yes; LAPACK_LIBS="-llapack"])
+fi
+
+LIBS="${acx_lapack_save_LIBS}"
+
+AC_SUBST(LAPACK_LIBS)
+])# R_LAPACK_LIBS
+
+
 ## R_XDR
 ## -----
 ## Try finding XDR library functions and headers.

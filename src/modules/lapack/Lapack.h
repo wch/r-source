@@ -46,14 +46,14 @@ void F77_NAME(dgesdd)(const char *jobz,
 
 /* DSYEV - compute all eigenvalues and, optionally, eigenvectors   */
 /* of a real symmetric matrix A                                    */
-void F77_NAME(rsyev)(const char *jobz, const char *uplo,
+void F77_NAME(dsyev)(const char *jobz, const char *uplo,
 		     const int *n, double *a, const int *lda,
 		     double *w, double *work, const int *lwork,
 		     int *info);
 
 /* DSYEVR - compute all eigenvalues and, optionally, eigenvectors   */
 /* of a real symmetric matrix A                                    */
-void F77_NAME(rsyevr)(const char *jobz, const char *range, const char *uplo,
+void F77_NAME(dsyevr)(const char *jobz, const char *range, const char *uplo,
 		      const int *n, double *a, const int *lda,
 		      const double *vl, const double *vu,
 		      const int *il, const int *iu,

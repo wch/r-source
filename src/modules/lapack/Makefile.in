@@ -12,12 +12,15 @@ R_HOME = $(top_builddir)
 include $(top_builddir)/Makeconf
 
 SOURCES_C = Lapack.c
-SOURCES_F = double.f rgeev.f rsyev.f rsyevr.f @COMPILE_DOUBLE_COMPLEX_FALSE@ cmplx.f
+SOURCES_F = rgeev.f  \
+   @USE_EXTERNAL_LAPACK_FALSE@ double.f \
+   @COMPILE_DOUBLE_COMPLEX_FALSE@ cmplx.f
 
-SOURCES_BLAS_DOUBLE_COMPLEX = cmplxblas.f
+SOURCES_BLAS_DOUBLE_COMPLEX = @USE_EXTERNAL_LAPACK_FALSE@ cmplxblas.f
 SOURCES_BLAS = @COMPILE_DOUBLE_COMPLEX_FALSE@ cmplxblas.f
 
 DEPENDS = $(SOURCES_C:.c=.d)
+SOURCES = $(SOURCES_C) $(SOURCES_F) @USE_EXTERNAL_BLAS_FALSE@ $(SOURCES_BLAS)
 OBJECTS_BLAS = @USE_EXTERNAL_BLAS_FALSE@ $(SOURCES_BLAS:.f=.lo)
 OBJECTS = $(SOURCES_C:.c=.lo) $(SOURCES_F:.f=.lo) $(OBJECTS_BLAS)
 HEADERS = Lapack.h
@@ -26,7 +29,7 @@ distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = \
 	README Makefile.in Makefile.win \
 	dllversion.rc $(HEADERS) $(SOURCES_C) \
-	blas2.f cmplx.f cmplxblas.f double.f
+	blas2.f cmplx.f cmplxblas.f double.f rgeev.f rsyev.f rsyevr.f
 
 ## <FIXME>
 ## Change to 'lapack.la' when using libtool for shlibs.
@@ -55,7 +58,7 @@ R: Makefile
 	@$(MAKE) $(Rexecmodulesdir_LTLIBRARIES)
 
 $(lapack_la): $(lapack_la_OBJECTS) $(lapack_la_DEPENDENCIES)
-	$(SHLIB_LINK) -o $@ $(lapack_la_LDFLAGS) $(lapack_la_OBJECTS) $(lapack_la_LIBADD) @BLAS_LIBS@ $(FLIBS) $(LIBS)
+	$(SHLIB_LINK) -o $@ $(lapack_la_LDFLAGS) $(lapack_la_OBJECTS) $(lapack_la_LIBADD) @LAPACK_LIBS@ @BLAS_LIBS@ $(FLIBS) $(LIBS)
 ## <FIXME>
 ## Not sure of we want to do this ...
 	@$(MAKE) rhome=`cd $(top_builddir); pwd` install
