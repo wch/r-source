@@ -639,15 +639,15 @@ The @code{bitmap} and @code{dev2bitmap} devices make use of ghostscript
 (@uref{http://www.cs.wisc.edu/~ghost}).
 
 @code{bzfile} connections make use of @code{libbz2}, part of
-@code{bzip2} (@uref{http://sources.redhat.com/bzip2}).  If an
-installed version is not found, that in the @R{} sources will be
-compiled in.
+@code{bzip2} (@uref{http://sources.redhat.com/bzip2}).  If no installed
+version is found, that in the @R{} sources will be compiled in.
 
 @code{grep} and related functions will make use of PCRE if installed.
 The sources are at
 @uref{ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/}; the
 Debian package is @code{libpcre3-dev} and the RPM something like
-@code{pcre-devel-3.4-2}.
+@code{pcre-devel-3.4-2}.  If no installed version is found, that in the
+@R{} sources will be compiled in.
 
 @menu
 * Tcl/Tk::                      
