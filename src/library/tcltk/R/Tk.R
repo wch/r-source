@@ -289,6 +289,11 @@ tkgrab.release <- function(...) tkcmd("grab", "release", ...)
 tkgrab.set     <- function(...) tkcmd("grab", "set", ...)
 tkgrab.status  <- function(...) tkcmd("grab", "status", ...)
 
+tkimage.cget     <- function(...) tkcmd("image","cget",...)
+tkimage.configure<- function(...) tkcmd("image","configure",...)
+tkimage.create   <- function(...) tkcmd("image","create",...)
+tkimage.names    <- function(...) tkcmd("image","names",...)
+
 ## NB: some widgets also have a selection.clear command, hence the "X".
 ## tkselection.clear might be made a generic function instead.
 tkXselection.clear  <- function(...) tkcmd("selection", "clear", ...)
@@ -416,10 +421,6 @@ tkget           <- function(widget, ...) tkcmd(widget, "get", ...)
 tkgettags       <- function(widget, ...) tkcmd(widget, "gettags", ...)
 tkicursor       <- function(widget, ...) tkcmd(widget, "icursor", ...)
 tkidentify      <- function(widget, ...) tkcmd(widget, "identify", ...)
-tkimage.cget     <- function(widget, ...) tkcmd(widget,"image","cget",...)
-tkimage.configure<- function(widget, ...) tkcmd(widget,"image","configure",...)
-tkimage.create   <- function(widget, ...) tkcmd(widget,"image","create",...)
-tkimage.names    <- function(widget, ...) tkcmd(widget,"image","names",...)
 tkindex         <- function(widget, ...) tkcmd(widget, "index", ...)
 tkinsert        <- function(widget, ...) tkcmd(widget, "insert", ...)
 tkinvoke        <- function(widget, ...) tkcmd(widget, "invoke", ...)

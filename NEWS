@@ -363,6 +363,10 @@ BUG FIXES
     o	filter(method="recursive") was unnecessarily requiring the
 	time series to be longer than the filter.
 
+    o   In the tcltk package, the tkimage.*() commands were defined
+        nonsensically as widget commands. They have been redefined to be
+        more useful now.
+ 
     o   Printing `nls' objects misbehaved when `data' was a composite
         expression. 
 

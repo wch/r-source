@@ -29,10 +29,6 @@
 \alias{tkgettags}
 \alias{tkicursor}
 \alias{tkidentify}
-\alias{tkimage.cget}
-\alias{tkimage.configure}
-\alias{tkimage.create}
-\alias{tkimage.names}
 \alias{tkindex}
 \alias{tkinsert}
 \alias{tkinvoke}
@@ -132,10 +128,6 @@ tkget(widget, ...)
 tkgettags(widget, ...)
 tkicursor(widget, ...)
 tkidentify(widget, ...)
-tkimage.cget(widget, ...)
-tkimage.configure(widget, ...)
-tkimage.create(widget, ...)
-tkimage.names(widget, ...)
 tkindex(widget, ...)
 tkinsert(widget, ...)
 tkinvoke(widget, ...)

@@ -845,7 +845,9 @@ static SEXP coerceSymbol(SEXP v, SEXPTYPE type)
 
 SEXP coerceVector(SEXP v, SEXPTYPE type)
 {
-    SEXP ans = R_NilValue;	/* -Wall */
+    SEXP op, vp, ans = R_NilValue;	/* -Wall */
+    int i,n;
+
     if (TYPEOF(v) == type)
 	return v;
 
@@ -860,8 +862,43 @@ SEXP coerceVector(SEXP v, SEXPTYPE type)
 	break;
     case NILSXP:
     case LISTSXP:
-    case LANGSXP:
 	ans = coercePairList(v, type);
+	break;
+    case LANGSXP:
+	if (type != STRSXP) {
+	    ans = coercePairList(v, type);
+	    break;
+	}
+
+	/* This is mostly copied from coercePairList, but we need to
+	 * special-case the first element so as not to get operators
+	 * put in backticks. */
+	n = length(v);
+	PROTECT(ans = allocVector(type, n));
+	if (n == 0) break; /* Can this actually happen? */
+	i = 0;
+	op = CAR(v);
+	/* The case of practical relevance is "lhs ~ rhs", which
+	 * people tend to split using as.character(), modify, and
+	 * paste() back together. However, we might as well
+	 * special-case all symbolic operators here. */
+	if (TYPEOF(op) == SYMSXP)
+	{
+	    SET_STRING_ELT(ans, i, PRINTNAME(op));
+	    i++;
+	    v = CDR(v);
+	}
+
+	/* The distinction between strings and other elements was
+	 * here "always", but is really dubious since it makes x <- a
+	 * and x <- "a" come out identical. Won't fix just now. */
+	for (vp = v;  vp != R_NilValue; vp = CDR(vp), i++) {
+	    if (isString(CAR(vp)) && length(CAR(vp)) == 1)
+		SET_STRING_ELT(ans, i, STRING_ELT(CAR(vp), 0));
+	    else
+		SET_STRING_ELT(ans, i, STRING_ELT(deparse1line(CAR(vp), 0), 0));
+	}
+	UNPROTECT(1);
 	break;
     case VECSXP:
     case EXPRSXP:

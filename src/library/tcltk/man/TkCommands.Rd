@@ -28,6 +28,10 @@
 \alias{tkgrab.release}
 \alias{tkgrab.set}
 \alias{tkgrab.status}
+\alias{tkimage.cget}
+\alias{tkimage.configure}
+\alias{tkimage.create}
+\alias{tkimage.names}
 \alias{tkXselection.clear}
 \alias{tkXselection.get}
 \alias{tkXselection.handle}
@@ -139,6 +143,11 @@ tkgrab.current(...)
 tkgrab.release(...)
 tkgrab.set(...)
 tkgrab.status(...)
+
+tkimage.cget(...)
+tkimage.configure(...)
+tkimage.create(...)
+tkimage.names(...)
 
 ## NB: some widgets also have a selection.clear command, hence the "X".
 
