@@ -1,4 +1,6 @@
-hist <-
+hist <- function(x, ...) UseMethod("hist")
+
+hist.default <-
 function (x, breaks, freq = NULL, probability = freq, include.lowest = TRUE,
 	col = NULL, border = par("fg"),
 	main = paste("Histogram of" , deparse(substitute(x))),
