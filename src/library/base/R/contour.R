@@ -1,4 +1,6 @@
-contour <-
+contour <- function(x, ...) UseMethod("contour")
+
+contour.default <-
 function (x = seq(0, 1, len = nrow(z)), y = seq(0, 1, len = ncol(z)),
 	  z,
 	  nlevels = 10, levels = pretty(zlim, nlevels), labels = NULL,

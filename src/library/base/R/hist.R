@@ -39,7 +39,7 @@ hist.default <-
         }
         if(!is.numeric(breaks) || is.na(breaks) || breaks < 2)
             stop("invalid number of breaks")
-        breaks <- pretty (range(x), n = breaks, min.n=1)
+        breaks <- pretty (range(x), n = breaks, min.n = 1)
         nB <- length(breaks)
         if(nB <= 1) ##-- Impossible !
             stop(paste("hist.default: pretty() error, breaks=",
@@ -61,7 +61,7 @@ hist.default <-
     ## the boundaries
     diddle <- 1e-7 * max(abs(range(breaks)))
     fuzz <- if(right)
-	c(if(include.lowest)-diddle else diddle,
+	c(if(include.lowest) - diddle else diddle,
 	    rep(diddle, length(breaks) - 1))
     else
 	c(rep(-diddle, length(breaks) - 1),
@@ -146,7 +146,7 @@ plot.histogram <-
 
 lines.histogram <- function(x, ...) plot.histogram(x, ..., add = TRUE)
 
-nclass.Sturges <- function(x) floor(log2(length(x)) + 1)
+nclass.Sturges <- function(x) ceiling(log2(length(x)) + 1)
 
 nclass.scott <- function(x)
 {
