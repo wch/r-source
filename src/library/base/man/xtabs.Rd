@@ -37,6 +37,10 @@ xtabs(formula = ~., data, subset, na.action, exclude = c(NA, NaN),
   performs a chi-squared test for independence of factors (note that the
   function \code{\link[ctest]{chisq.test}} in package \bold{ctest}
   currently only handles 2-d tables).
+
+  If a left hand side is given in \code{formula}, its entries are simply
+  summed over the cells corresponding to the right hand side; this also
+  works if the lhs does not give counts.
 }
 \value{
   A contingency table in array representation of class \code{c("xtabs",
@@ -67,5 +71,10 @@ DF
 xtabs(Freq ~ Gender + Admit, DF)
 ## And for testing independece ...
 summary(xtabs(Freq ~ ., DF))
+
+data(warpbreaks)
+## Create a nice display for the warp break data.
+warpbreaks$replicate <- rep(1:9, len = 54)
+ftable(xtabs(breaks ~ wool + tension + replicate, data = warpbreaks))
 }
 \keyword{category}
