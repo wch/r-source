@@ -49,6 +49,22 @@ written by Henry Spencer of the University of Toronto.
 }
 \examples{
 grep("[a-z]", letters)
+
+txt <- c("The", "licenses", "for", "most", "software", "are",
+  "designed", "to", "take", "away", "your", "freedom",
+  "to", "share", "and", "change", "it.",
+   "", "By", "contrast,", "the", "GNU", "General", "Public", "License",
+   "is", "intended", "to", "guarantee", "your", "freedom", "to",
+   "share", "and", "change", "free", "software", "--",
+   "to", "make", "sure", "the", "software", "is",
+   "free", "for", "all", "its", "users")
+i <- grep("[gu]", txt)
+all( txt[i] == grep("[gu]", txt, value = TRUE) )
+(ot <- sub("[b-e]",".", txt))
+txt[ot != gsub("[b-e]",".", txt)]#- gsub does "global" substitution
+
+txt[gsub("g","#", txt) !=
+    gsub("g","#", txt, ignore.case = TRUE)]
 }
 \keyword{character}
 \keyword{utilities}
