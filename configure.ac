@@ -251,6 +251,16 @@ AC_ARG_WITH([tk-config],
 ## </FIXME>
 AM_CONDITIONAL(USE_LIBTOOL, [test "x${use_libtool}" = xyes])
 
+## Recommended R packages.
+AC_ARG_WITH([recommended-packages],
+[AC_HELP_STRING([--with-recommended-packages],
+                [use/install recommended R packages (if available)
+                 @<:@yes@:>@])],
+[R_ARG_USE(recommended_packages)],
+[use_recommended_packages=yes])
+AM_CONDITIONAL(USE_RECOMMENDED_PACKAGES,
+               [test "x${use_recommended_packages}" = xyes])
+
 ### ** Precious variables.
 
 AC_ARG_VAR([R_PRINTCMD],
