@@ -2,6 +2,10 @@
 
 NEW FEATURES
 
+     o  A tests/ directory has been added (in the source), and "make tests"
+	has been modified to run more than all the examples from the base
+	package.  The exact 'make tests' behavior is still bound to change.
+
      o  An experimental directory etc/Rdoc has been added with a perl5
 	module to parse R documentation files.  Sample perl programs
 	to use this module are also included.
