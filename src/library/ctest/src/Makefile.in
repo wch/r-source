@@ -11,7 +11,12 @@ top_builddir = ../../../..
 subdir = src/library/$(pkg)/src
 R_HOME = $(top_builddir)
 
-OBJS = ansari.o chisqsim.o d2x2xk.o fexact.o kendall.o ks.o prho.o swilk.o init.o
+SRCS_C = ansari.c chisqsim.c d2x2xk.c fexact.c kendall.c ks.c prho.c \
+	swilk.c init.c
+SRCS_F =
+DEPS = $(SRCS_C:.c=.d)
+OBJS = $(SRCS_C:.c=.o) $(SRCS_F:.f=.o)
+
 SHLIB = $(pkg)@SHLIB_EXT@
 
 ## FIXME:
@@ -21,16 +26,24 @@ SHLIB = $(pkg)@SHLIB_EXT@
 PKG_LIBS = @FLIBS@
 ## </FIXME>
 
-all: Makefile $(SHLIB)
-	@$(top_srcdir)/tools/mkinstalldirs \
-	  $(top_builddir)/library/$(pkg)/libs
-	@$(top_srcdir)/tools/copy-if-change $(SHLIB) \
-	  $(top_builddir)/library/$(pkg)/libs/$(SHLIB)
+all: Makefile Makedeps
+	@$(MAKE) Makedeps
+	@$(MAKE) shlib
 
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@cd $(top_builddir) && \
 	  CONFIG_FILES=$(subdir)/$@ CONFIG_HEADERS= \
 	  $(SHELL) ./config.status
+
+Makedeps: Makefile $(DEPS)
+	@cat $(DEPS) >> Makefile
+	@touch $@
+
+shlib: $(SHLIB)
+	@$(top_srcdir)/tools/mkinstalldirs \
+	  $(top_builddir)/library/$(pkg)/libs
+	@$(top_srcdir)/tools/copy-if-change $(SHLIB) \
+	  $(top_builddir)/library/$(pkg)/libs/$(SHLIB)
 
 include $(top_srcdir)/share/make/shlib.mk
 
@@ -41,3 +54,5 @@ clean:
 distclean: clean
 	@-rm -f Makefile
 maintainer-clean: distclean
+
+## Automagically generated dependencies:
