@@ -110,7 +110,7 @@ function(dir) {
                 character(0)
         files
     }
-    
+
     if(missing(dir))
         stop("no package directory given")
     if(!file.exists(dir))
@@ -178,11 +178,12 @@ function(dir) {
         ## the generic g from environment env?  The method must have all
         ## arguments the generic has, with positional arguments of g in
         ## the same positions for m.
+        ## Exception: "..." in the method swallows anything
         gArgs <- ogArgs <- names(formals(get(g, envir = env)))
         mArgs <- omArgs <- names(formals(get(m, envir = .CodeEnv)))
         ## If m is a formula method, its first argument *may* be called
         ## formula.  (Note that any argument name mismatch throws an
-        ## error in current S-plus versions.)
+        ## error in current S-PLUS versions.)
         if(length(grep("\\.formula$", m)) > 0) {
             gArgs <- gArgs[-1]
             mArgs <- mArgs[-1]
@@ -192,7 +193,13 @@ function(dir) {
             seq(from = 1, length = dotsPos - 1)
         else
             seq(along = gArgs)
-        if(all(gArgs[ipos] == mArgs[ipos]) && all(gArgs %in% mArgs))
+
+        dotsPos <- which(mArgs == "...")
+        if(length(dotsPos) > 0)
+            ipos <- ipos[seq(from = 1, length = dotsPos - 1)]
+        PosMatchOK <- all(gArgs[ipos] == mArgs[ipos])
+        ArgMatchOK <- all(gArgs %in% mArgs) || length(dotsPos) > 0
+        if(PosMatchOK && ArgMatchOK)
             NULL
         else {
             l <- list(ogArgs, omArgs)
@@ -203,7 +210,7 @@ function(dir) {
 
     for(env in envList) {
         allObjs <- ls(envir = env, all.names = TRUE)
-        ## <FIXME>        
+        ## <FIXME>
         genFuns <- allObjs[sapply(allObjs, isGeneric, env)]
         ## This is not good enough for base where we also have generics
         ## which dispatch in C code.  We should also add group methods.
@@ -224,7 +231,7 @@ function(dir) {
 
     ## Output.
     formatArgs <- function(s)
-        paste("function(", paste(s, collapse = ", "), ")", sep = "")        
+        paste("function(", paste(s, collapse = ", "), ")", sep = "")
     for(entry in badMethods) {
         writeLines(c(paste(names(entry)[1], ":", sep = ""),
                      strwrap(formatArgs(entry[[1]]),
@@ -234,9 +241,9 @@ function(dir) {
                              indent = 2, exdent = 11),
                      ""))
     }
-    
+
     invisible(badMethods)
-    
+
 }
 
 checkTnF <-

@@ -33,8 +33,9 @@ checkTnF(file, package, lib.loc = .lib.loc)
   \code{checkMethods} checks whether all methods defined in the package
   R code have all arguments of the corresponding generic, with
   positional arguments of the generics in the same positions for the
-  method.  The generics are sought in the given package and the base
-  package.
+  method.  The generics are sought first in the given package and then
+  in the base package.  The rules when \code{\dots} is involved are
+  subtle: see the source code.
 
   \code{checkTnF} checks the specified R code for occurrences of
   \code{T} or \code{F}, and reports the expression containing these.
