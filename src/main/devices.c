@@ -223,7 +223,7 @@ SEXP do_XFig(SEXP call, SEXP op, SEXP args, SEXP env)
     vmaxset(vmax);
     return R_NilValue;
 }
-#ifdef macintosh  /* Jago */
+#ifdef macintosh
 
 /*  Macintosh Device Driver Parameters:
  *  -----------------		--> ../unix/devX11.c
