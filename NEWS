@@ -139,6 +139,9 @@ NEW FEATURES
     o   $ and $<- are now generic functions.
 
 
+    o   approx() and approxfun() have an extra argument ties= to control
+ 	handling of tied x values
+
 BUG FIXES
 
     o	The Mathlib functions now use exactly the same values for
