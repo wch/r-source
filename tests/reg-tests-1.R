@@ -2971,6 +2971,15 @@ points(depression~weight, subset=8:10, col=2:4, data=roller)
 
 
 ## PR#4558 part 2
-x <- seq(as.POSIXct("2004-03-25"),as.POSIXct("2004-03-31"),by="DSTdays")
+x <- seq(as.POSIXct("2004-03-25"), as.POSIXct("2004-03-31"), by="DSTdays")
 stopifnot(length(x) == 7)
 ## was length 6 in the UK time zone.
+
+
+## PR#6702 c/rbind on list matrices
+A <- matrix(as.list(1:4), 2, 2)
+(res <- cbind(A, A))
+stopifnot(typeof(res) == "list")
+(res <- rbind(A, A))
+stopifnot(typeof(res) == "list")
+## were not implemented in 1.8.1
