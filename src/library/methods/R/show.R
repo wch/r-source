@@ -6,7 +6,8 @@ showDefault <-
 
     cl <- classLabel(class(object))
     clDef <- getClass(class(object))
-    if(!is.null(clDef) && is.na(match(clDef@className, .BasicClasses)) && !extends(clDef, "oldClass")) {
+    if(!is.null(clDef) && is.na(match(clDef@className, .BasicClasses)) &&
+       !extends(clDef, "oldClass")) {
         cat("An object of class ", cl, "\n", sep="")
         slots <- slotNames(clDef)
         if(!is.na(match(".Data", slots))) {
@@ -24,7 +25,8 @@ showDefault <-
             cat("\n")
         }
     }
-    else if(isClass(clDef) && extends(clDef, "oldClass") && length(slotNames(clDef)) > 0) {
+    else if(isClass(clDef) && extends(clDef, "oldClass") &&
+            length(slotNames(clDef)) > 0) {
         ## print the old-style object
         cat("An object of class ", cl, "\n", sep="")
         for( cl2 in rev(extends(clDef)))
