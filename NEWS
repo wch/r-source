@@ -97,6 +97,11 @@ BUG FIXES
 
     o   print.matrix checks length of rowlab, collab (PR#850)
 
+    o   add1.glm was using the wrong weights for binomial glms in
+	cbind(successes, failures) ~ lhs  orm, since 1.2.0.
+
+
+
 		CHANGES IN R VERSION 1.2.1
 
 

@@ -1,6 +1,6 @@
 
 R : Copyright 2001, The R Development Core Team
-Version 1.2.1 Patched (2001-01-31)
+Version 1.2.1 Patched (2001-02-16)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -106,7 +106,7 @@ $B$subset
 > # $B$subset
 > # [1] TRUE
 > 
-> ## Marc Feldesman 2000-Feb-1.  Precision in summary.data.frame
+> ## Marc Feldesman 2001-Feb-1.  Precision in summary.data.frame
 > data(attenu)
 Warning message: 
 list.files: /opt/R/R-patched/tests/data is not a readable directory 
@@ -161,4 +161,74 @@ list.files: /opt/R/R-patched/tests/data is not a readable directory
  Max.   :10000.000  
 > ## Comments:
 > ## All entries show all 3 digits after the decimal point now.
+> 
+> ## Chong Gu 2000-Feb-16.  step on binomials
+> "detg1" <-
++ structure(list(Temp = structure(c(2, 1, 2, 1, 2, 1, 2, 1, 2,
++ 1, 2, 1), .Label = c("High", "Low"), class = "factor"), M.user = structure(c(1,
++ 1, 2, 2, 1, 1, 2, 2, 1, 1, 2, 2), .Label = c("N", "Y"), class = "factor"),
++     Soft = structure(c(1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3), .Label = c("Hard",
++     "Medium", "Soft"), class = "factor"), M = c(42, 30, 52, 43,
++     50, 23, 55, 47, 53, 27, 49, 29), X = c(68, 42, 37, 24, 66,
++     33, 47, 23, 63, 29, 57, 19)), .Names = c("Temp", "M.user",
++ "Soft", "M", "X"), class = "data.frame", row.names = c("1", "3",
++ "5", "7", "9", "11", "13", "15", "17", "19", "21", "23"))
+> detg1.m0 <- glm(cbind(X,M)~1,binomial,detg1)
+> detg1.m0
+
+Call:  glm(formula = cbind(X, M) ~ 1, family = binomial, data = detg1) 
+
+Coefficients:
+(Intercept)  
+    0.01587  
+
+Degrees of Freedom: 11 Total (i.e. Null);  11 Residual
+Null Deviance:	    32.83 
+Residual Deviance: 32.83 	AIC: 92.52 
+> step(detg1.m0,scope=list(upper=~M.user*Temp*Soft))
+Start:  AIC= 92.52 
+ cbind(X, M) ~ 1 
+
+         Df Deviance    AIC
++ M.user  1   12.244 73.942
++ Temp    1   28.464 90.162
+<none>        32.826 92.524
++ Soft    2   32.430 96.128
+
+Step:  AIC= 73.94 
+ cbind(X, M) ~ M.user 
+
+         Df Deviance    AIC
++ Temp    1    8.444 72.142
+<none>        12.244 73.942
++ Soft    2   11.967 77.665
+- M.user  1   32.826 92.524
+
+Step:  AIC= 72.14 
+ cbind(X, M) ~ M.user + Temp 
+
+              Df Deviance    AIC
++ M.user:Temp  1    5.656 71.354
+<none>              8.444 72.142
+- Temp         1   12.244 73.942
++ Soft         2    8.228 75.926
+- M.user       1   28.464 90.162
+
+Step:  AIC= 71.35 
+ cbind(X, M) ~ M.user + Temp + M.user:Temp 
+
+              Df Deviance    AIC
+<none>              5.656 71.354
+- M.user:Temp  1    8.444 72.142
++ Soft         2    5.495 75.193
+
+Call:  glm(formula = cbind(X, M) ~ M.user + Temp + M.user:Temp, family = binomial,      data = detg1) 
+
+Coefficients:
+    (Intercept)          M.userY          TempLow  M.userY:TempLow  
+        0.26236         -0.85183          0.04411          0.44427  
+
+Degrees of Freedom: 11 Total (i.e. Null);  8 Residual
+Null Deviance:	    32.83 
+Residual Deviance: 5.656 	AIC: 71.35 
 > 

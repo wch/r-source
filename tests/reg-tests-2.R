@@ -58,7 +58,7 @@ test.list
 # $B$subset
 # [1] TRUE
 
-## Marc Feldesman 2000-Feb-1.  Precision in summary.data.frame
+## Marc Feldesman 2001-Feb-1.  Precision in summary.data.frame
 data(attenu)
 summary(attenu)
 summary(attenu, digits = 5)
@@ -70,3 +70,18 @@ summary(x)
 summary(data.frame(x))
 ## Comments:
 ## All entries show all 3 digits after the decimal point now.
+
+## Chong Gu 2000-Feb-16.  step on binomials
+"detg1" <-
+structure(list(Temp = structure(c(2, 1, 2, 1, 2, 1, 2, 1, 2,
+1, 2, 1), .Label = c("High", "Low"), class = "factor"), M.user = structure(c(1,
+1, 2, 2, 1, 1, 2, 2, 1, 1, 2, 2), .Label = c("N", "Y"), class = "factor"),
+    Soft = structure(c(1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3), .Label = c("Hard",
+    "Medium", "Soft"), class = "factor"), M = c(42, 30, 52, 43,
+    50, 23, 55, 47, 53, 27, 49, 29), X = c(68, 42, 37, 24, 66,
+    33, 47, 23, 63, 29, 57, 19)), .Names = c("Temp", "M.user",
+"Soft", "M", "X"), class = "data.frame", row.names = c("1", "3",
+"5", "7", "9", "11", "13", "15", "17", "19", "21", "23"))
+detg1.m0 <- glm(cbind(X,M)~1,binomial,detg1)
+detg1.m0
+step(detg1.m0,scope=list(upper=~M.user*Temp*Soft))
