@@ -45,7 +45,7 @@ to the current release are incorporated in the build available <a href="rpatched
 </TBODY>
 </table>
 <p> Please see the <a href="../../../doc/FAQ/R-FAQ.html">R FAQ</a> for general
-information about R and the <a href="../contrib/rw-FAQ.html">R Windows FAQ</a> for Windows-specific information,
+information about R and the <a href="../rw-FAQ.html">R Windows FAQ</a> for Windows-specific information,
 including upgrade advice.</p>
 
 <hr>
