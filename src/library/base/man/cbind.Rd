@@ -25,6 +25,9 @@ rbind(\dots, deparse.level = 1)
   a data frame and the rest are vectors or matrices.  There can be other
   methods; in particular, there is one for time series objects.
 
+  In the matrix case, all the vectors/matrices must be atomic (e.g. not
+  lists). 
+
   Data frames can be \code{cbind}-ed with matrices, in which case
   each matrix forms a single column in the result, unlike calling
   \code{\link{data.frame}}.
