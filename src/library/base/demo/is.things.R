@@ -29,7 +29,7 @@ is.method <- function(fname) {
 }
 
 is.ALL <- function(obj, func.names = ls(pos=length(search())),
-		   not.using = c("is.single", "is.loaded", "is.all.equal",
+		   not.using = c("is.single", "is.loaded",
                      "is.empty.model", "is.R", "is.element"),
 		   true.only = FALSE, debug = FALSE)
 {

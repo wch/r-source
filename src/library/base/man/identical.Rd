@@ -1,6 +1,6 @@
 \name{identical}
 \alias{identical}
-\title{ Test Objects for Exact Equality }
+\title{Test Objects for Exact Equality}
 \description{
   The safe and reliable way to test two objects for being
   \emph{exactly} equal.  It returns \code{TRUE} in this case,
@@ -28,12 +28,10 @@ identical(x, y)
   the result is also \code{NA}.  In either case, the expression
   \code{if(x == y)....} won't work as expected.
 
-  The functions \code{all.equal} and \code{\link{is.all.equal}} are also
-  sometimes used to test equality this way, but were intended for
-  something different:  They allow for \dQuote{reasonable}
-  differences in numeric results.  Note that \code{is.all.equal} is
-  currently using \code{identical} on \code{all.equal()}'s result, see
-  the examples below.)
+  The function \code{all.equal} is also
+  sometimes used to test equality this way, but was intended for
+  something different:  It allows for \dQuote{reasonable}
+  differences in numeric results.
 
   The computations in \code{identical} are also reliable and usually
   fast.  There should never be an error.  The only known way to kill
@@ -60,8 +58,9 @@ identical(x, y)
   Springer.
 }
 \seealso{
-  \code{\link{is.all.equal}} for descriptions of how two objects differ;
+  \code{\link{all.equal}} for descriptions of how two objects differ;
   \link{Comparison} for operators that generate elementwise comparisons.
+  \code{\link{isTRUE}} is a simple wrapper based on \code{identical}.
 }
 \examples{
 identical(1, NULL) ## FALSE -- don't try this with ==
@@ -70,10 +69,11 @@ identical(1, as.integer(1)) ## FALSE, stored as different types
 
 x <- 1.0; y <- 0.99999999999
 ## how to test for object equality allowing for numeric fuzz :
-is.all.equal # (x,y)   which is simply defined to just use
-identical(all.equal(x, y), TRUE)
+(E <- all.equal(x,y))
+isTRUE(E) # which is simply defined to just use
+identical(TRUE, E)
 ## If all.equal thinks the objects are different, it returns a
-## character string, and this expression evaluates to FALSE
+## character string, and the above expression evaluates to FALSE
 
 # even for unusual R objects :
 identical(.GlobalEnv, environment())

@@ -9,7 +9,6 @@
 \alias{all.equal.list}
 \alias{all.equal.language}
 \alias{attr.all.equal}
-\alias{is.all.equal}
 \concept{numerical equality}
 \concept{approximately equal}
 \concept{equality testing}
@@ -19,8 +18,6 @@ all.equal(target, current, \dots)
 \method{all.equal}{numeric}(target, current,
           tolerance = .Machine$double.eps ^ 0.5,
           scale = NULL, \dots)
-
-is.all.equal(target, current, \dots)
 
 attr.all.equal(target, current, \dots)
 }
@@ -76,7 +73,7 @@ attr.all.equal(target, current, \dots)
   \emph{Programming with Data. A Guide to the S Language}.
   Springer (for \code{=}).
 }
-\seealso{\code{\link{identical}}, \code{\link{==}}, and
+\seealso{\code{\link{identical}}, \code{\link{isTRUE}}, \code{\link{==}}, and
   \code{\link{all}} for exact equality testing.
 }
 \examples{
@@ -92,7 +89,7 @@ all.equal(options(), .Options)           # no
 all.equal(options(), as.list(.Options))  # TRUE
 .Options $ myopt <- TRUE
    all.equal(options(), as.list(.Options)) #-> "see" the difference
-is.all.equal(options(), as.list(.Options)) # FALSE
+isTRUE(all.equal(options(), as.list(.Options))) # FALSE
 rm(.Options)
 }
 \keyword{programming}% is.*

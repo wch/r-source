@@ -87,7 +87,7 @@ NEW FEATURES
 	If the number of centres is supplied, it has a new option of
 	multiple random starts.
 
-    o	is.all.equal() convenience function to be used for programming.
+    o	isTRUE() convenience function to be used for programming.
 
     o	unclass() is no longer allowed for environments and external
 	pointers (since these cannot be copied and so unclass() was

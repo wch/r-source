@@ -7,6 +7,7 @@ x && y
 x | y
 x || y
 xor(x, y)
+isTRUE(x)
 }
 \alias{!}
 \alias{&}
@@ -15,6 +16,7 @@ xor(x, y)
 \alias{||}
 \alias{xor}
 \alias{Logic}
+\alias{isTRUE}
 \description{
   These operators act on logical vectors.
 }
@@ -35,11 +37,13 @@ xor(x, y)
 
   \code{xor} indicates elementwise exclusive OR.
 
+  \code{isTRUE(x)} is an abbreviation of \code{identical(TRUE,x)}.
+
   Numeric and complex vectors will be coerced to logical values, with
   zero being false and all non-zero values being true.  Raw vectors are
   handled without any coercion for \code{!}, \code{&} and \code{|}, with
   these operators being applied bitwise (so \code{!} is the 1-complement).
-  
+
   The operators \code{!}, \code{&} and \code{|} are generic functions:
   methods can be written for them individually or via the
   \code{\link{Ops}}) group generic function.

@@ -1,7 +1,8 @@
 all.equal <- function(target, current, ...) UseMethod("all.equal")
 
-is.all.equal <- function(target, current, ...)
-    identical(TRUE, all.equal(target, current, ...))
+## NO:  is.*(x) should be like S4  is(x, *) ! -- use  isTRUE(all.equal(*))
+## is.all.equal <- function(target, current, ...)
+##     identical(TRUE, all.equal(target, current, ...))
 
 all.equal.default <- function(target, current, ...)
 {
