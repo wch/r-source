@@ -126,6 +126,8 @@ void revsort(double *a, int *ib, int n)
     double ra;
     int ii;
 
+    if (n <= 1) return;
+
     a--; ib--;
 
     l = (n >> 1) + 1;
