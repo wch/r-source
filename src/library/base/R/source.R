@@ -1,13 +1,13 @@
 source <-
-  function (file, local = FALSE, echo = verbose, print.eval = echo, 
-            verbose = .Options$verbose, prompt.echo = .Options$prompt, 
-            max.deparse.length = 150) 
+  function (file, local = FALSE, echo = verbose, print.eval = echo,
+            verbose = .Options$verbose, prompt.echo = .Options$prompt,
+            max.deparse.length = 150)
 {
-  envir <- if (local) 
+  envir <- if (local)
     sys.frame(sys.parent())
   else .GlobalEnv
   if (!missing(echo)) {
-    if (!is.logical(echo)) 
+    if (!is.logical(echo))
       stop("echo must be logical")
     if (!echo && verbose) {
       warning("verbose is TRUE, echo not; ... coercing 'echo <- TRUE'")
@@ -19,9 +19,9 @@ source <-
     print(envir)
   }
   Ne <- length(exprs <- parse(n = -1, file = file))
-  if (verbose) 
+  if (verbose)
     cat("--> parsed", Ne, "expressions; now eval(.)ing them:\n")
-  if (Ne == 0) 
+  if (Ne == 0)
     return(invisible())
                                         #-- ass1 :  the  '<-' symbol/name
   ass1 <- expression(y <- x)[[1]][[1]]
@@ -30,26 +30,26 @@ source <-
     ## needed, when truncating below
     sd <- "\""
     nos <- "[^\"]*"
-    oddsd <- paste("^", nos, sd, "(", nos, sd, nos, sd, ")*", 
+    oddsd <- paste("^", nos, sd, "(", nos, sd, nos, sd, ")*",
                    nos, "$", sep = "")
   }
   for (i in 1:Ne) {
-    if (verbose) 
+    if (verbose)
       cat("\n>>>> eval(expression_nr.", i, ")\n\t  =================\n")
     ei <- exprs[i]
     if (echo) {
                                         # drop "expression("
-      dep <- substr(paste(deparse(ei), collapse = "\n"), 
+      dep <- substr(paste(deparse(ei), collapse = "\n"),
                     12, 1e+06)
                                         # -1: drop ")"
       nd <- nchar(dep) - 1
       do.trunc <- nd > max.deparse.length
-      dep <- substr(dep, 1, if (do.trunc) 
+      dep <- substr(dep, 1, if (do.trunc)
                     max.deparse.length
                     else nd)
-      cat("\n", prompt.echo, dep, if (do.trunc) 
-          paste(if (length(grep(sd, dep)) && length(grep(oddsd, 
-                                                         dep))) 
+      cat("\n", prompt.echo, dep, if (do.trunc)
+          paste(if (length(grep(sd, dep)) && length(grep(oddsd,
+                                                         dep)))
                 " ...\" ..."
                 else " ....", "[TRUNCATED] "), "\n", sep = "")
     }
@@ -69,7 +69,7 @@ source <-
     }
     if (print.eval && yy$visible)
       print(yy$value)
-    if (verbose) 
+    if (verbose)
       cat(" .. after `", deparse(ei), "'\n", sep = "")
   }
   invisible(yy)
@@ -96,7 +96,7 @@ demo <- function(topic, device = .Options$device)
 		   recursion	= c("language", "recursion.R",	"G"),
 		   scoping	= c("language", "scoping.R",	""),
 		   is.things	= c("language", "is-things.R",	""),
-		   dyn.load	= c("dynload",	"zero.R",	"")		
+		   dyn.load	= c("dynload",	"zero.R",	"")
 		   )
     dimnames(Topics)[[1]] <- c("dir", "file", "flag")
     topic.names <- dimnames(Topics)[[2]]
@@ -128,16 +128,16 @@ demo <- function(topic, device = .Options$device)
 }
 
 example <-
-function (topic, package = .packages(), lib.loc = .lib.loc, echo = TRUE, 
+function (topic, package = .packages(), lib.loc = .lib.loc, echo = TRUE,
           verbose = .Options$verbose,
-          prompt.echo = paste(abbreviate(topic, 6), "> ", sep = "")) 
+          prompt.echo = paste(abbreviate(topic, 6), "> ", sep = ""))
 {
   topic <- substitute(topic)
-  if (!is.character(topic)) 
+  if (!is.character(topic))
     topic <- deparse(topic)[1]
   INDICES <- system.file(pkg=package, lib=lib.loc)
   file <- index.search(topic, INDICES, "AnIndex")
-  if (file == "") 
+  if (file == "")
     stop(paste("No help file found for'", topic, "'", sep = ""))
   comp <- strsplit(file, .Platform$file.sep)[[1]]
   pkg <- comp[length(comp) - 2]
@@ -145,10 +145,10 @@ function (topic, package = .packages(), lib.loc = .lib.loc, echo = TRUE,
     warning(paste("More than one help file found: using package", pkg))
   lib <- sub(file.path("", pkg, "help", topic), "", file[1])
   file <- paste(file.path(lib, pkg, "R-ex", topic), "R", sep=".")
-  if (!file.exists(file)) 
-    stop(paste("'", topic, "'has a help file but no examples file", sep = ""))
-  if (pkg != "base") 
+  if (!file.exists(file))
+    stop(paste("'", topic, "' has a help file but no examples file", sep = ""))
+  if (pkg != "base")
     library(pkg, lib = lib, character.only = TRUE)
-  source(file, echo = echo, prompt.echo = prompt.echo, verbose = verbose, 
+  source(file, echo = echo, prompt.echo = prompt.echo, verbose = verbose,
          max.deparse.length = 250)
 }
