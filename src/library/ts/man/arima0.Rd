@@ -4,16 +4,20 @@
 \alias{print.arima0}
 \alias{predict.arima0}
 \title{ARIMA Modelling of Time Series -- Preliminary Version}
+\description{
+  Fit an ARIMA model to a univariate time series, and forecast from
+  the fitted model.
+}
 \usage{
 arima0(x, order = c(0, 0, 0),
        seasonal = list(order = c(0, 0, 0), period = NA),
        xreg = NULL, include.mean = TRUE, delta = 0.01,
-       transform.pars = TRUE, fixed = NULL,
-       method = c("ML", "CSS"), n.cond)
+       transform.pars = TRUE, fixed = NULL, init = NULL,
+       method = c("ML", "CSS"), n.cond, optim.control = list())
 
 \method{predict}{arima0}(object, n.ahead = 1, newxreg, se.fit = TRUE, ...)
 
-arima0.diag(fit, gof.lag = 10) 
+arima0.diag(fit, gof.lag = 10)
 }
 \arguments{
   \item{x}{a univariate time series}
@@ -36,14 +40,18 @@ arima0.diag(fit, gof.lag = 10)
   \item{delta}{A value to indicate at which point `fast recursions'
     should be used. See the Details section.}
 
-  \item{transform.pars}{If true, the ARMA parameters are
+  \item{transform.pars}{Logical.  If true, the AR parameters are
     transformed to ensure that they remain in the region of
-    stationarity/invertibility.  Not used for \code{method = "CSS"}.}
+    stationarity.  Not used for \code{method = "CSS"}.}
 
   \item{fixed}{optional numeric vector of the same length as the total
     number of parameters.  If supplied, only non-\code{NA} entries in
     \code{fixed} will be varied.  Use with care if \code{transform.pars}
-    is true, as \code{fixed} applies to the transformed parameters.}
+    is true, when AR parameters should not be fixed.}
+
+  \item{init}{optional numeric vector of initial parameter
+    values. Missing values will be filled in, by zeroes except for
+    regression coefficients.}
 
   \item{method}{Fitting method: maximum likelihood or minimize
     conditional sum-of-squares.}
@@ -52,22 +60,20 @@ arima0.diag(fit, gof.lag = 10)
     number of initial observations to ignore.  It will be ignored if
     less than the maximum lag of an AR term.}
 
+  \item{optim.control}{List of control parameters for \code{\link{optim}}.}
+
   \item{object, fit}{The result of an \code{arima0} fit.}
 
   \item{newxreg}{New values of \code{xreg} to be used for
     prediction. Must have at least \code{n.ahead} rows.}
 
   \item{n.ahead}{The number of steps ahead for which prediction is required.}
-  
+
   \item{se.fit}{Logical: should standard errors of prediction be returned?}
 
   \item{gof.lag}{Number of lags to be used in goodness-of-fit test.}
 
   \item{\dots}{arguments passed to or from other methods.}
-}
-\description{
-  Fit an ARIMA model to a univariate time series by exact maximum
-  likelihood, and forecast from the fitted model.
 }
 \details{
   Different definitions of ARMA models have different signs for the
@@ -78,15 +84,15 @@ arima0.diag(fit, gof.lag = 10)
   and so the MA coefficients differ in sign from those of
   S-PLUS.  Further, if \code{include.mean} is true, this formula
   applies to \eqn{X-m} rather than \eqn{X}.  For ARIMA models with
-  differencing, the differenced series follows a zero-mean ARMA model. 
-    
+  differencing, the differenced series follows a zero-mean ARMA model.
+
   The variance matrix of the estimates is found from the Hessian of
   the log-likelihood, and so may only be a rough guide, especially for
   fits close to the boundary of invertibility.
 
   Optimization is done by \code{\link{optim}}. It will work
   best if the columns in \code{xreg} are roughly scaled to zero mean
-  and unit variance.
+  and unit variance, but does attempt to estimate suitable scalings.
 
   Finite-history prediction is used. This is only statistically
   efficient if the MA part of the fit is invertible, so
@@ -101,18 +107,22 @@ arima0.diag(fit, gof.lag = 10)
   an effectively infinite past) if the innovations variance is close
   enough to its asymptotic bound. The argument \code{delta} sets the
   tolerance: at its default value the approximation is normally
-  negligible and the speed-up considerable. Exact computations can be
+  negligible and the speed-up considerable.  Exact computations can be
   ensured by setting \code{delta} to a negative value.
 
   If \code{transform.pars} is true, the optimization is done using an
   alternative parametrization which is a variation on that suggested by
-  Jones (1980) and ensures that the model is stationary and has an
-  invertible MA part.  For an AR(p) model the parametrization is via the
-  inverse tanh of the partial autocorrelations: the same procedure
-  is applied (separately) to the MA and seasonal terms.
+  Jones (1980) and ensures that the model is stationary.  For an AR(p)
+  model the parametrization is via the inverse tanh of the partial
+  autocorrelations: the same procedure is applied (separately) to the
+  AR and seasonal AR terms.  The MA terms are not constrained to be
+  invertible during optimization, but they will be converted to
+  invertible form after optimization if \code{transform.pars} is true.
 
   As from \R 1.5.0 missing values are allowed, but any missing values
   will force \code{delta} to be ignored and full recursions used.
+  Note that missing values will be propogated by differencing, so the
+  procedure used in this function is not fully efficient in that case.
 
   Conditional sum-of-squares is provided mainly for expositional
   purposes.  This computes the sum of squares of the fitted innovations
@@ -132,8 +142,7 @@ arima0.diag(fit, gof.lag = 10)
   \item{sigma2}{the MLE of the innovations variance.}
 
   \item{var.coef}{the estimated variance matrix of the coefficients
-    \code{coef}. If \code{transform.pars = 1}, only the portion
-    corresponding to the untransformed parameters is returned.}
+    \code{coef}.}
 
   \item{loglik}{the maximized log-likelihood (of the differenced data),
     or the approximation to it used.}
@@ -144,7 +153,7 @@ arima0.diag(fit, gof.lag = 10)
     differences.}
 
   \item{aic}{the AIC value corresponding to the log-likelihood. Only
-    valid for \code{method = "ML"} fits}
+    valid for \code{method = "ML"} fits.}
 
   \item{residuals}{the residuals. (Was \code{resid} prior to \R 1.5.0.)}
 
@@ -187,7 +196,7 @@ arima0.diag(fit, gof.lag = 10)
 
   The standard errors of prediction exclude the uncertainty in the
   estimation of the ARMA model and the regression coefficients.
-  
+
   The results are likely to be different from S-PLUS's
   \code{arima.mle}, which computes a conditional likelihood and does
   not include a mean in the model.  Further, the convention used by
@@ -197,7 +206,7 @@ arima0.diag(fit, gof.lag = 10)
 \seealso{\code{\link{ar}}}
 
 \examples{
-data(lh)
+data(lh, package="ts")
 arima0(lh, order = c(1,0,0))
 arima0(lh, order = c(3,0,0))
 arima0(lh, order = c(1,0,1))
@@ -205,7 +214,7 @@ predict(arima0(lh, order = c(3,0,0)), n.ahead = 12)
 
 arima0(lh, order = c(3,0,0), method = "CSS")
 
-data(USAccDeaths)
+data(USAccDeaths, package="ts")
 arima0(USAccDeaths, order = c(0,1,1), seasonal = list(order=c(0,1,1)))
 arima0(USAccDeaths, order = c(0,1,1), seasonal = list(order=c(0,1,1)),
        method = "CSS") # drops first 13 observations.
@@ -215,14 +224,14 @@ arima0(USAccDeaths, order = c(0,1,1), seasonal = list(order=c(0,1,1)),
 predict(fit, n.ahead = 6)
 
 data(LakeHuron)
-arima0(LakeHuron, order = c(2,0,0), xreg = 1:98)
+arima0(LakeHuron, order = c(2,0,0), xreg = time(LakeHuron)-1920)
 \testonly{
 ## test fitting with NAs
 tmp <- LakeHuron
+trend <- time(LakeHuron) - 1920
 tmp[c(17, 45, 96)] <- NA
-arima0(tmp, order=c(2,0,0), xreg=1:98)
-arima0(tmp, order=c(1,1,1), xreg=1:98)
-trend <- 1:98
+arima0(tmp, order=c(2,0,0), xreg=trend)
+arima0(tmp, order=c(1,1,1), xreg=trend)
 trend[c(20, 67)] <- NA
 arima0(tmp, order=c(2,0,0), xreg=trend)
 

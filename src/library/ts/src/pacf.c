@@ -320,18 +320,91 @@ static void partrans(int p, double *raw, double *new)
 
 static void dotrans(Starma G, double *raw, double *new, int trans)
 {
-    int i, v, n = G->mp + G->mq + G->msp + G->msq;
+    int i, v, n = G->mp + G->mq + G->msp + G->msq + G->m;
 
+    for(i = 0; i < n; i++) new[i] = raw[i];
     if(trans) {
-	v = 0;
-	partrans(G->mp, raw + v, new + v);
-	v += G->mp;
-	partrans(G->mq, raw + v, new + v);
-	v += G->mq;
+	partrans(G->mp, raw, new);
+	v = G->mp + G->mq;
 	partrans(G->msp, raw + v, new + v);
-	v += G->msp;
-	partrans(G->msq, raw + v, new + v);
-	for(i = n; i < n + G->m; i++) new[i] = raw[i];
-    } else
-	for(i = 0; i < n + G->m; i++) new[i] = raw[i];
+    }
+}
+
+#ifdef WIN32
+extern double atanh(double);
+#endif
+
+static void invpartrans(int p, double *phi, double *new)
+{
+    int j, k;
+    double a, work[100];
+
+    if(p > 100) error("can only transform 100 pars in arima0");
+
+    for(j = 0; j < p; j++) work[j] = new[j] = phi[j];
+    /* Run the Durbin-Levinson recursions backwards
+       to find the PACF phi_{j.} from the autoregression coefficients */
+    for(j = p - 1; j > 0; j--) {
+	a = new[j];
+	for(k = 0; k < j; k++)
+	    work[k]  = (new[k] + a * new[j - k - 1]) / (1 - a * a);
+	for(k = 0; k < j; k++) new[k] = work[k];
+    }
+    for(j = 0; j < p; j++) new[j] = atanh(new[j]);
+}
+
+SEXP Invtrans(SEXP pG, SEXP x)
+{
+    SEXP y = allocVector(REALSXP, LENGTH(x));
+    int i, v, n;
+    double *raw = REAL(x), *new = REAL(y);
+    GET_STARMA;
+
+    n = G->mp + G->mq + G->msp + G->msq;
+    
+    v = 0;
+    invpartrans(G->mp, raw + v, new + v);
+    v += G->mp;
+    for(i = v; i < v + G->mq; i++) new[i] = raw[i];
+    v += G->mq;
+    invpartrans(G->msp, raw + v, new + v);
+    for(i = v; i < n + G->m; i++) new[i] = raw[i];
+    return y;
+}
+
+#define eps 1e-3
+SEXP Gradtrans(SEXP pG, SEXP x)
+{
+    SEXP y = allocMatrix(REALSXP, LENGTH(x), LENGTH(x));
+    int i, j, v, n;
+    double *raw = REAL(x), *A = REAL(y), w1[100], w2[100], w3[100];
+    GET_STARMA;
+
+    n = G->mp + G->mq + G->msp + G->msq + G->m;
+    for(i = 0; i < n; i++)
+	for(j = 0; j < n; j++)
+	    A[i + j*n] = (i == j);
+    if(G->mp > 0) {
+	for(i = 0; i < G->mp; i++) w1[i] = raw[i];
+	partrans(G->mp, w1, w2);
+	for(i = 0; i < G->mp; i++) {
+	    w1[i] += eps;
+	    partrans(G->mp, w1, w3);
+	    for(j = 0; j < G->mp; j++) A[i + j*n] = (w3[j] - w2[j])/eps;
+	    w1[i] -= eps;
+	}
+    }
+    if(G->msp > 0) {
+	v = G->mp + G->mq;
+	for(i = 0; i < G->msp; i++) w1[i] = raw[i + v];
+	partrans(G->msp, w1, w2);
+	for(i = 0; i < G->msp; i++) {
+	    w1[i] += eps;
+	    partrans(G->msp, w1, w3);
+	    for(j = 0; j < G->msp; j++) 
+		A[i + v + (j+v)*n] = (w3[j] - w2[j])/eps;
+	    w1[i] -= eps;
+	}
+    }
+    return y;
 }

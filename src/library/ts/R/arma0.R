@@ -1,14 +1,29 @@
 arima0 <- function(x, order = c(0, 0, 0),
                    seasonal = list(order = c(0, 0, 0), period = NA),
                    xreg = NULL, include.mean = TRUE, delta = 0.01,
-                   transform.pars = TRUE, fixed = NULL,
-                   method = c("ML", "CSS"), n.cond)
+                   transform.pars = TRUE, fixed = NULL, init = NULL,
+                   method = c("ML", "CSS"), n.cond,
+                   optim.control = list())
 {
     arma0f <- function(p)
     {
         par <- as.double(fixed)
         par[mask] <- p
         .Call("arma0fa", G, par, PACKAGE = "ts")
+    }
+
+    maInvert <- function(ma)
+    {
+        ## polyroot can't cope with leading zero.
+        if(ma[length(ma)] == 0) return(ma)
+        roots <- polyroot(c(1, ma))
+        ind <- Mod(roots) < 1
+        if(all(!ind)) return(ma)
+        if(length(ma) == 1) return(1/ma)
+        roots[ind] <- 1/roots[ind]
+        x <- 1
+        for(r in roots) x <- c(x, 0) - c(0, x)/r
+        Re(x[-1])
     }
 
     series <- deparse(substitute(x))
@@ -66,34 +81,58 @@ arima0 <- function(x, order = c(0, 0, 0),
     on.exit(.Call("free_starma", G, PACKAGE = "ts"))
     .Call("Starma_method", G, method == "CSS", PACKAGE = "ts")
     narma <- sum(arma[1:4])
-    init <- rep(0, narma)
+    init0 <- rep(0, narma)
     parscale <- rep(1, narma)
     if (ncxreg > 0) {
         fit <- lm(x ~ xreg - 1)
-        init <- c(init, coef(fit))
+        init0 <- c(init0, coef(fit))
         ses <- summary(fit)$coef[,2]
-        parscale <- c(parscale, ses)
-     }
+        parscale <- c(parscale, 1/ses)
+    }
+    if(!is.null(init)) {
+        if(length(init) != length(init0))
+            stop("`init' is of the wrong length")
+        if(any(ind <- is.na(init))) init[ind] <- init0[ind]
+        if(transform.pars)
+            init <- .Call("Invtrans", G, as.double(init), PACKAGE = "ts")
+    } else init <- init0
 
     if (is.null(fixed)) fixed <- rep(NA, length(init))
     mask <- is.na(fixed)
     if(!any(mask)) stop("all parameters were fixed")
     .Call("Starma_method", G, method == "CSS", PACKAGE = "ts")
+    if(!("parscale" %in% names(optim.control)))
+       optim.control$parscale <- parscale
     res <- optim(init[mask], arma0f, method = "BFGS",
-                 hessian = !transform.pars,
-                 control = list(parscale = parscale))
-    if(res$convergence > 0)
+                 hessian = TRUE, control = optim.control)
+    if((code <- res$convergence) > 0)
         warning(paste("possible convergence problem: optim gave code=",
-                      res$convergence))
+                      code))
     coef <- res$par
 
-    if(transform.pars)
-        coef <- .Call("Dotrans", G, as.double(coef), PACKAGE = "ts")
     if(transform.pars) {
+        ## enforce invertibility
+        if(arma[2] > 0) {
+            ind <- arma[1] + 1:arma[2]
+            coef[ind] <- maInvert(coef[ind])
+        }
+        if(arma[4] > 0) {
+            ind <- sum(arma[1:3]) + 1:arma[4]
+            coef[ind] <- maInvert(coef[ind])
+        }
+        if(coef != res$par)  {  # need to re-fit
+            res <- optim(coef, arma0f, method = "BFGS", hessian = TRUE,
+                         control = list(maxit = 0,
+                         parscale = optim.control$parscale))
+            coef <- res$par
+        }
+        ## do it this way to ensure hessian was computed inside
+        ## stationarity region
+        A <- .Call("Gradtrans", G, as.double(coef), PACKAGE = "ts")
+        var <- t(A) %*% solve(res$hessian*length(x)) %*% A
+        coef <- .Call("Dotrans", G, as.double(coef), PACKAGE = "ts")
         .Call("set_trans", G, 0, PACKAGE = "ts")
-        res <- optim(coef, arma0f, method = "BFGS", hessian = TRUE,
-                     control = list(maxit = 0, parscale = parscale))
-    }
+    } else var <- solve(res$hessian*length(x))
     arma0f(coef)  # reset pars
     sigma2 <- .Call("get_s2", G, PACKAGE = "ts")
     resid <- .Call("get_resid", G, PACKAGE = "ts")
@@ -110,7 +149,6 @@ arima0 <- function(x, order = c(0, 0, 0),
     fixed[mask] <- coef
     names(fixed) <- nm
     names(arma) <- c("ar", "ma", "sar", "sma", "period", "diff", "sdiff")
-    var <- solve(res$hessian*length(x))
     dimnames(var) <- list(nm[mask], nm[mask])
     value <- 2 * n.used * res$value + n.used + n.used*log(2*pi)
     aic <- if(method != "CSS") value + 2*length(coef) else NA
@@ -118,7 +156,7 @@ arima0 <- function(x, order = c(0, 0, 0),
                 loglik = -0.5*value, aic = aic, arma = arma,
                 residuals = resid,
                 call = match.call(), series = series,
-                code = res$convergence, n.cond = ncond)
+                code = code, n.cond = ncond)
     class(res) <- "arima0"
     res
 }
@@ -126,7 +164,7 @@ arima0 <- function(x, order = c(0, 0, 0),
 print.arima0 <- function(x, digits = max(3, getOption("digits") - 3),
                          se = TRUE, ...)
 {
-    cat("\nCall:\n", deparse(x$call), "\n\n", sep = "")
+    cat("\nCall:", deparse(x$call, width = 75), "", sep = "\n")
     cat("Coefficients:\n")
     coef <- round(x$coef, digits = digits)
     print.default(coef, print.gap = 2)
