@@ -227,17 +227,17 @@ NEW FEATURES
 INTERNATIONALIZATION
 
     o	Unix-alike versions of R can now be used in UTF-8 locales on
-	suitably equipped OSe is configured with option --enable-utf8.
+	suitably equipped OSes if configured with option --enable-utf8.
 	[The changes to font handling in the X11 module are based on
 	the Japanization patches of Eiji Nakama.]
 
 	Such a version of R will also run in other locales with
 	multi-byte character sets.
 
-	See the 'Internationalization' section in the 'Installation
+	See the 'Internationalization' chapter in the 'Installation
 	and Administration' manual.
 
-    o	New command-line option --encoding to specify the encoding to
+    o	New command-line flag --encoding to specify the encoding to
 	be assumed for stdin (but not for a console).
 
     o	New function iconv() to convert character vectors between
@@ -506,7 +506,7 @@ BUG FIXES
 	namespaces; this is now done automatically.
 	Note that is.primitive() is now in "base", not "methods".
 
-    o	package grid:
+    o	Package grid:
 
 	- Fixed bug in grid.text() when "rot" argument has length 0.
 	  (reported by Emmanuel Paradis)
@@ -544,10 +544,10 @@ BUG FIXES
     o	Some .Internal functions that were supposed to return invisibly
 	did not. This was behind PR#7397 and PR#7466.
 
-    o	eval(expr,NULL,encl) now looks up variables in encl, as
+    o	eval(expr, NULL, encl) now looks up variables in encl, as
 	eval(expr, list(), encl) always did
 
-    o	coercing as.data.frame(NULL) to a pairlist caused an error.
+    o	Coercing as.data.frame(NULL) to a pairlist caused an error.
 
     o	p.adjust(p, ..) now correctly works when `p' contains NAs (or when
 	it is of length 0 or length 2 for method = "hommel").
@@ -572,7 +572,7 @@ BUG FIXES
     o	Base graphics now notices (ab)lines which have a zero
 	coordinate on log scale, and omits them.  (PR#7559)
 
-    o	atop() and warning() now accept NULL, as they are documented
+    o	stop() and warning() now accept NULL as they are documented
 	to do (although this seems of little use and is equivalent to "").
 
     o	weighted.mean() now checks the length of the weight vector w.
@@ -583,6 +583,7 @@ BUG FIXES
 	(spotted by Robert McGehee)
 
     o   eval() was not handling values from return() correctly.
+
 
 
 
