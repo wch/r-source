@@ -12,20 +12,43 @@ function(object, filename = NULL, name = NULL,
         typeof(arg) == "symbol" && deparse(arg) == ""
 
     if(missing(name))
-        name <-
-            if(is.character(object))
-                object
-            else {
-                name <- substitute(object)
-                if(is.language(name) && !is.name(name))
-                    name <- eval(name)
+        name <- if(is.character(object))
+            object
+        else {
+            name <- substitute(object)
+            ## <FIXME>
+            ## This used to be:
+            ##     if(is.language(name) && !is.name(name))
+            ##         name <- eval(name)
+            ##     as.character(name)
+            ## but what is this trying to do?
+            ## It seems that the eval() will typically give the given
+            ## object, and surely we cannot use that as the name (even
+            ## if the subsequent as.character() does not fail ...)
+            ## Better to be defensive about this, and handle only cases
+            ## we know will make sense ... 
+            if(is.name(name))
                 as.character(name)
+            else if(is.call(name)
+                    && (as.character(name[[1]]) %in%
+                        c("::", ":::", "getAnywhere"))) {
+                name <- as.character(name)
+                name[length(name)]
             }
+            else
+                stop("cannot determine a usable name")
+            ## </FIXME>
+        }
+
     if(is.null(filename))
         filename <- paste0(name, ".Rd")
 
-    ## Better than get(); works when called in fun :
-    x <- get(name, envir = parent.frame())
+    x <- if(!missing(object))
+        object
+    else {
+        ## Better than get(); works when called in fun :
+        x <- get(name, envir = parent.frame())
+    }
 
     ## <FIXME>
     ## If not a function or forced to document a function (?), always
@@ -139,7 +162,12 @@ function(object, filename = NULL, name = NULL, ...)
     if(is.null(filename))
         filename <- paste0(name, ".Rd")
 
-    x <- get(name, envir = parent.frame())
+    x <- if(!missing(object))
+        object
+    else {
+        ## Better than get(); works when called in fun :
+        x <- get(name, envir = parent.frame())
+    }
 
     ## <FIXME>
     ## Always assume data set ???
@@ -165,8 +193,12 @@ function(object, filename = NULL, name = NULL)
     if(is.null(filename))
         filename <- paste0(name, ".Rd")
 
-    ## Better than get(); works when called in fun :
-    x <- get(name, envir = parent.frame())
+    x <- if(!missing(object))
+        object
+    else {
+        ## Better than get(); works when called in fun :
+        x <- get(name, envir = parent.frame())
+    }
 
     ## Construct the format.
     if(is.data.frame(x)) {
