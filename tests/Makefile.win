@@ -41,6 +41,7 @@ test-src-lapack = lapack.R
 test-src-nafns = nafns.R
 test-src-random = p-r-random-tests.R
 test-src-postscript = ps-tests.R
+test-src-ts = ts-tests.R
 
 test-src-reg-1 = \
 	reg-tests-1.R reg-tests-2.R reg-IO.R reg-IO2.R reg-plot.R
@@ -56,12 +57,14 @@ test-out-nafns = $(test-src-nafns:.R=.Rout)
 test-out-postscript = $(test-src-postscript:.R=.Rout)
 test-out-random = $(test-src-random:.R=.Rout)
 test-out-reg = $(test-src-reg:.R=.Rout)
+test-out-ts = $(test-src-ts:.R=.Rout)
 
 all-extra-tests = Lapack Nafns Postscript Random Reg
 
 test-out = $(test-src:.R=.Rout) $(test-out-gct) \
 	$(test-out-internet) $(test-out-lapack) $(test-out-nafns) \
-	$(test-out-random) $(test-out-postscript) $(test-out-reg)
+	$(test-out-random) $(test-out-postscript) $(test-out-reg) \
+	$(test-out-ts)
 
 .SUFFIXES:
 .SUFFIXES: .R .Rin .Rout
@@ -74,7 +77,7 @@ test-out = $(test-src:.R=.Rout) $(test-out-gct) \
 .R.Rout:
 	@rm -f $@ $@.fail
 	@echo "running \`$<'"
-	@$(R) < $< > $@
+	@$(R) < $< > $@ || (mv $@ $@.fail && exit 1)
 	@if [ -f $(srcdir)/$@.save ] ; then \
 	  mv $@ $@.fail; \
 	  echo -n \
@@ -136,6 +139,9 @@ test-Reg:
 
 test-Reg-run: $(test-out-reg)
 
+test-Ts:
+	@echo "running tests of package ts functions"
+	@$(MAKE) -f Makefile.win $(test-out-ts) RVAL_IF_DIFF=0
 
 clean:
 	@rm -f *.Rout *.Rout.fail *.Rout2 Rplots.ps reg-plot.ps $(test-src-auto)
