@@ -1,6 +1,11 @@
-row.names <- function(x) attr(x, "row.names")
-
-"row.names<-" <- function(x, value) {
+row.names <- function(x) UseMethod("row.names")
+row.names.data.frame <- function(x) attr(x, "row.names")
+row.names.default <- function(x)
+{
+    if(!is.null(dim(x))) rownames(x) else NULL
+}
+"row.names<-" <- function(x, value) UseMethod("row.names<-")
+"row.names<-.data.frame" <- function(x, value) {
     if (!is.data.frame(x))
 	x <- as.data.frame(x)
     old <- attr(x, "row.names")
@@ -12,6 +17,7 @@ row.names <- function(x) attr(x, "row.names")
     attr(x, "row.names") <- value
     x
 }
+"row.names<-.default" <- function(x, value) "rownames<-"(x, value)
 
 is.na.data.frame <- function (x) {
     y <- do.call("cbind", lapply(x, "is.na"))

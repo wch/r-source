@@ -198,6 +198,10 @@ NEW FEATURES
 
     o	New readLines() function to read a file line-by-line.
 
+    o	row.names() and row.names<-() are now generic functions which
+	call rownames() as their default method and have methods for
+	class "data.frame".
+
     o	New function Rprof() for profiling R expressions under Unix.
 	Configure with `--enable-R-profiling' (on by default) to make
 	this operational.
