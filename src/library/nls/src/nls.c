@@ -1,5 +1,5 @@
 /*
- *  $Id: nls.c,v 1.6 2000/08/30 16:45:16 maechler Exp $
+ *  $Id: nls.c,v 1.7 2000/09/26 22:17:10 bates Exp $
  *
  *  Routines used in calculating least squares solutions in a
  *  nonlinear model in nls library for R.
@@ -55,7 +55,7 @@ getListElement(SEXP list, SEXP names, char *str) {
 
 /*
  *  call to nls_iter from R -
- *  .External("nls_iter", m, control, doTrace)
+ *  .Call("nls_iter", m, control, doTrace)
  *  where m and control are nlsModel and nlsControl objects.
  *  doTrace is a logical value.  The returned value is m.
  */
