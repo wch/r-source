@@ -136,6 +136,12 @@ structure(list(Treat = structure(c(2, 2, 2, 2, 2, 2, 2, 2, 2,
 "50", "51", "52", "53", "54", "55", "56", "57", "58", "59", "60", 
 "61", "62", "63", "64", "65", "66", "67", "68", "69", "70", "71", 
 "72"))}
+%% "else" (not testonly)
+\dontrun{
+ ## Need the anorexia data from a 1999 version of the package MASS:
+ library(MASS)
+ data(anorexia)
+}
 anorex.1 <- glm(Postwt ~ Prewt + Treat + offset(Prewt),
             family = gaussian, data = anorexia)
 summary(anorex.1)
