@@ -27,20 +27,22 @@ BUG FIXES
 
     o	The "Complex" S4 group generic now works.
 
-    o   abbreviate() doesn't get into infinite loops on input that differs
-  	only by leading/trailing space
+    o	abbreviate() doesn't get into infinite loops on input that differs
+	only by leading/trailing space
 
-    o   Added check for user interrupt in Rvprintf to allow printing to be
+    o	Added check for user interrupt in Rvprintf to allow printing to be
 	interrupted.
 
-    o   Fixed bug that would cause segfault on protect stack overflow.
+    o	Fixed bug that would cause segfault on protect stack overflow.
 
-    o   crossprod() on matrices with zero extents would return an
+    o	crossprod() on matrices with zero extents would return an
 	uninitialized matrix (rather than one filled with zeros).
 
-    o   DF[[i,j]] for a data frame used row j and col i, not as intended
-        row i and col j.
+    o	DF[[i,j]] for a data frame used row j and col i, not as intended
+	row i and col j.
 
+    o	cor(<matrix>, use = "pairwise") gave wrong result in 1.8.0 (only),
+	(PR#4646)
 
 
 		CHANGES IN R VERSION 1.8.0
