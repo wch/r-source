@@ -4,6 +4,8 @@
 apropos(what, where = FALSE, mode = "any")
 find(what, mode = "any", numeric. = FALSE, simple.words = TRUE)
 }
+\alias{apropos}
+\alias{find}
 \arguments{
   \item{what}{name of an object, or regular expression to match against}
   \item{where, numeric.}{a logical indicating whether positions in the
@@ -13,8 +15,6 @@ find(what, mode = "any", numeric. = FALSE, simple.words = TRUE)
   \item{simple.words}{logical; if \code{TRUE}, the \code{what} argument is
     only searched as whole only word.}
 }
-\alias{apropos}
-\alias{find}
 \description{
   \code{apropos} returns a vector of character strings giving the names of
   all objects in the search list matching \code{what}.
@@ -36,6 +36,7 @@ find(what, mode = "any", numeric. = FALSE, simple.words = TRUE)
 \author{Kurt Hornik and Martin Maechler (May 1997).}
 \seealso{
   \code{\link{objects}} for listing objects from one place,
+  \code{\link{help.search}} for searching the help system,
   \code{\link{search}} for the search path.
 }
 \examples{
