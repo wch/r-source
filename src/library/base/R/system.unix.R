@@ -99,7 +99,8 @@ function(topic, offline = FALSE, package = c(.packages(), .Autoloaded),
     topic <- gsub("\\[","\\\\[", topic) # for cmd/help ..
     INDICES <- paste(t(outer(lib.loc, package, paste, sep = "/")),
 		     "help", "AnIndex", sep = "/", collapse = " ")
-    file <- system(paste("${RHOME}/cmd/help '", topic, "' ", INDICES, sep=""),
+    file <- system(paste("${RHOME}/cmd/help INDEX '", topic, "' ",
+                         INDICES, sep=""),
 		   intern = TRUE)
     if (file == "") {                   # try data .doc -- this is OUTDATED
       file <- system.file(paste("data", "/", topic, ".doc", sep = ""),
@@ -113,19 +114,15 @@ function(topic, offline = FALSE, package = c(.packages(), .Autoloaded),
         system(paste("${RHOME}/cmd/pager", file))
       else {
         FILE <- tempfile()
-        TMPDIR <- sub("/[^/]*$", "", FILE)
-        TEXFILE <- paste(FILE, ".tex", sep = "")
         on.exit(unlink(paste(FILE, "*", sep = "")))
-        cat("\\documentclass[a4paper]{book}\n", file = TEXFILE)
-        system(paste("cat ${RHOME}/doc/manual/Rd.sty >>", TEXFILE))
-        cat("\\begin{document}\n", file = TEXFILE, append = TRUE)
+        cat("\\documentclass[", .Options$papersize, "paper]{article}\n",
+            file = FILE, sep = "")
+        system(paste("cat ${RHOME}/doc/manual/Rd.sty >>", FILE))
+        cat("\\begin{document}\n", file = FILE, append = TRUE)
         system(paste("cat ", sub("help/", "latex/", file), ".tex >>",
-                     TEXFILE, sep = ""))
-        cat("\\end{document}\n", file = TEXFILE, append = TRUE)
-        system(paste("cd", TMPDIR, "&&", "${LATEX}", FILE))
-        system(paste("cd", TMPDIR, "&&", "${DVIPS} -o",
-                     paste("!", .Options$printcmd, sep = ""),
-                     FILE))
+                     FILE, sep = ""))
+        cat("\\end{document}\n", file = FILE, append = TRUE)
+        system(paste("${RHOME}/cmd/help PRINT", FILE, .Options$printcmd))
         return()
       }
     } else
