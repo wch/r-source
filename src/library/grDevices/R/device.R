@@ -1,5 +1,8 @@
 dev.interactive <- function()
-    interactive() && .Device %in% c("X11", "GTK", "gnome", "quartz", "windows")
+{
+  interactive() &&
+  .Device %in% c("X11", "GTK", "gnome", "quartz", "windows", "JavaGD")
+}
 
 dev.list <- function()
 {
