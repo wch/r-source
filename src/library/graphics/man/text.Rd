@@ -14,8 +14,8 @@ text(x, \dots)
     \code{labels} should be written.  If the length of \code{x} and
     \code{y} differs, the shorter one is recycled.}
   \item{labels}{one or more character strings or expressions specifying
-    the \emph{text} to be written.  An attempt is made
-    to coerce other vectors to character, and other language objects
+    the \emph{text} to be written.  An attempt is made to coerce other
+    vectors (and factors) to character, and other language objects
     to expressions.  If \code{labels} is longer than \code{x} and
     \code{y}, the coordinates are recycled to the length of \code{labels}.}
   \item{adj}{one or two values in \eqn{[0,1]} which specify the x

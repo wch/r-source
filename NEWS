@@ -180,6 +180,11 @@ NEW FEATURES
     o	interaction.plot() allows 'type = "b"' and doesn't give spurious
 	warnings when passed a matplot()-only argument such as 'main'.
 
+    o	is.integer() and is.numeric() always return FALSE for a
+	factor.  (Previously they were true and false respectively for
+	well-formed factors, but it is possible to create factors
+	with non-integer codes by underhand means.)
+
     o	New functions is.leaf(), dendrapply() and a labels() method for
 	dendrogram objects.
 
@@ -271,6 +276,10 @@ NEW FEATURES
 	forces a garbage collection before timing begins.
 
     o	tail() of a matrix now displays the original row numbers.
+
+    o	The default method for text() now coerces a factor to character
+	and not to its internal codes.  This is incompatible with S
+	but seems what users would expect.
 
     o	TukeyHSD() now labels comparisons when applied to an
 	interaction in an aov() fit.
@@ -515,6 +524,8 @@ BUG FIXES
 
     o	model.frame() no longer builds invalid data frames if the
 	data contains time series and rows are omitted.
+
+    o	write.table() did not escape quotes in column names.  (PR#7171)
 
 
 

@@ -10,7 +10,7 @@ function (x, file = "", append = FALSE, quote = TRUE, sep = " ",
 
     nocols <- NCOL(x)==0
     if (nocols) quote <- FALSE
-    
+
     if(is.logical(quote) && quote)
 	quote <- which(unlist(lapply(x, function(x)
                                      is.character(x) || is.factor(x))))
@@ -76,21 +76,22 @@ function (x, file = "", append = FALSE, quote = TRUE, sep = " ",
         stop(paste("argument", sQuote("file"),
                    "must be a character string or connection"))
 
+    qstring <-                          # quoted embedded quote string
+        switch(qmethod,
+               "escape" = '\\\\"',
+               "double" = '""')
     if(!is.null(col.names)) {
 	if(append)
 	    warning("appending column names to file")
 	if(!is.null(quote))
-	    col.names <- paste("\"", col.names, "\"", sep = "")
+	    col.names <- paste("\"", gsub('"', qstring, col.names),
+                               "\"", sep = "")
         writeLines(paste(col.names, collapse = sep), file, sep = eol)
     }
 
     if (NROW(x) == 0)
         return(invisible(x))
-    
-    qstring <-                          # quoted embedded quote string
-        switch(qmethod,
-               "escape" = '\\\\"',
-               "double" = '""')
+
     for(i in quote)
 	x[, i] <- paste('"', gsub('"', qstring, as.character(x[, i])),
                         '"', sep = "")

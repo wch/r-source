@@ -1347,3 +1347,10 @@ eval(quote({Girth[1]<-NA;Girth}),a)
 a[1, ]
 trees[1, ]
 ## both a and trees got altered in 1.9.1
+
+
+## write.table did not apply qmethod to col.names (PR#7171)
+x <- data.frame("test string with \"" = c("a \" and a '"), check.names=FALSE)
+write.table(x)
+write.table(x, qmethod = "double")
+## Quote in col name was unescaped in 1.9.1.
