@@ -29,9 +29,7 @@ foreach $pkg (@pkgs) {
     }
     open bundledesc, "< $srcdir/$bundle/DESCRIPTION" 
 	|| die "no DESCRIPTION found";
-    while(<bundledesc>) {
-	if(!/^Contains:/) {print pkgdesc $_;}
-    }
+    while(<bundledesc>) {print pkgdesc $_;}
     close bundledesc;
     close pkgdesc;
     $cmd = "make PKGDIR=$srcdir/$bundle RLIB=$destdir pkg-$pkg";

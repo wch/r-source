@@ -182,6 +182,13 @@ INSTALLATION CHANGES
 	were not).
 
 
+PACKAGE INSTALLATION CHANGES
+
+    o	The Contains: field of the DESCRIPTION file of package bundles
+	is now installed, so later checks can find out if the package
+	is complete.
+
+
 BUG FIXES
 
     o	Configuring for Tcl/Tk makes use of ${TK_LIB_SPEC} ${TK_LIBS}
