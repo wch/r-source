@@ -145,7 +145,9 @@ void FixupSeeds(RNGtype kind)
 /* Depending on RNG, set 0 values to non-0, etc. */
 
     int j; 
+#ifdef OLD
     RNGtype tkind;
+#endif
 
     /* Set 0 to 1 : */
     if(!RNG_Table[kind].i1_seed) RNG_Table[kind].i1_seed++;
