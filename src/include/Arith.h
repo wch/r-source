@@ -58,9 +58,20 @@ extern int finite(double);
 #else
 
 #define MATH_CHECK(call)	(errno=0,R_tmp=call,(errno==0)?R_tmp:R_NaN)
-#define FINITE(x)		((x)!=R_NaReal)
-#define ISNAN(x)		((x)!=R_NaReal)/* ?? rather not -- FIXME!! */
-#define ISNA(x)			((x)!=R_NaReal)/* ?? rather not -- FIXME!! */
+
+#ifndef HAVE_FINITE
+#define FINITE(x)               ((x)!= R_NaReal)
+#else
+#define FINITE(x)		finite(x)
+#endif
+
+#ifndef HAVE_ISNAN
+#define ISNAN(x)                ((x)==R_NaReal)
+#else
+#define ISNAN(x)                (isnan(x) || (x)==R_NaReal)
+#endif
+
+#define ISNA(x)                 ((x)==R_NaReal)
 /* never used. in HP-UX' c89 "NAN" is for a double const. :
  * #define NAN(x)			ISNAN(x)
  */
