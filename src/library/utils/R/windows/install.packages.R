@@ -1,9 +1,10 @@
-install.packages <- function(pkgs, lib, CRAN = getOption("CRAN"),
-                             contriburl = contrib.url(CRAN),
+install.packages <- function(pkgs, lib, repos = CRAN,
+                             contriburl = contrib.url(repos),
+                             CRAN = getOption("CRAN"),
                              method, available = NULL, destdir = NULL,
                              installWithVers = FALSE, dependencies = FALSE)
 {
-    unpackPkg <- function(pkg, pkgname, lib, installWithVers=FALSE)
+    unpackPkg <- function(pkg, pkgname, lib, installWithVers = FALSE)
     {
         ## the `spammy' (his phrase) comments are from Gentry
         ## However, at least some of his many errors have been removed
@@ -102,7 +103,7 @@ install.packages <- function(pkgs, lib, CRAN = getOption("CRAN"),
         pkgs <- pkgs[!inuse]
         pkgnames <- pkgnames[!inuse]
     }
-    if(is.null(CRAN) & missing(contriburl)) {
+    if(is.null(repos) & missing(contriburl)) {
         for(i in seq(along=pkgs))
             unpackPkg(pkgs[i], pkgnames[i], lib, installWithVers)
         link.html.help(verbose=TRUE)
@@ -123,8 +124,8 @@ install.packages <- function(pkgs, lib, CRAN = getOption("CRAN"),
     if(dependencies) { # check for dependencies, recursively
         p0 <- p1 <- unique(pkgs) # this is ok, as 1 lib only
         if(is.null(available))
-            available <- CRAN.packages(contriburl = contriburl,
-                                       method = method)
+            available <- available.packages(contriburl = contriburl,
+                                            method = method)
         have <- .packages(all.available = TRUE)
         repeat {
             if(any(miss <- ! p1 %in% row.names(available))) {
@@ -182,8 +183,9 @@ install.packages <- function(pkgs, lib, CRAN = getOption("CRAN"),
 
 
 download.packages <- function(pkgs, destdir, available = NULL,
+                              repos = CRAN,
+                              contriburl = contrib.url(repos),
                               CRAN = getOption("CRAN"),
-                              contriburl = contrib.url(CRAN),
                               method)
 {
     dirTest <- function(x) !is.na(isdir <- file.info(x)$isdir) & isdir
@@ -192,7 +194,7 @@ download.packages <- function(pkgs, destdir, available = NULL,
     if(nonlocalcran && !dirTest(destdir))
         stop("destdir is not a directory")
     if(is.null(available))
-        available <- CRAN.packages(contriburl=contriburl, method=method)
+        available <- available.packages(contriburl=contriburl, method=method)
 
     retval <- NULL
     for(p in unique(pkgs))
@@ -200,7 +202,8 @@ download.packages <- function(pkgs, destdir, available = NULL,
         ok <- (available[,"Package"] == p) | (available[,"Bundle"] == p)
         ok <- ok & !is.na(ok)
         if(!any(ok))
-            warning(paste("No package \"", p, "\" on CRAN.", sep=""))
+            warning(paste("No package \"", p, "\" at the repositories.",
+                          sep=""))
         else {
             if(sum(ok) > 1) { # have multiple copies
                 vers <- package_version(available[ok, "Version"])
@@ -230,7 +233,7 @@ download.packages <- function(pkgs, destdir, available = NULL,
 
 menuInstallCran <- function()
 {
-    a <- CRAN.packages()
+    a <- available.packages()
     install.packages(select.list(a[,1],,TRUE), .libPaths()[1], available=a,
                      dependencies=TRUE)
 }
@@ -238,35 +241,35 @@ menuInstallCran <- function()
 menuInstallLocal <- function()
 {
     install.packages(choose.files('',filters=Filters[c('zip','All'),]),
-                     .libPaths()[1], CRAN = NULL)
+                     .libPaths()[1], repos = NULL)
 }
 
 menuInstallBioc <- function()
 {
-    a<- CRAN.packages(CRAN=getOption("BIOC"))
-    install.packages(select.list(a[,1],,TRUE), .libPaths()[1],
-                     available=a, CRAN=getOption("BIOC"),
-                     dependencies=TRUE)
+    a <- available.packages(contriburl(getOption("BIOC")))
+    install.packages(select.list(a[,1], , TRUE), .libPaths()[1],
+                     available = a, repos = getOption("BIOC"),
+                     dependencies = TRUE)
 }
 
 chooseCRANmirror <- function()
 {
     m <- read.csv(file.path(R.home(), "doc/CRAN_mirrors.csv"), as.is=TRUE)
-    URL <- m[m[, 1] == select.list(m[,1],,FALSE, "CRAN mirror"), 'URL']
+    URL <- m[m[, 1] == select.list(m[,1], , FALSE, "CRAN mirror"), 'URL']
     if(length(URL)) options(CRAN = gsub("/$", "", URL[1]))
 }
 
-contrib.url <- function(CRAN)
+contrib.url <- function(repos)
 {
     if(interactive() && !nchar(getOption("CRAN"))) {
         cat("--- Please select a CRAN mirror for use in this session ---\n")
         flush.console()
         chooseCRANmirror()
     }
-    ## now evaluate CRAN after setting options.
-    if(all(nchar(CRAN) == 0)) stop("no CRAN mirror is set")
-    ver <- paste(R.version$major, substring(R.version$minor,1,1), sep=".")
-    file.path(gsub("/$", "", CRAN), "bin", "windows", "contrib", ver)
+    ## now evaluate repos after setting options.
+    if(all(nchar(repos) == 0)) stop("no CRAN mirror is set")
+    ver <- paste(R.version$major, substring(R.version$minor, 1, 1), sep = ".")
+    file.path(gsub("/$", "", repos), "bin", "windows", "contrib", ver)
 }
 
 

@@ -56,12 +56,15 @@ NEW FEATURES
     o	Added colorRamp() and colorRampPalette() for color interpolation.
 
     o	install.packages() and friends now accept a vector of URLs for
-	'CRAN' or 'contriburl' and get the newest available version of
+	'repos' or 'contriburl' and get the newest available version of
 	a package from the first repository on the list in which it is
-	found.
+	found.  The argument 'CRAN' is still accepted, but deprecated.
 
      	New function new.packages() to report uninstalled packages
 	available at the requested repositories.
+
+	New function available.packages(), similar to CRAN.packages()
+	but for use with multiple repositories.
 
     o	New argument 'immediate.' to warning() to send an immediate
 	warning.
@@ -124,6 +127,11 @@ DEPRECATED & DEFUNCT
     o	Capabilities "bzip2", "GNOME, "libz" and "PCRE" are defunct.
 
     o	Capability "IEEE754" is deprecated.
+
+    o	The 'CRAN' argument to update.packages(), old.packages(),
+	new.packages(), download.packages() and install.packages() is
+	deprecated in favour of 'repos', which is the new first
+	argument (so this is only relevant for calls with named args).
 
 
 INSTALLATION CHANGES

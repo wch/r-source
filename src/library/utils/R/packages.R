@@ -1,5 +1,5 @@
-CRAN.packages <- function(CRAN = getOption("CRAN"), method,
-                          contriburl = contrib.url(CRAN))
+available.packages <-
+    function(contriburl = contrib.url(getOption("CRAN")), method)
 {
     flds <- c("Package", "Version", "Priority", "Bundle",
               "Depends", "Imports", "Suggests", "Contains")
@@ -23,8 +23,13 @@ CRAN.packages <- function(CRAN = getOption("CRAN"), method,
     res
 }
 
-update.packages <- function(lib.loc = NULL, CRAN = getOption("CRAN"),
-                            contriburl = contrib.url(CRAN),
+CRAN.packages <- function(CRAN = getOption("CRAN"), method,
+                          contriburl = contrib.url(CRAN))
+    available.packages(contriburl = contriburl, method = method)
+
+update.packages <- function(lib.loc = NULL, repos = CRAN,
+                            contriburl = contrib.url(repos),
+                            CRAN = getOption("CRAN"),
                             method, instlib = NULL, ask = TRUE,
                             available = NULL, destdir = NULL,
 			    installWithVers = FALSE,
@@ -49,7 +54,7 @@ update.packages <- function(lib.loc = NULL, CRAN = getOption("CRAN"),
                 "in", old[k, "LibPath"],
                 if(checkBuilt) paste("built under", old[k, "Built"]),
                 "\n",
-                "Version", old[k, "CRAN"], "on CRAN")
+                "Version", old[k, "Repository"], "on repository")
             cat("\n")
             answer <- substr(readline("Update (y/N)?  "), 1, 1)
             if(answer == "y" | answer == "Y")
@@ -71,8 +76,9 @@ update.packages <- function(lib.loc = NULL, CRAN = getOption("CRAN"),
     }
 }
 
-old.packages <- function(lib.loc = NULL, CRAN = getOption("CRAN"),
-                         contriburl = contrib.url(CRAN),
+old.packages <- function(lib.loc = NULL, repos = CRAN,
+                         contriburl = contrib.url(repos),
+                         CRAN = getOption("CRAN"),
                          method, available = NULL, checkBuilt = FALSE)
 {
     if(is.null(lib.loc))
@@ -126,12 +132,14 @@ old.packages <- function(lib.loc = NULL, CRAN = getOption("CRAN"),
         update <- rbind(update, c(instp[k, c(1:3,8)], onCran["Version"]))
     }
     if(!is.null(update))
-        colnames(update) <- c("Package", "LibPath", "Installed", "Built", "CRAN")
+        colnames(update) <- c("Package", "LibPath", "Installed", "Built",
+                              "Repository")
     update
 }
 
-new.packages <- function(lib.loc = NULL, CRAN = getOption("CRAN"),
-                         contriburl = contrib.url(CRAN),
+new.packages <- function(lib.loc = NULL, repos = CRAN,
+                         contriburl = contrib.url(repos),
+                         CRAN = getOption("CRAN"),
                          method, available = NULL)
 {
     if(is.null(lib.loc)) lib.loc <- .libPaths()

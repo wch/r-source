@@ -1,5 +1,6 @@
-install.packages <- function(pkgs, lib, CRAN = getOption("CRAN"),
-                             contriburl = contrib.url(CRAN),
+install.packages <- function(pkgs, lib, repos = CRAN,
+                             contriburl = contrib.url(repos),
+                             CRAN = getOption("CRAN"),
                              method, available = NULL, destdir = NULL,
                              installWithVers = FALSE, dependencies = FALSE)
 {
@@ -23,7 +24,8 @@ install.packages <- function(pkgs, lib, CRAN = getOption("CRAN"),
         dependencies <- FALSE
     }
     if(is.null(available))
-        available <- CRAN.packages(contriburl = contriburl, method = method)
+        available <- available.packages(contriburl = contriburl,
+                                        method = method)
     if(dependencies) { # check for dependencies, recursively
         p0 <- p1 <- unique(pkgs) # this is ok, as 1 lib only
         have <- .packages(all.available = TRUE)
@@ -90,8 +92,9 @@ install.packages <- function(pkgs, lib, CRAN = getOption("CRAN"),
 
 
 download.packages <- function(pkgs, destdir, available = NULL,
+                              repos = CRAN,
+                              contriburl = contrib.url(repos),
                               CRAN = getOption("CRAN"),
-                              contriburl = contrib.url(CRAN),
                               method)
 {
     dirTest <- function(x) !is.na(isdir <- file.info(x)$isdir) & isdir
@@ -100,7 +103,7 @@ download.packages <- function(pkgs, destdir, available = NULL,
     if(nonlocalcran && !dirTest(destdir))
         stop("destdir is not a directory")
     if(is.null(available))
-        available <- CRAN.packages(contriburl=contriburl, method=method)
+        available <- available.packages(contriburl=contriburl, method=method)
 
     retval <- NULL
     for(p in unique(pkgs))
@@ -108,7 +111,8 @@ download.packages <- function(pkgs, destdir, available = NULL,
         ok <- (available[,"Package"] == p) | (available[,"Bundle"] == p)
         ok <- ok & !is.na(ok)
         if(!any(ok))
-            warning(paste("No package \"", p, "\" on CRAN.", sep=""))
+            warning(paste("No package \"", p, "\" at the repositories.",
+                          sep=""))
         else {
             if(sum(ok) > 1) { # have multiple copies
                 vers <- package_version(available[ok, "Version"])
@@ -136,12 +140,12 @@ download.packages <- function(pkgs, destdir, available = NULL,
     retval
 }
 
-contrib.url <- function(CRAN, type=c("source","mac.binary"))
+contrib.url <- function(repos, type=c("source", "mac.binary"))
 {
   type <- match.arg(type)
   switch(type,
-         source = paste(gsub("/$", "", CRAN), "/src/contrib", sep=""),
-         mac.binary = paste(gsub("/$", "", CRAN), "/bin/macosx/",
-         version$major, ".", substr(version$minor,1,1), sep="")
+         source = paste(gsub("/$", "", repos), "/src/contrib", sep = ""),
+         mac.binary = paste(gsub("/$", "", repos), "/bin/macosx/",
+         version$major, ".", substr(version$minor, 1, 1), sep = "")
          )
 }
