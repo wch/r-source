@@ -70,7 +70,8 @@ as.data.frame.default <- function(x, row.names = NULL, optional = FALSE)
 }
 ## NEW:
 as.data.frame <- function(x, row.names = NULL, optional = FALSE) {
-    if(is.null(x)) return(as.data.frame(list()))
+    if(is.null(x))# can't assign class to NULL
+        return(as.data.frame(list()))
     if(is.null(class(x))) class(x) <- data.class(x)
     UseMethod("as.data.frame", x, row.names, optional)
 }
