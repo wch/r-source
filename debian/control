@@ -47,6 +47,7 @@ Description: `GNU S' - GNOME-enabled executable
 
 Package: r-doc-pdf
 Architecture: all
+Section: doc
 Suggests: xpdf | acroread | pdf-viewer, r-base
 Description: `GNU S' documentation in pdf format
  R is described by its authors as "not unlike" S, which is a language
