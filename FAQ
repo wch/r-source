@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.7-48, 2003-10-02
+Version 1.7-49, 2003-10-03
 ISBN 3-901167-51-X
 Kurt Hornik
 
@@ -1844,6 +1844,10 @@ distributions of R.)
 
 *lme4*
      Fit linear and generalized linear mixed-effects models.
+
+*lmeSplines*
+     Fit smoothing spline terms in Gaussian linear and nonlinear
+     mixed-effects models.
 
 *lmtest*
      A collection of tests on the assumptions of linear regression models
