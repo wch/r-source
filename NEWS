@@ -6,6 +6,20 @@
 	**************************************************
 
 
+		CHANGES IN R VERSION 1.2.2
+
+
+BUG FIXES
+
+     o	readBin() and writeBin() were not always making good use of
+	long types (such as long double) when available.
+
+     o	postscript() and xfig() devices now make use of genuine Adobe
+	afm files, and warn if characters are used in string width or
+	height calculations that are not in afm files.
+
+
+
 		CHANGES IN R VERSION 1.2.1
 
 
