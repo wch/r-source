@@ -38,13 +38,14 @@ bartlett.test <- function(x, g) {
     v.total <- sum(n * v) / n.total
     STATISTIC <- ((n.total * log(v.total) - sum(n * log(v))) /
                   (1 + (sum(1 / n) - 1 / n.total) / (3 * (k - 1))))
-    names(STATISTIC) <- "Bartlett's K-squared"
     PARAMETER <- k - 1
+    PVAL <- pchisq(STATISTIC, PARAMETER, lower = FALSE)    
+    names(STATISTIC) <- "Bartlett's K-squared"
     names(PARAMETER) <- "df"
   
     RVAL <- list(statistic = STATISTIC,
                  parameter = PARAMETER,
-                 p.value = pchisq(STATISTIC, PARAMETER, lower = FALSE),
+                 p.value = PVAL,
                  data.name = DNAME,
                  method = "Bartlett test for homogeneity of variances")
     class(RVAL) <- "htest"

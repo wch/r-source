@@ -330,7 +330,7 @@ function(x, y = NULL, alternative = c("two.sided", "less", "greater"),
 
     RVAL <- list(statistic = STATISTIC,
                  parameter = NULL,
-                 p.value = PVAL,
+                 p.value = as.numeric(PVAL),
                  null.value = c(mu = mu),
                  alternative = alternative,
                  method = METHOD, 
