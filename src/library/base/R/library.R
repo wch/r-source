@@ -124,13 +124,32 @@ library <-
                                     lib.loc = which.lib.loc)
             if(nchar(descfile)) testRversion(descfile)
             else stop("This is not a valid package -- no DESCRIPTION exists")
-            ## if the name space mechanism is available and the package
-            ## has a name space, then the name space loading mechanism
-            ## takes over.
+            # if the name space mechanism is available and the package
+            # has a name space, then the name space loading mechanism
+            # takes over.
             if (exists("packageHasNamespace") &&
-                packageHasNamespace(package, which.lib.loc))
-                return(doNamespaceLibrary(package, which.lib.loc, lib.loc,
-                                          logical.return))
+                packageHasNamespace(package, which.lib.loc)) {
+                tt <- try({
+                    ns <- loadNamespace(package, c(which.lib.loc, lib.loc))
+                    env <- attachNamespace(ns)
+                })
+                if (inherits(tt, "try-error")) 
+                    if (logical.return) 
+                        return(FALSE)
+                    else stop("package/namespace load failed")
+                else {
+                    on.exit(do.call("detach", list(name = pkgname)))
+                    nogenerics <- checkNoGenerics(env)
+                    if(warn.conflicts &&
+                       !exists(".conflicts.OK", envir = env, inherits = FALSE))
+                       checkConflicts(package, pkgname, pkgpath, nogenerics)
+                    on.exit()
+                    if (logical.return)
+                        return(TRUE)
+                    else
+                        return(invisible(.packages()))
+                }
+            }
             codeFile <- file.path(which.lib.loc, package, "R", package)
 	    ## create environment (not attached yet)
 	    loadenv <- new.env(hash = TRUE, parent = .GlobalEnv)
