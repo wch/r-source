@@ -74,4 +74,4 @@ rhome = @libdir@/R
 Rexecbindir = $(rhome)/bin
 ## Note however that by default we get paths in the installation dir and
 ## not in the build dir.
-## <FIXME>
+## </FIXME>
