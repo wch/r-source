@@ -78,8 +78,10 @@ mostlyclean: clean
 clean:
 	@echo "cleaning in $(subdir)"
 	@-rm -f Makedeps *.d *.o *.a
+	@(cd standalone; $(MAKE) clean)
 distclean: clean
 	@-rm -f Makefile
+	@(cd standalone; $(MAKE) distclean)
 maintainer-clean: distclean
 
 distdir: $(DISTFILES)
