@@ -1,69 +1,38 @@
-CRAN.packages <- function(CRAN=.Options$CRAN, method="auto")
+CRAN.packages <- function(CRAN=.Options$CRAN,
+                          contriburl=paste(CRAN,"/src/contrib",sep=""),
+                          method="auto")
 {
-    localcran <- length(grep("^file:", CRAN)) > 0
+    localcran <- length(grep("^file:", contriburl)) > 0
     if(localcran)
-        tmpf <- file.path(substring(CRAN,6),
-                          "src", "contrib", "PACKAGES")
+        tmpf <- paste(substring(contriburl,6), "PACKAGES", sep="/")
     else{
         tmpf <- tempfile()
-        download.file(url=paste(CRAN, "/src/contrib/PACKAGES", sep=""),
+        download.file(url=paste(contriburl, "PACKAGES", sep="/"),
                       destfile=tmpf, method=method)
         on.exit(unlink(tmpf))
     }
-    parse.dcf(file=tmpf, fields=c("Package", "Version", "Priority"),
+    parse.dcf(file=tmpf, fields=c("Package", "Version",
+                         "Priority", "Bundle"),
               versionfix=TRUE)
 }
 
-
-update.packages <- function(lib.loc=.lib.loc, CRAN=.Options$CRAN,
-                            method="auto", instlib=NULL)
-{
-    instp <- installed.packages(lib.loc=lib.loc)
-    cranp <- CRAN.packages(CRAN=CRAN, method=method)
-
-    update <- NULL
-    for(k in 1:nrow(instp)){
-        ok <- (instp[k, "Priority"] != "base") &
-              (cranp[,"Package"] == instp[k, "Package"])
-        if(any(cranp[ok, "Version"] > instp[k, "Version"]))
-        {
-            cat(instp[k, "Package"], ":\n",
-                "Version", instp[k, "Version"],
-                "in", instp[k, "LibPath"], "\n",
-                "Version", cranp[ok, "Version"], "on CRAN")
-            cat("\n")
-            answer <- substr(readline("Update Package (y/N)?  "), 1, 1)
-            if(answer == "y" | answer == "Y")
-                update <- rbind(update, instp[k, c("Package", "LibPath")])
-            cat("\n")
-        }
-    }
-
-    if(!is.null(update)){
-        if(is.null(instlib))
-            instlib <-  update[,"LibPath"]
-
-        install.packages(update[,"Package"], instlib, CRAN=CRAN,
-                         method=method, available=cranp)
-    }
-}
-
-
 install.packages <- function(pkgs, lib, CRAN=.Options$CRAN,
+                             contriburl=paste(CRAN,"/src/contrib",sep=""),
                              method="auto", available=NULL)
 {
 #    if(!missing(pkgs))
 #        pkgs <- as.character(substitute(pkgs))
-    localcran <- length(grep("^file:", CRAN)) > 0
+    localcran <- length(grep("^file:", contriburl)) > 0
     if(missing(lib) || is.null(lib)) {
         lib <- .lib.loc[1]
         warning(paste("argument `lib' is missing: using", lib))
     }
     tmpd <- tempfile("Rinstdir")
     system(paste("mkdir", tmpd))
+    
     foundpkgs <- download.packages(pkgs, destdir=tmpd,
                                    available=available,
-                                   CRAN=CRAN, method=method)
+                                   contriburl=contriburl, method=method)
 
     if(!is.null(foundpkgs))
     {
@@ -128,23 +97,25 @@ download.file <- function(url, destfile, method="auto")
 
 
 download.packages <- function(pkgs, destdir, available=NULL,
-                              CRAN=.Options$CRAN, method="auto")
+                              CRAN=.Options$CRAN,
+                              contriburl=paste(CRAN,"/src/contrib",sep=""),
+                              method="auto")
 {
-    localcran <- length(grep("^file:", CRAN)) > 0
+    localcran <- length(grep("^file:", contriburl)) > 0
     if(is.null(available))
-        available <- CRAN.packages(CRAN=CRAN, method=method)
+        available <- CRAN.packages(contriburl=contriburl, method=method)
 
     retval <- NULL
     for(p in unique(pkgs))
     {
-        ok <- available[,"Package"] == p
+        ok <- (available[,"Package"] == p) | (available[,"Bundle"] == p)
         fn <- paste(p, "_", available[ok, "Version"], ".tar.gz", sep="")
         if(localcran){
-            fn <- file.path(substring(CRAN, 6), "src", "contrib", fn)
+            fn <- paste(substring(contriburl, 6), fn, sep="/")
             retval <- rbind(retval, c(p, fn))
         }
         else{
-            url <- paste(CRAN, "src/contrib", fn, sep="/")
+            url <- paste(contriburl, fn, sep="/")
             destfile <- file.path(destdir, fn)
 
             if(download.file(url, destfile, method) == 0)
@@ -156,3 +127,5 @@ download.packages <- function(pkgs, destdir, available=NULL,
 
     retval
 }
+
+

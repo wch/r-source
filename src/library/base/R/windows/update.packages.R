@@ -27,40 +27,6 @@ CRAN.packages <- function(CRAN=.Options$CRAN, method="auto")
 }
 
 
-update.packages <- function(lib.loc=.lib.loc, CRAN=.Options$CRAN,
-                            method="auto", instlib=NULL)
-{
-    instp <- installed.packages(lib.loc=lib.loc)
-    cranp <- CRAN.packages(CRAN=CRAN, method=method)
-
-    update <- NULL
-    for(k in 1:nrow(instp)){
-        ok <- (instp[k, "Priority"] != "base") &
-              (cranp[,"Package"] == instp[k, "Package"])
-        if(any(cranp[ok, "Version"] > instp[k, "Version"]))
-        {
-            cat(instp[k, "Package"], ":\n",
-                "Version", instp[k, "Version"],
-                "in", instp[k, "LibPath"], "\n",
-                "Version", cranp[ok, "Version"], "on CRAN")
-            cat("\n")
-            answer <- substr(readline("Update Package (y/N)?  "), 1, 1)
-            if(answer == "y" | answer == "Y")
-                update <- rbind(update, instp[k, c("Package", "LibPath")])
-            cat("\n")
-        }
-    }
-
-    if(!is.null(update)){
-        if(is.null(instlib))
-            instlib <-  update[,"LibPath"]
-
-        install.packages(update[,"Package"], instlib, CRAN=CRAN,
-                         method=method, available=cranp)
-    }
-}
-
-
 install.packages <- function(pkgs, lib, CRAN=.Options$CRAN,
                              method="auto", available=NULL)
 {
