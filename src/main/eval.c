@@ -107,7 +107,7 @@ static void doprof(int sig)
 }
 
 static void R_InitProfiling(void)
-{	
+{
   struct itimerval itv;
 
   R_ProfileOutfile = fopen(PROFOUTNAME, "w");
@@ -513,9 +513,13 @@ static SEXP assignCall(SEXP op, SEXP symbol, SEXP fun,
 
 SEXP do_if(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    int cond = asLogical(eval(CAR(args), rho));
-    if (cond == NA_LOGICAL)
-	errorcall(call, "missing value where logical needed");
+    SEXP Cond = eval(CAR(args), rho);
+    int cond;
+
+    if ((cond = asLogical(Cond)) == NA_LOGICAL)
+	errorcall(call, isLogical(Cond)
+		  ? "missing value where logical needed"
+		  : "argument of if(*) is not interpretable as logical");
     else if (cond)
 	return (eval(CAR(CDR(args)), rho));
     else if (length(args) > 2)
@@ -1216,7 +1220,7 @@ SEXP do_eval(SEXP call, SEXP op, SEXP args, SEXP rho)
 	UNPROTECT(1);
 	expr = tmp;
     }
-    if (PRIMVAL(op)) {
+    if (PRIMVAL(op)) { /* eval.with.vis(*) : */
 	PROTECT(expr);
 	PROTECT(env = allocVector(VECSXP, 2));
 	PROTECT(encl = allocVector(STRSXP, 2));

@@ -16,6 +16,7 @@ NEW FEATURES
 
     o	hist() now returns a "histogram" object and calls the new
 	function plot.histogram() for plotting.
+	It now also allows character labels.
 
     o	The more recent GNU regex from grep-2.4.2 is used.
 
@@ -39,6 +40,8 @@ NEW FEATURES
 	with savehistory() and displayed with history(), under Windows
 	and under Unix using the readline or GNOME interfaces.
 
+    o	if(*) now gives a more intelligible error message
+        when "*" cannot be coerced to logical.
 
 
 	**************************************************
