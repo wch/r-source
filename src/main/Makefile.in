@@ -59,7 +59,7 @@ DISTFILES = Makefile.in Makefile.win \
 
 ## <FIXME>
 ## Names in here should use `$(top_builddir)' instead ...
-RLIBS = ../unix/libunix.a ../appl/libappl.a ../nmath/libnmath.a 
+RLIBS = ../unix/libunix.a ../appl/libappl.a ../nmath/libnmath.a @BUILD_XDR_TRUE@ ../extra/xdr/libxdr.a
 ## </FIXME>
 
 Rexecbin_PROGRAMS = R.bin

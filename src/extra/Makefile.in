@@ -13,7 +13,7 @@ include $(top_builddir)/Makeconf
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = Makefile.in
 
-SUBDIRS = 
+SUBDIRS = @BUILD_XDR_TRUE@ xdr
 
 all: Makefile R
 
@@ -23,17 +23,17 @@ Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	  $(SHELL) ./config.status
 
 R: Makefile
-	@for d in $(SUBDIRS); do \
+	@for d in "$(SUBDIRS)"; do \
 	  (cd $${d} && $(MAKE) $@) || exit 1; \
 	done
 
 mostlyclean: clean
 clean:
-	@for d in $(SUBDIRS); do \
+	@for d in "$(SUBDIRS)"; do \
 	  (cd $${d} && $(MAKE) $@) || exit 1; \
 	done
 distclean: clean
-	@for d in $(SUBDIRS); do \
+	@for d in "$(SUBDIRS)"; do \
 	  (cd $${d} && $(MAKE) $@) || exit 1; \
 	done
 	@rm -f Makefile
@@ -47,7 +47,7 @@ distdir: $(DISTFILES)
 	    || ln $(srcdir)/$${f} $(distdir)/$${f} 2>/dev/null \
 	    || cp -p $(srcdir)/$${f} $(distdir)/$${f}; \
 	done
-	@for d in $(SUBDIRS); do \
+	@for d in "$(SUBDIRS)"; do \
 	  test -d $(distdir)/$${d} \
 	    || mkdir $(distdir)/$${d} \
 	    || exit 1; \
