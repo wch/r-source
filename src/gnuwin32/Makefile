@@ -83,6 +83,8 @@ rinstaller:
 	$(MAKE) -C installer RPREFIX=$(RPREFIX)
 
 rlibs:
+	# need pcre.h built before main is built
+	$(MAKE) -C ../extra/pcre -f Makefile.win
 	$(MAKE) -C ../appl  OPTFLAGS='$(OPTFLAGS)' -f Makefile.win
 	$(MAKE) -C ../main  OPTFLAGS='$(OPTFLAGS)' -f Makefile.win
 	$(MAKE) -C ../nmath OPTFLAGS='$(OPTFLAGS)' -f Makefile.win
