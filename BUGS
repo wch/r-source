@@ -371,3 +371,15 @@ Date: Sun, 23 Dec 2001 09:05:57 -0500
 Subject: bug with var(rep(1e30, 3))
 From: Emmanuel Paradis <paradis@isem.univ-montp2.fr>
 Date: Wed, 26 Dec 2001 13:03:31 +0100
+* PR# 1229 *
+Subject: RGui/R Console crashes when entering illegal symbols
+From: hb@maths.lth.se
+Date: Thu, 27 Dec 2001 11:23:13 +0100 (MET)
+* PR# 1230 *
+Subject: scale in stars() is not as documented
+From: Prof Brian Ripley <ripley@stats.ox.ac.uk>
+Date: Thu, 27 Dec 2001 11:28:19 +0000 (GMT)
+* PR# 1231 *
+Subject: reshape error in 1.4
+From: Kevin.Wright@pioneer.com
+Date: Thu, 27 Dec 2001 22:52:57 +0100 (MET)
