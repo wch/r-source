@@ -393,11 +393,13 @@ Either form of quote mark may be used to escape the other, as in the
 string @code{"It's important"}.  Our convention is to use
 double quote marks for preference.
 
-On most @R{} installations help is available in @HTML{} format by running
-@findex help.start
+On most @R{} installations help is available in @HTML{} format by
+running
+
 @example
 > help.start()
 @end example
+@findex help.start
 
 @noindent
 which will launch a Web browser (@code{netscape} on UNIX) that allows
@@ -414,11 +416,11 @@ The @code{help.search} command allows searching for help in various
 ways: try @code{?help.search} for details and examples.
 
 The examples on a help topic can normally be run by
-@findex example
+
 @example
 > example(@var{topic})
 @end example
-
+@findex example
 
 Windows versions of @R{} have other optional help systems: use
 
@@ -6207,25 +6209,26 @@ Windows, and @R{} interfaces are available for each.
 @chapter Packages
 @cindex Packages
 
-All @R{} functions and datasets are stored in @emph{packages}.  
-Only when a package is loaded are its contents available.  
-This is done both for efficiency (the full list would take more 
-memory and would take longer to search than a subset),
-and to aid package developers, who are
-protected from name clashes with other code.  The 
-process of developing packages is described in the @emph{Writing
-@R{} Extensions} manual; here we will describe them from a user's
-point of view.
+All @R{} functions and datasets are stored in @emph{packages}.  Only
+when a package is loaded are its contents available.  This is done both
+for efficiency (the full list would take more memory and would take
+longer to search than a subset), and to aid package developers, who are
+protected from name clashes with other code.  The process of developing
+packages is described in @ref{Creating R packages, , Creating R
+packages, R-exts, Writing R Extensions}.  Here, we will describe them
+from a user's point of view.
 
-To see which packages are installed at your
-site, issue the command
+To see which packages are installed at your site, issue the command
+
 @example
 > library()
 @end example 
+
 @noindent
-with no arguments.  To load a particular package (e.g. the @code{boot}
-package containing functions from Davison & Hinkley (1997)), use a 
+with no arguments.  To load a particular package (e.g., the @pkg{boot}
+package containing functions from Davison & Hinkley (1997)), use a
 command like
+
 @example
 > library(boot)
 @end example
@@ -6235,21 +6238,25 @@ function (available through the @code{Packages} menu in the Windows and
 RAqua GUIs) to automatically update and install packages.
 
 To see which packages are currently loaded, use
+
 @example
 > search()
 @end example
+
 @noindent
 to display the search list.  A few packages may be loaded but not
-available on the search list; @pxref{Namespaces}. 
+available on the search list (@pxref{Namespaces}).
 
 To see a list of all available help topics in an installed package,
 use
+
 @example
 > help.start()
 @end example
+
 @noindent
-to start the HTML help system, and then navigate to the package
-listing in the @code{Reference} section.  
+to start the @HTML{} help system, and then navigate to the package
+listing in the @code{Reference} section.
 
 @menu
 * Standard packages::       
@@ -6260,12 +6267,12 @@ listing in the @code{Reference} section.
 @node Standard packages, Contributed packages and CRAN, Packages, Packages
 @section Standard packages
 
-The standard (or @emph{base}) packages are considered part of the
-@R{} source code.  They contain the basic functions that allow @R{}
-to work, and the standard statistical and graphical functions that
-are described in this manual.  They should be automatically
-available in any @R{} installation.  A complete list is contained in the
-@emph{R FAQ}.
+The standard (or @emph{base}) packages are considered part of the @R{}
+source code.  They contain the basic functions that allow @R{} to work,
+and the standard statistical and graphical functions that are described
+in this manual.  They should be automatically available in any @R{}
+installation.  @xref{Which add-on packages exist for R?, , R packages,
+R-FAQ, R FAQ}, for a complete list.
 
 @node Contributed packages and CRAN, Namespaces, Standard packages, Packages
 @section Contributed packages and @acronym{CRAN}
@@ -6277,12 +6284,10 @@ statistical methods, others give access to data or hardware, and others
 are designed to complement textbooks.  Some (the @emph{recommended}
 packages) are distributed with every binary distribution of @R{}.  Most
 are available for download from @acronym{CRAN}
-(@uref{http://cran.r-project.org} and its mirrors), and other
+(@uref{http://cran.r-project.org/} and its mirrors), and other
 repositories such as Bioconductor (@uref{http://www.bioconductor.org/}).
 The @emph{R FAQ} contains a list that was current at the time of
 release, but the collection of available packages changes frequently.
-
-
 
 @node Namespaces, , Contributed packages and CRAN, Packages
 @section Namespaces
@@ -6315,11 +6320,11 @@ code: it acts like the double-colon operator but also allows access to
 hidden objects.  Users are more likely to use the @code{getAnywhere()}
 function, which searches multiple packages.
 
-Packages are often inter-dependent, and loading one may cause others
-to be automatically loaded.  The colon operators described above
-will also cause automatic loading of the associated package.  
-When packages with namespaces are loaded
-automatically they are not added to the search list.
+Packages are often inter-dependent, and loading one may cause others to
+be automatically loaded.  The colon operators described above will also
+cause automatic loading of the associated package.  When packages with
+namespaces are loaded automatically they are not added to the search
+list.
 
 
 @node A sample session, Invoking R, Packages, Top
