@@ -5,32 +5,8 @@ predict.glm <-
 function(object, newdata=NULL, type = c("link", "response"), se.fit = F,
          dispersion = NULL, ...)
 {
-  predict.lm <- 
-  function (object, newdata = model.frame(object), se=F) 
-  {
-    X <- model.matrix(delete.response(terms(object)), newdata)
-    n <- NROW(object$qr$qr)
-    p <- object$rank
-    p1 <- 1:p
-    piv <- object$qr$pivot[p1]
-    r <- resid(object)
-    f <- fitted(object)
-    w <- weights(object)
-    if (is.null(w)) rss <- sum(r^2)
-    else rss <- sum(r^2 * w)
-    R <- chol2inv(object$qr$qr[p1, p1, drop = FALSE])
-    est <- object$coefficients[piv]
-    predictor <- c(X[, piv, drop = F] %*% est)
-    if(se) {
-      ip <- real(NROW(X))
-      for (i in (1:NROW(X))) {
-        xi <- X[i, piv]
-        ip[i] <- xi %*% R %*% xi
-      }
-      list(fit = predictor, se = sqrt(ip))
-    } else predictor
-  }
-  
+  ## 1998/06/23 KH:  predict.lm() now merged with the version in lm.R
+
   type <- match.arg(type)
   if(!se.fit) {
     #No standard errors
