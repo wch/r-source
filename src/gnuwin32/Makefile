@@ -24,7 +24,7 @@ R-DLLLIBS=-L. $(FLIBS) -lwsock32 -lcomctl32
 SOURCES=$(wildcard *.c *.f)
 OBJS=$(foreach i, $(SOURCES), $(basename $i).o)
 MAINLIBS=libmain.a libappl.a libmath.a
-EXTRALIBS=rx.a ga.a gl.a xdr.a em.a
+EXTRALIBS=../regex/rx.a ga.a gl.a xdr.a em.a
 
 LIBFILES=$(foreach i, $(PACKAGES), ../../library/$i)
 PKGS=$(foreach i, $(PACKAGES), pkg-$i)
@@ -34,7 +34,7 @@ PKGCLEAN=$(foreach i, $(PACKAGES), pkgclean-$i)
 
 all: rbuild rdemo rpackage
 
-CFLAGS=$(OPTFLAGS) -I../include -I.
+CFLAGS=$(OPTFLAGS) -I../include -I. -DHAVE_CONFIG_H
 FFLAGS=$(OPTFLAGS)
 
 rbuild: fixfiles makeMakedeps rlibs ../../bin/R.dll libR.a CHTML \
@@ -52,7 +52,7 @@ rlibs:
 	$(MAKE) -C ../appl OPTFLAGS="$(OPTFLAGS)" -f Makefile.win
 	$(MAKE) -C ../main OPTFLAGS="$(OPTFLAGS)" -f Makefile.win
 	$(MAKE) -C ../nmath OPTFLAGS="$(OPTFLAGS)" -f Makefile.win
-	$(MAKE) -C ./regex
+	$(MAKE) -C ../regex OPTFLAGS="$(OPTFLAGS)" -f Makefile.win
 	$(MAKE) -C ./graphapp
 	$(MAKE) -C ./getline
 	$(MAKE) -C ./xdr
@@ -174,10 +174,10 @@ distclean veryclean: clean
 
 cleanwin:
 	$(RM) *.o *.exe *.dll *.a *~ \#*\# *.zip R.def R.exp1 \
-	.RData .Rhistory Makedeps *.d
+	   .RData .Rhistory Makedeps *.d
 	$(MAKE) -C graphapp clean
 	$(MAKE) -C fixed clean
-	$(MAKE) -C regex clean
+	$(MAKE) -C ../regex -f Makefile.win clean
 	$(MAKE) -C getline clean
 	$(MAKE) -C help clean
 	$(MAKE) -C front-ends clean

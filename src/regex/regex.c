@@ -17,7 +17,8 @@
 
    You should have received a copy of the GNU General Public License
    along with this program; if not, write to the Free Software
-   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA */
+   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ */
 
 /* AIX requires this to be the first thing in the file. */
 #if defined (_AIX) && !defined (REGEX_MALLOC)
@@ -30,7 +31,7 @@
 #include <sys/types.h>
 
 #ifdef HAVE_CONFIG_H
-#include "config.h"
+#include "Rconfig.h"
 #endif
 
 /* The `emacs' switch turns on certain matching commands
@@ -1623,11 +1624,13 @@ regex_compile (pattern, size, syntax, bufp)
             case ')':
               if (syntax & RE_NO_BK_PARENS) goto normal_backslash;
 
-              if (COMPILE_STACK_EMPTY)
+              if (COMPILE_STACK_EMPTY) {
                 if (syntax & RE_UNMATCHED_RIGHT_PAREN_ORD)
                   goto normal_backslash;
                 else
-                  return REG_ERPAREN;
+		  return REG_ERPAREN;
+	      }
+	      
 
             handle_close:
               if (fixup_alt_jump)
@@ -1643,11 +1646,13 @@ regex_compile (pattern, size, syntax, bufp)
                 }
 
               /* See similar code for backslashed left paren above.  */
-              if (COMPILE_STACK_EMPTY)
+              if (COMPILE_STACK_EMPTY) {
                 if (syntax & RE_UNMATCHED_RIGHT_PAREN_ORD)
                   goto normal_char;
                 else
-                  return REG_ERPAREN;
+		  return REG_ERPAREN;
+	      }
+	      
 
               /* Since we just checked for an empty stack above, this
                  ``can't happen''.  */
@@ -3218,14 +3223,14 @@ re_match_2 (bufp, string1, size1, string2, size2, pos, regs, stop)
      matching and the regnum-th regend points to right after where we
      stopped matching the regnum-th subexpression.  (The zeroth register
      keeps track of what the whole pattern matches.)  */
-  const char **regstart, **regend;
+  const char **regstart = NULL, **regend = NULL;
 
   /* If a group that's operated upon by a repetition operator fails to
      match anything, then the register for its start will need to be
      restored because it will have been set to wherever in the string we
      are when we last see its open-group operator.  Similarly for a
      register's end.  */
-  const char **old_regstart, **old_regend;
+  const char **old_regstart = NULL, **old_regend = NULL;
 
   /* The is_active field of reg_info helps us keep track of which (possibly
      nested) subexpressions we are currently in. The matched_something
@@ -3240,7 +3245,7 @@ re_match_2 (bufp, string1, size1, string2, size2, pos, regs, stop)
      This happens as we backtrack through the failure points, which in
      turn happens only if we have not yet matched the entire string. */
   unsigned best_regs_set = false;
-  const char **best_regstart, **best_regend;
+  const char **best_regstart = NULL, **best_regend = NULL;
   
   /* Logically, this is `best_regend[0]'.  But we don't want to have to
      allocate space for that if we're not allocating space for anything
@@ -3253,7 +3258,7 @@ re_match_2 (bufp, string1, size1, string2, size2, pos, regs, stop)
   const char *match_end = NULL;
 
   /* Used when we pop values we don't care about.  */
-  const char **reg_dummy;
+  const char **reg_dummy = NULL;
   register_info_type *reg_info_dummy;
 
 #ifdef DEBUG
