@@ -239,13 +239,21 @@ foreach my $pkg (@ARGV) {
 		     !(-t STDIN && -t STDOUT));
 		my $INSTALL_opts = "";
 		$INSTALL_opts = "--fake" if($opt_install eq "fake");
-		my $cmd =
-		    join(" ",
-			 (&shell_quote_file_path(${R::Vars::R_EXE}),
-			  "CMD INSTALL -l",
-			  &shell_quote_file_path($library),
-			  "$INSTALL_opts",
-			  &shell_quote_file_path($pkgdir)));
+		my $cmd;
+		if($WINDOWS) {
+		    $cmd = join(" ",
+				("${R::Vars::R_CMD} INSTALL -l",
+				 &shell_quote_file_path($library),
+				 "$INSTALL_opts",
+				 &shell_quote_file_path($pkgdir)));
+		} else {
+		    $cmd = join(" ",
+				(&shell_quote_file_path(${R::Vars::R_EXE}),
+				 "CMD INSTALL -l",
+				 &shell_quote_file_path($library),
+				 "$INSTALL_opts",
+				 &shell_quote_file_path($pkgdir)));
+		}
 		if(!$use_install_log) {
 		    ## Case A: No redirection of stdout/stderr from
 		    ## installation.
