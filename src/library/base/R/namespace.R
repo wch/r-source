@@ -832,7 +832,7 @@ registerS3methods <- function(info, env)
                       paste(sQuote(info[notex, 3]), collapse=", "),
                       "were declared in NAMESPACE but not found"),
                 call. = FALSE)
-    Info <- Info[!notex, ]
+    Info <- Info[!notex, , drop = FALSE]
 
     ## do local generics first -- this could be load-ed if pre-computed.
     localGeneric <- Info[,1] %in% loc
