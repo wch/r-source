@@ -5,14 +5,15 @@ parse(file = "", n = NULL, text = NULL, prompt = NULL, white = FALSE)
 }
 \alias{parse}
 \arguments{
-  \item{file}{the name of a file to read the expressions from.  If the
-    \code{file} is \code{""} and \code{text} is missing or \code{NULL}
+  \item{file}{the name of a file to read the expressions from.  Note
+    that the ASCII file \emph{must} end with a newline (\code{"\n"}).
+    If \code{file} is \code{""} and \code{text} is missing or \code{NULL}
     then input is taken from the keyboard.}
   \item{n}{the number of statements to parse.  If \code{n} is negative
-    the file is parsed in its entirety.
-    When parsing takes place from the keyboard, \code{n} is always 1.}
-  \item{text}{text to parse, quoted.}
-  \item{prompt}{the prompt to print when parsing from the keyboard}
+    the file is parsed in its entirety.}
+  \item{text}{character. The text to parse, quoted.}
+  \item{prompt}{the prompt to print when parsing from the keyboard.  The
+  default, \code{NULL}, is to use \R's prompt, \code{options("prompt")[[1]]}.}
   \item{white}{if \code{TRUE} then any white space separates expressions
     otherwise only newlines or semicolons do.}
 }
@@ -25,6 +26,8 @@ parse(file = "", n = NULL, text = NULL, prompt = NULL, white = FALSE)
   \code{\link{deparse}}.
 }
 \examples{
+\testonly{
+  cat("x <- c(1,4)\n  x ^ 3 -10 ; outer(1:7,5:9)\n", file="xyz.Rdmped")}
 # parse 3 statements from the file "xyz.Rdmped"
 parse(file = "xyz.Rdmped", n = 3)
 }
