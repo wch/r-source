@@ -743,8 +743,6 @@ void			moveTo(SInt16, SInt16);
 void			lineToWindow(SInt16, SInt16, SInt16);
 void			moveToWindow(SInt16, SInt16, SInt16);
 WindowPtr		CreateGraphicWindow(int wid, int h);
-OSErr			OldnewWindow( const FSSpec* , int);
-//OSStatus 		newWindow ( const FSSpec * pFileSpec, WindowRef * outWindow, int graphic );
 OSStatus 		newWindow ( const FSSpec * pFileSpec, WindowRef * outWindow, int graphic, Boolean editable );
 Boolean			isTextWindow(WindowPtr window);
 void			LineFromToWindow(SInt16, SInt16, SInt16, SInt16,WindowPtr);
