@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.7-17, 2003-06-11
+Version 1.7-18, 2003-06-13
 ISBN 3-901167-51-X
 Kurt Hornik
 
@@ -245,7 +245,7 @@ hppa-hp-hpux, and sparc-sun-solaris.
 2.3 What is the current version of R?
 =====================================
 
-   The current released version is 1.7.0.  Based on this
+   The current released version is 1.7.1.  Based on this
 `major.minor.patchlevel' numbering scheme, there are two development
 versions of R, working towards the next patch (`r-patched') and minor or
 eventually major (`r-devel') releases of R, respectively.  Version
@@ -1542,6 +1542,9 @@ distributions of R.)
 *ellipse*
      Package for drawing ellipses and ellipse-like confidence regions.
 
+*emme2*
+     Functions to read from and write to an EMME/2 databank.
+
 *emplik*
      Empirical likelihood ratio for means/quantiles/hazards from possibly
      right censored data.
@@ -1969,6 +1972,9 @@ distributions of R.)
 
 *sgeostat*
      An object-oriented framework for geostatistical modeling.
+
+*shapefiles*
+     Functions to read and write ESRI shapefiles.
 
 *sm*
      Software linked to the book "Applied Smoothing Techniques for Data
