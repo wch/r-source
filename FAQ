@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.5-16, 2002-07-21
+Version 1.5-17, 2002-07-30
 ISBN 3-901167-51-X
 Kurt Hornik
 
@@ -1196,6 +1196,10 @@ works, was published in the Journal of Statistical Software
 
 *GeneSOM*
      Clustering genes using Self-Organizing Maps (SOMs).
+
+*ISwR*
+     Data sets for "Introductory Statistics with R" by Peter Dalgaard,
+     2002, Springer.
 
 *KernSmooth*
      Functions for kernel smoothing (and density estimation) corresponding
