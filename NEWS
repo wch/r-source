@@ -47,6 +47,8 @@ NEW FEATURES
 
 BUG FIXES
 
+    o   compilation on non-Intel Linux systems no longer looks for __setfpucw
+
     o   a %% b -- is now periodic instead of symmetric; more S compatible.
 
     o	locator(n=512) -- default: MANY points, not just one.
