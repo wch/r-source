@@ -1207,9 +1207,10 @@ static void 	Quartz_Polyline(int n, double *x, double *y,
 
     CGContextSaveGState( GetContext(xd) );
 
+    CGContextBeginPath( GetContext(xd) );
+
     Quartz_SetLineProperties(gc, dd);
 
-    CGContextBeginPath( GetContext(xd) );
     CGContextAddLines( GetContext(xd), &lines[0], n );
     Quartz_SetStroke( gc->col, gc->gamma, dd);
     CGContextStrokePath( GetContext(xd) );
@@ -1282,21 +1283,21 @@ static void Quartz_SetLineJoin(R_GE_linejoin ljoin, NewDevDesc *dd)
 {
     QuartzDesc *xd = (QuartzDesc*)dd->deviceSpecific;
     CGLineJoin linejoin;
-	CGLineCap linecap;
     switch (ljoin) {
     case GE_ROUND_JOIN:
-      linecap = kCGLineJoinRound;
+      linejoin = kCGLineJoinRound;
       break;
     case GE_MITRE_JOIN:
-      linecap = kCGLineJoinMiter;
+      linejoin = kCGLineJoinMiter;
       break;
     case GE_BEVEL_JOIN:
-      linecap = kCGLineJoinBevel;
+      linejoin = kCGLineJoinBevel;
       break;
     default:
       error("Invalid line join");
     }
-    CGContextSetLineCap( GetContext(xd), linejoin);
+
+    CGContextSetLineJoin( GetContext(xd), linejoin);
 }
 
 static void Quartz_SetLineMitre(double lmitre, NewDevDesc *dd)
@@ -1342,7 +1343,7 @@ static void 	Quartz_Polygon(int n, double *x, double *y,
 
 
    CGContextBeginPath( GetContext(xd) );
-   Quartz_SetLineProperties(gc, dd);
+//   Quartz_SetLineProperties(gc, dd);
 
 
     lines = (CGPoint *)malloc(sizeof(CGPoint)*(n+1));
@@ -1358,7 +1359,9 @@ static void 	Quartz_Polygon(int n, double *x, double *y,
     lines[n].y = (float)y[0];
 
     CGContextAddLines( GetContext(xd), &lines[0], n+1 );
-    Quartz_SetFill( gc->fill, gc->gamma, dd);
+     Quartz_SetLineProperties(gc, dd);
+
+	Quartz_SetFill( gc->fill, gc->gamma, dd);
     CGContextFillPath( GetContext(xd) );
 
     CGContextAddLines( GetContext(xd), &lines[0], n+1 );
