@@ -16,6 +16,8 @@ BUG FIXES
 
     o	c() now has a method for "noquote" objects and hence works as expected.
 
+    o	split(1:10, c(1,2)) no longer gives a spurious warning.
+
 
 
 		CHANGES IN R VERSION 1.8.0
