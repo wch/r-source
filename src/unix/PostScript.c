@@ -344,6 +344,7 @@ void PostScriptFileHeader(
 	fprintf(fp, "/I   { /%s findfont } def\n", font[6]);
 	fprintf(fp, "/BI  { /%s findfont } def\n", font[8]);
 	fprintf(fp, "/S   { /%s findfont } def\n", font[10]);
+	fprintf(fp, "1 setlinecap 1 setlinejoin\n");
 	fprintf(fp, "%%%%EndProlog\n");
 }
 
