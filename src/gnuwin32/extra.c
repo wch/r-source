@@ -1062,6 +1062,7 @@ SEXP do_chooseFiles(SEXP call, SEXP op, SEXP args, SEXP rho)
     char *temp, *cfilters, list[65520],*p;
     char path[MAX_PATH], filename[MAX_PATH];
     int multi, filterindex, i, count, lfilters, pathlen;
+
     checkArity(op, args);
     def = CAR(args);
     caption = CADR(args);
@@ -1136,4 +1137,51 @@ SEXP do_chooseFiles(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
     UNPROTECT(1);
     return ans;
+}
+
+extern window RFrame; /* from rui.c */
+
+SEXP do_setTitle(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    SEXP title = CAR(args);
+    char *ptitle, buf[512];
+
+    checkArity(op, args);
+    if(!isString(title)  || LENGTH(title) != 1)
+	errorcall(call, "'title' must be a character string");
+    ptitle = CHAR(STRING_ELT(title, 0));
+    switch(CharacterMode) {
+    case RGui:
+	if(RguiMDI & RW_MDI) {
+	strcpy(buf, "Rgui");
+	if(strlen(ptitle)) {
+	    strcat(buf, ": ");
+	    strncat(buf, ptitle, 507);
+	    buf[511] = '\0';
+	    settext(RFrame, buf);
+	}
+	} else {
+	    strcpy(buf, "R Console");
+	    if(strlen(ptitle)) {
+		strcat(buf, ": ");
+		strncat(buf, ptitle, 499);
+		buf[511] = '\0';
+	    }
+	    settext(RConsole, buf);
+	}
+	break;
+    case RTerm:
+	strcpy(buf, "Rterm");
+	if(strlen(ptitle)) {
+	    strcat(buf, ": ");
+	    strncat(buf, ptitle, 506);
+	    buf[511] = '\0';
+	}
+	SetConsoleTitle(buf);
+	break;
+    default:
+	/* do nothing */
+	break; /* -Wall */
+    }
+    return R_NilValue;
 }

@@ -61,6 +61,7 @@ SEXP do_memsize(SEXP, SEXP, SEXP, SEXP);
 SEXP do_readClipboard(SEXP, SEXP, SEXP, SEXP);
 SEXP do_saveDevga(SEXP, SEXP, SEXP, SEXP);
 SEXP do_selectlist(SEXP, SEXP, SEXP, SEXP);
+SEXP do_setTitle(SEXP, SEXP, SEXP, SEXP);
 SEXP do_shellexec(SEXP, SEXP, SEXP, SEXP);
 SEXP do_unlink(SEXP, SEXP, SEXP, SEXP);
 SEXP do_windialog(SEXP, SEXP, SEXP, SEXP);

@@ -16,3 +16,5 @@ readClipboard <- function()
 writeClipboard <- function(str)
     .Internal(writeClipboard(str))
 
+setWindowTitle <- function(title)
+    .Internal(setWindowTitle(title))

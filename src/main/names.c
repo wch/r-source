@@ -551,7 +551,8 @@ FUNTAB R_FunTab[] =
 {"select.list",	do_selectlist,	0,	11,	3,	{PP_FUNCALL, PREC_FN,	0}},
 {"readClipboard",do_readClipboard,0,	11,	0,	{PP_FUNCALL, PREC_FN,	0}},
 {"writeClipboard",do_writeClipboard,0,	111,	1,	{PP_FUNCALL, PREC_FN,	0}},
-{"chooseFiles", do_chooseFiles, 0,  11, 5,  {PP_FUNCALL, PREC_FN,   0}},
+{"chooseFiles", do_chooseFiles, 0,  	11, 	5,  	{PP_FUNCALL, PREC_FN,   0}},
+{"setWindowTitle",do_setTitle,	0,	111,	1,	{PP_FUNCALL, PREC_FN,	0}},
 #endif
 #if defined(__APPLE_CC__) && defined(HAVE_AQUA)
 {"wsbrowser",	do_wsbrowser,	0,	11,	8,	{PP_FUNCALL, PREC_FN,	0}},

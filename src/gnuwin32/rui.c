@@ -53,7 +53,7 @@ console RConsole = NULL;
 #ifdef USE_MDI
 int   RguiMDI = RW_MDI | RW_TOOLBAR | RW_STATUSBAR;
 int   MDIset = 0;
-static window RFrame;
+window RFrame;
 rect MDIsize;
 #endif
 extern int ConsoleAcceptCmd, R_is_running;
