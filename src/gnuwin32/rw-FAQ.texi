@@ -121,7 +121,7 @@ for a list), navigate to the @code{bin/windows/base}
 directory and collect the files you need.  There are three versions of
 the distribution.
 
-1) @code{SetupR.exe}, is about 17Mb and gives a complete installation.
+1) @code{SetupR.exe} is about 18Mb and gives a complete installation.
 
 2) Directory @code{miniR} contains @code{miniR.exe} and seven files
 @code{miniR-?.bin}.  You can put  @code{miniR.exe} and @code{miniR-1.bin}
@@ -136,7 +136,8 @@ files
 @noindent
 and you may want @code{@RWVER@w.zip} (the HTML format help files),
 @code{@RWVER@l.zip} (the LaTeX format help files, used for offline
-printing), or @code{@RWVER@d?.zip} (the draft manuals, in PDF).
+printing), or @code{@RWVER@d?.zip} (the manuals, in PDF).  The
+recommended packages are available separately.
 
 @node How do I install R for Windows?, How do I run it?, Where can I find the latest version?, Installation and Usage
 @section How do I install R for Windows?
@@ -147,7 +148,7 @@ except perhaps for some network-mounted systems).
 
 If you want to build packages from sources, we recommend that you choose
 an installation path not containing spaces.  (Using a path with spaces
-in will probably work, but it little-tested.)
+in will probably work, but is little-tested.)
 
 The simplest way is to use @code{SetupR.exe} or @code{miniR.exe}.  Just
 double-click on the icon and follow the instructions.  If you installed
@@ -159,16 +160,15 @@ For a manual installation, choose a location and unzip the zip files
 we recommend the INFO-ZIP project's @code{unzip}).  All the files will
 unpack into a directory @code{@RWVER@}.
 
-Choose a working directory for R.  Unless you used @code{SetupR.exe} or
-@code{miniR.exe} (which did this for you by default), make a shortcut to
-@code{@RWVER@\bin\Rgui.exe} on your desktop or somewhere on the Start
-menu file tree.  Right-click the shortcut, select Properties... and
-change the `Start in' field to your working directory.
+Choose a working directory for R.  If you installed manually, make a
+shortcut to @code{@RWVER@\bin\Rgui.exe} on your desktop or somewhere on
+the Start menu file tree.  Right-click the shortcut, select
+Properties... and change the `Start in' field to your working directory.
 
 You may also want to add command-line arguments at the end of the Target
 field, for example @code{--sdi --max-mem-size=40M}.  You can also set
 environment variables at the end of the Target field, for example
-@code{R_LIBS=p:/R/library}.
+@code{R_LIBS=P:/R/library}.
 
 
 @node How do I run it?, How do I UNinstall R?, How do I install R for Windows?, Installation and Usage
@@ -187,10 +187,11 @@ Normally you can do this from the R group on the Start Menu or from the
 there or if you want to remove an old version, run @file{unis000.exe} in
 the top-level installation directory.
 
-Uninstallin R only removes files from the initial installation, not for
+Uninstalling R only removes files from the initial installation, not for
 example packages you have installed.
 
-If all else fails, you can just delete the whole R directory.
+If all else fails, you can just delete the whole directory in which R
+was installed.
 
 
 @node What's the best way to upgrade?, There seems to be a limit on the memory it uses!, How do I UNinstall R?, Installation and Usage
@@ -220,7 +221,7 @@ way the memory manager works, it is possible that there will be free
 memory but R will not be able to reserve it.
 
 Use @code{?Memory} and @code{?memory.size} for information about memory
-usage.  The limit can be raised by calling @code{memory.limit} from a
+usage.  The limit can be raised by calling @code{memory.limit} within a
 running R session.
 
 We have found that starting R with too large a value of
@@ -360,6 +361,9 @@ and put it in the @code{@RWVER@\bin} directory.  Removing
 This fix has solved other problems too, for example incorrect results in
 the date-time functions.
 
+It seems that on some versions of Windows you also need to put
+the @code{@RWVER@\bin} directory early in your path.
+
 @node The internet download functions fail.,  , Entering certain characters crashes Rgui., Installation and Usage
 @section The internet download functions fail.
 
@@ -448,7 +452,7 @@ How you set an environment variable is system specific: in Windows 9x
 you can set them in @file{autoexec.bat} or in an MS-DOS window from
 which you launch @code{Rgui} / @code{Rterm}.  Under Windows NT/2000/XP you
 can use the control panel or the properties of `My Computer'.  Under
-Windows Me you need to use the System Configuration Utility (under
+Windows ME you can use the System Configuration Utility (under
 Programs, Accessories, System Tools on the Start menu).  You can also
 set them on the command line, for example in the shortcut you could have
 
@@ -509,7 +513,9 @@ not be installed for IE6 on Windows XP.
 @section Loading a package fails.
 
 Is the package compiled for this version of R?  Many of the packages
-need to be compiled for a fairly recent version.
+need to be compiled for a fairly recent version.  (As from version
+1.5.0, R will warn if a package is used that was built under a
+@emph{later} version.)
 
 You can tell the version the package was compiled for by looking at the
 @code{Built:} line in its @file{DESCRIPTION} file or at the
@@ -544,13 +550,9 @@ like
 @node  Hyperlinks in Compiled HTML do not work.,  , Package TclTk does not work., Packages
 @section Hyperlinks in Compiled HTML sometimes do not work.
 
-Unfortunately, hyperlinks in compiled HTML files used from R are
-interpreted relative to the current working directory of the R process,
-not relative to the @code{pkg.chm} file.  This was not discovered until
-@code{rw1021}: files made before that version work incorrectly.  Remake
-the package to cure this.
-
-They may well not work between packages installed in different libraries.
+They may well not work between packages installed in different
+libraries.  This is solved under Unix using symbolic links which Windows
+does not implement.
 
 
 @newchap{}
@@ -991,14 +993,14 @@ If you want output to be updated on the console, call
 @html
 <p><hr WIDTH="100%">
 <address>
-Last edited 2002 March 03 by Professor B. D. Ripley
+Last edited 2002 April 01 by Professor B. D. Ripley
 <code><a href="mailto:ripley@@stats.ox.ac.uk">ripley@@stats.ox.ac.uk</a></code>
 </address>
 @end html
 @end ifhtml
 @ifinfo
 @sp 2
-Last edited 2002 March 03 by Professor B. D. Ripley <ripley@@stats.ox.ac.uk>
+Last edited 2002 April 01 by Professor B. D. Ripley <ripley@@stats.ox.ac.uk>
 @end ifinfo
 
 @bye

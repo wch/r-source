@@ -251,7 +251,7 @@ http://cran.r-project.org/mirrors.html</a> for a list), navigate to
 the <code>bin/windows/base</code> directory and collect the files
 you need. There are three versions of the distribution.</p>
 
-<p>1) <code>SetupR.exe</code>, is about 17Mb and gives a complete
+<p>1) <code>SetupR.exe</code> is about 18Mb and gives a complete
 installation.</p>
 
 <p>2) Directory <code>miniR</code> contains <code>miniR.exe</code>
@@ -270,9 +270,9 @@ least the files<br>
 
 <p>and you may want <code>rw1050w.zip</code> (the HTML format help
 files), <code>rw1050l.zip</code> (the LaTeX format help files, used
-for offline printing), or <code>rw1050d?.zip</code> (the draft
-manuals, in PDF). <a name=
-"How%20do%20I%20install%20R%20for%20Windows%3f"></a></p>
+for offline printing), or <code>rw1050d?.zip</code> (the manuals,
+in PDF). The recommended packages are available separately. <a
+name="How%20do%20I%20install%20R%20for%20Windows%3f"></a></p>
 
 <h3>2.2 How do I install R for Windows?</h3>
 
@@ -283,7 +283,7 @@ systems).</p>
 
 <p>If you want to build packages from sources, we recommend that
 you choose an installation path not containing spaces. (Using a
-path with spaces in will probably work, but it little-tested.)</p>
+path with spaces in will probably work, but is little-tested.)</p>
 
 <p>The simplest way is to use <code>SetupR.exe</code> or <code>
 miniR.exe</code>. Just double-click on the icon and follow the
@@ -296,18 +296,17 @@ files (with a tool that preserves long file names and the directory
 structure: we recommend the INFO-ZIP project's <code>unzip</code>).
 All the files will unpack into a directory <code>rw1050</code>.</p>
 
-<p>Choose a working directory for R. Unless you used <code>
-SetupR.exe</code> or <code>miniR.exe</code> (which did this for you
-by default), make a shortcut to <code>rw1050\bin\Rgui.exe</code> on
-your desktop or somewhere on the Start menu file tree. Right-click
-the shortcut, select Properties... and change the `Start in' field
-to your working directory.</p>
+<p>Choose a working directory for R. If you installed manually,
+make a shortcut to <code>rw1050\bin\Rgui.exe</code> on your desktop
+or somewhere on the Start menu file tree. Right-click the shortcut,
+select Properties... and change the `Start in' field to your
+working directory.</p>
 
 <p>You may also want to add command-line arguments at the end of
 the Target field, for example <code>--sdi
 --max-mem-size=40M</code>. You can also set environment variables
 at the end of the Target field, for example <code>
-R_LIBS=p:/R/library</code>. <a name="How%20do%20I%20run%20it%3f">
+R_LIBS=P:/R/library</code>. <a name="How%20do%20I%20run%20it%3f">
 </a></p>
 
 <h3>2.3 How do I run it?</h3>
@@ -327,11 +326,12 @@ it does not appear there or if you want to remove an old version,
 run <code>unis000.exe</code> in the top-level installation
 directory.</p>
 
-<p>Uninstallin R only removes files from the initial installation,
+<p>Uninstalling R only removes files from the initial installation,
 not for example packages you have installed.</p>
 
-<p>If all else fails, you can just delete the whole R directory. <a
-name="What's%20the%20best%20way%20to%20upgrade%3f"></a></p>
+<p>If all else fails, you can just delete the whole directory in
+which R was installed. <a name=
+"What's%20the%20best%20way%20to%20upgrade%3f"></a></p>
 
 <h3>2.5 What's the best way to upgrade?</h3>
 
@@ -363,7 +363,7 @@ but R will not be able to reserve it.</p>
 
 <p>Use <code>?Memory</code> and <code>?memory.size</code> for
 information about memory usage. The limit can be raised by calling
-<code>memory.limit</code> from a running R session.</p>
+<code>memory.limit</code> within a running R session.</p>
 
 <p>We have found that starting R with too large a value of <code>
 --max-mem-size</code> may fail: the limit seemed to be about 1.7Gb
@@ -516,7 +516,10 @@ msvcrt.dll</code> from that directory reverts to the standard
 behaviour.</p>
 
 <p>This fix has solved other problems too, for example incorrect
-results in the date-time functions. <a name=
+results in the date-time functions.</p>
+
+<p>It seems that on some versions of Windows you also need to put
+the <code>rw1050\bin</code> directory early in your path. <a name=
 "The%20internet%20download%20functions%20fail."></a></p>
 
 <h3>2.15 The internet download functions fail.</h3>
@@ -611,10 +614,10 @@ library(MASS, lib.loc="p:/mylibs")
 Windows 9x you can set them in <code>autoexec.bat</code> or in an
 MS-DOS window from which you launch <code>Rgui</code> / <code>
 Rterm</code>. Under Windows NT/2000/XP you can use the control
-panel or the properties of `My Computer'. Under Windows Me you need
-to use the System Configuration Utility (under Programs,
-Accessories, System Tools on the Start menu). You can also set them
-on the command line, for example in the shortcut you could have<br>
+panel or the properties of `My Computer'. Under Windows ME you can
+use the System Configuration Utility (under Programs, Accessories,
+System Tools on the Start menu). You can also set them on the
+command line, for example in the shortcut you could have<br>
 </p>
 
 <pre>
@@ -684,7 +687,9 @@ Opera, and may not be installed for IE6 on Windows XP. <a name=
 <h3>3.5 Loading a package fails.</h3>
 
 <p>Is the package compiled for this version of R? Many of the
-packages need to be compiled for a fairly recent version.</p>
+packages need to be compiled for a fairly recent version. (As from
+version 1.5.0, R will warn if a package is used that was built
+under a <em>later</em> version.)</p>
 
 <p>You can tell the version the package was compiled for by looking
 at the <code>Built:</code> line in its <code>DESCRIPTION</code>
@@ -724,14 +729,9 @@ something like<br>
 
 <h3>3.7 Hyperlinks in Compiled HTML sometimes do not work.</h3>
 
-<p>Unfortunately, hyperlinks in compiled HTML files used from R are
-interpreted relative to the current working directory of the R
-process, not relative to the <code>pkg.chm</code> file. This was
-not discovered until <code>rw1021</code>: files made before that
-version work incorrectly. Remake the package to cure this.</p>
-
 <p>They may well not work between packages installed in different
-libraries.</p>
+libraries. This is solved under Unix using symbolic links which
+Windows does not implement.</p>
 
 <hr>
 <a name="Windows%20Features"></a> 
@@ -1179,7 +1179,7 @@ console, call <code>R_FlushConsole()</code> and then <code>
 R_ProcessEvents()</code>.</p>
 
 <hr width="100%">
-<address>Last edited 2002 March 03 by Professor B. D. Ripley <code>
+<address>Last edited 2002 April 01 by Professor B. D. Ripley <code>
 <a href="mailto:ripley@stats.ox.ac.uk">
 ripley@stats.ox.ac.uk</a></code></address>
 </body>
