@@ -56,12 +56,18 @@
 tkdestroy(win)
 is.tkwin(x)
 
+tclvalue(x)
+tclvalue(x) <- value
+
 tclVar(init="")
 \method{as.character}{tclVar}(x)
 \method{tclvalue}{tclVar}(x)
 \method{tclvalue}{tclVar}(x) <- value
-\method{tclObj}{tclVar}(x)
+
+tclObj(x)
 tclObj(x) <- value
+\method{tclObj}{tclVar}(x)
+\method{tclObj}{tclVar}(x) <- value
 
 as.tclObj(x, drop=FALSE)
 is.tclObj(x)
