@@ -95,6 +95,12 @@ NEW FEATURES
 
    o    chol() allows pivoting via new argument `pivot'.
 
+   o    acosh(), asinh(), atanh() are guaranteed to be available.
+
+   o    Package ts includes new datasets Nile, UKgas and WWWusage, and
+	a expanded version of UKDriverDeaths (as a multiple time
+	series SeatBelts).
+
 
 DEPRECATED & DEFUNCT
 
@@ -162,7 +168,7 @@ BUG FIXES
         symbol length.  (TODO:  either fix dump.frames accordingly or
         remove the limit--say by truncating very long symbols?)
 
-    o	se.contrasts works more reliably with multistratum models,
+    o	se.contrasts() works more reliably with multistratum models,
 	and its help page has an example.
 
 
