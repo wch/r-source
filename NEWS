@@ -702,6 +702,13 @@ BUG FIXES
  
     o	Rd conversion to latex did not add a new line before
 	\end{Section} in more cases than were corrected in 1.8.1.
+ 
+    o	split.default() dropped NA levels in its internal code but
+	returned them as NA in all components in the interpreted code
+	for factors.  (PR#6672)
+ 
+    o	points.formula() had problems if there was a subset argument
+	and no data argument.  (PR#6652)
 
 
 

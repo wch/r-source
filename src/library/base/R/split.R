@@ -10,7 +10,7 @@ split.default <- function(x, f)
     lf <- levels(f)
     y <- vector("list", length(lf))
     names(y) <- lf
-    for(k in lf) y[[k]] <- x[f == k]
+    for(k in lf) y[[k]] <- x[f %in% k]
     y
 }
 

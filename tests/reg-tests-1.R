@@ -2944,3 +2944,26 @@ stopifnot(abs(mean(r) - 1) < 0.003)
 ## check for a Microsoft bug in timezones ahead of GMT
 stopifnot(!is.na(as.POSIXct("1970-01-01 00:00:00")))
 ##
+
+
+## PR#6672, split.default on factors
+x <- c(NA, 1, 2)
+y <- as.factor(x)
+split(x, y)
+split(y, y) # included NAs in 1.8.1
+r1 <- tapply(x, y, length)
+r2 <- tapply(y, y, length)
+stopifnot(r1 == r2)
+##
+
+
+## PR#6652, points.formula with subset and extra arguments.
+roller <-
+    data.frame(weight = c(1.9, 3.1, 3.3, 4.8, 5.3, 6.1, 6.4, 7.6, 9.8, 12.4),
+               depression = c(2, 1, 5, 5, 20, 20, 23, 10, 30, 25))
+plot(depression ~ weight, data=roller, type="n")
+with(roller, points( depression~weight, subset=8:10, col=2))
+with(roller, points( depression~weight, subset=8:10, col=2:4))
+plot(depression ~ weight, data=roller, type="n")
+points(depression~weight, subset=8:10, col=2:4, data=roller)
+## first two gave error in 1.8.1
