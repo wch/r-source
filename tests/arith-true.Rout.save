@@ -131,11 +131,8 @@ NaNs produced in: log(x)
 > all(abs(1 - x / atan(tan(x))) <  2*Meps)
 [1] TRUE
 > 
-> is.nan(acos(1.1)) && is.nan(asin(-2))
-[1] TRUE
-Warning messages: 
-1: NaNs produced in: acos(1.1) 
-2: NaNs produced in: asin(-2) 
+> ## Sun has asin(.) = acos(.) = 0 for these:
+> ##	is.nan(acos(1.1)) && is.nan(asin(-2)) [!]
 > 
 > ## Complex Trig.:
 > abs(Im(cos(acos(1i))) -	 1) < 2*Meps
@@ -270,5 +267,5 @@ NaNs produced in: gamma(x)
 > 
 > ## Last Line:
 > cat('Time elapsed: ', proc.time() - .proctime00,'\n')
-Time elapsed:  4.14 0.15 4.33 0 0 
+Time elapsed:  4.16 0.12 4.29 0 0 
 > 
