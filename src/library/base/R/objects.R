@@ -23,7 +23,7 @@ methods <- function (generic.function, class)
     if (!missing(generic.function)) {
 	if (!is.character(generic.function))
 	    generic.function <- deparse(substitute(generic.function))
-        genfun <- get(generic.function)
+        genfun <- get(generic.function, mode="function")
         gf <- paste(deparse(genfun), collapse="\n")
         if(length(grep("UseMethod", gf))) {
             ## look for the generic dispatched on: not 100% reliable!
@@ -32,7 +32,7 @@ methods <- function (generic.function, class)
                 warning(paste("Generic `", generic.function,
                               "' dispatches methods for generic `",
                               truegf, "'", sep=""))
-                genfun <- get(generic.function <- truegf)
+                genfun <- get(generic.function <- truegf, mode="function")
             }
         }
 	name <- paste("^", generic.function, ".", sep = "")
@@ -77,10 +77,11 @@ methods <- function (generic.function, class)
 print.MethodsFunction <- function(x, ...)
 {
     visible <- attr(x, "info")[["visible"]]
-    z <- paste(x, ifelse(visible, "", "*"), sep="")
-    print(z, quote=FALSE, ...)
-    if(any(!visible))
-        cat("\n    Non-visible functions are asterisked\n")
+    if(length(x)) {
+        print(paste(x, ifelse(visible, "", "*"), sep=""), quote=FALSE, ...)
+        if(any(!visible))
+            cat("\n    Non-visible functions are asterisked\n")
+    } else cat("no methods were found\n")
     invisible(x)
 }
 
@@ -98,19 +99,19 @@ data.class <- function(x) {
 getS3method <-  function(f, class, optional = FALSE)
 {
     groupGenerics <- c("Ops", "Math", "Summary")
-    gf <- paste(deparse(get(f)), collapse="\n")
+    gf <- paste(deparse(get(f, mode="function")), collapse="\n")
     if(length(grep("UseMethod", gf))) {
         ## look for the generic dispatched on: not 100% reliable!
         truegf <- sub('(.*)UseMethod\\(\"([^"]*)(.*)', "\\2", gf)
         if(truegf != f) f <- truegf
     }
     method <- paste(f, class, sep=".")
-    if(exists(method)) return(get(method))
+    if(exists(method, mode="function")) return(get(method, mode="function"))
     ## also look for registered method in namespaces
     if(f %in% groupGenerics)
         defenv <- .BaseNamespaceEnv
     else {
-        genfun <- get(f)
+        genfun <- get(f, mode="function")
         defenv <- if (typeof(genfun) == "closure") environment(genfun)
         else .BaseNamespaceEnv
         S3Table <- get(".__S3MethodsTable__.", envir = defenv)
