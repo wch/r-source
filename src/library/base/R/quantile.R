@@ -7,25 +7,29 @@ quantile.default <-
 	x <- x[!is.na(x)]
     else if (any(is.na(x)))
 	stop("Missing values and NaN's not allowed if `na.rm' is FALSE")
-    if (any(probs < 0 | probs > 1))
+    if (any((p.ok <- !is.na(probs)) & (probs < 0 | probs > 1)))
 	stop("probs outside [0,1]")
     n <- length(x)
+    if(na.p <- any(!p.ok)) { # set aside NA & NaN
+        o.pr <- probs
+        probs <- probs[p.ok]
+    }
     np <- length(probs)
-    if(np == 0) return(numeric(0))
-    if(n > 0) {
+    if(n > 0 && np > 0) {
 	index <- 1 + (n - 1) * probs
 	lo <- floor(index)
 	hi <- ceiling(index)
 	x <- sort(x, partial = unique(c(lo, hi)))
 	i <- index > lo
 	qs <- x[lo]
-        .minus <- function(x,y) ifelse(x == y,    0, x - y)# ok for Inf - Inf
-        .addI  <- function(x,y) ifelse(x == -Inf, x, x + y)# -Inf"+"Inf = -Inf
-	qs[i] <- .addI(qs[i], .minus(x[hi[i]], x[lo[i]]) * (index[i] - lo[i]))
-    } else {
+        i <- seq(along=i)[i & !is.na(i)][qs[i] > -Inf]
+        .minus <- function(x,y) ifelse(x == y, 0, x - y)# ok for Inf - Inf
+        qs[i] <- qs[i] + .minus(x[hi[i]], x[lo[i]]) * (index[i] - lo[i])
+    }
+    else {
 	qs <- rep(as.numeric(NA), np)
     }
-    if(names) {
+    if(names && np > 0) {
 	dig <- max(2, getOption("digits"))
 	names(qs) <- paste(## formatC is slow for long probs
 			   if(np < 100)
@@ -33,7 +37,11 @@ quantile.default <-
 			   else format(100 * probs, trim=TRUE, dig=dig),
 			   "%", sep = "")
     }
-    qs
+    if(na.p) { # do this more elegantly (?!)
+        o.pr[p.ok] <- qs
+        names(o.pr)[p.ok] <- names(qs)
+        o.pr
+    } else qs
 }
 
 IQR <- function (x, na.rm = FALSE)
