@@ -667,3 +667,12 @@ stopifnot(identical(l2, "aa.bb this should be added"))
 ## 1.5.0 gave l2 printing as l.
 
 
+## PR 1530 drop inconsistency for data frames
+DF <- data.frame(x = 1:3, y = c("A","D","E"), z = c(6,9,10))
+a1 <- DF[1,1:3]
+xx <- DF[1,]
+a2 <- xx[, 1:3]
+a3 <- DF[1,1:3, drop = TRUE]
+a4 <- xx[, 1:3, drop = TRUE]
+stopifnot(identical(a1, a2), identical(a3, a4))
+## <= 1.5.0 had a2 == a3.

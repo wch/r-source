@@ -58,6 +58,9 @@ BUG FIXES
     o   qr.X was failing in n < p.  Fixed, but only in the case when
 	pivoting does not occur. (PR#1519)
 
+    o   xx[, 1:3] was returning a list if xx had only one row, even
+	though xx[1, 1:3] was a data frame. (PR#1530)
+
 
 
 		CHANGES IN R VERSION 1.5.0
