@@ -182,6 +182,16 @@ NEW FEATURES
 	levels.  For a million items this halved the time and reduced
 	storage by a factor of 20.
 
+    o   write.table() no longer coerces a matrix to a data frame and
+	then back to a matrix.
+
+	There is a new version currently called write.table2() which
+	is implemented in C and will eventually replace write.table.
+	Currently it is limited to matrices of atomic type, and data
+	frames whose columns are atomic vectors or factors.  This is
+	about 6x faster than write.table(), and uses negligible memory
+	compared to the object size.
+
 
 UTILITIES
 

@@ -1,11 +1,11 @@
 \name{write.table}
 \alias{write.table}
+\alias{write.table2}
 \title{Data Output}
 \description{
   \code{write.table} prints its required argument \code{x} (after
-  converting it to a data frame if it is not one already) to
-  \code{file}.  The entries in each line (row) are separated by the
-  value of \code{sep}.
+  converting it to a matrix or data frame if it is not one already) to
+  a file or connection.
 }
 \usage{
 write.table(x, file = "", append = FALSE, quote = TRUE, sep = " ",
@@ -13,8 +13,8 @@ write.table(x, file = "", append = FALSE, quote = TRUE, sep = " ",
 	    col.names = TRUE, qmethod = c("escape", "double"))
 }
 \arguments{
-  \item{x}{the object to be written, typically a data frame.  If not, it
-    is attempted to coerce \code{x} to a data frame.}
+  \item{x}{the object to be written, typically a matrix or data frame.
+    If not, it is attempted to coerce \code{x} to a data frame.}
   \item{file}{either a character string naming a file or a connection.
     \code{""} indicates output to the console.}
   \item{append}{logical.  If \code{TRUE}, the output is appended to the
@@ -42,8 +42,8 @@ write.table(x, file = "", append = FALSE, quote = TRUE, sep = " ",
     it is doubled.  You can specify just the initial letter.}
 }
 \details{
-  Normally there is no column name for a column of row names.  If
-  \code{col.names=NA} a blank column name is added.  This can be used to
+  By default there is no column name for a column of row names.  If
+  \code{col.names = NA} a blank column name is added.  This can be used to
   write CSV files for input to spreadsheets.
 
   \code{write.table} can be slow for data frames with large numbers
@@ -54,11 +54,11 @@ write.table(x, file = "", append = FALSE, quote = TRUE, sep = " ",
   represented in a numeric matrix.
 
   If the table has no columns the rownames will be written if
-  \code{row.names=TRUE}, and vice versa.
+  \code{row.names=TRUE}, and \emph{vice versa}.
 }
 
 \seealso{
-  The \dQuote{R Data Import/Export} manual.
+  The \sQuote{R Data Import/Export} manual.
 
   \code{\link{read.table}}, \code{\link{write}}.
 

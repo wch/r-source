@@ -458,6 +458,7 @@ SEXP do_usemethod(SEXP, SEXP, SEXP, SEXP);
 SEXP do_version(SEXP, SEXP, SEXP, SEXP);
 SEXP do_warning(SEXP, SEXP, SEXP, SEXP);
 SEXP do_while(SEXP, SEXP, SEXP, SEXP);
+SEXP do_writetable(SEXP, SEXP, SEXP, SEXP);
 SEXP do_zeroin(SEXP, SEXP, SEXP, SEXP);
 
 /* SEXP do_getDL(SEXP, SEXP, SEXP, SEXP);
