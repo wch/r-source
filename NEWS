@@ -300,6 +300,10 @@ BUG FIXES
     o	na.omit now handles vectors and matrices as well as data
         frames.
 
+    o	The gtk() device (formerly x11() under GNOME) was incorrectly
+	returning character information, so in particular `*' was
+	wrongly centred as a plotting symbol.
+
 
 
 		CHANGES IN R VERSION 1.0.1
