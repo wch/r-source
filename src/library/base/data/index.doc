@@ -34,6 +34,7 @@ randu		Random Numbers produced by RANDU
 rivers		Lengths of Major Rivers in North America
 savings		Intercountry Life-Cycle Savings Data
 sleep		Student's Sleep Data
+stackloss	Brownlee's Stack Loss Plant Data
 state		US State Facts and Figures
 sunspots	Yearly Average Sunspot Counts (compare with nhtemp)
 swiss		Swiss Demographic Data
