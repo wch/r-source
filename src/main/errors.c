@@ -35,12 +35,6 @@
    two lines */
 #define LONGCALL 30
 
-/* This is now non-static so that other applications that link or load libR.so
-   can override it by defining their own version and hence by-pass the longjmp
-   back into the standard R event loop.
- */
-void jump_now();
-
 /*
 Different values of inError are used to indicate different places
 in the error handling.
@@ -50,7 +44,7 @@ static int inWarning = 0;
 
 /* Interface / Calling Hierarchy :
 
-  R__stop()   -> do_error ->   errorcall --> jump_to_toplevel --> jump_now
+  R__stop()   -> do_error ->   errorcall --> jump_to_toplevel
 			 /
 		    error
 
@@ -111,7 +105,6 @@ void onsigusr1()
 	PrintWarnings();
 	inError = 1;
     }
-
 
     R_ResetConsole();
     R_FlushConsole();
@@ -384,7 +377,7 @@ void errorcall(SEXP call, const char *format,...)
 	    va_end(ap);
 	    REprintf("%s\n", errbuf);
 	}
-	jump_now();
+	jump_to_toplevel();
     }
 
     /* set up a context to restore inError value on exit */
@@ -408,6 +401,7 @@ void errorcall(SEXP call, const char *format,...)
 	}
 	else
 	    sprintf(errbuf, "Error: ");
+	inError = 0;
     }
     else
 	sprintf(errbuf, "Error: ");
@@ -460,6 +454,7 @@ void jump_to_toplevel()
     SEXP s, t;
     int haveHandler, oldInError;
     int nback = 0;
+    Rboolean traceback;
 
     /* set up a context to restore inError value on exit */
     begincontext(&cntxt, CTXT_CCODE, R_NilValue, R_NilValue, R_NilValue,
@@ -469,41 +464,54 @@ void jump_to_toplevel()
 
     oldInError = inError;
 
-    if (! inError)
-	inError = 1;
-
-    if( R_ShowErrorMessages && R_CollectWarnings ) {
-	inError = 2;
-	REprintf("In addition: ");
-	PrintWarnings();
-	inError = 1;
+    if (inError) {
+	traceback = FALSE;
+	haveHandler = FALSE;
     }
+    else {
+	traceback = TRUE;
 
-    /*now see if options("error") is set */
-    s = GetOption(install("error"), R_NilValue);
-    haveHandler = ( s != R_NilValue );
-    if (haveHandler) {
-	if( !isLanguage(s) &&  ! isExpression(s) )  /* shouldn't happen */
-	    REprintf("invalid option \"error\"\n");
-	else {
-	    inError = 3;
-	    if (isLanguage(s))
-		eval(s, R_GlobalEnv);
-	    else /* expression */
-	    {
-		int i, n = LENGTH(s);
-		for (i = 0 ; i < n ; i++)
-		    eval(VECTOR_ELT(s, i), R_GlobalEnv);
-	    }
+	inError = 1;
+
+	if( R_ShowErrorMessages && R_CollectWarnings ) {
+	    inError = 2;
+	    REprintf("In addition: ");
+	    PrintWarnings();
 	    inError = 1;
 	}
+
+	/*now see if options("error") is set */
+	s = GetOption(install("error"), R_NilValue);
+	haveHandler = ( s != R_NilValue );
+	if (haveHandler) {
+	    if( !isLanguage(s) &&  ! isExpression(s) )  /* shouldn't happen */
+		REprintf("invalid option \"error\"\n");
+	    else {
+		inError = 3;
+		if (isLanguage(s))
+		    eval(s, R_GlobalEnv);
+		else /* expression */
+		    {
+			int i, n = LENGTH(s);
+			for (i = 0 ; i < n ; i++)
+			    eval(VECTOR_ELT(s, i), R_GlobalEnv);
+		    }
+		inError = 1;
+	    }
+	}
+
+	/* reset some stuff--not sure (all) this belongs here */
+	R_ResetConsole();
+	R_FlushConsole();
+	R_ClearerrConsole();
+	R_ParseError = 0;
     }
 
-    /* reset some stuff--not sure (all) this belongs here */
-    R_ResetConsole();
-    R_FlushConsole();
-    R_ClearerrConsole();
-    R_ParseError = 0;
+    /* WARNING: If inError > 0 ABSOLUTELY NO ALLOCATION can be
+       triggered after this point except whatever happens in
+       R_run_onexits.  The error could be an out of memory error and
+       any allocation could result in an infinite-loop condition. All
+       you can do is reset things and exit.  */
 
     /* find the jump target; do the jump if target is a CTXT_RESTART */
     for (c = R_GlobalContext; c; c = c->nextcontext) {
@@ -516,65 +524,39 @@ void jump_to_toplevel()
 	if (c->callflag == CTXT_TOPLEVEL)
 	    break;
     }
+    /* at this point we should have c == R_ToplevelContext */
 
-    /* run onexit/cend code for all contexts down to but not including
-       the jump target */
-    R_run_onexits(c);
+    /* Run onexit/cend code for all contexts down to but not including
+       the jump target.  This may cause recursive calls to
+       jump_to_toplevel, but the possible number of such recursive
+       calls is limited since each exit function is removed before it
+       is executed.  In addition, all but the first should have
+       inError > 0.  This is not a great design because we could run
+       out of other resources that are on the stack (like C stack for
+       example).  The right thing to do is arrange to execute exit
+       code *after* the LONGJMP, but that requires a more extensive
+       redesign of the non-local transfer of control mechanism.
+       LT. */
+    R_run_onexits(R_ToplevelContext);
 
     if ( !R_Interactive && !haveHandler && inError ) {
 	REprintf("Execution halted\n");
 	R_CleanUp(SA_NOSAVE, 1, 0); /* quit, no save, no .Last, status=1 */
     }
 
-    PROTECT(s = allocList(nback));
-    t = s;
-    for (c = R_GlobalContext ;
-	 c != NULL && c->callflag != CTXT_TOPLEVEL;
-	 c = c->nextcontext)
-	if (c->callflag & CTXT_FUNCTION ) {
-	    SETCAR(t, deparse1(c->call, 0));
-	    t = CDR(t);
-	}
-    setVar(install(".Traceback"), s, R_GlobalEnv);
-    UNPROTECT(1);
-    jump_now();
-
-    /* not reached */
-    endcontext(&cntxt);
-}
-
-/*
-   Absolutely no allocation can be triggered in jump_now except
-   whatever happens in R_run_onexits.  The error could be an out of
-   memory error and any allocation could result in an infinite-loop
-   condition. All you can do is reset things and exit.  */
-void jump_now()
-{
-    RCNTXT *c;
-
-    /* find the jump target; do the jump if target is a CTXT_RESTART */
-    for (c = R_GlobalContext; c; c = c->nextcontext) {
-	if (IS_RESTART_BIT_SET(c->callflag)) {
-	    inError=0;
-	    findcontext(CTXT_RESTART, c->cloenv, R_RestartToken);
-	}
-	if (c->callflag == CTXT_TOPLEVEL)
-	    break;
+    if (traceback) {
+	PROTECT(s = allocList(nback));
+	t = s;
+	for (c = R_GlobalContext ;
+	     c != NULL && c->callflag != CTXT_TOPLEVEL;
+	     c = c->nextcontext)
+	    if (c->callflag & CTXT_FUNCTION ) {
+		SETCAR(t, deparse1(c->call, 0));
+		t = CDR(t);
+	    }
+	setVar(install(".Traceback"), s, R_GlobalEnv);
+	UNPROTECT(1);
     }
-    /* at this point we should have c == R_TopLevelContext */
-
-    /* Run onexit/cend code for all contexts down to but not including
-       the jump target.  Ordinarily this will already have been done,
-       but it may not have been completed in a recursive error
-       situation.  This may cause recursive calls to jump_now, but the
-       possible number of such recursive calls is limited since each
-       exit function is removed before it its executed.  This is not a
-       great design because we could run out of other resources that
-       are on the stack (like C stack for example).  The right thing
-       to do is arrange execute exit *after* the LONGJMP, but that
-       requires a more extensive redesign of the non-local transfer of
-       control mechanism.  LT. */
-    R_run_onexits(R_ToplevelContext);
 
     if( inError == 2 )
 	REprintf("Lost warning messages\n");
@@ -587,8 +569,10 @@ void jump_now()
     R_restore_globals(R_GlobalContext);
 
     LONGJMP(R_ToplevelContext->cjmpbuf, 0);
-}
 
+    /* not reached */
+    endcontext(&cntxt);
+}
 
 SEXP do_stop(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
