@@ -47,9 +47,9 @@ rt(n, df)
 
   The general \emph{non-central} \eqn{t}
   with parameters \eqn{(\nu,\delta)}{(df,Del)} \code{= (df, ncp)}
-  is defined as a the distribution of
+  is defined as the distribution of
   \eqn{T_{\nu}(\delta) := \frac{U + \delta}{\chi_{\nu}/\sqrt{\nu}}}{%
-      T(df,Del) := (U + Del) / (Chi(df) / sqrt(df)) }
+      T(df, Del) := (U + Del) / (Chi(df) / sqrt(df)) }
   where \eqn{U} and \eqn{\chi_{\nu}}{Chi(df)}  are independent random
   variables, \eqn{U \sim {\cal N}(0,1)}{U \~ N(0,1)}, and
 %%fails  \eqn{{\chi_{\nu}}^2}{(Chi(df))^2}
