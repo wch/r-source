@@ -1,7 +1,7 @@
 \name{ecdf}
 \alias{ecdf}
 \alias{print.ecdf}
-\alias{summary.ecdf}
+%\alias{summary.ecdf}
 \alias{plot.ecdf}
 \title{Empirical Cumulative Distribution Function}
 \usage{
@@ -9,7 +9,7 @@ ecdf(x)
 
 \method{plot}{ecdf}(\dots, verticals = FALSE, col.01line = "gray70")
 \method{print}{ecdf}(x, digits= getOption("digits") - 2, \dots)
-\method{summary}{ecdf}(object, \dots)
+%\method{summary}{ecdf}(object, \dots)
 }
 \arguments{
   \item{x}{numeric vector of ``observations'' in \code{ecdf};  for the

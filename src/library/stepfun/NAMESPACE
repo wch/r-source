@@ -1,0 +1,12 @@
+export(as.stepfun, ecdf, is.stepfun, knots, lines.stepfun, plot.ecdf,
+       plot.stepfun, print.ecdf, print.stepfun, stepfun, summary.stepfun)
+## the examples call summary.stepfun directly ...
+
+S3method(as.stepfun, default)
+S3method(knots, stepfun)
+S3method(lines, stepfun)
+S3method(plot, ecdf)
+S3method(plot, stepfun)
+S3method(print, stepfun)
+S3method(summary, ecdf)
+S3method(summary, stepfun)
