@@ -439,6 +439,13 @@ void GRestore(DevDesc*);
 void GSavePars(DevDesc*);
 void GRestorePars(DevDesc*);
 
+SEXP FixupPch(SEXP, DevDesc*);
+SEXP FixupLty(SEXP, DevDesc*);
+SEXP FixupFont(SEXP);		/* FIXME: need 2nd arg? */
+SEXP FixupCol(SEXP, DevDesc*);
+SEXP FixupCex(SEXP);
+
+
 		/* Device State functions */
 
 void GCheckState(DevDesc*);
