@@ -287,7 +287,6 @@ static double TeX(TEXPAR which)
 
     case xi8:     /* default_rule_thickness */
 	return RuleThickness();
-	break;
 
     case xi9:     /* big_op_spacing1 */
     case xi10:    /* big_op_spacing2 */
@@ -295,6 +294,8 @@ static double TeX(TEXPAR which)
     case xi12:    /* big_op_spacing4 */
     case xi13:    /* big_op_spacing5 */
 	return 0.15 * XHeight();
+    default:/* never happens (enum type) */
+	error("invalid `which' in TeX()!\n"); return 0;/*-Wall*/
     }
 }
 
