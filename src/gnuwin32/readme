@@ -54,7 +54,7 @@ You should install at least one of the text help and the compiled HTML help.
 Usage
 =====
 
-There are two executables in @RWVER@\bin:
+There are two versions of the R executable in @RWVER@\bin:
 
 GUI:
 
@@ -215,7 +215,8 @@ Binaries for many packages are available at
 CRAN/bin/windows/windows-NT/contrib.  These are zip files which should
 be unpacked in @RWVER@\library.  They are then available for use.  You
 can also use the installer rwinst.exe to selectively unpack the zip
-files.
+files.  Perhaps the simplest option is to run the R function
+install.packages: see its help page.
 
 The list of packages and functions given by HTML help and used by the
 search engine can be updated from a running R process by the command
@@ -277,11 +278,11 @@ Using package tcltk
 ===================
 
 The package tcltk introduced in version 1.1.0 provides somewhat
-experimental support for building graphical interfaces with Tcl/Tk.  To
-use this you need to install tcl831.exe from dev.scriptics.com, and
-you will need the Tcl and Tk dlls in your path.  Also, you need to set
-the environment variable TCL_LIBRARY, to something like
-c:/Program Files/Tcl/lib/tcl8.3.
+experimental support for building graphical interfaces with Tcl/Tk.
+To use this you need to install tcl831.exe or tcl832.exe from
+dev.scriptics.com, and you will need the Tcl and Tk dlls in your path.
+Also, you need to set the environment variable TCL_LIBRARY, to
+something like c:/Program Files/Tcl/lib/tcl8.3.
 
 How you set environmental variables under Windows is system-dependent,
 but with R you can always use the form
@@ -294,7 +295,8 @@ The demos(tk*) will work on Windows.
 Building From Source
 ====================
 
-See the file INSTALL in the source distribution and the rw-FAQ.
+See the file @RVER@\src\gnuwin32\INSTALL in the source distribution
+and the rw-FAQ.
 
 
 Feedback
