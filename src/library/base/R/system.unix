@@ -179,6 +179,8 @@ system.time <- function(expr) {
 	new.time - time
 }
 
+unix.time <- system.time
+
 tempfile <- function(pattern = "file") {
 	system(paste("for p in", paste(pattern, collapse = " "), ";",
 		     "do echo /tmp/$p$$; done"),

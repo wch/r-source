@@ -1,1 +1,0 @@
-unix.time <- function(expr) system.time(expr)
