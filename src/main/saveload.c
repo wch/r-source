@@ -266,7 +266,7 @@ static SEXP AsciiLoadOld(FILE *fp, int version)
 # error code requires that int have 32 bits
 #endif
 
-#include <rpc/xdr.h>
+#include <rpc/rpc.h>
 
 static XDR xdrs;
 
