@@ -5,6 +5,8 @@ postscript(\dots)
 pictex(\dots)  
 #ifdef unix
 x11(\dots)
+png(\dots)
+jpeg(\dots)
 #endif
 #ifdef windows
 windows(\dots)
@@ -15,25 +17,30 @@ bmp(\dots)
 #ifdef mac
 macintosh(\dots)
 #endif
+bitmap(\dots)
 }
 \alias{Devices}
 \alias{device}
 \description{The following graphics devices are currently available:
 \itemize{
-  \item \link{postscript} Writes PostScript graphics commands to a file
-  \item \link{pictex} Writes LaTeX/PicTeX graphics commands to a file
+  \item \code{\link{postscript}} Writes PostScript graphics commands to a file
+  \item \code{\link{pictex}} Writes LaTeX/PicTeX graphics commands to a file
 #ifdef unix
-  \item \link{x11} The graphics driver for the X11 Window system (Unix)
+  \item \code{\link{x11}} The graphics driver for the X11 Window system (Unix)
+  \item \code{\link{png}} PNG bitmap device
+  \item \code{\link{jpeg}} JPEG bitmap device
 #endif
 #ifdef windows
-  \item \link{windows} The graphics driver for Windows (on screen, to
+  \item \code{\link{windows}} The graphics driver for Windows (on screen, to
     printer and to Windows metafile.
-  \item \link{png} PNG bitmap device
-  \item \link{jpeg} JPEG bitmap device
-  \item \link{bmp} BMP bitmap device
+  \item \code{\link{png}} PNG bitmap device
+  \item \code{\link{jpeg}} JPEG bitmap device
+  \item \code{\link{bmp}} BMP bitmap device
 #endif
+  \item \code{\link{bitmap}} bitmap pseudo-device via \code{GhostScript} (if
+    available).
 #ifdef mac
-  \item \link{macintosh} The graphics driver for the Macintosh
+  \item \code{\link{macintosh}} The graphics driver for the Macintosh
 #endif
 }
 }
