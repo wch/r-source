@@ -10,13 +10,13 @@
 optim(par, fn, gr = NULL,
       method = c("Nelder-Mead", "BFGS", "CG", "L-BFGS-B", "SANN"),
       lower = -Inf, upper = +Inf,
-      control = list(), hessian = FALSE), \dots)
+      control = list(), hessian = FALSE, \dots)
 }
 \arguments{
  \item{par}{Initial values for the parameters to be optimized over.}
- \item{fn}{A function to be minimized, with first argument the vector of
-   parameters over which minimization is to take place. It should return
-   a scalar result.}
+ \item{fn}{A function to be minimized (or maximized), with first
+   argument the vector of parameters over which minimization is to take
+   place. It should return a scalar result.}
  \item{gr}{A function to return the gradient. Not needed for the
    \code{"Nelder-Mead"} and \code{"SANN"} method. If it is \code{NULL}
    and it is needed, a
