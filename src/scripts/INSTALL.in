@@ -160,6 +160,7 @@ with_package_versions=false
 save="CHECK"
 save_args=
 fake=false
+lazy=false
 
 while test -n "${1}"; do
   ##DBG echo "   in 'R INSTALL' --arg checking-- \$1 = '${1}'" # Debugging
