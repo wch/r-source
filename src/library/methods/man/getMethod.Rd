@@ -7,8 +7,11 @@
 \title{ Get the Definition of a Method }
 \description{
   A call to \code{getMethod} returns the method
-  corresponding a particular generic function and signature (set
-  classes for formal arguments). The functions \code{MethodsListSelect}
+  corresponding a particular generic function and signature; a call to
+  \code{findMethod} returns the vector of package names in which a
+  matching method is found.
+
+  The functions \code{MethodsListSelect}
   and \code{selectMethod} select methods using an environment in which
   arguments to the function have been assigned (they differ in the
   treatment of inheritance).  Neither is intended to be called directly,
