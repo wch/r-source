@@ -1,4 +1,26 @@
 
+		CHANGES IN VERSION R VERSION 0.60.1
+
+NEW FEATURES
+
+    o	"split" is now a generic function, with a method for data frames.
+	(contributed by Doug Bates).
+
+    o	S compatible functions "all.names" and "all.vars" added.
+
+
+BUG FIXES
+
+    o	A file was closed multiple times if an error message occured
+	after sourcing a file.  In some versions of Linux this caused
+	a core dump.
+
+    o   The inclusion <readline/history.h> was causing problems with
+	some versions of readline because the file did not exist.
+	This is now detected by configure.
+
+
+
 		CHANGES IN VERSION R VERSION 0.60
 
 R is about to become an official part of the GNU project.
