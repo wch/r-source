@@ -270,9 +270,10 @@ clean:
 	@if [ "$(srcdir)" != "." ]; then \
 	  rm -rf Rd.sty images; \
 	fi
-	@-rm -f *.aux *.cp *.cps *.dvi *.fn *.fns *.info* *.ky *.kys \
-	  *.log *.out *.pdf *.pg *.pgs *.ps *.ps-2 *.tmp *.toc *.tp  \
-	  *.vr *.vrs *-pkg.tex refman.i?? refman.tex version.tex \
+	@-rm -f *.aux *.cp *.cps *.dvi *.fn *.fns *.html *.info* \
+	  *.ky *.kys *.log *.out *.pdf *.pg *.pgs *.ps *.ps-2 *.tmp \
+	  *.toc *.tp *.vr *.vrs \
+	  *-pkg.tex refman.i?? refman.tex version.tex \
 	  version.texi
 	@rm -f stamp-*
 distclean: clean
