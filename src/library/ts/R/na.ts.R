@@ -13,11 +13,13 @@ na.omit.ts <- function(frame)
     if(st > 1) omit <- c(omit, 1:(st-1))
     en <- max(good)
     if(en < n) omit <- c(omit, (en+1):n)
+    cl <- class(frame)
     if(length(omit)) {
         frame <- if(is.matrix(frame)) frame[st:en,] else frame[st:en]
         attr(omit, "class") <- "omit"
         attr(frame, "na.action") <- omit
         tsp(frame) <- c(tm[st], tm[en], xfreq)
+        if(!is.null(cl)) class(frame) <- cl
     }
     if(any(is.na(frame))) stop("time series contains internal NAs")
     frame
@@ -43,11 +45,13 @@ na.contiguous <- function(frame)
     n <- NROW(frame)
     if(st > 1) omit <- c(omit, 1:(st-1))
     if(en < n) omit <- c(omit, (en+1):n)
+    cl <- class(frame)
     if(length(omit)) {
         frame <- if(is.matrix(frame)) frame[st:en,] else frame[st:en]
         attr(omit, "class") <- "omit"
         attr(frame, "na.action") <- omit
         tsp(frame) <- c(tm[st], tm[en], xfreq)
+        if(!is.null(cl)) class(frame) <- cl
     }
     frame
 }

@@ -19,7 +19,8 @@ na.omit.ts(frame)
     stretch.)
 }
 \value{
-    A time series without missing values.
+    A time series without missing values. The class of \code{frame} will
+    be preserved.
 }
 \author{B. D. Ripley}
 \seealso{\code{\link{na.omit}}, \code{\link{na.fail}}}
