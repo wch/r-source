@@ -243,41 +243,26 @@ changed by argument @code{na}.  Note that @code{NaN}s are treated as
 @cindex Quoting strings
 
 By default strings are quoted (including the row and column names).
-Argument @code{quote} controls quoting of character variables.  Factors
-are never quoted (and most character variables in data frames are
-factors).
+Argument @code{quote} controls quoting of character and factor variables.
 
-Some care is needed if the strings contain embedded quotes.
+Some care is needed if the strings contain embedded quotes. Three
+useful forms are
 
 @smallexample
 > df <- data.frame(a = I("a \" quote"))
 > write.table(df)
 "a"
-"1" "a " quote"
-> write.table(df, quote=FALSE)
-a
-1 a " quote
-@end smallexample
-
-@noindent
-is much as one might expect, but is probably not acceptable to other
-programs.  Better solutions include
-
-@smallexample
-> equote <- function(x)
-    if(is.character(x) gsub('"', '\\\\"', x)) else x
-> write.table(lapply(df, equote))
-"a"
 "1" "a \" quote"
-> dquote <- function(x)
-    if(is.character(x) gsub('"', '""', x)) else x
-> write.table(lapply(df, dquote))
+> write.table(df, qmethod="double")
 "a"
 "1" "a "" quote"
+> write.table(df, quote=FALSE, sep=",")
+a
+1,a " quote
 @end smallexample
 
 @noindent
-the latter being the form of escape commonly used by spreadsheets.
+The second is the form of escape commonly used by spreadsheets.
 @end enumerate
 
 @findex sink
@@ -676,7 +661,7 @@ on Linux.
 @cindex Open Database Connectivity
 There are other commonly used data sources, including spreadsheets,
 non-relational databases and even text files (possibly compressed).
-Open Database Connectivity (ODBC) is a standard to all of these data
+Open Database Connectivity (ODBC) is a standard to use all of these data
 sources. It originated on Windows (see
 @uref{http://www.microsoft.com/data/odbc/}) but is also implemented on
 Linux.
@@ -791,17 +776,17 @@ SQL name).
 
 @table @code
 @item float(p)
-Real number, with optional precision
+Real number, with optional precision.  Often called @code{real}.
 @item integer
-32-bit integer
+32-bit integer.  Often called @code{int}.
 @item smallint
 16-bit integer
 @item character(n)
-fixed-length character string
+fixed-length character string.  Often called @code{char}.
 @item character varying(n)
-variable-length character string
+variable-length character string  Often called @code{varchar}.
 @item boolean
-true or false.
+true or false.  Sometimes called @code{bool}.
 @item date
 calendar date
 @item time

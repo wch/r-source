@@ -123,11 +123,11 @@ NEW FEATURES
 	by calling anovalist.lm() directly.
 
     o	anova() for multiple lm and glm objects no longer truncates the
-	formula. There is much more extensive documentation for anova()
-	methods.
+	formula printed. There is much more extensive documentation 
+	for anova() methods.
 
     o	The standard methods for add1() and drop1() now attempt to cope
-	with missing values by using a subset of the data  that is
+	with missing values by using a subset of the data that is
 	`cleaned' by na.action for the maximal model under consideration.
 
     o	New method as.data.frame.table() for converting the array-based
@@ -253,12 +253,12 @@ NEW FEATURES
 	nonlocal return from R's error handling could bring the Tk
 	system into a strange state.  
 
-    o	New demos for tcltk: tkfaq, tkfilefind, tkcanvas
+    o	New demos for tcltk: tkfaq, tkfilefind, tkcanvas.
 
     o	termplot() now has an `ask' argument.
 
     o	options(width) now admits to a limit (previously 200, now
-	10000) and gives a more informative message is out of range
+	10000) and gives a more informative message if out of range
 	(as it does now for digits and expressions).
 
     o	Function path.expand() to do tilde-expansion on file paths.
@@ -298,6 +298,18 @@ NEW FEATURES
 	each evaluation.
 
     o	traceback() is now printed un-quoted.
+
+    o	write.table() now quotes factor columns if quote=TRUE, and has
+	a new argument `qmethod' to control the escaping of
+	embedded quotes in character or factor columns.
+
+    o	The print routines now escape " (as \") in a character string
+	only when it is printed as a quoted string.  This makes
+	print(, quote=FALSE) and cat() consistent.
+
+    o	help() has an additional `pager' argument which may be passed to
+	file.show().
+
 
 
 BUG FIXES
@@ -486,8 +498,6 @@ BUG FIXES
 
     o	t.test() allows an input vector of length 2.
 
-    o	help() has an additional `pager' argument which may be passed to
-	file.show().
 
 
 	**************************************************
