@@ -48,7 +48,7 @@ svnonly:
 	else \
 	  if test "$(BUILDDIR_IS_SRCDIR)" = no ; then \
 	    for f in $(NON_SVN_INSTFILES); do \
-	      $(INSTALL_DATA) $(srcdir)/$${f} "$(rhome)/$(subdir)"; \
+	      $(INSTALL_DATA) $(srcdir)/$${f} $(builddir); \
 	    done \
 	  fi \
 	fi
