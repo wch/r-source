@@ -181,6 +181,7 @@ function(package, help, lib.loc = NULL, character.only = FALSE,
                 title <- if(file.exists(INDEX))
                     read.00Index(INDEX)[, 2]
                 else ""
+                if(length(title) == 0) title <- ""
                 db <- rbind(db, cbind(i, lib, title))
             }
             if(length(a) == 0)

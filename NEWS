@@ -113,7 +113,7 @@ NEW FEATURES
 
     o	Connections to bzip2-ed files via bzfile().
 
-    o   The tcltk package now works with the gnome user interface.
+    o   The tcltk package now works with the GNOME user interface.
 
     o   chol() allows pivoting via new argument `pivot'.
 
@@ -571,13 +571,15 @@ BUG FIXES
     o   persp.default() no longer crashes with non-character labels.
 	(PR#1431)
 
-    o   fft() failed to give correct answers for sizes 392, 588, 968, 980 ....
+    o   fft() gave incorrect answers for input sizes 392, 588, 968, 980 ....
 	(PR#1429)
 
     o   det(method = "qr") gave incorrect results for numerically
 	singular matrices. (PR#1244)
 
-    o   barplot() has allows the user to control `xpd'. (PR#1088, 1398)
+    o   barplot() now allows the user to control `xpd'. (PR#1088, 1398)
+
+    o   library() (with no arguments) no longer fails on empty TITLE files.
 
 
 	**************************************************
