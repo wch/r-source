@@ -383,10 +383,6 @@ Directory:  incoming
 Subject: predict.nnet
 From: jcs20@po.cwru.edu
 Date: Mon, 26 Nov 2001 22:00:13 +0100 (MET)
-* PR# 1182 *
-Subject: Table Command
-From: mdesai@biostat.cpmc.columbia.edu
-Date: Tue, 27 Nov 2001 21:02:42 +0100 (MET)
 * PR# 1183 *
 Subject:  R-devel 11/27 will not build on solaris 2.8 
 From: v <stvjc@localhost.localdomain>
@@ -411,3 +407,7 @@ Date: 29 Nov 2001 15:13:01 -0600
 Subject: rug(x) clip warning incorrect if par("xlog")==TRUE
 From: "Charles C. Berry" <cberry@tajo.ucsd.edu>
 Date: Thu, 29 Nov 2001 13:17:22 -0800 (PST)
+* PR# 1189 *
+Subject: graphics device updating
+From: "Alastair Pout" <A.Pout@macaulay.ac.uk>
+Date: Fri, 30 Nov 2001 17:55:25 +0000
