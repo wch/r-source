@@ -250,6 +250,9 @@ BUG FIXES
 
     o   Pointer protection bug in load() code.
 
+    o	Assignment with unknown string index caused memory corruption
+        when used on matrices.
+
 
 	**************************************************
 	*						 *
