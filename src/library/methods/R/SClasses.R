@@ -31,28 +31,38 @@ setClass <-
     }
     classDef <- completeClassDefinition(Class, classDef, where, doExtends = FALSE)
     oldDef <- getClassDef(Class, where)
-    assignClassDef(Class, classDef, where)
-    badContains <- character()
-    for(class2 in superClasses)
-        if(is(try(setIs(Class, class2, where = where)), "try-error"))
-            badContains <- c(badContains, class2)
-    if(length(badContains)>0) {
-        msg <- paste(dQuote(badContains), collapse = ", ")
-        if(is(try(removeClass(Class, where)), "try-error"))
-           stop("Error in contained classes (", msg, ") for class \"", Class,
-                "\" and unable to remove definition from \"",
-                , getPackageName(where), "\"")
-        if(is.null(oldDef))
-            stop("Error in contained classes (", msg, ") for class \"", Class,
-                 "\"; class definition removed from \"", getPackageName(where), "\"")
-        else if(is(try(setClass(Class, oldDef, where=where)), "try-error"))
-           stop("Error in contained classes (", msg, ") for class \"", Class,
-                "\" and unable to restore previous definition from \"",
-                , getPackageName(where), "\"")
-        else
-           stop("Error in contained classes (", msg, ") for class \"", Class,
-                "\"; previous definition restored to \"",
-                getPackageName(where), "\"")
+    if(length(superClasses) == 0)
+        assignClassDef(Class, classDef, where)
+    else {
+        sealed <- classDef@sealed
+        classDef@sealed <- FALSE # to allow setIs to work anyway; will be reset later
+        assignClassDef(Class, classDef, where)
+        badContains <- character()
+        for(class2 in superClasses)
+            if(is(try(setIs(Class, class2, classDef = classDef, where = where)), "try-error"))
+                badContains <- c(badContains, class2)
+        if(length(badContains)>0) {
+            msg <- paste(dQuote(badContains), collapse = ", ")
+            if(is(try(removeClass(Class, where)), "try-error"))
+                stop("Error in contained classes (", msg, ") for class \"", Class,
+                     "\" and unable to remove definition from \"",
+                     , getPackageName(where), "\"")
+            if(is.null(oldDef))
+                stop("Error in contained classes (", msg, ") for class \"", Class,
+                     "\"; class definition removed from \"", getPackageName(where), "\"")
+            else if(is(try(setClass(Class, oldDef, where=where)), "try-error"))
+                stop("Error in contained classes (", msg, ") for class \"", Class,
+                     "\" and unable to restore previous definition from \"",
+                     , getPackageName(where), "\"")
+            else
+                stop("Error in contained classes (", msg, ") for class \"", Class,
+                     "\"; previous definition restored to \"",
+                     getPackageName(where), "\"")
+        }
+        if(sealed) {
+            classDef@sealed <- TRUE
+            assignClassDef(Class, classDef, where)
+        }
     }
     Class
 }
@@ -95,7 +105,7 @@ prototype <- function(...)
     if(dataPart) {
         if(sum(data) > 1)
             stop("only one data object (unnamed argument to prototype) allowed")
-        obj <- props[[seq(along=data)[data] ]]
+        obj <- unclass(props[[seq(along=data)[data] ]])
         props <- props[!data]
         names <- names[!data]
     }
