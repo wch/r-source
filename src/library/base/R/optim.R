@@ -35,7 +35,7 @@ optim <- function(par, fn, gr = NULL,
     if(!is.null(nm)) names(res$par) <- nm
     names(res$counts) <- c("function", "gradient")
     if (hessian) {
-        hess <- .Internal(optimhess(par, fn, gr, con))
+        hess <- .Internal(optimhess(res$par, fn, gr, con))
         hess <- 0.5*(hess + t(hess))
         if(!is.null(nm)) dimnames(hess) <- list(nm, nm)
         res$hessian <- hess
