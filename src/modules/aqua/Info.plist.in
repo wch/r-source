@@ -9,7 +9,7 @@
 	<key>CFBundleGetInfoString</key>
 	<string>Darwin port of R @VERSION@, the GNU 'S' language</string>
 	<key>CFBundleIdentifier</key>
-	<string>org.r-project.R</string>
+	<string>org.r-project.R-framework</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
