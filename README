@@ -57,28 +57,30 @@ applications. In addition, we have implemented a large part of the
 functionality from the 1992 book "Statistical Models in S" (the "White
 Book").
 
-All the R functions have been documented in the form of help pages in an
-"output independent" form which can be used to create versions for HTML,
-LaTeX, text etc. A 700+ page Reference Index (a collection of all the
-help pages) can be obtained in a variety of formats. The document "An
-Introduction to R" provides a more user-friendly starting point. See
-INSTALL for instructions on how to generate these documents.
+All the R functions have been documented in the form of help pages in
+an "output independent" form which can be used to create versions for
+HTML, LaTeX, text etc.  A 800+ page Reference Index (a collection of
+all the help pages) can be obtained in a variety of formats. The
+manual `An Introduction to R' provides a more user-friendly starting
+point, and there is an `R Language Definition' manual and more
+specialized manuals on data import/export and extending R. See INSTALL
+for instructions on how to generate these documents.
 
 
 4. GOALS
 
 Our aim at the start of this project was to demonstrate that it was
-possible to produce an S-like environment which did not suffer from the
-memory-demands and performance problems which S has. Somewhat later, we
-started to turn R into a "real" system, but unfortunately we seem to
-have lost a large part of the efficiency advantage in the process, so
-one of our short-term goals is to revise the memory management mechanism
-and look for other candidates for optimization.
+possible to produce an S-like environment which did not suffer from
+the memory-demands and performance problems which S has.  Somewhat
+later, we started to turn R into a "real" system, but unfortunately we
+lost a large part of the efficiency advantage in the process, so have
+recently revised the memory management mechanism and are looking for
+other candidates for optimization.
 
-Longer-term goals include to explore new ideas: e.g. virtual objects and
-component-based programming, and expanding the scope of existing ones
-like formula-based interfaces. Further, we wish to get a handle on a
-general approach to graphical user interfaces (preferably with
+Longer-term goals include to explore new ideas: e.g. virtual objects
+and component-based programming, and expanding the scope of existing
+ones like formula-based interfaces.  Further, we wish to get a handle
+on a general approach to graphical user interfaces (preferably with
 cross-platform portability), and to develop better 3-D and dynamic
 graphics.
 
