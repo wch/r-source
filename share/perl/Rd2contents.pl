@@ -56,9 +56,11 @@ if($out) {
 }
 
 while(glob file_path($ARGV[0], "man", "*.Rd")){ &do_one; }
+while(glob file_path($ARGV[0], "man", "*.rd")){ &do_one; }
 
 if(-d  &file_path($ARGV[0], "man", $OSdir)) {
     while(glob file_path($ARGV[0], "man",  $OSdir, "*.Rd")){ &do_one; }
+    while(glob file_path($ARGV[0], "man",  $OSdir, "*.rd")){ &do_one; }
 }
 
 sub do_one {
