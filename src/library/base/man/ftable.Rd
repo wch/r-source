@@ -36,8 +36,10 @@ write.ftable(x, file = "", quote = TRUE, digits = getOption("digits"))
     variables, or a character vector giving the names of the variables
     to be used for the columns of the flat contingency table.}
   \item{x}{an arbitrary \R object.}
-  \item{file}{a character string giving the name of the file which the
-    data are to be read from or written to.} 
+  \item{file}{either a character string naming a file or a connection
+    which the data are to be read from or written to.  \code{""}
+    indicates input from the console for reading and output to the
+    console for writing.}
   \item{sep}{the field separator string.  Values on each line of the file
     are separated by this string.}
   \item{quote}{a character string giving the set of quoting characters
