@@ -159,6 +159,9 @@ $(srcdir)/gram.c: @MAINTAINER_MODE_TRUE@ $(srcdir)/gram.y
 connections.o: $(srcdir)/connections.c
 	$(CC) $(ZLIB_CPPFLAGS) $(ALL_CPPFLAGS) $(ALL_CFLAGS) -c $< -o $@
 
+dounzip.o: $(srcdir)/dounzip.c
+	$(CC) $(ZLIB_CPPFLAGS) $(ALL_CPPFLAGS) $(ALL_CFLAGS) -c $< -o $@
+
 install: installdirs
 	@$(MAKE) install-bin
 	@if test -f $(libR_la); then $(MAKE) install-lib; fi
