@@ -250,8 +250,10 @@ par(\dots, no.readonly = FALSE)
       %% same value.
     }
     \item{\code{tck}}{The length of tick marks as a fraction of the
-      smaller of the width or height of the plotting region.  If
-      \code{tck=1}, grid lines are drawn.  The default setting
+      smaller of the width or height of the plotting region.
+      If \code{tck >= 0.5} it is interpreted as a fraction of the
+      relevant side, so if
+      \code{tck=1} grid lines are drawn.  The default setting
       (\code{tck = NA}) is to use \code{tcl = -0.5} (see below).}
     \item{\code{tcl}}{The length of tick marks as a fraction of the
       height of a line of text.  The default value is \code{-0.5};

@@ -389,7 +389,8 @@ static void Specify(char *what, SEXP value, DevDesc *dd, SEXP call)
 
     else if (streql(what, "new")) {
 	lengthCheck(what, value, 1, call);	ix = asLogical(value);
-	R_DEV__(new) = (ix != 0);
+	if(!Rf_gpptr(dd)->state) warning("calling par(new=) with no plot");
+	else R_DEV__(new) = (ix != 0);
     }
     /* -- */
 

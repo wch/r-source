@@ -650,9 +650,19 @@ BUG FIXES
 	at dates the OS was unable to handle.
 
     o	legend(x, y, leg) doesn't triple `leg' anymore when it is a call.
+
+    o	boxplot() was ignoring cex.axis.  (PR#2628)
+
+    o	Erroneously calling par(new=TRUE) with no plot was not caught
+	and so could result in invalid graphics files.  (PR#4037)
+
+    o	par(tck=) was being interpreted incorrectly.  It is now
+	documented in the same way as S, and now behaves as
+	documented.  (PR#3504)
     
     o	readBin(what = "foo") didn't convert `what' to its type.
     
+
 
 
 	**************************************************

@@ -214,7 +214,7 @@ bxp <- function(z, notch=FALSE, width=NULL, varwidth=FALSE,
     axes <- is.null(pars$axes)
     if(!axes) { axes <- pars$axes; pars$axes <- NULL }
     if(axes) {
-        ax.pars <- pars[names(pars) %in% c("xaxt", "yaxt", "las")]
+        ax.pars <- pars[names(pars) %in% c("xaxt", "yaxt", "las", "cex.axis")]
         if (is.null(show.names)) show.names <- n > 1
         if (show.names)
             do.call("axis", c(list(side = 1 + horizontal,
