@@ -1,0 +1,70 @@
+#
+# ${R_HOME}/src/modules/Makefile
+
+VPATH = @srcdir@
+srcdir = @srcdir@
+top_srcdir = @top_srcdir@
+
+top_builddir = ../..
+subdir = src/modules
+
+include $(top_builddir)/Makeconf
+
+distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
+DISTFILES = Makefile.in
+
+SUBDIRS = X11 gnome
+
+all: Makefile R
+
+Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
+	@cd $(top_builddir) && \
+	  CONFIG_FILES=$(subdir)/$@ CONFIG_HEADERS= \
+	  $(SHELL) ./config.status
+
+R: Makefile
+	@for g in $(R_GUIS) ""; do \
+	  if test -n "$${g}"; then \
+	    (cd $${g} && $(MAKE) R) || exit 1; \
+	  fi; \
+	done
+
+mostlyclean: clean
+clean:
+## <FIXME>
+## This should really work for all subdirs ...
+	@for g in $(R_GUIS) ""; do \
+	  if test -n "$${g}"; then \
+	    (cd $${g} && $(MAKE) $@); \
+	  fi; \
+	done
+## </FIXME>
+distclean: clean
+## <FIXME>
+## This should really work for all subdirs ...
+	@for g in $(R_GUIS) ""; do \
+	  if test -n "$${g}"; then \
+	    (cd $${g} && $(MAKE) $@); \
+	  fi; \
+	done
+## </FIXME>
+	@for d in $(SUBDIRS); do \
+	  rm -f $${d}/Makefile; \
+	done
+	@-rm -f Makefile
+maintainer-clean: distclean
+
+distdir: $(DISTFILES)
+	@for f in $(DISTFILES); do \
+	  test -f $(distdir)/$${f} \
+	    || ln $(srcdir)/$${f} $(distdir)/$${f} 2>/dev/null \
+	    || cp -p $(srcdir)/$${f} $(distdir)/$${f}; \
+	done
+	@for d in $(SUBDIRS); do \
+	  test -d $(distdir)/$${d} \
+	    || mkdir $(distdir)/$${d} \
+	    || exit 1; \
+	  chmod 755 $(distdir)/$${d}; \
+	  (cd $${d} && $(MAKE) distdir) \
+	    || exit 1; \
+	done
