@@ -488,6 +488,9 @@ C-LEVEL FACILITIES
 
     o	ISNAN now works even in C++ code that undefines the 'isnan' macro.
 
+    o	R_alloc's limit on 64-bit systems has been raised from just
+	under 2^31 bytes to just under 2^34, and is now checked.
+
 
 DEPRECATED & DEFUNCT
 
