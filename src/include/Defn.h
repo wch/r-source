@@ -619,7 +619,7 @@ void ssort(SEXP*,int);
 SEXPTYPE str2type(char*);
 int StringTrue(char*);
 int StrToInternal(char*);
-void suicide(char*);
+void R_Suicide(char*);
 void SymbolShortcuts(void);
 SEXP syscall(int,RCNTXT*);
 int sysparent(int,RCNTXT*);
