@@ -236,7 +236,7 @@ static void GetFullDLLPath(SEXP call, char *buf, char *path)
 	strcpy(buf, R_ExpandFileName(path));
     else if(path[0] != '/') {
 #ifdef HAVE_UNISTD_H
-	if(!getcwd(buf, MAXPATHLEN))
+	if(!getcwd(buf, PATH_MAX))
 #endif
 	    errorcall(call, "can't get working directory!\n");
 	strcat(buf, "/");
@@ -250,7 +250,7 @@ static void GetFullDLLPath(SEXP call, char *buf, char *path)
 
 SEXP do_dynload(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    char buf[2*MAXPATHLEN];
+    char buf[2 * PATH_MAX];
     checkArity(op,args);
     if (!isString(CAR(args)) || length(CAR(args)) < 1)
 	errorcall(call, "character argument expected\n");
@@ -264,7 +264,7 @@ SEXP do_dynload(SEXP call, SEXP op, SEXP args, SEXP env)
 
 SEXP do_dynunload(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    char buf[2*MAXPATHLEN];
+    char buf[2 * PATH_MAX];
     checkArity(op,args);
     if (!isString(CAR(args)) || length(CAR(args)) < 1)
 	errorcall(call, "character argument expected\n");

@@ -871,17 +871,12 @@ SEXP dcdr(SEXP l)
 SEXP
 do_getwd(SEXP call, SEXP op, SEXP args, SEXP rho) {
     SEXP rval = R_NilValue;
-    size_t size = 100;    
-    char *buf;
+    char buf[2 * PATH_MAX];
 
     checkArity(op, args);
+
 #ifdef R_GETCWD
-    buf = (char *)malloc(size);
-    while (!R_GETCWD(buf, size)) {
-	size *= 2;
-	free(buf);
-	buf = (char *)malloc(size);
-    }
+    R_GETCWD(buf, PATH_MAX);
     rval = mkString(buf);
 #endif
     return(rval);
