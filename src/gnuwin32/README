@@ -175,7 +175,9 @@ colours) can be customized by editing the file etc\Rconsole, and a
 copy with a user's settings can be put in her HOME directory or in the
 working directory.  (The exact sequence is to search the directory
 pointed to by the first found of the environment variables R_USER then
-HOME then {HOMEDRIVE}{HOMEPATH} then the working directory, finally
+HOME, then the Windows "personal" directory (typically `C:\Documents
+and Settings\username\My Documents' in Windows XP)
+ then {HOMEDRIVE}{HOMEPATH} then the working directory, finally
 R_HOME\etc.  This also applies to .Renviron and other uses of `HOME'
 in our documentation.)  The file contains a description of the
 settings that can be altered.  See also ?Rconsole.
@@ -205,8 +207,8 @@ file .Rprofile.  In particular:
 Adding packages
 ===============
 
-Binaries for many packages are available at
-CRAN/bin/windows/contrib/1.7.  These are zip files which should be
+Binaries for many packages are available under
+CRAN/bin/windows/contrib.  These are zip files which should be
 unpacked in @RWVER@\library.  The simplest option is use the items on
 the Packages menu to install from a zip file or to download from CRAN.
 
