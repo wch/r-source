@@ -274,5 +274,5 @@ prettyNum <-
                           P0("\\1",small.mark), A.[i.sml])
     }
     ## extraneous trailing dec.marks: paste(B., A., sep = decimal.mark)
-    P0(B., c("",decimal.mark)[2-iN], A.)
+    P0(B., c(decimal.mark, "")[iN+ 1:1], A.)
 }
