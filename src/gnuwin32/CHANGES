@@ -7,6 +7,12 @@ See the file NEWS for changes that affect all versions of R.
 rw1041
 ======
 
+Updating HTML indices, e.g. in help.start(), is not attempted if 
+file.access() indicates write permission will fail, and in any case
+is done within a try() construct.
+
+help.start() has a new argument update.
+
 Making packages now warns if there is a configure script.
 
 
