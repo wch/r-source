@@ -24,6 +24,10 @@
 
 	/*-- Error Message Strings --- 1st step to i18n --- --*/
 
+/*-- FIXME: Rather use and extend the ErrorDB[] and WarningDB[] in
+ *-- =====  ../main/errors.c ! (MM, who did the following in
+ *				the first place ...) */
+
 #ifdef IEEE_754
 # define R_MSG_NA		"NaNs produced"
 #else
@@ -51,25 +55,6 @@
 #define R_MSG_list_vec	"applies only to lists and vectors"
 #define R_MSG_list_vec2	"() applied to non-(list or vector)"
 
-
-	/*-- Packaged Error Messages ---> Handling & I18n ... */
-
-/* Argument list length and type errors */
-
-#define ERROR_NUMARGS		1
-#define ERROR_ARGTYPE		2
-#define ERROR_INCOMPAT_ARGS	3
-
-/* General type and length incompatibilities */
-
-#define ERROR_TSVEC_MISMATCH	100
-
-#define ERROR_UNIMPLEMENTED	9998
-#define ERROR_UNKNOWN		9999
-
-
-	/*-- Packaged Warning Messages --*/
-
-#define WARNING_UNKNOWN		9999
+/* Packaged Error & Warning Messages ==> ./R_ext/Error.h */
 
 #endif
