@@ -173,6 +173,28 @@ char *realloc ();
 
 /* Get the interface, including the syntax bits.  */
 #include "Rregex.h"
+/* Compile a fastmap for the compiled pattern in BUFFER; used to
+   accelerate searches.  Return 0 if successful and -2 if was an
+   internal error.  */
+static int re_compile_fastmap _RE_ARGS ((struct re_pattern_buffer *buffer));
+/* Search in the string STRING (with length LENGTH) for the pattern
+   compiled into BUFFER.  Start searching at position START, for RANGE
+   characters.  Return the starting position of the match, -1 for no
+   match, or -2 for an internal error.  Also return register
+   information in REGS (if REGS and BUFFER->no_sub are nonzero).  */
+static int re_search
+  _RE_ARGS ((struct re_pattern_buffer *buffer, const char *string,
+            int length, int start, int range, struct re_registers *regs));
+
+
+/* Like `re_search', but search in the concatenation of STRING1 and
+   STRING2.  Also, stop searching at index START + STOP.  */
+static int re_search_2
+  _RE_ARGS ((struct re_pattern_buffer *buffer, const char *string1,
+             int length1, const char *string2, int length2,
+             int start, int range, struct re_registers *regs, int stop));
+
+
 
 /* isalpha etc. are used for the character classes.  */
 #include <ctype.h>
