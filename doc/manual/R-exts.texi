@@ -1483,6 +1483,7 @@ must be transferred to the C code, which is
 
 @example
 #include <S.h>
+#include <Rinternals.h>
 
 SEXP convolve2(SEXP a, SEXP b)
 @{
@@ -1743,22 +1744,22 @@ obscure) to do this in C code.  The following is based on the code in
 @file{src/main/optimize.c}.
 
 @example
-SEXP lapply2(SEXP list, SEXP expr, SEXP rho)
+SEXP lapply2(SEXP list, SEXP fn, SEXP rho)
 @{
   int i, n = length(list);
   SEXP R_fcall, s, ans;
 
   if(!isNewList(list)) error("`list' must be a list");
-  if(!isFunction(expr)) error("`expr' must be a function");
+  if(!isFunction(fn)) error("`fn' must be a function");
   if(!isEnvironment(rho)) error("`rho' should be an environment");
-  PROTECT(R_fcall = lang2(expr, R_NilValue));
+  PROTECT(R_fcall = lang2(fn, R_NilValue));
   PROTECT(ans = allocVector(VECSXP, n));
   for(i = 0; i < n; i++) @{
     CADR(R_fcall) = VECTOR(list)[i];
-    VECTOR(ans)[i] = eval(expr, rho);
+    VECTOR(ans)[i] = eval(R_fcall, rho);
   @}
   setAttrib(ans, R_NamesSymbol, getAttrib(list, R_NamesSymbol));
-  UNPROTECT(1);
+  UNPROTECT(2);
   return(ans);
 @}
 @end example
