@@ -6,16 +6,17 @@ New function savePlot() to save plots to wmf, gif or ps.
 There is now support for help via compiled HTML files (as used by the
 latest Microsoft products): set options(chmhelp=TRUE) to use this.
 You will probably need Internet Explorer 4 or later installed to use
-this, or you can install hhupd.exe from the windows/windows-NT/etc
+this, or you can install hhupd.exe from the windows/windows-NT/base/etc
 directory on CRAN.
 
-There is support for building Windows help files (as in Windows 95) and
-compiled HTML files (as in Windows 2000) and both are available for the
-standard packages.  Set options(winhelp=TRUE) to make this your
-preferred help system.
+There is support for building Windows help files (as in Windows 95).
+Set options(winhelp=TRUE) to make this your preferred help system.
+
+Both compiled HTML files and Windows help are available for the
+standard packages.
 
 The new function update.packages() is supported if you have wget.exe
-(a copy is in the windows/windows-NT/etc directory on CRAN) or
+(a copy is in the windows/windows-NT/base/etc/wget.zip on CRAN) or
 lynx.exe, from http://www.fdisk.com/doslynx/lynxport.htm.
 
 On NT only, CPU times are returned by proc.time() (using a call to
@@ -28,7 +29,8 @@ A windows() device reports itself as `windows' not `X11'.
 
 getenv() now returns all the environmental variables.
 
-unlink() can now remove directories (but not using wildcard specifications).
+unlink() can now remove (empty) directories (but not using wildcard
+specifications).
 
 The complex LINPACK routines which were not included in the Unix
 versions of R are now omitted here.
@@ -37,14 +39,24 @@ There is more support for (support of) ActiveX Automation via the
 Rproxy.dll: see the file front-ends/readme.
 
 As under Unix, .Renviron is first searched for in the working directory, 
-then in the home directory.
+then in the home directory. (See README for how the home directory is
+decided.)
 
 The sockets code is definitely working in this version, enough to support
 source.url and friends.
 
+options(pager="console") is set as the default if --ess is used (as it
+works better with Emacs).
+
+The rounding code has been re-written to be more accurate and to round
+to even as documented.
+
 
 rw0650
 ======
+
+[ Because Guido Masarotto was ill for several weeks, rw0650 was only ever
+pre-released. ]
 
 There are many changes `under the skin' which are not reflected in
 user-visible changes, but either improve performance or will allow
