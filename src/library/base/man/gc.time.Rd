@@ -1,0 +1,30 @@
+\name{gc.time}
+\alias{gc.time}
+\title{Report Time Spent in Garbage Collection}
+\description{
+  This function reports the time spent in garbage collection so far in
+  the \R session.
+}
+\usage{
+gc.time()
+}
+\value{
+  A numerical vector of length 5 giving the user CPU time, the system
+  CPU time, the elapsed time and children's user and system CPU times
+  (normally both zero).
+}
+#ifdef windows
+\note{
+  CPU times will be returned as \code{NA} on Windows 9x/ME systems, but
+  are genuine times on NT4 and 2000 systems. Times of child processes are
+  not available and will always be given as \code{NA}.
+}
+#endif
+
+\seealso{\code{\link{gc}},
+  \code{\link{proc.time}} for the timings for the session.}
+
+\examples{
+gc.time()
+}
+\keyword{utilities}

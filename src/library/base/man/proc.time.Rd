@@ -28,13 +28,15 @@ proc.time()
 #endif
 #ifdef windows
 \note{
-  CPU times will be returned as \code{NA} on Windows 9x systems, but
+  CPU times will be returned as \code{NA} on Windows 9x/ME systems, but
   are genuine times on NT4 and 2000 systems. Times of child processes are
   not available and will always be given as \code{NA}.
 }
 #endif
 \seealso{
-  \code{\link{system.time}} for timing a valid \R expression.
+  \code{\link{system.time}} for timing a valid \R expression,
+  \code{\link{gc.time}} for how much of the time was spent in garbage
+  collection.
 }
 \examples{
 ptm <- proc.time()
