@@ -3535,7 +3535,7 @@ SEXP do_setGPar(SEXP call, SEXP op, SEXP args, SEXP env)
     GP = CAR(args);
     if (!isInteger(GP) || length(GP) != lGPar)
 	errorcall(call, "invalid graphics parameter list");
-    copyGPar((GPar *) INTEGER(GP), &dd->dpSaved);
+    copyGPar((GPar *) INTEGER(GP), dpSavedptr(dd)); /* &dd->dpSaved); */
     return R_NilValue;
 }
 
