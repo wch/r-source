@@ -44,7 +44,7 @@ $(srcdir)/configure: @MAINTAINER_MODE_TRUE@ $(srcdir)/configure.ac $(ACLOCAL_M4)
 	@BD=`pwd`; cd $(srcdir) && $(AUTOCONF) -B $${BD}
 $(ACLOCAL_M4): $(srcdir)/configure.ac acinclude.m4
 	@BD=`pwd`; cd $(srcdir) && $(ACLOCAL) --output=$${BD}/$@ -I $${BD}
-acinclude.m4: $(srcdir)/configure.ac
+acinclude.m4: $(srcdir)/configure.ac $(ACINCLUDE_DEPENDENCIES)
 	@(cd $(srcdir) && cat $(ACINCLUDE_DEPENDENCIES)) > $@
 
 LIBTOOL_DEPS = @LIBTOOL_DEPS@
