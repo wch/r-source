@@ -211,7 +211,7 @@ getMethodsForDispatch <-
 .getMethodsForDispatch <- function(f, fdef) {
     ev <- .evBasic(fdef)
     if(.existsBasic(".Methods", envir = ev)) {
-        get(".Methods", envir = ev)
+        .getBasic(".Methods", envir = ev)
     }
     else
         NULL

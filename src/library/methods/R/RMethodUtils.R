@@ -424,7 +424,7 @@ getGeneric <-
       baseDef <- get(f, "package:base")
       if(is.primitive(baseDef)) {
           value <- genericForPrimitive(f)
-          if(is.function(value) && !is(value, "genericFunction")) {
+          if(is.function(value) && !is.object(value)) {
               ## FIXME:  This should never happen?
               ## initialize the generic function in the list on base
               value <- makeGeneric(f, makeStandardGeneric(f, value), value, package = "base")
@@ -1068,3 +1068,6 @@ metaNameUndo <- function(strings, prefix = "M", searchForm = FALSE) {
     else
         FALSE
 }
+
+## a version of match that avoids the is.factor() junk: faster & safe for bootstrapping
+.matchBasic <- function(x, table, nomatch = NA) .Internal(match(x, table, nomatch))
