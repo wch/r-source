@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998--2003  Robert Gentleman, Ross Ihaka and the
+ *  Copyright (C) 1998--2004  Robert Gentleman, Ross Ihaka and the
  *                            R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -2239,7 +2239,7 @@ XFigDeviceDriver(DevDesc *dd, char *file, char *paper, char *family,
 
 static Rboolean XFig_Open(NewDevDesc *dd, XFigDesc *pd)
 {
-    char buf[512], name[50];
+    char buf[512], name[50], *tmp;
     int i;
 
     if (!LoadEncoding("ISOLatin1.enc", buf, FALSE))
@@ -2267,7 +2267,9 @@ static Rboolean XFig_Open(NewDevDesc *dd, XFigDesc *pd)
     }
     if (!pd->psfp) return FALSE;
     /* assume tmpname is less than PATH_MAX */
-    strcpy(pd->tmpname, R_tmpnam("Rxfig", R_TempDir));
+    tmp = R_tmpnam("Rxfig", R_TempDir);
+    strcpy(pd->tmpname, tmp);
+    free(tmp);
     pd->tmpfp = R_fopen(pd->tmpname, "w");
     if (!pd->tmpfp) {
 	fclose(pd->psfp);
