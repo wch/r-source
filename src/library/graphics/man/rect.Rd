@@ -1,5 +1,5 @@
 \name{rect}
-\title{Draw a Rectangle}
+\title{Draw a One or More Rectangles}
 \usage{
 rect(xleft, ybottom, xright, ytop, density = NULL, angle = 45,
      col = NULL, border = NULL, lty = NULL, lwd = par("lwd"),
@@ -20,9 +20,10 @@ rect(xleft, ybottom, xright, ytop, density = NULL, angle = 45,
   \item{col}{color(s) to fill or shade the rectangle(s) with.
     The default \code{NULL}, or also \code{\link{NA}} do not fill,
     i.e., draw transparent rectangles, unless \code{density} is specified.}
-  \item{border}{color for rectangle border(s).}
-  \item{lty}{line type for borders; defaults to \code{"solid"}.}
-  \item{lwd}{width for borders.}
+  \item{border}{color for rectangle border(s). Can also be \code{FALSE}
+    to suppress the border, or \code{TRUE} in which case \code{col} is used.}
+  \item{lty}{line type for borders and shading; defaults to \code{"solid"}.}
+  \item{lwd}{line width for borders and shading.}
   \item{xpd}{logical (\dQuote{e\bold{xp}an\bold{d}}); defaults to
     \code{par("xpd")}.  See \code{\link{par}(xpd= )}.}
   \item{\dots}{other graphical parameters can be given as arguments.}
