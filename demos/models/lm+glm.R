@@ -1,6 +1,5 @@
-###-*- R -*-
 ### Examples from: "An Introduction to Statistical Modelling"
-### By Annette Dobson
+###			By Annette Dobson
 
 
 ## Plant Weight Data (Page 9)
@@ -14,13 +13,16 @@ summary(lm(weight~group-1))
 
 ## Birth Weight Data (Page 14)
 age <- c(40, 38, 40, 35, 36, 37, 41, 40, 37, 38, 40, 38,
-         40, 36, 40, 38, 42, 39, 40, 37, 36, 38, 39, 40),
+         40, 36, 40, 38, 42, 39, 40, 37, 36, 38, 39, 40)
 birthw <- c(2968, 2795, 3163, 2925, 2625, 2847, 3292, 3473, 2628, 3176,
             3421, 2975, 3317, 2729, 2935, 2754, 3210, 2817, 3126, 2539,
-            2412, 2991, 2875, 3231),
+            2412, 2991, 2875, 3231)
 sex <- gl(2,12, labels=c("M","F"))
 plot(age,birthw, col=codes(sex), main="Dobson's Birth Weight Data")
-legend(39,2700,c("Male", "Female"),col=codes(sex),pch=1)
+lines(lowess(age[sex=='M'],birthw[sex=='M']), col=1)
+lines(lowess(age[sex=='F'],birthw[sex=='F']), col=2)
+legend(40,2700,c("Male", "Female"),col=1:2,pch=1,lty=1)
+
 summary(lm(birthw ~ sex + age), cor=T)
 summary(lm(birthw ~ sex + age -1), cor=T)
 summary(lm(birthw ~ sex + sex:age -1), cor=T)
@@ -90,7 +92,7 @@ summary(z <- glm(dead~dose,family=binomial(link=cloglog)))
 ## Note that the proportions below are not exactly
 ## in accord with the sample sizes quoted below.
 ## In particular, the value 0.555 does not seem sensible.
-n <- c(102,99,108,76,81,90)
+n <- c(102,  99,   108,  76,   81,   90)
 p <- c(0.539,0.525,0.528,0.724,0.617,0.555)
 # x <- round(n*p)
 x <- n*p
@@ -99,7 +101,7 @@ f <- rep(c(40,150,350),2)
 g <- gl(2,3)
 summary(glm(y~g*f,family=binomial(link="logit")))
 summary(glm(y~g+f,family=binomial(link="logit")))
-summary(glm(y~f,family=binomial(link="logit")))
+summary(glm(y~f,  family=binomial(link="logit")))
 
 
 ## Tumour Data (Page 92)
