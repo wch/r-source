@@ -196,12 +196,11 @@ fi])
 ## R_PROG_BROWSER
 ## --------------
 AC_DEFUN([R_PROG_BROWSER],
-[R_BROWSER="netscape"
-case "${host_os}" in
-  darwin*)
-    R_BROWSER="open \"\${R_HOME}/doc/html/index.html\""
-    ;;
-esac
+[AC_PATH_PROGS(R_BROWSER, [netscape mozilla galeon kfmclient gnome-moz-remote open])
+if test -z "${R_BROWSER}"; then
+  warn_browser="I could not determine a browser"
+  AC_MSG_WARN([${warn_browser}])
+fi
 AC_SUBST(R_BROWSER)
 ])# R_BROWSER
 
