@@ -3740,10 +3740,10 @@ further examples.
 @R{} contains a large number of mathematical functions for its own use,
 for example numerical linear algebra computations and special functions.
 
-The header file @file{R_ext/Linpack.h} contains details of the LINPACK
-and EISPACK linear algebra functions include in @R{}.  These are
-expressed as calls to FORTRAN subroutines, and they will also be usable
-from users' FORTRAN code.  Although not part of the official
+The header file @file{R_ext/Linpack.h} contains details of the BLAS,
+LINPACK and EISPACK linear algebra functions included in @R{}.  These
+are expressed as calls to FORTRAN subroutines, and they will also be
+usable from users' FORTRAN code.  Although not part of the official
 @acronym{API}, this set of subroutines is unlikely to change (but might
 be supplemented).
 
