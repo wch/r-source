@@ -13,14 +13,15 @@ by(data, INDICES, FUN, \dots)
 }
 \arguments{
  \item{data}{an \R object, normally a data frame, possibly a matrix.}
- \item{INDICES}{a factor or a list of factors, each of length \code{nrow(x)}.}
- \item{FUN}{a function to be applied to data frame subsets of \code{x}.}
+ \item{INDICES}{a factor or a list of factors, each of length
+   \code{nrow(data)}.}
+ \item{FUN}{a function to be applied to data frame subsets of \code{data}.}
  \item{\dots}{further arguments to \code{FUN}.}
 }
 \details{
   A data frame is split by row into data frames
   subsetted by the values of one or more factors, and function
-  \code{FUN} is applied to each subset in term.
+  \code{FUN} is applied to each subset in turn.
 
   Object \code{data} will be coerced to a data frame by default.
 }
