@@ -680,6 +680,10 @@ BUG FIXES
 
     o	The QC files now check that their file operations succeeded.
 
+    o   replicate() worked by making the supplied expression the 
+        body of an anonymous function(x), leading to a variable 
+	capture issue. Now, function(...) is used instead.
+
 
 
 
