@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Langage for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998-2000   The R Development Core Team.
+ *  Copyright (C) 1998-2001   The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -731,7 +731,7 @@ static SEXP CreateHess(SEXP names)
     SETCADR(dim, lang2(install("length"), install(".value")));
     SETCADDR(dim, allocVector(REALSXP, 1));
     REAL(CADDR(dim))[0] = length(names);
-    SETCADDDR(dim, allocVector(REALSXP, 1));    
+    SETCADDDR(dim, allocVector(REALSXP, 1));	
     REAL(CADDDR(dim))[0] = length(names);
     PROTECT(data = allocVector(REALSXP, 1));
     REAL(data)[0] = 0;
@@ -852,7 +852,9 @@ SEXP do_deriv(SEXP call, SEXP op, SEXP args, SEXP env)
     f_index = FindSubexprs(ans);
     UNPROTECT(1);
     d_index = (int*)R_alloc(nderiv, sizeof(int));
-    d2_index = (int*)R_alloc((nderiv * (1 + nderiv))/2, sizeof(int));
+    if (hessian) 
+	d2_index = (int*)R_alloc((nderiv * (1 + nderiv))/2, sizeof(int));
+    else d2_index = d_index;/*-Wall*/
     for(i=0, k=0; i<nderiv ; i++) {
 	PROTECT(ans = duplicate(expr));
 	PROTECT(ans = D(ans, install(CHAR(STRING_ELT(names, i)))));
