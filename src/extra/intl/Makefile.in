@@ -1,0 +1,65 @@
+#
+# ${R_HOME}/src/extra/intl/Makefile
+
+## This is currently a placeholder, just used for distribution
+## The files are built on Windows
+
+VPATH = @srcdir@
+srcdir = @srcdir@
+top_srcdir = @top_srcdir@
+
+top_builddir = ../../..
+subdir = src/extra/intl
+R_HOME = $(top_builddir)
+
+include $(top_builddir)/Makeconf
+HEADERS = \
+  gmo.h \
+  gettextP.h \
+  hash-string.h \
+  loadinfo.h \
+  plural-exp.h \
+  eval-plural.h \
+  localcharset.h \
+  xsize.h \
+  printf-args.h printf-args.c \
+  printf-parse.h wprintf-parse.h printf-parse.c \
+  vasnprintf.h vasnwprintf.h vasnprintf.c \
+  libgnuintl.h.in
+SOURCES = \
+  bindtextdom.c \
+  dcgettext.c \
+  dgettext.c \
+  gettext.c \
+  finddomain.c \
+  loadmsgcat.c \
+  localealias.c \
+  textdomain.c \
+  l10nflist.c \
+  explodename.c \
+  dcigettext.c \
+  dcngettext.c \
+  dngettext.c \
+  ngettext.c \
+  plural.c \
+  plural-exp.c \
+  localcharset.c \
+  localename.c \
+  log.c \
+  printf.c \
+  osdep.c \
+  intl-compat.c
+
+distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
+DISTFILES = ChangeLog README VERSION Makefile.in Makefile.win \
+  plural.y config.charset locale.alias ref-add.sin ref-del.sin \
+  $(SOURCES) $(HEADERS)
+
+all:
+
+distdir: $(DISTFILES)
+	@for f in $(DISTFILES); do \
+	  test -f $(distdir)/$${f} \
+	    || ln $(srcdir)/$${f} $(distdir)/$${f} 2>/dev/null \
+	    || cp -p $(srcdir)/$${f} $(distdir)/$${f}; \
+	done
