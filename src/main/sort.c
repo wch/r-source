@@ -28,6 +28,7 @@
 #ifndef HAVE_STRCOLL
 #define strcoll strcmp
 #endif
+
 			/*--- Part I: Comparison Utilities ---*/
 
 static int icmp(int x, int y, Rboolean nalast)
@@ -330,11 +331,11 @@ static void R_csort2(Rcomplex *x, int n, Rboolean decreasing)
 	    v = x[i];
 	    j = i;
 	    if(decreasing)
-		while (j >= h && (x[j - h].r < v.r || 
+		while (j >= h && (x[j - h].r < v.r ||
 				  (x[j - h].r == v.r && x[j - h].i < v.i)))
 	    { x[j] = x[j - h]; j -= h; }
 	    else
-		while (j >= h && (x[j - h].r > v.r || 
+		while (j >= h && (x[j - h].r > v.r ||
 				  (x[j - h].r == v.r && x[j - h].i > v.i)))
 	    x[j] = v;
 	}
@@ -535,7 +536,7 @@ static int greater(int i, int j, SEXP x, Rboolean nalast, Rboolean decreasing)
 }
 
 /* listgreater(): used as greater_sub in orderVector() in do_order(...) */
-static int listgreater(int i, int j, SEXP key, Rboolean nalast, 
+static int listgreater(int i, int j, SEXP key, Rboolean nalast,
 		       Rboolean decreasing)
 {
     SEXP x;
@@ -594,16 +595,25 @@ static void orderVector(int *indx, int n, SEXP key, Rboolean nalast,
 		for (i = lo + h; i <= hi; i++) { \
 		    itmp = indx[i]; \
 		    j = i; \
-		    while (j >= h && less(xx, indx[j - h], itmp)) { \
+		    while (j >= h && less(indx[j - h], itmp)) { \
 			indx[j] = indx[j - h]; j -= h; } \
 		    indx[j] = itmp; \
 		}
 
+#define insertion_with_index \
+            for (i = lo; i <= hi; i++) { \
+		itmp = indx[i]; \
+		j = i; \
+		while (j >= h && less2(indx[j - 1], itmp)) {  \
+		    indx[j] = indx[j - 1]; j--;} \
+		indx[j] = itmp; \
+	    }
+
 
 static void orderVector1(int *indx, int n, SEXP key, Rboolean nalast,
-			Rboolean decreasing)
+			 Rboolean decreasing)
 {
-    int i, j, h, t, lo = 0, hi = n-1;
+    int c, i, j, h, t, lo = 0, hi = n-1;
     int itmp, *isna, numna = 0;
     int *ix = INTEGER(key);
     double *x = REAL(key);
@@ -619,71 +629,76 @@ static void orderVector1(int *indx, int n, SEXP key, Rboolean nalast,
     case REALSXP:
 	for (i = 0; i < n; i++) isna[i] = ISNAN(x[i]);
 	break;
-/*    case STRSXP:
+    case STRSXP:
 	for (i = 0; i < n; i++) isna[i] = (sx[i] == NA_STRING);
-	break; */
+	break;
     }
     for (i = 0; i < n; i++) numna += isna[i];
 
-    if(numna) 
+    if(numna)
 	switch (TYPEOF(key)) {
 	case LGLSXP:
 	case INTSXP:
 	case REALSXP:
 	    if (!nalast) for (i = 0; i < n; i++) isna[i] = !isna[i];
 	    for (t = 1; 4*t*t <= n; t += t);
-#define less(x, a, b) (x[a] > x[b] || (x[a] == x[b] && a > b))
-#define xx isna
+#define less(a, b) (isna[a] > isna[b] || (isna[a] == isna[b] && a > b))
 	    sort2_with_index
-#undef xx
 #undef less
 	    if(nalast) hi -= numna; else lo += numna;
 	}
 
+    /* Shell sort isn't stable, but it proves to be somewhat faster
+       to run a final insertion sort to re-order runs of ties when
+       comparison is cheap.
+    */
     for (t = 1; 4*t*t <= hi-lo; t += t);
     switch (TYPEOF(key)) {
     case LGLSXP:
     case INTSXP:
-	if (decreasing)
-#define less(x, a, b) (x[a] < x[b] || (x[a] == x[b] && a > b))
-#define xx ix
+#define less2(a, b) (ix[a] == ix[b] && a > b)
+	if (decreasing) {
+#define less(a, b) (ix[a] < ix[b])
 	    sort2_with_index
-#undef xx
+	    insertion_with_index
 #undef less
-        else
-#define less(x, a, b) (x[a] > x[b] || (x[a] == x[b] && a > b))
-#define xx ix
+        } else {
+#define less(a, b) (ix[a] > ix[b])
 	    sort2_with_index
-#undef xx
+	    insertion_with_index
 #undef less
+#undef less2
+        }
 	break;
     case REALSXP:
-	if (decreasing)
-#define less(x, a, b) (x[a] < x[b] || (x[a] == x[b] && a > b))
-#define xx x
+#define less2(a, b) (x[a] == x[b] && a > b)
+	if (decreasing) {
+#define less(a, b) (x[a] < x[b])
 	    sort2_with_index
-#undef xx
+	    insertion_with_index
+#undef less
+        } else {
+#define less(a, b) (x[a] > x[b])
+	    sort2_with_index
+	    insertion_with_index
+#undef less
+#undef less2
+        }
+	break;
+    case STRSXP:
+	if (decreasing)
+#define less(a, b) (c=strcoll(CHAR(sx[a]),CHAR(sx[b])), c < 0 || (c == 0 && a > b))
+	    sort2_with_index
 #undef less
         else
-#define less(x, a, b) (x[a] > x[b] || (x[a] == x[b] && a > b))
-#define xx x
+#define less(a, b) (c=strcoll(CHAR(sx[a]),CHAR(sx[b])), c > 0 || (c == 0 && a > b))
 	    sort2_with_index
-#undef xx
 #undef less
 	break;
     default:
-	for (h = hinit(n); t > 0; t /= 2, h = t*t - (3*t)/2 + 1)
-	    for (i = h; i < n; i++) {
-		itmp = indx[i];
-		j = i;
-		while (j >= h &&
-		       greater(indx[j - h], itmp, key, nalast^decreasing, 
-			       decreasing)) {
-		    indx[j] = indx[j - h];
-		    j -= h;
-		}
-		indx[j] = itmp;
-	    }
+#define less(a, b) greater(a, b, key, nalast^decreasing, decreasing)
+	sort2_with_index
+#undef less
     }
     free(isna);
 }
