@@ -117,7 +117,7 @@ ifeq ($(strip $(BUILD)),CROSS)
 	@if ! test -f ../../library/base/R/base.rdb ; then \
 	  echo "preparing package base for lazy loading" ; \
 	  echo "tools:::makeLazyLoading(\"base\", lib.loc=\"$(RLIB)\")" | \
-	    R_DEFAULT_PACKAGES=NULL LC_COLLATE=C $(R_EXE) --vanilla --slave ; \
+	    R_DEFAULT_PACKAGES=NULL LC_COLLATE=C $(R_EXE) --vanilla --slave > /dev/null; \
 	fi
 	@if ! test -f ../../library/tools/R/tools.rdb ; then \
 	  echo "preparing package tools for lazy loading" ; \
