@@ -39,9 +39,9 @@
 #include "console.h"
 #include "rui.h"
 #include "opt.h"
-#include "Rversion.h"
+#include <Rversion.h>
 #include "getline/getline.h"  /* for gl_load/savehistory */
-#include "Startup.h"          /* for SA_DEFAULT */
+#include <Startup.h>          /* for SA_DEFAULT */
 
 #define TRACERUI(a)
 

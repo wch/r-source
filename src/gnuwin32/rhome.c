@@ -26,7 +26,7 @@
 #include <string.h>		/* for strrchr(...) */
 #include <stdio.h>
 #include <ctype.h>
-#include "Rversion.h"
+#include <Rversion.h>
 
 static char rhomebuf[MAX_PATH];
 

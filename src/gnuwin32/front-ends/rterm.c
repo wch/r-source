@@ -21,9 +21,9 @@
 #include <windows.h>
 #include <stdio.h>
 #include <io.h> /* for isatty */
-#include "Rversion.h"
-#include "Startup.h"
-#include "psignal.h"
+#include <Rversion.h>
+#include <Startup.h>
+#include <psignal.h>
 #include "../getline/getline.h"
 
 extern void cmdlineoptions(int, char **);

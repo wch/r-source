@@ -26,7 +26,7 @@
 #define USE_MDI 1
 #endif
 
-#include "R_ext/Error.h"  /* for warning() */
+#include <R_ext/Error.h>  /* for warning() */
 #include <windows.h>
 #include "graphapp/ga.h"
 #ifdef USE_MDI
@@ -35,7 +35,7 @@
 #include "console.h"
 #include "consolestructs.h"
 #include "rui.h"
-#include "Startup.h" /* for UImode */
+#include <Startup.h> /* for UImode */
 
 extern UImode  CharacterMode;
 

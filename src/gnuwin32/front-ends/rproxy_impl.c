@@ -21,7 +21,7 @@
  *  Software Foundation, Inc., 59 Temple Place - Suite 330, Boston,
  *  MA 02111-1307, USA
  *
- *  $Id: rproxy_impl.c,v 1.16 2002/03/22 17:56:07 ripley Exp $
+ *  $Id: rproxy_impl.c,v 1.17 2002/04/30 19:13:56 ripley Exp $
  */
 
 #define NONAMELESSUNION
@@ -33,14 +33,14 @@
 //#undef CharacterMode
 //#undef R_Interactive
 #include <config.h>
-#include "Rversion.h"
-#include "Startup.h"
+#include <Rversion.h>
+#include <Startup.h>
 #include "bdx.h"
 #include "SC_proxy.h"
 #include "rproxy_impl.h"
-#include "IOStuff.h"
-#include "Parse.h"
-#include "Graphics.h"
+#include <IOStuff.h>
+#include <Parse.h>
+#include <Graphics.h>
 
 struct _R_Proxy_init_parameters
 {

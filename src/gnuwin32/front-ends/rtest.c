@@ -22,13 +22,13 @@
 #include <windows.h>
 #include <stdio.h>
 #include <config.h>
-#include "Rversion.h"
-#include "Startup.h"
+#include <Rversion.h>
+#include <Startup.h>
 /* for askok and askyesnocancel */
 #include "graphapp/graphapp.h"
 
 /* for signal-handling code */
-#include "psignal.h"
+#include <psignal.h>
 
 /* one way to allow user interrupts: called in ProcessEvents */
 #ifdef _MSC_VER

@@ -20,8 +20,8 @@
 #define NONAMELESSUNION
 #include <windows.h>
 #include <stdio.h>
-#include "Rversion.h"
-#include "Startup.h"
+#include <Rversion.h>
+#include <Startup.h>
 
 extern void cmdlineoptions(int, char **);
 extern int setupui(void);

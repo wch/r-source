@@ -19,7 +19,7 @@
 #define NONAMELESSUNION
 #include <windows.h>
 #include <stdio.h>
-#include "Rversion.h"
+#include <Rversion.h>
 
 #define REG_KEY_NAME "Software\\R-core\\R"
 

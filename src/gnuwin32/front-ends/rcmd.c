@@ -21,7 +21,7 @@
 #include <windows.h>
 #include <stdlib.h>
 #include <stdio.h>
-#include "Rversion.h"
+#include <Rversion.h>
 
 extern char *getRHOME(); /* in ../rhome.c */
 
