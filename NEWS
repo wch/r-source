@@ -158,6 +158,10 @@ BUG FIXES
 	scan() was supported by strtod on some platforms and not
 	others: these are now handled by R itself. (PR#1072)
 
+    o	hclust(dist(1)) doesn't loop infinitely but signal an error.
+
+    o	cutree() can now cut outside heights and does not return
+	garbage	for h >= max(tree$heights) anymore. (PR#1067)
 
 
 
