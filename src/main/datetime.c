@@ -308,14 +308,70 @@ SEXP do_systime(SEXP call, SEXP op, SEXP args, SEXP env)
 #ifdef WIN32
 #define tzname _tzname
 #else
-#ifndef macintosh
+# ifdef macintosh
+char *tzname[2] = { "local", "local" };
+# else /* Unix */
 extern char *tzname[2];
-#else
-char *tzname[2];
-#endif /* mac */
+# endif
 #endif
 
 static char buff[20]; /* for putenv */
+
+static int set_tz(char *tz, char *oldtz)
+{
+    char *p = NULL;
+    int settz = 0;
+    
+#ifdef macintosh
+    return 0;
+#else
+    strcpy(oldtz, "");
+    p = getenv("TZ");
+    if(p) strcpy(oldtz, p);
+#ifdef HAVE_PUTENV
+    strcpy(buff, "TZ="); strcat(buff, tz);
+    putenv(buff);
+    settz = 1;
+#else
+# ifdef HAVE_SETENV
+    setenv("TZ", tz, 1);
+    settz = 1;
+# else
+    warning("cannot set timezones on this system");
+# endif
+#endif
+    tzset();
+    return settz;
+#endif /*macintosh */
+}
+
+static void reset_tz(char *tz)
+{
+#ifdef macintosh
+    return;
+#else
+    if(strlen(tz)) {
+#ifdef HAVE_PUTENV
+	strcpy(buff, "TZ="); strcat(buff, tz);
+	putenv(buff);
+#else
+# ifdef HAVE_SETENV
+	setenv("TZ", tz, 1);
+# endif
+#endif
+    } else {
+#ifdef HAVE_UNSETENV
+	unsetenv("TZ");
+#else
+# ifdef HAVE_PUTENV
+	putenv("TZ=");
+# endif
+#endif
+    }
+    tzset();
+#endif /*macintosh */
+}
+
 
 static char ltnames[][6] =
 { "sec", "min", "hour", "mday", "mon", "year", "wday", "yday", "isdst" };
@@ -346,8 +402,8 @@ static void makelt(struct tm *tm, SEXP ans, int i, int valid)
 SEXP do_asPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP stz, x, ans, ansnames, class, tzone;
-    int i, n, isgmt = 0, valid, settz=0;
-    char *tz = NULL, oldtz[20] = "", *p = NULL;
+    int i, n, isgmt = 0, valid, settz = 0;
+    char *tz = NULL, oldtz[20] = "";
     struct tm *ptm = NULL;
 
     checkArity(op, args);
@@ -356,26 +412,7 @@ SEXP do_asPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 	error("invalid `tz' value");
     tz = CHAR(STRING_ELT(stz, 0));
     if(strcmp(tz, "GMT") == 0  || strcmp(tz, "UTC") == 0) isgmt = 1;
-    if(!isgmt && strlen(tz) > 0) {
-	strcpy(oldtz, "");
-	p = getenv("TZ");
-	if(p) strcpy(oldtz, p);
-#ifdef HAVE_PUTENV
-	strcpy(buff, "TZ="); strcat(buff, tz);
-	putenv(buff);
-	settz = 1;
-#else
-# ifdef HAVE_SETENV
-	setenv("TZ", tz, 1);
-	settz = 1;
-# else
-	warning("cannot set timezones on this system");
-# endif
-#endif
-#ifndef macintosh
-	tzset();
-#endif /* mac */
-    }
+    if(!isgmt && strlen(tz) > 0) settz = set_tz(tz, oldtz);
 
     n = LENGTH(x);
     PROTECT(ans = allocVector(VECSXP, 9));
@@ -413,30 +450,7 @@ SEXP do_asPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
     setAttrib(ans, install("tzone"), tzone);
     UNPROTECT(5);
 
-    if(settz) {
-    /* reset timezone */
-	if(strlen(oldtz)) {
-#ifdef HAVE_PUTENV
-	    strcpy(buff, "TZ="); strcat(buff, oldtz);
-	    putenv(buff);
-#else
-# ifdef HAVE_SETENV
-	    setenv("TZ", oldtz, 1);
-# endif
-#endif
-	} else {
-#ifdef HAVE_UNSETENV
-	    unsetenv("TZ");
-#else
-# ifdef HAVE_PUTENV
-	    putenv("TZ=");
-# endif
-#endif
-	}
-#ifndef macintosh
-	tzset();
-#endif
-    }
+    if(settz) reset_tz(oldtz);
     return ans;
 }
 
@@ -444,7 +458,7 @@ SEXP do_asPOSIXct(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP stz, x, ans;
     int i, n = 0, isgmt = 0, nlen[9], settz = 0;
-    char *tz = NULL, oldtz[20] = "", *p = NULL;
+    char *tz = NULL, oldtz[20] = "";
     struct tm tm;
 
     checkArity(op, args);
@@ -456,25 +470,7 @@ SEXP do_asPOSIXct(SEXP call, SEXP op, SEXP args, SEXP env)
 
     tz = CHAR(STRING_ELT(stz, 0));
     if(strcmp(tz, "GMT") == 0  || strcmp(tz, "UTC") == 0) isgmt = 1;
-    if(strlen(tz) > 0) {
-	strcpy(oldtz, "");
-	if((p = getenv("TZ"))) strcpy(oldtz, p);
-#ifdef HAVE_PUTENV
-	strcpy(buff, "TZ="); strcat(buff, tz);
-	putenv(buff);
-	settz = 1;
-#else
-# ifdef HAVE_SETENV
-	setenv("TZ", tz, 1);
-	settz = 1;
-# else
-	warning("cannot set timezones on this system");
-# endif
-#endif
-#ifndef macintosh
-	tzset();
-#endif /* mac */
-    }
+    if(strlen(tz) > 0) settz = set_tz(tz, oldtz);
 
     for(i = 0; i < 6; i++)
 	if((nlen[i] = LENGTH(VECTOR_ELT(x, i))) > n) n = nlen[i];
@@ -508,30 +504,7 @@ SEXP do_asPOSIXct(SEXP call, SEXP op, SEXP args, SEXP env)
 	else REAL(ans)[i] = mktime0(&tm);
     }
 
-    if(settz) {
-    /* reset timezone */
-	if(strlen(oldtz)) {
-#ifdef HAVE_PUTENV
-	    strcpy(buff, "TZ="); strcat(buff, oldtz);
-	    putenv(buff);
-#else
-# ifdef HAVE_SETENV
-	    setenv("TZ", oldtz, 1);
-# endif
-#endif
-	} else {
-#ifdef HAVE_UNSETENV
-	    unsetenv("TZ");
-#else
-# ifdef HAVE_PUTENV
-	    putenv("TZ=");
-# endif
-#endif
-	}
-#ifndef macintosh
-	tzset();
-#endif
-    }
+    if(settz) reset_tz(oldtz);
 
     UNPROTECT(1);
     return ans;
