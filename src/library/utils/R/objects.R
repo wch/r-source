@@ -230,7 +230,7 @@ getFromNamespace <- function(x, ns, pos = -1, envir = as.environment(pos))
 }
 
 assignInNamespace <-
-    function(x, value, ns, pos = -1, envir = as.environment(pos), ...)
+    function(x, value, ns, pos = -1, envir = as.environment(pos))
 {
     if(missing(ns)) {
         nm <- attr(envir, "name")
