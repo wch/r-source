@@ -1,6 +1,33 @@
 				Dear Emacs, please make this -*-Text-*- mode!
 	**************************************************
 	*						 *
+	*	       1.9 SERIES NEWS			 *
+	*						 *
+	**************************************************
+
+
+		CHANGES IN R VERSION 1.9.0
+
+
+DEPRECATED & DEFUNCT
+
+    o	printNoClass() is defunct.
+
+    o	print.coefmat() is defunct, replaced by printCoefmat().
+
+    o	codes() and codes<-() are defunct.
+
+    o	anovalist.lm (replaced in 1.2.0) is now defunct.
+
+    o	glm.fit.null(), lm.fit.null() and lm.wfit.null() are defunct.
+
+    o	print.atomic() is defunct.
+
+
+
+
+	**************************************************
+	*						 *
 	*	       1.8 SERIES NEWS			 *
 	*						 *
 	**************************************************

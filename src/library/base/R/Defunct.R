@@ -58,3 +58,17 @@ restart <- function(...) .Defunct()
 ## Defunct in 1.8.0
 printNoClass <- function(...) .Defunct()
 ## </entry>
+
+## Deprecated in 1.8.0
+## Defunct in 1.8.0
+print.coefmat <- function(...) .Defunct()
+codes <- function(x, ...) .Defunct()
+codes.factor <- function(x, ...) .Defunct()
+codes.ordered <- function(x, ...) .Defunct()
+"codes<-" <- function(x, ..., value) .Defunct()
+anovalist.lm <- function (...) .Defunct()
+lm.fit.null <- function(...) .Defunct()
+lm.wfit.null <- function(...) .Defunct()
+glm.fit.null <- function(...) .Defunct()
+print.atomic <- function(...) .Defunct()
+## </entry>
