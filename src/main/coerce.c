@@ -1215,6 +1215,10 @@ SEXP do_isvector(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (streql(CHAR(STRING(CADR(args))[0]), "any")) {
 	LOGICAL(ans)[0] = isVector(CAR(args));/* from ./util.c */
     }
+    else if (streql(CHAR(STRING(CADR(args))[0]), "numeric")) {
+	LOGICAL(ans)[0] = (isNumeric(CAR(args)) &&
+			   !isLogical(CAR(args)));
+    }
     else if (streql(CHAR(STRING(CADR(args))[0]),
 		    CHAR(type2str(TYPEOF(CAR(args)))))) {
 	LOGICAL(ans)[0] = 1;
