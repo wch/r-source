@@ -43,6 +43,7 @@ Directory:  Analyses
 Subject: glm throws erroneous(?)'names attribute must be the same length as the vector' 
 From: wagman@enteract.com
 Date: Thu, 18 Mar 1999 08:58:47 +0100
+--Can anyone reproduce this ??
 
 Directory:  Documentation
 
