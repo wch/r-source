@@ -140,7 +140,7 @@ static void   GA_Line(double, double, double, double, int, DevDesc*);
 static Rboolean GA_Locator(double*, double*, DevDesc*);
 static void   GA_Mode(int);
 static void   GA_NewPage(DevDesc*);
-static Rboolean GA_Open(DevDesc*, gadesc*, char*, double, double, int);
+static Rboolean GA_Open(DevDesc*, gadesc*, char*, double, double, Rboolean);
 static void   GA_Polygon(int, double*, double*, int, int, int, DevDesc*);
 static void   GA_Polyline(int, double*, double*, int, DevDesc*);
 static void   GA_Rect(double, double, double, double, int, int, int, DevDesc*);
