@@ -1,4 +1,4 @@
-### $Id: nls.R,v 1.1 1999/11/11 21:09:49 bates Exp $
+### $Id: nls.R,v 1.2 1999/11/16 21:39:34 bates Exp $
 ###
 ###            Nonlinear least squares for R
 ###
@@ -523,6 +523,7 @@ predict.nls <-
            interval = c("none", "confidence", "prediction"), level = 0.95,
            ...)
 {
+  if (missing(newdata)) return(as.vector(fitted(object)))
   object$m$predict(newdata)
 }
 
