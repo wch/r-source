@@ -31,6 +31,7 @@ Now we look at Gaussian data:
 <<>>=
 x <- rnorm(20)
 print(x)
+library(ctest)
 print(t1 <- t.test(x))
 @ 
 Note that we can easily integrate some numbers into standard text: The
