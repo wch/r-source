@@ -664,7 +664,6 @@ AC_OUTPUT(Makeconf
   doc/keyword-test
   doc/manual/Makefile
   doc/manual/lib2tex
-  doc/manual/refman.top
   etc/Makefile
   etc/Makeconf
   src/Makefile
