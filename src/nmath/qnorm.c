@@ -57,12 +57,12 @@ double qnorm5(double p, double mu, double sigma, int lower_tail, int log_p)
     if (ISNAN(p) || ISNAN(mu) || ISNAN(sigma))
 	return p + mu + sigma;
 #endif
-    R_Q_P01_check(p);
-    if(sigma  < 0)	ML_ERR_return_NAN;
-    if(sigma == 0)	return mu;
-
     if (p == R_DT_0)	return ML_NEGINF;
     if (p == R_DT_1)	return ML_POSINF;
+    R_Q_P01_check(p);
+
+    if(sigma  < 0)	ML_ERR_return_NAN;
+    if(sigma == 0)	return mu;
 
     p_ = R_DT_qIv(p);/* real lower_tail prob. p */
     q = p_ - 0.5;
