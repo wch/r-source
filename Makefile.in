@@ -97,6 +97,7 @@ uninstall:
 	@rm -rf $(rhome)/demos
 	@rm -rf $(rhome)/gnome
 
+
 mostlyclean: clean
 clean:
 	@(for d in $(SUBDIRS); do rsd="$${d} $${rsd}"; done; \
@@ -158,5 +159,15 @@ check check-devel check-all:
 
 reset-recommended:
 	@(cd src/library/Recommended && $(MAKE) clean)
+aqualaunch: 
+	@(cd $(top_builddir)/src/modules/aqua && \
+        $(MAKE) aqualaunch)
+install-aqua: aqualaunch
+	@(cd $(top_builddir) && \
+	$(MAKE) install \
+	rhome=/Applications/StartR.app/RAqua.app/Contents \
+	mandir=/Applications/StartR.app/RAqua.app/Contents \
+	bindir=/Applications/StartR.app/RAqua.app/Contents )
+	@(cd src/modules/aqua && sh AquaInstall)
 
 TAGS:

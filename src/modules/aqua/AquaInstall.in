@@ -11,20 +11,21 @@ top_srcdir=@top_srcdir@
 
 
 here=`pwd`;
-cd ${top_builddir}
-
-make install rhome=/Applications/StartR.app/RAqua.app/Contents mandir=/Applications/StartR.app/RAqua.app/Contents bindir=/Applications/StartR.app/RAqua.app/Contents
-
-cd ${here}
 cp ${top_srcdir}/src/modules/aqua/R.fix /Applications/StartR.app/RAqua.app/Contents/
 cd /Applications/StartR.app/RAqua.app/Contents
-mv RESOURCES R_RESOURCES
-mv bin MacOS
-ln -s MacOS bin
-cd MacOS
-mv R.bin RAqua
-ln -s RAqua R.bin
-cd .. 
+if !(test -f R_RESOURCES);  then 
+ mv RESOURCES R_RESOURCES 
+fi
+if !(test -e MacOS); then
+ mv bin MacOS
+ ln -s MacOS bin
+fi 
+if !(test -f MacOS/RAqua); then
+  cd MacOS
+  mv R.bin RAqua
+  ln -s RAqua R.bin
+  cd ..
+fi
 ./R.fix
 rm R.fix
 cd ${here}
@@ -38,14 +39,15 @@ mkdir -p /Applications/StartR.app/Contents/Resources
 cp src/modules/aqua/RAqua/Contents/Resources/RAqua.icns /Applications/StartR.app/Contents/Resources/
 cp src/modules/aqua/RAqua/Contents/PkgInfo /Applications/StartR.app/Contents/
 cp src/modules/aqua/RAqua/Contents/Info.plist /Applications/StartR.app/Contents/
-cp src/modules/aqua/RAqua/Contents/MacOS/aqualaunch.c ${here}/
 
 cd ${here}
 cd ${top_builddir}/${subdir}/
 # builds the StartR exec code
-gcc aqualaunch.c
+if !(test -f a.out); then
+ make aqualaunch
+fi
 mkdir -p /Applications/StartR.app/Contents/MacOS
-mv a.out /Applications/StartR.app/Contents/MacOS/StartR
+cp a.out /Applications/StartR.app/Contents/MacOS/StartR
 
-echo "Note: execute this script one time only!"
+# echo "Note: execute this script one time only!"
 

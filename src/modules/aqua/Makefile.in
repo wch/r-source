@@ -90,4 +90,7 @@ distdir: $(DISTFILES)
 	    || exit 1; \
 	done
 
+aqualaunch:
+	@gcc $(top_srcdir)/src/modules/aqua/RAqua/Contents/MacOS/aqualaunch.c
+
 ## Automagically generated dependencies:
