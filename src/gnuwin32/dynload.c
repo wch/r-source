@@ -74,6 +74,12 @@ typedef struct {
 
 #include "Rconfig.h"		/* F77_SYMBOL */
 
+#ifdef HAVE_F77_UNDERSCORE
+# define F77_QSYMBOL(x)	 #x ## "_"
+#else
+# define F77_QSYMBOL(x)  #x
+#endif
+
 #include "FFDecl.h"
 
 /* This provides a table of built-in C and Fortran functions.
