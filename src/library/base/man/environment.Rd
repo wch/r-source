@@ -7,6 +7,7 @@
 \alias{new.env}
 \alias{parent.env}
 \alias{parent.env<-}
+\alias{.BaseNamespaceEnv}
 \title{Environment Access}
 \description{
   Get, set, test for and create environments.
@@ -54,6 +55,14 @@ parent.env(env) <- value
   The global environment \code{.GlobalEnv} is the first item on the
   search path, more often known as the user's workspace.  It can also be
   accessed by \code{globalenv()}.
+
+  The variable \code{.BaseNamespaceEnv} is part of some experimental
+  support for name space management.
+
+  The assignment function \code{parent.env<-} is extremely dangerous as it
+  can be used to destructively change environments in ways that
+  violate assumptions made by the internal C code.  It may be removed
+  in the near future.
 }
 \seealso{
   The \code{envir} argument of \code{\link{eval}}.
