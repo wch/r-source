@@ -516,6 +516,8 @@ BUG FIXES
     o	pretty(x <- c(2.8,3))[1] - x[1] is now 0; in general,
 	p <- pretty(x) now again fulfills  p[1] <= x[] <= p[length(p)].
 
+    o	print.dist() {mva} now passes "..." to print.default.
+
     o	print.noquote("ABC") now works.
 
     o	prompt(fn) uses fn's "source" attribute if it has one.
@@ -603,8 +605,7 @@ BUG FIXES
     o   Coercing lists to functions failed if argument list was empty.
         (PR#743). Also coercing functions to lists was wrong when the
 	body was a single constant.
- 
-    o	print.dist() {mva} now passes "..." to print.default.
+
 
 
 	**************************************************
