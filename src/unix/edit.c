@@ -19,6 +19,7 @@
 
 #include "Defn.h"
 #include "Print.h"
+#include "Fileio.h"
 #include <stdio.h>
 
 /*
@@ -72,7 +73,7 @@ SEXP do_edit(SEXP call, SEXP op, SEXP args, SEXP rho)
 	else filename = DefaultFileName;
 
 	if (x != R_NilValue) {
-		if((fp=fopen(filename, "w")) == NULL)
+		if((fp=R_fopen(filename, "w")) == NULL)
 			errorcall(call, "unable to open file\n");
 		x = deparse1(x, 0);
 		for (i=0; i<LENGTH(x); i++)
@@ -87,7 +88,7 @@ SEXP do_edit(SEXP call, SEXP op, SEXP args, SEXP rho)
 	sprintf(editcmd, "%s %s", CHAR(STRING(ed)[0]), filename);
 	system(editcmd);
 
-	if((fp=fopen(filename, "r")) == NULL)
+	if((fp=R_fopen(filename, "r")) == NULL)
 		errorcall(call, "unable to open file to read\n");
 	R_ParseCnt = 0;
 #ifdef OLD

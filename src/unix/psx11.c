@@ -21,6 +21,7 @@
 #include "Defn.h"
 #include "Graphics.h"
 #include "PostScript.h"
+#include "Fileio.h"
 #include "psx11.h"
 #include <math.h>
 #include <stdio.h>
@@ -130,7 +131,7 @@ int psx11_Open(char *pagetype, int orientation)
 	}
 	psfp = NULL;
 	sprintf(filename, "/tmp/Rps%d.ps", getpid());
-	if((psfp = fopen(filename, "w")) == NULL)
+	if((psfp = R_fopen(filename, "w")) == NULL)
 		return 0;
 	return 1;
 }
@@ -151,7 +152,7 @@ void psx11_NewPlot(int xsize, int ysize, double pw, double ph,
 		/* compute window -> page mappings */
 
 	if(psfp) fclose(psfp);
-	psfp = fopen(filename, "w");
+	psfp = R_fopen(filename, "w");
 	xscale = 72.0 * pw;
 	yscale = 72.0 * ph;
 	plotwidth  = xscale * xsize;
@@ -353,7 +354,7 @@ void psx11_PrintPlot()
 	if((ofp=popen(lprcmd, "w")) == NULL)
 		error("unable print plot\n");
 
-	if((ifp=fopen(filename, "r")) == NULL) {
+	if((ifp=R_fopen(filename, "r")) == NULL) {
 		fclose(ofp);
 		error("unable to open plot file \"%s\"\n", filename);
 	}
@@ -372,9 +373,9 @@ void psx11_SavePlot(char *name)
 	if(!psfp) error("no plot file present (yet)\n");
 	fflush(psfp);
 
-	if((ofp=fopen(name, "w")) == NULL)
+	if((ofp=R_fopen(name, "w")) == NULL)
 		error("unable to open output file \"%s\" for plot\n", name);
-	if((ifp=fopen(filename, "r")) == NULL) {
+	if((ifp=R_fopen(filename, "r")) == NULL) {
 		fclose(ofp);
 		error("unable to open plot file \"%s\"\n", filename);
 	}

@@ -23,6 +23,7 @@
  */
 
 #include "Graphics.h"
+#include "Fileio.h"
 
 /*void error(char*);*/
 int ValidColor(unsigned int);
@@ -255,7 +256,7 @@ static int PicTeX_Open(void)
 	int i;
 	fontsize = 0;
 	fontface = 0;
-	if(!(texfp = fopen(filename, "w"))) return 0;
+	if(!(texfp = R_fopen(filename, "w"))) return 0;
 	fprintf(texfp, "\\hbox{\\beginpicture\n");
 	fprintf(texfp, "\\setcoordinatesystem units <1pt,1pt>\n");
 	fprintf(texfp, "\\setplotarea x from 0 to %.2f, y from 0 to %.2f\n",

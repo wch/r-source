@@ -20,6 +20,7 @@
 #include <stdio.h>
 #include <ctype.h>
 #include "PostScript.h"
+#include "Fileio.h"
 
 	/*  PostScript Graphics Utilities			  */
 	/*  This file contains all those utilities used to draw   */
@@ -199,7 +200,7 @@ int PostScriptLoadFontMetrics(char *fontname, FontMetricInfo *metrics)
 	int mode;
 	FILE *fp;
 
-	if(!(fp = fopen(fontname, "r"))) return 0;
+	if(!(fp = R_fopen(fontname, "r"))) return 0;
 
 	mode = 0;
 	while(fgets(buf, BUFSIZE, fp)) {

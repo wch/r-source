@@ -20,6 +20,7 @@
 #include "Graphics.h"
 #include "PostScript.h"
 #include "Errormsg.h"
+#include "Fileio.h"
 #include <stdio.h>
 
 unsigned int str2col(char*);
@@ -151,9 +152,9 @@ int PSDeviceDriver(char **cpars, int ncpars, double *npars, int nnpars)
 		pagewidth = pageheight;
 		pageheight = tmp;;
 	}
-	if(width < 3.0 || width > pagewidth-0.5)
+	if(width < 0.1 || width > pagewidth-0.5)
 		width = pagewidth-0.5;
-	if(height < 3.0 || height > pageheight-0.5)
+	if(height < 0.1 || height > pageheight-0.5)
 		height = pageheight-0.5;
 	xoff = (pagewidth - width)/2.0;
 	yoff = (pageheight - height)/2.0;
@@ -229,39 +230,63 @@ int PSDeviceDriver(char **cpars, int ncpars, double *npars, int nnpars)
 }
 
 
-static char *FamilyName[][6] = {
+static char *FamilyName[][6][2] = {
 
-	{ "AvantGarde",				"AvantGarde-Book",
-	  "AvantGarde-Demi",			"AvantGarde-BookOblique",
-	  "AvantGarde-DemiOblique",		"Symbol", },
+	{ { "AvantGarde",				"AvantGarde",},
+	  { "AvantGarde-Book",				"AvantB",},
+	  { "AvantGarde-Demi",				"AvantD",},
+	  { "AvantGarde-BookOblique",			"AvantBO",},
+	  { "AvantGarde-DemiOblique",			"AvantDO",},
+	  { "Symbol", 					"Symbol",}, },
 
-	{ "Bookman",				"Bookman-Light",
-	  "Bookman-Demi",			"Bookman-LightItalic",
-	  "Bookman-DemiItalic",			"Symbol", },
+	{ { "Bookman",					"Bookman",},
+	  { "Bookman-Light",				"BookL",},
+	  { "Bookman-Demi",				"BookD",},
+	  { "Bookman-LightItalic",			"BookLI",},
+	  { "Bookman-DemiItalic",			"BookDI",},
+	  { "Symbol", 					"Symbol",}, },
 
-	{ "Courier",				"Courier",
-	  "Courier-Bold",			"Courier-BoldOblique",
-	  "Courier-Oblique",			"Symbol", },
+	{ { "Courier",					"Courier",},
+	  { "Courier",					"Cour",},
+	  { "Courier-Bold",				"CourB",},
+	  { "Courier-BoldOblique",			"CourBO",},
+	  { "Courier-Oblique",				"CourO",},
+	  { "Symbol", 					"Symbol",}, },
 
-	{ "Helvetica",				"Helvetica",
-	  "Helvetica-Bold",			"Helvetica-Oblique",
-	  "Helvetica-BoldOblique",		"Symbol", },
+	{ { "Helvetica",				"Helvetica",},
+	  { "Helvetica",				"Helv",},
+	  { "Helvetica-Bold",				"HelvB",},
+	  { "Helvetica-Oblique",			"HelvO",},
+	  { "Helvetica-BoldOblique",			"HelvBO",},
+	  { "Symbol", 					"Symbol",}, },
 
-	{ "Helvetica-Narrow",			"Helvetica-Narrow",
-	  "Helvetica-Narrow-Bold",		"Helvetica-Narrow-Oblique",
-	  "Helvetica-Narrow-BoldOblique",	"Symbol", },
+	{ { "Helvetica-Narrow",				"Helvetica-Narrow",},
+	  { "Helvetica-Narrow",				"HelvN",},
+	  { "Helvetica-Narrow-Bold",			"HelvNB",},
+	  { "Helvetica-Narrow-Oblique",			"HelvNO",},
+	  { "Helvetica-Narrow-BoldOblique",		"HelvNBO",},
+	  { "Symbol", 					"Symbol",}, },
 
-	{ "NewCenturySchoolbook",		"NewCenturySchlbk-Roman",
-	  "NewCenturySchlbk-Bold",		"NewCenturySchlbk-Italic",
-	  "NewCenturySchlbk-BoldItalic",	"Symbol", },
+	{ { "NewCenturySchoolbook",			"NewCenturySchoolbook",},
+	  { "NewCenturySchlbk-Roman",			"NCSchlR",},
+	  { "NewCenturySchlbk-Bold",			"NCSchlB",},
+	  { "NewCenturySchlbk-Italic",			"NCSchlI",},
+	  { "NewCenturySchlbk-BoldItalic",		"NCSchlBI"},
+	  { "Symbol", 					"Symbol",}, },
 
-	{ "Palatino",				"Palatino-Roman",
-	  "Palatino-Bold",			"Palatino-Italic",
-	  "Palatino-BoldItalic",		"Symbol", },
+	{ { "Palatino",					"Palatino",},
+	  { "Palatino-Roman",				"PalatR",},
+	  { "Palatino-Bold",				"PalatB",},
+	  { "Palatino-Italic",				"PalatI",},
+	  { "Palatino-BoldItalic",			"PalatBI",},
+	  { "Symbol", 					"Symbol",}, },
 
-	{ "Times",				"Times-Roman",
-	  "Times-Bold",				"Times-Italic",
-	  "Times-BoldItalic",			"Symbol", },
+	{ { "Times",					"Times",},
+	  { "Times-Roman",				"TimesR",},
+	  { "Times-Bold",				"TimesB",},
+          { "Times-Italic",				"TimesI",},
+	  { "Times-BoldItalic",				"TimesBI",},
+	  { "Symbol", 					"Symbol",}, },
 
 	NULL
 };
@@ -270,9 +295,9 @@ static int matchfamily(char *name)
 {
 	int i;
 	for(i=0 ; FamilyName[i] != NULL ; i++)
-		if(!strcmp(name, FamilyName[i][0])) return i;
+		if(!strcmp(name, FamilyName[i][0][0])) return i;
 	warning("unknown postscript font family, using %s\n",
-		FamilyName[3][0]);
+		FamilyName[3][0][0]);
 	return 3;
 }
 
@@ -321,17 +346,17 @@ static int PS_Open(void)
 		return 0;
 
 	for(i=1 ; i<=5 ; i++) {
-		sprintf(buf, "%s/afm/%s", rhome,
-			FamilyName[fontfamily][i]);
+		sprintf(buf, "%s/lib/afm/%s", rhome,
+			FamilyName[fontfamily][i][1]);
 		if(!PostScriptLoadFontMetrics(buf, &(metrics[i-1])))
 			return 0;
 	}
 
-	if(!(psfp = fopen(filename, "w"))) return 0;
+	if(!(psfp = R_fopen(filename, "w"))) return 0;
 
 	if(landscape)
 		PostScriptFileHeader(psfp,
-			&(FamilyName[fontfamily][1]),
+			&(FamilyName[fontfamily][0][0]),
 			papername,
 			paperwidth,
 			paperheight,
@@ -342,7 +367,7 @@ static int PS_Open(void)
 			GP->right);
 	else
 		PostScriptFileHeader(psfp,
-			&(FamilyName[fontfamily][1]),
+			&(FamilyName[fontfamily][0][0]),
 			papername,
 			paperwidth,
 			paperheight,
@@ -383,8 +408,16 @@ static void PS_NewPlot(void)
                         R_BLUE(col)/255.0);
 	if(DP->bg != R_RGB(255,255,255)) {
 		SetColor(DP->bg);
+#ifdef OLD
 		PostScriptFilledRectangle(psfp,
 			0, 0, 72.0 * pagewidth, 72.0 * pageheight);
+#else
+		PostScriptFilledRectangle(psfp,
+			GP->left,
+			GP->bottom,
+			GP->right,
+			GP->top);
+#endif
 	}
 }
 
