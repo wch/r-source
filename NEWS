@@ -225,6 +225,9 @@ NEW FEATURES
 	Sys.localeconv(), but nothing else in R itself.  (It could
 	affect addon packages.)
 
+    o	New function localeToCharset to find/guess encoding from the
+	locale name.
+
 
 
 UTILITIES

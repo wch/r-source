@@ -26,6 +26,8 @@ localeToCharset(locale = Sys.getlocale("LC_CTYPE"))
   to look up the equivalent encoding name.  Otherwise, the language
   (here \code{es}) is used to choose a primary or fallback encoding.
 #endif
+
+  In the \code{C} locale the answer will be \code{"ASCII"}.
 }
 \value{
   A character vector naming an encoding and possibly a fallback

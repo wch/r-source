@@ -25,6 +25,7 @@ localeToCharset <- function(locale = Sys.getlocale("LC_CTYPE"))
         if(en %in% "cy") return("ISO8859-14")
         return(as.character(NA))
     }
+    if(locale %in% c("C", "POSIX")) return("ASCII")
     if(.Platform$OS.type == "windows") {
         x <- strsplit(locale, ".", fixed=TRUE)[[1]]
         if(length(x) != 2) return(as.character(NA))
