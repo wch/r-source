@@ -22,7 +22,7 @@ Collect the tools
 You will need suitable versions of at least make, sh, cat, cp, cut,
 diff, echo, egrep, expr, grep, ls, mkdir, mv, rm, sed, touch; we use
 those from the cygwin distribution
-(http://www.cygwin.com/mirrors.html) or (gzip, makeinfo, texindex, tidy)
+(http://www.cygwin.com/mirrors.html) or (gzip, makeinfo, texindex)
 compiled from the sources.  We have packaged a set at
 http://www.stats.ox.ac.uk/pub/Rtools/tools.zip.
 
@@ -34,7 +34,7 @@ use our tool set, and make sure it is at the front of your path.
 To compile this version you need a recent version of the Mingw port of
 gcc from http://sourceforge.net/projects/mingw/.  There will be a
 distribution called something like MinGW-3.1.0-1.exe.  Earlier
-versions may work, but mingw-runtime >= 2.0 and w32api >= 2.0 are
+versions may work, but mingw-runtime >= 3.0 and w32api >= 2.0 are
 essential.  The release candidates of gcc-3.3.1 have also been tested.
 
 No earlier Mingw compiler has been tested and support for using the
@@ -250,9 +250,6 @@ To make HTML versions of the manuals (not the Reference Manual) use
 	cd ../../doc/manual
 	make -f Makefile.win html
 
-This makes use of tidy.exe, available via http://tidy.sourceforge.net/,
-with a compiled version included in our tool set.
-
 The fptex distribution of TeX (via www.fptex.org) includes a suitable
 port of pdftex.
 
@@ -304,8 +301,8 @@ Note that as from R 1.7.0 you do need versions >= 2.0 of mingw-runtime
 and w32api and so a later set of cross-compilers than is needed for R
 1.6.x.
 
-You will need Perl, zip and unzip installed, as well as makeinfo >=
-4.2 (part of GNU texinfo) and tidy (via http://tidy.sourceforge.net).
+You will need Perl, zip and unzip installed and makeinfo >= 4.2 
+(part of GNU texinfo).
 
 You also need the R source (R-1.x.y.tgz).
 

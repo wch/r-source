@@ -6,6 +6,8 @@
 @set VERSION @RWVER@
 @set RVERSION @RVER@
 @c %**end of header
+@documentlanguage en
+@documentencoding ISO-8859-1
 
 @finalout
 
@@ -15,7 +17,7 @@
 @end ifinfo
 @ifhtml
 @html
-<p><hr>
+<hr>
 @end html
 @end ifhtml
 @end macro
@@ -31,7 +33,7 @@
 R for Windows FAQ                           @*
 Frequently Asked Questions on R for Windows @*
 Version for @value{VERSION}                 @*
-Brian Ripley                                @*
+B. D. Ripley                                @*
 
 @sp 2
 @end ifinfo
@@ -40,7 +42,7 @@ Brian Ripley                                @*
 @html
 <h2>Version for <tt>@value{VERSION}</tt></h2>
 <address>B. D. Ripley</address>
-<p><p><hr><p>
+<hr>
 @end html
 @end ifhtml
 
@@ -194,7 +196,7 @@ after having checked the command line.
 @end table
 
 A successful installation has exit code 0: unsuccessful ones may give 1,
-2, 3, 4 or 5.  See the help for Inno Setup 3
+2, 3, 4 or 5.  See the help for Inno Setup 4
 (@uref{http://jrsoftware.org/isinfo.php}) for details.
 
 
@@ -1170,16 +1172,16 @@ If you want output to be updated on the console, call
 
 @ifhtml
 @html
-<p><hr WIDTH="100%">
+<hr WIDTH="100%">
 <address>
-Last edited 2003 December 19 by Professor B. D. Ripley
+Last edited 2004 January 20 by Professor B. D. Ripley
 <code><a href="mailto:ripley@@stats.ox.ac.uk">ripley@@stats.ox.ac.uk</a></code>
 </address>
 @end html
 @end ifhtml
 @ifinfo
 @sp 2
-Last edited 2003 December 19 by Professor B. D. Ripley <ripley@@stats.ox.ac.uk>
+Last edited 2004 January 20 by Professor B. D. Ripley <ripley@@stats.ox.ac.uk>
 @end ifinfo
 
 @bye
