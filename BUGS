@@ -427,51 +427,11 @@ none
 
 Directory:  incoming
 
-* PR# 1284 *
-Subject: make check fails when R_HOME env var set
-From: "Warnes, Gregory R" <gregory_r_warnes@groton.pfizer.com>
-Date: Fri, 25 Jan 2002 15:08:33 -0500
-* PR# 1447 *
-Subject: Problem handling NA indexes for character matrixes
-From: "Warnes, Gregory R" <gregory_r_warnes@groton.pfizer.com>
-Date: Tue, 9 Apr 2002 18:51:28 -0400 
-* PR# 1448 *
-Subject: bug?
-From: "Paulo Cardoso" <paulocardoso@netvisao.pt>
-Date: Wed, 10 Apr 2002 02:30:56 +0100
-* PR# 1449 *
-Subject: ??????´?´?
-From: ???¤?? <ghuq1y338@lycos.co.kr>
-Date: Wed, 10 Apr 2002 22:15:19 +0900
-* PR# 1450 *
-Subject: Strange assignment bug
-From: "Giles Innocent" <G.Innocent@vet.gla.ac.uk>
-Date: Wed, 10 Apr 2002 14:35:35 +0100
-* PR# 1451 *
-Subject:  Funny characters in x11 window title 
-From: David Brahm  <a215020@onyx.fmr.com>
-Date: Wed, 10 Apr 2002 11:21:43 -0400 (EDT)
-* PR# 1452 *
-Subject: ?©??º? º???µ????? ±??®°? ????µ?µµ µ?±???............?? [±¤°?]
-From: "." <ggoodrice@orgio.net>
-Date: Thu, 11 Apr 2002 22:52:53 +0900
-* PR# 1453 *
-Subject: segmentation violation when closing the data entry window
-From: Stephen Eglen <eglen@pcg.wustl.edu>
-Date: Thu, 11 Apr 2002 13:53:52 -0500
-* PR# 1454 *
-Subject: Maritime Newsletter (Week 15)
-From: "Marine Digital Inc."<newsletter@marinedigital.com>
-Date: Fri, 12 Apr 2002 21:29:16 +0900
-* PR# 1455 *
-Subject: Interviewing 
-From: "April Adams" <AAdams@geologics.com>
-Date: Fri, 12 Apr 2002 14:42:53 -0400
-* PR# 1456 *
-Subject:  
-From: toussain <toussain@stolaf.edu>
-Date: Fri, 12 Apr 2002 23:13:05 -0500 (CDT)
-* PR# 1457 *
-Subject: glm() in R
-From: Alexandrin Popescul <popescul@unagi.cis.upenn.edu>
-Date: Sat, 13 Apr 2002 10:09:22 -0400 (EDT)
+* PR# 1458 *
+Subject: [±¤*°?]??´??? µ??ú???­ ??????´??ý?? ¾???µ???´?´?.
+From: ?º°?±??? <oknti@netian.com>
+Date: Sun, 14 Apr 2002 21:35:11 +0900
+* PR# 1459 *
+Subject: [±¤°?] ???±?? ?º???µ?­°ü?? ??°???´?´?
+From: movie <dfgty55aq@lycos.co.kr>
+Date: Mon, 15 Apr 2002 01:13:37 +0900
