@@ -65,7 +65,7 @@ static char *rmspace(char *s)
 {
     int   i;
 
-    for (i = strlen(s) - 1; s[i] == ' '; i--)
+    for (i = strlen(s) - 1; i >= 0 && s[i] == ' '; i--)
 	s[i] = '\0';
     for (i = 0; s[i] == ' '; i++);
     return &s[i];
