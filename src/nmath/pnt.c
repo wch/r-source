@@ -1,6 +1,24 @@
 /*
- *  Algorithm AS 243  Appl. Statist. (1989), Vol.38, No. 1.
+ *  Mathlib : A C Library of Special Functions
+ *  Copyright (C) 1998 Ross Ihaka and the R Core Team
  *
+ *  This program is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 2 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program; if not, write to the Free Software
+ *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ */
+
+/*  Algorithm AS 243  Lenth,R.V. (1989). Appl. Statist., Vol.38, 185-189.
+ *  ----------------
  *  Cumulative probability at t of the non-central t-distribution
  *  with df degrees of freedom (may be fractional) and non-centrality
  *  parameter delta.
@@ -9,9 +27,9 @@
  *
  *    Requires the following auxiliary routines:
  *
- *        lgammafn(x)       - log gamma function
- *        pbeta(x, a, b)  - incomplete beta function
- *        pnorm(x)        - normal distribution function
+ *	lgammafn(x)	- log gamma function
+ *	pbeta(x, a, b)	- incomplete beta function
+ *	pnorm(x)	- normal distribution function
  *
  *  CONSTANTS
  *
@@ -21,15 +39,26 @@
 
 #include "Mathlib.h"
 
+/*----------- DEBUGGING -------------
+ *
+ *	make CFLAGS='-DDEBUG_pnt -g -I/usr/local/include -I../include'
+
+ * -- Feb.3, 1999; M.Maechler:
+	- For 't > delta > 20' (or so)	the result is completely WRONG!
+ */
+#ifdef DEBUG_pnt
+# include "PrtUtil.h"
+#endif
+
 double pnt(double t, double df, double delta)
 {
-    double a, albeta, b, del, en, errbd, geven, godd,
+    double a, albeta, b, del, errbd, geven, godd,
 	lambda, p, q, rxb, s, tnc, tt, x, xeven, xodd;
-    int negdel;
+    int it, negdel;
 
     /* note - itrmax and errmax may be changed to suit one's needs. */
 
-    static double itrmax = 100.1;
+    static int itrmax = 1000;
     static double errmax = 1.e-12;
 
     static double zero = 0.0;
@@ -37,7 +66,7 @@ double pnt(double t, double df, double delta)
     static double one = 1.0;
     static double two = 2.0;
 
-    tnc = zero;
+    tnc = zero;/* tnc will be the result */
     if (df <= zero) {
 	ML_ERROR(ME_DOMAIN);
 	return ML_NAN;
@@ -51,45 +80,74 @@ double pnt(double t, double df, double delta)
 	del = -del;
     }
     /* initialize twin series */
-    /* (guenther, j. statist. computn. simuln.  vol.6, 199, 1978). */
+    /* Guenther, J. (1978). Statist. Computn. Simuln. vol.6, 199. */
 
-    en = one;
-    x = t * t / (t * t + df);
-    if (x > zero) {
+    x = t * t;
+    x = x / (x + df);/* in [0,1) */
+#ifdef DEBUG_pnt
+    REprintf("pnt(t=%7g, df=%7g, delta=%7g) ==> x= %10g:",t,df,delta, x);
+#endif
+    if (x > zero) {/* <==>  t != 0 */
 	lambda = del * del;
 	p = half * exp(-half * lambda);
+#ifdef DEBUG_pnt
+	REprintf("\t p=%10g\n",p);
+#endif
+	if(p == 0.) { /* underflow! */
+
+	  /*========== really use an other algorithm for this case !!! */
+	  ML_ERROR(ME_UNDERFLOW);
+	  ML_ERROR(ME_RANGE); /* |delta| too large */
+	  return zero;
+	}
+#ifdef DEBUG_pnt
+        REprintf("it  1e5*(godd,  geven)       p         q          s    "
+	       /* 1.3 1..4..7.9 1..4..7.9  1..4..7.9 1..4..7.9 1..4..7.9_ */
+		 "        pnt(*)      errbd\n");
+	       /* 1..4..7..0..3..6 1..4..7.9*/
+#endif
 	q = M_SQRT_2dPI * p * del;
 	s = half - p;
 	a = half;
 	b = half * df;
 	rxb = pow(one - x, b);
-	albeta = M_LN_SQRT_PI + lgammafn(b) - lgammafn(a + b);
+	albeta = M_LN_SQRT_PI + lgammafn(b) - lgammafn(half + b);
 	xodd = pbeta(x, a, b);
 	godd = two * rxb * exp(a * log(x) - albeta);
 	xeven = one - rxb;
 	geven = b * x * rxb;
 	tnc = p * xodd + q * xeven;
 
-	/* repeat until convergence */
-
-	do {
-	    a = a + one;
-	    xodd = xodd - godd;
-	    xeven = xeven - geven;
-	    godd = godd * x * (a + b - one) / a;
-	    geven = geven * x * (a + b - half) / (a + half);
-	    p = p * lambda / (two * en);
-	    q = q * lambda / (two * en + one);
-	    s = s - p;
-	    en = en + one;
-	    tnc = tnc + p * xodd + q * xeven;
+	/* repeat until convergence or iteration limit */
+	for(it = 1; it <= itrmax; it++) {
+	    a += one;
+	    xodd  -= godd;
+	    xeven -= geven;
+	    godd  *= x * (a + b - one) / a;
+	    geven *= x * (a + b - half) / (a + half);
+	    p *= lambda / (2 * it);
+	    q *= lambda / (2 * it + 1);
+	    tnc += p * xodd + q * xeven;
+	    s -= p;
+	    if(s <= 0.) { /* happens e.g. for (t,df,delta)=(40,10,38.5), after 799 it.*/
+		ML_ERROR(ME_PRECISION);
+#ifdef DEBUG_pnt
+		REprintf("s = %#14.7g < 0 !!! ---> non-convergence!!\n", s);
+#endif
+		goto finis;
+	    }
 	    errbd = two * s * (xodd - godd);
+#ifdef DEBUG_pnt
+	    REprintf("%3d %#9.4g %#9.4g  %#9.4g %#9.4g %#9.4g %#14.10g %#9.4g\n",
+		     it, 1e5*godd, 1e5*geven, p,q, s, tnc, errbd);
+#endif
+	    if(errbd < errmax) goto finis;/*convergence*/
 	}
-	while (errbd > errmax && en <= itrmax);
-    }
-    if (en <= itrmax)
+	/* non-convergence:*/
 	ML_ERROR(ME_PRECISION);
-    tnc = tnc + pnorm(- del, zero, one);
+    }
+ finis:
+    tnc += pnorm(- del, zero, one);
     if (negdel)
 	tnc = one - tnc;
     return tnc;
