@@ -1489,7 +1489,7 @@ void GESymbol(double x, double y, int pch, double size,
 	    xc = toDeviceWidth(RADIUS * GSTR_0, GE_INCHES, dd);
 	    yc = toDeviceHeight(RADIUS * GSTR_0, GE_INCHES, dd);
 	    GERect(x-xc, y-yc, x+xc, y+yc,
-		   NA_INTEGER, col, lty, lwd, dd);
+		   col, NA_INTEGER, lty, lwd, dd);
 	    GELine(x-xc, y-yc, x+xc, y+yc, col, lty, lwd, dd);
 	    GELine(x-xc, y+yc, x+xc, y-yc, col, lty, lwd, dd);
 	    break;
@@ -1508,8 +1508,8 @@ void GESymbol(double x, double y, int pch, double size,
 	case 9: /* S diamond and plus superimposed */
 	    xc = toDeviceWidth(M_SQRT2 * RADIUS * GSTR_0, GE_INCHES, dd);
 	    yc = toDeviceHeight(M_SQRT2 * RADIUS * GSTR_0, GE_INCHES, dd);
-	    GELine(x-xc, y-yc, x+xc, y+yc, col, lty, lwd, dd);
-	    GELine(x-xc, y+yc, x+xc, y-yc, col, lty, lwd, dd);
+	    GELine(x-xc, y, x+xc, y, col, lty, lwd, dd);
+	    GELine(x, y-yc, x, y+yc, col, lty, lwd, dd);
 	    xx[0] = x-xc; yy[0] = y;
 	    xx[1] = x; yy[1] = y+yc;
 	    xx[2] = x+xc; yy[2] = y;
@@ -1519,11 +1519,11 @@ void GESymbol(double x, double y, int pch, double size,
 
 	case 10: /* S hexagon (circle) and plus superimposed */
 	    xc = RADIUS * size;
-	    GECircle(x, y, xc, NA_INTEGER, col, lty, lwd, dd);
+	    GECircle(x, y, xc, col, NA_INTEGER, lty, lwd, dd);
 	    xc = toDeviceWidth(M_SQRT2 * RADIUS * GSTR_0, GE_INCHES, dd);
 	    yc = toDeviceHeight(M_SQRT2 * RADIUS * GSTR_0, GE_INCHES, dd);
-	    GELine(x-xc, y-yc, x+xc, y+yc, col, lty, lwd, dd);
-	    GELine(x-xc, y+yc, x+xc, y-yc, col, lty, lwd, dd);
+	    GELine(x-xc, y, x+xc, y, col, lty, lwd, dd);
+	    GELine(x, y-yc, x, y+yc, col, lty, lwd, dd);
 	    break;
 
 	case 11: /* S superimposed triangles */
@@ -1549,12 +1549,12 @@ void GESymbol(double x, double y, int pch, double size,
 	    xc = toDeviceWidth(RADIUS * GSTR_0, GE_INCHES, dd);
 	    yc = toDeviceHeight(RADIUS * GSTR_0, GE_INCHES, dd);
 	    GERect(x-xc, y-yc, x+xc, y+yc,
-		   NA_INTEGER, col, lty, lwd, dd);
+		   col, NA_INTEGER, lty, lwd, dd);
 	    break;
 
 	case 13: /* S octagon (circle) and times superimposed */
 	    xc = RADIUS * size;
-	    GECircle(x, y, xc, NA_INTEGER, col, lty, lwd, dd);
+	    GECircle(x, y, xc, col, NA_INTEGER, lty, lwd, dd);
 	    xc = toDeviceWidth(RADIUS * GSTR_0, GE_INCHES, dd);
 	    yc = toDeviceHeight(RADIUS * GSTR_0, GE_INCHES, dd);
 	    GELine(x-xc, y-yc, x+xc, y+yc, col, lty, lwd, dd);
@@ -1565,7 +1565,7 @@ void GESymbol(double x, double y, int pch, double size,
 	    xc = toDeviceWidth(RADIUS * GSTR_0, GE_INCHES, dd);
 	    yc = toDeviceHeight(RADIUS * GSTR_0, GE_INCHES, dd);
 	    GERect(x-xc, y-yc, x+xc, y+yc,
-		   NA_INTEGER, col, lty, lwd, dd);
+		   col, NA_INTEGER, lty, lwd, dd);
 	    xc = RADIUS * GSTR_0;
 	    r = toDeviceHeight(TRC0 * xc, GE_INCHES, dd);
 	    yc = toDeviceHeight(TRC2 * xc, GE_INCHES, dd);
