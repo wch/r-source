@@ -4,7 +4,7 @@
 
 # @configure_input@
 
-revision='$Revision: 1.65 $'
+revision='$Revision: 1.66 $'
 version=`set - ${revision}; echo ${2}`
 version="R add-on package installer ${version}
 
@@ -236,7 +236,7 @@ do_install () {
     if ${use_configure} && test -x ./configure ; then
       ./configure ${configure_args}
       if test ${?} -ne 0; then
-	echo "ERROR: Configuration failed for package \`${pkg}'"
+	echo "ERROR: configuration failed for package \`${pkg}'"
 	exit 4
       fi
     fi
@@ -274,7 +274,7 @@ do_install () {
 	cd ..
       fi
       if ${error}; then
-	echo "ERROR: Compilation failed for package \`${pkg}'"
+	echo "ERROR: compilation failed for package \`${pkg}'"
 	exit 5
       fi
       if ${debug}; then set +x; fi
@@ -400,6 +400,10 @@ EOF
 	  fi
 	  ${R_CMD} perl ${R_HOME}/share/perl/build-help.pl \
 	    ${build_help_opts} ../${pkg} ${lib}
+	  if test ${?} -ne 0; then
+	    echo "ERROR: building help failed for package \`${pkg}'"
+	    exit 6
+	  fi
 	  ${R_CMD} perl ${R_HOME}/share/perl/Rd2contents.pl \
 	    ../${pkg} > ${lib}/${pkg}/CONTENTS
 	  if test ${lib} = ${R_HOME}/library; then 
