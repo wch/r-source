@@ -34,7 +34,8 @@ USER-VISIBLE CHANGES
 	Users may notice that code in .Rprofile is run only with the
 	new base loaded and so functions may now not be found.  For
 	example, ps.options(horizontal = TRUE) should be preceded by
-	library(graphics) or called as graphics::ps.options.
+	library(graphics) or called as graphics::ps.options or,
+	better, set as a hook -- see ?setUserOnLoadHook.
 
     o	There has been a concerted effort to speed up the startup of
 	an R session: it now takes about 2/3rds of the time of 1.8.1.
@@ -147,6 +148,9 @@ NEW FEATURES
     o	methods(class=) now checks for a matching generic, and so no
 	longer returns methods for non-visible generics (and
 	eliminates various mismatches).
+
+    o	User hooks can be set for onLoad, library, detach and
+	onUnload: see ?setUserOnLoadHook.
 
 
 UTILITIES

@@ -34,10 +34,15 @@ detach <- function(name, pos=2, version)
     }
     env <- as.environment(pos)
     packageName <- search()[[pos]]
+    libpath <- attr(env, "path")
+    if(length(grep("^package:", packageName))) {
+        pkgname <- sub("^package:", "", packageName)
+        hook <- getUserDetachHook(pkgname) # might be list()
+        for(fun in hook) try(fun(pkgname, libpath))
+    }
     if(exists(".Last.lib", mode = "function", where = pos, inherits=FALSE)) {
         .Last.lib <- get(".Last.lib",  mode = "function", pos = pos,
                          inherits=FALSE)
-        libpath <- attr(env, "path")
         if(!is.null(libpath)) try(.Last.lib(libpath))
     }
     .Internal(detach(pos))

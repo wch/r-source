@@ -133,6 +133,10 @@ loadNamespace <- function (package, lib.loc = NULL,
                          call. = FALSE)
             }
         }
+        runUserHook <- function(pkgname, libpath) {
+            hook <- getUserOnLoadHook(pkgname) # might be list()
+            for(fun in hook) try(fun(pkgname, libpath))
+        }
         makeNamespace <- function(name, version = NULL, lib = NULL) {
             impenv <- new.env(parent = .BaseNamespaceEnv, hash = TRUE)
             env <- new.env(parent = impenv, hash = TRUE)
@@ -282,6 +286,8 @@ loadNamespace <- function (package, lib.loc = NULL,
         }
         namespaceExport(ns, exports)
         sealNamespace(ns)
+        ## run user hooks here
+        runUserHook(package, file.path(package.lib, package))
         on.exit()
         ns
     }
@@ -344,8 +350,11 @@ unloadNamespace <- function(ns) {
     if (length(users) != 0)
         stop(paste("name space still used by:", paste(users, collapse = ", ")))
     nspath <- getNamespaceInfo(ns, "path")
+    hook <- getUserOnUnloadHook(nsname) # might be list()
+    for(fun in hook) try(fun(nsname, nspath))
     try(runHook(".onUnload", ns, nspath))
     .Internal(unregisterNamespace(nsname))
+    invisible()
 }
 
 .Import <- function(...) {

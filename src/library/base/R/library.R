@@ -115,6 +115,11 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
 	out
     }
 
+    runUserHook <- function(pkgname, libpath) {
+        hook <- getUserAttachHook(pkgname) # might be list()
+        for(fun in hook) try(fun(pkgname, libpath))
+    }
+
     if (is.null(lib.loc)) lib.loc <- .libPaths()
 
     if(!missing(package)) {
@@ -220,6 +225,7 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
                         if(!nogenerics && .isMethodsDispatchOn() &&
                            !identical(pkgname, "package:methods"))
                             methods::cacheMetaData(env, TRUE, searchWhere = .GlobalEnv)
+                        runUserHook(package, pkgpath)
 			on.exit()
 			if (logical.return)
 			    return(TRUE)
@@ -272,6 +278,7 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
 		if(!nogenerics && .isMethodsDispatchOn() &&
 		   !identical(pkgname, "package:methods"))
                     methods::cacheMetaData(env, TRUE, searchWhere = .GlobalEnv)
+                runUserHook(package, pkgpath)
 		on.exit()
 	    }
 	}
