@@ -65,7 +65,7 @@ stack.data.frame <-
     x <- x[, unlist(lapply(x, is.vector)), drop = FALSE]
     data.frame(values = unlist(unname(x)),
                ind = factor(rep(names(x), lapply(x, length))))
-}    
+}
 
 stack <-
     function(x, ...)
@@ -83,7 +83,6 @@ stack.default <-
 unstack.data.frame <-
     function(x, form = formula(x))
 {
-    x <- as.list(x)
     form <- as.formula(form)
     if (length(form) < 3)
         stop("form must be a two-sided formula")
