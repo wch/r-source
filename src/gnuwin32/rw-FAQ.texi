@@ -129,8 +129,9 @@ and allows as complete as installation as you choose.
 on one floppy and the remaining @code{miniR-?.bin} on a floppy each.
 This is a small installation, containing the text versions of the help
 files and the @emph{An Introduction to R} and @emph{Data Import/Export}
-manuals in PDF.  There is no support for @code{tcltk} in this version,
-and no documentation for packages @code{grid} or @code{survival}.
+manuals in PDF.  There is no support for @code{tcltk} nor @code{iconv}
+in this version, and no documentation for packages @code{grid} or
+@code{survival}.
 
 There are also links on that page to the @code{r-patched} and
 @code{r-devel} releases.  These are frequently updated builds of development
