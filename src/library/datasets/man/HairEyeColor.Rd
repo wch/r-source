@@ -41,9 +41,9 @@
   \url{http://www.math.yorku.ca/SCS/Papers/asa92.html}
 }
 \seealso{
-  \code{\link[stats]{chisq.test}},
-  \code{\link[stats]{loglin}},
-  \code{\link[graphics]{mosaicplot}}
+  \code{\link{chisq.test}},
+  \code{\link{loglin}},
+  \code{\link{mosaicplot}}
 }
 \examples{
 require(graphics)

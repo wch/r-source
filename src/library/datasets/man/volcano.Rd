@@ -17,7 +17,7 @@
   These data should not be regarded as accurate.
 }
 % FIXME: missing \references{}
-\seealso{\code{\link[graphics]{filled.contour}} for a nice plot.}
+\seealso{\code{\link{filled.contour}} for a nice plot.}
 \examples{
 require(graphics)
 filled.contour(volcano, color = terrain.colors, asp = 1)

@@ -48,7 +48,7 @@ bs(x, df = NULL, knots = NULL, degree = 3, intercept = FALSE,
 %   specify \code{knots} and \code{Boundary.knots}.
 }
 \seealso{
-  \code{\link{ns}}, \code{\link{poly}}, \code{\link[stats]{smooth.spline}},
+  \code{\link{ns}}, \code{\link{poly}}, \code{\link{smooth.spline}},
   \code{\link{predict.bs}}, \code{\link{SafePrediction}}
 }
 \references{

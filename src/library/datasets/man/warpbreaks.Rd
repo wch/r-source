@@ -33,7 +33,7 @@
   Wiley.
 }
 \seealso{
-  \code{\link[stats]{xtabs}} for ways to display these data as a table.
+  \code{\link{xtabs}} for ways to display these data as a table.
 }
 \examples{
 summary(warpbreaks)

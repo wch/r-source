@@ -43,7 +43,7 @@ iris3
   Wadsworth \& Brooks/Cole. (has \code{iris3} as \code{iris}.)
 }
 \seealso{
-  \code{\link[graphics]{matplot}} some examples of which use
+  \code{\link{matplot}} some examples of which use
   \code{iris}.
 }
 \examples{
