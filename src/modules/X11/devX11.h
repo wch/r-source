@@ -119,8 +119,8 @@ typedef struct {
     XRectangle clip;			/* The clipping rectangle */
 
     int usefixed;
-    XFontStruct *fixedfont;
-    XFontStruct *font;
+    R_XFont *fixedfont;
+    R_XFont *font;
     char fontfamily[500];               /* CURRENT fontfamily */
     char symbolfamily[500];
     X_GTYPE type;			/* Window or pixmap? */

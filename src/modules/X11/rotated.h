@@ -20,18 +20,17 @@
 /* ---------------------------------------------------------------------- */
 
 
-/* text alignment */
+typedef enum {One_Font, Font_Set} R_FontType;
 
-#define NONE		 0
-#define TLEFT		 1
-#define TCENTRE		 2
-#define TRIGHT		 3
-#define MLEFT		 4
-#define MCENTRE		 5
-#define MRIGHT		 6
-#define BLEFT		 7
-#define BCENTRE		 8
-#define BRIGHT		 9
+typedef struct R_XFont
+{
+    R_FontType type;
+    XFontStruct *font;  
+    XFontSet fontset; 
+    int height;  
+    int ascent;
+    int descent;
+} R_XFont;
 
 
 /* ---------------------------------------------------------------------- */
@@ -53,11 +52,8 @@ XPoint *XRotTextExtents(Display*, XFontStruct*, double,
 			int, int, char*, int);
 
 /* addition in 2.1.0 */
-int	XmbRotDrawString(Display*, XFontSet, double,
+int	XRfRotDrawString(Display*, R_XFont*, double,
 			 Drawable, GC, int, int, char*);
 
 /* ---------------------------------------------------------------------- */
-
-XFontStruct            *RXFontStructOfFontSet(XFontSet font);
-
 #endif /* _XVERTEXT_INCLUDED_ */

@@ -51,6 +51,18 @@ extern char *strdup(const char *s1);
 
 /* ---------------------------------------------------------------------- */
 
+/* text alignment -- only NONE is used in R */
+
+#define NONE		 0
+#define TLEFT		 1
+#define TCENTRE		 2
+#define TRIGHT		 3
+#define MLEFT		 4
+#define MCENTRE		 5
+#define MRIGHT		 6
+#define BLEFT		 7
+#define BCENTRE		 8
+#define BRIGHT		 9
 
 /* Make sure cache size is set */
 
@@ -163,8 +175,25 @@ static void		XRotAddToLinkedList(Display *dpy, RotatedTextItem *item);
 static void		XRotFreeTextItem(Display *dpy, RotatedTextItem *item);
 static XImage	       *XRotMagnifyImage(Display *dpy, XImage *ximage);
 
+#ifdef USE_FONTSET
+static int XmbRotDrawString(Display *dpy, XFontSet fontset, double angle,
+			    Drawable drawable, GC gc, int x, int y, char *str);
+#endif
 
 /* ---------------------------------------------------------------------- */
+
+int XRfRotDrawString(Display *dpy, R_XFont *rfont, double angle, 
+		     Drawable drawable, GC gc, int x, int y, char *str)
+{
+#ifdef USE_FONTSET
+    if(rfont->type == Font_Set)
+	return XmbRotDrawString(dpy, rfont->fontset, angle, drawable, gc, x, y, str);
+    else
+#endif
+	return XRotDrawString(dpy, rfont->font, angle, drawable, gc, x, y, str);
+}
+
+
 
 
 /**************************************************************************/
@@ -1464,13 +1493,27 @@ XPoint *XRotTextExtents(Display *dpy, XFontStruct *font, double angle,
 
 
 #ifdef USE_FONTSET
-int			XmbRotDrawString(Display *dpy, XFontSet font, double angle, Drawable drawable, GC gc, int x, int y, char *str);
-static int		XmbRotPaintAlignedString(Display *dpy, XFontSet font, double angle, Drawable drawable, GC gc, int x, int y, char *text, int align, int bg);
-static int		XmbRotDrawHorizontalString(Display *dpy, XFontSet font, Drawable drawable, GC gc, int x, int y, char *text, int align, int bg);
-static RotatedTextItem *XmbRotRetrieveFromCache(Display *dpy, XFontSet font, double angle, char *text, int align);
-static RotatedTextItem *XmbRotCreateTextItem(Display *dpy, XFontSet font, double angle, char *text, int align);
+static XFontStruct * RXFontStructOfFontSet(XFontSet font) 
+{
+    char **ml;
+    XFontStruct **fs_list;
+    XFontsOfFontSet(font, &fs_list, &ml);
+    return fs_list[0];
+}
 
-XFontStruct            *RXFontStructOfFontSet(XFontSet font);
+static int 
+XmbRotPaintAlignedString(Display *dpy, XFontSet font, 
+			 double angle, Drawable drawable, GC gc, int x, int y, 
+			 char *text, int align, int bg);
+static int		
+XmbRotDrawHorizontalString(Display *dpy, XFontSet font, Drawable drawable, 
+			   GC gc, int x, int y, char *text, int align, int bg);
+static RotatedTextItem 
+*XmbRotRetrieveFromCache(Display *dpy, XFontSet font, double angle, char *text,
+			 int align);
+static RotatedTextItem 
+*XmbRotCreateTextItem(Display *dpy, XFontSet font, double angle, char *text, 
+		      int align);
 
 static int 
 XRfTextExtents(XFontSet font_set, char *string, int num_bytes, 
@@ -1520,11 +1563,12 @@ XRfDrawImageString(Display *display, Drawable d, XFontSet font_set, GC gc,
 /*	-no alignment, no background					  */
 /**************************************************************************/
 
-int XmbRotDrawString(Display *dpy, XFontSet font, double angle,
-		   Drawable drawable, GC gc, int x, int y, char *str)
+
+static int XmbRotDrawString(Display *dpy, XFontSet fontset, double angle,
+			    Drawable drawable, GC gc, int x, int y, char *str)
 {
-    return (XmbRotPaintAlignedString(dpy, font, angle, drawable, gc,
-				   x, y, str, NONE, 0));
+    return (XmbRotPaintAlignedString(dpy, fontset, angle, drawable, gc,
+				     x, y, str, NONE, 0));
 }
 
 
@@ -1536,9 +1580,10 @@ int XmbRotDrawString(Display *dpy, XFontSet font, double angle,
 /*  Aligns and paints a rotated string					  */
 /**************************************************************************/
 
-static int XmbRotPaintAlignedString(Display *dpy, XFontSet font, double angle,
-				  Drawable drawable, GC gc, int x, int y,
-				  char *text, int align, int bg)
+static int 
+XmbRotPaintAlignedString(Display *dpy, XFontSet font, double angle,
+			 Drawable drawable, GC gc, int x, int y,
+			 char *text, int align, int bg)
 {
     int i;
     GC my_gc;
@@ -1845,9 +1890,11 @@ static int XmbRotDrawHorizontalString(Display *dpy, XFontSet font,
 
 	/* draw string onto bitmap */
 	if(!bg)
-	    XRfDrawString(dpy, drawable, font, my_gc, xp, yp, str3, strlen(str3));
+	    XRfDrawString(dpy, drawable, font, my_gc, xp, yp, str3, 
+			  strlen(str3));
 	else
-	    XRfDrawImageString(dpy, drawable, font, my_gc, xp, yp, str3, strlen(str3));
+	    XRfDrawImageString(dpy, drawable, font, my_gc, xp, yp, str3, 
+			       strlen(str3));
 
 	/* move to next line */
 	yp+=height;
@@ -2156,8 +2203,8 @@ static RotatedTextItem
 
 	/* keep a note of corner positions of this string */
 	item->corners_x[ic]=((double)xp-(double)item->cols_in/2)*style.magnify;
-	item->corners_y[ic]=((double)(yp-RXFontStructOfFontSet(font)->ascent)-(double)item->rows_in/2)
-	    *style.magnify;
+	item->corners_y[ic]=((double)(yp-RXFontStructOfFontSet(font)->ascent)-
+			     (double)item->rows_in/2) *style.magnify;
 	item->corners_x[ic+1]=item->corners_x[ic];
 	item->corners_y[ic+1]=item->corners_y[ic]+(double)height*style.magnify;
 	item->corners_x[item->nl*4-1-ic]=item->corners_x[ic]+
@@ -2399,7 +2446,8 @@ XPoint *XmbRotTextExtents(Display *dpy, XFontSet font, double angle,
     else if(align==BLEFT || align==BCENTRE || align==BRIGHT)
 	hot_y= -(double)rows_in/2*style.magnify;
     else
-	hot_y= -((double)rows_in/2-(double)RXFontStructOfFontSet(font)->descent)*style.magnify;
+	hot_y= -((double)rows_in/2-
+		 (double)RXFontStructOfFontSet(font)->descent)*style.magnify;
 
     /* x position */
     if(align==TLEFT || align==MLEFT || align==BLEFT || align==NONE)
@@ -2441,13 +2489,5 @@ XPoint *XmbRotTextExtents(Display *dpy, XFontSet font, double angle,
     free((char *)xp_in);
 
     return xp_out;
-}
-
-XFontStruct * RXFontStructOfFontSet(XFontSet font) 
-{
-    char **ml;
-    XFontStruct **fs_list;
-    XFontsOfFontSet(font, &fs_list, &ml);
-    return fs_list[0];
 }
 #endif
