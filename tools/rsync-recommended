@@ -1,0 +1,17 @@
+#! /bin/sh
+#
+# ${RHOME}/tools/rsync-recommended
+
+: ${CRAN_RSYNC='cran.r-project.org::CRAN'}
+
+TOOLS_DIR=`echo ${0} | sed 's%/[^/][^/]*$%%'`
+(cd "${TOOLS_DIR}"/..
+  version=`cut -f1 -d' ' VERSION`
+  cd src/library/Recommended
+  ## Notice that if we can't use -t on rsync because that defeats the
+  ## purpose of the Timestamp... The -c (checksum first) is also
+  ## necessary because otherwise all the files get the mtime changed.
+  ## Sigh.
+  rsync -rcIzC --delete \
+    --exclude=Makefile.in --exclude=Makefile --exclude=Timestamp \
+    "${CRAN_RSYNC}"/src/contrib/${version}/Recommended/ .)
