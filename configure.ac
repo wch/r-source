@@ -623,14 +623,8 @@ R_PROG_CXX_MAKEFRAG
 case "${host_cpu}" in
   i*86|x86_64)
     R_PROG_CC_FLAG_D__NO_MATH_INLINES
-    if test "${GCC}" = yes; then
-      R_PROG_CC_FLAG([-mieee-fp],
-                     R_SH_VAR_ADD(R_XTRA_CFLAGS, [-mieee-fp]))
-      R_PROG_F77_FLAG([-mieee-fp],
-                      R_SH_VAR_ADD(R_XTRA_FFLAGS, [-mieee-fp]))
-      R_PROG_CXX_FLAG([-mieee-fp],
-                      R_SH_VAR_ADD(R_XTRA_CXXFLAGS, [-mieee-fp]))
-    fi
+    ## We used to add -mieee-fp here, but it seems it is really a
+    ## linker flag for old Linuxen adding -lieee to a non-shared link.
     ;;
   alpha*)
     ## <NOTE>

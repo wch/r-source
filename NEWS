@@ -11,13 +11,10 @@
 
 NEW FEATURES
 
-   o	Faster algorithm in summaryRprof.
+   o	Faster algorithm in summaryRprof().
 	
 
 INSTALLATION CHANGES
-
-   o	The gcc compilation flag -mieee-fp is used on x86_64 as well as
-	ix86 platforms.
 
    o	-D__NO_MATH_INLINES is only used on older ix86 glibc-based
 	systems which need it (tested at configure time).
@@ -30,6 +27,11 @@ INSTALLATION CHANGES
 
 
 BUG FIXES
+
+   o	Configuring for Tcl/TK makes use of ${TK_LIB_SPEC} ${TK_LIBS}
+	not ${TK_LIB_SPEC} ${TK_XLIBSW}, which is correct for
+	recent versions of Tk, but conceivably not for old
+	tkConfig.sh files.
 
 
 
@@ -67,6 +69,10 @@ BUG FIXES
     o   Importing from another namespace was broken for versioned
 	installs, incorrectly reporting something like 
 	"package 'imported_from' does not have a name space".
+
+    o	The compiler flag -mieee-fp is no longer used on i386 Linux
+	(these days it is only passed to the linker and was only
+	invoked for compilation steps).
 
 
 

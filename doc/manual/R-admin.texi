@@ -1400,6 +1400,11 @@ A discussion of which Linux systems support large files can be found at
 @uref{http://www.suse.de/~aj/linux_lfs.html}: it has been available
 since about 2001.
 
+R used to include the compiler flag @option{-mieee-fp}, but it seems this
+was really an alias for the linker flag @option{-lieee}.  Neither are
+needed for a modern Linux (e.g. using @code{glibc} 2.2 or 2.3) but could
+conceivably be needed on an older version.
+
 
 @node Mac OS X, Solaris, Linux, Platform notes
 @subsection Mac OS X
