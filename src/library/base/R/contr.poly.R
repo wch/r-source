@@ -40,11 +40,10 @@ contr.poly <- function (n, contrasts = TRUE)
 
 ## implemented by BDR 29 May 1998
 ## `coefs' code added by KH
-## We could predict on coefs: do later?
-poly <- function(x, degree = 1, oldx = NULL)
+poly <- function(x, degree = 1, coefs = NULL)
 {
     if(is.matrix(x)) stop("poly is only implemented for vectors")
-    if(is.null(oldx)) { # fitting
+    if(is.null(coefs)) { # fitting
         n <- degree + 1
         xbar <- mean(x)
         x <- x - xbar
@@ -58,19 +57,14 @@ poly <- function(x, degree = 1, oldx = NULL)
         Z <- raw/rep(sqrt(norm2), each = length(x))
         colnames(Z) <- 1:n - 1
         Z <- Z[, -1]
+        attr(Z, "cf") <- list(xbar=xbar, beta=lsfit(X, Z, intercept = F)$coef)
         attr(Z, "degree") <- 1:degree
         attr(Z, "coefs") <- list(alpha = alpha, norm2 = c(1, norm2))
         class(Z) <- "poly"
         return(Z)
     } else {            # prediction
-        n <- degree + 1
-        z <- poly(oldx, degree = degree)
-        xbar <- mean(oldx)
-        oldx <- oldx - xbar
-        X <- outer(oldx, seq(length = n) - 1, "^")
-        cf <- lsfit(X, z, intercept = F)$coef
-        Z <- outer(x - xbar, seq(length = n) - 1, "^") %*% cf
-        colnames(Z) <- 1:(n - 1)
+        Z <- outer(x - coefs$xbar, 0:degree, "^") %*% coefs$beta
+        colnames(Z) <- 1:degree
         return(Z)
     }
 }

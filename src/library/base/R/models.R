@@ -76,6 +76,7 @@ delete.response <- function (termobj)
         f[[2]] <- NULL
     tt <- terms(f, specials = names(attr(termobj, "specials")))
     attr(tt, "intercept") <- attr(termobj, "intercept")
+    attr(tt, "predvars") <- attr(termobj, "predvars")[-2]
     tt
 }
 
@@ -402,6 +403,6 @@ makepredictcall.bs <- function(var, call)
 
 makepredictcall.poly  <- function(var, call)
 {
-    call$oldx <- var
+    call$coefs <- attr(var, "cf")
     call
 }

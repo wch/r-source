@@ -1,7 +1,7 @@
 \name{poly}
 \title{Compute Orthogonal Polynomials}
 \usage{
-poly(x, degree=1, oldx = NULL)
+poly(x, degree=1, coefs = NULL)
 }
 \alias{poly}
 \description{
@@ -12,7 +12,7 @@ poly(x, degree=1, oldx = NULL)
 \arguments{
  \item{x}{a numeric vector at which to evaluate the polynomial}
  \item{degree}{the degree of the polynomial}
- \item{oldx}{for prediction, the original data.}
+ \item{oldx}{for prediction, coefficients from a previous fit.}
 }
 \value{
   A matrix with rows corresponding to points in \code{x} and columns
@@ -33,7 +33,7 @@ poly(x, degree=1, oldx = NULL)
 \seealso{\code{\link{contr.poly}}}
 
 \examples{
-poly(1:10, 3)
-poly(seq(2, 4, 0.5), 3, oldx = 1:10)
+(z <- poly(1:10, 3))
+poly(seq(2, 4, 0.5), 3, coefs = attr(z, "cf"))
 }
 \keyword{math}
