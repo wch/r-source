@@ -508,6 +508,14 @@ SEXP do_lengthgets(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    CAR(t) = CAR(x);
 	    TAG(t) = TAG(x);
 	}
+    case VECSXP:
+	for (i = 0; i < len; i++)
+	    if (i < lenx) {
+		VECTOR(rval)[i] = VECTOR(x)[i];
+		if (xnames != R_NilValue)
+		    STRING(names)[i] = STRING(xnames)[i];
+	    }
+	break;	
     }
     if (isVector(x) && xnames != R_NilValue)
 	setAttrib(rval, R_NamesSymbol, names);
