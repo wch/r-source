@@ -41,24 +41,17 @@ static int *ind;
 
 static void lqs_setup(int *n, int *p, int *nwhich)
 {
-    coef = Calloc(*p, double);
-    qraux = Calloc(*p, double);
-    work = Calloc(2*(*p), double);
-    res = Calloc(*n, double);
-    yr = Calloc(*n, double);
-    xr = Calloc((*n)*(*p), double);
-    pivot = Calloc(*p, int);
-    ind = Calloc(*n, int);
-    which = Calloc(*nwhich, int);
-    /*bestone = Calloc(*nwhich, int);*/
+    coef = (double *) R_alloc(*p, sizeof(double));
+    qraux = (double *) R_alloc(*p, sizeof(double));
+    work = (double *) R_alloc(2*(*p), sizeof(double));
+    res = (double *) R_alloc(*n, sizeof(double));
+    yr = (double *) R_alloc(*n, sizeof(double));
+    xr = (double *) R_alloc((*n)*(*p), sizeof(double));
+    pivot = (int *) R_alloc(*p, sizeof(int));
+    ind = (int *) R_alloc(*n, sizeof(int));
+    which = (int *) R_alloc(*nwhich, sizeof(int));
+    /*bestone = R_alloc(*nwhich, int);*/
 }
-
-static void lqs_free()
-{
-    Free(coef); Free(qraux); Free(work); Free(res); Free(yr); Free(xr);
-    Free(pivot); Free(ind); Free(which); /*Free(bestone);*/
-}
-
 
 
 /*
@@ -179,6 +172,14 @@ lqs_fitlots(double *x, double *y, int *n, int *p, int *qn,
 
     for(trial = 0; trial < *ntrials; trial++) {
 
+	/* check for a user interrupt */
+#ifdef Macintosh
+	if(trial % 10) isintrpt();
+#endif
+#ifdef Win32
+	if(trial % 10) R_ProcessEvents();
+#endif
+
 	if(!(*sample)) {if(trial > 0) next_set(which, nn, nnew);}
 	else sample_noreplace(which, nn, nnew);
 
@@ -260,29 +261,24 @@ lqs_fitlots(double *x, double *y, int *n, int *p, int *qn,
 
     *crit = best;
     if(*sample) PutRNGstate();
-    lqs_free();
+    /* lqs_free(); */
 }
 
 
 static void mve_setup(int *n, int *p, int *ps)
 {
-    xr = Calloc((*ps)*(*p), double);
-    qraux = Calloc(*p, double);
-    pivot = Calloc(*p, int);
-    work = Calloc(2*(*p), double);
-    d2 = Calloc(*n, double);
-    d2copy = Calloc(*n, double);
-    means = Calloc((*p), double);
-    ind = Calloc(*n, int);
-    which = Calloc(*ps, int);
-    which2 = Calloc(*ps, int);
+    xr = (double *) R_alloc((*ps)*(*p), sizeof(double));
+    qraux = (double *) R_alloc(*p, sizeof(double));
+    pivot = (int *) R_alloc(*p, sizeof(int));
+    work = (double *) R_alloc(2*(*p), sizeof(double));
+    d2 = (double *) R_alloc(*n, sizeof(double));
+    d2copy = (double *) R_alloc(*n, sizeof(double));
+    means = (double *) R_alloc((*p), sizeof(double));
+    ind = (int *) R_alloc(*n, sizeof(int));
+    which = (int *) R_alloc(*ps, sizeof(int));
+    which2 = (int *) R_alloc(*ps, sizeof(int));
 }
 
-static void mve_free()
-{
-    Free(xr); Free(qraux); Free(work); Free(d2); Free(pivot); Free(means);
-    Free(ind); Free(which); /*Free(bestone);*/ Free(d2copy);
-}
 
 /* find the squared Mahalanobis distance to x via QR decomposition in xr. */
 static double mah(double *xr, int nnew, int p, double *x)
@@ -361,6 +357,14 @@ mve_fitlots(double *x, int *n, int *p, int *qn, int *mcd,
 
     for(trial = 0; trial < *ntrials; trial++) {
 
+	/* check for a user interrupt */
+#ifdef Macintosh
+	if(trial % 10) isintrpt();
+#endif
+#ifdef Win32
+	if(trial % 10) R_ProcessEvents();
+#endif
+
 	if(!(*sample)) {if(trial > 0) next_set(which, nn, nnew);}
 	else sample_noreplace(which, nn, nnew);
 
@@ -414,7 +418,7 @@ mve_fitlots(double *x, int *n, int *p, int *qn, int *mcd,
     }
     *crit = best;
     if(*sample) PutRNGstate();
-    mve_free();
+    /* mve_free(); */
 }
 
 #include "Rinternals.h"
