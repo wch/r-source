@@ -9,7 +9,7 @@ if test "${LATEX}" = "false"; then
     echo "Cannot print, latex seems to be unavailable"
     exit 1
 fi
-DVIPS="${5}"
+DVIPS="${4}"
 if test "${DVIPS}" = "false"; then
     echo "Cannot print, dvips seems to be unavailable"
     exit 2
