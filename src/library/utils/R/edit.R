@@ -1,9 +1,9 @@
 dataentry <- function (data, modes) {
     if(!is.list(data) || !length(data) || !all(sapply(data, is.vector)))
-        stop("invalid data argument")
+        stop("invalid 'data' argument")
     if(!is.list(modes) ||
        (length(modes) && !all(sapply(modes, is.character))))
-        stop("invalid modes argument")
+        stop("invalid 'modes' argument")
     .Internal(dataentry(data, modes))
 }
 
