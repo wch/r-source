@@ -254,6 +254,20 @@ removeMethods("Compare")
 
 length(ISOdate(1990, 12, 1)- ISOdate(1980, 12, 1))
 
+## methods for %*%, which isn't done by the same C code as other ops
+
+setClass("foo", representation(m="matrix"))
+m1 <- matrix(1:12,3,4)
+f1 = new("foo", m=m1)
+f2 = new("foo", m=t(m1))
+
+setMethod("\%*\%", c("foo", "foo"),
+ function(x,y)callGeneric(x@m, y@m))
+
+stopifnot(identical(f1\%*\%f2, m1\%*\% t(m1)))
+
+removeMethods("\%*\%")
+
 removeMethods("plot")
 
 stopifnot(existsFunction("plot", FALSE) && !isGeneric("plot", 1))
