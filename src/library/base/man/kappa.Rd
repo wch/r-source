@@ -33,7 +33,7 @@ kappa.default(z, exact = FALSE)
     \code{exact=FALSE}.  
 }
 \author{B.D. Ripley}
-\seealso{\code{\link{svd} for the singular value decomposition and
+\seealso{\code{\link{svd}} for the singular value decomposition and
 	\code{\link{qr}} for the \eqn{QR} one.
 }
 \examples{
