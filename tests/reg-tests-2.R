@@ -165,3 +165,11 @@ try(cor(rnorm(10), NULL))
 try(var(NULL))
 try(var(numeric(0)))
 ## gave NA in 1.2.2
+
+
+## PR 960 (format() of a character matrix converts to vector)
+## example from <John.Peters@tip.csiro.au>
+a <- matrix(c("axx","b","c","d","e","f","g","h"), nrow=2)
+format(a)
+format(a, justify="right")
+## lost dimensions in 1.2.3
