@@ -1,9 +1,7 @@
 \name{iris}
 \alias{iris}
 \alias{iris3}
-\title{
-    Edgar Anderson's Iris Data
-}
+\title{Edgar Anderson's Iris Data}
 \usage{
 data(iris)
 data(iris3)
@@ -38,4 +36,14 @@ data(iris3)
     \emph{Bulletin of the American Iris Society,}
     \bold{59}, 2--5.
 }
+\seealso{\code{\link{matplot}} some examples of which use \code{iris}.}
+\examples{
+data(iris3)
+dni3 <- dimnames(iris3)
+ii <- data.frame(matrix(aperm(iris3, c(1,3,2)), ncol=4,
+                   dimnames=list(NULL, sub(" L.",".Length",
+                                           sub(" W.",".Width", dni3[[2]])))),
+                 Species = gl(3,50,lab=sub("S","s",sub("V","v",dni3[[3]]))))
+data(iris)
+all.equal(ii, iris) # TRUE
 \keyword{datasets}
