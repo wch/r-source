@@ -68,6 +68,7 @@ umask 022
 
 R_VERSION='@VERSION@'
 GETWD='@GETWD@'
+R_GZIPCMD='@R_GZIPCMD@'
 NO_PERL5=@NO_PERL5@
 NO_PERL5_MSG="\
 *** Formatting and installing R help pages needs Perl version 5, which
@@ -669,7 +670,7 @@ do_install_source () {
       done \
         > "${R_PACKAGE_DIR}/man/${pkg_name}.Rd"
       chmod 644 "${R_PACKAGE_DIR}/man/${pkg_name}.Rd"
-      gzip -9 "${R_PACKAGE_DIR}/man/${pkg_name}.Rd"
+      ${R_GZIPCMD} -9 "${R_PACKAGE_DIR}/man/${pkg_name}.Rd"
     fi
     ## Maybe build preformatted help pages ...
     if ${build_help}; then

@@ -410,9 +410,10 @@ R_PROG_PERL
 AC_SUBST(TAR)
 ## TeXMF stuff
 R_PROG_TEXMF
-## Unzip && zip
+## Unzip && zip && gzip
 AC_PATH_PROGS(R_UNZIPCMD, [${UNZIP} unzip], "")
 AC_PATH_PROGS(R_ZIPCMD, [${ZIP} zip], "")
+AC_PATH_PROGS(R_GZIPCMD, [${GZIP} gzip], true)
 ## Browser
 R_PROG_BROWSER
 ## PDF viewer

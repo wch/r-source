@@ -58,9 +58,10 @@ all: Makefile DESCRIPTION
 	      echo "% --- Source file: $${rdfile} ---"; \
 	      cat $${rdfile}; echo '\eof'; \
 	    done >> $${f}; \
-            gzip $${f}; \
-            $(SHELL) $(top_srcdir)/tools/move-if-change $${f}.gz \
-	      $(top_builddir)/library/$(pkg)/man/$(pkg).Rd.gz); \
+            $(SHELL) $(top_srcdir)/tools/move-if-change $${f} \
+              $(top_builddir)/library/$(pkg)/man/$(pkg).Rd); \
+            rm -f $(top_builddir)/library/$(pkg)/man/$(pkg).Rd.gz; \
+            $(R_GZIPCMD) $(top_builddir)/library/$(pkg)/man/$(pkg).Rd; \
 	fi
 	@if test -d src; then \
 	  (cd src && $(MAKE)) || exit 1; \
