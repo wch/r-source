@@ -38,6 +38,7 @@ lm.influence <- function (lm.obj)
 	     hat = double(n),
 	     coefficients = matrix(0, nr = n, nc = k),
 	     sigma = double(n),
+             NAOK = TRUE,# lm.obj$coef can have "structural" NAs
 	     DUP = FALSE)[c("hat", "coefficients", "sigma")]
 }
 
