@@ -108,7 +108,7 @@ title(main="1000 Normal Random Variates", font.main=3)
 data("iris")
 pairs(iris[1:4], main="Edgar Anderson's Iris Data", font.main=4, pch=19)
 pairs(iris[1:4], main="Edgar Anderson's Iris Data", pch=21,
-      bg=c("red", "green3", "blue")[codes(iris$Species)])
+      bg=c("red", "green3", "blue")[unclass(iris$Species)])
 
 
 ## Contour plotting

@@ -1,6 +1,6 @@
 
 R : Copyright 2003, The R Development Core Team
-Version 1.8.0 Under development (unstable) (2003-05-07)
+Version 1.8.0 Under development (unstable) (2003-05-12)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -69,23 +69,23 @@ glm(formula = Fr ~ M.user * Temp * Soft + Brand, family = poisson,
 
 Deviance Residuals: 
       Min         1Q     Median         3Q        Max  
--2.208775  -0.991898  -0.001264   0.935415   1.975997  
+-2.208764  -0.991898  -0.001264   0.935415   1.976008  
 
 Coefficients:
                             Estimate Std. Error z value Pr(>|z|)    
-(Intercept)                  4.01524    0.10032  40.025  < 2e-16 ***
-M.userY                     -0.21184    0.14256  -1.486  0.13727    
-TempHigh                    -0.42381    0.15158  -2.796  0.00517 ** 
-SoftMedium                   0.05311    0.13307   0.399  0.68982    
-SoftSoft                     0.05311    0.13307   0.399  0.68982    
-BrandM                      -0.01587    0.06299  -0.252  0.80103    
-M.userY:TempHigh             0.13987    0.22163   0.631  0.52798    
-M.userY:SoftMedium           0.08323    0.19684   0.423  0.67243    
-M.userY:SoftSoft             0.12169    0.19590   0.621  0.53447    
-TempHigh:SoftMedium         -0.30442    0.22238  -1.369  0.17101    
-TempHigh:SoftSoft           -0.30442    0.22238  -1.369  0.17102    
-M.userY:TempHigh:SoftMedium  0.21189    0.31569   0.671  0.50209    
-M.userY:TempHigh:SoftSoft   -0.20387    0.32536  -0.627  0.53092    
+(Intercept)                  4.01524    0.10034  40.018  < 2e-16 ***
+M.userY                     -0.21184    0.14257  -1.486  0.13731    
+TempHigh                    -0.42381    0.15159  -2.796  0.00518 ** 
+SoftMedium                   0.05311    0.13308   0.399  0.68984    
+SoftSoft                     0.05311    0.13308   0.399  0.68984    
+BrandM                      -0.01587    0.06300  -0.252  0.80106    
+M.userY:TempHigh             0.13987    0.22168   0.631  0.52806    
+M.userY:SoftMedium           0.08323    0.19685   0.423  0.67245    
+M.userY:SoftSoft             0.12169    0.19591   0.621  0.53449    
+TempHigh:SoftMedium         -0.30442    0.22239  -1.369  0.17104    
+TempHigh:SoftSoft           -0.30442    0.22239  -1.369  0.17104    
+M.userY:TempHigh:SoftMedium  0.21189    0.31577   0.671  0.50220    
+M.userY:TempHigh:SoftSoft   -0.20387    0.32540  -0.627  0.53098    
 ---
 Signif. codes:  0 `***' 0.001 `**' 0.01 `*' 0.05 `.' 0.1 ` ' 1 
 
@@ -95,7 +95,7 @@ Signif. codes:  0 `***' 0.001 `**' 0.01 `*' 0.05 `.' 0.1 ` ' 1
 Residual deviance:  32.826  on 11  degrees of freedom
 AIC: 191.24
 
-Number of Fisher Scoring iterations: 3
+Number of Fisher Scoring iterations: 4
 
 
 > detg.mod <- glm(terms(Fr ~ M.user * Temp * Soft + 
@@ -139,7 +139,7 @@ Signif. codes:  0 `***' 0.001 `**' 0.01 `*' 0.05 `.' 0.1 ` ' 1
 Residual deviance:   5.656  on  8  degrees of freedom
 AIC: 170.07
 
-Number of Fisher Scoring iterations: 3
+Number of Fisher Scoring iterations: 4
 
 
 > symnum(summary(detg.mod, correlation = TRUE)$corr)
@@ -311,7 +311,7 @@ Model 2: Fr ~ M.user * Temp * Soft + Brand * M.user * Temp
     font.main = 4, pch = 19)
 
 > pairs(iris[1:4], main = "Edgar Anderson's Iris Data", 
-    pch = 21, bg = c("red", "green3", "blue")[codes(iris$Species)])
+    pch = 21, bg = c("red", "green3", "blue")[unclass(iris$Species)])
 
 > data("volcano")
 
@@ -475,8 +475,8 @@ flld.c> filled.contour(x = 1:20, y = 1:20, z = b, plot.axes = {
     "\nNumber of builtin functions:\t", sum(base.is.f), "\n\t starting with 'is.' :\t ", 
     length(is.bi <- bi[substring(bi, 1, 3) == "is."]), "\n")
 
-Number of base objects:		 1658 
-Number of builtin functions:	 1624 
+Number of base objects:		 1632 
+Number of builtin functions:	 1599 
 	 starting with 'is.' :	  45 
 
 > is.primitive <- function(obj) is.function(obj) && 
@@ -1236,5 +1236,5 @@ sm     3    3    3    3    4    4    4    4    2     2     2
 > par(op)
 > 
 > cat("Time elapsed: ", proc.time() - .ptime, "\n")
-Time elapsed:  9.67 0.37 14.39 NA NA 
+Time elapsed:  2.73 0.12 2.91 0 0 
 > 
