@@ -41,7 +41,11 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
 #endif
     in the \file{R\_HOME/afm} directory, which is used if the path does
     not contain a path separator.  An extension \code{".enc"} can be
-    omitted.}
+    omitted.
+#ifdef unix
+    In a UTF-8 locale only \code{"ISOLatin1.enc"} is allowed.
+#endif
+  }
   \item{pointsize}{the default point size to be used.}
   \item{bg}{the default background color to be used.}
   \item{fg}{the default foreground color to be used.}

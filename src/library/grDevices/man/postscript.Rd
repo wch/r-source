@@ -74,7 +74,11 @@ ps.options(paper, horizontal, width, height, family, encoding,
 #endif
     in the \file{R\_HOME/afm} directory, which is used
     if the path does not contain a path separator.  An extension
-    \code{".enc"} can be omitted.}
+    \code{".enc"} can be omitted.
+#ifdef unix
+    In a UTF-8 locale only \code{"ISOLatin1.enc"} is allowed.
+#endif
+  }
   \item{pointsize}{the default point size to be used.}
   \item{bg}{the default background color to be used.
     If \code{"transparent"} (or an equivalent specification), no

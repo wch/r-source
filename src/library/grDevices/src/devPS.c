@@ -26,6 +26,11 @@
 #include <stdio.h>
 #include <ctype.h>
 
+#ifdef SUPPORT_UTF8
+#include <wchar.h>
+#include <wctype.h>
+#endif
+
 #include "Defn.h"
 #include "Rmath.h" /* for rround */
 #include "Graphics.h"
@@ -615,31 +620,61 @@ PostScriptLoadFontMetrics(const char * const fontpath,
 }
 
 static double
-PostScriptStringWidth(unsigned char *p, FontMetricInfo *metrics)
+PostScriptStringWidth(unsigned char *p, FontMetricInfo *metrics, int face)
 {
     int sum = 0, i;
     short wx;
-    unsigned char p1, p2;
-    for ( ; *p; p++) {
-#ifdef USE_HYPHEN
-	if (*p == '-' && !isdigit(p[1]))
-	    wx = metrics->CharInfo[(int)PS_hyphen].WX;
-	else
-#endif
-	    wx = metrics->CharInfo[*p].WX;
-	if(wx == NA_SHORT)
-	    warning("font width unknown for character %d", *p);
-	else sum += wx;
 
-	/* check for kerning adjustment */
-	p1 = p[0]; p2 = p[1];
-	for (i =  metrics->KPstart[p1]; i < metrics->KPend[p1]; i++)
-	/* second test is a safety check: should all start with p1  */
-	    if(metrics->KernPairs[i].c2 == p2 &&
-	       metrics->KernPairs[i].c1 == p1) {
-		sum += metrics->KernPairs[i].kern;
-		break;
-	    }
+#ifdef SUPPORT_UTF8
+    if(utf8locale && !utf8strIsASCII((char *) p) && face != 5) {
+	wchar_t wc, wc2;
+	while (*p) {
+	    p += mbrtowc(&wc, (char *)p, MB_CUR_MAX, NULL);
+	    if(*p) mbrtowc(&wc2, (char *)p, MB_CUR_MAX, NULL); else wc2 = 0;
+#ifdef USE_HYPHEN
+	    if (wc == L'-' && !iswdigit(wc2))
+		wx = metrics->CharInfo[(int)PS_hyphen].WX;
+	    else
+#endif
+		wx = metrics->CharInfo[wc].WX;
+	    if(wx == NA_SHORT)
+		warning("font width unknown for character 0x%x", wc);
+	    else sum += wx;
+
+	    /* check for kerning adjustment */
+	    for (i =  metrics->KPstart[wc]; i < metrics->KPend[wc]; i++)
+		/* second test is a safety check: should all start with p1  */
+		if(metrics->KernPairs[i].c2 == wc2 &&
+		   metrics->KernPairs[i].c1 == wc) {
+		    sum += metrics->KernPairs[i].kern;
+		    break;
+		}
+	}
+    } else 
+#endif
+    {
+	unsigned char p1, p2;
+	for ( ; *p; p++) {
+#ifdef USE_HYPHEN
+	    if (*p == '-' && !isdigit(p[1]))
+		wx = metrics->CharInfo[(int)PS_hyphen].WX;
+	    else
+#endif
+		wx = metrics->CharInfo[*p].WX;
+	    if(wx == NA_SHORT)
+		warning("font width unknown for character 0x%x", *p);
+	    else sum += wx;
+
+	    /* check for kerning adjustment */
+	    p1 = p[0]; p2 = p[1];
+	    for (i =  metrics->KPstart[p1]; i < metrics->KPend[p1]; i++)
+		/* second test is a safety check: should all start with p1  */
+		if(metrics->KernPairs[i].c2 == p2 &&
+		   metrics->KernPairs[i].c1 == p1) {
+		    sum += metrics->KernPairs[i].kern;
+		    break;
+		}
+	}
     }
     return 0.001 * sum;
 }
@@ -1490,7 +1525,6 @@ typedef struct {
 	R_GE_linejoin ljoin;
 	double lmitre;
 	int font;
-	int fontstyle;	         /* font style, R, B, I, BI, S */
 	int fontsize;	         /* font size in points */
 	rcolor col;		 /* color */
 	rcolor fill;	         /* fill color */
@@ -1916,6 +1950,37 @@ static void PostScriptCircle(FILE *fp, double x, double y, double r)
     fprintf(fp, "%.2f %.2f %.2f c ", x, y, r);
 }
 
+/* We do this conversion ourselves to do our own error recovery */
+#ifdef SUPPORT_UTF8
+static void utf8toLatin1(char *in, char *out)
+{
+    unsigned char *p = (unsigned char *) in, *q = (unsigned char *) out, p2;
+    int i, clen;
+
+    while(*p) {
+	if(*p < 0x80) {
+	    *q++ = *p++;
+	} else if(*p == 0xc2) {
+	    p2 =  *++p;
+	    if(!p2) break; /* That's an error */
+	    *q++ = p2; p++;
+	} else if(*p == 0xc3) {
+	    p2 =  *++p;
+	    if(!p2) break; /* That's an error */
+	    *q++ = p2 | 0x40; p++;
+	} else if(*p > 0xc3 ) { /* Not Latin-1 */
+	    *q++ = '.';
+	    /* unsafe *p += utf8clen(*p); */
+	    clen = utf8clen(*p);
+	    for(i = 0; i < clen; i++) if(*p++) break;
+	} else { /* invalid */
+	    *p++;
+	}
+    }
+    *q = '\0';
+}
+#endif
+
 static void PostScriptWriteString(FILE *fp, char *str)
 {
     fputc('(', fp);
@@ -2101,6 +2166,12 @@ PSDeviceDriver(NewDevDesc *dd, char *file, char *paper, char *family,
 	free(pd);
 	error("encoding path is too long");
     }
+#ifdef SUPPORT_UTF8
+    if(utf8locale && strcmp(encoding, "ISOLatin1.enc")) {
+	warning("Only encoding = \"ISOLatin1.enc\" is currently allowed in a UTF-8 locale\nAssuming \"ISOLatin1.enc\"");
+	encoding = ISOLatin1Enc;
+    }
+#endif
 
     pd->encodings = NULL;
     pd->fonts = NULL;
@@ -2524,7 +2595,6 @@ static void Invalidate(NewDevDesc *dd)
 
     pd->current.font = -1;
     pd->current.fontsize = -1;
-    pd->current.fontstyle = -1;
     pd->current.lwd = -1;
     pd->current.lty = -1;
     pd->current.lend = 0;
@@ -2650,7 +2720,7 @@ static double PS_StrWidth(char *str,
     if(face < 1 || face > 5) face = 1;
     return floor(gc->cex * gc->ps + 0.5) *
 	PostScriptStringWidth((unsigned char *)str,
-			      metricInfo(gc->fontfamily, face, pd));
+			      metricInfo(gc->fontfamily, face, pd), face);
 }
 
 static void PS_MetricInfo(int c, 
@@ -2826,13 +2896,25 @@ static void PS_Text(double x, double y, char *str,
 		    R_GE_gcontext *gc,
 		    NewDevDesc *dd)
 {
+    char *str1 = str;
+#ifdef SUPPORT_UTF8
+    char buff[1000]; /* FIXME */
+#endif
+
     PostScriptDesc *pd = (PostScriptDesc *) dd->deviceSpecific;
 
     SetFont(translateFont(gc->fontfamily, gc->fontface, pd), 
 	    (int)floor(gc->cex * gc->ps + 0.5),dd);
     if(R_OPAQUE(gc->col)) {
 	SetColor(gc->col, dd);
-	PostScriptText(pd->psfp, x, y, str, hadj, 0.0, rot);
+#ifdef SUPPORT_UTF8
+	if(utf8locale && !utf8strIsASCII(str) && 
+	   pd->current.font != 5) { 
+	    utf8toLatin1(str, buff);
+	    str1 = buff;
+	}
+#endif
+	PostScriptText(pd->psfp, x, y, str1, hadj, 0.0, rot);
     }
 }
 
@@ -3574,7 +3656,8 @@ static double XFig_StrWidth(char *str,
 
     return floor(gc->cex * gc->ps + 0.5) *
 	PostScriptStringWidth((unsigned char *)str,
-			      &(pd->fonts->family->fonts[face-1]->metrics));
+			      &(pd->fonts->family->fonts[face-1]->metrics),
+			      face);
 }
 
 static void XFig_MetricInfo(int c, 
@@ -3627,7 +3710,6 @@ typedef struct {
 	R_GE_lineend lend;
 	R_GE_linejoin ljoin;
 	double lmitre;
-	int fontstyle;	         /* font style, R, B, I, BI, S */
 	int fontsize;	         /* font size in points */
 	rcolor col;		 /* color */
 	rcolor fill;	         /* fill color */
@@ -3809,6 +3891,12 @@ PDFDeviceDriver(NewDevDesc* dd, char *file, char *family, char *encoding,
 	free(pd->pos); free(pd->pageobj); free(pd);
 	error("encoding path is too long");
     }
+#ifdef SUPPORT_UTF8
+    if(utf8locale && strcmp(encoding, "ISOLatin1.enc")) {
+	warning("Only encoding = \"ISOLatin1.enc\" is currently allowed in a UTF-8 locale\nAssuming \"ISOLatin1.enc\"");
+	encoding = ISOLatin1Enc;
+    }
+#endif
 
     pd->encodings = NULL;
     pd->fonts = NULL;
@@ -3974,7 +4062,6 @@ static void PDF_Invalidate(NewDevDesc *dd)
     PDFDesc *pd = (PDFDesc *) dd->deviceSpecific;
 
     pd->current.fontsize = -1;
-    pd->current.fontstyle = -1;
     /*
      * Paul:  make all these settings "invalid"
      pd->current.lwd = 1;
@@ -4799,6 +4886,10 @@ static void PDF_Text(double x, double y, char *str,
     int size = (int)floor(gc->cex * gc->ps + 0.5);
     int face = gc->fontface;
     double a, b, rot1;
+    char *str1 = str;
+#ifdef SUPPORT_UTF8
+    char buff[1000]; /* FIXME */
+#endif
 
     if(face < 1 || face > 5) {
 	warning("attempt to use invalid font %d replaced by font 1", face);
@@ -4817,7 +4908,13 @@ static void PDF_Text(double x, double y, char *str,
 	fprintf(pd->pdffp, "/F%d 1 Tf %.2f %.2f %.2f %.2f %.2f %.2f Tm ",
 		PDFfontNumber(gc->fontfamily, face, pd), 
 		a, b, -b, a, x, y);
-	PostScriptWriteString(pd->pdffp, str);
+#ifdef SUPPORT_UTF8
+	if(utf8locale && !utf8strIsASCII(str1) && face < 5) { 
+	    utf8toLatin1(str, buff);
+	    str1 = buff;
+	}
+#endif
+	PostScriptWriteString(pd->pdffp, str1);
 	fprintf(pd->pdffp, " Tj\n");
     }
 }
@@ -4877,7 +4974,8 @@ static double PDF_StrWidth(char *str,
     return floor(gc->cex * gc->ps + 0.5) *
 	PostScriptStringWidth((unsigned char *)str,
 			      PDFmetricInfo(gc->fontfamily, 
-					    gc->fontface, pd));
+					    gc->fontface, pd),
+			      gc->fontface);
 }
 
 static void PDF_MetricInfo(int c, 
