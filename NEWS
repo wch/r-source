@@ -143,11 +143,6 @@ BUG FIXES
     o	tools:::.getInternalS3generics() was omitting all the members
 	of the S3 group generics, which also accept methods for members.
 
-    o	find(simple.words=TRUE) (the default) was still using regular
-	expressions for e.g. "+" and "*".  Also, it checked the mode 
-	only of the first object matching a regular expression found 
-	in a package.
-
 
 
 
@@ -177,6 +172,11 @@ BUG FIXES
     o	[l]choose() use a more accurate formula which also slightly
 	improves p- and qhyper(); choose(n,k) now returns 0 instead of NaN
 	for k < 0 or > n.
+
+    o	find(simple.words=TRUE) (the default) was still using regular
+	expressions for e.g. "+" and "*".  Also, it checked the mode 
+	only of the first object matching a regular expression found 
+	in a package.
 
 
 
