@@ -1,6 +1,6 @@
 
 R : Copyright 2004, The R Foundation for Statistical Computing
-Version 1.9.0 alpha (2004-03-10), ISBN 3-900051-00-3
+Version 1.9.0 alpha (2004-03-18), ISBN 3-900051-00-3
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -3975,5 +3975,24 @@ attr(,"response")
 [1] 1
 attr(,".Environment")
 <environment: R_GlobalEnv>
-> ## failed to remove second offset in 1.8.1
+> ## failed to remove second offset from formula in 1.8.1
+> terms(y ~ offset(x) + z - z, data=df, simplify = TRUE)
+y ~ offset(x)
+attr(,"variables")
+list(y, offset(x), z)
+attr(,"offset")
+[1] 2
+attr(,"factors")
+numeric(0)
+attr(,"term.labels")
+character(0)
+attr(,"order")
+numeric(0)
+attr(,"intercept")
+[1] 1
+attr(,"response")
+[1] 1
+attr(,".Environment")
+<environment: R_GlobalEnv>
+> ## first fix failed for models with no non-offset terms.
 > 

@@ -17,7 +17,8 @@
     occur in the term, 1 if it does occur and should be coded by
     contrasts, and 2 if it occurs and should be coded via dummy
     variables for all levels (as when an intercept or lower-order term
-    is missing).}
+    is missing).  If there are no terms other than an intercept and offsets,
+    this is \code{numeric(0)}.}
   \item{term.labels}{A character vector containing the labels for each
     of the terms in the model, except for offsets.  Non-syntactic names
     will be quoted by backticks.}
@@ -27,9 +28,10 @@
   \item{order}{A vector of the same length as \code{term.labels}
     indicating the order of interaction for each term }
   \item{response}{The index of the variable (in variables) of the
-    response (the left hand side of the formula).}
+    response (the left hand side of the formula). Zero, if there is no
+    response.}
   \item{offset}{If the model contains \code{\link{offset}} terms there
-    is an \code{offset} attribute indicating which variables are offsets}
+    is an \code{offset} attribute indicating which variable(s) are offsets}
   \item{specials}{If the \code{specials} argument was given to
     \code{\link{terms.formula}} there is a \code{specials} attribute, a
     list of vectors indicating the terms that contain these special

@@ -149,7 +149,8 @@ terms.formula <- function(x, specials = NULL, abb = NULL, data = NULL,
 	tmp <- attr(Terms, "term.labels")
         ## need to add back any offsets
         if(length(ind <- attr(Terms, "offset"))) {
-            tmp2 <- rownames(attr(Terms, "factors"))
+            ## can't look at rownames of factors, as not there y ~ offset(x)
+            tmp2 <- as.character(attr(Terms, "variables"))[-1]
             tmp <- c(tmp, tmp2[ind])
         }
 	form <- formula(object)

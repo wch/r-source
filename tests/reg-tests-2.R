@@ -1254,4 +1254,6 @@ fit1 <- glm(y ~ offset(x) + z, data=df)
 update(fit1, ". ~.")$call
 ## lost offset in 1.7.0 to 1.8.1
 terms(y ~ offset(x) + offset(log(x)) + z, data=df)
-## failed to remove second offset in 1.8.1
+## failed to remove second offset from formula in 1.8.1
+terms(y ~ offset(x) + z - z, data=df, simplify = TRUE)
+## first fix failed for models with no non-offset terms.
