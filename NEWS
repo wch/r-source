@@ -89,6 +89,14 @@ NEW FEATURES
 	(without partially matching to `xlabs' and `ylabs').
 	(Thanks to Uwe Ligges.)
 
+     o	On Unix(-alike) systems the default PDF viewer is now determined
+	during configuration, and available as the 'pdfviewer' option.
+
+     o	If a prompt() method is called with 'filename' as 'NA', a
+        list-style representation of the documentation shell generated
+        is returned.  New function promptData() for documenting objects
+        as data sets.
+
 
 INSTALLATION CHANGES
 
