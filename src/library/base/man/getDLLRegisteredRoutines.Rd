@@ -1,5 +1,7 @@
 \name{getDLLRegisteredRoutines}
 \alias{getDLLRegisteredRoutines}
+\alias{getDLLRegisteredRoutines.character}
+\alias{getDLLRegisteredRoutines.DLLInfo}
 \alias{print.NativeRoutineList}
 \alias{print.DLLRegisteredRoutines}
 \title{Reflectance Information for C/Fortran routines in a DLL}
@@ -38,17 +40,15 @@ getDLLRegisteredRoutines(dll)
   of class \code{NativeSymbolInfo}.
   An object of this class has the following fields:
   \item{name}{the registered name of the routine (not necessarily the
-    name in the C code)}
+    name in the C code).}
   \item{address}{the memory address of the routine as resolved in the
     loaded DLL. This may be \code{NULL} if the symbol has not yet been resolved.}
   \item{dll}{an object of class \code{DLLInfo} describing the DLL.
-         This is same for all elements returned from \code{getDLLRegisteredRoutines}.}
+    This is same for all elements returned from \code{getDLLRegisteredRoutines}.}
   \item{numParameters}{the number of arguments the native routine is to
-        be called with. In the future, we will provide information about
-        the types of the parameters also.
-       }
-  
-  
+    be called with. In the future, we will provide information about
+    the types of the parameters also.
+  }
 }
 \references{
   "Writing R Extensions Manual" for symbol registration.
@@ -60,10 +60,8 @@ getDLLRegisteredRoutines(dll)
   \code{\link{getLoadedDLLs}}
 }
 \examples{
-
- dlls = getLoadedDLLs()
-
- getDLLRegisteredRoutines(dlls[["base"]])
+dlls <- getLoadedDLLs()
+getDLLRegisteredRoutines(dlls[["base"]])
 }
 \keyword{interface}
 
