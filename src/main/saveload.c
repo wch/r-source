@@ -2116,3 +2116,45 @@ int R_XDRDecodeInteger(void *buf)
     return 0; /* keep compiler happy */
 #endif
 }
+
+void R_SaveGlobalEnvToFile(const char *name)
+{
+    SEXP sym = install("sys.save.image");
+    if (findVar(sym, R_GlobalEnv) == R_UnboundValue) { /* not a perfect test */
+	FILE *fp = R_fopen(name, "wb"); /* binary file */
+	if (!fp)
+	    error("can't save data -- unable to open %s", name);
+	R_SaveToFile(FRAME(R_GlobalEnv), fp, 0);
+	fclose(fp);
+    }
+    else {
+	SEXP args, call;
+	args = LCONS(ScalarString(mkChar(name)), R_NilValue);
+	PROTECT(call = LCONS(sym, args));
+	eval(call, R_GlobalEnv);
+	UNPROTECT(1);
+    }
+}
+
+void R_RestoreGlobalEnvFromFile(const char *name, Rboolean quiet)
+{
+    SEXP sym = install("sys.load.image");
+    if (findVar(sym, R_GlobalEnv) == R_UnboundValue) { /* not a perfect test */
+	FILE *fp = R_fopen(name, "rb"); /* binary file */
+	if(fp != NULL) { 
+	    R_LoadSavedData(fp, R_GlobalEnv);
+	    if(! quiet)
+		Rprintf("[Previously saved workspace restored]\n\n");
+	    fclose(fp);
+	}
+    }
+    else {
+	SEXP args, call, sQuiet;
+	sQuiet = quiet ? mkTrue() : mkFalse();
+	PROTECT(args = LCONS(sQuiet, R_NilValue));
+	args = LCONS(ScalarString(mkChar(name)), args);
+	PROTECT(call = LCONS(sym, args));
+	eval(call, R_GlobalEnv);
+	UNPROTECT(2);
+    }
+}
