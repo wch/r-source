@@ -120,6 +120,10 @@
 
 /* Other, R-Specific Constants */
 
+#ifndef M_SQRT_3
+#define M_SQRT_3	1.732050807568877293527446341506	/* sqrt(3) */
+#endif
+
 #ifndef M_SQRT_32
 #define M_SQRT_32	5.656854249492380195206754896838	/* sqrt(32) */
 #endif
