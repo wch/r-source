@@ -1,4 +1,3 @@
-options(error=expression(NULL))
 #### Produce an R test script
 ls.base <- ls(pos=length(search()))#- something more elegant ?
 base.is.f <- sapply(ls.base, function(x) is.function(get(x)))
@@ -10,6 +9,8 @@ aroot <- substring(as.bi <- bi[substring(bi,1,3) == "as."],4)
 ##--- producing the real R script:
 sink("isas-tests.R")
 
+cat("options(error = expression(NULL))",
+    "# don't stop on error in batch\n##~~~~~~~~~~~~~~\n")
 for(x in expression(1, NULL, pi, "1.3", list(), list(a=1))) {
     cat("\n###--------\n x <- ", deparse(x), "\n", sep="")
     ## is.foo(as.foo( bar )) #>> TRUE

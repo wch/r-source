@@ -13,7 +13,9 @@ Type	"demo()" for some demos, "help()" for on-line help, or
     	"help.start()" for a HTML browser interface to help.
 Type	"q()" to quit R.
 
-> options(error=expression(NULL))
+> options(error = expression(NULL)) # don't stop on error in batch
+> ##~~~~~~~~~~~~~~
+> 
 > ###--------
 >  x <- 1
 > is.array(as.array( x ))
