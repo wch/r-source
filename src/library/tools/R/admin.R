@@ -26,7 +26,7 @@ function(dir, outDir)
         "i386-pc-mingw32"
     else
         R.version$platform
-    db["Built"] <-
+    Built <-
         paste("R ",
               paste(R.version[c("major", "minor")],
                     collapse = "."),
@@ -42,7 +42,9 @@ function(dir, outDir)
               .OStype(),
               sep = "")
 
-    writeLines(formatDL(names(db), db, style = "list"),
+    ## we must not split the Built: field across lines
+    writeLines(c(formatDL(names(db), db, style = "list"),
+                 paste("Built", Built, sep=": ")),
                file.path(outDir, "DESCRIPTION"))
 
     outMetaDir <- file.path(outDir, "Meta")

@@ -143,6 +143,9 @@ BUG FIXES
 
    o	ecdf() was failing on inputs containing NAs. (Part of PR#7292)
 
+   o	tools:::.install_package_description was splitting the Built:
+	field across lines on platforms with very long names.
+
 
 
 	*********************************************************
