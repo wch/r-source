@@ -3917,18 +3917,19 @@ ross$withdraw(500)
 @cindex Customizing the environment
 
 Users can customize their environment in several different ways.  There
-is a system initialization file and every directory can have its own
+is a site initialization file and every directory can have its own
 special initialization file.  Finally, the special functions
 @code{.First} and @code{.Last} can be used.
 
-The system initialization file is called @file{Rprofile} and it is found
-in the @R{} home subdirectory @file{library/base/R}.  This file should
-contain the commands that you want to execute every time @R{} is started
-under your system.  A second, personal, profile file named
-@file{.Rprofile}@footnote{So it is hidden under UNIX.} can be placed in
-any directory.  If @R{} is invoked in that directory then that file will
-be sourced.  This file gives individual users control over their
-workspace and allows for different startup procedures in different
+The location of the site initialization file is taken from the value of
+the @env{R_PROFILE} environment variable.  If that variable is unset,
+file @file{Rprofile} in the @R{} home subdirectory @file{etc} is used.
+This file should contain the commands that you want to execute every
+time @R{} is started under your system.  A second, personal, profile
+file named @file{.Rprofile}@footnote{So it is hidden under UNIX.} can be
+placed in any directory.  If @R{} is invoked in that directory then that
+file will be sourced.  This file gives individual users control over
+their workspace and allows for different startup procedures in different
 working directories.  If no @file{.Rprofile} file is found in the
 startup directory, than @R{} looks for a @file{.Rprofile} file in the
 user's home directory and uses that (if it exists).
