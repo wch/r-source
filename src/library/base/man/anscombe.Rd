@@ -38,8 +38,10 @@ for(i in 1:4) {
 sapply(objects(pat="lm\.[1-4]$"), function(n) coef(get(n)))
 lapply(objects(pat="lm\.[1-4]$"), function(n) summary(get(n))$coef)
 
-## Now, do what you should have done in the first place:
-frame(); op <- par(mfrow=c(2,2), mar=.1+c(4,4,1,1), oma= c(0,0,2,0))
+## Now, do what you should have done in the first place: PLOTS
+op <- par(mfrow=c(1,1));frame()#-- start a new figure -- in any case..
+par(mfrow=c(2,2))
+op <- c(op,par(mfrow=c(2,2), mar=.1+c(4,4,1,1), oma= c(0,0,2,0)))
 mtext("Anscombe's  4  Regression data sets", outer = TRUE, cex=1.5)
 for(i in 1:4) {
   ff[2:3] <- lapply(paste(c("y","x"), i, sep=""), as.name)

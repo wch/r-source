@@ -6,7 +6,7 @@ cbind(\dots)
 \alias{cbind}
 \value{
 \code{cbind} takes a sequence of vector and/or matrix arguments
-and combines them as the columns of a matrix.
+and combines them as the \bold{c}olumns of a matrix.
 
 If there are several matrix arguments,
 they must all have the same number of rows
@@ -22,11 +22,15 @@ of rows of the matrix arguments.  Any vectors have their
 values recycled or subsetted to achieve this length.
 }
 \seealso{
-\code{\link{c}},
-\code{\link{rbind}}.
+\code{\link{c}} to combine vectors or list;
+\code{\link{rbind}} to combine \bold{r}ows.
 }
 \examples{
-cbind(1,1:n)
+cbind(1,1:7) # the '1' (= shorter vector) is recycled
+cbind(1:7, diag(3))# vector is subset
+
+cbind(0, matrix(1, nrow=0, ncol=4))#> Warning (making sense)
+dim(cbind(0, matrix(1, nrow=2, ncol=0)))#-> 2 x 1
 }
 \keyword{array}
 \keyword{manip}

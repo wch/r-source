@@ -5,8 +5,9 @@ length(x)
 length(x) <- n
 }
 \alias{length}
+\alias{length<-}
 \description{
-If \code{x} is a vector or list \code{length}
+If \code{x} is (or can be coerced to) a vector or list, \code{length}
 returns the length of \code{x}.
 Otherwise, \code{length} returns \code{NA}.
 
@@ -14,7 +15,12 @@ The second form above can be used to reset
 the length of a vector.
 If a vector is shortened, extra values are discarded
 and when a vector is lengthened, it is padded out to
-its new length with \code{NA}s.
+its new length with \code{\link{NA}}s.
+}
+\examples{
+length(diag(4))# = 16 (4 x 4)
+length(options())# 13 or more..
+length(expression(x, {y <- x^2; y+2}, x^y)) # 3
 }
 \keyword{attribute}
 

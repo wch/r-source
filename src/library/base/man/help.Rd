@@ -9,7 +9,7 @@ help(topic, package = c(.packages(),.Autoloaded), lib.loc = .lib.loc)
 \alias{?}
 \arguments{
  \item{topic}{a name or character string on which documentation is
-  sought.}
+  sought (but \emph{not} a variable containing a character string!).}
  \item{package}{a name or character vector giving the packages to look
   into for documentation.  By default, all packages in the search path
   are used.}
@@ -36,15 +36,20 @@ of private packages.
 }
 \examples{
 help()
-help(help)                   # the same
+help(help)		# the same
 
 help(lapply)
-?lapply                      # the same
+?lapply			# the same
 
-help("for")                  # or ?"for", but the quotes are needed
+help("for")		# or ?"for", but the quotes are needed
 ?"+"
 
-data()                       # list all available data sets
-?women                       # information about data set "women"
+help(package = stepfun)	# get help even when it's not present
+
+data()			# list all available data sets
+?women			# information about data set "women"
+
+topi <- "women"
+help(topi) ##--> Error: No documentation for `topi'
 }
 \keyword{documentation}

@@ -4,6 +4,7 @@
 window(x, start, end)
 }
 \alias{window}
+\alias{window.ts}
 \arguments{
 \item{x}{a time-series or other object.}
 \item{start}{the start time of the period of interest.}

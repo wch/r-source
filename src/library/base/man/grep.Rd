@@ -31,7 +31,7 @@ argument) within the vector \code{x} of character strings (second argument).
 
 \code{sub} and \code{gsub} perform replacement of matches
 determined by regular expression matching.
-The functions differ only in that \code{sub} replaces only
+The two functions differ only in that \code{sub} replaces only
 the first occurence of a \code{pattern} whereas \code{gsub} replaces
 all occurences.
 
@@ -57,13 +57,13 @@ txt <- c("The", "licenses", "for", "most", "software", "are",
    "share", "and", "change", "free", "software", "--",
    "to", "make", "sure", "the", "software", "is",
    "free", "for", "all", "its", "users")
-i <- grep("[gu]", txt)
+( i <- grep("[gu]", txt) ) # indices
 all( txt[i] == grep("[gu]", txt, value = TRUE) )
 (ot <- sub("[b-e]",".", txt))
 txt[ot != gsub("[b-e]",".", txt)]#- gsub does "global" substitution
 
 txt[gsub("g","#", txt) !=
-    gsub("g","#", txt, ignore.case = TRUE)]
+    gsub("g","#", txt, ignore.case = TRUE)] # the "G" words
 }
 \keyword{character}
 \keyword{utilities}
