@@ -1,8 +1,9 @@
 boxplot <- function(x, ...) UseMethod("boxplot")
 
 boxplot.default <-
-function(x, ..., range = 1.5, width = NULL, varwidth = FALSE, notch =
-         FALSE, names, data = sys.frame(sys.parent()), plot = TRUE,
+function(x, ..., range = 1.5, width = NULL, varwidth = FALSE,
+         notch = FALSE, names, boxwex = 0.8,
+	 data = sys.frame(sys.parent()), plot = TRUE,
          border = par("fg"), col = NULL, log = "", pars = NULL)
 {
     args <- list(x, ...)
@@ -54,7 +55,7 @@ function(x, ..., range = 1.5, width = NULL, varwidth = FALSE, notch =
     z <- list(stats = stats, n = ng, conf = conf, out = out, group = group,
               names = names)
     if(plot) {
-	bxp(z, width, varwidth = varwidth, notch = notch,
+	bxp(z, width, varwidth = varwidth, notch = notch, boxwex = boxwex,
             border = border, col = col, log = log, pars = pars)
 	invisible(z)
     }
@@ -92,7 +93,7 @@ boxplot.stats <- function(x, coef = 1.5, do.conf=TRUE, do.out=TRUE)
 }
 
 bxp <- function(z, notch=FALSE, width=NULL, varwidth=FALSE,
-		notch.frac = 0.5,
+	        notch.frac = 0.5, boxwex = 0.8,
 		border=par("fg"), col=NULL, log="", pars=NULL,
 		 ...)
 {
@@ -152,11 +153,11 @@ bxp <- function(z, notch=FALSE, width=NULL, varwidth=FALSE,
     width <- if(!is.null(width)) {
 	if(length(width) != n | any(is.na(width)) | any(width <= 0))
 	    stop("invalid boxplot widths")
-	0.8 * width/max(width)
+	boxwex * width/max(width)
     }
-    else if(varwidth) 0.8 * sqrt(z$n)/nmax
-    else if(n == 1) 0.4
-    else rep(0.8, n)
+    else if(varwidth) boxwex * sqrt(z$n)/nmax
+    else if(n == 1) 0.5 * boxwex
+    else rep(boxwex, n)
 
     if(is.null(pars$ylim)) ylim <- limits
     else { ylim <- pars$ylim; pars$ylim <- NULL }

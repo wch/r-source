@@ -2,7 +2,8 @@
 \title{Box Plots from Summaries}
 \usage{
 bxp(z, notch = FALSE, width = NULL, varwidth = FALSE, notch.frac = 0.5,
-    border = par("fg"), col = NULL, log = "", pars = NULL, \dots)
+    boxwex = 0.8, border = par("fg"), col = NULL, log = "",
+    pars = NULL, \dots)
 }
 \alias{bxp}
 \arguments{
@@ -18,6 +19,9 @@ bxp(z, notch = FALSE, width = NULL, varwidth = FALSE, notch.frac = 0.5,
 \item{varwidth}{if \code{varwidth} is \code{TRUE}, the boxes are drawn
   with widths proportional to the square-roots of the number of
   observations in the groups.}
+\item{boxwex}{a scale factor to be applied to all boxes.  When there
+  are only a few groups, the appearance of the plot can be improved
+  by making the boxes narrower.}
 \item{notch.frac}{numeric in (0,1). When \code{notch=TRUE}, the fraction
   of the box width that the notches should use.}
 \item{border}{character, the color of the box borders. Is recycled for

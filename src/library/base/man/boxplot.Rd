@@ -5,10 +5,10 @@
 \title{Box Plots}
 \usage{
 boxplot(x, \dots)
-boxplot.default(x, \dots, range = 1.5, width = NULL, varwidth = FALSE,
-        notch = FALSE, names, data = sys.frame(sys.parent()),
-        plot = TRUE, border = par("fg"), col = NULL, log = "",
-        pars = NULL)
+boxplot.default(x, \dots, range = 1.5, width = NULL,
+        varwidth = FALSE, notch = FALSE, names, boxwex = 0.8,
+        data = sys.frame(sys.parent()), plot = TRUE,
+        border = par("fg"), col = NULL, log = "", pars = NULL)
 boxplot.formula(formula, data = NULL, subset, na.action, \dots)
 }
 \arguments{
@@ -40,6 +40,9 @@ boxplot.formula(formula, data = NULL, subset, na.action, \dots)
     overlap then the medians are significantly different at the 5
     percent level.}
   \item{names}{group labels which will be printed under each boxplot.}
+  \item{boxwex}{a scale factor to be applied to all boxes.  When there
+    are only a few groups, the appearance of the plot can be improved
+    by making the boxes narrower.}
   \item{data}{\code{\link{data.frame}}, \code{\link{list}}, or
     \code{\link{environment}} in which variable names are evaluated
     when \code{x} is a formula.}
