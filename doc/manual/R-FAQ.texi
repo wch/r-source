@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2005
-@set FAQ-VERSION 2.0.@value{FAQ-YEAR}-02-02
+@set FAQ-VERSION 2.0.@value{FAQ-YEAR}-02-03
 @set REL-VERSION 2.0.1
 @set REL-YEAR 2004
 @c <COMMENT>
@@ -1745,6 +1745,9 @@ Basic functions for the hyperbolic distribution: probability density
 function, distribution function, quantile function, a routine for
 generating observations from the hyperbolic, and a function for fitting
 the hyperbolic distribution to data.
+@item IDPmisc
+Utilities from the Institute of Data Analyses and Process Design,
+IDP/ZHW.
 @item ISwR
 Data sets for ``Introductory Statistics with R'' by Peter Dalgaard,
 2002, Springer.
@@ -1894,6 +1897,10 @@ for the dialog boxes, @strong{svIO} for data import/export,
 @strong{svViews} providing views and report features (views are
 @acronym{HTML} presentations of the content of R objects, combining
 text, tables and graphs in the same document).
+@item SemiPar
+Functions for semiparametric regression analysis, to complement the
+book ``Semiparametric Regression'' by R. Ruppert, M. P. Wand, and
+R. J. Carroll, 2003, Cambridge University Press.
 @item SenSrivastava
 Collection of datasets from ``Regression Analysis, Theory, Methods and
 Applications'' by A. Sen and M. Srivastava, 1990, Springer.
@@ -2354,7 +2361,7 @@ set.
 Estimation of hierarchical F-statistics from haploid or diploid genetic
 data with any numbers of levels in the hierarchy, and tests for the
 significance of each F and variance components.
-@item hmm.disc.np
+@item hmm.discnp
 Hidden Markov models with discrete non-parametric observation
 distributions.
 @item homals
