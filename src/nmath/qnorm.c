@@ -90,16 +90,15 @@ double qnorm5(double p, double mu, double sigma, int lower_tail, int log_p)
 #endif
 
 	if(r > DBL_EPSILON) {
-	    r = sqrt(- (log_p && !lower_tail
-			?(q > 0. ? p : 1 - p)
-			:/* else */ log(r)));
+	    r = sqrt(- ((log_p && ((lower_tail && q <= 0) || (!lower_tail && q > 0))) ?
+			p : /* else */ log(r)));
 #ifdef DEBUG_qnorm
-	    REprintf(" new r = %7g\n", r);
+	    REprintf(" new r = %7g ( =? sqrt(- log(r)) )\n", r);
 #endif
 	    val = (((2.32121276858 * r + 4.85014127135) * r
 		    - 2.29796479134) * r - 2.78718931138)
 		/ ((1.63706781897 * r + 3.54388924762) * r + 1.0);
-	    if (q < 0.0)
+	    if (q < 0)
 		val = -val;
 	}
 	else if(r >= DBL_MIN) { /* r = p <= eps : Use Wichura */
