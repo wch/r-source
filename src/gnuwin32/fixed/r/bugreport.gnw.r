@@ -6,6 +6,8 @@ bug.report <- function(subject="", ccaddress=getenv("USER"),
 		  "--please do not edit the information below--\\n\\n",
 		  "Version:\\n ",
 		  paste(names(version), version, sep=" = ", collapse="\\n "),
+                  "\\n\\n",
+                  win.version(),
 		  "\\n\\n",
 		  "Search Path:\\n ",
 		  paste(search(), collapse=", "),
@@ -30,3 +32,4 @@ bug.report <- function(subject="", ccaddress=getenv("USER"),
     invisible()
 }
 
+win.version <- function() .Internal(win.version())

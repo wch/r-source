@@ -269,12 +269,15 @@ distribution.
 Note 2: we are aware that because of limitations in line length or in the
 shell used that the Makefiles do not work unchanged on all the possible
 combinations of tools, compilers and OSes.  We use the Cygwin make and 
-shell under NT, and cross-building (see below), and with small changes the 
-djtools make under Windows 95.
+shell under NT, and cross-building (see below).
 
 Note 3: building libR.a is highly disk intensive and can take several
 minutes even on a local disc. We have seen times from 30 secs to 20
 minutes. Using a network file system is likely to take longer.
+
+
+You can test a build by `make check': expect some differences in the tests
+of print routines.
 
 
 Cross-building on Linux

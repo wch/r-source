@@ -6,8 +6,8 @@ that version. The main R FAQ can be found at
 http://www.ci.tuwien.ac.at/~hornik/R/R-FAQ.html.
 
 There are two versions of R for Windows, but only is under active
-development, that described here. It is often called something like rw0640
-(although not officially). Thre is also information on the use of R for
+development, that described here. It is often called something like rw0642
+(although not officially). There is also information on the use of R for
 Windows in the Venables & Ripley `R Complements' at
 http://www.stats.ox.ac.uk/pub/MASS2.
 
@@ -18,27 +18,25 @@ http://www.stats.ox.ac.uk/pub/MASS2.
      Q1.1. Where can I find the latest version?
      Q1.2. How do I install R for Windows?
      Q1.3. How do I run it?
-     Q1.4. I am using Windows NT and I get a GPF when I try to start
-     rgui.exe or rterm.exe for the command line.
-     Q1.5. How can I manage my work keeping workspaces for different
-     projects in different directories?
-     Q1.6. How do I print from R?
-     Q1.7. Can I use R BATCH?
-     Q1.8. Can I use rw06xx with ESS and emacs?
+     Q1.4. How can I manage my work keeping workspaces for different
+           projects in different directories?
+     Q1.5. How do I print from R?
+     Q1.6. Can I use R BATCH?
+     Q1.7. Can I use rw06xx with ESS and emacs?
 
 2. Packages
 
      Q2.1. Can I install packages (libraries) in this version?
      Q2.2. I don't have permission to write to the rw06xx\library directory.
-     Is this fatal?
+           Is this fatal?
      Q2.3. The packages I installed do not appear in the HTML help system.
      Q2.4. The functions in the packages I installed are not found by the
-     HTML help search system.
+           HTML help search system.
 
 3. Windows features
 
      Q3.1. What should I expect to behave differently from the
-     Unix/GNU-Linux version of R?
+           Unix/GNU-Linux version of R?
      Q3.2. I hear about some nifty features: please tell me about them!
 
 4. Workspaces
@@ -50,9 +48,9 @@ http://www.stats.ox.ac.uk/pub/MASS2.
 5. The R Console and Fonts
 
      Q5.1. I would like to be able to use Japanese fonts in the console and
-     to annotate graphs.
+           to annotate graphs.
      Q5.2. I don't see characters with accents at the R console, for example
-     in ?text.
+           in ?text.
      Q5.3. When using Rgui, the output to the console seems to be delayed.
 
 6. Building from Source
@@ -96,8 +94,10 @@ rw06xx\bin\Rgui.exe on your desktop or somewhere on the Start menu
 file tree. Right-click the shortcut, select Properties... and change
 the `Start in' field to your working directory.
 
-You may also want to add command-line arguments at the end of the Target
-field. We use --vsize 10M --nsize 300k.
+You may also want to add command-line arguments at the end of the
+Target field. We use --vsize 10M --nsize 300k. You can also set
+environment variables at the end of the Target field, for
+example RLIBS=e:/R/library.
 
 
 1.3) How do I run it?
@@ -108,14 +108,7 @@ If you want to set up another project, make a new shortcut or use the
 existing one, and change the `Start in' field of the Properties.
 
 
-1.4) I am using Windows NT and I get a GPF when I try to start rgui.exe or
-rterm.exe for the command line.
-
-This happened prior to rw0633. We believe this is completely solved in
-rw0633 and later: please upgrade.
-
-
-1.5) How can I manage my work keeping workspaces for different projects in
+1.4) How can I manage my work keeping workspaces for different projects in
 different directories?
 
 Create a separate shortcut for each project: see Q1.3. All the paths to
@@ -123,7 +116,7 @@ files used by R are relative to the starting directory, so setting the
 `Start in' field automatically helps separate projects.
 
 
-1.6) How do I print from R?
+1.5) How do I print from R?
 
 It depends what you want to print.
 
@@ -135,15 +128,15 @@ It depends what you want to print.
      you can print help files by help(fn_name, offline=T).
 
 
-1.7) Can I use R BATCH?
+1.6) Can I use R BATCH?
 
 No, but you can set up a batch file using rterm.exe. A sample batch file
 might contain (as one line)
 
-path_to_R\bin\rterm.exe --vsize 10M --nsize 250k  --no-restore --no-save < %1 > %1.out
+path_to_R\bin\rterm.exe --vsize 10M --nsize 300k --no-restore --no-save < %1 > %1.out
 
 
-1.8) Can I use rw06xx with ESS and emacs?
+1.7) Can I use rw06xx with ESS and emacs?
 
 Yes. Some time soon versions of ESS will come with support for this
 version of R (5.1.7 has prototype support). If yours does not, try
@@ -196,10 +189,11 @@ OR use a package by, e.g.
 
       library(MASS, lib.loc="p:/mylibs")
 
-How you set an environment variable is system specific: in 9x you can set
-them in autoexec.bat or in an MS-DOS window from which you launch
-Rgui / Rterm. Under NT you can use the control panel. You can also set them on
-the command line, for example in the shortcut you could have
+How you set an environment variable is system specific: in Windows 9x
+you can set them in autoexec.bat or in an MS-DOS window from which you
+launch Rgui / Rterm. Under Windows NT you can use the control
+panel. You can also set them on the command line, for example in the
+shortcut you could have
 
       path_to_R\bin\rgui.exe --vsize 10M --nsize 300k RLIBS=e:/R/library
 
@@ -218,7 +212,7 @@ simpler to install a private copy of R to do the building.
 
 HTML help only works for packages installed in rw06xx\library.
 
-(Information for rw0633 or later) To update the HTML help files after you
+To update the HTML help files after you
 have installed a binary package, run at the R prompt.
 
       > link.html.help()
@@ -304,18 +298,13 @@ see ?Rconsole.
 
 Have you changed the working directory?: see Q4.2.
 
-Prior to rw0633, using the file dialog boxes from the menus to
-navigate the file system changes the working directory. Either don't
-use them, or use the `Source file' menu item and navigate back to
-where you want the workspace (.RData) saved before quitting Rgui.
-
 
 4.2) How do I store my workspace in a different place?
 
 Use the `File | Change Dir' menu item to select a new working
 directory: this defaults to the last directory you loaded a file
 from. From rw0641 this has a browse button. The workspace is saved in
-the working directory. You can also save a snapshot of the workspage
+the working directory. You can also save a snapshot of the workspace
 from the `Save Image' menu item.
 
 
@@ -404,8 +393,8 @@ However, note
      the `directory' command.
 
    * It is only possible to set breakpoints in a DLL after the DLL has been
-     loaded. So a way to examine the function tukeyline in package eda might
-     be
+     loaded. So a way to examine the function `tukeyline' in package `eda'
+     might be
 
            gdb ../../../../bin/Rgui.exe
            (gdb) break WinMain
@@ -424,7 +413,7 @@ However, note
      drop control back to the debugger does not work.
 
    * We have seen examples in debugging problems with Windows events that
-     the cygwin gdb was able to catch but terminated the mingw32 gdb.
+     the cygwin gdb was able to catch but which terminated the mingw32 gdb.
 
 
 If you have an X server available on the PC, there is a version of DDD
@@ -433,4 +422,4 @@ http://sourceware.cygnus.com/cygwin) and provides a graphical user
 interface to gdb.
 
   ------------------------------------------------------------------------
-Last edited 29 June 1999 by Brian Ripley ripley@stats.ox.ac.uk
+Last edited 30 June 1999 by Brian Ripley ripley@stats.ox.ac.uk

@@ -119,8 +119,9 @@ ifeq ($(strip $(HELP)),YES)
 endif
 
 pkgcheck-%:
-	-mkdir -p ../library/$*/check
-	$(MAKE) -C ../library/$*/check PKG=$* -f ../../../gnuwin32/check/PkgCheck
+	@$(ECHO) -------- Testing package $* --------
+	-@mkdir -p ../library/$*/check
+	@$(MAKE) -C ../library/$*/check PKG=$* -f ../../../gnuwin32/check/PkgCheck
 
 ziphelp-%:
 	$(MAKE) -C ./help ziphelp-$*
@@ -135,10 +136,18 @@ bootstrap-DLLNM=boott
 clean: cleanwin
 	$(RM) -f $(OBJS) $(WINOBJS) *.a ../*/*.d
 
-veryclean: clean
-	$(RM) -rf ../../bin/R.exe ../../library
+distclean veryclean: clean
+	$(RM) -rf R.exp ../../bin ../../library
 	$(RM) -f ../library/*/src/*.o ../library/*/src/*.a
 	$(RM) -f ../library/*/src/*.def ../library/*/src/*.dll
+	$(RM) -rf ../library/*/check
+	$(RM) -f ../../doc/html/search/index.txt \
+	../../doc/html/function.html ../../doc/html/packages.html \
+	../../demos/dynload/zero.def ../../demos/dynload/zero.dll \
+	../../demos/dynload/zero.o \
+	../../etc/R* ../../etc/rgb.txt \
+	../include/FFDecl.h ../include/FFTab.h ../include/Platform.h \
+	../include/globalvar.h ../../tests/*.Rout ../../tests/*.Rout.fail
 
 cleanwin:
 	$(RM) *.o *.exe *.dll *.a *~ \#*\# *.zip R.def R.exp1 \
@@ -225,7 +234,25 @@ packagedist:
 	$(RM) -r $(RPREFIX)
 
 
-distribution: bindist srcdist packagedist
+distribution: bindist packagedist
+
+# tests
+
+test check: all stricttests pkgtests
+
+stricttests:
+	-@$(MAKE) -C ../../tests -f ../src/gnuwin32/check/Maketests clean
+	-@$(MAKE) -C ../../tests -f ../src/gnuwin32/check/Maketests
+
+PKGS-CHK=$(foreach i, $(PACKAGES), pkgcheck-$i)
+pkgtests: $(PKGS-CHK)
+
+pkgcheck-base:
+	@$(ECHO) -------- Testing package base --------
+	@(cd ../../library/base/R-ex; unzip -oq Rex)
+	-@mkdir -p ../library/base/check
+	-@$(MAKE) -C ../library/base/check PKG=base -f ../../../gnuwin32/check/PkgCheck
+	@(cd ../../library/base/R-ex; rm -f *.R)
 
 # Dependencies
 CSOURCES=$(foreach i, $(DIRS), $(wildcard $i/*.c))

@@ -55,4 +55,4 @@ fixRd: $(wildcard man/*.Rd)
 
 
 clean:
-	$(RM) *~ */*~ fixr fixh fixc fixRd fixbin fixgif
+	$(RM) *~ */*~ fixr fixh fixRd fixbin

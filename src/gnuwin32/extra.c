@@ -201,3 +201,48 @@ SEXP do_flushconsole(SEXP call, SEXP op, SEXP args, SEXP env)
     R_FlushConsole();
     return R_NilValue;
 }
+
+#include <winbase.h>
+/* typedef struct _OSVERSIONINFO{  
+    DWORD dwOSVersionInfoSize; 
+    DWORD dwMajorVersion; 
+    DWORD dwMinorVersion; 
+    DWORD dwBuildNumber; 
+    DWORD dwPlatformId; 
+    TCHAR szCSDVersion[ 128 ]; 
+    } OSVERSIONINFO; */
+ 
+
+SEXP do_winver(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    char isNT[8]="??", ver[256];
+    SEXP ans;
+    OSVERSIONINFO verinfo;
+    
+    checkArity(op, args);
+    verinfo.dwOSVersionInfoSize = sizeof(OSVERSIONINFO);
+    GetVersionEx(&verinfo);
+    switch(verinfo.dwPlatformId) {
+    case VER_PLATFORM_WIN32_NT:
+	strcpy(isNT, "NT");
+	break;
+    case VER_PLATFORM_WIN32_WINDOWS:
+	strcpy(isNT, "9x");
+	break;
+    case VER_PLATFORM_WIN32s:
+	strcpy(isNT, "win32s");
+	break;	
+    default:
+	sprintf(isNT, "ID=%d", verinfo.dwPlatformId);
+	break;
+    }
+    
+    sprintf(ver, "Windows %s %d.%d (build %d) %s", isNT,
+	    verinfo.dwMajorVersion, verinfo.dwMinorVersion,
+	    LOWORD(verinfo.dwBuildNumber), verinfo.szCSDVersion);
+    
+    PROTECT(ans = allocVector(STRSXP, 1));
+    STRING(ans)[0] = mkChar(ver);
+    UNPROTECT(1);
+    return (ans);
+}

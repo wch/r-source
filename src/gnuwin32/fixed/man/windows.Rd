@@ -3,7 +3,7 @@
 \alias{win.graph}
 \alias{win.metafile}
 \alias{win.print}
-\alias(x11}
+\alias{x11}
 \alias{X11}
 
 \title{Windows graphics devices}
