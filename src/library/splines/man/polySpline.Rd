@@ -5,8 +5,10 @@ polySpline(object, \dots)
 as.polySpline(object, \dots)
 }
 \alias{polySpline}
+\alias{polySpline.bSpline}
 \alias{polySpline.nbSpline}
 \alias{polySpline.pbSpline}
+\alias{polySpline.polySpline}
 \alias{as.polySpline}
 \alias{plot.polySpline}
 \alias{predict.polySpline}
