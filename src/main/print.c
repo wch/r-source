@@ -723,6 +723,5 @@ int F77_NAME(realp0) (char *label, int *nchar, float *data, int *ndata)
 
 void F77_NAME(xerbla)(char *srname, int *info)
 {
-    error("On entry to %6s parameter number %d had an illegal value",
-	  srname, *info);
+    error("LAPACK routine %6s gave error code %d", srname, *info);
 }
