@@ -355,7 +355,7 @@ pkgcheck-%:
 	fi
 
 lazyload-%:
-	@$(MAKE) --no-print-directory PKG=$* RHOME=$(RHOME) RLIB=$(RLIB) BUILD=$(BUILD) -f $(RHOME)/src/gnuwin32/MakePkg lazyload
+	@$(MAKE) --no-print-directory PKG=$* RHOME=$(RHOME) RLIB=$(RLIB) BUILD=$(BUILD) -f $(RHOME)/src/gnuwin32/MakePkg -C $(PKGD)/$* lazyload
 
 lazydata-%:
 	@$(MAKE) --no-print-directory PKG=$* RHOME=$(RHOME) RLIB=$(RLIB) BUILD=$(BUILD) -f $(RHOME)/src/gnuwin32/MakePkg lazydata
@@ -520,9 +520,13 @@ unpack-recommended:
 clean-recommended:
 	@for i in ${R_PKGS_RECOMMENDED_SOURCES} ; do $(RM) -r ../library/$${i} ; done
 
+# this is really tricky for a bundle.
+# also note that as we are not using Rcmd INSTALL we do not get info
+# on LazyLoad / LazyData from the DESCRIPTION files. 
 recommended: unpack-recommended
 	@$(ECHO) "--- Making recommended packages"
-	@$(MAKE) --no-print-directory bundle-VR lazyload-MASS \
+	@$(MAKE) --no-print-directory bundle-VR
+	@$(MAKE) --no-print-directory PKGDIR=../library/VR lazyload-MASS \
 	  lazyload-class lazyload-nnet lazyload-spatial lazydata-MASS
 	@for p in $(filter-out VR, $(R_PKGS_RECOMMENDED_SOURCES)); do \
 	  $(MAKE) --no-print-directory pkg-$$p lazyload-$$p lazydata-$$p || exit 1; \

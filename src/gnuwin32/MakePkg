@@ -309,33 +309,39 @@ endif
 
 lazyload:
 ifeq ($(strip $(BUILD)),CROSS)
-	@if ! test -f ../../library/$(PKG)/R/$(PKG).rdb ; then \
+	@if ! test -f $(DPKG)/R/$(PKG).rdb ; then \
 	  $(ECHO)  "preparing package $(PKG) for lazy loading" ; \
 	  $(ECHO) "tools:::makeLazyLoading(\"$(PKG)\", lib.loc=\"$(RLIB)\")" | \
 	  R_CROSS_BUILD=yes R_DEFAULT_PACKAGES=NULL LC_COLLATE=C R_OSTYPE=windows $(R_EXE) --vanilla --slave > /dev/null ; \
-	  rm -f ../../library/$(PKG)/R/all.rda ; \
+	  rm -f $(DPKG)/R/all.rda ; \
+	  if test -r install.R ; then \
+	    cat install.R >> $(DPKG)/R/$(PKG) ; \
+	  fi ; \
 	fi
 else
-	@if ! test -f ../../library/$(PKG)/R/$(PKG).rdb ; then \
+	@if ! test -f $(DPKG)/R/$(PKG).rdb ; then \
 	  $(ECHO)  "preparing package $(PKG) for lazy loading" ; \
 	  $(ECHO) "tools:::makeLazyLoading(\"$(PKG)\")" | \
 	  $(RHOME)/bin/rterm.exe --vanilla --slave R_DEFAULT_PACKAGES=NULL LC_COLLATE=C > /dev/null ; \
-	  rm -f ../../library/$(PKG)/R/all.rda ; \
+	  rm -f $(DPKG)/R/all.rda ; \
+	  if test -r install.R ; then \
+	    cat install.R >> $(DPKG)/R/$(PKG) ; \
+	  fi ; \
 	fi
 endif
 
 lazydata:
 ifeq ($(strip $(BUILD)),CROSS)
-	@if test -d ../../library/$(PKG)/data; then \
-	  if ! test -f ../../library/$(PKG)/data/Rdata.rdb ; then \
+	@if test -d $(DPKG)/data; then \
+	  if ! test -f $(DPKG)/data/Rdata.rdb ; then \
 	    $(ECHO)  "preparing package $(PKG) for lazy data loading" ; \
 	    $(ECHO) "tools:::data2LazyLoadDB(\"$(PKG)\", lib.loc=\"$(RLIB)\")" | \
 	    R_CROSS_BUILD=yes R_DEFAULT_PACKAGES=NULL LC_COLLATE=C R_OSTYPE=windows $(R_EXE) --vanilla --slave > /dev/null ; \
 	  fi ; \
 	fi
 else
-	@if test -d ../../library/$(PKG)/data; then \
-	  if ! test -f ../../library/$(PKG)/data/Rdata.rdb ; then \
+	@if test -d $(DPKG)/data; then \
+	  if ! test -f $(DPKG)/data/Rdata.rdb ; then \
 	    $(ECHO)  "preparing package $(PKG) for lazy data loading" ; \
 	    $(ECHO) "tools:::data2LazyLoadDB(\"$(PKG)\")" | \
 	    $(RHOME)/bin/rterm.exe --vanilla --slave R_DEFAULT_PACKAGES=NULL LC_COLLATE=C > /dev/null ; \

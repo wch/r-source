@@ -590,15 +590,18 @@ false
     fi
   fi
   if ${thislazy}; then
-     message "preparing package for lazy loading"
-     echo "tools:::makeLazyLoading(\"${pkg_name}\")" | \
-	  R_DEFAULT_PACKAGES=NULL LC_COLLATE=C "${R_EXE}" --vanilla --slave
-     rm -f ${R_PACKAGE_DIR}/R/all.rda
-     if test -s R_PROFILE.R; then
-       mv ${R_PACKAGE_DIR}/R/${R_PACKAGE_NAME} ${R_PACKAGE_DIR}/R/${R_PACKAGE_NAME}.1
-       cat R_PROFILE.R ${R_PACKAGE_DIR}/R/${R_PACKAGE_NAME}.1 > ${R_PACKAGE_DIR}/R/${R_PACKAGE_NAME}
-       rm ${R_PACKAGE_DIR}/R/${R_PACKAGE_NAME}.1
-     fi
+    message "preparing package for lazy loading"
+    echo "tools:::makeLazyLoading(\"${pkg_name}\")" | \
+      R_DEFAULT_PACKAGES=NULL LC_COLLATE=C "${R_EXE}" --vanilla --slave
+    rm -f ${R_PACKAGE_DIR}/R/all.rda
+    if test -s R_PROFILE.R; then
+      mv ${R_PACKAGE_DIR}/R/${R_PACKAGE_NAME} ${R_PACKAGE_DIR}/R/${R_PACKAGE_NAME}.1
+      cat R_PROFILE.R ${R_PACKAGE_DIR}/R/${R_PACKAGE_NAME}.1 > ${R_PACKAGE_DIR}/R/${R_PACKAGE_NAME}
+      rm ${R_PACKAGE_DIR}/R/${R_PACKAGE_NAME}.1
+    fi
+    if test -s install.R; then
+      cat install.R >> "${R_PACKAGE_DIR}/R/${R_PACKAGE_NAME}"
+    fi
   fi
 
 

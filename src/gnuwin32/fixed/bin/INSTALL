@@ -297,7 +297,7 @@ foreach $pkg (@ARGV){
 	}
 
 	if($lazyload) {
-	    my $cmd = "make --no-print-directory -C $R_HOME/src/gnuwin32";
+	    my $cmd = "make --no-print-directory -C $R_HOME/src/gnuwin32 PKGDIR=$pkgdir";
 	    if($is_bundle) {
 		foreach $ppkg (@bundlepkgs) {$cmd .= " lazyload-$ppkg";}
 	    } else {
