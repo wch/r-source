@@ -9,8 +9,11 @@ stop <- function(..., call. = TRUE)
         .Internal(.dfltStop(message, call))
     }
     else {
-        if (length(args) > 0)
-            message <- paste(..., sep = "")
+        if (length(args) > 0) {
+            ## don't simplify this, as call sequence matters.
+            args <- .Internal(gettext(NULL, unlist(args)))
+            message <- paste(args, collapse = "")
+        }
         else message <- ""
         .Internal(stop(as.logical(call.), message))
     }
@@ -41,9 +44,17 @@ warning <- function(..., call. = TRUE, immediate. = FALSE)
         invisible(message)
     }
     else {
-        if (length(args) > 0)
-            message <- paste(..., sep = "")
-        else message <- ""
+        if (length(args) > 0) {
+            ## don't simplify this, as call sequence matters.
+            args <- .Internal(gettext(NULL, unlist(args)))
+            message <- paste(args, collapse = "")
+        } else message <- ""
         .Internal(warning(as.logical(call.), as.logical(immediate.), message))
     }
 }
+
+gettext <- function(domain = NULL, ...)
+    .Internal(gettext(domain, unlist(list(...))))
+
+bindtextdomain <- function(domain, dirname = NULL)
+    .Internal(bindtextdomain(domain, dirname))

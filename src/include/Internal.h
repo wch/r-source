@@ -107,6 +107,7 @@ SEXP do_axis(SEXP, SEXP, SEXP, SEXP);
 SEXP do_basename(SEXP, SEXP, SEXP, SEXP);
 SEXP do_begin(SEXP, SEXP, SEXP, SEXP);
 SEXP do_bind(SEXP, SEXP, SEXP, SEXP);
+SEXP do_bindtextdomain(SEXP, SEXP, SEXP, SEXP);
 SEXP do_body(SEXP, SEXP, SEXP, SEXP);
 SEXP do_bodyCode(SEXP, SEXP, SEXP, SEXP);
 SEXP do_box(SEXP, SEXP, SEXP, SEXP);
@@ -225,6 +226,7 @@ SEXP do_getlocale(SEXP, SEXP, SEXP, SEXP);
 #ifdef NEW_CONDITION_HANDLING
 SEXP do_getRestart(SEXP, SEXP, SEXP, SEXP);
 #endif
+SEXP do_gettext(SEXP, SEXP, SEXP, SEXP);
 SEXP do_getwd(SEXP, SEXP, SEXP, SEXP);
 SEXP do_globalenv(SEXP, SEXP, SEXP, SEXP);
 SEXP do_gray(SEXP, SEXP, SEXP, SEXP);

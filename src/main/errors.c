@@ -35,6 +35,13 @@ extern void R_ProcessEvents(void);
 #include <R_ext/GraphicsDevice.h>
 #include <R_ext/GraphicsEngine.h> /* for GEonExit */
 
+#ifdef HAVE_ALLOCA_H
+#include <alloca.h>
+#endif
+#if !HAVE_DECL_ALLOCA
+extern char *alloca(size_t);
+#endif
+
 #ifndef min
 #define min(a, b) (a<b?a:b)
 #endif
@@ -690,6 +697,91 @@ void jump_to_toplevel()
     jump_to_top_ex(FALSE, FALSE, TRUE, TRUE, TRUE);
 }
 
+/* #define DEBUG_GETTEXT  1 */
+
+/* gettext(domain, string) */
+SEXP do_gettext(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+#ifdef ENABLE_NLS
+    char *domain = "", *buf;
+    SEXP ans, string = CADR(args);
+    int i, n = LENGTH(string);
+    
+    checkArity(op, args);
+    if(isNull(CAR(args))) {
+	RCNTXT *cptr;
+	SEXP rho = R_NilValue;
+	for (cptr = R_GlobalContext->nextcontext;
+	     cptr != NULL && cptr->callflag != CTXT_TOPLEVEL;
+	     cptr = cptr->nextcontext)
+	    if (cptr->callflag & CTXT_FUNCTION) {
+		rho = cptr->cloenv;
+		break;
+	    }
+	while(rho != R_NilValue) {
+	    if (rho == R_GlobalEnv) break;
+	    else if (R_IsPackageEnv(rho)) {
+		domain = CHAR(STRING_ELT(R_PackageEnvName(rho), 0));
+		break;
+	    } else if (R_IsNamespaceEnv(rho)) {
+		domain = CHAR(STRING_ELT(R_NamespaceEnvSpec(rho), 0));
+		break;
+	    }
+	    rho = CDR(rho);
+	}
+	if(strlen(domain)) {
+	    buf = alloca(strlen(domain)+3);
+	    sprintf(buf, "R-%s", domain);
+	    domain = buf;
+	}
+    } else if(isString(CAR(args)))
+	domain = CHAR(STRING_ELT(CAR(args),0));
+    else errorcall(call, _("invalid 'domain' value"));
+    if(!isString(string)) errorcall(call, _("invalid 'string' value"));
+    if(strlen(domain)) {
+	PROTECT(ans = allocVector(STRSXP, n));
+	for(i = 0; i < n; i++) {
+	    char *this = CHAR(STRING_ELT(string, i)), *tmp;
+	    tmp = alloca(strlen(this) + 1);
+	    strcpy(tmp, this);
+	    /* FIXME string leading and trailing white spaces 
+	       and add back after translation */
+#ifdef DEBUG_GETTEXT
+	    REprintf("translating '%s' in domain '%s'\n", tmp, domain);
+#endif
+	    SET_STRING_ELT(ans, i, mkChar(dgettext(domain, this)));
+	}
+	UNPROTECT(1);
+	return ans;
+    } else return CADR(args);
+#else
+    return CADR(args);
+#endif
+}
+
+/* bindtextdomain(domain, dirname) */
+SEXP do_bindtextdomain(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+#ifdef ENABLE_NLS
+    char *res;
+    
+    checkArity(op, args);
+    if(!isString(CAR(args)) || LENGTH(CAR(args)) != 1) 
+	errorcall(call, _("invalid 'domain' value"));
+    if(isNull(CADR(args))) {
+	res = bindtextdomain(CHAR(STRING_ELT(CAR(args),0)), NULL);
+    } else {
+	if(!isString(CADR(args)) || LENGTH(CADR(args)) != 1) 
+	    errorcall(call, _("invalid 'dirname' value"));
+	res = bindtextdomain(CHAR(STRING_ELT(CAR(args),0)),
+			     CHAR(STRING_ELT(CADR(args),0)));
+    }
+    if(res) return mkString(res);
+    /* else this failed */
+#endif
+    return R_NilValue;
+}
+
 static SEXP findCall(void)
 {
     RCNTXT *cptr;
@@ -709,8 +801,8 @@ SEXP do_stop(SEXP call, SEXP op, SEXP args, SEXP rho)
     if(asLogical(CAR(args))) /* find context -> "Error in ..:" */
 	c_call = findCall();
     else
-	c_call = R_NilValue;
-
+	c_call = R_NilValue;    
+    
     args = CDR(args);
 
     if (CAR(args) != R_NilValue) { /* message */

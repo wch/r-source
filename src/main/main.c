@@ -421,7 +421,7 @@ void setup_Rmainloop(void)
     SEXP cmd;
     FILE *fp;
 #ifdef ENABLE_NLS
-    char localedir[PATH_MAX];
+    char localedir[PATH_MAX+20];
 #endif
 
     InitConnections(); /* needed to get any output at all */
@@ -442,6 +442,7 @@ void setup_Rmainloop(void)
 	else setlocale(LC_TIME, Rlocale);
 	if((p = getenv("LC_MONETARY"))) setlocale(LC_MONETARY, p);
 	else setlocale(LC_MONETARY, Rlocale);
+	/* Windows does not have LC_MESSAGES */
     }
 #else
     setlocale(LC_CTYPE, "");/*- make ISO-latin1 etc. work for LOCALE users */
@@ -454,6 +455,8 @@ void setup_Rmainloop(void)
     textdomain(PACKAGE);
     strcpy(localedir, R_Home); strcat(localedir, "/share/locale");
     bindtextdomain(PACKAGE, localedir);
+    strcpy(localedir, R_Home); strcat(localedir, "/library/base/po");
+    bindtextdomain("R-base", localedir);
 #endif
 #endif
 

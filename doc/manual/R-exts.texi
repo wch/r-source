@@ -1602,29 +1602,25 @@ CMD check} checks for.
 @node Localization,  , Writing portable packages, Creating R packages
 @section Localization
 
-@R{} provides facilities to make use of translations of messages on
-systems which have suitable@footnote{Currently GNU @code{gettext} is
-required: it is likely that this will be bundled with future versions of
-R.} OS-level support.
+@R{} 2.1.0 introduced mechanisms to translate the R- and C-level error
+and warning messages, and these has been implemented in package
+@pkg{splines} as a demonstration.  There are only available if @R{} is
+compiled with NLS support (which is requested by @command{configure}
+option @option{--enable-nls}, the default).
+
+The procedures make use of @code{msgfmt} and @code{xgettext} which are
+part of GNU @code{gettext} and this will need to be installed: Windows
+users can find pre-compiled binaries at the GNU archive mirrors.
 
 @menu
-* R messages::                  
 * C-level messages::            
+* R messages::                  
 @end menu
-
-@node R messages, C-level messages, Localization, Localization
-@subsection R messages
-
-Mechanisms to support the translation of @R{} @code{warning} and
-@code{stop} messages are planned for @R{} 2.1.0.
 
 @node C-level messages,  , R messages, Localization
 @subsection C-level messages
 
-@R{} 2.1.0 introduced mechanisms to translate the C-level error and
-warning messages, and this has been implemented in package @pkg{splines}
-as a demonstration (and also in @pkg{stats}, but with no translations
-provided).  The process of enabling translations is
+The process of enabling translations is
 
 @itemize
 @item
@@ -1650,25 +1646,6 @@ error(_("'ord' must be a positive integer"));
 @end example
 
 @item
-Arrange to initialize NLS, for example by having @code{.onLoad} call
-@example
-.C("@var{pkg}_init", file.path(libname, pkgname), PACKAGE="@var{pkg}")
-@end example
-where the C function called looks like
-@example
-void @var{pkg}_init(char **path)
-@{
-#ifdef ENABLE_NLS
-    char localedir[PATH_MAX];
-
-    strcpy(localedir, path[0]);
-    strcat(localedir, "/po");
-    bindtextdomain("@var{pkg}", localedir);
-#endif   
-@}
-@end example
-
-@item
 In the package's @file{src} directory run
 @example
 xgettext --keyword=_ -o @var{pkg}.pot *.c
@@ -1688,6 +1665,20 @@ of its messages in the @file{po/@var{lang}/LC_MESSAGES/@var{pkg}.mo} file
 for any language @var{lang} that matches the user's preferences (via the
 setting of the @code{LANGUAGES} environment variable or from the locale
 settings).
+
+@node R messages, C-level messages, Localization, Localization
+@subsection R messages
+
+Mechanisms to support the translation of @R{} @code{warning} and
+@code{stop} messages are in place.  They make use of message catalogs in
+the same way as C-level packages, but using domain @code{R-@var{pkg}}
+rather than @code{@var{pkg}}.  Translation of terms in @code{stop} and
+@code{warning} calls is automatically enabled, as well as other messages
+enclosed in calls to @code{gettext}.
+
+Tools to prepare the @file{R-@var{pkg}.pot} file are under development.
+
+
 
 @node Writing R documentation files, Tidying and profiling R code, Creating R packages, Top
 @chapter Writing R documentation files

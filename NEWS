@@ -22,6 +22,9 @@ USER-VISIBLE CHANGES
     o	The meaning of 'encoding' for a connection has changed: See the
 	internationalization section below.
 
+    o	There has been some rationalization of the format of error
+	messages, to make them easier to translate.
+
 
 NEW FEATURES
 
@@ -302,6 +305,9 @@ INTERNATIONALIZATION
 	used for the startup message.  See 'Writing R Extensions' for
 	how to make use of this in a package: all the standard
 	packages have been marked and splines is set up to do translation.
+
+    o	R-level stop() and warning() messages can be translated, as can
+	other messages via the new function gettext().
 
 
 UTILITIES

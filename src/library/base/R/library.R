@@ -133,6 +133,14 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
         for(fun in hook) try(fun(pkgname, pkgpath))
     }
 
+    bindTranslations <- function(pkgname, pkgpath)
+    {
+        popath <- file.path(pkgpath, "po")
+        if(!file.exists(popath)) return()
+        bindtextdomain(pkgname, popath)
+        bindtextdomain(paste("R", pkgname, sep="-"), popath)
+    }
+
     if(!missing(package)) {
         if (is.null(lib.loc)) lib.loc <- .libPaths()
 
@@ -244,6 +252,7 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
             ## If the name space mechanism is available and the package
             ## has a name space, then the name space loading mechanism
             ## takes over.
+            bindTranslations(libraryPkgName(package), pkgpath)
             if (packageHasNamespace(package, which.lib.loc)) {
                 tt <- try({
                     ns <- loadNamespace(package, c(which.lib.loc, lib.loc))
