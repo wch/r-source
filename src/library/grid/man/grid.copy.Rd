@@ -17,6 +17,4 @@ grid.copy(grob)
 \seealso{
   \code{\link{grid.grob}}.
 }
-\examples{
-}
 \keyword{dplot}

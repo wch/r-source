@@ -55,6 +55,4 @@ removeGrob(gTree, gPath, strict = FALSE, grep = FALSE, global = FALSE,
   \code{\link{grob}}, \code{\link{getGrob}},
   \code{\link{removeGrob}}, \code{\link{removeGrob}}.
 }
-\examples{
-}
 \keyword{dplot}

@@ -59,6 +59,4 @@ setChildren(x, children)
   \code{\link{grob}}, \code{\link{getGrob}},
   \code{\link{addGrob}}, \code{\link{removeGrob}}.
 }
-\examples{
-}
 \keyword{dplot}
