@@ -14,10 +14,10 @@ function(dir, outDir)
     ## results and not the package metadata ...
     ok <- .check_package_description(file.path(dir, "DESCRIPTION"))
     if(any(as.integer(sapply(ok, length))) > 0) {
-        stop(paste("Invalid DESCRIPTION file",
+        stop(paste(gettext("Invalid DESCRIPTION file") ,
                    paste(.capture_output_from_print(ok),
                          collapse = "\n"),
-                   sep = "\n\n"), call.=FALSE)
+                   sep = "\n\n"), call.=FALSE, domain=NA)
     }
 
     db <- .read_description(file.path(dir, "DESCRIPTION"))

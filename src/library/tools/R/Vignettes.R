@@ -93,7 +93,7 @@ pkgVignettes <- function(package, dir, lib.loc = NULL)
     ## Argument handling.
     if(!missing(package)) {
         if(length(package) != 1)
-            stop(.wrong_args("package", "must be of length 1"))
+            stop("argument 'package' must be of length 1")
         docdir <- file.path(.find.package(package, lib.loc), "doc")
         ## Using package installed in @code{dir} ...
     }

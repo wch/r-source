@@ -271,8 +271,8 @@ reduceDepends <- function(depMtrx, quietly=TRUE) {
                     outRow <- minRow
             }
             if (quietly == FALSE)
-                warning("Package ", pkg, " had its dependencies ",
-                        "reduced to a minimal set.")
+                warning("Package ", pkg,
+                        " had its dependencies reduced to a minimal set.")
         }
 	pkgMtrx[outRow,]
     }, quietly)

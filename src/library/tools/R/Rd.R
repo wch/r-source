@@ -6,7 +6,7 @@ function(lines)
     ## Preprocess lines with Rd markup according to .Platform$OS.type.
 
     if(!is.character(lines))
-        stop(.wrong_args("lines", "must be a character vector"))
+        stop("argument 'lines' must be a character vector")
 
     ## Re-encode if necessary (and possible).
     encoding <-
@@ -120,8 +120,7 @@ function(file)
         on.exit(close(file))
     }
     if(!inherits(file, "connection"))
-        stop(.wrong_args("file",
-                         "must be a character string or connection"))
+        stop("argument 'file' must be a character string or connection")
 
     lines <- Rd_pp(.read_Rd_lines_quietly(file))
 
@@ -142,18 +141,14 @@ function(file)
         stop("missing/empty \\name field in ",
              sQuote(summary(file)$description), "\n",
              "Rd files must have a non-empty \\name.\n",
-             "See chapter ", sQuote("Writing R documentation"),
-             " in manual ", sQuote("Writing R Extensions"),
-             ".")
+             "See chapter 'Writing R documentation' in manual 'Writing R Extensions'.")
 
     Rd_title <- .get_Rd_title(txt)
     if(!length(Rd_title))
         stop("missing/empty \\title field in ",
              sQuote(summary(file)$description), "\n",
              "Rd files must have a non-empty \\title.\n",
-             "See chapter ", sQuote("Writing R documentation"),
-             " in manual ", sQuote("Writing R Extensions"),
-             ".")
+             "See chapter 'Writing R documentation' in manual 'Writing R Extensions'.")
 
     list(name = Rd_name, type = Rd_type, title = Rd_title,
          aliases = aliases, concepts = concepts, keywords = keywords,
@@ -345,8 +340,7 @@ function(RdFiles, outFile = "", type = NULL,
         on.exit(close(outFile))
     }
     if(!inherits(outFile, "connection"))
-        stop(.wrong_args("outFile",
-                         "must be a character string or connection"))
+        stop("argument 'outFile' must be a character string or connection")
 
     index <- .build_Rd_index(Rdcontents(RdFiles), type = type)
 
@@ -366,7 +360,7 @@ function(package, dir, lib.loc = NULL)
     ## Argument handling.
     if(!missing(package)) {
         if(length(package) != 1)
-            stop(.wrong_args("package", "must be of length 1"))
+            stop("argument 'package' must be of length 1")
         dir <- .find.package(package, lib.loc)
         ## Using package installed in @code{dir} ...
         docsDir <- file.path(dir, "man")
@@ -397,7 +391,7 @@ function(package, dir, lib.loc = NULL)
     }
     else {
         if(missing(dir))
-            stop("you must specify ", sQuote("package"), " or ", sQuote("dir"))
+            stop("you must specify 'package' or 'dir'")
         ## Using sources from directory @code{dir} ...
         if(!file_test("-d", dir))
             stop("directory ", sQuote(dir), " does not exist")
@@ -431,8 +425,7 @@ function(file, text = NULL)
             on.exit(close(file))
         }
         if(!inherits(file, "connection"))
-            stop(.wrong_args("file",
-                             "must be a character string or connection"))
+            stop("argument 'file' must be a character string or connection")
         lines <- Rd_pp(.read_Rd_lines_quietly(file))
     }
 
@@ -541,7 +534,7 @@ function(txt, type, predefined = TRUE)
 
     out <- character()
     if(length(txt) != 1)
-        stop(.wrong_args("txt", "must be a character string"))
+        stop("argument 'txt' must be a character string")
     pattern <- paste("(^|\n)[[:space:]]*\\\\",
                      ifelse(predefined, type,
                             paste("section\\{", type, "\\}",
@@ -585,15 +578,13 @@ function(txt)
     ## 'txt'.
     out <- character()
     if(length(txt) != 1)
-        stop(.wrong_args("txt", "must be a character string"))
+        stop("argument 'txt' must be a character string")
     pattern <- "(^|\n)[[:space:]]*\\\\item\\{"
     while((pos <- regexpr(pattern, txt)) != -1) {
         txt <- substring(txt, pos + attr(pos, "match.length") - 1)
         if((pos <- delimMatch(txt)) == -1)
             stop("unmatched \\item name in ",
-                 sQuote(paste("\\item{",
-                              sub("\n.*$", "", txt),
-                              sep = "")),
+                 sQuote(paste("\\item{", sub("\n.*$", "", txt), sep = "")),
                  call. = FALSE)
         out <- c(out,
                  substring(txt,
@@ -607,7 +598,7 @@ function(txt)
                  call. = FALSE)
         txt <- substring(txt, pos + attr(pos, "match.length") - 1)
         if((pos <- delimMatch(txt)) == -1)
-            stop("unmatched \\item description for item",
+            stop("unmatched \\item description for item ",
                  sQuote(out[length(out)]),
                  call. = FALSE)
         txt <- substring(txt, pos + attr(pos, "match.length"))
@@ -754,7 +745,7 @@ function(db)
             stop(paste(gettext("missing/empty \\name field in Rd file(s)"),
                        paste(" ", Rd_paths[idx], collapse = "\n"),
                        sep = "\n"),
-                 call. = FALSE)
+                 call. = FALSE, domain = NA)
         }
     }
     unlist(Rd_names)
