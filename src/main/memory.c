@@ -1747,6 +1747,8 @@ SEXP allocVector(SEXPTYPE type, int length)
 	for (i = 0; i < length; i++)
 	    data[i] = R_BlankString;
     }
+    else if (type == CHARSXP)
+	CHAR(s)[length] = 0;
     return s;
 }
 
