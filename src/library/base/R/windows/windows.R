@@ -16,13 +16,18 @@ png <- function(filename = "Rplot.png", width = 480, height = 480,
     .Internal(devga(paste("png:", filename, sep=""),
                   width=width, height=height, pointsize=pointsize, 1))
 
+bmp <- function(filename = "Rplot.bmp", width = 480, height = 480,
+                pointsize = 12)
+    .Internal(devga(paste("bmp:", filename, sep=""),
+                  width=width, height=height, pointsize=pointsize, 1))
+
 jpeg <- function(filename = "Rplot.jpg", width = 480, height = 480,
                  pointsize = 12, quality=75)
     .Internal(devga(paste("jpeg:", quality, ":",filename, sep=""),
                   width=width, height=height, pointsize=pointsize, 1))
 
 savePlot <- function(filename = "Rplot",
-                     type = c("wmf", "png", "jpeg", "jpg", "ps"),
+                     type = c("wmf", "png", "jpeg", "jpg", "bmp","ps"),
                      device = dev.cur())
 {
     type <- match.arg(type)

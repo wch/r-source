@@ -334,13 +334,145 @@ int R_SaveAsJpeg(void  *d, int width, int height,
   /* Step 7: release JPEG compression object */
 
   /* This is an important step since it will release a good deal of memory. */
+  free(scanline);
   jpeg_destroy_compress(&cinfo);
+
 
   /* And we're done! */
   return 1;
 }
 
 #endif /* HAVE_JPEG */
+
+/* 
+ * Try to save the content of the device 'd' in 'filename' as Windows BMP.
+ * If numbers of colors is less than 256 we use a 'palette' BMP.
+ * Return 1 on success, 0 on failure 
+*/
+
+#define BMPERROR {R_ShowMessage("Problems writing to 'bmp' file");return 0;} 
+#define BMPW(a) {wrd=a;if(fwrite(&wrd,sizeof(unsigned short),1,fp)!=1) BMPERROR}
+#define BMPDW(a) {dwrd=a;if(fwrite(&dwrd,sizeof(unsigned long),1,fp)!=1) BMPERROR}
+#define BMPLONG(a) {lng=a;if(fwrite(&lng,sizeof(long),1,fp)!=1) BMPERROR}
+#define BMPPUTC(a) if(fputc(a,fp)==EOF) BMPERROR;
+#define HEADERSIZE 54
+
+int R_SaveAsBmp(void  *d, int width, int height, 
+		unsigned long (*gp)(void *, int, int), int bgr, FILE *fp) 
+{
+  unsigned long  col, palette[256];
+  int i, j, r, ncols, mid, high, low, withpalette;
+  int bfOffBits, bfSize, biBitCount, biClrUsed , pad;
+  unsigned short wrd;
+  unsigned long dwrd;
+  long lng;
+  DECLARESHIFTS;
+
+  /* Have we less than 256 different colors? */
+  ncols = mid = 0;
+  withpalette = 1;
+  for (i=0; i<256 ; i++) palette[i] = 0;
+  for (i = 0; (i < height) && withpalette ; i++) {
+    for (j = 0; (j < width) && withpalette ; j++) {
+      col = gp(d,i,j) & 0xFFFFFFUL ;
+      /* binary search the palette: */
+      low = 0;  
+      high = ncols - 1;
+      while (low <= high) {
+	mid = (low + high)/2;
+	if ( col < palette[mid] ) high = mid - 1;
+	else if ( col > palette[mid] ) low  = mid + 1;
+	else break;
+      }
+      if (high < low) {
+	/* didn't find colour in palette, insert it: */
+	if (ncols >= 256) {
+	  withpalette = 0;
+	} else {
+	  for (r = ncols; r > low; r--)
+	    palette[r] = palette[r-1] ;
+	  palette[low] = col;
+	  ncols ++;
+	}
+      }
+    }
+  }
+  /* Compute some part of the header */
+  if (withpalette) {
+    bfOffBits = HEADERSIZE + 4 * 256;
+    bfSize = bfOffBits + width * height ;
+    biBitCount = 8;
+    biClrUsed = 256;
+  } else {
+    bfOffBits = HEADERSIZE ;
+    bfSize = bfOffBits + 3 * width * height ;
+    biBitCount = 24;
+    biClrUsed = 0;
+  }
+
+  /* write the header */
+  BMPW(0x4D42); /* bfType must be "BM" */
+  BMPDW(bfSize); /*bfSize*/ 
+  BMPW(0);BMPW(0); /* bfReserved1 and bfReserved2 must be 0*/
+  BMPDW(bfOffBits); /* bfOffBits */
+  BMPDW(40);	/* biSize */
+  BMPLONG(width); /* biWidth */
+  BMPLONG(height); /* biHeight */
+  BMPW(1);	/* biPlanes - must be 1 */
+  BMPW(biBitCount); /* biBitCount */
+  BMPDW(0); /* biCompression=BI_RGB */
+  BMPDW(0); /* biSizeImage (with BI_RGB not needed)*/
+  BMPLONG(0); /* XPels/M <- used only by Windows?*/
+  BMPLONG(0); /* XPels/M */
+  BMPDW(biClrUsed); /* biClrUsed */
+  BMPDW(0) ; /* biClrImportant All colours are important */
+
+  /* and now the pixels */
+  if (withpalette) {
+    /* 8 bit image; write the palette */
+    for ( i=0; i<256; i++) {
+      col = palette[i];
+      BMPPUTC(GETBLUE(col));
+      BMPPUTC(GETGREEN(col));
+      BMPPUTC(GETRED(col));
+      BMPPUTC(0);
+    }
+    /* Rows must be padded to 4-byte boundary */
+    for ( pad=0 ; ((width+pad) & 3) != 0; pad++);
+    /* and then the pixels */
+    for (i=height-1 ; i>=0 ; i--) { 
+      for ( j=0 ; j<width ; j++) {
+	col = gp(d, i, j)&0xFFFFFFUL;
+	/* binary search the palette (the colour must be there): */
+	low = 0;  high = ncols - 1;
+	while (low <= high) {
+	  mid = (low + high)/2;
+	  if      (col < palette[mid]) high = mid - 1;
+	  else if (col > palette[mid]) low  = mid + 1;
+	  else break;
+	}
+	BMPPUTC(mid);
+      }
+      for (j=0; j<pad; j++) BMPPUTC(0);
+    }
+  } else {
+    /* 24 bits image */
+    BMPDW(0); /* null bmiColors */
+    for ( pad=0 ; ((3*width+pad) & 3) != 0; pad++); /*padding*/    
+    for (i=height-1 ; i>=0 ; i--) { 
+      for ( j=0 ; j<width ; j++) {
+	col = gp(d, i, j);
+	BMPPUTC(GETBLUE(col));
+	BMPPUTC(GETGREEN(col));
+	BMPPUTC(GETRED(col));
+      }
+      for (j=0; j<pad; j++) BMPPUTC(0);
+    }
+  }
+  return 1;
+}
+
+
 
 
 

@@ -12,10 +12,10 @@ Better formatting of math expressions in graphics labels, legends, ...
 (but only if font is True Type since it seems not possible to get
 per-char font metric information for raster fonts).
 
-Support for GIF format bitmaps has been removed, but support for PNG
-and JPEG has been added. This can be done via the File menu on the
-graphics window, savePlot() or dev.print to the new devices png() and
-jpeg(), which can also be used directly.
+Support for GIF format bitmaps has been removed, but support for PNG, 
+JPEG and  BMP has been added. This can be done via the File menu on the
+graphics window, savePlot() or dev.print to the new devices png(), bmp() 
+and jpeg(), which can also be used directly.
 
 
 
