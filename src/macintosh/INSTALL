@@ -169,6 +169,9 @@ On the MPW Shell submit the following two lines:
 Make -f MakeRecmd.mac > build
 build
 
+The launch the Apple script file install_recmd from the
+R_HOME:script directory to finish the installation
+
 The file MakeBio.mac is a makefiles that can be
 used to build the Biocondutor bundle of packages
 as of version 1.0.

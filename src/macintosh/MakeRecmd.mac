@@ -22,7 +22,7 @@ PACKAGES =  boot cluster foreign grid KernSmooth lattice mgcv ¶
             nlme rpart survival class MASS spatial nnet
 LIBF = cluster foreign grid KernSmooth lattice mgcv ¶
        nlme rpart survival class MASS spatial nnet
-DATA = boot cluster KernSmooth lattice MASS nlme rpart spatial survival
+DATA = boot cluster lattice MASS nlme rpart  survival
 DEMO = lattice
 INST = class grid lattice MASS nlme nnet spatial survival
 
@@ -126,7 +126,7 @@ help Ä $OutOfDate
 	for pkg in {PACKAGES}
 	 Begin
 	  SetDirectory {RHOME}share:perl
-	  perl  build-help-mac.pl -txt -html -example -latex :::src:library:{pkg} :::library
+	  perl  build-help-mac.pl -txt -html -example  :::src:library:{pkg} :::library
 	  perl Rd2contents.pl --os="mac" >:::library:{pkg}:CONTENTS :::src:library:{pkg}
       SetDirectory :::src:macintosh:
       if {pkg} == base

@@ -1,7 +1,7 @@
 #   File:       Makefile.mac
 #   Target:     gridLib
 #   Created:    Jago, Sep 2001, Stefano M. Iacus
-#   Updated:    Jago, Apr 2002
+#   Updated:    Jago, Mar 2003
 #
 #   This script assumes that R binary already exists in 
 #   the R root folder
@@ -42,7 +42,9 @@ SrcFiles        =  ¶
 					state.c ¶
 					unit.c ¶
 					util.c ¶
-					viewport.c
+					viewport.c ¶
+					register.c
+					
 
 ### Object Files ###
 
@@ -55,7 +57,9 @@ ObjFiles-PPC    =  ¶
 					state.o ¶
 					unit.o ¶
 					util.o ¶
-					viewport.o
+					viewport.o ¶
+					register.o
+					
 
 ### Libraries ###
 
@@ -112,7 +116,7 @@ state.o Ä state.c
 unit.o Ä unit.c
 util.o Ä util.c
 viewport.o Ä viewport.c
-
+register.o Ä register.c
 
 
 ### Optional Dependencies ###

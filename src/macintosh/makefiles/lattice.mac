@@ -1,7 +1,7 @@
 #   File:       Makefile.mac
 #   Target:     latticeLib
 #   Created:    Jago, Dec 2001, Stefano M. Iacus
-#   Updated:	Jago, Apr 2002
+#   Updated:	Jago, Mar 2003
 #   
 #   This script assumes that R binary already exists in 
 #   the R root folder
@@ -33,13 +33,18 @@ LibDir     		= :::::library:{DLib}:libs
 ### Source Files ###
 
 SrcFiles        =  ¶
-				  cont.c
+				  cont.c ¶
+				  threeDplot.c
+				  
 				  
 
 ### Object Files ###
 
 ObjFiles-PPC    =  ¶
-				  cont.o
+				  cont.o ¶
+				  threeDplot.o
+				  
+				  
 				  
 ### Libraries ###
 
@@ -88,7 +93,7 @@ LibFiles-PPC    =  ¶
 ### Required Dependencies ###
  
 cont.o Ä cont.c
-
+threeDplot.o Ä threeDplot.c
 
 ### Optional Dependencies ###
 ### Build this target to generate "include file" dependencies. ###
