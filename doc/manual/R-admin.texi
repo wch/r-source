@@ -789,7 +789,8 @@ a good idea to remove that file before re-configuring.
 To compile @R{}, you will most likely find it easiest to use GNU
 @command{make}.  On Solaris 2.6/7/8 in particular, you need a version of
 GNU @command{make} different from 3.77; 3.79 works fine, as does the Sun
-@command{make}.
+@command{make}.  The native @command{make} is reported to fail on SGI
+Irix 6.5.
 
 To build in a separate directory you need a @command{make} that uses the
 @code{VPATH} variable, for example GNU @command{make}, or Sun
@@ -843,6 +844,11 @@ FORTRAN 77 compliance.
 
 For performance reasons@footnote{e.g., to use an optimized BLAS on
 Sun/Sparc} you may want to choose a FORTRAN 90/95 compiler.
+
+If you use @command{f2c} you may need to ensure that the FORTRAN type
+@code{integer} is translated to the C type @code{int}.  Normally
+@file{f2c.h} contains @command{typedef long int integer;}, which will
+work on a 32-bit platform but not on a 64-bit platform.
 
 @node Compile and load flags, Building the GNOME interface, Using FORTRAN, Configuration on Unix
 @section Compile and load flags
