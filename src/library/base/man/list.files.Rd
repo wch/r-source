@@ -3,9 +3,8 @@
 \alias{dir}
 \title{List the Files in a Directory/Folder}
 \usage{
-list.files(path = ".", pattern=NULL, all.files=FALSE,
-           full.names=FALSE)
-dir(path = ".", pattern=NULL, all.files=FALSE, full.names=FALSE)
+list.files(path = ".", pattern=NULL, all.files=FALSE, full.names=FALSE)
+       dir(path = ".", pattern=NULL, all.files=FALSE, full.names=FALSE)
 }
 \arguments{
   \item{path}{a character vector of full path names.}
@@ -35,7 +34,11 @@ dir(path = ".", pattern=NULL, all.files=FALSE, full.names=FALSE)
 \note{
   File naming conventions are very platform dependent.
 }
+\seealso{\code{\link{file.info}} and \code{\link{file}} for many more file
+  handling functions.}
 \examples{
 list.files(R.home())
+## Only files starting with a-l or r (*including* uppercase):
+dir("../..", pattern = "^[a-lr]",full.names=TRUE)
 }
 \keyword{file}
