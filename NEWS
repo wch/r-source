@@ -230,7 +230,7 @@ BUG FIXES
     o	Use FILESEP instead of '/' in devPS.c.
 
     o	Errors in argument matching could cause crashes if error
-	handler was used
+	handler was used.
 
     o	Zero the widths of undefined chars in postscript().
 
@@ -238,12 +238,15 @@ BUG FIXES
 	that simultaneous instances of postscript/xfig/bitmap can use
 	different values for `family'.
 
-    o	plot.stl() now uses correct time labels for tickmarks of x-axes
+    o	plot.stl() now uses correct time labels for tickmarks of x-axes.
 
     o	lm.fit & lm.wfit (and hence lm) now give understandable error
 	messages when there are 0 non-NA cases.
 
-    o	New "[.AsIs" function fixing PR#665
+    o	New "[.AsIs" function fixing PR#665.
+
+    o	Improved logic in the re-scaling of plots in dev.print.
+
 
 
 	**************************************************
