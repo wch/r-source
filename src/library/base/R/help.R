@@ -62,7 +62,7 @@ help <-
                 ## end of experimental code
                 if(file.exists(zfile))
                     file.show(zfile,
-                              header = paste("Help for `", topic, "'", sep=""),
+                              ##header= paste("Help for `", topic, "'", sep=""),
                               delete.file = (zfile!=file))
                 else
                     stop(paste("The help file for `", topic, "' is missing",
