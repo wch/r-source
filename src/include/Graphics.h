@@ -149,7 +149,7 @@ typedef struct {
     double mkh;		/* Mark size in inches */
     int	pch;		/* Plotting character */
     int	ps;		/* Text & symbol pointsize */
-    int	smo;		/* Curve smoothness */
+    double smo;		/* Curve smoothness */
     double srt;		/* String Rotation */
     double tck;		/* Tick size as in S */
     double tcl;		/* Tick size in "lines" */
@@ -331,7 +331,7 @@ typedef struct {
     SEXP displayList;	/* display list */
 } DevDesc;
 
-/* For easy reference: Here are the source files of 
+/* For easy reference: Here are the source files of
  * currently existing device drivers:
  * FILE				driver name prefix
  * ----------------------	------------------
