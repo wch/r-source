@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2003
-@set FAQ-VERSION 1.8-0, @value{FAQ-YEAR}-10-07
+@set FAQ-VERSION 1.8-1, @value{FAQ-YEAR}-10-07
 @set REL-VERSION 1.8.0
 @set FAQ-ISBN 3-901167-51-X
 @documentlanguage en
@@ -2045,6 +2045,12 @@ Functions that solve general linear/integer problems, assignment
 problems, and transportation problems via interfacing Lp_solve.
 @item lpridge
 Local polynomial (ridge) regression.
+@item mapdata
+Supplement to package @strong{maps}, providing the larger and/or
+higher-resolution databases.
+@item maps
+Draw geographical maps.  Projection code and larger maps are in separate
+packages.
 @item maptools
 Set of tools for manipulating and reading geographic data, in particular
 ESRI shapefiles.
@@ -2257,6 +2263,9 @@ Calculates parameters of the seawater carbonate system.
 Simple Evolutionary Algorithm Optimization.
 @item seao.gui
 Simple Evolutionary Algorithm Optimization: graphical user interface.
+@item segmented
+Functions to estimate break-points of segmented relationships in
+regression models (GLMs).
 @item sem
 Functions for fitting general linear Structural Equation Models (with
 observed and unobserved variables) by the method of maximum likelihood
@@ -2321,7 +2330,7 @@ formerly the three packages: @strong{spweights}, @strong{sptests}, and
 @item splancs
 Spatial and space-time point pattern analysis functions.
 @c <COMMENT>
-@c Deprecated in favor of new @pkg{spdep} along with 1.5.0 release.
+@c Deprecated in favor of new @strong{spdep} along with 1.5.0 release.
 @c @item spsarlm
 @c Functions for estimating spatial simultaneous autoregressive (SAR)
 @c models, including sparse matrix methods for computing the Jacobian.
