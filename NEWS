@@ -813,7 +813,8 @@ BUG FIXES
     o   [g]sub(perl = TRUE) was giving random results for a 0-length
 	initial match.  Now such matches (and internal 0-length
 	matches such as those at word boundaries) are handled
-	correctly.  (Parts of PR#7742.)
+	correctly, as are those for sub(perl = FALSE).  
+	(Parts of PR#7742.)
 
 
 

@@ -3554,18 +3554,30 @@ options(contrasts = old)
 ## Were different in earlier versions
 
 
-## parts of PR#7742
+## parts of PR#7742 and other examples
 sub('^','v_', 1:3, perl=TRUE)
 ## 2.0.1 did not coerce to character (nor was it documented to).
 x <- LETTERS[1:3]
 stopifnot(identical(paste('v_', x, sep=""),
                     sub('^','v_', x, perl = TRUE)))
 ## 2.0.1 added random chars at the end
-## perl = FALSE still gives the wrong answer.
+stopifnot(identical(paste('v_', x, sep=""), sub('^','v_', x)))
+## 2.0.1 did not substitute at all
 (x <- gsub("\\b", "|", "The quick brown fox", perl = TRUE))
 stopifnot(identical(x, "|The| |quick| |brown| |fox|"))
 ## checked against sed: 2.0.1 infinite-looped.
 ## perl = FALSE still gives the wrong answer.
+## Another boundary case,
 (x <- gsub("\\b", "|", " The quick ", perl = TRUE))
 stopifnot(identical(x, " |The| |quick| "))
-## another boundary case.
+## and some from a comment in the GNU sed code
+x <- gsub("a*", "x", "baaaac")
+stopifnot(identical(x, "xbxcx"))
+x <- gsub("a*", "x", "baaaac", perl = TRUE)
+stopifnot(identical(x, "xbxcx"))
+## earlier versions got "bxc" or "xbxxcx"
+(x <- gsub("^12", "x", "1212")) # was "xx"
+stopifnot(identical(x, "x12"))
+(x <- gsub("^12", "x", "1212", perl = TRUE)) # was "xx"
+stopifnot(identical(x, "x12"))
+## various fixes in 2.1.0

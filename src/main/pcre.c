@@ -229,7 +229,7 @@ SEXP do_pgsub(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP pat, rep, vec, ans;
     int i, j, n, ns, nns, nmatch, offset, re_nsub;
-    int global, igcase_opt, erroffset, eflag;
+    int global, igcase_opt, erroffset, eflag, last_end;
     int options = 0;
     char *s, *t, *u, *uu;
     const char *errorptr;
@@ -308,12 +308,18 @@ SEXP do_pgsub(SEXP call, SEXP op, SEXP args, SEXP env)
 		      i+1);
 	}
 #endif
-	eflag = 0;
+	/* Looks like PCRE_NOTBOL is not needed in this version,
+	   but leave in as a precaution */
+	eflag = 0; last_end = -1;
 	while (pcre_exec(re_pcre, re_pe, s, nns, offset, eflag,
 			 ovector, 30) >= 0) {
 	    nmatch += 1;
-	    ns += length_adj(t, ovector, re_nsub);
+	    /* Do not repeat a 0-length match after a match, so
+	       gsub("a*", "x", "baaac") is "xbxcx" not "xbxxcx" */
+	    if(ovector[1] > last_end) 
+		ns += length_adj(t, ovector, re_nsub);
 	    offset = ovector[1];
+	    if (s[offset] == '\0' || !global) break;
 	    /* If we have a 0-length match, move on a char */
 	    if(ovector[1] == ovector[0]) {
 #ifdef SUPPORT_UTF8
@@ -331,9 +337,8 @@ SEXP do_pgsub(SEXP call, SEXP op, SEXP args, SEXP env)
 #endif
 		    offset++;
 	    }
-	    if (s[offset] == '\0' || !global)
-		break;
 	    eflag = PCRE_NOTBOL;
+	    last_end = ovector[1];
 	}
 	if (nmatch == 0)
 	    SET_STRING_ELT(ans, i, STRING_ELT(vec, i));
@@ -343,14 +348,16 @@ SEXP do_pgsub(SEXP call, SEXP op, SEXP args, SEXP env)
 	    s = CHAR(STRING_ELT(vec, i));
 	    t = CHAR(STRING_ELT(rep, 0));
 	    uu = u = CHAR(STRING_ELT(ans, i));
-	    eflag = 0;
+	    eflag = 0; last_end = -1;
 	    while (pcre_exec(re_pcre, re_pe, s, nns, offset, eflag,
 			     ovector, 30) >= 0) {
 		/* printf("%s, %d, %d %d\n", s, offset,
 		   ovector[0], ovector[1]); */
 		for (j = offset; j < ovector[0]; j++) *u++ = s[j];
-		u = string_adj(u, s, t, ovector);
+		if(ovector[1] > last_end) 
+		    u = string_adj(u, s, t, ovector);
 		offset = ovector[1];
+		if (s[offset] == '\0' || !global) break;
 		if(ovector[1] == ovector[0]) { 
 		    /* advance by a char */
 #ifdef SUPPORT_UTF8
@@ -370,9 +377,8 @@ SEXP do_pgsub(SEXP call, SEXP op, SEXP args, SEXP env)
 			*u++ = s[offset++];
 		}
 
-		if (s[offset] == '\0' || !global)
-		    break;
 		eflag = PCRE_NOTBOL;
+		last_end = ovector[1];
 	    }
 	    for (j = offset ; s[j] ; j++)
 		*u++ = s[j];
