@@ -7,13 +7,13 @@
 ## 'General case':  f(x[i]) = z[i]  with arbitrary z[]
 ## -- but we would have to modify 'approxfun' or not be able to use it..
 ## --->> forget about general case
-stepfun <- function (x, y, f = 0)
+stepfun <- function (x, y, f = 0, ties = "ordered")
 {
-    if(any(diff(x)<0)) stop("stepfun: x must be ordered increasingly")
+    if(is.unsorted(x)) stop("stepfun: x must be ordered increasingly")
     n <- length(x)
     if(length(y)!= n+1) stop("y must be one longer than x")
     rval <- approxfun(x, y[-1], method = "constant",
-		      yleft = y[1], yright = y[n+1], f = f)
+		      yleft = y[1], yright = y[n+1], f = f, ties = ties)
     class(rval) <- c("stepfun", class(rval))
     attr(rval, "call") <- sys.call()
     rval

@@ -1,7 +1,7 @@
 \name{stepfun}
 \title{Step Functions}
 \usage{
-stepfun(x, y, f=0)
+stepfun(x, y, f = 0, ties = "ordered")
 
 is.stepfun(x)
 knots(Fn, \dots)
@@ -16,13 +16,15 @@ summary.stepfun(Fn)
 \alias{knots}
 \alias{knots.stepfun}
 \arguments{
- \item{x}{numeric vector giving the ``knots'' or jump locations of the
-   step function.}
- \item{y}{numeric vector one longer than \code{x}, giving the heights of
-   the function values \emph{between} the x values.}
- \item{f}{a number between 0 and 1, indicating how interpolation outside
-   the given x values should happen.  See  \code{\link{approxfun}}.}
- \item{fn}{an \R object inheriting from \code{"stepfun"}.}
+  \item{x}{numeric vector giving the ``knots'' or jump locations of the
+    step function.}
+  \item{y}{numeric vector one longer than \code{x}, giving the heights of
+    the function values \emph{between} the x values.}
+  \item{f}{a number between 0 and 1, indicating how interpolation outside
+    the given x values should happen.  See  \code{\link{approxfun}}.}
+  \item{ties}{Handling of tied \code{x} values. Either a function or
+    the string \code{"ordered"}.  See  \code{\link{approxfun}}.}
+  \item{Fn}{an \R object inheriting from \code{"stepfun"}.}
 }
 \description{
   Given the vectors \eqn{(x_1,\ldots, x_n)}{(x[1],\ldots, x[n])} and
