@@ -483,8 +483,7 @@ rev.dendrogram <- function(x) {
     midcache.dendrogram( r )
 }
 
-## original Andy Liaw; modified RG, MM
-
+## original Andy Liaw; modified RG, MM :
 heatmap <-
 function (x, Rowv=NULL, Colv=if(symm)"Rowv" else NULL,
           distfun = dist, hclustfun = hclust, add.expr,
@@ -493,7 +492,7 @@ function (x, Rowv=NULL, Colv=if(symm)"Rowv" else NULL,
 	  margins = c(5, 5), ColSideColors, RowSideColors,
           cexRow = 0.2 + 1/log10(nr), cexCol = 0.2 + 1/log10(nc),
           labRow = NULL, labCol = NULL, main = NULL, xlab = NULL, ylab = NULL,
-          ...)
+          verbose = getOption("verbose"), ...)
 {
     scale <- if(symm && missing(scale)) "none" else match.arg(scale)
     if(length(di <- dim(x)) != 2 || !is.numeric(x))
@@ -505,46 +504,54 @@ function (x, Rowv=NULL, Colv=if(symm)"Rowv" else NULL,
     if(!is.numeric(margins) || length(margins) != 2)
 	stop("`margins' must be a numeric vector of length 2")
 
+    doRdend <- !identical(Rowv,NA)
+    doCdend <- !identical(Colv,NA)
     ## by default order by row/col means
     if(is.null(Rowv)) Rowv <- rowMeans(x, na.rm = na.rm)
     if(is.null(Colv)) Colv <- colMeans(x, na.rm = na.rm)
 
     ## get the dendrograms and reordering indices
 
-    if(inherits(Rowv, "dendrogram"))
-	ddr <- Rowv
-    else {
-	hcr <- hclustfun(distfun(x))
-	ddr <- as.dendrogram(hcr)
-	if(!is.logical(Rowv) || Rowv)
-	    ddr <- reorder(ddr, Rowv)
+    if(doRdend) {
+	if(inherits(Rowv, "dendrogram"))
+	    ddr <- Rowv
+	else {
+	    hcr <- hclustfun(distfun(x))
+	    ddr <- as.dendrogram(hcr)
+	    if(!is.logical(Rowv) || Rowv)
+		ddr <- reorder(ddr, Rowv)
+	}
+	if(nr != length(rowInd <- order.dendrogram(ddr)))
+	    stop("row dendrogram ordering gave index of wrong length")
     }
-    if(nr != length(rowInd <- order.dendrogram(ddr)))
-	stop("row dendrogram ordering gave index of wrong length")
+    else rowInd <- 1:nr
 
-    if(inherits(Colv, "dendrogram"))
-	ddc <- Colv
-    else if(identical(Colv, "Rowv")) {
-        if(nr != nc)
-            stop('Colv = "Rowv" but nrow(x) != ncol(x)')
-        ddc <- ddr
+    if(doCdend) {
+	if(inherits(Colv, "dendrogram"))
+	    ddc <- Colv
+	else if(identical(Colv, "Rowv")) {
+	    if(nr != nc)
+		stop('Colv = "Rowv" but nrow(x) != ncol(x)')
+	    ddc <- ddr
+	}
+	else {
+	    hcc <- hclustfun(distfun(if(symm)x else t(x)))
+	    ddc <- as.dendrogram(hcc)
+	    if(!is.logical(Colv) || Colv)
+		ddc <- reorder(ddc, Colv)
+	}
+	if(nc != length(colInd <- order.dendrogram(ddc)))
+	    stop("column dendrogram ordering gave index of wrong length")
     }
-    else {
-	hcc <- hclustfun(distfun(if(symm)x else t(x)))
-	ddc <- as.dendrogram(hcc)
-	if(!is.logical(Colv) || Colv)
-	    ddc <- reorder(ddc, Colv)
-    }
-    if(nc != length(colInd <- order.dendrogram(ddc)))
-	stop("column dendrogram ordering gave index of wrong length")
+    else colInd <- 1:nc
 
     ## reorder x
     x <- x[rowInd, colInd]
 
     if(is.null(labRow))
-        labRow <- if(is.null(rownames(x))) (1:nr)[rowInd] else rownames(x)
+	labRow <- if(is.null(rownames(x))) (1:nr)[rowInd] else rownames(x)
     if(is.null(labCol))
-        labCol <- if(is.null(colnames(x))) (1:nc)[colInd] else colnames(x)
+	labCol <- if(is.null(colnames(x))) (1:nc)[colInd] else colnames(x)
 
     if(scale == "row") {
 	x <- sweep(x, 1, rowMeans(x, na.rm = na.rm))
@@ -559,7 +566,8 @@ function (x, Rowv=NULL, Colv=if(symm)"Rowv" else NULL,
 
     ## Calculate the plot layout
     lmat <- rbind(c(NA, 3), 2:1)
-    lwid <- lhei <- c(1, 4)
+    lwid <- c(if(doRdend) 1 else 0.05, 4)
+    lhei <- c((if(doCdend) 1 else 0.05) + if(!is.null(main)) 0.2 else 0, 4)
     if(!missing(ColSideColors)) { ## add middle row to layout
 	if(!is.character(ColSideColors) || length(ColSideColors) != nc)
 	    stop("'ColSideColors' must be a character vector of length ncol(x)")
@@ -573,6 +581,10 @@ function (x, Rowv=NULL, Colv=if(symm)"Rowv" else NULL,
 	lwid <- c(lwid[1], 0.2, lwid[2])
     }
     lmat[is.na(lmat)] <- 0
+    if(verbose) {
+        cat("layout: widths = ", lwid, ", heights = ", lhei,"; lmat=\n")
+        print(lmat)
+    }
 
     ## Graphics `output' -----------------------
 
@@ -590,15 +602,16 @@ function (x, Rowv=NULL, Colv=if(symm)"Rowv" else NULL,
     }
     ## draw the main carpet
     par(mar = c(margins[1], 0, 0, margins[2]))
-    if(!symm || scale != "none") x <- t(x)
+    if(!symm || scale != "none")
+	x <- t(x)
     if(revC) { # x columns reversed
-        iy <- nr:1
-        ddr <- rev(ddr)
-        x <- x[,iy]
+	iy <- nr:1
+	ddr <- rev(ddr)
+	x <- x[,iy]
     } else iy <- 1:nr
 
     image(1:nc, 1:nr, x, xlim = 0.5+ c(0, nc), ylim = 0.5+ c(0, nr),
-          axes = FALSE, xlab = "", ylab = "", ...)
+	  axes = FALSE, xlab = "", ylab = "", ...)
     axis(1, 1:nc, labels= labCol, las= 2, line= -0.5, tick= 0, cex.axis= cexCol)
     if(!is.null(xlab)) mtext(xlab, side = 1, line = margins[1] - 1.25)
     axis(4, iy, labels= labRow, las= 2, line= -0.5, tick= 0, cex.axis= cexRow)
@@ -609,10 +622,15 @@ function (x, Rowv=NULL, Colv=if(symm)"Rowv" else NULL,
 
     ## the two dendrograms :
     par(mar = c(margins[1], 0, 0, 0))
-    plot(ddr, horiz = TRUE, axes = FALSE, yaxs = "i", leaflab = "none")
+    if(doRdend)
+	plot(ddr, horiz = TRUE, axes = FALSE, yaxs = "i", leaflab = "none")
+    else frame()
 
     par(mar = c(0, 0, if(!is.null(main)) 1 else 0, margins[2]))
-    plot(ddc,		    axes = FALSE, xaxs = "i", leaflab = "none")
+    if(doCdend)
+	plot(ddc,               axes = FALSE, xaxs = "i", leaflab = "none")
+    else if(!is.null(main)) frame()
+
     if(!is.null(main)) title(main, cex.main = 1.5*op[["cex.main"]])
 
     invisible(list(rowInd = rowInd, colInd = colInd))

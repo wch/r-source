@@ -2756,8 +2756,12 @@ SEXP do_writechar(SEXP call, SEXP op, SEXP args, SEXP env)
 
     len = 0;
     for(i = 0; i < n; i++) {
+	/* This is not currently needed, just future-proofing in case
+	   the logic gets changed */
 	tlen = strlen(CHAR(STRING_ELT(object, i)));
 	if (tlen > len) len = tlen;
+	tlen = INTEGER(nchars)[i];
+	if (tlen > len) len = tlen;	
     }
     buf = (char *) R_alloc(len + slen, sizeof(char));
 
@@ -2769,6 +2773,9 @@ SEXP do_writechar(SEXP call, SEXP op, SEXP args, SEXP env)
 	for(i = 0; i < n; i++) {
 	    len = INTEGER(nchars)[i];
 	    s = CHAR(STRING_ELT(object, i));
+	    /* As from 1.8.1, zero-pad if too many chars are requested. */
+	    if(len > strlen(s))
+		warning("writeChar: more characters requested than are in the string - will zero-pad");
 	    memset(buf, '\0', len + slen);
 	    strncpy(buf, s, len);
 	    if (usesep) {

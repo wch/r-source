@@ -2761,6 +2761,15 @@ stopifnot(identical(xx[1:3], c(8.25, 15.25, 26.125)))
 ## 1.8.0 gave 6.75 12.75 22.375
 
 
+## PR#5090 user error with writeChar could segfault
+tf <- tempfile()
+zz <- file(tf, "wb")
+writeChar("", zz, nchars=10000000)
+close(zz)
+unlink(tf)
+## segfaults in 1.8.0
+
+
 ## PR#4955 now allow embedded newlines in quoted fields in read.table
 temp <- tempfile()
 data <- data.frame(a=c("c", "e\nnewline"))
@@ -2770,4 +2779,3 @@ unlink(temp)
 # attributes get a different order here
 stopifnot(identical(data$a, data2$a))
 ## not allowed prior to 1.9.0
-
