@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.5-9, 2002-06-06
+Version 1.5-9, 2002-06-11
 ISBN 3-901167-51-X
 Kurt Hornik
 
@@ -1496,6 +1496,11 @@ works, was published in the Journal of Statistical Software
 *gss*
      A comprehensive package for structural multivariate function estimation
      using smoothing splines.
+
+*gtkDevice*
+     GTK graphics device driver that may be used independently of the
+     R-GNOME interface and can be used to create R devices as embedded
+     components in a GUI using a Gtk drawing area widget, e.g., using RGtk.
 
 *hdf5*
      Interface to the NCSA HDF5 library.
