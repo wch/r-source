@@ -527,12 +527,14 @@ seq.POSIXt <-
             res <- as.POSIXct(r1)
         } else if(valid == 8) { # DSTdays
             if(!missing(to)) {
-                length.out <- 1 + floor((unclass(as.POSIXct(to)) -
+                ## We might have a short day, so need to over-estimate.
+                length.out <- 2 + floor((unclass(as.POSIXct(to)) -
                                          unclass(as.POSIXct(from)))/86400)
             }
             r1$mday <- seq(r1$mday, by = by, length = length.out)
             r1$isdst <- -1
             res <- as.POSIXct(r1)
+            ## now correct if necessary.
             if(!missing(to)) res <- res[res <= as.POSIXct(to)]
         }
         return(res)

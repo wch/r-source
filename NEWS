@@ -795,6 +795,9 @@ BUG FIXES
 
     o   The X11 module can now be built against XFree86 4.4.0 headers (still
 	with some warnings).
+
+    o   seq.POSIXt(from, to, by="DSTdays") was shorter than expected
+	for rare times in the UK time zone.  (PR#4558)
  
 
 

@@ -2968,3 +2968,9 @@ with(roller, points( depression~weight, subset=8:10, col=2:4))
 plot(depression ~ weight, data=roller, type="n")
 points(depression~weight, subset=8:10, col=2:4, data=roller)
 ## first two gave error in 1.8.1
+
+
+## PR#4558 part 2
+x <- seq(as.POSIXct("2004-03-25"),as.POSIXct("2004-03-31"),by="DSTdays")
+stopifnot(length(x) == 7)
+## was length 6 in the UK time zone.
