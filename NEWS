@@ -413,6 +413,8 @@ BUG FIXES
     o	In prop.test(), the conf.int. now contains the estimate,
 	even when that is 0 or 1 (PR#714).
 
+    o	R CMD Rd2dvi now again works with file names containing "_" or "$".
+
 
 	**************************************************
 	*						 *
