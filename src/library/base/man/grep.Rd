@@ -8,7 +8,7 @@
   \code{grep} searches for matches to \code{pattern} (its first
   argument) within the character vector \code{x} (second
   argument).  \code{regexpr} does too, but returns more detail in a
-  different format.  \code{frep} matches fixed strings.
+  different format.
 
   \code{sub} and \code{gsub} perform replacement of matches determined
   by regular expression matching.
@@ -68,9 +68,6 @@ regexpr(pattern, text,  extended = TRUE, perl = FALSE)
   giving the starting position of the first match, or \eqn{-1} if there
   is none, with attribute \code{"match.length"} giving the length of the
   matched text (or \eqn{-1} for no match).
-
-  For \code{fgrep} a vector giving either the indices of the elements of
-  \code{x} that yielded a match.
 }
 \note{
   \code{perl=TRUE} will only be available if \R was compiled against 
