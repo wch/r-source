@@ -334,7 +334,7 @@ NEW FEATURES
     o   The internal download.file() etc now allow URLs of the form
 	ftp://user@foo.bar/ and ftp://user:pass@foo.bar/
 
-
+    o    .Alias has been removed from all R sources and deprecated.
 
 BUG FIXES
 
