@@ -26,7 +26,9 @@
 #else
 #include <math.h>
 #ifndef HAVE_FINITE
+#ifndef finite /* Do not declare if macro! */
 int finite(double);
+#endif
 #endif
 #endif
 

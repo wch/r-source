@@ -332,7 +332,6 @@ if ${use_readline}; then
   AC_CHECK_LIB(readline, rl_callback_read_char)
 fi
 
-LIBS="${FLIBS} ${LIBS}"
 
 ### Library functions.
 
@@ -385,7 +384,7 @@ SHLIBEXT=so
 
 #  We create a fake Imakefile and then run xmkmf so that we can
 #  determine PICFLAGS and SHLIBLDFLAGS.  The only platform I know
-#  of which uses DLLFLAGS is hpux.
+#  of which uses DLLFLAGS is linux-elf which requires -rdynamic.
 #
 #  DLLFLAGS     - flags for loading the main
 #  CPICFLAGS    - flags for compiling C library code
@@ -422,15 +421,26 @@ fi
 CPICFLAGS=${CPICFLAGS-${cpicflags}}
 FPICFLAGS=${FPICFLAGS-${CPICFLAGS}}
 SHLIBLDFLAGS=${SHLIBLDFLAGS-${shlibldflags}}
+LIBS="${FLIBS} ${LIBS}"
 
 ## Individual platform overrides.
 
 case "${host}" in
   alpha*osf*)
-    AC_DEFINE(HAVE_NO_SYMBOL_UNDERSCORE)
     CFLAGS="-ieee_with_inexact ${CFLAGS}"
+    AC_DEFINE(HAVE_NO_SYMBOL_UNDERSCORE)
     CPICFLAGS=
-    SHLIBLDFLAGS="-shared"
+    SHLIBLDFLAGS=-shared
+    ;;
+  *linuxaout)
+    sed '/HAVE_ELF_H/d' confdefs.h > tmp.h ; mv tmp.h confdefs.h
+    LDCMD=gcc
+    LIBS="-lf2c ${LIBS}"
+    ;;
+  *linux)
+    LDCMD=gcc
+    LIBS="-lf2c ${LIBS}"
+    DLLFLAGS=-export-dynamic
     ;;
   *sgi*)
     SHLIBLDFLAGS="-shared"
