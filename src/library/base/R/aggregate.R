@@ -37,6 +37,36 @@ aggregate.data.frame <- function(x, by, FUN, ...) {
     y
 }
 
-aggregate.ts <- function(x, nfrequency = 1, FUN = sum, ndeltat = 1) {
-    .NotYetImplemented()
+aggregate.ts <- function(x, nfrequency = 1, FUN = sum, ndeltat = 1,
+                         ts.eps = .Options$ts.eps) {
+    x <- as.ts(x)
+    ofrequency <- tsp(x)[3]
+    ## Set up the new frequency, and make sure it is an integer.
+    if (missing(nfrequency))
+        nfrequency <- 1 / ndeltat
+    if ((nfrequency > 1) &&
+        (abs(nfrequency - round(nfrequency)) < ts.eps))
+        nfrequency <- round(nfrequency)
+    
+    if (nfrequency == ofrequency)
+        return(x)
+    if ((ofrequency %% nfrequency) != 0)
+        stop(paste("cannot change frequency from",
+                   ofrequency, "to", nfrequency))
+    ## The desired result is obtained by applying FUN to blocks of
+    ## length ofrequency/nfrequency, for each of the variables in x.
+    ## We first get the new start and end right, and then break x into
+    ## such blocks by reshaping it into an array and setting dim.
+    len <- ofrequency %/% nfrequency
+    mat <- is.matrix(x)
+    nstart <- ceiling(tsp(x)[1] * nfrequency) / nfrequency
+    x <- as.matrix(window(x, start = nstart))
+    nend <- floor(nrow(x) / len) * len
+    x <- apply(array(c(x[1 : nend, ]),
+                     dim = c(len, nend / len, ncol(x))),
+               MARGIN = c(2, 3),
+               FUN = FUN)
+    if (!mat)
+        x <- as.vector(x)
+    ts(x, start = nstart, frequency = nfrequency)
 }
