@@ -66,11 +66,11 @@ of coherency and phase of the cross-spectra.
   \item{method}{The method used to calculate the spectrum.}
 }
 \details{
-    The spectrum here is defined with scaling 1/frequency(x),
-    following S-PLUS. This makes the spectral density a density over the
-    range \code{(-frequency(x)/2, +frequency(x)/2]}, whereas a more
-    common scaling is 2*\pi and range (-0.5, 0.5]
-    (e.g. Bloomfield) or 1 and range (-\pi, \pi].
+    The spectrum here is defined with scaling 1/frequency(x), following
+    S-PLUS. This makes the spectral density a density over the range
+    \code{(-frequency(x)/2, +frequency(x)/2]}, whereas a more common
+    scaling is \eqn{2*\pi} and range \eqn{(-0.5, 0.5]} (e.g.,
+    Bloomfield) or 1 and range \eqn{(-\pi, \pi]}.
 
     If available, a confidence interval will be plotted by
     \code{plot.spec}: this is asymmetric, and the width of the centre

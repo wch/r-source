@@ -18,14 +18,14 @@ data(sunspot)
     Monthly and yearly number of sunspots. 
 }
 \seealso{
-    \code{sunspot.month} is a longer version of \cite{\link{sunspots}} in
-    base \R, that runs until 1988.
+    \code{sunspot.month} is a longer version of \code{\link{sunspots}}
+    in base \R, that runs until 1988.
 }
 \source{
     Monthly data: SUNSPOT INDEX DATA CENTER,
     WORLD DATA CENTER-C1 FOR SUNSPOT INDEX
     ROYAL OBSERVATORY OF BELGIUM, Av. Circulaire, 3 - B-1180 BRUSSELS
-    \url{http://www.oma.be/KSB-ORB/SIDC/sidc_txt.html}
+    \url{http://www.oma.be/KSB-ORB/SIDC/sidc\_txt.html}
 
     Yearly data: H. Tong (1996):
     \emph{Non-Linear Time Series}. Clarendon Press, Oxford, p. 471. 
