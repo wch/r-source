@@ -381,6 +381,9 @@ C-LEVEL FACILITIES
     o	Rinternals.h no longer includes fcntl.h, as this is not an
 	ISO C header and cannot be guaranteed to exist.
 
+    o	Fortran subroutines are more correctly declared as `extern void'
+	in R_exts/Applic.h and R_exts/Linpack.h.
+
 
 BUG FIXES
 
