@@ -1501,17 +1501,17 @@ OSErr DoSaveAs(const FSSpec *suggestedTarget, WindowPtr window)
 
 OSErr DoClose(ClosingOption closing, SavingOption saving, WindowPtr window)
 {
-    Str255	s1, s2;
-    SInt16	alertResult,win_num,i;
-    OSErr	err;
-    Boolean	haveCancel;
+    Str255		s1, s2;
+    SInt16		alertResult,win_num,i;
+    OSErr		err;
+    Boolean		haveCancel;
     Str255      Cur_Title,curString;
     MenuHandle  windowsMenu;
     Boolean 	EqString = FALSE;
-    Cursor 	arrow;
-    static ModalFilterUPP sFilterProc = nil;
-     
-     
+    Cursor 		arrow;
+    static		ModalFilterUPP sFilterProc = nil;
+    char 		cmd[40]; 
+    SInt16 		WinIndex; 
 
 
 
@@ -1609,7 +1609,10 @@ furtherstep:
     /* if it is a graphic window, maintain the menus and title first.
      */
     if (isGraphicWindow(window)){
-		Mac_Dev_Kill(window); /* Mac_Dev_Kill provides menu deletion */
+        WinIndex = isGraphicWindow(window);
+	    sprintf(cmd,"dev.off(%d)",1+deviceNumber((DevDesc *)gGReference[WinIndex].gedevdesc));
+   		consolecmd(cmd);
+		//Mac_Dev_Kill(window); /* Mac_Dev_Kill provides menu deletion */
 		return noErr;
 	}
     else {
@@ -1625,6 +1628,7 @@ furtherstep:
     }
     return err;
 }
+
 
 SavingOption DoWeSaveIt(WindowPtr window)
 {
