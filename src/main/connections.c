@@ -2115,13 +2115,14 @@ SEXP do_pushback(SEXP call, SEXP op, SEXP args, SEXP env)
 	    q = con->PushBack = (char **) malloc(n*sizeof(char *));
 	}
 	if(!q) error("could not allocate space for pushBack");
+	q += nexists;
 	for(i = 0; i < n; i++) {
 	    p = CHAR(STRING_ELT(stext, n - i - 1));
-	    q += nexists + i;
 	    *q = (char *) malloc(strlen(p) + 1 + newLine);
 	    if(!(*q)) error("could not allocate space for pushBack");
 	    strcpy(*q, p);
 	    if(newLine) strcat(*q, "\n");
+	    q++;
 	}
 	con->posPushBack = 0;
 	con->nPushBack += n;
