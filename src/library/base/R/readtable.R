@@ -170,14 +170,15 @@ function(file, header = FALSE, sep = "", quote = "\"'", dec = ".",
     } else if (length(as.is) != cols)
 	stop(paste("as.is has the wrong length",
 		   length(as.is),"!= cols =", cols))
-    for (i in 1:cols) {
-#        if(known[i] || as.is[i]) next
-        if(known[i] || !keep[i]) next
+
+    do <- keep & !known # & !as.is
+    if(rlabp) do[1] <- FALSE # don't convert "row.names"
+    for (i in (1:cols)[do]) {
         data[[i]] <-
             if (is.na(colClasses[i]))
                 type.convert(data[[i]], as.is = as.is[i], dec = dec,
                              na.strings = character(0))
-        ## as na.strings have already be converted to <NA>
+        ## as na.strings have already been converted to <NA>
             else if (colClasses[i] == "factor") as.factor(data[[i]])
             else if (colClasses[i] == "Date") as.Date(data[[i]])
             else if (colClasses[i] == "POSIXct") as.POSIXct(data[[i]])

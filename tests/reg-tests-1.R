@@ -608,7 +608,7 @@ X <- X[, colSums(X) <= 3]
 X <- rbind(X, 3:3 - colSums(X))
 for(p in list(c(1,2,5), 1:3, 3:1, 2:0, 0:2, c(1,2,1), c(0,0,1))) {
   px <- apply(X, 2, function(x) dmultinom(x, prob = p))
-  stopifnot(identical(TRUE, all.equal(sum(px), 1)))
+  stopifnot(is.all.equal(sum(px), 1))
 }
 ## end of moved from Multinom.Rd
 
@@ -3374,3 +3374,12 @@ plot(1:10)
 loc <- list(5, 6)
 try(text(loc, labels = "a"))
 ## segfaulted in 2.0.1
+
+## automatic row.names can be number-like, MM, 2004-11-26
+d0 <- data.frame(x=1:3, y=pi*2:0)
+row.names(d0)[3] <- c("01.00")
+write.table(d0, (tf <- tempfile()))
+d <- read.table(tf)
+## gave error ("duplicate row.names") in 2.0.1
+stopifnot(all.equal(d,d0))
+unlink(tf)

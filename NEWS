@@ -256,6 +256,8 @@ BUG FIXES
     o	R CMD INSTALL (Unix) was sometimes leaving a temporary dir
 	behind.  (PR#7230)
 
+    o	read.table() could fail when the row.names were looking like numbers.
+
 
 
 		CHANGES IN R VERSION 2.0.1
