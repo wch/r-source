@@ -106,7 +106,7 @@ loadNamespace <- function (package, lib.loc = NULL,
                     stop(paste(hookname, "failed"))
             }
         }
-        fQuote <- function(s) paste("`", s, "'", sep = "")
+        sQuote <- function(s) paste("'", s, "'", sep = "")
         makeNamespace <- function(name, version = NULL, lib = NULL) {
             impenv <- new.env(parent = .BaseNamespaceEnv, hash = TRUE)
             env <- new.env(parent = impenv, hash = TRUE)
@@ -141,10 +141,10 @@ loadNamespace <- function (package, lib.loc = NULL,
         # find package and check it has a name space
         pkgpath <- .find.package(package, lib.loc, quiet = TRUE)
         if (length(pkgpath) == 0)
-            stop(paste("There is no package called", fQuote(package)))
+            stop(paste("There is no package called", sQuote(package)))
         package.lib <- dirname(pkgpath)
         if (! packageHasNamespace(package, package.lib))
-            stop(paste("package", fQuote(package),
+            stop(paste("package", sQuote(package),
                        "does not have a name space"))
 
         # create namespace; arrange to unregister on error
@@ -171,7 +171,7 @@ loadNamespace <- function (package, lib.loc = NULL,
         codeFile <- file.path(package.lib, package, "R", package)
         if (file.exists(codeFile))
             sys.source(codeFile, env, keep.source = keep.source)
-        else warning(paste("Package ", fQuote(package), "contains no R code"))
+        else warning(paste("Package ", sQuote(package), "contains no R code"))
 
         # save the package name in the environment
         assign(".packageName", package, envir = env)
@@ -408,12 +408,12 @@ packageHasNamespace <- function(package, package.lib) {
 parseNamespaceFile <- function(package, package.lib, mustExist = TRUE) {
     namespaceFilePath <- function(package, package.lib)
         file.path(package.lib, package, "NAMESPACE")
-    fQuote <- function(s) paste("`", s, "'", sep = "")
+    sQuote <- function(s) paste("'", s, "'", sep = "")
     nsFile <- namespaceFilePath(package, package.lib)
     if (file.exists(nsFile))
         directives <- parse(nsFile)
     else if (mustExist)
-        stop(paste("package", fQuote(package), "has no NAMESPACE file"))
+        stop(paste("package", sQuote(package), "has no NAMESPACE file"))
     else directives <- NULL
     exports <- character(0)
     exportPatterns <- character(0)
