@@ -11,7 +11,7 @@ R CMD BATCH [options] infile [outfile]
   \item{options}{a list of \R command line options, e.g., for setting the
     amount of memory available and controlling the load/save process.
     If \code{infile} starts with a \samp{-}, use \samp{--} as the final
-    option.  The default options are \samp{--restore --save --no-readline}.
+    option.  The default options are \samp{--restore --save --no-readline}.}
   \item{outfile}{the name of a file to which to write output.  If not
     given, the name used is that of \code{infile}, with a possible
     \file{.R} extension stripped, and \file{.Rout} appended.}
