@@ -2106,6 +2106,10 @@ SEXP do_sumconnection(SEXP call, SEXP op, SEXP args, SEXP env)
 
 /* ------------------- internet access functions  --------------------- */
 
+#if defined(USE_WININET_ASYNC) && !defined(USE_WININET)
+#define USE_WININET 2
+#endif
+
 void *R_HTTPOpen(const char *url);
 int   R_HTTPRead(void *ctx, void *dest, int len);
 void  R_HTTPClose(void *ctx);
@@ -2523,8 +2527,6 @@ void R_FTPClose(void *ctx)
 
 
 #ifdef USE_WININET
-/* #define USE_WININET_ASYNC 1 */
-
 #define INTERNET 2
 
 #include <windows.h>
@@ -2629,20 +2631,20 @@ void *R_HTTPOpen(const char *url)
 		  HTTP_QUERY_STATUS_CODE | HTTP_QUERY_FLAG_NUMBER,
 		  &status, &d1, &d2);
     if(status != 200) {
+	HttpQueryInfo(wictxt->session,
+		      HTTP_QUERY_STATUS_TEXT, &buf, &d3, &d2);
 	InternetCloseHandle(wictxt->session);
 	InternetCloseHandle(wictxt->hand);
 	free(wictxt);
-	HttpQueryInfo(wictxt->session,
-		      HTTP_QUERY_STATUS_TEXT, &buf, &d3, &d2);
-	error("cannot open: HTTP status code was %d %s\n", status, buf);
+	error("cannot open: HTTP status was `%d %s'\n", status, buf);
     }
 
     if(!IDquiet) {
 	HttpQueryInfo(wictxt->session,
-		      HTTP_QUERY_CONTENT_TYPE, &buf, &d3, &d2);
-	HttpQueryInfo(wictxt->session,
 		      HTTP_QUERY_CONTENT_LENGTH | HTTP_QUERY_FLAG_NUMBER,
 		      &status, &d1, &d2);
+	HttpQueryInfo(wictxt->session,
+		      HTTP_QUERY_CONTENT_TYPE, &buf, &d3, &d2);
 	Rprintf("Content type `%s' length %d bytes\n", buf, status);
     }
     
