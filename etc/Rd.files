@@ -1,0 +1,25 @@
+#!/bin/sh
+##-- Not used anymore if we have  .Rd  file names in  MANdir 
+##
+#-- must run from current directory (if using default MANdir ..)
+cd `dirname $0`
+#
+if [ "$1" -a  x$1 != xbase ]
+then
+	MANdir=$1
+else
+	MANdir=../src/library/base/man
+fi
+if [ ! -d $MANdir ]
+then
+	echo "'$MANdir' is not a directory\!"
+	exit 1
+fi
+(if [ "$2" ]
+then
+	#-- include the PATHname
+	ls -A $MANdir/*
+else
+	ls -A $MANdir
+fi
+) | sed '/CVS/d;/~$/d;/\.bak$/d;/\.orig$/d;/^$/d'

@@ -1,0 +1,34 @@
+#!/bin/sh
+
+RHOME=`pwd`
+
+# Create the basic include files needed for compilation
+
+cp $RHOME/src/windows/Platform.h $RHOME/src/include
+cp $RHOME/src/unix/PostScript.c $RHOME/src/windows/PostScript.c
+cp $RHOME/src/unix/devPS.c $RHOME/src/windows/devPS.c
+
+
+# This code assembles the table of statically loaded C and Fortran
+# code which is to be accessed via .C and .Fortran calls.
+
+cd $RHOME/src
+
+#we take only the C source for windows
+
+ln appl.c/*.c appl
+
+sh GETSYMBOLS
+
+# Create the library of interpreted functions
+
+cd $RHOME/src/library/base/funs
+cat [a-z]* > $RHOME/library/base
+
+cd $RHOME/src/library/windows/funs
+cat [a-z]* > $RHOME/library/system
+
+cd $RHOME/etc
+make install-html
+
+cp $RHOME/src/library/profile/Rprofile.win $RHOME/library/Rprofile

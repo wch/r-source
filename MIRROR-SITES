@@ -1,0 +1,24 @@
+
+			R SOURCE CODE MIRROR SITES
+
+
+The primary R distribution site
+
+	ftp://stat.auckland.ac.nz/pub/R/
+
+is mirrored DAILY at the following sites.
+
+
+EUROPE:
+	ftp://ftp.stat.math.ethz.ch/R/
+	ftp://statlab.uni-heidelberg.de/pub/mirrors/auckland/R/
+
+JAPAN:
+	ftp://ftp.u-aizu.ac.jp/pub/lang/R/
+
+NORTH AMERICA:
+	Statlib mirrors R:  http://lib.stat.cmu.edu/R/
+
+In the interests of preserving international bandwidth (and of
+keeping our internet bills under control) please use a site near
+you if possible.

@@ -1,0 +1,179 @@
+\name{par}
+\title{Set or Query Graphical Parameters}
+\usage{
+par(\dots)
+}
+\alias{par}
+\description{
+ % \code{par} is an abomination before man and god.
+\code{par} can be used to set or query graphical parameters.
+Parameters can be set by specifying them as arguments to \code{par"}
+in \code{tag=value} form, or by passing them as a list of tagged values.
+In either case the previous values are returned in an invisible tagged list.
+Such a list can be passed as an arument to \code{par} to
+restore the parameter values.
+
+Parameters are queried by giving vectors of character strings to
+\code{par}.  In this case, the values are returned in a tagged list.
+}
+\arguments{
+\item{adj}{The value of \code{adj} determines the way in which text strings are justified.
+A value of \code{0} produces right left-justified text, \code{0.5}
+centered text and \code{1} right-justified text.}
+\item{ann}{If set to \code{FALSE}, high-level plotting functions do
+not annotate the plots they produce with axis and overall
+titles.
+The default is to do annotation.}
+\item{bg}{The color to be used for the background of plots.
+A description of how colors are specified is given below.}
+\item{bty}{A character string which determined the type of box which is drawn
+about plots.  If \code{bty} is one of are \code{"o"}, \code{"l"}, \code{"7"} or
+\code{"c"} the resulting box resembles the corresponding upper case letter.
+A value of \code{"n"} suppresses the box.}
+\item{cex}{A numerical value giving the amount by which plotting text
+and symbols should be scaled relative to the default.}
+\item{cex.axis}{The magnification to be used for axis anotation relative to the current.}
+\item{cex.lab}{The magnification to be used for x and y labels relative to the current.}
+\item{cex.main}{The magnification to be used for main titles relative to the current.}
+\item{cex.sub}{The magnification to be used for sub-titles relative to the current.}
+\item{col}{A specification for the default plotting color.
+A description of how colors are specified is given below.}
+\item{col.axis}{The color to be used for axis annotation.}
+\item{col.lab}{The color to be used for x and y labels.}
+\item{col.main}{The color to be used for plot main titles.}
+\item{col.sub}{The color to be used for plot sub-titles.}
+\item{crt}{A numerical value specifying (in degrees) how strings should be rotated.
+It is unwise to expect values other than multiples of 90 to work.}
+\item{csi}{(\emph{Unimplemented}) The height of characters in inches.}
+\item{err}{(\emph{Unimplemented}) The degree of error reporting desired.}
+\item{fg}{The color to be used for the foreground of plots.
+This is the default color is used for things like axes and boxes around plots.
+A description of how colors are specified is given below.}
+\item{fig}{A numerical vector of the form \code{c(x1,x2,y1,y2)} which gives
+the (NDC) coordinates of the figure region in the display region
+of the device.}
+\item{fin}{A numerical vector of the form \code{c(x,y)} which gives
+the size of the figure region in inches.}
+\item{font}{An integer which specifies which font to use for text.
+If possible, device drivers arrange so that 1 corresponds to
+plain text, 2 to bold face, 3 to italic and 4 to bold italic.}
+\item{lab}{A numerical vector of the form \code{c(x,y,len)} which
+modifies the way that axes are annotated.
+The values of \code{x} and \code{y} give the (approximate)
+number of tickmarks on the x and y axes and
+\code{len} species the label size.
+\emph{Currently}, \code{len} \emph{is unimplemented}.}
+\item{las}{(\emph{Unimplemented})
+the style of axis labels.
+0=always parallel to the axis,
+1=always horizontal,
+2=always perpendicular to the axis.}
+\item{lty}{The line type.
+Line types can either be specified as an integer
+(1=solid, 2=dashed, 3=dotted 4=dotdashed) or as one of the character strings
+\code{"solid"}, \code{"dashed"}, \code{"dotted"} or \code{"dotdashed"}.
+Alternatively, a string of up to 8 characters
+may be given, giving the length (in points) of line segments which are
+alternatively drawn and skipped.
+For example, \code{"44"} is dashed and \code{"13"} is dotted.}
+\item{mai}{A numerical vector of the form \code{c(xb,xt,yl,yr)}
+which gives the margin size specified in inches.}
+\item{mar}{A numerical vector of the form \code{c(xb,xt,yl,yr)}
+which gives the
+lines of margin to be specified on the four sides of the plot.
+The default is \code{c(5,4,4,2)+0.1}.}
+\item{mex}{\code{mex} is a character size expansion factor
+which is used to describe coordinates in the margins of plots.}
+\item{mfcol}{This is a vector of the form \code{c(r,c)}.
+Subsequent figures will be drawn in an \code{r}-by-\code{c}
+array on the device by \emph{columns}.}
+\item{mfg}{A numerical vector of the form \code{c(i,j,r,c)} where
+\code{i} and \code{j} indicate which figure in an \code{r}-by-\code{c}
+array of figures is currently being drawn.}
+\item{mfrow}{This is a vector of the form \code{c(nr,nc)}.
+Subsequent figures will be drawn in an \code{r}-by-\code{c}
+array on the device by \emph{rows}.}
+\item{mgp}{The margin line for the axis title, axis labels and axis line.
+The default is \code{c(3,1,0)}.}
+\item{mkh}{The height in inches of symbols to be drawn when
+the value of \code{pch} is an integer.}
+\item{oma}{A vector of the form \code{c(xb,xt,yl,yr)} giving
+the size of the outer margins in lines of text.}
+\item{omd}{A vector of the form \code{c(x1,x2,y1,y2)} giving the
+NDC coordinates of the region where (multiple) figures
+will appear on the device.}
+\item{omi}{A vector of the form \code{c(xb,xt,yl,yr)} giving
+the size of the outer margins in inches.}
+\item{pch}{Either an integer specifying a symbol or a single character
+to be used as the default in plotting.}
+\item{pin}{The width and height of the current plot in inches.}
+\item{plt}{A vector of the form \code{c(x1,x2,y1,y2)} giving the
+the coordinates of the plot region as fractions of the
+current figure region.}
+\item{pty}{A character specifying the type of plot region to be used;
+\code{"s"} generates a square plotting region and
+\code{"m"} generates the maximal plotting region.}
+\item{smo}{(\emph{Unimplemented}) a value which indicates
+how smooth circles and circular arc should be.}
+\item{srt}{The string rotation in degrees.
+Causes \code{srt} to be set to the same value.}
+\item{tck}{The length of tick marks as a fraction of the smaller of
+the width or height of the plotting region.
+If \code{tck=1}, grid lines are drawn.
+The default value is \code{-0.2}.}
+\item{tmag}{A number specifying the enlargement of text of the main title
+relative to the other annotating text of the plot.}
+\item{usr}{A vector of the form \code{c(x1,x2,y1,y2)} giving the extremes
+of the user coordinates of the plotting region.}
+\item{xaxp}{A vector of the form \code{c(x1,x2,n)} giving
+the coordinates of the extreme tick marks and the number
+of intervals between tick-marks.}
+\item{xaxs}{(\emph{Unimplemented}) The style of axis interval calculation
+to be used for the x-axis.}
+\item{xaxt}{A character which specifies the axis type.
+Specifying \code{"n"} causes an axis to be set up, but not plotted.}
+\item{xlog}{A logical value. If \code{TRUE} a logarithmic scale is used.
+The default is to use a linear scale.}
+\item{xpd}{A logical value.
+If \code{FALSE}, all plotting is clipped to the plot region.}
+\item{yaxp}{A vector of the form \code{c(y1,y2,n)} giving
+the coordinates of the extreme tick marks and the number
+of intervals between tick-marks.}
+\item{yaxs}{(\emph{Unimplemented}) The style of axis interval calculation
+to be used for the y-axis.}
+\item{yaxt}{A character which specifies the axis type.
+Specifying \code{"n"} causes an axis to be set up, but not plotted.}
+\item{ylog}{A logical value. If \code{TRUE} a logarithmic scale is used.
+The default is to use a linear scale.}
+}
+ % ---------------------------------------------------------------------
+\section{Color Specification}{Colors can be specified in several different ways.  The simplest way is
+with a character string giving the color name (eg. \code{"red"}).
+A list of the possible colors can be obtained with the function
+\code{\link{colors}}.  Alternatively, colors can be specified directly
+in terms of there RGB components with a string of the form
+\code{"#RRGGBB"} where each of the pairs \code{RR}, \code{GG},
+\code{BB} consist of two hexidecimal digits giving a value in the
+range \code{00} to \code{FF}.  Colors can also be specified
+by giving an index into a small table of colors.  This provides
+compatibility with S.
+
+The functions \code{rgb}, \code{hsv}, \code{gray} and \code{rainbow}
+provide additional ways of generating colors.}
+\section{Line Type Specification}{Line types can either be specified by giving an index
+into a small built in table of line types (1=solid, 2=dashed, 3=dotted)
+or directly as the lengths of on/off stretches of line.
+This is done with a string of up to eight characters which give
+the lengths in consecutive positions in the string.
+For example, the string \code{"33"} specifies three pixels on followed
+by three off and \code{"3313"} specifies three pixels on followed
+by three off followed by one on and finally three off.}
+\seealso{
+\code{\link{colors}}, \code{\link{gray}}, \code{\link{rainbow}}, \code{\link{rgb}}.
+\code{\link{options}} for other setup parameters.
+Graphic devices  \code{\link{x11}}, \code{\link{postscript}}.
+}
+\examples{
+op <- par(mfrow=c(2,2)) #-- 2 x 2 pictures on one plot
+par(pty = 's') #- square plotting region, independent of device size
+}

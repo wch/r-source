@@ -1,0 +1,6 @@
+points <- function(x, ...)
+UseMethod("points")
+
+points.default <- function(x, y=NULL, pch=1, col="black", ...) {
+	plot.xy(xy.coords(x,y), type="p", pch=pch, col=col, ...)
+}

@@ -1,0 +1,13 @@
+#!/bin/sh
+
+helpdir=../../help
+
+for dir in $*
+do
+    files="`ls $dir | sed /CVS/d`"
+    for i in $files
+    do
+	./etc/doc2ms $dir/$i | nroff -ms 2> /dev/null > $helpdir/$i
+	echo $i
+    done
+done

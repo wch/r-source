@@ -1,0 +1,59 @@
+#!/bin/sh
+
+RHOME=`pwd`
+
+# Create the basic include files needed for compilation
+
+cp $RHOME/src/macintosh/Platform.h $RHOME/src/include
+
+
+# This code assembles the table of statically loaded C and Fortran
+# code which is to be accessed via .C and .Fortran calls.
+
+cd $RHOME/src
+
+ROUTINES="applc/ROUTINES"
+
+sed '
+s/F77_SUBROUTINE(\(.*\))/int \1_();/
+s/C_FUNCTION(\(.*\))/int \1();/
+' ${ROUTINES} > /tmp/ForeignDecl.h
+
+if test ! -f include/ForeignDecl.h
+then
+	cp /tmp/ForeignDecl.h include/ForeignDecl.h
+else
+	if diff /tmp/ForeignDecl.h include/ForeignDecl.h
+	then
+	:
+	else
+		cp /tmp/ForeignDecl.h include/ForeignDecl.h
+	fi
+fi
+
+
+sed '
+s/F77_SUBROUTINE(\(.*\))/	"\1_",	\1_,/
+s/C_FUNCTION(\(.*\))/	"\1",	\1,/
+' ${ROUTINES} > /tmp/ForeignTab.h
+
+if test ! -f include/ForeignTab.h
+then
+	cp /tmp/ForeignTab.h include/ForeignTab.h
+else
+	if diff /tmp/ForeignTab.h include/ForeignTab.h
+	then
+	:
+	else
+		cp /tmp/ForeignTab.h include/ForeignTab.h
+	fi
+fi
+rm -f /tmp/ForeignTab.h /tmp/ForeignDecl.h
+
+
+# Create the library of interpreted functions
+
+cd $RHOME/src/library/base/funs
+cat [a-z]* > $RHOME/library/base
+
+cp $RHOME/src/library/profile/Rprofile.mac $RHOME/library/Rprofile

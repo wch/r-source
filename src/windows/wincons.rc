@@ -1,0 +1,181 @@
+ /*  R : A Computer Langage for Statistical Data Analysis
+ *  Copyright (C) 1995  Robert Gentleman and Ross Ihaka
+ *
+ *  This program is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 2 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program; if not, write to the Free Software
+ *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ */
+
+#include <windows.h>
+#include "WINcons.h"
+
+PAbortDlg DIALOG 40,40,120, 40
+STYLE WS_POPUP | WS_CAPTION | WS_VISIBLE
+BEGIN
+        CTEXT "Cancel Printing", -1, 4, 6, 120, 12
+        DEFPUSHBUTTON "Cancel", IDCANCEL, 44, 22, 32, 14, WS_GROUP
+END
+
+AboutBox DIALOG 22, 17, 144, 75
+STYLE DS_MODALFRAME | WS_CAPTION | WS_SYSMENU
+CAPTION "About R"
+BEGIN
+        CTEXT "R - A Language and Environment"  -1, 0, 5, 144,8
+        CTEXT "Copyright 1993, 1994"    -1, 0,14,144,8
+        CTEXT "by Robert Gentleman and Ross Ihaka"      -1,0,34,144,8
+        DEFPUSHBUTTON "OK"      IDOK,53,59,32,14,WS_GROUP
+END
+
+SaveBox DIALOG 22, 17, 144, 80
+STYLE DS_MODALFRAME | WS_CAPTION
+CAPTION "SAVE"
+BEGIN
+        CTEXT "Save Workspace?", -1, 0, 5, 144, 8
+        PUSHBUTTON  "Yes", IDOK, 10, 20, 40, 14, WS_GROUP
+        PUSHBUTTON  "No",  RDD_NO, 10, 60, 40, 14, WS_GROUP
+        PUSHBUTTON "Cancel", IDCANCEL, 70, 20, 40, 14, WS_GROUP
+END
+
+DEVarBox DIALOG  31, 21, 150, 100
+STYLE DS_MODALFRAME | WS_CAPTION
+CAPTION "R DataEntry"
+{
+ CTEXT "Data Type", -1, 0, 5, 150, 8
+ RADIOBUTTON "Numeric", RDD_NUM, 10, 30, 75, 8, WS_TABSTOP | WS_GROUP
+ RADIOBUTTON "Character", RDD_CHAR, 10, 43, 75, 8
+ DEFPUSHBUTTON "OK", IDOK, 94, 20, 40, 14, WS_GROUP
+ PUSHBUTTON "Cancel", IDCANCEL, 94, 39, 40, 14, WS_GROUP
+ CTEXT "Variable Name", -1, 6, 66, 110, 8
+ EDITTEXT RDD_NAME, 4, 79, 110, 14, WS_GROUP
+} 
+
+RMenuInit MENU 
+{
+ POPUP "&About"
+ {
+  MENUITEM "&About", RRR_ABOUT
+ }
+
+ POPUP "&File"
+ {
+  MENUITEM "&Open", RRR_OPEN
+  MENUITEM "&Quit", RRR_QUIT
+ }
+
+ POPUP "&Window"
+ {
+  MENUITEM "&Tile", RRR_TILE
+  MENUITEM "&Cascade", RRR_CASC
+  MENUITEM "Arrange &Icons", RRR_ARRA
+ }
+
+}
+
+RMenuConsole MENU 
+{
+ POPUP "&File"
+ {
+  MENUITEM "&About", RRR_ABOUT
+  MENUITEM "&Open", RRR_OPEN
+  MENUITEM "&Save", RRR_SAVE
+  MENUITEM "&Load", RRR_LOAD
+  MENUITEM "&Print", RRR_PRINT
+  MENUITEM "&Quit", RRR_QUIT
+ }
+
+ POPUP "&Edit"
+ {
+  MENUITEM "Cu&t\tCtrl+X", RRR_CUT
+  MENUITEM "&Copy\tCtrl+C", RRR_COPY
+  MENUITEM "&Paste\tCtrl+V", RRR_PASTE
+  MENUITEM "De&lete", RRR_DEL
+  MENUITEM "Copy/Paste\tAlt+x", RRR_CPASTE
+  MENUITEM "Quit Browser\tCtrl+D", RRR_QBROW
+ }
+
+ POPUP "&Window"
+ {
+  MENUITEM "&Tile", RRR_TILE
+  MENUITEM "&Cascade", RRR_CASC
+  MENUITEM "Arrange &Icons", RRR_ARRA
+ }
+
+}
+        /*
+        POPUP "&Help"
+                BEGIN
+                        MENUITEM "&Help...", RRR_HELP
+                END
+  END
+                          */
+RMenuGraph MENU 
+{
+ POPUP "&Plot"
+ {
+  MENUITEM "&Print", RRR_PRINT
+  MENUITEM "&Copy", RRR_COPY
+ }
+
+ POPUP "&Window"
+ {
+  MENUITEM "&Tile", RRR_TILE
+  MENUITEM "&Cascade", RRR_CASC
+  MENUITEM "Arrange &Icons", RRR_ARRA
+ }
+
+}
+
+RMenuTEd MENU 
+{
+ POPUP "&Edit"
+ {
+  MENUITEM "&Clear", RRR_CLEAR
+  MENUITEM "&Refresh", RRR_REFRESH
+  MENUITEM "&Quit", RRR_QUIT
+ }
+
+ POPUP "&Window"
+ {
+  MENUITEM "&Tile", RRR_TILE
+  MENUITEM "&Cascade", RRR_CASC
+  MENUITEM "Arrange &Icons", RRR_ARRA
+ }
+
+}
+
+RMenuDE MENU 
+{
+ POPUP "&File"
+ {
+  MENUITEM "&Quit", RRR_QUIT
+ }
+
+ POPUP "&Window"
+ {
+  MENUITEM "&Tile", RRR_TILE
+  MENUITEM "&Cascade", RRR_CASC
+  MENUITEM "Arrange &Icons", RRR_ARRA
+ }
+
+}
+
+MdiAccel ACCELERATORS 
+{
+ "^Z", RRR_UNDO, ASCII
+ "^X", RRR_CUT, ASCII
+ "^C", RRR_COPY, ASCII
+ "^V", RRR_PASTE, ASCII
+ "x", RRR_CPASTE, ALT
+ "^D", RRR_QBROW, ASCII
+}
+

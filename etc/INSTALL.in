@@ -1,0 +1,91 @@
+#! /bin/sh
+
+# ${RHOME}/etc/INSTALL for installing add-on packages
+# Usage:
+#	R INSTALL [-help/+help] [-html/+html] pkg [lib]
+
+IHELP=y
+IHTML=
+if [ "$1" = "+help" ]; then shift; IHELP=y; fi
+if [ "$1" = "-help" ]; then shift; IHELP=;  fi
+if [ "$1" = "+html" ]; then shift; IHTML=y; fi
+if [ "$1" = "-html" ]; then shift; IHTML=;  fi
+# And obviously, we could play the same game with objs, libs and data
+
+if [ "$1" ]
+then
+    pkg=$1
+    test -d ${pkg} || ( echo "Package \`${pkg}' does not exist"; exit 1 )
+else
+    echo "usage:  R INSTALL <options> pkg [lib]" && exit 1
+fi
+
+lib=${2:-${RHOME}/library}
+mkdir -p ${lib} || ( echo "Cannot write to \`${lib}'"; exit 1 )
+lib=`cd ${lib}; pwd`
+
+src=@LIBSRC@
+
+cd ${pkg}
+pkg=`basename ${pkg}`
+
+echo "Installing package \`${pkg}' ..."
+
+if test -d ${src}
+then
+    echo "objs"
+    (cd ${src}; make CC="@CC@" CFLAGS="@CFLAGS@ @PICFLAGS@ -I${RHOME}/include" SHLIBLDFLAGS="@SHLIBLDFLAGS@" FC="@FC@" FFLAGS="@FFLAGS@ @FPICFLAGS@")
+    mkdir -p ${lib}/${pkg}/libs
+    cp ${src}/*.so ${lib}/${pkg}/libs
+fi
+
+if test -d R
+then
+    echo "R"
+    mkdir -p ${lib}/${pkg}/R
+    cat R/[a-z]* > ${lib}/${pkg}/R/${pkg}
+elif test -d funs
+then
+    echo "funs"
+    mkdir -p ${lib}/${pkg}/R
+    cat funs/[a-z]* > ${lib}/${pkg}/R/${pkg}
+fi
+
+if test -d data
+then
+    echo "data"
+    mkdir -p ${lib}/${pkg}/data
+    cp data/* ${lib}/${pkg}/data
+fi
+
+if test -d exec
+then
+    echo "exec"
+    mkdir -p ${lib}/${pkg}/exec
+    cp exec/* ${lib}/${pkg}/exec
+    chmod 755 ${lib}/${pkg}/exec/*
+fi
+
+if [ "$IHELP" ]
+then
+    echo "help"
+    ${RHOME}/etc/build-help ../${pkg} ${lib}
+fi
+
+if [ "$IHTML" ]
+then
+    echo "html"
+    ${RHOME}/etc/build-html ../${pkg} ${lib}    
+fi
+
+if [ -f INDEX ]
+then
+    cp INDEX ${lib}/${pkg}
+fi
+if [ -f TITLE ]
+then
+    cp TITLE ${lib}/${pkg}
+fi
+(cd ${lib}; cat */TITLE > LibIndex 2> /dev/null)
+
+echo "DONE"

@@ -1,0 +1,91 @@
+
+			THE BASIC R README
+
+	   (See "RESOURCES" for additional resources)
+
+
+
+1. INTRODUCTION
+
+This directory contains the Unix source code tree for R, which is
+a language which is not entirely unlike the S language developed
+at AT&T Bell Laboratories by Rick Becker, John Chambers and Allan
+Wilks.  Indeed in the (present) absence of an R manual, you can
+(mostly) get along by using the S manual.
+
+R is free software distributed under a GNU-style copyleft.
+
+Currently the software is in a beta test state and we are seeking
+comments and bug reports.  Please send comments and reports to
+
+	R@stat.auckland.ac.nz
+
+In the case of bugs it would be very helpful to have code which
+reliably reproduces the problem.  Some bugs can be very hard to
+fix without this.
+
+
+2. PRESENT STATUS
+
+We have implemented most of the functionality in the first S book
+(the "Blue Book") and many of the applications.  In addition, we
+have implemented a certain amount of functionality from the second
+S book (the "White Book").  In particular we have a functioning
+versions of "lm" and "glm" and their associated "summary" and
+"anova" methods (it would be nice to have "drop1", "add1" and
+"step", but there hasn't been time to complete these yet).
+
+What we have in the way of manual is in the directory in an
+"output independent" form which can be used to create versions
+for HTML, LaTeX, troff etc.
+
+
+3. GOALS
+
+Our aim at the start of this project was to demonstrate that it was
+possible to produce an S-like environment which did not suffer from
+the memory-demands and performance problems which S has.  It is only
+recently that we have started trying to turn R into a "real" system.
+In the short term we hope to create a small portable free system
+which will provide most of the functionality of S and perhaps some
+extensions.
+
+Our present plan of attack is as follows:
+
+1.  Re-implement parts of the system to make things more modular
+    so that data sets can be saved and restored on an individual
+    basis and so that we have a real library facility.
+    (Mostly done).
+
+2.  Move the user interface to an event driven basis.  This will
+    enable users to interact with the system in a much more
+    graphical way.  It also raises the possibility that we can
+    borrow the graphics technology in LispStat.
+    (Design phase).
+
+3.  Add functionality in the form of new functions.
+    (Ongoing).
+
+4.  The present documentation is written using our own format into 
+    files which can be processed by a combination of sed and m4 into
+    a variety of formats (nroff, latex, html).  We should use a real
+    SGML description of our format and develop techniques for more
+    generally translating into other formats.
+
+Longer-term we are hoping to move to a compiled evironment which
+will give substantial performance gains.  A separate compiler
+"skunk works" is engaged in this.
+
+
+4. DIFFERENCES BETWEEN R AND S
+
+1. In R, "factor" and "ordered factor" are primitive vector types.
+   This means in particular that they can be shaped as arrays.
+
+2. In R a list is a Lisp-style list composed of dotted pairs, rather
+   than a vector of generic elements as in S.  This means that list
+   subscripting can be rather inefficient.  However, lists are rarely
+   large and so we have not (yet) bothered to implement a matching
+   "generic vector" type, even though this could be quite useful.
+
+Robert Gentleman + Ross Ihaka

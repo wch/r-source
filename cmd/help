@@ -1,0 +1,19 @@
+#!/bin/sh
+#
+# ${RHOME}/cmd/help
+
+subject=${1}
+shift
+for index in $*
+do
+    if [ -f ${index} ];
+    then
+	file=`grep "^${subject}	" ${index} | cut -f 2`
+	if test -n "${file}"
+	then
+	    echo `dirname ${index}`/${file}
+	    exit 0
+	fi
+    fi
+done    
+echo

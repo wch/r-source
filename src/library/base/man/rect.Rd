@@ -1,0 +1,33 @@
+\name{rect}
+\title{Draw a Rectangle}
+\usage{
+rect(xleft, ybottom, xright, ytop, \dots)
+}
+\alias{rect}
+\arguments{
+\item{xleft}{a vector (or scalar) of left x positions.}
+\item{ybottom}{a vector (or scalar) of bottom y positions.}
+\item{xright}{a vector (or scalar) of right x positions.}
+\item{ytop}{a vector (or scalar) of top y positions.}
+\item{\dots}{graphical parameters passed to set.pars.}
+}
+\description{
+\code{rect} draws a rectangle (or sequence of rectangles) with the
+given coordinates. It is a primitive function used in \code{\link{hist}}.
+The value supplied, i.e., \code{xleft, \dots}, are relative to the current
+plotting region. If the x-axis goes from 100 to 200 then \code{xleft}
+must be larger than 100 and \code{xright} must be less than 200.
+}
+\seealso{
+\code{\link{box}} for the "standard" box around the plot;
+\code{\link{polygon}} and \code{\link{segments}} for flexible line drawing.
+}
+\examples{
+# set up the plot region but don't plot
+plot(c(100, 200), c(300, 400), type="n", main = "A rectangle")
+
+# draw a rectangle with bottom left (150,320)
+# and top right (177,380)
+rect(150,320, 177,380)
+}
+\keyword{aplot}

@@ -1,0 +1,78 @@
+###---- As S  (just 'better' ...)
+
+matpoints <- function(x, y, lty=1:5, pch=NULL, col=1:6, ...)
+	matplot(x=x, y=y, type = 'p', lty=lty, pch=pch, col=col, add=TRUE, ...)
+matlines  <- function(x, y, lty=1:5, pch=NULL, col=1:6, ...)
+	matplot(x=x, y=y, type = 'l', lty=lty, pch=pch, col=col, add=TRUE, ...)
+
+matplot <- function(x, y, type="p",
+		    lty=1:5, pch=NULL, col=1:6,
+		    xlab=NULL, ylab=NULL, xlim=NULL, ylim=NULL,
+		    ..., add= FALSE, verbose = FALSE)
+{
+	## Purpose: Plots columns of  x	  vs. columns of  y.	--> ?matplot
+	## ------------------------------------------------------------------
+	## Author: Martin Maechler, Date: 27 Jun 97
+
+	types <- c("p", "l", "b", "o", "h", "n")
+	paste.ch <- function(chv) paste('"',chv,'"', sep="", collapse=" ")
+	str2vec <- function(string)
+	  if((nch <- nchar(string))>1) substr(rep(string[1], nch), 1:nch, 1:nch)
+	  else string
+	##--- These are from  plot.default ----
+	xlabel <- if (!missing(x)) deparse(substitute(x))  else NULL
+	ylabel <- if (!missing(y)) deparse(substitute(y))  else NULL
+	##
+	if(missing(x)) {
+		if(missing(y)) stop("Must specify at least one of  'x' and 'y'")
+		else x <- 1:NROW(y)
+	} else if(missing(y)) {
+		y <- x;		ylabel <- xlabel
+		x <- 1:NROW(y); xlabel <- ""
+	}
+	##
+	kx <- ncol(x <- as.matrix(x))
+	ky <- ncol(y <- as.matrix(y))
+	n <- nrow(x)
+	if(n != nrow(y)) stop("'x' and 'y' must have same number of rows")
+
+	if(kx > 1 && ky > 1 && kx != ky)
+	  stop("'x' and 'y' must have only 1 or the same number of columns")
+	if(kx == 1) x <- matrix(x, nrow = n, ncol = ky)
+	if(ky == 1) y <- matrix(y, nrow = n, ncol = kx)
+	k <- max(kx,ky)## k == kx == ky
+	type <- str2vec(type)
+	do.points <- any(type=='p') || any(type=='o')
+	if(do.points) {
+		if(is.null(pch)) pch <- c(paste(c(1:9,0)),letters)[1:k]
+		else if(is.character(pch)) pch <- str2vec(pch)
+	}
+	if(verbose)
+	    cat("matplot: doing ", k, " plots with ",
+		paste(" col= (", paste.ch(col), ")", sep=''),
+		if(do.points) paste(" pch= (", paste.ch(pch), ")", sep=''),
+		" ...\n\n")
+	xy <- xy.coords(x, y, xlabel, ylabel)
+	xlab <- if (is.null(xlab)) xy$xlab  else xlab
+	ylab <- if (is.null(ylab)) xy$ylab  else ylab
+	xlim <- if (is.null(xlim)) range(xy$x, na.rm = TRUE)  else xlim
+	ylim <- if (is.null(ylim)) range(xy$y, na.rm = TRUE)  else ylim
+	if(length(type)< k) type<- rep(type,length= k)
+	if(length(lty) < k) lty <- rep(lty, length= k)
+	if(length(pch) < k) pch <- rep(pch, length= k)
+	if(length(col) < k) col <- rep(col, length= k)
+	ii <- 1:k
+	if(!add) {
+		ii <- ii[-1]
+		plot(x[,1],y[,1], type=type[1], xlab=xlab, ylab=ylab,
+		     xlim = xlim, ylim = ylim,
+		     lty=lty[1], pch=pch[1], col=col[1], ...)
+	}
+	for (i in ii) {
+		tp <- type[i]
+		if(tp=='l' || tp=='b'|| tp=='o'|| tp=='h')
+		  lines(x[,i],y[,i], type=tp, lty=lty[i],pch=pch[i],col=col[i])
+		if(do.points && tp=='p')
+		  points(x[,i],y[,i], pch=pch[i], col=col[i])
+	}
+}

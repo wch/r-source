@@ -1,0 +1,22 @@
+contour <- function(x=seq(0,1,len=nrow(z)), y=seq(0,1,len=ncol(z)), z,
+	nlevels=10, levels=pretty(range(z,na.rm=TRUE), nlevels), labcex=0,
+	col=par("fg"), lty=par("lty"), add=FALSE)
+{
+	if(is.list(x)) {
+		x <- x$x
+		y <- x$y
+	}
+	if(any(diff(x) <= 0) || any(diff(y) <= 0))
+		stop("increasing x and y values expected")
+	if(!add) {
+		plot.new()
+		plot.window(range(x), range(y), "")
+	}
+	.Internal(contour(x, y, z, levels, col=col, lty=lty))
+	if(!add) {
+		axis(1)
+		axis(2)
+		box()
+	}
+	invisible()
+}

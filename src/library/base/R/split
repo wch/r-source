@@ -1,0 +1,1 @@
+split <- function(x, f) .Internal(split(x, as.factor(f)))
