@@ -33,6 +33,8 @@ BUG FIXES
 
     o	[<-.data.frame mishandled dfr[1] <- 1 (forgotten drop=FALSE)
 
+    o   sys.on.exit didn't work
+
 
 		CHANGES IN R VERSION 0.65.0
 

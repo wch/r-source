@@ -389,8 +389,8 @@ SEXP do_sys(SEXP call, SEXP op, SEXP args, SEXP rho)
 	UNPROTECT(1);
 	return rval;
     case 7: /* sys.on.exit */
-	if( R_GlobalContext->conexit )
-	    return R_GlobalContext->conexit;
+	if( R_GlobalContext->nextcontext != R_NilValue )
+	    return R_GlobalContext->nextcontext->conexit;
 	else
 	    return R_NilValue;
     case 8: /* sys.parents */

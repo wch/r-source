@@ -48,7 +48,7 @@ while test -n "${1}"; do
     -g|--gnome)
       R_BINARY="R.gnome" ;;
     -d|--debugger)
-      DBG="${2}"; shift 2 ;;
+      DBG="${2}"; shift  ;;
     --no-environ)
       USE_R_ENVIRON=false ;;
     --vanilla)
