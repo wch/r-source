@@ -9,6 +9,9 @@
 enableSearch = false;
 
 // main search entry point
+//
+// 98-05-14 | baier | forward kwonly to the search function
+//------------------------------------------------------------------------------
 function searchInIndex (srch_trm,kwonly)
 {
   // if the applet is not initialized, ignore search results
@@ -16,19 +19,15 @@ function searchInIndex (srch_trm,kwonly)
     return "";
   }
   line =        '<html><head>\n';
-
   line = line + '<title>Search Results</title>\n';
   line = line + '\n';
 
-  line = line + '<body TEXT=\"#000000\" BGCOLOR=\"#FFFFFF\" LINK=\"#0000F0\"'
-  line = line + 'VLINK=\"#660066\" ALINK=\"#FF0000\" BACKGROUND=\"white\" >\n';
+  line = line + '<body bgcolor="white">\n';
 
-  line = line + '<h2 align=center><FONT FACE=\"Courier New,Courier\"';
-  line = line + 'COLOR=\"#999999\">Search Results</FONT></h2>';
-
+  line = line + '<h1>Search Results</h1>\n';
 
   // call the applet code!
-  line = line + document.SearchEngine.search (srch_trm);
+  line = line + document.SearchEngine.search (srch_trm,!kwonly);
 
   line = line + '</body>\n';
 
@@ -62,11 +61,6 @@ VLINK="#660066" ALINK="#FF0000" BACKGROUND="white" >
 <HR WIDTH="100%">
 
 <p>
-This search engine is in alpha stage ... don't expect too
-much. Currently you can only search for functions of the base package,
-but searching all packages should be implemented soon.
-
-<p>
 <h1 align=center>
 <FONT FACE="Courier New,Courier" COLOR="#666666"><b>
 Search</b></font></h1>
@@ -80,7 +74,7 @@ You can search for keywords, function and data names and titles.
 
 <form
      name="f"
-     onSubmit="searchInIndex (document.f.SEARCHTERM.value,document.f.KEYWORDSONLY); return false;"
+     onSubmit="searchInIndex (document.f.SEARCHTERM.value,document.f.KEYWORDSONLY.checked); return false;"
      >
 
 <INPUT TYPE=TEXT NAME="SEARCHTERM" SIZE=20 MAXLENGTH=256 VALUE="">

@@ -5,13 +5,26 @@
   JAVA Source file for the class SearchEngine
   
   COPYRIGHT (C), 1998, Thomas Baier
-  ALL RIGHTS RESERVED.
+
+ *  This program is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 2 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program; if not, write to the Free Software
+ *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.  
   
   $Source: /scratch/CVS-ARCHIVE/R/doc/html/search/SearchEngine.java,v $
   
-  $Revision: 1.1 $
+  $Revision: 1.2 $
 
-  $Date: 1998/05/15 10:38:10 $
+  $Date: 1999/03/04 17:15:18 $
   
   $Author: leisch $
 
@@ -39,6 +52,7 @@ import java.util.*;
   NOTES:    
 
   HISTORY:  98-04-26: created 
+            98-05-15: new member for search mode
 ------------------------------------------------------------------------------*/
 public class SearchEngine extends Applet
 {
@@ -58,11 +72,13 @@ public class SearchEngine extends Applet
   
     HISTORY:   98-04-26: created
                98-05-03: now reads the index file
+	       98-05-15: init new member
   ----------------------------------------------------------------------------*/
   public SearchEngine ()
   {
     iIndexTable = null;
     iSearchTerm = null;
+    iSearchMode = 0;
 
     Tracer.write ("SearchEngine initializing\n");
 
@@ -238,10 +254,17 @@ public class SearchEngine extends Applet
                98-05-08: new format for output
 	       98-05-09: added trace
 	       98-05-10: now a front-end for search()
+	       98-05-15: new parameter for search-mode
   ----------------------------------------------------------------------------*/
-  public String search (String key)
+  public String search (String key,boolean searchTitles)
   {
     iSearchTerm = key;
+
+    if (searchTitles) {
+      iSearchMode = IndexTable.cSearchDescription;
+    } else {
+      iSearchMode = 0;
+    }
 
     return internalSearch ();
   }
@@ -258,6 +281,7 @@ public class SearchEngine extends Applet
     RETURNS:   void
   
     HISTORY:   98-05-10: created
+               98-05-15: forward search-mode
   ----------------------------------------------------------------------------*/
   public String internalSearch ()
   {
@@ -266,7 +290,7 @@ public class SearchEngine extends Applet
     Vector foundItems = null;
 
     if (iSearchTerm != null) {
-      foundItems = iIndexTable.search (iSearchTerm);
+      foundItems = iIndexTable.search (iSearchTerm,iSearchMode);
     } else {
       foundItems = null;
     }
@@ -284,7 +308,7 @@ public class SearchEngine extends Applet
       result =
 	"The search string was <b>\"" +
 	iSearchTerm +
-	"<b>\"" +
+	"</b>\"" +
 	"<hr>" +
 	"<dl>";
 
@@ -335,6 +359,8 @@ public class SearchEngine extends Applet
     HISTORY:   98-04-26: created
                98-05-08: now use an IndexStream
 	       98-05-10: also use prefix and suffix, build URL from first key
+	       98-05-19: add "Alias:" entry to keywords
+	       98-06-01: bugfix: don't null the variables
   ----------------------------------------------------------------------------*/
   private void readIndexFile (String idxFile)
   {
@@ -358,10 +384,12 @@ public class SearchEngine extends Applet
        * "Entry" (case is ignored)
        *
        * must-have entries are "Entry" and "Keywords"
+       *
+       * 98-06-01: bugfix: don't null the variables
        */
-      String entry = null;
-      String keywords = null;
-      String url = null;
+      String entry = "";
+      String keywords = "";
+      String url = "";
       String description = "";
       String prefix = "";
       String suffix = "";
@@ -375,11 +403,11 @@ public class SearchEngine extends Applet
 	  addEntry (entry,keywords,description,url,prefix,suffix);
 
 	  entry = value.getValue ();
-	  keywords = null;
-	  url = null;
+	  keywords = "";
+	  url = "";
 	  description = "";
 	} else if (value.getKey ().equalsIgnoreCase ("keywords")) {
-	  keywords = value.getValue ();
+	  keywords += value.getValue ();
 	} else if (value.getKey ().equalsIgnoreCase ("url")) {
 	  // use prefix and suffix
 	  url = prefix + value.getValue () + suffix;
@@ -391,6 +419,8 @@ public class SearchEngine extends Applet
 	} else if (value.getKey ().equalsIgnoreCase ("suffix")) {
 	  suffix = value.getValue ();
 	  Tracer.write ("using new URL suffix \"" + suffix + "\"\n");
+	} else if (value.getKey ().equalsIgnoreCase ("alias")) {
+	  keywords += value.getValue ();
 	}
 	value = idxStream.popEntry ();
       }
@@ -416,19 +446,20 @@ public class SearchEngine extends Applet
     RETURNS:   void
   
     HISTORY:   98-05-10: created
+               98-06-01: value is "", not null if empty
   ----------------------------------------------------------------------------*/
   private void addEntry (String entry,String keywords,
 			 String description,String url,
 			 String prefix,String suffix)
   {
     // the entry must be set
-    if (entry == null) {
+    if (entry.length () == 0) {
       return;
     }
 
     // the keywords must be set, else ignore it
-    if (keywords != null) {
-      if (url == null) {
+    if (keywords.length () != 0) {
+      if (url.length () == 0) {
 	// if the URL is empty, construct one following the rule:
 	// URL = prefix + first keyword + suffix
 	int endOfFirstKeyword = keywords.indexOf (" ");
@@ -468,6 +499,7 @@ public class SearchEngine extends Applet
   ============================================================================*/
   private IndexTable iIndexTable;
   private String     iSearchTerm;
+  private int        iSearchMode;
 
 
   /*============================================================================
@@ -484,8 +516,17 @@ public class SearchEngine extends Applet
   HISTORY:
   
   $Log: SearchEngine.java,v $
-  Revision 1.1  1998/05/15 10:38:10  leisch
-  New: Search Engine
+  Revision 1.2  1999/03/04 17:15:18  leisch
+  various bugfixes
+
+  Revision 1.1.4.1  1999/03/02 15:19:57  leisch
+  search used only kewords, no titles
+
+  Revision 1.6  1998/05/19 20:23:13  baier
+  added alias support
+
+  Revision 1.5  1998/05/15 22:10:05  baier
+  allow searching in description, fix bug in results list
 
   Revision 1.4  1998/05/10 22:56:53  baier
   internal search function, parameter expansion

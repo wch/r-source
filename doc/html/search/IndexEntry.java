@@ -5,13 +5,26 @@
   JAVA Source file for the class IndexEntry
   
   COPYRIGHT (C), 1998, Thomas Baier
-  ALL RIGHTS RESERVED.
+
+ *  This program is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 2 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program; if not, write to the Free Software
+ *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
   
   $Source: /scratch/CVS-ARCHIVE/R/doc/html/search/IndexEntry.java,v $
   
-  $Revision: 1.1 $
+  $Revision: 1.2 $
 
-  $Date: 1998/05/15 10:38:09 $
+  $Date: 1999/03/04 17:15:18 $
   
   $Author: leisch $
 
@@ -86,15 +99,22 @@ public class IndexEntry extends Object
     RETURNS:   boolean: true if matches
   
     HISTORY:   98-04-26: created
+               98-05-15: new parameter mode, check description, too
   ----------------------------------------------------------------------------*/
-  public boolean matches (String aString)
+  public boolean matches (String aString,int mode)
   {
     // case-insensitive substring!
-    if (iKey.toUpperCase ().indexOf (aString.toUpperCase ()) > -1) {
-      return true;
+    if ((mode & IndexTable.cSearchDescription) == IndexTable.cSearchDescription) {
+      if ((iKey.toUpperCase ().indexOf (aString.toUpperCase ()) > -1)
+	  || (iDescription.toUpperCase ().indexOf (aString.toUpperCase ()) > -1)) {
+	return true;
+      }
     } else {
-      return false;
+      if (iKey.toUpperCase ().indexOf (aString.toUpperCase ()) > -1) {
+	return true;
+      }
     }
+    return false;
   }
 
 
@@ -181,8 +201,14 @@ public class IndexEntry extends Object
   HISTORY:
   
   $Log: IndexEntry.java,v $
-  Revision 1.1  1998/05/15 10:38:09  leisch
-  New: Search Engine
+  Revision 1.2  1999/03/04 17:15:18  leisch
+  various bugfixes
+
+  Revision 1.1.4.1  1999/03/02 15:19:55  leisch
+  search used only kewords, no titles
+
+  Revision 1.4  1998/05/15 22:07:56  baier
+  also allow search in description
 
   Revision 1.3  1998/05/10 02:43:24  baier
   now a simple data-class
