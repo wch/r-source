@@ -27,6 +27,7 @@ imagedir:
 # copy base and recommended packages
 	$(MKDIR) -p $(RPREFIX)/library
 	$(CP) -pr $(LIBFILES) $(RPREFIX)/library
+	$(RM) $(RPREFIX)/library/*/MD5
 # morley.tab is needed for R-intro Appendix A
 	$(CP) -p $(R_HOME)/src/library/datasets/data/morley.tab $(RPREFIX)/library/datasets/data
 	$(RM) $(RPREFIX)/*/Makefile.in
@@ -39,7 +40,7 @@ imagedir:
 	  $(RPREFIX)/doc/manual
 #	html copies of these are in doc/html, and we don't have PDFs on menus
 	$(RM) $(RPREFIX)/doc/manual/R-FAQ.html $(RPREFIX)/doc/manual/R-FAQ.pdf
-	$(RM) $(RPREFIX)/doc/manual/R-admin.html $(RPREFIX)/doc/manual/R-admin.pdf
+	$(RM) $(RPREFIX)/doc/html/R-admin.html $(RPREFIX)/doc/manual/R-admin.pdf
 #
 	$(CP) -p $(foreach i,$(INFO_FILES),$(R_HOME)/$i) $(RPREFIX)
 	$(CP) -p $(foreach i,$(GW_INFO_FILES),../$i) $(RPREFIX)
@@ -75,7 +76,12 @@ endif
 #
 	find $(RPREFIX) -name .svn -prune -exec rm -rf \{\} \;
 
-R.iss Rsmall.iss: JRins.pl imagedir
+md5sums:
+	@(cd $(RPREFIX); echo "tools:::.installMD5sums(\".\")" | \
+	  R_DEFAULT_PACKAGES=NULL LC_COLLATE=C R_OSTYPE=windows \
+	  ../../../../bin/Rterm.exe --vanilla --slave)
+
+R.iss Rsmall.iss: JRins.pl imagedir md5sums
 	rm -rf $(RPREFIX)/library/*/man
 	$(CAT) $(RPREFIX)/library/*/CONTENTS >  \
 	  $(RPREFIX)/doc/html/search/index.txt

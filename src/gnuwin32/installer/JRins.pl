@@ -170,7 +170,7 @@ sub listFiles {
 	$dir =~ s/\\$//;
 	$_ = $fn;
 	
-	if (m/^library\\tcltk/) {
+	if (m/^library\\tcltk/ || m/^MD5/) {
 	    $mini = 0;
 	}
 	if ($_ eq "bin\\Rchtml.dll" 
