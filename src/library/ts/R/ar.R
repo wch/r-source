@@ -1,7 +1,7 @@
 ## based on, especially multivariate case, code by Martyn Plummer
 ar <-
     function (x, aic = TRUE, order.max = NULL,
-              method=c("yule-walker","burg", "ols", "mle", "yw",),
+              method=c("yule-walker","burg", "ols", "mle", "yw"),
               na.action = na.fail, series = deparse(substitute(x)), ...)
 {
     res <- switch(match.arg(method),

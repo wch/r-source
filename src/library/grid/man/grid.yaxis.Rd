@@ -5,7 +5,7 @@
   This function draws a y-axis.
 }
 \usage{
-grid.yaxis(at = NA, label = TRUE, main = TRUE, gp=gpar(),
+grid.yaxis(at = NA, label = TRUE, main = TRUE, gp  =gpar(),
            draw = TRUE, vp = NULL)
 }
 \arguments{
@@ -20,7 +20,7 @@ grid.yaxis(at = NA, label = TRUE, main = TRUE, gp=gpar(),
     a list of graphical parameter settings.}
   \item{draw}{A logical value indicating whether graphics output
     should be produced.}
-  \item{vp}{A Grid viewport obect (or NULL).}
+  \item{vp}{A Grid viewport obect (or \code{NULL}).}
 }
 \value{
   An object of class \code{"grob"}.
