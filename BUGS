@@ -249,7 +249,7 @@ none
 
 Directory:  incoming
 
-* PR# 610 *
-Subject: Re: [R] na.omit
-From: Douglas Bates <bates@stat.wisc.edu>
-Date: 17 Jul 2000 15:13:28 -0500
+* PR# 611 *
+Subject: bug in loess
+From: hdrees@statlab.uni-heidelberg.de
+Date: Wed, 19 Jul 2000 17:47:04 +0200 (MET DST)
