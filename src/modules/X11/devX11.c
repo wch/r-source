@@ -1030,6 +1030,8 @@ static void SetLinetype(int newlty, double nlwd, NewDevDesc *dd)
 		dashlist[i] = j;
 		newlty = newlty >> 4;
 	    }
+	    /* NB if i is odd the pattern will be interpreted as
+	       the original pattern concatenated with itself */
 	    XSetDashes(display, xd->wgc, 0, dashlist, i);
 	    XSetLineAttributes(display,
 			       xd->wgc,
