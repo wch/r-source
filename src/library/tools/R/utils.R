@@ -13,8 +13,16 @@ function(path)
         stop(paste("file", sQuote(path), "does not exist"))
     cwd <- getwd()
     on.exit(setwd(cwd))
-    setwd(dirname(epath))
-    file.path(getwd(), basename(epath))
+    if(.fileTest("-d", epath)) {
+        ## Combining dirname and basename does not work for e.g. '.' or
+        ## '..' on Unix ...
+        setwd(epath)
+        getwd()
+    }
+    else {
+        setwd(dirname(epath))
+        file.path(getwd(), basename(epath))
+    }
 }
 
 .fileTest <-
