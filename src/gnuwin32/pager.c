@@ -188,13 +188,7 @@ static void pagerstayontop(control m)
 {
     control c = getdata(m);
 
-    if (ischecked(m)) {
-	uncheck(m);
-    	BringToTop(c, 0);
-    } else {
-	check(m);
-    	BringToTop(c, 1);
-    }
+    BringToTop(c, 2);
 }
 
 static void pagerconsole(control m)
@@ -295,8 +289,13 @@ static void pagermenuact(control m)
     }
     if (ismdi())
     	disable(PagerPopup[4].m);
-    else
+    else {
     	enable(PagerPopup[4].m);
+    	if (isTopmost(c))
+    	    check(PagerPopup[4].m);
+    	else
+    	    uncheck(PagerPopup[4].m);
+    }
 }
 
 
@@ -403,6 +402,7 @@ static pager pagercreate()
     setdata(p->mpoppaste = PagerPopup[1].m, c);
     setdata(PagerPopup[2].m, c);
     setdata(PagerPopup[4].m, c);
+    setdata(PagerPopup[6].m, c);
     MCHECK(m = newmenubar(pagermenuact));
     setdata(m, c);
     MCHECK(newmenu("File"));

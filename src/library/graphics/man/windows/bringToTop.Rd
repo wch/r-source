@@ -20,7 +20,8 @@ bringToTop(which = dev.cur(), stay = FALSE)
   
   If \code{stay =  TRUE}, the window is designated as a topmost window,
   i.e. it will stay on top of any regular window.  \code{stay} may only be used
-  when Rgui is run in SDI mode.
+  when Rgui is run in SDI mode.  This corresponds to the ``Stay on top''
+  popup menu item in Rgui.
 }
 
 \seealso{

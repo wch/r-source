@@ -163,7 +163,8 @@ int   deviceheightmm(drawing dev);
 int   devicepixelsx(drawing dev);
 int   devicepixelsy(drawing dev);
 
-void BringToTop(window w, int stay);
+int  	isTopmost(window w);
+void 	BringToTop(window w, int stay); /* stay=0 for regular, 1 for topmost, 2 for toggle */
 
 /* gbuttons.c */
 /* horizontal, vertical and control scrollbar */
