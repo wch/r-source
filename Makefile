@@ -34,17 +34,17 @@ clean:
 	@echo "Cleaning ./etc/"; cd etc; $(MAKE) $@
 	@echo "Cleaning the source tree"; cd src; $(MAKE) $@
 
-moreclean: clean acclean
-	@echo "Cleaning ./etc/ a bit more"; cd etc; $(MAKE) $@
-
 acclean:
 	@echo "Cleaning configure files"
 	@rm -f config.cache config.log config.status
 	@echo > Makeconf
 
+moreclean: clean acclean
+	@echo "Cleaning ./etc/ a bit more"; cd etc; $(MAKE) $@
+
 distclean: realclean
 
-realclean: 
+realclean:
 	@echo "Cleaning at top level"
 	@-rm -f bin/R*
 	@-rm -rf `echo library/* | sed 's@library/CVS *@@'`
@@ -53,7 +53,7 @@ realclean:
 	@cd demos/dynload; $(MAKE) $@
 	@echo "Really cleaning ./etc/"; cd etc; $(MAKE) $@
 	@echo "Really cleaning the source tree"; cd src; $(MAKE) $@
-	@make acclean
+	$(MAKE) acclean
 
 install: all
 	$(INSTALL) -d $(bindir) $(mandir)/man1
@@ -64,16 +64,16 @@ install: all
 		$(rhome)/include \
 		$(rhome)/library
 	$(INSTALL_DATA) COPYING COPYRIGHTS MIRROR-SITES RESOURCES $(rhome)
-	cd afm; $(MAKE) install
+	cd afm; $(MAKE) $@
 	$(INSTALL_PROGRAM) bin/R.binary $(rhome)/bin
 	cat bin/R | sed "s@RHOME=.*@RHOME=$(rhome)@" > $(bindir)/R
 	chmod 755 $(bindir)/R
 	$(INSTALL_PROGRAM) cmd/[a-z]* $(rhome)/cmd
-	cd demos; $(MAKE) install
-	cd doc; $(MAKE) install
-	cd etc; $(MAKE) install
+	cd demos; $(MAKE) $@
+	cd doc; $(MAKE) $@
+	cd etc; $(MAKE) $@
 	$(INSTALL_DATA) include/*.h $(rhome)/include
 	@echo "Installing library ..."
-	cd library; tar c [a-z]* | (cd $(rhome)/library; tar x) 
+	cd library; tar c [a-z]* | (cd $(rhome)/library; tar x)
 	$(INSTALL_DATA) library/LibIndex $(rhome)/library
 
