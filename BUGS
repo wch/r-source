@@ -556,10 +556,6 @@ Directory:  incoming
 Subject: apropos() with partial name
 From: John Maindonald <u9801539@leonard.anu.edu.au>
 Date: Thu, 16 Jan 2003 20:22:23 +1100 (EST)
-* PR# 2511 *
-Subject: Possible bug in socketConnection
-From: DEd@novonordisk.com
-Date: Fri, 31 Jan 2003 11:04:13 +0100 (MET)
 * PR# 2518 *
 Subject: AIC.default
 From: Alec Stephenson <a.stephenson@lancaster.ac.uk>
@@ -568,27 +564,7 @@ Date: Sat, 1 Feb 2003 10:17:10 +0000 (GMT)
 Subject: removeMethods (methods) does not work in my examples
 From: ripley@stats.ox.ac.uk
 Date: Sat, 1 Feb 2003 20:27:31 +0000 (GMT)
-* PR# 2534 *
-Subject: (성인광고)성인들만 보세요
-From: durisex<durisex@hotmail.com>
-Date: Thu, 6 Feb 2003 20:01:57 +0100 (MET)
-* PR# 2535 *
-Subject: Bug in socketConnection
-From: "DED (David George Edwards)" <ded@novonordisk.com>
-Date: Fri, 7 Feb 2003 15:51:25 +0100 
-* PR# 2536 *
-Subject: I can teach YOU how to make $100,000 + YEARLY with your Online Business!
-From: "Email 1,000,000 Prospects Daily!" <submitnow007@yahoo.com>
-Date: Fri, 7 Feb 2003 16:34:09 -0600
-* PR# 2537 *
-Subject: (광고)크레이지잉글리쉬! 무료체험 신청하시고,온누리폰도 받으세요!
-From: 크레이지잉글리쉬<cy0658@kornet.net>
-Date: Sun, 9 Feb 2003 01:49:23 +0900
-* PR# 2538 *
-Subject: THANKS
-From: Joseph Mobutu Sese-Seko  <joseph#$*@yahoo.com>
-Date: Mon, 10 Feb 2003 15:51:29 +0100
-* PR# 2539 *
-Subject: Pearson's residuals in logistic regression
-From: bnan@umich.edu
-Date: Mon, 10 Feb 2003 17:19:04 +0100 (MET)
+* PR# 2541 *
+Subject: cbind rises floating point exception 
+From: Ramon Diaz <rdiaz@cnio.es>
+Date: Tue, 11 Feb 2003 19:23:53 +0100
