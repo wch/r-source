@@ -34,6 +34,9 @@
  *  Integer arguments changed from "long" to "int"
  *  Bus error due to non-writable strings fixed
  *
+ *  BDR 2001-10-30 use R_alloc not Calloc as memory was not
+ *  reclaimed on error (and there are many error exits).
+ *
  *	type	"double" or "integer" (R - numeric `mode').
  *
  *	width	The total field width; width < 0 means to left justify
@@ -71,7 +74,7 @@
 #endif /* mac */
 
 #include "R_ext/Error.h" /* error */
-#include "R_ext/RS.h" /* Calloc */
+#include "R_ext/Memory.h" /* R_alloc */
 #include "R_ext/Applic.h"
 
 void str_signif(char *x, int *n, char **type, int *width, int *digits,
@@ -84,8 +87,8 @@ void str_signif(char *x, int *n, char **type, int *width, int *digits,
     double xx;
     int iex, j, jL, len_flag = strlen(*flag);
 
-    char *f0  =	 Calloc(do_fg ? 1+len_flag+3 : 1, char);
-    char *form = Calloc(len_flag+4 + strlen(*format), char);
+    char *f0  =	 R_alloc(do_fg ? 1+len_flag+3 : 1, sizeof(char));
+    char *form = R_alloc(len_flag+4 + strlen(*format), sizeof(char));
 
     if (wid == 0)
 	error(".C(..): Width cannot be zero");
@@ -169,6 +172,4 @@ void str_signif(char *x, int *n, char **type, int *width, int *digits,
 	} else
 	    error(".C(..): `type' must be \"real\" for this format");
     }
-    Free(form);
-    Free(f0);
 }

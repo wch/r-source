@@ -69,8 +69,8 @@ w_init_maybe(int n)
     if (!w) {
 	n = imax2(n, SIGNRANK_MAX);
 	w = (double **) calloc(n + 1, sizeof(double *));
-    if (!w)
-	MATHLIB_ERROR("%s", "signrank allocation error");
+	if (!w)
+	    MATHLIB_ERROR("%s", "signrank allocation error");
     }
 }
 
@@ -88,6 +88,9 @@ csignrank(int k, int n)
 	k = u - k;
     if (w[n] == 0) {
 	w[n] = (double *) calloc(c + 1, sizeof(double));
+	if (!w[n]) {
+	    MATHLIB_ERROR("%s", "signrank allocation error");
+	}
 	for (i = 0; i <= c; i++)
 	    w[n][i] = -1;
     }

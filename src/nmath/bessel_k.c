@@ -26,6 +26,10 @@
 #include "bessel.h"
 #include "nmath.h"
 
+#ifndef MATHLIB_STANDALONE
+#include "R_ext/Memory.h"
+#endif
+
 static void K_bessel(double *x, double *alpha, long *nb,
 		     long *ize, double *bk, long *ncalc);
 
@@ -46,7 +50,12 @@ double bessel_k(double x, double alpha, double expo)
 	alpha = -alpha;
     nb = 1+ (long)floor(alpha);/* nb-1 <= |alpha| < nb */
     alpha -= (nb-1);
+#ifdef MATHLIB_STANDALONE
     bk = (double *) calloc(nb, sizeof(double));
+    if (!bk) MATHLIB_ERROR("%s", "bessel_k allocation error");
+#else
+    bk = (double *) R_alloc(nb, sizeof(double));
+#endif
     K_bessel(&x, &alpha, &nb, &ize, bk, &ncalc);
     if(ncalc != nb) {/* error input */
       if(ncalc < 0)
@@ -57,7 +66,9 @@ double bessel_k(double x, double alpha, double expo)
 			 x, alpha+nb-1);
     }
     x = bk[nb-1];
+#ifdef MATHLIB_STANDALONE
     free(bk);
+#endif
     return x;
 }
 

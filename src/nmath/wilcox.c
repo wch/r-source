@@ -112,6 +112,8 @@ cwilcox(int k, int m, int n)
 
     if (w[i][j] == 0) {
 	w[i][j] = (double *) calloc(c + 1, sizeof(double));
+	if (!w[i][j])
+		MATHLIB_ERROR("wilcox allocation error %d", 3);
 	for (l = 0; l <= c; l++)
 	    w[i][j][l] = -1;
     }
@@ -271,6 +273,8 @@ double rwilcox(double m, double n)
     r = 0.0;
     k = (int) (m + n);
     x = (int *) calloc(k, sizeof(int));
+    if (!x)
+	MATHLIB_ERROR("wilcox allocation error %d", 4);
     for (i = 0; i < k; i++)
 	x[i] = i;
     for (i = 0; i < n; i++) {

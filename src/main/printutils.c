@@ -60,6 +60,7 @@
 #include <Defn.h>
 #include <Rmath.h>
 #include <Print.h>
+#include "R_ext/RS.h"
 #include <Rconnections.h>
 extern int R_OutputCon; /* from connections.c */
 
@@ -208,18 +209,18 @@ char *EncodeComplex(Rcomplex x, int wr, int dr, int er, int wi, int di, int ei)
 	/* EncodeReal returns pointer to static storage so copy */
 
 	tmp = EncodeReal(x.r, wr, dr, er);
-	Re = (char *) calloc(strlen(tmp)+1, sizeof(char));
+	Re = Calloc(strlen(tmp)+1, char);
 	strcpy(Re, tmp);
 
 	if ( (flagNegIm = (x.i < 0)) )
 	    x.i = -x.i;
 	tmp = EncodeReal(x.i, wi, di, ei);
-	Im = (char *) calloc(strlen(tmp)+1, sizeof(char));
+	Im = Calloc(strlen(tmp)+1, char);
 	strcpy(Im, tmp);
 
 	sprintf(Encodebuf, "%s%s%si", Re, flagNegIm ? "-" : "+", Im);
 
-	free(Re); free(Im);
+	Free(Re); Free(Im);
     }
 #endif
     return Encodebuf;
