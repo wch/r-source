@@ -11,7 +11,8 @@ subdir = doc/manual
 include $(top_builddir)/Makeconf
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
-DISTFILES =
+DISTFILES = EQN ABOUT.tex Man.tex plotmath.tex primitive-funs.tex \
+	writing-Rd.tex Rd.sty lib2tex.in Makefile.in
 
 RLIB = $(top_builddir)/library
 RLIBsrc = $(top_srcdir)/src/library

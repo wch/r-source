@@ -6,8 +6,13 @@ srcdir = @srcdir@
 top_srcdir = @top_srcdir@
 
 top_builddir = ../..
+subdir = src/appl
 
 include $(top_builddir)/Makeconf
+
+distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
+DISTFILES = $(shell cd $(srcdir); \
+	       ls COPYRIGHT COPYRIGHT.ftn Makefile.in ROUTINES *.[cfh])
 
 OBJS = \
 	approx.o \
@@ -62,3 +67,10 @@ clean:
 distclean: clean
 	@-rm -f Makefile
 maintainer-clean: distclean
+
+distdir: $(DISTFILES)
+	@for f in $(DISTFILES); do \
+	  test -f $(distdir)/$${f} \
+	    || ln $(srcdir)/$${f} $(distdir)/$${f} 2>/dev/null \
+	    || cp -p $(srcdir)/$${f} $(distdir)/$${f}; \
+	done

@@ -6,8 +6,12 @@ srcdir = @srcdir@
 top_srcdir = @top_srcdir@
 
 top_builddir = ../..
+subdir = src/include
 
 include $(top_builddir)/Makeconf
+
+distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
+DISTFILES = $(shell cd $(srcdir) && ls Makefile.in Platform.h.in *.h)
 
 SRC_HEADERS = S.h S_compat.h f2c.h Arith.h Complex.h Error.h Fortran.h \
 	Blas.h Linpack.h Mathlib.h
@@ -37,3 +41,10 @@ distclean:
 maintainer-clean: distclean
 
 install install-strip uninstall::
+
+distdir: $(DISTFILES)
+	@for f in $(DISTFILES); do \
+	  test -f $(distdir)/$${f} \
+	    || ln $(srcdir)/$${f} $(distdir)/$${f} 2>/dev/null \
+	    || cp -p $(srcdir)/$${f} $(distdir)/$${f}; \
+	done

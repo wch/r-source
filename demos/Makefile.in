@@ -6,9 +6,13 @@ srcdir = @srcdir@
 top_srcdir = @top_srcdir@
 
 top_builddir = ..
+subdir = demos
 
 include $(top_builddir)/Makeconf
-subdir = demos
+
+distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
+DISTFILES = Makefile.in
+SUBDIRS = dynload graphics language models nlm
 
 all: Makefile R
 
@@ -61,3 +65,14 @@ clean:
 distclean:
 	@rm -f Makefile
 maintainer-clean: distclean
+
+distdir: $(DISTFILES)
+	@for f in $(DISTFILES); do \
+	  test -f $(distdir)/$${f} \
+	    || ln $(srcdir)/$${f} $(distdir)/$${f} 2>/dev/null \
+	    || cp -p $(srcdir)/$${f} $(distdir)/$${f}; \
+	done
+	@((cd $(srcdir); \
+	      $(TAR) -c -f - --exclude=CVS $(SUBDIRS)) \
+	    | (cd $(distdir); $(TAR) -x -f -)) \
+	  || exit 1

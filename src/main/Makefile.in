@@ -6,8 +6,12 @@ srcdir = @srcdir@
 top_srcdir = @top_srcdir@
 
 top_builddir = ../..
+subdir = src/main
 
 include $(top_builddir)/Makeconf
+
+distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
+DISTFILES = $(shell cd $(srcdir) && ls Makefile.in *.[cfhy])
 
 OBJS = arithmetic.o array.o attrib.o bind.o builtin.o character.o    \
 	coerce.o colors.o complex.o context.o cov.o cum.o debug.o    \
@@ -83,6 +87,13 @@ printvector.o:	$(top_srcdir)/src/include/Print.h
 version.o:	../include/Platform.h
 ../include/Platform.h:
 	(cd ../include; $(MAKE) Platform.h)
+
+distdir: $(DISTFILES)
+	@for f in $(DISTFILES); do \
+	  test -f $(distdir)/$${f} \
+	    || ln $(srcdir)/$${f} $(distdir)/$${f} 2>/dev/null \
+	    || cp -p $(srcdir)/$${f} $(distdir)/$${f}; \
+	done
 
 # Unused targets
 

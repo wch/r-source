@@ -6,8 +6,12 @@ srcdir = @srcdir@
 top_srcdir = @top_srcdir@
 
 top_builddir = ../..
+subdir = src/scripts
 
 include $(top_builddir)/Makeconf
+
+distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
+DISTFILES = $(shell cd $(srcdir) && ls | sed '/CVS/d')
 
 SRC_SCRIPTS = BATCH Rd2txt Rd2dvi filename help help.links pager
 OBJ_SCRIPTS = COMPILE INSTALL REMOVE Rdconv Rdindex Rman2Rd SHLIB \
@@ -32,3 +36,10 @@ clean:
 distclean:
 	@rm -f Makefile R.sh $(OBJ_SCRIPTS)
 maintainer-clean: distclean
+
+distdir: $(DISTFILES)
+	@for f in $(DISTFILES); do \
+	  test -f $(distdir)/$${f} \
+	    || ln $(srcdir)/$${f} $(distdir)/$${f} 2>/dev/null \
+	    || cp -p $(srcdir)/$${f} $(distdir)/$${f}; \
+	done

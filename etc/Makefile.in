@@ -10,6 +10,12 @@ subdir = etc
 
 include $(top_builddir)/Makeconf
 
+distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
+DISTFILES = Rdconvlib.pl buildlib.pl html-layout.pl \
+	Makeconf.in Makefile.in \
+	colors.big colors.small Rd.files tasks test-things.Rd
+SUBDIRS = Rdoc undoc
+
 all: Makefile Makeconf R
 
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
@@ -51,3 +57,14 @@ clean:
 distclean: clean
 	@rm -f Makeconf Makefile
 maintainer-clean: distclean
+
+distdir: $(DISTFILES)
+	@for f in $(DISTFILES); do \
+	  test -f $(distdir)/$${f} \
+	    || ln $(srcdir)/$${f} $(distdir)/$${f} 2>/dev/null \
+	    || cp -p $(srcdir)/$${f} $(distdir)/$${f}; \
+        done
+	@((cd $(srcdir); \
+	      $(TAR) -c -f - --exclude=CVS $(SUBDIRS)) \
+	    | (cd $(distdir); $(TAR) -x -f -)) \
+	  || exit 1; \
