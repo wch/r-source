@@ -23,6 +23,7 @@ NEW FEATURES
 	and so forth in very few lines of code.  It is still somewhat
 	experimental so don't go churning out thousands of lines of
 	GUI code and then blame us for changing the API later on.
+	See demo(tkttest) and demo(tkdensity). 
 
     o	Internally using global R_Expressions [getOption("expressions")]
 	dramatically speeds up eval.c.

@@ -3,19 +3,28 @@
 require(tcltk)
 local({
     y<-NULL
+    xlim <-NULL
 
     replot <- function(...) {
-        b <- as.numeric(tclvar$bw)/5
+        if (is.null(y)) return() # too early...
+        bw <<- b <- as.numeric(tclvar$bw)
         k <- tclvar$kernel
         sz <- as.numeric(tclvar$size)
-        eval(substitute(plot(density(y, bw=b * sd(y),
-                     kernel=k))))
+        eval(substitute(plot(density(y, bw=b,
+                     kernel=k),xlim=xlim)))
         points(y,rep(0,sz))
+    }
+
+    replot.maybe <- function(...)
+    {
+        if (as.numeric(tclvar$bw) != bw)
+        replot()
     }
 
     regen <- function(...) {
         if (tclvar$dist==1) y<<-rnorm(as.numeric(tclvar$size))
         else y<<-rexp(as.numeric(tclvar$size))
+        xlim <<- range(y) + c(-2,2)
         replot()
     }
 
@@ -55,9 +64,9 @@ local({
 
     frame4 <-tkframe(right.frm, relief="groove", borderwidth=2)
     tkpack(tklabel (frame4, text="Bandwidth"))
-    tkpack(tkscale(frame4, command=replot, from=1, to=9,
+    tkpack(tkscale(frame4, command=replot.maybe, from=0.05, to=2.00,
                    showvalue=F, variable="bw",
-                   resolution=0.2, orient="horiz"))
+                   resolution=0.05, orient="horiz"))
 
 
     tkpack(frame1, frame2, fill="x")
@@ -72,7 +81,7 @@ local({
     tclvar$size  <- 50
     tclvar$dist  <- 1
     tclvar$kernel<- "gaussian"
-    tclvar$bw    <- 5
+    tclvar$bw    <- bw <- 1
     regen()
 })
 

@@ -1,7 +1,7 @@
 \name{TkCommands}
 \alias{tkcmd}
 \alias{tktitle}
-\alias{"tktitle<-"}
+\alias{tktitle<-}
 \alias{tkbell}
 \alias{tkbind}
 \alias{tkbindtags}
@@ -82,7 +82,7 @@
 \alias{tkplace.forget}
 \alias{tkplace.info}
 \alias{tkplace.slaves}
-}
+
 \title{Tk non-widget commands}
 \description{
   These functions interface to Tk non-widget commands, such as the

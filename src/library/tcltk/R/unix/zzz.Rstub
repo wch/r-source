@@ -1,2 +1,2 @@
 .First.lib <- function(lib, pkg) 
-    cat("\n Tcl/Tk support is not available on this system \n\n")
+    stop("Tcl/Tk support is not available on this system")
