@@ -85,7 +85,7 @@ class(tab <- xtabs(Freq ~ ., DF))# xtabs & table
 all(tab == UCBAdmissions)
 all.equal(dimnames(tab), dimnames(UCBAdmissions))
 
-a <- 1/rep(0:3,10)
+a <- rep(c(NA, 1/0:3), 10)
 table(a)
 table(a, exclude=NULL)
 b <- factor(rep(c("A","B","C"), 10))
