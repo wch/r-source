@@ -24,22 +24,23 @@ quasipoisson(link = "log")
 \alias{print.family}
 \arguments{
   \item{link}{a specification for the model link function.
-    The \code{binomial} family admits the links \code{"logit"},
-    \code{"probit"}, \code{"log"}, and \code{"cloglog"} (complementary
+    The \code{gaussian} family accepts the links \code{"identity"},
+    \code{"log"} and \code{"inverse"};
+    the \code{binomial} family the links \code{"logit"},
+    \code{"probit"}, \code{"log"} and \code{"cloglog"} (complementary
     log-log);
-    the \code{Gamma} family the links \code{"identity"},
-    \code{"inverse"}, and \code{"log"};
-    the \code{poisson} family the links \code{"identity"}, \code{"log"},
-    and \code{"sqrt"};
-    the \code{quasi} family the links \code{"logit"}, \code{"probit"},
+    the \code{Gamma} family the links \code{"inverse"}, \code{"identity"}
+     and \code{"log"};
+    the \code{poisson} family the links \code{"log"}, \code{"identity"}, 
+    and \code{"sqrt"} and the \code{inverse.gaussian} family the links
+    \code{"1/mu^2"}, \code{"inverse"}, \code{"inverse"} and \code{"log"}.
+    
+    The \code{quasi} family allows the links \code{"logit"}, \code{"probit"},
     \code{"cloglog"},  \code{"identity"}, \code{"inverse"},
     \code{"log"}, \code{"1/mu^2"} and \code{"sqrt"}.
     The function \code{\link{power}} can also be used to create a
     power link function for the \code{quasi} family.
-
-    The other families have only one permissible link function:
-    \code{"identity"} for the \code{gaussian} family, and
-    \code{"1/mu^2"} for the \code{inverse.gaussian} family.}
+  }
   \item{variance}{for all families, other than \code{quasi}, the
     variance function is determined by the family.  The \code{quasi}
     family will accept the specifications \code{"constant"},

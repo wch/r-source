@@ -266,7 +266,8 @@ BUG FIXES
 
     o	Printing numbers near the minimum could get the number of
 	significant figures wrong due to underflow: for example 4e-308
-	might print as 4.00000e-307.  (Seen on some Windows builds.)
+	might print as 4.00000e-307.  (Seen on some Windows builds,
+	and also on numbers around 1e-317 on Linux.)
 
     o	wilcox.test() could give integer overflow warnings on very long
 	vectors.  Also added tests for numeric inputs, as per the help
@@ -279,6 +280,10 @@ BUG FIXES
 
     o	if(logical(0)) and while(logical(0)) now report zero length,
 	not `missing value where logical is needed'.
+
+    o	The gaussian() and inverse.gaussian() families were documented
+	to allow only one link, which has not been true in R for at
+	least four years.
 
 
 
