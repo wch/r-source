@@ -1,3 +1,5 @@
+## NOTE that xyz.coords() in ./xyz.coords.R  should be kept in sync!
+##
 xy.coords <- function(x, y, xlab=NULL, ylab=NULL, log=NULL, recycle = FALSE)
 {
     if(is.null(y)) {

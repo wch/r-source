@@ -1,3 +1,5 @@
+## the obvious analog of  xy.coords() -- in ./plot.R
+
 xyz.coords <- function(x, y, z, xlab=NULL, ylab=NULL, zlab=NULL,
 		       log = NULL, recycle = FALSE)
 {
