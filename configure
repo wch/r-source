@@ -18530,10 +18530,10 @@ echo $ECHO_N "checking for tclConfig.sh in library (sub)directories... $ECHO_C" 
 if test "${r_cv_path_TCL_CONFIG+set}" = set; then
   echo $ECHO_N "(cached) $ECHO_C" >&6
 else
-  for libdir in /opt/lib /usr/local/lib /usr/lib /lib; do
+  for ldir in /opt/lib /usr/local/lib /usr/lib /lib; do
   for dir in \
-      ${libdir} \
-      `ls -d ${libdir}/tcl[8-9].[0-9]* 2>/dev/null`; do
+      ${ldir} \
+      `ls -d ${ldir}/tcl[8-9].[0-9]* 2>/dev/null`; do
     if test -f ${dir}/tclConfig.sh; then
       r_cv_path_TCL_CONFIG="${dir}/tclConfig.sh"
       break 2
@@ -18602,10 +18602,10 @@ echo $ECHO_N "checking for tkConfig.sh in library (sub)directories... $ECHO_C" >
 if test "${r_cv_path_TK_CONFIG+set}" = set; then
   echo $ECHO_N "(cached) $ECHO_C" >&6
 else
-  for libdir in /opt/lib /usr/local/lib /usr/lib /lib; do
+  for ldir in /opt/lib /usr/local/lib /usr/lib /lib; do
   for dir in \
-      ${libdir} \
-      `ls -d ${libdir}/tk[8-9].[0-9]* 2>/dev/null`; do
+      ${ldir} \
+      `ls -d ${ldir}/tk[8-9].[0-9]* 2>/dev/null`; do
     if test -f ${dir}/tkConfig.sh; then
       r_cv_path_TK_CONFIG="${dir}/tkConfig.sh"
       break 2
