@@ -22,7 +22,7 @@
 
 <p>This is a guide to installation and administration for R.
 
-   <p>The current version of this document is 1.8.0 (2003-08-06).
+   <p>The current version of this document is 1.8.0 (2003-08-19).
 
    ISBN 3-901167-52-8
 
@@ -528,13 +528,14 @@ configuration option <code>--with-blas</code> and not to use an external
 BLAS library by <code>--without-blas</code>.
 
    <p>For systems with multiple processors it is in principle possible to use
-a multi-threaded version of ATLAS.  This is currently not supported. 
-The problem is that <code>SIGINT</code> signals will not be handled properly
-when sent during a multi-threaded ATLAS computation, and this may result
-in a segmentation fault.  Changes in the R internals are needed to
-support the use of threaded libraries; this will hopefully be addressed
-in a future release.  If despite this warning you still want to use a
-multi-threaded ATLAS you can do so by specifying
+a multi-threaded version of ATLAS.  Prior to R 1.8.0 this was not
+supported since <code>SIGINT</code> signals sent to the process and handled by
+the wrong thread could result in segfaults.  Changes in <code>SIGINT</code>
+handling introduced in R 1.8.0 should make it safe to use a
+multi-threaded ATLAS.  A remaining issue is that R profiling, which
+uses the <code>SIGPROF</code> signal, may cause problems.  You may want to
+disable profiling if you use a multi-threaded version of ATLAS.  You can
+use a multi-threaded ATLAS by specifying
 <pre class="smallexample">     --with-blas="-lptf77blas -lpthread -latlas"
      </pre>
 
