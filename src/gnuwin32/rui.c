@@ -379,7 +379,7 @@ static void menupkgupdatebioc(control m)
 {
     if (!ConsoleAcceptCmd) return;
     consolecmd(RConsole,
-	       "update.packages(CRAN=getOption(\"BIOC\"))");
+	       "update.packages(repos=getOption(\"BIOC\"))");
 /*    show(RConsole); */
 }
 
