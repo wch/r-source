@@ -1,6 +1,6 @@
 approxfun <-
-    function(x, y=NULL, method = "linear", yleft, yright, rule=1,
-             f=0, ties=mean)
+    function(x, y = NULL, method = "linear", yleft, yright, rule = 1,
+	     f = 0, ties = mean)
 {
     x <- xy.coords(x, y)
     y <- x$y
@@ -18,19 +18,20 @@ approxfun <-
     ok <- !(is.na(x) | is.na(y))
     x <- x[ok]
     y <- y[ok]
-    if (!is.character(ties) || (ties!="ordered")){
-        if (length(ux<-unique(x))<length(x)){
-            if (missing(ties))
-                warning("Collapsing to unique x values")
+    if (!is.character(ties) || (ties != "ordered")) {
+	if (length(ux <- unique(x)) < length(x)) {
+	    if (missing(ties))
+		warning("Collapsing to unique x values")
             y <- tapply(y,x,ties)
-            x <- sort(ux)
-        } else {
-            o <- order(x)
-            x <- x[o]
-            y <- y[o]
-            rm(o)
-        }
-
+	    ##BETTER y <- as.vector(tapply(y,x,ties))
+	    x <- sort(ux)
+            rm(ux)
+	} else {
+	    o <- order(x)
+	    x <- x[o]
+	    y <- y[o]
+	    rm(o)
+	}
     }
     if (missing(yleft))
 	yleft <- if(rule == 1) NA else y[1]
@@ -40,5 +41,5 @@ approxfun <-
     function(v) .C("R_approx", as.double(x), as.double(y),
 		   n, xout = as.double(v), length(v), as.integer(method),
 		   as.double(yleft), as.double(yright),
-		   as.double(f), NAOK=TRUE, PACKAGE="base")$xout
+		   as.double(f), NAOK = TRUE, PACKAGE = "base")$xout
 }
