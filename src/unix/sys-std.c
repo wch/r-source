@@ -525,7 +525,12 @@ handleInterrupt(void)
     popReadline();
     onintr();
 }
-
+#else
+static void
+handleInterrupt(void)
+{
+    onintr();
+}
 #endif /* HAVE_LIBREADLINE */
 
 /* Fill a text buffer from stdin or with user typed console input. */
@@ -579,7 +584,7 @@ int Rstd_ReadConsole(char *prompt, unsigned char *buf, int len,
 
 	for (;;) {
 	    fd_set *what;
-
+	    
 	    what = R_checkActivityEx(R_wait_usec ? R_wait_usec : -1, 0,
 				     handleInterrupt);
 	    /* This is slightly clumsy. We have advertised the
