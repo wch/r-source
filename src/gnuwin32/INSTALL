@@ -88,11 +88,11 @@ and run
 	make
 
 
-Note 1: the file rw1040\unzip\unzip32.dll is not in the source
+Note 1: the file rw1041\unzip\unzip32.dll is not in the source
 distribution. It can be found in file unz542dN.zip at any Info-ZIP
 mirror, or you can copy it from a binary distribution.
 
-The file rw1040\bin\Rchtml.dll is only built if CHM help is specified
+The file rw1041\bin\Rchtml.dll is only built if CHM help is specified
 in the main Makefile. Its source is the help directory, and you need
 the HTML Help Workshop files to build it. It contains instructions
 to build it under VC++6, and it is preferable to use that as the 
@@ -123,7 +123,7 @@ temporary directory: the default is c:\TEMP.
 Building bitmap device support
 ------------------------------
 
-The file rw1040\bin\Rbitmap.dll is not built automatically:
+The file rw1041\bin\Rbitmap.dll is not built automatically:
 instructions on how to build it are in the file bitmap\INSTALL.
 
 
