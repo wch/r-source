@@ -25,7 +25,8 @@ USER-VISIBLE CHANGES
 	Packages are by default installed using lazy loading if they 
 	have more than 50kB of R code and did not use a saved image.
 	This can be overridden by INSTALL --[no-]lazy or via a field
-	in the DESCRIPTION file.
+	in the DESCRIPTION file.  Note that as with --save, any other
+	packages which are required must be already installed.
 
     o	All the datasets formerly in packages 'base' and 'stats' have
 	been moved to a new package 'datasets'.  data() does the
@@ -33,7 +34,7 @@ USER-VISIBLE CHANGES
 	data() are not normally needed as the data objects are visible
 	in the 'datasets' package.
 
-	Packages can be installed to make their data objects available
+	Packages can be installed to make their data objects visible
 	via R CMD INSTALL --lazy-data or via a field in the
 	DESCRIPTION file.
 
@@ -50,25 +51,19 @@ USER-VISIBLE CHANGES
         separately but not via data(sunspot) (which is used by package
         lattice to retrieve a dataset 'sunspot').
 
-    o	The default barplot() method by default uses a
-	gamma-corrected grey palette (rather than the heat color
-	palette) for coloring its output when given a matrix.
-
-    o	Package names must now be typed exactly in library() and
+    o	Package names must now be given exactly in library() and
     	require(), regardless of whether the underlying file system is
     	case-sensitive or not.
 
 
 NEW FEATURES
 
-    o	A 'version' argument has been added to pdf() device.  If this is
-	set to "1.4", the device will support transparent colours.
+    o	There is a new atomic vector type, class "raw".	 See ?raw for
+	full details including the operators and utility functions provided.
 
-    o	Function file.edit() function added: like file.show(), but
-	allows editing.
-
-    o	edit() and fix() use the object name in the window caption on
-	some platforms.
+    o	The default barplot() method by default uses a
+	gamma-corrected grey palette (rather than the heat color
+	palette) for coloring its output when given a matrix.
 
     o	The 'formula' method for boxplot() has a 'na.action' argument,
 	defaulting to 'na.pass'.  This is mainly useful if the response
@@ -81,68 +76,19 @@ NEW FEATURES
 	thanks to contributions from Arni Magnusson.  For consistency,
 	'boxwex' is not an explicit argument anymore.
 
-    o	The 'formula' method for pairs() has a 'na.action' argument,
-	defaulting to 'na.pass', rather than the value of
-	getOption("na.action").
+    o	There is now a coef() method for summaries of "nls" objects.
 
-    o	The 'formula' method for mosaicplot() has a 'na.action' argument
-	defaulting to 'na.omit'.
+    o	cumsum/prod/max/min() now preserve names.
 
-    o	The way the comparison operators handle a list argument has
-	been rationalized so a few more cases will now work -- see
-	?Comparison.
-
-    o	deparse(), dput() and dump() have a new 'control' argument to
-    	control the level of detail when deparsing. dump() defaults to
-    	the most detail, the others default to less.  See ?deparse
-    	for the details.
-
-    o	source() with 'echo = TRUE' uses the function source attribute
-    	when displaying commands as they are parsed.
-
-    o	The screen devices x11(), windows() and quartz() have a new
-	argument 'bg' to set the default background colour.
+    o	data(), .path.packages() and .find.packages() now interpret
+	package = NULL to mean all loaded packages.
 
     o	data.frame() and its replacement methods remove the names from
 	vector columns.	 Using I() will ensure that names are
 	preserved.
 
-    o	Indexing a vector by a character vector was slow if both the
-	vector and index were long (say 10,000).  Now hashing is used
-	and the time should be linear in the longer of the lengths
-	(but more memory is used).
-
-    o	cumsum/prod/max/min() now preserve names.
-
-    o	Replaying a plot (with replayPlot() or via autoprinting) now
-	automagically opens a device if none is open.
-
-    o	Printing a character string with embedded nuls now prints the
-	whole string, and non-printable characters are represented by
-	octal escape sequences.
-
-    o	str(obj) now displays more reasonably the STRucture of S4 objects.
-	The method for class "dendrogram" has a new argument 'stem' and
-	indicates when it's not printing all levels (as typically when
-	e.g., 'max.level = 2').
-
-    o	fisher.test(*, conf.int=FALSE) allows the confidence interval
-	computation to be skipped.
-
-    o	formula() methods for classes "lm" and "glm" used the expanded
-	formula (with '.' expanded) from the terms component.
-
-    o	New function eapply() - apply for environments.	 The supplied
-	function is applied to each element of the environment; the order
-	of application is not specified.
-
-    o	system.time() has a new argument 'gcFirst' which, when TRUE,
-	forces a garbage collection before timing begins.
-
-    o	There is now a coef() method for summaries of "nls" objects.
-
-    o	ftable.formula() now looks for variables in the environment of
-	the formula before the usual search path.
+    o	data.frame(check.names = TRUE) (the default) enforces unique
+	names, as S does.
 
     o	.Defunct() now has 'new' and 'package' arguments like those of
 	.Deprecated().
@@ -151,59 +97,114 @@ NEW FEATURES
 	nodePar and edgePar settings and for edge labeling computes the
 	extents of the diamond more correctly.
 
+    o	deparse(), dput() and dump() have a new 'control' argument to
+    	control the level of detail when deparsing. dump() defaults to
+    	the most detail, the others default to less.  See ?deparse
+    	for the details.
+
+    o	dir.create() now expands '~' in filenames.
+
+    o	New function eapply() - apply for environments.	 The supplied
+	function is applied to each element of the environment; the order
+	of application is not specified.
+
+    o	edit() and fix() use the object name in the window caption on
+	some platforms (e.g. Windows).
+
+    o	Function file.edit() function added: like file.show(), but
+	allows editing.
+
+    o	fisher.test(*, conf.int=FALSE) allows the confidence interval
+	computation to be skipped.
+
+    o	formula() methods for classes "lm" and "glm" used the expanded
+	formula (with '.' expanded) from the terms component.
+
+    o   The `formula' method for ftable() now looks for variables in the
+	environment of the formula before the usual search path.
+
+    o	help() now returns information about available documentation for
+	a given topic, and notifies about multiple matches.
+
+    o	heatmap() has a new argument 'reorderfun'.
+
+    o	interaction() has new argument 'sep'.
+
     o	New functions is.leaf(), dendrapply() and a labels() method for
 	dendrogram objects.
-
-    o	reorder.dendrogram() now has a 'agglo.FUN' argument for
-	specification of a weights agglomeration function.
-
-    o	heatmap() has got an argument 'reorderfun'.
-
-    o	readChar() can now read strings with embedded nuls.
-
-    o	There is a new atomic vector type, class "raw".	 See ?raw for
-	full details including the operators and utility functions provided.
-
-    o	The png() and jpeg() devices (and the bmp() device under Windows)
-	now allow a nominal resolution to be recorded in the file.
 
     o	ls.str() and lsf.str() now return an object of class "ls_str" which
 	has a print method.
 
-    o	There is now a replacement method for window(), to allow a
-	range of values of time series to be replaced by specifying the
-	start and end times (and optionally a frequency).
+    o	make.names() has a new argument allow_, which if false allows
+	its behaviour in R 1.8.1 to be reproduced.
+
+    o	The 'formula' method for mosaicplot() has a 'na.action' argument
+	defaulting to 'na.omit'.
 
     o	model.frame() now warns if it is given data = newdata and it
 	creates a model frame with a different number of rows from
 	that implied by the size of 'newdata'.
 
-    o	data.frame(check.names = TRUE) (the default) enforces unique
-	names, as S does.
+    o	The 'formula' method for pairs() has a 'na.action' argument,
+	defaulting to 'na.pass', rather than the value of
+	getOption("na.action").
 
-    o	make.names() has a new argument allow_, which if false allows
-	its behaviour in R 1.8.1 to be reproduced.
+    o	A 'version' argument has been added to pdf() device.  If this is
+	set to "1.4", the device will support transparent colours.
+
+    o	The png() and jpeg() devices (and the bmp() device under Windows)
+	now allow a nominal resolution to be recorded in the file.
+
+    o   power (x^y) has optimised code for y == 2.
 
     o	rank() has two new 'ties.method's, "min" and "max".
-
-    o   power (x^y) is optimised for y == 2.
-
-    o   read.fwf() reads multiline records, is faster for large files.
 
     o	New function read.fortran() reads Fortran-style fixed-format
 	specifications.
 
-    o	help() now returns information about available documentation for
-	a given topic, and notifies about multiple matches.
+    o   read.fwf() reads multiline records, is faster for large files.
+
+    o	readChar() can now read strings with embedded nuls.
+
+    o	reorder.dendrogram() now has a 'agglo.FUN' argument for
+	specification of a weights agglomeration function.
+
+    o	Replaying a plot (with replayPlot() or via autoprinting) now
+	automagically opens a device if none is open.
+
+    o	source() with 'echo = TRUE' uses the function source attribute
+    	when displaying commands as they are parsed.
+
+    o	str(obj) now displays more reasonably the STRucture of S4 objects.
+	The method for class "dendrogram" has a new argument 'stem' and
+	indicates when it's not printing all levels (as typically when
+	e.g., 'max.level = 2').
+
+    o	system.time() has a new argument 'gcFirst' which, when TRUE,
+	forces a garbage collection before timing begins.
 
     o	tail() of a matrix now displays the original row numbers.
 
-    o	data(), .path.packages() and .find.packages() now interpret
-	package = NULL to mean all loaded packages.
+    o	There is now a replacement method for window(), to allow a
+	range of values of time series to be replaced by specifying the
+	start and end times (and optionally a frequency).
 
-    o	dir.create() now expands '~' in filenames.
+    o	The screen devices x11(), windows() and quartz() have a new
+	argument 'bg' to set the default background colour.
 
-    o	interaction() has new argument 'sep'.
+    o	The way the comparison operators handle a list argument has
+	been rationalized so a few more cases will now work -- see
+	?Comparison.
+
+    o	Indexing a vector by a character vector was slow if both the
+	vector and index were long (say 10,000).  Now hashing is used
+	and the time should be linear in the longer of the lengths
+	(but more memory is used).
+
+    o	Printing a character string with embedded nuls now prints the
+	whole string, and non-printable characters are represented by
+	octal escape sequences.
 
 
 UTILITIES
@@ -321,7 +322,7 @@ BUG FIXES
 	the wrong place, possibly uninitialized memory.
 
     o   Rd.sty contained a length \middle that was not needed after a
-	revision in July 2000.  It causes problems with LaTeX systems
+	revision in July 2000.  It caused problems with LaTeX systems
 	based on e-TeX which are starting to appear.
 
     o   save() to a connection did not check that the connection was
