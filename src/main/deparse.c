@@ -541,29 +541,7 @@ static void deparse2buff(SEXP s, LocalParseData *d)
 	print2buff("NULL", d);
 	break;
     case SYMSXP:
-#if 1
 	print2buff(CHAR(PRINTNAME(s)), d);
-#else
-	/* I'm pretty sure this is WRONG:
-	   Blindly putting special symbols in ""s causes more trouble
-	   than it solves
-	   --pd
-	   */
-	if( isValidName(CHAR(PRINTNAME(s))) )
-	    print2buff(CHAR(PRINTNAME(s)));
-	else {
-	    if( strlen(CHAR(PRINTNAME(s)))< 117 ) {
-		sprintf(tpb,"\"%s\"",CHAR(PRINTNAME(s)));
-		print2buff(tpb);
-	    }
-	    else {
-		sprintf(tpb,"\"");
-		strncat(tpb, CHAR(PRINTNAME(s)), 117);
-		strcat(tpb, "\"");
-		print2buff(tpb);
-	    }
-	}
-#endif
 	break;
     case CHARSXP:
 	print2buff(CHAR(s), d);
@@ -871,18 +849,29 @@ static void deparse2buff(SEXP s, LocalParseData *d)
 		    break;
 		}
 		else {
-		    if ( isSymbol(CAR(s)) )
-			if ( !isValidName(CHAR(PRINTNAME(CAR(s)))) ){
-			    print2buff("\"", d);
-			    print2buff(CHAR(PRINTNAME(CAR(s))), d);
-			    print2buff("\"", d);
-			} else
-			    print2buff(CHAR(PRINTNAME(CAR(s))), d);
-		    else
-			deparse2buff(CAR(s), d);
-		    print2buff("(", d);
-		    args2buff(CDR(s), 0, 0, d);
-		    print2buff(")", d);
+		    if ( isSymbol(CAR(s))
+		      && TYPEOF(SYMVALUE(CAR(s))) == CLOSXP
+		      && streql(CHAR(PRINTNAME(CAR(s))), "::") ){ /*  :: is special case */
+		    	deparse2buff(CADR(s), d);
+		    	print2buff("::", d);
+			deparse2buff(CADDR(s), d);
+		    }
+		    else {
+			if ( isSymbol(CAR(s)) ){
+			    if ( !isValidName(CHAR(PRINTNAME(CAR(s)))) ){
+
+				print2buff("\"", d);
+				print2buff(CHAR(PRINTNAME(CAR(s))), d);
+				print2buff("\"", d);
+			    } else
+				print2buff(CHAR(PRINTNAME(CAR(s))), d);
+			}
+			else
+			    deparse2buff(CAR(s), d);
+			print2buff("(", d);
+			args2buff(CDR(s), 0, 0, d);
+			print2buff(")", d);
+		    }
 		}
 	    }
 	}

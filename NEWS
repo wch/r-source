@@ -672,6 +672,8 @@ BUG FIXES
 
     o	[<- lost the object bit if coercion was involved.
 
+    o	package::object wasn't being deparsed properly.
+
 
 
 	**************************************************
