@@ -34,6 +34,7 @@ install install-strip:
 	  (cd $${d} && $(MAKE) $@) || exit 1; \
 	done
 installdirs:
+	@$(MKINSTALLDIRS) $(Rexecmodulesdir)
 uninstall:
 	@rm -rf $(Rexecmodulesdir)
 
