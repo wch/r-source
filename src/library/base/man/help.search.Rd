@@ -32,7 +32,8 @@ help.search(pattern, fields = c("alias", "concept", "title"),
   \item{keyword}{a character string to be matched in the help page
     \sQuote{keywords}. \sQuote{Keywords} are really categories: the
     standard categories are listed in file \file{RHOME/doc/KEYWORDS} and
-    some package writers have defined their own.}
+    some package writers have defined their own.  If \code{keyword} is
+    specified, \code{agrep} defaults to \code{FALSE}.}
   \item{whatis}{a character string to be matched in the help page
     topics.}
   \item{ignore.case}{a logical.  If \code{TRUE}, case is ignored during
@@ -49,7 +50,8 @@ help.search(pattern, fields = c("alias", "concept", "title"),
   \item{verbose}{logical; if \code{TRUE}, the search process is traced.}
   \item{rebuild}{a logical indicating whether the help data base should
     be rebuilt.}
-  \item{agrep}{if \code{NULL} (the default) and the character string to
+  \item{agrep}{if \code{NULL} (the default unless \code{keyword} is
+    used) and the character string to
     be matched consists of alphanumeric characters, whitespace or a dash
     only, approximate (fuzzy) matching via \code{\link{agrep}} is used
     unless the string has fewer than 5 characters; otherwise, it is
@@ -62,9 +64,9 @@ help.search(pattern, fields = c("alias", "concept", "title"),
 \details{
   Upon installation of a package, a contents data base which contains
   the information on name, title, aliases and keywords and, concepts
-  starting with \R 1.8, is computed from the Rd files in the package and
+  starting with \R 1.8.0, is computed from the Rd files in the package and
   serialized as \file{Rd.rds} in the \file{Meta} subdirectory of the
-  top-level package installation directory (or, prior to \R 1.7, as
+  top-level package installation directory (or, prior to \R 1.7.0, as
   \file{CONTENTS} in Debian Control Format with aliases and keywords
   collapsed to character strings in the top-level package installation
   directory).  This, or a pre-built help.search index serialized as

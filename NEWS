@@ -26,7 +26,9 @@ NEW FEATURES
     o	The solve() function now uses the `tol' argument for all
         non-complex cases.  The default tolerance for LINPACK is 1e-7,
         as before.  For LAPACK it currently is .Machine$double.eps but
-        may be changed in future versions of R.
+
+    o   help.search() now defaults to agrep = FALSE when keyword= is
+	specified, since no one wants fuzzy matching of categories.
 
 
 BUG FIXES
@@ -61,7 +63,7 @@ BUG FIXES
     o	cor(<matrix>, use = "pairwise") gave wrong result in 1.8.0 (only).
 	(PR#4646)
 
-    o	merge.data.frame could give incorrect names when one of the
+    o	merge.data.frame() could give incorrect names when one of the
 	arguments had only one column.	(PR#4299)
 
     o	Subsetting a one-dimensional array dropped dimensions even when
@@ -75,7 +77,7 @@ BUG FIXES
 
     o	dist() objects with NA's didn't print these, now do. (PR#4866).
 
-    o	regexpr(fixed=TRUE) returned 0-based indices.
+    o	regexpr(fixed = TRUE) returned 0-based indices.
 
     o	df[, length_1_index] <- value did not recycle short rhs. (PR#4820)
 
