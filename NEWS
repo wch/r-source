@@ -191,6 +191,8 @@ NEW FEATURES
 	frame and then back to a matrix) is available for now as
 	write.table0().
 
+    o   New convenience wrappers write.csv() and write.csv2().  
+
 
 UTILITIES
 

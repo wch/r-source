@@ -224,3 +224,8 @@ function (x, file = "", append = FALSE, quote = TRUE, sep = " ",
     .Internal(write.table(x, file, nrow(x), p, rnames, sep, eol, na, dec,
                           as.integer(quote), qmethod != "double"))
 }
+
+write.csv <- function(...)
+    write.table(..., col.names=NA, sep=",", qmethod="double")
+write.csv2 <- function(...)
+    write.table(..., col.names=NA, dec=",", sep=";", qmethod="double")

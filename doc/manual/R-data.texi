@@ -90,7 +90,6 @@ principal authors of the packages mentioned are
 @quotation
 @multitable {foreign  xxxx} {A longggggggggggggggggggggggggggggggggg description}
 @item @pkg{CORBA} @tab Duncan Temple Lang
-@item @pkg{e1071} @tab Friedrich Leisch
 @item @pkg{foreign} @tab Thomas Lumley, Saikat DebRoy, Douglas Bates, Duncan Murdoch and Roger Bivand
 @item @pkg{hdf5} @tab Marcus Daniels
 @item @pkg{ncdf} @tab David Pierce
@@ -230,22 +229,21 @@ data frame to a text file.
 @findex format
 @item @strong{Precision}
 
-These functions are based on @code{cat} not @code{print}, and the
-precision to which numbers are printed is governed by the current
-setting of @code{options(digits)}.  It may be necessary to increase this
-to avoid losing precision.  For more control, use @code{format} on a
-data frame, possibly column-by-column.
+Most of the conversions of real/complex numbers done by these functions
+is to full precision, but those by @code{write} are governed by the
+current setting of @code{options(digits)}.  For more control, use
+@code{format} on a data frame, possibly column-by-column.
 
 @item @strong{Header line}
 
 @R{} prefers the header line to have no entry for the row names, so the
 file looks like
 
-@smallexample
+@example
                 dist    climb   time
 Greenmantle     2.5     650     16.083
    ...
-@end smallexample
+@end example
 
 @noindent
 Some other systems require a (possibly empty) entry for the row names, which
@@ -255,13 +253,16 @@ is specified.  Excel is one such system.
 @item @strong{Separator}
 @cindex CSV files
 @cindex comma separated values
+@findex write.csv
+@findex write.csv2
 
 A common field separator to use in the file is a comma, as that is
 unlikely to appear in any of the fields, in English-speaking countries.
-Such files are known as CSV (comma separated values) files.
-In some locales the comma is used as the decimal point
-(set this in @code{write.table} by @code{dec = ","}) and there CSV files
-use the semicolon as the field separator.
+Such files are known as CSV (comma separated values) files, and wrapper
+function @code{read.csv} provides appropriate defaults.  In some locales
+the comma is used as the decimal point (set this in @code{write.table}
+by @code{dec = ","}) and there CSV files use the semicolon as the field
+separator: use @code{read.csv2} for appropriate defaults.
 
 Using a semicolon or tab (@code{sep = "\t"}) are probably the safest
 options.
@@ -282,7 +283,7 @@ Argument @code{quote} controls quoting of character and factor variables.
 Some care is needed if the strings contain embedded quotes.  Three
 useful forms are
 
-@smallexample
+@example
 > df <- data.frame(a = I("a \" quote"))
 > write.table(df)
 "a"
@@ -293,16 +294,14 @@ useful forms are
 > write.table(df, quote = FALSE, sep = ",")
 a
 1,a " quote
-@end smallexample
+@end example
 
 @noindent
 The second is the form of escape commonly used by spreadsheets.
 @end enumerate
 
 @findex write.matrix
-Note that @code{write.table} is often not the best way to write out
-very large matrices, for which it can use excessively large amounts of
-memory. Function @code{write.matrix} in package @pkg{MASS} provides a
+Function @code{write.matrix} in package @pkg{MASS} provides a
 specialized interface for writing matrices, with the option of writing
 them in blocks and thereby reducing memory usage.
 
@@ -313,10 +312,10 @@ a file, and thereby capture the output of (possibly implicit)
 and the @code{options(width)} setting may need to be increased.
 
 @findex write.foreign
-@code{write.foreign} uses @code{write.table} to produce a text file
-and also writes a code file that will read this text file into another
-statistical package. There is currently support for export to @code{SPSS} and
-@code{Stata}.
+Function @code{write.foreign} in package @pkg{foreign} uses
+@code{write.table} to produce a text file and also writes a code file
+that will read this text file into another statistical package. There is
+currently support for export to @code{SPSS} and @code{Stata}.
 
 @node XML,  , Export to text files, Introduction
 @section XML
@@ -397,9 +396,9 @@ for the row labels, so is one field shorter than the remaining lines.
 file that has a (possibly empty) header field for the row labels, read
 it in by something like
 
-@smallexample
+@example
 read.table("file.dat", header = TRUE, row.names = 1)
-@end smallexample
+@end example
 
 Column names can be given explicitly via the @code{col.names}; explicit
 names override the header line (if present).
@@ -433,16 +432,16 @@ If a separator character is specified, quotes can be escaped within
 quoted strings by doubling them as is conventional in spreadsheets.  For
 example
 
-@smallexample
+@example
 'One string isn''t two',"one more"
-@end smallexample
+@end example
 
 @noindent
 can be read by
 
-@smallexample
+@example
 read.table("testfile", sep = ",")
-@end smallexample
+@end example
 
 @noindent
 This does not work with the default separator.
@@ -456,6 +455,9 @@ to represent missing values, but this can be changed by the argument
 representations of missing values.
 
 Empty fields in numeric columns are also regarded as missing values.
+
+In numeric columns, the values @code{NaN}, @code{Inf} and @code{-Inf} are
+accepted.
 
 @item @strong{Unfilled lines}
 
@@ -473,8 +475,8 @@ use argument @code{strip.white = TRUE}.
 
 By default, @code{read.table} ignores empty lines.  This can be changed
 by setting @code{blank.lines.skip = FALSE}, which will only be useful in
-conjunction with @code{fill = TRUE}, perhaps to indicate missing data in
-a regular layout.
+conjunction with @code{fill = TRUE}, perhaps to use blank rows to
+indicate missing cases in a regular layout.
 
 @item @strong{Classes for the variables}
 
@@ -518,24 +520,25 @@ arguments to @code{read.table} appropriate for CSV and tab-delimited
 files exported from spreadsheets in English-speaking locales.  The
 variations @code{read.csv2} and @code{read.delim2} are appropriate for
 use in countries where the comma is used for the decimal point.
-You can find the current settings of the computer in use by calling
-@code{Sys.localeconv()}.
+@c Currently R overrides the setting of LC_NUMERIC
+@c You can find the current settings of the computer in use by calling
+@c @code{Sys.localeconv()}.
 
 If the options to @code{read.table} are specified incorrectly, the error
 message will usually be of the form
 
-@smallexample
+@example
 Error in scan(file = file, what = what, sep = sep, : 
         line 1 did not have 5 elements
-@end smallexample
+@end example
 
 @noindent
 or
 
-@smallexample
+@example
 Error in read.table("files.dat", header = TRUE) : 
         more columns than column names
-@end smallexample
+@end example
 
 @findex count.fields
 
@@ -544,10 +547,14 @@ This may give enough information to find the problem, but the auxiliary
 function @code{count.fields} can be useful to investigate further.
 
 Efficiency can be important when reading large data grids.  It will help
-to specify @code{colClasses} as one of the atomic vector types (logical,
-integer, numeric, complex, character or perhaps raw) for each column,
-and to give @code{nrows}, the number of rows to be read (and a mild
-over-estimate is better than not specifying this at all).
+to specify @code{comment.char = ""}, @code{colClasses} as one of the
+atomic vector types (logical, integer, numeric, complex, character or
+perhaps raw) for each column, and to give @code{nrows}, the number of
+rows to be read (and a mild over-estimate is better than not specifying
+this at all).  Here is an example
+
+@example
+@end example
 
 
 @node Fixed-width-format files, Using scan directly, Variations on read.table, Spreadsheet-like data
@@ -590,10 +597,10 @@ components of the returned list.  Modes can be numeric, character or
 complex, and are usually specified by an example, e.g. @code{0},
 @code{""} or @code{0i}.  For example
 
-@smallexample
+@example
 cat("2 3 5 7", "11 13 17 19", file="ex.dat", sep="\n")
 scan(file="ex.dat", what=list(x=0, y="", z=0), flush=TRUE)
-@end smallexample
+@end example
 
 @noindent
 returns a list with three components and discards the fourth column in
@@ -603,24 +610,64 @@ the file.
 There is a function @code{readLines} which will be more convenient if
 all you want is to read whole lines into @R{} for further processing.
 
-One common use of @code{scan} is to read in a large numeric matrix.
-Suppose file @file{matrix.dat} just contains the numbers for a 200 x
-2000 matrix. Then we can use
+One common use of @code{scan} is to read in a large matrix.  Suppose
+file @file{matrix.dat} just contains the numbers for a 200 x 2000
+matrix. Then we can use
+@c write.table(matrix(rnorm(200*2000), 200), "matrix.dat", row.names=F, col.names=F)
 
-@smallexample
+@example
 A <- matrix(scan("matrix.dat", n = 200*2000), 200, 2000, byrow = TRUE)
-@end smallexample
+@end example
 
 @noindent
-On one test this took 2 seconds whereas
+On one test this took 1 second (under Linux, 3 seconds under Windows on
+the same machine) whereas
 
-@smallexample
+@example
 A <- as.matrix(read.table("matrix.dat"))
-@end smallexample
+@end example
 
 @noindent
-took 32 seconds (and a lot more memory).  (Using @code{comment.char =
-""} saved 3 seconds.)
+took 10 seconds (and more memory), and 
+
+@example
+A <- as.matrix(read.table("matrix.dat", header = FALSE, nrows = 200,
+                          comment.char = "", colClasses = "numeric"))
+@end example
+
+@noindent
+took 7 seconds.  The difference is almost entirely due to the overhead
+of reading 2000 separate short columns: were they of length 2000,
+@code{scan} took 9 seconds whereas @code{read.table} took 18 if used
+efficiently (in particular, specifying @code{colClasses}) and 125 if
+used naively.
+
+
+Note that timings can depend on the type read and the data. 
+Consider reading a million integers:
+@example
+writeLines(as.character((1+1e6):2e6), "ints.dat")
+xi <- scan("ints.dat", what=integer(0), n=1e6)   # 0.77s
+xn <- scan("ints.dat", what=numeric(0), n=1e6)   # 0.93s
+xc <- scan("ints.dat", what=character(0), n=1e6) # 0.85s
+xf <- as.factor(xc)                              # 2.2s
+DF <- read.table("ints.dat")                     # 4.5s
+@end example
+@noindent
+and a million distinct codes:
+@example
+code <- c("LMH", "SJC", "CHCH", "SPC", "SOM")
+writeLines(sample(code, 1e6, replace=TRUE), "code.dat")
+y <- scan("code.dat", what=character(0), n=1e6) # 0.44s
+yf <- as.factor(y)                              # 0.21s
+DF <- read.table("code.dat")                    # 4.9s
+DF <- read.table("code.dat", nrows=1e6)         # 3.6s
+@end example
+
+Note that these timings depend heavily on the system (the basic reads in
+Windows take at least as twice as long as these Linux times) and on the
+precise state of the garbage collector.
+
 
 @node Re-shaping data, Flat contingency tables, Using scan directly, Spreadsheet-like data
 @section Re-shaping data
@@ -651,10 +698,10 @@ The data were exported from Excel as a file @file{mr.csv}.
 We can use @code{stack} to help manipulate these data to give a single
 response.
 
-@smallexample
+@example
 zz <- read.csv("mr.csv", strip.white = TRUE)
 zzz <- cbind(zz[gl(nrow(zz), 1, 4*nrow(zz)), 1:2], stack(zz[, 3:6]))
-@end smallexample
+@end example
 
 @noindent
 with result
@@ -680,7 +727,7 @@ useful for exporting data.
 Another way to do this is to use the function
 @code{reshape}, by
 
-@smallexample
+@example
 > reshape(zz, idvar="id",timevar="var",
   varying=list(c("V1","V2","V3","V4")),direction="long")
     Status   Age var    V1 id
@@ -694,7 +741,7 @@ Another way to do this is to use the function
 1.2      P 23646   2 50333  1
 2.2     CC 26174   2 38227  2
 ...
-@end smallexample
+@end example
 
 The @code{reshape} has a more complicated syntax than @code{stack} but
 can be used for data where the `long' form has more than the one column
@@ -723,7 +770,7 @@ As a simple example, consider the @R{} standard data set
 resulting from classifying applicants to graduate school at UC Berkeley
 for the six largest departments in 1973 classified by admission and sex.
 
-@smallexample
+@example
 > data(UCBAdmissions)
 > ftable(UCBAdmissions)
                 Dept   A   B   C   D   E   F
@@ -732,7 +779,7 @@ Admitted Male        512 353 120 138  53  22
          Female       89  17 202 131  94  24
 Rejected Male        313 207 205 279 138 351
          Female       19   8 391 244 299 317
-@end smallexample
+@end example
 
 @noindent
 The printed representation is clearly more useful than displaying the
@@ -855,7 +902,7 @@ or (more recently) @code{.syd}.
 @findex read.octave
 
 Octave is a numerical linear algebra system, and function
-@code{read.octave} in package @pkg{e1071} can read the first vector or
+@code{read.octave} in package @pkg{foreign} can read the first vector or
 matrix from an Octave ASCII data file created using the Octave command
 @command{save -ascii}.
 
@@ -974,7 +1021,7 @@ they are made up of @emph{columns} or @emph{fields} of one type
 @acronym{SQL} `queries' are quite general operations on a relational
 database.  The classical query is a SELECT statement of the type
 
-@smallexample
+@example
 SELECT State, Murder FROM USArrests WHERE Rape > 30 ORDER BY Murder
 
 SELECT t.sch, c.meanses, t.sex, t.achieve
@@ -983,7 +1030,7 @@ SELECT t.sch, c.meanses, t.sex, t.achieve
 SELECT sex, COUNT(*) FROM student GROUP BY sex
 
 SELECT sch, AVG(sestat) FROM student GROUP BY sch LIMIT 10
-@end smallexample
+@end example
 
 @noindent
 The first of these selects two columns from the @R{} data frame
@@ -1653,7 +1700,7 @@ to a connection.
 
 Some simple examples are
 
-@smallexample
+@example
 zz <- file("ex.data", "w")  # open an output file connection
 cat("TITLE extra line", "2 3 5 7", "", "11 13 17", 
     file = zz, sep = "\n")
@@ -1677,7 +1724,7 @@ close(zz)
 ## now `ex.lm.out' contains the output for futher processing.
 ## Look at it by, e.g.,
 cat(ex.lm.out, sep = "\n")
-@end smallexample
+@end example
 
 @node Input from connections, Listing and manipulating connections, Output to connections, Connections
 @section Input from connections
@@ -1696,7 +1743,7 @@ in particular @code{read.table}.
 
 Some simple examples are
 
-@smallexample
+@example
 ## read in file created in last examples
 readLines("ex.data")
 unlink("ex.data")
@@ -1711,7 +1758,7 @@ readLines(pipe("ls -1"))
 446, 547, 534, 495, 979, 479
 # Then read this by
 scan(pipe("sed -e s/,$// data"), sep=",")
-@end smallexample
+@end example
 
 @cindex URL connections
 For convenience, if the @code{file} argument specifies a FTP or HTTP
@@ -1743,7 +1790,7 @@ pending lines pushed back can be found via a call to
 
 A simple example will show the idea.
 
-@smallexample
+@example
 > zz <- textConnection(LETTERS)
 > readLines(zz, 2)
 [1] "A" "B"
@@ -1755,7 +1802,7 @@ Read 4 items
 Read 4 items
 [1] "aa" "bb" "G"  "H" 
 > close(zz)
-@end smallexample
+@end example
 
 Pushback is only available for connections opened for input in text mode.
 
@@ -1796,10 +1843,10 @@ binary connections.  A connection is opened in binary mode by appending
 reading, and mode @code{"wb"} or @code{"ab"} (where appropriate) for
 writing.  The functions have arguments
 
-@smallexample
+@example
 readBin(con, what, n = 1, size = NA, endian = .Platform$endian) 
 writeBin(object, con, size = NA, endian = .Platform$endian) 
-@end smallexample
+@end example
 
 In each case @code{con} is a connection which will be opened if
 necessary for the duration of the call, and if a character string is
