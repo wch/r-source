@@ -68,7 +68,10 @@ bringToTop(which = dev.cur())
   the plot size unchanged, adding scrollbars if part of the
   plot is obscured.
   This setting also affects the initial re-scaling if the specified
-  window size is too big.
+  window size is too big.   Using \code{\link{strwidth}} or
+  \code{\link{strheight}} after a window has been rescaled gives
+  dimensions in the original units, but only approximately as they are
+  derived from the metrics of the rescaled fonts.
 }
 
 \value{
