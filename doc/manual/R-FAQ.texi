@@ -3,8 +3,8 @@
 @setfilename R-FAQ.info
 @settitle R FAQ
 @setchapternewpage on
-@set FAQ-YEAR 2001
-@set FAQ-VERSION 1.4-2, 2001-12-29
+@set FAQ-YEAR 2002
+@set FAQ-VERSION 1.4-3, 2002-01-02
 @set REL-VERSION 1.4.0
 @c %**end of header
 
@@ -1881,6 +1881,8 @@ Functions for exporting R objects & graphics in an @HTML{} document.
 @c  Provides methods for accessing data stored in PostgreSQL tables.
 @item StatDataML
 Read and write StatDataML.
+@item colSums
+Matrix summary functions in C.
 @item cxx
 A small C++ test package.
 @item dopt
