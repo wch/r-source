@@ -602,6 +602,9 @@ BUG FIXES
 	help file: previously whether foo.R or foo.csv was used was
 	locale-dependent.
 
+    o	sys.function() now returns the actual function being evaluated in
+ 	the specified frame rather than one inferred from the call.
+
 
 
 	**************************************************

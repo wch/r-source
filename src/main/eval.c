@@ -430,7 +430,7 @@ SEXP eval(SEXP e, SEXP rho)
 		PROTECT(tmp = evalList(CDR(e), rho));
 		R_Visible = 1 - PRIMPRINT(op);
 		begincontext(&cntxt, CTXT_BUILTIN, e,
-			     R_NilValue, R_NilValue, R_NilValue);
+			     R_NilValue, R_NilValue, R_NilValue, R_NilValue);
 		tmp = PRIMFUN(op) (e, op, tmp, rho);
 		endcontext(&cntxt);
 		UNPROTECT(1);
@@ -485,7 +485,7 @@ SEXP applyClosure(SEXP call, SEXP op, SEXP arglist, SEXP rho, SEXP suppliedenv)
 
     /*  Set up a context with the call in it so error has access to it */
 
-    begincontext(&cntxt, CTXT_RETURN, call, savedrho, rho, arglist);
+    begincontext(&cntxt, CTXT_RETURN, call, savedrho, rho, arglist, op);
 
     /*  Build a list which matches the actual (unevaluated) arguments
 	to the formal paramters.  Build a new environment which
@@ -543,9 +543,9 @@ SEXP applyClosure(SEXP call, SEXP op, SEXP arglist, SEXP rho, SEXP suppliedenv)
 
     if( R_GlobalContext->callflag == CTXT_GENERIC )
 	begincontext(&cntxt, CTXT_RETURN, call,
-		     newrho, R_GlobalContext->sysparent, arglist);
+		     newrho, R_GlobalContext->sysparent, arglist, op);
     else
-	begincontext(&cntxt, CTXT_RETURN, call, newrho, rho, arglist);
+	begincontext(&cntxt, CTXT_RETURN, call, newrho, rho, arglist, op);
 
     /* The default return value is NULL.  FIXME: Is this really needed
        or do we always get a sensible value returned?  */
@@ -760,7 +760,8 @@ SEXP do_for(SEXP call, SEXP op, SEXP args, SEXP rho)
     bgn = BodyHasBraces(body);
 
     PROTECT_WITH_INDEX(ans, &api);
-    begincontext(&cntxt, CTXT_LOOP, R_NilValue, rho, R_NilValue, R_NilValue);
+    begincontext(&cntxt, CTXT_LOOP, R_NilValue, rho, R_NilValue, R_NilValue,
+		 R_NilValue);
     switch (SETJMP(cntxt.cjmpbuf)) {
     case CTXT_BREAK: goto for_break;
     case CTXT_NEXT: goto for_next;
@@ -832,7 +833,8 @@ SEXP do_while(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     t = R_NilValue;
     PROTECT_WITH_INDEX(t, &tpi);
-    begincontext(&cntxt, CTXT_LOOP, R_NilValue, rho, R_NilValue, R_NilValue);
+    begincontext(&cntxt, CTXT_LOOP, R_NilValue, rho, R_NilValue, R_NilValue,
+		 R_NilValue);
     if (SETJMP(cntxt.cjmpbuf) != CTXT_BREAK) {
 	while (asLogicalNoNA(eval(CAR(args), rho), call)) {
 	    DO_LOOP_DEBUG(call, op, args, rho, bgn);
@@ -863,7 +865,8 @@ SEXP do_repeat(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     t = R_NilValue;
     PROTECT_WITH_INDEX(t, &tpi);
-    begincontext(&cntxt, CTXT_LOOP, R_NilValue, rho, R_NilValue, R_NilValue);
+    begincontext(&cntxt, CTXT_LOOP, R_NilValue, rho, R_NilValue, R_NilValue,
+		 R_NilValue);
     if (SETJMP(cntxt.cjmpbuf) != CTXT_BREAK) {
 	for (;;) {
 	    DO_LOOP_DEBUG(call, op, args, rho, bgn);
@@ -1384,7 +1387,7 @@ SEXP do_eval(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
     if(isLanguage(expr) || isSymbol(expr)) {
 	PROTECT(expr);
-	begincontext(&cntxt, CTXT_RETURN, call, env, rho, args);
+	begincontext(&cntxt, CTXT_RETURN, call, env, rho, args, op);
 	if (!SETJMP(cntxt.cjmpbuf))
 	    expr = eval(expr, env);
 	endcontext(&cntxt);
@@ -1395,7 +1398,7 @@ SEXP do_eval(SEXP call, SEXP op, SEXP args, SEXP rho)
 	PROTECT(expr);
 	n = LENGTH(expr);
 	tmp = R_NilValue;
-	begincontext(&cntxt, CTXT_RETURN, call, env, rho, args);
+	begincontext(&cntxt, CTXT_RETURN, call, env, rho, args, op);
 	if (!SETJMP(cntxt.cjmpbuf))
 	    for(i=0 ; i<n ; i++)
 		tmp = eval(VECTOR_ELT(expr, i), env);
@@ -1559,7 +1562,7 @@ int DispatchOrEval(SEXP call, SEXP op, char *generic, SEXP args, SEXP rho,
 	    SEXP pargs;
 	    PROTECT(pargs = promiseArgs(args, rho)); nprotect++;
 	    SET_PRVALUE(CAR(pargs), x);
-	    begincontext(&cntxt, CTXT_RETURN, call, rho, rho, pargs);
+	    begincontext(&cntxt, CTXT_RETURN, call, rho, rho, pargs, op);
 #ifdef EXPERIMENTAL_NAMESPACES
 	    if(usemethod(generic, x, call, pargs, rho, rho, R_NilValue, ans))
 #else
@@ -1603,7 +1606,7 @@ int DispatchOrEval(SEXP call, SEXP op, char *generic, SEXP args, SEXP rho,
 	if (pt == NULL || strcmp(pt,".default")) {
 	    /* PROTECT(args = promiseArgs(args, rho)); */
 	    SET_PRVALUE(CAR(args), x);
-	    begincontext(&cntxt, CTXT_RETURN, call, rho, rho, args);
+	    begincontext(&cntxt, CTXT_RETURN, call, rho, rho, args, op);
 #ifdef EXPERIMENTAL_NAMESPACES
 	    if(usemethod(generic, x, call, args, rho, rho, R_NilValue, ans)) {
 #else

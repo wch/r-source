@@ -449,6 +449,7 @@ void setup_Rmainloop(void)
     R_Toplevel.callflag = CTXT_TOPLEVEL;
     R_Toplevel.cstacktop = 0;
     R_Toplevel.promargs = R_NilValue;
+    R_Toplevel.callfun = R_NilValue;
     R_Toplevel.call = R_NilValue;
     R_Toplevel.cloenv = R_NilValue;
     R_Toplevel.sysparent = R_NilValue;
@@ -715,12 +716,12 @@ SEXP do_browser(SEXP call, SEXP op, SEXP args, SEXP rho)
     /* acts as a target for error returns. */
 
     begincontext(&returncontext, CTXT_BROWSER, call, rho,
-		 R_NilValue, R_NilValue);
+		 R_NilValue, R_NilValue, R_NilValue);
     returncontext.cend = browser_cend;
     returncontext.cenddata = &savebrowselevel;
     if (!SETJMP(returncontext.cjmpbuf)) {
 	begincontext(&thiscontext, CTXT_RESTART, R_NilValue, rho,
-		     R_NilValue, R_NilValue);
+		     R_NilValue, R_NilValue, R_NilValue);
 	if (SETJMP(thiscontext.cjmpbuf)) {
 	    SET_RESTART_BIT_ON(thiscontext.callflag);
 	    R_ReturnedValue = R_NilValue;

@@ -998,7 +998,7 @@ static Rboolean RunFinalizers(void)
 	       insure that any errors that might occur do not spill
 	       into the call that triggered the collection. */
 	    begincontext(&thiscontext, CTXT_TOPLEVEL, R_NilValue, R_GlobalEnv,
-			 R_NilValue, R_NilValue);
+			 R_NilValue, R_NilValue, R_NilValue);
 	    saveToplevelContext = R_ToplevelContext;
 	    PROTECT(topExp = R_CurrentExpr);
 	    savestack = R_PPStackTop;
@@ -1187,8 +1187,14 @@ static void RunGenCollect(R_size_t size_needed)
 	}
     }
 
-    for (ctxt = R_GlobalContext ; ctxt != NULL ; ctxt = ctxt->nextcontext)
-	FORWARD_NODE(ctxt->conexit);           /* on.exit expressions */
+    for (ctxt = R_GlobalContext ; ctxt != NULL ; ctxt = ctxt->nextcontext) {
+	FORWARD_NODE(ctxt->conexit);       /* on.exit expressions */
+	FORWARD_NODE(ctxt->promargs);	   /* promises supplied to closure */
+	FORWARD_NODE(ctxt->callfun);       /* the closure called */
+        FORWARD_NODE(ctxt->sysparent);     /* calling environment */
+	FORWARD_NODE(ctxt->call);          /* the call */
+	FORWARD_NODE(ctxt->cloenv);        /* the closure environment */
+    }
 
     FORWARD_NODE(framenames); 		   /* used for interprocedure
 					      communication in model.c */

@@ -228,7 +228,7 @@ SEXP do_dataentry(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     /* set up a context which will close the window if there is an error */
     begincontext(&cntxt, CTXT_CCODE, R_NilValue, R_NilValue, R_NilValue,
-		 R_NilValue);
+		 R_NilValue, R_NilValue);
     cntxt.cend = &de_closewin_cend;
     cntxt.cenddata = NULL;
 

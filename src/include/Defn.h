@@ -320,6 +320,7 @@ typedef struct RCNTXT {
     int cstacktop;		/* Top of the pointer protection stack */
     int evaldepth;	        /* evaluation depth at inception */
     SEXP promargs;		/* Promises supplied to closure */
+    SEXP callfun;		/* The closure called */
     SEXP sysparent;		/* environment the closure was called from */
     SEXP call;			/* The call that effected this context*/
     SEXP cloenv;		/* The environment */
@@ -656,7 +657,7 @@ void R_SetVarLocValue(R_varloc_t, SEXP);
 /* Other Internally Used Functions */
 
 SEXP Rf_append(SEXP, SEXP); /* apparently unused now */
-void begincontext(RCNTXT*, int, SEXP, SEXP, SEXP, SEXP);
+void begincontext(RCNTXT*, int, SEXP, SEXP, SEXP, SEXP, SEXP);
 void checkArity(SEXP, SEXP);
 void CheckFormals(SEXP);
 void CleanEd(void);

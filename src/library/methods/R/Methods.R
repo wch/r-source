@@ -665,7 +665,12 @@ isGroup <-
 callGeneric <- function(...)
 {
     frame <- sys.parent()
-    fdef <- sys.function(frame)
+
+    # the two lines below this comment do what the previous version of
+    # did in the expression fdef <- sys.function(frame)
+    fname <- sys.call(frame)[[1]]
+    fdef <- get(as.character(fname), env = parent.frame())
+
     if(is.primitive(fdef)) {
         if(nargs() == 0)
             stop("callGeneric with a primitive needs explict arguments (no formal args defined)")
