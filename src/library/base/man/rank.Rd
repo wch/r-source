@@ -9,4 +9,11 @@ rank(x)
 Ties result in ranks being averaged.
 \code{NA} values are not allowed in this function.
 }
+\seealso{\code{\link{order}} and \code{\link{sort}}.}
+\examples{
+(r1 <- rank(x1 <- c(3,1,4,59,26)))
+all(rank(r1) == r1) ## rank() is "idempotent": rank(rank(x)) == rank(x)
+(r2 <- rank(x2 <- c(3,1,4,5,9,2,6,5,3,5)))
+all(rank(r2) == r2)
+}
 \keyword{univar}

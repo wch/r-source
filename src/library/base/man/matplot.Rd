@@ -82,7 +82,7 @@ data(iris)                  # is data.frame with  `Species' factor
 table(iris$Species)
 iS <- iris$Species == "setosa"
 iV <- iris$Species == "versicolor"
-par(bg = "bisque")
+op <- par(bg = "bisque")
 matplot(c(1, 8), c(0, 4.5), type= "n", xlab = "Length", ylab = "Width",
         main = "Petal and Sepal Dimensions in Iris Blossoms")
 matpoints(iris[iS,c(1,3)], iris[iS,c(2,4)], pch = "sS", col = c(2,4))
@@ -102,6 +102,7 @@ matplot(iris.S[,"Petal.Length",], iris.S[,"Petal.Width",], pch="SCV",
                     sep = "=", collapse= ",  "),
         main = "Fisher's Iris Data")
 }
+par(op)
 \keyword{hplot}
 \keyword{aplot}
 \keyword{array}
