@@ -523,10 +523,12 @@ se.contrast.aov <-
     if(is.null(data)) contrast.obj <- eval(contrast.obj)
     else contrast.obj <- eval(substitute(contrast.obj), data, parent.frame())
     if(!is.matrix(contrast.obj)) { # so a list
-        if(sum(coef) != 0)
-            stop("coef must define a contrast, i.e., sum to 0")
-        if(length(coef) != length(contrast.obj))
-            stop("coef must have same length as contrast.obj")
+        if(!missing(coef)) {
+            if(sum(coef) != 0)
+                stop("coef must define a contrast, i.e., sum to 0")
+            if(length(coef) != length(contrast.obj))
+                stop("coef must have same length as contrast.obj")
+        }
         contrast <-
             sapply(contrast.obj, function(x)
                {
@@ -613,10 +615,12 @@ se.contrast.aovlist <-
         if(is.null(data)) eval(contrast.obj)
         else eval(substitute(contrast.obj), data, parent.frame())
     if(!is.matrix(contrast.obj)) {
-        if(sum(coef) != 0)
-            stop("coef must define a contrast, i.e., sum to 0")
-        if(length(coef) != length(contrast.obj))
-            stop("coef must have same length as contrast.obj")
+        if(!missing(coef)) {
+            if(sum(coef) != 0)
+                stop("coef must define a contrast, i.e., sum to 0")
+            if(length(coef) != length(contrast.obj))
+                stop("coef must have same length as contrast.obj")
+        }
         contrast <-
             sapply(contrast.obj,
                    function(x) {
