@@ -59,7 +59,7 @@ col <- function(x, as.factor=FALSE) {
     else .Internal(col(x))
 }
 
-crossprod <- function(x, y=x) .Internal(crossprod(x,y))
+crossprod <- function(x, y=NULL) .Internal(crossprod(x,y))
 
 t <- function(x) UseMethod("t")
 ## t.default is <primitive>

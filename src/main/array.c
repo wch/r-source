@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998-2001   The R Development Core Team.
+ *  Copyright (C) 1998-2002   The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -388,6 +388,19 @@ static void cmatprod(Rcomplex *x, int nrx, int ncx,
 	}
 }
 
+static void symcrossprod(double *x, int nr, int nc, double *z)
+{
+    char *trans = "T", *uplo = "U";
+    double one = 1.0, zero = 0.0;
+    int i, j;
+
+    if (nr > 0 && nc > 0) {
+        F77_CALL(dsyrk)(uplo, trans, &nc, &nr, &one, x, &nr, &zero, z, &nc);
+	for (i = 1; i < nc; i++) 
+	    for (j = 0; j < i; j++) z[i + nc *j] = z[j + nc * i];
+    }
+}
+
 static void crossprod(double *x, int nrx, int ncx,
 		      double *y, int nry, int ncy, double *z)
 {
@@ -457,14 +470,14 @@ static void ccrossprod(Rcomplex *x, int nrx, int ncx,
 SEXP do_matprod(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     int ldx, ldy, nrx, ncx, nry, ncy, mode;
-    SEXP x, y, xdims, ydims, ans;
+    SEXP x = CAR(args), y = CADR(args), xdims, ydims, ans;
+    Rboolean sym;
 
-    if (!(isNumeric(CAR(args)) || isComplex(CAR(args))) ||
-	!(isNumeric(CADR(args)) || isComplex(CADR(args))))
+    sym = isNull(y);
+    if (sym && (PRIMVAL(op) == 1)) y = x;
+    if ( !(isNumeric(x) || isComplex(x)) || !(isNumeric(y) || isComplex(y)) )
 	errorcall(call, "requires numeric matrix/vector arguments");
 
-    x = CAR(args);
-    y = CADR(args);
     xdims = getAttrib(x, R_DimSymbol);
     ydims = getAttrib(y, R_DimSymbol);
     ldx = length(xdims);
@@ -594,9 +607,15 @@ SEXP do_matprod(SEXP call, SEXP op, SEXP args, SEXP rho)
 	if (mode == CPLXSXP)
 	    ccrossprod(COMPLEX(CAR(args)), nrx, ncx,
 		       COMPLEX(CADR(args)), nry, ncy, COMPLEX(ans));
-	else
-	    crossprod(REAL(CAR(args)), nrx, ncx,
-		      REAL(CADR(args)), nry, ncy, REAL(ans));
+	else {
+#ifdef IEEE_754
+	    if(sym)
+		symcrossprod(REAL(CAR(args)), nrx, ncx, REAL(ans));
+	    else
+#endif
+		crossprod(REAL(CAR(args)), nrx, ncx,
+			  REAL(CADR(args)), nry, ncy, REAL(ans));
+	}
 	PROTECT(xdims = getAttrib(CAR(args), R_DimNamesSymbol));
 	PROTECT(ydims = getAttrib(CADR(args), R_DimNamesSymbol));
 	if (xdims != R_NilValue || ydims != R_NilValue) {

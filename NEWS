@@ -176,6 +176,11 @@ NEW FEATURES
     o   [pqr]binom() no longer silently round the `size' argument,
 	but return NaN (as dbinom() does). (PR#1377)
 
+    o   crossprod() handles the case of real matrices with y = x
+	separately (by accepting y = NULL).  This gives a small
+	performance gain (suggestion of Jonathan Rougier).
+
+
 
 DEPRECATED & DEFUNCT
 
