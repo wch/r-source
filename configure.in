@@ -526,25 +526,23 @@ SHLIBEXT=so
 AC_PATH_PROG(XMKMF, xmkmf, ,
   ${PATH}:/usr/bin/X11:/usr/X11R6/bin:/usr/openwin/bin)
 AC_MSG_CHECKING([how to deal with shared libraries])
+if test -n "${XMKMF}"; then
+  echo > Imakefile
+  ${XMKMF} > /dev/null
+  cc=`${srcdir}/tools/GETMAKEVAL CC`
+  if test "`which ${cc}`" = "`which ${CC}`"; then
+    shlibldflags=`${srcdir}/tools/GETMAKEVAL SHLIBLDFLAGS`  
+    cpicflags=`${srcdir}/tools/GETMAKEVAL PICFLAGS`
+    fpicflags=${cpicflags}
+  fi
+  rm -f Imakefile Makefile
+fi
 if test "${GCC}" = yes; then
   cpicflags=-fPIC
   shlibldflags=-shared
-else
-  if test -n "${XMKMF}"; then
-    echo > Imakefile
-    ${XMKMF} > /dev/null
-    cc=`${srcdir}/tools/GETMAKEVAL CC`
-    if test "`which ${cc}`" = "`which ${CC}`"; then
-      cpicflags=`${srcdir}/tools/GETMAKEVAL PICFLAGS`
-      shlibldflags=`${srcdir}/tools/GETMAKEVAL SHLIBLDFLAGS`
-    fi
-    rm -f Imakefile Makefile
-  fi
 fi
 if test "${G77}" = yes; then
   fpicflags=-fPIC
-else
-  fpicflags=${cpicflags}
 fi
 AC_MSG_RESULT(done)
 
@@ -606,7 +604,8 @@ case "${host}" in
         cpicflags="+z" ;;
     esac
     dllflags="-Wl,-E"
-    shlibldflags=-b
+    shlibld=ld
+    shlibldflags="-b"
     SHLIBEXT=sl
     ;;
   *solaris*)
