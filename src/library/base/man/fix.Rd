@@ -1,20 +1,21 @@
 \name{fix}
-\title{Fix an Object}
-\usage{
-fix(x, ...)
-}
 \alias{fix}
-\arguments{
-  \item{x}{An \R object}
-  \item{...}{Arguments to pass to editor}
-}
+\title{Fix an Object}
 \description{
   \code{fix} invokes the editor specified in
   \code{\link{options}("editor")} on \code{x} and then assigns the new
   (edited) version of \code{x} in the user's workspace.
 }
+\usage{
+fix(x, \dots)
+}
+\arguments{
+  \item{x}{an \R object.}
+  \item{\dots}{arguments to pass to editor.}
+}
 \seealso{
-  \code{\link{edit}},  \code{\link{edit.data.frame}}
+  \code{\link{edit}},
+  \code{\link{edit.data.frame}}
 }
 \examples{
 \dontrun{

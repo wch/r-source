@@ -8,9 +8,9 @@
   needed to display the largest, using leading zeroes as necessary.
 }
 \usage{
-as.character.octmode(x, \dots)
-format.octmode(x, \dots)
-print.octmode(x, \dots)
+\method{as.character}{octmode}(x, \dots)
+\method{format}{octmode}(x, \dots)
+\method{print}{octmode}(x, \dots)
 }
 \arguments{
   \item{x}{An object inheriting from class \code{"octmode"}.}
@@ -19,9 +19,10 @@ print.octmode(x, \dots)
 \details{
   Class \code{"octmode"} consists of integer vectors with that class
   atttribute, used merely to ensure that they are printed in octal
-  notation, specifically for Unix-like file permissions such as \code{755}.
+  notation, specifically for Unix-like file permissions such as
+  \code{755}.
 }
-
-\seealso{These are auxiliary functions for \code{\link{file.info}}}
-
+\seealso{
+  These are auxiliary functions for \code{\link{file.info}}
+}
 \keyword{print}
