@@ -47,6 +47,6 @@ browseURL <- function(url, browser = getOption("browser"))
                          sep = "")
                })
     else url
-    system(paste(browser, remoteCmd, "2>/dev/null ||",
+    system(paste(browser, remoteCmd, "2>&1 >/dev/null ||",
                  browser, url, "&"))
 }
