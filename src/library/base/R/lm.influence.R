@@ -89,11 +89,11 @@ influence.measures <- function(lm.obj)
 	if(n <= k)
 	    stop("Too few cases, n < k")
 	absmat <- abs(infmat)
-	result <- cbind(absmat[, 1:k] > 1,
-			absmat[, k + 1] > 3 * sqrt(k/(n - k)),
-			abs(1 - infmat[, k + 2]) > (3 * k)/(n - k),
-			qf(infmat[, k + 3], k, n - k) > 0.9,
-			infmat[, k + 4] > (3 * k)/n)
+	result <- cbind(absmat[, 1:k] > 1, # |dfbetas| > 1
+			absmat[, k + 1] > 3 * sqrt(k/(n - k)), # |dffit| > ..
+			abs(1 - infmat[, k + 2]) > (3*k)/(n - k),# |1-cov.r| >..
+			pf(infmat[, k + 3], k, n - k) > 0.9,# P[cook.d..] > .9
+			infmat[, k + 4] > (3 * k)/n) # hat > 3k/n
 	dimnames(result) <- dimnames(infmat)
 	result
     }
@@ -114,7 +114,6 @@ influence.measures <- function(lm.obj)
     infmat <- cbind(dfbetas, dffit = dffits, cov.r = cov.ratio,
 		    cook.d = cooks.d, hat=h)
     is.inf <- is.influential(infmat)
-    ##is.star <- apply(is.inf, 1, any)
     ans <- list(infmat = infmat, is.inf = is.inf, call = lm.obj$call)
     class(ans) <- "infl"
     ans

@@ -27,6 +27,8 @@ NEW FEATURES
 
 BUG FIXES
 
+    o	influence.measures(.) $ is.inf was wrong.
+
     o	printing of complex NaN/Inf was wrong as well.
 
     o	printing of complex named vectors had a wrong initial space.
