@@ -69,6 +69,15 @@ show.data(package = .packages(), lib.loc = .lib.loc)
   an installed package can be zipped up as a zip archive
   \file{Rdata.zip}.  You will need to provide a single-column file 
   \file{filelist} of file names in that directory.
+
+  One can take advantage of the search order and the fact that a
+  \file{.R} file will change directory. If raw data are stored in
+  \file{mydata.txt} then one can set up \file{mydata.R} to read
+  \file{mydata.txt} and preprocess it, e.g. using \code{transform}. For
+  instance one can convert numeric vectors to factors with the
+  appropriate labels.
+  Thus, the \file{.R} file can effectively contain a metadata
+  specification for the plaintext formats.
 }
 \seealso{
   \code{\link{help}} for obtaining documentation on data sets.
