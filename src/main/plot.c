@@ -1020,7 +1020,7 @@ SEXP do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
     PROTECT(padj = coerceVector(CAR(args), REALSXP));
     npadj = length(padj);
     if (npadj <= 0) errorcall(call, "zero length \"padj\" specified");
-    if (n < npadj) n = npadj;
+    /* if (n < npadj) n = npadj; */
     args = CDR(args);    
 
     /* Retrieve relevant "par" values. */
