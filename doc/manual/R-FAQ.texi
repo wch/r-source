@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2002
-@set FAQ-VERSION 1.4-6, 2002-01-13
+@set FAQ-VERSION 1.4-7, 2002-01-16
 @set REL-VERSION 1.4.0
 @c %**end of header
 
@@ -1852,8 +1852,6 @@ Robust statistical inference via a weighted likelihood approach.
 Interface to the XGobi and XGvis programs for graphical data analysis.
 @item xtable
 Export data to La@TeX{} and @HTML{} tables.
-@item zmatrix
-Matrices with numeric indices starting at zero rather than one.
 @end table
 
 @noindent
