@@ -35,7 +35,7 @@
  *
  *    The accuracy of this routine compares (very) favourably
  *    with those of the Sun Microsystems portable mathematical
- *    library.                                                  
+ *    library.
  */
 
 #include "Mathlib.h"
@@ -44,11 +44,6 @@ int signgam;
 
 double lgamma(double x)
 {
-    /* sq2pil = alog(sqrt(2*pi)) */
-    /* sqpi2l = alog(sqrt(pi/2)) */
-    static double sq2pil = .91893853320467274178032973640562;
-    static double sqpi2l = .225791352644727432363097614947441;
-    static double pi = 3.1415926535897932384626433832795;
     static double xmax = 0.;
     static double dxrel = 0.;
     double ans, y, sinpiy;
@@ -68,7 +63,7 @@ double lgamma(double x)
 
     if (y <= 10) {
 	return log(fabs(gamma(x)));
-    }
+		 }
     else {
 
 	if (y > xmax) {
@@ -77,16 +72,17 @@ double lgamma(double x)
 	}
 
 	if (x > 0)
-	    return sq2pil + (x - 0.5) * log(x) - x + lgammacor(y);
+	  return M_LN_SQRT_2PI + (x - 0.5) * log(x) - x + lgammacor(y);
 
-	sinpiy = fabs(sin(pi * y));
+	sinpiy = fabs(sin(M_PI * y));
 
-	if (sinpiy == 0) {			/* Negative integer argument */
+	if (sinpiy == 0) {	/* Negative integer argument */
 	    ML_ERROR(ME_DOMAIN);
 	    return ML_NAN;
 	}
 
-	ans = sqpi2l + (x - 0.5) * log(y) - x - log(sinpiy) - lgammacor(y);
+	ans = M_LN_SQRT_PId2 + (x - 0.5) * log(y) - x
+	      - log(sinpiy) - lgammacor(y);
 
 	if(fabs((x - (int)(x - 0.5)) * ans / x) < dxrel) {
 
@@ -96,11 +92,14 @@ double lgamma(double x)
 	    ML_ERROR(ME_PRECISION);
 	}
 
-    if (x > 0)
-        return;
+	if (x > 0)
+	  return;
 
-    if (((int)(-x))%2 == 0)
-        signgam = -1; 
+	if (((int)(-x))%2 == 0)
+	  signgam = -1;
 	return ans;
-    }
+    } /*  |x| > 10 */
 }
+
+
+

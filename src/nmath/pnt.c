@@ -15,8 +15,8 @@
  *
  *  CONSTANTS
  *
- *    r2pi = 1/ {gamma(1.5) * sqrt(2)} = sqrt(2 / pi) #
- *    alnrpi = ln(sqrt(pi))
+ *    M_SQRT_2dPI  = 1/ {gamma(1.5) * sqrt(2)} = sqrt(2 / pi)
+ *    M_LN_SQRT_PI = ln(sqrt(pi)) = ln(pi)/2
  */
 
 #include "Mathlib.h"
@@ -40,8 +40,6 @@ double pnt(double t, double df, double delta)
     static double half = 0.5;
     static double one = 1.0;
     static double two = 2.0;
-    static double r2pi = 0.79788456080286535588;
-    static double alnrpi = 0.57236494292470008707;
 
     tnc = zero;
     if (df <= zero) {
@@ -64,12 +62,12 @@ double pnt(double t, double df, double delta)
     if (x > zero) {
 	lambda = del * del;
 	p = half * exp(-half * lambda);
-	q = r2pi * p * del;
+	q = M_SQRT_2dPI * p * del;
 	s = half - p;
 	a = half;
 	b = half * df;
 	rxb = pow(one - x, b);
-	albeta = alnrpi + lgamma(b) - lgamma(a + b);
+	albeta = M_LN_SQRT_PI + lgamma(b) - lgamma(a + b);
 	xodd = pbeta(x, a, b);
 	godd = two * rxb * exp(a * log(x) - albeta);
 	xeven = one - rxb;

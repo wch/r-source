@@ -84,11 +84,6 @@ double gamma(double x)
 	-.5793070335782135784625493333333e-31
     };
 
-    /* pi is the obvious constant */
-    /* sq2pil is 0.5*ln(2*pi) = ln(sqrt(2*pi)) */
-
-    static double pi = 3.1415926535897932384626433832795;
-    static double sq2pil = .91893853320467274178032973640562;
     static int ngam = 0;
     static double xmin = 0.;
     static double xmax = 0.;
@@ -187,7 +182,7 @@ double gamma(double x)
 	    return ML_UNDERFLOW;
 	}
 
-	value = exp((y - 0.5) * log(y) - y + sq2pil + lgammacor(y));
+	value = exp((y - 0.5) * log(y) - y + M_LN_SQRT_2PI + lgammacor(y));
 
 	if (x > 0)
 	    return value;
@@ -200,12 +195,12 @@ double gamma(double x)
 	    ML_ERROR(ME_PRECISION);
 	}
 
-	sinpiy = sin(pi * y);
+	sinpiy = sin(M_PI * y);
 	if (sinpiy == 0) {		/* Negative integer arg - overflow */
 	    ML_ERROR(ME_RANGE);
 	    return ML_POSINF;
 	}
 
-	return -pi / (y * sinpiy * value);
+	return -M_PI / (y * sinpiy * value);
     }
 }

@@ -39,12 +39,6 @@
 
 #include "Mathlib.h"
 
-	/* Mathematical Constants */
- 
-#define SIXTEN	1.6					/* Magic Cutoff */
-#define SQRT32	5.656854249492380195206754896838	/* sqrt(32) */
-#define SQRPI	0.398942280401432677939946059934	/* 1 / sqrt(2 * pi) */
-
 
 double qnorm(double p, double mu, double sigma)
 {
@@ -64,11 +58,11 @@ double qnorm(double p, double mu, double sigma)
     if (fabs(q) <= 0.42) {
 
 	/* 0.08 < p < 0.92 */
-	
+
 	r = q * q;
 	val = q * (((-25.44106049637 * r + 41.39119773534) * r
 		    - 18.61500062529) * r + 2.50662823884)
-	    / ((((3.13082909833 * r - 21.06224101826) * r 
+	    / ((((3.13082909833 * r - 21.06224101826) * r
 		 + 23.08336743743) * r + -8.47351093090) * r + 1.0);
     }
     else {

@@ -35,7 +35,6 @@
 
 double lbeta(double a, double b)
 {
-    static double sq2pil = .91893853320467274178032973640562;
     static double corr, p, q;
 
     p = q = a;
@@ -57,7 +56,7 @@ double lbeta(double a, double b)
     if (p >= 10) {
 	/* p and q are big. */
 	corr = lgammacor(p) + lgammacor(q) - lgammacor(p + q);
-	return log(q) * -0.5 + sq2pil + corr
+	return log(q) * -0.5 + M_LN_SQRT_2PI + corr
 		+ (p - 0.5) * log(p / (p + q)) + q * logrelerr(-p / (p + q));
     }
     else if (q >= 10) {

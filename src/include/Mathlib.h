@@ -9,32 +9,44 @@
 #include <math.h>
 #include <stdlib.h>
 
-/* 30 Decimal-place constants computed with bc  (scale=32; proper round) */
+/* (>=) 30 Decimal-place constants computed with bc (scale=32; proper round) */
 
-#ifndef M_1_SQRT_2
-#define M_1_SQRT_2      0.707106781186547524400844362105
+#ifndef M_SQRT_2
+#define M_SQRT_2	1.4142135623730950488016887242097
+#define M_1_SQRT_2	0.707106781186547524400844362105	/* 1/sqrt(2) */
+#define M_SQRT_32	5.656854249492380195206754896838	/* sqrt(32) */
+#endif
+
+#ifndef M_LN_2
+#define M_LN_2		0.693147180559945309417232121458176568
+#define M_LOG10_2	0.301029995663981195213738894724493027
 #endif
 
 #ifndef M_PI
-#define M_PI            3.141592653589793238462643383279
+#define M_PI		3.141592653589793238462643383279502884197169399375
 #endif
-
 #ifndef M_PI_half
-#define M_PI_half       1.570796326794896619231321691640
+#define M_PI_half	1.570796326794896619231321691640
 #endif
 
 #ifndef M_SQRT_PI
-#define M_SQRT_PI       1.772453850905516027298167483341
+/* sqrt(pi),  1/sqrt(2pi),  sqrt(2/pi) : */
+#define M_SQRT_PI	1.772453850905516027298167483341
+#define M_1_SQRT_2PI	0.398942280401432677939946059934
+#define M_SQRT_2dPI	0.79788456080286535587989211986876
 #endif
 
-#ifndef M_1_SQRT_2PI
-#define M_1_SQRT_2PI    0.398942280401432677939946059934
-#endif
 
+#ifndef M_LN_SQRT_PI
+/* log(sqrt(pi)) = log(pi)/2 : */
+#define M_LN_SQRT_PI	0.5723649429247000870717136756765293558
 /* log(sqrt(2*pi)) = log(2*pi)/2 : */
-#ifndef M_LN_SQRT_2PI
-#define M_LN_SQRT_2PI   0.918938533204672741780329736406
+#define M_LN_SQRT_2PI	0.91893853320467274178032973640562
+/* log(sqrt(pi/2)) = log(pi/2)/2 : */
+#define M_LN_SQRT_PId2	0.225791352644727432363097614947441
 #endif
+
+
 
 #define MATHLIB_ERROR(x)   { printf("%s\n",x); exit(1); }
 #define MATHLIB_WARNING(x) { printf("%s\n",x); }
@@ -57,14 +69,14 @@ extern double m_tiny;
 #define ML_NEGINF	((-m_one) / m_zero)
 #define ML_NAN		(m_zero / m_zero)
 #define ML_UNDERFLOW	(m_tiny * m_tiny)
-#define ML_VALID(x)     (!isnan(x))
+#define ML_VALID(x)	(!isnan(x))
 #else
 #define ML_ERROR(x)	ml_error(x)
 #define ML_POSINF	DBL_MAX
 #define ML_NEGINF	(-DBL_MAX)
 #define ML_NAN		(-DBL_MAX)
 #define ML_UNDERFLOW	0
-#define ML_VALID(x)     (errno == 0)
+#define ML_VALID(x)	(errno == 0)
 #endif
 
 	/* Splus Compatibility */

@@ -35,13 +35,13 @@
  *    Multiple comparisons of simple effects in
  *    the two-way analysis of variance with fixed effects.
  *    Journal of Statistical Computation and Simulation,
- *    Vol.30, pp.1-15, 1988.    
+ *    Vol.30, pp.1-15, 1988.
  */
 
 /*
  *  This function calculates probability integral of Hartley's
  *  form of the range.
- * 
+ *
  *  w     = value of range
  *  rr    = no. of rows or groups
  *  cc    = no. of columns or treatments
@@ -49,7 +49,7 @@
  *  wprob = returned probability integral from (0, w)
  *
  *  program will not terminate if ir is raised.
- * 
+ *
  *  bb = upper limit of legendre integration
  *  eps = maximum acceptable value of integral
  *  nleg = order of legendre quadrature
@@ -59,9 +59,9 @@
  *         else wincr2 intervals are used.
  *  eps1, eps2, eps3 = values which are used as cutoffs for terminating
  *  or modifying a calculation.
- * 
- *  sq2pii = 1 / sqrt(2 * pi);  from abramowitz & stegun, p. 3.
- *  qsqr2 = sqrt(2)
+ *
+ *  M_1_SQRT_2PI = 1 / sqrt(2 * pi);  from abramowitz & stegun, p. 3.
+ *  M_SQRT_2 = sqrt(2)
  *  xleg = legendre 12-point nodes
  *  aleg = legendre 12-point coefficients
  */
@@ -81,8 +81,6 @@ static double wprob(double w, double rr, double cc)
     static double wlar = 3.0;
     static double wincr1 = 2.0;
     static double wincr2 = 3.0;
-    static double sq2pii = 0.3989422804014326779399461;
-    static double qsqr2 = 1.41421356237309504880168872421;
     static double xleg[ihalf] = {
 	0.981560634246719250690549090149e0,
 	0.904117256370474856678465866119e0,
@@ -117,7 +115,7 @@ static double wprob(double w, double rr, double cc)
 
     /* if ans ** cc < 2e-22 then set ans = 0 */
 
-    ans = erf(qsqz / qsqr2);
+    ans = erf(qsqz / M_SQRT_2);
     if (ans >= exp(eps2 / cc))
 	ans = pow(ans, cc);
     else
@@ -174,14 +172,14 @@ static double wprob(double w, double rr, double cc)
 	    if (qexpo > eps3)
 		break;
 	    if (ac > 0.0)
-		pplus = 1.0 + erf(ac / qsqr2);
+		pplus = 1.0 + erf(ac / M_SQRT_2);
 	    else
-		pplus = erfc(-(ac / qsqr2));
+		pplus = erfc(-(ac / M_SQRT_2));
 
 	    if (ac > w)
-		pminus = 1.0 + erf((ac / qsqr2) - (w / qsqr2));
+		pminus = 1.0 + erf((ac / M_SQRT_2) - (w / M_SQRT_2));
 	    else
-		pminus = erfc((w / qsqr2) - (ac / qsqr2));
+		pminus = erfc((w / M_SQRT_2) - (ac / M_SQRT_2));
 
 	    /* if rinsum ** (cc-1) < 9e-14, */
 	    /* then doesn't contribute to integral */
@@ -193,7 +191,7 @@ static double wprob(double w, double rr, double cc)
 		elsum = elsum + rinsum;
 	    }
 	}
-	elsum = (((2.0 * b) * cc) * sq2pii) * elsum;
+	elsum = (((2.0 * b) * cc) * M_1_SQRT_2PI) * elsum;
 	einsum = einsum + elsum;
 	blb = bub;
 	bub = bub + binc;
@@ -213,64 +211,64 @@ static double wprob(double w, double rr, double cc)
 
 /*
  *  function qprob
- * 
+ *
  *  q = value of studentized range
  *  rr = no. of rows or groups
  *  cc = no. of columns or treatments
  *  df = degrees of freedom of error term
  *  ir[0] = error flag = 1 if wprob probability > 1
  *  ir[1] = error flag = 1 if qprob probability > 1
- * 
+ *
  *  qprob = returned probability integral over [0, q]
- * 
+ *
  *  The program will not terminate if ir[0] or ir[1] are raised.
- * 
+ *
  *  All references in wprob to Abramowitz and Stegun
  *  are from the following reference:
- * 
+ *
  *  Abramowitz, Milton and Stegun, Irene A.
  *  Handbook of Mathematical Functions.
  *  New York:  dover publications, inc. (1970).
  *
  *  All constants taken from this text are
  *  given to 25 significant digits.
- * 
+ *
  *  nlegq = order of legendre quadrature
  *  ihalfq = int ((nlegq + 1) / 2)
  *  eps = max. allowable value of integral
  *  eps1 & eps2 = values below which there is
  *                no contribution to integral.
- * 
+ *
  *  d.f. <= dhaf:   integral is divided into ulen1 length intervals.  else
  *  d.f. <= dquar:  integral is divided into ulen2 length intervals.  else
  *  d.f. <= deigh:  integral is divided into ulen3 length intervals.  else
  *  d.f. <= dlarg:  integral is divided into ulen4 length intervals.
- * 
+ *
  *  d.f. > dlarg:   the range is used to calculate integral.
- * 
- *  r2 = log(2)
- * 
+ *
+ *  M_LN_2 = log(2)
+ *
  *  xlegq = legendre 16-point nodes
- * 
+ *
  *  alegq = legendre 16-point coefficients
- * 
+ *
  *  The coefficients and nodes for the legendre quadrature used in
  *  qprob and wprob were calculated using the algorithms found in:
- * 
+ *
  *  Stroud, A. H. and Secrest, D.
  *  Gaussian Quadrature Formulas.
  *  Englewood Cliffs,
  *  New Jersey:  Prentice-Hall, Inc, 1966.
- * 
+ *
  *  All values matched the tables (provided in same reference)
  *  to 30 significant digits.
- * 
+ *
  *  f(x) = .5 + erf(x / sqrt(2)) / 2      for x > 0
- * 
+ *
  *  f(x) = erfc( -x / sqrt(2)) / 2        for x < 0
- * 
+ *
  *  where f(x) is standard normal c. d. f.
- * 
+ *
  *  if degrees of freedom large, approximate integral
  *  with range distribution.
  */
@@ -291,7 +289,6 @@ double ptukey(double q, double rr, double cc, double df)
     static double ulen2 = 0.5e0;
     static double ulen3 = 0.25e0;
     static double ulen4 = 0.125e0;
-    static double r2 = 0.693147180559945309417232121458e0;
     static double xlegq[ihalfq] = {
 	0.989400934991649932596154173450e+00,
 	0.944575023073232576077988415535e+00,
@@ -322,7 +319,7 @@ double ptukey(double q, double rr, double cc, double df)
         return q + rr + cc + df;
     }
 #endif
-    if (q <= 0) 
+    if (q <= 0)
 	return 0;
 
     /* df must be > 1 */
@@ -347,7 +344,7 @@ double ptukey(double q, double rr, double cc, double df)
     /* lgamma is the log gamma function. */
 
     f2 = df * 0.5;
-    f2lf = ((f2 * log(df)) - (df * r2)) - lgamma(f2);
+    f2lf = ((f2 * log(df)) - (df * M_LN_2)) - lgamma(f2);
     f21 = f2 - 1.0;
 
     /* integral is divided into unit, half-unit, quarter-unit, or */

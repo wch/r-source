@@ -24,6 +24,8 @@
  *  DESCRIPTION
  *
  *    Compute the density of the normal distribution.
+ *
+ * 	M_1_SQRT_2PI = 1 / sqrt(2 * pi)
  */
 
 #include "Mathlib.h"
@@ -32,8 +34,6 @@
 
 double dnorm(double x, double mu, double sigma)
 {
-    /* sqrpi = 1 / sqrt(2 * pi) */
-    static double sqrpi = 0.398942280401432677939946059934;
 
 #ifdef IEEE_754
     if (ISNAN(x) || ISNAN(mu) || ISNAN(sigma))
@@ -45,5 +45,5 @@ double dnorm(double x, double mu, double sigma)
     }
 
     x = (x - mu) / sigma;
-    return sqrpi * exp(-0.5 * x * x) / sigma;
+    return M_1_SQRT_2PI * exp(-0.5 * x * x) / sigma;
 }

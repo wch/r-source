@@ -23,14 +23,14 @@
  *  DESCRIPTION
  *
  *    The density of the lognormal distribution.
+ *
+ * 	M_1_SQRT_2PI = 1 / sqrt(2 * pi)
  */
 
 #include "Mathlib.h"
 
 double dlnorm(double x, double logmean, double logsd)
 {
-    /* sqrpi = 1 / sqrt(2 * pi) */
-    static double sqrpi = 0.398942280401432677939946059934;
     double y;
 
 #ifdef IEEE_754
@@ -43,5 +43,5 @@ double dlnorm(double x, double logmean, double logsd)
     }
 
     y = (log(x) - logmean) / logsd;
-    return sqrpi * exp(-0.5 * y * y) / (x * logsd);
+    return M_1_SQRT_2PI * exp(-0.5 * y * y) / (x * logsd);
 }

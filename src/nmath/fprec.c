@@ -36,22 +36,11 @@
 
 #include "Mathlib.h"
 
-	/* These should always defined in ANSI C */
-
-#ifndef DBL_DIG
-#define	DBL_DIG		15
-#endif
-
-#ifndef DBL_MAX_EXP
-#define	DBL_MAX_EXP	1024
-#endif
-
 /* Improvements by Martin Maechler, May 1997 */
 /* Note that the code could be further improved by using */
-/* pow_di(x, i)  instead of  pow(x, (double)i) */
+/* pow_di(x, i)	 instead of  pow(x, (double)i) */
 
 #define MAXPLACES DBL_DIG
-#define M_LOG10_2 .30102999566398119521373889472449
 
 double fprec(double x, double digits)
 {
@@ -59,7 +48,7 @@ double fprec(double x, double digits)
     int e10, e2, do_round;
     /* Max.expon. of 10 (=308.2547) */
     static double max10e = DBL_MAX_EXP * M_LOG10_2;
-	
+
 #ifdef IEEE_754
     if (ISNAN(x) || ISNAN(digits))
 	return x + digits;
