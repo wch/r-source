@@ -28,8 +28,8 @@ MAINLIBS = libmain.a libappl.a libmath.a
 EXTRALIBS = ga.a gl.a xdr.a em.a
 
 LIBFILES = $(foreach i, $(ALLPACKAGES), ../../library/$i) ../../library/R.css
-PKGS = $(foreach i, $(PACKAGES), pkg-$i)
-PKGCLEAN = $(foreach i, $(ALLPACKAGES), pkgclean-$i)
+PKGS = $(foreach i,$(PACKAGES),pkg-$i)
+PKGCLEAN = $(foreach i,$(ALLPACKAGES),pkgclean-$i)
 
 .PHONY:  clean veryclean  rlibs fixfiles front-ends
 
