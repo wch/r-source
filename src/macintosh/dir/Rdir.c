@@ -37,15 +37,24 @@ void closedir(DIR *entry)
 	return ;   
 }
 
+/* Fixed on Nov 2001 Jago, Stefano M. Iacus
+   Now correctly sets the volume reference number
+   This was correct under OS X but always 0 under MacOS
+*/
+   
 DIR *opendir(char *path)
 {
     CInfoPBRec search_info;
     DIR *entry;
     int error;
     
+     
+    if(path == NULL)
+     return((DIR *) NULL);
+      
     search_info.hFileInfo.ioNamePtr = 0;
     pathname[0] = 0;
-    if ((path != (char *) NULL) || (*path != '\0'))
+
 	if ((path[0] != '.') || (path[1] != '\0')){
 #if ! TARGET_API_MAC_CARBON	
 	    search_info.hFileInfo.ioNamePtr = c2pstr(strcpy(pathname, path));
@@ -70,6 +79,7 @@ DIR *opendir(char *path)
     entry->ioVRefNum = search_info.hFileInfo.ioVRefNum;
     entry->ioDrDirID = search_info.hFileInfo.ioDirID;
     entry->ioFDirIndex = 1;
+    DetermineVRefNum(pathname, entry->ioVRefNum, &(entry->ioVRefNum));
     return(entry);
 }
 
@@ -81,7 +91,7 @@ struct dirent *readdir(DIR *entry)
     CInfoPBRec search_info;
     int error;
     static struct dirent dir_entry;
-    
+    pathname[0] = 0; 
     if (entry == (DIR *) NULL)
 	return((struct dirent *) NULL);
     search_info.hFileInfo.ioCompletion = 0;
