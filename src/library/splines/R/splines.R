@@ -20,7 +20,7 @@ bs <- function(x, df = NULL, knots = NULL, degree = 3, intercept = FALSE,
         nIknots <- df - ord + (1 - intercept)
         if(nIknots < 0) {
             nIknots <- 0
-            warning("df was too small; have used  ", ord - (1 - intercept))
+            warning("'df' was too small; have used  ", ord - (1 - intercept))
         }
         knots <-
             if(nIknots > 0) {
