@@ -151,7 +151,8 @@ dist: dist-unix
 dist-unix: distdir
 	-chmod -R a+r $(distdir)
 	-chmod -R go-w $(distdir)
-	GZIP=$(GZIP) $(TAR) czf $(distdir).tar.gz $(distdir)
+	distname=`$(srcdir)/tools/GETDISTNAME`; \
+	  GZIP=$(GZIP) $(TAR) czf $${distname}.tar.gz $(distdir)
 	rm -rf $(distdir)
 dist-win:
 distdir: $(DISTFILES) vignettes
