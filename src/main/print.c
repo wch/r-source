@@ -562,13 +562,23 @@ void PrintValueRec(SEXP s,SEXP env)
     printAttributes(s,env);
 }
 
-static void printAttributes(SEXP s,SEXP env)
+/* 2000-12-30 PR#715: remove list tags from tagbuf here
+   to avoid $a$battr("foo").  Need to save and restore, since
+   attributes might be lists with attributes or just have attributes ...
+ */
+static void printAttributes(SEXP s, SEXP env)
 {
     SEXP a;
     char *ptag;
+    char save[TAGBUFLEN + 5] = "\0";
 
     a = ATTRIB(s);
     if (a != R_NilValue) {
+	strcpy(save, tagbuf);
+	/* remove the tag if it looks like a list not an attribute */
+	if (strlen(tagbuf) > 0 &&
+	    *(tagbuf + strlen(tagbuf) - 1) != ')')
+	    tagbuf[0] = '\0';
 	ptag = tagbuf + strlen(tagbuf);
 	while (a != R_NilValue) {
 	    if(isArray(s) || isList(s)) {
@@ -593,13 +603,15 @@ static void printAttributes(SEXP s,SEXP env)
 	    if(TAG(a) == R_CommentSymbol || TAG(a) == R_SourceSymbol)
 		goto nextattr;
 	    sprintf(ptag, "attr(,\"%s\")",
-		    EncodeString(CHAR(PRINTNAME(TAG(a))),0,0, Rprt_adj_left));
+		    EncodeString(CHAR(PRINTNAME(TAG(a))), 0, 0,
+				 Rprt_adj_left));
 	    Rprintf(tagbuf); Rprintf("\n");
-	    PrintValueRec(CAR(a),env);
+	    PrintValueRec(CAR(a), env);
 	nextattr:
 	    *ptag = '\0';
 	    a = CDR(a);
 	}
+	strcpy(tagbuf, save);
     }
 }/* printAttributes */
 

@@ -44,7 +44,7 @@ BUG FIXES
     o	Prevent closing the sink connection (which would be a silly 
 	thing to do).
 
-    o	showConnections(all = TRUE) was counting connections
+    o	showConnections(all = TRUE) was sometimes counting connections
 	incorrectly, and so not showing some closed ones.
 
     o	ts(1:10, start= c(1999,6), end = c(2000,3), frequency = 12)
@@ -67,8 +67,8 @@ BUG FIXES
 
     o	dchisq() now behaves better for large values of its ncp parameter.
 
-    o	besselJ(*, nu) is now ok for nu < 1; fix improves other values by a
-        few bits as well.
+    o	besselJ(*, nu) is now ok for nu < 1; fix improves accuracy of
+	other values by a few bits as well.
 
     o	is.vector() is now correctly documented: complex vectors and
 	lists return TRUE.
@@ -92,16 +92,23 @@ BUG FIXES
 
     o	aic in family() objects is now computed more precisely using
 	dxxxx(log=TRUE).  For binomial fits the value was wrong for
-	models specified via proportions and weights.
+	models specified via proportions and weights (PR#796).
 
-    o	Using non-integer numbers of successes in a binomial glm
-	(as formerly in demo(lm.glm) now gives a warning, as the
+    o   Using non-integer numbers of successes in a binomial glm
+	(as formerly in demo(lm.glm)) now gives a warning, as the
 	theory and in particular the AIC value is not applicable.
 
     o	demo(is.things) works again {is.ALL() doesn't call methods anymore}.
 
     o	persp(*, nticks = nn) now works (better) for too small nn.
 	persp(*, main = t1, sub= t2) now work (as always documented).
+
+    o   Printing of attributes of a list element no longer precedes
+	`attr' by the tag (PR#715).
+
+    o   It is no longer possible to use df[foo] to select non-existent
+	columns in df and so create an invalid object of class
+	"data.frame" (PR#698).
 
 
 		CHANGES IN R VERSION 1.2.0

@@ -38,7 +38,7 @@ test-src-strict = $(test-src-strict-1) $(test-src-strict-auto)
 test-src = $(test-src-strict) $(test-src-sloppy)
 
 test-src-reg-1 = \
-	reg-tests-1.R
+	reg-tests-1.R reg-tests-2.R
 test-src-reg-auto =
 test-src-reg = $(test-src-reg-1) $(test-src-reg-auto)
 
