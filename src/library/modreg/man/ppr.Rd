@@ -191,37 +191,33 @@ area1 <- area/10000; peri1 <- peri/10000
 rock.ppr <- ppr(log(perm) ~ area1 + peri1 + shape,
 		data=rock, nterms=2, max.terms=5)
 rock.ppr
-#Call:
-#ppr.formula(formula = log(perm) ~ area1 + peri1 + 
-#	shape, data = rock, nterms = 2, max.terms = 5)
+# Call:
+# ppr.formula(formula = log(perm) ~ area1 + peri1 + shape, data = rock, 
+#     nterms = 2, max.terms = 5)
 #
-#
-#Goodness of fit:
-# 2 terms 3 terms 4 terms 5 terms 
-# 11.2196  7.1895  6.4565  5.8592
-
+# Goodness of fit:
+#  2 terms  3 terms  4 terms  5 terms 
+# 8.737806 5.289517 4.745799 4.490378
 
 summary(rock.ppr)
-#Call:
-#ppr.formula(formula = log(perm) ~ area1 + peri1 + 
-#	shape, data = rock, nterms = 2, max.terms = 5)
+# Call:
+# ppr.formula(formula = log(perm) ~ area1 + peri1 + shape, data = rock, 
+#     nterms = 2, max.terms = 5)
 #
+# Goodness of fit:
+#  2 terms  3 terms  4 terms  5 terms 
+# 8.737806 5.289517 4.745799 4.490378
 #
-#Goodness of fit:
-# 2 terms 3 terms 4 terms 5 terms 
-# 11.2196  7.1895  6.4565  5.8592
+# Projection direction vectors:
+#       term 1      term 2     
+# area1  0.34357179  0.37071027
+# peri1 -0.93781471 -0.61923542
+# shape  0.04961846  0.69218595
 #
-#
-#Projection direction vectors:
-#         term 1    term 2 
-# area  0.319492  0.435617
-# peri -0.945544 -0.866757
-#shape  0.062226  0.242839
-#
-#
-#Coefficients of ridge terms:
-#  term 1  term 2 
-# 1.00638 0.72915
+# Coefficients of ridge terms:
+#    term 1    term 2 
+# 1.6079271 0.5460971 
+
 par(mfrow=c(1,2), pty="s")
 plot(rock.ppr)
 plot(update(rock.ppr, bass=5))
