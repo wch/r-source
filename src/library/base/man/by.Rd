@@ -2,6 +2,7 @@
 \alias{by}
 \alias{by.default}
 \alias{by.data.frame}
+\alias{print.by}
 \title{Apply a Function to a Data Frame split by Factors}
 \description{
   Function \code{by} is an object-oriented wrapper for
