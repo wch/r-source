@@ -108,7 +108,7 @@ time.ts <- function (x)
     x <- as.ts(x)
     n <- if(is.matrix(x)) nrow(x) else length(x)
     xtsp <- attr(x, "tsp")
-    ts(seq(xtsp[1], tsp[2], length=n),
+    ts(seq(xtsp[1], xtsp[2], length=n),
        start=start(x), end=end(x), frequency=frequency(x))
 }
 
