@@ -1095,7 +1095,7 @@ x <- c(NA, "NA", "foo")
 (z <- type.convert(x))
 stopifnot(identical(levels(z), "foo"))
 (z <- type.convert(x, na.strings=character(0)))
-stopifnot(identical(levels(z), c("foo", "NA")))
+stopifnot(identical(levels(z), sort(c("foo", "NA"))))
 (z <- type.convert(x, na.strings="foo"))
 stopifnot(identical(levels(z), "NA"))
 ## extra level in 1.6.1
