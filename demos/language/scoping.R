@@ -45,4 +45,4 @@ robert$balance()
 
 ross$deposit(50)
 ross$balance()
-ross$withdraw(500)
+try(ross$withdraw(500)) # no way..
