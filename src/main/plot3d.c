@@ -481,6 +481,8 @@ static void contour(SEXP x, int nx, SEXP y, int ny, SEXP z,
  * for preventing infinite loops -- shouldn't be needed --> warning */
 #define MAX_ns 25000
 
+    char *vmax;
+
     double f, xl, xh, yl, yh, zll, zhl, zlh, zhh, xx[4], yy[4];
     double xend, yend;
     int i, ii, j, jj, k, l, m, nacode, ns, ns2, dir;
@@ -720,8 +722,9 @@ static void contour(SEXP x, int nx, SEXP y, int ny, SEXP z,
 	    /* countour midpoint : use for labelling sometime (not yet!) */
 	    if (ns > 3) ns2 = ns/2; else ns2 = -1;
 
-	    xxx = (double *) C_alloc(ns + 1, sizeof(double));
-	    yyy = (double *) C_alloc(ns + 1, sizeof(double));
+	    vmax = vmaxget();
+	    xxx = (double *) R_alloc(ns + 1, sizeof(double));
+	    yyy = (double *) R_alloc(ns + 1, sizeof(double));
 	    /* now have the space, go through again: */
 	    s = start;
 	    ns = 0;
@@ -1046,8 +1049,7 @@ static void contour(SEXP x, int nx, SEXP y, int ny, SEXP z,
 	    }
 
 	    GMode(0, dd);
-	    C_free((char *) xxx);
-	    C_free((char *) yyy);
+	    vmaxset(vmax);
 	} /* while */
       } /* for(i .. )  for(j ..) */
     UNPROTECT_PTR(label1); /* pwwwargh! This is messy, but last thing

@@ -37,10 +37,6 @@ char*	R_alloc(long, int);
 char*	S_alloc(long, int);
 char*	S_realloc(char*, long, long, int);
 
-/* C Memory Management Interface */
-char*	C_alloc(long, int);
-void	C_free(char *);
-
 #ifdef  __cplusplus
 }
 #endif

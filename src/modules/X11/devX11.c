@@ -1661,11 +1661,13 @@ static void X11_Line(double x1, double y1, double x2, double y2,
 
 static void X11_Polyline(int n, double *x, double *y, int coords, DevDesc *dd)
 {
+    char *vmax = vmaxget();
     XPoint *points;
     double devx, devy;
     int i, j;
     x11Desc *xd = (x11Desc *) dd->deviceSpecific;
-    points = (XPoint *) C_alloc(n, sizeof(XPoint));
+
+    points = (XPoint *) R_alloc(n, sizeof(XPoint));
 
     for(i=0 ; i<n ; i++) {
 	devx = x[i];  devy = y[i];
@@ -1686,7 +1688,7 @@ static void X11_Polyline(int n, double *x, double *y, int coords, DevDesc *dd)
     if (xd->type == WINDOW) XSync(display, 0);
 #endif
 
-    C_free((char *) points);
+    vmaxset(vmax);
 }
 
 	/********************************************************/
@@ -1704,12 +1706,13 @@ static void X11_Polyline(int n, double *x, double *y, int coords, DevDesc *dd)
 static void X11_Polygon(int n, double *x, double *y, int coords,
 			int bg, int fg, DevDesc *dd)
 {
+    char *vmax = vmaxget();
     XPoint *points;
     double devx, devy;
     int i;
     x11Desc *xd = (x11Desc *) dd->deviceSpecific;
 
-    points = (XPoint *) C_alloc(n+1, sizeof(XPoint));
+    points = (XPoint *) R_alloc(n+1, sizeof(XPoint));
 
     for (i=0 ; i<n ; i++) {
 	devx = x[i];  devy = y[i];
@@ -1737,7 +1740,7 @@ static void X11_Polygon(int n, double *x, double *y, int coords,
 #endif
     }
 
-    C_free((char *) points);
+    vmaxset(vmax);
 }
 
 

@@ -1865,7 +1865,8 @@ static void GA_Line(double x1, double y1, double x2, double y2,
 
 static void GA_Polyline(int n, double *x, double *y, int coords, DevDesc *dd)
 {
-    point *p = (point *) C_alloc(n, sizeof(point));
+    char *vmax = vmaxget();
+    point *p = (point *) R_alloc(n, sizeof(point));
     double devx, devy;
     int   i;
     gadesc *xd = (gadesc *) dd->deviceSpecific;
@@ -1880,7 +1881,7 @@ static void GA_Polyline(int n, double *x, double *y, int coords, DevDesc *dd)
     SetColor(dd->gp.col, dd),
 	SetLinetype(dd->gp.lty, dd->gp.lwd, dd);
     DRAW(gdrawpolyline(_d, xd->lwd, xd->lty, xd->fgcolor, p, n, 0, 0));
-    C_free((char *) p);
+    vmaxset(vmax);
 }
 
 	/********************************************************/
@@ -1898,13 +1899,14 @@ static void GA_Polyline(int n, double *x, double *y, int coords, DevDesc *dd)
 static void GA_Polygon(int n, double *x, double *y, int coords,
 			int bg, int fg, DevDesc *dd)
 {
+    char *vmax = vmaxget();
     point *points;
     double devx, devy;
     int   i;
     gadesc *xd = (gadesc *) dd->deviceSpecific;
 
     TRACEDEVGA("plg");
-    points = (point *) C_alloc(n , sizeof(point));
+    points = (point *) R_alloc(n , sizeof(point));
     if (!points)
 	return;
     for (i = 0; i < n; i++) {
@@ -1923,7 +1925,7 @@ static void GA_Polygon(int n, double *x, double *y, int coords,
 	SetLinetype(dd->gp.lty, dd->gp.lwd, dd);
 	DRAW(gdrawpolygon(_d, xd->lwd, xd->lty, xd->fgcolor, points, n, 0 ));
     }
-    C_free((char *) points);
+    vmaxset(vmax);
 }
 
 
