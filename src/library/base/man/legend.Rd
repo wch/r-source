@@ -1,8 +1,8 @@
 \name{legend}
 \title{Add Legends to Plots}
 \usage{
-legend(x, y, legend, fill, col = "black", lty, pch, bty = "o",
-       bg = par("bg"), cex = 1, xjust = 0, yjust = 1,
+legend(x, y, legend, fill, col = "black", lty, lwd = 1, pch,
+       bty = "o", bg = par("bg"), cex = 1, xjust = 0, yjust = 1,
        x.intersp = NULL, y.intersp = NULL, text.width = NULL,
        merge = FALSE)
 }
@@ -15,8 +15,8 @@ legend(x, y, legend, fill, col = "black", lty, pch, bty = "o",
   \item{fill}{if specied, this argument will cause boxes filled
     with the specified colors to appear beside the legend text.}
   \item{col}{the color of points or lines appearing in the legend.}
-  \item{lty}{the line types for lines appearing in the legend. \emph{Must}
-    be specified for line drawing.}
+  \item{lty,lwd}{the line types and widths for lines appearing in the
+    legend.  One of these two \emph{must} be specified for line drawing.}
   \item{pch}{the plotting symbols appearing in the legend, either as
     vector of 1-character strings, or one (multi character)
     string. \emph{Must} be specified for symbol drawing.}
@@ -74,7 +74,20 @@ title("legend(..... lty = c(2, -1, 1), pch = c(-1,3,4), merge = TRUE)",
 legend(-1, 1.9, c("sin", "cos", "tan"), col = c(3,4,6),
        lty = c(2, -1, 1), pch = c(-1, 3, 4), merge = TRUE, bg='gray90')
 
-##-- Math expressions:
+##--- log scaled Examples ------------------------------
+leg.txt <- c("a one", "a two")
+
+par(mfrow = c(2,2))
+for(ll in c("","x","y","xy")) {
+  plot(2:10, log=ll, main=paste("log = '",ll,"'", sep=""))
+  abline(1,1)
+  lines(2:3,3:4, col=2) #
+  points(2,2, col=3)    #
+  rect(2,3,3,2, col=4)  #
+  legend(list(x=2,y=8), legend = leg.txt, col=2:3, pch=1:2, lty=1, merge=T)
+}
+
+##-- Math expressions:  ------------------------------
 plot(x, sin(x), type="l", col = 2,xlab=expression(phi),ylab=expression(f(phi)))
 abline(h=-1:1, v=pi/2*(-6:6), col="gray90")
 lines(x, cos(x), col = 3, lty = 2)
