@@ -32,6 +32,9 @@ winMenuDelItem(menuname)
   Submenus can be specified by separating the elements in
   \code{menuname} by slashes: as a consequence menu names may not
   contain slashes.
+
+  If the \code{action} is specified as \code{"none"} no action is taken:
+  this can be useful to reserve items for future expansion.
 }
 \value{
   \code{NULL}, invisibly. If an error occurs, an informative error
