@@ -19,7 +19,8 @@ OBJECTS = $(SOURCES:.c=.lo)
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = \
 	README Makefile.in Makefile.win $(SOURCES) $(HEADERS) \
-	dllversion.rc internet.mcp.hqx
+	dllversion.rc
+## Was: dllversion.rc internet.mcp.hqx
 
 ## <FIXME>
 ## Change to 'internet.la' when using libtool for shlibs.
