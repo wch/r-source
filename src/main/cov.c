@@ -314,30 +314,35 @@ static void complete2(int n, int ncx, int ncy, double *x, double *y, int *ind)
 SEXP do_cov(SEXP call, SEXP op, SEXP args, SEXP env)
 {
 	SEXP x, y, ans, xm, ym, ind;
-	int cor, method, n, ncx, ncy, pair;
+	int ansmat, cor, method, n, ncx, ncy, pair;
 
 	checkArity(op, args);
 	cor = PRIMVAL(op);
 
 		/* Argument-1: x */
+
 	x = CAR(args) = coerceVector(CAR(args), REALSXP);
+	ansmat = isMatrix(x);
 	n = nrows(x);
 	ncx = ncols(x);
 	args = CDR(args);
 
 		/* Argument-2: y */
+
 	if(isNull(CAR(args))) {
 		y = R_NilValue; 
 		ncy = ncx;
 	}
 	else {
 		y = CAR(args) = coerceVector(CAR(args), REALSXP);
+		ansmat = (ansmat || isMatrix(y));
 		if(nrows(y) != n) errorcall(call, "incompatible dimensions\n");
 		ncy = ncols(y);
 	}
 	args = CDR(args);
 
 		/* Argument-3: method */
+
 	method = asInteger(CAR(args));
 	switch(method) {
 	case 1:		/* none */
@@ -357,8 +362,8 @@ SEXP do_cov(SEXP call, SEXP op, SEXP args, SEXP env)
 	}
 	if(pair == NA_INTEGER) pair = 0;
 
-	if(ncx > 1 || ncy > 1) PROTECT(ans = allocMatrix(REALSXP, ncx, ncy));
-	else PROTECT(ans = allocVector(REALSXP, 1));
+	if(ansmat) PROTECT(ans = allocMatrix(REALSXP, ncx, ncy));
+	else PROTECT(ans = allocVector(REALSXP, ncx * ncy));
 	
 	ZeroSD = 0;
 
@@ -367,7 +372,8 @@ SEXP do_cov(SEXP call, SEXP op, SEXP args, SEXP env)
 			PROTECT(xm = allocVector(REALSXP, ncx));
 			PROTECT(ind = allocVector(INTSXP, n));
 			complete1(n, ncx, REAL(x), INTEGER(ind));
-			cov_complete1(n, ncx, REAL(x), REAL(xm), INTEGER(ind), REAL(ans), cor);
+			cov_complete1(n, ncx, REAL(x), REAL(xm),
+					INTEGER(ind), REAL(ans), cor);
 			UNPROTECT(2);
 		}
 		else {		/* pairwise */
@@ -379,34 +385,40 @@ SEXP do_cov(SEXP call, SEXP op, SEXP args, SEXP env)
 			PROTECT(xm = allocVector(REALSXP, ncx));
 			PROTECT(ym = allocVector(REALSXP, ncy));
 			PROTECT(ind = allocVector(INTSXP, n));
-			complete2(n, ncx, ncy, REAL(x), REAL(y), INTEGER(ind));
+			complete2(n, ncx, ncy, REAL(x), REAL(y),
+					INTEGER(ind));
 			cov_complete2(n, ncx, ncy, REAL(x), REAL(y),
-				REAL(xm), REAL(ym), INTEGER(ind), REAL(ans), cor);
+				REAL(xm), REAL(ym), INTEGER(ind),
+				REAL(ans), cor);
 			UNPROTECT(3);
 		}
 		else {		/* pairwise */
-			cov_pairwise2(n, ncx, ncy, REAL(x), REAL(y), REAL(ans), cor);
+			cov_pairwise2(n, ncx, ncy, REAL(x), REAL(y),
+				REAL(ans), cor);
 		}
 	}
-	if(isNull(y)) {
-		x = getAttrib(x, R_DimNamesSymbol);
-		if(!isNull(x) && !isNull(CADR(x))) {
-			PROTECT(ind = allocList(2));
-			CAR(ind) = CADR(x);
-			CADR(ind) = CADR(x);
-			setAttrib(ans, R_DimNamesSymbol, ind);
-			UNPROTECT(1);
+	if(ansmat) {
+		if(isNull(y)) {
+			x = getAttrib(x, R_DimNamesSymbol);
+			if(!isNull(x) && !isNull(CADR(x))) {
+				PROTECT(ind = allocList(2));
+				CAR(ind) = CADR(x);
+				CADR(ind) = CADR(x);
+				setAttrib(ans, R_DimNamesSymbol, ind);
+				UNPROTECT(1);
+			}
 		}
-	}
-	else {
-		x = getAttrib(x, R_DimNamesSymbol);
-		y = getAttrib(y, R_DimNamesSymbol);
-		if((!isNull(x) && !isNull(CADR(x))) || (!isNull(y) && !isNull(CADR(y)))) {
-			PROTECT(ind = allocList(2));
-			CAR(ind) = CADR(x);
-			CADR(ind) = CADR(y);
-			setAttrib(ans, R_DimNamesSymbol, ind);
-			UNPROTECT(1);
+		else {
+			x = getAttrib(x, R_DimNamesSymbol);
+			y = getAttrib(y, R_DimNamesSymbol);
+			if((!isNull(x) && !isNull(CADR(x))) ||
+                           (!isNull(y) && !isNull(CADR(y)))) {
+				PROTECT(ind = allocList(2));
+				CAR(ind) = CADR(x);
+				CADR(ind) = CADR(y);
+				setAttrib(ans, R_DimNamesSymbol, ind);
+				UNPROTECT(1);
+			}
 		}
 	}
 	UNPROTECT(1);
