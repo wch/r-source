@@ -507,6 +507,12 @@ stopifnot(identical(dimnames(c1), dimnames(c2)),
           all.equal(X4, qr.X(q4), tol = 1e-12)
 )
 
+## PR 1297  read.fwf() was interpreting `#' in 1.4.0/1
+cat(file="test.fwf", "123ABC123", "123#3 123", "123XYZ123", sep="\n")
+(res <- read.fwf("test.fwf", widths=c(3,3,3), comment.char=""))
+unlink("test.fwf")
+stopifnot(res[2, 2] == "#3 ")
+
 
 ## This example last ##
 

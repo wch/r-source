@@ -9,7 +9,7 @@ scan(file = "", what = double(0), nmax = -1, n = -1, sep = "",
      quote = if (sep=="\n") "" else "'\"", dec = ".",
      skip = 0, nlines = 0, na.strings = "NA",
      flush = FALSE, fill = FALSE, strip.white = FALSE, quiet = FALSE,
-     blank.lines.skip = TRUE, multi.line = TRUE, comment.char = "#")
+     blank.lines.skip = TRUE, multi.line = TRUE, comment.char = "")
 }
 \arguments{
   \item{file}{the name of a file to read data values from.  If the
@@ -93,7 +93,7 @@ scan(file = "", what = double(0), nmax = -1, n = -1, sep = "",
   
   \item{comment.char}{character: a character vector of length one
     containing a single character or an empty string.  Use \code{""} to
-    turn off the interpretation of comments altogether.}
+    turn off the interpretation of comments altogether (the default).}
 }
 \details{
   The value of \code{what} can be a list of types, in which case

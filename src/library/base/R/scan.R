@@ -4,7 +4,7 @@ scan <-
              dec = ".", skip = 0, nlines = 0,
 	     na.strings = "NA", flush = FALSE, fill = FALSE,
              strip.white = FALSE, quiet = FALSE, blank.lines.skip = TRUE,
-             multi.line = TRUE, comment.char = "#")
+             multi.line = TRUE, comment.char = "")
 {
     na.strings <- as.character(na.strings)# allow it to be NULL
     if(!missing(n)) {

@@ -8,7 +8,7 @@ read.fwf <- function(file, widths, sep = "\t", as.is = FALSE,
     }
     FILE <- tempfile("Rfwf.")
     on.exit(unlink(FILE))
-    raw <- scan(file, what="", sep="\n", quote="", quiet=TRUE, n=n)
+    raw <- readLines(file, n=n)
     st <- c(1, 1+cumsum(widths))
     first <- st[-length(st)]
     last <- cumsum(widths)
