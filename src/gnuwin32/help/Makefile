@@ -1,6 +1,6 @@
 # default target builds indices
 DOS=# -dosnames   # for file-name mapping
-PERL=perl
+PERL=R_OSTYPE=windows perl
 CAT=cat
 CP=cp
 RM=rm
