@@ -69,6 +69,7 @@ NEW FEATURES
 
     o   The LaTeX version of the Manual now has an Index.
 
+    o   EVERY *.Rd file in src/library/base/man/ has now at least one \keyword
 
 BUG FIXES
 
@@ -120,6 +121,8 @@ BUG FIXES
     o   lm(), lm.fit, lm.wfit (was `lm.w.fit'):  Made more compatible.
 	Dealing with (close to) collinear situations is still not flexible
 	enough.
+
+    o   internal postcript() improved (missing lines in boxplot(.)).
 
     o   Improvement to many (even most ?) documentation (.Rd) files.
 
