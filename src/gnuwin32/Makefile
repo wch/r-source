@@ -279,11 +279,19 @@ pkg-%:
 	fi
 ifeq ($(strip $(HELP)),YES)
 	@$(ECHO) "  installing help"
-ifeq ($(strip $(WINHELP)),CHM)
-	@$(MAKE) --no-print-directory -C ./help -s RHOME=$(RHOME) PKGDIR=$(PKGD) RLIB=$(RLIB) $($*-HELP)help-$* chm-$*
-else
-	@$(MAKE) --no-print-directory -C ./help -s RHOME=$(RHOME) PKGDIR=$(PKGD) RLIB=$(RLIB) $($*-HELP)help-$*
-endif
+  ifeq ($(strip $(DPKG)),)
+    ifeq ($(strip $(WINHELP)),CHM)
+	@$(MAKE) --no-print-directory -C ./help -s RHOME=$(RHOME) PKGDIR=$(PKGD) RLIB=$(RLIB) DPKG=$(RLIB)/$* $($*-HELP)help-$* chm-$*
+    else
+	@$(MAKE) --no-print-directory -C ./help -s RHOME=$(RHOME) PKGDIR=$(PKGD) RLIB=$(RLIB) DPKG=$(RLIB)/$* $($*-HELP)help-$*
+    endif
+  else
+    ifeq ($(strip $(WINHELP)),CHM)
+	@$(MAKE) --no-print-directory -C ./help -s RHOME=$(RHOME) PKGDIR=$(PKGD) RLIB=$(RLIB) DPKG=$(DPKG) $($*-HELP)help-$* chm-$*
+    else
+	@$(MAKE) --no-print-directory -C ./help -s RHOME=$(RHOME) PKGDIR=$(PKGD) RLIB=$(RLIB) DPKG=$(DPKG) $($*-HELP)help-$*
+    endif
+  endif
 endif
 	@$(MAKE) --no-print-directory BUILD=$(BUILD) \
 	  -C $(PKGDIR)/$* PKG=$* RHOME=$(RHOME) RLIB=$(RLIB)  \
@@ -294,7 +302,7 @@ pkgfake-%:
 	  -C $(PKGDIR)/$* PKG=$* RHOME=$(RHOME) RLIB=$(RLIB) RVER=$(RVER) \
 	  -f $(RHOME)/src/gnuwin32/MakePkg fake
 	@$(ECHO) "  installing help"
-	@$(MAKE) --no-print-directory -C ./help RHOME=$(RHOME) PKGDIR=$(PKGD) RLIB=$(RLIB) pkgfake-$*
+	@$(MAKE) --no-print-directory -C ./help RHOME=$(RHOME) PKGDIR=$(PKGD) RLIB=$(RLIB) DPKG=$(DPKG) pkgfake-$*
 
 
 pkgclean-%:
@@ -312,10 +320,10 @@ pkgcheck-%:
 	fi
 
 ziphelp-%:
-	$(MAKE) --no-print-directory -C ./help RHOME=$(RHOME) PKGDIR=$(PKGD) RLIB=$(RLIB) ziphelp-$*
+	$(MAKE) --no-print-directory -C ./help RHOME=$(RHOME) PKGDIR=$(PKGD) RLIB=$(RLIB) DPKG=$(DPKG) ziphelp-$*
 
 ziponly-%:
-	$(MAKE) --no-print-directory -C ./help RHOME=$(RHOME) PKGDIR=$(PKGD) RLIB=$(RLIB) ziponlyhelp-$*
+	$(MAKE) --no-print-directory -C ./help RHOME=$(RHOME) PKGDIR=$(PKGD) RLIB=$(RLIB) DPKG=$(DPKG) ziponlyhelp-$*
 
 zipdata-%:
 	@$(ECHO) "  zipping data"

@@ -55,7 +55,7 @@ dse1-HELP = ziponly
 dse2-HELP = ziponly
 
 bundle-%:
-	@$(PERL) fixed/dobundle.pl $* $(PKGD) $(RLIB)
+	@+$(PERL) fixed/dobundle.pl $* $(PKGD) $(RLIB)
 
 pkg-%:
 	@$(MAKE) --no-print-directory DLLNM=$($*-DLLNM)  FLIBS="$(FLIBS)" BUILD=$(BUILD) \
@@ -66,11 +66,19 @@ pkg-%:
 	fi
 ifeq ($(strip $(HELP)),YES)
 	@$(ECHO) "  installing help"
-ifeq ($(strip $(WINHELP)),CHM)
-	@$(MAKE) --no-print-directory -C ./help -s RHOME=$(RHOME) PKGDIR=$(PKGD) RLIB=$(RLIB) $($*-HELP)help-$* chm-$*
-else
-	@$(MAKE) --no-print-directory -C ./help -s RHOME=$(RHOME) PKGDIR=$(PKGD) RLIB=$(RLIB) $($*-HELP)help-$*
-endif
+  ifeq ($(strip $(DPKG)),)
+    ifeq ($(strip $(WINHELP)),CHM)
+	@$(MAKE) --no-print-directory -C ./help -s RHOME=$(RHOME) PKGDIR=$(PKGD) RLIB=$(RLIB) DPKG=$(RLIB)/$* $($*-HELP)help-$* chm-$*
+    else
+	@$(MAKE) --no-print-directory -C ./help -s RHOME=$(RHOME) PKGDIR=$(PKGD) RLIB=$(RLIB) DPKG=$(RLIB)/$* $($*-HELP)help-$*
+    endif
+  else
+    ifeq ($(strip $(WINHELP)),CHM)
+	@$(MAKE) --no-print-directory -C ./help -s RHOME=$(RHOME) PKGDIR=$(PKGD) RLIB=$(RLIB) DPKG=$(DPKG) $($*-HELP)help-$* chm-$*
+    else
+	@$(MAKE) --no-print-directory -C ./help -s RHOME=$(RHOME) PKGDIR=$(PKGD) RLIB=$(RLIB) DPKG=$(DPKG) $($*-HELP)help-$*
+    endif
+  endif
 endif
 	@$(MAKE) --no-print-directory BUILD=$(BUILD) \
 	  -C $(PKGDIR)/$* PKG=$* RHOME=$(RHOME) RLIB=$(RLIB)  \
@@ -91,10 +99,10 @@ pkgcheck-%:
 	fi
 
 ziphelp-%:
-	$(MAKE) --no-print-directory -C ./help RHOME=$(RHOME) PKGDIR=$(PKGD) RLIB=$(RLIB) ziphelp-$*
+	$(MAKE) --no-print-directory -C ./help RHOME=$(RHOME) PKGDIR=$(PKGD) RLIB=$(RLIB) DPKG=$(DPKG) ziphelp-$*
 
 ziponly-%:
-	$(MAKE) --no-print-directory -C ./help RHOME=$(RHOME) PKGDIR=$(PKGD) RLIB=$(RLIB) ziponlyhelp-$*
+	$(MAKE) --no-print-directory -C ./help RHOME=$(RHOME) PKGDIR=$(PKGD) RLIB=$(RLIB) DPKG=$(DPKG) ziponlyhelp-$*
 
 zipdata-%:
 	@$(ECHO) "  zipping data"

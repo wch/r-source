@@ -74,7 +74,11 @@ if(!$opt_html && !$opt_txt && !$opt_latex && !$opt_example && !$opt_chm){
 }
 
 ($pkg, $lib, @mandir) = buildinit();
-$dest = file_path($lib, $pkg);
+$dest = $ARGV[2];
+if (!$dest) {
+    $dest = file_path($lib, $pkg);
+}
+
 print STDERR "Destination dest = '$dest'\n" if $opt_debug;
 
 if($opt_chm) {
@@ -117,12 +121,20 @@ print "\n";
 # get %htmlindex and %anindex
 # as from 1.7.0 we can resolve links to base from other libraries
 # by fixing the link in fixup.package.URLs().
+# as from 1.9.0 we fix up utils, graphics, stats as well.
 
 %anindex = read_anindex($lib);
 if($opt_html || $opt_chm){
     %htmlindex = read_htmlindex($lib);
     if ($lib ne $mainlib) {
 	%basehtmlindex = read_htmlpkgindex($mainlib, "base");
+	foreach $pkg ("utils", "graphics", "stats") {
+	    my %pkghtmlindex = read_htmlpkgindex($mainlib, $pkg);
+	    foreach $topic (keys %pkghtmlindex) {
+		$basehtmlindex{$topic} = $pkghtmlindex{$topic};
+	    }
+	}
+	# current lib will win
 	foreach $topic (keys %htmlindex) {
 	    $basehtmlindex{$topic} = $htmlindex{$topic};
 	}
