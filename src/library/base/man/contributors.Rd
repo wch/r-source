@@ -3,7 +3,7 @@
 \alias{contributors}
 \section{The \R Project}{
   \R is a project which is attempting to provide a modern
-  piece of statistical software to the GNU suite of software.
+  piece of statistical software for the GNU suite of software.
 }
 \section{Contributors}{
   The current \R is the result of a collaborative effort
@@ -28,6 +28,7 @@
       \item Paul Murrell
       \item Brian Ripley
       \item Heiner Schwarte
+      \item Duncan Temple Lang
       \item Luke Tierney
     }
 
@@ -50,6 +51,7 @@
   Martyn Plummer,
   Jonathan Rougier,
   Bill Simpson,
+  Adrian Trapetti,
   Terry Therneau,
   Bill Venables,
   Gregory R. Warnes,
