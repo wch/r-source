@@ -20,17 +20,23 @@ options(\dots)
     over one line.}
 
   \item{width}{controls the number of characters on a line.  You may
-    want to change this if you resize the window that \R is running in.}
+    want to change this if you re-size the window that \R is running in.}
 
   \item{digits}{controls the number of digits to print when printing
     numeric values.  It is a suggestion only.}
 
   \item{editor}{sets the default text editor, e.g., for
-    \code{\link{edit}}. Set from the environmnet variable \code{VISUAL}
+    \code{\link{edit}}. Set from the environment variable \code{VISUAL}
     on UNIX.}
+
+  \item{pager}{the (stand-alone) program used for displaying ASCII files on
+    \R's console.  Defaults to \file{\$R\_HOME/bin/pager} on UNIX.}
 
   \item{browser}{default HTML browser used by \code{\link{help.start}()}
     on UNIX.}
+
+  \item{mailer}{default mailer used by \code{\link{bug.report}()}. can
+    be \code{"none"}.}
 
   \item{contrasts}{the default \code{\link{contrasts}} used in model
     fitting such as with \code{\link{aov}} or \code{\link{lm}}.  A
@@ -50,9 +56,6 @@ options(\dots)
   \item{na.action}{the name of a function for treating missing values
     (\code{\link{NA}}'s) for certain situations.}
 
-  \item{pager}{the (standalone) program used for displaying ASCII files on
-    \R's console.  Defaults to \file{\$R\_HOME/bin/pager} on UNIX.}
-
   \item{papersize}{the paper format used for graphics printing; currently
     \bold{read-only}, set by environment variable \code{R_PAPERSIZE}, or in
     \file{config.site}.}
@@ -60,7 +63,11 @@ options(\dots)
   \item{printcmd}{the command used for graphics printing; currently
     \bold{read-only}, set by environment variable \code{R_PRINTCMD}, or in
     \file{config.site}.}
-
+#ifdef unix
+  \item{latexcmd, dvipscmd}{character strings giving commands to be used
+    in off-line printing of help pages.}
+#endif
+  
   \item{show.signif.stars, show.coef.Pvalues}{logical, affecting P value
     printing, see \code{\link{print.coefmat}}.}
 
@@ -81,6 +88,29 @@ options(\dots)
     viewed through the function \code{\link{warnings}}.  If \code{warn} is
     one, warnings are printed as they occur.  If \code{warn} is two or
     larger all warnings are turned into errors.}
+
+  \item{echo}{logical. Only used in non-interactive mode, when it
+    controls whether input is echoed. Command-line options
+    \code{--quiet} and \code{--slave} set this initially to \code{FALSE}.}
+
+  \item{verbose}{logical. Should \R report extra information on
+    progress? Set to \code{TRUE} by the command-line option
+    \code{--verbose}.}
+
+  \item{device}{a character string giving the default device for that session.}
+#ifdef unix
+  \item{X11colortype}{The default colour type for \code{\link{X11}} devices.}
+#endif
+
+  \item{CRAN}{The URL of the preferred CRAN node for use by
+    \code{\link{update.packages}}. Defaults to
+    \url{http://cran.r-project.org}.} 
+
+  \item{unzip}{the command used unzipping help files.
+#ifdef windows
+    Defaults to "internal" when the internal unzip DLL is used.
+#endif
+  }
 }
 \description{
   \code{options} allows the user to set and examine a variety of global
@@ -109,7 +139,9 @@ options(\dots)
     \code{na.action} \tab \code{na.omit} \tab
     \code{ts.eps} \tab \code{1e-5}\cr
     \code{error} \tab \code{NULL} \tab
-    \code{warn} \tab \code{0}
+    \code{warn} \tab \code{0}\cr
+    \code{echo} \tab \code{TRUE} \tab
+    \code{verbose} \tab \code{FALSE}
   }
   Others are set from environment variables or are platform-dependent.
 }
