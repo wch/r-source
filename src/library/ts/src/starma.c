@@ -44,9 +44,7 @@ inclu2(int np, double *xnext, double *xrow, double ynext,
     int i, k, ithisr;
 
 /*   This subroutine updates d, rbar, thetab by the inclusion
-     of xnext and ynext with a specified weight. The values of xnext,
-     ynext and weight will be conserved. the corresponding value of
-     recres is calculated. */
+     of xnext and ynext. */
 
     for (i = 0; i < np; i++) xrow[i] = xnext[i];
 
@@ -68,8 +66,7 @@ inclu2(int np, double *xnext, double *xrow, double ynext,
 	    ynext = xk - xi * thetab[i];
 	    thetab[i] = cbar * thetab[i] + sbar * xk;
 	    if (di == 0.0) return;
-	} else
-	    ithisr = ithisr + np - i - 1;
+	} else ithisr = ithisr + np - i - 1;
     }
 }
 
@@ -108,7 +105,7 @@ void starma(Starma G, int *ifault)
     if (r == 1) *ifault = 8;
     if (*ifault != 0) return;
 
-/*        Now set a(0), v and phi. */
+/*        Now set a(0), V and phi. */
 
     for (i = 1; i < r; i++) {
 	a[i] = 0.0;
@@ -190,7 +187,7 @@ void starma(Starma G, int *ifault)
 	for (i = 0; i < r; i++) P[i] = xnext[i];
     } else {
 
-/* p(0) is obtained by backsubstitution for a moving average process. */
+/* P(0) is obtained by backsubstitution for a moving average process. */
 
 	indn = np;
 	ind = np;
@@ -208,7 +205,7 @@ void karma(Starma G, double *sumlog, double *ssq, int iupd, int *nit)
     int p = G->p, q = G->q, r = G->r, n = G->n;
     double *phi = G->phi, *theta = G->theta, *a = G->a, *P = G->P,
 	*V = G->V, *w = G->w, *resid = G->resid;
-    
+
     int i, j, l, ii, ind, indn, indw;
     double a1, dt, et, ft, g, ut;
 
@@ -288,265 +285,212 @@ void karma(Starma G, double *sumlog, double *ssq, int iupd, int *nit)
 }
 
 
-/*  start of as 182 */
+/*  start of AS 182 */
 void
-forkal(Starma G, int id, int il, double *delta, double *y, double *amse,
+forkal(Starma G, int d, int il, double *delta, double *y, double *amse,
        int *ifault)
 {
-    int ip = G->p, iq = G->q, ir = G->r, n = G->n, np = G->np;
-    double *phi = G->phi, *v = G->V, *w = G->w, *xrow = G->xrow;
-    
+    int p = G->p, q = G->q, r = G->r, n = G->n, np = G->np;
+    double *phi = G->phi, *V = G->V, *w = G->w, *xrow = G->xrow;
     double *a, *P, *store;
-    int ird = ir + id, irz = ird*(ird + 1)/2;
-    
-    /* Local variables */
-    int id2r1, iddr, id2r2;
-    double phii, phij;
-    int idrr1, i, j, k, l;
-    double sigma, a1;
-    int j1, k1;
-    double aa;
+    int rd = r + d, rz = rd*(rd + 1)/2;
+    double phii, phij, sigma2, a1, aa, dt, phijdt, ams, tmp;
+    int i, j, k, l;
+    int k1;
     int i45, jj, kk, lk, ll;
-    double dt;
     int nt;
-    double phijdt;
-    int id1;
-    double sumlog;
-    int kk1, lk1, ir1, ir2, ibc;
-    int iid, idk, ind, jkl, kkk, jrj, jrk;
-    double ams;
-    int nit;
-    double ssq, tmp;
-    int idd1, idd2, ind1, ind2, id2r, jkl1, iri1;
+    int kk1, lk1;
+    int ind, jkl, kkk;
+    int ind1, ind2;
 
 /*  Finite sample prediction from ARIMA processes. */
 
 /*  This routine will calculate the finite sample predictions
     and their conditional mean square errors for any ARIMA process. */
 
-    /* Parameter adjustments */
-    --phi;
-    --v;
-    --delta;
-    --w;
-
-    /* Function Body */
-
 /*     invoking this routine will calculate the finite sample predictions */
 /*     and their conditional mean square errors for any arima process. */
 
-    store = (double *) R_alloc(ird, sizeof(double));
-    Free(G->a); G->a = a = Calloc(ird, double);
-    Free(G->P); G->P = P = Calloc(irz, double);
-    --store;
-    --a;
-    --P;
-    
+    store = (double *) R_alloc(rd, sizeof(double));
+    Free(G->a); G->a = a = Calloc(rd, double);
+    Free(G->P); G->P = P = Calloc(rz, double);
+
 /*     check for input faults. */
     *ifault = 0;
-    if (ip < 0) *ifault = 1;
-    if (iq < 0) *ifault += 2;
-    if (ip * ip + iq * iq == 0) *ifault = 4;
-    k = iq + 1;
-    if (k < ip) k = ip;
-    if (ir != k) *ifault = 5;
-    if (np != ir * (ir + 1) / 2) *ifault = 6;
-    if (id < 0) *ifault = 8;
-    if (ird != ir + id) *ifault = 9;
-    if (irz != ird * (ird + 1) / 2) *ifault = 10;
+    if (p < 0) *ifault = 1;
+    if (q < 0) *ifault += 2;
+    if (p * p + q * q == 0) *ifault = 4;
+    if (r != max(p, q + 1)) *ifault = 5;
+    if (np != r * (r + 1) / 2) *ifault = 6;
+    if (d < 0) *ifault = 8;
     if (il < 1) *ifault = 11;
     if (*ifault != 0) return;
 
 /*     Find initial likelihood conditions. */
 
-    if (ir == 1) {
-	a[1] = 0.0;
-	v[1] = 1.0;
-	P[1] = 1.0 / (1.0 - phi[1] * phi[1]);
+    if (r == 1) {
+	a[0] = 0.0;
+	V[0] = 1.0;
+	P[0] = 1.0 / (1.0 - phi[0] * phi[0]);
     } else starma(G, ifault);
 
 /*     Calculate data transformations */
 
-    nt = n - id;
-    if (id > 0) {
-	for (j = 1; j <= id; j++) {
-	    store[j] = w[n - j];
+    nt = n - d;
+    if (d > 0) {
+	for (j = 0; j < d; j++) {
+	    store[j] = w[n - j - 2];
 	    if(ISNAN(store[j]))
-		error("missing value in last %d observations", id);
+		error("missing value in last %d observations", d);
 	}
-	for (i = 1; i <= nt; i++) {
+	for (i = 0; i < nt; i++) {
 	    aa = 0.0;
-	    for (k = 1; k <= id; ++k) {
-		idk = id + i - k;
-		aa -= delta[k] * w[idk];
-	    }
-	    iid = i + id;
-	    w[i] = w[iid] + aa;
+	    for (k = 0; k < d; ++k) aa -= delta[k] * w[d + i - k - 1];
+	    w[i] = w[i + d] + aa;
 	}
     }
 
 /*     Evaluate likelihood to obtain final Kalman filter conditions */
-
-    sumlog = 0.0;
-    ssq = 0.0;
-    nit = 0;
-    G->n = nt;
-    karma(G, &sumlog, &ssq, 1, &nit);
+    
+    {
+	double sumlog = 0.0, ssq = 0.0;
+	int nit = 0;
+	G->n = nt;
+	karma(G, &sumlog, &ssq, 1, &nit);
+    }
+    
 
 /*     Calculate m.l.e. of sigma squared */
 
-    sigma = 0.0;
-    for (j = 0; j < nt; j++) {
-	tmp = G->resid[j];
-	sigma += tmp * tmp;
-    }
-    sigma /= nt;
+    sigma2 = 0.0;
+    for (j = 0; j < nt; j++) { tmp = G->resid[j]; sigma2 += tmp * tmp; }
+    sigma2 /= nt;
 
-/*     reset the initial a and p when differencing occurs */
+/*     reset the initial a and P when differencing occurs */
 
-    if (id > 0) {
-	for (i = 1; i <= np; i++) xrow[i-1] = P[i];
-	for (i = 1; i <= irz; i++) P[i] = 0.0;
+    if (d > 0) {
+	for (i = 0; i < np; i++) xrow[i] = P[i];
+	for (i = 0; i < rz; i++) P[i] = 0.0;
 	ind = 0;
-	for (j = 1; j <= ir; j++) {
-	    k = (j - 1) * (id + ir + 1) - (j - 1) * j / 2;
-	    for (i = j; i <= ir; i++) P[++k] = xrow[ind++];
+	for (j = 0; j < r; j++) {
+	    k = j * (rd + 1) - j * (j + 1) / 2;
+	    for (i = j; i < r; i++) P[k++] = xrow[ind++];
 	}
-	for (j = 1; j <= id; j++) a[ir + j] = store[j];
+	for (j = 0; j < d; j++) a[r + j] = store[j];
     }
 
-/*     Set up constants */
+    i45 = 2*rd + 1;
+    jkl = r * (2*d + r + 1) / 2;
 
-    ir2 = ir + 1;
-    ir1 = ir - 1;
-    id1 = id - 1;
-    id2r = ird << 1;
-    id2r1 = id2r - 1;
-    idd1 = (id << 1) + 1;
-    idd2 = idd1 + 1;
-    i45 = id2r + 1;
-    idrr1 = ird + 1;
-    iddr = (id << 1) + ir;
-    jkl = ir * (iddr + 1) / 2;
-    jkl1 = jkl + 1;
-    id2r2 = id2r + 2;
-    ibc = ir * (i45 - ir) / 2;
     for (l = 0; l < il; ++l) {
 
 /*     predict a */
 
-	a1 = a[1];
-	for (i = 1; i <= ir1; i++) a[i] = a[i + 1];
-	a[ir] = 0.0;
-	for (j = 1; j <= ip; j++) a[j] += phi[j] * a1;
-	if (id > 0) {
-	    for (j = 1; j <= id; j++) a1 += delta[j] * a[ir + j];
-	    for (i = 1; i <= id1; i++) {
-		iri1 = ird - i;
-		a[iri1 + 1] = a[iri1];
-	    }
-	    a[ir2] = a1;
+	a1 = a[0];
+	for (i = 0; i < r - 1; i++) a[i] = a[i + 1];
+	a[r - 1] = 0.0;
+	for (j = 0; j < p; j++) a[j] += phi[j] * a1;
+	if (d > 0) {
+	    for (j = 0; j < d; j++) a1 += delta[j] * a[r + j];
+	    for (i = rd - 1; i > r; i--) a[i] = a[i - 1];
+	    a[r] = a1;
 	}
 
 /*     predict P */
 
-	if (id > 0) {
-	    for (i = 1; i <= id; i++) {
+	if (d > 0) {
+	    for (i = 0; i < d; i++) {
 		store[i] = 0.0;
-		for (j = 1; j <= id; j++) {
-		    ll = max(i,j);
-		    k = min(i,j);
-		    jj = jkl + (ll - k) + 1 + (k - 1) * (idd2 - k) / 2;
+		for (j = 0; j < d; j++) {
+		    ll = max(i, j);
+		    k = min(i, j);
+		    jj = jkl + (ll - k) + k * (2*d + 2 - k - 1) / 2;
 		    store[i] += delta[j] * P[jj];
 		}
 	    }
-	    if (id > 1) {
-		for (j = 1; j <= id1; j++) {
-		    jj = id - j;
-		    lk = (jj - 1) * (idd2 - jj) / 2 + jkl;
-		    lk1 = jj * (idd1 - jj) / 2 + jkl;
-		    for (i = 1; i <= j; i++) P[++lk1] = P[++lk];
+	    if (d > 1) {
+		for (j = 0; j < d - 1; j++) {
+		    jj = d - j - 1;
+		    lk = (jj - 1) * (2*d + 2 - jj) / 2 + jkl;
+		    lk1 = jj * (2*d + 1 - jj) / 2 + jkl;
+		    for (i = 0; i <= j; i++) P[lk1++] = P[lk++];
 		}
-		for (j = 1; j <= id1; j++)
-		    P[jkl1 + j] = store[j] + P[ir + j];
+		for (j = 0; j < d - 1; j++)
+		    P[jkl + j + 1] = store[j] + P[r + j];
 	    }
-	    P[jkl1] = P[1];
-	    for (i = 1; i <= id; i++)
-		P[jkl1] += delta[i] * (store[i] + 2.0 * P[ir + i]);
-	    for (i = 1; i <= id; i++) store[i] = P[ir + i];
-	    for (j = 1; j <= ir; j++) {
-		kk1 = j * (id2r1 - j) / 2 + ir;
-		k1 = (j - 1) * (id2r - j) / 2 + ir;
-		for (i = 1; i <= id; i++) {
+	    P[jkl] = P[0];
+	    for (i = 0; i < d; i++)
+		P[jkl] += delta[i] * (store[i] + 2.0 * P[r + i]);
+	    for (i = 0; i < d; i++) store[i] = P[r + i];
+	    for (j = 0; j < r; j++) {
+		kk1 = (j+1) * (2*rd - j - 2) / 2 + r;
+		k1 = j * (2*rd - j - 1) / 2 + r;
+		for (i = 0; i < d; i++) {
 		    kk = kk1 + i;
 		    k = k1 + i;
 		    P[k] = phi[j] * store[i];
-		    if (j != ir) P[k] += P[kk];
+		    if (j < r - 1) P[k] += P[kk];
 		}
 	    }
 
-	    for (j = 1; j <= ir; j++) {
+	    for (j = 0; j < r; j++) {
 		store[j] = 0.0;
-		kkk = j * (i45 - j) / 2 - id;
-		for (i = 1; i <= id; i++)
-		    store[j] += delta[i] * P[++kkk];
+		kkk = (j + 1) * (i45 - j - 1) / 2 - d;
+		for (i = 0; i < d; i++) store[j] += delta[i] * P[kkk++];
 	    }
-	    for (j = 1; j <= ir; j++) {
-		k = j * idrr1 - j * (j + 1) / 2 + 1;
-		for (i = 1; i <= id1; i++) {
+	    for (j = 0; j < r; j++) {
+		k = (j + 1) * (rd + 1) - (j + 1) * (j + 2) / 2;
+		for (i = 0; i < d - 1; i++) {
 		    --k;
 		    P[k] = P[k - 1];
 		}
 	    }
-	    for (j = 1; j <= ir; j++) {
-		k = (j - 1) * (id2r - j) / 2 + ir + 1;
-		P[k] = store[j] + phi[j] * P[1];
-		if (j < ir) P[k] += P[j + 1];
+	    for (j = 0; j < r; j++) {
+		k = j * (2*rd - j - 1) / 2 + r;
+		P[k] = store[j] + phi[j] * P[0];
+		if (j < r - 1) P[k] += P[j + 1];
 	    }
 	}
-	for (i = 1; i <= ir; i++) store[i] = P[i];
+	for (i = 0; i < r; i++) store[i] = P[i];
 
 	ind = 0;
-	dt = P[1];
-	for (j = 1; j <= ir; j++) {
+	dt = P[0];
+	for (j = 0; j < r; j++) {
 	    phij = phi[j];
 	    phijdt = phij * dt;
-	    ind2 = (j - 1) * (id2r2 - j) / 2;
-	    ind1 = j * (i45 - j) / 2;
-	    for (i = j; i <= ir; i++) {
-		++ind;
+	    ind2 = j * (2*rd - j + 1) / 2 - 1;
+	    ind1 = (j + 1) * (i45 - j - 1) / 2 - 1;
+	    for (i = j; i < r; i++) {
 		++ind2;
 		phii = phi[i];
-		P[ind2] = v[ind] + phii * phijdt;
-		if (j < ir)
-		    P[ind2] += store[j + 1] * phii;
-		if (i < ir)
+		P[ind2] = V[ind++] + phii * phijdt;
+		if (j < r - 1) P[ind2] += store[j + 1] * phii;
+		if (i < r - 1)
 		    P[ind2] += store[i + 1] * phij + P[++ind1];
 	    }
 	}
 
 /*     predict y */
 
-	y[l] = a[1];
-	for (j = 1; j <= id; j++) y[l] += a[ir + j] * delta[j];
+	y[l] = a[0];
+	for (j = 0; j < d; j++) y[l] += a[r + j] * delta[j];
 
 /*     calculate m.s.e. of y */
 
-	ams = P[1];
-	if (id > 0) {
-	    for (j = 1; j <= id; j++) {
-		jrj = ibc + (j - 1) * (idd2 - j) / 2;
+	ams = P[0];
+	if (d > 0) {
+	    for (j = 0; j < d; j++) {
+		k = r * (i45 - r) / 2 + j * (2*d + 1 - j) / 2;
 		tmp = delta[j];
-		ams += 2.0 * tmp * P[ir + j] + P[jrj + 1] * tmp * tmp;
+		ams += 2.0 * tmp * P[r + j] + P[k] * tmp * tmp;
 	    }
-	    for (j = 1; j <= id1; j++) {
-		j1 = j + 1;
-		jrk = ibc + 1 + (j - 1) * (idd2 - j) / 2;
-		for (i = j1; i <= id; i++)
-		    ams += 2.0 * delta[i] * delta[j] * P[++jrk];
+	    for (j = 0; j < d - 1; j++) {
+		k = r * (i45 - r) / 2 + 1 + j * (2*d + 1 - j) / 2;
+		for (i = j + 1; i < d; i++)
+		    ams += 2.0 * delta[i] * delta[j] * P[k++];
 	    }
 	}
-	amse[l] = ams * sigma;
+	amse[l] = ams * sigma2;
     }
     return;
 }
