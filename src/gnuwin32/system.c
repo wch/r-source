@@ -40,6 +40,16 @@
 #include "run.h"
 #include "Startup.h"
 #include <stdlib.h>		/* for exit */
+
+#ifdef ENABLE_NLS
+#define G_(String) libintl_dgettext("RGui", String)
+#define GN_(String) gettext_noop (String)
+#else /* not NLS */
+#define G_(String) (String)
+#define GN_(String) String
+#endif
+
+
 void CleanTempDir();		/* from extra.c */
 void editorcleanall();                  /* from editor.c */
 

@@ -31,6 +31,7 @@
 #include "internal.h"
 #include "ga.h"
 #include "../shext.h"		/* for selectfolder */
+#include "../win-nls.h"
 
 #define BUFSIZE _MAX_PATH
 static char strbuf[BUFSIZE];
@@ -97,7 +98,7 @@ int askyesno(char *question)
 
 	if (! question)
 		question = "";
-	result = MessageBox(0, question, "Question",
+	result = MessageBox(0, question, G_("Question"),
 		MB_TASKMODAL | MB_ICONQUESTION | MB_YESNO | TopmostDialogs);
 
 	switch (result) {
@@ -114,7 +115,7 @@ int askyesnocancel(char *question)
 
 	if (! question)
 		question = "";
-	result = MessageBox(0, question, "Question",
+	result = MessageBox(0, question, G_("Question"),
 		MB_TASKMODAL | MB_ICONQUESTION | MB_YESNOCANCEL | MB_SETFOREGROUND | TopmostDialogs);
 
 	switch (result) {
@@ -134,10 +135,10 @@ void askchangedir()
 
 /* if cod has never been used, set it to current directory */
     if (!cod[0]) GetCurrentDirectory(MAX_PATH, cod);
-    s = askcdstring(" Change working directory to:", cod);
+    s = askcdstring(G_(" Change working directory to:"), cod);
     if (s && (SetCurrentDirectory(s) == FALSE)) {
 	snprintf(msg, MAX_PATH + 40,
-		 "Unable to set '%s' as working directory", s);
+		 G_("Unable to set '%s' as working directory"), s);
 	askok(msg);
     }
     /* in every case reset cod (to new directory if all went ok
@@ -348,12 +349,12 @@ static void browse_button(control c)
     dialog_data *d = data(w);
 
     OPENFILENAME ofn;
-    char strbuf[_MAX_PATH]="anything", *p;
+    char strbuf[_MAX_PATH] = "anything", *p;
 
     ofn.lStructSize     = sizeof(OPENFILENAME);
     ofn.hwndOwner       = 0;
     ofn.hInstance       = 0;
-    ofn.lpstrFilter     = "All files (*.*)\0*.*\0\0";
+    ofn.lpstrFilter     = G_("All files (*.*)\0*.*\0\0");
     ofn.lpstrCustomFilter = NULL;
     ofn.nMaxCustFilter  = 0;
     ofn.nFilterIndex    = 0;
@@ -362,7 +363,7 @@ static void browse_button(control c)
     ofn.lpstrFileTitle  = NULL;
     ofn.nMaxFileTitle   = _MAX_FNAME + _MAX_EXT;
     ofn.lpstrInitialDir = gettext(d->text);
-    ofn.lpstrTitle      = "Select working directory";
+    ofn.lpstrTitle      = G_("Select working directory");
     ofn.Flags           = OFN_HIDEREADONLY;
     ofn.nFileOffset     = 0;
     ofn.nFileExtension  = 0;
@@ -566,8 +567,8 @@ char *askUserPass(char *title)
         setbackground(win, dialog_bg());
 	add_data(win);
 	d = data(win);
-	d->question = newlabel("User", rect(10, h, tw+4, h*2+2), AlignLeft);
-	bw = strwidth(SystemFont, "Password");
+	d->question = newlabel(G_("User"), rect(10, h, tw+4, h*2+2), AlignLeft);
+	bw = strwidth(SystemFont, G_("Password"));
 	d->text = newfield("", rect(20+bw, h, tw-6-bw, h*3/2));
 	newlabel("Password", rect(10, h*4, tw+4, h*2+2), AlignLeft);
 	d->pass = newpassword("", rect(20+bw, h*4, tw-6-bw, h*3/2));
@@ -728,13 +729,13 @@ void handle_findreplace(HWND hwnd, LPFINDREPLACE pfr)
 
     if (pfr->Flags & FR_FINDNEXT) {
 	if (!richeditfind(hwnd, pfr->lpstrFindWhat, matchcase, wholeword, down)) {
-	    snprintf(buf, 100, "\"%s\" not found", pfr->lpstrFindWhat);
+	    snprintf(buf, 100, G_("\"%s\" not found"), pfr->lpstrFindWhat);
 	    askok(buf);
 	}
     }
     else if (pfr->Flags & FR_REPLACE) {
 	if (!richeditreplace(hwnd, pfr->lpstrFindWhat, pfr->lpstrReplaceWith, matchcase, wholeword, down)) {
-	    snprintf(buf, 100, "\"%s\" not found", pfr->lpstrFindWhat);
+	    snprintf(buf, 100, G_("\"%s\" not found"), pfr->lpstrFindWhat);
 	    askok(buf);
 	}
     }

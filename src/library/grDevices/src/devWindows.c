@@ -42,6 +42,13 @@
 #include "windows.h"
 #include "devWindows.h"
 #include "grDevices.h"
+#ifdef ENABLE_NLS
+#define G_(String) libintl_dgettext("RGui", String)
+#define GN_(String) gettext_noop (String)
+#else /* not NLS */
+#define G_(String) (String)
+#define GN_(String) String
+#endif
 
 Rboolean 
 PSDeviceDriver(NewDevDesc*, char*, char*, char*, char**,
@@ -263,12 +270,12 @@ static void SaveAsWin(NewDevDesc *dd, char *display)
     NewDevDesc *ndd = (NewDevDesc *) calloc(1, sizeof(NewDevDesc));
     GEDevDesc* gdd = (GEDevDesc*) GetDevice(devNumber((DevDesc*) dd));
     if (!ndd) {
-	R_ShowMessage("Not enough memory to copy graphics window");
+	R_ShowMessage(_("Not enough memory to copy graphics window"));
 	return;
     }
     if(!R_CheckDeviceAvailableBool()) {
 	free(ndd);
-	R_ShowMessage("No device available to copy graphics window");
+	R_ShowMessage(_("No device available to copy graphics window"));
 	return;
     }
 
@@ -295,12 +302,12 @@ static void SaveAsPostscript(NewDevDesc *dd, char *fn)
 	**afmpaths = NULL;
 
     if (!ndd) {
-	R_ShowMessage("Not enough memory to copy graphics window");
+	R_ShowMessage(_("Not enough memory to copy graphics window"));
 	return;
     }
     if(!R_CheckDeviceAvailableBool()) {
 	free(ndd);
-	R_ShowMessage("No device available to copy graphics window");
+	R_ShowMessage(_("No device available to copy graphics window"));
 	return;
     }
 
@@ -358,12 +365,12 @@ static void SaveAsPDF(NewDevDesc *dd, char *fn)
     char family[256], encoding[256], bg[256], fg[256];
 
     if (!ndd) {
-	R_ShowMessage("Not enough memory to copy graphics window");
+	R_ShowMessage(_("Not enough memory to copy graphics window"));
 	return;
     }
     if(!R_CheckDeviceAvailableBool()) {
 	free(ndd);
-	R_ShowMessage("No device available to copy graphics window");
+	R_ShowMessage(_("No device available to copy graphics window"));
 	return;
     }
 
@@ -835,14 +842,14 @@ static void menufilebitmap(control m)
     gadesc *xd = (gadesc *) dd->deviceSpecific;
     char *fn;
     if (m==xd->mpng) {
-      setuserfilter("Png files (*.png)\0*.png\0\0");
-      fn = askfilesave("Portable network graphics file", "");
+      setuserfilter(G_("Png files (*.png)\0*.png\0\0"));
+      fn = askfilesave(G_("Portable network graphics file"), "");
     } else if (m==xd->mbmp) {
-      setuserfilter("Windows bitmap files (*.bmp)\0*.bmp\0\0");
-      fn = askfilesave("Windows bitmap file", "");
+      setuserfilter(G_("Windows bitmap files (*.bmp)\0*.bmp\0\0"));
+      fn = askfilesave(G_("Windows bitmap file"), "");
     } else {
-      setuserfilter("Jpeg files (*.jpeg,*jpg)\0*.jpeg;*.jpg\0\0");
-      fn = askfilesave("Jpeg file", "");
+      setuserfilter(G_("Jpeg files (*.jpeg,*jpg)\0*.jpeg;*.jpg\0\0"));
+      fn = askfilesave(G_("Jpeg file"), "");
     }
     if (!fn) return;
     fixslash(fn);
@@ -863,8 +870,8 @@ static void menups(control m)
     NewDevDesc *dd = (NewDevDesc *) getdata(m);
     char  *fn;
 
-    setuserfilter("Postscript files (*.ps)\0*.ps\0All files (*.*)\0*.*\0\0");
-    fn = askfilesave("Postscript file", "");
+    setuserfilter(G_("Postscript files (*.ps)\0*.ps\0All files (*.*)\0*.*\0\0"));
+    fn = askfilesave(G_("Postscript file"), "");
     if (!fn) return;
     fixslash(fn);
     SaveAsPostscript(dd, fn);
@@ -876,8 +883,8 @@ static void menupdf(control m)
     NewDevDesc *dd = (NewDevDesc *) getdata(m);
     char  *fn;
 
-    setuserfilter("PDF files (*.pdf)\0*.pdf\0All files (*.*)\0*.*\0\0");
-    fn = askfilesave("PDF file", "");
+    setuserfilter(G_("PDF files (*.pdf)\0*.pdf\0All files (*.*)\0*.*\0\0"));
+    fn = askfilesave(G_("PDF file"), "");
     if (!fn) return;
     fixslash(fn);
     SaveAsPDF(dd, fn);
@@ -889,12 +896,12 @@ static void menuwm(control m)
     NewDevDesc *dd = (NewDevDesc *) getdata(m);
     char  display[550], *fn;
 
-    setuserfilter("Enhanced metafiles (*.emf)\0*.emf\0All files (*.*)\0*.*\0\0");
-    fn = askfilesave("Enhanced metafiles", "");
+    setuserfilter(G_("Enhanced metafiles (*.emf)\0*.emf\0All files (*.*)\0*.*\0\0"));
+    fn = askfilesave(G_("Enhanced metafiles"), "");
     if (!fn) return;
     fixslash(fn);
     if(strlen(fn) > 512) {
-	askok("file path selected is too long: only 512 bytes are allowed");
+	askok(G_("file path selected is too long: only 512 bytes are allowed"));
 	return;
     }
     sprintf(display, "win.metafile:%s", fn);
@@ -978,14 +985,14 @@ static void grpopupact(control m)
                        (TYPEOF(VECTOR_ELT(vDL, 0))!=INTSXP) ||\
                        (LENGTH(VECTOR_ELT(vDL, 0))!=1) ||\
                        (pMAGIC != PLOTHISTORYMAGIC)) {\
-                       R_ShowMessage("Plot history seems corrupted");\
+                       R_ShowMessage(_("plot history seems corrupted"));\
                        return;}
 #define pMOVE(a) {pCURRENTPOS+=a;\
                   if(pCURRENTPOS<0) pCURRENTPOS=0;\
                   if(pCURRENTPOS>pNUMPLOTS-1) pCURRENTPOS=pNUMPLOTS-1;\
                   Replay(dd,vDL);SETDL;}
 #define pEXIST ((vDL!=R_UnboundValue) && (vDL!=R_NilValue))
-#define pMUSTEXIST if(!pEXIST){R_ShowMessage("No plot history!");return;}
+#define pMUSTEXIST if(!pEXIST){R_ShowMessage(_("no plot history!"));return;}
 
 
 
@@ -1110,7 +1117,7 @@ static void menureplace(control m)
     pMUSTEXIST;
     pCHECK;
     if (pCURRENTPOS < 0) {
-	R_ShowMessage("No plot to replace!");
+	R_ShowMessage(G_("No plot to replace!"));
 	return;
     }
     AddtoPlotHistory(GEcreateSnapshot(gdd), 1);
@@ -1156,14 +1163,14 @@ static void menugrclear(control m)
 static void menugvar(control m)
 {
     SEXP  vDL;
-    char *v = askstring("Variable name", "");
+    char *v = askstring(G_("Variable name"), "");
     NewDevDesc *dd = (NewDevDesc *) getdata(m);
 
     if (!v)
 	return;
     vDL = findVar(install(v), R_GlobalEnv);
     if (!pEXIST || !pNUMPLOTS) {
-	R_ShowMessage("Variable doesn't exist or doesn't contain any plots!");
+	R_ShowMessage(G_("Variable doesn't exist or doesn't contain any plots!"));
 	return;
     }
     pCHECK;
@@ -1179,7 +1186,7 @@ static void menusvar(control m)
     GETDL;
     pMUSTEXIST;
     pCHECK;
-    v = askstring("Name of variable to save to", "");
+    v = askstring(G_("Name of variable to save to"), "");
     if (!v)
 	return;
     defineVar(install(v), vDL, R_GlobalEnv);
@@ -1484,25 +1491,25 @@ setupScreenDevice(NewDevDesc *dd, gadesc *xd, double w, double h,
 	addto(tb);
 
 	MCHECK(bt = newtoolbutton(cam_image, r, menuclpwm));
-	MCHECK(addtooltip(bt, "Copy to the clipboard as a metafile"));
+	MCHECK(addtooltip(bt, G_("Copy to the clipboard as a metafile")));
 	gsetcursor(bt, ArrowCursor);
 	setdata(bt, (void *) dd);
 	r.x += (btsize + 6);
 
 	MCHECK(bt = newtoolbutton(print_image, r, menuprint));
-	MCHECK(addtooltip(bt, "Print"));
+	MCHECK(addtooltip(bt, G_("Print")));
 	gsetcursor(bt, ArrowCursor);
 	setdata(bt, (void *) dd);
 	r.x += (btsize + 6);
 
 	MCHECK(bt = newtoolbutton(console_image, r, menuconsole));
-	MCHECK(addtooltip(bt, "Return focus to console"));
+	MCHECK(addtooltip(bt, G_("Return focus to console")));
 	gsetcursor(bt, ArrowCursor);
 	setdata(bt, (void *) dd);
 	r.x += (btsize + 6);
 
 	MCHECK(xd->stoploc = newtoolbutton(stop_image, r, menustop));
-	MCHECK(addtooltip(xd->stoploc, "Stop locator"));
+	MCHECK(addtooltip(xd->stoploc, G_("Stop locator")));
 	gsetcursor(bt, ArrowCursor);
 	setdata(xd->stoploc,(void *) dd);
 	hide(xd->stoploc);
@@ -1512,81 +1519,81 @@ setupScreenDevice(NewDevDesc *dd, gadesc *xd, double w, double h,
     /* First we prepare 'locator' menubar and popup */
     addto(xd->gawin);
     MCHECK(xd->mbarloc = newmenubar(NULL));
-    MCHECK(newmenu("Stop"));
-    MCHECK(m = newmenuitem("Stop locator", 0, menustop));
+    MCHECK(newmenu(G_("Stop")));
+    MCHECK(m = newmenuitem(G_("Stop locator"), 0, menustop));
     setdata(m, (void *) dd);
     MCHECK(xd->locpopup = newpopup(NULL));
-    MCHECK(m = newmenuitem("Stop", 0, menustop));
+    MCHECK(m = newmenuitem(G_("Stop"), 0, menustop));
     setdata(m, (void *) dd);
-    MCHECK(newmenuitem("Continue", 0, NULL));
+    MCHECK(newmenuitem(G_("Continue"), 0, NULL));
 
     /* Next the 'Click for next plot' menubar */
     MCHECK(xd->mbarconfirm = newmenubar(NULL));
-    MCHECK(newmenu("Next"));
-    MCHECK(m = newmenuitem("Next plot", 0, menunextplot));
+    MCHECK(newmenu(G_("Next")));
+    MCHECK(m = newmenuitem(G_("Next plot"), 0, menunextplot));
     setdata(m, (void *) dd);
 
     /* Normal menubar */
     MCHECK(xd->mbar = newmenubar(mbarf));
-    MCHECK(m = newmenu("File"));
-    MCHECK(xd->msubsave = newsubmenu(m, "Save as"));
-    MCHECK(xd->mwm = newmenuitem("Metafile...", 0, menuwm));
-    MCHECK(xd->mps = newmenuitem("Postscript...", 0, menups));
-    MCHECK(xd->mpdf = newmenuitem("PDF...", 0, menupdf));
-    MCHECK(xd->mpng = newmenuitem("Png...", 0, menufilebitmap));
-    MCHECK(xd->mbmp = newmenuitem("Bmp...", 0, menufilebitmap));
-    MCHECK(newsubmenu(xd->msubsave,"Jpeg"));
-    MCHECK(xd->mjpeg50 = newmenuitem("50% quality...", 0, menufilebitmap));
-    MCHECK(xd->mjpeg75 = newmenuitem("75% quality...", 0, menufilebitmap));
-    MCHECK(xd->mjpeg100 = newmenuitem("100% quality...", 0, menufilebitmap));
-    MCHECK(newsubmenu(m, "Copy to the clipboard"));
-    MCHECK(xd->mclpbm = newmenuitem("as a Bitmap\tCTRL+C", 0, menuclpbm));
-    MCHECK(xd->mclpwm = newmenuitem("as a Metafile\tCTRL+W", 0, menuclpwm));
+    MCHECK(m = newmenu(G_("File")));
+    MCHECK(xd->msubsave = newsubmenu(m, G_("Save as")));
+    MCHECK(xd->mwm = newmenuitem(G_("Metafile..."), 0, menuwm));
+    MCHECK(xd->mps = newmenuitem(G_("Postscript..."), 0, menups));
+    MCHECK(xd->mpdf = newmenuitem(G_("PDF..."), 0, menupdf));
+    MCHECK(xd->mpng = newmenuitem(G_("Png..."), 0, menufilebitmap));
+    MCHECK(xd->mbmp = newmenuitem(G_("Bmp..."), 0, menufilebitmap));
+    MCHECK(newsubmenu(xd->msubsave,G_("Jpeg")));
+    MCHECK(xd->mjpeg50 = newmenuitem(G_("50% quality..."), 0, menufilebitmap));
+    MCHECK(xd->mjpeg75 = newmenuitem(G_("75% quality..."), 0, menufilebitmap));
+    MCHECK(xd->mjpeg100 = newmenuitem(G_("100% quality..."), 0, menufilebitmap));
+    MCHECK(newsubmenu(m, G_("Copy to the clipboard")));
+    MCHECK(xd->mclpbm = newmenuitem(G_("as a Bitmap\tCTRL+C"), 0, menuclpbm));
+    MCHECK(xd->mclpwm = newmenuitem(G_("as a Metafile\tCTRL+W"), 0, menuclpwm));
     addto(m);
     MCHECK(newmenuitem("-", 0, NULL));
-    MCHECK(xd->mprint = newmenuitem("Print...\tCTRL+P", 0, menuprint));
+    MCHECK(xd->mprint = newmenuitem(G_("Print...\tCTRL+P"), 0, menuprint));
     MCHECK(newmenuitem("-", 0, NULL));
-    MCHECK(xd->mclose = newmenuitem("close Device", 0, menuclose));
-    MCHECK(newmenu("History"));
-    MCHECK(xd->mrec = newmenuitem("Recording", 0, menurec));
+    MCHECK(xd->mclose = newmenuitem(G_("close Device"), 0, menuclose));
+    MCHECK(newmenu(G_("History")));
+    MCHECK(xd->mrec = newmenuitem(G_("Recording"), 0, menurec));
     if(recording) check(xd->mrec);
     MCHECK(newmenuitem("-", 0, NULL));
-    MCHECK(xd->madd = newmenuitem("Add\tINS", 0, menuadd));
-    MCHECK(xd->mreplace = newmenuitem("Replace", 0, menureplace));
+    MCHECK(xd->madd = newmenuitem(G_("Add\tINS"), 0, menuadd));
+    MCHECK(xd->mreplace = newmenuitem(G_("Replace"), 0, menureplace));
     MCHECK(newmenuitem("-", 0, NULL));
-    MCHECK(xd->mprev = newmenuitem("Previous\tPgUp", 0, menuprev));
-    MCHECK(xd->mnext = newmenuitem("Next\tPgDown", 0, menunext));
+    MCHECK(xd->mprev = newmenuitem(G_("Previous\tPgUp"), 0, menuprev));
+    MCHECK(xd->mnext = newmenuitem(G_("Next\tPgDown"), 0, menunext));
     MCHECK(newmenuitem("-", 0, NULL));
-    MCHECK(xd->msvar = newmenuitem("Save to variable...", 0, menusvar));
-    MCHECK(xd->mgvar = newmenuitem("Get from variable...", 0, menugvar));
+    MCHECK(xd->msvar = newmenuitem(G_("Save to variable..."), 0, menusvar));
+    MCHECK(xd->mgvar = newmenuitem(G_("Get from variable..."), 0, menugvar));
     MCHECK(newmenuitem("-", 0, NULL));
-    MCHECK(xd->mclear = newmenuitem("Clear history", 0, menugrclear));
-    MCHECK(newmenu("Resize"));
-    MCHECK(xd->mR = newmenuitem("R mode", 0, menuR));
+    MCHECK(xd->mclear = newmenuitem(G_("Clear history"), 0, menugrclear));
+    MCHECK(newmenu(G_("Resize")));
+    MCHECK(xd->mR = newmenuitem(G_("R mode"), 0, menuR));
     if(resize == 1) check(xd->mR);
-    MCHECK(xd->mfit = newmenuitem("Fit to window", 0, menufit));
+    MCHECK(xd->mfit = newmenuitem(G_("Fit to window"), 0, menufit));
     if(resize == 2) check(xd->mfit);
-    MCHECK(xd->mfix = newmenuitem("Fixed size", 0, menufix));
+    MCHECK(xd->mfix = newmenuitem(G_("Fixed size"), 0, menufix));
     if(resize == 3) check(xd->mfix);
     newmdimenu();
 
     /* Normal popup */
     MCHECK(xd->grpopup = newpopup(grpopupact));
     setdata(xd->grpopup, (void *) dd);
-    MCHECK(m = newmenuitem("Copy as metafile", 0, menuclpwm));
+    MCHECK(m = newmenuitem(G_("Copy as metafile"), 0, menuclpwm));
     setdata(m, (void *) dd);
-    MCHECK(m = newmenuitem("Copy as bitmap", 0, menuclpbm));
-    setdata(m, (void *) dd);
-    MCHECK(newmenuitem("-", 0, NULL));
-    MCHECK(m = newmenuitem("Save as metafile...", 0, menuwm));
-    setdata(m, (void *) dd);
-    MCHECK(m = newmenuitem("Save as postscript...", 0, menups));
+    MCHECK(m = newmenuitem(G_("Copy as bitmap"), 0, menuclpbm));
     setdata(m, (void *) dd);
     MCHECK(newmenuitem("-", 0, NULL));
-    MCHECK(xd->grmenustayontop = newmenuitem("Stay on top", 0, menustayontop));
+    MCHECK(m = newmenuitem(G_("Save as metafile..."), 0, menuwm));
+    setdata(m, (void *) dd);
+    MCHECK(m = newmenuitem(G_("Save as postscript..."), 0, menups));
+    setdata(m, (void *) dd);
+    MCHECK(newmenuitem("-", 0, NULL));
+    MCHECK(xd->grmenustayontop = newmenuitem(G_("Stay on top"), 0, menustayontop));
     setdata(xd->grmenustayontop, (void *) dd);
     MCHECK(newmenuitem("-", 0, NULL));
-    MCHECK(m = newmenuitem("Print...", 0, menuprint));
+    MCHECK(m = newmenuitem(G_("Print..."), 0, menuprint));
     setdata(m, (void *) dd);
     gchangepopup(xd->gawin, xd->grpopup);
 
@@ -1963,7 +1970,7 @@ static void GA_Resize(NewDevDesc *dd)
 	    del(xd->bm);
 	    xd->bm = newbitmap(iw, ih, getdepth(xd->gawin));
 	    if (!xd->bm) {
-		R_ShowMessage("Insufficient memory for resize. Killing device");
+		R_ShowMessage(_("Insufficient memory for resize. Killing device"));
 		KillDevice(GetDevice(devNumber((DevDesc*) dd)));
 	    }
 	    gfillrect(xd->gawin, xd->outcolor, getrect(xd->gawin));
@@ -2412,7 +2419,7 @@ static Rboolean GA_Locator(double *x, double *y, NewDevDesc *dd)
     }
     gchangepopup(xd->gawin, xd->locpopup);
     gsetcursor(xd->gawin, CrossCursor);
-    setstatus("Locator is active");
+    setstatus(G_("Locator is active"));
     while (!xd->clicked) {
 	if(xd->buffered) SHOW;
         WaitMessage();
@@ -2427,7 +2434,7 @@ static Rboolean GA_Locator(double *x, double *y, NewDevDesc *dd)
     gsetcursor(xd->gawin, ArrowCursor);
     gchangepopup(xd->gawin, xd->grpopup);
     addto(xd->gawin);
-    setstatus("R Graphics");
+    setstatus(_("R Graphics"));
     xd->locator = FALSE;
     if (xd->clicked == 1) {
 	*x = xd->px;
@@ -2668,7 +2675,7 @@ SEXP savePlot(SEXP args)
         SaveAsJpeg(dd, 75, fn);
     } else if (!strcmp(tp, "wmf")) {
 	if(strlen(fn) > 512) {
-	    askok("file path selected is too long: only 512 bytes are allowed");
+	    askok(G_("file path selected is too long: only 512 bytes are allowed"));
 	    return R_NilValue;
 	}
 	sprintf(display, "win.metafile:%s", fn);
@@ -2769,7 +2776,7 @@ static void SaveAsPng(NewDevDesc *dd,char *fn)
     gadesc *xd = (gadesc *) dd->deviceSpecific;
 
     if (!Load_Rbitmap_Dll()) {
-	R_ShowMessage("Impossible to load Rbitmap.dll");
+	R_ShowMessage(_("Impossible to load Rbitmap.dll"));
 	return;
     }
     if ((fp=fopen(fn, "wb")) == NULL) {
@@ -2802,7 +2809,7 @@ static void SaveAsJpeg(NewDevDesc *dd,int quality,char *fn)
     gadesc *xd = (gadesc *) dd->deviceSpecific;
 
     if (!Load_Rbitmap_Dll()) {
-	R_ShowMessage("Impossible to load Rbitmap.dll");
+	R_ShowMessage(_("Impossible to load Rbitmap.dll"));
 	return;
     }
     if ((fp=fopen(fn,"wb")) == NULL) {
@@ -2835,13 +2842,13 @@ static void SaveAsBmp(NewDevDesc *dd,char *fn)
     gadesc *xd = (gadesc *) dd->deviceSpecific;
 
     if (!Load_Rbitmap_Dll()) {
-	R_ShowMessage("Impossible to load Rbitmap.dll");
+	R_ShowMessage(_("Impossible to load Rbitmap.dll"));
 	return;
     }
     if ((fp=fopen(fn, "wb")) == NULL) {
 	char msg[MAX_PATH+32];
 
-	strcpy(msg, "Impossible to open ");
+	strcpy(msg, _("Impossible to open "));
 	strncat(msg, fn, MAX_PATH);
 	R_ShowMessage(msg);
 	return;
@@ -2959,19 +2966,20 @@ static void GA_onExit(NewDevDesc *dd)
     gchangemenubar(xd->mbar);
     gchangepopup(xd->gawin, xd->grpopup);
     addto(xd->gawin);
-    setstatus("R Graphics");
+    setstatus(_("R Graphics"));
     GA_Activate(dd);
 }
 
 static Rboolean GA_NewFrameConfirm()
 {
-    char msg[] = "Waiting to confirm page change...";
+    char *msg;
     GEDevDesc *dd = GEcurrentDevice();
     gadesc *xd = dd->dev->deviceSpecific;
 
     if (!xd || xd->kind != SCREEN)
 	return FALSE;
 
+    msg = G_("Waiting to confirm page change...");
     xd->confirmation = TRUE;
     xd->clicked = 0;
     xd->enterkey = 0;
@@ -2983,7 +2991,7 @@ static Rboolean GA_NewFrameConfirm()
     R_WriteConsole(msg, strlen(msg));
     R_WriteConsole("\n", 1);
     R_FlushConsole();
-    settext(xd->gawin, "Click or hit ENTER for next page");
+    settext(xd->gawin, G_("Click or hit ENTER for next page"));
     dd->dev->onExit = GA_onExit;  /* install callback for cleanup */
     while (!xd->clicked && !xd->enterkey) {
 	if(xd->buffered) SHOW;

@@ -127,7 +127,10 @@ RGui.pot-update:
 	  --add-comments=TRANSLATORS: \
 	  --copyright-holder='$(COPYRIGHT_HOLDER)' \
 	  --msgid-bugs-address='$(MSGID_BUGS_ADDRESS)' \
-	   -o - console.c dataentry.c editor.c pager.c preferences.c rui.c system.c graphapp/gmenus.c) > RGui.po
+	   -o - console.c dataentry.c editor.c pager.c preferences.c rui.c \
+	    system.c graphapp/dialogs.c graphapp/gmenus.c \
+	    ../library/grDevices/src/devWindows.c) \
+	  > RGui.po
 	test ! -f RGui.po || { \
 	  if test -f $(srcdir)/RGui.pot; then \
 	    sed -f remove-potcdate.sed < $(srcdir)/RGui.pot > RGui.1po && \
@@ -356,7 +359,6 @@ update-pkg-po: remove-potcdate.sed
 
 .nop.po-update:
 	@lang=`echo $@ | sed -e 's/\.po-update$$//'`; \
-	if test "$(PACKAGE)" = "gettext-tools"; then PATH=`pwd`/../src:$$PATH; fi; \
 	tmpdir=`pwd`; \
 	echo "$$lang:"; \
 	test "$(srcdir)" = . && cdcmd="" || cdcmd="cd $(srcdir) && "; \

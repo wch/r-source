@@ -1740,11 +1740,11 @@ void consolesavefile(console c, int pager)
     int x0, y0, x1, y1, cl;
     char *s, buf[1024];
 
-    setuserfilter("Text files (*.txt)\0*.txt\0All files (*.*)\0*.*\0\0");
+    setuserfilter(G_("Text files (*.txt)\0*.txt\0All files (*.*)\0*.*\0\0"));
     if(p->sel)
-        fn = askfilesave("Save selection to", "lastsave.txt");
+        fn = askfilesave(G_("Save selection to"), "lastsave.txt");
     else
-        fn = askfilesave("Save console contents to", "lastsave.txt");
+        fn = askfilesave(G_("Save console contents to"), "lastsave.txt");
     show(c);
     if (fn) {
 	fp = fopen(fn, "wt");
