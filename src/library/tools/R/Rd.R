@@ -418,8 +418,19 @@ function(txt, type, predefined = TRUE)
     ## Extract Rd section(s) 'type' from (preprocessed) Rd markup in the
     ## character string 'txt'.  Use 'predefined = FALSE' for dealing
     ## with user-defined sections.
+
+    ## <NOTE>
+    ## This is *not* vectorized.  As we try extracting *all* top-level
+    ## sections of the given type, computations on a single character
+    ## string can result in a character vector of arbitray length.
+    ## Hence, a vectorized version would return its results similar to
+    ## e.g. strsplit(), i.e., a list of character vectors.  Worth the
+    ## effort?
+    ## </FIXME>
     
     out <- character()
+    if(length(txt) != 1)
+        stop("'txt' must be a character string")
     pattern <- paste("(^|\n)[[:space:]]*\\\\",
                      ifelse(predefined, type,
                             paste("section{", type, "}",
