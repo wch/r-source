@@ -9,6 +9,9 @@
 \alias{conformMethodArgs}
 \alias{getGeneric}
 \alias{getGroup}
+%% Not for the user to know about!
+\alias{.ShortPrimitiveSkeletons} %% used from C code
+\alias{.EmptyPrimitiveSkeletons}
 \title{RMethodUtils}
 \usage{
 makeGeneric(f, fdef, keepMethods=TRUE, useAsDefault=NA, group=character(), valueClass=character())

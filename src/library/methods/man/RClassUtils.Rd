@@ -43,6 +43,14 @@
 \alias{as.data.frame}
 \alias{nullSymbol}
 \alias{requireMethods}
+%% not explicitly documented here
+\alias{.BasicClasses}
+\alias{.BasicVectorClasses}
+\alias{classGetsInR}
+\alias{classInR}
+\alias{.InitBasicClasses}
+\alias{.InitMethodsListClass}
+
 \title{Utilities for Managing Class Definitions}
 \usage{
 testVirtual(properties, extends, prototype)

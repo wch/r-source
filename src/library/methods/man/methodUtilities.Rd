@@ -1,9 +1,12 @@
 \name{methodUtilities}
 \alias{functionBody}
+\alias{functionBody<-}
 \alias{allNames}
 \alias{getFunction}
 \alias{el}
 \alias{elNamed}
+\alias{el<-}
+\alias{elNamed<-}
 \alias{formalArgs}
 \alias{Quote}
 \alias{message}
