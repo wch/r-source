@@ -325,6 +325,7 @@ foreach $pkg (@ARGV){
 	    if($lazyload) {
 		my $spkg = $pkg;
 		$spkg = Win32::GetShortPathName($spkg) if $spkg =~ / /;
+		$spkg =~ s+\\+/+g; # seems some systems need this
 		my $cmd = "make --no-print-directory -f $R_HOME/src/gnuwin32/MakePkg ";
 		$cmd .= "RHOME=$R_HOME SPKG=$spkg BUILD=$BUILD" . 
 		    " DPKG=$library/$decpkgname PKG=$decpkgname" .
