@@ -13,10 +13,8 @@ kronecker <- function (X, Y, FUN = "*", make.dimnames = FALSE, ...)
     ld <- length(dX)
     dp <- as.vector(t(matrix(dp, ncol=2)[, 2:1]))# e.g. = 3 1 4 2
     opobj <- aperm(opobj, dp)
-    if(make.dimnames)
-        dn <- dimnames(opobj)
     dim(opobj) <- dX * dY
-    if(make.dimnames) {
+    if(make.dimnames && !is.null(dn<-dimnames(opobj))) {
         outerPaste <- function(x,y) {
             if((iNx <- is.null(x)) && (iNy <- is.null(y))) 
                 NULL
