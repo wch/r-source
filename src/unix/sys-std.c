@@ -844,7 +844,7 @@ static void SleepHandler(void)
     elapsed = (times(&timeinfo) - start) / (double)CLK_TCK;
 /*    Rprintf("elapsed %f,  R_wait_usec %d\n", elapsed, R_wait_usec); */
     if(elapsed >= timeint) longjmp(sleep_return, 100);
-    if(timeint - elapsed < 0.5)
+    if(timeint - elapsed < 0.5) 
 	R_wait_usec = 1e6*(timeint - elapsed) + 10000;
     OldHandler();
 }
@@ -854,6 +854,8 @@ static void sleep_cleanup(void *ignored)
     R_PolledEvents = OldHandler;
     R_wait_usec = OldTimeout;
 }
+
+#define MIN(a, b) ((a) < (b) ? (a) : (b))
 
 SEXP do_syssleep(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
@@ -866,6 +868,7 @@ SEXP do_syssleep(SEXP call, SEXP op, SEXP args, SEXP rho)
     R_PolledEvents = SleepHandler;
     OldTimeout = R_wait_usec;
     if(OldTimeout == 0 || OldTimeout > 500000) R_wait_usec = 500000;
+    R_wait_usec = MIN(timeint*1e6, R_wait_usec);
 
     /* set up a context to restore R_PolledEvents and R_wait_usec if
        there is an error or interrupt */
@@ -878,6 +881,10 @@ SEXP do_syssleep(SEXP call, SEXP op, SEXP args, SEXP rho)
 	for (;;) {
 	    fd_set *what = R_checkActivity(R_wait_usec, 1);
 	    R_runHandlers(R_InputHandlers, what);
+	    if(what)
+  	       SleepHandler();/* Potentially don't want to call OldHandler, so may need to
+                                 separate SleepHandler into computation/jump and OldHandler
+                                 call. */
 	}
 
     R_PolledEvents = OldHandler;
