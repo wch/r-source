@@ -4,7 +4,7 @@ Priority: optional
 Maintainer: Dirk Eddelbuettel <edd@debian.org>
 Uploaders: Douglas Bates <bates@stat.wisc.edu>
 Standards-Version: 3.6.1.0
-Build-Depends: blas-dev (>= 1.0-9), lapack-dev, libgnome-dev, libzvt-dev, libgtkxmhtml-dev, tcl8.4-dev, tk8.4-dev, libglade-gnome0-dev, bison, g77 [!m68k], f2c [m68k], g++, groff-base, libncurses5-dev, libreadline4-dev, tetex-bin, tetex-extra, debhelper (>= 3.0.0), texi2html, texinfo (>= 4.1-2), libbz2-dev, libpcre3-dev, libpaperg-dev, xpdf-reader | pdf-viewer
+Build-Depends: blas-dev (>= 1.0-9), lapack-dev, libgnome-dev, libzvt-dev, libgtkxmhtml-dev, tcl8.4-dev, tk8.4-dev, libglade-gnome0-dev, bison, g77 [!m68k], f2c [m68k], g++, groff-base, libncurses5-dev, libreadline4-dev, debhelper (>= 3.0.0), texi2html, texinfo (>= 4.1-2), libbz2-dev, libpcre3-dev, libpaperg-dev, tetex-bin, tetex-extra, xpdf-reader
 
 Package: r-base
 Architecture: all
@@ -84,7 +84,7 @@ Description: GNU R Gnome gui for statistical computing system
 Package: r-base-dev
 Architecture: all
 Section: devel
-Depends: r-base-core (= ${Source-Version}), blas-dev (>= 1.0-9), build-essential, g77 | f2c, gcc, g++, libncurses5-dev, libreadline4-dev, lapack-dev, atlas2-base-dev | atlas2-dev
+Depends: r-base-core (= ${Source-Version}), blas-dev (>= 1.0-9), build-essential, g77 | f2c, gcc, g++, libncurses5-dev, libreadline4-dev, lapack-dev
 Description: GNU R installation of auxiliary GNU R packages 
  R is `GNU S' - A language and environment for statistical computing
  and graphics. R is similar to the award-winning S system, which was
