@@ -4044,7 +4044,7 @@ int StrMatch(char *s, char *t)
  */
 unsigned int rgb2col(char *rgb)
 {
-    unsigned int r, g, b, a;
+    unsigned int r=0, g=0, b=0, a=0; /* -Wall */
     if(rgb[0] != '#')
 	error("invalid RGB specification");
     switch (strlen(rgb)) {
