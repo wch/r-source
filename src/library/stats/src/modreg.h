@@ -87,6 +87,7 @@ void F77_SUB(smart)(int *m, int *mu, int *p, int * q, int *n,
 		    double *w, double *x, double *y,
 		    double *ww, double *smod, int *nsmod, double *sp,
 		    int *nsp, double *dp, int *ndp, double *edf);
+void F77_SUB(setsmu)();
 void F77_SUB(pppred)(int *np, double *x, double *smod,
 		     double *y, double *sc);
 void F77_SUB(qsbart)(double *penalt, double *dofoff,
