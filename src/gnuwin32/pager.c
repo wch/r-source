@@ -145,6 +145,11 @@ static void pagerprint(control m)
     consoleprint(getdata(m));
 }
 
+static void pagersavefile(control m)
+{
+    consolesavefile(getdata(m));
+}
+
 static void pagercopy(control m)
 {
     control c = getdata(m);
@@ -383,6 +388,8 @@ static pager pagercreate()
     setdata(m, c);
     MCHECK(newmenu("File"));
     MCHECK(m = newmenuitem("Print", 0, pagerprint));
+    setdata(m, c);
+    MCHECK(m = newmenuitem("Save to File", 0, pagersavefile));
     setdata(m, c);
     MCHECK(m = newmenuitem("-", 0, NULL));
     MCHECK(m = newmenuitem("Close", 0, pagerclose));
