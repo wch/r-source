@@ -461,11 +461,16 @@ AC_HEADER_TIME
 AC_HEADER_DIRENT
 AC_HEADER_SYS_WAIT
 AC_CHECK_HEADERS(arpa/inet.h dl.h dlfcn.h elf.h errno.h fcntl.h \
-  floatingpoint.h \
-  fpu_control.h grp.h ieee754.h ieeefp.h libintl.h locale.h netdb.h \
-  netinet/in.h pwd.h readline/history.h readline/readline.h \
+  floatingpoint.h fpu_control.h grp.h ieee754.h ieeefp.h locale.h \
+  netdb.h netinet/in.h pwd.h readline/history.h readline/readline.h \
   rpc/xdr.h string.h strings.h sys/param.h sys/select.h sys/socket.h \
   sys/stat.h sys/time.h sys/times.h sys/utsname.h unistd.h)
+## <FIXME>
+## AC_CHECK_HEADERS(libintl.h)
+## src/main/regex.c uses HAVE_LIBINTL_H.
+## But then we want full gettext support and AM_GNU_GETTEXT.
+## </FIXME>
+
 case "${host}" in
   *sunos4*)
     AC_DEFINE(SunOS4) ;;
@@ -1063,6 +1068,7 @@ AC_OUTPUT(Makeconf
   src/scripts/check
   src/unix/Makefile
   tests/Makefile
+  tests/Embedding/Makefile
   tests/Examples/Makefile
   tools/Makefile
 )
