@@ -349,6 +349,9 @@ BUG FIXES
 
     o	La.svd() was not coercing integer matrices. (PR#1363)
 
+    o	deriv(3) now reports correctly the function it cannot find
+	the derivatives table.
+
 
 
 	**************************************************
