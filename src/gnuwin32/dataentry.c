@@ -302,7 +302,7 @@ void drawwindow()
 
     gfillrect(de, bbg, rect(0, 0, windowWidth, box_h));
     gfillrect(de, bbg, rect(0, 0, boxw[0], windowHeight));
-
+    
     for (i = 1; i < nhigh; i++)
 	drawrectangle(0, hwidth + i * box_h, boxw[0], box_h, 1, 1);
      /* so row 0 and col 0 are reserved for labels */
@@ -314,10 +314,7 @@ void drawwindow()
     /* row/col 1 = pos 0 */
     gchangescrollbar(de, VWINSB, rowmin-1, ymaxused, nhigh, 0);
     gchangescrollbar(de, HWINSB, colmin-1, xmaxused, nwide, 0);
-/*    Rprintf("rowmin %d colmin %d nwide %d nhigh %d xmax %d ymax %d\n", 
-      rowmin, colmin, nwide, nhigh, xmaxused, ymaxused);*/
     highlightrect();
-    show(de);
 }
 
 void doHscroll(int oldcol)
@@ -355,7 +352,6 @@ void doHscroll(int oldcol)
     }
     gchangescrollbar(de, HWINSB, colmin-1, xmaxused, nwide, 0);
     highlightrect();
-    show(de);
 }
 
 /* find_coords finds the coordinates of the upper left corner of the
@@ -517,7 +513,6 @@ void drawcol(int whichcol)
 		printelt(CAR(tmp), i, i - rowmin + 2, col);
 	}
     }
-    show(de);
 }
 
 
@@ -549,7 +544,6 @@ void drawrow(int whichrow)
 	    if (whichrow <= (int)LEVELS(tvec))
 	    printelt(tvec, whichrow - 1, row, i - colmin + 1);
     }
-    show(de);
 }
 
 
@@ -598,7 +592,6 @@ static void drawelt(int whichrow, int whichcol)
 	} else
 	printstring("", 0, whichrow,  whichcol, 0);
     }
-    show(de);
 }
 
 void jumppage(int dir)
@@ -650,7 +643,6 @@ void printrect(int lwd, int fore)
     drawrectangle(x + lwd - 1, y + lwd -1,
 		  BOXW(ccol+colmin-1) - lwd + 1,
 		  box_h - lwd + 1, lwd, fore);
-    show(de);
 }
 
 void downlightrect()
@@ -802,7 +794,6 @@ void printstring(char *ibuf, int buflen, int row, int col, int left)
 	}
     }
     de_drawtext(x_pos + text_xoffset, y_pos - text_yoffset, pc);
-    show(de);
 }
 
 void clearrect()
@@ -810,7 +801,6 @@ void clearrect()
     int x_pos, y_pos;
     find_coords(crow, ccol, &x_pos, &y_pos);
     cleararea(x_pos, y_pos, BOXW(ccol+colmin-1), box_h, p->bg);
-    show(de);
 }
 
 /* handlechar has to be able to parse decimal numbers and strings,
@@ -938,7 +928,6 @@ static void drawrectangle(int xpos, int ypos, int width, int height,
 static void de_drawtext(int xpos, int ypos, char *text)
 {
     gdrawstr(de, p->f, p->fg, pt(xpos, ypos), text);
-    show(de);
 }
 
 /* Keypress callbacks */
@@ -1023,15 +1012,21 @@ void de_ctrlkeyin(control c, int key)
     switch (key) {
     case HOME:
 	jumpwin(1, 1);
+	downlightrect();
+	crow = ccol = 1;
+	highlightrect();
 	break;
     case END:
 	i = ymaxused - nhigh + 2;
-	crow = ymaxused;
 	jumpwin(xmaxused, max(i, 1));
+	downlightrect();
+	crow = ymaxused - rowmin + 1;
+	ccol = 1;
+	highlightrect();
 	break;
     case PGUP:
 	i = rowmin - nhigh + 2;
-	jumpwin(xmaxused, max(i, 1));
+	jumpwin(colmin, max(i, 1));
 	break;
     case PGDN:
 	jumpwin(colmin, rowmax);
@@ -1203,23 +1198,35 @@ void de_redraw(control c, rect r)
 
 static void deredraw()
 {
-    int i;
+    int i, w, dw;
 
     if (WIDTH != oldWIDTH || HEIGHT != oldHEIGHT) {
 	drawwindow();
 	return;
     }
-    
+    windowWidth = w = 2*bwidth + boxw[0] + BOXW(colmin);
+    nwide = 2;
+    for (i = 2; i < 100; i++) { /* 100 on-screen columns cannot occur */
+	dw = BOXW(i + colmin - 1);
+	if((w += dw) > WIDTH) {
+	    nwide = i;
+	    windowWidth = w - dw;
+	    break;
+	}
+    }
+
     gfillrect(de, bbg, rect(0, 0, windowWidth, box_h));
     gfillrect(de, bbg, rect(0, 0, boxw[0], windowHeight));
 
     for (i = 1; i < nhigh; i++)
 	drawrectangle(0, hwidth + i * box_h, boxw[0], box_h, 1, 1);
+    colmax = colmin + (nwide - 2);
+    rowmax = rowmin + (nhigh - 2);
     printlabs();
     if (inputlist != R_NilValue)
 	for (i = colmin; i <= colmax; i++) drawcol(i);
+    gfillrect(de, p->bg, rect(windowWidth+1, 0, WIDTH-windowWidth-1, HEIGHT));
     highlightrect();
-    show(de);
 }
 
 void de_closewin()
