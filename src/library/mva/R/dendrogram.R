@@ -392,13 +392,14 @@ cut.dendrogram <- function(x, h, ...)
 isLeaf <- function(object) (is.logical(L <- attr(object, "leaf"))) && L
 
 
+## *Not* a method (yet):
 order.dendrogram <- function(x) {
     if( !inherits(x, "dendrogram") )
         stop("order.dendrogram requires a dendrogram")
     unlist(x)
 }
 
-##my first version -- for posterity
+##RG's first version -- for posterity
 # order.dendrogram <- function(x) {
 #    if( !inherits(x, "dendrogram") )
 #       stop("order.dendrogram requires a dendrogram")
@@ -412,48 +413,53 @@ order.dendrogram <- function(x) {
 reorder <- function(x, ...)
     UseMethod("reorder")
 
-reorder.dendrogram <- function(x, wts, ...) {
+reorder.dendrogram <- function(x, wts, ...)
+{
     if( !inherits(x, "dendrogram") )
         stop("we require a dendrogram")
     oV <- function(x, wts) {
         if( isLeaf(x) ) {
             attr(x, "value") <- wts[x[1]]
             return(x)
-      }
-        left <- oV(x[[1]], wts)
+        }
+        left  <- oV(x[[1]], wts)
         right <- oV(x[[2]], wts)
         lV <- attr(left, "value")
         rV <- attr(right, "value")
         attr(x, "value") <- lV+rV
         if( lV > rV ) {
-         x[[1]] <- right
-         x[[2]] <- left
-     } else {
-         x[[1]] <- left
-         x[[2]] <- right
-     }
-      x
-  }
+            x[[1]] <- right
+            x[[2]] <- left
+        } else {
+            x[[1]] <- left
+            x[[2]] <- right
+        }
+        x
+    }
     oV(x, wts)
- }
+}
 
 
-##original Andy Liaw; modified RG
+## original Andy Liaw; modified RG
 
 heatmap <- function (x, Rowv, Colv, distfun = dist, add.expr,
-                     scale=c("row", "column","none"),...)
+                     scale = c("row", "column", "none"), ...)
 {
-    op <- par(no.readonly = TRUE)
-    on.exit(par(op))
-    which <- match.arg(scale)
-    r.cex <- 0.2 + 1/log10(nrow(x))
-    c.cex <- 0.2 + 1/log10(ncol(x))
-    ##by default order by row/col means
+    scale <- match.arg(scale)
+    if(length(di <- dim(x)) != 2 || !is.numeric(x))
+        stop("`x' must be a numeric matrix")
+    nr <- di[1]
+    nc <- di[2]
+    if(nr <= 1 || nc <= 1)
+        stop("`x' must have at least 2 rows and 2 columns")
+    r.cex <- 0.2 + 1/log10(nr)
+    c.cex <- 0.2 + 1/log10(nc)
+    ## by default order by row/col means
     if( missing(Rowv) )
         Rowv <- apply(x, 1, mean)
     if( missing(Colv) )
         Colv <- apply(x, 2, mean)
-    ##get the dendrograms
+    ## get the dendrograms
     if( !inherits(Rowv, "dendrogram") ) {
         xdist <- distfun(x)
         hcr <- hclust(xdist)
@@ -470,36 +476,38 @@ heatmap <- function (x, Rowv, Colv, distfun = dist, add.expr,
     }
     else
         ddc <- Colv
-    ##reorder x
+    ## reorder x
     x <- x[order.dendrogram(ddr), order.dendrogram(ddc)]
-    if( which == "row") {
+    if(scale == "row") {
         mn <- rowMeans(x)
         sd <- apply(x, 1, sd)
         x <- sweep(x, 1, mn)
         x <- sweep(x, 1, sd, "/")
     }
-    if( which == "column" ) {
+    else if(scale == "column") {
         mn <- colMeans(x)
         sd <- apply(x, 2, sd)
         x <- sweep(x, 2, mn)
         x <- sweep(x, 2, sd, "/")
     }
+    ## Graphics :
+    op <- par(no.readonly = TRUE)
+    on.exit(par(op))
     layout(matrix(c(0, 3, 2, 1), 2, 2, byrow = TRUE),
            widths = c(1,4), heights = c(1, 4), respect = TRUE)
     par(mar = c(5, 0, 0, 5))
     image(1:ncol(x), 1:nrow(x), t(x), axes = FALSE,
           xlim = c(0.5, ncol(x) + 0.5), ylim = c(0.5, nrow(x) + 0.5),
           xlab = "",ylab = "", ...)
-    axis(1, 1:ncol(x), las = 2, line = -0.5, tick = 0, labels = if
-         (is.null(colnames(x)))
-         (1:ncol(x))[order.dendrogram(ddc)]
-    else colnames(x), cex.axis = c.cex)
-    axis(4, 1:nrow(x), las = 2, line = -0.5, tick = 0, labels = if
-         (is.null(rownames(x)))
-        (1:nrow(x))[order.dendrogram(ddr)]
-    else rownames(x), cex.axis = r.cex)
+    axis(1, 1:ncol(x), las = 2, line = -0.5, tick = 0,
+         labels = if (is.null(colnames(x))) (1:ncol(x))[order.dendrogram(ddc)]
+         else colnames(x), cex.axis = c.cex)
+    axis(4, 1:nrow(x), las = 2, line = -0.5, tick = 0, labels =
+         if(is.null(rownames(x))) (1:nrow(x))[order.dendrogram(ddr)]
+         else rownames(x), cex.axis = r.cex)
     if (!missing(add.expr))
         eval(substitute(add.expr))
+    ## the two dendrograms :
     par(mar = c(5, 3, 0, 0))
     plot(ddr, horiz = TRUE, axes = FALSE, yaxs = "i", leaflab="none")
     par(mar = c(0, 0, 3, 5))
