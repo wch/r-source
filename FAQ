@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.7-27, 2003-07-16
+Version 1.7-28, 2003-07-18
 ISBN 3-901167-51-X
 Kurt Hornik
 
@@ -2004,6 +2004,9 @@ distributions of R.)
      Given a quantity assigned to each unit in the population, samples are
      drawn with probability proportional to te product of the quantities of
      the units included in the sample.
+
+*sca*
+     Simple Component Analysis.
 
 *scatterplot3d*
      Plots a three dimensional (3D) point cloud perspectively.
