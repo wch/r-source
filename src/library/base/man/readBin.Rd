@@ -76,11 +76,11 @@ writeChar(object, con, nchars = nchar(object), eos = "")
   bytes) will be available only if that type is available and different
   from \code{double}.
 
-  Note that as \R character strings cannot contain ASCII \code{nul},
-  strings read by \code{readChar} which contain such characters will
-  appear to be shorter than requested, but the additional bytes are read
-  from the file.
-
+  As from \R 2.0.0, character strings containing ASCII \code{nul} will
+  be read correctly by \code{readChar} and appear as embedded nuls in
+  the character vector returned.  (In earlier versions of \R they
+  terminated the strings returned.)
+  
   If the character length requested for \code{readChar} is longer than
   the data available on the connection, what is available is returned.
   For \code{writeChar} if too many characters are requested the output
