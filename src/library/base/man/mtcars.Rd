@@ -3,15 +3,15 @@
 \title{Motor Trend Road Tests}
 \usage{data(mtcars)}
 \description{
-  The data was extracted from 1974 Motor Trend magazine, and comprises
-  gasoline mileage in gallons per mile (GPM) and 10 aspects of
+  The data was extracted from the 1974 \emph{Motor Trend} US magazine,
+  and comprises fuel consumption and 10 aspects of
   automobile design and performance for 32 automobiles (1973--74
   models).
 }
 \format{
   A data frame with 32 observations on 11 variables.
   \tabular{rll}{
-    [, 1] \tab mpg  \tab Miles/gallon \cr
+    [, 1] \tab mpg  \tab Miles/(US) gallon \cr
     [, 2] \tab cyl  \tab Number of cylinders \cr
     [, 3] \tab disp \tab Displacement (cu.in.) \cr
     [, 4] \tab hp   \tab Gross horsepower \cr

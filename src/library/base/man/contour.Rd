@@ -1,5 +1,9 @@
 \name{contour}
+\alias{contour}
 \title{Display Contours}
+\description{
+  Create a contour plot, or add contour lines to an existing plot.
+}
 \usage{
 contour(x = seq(0, 1, len = nrow(z)), y = seq(0, 1, len = ncol(z)),
         z,
@@ -7,12 +11,11 @@ contour(x = seq(0, 1, len = nrow(z)), y = seq(0, 1, len = ncol(z)),
         xlim = range(x, finite = TRUE),
         ylim = range(y, finite = TRUE),
         zlim = range(z, finite = TRUE),
-        labcex = 0.6, drawlabels = T, method = "flattest", 
+        labcex = 0.6, drawlabels = TRUE, method = "flattest", 
 	vfont = c("sans serif", "plain"),
         col = par("fg"), lty = par("lty"), lwd = par("lwd"),
 	add = FALSE, \dots)
 }
-\alias{contour}
 \arguments{
   \item{x,y}{locations of grid lines at which the values in \code{z} are
     measured.  These must be in ascending order.  By default, equally
@@ -29,32 +32,35 @@ contour(x = seq(0, 1, len = nrow(z)), y = seq(0, 1, len = ncol(z)),
     lines.}
   \item{labcex}{\code{cex} for contour labelling.}
   \item{drawlabels}{logical.  Contours are labelled if \code{TRUE}.}
-  \item{method}{character, specifying where the labels will be located.}
+  \item{method}{character string specifying where the labels will be
+    located. Possible values are \code{"simple"}, \code{"edge"} and
+    \code{"flattest"} (the default). See the Details section.}
   \item{vfont}{if a character vector of length 2 is specified, then Hershey
     vector fonts are used.  The first element of the vector
     selects a typeface and the second element selects a fontindex 
-    (see \code{help(text)} for more information).} 
-  \item{xlim, ylim, zlim}{x-, y- and z-limits for the plot}
-  \item{col}{color for the lines drawn}
-  \item{lty}{line type for the lines drawn}
-  \item{lwd}{line width for the lines drawn}
+    (see \code{\link{text}} for more information).} 
+  \item{xlim, ylim, zlim}{x-, y- and z-limits for the plot.}
+  \item{col}{color for the lines drawn.}
+  \item{lty}{line type for the lines drawn.}
+  \item{lwd}{line width for the lines drawn.}
   \item{add}{logical. If \code{TRUE}, add to a current plot.}
   \item{\dots}{additional graphical parameters (see \code{\link{par}})
     and the arguments to \code{\link{title}} may also be supplied.}
 }
-\description{
-  Draws contour lines for the desired levels.
+\details{
   There is currently no documentation about the algorithm.
   The source code is in \file{\$R\_HOME/src/main/plot3d.c}.
-  For information about vector fonts, see \code{help(text)}.
-  The methods for positioning the labels on contours are "simple" (draw on the
-  edge of the plot, overlaying the contour line), "edge" (draw on the edge
-  of the
-  plot, embedded in the contour line, with no labels overlapping) and 
-  "flattest" (draw
-  on the flattest section of the contour, embedded in the contour line,
-  with no labels overlapping).  Either of the second two may not draw a
-  label on every contour line.
+
+  The methods for positioning the labels on contours are \code{"simple"}
+  (draw at the edge of the plot, overlaying the contour line),
+  \code{"edge"} (draw at the edge of the plot, embedded in the contour
+  line, with no labels overlapping) and \code{"flattest"}
+  (draw on the flattest section of the contour, embedded in the
+  contour line, with no labels overlapping).  The second and third may
+  not draw a label on every contour line.
+
+  For information about vector fonts, see the Details section of the
+  help for \code{\link{text}}.
 }
 \seealso{
   \code{\link{filled.contour}} for ``color-filled'' contours,

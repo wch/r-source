@@ -3,7 +3,7 @@
 \usage{
 text (x, \dots)
 text.default (x, y = NULL, labels = seq(along = x), adj = NULL,
-              pos = NULL, offset = 0.5, vfont=NULL, \dots)
+              pos = NULL, offset = 0.5, vfont = NULL, \dots)
 }
 \alias{text}
 \alias{text.default}
@@ -25,8 +25,8 @@ text.default (x, y = NULL, labels = seq(along = x), adj = NULL,
     of a character width.}
   \item{vfont}{if a character vector of length 2 is specified, then Hershey
     vector fonts are used.  The first element of the vector
-    selects a typeface and the second element selects a fontindex 
-    (see below).} 
+    selects a typeface and the second element selects a style 
+    (see the Details section).} 
   \item{\dots}{further graphical parameters (from \code{\link{par}}),
     such as \code{cex}, etc.}
 }
@@ -56,39 +56,41 @@ text.default (x, y = NULL, labels = seq(along = x), adj = NULL,
   Text can be rotated by using graphical parameters \code{srt} (see
   \code{\link{par}}); this rotates about the centre set by \code{adj}.
 
-  The available values for (typeface, fontindex) for Hershey fonts are:
-    ("serif", "symbol")
-    ("serif", "plain")
-    ("serif", "italic")
-    ("serif", "bold")
-    ("serif", "bold italic")
-    ("sans serif", "symbol")
-    ("sans serif", "plain")
-    ("sans serif", "italic")
-    ("sans serif", "bold")
-    ("sans serif", "bold italic")
-    ("script", "symbol")
-    ("script", "plain")
-    ("script", "italic")
-    ("script", "bold")
-    ("gothic english", "symbol")
-    ("gothic english", "plain")
-    ("gothic german", "symbol")
-    ("gothic german, "plain")
-    ("gothic italian", "symbol")
-    ("gothic italian", "plain")
-    ("serif symbol", "symbol")
-    ("serif symbol", "plain")
-    ("serif symbol", "italic")
-    ("serif symbol", "bold")
-    ("serif symbol", "bold italic")
-    ("sans serif symbol", "symbol")
-    ("sans serif symbol", "plain")
-    ("sans serif symbol", "italic")
+  The available values for \code{(typeface, fontindex)} for Hershey
+  vector fonts are:
+    \code{("serif", "symbol")},
+    \code{("serif", "plain")},
+    \code{("serif", "italic")},
+    \code{("serif", "bold")},
+    \code{("serif", "bold italic")},
+    \code{("sans serif", "symbol")},
+    \code{("sans serif", "plain")},
+    \code{("sans serif", "italic")},
+    \code{("sans serif", "bold")},
+    \code{("sans serif", "bold italic")},
+    \code{("script", "symbol")},
+    \code{("script", "plain")},
+    \code{("script", "italic")},
+    \code{("script", "bold")},
+    \code{("gothic english", "symbol")},
+    \code{("gothic english", "plain")},
+    \code{("gothic german", "symbol")},
+    \code{("gothic german", "plain")},
+    \code{("gothic italian", "symbol")},
+    \code{("gothic italian", "plain")},
+    \code{("serif symbol", "symbol")},
+    \code{("serif symbol", "plain")},
+    \code{("serif symbol", "italic")},
+    \code{("serif symbol", "bold")},
+    \code{("serif symbol", "bold italic")},
+    \code{("sans serif symbol", "symbol")},
+    \code{("sans serif symbol", "plain")},
+    \code{("sans serif symbol", "italic")}.
 }
 \seealso{
   \code{\link{mtext}}, \code{\link{title}};
-  \code{\link{plotmath}} for details and more examples on mathematical annotation.
+  \code{\link{plotmath}} for details and more examples on
+  mathematical annotation.
 }
 \examples{
 plot(-1:1,-1:1, type = "n", xlab = "Re", ylab = "Im")
