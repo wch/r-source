@@ -130,7 +130,7 @@ fi],
 AC_ARG_ENABLE([R-framework],
 [AC_HELP_STRING([--enable-R-framework@<:@=DIR@:>@],
                 [build R framework (if possible), and specify its
-                 installation dir @<:@yes, /Library/Frameworks@:>@])],
+                 installation prefix @<:@yes, /Library/Frameworks@:>@])],
 [want_R_framework="${enableval}"],
 [want_R_framework=yes])
 ## Can only build frameworks on Darwin.
@@ -138,9 +138,15 @@ if test "${want_R_framework}" != no; then
   case "${host_os}" in
     darwin*)
       if test "${want_R_framework}" = yes; then
-	R_FRAMEWORK_DIR="/Library/Frameworks/R.framework"
+        ## If we build a framework and 'prefix' was not given, we need
+        ## to set it to '/Library/Frameworks' rather than '/usr/local'.
+        ## Note that Autoconf sets things up so that by default, prefix
+        ## and exec_prefix are set to 'NONE'.  Let's hope for no change.
+	if test "x${prefix}" = xNONE; then
+          prefix="/Library/Frameworks"
+        fi
       else
-	R_FRAMEWORK_DIR="${want_R_framework}/R.framework"
+	prefix="${want_R_framework}"
 	want_R_framework=yes
       fi
       ;;
@@ -150,24 +156,6 @@ if test "${want_R_framework}" != no; then
   esac
 fi
 AM_CONDITIONAL(WANT_R_FRAMEWORK, [test "x${want_R_framework}" = xyes])
-## If we build a framework, then we need to adjust the installation
-## paths, and warn about overriding 'prefix'.
-if test "${want_R_framework}" = yes; then
-  ## Note that Autoconf sets things up so that by default, prefix and
-  ## exec_prefix are set to 'NONE'.  Let's hope for no change.
-  if test "x${prefix}" != xNONE; then
-    warn_framework_and_prefix="overriding 'prefix' for installing the R framework"
-    AC_MSG_WARN([${warn_framework_and_prefix}])
-  fi
-  prefix="${R_FRAMEWORK_DIR}"
-  rhome="${prefix}/Versions/${VERSION}/Resources"
-  bindir="${rhome}"
-  mandir="${rhome}"
-else
-  rhome="\$(libdir)/R"
-fi
-AC_SUBST(R_FRAMEWORK_DIR)
-AC_SUBST(rhome)
 
 ## Allow the user to specify building R shared libraries.
 ## <NOTE>
@@ -1573,9 +1561,6 @@ R is now configured for ${host}
 ])
 if test -n "${warn_F77_and_F2C}"; then
   AC_MSG_WARN([${warn_F77_and_F2C}])
-fi
-if test -n "${warn_framework_and_prefix}"; then
-  AC_MSG_WARN([${warn_framework_and_prefix}])
 fi
 if test -n "${warn_f77_cc_double_complex}"; then
   AC_MSG_WARN([${warn_f77_cc_double_complex}])

@@ -164,22 +164,22 @@ reset-recommended:
 
 install-R-framework:
 	@(cd $(top_builddir)/src/modules/aqua && \
-	  cp Info.plist "@R_FRAMEWORK_DIR@/Versions/$(VERSION)/Resources")
-	@(cd "@R_FRAMEWORK_DIR@/Versions/$(VERSION)" && \
+	  cp Info.plist "$(R_FRAMEWORK_DIR)/Versions/$(VERSION)/Resources")
+	@(cd "$(R_FRAMEWORK_DIR)/Versions/$(VERSION)" && \
 	  ln -f -s Resources/include Headers && \
 	  ln -f -s Resources/bin/libR.dylib R)
-	@(cd "@R_FRAMEWORK_DIR@/Versions" && \
+	@(cd "$(R_FRAMEWORK_DIR)/Versions" && \
 	  ln -f -s $(VERSION) Current)
-	@(cd "@R_FRAMEWORK_DIR@"  && \
+	@(cd "$(R_FRAMEWORK_DIR)"  && \
 	  ln -f -s Versions/Current/Headers Headers&& \
 	  ln -f -s Versions/Current/R R && \
 	  ln -f -s Versions/Current/Resources Resources)
 	@(cd "$(srcdir)/src/modules/aqua/Contents/Resources" && \
-	  cp -R * "@R_FRAMEWORK_DIR@/Resources/bin")
-	@(cd "@R_FRAMEWORK_DIR@/Resources/bin" && \
+	  cp -R * "$(R_FRAMEWORK_DIR)/Resources/bin")
+	@(cd "$(R_FRAMEWORK_DIR)/Resources/bin" && \
 	  sed 's/^args=/args=--gui=aqua/' < R > RAqua && \
 	  chmod 755 RAqua && \
-	  install_name_tool -id "@R_FRAMEWORK_DIR@/Versions/$(VERSION)/Resources/bin/libR.dylib" libR.dylib)
+	  install_name_tool -id "$(R_FRAMEWORK_DIR)/Versions/$(VERSION)/Resources/bin/libR.dylib" libR.dylib)
 
 install-aqua:
 	@(rm -rf /Applications/R.app)
@@ -191,9 +191,9 @@ install-aqua:
 	@(cd "$(srcdir)/src/modules/aqua/Contents/Resources" && \
 	  cp -R * /Applications/R.app/Contents/Resources)
 	@(mkdir -p /Applications/R.app/Contents/MacOS)
-	@test -f "@R_FRAMEWORK_DIR@/Resources/bin/RAqua"  \
+	@test -f "$(R_FRAMEWORK_DIR)/Resources/bin/RAqua"  \
 	  || (echo "please, make install-R-framework first" &&  exit 1)
 	@(cd /Applications/R.app/Contents/MacOS && \
-	  ln -f "@R_FRAMEWORK_DIR@/Resources/bin/RAqua" R && \
+	  ln -f "$(R_FRAMEWORK_DIR)/Resources/bin/RAqua" R && \
 	  chmod 755 R)
 TAGS:
