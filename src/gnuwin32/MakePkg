@@ -97,9 +97,14 @@ $(DPKG)/R/$(PKG): $(PKGRFILES)
 ifneq ($(strip $(PKGRFILES)),)
 	@$(ECHO) "  installing R files"
 	@$(MKDIR) -p $(DPKG)/R
+ifeq ($(strip $(BUILD)),CROSS)
 	@$(ECHO) "collater('"$(SPKG)"', pkg='"$(PKG)"',destDir='"$(DPKG)/R"')" \
-		 | $(RHOME)/bin/rterm.exe \
-		--vanilla --slave R_DEFAULT_PACKAGES=tools > /dev/null
+	  | R_DEFAULT_PACKAGES=tools $(R_EXE) --vanilla --slave > /dev/null
+else
+	@$(ECHO) "collater('"$(SPKG)"', pkg='"$(PKG)"',destDir='"$(DPKG)/R"')" \
+	  | $(RHOME)/bin/rterm.exe \
+	  --vanilla --slave R_DEFAULT_PACKAGES=tools > /dev/null
+endif
 ## install halts here if collater failed
 	@sh $(RHOME)/src/gnuwin32/install-save.sh $(SAVE) $(RLIB) $(PKG) $(RHOME)
 else
