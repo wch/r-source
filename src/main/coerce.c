@@ -576,8 +576,12 @@ SEXP coerceList(SEXP v, SEXPTYPE type)
 		PROTECT(rval = allocVector(type, n));
 		i = 0;
 		t = v;
-		for ( ; v != R_NilValue; v = CDR(v), i++)
-			STRING(rval)[i] = STRING(deparse1(CAR(v), 0))[0];
+		for ( ; v != R_NilValue; v = CDR(v), i++) {
+			if( isString(CAR(v)) && length(CAR(v)) == 1 )
+				STRING(rval)[i] = STRING(CAR(v))[0];
+			else
+				STRING(rval)[i] = STRING(deparse1(CAR(v), 0))[0];
+		}
 	}
 	else if(type == EXPRSXP) {
 		PROTECT(rval = allocVector(type, 1));
