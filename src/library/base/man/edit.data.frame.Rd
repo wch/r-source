@@ -34,7 +34,8 @@
   It is possible to use the data-editor's facilities to select the mode
   of columns to swap between numerical and factor columns in a data
   frame.  Changing any column in a numerical matrix to character will
-  cause the result to be coerced to a character matrix.
+  cause the result to be coerced to a character matrix.  Changing 
+  the mode of logical columns is not supported.
 }
 \value{
   The edited data frame.
