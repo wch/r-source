@@ -92,8 +92,10 @@ sys.source <-
 function(file, envir = NULL, chdir = FALSE,
          keep.source = getOption("keep.source.pkgs"))
 {
+    sQuote <- function(s) paste("`", s, "'", sep = "")
+    
     if(!(is.character(file) && file.exists(file)))
-	stop(paste("`", file, "' is not an existing file", sep = ""))
+	stop(paste(sQuote(file), "is not an existing file"))
     oop <- options(keep.source = as.logical(keep.source))
     on.exit(options(oop))
     exprs <- parse(n = -1, file = file)
@@ -119,12 +121,35 @@ function(topic, device = getOption("device"),
 
     paths <- .find.package(package, lib.loc, verbose = verbose)
 
+    ## Find the directories with a 'demo' subdirectory.
+    nodemo <- !file.exists(file.path(paths, "demo"))
+    if(any(nodemo)) {
+        if(!missing(package) && (length(package) > 0)) {
+            ## Warn about given packages which do not have a 'demo'
+            ## subdirectory.
+            packagesWithNoDemo <-
+                package[package %in% sapply(paths[nodemo], basename)]
+            if(length(packagesWithNoDemo) > 1) {
+                warning(paste("packages",
+                              paste(sQuote(packagesWithNoDemo),
+                                    collapse=", "),
+                              "contain no demos"))
+            }
+            else if(length(packagesWithNoDemo) == 1) {
+                warning(paste("package", sQuote(packagesWithNoDemo),
+                              "contains no demos"))
+
+            }
+        }
+        paths <- paths[!nodemo]
+    }
+
     if(missing(topic)) {
-        ## List all available demos.
-        ## This code could be made more similar to data().
+        ## List all possible demos.
 
         ## Build the demo db.
         db <- matrix(character(0), nr = 0, nc = 4)
+        noindex <- character(0)
         for(path in paths) {
             INDEX <- file.path(path, "demo", "00Index")
             if(file.exists(INDEX)) {
@@ -136,17 +161,43 @@ function(topic, device = getOption("device"),
                                       entries))
                 }
             }
+            else {
+                ## no index: check whether subdir 'demo' contains files.
+                if(length(list.files(file.path(path, "demo"))) > 0)
+                    noindex <- c(noindex, basename(path))
+            }
+
         }
         colnames(db) <- c("Package", "LibPath", "Item", "Title")
 
+        if(length(noindex) > 0) {
+            if(!missing(package) && (length(package) > 0)) {
+                ## Warn about given packages which do not have a demo
+                ## index.
+                packagesWithNoIndex <- package[package %in% noindex]
+                if(length(packagesWithNoIndex) > 1) {
+                    warning(paste("packages",
+                                  paste(sQuote(packagesWithNoIndex),
+                                        collapse=", "),
+                                  "contain demos but no index"))
+                }
+                else if(length(packagesWithNoIndex) == 1)
+                    warning(paste("package",
+                                  sQuote(packagesWithNoIndex),
+                                  "contains demos but no index"))
+            }
+        }
+
         footer <- if(missing(package))
-            paste("Use `demo(package = ",
-                  ".packages(all.available = TRUE))'\n",
-                  "to list the demos in all ",
-                  "*available* packages.", sep = "")
+            paste("Use ",
+                  sQuote(paste("demo(package =",
+                               ".packages(all.available = TRUE))")),
+                  "\n",
+                  "to list the demos in all *available* packages.",
+                  sep = "")
         else
             NULL
-        y <- list(type = "demo",
+        y <- list(type = "demo", title = "Demos",
                   header = NULL, results = db, footer = footer)
         class(y) <- "packageIQR"
         return(y)
