@@ -213,6 +213,8 @@ NEW FEATURES
 	power calculation. (Based in part on code suggested by Ulrich
 	Halekoh.)
 
+    o   New function power.anova.test, contributed by Claus Ekstrøm.
+
     o	print.matrix() and prmatrix() are now separate functions.
 	prmatrix() is the old S-compatible function, and
 	print.matrix() is a proper print method, currently identical
