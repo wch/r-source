@@ -129,7 +129,7 @@ else
 fi
 : ${R_RD4DVI="ae"}
 AC_SUBST(R_RD4DVI)
-: ${R_RD4PDF="ae,hyper"}
+: ${R_RD4PDF="times,hyper"}
 AC_SUBST(R_RD4PDF)
 ])# R_PROG_TEXMF
 
