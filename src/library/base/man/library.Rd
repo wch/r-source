@@ -36,7 +36,8 @@ provide(name)
   \item{logical.return}{logical.  If it is \code{TRUE},  \code{FALSE} or
       \code{TRUE} is returned to indicate success.}
   \item{warn.conflicts}{logical.  If \code{TRUE}, warnings are
-    printed about \code{\link{conflicts}} from attaching the new package.}
+    printed about \code{\link{conflicts}} from attaching the new
+    package, unless that package contains an object \code{.conflicts.ok}.}
   \item{quietly}{a logical.  If \code{TRUE}, a warning will not be
     printed if the package cannot be found.}
   \item{libname}{a character string giving the library directory where
