@@ -9,7 +9,6 @@ options(pager="macintosh")
 options(unzip="mac.unzip")
 options(mailer="none")
 
-options(encoding = native.enc)
 MacRoman <- 0:255
 
 ISOLatin1 <- as.integer(c(0:126, 32, 32, 32, 32, 32, 32, 32, 32, 32,

@@ -17,7 +17,6 @@ options(X11colortype = "true")
 options(pager = "${R_HOME}/bin/pager")
 options(browser = "netscape")
 options(mailer = "mailx")
-options(encoding = native.enc)
 
 MacRoman <- as.integer(c(0:126, 32, 196, 197, 199, 201, 209, 214, 220,
 225, 224, 226, 228, 227, 229, 231, 233, 232, 234, 235, 237, 236, 238,
