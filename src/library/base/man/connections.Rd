@@ -226,7 +226,7 @@ isIncomplete(con)
   \code{\link{readBin}}, \code{\link{writeLines}}, \code{\link{writeBin}},
   \code{\link{showConnections}}, \code{\link{pushBack}}.
 
-  \code{\link{capabilities}} to see if \code{gzfile}, \code{url},
+  \code{\link{capabilities}} to see if \code{url},
   \code{fifo} and \code{socketConnection} are supported by this build of \R.
 
 #ifdef windows
