@@ -34,7 +34,7 @@ MAKEINFO_HTML_OPTS = --html --no-split
 MAKEINFO_TEXT_OPTS = --number-sections --fill-column=76 --no-split --no-headers
 TEXI2HTML = $(MAKEINFO) $(MAKEINFO_HTML_OPTS)
 TEXI2TEXT = $(MAKEINFO) $(MAKEINFO_TEXT_OPTS)
-TEXI2DVI = $(top_builddir)/bin/texi2dvi --texinfo="@set UseExternalXrefs"
+TEXI2DVI = $(top_builddir)/bin/texi2dvi --texinfo="@set UseExternalXrefs "
 TEXI2PDF = $(TEXI2DVI) --pdf
 PDFLATEX = @PDFLATEX@
 PDFTEX = @PDFTEX@
