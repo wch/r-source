@@ -54,7 +54,7 @@ par(\dots, no.readonly = FALSE)
     strings are justified.  A value of \code{0} produces
     left-justified text, \code{0.5} centered text and \code{1}
     right-justified text.  Note that the \code{adj} argument of
-    \code{\link{text}} and \code{\link{mtext}} also allows
+    \code{\link{text}} also allows
     \code{adj= c(x,y)} for different adjustment in x- and y- direction.}
   \item{ann}{If set to \code{FALSE}, high-level plotting functions do
     not annotate the plots they produce with axis and overall titles.
@@ -130,7 +130,7 @@ par(\dots, no.readonly = FALSE)
   \item{las}{numeric in \{0,1,2,3\}; the style of axis labels.
     \describe{
       \item{0:}{always parallel to the axis [\emph{default}],}
-      \item{1:}{always horizontal,} 
+      \item{1:}{always horizontal,}
       \item{2:}{always perpendicular to the axis,}
       \item{3:}{always vertical.}
     }
