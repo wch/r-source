@@ -209,6 +209,7 @@ void errorcall(SEXP call, char *format,...)
     }
 
     if(call != R_NilValue ) {
+	inError = 1;
 	dcall = CHAR(STRING(deparse1(call, 0))[0]);
 	sprintf(errbuf, "Error in %s : ", dcall);
 	if (strlen(dcall) > LONGCALL) strcat(errbuf, "\n	");
