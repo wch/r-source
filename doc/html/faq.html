@@ -412,7 +412,7 @@ it, for example to <code>/usr/local/bin</code>.  In addition, plain text help
 pages as well as <small>HTML</small> and LaTeX versions of the documentation are
 built.
 
-<p>Use <kbd>make dvi</kbd> to create dvi versions of the R manuals, such as
+<p>Use <kbd>make dvi</kbd> to create DVI versions of the R manuals, such as
 <code>refman.dvi</code> (an R object reference index) and <code>R-exts.dvi</code>,
 the "R Extension Writers Guide", in the <code>doc/manual</code>
 subdirectory.  These files can be previewed and printed using standard
@@ -431,9 +431,9 @@ install</kbd>.  By default, this will install to the following directories:
 
 <dl>
 <dt><code>${prefix}/bin</code>
-<dd>(some) executables
+<dd>the front-end shell script
 <br><dt><code>${prefix}/man/man1</code>
-<dd>man pages
+<dd>the man page
 <br><dt><code>${prefix}/lib/R</code>
 <dd>all the rest (libraries, on-line help system, <small>...</small>).  This is the "R
 Home Directory" (<code>R_HOME</code>) of the installed system. 
@@ -449,7 +449,7 @@ Home Directory" (<code>R_HOME</code>) of the installed system.
 <p>(E.g., the R executable will then be installed into
 <code>/where/you/want/R/to/go/bin</code>.)
 
-<p>To install dvi, info and PDF versions of the manuals, use <kbd>make
+<p>To install DVI, info and PDF versions of the manuals, use <kbd>make
 install-dvi</kbd>, <kbd>make install-info</kbd> and <kbd>make install-pdf</kbd>,
 respectively.
 
@@ -591,7 +591,7 @@ J. C. Pinheiro and D. M. Bates (2000), "Mixed-Effects Models in S and
 
 <p>provides a comprehensive guide to the use of the <strong>nlme</strong> package
 for linear and nonlinear mixed-effects models.  This has a home page at
-<a href="http://nlme.stat.wisc.edu/MEMSS">http://nlme.stat.wisc.edu/MEMSS</a>.
+<a href="http://nlme.stat.wisc.edu/MEMSS/">http://nlme.stat.wisc.edu/MEMSS/</a>.
 
 <p>Last, but not least, Ross' and Robert's experience in designing and
 implementing R is described in:
@@ -1334,8 +1334,8 @@ U.S. National Institute for Standards and Technology.
 <dd>An interface between R and the mSQL database system. 
 <br><dt><strong>SASmixed</strong>
 <dd>Data sets and sample linear mixed effects analyses corresponding to the
-examples in "SAS System for Mixed Models" by Littel, Milliken, Stroup
-and Wolfinger, 1996, SAS Institute. 
+examples in "SAS System for Mixed Models" by R. C. Littell,
+G. A. Milliken, W. W. Stroup and R. D. Wolfinger, 1996, SAS Institute. 
 <br><dt><strong>acepack</strong>
 <dd>ace (Alternating Conditional Expectations) and avas (Additivity and
 VAriance Stabilization for regression) for selecting regression
@@ -1782,7 +1782,7 @@ usual tools.
 and highlighting of source code, partial evaluations of code, loading
 and error-checking of code, and source code revision maintenance) and
 documentation (syntactic indentation and highlighting of source code,
-sending Examples to running ESS process, and previewing), interacting
+sending examples to running ESS process, and previewing), interacting
 with an inferior R process from within Emacs (command-line editing,
 searchable command history, command-line completion of R object and file
 names, quick access to object and search lists, transcript recording,
@@ -2214,9 +2214,9 @@ If the problem occurs when Netscape is running, try (re)starting it with
 either the <code>-no-install</code> (to use the default colormap) or the
 <code>-install</code> (to install a private colormap) option.
 
-<p>You could also set the <code>colortype</code> of <code>X11()</code> to `pseudo.cube'
-rather than the default `pseudo'.  See the help page for <code>X11()</code>
-for more information.
+<p>You could also set the <code>colortype</code> of <code>X11()</code> to
+<code>"pseudo.cube"</code> rather than the default <code>"pseudo"</code>.  See the
+help page for <code>X11()</code> for more information.
 
 <p><hr>
 Node:<a name="Is%20R%20Y2K-compliant%3f">Is R Y2K-compliant?</a>,
