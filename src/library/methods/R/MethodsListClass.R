@@ -11,6 +11,7 @@
              prototype = list(methods=list(),  argument = as.name("<UNDEFINED>"),  allMethods = list(), form = quote(f()))
              , where = envir)
     setIs("MethodsList", "OptionalMethods")
+    setClass("EmptyMethodsList", representation(argument = "name", sublist = "list"))
 
     TRUE
 }

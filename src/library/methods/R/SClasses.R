@@ -118,9 +118,13 @@ slot <-
 ##   function(object, name)
 ##   .Internal(object@name)
 
-## "@<-" <-
-##   function(object, name, value)
-##   .Internal(object@name <- value)
+"@<-" <-
+   function(object, name, value) {
+     arg <- substitute(name)
+     if(is.name(arg))
+       name <- as.character(arg)
+     "slot<-"(object, name, TRUE, value)
+   }
 
 slotNames <-
   ##  The names of the class's slots.  The argument is either the name of a class, or
@@ -216,23 +220,26 @@ new <-
         if(length(elements)>0) {
           slotDefs <- getProperties(ClassDef)
             snames <- names(elements)
-            which  <- match(snames, names(slotDefs))
-            if(any(is.na(which)))
-                stop(paste("Invalid names for properties of class ",
-                           Class, ": ", paste(snames[is.na(which)], collapse=", ")))
-            for(i in seq(along=snames)) {
-              slotName <- el(snames, i)
-              slotClass <- elNamed(slotDefs, slotName)
-              slotVal <- el(elements, i)
-              if(!.Force && !is(slotVal, slotClass))
-                stop(paste("Invalid object for slot \"", slotName,
-                           "\", with class \"", class(slotVal), 
-                           "\", should be or extend class \"", slotClass, "\"", sep = ""))
-              slotVal <- as(slotVal, slotClass)
-              slot(value, slotName, check = FALSE) <- slotVal
-            }
+          if(any(duplicated(snames)))
+            stop(paste("Duplicated slot names:",
+                       paste(snames[duplicated(snames)], collapse = ", ")))
+          which  <- match(snames, names(slotDefs))
+          if(any(is.na(which)))
+            stop(paste("Invalid names for properties of class ",
+                       Class, ": ", paste(snames[is.na(which)], collapse=", ")))
+          for(i in seq(along=snames)) {
+            slotName <- el(snames, i)
+            slotClass <- elNamed(slotDefs, slotName)
+            slotVal <- el(elements, i)
+            if(!.Force && !is(slotVal, slotClass))
+              stop(paste("Invalid object for slot \"", slotName,
+                         "\", with class \"", class(slotVal), 
+                         "\", should be or extend class \"", slotClass, "\"", sep = ""))
+            slotVal <- as(slotVal, slotClass)
+            slot(value, slotName, check = FALSE) <- slotVal
+          }
         }
-    }
+      }
     value
 }
 

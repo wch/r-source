@@ -8,6 +8,8 @@
 \alias{matchArgClass}
 \alias{showMlist}
 \alias{print.MethodsList}
+\alias{emptyMethodsList}
+\alias{insertMethodInEmptyList}
 \title{MethodsList Objects}
 \usage{
 MethodsList(.ArgName, ...)
@@ -34,9 +36,12 @@ print.MethodsList(x, ...)
 These functions create and manipulate \code{MethodsList} objects, the
 objects used in R to store methods for dispatch.
 You should not call any of these functions from code that you want to
-port to S-Plus.  Instead, use the functions described in the documentation.
+port to S-Plus.  Instead, use the functions described in the
+documentation.
+
+\describe{
   
-  \code{MethodsList}: 
+  \item{\code{MethodsList}:}{ 
   Create a MethodsList object out of the arguments.
 
 Conceptually, this object is a named collection of methods to be dispatched
@@ -53,7 +58,8 @@ MethodsList objects are used primarily to dispatch OOP-style methods and, in R,
 to emulate S4-style methods.
 
   
-  \code{SignatureMethod}: 
+  }
+\item{\code{SignatureMethod}:}{ 
   construct a MethodsList object containing (only) this method, corresponding
 to the signature; i.e., such that signature[[1]] is the match for the first
 argument, signature[[2]] for the second argument, and so on.  The string
@@ -64,12 +70,14 @@ The first argument is the argument names to be used for dispatch corresponding t
 the signatures.
 
   
-  \code{insertMethod}: 
+  }
+\item{\code{insertMethod}:}{ 
   insert the definition \code{def} into the MethodsList object, \code{mlist}, corresponding to
 the signature
 
   
-  \code{MethodsListDispatch}: 
+  }
+\item{\code{MethodsListDispatch}:}{ 
   select the element of a MethodsList object corresponding to the
 actual arguments.
 
@@ -82,18 +90,21 @@ a method specifically linked to class \code{"missing"}.  Once a function is foun
 is returned as the value.  If matching fails, an error occurs.
 
   
-  \code{matchArg}: 
-  Utility function to match the object to the elements of a methods list.
+  }
+\item{\code{matchArg, matchArgClass}:}{ 
+  Utility functions to match the object  or the class to the elements of
+  a methods list.
+  Used in finding inherited methods, and not meant to be called directly.
 
-  
-  \code{matchArgClass}: 
-  utility function to match the specified class to the elements of a methods list.
-
-  \code{showMlist}: 
+  }
+\item{\code{showMlist}:}{ 
   Prints the contents of the MethodsList.  If \code{includeDefs} the signatures and the
 corresonding definitions will be printed; otherwise, only the signatures.
 
-The function calls itself recursively.  \code{prev} is the previously selected classes.
+The function calls itself recursively.  \code{prev} is the previously
+selected classes.
+}
+}
 
 }
 \details{

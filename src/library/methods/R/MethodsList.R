@@ -120,91 +120,161 @@ insertMethod <-
 
 MethodsListSelect <-
   ## select the element of a MethodsList object corresponding to the
-  ## actual arguments.
+  ## actual arguments (as defined in the suppled environment),
+  ## and return the object, extended to include that method if necessary.
   ##
   ## Works recursively.  At each level finds an argument name from the current `mlist'
   ## object, and evaluates this argument (if it is not missing), then uses the
-  ## `data.class' of the result to select an element of `mlist'.  If such an element
+  ## class of the result to select an element of `mlist'.  If such an element
   ## exists and is another `MethodsList' object, `MethodsListSelect'  calls itself recursively
   ## to resolve using further arguments.  Matching includes using a default selection or
   ## a method specifically linked to class `"missing"'.  Once a function is found, it
-  ## is returned as the value.  If matching fails, an error occurs.
-    function(fname = NULL, ev, mustFind = TRUE,
+  ## is returned as the value.  If matching fails,  NULL is returned.
+    function(fname, ev,
              mlist = getMethodsForDispatch(fname),
-             arg, thisClass, argName = slot(mlist, "argument")
+             finalDefault = finalDefaultMethod(mlist)
  )
 {
-    ## the C level code turns off some recursive method selection during evaluation
-    ## of a call to this function.  Make sure it's turned back on, even if an error occurs.
-    if(!is(mlist, "MethodsList")) {
-        if(is.null(fname))
-            stop("Invalid method sublist")
-        else
-            stop(paste("\"", fname, "\" is not a valid generic function", sep=""))
+  if(!is(mlist, "MethodsList")) {
+    if(is.null(fname))
+      stop("Invalid method sublist")
+    else
+      stop(paste("\"", fname, "\" is not a valid generic function", sep=""))
+  }
+  ## the C level code turns off some recursive method selection during evaluation
+  ## of a call to this function.  Make sure it's turned back on, even if an error occurs.
+  on.exit(.Call("R_clear_method_selection", PACKAGE = "methods"))
+  argName <- slot(mlist, "argument")
+  missingThisArg <-
+    eval(substitute(missing(ARGNAME),  list(ARGNAME = argName)), ev)
+  if(missingThisArg) {
+    arg <- NULL
+    thisClass <- "missing"
+  }
+  else {
+    arg <- eval(as.name(argName), ev)
+    thisClass <- data.class(arg) #really class, but only 1st string.
+    ## evaluate the argument to try class matching
+  }
+  selection <- elNamed(slot(mlist, "allMethods"), thisClass)
+  inherited <- is.null(selection)
+  if(!inherited) {
+    if(is(selection, "function"))
+      ## found directly (won't happen if called from C dispatch)
+      value <- mlist ## no change
+    else {
+      method <- Recall(NULL, ev, selection, finalDefault = finalDefault)
+      if(!is(method, "EmptyMethodsList")) {
+        method <- mergeAllMethods(selection, method, thisClass)
+        elNamed(slot(mlist, "allMethods"), thisClass) <- method
+        value <- mlist
+      }
+      else
+        value <- method
     }
-    on.exit(.Call("R_clear_method_selection", PACKAGE = "methods"))## in case of error
-    ## in calls from the C method selection code,  arg and thisClass are already known.
-    if(missing(arg)) {
-        missingThisArg <-
-            eval(substitute(missing(ARGNAME),  list(ARGNAME = argName)), ev)
-        if(missingThisArg) {
-            arg <- NULL
-            thisClass <- "missing"
-        }
-        else {
-            arg <- eval(as.name(argName), ev)
-            thisClass <- data.class(arg)
-            ## evaluate the argument to try class matching
-            ## May also signal inexact match by storing .Classes in ev
-        }
+  }
+  if(inherited || is(value, "EmptyMethodsList"))  {
+    ## direct selection failed at this level or below
+    allSelections <- matchArg(arg, thisClass, mlist, ev)
+    method <- NULL
+    for(selection in allSelections) {
+      if(is(selection, "function"))
+        method <- selection
+      else if(is(selection, "MethodsList")) {
+        ## go on to try matching further arguments
+        method <- Recall(NULL, ev, selection, finalDefault = finalDefault)
+        if(is(method, "EmptyMethodsList"))
+          selection <- method   ## recursive selection failed
+      }
+      if(!is(selection, "EmptyMethodsList"))
+        break
     }
-    selection <- elNamed(slot(mlist, "allMethods"), thisClass)
-    inherited <- is.null(selection)
-    if(inherited) {
-        ## look for inherited methods: should only happen once per signature
-        ##
-        ## First, get all the superclasses that have method(s) defined
-        allSelections <- matchArg(arg, thisClass, mlist, ev)
-        method <- NULL
-        for(selection in allSelections) {
-            if(is(selection, "function"))
-                method <- selection
-            else if(is(selection, "MethodsList")) {
-                method <- Recall(NULL, ev, FALSE, selection)
-                if(is.null(method))
-                    selection <- NULL   ## recursive selection failed
-            }
-            if(!is.null(selection))
-                break
-        }
-        if(is.null(selection) && mustFind) {
-            ## try the overall default
-            method <- selection <- finalDefaultMethod(mlist)
-            if(is.null(selection))
-                stop(paste("Unable to match argument \"", argName, "\" to methods", sep=""))
-        }
+    if(is(selection, "EmptyMethodsList") && !is.null(fname) && !is.null(finalDefault)) {
+      ## only use the final default method after exhausting all
+      ## other possibilities, at all levels.
+      method <- insertMethodInEmptyList(selection, finalDefault)
     }
-    else {                              ## this code is generally not used (C implementaton does non-inherited case)
-        if(is(selection, "function"))
-            method <- selection
-        else {
-            method <- Recall(NULL, ev, FALSE, selection)
-            if(is.null(method))
-                selection <- NULL       ## recursive selection failed
-        }
+    if(is.null(method))
+      value <- emptyMethodsList(mlist, thisClass) ## nothing found
+    else {
+      oldMethods <- elNamed(mlist@allMethods, thisClass)
+      newMethods <- mergeAllMethods(oldMethods, method, thisClass)
+      elNamed(mlist@allMethods, thisClass) <- newMethods
+      value <- mlist
     }
-    if(inherited && !is.null(selection)
-       && !is.null(fname)) {
-        ## top-level call:  lower-level inherited methods (for which fname is NULL)
-        ## are inserted into the corresponding element of the mlist by the C code
-        ## in do_dispatch.
-        elNamed(slot(mlist, "allMethods"), thisClass) <- selection
-        fdef <- getFromMethodMetaData(fname)
-        assign(".Methods", envir = environment(fdef), mlist)
+  }
+  ## end of assignment to value of updated methods list (or NULL)
+  if(!(is.null(fname) || is.null(value))) {
+    ## update the generic's methods in the metadata
+    fdef <- getFromMethodMetaData(fname)
+    if(is.function(fdef))
+      assign(".Methods", value, environment(fdef))
+    else
+      warning("MethodsListSelect called on a currently undefined generic (\"",
+              fname, "\"):  result will not be saved in the environment")
     }
-    on.exit()                           # clear error action
-    method
+    value
 }
+
+emptyMethodsList <-
+  function(mlist, thisClass, sublist = list()) {
+    sublist[thisClass] <- list(NULL)
+    new("EmptyMethodsList", argument = mlist@argument, sublist = sublist)
+  }
+
+insertMethodInEmptyList <-
+  function(mlist, def) {
+    value <- new("MethodsList", argument = mlist@argument)
+    sublist <- mlist@sublist
+    submethods <- sublist[[1]]
+    if(is.null(submethods))
+      sublist[[1]] <- def
+    else
+      sublist[[1]] <- Recall(submethods, def)
+    value@allMethods <- sublist
+    value
+  }
+
+mergeAllMethods <-
+  ## merge the AllMethods slots in two methods list objects (including special
+  ## cases of NULL and function.
+  function(mlist, update, thisClass, argument) {
+    if(is.null(mlist))
+      return(update)
+    if(!is(mlist, "MethodsList")) {
+      if(!is(update, "MethodsList"))
+        stop("Both original and update can't be functions")
+      temp <- new("MethodsList", argument = update@argument)
+      elNamed(temp@allMethods, "ANY") <- mlist
+      mlist <- temp
+    }
+    mA <- mlist@allMethods
+    if(is(update, "MethodsList"))
+      uA <- update@allMethods
+    else {
+      uA <- list()
+      elNamed(uA, thisClass) <- update
+    }
+    for(what in names(uA)) {
+      whatEl <- elNamed(uA, what)
+      ## as used from MethodsListSearch, it's asserted that cur
+      ## is a MethodsList object
+      if(is(whatEl, "MethodsList")) {
+        cur <- elNamed(mA, what)
+        if(is(cur, "MethodsList"))
+          ## merge recursively
+          elNamed(mA, what) <- mergeAllMethods(cur, whatEl)
+        else
+          elNamed(mA, what) <- whatEl
+      }
+      else
+        elNamed(mA, what) <- whatEl
+    }
+    mlist@allMethods <- mA
+    mlist
+  }
+
+    
 
 MethodsListDispatch <-
   function(fname, ev, mustFind = TRUE)
@@ -240,59 +310,51 @@ finalDefaultMethod <-
 matchArg <-
   ## Utility function to match the object to the elements of a methods list.
   ##
-  ## If `thisClass' is the name of one of the methods, that method is returned (including
-  ## the case of `"missing"' for missing arguments.
-  ##
-  ## If direct matching fails, the function looks for an inherited match, but only among
+  ## The function looks only for an inherited match, and only among
   ## the methods that are not themselves inherited.  (Inherited methods when found are
   ## stored in the session copy of the methods list, but they themselves should not be
   ## used for finding inherited matches, because an erroneous match could be found depending
   ## on which methods were previously used.  See the detailed discussion of methods.)
   function(object, thisClass, mlist, ev)
 {
-    methods <- slot(mlist, "allMethods")## both direct and inherited
-    defaultMethod <- elNamed(methods, "ANY")## maybe NULL
-    classes <- names(methods)
-    which <- match(thisClass, classes)
-    value <- list()
-    if(!is.na(which))
-        elNamed(value, thisClass) <- el(methods, which)
-    else if(thisClass == "missing")
-        ## no superclasses for "missing"!
-        elNamed(value, "ANY") <- defaultMethod
+  methods <- slot(mlist, "methods")## only direct methods
+  defaultMethod <- elNamed(methods, "ANY")## maybe NULL
+  classes <- names(methods)
+  value <- list()
+  if(thisClass == "missing") {}
+        ## no superclasses for "missing", not even "ANY"
+  else {
+    ## search in the superclasses, but don't use inherited methods
+    ## There are two cases:  if thisClass is formally defined, use its
+    ## superclasses.  Otherwise, look in the subclasses of those classes for
+    ## which methods exist.
+    if(isClass(thisClass)) {
+      ## for consistency, order the available methods by
+      ## the (depth first) order of the superclasses of thisClass
+      superClasses <- names(getExtends(getClass(thisClass)))
+      classes <- superClasses[!is.na(match(superClasses, classes))]
+      for(which in seq(along=classes)) {
+        tryClass <- el(classes, which)
+        ## TODO:  There is potential bug here:  If the is relation is conditional,
+        ## we should not cache this selection.  Needs another trick in the environment
+        ## to FORCE no caching regardless of what happens elsewhere; e.g., storing a
+        ## special object in .Class
+        if(is(object, tryClass)) {
+          elNamed(value, tryClass) <- elNamed(methods, tryClass)
+        }
+      }
+    }
     else {
-        ## search in the superclasses, but don't use inherited methods
-        methods <- slot(mlist, "methods")## only direct methods
-        ## There are two cases:  if thisClass is formally defined, use its
-        ## superclasses.  Otherwise, look in the subclasses of those classes for
-        ## which methods exist.
-        if(isClass(thisClass)) {
-            ## for consistency, order the available methods by
-            ## the (depth first) order of the superclasses of thisClass
-            superClasses <- names(getExtends(getClass(thisClass)))
-            classes <- superClasses[!is.na(match(superClasses, classes))]
-            for(which in seq(along=classes)) {
-                tryClass <- el(classes, which)
-                ## TODO:  There is potential bug here:  If the is relation is conditional,
-                ## we should not cache this selection.  Needs another trick in the environment
-                ## to FORCE no caching regardless of what happens elsewhere; e.g., storing a
-                ## special object in .Class
-                if(is(object, tryClass)) {
-                    elNamed(value, tryClass) <- elNamed(methods, tryClass)
-                }
-            }
-        }
-        else {
-            for(which in seq(along = classes)) {
-                tryClass <- el(classes, which)
-                if(isClass(tryClass) && is(object, tryClass))
-                    elNamed(value, tryClass) <- el(methods, which)
-            }
-        }
+      for(which in seq(along = classes)) {
+        tryClass <- el(classes, which)
+        if(isClass(tryClass) && is(object, tryClass))
+          elNamed(value, tryClass) <- el(methods, which)
+      }
     }
     if(length(value) == 0 && !is.null(defaultMethod))
-        elNamed(value, "ANY") <- defaultMethod
-    value
+      elNamed(value, "ANY") <- defaultMethod
+  }
+  value
 }
 
 matchArgClass <-
@@ -355,44 +417,33 @@ showMlist <-
   ## The function calls itself recursively.  `prev' is the previously selected classes.
   function(mlist, includeDefs = TRUE, inherited = TRUE, prev = character())
 {
-    showThisMethod <-
-        function(mi,includeDefs, ci)
-        {
-            if(is.function(mi)) {
-                cat(paste(ci, collapse=", "))
-                if(includeDefs) {
-                    cat(":\n  ")
-                    print(mi)
-                }
-                cat("\n")
-            }
-            else if(is(mi, "MethodsList")) {
-                methods <- slot(mi, "methods")
-                classes <- names(methods)
-                for(i in seq(along=methods))
-                    Recall(el(methods, i), includeDefs, c(ci, el(classes,i)))
-            }
-            else
-                cat(paste(ci, collapse = ", "),
-                    ": <<Unexpected element of class \"", data.class(mi),
-                    "\"\n\n", sep="")
-        }
     methods <- slot(mlist, "methods")
-    cnames <- names(methods)
     if(inherited) {
         allMethods <- slot(mlist, "allMethods")
         anames <- names(allMethods)
-        inh <- is.na(match(anames, cnames))
-        if(any(inh)) {
-            anames <- paste(anames[inh], "(inherited)")
-            methods[anames] <- allMethods[inh]
-            cnames <- c(cnames, anames)
-        }
+        inh <- is.na(match(anames, names(methods)))
+        anames[inh] <- paste(anames[inh], "(inherited)")
+        names(allMethods) <- anames
+        methods <- allMethods
     }
+    cnames <- names(methods)
     for(i in seq(along = cnames)) {
         mi <- el(methods, i)
         ci <- c(prev, el(cnames, i))
-        showThisMethod(mi, includeDefs, ci)
+        if(is.function(mi)) {
+          cat(paste(ci, collapse=", "))
+          if(includeDefs) {
+            cat(":\n  ")
+            print(mi)
+          }
+          cat("\n")
+        }
+        else if(is(mi, "MethodsList"))
+          Recall(mi, includeDefs, inherited, ci)
+        else
+          cat(paste(ci, collapse = ", "),
+              ": <<Unexpected element of class \"", data.class(mi),
+              "\"\n\n", sep="")
     }
 }
 

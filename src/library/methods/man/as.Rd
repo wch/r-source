@@ -61,6 +61,43 @@ The functions in this package emulate the facility for classes and methods descr
 for further details and examples.
 }
 
+\examples{
+## using the definition of class "track" from \link{Classes}
+
+\testonly{
+setClass("track",
+            representation(x="numeric", y="numeric"))
+setClass("trackCurve",
+            representation("track", smooth = "numeric"))
+
+ydata <- rnorm(10); ysmooth <- 1:10}
+
+setAs("track", "numeric", function(x, ...)x@y)
+
+\testonly{
+setClass("ca", representation(a = "character", id = "numeric"))
+
+setClass("cb", representation(b = "character", id = "numeric"))
+
+
+setClass("id")
+setIs("ca", "id")
+setIs("cb", "id")
+
+
+setAs("id", "numeric", function(x, ...) x@id)
+
+CA <- new("ca", a ="A", id = 1)
+
+CB <- new("cb", b = "B", id = 2)
+
+setAs("cb", "ca", function(object)new("ca", a=object@b, id = object@id))
+
+as(CB, "numeric")
+
+}
+
+}
 
 \author{
   John Chambers

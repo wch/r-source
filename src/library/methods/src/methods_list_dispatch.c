@@ -26,9 +26,7 @@ SEXP R_subassign3_dflt(SEXP call, SEXP x, SEXP nlist, SEXP val);
    they will eventually be C implementations of slot, data.class,
    etc. */
 
-static SEXP do_dispatch(SEXP fname, SEXP ev, SEXP optional, SEXP mlist, SEXP *final);
-static SEXP R_S_MethodsListSelect(SEXP fname, SEXP ev, SEXP optional,
-				  SEXP mlist, SEXP arg, SEXP class);
+static SEXP do_dispatch(SEXP fname, SEXP ev, SEXP mlist, int firstTry);
 
 /* objects, mostly symbols, that are initialized once to save a little time */
 static int initialized = 0;
@@ -183,28 +181,7 @@ SEXP R_clear_method_selection()
     return R_NilValue;
 }
 
-static SEXP clearOverride(SEXP mlist)
-{
-    int i;
-    for(i=0; i<n_ov; i++)
-	if(ov_mlists[i] == mlist) {
-	    int j;
-	    for(j=i+1; j<n_ov; j++) {
-		ov_mlists[j-1] = ov_mlists[j];
-		ov_methods[j-1] = ov_methods[j];
-	    }
-	    n_ov--;
-	    return mlist;
-	}
-    warning("Could not find the methods list object to clear in R_clear_method_selection");
-    return R_NilValue;
-}
-
-
-/* static char* any = "ANY"; unused */
-
-static SEXP R_find_method(SEXP mlist, char *class, SEXP fname,
-			 SEXP ev, SEXP arg, SEXP class_obj, int *inherited)
+static SEXP R_find_method(SEXP mlist, char *class, SEXP fname)
 {
     /* find the element of the methods list that matches this class,
        but not including inheritance. */
@@ -216,29 +193,6 @@ static SEXP R_find_method(SEXP mlist, char *class, SEXP fname,
 	return(R_NilValue); /* -Wall */
     }
     value = R_element_named(methods, class);
-    if(value == R_NilValue) {
-	/* Avoid recursive loop in searching for a method:  if the S
-	   language search calls a generic for which no direct method is
-	   defined, we MUST use the override default method.  If this is
-	   not a recursive call, we set that override attribute (and the
-	   R_S_methodsListSearch code must unset it). */
-	value = getOverride(mlist);
-	if(value == R_NilValue) {
-	    SEXP deflt;
-	    deflt = R_element_named(methods, "ANY");
-	    if(deflt == R_NilValue)
-		deflt = R_MissingArg; /* a fixed value indicating no default
-				       */
-	    setOverride(mlist, deflt);
-	    /* call the S function */
-	    value = R_S_MethodsListSelect(fname, ev, R_FALSE, mlist, arg, class_obj);
-	    *inherited = 1;
-	    clearOverride(mlist);
-	}
-	else if(value == R_MissingArg)
-	    error("Recursive use of function \"%s\" in method selection, with no default method",
-		  CHAR(asChar(fname)));
-    }
     return value;
 }
 
@@ -297,27 +251,20 @@ static SEXP R_S_sysframe(int n, SEXP ev)
 #endif
 
 
-static SEXP R_S_MethodsListSelect(SEXP fname, SEXP ev, SEXP optional,
-				  SEXP mlist, SEXP arg, SEXP class)
+static SEXP R_S_MethodsListSelect(SEXP fname, SEXP ev, SEXP mlist)
 {
     SEXP e, val;
-    PROTECT(e = allocVector(LANGSXP, 7));
-    PROTECT(val = Rf_findFun(s_MethodsListSelect, R_GlobalEnv));
-    SETCAR(e, val);
+    PROTECT(e = allocVector(LANGSXP, 4));
+    SETCAR(e, s_MethodsListSelect);
     val = CDR(e);
     SETCAR(val, fname);
     val = CDR(val);
     SETCAR(val, ev);
     val = CDR(val);
-    SETCAR(val, optional);
-    val = CDR(val);
     SETCAR(val, mlist);
     val = CDR(val);
-    SETCAR(val, arg);
-    val = CDR(val);
-    SETCAR(val, class);
-    val = eval(e, R_NilValue);
-    UNPROTECT(2);
+    val = eval(e, R_GlobalEnv);
+    UNPROTECT(1);
     return val;
 }
 
@@ -509,8 +456,8 @@ static SEXP nonstandard_primitive(primitive_type which, SEXP skeleton,
 /* C version of the standardGeneric R function. */
 SEXP R_standardGeneric(SEXP fname, SEXP ev)
 {
-    SEXP mlist, final, f, val, f_env = R_NilValue, fdef, call, fsym;
-    int merged = 0; primitive_type prim_case;
+    SEXP mlist, f, val, f_env = R_NilValue, fdef, call, fsym;
+    int nprotect = 0; primitive_type prim_case;
 
     fsym = fname;
     if(!isSymbol(fsym))
@@ -529,9 +476,8 @@ SEXP R_standardGeneric(SEXP fname, SEXP ev)
 	   information. First assign a special version to trap recursive
 	   calls to the same generic. */
 	R_assign_to_method_metadata(fsym, get_skeleton(fsym, R_NilValue));
-	PROTECT(fdef = R_S_mergeGenericFunctions(fname));
+	PROTECT(fdef = R_S_mergeGenericFunctions(fname)); nprotect++;
 	R_assign_to_method_metadata(fsym, fdef);
-	merged = 1;
 	if(fdef == R_NilValue) {
 	    error("\"%s\" has no defined methods", CHAR_STAR(fsym));
 	    return R_NilValue; /* -Wall */
@@ -541,18 +487,47 @@ SEXP R_standardGeneric(SEXP fname, SEXP ev)
     default:
 	f_env = R_get_function_env(fdef, fsym);
 	mlist = R_get_from_f_env(f_env, s_dot_Methods, fsym);
-	PROTECT(mlist);
-	f = do_dispatch(fname, ev, R_FALSE, mlist, &final);
-	UNPROTECT(1);
-	if(merged)
-	    UNPROTECT(1);
+	PROTECT(mlist); nprotect++;
+	f = do_dispatch(fname, ev, mlist, TRUE);
+	if(isNull(f)) {
+	  /* call the S language code to do a search with inheritance */
+	  SEXP value = getOverride(mlist);
+	  /* Avoid recursive loop in searching for a method:  if the S
+	     language search calls a generic for which no direct method is
+	     defined, we MUST use the override default method.  If this is
+	     not a recursive call, we set that override attribute (and the
+	     R_S_methodsListSearch code must unset it). */
+	  if(value == R_NilValue) {
+	    SEXP deflt;
+	    deflt = R_find_method(mlist, "ANY", fname);
+	    if(deflt == R_NilValue)
+	      deflt = R_MissingArg; /* a fixed value indicating no default
+				       */
+	    setOverride(mlist, deflt);
+	    /* call the S function, it returns a revised MethodsList
+	       object, and also stores the revised MethodsList in the
+	       methods metadata.
+	    */
+	    PROTECT(value = R_S_MethodsListSelect(fname, ev, mlist)); nprotect++;
+	    R_clear_method_selection(); /* to be safe.
+				     The S language code is supposed
+				     to clear also. */
+	    if(isNull(value))
+	      error("No direct or inherited method for function \"%s\" for this call",
+		    CHAR_STAR(fname));
+	    mlist = value;
+	    /* now look again.  This time the necessary method should
+	       have been inserted in the MethodsList object */
+	    f = do_dispatch(fname, ev, mlist, FALSE);
+	  }
+	}
     }
+    val = R_NilValue;
     switch(TYPEOF(f)) {
     case CLOSXP:
-	PROTECT(val = BODY(f));
+      PROTECT(val = BODY(f)); nprotect++;
 	val =  eval(val, ev);
-	UNPROTECT(1);
-	return val;
+	break;
     case SPECIALSXP: case BUILTINSXP: {
 	/* most primitives can be handled just by calling the skeleton
 	   function, but some need special attention */
@@ -564,10 +539,9 @@ SEXP R_standardGeneric(SEXP fname, SEXP ev)
 	    /* the skeleton is almost surely a call to the same primitive, but we
 	       don't need to assume that. */
 	    SETCAR(call, f);
-	PROTECT(call);
+	PROTECT(call); nprotect++;
 	val = eval(call, ev);
-	UNPROTECT(1);
-	return val;
+	break;
     }
     case LANGSXP:
 	if(mlist == R_NilValue) {
@@ -581,27 +555,25 @@ SEXP R_standardGeneric(SEXP fname, SEXP ev)
 		/* the skeleton is almost surely a call to the same primitive, but we
 		   don't need to assume that. */
 		SETCAR(call, f);
-	    PROTECT(call);
+	    PROTECT(call); nprotect++;
 	    val =  eval(call, ev);
-	    UNPROTECT(1);
-	    return val;
+	    break;
 	}
 	/* else, it's an errror */
     default:
 	error("invalid object (non-function) used as method");
-	return R_NilValue;
+	break;
     }
+    UNPROTECT(nprotect);
+    return val;
 }
 
-static SEXP do_dispatch(SEXP fname, SEXP ev, SEXP optional, SEXP mlist,
-			SEXP *final_p)
+static SEXP do_dispatch(SEXP fname, SEXP ev, SEXP mlist, int firstTry)
 {
     char *arg_name, *class;
-    SEXP arg_slot, arg_sym, arg, method, this_method, child, class_obj;
+    SEXP arg_slot, arg_sym, arg, method, value, child, class_obj;
     int inherited, nprotect = 0;
-    *final_p = mlist; /* to signal possible re-computation of mlist to add
-			 inherited element. */
-    PROTECT(arg_slot = R_get_attr(mlist, "argument"));
+    PROTECT(arg_slot = R_get_attr(mlist, "argument")); nprotect++;
     if(arg_slot == R_NilValue) {
 	error("methods list had no \"argument\" slot");
 	return(R_NilValue); /* -Wall */
@@ -614,7 +586,6 @@ static SEXP do_dispatch(SEXP fname, SEXP ev, SEXP optional, SEXP mlist,
 	   "name" */
 	arg_sym = install(arg_name);
     }
-    UNPROTECT(1); /* arg_slot */
     if(TYPEOF(ev) != ENVSXP) {
 	error("The environment argument for dispatch must be an R environment");
 	return(R_NilValue); /* -Wall */
@@ -636,38 +607,28 @@ static SEXP do_dispatch(SEXP fname, SEXP ev, SEXP optional, SEXP mlist,
       PROTECT(class_obj = R_data_class(eval(arg_sym, ev), TRUE)); nprotect++;
     }
     class = CHAR(asChar(class_obj));
-    method = R_find_method(mlist, class, fname, ev, arg, class_obj, &inherited);
-    if(method == R_NilValue && !asLogical(optional)) {
-	error("No matching method or default for argument \"%s\" of class %s",
-	      CHAR(PRINTNAME(arg_sym)), class);
-	return(R_NilValue); /* -Wall */
+    method = R_find_method(mlist, class, fname);
+    if(isNull(method)) {
+      if(!firstTry)
+	error("No matching method for function \"%s\" (argument \"%s\", with class %s)",
+	      CHAR_STAR(fname), CHAR(PRINTNAME(arg_sym)), class);
+      UNPROTECT(nprotect);
+      return(R_NilValue);
     }
-    this_method = method; /* for inserting inherited methods at this
-			     level (but only if the eventual search succeeds) */
+    if(value == R_MissingArg) {/* the check put in before calling
+			  function  MethodListSelect in R */
+      error("Recursive use of function \"%s\" in method selection, with no default method",
+		  CHAR_STAR(fname));
+      return(R_NilValue);
+    }
     if(!isFunction(method)) {
 	/* assumes method is a methods list itself.  */
-	SEXP temp;
-	PROTECT(method); nprotect++;
 	/* call do_dispatch recursively.  Note the NULL for fname; this is
 	   passed on to the S language search function for inherited
 	   methods, to indicate a recursive call, not one to be stored in
 	   the methods metadata */
-	temp = do_dispatch(R_NilValue, ev, optional, method, &child);
-	method = temp;
+	method = do_dispatch(R_NilValue, ev, method, firstTry);
     }
-    else
-	child = this_method;
-    if((inherited && method != R_NilValue && fname == R_NilValue) ||
-       (this_method != child))
-	/* Found a method, so we can insert the inherited structure at
-	   this level-- the top level (fname != NULL) is handled by the S
-	   function, with an assignment into the metadata.
-
-	   (we use child, the possibly modified version of this_method) */
-	*final_p = R_insert_element(mlist, class, child);
     UNPROTECT(nprotect); nprotect = 0;
     return method;
 }
-
-
-
