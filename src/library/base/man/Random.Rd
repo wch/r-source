@@ -101,6 +101,14 @@ set.seed(seed, kind = NULL)
   valid seed sets for the more complicated methods (especially
   \code{"Knuth-TAOCP"}).
 }
+\note{
+  \code{.Random.seed} saves the seed set for the uniform random-number
+  generator, at least for the system generators. It does not necessarily
+  save the state of other generators, and in particular does not save
+  the state of the Box--Muller normal generator. If you want to
+  reproduce work later, call \code{set.seed} rather than set
+  \code{.Random.seed}.
+}
 \value{
   \code{.Random.seed} is an \code{\link{integer}} vector whose first
   element \emph{codes} the kind of RNG and normal generator. The lowest

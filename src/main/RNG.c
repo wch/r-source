@@ -364,6 +364,7 @@ SEXP do_RNGkind (SEXP call, SEXP op, SEXP args, SEXP env)
 	if (newN01 < 0 || newN01 > BOX_MULLER)
 	    errorcall(call, "invalid Normal type");
 	N01_kind = newN01;
+	BM_norm_keep = 0.0; /* zap Box-Muller history */
     }
     if(!isNull(rng)) { /* set a new RNG kind */
 	RNGkind(asInteger(rng));
