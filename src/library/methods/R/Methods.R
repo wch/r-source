@@ -387,39 +387,57 @@ signature <-
     value
 }
 
-showMethods <-
+"showMethods" <-
   ## Show all the methods for the specified function.
   ##
   ## If `where' is supplied, the definition from that database will be used; otherwise,
   ## the current definition is used (which will include inherited methods that have arisen so
   ## far in the session).
   ##
-  ## The argument `classes' is included for consistency with S-Plus, but currently ignored.
-  ## Similarly, omitting `f' is not currently supported.  Someday, ...
   ##
   ## The output style is different from S-Plus in that it does not show the database
   ## from which the definition comes, but can optionally include the method definitions,
   ## if `includeDefs == TRUE'.
-  function(f = character(), where = -1, classes = NULL, includeDefs = FALSE, inherited = TRUE)
+function(f = character(), where = -1, classes = NULL, includeDefs = FALSE,
+           inherited = TRUE, printTo = stdout())
 {
+      if(identical(printTo, FALSE)) {
+          tmp <- tempfile()
+          con <- file(tmp, "w")
+      }
     if(length(f)==0) {
-      if(missing(where)) {
-        f <- getGenerics()
-        where = -1
-      }
-      else
-        f <- getGenerics(where)
-      for(ff in f) {
-        cat("\nFunction \"", ff, "\":\n", sep="")
-        Recall(ff, where, classes, includeDefs, inherited)
-      }
-      return()
+        if(missing(where)) {
+            f <- getGenerics()
+            where = -1
+        }
+        else
+            f <- getGenerics(where)
     }
+    if(length(f) == 0)
+        cat(file = con, "No applicable functions")
+
+    if(length(f) > 1) {
+        value <- character()
+      for(ff in f) {
+        value <- c(value, Recall(ff, where, classes, includeDefs, inherited, printTo))
+      }
+        if(length(value) > 0)
+            return(value)
+        else
+            return()
+    }
+    cat(file= con, "\nFunction \"", ff, "\":\n", sep="")
     if(missing(where))
         mlist <- getMethods(f)
     else
         mlist <- getMethods(f, where)
-    showMlist(mlist, includeDefs, inherited, classes)
+    showMlist(mlist, includeDefs, inherited, classes, printTo = printTo)
+    if(identical(printTo, FALSE)) {
+        close(con)
+        value <- readLines(tmp)
+        unlink(tmp)
+        value
+    }
 }
 
 removeMethods <-
