@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2005
-@set FAQ-VERSION 2.0.@value{FAQ-YEAR}-02-26
+@set FAQ-VERSION 2.0.@value{FAQ-YEAR}-02-28
 @set REL-VERSION 2.0.1
 @set REL-YEAR 2004
 @c <COMMENT>
@@ -2738,6 +2738,8 @@ Poisson-Gamma Additive Models.
 @item pheno
 Some easy-to-use functions for time series analyses of (plant-)
 phenological data sets.
+@item phpSerialize
+Serialize R to PHP associative array.
 @item phyloarray
 Software to process data from phylogenetic or identification
 microarrays.
