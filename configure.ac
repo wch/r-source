@@ -1,8 +1,8 @@
-dnl configure.ac
-dnl
-dnl Process this file with autoconf to produce a configure script.
-dnl
-dnl Copyright (C) 1998 - 2002 R Core Team
+### configure.ac					-*- Autoconf -*-
+###
+### Process this file with autoconf to produce a configure script.
+###
+### Copyright (C) 1998-2002 R Core Team
 ###
 ### This file is part of R.
 ###
@@ -255,8 +255,11 @@ AC_ARG_VAR([MAIN_CFLAGS],
            [additional CFLAGS used when compiling the main binary])
 AC_ARG_VAR([SHLIB_CFLAGS],
            [additional CFLAGS used when building shared libraries])
+## <FIXME>
+## Maybe deprecate this in favor of F77 (which is always precious)?
 AC_ARG_VAR([FC],
            [command which runs the the FORTRAN compiler])
+## </FIXME>
 AC_ARG_VAR([MAIN_FFLAGS],
            [additional FFLAGS used when compiling the main binary])
 AC_ARG_VAR([SHLIB_FFLAGS],
@@ -293,12 +296,15 @@ AC_ARG_VAR([MAKE], [Make command])
 
 ## Check whether we build in srcdir.
 AC_PATH_PROG(GETWD, pwd, pwd)
+## <FIXME>
+## Autoconf 2.53 or better has abs_top_srcdir and abs_top_builddir.
 AC_MSG_CHECKING([whether builddir is srcdir])
 if test "`cd ${srcdir} && ${GETWD}`" = "`${GETWD}`"; then
   BUILDDIR_IS_SRCDIR=yes
 else
   BUILDDIR_IS_SRCDIR=no
 fi
+## </FIXME>
 AC_SUBST(BUILDDIR_IS_SRCDIR)
 AC_MSG_RESULT([${BUILDDIR_IS_SRCDIR}])
 
@@ -306,35 +312,30 @@ AC_MSG_RESULT([${BUILDDIR_IS_SRCDIR}])
 
 AC_PROG_CC
 AC_PROG_CPP
-AC_PROG_GCC_TRADITIONAL
 
 : ${CPPFLAGS="-I/usr/local/include"}
 : ${LIBS="-L/usr/local/lib"}
-
 ## Yes, we already need this at configure time ...
 case "${host_os}" in
   aix*)
     AC_AIX
     LIBS="${LIBS} -lc"
     ;;
+esac
+
+AC_PROG_CC_STDC
+case "${host_os}" in
   hpux*)
     ## <FIXME>
-    ## Autoconf 2.50 or better has AC_PROG_CC_STDC which takes care
-    ## of some of this.
-    case "${CC}" in
-      cc)
-        if test `echo ${CFLAGS} | grep -c -e "-A[ae] "` = 0; then
-	  CFLAGS="${CFLAGS} -Aa"
-	fi
-	;;
-    esac
-    ## On HPUX 11 we need _HPUX_SOURCE also with gcc so that we get the
-    ## ISO C99 fp classification macros ... 
-    AC_DEFINE(_HPUX_SOURCE, 1,
-              [Define on HPUX if not using GCC.])
+    ## Do we still to defined _HPUX_SOURCE on HPUX 11 with gcc so that
+    ## we get the ISO C99 fp classification macros?
+    ## AC_DEFINE(_HPUX_SOURCE, 1,
+    ##           [Define on HPUX if not using GCC.])
     ## </FIXME>
     ;;
 esac
+
+AC_PROG_GCC_TRADITIONAL
 
 R_PROG_CC_M
 R_PROG_CC_C_O_LO
@@ -382,82 +383,22 @@ R_PROG_F77_OR_F2C
 if test -n "${F77}"; then
   FC=${F77}
   AC_PROG_F77
-  AC_F77_LIBRARY_LDFLAGS
-  ## Currently g77 on Darwin links against -lcrt1.o, which (unlike
-  ## -lcrt0.o) is not stripped by AC_F77_LIBRARY_LDFLAGS.  This in
-  ## particular causes R_PROG_F77_CC_COMPAT to fail.  Hence, we make
-  ## sure all -lcrt?.o are removed.
-  flibs=
-  for arg in ${FLIBS}; do
-    case "${arg}" in
-      -lcrt?.o)
-        ;;
-      *)
-        flibs="${flibs} ${arg}"
-	;;
-    esac
-  done
-  FLIBS="${flibs}"
-  ## <FIXME>
-  ## Add something to use -lg2c-pic instead of -lg2c if exists.
-  ## </FIXME>
+  R_PROG_F77_FLIBS
   R_PROG_F77_APPEND_UNDERSCORE
   R_PROG_F77_CC_COMPAT
   R_PROG_F77_CC_COMPAT_COMPLEX
-  f77_rules_frag=Makefrag.f77
-  cat << \EOF > ${f77_rules_frag}
-.f.c:
-.f.o:
-	$(FC) $(ALL_FFLAGS) -c $< -o $[@]
-EOF
-  R_PROG_F77_C_O_LO
-  if test "${r_cv_prog_f77_c_o_lo}" = yes; then
-    cat << \EOF >> ${f77_rules_frag}
-.f.lo:
-	$(FC) $(ALL_FFLAGS_LO) -c $< -o $[@]
-EOF
-  else
-    cat << \EOF >> ${f77_rules_frag}
-.f.lo:
-	@test -d .libs || mkdir .libs
-	$(FC) $(ALL_FFLAGS_LO) -c $< -o .libs/$[*].o
-	mv .libs/$[*].o $[*].lo
-EOF
-  fi
+  R_PROG_F77_MAKEFRAG  
 elif test -n "${F2C}"; then
   R_PROG_F2C_FLIBS
   AC_DEFINE(HAVE_F77_UNDERSCORE, 1)
   AC_DEFINE(HAVE_DOUBLE_COMPLEX, 1)
-  f77_rules_frag=Makefrag.f77
-  cat << \EOF > ${f77_rules_frag}
-.f.o:
-	$(F2C) $(F2CFLAGS) < $< > $[*].c
-	$(CC) $(ALL_CPPFLAGS) $(ALL_CFLAGS) -c $[*].c -o $[@]
-	@rm -f $[*].c
-.f.lo:
-	$(F2C) $(F2CFLAGS) < $< > $[*].c
-EOF
-  if test "${r_cv_prog_cc_c_o_lo}" = yes; then
-    cat << \EOF >> ${f77_rules_frag}
-	$(CC) $(ALL_CPPFLAGS) $(ALL_CFLAGS_LO) -c $[*].c -o $[@]
-EOF
-  else
-    cat << \EOF >> ${f77_rules_frag}
-	@test -d .libs || mkdir .libs
-	$(CC) $(ALL_CPPFLAGS) $(ALL_CFLAGS_LO) -c $[*].c -o .libs/$[*].o
-	mv .libs/$[*].o $[*].lo
-EOF
-  fi
-  cat << \EOF >> ${f77_rules_frag}
-	@rm -f $[*].c
-EOF
+  R_PROG_F2C_MAKEFRAG
 else
   AC_MSG_ERROR([Neither an F77 compiler nor f2c found])
 fi
 
 AC_SUBST(FC)
 AC_SUBST(F2C)
-AC_SUBST_FILE(f77_rules_frag)
 AM_CONDITIONAL(COMPILE_DOUBLE_COMPLEX, [test "x$HAVE_DOUBLE_COMPLEX" != x])
 
 ### Set up LD_LIBRARY_PATH or equivalent.
@@ -540,7 +481,7 @@ fi
 ### Library functions.
 
 AC_FUNC_ALLOCA
-AC_FUNC_FORK([])
+AC_FUNC_FORK
 AC_FUNC_VPRINTF
 AC_CHECK_FUNCS(access acosh asinh atanh bcopy bzero finite ftruncate \
   getcwd getgrgid getpwuid getuid hypot isascii isnan log1p matherr \
@@ -550,9 +491,9 @@ AC_CHECK_FUNCS(access acosh asinh atanh bcopy bzero finite ftruncate \
 ## <FIXME>
 ## to build src/include/Rmath.h
 if test "${ac_cv_func_log1p}" = yes; then
-RMATH_HAVE_LOG1P="# define HAVE_LOG1P 1"
+  RMATH_HAVE_LOG1P="# define HAVE_LOG1P 1"
 else
-RMATH_HAVE_LOG1P="# undef HAVE_LOG1P"
+  RMATH_HAVE_LOG1P="# undef HAVE_LOG1P"
 fi
 AC_SUBST(RMATH_HAVE_LOG1P)
 ## </FIXME>
@@ -593,8 +534,6 @@ case "${host_os}" in
 esac
 R_HEADER_SETJMP
 R_HEADER_GLIBC2
-R_HEADER_MATH_ISFINITE
-R_HEADER_MATH_ISNAN
 
 ### Typedefs.
 
@@ -696,16 +635,22 @@ case "${host_os}" in
     AC_DEFINE(USE_BUILTIN_RINT, 1,
               [Define if your rint() is broken on your system.
                Apparently needed on HPUX.])
-    ## Need -D_HPUX_SOURCE to get the ISO C99 fp classification macros
-    ## (also with gcc).
-    R_XTRA_CFLAGS="${R_XTRA_CFLAGS} -D_HPUX_SOURCE"
+    ## <FIXME>
+    ## Do we still need -D_HPUX_SOURCE to get the ISO C99 fp
+    ## classification macros (also with gcc)?
+    ## R_XTRA_CFLAGS="${R_XTRA_CFLAGS} -D_HPUX_SOURCE"
+    ## </FIXME>
     case "${CC}" in
       cc|c89)
 	## Luke Tierney says we also need '-Wp,-H16000' which tells the
 	## pre-processor to increase the size of an internal table.  It
 	## seems that src/modules/vfonts/g_her_glyph.c contains a line
 	## that is too long for the pre-processor without this flag.
+        ## <FIXME>
+        ## This should really be in R_XTRA_CPPFLAGS but we do not have
+        ## this ...
 	R_XTRA_CFLAGS="${R_XTRA_CFLAGS} -Wp,-H16000"
+        ## </FIXME>
 	;;
     esac
     AC_CHECK_LIB(dld, shl_load, [R_XTRA_LIBS="${R_XTRA_LIBS} -ldld"])
@@ -828,13 +773,13 @@ fi
 ## Step 3.  Individual platform overrides.
 case "${host_os}" in
   aix*)
-    EXPORTFILE="\$(top_builddir)/etc/R.exp"
+    EXPORTFILE="R.exp"
     ## All AIX code is PIC.
     cpicflags=
     cxxpicflags=
     fpicflags=
     wl="-Wl,"
-    main_ldflags="${wl}-bdynamic ${wl}-bE:${EXPORTFILE} ${wl}-bM:SRE"
+    main_ldflags="${wl}-bdynamic ${wl}-bE:\$(top_builddir)/etc/${EXPORTFILE} ${wl}-bM:SRE"
     shlib_ldflags="${wl}-bM:SRE ${wl}-H512 ${wl}-T512 ${wl}-bnoentry \
       ${wl}-bexpall ${wl}-bI:\$(R_HOME)/etc/R.exp"
     SHLIB_LIBADD="\$(LIBM)"
@@ -1117,10 +1062,10 @@ AC_SUBST(R_PROFILING)
 ### Miscellaneous.
 
 ## Printing.
-## We look to see whether we have `lpr' or `lp'".  Some platforms
+## We look to see whether we have `lpr' or `lp'.  Some platforms
 ## provide both (SunOS and HPUX), and in those cases we choose lpr.
 if test -z "${R_PRINTCMD}"; then
-  AC_CHECK_PROGS(R_PRINTCMD, lpr lp)
+  AC_CHECK_PROGS(R_PRINTCMD, [lpr lp])
 fi
 AC_DEFINE_UNQUOTED(R_PRINTCMD, "${R_PRINTCMD}",
 [Define this to be printing command on your system.])
@@ -1164,7 +1109,7 @@ for arg in ${X_LIBS} ${TCLTK_LIBS} ${GNOME_LIBS} ${FLIBS} ${BLAS_LIBS}; do
       if test -z "${R_LD_LIBRARY_PATH}"; then
         R_LD_LIBRARY_PATH="${lib}"
       else
-        R_LD_LIBRARY_PATH="${R_LD_LIBRARY_PATH}:${lib}"
+        R_LD_LIBRARY_PATH="${R_LD_LIBRARY_PATH}${PATH_SEPARATOR}${lib}"
       fi
       ;;
   esac
@@ -1209,7 +1154,6 @@ AC_CONFIG_FILES([Makeconf
   src/library/Makefile
   src/library/base/DESCRIPTION
   src/library/base/Makefile
-  src/library/profile/Makefile
   src/library/ctest/DESCRIPTION
   src/library/ctest/Makefile
   src/library/ctest/src/Makefile
@@ -1231,6 +1175,7 @@ AC_CONFIG_FILES([Makeconf
   src/library/nls/DESCRIPTION
   src/library/nls/Makefile
   src/library/nls/src/Makefile
+  src/library/profile/Makefile
   src/library/stepfun/DESCRIPTION
   src/library/stepfun/Makefile
   src/library/splines/DESCRIPTION
@@ -1349,8 +1294,3 @@ fi
 if test -n "${warn_pager}"; then
   AC_MSG_WARN([${warn_pager}])
 fi
-
-dnl Local Variables: ***
-dnl mode: sh ***
-dnl sh-indentation: 2 ***
-dnl End: ***
