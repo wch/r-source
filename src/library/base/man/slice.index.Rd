@@ -9,7 +9,7 @@
 slice.index(x, MARGIN)
 }
 \arguments{
-  \item{x}{an array.  If \code{x} has no dimensiion attribute, it is
+  \item{x}{an array.  If \code{x} has no dimension attribute, it is
     considered a one-dimensional array.}
   \item{MARGIN}{an integer giving the dimension number to slice by.}
 }
@@ -21,7 +21,8 @@ slice.index(x, MARGIN)
 \seealso{
   \code{\link{row}} and \code{\link{col}} for determining row and column
   indexes; in fact, these are special cases of \code{slice.index}
-  corresponding to \code{MARGIN} equal to 1 and 2, respectively.
+  corresponding to \code{MARGIN} equal to 1 and 2, respectively when \code{x}
+  is a matrix.
 }
 \examples{
 x <- array(1 : 24, c(2, 3, 4))

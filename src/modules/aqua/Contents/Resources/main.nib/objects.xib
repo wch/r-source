@@ -4,7 +4,7 @@
   <object name="rootObject" class="NSCustomObject" id="1">
     <string name="customClass">NSApplication</string>
   </object>
-  <array count="167" name="allObjects">
+  <array count="168" name="allObjects">
     <object class="IBCarbonMenu" id="29">
       <string name="title">main</string>
       <array count="7" name="items">
@@ -12,12 +12,17 @@
           <string name="title">R</string>
           <object name="submenu" class="IBCarbonMenu" id="184">
             <string name="title">R</string>
-            <array count="1" name="items">
+            <array count="2" name="items">
               <object class="IBCarbonMenuItem" id="187">
                 <string name="title">About R</string>
                 <int name="keyEquivalentModifier">0</int>
                 <ostype name="command">abou</ostype>
                 <string name="helpTagText">General information on this binary distribution of R for MacOSX</string>
+              </object>
+              <object class="IBCarbonMenuItem" id="411">
+                <string name="title">Check for RAqua updates</string>
+                <ostype name="command">nraq</ostype>
+                <string name="helpTagText">Checks for new versions of RAqua on CRAN</string>
               </object>
             </array>
             <string name="name">_NSAppleMenu</string>
@@ -333,7 +338,6 @@
                   <string name="title">Install from local files</string>
                   <array count="3" name="items">
                     <object class="IBCarbonMenuItem" id="410">
-                      <boolean name="updateSingleItem">TRUE</boolean>
                       <string name="title">Binary package file (.tgz)</string>
                       <ostype name="command">ipbt</ostype>
                       <string name="helpTagText">Install a binary package file (.tgz) from a local directory</string>
@@ -462,7 +466,6 @@
             <ostype name="controlSignature">RGUI</ostype>
             <int name="controlID">1002</int>
             <boolean name="small">TRUE</boolean>
-            <int name="controlSize">1</int>
             <string name="title">Working...</string>
             <int name="justification">1</int>
           </object>
@@ -490,7 +493,6 @@
             <ostype name="controlSignature">0FFF</ostype>
             <int name="controlID">133</int>
             <boolean name="small">TRUE</boolean>
-            <int name="controlSize">1</int>
             <string name="title">Copyiright Info</string>
             <string name="helpTagText">Copyright Info</string>
             <int name="justification">1</int>
@@ -501,7 +503,6 @@
             <ostype name="controlSignature">0FFF</ostype>
             <int name="controlID">135</int>
             <boolean name="small">TRUE</boolean>
-            <int name="controlSize">1</int>
             <string name="title">Thanks to</string>
             <string name="helpTagText">People who help the development of RAqua</string>
             <int name="justification">1</int>
@@ -512,7 +513,6 @@
             <ostype name="controlSignature">0FFF</ostype>
             <int name="controlID">132</int>
             <boolean name="small">TRUE</boolean>
-            <int name="controlSize">1</int>
             <string name="title">Version Info</string>
             <string name="helpTagText">Version of the R Kernel</string>
             <int name="justification">1</int>
@@ -523,7 +523,6 @@
             <ostype name="controlSignature">0FFF</ostype>
             <int name="controlID">134</int>
             <boolean name="small">TRUE</boolean>
-            <int name="controlSize">1</int>
             <string name="title">RAqua author</string>
             <string name="helpTagText">RAqua GUI developers</string>
             <int name="justification">1</int>
@@ -613,7 +612,7 @@
             <string name="bounds">12 20 374 468 </string>
             <array count="4" name="subviews">
               <object class="IBCarbonUserPane" id="251">
-                <string name="bounds">49 20 374 468 </string>
+                <string name="bounds">42 20 374 468 </string>
                 <array count="8" name="subviews">
                   <object class="IBCarbonGroupBox" id="255">
                     <string name="bounds">197 30 292 430 </string>
@@ -739,7 +738,7 @@
                 <int name="featureBits">2</int>
               </object>
               <object class="IBCarbonUserPane" id="294">
-                <string name="bounds">49 20 374 468 </string>
+                <string name="bounds">42 20 374 468 </string>
                 <array count="5" name="subviews">
                   <object class="IBCarbonButton" id="304">
                     <string name="bounds">95 30 115 135 </string>
@@ -837,7 +836,7 @@
                 <int name="featureBits">2</int>
               </object>
               <object class="IBCarbonUserPane" id="377">
-                <string name="bounds">49 20 374 468 </string>
+                <string name="bounds">42 20 374 468 </string>
                 <array count="5" name="subviews">
                   <object class="IBCarbonStaticText" id="378">
                     <string name="bounds">140 53 156 129 </string>
@@ -875,7 +874,7 @@
                 <int name="featureBits">2</int>
               </object>
               <object class="IBCarbonUserPane" id="407">
-                <string name="bounds">49 20 374 468 </string>
+                <string name="bounds">42 20 374 468 </string>
                 <array count="2" name="subviews">
                   <object class="IBCarbonCheckBox" id="408">
                     <string name="bounds">69 40 83 443 </string>
@@ -973,42 +972,42 @@
     <reference idRef="278"/>
     <reference idRef="279"/>
     <object class="IBCarbonUserPane" id="280">
-      <string name="bounds">-14094 21567 -13796 22007 </string>
+      <string name="bounds">24036 9872 24334 10312 </string>
       <array count="9" name="subviews">
         <object class="IBCarbonCheckBox" id="281">
-          <string name="bounds">-17156 -531 -17154 -527 </string>
+          <string name="bounds">14863 21980 14865 21980 </string>
           <string name="title">AntiAliasing</string>
         </object>
         <object class="IBCarbonCheckBox" id="282">
-          <string name="bounds">-17156 -12318 -17154 -12316 </string>
+          <string name="bounds">14863 -5003 14865 -5001 </string>
           <string name="title">Auto Refresh</string>
         </object>
         <object class="IBCarbonStaticText" id="284">
-          <string name="bounds">-17270 -10941 -17254 -10548 </string>
+          <string name="bounds">14963 -3438 14979 -3045 </string>
           <string name="title">Font Name</string>
         </object>
         <object class="IBCarbonButton" id="283">
-          <string name="bounds">-17230 -9195 -17210 -9191 </string>
+          <string name="bounds">14923 -1507 14943 -1499 </string>
           <string name="title">Choose Font</string>
         </object>
         <object class="IBCarbonEditText" id="285">
-          <string name="bounds">-17223 -7277 -17225 -7278 </string>
+          <string name="bounds">31320 600 31316 595 </string>
           <string name="title">12</string>
         </object>
         <object class="IBCarbonStaticText" id="286">
-          <string name="bounds">-17232 -5795 -17216 -5719 </string>
+          <string name="bounds">14925 2254 14941 2330 </string>
           <string name="title">Point Size</string>
         </object>
         <object class="IBCarbonEditText" id="287">
-          <string name="bounds">-17352 -4191 -17354 -4197 </string>
+          <string name="bounds">15064 4041 15060 4041 </string>
           <string name="title">5</string>
         </object>
         <object class="IBCarbonStaticText" id="288">
-          <string name="bounds">-17360 -2659 -17344 -2612 </string>
+          <string name="bounds">15053 5751 15069 5798 </string>
           <string name="title">Width:</string>
         </object>
         <object class="IBCarbonStaticText" id="290">
-          <string name="bounds">-17360 -851 -17344 -804 </string>
+          <string name="bounds">15053 7741 15069 7788 </string>
           <string name="title">Height:</string>
         </object>
       </array>
@@ -1177,8 +1176,9 @@
     <reference idRef="408"/>
     <reference idRef="409"/>
     <reference idRef="410"/>
+    <reference idRef="411"/>
   </array>
-  <array count="167" name="allParents">
+  <array count="168" name="allParents">
     <reference idRef="1"/>
     <reference idRef="29"/>
     <reference idRef="131"/>
@@ -1346,6 +1346,7 @@
     <reference idRef="407"/>
     <reference idRef="407"/>
     <reference idRef="345"/>
+    <reference idRef="184"/>
   </array>
   <dictionary count="6" name="nameTable">
     <string>AboutWindow</string>
@@ -1361,5 +1362,5 @@
     <string>PrefsWindow</string>
     <reference idRef="247"/>
   </dictionary>
-  <unsigned_int name="nextObjectID">411</unsigned_int>
+  <unsigned_int name="nextObjectID">412</unsigned_int>
 </object>
