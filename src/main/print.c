@@ -641,18 +641,16 @@ void CustomPrintValue(SEXP s, SEXP env)
 
 /* xxxpr are mostly for S compatibility (as mentioned in V&R) */
 
-int F77_SYMBOL(dblepr) (char *label, int *nchar, double *data, int *ndata)
+int F77_SYMBOL(dblepr0) (char *label, int *nchar, double *data, int *ndata)
 {
     int k, nc = *nchar;
 
-    if(nc < 0) {
-	nc = strlen(label);
-	if(nc > 255) {
-	    warning("invalid character length in dblepr");
-	    nc = 0;
-	}
+    if(nc < 0) nc = strlen(label);
+    if(nc > 255) {
+	warning("invalid character length in dblepr");
+	nc = 0;
     }
-    for (k = 0; k < nc; k++){
+    for (k = 0; k < nc; k++) {
 	Rprintf("%c", label[k]);
     }
     Rprintf("\n");
@@ -660,18 +658,16 @@ int F77_SYMBOL(dblepr) (char *label, int *nchar, double *data, int *ndata)
     return(0);
 }
 
-int F77_SYMBOL(intpr) (char *label, int *nchar, int *data, int *ndata)
+int F77_SYMBOL(intpr0) (char *label, int *nchar, int *data, int *ndata)
 {
     int k, nc = *nchar;
 
-    if(nc < 0) {
-	nc = strlen(label);
-	if(nc > 255) {
-	    warning("invalid character length in intpr");
-	    nc = 0;
-	}
+    if(nc < 0) nc = strlen(label);
+    if(nc > 255) {
+	warning("invalid character length in intpr");
+	nc = 0;
     }
-    for (k = 0; k < nc; k++){
+    for (k = 0; k < nc; k++) {
 	Rprintf("%c", label[k]);
     }
     Rprintf("\n");
@@ -679,26 +675,24 @@ int F77_SYMBOL(intpr) (char *label, int *nchar, int *data, int *ndata)
     return(0);
 }
 
-int F77_SYMBOL(realpr) (char *label, int *nchar, float *data, int *ndata)
+int F77_SYMBOL(realpr0) (char *label, int *nchar, float *data, int *ndata)
 {
-    int k, nc = *nchar;
+    int k, nc = *nchar, nd=*ndata;
     double *ddata;
     
-    if(nc < 0) {
-	nc = strlen(label);
-	if(nc > 255) {
-	    warning("invalid character length in realpr");
-	    nc = 0;
-	}
+    if(nc < 0) nc = strlen(label);
+    if(nc > 255) {
+	warning("invalid character length in realpr");
+	nc = 0;
     }
-    ddata = malloc((*ndata)*sizeof(double));
+    ddata = malloc(nd*sizeof(double));
     if(!ddata) error("memory allocation error in realpr");
-    for (k = 0; k < *ndata; k++) ddata[k] = (double) data[k];
+    for (k = 0; k < nd; k++) ddata[k] = (double) data[k];
     for (k = 0; k < nc; k++) {
 	Rprintf("%c", label[k]);
     }
     Rprintf("\n");
-    printRealVector(ddata, *ndata, 1);
+    printRealVector(ddata, nd, 1);
     free(ddata);
     return(0);
 }
