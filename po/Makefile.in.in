@@ -321,7 +321,7 @@ DUMMYPKGFILES= $(R_PKGS_PO:=.nop)
 UPDATEPKGFILES=$(R_PKGS_PO:=.pkg-update)
 $(DUMMYPKGFILES):
 
-update-pkg-po: Makefile $(UPDATEPKGFILES)
+update-pkg-po: Makefile remove-potcdate.sed en@quot.insert-header $(UPDATEPKGFILES)
 
 R_EXE = $(top_builddir)/bin/R --vanilla
 

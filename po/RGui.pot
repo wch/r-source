@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-03-22 21:09+0000\n"
+"POT-Creation-Date: 2005-03-24 11:41+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,167 +16,167 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: console.c:840 console.c:880
+#: console.c:870 console.c:910
 msgid "Not enough memory"
 msgstr ""
 
-#: console.c:939 console.c:943
+#: console.c:969 console.c:973
 msgid "Insufficient memory: text not copied to the clipboard"
 msgstr ""
 
-#: console.c:985 graphapp/clipboard.c:54 graphapp/clipboard.c:80
+#: console.c:1015 graphapp/clipboard.c:54 graphapp/clipboard.c:80
 msgid "Unable to open the clipboard"
 msgstr ""
 
-#: console.c:1539
+#: console.c:1569
 msgid "Insufficient memory. Please close the console"
 msgstr ""
 
-#: console.c:1592 console.c:1643 preferences.c:216
+#: console.c:1622 console.c:1673 preferences.c:216
 #, c-format
 msgid ""
 "Font %s-%d-%d  not found.\n"
 "Using system fixed font"
 msgstr ""
 
-#: console.c:1743
+#: console.c:1773
 msgid "Text files (*.txt)"
 msgstr ""
 
-#: console.c:1745
+#: console.c:1775
 msgid "Save selection to"
 msgstr ""
 
-#: console.c:1747
+#: console.c:1777
 msgid "Save console contents to"
 msgstr ""
 
-#: console.c:1845
+#: console.c:1875
 msgid "Scrolling.\n"
 msgstr ""
 
-#: console.c:1846
+#: console.c:1876
 msgid "  Keyboard: PgUp, PgDown, Ctrl+Arrows, Ctrl+Home, Ctrl+End,\n"
 msgstr ""
 
-#: console.c:1847
+#: console.c:1877
 msgid ""
 "  Mouse: use the scrollbar(s).\n"
 "\n"
 msgstr ""
 
-#: console.c:1848
+#: console.c:1878
 msgid "Editing.\n"
 msgstr ""
 
-#: console.c:1849
+#: console.c:1879
 msgid "  Moving the cursor: \n"
 msgstr ""
 
-#: console.c:1850
+#: console.c:1880
 msgid "     Left arrow or Ctrl+B: move backward one character;\n"
 msgstr ""
 
-#: console.c:1851
+#: console.c:1881
 msgid "     Right arrow or Ctrl+F: move forward one character;\n"
 msgstr ""
 
-#: console.c:1852
+#: console.c:1882
 msgid "     Home or Ctrl+A: go to beginning of line;\n"
 msgstr ""
 
-#: console.c:1853
+#: console.c:1883
 msgid "     End or Ctrl+E: go to end of line;\n"
 msgstr ""
 
-#: console.c:1854
+#: console.c:1884
 msgid "  History: Up and Down Arrows, Ctrl+P, Ctrl+N\n"
 msgstr ""
 
-#: console.c:1855
+#: console.c:1885
 msgid "  Deleting:\n"
 msgstr ""
 
-#: console.c:1856
+#: console.c:1886
 msgid "     Del or Ctrl+D: delete current character;\n"
 msgstr ""
 
-#: console.c:1857
+#: console.c:1887
 msgid "     Backspace: delete preceding character;\n"
 msgstr ""
 
-#: console.c:1858
+#: console.c:1888
 msgid ""
 "     Ctrl+Del or Ctrl+K: delete text from current character to end of line.\n"
 msgstr ""
 
-#: console.c:1859
+#: console.c:1889
 msgid "     Ctrl+U: delete all text from current line.\n"
 msgstr ""
 
-#: console.c:1860
+#: console.c:1890
 msgid "  Copy and paste.\n"
 msgstr ""
 
-#: console.c:1861
+#: console.c:1891
 msgid ""
 "     Use the mouse (with the left button held down) to mark (select) text.\n"
 msgstr ""
 
-#: console.c:1862
+#: console.c:1892
 msgid ""
 "     Use Shift+Del (or Ctrl+C) to copy the marked text to the clipboard and\n"
 msgstr ""
 
-#: console.c:1863
+#: console.c:1893
 msgid ""
 "     Shift+Ins (or Ctrl+V or Ctrl+Y) to paste the content of the clipboard "
 "(if any)  \n"
 msgstr ""
 
-#: console.c:1864
+#: console.c:1894
 msgid "     to the console, Ctrl+X first copy then paste\n"
 msgstr ""
 
-#: console.c:1865
+#: console.c:1895
 msgid "  Misc:\n"
 msgstr ""
 
-#: console.c:1866
+#: console.c:1896
 msgid "     Ctrl+L: Clear the console.\n"
 msgstr ""
 
-#: console.c:1867
+#: console.c:1897
 msgid "     Ctrl+O: Toggle overwrite mode: initially off.\n"
 msgstr ""
 
-#: console.c:1868
+#: console.c:1898
 msgid "     Ctrl+T: Interchange current char with one to the left.\n"
 msgstr ""
 
-#: console.c:1869
+#: console.c:1899
 msgid ""
 "\n"
 "Note: Console is updated only when some input is required.\n"
 msgstr ""
 
-#: console.c:1870
+#: console.c:1900
 msgid ""
 "  Use Ctrl+W to toggle this feature off/on.\n"
 "\n"
 msgstr ""
 
-#: console.c:1871
+#: console.c:1901
 msgid ""
 "Use ESC to stop the interpreter.\n"
 "\n"
 msgstr ""
 
-#: console.c:1872
+#: console.c:1902
 msgid "Standard Windows hotkeys can be used to switch to the\n"
 msgstr ""
 
-#: console.c:1873
+#: console.c:1903
 msgid "graphics device (Ctrl+Tab or Ctrl+F6 in MDI, Alt+Tab in SDI)"
 msgstr ""
 
@@ -1006,17 +1006,14 @@ msgid "Jpeg"
 msgstr ""
 
 #: ../library/grDevices/src/devWindows.c:1537
-#, c-format
 msgid "50% quality..."
 msgstr ""
 
 #: ../library/grDevices/src/devWindows.c:1538
-#, c-format
 msgid "75% quality..."
 msgstr ""
 
 #: ../library/grDevices/src/devWindows.c:1539
-#, c-format
 msgid "100% quality..."
 msgstr ""
 

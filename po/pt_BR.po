@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-03-22 21:09+0000\n"
+"POT-Creation-Date: 2005-03-24 11:41+0000\n"
 "PO-Revision-Date: 2005-02-26 18:12-0300\n"
 "Last-Translator: Fernando Henrique Ferraz P. da Rosa <feferraz@ime.usp.br>\n"
 "Language-Team: Portuguese <ldp-br@bazar.conectiva.com.br>\n"
@@ -1171,8 +1171,8 @@ msgstr "termo do lado direito inválido em substr<-()"
 msgid "non-character argument in strsplit()"
 msgstr "argumento de modo diferente de caractere em strsplit()"
 
-#: src/main/character.c:361 src/main/pcre.c:111 src/main/pcre.c:251
-#: src/main/pcre.c:370
+#: src/main/character.c:361 src/main/pcre.c:114 src/main/pcre.c:253
+#: src/main/pcre.c:421
 msgid "perl = TRUE is only fully implemented in UTF-8 locales"
 msgstr "perl = TRUE está implementado completamente apenas em locales UTF-8"
 
@@ -1197,100 +1197,100 @@ msgstr "nomes de modo não caractere"
 msgid "invalid value of 'allow_'"
 msgstr "valor de 'allow_' inválido"
 
-#: src/main/character.c:790 src/main/character.c:1303
+#: src/main/character.c:790 src/main/character.c:1315
 #, c-format
 msgid "invalid multibyte string %d"
 msgstr "string multibyte inválida %d"
 
-#: src/main/character.c:866 src/main/character.c:1192 src/main/pcre.c:113
-#: src/main/pcre.c:375
+#: src/main/character.c:869 src/main/character.c:1204 src/main/pcre.c:116
+#: src/main/pcre.c:426
 msgid "regular expression is invalid in this locale"
 msgstr "expressão regular é inválida nesse locale"
 
-#: src/main/character.c:888 src/main/character.c:1044
-#: src/main/character.c:1195 src/main/pcre.c:120 src/main/pcre.c:267
-#: src/main/pcre.c:380
+#: src/main/character.c:891 src/main/character.c:1047
+#: src/main/character.c:1207 src/main/pcre.c:123 src/main/pcre.c:274
+#: src/main/pcre.c:431
 #, c-format
 msgid "invalid regular expression '%s'"
 msgstr "expressão regular inválida '%s'"
 
-#: src/main/character.c:898 src/main/character.c:1210 src/main/pcre.c:135
-#: src/main/pcre.c:300 src/main/pcre.c:395
+#: src/main/character.c:901 src/main/character.c:1222 src/main/pcre.c:138
+#: src/main/pcre.c:307 src/main/pcre.c:446
 #, c-format
 msgid "input string %d is invalid in this locale"
 msgstr "string de entrada %d é inválida nesse locale"
 
-#: src/main/character.c:953 src/main/pcre.c:181
+#: src/main/character.c:956 src/main/pcre.c:184
 #, c-format
 msgid "invalid backreference %d in regular expression"
 msgstr "auto-referência %d inválida na expressão regular"
 
-#: src/main/character.c:1039 src/main/pcre.c:253
+#: src/main/character.c:1042 src/main/pcre.c:255
 msgid "'pattern' is invalid in this locale"
 msgstr "'pattern' é inválido nesse locale"
 
-#: src/main/character.c:1041 src/main/pcre.c:255
+#: src/main/character.c:1044 src/main/pcre.c:257
 msgid "'replacement' is invalid in this locale"
 msgstr "'replacement' é inválido nesse locale"
 
-#: src/main/character.c:1050
+#: src/main/character.c:1053
 msgid "zero-length pattern"
 msgstr "padrão de comprimento 0"
 
-#: src/main/character.c:1279
+#: src/main/character.c:1291
 msgid "non-character argument to tolower()"
 msgstr "argumento diferente de caractere para tolower()"
 
-#: src/main/character.c:1353
+#: src/main/character.c:1365
 #, c-format
 msgid "decreasing range specification ('%lc-%lc')"
 msgstr "especificação de intervalo decrescente ('%lc-%lc')"
 
-#: src/main/character.c:1439
+#: src/main/character.c:1451
 #, c-format
 msgid "decreasing range specification ('%c-%c')"
 msgstr "especificação de intervalo decrescente ('%c-%c')"
 
-#: src/main/character.c:1517
+#: src/main/character.c:1529
 msgid "invalid (NA) arguments."
 msgstr "argumentos inválidos (NA)"
 
-#: src/main/character.c:1539
+#: src/main/character.c:1551
 msgid "invalid multibyte string 'old'"
 msgstr "string multibyte inválida 'old'"
 
-#: src/main/character.c:1546
+#: src/main/character.c:1558
 msgid "invalid multibyte string 'new'"
 msgstr "string multibyte inválida 'new'"
 
-#: src/main/character.c:1565 src/main/character.c:1626
+#: src/main/character.c:1577 src/main/character.c:1638
 msgid "'old' is longer than 'new'"
 msgstr "'old' é maior que 'new'"
 
-#: src/main/character.c:1582
+#: src/main/character.c:1594
 #, c-format
 msgid "invalid input multibyte string %d"
 msgstr "string de entrada multibyte %d inválida"
 
-#: src/main/character.c:1725
+#: src/main/character.c:1737
 msgid "use of agrep() in a UTF-8 locale may only work for ASCII strings"
 msgstr ""
 "uso de agrep() em um locale UTF-8 pode funcionar somente para strings ASCII"
 
-#: src/main/character.c:1734
+#: src/main/character.c:1746
 msgid "could not allocate memory for approximate matching"
 msgstr "não foi possível alocar memória para comparação aproximada"
 
-#: src/main/character.c:1758
+#: src/main/character.c:1770
 msgid "could not perform case insensitive matching"
 msgstr ""
 "não foi possível fazer comparação desconsiderando maíusculas/minúsculas"
 
-#: src/main/character.c:1800
+#: src/main/character.c:1812
 msgid "argument must be a character vector of length 1"
 msgstr "argumento deve ser um vetor de caracteres de comprimento 1"
 
-#: src/main/character.c:1802
+#: src/main/character.c:1814
 msgid ""
 "argument should be a character vector of length 1\n"
 "all but the first element will be ignored"
@@ -1298,45 +1298,45 @@ msgstr ""
 "argumento deve ser um vetor de caracteres de comprimento 1\n"
 "todos menos o primeiro argumento serão ignorados"
 
-#: src/main/character.c:1817 src/main/character.c:1849
-#: src/main/character.c:1870
+#: src/main/character.c:1829 src/main/character.c:1861
+#: src/main/character.c:1882
 msgid "argument 'x' must be a raw vector"
 msgstr "argumento 'x' deve ser um vetor do tipo raw"
 
-#: src/main/character.c:1820
+#: src/main/character.c:1832
 msgid "argument 'multiple' must be TRUE or FALSE"
 msgstr "argumento 'multiple' deve ser TRUE ou FALSE"
 
-#: src/main/character.c:1851
+#: src/main/character.c:1863
 msgid "argument 'shift' must be a small integer"
 msgstr "argumento 'shift' deve ser um inteiro pequeno"
 
-#: src/main/character.c:1888
+#: src/main/character.c:1900
 msgid "argument 'x' must be a integer vector"
 msgstr "argumento 'x' deve ser um vetor inteiro"
 
-#: src/main/character.c:1908
+#: src/main/character.c:1920
 msgid "argument 'x' must be raw, integer or logical"
 msgstr "argumento 'x' deve ser raw, inteiro ou lógico"
 
-#: src/main/character.c:1910
+#: src/main/character.c:1922
 msgid "argument 'type' must be a character string"
 msgstr "argumento 'type' deve ser uma string de caracteres"
 
-#: src/main/character.c:1914
+#: src/main/character.c:1926
 #, c-format
 msgid "argument 'x' must be a multiple of %d long"
 msgstr "argumento 'x' deve ter comprimento múltiplo de %d"
 
-#: src/main/character.c:1928 src/main/character.c:1943
+#: src/main/character.c:1940 src/main/character.c:1955
 msgid "argument 'x' must not contain NAs"
 msgstr "argumento 'x' não pode conter NAs"
 
-#: src/main/character.c:1968
+#: src/main/character.c:1980
 msgid "strtrim() requires a character vector"
 msgstr "strtrim() requer um vetor de caracteres"
 
-#: src/main/character.c:1973 src/main/character.c:1977
+#: src/main/character.c:1985 src/main/character.c:1989
 msgid "invalid 'width' argument"
 msgstr "argumento 'width' inválido"
 

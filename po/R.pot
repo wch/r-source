@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-03-22 21:09+0000\n"
+"POT-Creation-Date: 2005-03-24 11:41+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1150,8 +1150,8 @@ msgstr ""
 msgid "non-character argument in strsplit()"
 msgstr ""
 
-#: src/main/character.c:361 src/main/pcre.c:111 src/main/pcre.c:251
-#: src/main/pcre.c:370
+#: src/main/character.c:361 src/main/pcre.c:114 src/main/pcre.c:253
+#: src/main/pcre.c:421
 msgid "perl = TRUE is only fully implemented in UTF-8 locales"
 msgstr ""
 
@@ -1176,142 +1176,142 @@ msgstr ""
 msgid "invalid value of 'allow_'"
 msgstr ""
 
-#: src/main/character.c:790 src/main/character.c:1303
+#: src/main/character.c:790 src/main/character.c:1315
 #, c-format
 msgid "invalid multibyte string %d"
 msgstr ""
 
-#: src/main/character.c:866 src/main/character.c:1192 src/main/pcre.c:113
-#: src/main/pcre.c:375
+#: src/main/character.c:869 src/main/character.c:1204 src/main/pcre.c:116
+#: src/main/pcre.c:426
 msgid "regular expression is invalid in this locale"
 msgstr ""
 
-#: src/main/character.c:888 src/main/character.c:1044
-#: src/main/character.c:1195 src/main/pcre.c:120 src/main/pcre.c:267
-#: src/main/pcre.c:380
+#: src/main/character.c:891 src/main/character.c:1047
+#: src/main/character.c:1207 src/main/pcre.c:123 src/main/pcre.c:274
+#: src/main/pcre.c:431
 #, c-format
 msgid "invalid regular expression '%s'"
 msgstr ""
 
-#: src/main/character.c:898 src/main/character.c:1210 src/main/pcre.c:135
-#: src/main/pcre.c:300 src/main/pcre.c:395
+#: src/main/character.c:901 src/main/character.c:1222 src/main/pcre.c:138
+#: src/main/pcre.c:307 src/main/pcre.c:446
 #, c-format
 msgid "input string %d is invalid in this locale"
 msgstr ""
 
-#: src/main/character.c:953 src/main/pcre.c:181
+#: src/main/character.c:956 src/main/pcre.c:184
 #, c-format
 msgid "invalid backreference %d in regular expression"
 msgstr ""
 
-#: src/main/character.c:1039 src/main/pcre.c:253
+#: src/main/character.c:1042 src/main/pcre.c:255
 msgid "'pattern' is invalid in this locale"
 msgstr ""
 
-#: src/main/character.c:1041 src/main/pcre.c:255
+#: src/main/character.c:1044 src/main/pcre.c:257
 msgid "'replacement' is invalid in this locale"
 msgstr ""
 
-#: src/main/character.c:1050
+#: src/main/character.c:1053
 msgid "zero-length pattern"
 msgstr ""
 
-#: src/main/character.c:1279
+#: src/main/character.c:1291
 msgid "non-character argument to tolower()"
 msgstr ""
 
-#: src/main/character.c:1353
+#: src/main/character.c:1365
 #, c-format
 msgid "decreasing range specification ('%lc-%lc')"
 msgstr ""
 
-#: src/main/character.c:1439
+#: src/main/character.c:1451
 #, c-format
 msgid "decreasing range specification ('%c-%c')"
 msgstr ""
 
-#: src/main/character.c:1517
+#: src/main/character.c:1529
 msgid "invalid (NA) arguments."
 msgstr ""
 
-#: src/main/character.c:1539
+#: src/main/character.c:1551
 msgid "invalid multibyte string 'old'"
 msgstr ""
 
-#: src/main/character.c:1546
+#: src/main/character.c:1558
 msgid "invalid multibyte string 'new'"
 msgstr ""
 
-#: src/main/character.c:1565 src/main/character.c:1626
+#: src/main/character.c:1577 src/main/character.c:1638
 msgid "'old' is longer than 'new'"
 msgstr ""
 
-#: src/main/character.c:1582
+#: src/main/character.c:1594
 #, c-format
 msgid "invalid input multibyte string %d"
 msgstr ""
 
-#: src/main/character.c:1725
+#: src/main/character.c:1737
 msgid "use of agrep() in a UTF-8 locale may only work for ASCII strings"
 msgstr ""
 
-#: src/main/character.c:1734
+#: src/main/character.c:1746
 msgid "could not allocate memory for approximate matching"
 msgstr ""
 
-#: src/main/character.c:1758
+#: src/main/character.c:1770
 msgid "could not perform case insensitive matching"
 msgstr ""
 
-#: src/main/character.c:1800
+#: src/main/character.c:1812
 msgid "argument must be a character vector of length 1"
 msgstr ""
 
-#: src/main/character.c:1802
+#: src/main/character.c:1814
 msgid ""
 "argument should be a character vector of length 1\n"
 "all but the first element will be ignored"
 msgstr ""
 
-#: src/main/character.c:1817 src/main/character.c:1849
-#: src/main/character.c:1870
+#: src/main/character.c:1829 src/main/character.c:1861
+#: src/main/character.c:1882
 msgid "argument 'x' must be a raw vector"
 msgstr ""
 
-#: src/main/character.c:1820
+#: src/main/character.c:1832
 msgid "argument 'multiple' must be TRUE or FALSE"
 msgstr ""
 
-#: src/main/character.c:1851
+#: src/main/character.c:1863
 msgid "argument 'shift' must be a small integer"
 msgstr ""
 
-#: src/main/character.c:1888
+#: src/main/character.c:1900
 msgid "argument 'x' must be a integer vector"
 msgstr ""
 
-#: src/main/character.c:1908
+#: src/main/character.c:1920
 msgid "argument 'x' must be raw, integer or logical"
 msgstr ""
 
-#: src/main/character.c:1910
+#: src/main/character.c:1922
 msgid "argument 'type' must be a character string"
 msgstr ""
 
-#: src/main/character.c:1914
+#: src/main/character.c:1926
 #, c-format
 msgid "argument 'x' must be a multiple of %d long"
 msgstr ""
 
-#: src/main/character.c:1928 src/main/character.c:1943
+#: src/main/character.c:1940 src/main/character.c:1955
 msgid "argument 'x' must not contain NAs"
 msgstr ""
 
-#: src/main/character.c:1968
+#: src/main/character.c:1980
 msgid "strtrim() requires a character vector"
 msgstr ""
 
-#: src/main/character.c:1973 src/main/character.c:1977
+#: src/main/character.c:1985 src/main/character.c:1989
 msgid "invalid 'width' argument"
 msgstr ""
 

@@ -1,20 +1,24 @@
-# English translations for R package.
-# Copyright (C) 2005 The R Foundation
-# This file is distributed under the same license as the R package.
-# Prof Brian Ripley <ripley@stats.ox.ac.uk>, 2005.
+# Russian translations for R package
+# Русский перевод для пакета R
 #
+# Copyright (C) 2005 The R Foundation
+# Copyright (C) 2005 Dmitri I GOULIAEV <dmitri.gouliaev@telkel.net>
+#
+# This file is distributed under the same license as the R package.
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.1.0\n"
+"Project-Id-Version:        R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
 "POT-Creation-Date: 2005-03-24 11:41+0000\n"
-"PO-Revision-Date: 2005-02-22 16:55+0000\n"
-"Last-Translator: Prof Brian Ripley <ripley@stats.ox.ac.uk>\n"
-"Language-Team: English\n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=ISO-8859-1\n"
+"PO-Revision-Date:          2005-03-15 00:00-0600\n"
+"Last-Translator:           Dmitri I GOULIAEV <dmitri.gouliaev@telkel.net\n"
+"Language-Team:             Russian\n"
+"MIME-Version:              1.0\n"
+"Content-Type:              text/plain; charset=KOI8-R\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"First-Translator:          Dmitri I GOULIAEV <dmitri.gouliaev@telkel.net\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%"
+"10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
 #: src/appl/approx.c:110
 msgid "approx(): invalid f value"
@@ -1429,12 +1433,12 @@ msgstr ""
 #: src/main/colors.c:40
 #, c-format
 msgid "color intensity %g, not in [0,1]"
-msgstr "colour intensity %g, not in [0,1]"
+msgstr ""
 
 #: src/main/colors.c:47
 #, c-format
 msgid "color intensity %d, not in 0:255"
-msgstr "colour intensity %d, not in 0:25"
+msgstr ""
 
 #: src/main/colors.c:54
 #, c-format
@@ -1452,19 +1456,19 @@ msgstr ""
 
 #: src/main/colors.c:88
 msgid "unknown palette (need >= 2 colors)"
-msgstr "unknown palette (need >= 2 colours)"
+msgstr ""
 
 #: src/main/colors.c:92
 msgid "maximum number of colors exceeded"
-msgstr "maximum number of colours exceeded"
+msgstr ""
 
 #: src/main/colors.c:159
 msgid "invalid HSV color"
-msgstr "invalid HSV colour"
+msgstr ""
 
 #: src/main/colors.c:271
 msgid "invalid hcl color"
-msgstr "invalid hcl colour"
+msgstr ""
 
 #: src/main/colors.c:322
 msgid "invalid names vector"
@@ -1472,7 +1476,7 @@ msgstr ""
 
 #: src/main/colors.c:367
 msgid "invalid gray level, must be in [0,1]."
-msgstr "invalid grey level, must be in [0,1]."
+msgstr ""
 
 #: src/main/colors.c:420
 msgid "rgb is not a matrix (internally)"
@@ -3491,7 +3495,7 @@ msgstr ""
 
 #: src/main/graphics.c:3273
 msgid "bad hsv to rgb color conversion"
-msgstr "bad hsv to rgb colour conversion"
+msgstr ""
 
 #: src/main/graphics.c:4047
 msgid "invalid hex digit in 'color' or 'lty'"
@@ -3503,15 +3507,15 @@ msgstr ""
 
 #: src/main/graphics.c:4131
 msgid "invalid color name"
-msgstr "invalid colour name"
+msgstr ""
 
 #: src/main/graphics.c:4142
 msgid "invalid color specification"
-msgstr "invalid colour specification"
+msgstr ""
 
 #: src/main/graphics.c:4283
 msgid "Invalid color"
-msgstr "Invalid colour"
+msgstr ""
 
 #: src/main/graphics.c:4355
 msgid "invalid line type: must be length 2, 4, 6 or 8"
@@ -6428,6 +6432,10 @@ msgid ""
 "Type 'license()' or 'licence()' for distribution details.\n"
 "\n"
 msgstr ""
+"R -- это свободное ПО, и оно поставляется безо всяких гарантий.\n"
+"Вы вольны распространять его при соблюдении некоторых условий.\n"
+"Введите 'license()' для получения более подробной информации.\n"
+"\n"
 
 #: src/main/version.c:37
 msgid ""
@@ -6436,6 +6444,11 @@ msgid ""
 "'citation()' on how to cite R or R packages in publications.\n"
 "\n"
 msgstr ""
+"R -- это проект, в котором сотрудничает множество разработчиков.\n"
+"Введите 'contributors()' для получения дополнительной информации и\n"
+"'citation()', для ознакомления с правилами упоминания R и пакетов R\n"
+"в публикациях.\n"
+"\n"
 
 #: src/main/version.c:40
 msgid ""
@@ -6444,6 +6457,10 @@ msgid ""
 "Type 'q()' to quit R.\n"
 "\n"
 msgstr ""
+"Введите 'demo()' для запуска демонстрационных программ, 'help()' -- для\n"
+"получения справки, 'help.start()' -- для доступа к справке через браузер.\n"
+"Введите 'q()', чтобы закончить работу в R.\n"
+"\n"
 
 #: src/main/vfonts.c:78
 msgid "vfont routines cannot be accessed in module"
@@ -6780,16 +6797,12 @@ msgid ""
 "X11 driver unable to obtain color cube\n"
 "  reverting to monochrome"
 msgstr ""
-"X11 driver unable to obtain colour cube\n"
-"  reverting to monochrome"
 
 #: src/modules/X11/devX11.c:421
 msgid ""
 "Error: X11 cannot allocate additional graphics colors.\n"
 "Consider using X11 with colortype=\"pseudo.cube\" or \"gray\"."
 msgstr ""
-"Error: X11 cannot allocate additional graphics colours.\n"
-"Consider using X11 with colortype=\"pseudo.cube\" or \"gray\"."
 
 #: src/modules/X11/devX11.c:816
 msgid ""
@@ -6894,7 +6907,7 @@ msgstr ""
 
 #: src/modules/X11/devX11.c:2326
 msgid "unknown X11 color/colour model -- using monochrome"
-msgstr "unknown X11 colour model -- using monochrome"
+msgstr ""
 
 #: src/modules/X11/devX11.c:2336
 msgid "invalid value of 'bg'"
