@@ -456,7 +456,7 @@ static char enccode[5000];
 
 /* Load encoding array from a file: defaults to the R_HOME/afm directory */
 static int
-LoadEncoding(char *encpath, char *encname, Rboolean isPDF)
+LoadEncoding(char *encpath, char *encname, char *enccode, Rboolean isPDF)
 {
     char buf[BUFSIZE];
     int i;
@@ -654,13 +654,132 @@ PostScriptMetricInfo(int c, double *ascent, double *descent,
 }
 
 
-/*  Part 2.  Graphics Support Code.  */
+/* Part 2.  Device Driver State. */
+
+typedef struct {
+    char filename[PATH_MAX];
+    int open_type;
+
+    char papername[64];	/* paper name */
+    int paperwidth;	/* paper width in big points (1/72 in) */
+    int paperheight;	/* paper height in big points */
+    Rboolean landscape;	/* landscape mode */
+    int pageno;		/* page number */
+
+    int fontfamily;	/* font family */
+    char encpath[PATH_MAX]; /* font encoding file */
+    char encname[100]; /* font encoding */
+    char **afmpaths;	/* for user-specified family */
+    int maxpointsize;
+
+    double width;	/* plot width in inches */
+    double height;	/* plot height in inches */
+    double pagewidth;	/* page width in inches */
+    double pageheight;	/* page height in inches */
+    Rboolean pagecentre;/* centre image on page? */
+    Rboolean printit;	/* print page at close? */
+    char command[PATH_MAX];
+    char title[1024];
+
+    FILE *psfp;		/* output file */
+
+    Rboolean onefile;	/* EPSF header etc*/
+    Rboolean paperspecial;	/* suppress %%Orientation */
+
+    /* This group of variables track the current device status.
+     * They should only be set by routines that emit PostScript code. */
+    struct {
+	double lwd;		 /* line width */
+	int lty;		 /* line type */
+	int font;
+	int fontstyle;	         /* font style, R, B, I, BI, S */
+	int fontsize;	         /* font size in points */
+	rcolor col;		 /* color */
+	rcolor fill;	         /* fill color */
+    } current;
+
+    FontMetricInfo metrics[5];	/* font metrics */
+
+    /*
+     * This is a record of the R-level font names that are
+     * specified when the device is first opened.
+     * Any fonts that will be sent via the fontfamily slot in
+     * a gcontext must be mentioned here.
+     * In other words, you figure out which fonts you're going
+     * to use, you open the device, naming all those fonts via
+     * the fonts argument, they get stored here, then when
+     * you draw a piece of text, you specify the font
+     * and it gets looked up here.
+     */
+    int nfonts;
+    char **fonts;             
+    char **fontfamilynames;
+    FontMetricInfo *fontsMetrics;
+}
+PostScriptDesc;
+
+/*  Part 3.  Graphics Support Code.  */
+
+static char WinAnsiEnc[] = "WinAnsi.enc";
+static char ISOLatin1Enc[] = "ISOLatin1.enc";
+
+static char* getFontEncoding(int fontIndex, PostScriptDesc *pd) {
+    SEXP graphicsNS, PSenv, fontdb, fontnames;
+    int i, nfonts;
+    char* result = NULL;
+    int found = 0;
+    char* family = pd->fonts[fontIndex];
+    /* 
+     * Get encoding name from font database
+     */
+    PROTECT(graphicsNS = R_FindNamespace(ScalarString(mkChar("graphics"))));
+    PROTECT(PSenv = findVar(install(".PSenv"), graphicsNS));
+    PROTECT(fontdb = findVar(install(".PostScript.Fonts"), PSenv));
+    PROTECT(fontnames = getAttrib(fontdb, R_NamesSymbol));
+    nfonts = LENGTH(fontdb);
+    for (i=0; i<nfonts && !found; i++) {
+	char* fontFamily = CHAR(STRING_ELT(fontnames, i));
+	if (strcmp(family, fontFamily) == 0) {
+	    found = 1;
+	    result = CHAR(STRING_ELT(VECTOR_ELT(VECTOR_ELT(fontdb, i), 2), 0));
+	}
+    }
+    if (!found)
+	warning("Font encoding not found in PostScript font database");
+    else {
+	/*
+	 * Convert "default" to "WinAnsi.enc" on Windows
+	 * and "ISOLatin1.enc" elsewhere
+	 * 
+	 * Equivalent of following code in postscript.R;
+	 * 
+	 * old$encoding <- switch(.Platform$OS.type,
+         *                        "windows" = "WinAnsi.enc",
+         *                        "ISOLatin1.enc")
+	 */
+	if (!strcmp(result, "default")) {
+	    SEXP platform, platformNames, OStype;
+	    PROTECT(platform = findVar(install(".Platform"), R_GlobalEnv));
+	    PROTECT(platformNames = getAttrib(platform, R_NamesSymbol));
+	    if (strcmp(CHAR(STRING_ELT(platformNames, 0)), "OS.type"))
+		error(".Platform has changed and nobody told postscript");
+	    PROTECT(OStype = VECTOR_ELT(platform, 0));
+	    if (!strcmp(CHAR(STRING_ELT(OStype, 0)), "windows"))
+		result = WinAnsiEnc;
+	    else
+		result = ISOLatin1Enc;
+	    UNPROTECT(3);
+	}
+    }
+    UNPROTECT(4);
+    return result;
+}
 
 static const char * const TypeFaceDef[] = { "R", "B", "I", "BI", "S" };
 
-static void PSEncodeFont(FILE *fp, char *encname)
+static void PSEncodeFont(FILE *fp, char *encname, PostScriptDesc *pd)
 {
-    int i;
+    int i, j;
 
     /* include encoding unless it is ISOLatin1Encoding, which is predefined */
     if (strcmp(encname, "ISOLatin1Encoding"))
@@ -785,6 +904,51 @@ static void PSEncodeFont(FILE *fp, char *encname)
    	fprintf(fp, "  end\n");
    	fprintf(fp, "/Font5 exch definefont pop\n");
     }
+    /* 
+     * Add user-defined fonts
+     */
+    for (j=0; j<pd->nfonts; j++) {
+	/* 
+	 * First load the encoding if necessary
+	 */
+	char *fontencpath;
+	char fontencname[100];
+	fontencpath = getFontEncoding(j, pd);
+	if (fontencpath) {
+	    char encoding[5000];
+	    if (!LoadEncoding(fontencpath, fontencname, encoding, FALSE)) {
+		warning("problem loading encoding file (using ISOLatin1)");
+		strcpy(fontencname, "ISOLatin1Encoding");
+	    } else 
+		if (strcmp(fontencname, "ISOLatin1Encoding")) {
+		    fprintf(fp, 
+			    "%% begin encoding\n%s def\n%% end encoding\n", 
+			    encoding);
+		}
+	} 
+	/*
+	 * Now include the fonts
+	 */
+  	for (i = 0; i < 4 ; i++) {
+	    fprintf(fp, "%%%%IncludeResource: font %s\n", 
+		    pd->fontfamilynames[j*5 + i]);
+	    fprintf(fp, "/%s findfont\n", pd->fontfamilynames[j*5 + i]);
+	    fprintf(fp, "dup length dict begin\n");
+	    fprintf(fp, "  {1 index /FID ne {def} {pop pop} ifelse} forall\n");
+	    fprintf(fp, "  /Encoding %s def\n", fontencname);
+	    fprintf(fp, "  currentdict\n");
+	    fprintf(fp, "  end\n");
+	    fprintf(fp, "/Font%d exch definefont pop\n", 5 + j*5 + i + 1);
+   	}
+	fprintf(fp, "%%%%IncludeResource: font %s\n", 
+		pd->fontfamilynames[j*5 + 4]);
+	fprintf(fp, "/%s findfont\n", pd->fontfamilynames[j*5 + 4]);
+   	fprintf(fp, "dup length dict begin\n");
+   	fprintf(fp, "  {1 index /FID ne {def} {pop pop} ifelse} forall\n");
+   	fprintf(fp, "  currentdict\n");
+   	fprintf(fp, "  end\n");
+	fprintf(fp, "/Font%d exch definefont pop\n", 5 + j*5 + 5);
+    }
 }
 
 /* The variables "paperwidth" and "paperheight" give the dimensions */
@@ -796,9 +960,10 @@ static void PSFileHeader(FILE *fp, char* encname,
 			 double paperheight, Rboolean landscape,
 			 int EPSFheader, Rboolean paperspecial,
 			 double left, double bottom, double right, double top,
-			 char *title)
+			 char *title,
+			 PostScriptDesc *pd)
 {
-    int i;
+    int i, j;
     SEXP prolog;
 
     if(EPSFheader)
@@ -808,6 +973,12 @@ static void PSFileHeader(FILE *fp, char* encname,
     fprintf(fp, "%%%%DocumentNeededResources: font %s\n", familyname[0]);
     for (i = 1; i < 5; i++)
 	fprintf(fp, "%%%%+ font %s\n", familyname[i]);
+    /*
+     * Add any user-sepcified fonts
+     */
+    for (j=0; j<pd->nfonts; j++)
+	for (i = 0; i < 5; i++)
+	    fprintf(fp, "%%%%+ font %s\n", pd->fontfamilynames[j*5 + i]);
 
     if(!EPSFheader)
 	fprintf(fp, "%%%%DocumentMedia: %s %.0f %.0f 0 () ()\n",
@@ -841,7 +1012,7 @@ static void PSFileHeader(FILE *fp, char* encname,
     for (i = 0; i < length(prolog); i++)
 	fprintf(fp, "%s\n", CHAR(STRING_ELT(prolog, i)));
     fprintf(fp, "%% end   .ps.prolog\n");
-    PSEncodeFont(fp, encname);
+    PSEncodeFont(fp, encname, pd);
     fprintf(fp, "%%%%EndProlog\n");
 }
 
@@ -875,9 +1046,9 @@ static void PostScriptSetLineWidth(FILE *fp, double linewidth)
     fprintf(fp, "%.2f setlinewidth\n", linewidth);
 }
 
-static void PostScriptSetFont(FILE *fp, int typeface, double size)
+static void PostScriptSetFont(FILE *fp, int fontnum, double size)
 {
-    fprintf(fp, "/ps %.0f def %s %.0f s\n", size, TypeFaceDef[typeface], size);
+    fprintf(fp, "/ps %.0f def /Font%d findfont %.0f s\n", size, fontnum, size);
 }
 
 static void
@@ -997,54 +1168,6 @@ static void PostScriptText(FILE *fp, double x, double y,
 }
 
 
-/* Part 3.  Device Driver State. */
-
-typedef struct {
-    char filename[PATH_MAX];
-    int open_type;
-
-    char papername[64];	/* paper name */
-    int paperwidth;	/* paper width in big points (1/72 in) */
-    int paperheight;	/* paper height in big points */
-    Rboolean landscape;	/* landscape mode */
-    int pageno;		/* page number */
-
-    int fontfamily;	/* font family */
-    char encpath[PATH_MAX]; /* font encoding file */
-    char encname[100]; /* font encoding */
-    char **afmpaths;	/* for user-specified family */
-    int maxpointsize;
-
-    double width;	/* plot width in inches */
-    double height;	/* plot height in inches */
-    double pagewidth;	/* page width in inches */
-    double pageheight;	/* page height in inches */
-    Rboolean pagecentre;/* centre image on page? */
-    Rboolean printit;	/* print page at close? */
-    char command[PATH_MAX];
-    char title[1024];
-
-    FILE *psfp;		/* output file */
-
-    Rboolean onefile;	/* EPSF header etc*/
-    Rboolean paperspecial;	/* suppress %%Orientation */
-
-    /* This group of variables track the current device status.
-     * They should only be set by routines that emit PostScript code. */
-    struct {
-	double lwd;		 /* line width */
-	int lty;		 /* line type */
-	int fontstyle;	         /* font style, R, B, I, BI, S */
-	int fontsize;	         /* font size in points */
-	rcolor col;		 /* color */
-	rcolor fill;	         /* fill color */
-    } current;
-
-    FontMetricInfo metrics[5];	/* font metrics */
-}
-PostScriptDesc;
-
-
 /* Device Driver Actions */
 
 static void PS_Activate(NewDevDesc *dd);
@@ -1132,6 +1255,65 @@ static void SetLineStyle(int newlty, double newlwd, NewDevDesc *dd);
 static void Invalidate(NewDevDesc*);
 static int  MatchFamily(char *name);
 
+static void freeFontNames(int nfonts, char **fontNames) {
+    int i;
+    for (i=0; i<nfonts; i++) {
+	if (fontNames[i] != NULL)
+	    free(fontNames[i]);
+    }
+    free(fontNames);
+}
+
+static char** allocFontNames(int nfonts, SEXP fonts) {
+    char **result = (char **) malloc(nfonts*sizeof(char*));
+    if (result) {
+	int i;
+	for (i=0; i<nfonts; i++) 
+	    result[i] = NULL;
+	for (i=0; i<nfonts; i++) {
+	    char *font = CHAR(STRING_ELT(fonts, i));
+	    char *fontName = (char *) malloc(strlen(font)*sizeof(char)+1);
+	    if (!fontName) {
+		freeFontNames(nfonts, result);
+		return NULL;
+	    } 
+	    result[i] = fontName;
+	    strcpy(result[i], font);
+	}
+    } else {
+	return NULL;
+    }
+    return result;
+}
+
+static void freeFontFamilyNames(int nfonts, char **familyNames) {
+    int i;
+    for (i=0; i<(nfonts*5); i++) {
+	if (familyNames[i] != NULL)
+	    free(familyNames[i]);
+    }
+    free(familyNames);
+}
+
+static char** allocFontFamilyNames(int nfonts) {
+    char **result = (char **) malloc(nfonts*5*sizeof(char*));
+    if (result) {
+	int i;
+	for (i=0; i<nfonts; i++) 
+	    result[i] = NULL;
+	for (i=0; i<(nfonts*5); i++) {
+	    char *fontName = (char *) malloc(50*sizeof(char)+1);
+	    if (!fontName) {
+		freeFontFamilyNames(nfonts, result);
+		return NULL;
+	    } 
+	    result[i] = fontName;
+	}
+    } else {
+	return NULL;
+    }
+    return result;
+}
 
 static Rboolean
 innerPSDeviceDriver(NewDevDesc *dd, char *file, char *paper, char *family,
@@ -1140,13 +1322,15 @@ innerPSDeviceDriver(NewDevDesc *dd, char *file, char *paper, char *family,
 		    double width, double height,
 		    Rboolean horizontal, double ps,
 		    Rboolean onefile, Rboolean pagecentre,
-		    Rboolean printit, char *cmd, char *title)
+		    Rboolean printit, char *cmd, char *title,
+		    SEXP fonts)
 {
     /* If we need to bail out with some sort of "error"
        then we must free(dd) */
 
     double xoff, yoff, pointsize;
     rcolor setbg, setfg;
+    char **fontNames;
 
     PostScriptDesc *pd;
 
@@ -1176,7 +1360,30 @@ innerPSDeviceDriver(NewDevDesc *dd, char *file, char *paper, char *family,
     }
     strcpy(pd->encpath, encoding);
     pd->afmpaths = afmpaths;
-
+    
+    /* 
+     * Save the font names sent in via the fonts arg
+     * NOTE that these are the font names specified at the 
+     * R-level, NOT the translated font names.  
+     * 
+     * These will be used to match values sent in to PS_Text via a 
+     * gcontext (which will also be R-level names).
+     *
+     * If have to bail out hereafter, free fontNames
+     */
+    if (!isNull(fonts)) {
+	int nfonts = LENGTH(fonts);
+	if (!(fontNames = allocFontNames(nfonts, fonts))) {
+	    free(pd);
+	    error("Failed to record font names");
+	}
+	pd->nfonts = nfonts;
+	pd->fonts = fontNames;
+    } else {
+	pd->nfonts = 0;
+	pd->fonts = NULL;
+    }
+					  
     setbg = str2col(bg);
     setfg = str2col(fg);
 
@@ -1186,12 +1393,14 @@ innerPSDeviceDriver(NewDevDesc *dd, char *file, char *paper, char *family,
     pointsize = floor(ps);
     if(setbg == NA_INTEGER && setfg == NA_INTEGER) {
 	free(dd);
+	freeFontNames(pd->nfonts, pd->fonts);
 	free(pd);
 	error("invalid foreground/background color (postscript)");
     }
     pd->printit = printit;
     if(strlen(cmd) > PATH_MAX - 1) {
 	free(dd);
+	freeFontNames(pd->nfonts, pd->fonts);
 	free(pd);
 	error("`command' is too long");
     }
@@ -1243,6 +1452,7 @@ innerPSDeviceDriver(NewDevDesc *dd, char *file, char *paper, char *family,
     }
     else {
 	free(dd);
+	freeFontNames(pd->nfonts, pd->fonts);
 	free(pd);
 	error("invalid page type `%s' (postscript)", pd->papername);
     }
@@ -1327,6 +1537,11 @@ innerPSDeviceDriver(NewDevDesc *dd, char *file, char *paper, char *family,
 
     pd->pageno = 0;
     if(!PS_Open(dd, pd)) {
+	freeFontNames(pd->nfonts, pd->fonts);
+	if (pd->fontfamilynames != NULL)
+	    freeFontFamilyNames(pd->nfonts, pd->fontfamilynames);
+	if (pd->fontsMetrics != NULL)
+	    free(pd->fontsMetrics);
 	free(pd);
 	return FALSE;
     }
@@ -1368,12 +1583,13 @@ PSDeviceDriver(DevDesc *dd, char *file, char *paper, char *family,
 	       double width, double height,
 	       Rboolean horizontal, double ps,
 	       Rboolean onefile, Rboolean pagecentre,
-	       Rboolean printit, char *cmd, char *title)
+	       Rboolean printit, char *cmd, char *title,
+	       SEXP fonts)
 {
     return innerPSDeviceDriver((NewDevDesc*) dd, file, paper, family,
 			       afmpaths, encoding, bg, fg, width, height,
 			       horizontal, ps, onefile, pagecentre,
-			       printit, cmd, title);
+			       printit, cmd, title, fonts);
 }
 
 static int MatchFamily(char *name)
@@ -1431,19 +1647,15 @@ static void SetLineStyle(int newlty, double newlwd, NewDevDesc *dd)
     }
 }
 
-static void SetFont(int style, int size, NewDevDesc *dd)
+static void SetFont(int font, int size, NewDevDesc *dd)
 {
     PostScriptDesc *pd = (PostScriptDesc *) dd->deviceSpecific;
-    if(style < 1 || style > 5) {
-	warning("attempt to use invalid font %d replaced by font 1", style);
-	style = 1;
-    }
     if(size < 1 || size > pd->maxpointsize)
 	size = 10;
-    if(size != pd->current.fontsize || style != pd->current.fontstyle) {
-	PostScriptSetFont(pd->psfp, style-1, size);
+    if (size != pd->current.fontsize || font != pd->current.font) {
+	PostScriptSetFont(pd->psfp, font, size);
 	pd->current.fontsize = size;
-	pd->current.fontstyle = style;
+	pd->current.font = font;
     }
 }
 
@@ -1452,15 +1664,54 @@ static void SetFont(int style, int size, NewDevDesc *dd)
 # undef HAVE_POPEN
 #endif
 
+/*
+ * Get the path to the afm file for a user-specifed font
+ * given the font index (within pd->fonts) and the face
+ * index (0..4)
+ *
+ * Do this by looking up the font name in the PostScript
+ * font database
+ */
+static char* fontsMetricsFileName(int fontIndex, int faceIndex, 
+				  PostScriptDesc *pd)
+{
+    SEXP graphicsNS, PSenv, fontdb, fontnames;
+    int i, nfonts;
+    char* result = NULL;
+    int found = 0;
+    char* family = pd->fonts[fontIndex];
+    PROTECT(graphicsNS = R_FindNamespace(ScalarString(mkChar("graphics"))));
+    PROTECT(PSenv = findVar(install(".PSenv"), graphicsNS));
+    PROTECT(fontdb = findVar(install(".PostScript.Fonts"), PSenv));
+    PROTECT(fontnames = getAttrib(fontdb, R_NamesSymbol));
+    nfonts = LENGTH(fontdb);
+    for (i=0; i<nfonts && !found; i++) {
+	char* fontFamily = CHAR(STRING_ELT(fontnames, i));
+	if (strcmp(family, fontFamily) == 0) {
+	    found = 1;
+	    result = CHAR(STRING_ELT(VECTOR_ELT(VECTOR_ELT(fontdb, i), 1), 
+				     faceIndex));
+	}
+    }
+    if (!found)
+	warning("Font family not found in PostScript font database");
+    UNPROTECT(4);
+    return result;
+}
+
 static Rboolean PS_Open(NewDevDesc *dd, PostScriptDesc *pd)
 {
     char buf[512];
-    int i;
+    int i, j;
 
-    if (!LoadEncoding(pd->encpath, pd->encname, FALSE)) {
+    if (!LoadEncoding(pd->encpath, pd->encname, enccode, FALSE)) {
 	warning("problem loading encoding file");
 	return FALSE;
     }
+    /*
+     * Load metric info for the default font set up by
+     * the device
+     */
     for(i = 0; i < 5 ; i++) {
         char const *p;
 	if(pd->fontfamily == USERAFM) p = pd->afmpaths[i];
@@ -1470,6 +1721,48 @@ static Rboolean PS_Open(NewDevDesc *dd, PostScriptDesc *pd)
 	    warning("cannot read afm file %s", p);
 	    return FALSE;
 	}
+    }
+
+    /*
+     * Load metric info for extra fonts the user has specified
+     *
+     * NOTE there will be five font metrics per font, one for
+     * each font "face" (plain, bold, italic, bolditalic, symbol)
+     */
+    if (pd->nfonts > 0) {
+	char **fontfamilynames;
+	FontMetricInfo *fontsMetrics;
+	if (!(fontsMetrics = 
+	      (FontMetricInfo *) 
+	      malloc(pd->nfonts*5*sizeof(FontMetricInfo)))) {
+	    fontsMetrics = NULL;
+	    warning("cannot load font metric information");
+	    return FALSE;
+	} 
+	if (!(fontfamilynames = allocFontFamilyNames(pd->nfonts))) {
+	    warning("cannot load font metric information");
+	    fontfamilynames = NULL;
+	    return FALSE;	    
+	}
+	pd->fontsMetrics = fontsMetrics;
+	pd->fontfamilynames = fontfamilynames;
+	for (j=0; j<pd->nfonts; j++) {
+	    for(i = 0; i < 5 ; i++) {
+		char *afmpath = fontsMetricsFileName(j, i, pd);
+		if (!afmpath)
+		    return FALSE;
+		if(!PostScriptLoadFontMetrics(afmpath, 
+					      &(pd->fontsMetrics[j*5 + i]),
+					      pd->fontfamilynames[j*5 + i],
+					      (i < 4)?1:0)) {
+		    warning("cannot read afm file %s", afmpath);
+		    return FALSE;
+		}
+	    }
+	}
+    } else {
+	pd->fontsMetrics = NULL;
+	pd->fontfamilynames = NULL;
     }
 
     if (strlen(pd->filename) == 0) {
@@ -1522,7 +1815,8 @@ static Rboolean PS_Open(NewDevDesc *dd, PostScriptDesc *pd)
 		     dd->left,
 		     dd->top,
 		     dd->right,
-		     pd->title);
+		     pd->title,
+		     pd);
     else
 	PSFileHeader(pd->psfp,
 		     pd->encname,
@@ -1536,7 +1830,8 @@ static Rboolean PS_Open(NewDevDesc *dd, PostScriptDesc *pd)
 		     dd->bottom,
 		     dd->right,
 		     dd->top,
-		     pd->title);
+		     pd->title,
+		     pd);
 
     return TRUE;
 }
@@ -1552,6 +1847,7 @@ static void Invalidate(NewDevDesc *dd)
 {
     PostScriptDesc *pd = (PostScriptDesc *) dd->deviceSpecific;
 
+    pd->current.font = -1;
     pd->current.fontsize = -1;
     pd->current.fontstyle = -1;
     pd->current.lwd = -1;
@@ -1647,6 +1943,11 @@ static void PS_Close(NewDevDesc *dd)
     for(i = 0; i < 5; i++) {
         if(pd->metrics[i].KernPairs) free(pd->metrics[i].KernPairs);
     }
+    freeFontNames(pd->nfonts, pd->fonts);
+    if (pd->fontfamilynames != NULL)
+	freeFontFamilyNames(pd->nfonts, pd->fontfamilynames);
+    if (pd->fontsMetrics != NULL)
+	free(pd->fontsMetrics);
     free(pd);
 }
 
@@ -1816,6 +2117,28 @@ static void PS_Polyline(int n, double *x, double *y,
     }
 }
 
+static int translateFont(char* family, int style, PostScriptDesc *pd) 
+{
+    int result = style;
+    if(style < 1 || style > 5) {
+	warning("attempt to use invalid font %d replaced by font 1", style);
+	style = 1;
+    }
+    if (strlen(family) > 0) {
+	/*
+	 * Find the family in pd->fonts
+	 */
+	int i, found = 0;
+	for (i=0; i<pd->nfonts && !found; i++)
+	    if (strcmp(family, pd->fonts[i]) == 0) {
+		found = 1;
+		result = 5 + i*5 + style;
+	    }
+	if (!found)
+	    warning("family not included in PostScript device");
+    }
+    return result;
+}
 
 static void PS_Text(double x, double y, char *str,
 		    double rot, double hadj,
@@ -1824,7 +2147,8 @@ static void PS_Text(double x, double y, char *str,
 {
     PostScriptDesc *pd = (PostScriptDesc *) dd->deviceSpecific;
 
-    SetFont(gc->fontface, (int)floor(gc->cex * gc->ps + 0.5), dd);
+    SetFont(translateFont(gc->fontfamily, gc->fontface, pd), 
+	    (int)floor(gc->cex * gc->ps + 0.5),dd);
     if(R_ALPHA(gc->col) == 0) {
 	SetColor(gc->col, dd);
 	PostScriptText(pd->psfp, x, y, str, hadj, 0.0, rot);
@@ -2242,7 +2566,7 @@ static Rboolean XFig_Open(NewDevDesc *dd, XFigDesc *pd)
     char buf[512], name[50], *tmp;
     int i;
 
-    if (!LoadEncoding("ISOLatin1.enc", buf, FALSE))
+    if (!LoadEncoding("ISOLatin1.enc", buf, enccode, FALSE))
 	error("problem loading encoding file");
     for(i = 0; i < 4 ; i++) {
 	if(!PostScriptLoadFontMetrics(Family[pd->fontfamily].afmfile[i],
@@ -3053,7 +3377,7 @@ static Rboolean PDF_Open(NewDevDesc *dd, PDFDesc *pd)
     char buf[512];
     int i;
 
-    if (!LoadEncoding(pd->encpath, pd->encname, TRUE)) {
+    if (!LoadEncoding(pd->encpath, pd->encname, enccode, TRUE)) {
 	warning("problem loading encoding file");
 	return FALSE;
     }

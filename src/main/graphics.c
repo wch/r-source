@@ -2427,8 +2427,11 @@ void gcontextFromGP(R_GE_gcontext *gc, DevDesc *dd)
     gc->fontface = Rf_gpptr(dd)->font;
     /*
      * FIXME:  Need to add a fontfamily par so user can control this
+     *
+     * A font family of "" means that the default font
+     * set up by the device will be used.
      */
-    gc->fontfamily[0] = '\0';
+    strcpy(gc->fontfamily, "");
 }
 
 /* Draw a line. */

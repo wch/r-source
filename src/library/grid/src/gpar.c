@@ -252,6 +252,10 @@ void initGPar(GEDevDesc *dd)
     INTEGER(gpfont)[0] = dev->startfont;
     SET_VECTOR_ELT(gpar, GP_FONT, gpfont);
     PROTECT(gpfontfamily = allocVector(STRSXP, 1));
+    /* 
+     * A font family of "" means that the default font
+     * set up by the device will be used.
+     */
     SET_STRING_ELT(gpfontfamily, 0, mkChar(""));
     SET_VECTOR_ELT(gpar, GP_FONTFAMILY, gpfontfamily);
     PROTECT(gpalpha = allocVector(REALSXP, 1));

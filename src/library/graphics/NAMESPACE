@@ -20,6 +20,7 @@ export(Hershey, abline, arrows, assocplot, axTicks, axis, axis.Date,
        strwidth, sunflowerplot, symbols, terrain.colors, text,
        text.default, title, topo.colors, xfig, xy.coords, xyz.coords)
 
+export(postscriptFont, postscriptFonts)
 
 S3method(barplot, default)
 S3method(boxplot, default)
@@ -53,7 +54,8 @@ S3method(print, recordedplot)
 S3method(text, default)
 
 if(.Platform$OS.type == "unix") {
-export(GNOME, X11, bitmap, dev2bitmap, gnome, jpeg, png, quartz, x11)
+export(GNOME, X11, bitmap, dev2bitmap, gnome, jpeg, png, quartz, x11,
+       X11Font, X11Fonts)
 }
 
 if(.Platform$OS.type == "windows") {

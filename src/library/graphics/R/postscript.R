@@ -103,8 +103,9 @@ ps.options <- function(..., reset=FALSE, override.check= FALSE)
 ##--> source in ../../../main/devices.c	 and ../../../main/devPS.c :
 
 postscript <- function (file = ifelse(onefile,"Rplots.ps", "Rplot%03d.ps"),
-                        onefile = TRUE, family,
-                        title = "R Graphics Output", ...)
+                        onefile = TRUE, family, 
+                        title = "R Graphics Output",
+                        fonts = NULL, ...)
 {
     new <- list(onefile=onefile, ...)# eval
     old <- check.options(new = new, envir = .PSenv,
@@ -125,7 +126,7 @@ postscript <- function (file = ifelse(onefile,"Rplots.ps", "Rplot%03d.ps"),
     .Internal(PS(file, old$paper, old$family, old$encoding, old$bg, old$fg,
 		 old$width, old$height, old$horizontal, old$pointsize,
                  old$onefile, old$pagecentre, old$print.it, old$command,
-                 title))
+                 title, fonts))
     # if .ps.prolog is searched for and fails, NULL got returned.
     invisible()
 }
@@ -183,9 +184,191 @@ pdf <- function (file = ifelse(onefile, "Rplots.pdf", "Rplot%03d.pdf"),
 "       closepath clip newpath } def",
 "/rgb { setrgbcolor } def",
 "/s   { scalefont setfont } def",
-"/R   { /Font1 findfont } def",
-"/B   { /Font2 findfont } def",
-"/I   { /Font3 findfont } def",
-"/BI  { /Font4 findfont } def",
-"/S   { /Font5 findfont } def",
+# "/R   { /Font1 findfont } def",
+# "/B   { /Font2 findfont } def",
+# "/I   { /Font3 findfont } def",
+# "/BI  { /Font4 findfont } def",
+# "/S   { /Font5 findfont } def",
 "1 setlinecap 1 setlinejoin")
+
+####################
+# PostScript font database
+####################
+
+# Each font family has a name, plus a vector of 4 or 5 directories
+# for font metric afm files
+assign(".PostScript.Fonts", list(), envir = .PSenv)
+
+psFontError <- function(errDesc) {
+  stop(paste("Invalid", errDesc, "in PostScript font specification"))
+}
+
+# Check that the font has the correct structure and information
+# Already checked that it had a name
+checkPSFont <- function(font) {
+  if (is.null(font$family) || !is.character(font$family))
+    psFontError("font family name")
+  if (is.null(font$metrics) || !is.character(font$metrics) ||
+      length(font$metrics) < 4)
+    psFontError("font metric information")
+  # Add default symbol font metric if none provided
+  if (length(font$metrics) == 4)
+    font$metrics <- c(font$metrics, "sy______.afm")
+  if (is.null(font$encoding) || !is.character(font$encoding))
+    psFontError("font encoding")
+  font
+}
+
+setPSFonts <- function(fonts, fontNames) {
+  fonts <- lapply(fonts, checkPSFont)
+  fontDB <- get(".PostScript.Fonts", envir=.PSenv)
+  existingFonts <- fontNames %in% names(fontDB)
+  if (sum(existingFonts) > 0)
+    fontDB[fontNames[existingFonts]] <- fonts[existingFonts]
+  if (sum(existingFonts) < length(fontNames))
+    fontDB <- c(fontDB, fonts[!existingFonts])
+  assign(".PostScript.Fonts", fontDB, envir=.PSenv)
+}
+
+printFont <- function(font) {
+  paste(font$family, "\n    (", paste(font$metrics, collapse=" "), ")\n",
+        sep="")
+}
+
+printFonts <- function(fonts) {
+  cat(paste(names(fonts), ": ", unlist(lapply(fonts, printFont)),
+            sep="", collapse=""))
+}
+
+# If no arguments spec'ed, return entire font database
+# If no named arguments spec'ed, all args should be font names
+# to get info on from the database
+# Else, must specify new fonts to enter into database (all
+# of which must be valid PostScript font descriptions and
+# all of which must be named args)
+postscriptFonts <- function(...) {
+  ndots <- length(fonts <- list(...))
+  if (ndots == 0)
+    get(".PostScript.Fonts", envir=.PSenv)
+  else {
+    fontNames <- names(fonts)
+    nnames <- length(fontNames)
+    if (nnames == 0) {
+      if (!all(sapply(fonts, is.character)))
+        stop("Invalid arguments in postscriptFonts (must be font names)")
+      else
+        get(".PostScript.Fonts", envir=.PSenv)[unlist(fonts)]
+    } else {
+      if (ndots != nnames)
+        stop("Invalid arguments in postscriptFonts (need NAMED args)")
+      setPSFonts(fonts, fontNames)
+    }
+  }
+}
+
+# Create a valid postscript font description
+postscriptFont <- function(family, metrics, encoding="default") {
+  checkPSFont(list(family=family, metrics=metrics, encoding=encoding))
+}
+
+postscriptFonts(# Default Serif font is Times 
+                serif=postscriptFont("Times",
+                  c("tir_____.afm", "tib_____.afm",
+                    "tii_____.afm", "tibi____.afm",
+                    "sy______.afm")),
+                # Default Sans Serif font is Helvetica
+                sans=postscriptFont("Helvetica",
+                  c("hv______.afm", "hvb_____.afm",
+                    "hvo_____.afm", "hvbo____.afm",
+                    "sy______.afm")),
+                # Default Monospace font is Courier
+                mono=postscriptFont("Courier",
+                  c("com_____.afm", "cob_____.afm",
+                    "coo_____.afm", "cobo____.afm",
+                    "sy______.afm")),
+                # Default Symbol font is Symbol
+                symbol=postscriptFont("Symbol",
+                  c("sy______.afm", "sy______.afm",
+                    "sy______.afm", "sy______.afm",
+                    "sy______.afm"),
+                  encoding="AdobeSym.enc"),
+                # Remainder are standard Adobe fonts that
+                # should be present on PostScript devices
+                AvantGarde=postscriptFont("AvantGarde",
+                  c("agw_____.afm", "agd_____.afm",
+                    "agwo____.afm", "agdo____.afm",
+                    "sy______.afm")),
+                Bookman=postscriptFont("Bookman",
+                  c("bkl_____.afm", "bkd_____.afm",
+                    "bkli____.afm", "bkdi____.afm",
+                    "sy______.afm")),
+                Courier=postscriptFont("Courier",
+                  c("com_____.afm", "cob_____.afm",
+                    "coo_____.afm", "cobo____.afm",
+                    "sy______.afm")),
+                Helvetica=postscriptFont("Helvetica",
+                  c("hv______.afm", "hvb_____.afm",
+                    "hvo_____.afm", "hvbo____.afm",
+                    "sy______.afm")),
+                HelveticaNarrow=postscriptFont("Helvetica-Narrow",
+                  c("hvn_____.afm", "hvnb____.afm",
+                    "hvno____.afm", "hvnbo___.afm",
+                    "sy______.afm")),
+                NewCenturySchoolbook=postscriptFont("NewCenturySchoolbook",
+                  c("ncr_____.afm", "ncb_____.afm",
+                    "nci_____.afm", "ncbi____.afm",
+                    "sy______.afm")),
+                Palatino=postscriptFont("Palatino",
+                  c("por_____.afm", "pob_____.afm",
+                    "poi_____.afm", "pobi____.afm",
+                    "sy______.afm")),
+                Times=postscriptFont("Times",
+                  c("tir_____.afm", "tib_____.afm",
+                    "tii_____.afm", "tibi____.afm",
+                    "sy______.afm")),
+                # URW equivalents
+                URWGothic=postscriptFont("URWGothic",
+                  c("a010013l.afm", "a010015l.afm",
+                    "a010033l.afm", "a010035l.afm",
+                    "s050000l.afm")),
+                URWBookman=postscriptFont("URWBookman",
+                  c("b018012l.afm", "b018015l.afm",
+                    "b018032l.afm", "b018035l.afm",
+                    "s050000l.afm")),
+                NimbusMon=postscriptFont("NimbusMon",
+                  c("n022003l.afm", "n022004l.afm",
+                    "n022023l.afm", "n022024l.afm",
+                    "s050000l.afm")),
+                NimbusSan=postscriptFont("NimbusSan",
+                  c("n019003l.afm", "n019004l.afm",
+                    "n019023l.afm", "n019024l.afm",
+                    "s050000l.afm")),
+                URWHelvetica=postscriptFont("URWHelvetica",
+                  c("n019003l.afm", "n019004l.afm",
+                    "n019023l.afm", "n019024l.afm",
+                    "s050000l.afm")),
+                NimbusSanCond=postscriptFont("NimbusSanCond",
+                  c("n019043l.afm", "n019044l.afm",
+                    "n019063l.afm", "n019064l.afm",
+                    "s050000l.afm")),
+                CenturySch=postscriptFont("CenturySch",
+                  c("c059013l.afm", "c059016l.afm",
+                    "c059033l.afm", "c059036l.afm",
+                    "s050000l.afm")),
+                URWPalladio=postscriptFont("URWPalladio",
+                  c("p052003l.afm", "p052004l.afm",
+                    "p052023l.afm", "p052024l.afm",
+                    "s050000l.afm")),
+                NimbusRom=postscriptFont("NimbusRom",
+                  c("n021003l.afm", "n021004l.afm",
+                    "n021023l.afm", "n021024l.afm",
+                    "s050000l.afm")),
+                URWTimes=postscriptFont("URWTimes",
+                  c("n021003l.afm", "n021004l.afm",
+                    "n021023l.afm", "n021024l.afm",
+                    "s050000l.afm")),
+                # Computer Modern as recoded by Brian D'Urso 
+                ComputerModern=postscriptFont("ComputerModern",
+                  c("CM_regular_10.afm", "CM_boldx_10.afm",
+                    "CM_italic_10.afm", "CM_boldx_italic_10.afm",
+                    "CM_symbol_10.afm")))

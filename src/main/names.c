@@ -715,7 +715,7 @@ FUNTAB R_FunTab[] =
 
 /* Device Drivers */
 
-{"PS",		do_PS,		0,	111,   16,	{PP_FUNCALL, PREC_FN,	0}},
+{"PS",		do_PS,		0,	111,   17,	{PP_FUNCALL, PREC_FN,	0}},
 {"PicTeX",	do_PicTeX,	0,	111,	6,	{PP_FUNCALL, PREC_FN,	0}},
 {"XFig",	do_XFig,	0,	111,   11,	{PP_FUNCALL, PREC_FN,	0}},
 {"PDF",		do_PDF,		0,	111,   10,	{PP_FUNCALL, PREC_FN,	0}},

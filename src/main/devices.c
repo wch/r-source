@@ -68,7 +68,7 @@ SEXP do_PS(SEXP call, SEXP op, SEXP args, SEXP env)
     char *afms[5], *encoding, *title;
     int i, horizontal, onefile, pagecentre, printit;
     double height, width, ps;
-    SEXP fam;
+    SEXP fam, fonts;
 
     vmax = vmaxget();
     file = SaveString(CAR(args), 0, call);  args = CDR(args);
@@ -98,8 +98,11 @@ SEXP do_PS(SEXP call, SEXP op, SEXP args, SEXP env)
     pagecentre = asLogical(CAR(args));args = CDR(args);
     printit = asLogical(CAR(args));   args = CDR(args);
     cmd = SaveString(CAR(args), 0, call); args = CDR(args);
-    title = SaveString(CAR(args), 0, call);
-
+    title = SaveString(CAR(args), 0, call); args = CDR(args);    
+    fonts = CAR(args); 
+    if (!isNull(fonts) && !isString(fonts))
+	errorcall(call, "invalid `fonts' parameter");
+    
     R_CheckDeviceAvailable();
     BEGIN_SUSPEND_INTERRUPTS {
 	if (!(dev = (NewDevDesc *) calloc(1, sizeof(NewDevDesc))))
@@ -112,7 +115,7 @@ SEXP do_PS(SEXP call, SEXP op, SEXP args, SEXP env)
 	dev->savedSnapshot = R_NilValue;
 	if(!PSDeviceDriver((DevDesc*) dev, file, paper, family, afms, encoding, bg, fg,
 			   width, height, (double)horizontal, ps, onefile,
-			   pagecentre, printit, cmd, title)) {
+			   pagecentre, printit, cmd, title, fonts)) {
 	    free(dev);
 	    errorcall(call, "unable to start device PostScript");
 	}

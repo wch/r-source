@@ -76,7 +76,7 @@ validGP <- function(gpars) {
         gpars$font <- as.integer(gpars$fontface)
       else {
         temp.char <- as.character(gpars$fontface)
-        temp.num <- 0
+        temp.num <- integer(length(temp.char))
         for (i in 1:length(temp.char))
           temp.num[i] <- switch(temp.char[i],
                                 plain=1,
@@ -88,7 +88,8 @@ validGP <- function(gpars) {
                                 # These are Hershey variants
                                 cyrillic=5,
                                 cyrillic.oblique=6,
-                                EUC=7)
+                                EUC=7,
+                                stop("Invalid font face"))
         gpars$font <- as.integer(temp.num)
       }
     }

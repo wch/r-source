@@ -17,6 +17,9 @@ Changes from grid_1.9.0 to grid_2.0.0:
     There is a new vignette("nonfinite") which describes this
     new behaviour.
 
+4.  Fixed (unreported) bug in drawing circles.  Now checks that
+    radius is non-negative.
+
 
 Changes from grid_1.9.0 to grid_1.9.1:
 ------------------------------------

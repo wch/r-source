@@ -171,12 +171,12 @@ static void newX11_Text(double x, double y, char *str,
 
 	/* Support Routines */
 
-static XFontStruct *RLoadFont(newX11Desc*, int, int);
+static XFontStruct *RLoadFont(newX11Desc*, char*, int, int);
 static double pixelHeight(void);
 static double pixelWidth(void);
 static int SetBaseFont(newX11Desc*);
 static void SetColor(int, NewDevDesc*);
-static void SetFont(int, int, NewDevDesc*);
+static void SetFont(char*, int, int, NewDevDesc*);
 static void SetLinetype(int, double, NewDevDesc*);
 static void X11_Close_bitmap(newX11Desc *xd);
 
@@ -639,7 +639,11 @@ static unsigned int adobe_sizes = 0x0403165D;
 #define MAXFONTS 64
 #define CLRFONTS 16 /* Number to free when cache runs full */
 
-typedef struct {int face, size;	 XFontStruct *font;} cacheentry;
+typedef struct {
+    char family[500]; 
+    int face, size;	 
+    XFontStruct *font;
+} cacheentry;
 
 static cacheentry fontcache[MAXFONTS];
 static int nfonts = 0;
@@ -648,7 +652,7 @@ static int force_nonscalable = 0; /* for testing */
 #define ADOBE_SIZE(I) ((I) > 7 && (I) < 35 && (adobe_sizes & (1<<((I)-8))))
 #define SMALLEST 2
 
-static XFontStruct *RLoadFont(newX11Desc *xd, int face, int size)
+static XFontStruct *RLoadFont(newX11Desc *xd, char* family, int face, int size)
 {
     int pixelsize, i;
     cacheentry *f;
@@ -668,17 +672,24 @@ static XFontStruct *RLoadFont(newX11Desc *xd, int face, int size)
     /* search fontcache */
     for ( i = nfonts ; i-- ; ) {
 	f = &fontcache[i];
-	if ( f->face == face && f->size == size ) return f->font;
+	if ( strcmp(f->family, family) == 0 && 
+	     f->face == face && 
+	     f->size == size ) 
+	    return f->font;
     }
 
     /* 'size' is the requested size, 'pixelsize'  the size of the
        actually allocated font*/
     pixelsize = size;
 
+    /* 
+     * The symbol font face is a historical oddity
+     * Always use a standard font for font face 4
+     */
     if (face == 4)
 	sprintf(buf, xd->symbolfamily,  pixelsize);
     else
-	sprintf(buf, xd->fontfamily,
+	sprintf(buf, family,
 		weight[face & 1],
 		slant[(face & 2)>>1 ],	pixelsize);
 #ifdef DEBUG_X11
@@ -688,6 +699,10 @@ static XFontStruct *RLoadFont(newX11Desc *xd, int face, int size)
 #ifdef DEBUG_X11
     if (tmp) Rprintf("success\n"); else Rprintf("failure\n");
 #endif
+    /*
+     * IF can't find the font specified then
+     * go to great lengths to find something else to use.
+     */
     if (!tmp || (force_nonscalable && !ADOBE_SIZE(size)) ){
 	static int near[]=
 	  {14,14,14,17,17,18,20,20,20,20,24,24,24,25,25,25,25};
@@ -751,6 +766,7 @@ static XFontStruct *RLoadFont(newX11Desc *xd, int face, int size)
 
     if (tmp){
 	f = &fontcache[nfonts++];
+	strcpy(f->family, family);
 	f->face = face;
 	f->size = size;
 	f->font = tmp;
@@ -774,7 +790,7 @@ static int SetBaseFont(newX11Desc *xd)
     xd->fontface = xd->basefontface;
     xd->fontsize = xd->basefontsize;
     xd->usefixed = 0;
-    xd->font = RLoadFont(xd, xd->fontface, xd->fontsize);
+    xd->font = RLoadFont(xd, xd->fontfamily, xd->fontface, xd->fontsize);
     if (!xd->font) {
 	xd->usefixed = 1;
 	xd->font = xd->fixedfont = XLoadQueryFont(display, "fixed");
@@ -784,17 +800,22 @@ static int SetBaseFont(newX11Desc *xd)
     return 1;
 }
 
-static void SetFont(int face, int size, NewDevDesc *dd)
+static void SetFont(char* family, int face, int size, NewDevDesc *dd)
 {
     newX11Desc *xd = (newX11Desc *) dd->deviceSpecific;
     XFontStruct *tmp;
 
     if (face < 1 || face > 5) face = 1;
 
-    if (!xd->usefixed && (size != xd->fontsize	|| face != xd->fontface)) {
-	tmp = RLoadFont(xd, face, size);
+    if (!xd->usefixed && 
+	(size != xd->fontsize	|| 
+	 face != xd->fontface ||
+	 strcmp(family, xd->fontfamily) != 0)) {
+	
+	tmp = RLoadFont(xd, family, face, size);
 	if(tmp) {
 	    xd->font = tmp;
+	    strcpy(xd->fontfamily, family);
 	    xd->fontface = face;
 	    xd->fontsize = size;
 	    XSetFont(display, xd->wgc, xd->font->fid);
@@ -1093,6 +1114,53 @@ newX11_Open(NewDevDesc *dd, newX11Desc *xd, char *dsp, double w, double h,
     return TRUE;
 }
 
+/* Return a non-relocatable copy of a string */
+
+static char *SaveFontSpec(SEXP sxp, int offset)
+{
+    char *s;
+    if(!isString(sxp) || length(sxp) <= offset)
+	error("Invalid font specification");
+    s = R_alloc(strlen(CHAR(STRING_ELT(sxp, offset)))+1, sizeof(char));
+    strcpy(s, CHAR(STRING_ELT(sxp, offset)));
+    return s;
+}
+
+/*
+ * Take the fontfamily from a gcontext (which is device-independent)
+ * and convert it into an X11-specific font description using
+ * the X11 font database (see src/library/graphics/R/unix/x11.R)
+ *
+ * IF gcontext fontfamily is empty ("") 
+ * OR IF can't find gcontext fontfamily in font database 
+ * THEN return xd->basefontfamily (the family set up when the
+ *   device was created)
+ */
+static char* translateFontFamily(char* family, newX11Desc* xd) {
+    SEXP graphicsNS, x11env, fontdb, fontnames;
+    int i, nfonts;
+    char* result = xd->basefontfamily;
+    PROTECT(graphicsNS = R_FindNamespace(ScalarString(mkChar("graphics"))));
+    PROTECT(x11env = findVar(install(".X11env"), graphicsNS));
+    PROTECT(fontdb = findVar(install(".X11.Fonts"), x11env));
+    PROTECT(fontnames = getAttrib(fontdb, R_NamesSymbol));
+    nfonts = LENGTH(fontdb);
+    if (strlen(family) > 0) {
+	int found = 0;
+	for (i=0; i<nfonts && !found; i++) {
+	    char* fontFamily = CHAR(STRING_ELT(fontnames, i));
+	    if (strcmp(family, fontFamily) == 0) {
+		found = 1;
+		result = SaveFontSpec(VECTOR_ELT(fontdb, i), 0);
+	    }
+	}
+	if (!found)
+	    warning("Font family not found in X11 font database");
+    }
+    UNPROTECT(4);
+    return result;
+}
+
 static double newX11_StrWidth(char *str,
 			      R_GE_gcontext *gc,
 			      NewDevDesc *dd)
@@ -1100,7 +1168,8 @@ static double newX11_StrWidth(char *str,
     newX11Desc *xd = (newX11Desc *) dd->deviceSpecific;
 
     int size = gc->cex * gc->ps + 0.5;
-    SetFont(gc->fontface, size, dd);
+    SetFont(translateFontFamily(gc->fontfamily, xd),
+	    gc->fontface, size, dd);
     return (double)XTextWidth(xd->font, str, strlen(str));
 }
 
@@ -1117,7 +1186,8 @@ static void newX11_MetricInfo(int c,
     int size = gc->cex * gc->ps + 0.5;
     newX11Desc *xd = (newX11Desc *) dd->deviceSpecific;
 
-    SetFont(gc->fontface, size, dd);
+    SetFont(translateFontFamily(gc->fontfamily, xd),
+	    gc->fontface, size, dd);
     first = xd->font->min_char_or_byte2;
     last = xd->font->max_char_or_byte2;
 
@@ -1540,7 +1610,8 @@ static void newX11_Text(double x, double y,
     newX11Desc *xd = (newX11Desc *) dd->deviceSpecific;
 
     size = gc->cex * gc->ps + 0.5;
-    SetFont(gc->fontface, size, dd);
+    SetFont(translateFontFamily(gc->fontfamily, xd),
+	    gc->fontface, size, dd);
     if (R_OPAQUE(gc->col)) {
 	SetColor(gc->col, dd);
 	len = strlen(str);
@@ -1644,9 +1715,13 @@ Rboolean newX11DeviceDriver(DevDesc *dd,
      * This sort of initialisation occurs in R base graphics now.
      */
 
-    if(strlen(fn = CHAR(STRING_ELT(sfonts, 0))) > 499)
+    if(strlen(fn = CHAR(STRING_ELT(sfonts, 0))) > 499) {
+	strcpy(xd->basefontfamily, fontname);
 	strcpy(xd->fontfamily, fontname);
-    else strcpy(xd->fontfamily,fn);
+    } else {
+	strcpy(xd->basefontfamily,fn);
+	strcpy(xd->fontfamily,fn);
+    }
     if(strlen(fn = CHAR(STRING_ELT(sfonts, 1))) > 499)
 	strcpy(xd->symbolfamily, symbolname);
     else strcpy(xd->symbolfamily,fn);
@@ -1748,7 +1823,7 @@ Rf_setNewX11DeviceData(NewDevDesc *dd, double gamma_fac, newX11Desc *xd)
     dd->startcol = xd->col;
     dd->startfill = xd->fill;
     dd->startlty = LTY_SOLID;
-    dd->startfont = 1;
+    dd->startfont = xd->basefontface;
     dd->startgamma = gamma_fac;
 
     /* initialise x11 device description */
@@ -1876,9 +1951,9 @@ typedef Rboolean (*X11DeviceDriverRoutine)(DevDesc*, char*,
 					   double, double, double, double,
 					   X_COLORTYPE, int, int);
 
-/* Return a non-relocatable copy of a string */
-
 static SEXP gcall;
+
+/* Return a non-relocatable copy of a string */
 
 static char *SaveString(SEXP sxp, int offset)
 {
