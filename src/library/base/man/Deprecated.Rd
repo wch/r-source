@@ -3,6 +3,7 @@
 \title{Deprecated Functions}
 \alias{Deprecated}
 \alias{.Deprecated}
+\alias{tkfilefind}
 \alias{print.coefmat}
 \alias{codes}
 \alias{codes.factor}
@@ -37,6 +38,12 @@ anovalist.lm(object, ..., test = NULL)
   \code{.Deprecated("<new name>")} is called from deprecated
   functions. The original help page for these functions is often
   available at \code{help("oldName-deprecated")} (note the quotes).
+
+  \code{tkfilefind} is a demo in package \code{tcltk} displaying a
+  widget for selecting files but the same functionality is available in
+  a better form in the \code{tkgetOpenFile} and \code{tkgetSaveFile}
+  functions. The demo is reported not even to work with recent versions
+  of Tcl and Tk libraries.
 
   \code{print.coefmat} is an older name for \code{\link{printCoefmat}}
   with a different default for \code{na.print}.
