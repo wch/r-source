@@ -32,33 +32,35 @@ detach <- function(name, pos=2)
     .Internal(detach(pos))
 }
 
-objects <-
-    function (name, pos = -1, envir=pos.to.env(pos), all.names = FALSE, pattern)
+ls <- objects <-
+    function (name, pos = -1, envir = as.environment(pos), all.names = FALSE,
+              pattern)
 {
     if (!missing(name)) {
-	if(!is.numeric(name) || name != (pos <- as.integer(name))) {
-	    name <- substitute(name)
-	    if (!is.character(name))
-		name <- deparse(name)
-	    pos <- match(name, search())
-	}
-	envir <- pos.to.env(pos)
+        nameValue <- try(name)
+        if(identical(class(nameValue), "try-error")) {
+            name <- substitute(name)
+            if (!is.character(name))
+                name <- deparse(name)
+            pos <- name
+        }
+        else
+            pos <- nameValue
     }
     all.names <- .Internal(ls(envir, all.names))
-    if(!missing(pattern)) {
-	if((ll <- length(grep("\\[", pattern))) > 0
-	   && ll != (lr <- length(grep("\\]", pattern)))) {
-	    ## fix forgotten "\\" for simple cases:
-	    if(pattern == "[") {
-		pattern <- "\\["
-		warning("replaced regular expression pattern `[' by `\\\\['")
-	    } else if(length(grep("[^\\\\]\\[<-",pattern)>0)) {
-		pattern <- sub("\\[<-","\\\\\\[<-",pattern)
-		warning("replaced `[<-' by `\\\\[<-' in regular expression pattern")
-	    }
-	}
-	grep(pattern, all.names, value = TRUE)
-    } else all.names
+    if (!missing(pattern)) {
+        if ((ll <- length(grep("\\[", pattern))) > 0 && ll !=
+            (lr <- length(grep("\\]", pattern)))) {
+            if (pattern == "[") {
+                pattern <- "\\["
+                warning("replaced regular expression pattern `[' by `\\\\['")
+            }
+            else if (length(grep("[^\\\\]\\[<-", pattern) > 0)) {
+                pattern <- sub("\\[<-", "\\\\\\[<-", pattern)
+                warning("replaced `[<-' by `\\\\[<-' in regular expression pattern")
+            }
+        }
+        grep(pattern, all.names, value = TRUE)
+    }
+    else all.names
 }
-
-ls <- .Alias(objects)
