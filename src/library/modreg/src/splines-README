@@ -2,7 +2,7 @@ smooth.spline()  [R]
  |
  \--> qsbart()                          ./qsbart.f
       |
-      \--> sbart()                      ./sbart.f
+      \--> sbart()                      ./sbart.c
            |--> sgram()                 ./sgram.f  [was ratfor !]
            |    |--> interv()           ./bvalue.f [was ratfor !]
            |    \--> bsplvd()           ./bsplvd.f [was ratfor !]
