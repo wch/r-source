@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2004
-@set FAQ-VERSION 1.9-31 @value{FAQ-YEAR}-07-09
+@set FAQ-VERSION 1.9-35 @value{FAQ-YEAR}-07-21
 @set REL-VERSION 1.9.1
 @set REL-YEAR 2004
 @set FAQ-ISBN 3-900051-01-1
@@ -288,34 +288,37 @@ introduced in r-devel.
 Sources, binaries and documentation for R can be obtained via @CRAN{},
 the ``Comprehensive R Archive Network'' (see @ref{What is CRAN?}).
 
-Sources are also available via anonymous rsync.  Use
+Sources are also available via @uref{https://svn.r-project.org/R/}, the
+R Subversion repository, but currently not via anonymous rsync (or CVS).
 
-@example
-rsync -rptC --delete rsync.R-project.org::@var{module} R
-@end example
+@c Sources are also available via anonymous rsync.  Use
 
-@noindent
-to create a copy of the source tree specified by @var{module} in the
-subdirectory @file{R} of the current directory, where @var{module}
-specifies one of the three existing flavors of the R sources, and can be
-one of @samp{r-release} (current released version), @samp{r-patched}
-(patched released version), and @samp{r-devel} (development version).
-The rsync trees are created directly from the master CVS archive and are
-updated hourly.  The @option{-C} and in the @command{rsync} command
-is to cause it to skip the CVS directories.  Further information on
-@command{rsync} is available at @uref{http://rsync.samba.org/rsync/}.
+@c @example
+@c rsync -rptC --delete rsync.R-project.org::@var{module} R
+@c @end example
 
-@c <NOTE>
-@c Keep in sync with R-admin.
-Note that the sources available via rsync do not include the recommended
-packages, whereas these are included in the tarballs of released
-versions.  To install the appropriate sources for the recommended
-packages, run @command{./tools/rsync-recommended} from the top-level of
-the R sources that you pulled by rsync.
-@c </NOTE>
+@c @noindent
+@c to create a copy of the source tree specified by @var{module} in the
+@c subdirectory @file{R} of the current directory, where @var{module}
+@c specifies one of the three existing flavors of the R sources, and can be
+@c one of @samp{r-release} (current released version), @samp{r-patched}
+@c (patched released version), and @samp{r-devel} (development version).
+@c The rsync trees are created directly from the master CVS archive and are
+@c updated hourly.  The @option{-C} and in the @command{rsync} command
+@c is to cause it to skip the CVS directories.  Further information on
+@c @command{rsync} is available at @uref{http://rsync.samba.org/rsync/}.
 
-The sources of the development version are also available via anonymous
-CVS.  See @uref{http://anoncvs.R-project.org} for more information.
+@c @c <NOTE>
+@c @c Keep in sync with R-admin.
+@c Note that the sources available via rsync do not include the recommended
+@c packages, whereas these are included in the tarballs of released
+@c versions.  To install the appropriate sources for the recommended
+@c packages, run @command{./tools/rsync-recommended} from the top-level of
+@c the R sources that you pulled by rsync.
+@c @c </NOTE>
+
+@c The sources of the development version are also available via anonymous
+@c CVS.  See @uref{http://anoncvs.R-project.org} for more information.
 
 @node How can R be installed?, Are there Unix binaries for R?, How can R be obtained?, R Basics
 @section How can R be installed?
@@ -1706,6 +1709,9 @@ ordering of all the available alternatives.
 Data sets from the book ``Introduction to Linear Regression Analysis''
 by D. C. Montgomery, E. A. Peck, and C. G. Vining, 2001, John Wiley and
 Sons.
+@item Malmig
+An implementation of Malecot migration model together with a number of
+related functions.
 @item Matrix
 A Matrix package.
 @item NADA
@@ -1793,7 +1799,7 @@ G. A. Milliken, W. W. Stroup and R. D. Wolfinger, 1996, SAS Institute.
 A SINful approach to selection of Gaussian Graphical Markov Models.
 @item SenSrivastava
 Collection of datasets from ``Regression Analysis, Theory, Methods and
-Applications'' by A. Sen and M. Srivastava, 1990, Springer-Verlag.
+Applications'' by A. Sen and M. Srivastava, 1990, Springer.
 @item SoPhy
 Soil Physics Tools: simulation of water flux and solute transport in
 soil.
@@ -1809,6 +1815,8 @@ Kruskal-Wallis, Kendall's Tau, Friedman's chi squared, Spearman's rho,
 maximum F ratio, the Pearson product moment correlation coefficiant,
 Johnson distributions, normal scores and generalized hypergeometric
 distributions).
+@item UNF
+Tools for creating universal numeric fingerprints for data.
 @item VLMC
 Functions, classes & methods for estimation, prediction, and simulation
 (bootstrap) of VLMC (Variable Length Markov Chain) models.
@@ -1818,6 +1826,9 @@ Methods for calculation of Value at Risk (VaR).
 Facilities for reading @XML{} documents and DTDs.
 @item abind
 Combine multi-dimensional arrays.
+@item accuracy
+A suite of tools designed to test and improve the accuracy of
+statistical computation.
 @item acepack
 ACE (Alternating Conditional Expectations) and AVAS (Additivity and
 VAriance Stabilization for regression) methods for selecting regression
@@ -1990,6 +2001,9 @@ Miscellaneous functions used at the Department of Statistics at TU Wien
 Component Analysis, Latent Class Analysis, support vector machines, and
 fuzzy clustering, shortest path computation, bagged clustering, and some
 more.
+@item eba
+Fitting and testing probabilistic choice models, especially the BTL,
+elimination-by-aspects (EBA), and preference tree (Pretree) models.
 @item effects
 Graphical and tabular effect displays, e.g., of interactions, for linear
 and generalised linear models.
@@ -2215,7 +2229,7 @@ single least squares fit.
 @item lasso2
 Routines and documentation for solving regression problems while
 imposing an L1 constraint on the estimates, based on the algorithm of
-Osborne et al.@: (1998)
+Osborne et al.@: (1998).
 @item lattice
 Lattice graphics, an implementation of Trellis Graphics functions.
 @emph{Recommended}.
@@ -2512,6 +2526,11 @@ Fitting Gaussian linear models where the covariance structure is a
 linear combination of known matrices by maximising the residual log
 likelihood.  Can be used for multivariate models and random effects
 models.
+@item reldist
+Functions for the comparison of distributions, including nonparametric
+estimation of the relative distribution PDF and CDF and numerical
+summaries as described in ``Relative Distribution Methods in the Social
+Sciences'' by Mark S. Handcock and Martina Morris, 1999, Springer.
 @item relimp
 Functions to facilitate inference on the relative importance of
 predictors in a linear or generalized linear model.
@@ -2601,7 +2620,7 @@ for the skewed @math{t} distribution of Fernandez and Steel.
 @item sm
 Software linked to the book ``Applied Smoothing Techniques for Data
 Analysis:  The Kernel Approach with @SPLUS{} Illustrations'' by
-A. W. Bowman and A. Azzalini (1997), Oxford University Press.
+A. W. Bowman and A. Azzalini, 1997, Oxford University Press.
 @item sma
 Functions for exploratory (statistical) microarray analysis.
 @item smoothSurv
@@ -2742,6 +2761,9 @@ Various help functions for vegetation scientists and community
 ecologists.
 @item verify
 Construction of test suites using verify objects.
+@item vioplot
+Violin plots, which are a combination of a box plot and a kernel density
+plot.
 @item waveslim
 Basic wavelet routines for time series analysis.
 @item wavethresh
@@ -3019,8 +3041,8 @@ Creates Universally Unique ID values (UUIDs) in R.
 @item SAGElyzer
 Locates genes based on SAGE tags.
 @item SNAData
-Data from the book ``Social Network Analysis'' by Wasserman & Faust
-(1999).
+Data from the book ``Social Network Analysis'' by Wasserman & Faust,
+1999.
 @item aCGH
 Classes and functions for Array Comparative Genomic Hybridization data.
 @item affy

@@ -28,7 +28,7 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#dir">(dir)</a>
 <h2 class="unnumbered">R FAQ</h2>
 
 <h2>Frequently Asked Questions on R</h2>
-<h2>Version 1.9-31 2004-07-09</h2>
+<h2>Version 1.9-35 2004-07-21</h2>
 <h2>ISBN 3-900051-01-1</h2>
 <address>Kurt Hornik</address>
 <p><p><hr><p>
@@ -312,29 +312,8 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#R%20Basics">R Basics</a>
 <p>Sources, binaries and documentation for R can be obtained via <small>CRAN</small>,
 the "Comprehensive R Archive Network" (see <a href="#What%20is%20CRAN%3f">What is CRAN?</a>).
 
-   <p>Sources are also available via anonymous rsync.  Use
-
-<pre class="example">     rsync -rptC --delete rsync.R-project.org::<var>module</var> R
-     </pre>
-
-<p>to create a copy of the source tree specified by <var>module</var> in the
-subdirectory <code>R</code> of the current directory, where <var>module</var>
-specifies one of the three existing flavors of the R sources, and can be
-one of <code>r-release</code> (current released version), <code>r-patched</code>
-(patched released version), and <code>r-devel</code> (development version). 
-The rsync trees are created directly from the master CVS archive and are
-updated hourly.  The <code>-C</code> and in the <code>rsync</code> command
-is to cause it to skip the CVS directories.  Further information on
-<code>rsync</code> is available at <a href="http://rsync.samba.org/rsync/">http://rsync.samba.org/rsync/</a>.
-
-   <p>Note that the sources available via rsync do not include the recommended
-packages, whereas these are included in the tarballs of released
-versions.  To install the appropriate sources for the recommended
-packages, run <code>./tools/rsync-recommended</code> from the top-level of
-the R sources that you pulled by rsync.
-
-   <p>The sources of the development version are also available via anonymous
-CVS.  See <a href="http://anoncvs.R-project.org">http://anoncvs.R-project.org</a> for more information.
+   <p>Sources are also available via <a href="https://svn.r-project.org/R/">https://svn.r-project.org/R/</a>, the
+R Subversion repository, but currently not via anonymous rsync (or CVS).
 
 <div class="node">
 <p><hr>
@@ -1738,6 +1717,9 @@ ordering of all the available alternatives.
      <dd>Data sets from the book "Introduction to Linear Regression Analysis"
 by D. C. Montgomery, E. A. Peck, and C. G. Vining, 2001, John Wiley and
 Sons. 
+<br><dt><strong>Malmig</strong>
+     <dd>An implementation of Malecot migration model together with a number of
+related functions. 
 <br><dt><strong>Matrix</strong>
      <dd>A Matrix package. 
 <br><dt><strong>NADA</strong>
@@ -1819,7 +1801,7 @@ G. A. Milliken, W. W. Stroup and R. D. Wolfinger, 1996, SAS Institute.
      <dd>A SINful approach to selection of Gaussian Graphical Markov Models. 
 <br><dt><strong>SenSrivastava</strong>
      <dd>Collection of datasets from "Regression Analysis, Theory, Methods and
-Applications" by A. Sen and M. Srivastava, 1990, Springer-Verlag. 
+Applications" by A. Sen and M. Srivastava, 1990, Springer. 
 <br><dt><strong>SoPhy</strong>
      <dd>Soil Physics Tools: simulation of water flux and solute transport in
 soil. 
@@ -1835,6 +1817,8 @@ Kruskal-Wallis, Kendall's Tau, Friedman's chi squared, Spearman's rho,
 maximum F ratio, the Pearson product moment correlation coefficiant,
 Johnson distributions, normal scores and generalized hypergeometric
 distributions). 
+<br><dt><strong>UNF</strong>
+     <dd>Tools for creating universal numeric fingerprints for data. 
 <br><dt><strong>VLMC</strong>
      <dd>Functions, classes &amp; methods for estimation, prediction, and simulation
 (bootstrap) of VLMC (Variable Length Markov Chain) models. 
@@ -1844,6 +1828,9 @@ distributions).
      <dd>Facilities for reading <small>XML</small> documents and DTDs. 
 <br><dt><strong>abind</strong>
      <dd>Combine multi-dimensional arrays. 
+<br><dt><strong>accuracy</strong>
+     <dd>A suite of tools designed to test and improve the accuracy of
+statistical computation. 
 <br><dt><strong>acepack</strong>
      <dd>ACE (Alternating Conditional Expectations) and AVAS (Additivity and
 VAriance Stabilization for regression) methods for selecting regression
@@ -2016,6 +2003,9 @@ the same random numbers in S and R).
 Component Analysis, Latent Class Analysis, support vector machines, and
 fuzzy clustering, shortest path computation, bagged clustering, and some
 more. 
+<br><dt><strong>eba</strong>
+     <dd>Fitting and testing probabilistic choice models, especially the BTL,
+elimination-by-aspects (EBA), and preference tree (Pretree) models. 
 <br><dt><strong>effects</strong>
      <dd>Graphical and tabular effect displays, e.g., of interactions, for linear
 and generalised linear models. 
@@ -2239,7 +2229,7 @@ single least squares fit.
 <br><dt><strong>lasso2</strong>
      <dd>Routines and documentation for solving regression problems while
 imposing an L1 constraint on the estimates, based on the algorithm of
-Osborne et al. (1998)
+Osborne et al. (1998). 
 <br><dt><strong>lattice</strong>
      <dd>Lattice graphics, an implementation of Trellis Graphics functions. 
 <em>Recommended</em>. 
@@ -2515,6 +2505,11 @@ encapsulates matrices and data frames.
 linear combination of known matrices by maximising the residual log
 likelihood.  Can be used for multivariate models and random effects
 models. 
+<br><dt><strong>reldist</strong>
+     <dd>Functions for the comparison of distributions, including nonparametric
+estimation of the relative distribution PDF and CDF and numerical
+summaries as described in "Relative Distribution Methods in the Social
+Sciences" by Mark S. Handcock and Martina Morris, 1999, Springer. 
 <br><dt><strong>relimp</strong>
      <dd>Functions to facilitate inference on the relative importance of
 predictors in a linear or generalized linear model. 
@@ -2598,7 +2593,7 @@ for the skewed t distribution of Fernandez and Steel.
 <br><dt><strong>sm</strong>
      <dd>Software linked to the book "Applied Smoothing Techniques for Data
 Analysis:  The Kernel Approach with <small>S-PLUS</small> Illustrations" by
-A. W. Bowman and A. Azzalini (1997), Oxford University Press. 
+A. W. Bowman and A. Azzalini, 1997, Oxford University Press. 
 <br><dt><strong>sma</strong>
      <dd>Functions for exploratory (statistical) microarray analysis. 
 <br><dt><strong>smoothSurv</strong>
@@ -2708,6 +2703,9 @@ Data" by Michael Friendly.
 ecologists. 
 <br><dt><strong>verify</strong>
      <dd>Construction of test suites using verify objects. 
+<br><dt><strong>vioplot</strong>
+     <dd>Violin plots, which are a combination of a box plot and a kernel density
+plot. 
 <br><dt><strong>waveslim</strong>
      <dd>Basic wavelet routines for time series analysis. 
 <br><dt><strong>wavethresh</strong>
@@ -2943,8 +2941,8 @@ data into Bioconductor data package.
 <br><dt><strong>SAGElyzer</strong>
      <dd>Locates genes based on SAGE tags. 
 <br><dt><strong>SNAData</strong>
-     <dd>Data from the book "Social Network Analysis" by Wasserman &amp; Faust
-(1999). 
+     <dd>Data from the book "Social Network Analysis" by Wasserman &amp; Faust,
+1999. 
 <br><dt><strong>aCGH</strong>
      <dd>Classes and functions for Array Comparative Genomic Hybridization data. 
 <br><dt><strong>affy</strong>

@@ -25,7 +25,7 @@ getAnywhere(x)
 \value{
   An object of class \code{"getAnywhere"}.  This is a list with components
   \item{name}{the name searched for.}
-  \item{funs}{a list of objects found}
+  \item{objs}{a list of objects found}
   \item{where}{a character vector explaining where the object(s) were found}
   \item{visible}{logical: is the object visible}
   \item{dups}{logical: is the object identical to one earlier in the

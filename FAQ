@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.9-31 2004-07-09
+Version 1.9-35 2004-07-21
 ISBN 3-900051-01-1
 Kurt Hornik
 
@@ -261,27 +261,8 @@ in r-devel.
 Sources, binaries and documentation for R can be obtained via CRAN, the
 "Comprehensive R Archive Network" (see *Note What is CRAN?::).
 
-   Sources are also available via anonymous rsync.  Use
-
-     rsync -rptC --delete rsync.R-project.org::MODULE R
-
-to create a copy of the source tree specified by MODULE in the subdirectory
-`R' of the current directory, where MODULE specifies one of the three
-existing flavors of the R sources, and can be one of `r-release' (current
-released version), `r-patched' (patched released version), and `r-devel'
-(development version).  The rsync trees are created directly from the
-master CVS archive and are updated hourly.  The `-C' and in the `rsync'
-command is to cause it to skip the CVS directories.  Further information on
-`rsync' is available at `http://rsync.samba.org/rsync/'.
-
-   Note that the sources available via rsync do not include the recommended
-packages, whereas these are included in the tarballs of released versions.
-To install the appropriate sources for the recommended packages, run
-`./tools/rsync-recommended' from the top-level of the R sources that you
-pulled by rsync.
-
-   The sources of the development version are also available via anonymous
-CVS.  See `http://anoncvs.R-project.org' for more information.
+   Sources are also available via `https://svn.r-project.org/R/', the R
+Subversion repository, but currently not via anonymous rsync (or CVS).
 
 2.5 How can R be installed?
 ===========================
@@ -1408,6 +1389,10 @@ distributions of R.)
      by D. C. Montgomery, E. A. Peck, and C. G. Vining, 2001, John Wiley and
      Sons.
 
+*Malmig*
+     An implementation of Malecot migration model together with a number of
+     related functions.
+
 *Matrix*
      A Matrix package.
 
@@ -1516,7 +1501,7 @@ distributions of R.)
 
 *SenSrivastava*
      Collection of datasets from "Regression Analysis, Theory, Methods and
-     Applications" by A. Sen and M. Srivastava, 1990, Springer-Verlag.
+     Applications" by A. Sen and M. Srivastava, 1990, Springer.
 
 *SoPhy*
      Soil Physics Tools: simulation of water flux and solute transport in
@@ -1538,6 +1523,9 @@ distributions of R.)
      Johnson distributions, normal scores and generalized hypergeometric
      distributions).
 
+*UNF*
+     Tools for creating universal numeric fingerprints for data.
+
 *VLMC*
      Functions, classes & methods for estimation, prediction, and simulation
      (bootstrap) of VLMC (Variable Length Markov Chain) models.
@@ -1550,6 +1538,10 @@ distributions of R.)
 
 *abind*
      Combine multi-dimensional arrays.
+
+*accuracy*
+     A suite of tools designed to test and improve the accuracy of
+     statistical computation.
 
 *acepack*
      ACE (Alternating Conditional Expectations) and AVAS (Additivity and
@@ -1780,6 +1772,10 @@ distributions of R.)
      Component Analysis, Latent Class Analysis, support vector machines, and
      fuzzy clustering, shortest path computation, bagged clustering, and
      some more.
+
+*eba*
+     Fitting and testing probabilistic choice models, especially the BTL,
+     elimination-by-aspects (EBA), and preference tree (Pretree) models.
 
 *effects*
      Graphical and tabular effect displays, e.g., of interactions, for
@@ -2078,7 +2074,7 @@ distributions of R.)
 *lasso2*
      Routines and documentation for solving regression problems while
      imposing an L1 constraint on the estimates, based on the algorithm of
-     Osborne et al. (1998)
+     Osborne et al. (1998).
 
 *lattice*
      Lattice graphics, an implementation of Trellis Graphics functions.
@@ -2452,6 +2448,12 @@ distributions of R.)
      likelihood.  Can be used for multivariate models and random effects
      models.
 
+*reldist*
+     Functions for the comparison of distributions, including nonparametric
+     estimation of the relative distribution PDF and CDF and numerical
+     summaries as described in "Relative Distribution Methods in the Social
+     Sciences" by Mark S. Handcock and Martina Morris, 1999, Springer.
+
 *relimp*
      Functions to facilitate inference on the relative importance of
      predictors in a linear or generalized linear model.
@@ -2566,7 +2568,7 @@ distributions of R.)
 *sm*
      Software linked to the book "Applied Smoothing Techniques for Data
      Analysis:  The Kernel Approach with S-PLUS Illustrations" by A. W.
-     Bowman and A. Azzalini (1997), Oxford University Press.
+     Bowman and A. Azzalini, 1997, Oxford University Press.
 
 *sma*
      Functions for exploratory (statistical) microarray analysis.
@@ -2713,6 +2715,10 @@ distributions of R.)
 
 *verify*
      Construction of test suites using verify objects.
+
+*vioplot*
+     Violin plots, which are a combination of a box plot and a kernel
+     density plot.
 
 *waveslim*
      Basic wavelet routines for time series analysis.
@@ -2978,8 +2984,8 @@ of Bioconductor, with more packages under development.
      Locates genes based on SAGE tags.
 
 *SNAData*
-     Data from the book "Social Network Analysis" by Wasserman & Faust
-     (1999).
+     Data from the book "Social Network Analysis" by Wasserman & Faust,
+     1999.
 
 *aCGH*
      Classes and functions for Array Comparative Genomic Hybridization data.
