@@ -93,6 +93,14 @@ and so on, as described further above.  This has the advantage of always
 keeping your source tree `clean'.
 
 
+USING MAKE
+
+To compile R, you currently most likely need GNU make.  (To be more
+precise, you need a version of make which accepts shell wildcards in
+dependencies.)  On Solaris 2.6 in particular, you need a version of
+GNU make different from 3.77 (the current one); 3.76.1 works fine.
+
+
 USING FORTRAN
 
 To compile R, you need a FORTRAN compiler or f2c, the FORTRAN-to-C
