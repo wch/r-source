@@ -546,8 +546,8 @@ allGenerics <- getGenerics
     these <- character()
     for(i in where) these <- c(these, objects(i, all=TRUE))
     these <- unique(these)
-    matched <- substr(these, 1, 6) == ".__M__"
-    gsub(".__M__(.*):([^:]+)", "\\1", these[matched])
+    these <- these[substr(these, 1, 6) == ".__M__"]
+    gsub(".__M__(.*):([^:]+)", "\\1", these)
 }
 
 is.primitive <-
