@@ -1406,25 +1406,24 @@ static void newX11_MetricInfo(int c,
     }
 
     if (xd->fontface != SYMBOL_FONTFACE) {
-	XFontSetExtents *extent = XExtentsOfFontSet(xd->font->fontset);
 	char buf[10];
-	wchar_t wc[2] = L" ";
+	wchar_t wc[2] = L" ";XRectangle ink, log;
 
 	wc[0] = (unsigned int) c;
 	wcstombs(buf, wc, 10);
-#ifdef HAVE_XUTF8TEXTESCAPEMENT
+#ifdef HAVE_XUTF8TEXTEXTENTS
 	if(utf8locale)
-	    *width = Xutf8TextEscapement(xd->font->fontset, buf, strlen(buf));
+	    Xutf8TextExtents(xd->font->fontset, buf, strlen(buf), &ink, &log);
 	else
 #endif
-	    *width = XmbTextEscapement(xd->font->fontset, buf, strlen(buf));
-
-	/* it seeems we cannot get the per-char ascent and descent
-	   even from X*TextExtents, so follow Nakama's fudge */
-	*ascent = extent->max_logical_extent.height * 0.8;
-	*descent = extent->max_logical_extent.height * 0.2;
+	    XmbTextExtents(xd->font->fontset, buf, strlen(buf), &ink, &log);
+	/* Rprintf("%d %d %d %d\n", ink.x, ink.y, ink.width, ink.height);
+	   Rprintf("%d %d %d %d\n", log.x, log.y, log.width, log.height); */
+	*ascent = -ink.y;
+	*descent = ink.y + ink.height;
+	*width = log.width;
 	/* Rprintf("%d %lc w=%f a=%f d=%f\n", c, wc[0],
-	           *width, *ascent, *descent); */
+	            *width, *ascent, *descent);*/
     } else { /* symbol font */
 	if(first <= c && c <= last) {
 	    *ascent = f->per_char[c-first].ascent;
