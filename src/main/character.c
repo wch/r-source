@@ -1175,6 +1175,7 @@ do_chartr(SEXP call, SEXP op, SEXP args, SEXP env)
     /* Free the memory occupied by the tr_spec lists. */
     tr_free_spec(trs_old);
     tr_free_spec(trs_new);
+    free(trs_old_ptr); free(trs_new_ptr);
 
     n = LENGTH(x);
     PROTECT(y = allocVector(STRSXP, n));
