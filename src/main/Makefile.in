@@ -65,9 +65,10 @@ DISTFILES = Makefile.in Makefile.win \
 ZLIB_CPPFLAGS = @BUILD_ZLIB_TRUE@ -I$(top_srcdir)/src/extra/zlib
 BZLIB_CPPFLAGS = @BUILD_BZLIB_TRUE@ -I$(top_srcdir)/src/extra/bzip2
 PCRE_CPPFLAGS = @BUILD_PCRE_TRUE@ -I$(top_srcdir)/src/extra/pcre
+XDR_CPPFLAGS = @BUILD_XDR_TRUE@ -I$(top_srcdir)/src/extra/xdr
 
 ALL_CPPFLAGS = $(ZLIB_CPPFLAGS) $(BZLIB_CPPFLAGS) $(PCRE_CPPFLAGS) \
-  $(R_XTRA_CPPFLAGS) $(CPPFLAGS) $(DEFS)
+  $(XDR_CPPFLAGS) $(R_XTRA_CPPFLAGS) $(CPPFLAGS) $(DEFS)
 
 ## use an explicit library: there might be an unsatisfactory -lz around
 R_ZLIBS = @BUILD_ZLIB_TRUE@ ../extra/zlib/libz.a
