@@ -44,6 +44,8 @@ NEW FEATURES
 
     o	New option by = "DSTday" for seq.POSIXt().
 
+    o	hist now has a method for date-time objects.
+
     o	summary.princomp() now has a separate print() method, and
 	`digits' is now an argument to the print method and not to
 	summary.princomp itself.
