@@ -81,7 +81,7 @@ deparse <-
 
 do.call <- function(what,args).Internal(do.call(what,args))
 drop <- function(x).Internal(drop(x))
-format.info <- function(x).Internal(format.info(x))
+format.info <- function(x, nsmall=0).Internal(format.info(x, nsmall))
 gc <- function(verbose = getOption("verbose"))
 {
     res <-.Internal(gc(verbose))/c(1, 1, 10, 10, 1, 1, rep(10,4))
