@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.7-42, 2003-09-16
+Version 1.7-43, 2003-09-18
 ISBN 3-901167-51-X
 Kurt Hornik
 
@@ -2105,6 +2105,9 @@ distributions of R.)
 
 *scatterplot3d*
      Plots a three dimensional (3D) point cloud perspectively.
+
+*seacarb*
+     Calculates parameters of the seawater carbonate system.
 
 *seao*
      Simple Evolutionary Algorithm Optimization.

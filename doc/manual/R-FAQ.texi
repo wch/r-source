@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2003
-@set FAQ-VERSION 1.7-42, @value{FAQ-YEAR}-09-16
+@set FAQ-VERSION 1.7-43, @value{FAQ-YEAR}-09-18
 @set REL-VERSION 1.7.1
 @set FAQ-ISBN 3-901167-51-X
 @documentlanguage en
@@ -2225,6 +2225,8 @@ units included in the sample.
 Simple Component Analysis.
 @item scatterplot3d
 Plots a three dimensional (3D) point cloud perspectively.
+@item seacarb
+Calculates parameters of the seawater carbonate system.
 @item seao
 Simple Evolutionary Algorithm Optimization.
 @item seao.gui
