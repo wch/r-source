@@ -261,33 +261,33 @@ c
       end
 
 
-*
-*  dnrm2() returns the euclidean norm of a vector via the function
-*  name, so that
-*
-*     dnrm2 := sqrt( x'*x )
-*
-*
-*  -- This version written on 25-October-1982.
-*     Modified on 14-October-1993 to inline the call to DLASSQ.
-*     Sven Hammarling, Nag Ltd.
-*
-*
+c
+c  dnrm2() returns the euclidean norm of a vector via the function
+c  name, so that
+c
+c     dnrm2 := sqrt( x'*x )
+c
+c
+c  -- This version written on 25-October-1982.
+c     Modified on 14-October-1993 to inline the call to DLASSQ.
+c     Sven Hammarling, Nag Ltd.
+c
+c
       double precision function dnrm2 ( n, x, incx )
-*     .. scalar arguments ..
+c     .. scalar arguments ..
       integer                           incx, n
-*     .. array arguments ..
+c     .. array arguments ..
       double precision                  x( * )
-*     .. parameters ..
+c     .. parameters ..
       double precision      one         , zero
       parameter           ( one = 1.0d+0, zero = 0.0d+0 )
-*     .. local scalars ..
+c     .. local scalars ..
       integer               ix
       double precision      absxi, norm, scale, ssq
-*     .. intrinsic functions ..
+c     .. intrinsic functions ..
       intrinsic             abs, sqrt
-*     ..
-*     .. executable statements ..
+c     ..
+c     .. executable statements ..
       if( n.lt.1 .or. incx.lt.1 )then
          norm  = zero
       else if( n.eq.1 )then
@@ -295,10 +295,10 @@ c
       else
          scale = zero
          ssq   = one
-*        the following loop is equivalent to this call to the lapack
-*        auxiliary routine:
-*        call dlassq( n, x, incx, scale, ssq )
-*
+c        the following loop is equivalent to this call to the lapack
+c        auxiliary routine:
+c        call dlassq( n, x, incx, scale, ssq )
+c
          do 10, ix = 1, 1 + ( n - 1 )*incx, incx
             if( x( ix ).ne.zero )then
                absxi = abs( x( ix ) )
@@ -312,11 +312,11 @@ c
    10    continue
          norm  = scale * sqrt( ssq )
       end if
-*
+c
       dnrm2 = norm
       return
       end
-*     end of dnrm2.
+c     end of dnrm2.
 
 
 c
@@ -531,156 +531,156 @@ c
       end
 
       subroutine dgemm ( transa, transb, m, n, k, alpha, a, lda, b, ldb,
-     $                   beta, c, ldc )
-*     .. scalar arguments ..
+     1                   beta, c, ldc )
+c     .. scalar arguments ..
       character*1        transa, transb
       integer            m, n, k, lda, ldb, ldc
       double precision   alpha, beta
-*     .. array arguments ..
+c     .. array arguments ..
       double precision   a( lda, * ), b( ldb, * ), c( ldc, * )
-*     ..
-*
-*  purpose
-*  =======
-*
-*  dgemm  performs one of the matrix-matrix operations
-*
-*     c := alpha*op( a )*op( b ) + beta*c,
-*
-*  where  op( x ) is one of
-*
-*     op( x ) = x   or   op( x ) = x',
-*
-*  alpha and beta are scalars, and a, b and c are matrices, with op( a )
-*  an m by k matrix,  op( b )  a  k by n matrix and  c an m by n matrix.
-*
-*  parameters
-*  ==========
-*
-*  transa - character*1.
-*           on entry, transa specifies the form of op( a ) to be used in
-*           the matrix multiplication as follows:
-*
-*              transa = 'n' or 'n',  op( a ) = a.
-*
-*              transa = 't' or 't',  op( a ) = a'.
-*
-*              transa = 'c' or 'c',  op( a ) = a'.
-*
-*           unchanged on exit.
-*
-*  transb - character*1.
-*           on entry, transb specifies the form of op( b ) to be used in
-*           the matrix multiplication as follows:
-*
-*              transb = 'n' or 'n',  op( b ) = b.
-*
-*              transb = 't' or 't',  op( b ) = b'.
-*
-*              transb = 'c' or 'c',  op( b ) = b'.
-*
-*           unchanged on exit.
-*
-*  m      - integer.
-*           on entry,  m  specifies  the number  of rows  of the  matrix
-*           op( a )  and of the  matrix  c.  m  must  be at least  zero.
-*           unchanged on exit.
-*
-*  n      - integer.
-*           on entry,  n  specifies the number  of columns of the matrix
-*           op( b ) and the number of columns of the matrix c. n must be
-*           at least zero.
-*           unchanged on exit.
-*
-*  k      - integer.
-*           on entry,  k  specifies  the number of columns of the matrix
-*           op( a ) and the number of rows of the matrix op( b ). k must
-*           be at least  zero.
-*           unchanged on exit.
-*
-*  alpha  - double precision.
-*           on entry, alpha specifies the scalar alpha.
-*           unchanged on exit.
-*
-*  a      - double precision array of dimension ( lda, ka ), where ka is
-*           k  when  transa = 'n' or 'n',  and is  m  otherwise.
-*           before entry with  transa = 'n' or 'n',  the leading  m by k
-*           part of the array  a  must contain the matrix  a,  otherwise
-*           the leading  k by m  part of the array  a  must contain  the
-*           matrix a.
-*           unchanged on exit.
-*
-*  lda    - integer.
-*           on entry, lda specifies the first dimension of a as declared
-*           in the calling (sub) program. when  transa = 'n' or 'n' then
-*           lda must be at least  max( 1, m ), otherwise  lda must be at
-*           least  max( 1, k ).
-*           unchanged on exit.
-*
-*  b      - double precision array of dimension ( ldb, kb ), where kb is
-*           n  when  transb = 'n' or 'n',  and is  k  otherwise.
-*           before entry with  transb = 'n' or 'n',  the leading  k by n
-*           part of the array  b  must contain the matrix  b,  otherwise
-*           the leading  n by k  part of the array  b  must contain  the
-*           matrix b.
-*           unchanged on exit.
-*
-*  ldb    - integer.
-*           on entry, ldb specifies the first dimension of b as declared
-*           in the calling (sub) program. when  transb = 'n' or 'n' then
-*           ldb must be at least  max( 1, k ), otherwise  ldb must be at
-*           least  max( 1, n ).
-*           unchanged on exit.
-*
-*  beta   - double precision.
-*           on entry,  beta  specifies the scalar  beta.  when  beta  is
-*           supplied as zero then c need not be set on input.
-*           unchanged on exit.
-*
-*  c      - double precision array of dimension ( ldc, n ).
-*           before entry, the leading  m by n  part of the array  c must
-*           contain the matrix  c,  except when  beta  is zero, in which
-*           case c need not be set on entry.
-*           on exit, the array  c  is overwritten by the  m by n  matrix
-*           ( alpha*op( a )*op( b ) + beta*c ).
-*
-*  ldc    - integer.
-*           on entry, ldc specifies the first dimension of c as declared
-*           in  the  calling  (sub)  program.   ldc  must  be  at  least
-*           max( 1, m ).
-*           unchanged on exit.
-*
-*
-*  level 3 blas routine.
-*
-*  -- written on 8-february-1989.
-*     jack dongarra, argonne national laboratory.
-*     iain duff, aere harwell.
-*     jeremy du croz, numerical algorithms group ltd.
-*     sven hammarling, numerical algorithms group ltd.
-*
-*
-*     .. external functions ..
+c     ..
+c
+c  purpose
+c  =======
+c
+c  dgemm  performs one of the matrix-matrix operations
+c
+c     c := alpha*op( a )*op( b ) + beta*c,
+c
+c  where  op( x ) is one of
+c
+c     op( x ) = x   or   op( x ) = x',
+c
+c  alpha and beta are scalars, and a, b and c are matrices, with op( a )
+c  an m by k matrix,  op( b )  a  k by n matrix and  c an m by n matrix.
+c
+c  parameters
+c  ==========
+c
+c  transa - character*1.
+c           on entry, transa specifies the form of op( a ) to be used in
+c           the matrix multiplication as follows:
+c
+c              transa = 'n' or 'n',  op( a ) = a.
+c
+c              transa = 't' or 't',  op( a ) = a'.
+c
+c              transa = 'c' or 'c',  op( a ) = a'.
+c
+c           unchanged on exit.
+c
+c  transb - character*1.
+c           on entry, transb specifies the form of op( b ) to be used in
+c           the matrix multiplication as follows:
+c
+c              transb = 'n' or 'n',  op( b ) = b.
+c
+c              transb = 't' or 't',  op( b ) = b'.
+c
+c              transb = 'c' or 'c',  op( b ) = b'.
+c
+c           unchanged on exit.
+c
+c  m      - integer.
+c           on entry,  m  specifies  the number  of rows  of the  matrix
+c           op( a )  and of the  matrix  c.  m  must  be at least  zero.
+c           unchanged on exit.
+c
+c  n      - integer.
+c           on entry,  n  specifies the number  of columns of the matrix
+c           op( b ) and the number of columns of the matrix c. n must be
+c           at least zero.
+c           unchanged on exit.
+c
+c  k      - integer.
+c           on entry,  k  specifies  the number of columns of the matrix
+c           op( a ) and the number of rows of the matrix op( b ). k must
+c           be at least  zero.
+c           unchanged on exit.
+c
+c  alpha  - double precision.
+c           on entry, alpha specifies the scalar alpha.
+c           unchanged on exit.
+c
+c  a      - double precision array of dimension ( lda, ka ), where ka is
+c           k  when  transa = 'n' or 'n',  and is  m  otherwise.
+c           before entry with  transa = 'n' or 'n',  the leading  m by k
+c           part of the array  a  must contain the matrix  a,  otherwise
+c           the leading  k by m  part of the array  a  must contain  the
+c           matrix a.
+c           unchanged on exit.
+c
+c  lda    - integer.
+c           on entry, lda specifies the first dimension of a as declared
+c           in the calling (sub) program. when  transa = 'n' or 'n' then
+c           lda must be at least  max( 1, m ), otherwise  lda must be at
+c           least  max( 1, k ).
+c           unchanged on exit.
+c
+c  b      - double precision array of dimension ( ldb, kb ), where kb is
+c           n  when  transb = 'n' or 'n',  and is  k  otherwise.
+c           before entry with  transb = 'n' or 'n',  the leading  k by n
+c           part of the array  b  must contain the matrix  b,  otherwise
+c           the leading  n by k  part of the array  b  must contain  the
+c           matrix b.
+c           unchanged on exit.
+c
+c  ldb    - integer.
+c           on entry, ldb specifies the first dimension of b as declared
+c           in the calling (sub) program. when  transb = 'n' or 'n' then
+c           ldb must be at least  max( 1, k ), otherwise  ldb must be at
+c           least  max( 1, n ).
+c           unchanged on exit.
+c
+c  beta   - double precision.
+c           on entry,  beta  specifies the scalar  beta.  when  beta  is
+c           supplied as zero then c need not be set on input.
+c           unchanged on exit.
+c
+c  c      - double precision array of dimension ( ldc, n ).
+c           before entry, the leading  m by n  part of the array  c must
+c           contain the matrix  c,  except when  beta  is zero, in which
+c           case c need not be set on entry.
+c           on exit, the array  c  is overwritten by the  m by n  matrix
+c           ( alpha*op( a )*op( b ) + beta*c ).
+c
+c  ldc    - integer.
+c           on entry, ldc specifies the first dimension of c as declared
+c           in  the  calling  (sub)  program.   ldc  must  be  at  least
+c           max( 1, m ).
+c           unchanged on exit.
+c
+c
+c  level 3 blas routine.
+c
+c  -- written on 8-february-1989.
+c     jack dongarra, argonne national laboratory.
+c     iain duff, aere harwell.
+c     jeremy du croz, numerical algorithms group ltd.
+c     sven hammarling, numerical algorithms group ltd.
+c
+c
+c     .. external functions ..
       logical            lsame
       external           lsame
-*     .. external subroutines ..
+c     .. external subroutines ..
       external           xerbla
-*     .. intrinsic functions ..
+c     .. intrinsic functions ..
       intrinsic          max
-*     .. local scalars ..
+c     .. local scalars ..
       logical            nota, notb
       integer            i, info, j, l, ncola, nrowa, nrowb
       double precision   temp
-*     .. parameters ..
+c     .. parameters ..
       double precision   one         , zero
       parameter        ( one = 1.0d+0, zero = 0.0d+0 )
-*     ..
-*     .. executable statements ..
-*
-*     set  nota  and  notb  as  true if  a  and  b  respectively are not
-*     transposed and set  nrowa, ncola and  nrowb  as the number of rows
-*     and  columns of  a  and the  number of  rows  of  b  respectively.
-*
+c     ..
+c     .. executable statements ..
+c
+c     set  nota  and  notb  as  true if  a  and  b  respectively are not
+c     transposed and set  nrowa, ncola and  nrowb  as the number of rows
+c     and  columns of  a  and the  number of  rows  of  b  respectively.
+c
       nota  = lsame( transa, 'n' )
       notb  = lsame( transb, 'n' )
       if( nota )then
@@ -695,17 +695,17 @@ c
       else
          nrowb = n
       end if
-*
-*     test the input parameters.
-*
+c
+c     test the input parameters.
+c
       info = 0
       if(      ( .not.nota                 ).and.
-     $         ( .not.lsame( transa, 'c' ) ).and.
-     $         ( .not.lsame( transa, 't' ) )      )then
+     1         ( .not.lsame( transa, 'c' ) ).and.
+     1         ( .not.lsame( transa, 't' ) )      )then
          info = 1
       else if( ( .not.notb                 ).and.
-     $         ( .not.lsame( transb, 'c' ) ).and.
-     $         ( .not.lsame( transb, 't' ) )      )then
+     1         ( .not.lsame( transb, 'c' ) ).and.
+     1         ( .not.lsame( transb, 't' ) )      )then
          info = 2
       else if( m  .lt.0               )then
          info = 3
@@ -724,15 +724,15 @@ c
          call xerbla( 'dgemm ', info )
          return
       end if
-*
-*     quick return if possible.
-*
+c
+c     quick return if possible.
+c
       if( ( m.eq.0 ).or.( n.eq.0 ).or.
-     $    ( ( ( alpha.eq.zero ).or.( k.eq.0 ) ).and.( beta.eq.one ) ) )
-     $   return
-*
-*     and if  alpha.eq.zero.
-*
+     1    ( ( ( alpha.eq.zero ).or.( k.eq.0 ) ).and.( beta.eq.one ) ) )
+     1   return
+c
+c     and if  alpha.eq.zero.
+c
       if( alpha.eq.zero )then
          if( beta.eq.zero )then
             do 20, j = 1, n
@@ -749,14 +749,14 @@ c
          end if
          return
       end if
-*
-*     start the operations.
-*
+c
+c     start the operations.
+c
       if( notb )then
          if( nota )then
-*
-*           form  c := alpha*a*b + beta*c.
-*
+c
+c           form  c := alpha*a*b + beta*c.
+c
             do 90, j = 1, n
                if( beta.eq.zero )then
                   do 50, i = 1, m
@@ -777,9 +777,9 @@ c
    80          continue
    90       continue
          else
-*
-*           form  c := alpha*a'*b + beta*c
-*
+c
+c           form  c := alpha*a'*b + beta*c
+c
             do 120, j = 1, n
                do 110, i = 1, m
                   temp = zero
@@ -796,9 +796,9 @@ c
          end if
       else
          if( nota )then
-*
-*           form  c := alpha*a*b' + beta*c
-*
+c
+c           form  c := alpha*a*b' + beta*c
+c
             do 170, j = 1, n
                if( beta.eq.zero )then
                   do 130, i = 1, m
@@ -819,9 +819,9 @@ c
   160          continue
   170       continue
          else
-*
-*           form  c := alpha*a'*b' + beta*c
-*
+c
+c           form  c := alpha*a'*b' + beta*c
+c
             do 200, j = 1, n
                do 190, i = 1, m
                   temp = zero
@@ -837,131 +837,131 @@ c
   200       continue
          end if
       end if
-*
+c
       return
-*
-*     end of dgemm .
-*
+c
+c     end of dgemm .
+c
       end
 
       logical          function lsame( ca, cb )
-*
-*  -- lapack auxiliary routine (version 2.0) --
-*     univ. of tennessee, univ. of california berkeley, nag ltd.,
-*     courant institute, argonne national lab, and rice university
-*     january 31, 1994
-*
-*     .. scalar arguments ..
+c
+c  -- lapack auxiliary routine (version 2.0) --
+c     univ. of tennessee, univ. of california berkeley, nag ltd.,
+c     courant institute, argonne national lab, and rice university
+c     january 31, 1994
+c
+c     .. scalar arguments ..
       character          ca, cb
-*     ..
-*
-*  purpose
-*  =======
-*
-*  lsame returns .true. if ca is the same letter as cb regardless of
-*  case.
-*
-*  arguments
-*  =========
-*
-*  ca      (input) character*1
-*  cb      (input) character*1
-*          ca and cb specify the single characters to be compared.
-*
-* =====================================================================
-*
-*     .. intrinsic functions ..
+c     ..
+c
+c  purpose
+c  =======
+c
+c  lsame returns .true. if ca is the same letter as cb regardless of
+c  case.
+c
+c  arguments
+c  =========
+c
+c  ca      (input) character*1
+c  cb      (input) character*1
+c          ca and cb specify the single characters to be compared.
+c
+c =====================================================================
+c
+c     .. intrinsic functions ..
       intrinsic          ichar
-*     ..
-*     .. local scalars ..
+c     ..
+c     .. local scalars ..
       integer            inta, intb, zcode
-*     ..
-*     .. executable statements ..
-*
-*     test if the characters are equal
-*
+c     ..
+c     .. executable statements ..
+c
+c     test if the characters are equal
+c
       lsame = ca.eq.cb
       if( lsame )
-     $   return
-*
-*     now test for equivalence if both characters are alphabetic.
-*
+     1   return
+c
+c     now test for equivalence if both characters are alphabetic.
+c
       zcode = ichar( 'z' )
-*
-*     use 'z' rather than 'a' so that ascii can be detected on prime
-*     machines, on which ichar returns a value with bit 8 set.
-*     ichar('a') on prime machines returns 193 which is the same as
-*     ichar('a') on an ebcdic machine.
-*
+c
+c     use 'z' rather than 'a' so that ascii can be detected on prime
+c     machines, on which ichar returns a value with bit 8 set.
+c     ichar('a') on prime machines returns 193 which is the same as
+c     ichar('a') on an ebcdic machine.
+c
       inta = ichar( ca )
       intb = ichar( cb )
-*
+c
       if( zcode.eq.90 .or. zcode.eq.122 ) then
-*
-*        ascii is assumed - zcode is the ascii code of either lower or
-*        upper case 'z'.
-*
+c
+c        ascii is assumed - zcode is the ascii code of either lower or
+c        upper case 'z'.
+c
          if( inta.ge.97 .and. inta.le.122 ) inta = inta - 32
          if( intb.ge.97 .and. intb.le.122 ) intb = intb - 32
-*
+c
       else if( zcode.eq.233 .or. zcode.eq.169 ) then
-*
-*        ebcdic is assumed - zcode is the ebcdic code of either lower or
-*        upper case 'z'.
-*
+c
+c        ebcdic is assumed - zcode is the ebcdic code of either lower or
+c        upper case 'z'.
+c
          if( inta.ge.129 .and. inta.le.137 .or.
-     $       inta.ge.145 .and. inta.le.153 .or.
-     $       inta.ge.162 .and. inta.le.169 ) inta = inta + 64
+     1       inta.ge.145 .and. inta.le.153 .or.
+     1       inta.ge.162 .and. inta.le.169 ) inta = inta + 64
          if( intb.ge.129 .and. intb.le.137 .or.
-     $       intb.ge.145 .and. intb.le.153 .or.
-     $       intb.ge.162 .and. intb.le.169 ) intb = intb + 64
-*
+     1       intb.ge.145 .and. intb.le.153 .or.
+     1       intb.ge.162 .and. intb.le.169 ) intb = intb + 64
+c
       else if( zcode.eq.218 .or. zcode.eq.250 ) then
-*
-*        ascii is assumed, on prime machines - zcode is the ascii code
-*        plus 128 of either lower or upper case 'z'.
-*
+c
+c        ascii is assumed, on prime machines - zcode is the ascii code
+c        plus 128 of either lower or upper case 'z'.
+c
          if( inta.ge.225 .and. inta.le.250 ) inta = inta - 32
          if( intb.ge.225 .and. intb.le.250 ) intb = intb - 32
       end if
       lsame = inta.eq.intb
-*
-*     return
-*
-*     end of lsame
-*
+c
+c     return
+c
+c     end of lsame
+c
       end
 
-*     SUBROUTINE XERBLA( SRNAME, INFO )
-*
-*  -- LAPACK auxiliary routine (preliminary version) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     February 29, 1992
-*
-*     .. Scalar Arguments ..
-*     CHARACTER*6        SRNAME
-*     INTEGER            INFO
-*     ..
-*
-*  Purpose
-*  =======
-*
-*  XERBLA  is an error handler for the LAPACK routines.
-*  It is called by an LAPACK routine if an input parameter has an
-*  invalid value.  A message is printed and execution stops.
-*
-*  Installers may consider modifying the STOP statement in order to
-*  call system-specific exception-handling facilities.
-*
-*  Arguments
-*  =========
-*
-*  SRNAME  (input) CHARACTER*6
-*          The name of the routine which called XERBLA.
-*
-*  INFO    (input) INTEGER
-*          The position of the invalid parameter in the parameter list
-*          of the calling routine.
-*
-*  This has been replaced by a C routine in src/main/print.c
+c     SUBROUTINE XERBLA( SRNAME, INFO )
+c
+c  -- LAPACK auxiliary routine (preliminary version) --
+c     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
+c     Courant Institute, Argonne National Lab, and Rice University
+c     February 29, 1992
+c
+c     .. Scalar Arguments ..
+c     CHARACTER*6        SRNAME
+c     INTEGER            INFO
+c     ..
+c
+c  Purpose
+c  =======
+c
+c  XERBLA  is an error handler for the LAPACK routines.
+c  It is called by an LAPACK routine if an input parameter has an
+c  invalid value.  A message is printed and execution stops.
+c
+c  Installers may consider modifying the STOP statement in order to
+c  call system-specific exception-handling facilities.
+c
+c  Arguments
+c  =========
+c
+c  SRNAME  (input) CHARACTER*6
+c          The name of the routine which called XERBLA.
+c
+c  INFO    (input) INTEGER
+c          The position of the invalid parameter in the parameter list
+c          of the calling routine.
+c
+c  This has been replaced by a C routine in src/main/print.c
