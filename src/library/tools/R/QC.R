@@ -201,7 +201,7 @@ function(x, ...)
 {
     for(i in which(sapply(x, length) > 0)) {
         writeLines(paste("Undocumented ", names(x)[i], ":", sep = ""))
-        print(x[[i]])
+        .prettyPrint(x[[i]])
     }
     invisible(x)
 }
@@ -576,7 +576,7 @@ function(x, ...)
     ##        && identical(TRUE, attr(x, "hasNamespace"))) {
     ##         if(length(objectsInCodeNotInUsages)) {
     ##             writeLines("Exported objects without usage information:")
-    ##             print(objectsInCodeNotInUsages)
+    ##             .prettyPrint(objectsInCodeNotInUsages)
     ##             writeLines("")
     ##         }
     ##     }
@@ -590,7 +590,7 @@ function(x, ...)
     ##        && identical(TRUE, attr(x, "hasNamespace"))) {
     ##         if(length(functionsInCodeNotInUsages)) {
     ##             writeLines("Exported functions without usage information:")
-    ##             print(functionsInCodeNotInUsages)
+    ##             .prettyPrint(functionsInCodeNotInUsages)
     ##             writeLines("")
     ##         }
     ##     }
@@ -604,7 +604,7 @@ function(x, ...)
             writeLines(paste("Functions/methods with usage in",
                              "documentation object", sQuote(fname),
                              "but not in code:"))
-            print(unique(functionsInUsagesNotInCode[[fname]]))
+            .prettyPrint(unique(functionsInUsagesNotInCode[[fname]]))
             writeLines("")
         }
     }
@@ -1164,28 +1164,28 @@ function(x, ...)
             writeLines(paste("Undocumented arguments",
                              " in documentation object ",
                              sQuote(docObj), ":", sep = ""))
-            print(unique(argNamesInUsageMissingInArgList))
+            .prettyPrint(unique(argNamesInUsageMissingInArgList))
         }
         duplicatedArgsInArgList <- x[[docObj]][["duplicated"]]
         if(length(duplicatedArgsInArgList) > 0) {
             writeLines(paste("Duplicated \\argument entries",
                              " in documentation object ",
                              sQuote(docObj), ":", sep = ""))
-            print(duplicatedArgsInArgList)
+            .prettyPrint(duplicatedArgsInArgList)
         }
         argNamesInArgListMissingInUsage <- x[[docObj]][["overdoc"]]
         if(length(argNamesInArgListMissingInUsage) > 0) {
             writeLines(paste("Documented arguments not in \\usage",
                              " in documentation object ",
                              sQuote(docObj), ":", sep = ""))
-            print(unique(argNamesInArgListMissingInUsage))
+            .prettyPrint(unique(argNamesInArgListMissingInUsage))
         }
         functionsNotInAliases <- x[[docObj]][["unaliased"]]
         if(length(functionsNotInAliases) > 0) {
             writeLines(paste("Objects in \\usage without \\alias",
                              " in documentation object ",
                              sQuote(docObj), ":", sep = ""))
-            print(unique(functionsNotInAliases))
+            .prettyPrint(unique(functionsNotInAliases))
         }
         
         writeLines("")
@@ -1986,7 +1986,7 @@ function(package, dir, lib.loc = NULL)
 print.checkReplaceFuns <-
 function(x, ...)
 {
-    if(length(x) > 0) print(unclass(x), ...)
+    if(length(x) > 0) .prettyPrint(unclass(x))
     invisible(x)
 }
 
@@ -2178,6 +2178,15 @@ function(txt)
     }
     attr(exprs, "badLines") <- badLines
     exprs
+}
+
+### * .prettyPrint
+
+.prettyPrint <-
+function(x)
+{
+    writeLines(strwrap(paste(x, collapse = " "),
+                       indent = 2, exdent = 2))
 }
 
 ### * .transformS3methodMarkup
