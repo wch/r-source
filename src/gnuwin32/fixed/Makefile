@@ -1,6 +1,6 @@
 include ../MkRules
 
-all: profiles fixh fixr fixbin fixetc
+all: profiles FAQs fixh fixr fixbin fixetc
 
 profiles: ../../../library/base/R/Rprofile
 
@@ -22,6 +22,13 @@ SED4='s/C_FUNCTION(\(.*\))/{ "\1",	\1 },/'
 	$(SED) -e $(SED0) -e $(SED01) -e $(SED1) -e $(SED2) ../../appl/ROUTINES > ../../include/FFDecl.h
 ../../include/FFTab.h: ../../appl/ROUTINES
 	$(SED) -e $(SED0) -e $(SED01) -e $(SED3) -e $(SED4) ../../appl/ROUTINES > ../../include/FFTab.h
+
+FAQs: ../rw-faq r/rw-FAQ.html
+r/rw-FAQ.html: ../rw-FAQ.texi
+	makeinfo --html --no-headers --number-sections -o $@ $<
+
+../rw-faq: ../rw-FAQ.texi
+	makeinfo --no-headers --number-sections -o $@ $<
 
 
 fixh: h/config.h ../../../date-stamp ../../include/FFDecl.h ../../include/FFTab.h

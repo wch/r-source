@@ -1,0 +1,679 @@
+\input texinfo
+@c %**start of header
+@setfilename rw-FAQ.info
+@settitle R for Windows FAQ
+@setchapternewpage on
+@set VERSION rw0990
+@c %**end of header
+
+@dircategory Programming
+@direntry
+* R for Windows FAQ: (rw-FAQ).  The R for Windows FAQ.
+@end direntry
+
+@finalout
+
+@macro newchap{}
+@ifinfo
+@sp 1
+@end ifinfo
+@ifhtml
+@html
+<p><hr>
+@end html
+@end ifhtml
+@end macro
+
+@titlepage
+@title R for Windows FAQ
+@subtitle Frequently Asked Questions on R for Windows
+@subtitle Version @value{VERSION}
+@author B. D. Ripley
+@end titlepage
+
+@ifinfo
+R for Windows FAQ                           @*
+Frequently Asked Questions on R for Windows @*
+Version for @value{VERSION}                 @*
+Brian Ripley                                @*
+
+@sp 2
+@end ifinfo
+
+@ifhtml
+@html
+<html>
+<head>
+<TITLE>R for Windows FAQ</TITLE>
+</head>
+
+<body>
+<h1 align="center">R for Windows FAQ</h1>
+<h2>Version for <tt>@value{VERSION}</tt></h2>
+<address>B. D. Ripley</address>
+<p><p><hr><p>
+@end html
+@end ifhtml
+
+@paragraphindent 0
+
+@contents
+
+@ifinfo
+@sp 1
+@end ifinfo
+
+
+@node Top, Introduction, (dir), (dir)
+
+@menu
+* Introduction::                
+* Installation and Usage::      
+* Packages::                    
+* Windows Features::            
+* Workspaces::                  
+* The R Console and Fonts::     
+* Building from Source::        
+@end menu
+
+@newchap{}
+@node Introduction, Installation and Usage, Top, Top
+@chapter Introduction
+
+
+This FAQ is for the Windows port of R: it describes features specific to
+that version. The main R FAQ can be found at
+
+@display
+@uref{http://www.ci.tuwien.ac.at/~hornik/R/R-FAQ.html}.
+@end display
+
+There have been two versions of R for Windows, but only is under active
+development, that described here. It is often called something like
+@code{@value{VERSION}} (although not officially). The information here applies
+only to recent versions (@code{rw0901} or later).
+
+There is also information on the use of R for Windows in the Venables
+& Ripley `R Complements' at @uref{http://www.stats.ox.ac.uk/pub/MASS2}.
+
+
+@newchap{}
+@node Installation and Usage, Packages, Introduction, Top
+@chapter Installation and Usage
+
+@menu
+* Where can I find the latest version?::  
+* How do I install R for Windows?::  
+* How do I run it?::            
+* How can I keep workspaces for different projects in different directories?::  
+* How do I print from R?::      
+* Can I use R BATCH?::          
+* Can I use rwXxxx with ESS and emacs?::  
+* What are HOME and working directories?::  
+@end menu
+
+@node Where can I find the latest version?, How do I install R for Windows?, Installation and Usage, Installation and Usage
+@section Where can I find the latest version?
+
+Go to any CRAN site (see @uref{http://cran.r-project.org/mirrors.html}
+for a list), navigate to the @code{bin/windows/windows-NT/base}
+directory and collect the files you need. You will need at least the
+files
+
+@example
+      rwXxxxb1.zip rwXxxxb2.zip
+      rwXxxxh.zip (text help) or rwXxxxch.zip (Compiled HTML help)
+@end example
+@noindent
+and you may want @code{rwXxxxwh.zip} (the Windows help files) or
+@code{rwXxxxw.zip} (the HTML format help files), @code{rwXxxxl.zip} (the
+LaTeX format help files, used for offline printing), or
+@code{rwXxxxd?.zip} (the draft manuals, in PDF).
+
+Optionally, you can download the installer, @code{rwinst.exe}.
+
+
+@node How do I install R for Windows?, How do I run it?, Where can I find the latest version?, Installation and Usage
+@section How do I install R for Windows?
+
+First, you need Windows 95 or 98 or NT4 or 2000: Windows 3.11+win32s
+will not work. Your file system must allow long file names (as is
+likely except perhaps for some network-mounted systems).
+
+The simplest way is to run the installer (double-click on the icon for
+@code{rwinst.exe} and navigate its wizard-like pages).  Alternatively, choose
+a location and unzip the zip files (with a tool that preserves long
+file names and the directory structure: we recommend the INFO-ZIP
+project's @code{unzip}). All the files will unpack into a directory called
+@code{rwXxxx}, for some @code{Xxxx}.
+
+Choose a working directory for R. Make a shortcut to
+@code{rwXxxx\bin\Rgui.exe} on your desktop or somewhere on the Start menu
+file tree. Right-click the shortcut, select Properties... and change
+the `Start in' field to your working directory.
+
+You may also want to add command-line arguments at the end of the
+Target field. We use @code{--vsize=10M --nsize=400k}. You can also set
+environment variables at the end of the Target field, for
+example @code{R_LIBS=e:/R/library}.
+
+
+@node How do I run it?, How can I keep workspaces for different projects in different directories?, How do I install R for Windows?, Installation and Usage
+@section How do I run it?
+
+Just double-click on the shortcut you prepared at installation.
+
+If you want to set up another project, make a new shortcut or use the
+existing one, and change the `Start in' field of the Properties.
+
+
+@node How can I keep workspaces for different projects in different directories?, How do I print from R?, How do I run it?, Installation and Usage
+@section How can I keep workspaces for different projects in different directories?
+
+Create a separate shortcut for each project: see Q2.3. All the paths to
+files used by R are relative to the starting directory, so setting the
+`Start in' field automatically helps separate projects.
+
+
+@node How do I print from R?, Can I use R BATCH?, How can I keep workspaces for different projects in different directories?, Installation and Usage
+@section How do I print from R?
+
+It depends what you want to print.
+
+@itemize @bullet
+@item You can print the graphics window from its menu or by using 
+@code{dev.print()}.
+@item You can print from the R console or pager by @code{File | Print}.
+@item You can print help files from the pager or HTML browser.
+@item If you have configured @code{RHOME\bin\helpPRINT.bat} and have
+latex installed you can print help files by @code{help(fn_name, offline=TRUE)}.
+@end itemize
+
+@node Can I use R BATCH?, Can I use rwXxxx with ESS and emacs?, How do I print from R?, Installation and Usage
+@section Can I use @code{R BATCH}?
+
+No, but you can set up a batch file using @code{rterm.exe}. A sample batch file
+might contain (as one line)
+
+@example
+path_to_R\bin\rterm.exe --vsize=10M --nsize=500k --no-restore --no-save < %1 > %1.out
+@end example
+
+@node Can I use rwXxxx with ESS and emacs?, What are HOME and working directories?, Can I use R BATCH?, Installation and Usage
+@section Can I use rwXxxx with ESS and emacs?
+
+Yes. The latest versions of ESS (e.g. 5.1.11) come with support for this
+version of R, and @code{rw0650} and later have support for interrupting
+the R process from ESS (by @code{C-c C-c}).
+
+For help with ESS, please send email to @uref{ESS-help@@stat.ethz.ch}, not the R
+mailing lists.
+
+
+@node What are HOME and working directories?,  , Can I use rwXxxx with ESS and emacs?, Installation and Usage
+@section What are HOME and working directories?
+
+Several places in the documentation use these terms.
+
+The working directory is the directory from which @code{Rgui} or
+@code{Rterm} was launched, unless a shortcut was used when it is given
+by the `Start in' field of the shortcut's properties. You can find this
+from R code by the call @code{getwd()}.
+
+The home directory is set as follows (@code{rw0650} on):@*
+If environment variable @code{R_USER} is set, its value is used.@*
+Otherwise if environment variable @code{HOME} is set, its value is used.@*
+Otherwise if environment variables @code{HOMEDRIVE} and @code{HOMEPATH} are set,
+the value is @code{$@{HOMEDRIVE@}$@{HOMEPATH@}}.@*
+If all of these fail, the current working directory is used.
+
+You can find this from R code by @code{getenv("R_USER")}.
+
+
+@newchap{}
+@node Packages, Windows Features, Installation and Usage, Top
+@chapter Packages
+
+
+@menu
+* Can I install packages (libraries) in this version?::  
+* I don't have permission to write to the rwXxxx/library directory::  
+* The packages I installed do not appear in the HTML help system::  
+* My functions are not found by the HTML help search system.::  
+@end menu
+
+@node Can I install packages (libraries) in this version?, I don't have permission to write to the rwXxxx/library directory, Packages, Packages
+@section Can I install packages (libraries) in this version?
+
+Yes, of course. The easy way is to see if a pre-compiled binary version
+of the package is available: look on CRAN at
+@code{bin/windows/windows-NT/contrib}. If there is, download the zip
+file and unpack it in the @code{rwXxxx\library} directory, using
+@code{unzip} or similar, or using the installer @code{rwinst.exe}.
+Perhaps even easier is to use the R function @code{install.packages()}:
+check out its help page.
+
+If there is not a binary version or that is not up-to-date or you prefer
+compiling from source, get @code{rwXxxxsp.zip} from the distribution
+(see Q1.1) and unpack it in @code{rwXxxx}. Then @code{cd src\gnuwin32}
+and read @code{README.packages}. You will need to collect and install
+several tools to use this. Once you have done so, installation is easy:
+just run @code{make pkg-pkgname}. To check the package (run all the examples
+on its help pages) use @code{make pkgcheck-pkgname}.
+
+@node I don't have permission to write to the rwXxxx/library directory, The packages I installed do not appear in the HTML help system, Can I install packages (libraries) in this version?, Packages
+@section I don't have permission to write to the @file{rwXxxx/library} directory.
+
+You can install packages anywhere and use the environment variable
+@code{R_LIBS} to point to the library location(s). You can also set the
+R variable @code{.lib.loc} in your @file{.Rprofile} or when running R.
+
+Suppose your packages are in installed in @code{p:\mylibs}. Then you can EITHER
+
+@example
+set R_LIBS to p:\mylibs
+@end example
+@noindent
+OR put in the @code{.Rprofile} in the working directory or your home directory
+
+@example
+.lib.loc <- c("p:/mylibs", .Library)
+@end example
+@noindent
+OR use a package by, e.g.
+
+@example
+library(MASS, lib.loc="p:/mylibs")
+@end example
+
+How you set an environment variable is system specific: in Windows 9x
+you can set them in autoexec.bat or in an MS-DOS window from which you
+launch @code{Rgui} / @code{Rterm}. Under Windows NT you can use the
+control panel or the properties of `My Computer'. You can also set them
+on the command line, for example in the shortcut you could have
+
+@example
+path_to_R\bin\rgui.exe --vsize=10M R_LIBS=e:/R/library
+@end example
+@noindent
+and you can set variables in a file @file{.Renviron} in the working directory
+or your home directory, for example
+
+@example
+R_LIBS=e:/R/library
+R_VSIZE=10M
+R_NSIZE=400k
+@end example
+
+The order of precedence is the command line (flags before variables)
+then @file{.Renviron} then the inherited environment.
+
+You can also build packages anywhere, but it is simpler to install a
+private copy of R to do the building.
+
+
+@node The packages I installed do not appear in the HTML help system, My functions are not found by the HTML help search system., I don't have permission to write to the rwXxxx/library directory, Packages
+@section The packages I installed do not appear in the HTML help system.
+
+HTML help only works for packages installed in @file{rwXxxx\library}.
+
+To update the HTML help files after you have installed a binary package,
+run at the R prompt.
+
+@example
+> link.html.help()
+@end example
+
+(Using @code{install.packages()} does this for you.  The source-code
+installation also does this automatically, and if you have that
+installed you can use (preferably)
+
+@example
+cd rwXxxx\src\gnuwin32\help
+make indices
+@end example
+@noindent
+instead.)
+
+
+@node My functions are not found by the HTML help search system.,  , The packages I installed do not appear in the HTML help system, Packages
+@section My functions are not found by the HTML help search system.
+
+The following conditions need to hold for functions in a package you installed.
+
+@itemize @bullet
+@item the package is installed in @file{rwXxxx\library}.
+@item the package contains a @file{CONTENTS} file in top-level directory 
+(a few of the binary distributions do not).
+@item you updated the indices as described in the answer to Q3.3 after
+installing the package.
+@end itemize
+@noindent
+If those all hold true, this works for us.
+
+
+@newchap{}
+@node Windows Features, Workspaces, Packages, Top
+@chapter Windows Features
+
+@menu
+* What should I expect to behave differently from the Unix version of R?::  
+* I hear about some nifty features. Please tell me about them!::  
+@end menu
+
+@node  What should I expect to behave differently from the Unix version of R?, I hear about some nifty features. Please tell me about them!, Windows Features, Windows Features
+@section  What should I expect to behave differently from the Unix version of R?
+
+@itemize @bullet
+@item R commands can be interrupted by @key{Esc} in @code{rgui.exe}
+and @key{Ctrl-break} or @key{Ctrl-C} in @code{rterm.exe}: @key{Ctrl-C} 
+is used for copying in the GUI version.
+@item Command-line editing is always available, but is much simpler than the
+readline-based editing on Unix. For @code{rgui.exe}, the menu item `Help |
+Console' will give details.
+@item The commands history is saved between sessions only on
+@code{rgui.exe}, and it is always saved.
+@item Using @code{help.start()} does not automatically send help requests to the
+browser: use @code{options(htmlhelp=T)} to turn this on.
+@item The HTML help system can only access packages installed in the standard
+place.
+@item Paths to files (e.g. in @code{source()}) can be specified with either "/" or
+"\\".
+@item @code{system()} is slightly different: see its help page and that
+of @code{shell()}.
+@end itemize
+
+@node I hear about some nifty features. Please tell me about them!,  , What should I expect to behave differently from the Unix version of R?, Windows Features
+@section I hear about some nifty features: please tell me about them!
+
+You have read the @code{README}? There are file menus on the R console,
+pager and graphics windows. You can source and save from those menus,
+and copy the graphics to @code{png}, @code{jpeg}, @code{bmp},
+@code{postscript} or @code{metafile}. There are right-click menus giving
+shortcuts to menu items, and optionally toolbars with buttons giving
+shortcuts to frequent operations.
+
+If you resize the R console the @code{options(width=)} is automatically set to the
+console width (unless disabled in the configuration file).
+
+The graphics has a history mechanism. As the README says:
+
+@quotation
+`The History menu allows the recording of plots. When plots have been
+recorded they can be reviewed by @key{PgUp} and @key{PgDn}, saved and replaced.
+Recording can be turned on automatically (the Recording item on the list) or
+individual plots can be added (Add or the @key{INS} key). The whole plot history
+can be saved to or retrieved from an R variable in the global environment.
+
+There is only one graphics history shared by all the windows devices.'
+@end quotation
+@noindent
+The R console and graphics windows have configuration files stored in the
+@file{RHOME\etc} directory called @file{Rconsole} and @file{Rdevga}; you can
+keep personal copies in your @file{HOME} directory. They contain comments which
+should suffice for you to edit them to your preferences. For more details
+see @code{?Rconsole}.
+
+@newchap{}
+@node Workspaces, The R Console and Fonts, Windows Features, Top
+@chapter Workspaces
+
+
+@menu
+* My workspace gets saved in a strange place. how do I stop this?::  
+* How do I store my workspace in a different place?::  
+* Can I load workspaces saved under Unix/GNU-Linux?::  
+@end menu
+
+@node My workspace gets saved in a strange place. how do I stop this?, How do I store my workspace in a different place?, Workspaces, Workspaces
+@section My workspace gets saved in a strange place: how do I stop this?
+
+Have you changed the working directory?: see Q5.2.
+
+
+@node How do I store my workspace in a different place?, Can I load workspaces saved under Unix/GNU-Linux?, My workspace gets saved in a strange place. how do I stop this?, Workspaces
+@section How do I store my workspace in a different place?
+
+Use the `File | Change Dir' menu item to select a new working
+directory: this defaults to the last directory you loaded a file
+from. The workspace is saved in the working directory. You can also
+save a snapshot of the workspace from the `Save Image' menu item.
+
+
+@node Can I load workspaces saved under Unix/GNU-Linux?,  , How do I store my workspace in a different place?, Workspaces
+@section Can I load workspaces saved under Unix/GNU-Linux?
+
+Yes. The converse (saving on Windows, loading on Unix) also works.
+
+
+@newchap{}
+@node The R Console and Fonts, Building from Source, Workspaces, Top
+@chapter The R Console and Fonts
+
+
+@menu
+* I would like to be able to use Japanese fonts::  
+* I don't see characters with accents at the R console::  
+* The output to the console seems to be delayed::  
+* Long lines seem to be truncated.::  
+@end menu
+
+@node I would like to be able to use Japanese fonts, I don't see characters with accents at the R console, The R Console and Fonts, The R Console and Fonts
+@section I would like to be able to use Japanese fonts
+
+for example, in the console and to annotate graphs.
+
+We believe this is possible by setting suitable fonts in the Rconsole and
+Rdevga configuration files (see Q4.2). You can specify additional fonts in
+Rdevga, and use them by
+
+@example
+par(font=, font.lab=, font.main=, font.sub=)
+@end example
+
+Nineteen fonts are specified (as 1 to 19) by default: you can add to these
+(up to 13 more) or replace them.
+
+
+@node I don't see characters with accents at the R console, The output to the console seems to be delayed, I would like to be able to use Japanese fonts, The R Console and Fonts
+@section I don't see characters with accents at the R console, for example in ?text.
+
+You need to specify a font in Rconsole (see Q4.2) that supports latin1
+encoding. The default, Courier New, does on our systems, as does FixedSys.
+This may be a problem in other locales, especially for non-Western European
+languages.
+
+@node The output to the console seems to be delayed, Long lines seem to be truncated., I don't see characters with accents at the R console, The R Console and Fonts
+@section When using Rgui the output to the console seems to be delayed.
+
+This is deliberate: the console output is buffered and re-written in
+chunks to be less distracting. You can turn buffering off or on from
+the Misc menu or the right-click menu: @key{Ctrl-W} toggles the setting.
+
+If you are sourcing R code or writing from a function, there is another
+option. A call to the R function @code{flush.console()} will write out
+the buffer and so update the console.
+
+
+@node Long lines seem to be truncated.,  , The output to the console seems to be delayed, The R Console and Fonts
+@section Long lines in the console or pager are truncated.
+
+They only @strong{seem} to be truncated: that $ at the end indicates you
+can scroll the window to see the rest of the message. Use the
+@key{CTRL+arrow} keys to scroll horizontally, or (@code{rw0990} and
+later) use the horizontal scrollbar.
+
+
+@newchap{}
+@node Building from Source,  , The R Console and Fonts, Top
+@chapter Building from Source
+
+@menu
+* How can I compile R from source?::  
+* How do I debug code that I have compiled and dyn.load-ed?::  
+* How do I include C++ code?::  
+* The output from my C code disappears.::  
+* The output from my Fortran code disappears.::  
+@end menu
+
+@node How can I compile R from source?, How do I debug code that I have compiled and dyn.load-ed?, Building from Source, Building from Source
+@section How can I compile R from source?
+
+Get the R sources. Suppose you want to compile R-0.99.0.
+
+@example
+tar zxvf R-0.99.0.tgz
+cd R-0.99.0
+cd src\gnuwin32
+@end example
+@noindent
+Now read the @file{INSTALL} file and set up all the tools needed. Then you
+can just use @code{make}, sit back and wait. (A complete build takes about
+15 minutes on a 300MHz PII with a fast local disc.)
+
+You may need to compile under a case-honouring file system: we found
+that a @code{samba}-mounted file system (which maps all file names to lower
+case) did not work.
+
+
+@node How do I debug code that I have compiled and dyn.load-ed?, How do I include C++ code?, How can I compile R from source?, Building from Source
+@section How do I debug code that I have compiled and dyn.load-ed?
+
+First, build a version of the R system with debugging information by
+
+@example
+make clean
+make DEBUG=T
+@end example
+@noindent
+
+and make a debug version of your package by
+
+@example
+make DEBUG=T pkg-mypkg
+@end example
+@noindent
+
+Then you can debug by
+
+@example
+gdb /path/to/rwXxxx/bin/Rgui.exe
+@end example
+@noindent
+
+However, note
+
+@itemize @bullet
+@item gdb will only be able to find the source code if we run in the
+location where the source was compiled (@code{rwXxxx/src/gnuwin32} for
+the main system, @code{rwXxxx/src/library/mypkg/src} for a package),
+unless told otherwise by the @code{directory} command. It is most
+convenient to set a list of code locations via @code{directory}
+commands in the file @file{.gdbinit} in the directory from which 
+@code{gdb} is run.
+
+@item It is only possible to set breakpoints in a DLL after the DLL has
+been loaded. So a way to examine the function @code{tukeyline} in
+package @code{eda} might be
+
+@example
+     gdb ../../../../bin/Rgui.exe
+     (gdb) break WinMain
+     (gdb) run
+     [ stops with R.dll loaded ]
+     (gdb) break R_ReadConsole
+     (gdb) continue
+     [ stops with console running ]
+     (gdb) continue
+     Rconsole> library(eda)
+     (gdb) break tukeyline
+     (gdb) clear R_ReadConsole
+     (gdb) continue
+@end example
+
+Fortran symbols need an underline appended.
+
+@item Windows has little support for signals, so the usual idea of running a
+program under a debugger and sending it a signal to interrupt it and
+drop control back to the debugger does not work with @code{mingw32}
+version of @code{gdb}.  It does often work with the @code{cygwin} version.
+
+@item We have seen examples in debugging problems with Windows events that
+the @code{cygwin gdb} was able to catch but which terminated the 
+@code{mingw32 gdb}.
+@end itemize
+
+If you have an X server available on the PC, there is a version of @code{DDD}
+available that runs under the cygwin emulation layer (follow the links
+at @uref{http://sourceware.cygnus.com/cygwin}) and provides a graphical
+user interface to @code{gdb}.  Another (Windows-native) GUI for
+@code{gdb} is @code{Insight}, from
+@uref{ftp://ftp.xraylith.wisc.edu/pub/khan/gnu-win32/cygwin/ports/}.
+
+
+
+@node  How do I include C++ code?, The output from my C code disappears., How do I debug code that I have compiled and dyn.load-ed?, Building from Source
+@section  How do I include C++ code?
+
+You need to do two things:
+
+(a) Write a wrapper to export the symbols you want to call from R as
+ @code{extern "C"}.
+
+(b) Include the C++ libraries in the link to make the DLL. Suppose
+@file{X.cc} contains your C++ code, and @file{X_R.cc} is the
+wrapper. Then build the DLL by (@code{gcc-2.95.x})
+
+@example
+g++ -c X.cc X_R.cc
+dlltool --export-all-symbols --output-def X.def X_R.o
+dllwrap -o X.dll --def X.def X.o X_R.o -lstdc++
+@end example
+@noindent
+or (VC++)
+
+@example
+cl /MT /c X.cpp X_R.cpp
+ink /dll /out:XX.dll /export:X_main X.obj X_R.obj
+@end example
+@noindent
+and call the entry point(s) in @code{X_R}.  Construction of static variables
+will occur when the DLL is loaded, and destruction when the DLL is
+unloaded, usually when R terminates.
+
+
+@node  The output from my C code disappears., The output from my Fortran code disappears., How do I include C++ code?, Building from Source
+@section  The output from my C code disappears. Why?
+
+The @code{Rgui.exe} console is a Windows application: writing to
+@code{stdout} or @code{stderr} will not produce output in the
+console. (This will work with @code{Rterm.exe}.)  Use @code{Rprintf} or
+@code{REprintf} instead.
+
+@node  The output from my Fortran code disappears.,  , The output from my C code disappears., Building from Source
+@section  The output from my Fortran code disappears. Why?
+
+Writing to Fortran output writes to a file, not the @code{Rgui} console.
+Use one of the subroutines @code{dblepr}, @code{intpr} or @code{realpr}
+documented in the @emph{`Writing R Extensions'} manual.
+
+
+@ifhtml
+@html
+<p><hr WIDTH="100%">
+<address>
+Last edited 2000 February 4 by Brian Ripley
+<code><a href="mailto:ripley@@stats.ox.ac.uk">ripley@@stats.ox.ac.uk</a></code>
+</address>
+@end html
+@end ifhtml
+@ifinfo
+@sp 2
+Last edited 2000 February 4 by Brian Ripley <ripley@@stats.ox.ac.uk>
+@end ifinfo
+
+@bye
+
+@c Local Variables: ***
+@c mode: TeXinfo ***
+@c End: ***
