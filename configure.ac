@@ -558,8 +558,6 @@ case "${host_cpu}" in
     else
       R_PROG_CC_FLAG([-ieee_with_inexact],
                      [R_XTRA_CFLAGS="${R_XTRA_CFLAGS} -ieee_with_inexact"])
-      R_PROG_CC_FLAG([-std1],
-                     [R_XTRA_CFLAGS="${R_XTRA_CFLAGS} -std1"])
     fi
     if test "${G77}" = yes; then
       R_XTRA_FFLAGS="${R_XTRA_FFLAGS} -mieee"
