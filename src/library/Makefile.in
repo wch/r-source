@@ -54,7 +54,6 @@ docs:
 	@$(MAKE) help-indices
 	@$(MAKE) Rdfiles
 	@$(R_CMD_BUILD_HELP) --htmllists
-	@$(MAKE) vignettes
 	@$(MAKE) indices
 	@touch stamp-docs
 

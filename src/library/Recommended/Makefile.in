@@ -16,6 +16,7 @@ R = R_LIBS= $(top_builddir)/bin/R
 
 ## foo.ts is the timestamp for package foo;
 ## foo.tgz is a symlink to foo_x.y-z.tar.gz in the source dir.
+## unfortunately package foo can be uninstalled and leave foo.ts
 
 ## For developers: A shell script, tools/rsync-recommended, updates
 ## packages from the CRAN master directory. 
@@ -35,35 +36,22 @@ Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
 
 recommended-packages: Makefile
-	@$(MAKE) Makedeps
 	@$(MAKE) stamp-recommended
 stamp-recommended: $(OBJECTS)
 	@touch $@
 
-## <NOTE>
-## We create dependencies so that packages are built in a certain order.
-## (Mostly to make parallel Make work.)
-## Currently, we enforce the order in which package sources are listed
-## in 'share/make/vars.mk'; we could prepend sources which must come
-## first. 
-Makedeps: Makefile
-	@(set $(R_PKGS_RECOMMENDED_SOURCES); \
-	  while test -n "$${2}"; do \
-	  echo "$${2}.ts: $${1}.ts"; \
-	  shift; \
-	done) >> Makefile
-	@touch $@
-## </NOTE>
-
-INSTALL-OPTS=
+## need to allow parallel installs
+INSTALL-OPTS=--no-lock
 
 .tgz.ts:
+	@echo "begin installing recommended package" `basename $< .tgz`
 ## <FIXME>
 ## RG says that with FreeBSD Make calling INSTALL does not work without
 ## explicitly passing down MAKE ('unrecognized option -w ...').  But
 ## what is really going on?
-	MAKE="$(MAKE)" $(R) CMD INSTALL $(INSTALL-OPTS) -l $(top_builddir)/library $<
+	@MAKE="$(MAKE)" $(R) CMD INSTALL $(INSTALL-OPTS) -l $(top_builddir)/library $< > $@.out 2>&1
 ## </FIXME>
+	@cat $@.out; rm $@.out
 	@touch $@
 
 R docs:
@@ -88,4 +76,7 @@ distdir: $(DISTFILES)
 	    || cp -p $(srcdir)/$${f} $(distdir)/$${f}; \
 	done
 
-## Automagically generated dependencies:
+
+## Hardcoded dependencies (see 'share/make/vars.mk')
+mgcv.ts: nlme.ts VR.ts
+nlme.ts: lattice.ts

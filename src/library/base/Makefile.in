@@ -61,7 +61,7 @@ all: Makefile DESCRIPTION
 	@$(INSTALL_DATA) all.R $(top_builddir)/library/$(pkg)/R/$(pkg)
 	@(cat $(srcdir)/../tools/R/makeLazyLoad.R $(srcdir)/makebasedb.R; \
 	  echo "makeLazyLoading(\"$(pkg)\")") | \
-	  R_DEFAULT_PACKAGES=NULL LC_COLLATE=C $(R_EXE) --slave
+	  R_DEFAULT_PACKAGES=NULL LC_COLLATE=C $(R_EXE) --slave > /dev/null
 
 
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status

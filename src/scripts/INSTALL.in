@@ -184,6 +184,7 @@ save_args=
 fake=false
 lazy="auto"
 lazy_data=false
+lock=true
 
 while test -n "${1}"; do
   ##DBG echo "   in 'R INSTALL' --arg checking-- \$1 = '${1}'" # Debugging
@@ -244,6 +245,8 @@ while test -n "${1}"; do
       configure_vars=`echo "${1}" | sed -e 's/[^=]*=//'` ;;
     --fake)
       fake=true ;;
+    --no-lock)
+      lock=false ;;
     *)
       if test -f "${1}"; then
 	##DBG echo "  in 'R INSTALL' --arg checking-- FILE '${1}'"
@@ -292,21 +295,23 @@ else
   error "cannot write to or create directory '${lib}'"
   exit 2
 fi
-lockdir="${lib}/00LOCK"
-if ${debug} ; then  echo "   before checking lockdir= '${lockdir}'" ; fi
-if test -d "${lockdir}" || test -f "${lockdir}"; then
-  error "failed to lock directory '${lib}' for modifying"
-  echo "Try removing '${lockdir}'" >&2
-  exit 3
-else
-  ${MKDIR_P} "${lockdir}"
-  if test ${?} -ne 0; then
-    ## This should not really happen ...
+if ${lock} ; then
+  lockdir="${lib}/00LOCK"
+  if ${debug} ; then  echo "   before checking lockdir= '${lockdir}'" ; fi
+  if test -d "${lockdir}" || test -f "${lockdir}"; then
     error "failed to lock directory '${lib}' for modifying"
+    echo "Try removing '${lockdir}'" >&2
     exit 3
+  else
+    ${MKDIR_P} "${lockdir}"
+    if test ${?} -ne 0; then
+      ## This should not really happen ...
+      error "failed to lock directory '${lib}' for modifying"
+      exit 3
+    fi
   fi
+  if ${debug} ; then  echo '   after checking lockdir' ; fi
 fi
-if ${debug} ; then  echo '   after checking lockdir' ; fi
 
 if ${fake}; then
   use_configure=false
@@ -354,7 +359,7 @@ do_install_binary () {
 
   if test -f "${R_PACKAGE_DIR}/DESCRIPTION"; then
     ## Back up previous version.
-    mv "${R_PACKAGE_DIR}" "${lockdir}/${R_PACKAGE_NAME}"
+    if ${lock}; then mv "${R_PACKAGE_DIR}" "${lockdir}/${R_PACKAGE_NAME}" ; fi
     ${MKDIR_P} "${R_PACKAGE_DIR}"
   fi
 
@@ -395,11 +400,16 @@ do_install_source () {
 
   if test -f "${R_PACKAGE_DIR}/DESCRIPTION"; then
     ## Back up previous version.
-    mv "${R_PACKAGE_DIR}" "${lockdir}/${R_PACKAGE_NAME}"
+    if ${lock} ; then 
+      mv "${R_PACKAGE_DIR}" "${lockdir}/${R_PACKAGE_NAME}"
+    else
+      ## this is only used for recommended packages installed from .tgz
+      rm -rf "${R_PACKAGE_DIR}"
+    fi
     ${MKDIR_P} "${R_PACKAGE_DIR}"
     ## Preserve man pages to speed up installation?  Only makes sense
     ## if we install from a non-temporary directory.
-    if test "`cd .. && ${GETWD}`" != \
+    if ${lock} && test "`cd .. && ${GETWD}`" != \
             "`cd \"${tmpdir}\" && ${GETWD}`"; then
       (cd "${lockdir}/${R_PACKAGE_NAME}" \
           && ${TAR} cf - R-ex help html latex) | \
