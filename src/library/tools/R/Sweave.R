@@ -153,7 +153,7 @@ RweaveLatexSetup <-
                     echo=echo, results="verbatim", split=split,
                     strip.white=TRUE, include=TRUE)
     
-    list(output=output, styfile=styfile,
+    list(output=output, styfile=styfile, havesty=FALSE,
          debug=debug, quiet=quiet,
          options=options, chunkout=list())
 }
@@ -287,11 +287,18 @@ RweaveLatexRuncode <- function(object, chunk, options)
 
 RweaveLatexWritedoc <- function(object, chunk)
 {
-    chunk <- gsub("\\\\begin\\{document\\}",
-                  paste("\\\\usepackage{",
-                        object$styfile,
-                        "}\n\\\\begin{document}", sep=""),
-                  chunk)
+    if(any(grep("\\usepackage[^\}]*Sweave.*\}", chunk)))
+        object$havesty <- TRUE
+
+    if(!object$havesty){
+        chunk <- gsub("\\\\begin\\{document\\}",
+                      paste("\\\\usepackage{",
+                            object$styfile,
+                            "}\n\\\\begin{document}", sep=""),
+                      chunk)
+        object$havesty <- TRUE
+    }
+    
     while((pos <-  regexpr("\\\\Sexpr{([^}]*)}", chunk)) >0)
     {
         cmd <- substr(chunk, pos+7, pos-2+attr(pos, "match.length"))

@@ -27,7 +27,10 @@ RweaveLatexSetup(file, output=NULL, quiet=FALSE, debug=FALSE,
     \code{\\usepackage\{Sweave\}} is written. The hard path makes the
     TeX file less
     portable, but avoids the problem of installing the current
-    version of \file{Sweave.sty} to some place in your TeX input path.}
+    version of \file{Sweave.sty} to some place in your TeX input path.
+    The argument is ignored if a \code{\\usepackage\{Sweave\}} is
+    already present in the Sweave source file.
+  }
   \item{echo}{set default for option \code{echo}, see defails below.}
   \item{eval}{set default for option \code{eval}, see defails below.}
   \item{split}{set default for option \code{split}, see defails below.}
