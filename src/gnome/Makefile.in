@@ -14,12 +14,7 @@ ALL_CPPFLAGS = $(GNOME_INCLUDEDIR) $(R_XTRA_CPPFLAGS) $(X_CFLAGS) $(CPPFLAGS) $(
 
 SOURCES = \
 	../unix/dataentry.c \
-	../unix/devPS.c \
-	../unix/devPicTeX.c \
 	../unix/dynload.c \
-	../unix/edit.c \
-	../unix/Rsock.c \
-	../unix/sock.c \
 	system.c \
 	system-choosefile.c \
 	system-console.c \

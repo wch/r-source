@@ -24,12 +24,15 @@ SOURCES = \
 	cov.c \
 	cum.c \
 	debug.c \
+	devPS.c \
+	devPicTeX.c \
 	deparse.c \
 	deriv.c \
 	devices.c \
 	dotcode.c \
 	dstruct.c \
 	duplicate.c \
+	edit.c \
 	envir.c \
 	errors.c \
 	eval.c \

@@ -1,6 +1,7 @@
 /*
  *  R : A Computer Langage for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
+ *  Copyright (C) 1998, 1999  The R Core Development Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -23,6 +24,9 @@
 #include "IOStuff.h"
 #include "Parse.h"
 #include <stdio.h>
+#ifdef Win32
+#include "run.h"
+#endif
 
 /*
  * ed, vi etc have 3 parameters. the data, a file and an editor
@@ -41,20 +45,38 @@
  * possible and an error message reported otherwise
  */
 
+#ifdef Win32
+static char DefaultFileName[MAX_PATH];
+
+void InitEd()
+{
+    char *tmp;
+
+    tmp = getenv("TMP");
+    if (!tmp) tmp = getenv("TEMP");
+    if (!tmp) tmp = getenv("R_USER");
+    sprintf(DefaultFileName,"%s/XXXXXX",tmp);
+    mktemp(DefaultFileName);
+}
+#else
 static char *DefaultFileName;
 
 void InitEd()
 {
     DefaultFileName = tmpnam(NULL);
 }
+#endif
 
 
 SEXP do_edit(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    int i, status;
-    SEXP x, fn, envir, ed;
+    int   i, status;
+    SEXP  x, fn, envir, ed;
     char *filename, *editcmd, *vmaxsave;
     FILE *fp;
+#ifdef Win32
+    int rc;
+#endif
 
     checkArity(op, args);
 
@@ -90,7 +112,15 @@ SEXP do_edit(SEXP call, SEXP op, SEXP args, SEXP rho)
     editcmd = R_alloc(strlen(CHAR(STRING(ed)[0]))+strlen(filename)+2,
 		      sizeof(char));
     sprintf(editcmd, "%s %s", CHAR(STRING(ed)[0]), filename);
+#ifdef Win32
+    rc = runcmd(editcmd, 1, 1, "");
+    if (rc == NOLAUNCH)
+	errorcall(call, "unable to run editor\n");
+    if (rc != 0)
+	warningcall(call, "editor ran but returned error status\n");
+#else
     system(editcmd);
+#endif
 
     if((fp=R_fopen(R_ExpandFileName(filename), "r")) == NULL)
 	errorcall(call, "unable to open file to read\n");
@@ -117,4 +147,3 @@ SEXP do_edit(SEXP call, SEXP op, SEXP args, SEXP rho)
     vmaxset(vmaxsave);
     return (x);
 }
-

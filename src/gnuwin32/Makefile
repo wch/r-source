@@ -18,7 +18,7 @@ R-DLLLIBS=-L. $(FLIBS) -lwsock32 -lcomctl32
 SOURCES=$(wildcard *.c *.f)
 OBJS=$(foreach i, $(SOURCES), $(basename $i).o)
 
-MAINLIBS=main.a appl.a nmath.a unix.a
+MAINLIBS=main.a appl.a nmath.a
 EXTRALIBS=rx.a ga.a gl.a xdr.a em.a
 
 LIBFILES=$(foreach i, $(PACKAGES), ../../library/$i)
@@ -46,7 +46,6 @@ rlibs:
 	$(MAKE) -C ../appl OPTFLAGS=$(OPTFLAGS)
 	$(MAKE) -C ../main OPTFLAGS=$(OPTFLAGS)
 	$(MAKE) -C ../nmath OPTFLAGS=$(OPTFLAGS)
-	$(MAKE) -C ../unix OPTFLAGS=$(OPTFLAGS)
 	$(MAKE) -C ./regex
 	$(MAKE) -C ./graphapp
 	$(MAKE) -C ./getline

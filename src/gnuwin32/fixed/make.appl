@@ -6,6 +6,9 @@ DIRS = .
 SOURCES=$(wildcard *.c *.f)
 OBJS=$(foreach i, $(SOURCES), $(basename $i).o)
 
+sock-CFLAGS=-DWin32
+Rsock-CFLAGS=-DWin32
+
 all: makeMakedeps ../gnuwin32/appl.a
 
 ../gnuwin32/appl.a: $(OBJS)

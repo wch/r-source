@@ -53,18 +53,15 @@ fixRd: $(wildcard man/*.Rd)
 	-$(RM) $(foreach i, $(MANOBJS), ../../library/base/man/$i)
 	$(ECHO) done > fixRd	
 
-fixmake: ../../appl/Makefile
+fixmake: ../../appl/Makefile ../../main/Makefile ../../nmath/Makefile
 
-../appl/Makefile: make.appl
+../../appl/Makefile: make.appl
 	$(CP) -p $^ $@
 
-../main/Makefile: make.main
+../../main/Makefile: make.main
 	$(CP) -p $^ $@
 
-../nmath/Makefile: make.nmath
-	$(CP) -p $^ $@
-
-../unix/Makefile: make.unix
+../../nmath/Makefile: make.nmath
 	$(CP) -p $^ $@
 
 clean:

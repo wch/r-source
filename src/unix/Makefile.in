@@ -12,11 +12,10 @@ include $(top_builddir)/Makeconf
 
 ALL_CPPFLAGS = $(R_XTRA_CPPFLAGS) $(X_CFLAGS) $(CPPFLAGS) $(DEFS)
 
-SOURCES = Rsock.c dataentry.c devPS.c devPicTeX.c devX11.c dynload.c \
-	edit.c rotated.c system.c sock.c
+SOURCES = dataentry.c devX11.c dynload.c rotated.c system.c
 DEPENDS = $(SOURCES:.c=.d)
 OBJECTS = $(SOURCES:.c=.o)
-HEADERS = Rsock.h dataentry.h devX11.h rotated.h sock.h
+HEADERS = dataentry.h devX11.h rotated.h
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = Makefile.in PSPAPER $(SOURCES) $(HEADERS)

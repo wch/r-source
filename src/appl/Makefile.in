@@ -15,6 +15,7 @@ include $(top_builddir)/Makeconf
 ## see `../unix/dynload.c'.
 
 SOURCES_C = \
+	Rsock.c \
 	S_compat.c \
 	approx.c \
 	bakslv.c \
@@ -33,6 +34,7 @@ SOURCES_C = \
 	pretty.c \
 	pythag.c \
 	rowsum.c \
+	sock.c \
 	splines.c \
 	stem.c \
 	strsignif.c \
@@ -61,10 +63,11 @@ SOURCES_F = \
 	uncmin.f
 DEPENDS = $(SOURCES_C:.c=.d)
 OBJECTS = $(SOURCES_C:.c=.o) $(SOURCES_F:.f=.o) $(BLAS)
+HEADERS = Rsock.h sock.h
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = COPYRIGHT COPYRIGHT.ftn Makefile.in README ROUTINES \
-	$(SOURCES_C) $(SOURCES_F) blas.f
+	$(SOURCES_C) $(SOURCES_F) blas.f $(HEADERS)
 
 LIB = libappl.a
 
