@@ -70,11 +70,11 @@ SEXP mkCLOSXP(SEXP formals, SEXP body, SEXP rho)
 	FORMALS(c) = formals;
     else
         error("invalid formal arguments for \"function\"");
-#endif
+#else
     FORMALS(c) = formals;
-
+#endif
     if(isList(body) || isLanguage(body) || isSymbol(body)
-       || isExpression(body) || isVectorList(body))
+       || isExpression(body) || isVector(body))
 	BODY(c) = body;
     else
         error("invalid body argument for \"function\"\n"
