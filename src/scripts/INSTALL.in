@@ -346,7 +346,7 @@ if ${debug} ; then echo "   build_help_opts= '${build_help_opts}'" ; fi
 is_first_package=yes
 
 ### 
-### Install a *binary* package from the current directory.
+### Install a *binary* package (not bundle) from the current directory.
 
 do_install_binary () {
   pkg="${1}"
@@ -417,6 +417,12 @@ do_install_source () {
           && ${TAR} cf - R-ex help html latex 2>/dev/null) | \
 	(cd "${R_PACKAGE_DIR}" && ${TAR} xf -)
     fi
+    ## check if we are in a bundle so we can back out the whole bundle
+    if grep "^Bundle:" DESCRIPTION >/dev/null; then
+      bundlepkg=`get_dcf_field Contains ../DESCRIPTION`
+    else
+      bundlepkg=${R_PACKAGE_NAME}
+    fi
   fi
 
   if ${use_configure} && test -x ./configure ; then
@@ -435,8 +441,6 @@ do_install_source () {
   done
 
   ## Install DESCRIPTION file with build information.
-  ## As from 1.7.0, packages without compiled code are not marked
-  ## as being from any platform.
   echo "tools:::.install_package_description(\".\", \"${R_PACKAGE_DIR}\")" | \
     R_DEFAULT_PACKAGES=NULL LANG=C "${R_EXE}" --vanilla >/dev/null
   if test ${?} -ne 0; then
@@ -525,6 +529,10 @@ do_install_source () {
       message " moving datasets to lazyload DB"
       echo "tools:::data2LazyLoadDB(\"${pkg_name}\", \"${lib}\")" | \
         R_DEFAULT_PACKAGES=NULL LANG=C "${R_EXE}" --vanilla > /dev/null
+    if test ${?} -ne 0; then
+      error "lazydata failed for package '${pkg_name}'"
+      do_exit_on_error
+    fi
     else
       if test -n "${use_zip_data}" \
 	  && test -n "${R_UNZIPCMD}" \
@@ -619,8 +627,7 @@ do_install_source () {
     # mv "${code_file}" "${R_PACKAGE_DIR}/R/${pkg_name}.R"
     cat "${R_HOME}/share/R/${loader_file}" > "${code_file}"
     ## If install.R is non-empty, arrange to evaluate the R code it
-    ## contains after the package source (maybe for some kind of
-    ## cleanup).
+    ## contains after the package loader.
     if test -s install.R; then
       cat install.R >> "${R_PACKAGE_DIR}/R/${R_PACKAGE_NAME}"
     fi
@@ -651,6 +658,10 @@ do_install_source () {
     (if test -s R_PROFILE.R; then cat R_PROFILE.R; fi; \
     echo "tools:::makeLazyLoading(\"${R_PACKAGE_NAME}\", \"${lib}\")") | \
       R_DEFAULT_PACKAGES= LC_COLLATE=C "${R_EXE}" --vanilla --slave
+    if test ${?} -ne 0; then
+      error "lazy loading failed for package '${pkg_name}'"
+      do_exit_on_error
+    fi
     rm -f ${R_PACKAGE_DIR}/R/all.rda
     if test -s install.R; then
       cat install.R >> "${R_PACKAGE_DIR}/R/${R_PACKAGE_NAME}"
@@ -772,6 +783,7 @@ do_install () {
 
   ## Set R_PACKAGE_DIR here at the top level.  If a version is being
   ## specified, tack that on.
+  version=""
   if ${with_package_versions}; then
     version=`get_dcf_field Version DESCRIPTION`
     if test -z "${version}"; then
@@ -819,21 +831,11 @@ do_install () {
   fi
 
   ## Figure out whether this is a source or binary package.
-  ## <NOTE>
-  ## If DESCRIPTION has a @samp{Built:} entry, this is a binary package.
-  ## This is the right test, but not available for packages installed
-  ## prior to R 1.4.  For some time, we thus checked for the existence
-  ## of a 'man' subdir if no build information was found in DESCRIPTION,
-  ## using the fact that versions of R prior to 1.4 also did not install
-  ## documentation sources, and assuming that all source packages would
-  ## have some documentation, which caused problems for people who had
-  ## not yet written any docs ... hence, from R 1.6 on only DESCRIPTION
-  ## is looked at.
-  ## </NOTE>
   if grep "^Built:" DESCRIPTION >/dev/null ; then
     ## If DESCRIPTION has a @samp{Built:} entry this is a binary
     ## package.  This is the right test, but not available for packages
-    ## installed prior to 1.4.0.
+    ## installed prior to 1.4.0 -- but 2.0.0 requires packages to be 
+    ## reinstalled.
     is_source_package=false
   else
     is_source_package=true
@@ -862,16 +864,22 @@ do_install () {
 
 do_exit_on_error () {
   remove_R_package_dir=${1-yes}
-  if test "${remove_R_package_dir}" = yes \
-      && test -n "${R_PACKAGE_DIR}"; then
-    message "Removing '${R_PACKAGE_DIR}'"
-    rm -rf "${R_PACKAGE_DIR}"
-  fi
-  if test -n "${R_PACKAGE_NAME}" \
-      && test -d "${lockdir}/${R_PACKAGE_NAME}"; then
-    message "Restoring previous '${R_PACKAGE_DIR}'"
-    mv "${lockdir}/${R_PACKAGE_NAME}" "${R_PACKAGE_DIR}"
-  fi
+  for p in ${bundlepkg}; do
+    if ${with_package_versions}; then
+      p=${p}_${version}
+    fi
+    pkgdir="${lib}/$p"
+    if test "${remove_R_package_dir}" = yes \
+	&& test -n "${pkgdir}"; then
+      message "Removing '${pkgdir}'"
+      rm -rf "${pkgdir}"
+    fi
+    if test -n "$p" \
+	&& test -d "${lockdir}/$p"; then
+      message "Restoring previous '${pkgdir}'"
+      mv "${lockdir}/$p" "${pkgdir}"
+    fi
+  done
   do_cleanup
   exit 1
 }
@@ -885,7 +893,7 @@ do_cleanup () {
 
   if test "${is_first_package}" = no; then
     ## Only need to do this in case we successfully installed  at least
-    ## *one* package ...
+    ## *one* package ... well not so sure for bundles.
     cp "${R_HOME}/doc/html/R.css" "${lib}"
     chmod 644 "${lib}/R.css"
     if test "${lib}" = "`cd \"${R_HOME}/library\" && ${GETWD}`"; then

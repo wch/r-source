@@ -653,6 +653,10 @@ PACKAGE INSTALLATION CHANGES
 	loading).  This means that almost all uses of R_PROFILE.R and
 	install.R are now unnecessary.
 
+    o	If installation of any package in a bundle fails, R CMD
+	INSTALL will back out the installation of all of the bundle,
+	not just the failed package (on both Unix and Windows).
+
 
 BUG FIXES
 

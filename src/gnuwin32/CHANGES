@@ -44,6 +44,7 @@ fails.  In any case, a failed installation is removed.  Bundles are
 processed differently, by combining the DESCRIPTION and DESCRIPTION.in
 files and processing each package separately.  Installation of a
 bundle now fails as soon as installing any component package fails.
+It is possible to install the current directory by `Rcmd INSTALL .' .
 
 winMenuAdd() and winMenuAddItem() now allow addition of menu items to
 the console and graphics windows and their popup menus.  Repeated
@@ -69,11 +70,11 @@ Open a Command Prompt/MS-DOS window, cd to the top of the installation
 
 Any changed or missing files will be reported.  You can also
 double-click to run the file -- it will open a window which will stay
-open if there are any errors.
+open if there are any errors and close quickly otherwise.
 
-The `Manuals' menu item is renamed to `Manuals (in PDF)', and is now
-greyed out if no manuals are present (which GraphApp was not doing
-correctly).
+The `Manuals' menu item in RGui is renamed to `Manuals (in PDF)', and
+is now greyed out if no manuals are present (which GraphApp was not
+doing correctly).
 
 There is a new component in the main installer for the sources of the
 help pages (the man subdirectories of the libraries) -- these were
