@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2004
-@set FAQ-VERSION 1.9-9 @value{FAQ-YEAR}-05-01
+@set FAQ-VERSION 1.9-11 @value{FAQ-YEAR}-05-05
 @set REL-VERSION 1.9.0
 @set REL-YEAR 2004
 @set FAQ-ISBN 3-900051-01-1
@@ -1981,6 +1981,11 @@ distribution, quantile and density functions to univariate, bivariate
 and (for simulation) multivariate parametric extreme value
 distributions, and provides fitting functions which calculate maximum
 likelihood estimates for univariate and bivariate models.
+@item evir
+Extreme Values in R: Functions for extreme value theory, which may be
+divided into the following groups; exploratory data analysis, block
+maxima, peaks over thresholds (univariate and bivariate), point
+processes, gev/gpd distributions.
 @item exactLoglinTest
 Monte Carlo exact tests for log-linear models.
 @item exactRankTests
@@ -4261,8 +4266,18 @@ information and sends the bug to the correct address.  Alternatively the
 bug report can be emailed to @email{R-bugs@@R-project.org} or submitted
 to the Web page at @uref{http://bugs.R-project.org/}.
 
-Bug reports on contributed packages should perhaps be sent to the
-package maintainer rather than to R-bugs.
+Bug reports on contributed packages should be sent first to the package
+maintainer, and only submitted to the R-bugs repository by package
+maintainers, mentioning the package in the subject line.
+
+There is a section of the bug repository for suggestions for
+enhancements for R labelled @samp{wishlist}.  Suggestions can be
+submitted in the same ways as bugs, but please ensure that the subject
+line makes clear that this is for the wishlist and not a bug report, for
+example by starting with @samp{Wishlist:}.
+
+Comments on and suggestions for the Windows port of R should be sent to
+@email{R-windows@@R-project.org}.
 
 @node Acknowledgments,  , R Bugs, Top
 @chapter Acknowledgments
