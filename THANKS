@@ -1,0 +1,37 @@
+R would not be what it is today without the invaluable help of these
+people, who contributed by donating code, bug fixes and documentation:
+
+Valerio Aimale
+Thomas Baier			<Thomas.Baier@ci.tuwien.ac.at>
+Ben Bolker
+Göran Broström			<gb@stat.umu.se>
+Saikat DebRoy			<saikat@stat.wisc.edu>
+Lyndon Drake			<lyndon@stat.auckland.ac.nz>
+Paul Gilbert			<pgilbert@bank-banque-canada.ca>
+Robert King
+Philippe Lambert
+Patrick Lindsey
+Jim Lindsey			<jlindsey@luc.ac.be>
+Catherine Loader		<catherine@research.bell-labs.com>
+Gordon Maclean
+John Maindonald			<john.maindonald@anu.edu.au>
+Jens Oehlschaegel-Akiyoshi	<jens.oehlschlaegel-akiyoshi@mdfactory.de>
+Steve Oncley
+Richard Okeefe
+Hubert Palme
+Jose C. Pinheiro		<jcp$research.bell-labs.com>
+Martyn Plummer			<plummer@iarc.fr>
+Jonathan Rougier		<J.C.Rougier@durham.ac.uk>
+Bill Simpson			<wsi@gcal.ac.uk>
+Adrian Trapletti		<adrian@olsen.ch>
+Terry Therneau
+Bill Venables			<William.Venables@cmis.CSIRO.AU>
+Gregory R. Warnes		<warnes@biostat.washington.edu>
+Andreas Weingessel		<Andreas.Weingessel@ci.tuwien.ac.at>
+
+Many more, too numerous to mention here, have contributed by sending bug
+reports and suggesting various improvements.
+
+A special debt is owed to John Chambers who has graciously contributed
+advice and encouragement in the early days of R and later became a
+member of the core team.
