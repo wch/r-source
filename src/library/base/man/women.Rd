@@ -8,8 +8,8 @@
 }
 \format{A data frame with 15 observations on 2 variables.
   \tabular{rlll}{
-    [,1]  \tab height  \tab numeric  \tab Height (in)\cr
-    [,2]  \tab weight  \tab numeric  \tab Weight (lbs)
+    \code{[,1]}  \tab \code{height}  \tab numeric  \tab Height (in)\cr
+    \code{[,2]}  \tab \code{weight}  \tab numeric  \tab Weight (lbs)
   }
 }
 \source{The World Almanac and Book of Facts, 1975.}

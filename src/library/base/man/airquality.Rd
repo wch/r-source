@@ -5,12 +5,12 @@
 \format{A data frame with 154 observations on 6 variables.
 
   \tabular{rlll}{
-    [,1] \tab Ozone   \tab numeric \tab Ozone (ppb)\cr
-    [,2] \tab Solar.R \tab numeric \tab Solar R (lang)\cr
-    [,3] \tab Wind    \tab numeric \tab Wind (mph)\cr
-    [,4] \tab Temp    \tab numeric \tab Temperature (degrees F)\cr
-    [,5] \tab Month   \tab numeric \tab Month (1--12)\cr
-    [,6] \tab Day     \tab numeric \tab Day of month (1--31)
+    \code{[,1]} \tab \code{Ozone}   \tab numeric \tab Ozone (ppb)\cr
+    \code{[,2]} \tab \code{Solar.R} \tab numeric \tab Solar R (lang)\cr
+    \code{[,3]} \tab \code{Wind}    \tab numeric \tab Wind (mph)\cr
+    \code{[,4]} \tab \code{Temp}    \tab numeric \tab Temperature (degrees F)\cr
+    \code{[,5]} \tab \code{Month}   \tab numeric \tab Month (1--12)\cr
+    \code{[,6]} \tab \code{Day}     \tab numeric \tab Day of month (1--31)
   }
 }
 \description{

@@ -78,11 +78,8 @@
     \code{x \%<=\% y}   \tab y implies x \cr
     \code{x \%dblup\% y}   \tab x double-up-arrow y \cr
     \code{x \%dbldown\% y} \tab x double-down-arrow y \cr
-  }
-  \tabular{ll}{
-%    \bold{Syntax} \tab \bold{Meaning} \cr
-    \code{alpha} -- \code{omega} \tab greek symbols \cr
-    \code{Alpha} -- \code{Omega} \tab uppercase greek symbols \cr
+    \code{alpha} -- \code{omega} \tab Greek symbols \cr
+    \code{Alpha} -- \code{Omega} \tab uppercase Greek symbols \cr
     \code{infinity}   \tab infinity symbol \cr
     \code{32*degree}   \tab 32 degrees \cr
     \code{60*minute}   \tab 60 minutes of angle \cr

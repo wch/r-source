@@ -4,9 +4,9 @@
 \alias{trees}
 \format{A data frame with 31 observations on 3 variables.
   \tabular{rlll}{
-  [,1]  \tab Girth   \tab numeric  \tab Tree diameter at 4 ft 6 in\cr
-  [,2]  \tab Height  \tab numeric  \tab Height in ft\cr
-  [,3]  \tab Volume  \tab numeric  \tab Volume of timber in cubic ft\cr
+  \code{[,1]} \tab \code{Girth} \tab numeric \tab Tree diameter at 4 ft 6 in\cr
+  \code{[,2]} \tab \code{Height}\tab numeric \tab Height in ft\cr
+  \code{[,3]} \tab \code{Volume}\tab numeric \tab Volume of timber in cubic ft\cr
 }
 \source{
   Ryan, T. A., Joiner, B. L. and Ryan, B. F. (1976)
