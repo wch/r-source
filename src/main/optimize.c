@@ -1,8 +1,8 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998--2000  Robert Gentleman, Ross Ihaka and the
- *                            R Development Core Team
+ *  Copyright (C) 1998--2002  Robert Gentleman, Ross Ihaka and the
+ *			      R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -113,7 +113,7 @@ SEXP do_fmin(SEXP call, SEXP op, SEXP args, SEXP rho)
     PROTECT(info.R_fcall = lang2(v, R_NilValue));
     PROTECT(res = allocVector(REALSXP, 1));
     SETCADR(info.R_fcall, allocVector(REALSXP, 1));
-    REAL(res)[0] = Brent_fmin(xmin, xmax, 
+    REAL(res)[0] = Brent_fmin(xmin, xmax,
 			      (double (*)(double, void*)) fcn1, &info, tol);
     UNPROTECT(2);
     return res;
@@ -229,14 +229,14 @@ typedef struct {
 } ftable;
 
 typedef struct {
-  SEXP R_fcall;       /* unevaluated call to R function */
-  SEXP R_env;         /* where to evaluate the calls */
+  SEXP R_fcall;	      /* unevaluated call to R function */
+  SEXP R_env;	      /* where to evaluate the calls */
   int have_gradient;
   int have_hessian;
 /*  int n;	      -* length of the parameter (x) vector */
-  int FT_size;        /* size of table to store computed
+  int FT_size;	      /* size of table to store computed
 			 function values */
-  int FT_last;        /* Newest entry in the table */
+  int FT_last;	      /* Newest entry in the table */
   ftable *Ftable;
 } function_info;
 
@@ -282,7 +282,7 @@ static void FT_store(int n, const double f, const double *x, const double *grad,
     state->Ftable[ind].fval = f;
     Memcpy(state->Ftable[ind].x, x, n);
     if (grad) {
-        Memcpy(state->Ftable[ind].grad, grad, n);
+	Memcpy(state->Ftable[ind].grad, grad, n);
 	if (hess) {
 	    Memcpy(state->Ftable[ind].hess, hess, n * n);
 	}
@@ -298,7 +298,7 @@ static int FT_lookup(int n, const double *x, function_info *state)
     int i, j, ind, matched;
     int FT_size, FT_last;
     ftable *Ftable;
-    
+
     FT_last = state->FT_last;
     FT_size = state->FT_size;
     Ftable = state->Ftable;
@@ -311,13 +311,13 @@ static int FT_lookup(int n, const double *x, function_info *state)
 	if (ftx) {
 	    matched = 1;
 	    for (j = 0; j < n; j++) {
-	        if (x[j] != ftx[j]) {
-	            matched = 0;
+		if (x[j] != ftx[j]) {
+		    matched = 0;
 		    break;
-	        }
+		}
 	    }
 	    if (matched) return ind;
-        }
+	}
     }
     return -1;
 }
@@ -405,7 +405,7 @@ static void Cd2fcn(int nr, int n, const double x[], double *h,
 	}
     }
     for (j = 0; j < n; j++) {  /* fill in lower triangle only */
-        Memcpy( h + j*(n + 1), state->Ftable[ind].hess + j*(n + 1), n - j);
+	Memcpy( h + j*(n + 1), state->Ftable[ind].hess + j*(n + 1), n - j);
     }
 }
 
@@ -520,6 +520,8 @@ static void optcode(int code)
     Rprintf("\n");
 }
 
+/* NOTE: The actual Dennis-Schnabel algorithm `optif9' is in ../appl/uncmin.c */
+
 SEXP do_nlm(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP value, names, v, R_gradientSymbol, R_hessianSymbol;
@@ -532,6 +534,10 @@ SEXP do_nlm(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     char *vmax;
 
+/* .Internal(
+ *	nlm(function(x) f(x, ...), p, hessian, typsize, fscale,
+ *	    msg, ndigit, gradtol, stepmax, steptol, iterlim)
+ */
     function_info *state;
 
     checkArity(op, args);
@@ -549,29 +555,30 @@ SEXP do_nlm(SEXP call, SEXP op, SEXP args, SEXP rho)
     PROTECT(state->R_fcall = lang2(v, R_NilValue));
     args = CDR(args);
 
-    /* inital parameter value */
+    /* `p' : inital parameter value */
 
     n = 0;
     x = fixparam(CAR(args), &n, call);
     args = CDR(args);
 
-    /* hessian required? */
+    /* `hessian' : H. required? */
 
     want_hessian = asLogical(CAR(args));
     if (want_hessian == NA_LOGICAL) want_hessian = 0;
     args = CDR(args);
 
-    /* typical size of parameter elements */
+    /* `typsize' : typical size of parameter elements */
 
     typsiz = fixparam(CAR(args), &n, call);
     args = CDR(args);
 
-    /* expected function size */
+    /* `fscale' : expected function size */
 
     fscale = asReal(CAR(args));
     if (ISNA(fscale)) invalid_na(call);
     args = CDR(args);
 
+    /* `msg' (bit pattern) */
     omsg = msg = asInteger(CAR(args));
     if (msg == NA_INTEGER) invalid_na(call);
     args = CDR(args);
@@ -592,6 +599,7 @@ SEXP do_nlm(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (ISNA(steptol)) invalid_na(call);
     args = CDR(args);
 
+    /* `iterlim' (def. 100) */
     itnlim = asInteger(CAR(args));
     if (itnlim == NA_INTEGER) invalid_na(call);
     args = CDR(args);
@@ -617,7 +625,7 @@ SEXP do_nlm(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    iagflg = 1;
 	    state->have_gradient = 1;
 	    v = getAttrib(value, R_hessianSymbol);
-	    
+
 	    if (v != R_NilValue) {
 		if (LENGTH(v) == (n * n) && (isReal(v) || isInteger(v))) {
 		    iahflg = 1;
