@@ -1355,6 +1355,12 @@ Tcl/Tk libraries, @code{libpng}, @code{libjpeg} and @code{zlib}) which
 might be linked against.  Fortunately these are normally built as shared
 libraries with the exception of the ATLAS BLAS libraries.
 
+64-bit versions of Linux are built with support for files > 2Gb, but
+32-bit versions usually are not.  This can be enabled for Linux kernels
+2.4.x or later by the configure option @option{--enable-linux-lfs}: it
+test for Linux, a suitable kernel and a 32-bit @samp{long} type.
+
+
 @node Mac OS X, Solaris, Linux, Platform notes
 @subsection Mac OS X
 @cindex Mac OS X
@@ -1439,6 +1445,12 @@ compiler: the @command{gcc}/@command{f77} combination works well.  For
 many C++ applications (e.g. package @pkg{Matrix}) Forte 7 requires
 @code{-lCstd}, which the configure script will add to
 @code{SHLIB_CXXLDFLAGS} if it identifies the compiler correctly.
+
+A 32-bit version of R is built without large file support and so can
+only handle files up to 2Gb (unlike 64-bit versions).  According to
+@samp{man lfcompile} this restriction can be removed if
+@option{-D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE=1} is added to
+@samp{CFLAGS}.  (This has not been tested.)
 
 
 To compile for a 64-bit target on Solaris (which needs an UltraSparc
@@ -1849,7 +1861,7 @@ override the results.  Scanning the manual entries for @command{cc} and
 recipe you can modify the file @file{config.site} (following the
 instructions therein) so that the build will use these options.
 
-It seems that @samp{gcc 3.4.0} on @samp{ix86} Linux defeats attempts by
+It seems that @samp{gcc 3.4.x} on @samp{ix86} Linux defeats attempts by
 the LAPACK code to avoid computations entirely in extended-precision
 registers, so file @file{src/modules/lapack/dlamc.f} may need to
 compiled without optimization.  If configure detects GNU Fortran it adds
