@@ -777,6 +777,9 @@ BUG FIXES
     o   gzfile() connections had trouble at EOF when used on uncompressed
 	file.
 
+    o   The Unix version of dataentry segfaulted if the `Copy' button
+	was used.  (PR#6605)
+
 
 
 
