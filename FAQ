@@ -2078,7 +2078,7 @@ This ensures that the site profile and saved data files are not read.
    On Unix systems a bug report can be generated using the function
 `bug.report()'.  This automatically includes the version information and
 sends the bug to the correct address.  Alternatively the bug report can be
-emailed to <r-bugs@lists.r-project.org> or submitted to the Web page at
+emailed to <r-bugs@r-project.org> or submitted to the Web page at
 `http://bugs.r-project.org/'.
 
    Bug reports on contributed packages should perhaps be sent to the
