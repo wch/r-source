@@ -34,7 +34,7 @@ use Text::DelimMatch;
 ## don't buffer output
 $| = 1;
 
-my $revision = ' $Revision: 1.63 $ ';
+my $revision = ' $Revision: 1.64 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -71,8 +71,8 @@ $opt_install = 0 if $opt_no_install;
 
 sub env_path {
     my @args = @_;
-    my $filesep = ":";
-    $filesep = ";" if($WINDOWS);
+    my $envsep = ":";
+    $envsep = ";" if($WINDOWS);
     join($envsep, @args);
 }
 
