@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.7-45, 2003-09-21
+Version 1.7-46, 2003-09-26
 ISBN 3-901167-51-X
 Kurt Hornik
 
@@ -175,7 +175,7 @@ Feedback is of course most welcome.
 Features specific to the Windows and Mac OS ports of R are described in the
 "R for Windows FAQ" (http://www.stats.ox.ac.uk/pub/R/rw-FAQ.html) and the
 "R for Macintosh FAQ/DOC"
-(http://cran.R-project.org/bin/macos/rmac-FAQ.html).  If you have
+(http://cran.r-project.org/bin/macosx/RAqua-FAQ.html).  If you have
 information on Mac or Windows systems that you think should be added to
 this document, please let me know.
 
@@ -375,7 +375,7 @@ the RAqua GUI.
 
    This port of R for MacOSX is maintained by Stefano Iacus
 <Stefano.Iacus@R-project.org>.  The "R for Macintosh FAQ/DOC"
-(http://www.economia.unimi.it/R/rmac-FAQ.html) has more details.
+(http://cran.r-project.org/bin/macosx/RAqua-FAQ.html) has more details.
 
    The `bin/macos' directory of a CRAN site contains bin-hexed (`hqx') and
 stuffit (`sit') archives for a base distribution and a large number of
@@ -1852,6 +1852,10 @@ distributions of R.)
 *lokern*
      Kernel regression smoothing with adaptive local or global plug-in
      bandwidth selection.
+
+*lpSolve*
+     Functions that solve general linear/integer problems, assignment
+     problems, and transportation problems via interfacing Lp_solve.
 
 *lpridge*
      Local polynomial (ridge) regression.
