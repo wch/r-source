@@ -59,7 +59,7 @@ _nl_find_domain (const char *dirname, char *locale,
   const char *special;
   const char *sponsor;
   const char *revision;
-  const char *alias_value;
+  const char *alias_value = NULL;
   int mask;
 
   /* LOCALE can consist of up to four recognized parts for the XPG syntax:
@@ -165,8 +165,10 @@ _nl_find_domain (const char *dirname, char *locale,
     }
 
   /* The room for an alias was dynamically allocated.  Free it now.  */
+#ifndef WIN32 /* not used on Windows */
   if (alias_value != NULL)
-    free (locale);
+      free (alias_value); /* R bug fix */
+#endif
 
   /* The space for normalized_codeset is dynamically allocated.  Free it.  */
   if (mask & XPG_NORM_CODESET)
