@@ -92,8 +92,8 @@ src/nmath/sunif.c
 src/nmath/stirlerr.c
 src/nmath/dbinom.c
 src/nmath/dpois.c
- are now partly based on Clive Loader's (1999) work, and are
- (C) 1999-2000 Lucent Technologies, Bell Laboratories.
+  are now partly based on Clive Loader's (1999) work, and are
+  (C) 1999-2000 Lucent Technologies, Bell Laboratories.
 
 src/gnome/devGNOME.c
 src/gnome/devGTK.c
