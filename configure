@@ -18,15 +18,15 @@ ac_help="$ac_help
 ac_help="$ac_help
   --with-f77              use f77 to compile FORTRAN subroutines"
 ac_help="$ac_help
-  --enable-libmoto        use libmoto math library (if available)"
+  --with-libmoto          use libmoto math library (if available)"
 ac_help="$ac_help
-  --enable-blas           use BLAS library (if available)"
+  --with-blas             use BLAS library (if available)"
 ac_help="$ac_help
-  --enable-blas_risc      use RISC Optimized BLAS library (if available)"
+  --with-blas_risc        use RISC Optimized BLAS library (if available)"
 ac_help="$ac_help
-  --enable-dxml           use DXML library (if available)"
+  --with-dxml             use DXML library (if available)"
 ac_help="$ac_help
-  --enable-readline       use readline library (if available)"
+  --with-readline         use readline library (if available)"
 ac_help="$ac_help
   --with-gnome            use GNOME (if available)"
 ac_help="$ac_help
@@ -678,10 +678,10 @@ fi
 ## Here we should maybe check that only one of the above options for
 ## dealing with FORTRAN were specified.
 
-# Check whether --enable-libmoto or --disable-libmoto was given.
-if test "${enable_libmoto+set}" = set; then
-  enableval="$enable_libmoto"
-   if test "${enableval}"=no;
+# Check whether --with-libmoto or --without-libmoto was given.
+if test "${with_libmoto+set}" = set; then
+  withval="$with_libmoto"
+   if test "${withval}"=no;
       then use_libmoto=false;
       else use_libmoto=true;
     fi
@@ -690,10 +690,10 @@ else
 fi
 
       
-# Check whether --enable-blas or --disable-blas was given.
-if test "${enable_blas+set}" = set; then
-  enableval="$enable_blas"
-  if test "${enableval}" = no;
+# Check whether --with-blas or --without-blas was given.
+if test "${with_blas+set}" = set; then
+  withval="$with_blas"
+  if test "${withval}" = no;
     then use_blas=false;
     else use_blas=true;
   fi
@@ -702,10 +702,10 @@ else
 fi
 
 
-# Check whether --enable-blas_risc or --disable-blas_risc was given.
-if test "${enable_blas_risc+set}" = set; then
-  enableval="$enable_blas_risc"
-   if test "${enableval}" = no;
+# Check whether --with-blas_risc or --without-blas_risc was given.
+if test "${with_blas_risc+set}" = set; then
+  withval="$with_blas_risc"
+   if test "${withval}" = no;
      then use_blas_risc=false;  
      else use_blas_risc=true;
     fi
@@ -714,10 +714,10 @@ else
 fi
 
 
-# Check whether --enable-dxml or --disable-dxml was given.
-if test "${enable_dxml+set}" = set; then
-  enableval="$enable_dxml"
-  if test "${enableval}" = no;
+# Check whether --with-dxml or --without-dxml was given.
+if test "${with_dxml+set}" = set; then
+  withval="$with_dxml"
+  if test "${withval}" = no;
     then use_dxml=false;
     else use_dxml=true;
   fi
@@ -726,10 +726,10 @@ else
 fi
 
 
-# Check whether --enable-readline or --disable-readline was given.
-if test "${enable_readline+set}" = set; then
-  enableval="$enable_readline"
-  if test "${enableval}" = no;
+# Check whether --with-readline or --without-readline was given.
+if test "${with_readline+set}" = set; then
+  withval="$with_readline"
+  if test "${withval}" = no;
     then use_readline=false;
     else use_readline=true;
    fi
@@ -2569,11 +2569,11 @@ echo "configure:2555: checking for gnomeConf.sh file in $gnome_prefix" >&5
 
 fi
 if test "${GNOMEUI_LIBS}" = ""; then
-  GNOME_ENABLED="no"
+  use_gnome="no"
   RGNOMEDIR=""
   RGNOMEBIN=""
 else
-  GNOME_ENABLED="yes"
+  use_gnome="yes"
   RGNOMEDIR="gnome"
   RGNOMEBIN="\$(top_builddir)/bin/R.gnome"
 fi
@@ -5065,7 +5065,7 @@ R is now configured for ${host}
   Installation directory:   ${prefix}
   C compiler:               ${CC} ${CFLAGS}
   FORTRAN compiler:         ${FORT}
-  Gnome support enabled:    ${GNOME_ENABLED}
+  Gnome support:            ${use_gnome}
 " 1>&6
 chmod +x doc/keyword-test doc/manual/lib2tex
 
