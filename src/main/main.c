@@ -41,12 +41,6 @@
 # include <langinfo.h>
 #endif
 
-#ifdef HAVE_AQUA
-extern void InitAquaIO(void);			/* from src/modules/aqua/aquaconsole.c */
-extern void RSetConsoleWidth(void);		/* from src/modules/aqua/aquaconsole.c */
-extern Rboolean CocoaGUI;				/* from src/unix/system.c              */
-extern Rboolean useCocoa;				/* from src/unix/system.c              */
-#endif
 
 /* The `real' main() program is in ../<SYSTEM>/system.c */
 /* e.g. ../unix/system.c */
@@ -455,12 +449,6 @@ void setup_Rmainloop(void)
     InitColors();
     InitGraphics();
     R_Is_Running = 1;
-#ifdef HAVE_AQUA 
-    if( (strcmp(R_GUIType, "AQUA") == 0) && !CocoaGUI && !useCocoa){ 
-		InitAquaIO(); /* must be after InitTempDir() */
-		RSetConsoleWidth();
-	}
-#endif
 #ifdef HAVE_LANGINFO_CODESET
     utf8locale = strcmp(nl_langinfo(CODESET), "UTF-8") == 0;
 #endif

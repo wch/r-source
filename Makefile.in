@@ -198,8 +198,6 @@ reset-recommended:
 	@(cd src/library/Recommended && $(MAKE) clean)
 
 install-R-framework:
-	@(cd $(top_builddir)/src/modules/aqua && \
-	  cp Info.plist "$(R_FRAMEWORK_DIR)/Versions/$(VERSION)/Resources")
 	@(cd "$(R_FRAMEWORK_DIR)/Versions/$(VERSION)" && \
 	  ln -f -s -n Resources/include Headers && \
 	  ln -f -s -n Resources/lib/libR.dylib R && \
@@ -213,38 +211,12 @@ install-R-framework:
 	  ln -f -s -n Versions/Current/Headers Headers&& \
 	  ln -f -s -n Versions/Current/R R && \
 	  ln -f -s -n Versions/Current/Resources Resources)
-	@(cd "$(srcdir)/src/modules/aqua/Contents/Resources" && \
-	  cp -R * "$(R_FRAMEWORK_DIR)/Resources/bin/exec/")
-	@(cd "$(R_FRAMEWORK_DIR)/Resources/bin" && \
-	  sed 's/^args=/args=--gui=aqua/' < R > RAqua && \
-	  chmod 755 RAqua) 
 	@(cd "$(R_FRAMEWORK_DIR)/Resources/lib" && \
 	  install_name_tool -id "$(R_FRAMEWORK_DIR)/Versions/$(VERSION)/Resources/lib/libR.dylib" ../lib/libR.dylib)
-	@(sed 's/Versions\/$(VERSION)\/Resources/Resources/' $(R_FRAMEWORK_DIR)/Resources/bin/RAqua > \
-	  $(R_FRAMEWORK_DIR)/Resources/bin/RRAqua)
-	@(mv $(R_FRAMEWORK_DIR)/Resources/bin/RRAqua $(R_FRAMEWORK_DIR)/Resources/bin/RAqua)
-	@(chmod 755 $(R_FRAMEWORK_DIR)/Resources/bin/RAqua)
-	@(cp $(srcdir)/src/modules/aqua/CHANGES "$(R_FRAMEWORK_DIR)/Resources/NEWS.aqua")
-	@(cp $(srcdir)/src/modules/aqua/RMacOSX-FAQ.html "$(R_FRAMEWORK_DIR)/Resources/RMacOSX-FAQ.html")
 	@(cp -R $(srcdir)/src/include $(R_FRAMEWORK_DIR)/Versions/Current/PrivateHeaders)
 	@(install_name_tool -change libR.dylib "$(R_FRAMEWORK_DIR)/Versions/$(VERSION)/Resources/lib/libR.dylib" \
 	  $(R_FRAMEWORK_DIR)/Resources/bin/exec/R)
 	@(find "$(R_FRAMEWORK_DIR)/Resources/" -name '*.so' -exec install_name_tool \
 	  -change libR.dylib "$(R_FRAMEWORK_DIR)/Versions/$(VERSION)/Resources/lib/libR.dylib" \{\} \;)
 
-install-aqua:
-	@(rm -rf /Applications/R.app)
-	@(mkdir -p /Applications/R.app/Contents/Resources)
-	@(cd "$(srcdir)/src/modules/aqua/Contents" && \
-	  cp PkgInfo /Applications/R.app/Contents)
-	@(cd "$(top_builddir)/src/modules/aqua/Contents" && \
-	  cp Info.plist  /Applications/R.app/Contents)
-	@(cd "$(srcdir)/src/modules/aqua/Contents/Resources" && \
-	  cp -R * /Applications/R.app/Contents/Resources)
-	@(mkdir -p /Applications/R.app/Contents/MacOS)
-	@test -f "$(R_FRAMEWORK_DIR)/Resources/bin/RAqua"  \
-	  || (echo "please, make install-R-framework first" &&  exit 1)
-	@(cd /Applications/R.app/Contents/MacOS && \
-	  ln -f -n "$(R_FRAMEWORK_DIR)/Resources/bin/RAqua" R && \
-	  chmod 755 R)
 TAGS:

@@ -48,8 +48,8 @@
 #endif
 
 #if HAVE_AQUA
-extern Rboolean useCocoa;
 extern int (*ptr_CocoaSystem)(char*);
+extern	Rboolean useaqua;
 #endif
 
 Rboolean R_FileExists(char *path)
@@ -184,7 +184,7 @@ int R_system(char *command)
     sigaddset(&ss, SIGPROF);
     sigprocmask(SIG_BLOCK, &ss,  NULL);
 #ifdef HAVE_AQUA
-	if(useCocoa)
+	if(useaqua)
 		val = ptr_CocoaSystem(command);
     else
 #endif		

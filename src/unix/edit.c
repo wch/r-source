@@ -38,7 +38,7 @@ int Rgui_Edit(char *filename, char *title, int modal);
 
 #ifdef HAVE_AQUA
 extern  DL_FUNC ptr_Raqua_Edit;
-extern  Rboolean useCocoa;
+extern  Rboolean useaqua;
 int Raqua_Edit(char *filename) {ptr_Raqua_Edit(filename);}
 #endif
 
@@ -154,7 +154,7 @@ SEXP do_edit(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
 #else
 # if defined(HAVE_AQUA)
-    if (!strcmp(R_GUIType,"AQUA") || useCocoa)	
+    if (!strcmp(R_GUIType,"AQUA") || useaqua)	
       rc = Raqua_Edit(filename);
     else {
       sprintf(editcmd, "%s %s", cmd, filename);

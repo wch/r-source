@@ -21,4 +21,3 @@ void Rstd_loadhistory(SEXP call, SEXP op, SEXP args, SEXP env);
 void Rstd_savehistory(SEXP call, SEXP op, SEXP args, SEXP env);
 
 void R_load_X11_shlib(void);
-void R_load_aqua_shlib(void);
