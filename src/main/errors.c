@@ -61,9 +61,9 @@ static int inWarning = 0;
 			     /
 		    warning /
 
-  ErrorMessage	 : similar to errorcall()   but with message from ErrorDB[]
+  ErrorMessage()-> errorcall   (but with message from ErrorDB[])
 
-  WarningMessage : similar to warningcall() but with message from WarningDB[].
+  WarningMessage-> warningcall (but with message from WarningDB[]).
 */
 
 
@@ -575,49 +575,37 @@ WarningDB[] = {
 void ErrorMessage(SEXP call, int which_error, ...)
 {
     int i;
+    char buf[BUFSIZE], *p;
     va_list(ap);
-    char *dcall;
-    if (inError)
-	jump_now();
-    if (call != R_NilValue) {
-	dcall = CHAR(STRING_ELT(deparse1(call, 0), 0));
-	REprintf("Error in %s : ", dcall);
-	if (strlen(dcall) > LONGCALL) REprintf("\n   ");
-    }
-    else
-	REprintf("Error: ");	/* -- dcall = ??? */
+
     i = 0;
     while(ErrorDB[i].code != ERROR_UNKNOWN) {
 	if (ErrorDB[i].code == which_error)
 	    break;
 	i++;
     }
+
     va_start(ap, which_error);
-    REvprintf(ErrorDB[i].format, ap);
+    Rvsnprintf(buf, BUFSIZE, ErrorDB[i].format, ap);
     va_end(ap);
-    jump_to_toplevel();
+    errorcall(call, "%s", buf);
 }
 
 void WarningMessage(SEXP call, R_WARNING which_warn, ...)
 {
     int i;
+    char buf[BUFSIZE], *p;
     va_list(ap);
-    char *dcall;
-    if (inError)
-	jump_now();
-    if (call != R_NilValue) {
-	dcall = CHAR(STRING_ELT(deparse1(call, 0), 0));
-	REprintf("Warning in %s : ", dcall);
-    }
-    else
-	REprintf("Warning: ");	/* -- dcall = ??? */
+
     i = 0;
     while(WarningDB[i].code != WARNING_UNKNOWN) {
 	if (WarningDB[i].code == which_warn)
 	    break;
 	i++;
     }
+
     va_start(ap, which_warn);
-    REvprintf(WarningDB[i].format, ap);
+    Rvsnprintf(buf, BUFSIZE, WarningDB[i].format, ap);
     va_end(ap);
+    warningcall(call, "%s", buf);
 }
