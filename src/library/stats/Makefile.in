@@ -1,5 +1,5 @@
 #
-# ${R_HOME}/src/library/utils/Makefile
+# ${R_HOME}/src/library/stats/Makefile
 
 VPATH = @srcdir@
 srcdir = @srcdir@
@@ -12,7 +12,7 @@ include $(top_builddir)/Makeconf
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = COPYRIGHTS.modreg DESCRIPTION.in Makefile.in \
-  NAMESPACE SOURCES.ts
+  NAMESPACE SOURCES.ts install.R
 
 pkg = stats
 
@@ -20,10 +20,10 @@ all: Makefile DESCRIPTION
 	@echo "building package '$(pkg)'"
 	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/R
 	@(f=$${TMPDIR:-/tmp}/R$$$$; \
-	  cat `ls $(srcdir)/R/*.R` > $${f}; \
-	  $(SHELL) $(top_srcdir)/tools/move-if-change $${f} \
-	    $(top_builddir)/library/$(pkg)/R/$(pkg))
-	@for f in COPYRIGHTS INDEX NAMESPACE SOURCES; do \
+	  echo ".packageName <- \"$(pkg)\"" >  $${f}; \
+	  cat `ls $(srcdir)/R/*.R` >> $${f}; \
+	  $(SHELL) $(top_srcdir)/tools/move-if-change $${f} all.R)
+	@for f in COPYRIGHTS.modreg SOURCES.ts NAMESPACE; do \
 	  if test -f $(srcdir)/$${f}; then \
 	    $(INSTALL_DATA) $(srcdir)/$${f} \
 	      $(top_builddir)/library/$(pkg); \
@@ -63,15 +63,46 @@ all: Makefile DESCRIPTION
 	@if test -d src; then \
 	  (cd src && $(MAKE)) || exit 1; \
 	fi
+	@$(MAKE) Rfiles
 
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
 DESCRIPTION: $(srcdir)/DESCRIPTION.in $(top_builddir)/config.status
 	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
 
+Rfiles: $(top_builddir)/library/$(pkg)/R/$(pkg) \
+  $(top_builddir)/library/$(pkg)/R/all.rda
+
+$(top_builddir)/library/$(pkg)/R/$(pkg): $(srcdir)/install.R
+	@$(INSTALL_DATA) $(srcdir)/install.R $@
+
+$(top_builddir)/library/$(pkg)/R/all.rda: all.R
+	@echo "dumping R code in package '$(pkg)'"
+	@if test -f $(srcdir)/NAMESPACE; then \
+	  $(INSTALL_DATA) all.R $(top_builddir)/library/$(pkg)/R/$(pkg); \
+	  echo "saveNamespaceImage(\"$(pkg)\", \"$@\")" | \
+	    R_DEFAULT_PACKAGES=NULL \
+	    $(top_builddir)/bin/R --vanilla --slave; \
+	  $(INSTALL_DATA) $(top_srcdir)/share/R/nsrdaload.R \
+	    $(top_builddir)/library/$(pkg)/R/$(pkg); \
+	else \
+	  (echo \
+	    "options(save.image.defaults=list(compress=TRUE, safe=FALSE))"; \
+	    cat all.R) | \
+	    R_DEFAULT_PACKAGES=NULL \
+	    $(top_builddir)/bin/R --vanilla --slave --save; \
+	  $(INSTALL_DATA) .RData $@; \
+	  $(INSTALL_DATA) $(top_srcdir)/share/R/firstlib.R \
+	    $(top_builddir)/library/$(pkg)/R/$(pkg); \
+	  if test -f $(top_builddir)/library/$(pkg)/NAMESPACE; then \
+	    rm -f $(top_builddir)/library/$(pkg)/NAMESPACE; \
+	  fi; \
+	fi
+
 mostlyclean: clean
 clean:
 	@if test -d src; then (cd src && $(MAKE) $@); fi
+	-@rm -f all.R .RData
 distclean:
 	@if test -d src; then (cd src && $(MAKE) $@); fi
 	-@rm -f Makefile DESCRIPTION
