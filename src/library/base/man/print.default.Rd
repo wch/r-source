@@ -47,7 +47,7 @@
   default values (for the methods called) of the other arguments.
 
   When the \pkg{methods} package is attached, \code{print} will call
-  \code{\link[methods]{show}} for methods with formal classes if called
+  \code{\link{show}} for methods with formal classes if called
   with no optional arguments.
 }
 \seealso{The generic \code{\link{print}}, \code{\link{options}}.

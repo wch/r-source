@@ -52,7 +52,7 @@ unix.time(expr, gcFirst)
 }
 #endif
 \seealso{
-  \code{\link{proc.time}}, \code{\link[stats]{time}} which is for time series.
+  \code{\link{proc.time}}, \code{\link{time}} which is for time series.
 }
 \examples{
 require(stats)

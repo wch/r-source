@@ -82,7 +82,7 @@ getNativeSymbolInfo(name, PACKAGE)
   in a similar manner, such as when passing an R function
   to C code that makes callbacks to that function
   at different points in its computation
-  (e.g., \code{\link[stats]{nls}}).
+  (e.g., \code{\link{nls}}).
   Additionally, we can resolve the symbol just once and
   avoid resolving it repeatedly or using the internal
   cache.

@@ -16,7 +16,7 @@ is.object(x)
   \code{is.object} is generic: you can write methods to handle
   specific classes of objects, see \link{InternalMethods}.
 }
-\seealso{\code{\link[base]{class}}, and \code{\link[utils]{methods}}.}
+\seealso{\code{\link[base]{class}}, and \code{\link{methods}}.}
 
 \examples{
 is.object(1) # FALSE

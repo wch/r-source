@@ -12,7 +12,7 @@
   You can ask for on-line help for class definitions, for specific
   methods for a generic function, and for general discussion of
   methods for a generic function.  These requests use the \code{?}
-  operator (see \code{\link[utils]{help}} for a general description of
+  operator (see \code{\link{help}} for a general description of
   the operator).  Of course, you are at the mercy of the implementer
   as to whether there \emph{is} any documentation on the corresponding
   topics.

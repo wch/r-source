@@ -16,15 +16,15 @@ panel.smooth(x, y, col = par("col"), bg = NA, pch = par("pch"), cex = 1,
     \code{\link{par}}.}
   \item{col.smooth}{color to be used by \code{lines} for drawing the
     smooths.}
-  \item{span}{smoothing parameter \code{f} for \code{\link[stats]{lowess}}, see
+  \item{span}{smoothing parameter \code{f} for \code{\link{lowess}}, see
     there.}
-  \item{iter}{number of robustness iterations for \code{\link[stats]{lowess}}.}
+  \item{iter}{number of robustness iterations for \code{\link{lowess}}.}
   \item{\dots}{further arguments to \code{\link{lines}}.}
 }
 \seealso{
   \code{\link{coplot}} and \code{\link{pairs}} where \code{panel.smooth}
   is typically used;
-  \code{\link[stats]{lowess}}.
+  \code{\link{lowess}}.
 }
 \examples{
 pairs(swiss, panel = panel.smooth, pch = ".")# emphasize the smooths

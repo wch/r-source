@@ -32,7 +32,7 @@ packageDescription(pkg, lib.loc = NULL, fields = NULL, drop=TRUE)
   with the field tags as names if \code{fields} is not null, and
   \code{NA} otherwise.
 }
-\seealso{\code{\link{read.dcf}}, \code{\link[utils]{package.contents}}}
+\seealso{\code{\link{read.dcf}}, \code{\link{package.contents}}}
 \examples{
 packageDescription("stats")
 packageDescription("stats", fields = c("Package", "Version"))

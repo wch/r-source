@@ -67,7 +67,7 @@
 #endif
 %% </FIXME>
   }
-  None of these are available under \code{R CMD \link[base:BATCH]{BATCH}}.
+  None of these are available under \code{R CMD \link{BATCH}}.
 #endif
 }
 \details{

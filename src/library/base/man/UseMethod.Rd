@@ -36,7 +36,7 @@ NextMethod(generic = NULL, object = NULL, \dots)
   If no class name produces a suitable function, the function
   \code{fun.default} is used.
 
-  Function \code{\link[utils]{methods}} can be used to find out about the
+  Function \code{\link{methods}} can be used to find out about the
   methods for a particular generic function or class.
 
   Now for some obscure details that need to appear somewhere.  These
@@ -89,7 +89,7 @@ NextMethod(generic = NULL, object = NULL, \dots)
   meant for \R internal use only.
 }
 \seealso{
-  \code{\link[utils]{methods}}, \code{\link[base]{class}}, \code{\link[utils]{getS3method}}
+  \code{\link{methods}}, \code{\link[base]{class}}, \code{\link{getS3method}}
 }
 \references{
   Chambers, J. M. (1992)

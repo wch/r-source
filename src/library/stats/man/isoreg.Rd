@@ -23,7 +23,7 @@ isoreg(x, y = NULL)
   linear and the result is \eqn{m'(x)}, a step function with level
   changes at locations where the convex \eqn{m(x)} touches the
   cumulative data polygon and changes slope.\cr
-  \code{\link[stats]{as.stepfun}()} returns a \code{\link[stats]{stepfun}}
+  \code{\link{as.stepfun}()} returns a \code{\link{stepfun}}
   object which can be more parsimonious.
 }
 \value{

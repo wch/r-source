@@ -74,10 +74,10 @@ library.dynam.unload(chname, libpath,
   \code{\link{.libPaths}}
 
 #ifdef unix
-  \code{\link[utils]{SHLIB}} for how to create suitable shared libraries.
+  \code{\link{SHLIB}} for how to create suitable shared libraries.
 #endif
 #ifdef windows
-  \code{\link[utils]{SHLIB}} for how to create suitable DLLs.
+  \code{\link{SHLIB}} for how to create suitable DLLs.
 #endif
 }
 \references{

@@ -3,7 +3,7 @@
 \alias{pkgVignettes}
 \title{List and Build Package Vignettes}
 \description{
-  Run \code{\link[utils]{Sweave}} and \code{\link{texi2dvi}} on all vignettes
+  Run \code{\link{Sweave}} and \code{\link{texi2dvi}} on all vignettes
   of a package.
 }
 \usage{

@@ -82,7 +82,7 @@ sunflowerplot(x, y = NULL, number, log = "", digits = 6,
   1989--1993.  Port to \R by Martin Maechler
   \email{maechler@stat.math.ethz.ch}.
 }
-\seealso{\code{\link[stats]{density}}}
+\seealso{\code{\link{density}}}
 \examples{
 ## 'number' is computed automatically:
 sunflowerplot(iris[, 3:4])

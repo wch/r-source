@@ -37,8 +37,8 @@
   
   \code{\link{format.Date}} for conversion to and from character strings.
 
-  \code{\link[graphics:axis.POSIXct]{plot.Date}} and
-  \code{\link[graphics:hist.POSIXt]{hist.Date}} for plotting.
+  \code{\link{plot.Date}} and
+  \code{\link{hist.Date}} for plotting.
 
   \code{\link{weekdays}} for convenience extraction functions.
 

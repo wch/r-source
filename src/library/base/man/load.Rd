@@ -15,7 +15,7 @@ loadURL(url, envir = parent.frame(), quiet = TRUE, \dots)
   \item{envir}{the environment where the data should be loaded.}
   \item{url}{a character string naming a URL.}
   \item{quiet, \dots}{additional arguments to
-    \code{\link[utils]{download.file}}.}
+    \code{\link{download.file}}.}
 }
 \details{
   \code{load} can load \R objects saved in the current or any earlier
@@ -35,7 +35,7 @@ loadURL(url, envir = parent.frame(), quiet = TRUE, \dots)
   conversion of end of line markers.
 }
 \seealso{
-  \code{\link{save}}, \code{\link[utils]{download.file}}.
+  \code{\link{save}}, \code{\link{download.file}}.
 }
 \examples{
 ## save all data

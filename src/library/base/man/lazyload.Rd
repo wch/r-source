@@ -26,6 +26,6 @@ lazyLoad(filebase, envir = parent.frame(), filter)
 }
 \author{Luke Tierney}
 \seealso{
-  \code{\link[utils:lazyload]{makeLazyLoading}}
+  \code{\link{makeLazyLoading}}
 }
 \keyword{internal}

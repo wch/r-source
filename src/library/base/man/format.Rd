@@ -71,13 +71,13 @@ prettyNum(x, big.mark = "",   big.interval = 3,
   character strings which have a common format (as is done by
   \code{\link{print}}), fulfilling \code{length(format*(x, *)) ==
     length(x)}.  The trimming with \code{trim = TRUE} is useful
-  when the strings are to be used for plot \code{\link[graphics]{axis}} annotation.
+  when the strings are to be used for plot \code{\link{axis}} annotation.
 
   \code{format.AsIs} deals with columns of complicated objects that
   have been extracted from a data frame.
 
   \code{format.pval} is mainly an auxiliary function for
-  \code{\link[stats]{print.summary.lm}} etc., and does separate formatting for
+  \code{\link{print.summary.lm}} etc., and does separate formatting for
   fixed, floating point and very small values; those less than
   \code{eps} are formatted as \code{"< [eps]"} (where \dQuote{[eps]}
   stands for \code{format(eps, digits)}.

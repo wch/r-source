@@ -43,7 +43,7 @@ apply(X, MARGIN, FUN, \dots)
 }
 \seealso{
   \code{\link{lapply}}, \code{\link{tapply}}, and convenience functions
-  \code{\link{sweep}} and \code{\link[stats]{aggregate}}.
+  \code{\link{sweep}} and \code{\link{aggregate}}.
 }
 \examples{
 ## Compute row and column sums for a matrix:

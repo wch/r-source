@@ -32,7 +32,7 @@ atanh(x)
   \code{\link{tan}}, and their inverses
   \code{\link{acos}}, \code{\link{asin}}, \code{\link{atan}}.
 
-  The logistic distribution function \code{\link[stats]{plogis}} is a shifted
+  The logistic distribution function \code{\link{plogis}} is a shifted
   version of \code{tanh()}.
 }
 \keyword{math}

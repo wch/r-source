@@ -23,10 +23,10 @@ Filters
   A character vector giving zero or more file paths.
 }
 \details{
-  Unlike \code{\link[base]{file.choose}}, this function will always
+  Unlike \code{\link{file.choose}}, this function will always
   attempt to return a character vector
   giving a list of files.  If the user cancels the dialog, then
-  zero files are returned, whereas \code{\link[base]{file.choose}} would
+  zero files are returned, whereas \code{\link{file.choose}} would
   signal an error.
 
   Windows file dialog boxes include a list of \dQuote{filters}, which allow
@@ -51,7 +51,7 @@ Filters
   \dQuote{remember} the last directory on subsequent invocations.
 }
 \seealso{
-  \code{\link[base]{file.choose}}
+  \code{\link{file.choose}}
 }
 \examples{
   if (interactive()) 

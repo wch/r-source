@@ -9,7 +9,7 @@
   given as their arguments into the correct units for plotting with
   graphics functions.  Usually, this only makes sense when normal
   coordinates are used, i.e., \emph{no} \code{log} scale (see the
-  \code{log} argument to \code{\link[graphics]{par}}).
+  \code{log} argument to \code{\link{par}}).
 
   \code{xyinch} does the same for a pair of numbers \code{xy},
   simultaneously.

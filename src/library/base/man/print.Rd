@@ -43,7 +43,7 @@ print(x, \dots)
 }
 \details{
   The default method, \code{\link{print.default}} has its own help page.
-  Use \code{\link[utils]{methods}("print")} to get all the methods for the
+  Use \code{\link{methods}("print")} to get all the methods for the
   \code{print} generic.
 
   \code{print.factor} allows some customization and is used for printing

@@ -38,7 +38,7 @@ mean(x, \dots)
   Wadsworth \& Brooks/Cole.
 }
 \seealso{
-  \code{\link[stats]{weighted.mean}}, \code{\link{mean.POSIXct}}
+  \code{\link{weighted.mean}}, \code{\link{mean.POSIXct}}
 }
 \examples{
 x <- c(0:10, 50)

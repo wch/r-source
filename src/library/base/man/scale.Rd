@@ -54,7 +54,7 @@ scale(x, center = TRUE, scale = TRUE)
   \code{\link{sweep}} which allows centering (and scaling) with
   arbitrary statistics.
 
-  For working with the scale of a plot, see \code{\link[graphics]{par}}.
+  For working with the scale of a plot, see \code{\link{par}}.
 }
 \examples{
 require(stats)

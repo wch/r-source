@@ -80,7 +80,7 @@ image(x, \dots)
   \email{tlumley@u.washington.edu}.
 }
 \seealso{
-  \code{\link{filled.contour}} or \code{\link[stats]{heatmap}} which can
+  \code{\link{filled.contour}} or \code{\link{heatmap}} which can
   look nicer (but are less modular),
   \code{\link{contour}};
 

@@ -72,7 +72,7 @@ data.frame(\dots, row.names = NULL, check.rows = FALSE, check.names = TRUE)
 }
 \seealso{
   \code{\link{I}},
-  \code{\link[graphics]{plot.data.frame}},
+  \code{\link{plot.data.frame}},
   \code{\link{print.data.frame}},
   \code{\link{row.names}},
   \code{\link{[.data.frame}} for subsetting methods,

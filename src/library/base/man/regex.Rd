@@ -276,8 +276,8 @@
   page from PCRE 3.9 and the \code{pcrepattern} man page from PCRE 4.4.
 }
 \seealso{
-  \code{\link{grep}}, \code{\link[utils]{apropos}}, \code{\link[utils]{browseEnv}},
-  \code{\link[utils]{help.search}}, \code{\link{list.files}},
+  \code{\link{grep}}, \code{\link{apropos}}, \code{\link{browseEnv}},
+  \code{\link{help.search}}, \code{\link{list.files}},
   \code{\link{ls}} and \code{\link{strsplit}}.
 }
 \keyword{character}

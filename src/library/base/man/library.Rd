@@ -116,7 +116,7 @@ require(package, quietly = FALSE, warn.conflicts = TRUE,
   change in future versions.  In earlier versions of R, only the names
   of all available packages were returned; use \code{.packages(all =
     TRUE)} for obtaining these.  Note that
-  \code{\link[utils:update.packages]{installed.packages}()}
+  \code{\link{installed.packages}()}
   returns even more information.
 
   \code{library(help = somename)} computes basic information about the
@@ -212,7 +212,7 @@ require(package, quietly = FALSE, warn.conflicts = TRUE,
   new package.  The saved package names are used by
   \code{\link{detach}} when a package is detached to warn if other
   packages still require the detached package.  Also, if a package is
-  installed with saved image (see \link[utils]{INSTALL}), the saved package
+  installed with saved image (see \link{INSTALL}), the saved package
   names are used to require these packages when the new package is attached.}
 \section{Formal methods}{
   \code{library} takes some further actions when package \pkg{methods}
@@ -261,9 +261,9 @@ require(package, quietly = FALSE, warn.conflicts = TRUE,
   \code{\link{attach}}, \code{\link{detach}}, \code{\link{search}},
   \code{\link{objects}}, \code{\link{autoload}},
   \code{\link{library.dynam}}, \code{\link{data}},
-  \code{\link[utils]{install.packages}} and
-  \code{\link[utils]{installed.packages}};
-  \code{\link[utils]{INSTALL}}, \code{\link[utils]{REMOVE}}.
+  \code{\link{install.packages}} and
+  \code{\link{installed.packages}};
+  \code{\link{INSTALL}}, \code{\link{REMOVE}}.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

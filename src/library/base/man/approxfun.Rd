@@ -16,7 +16,7 @@ approxfun(x, y = NULL,       method="linear",
 \arguments{
   \item{x, y}{vectors giving the coordinates of the points to be
     interpolated.  Alternatively a single plotting structure can be
-    specified: see \code{\link[graphics]{xy.coords}}.}
+    specified: see \code{\link{xy.coords}}.}
   \item{xout}{an optional set of values specifying where interpolation
     is to take place.}
   \item{method}{specifies the interpolation method to be used.  Choices
@@ -60,14 +60,14 @@ approxfun(x, y = NULL,       method="linear",
   two complete \code{(x, y)} pairs are required.  If there are
   duplicated (tied) \code{x} values and \code{ties} is a function it is
   applied to the \code{y} values for each distinct \code{x} value.
-  Useful functions in this context include \code{\link[stats]{mean}},
+  Useful functions in this context include \code{\link{mean}},
   \code{\link{min}}, and \code{\link{max}}.  If \code{ties="ordered"}
   the \code{x} values are assumed to be already ordered.  The first
   \code{y} value will be used for interpolation to the left and the last
   one for interpolation to the right.
 }
 \seealso{
-  \code{\link[stats]{spline}} and \code{\link[stats]{splinefun}} for spline
+  \code{\link{spline}} and \code{\link{splinefun}} for spline
   interpolation.
 }
 \references{

@@ -47,7 +47,7 @@ tapply(X, INDEX, FUN = NULL, \dots, simplify = TRUE)
 }
 \seealso{
   the convenience functions \code{\link{by}} and
-  \code{\link[stats]{aggregate}} (using \code{tapply});
+  \code{\link{aggregate}} (using \code{tapply});
   \code{\link{apply}},
   \code{\link{lapply}} with its versions
   \code{\link{sapply}} and \code{\link{mapply}}.

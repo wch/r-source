@@ -32,7 +32,7 @@ noquote(obj)
 }
 \author{Martin Maechler \email{maechler@stat.math.ethz.ch}}
 \seealso{
-  \code{\link[utils]{methods}},
+  \code{\link{methods}},
   \code{\link[base]{class}},
   \code{\link{print}}.
 }

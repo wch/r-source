@@ -48,7 +48,7 @@
   to a file.
 }
 \author{Guido Masarotto}
-\seealso{\code{\link[graphics]{windows}}}
+\seealso{\code{\link{windows}}}
 \examples{
 ruser <- Sys.getenv("R_USER")
 cat("\n\nLocation for personal configuration files is\n   R_USER = ",

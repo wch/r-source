@@ -8,7 +8,7 @@
 \description{
   \code{summary} is a generic function used to produce result summaries
   of the results of various model fitting functions.  The function
-  invokes particular \code{\link[utils]{methods}} which depend on the
+  invokes particular \code{\link{methods}} which depend on the
   \code{\link[base]{class}} of the first argument.
 }
 \usage{
@@ -36,7 +36,7 @@ summary(object, \dots)
 
     The functions \code{summary.lm} and \code{summary.glm} are examples
     of particular methods which summarise the results produced by
-    \code{\link[stats]{lm}} and \code{\link[stats]{glm}}.
+    \code{\link{lm}} and \code{\link{glm}}.
 }
 \value{
     The form of the value returned by \code{summary} depends on the
@@ -44,9 +44,9 @@ summary(object, \dots)
     methods for details of what is produced by that method.
 }
 \seealso{
-  \code{\link[stats]{anova}},
-  \code{\link[stats]{summary.glm}},
-  \code{\link[stats]{summary.lm}}.
+  \code{\link{anova}},
+  \code{\link{summary.glm}},
+  \code{\link{summary.lm}}.
 }
 \references{
   Chambers, J. M. and Hastie, T. J. (1992)

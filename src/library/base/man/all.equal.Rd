@@ -36,7 +36,7 @@ attr.all.equal(target, current, \dots)
 }
 \details{
     There are several methods available, most of which are dispatched by
-    the default method, see \code{\link[utils]{methods}("all.equal")}.
+    the default method, see \code{\link{methods}("all.equal")}.
     \code{all.equal.list} and \code{all.equal.language} provide
     comparison of recursive objects.
 

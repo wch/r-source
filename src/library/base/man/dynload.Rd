@@ -163,10 +163,10 @@ symbol.For(name)
   \code{\link{.First.lib}} initialization.
 
 #ifdef unix
-  \code{\link[utils]{SHLIB}} for how to create suitable shared objects.
+  \code{\link{SHLIB}} for how to create suitable shared objects.
 #endif
 #ifdef windows
-  \code{\link[utils]{SHLIB}} for how to create suitable DLLs.
+  \code{\link{SHLIB}} for how to create suitable DLLs.
 #endif
   
   \code{\link{.C}},

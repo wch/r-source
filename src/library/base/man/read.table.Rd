@@ -209,7 +209,7 @@ read.delim2(file, header = TRUE, sep = "\t", quote="\"", dec=",",
   The \emph{R Data Import/Export} manual.
   
   \code{\link{scan}}, \code{\link{type.convert}},
-  \code{\link[utils]{read.fwf}} for reading \emph{f}ixed \emph{w}idth
+  \code{\link{read.fwf}} for reading \emph{f}ixed \emph{w}idth
   \emph{f}ormatted input;
   \code{\link{write.table}};
   \code{\link{data.frame}}.

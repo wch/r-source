@@ -77,7 +77,7 @@ Complex(z)
   the first three groups.
   (There are also a \code{\link{ordered}} method for \code{Ops},
   \code{\link{POSIXt}} methods for \code{Math} and \code{Ops}, as well as a
-  \code{\link[stats]{ts}} method for \code{Ops} in package \pkg{stats}.)
+  \code{\link{ts}} method for \code{Ops} in package \pkg{stats}.)
   
 %   A function \emph{\code{f}} belonging to one of these groups must be
 %   \code{\link{.Internal}} or \code{\link{.Primitive}} and will
@@ -212,7 +212,7 @@ Complex(z)
   Chambers, J. M. (1998) \emph{Programming with Data.} Springer, pp. 352--4.
 }
 \seealso{
-  \code{\link[utils]{methods}} for methods of non-Internal generic functions.
+  \code{\link{methods}} for methods of non-Internal generic functions.
 }
 \examples{
 methods("Math")

@@ -26,7 +26,7 @@ index.search(topic, path, file="AnIndex", type = "help")
   extensions \code{".html"}, \code{".R"} and \code{".tex"} are added.
 }
 \seealso{
-  \code{\link[utils]{help}},
-  \code{\link[utils]{example}}
+  \code{\link{help}},
+  \code{\link{example}}
 }
 \keyword{utilities}

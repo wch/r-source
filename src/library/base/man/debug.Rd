@@ -36,7 +36,7 @@ undebug(fun)
 }
 \seealso{
   \code{\link{browser}}, \code{\link{traceback}} to see the stack after
-  an \code{Error: \dots} message; \code{\link[utils]{recover}} for another
+  an \code{Error: \dots} message; \code{\link{recover}} for another
   debugging approach.
 }
 \keyword{programming}

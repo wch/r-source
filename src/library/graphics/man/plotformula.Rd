@@ -15,7 +15,7 @@
 \method{lines}{formula}(formula, data = parent.frame(), \dots, subset)
 }
 \arguments{
-  \item{formula}{a \code{\link[stats]{formula}}, such as \code{y ~ x}.}
+  \item{formula}{a \code{\link{formula}}, such as \code{y ~ x}.}
   \item{data}{a data.frame (or list) from which the variables in
     \code{formula} should be taken.}
   \item{\dots}{Further graphical parameters may also be passed as

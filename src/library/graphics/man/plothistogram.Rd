@@ -48,7 +48,7 @@
 \seealso{
   \code{\link{hist}},
   \code{\link{stem}},
-  \code{\link[stats]{density}}.
+  \code{\link{density}}.
 }
 \examples{
 (wwt <- hist(women$weight, nc= 7, plot = FALSE))

@@ -63,7 +63,7 @@ textConnection(object, open = "r", local = FALSE)
  
 \seealso{
   \code{\link{connections}}, \code{\link{showConnections}},
-  \code{\link{pushBack}}, \code{\link[utils]{capture.output}}.
+  \code{\link{pushBack}}, \code{\link{capture.output}}.
 }
 
 \examples{

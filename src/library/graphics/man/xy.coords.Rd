@@ -33,7 +33,7 @@ xy.coords(x, y, xlab = NULL, ylab = NULL, log = NULL, recycle = FALSE)
       used to define plotting coordinates.}
 
     \item{time series:}{the x values are taken to be
-      \code{\link[stats]{time}(x)} and the y values to be the time series.}
+      \code{\link{time}(x)} and the y values to be the time series.}
 
     \item{matrix with two columns:}{the first is assumed to contain the
       x values and the second the y values.}
@@ -57,7 +57,7 @@ xy.coords(x, y, xlab = NULL, ylab = NULL, log = NULL, recycle = FALSE)
 }
 \seealso{
   \code{\link{plot.default}}, \code{\link{lines}}, \code{\link{points}}
-  and \code{\link[stats]{lowess}} are examples of functions which use this mechanism.
+  and \code{\link{lowess}} are examples of functions which use this mechanism.
 }
 \examples{
 xy.coords(fft(c(1:10)), NULL)

@@ -10,7 +10,7 @@ package.dependencies(x, check=FALSE, depLevel=c("Depends", "Suggests"))
 }
 \arguments{
     \item{x}{A matrix of package descriptions as returned by
-	\code{\link[utils]{CRAN.packages}}.}
+	\code{\link{CRAN.packages}}.}
     \item{check}{If \code{TRUE}, return logical vector of check results.
 	If \code{FALSE}, return parsed list of dependencies.}
     \item{depLevel}{Whether to look for \code{Depends} or
@@ -21,5 +21,5 @@ package.dependencies(x, check=FALSE, depLevel=c("Depends", "Suggests"))
     running version of R. In the future we might add checks for
     inter-package dependencies.
 }
-\seealso{\code{\link[utils]{update.packages}}}
+\seealso{\code{\link{update.packages}}}
 \keyword{utilities}

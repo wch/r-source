@@ -12,7 +12,7 @@ rev(x)
 \description{
   \code{rev} provides a reversed version of its argument.  It is generic
   function with a default method for vectors and one for
-  \code{\link[stats]{dendrogram}}s.
+  \code{\link{dendrogram}}s.
 
   Note that this is no longer needed (nor efficient) for obtaining
   vectors sorted into descending order, since that is now rather more
