@@ -517,7 +517,7 @@ static void GTK_MetricInfo(int c, double *ascent, double *descent,
 	g_snprintf(tmp, 2, "%c", (gchar) c);
 	gdk_string_extents(gtkd->font, tmp,
 			   &lbearing, &rbearing,
-			   &iascent, &idescent, &iwidth);
+			   &iwidth, &iascent, &idescent);
 
 	*ascent = (double) iascent;
 	*descent = (double) idescent;
