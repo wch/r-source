@@ -726,9 +726,12 @@ void process_system_Renviron()
 /* try site Renviron: R_ENVIRON, then R_HOME/etc/Renviron.site. */
 void process_site_Renviron ()
 {
-    char buf[PATH_MAX];
+    char buf[PATH_MAX], *p = getenv("R_ENVIRON");
 
-    if(process_Renviron(getenv("R_ENVIRON"))) return;
+    if(p && strlen(p)) {
+	process_Renviron(p);
+	return;
+    }
     if(strlen(R_Home) + strlen("/etc/Renviron.site") > PATH_MAX - 1) {
 	R_ShowMessage("path to Renviron.site is too long: skipping");
 	return;

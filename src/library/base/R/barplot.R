@@ -9,7 +9,7 @@ function(height, width = 1, space = NULL, names.arg = NULL,
          xlim = NULL, ylim = NULL, xpd = TRUE,
          axes = TRUE, axisnames = TRUE,
          cex.axis = par("cex.axis"), cex.names = par("cex.axis"),
-         inside = TRUE, plot = TRUE, ...)
+         inside = TRUE, plot = TRUE, axis.lty = 0, ...)
 {
     if (!missing(inside)) .NotYetUsed("inside", error = FALSE)
     if (!missing(border)) .NotYetUsed("border", error = FALSE)
@@ -92,8 +92,8 @@ function(height, width = 1, space = NULL, names.arg = NULL,
 		else
 		    stop("incorrect number of names")
 	    } else w.m
-	    axis(if(horiz) 2 else 1, at = at.l,
-                 labels = names.arg, lty = 0, cex.axis = cex.names, ...)
+	    axis(if(horiz) 2 else 1, at = at.l, labels = names.arg,
+                 lty = axis.lty, cex.axis = cex.names, ...)
 	}
 	if(!is.null(legend.text)) {
 	    legend.col <- rep(col, length = length(legend.text))

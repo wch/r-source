@@ -941,6 +941,7 @@ stopifnot(or == or)
 stopifnot(or != "d")
 ##  last was NA NA NA in 1.5.1
 
+
 Ops.foo <- function(e1, e2) {
     NextMethod()
 }
@@ -954,6 +955,7 @@ stopifnot(a == 1,
           b == a)
 ##(already worked in 1.5.1)
 
+
 ## t() wrongly kept "ts" class and "tsp"
 t(ts(c(a=1, d=2)))
 ## gave error while printing in 1.5.1
@@ -963,19 +965,36 @@ stopifnot(length(at) == 2,
           at$dimnames[[1]] == paste("Series", 1:2))
 ## failed in 1.5.1
 
+
 ## Nextmethod from anonymous function (PR#1211)
 try( get("print.ts")(1) )# -> Error
 ## seg.faulted till 1.5.1
+
 
 ## cbind/rbind should work with NULL only args
 stopifnot(is.null(cbind(NULL)), is.null(cbind(NULL,NULL)),
           is.null(rbind(NULL)), is.null(rbind(NULL,NULL)))
 ## gave error from 0.63 till 1.5.1
 
+
 ## seq.POSIXt() had rounding problem:
 stopifnot(4 == length(seq(from=ISOdate(2000,1,1), to=ISOdate(2000,1,4),
                           length.out=4)))
 ## length was 5 till 1.6.0
+
+
+## loess has a limit of 4 predictors (John Deke on R-help, 2002-09-16)
+library(modreg)
+data1 <- array(runif(500*5),c(500,5))
+colnames(data1) <- c("x1","x2","x3","x4","x5")
+y <- 3+2*data1[,"x1"]+15*data1[,"x2"]+13*data1[,"x3"]-8*data1[,"x4"]+14*data1[,"x5"]+rnorm(500)
+data2 <- as.data.frame(cbind(y,data1))
+result4 <- loess(y~x1+x2+x3+x4,data2)
+try(result5 <- loess(y~x1+x2+x3+x4+x5,data2))
+detach("package:modreg")
+## segfaulted in 1.5.1
+
+
 
 ## keep at end, as package `methods' has had persistent side effects
 library(methods)

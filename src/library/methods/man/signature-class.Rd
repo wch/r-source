@@ -7,9 +7,10 @@
   one of two slots in the \code{\link{MethodDefinition-class}}.
 }
 \section{Objects from the Class}{
-Objects can be created by calls of the form \code{new("signature", functionDef, ...)}.
-The \code{functionDef} argument, if it is supplied as a function object,
-defines the formal names.  The other arguments define the classes.
+  Objects can be created by calls of the form \code{new("signature",
+    functionDef, ...)}.  The \code{functionDef} argument, if it is
+  supplied as a function object, defines the formal names.  The other
+  arguments define the classes.
 }
 \section{Slots}{
   \describe{

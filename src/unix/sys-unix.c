@@ -85,15 +85,31 @@ FILE *R_OpenInitFile(void)
      */
 
 
+static char newFileName[PATH_MAX];
 #ifdef HAVE_LIBREADLINE
+/* tilde_expand (in libreadline) mallocs storage for its return value.
+   The R entry point does not require that storage to be freed, so we
+   copy the value to a static buffer, to void a memory leak in R<=1.6.0.
+
+   This is not thread-safe, but as R_ExpandFileName is a public entry 
+   point (in R-exts.texi) it will need to deprecated and replaced by a
+   version which takes a buffer as an argument.
+
+   BDR 10/2002
+*/
+
 char *R_ExpandFileName(char *s)
 {
-    return( tilde_expand(s) );
+    char *s2 = tilde_expand(s);
+
+    strncpy(newFileName, s2, PATH_MAX);
+    if(strlen(s2) >= PATH_MAX) newFileName[PATH_MAX-1] = '\0';
+    free(s2);
+    return newFileName;
 }
 #else /* not HAVE_LIBREADLINE */
 static int HaveHOME=-1;
 static char UserHOME[PATH_MAX];
-static char newFileName[PATH_MAX];
 char *R_ExpandFileName(char *s)
 {
     char *p;

@@ -2,7 +2,7 @@
 \docType{class}
 \alias{EmptyMethodsList-class}
 \title{Internal Class representing Empty Methods List }
-\description{Objects from class \code{"EmptyMethodsList} are generated during method
+\description{Objects from class \code{"EmptyMethodsList"} are generated during method
   selection to indicate failed search (forcing backtracking).  Other
   classes described here are used internally in method dispatch. All
   these are for internal use.}

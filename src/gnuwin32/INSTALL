@@ -97,7 +97,8 @@ Then: untar R-1.7.0.tgz somewhere (with no spaces in the path names),
 	cd /somewhere/R-1.7.0/src/gnuwin32
 
 IMPORTANT: edit MkRules to set the appropriate paths as needed and to
-set the type(s) of help that you want built.
+set the type(s) of help that you want built.  BEWARE: MkRules contains
+tabs and some editors (e.g. WinEdt) silently remove them.
 
 Then run
 

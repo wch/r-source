@@ -300,6 +300,7 @@ double rwilcox(double m, double n)
 	r += x[j];
 	x[j] = x[--k];
     }
+    free(x);
     return(r - n * (n - 1) / 2);
 }
 

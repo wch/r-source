@@ -379,7 +379,7 @@ static struct {
   int current;
   int max;
   rl_vcpfunc_t *fun[MAX_READLINE_NESTING];
-} ReadlineStack = {-1, MAX_READLINE_NESTING};
+} ReadlineStack = {-1, MAX_READLINE_NESTING - 1};
 
 
 /*
@@ -392,7 +392,7 @@ pushReadline(char *prompt, rl_vcpfunc_t f)
    if(ReadlineStack.current >= ReadlineStack.max) {
      warning("An unusual circumstance has arisen in the nesting of readline input. Please report using bug.report()");
    } else
-     ReadlineStack.fun[ReadlineStack.current++] = f; 
+     ReadlineStack.fun[++ReadlineStack.current] = f; 
 
    rl_callback_handler_install(prompt, f);
 }

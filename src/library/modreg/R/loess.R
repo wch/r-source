@@ -76,6 +76,7 @@ simpleLoess <-
     ## loess_ translated to R.
 
     D <- NCOL(x)
+    if(D > 4) stop("only 1-4 predictors are allowed")
     N <- NROW(x)
     if(!N || !D)	stop("invalid `x'")
     if(!length(y))	stop("invalid `y'")
