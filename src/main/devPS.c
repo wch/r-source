@@ -482,6 +482,9 @@ static void PSFileHeader(FILE *fp, int font, int encoding, char *papername,
     fprintf(fp, "       ps mul neg 0 2 1 roll rmoveto\n");
     fprintf(fp, "       1 index stringwidth pop\n");
     fprintf(fp, "       mul neg 0 rmoveto show grestore } def\n");
+    fprintf(fp, "/cl  { initclip newpath 3 index 3 index moveto 1 index\n");
+    fprintf(fp, "       4 -1 roll lineto  exch 1 index lineto lineto\n");
+    fprintf(fp, "       closepath clip newpath } def\n");
     fprintf(fp, "/rgb { setrgbcolor } def\n");
     fprintf(fp, "/s   { scalefont setfont } def\n");
     fprintf(fp, "/R   { /Font1 findfont } def\n");
@@ -511,6 +514,12 @@ void PostScriptStartPage(FILE *fp, int pageno)
 void PostScriptEndPage(FILE *fp)
 {
     fprintf(fp, "ep\n");
+}
+
+void PostScriptSetClipRect(FILE *fp, double x0, double x1, 
+			   double y0, double y1)
+{
+        fprintf(fp, "%.2f %.2f %.2f %.2f cl\n", x0, y0, x1, y1);
 }
 
 void PostScriptSetLineWidth(FILE *fp, double linewidth)
@@ -849,7 +858,7 @@ int PSDeviceDriver(DevDesc *dd, char *file, char *paper, char *family,
     dd->dp.canChangeFont = 1;
     dd->dp.canRotateText = 1;
     dd->dp.canResizeText = 1;
-    dd->dp.canClip = 0;
+    dd->dp.canClip = 1;
 
     /*	Start the driver */
 
@@ -1003,8 +1012,10 @@ static int PS_Open(DevDesc *dd, PostScriptDesc *pd)
 
 static void PS_Clip(double x0, double x1, double y0, double y1, DevDesc *dd)
 {
+    PostScriptDesc *pd = (PostScriptDesc *) dd->deviceSpecific;
+    
+    PostScriptSetClipRect(pd->psfp, x0, x1, y0, y1);
 }
-
 
 static void PS_Resize(DevDesc *dd)
 {
@@ -1015,7 +1026,9 @@ static void PS_NewPage(DevDesc *dd)
     PostScriptDesc *pd = (PostScriptDesc *) dd->deviceSpecific;
 
     pd->pageno++;
-    if(pd->pageno > 1) PostScriptEndPage(pd->psfp);
+    if(pd->pageno > 1) {
+	PostScriptEndPage(pd->psfp);
+    }
     if(pd->pageno > 1 && pd->EPSFheader) 
 	warning("multiple pages used in postscript() with onefile=FALSE");
     PostScriptStartPage(pd->psfp, pd->pageno);
