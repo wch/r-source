@@ -19,6 +19,10 @@ NEW FEATURES
 
 BUG FIXES
 
+    o	boxplot(<data.frame>) now works again.
+
+    o	dyn.load(..) failing gives more informative error message.
+
     o	Ops.factor:  not error, but a warning + NAs
 
     o	bug.report() keeps report file if can't be e-mailed

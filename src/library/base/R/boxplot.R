@@ -23,6 +23,8 @@ boxplot <- function(x, ..., range=1.5, width=NULL, varwidth=FALSE,
 	}
     if(0 == (n <- length(groups)))
 	stop("invalid first argument")
+    if(length(class(groups)))
+	groups <- unclass(groups)
     if(!missing(names.x))
 	attr(groups, "names") <- names.x
     else if(is.null(attr(groups, "names")))
