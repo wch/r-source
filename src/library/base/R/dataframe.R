@@ -342,7 +342,9 @@ data.frame <-
     function(x, i, j, drop = if(missing(i)) TRUE else length(cols) == 1)
 {
     mdrop <- missing(drop)
-    if(nargs() < 3) {
+    Narg <- nargs() - !mdrop  # number of arg from x,i,j that were specified
+    if(Narg < 3) {  # list-like indexing
+        if(!mdrop) warning("drop argument will be ignored")
 	if(missing(i))
 	    return(x)
 	if(is.matrix(i))

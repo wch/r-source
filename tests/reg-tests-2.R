@@ -911,3 +911,13 @@ a <- matrix( c(NA, "a", "b", "10",
 print(a, right=TRUE, na.print=" ")
 print(a, right=TRUE, na.print="----")
 ## misaligned in 1.7.0
+
+
+## list-like indexing of data frames with drop specified
+data(women)
+women["height"]
+women["height", drop = FALSE]  # same with a warning
+women["height", drop = TRUE]   # ditto
+women[,"height", drop = FALSE] # no warning
+women[,"height", drop = TRUE]  # a vector
+## second and third were interpreted as women["height", , drop] in 1.7.x

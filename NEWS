@@ -99,6 +99,10 @@ NEW FEATURES
 
     o	When coercion of a list fails, a meaningful error message is given.
 
+    o	Subscripting data-frames with a single argument now ignores any
+	`drop' argument (with a warning).  Previously using `drop'
+	inhibited list-like subscripting.
+
 
 DEPRECATED & DEFUNCT
 

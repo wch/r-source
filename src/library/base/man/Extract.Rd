@@ -66,6 +66,10 @@ x$name
   \code{\link{make.names}( * , unique = TRUE)}. See the \code{swiss}
   example below.
 
+  Using \code{[.data.frame} with only one index uses list-like indexing,
+  with the single index being taken to refer to columns.  In this usage
+  the \code{drop} argument is ignored, with a warning.
+
   When operating on a list, the \code{[[} operator gives the specified
   element of the list while the \code{[} operator returns a list with
   the specified element(s) in it.

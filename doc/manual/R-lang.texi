@@ -1719,8 +1719,11 @@ are the indices.  In the case of @code{$}, the index argument is of mode
 
 The most important example of a class method for @code{[} is that used
 for data frames.  It is not be described in detail here, but in broad
-terms, it creates matrix-like indexing for a structure that is basically
-a list of vectors of the same length.
+terms, if two indices are supplied (even if one is empty) it creates
+matrix-like indexing for a structure that is basically a list of vectors
+of the same length.  If a single index is supplied, it is interpreted as
+indexing the list of columns---in that case the @code{drop} argument is
+ignored, with a warning.
 
 @node Subset assignment,  , Indexing other structures, Indexing
 @subsection Subset assignment

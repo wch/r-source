@@ -1,6 +1,6 @@
 
 R : Copyright 2003, The R Development Core Team
-Version 1.8.0 Under development (unstable) (2003-06-03)
+Version 1.8.0 Under development (unstable) (2003-06-11)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -2449,4 +2449,83 @@ x3  0.81       -0.97
 [2,] ---- ----  "d" "12"
 [3,] ---- ---- ---- "14"
 > ## misaligned in 1.7.0
+> 
+> 
+> ## list-like indexing of data frames with drop specified
+> data(women)
+> women["height"]
+   height
+1      58
+2      59
+3      60
+4      61
+5      62
+6      63
+7      64
+8      65
+9      66
+10     67
+11     68
+12     69
+13     70
+14     71
+15     72
+> women["height", drop = FALSE]  # same with a warning
+   height
+1      58
+2      59
+3      60
+4      61
+5      62
+6      63
+7      64
+8      65
+9      66
+10     67
+11     68
+12     69
+13     70
+14     71
+15     72
+Warning message: 
+drop argument will be ignored in: "[.data.frame"(women, "height", drop = FALSE) 
+> women["height", drop = TRUE]   # ditto
+   height
+1      58
+2      59
+3      60
+4      61
+5      62
+6      63
+7      64
+8      65
+9      66
+10     67
+11     68
+12     69
+13     70
+14     71
+15     72
+Warning message: 
+drop argument will be ignored in: "[.data.frame"(women, "height", drop = TRUE) 
+> women[,"height", drop = FALSE] # no warning
+   height
+1      58
+2      59
+3      60
+4      61
+5      62
+6      63
+7      64
+8      65
+9      66
+10     67
+11     68
+12     69
+13     70
+14     71
+15     72
+> women[,"height", drop = TRUE]  # a vector
+ [1] 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72
+> ## second and third were interpreted as women["height", , drop] in 1.7.x
 > 
