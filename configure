@@ -584,7 +584,7 @@ cat >> confdefs.h <<\EOF
 EOF
 
 cat >> confdefs.h <<EOF
-#define R_DAY "`awk -F/ '{print $3}' date-stamp`"
+#define R_DAY "`awk -F/ '{print $3+0}' date-stamp`"
 EOF
 
 cat >> confdefs.h <<EOF
