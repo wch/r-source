@@ -317,6 +317,7 @@ double toDeviceY(double value, GEUnit from, GEDevDesc *dd)
 	result = dd->dev->bottom + result*(dd->dev->top - dd->dev->bottom);
     case GE_DEVICE:
 	/* Do nothing */
+	break;
     }
     return result;
 }
@@ -354,6 +355,7 @@ double toDeviceWidth(double value, GEUnit from, GEDevDesc *dd)
 	result = result*(dd->dev->right - dd->dev->left);
     case GE_DEVICE:
 	/* Do nothing */
+	break;
     }
     return result;
 }
