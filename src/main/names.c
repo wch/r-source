@@ -429,8 +429,8 @@ FUNTAB R_FunTab[] =
 {"max",		do_summary,	3,	11,	-1,	{PP_FUNCALL, PREC_FN,	0}},
 {"prod",	do_summary,	4,	11,	-1,	{PP_FUNCALL, PREC_FN,	0}},
 {"range",	do_range,	0,	11,	-1,	{PP_FUNCALL, PREC_FN,	0}},
-{"cov",		do_cov,		0,	11,	3,	{PP_FUNCALL, PREC_FN,	0}},
-{"cor",		do_cov,		1,	11,	3,	{PP_FUNCALL, PREC_FN,	0}},
+{"cov",		do_cov,		0,	11,	4,	{PP_FUNCALL, PREC_FN,	0}},
+{"cor",		do_cov,		1,	11,	4,	{PP_FUNCALL, PREC_FN,	0}},
 
 {"cumsum",	do_cum,		1,	1,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"cumprod",	do_cum,		2,	1,	1,	{PP_FUNCALL, PREC_FN,	0}},

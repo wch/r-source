@@ -1,11 +1,52 @@
-cor <- function (x, y=NULL, use="all.obs")
+#### cor() , cov() and var() : Based on the same C code
+
+## cor() and cov() only differ by one single letter :
+cor <-
+function(x, y=NULL, use="all.obs", method = c("pearson", "kendall", "spearman"))
 {
-    na.method <- pmatch(use, c("all.obs", "complete.obs", "pairwise.complete.obs"))
+    na.method <-
+        pmatch(use, c("all.obs", "complete.obs", "pairwise.complete.obs"))
+    method <- match.arg(method)
     if(is.data.frame(x)) x <- as.matrix(x)
     if(is.data.frame(y)) y <- as.matrix(y)
     if(!is.matrix(x) && is.null(y))
         stop("supply both x and y or a matrix-like x")
-    .Internal(cor(x, y, na.method))
+    if(method != "pearson") {
+        ## Rank transform
+        Rank <- function(u) if(is.matrix(u)) apply(u, 2, rank) else rank(u)
+        x <- Rank(x)
+        if(!is.null(y)) y <- Rank(y)
+    }
+    .Internal(cor(x, y, na.method, method == "kendall"))
+}
+
+cov <-
+function(x, y=NULL, use="all.obs", method = c("pearson", "kendall", "spearman"))
+{
+    na.method <-
+        pmatch(use, c("all.obs", "complete.obs", "pairwise.complete.obs"))
+    method <- match.arg(method)
+    if(is.data.frame(x)) x <- as.matrix(x)
+    if(is.data.frame(y)) y <- as.matrix(y)
+    if(!is.matrix(x) && is.null(y))
+        stop("supply both x and y or a matrix-like x")
+    if(method != "pearson") {
+        ## Rank transform
+        Rank <- function(u) if(is.matrix(u)) apply(u, 2, rank) else rank(u)
+        x <- Rank(x)
+        if(!is.null(y)) y <- Rank(y)
+    }
+    .Internal(cov(x, y, na.method, method == "kendall"))
+}
+
+var <- function(x, y = NULL, na.rm = FALSE, use) {
+    if(missing(use))
+	use <- if(na.rm) "complete.obs" else "all.obs"
+    na.method <- pmatch(use, c("all.obs", "complete.obs",
+                               "pairwise.complete.obs"))
+    if (is.data.frame(x)) x <- as.matrix(x)
+    if (is.data.frame(y)) y <- as.matrix(y)
+    .Internal(cov(x, y, na.method, FALSE))
 }
 
 cov2cor <- function(V)

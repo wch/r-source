@@ -15,7 +15,7 @@ MACOS CHANGES
 	Macintosh, which runs only on MacOS X.  (The `Carbon' port has
 	been discontinued, and the `Darwin' port is part of the new
 	version.)   The current version can be run either as a
-	command-line application or as an `Aqua' console.  There is a 
+	command-line application or as an `Aqua' console.  There is a
 	`Quartz' device quartz(), and the download and installation of
 	both source and binary packages is supported from the Aqua
 	console.  Those CRAN and BioC packages which build under MacOS
@@ -81,6 +81,10 @@ NEW FEATURES
 
     o	contr.poly() has a new `scores' argument to use as the base set
 	for the polynomials.
+
+    o	cor() has a new argument `method = c("pearson","spearman","kendall")'
+	as cor.test() did forever. The two rank based measures do work with
+	all three missing value strategies.
 
     o	New utility function cov2cor() {Cov -> Corr matrix}.
 

@@ -58,14 +58,7 @@ function(x, y, alternative = c("two.sided", "less", "greater"),
 	if(method == "kendall") {
 	    method <- "Kendall's rank correlation tau"
 	    names(NVAL) <- "tau"
-	    x <- rank(x)
-	    y <- rank(y)
-	    r <- .C("kendall_tau",
-                    length(x),
-                    as.double(x),
-                    as.double(y),
-                    tau = as.double(0),
-                    PACKAGE = "ctest")$tau
+	    r <- cor(x,y, method = "kendall")
             ESTIMATE <- c(tau = r)
 
             if(!is.finite(ESTIMATE)) {  # all x or all y the same
