@@ -40,6 +40,7 @@ contr.poly <- function (n, contrasts = TRUE)
 
 ## implemented by BDR 29 May 1998
 ## `coefs' code added by KH
+## cf and prediction added BDR Jan 2002
 poly <- function(x, degree = 1, coefs = NULL)
 {
     if(is.matrix(x)) stop("poly is only implemented for vectors")
@@ -57,10 +58,10 @@ poly <- function(x, degree = 1, coefs = NULL)
         Z <- raw/rep(sqrt(norm2), each = length(x))
         colnames(Z) <- 1:n - 1
         Z <- Z[, -1]
-        attr(Z, "cf") <- list(xbar=xbar, beta=lsfit(X, Z, intercept = F)$coef)
+        attr(Z, "cf") <- list(xbar = xbar, beta = qr.solve(QR, Z))
         attr(Z, "degree") <- 1:degree
         attr(Z, "coefs") <- list(alpha = alpha, norm2 = c(1, norm2))
-        class(Z) <- "poly"
+        class(Z) <- c("poly", "matrix")
         return(Z)
     } else {            # prediction
         Z <- outer(x - coefs$xbar, 0:degree, "^") %*% coefs$beta
@@ -68,3 +69,4 @@ poly <- function(x, degree = 1, coefs = NULL)
         return(Z)
     }
 }
+
