@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.7-43, 2003-09-18
+Version 1.7-44, 2003-09-19
 ISBN 3-901167-51-X
 Kurt Hornik
 
@@ -1475,6 +1475,10 @@ distributions of R.)
 
 *aws*
      Functions to perform adaptive weights smoothing.
+
+*bim*
+     Bayesian interval mapping diagnostics:  functions to interpret
+     QTLCart/Bmapqtl samples.
 
 *bindata*
      Generation of correlated artificial binary data.
