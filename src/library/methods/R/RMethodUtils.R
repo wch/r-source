@@ -726,6 +726,7 @@ sigToEnv <- function(signature) {
     body(fdef, envir = environment(fdef)) <-
         substitute(.valueClassTest(EXPR, VALUECLASS, FNAME),
                    list(EXPR = fbody, VALUECLASS = valueClass, FNAME = name))
+    fdef
 }
 
 ## interpret the group= argument to makeGeneric, allowing for char. argument
