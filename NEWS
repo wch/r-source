@@ -7,30 +7,34 @@
 
 NEW FEATURES
 
-    o   Interpret NaN and Inf in character->numeric conversions (and
+    o	Interpret NaN and Inf in character->numeric conversions (and
 	thereby in read.table)
 
     o	All R environment variables are now of the form `R_xxx'.  In
 	particular, `RHOME', `RLIBS' and `RPROFILE' are now called
 	`R_HOME', `R_LIBS', and `R_PROFILE'.
 
-    o   New boxplot.formula() as a formula interface to boxplots.
+    o	New boxplot.formula() as a formula interface to boxplots.
 
-    o   expression()'s have gotten semantics that are closer to
-        those of S. They don't get evaluated except when expressedly
-        specified. Example: e<-expression(x); e[[1]]<-expression(123);
-        eval(e) now gives expression(123), not 123. This fixes some
-        problems with expressions in the list argument to do.call().
+    o	expression()'s have gotten semantics that are closer to
+	those of S. They don't get evaluated except when expressedly
+	specified. Example: e<-expression(x); e[[1]]<-expression(123);
+	eval(e) now gives expression(123), not 123. This fixes some
+	problems with expressions in the list argument to do.call().
 
-    o   Convenience functions parent.frame() and eval.parent()
+    o	Convenience functions parent.frame() and eval.parent()
 
-    o   Function new.env() to create empty environment and local() to
-        allow local evaluation of expressions, with various useful 
+    o	Function new.env() to create empty environment and local() to
+	allow local evaluation of expressions, with various useful
 	idiomatic uses.
 
-    o   uniroot() can now be used recursively
+    o	uniroot() can now be used recursively
 
 BUG FIXES
+
+    o	plot(<function>, log="x") doesn't give silly warning anymore.
+
+    o	pgamma() gave 0 or 1 too quickly for extreme arguments.
 
     o	A couple of problems with group generic operations.
 
@@ -50,7 +54,6 @@ BUG FIXES
 	functions will be identical.
 
 
-<<<<<<< NEWS
 	**************************************************
 	*						 *
 	*	       0.64 SERIES NEWS			 *
@@ -64,7 +67,7 @@ BUG FIXES
 NEW FEATURES
 
     o	new global variable R.version.string (for plots & reports).
-	Deprecated version & Version for new  R.version & R.Version. 
+	Deprecated version & Version for new  R.version & R.Version.
 
     o	R CMD Rd2dvi  has builtin "Usage" help and works for multiple files.
 	Useful for automatic reference manual of a package.
@@ -73,18 +76,18 @@ NEW FEATURES
 
 BUG FIXES
 
-    o   pmatch() misbehaved on duplicate matches
-    
+    o	pmatch() misbehaved on duplicate matches
+
     o	R CMD Rd2dvi <file.Rd> works again
 
     o	logical binops tried to set time series parameters before dimensions
 
-    o	upped the BUFSIZE in model.c (This is really peeing in the pants 
+    o	upped the BUFSIZE in model.c (This is really peeing in the pants
 	to get warm...)
 
     o	dput(), dump() and deparse()  now always use DBL_DIG (=15) digits
 	for numeric formatting.
-    
+
     o	chull() now works for vertical borders, such as in chull(c(1,1,2),3:1)
 
 
@@ -106,10 +109,10 @@ NEW FEATURES
 	is found it is executed before anything else is done by R
 	INSTALL.
 
-    o	If HTML help files are asked for but not available, text help 
-	is used. 
+    o	If HTML help files are asked for but not available, text help
+	is used.
 
-    o	HTML help file conversion reports unsatisified \link{..}s. 
+    o	HTML help file conversion reports unsatisified \link{..}s.
 
     o	`vsize' and `nsize' can be set by the environment variables
 	R_VSIZE and R_NSIZE respectively, perhaps most conveniently from
@@ -169,9 +172,9 @@ BUG FIXES
     o	for method functions: many argument name changes, add ... where
 	needed, for consistency with the generic function.
 
-    o	example() will allow (again) aliased topic names. 
+    o	example() will allow (again) aliased topic names.
 
-    o	HTML help file conversions will find hyperlinks in the main 
+    o	HTML help file conversions will find hyperlinks in the main
 	library as well as the current library. Links containing `<'
 	or `>' now work properly.
 
@@ -190,7 +193,7 @@ BUG FIXES
 
     o	eigen() now should work (again) in all cases.
 
-    o	is.nan() fixed to work (again) in architectures with 
+    o	is.nan() fixed to work (again) in architectures with
 	"unspecified" internal isnan().
 
 
@@ -303,7 +306,7 @@ BUG FIXES
 
     o	changed long to int in several .C calls to follow the above rules.
 
-    o	rbind(x1,x2) now does not lose dimnames when xi are 
+    o	rbind(x1,x2) now does not lose dimnames when xi are
 	character or complex.
 
     o	readline() accidentally inherited menu()'s prompt.
@@ -341,8 +344,8 @@ BUG FIXES
     o	curve() [and plot.function()] now use proper `x' values with log="x";
 	`type = "."' now works with curve() and plot.function()
 
-    o	zapped old windows files since they didn't build any more. 
-	The sources for the later gnuwin32 version are expected to 
+    o	zapped old windows files since they didn't build any more.
+	The sources for the later gnuwin32 version are expected to
 	appear here for 0.64.1. The #ifdef Win32's here are for that
 	version.
 
@@ -359,7 +362,7 @@ BUG FIXES
 NEW FEATURES
 
     o	get() and assign() allow position in search list to be a
-	character string. (e.g. get("delete.response","package:base") 
+	character string. (e.g. get("delete.response","package:base")
 
     o	HTML search now works for all packages (after new installation).
 
@@ -377,8 +380,8 @@ NEW FEATURES
 	of LaTeX and dvips; corresponding environment variables renamed to
 	`R_LATEXCMD' and `R_DVIPSCMD'.
 
-    o	--vsize & --nsize now both give size in "single units" 
-	(bytes/cons cells) with possible 
+    o	--vsize & --nsize now both give size in "single units"
+	(bytes/cons cells) with possible
 	suffixes "M" (Mega), "K"ilo (1024) and "k"ilo(1000).
 
     o	[pdqr]negbin() now also work with non-integer 'size' [by Ben Bolker].
@@ -394,7 +397,7 @@ NEW FEATURES
 
 BUG FIXES
 
-    o	system(command, intern=FALSE, ignore.errors=FALSE) 
+    o	system(command, intern=FALSE, ignore.errors=FALSE)
 	changed 1st & 3rd argument names and is better documented.
 
     o	"/Font5 /Symbol findfont definefont" confused some printers
@@ -421,7 +424,7 @@ BUG FIXES
     o	locator() on log axes: value antilogged twice
 
     o	(a real oldie - and trival too) is.recursive now TRUE for
-	expressions 
+	expressions
 
     o	sanitised delete.response
 
@@ -446,7 +449,7 @@ BUG FIXES
     o	--debugger .. now gives a warning if other command line args are used
 
     o	pt(t, df, ncp) now also works for bigger ncp's
-    
+
     o	apply(a,d, fun) now passes vectors (rank 1 arrays) to fun.
 
     o	model.frame() with subset and only one column fixed
@@ -466,14 +469,14 @@ BUG FIXES
     o	boxplot(.., ylim=..) or (.., axes=..)  gave erronous warning
 
     o	glm had wrong init code for models with offsets. Also fixed
-	so that linear predictor includes offset, also when predicting. 
+	so that linear predictor includes offset, also when predicting.
 
     o	predict.glm didn't work with se=T
 
     o	backsolve(), qr.solve... now return a vector when x (or y) is a vector.
 
     o	string tags now converted to symbols and strange symbolic
-	tags print as strings, cf. e<-quote(c(F=2, "tail area" = .5)), etc. 
+	tags print as strings, cf. e<-quote(c(F=2, "tail area" = .5)), etc.
 
     o	row.names(.) <- val  doesn't allow duplicated values anymore.
 
@@ -481,7 +484,7 @@ BUG FIXES
 
     o	revised curve function to avoid using grep patterns that caused
 	problems under Solaris 2.6
- 
+
     o	coplot() now has 'number' and 'overlap' arguments, and should work
 	in more situations. [by John Maindonald and MM].
 
