@@ -5,7 +5,7 @@ factor <- function (x, levels = sort(unique(x), na.last = TRUE),
 	x <- list()
     exclude <- as.vector(exclude, typeof(x))
     levels <- levels[is.na(match(levels, exclude))]
-    f <- match(as.character(x), as.character(levels))
+    f <- match(x, levels)
     names(f) <- names(x)
     nl <- length(labels)
     attr(f, "levels") <-
