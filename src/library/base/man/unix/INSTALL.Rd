@@ -57,19 +57,19 @@
 }
 
 \section{Packages using the methods package}{
-Packages that require the methods package, and that use functions such as
-\code{\link{setMethod}} or \code{\link{setClass}}, should be installed
-by creating a binary image.
+  Packages that require the methods package, and that use functions such
+  as \code{\link[methods]{setMethod}} or
+  \code{\link[methods]{setClass}}, should be installed by creating a
+  binary image.
 
-The package should require the methods package, both during installation
-and when the user attaches the package.  A good solution for most
-cases is to include the line \code{require("methods")} twice, once at
-the beginning of the package's R source, and once in the file
-\file{install.R} in the package directory (the top-level directory, \emph{not}
-in the \file{R} directory below that).  The \file{install.R} file
-causes an image to be saved, and the contents will ensure that methods
-are available when
-the package is attached.
+  The package should require the methods package, both during
+  installation and when the user attaches the package.  A good solution
+  for most cases is to include the line \code{require("methods")} twice,
+  once at the beginning of the package's R source, and once in the file
+  \file{install.R} in the package directory (the top-level directory,
+  \emph{not} in the \file{R} directory below that).  The
+  \file{install.R} file causes an image to be saved, and the contents
+  will ensure that methods are available when the package is attached.
 
 }
 \seealso{
