@@ -8,7 +8,7 @@
 }
 \usage{
 data(\dots, list = character(0), package = .packages(),
-     lib.loc = .lib.loc)
+     lib.loc = .lib.loc, verbose = getOption("verbose"))
 show.data(package = .packages(), lib.loc = .lib.loc)
 }
 \arguments{
@@ -20,7 +20,10 @@ show.data(package = .packages(), lib.loc = .lib.loc)
     current working directory.} 
   \item{lib.loc}{a character vector of directory names of \R
     libraries.  Defaults to all libraries currently known.  If the
-    default is used, the loaded packages are searched before the libraries.}
+    default is used, the loaded packages are searched before the
+    libraries.}
+  \item{verbose}{a logical.  If \code{TRUE}, additional diagnostics are
+    printed.}
 }
 \value{
   \code{data()} returns a character vector of all data sets specified,
