@@ -133,6 +133,6 @@ function(x, ...)
         file.show(outFile, delete.file = TRUE)
     } else {
         cat(paste("No help files found with ", fields, " matching `",
-                  pattern, "'\n", sep = ""))
+                  x$pattern, "'\n", sep = ""))
     }
 }
