@@ -348,6 +348,9 @@ RweaveLatexRuncode <- function(object, chunk, options)
         sink()
         output <- readLines(tmpcon)
         close(tmpcon)
+        ## delete empty output
+        if(length(output)==1 & output[1]=="") output <- NULL
+
         if(inherits(err, "try-error")) stop(err)
 
         if(object$debug)
