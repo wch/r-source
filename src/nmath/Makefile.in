@@ -55,6 +55,10 @@ SUBDIRS = standalone
 
 LIB = libmath.a
 
+noinst_LTLIBRARIES = libnmath.la
+libnmath_la_SOURCES = $(SOURCES)
+libnmath_la_LTLIBOBJS = $(OBJECTS:.o=.lo)
+
 all: Makefile Makedeps R
 
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status $(SOURCES)
@@ -69,19 +73,26 @@ Makedeps: Makefile $(DEPENDS)
 R: Makefile
 	@$(MAKE) Makedeps
 	@$(MAKE) $(LIB)
+	@@WANT_SHLIB_TRUE@$(MAKE) stamp-lo
 
 $(LIB): $(OBJECTS)
 	$(AR) cr $(LIB) $(OBJECTS)
 	$(RANLIB) $(LIB)
 
+stamp-lo: $(libnmath_la_LTLIBOBJS)
+	@touch $@
+libnmath.la: stamp-lo
+	$(LTLINK) -o $@ $(libnmath_la_LTLIBOBJS)
+
 mostlyclean: clean
 clean:
 	@echo "cleaning in $(subdir)"
-	@-rm -f Makedeps *.d *.o *.a
 	@(cd standalone; $(MAKE) clean)
+	@-rm -rf .libs _libs
+	@-rm -f Makedeps *.d *.o *.a *.la stamp-lo
 distclean: clean
-	@-rm -f Makefile
 	@(cd standalone; $(MAKE) distclean)
+	@-rm -f Makefile
 maintainer-clean: distclean
 
 distdir: $(DISTFILES)

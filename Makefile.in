@@ -37,6 +37,10 @@ $(srcdir)/configure: @MAINTAINER_MODE_TRUE@ $(srcdir)/configure.in $(srcdir)/acl
 $(srcdir)/aclocal.m4: @MAINTAINER_MODE_TRUE@ $(srcdir)/configure.in $(srcdir)/acinclude.m4
 	@cd $(srcdir) && $(ACLOCAL)
 
+LIBTOOL_DEPS = @LIBTOOL_DEPS@
+libtool: $(LIBTOOL_DEPS)
+	$(SHELL) ./config.status --recheck
+
 R: Makefile
 	@if [ "$(srcdir)" != "." ]; then \
 	  for f in $(INSTFILES); do \
@@ -142,7 +146,7 @@ distclean: clean
 	done
 	@rm -rf bin include library gnome
 	@rm -f Makeconf Makefile Makefile.bak Makefrag.* \
-	  config.cache config.log config.status
+	  config.cache config.log config.status libtool
 maintainer-clean: distclean
 	@echo "This command is intended for maintainers to use; it"
 	@echo "deletes files that may need special rules to rebuild"

@@ -83,6 +83,10 @@ DISTFILES = COPYRIGHT COPYRIGHT.ftn README ROUTINES lowess.doc \
 
 LIB = libappl.a
 
+noinst_LTLIBRARIES = libappl.la
+libappl_la_SOURCES = $(SOURCES)
+libappl_la_LTLIBOBJS = $(OBJECTS:.o=.lo)
+
 all: Makefile Makedeps R
 
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status $(SOURCES_C)
@@ -97,15 +101,22 @@ Makedeps: Makefile $(DEPENDS)
 R: Makefile
 	@$(MAKE) Makedeps
 	@$(MAKE) $(LIB)
+	@@WANT_SHLIB_TRUE@$(MAKE) stamp-lo
 
 $(LIB):	$(OBJECTS)
 	$(AR) cr $(LIB) $(OBJECTS)
 	$(RANLIB) $(LIB)
 
+stamp-lo: $(libappl_la_LTLIBOBJS)
+	@touch $@
+libappl.la: stamp-lo
+	$(LTLINK) -o $@ $(libappl_la_LTLIBOBJS)
+
 mostlyclean: clean
 clean:
 	@echo "cleaning in $(subdir)"
-	@-rm -f Makedeps *.d *.o *.a
+	@-rm -rf .libs _libs
+	@-rm -f Makedeps *.d *.o *.a *.la stamp-lo
 distclean: clean
 	@-rm -f Makefile
 maintainer-clean: distclean

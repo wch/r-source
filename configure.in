@@ -25,10 +25,14 @@ dnl Copyright (C) 1998, 1999, 2000 R Core Team
 AC_PREREQ(2.13)
 
 AC_INIT(src/include/Defn.h)
-AC_CONFIG_HEADER(src/include/config.h)
 AC_CONFIG_AUX_DIR(tools)
 
-### Platform & Version
+PACKAGE="R"
+VERSION=`cat ${srcdir}/VERSION | cut -d" " -f1`
+AM_INIT_AUTOMAKE(${PACKAGE}, ${VERSION})
+AM_CONFIG_HEADER(src/include/config.h)
+
+### Platform
 
 AC_CANONICAL_HOST
 AC_DEFINE_UNQUOTED(R_PLATFORM, "${host}")
@@ -38,10 +42,6 @@ AC_DEFINE_UNQUOTED(R_OS, "${host_os}")
 
 R_PLATFORM="${host}"
 AC_SUBST(R_PLATFORM)
-
-PACKAGE="R"
-VERSION=`cat ${srcdir}/VERSION | cut -d" " -f1`
-AM_INIT_AUTOMAKE(${PACKAGE}, ${VERSION})
 
 case "${host_os}" in
   macos*)
@@ -85,6 +85,7 @@ AC_ARG_ENABLE(maintainer-mode,
                           (and maybe confusing) to the casual installer],
   use_maintainer_mode=${enableval},
   use_maintainer_mode=no)
+AM_CONDITIONAL(MAINTAINER_MODE, test "${use_maintainer_mode}" = yes)
 
 ## Enable testing the write barrier.
 AC_ARG_ENABLE(strict-barrier,
@@ -173,6 +174,12 @@ AC_ARG_WITH(tk-config,
   TK_CONFIG=${withval},
   TK_CONFIG="")
 
+AC_ARG_WITH(libtool,
+  [  --with-libtool       use libtool for building shared libraries],
+  use_libtool=${withval},
+  use_libtool=no)
+AM_CONDITIONAL(USE_LIBTOOL, test "${use_libtool}" = yes)
+
 ### Programs.
 
 AC_PROG_AWK
@@ -182,6 +189,11 @@ AC_PROG_YACC
 R_PROG_AR
 R_PROG_ECHO_N
 R_PROG_INSTALL
+## Libtool
+AM_DISABLE_STATIC
+AM_DISABLE_SHARED
+AM_PROG_LIBTOOL
+AC_SUBST(LIBTOOL_DEPS)
 ## Make
 : ${MAKE=make}
 AC_SUBST(MAKE)
@@ -292,6 +304,8 @@ if test -n "${F77}"; then
 .f.c:
 .f.o:
 	$(FC) $(ALL_FFLAGS) -c $< -o $@
+.f.lo:
+	$(FC) $(ALL_FFLAGS_LO) -c $< -o $@
 EOF
 elif test -n "${F2C}"; then
   R_PROG_F2C_FLIBS
@@ -300,6 +314,10 @@ elif test -n "${F2C}"; then
 .f.o:
 	$(F2C) $(F2CFLAGS) < $< > $*.c
 	$(CC) $(ALL_CPPFLAGS) $(ALL_CFLAGS) -c $*.c -o $@
+	@rm -f $*.c
+.f.lo:
+	$(F2C) $(F2CFLAGS) < $< > $*.c
+	$(CC) $(ALL_CPPFLAGS) $(ALL_CFLAGS_LO) -c $*.c -o $@
 	@rm -f $*.c
 EOF
 else
@@ -823,11 +841,7 @@ AC_SUBST(R_PAPERSIZE)
 
 AC_SUBST(R_BATCHSAVE)
 
-## Final cleanups/rewrites.
-
-AM_CONDITIONAL(MAINTAINER_MODE, test "${use_maintainer_mode}" = yes)
-
-## Make sure -L terms come first in LIBS, separate out as LIBPATHS
+## Make sure -L terms come first in LIBS, separate out as LIBPATHS.
 LIBS1=""
 LIBS2=""
 for arg in ${LIBS}; do
@@ -859,6 +873,10 @@ for arg in ${X_LIBS} ${TCLTK_LIBS} ${GNOME_LIBS} ${BLAS_LIBS}; do
   esac
 done
 AC_SUBST(R_LD_LIBRARY_PATH)
+
+## Final cleanups/rewrites.
+
+AM_CONDITIONAL(WANT_SHLIB, test "${enable_shared}" = yes)
 
 if test "${PERL}" = false; then
   PERL="/bin/sh false"
@@ -971,10 +989,13 @@ R is now configured for ${host}
   C compiler:               ${CC} ${R_XTRA_CFLAGS} ${CFLAGS}
   C++ compiler:             ${CXX} ${R_XTRA_CXXFLAGS} ${CXXFLAGS}
   FORTRAN compiler:         ${FORT}
+
   X11 support:              ${use_X11}
   Gnome support:            ${use_gnome}
   Tcl/Tk support:           ${use_tcltk}
+
   R profiling support:      ${want_Rprof}
+  Build R shared library:   ${enable_shared}
 ])
 
 if test -n "${warn_f77_and_g77}"; then

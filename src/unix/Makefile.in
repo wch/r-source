@@ -27,6 +27,10 @@ SUBDIRS = X11 gnome
 
 LIB = libunix.a
 
+noinst_LTLIBRARIES = libunix.la
+libunix_la_SOURCES = $(SOURCES)
+libunix_la_LTLIBOBJS = $(OBJECTS:.o=.lo)
+
 all: Makefile Makedeps R
 
 Makefile: $(srcdir)/Makefile.in \
@@ -46,6 +50,7 @@ Makedeps: Makefile $(DEPENDS)
 R: Makefile
 	@$(MAKE) Makedeps
 	@$(MAKE) $(LIB)
+	@@WANT_SHLIB_TRUE@$(MAKE) stamp-lo
 
 DLLs:
 	@for g in $(R_GUIS) ""; do \
@@ -64,6 +69,11 @@ $(LIB): $(OBJECTS)
 	$(AR) cr $(LIB) $(OBJECTS)
 	$(RANLIB) $(LIB)
 
+stamp-lo: $(libunix_la_LTLIBOBJS)
+	@touch $@
+libunix.la: stamp-lo
+	$(LTLINK) -o $@ $(libunix_la_LTLIBOBJS)
+
 mostlyclean: clean
 clean:
 	@echo "cleaning in $(subdir)"
@@ -72,7 +82,8 @@ clean:
 	    (cd $${g} && $(MAKE) $@); \
 	  fi; \
 	done
-	@-rm -f Makedeps *.d *.o *.a FFDecl.h FFTab.h
+	@-rm -rf .libs _libs
+	@-rm -f Makedeps FFDecl.h FFTab.h *.d *.o *.a *.la stamp-lo
 distclean: clean
 	@for g in $(R_GUIS) ""; do \
 	  if test -n "$${g}"; then \
