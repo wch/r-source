@@ -389,8 +389,6 @@ void setup_Rmainloop(void)
     R_Warnings = R_NilValue;
 
 #ifdef EXPERIMENTAL_NAMESPACES
-    if (getenv("R_USE_NAMESPACE_DISPATCH") != NULL)
-	R_SetUseNamespaceDispatch(TRUE);
     if (getenv("R_USE_BASE_NAMESPACE") != NULL)
 	baseEnv = R_BaseNamespace;
     else
