@@ -143,6 +143,15 @@ void R_load_aqua_shlib(void)
 */    
 }
 
+SEXP do_wsbrowser(SEXP call, SEXP op, SEXP args, SEXP env);
+void EmptyDataBrowser(void);
+
+SEXP do_wsbrowser(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+  return R_NilValue;
+}
+
+
 #else
 
 void R_load_aqua_shlib()
