@@ -318,6 +318,8 @@ static SEXP binary(SEXP op, SEXP args)
     }
 
     if (xarray || yarray) {
+	nx = length(x);
+	ny = length(y);
 	if (xarray && yarray) {
 	    if (!conformable(x, y))
 		errorcall(lcall, "non-conformable arrays\n");
@@ -387,13 +389,17 @@ static SEXP binary(SEXP op, SEXP args)
 	setAttrib(x, R_ClassSymbol, class);
 	UNPROTECT(2);
     }
-
+/* Don't set the dims if one argument is an array of size 0
+   and the other isn't of size zero, cos they're wrong */
     if (dims != R_NilValue) {
+      if ( !((xarray && (nx==0) && (ny!=0)) || (yarray && (ny==0) &&
+(nx!=0)))  ){
 	setAttrib(x, R_DimSymbol, dims);
 	if(xnames != R_NilValue)
 	    setAttrib(x, R_DimNamesSymbol, xnames);
 	else if(ynames != R_NilValue)
 	    setAttrib(x, R_DimNamesSymbol, ynames);
+     }
     }
     else {
 	if(length(x) == length(xnames))

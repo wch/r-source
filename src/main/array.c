@@ -25,7 +25,7 @@ static void CheckDims(SEXP dims)
 	int i;
 
 	for (i = 0; i < LENGTH(dims); i++) {
-		if (INTEGER(dims)[i] <= 0)
+		if (INTEGER(dims)[i] < 0)
 			error("invalid array extent\n");
 	}
 }
@@ -42,7 +42,7 @@ SEXP do_matrix(SEXP call, SEXP op, SEXP args, SEXP rho)
 	byrow = asInteger(CADR(CDDR(args)));
 
 	if (isVector(vals) || isList(vals)) {
-		if(length(vals) <= 0)
+		if(length(vals) < 0)
 			errorcall(call, "argument has length zero\n");
 	} else errorcall(call, "invalid matrix element type\n");
 
@@ -78,8 +78,8 @@ SEXP allocMatrix(SEXPTYPE mode, int nrow, int ncol)
 	SEXP s, t;
 	int n;
 
-	if (nrow <= 0 || ncol <= 0)
-		error("nonpositive extents to matrix\n");
+	if (nrow < 0 || ncol < 0)
+		error("negative extents to matrix\n");
 	n = nrow * ncol;
 	PROTECT(s = allocVector(mode, n));
 	PROTECT(t = allocVector(INTSXP, 2));
@@ -218,7 +218,7 @@ SEXP do_drop(SEXP call, SEXP op, SEXP args, SEXP rho)
 		n = LENGTH(xdims);
 		shorten = 0;
 		for(i=0 ; i<n ; i++)
-			if(INTEGER(xdims)[i] <= 1) shorten = 1;
+			if(INTEGER(xdims)[i] == 1) shorten = 1;
 		if(shorten) {
 			if(NAMED(x)) x = duplicate(x);
 			x = DropDims(x);

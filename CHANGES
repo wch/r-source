@@ -174,6 +174,8 @@ NEW FEATURES
 
     o	new editor function pico()
 
+    o   matrices and arrays can have zero extents
+
 BUG FIXES (many of which resulted from the added features...)
 
     o   Rd files: leading whitespace of lines in user-defined sections
