@@ -321,3 +321,11 @@ Date: Wed, 2 Jun 1999 15:02:03 +0200 (MET DST)
 Subject: dput and options()$digits
 From: Paul Gilbert <pgilbert@bank-banque-canada.ca>
 Date: Wed, 02 Jun 1999 13:24:32 -0400
+* PR# 204 *
+Subject: very minor Rgui problem in rw0641
+From: Simon Fear <fears@roycastle.liv.ac.uk>
+Date: Thu, 3 Jun 1999 14:09:04 +0100 
+* PR# 205 *
+Subject: IE5 html help search failure
+From: Simon Fear <fears@roycastle.liv.ac.uk>
+Date: Thu, 3 Jun 1999 14:55:24 +0100 
