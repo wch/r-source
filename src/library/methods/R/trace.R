@@ -70,18 +70,22 @@
         }
     if(untrace) {
     if(is.null(signature)) {
-        ## ensure that the version to assign is untraced (should be, but ...)
+        ## ensure that the version to assign is untraced
         if(is(def, "traceable")) {
             newFun <- .untracedFunction(def)
         }
-        else
+        else {
             .primUntrace(what) # to be safe--no way to know if it's traced or not
+            return(what)
+        }
     }
     else {
             if(is(def, "traceable"))
                 newFun <- .untracedFunction(def)
-            else
+            else {
                 warning("The method for \"", what, "\" for this signature was not being traced")
+                return(what)
+            }
         }
     }
     else {
