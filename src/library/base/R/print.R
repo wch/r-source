@@ -56,7 +56,7 @@ print.noquote <- function(obj,...) {
 }
 ## used for version:
 print.simple.list <- function(x, ...)
-    print(noquote(cbind("_simple.list_"=unlist(x))), ...)
+    print(noquote(cbind("_"=unlist(x))), ...)
 
 print.coefmat <-
     function(x, digits = max(3, .Options$digits - 2),
