@@ -3,7 +3,7 @@
 \alias{unix}
 \title{Invoke a System Command}
 \usage{
-system(command, intern = FALSE, wait = TRUE, input,
+system(command, intern = FALSE, wait = TRUE, input = "",
        show.output.on.console = FALSE,
        minimized = FALSE, invisible = FALSE)
 }

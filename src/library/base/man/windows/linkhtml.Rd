@@ -5,7 +5,7 @@
 \title{Update HTML documentation files}
 \usage{
 link.html.help(verbose=FALSE, lib.loc=.Library)
-make.packages.html(lib.loc=.libpaths())
+make.packages.html(lib.loc=.libPaths())
 make.search.html(lib.loc=.Library)
 }
 \description{
