@@ -4,29 +4,28 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
          keep.source = getOption("keep.source.pkgs"),
          verbose = getOption("verbose"), version)
 {
-    testRversion <- function(pkgInfo)
+    testRversion <- function(pkgInfo, pkgname)
     {
         current <- getRversion()
-        pkgname <- sQuote(pkgInfo$DESCRIPTION["Package"])
         ## depends on R version?
         if(length(Rdeps <- pkgInfo$Rdepends) > 1) {
             target <- Rdeps$version
             res <- eval(parse(text=paste("current", Rdeps$op, "target")))
             if(!res)
                 stop(paste("This is R ", current, ", package ",
-                           pkgname, " needs ", Rdeps$op, " ", target, sep=""),
+                           sQuote(pkgname), " needs ", Rdeps$op, " ", target, sep=""),
                      call. = FALSE)
         }
         ## which version was this package built under?
         if(!is.null(built <- pkgInfo$Built)) {
             ## must be >= 2.0.0
             if(built$R < "2.0.0")
-                stop("package ", pkgname,
+                stop("package ", sQuote(pkgname),
                      " was built before R 2.0.0: please re-install it",
                      call. = FALSE)
             ## warn if later than this version
             if(built$R > current)
-                warning(paste("package", pkgname,
+                warning(paste("package", sQuote(pkgname),
                               "was built under R version", built$R),
                         call. = FALSE)
             if(.Platform$OS.type == "unix") {
@@ -35,15 +34,16 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
                     ## allow for small mismatches, e.g. OS version number.
                     m <- agrep(platform, R.version$platform)
                     if(!length(m))
-                        stop(paste("package", pkgname,
+                        stop(paste("package", sQuote(pkgname),
                                    "was built for", platform),
                              call. = FALSE)
 		}
             }
         }
         else
-            stop(paste("This package has not been installed properly\n",
-                       "See the Note in ?library"))
+            stop(paste("Package", sQuote(pkgname),
+                       "has not been installed properly\n",
+                       "See the Note in ?library"), call. = FALSE)
     }
 
     checkNoGenerics <- function(env, pkg)
@@ -218,7 +218,7 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
             if(!nchar(pfile))
             	stop(sQuote(package), " is not a valid package -- installed < 2.0.0?")
             pkgInfo <- .readRDS(pfile)
-            testRversion(pkgInfo)
+            testRversion(pkgInfo, package)
 
             ## The check for inconsistent naming is now in .find.package
 
