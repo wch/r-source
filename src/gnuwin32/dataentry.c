@@ -130,14 +130,15 @@ static int xScrollbarScale=1, yScrollbarScale=1;
 
 #include <windows.h> /* for Sleep */
 
-int mb_char_len(char *buf, int clength); /* from console.c */
+int mb_char_len(char *buf, int clength, wchar_t *wc); /* from console.c */
 
 static void moveback()
 {
     int mb_len;
+    wchar_t wc;
 
     if (clength > 0) {
-	mb_len = mb_char_len(buf, clength-1);
+	mb_len = mb_char_len(buf, clength-1, &wc);
 	clength -= mb_len;
 	bufp -= mb_len;
 	printstring(buf, clength, crow, ccol, 1);

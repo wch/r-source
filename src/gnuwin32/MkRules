@@ -39,6 +39,8 @@ TCL_VERSION = 84
 # SUPPORT_MBCS = YES
 # Define if R.dll is to have support of UTF-8 locales.
 # SUPPORT_UTF8 = YES
+# Define to use unicows
+# USE_UNICOWS = YES
 
 ## ====== configuration macros for building installers ===========
 
@@ -78,12 +80,16 @@ DEPARG=-M
 endif
 
 ifdef SUPPORT_UTF8
-LIBEXTRAS = -lunicows -lmsvcp60
+LIBEXTRAS = -lmsvcp60
 CFLAGS += -DSUPPORT_UTF8
 else
 ifdef SUPPORT_MBCS
 LIBEXTRAS = -lmsvcp60
+CFLAGS += -DSUPPORT_UTF8
 endif
+endif
+ifdef USE_UNICOWS
+LIBEXTRAS += -lunicows
 endif
 
 PERL=perl
