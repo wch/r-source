@@ -92,6 +92,8 @@ anova(lm.D9 <- lm(weight~group))
 summary(lm.D90 <- lm(weight ~ group -1))# omitting intercept
 summary(resid(lm.D9) - resid(lm.D90)) #- residuals almost identical
 
-plot(lm.D9)# Residuals, Fitted,..
+opar <- par(mfrow = c(2,2), oma = c(0, 0, 1.1, 0))
+plot(lm.D9, las = 1)      # Residuals, Fitted,..
+par(opar)
 }
 \keyword{regression}
