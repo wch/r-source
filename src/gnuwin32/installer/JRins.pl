@@ -206,7 +206,7 @@ sub listFiles {
 	} elsif (exists($develfiles{$_})
 		 || m/^doc\\KEYWORDS/
 		 || m/^src\\gnuwin32/
-		 || m/^src\\include/
+		 || m/^include/
 		 || m/^src\\library\\windlgs/
 		 || m/^share\\make/
 		 || m/^share\\perl/

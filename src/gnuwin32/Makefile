@@ -37,8 +37,6 @@ OPTFLAGS_M=$(OPTFLAGS)
 
 ifneq ($(strip $(BUILD)),CROSS)
 R-DLLFLAGS = -mwindows
-## needed for gcc-3.2.2 but not 3.2 nor 3.2.3
-## R-DLLFLAGS = -mwindows -Wl,--allow-multiple-definition
 else
 R-DLLFLAGS = -mwindows
 endif
@@ -79,6 +77,7 @@ rbuild:
 	@$(MAKE) --no-print-directory fixfiles
 	@$(MAKE) --no-print-directory makeMakedeps
 	@$(MAKE) --no-print-directory libRblas.a
+	@$(MAKE) --no-print-directory -C ../include -f Makefile.win
 	@$(MAKE) --no-print-directory ../../bin/R.dll libR.a
 	@$(MAKE) --no-print-directory ../../bin/Rblas.dll CHTML
 	@$(MAKE) --no-print-directory front-ends COPYRIGHTS rmodules Rcode
@@ -368,6 +367,7 @@ distclean veryclean: clean clean-recommended
 	../../etc/rgb.txt ../../share/make/wintests.mk \
 	../include/Platform.h ../../tests/*.Rout ../../tests/*.Rout.fail
 	$(MAKE) -C fixed distclean
+	$(MAKE) -C ../include -f Makefile.win distclean
 	-$(MAKE) -C installer distclean
 	@for pkg in $(R_PKGS_BASE); do \
 	  $(RM) ../library/$${pkg}/DESCRIPTION; \

@@ -11,29 +11,9 @@ profiles: ../../../library/base/R/Rprofile
 	@$(CAT)  $^ > $@
 
 
-version: ../../include/Rversion.h
-fixh: version h/config.h \
-  ../../include/Rconfig.h  ../../include/Rmath.h
+fixh: h/config.h h/psignal.h
 	@$(CP) -p ./h/config.h ./h/psignal.h ../../include
 	@$(ECHO) done > fixh
-
-../../include/Rconfig.h: h/config.h ../../../tools/GETCONFIG
-	$(SED) -e 1d ../../../tools/GETCONFIG > GC
-	(cd h; sh ../GC > ../../../include/Rconfig.h)
-	$(RM) GC
-
-../../include/Rversion.h: ../../../date-stamp ../../../VERSION
-	$(SED) -e 1d ../../../tools/GETVERSION > ../../../tools/GV
-	sh ../../../tools/GV > $@
-	$(RM) ../../../tools/GV
-
-Rmath.h: ../../include/Rmath.h0.in ../../../VERSION
-	$(SED) -e 's/@RMATH_HAVE_LOG1P@/# define HAVE_LOG1P 1/'  \
-	  -e /@RMATH_HAVE_EXPM1@/d  \
-	  -e  's/@RMATH_HAVE_WORKING_LOG1P@/# define HAVE_WORKING_LOG1P 1/' \
-	  -e "s/@PACKAGE_VERSION@/`sed 's/\([^ ]*\).*/\1/' < ../../../VERSION`/" $< > $@
-../../include/Rmath.h: Rmath.h
-	@sh ../../../tools/copy-if-change $< $@
 
 ../../../bin/massage-Examples: ../../../share/perl/massage-Examples.pl
 	$(SED) -e 's/"contr.poly")/"contr.poly"), pager="console"/' $< > $@
@@ -88,8 +68,7 @@ fixshare: ./share/tests.mk
 clean:
 	$(RM) *~ */*~ fixhtml fixh fixbin fixetc fixshare
 
-distclean: clean
-	$(RM) -f Rmath.h ../../../tools/GV
+distclean:
 
 ../../../doc/html/search/SearchEngine.html: ../../../doc/html/search/SearchEngine-head.html ../../../doc/html/search/SearchEngine-foot.html ../../../doc/KEYWORDS.db
 	(cd ../../../doc; \

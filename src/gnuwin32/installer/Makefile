@@ -6,19 +6,13 @@ include ../../../share/make/vars.mk
 RPREFIX = $(shell perl ../fixed/rwver.pl ../../../VERSION)
 LIBFILES = $(foreach i, $(R_PKGS_BASE), ../../../library/$i) ../../../library/R.css
 
-all: $(RPREFIX).exe
+INFO_FILES = AUTHORS COPYING FAQ NEWS README RESOURCES THANKS Y2K
 
-#taken from ../include/Makefile.in
-SRC_HEADERS = R.h S.h Rdefines.h Rdevices.h Rgraphics.h Rinternals.h Rmath.h
-OBJ_HEADERS = Rconfig.h Rversion.h
-GW32_HEADERS =
+all: $(RPREFIX).exe
 
 imagedir:
 	$(RM) -r $(RPREFIX)
 	$(MKDIR) $(RPREFIX)
-#
-# the next lines were formerly the bindist target
-#
 	$(CP) -pr ../../../bin ../../../modules ../../../afm $(RPREFIX)
 	$(MKDIR) -p $(RPREFIX)/library
 	$(CP) -pr $(LIBFILES) $(RPREFIX)/library
@@ -36,8 +30,8 @@ imagedir:
 	$(CP) -pr ../../../doc/html $(RPREFIX)/doc
 	$(CP) -p ../../../doc/manual/*.html $(RPREFIX)/doc/manual
 	$(CP) -pr ../../../share/texmf $(RPREFIX)/share
-	$(CP) -p ../../../AUTHORS ../../../COPYING ../COPYRIGHTS ../../../FAQ ../../../NEWS \
-		../../../README ../../../RESOURCES ../../../THANKS ../../../Y2K $(RPREFIX)
+	$(CP) -p ../COPYRIGHTS $(RPREFIX)
+	$(CP) -p $(foreach i,$(INFO_FILES),../../../$i) $(RPREFIX)
 	$(SED) -e s/@RWVER@/$(RPREFIX)/g \
 	  -e s/@RVER@/$(RVER)/g ../readme > $(RPREFIX)/README.$(RPREFIX)
 	$(CP) -p ../rw-faq $(RPREFIX)/rw-FAQ
@@ -52,18 +46,12 @@ else
 endif
 	$(RM) dosfiles.zip
 	$(RM) $(RPREFIX)/doc/manual/R-FAQ.html
-#
-# the next lines were formerly the docsdist target
-#
 	$(MKDIR) -p $(RPREFIX)/doc/manual
 	$(CP) -pr ../../../doc/manual/*.pdf $(RPREFIX)/doc/manual
 	$(RM) $(RPREFIX)/doc/manual/R-FAQ.pdf
-#
-# the next lines were formerly the packagedist target
-#
 	$(MKDIR) -p $(RPREFIX)/bin $(RPREFIX)/etc \
 	  $(RPREFIX)/doc $(RPREFIX)/doc/html $(RPREFIX)/share \
-	  $(RPREFIX)/src/include $(RPREFIX)/src/library \
+	  $(RPREFIX)/include $(RPREFIX)/src/library \
 	  $(RPREFIX)/src/gnuwin32/fixed
 	$(CP) ../../../doc/html/logo.jpg $(RPREFIX)/doc/html
 	$(CP) ../../../doc/KEYWORDS* $(RPREFIX)/doc
@@ -75,9 +63,7 @@ endif
 	$(RM) $(RPREFIX)/src/gnuwin32/help/*.c \
 	  $(RPREFIX)/src/gnuwin32/help/MkChmDll
 	(cd ..; $(MAKE) --no-print-directory -C installer/$(RPREFIX)/src/gnuwin32/help clean)
-	$(CP) -p $(foreach i,$(SRC_HEADERS) $(OBJ_HEADERS) $(GW32_HEADERS), \
-	  ../../include/$i) $(RPREFIX)/src/include
-	$(CP) -pr ../../include/R_ext $(RPREFIX)/src/include
+	$(CP) -pr ../../../include $(RPREFIX)
 	$(SED) -e 3,5d ../readme.packages > $(RPREFIX)/readme.packages
 	$(CP) ../../../COPYING.LIB $(RPREFIX)
 	$(CP) -r ../../../share/make ../../../share/perl ../../../share/texmf \
@@ -90,12 +76,9 @@ endif
 	$(CP) -pr ../../../lib $(RPREFIX)
 	$(CP) ../../../share/make/wintests.mk $(RPREFIX)/share/make
 	$(CP) -pr ../../../share/R $(RPREFIX)/share
-	$(CP) -p ../graphapp/graphapp.h ../graphapp/ga.h $(RPREFIX)/src/include
+	$(CP) -p ../graphapp/graphapp.h ../graphapp/ga.h $(RPREFIX)/include
 	(cd ..; $(MAKE) --no-print-directory PKGDIR=. pkgclean-windlgs)
 	$(CP) -pr ../windlgs $(RPREFIX)/src/library
-#
-# the next lines were formerly the dist-recommended target
-#
 	@for p in $(R_PKGS_RECOMMENDED); do \
 	echo Copying $$p ; \
 	$(MKDIR) -p $(RPREFIX)/library/$$p ; \
@@ -121,7 +104,3 @@ clean:
 
 distclean: clean
 	rm -f $(RPREFIX).exe miniR*
-
-# for historical reasons
-ISclean: clean
-ISdistclean: distclean

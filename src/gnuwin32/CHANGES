@@ -23,6 +23,9 @@ Added function getWindowsHandle().
 The windows() device has new 'bg' argument to set the background colour
 (which still defaults to "transparent").
 
+C headers files are now installed into R_HOME/include rather than
+R_HOME/src/include (as on Unix).
+
 
 
 rw1091

@@ -57,7 +57,7 @@ R.exe: R.o ../rhome.o rcico.o rcmdfn.o
 RSetReg.exe: RSetReg.o ../rhome.o rcico.o
 
 Rpwd:
-	$(MAKE) -C ../fixed version
+	$(MAKE) -C ../../include -f Makefile.win version
 	$(MAKE) Rpwd.exe
 
 Rpwd.exe: rpwd.o rcico.o
