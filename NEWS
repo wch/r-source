@@ -76,6 +76,11 @@ BUG FIXES
 
     o   The GNOME interface under Linux/Unix was broken. (PR#7276)
 
+    o	For the jpeg/png devices under Linux/Unix, under certain rare
+	circumstances clipping needed to be cleared before starting a
+	new page.  (PR#7270, which has been the case since the devices
+	were introduced in 1.1.0.)
+
 
 
 
