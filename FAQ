@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.4-19, 2002-02-21
+Version 1.4-20, 2002-02-24
 Kurt Hornik
 
 
@@ -1357,6 +1357,10 @@ works, was published in the Journal of Statistical Software
      Functions for dealing with dates.  The most useful of them accepts a
      vector of input dates in any of the forms `8/30/53', `30Aug53', `30
      August 1953', ..., `August 30 53', or any mixture of these.
+
+*deldir*
+     Calculates the  Delaunay triangulation and the Dirichlet or Voronoi
+     tesselation (with respect to the entire plane) of a planar point set.
 
 *diamonds*
      Functions for illustrating aperture-4 diamond partitions in the plane,

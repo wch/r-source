@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2002
-@set FAQ-VERSION 1.4-19, 2002-02-21
+@set FAQ-VERSION 1.4-20, 2002-02-24
 @set REL-VERSION 1.4.1
 @c %**end of header
 
@@ -1601,6 +1601,9 @@ Functions for dealing with dates.  The most useful of them accepts a
 vector of input dates in any of the forms @samp{8/30/53},
 @samp{30Aug53}, @samp{30 August 1953}, @dots{}, @samp{August 30 53}, or
 any mixture of these.
+@item deldir
+Calculates the  Delaunay triangulation and the Dirichlet or Voronoi
+tesselation (with respect to the entire plane) of a planar point set.
 @item diamonds
 Functions for illustrating aperture-4 diamond partitions in the plane,
 or on the surface of an octahedron or icosahedron, for use as analysis
