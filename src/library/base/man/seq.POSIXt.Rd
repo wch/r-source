@@ -33,7 +33,7 @@
 
 \examples{
 ## first days of years in the (commonly used) 20th century
-seq(ISOdate(1901,1,1), ISOdate(1999,1,1), "years")
+seq(ISOdate(1910,1,1), ISOdate(1999,1,1), "years")
 ## by month
 seq(ISOdate(2000,1,1), by="month", length=12)
 ## quarters
