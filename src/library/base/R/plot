@@ -65,29 +65,17 @@ UseMethod("plot")
 
 plot.default <-
 function (x, y=NULL, type="p", col=par("fg"), bg=NA, pch=par("pch"), xlim=NULL,
-	ylim=NULL, log="", axes=TRUE, frame.plot=TRUE, panel.first=NULL,
+	ylim=NULL, log="", axes=TRUE, frame.plot=axes, panel.first=NULL,
 	panel.last=NULL, ann=par("ann"), main=NULL, xlab=NULL, ylab=NULL,
-	cex=par("cex"), lty=par("lty"), lwd=par("lwd"), ...) 
+	cex=par("cex"), lty=par("lty"), lwd=par("lwd"), ...)
 {
-	xlabel <- if (!missing(x)) 
-		deparse(substitute(x))
-	else NULL
-	ylabel <- if (!missing(y)) 
-		deparse(substitute(y))
-	else NULL
+	xlabel <- if (!missing(x)) deparse(substitute(x))	else NULL
+	ylabel <- if (!missing(y)) deparse(substitute(y))	else NULL
 	xy <- xy.coords(x, y, xlabel, ylabel)
-	xlab <- if (missing(xlab)) 
-		xy$xlab
-	else xlab
-	ylab <- if (missing(ylab)) 
-		xy$ylab
-	else ylab
-	xlim <- if (missing(xlim)) 
-		range(xy$x, na.rm=TRUE)
-	else xlim
-	ylim <- if (missing(ylim)) 
-		range(xy$y, na.rm=TRUE)
-	else ylim
+	xlab <- if (missing(xlab)) xy$xlab	else xlab
+	ylab <- if (missing(ylab)) xy$ylab	else ylab
+	xlim <- if (missing(xlim)) range(xy$x, na.rm=TRUE)	else xlim
+	ylim <- if (missing(ylim)) range(xy$y, na.rm=TRUE)	else ylim
 	plot.new()
 	plot.window(xlim, ylim, log, ...)
 	panel.first
@@ -97,10 +85,10 @@ function (x, y=NULL, type="p", col=par("fg"), bg=NA, pch=par("pch"), xlim=NULL,
 	if (axes) {
 		axis(1, pars=pars)
 		axis(2, pars=pars)
-		if (frame.plot) 
-			box(...)
 	}
-	if (ann) 
+	if (frame.plot)
+		box(...)
+	if (ann)
 		title(main=main, xlab=xlab, ylab=ylab, pars=pars)
 	invisible()
 }
@@ -113,8 +101,9 @@ function(x, y, ...)
 	else NextMethod("plot")
 }
 
-plot.xy <- function(xy, type, pch=1, lty="solid", col=par("fg"), bg=NA, cex=1, ...)
-	.Internal(plot.xy(xy, type, pch, lty, col, bg=bg, cex, ...))
+plot.xy <-
+function(xy, type, pch=1, lty="solid", col=par("fg"), bg=NA, cex=1, ...)
+	.Internal(plot.xy(xy, type, pch, lty, col, bg=bg, cex=cex, ...))
 
 plot.new <- function(ask=NA)
 	.Internal(plot.new(ask))
