@@ -21,8 +21,6 @@ parse.dcf(text = NULL, file = "", fields = NULL, versionfix = FALSE)
 \alias{scan.url}
 \alias{source.url}
 \alias{httpclient}
-\alias{dotplot}
-\alias{stripplot}
 \alias{parse.dcf}
 \description{
   These functions are provided for compatibility with older versions of
@@ -38,10 +36,8 @@ parse.dcf(text = NULL, file = "", fields = NULL, versionfix = FALSE)
 
   \code{httpclient} is used by the deprecated \code{"socket"} method
   of \code{\link{download.file}}.
-  \code{dotplot} and \code{stripplot} are deprecated names for
-  \code{\link{dotchart}} and \code{\link{stripchart}}, respectively.
 
-    \code{parse.dcf} has been replaced by \code{read.dcf}, which is much
+  \code{parse.dcf} has been replaced by \code{read.dcf}, which is much
   faster, but has a slightly different interface.
 }
 \seealso{\code{\link{Defunct}}}

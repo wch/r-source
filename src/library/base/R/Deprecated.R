@@ -113,16 +113,6 @@ getenv <- function(x) {
     unlink(file)
 }
 
-## Deprecated in 1.2.3
-dotplot <- function(...) {
-    .Deprecated("dotchart")
-    dotchart(...)
-}
-stripplot <- function(...) {
-    .Deprecated("stripchart")
-    stripchart(...)
-}
-
 parse.dcf <- function(text=NULL, file="", fields=NULL, versionfix=FALSE)
 {
     .Deprecated("read.dcf")

@@ -2,6 +2,28 @@
 \title{Defunct Functions}
 \alias{Defunct}
 \alias{.Defunct}
+%------ PLEASE: put \alias{.} here for  EACH !
+\alias{Version}
+\alias{provide}
+\alias{.Provided}
+\alias{category}
+\alias{dnchisq}
+\alias{pnchisq}
+\alias{qnchisq}
+\alias{rnchisq}
+\alias{print.anova.glm}
+\alias{print.anova.lm}
+\alias{print.tabular}
+\alias{print.plot}
+\alias{save.plot}
+\alias{system.test}
+\alias{dotplot}
+\alias{stripplot}
+%
+\description{
+  The functions listed here are no longer part of \R as they are not
+  needed (any more).
+}
 \usage{
 .Defunct()
 
@@ -21,26 +43,11 @@ print.tabular(.)
 print.plot(.)
 save.plot(.)
 system.test(.)
-}
-%------ PLEASE: put \alias{.} here for  EACH !
-\alias{Version}
-\alias{provide}
-\alias{.Provided}
-\alias{category}
-\alias{dnchisq}
-\alias{pnchisq}
-\alias{qnchisq}
-\alias{rnchisq}
-\alias{print.anova.glm}
-\alias{print.anova.lm}
-\alias{print.tabular}
-\alias{print.plot}
-\alias{save.plot}
-\alias{system.test}
-%
-\description{
-  The functions listed here are no longer part of \R as they are not
-  needed (any more).
+% </Removed 1.2.0>
+% Removed in 1.3.0
+dotplot(\dots)
+stripplot(\dots)
+% </Removed 1.3.0>
 }
 \details{
   \code{category} has been an old-S function before there were factors;
@@ -55,10 +62,12 @@ system.test(.)
   \code{provide} and its object \code{.Provided} have been removed.
   They were never used for their intended purpose, to allow one
   package to subsume another.
+
+  \code{dotplot} and \code{stripplot} have been renamed to
+  \code{\link{dotchart}} and \code{\link{stripchart}}, respectively.
   
   \code{.Defunct} is the function to which defunct functions are set.
 }
 \seealso{\code{\link{Deprecated}}}
 \keyword{documentation}
 \keyword{utilities}
-

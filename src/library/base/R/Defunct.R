@@ -7,3 +7,11 @@
 
 Version <- function() .Defunct()
 provide <- function(package) .Defunct()
+
+## <entry>
+## Deprecated in 1.2.3
+## Defunct in 1.3.0
+dotplot <- function(...) .Defunct()
+stripplot <- function(...) .Defunct()
+## </entry>
+
