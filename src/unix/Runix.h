@@ -35,7 +35,16 @@ int  Rgnome_ShowFiles(int nfile, char **file, char **headers, char *wtitle,
 		      Rboolean del, char *pager);
 int  Rgnome_ChooseFile(int new, char *buf, int len);
 
+void Raqua_StartConsole(void);
+int  Raqua_ReadConsole(char *prompt, unsigned char *buf, int len, 
+			int addtohistory);
+void Raqua_WriteConsole(char *buf, int len);
+void Raqua_ResetConsole(void);
+void Raqua_FlushConsole(void);
+void Raqua_ClearerrConsole(void);
+
 void R_load_X11_shlib(void);
 void R_load_gnome_shlib(void);
+void R_load_aqua_shlib(void);
 
 int Rf_initEmbeddedR(int argc, char **argv);
