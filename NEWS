@@ -471,6 +471,9 @@ BUG FIXES
 	Fixed socket reading code to properly handle long reads and reads
 	with part of the data in the connection buffer.
 
+    o	Allow sockets to be opened in binary mode with both open="ab" and
+	open="a+b".
+
     o	levels<-.factor() was using incorrectly list values longer than
 	the number of levels (PR#1394), and incorrectly documented
 	that a character value could not be longer than the existing

@@ -36,7 +36,7 @@
 static Rboolean sock_open(Rconnection con)
 {
     Rsockconn this = (Rsockconn)con->private;
-    int sock, sock1;
+    int sock, sock1, mlen;
     int timeout = asInteger(GetOption(install("timeout"), R_NilValue));
     char buf[256];
 
@@ -70,8 +70,9 @@ static Rboolean sock_open(Rconnection con)
     }
     this->fd = sock;
     
+    mlen = strlen(con->mode);
     con->isopen = TRUE;
-    if(strlen(con->mode) >= 2 && con->mode[1] == 'b') con->text = FALSE;
+    if(mlen >= 2 && con->mode[mlen - 1] == 'b') con->text = FALSE;
     else con->text = TRUE;
     con->save = -1000;
     return TRUE;
