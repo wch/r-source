@@ -41,7 +41,7 @@ use Text::Wrap;
 ## don't buffer output
 $| = 1;
 
-my $revision = ' $Revision: 1.101 $ ';
+my $revision = ' $Revision: 1.102 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -199,16 +199,16 @@ foreach my $pkg (@ARGV) {
 	    $log->result("NO");
 	    exit(1);
 	}
-	## This check should be adequate, but would not
-	## catch a manually installed package, nor one installed
-	## prior to 1.4.0.
-	$log->checking("this is a source package");
-	if(!defined $description->{"Built"}) {
+	## <NOTE>
+	## This check should be adequate, but would not catch a manually
+	## installed package, nor one installed prior to 1.4.0.
+	## </NOTE>
+	$log->checking("if this is a source package");
+	if(!defined($description->{"Built"})) {
 	    $log->result("OK")
 	} else {
-	    $log->result("NO");
-	    $log->print("*** R CMD check is for use with source packages only. ***\n");
 	    $log->error();
+	    $log->print("Only *source* packages can be checked.\n");
 	    exit(1);
 	}
 	if($opt_install) {
