@@ -10,6 +10,10 @@
 
 NEW FEATURES
 
+    o	DPQ {probability density quantile} functions have new
+	arguments, "lower_tail = TRUE" and "log{_p} = FALSE".  This allows
+	more precise results when values would be close to 0 or 1.
+
     o	R CMD Rd2dvi has new options --pdf, --title and --output
 
     o	new Date, URL and Title fields in DESCRIPTION file of
@@ -85,10 +89,13 @@ NEW FEATURES
     o	New function ftable() for creating and manipulating flat
 	contingency tables.
 
-    o   New function cutree() fur cutting hclust trees in package mva.
+    o	New function cutree() fur cutting hclust trees in package mva.
 
 
 BUG FIXES
+
+    o	all.equal(-Inf, -1e5) now gives "Mean absolute difference: Inf"
+	instead of "Mean relative  difference: NaN".
 
     o	strsplit fix broke copy.url.
 

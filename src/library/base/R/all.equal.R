@@ -20,8 +20,8 @@ all.equal.default <- function(target, current, ...)
     if(is.null(msg)) TRUE else msg
 }
 
-all.equal.numeric <- function(target, current,
-			      tolerance = .Machine$double.eps ^ .5, scale=NULL)
+all.equal.numeric <-
+function(target, current, tolerance = .Machine$double.eps ^ .5, scale=NULL)
 {
     lt <- length(target)
     lc <- length(current)
@@ -44,7 +44,7 @@ all.equal.numeric <- function(target, current,
     what <-
 	if(is.null(scale)) {
 	    xn <- mean(abs(target))
-	    if(xn > tolerance) {
+	    if(is.finite(xn) && xn > tolerance) {
 		xy <- xy/xn
 		"relative"
 	    } else "absolute"
