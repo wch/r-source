@@ -282,6 +282,7 @@ and the @code{options(width)} setting may need to be increased.
 * Fixed-width-format files::    
 * Using scan directly::         
 * Re-shaping data::             
+* Flat contingency tables::     
 @end menu
 
 In @ref{Export to text files} we saw a number of variations on the
@@ -468,7 +469,7 @@ There is a function @code{readLines} which will be more convenient if
 all you want is to read whole lines into @R{} for further processing.
 
 
-@node Re-shaping data,  , Using scan directly, Spreadsheet-like data
+@node Re-shaping data, Flat contingency tables, Using scan directly, Spreadsheet-like data
 @section Re-shaping data
 @cindex Re-shaping data
 
@@ -521,6 +522,60 @@ X11        P 23646  50333  V2
 @findex unstack.
 Function @code{unstack} goes in the opposite direction, and may be
 useful for exporting data.
+
+
+@node Flat contingency tables,  , Re-shaping data, Spreadsheet-like data
+@section Flat contingency tables
+@cindex Flat contingency tables
+
+Displaying higher-dimensional contingency tables in array form typically
+is rather inconvenient.  In categorical data analysis, such information
+is often represented in the form of bordered two-dimensional arrays with
+leading rows and columns specifying the combination of factor levels
+corresponding to the cell counts.  These rows and columns are typically
+``ragged'' in the sense that labels are only displayed when they change,
+with the obvious convention that rows are read from top to bottom and
+columns are read from left to right.  In @R{}, such ``flat'' contingency
+tables can be created using @code{ftable},
+@findex ftable
+which creates objects of class @code{"ftable"} with an appropriate print
+method.
+
+As a simple example, consider the @R{} standard data set
+@code{UCBAdmissions} which is a 3-dimensional contingency table
+resulting from classifying applicants to graduate school at UC Berkeley
+for the six largest departments in 1973 classified by admission and sex.
+
+@smallexample
+> data(UCBAdmissions)
+> ftable(UCBAdmissions)
+                Dept   A   B   C   D   E   F
+Admit    Gender                             
+Admitted Male        512 353 120 138  53  22
+         Female       89  17 202 131  94  24
+Rejected Male        313 207 205 279 138 351
+         Female       19   8 391 244 299 317
+@end smallexample
+
+@noindent
+The printed representation is clearly more useful than displaying the
+data as a 3-dimensional array.
+
+There is also a function @code{read.ftable} for reading in flat-like
+contingency tables from files.
+@findex read.ftable
+This has additional arguments for dealing with variants on how exactly
+the information on row and column variables names and levels is
+represented.  The help page for @code{read.ftable} has some useful
+examples.  The flat tables can be converted to standard contingency
+tables in array form using @code{as.table}.
+
+Note that flat tables are characterized by their ``ragged'' display of
+row (and maybe also column) labels.  If the full grid of levels of the
+row variables is given, one should instead use @code{read.table} to read
+in the data, and create the contingency table from this using
+@code{xtabs}.
+
 
 @node Importing from other statistical systems, Relational databases, Spreadsheet-like data, Top
 @chapter Importing from other statistical systems
@@ -602,7 +657,7 @@ convert these files to a text format.
 Octave is a numerical linear algebra system, and function
 @code{read.octave} in package @pkg{e1071} can read the first vector or
 matrix from an Octave ASCII data file created using the Octave command
-@code{save -ascii}
+@command{save -ascii}.
 
 @node Relational databases, Binary files, Importing from other statistical systems, Top
 @chapter Relational databases
@@ -720,12 +775,12 @@ they are made up of @emph{columns} or @emph{fields} of one type
 database.  The classical query is a SELECT statement of the type
 
 @smallexample
-SELECT State, Murder FROM USArrests WHERE rape > 30 ORDER BY Murder
+SELECT State, Murder FROM USArrests WHERE rape > 30 ORDER BY Murder;
 
 SELECT t.sch, c.meanses, t.sex, t.achieve
-  FROM student as t, school as c WHERE t.sch = c.id
+  FROM student as t, school as c WHERE t.sch = c.id;
 
-SELECT sex, COUNT(*) FROM student GROUP BY sex
+SELECT sex, COUNT(*) FROM student GROUP BY sex;
 
 SELECT sch, AVG(sestat) FROM student GROUP BY sch LIMIT 10;
 @end smallexample
@@ -795,16 +850,16 @@ the @acronym{SQL} name).
 @c  @end quotation
 
 @table @code
-@item float(p)
+@item float(@var{p})
 Real number, with optional precision.  Often called @code{real}.
 @item integer
 32-bit integer.  Often called @code{int}.
 @item smallint
 16-bit integer
-@item character(n)
+@item character(@var{n})
 fixed-length character string.  Often called @code{char}.
-@item character varying(n)
-variable-length character string  Often called @code{varchar}.
+@item character varying(@var{n})
+variable-length character string.  Often called @code{varchar}.
 @item boolean
 true or false.  Sometimes called @code{bool}.
 @item date
