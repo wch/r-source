@@ -16,21 +16,30 @@ NEW FEATURES
 
     o   `vsize' and `nsize' can be set by the environment variables
 	R_VSIZE and R_NSIZE respectively, perhaps most conveniently from
-	`~/.Renviron' under Unix. Command-line settings will take priority.
+	`~/.Renviron' under Unix.  Command-line settings will take
+	priority.
 
         The defaults have been increased to 6M and 250k.
 
     o   zip files can be used for storing help and example files. See
 	the help files for "help" and "example" for details.
 
-    o   New submission method "none" (for not sending email) in bug.report().
+    o   New submission method "none" (for not sending email) in
+	bug.report().
+
+    o	`R CMD check' can now also be used for installed packages without
+	the corresponding sources.
 
 
 BUG FIXES
 
-    o   as.list didn't work for expressions
+    o	is.nan() should now work correctly on new/old-style lists.
 
-    o   x[[i]]<-quote(a) (x generic vector) didn't work
+    o	x[[i]] did not work correctly for negative subscripts i.
+
+    o   as.list() didn't work for expressions
+
+    o   x[[i]] <- quote(a) (x generic vector) didn't work
 
     o   for method functions: many argument name changes, add ... where
 	needed, for consistency with the generic function.
@@ -114,13 +123,13 @@ NEW FEATURES
 	you get exactly the color you request.	(Note that
 	Directcolor and staticcolor displays are not supported yet).
 
-    o	The "persp" function now allows shading of the rendered
-	surface using a simple lighting model.
+    o	The persp() function now allows shading of the rendered	surface
+	using a simple lighting model.
 
     o	Many functions providing an interface to the operating system
 	have been made "platform independent".	See the manual entries
 	for "file", "list.files" and "file.show" for details of the new
-	interface. The system.file() interface has been changed.
+	interface.  The system.file() interface has been changed.
 
     o	There is a new function "eval.with.vis" which behaves exactly
 	like "eval", but which returns both the result of the evaluation
@@ -145,7 +154,8 @@ NEW FEATURES
 
     o   new dataset co2.
 
-    o   documentation for datasets mtcars, plants, pressure, randu and sleep.
+    o   documentation for datasets mtcars, plants, pressure, randu and
+	sleep.
 
     o   the sunspots dataset is now monthly rather than annual.
 
