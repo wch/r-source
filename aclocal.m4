@@ -272,9 +272,9 @@ AC_CACHE_VAL([r_cv_prog_cc_flag_${ac_safe}],
 [AC_LANG_PUSH(C)
 r_save_CFLAGS="${CFLAGS}"
 CFLAGS="${CFLAGS} $1"
-AC_TRY_LINK([], [],
-            [eval "r_cv_prog_cc_flag_${ac_safe}=yes"],
-            [eval "r_cv_prog_cc_flag_${ac_safe}=no"])
+AC_LINK_IFELSE([AC_LANG_PROGRAM()],
+               [eval "r_cv_prog_cc_flag_${ac_safe}=yes"],
+               [eval "r_cv_prog_cc_flag_${ac_safe}=no"])
 CFLAGS="${r_save_CFLAGS}"
 AC_LANG_POP(C)
 ])
@@ -299,16 +299,17 @@ AC_DEFUN([R_PROG_CC_FLAG_D__NO_MATH_INLINES],
 AC_DEFUN([R_C_OPTIEEE],
 [AC_CACHE_CHECK([whether C compiler needs -OPT:IEEE_NaN_inf=ON],
                 [r_cv_c_optieee],
-AC_TRY_RUN(
-[#include <math.h>
+[AC_RUN_IFELSE([AC_LANG_SOURCE([[
+#include <math.h>
 #include <ieeefp.h>
 int main () {
   double x = 0;
   fpsetmask(0); x = x / x; exit (x != x);
-}],
-	   [r_cv_c_optieee=yes],
-	   [r_cv_c_optieee=no],
-	   [r_cv_c_optieee=no]))
+}
+]])],
+              [r_cv_c_optieee=yes],
+              [r_cv_c_optieee=no],
+              [r_cv_c_optieee=no])])
 if test "${r_cv_c_optieee}" = yes; then
   R_SH_VAR_ADD(R_XTRA_CFLAGS, [-OPT:IEEE_NaN_inf=ON])
 fi
@@ -416,9 +417,9 @@ AC_CACHE_VAL([r_cv_prog_cxx_flag_${ac_safe}],
 [AC_LANG_PUSH(C++)
 r_save_CXXFLAGS="${CXXFLAGS}"
 CXXFLAGS="${CXXFLAGS} $1"
-AC_TRY_LINK([], [],
-	    [eval "r_cv_prog_cxx_flag_${ac_safe}=yes"],
-	    [eval "r_cv_prog_cxx_flag_${ac_safe}=no"])
+AC_LINK_IFELSE([AC_LANG_PROGRAM()],
+               [eval "r_cv_prog_cxx_flag_${ac_safe}=yes"],
+               [eval "r_cv_prog_cxx_flag_${ac_safe}=no"])
 CXXFLAGS="${r_save_CXXFLAGS}"
 AC_LANG_POP(C++)
 ])
@@ -497,7 +498,7 @@ if test "${G77}" = yes; then
   flibs=`echo "${FLIBS}" | sed 's/-lg2c/-lg2c-pic/'`
   LIBS="${LIBS} ${flibs}"
   AC_LANG_PUSH(C)
-  AC_TRY_LINK([], [], [FLIBS="${flibs}"])
+  AC_LINK_IFELSE([AC_LANG_PROGRAM()], [FLIBS="${flibs}"], [])
   AC_LANG_POP(C)
   LIBS="${r_save_LIBS}"
 fi
@@ -794,7 +795,7 @@ AC_CACHE_VAL([r_cv_prog_f77_flag_${ac_safe}],
 [AC_LANG_PUSH(Fortran 77)
 r_save_FFLAGS="${FFLAGS}"
 FFLAGS="${FFLAGS} $1"
-AC_LINK_IFELSE([AC_LANG_PROGRAM([], [])],
+AC_LINK_IFELSE([AC_LANG_PROGRAM()],
                [eval "r_cv_prog_f77_flag_${ac_safe}=yes"],
                [eval "r_cv_prog_f77_flag_${ac_safe}=no"])
 FFLAGS="${r_save_FFLAGS}"
@@ -879,17 +880,18 @@ AC_DEFUN([R_FUNC___SETFPUCW],
 [AC_CHECK_FUNC(__setfpucw, 
 [AC_CACHE_CHECK([whether __setfpucw is needed],
 	        [r_cv_func___setfpucw_needed],
-AC_TRY_RUN(
-[int main () {
+[AC_RUN_IFELSE([AC_LANG_SOURCE([[
+int main () {
 #include <fpu_control.h>
 #if defined(_FPU_DEFAULT) && defined(_FPU_IEEE)
   exit(_FPU_DEFAULT != _FPU_IEEE);
 #endif
   exit(0);
-}],
-	   [r_cv_func___setfpucw_needed=no],
-	   [r_cv_func___setfpucw_needed=yes],
-	   [r_cv_func___setfpucw_needed=no]))
+}
+]])],
+              [r_cv_func___setfpucw_needed=no],
+              [r_cv_func___setfpucw_needed=yes],
+              [r_cv_func___setfpucw_needed=no])])
 if test "x${r_cv_func___setfpucw_needed}" = xyes; then
   AC_DEFINE(NEED___SETFPUCW, 1,
 	    [Define if your system needs __setfpucw() to control
@@ -903,15 +905,16 @@ fi])
 
 AC_DEFUN([R_FUNC_CALLOC],
 [AC_CACHE_CHECK([for working calloc], [r_cv_func_calloc_works],
-[AC_TRY_RUN(
-[#include <stdlib.h>
+[AC_RUN_IFELSE([AC_LANG_SOURCE([[
+#include <stdlib.h>
 int main () {
   int *p = calloc(0, sizeof(int));
   exit(p == 0);
-}],
-	    [r_cv_func_calloc_works=yes],
-	    [r_cv_func_calloc_works=no],
-	    [r_cv_func_calloc_works=no])])
+}
+]])],
+               [r_cv_func_calloc_works=yes],
+               [r_cv_func_calloc_works=no],
+               [r_cv_func_calloc_works=no])])
 if test "x${r_cv_func_calloc_works}" = xyes; then
   AC_DEFINE(HAVE_WORKING_CALLOC, 1,
             [Define if calloc(0) returns a null pointer.])
@@ -920,8 +923,8 @@ fi
 
 AC_DEFUN([R_FUNC_FINITE],
 [AC_CACHE_CHECK([for working finite], [r_cv_func_finite_works],
-[AC_TRY_RUN(
-[#include <math.h>
+[AC_RUN_IFELSE([AC_LANG_SOURCE([[
+#include <math.h>
 #include "confdefs.h"
 int main () {
 #ifdef HAVE_FINITE
@@ -929,10 +932,11 @@ int main () {
 #else
   exit(1);
 #endif
-}],
-	    [r_cv_func_finite_works=yes],
-	    [r_cv_func_finite_works=no],
-	    [r_cv_func_finite_works=no])])
+}
+]])],
+               [r_cv_func_finite_works=yes],
+               [r_cv_func_finite_works=no],
+               [r_cv_func_finite_works=no])])
 if test "x${r_cv_func_finite_works}" = xyes; then
   AC_DEFINE(HAVE_WORKING_FINITE, 1,
             [Define if finite() is correct for -Inf/NaN/Inf.])
@@ -941,8 +945,8 @@ fi
 
 AC_DEFUN([R_FUNC_LOG],
 [AC_CACHE_CHECK([for working log], [r_cv_func_log_works],
-[AC_TRY_RUN(
-[#include <math.h>
+[AC_RUN_IFELSE([AC_LANG_SOURCE([[
+#include <math.h>
 #include "confdefs.h"
 int main () {
 #ifdef HAVE_ISNAN
@@ -950,10 +954,11 @@ int main () {
 #else
   exit(log(0.) != -1. / 0);
 #endif
-}],
-	    [r_cv_func_log_works=yes],
-	    [r_cv_func_log_works=no],
-	    [r_cv_func_log_works=no])])
+}
+]])],
+               [r_cv_func_log_works=yes],
+               [r_cv_func_log_works=no],
+               [r_cv_func_log_works=no])])
 if test "x${r_cv_func_log_works}" = xyes; then
   AC_DEFINE(HAVE_WORKING_LOG, 1,
             [Define if log() is correct for 0/-1.])
@@ -962,8 +967,8 @@ fi
 
 AC_DEFUN([R_FUNC_STRPTIME],
 [AC_CACHE_CHECK([for working strptime], [r_cv_func_strptime_works],
-[AC_TRY_RUN(
-[#include <time.h>
+[AC_RUN_IFELSE([AC_LANG_SOURCE([[
+#include <time.h>
 int main () {
 #ifdef HAVE_STRPTIME
   struct tm tm;
@@ -974,10 +979,11 @@ int main () {
 #else
   exit(1);
 #endif
-}],
-	    [r_cv_func_strptime_works=yes],
-	    [r_cv_func_strptime_works=no],
-	    [r_cv_func_strptime_works=no])])
+}
+]])],
+               [r_cv_func_strptime_works=yes],
+               [r_cv_func_strptime_works=no],
+               [r_cv_func_strptime_works=no])])
 if test "x${r_cv_func_strptime_works}" = xyes; then
   AC_DEFINE(HAVE_WORKING_STRPTIME, 1,
             [Define if strptime() exists and does not fail pre-1970.])
@@ -988,12 +994,13 @@ fi
 AC_DEFUN([R_HEADER_SETJMP],
 [AC_CACHE_CHECK([whether setjmp.h is POSIX.1 compatible], 
                 [r_cv_header_setjmp_posix],
-[AC_TRY_COMPILE([#include <setjmp.h>],
-[sigjmp_buf b;
+[AC_COMPILE_IFELSE([AC_LANG_PROGRAM(
+[[#include <setjmp.h>]],
+[[sigjmp_buf b;
 sigsetjmp(b, 0);
-siglongjmp(b, 1);],
-[r_cv_header_setjmp_posix=yes],
-[r_cv_header_setjmp_posix=no])])
+siglongjmp(b, 1);]])],
+                   [r_cv_header_setjmp_posix=yes],
+                   [r_cv_header_setjmp_posix=no])])
 if test "${r_cv_header_setjmp_posix}" = yes; then
   AC_DEFINE(HAVE_POSIX_SETJMP, 1,
             [Define if you have POSIX.1 compatible sigsetjmp/siglongjmp.])
@@ -1025,19 +1032,19 @@ AC_DEFUN([R_TYPE_SOCKLEN],
 [AC_MSG_CHECKING([for type of socket length])
 AC_CACHE_VAL([r_cv_type_socklen],
 [for t in socklen_t size_t int; do
-  AC_TRY_COMPILE(
-[#include <stddef.h>
+  AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
+#include <stddef.h>
 #include <sys/types.h>
 #ifdef HAVE_SYS_SOCKET_H
-#include <sys/socket.h>
+# include <sys/socket.h>
 #endif
 #ifdef Win32
-#include <winsock.h>
+# include <winsock.h>
 #endif
-], 
-                 [(void)getsockopt (1, 1, 1, NULL, (${t} *)NULL)],
-                 [r_cv_type_socklen=${t}; break],
-                 [r_cv_type_socklen=])
+]],
+[[(void)getsockopt (1, 1, 1, NULL, (${t} *)NULL)]])],
+                    [r_cv_type_socklen=${t}; break],
+                    [r_cv_type_socklen=])
 done])
 if test "x${r_cv_type_socklen}" = x; then
   warn_type_socklen="could not determine type of socket length"
@@ -1698,8 +1705,8 @@ AM_CONDITIONAL(USE_MMAP_ZLIB,
 AC_DEFUN([_R_HEADER_ZLIB],
 [AC_CACHE_CHECK([if zlib version >= 1.1.3],
                 [r_cv_header_zlib_h],
-AC_TRY_RUN(
-[#include <string.h>
+[AC_RUN_IFELSE([AC_LANG_SOURCE([[
+#include <string.h>
 #include <zlib.h>
 int main() {
 #ifdef ZLIB_VERSION
@@ -1707,25 +1714,27 @@ int main() {
 #else
   exit(1);
 #endif
-}],
-           [r_cv_header_zlib_h=yes],
-           [r_cv_header_zlib_h=no],
-           [r_cv_header_zlib_h=no]))
+}
+]])],
+              [r_cv_header_zlib_h=yes],
+              [r_cv_header_zlib_h=no],
+              [r_cv_header_zlib_h=no])])
 ])# _R_HEADER_ZLIB
 
 AC_DEFUN([_R_ZLIB_MMAP],
 [AC_CACHE_CHECK([mmap support for zlib],
                 [r_cv_zlib_mmap],
-AC_TRY_RUN(
-[#include <sys/types.h>
+[AC_RUN_IFELSE([AC_LANG_SOURCE([[
+#include <sys/types.h>
 #include <sys/mman.h>
 #include <sys/stat.h>
 caddr_t hello() {
   exit(mmap((caddr_t)0, (off_t)0, PROT_READ, MAP_SHARED, 0, (off_t)0)); 
-}],
-	       [r_cv_zlib_mmap=no],
-	       [r_cv_zlib_mmap=yes],
-	       [r_cv_zlib_mmap=yes]))
+}
+]])],
+              [r_cv_zlib_mmap=no],
+              [r_cv_zlib_mmap=yes],
+              [r_cv_zlib_mmap=yes])])
 ])# _R_ZLIB_MMAP
 
 AC_DEFUN([R_PCRE],
@@ -1777,7 +1786,7 @@ AM_CONDITIONAL(BUILD_BZLIB, [test "x${have_bzlib}" = xno])
 AC_DEFUN([R_SYS_POSIX_LEAPSECONDS],
 [AC_CACHE_CHECK([whether leap seconds are treated according to POSIX],
                 [r_cv_sys_posix_leapseconds],
-AC_TRY_RUN([
+[AC_RUN_IFELSE([AC_LANG_SOURCE([[
 #include <stdlib.h>
 #include <time.h>
 #include <stdio.h>
@@ -1791,10 +1800,11 @@ int main () {
   ct = ct - (ct % 60);
   tm = gmtime(&ct);
   if(tm->tm_sec == 0) exit(1); else exit(0);
-}],
-	   [r_cv_sys_posix_leapseconds=no],
-	   [r_cv_sys_posix_leapseconds=yes],
-	   [r_cv_sys_posix_leapseconds=yes]))
+}
+]])],
+              [r_cv_sys_posix_leapseconds=no],
+              [r_cv_sys_posix_leapseconds=yes],
+              [r_cv_sys_posix_leapseconds=yes])])
 if test "x${r_cv_sys_posix_leapseconds}" = xyes; then
   AC_DEFINE(HAVE_POSIX_LEAPSECONDS, 1,
             [Define if your system time functions do not count leap

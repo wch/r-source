@@ -426,7 +426,7 @@ SHELL=${CONFIG_SHELL-/bin/sh}
 
 # Identity of this package.
 PACKAGE_NAME='R'
-PACKAGE_TARNAME='r'
+PACKAGE_TARNAME='R'
 PACKAGE_VERSION='1.7.0'
 PACKAGE_STRING='R 1.7.0'
 PACKAGE_BUGREPORT='r-bugs@R-project.org'
@@ -11106,7 +11106,7 @@ ac_compiler_gnu=$ac_cv_c_compiler_gnu
 ## Set up LD_LIBRARY_PATH or equivalent.
 ## <FIXME>
 ## What is this doing *HERE*?
-## Should be needed for tests using AC_TRY_RUN()?
+## Should be needed for tests using AC_RUN_IFELSE()?
 ## Make sure that non-standard directories specified via '-L' are really
 ## searched in the tests.
 ## Note: earlier versions used LIBS rather than LDFLAGS.
@@ -12937,13 +12937,14 @@ _ACEOF
 cat confdefs.h >>conftest.$ac_ext
 cat >>conftest.$ac_ext <<_ACEOF
 /* end confdefs.h.  */
+
 #include <stddef.h>
 #include <sys/types.h>
 #ifdef HAVE_SYS_SOCKET_H
-#include <sys/socket.h>
+# include <sys/socket.h>
 #endif
 #ifdef Win32
-#include <winsock.h>
+# include <winsock.h>
 #endif
 
 int
@@ -14895,7 +14896,7 @@ _ACEOF
 # flags.
 ac_save_FFLAGS=$FFLAGS
 FFLAGS="$FFLAGS $ac_verb"
-(eval echo $as_me:14898: \"$ac_link\") >&5
+(eval echo $as_me:14899: \"$ac_link\") >&5
 ac_f77_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$ac_f77_v_output" >&5
 FFLAGS=$ac_save_FFLAGS
@@ -14975,7 +14976,7 @@ _ACEOF
 # flags.
 ac_save_FFLAGS=$FFLAGS
 FFLAGS="$FFLAGS $ac_cv_prog_f77_v"
-(eval echo $as_me:14978: \"$ac_link\") >&5
+(eval echo $as_me:14979: \"$ac_link\") >&5
 ac_f77_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$ac_f77_v_output" >&5
 FFLAGS=$ac_save_FFLAGS
@@ -16630,8 +16631,8 @@ fi
   alpha*)
     ## <NOTE>
     ## * ANSI C
-    ## The native C compiler needs @option{-std1}: AC_PROG_CC_STDC
-    ## passes all ANSI C tests with no extra flags but then __STDC__ is
+    ## The native C compiler needs @option{-std1}: AC_PROG_CC() passes
+    ## all ANSI C tests with no extra flags but then __STDC__ is
     ## undefined which breaks compilation of the connections code.
     ## * IEEE math
     ## We really need to use @option{-ieee_with_inexact} (called
@@ -17409,12 +17410,14 @@ _ACEOF
 cat confdefs.h >>conftest.$ac_ext
 cat >>conftest.$ac_ext <<_ACEOF
 /* end confdefs.h.  */
+
 #include <math.h>
 #include <ieeefp.h>
 int main () {
   double x = 0;
   fpsetmask(0); x = x / x; exit (x != x);
 }
+
 _ACEOF
 rm -f conftest$ac_exeext
 if { (eval echo "$as_me:$LINENO: \"$ac_link\"") >&5
@@ -19548,6 +19551,7 @@ _ACEOF
 cat confdefs.h >>conftest.$ac_ext
 cat >>conftest.$ac_ext <<_ACEOF
 /* end confdefs.h.  */
+
 int main () {
 #include <fpu_control.h>
 #if defined(_FPU_DEFAULT) && defined(_FPU_IEEE)
@@ -19555,6 +19559,7 @@ int main () {
 #endif
   exit(0);
 }
+
 _ACEOF
 rm -f conftest$ac_exeext
 if { (eval echo "$as_me:$LINENO: \"$ac_link\"") >&5
@@ -19606,11 +19611,13 @@ _ACEOF
 cat confdefs.h >>conftest.$ac_ext
 cat >>conftest.$ac_ext <<_ACEOF
 /* end confdefs.h.  */
+
 #include <stdlib.h>
 int main () {
   int *p = calloc(0, sizeof(int));
   exit(p == 0);
 }
+
 _ACEOF
 rm -f conftest$ac_exeext
 if { (eval echo "$as_me:$LINENO: \"$ac_link\"") >&5
@@ -19660,6 +19667,7 @@ _ACEOF
 cat confdefs.h >>conftest.$ac_ext
 cat >>conftest.$ac_ext <<_ACEOF
 /* end confdefs.h.  */
+
 #include <math.h>
 #include "confdefs.h"
 int main () {
@@ -19669,6 +19677,7 @@ int main () {
   exit(1);
 #endif
 }
+
 _ACEOF
 rm -f conftest$ac_exeext
 if { (eval echo "$as_me:$LINENO: \"$ac_link\"") >&5
@@ -19718,6 +19727,7 @@ _ACEOF
 cat confdefs.h >>conftest.$ac_ext
 cat >>conftest.$ac_ext <<_ACEOF
 /* end confdefs.h.  */
+
 #include <math.h>
 #include "confdefs.h"
 int main () {
@@ -19727,6 +19737,7 @@ int main () {
   exit(log(0.) != -1. / 0);
 #endif
 }
+
 _ACEOF
 rm -f conftest$ac_exeext
 if { (eval echo "$as_me:$LINENO: \"$ac_link\"") >&5
@@ -19776,6 +19787,7 @@ _ACEOF
 cat confdefs.h >>conftest.$ac_ext
 cat >>conftest.$ac_ext <<_ACEOF
 /* end confdefs.h.  */
+
 #include <time.h>
 int main () {
 #ifdef HAVE_STRPTIME
@@ -19788,6 +19800,7 @@ int main () {
   exit(1);
 #endif
 }
+
 _ACEOF
 rm -f conftest$ac_exeext
 if { (eval echo "$as_me:$LINENO: \"$ac_link\"") >&5
@@ -24606,6 +24619,7 @@ _ACEOF
 cat confdefs.h >>conftest.$ac_ext
 cat >>conftest.$ac_ext <<_ACEOF
 /* end confdefs.h.  */
+
 #include <string.h>
 #include <zlib.h>
 int main() {
@@ -24615,6 +24629,7 @@ int main() {
   exit(1);
 #endif
 }
+
 _ACEOF
 rm -f conftest$ac_exeext
 if { (eval echo "$as_me:$LINENO: \"$ac_link\"") >&5
@@ -24676,12 +24691,14 @@ _ACEOF
 cat confdefs.h >>conftest.$ac_ext
 cat >>conftest.$ac_ext <<_ACEOF
 /* end confdefs.h.  */
+
 #include <sys/types.h>
 #include <sys/mman.h>
 #include <sys/stat.h>
 caddr_t hello() {
   exit(mmap((caddr_t)0, (off_t)0, PROT_READ, MAP_SHARED, 0, (off_t)0));
 }
+
 _ACEOF
 rm -f conftest$ac_exeext
 if { (eval echo "$as_me:$LINENO: \"$ac_link\"") >&5
@@ -25239,6 +25256,7 @@ int main () {
   tm = gmtime(&ct);
   if(tm->tm_sec == 0) exit(1); else exit(0);
 }
+
 _ACEOF
 rm -f conftest$ac_exeext
 if { (eval echo "$as_me:$LINENO: \"$ac_link\"") >&5
@@ -25508,8 +25526,8 @@ LIBS="${LIBS1} ${LIBS2}"
 ## <FIXME>
 ## This should not be necessary when using libtool for linking.
 ## In any case, is this really good enough?
-for arg in ${LDFLAGS} ${FLIBS} ${BLAS_LIBS} ${LAPACK_LIBS} ${X_LIBS} ${TCLTK_LIBS} \
-           ${GNOME_LIBS}; do
+for arg in ${LDFLAGS} ${FLIBS} ${BLAS_LIBS} ${LAPACK_LIBS} ${X_LIBS} \
+           ${TCLTK_LIBS} ${GNOME_LIBS}; do
   case "${arg}" in
     -L*)
       lib=`echo ${arg} | sed "s/^-L//"`
