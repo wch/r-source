@@ -46,8 +46,8 @@ install-html:
 	  $(INSTALL_DATA) $$f $(rhome)/doc/html; \
 	done
 	@for f in $(srcdir)/html/search/*.class \
-	          $(srcdir)/html/search/*.html \
-	          $(srcdir)/html/search/index.txt ; do \
+	          $(srcdir)/html/search/*.html  \
+		  $(top_builddir)/doc/html/search/index.txt; do \
 	  $(INSTALL_DATA) $$f $(rhome)/doc/html/search; \
 	done
 install-man:

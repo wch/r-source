@@ -43,11 +43,19 @@ terms <- function(x, ...) UseMethod("terms")
 terms.default <- function(x) x$terms
 terms.terms <- function(x, ...) x
 print.terms <- function(x) print.default(unclass(x))
+#delete.response <- function (termobj)
+#{
+#    intercept <- if (attr(termobj, "intercept")) "1" else "0"
+#    terms(reformulate(c(attr(termobj, "term.labels"), intercept), NULL),
+#	  specials = names(attr(termobj, "specials")))
+#}
+
 delete.response <- function (termobj)
 {
-    intercept <- if (attr(termobj, "intercept")) "1" else "0"
-    terms(reformulate(c(attr(termobj, "term.labels"), intercept), NULL),
-	  specials = names(attr(termobj, "specials")))
+    f<-formula(termobj)
+    if (length(f) == 3) 
+        f[[2]]<-NULL
+    terms(f)
 }
 
 reformulate <- function (termlabels, response=NULL)

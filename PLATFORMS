@@ -19,6 +19,7 @@ our installation procedures.
 		"			cc  / f77
 	sparc-sun-solaris2.6		gcc / f77 
 	sparc-sun-solaris2.6		cc  / f77
+	alpha-dec-osf4			gcc		(4)
 
 	OLD (pre 0.62 systems)
 
@@ -38,3 +39,21 @@ NOTES
 (3) 	A number of  users appear to have installation problems with f77,
 	requiring the f77 library directory to be explicitly 
 	specified in -L and -R 
+
+(4)     (Greg Snow <snow@biostat.washington.edu>)
+
+	It needed the -mieee-with-inexact flag (the default config used 
+	-ieee_with_inexact, note the m and the switch from _ to -)
+
+	I also changed a line in plot.c, the line was around 411 (I
+	added some printf's for debugging so this is probably not the
+	original line number)
+
+	the original line was:
+    if (FINITE(asp) && asp > 0 ) {
+	my new line is:
+    if (FINITE(asp) && asp > 0 && asp != NA_REAL ) {
+
+	Apparently my setup thinks that NA_REAL is positive finite so
+	the change was neccesary.
+

@@ -1,22 +1,20 @@
-start	<- function(x, ...) UseMethod("start")
-end	<- function(x, ...) UseMethod("end")
+start	  <- function(x, ...) UseMethod("start")
+end	  <- function(x, ...) UseMethod("end")
 frequency <- function(x, ...) UseMethod("frequency")
-time	<- function(x, ...) UseMethod("time")
-window	<- function(x, ...) UseMethod("window")
+time	  <- function(x, ...) UseMethod("time")
+window	  <- function(x, ...) UseMethod("window")
 
-## The first 2 as requested by	<la-jassine@aix.pacwan.net>
+## The first 2 as requested by <la-jassine@aix.pacwan.net>
 start.default	<- function (x) start(ts(x))
 end.default	<- function (x)	end(ts(x))
 frequency.default<-function (x) frequency(ts(x))
 time.default	<- function (x)	time(ts(x))
 window.default	<- function (x)	window(ts(x))
 
-
 options(ts.eps = 1e-5)#- default as S
 
-ts <- function(data=NA, start=1, end=numeric(0), frequency=1, deltat=1,
-	       ts.eps = .Options$ts.eps)
-{
+ts <- function(data = NA, start = 1, end = numeric(0), frequency = 1,
+	       deltat = 1, ts.eps  =  .Options$ts.eps) {
     if(is.matrix(data)) {
 	nseries <- ncol(data)
 	ndata <- nrow(data)
@@ -49,10 +47,10 @@ ts <- function(data=NA, start=1, end=numeric(0), frequency=1, deltat=1,
     if(nobs != ndata)
 	data <-
 	    if(nseries == 1) {
-		if(ndata < nobs) rep(data, length=nobs)
+		if(ndata < nobs) rep(data, length = nobs)
 		else if(ndata > nobs) data[1:nobs]
 	    } else {
-		if(ndata < nobs) data[rep(1:ndata, length=nobs)]
+		if(ndata < nobs) data[rep(1:ndata, length = nobs)]
 		else if(ndata > nobs) data[1:nobs,]
 	    }
     attr(data, "tsp") <- c(start, end, frequency)#-- order is fix !
@@ -62,12 +60,13 @@ ts <- function(data=NA, start=1, end=numeric(0), frequency=1, deltat=1,
 
 tsp <- function(x) attr(x, "tsp")
 
-"tsp<-" <- function(x, value)
-{
+"tsp<-" <- function(x, value) {
     cl <- class(x)
     attr(x,"tsp") <- value
-    class(x) <-
-	if (is.null(value) && inherits(x,"ts")) cl["ts" != cl] else c("ts",cl)
+    if (!inherits(x, "ts"))
+        class(x) <- c("ts", cl)
+    else if (is.null(value))
+        class(x) <- cl["ts" != cl]
     x
 }
 
@@ -89,10 +88,9 @@ start.ts <- function(x)
     else tsp[1]
 }
 
-end.ts <- function(x)
-{
+end.ts <- function(x) {
     ts.eps <- .Options$ts.eps
-    ##if(is.null(ts.eps)) ts.eps <- 1.e-5
+    ## if(is.null(ts.eps)) ts.eps <- 1.e-5
     tsp <- attr(as.ts(x), "tsp")
     is <- tsp[2]*tsp[3]
     if(abs(is-round(is)) < ts.eps) {
@@ -105,17 +103,15 @@ end.ts <- function(x)
 
 frequency.ts <- function(x) { attr(as.ts(x), "tsp")[3] }
 
-time.ts <- function (x)
-{
+time.ts <- function (x) {
     x <- as.ts(x)
     n <- if(is.matrix(x)) nrow(x) else length(x)
     xtsp <- attr(x, "tsp")
-    ts(seq(xtsp[1], xtsp[2], length=n),
-       start=start(x), end=end(x), frequency=frequency(x))
+    ts(seq(xtsp[1], xtsp[2], length = n),
+       start = start(x), end = end(x), frequency = frequency(x))
 }
 
-print.ts <- function(x, calendar, ...)
-{
+print.ts <- function(x, calendar, ...) {
     x <- as.ts(x)
     fr.x <- frequency(x)
     if(missing(calendar))
@@ -128,11 +124,11 @@ print.ts <- function(x, calendar, ...)
 	    dn2 <-
 		if(fr.x == 12)	month.abb
 		else if(fr.x == 4) {
-		    dn1 <- paste(dn1, ":" , sep="")
+		    dn1 <- paste(dn1, ":" , sep = "")
 		    c("Qtr1", "Qtr2", "Qtr3", "Qtr4")
-		} else paste("p", 1:fr.x, sep="")
+		} else paste("p", 1:fr.x, sep = "")
 	    x <- matrix(c(rep(NA, start.pad), x,
-			  rep(NA, end.pad)), nc= fr.x, byrow=TRUE,
+			  rep(NA, end.pad)), nc =  fr.x, byrow = TRUE,
 			dimnames = list(dn1, dn2))
 	} else { ## fr.x == 1
 	    tx <- time(x)
@@ -140,8 +136,8 @@ print.ts <- function(x, calendar, ...)
 	    names(x) <- tx
 	}
     }
-    else { ##-- no 'calendar' --
-	cat("Time-Series:\nStart =", deparse(start(x)),
+    else { ##-- no `calendar' --
+	cat("Time Series:\nStart =", deparse(start(x)),
 	    "\nEnd =", deparse(end(x)),
 	    "\nFrequency =", deparse(fr.x), "\n")
 	tx <- time(x)
@@ -155,30 +151,32 @@ print.ts <- function(x, calendar, ...)
 }
 
 plot.ts <-
-    function (x, y=NULL, type="l", xlim=NULL, ylim=NULL, xlab = "Time", ylab,
-	      log="", col=par("col"), bg=NA, pch=par("pch"), cex=par("cex"),
-	      lty=par("lty"), lwd=par("lwd"), axes = TRUE,
-	      frame.plot = axes, ann = par("ann"), main = NULL, ...)
+function (x, y = NULL, type = "l", xlim = NULL, ylim = NULL, xlab =
+          "Time", ylab, log = "", col = par("col"), bg = NA, pch =
+          par("pch"), cex = par("cex"), lty = par("lty"), lwd =
+          par("lwd"), axes = TRUE, frame.plot = axes, ann = par("ann"),
+          main = NULL, ...)
 {
-    xlabel <- if (!missing(x)) deparse(substitute(x))	else NULL
-    ylabel <- if (!missing(y)) deparse(substitute(y))	else NULL
+    xlabel <- if (!missing(x)) deparse(substitute(x)) else NULL
+    ylabel <- if (!missing(y)) deparse(substitute(y)) else NULL
     x <- as.ts(x)
     if(!is.null(y)) {
 	## want ("scatter") plot of y ~ x
 	y <- as.ts(y)
 	xy <- xy.coords(x, y, xlabel, ylabel, log)
 	xlab <- xy$xlab
-	ylab <- if (missing(ylab)) xy$ylab	else ylab
+	ylab <- if (missing(ylab)) xy$ylab else ylab
 	xlim <- if (is.null(xlim)) range(xy$x[is.finite(xy$x)]) else xlim
 	ylim <- if (is.null(ylim)) range(xy$y[is.finite(xy$y)]) else ylim
-	plot.default(xy, type = "n",
-		     xlab=xlab, ylab = ylab, xlim=xlim, ylim=ylim,
-		     log=log, col=col,bg=bg,pch=pch,axes=axes,
-		     frame.plot=frame.plot,ann=ann, main=main, ...)
-	text(xy, labels =
-	     if(all(tsp(x)==tsp(y))) formatC(time(x),wid=1) else seq(along=x),
-	     col=col, cex=cex)
-	lines(xy, col=col, lty=lty, lwd=lwd)
+	plot.default(xy, type = "n", xlab = xlab, ylab = ylab, xlim =
+                     xlim, ylim = ylim, log = log, col = col, bg = bg,
+                     pch = pch, axes = axes, frame.plot = frame.plot,
+                     ann = ann, main = main, ...)
+	text(xy, labels = 
+             if(all(tsp(x)==tsp(y))) formatC(time(x),wid = 1)
+             else seq(along = x),
+	     col = col, cex = cex)
+	lines(xy, col = col, lty = lty, lwd = lwd)
 	return(invisible())
     }
     if(missing(ylab)) ylab <- xlabel
@@ -190,16 +188,16 @@ plot.ts <-
     if(is.matrix(x)) {
 	for(i in 1:ncol(x))
 	    lines.default(time.x, x[,i],
-			  col=col[(i-1)%%length(col) + 1],
-			  lty=lty[(i-1)%%length(lty) + 1],
-			  lwd=lwd[(i-1)%%length(lwd) + 1],
-			  bg = bg[(i-1)%%length(bg) + 1],
-			  pch=pch[(i-1)%%length(pch) + 1],
-			  type=type)
+			  col = col[(i-1) %% length(col) + 1],
+			  lty = lty[(i-1) %% length(lty) + 1],
+			  lwd = lwd[(i-1) %% length(lwd) + 1],
+			  bg  =  bg[(i-1) %% length(bg)  + 1],
+			  pch = pch[(i-1) %% length(pch) + 1],
+			  type = type)
     }
     else {
-	lines.default(time.x, x, col=col[1], bg=bg, lty=lty[1], lwd=lwd[1],
-		      pch=pch[1], type=type)
+	lines.default(time.x, x, col = col[1], bg = bg, lty = lty[1],
+                      lwd = lwd[1], pch = pch[1], type = type)
     }
     if (ann)
 	title(main = main, xlab = xlab, ylab = ylab, ...)
@@ -210,8 +208,7 @@ plot.ts <-
     if (frame.plot) box(...)
 }
 
-window.ts <- function(x, start, end)
-{
+window.ts <- function(x, start, end) {
     x <- as.ts(x)
     xtsp <- tsp(x)
     freq <- xtsp[3]
@@ -256,8 +253,7 @@ window.ts <- function(x, start, end)
     x
 }
 
-"[.ts" <- function (x, i, j, drop = TRUE)
-{
+"[.ts" <- function (x, i, j, drop = TRUE) {
     y <- NextMethod("[")
     if (missing(i))
 	ts(y, start = start(x), freq = frequency(x))
@@ -269,9 +265,9 @@ window.ts <- function(x, start, end)
 	    warning("Not returning a time series object")
 	} else {
 	    xtsp <- tsp(x)
-	    xtimes <- seq(from = xtsp[1], to = xtsp[2], by = 1/xtsp[3])
+	    xtimes <- seq(from = xtsp[1], to = xtsp[2], by = 1 / xtsp[3])
 	    ytsp <- xtimes[range(ind)]
-	    tsp(y) <- c(ytsp, (li - 1)/(ytsp[2] - ytsp[1]))
+	    tsp(y) <- c(ytsp, (li - 1) / (ytsp[2] - ytsp[1]))
 	}
 	y
     }

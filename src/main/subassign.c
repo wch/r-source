@@ -544,7 +544,7 @@ static SEXP VectorAssign(SEXP call, SEXP x, SEXP s, SEXP y)
 
 static SEXP MatrixAssign(SEXP call, SEXP x, SEXP s, SEXP y)
 {
-    int i, j, ii, jj, ij, iy, k, which;
+    int i, j, ii, jj, ij, iy, k, n, which;
     double ry;
     int nr, ny;
     int nrs, ncs;
@@ -564,13 +564,17 @@ static SEXP MatrixAssign(SEXP call, SEXP x, SEXP s, SEXP y)
     nrs = LENGTH(sr);
     ncs = LENGTH(sc);
 
-    /* <TSL> 21Oct97*/
-    if (length(y) == 0)
-	error("Replacement length is zero\n");
-    /* </TSL>  */
+    n = nrs * ncs;
 
-    if ((length(sr) * length(sc)) % length(y))
-	error("no of items to replace is not a multiple of replacement length\n");
+    /* <TSL> 21Oct97
+       if (length(y) == 0)
+       error("Replacement length is zero\n");
+       </TSL>  */
+
+    if (n > 0 && ny == 0)
+	errorcall(call, "nothing to replace with\n");
+    if (n > 0 && n % ny)
+	errorcall(call, "number of items to replace is not a multiple of replacement length\n");
 
     which = 100 * TYPEOF(x) + TYPEOF(y);
 
@@ -797,8 +801,10 @@ static SEXP ArrayAssign(SEXP call, SEXP x, SEXP s, SEXP y)
 	tmp = CDR(tmp);
     }
 
-    if (n % length(y))
-	error("no of elements to replace is not a multiple of replacement length\n");
+    if (n > 0 && ny == 0)
+	errorcall(call, "nothing to replace with\n");
+    if (n > 0 && n % ny)
+	errorcall(call, "number of items to replace is not a multiple of replacement length\n");
 
     offset[0] = 1;
     for (i = 1; i < k; i++)
@@ -810,6 +816,11 @@ static SEXP ArrayAssign(SEXP call, SEXP x, SEXP s, SEXP y)
     /* a form which can accept elements from the RHS. */
 
     SubassignTypeFix(&x, &y, which, 0, 1);
+
+    if (ny == 0) {
+	UNPROTECT(1);
+	return(x);
+    }
 
     PROTECT(x);
 
@@ -958,10 +969,9 @@ static SEXP SimpleListAssign(SEXP call, SEXP x, SEXP s, SEXP y)
     nx = length(x);
 
     if (n > 0 && ny == 0)
-	error("nothing to replace with\n");
-
+	errorcall(call, "nothing to replace with\n");
     if (n > 0 && n % ny)
-	error("no of items to replace is not a multiple of replacement length\n");
+	errorcall(call, "no of items to replace is not a multiple of replacement length\n");
 
     if (stretch) {
 	yi = allocList(stretch - nx);

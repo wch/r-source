@@ -81,6 +81,9 @@
 #endif
 
 
+/* Some Linux systems may need this */
+#undef HAVE___SETFPUCW
+
 /* Fortran and C Links */
 #undef HAVE_F77_UNDERSCORE
 

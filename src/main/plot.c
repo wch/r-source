@@ -977,6 +977,9 @@ SEXP do_plot_xy(SEXP call, SEXP op, SEXP args, SEXP env)
     if(length(args) < 6)
 	errorcall(call, "too few arguments\n");
 
+    sx = R_NilValue;            /* -Wall */
+    sy = R_NilValue;            /* -Wall */
+
     /* Required Arguments */
     sxy = CAR(args);
     if (isNewList(sxy) && length(sxy) >= 2) {
@@ -1532,6 +1535,9 @@ SEXP do_text(SEXP call, SEXP op, SEXP args, SEXP env)
 
     if(length(args) < 3) errorcall(call, "too few arguments\n");
 
+    sx = R_NilValue;            /* -Wall */
+    sy = R_NilValue;            /* -Wall */
+
     sxy = CAR(args);
     if (isNewList(sxy) && length(sxy) >= 2) {
 	    internalTypeCheck(call, sx = VECTOR(sxy)[0], REALSXP);
@@ -2061,8 +2067,6 @@ SEXP do_locator(SEXP call, SEXP op, SEXP args, SEXP env)
     while(i < n) {
 	if(!GLocator(&(REAL(x)[i]), &(REAL(y)[i]), USER, dd))
 	    break;
-	if (dd->gp.xlog) REAL(x)[i] = pow(10., REAL(x)[i]);
-	if (dd->gp.ylog) REAL(y)[i] = pow(10., REAL(y)[i]);
 	i += 1;
     }
     GMode(0, dd);
@@ -2347,6 +2351,8 @@ SEXP do_strwidth(SEXP call, SEXP op, SEXP args, SEXP env)
     DevDesc *dd = CurrentDevice();
 
     checkArity(op, args);
+    GCheckState(dd);
+
     str = CAR(args);
     if((TYPEOF(str) != STRSXP) && (TYPEOF(str) != EXPRSXP))
 	errorcall(call, "character or expression first argument expected\n");

@@ -143,7 +143,7 @@ plot.factor <- function(x, y, legend.text=levels(y), ...)
 }
 
 plot.formula <- function(formula, data = NULL, subset, na.action,
-			 ..., ask = TRUE)
+			 ylab=varnames[response],..., ask = TRUE)
 {
     if (missing(na.action)) na.action <- options()$na.action
     m <- match.call(expand.dots = FALSE)
@@ -156,7 +156,6 @@ plot.formula <- function(formula, data = NULL, subset, na.action,
     if (response) {
 	varnames <- names(mf)
 	y <- mf[[response]]
-	ylab <- varnames[response]
 	if (length(varnames) > 2) {
 	    opar <- par(ask = ask)
 	    on.exit(par(opar))

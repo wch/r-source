@@ -65,6 +65,25 @@ BUG FIXES
 
 NEW FEATURES
 
+    o	get() and assign() allow position in search list to be a
+	character string. (e.g. get("delete.response","package:base") 
+
+    o	HTML search now works for all packages (after new installation).
+
+    o	R INSTALL now also copies DESCRIPTION file to target dir.
+
+    o	offsets should work with lm as well as with glm now
+
+    o	range() is now in the Summary group, trunc() back in the Math
+	group.
+
+    o	Under Unix, R-specific environment variables can now be kept/set
+	in `~/.Renviron'.
+
+    o	New options `latexcmd' and `dvipscmd' for specifying the locations
+	of LaTeX and dvips; corresponding environment variables renamed to
+	`R_LATEXCMD' and `R_DVIPSCMD'.
+
     o	--vsize & --nsize now both give size in "single units" 
 	(bytes/cons cells) with possible 
 	suffixes "M" (Mega), "K"ilo (1024) and "k"ilo(1000).
@@ -82,13 +101,62 @@ NEW FEATURES
 
 BUG FIXES
 
+    o   system(command, intern=FALSE, ignore.errors=FALSE) 
+	changed 1st & 3rd argument names and is better documented.
+
+    o   "/Font5 /Symbol findfont definefont" confused some printers
+
+    o   Bounding box rotated 90 deg for landscape (shouldn't be)
+
+    o   Legend skipped symbol for pch=0
+
+    o   compilation on non-Intel Linux systems no longer looks for __setfpucw
+
+    o   a %% b -- is now periodic instead of symmetric; more S compatible.
+
+    o	locator(n=512) -- default: MANY points, not just one.
+
+    o	qqnorm() uses ppoints() and returns list with x sorted along y.
+
+    o	plot.formula now allows ylab to be set
+
+    o	plotmath had trouble with paste()'ing expressions
+
+    o	plotting math expressions now also works for objects of mode
+	"call" (in particular on the result of substitute())
+
+    o	locator() on log axes: value antilogged twice
+
+    o	(a real oldie - and trival too) is.recursive now TRUE for
+	expressions 
+
+    o	sanitised delete.response
+
+    o	x[["a",]] could crash R
+
+    o	strwidth() crashed R if no device open
+
+    o	predict inconsistencies with offsets straightened out
+
+    o	tapply goofed when FUN returned named scalar
+
+    o	[.factor now retains contrasts attrib.
+
+    o	hist() had trouble with plotting math
+
+    o	HTML indices get only built when installing a package to RHOME
+
+    o	subscripting with a length zero logical no longer bombs.
+
+    o	as.ordered(NULL) now returns an "ordered" object.
+
     o	--debugger .. now gives a warning if other command line args are used
 
-    o	pt(t,df, ncp) now also works for bigger ncp's
+    o	pt(t, df, ncp) now also works for bigger ncp's
     
     o	apply(a,d, fun) now passes vectors (rank 1 arrays) to fun.
 
-    o	model.frame with subset and only one column fixed
+    o	model.frame() with subset and only one column fixed
 
     o	boxplot(<data.frame>) now works again.
 

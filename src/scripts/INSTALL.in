@@ -152,11 +152,19 @@ for pkg in ${PKGS}; do
     chmod 755 ${lib}/${pkg}/exec/*
   fi
 
+  if test -d inst; then
+    echo " inst"
+    cp -r inst/* ${lib}/${pkg}
+  fi
+
   if test -f INDEX; then
     cp INDEX ${lib}/${pkg}
   fi
   if test -f TITLE; then
     cp TITLE ${lib}/${pkg}
+  fi
+  if test -f DESCRIPTION; then
+    cp DESCRIPTION ${lib}/${pkg}
   fi
   (cd ${lib}; cat */TITLE > LibIndex 2> /dev/null)
 
@@ -170,6 +178,11 @@ for pkg in ${PKGS}; do
 	  echo "  ${RHOME}/bin/build-help ${BUILD_HELP_OPTS} ../${pkg} ${lib}"
 	fi
 	${RHOME}/bin/build-help ${BUILD_HELP_OPTS} ../${pkg} ${lib}
+	${RHOME}/bin/Rd2contents ../${pkg} > ${lib}/${pkg}/CONTENTS
+	if test ${lib} = ${RHOME}/library; then 
+	  ${RHOME}/bin/build-help --htmllists
+	  cat ${RHOME}/library/*/CONTENTS > ${RHOME}/doc/html/search/index.txt
+	fi	
       fi
     fi
   else

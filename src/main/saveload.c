@@ -998,9 +998,10 @@ static SEXP DataLoad(FILE *fp)
     /* return the "top-level" object */
     /* this is usually a list */
 
+    i = InInteger(fp);
     InTerm(fp);
 
-    return OffsetToNode(InInteger(fp));
+    return OffsetToNode(i);
 }
 
 void R_SaveToFile(SEXP obj, FILE *fp, int ascii)

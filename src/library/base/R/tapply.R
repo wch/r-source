@@ -24,6 +24,7 @@ tapply <- function (X, INDEX, FUN=NULL, simplify=TRUE, ...)
     }
     if (is.null(FUN)) return(group)
     ans <- lapply(split(X, group), FUN, ...)
+    index <- as.numeric(names(ans))
     if (simplify && all(unlist(lapply(ans, length)) == 1)) {
 	ansmat <- array(dim=extent, dimnames=namelist)
 	ans <- unlist(ans, recursive = FALSE)
@@ -33,7 +34,6 @@ tapply <- function (X, INDEX, FUN=NULL, simplify=TRUE, ...)
 			dim=extent, dimnames=namelist)
     }
     ## old : ansmat[as.numeric(names(ans))] <- ans
-    index <- as.numeric(names(ans))
     names(ans) <- NULL
     ansmat[index] <- ans
     ansmat

@@ -17,9 +17,10 @@ value ->> x
   \item{x}{a variable name (given as a quoted string).}
   \item{value}{a value to be assigned to \code{x}.}
   \item{pos}{an index into the search list which determines which
-    environment the assignment is to take place in. The environment
+    environment the assignment is to take place in. A character string may
+    also be used. The environment
     can also be specified directly with \code{envir}.}
-  \item{envir}{the \code{\link{environent}} in which to assign.  The
+  \item{envir}{the \code{\link{environment}} in which to assign.  The
     default is the environment where the call to \code{assign} takes place.}
   \item{inherits}{should the enclosing frames of the environment be
     inspected?}

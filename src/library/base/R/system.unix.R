@@ -97,16 +97,16 @@ help.start <- function (gui = "irrelevant", browser = .Options$browser,
     cat("If", browser, " is already running,\tit is *not* restarted,\n",
 	"and you must switch to its window.\nOtherwise, be patient..\n")
     system(paste("${RHOME}/bin/help.links",
-		 paste(.lib.loc[length(.lib.loc):1], sep=" ", collapse=" "),
+		 paste(unique(.lib.loc), sep=" ", collapse=" "),
 		 sep =" "))
     system(paste(browser, " -remote \"openURL(", url, ")\" 2>/dev/null || ",
 		 browser, " ", url, " &", sep = ""))
     options(htmlhelp=TRUE)
 }
 
-system <- function(call, intern = FALSE, trash.errors = FALSE)
-    .Internal(system(if(trash.errors) paste(call, "2>/dev/null") else call,
-		     intern))
+system <- function(command, intern = FALSE, ignore.stderr = FALSE)
+    .Internal(system(if(ignore.stderr) paste(command, "2>/dev/null") else
+                     command, intern))
 
 unix <- function(call, intern = FALSE) {
     .Deprecated("system"); system(call,intern)

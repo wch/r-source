@@ -90,7 +90,7 @@ print "\n";
 %anindex = read_anindex($lib);
 if($opt_html){
     %htmlindex = read_htmlindex($lib);
-    build_htmlfctlist($lib);
+#    build_htmlfctlist($lib);
 }
 
 format STDOUT =

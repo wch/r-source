@@ -10,8 +10,8 @@ hist.default <-
 {
     if (!is.numeric(x))
 	stop("hist: x must be numeric")
-    eval(main)
-    eval(xlab)
+    main # defeat lazy eval
+    xlab
     n <- length(x <- x[!is.na(x)])
     use.br <- !missing(breaks) && (nB <- length(breaks)) > 1
     if(use.br)

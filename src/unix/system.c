@@ -269,10 +269,12 @@ static void readline_handler(char *line)
 int R_ReadConsole(char *prompt, char *buf, int len, int addtohistory)
 {
     if(!isatty(0)) {
-	if(!R_Quiet) fputs(prompt, stdout);
+	if (!R_Slave)
+	    fputs(prompt, stdout);
 	if (fgets(buf, len, stdin) == NULL)
 	    return 0;
-	if(!R_Quiet) fputs(buf,stdout);
+	if (!R_Slave)
+	    fputs(buf, stdout);
 	return 1;
     }
     else {
@@ -609,7 +611,9 @@ int main(int ac, char **av)
 #endif
 
 #ifdef linux
+#ifdef HAVE___SETFPUCW
     __setfpucw(_FPU_IEEE);
+#endif    
 #endif
 
 #ifdef HAVE_LIBREADLINE
@@ -690,7 +694,9 @@ void R_CleanUp(int ask)
 #endif
 
 #ifdef linux
+#ifdef HAVE___SETFPUCW
     __setfpucw(_FPU_DEFAULT);
+#endif    
 #endif
 
     exit(0);

@@ -472,8 +472,10 @@ AC_SUBST(RGNOMEBIN)
 
 AC_FUNC_VFORK
 AC_FUNC_VPRINTF
-AC_CHECK_FUNCS(acosh asinh atanh bcopy finite isfinite isnan matherr memcpy \
-  memmove regcomp rint strcoll strtod strtol system times sigsetjmp siglongjmp)
+AC_CHECK_FUNCS(acosh asinh atanh bcopy finite isfinite isnan\
+  matherr memcpy \
+  memmove regcomp rint strcoll strtod strtol system times sigsetjmp\
+  siglongjmp __setfpucw)
 
 ### Header files
 
@@ -697,7 +699,7 @@ AC_OUTPUT(Makeconf Makefile
   src/scripts/R.sh src/scripts/Rdconv src/scripts/Rdindex
   src/scripts/Rman2Rd src/scripts/SHLIB src/scripts/Sd2Rd
   src/scripts/build-help src/scripts/fwf2table src/scripts/help.pretty
-  src/scripts/html2dos
+  src/scripts/html2dos src/scripts/Rd2contents
   tests/Makefile tests/Examples/Makefile
 )
 

@@ -28,10 +28,14 @@ TESTsrc = simple-true.R simple-tests.R d-p-q-r-tests.R \
 TESTout = $(TESTsrc:.R=.Rout)
 
 %.Rout: %.R stamp-R
+	@rm -f $@.fail
 	@(SRCDIR=$(srcdir); export SRCDIR; \
 	  echo "$(R) < $< > $@"; \
 	  $(R) < $< > $@)
-	$(srcdir)/Rdiff $@ $(srcdir)/$@.save
+	@echo -n "Comparing \`$@' to \`$(srcdir)/$@.save' ..."
+	@$(srcdir)/Rdiff $@ $(srcdir)/$@.save || \
+	  (mv $@ $@.fail && exit 1)
+	@echo " OK"
 
 test-All: test-Examples $(TESTout)
 

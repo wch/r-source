@@ -15,6 +15,3 @@ all <- function(..., na.rm = FALSE)
 
 any <- function(..., na.rm = FALSE)
     .Internal(any(..., na.rm = na.rm))
-
-range <- function(..., na.rm = FALSE)
-    .Internal(range(..., na.rm = na.rm))

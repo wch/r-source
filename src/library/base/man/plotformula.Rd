@@ -18,7 +18,8 @@ plot(y ~ x, \dots)
     print an error message and terminate if there are any incomplete
     observations.}
   \item{\dots}{graphical parameters may also be passed as arguments, see
-    \code{\link{par}}.}
+    \code{\link{par}}. These can include \code{ylab}, which if not
+    supplied is set by \code{plot.formula}.}
   \item{ask}{logical, see \code{\link{par}}.}
 }
 \value{

@@ -390,24 +390,21 @@ static char *TypeFaceDef[] = { "R", "B", "I", "BI", "S" };
 static void PSEncodeFont(FILE *fp, int index, int encoding)
 {
     int i;
-    switch (encoding) {
-    case 0:
-	for (i = 0; i < 4 ; i++)
-	    fprintf(fp, "/Font%d /%s findfont definefont\n",
-		    i + 1, Family[index].font[i].name);
-	break;
-    case 1:
-	for (i = 0; i < 4 ; i++) {
-	    fprintf(fp, "/%s findfont\n", Family[index].font[i].name);
-	    fprintf(fp, "dup length dict begin\n");
-	    fprintf(fp, "  {1 index /FID ne {def} {pop pop} ifelse} forall\n");
-	    fprintf(fp, "  /Encoding ISOLatin1Encoding def\n");
-	    fprintf(fp, "  currentdict\n");
-	    fprintf(fp, "  end\n");
-	    fprintf(fp, "/Font%d exch definefont pop\n", i + 1);
-	}
+    for (i = 0; i < 4 ; i++) {
+	fprintf(fp, "/%s findfont\n", Family[index].font[i].name);
+	fprintf(fp, "dup length dict begin\n");
+	fprintf(fp, "  {1 index /FID ne {def} {pop pop} ifelse} forall\n");
+	if (encoding) fprintf(fp, "  /Encoding ISOLatin1Encoding def\n");
+	fprintf(fp, "  currentdict\n");
+	fprintf(fp, "  end\n");
+	fprintf(fp, "/Font%d exch definefont pop\n", i + 1);
     }
-    fprintf(fp, "/Font5 /Symbol findfont definefont\n");
+    fprintf(fp, "/Symbol findfont\n");
+    fprintf(fp, "dup length dict begin\n");
+    fprintf(fp, "  {1 index /FID ne {def} {pop pop} ifelse} forall\n");
+    fprintf(fp, "  currentdict\n");
+    fprintf(fp, "  end\n");
+    fprintf(fp, "/Font5 exch definefont pop\n");
 }
 
 /* The variables "paperwidth" and "paperheight" give the dimensions */
@@ -431,7 +428,10 @@ static void PSFileHeader(FILE *fp, int font, int encoding, char *papername,
     if (landscape) {
 	fprintf(fp, "%%%%Orientation: Landscape\n");
 	fprintf(fp, "%%%%BoundingBox: %.0f %.0f %.0f %.0f\n",
+		left, bottom, right, top);
+/* This appears to be wrong, use *same* BBox as Portrait
 		bottom, left, top, right);
+*/
     }
     else {
 	fprintf(fp, "%%%%Orientation: Portrait\n");

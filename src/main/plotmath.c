@@ -2616,7 +2616,7 @@ static int ConcatenateAtom(SEXP expr)
 
 static BBOX RenderConcatenate(SEXP expr, int draw)
 {
-    BBOX bbox;
+    BBOX bbox = NullBBox();
     int i, n;
 
     expr = CDR(expr);

@@ -56,6 +56,12 @@ static SEXP Options(void)
     return install(".Options");
 }
 
+static SEXP optLogical(int k) {
+    SEXP v = allocVector(LGLSXP, 1);
+    LOGICAL(v)[0] = k;
+    return v;
+}
+
 static SEXP optInteger(int k)
 {
     SEXP v = allocVector(INTSXP, 1);
@@ -176,24 +182,56 @@ int R_SetOptionWidth(int w)
 void InitOptions(void)
 {
     SEXP t, val, v;
-    PROTECT(v = val = allocList(9));
-    TAG(v) = install("prompt"); CAR(v) = mkString("> "); v = CDR(v);
-    TAG(v) = install("continue"); CAR(v) = mkString("+ "); v = CDR(v);
-    TAG(v) = install("editor"); CAR(v) = mkString("vi"); v = CDR(v);
-    TAG(v) = install("expressions"); CAR(v) = optInteger(100); v = CDR(v);
-    TAG(v) = install("width"); CAR(v) = optInteger(80); v = CDR(v);
-    TAG(v) = install("digits"); CAR(v) = optInteger(7); v = CDR(v);
-    TAG(v) = install("contrasts"); CAR(v) = allocVector(STRSXP, 2);
+    PROTECT(v = val = allocList(10));
+
+    TAG(v) = install("prompt");
+    CAR(v) = mkString("> ");
+    v = CDR(v);
+
+    TAG(v) = install("continue");
+    CAR(v) = mkString("+ ");
+    v = CDR(v);
+
+    TAG(v) = install("editor");
+    CAR(v) = mkString("vi");
+    v = CDR(v);
+
+    TAG(v) = install("expressions");
+    CAR(v) = optInteger(100);
+    v = CDR(v);
+
+    TAG(v) = install("width");
+    CAR(v) = optInteger(80);
+    v = CDR(v);
+
+    TAG(v) = install("digits");
+    CAR(v) = optInteger(7);
+    v = CDR(v);
+
+    TAG(v) = install("contrasts");
+    CAR(v) = allocVector(STRSXP, 2);
     STRING(CAR(v))[0] = mkChar("contr.treatment");
     STRING(CAR(v))[1] = mkChar("contr.poly");
     PROTECT(t = allocVector(STRSXP, 2));
     STRING(t)[0] = mkChar("unordered");
     STRING(t)[1] = mkChar("ordered");
-    namesgets(CAR(v), t); v = CDR(v);
+    namesgets(CAR(v), t);
+    v = CDR(v);
+
     TAG(v) = install("verbose");
-    CAR(v) = allocVector(LGLSXP, 1); LOGICAL(CAR(v))[0] = R_Verbose; v = CDR(v);
+    CAR(v) = allocVector(LGLSXP, 1);
+    LOGICAL(CAR(v))[0] = R_Verbose;
+    v = CDR(v);
+
+    TAG(v) = install("echo");
+    CAR(v) = allocVector(LGLSXP, 1);
+    LOGICAL(CAR(v))[0] = !R_Slave;
+    v = CDR(v);
+    
     TAG(v) = install("check.bounds");
-    CAR(v) = allocVector(LGLSXP, 1); LOGICAL(CAR(v))[0] = 0;/* no checking */
+    CAR(v) = allocVector(LGLSXP, 1);
+    LOGICAL(CAR(v))[0] = 0;	/* no checking */
+    
     SYMVALUE(install(".Options")) = val;
     UNPROTECT(2);
 }
@@ -226,17 +264,19 @@ void InitOptions(void)
 SEXP do_options(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP argi= R_NilValue, argnames= R_NilValue, namei= R_NilValue,
-	names, options, s, tag, value;/* = R_Nil..: -Wall */
+	names, options, s, tag, value; /* = R_Nil..: -Wall */
     int i, k, n;
 
-    /* Locate the options values in the symbol table. */
-    /* This will need to change if options are to live */
-    /* in the session frame. */
+    /* Locate the options values in the symbol table.
+       This will need to change if options are to live in the session
+       frame.
+       */
 
     options = SYMVALUE(Options());
 
-    /* This is the zero argument case.  We alloc up a real */
-    /* list and write the system values into it. */
+    /* This is the zero argument case.  We alloc up a real list and
+       write the system values into it.
+       */
 
     if (args == R_NilValue) {
 	n = length(options);
@@ -253,10 +293,11 @@ SEXP do_options(SEXP call, SEXP op, SEXP args, SEXP rho)
 	return value;
     }
 
-    /* The arguments to "options" can either be a sequence of */
-    /* name = value form, or can be a single list. This means */
-    /* that we must code so that both forms will work.  */
-    /* [ Vomits quietly onto shoes ... ] */
+    /* The arguments to "options" can either be a sequence of name =
+       value form, or can be a single list.  This means that we must
+       code so that both forms will work.  
+       [ Vomits quietly onto shoes ... ]
+       */
 
     n = length(args);
     if (n == 1 && (isPairList(CAR(args)) || isVectorList(CAR(args)))) {
@@ -333,6 +374,16 @@ SEXP do_options(SEXP call, SEXP op, SEXP args, SEXP rho)
 		if (TYPEOF(argi) != STRSXP || LENGTH(argi) != 2)
 		    errorcall(call, "contrasts parameter invalid\n");
 		VECTOR(value)[i] = SetOption(tag, argi);
+	    }
+	    else if (streql(CHAR(namei), "echo")) {
+		if (TYPEOF(argi) != LGLSXP || LENGTH(argi) != 1)
+		    errorcall(call, "echo parameter invalid\n");
+		k = asInteger(argi);
+		/* Should be quicker than checking options(echo) every
+		   time R prompts for input.
+		   */
+		R_Slave = !k;
+		VECTOR(value)[i] = SetOption(tag, optLogical(k));
 	    }
 	    else {
 		VECTOR(value)[i] = SetOption(tag, duplicate(argi));

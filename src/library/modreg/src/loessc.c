@@ -47,7 +47,7 @@ void F77_SUB(ehg196)();
 
 static void warnmsg(char *string)
 {
-  PROBLEM "%s\n", string WARNING(NULL_ENTRY);
+  PROBLEM "%s", string WARNING(NULL_ENTRY);
 }
 
 
@@ -357,11 +357,12 @@ switch(*i){
 warnmsg(msg);
 }
 
-void F77_SUB(ehg183)(char *s,int *i,int *n,int *inc)
+void F77_SUB(ehg183a)(char *s, int *nc,int *i,int *n,int *inc)
 {
     char mess[4000], num[20];
     int j;
-    strcpy(mess,s);
+    strncpy(mess,s,*nc);
+    mess[*nc] = '\0';
     for (j=0; j<*n; j++) {
 	sprintf(num," %d",i[j * *inc]);
 	strcat(mess,num);
@@ -370,11 +371,12 @@ void F77_SUB(ehg183)(char *s,int *i,int *n,int *inc)
     warnmsg(mess);
 }
 
-void F77_SUB(ehg184)(char *s, double *x, int *n, int *inc)
+void F77_SUB(ehg184a)(char *s, int *nc, double *x, int *n, int *inc)
 {
     char mess[4000], num[30];
     int j;
-    strcpy(mess,s);
+    strncpy(mess,s,*nc);
+    mess[*nc] = '\0';
     for (j=0; j<*n; j++) {
 	sprintf(num," %.5g",x[j * *inc]);
 	strcat(mess,num);
