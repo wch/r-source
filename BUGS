@@ -331,3 +331,7 @@ Date: Sat, 30 Oct 99 13:24:14 +0100
 Subject: read.table problem on Linux/Alpha (seg faults caused by isspace(R_EOF))
 From: ntakebay@bio.indiana.edu
 Date: Sun, 31 Oct 1999 01:29:05 +0200 (MET DST)
+* PR# 304 *
+Subject: bugs in scan()
+From: Ray Brownrigg <Ray.Brownrigg@mcs.vuw.ac.nz>
+Date: Mon, 1 Nov 1999 12:20:33 +1300 (NZDT)
