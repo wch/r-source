@@ -1,7 +1,7 @@
 include MkRules
 
 HELP = YES
-WINHELP = BOTH # NO, CHM, BOTH
+WINHELP = BOTH# NO, CHM, BOTH
 
 PACKAGES = base ctest eda lqs modreg mva nls splines stepfun ts
 ALLPACKAGES = $(PACKAGES) tcltk
@@ -336,10 +336,12 @@ GW32_HEADERS = globalvar.h
 
 packagedist:
 	$(RM) -r $(RPREFIX)sp.zip $(RPREFIX)
-	$(MKDIR) $(RPREFIX) $(RPREFIX)/bin $(RPREFIX)/doc $(RPREFIX)/doc/html \
+	$(MKDIR) $(RPREFIX) $(RPREFIX)/bin \
+	  $(RPREFIX)/doc $(RPREFIX)/doc/html $(RPREFIX)/doc/manual \
 	  $(RPREFIX)/src $(RPREFIX)/src/include $(RPREFIX)/src/library \
 	  $(RPREFIX)/src/gnuwin32 $(RPREFIX)/src/gnuwin32/fixed
 	$(CP) ../../doc/html/logo.jpg $(RPREFIX)/doc/html
+	$(CP) -p ../../doc/manual/Rd.sty $(RPREFIX)/doc/manual
 	$(CP) -p exported-vars R.exp MkRules MakePkg MakeDll \
 	  maketitle pwd.pl makeDllRes.pl $(RPREFIX)/src/gnuwin32
 	$(CP) -p Makefile.packages $(RPREFIX)/src/gnuwin32/Makefile
