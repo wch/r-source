@@ -1,6 +1,9 @@
 \name{arima}
 \alias{arima}
 \alias{print.Arima}
+\alias{coef.Arima}
+\alias{vcov.Arima}
+\alias{logLik.Arima}
 \title{ARIMA Modelling of Time Series}
 \description{
   Fit an ARIMA model to a univariate time series.
@@ -120,12 +123,13 @@ arima(x, order = c(0, 0, 0),
 \value{
   A list of class \code{"Arima"} with components:
 
-  \item{coef}{a vector of AR, MA and regression coefficients,}
+  \item{coef}{a vector of AR, MA and regression coefficients, which can
+    be extracted by the \code{\link{coef}} method.}
 
   \item{sigma2}{the MLE of the innovations variance.}
 
   \item{var.coef}{the estimated variance matrix of the coefficients
-    \code{coef}.}
+    \code{coef}, which can be extracted by the \code{\link{vcov}} method.}
 
   \item{loglik}{the maximized log-likelihood (of the differenced data),
     or the approximation to it used.}

@@ -231,8 +231,7 @@ NEW FEATURES
 
     o	New argument `silent' to try().
 
-    o   new plot.design() function as in S.
-
+    o	arima() has coef(), logLik() (and hence AIC) and vcov() methods.
 
 
 INSTALLATION CHANGES
@@ -417,7 +416,7 @@ BUG FIXES
 
     o	methods() was sorting by package, not by name.
 
-    o	symbols(thermometers=) was often giving spurious warning about
+    o	symbols(thermometers=) was often giving a spurious warning about
 	the range.
 
 

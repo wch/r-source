@@ -415,3 +415,13 @@ makeARIMA <- function(phi, theta, Delta, kappa = 1e6)
     return(phi, theta, Delta, Z, a, P, T, V, h, Pn)
 }
 
+coef.Arima <- function (object, ...) object$coef
+
+vcov.Arima <- function (object, ...) object$var.coef
+
+logLik.Arima <- function (object, ...) {
+    res <- if(is.na(object$aic)) NA
+    else structure(object$loglik, df=sum(object$mask)  + 1)
+    class(res) <- "logLik"
+    res
+}
