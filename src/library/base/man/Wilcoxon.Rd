@@ -22,7 +22,7 @@ rwilcox(nn, m, n)
   \item{nn}{number of observations. If \code{length(nn) > 1}, the length
     is taken to be the number required.}
   \item{m, n}{numbers of observations in the first and second sample,
-    respectively.}
+    respectively.  Can be vectors of positive integers.}
   \item{log, log.p}{logical; if TRUE, probabilities p are given as log(p).}
   \item{lower.tail}{logical; if TRUE (default), probabilities are
     \eqn{P[X \le x]}{P[X <= x]}, otherwise, \eqn{P[X > x]}{P[X > x]}.}
@@ -41,14 +41,23 @@ rwilcox(nn, m, n)
   \code{x[i]}.  This statistic takes values between \code{0} and
   \code{m * n}, and its mean and variance are \code{m * n / 2} and
   \code{m * n * (m + n + 1) / 12}, respectively.
+
+  If any of the first three arguments are vectors, the recycling rule is
+  used to do the calculations for all combinations of the three up to
+  the length of the longest vector.
 }
 \note{
   S-PLUS uses a different (but equivalent) definition of the Wilcoxon
   statistic.
 }
 \author{Kurt Hornik \email{hornik@ci.tuwien.ac.at}}
-\seealso{\code{\link{dsignrank}} etc, for the \emph{one-sample} Wilcoxon
-    rank statistic.}
+\seealso{
+  \code{\link{wilcox.test}} to calculate the statistic from data, find p
+  values and so on.
+  
+  \code{\link{dsignrank}} etc, for the distribution of the
+  \emph{one-sample} Wilcoxon signed rank statistic.
+}
 \examples{
 x <- -1:(4*6 + 1)
 fx <- dwilcox(x, 4, 6)

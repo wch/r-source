@@ -21,8 +21,8 @@ rsignrank(nn, n)
   \item{p}{vector of probabilities.}
   \item{nn}{number of observations. If \code{length(nn) > 1}, the length
     is taken to be the number required.}
-  \item{n}{numbers of observations in the sample.  Must be positive
-    integers less than 50.}
+  \item{n}{number(s) of observations in the sample(s).  A positive
+    integer, or a vector of such integers.}
   \item{log, log.p}{logical; if TRUE, probabilities p are given as log(p).}
   \item{lower.tail}{logical; if TRUE (default), probabilities are
     \eqn{P[X \le x]}{P[X <= x]}, otherwise, \eqn{P[X > x]}{P[X > x]}.}
@@ -41,10 +41,19 @@ rsignrank(nn, n)
   positive.  This statistic takes values between \eqn{0} and
   \eqn{n(n+1)/2}, and its mean and variance are \eqn{n(n+1)/4} and
   \eqn{n(n+1)(2n+1)/24}, respectively.
+
+  If either of the first two arguments is a vector, the recycling rule is
+  used to do the calculations for all combinations of the two up to
+  the length of the longer vector.
 }
 \author{Kurt Hornik \email{hornik@ci.tuwien.ac.at}}
-\seealso{\code{\link{dwilcox}} etc, for the \emph{two-sample} Wilcoxon
-    rank sum statistic.}
+\seealso{
+  \code{\link{wilcox.test}} to calculate the statistic from data, find p
+  values and so on.
+  
+  \code{\link{dwilcox}} etc, for the distribution of \emph{two-sample} Wilcoxon
+  rank sum statistic.
+}
 \examples{
 par(mfrow=c(2,2))
 for(n in c(4:5,10,40)) {
