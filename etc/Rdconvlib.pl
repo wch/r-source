@@ -127,9 +127,17 @@ sub Rdconv { # Rdconv(foobar.Rd, type, debug, filename)
 
 	get_blocks($complete_text);
 
-	get_sections($complete_text)
-	  if $type =~ /html/i || $type =~ /nroff/i ||
-	    $type =~ /Sd/    || $type =~ /tex/i;
+	if($type =~ /html/i || $type =~ /nroff/i ||
+	   $type =~ /Sd/    || $type =~ /tex/i) {
+
+	    get_sections($complete_text);
+
+	} elsif($type =~ /example/i ) {
+	    ;
+	} else {
+	    warn("\n** Rdconv( type = '%s' ): no valid type specified\n", 
+		 $type);
+	}
 
 	rdoc2html($htmlfile)	if $type =~ /html/i;
 	rdoc2nroff($nrofffile)	if $type =~ /nroff/i;
@@ -1223,13 +1231,14 @@ sub Sd_print_sections {
 
 sub rdoc2ex { # (filename)
 
+    local($tit = $blocks{"title"});
+
     if($_[0]!= -1) {
       if($_[0]) { open Exout, "> $_[0]"; } else { open Exout, "| cat"; }
     }
-    ##--- Here, I should also put everything which belongs to
-    ##--- ./massage-Examples ---- depending on 'name' !!!
+    $tit =~ s/\s+/ /g;
     print Exout "###--- >>> `"; print Exout $blocks{"name"};
-    print Exout "' <<<----- "; print Exout $blocks{"title"};
+    print Exout "' <<<----- "; print Exout $tit;
     print Exout "\n\n";
     if(@aliases) {
 	foreach (@aliases) {
