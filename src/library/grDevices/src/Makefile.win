@@ -19,6 +19,9 @@ DEPS = $(SOURCES_C:.c=.d)
 OBJS = $(SOURCES_C:.c=.o)
 
 RESFLAGS=--include-dir $(RHOME)/include
+
+$(DLLNAME)_res.rc:
+	@PERL5LIB=$(RHOME)/share/perl perl $(RHOME)/src/gnuwin32/makeDllRes.pl $(DLLNAME) > $@
 grDevices_res.o: grDevices_res.rc $(RHOME)/include/Rversion.h
 
 CFLAGS = -I$(RHOME)/src/include -I$(RHOME)/src/gnuwin32 -DHAVE_CONFIG_H $(DEBUGFLAG) -O2
