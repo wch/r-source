@@ -82,6 +82,11 @@
 #include <R_ext/Applic.h>
 #include <Rmath.h>		/* fround */
 
+/*
+   The declaration for x is unusual for a .C() but is managed by
+   casting in the code itself.  However, it does mean that we cannot
+   use the argument type matching
+ */
 void str_signif(char *x, int *n, char **type, int *width, int *digits,
 		char **format, char **flag, char **result)
 {

@@ -136,10 +136,29 @@ static int CountDLL = 0;
 
 static DllInfo LoadedDLL[MAX_NUM_DLLS];
 
+int addDLL(char *dpath, char *name, HINSTANCE handle);
+
 
 OSDynSymbol Rf_osDynSymbol;
 OSDynSymbol *R_osDynSymbol = &Rf_osDynSymbol;
 
+void R_init_base(DllInfo *); /* In Registration.c */
+
+void
+InitDynload()
+{
+   DllInfo *dll;
+   int which = addDLL(strdup("base"), "base", NULL);
+   dll = &LoadedDLL[which];
+   R_init_base(dll);
+   InitFunctionHashing();
+}
+
+DllInfo *
+getBaseDllInfo()
+{
+    return(&LoadedDLL[0]);
+}
 
 Rboolean R_useDynamicSymbols(DllInfo *info, Rboolean value)
 {
@@ -168,7 +187,7 @@ void R_addExternalRoutine(DllInfo *info,
  with the path name `path'. This ensures uniqueness rather than having the 
  undesirable situation of two libraries with the same name but in different
  directories.
- This is available so that itcan be called from arbitrary C routines
+ This is available so that it can be called from arbitrary C routines
  that need to call R_registerRoutines(). The initialization routine
  R_init_<library name> is passed the DllInfo reference as an argument.
  Other routines must explicitly request it using this routine.
@@ -524,15 +543,25 @@ DllInfo *R_RegisterDLL(HINSTANCE handle, const char *path)
     if(p > DLLname && strcmp(p, SHLIB_EXT) == 0) *p = '\0';
 #endif
     
-    name = malloc(strlen(DLLname)+1);
+    addDLL(dpath, DLLname, handle);
+
+    return(info);
+}
+
+int
+addDLL(char *dpath, char *DLLname, HINSTANCE handle)
+{
+    int ans = CountDLL;
+    char *name = malloc(strlen(DLLname)+1);
     if(name == NULL) {
 	strcpy(DLLerror, "Couldn't allocate space for 'name'");
-	R_osDynSymbol->closeLibrary(handle);
+	if(handle)
+	   R_osDynSymbol->closeLibrary(handle);
 	free(dpath);
 	return 0;
     }
-    strcpy(name, DLLname);
 
+    strcpy(name, DLLname);
     LoadedDLL[CountDLL].path = dpath;
     LoadedDLL[CountDLL].name = name;
     LoadedDLL[CountDLL].handle = handle;
@@ -543,9 +572,9 @@ DllInfo *R_RegisterDLL(HINSTANCE handle, const char *path)
     LoadedDLL[CountDLL].CSymbols = NULL;
     LoadedDLL[CountDLL].CallSymbols = NULL;
     LoadedDLL[CountDLL].FortranSymbols = NULL;
-    CountDLL++;
+    CountDLL++;    
 
-    return(info);
+    return(ans);
 }
 
 
@@ -691,6 +720,14 @@ static DL_FUNC R_dlsym(DllInfo *info, char const *name,
 #else
     sprintf(buf, "_%s", name);
 #endif
+
+#ifdef HAVE_F77_UNDERSCORE
+    if(symbol && symbol->type == R_FORTRAN_SYM) {
+	buf[strlen(buf)+1] = '\0';
+	buf[strlen(buf)] = '_';
+    }
+#endif
+
     return (DL_FUNC) R_osDynSymbol->dlsym(info, buf);
 }
 

@@ -50,6 +50,7 @@
 # endif
 #endif
 
+#ifdef USE_CFUNTAB
 #include "FFDecl.h"
 
 static CFunTabEntry CFunTab[] =
@@ -57,6 +58,7 @@ static CFunTabEntry CFunTab[] =
 #include "FFTab.h"
     {NULL, NULL}
 };
+#endif
 
 #ifdef HAVE_DYNAMIC_LOADING
 
@@ -81,7 +83,9 @@ void InitFunctionHashing()
     R_osDynSymbol->deleteCachedSymbols = deleteCachedSymbols;
     R_osDynSymbol->lookupCachedSymbol = Rf_lookupCachedSymbol;
 
+#ifdef OLD_DYNLOAD_BASE
     R_osDynSymbol->CFunTab = CFunTab;
+#endif
     R_osDynSymbol->getFullDLLPath = getFullDLLPath;
 }
 
@@ -144,9 +148,14 @@ static DL_FUNC getBaseSymbol(const char *name)
 {
     int i;
 
+#ifdef USE_CFUNTAB
     for(i = 0 ; R_osDynSymbol->CFunTab[i].name ; i++)
 	if(!strcmp(name, R_osDynSymbol->CFunTab[i].name))
 	    return R_osDynSymbol->CFunTab[i].func;
+#else
+    return(R_dlsym(getBaseDllInfo(), name));
+
+#endif
 
     return((DL_FUNC) NULL);
 }

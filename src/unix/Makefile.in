@@ -41,8 +41,6 @@ all: Makefile Makedeps R
 Makefile: $(srcdir)/Makefile.in \
   $(top_builddir)/config.status \
   ../include/Rversion.h \
-  FFDecl.h \
-  FFTab.h \
   $(SOURCES)
 	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
 
@@ -57,9 +55,6 @@ R: Makefile
 
 ../include/Rversion.h:
 	(cd ../include; $(MAKE) $(@F))
-FFDecl.h FFTab.h: $(top_srcdir)/src/appl/ROUTINES \
-  $(top_srcdir)/tools/GETSYMBOLS
-	@$(top_srcdir)/tools/GETSYMBOLS
 
 libunix.a: $(libunix_a_OBJECTS)
 	$(AR) cr $@ $(libunix_a_OBJECTS)
@@ -73,7 +68,7 @@ libunix.la: stamp-lo
 mostlyclean: clean
 clean:
 	@-rm -rf .libs _libs
-	@-rm -f Makedeps FFDecl.h FFTab.h *.d *.o *.a *.lo *.la stamp-lo
+	@-rm -f Makedeps *.d *.o *.a *.lo *.la stamp-lo
 distclean: clean
 	@-rm -f Makefile
 maintainer-clean: distclean

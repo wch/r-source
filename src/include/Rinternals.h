@@ -82,7 +82,9 @@ typedef unsigned int SEXPTYPE;
 #define CPLXSXP	    15	  /* complex variables */
 #define STRSXP	    16	  /* string vectors */
 #define DOTSXP	    17	  /* dot-dot-dot object */
-#define ANYSXP	    18	  /* make "any" args work */
+#define ANYSXP	    18	  /* make "any" args work.
+			     Used in specifying types for symbol 
+			     registration to mean anything is okay  */
 #define VECSXP	    19	  /* generic vectors */
 #define EXPRSXP	    20	  /* expressions vectors */
 #define BCODESXP    21    /* byte code */
@@ -90,6 +92,7 @@ typedef unsigned int SEXPTYPE;
 #define WEAKREFSXP  23    /* weak reference */
 
 #define FUNSXP      99    /* Closure or Builtin */
+
 
 #else /* NOT YET */
 /*------ enum_SEXPTYPE ----- */

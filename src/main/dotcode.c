@@ -52,6 +52,21 @@ static char DLLname[PATH_MAX];
    than vectors and lists unaltered.
 */
 
+static Rboolean
+checkNativeType(int targetType, int actualType)
+{
+   if(targetType > 0) {
+      if(targetType == INTSXP || targetType == LGLSXP) {
+	  return(actualType == INTSXP || actualType == LGLSXP);
+      }
+      return(targetType == actualType);
+   }
+
+  return(TRUE);
+}
+
+
+
 static void *RObjToCPtr(SEXP s, int naok, int dup, int narg, int Fort, const char *name, R_toCConverter **converter,
                           int targetType)
 {
@@ -82,10 +97,10 @@ static void *RObjToCPtr(SEXP s, int naok, int dup, int narg, int Fort, const cha
 	    return(ans);
     }
 
-    if(targetType > 0 && targetType != TYPEOF(s)) {
+    if(checkNativeType(targetType, TYPEOF(s)) == FALSE) {
      if(!dup) {
-       error("expliciti request not to duplicate arguments in call to %s, but argument %d is of the wrong type", 
-	     name, narg + 1);
+       error("explicit request not to duplicate arguments in call to %s, but argument %d is of the wrong type (%d != %d)", 
+	     name, narg + 1, targetType, TYPEOF(s));
      } 
 
      if(targetType != SINGLESXP) 
@@ -272,7 +287,7 @@ static SEXP CPtrToRObj(void *p, SEXP arg, int Fort, R_NativePrimitiveArgType typ
 static Rboolean
 comparePrimitiveTypes(R_NativePrimitiveArgType type, SEXP s, Rboolean dup)
 {
-   if(TYPEOF(s) == type)
+   if(type == ANYSXP || TYPEOF(s) == type)
       return(TRUE);
 
    if(dup && type == SINGLESXP)
@@ -1243,11 +1258,7 @@ SEXP do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 	p++;
 	q++;
     }
-#ifdef HAVE_F77_UNDERSCORE
-    if (which)
-	*q++ = '_';
-    *q = '\0';
-#endif
+
 #ifdef Macintosh
     if (!(fun = R_FindSymbol(buf, "", &symbol)))
 #else

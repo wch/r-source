@@ -54,6 +54,7 @@ void Rf_callToplevelHandlers(SEXP expr, SEXP value, Rboolean succeeded, Rboolean
 
 static int ParseBrowser(SEXP, SEXP);
 
+extern void InitDynload();
 
 
 	/* Read-Eval-Print Loop [ =: REPL = repl ] with input from a file */
@@ -434,7 +435,7 @@ void setup_Rmainloop(void)
     InitMemory();
     InitNames();
     InitGlobalEnv();
-    InitFunctionHashing();
+    InitDynload();
     InitOptions();
     InitEd();
     InitArithmetic();
