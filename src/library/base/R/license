@@ -1,4 +1,4 @@
-license <- function() {
+licence <- license <- function() {
 cat("\nThis software is distributed under the terms of the GNU GENERAL\n")
 cat("PUBLIC LICENSE Version 2, June 1991.  The terms of this license\n")
 cat("are in a file called COPYING which you should have received with\n")
