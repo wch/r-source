@@ -22,12 +22,12 @@
   separately.
 }
 \details{
-  There are system copies of these files in \code{R\_HOME\\etc}. Users
+  There are system copies of these files in \file{R\_HOME\\etc}. Users
   can have personal copies of the files: these are looked for in the
-  location given by the environment variable \code{R\_USER}. The system
+  location given by the environment variable \code{R_USER}. The system
   files are read only if a corresponding personal file is not found.
 
-  If the environment variable \code{R\_USER} is not set, the \R system
+  If the environment variable \code{R_USER} is not set, the \R system
   sets it to \code{HOME} if that is set (stripping any trailing
   slash), otherwise to \code{HOMEDIR:HOMEPATH} is \code{HOMEDIR} is set
   otherwise to the working directory.
