@@ -39,9 +39,9 @@ pictex(file = "Rplots.tex", width = 5, height = 4, debug = FALSE,
   \code{\link{postscript}}, \code{\link{Devices}}.
 }
 \examples{
-####BUG in 0.62>> pictex()
-####BUG in 0.62>> plot(1:11,(-5:5)^2, type='b', main="Simple Example Plot")
-####BUG in 0.62>> dev.off()
+pictex()
+plot(1:11,(-5:5)^2, type='b', main="Simple Example Plot")
+dev.off()
 ##--------------------
 \%\% LaTeX Example
 \\documentclass{article}
