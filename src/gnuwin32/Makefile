@@ -1,7 +1,7 @@
 include MkRules
 
 HELP = YES
-WINHELP = CHM # NO, CHM, BOTH
+WINHELP = BOTH # NO, CHM, BOTH
 
 PACKAGES = base ctest eda lqs modreg mva nls splines stepfun ts
 ALLPACKAGES = $(PACKAGES) tcltk
@@ -276,7 +276,7 @@ bindist: docfiles
 	$(SED) -e s/@RWVER@/$(RPREFIX)/g \
 	  -e s/@RVER@/$(RVER)/g readme > $(RPREFIX)/README
 	$(CP) -p rw-faq $(RPREFIX)/rw-FAQ
-	$(CP) -p CHANGES $(RPREFIX)/CHANGES
+	$(CP) -p CHANGES README.Rterm $(RPREFIX)
 	zip dosfiles.zip $(RPREFIX)/* $(RPREFIX)/bin/*.bat
 	unzip -ao dosfiles.zip
 	$(RM) dosfiles.zip
