@@ -1,13 +1,14 @@
 This is the Debian GNU/Linux r-base package of the GNU R system for
 statistical computing and graphics.
 
-R was initially written by Ross Ihaka <Ross.Ihaka@r-project.org> and Robert
-Gentleman of the University of Auckland in Auckland, New Zealand.  Since
-mid-1997 there has been a core group (the "R Core Team") who can modify the R
-source code CVS archive.  The group currently consists of Doug Bates, John
-Chambers, Peter Dalgaard, Robert Gentleman, Kurt Hornik, Stefano Iacus, Ross
-Ihaka, Friedrich Leisch, Thomas Lumley, Martin Maechler, Guido Masarotto,
-Paul Murrell, Brian Ripley, Duncan Temple Lang, and Luke Tierney. 
+R was initially written by Ross Ihaka <Ross.Ihaka@r-project.org> and
+Robert Gentleman of the University of Auckland in Auckland, New
+Zealand.  Since mid-1997 there has been a core group (the "R Core
+Team") who can modify the R source code CVS archive.  The group
+currently consists of Doug Bates, John Chambers, Peter Dalgaard,
+Robert Gentleman, Kurt Hornik, Stefano Iacus, Ross Ihaka, Friedrich
+Leisch, Thomas Lumley, Martin Maechler, Duncan Murdoch, Paul Murrell,
+Martyn Plummer, Brian Ripley, Duncan Temple Lang, and Luke Tierney.
 
 R has a home page at `http://www.r-project.org/'.  It is free software
 distributed under a GNU-style copyleft, and an official part of the GNU
