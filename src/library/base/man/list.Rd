@@ -1,37 +1,51 @@
 \name{list}
-\title{Lists}
+\title{Lists -- Generic and Dotted Pairs}
 \usage{
 list(\dots)
+pairlist(\dots)
 as.list(x)
+as.pairlist(x)
 is.list(x)
+is.pairlist(x)
 alist(\dots)
 }
 \alias{list}
+\alias{pairlist}
 \alias{alist}
 \alias{as.list}
+\alias{as.pairlist}
 \alias{is.list}
+\alias{is.pairlist}
 \description{
-The arguments to \code{list} are of the form \code{value}
-or \code{tag=value}.
-The function returns a list composed of its arguments
-with each value either tagged or untagged,
-depending on how the argument was specified.
+  Functions to construct, coerce and check for all kinds of \R lists.
+}
+\details{
+  Since version 0.63, most lists in \R internally are \emph{Generic
+    Vectors}, whereas traditional \emph{dotted pair} lists (as in LISP)
+  are still available.
 
-\code{alist} is like \code{list}, except in the handling of tagged
-arguments with no value. These are handled as if they described
-function arguments with no default (cf. \code{\link{formals}}), whereas
-\code{list} simply ignores them.
+  The arguments to \code{list} or \code{pairlist} are of the form
+  \code{value} or \code{tag=value}.
+  The functions return a list composed of its arguments
+  with each value either tagged or untagged,
+  depending on how the argument was specified.
 
-\code{as.list} attempts to coerce its argument to list type.
-For functions, this returns the concatenation of the list of formals
-arguments and the function body. For expressions, the list of
-constituent calls is returned.
+  \code{alist} is like \code{list}, except in the handling of tagged
+  arguments with no value. These are handled as if they described
+  function arguments with no default (cf. \code{\link{formals}}), whereas
+  \code{list} simply ignores them.
 
-\code{is.list} returns \code{TRUE} if its argument
-is a list and \code{FALSE} otherwise.
+  \code{as.list} attempts to coerce its argument to list type.
+  For functions, this returns the concatenation of the list of formals
+  arguments and the function body. For expressions, the list of
+  constituent calls is returned.
 
-To create an empty list, it is necessary to use the
-function \code{vector} with a \code{\link{mode}} of \code{"list"}.
+  \code{is.list} returns \code{TRUE} iff its argument
+  is a \code{list} \emph{or} a \code{pairlist} of \code{length}\eqn{> 0},
+  whereas \code{is.pairlist} only returns \code{TRUE} in the latter case.
+
+  An empty pairlist, \code{pairlist()} is the same as \code{NULL}.  This
+  is different from \code{list()}.
 }
 \seealso{
 \code{\link{vector}(., mode="list")}, \code{\link{c}}, for concatenation;
@@ -45,8 +59,20 @@ plot(pts)
 
 # Argument lists
 f <- function()x
-formals(f) <- alist(x=, y=2, ...=) # Note the spec. of a "..." argument
+# Note the specification of a "..." argument:
+formals(f) <- al <- alist(x=, y=2, ...=)
 f
+str(al)
+
+str(pl <- as.pairlist(ps.options()))
+
+## These are all TRUE:
+is.list(pl) && is.pairlist(pl)
+!is.null(list())
+is.null(pairlist())
+!is.list(NULL)
+is.pairlist(pairlist())
+is.null(as.pairlist(list()))
 }
 \keyword{list}
 \keyword{manip}

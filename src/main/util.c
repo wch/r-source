@@ -266,39 +266,30 @@ int isNewList(SEXP s)
 
 int isPairList(SEXP s)
 {
-    int ans;
     switch (TYPEOF(s)) {
     case NILSXP:
     case LISTSXP:
     case LANGSXP:
-	ans = 1;
-	break;
+	return 1;
     default:
-	ans = 0;
-	break;
+	return 0;
     }
-    return ans;
 }
 
 int isVectorList(SEXP s)
 {
-    int ans;
     switch (TYPEOF(s)) {
     case VECSXP:
     case EXPRSXP:
-	ans = 1;
-	break;
+	return 1;
     default:
-	ans = 0;
-	break;
+	return 0;
     }
-    return ans;
 }
 
 
 int isVectorObject(SEXP s)
 {
-    int ans;
     switch (TYPEOF(s)) {
     case LGLSXP:
     case INTSXP:
@@ -307,13 +298,10 @@ int isVectorObject(SEXP s)
     case STRSXP:
     case VECSXP:
     case EXPRSXP:
-	ans = 1;
-	break;
+	return 1;
     default:
-	ans = 0;
-	break;
+	return 0;
     }
-    return ans;
 }
 
 
@@ -332,10 +320,7 @@ int isFrame(SEXP s)
 
 int isEnvironment(SEXP s)
 {
-    if (TYPEOF(s) == NILSXP || TYPEOF(s) == ENVSXP)
-	return 1;
-    else
-	return 0;
+    return (TYPEOF(s) == NILSXP || TYPEOF(s) == ENVSXP);
 }
 
 
@@ -396,9 +381,7 @@ int isArray(SEXP s)
 
 int isTs(SEXP s)
 {
-    if (isVector(s) && getAttrib(s, R_TspSymbol) != R_NilValue)
-	return 1;
-    return 0;
+    return (isVector(s) && getAttrib(s, R_TspSymbol) != R_NilValue);
 }
 
 
@@ -518,10 +501,7 @@ int isNumeric(SEXP s)
 
 int isString(SEXP s)
 {
-    if (TYPEOF(s) == STRSXP)
-	return 1;
-    else
-	return 0;
+    return (TYPEOF(s) == STRSXP);
 }
 
 
@@ -588,46 +568,47 @@ int inherits(SEXP s, char *name)
 	    if (!strcmp(CHAR(STRING(class)[i]), name))
 		return 1;
 	}
-	return 0;
     }
-    else return 0;
+    return 0;
 }
 
 
+#ifdef neverUser
 double realNA()
 {
     return NA_REAL;
 }
-
+#endif
 
 static struct {
     char *str;
     int type;
 }
 TypeTable[] = {
-    { "NULL",		NILSXP     },  /* real types */
-    { "symbol",		SYMSXP     },
+    { "NULL",		NILSXP	   },  /* real types */
+    { "symbol",		SYMSXP	   },
     { "pairlist",	LISTSXP	   },
-    { "closure",	CLOSXP     },
-    { "environment",	ENVSXP     },
-    { "promise",	PROMSXP    },
-    { "language",	LANGSXP    },
+    { "closure",	CLOSXP	   },
+    { "environment",	ENVSXP	   },
+    { "promise",	PROMSXP	   },
+    { "language",	LANGSXP	   },
     { "special",	SPECIALSXP },
     { "builtin",	BUILTINSXP },
-    { "char",		CHARSXP    },
-    { "logical",	LGLSXP     },
-    { "integer",	INTSXP     },
-    { "double",		REALSXP    },  /*- was "real", for R <= 0.61.x */
-    { "complex",	CPLXSXP    },
-    { "character",      STRSXP     },
-    { "...",		DOTSXP     },
-    { "any",		ANYSXP     },
-    { "expression",	EXPRSXP    },
+    { "char",		CHARSXP	   },
+    { "logical",	LGLSXP	   },
+    { "integer",	INTSXP	   },
+    { "double",		REALSXP	   }, /*-  "real", for R <= 0.61.x */
+    { "complex",	CPLXSXP	   },
+    { "character",	STRSXP	   },
+    { "...",		DOTSXP	   },
+    { "any",		ANYSXP	   },
+    { "expression",	EXPRSXP	   },
     { "list",		VECSXP	   },
-    { "numeric",	REALSXP    },  /* aliases */
+    /* aliases : */
+    { "numeric",	REALSXP	   },
     { "name",		SYMSXP	   },
 
-    { (char *)0,        -1         }
+    { (char *)0,	-1	   }
 };
 
 
@@ -701,7 +682,7 @@ SEXP nthcdr(SEXP s, int n)
 	}
 	return s;
     }
-    else error("\"nthcdr\" need a list to CDR down\n");
+    else error("\"nthcdr\" needs a list to CDR down\n");
     return R_NilValue;/* for -Wall */
 }
 
@@ -735,13 +716,13 @@ static int isMissing(SEXP symbol, SEXP rho)
 		else
 			vl = nthcdr(CAR(vl), DDVAL(symbol)-1);
 	}
-        if (MISSING(vl) == 1 || CAR(vl) == R_MissingArg)
-           return 1;
-        if (TYPEOF(CAR(vl)) == PROMSXP &&
-              TYPEOF(PREXPR(CAR(vl))) == SYMSXP)
-              return isMissing(PREXPR(CAR(vl)), PRENV(CAR(vl)));
-        else
-           return 0;
+	if (MISSING(vl) == 1 || CAR(vl) == R_MissingArg)
+	   return 1;
+	if (TYPEOF(CAR(vl)) == PROMSXP &&
+	      TYPEOF(PREXPR(CAR(vl))) == SYMSXP)
+	      return isMissing(PREXPR(CAR(vl)), PRENV(CAR(vl)));
+	else
+	   return 0;
     }
     return 0;
 }
@@ -772,11 +753,11 @@ SEXP do_missing(SEXP call, SEXP op, SEXP args, SEXP rho)
 		else
 			t = nthcdr(CAR(t), DDVAL(s)-1);
 	}
-        if (MISSING(t) || CAR(t) == R_MissingArg ) {
-            LOGICAL(rval)[0] = 1;
-            return rval;
-        }
-        else goto havebinding;
+	if (MISSING(t) || CAR(t) == R_MissingArg ) {
+	    LOGICAL(rval)[0] = 1;
+	    return rval;
+	}
+	else goto havebinding;
     }
     else  /* it wasn't an argument to the function */
 	error("\"missing\" illegal use of missing\n");

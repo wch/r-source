@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1995-1998  Robert Gentleman and Ross Ihaka
+ *  Copyright (C) 1995-1998  Robert Gentleman, Ross Ihaka and the R core team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -17,7 +17,7 @@
  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
-#include "Defn.h"
+#include "Defn.h"/*-- Maybe modularize into own Coerce.h ..*/
 #include "Mathlib.h"
 #include "Print.h"
 
@@ -43,11 +43,11 @@ static char *falsenames[] = {
     (char *) 0,
 };
 
-#define WARN_NA    1
+#define WARN_NA	   1
 #define WARN_INACC 2
 #define WARN_IMAG  4
 
-static void CoercionWarning(int warn)
+void CoercionWarning(int warn)
 {
     if (warn & WARN_NA)
 	warning("NAs introduced by coercion\n");
@@ -57,25 +57,25 @@ static void CoercionWarning(int warn)
 	warning("imaginary parts discarded in coercion\n");
 }
 
-static int LogicalFromInteger(int x, int *warn)
+int LogicalFromInteger(int x, int *warn)
 {
     return (x == NA_INTEGER) ?
 	NA_LOGICAL : (x != 0);
 }
 
-static int LogicalFromReal(double x, int *warn)
+int LogicalFromReal(double x, int *warn)
 {
     return ISNAN(x) ?
 	NA_LOGICAL : (x != 0);
 }
 
-static int LogicalFromComplex(complex x, int *warn)
+int LogicalFromComplex(complex x, int *warn)
 {
     return (ISNAN(x.r) || ISNAN(x.i)) ?
 	NA_LOGICAL : (x.r != 0 || x.i != 0);
 }
 
-static int LogicalFromString(SEXP x, int *warn)
+int LogicalFromString(SEXP x, int *warn)
 {
     if (x != R_NaString) {
 	int i;
@@ -89,13 +89,13 @@ static int LogicalFromString(SEXP x, int *warn)
     return NA_LOGICAL;
 }
 
-static int IntegerFromLogical(int x, int *warn)
+int IntegerFromLogical(int x, int *warn)
 {
     return (x == NA_LOGICAL) ?
 	NA_INTEGER : x;
 }
 
-static int IntegerFromReal(double x, int *warn)
+int IntegerFromReal(double x, int *warn)
 {
     if (ISNAN(x))
 	return NA_INTEGER;
@@ -110,7 +110,7 @@ static int IntegerFromReal(double x, int *warn)
     return x;
 }
 
-static int IntegerFromComplex(complex x, int *warn)
+int IntegerFromComplex(complex x, int *warn)
 {
     if (ISNAN(x.r) || ISNAN(x.i))
 	return NA_INTEGER;
@@ -127,7 +127,7 @@ static int IntegerFromComplex(complex x, int *warn)
     return x.r;
 }
 
-static int IntegerFromString(SEXP x, int *warn)
+int IntegerFromString(SEXP x, int *warn)
 {
     double xdouble;
     char *endp;
@@ -150,13 +150,13 @@ static int IntegerFromString(SEXP x, int *warn)
     return NA_INTEGER;
 }
 
-static double RealFromLogical(int x, int *warn)
+double RealFromLogical(int x, int *warn)
 {
     return (x == NA_LOGICAL) ?
 	NA_REAL : x;
 }
 
-static double RealFromInteger(int x, int *warn)
+double RealFromInteger(int x, int *warn)
 {
     if (x == NA_INTEGER)
 	return NA_REAL;
@@ -164,7 +164,7 @@ static double RealFromInteger(int x, int *warn)
 	return x;
 }
 
-static double RealFromComplex(complex x, int *warn)
+double RealFromComplex(complex x, int *warn)
 {
     if (ISNAN(x.r) || ISNAN(x.i))
 	return NA_INTEGER;
@@ -173,7 +173,7 @@ static double RealFromComplex(complex x, int *warn)
     return x.r;
 }
 
-static double RealFromString(SEXP x, int *warn)
+double RealFromString(SEXP x, int *warn)
 {
     double xdouble;
     char *endp;
@@ -187,7 +187,7 @@ static double RealFromString(SEXP x, int *warn)
     return NA_REAL;
 }
 
-static complex ComplexFromLogical(int x, int *warn)
+complex ComplexFromLogical(int x, int *warn)
 {
     complex z;
     if (x == NA_LOGICAL) {
@@ -201,7 +201,7 @@ static complex ComplexFromLogical(int x, int *warn)
     return z;
 }
 
-static complex ComplexFromInteger(int x, int *warn)
+complex ComplexFromInteger(int x, int *warn)
 {
     complex z;
     if (x == NA_INTEGER) {
@@ -215,7 +215,7 @@ static complex ComplexFromInteger(int x, int *warn)
     return z;
 }
 
-static complex ComplexFromReal(double x, int *warn)
+complex ComplexFromReal(double x, int *warn)
 {
     complex z;
     if (ISNAN(x)) {
@@ -229,7 +229,7 @@ static complex ComplexFromReal(double x, int *warn)
     return z;
 }
 
-static complex ComplexFromString(SEXP x, int *warn)
+complex ComplexFromString(SEXP x, int *warn)
 {
     double xr, xi;
     complex z;
@@ -254,28 +254,28 @@ static complex ComplexFromString(SEXP x, int *warn)
     return z;
 }
 
-static SEXP StringFromLogical(int x, int *warn)
+SEXP StringFromLogical(int x, int *warn)
 {
     int w;
     formatLogical(&x, 1, &w);
     return mkChar(EncodeLogical(x, w));
 }
 
-static SEXP StringFromInteger(int x, int *warn)
+SEXP StringFromInteger(int x, int *warn)
 {
     int w;
     formatInteger(&x, 1, &w);
     return mkChar(EncodeInteger(x, w));
 }
 
-static SEXP StringFromReal(double x, int *warn)
+SEXP StringFromReal(double x, int *warn)
 {
     int w, d, e;
     formatReal(&x, 1, &w, &d, &e);
     return mkChar(EncodeReal(x, w, d, e));
 }
 
-static SEXP StringFromComplex(complex x, int *warn)
+SEXP StringFromComplex(complex x, int *warn)
 {
     int wr, dr, er, wi, di, ei;
     formatComplex(&x, 1, &wr, &dr, &er, &wi, &di, &ei);
@@ -498,7 +498,7 @@ static SEXP coerceToString(SEXP v)
     case REALSXP:
 	PrintDefaults(R_NilValue);
 	savedigits = print_digits;
-	print_digits = DBL_DIG;              /*- MAXIMAL precision */
+	print_digits = DBL_DIG;		     /*- MAXIMAL precision */
 	for (i = 0; i < n; i++)
 	    STRING(ans)[i] = StringFromReal(REAL(v)[i], &warn);
 	break;
@@ -506,7 +506,7 @@ static SEXP coerceToString(SEXP v)
     case CPLXSXP:
 	PrintDefaults(R_NilValue);
 	savedigits = print_digits;
-	print_digits = DBL_DIG;              /*- MAXIMAL precision */
+	print_digits = DBL_DIG;		     /*- MAXIMAL precision */
 	for (i = 0; i < n; i++)
 	    STRING(ans)[i] = StringFromComplex(COMPLEX(v)[i], &warn);
 	break;
@@ -548,7 +548,7 @@ static SEXP coerceToExpression(SEXP v)
 	    for (i = 0; i < n; i++)
 		VECTOR(ans)[i] = VECTOR(v)[i];
 	    break;
-    	}
+	}
     }
     else {
 	PROTECT(ans = allocVector(EXPRSXP, 1));
@@ -1081,7 +1081,7 @@ SEXP do_ascall(SEXP call, SEXP op, SEXP args, SEXP rho)
     return ans;
 }
 
-/* return the type of the SEXP */
+/* return the type (= "detailed mode") of the SEXP */
 SEXP do_typeof(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP ans;
@@ -1098,36 +1098,42 @@ SEXP do_is(SEXP call, SEXP op, SEXP args, SEXP rho)
     checkArity(op, args);
     PROTECT(ans = allocVector(LGLSXP, 1));
     switch (PRIMVAL(op)) {
-    case NILSXP:		/* is.null */
+    case NILSXP:	/* is.null */
 	LOGICAL(ans)[0] = isNull(CAR(args));
 	break;
-    case LGLSXP:		/* is.logical */
+    case LGLSXP:	/* is.logical */
 	LOGICAL(ans)[0] = (TYPEOF(CAR(args)) == LGLSXP);
 	break;
-    case INTSXP:		/* is.integer */
+    case INTSXP:	/* is.integer */
 	LOGICAL(ans)[0] = (TYPEOF(CAR(args)) == INTSXP);
 	break;
-    case REALSXP:		/* is.double */
+    case REALSXP:	/* is.double */
 	LOGICAL(ans)[0] = (TYPEOF(CAR(args)) == REALSXP);
 	break;
-    case CPLXSXP:		/* is.complex */
+    case CPLXSXP:	/* is.complex */
 	LOGICAL(ans)[0] = (TYPEOF(CAR(args)) == CPLXSXP);
 	break;
-    case STRSXP:		/* is.character */
+    case STRSXP:	/* is.character */
 	LOGICAL(ans)[0] = (TYPEOF(CAR(args)) == STRSXP);
 	break;
-    case SYMSXP:		/* is.name */
+    case SYMSXP:	/* is.name */
 	LOGICAL(ans)[0] = (TYPEOF(CAR(args)) == SYMSXP);
 	break;
-    case ENVSXP:		/* is.environment */
+    case ENVSXP:	/* is.environment */
 	LOGICAL(ans)[0] = (TYPEOF(CAR(args)) == ENVSXP);
 	break;
-    case LISTSXP:		/* is.list */
-	LOGICAL(ans)[0] = (TYPEOF(CAR(args)) == VECSXP);
+    case VECSXP:	/* is.list */
+	LOGICAL(ans)[0] = (TYPEOF(CAR(args)) == VECSXP ||
+			   TYPEOF(CAR(args)) == LISTSXP);
 	break;
-    case EXPRSXP:		/* is.expression */
-	LOGICAL(ans)[0] = (TYPEOF(CAR(args)) == EXPRSXP);
+    case LISTSXP:	/* is.pairlist */
+	LOGICAL(ans)[0] = (TYPEOF(CAR(args)) == LISTSXP ||
+			   TYPEOF(CAR(args)) == NILSXP);/* pairlist() -> NULL */
 	break;
+    case EXPRSXP:	/* is.expression */
+	LOGICAL(ans)[0] = TYPEOF(CAR(args)) == EXPRSXP;
+	break;
+
     case 50:		/* is.object */
 	LOGICAL(ans)[0] = OBJECT(CAR(args));
 	break;
@@ -1139,8 +1145,8 @@ SEXP do_is(SEXP call, SEXP op, SEXP args, SEXP rho)
 	break;
 
     case 100:		/* is.numeric */
-	LOGICAL(ans)[0] = (isNumeric(CAR(args))
-			   && !isLogical(CAR(args)));
+	LOGICAL(ans)[0] = (isNumeric(CAR(args)) &&
+			   !isLogical(CAR(args)));
 	break;
     case 101:		/* is.matrix */
 	LOGICAL(ans)[0] = isMatrix(CAR(args));
@@ -1191,17 +1197,15 @@ SEXP do_is(SEXP call, SEXP op, SEXP args, SEXP rho)
 	LOGICAL(ans)[0] = TYPEOF(CAR(args)) == LANGSXP;
 	break;
     case 301:		/* is.language */
-	LOGICAL(ans)[0] = (TYPEOF(CAR(args)) == SYMSXP) ||
-	    (TYPEOF(CAR(args)) == LANGSXP) ||
-	    (TYPEOF(CAR(args)) == EXPRSXP);
+	LOGICAL(ans)[0] = (TYPEOF(CAR(args)) == SYMSXP ||
+			   TYPEOF(CAR(args)) == LANGSXP ||
+			   TYPEOF(CAR(args)) == EXPRSXP);
 	break;
     case 302:		/* is.function */
-	LOGICAL(ans)[0] = (TYPEOF(CAR(args)) == CLOSXP) ||
-	    (TYPEOF(CAR(args)) == SPECIALSXP) ||
-	    (TYPEOF(CAR(args)) == BUILTINSXP);
+	LOGICAL(ans)[0] = isFunction(CAR(args));
 	break;
 
-    case 999:	/* is.single */
+    case 999:		/* is.single */
 	errorcall(call, "type \"single\" unimplemented in R\n");
     default:
 	errorcall(call, "unimplemented predicate\n");
@@ -1560,19 +1564,6 @@ SEXP do_call(SEXP call, SEXP op, SEXP args, SEXP rho)
     return (rfun);
 }
 
-/* FIXME : the same function occurs in bind.c */
-/* Make it universal and document it. */
-
-static SEXP ItemName(SEXP names, int i)
-{
-    if (names != R_NilValue &&
-            STRING(names)[i] != R_NilValue &&
-            CHAR(STRING(names)[i])[0] != '\0')
-        return STRING(names)[i];
-    else
-        return R_BlankString;
-}
-
 SEXP do_docall(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP c, fun, names;
@@ -1597,7 +1588,7 @@ SEXP do_docall(SEXP call, SEXP op, SEXP args, SEXP rho)
     c = CDR(c);
     for (i = 0; i < n; i++) {
 	CAR(c) = VECTOR(args)[i];
-	if (ItemName(names, i) != R_BlankString)
+	if (ItemName(names, i) != R_NilValue)
 	    TAG(c) = install(CHAR(ItemName(names, i)));
 	c = CDR(c);
     }
@@ -1608,15 +1599,12 @@ SEXP do_docall(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 
 /* do_substitute has two arguments, an expression and an environment */
-/* (optional).  Symbols found in the expression are substituted with their */
-/* values as found in the environment.  There is no inheritance so only */
+/* (optional).	Symbols found in the expression are substituted with their */
+/* values as found in the environment.	There is no inheritance so only */
 /* the supplied environment is searched. If no environment is specified */
 /* the environment in which substitute was called is used.  If the */
 /* specified environment is R_NilValue then R_GlobalEnv is used. */
 /* Arguments to do_substitute should not be evaluated. */
-
-
-SEXP substituteList(SEXP, SEXP);
 
 SEXP substitute(SEXP lang, SEXP rho)
 {

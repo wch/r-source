@@ -20,6 +20,7 @@
 /* Code to handle list / vector switch */
 
 #include "Defn.h"
+#include "Mathlib.h"/* imax2 */
 
 #define LIST_ASSIGN(x) {VECTOR(ans_ptr)[ans_length] = x; ans_length++;}
 
@@ -350,6 +351,13 @@ static SEXP NewBase(SEXP base, SEXP tag)
 
 SEXP NewName(SEXP base, SEXP tag, int i, int n, int seqno)
 {
+/* Construct a new Name/Tag, using
+ *	base.tag
+ *	base<seqno>	or
+ *	tag
+ *
+ * NOTE: i,n   are NOT used currently */
+
     SEXP ans;
     base = EnsureString(base);
     tag = EnsureString(tag);
@@ -369,26 +377,27 @@ SEXP NewName(SEXP base, SEXP tag, int i, int n, int seqno)
     return ans;
 }
 
-static SEXP ItemName(SEXP names, int i)
+SEXP ItemName(SEXP names, int i)
 {
+  /* return  names[i]  if it is a character (>= 1 cgar), or NULL otherwise */
     if (names != R_NilValue &&
-	    STRING(names)[i] != R_NilValue &&
-	    CHAR(STRING(names)[i])[0] != '\0')
+	STRING(names)[i] != R_NilValue &&
+	CHAR(STRING(names)[i])[0] != '\0')
 	return STRING(names)[i];
     else
 	return R_NilValue;
 }
 
-/* On entry, "base" is the naming component we have acquired by */
-/* recursing down from above.  If we have a list and we are */
-/* recursing, we append a new tag component to the base tag */
-/* (either by using the list tags, or their offsets), and then */
-/* we do the recursion.	 If we have a vector, we just create the */
-/* tags for each element. */
+/* NewExtractNames(v, base, tag, recurse):  For c() and	 unlist().
+ * On entry, "base" is the naming component we have acquired by
+ * recursing down from above.
+ *	If we have a list and we are recursing, we append a new tag component
+ * to the base tag (either by using the list tags, or their offsets),
+ * and then we do the recursion.
+ *	If we have a vector, we just create the tags for each element. */
 
-static int seqno;
+static int count, seqno;
 static int firstpos;
-static int count;
 
 static void NewExtractNames(SEXP v, SEXP base, SEXP tag, int recurse)
 {
@@ -803,11 +812,7 @@ SEXP do_unlist(SEXP call, SEXP op, SEXP args, SEXP env)
 }
 
 
-/* Note: We use substituteList to expand the ... which */
-/* is passed down by the wrapper function to cbind */
-
 static SEXP rho;
-SEXP substituteList(SEXP, SEXP);
 
 SEXP do_bind(SEXP call, SEXP op, SEXP args, SEXP env)
 {
@@ -909,11 +914,6 @@ SEXP do_bind(SEXP call, SEXP op, SEXP args, SEXP env)
 }
 
 
-static int imax(int i, int j)
-{
-    return (i > j) ? i : j;
-}
-
 static void SetRowNames(SEXP dimnames, SEXP x)
 {
     if (TYPEOF(dimnames) == VECSXP)
@@ -962,7 +962,7 @@ static SEXP cbind(SEXP call, SEXP args, SEXPTYPE mode)
 		cols += INTEGER(dims)[1];
 	    }
 	    else if (length(CAR(t))>0) {
-		rows = imax(rows, length(CAR(t)));
+		rows = imax2(rows, length(CAR(t)));
 		cols += 1;
 	    }
 	}
@@ -999,7 +999,7 @@ static SEXP cbind(SEXP call, SEXP args, SEXPTYPE mode)
 		dn = getAttrib(CAR(t), R_NamesSymbol);
 		if (TAG(t) != R_NilValue)
 		    have_cnames = 1;
-		nrnames = imax(nrnames, length(dn));
+		nrnames = imax2(nrnames, length(dn));
 	    }
 	}
     }
@@ -1140,7 +1140,7 @@ static SEXP rbind(SEXP call, SEXP args, SEXPTYPE mode)
 		rows += INTEGER(dims)[0];
 	    }
 	    else if (length(CAR(t))>0){
-		cols = imax(cols, length(CAR(t)));
+		cols = imax2(cols, length(CAR(t)));
 		rows += 1;
 	    }
 	}
@@ -1177,7 +1177,7 @@ static SEXP rbind(SEXP call, SEXP args, SEXPTYPE mode)
 		dn = getAttrib(CAR(t), R_NamesSymbol);
 		if (TAG(t) != R_NilValue)
 		    have_rnames = 1;
-		ncnames = imax(ncnames, length(dn));
+		ncnames = imax2(ncnames, length(dn));
 	    }
 	}
     }

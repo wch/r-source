@@ -83,14 +83,15 @@
 /*  Note that the gap of 11 and 12 below is because of	*/
 /*  the withdrawal of native "factor" and "ordered" types.  */
 
+/*			--> TypeTable[] in ../main/util.c for  typeof() */
 typedef unsigned int SEXPTYPE;
 
-#define NILSXP	     0	  /* nil */
+#define NILSXP	     0	  /* nil = NULL */
 #define SYMSXP	     1	  /* symbols */
-#define LISTSXP	     2	  /* lists & dotted pairs */
+#define LISTSXP	     2	  /* lists of dotted pairs */
 #define CLOSXP	     3	  /* closures */
 #define ENVSXP	     4	  /* environments */
-#define PROMSXP	     5	  /* evaluated/unevaluated closure arguments */
+#define PROMSXP	     5	  /* promises: [un]evaluated closure arguments */
 #define LANGSXP	     6	  /* language constructs (special lists) */
 #define SPECIALSXP   7	  /* special forms */
 #define BUILTINSXP   8	  /* builtin non-special forms */
@@ -440,7 +441,37 @@ void	R_Busy(int);
 void	R_CleanUp(int);
 void	R_StartUp(void);
 
-/* Internally Used Functions */
+/* Type Coercions of all kinds */
+
+SEXP coerceVector(SEXP, SEXPTYPE);
+SEXP coerceList(SEXP, SEXPTYPE);
+void CoercionWarning(int);/* warning code */
+SEXP PairToVectorList(SEXP x);
+SEXP VectorToPairList(SEXP x);
+
+int LogicalFromInteger(int, int*);
+int LogicalFromReal(double, int*);
+int LogicalFromComplex(complex, int*);
+int LogicalFromString(SEXP, int*);
+int IntegerFromLogical(int, int*);
+int IntegerFromReal(double, int*);
+int IntegerFromComplex(complex, int*);
+int IntegerFromString(SEXP, int*);
+double RealFromLogical(int, int*);
+double RealFromInteger(int, int*);
+double RealFromComplex(complex, int*);
+double RealFromString(SEXP, int*);
+complex ComplexFromLogical(int, int*);
+complex ComplexFromInteger(int, int*);
+complex ComplexFromReal(double, int*);
+complex ComplexFromString(SEXP, int*);
+SEXP StringFromLogical(int, int*);
+SEXP StringFromInteger(int, int*);
+SEXP StringFromReal(double, int*);
+SEXP StringFromComplex(complex, int*);
+
+
+/* Other Internally Used Functions */
 
 SEXP allocArray(SEXPTYPE, SEXP);
 SEXP allocMatrix(SEXPTYPE, int, int);
@@ -464,8 +495,6 @@ SEXP classgets(SEXP, SEXP);
 #ifdef Macintosh
 	void CleanUpMemory( void );
 #endif
-SEXP coerceVector(SEXP, SEXPTYPE);
-SEXP coerceList(SEXP, SEXPTYPE);
 void compactPhase(void);
 int conformable(SEXP, SEXP);
 SEXP cons(SEXP, SEXP);
@@ -562,6 +591,7 @@ int isVector(SEXP);
 int isVectorizable(SEXP);
 int isVectorList(SEXP);
 int isVectorObject(SEXP);
+SEXP ItemName(SEXP, int);
 void jump_to_toplevel(void);
 SEXP lang1(SEXP);
 SEXP lang2(SEXP, SEXP);
@@ -604,7 +634,6 @@ int NonNullStringMatch(SEXP, SEXP);
 SEXP nthcdr(SEXP, int);
 void onintr();
 int OneIndex(SEXP, SEXP, int, SEXP*);
-SEXP PairToVectorList(SEXP x);
 SEXP parse(FILE*, int);
 int pmatch(SEXP, SEXP, int);
 void PrintDefaults(SEXP);
@@ -636,6 +665,7 @@ void ssort(SEXP*,int);
 SEXPTYPE str2type(char*);
 int StringBlank(SEXP);
 int StrToInternal(char*);
+SEXP substituteList(SEXP, SEXP);
 SEXP R_syscall(int,RCNTXT*);
 int R_sysparent(int,RCNTXT*);
 SEXP R_sysframe(int,RCNTXT*);
@@ -648,7 +678,6 @@ void unmarkPhase(void);
 void unprotect(int);
 void unprotect_ptr(SEXP);
 int usemethod(char*, SEXP, SEXP, SEXP, SEXP, SEXP*);
-SEXP VectorToPairList(SEXP x);
 void warningcall(SEXP, char*,...);
 void WarningMessage(SEXP, int, ...);
 

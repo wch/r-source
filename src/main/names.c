@@ -424,7 +424,8 @@ FUNTAB R_FunTab[] =
 {"is.character",do_is,		STRSXP,	1,	1,	PP_FUNCALL},
 {"is.name",	do_is,		SYMSXP,	1,	1,	PP_FUNCALL},
 {"is.environment",do_is,	ENVSXP,	1,	1,	PP_FUNCALL},
-{"is.list",	do_is,		LISTSXP,1,	1,	PP_FUNCALL},
+{"is.list",	do_is,		VECSXP,	1,	1,	PP_FUNCALL},
+{"is.pairlist",	do_is,		LISTSXP,1,	1,	PP_FUNCALL},
 {"is.expression",do_is,		EXPRSXP,1,	1,	PP_FUNCALL},
 
 {"is.object",	do_is,		50,	1,	1,	PP_FUNCALL},
