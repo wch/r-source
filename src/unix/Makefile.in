@@ -38,7 +38,7 @@ fileio.o: $(srcdir)/fileio.c $(top_srcdir)/src/include/Fileio.h
 	$(CC) $(CFLAGS) $(CPPFLAGS) -c $<
 rotated.o: $(srcdir)/rotated.c $(srcdir)/rotated.h
 	$(CC) $(CFLAGS) $(X_CFLAGS) $(CPPFLAGS) -c $<
-devX11.o: $(srcdir)/devX11.c $(srcdir)/psx11.h $(top_srcdir)/src/include/Graphics.h $(top_srcdir)/src/include/Defn.h
+devX11.o: $(srcdir)/devX11.c $(top_srcdir)/src/include/Graphics.h $(top_srcdir)/src/include/Defn.h
 	$(CC) $(CFLAGS) $(X_CFLAGS) $(CPPFLAGS) -c $<
 devPS.o: $(srcdir)/devPS.c $(top_srcdir)/src/include/Graphics.h $(top_srcdir)/src/include/Defn.h
 	$(CC) $(CFLAGS) $(CPPFLAGS) -c $<
