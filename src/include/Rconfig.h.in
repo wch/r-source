@@ -1,3 +1,4 @@
+			/* Dear Emacs, I'm -*- C -*- code .. */
 #ifndef RCONFIG_H_
 #define RCONFIG_H_
 
@@ -118,7 +119,7 @@
 #undef HAVE_READLINE_HISTORY_H
 #undef HAVE_READLINE_READLINE_H
 
-/* Miscellaneous */ 
+/* Miscellaneous */
 #undef HAVE_LOCALE_H
 #undef HAVE_SYS_STAT_H
 #undef HAVE_SYS_TYPES_H
@@ -166,20 +167,20 @@
 
 /* for platform.c to put in .Platform */
 #ifdef Unix
-#define OSTYPE      "Unix"
+#define OSTYPE      "unix"
 #define FILESEP     "/"
 #define SHLIBEXT    ""
 #define DYNLOADEXT  "." ## SHLIBEXT
 #endif
 
 #ifdef Macintosh
-#define OSTYPE      "Macintosh"
+#define OSTYPE      "mac"
 #define FILESEP     ":"
 #define DYNLOADEXT  ".dll"
 #endif
 
 #ifdef Win32
-#define OSTYPE      "Windows"
+#define OSTYPE      "windows"
 #define FILESEP     "/"
 #define DYNLOADEXT  ".dll"
 #endif

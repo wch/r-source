@@ -13,6 +13,7 @@ NEW FEATURES
     o	demo(nlm) has examples of using analytical gradients and
         Hessians.
 
+    o	.Platform$OS.type is standardized.
 
 BUG FIXES
 
@@ -117,7 +118,7 @@ NEW FEATURES
     o	The R-external manual which describes programming for the
 	.Call and .External interfaces is in the doc/manual directory.
 
-    o	New target `make pdf' in doc/manuals makes hyperlinked PDF 
+    o	New target `make pdf' in doc/manuals makes hyperlinked PDF
 	documentation. (This is experimental for this release. See
 	doc/manual/README for further details.)
 
