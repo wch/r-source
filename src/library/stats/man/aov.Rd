@@ -53,7 +53,7 @@ aov(formula, data = NULL, projections = FALSE, qr = TRUE,
 
   Balance can be checked with the \code{\link{replications}} function.
 
-  The default \sQuote(contrasts} in \R are not orthogonal contrasts, and
+  The default \sQuote{contrasts} in \R are not orthogonal contrasts, and
   \code{aov} and its helper functions will work better with such
   contrasts: see the examples for how to select these.
 }

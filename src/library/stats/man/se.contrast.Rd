@@ -62,7 +62,7 @@ yield <- c(49.5,62.8,46.8,57.0,59.8,58.5,55.5,56.0,62.8,55.8,69.5,
 
 npk <- data.frame(block = gl(6,4), N = factor(N), P = factor(P),
                   K = factor(K), yield = yield)
-## Set proper contrasts.
+## Set suitable contrasts.
 options(contrasts=c("contr.helmert", "contr.poly"))
 npk.aov1 <- aov(yield ~ block + N + K, npk)
 se.contrast(npk.aov1, list(N=="0", N=="1"), data=npk)
