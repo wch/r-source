@@ -299,6 +299,8 @@ SEXP R_sysfunction(int n, RCNTXT *cptr)
 		    t = findVar(s, cptr->sysparent);
 		else if( isLanguage(s) )
 		    t = eval(s, cptr->sysparent);
+		else if( isFunction(s) )
+		    t = s;
 		else
 		    t = R_NilValue;
 		while (TYPEOF(t) == PROMSXP) 
