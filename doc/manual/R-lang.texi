@@ -407,7 +407,7 @@ syntactically correct collection of
 tokens.
 @cindex expression object
 Expression objects are
-special language objects which they contain parsed, but unevaluated
+special language objects which contain parsed, but unevaluated
 @R{} statements.  The main difference is that an expression object can
 contain several such expressions.  Another more subtle difference is
 that objects of type @code{"expression"} are only
@@ -573,7 +573,7 @@ multiple children, but only one parent.
 Environments are created implicitly by function calls, but may also be
 created directly by @code{new.env}.
 @findex new.env
-The frame content of an environment can be accesses and manipulated by
+The frame content of an environment can be accessed and manipulated by
 use of @code{get} and @code{assign} as well as @code{eval} and
 @code{evalq}.
 
@@ -1483,7 +1483,7 @@ supplied (see @ref{Arguments}).
 
 @cindex type
 As the elements of a vector or matrix must be of the same type there are
-multiple types of @code{NA} values. There is one cases where this is
+multiple types of @code{NA} values. There is one case where this is
 particularly important to the user. The default type of @code{NA} is
 @code{logical}, unless coerced to some other type, so the appearance of
 a missing value may trigger logical rather than numeric indexing (see
@@ -1551,7 +1551,7 @@ whereas @code{[} returns a list of the selected elements.
 The @code{[[} form allows only a single element to be selected using
 integer or character indices, whereas @code{[} allows indexing by
 vectors.  Note though that for a list, the index can be a vector and
-each element of the vector is applied in turn to the the list, the
+each element of the vector is applied in turn to the list, the
 selected component, the selected component of that component, and so on.
 The result is still a single element.
 
@@ -1734,7 +1734,7 @@ warning.
 @cindex assignment
 @cindex complex assignment
 
-Assignment to subsets of a structure is a special case of a general mechanisms for complex assignment:
+Assignment to subsets of a structure is a special case of a general mechanism for complex assignment:
 @smallexample
 x[3:5] <- 13:15
 @end smallexample
@@ -1776,7 +1776,7 @@ is equivalent to
 names(`*tmp*`)[3] <- "Three"
 x <<- `*tmp*`
 @end smallexample
-and so to
+and also to
 @smallexample
 `*tmp*` <- get(x,envir=parent.env(), inherits=TRUE)
 x <<- "names<-"(`*tmp*`, value="[<-"(names(`*tmp*`), 3, value="Three"))
@@ -1910,7 +1910,7 @@ The global
 environment is the root of the user workspace.  An
 @cindex assignment
 assignment
-operation from command line will cause the relevant object to belong to
+operation from the command line will cause the relevant object to belong to
 the global environment.
 
 @node Lexical environment, Stacks, Global environment, Scope of variables
@@ -1952,7 +1952,7 @@ the enclosure, etc.
 Every time a
 @cindex function
 function is invoked a new evaluation frame is created.  At
-any point in time during the computation the the currently active
+any point in time during the computation the currently active
 environments are accessible through the @emph{call stack}.  Each time a
 function is invoked a special construct called a context is created
 internally and is placed on a list of contexts.  When a function has
@@ -1977,7 +1977,7 @@ have names that start with @samp{sys.}.  They are listed briefly below.
 @cindex evaluation
 @table @code
 @item sys.call
-Get the call for the specified context
+Get the call for the specified context.
 @item sys.frame
 Get the evaluation frame for the specified context.
 @item sys.nframe
