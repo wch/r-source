@@ -31,6 +31,9 @@ Hitting the total memory allocation limit set by --max-mem-size will
 give a warning (and will usually also lead to an error, and that may
 suppress printing out the warning).
 
+There is a new make target test-Reg to run the regression tests (which
+now do I/0, so might give different results on Windows).
+
 
 rw1020
 ======
