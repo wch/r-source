@@ -27,6 +27,7 @@
 	else glabels <- NULL
     }
 
+    plot.new()
     linch <- 0
     ginch <- 0
     if (!is.null(labels))
@@ -59,7 +60,6 @@
 	ylim <- range(0, y + 2)
     }
 
-    plot.new()
     plot.window(xlim = range(x[is.finite(x)]), ylim = ylim, log = "")
     xmin <- par("usr")[1]
     if (!is.null(labels)) {
