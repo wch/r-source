@@ -159,6 +159,11 @@ BUG FIXES
 
     o	print.noquote("ABC") now works.
 
+    o	[internal] Calloc() & Realloc() failures now give size info
+
+    o	[internal] .C("strsignif",*) doesn't use fixed size strings anymore
+	(possible overflow).
+
 
 	**************************************************
 	*						 *
