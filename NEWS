@@ -301,6 +301,8 @@ NEW FEATURES
 
     o	sys.function() now has argument 'which' (as has long been
 	presaged on its help page).
+	
+    o	Added alarm() function to generate a bell or beep.	
 
 
 INTERNATIONALIZATION

@@ -1,0 +1,2 @@
+alarm <- function() cat("\a")
+
