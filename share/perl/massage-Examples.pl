@@ -49,18 +49,34 @@ attach(NULL, name = "CheckExEnv")
 assign(".CheckExEnv", as.environment(2), pos = length(search())) # base
 ## This plot.new() patch has no effect yet for persp();
 ## layout() & filled.contour() are now ok
-assign("plot.new", function() { .Internal(plot.new())
-		       pp <- par(c("mfg","mfcol","oma","mar"))
-		       if(all(pp\$mfg[1:2] == c(1, pp\$mfcol[2]))) {
-			 outer <- (oma4 <- pp\$oma[4]) > 0; mar4 <- pp\$mar[4]
-			 mtext(paste("help(",..nameEx,")"), side = 4,
-			       line = if(outer)max(1, oma4 - 1) else min(1, mar4 - 1),
-			       outer = outer, adj=1, cex= .8, col="orchid")} },
+assign("plot.new",
+       function() {
+	   .Internal(plot.new())
+	   pp <- par(c("mfg","mfcol","oma","mar"))
+	   if(all(pp\$mfg[1:2] == c(1, pp\$mfcol[2]))) {
+               outer <- (oma4 <- pp\$oma[4]) > 0; mar4 <- pp\$mar[4]
+               mtext(paste("help(", ..nameEx, ")"), side = 4,
+                     line = if(outer)max(1, oma4 - 1) else min(1, mar4 - 1),
+                     outer = outer, adj = 1, cex = .8, col = "orchid")
+	   }
+       },
        env = .CheckExEnv)
-assign("cleanEx", function(env = .GlobalEnv) {
-	rm(list = ls(envir = env, all.names = TRUE), envir = env)
-	RNGkind("Wichmann-Hill", "default")
-	assign(".Random.seed", c(0,rep(7654,3)), pos=1)
+assign("cleanEx",
+       function(env = .GlobalEnv) {
+	   rm(list = ls(envir = env, all.names = TRUE), envir = env)
+           RNGkind("Wichmann-Hill", "default")
+	   assign(".Random.seed", c(0, rep(7654, 3)), pos = 1)
+_EOF_
+## <FIXME>
+## Eventually make setting T and F to NULL unconditional ...
+if("$ENV{'R_CHECK_WITH_T_N_F_AS_NULL'}" ne "") {
+    print <<_EOF_;
+	   assign("T", NULL, pos = 1);
+	   assign("F", NULL, pos = 1);
+_EOF_
+}
+## </FIXME>
+print <<_EOF_;
        },
        env = .CheckExEnv)
 assign("..nameEx", "__{must remake R-ex/*.R}__", env = .CheckExEnv) #-- for now
@@ -79,7 +95,10 @@ if($PKG eq "tcltk") {
 ## 2) ---- edit a few of these files:
 foreach my $file (@Rfiles) {
     my $bf = basename $file, (".R");
-    my $have_examples=0, $have_par=0, $have_contrasts=0, $nm;
+    my $have_examples = 0;
+    my $have_par = 0;
+    my $have_contrasts = 0;
+    my $nm;
 
     open FILE, "< $file" or die "file $file cannot be opened";
     while (<FILE>) {
@@ -114,4 +133,3 @@ print <<_EOF_;
 cat("Time elapsed: ", proc.time() - get("ptime", env = .CheckExEnv),"\\n")
 dev.off(); quit('no')
 _EOF_
-
