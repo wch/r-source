@@ -758,7 +758,7 @@ for x = 0, 1, 2, ....
 @c  @findex \left(
 @c  @findex \right)
 
-@Node Insertions, Platform-specific sections, Mathematics, Writing R documentation
+@node Insertions, Platform-specific sections, Mathematics, Writing R documentation
 @section Insertions
 
 @findex \R
