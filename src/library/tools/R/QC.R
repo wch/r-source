@@ -2301,7 +2301,8 @@ function(packageName)
 {
     c("<-", "=",
       if(packageName == "base")
-      c("(", "{", "function", "if", "for", "while", "repeat", "?"),
+      c("(", "{", "function", "if", "for", "while", "repeat"),
+      if(packageName == "utils") "?",
       if(packageName == "methods") "@")
 }
 
