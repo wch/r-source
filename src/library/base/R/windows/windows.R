@@ -17,30 +17,30 @@ windows <- function(width = 7, height = 7, pointsize = 12,
 }
 
 win.graph <- function(width = 7, height = 7, pointsize = 12)
-    .Internal(devga("", width, height, pointsize, FALSE, 1, NA, NA, "white"))
+    .Internal(devga("", width, height, pointsize, FALSE, 1, NA, NA, "white", 1))
 
 win.print <- function(width = 7, height = 7, pointsize = 12)
     .Internal(devga("win.print", width, height, pointsize, FALSE, 1,
-                    NA, NA, "white"))
+                    NA, NA, "white", 1))
 
 win.metafile <- function(filename = "", width = 7, height = 7, pointsize = 12)
     .Internal(devga(paste("win.metafile:", filename, sep=""),
-                  width, height, pointsize, FALSE, 1, NA, NA, "white"))
+                  width, height, pointsize, FALSE, 1, NA, NA, "white", 1))
 
 png <- function(filename = "Rplot.png", width = 480, height = 480,
                 pointsize = 12, bg = "white")
     .Internal(devga(paste("png:", filename, sep=""),
-                  width, height, pointsize, FALSE, 1, NA, NA, bg))
+                  width, height, pointsize, FALSE, 1, NA, NA, bg, 1))
 
 bmp <- function(filename = "Rplot.bmp", width = 480, height = 480,
                 pointsize = 12, bg = "white")
     .Internal(devga(paste("bmp:", filename, sep=""),
-                  width, height, pointsize, FALSE, 1, NA, NA, bg))
+                  width, height, pointsize, FALSE, 1, NA, NA, bg, 1))
 
 jpeg <- function(filename = "Rplot.jpg", width = 480, height = 480,
                  pointsize = 12, quality=75, bg = "white")
     .Internal(devga(paste("jpeg:", quality, ":",filename, sep=""),
-                  width, height, pointsize, FALSE, 1, NA, NA, bg))
+                  width, height, pointsize, FALSE, 1, NA, NA, bg, 1))
 
 bringToTop <- function(which = dev.cur())
 {
