@@ -1,5 +1,5 @@
 # default target builds indices
-DOS= # -dosnames   # for file-name mapping
+DOS=# -dosnames   # for file-name mapping
 PERL=perl
 CAT=cat
 CP=cp
@@ -10,13 +10,10 @@ RHOME=$(shell cd ../../..; perl src/gnuwin32/pwd.pl)# must be absolute path
 PKGDIR=../../library
 RLIB=$(RHOME)/library
 
-# need not have HTML installed when building packages
 indices:
-	@$(MKDIR) -p $(RHOME)/doc/html
 	PERL5LIB=$(RHOME)/share/perl $(PERL) build.help ${DOS} -htmllists
 
 pkg-% help-%:
-	@$(MKDIR) -p $(RHOME)/doc/html
 	PERL5LIB=$(RHOME)/share/perl $(PERL) build.help ${DOS} -txt -html -example -latex $(PKGDIR)/$* $(RLIB)
 
 chm-%:
@@ -31,6 +28,7 @@ winhlp-%: chm-%
 	$(MKDIR) -p $(RLIB)/$*/winhlp
 	$(CP) $(PKGDIR)/$*/chm/$*.cnt $(PKGDIR)/$*/chm/$*.hlp $(RLIB)/$*/winhlp
 
+# need not have HTML installed when building packages
 contents-%:
 	$(PERL) Rd2contents $(PKGDIR)/$* $(RLIB)/$*/CONTENTS
 	@$(MKDIR) -p $(RHOME)/doc/html/search
