@@ -2347,16 +2347,20 @@ sub rdoc2Ssgm { # (filename) ; 0 for STDOUT
     Ssgm_print_block("description", "s-description");
     Ssgm_print_usage();
     Ssgm_print_argblock();
-    Ssgm_print_block("format", "Format");
+    Ssgm_print_block_named("format", "Format");
     Ssgm_print_block("details", "s-details");
     Ssgm_print_valueblock();
 
     Ssgm_print_sections();
 
-    Ssgm_print_block("note", "Note");
-    Ssgm_print_block("author", "Author(s)");
-    Ssgm_print_block("source", "Source");
-    Ssgm_print_block("references", "References");
+# s-note, s-author, s-references are in the DTD, but not translated to HTML
+#    Ssgm_print_block("note", "s-note");
+    Ssgm_print_block_named("note", "Note");
+#    Ssgm_print_block("author", "s-author");
+    Ssgm_print_block_named("author", "Author(s)");
+    Ssgm_print_block_named("source", "Source");
+#    Ssgm_print_block("references", "s-references");
+    Ssgm_print_block_named("references", "References");
     Ssgm_print_seealso();
     Ssgm_print_examples();
     if ($#keywords > 0) {
@@ -2383,17 +2387,19 @@ sub text2Ssgm {
         $text =~ s/&([^#])/&amp;\1/go; # might have explicit &# in source
 	$text =~ s/>/&gt;/go;
 	$text =~ s/</&lt;/go;
+	$text =~ s/\]/&rsqb;/go;
+	$text =~ s/\[/&lsqb;/go;
 	$text =~ s/\\%/%/go;
 
-	$text =~ s/\n\s*\n/\n<br>\n/sgo;
+	$text =~ s/\n\s*\n/\n<p>\n/sgo;
 	$text =~ s/\\dots/.../go;
 	$text =~ s/\\ldots/.../go;
 
+	$text =~ s/\\mu/&mu;/go;
 	$text =~ s/\\Gamma/&Gamma;/go;
 	$text =~ s/\\alpha/&alpha;/go;
 	$text =~ s/\\Alpha/&Alpha;/go;
 	$text =~ s/\\pi/&pi;/go;
-	$text =~ s/\\mu/&mu;/go;
 	$text =~ s/\\sigma/&sigma;/go;
 	$text =~ s/\\Sigma/&Sigma;/go;
 	$text =~ s/\\lambda/&lambda;/go;
@@ -2403,15 +2409,17 @@ sub text2Ssgm {
 	$text =~ s/\\right\)/\)/go;
 	$text =~ s/\\le/&lt;=/go;# \le *after* \left !
 	$text =~ s/\\ge/&gt;=/go;
-	$text =~ s/\\R/<font face=\"Courier New,Courier\" color=\"\#666666\"><b>R<\/b><\/font>/go;
-	$text =~ s/---/&#151;/go; # HTML 4.01 has &mdash; and &#8212;
-	$text =~ s/--/&#150;/go; # HTML 4.01 has &ndash; and &#8211;
+	$text =~ s/\\R/<bf>R<\/bf>/go;
+#	$text =~ s/---/&#151;/go; # HTML 4.01 has &mdash; and &#8212;
+#	$text =~ s/--/&#150;/go; # HTML 4.01 has &ndash; and &#8211;
+	$text =~ s/---/&mdash;/go;
+	$text =~ s/--/&ndash;/go;
 	$text =~ s/$EOB/\{/go;
 	$text =~ s/$ECB/\}/go;
     }
 
     $text = replace_command($text, "emph", "<em>", "</em>");
-    $text = replace_command($text, "bold", "<b>", "</b>");
+    $text = replace_command($text, "bold", "<bf>", "</bf>");
     $text = replace_command($text, "file", "`<tt>", "</tt>'");
 
     $text = Ssgm_tables($text);
@@ -2429,14 +2437,14 @@ sub text2Ssgm {
     while(checkloop($loopcount++, $text, "\\email")
 	  &&  $text =~ /\\email/){
 	my ($id, $arg)	= get_arguments("email", $text, 1);
-	$text =~ s/\\email$id.*$id/<a href=\"mailto:$arg\">$arg<\/a>/s;
+	$text =~ s/\\email$id.*$id/<url url=\"mailto:$arg\">/s;
     }
 
     $loopcount = 0;
     while(checkloop($loopcount++, $text, "\\url")
 	  &&  $text =~ /\\url/){
 	my ($id, $arg)	= get_arguments("url", $text, 1);
-	$text =~ s/\\url.*$id/<a href=\"$arg\">$arg<\/a>/s;
+	$text =~ s/\\url.*$id/<url url =\"$arg\">/s;
     }
 
     # handle equations:
@@ -2445,7 +2453,7 @@ sub text2Ssgm {
 	  &&  $text =~ /\\eqn/){
 	my ($id, $eqn, $ascii) = get_arguments("eqn", $text, 2);
 	$eqn = $ascii if $ascii;
-	$text =~ s/\\eqn(.*)$id/<i>$eqn<\/i>/s;
+	$text =~ s/\\eqn(.*)$id/<it>$eqn<\/it>/s;
     }
 
     $loopcount = 0;
@@ -2453,21 +2461,21 @@ sub text2Ssgm {
 	  &&  $text =~ /\\deqn/){
 	my ($id, $eqn, $ascii) = get_arguments("deqn", $text, 2);
 	$eqn = $ascii if $ascii;
-	$text =~ s/\\deqn(.*)$id/<\/p><p align="center"><i>$eqn<\/i><\/p><p>/s;
+	$text =~ s/\\deqn(.*)$id/<p><it>$eqn<\/it><\/p>/s;
     }
 
-    $text = replace_command($text, "itemize", "<ul>", "</ul>");
-    $text = replace_command($text, "enumerate", "<ol>", "</ol>");
-    $text =~ s/<\/p>\n<p>\s+\\item\s+/<li>/go;
-    $text =~ s/\\item\s+/<li>/go;
+    $text = replace_command($text, "itemize", "<itemize>", "</itemize>");
+    $text = replace_command($text, "enumerate", "<enum>", "</enum>");
+    $text =~ s/<\/p>\n<p>\s+\\item\s+/<item>/go;
+    $text =~ s/\\item\s+/<item>/go;
 
     # handle "\describe"
-    $text = replace_command($text, "describe", "<dl>", "</dl>");
+    $text = replace_command($text, "describe", "<descrip>", "</descrip>\n");
     while(checkloop($loopcount++, $text, "\\item") && $text =~ /\\itemnormal/s)
     {
 	my ($id, $arg, $desc)  = get_arguments("item", $text, 2);
-	$descitem = "<dt>" . text2Ssgm($arg, 0, $inarglist) . "</dt>";
-	$descitem .= "<dd>" . text2Ssgm($desc, 0, $inarglist) . "</dd>";
+	$descitem = "<tag/" . text2Ssgm($arg, 0, $inarglist) . "/";
+	$descitem .= text2Ssgm($desc, 0, $inarglist);
 	$text =~ s/\\itemnormal.*$id/$descitem/s;
     }
     if($outerpass) {
@@ -2475,6 +2483,7 @@ sub text2Ssgm {
 	$text =~ s/\\\\/\\/go;
 	$text = Ssgm_unescape_codes($text);
 	$text = unmark_brackets($text);
+	$text =~ s/<tag\/<s-expression>(.*?)<\/s-expression>/<tag\/$1/g;
     }
     $text;
 }
@@ -2529,15 +2538,25 @@ sub Ssgm_print_block {
 
     my ($block,$sname) = @_;
 
-    Ssgm_print_a_section($sname, $blocks{$block}) if defined $blocks{$block};
+    Ssgm_print_a_section("<$sname>", $blocks{$block}, "</$sname>") 
+	if defined $blocks{$block};
+}
+
+sub Ssgm_print_block_named {
+
+    my ($block,$name) = @_;
+
+    Ssgm_print_a_section("<s-section name=\"".uc($name)."\">", 
+			 $blocks{$block}, "</s-section>") 
+	if defined $blocks{$block};
 }
 
 sub Ssgm_print_usage {
 
     if(defined $blocks{"usage"}){
 	print $sgmlout ("<s-usage>\n<s-old-style-usage>", 
-			$blocks{"usage"}, 
-			"</s-old-style-usage>\n</$s-usage>\n\n");
+			code2Ssgm($blocks{"usage"}), 
+			"</s-old-style-usage>\n</s-usage>\n\n");
     }
 }
 
@@ -2565,7 +2584,7 @@ sub Ssgm_print_argblock {
     my $block = "arguments";
 
     if(defined $blocks{$block}){
-	print $sgmlout "<s-args-required>\n";
+	print $sgmlout "<s-args>\n";
 
 	my $text = $blocks{$block};
 
@@ -2595,7 +2614,7 @@ sub Ssgm_print_argblock {
 	    my $rest = text2Ssgm($text, 1, 1);
 	    print $sgmlout ($rest, "\n") if $rest;
 	}
-	print $sgmlout "</s-args-required>\n\n";
+	print $sgmlout "</s-args>\n\n";
     }
 }
 sub Ssgm_print_valueblock {
@@ -2620,10 +2639,11 @@ sub Ssgm_print_valueblock {
 		  && $text =~ /\\item/s){
 		my ($id, $arg, $desc)  =
 		    get_arguments("item", $text, 2);
-		print $sgmlout ("<s-arg name=\"",
+		print $sgmlout ("<s-return-component name=\"",
 				text2Ssgm($arg, 1, 1),
 				"\">\n",
-				text2Ssgm($desc, 1, 1), "</s-arg>\n");
+				text2Ssgm($desc, 1, 1), 
+				"</s-return-component>\n");
 		$text =~ s/.*$id//s;
 	    }
 	    my $rest = text2Ssgm($text, 1, 1);
@@ -2643,25 +2663,22 @@ sub Ssgm_print_sections {
     my $section;
 
     for($section=0; $section<$max_section; $section++){
-	Ssgm_print_a_section($section_title[$section],
-			     $section_body[$section]);
+	Ssgm_print_block_named($section, $section_title[$section]);
     }
 }
 
 sub Ssgm_print_a_section {
-    my ($sname, $body) = @_;
+    my ($sbegin, $body, $send) = @_;
     my $htmlbody = text2Ssgm($body, 1, 0);
 
     $htmlbody =~ s/<p>\s*<p/<p/g;  # before deqn
     $htmlbody =~ s/<\/p>\s*<\/p>/<\/p>/g;
 # attempt to close paragraphs tags, and remove spurious closings.
-# next one gets thrown by the unclosed <li> tags.
-#    $htmlbody =~ s/([^>]\n+)<(table|dl|ul|ol)/\1<\/p>\n<\2/g;
     $htmlbody =~ s/<\/(table|dl|ul|ol|dd)>\n+<\/p>\n/<\/\1>\n\n/g;
     $htmlbody =~ s/<\/(table|dl|ul|ol)>\n+(\w|<em|<s-expression|<b)/<\/\1>\n<p>\n\2/g;
     $htmlbody =~ s/<p>\s*<(table|dl|ul|ol|dt)/\n<\1/g;
 
-    print $sgmlout ("<$sname>\n", $htmlbody, "\n</$sname>\n\n");
+    print $sgmlout ("$sbegin\n", $htmlbody, "\n$send\n\n");
 }
 
 
@@ -2675,12 +2692,16 @@ sub Ssgm_unescape_codes {
 	  && $text =~ /$ECODE($ID)/){
 	my $id = $1;
 	my $ec = code2Ssgm($ecodes{$id});
-	$text =~ s/$ECODE$id/<s-expression>$ec<\/s-expression>/;
+	if($ec =~ /^<s-function/) {
+	    $text =~ s/$ECODE$id/$ec/;
+	} else {
+	    $text =~ s/$ECODE$id/<s-expression>$ec<\/s-expression>/;
+	}
     }
     $text;
 }
 
-
+# no support for tables in DTD, even though <tabular> is in linuxdoc.dtd
 sub Ssgm_tables {
 
     my $text = $_[0];
@@ -2719,20 +2740,21 @@ sub Ssgm_tables {
 	}
 
 	# now do the real work: split into lines and columns
-	my $table = "<table summary=\"Rd table\">\n";
+	my $table = "<p>\n<!-- no support for tables -->\n";
 	my @rows = split(/\\cr/, $arg);
 	for($k=0; $k<=$#rows;$k++){
-	    $table .= "<tr>\n";
+	    $table .= "    ";
 	    my @cols = split(/\\tab/, $rows[$k]);
 	    die("Error:\n  $rows[$k]\\cr\n" .
 		"does not fit tabular format \{$format\}\n")
 		if ($#cols != $#colformat);
-	    for($l=0; $l<=$#cols; $l++){
-		$table .= "  <td align=\"$colformat[$l]\">$cols[$l]</td>";
+	    $table .= $cols[0];
+	    for($l=1; $l<=$#cols; $l++){
+		$table .= "|$cols[$l]";
 	    }
-	    $table .= "\n</tr>\n";
+	    $table .= "<br>\n";
 	}
-	$table .= "</table>\n";
+	$table .= "<!-- end of table -->\n";
 	$text =~ s/\\tabular.*$id/$table/s;
     }
 

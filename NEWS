@@ -111,7 +111,6 @@ UTILITIES
 	allow automatic report generation.
 
     o	Rdconv can convert to the S4 .sgml format. 
-	[Still under development.]
 
 
 C-LEVEL FACILITIES
