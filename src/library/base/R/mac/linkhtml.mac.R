@@ -11,7 +11,7 @@ link.html.help <- function(verbose=FALSE, lib.loc=.Library)
 }
 
 
-make.packages.html <- function(lib.loc=.lib.loc)
+make.packages.html <- function(lib.loc=.libPaths())
 {
     f.tg <- file.path(R.home(), "doc:html:packages.html")
     f.hd <- file.path(R.home(), "doc:html:packages-head.html")

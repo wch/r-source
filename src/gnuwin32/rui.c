@@ -286,7 +286,7 @@ static void menupkginstallcran(control m)
 {
     if (!ConsoleAcceptCmd) return;
     consolecmd(RConsole, 
-	       "{a <- CRAN.packages()\ninstall.packages(select.list(a[,1],,TRUE), .lib.loc[1], available=a)}");
+	       "{a <- CRAN.packages()\ninstall.packages(select.list(a[,1],,TRUE), .libPaths()[1], available=a)}");
     show(RConsole);
 }
 
@@ -300,7 +300,7 @@ static void menupkginstalllocal(control m)
     show(RConsole);
     if (fn) {
 	fixslash(fn);
-	sprintf(cmd, "install.packages(\"%s\", .lib.loc[1], CRAN = NULL)", fn);
+	sprintf(cmd, "install.packages(\"%s\", .libPaths()[1], CRAN = NULL)", fn);
 	consolecmd(RConsole, cmd);
     }
 }

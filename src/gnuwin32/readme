@@ -254,7 +254,7 @@ R_LIBS=R:\libraries\gm
 in the environment or your .Renviron file or on the command line, or
 add the line
 
-.lib.loc <- c("R:/libraries/gm", .lib.loc)
+.libPaths("R:/libraries/gm")
 
 to your .Rprofile or at the end of R_HOME\etc\Rprofile.
 
