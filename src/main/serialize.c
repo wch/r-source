@@ -1418,3 +1418,235 @@ SEXP do_unserializeFromConn(SEXP call, SEXP op, SEXP args, SEXP env)
     return R_Unserialize(&in);
 }
 
+
+/*
+ * Persistent Buffered Binary Connection Streams
+ */
+
+/**** should eventually come from a public header file */
+size_t R_WriteConnection(Rconnection con, void *buf, size_t n);
+
+#define BCONBUFSIZ 4096
+
+typedef struct bconbuf_st {
+    Rconnection con;
+    int count;
+    unsigned char buf[BCONBUFSIZ];
+} *bconbuf_t;
+
+static void flush_bcon_buffer(bconbuf_t bb)
+{
+    if (R_WriteConnection(bb->con, bb->buf, bb->count) != bb->count)
+	error("error writing to connection");
+    bb->count = 0;
+}
+
+static void OutCharBB(R_outpstream_t stream, int c)
+{
+    bconbuf_t bb = stream->data;
+    if (bb->count >= BCONBUFSIZ)
+	flush_bcon_buffer(bb);
+    bb->buf[bb->count++] = c;
+}
+
+static void OutBytesBB(R_outpstream_t stream, void *buf, int length)
+{
+    bconbuf_t bb = stream->data;
+    if (bb->count + length > BCONBUFSIZ)
+	flush_bcon_buffer(bb);
+    if (length <= BCONBUFSIZ) {
+	memcpy(bb->buf + bb->count, buf, length);
+	bb->count += length;
+    }
+    else if (R_WriteConnection(bb->con, buf, length) != length)
+	error("error writing to connection");
+}
+
+static void InitBConOutPStream(R_outpstream_t stream, bconbuf_t bb,
+			       Rconnection con,
+			       R_pstream_format_t type, int version,
+			       SEXP (*phook)(SEXP, SEXP), SEXP pdata)
+{
+    bb->count = 0;
+    bb->con = con;
+    R_InitOutPStream(stream, (R_pstream_data_t) bb, type, version,
+		     OutCharBB, OutBytesBB, phook, pdata);
+}
+
+SEXP R_serializeb(SEXP object, SEXP icon, SEXP fun)
+{
+    struct R_outpstream_st out;
+    SEXP (*hook)(SEXP, SEXP);
+    struct bconbuf_st bbs;
+    Rconnection con = getConnection(asInteger(icon));
+
+    hook = fun != R_NilValue ? CallHook : NULL;
+
+    InitBConOutPStream(&out, &bbs, con, R_pstream_xdr_format, 0, hook, fun);
+    R_Serialize(object, &out);
+    flush_bcon_buffer(&bbs);
+    return R_NilValue;
+}
+
+
+/*
+ * Persistent Memory Streams
+ */
+
+typedef struct membuf_st {
+    int size;
+    int count;
+    unsigned char *buf;
+} *membuf_t;
+
+static void resize_buffer(membuf_t mb, int needed)
+{
+    int newsize = 2 * needed;
+    mb->buf = realloc(mb->buf, newsize);
+    if (mb->buf == NULL)
+	error("cannot allocate buffer");
+}
+
+static void OutCharMem(R_outpstream_t stream, int c)
+{
+    membuf_t mb = stream->data;
+    if (mb->count >= mb->size)
+	resize_buffer(mb, mb->count + 1);
+    mb->buf[mb->count++] = c;
+}
+
+static void OutBytesMem(R_outpstream_t stream, void *buf, int length)
+{
+    membuf_t mb = stream->data;
+    if (mb->count + length > mb->size)
+	resize_buffer(mb, mb->count + length);
+    memcpy(mb->buf + mb->count, buf, length);
+    mb->count += length;
+}
+
+static int InCHarMem(R_inpstream_t stream)
+{
+    membuf_t mb = stream->data;
+    if (mb->count >= mb->size)
+	error("read error");
+    return mb->buf[mb->count++];
+}
+
+static void InBytesMem(R_inpstream_t stream, void *buf, int length)
+{
+    membuf_t mb = stream->data;
+    if (mb->count + length > mb->size)
+	error("read error");
+    memcpy(buf, mb->buf + mb->count, length);
+    mb->count += length;
+}
+
+static void InitMemInPStream(R_inpstream_t stream, membuf_t mb,
+			     void *buf, int length,
+			     SEXP (*phook)(SEXP, SEXP), SEXP pdata)
+{
+    mb->count = 0;
+    mb->size = length;
+    mb->buf = buf;
+    R_InitInPStream(stream, (R_pstream_data_t) mb, R_pstream_any_format,
+		    InCHarMem, InBytesMem, phook, pdata);
+}
+
+static void InitMemOutPStream(R_outpstream_t stream, membuf_t mb,
+			      R_pstream_format_t type, int version,
+			      SEXP (*phook)(SEXP, SEXP), SEXP pdata)
+{
+    mb->count = 0;
+    mb->size = 0;
+    mb->buf = NULL;
+    R_InitOutPStream(stream, (R_pstream_data_t) mb, type, version,
+		     OutCharMem, OutBytesMem, phook, pdata);
+}
+
+static void free_mem_buffer(void *data)
+{
+    membuf_t mb = data;
+    if (mb->buf != NULL) {
+	unsigned char *buf = mb->buf;
+	mb->buf = NULL;
+	free(buf);
+    }
+}
+    
+static SEXP CloseMemOutPStream(R_outpstream_t stream)
+{
+    SEXP val;
+    membuf_t mb = stream->data;
+    PROTECT(val = allocVector(CHARSXP, mb->count));
+    memcpy(CHAR(val), mb->buf, mb->count);
+    val = ScalarString(val);
+    free_mem_buffer(mb);
+    UNPROTECT(1);
+    return val;
+}
+
+SEXP R_serialize(SEXP object, SEXP icon, SEXP ascii, SEXP fun)
+{
+    struct R_outpstream_st out;
+    R_pstream_format_t type;
+    SEXP (*hook)(SEXP, SEXP);
+
+    hook = fun != R_NilValue ? CallHook : NULL;
+
+    if (asLogical(ascii)) type = R_pstream_ascii_format;
+    else type = R_pstream_xdr_format; /**** binary or ascii if no XDR? */
+
+    if (icon == R_NilValue) {
+	RCNTXT cntxt;
+	struct membuf_st mbs;
+	SEXP val;
+
+	/* set up a context which will free the buffer if there is an error */
+	begincontext(&cntxt, CTXT_CCODE, R_NilValue, R_NilValue, R_NilValue,
+		     R_NilValue, R_NilValue);
+	cntxt.cend = &free_mem_buffer;
+	cntxt.cenddata = &mbs;
+
+	InitMemOutPStream(&out, &mbs, type, 0, hook, fun);
+        /**** Need to make sure the buffer is released on error.  This
+	      will be easier to do once this code is included in base.
+	      But maybe having a oublic unwind-protect mechanism would
+	      be useful too. */
+	R_Serialize(object, &out);
+
+	val =  CloseMemOutPStream(&out);
+
+	/* end the context after anything that could raise an error but before
+	   calling OutTerm so it doesn't get called twice */
+    endcontext(&cntxt);
+
+	return val;
+    }
+    else {
+	Rconnection con = getConnection(asInteger(icon));
+	R_InitConnOutPStream(&out, con, type, 0, hook, fun);
+	R_Serialize(object, &out);
+	return R_NilValue;
+    }
+}
+
+SEXP R_unserialize(SEXP icon, SEXP fun)
+{
+    struct R_inpstream_st in;
+    SEXP (*hook)(SEXP, SEXP);
+
+    hook = fun != R_NilValue ? CallHook : NULL;
+
+    if (TYPEOF(icon) == STRSXP && LENGTH(icon) > 0) {
+	struct membuf_st mbs;
+	void *data = CHAR(STRING_ELT(icon, 0));
+	int length = LENGTH(STRING_ELT(icon, 0));
+	InitMemInPStream(&in, &mbs, data,  length, hook, fun);
+	return R_Unserialize(&in);
+    }
+    else {
+	Rconnection con = getConnection(asInteger(icon));
+	R_InitConnInPStream(&in, con, R_pstream_any_format, hook, fun);
+	return R_Unserialize(&in);
+    }
+}
