@@ -198,6 +198,8 @@ NEW FEATURES
 
 BUG FIXES
 
+    o   predict.glm(,type="link",se.fit=T) works
+
     o	str() now works with Surv(.) objects from library(survival5).
 
     o	all.equal(-Inf, -1e5) now gives "Mean absolute difference: Inf"

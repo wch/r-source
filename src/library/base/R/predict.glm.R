@@ -33,7 +33,8 @@ predict.glm <-
 	residual.scale <- as.vector(sqrt(dispersion))
 	if ( missing(newdata) ) newdata <- model.frame(object)
 	pred <- predict.lm(object, newdata, se.fit, scale = residual.scale,
-                           type=type, terms=terms)
+                           type=ifelse(type=="link", "response", type),
+                           terms=terms)
 	fit <- pred$fit
 	se.fit <- pred$se.fit
 	switch(type,
