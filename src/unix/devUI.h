@@ -23,6 +23,9 @@ extern void (*ptr_R_Busy)(int);
 extern void (*ptr_R_CleanUp)(int, int, int);
 extern int  (*ptr_R_ShowFiles)(int, char **, char **, char *, int, char *);
 extern int  (*ptr_R_ChooseFile)(int, char *, int);
+extern void (*ptr_R_loadhistory)(SEXP, SEXP, SEXP, SEXP);
+extern void (*ptr_R_savehistory)(SEXP, SEXP, SEXP, SEXP);
+
 
 #ifdef __SYSTEM__
 #undef extern

@@ -603,3 +603,43 @@ void Rstd_read_history(char *s)
 #endif
 #endif
 }
+
+void Rstd_loadhistory(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    SEXP sfile;
+    char file[PATH_MAX];
+   
+    checkArity(op, args);
+    sfile = CAR(args);
+    if (!isString(sfile) || LENGTH(sfile) < 1)
+	errorcall(call, "invalid file argument");
+    strcpy(file, R_ExpandFileName(CHAR(STRING(sfile)[0])));
+#if defined(HAVE_LIBREADLINE) && defined(HAVE_READLINE_HISTORY_H)
+    if(R_Interactive && UsingReadline) {
+	clear_history();
+	read_history(file);
+    } else errorcall(call, "no history mechanism available");
+#else
+    errorcall(call, "no history mechanism available");
+#endif
+}
+
+void Rstd_savehistory(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    SEXP sfile;
+    char file[PATH_MAX];
+    
+    checkArity(op, args);
+    sfile = CAR(args);
+    if (!isString(sfile) || LENGTH(sfile) < 1)
+	errorcall(call, "invalid file argument");
+    strcpy(file, R_ExpandFileName(CHAR(STRING(sfile)[0])));
+#if defined(HAVE_LIBREADLINE) && defined(HAVE_READLINE_HISTORY_H)
+    if(R_Interactive && UsingReadline) {
+	write_history(file);
+	history_truncate_file(file, R_HistorySize);
+    } else errorcall(call, "no history available to save");
+#else
+    errorcall(call, "no history available to save");
+#endif
+}

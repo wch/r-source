@@ -24,6 +24,7 @@ SOURCES = \
 	gdkrotated.c \
 	gnome-find-dialog.c \
 	gtkconsole.c \
+	savehistory.c \
 	system-choosefile.c \
 	system-console.c \
 	system-showfiles.c \

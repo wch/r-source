@@ -14,14 +14,14 @@ NEW FEATURES
     o   hclust() takes new argument `members' allowing dissimilarity
 	matrices both for singletons (as until now) and clusters.
 
-    o	hist() now returns a "histogram" object and calls
-	new plot.histogram() for plotting.
+    o	hist() now returns a "histogram" object and calls the new
+	function plot.histogram() for plotting.
 
     o	The more recent GNU regex from grep-2.4.2 is used.
 
-    o   where command added to debug
+    o   where command added to debug.
 
-    o   inherits is now an internal function and compatible with S
+    o   inherits() is now an internal function and compatible with S.
 
     o   R CMD build and check have been completely re-written in perl. In
         addition to running examples, check now also checks the directory
@@ -33,7 +33,12 @@ NEW FEATURES
         place in $R_HOME/share. Migration of existing files might take
         a while, though.
 
-    o   --nsize up to 50M (2Gb on 64-bit Solaris) allowed
+    o   --nsize up to 50M (2Gb on 64-bit Solaris) allowed.
+
+    o	The commands history can be loaded with loadhistory(), saved
+	with savehistory() and displayed with history(), under Windows
+	and under Unix using the readline or GNOME interfaces.
+
 
 
 	**************************************************

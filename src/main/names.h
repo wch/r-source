@@ -73,7 +73,6 @@ SEXP do_windialog(SEXP, SEXP, SEXP, SEXP);
 SEXP do_windialogstring(SEXP, SEXP, SEXP, SEXP);
 SEXP do_winmenuadd(SEXP, SEXP, SEXP, SEXP);
 SEXP do_winmenudel(SEXP, SEXP, SEXP, SEXP);
-SEXP do_savehistory(SEXP, SEXP, SEXP, SEXP);
 #endif
 
 SEXP do_abbrev(SEXP, SEXP, SEXP, SEXP);
@@ -214,6 +213,7 @@ SEXP do_lengthgets(SEXP, SEXP, SEXP, SEXP);
 SEXP do_libfixup(SEXP, SEXP, SEXP, SEXP);
 SEXP do_listfiles(SEXP, SEXP, SEXP, SEXP);
 SEXP do_load (SEXP, SEXP, SEXP, SEXP);
+SEXP do_loadhistory(SEXP, SEXP, SEXP, SEXP);
 SEXP do_locator(SEXP, SEXP, SEXP, SEXP);
 SEXP do_log(SEXP, SEXP, SEXP, SEXP);
 SEXP do_logic(SEXP, SEXP, SEXP, SEXP);
@@ -298,6 +298,7 @@ SEXP do_rownames(SEXP, SEXP, SEXP, SEXP);
 SEXP do_rowscols(SEXP, SEXP, SEXP, SEXP);
 SEXP do_sample(SEXP, SEXP, SEXP, SEXP);
 SEXP do_save(SEXP, SEXP, SEXP, SEXP);
+SEXP do_savehistory(SEXP, SEXP, SEXP, SEXP);
 SEXP do_scan(SEXP, SEXP, SEXP, SEXP);
 SEXP do_search(SEXP, SEXP, SEXP, SEXP);
 SEXP do_segments(SEXP, SEXP, SEXP, SEXP);

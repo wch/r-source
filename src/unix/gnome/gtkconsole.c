@@ -388,9 +388,18 @@ gboolean gtk_console_save_history(GtkConsole *object, gchar *filename, guint max
     fputs(cur_item->data, hist_file);
     fputs("\n", hist_file);
   }
+  fclose(hist_file);
 
   return TRUE;
 }
+
+void gtk_console_clear_history(GtkConsole *object)
+{
+    object -> history = NULL;
+    object -> history_num_items = 0;
+    object -> history_cur = NULL;
+}
+
 
 gboolean gtk_console_restore_history(GtkConsole *object, gchar *filename, guint maxitems, gchar *errmsg)
 {
