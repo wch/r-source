@@ -259,7 +259,10 @@ FUNTAB R_FunTab[] =
 {"pt",		do_math2,	19,	11,	2,	PP_FUNCALL},
 {"qt",		do_math2,	20,	11,	2,	PP_FUNCALL},
 
-
+{"dsignrank",	do_math2,	21,	11,	2,	PP_FUNCALL},
+{"psignrank",	do_math2,	22,	11,	2,	PP_FUNCALL},
+{"qsignrank",	do_math2,	23,	11,	2,	PP_FUNCALL},
+    
 /* Mathematical Functions of a Complex Argument */
 
 {"Re",		do_cmathfuns,	1,	1,	1,	PP_FUNCALL},
@@ -352,6 +355,7 @@ FUNTAB R_FunTab[] =
 {"rgeom",	do_random1,	2,	11,	2,	PP_FUNCALL},
 {"rpois",	do_random1,	3,	11,	2,	PP_FUNCALL},
 {"rt",		do_random1,	4,	11,	2,	PP_FUNCALL},
+{"rsignrank",	do_random1,	5,	11,	2,	PP_FUNCALL},
 
 {"rbeta",	do_random2,	0,	11,	3,	PP_FUNCALL},
 {"rbinom",	do_random2,	1,	11,	3,	PP_FUNCALL},
@@ -369,7 +373,6 @@ FUNTAB R_FunTab[] =
 {"rhyper",	do_random3,	0,	11,	4,	PP_FUNCALL},
 
 {"sample",	do_sample,	0,	11,	4,	PP_FUNCALL},
-
 
 /* Data Summaries */
 
