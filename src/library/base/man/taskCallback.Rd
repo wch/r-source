@@ -75,8 +75,7 @@ will be called on the completion of the next top-level task.
 \note{
   This is an experimental feature and the interface may be changed
   in the future.
-}
-\note{
+
   There is also C-level access to top-level task callbacks
   to allow C routines rather than R functions be used.
 }

@@ -239,7 +239,7 @@ SEXP RTcl_ObjAsCharVector(SEXP args)
 
     PROTECT(ans = allocVector(STRSXP, count));
     for (i = 0 ; i < count ; i++)
-	SET_STRING_ELT(ans, i, mkChar(Tcl_GetString(elem[i])));
+	SET_STRING_ELT(ans, i, mkChar(Tcl_GetStringFromObj(elem[i], NULL)));
     UNPROTECT(1);
     return ans;
 }

@@ -30,9 +30,10 @@ col2rgb(col)
 col2rgb("peachpuff")
 col2rgb(c(blu = "royalblue", reddish = "tomato")) # names kept
 
-col2rgb(1:7)# the ones from the palette()
-stopifnot(col2rgb(0) ==  # col = 0 is the background color:
-    print(col2rgb(par("bg"))))
+col2rgb(1:8)# the ones from the palette() :
+pp <- palette(); names(pp) <- pp # add & use names :
+stopifnot(col2rgb(1:8) ==
+    print(col2rgb(pp)))
 
 col2rgb(paste("gold", 1:4, sep=""))
 

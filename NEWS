@@ -74,9 +74,6 @@ NEW FEATURES
 
     o	[dpqr]gamma() check for shape parameter > 0.
 
-    o	as.data.frame() now coerces a logical matrix to a data frame
-	with logical (rather than factor) columns.
-
 
 DEPRECATED & DEFUNCT
 
@@ -131,6 +128,19 @@ BUG FIXES
 	*	       1.5 SERIES NEWS			 *
 	*						 *
 	**************************************************
+
+
+		CHANGES IN R VERSION 1.5.2
+
+
+BUG FIXES
+
+    o	tcltk ... <<Peter, please fill in>>
+
+    o	hist.POSIXct(*, breaks) now works for `breaks = #{breaks}'
+
+    o	as.data.frame() does not coerce logical matrices into factors 
+	anymore.
 
 
 		CHANGES IN R VERSION 1.5.1

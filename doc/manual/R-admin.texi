@@ -487,9 +487,10 @@ R CMD INSTALL -l /path/to/library @var{pkg1} @var{pkg2} @dots{}
 @end smallexample
 
 @noindent
-The part @samp{-l /path/to/library} can be omitted, when the first
-library in @env{R_LIBS} is used if set, otherwise the main library
-@file{@var{R_HOME}/library}.
+The part @samp{-l /path/to/library} can be omitted, in which case the
+first library in @env{R_LIBS} is used if set, otherwise the main
+library @file{@var{R_HOME}/library} is used.  (@env{R_LIBS} is looked
+for in the environment: @file{.Renviron} is not read by @command{R CMD}.)
 
 The Windows equivalent is@footnote{if you have the source-code package
 files installed}

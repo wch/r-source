@@ -648,42 +648,47 @@ hist.POSIXt <- function(x, breaks, ..., xlab = deparse(substitute(x)),
     if(!inherits(x, "POSIXt")) stop("wrong method")
     xlab
     x <- as.POSIXct(x)
+    incr <- 1
     ## handle breaks ourselves
     if (inherits(breaks, "POSIXt")) {
         breaks <- as.POSIXct(breaks)
         d <- min(abs(diff(unclass(breaks))))
-        incr <- 1
         if(d > 60) incr <- 60
         if(d > 3600) incr <- 3600
         if(d > 86400) incr <- 86400
         if(d > 86400*7) incr <- 86400*7
         if(d > 86400*28) incr <- 86400*28
         if(d > 86400*366) incr <- 86400*366
-    } else if(is.numeric(breaks) && length(breaks) == 1) {
+    } else {
+        start <- as.POSIXlt(min(x, na.rm = TRUE))
+        maxx <- max(x, na.rm = TRUE)
+        brks.number <- is.numeric(breaks) && length(breaks) == 1
+        if(brks.number) {
         ## specified number of breaks
-    } else if(is.character(breaks) && length(breaks) == 1) {
-        valid <-
-            pmatch(breaks,
-                   c("secs", "mins", "hours", "days", "weeks",
-                     "months", "years"))
-        if(is.na(valid)) stop("invalid specification of `breaks'")
-        start <- as.POSIXlt(min(x))
-        incr <- 1
-        if(valid > 1) { start$sec <- 0; incr <- 59.99 }
-        if(valid > 2) { start$min <- 0; incr <- 3600 - 1 }
-        if(valid > 3) { start$hour <- 0; incr <- 86400 - 1 }
-        if(valid > 4) { start$isdst <- -1}
-        if(valid == 5) {
-            start$mday <- start$mday - start$wday
-            if(start.on.monday)
-                start$mday <- start$mday + ifelse(start$wday > 0, 1, -6)
-            incr <- 7*86400
+        } else if(is.character(breaks) && length(breaks) == 1) {
+            valid <-
+                pmatch(breaks,
+                       c("secs", "mins", "hours", "days", "weeks",
+                         "months", "years"))
+            if(is.na(valid)) stop("invalid specification of `breaks'")
+            incr <- 1
+            if(valid > 1) { start$sec <- 0; incr <- 59.99 }
+            if(valid > 2) { start$min <- 0; incr <- 3600 - 1 }
+            if(valid > 3) { start$hour <- 0; incr <- 86400 - 1 }
+            if(valid > 4) { start$isdst <- -1}
+            if(valid == 5) {
+                start$mday <- start$mday - start$wday
+                if(start.on.monday)
+                    start$mday <- start$mday + ifelse(start$wday > 0, 1, -6)
+                incr <- 7*86400
+            }
+            if(valid == 6) { start$mday <- 1; incr <- 31*86400 }
+            if(valid == 7) { start$mon <- 0; incr <- 366*86400 }
+            breaks <- seq(start, maxx + incr, breaks)
+            breaks <- breaks[1:(1+max(which(breaks < maxx)))]
         }
-        if(valid == 6) { start$mday <- 1; incr <- 31*86400 }
-        if(valid == 7) { start$mon <- 0; incr <- 366*86400 }
-        breaks <- seq(start, max(x) + incr, breaks)
-        breaks <- breaks[1:(1+max(which(breaks < max(x))))]
-    } else stop("invalid specification of `breaks'")
+        else stop("invalid specification of `breaks'")
+    }
     res <- hist.default(unclass(x), unclass(breaks), plot = FALSE)
     res$equidist <- TRUE # years are of uneven lengths
     res$intensities <- res$intensities*incr
@@ -692,7 +697,13 @@ hist.POSIXt <- function(x, breaks, ..., xlab = deparse(substitute(x)),
         plot(res, xlab = xlab, axes = FALSE, freq = freq, ...)
         if(axes) {
             axis(2, ...)
-            axis.POSIXct(1, at = breaks, format = format)
+            if(brks.number) {
+                warning("number of breaks implementation is still somewhat flawed")
+                ## We should use   res$breaks and re-transform these
+                ## to POSIXt class  -- how ?!?
+                breaks <- seq(start, maxx+1, length = breaks)
+            }
+            axis.POSIXct(1, at = breaks,  format = format)
         }
      }
     invisible(res)
