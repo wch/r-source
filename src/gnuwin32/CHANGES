@@ -26,6 +26,8 @@ source directory.
 
 All the configuration options are now in file MkRules.
 
+Unzipping is now handled by internal code based on zlib: unzip.dll is
+no longer required.
 
 
 rw1042
