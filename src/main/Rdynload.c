@@ -145,12 +145,16 @@ Rboolean R_useDynamicSymbols(DllInfo *info, Rboolean value)
   return(old);  
 }
 
-void R_addCRoutine(DllInfo *info, const R_CMethodDef * const croutine, Rf_DotCSymbol *sym);
-void R_addCallRoutine(DllInfo *info, const R_CallMethodDef * const croutine, 
+void R_addCRoutine(DllInfo *info, const R_CMethodDef * const croutine, 
+		   Rf_DotCSymbol *sym);
+void R_addCallRoutine(DllInfo *info, 
+		      const R_CallMethodDef * const croutine, 
 		      Rf_DotCallSymbol *sym);
-void R_addFortranRoutine(DllInfo *info, const R_FortranMethodDef * const croutine, 
+void R_addFortranRoutine(DllInfo *info, 
+			 const R_FortranMethodDef * const croutine, 
 			 Rf_DotFortranSymbol *sym);
-void R_addExternalRoutine(DllInfo *info, const R_ExternalMethodDef * const croutine, 
+void R_addExternalRoutine(DllInfo *info, 
+			  const R_ExternalMethodDef * const croutine, 
 	      	          Rf_DotExternalSymbol *sym);
 
 
@@ -237,7 +241,7 @@ R_registerRoutines(DllInfo *info, const R_CMethodDef * const croutines,
 
 	for(i = 0; i < num; i++) {
 	    R_addExternalRoutine(info, externalRoutines+i, 
-				  info->ExternalSymbols + i);
+				 info->ExternalSymbols + i);
 	}
     }
 
@@ -245,7 +249,8 @@ R_registerRoutines(DllInfo *info, const R_CMethodDef * const croutines,
 }
 
 void
-R_addFortranRoutine(DllInfo *info, const R_FortranMethodDef * const croutine, 
+R_addFortranRoutine(DllInfo *info, 
+		    const R_FortranMethodDef * const croutine, 
 		    Rf_DotFortranSymbol *sym)
 {
     sym->name = strdup(croutine->name);
@@ -254,7 +259,8 @@ R_addFortranRoutine(DllInfo *info, const R_FortranMethodDef * const croutine,
 }
 
 void
-R_addExternalRoutine(DllInfo *info, const R_ExternalMethodDef * const croutine, 
+R_addExternalRoutine(DllInfo *info, 
+		     const R_ExternalMethodDef * const croutine, 
 		     Rf_DotExternalSymbol *sym)
 {
     sym->name = strdup(croutine->name);
@@ -265,7 +271,8 @@ R_addExternalRoutine(DllInfo *info, const R_ExternalMethodDef * const croutine,
 
 
 void
-R_addCRoutine(DllInfo *info, const R_CMethodDef * const croutine, Rf_DotCSymbol *sym)
+R_addCRoutine(DllInfo *info, const R_CMethodDef * const croutine, 
+	      Rf_DotCSymbol *sym)
 {
     sym->name = strdup(croutine->name);
     sym->fun = croutine->fun;
@@ -424,7 +431,8 @@ static int AddDLL(char *path, int asLocal, int now)
     if(info) {
 	char *tmp;
 	DL_FUNC f;
-	tmp = (char*) malloc(sizeof(char)*(strlen("R_init_") + strlen(info->name)+ 1));
+	tmp = (char*) malloc(sizeof(char)*(strlen("R_init_") + 
+					   strlen(info->name)+ 1));
 	sprintf(tmp, "%s%s","R_init_", info->name);
 	f = (DL_FUNC) R_osDynSymbol->dlsym(info, tmp);
 	free(tmp);
@@ -546,7 +554,8 @@ DL_FUNC R_getDLLRegisteredSymbol(DllInfo *info, const char *name,
     if(symbol) {
 	purpose = symbol->type;
     }
-    if((purpose == R_ANY_SYM || purpose == R_C_SYM) && info->numCSymbols > 0) {
+    if((purpose == R_ANY_SYM || purpose == R_C_SYM) && 
+       info->numCSymbols > 0) {
 	Rf_DotCSymbol *sym;
 	sym = Rf_lookupRegisteredCSymbol(info, name);
 	if(sym) {
@@ -560,7 +569,8 @@ DL_FUNC R_getDLLRegisteredSymbol(DllInfo *info, const char *name,
 	fail = 1;
     }
 
-    if((purpose == R_ANY_SYM || purpose == R_CALL_SYM) && info->numCallSymbols > 0) {
+    if((purpose == R_ANY_SYM || purpose == R_CALL_SYM) && 
+       info->numCallSymbols > 0) {
 	Rf_DotCallSymbol *sym;
 	sym = Rf_lookupRegisteredCallSymbol(info, name);
 	if(sym) {
@@ -573,7 +583,8 @@ DL_FUNC R_getDLLRegisteredSymbol(DllInfo *info, const char *name,
 	fail = 1;
     }
 
-    if((purpose == R_ANY_SYM || purpose == R_FORTRAN_SYM) && info->numCallSymbols > 0) {
+    if((purpose == R_ANY_SYM || purpose == R_FORTRAN_SYM) && 
+       info->numCallSymbols > 0) {
 	Rf_DotFortranSymbol *sym;
 	sym = Rf_lookupRegisteredFortranSymbol(info, name);
 	if(sym) {
@@ -586,7 +597,8 @@ DL_FUNC R_getDLLRegisteredSymbol(DllInfo *info, const char *name,
 	fail = 1;
     }
 
-    if((purpose == R_ANY_SYM || purpose == R_EXTERNAL_SYM) && info->numExternalSymbols > 0) {
+    if((purpose == R_ANY_SYM || purpose == R_EXTERNAL_SYM) && 
+       info->numExternalSymbols > 0) {
 	Rf_DotExternalSymbol *sym;
 	sym = Rf_lookupRegisteredExternalSymbol(info, name);
 	if(sym) {
@@ -603,7 +615,7 @@ DL_FUNC R_getDLLRegisteredSymbol(DllInfo *info, const char *name,
 }
 
 static DL_FUNC R_dlsym(DllInfo *info, char const *name, 
-                        R_RegisteredNativeSymbol *symbol)
+		       R_RegisteredNativeSymbol *symbol)
 {
     char buf[MAXIDSIZE+1];
     DL_FUNC f;
@@ -637,7 +649,7 @@ static DL_FUNC R_dlsym(DllInfo *info, char const *name,
  */
 
 DL_FUNC R_FindSymbol(char const *name, char const *pkg, 
-                       R_RegisteredNativeSymbol *symbol)
+		     R_RegisteredNativeSymbol *symbol)
 {
     DL_FUNC fcnptr = (DL_FUNC) NULL;
 #ifndef Macintosh
