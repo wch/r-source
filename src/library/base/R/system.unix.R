@@ -1,3 +1,6 @@
+.Platform <-
+    list(OS.type = "Unix", file.sep = "/", dynlib.ext = ".so")
+
 getenv <- function(x) {
     if (missing(x)) {
 	x <- strsplit(.Internal(getenv(character())), "=")
@@ -36,7 +39,9 @@ unix <- function(call, intern = FALSE) {
     .Deprecated("system"); system(call,intern)
 }
 
-##--- The following 2  should/could really be done in C [platform !] :
+##--- All the following should really be done in C [platform !] :
+##---> For the first 3, look at Guido's win32 code!
+
 tempfile <- function(pattern = "file") {
     system(paste("for p in", paste(pattern, collapse = " "), ";",
 		 "do echo /tmp/$p$$; done"),
@@ -44,6 +49,15 @@ tempfile <- function(pattern = "file") {
 }
 
 unlink <- function(x) { system(paste("rm -rf ", paste(x, collapse = " "))) }
+
+## Unfortunately, the following fails for "-e" on Solaris [/bin/sh-builtin test]
+system.test <- function(...) { system(paste("test", ...)) == 0 }
+## Martin would like these;  Kurt thinks they're unnecessary:
+## file.exists <-function(file){ sapply(file, function(f)system.test("-e", f))}
+## dir.exists  <-function(dir) { sapply(dir,  function(d)system.test("-d", d))}
+## Yet another misuse of  is.xxx naming [S-plus compatibility]:
+## is.dir <- .Alias(dir.exists)
+
 
 zip.file.extract <- function(file, zipname="R.zip")
 {
