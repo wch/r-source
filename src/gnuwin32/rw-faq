@@ -216,8 +216,9 @@ under Windows.
 
 Another possible source of grief is spaces in folder names.  We have
 tried to make R work on paths with spaces in, but lots of people writing
-for Unix do not bother. So it is worth trying the alternative short name
-(something like `PROGRA~1'; you can get if from the Properties).
+packages for Unix do not bother. So it is worth trying the alternative
+short name (something like `PROGRA~1'; you can get it as the `MS-DOS
+name' from the Properties on most versions of Windows).
 
 
 3 Packages
