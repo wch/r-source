@@ -43,4 +43,4 @@ try.autoload("chisq.test","ctest")
 try.autoload("prop.test","ctest")
 try.autoload("wilcox.test","ctest")
 
-rm(try.autoload)
+## This fails ! rm(try.autoload)
