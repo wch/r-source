@@ -3,7 +3,7 @@ include MkRules
 HELP=YES
 WINHELP=CHM # NO, CHM, BOTH
 
-PACKAGES=base eda lqs modreg mva nls splines stepfun ts
+PACKAGES=base ctest eda lqs modreg mva nls splines stepfun ts
 RPREFIX=rw0990
 
 RHOME=$(shell cd ../..; pwd)# must be absolute path
