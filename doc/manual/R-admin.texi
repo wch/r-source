@@ -192,7 +192,7 @@ Note that the sources available via rsync do not include the recommended
 packages, whereas these are included in the tarballs of released
 versions.  To install the appropriate sources for the recommended
 packages, run @command{./tools/rsync-recommended} from the top-level of
-the R sources.
+the @R{} sources.
 
 
 @node Installing R under Unix, Installing R under Windows, Obtaining R, Top
@@ -445,7 +445,7 @@ perhaps for some network-mounted systems).
 
 The simplest way is to use @file{@value{RWVERSION}.exe} or
 @file{miniR.exe}.  Just double-click on the icon and follow the
-instructions.  If you installed R this way you can uninstall it from the
+instructions.  If you installed @R{} this way you can uninstall it from the
 Control Panel.
 
 See the @uref{http://cran.r-project.org/bin/windows/rw-FAQ.html, R Windows
@@ -507,7 +507,7 @@ If you want to build this port from the sources, you can read the above
 mentioned @uref{http://cran.r-project.org/bin/macosx/RMacOSX-FAQ.html, R
 for Mac OS X @acronym{FAQ}} for full details. You will need to collect
 and install some tools as explained in the document. Than you have to
-expand the R sources and configure R appropriately, for example
+expand the @R{} sources and configure @R{} appropriately, for example
 
 
 @smallexample
@@ -631,7 +631,7 @@ on all installed packages and packages available at multiple
 repositories (CRAN, local archive, @dots{}). The @code{print} and
 @code{summary} methods give an overview of installed and available
 packages, the @code{upgrade} method offers to fetch and install outdated
-packages.  This allows R to fetch packages from several repositories and
+packages.  This allows @R{} to fetch packages from several repositories and
 keep in sync with all of them, instead of only one CRAN mirror, and is
 intended to become the default package manager for future versions of R.
 
@@ -905,7 +905,7 @@ use readline library (if available) [yes]
 @item --enable-R-profiling
 attempt to compile support for @code{Rprof()} [yes]
 @item --enable-R-shlib
-build R as a shared library [no]
+build @R{} as a shared library [no]
 @end table
 
 @noindent
@@ -915,10 +915,13 @@ negatives.
 You will want to use @option{--disable-R-profiling} if you are building
 a profiled executable of @R{} (e.g. with @samp{-pg)}.
 
-Flag @option{--enable-R-shlib} causes the make process to build R as a
-shared library, typically called @file{libR.so}, and to take
-considerably longer, so you probably only want this if you will be using
-an application which embeds @R{}.
+Flag @option{--enable-R-shlib} causes the make process to build @R{} as a
+dynamic (shared) library, typically called @file{libR.so}, and link the
+main @R{} executable @file{R.bin} against that library.  This can only be
+done if all the code (including system libraries) can be compiled into a
+dynamic library, and there may be a small performance penalty.  So you
+probably only want this if you will be using an application which embeds
+@R{}.
 
 @node Configuration variables, Using make, Configuration options, Configuration on Unix
 @section Configuration variables
@@ -1165,10 +1168,10 @@ specify location of @command{libglade-config}
 @node Platform notes,  , Building the GNOME interface, Configuration on Unix
 @section Platform notes
 
-This section provides some notes on building R on different Unix-like
+This section provides some notes on building @R{} on different Unix-like
 platforms.  These notes are based on tests run on one or two systems in
 each case with particular sets of compilers and support libraries.
-Success in building R depends on the proper installation and functioning
+Success in building @R{} depends on the proper installation and functioning
 of support software; your results may differ if you have other versions
 of compilers and support libraries.
 
@@ -1211,12 +1214,6 @@ position-independent code is used in any static libraries (such as the
 Tcl/Tk libraries, @code{libpng}, @code{libjpeg} and @code{zlib}) which
 might be linked against.  Fortunately these are normally built as shared
 libraries with the exception of the ATLAS BLAS libraries.
-
-It seems that @samp{gcc 3.4.0} on @samp{ix86} Linux defeats attempts by
-the LAPACK code to avoid computations entirely in extended-precision
-registers, so file @file{src/modules/lapack/dlamc.f} may need to
-compiled without optimization or with @code{-ffloat-store}.  This is
-done by configure if @samp{g77} is detected.
 
 @node Mac OS X, Solaris, Linux, Platform notes
 @subsection Mac OS X
@@ -1336,7 +1333,7 @@ experience has been that ATLAS's BLAS is faster than @code{libsunperf},
 especially for complex numbers.
 
 Some care is needed to ensure that libraries found by
-@command{configure} are compatible with the R executable and modules, as
+@command{configure} are compatible with the @R{} executable and modules, as
 the testing process will not detect many of the possible problems.  For
 32-bit builds under @command{cc} the flag @option{-dalign} is needed for
 some of the Sun libraries: fortunately the equivalent flag for
@@ -1360,7 +1357,7 @@ only with the Forte compiler (and not with @command{gcc}) as of Tcl/Tk 8.4.5.
 
 @R{} has been built successfully on HP-UX 10.2 and HP-UX 11.0 using both
 native compilers and @command{gcc}.  However, 10.2 has not been tested
-since R 1.4.0.  By default, R is configured to use @command{gcc} and
+since @R{} 1.4.0.  By default, @R{} is configured to use @command{gcc} and
 @command{g77} on HP-UX (if available).  Some installations of
 @command{g77} only install a static version of the @command{g2c} library
 that cannot be linked into a shared library since its files have not
@@ -1490,7 +1487,7 @@ example, in environment variable @env{LIBS}).
 @command{cc} and @command{g77} fails to configure.  The
 @command{configure} option @option{--without-blas} was used since the
 native blas seems not to have been built with the flags needed to
-suppress @code{SIGFPE}'s.  Currently R does not set a signal handler for
+suppress @code{SIGFPE}'s.  Currently @R{} does not set a signal handler for
 @code{SIGFPE} on platforms that support @acronym{IEEE} arithmetic, so
 these are fatal.
 
@@ -1511,11 +1508,11 @@ port would be greatly appreciated.
 
 On AIX 4.3.3 and AIX 5.1, it was found that the use of ``run time
 linking'' (as opposed to normal AIX style linking) was required.  For
-this, the R main program must be linked to the runtime linker with the
+this, the @R{} main program must be linked to the runtime linker with the
 @option{-brtl} linker option, and shareable objects must be enabled for
 runtime linking with the @option{-G} linker option.  Without these
 options, the AIX linker will not automatically link to any shared object
-with a @file{.so} extension.  Also, the R main program is unable to
+with a @file{.so} extension.  Also, the @R{} main program is unable to
 dynamically load modules (such as X11) with the @code{dlopen} call.
 
 When setting @code{MAIN_LDFLAGS} and @code{SHLIB_LDFLAGS} accordingly,
@@ -1639,7 +1636,7 @@ Panel.
 @node New platforms, Function and variable index, Enabling search in HTML help, Top
 @appendix New platforms
 
-There are a number of sources of problems when installing R on a new
+There are a number of sources of problems when installing @R{} on a new
 hardware/OS platform.  These include
 
 @strong{Floating Point Arithmetic}: @R{} supports the @acronym{POSIX},
@@ -1674,13 +1671,21 @@ override the results.  Scanning the manual entries for @command{cc} and
 recipe you can modify the file @file{config.site} (following the
 instructions therein) so that the build will use these options.
 
+It seems that @samp{gcc 3.4.0} on @samp{ix86} Linux defeats attempts by
+the LAPACK code to avoid computations entirely in extended-precision
+registers, so file @file{src/modules/lapack/dlamc.f} may need to
+compiled without optimization.  If configure detects GNU Fortran it adds
+flag @option{-ffloat-store} which suffices, but it is possible that 
+@file{src/modules/lapack/Makefile} will need to be edited to remove
+optimization on other platforms.
+
 If you do manage to get @R{} running on a new platform please let us
 know about it so we can modify the configuration procedures to include
 that platform.
 
 If you are having trouble getting @R{} to work on your platform please
 feel free to get in touch to ask questions.  We have had a fair amount
-of practice at porting R to new platforms @enddots{}
+of practice at porting @R{} to new platforms @enddots{}
 
 
 @node Function and variable index, Concept index, New platforms, Top
