@@ -100,6 +100,9 @@ static CFunTabEntry CFunTab[] =
 #ifndef RTLD_LAZY
 #define RTLD_LAZY 1
 #endif
+#ifndef RTLD_NOW
+#define RTLD_NOW  2
+#endif
 
 #ifdef DL_SEARCH_PROG
 static void *dlhandle;
