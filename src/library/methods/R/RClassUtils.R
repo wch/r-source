@@ -1338,6 +1338,9 @@ substituteFunctionArgs <- function(def, newArgs, args = formalArgs(def), silent 
             value <- trySilent(loadNamespace(package))
     if(is.environment(value))
         return(value)
+    if(exists(".packageName", .GlobalEnv, inherits=TRUE) &&
+       .identC(package, get(".packageName", .GlobalEnv)))
+        return(.GlobalEnv) # kludge for running package code
     require(package, character.only = TRUE)
     .asEnvironmentPackage(package)
 }
