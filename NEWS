@@ -258,6 +258,9 @@ BUG FIXES
     o	Assignments of the form adf[i,j] <- value now accept a
 	data-frame value as well as a list value.
 
+    o	dir.create() sometimes erroneously continue to report a directory
+	already existed after the first instance.  (PR#6892)
+
 
 
 		CHANGES IN R VERSION 1.9.0
