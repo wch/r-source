@@ -7,15 +7,13 @@ qqnorm <-
     y <- y[!is.na(y)]
     if(!length(y)) stop("y is empty")
     if (missing(ylim)) ylim <- range(y)
-    x <- qnorm(ppoints(length(y)))
-    y.srt <- sort(y)
+    x <- qnorm(ppoints(length(y)))[order(order(y))]
     if(plot.it)
-	plot(x, y.srt, main = main, xlab = xlab, ylab = ylab, ylim = ylim, ...)
-    invisible(list(x = x, y = y.srt))
+	plot(x, y, main= main, xlab= xlab, ylab= ylab, ylim= ylim, ...)
+    invisible(list(x = x, y = y))
 }
 
-qqline <-
-    function(y, ...)
+qqline <- function(y, ...)
 {
     y <- quantile(y[!is.na(y)],c(0.25, 0.75))
     x <- qnorm(c(0.25, 0.75))
