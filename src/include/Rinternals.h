@@ -822,6 +822,10 @@ SEXP R_do_new_object(SEXP class_def);
 void R_PreserveObject(SEXP);
 void R_ReleaseObject(SEXP);
 
+/* Shutdown actions */
+void R_dot_Last(void);		/* in main.c */
+void R_RunExitFinalizers(void);	/* in memory.c */
+
 
 #ifndef R_NO_REMAP
 #define allocArray		Rf_allocArray

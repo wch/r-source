@@ -68,8 +68,6 @@
 extern OSStatus OpenPageSetup(WindowRef window);
 extern OSStatus OpenPrintDialog(WindowRef window);
 
-void R_dot_Last(void);		/* in main.c */
-void R_RunExitFinalizers(void);	/* in memory.c */
 extern SA_TYPE SaveAction;
 extern SA_TYPE RestoreAction;
 
