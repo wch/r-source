@@ -94,4 +94,4 @@ download.packages <- function(pkgs, destdir, available=NULL,
 }
 
 contrib.url <- function(CRAN)
-    paste(CRAN,"bin", "windows", "windows-NT", "contrib", sep="/")
+    file.path(CRAN, "bin", "windows", "contrib")
