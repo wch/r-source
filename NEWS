@@ -333,6 +333,9 @@ BUG FIXES
 	segments to help some PostScript interpreters (typically old
 	level-1 interpreters).
 
+    o   Usage of methods in dist.Rd is now correctly documented
+        (as.matrix.dist() is not an exported symbol).
+
 
 
 		CHANGES IN R VERSION 1.7.0
