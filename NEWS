@@ -69,6 +69,8 @@ NEW FEATURES
     o	sapply  has a new argument USE.NAMES=TRUE  and now returns a named
         result when its input was a character.
 
+    o	plot.stepfun  has new arguments  lty and lwd.
+
 
 BUG FIXES
 
@@ -143,7 +145,7 @@ BUG FIXES
 
     o   qgeom() is now left-continuous with a tolerance, and so the
 	example on th help page will be platform-independent.
- 
+
 
 		CHANGES IN R VERSION 0.65.0
 

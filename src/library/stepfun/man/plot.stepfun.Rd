@@ -4,27 +4,30 @@
 plot.stepfun(Fn, x, xlim, xlab = "x", ylab = "f(x)", main = NULL,
      add = FALSE, verticals = TRUE, do.points = TRUE,
      pch = par("pch"), col.points=par("col"), cex.points=par("cex"),
-     col.hor = par("col"), col.vert= par("col"), \dots)
+     col.hor = par("col"), col.vert= par("col"),
+     lty = par("lty"), lwd = par("lwd"), \dots)
 }
 \alias{plot.stepfun}
 \arguments{
- \item{Fn}{an \R object inheriting from \code{"stepfun"}.}
- \item{x}{numeric vector of abscissa values at which to evaluate
-   \code{Fn}.  Defaults to \code{\link{knots}(Fn)} restricted to \code{xlim}.}
- \item{xlim}{numeric(2); range of \code{x} values to use.}
- \item{add}{logical; if \code{TRUE} only \emph{add} to an existing plot.}
- \item{verticals}{logical;  if \code{TRUE}, draw vertical lines at steps.}
- \item{do.points}{logical;  if \code{true}, also draw points at the
-   (\code{xlim} restricted) knot locations.}
- \item{pch}{character; point character if \code{do.points}.}
- \item{col.points}{character or integer code; color of points if \code{do.points}.}
- \item{cex.points}{numeric; character expansion factor if \code{do.points}.}
- \item{col.hor}{color of horizontal lines.}
- \item{col.vert}{color of vertical lines.}
- \item{xlab,ylab}{labels of x and y axis.}
- \item{main}{main title.}
- \item{\dots}{further arguments of \code{\link{plot}(.)}, or if\code{(add)}
-   \code{\link{segments}(.)}.}
+  \item{Fn}{an \R object inheriting from \code{"stepfun"}.}
+  \item{x}{numeric vector of abscissa values at which to evaluate
+    \code{Fn}.  Defaults to \code{\link{knots}(Fn)} restricted to \code{xlim}.}
+  \item{xlim}{numeric(2); range of \code{x} values to use.}
+  \item{xlab,ylab}{labels of x and y axis.}
+  \item{main}{main title.}
+  \item{add}{logical; if \code{TRUE} only \emph{add} to an existing plot.}
+  \item{verticals}{logical;  if \code{TRUE}, draw vertical lines at steps.}
+  \item{do.points}{logical;  if \code{true}, also draw points at the
+    (\code{xlim} restricted) knot locations.}
+  \item{pch}{character; point character if \code{do.points}.}
+  \item{col.points}{character or integer code; color of points if
+    \code{do.points}.}
+  \item{cex.points}{numeric; character expansion factor if \code{do.points}.}
+  \item{col.hor}{color of horizontal lines.}
+  \item{col.vert}{color of vertical lines.}
+  \item{lty, lwd}{line type and thickness for all lines.}
+  \item{\dots}{further arguments of \code{\link{plot}(.)}, or if\code{(add)}
+    \code{\link{segments}(.)}.}
 }
 \description{
   Method of the generic \code{\link{plot}} for \code{\link{stepfun}}

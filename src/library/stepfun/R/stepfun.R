@@ -69,7 +69,9 @@ plot.stepfun <-
     function(Fn, x, xlim, xlab = "x", ylab = "f(x)", main = NULL, add = FALSE,
 	     verticals = TRUE, do.points = TRUE,
 	     pch = par("pch"), col.points=par("col"), cex.points=par("cex"),
-	     col.hor = par("col"), col.vert= par("col"), ...)
+	     col.hor = par("col"), col.vert= par("col"),
+             lty = par("lty"), lwd = par("lwd"),
+             ...)
 {
 
     if(!is.stepfun(Fn)) { #- make it work when called explicitly with data
@@ -107,17 +109,17 @@ plot.stepfun <-
 
     ## horizontal segments
     if (add)
-	segments(ti.l, y, ti.r, y, col=col.hor, ...)
+	segments(ti.l, y, ti.r, y, col=col.hor, lty=lty, lwd=lwd, ...)
     else {
 	plot(0,0, type="n", xlim=xlim, ylim=range(c(y,Fn.kn)),
 	     xlab=xlab, ylab=ylab, main= main, ...)
-	segments(ti.l, y, ti.r, y, col=col.hor)
+	segments(ti.l, y, ti.r, y, col=col.hor, lty=lty, lwd=lwd)
     }
     if(do.points)
 	points(knF, Fn.kn, pch=pch, col=col.points, cex=cex.points)
 
     if(verticals)
-	segments(knF, y[-n], knF, y[-1], col=col.vert)
+	segments(knF, y[-n], knF, y[-1], col=col.vert, lty=lty, lwd=lwd)
     invisible(list(t = ti, y = y))
 }
 
