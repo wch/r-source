@@ -247,6 +247,40 @@ AC_DEFUN([R_PROG_CXX_FLAG],
       AC_MSG_RESULT(no)
     fi
   ])
+AC_DEFUN([R_PROG_F77_OR_F2C], [
+if test -n "${FC}"; then
+  F77=${FC}
+  AC_MSG_RESULT([defining F77 to be ${F77}])
+elif ${use_f77}; then
+  if test "${with_f77}" = yes; then
+    F77=f77
+  else
+    F77="${with_f77}"
+  fi
+  AC_MSG_RESULT([defining F77 to be ${F77}])
+elif ${use_g77}; then
+  if test "${with_g77}" = yes; then
+    F77=g77
+  else
+    F77="${with_g77}"
+  fi
+  AC_MSG_RESULT([defining F77 to be ${F77}])
+elif ${use_f2c}; then
+  F77=
+  if test "${with_f2c}" = yes; then
+    F2C=f2c
+  else
+    F2C="${with_f2c}"
+  fi
+  AC_MSG_RESULT([defining F2C to be ${F2C}])
+else
+  F77=
+  AC_CHECK_PROGS(F77, [g77 f77 xlf cf77 cft77 pgf77 fl32 af77 fort77 f90 xlf90 pgf90 epcf90 f95 xlf95 lf95 g95 fc])
+  if test -z "${F77}"; then
+    AC_CHECK_PROG(F2C, f2c, f2c, [])
+  fi
+fi
+])
 AC_DEFUN([R_PROG_F77_WORKS], [
     AC_CACHE_CHECK([whether the Fortran 77 compiler (${FC} ${FFLAGS} ${LDFLAGS}) works],
     r_cv_prog_f77_works, [
