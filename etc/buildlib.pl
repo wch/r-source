@@ -6,12 +6,12 @@
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation; either version 2, or (at your option)
 # any later version.
-# 
+#
 # This program is distributed in the hope that it will be useful, but
 # WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-# General Public License for more details. 
-# 
+# General Public License for more details.
+#
 # A copy of the GNU General Public License is available via WWW at
 # http://www.gnu.org/copyleft/gpl.html.  You can also obtain it by
 # writing to the Free Software Foundation, Inc., 675 Mass Ave,
@@ -23,6 +23,7 @@
 use Cwd;
 use File::Basename;
 
+$dir_mod = 755;#- Permission ('mode') of newly created directories.
 
 # determine of pkg and lib directory are accessible; chdir to pkg man dir
 # and return pkg name, full path to lib dir and contents of mandir
@@ -33,27 +34,26 @@ sub buildinit {
     my $lib = $ARGV[1];
 
     my $currentdir = getcwd();
-    
+
     if($pkg){
 	die("Package $pkg does not exit\n") unless (-d $pkg);
     }
     else{
 	$pkg="$RHOME/src/library/base";
     }
-    
+
     chdir $currentdir;
-    
+
     if($lib){
-	system("mkdir $lib") unless (-d $lib);
-	chdir($lib) or die("Cannot create $lib\n");
+        mkdir "$lib", $dir_mod || die "Could not create $lib: $!\n";
 	$lib=getcwd();
     }
     else{
 	$lib="$RHOME/library";
     }
-    
+
     chdir $currentdir;
-    
+
     chdir($pkg) or die("Cannot change to $pkg\n");
     $pkg = basename(getcwd());
 
@@ -61,7 +61,7 @@ sub buildinit {
     opendir man, '.';
     @mandir = readdir(man);
     closedir man;
-    
+
     ($pkg, $lib, @mandir);
 }
 
@@ -74,11 +74,11 @@ sub read_titles {
 
     my %tit;
     my $pkg;
-    
+
     opendir lib, $lib;
     my @libs = readdir(lib);
     closedir lib;
-    
+
     foreach $pkg (@libs) {
 	if(-d "$lib/$pkg"){
 	    if(! ( ($pkg =~ /^CVS$/) || ($pkg =~ /^\.+$/))){
@@ -87,7 +87,7 @@ sub read_titles {
 		    $_ = <rtitle>;
 		    /^(\S*)\s*(.*)/;
 		    my $pkgname = $1;
-		    $tit{$pkgname} = $2; 
+		    $tit{$pkgname} = $2;
 		    while(<rtitle>){
 			/\s*(.*)/;
 			$tit{$pkgname} = $tit{$pkgname} . "\n" .$1;
@@ -104,18 +104,18 @@ sub read_titles {
 
 ### Read all aliases into an hash array with the (relative) paths to
 ### the corresponding html files
-	
+
 sub read_htmlindex {
 
     my $lib = $_[0];
 
     my %hi;
     my $pkg;
-    
+
     opendir lib, $lib;
     my @libs = readdir(lib);
     closedir lib;
-    
+
     foreach $pkg (@libs) {
 	if(-d "$lib/$pkg"){
 	    if(! ( ($pkg =~ /^CVS$/) || ($pkg =~ /^\.+$/))){
@@ -140,12 +140,12 @@ sub read_htmlindex {
 sub build_htmlpkglist {
 
     my $lib = $_[0];
-    
+
     my %htmltitles = read_titles($lib);
     my $key;
-    
+
     open(htmlfile, ">$lib/index.html");
-    
+
     print htmlfile "<HEAD><TITLE>R Function Index</TITLE></HEAD>\n";
     print htmlfile "<BODY LINK=#0000EF VLINK=#0000EF>\n";
     print htmlfile "<A HREF =\"../html/index.html\">[top]</A>\n";
@@ -157,13 +157,13 @@ sub build_htmlpkglist {
     print htmlfile "<P>";
     print htmlfile "The following packages are currently installed:\n";
     print htmlfile "<P><TABLE>\n";
-    
+
     foreach $key (sort(keys %htmltitles)) {
 	print htmlfile "<TR ALIGN=LEFT VALIGN=TOP>\n";
 	print htmlfile "<TD><A HREF=\"$key/html/00Index.html\">";
 	print htmlfile "$key</A><TD>";
 	print htmlfile $htmltitles{$key};
-	
+
     }
 
     print htmlfile "</TABLE>\n";
@@ -172,7 +172,7 @@ sub build_htmlpkglist {
     close htmlfile;
 }
 
-	
+
 1;
 
 
