@@ -552,7 +552,7 @@ int  GLocator(double*, double*, int, DevDesc*);
 void GMetricInfo(int, double*, double*, double*, int, DevDesc*);
 /* Set device "mode" (drawing or not drawing) here for windows and mac drivers.
  */
-void GMode(DevDesc*, int);
+void GMode(int, DevDesc*);
 /* Draw a polygon using the specified lists of x and y values: */
 void GPolygon(int, double*, double*, int, int, int, DevDesc*);
 /* Draw series of straight lines using the specified lists of x and y values: */

@@ -142,7 +142,7 @@ static void   X11_Deactivate(DevDesc *);
 static void   X11_Hold(DevDesc*);
 static void   X11_Line(double, double, double, double, int, DevDesc*);
 static int    X11_Locator(double*, double*, DevDesc*);
-static void   X11_Mode(int);
+static void   X11_Mode(int, DevDesc*);
 static void   X11_NewPage(DevDesc*);
 static int    X11_Open(DevDesc*, x11Desc*, char*, double, double);
 static void   X11_Polygon(int, double*, double*, int, int, int, DevDesc*);
@@ -1212,7 +1212,7 @@ static int X11_Locator(double *x, double *y, DevDesc *dd)
 	/********************************************************/
 
 /* Set Graphics mode - not needed for X11 */
-static void X11_Mode(int mode)
+static void X11_Mode(int mode, DevDesc *dd)
 {
     if(mode == 0) XSync(display, 0);
 }

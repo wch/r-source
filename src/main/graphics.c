@@ -2561,12 +2561,12 @@ void GMetricInfo(int c, double *ascent, double *descent, double *width,
 /*  mode = 2, graphical input on */
 /*  (Ignored by most drivers)	 */
 
-void GMode(DevDesc *dd, int mode)
+void GMode(int mode, DevDesc *dd)
 {
     if (NoDevices())
 	error("No graphics device is active\n");
     if(mode != dd->gp.devmode)
-	dd->dp.mode(mode);
+	dd->dp.mode(mode, dd);
     dd->gp.new = dd->dp.new = 0;
     dd->gp.devmode = dd->dp.devmode = mode;
 }

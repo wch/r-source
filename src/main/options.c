@@ -155,6 +155,21 @@ static SEXP SetOption(SEXP tag, SEXP value)
     return old;
 }
 
+/* Set the width of lines for printing i.e. like options(width=...) */
+/* Returns the previous value for the options. */
+
+int R_SetOptionWidth(int w)
+{
+    SEXP t, v;
+    if (w < MIN_WIDTH) w = MIN_WIDTH;
+    if (w > MAX_WIDTH) w = MAX_WIDTH;
+    PROTECT(t = install("width"));
+    PROTECT(v = ScalarInteger(w));
+    v = SetOption(t, v);
+    UNPROTECT(2);
+    return INTEGER(v)[0];
+}
+
 /* Note that options are stored as a dotted pair list */
 /* This is barely historical, but is also useful. */
 

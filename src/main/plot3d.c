@@ -383,9 +383,9 @@ static void contour(SEXP x, int nx, SEXP y, int ny, SEXP z, double zc,
 		}
 		xxx[ns] = s->x1;
 		yyy[ns++] = s->y1;
-		GMode(dd, 1);
+		GMode(1, dd);
 		GPolyline(ns, xxx, yyy, USER, dd);
-		GMode(dd, 0);
+		GMode(0, dd);
 		C_free((char *) xxx);
 		C_free((char *) yyy);
 	    }
@@ -592,7 +592,7 @@ SEXP do_image(SEXP call, SEXP op, SEXP args, SEXP env)
     xpdsave = dd->gp.xpd;
     dd->gp.xpd = 0;
 
-    GMode(dd, 1);
+    GMode(1, dd);
 
     for (i = 0; i < nx; i++) {
 	if (i == 0)
@@ -622,7 +622,7 @@ SEXP do_image(SEXP call, SEXP op, SEXP args, SEXP env)
 	    }
 	}
     }
-    GMode(dd, 0);
+    GMode(0, dd);
     dd->gp.col = colsave;
     dd->gp.xpd = xpdsave;
     R_Visible = 0;

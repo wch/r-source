@@ -225,7 +225,7 @@ static void   PicTeX_Deactivate(DevDesc *);
 static void   PicTeX_Hold(DevDesc*);
 static void   PicTeX_Line(double, double, double, double, int, DevDesc*);
 static int    PicTeX_Locator(double*, double*, DevDesc*);
-static void   PicTeX_Mode(int);
+static void   PicTeX_Mode(int, DevDesc*);
 static void   PicTeX_NewPage(DevDesc*);
 static int    PicTeX_Open(DevDesc*, picTeXDesc*);
 static void   PicTeX_Polygon(int, double*, double*, int, int, int, DevDesc*);
@@ -683,7 +683,7 @@ static int PicTeX_Locator(double *x, double *y, DevDesc *dd)
 
 
 /* Set Graphics mode - not needed for PS */
-static void PicTeX_Mode(int mode)
+static void PicTeX_Mode(int mode, DevDesc* dd)
 {
 }
 

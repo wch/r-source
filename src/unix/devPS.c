@@ -637,7 +637,7 @@ static void   PS_Deactivate(DevDesc*);
 static void   PS_Hold(DevDesc*);
 static void   PS_Line(double, double, double, double, int, DevDesc*);
 static int    PS_Locator(double*, double*, DevDesc*);
-static void   PS_Mode(int);
+static void   PS_Mode(int, DevDesc*);
 static void   PS_NewPage(DevDesc*);
 static int    PS_Open(DevDesc*, PostScriptDesc*);
 static void   PS_Polygon(int, double*, double*, int, int, int, DevDesc*);
@@ -1208,7 +1208,7 @@ static int PS_Locator(double *x, double *y, DevDesc *dd)
     return 0;
 }
 
-static void PS_Mode(int mode)
+static void PS_Mode(int mode, DevDesc* dd)
 {
 }
 

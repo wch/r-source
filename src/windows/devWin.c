@@ -136,7 +136,7 @@ static void   Win_Deactivate(DevDesc *);
 static void   Win_Hold(DevDesc*);
 static void   Win_Line(double, double, double, double, int, DevDesc*);
 static int    Win_Locator(double*, double*, DevDesc*);
-static void   Win_Mode(int);
+static void   Win_Mode(int, DevDesc*);
 static void   Win_NewPage(DevDesc*);
 static int    Win_Open(DevDesc*, winDesc*, double, double);
 static void   Win_Polygon(int, double*, double*, int, int, int, DevDesc*);
@@ -1058,7 +1058,7 @@ static int Win_Locator(double *x, double *y, DevDesc *dd)
 	/********************************************************/
 
 /* Set Graphics mode - not needed for Windows */
-static void Win_Mode(int mode)
+static void Win_Mode(int mode, DevDesc *dd)
 {
     return;
 }
