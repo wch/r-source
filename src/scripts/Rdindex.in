@@ -25,7 +25,7 @@
 use Getopt::Long;
 use R::Utils;
 
-my $revision = ' $Revision: 1.9 $ ';
+my $revision = ' $Revision: 1.10 $ ';
 my $version;
 my $name;
 
@@ -50,20 +50,25 @@ Options:
   -r, --right=Y		make Y the right column for title formatting
   -d, --data            include only data documentation files if a
                         directory was specified
+      --os=NAME         use OS subdir \`NAME\' (unix, mac or windows)
+      --OS=NAME         the same as \`--os\'.
 
 Email bug reports to <r-bugs\@r-project.org>.
 END
     exit 0; 
 }
 
-my @options = ("h|help", "v|version", "l|left=s", "r|right=s",
-	       "d|data");
-GetOptions(@options) || &usage();
+my $OSdir = "unix";
+
+my @knownoptions = ("h|help", "v|version", "l|left=s", "r|right=s",
+		    "d|data", "os|OS:s");
+GetOptions(@knownoptions) || &usage();
 &R_version($name, $version) if $opt_v;
 &usage() if $opt_h;
 
 $opt_l = 25 unless $opt_l;
 $opt_r = 72 unless $opt_r;
+$OSdir = $opt_os if $opt_os;
 
 my $l1 = $opt_l - 2;
 my $l2 = $opt_r - $opt_l;
@@ -92,8 +97,7 @@ if ($#ARGV == 0 && -d $ARGV[0]) {
     if (-d "$dir/man") {
  	$dir = "$dir/man";
     }
-    @Rdfiles = `LC_ALL=C find $dir -name "*.[Rr]d" -print | \
-                  sed -e '/windows\\//d' | sort`;
+    @Rdfiles = sort(glob("$dir/*.[Rr]d"), glob("$dir/$OSdir/*.[Rr]d"));
     if ($opt_d) {
 	my @tmp = ();
 	foreach $f (@Rdfiles) {
@@ -101,9 +105,11 @@ if ($#ARGV == 0 && -d $ARGV[0]) {
 	}
 	@Rdfiles = @tmp;
     }
-    chop(@Rdfiles);
 } else {
-    @Rdfiles = @ARGV;
+    @Rdfiles = ();
+    foreach $arg (@ARGV) {
+	@Rdfiles = (@Rdfiles, glob($arg));
+    }
 }
 
 undef $/;
