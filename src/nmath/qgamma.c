@@ -75,7 +75,7 @@ double qgamma(double p, double alpha, double scale, int lower_tail, int log_p)
     if (/* 0 <= */ p_ < pMIN) return 0;
     if (/* 1 >= */ p_ > pMAX) return ML_POSINF;
 
-    v = 2*alpha;
+    v = 2*alpha;/* == df  in qchisq() */
 
     c = alpha-1;
     g = lgammafn(alpha);/* log Gamma(v/2) */
