@@ -26,7 +26,7 @@ isSeekable(con)
 }
 \details{
   \code{seek} with \code{where = NA} returns the current byte offset
-  of a connection (from the beginning), and with a positive \code{where}
+  of a connection (from the beginning), and with a non-missing \code{where}
   argument the connection is re-positioned (if possible) to the
   specified position. \code{isSeekable} returns whether the connection
   in principle supports \code{seek}: currently only file connections do.
@@ -54,8 +54,8 @@ isSeekable(con)
   implemented on all platforms.
 }
 \value{
-  \code{seek} returns the current position, as a byte offset, if
-  relevant, or \code{0} if not.
+  \code{seek} returns the current position (before any move),
+  as a byte offset, if relevant, or \code{0} if not.
 
   \code{truncate} returns \code{NULL}: it stops with an error if
   it fails (or is not implemented).
