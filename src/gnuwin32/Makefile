@@ -1,4 +1,5 @@
 include MkRules
+include ../../share/make/vars.mk
 
 ## This is done so Rpwd.exe gets built first under a native build,
 ## but it is not used in Makefile under a cross-build.

@@ -1,6 +1,8 @@
 # Makefile for R for Windows Installers
 
 include ../MkRules
+include ../../../share/make/vars.mk
+
 RPREFIX = $(shell perl ../fixed/rwver.pl ../../../VERSION)
 LIBFILES = $(foreach i, $(R_PKGS_BASE), ../../../library/$i) ../../../library/R.css
 

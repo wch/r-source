@@ -47,11 +47,6 @@ R_EXE=R
 
 ## =============== end of user-customizable parts  ===================
 
-# copies from etc/Makeconf.in
-R_PKGS_BASE = base ctest eda grid lqs methods modreg mva nls splines stepfun tcltk tools ts
-R_PKGS_RECOMMENDED_SOURCES = survival boot cluster foreign lattice KernSmooth mgcv nlme rpart VR
-R_PKGS_RECOMMENDED_EXPANDED = survival boot cluster foreign lattice KernSmooth mgcv nlme rpart MASS nnet spatial class
-
 ifeq ($(strip $(BUILD)),MINGW)
 BINPREF=
 MINGW32CFLAG=

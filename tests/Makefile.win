@@ -4,6 +4,7 @@
 
 # for R_PKGS_BASE
 include ../src/gnuwin32/MkRules
+include ../share/make/vars.mk
 
 srcdir = .
 

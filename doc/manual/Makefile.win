@@ -3,6 +3,7 @@
 # ${R_HOME}/doc/manual/Makefile.win
 
 include ../../src/gnuwin32/MkRules
+include ../../share/make/vars.mk
 
 srcdir = .
 top_srcdir = ../..
