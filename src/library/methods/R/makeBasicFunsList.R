@@ -85,5 +85,6 @@
                          group = "Ops"))
 
     assign(".BasicFunsList", .BasicFunsList, envir=where)
+    rm(.addBasicGeneric, envir=where)
 }
 

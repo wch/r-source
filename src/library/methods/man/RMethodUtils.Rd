@@ -11,10 +11,16 @@
 \alias{getGroup}
 \alias{getMethodsMetaData}
 \alias{assignMethodsMetaData}
+\alias{matchSignature}
 \alias{mlistMetaName}
+\alias{assignToMethodMetaData}
+\alias{getFromMethodMetaData}
+\alias{removeFromMethodMetaData}
+\alias{.saveImage}
 %% Not for the user to know about!
 \alias{.ShortPrimitiveSkeletons} %% used from C code
 \alias{.EmptyPrimitiveSkeletons}
+\alias{__MethodMetaData}
 \title{RMethodUtils}
 \usage{
 makeGeneric(f, fdef, keepMethods=TRUE, useAsDefault=NA, group=character(), valueClass=character())
@@ -36,6 +42,16 @@ conformMethodArgs(def, fdef, envir)
 getGeneric(f, mustFind=FALSE)
 
 getGroup(fdef, recursive=FALSE)
+
+matchSignature(names, signature, fun)
+
+## manage method metadata
+getFromMethodMetaData(name)
+
+assignToMethodMetaData(name, value)
+
+removeFromMethodMetaData(name)
+
 
 }
 \description{
@@ -108,13 +124,34 @@ NULL according to the value of mustFind.
   return the groups to which this generic belongs.  
 
   If \code{recursive=TRUE}, also all the
-group(s) of these groups.
+  group(s) of these groups.
+  }
+
+\item{\code{matchSignature}}{
+    Matches the signature object (a partially or completely named subset of the
+   arguments of \code{fun}), and return a vector of all the classes in the order specified
+   by \code{names}.  The classes not specified by `signature' will be \code{"ANY"} in the
+   value.
+  
+   The formal arguments of \code{fun} must agree with \code{names} (usually the formal arguments
+   of the generic function) as well, and \code{matchSignature} checks
+   this.
 }
+
+
+
 \item{\code{getMethodsMetaData}, \code{assignMethodsMetaData},
   \code{mlistMetaName}:}{
   utilities to manage methods list objects in a particular database.
   Not to be called directly.
   }
+\item{\code{getFromMethodMetaData, assignToMethodMetaData,
+      removeFromMethodMetaData}}{
+      Functions to manage the session metadata for methods.  Don't
+      call these directly.}
+
+\item{\code{.saveImage}}{Flag, used in dynamically initializing the
+    methods package from \code{.First.lib}}
 }
 }
-\keyword{programming}
+\keyword{internal}

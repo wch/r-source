@@ -278,7 +278,7 @@ selectMethod <-
   ## mlist = Optional MethodsList object to use in the search.  Usually omitted, but
   ##         required for a recursive call from within selectMethod.
     function(f, signature = character(), optional = FALSE,
-             inherited = TRUE, mlist)
+             inherited, mlist)
 {
     if(missing(mlist)) {
         mlist <- getMethods(f)
@@ -299,18 +299,24 @@ selectMethod <-
         if(length(signature))
             names(signature) <- sigNames
     }
+    if(missing(inherited)) ## avoid lazy eval. after signature changes
+      inherited <- rep(TRUE, length(signature))
     argName <- as.character(slot(mlist, "argument"))
     which <- match(argName, sigNames)
-    if(is.na(which))
+    if(is.na(which)) {
         thisClass <- "ANY"
+        inhThis <- TRUE ## irrelevant
+      }
     else {
-        thisClass <- el(signature, which)
+        thisClass <- signature[[which]]
         signature <- signature[-which]
+        inhThis <- inherited[[which]]
+        inherited <- inherited[-which]
     }
     exact <- TRUE
     selection <- elNamed(methods, thisClass)
     if(is.null(selection)) {
-        if(inherited) {
+        if(inhThis) {
             selection <- elNamed(slot(mlist, "allMethods"), thisClass)
             if(is.null(selection)) {
                 ## do the inheritance calculations
@@ -319,8 +325,8 @@ selectMethod <-
                   method <- elNamed(allSelections, cl)
                   if(is(method, "MethodsList"))
                     ## try completing the selection
-                    method <- Recall(mlist = method, signature = signature[-1],
-                                     optional = TRUE)
+                    method <- Recall(f = f, signature = signature, optional = TRUE,
+                                     inherited = inherited, mlist = method)
                   if(is(method, "function")) {
                     thisClass <- cl
                     selection <- method

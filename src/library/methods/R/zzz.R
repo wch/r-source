@@ -18,17 +18,11 @@
         }
         where <- as.environment(where)
     }
-    ## assign a pointer to the environment in the environment!
-    ## (Fortunately, environments are references, not true objects)
-    ## Note:  this is only used currently for turning method search on and off,
-    ## and that use should disappear when standardGeneric is implemented in C
-    assign(".methodsEnv", where, envir=where)
     ## initialize the environment used as the session table to store methods definitions
     table <- new.env(hash=TRUE)
     assign("__MethodMetaData", table, envir = where)
     .Call("R_initialize_methods_metadata", table, PACKAGE = "methods")
     .C("R_initMethodDispatch", PACKAGE = "methods")# C-level initialization
-    assign(".MethodsDispatchOn", TRUE, envir = where)
     if(!get(".saveImage", envir = where)) {
         cat("initializing class and method definitions now\n")
         .InitBasicClasses(where)

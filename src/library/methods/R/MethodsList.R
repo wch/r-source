@@ -361,7 +361,7 @@ matchArgClass <-
     ## and to a depth-first search for inherited methods, because the elements
   ## are returned in the order of the extends (asserted to correspond to depth-first traversal
   ## of the tree of is relations).
-    superClasses <- names(getExtends(getClass(Class)))
+    superClasses <- c(names(getExtends(getClass(Class))), "ANY")
     which <- match(superClasses, classes)
     foundClasses <- superClasses[!is.na(which)] ## here's where the order is depth-first
     value <- list()

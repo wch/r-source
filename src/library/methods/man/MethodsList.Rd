@@ -12,6 +12,9 @@
 \alias{insertMethodInEmptyList}
 \alias{listFromMlist}
 \alias{listFromMlistForPrint}
+\alias{finalDefaultMethod}
+\alias{mergeAllMethods}
+\alias{mergeMethods}
 \title{MethodsList Objects}
 \usage{
 MethodsList(.ArgName, ...)
@@ -35,6 +38,12 @@ print.MethodsList(x, ...)
 listFromMlist(mlist, prefix = list())
 
 listFromMlistForPrint(mlist, inherited = TRUE, useArgName = TRUE, prev = character())
+
+finalDefaultMethod(mlist, fname = "")
+
+mergeAllMethods(mlist, update, thisClass, argument)
+
+mergeMethods(m1, m2)
 
 }
 \description{
@@ -119,6 +128,21 @@ selected classes.
   selected classes.
   }
 
+  \item{\code{finalDefaultMethod}}{
+    The true default method for the methods list object \code{mlist}
+    (the method that matches class \code{"ANY"} for as many arguments as
+    are used in methods matching for this generic function).}
+
+  \item{\code{mergeAllMethods}}{
+    Merges the \code{AllMethods} slots in two methods list objects (including
+    special  cases of NULL and function).
+  }
+
+  \item{\code{mergeMethods}}{
+    Merges the methods in the second MethodsList object into the first,
+    and returns the merged result.  Called from
+    \code{\link{mergeGenericFunctions}}
+    }
 }
 
 }
@@ -139,6 +163,5 @@ for further details and examples.
 }
 \examples{
 }
-\keyword{programming}
-\keyword{classes}
-\keyword{methods}
+\keyword{internal}
+

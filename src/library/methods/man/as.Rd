@@ -2,15 +2,16 @@
 \alias{as}
 \alias{as<-}
 \alias{coerce}
-\alias{asFunctions}
 \alias{setAs}
 \title{Force an Object to Belong to a Class}
 \usage{
 as(object, Class, coerceFlag=TRUE)
 
-coerce(x, y)
+as(object, Class, coerceFlag=TRUE) <- value
 
-setAs(from, to, def, where = 1)
+coerce(from, to)
+
+setAs(from, to, def, replace, where = 1)
 
 }
 \description{
@@ -38,11 +39,11 @@ calls to the \code{setAs} function.
 }
 
   \item{\code{coerce}:}{
-  Coerce \code{x} to be of the same class as \code{y}.  
+    Coerce \code{from} to be of the same class as \code{to}.
 
-  Not a function you should usually
-call explicitly.  The function \code{\link{setAs}} creates
-methods for \code{coerce} for the \code{as} function to use.
+    Not a function you should usually
+    call explicitly.  The function \code{\link{setAs}} creates
+    methods for \code{coerce} for the \code{as} function to use.
 }
 
   \item{\code{setAs}:}{
@@ -53,6 +54,141 @@ methods for \code{coerce} for the \code{as} function to use.
 }
 }
 }
+\arguments{
+  \item{object}{ Any object. }
+  \item{Class}{ The name of the class to which \code{object} should be coerced. }
+  \item{coerceFlag}{ A logical flag.  If \code{FALSE},  only inheritance
+  relations will be used; i.e., \code{is(object, Class)} must be
+  \code{TRUE}, and if not, \code{NULL} is returned.
+
+  If the flag is \code{TRUE}, however, coerce methods will be called if
+  inheritance is not true (and an error will result if coercion fails).
+}
+  \item{value}{The value to use to modify \code{object} (see the
+    discussion below).  You should supply an object with class
+    \code{Class}; some coercion is done, but you're unwise to rely on
+    it.
+    }
+
+\item{from, to}{ The classes between which \code{def} performs coercion.
+
+  (In the case of the \code{coerce} function these are objects from the
+  classes, not the names of the classes, but you're not expected to call \code{coerce} directly.)
+}
+  \item{def}{ A function of one argument.  It will get an object from
+    class \code{from} and had better return an object of class
+    \code{to}. (If you want to save \code{setAs} a little work, make
+    the name of the argument \code{from}, but don't worry about it,
+    \code{setAs} will do the conversion.) }
+  \item{where}{ The database on which to store the resulting method for
+    \code{coerce}; by default, the global environment. }
+
+}
+\section{How Functions \code{as} and \code{setAs} Work}{
+  The function \code{as} contrives to turn \code{object} into an object
+  with class \code{Class}.  In doing so, it uses information about
+  classes and methods, but in a somewhat special way.  Keep in mind
+  that objects from one class can turn into objects from another class
+  either automatically or by an explicit call to the \code{as}
+  function. Automatic conversion is special, and comes from the
+  designer of one class of objects asserting that this class extends a
+  another class  (see \code{\link{setClass}} and \code{\link{setIs}}).
+
+  Because inheritance is a powerful assertion, it should be used
+  sparingly (otherwise your computations may produce unexpected, and
+  perhaps incorrect, results).  But objects can also be converted
+  explicitly, by calling \code{as}, and that conversion is designed to
+  use any inheritance information, as well as explicit methods.
+
+  As a first step in conversion, the \code{as} function determines whether \code{is(object,
+    Class)} is \code{TRUE}.  This can be the case either because the
+  class definition of \code{object} includes \code{Class} as a ``super
+  class'' (directly or indirectly), or because a call to
+  \code{\link{setIs}} established the relationship.
+
+  Either way, the inheritance relation defines a method to coerce
+  \code{object} to \code{Class}.  In the most common case, the method
+  is just to extract from \code{object} the slots needed for
+  \code{Class}, but it's also possible to specify a method explicitly in
+  a \code{\link{setIs}} call.
+
+  So, if inheritance applies, the \code{as} function calls the
+  appropriate method.  If inheritance does not apply, and
+  \code{coerceFlag} is \code{FALSE}, \code{NULL} is returned.
+
+  By default, \code{coerceFlag} is \code{TRUE}.  In this case the
+  \code{as} function goes on to look for a method for the function
+  \code{coerce} for the signature \code{c(from = class(object), to =
+    Class)}.
+
+  Method selection is used in the \code{as} function in two special
+  ways.
+  First,  inheritance is
+  applied for the argument \code{from} but not for the argument
+  \code{to} (if you think about it, you'll probably agree that you
+  wouldn't want the result to be from some class other than the
+  \code{Class} specified).
+  Second, the function tries to use inheritance information to convert
+  the object indirectly, by first converting it to an inherited class.
+  It does this by examining the classes that the \code{from} class
+  extends, to see if any of them has an explicit conversion method.
+  Suppose class \code{"by"} does:  Then the \code{as} function
+  implicitly computes \code{as(as(object, "by"), Class)}.
+
+  With this explanation as background, the function \code{setAs} does a
+  fairly obvious computation:  It constructs and sets a method for the function
+  \code{coerce} with signature \code{c(from, to)}, using the \code{def}
+  argument to define the body of the method.  The function \code{coerce}
+  exists almost entirely as a repository for such methods, to be
+  selected as desribed above by the \code{as} function.  In fact, it
+  would usually be a bad idea to call \code{coerce} directly, since then
+  you would get inheritance on the \code{to} argument; as mentioned,
+  this is not likely to be what you want.
+}
+
+\section{The Function \code{as} Used in Replacements}{
+  When \code{as} appears on the left of an assignment, the intuitive
+  meaning is ``Replace the part of \code{object} that was inherited from
+  \Code{Class} by the \code{value} on the right of the assignment.''
+
+  This usually has a straightforward interpretation, but you can control
+  explicitly what happens, and sometimes you should to avoid possible
+  corruption of objects.
+
+  When \code{object} inherits from \code{Class} in the usual way, by
+  including the slots of \Code{Class}, the default \code{as} method is
+  to set the corresponding slots in \code{object} to those in
+  \code{value}.
+
+  The default computation may be reasonable, but usually only if all
+  \emph{other} slots in \code{object} are unrelated to the slots being
+  changed.  Often, however, this is not the case.  The class of
+  \code{object} may have extended \Code{Class} with a new slot whose
+  value depends on the inherited slots.  In this case, you may want to
+  define a method for replacing the inherited information that
+  recomputes all the dependent information.  Or, you may just want to
+  prohibit replacing the inherited information directly .
+
+  The way to control such replacements is through the \code{replace}
+  argument to function \code{setIs}.  This argument is a method that
+  function \code{as} calls when used for replacement.  It can do
+  whatever you like, including calling \code{stop} if you want to
+  prohibit replacements.  It should return a modified object with the
+  same class as the \code{object} argument to \code{as}.
+
+  In R, you can also explicitly supply a replacement method, even in the
+  case that inheritance does not apply, through the \code{replace}
+  argument to \code{setAs}.  It works essentially the same way, but in
+  this case by constructing a method for \code{"coerce<-"}.  (Replace
+  methods for coercion without inheritance are not in the original
+  description and so may not be compatible with S-Plus, at least not
+  yet.)
+
+  When inheritance does apply, coerce and replace methods can be
+  specified through either \code{setIs} or \code{setAs}; the effect is
+  essentially the same.
+  }
+
 \references{
 The web page \url{http://www.omegahat.org/RSMethods/index.html} is the primary documentation.
 
@@ -70,11 +206,16 @@ setClass("track",
 setClass("trackCurve",
             representation("track", smooth = "numeric"))
 
-ydata <- rnorm(10); ysmooth <- 1:10}
+ydata <- rnorm(10); ysmooth <- 1:10
 
-setAs("track", "numeric", function(x, ...)x@y)
+setAs("track", "numeric", function(x)x@y)
+}
 
-\testonly{
+## The next example shows:
+##  1. A virtual class to define setAs for
+##     several classes at once.
+##  2. as() using inherited information
+
 setClass("ca", representation(a = "character", id = "numeric"))
 
 setClass("cb", representation(b = "character", id = "numeric"))
@@ -85,7 +226,7 @@ setIs("ca", "id")
 setIs("cb", "id")
 
 
-setAs("id", "numeric", function(x, ...) x@id)
+setAs("id", "numeric", function(x) x@id)
 
 CA <- new("ca", a ="A", id = 1)
 
@@ -94,6 +235,10 @@ CB <- new("cb", b = "B", id = 2)
 setAs("cb", "ca", function(object)new("ca", a=object@b, id = object@id))
 
 as(CB, "numeric")
+
+\testonly{
+## should generate an error (not a function of one argument)
+try(setAs("track", "numeric", function(x, ...)x@y))
 
 }
 

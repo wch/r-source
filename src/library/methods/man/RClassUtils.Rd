@@ -37,6 +37,7 @@
 \alias{removeFromClassMetaData}
 \alias{unsetClass}
 \alias{extendsCoerce}
+\alias{extendsReplace}
 \alias{findExtends}
 \alias{completeExtends}
 \alias{classMetaName}
@@ -51,6 +52,7 @@
 \alias{classInR}
 \alias{.InitBasicClasses}
 \alias{.InitMethodsListClass}
+\alias{.setCoerceGeneric}
 
 \title{Utilities for Managing Class Definitions}
 \usage{
@@ -128,6 +130,8 @@ removeFromClassMetaData(name)
 unsetClass(Class)
 
 extendsCoerce(fromClass, Class)
+
+extendsReplace(fromClass, Class)
 
 findExtends(class1, class2)
 
@@ -391,8 +395,9 @@ Rarely needed to call this directly.
 
   
   }
-\item{\code{extendsCoerce}:}{ 
-  the function to perform coercion based on the is relation
+\item{\code{extendsCoerce}, \code{extendsReplace}:}{ 
+  Returns the function to perform coercion or replacement,
+  respectivelyl, based on the \code{is} relation
 between two classes.  
   
   May be explicitly stored in the metadata or
@@ -465,4 +470,10 @@ results.
     class information is cached during the session.}
 }
 }
-\keyword{programming}
+\item{\code{.InitBasicClasses}, \code{.InitMethodsListClass},
+  \code{.setCoerceGeneric}:}{
+  These functions perform part of the initialization of classes and
+  methods, and are called (only!) from \code{.First.lib}.
+  }
+\keyword{internal}
+

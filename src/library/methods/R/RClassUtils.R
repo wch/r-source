@@ -664,6 +664,68 @@ extendsCoerce <-
     f
 }
 
+extendsReplace <-
+  ## the function to perform as() replacement based on the is relation
+  ## between two classes.  May be explicitly stored in the metadata or
+  ## inferred.  If the latter, the inferred result is stored in the session
+  ## metadata for fromClass, to save recomputation later.
+  function(fromClass, Class)
+{
+    ext <- findExtends(fromClass, Class)
+    f <- NULL
+    if(is.list(ext)) {
+        repl <- ext$replace
+        if(is.function(repl))
+            return(repl)
+        by <- list$by
+        if(length(by) > 0) {
+          f <- substitute(function(object, value)
+                          as(as(object, BY), CLASS) <- value,
+                          list(BY = by, CLASS=Class))
+          f <- eval(f, .GlobalEnv)
+        }
+        ## else, drop through
+    }
+    if(is.null(f)) {
+        ## Because `is' was TRUE, must be a direct extension.
+        ## Copy slots if the slots are a subset.  Else, just set the
+        ## class.  For VIRTUAL targets, never change the object.
+        ## If the to Class is not formally defined, the `is' is taken to imply
+        ## that the object's contents are a Class object.
+        formal <- isClass(Class)
+        virtual <- formal && isVirtualClass(Class)
+        if(!formal || virtual)
+            f <- NULL
+         else {
+            fromSlots <- slotNames(fromClass)
+            toSlots <-  slotNames(Class)
+            sameSlots <- (length(toSlots) == 0
+                          || (length(fromSlots) == length(toSlots) &&
+                              !any(is.na(match(fromSlots, toSlots)))))
+            if(sameSlots)
+                f <- substitute(function(object, value){as(value, CLASS)},
+                                list(CLASS = Class))
+            else
+                f <- substitute(function(object, value) {
+                     for(what in TOSLOTS)
+                        slot(object, what) <- slot(value, what)
+                    object }, list(CLASS=Class, TOSLOTS = toSlots))
+            f <- eval(f, .GlobalEnv)
+        }
+        ## we dropped through because there was no replace function in the
+        ## extends object.  Make one and save it back in the session metadata
+        ## so no further calls will require constructing the function
+        if(!is.list(ext))
+            ext <- list()
+        ext$replace <- f  ## might be NULL
+        ClassDef <- getClass(fromClass)
+        allExt <- as.list(getExtends(ClassDef))
+        allExt[Class] <- ext
+        setExtends(ClassDef, allExt)
+    }
+    f
+}
+
 findExtends <-
   ## Find the information that says whether class1 extends class2,
   ## directly or indirectly.  This can be either a logical value or
