@@ -38,7 +38,7 @@ NEW FEATURES
 
     o	The default method for download.file() (and functions which use
 	it such as update.packages()) is now "internal", and uses code
-	compiled into R. [Operational if libxml is available.]
+	compiled into R.
 
     o	`hessian' argument added to deriv and its methods.  A new function
 	deriv3() provides identical capabilities to deriv() except that
