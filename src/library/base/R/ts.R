@@ -316,7 +316,7 @@ plot.mts <- function (x, plot.type = c("multiple", "single"),
     oldpar <- par("mar", "oma", "mfcol")
     on.exit(par(oldpar))
     par(mar = c(0, 5.1, 0, 2.1), oma = oma)
-    nr <- ceiling(nser %/% nc)
+    nr <- ceiling(nser / nc)
     par(mfcol = c(nr, nc))
     for(i in 1:nser) {
         plot(x[, i], axes = F, xlab="", ylab="",
