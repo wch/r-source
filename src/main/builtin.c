@@ -315,7 +315,7 @@ SEXP do_makelist(SEXP call, SEXP op, SEXP args, SEXP rho)
 SEXP do_namedlist(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
 }
-#endif NOT_used
+#endif /* NOT_used */
 
 
 SEXP do_expression(SEXP call, SEXP op, SEXP args, SEXP rho)
