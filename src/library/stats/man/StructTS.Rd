@@ -94,7 +94,7 @@ StructTS(x, type = c("level", "trend", "BSM"), init = NULL,
     at time \eqn{t} and not at the end of the series).}
   \item{call}{the matched call.}
   \item{series}{the name of the series \code{x}.}
-  \item{code}{the convergence value returned by \code{\link{optim}}.}
+  \item{code}{the \code{convergence} code returned by \code{\link{optim}}.}
   \item{model, model0}{Lists representing the Kalman Filter used in the
     fitting.  See \code{\link{KalmanLike}}.  \code{model0} is the
     initial state of the filter, \code{model} its final state.}
@@ -108,7 +108,7 @@ StructTS(x, type = c("level", "trend", "BSM"), init = NULL,
 
   Durbin, J. and Koopman, S. J. (2001) \emph{Time Series Analysis by
     State Space Methods.}  Oxford University Press.
-  
+
   Harvey, A. C. (1989)
   \emph{Forecasting, Structural Time Series Models and the Kalman Filter}.
   Cambridge University Press.
@@ -142,5 +142,9 @@ tsdiag(fit)
 par(mfrow = c(4, 1))
 plot(log10(UKgas))
 plot(cbind(fitted(fit), resids=resid(fit)), main = "UK gas consumption")
+
+## keep some parameters fixed; trace optimizer:
+StructTS(log10(UKgas), type = "BSM", fixed = c(0.1, 0.001,NA,NA),
+         optim.control = list(trace=TRUE))
 }
 \keyword{ts}
