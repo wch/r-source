@@ -140,8 +140,8 @@ endif
 	fi
 	@for pkg in $(LAZY_PKGS); do \
 	  $(MAKE) --no-print-directory PKG=$${pkg} RHOME=$(RHOME) \
-	  -f $(RHOME)/src/gnuwin32/MakePkg BUILD=$(BUILD) RLIB=$(RLIB) \
-	  lazyload ; \
+	  BUILD=$(BUILD) RLIB=$(RLIB) R_START_PACKAGES=NULL\
+	  -f $(RHOME)/src/gnuwin32/MakePkg lazyload ; \
 	done
 	@$(MAKE) --no-print-directory PKG=datasets RHOME=$(RHOME) \
 	  -f $(RHOME)/src/gnuwin32/MakePkg BUILD=$(BUILD) RLIB=$(RLIB) lazydata
