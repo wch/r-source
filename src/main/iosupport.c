@@ -233,3 +233,4 @@ int R_TextBufferUngetc(int c, TextBuffer *txtb)
 {
 	return (*--txtb->bufp = c);
 }
+
