@@ -18,9 +18,6 @@ plot(data.frame.obj)
 \alias{row.names}
 \alias{row.names<-}
 %- methods:
-\alias{row.names.default}
-\alias{row.names<-.data.frame}
-\alias{row.names<-.default}
 \alias{print.data.frame}
 \alias{plot.data.frame}
 %
@@ -65,8 +62,8 @@ plot(data.frame.obj)
   \code{is.data.frame} returns \code{TRUE} if its argument is a data
   frame and \code{FALSE} otherwise.
 
-  \code{row.names} is generic and is used to set and retrieve the row
-  names of a data frame, similarly to \code{\link{rownames}} for arrays.
+  \code{row.names} can be used to set and retrieve the row names of a
+  data frame, similarly to \code{\link{rownames}} for arrays.
 }
 \seealso{
   \code{\link{read.table}}.
