@@ -2,6 +2,8 @@
 
 NEW FEATURES
 
+    o   new function mahalanobis() for Mahalanobis distance
+
     o	quantile.default() now handles Inf's correctly.
 
     o	New command line options `--enable-blas' and `--enable-readline'
