@@ -15,7 +15,7 @@
  *  be accessed:
  *   .C, .Call, .External or .Fortran
  *  Then add an entry to 
- *    cmethods, callMethods, externalMethods, or fortranMethods
+ *    cMethods, callMethods, externalMethods, or fortranMethods
  *  respectively
  *
  *  DTL 14-Dec-2002
@@ -112,7 +112,7 @@ R_NativePrimitiveArgType fdhess_t[] = {};
 
 #define CDEF(name)  {#name, (DL_FUNC) &name, sizeof(name ## _t)/sizeof(name ## _t[0]), name ##_t}
 
-static R_CMethodDef cmethods [] = {
+static R_CMethodDef cMethods [] = {
     CDEF(R_approx),
     CDEF(bakslv),
     CDEF(bincode),
@@ -245,7 +245,7 @@ R_FortranMethodDef fortranMethods[] = {
 void
 R_init_base(DllInfo *dll)
 {
-    R_registerRoutines(dll, cmethods, callMethods,
+    R_registerRoutines(dll, cMethods, callMethods,
 		       fortranMethods, externalMethods);
 }
 
