@@ -252,8 +252,8 @@ static int KeyType(char *s)
 
 static char *SkipToNextItem(char *p)
 {
-    while (!isspace(*p)) p++;
-    while (isspace(*p)) p++;
+    while (!isspace((int)*p)) p++;
+    while (isspace((int)*p)) p++;
     return p;
 }
 
@@ -261,7 +261,7 @@ static char *SkipToNextKey(char *p)
 {
     while (*p != ';') p++;
     p++;
-    while (isspace(*p)) p++;
+    while (isspace((int)*p)) p++;
     return p;
 }
 

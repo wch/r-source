@@ -47,7 +47,7 @@ typedef enum {
     BoldFont	   = 2,
     ItalicFont	   = 3,
     BoldItalicFont = 4,
-    SymbolFont	   = 5,
+    SymbolFont	   = 5
 } FontType;
 
 /*
@@ -1009,7 +1009,7 @@ static BBOX RenderSymbolStr(char *str, int draw)
     if (str) {
 	char *s = str;
 	while (*s) {
-	    if (isdigit(*s) && font != PlainFont) {
+	    if (isdigit((int)*s) && font != PlainFont) {
 		font = PlainFont;
 		SetFont(PlainFont);
 	    }
