@@ -508,7 +508,7 @@ sub text2html {
 
     $text = replace_command($text, "emph", "<EM>", "</EM>");
     $text = replace_command($text, "bold", "<B>", "</B>");
-    $text = replace_command($text, "file", "`<tt>", "<tt>'");
+    $text = replace_command($text, "file", "`<tt>", "</tt>'");
 
     $text = html_tables($text);
     $text =~ s/\\cr/<BR>/sgo;
