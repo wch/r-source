@@ -1,11 +1,11 @@
 \name{on.exit}
 \title{Function Exit Code}
 \usage{
-on.exit(expr)
+on.exit(expression)
 }
 \alias{on.exit}
 \arguments{
-\item{expr}{an expression to be executed.}
+\item{expression}{an expression to be executed.}
 }
 \description{
 \code{on.exit} records the expression given as

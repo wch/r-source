@@ -49,7 +49,7 @@ provide(name)
   \code{provide} allows code to register services that it provides.  The
   argument is stored in the list \code{.Provided}.  \code{provide}
   returns \code{FALSE} if the name was already present in
-  \code{.Provided} or among the packages in \code{search()}.  The main 
+  \code{.Provided} or among the packages in \code{search()}.  The main
   use for \code{provide} is when multiple packages share code.	This is
   most likely when the code implements features present in S(-PLUS) but
   not in R. For example, the spline functions \code{ns}, \code{bs} and
@@ -100,7 +100,7 @@ provide(name)
   \file{DESCRIPTION}, \file{INDEX}, and \file{TITLE}, and the
   subdirectories \file{R}, \file{data}, \file{exec}, \file{man}, and
   \file{src} (some of which can be missing).
-  
+
   The \file{DESCRIPTION} file contains information about authors,
   version, copyright, etc., and looks like
 
@@ -126,7 +126,7 @@ provide(name)
   explicitly might not be included).  Note that you can automatically
   create this file using the \code{Rdindex} program in \file{RHOME/etc},
   provided that Perl is available on your system.
-  
+
   The \file{R} subdirectory contains \R code files.  The code files to
   be installed must start with a (lower- or uppercase) letter and have
   one of the extensions \file{.R}, \file{.S}, \file{.q}, \file{.r}, or
@@ -167,13 +167,13 @@ provide(name)
   \code{\link{INSTALL}}, \code{\link{REMOVE}}
 }
 \examples{
-print(.packages())	    # maybe just "base"
+( .packages() )	    	    # maybe just "base"
 library()		    # list all available packages
 library(lib = .Library)	    # list all packages in the default library
 library(help = eda)	    # documentation on package "eda"
 library(eda)		    # load package "eda"
 require(eda)		    # the same
-print(.packages())	    # "eda", too
+( .packages() )             # "eda", too
 require(nonexistent)	    # FALSE
 ## Suppose the a package needs to call a shared library named "foo.EXT",
 ## where "EXT" is the system-specific extension.  Then you should use

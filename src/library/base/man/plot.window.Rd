@@ -1,13 +1,14 @@
 \name{plot.window}
 \title{Set up World Coordinates for Graphics Window}
 \usage{
-plot.window(xlim, ylim, log = "", asp = NA)
+plot.window(xlim, ylim, log = "", asp = NA, \dots)
 }
 \alias{plot.window}
 \arguments{
 \item{xlim, ylim}{numeric of length 2, giving the x and y coordinates ranges.}
 \item{log}{character; indicating which axes should be in log scale.}
 \item{asp}{numeric, giving the \bold{asp}ect ratio y/x.}
+\item{\dots}{further graphical parameters as in \code{\link{par}(..)}.}
 }
 \description{
   This function sets up the world coordinates for a graphics
