@@ -2280,7 +2280,9 @@ function(package)
     }
     else
         depends <- character()
-    if("Suggests" %in% names(db)) {
+    if("Suggests" %in% names(db)
+       && !identical(as.logical(Sys.getenv("_R_CHECK_FORCE_SUGGESTS_")),
+                     FALSE)) {
         suggests <- unlist(strsplit(db["Suggests"], ","))
         suggests <-
             sub("^[[:space:]]*([[:alnum:].]+).*$", "\\1", suggests)
