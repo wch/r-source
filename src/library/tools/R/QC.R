@@ -2635,10 +2635,11 @@ function(dfile)
         out$bad_maintainer <- val
 
     ## Optional entries in DESCRIPTION:
-    ##   Depends/Suggests, Namespace, Priority.
+    ##   Depends/Suggests/Imports, Namespace, Priority.
     ## These must be correct if present.
 
-    val <- db[match(c("Depends", "Suggests"), names(db), nomatch = 0)]
+    val <- db[match(c("Depends", "Suggests", "Imports"),
+                    names(db), nomatch = 0)]
     if(length(val)) {
         depends <- .strip_whitespace(unlist(strsplit(val, ",")))
         bad_dep_entry <- bad_dep_op <- bad_dep_version <- character()
