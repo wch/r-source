@@ -27,7 +27,7 @@ function(y, groups, blocks, ...)
     n <- nrow(y)
     r <- t(apply(y, 1, rank))
     TIES <- tapply(r, row(r), table)
-    STATISTIC <- ((12 * sum((apply(r, 2, sum) - n * (k + 1) / 2)^2)) /
+    STATISTIC <- ((12 * sum((colSums(r) - n * (k + 1) / 2)^2)) /
                   (n * k * (k + 1)
                    - (sum(unlist(lapply(TIES, function (u) {u^3 - u}))) /
                       (k - 1))))

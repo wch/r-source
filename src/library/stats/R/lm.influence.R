@@ -9,7 +9,7 @@ hat <- function(x, intercept = TRUE)
 	n <- nrow(x)
 	x <- qr(x)
     }
-    apply(qr.qy(x, diag(1, nrow = n, ncol = x$rank))^2, 1, sum)
+    rowSums(qr.qy(x, diag(1, nrow = n, ncol = x$rank))^2)
 }
 
 weighted.residuals <- function(obj, drop0 = TRUE)

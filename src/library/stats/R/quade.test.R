@@ -32,7 +32,7 @@ function(y, groups, blocks, ...)
     ## S is a matrix of ranks within blocks (minus the average rank)
     ## multiplied by the ranked ranges of the blocks
     A <- sum(s^2)
-    B <- sum(apply(s, 2, sum)^2) / b
+    B <- sum(colSums(s)^2) / b
     if(A == B) {
         ## Treat zero denominator case as suggested by Conover (1999),
         ## p.374.
