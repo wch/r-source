@@ -40,7 +40,7 @@ library flags necessary for linking against R.
 
 Options:
   -h, --help            print short help message and exit
-  -v, --version         print version info and exit
+  -v, --version         print 'config' version info and exit
       --cppflags        print pre-processor flags required to compile
                         a program using R as a shared library
       --ldflags         print linker flags needed for linking against

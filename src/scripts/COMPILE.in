@@ -21,7 +21,7 @@ are supported.
 
 Options:
   -h, --help		print short help message and exit
-  -v, --version		print version info and exit
+  -v, --version		print COMPILE version info and exit
 
 Other options of the form '-DMACRO' or 'VAR=VALUE' are passed on to the
 compilation.
