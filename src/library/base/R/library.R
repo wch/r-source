@@ -895,7 +895,7 @@ manglePackageName <- function(pkgName, pkgVersion)
 }
 
 .getRequiredPackages2 <-
-    function(pkgInfo, quietly = FALSE, lib.loc = NULL, useImports = FALSE)
+function(pkgInfo, quietly = FALSE, lib.loc = NULL, useImports = FALSE)
 {
     pkgs <- names(pkgInfo$Depends)
     if (length(pkgs)) {
@@ -913,8 +913,8 @@ manglePackageName <- function(pkgName, pkgVersion)
                              call. = FALSE, domain = NA)
                     current <- .readRDS(pfile)$DESCRIPTION["Version"]
                     if (!eval(parse(text=paste("current", z$op, "z$version"))))
-                        stop("package '%s' %s was found, but %s %s is required by '%s'",
-                             pkg, current, z$op, z$version, pkgname,
+                        stop(gettextf("package '%s' %s was found, but %s %s is required by '%s'",
+                             pkg, current, z$op, z$version, pkgname),
                              call. = FALSE, domain = NA)
                 }
 
@@ -931,8 +931,8 @@ manglePackageName <- function(pkgName, pkgVersion)
                                          package = pkg, lib.loc = lib.loc)
                     current <- .readRDS(pfile)$DESCRIPTION["Version"]
                     if (!eval(parse(text=paste("current", z$op, "z$version"))))
-                        stop("package '%s' %s is loaded, but %s %s is required by '%s'",
-                             pkg, current, z$op, z$version, pkgname,
+                        stop(gettextf("package '%s' %s is loaded, but %s %s is required by '%s'",
+                             pkg, current, z$op, z$version, pkgname),
                              call. = FALSE, domain = NA)
                 }
             }
