@@ -29,7 +29,6 @@
 extern "C" {
 #endif
 
-#include <R.h>
 #include <Rinternals.h>
 
   /* Context information controlling how the conversion is performed, passed 
