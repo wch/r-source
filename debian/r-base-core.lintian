@@ -12,6 +12,7 @@ r-base-core: file-missing-in-md5sums usr/lib/R/library/base/html/as.function.htm
 r-base-core: file-missing-in-md5sums usr/bin/R
 r-base-core: file-missing-in-md5sums usr/lib/R/library/base/html/update.packages.html
 r-base-core: file-missing-in-md5sums usr/lib/R/library/base/help/make.packages.html
+r-base-core: file-missing-in-md5sums usr/lib/R/library/utils/help/make.packages.html
 r-base-core: extra-license-file usr/lib/R/library/base/help/license
 r-base-core: image-file-in-usr-lib usr/lib/R/doc/html/left.jpg
 r-base-core: image-file-in-usr-lib usr/lib/R/doc/html/logo.jpg

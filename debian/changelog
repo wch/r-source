@@ -1,3 +1,100 @@
+r-base (1.8.1.cvs.20040331-1) unstable; urgency=low
+
+  * Upgraded to beta release candidate 2004-03-31 of R 1.9.0
+
+ -- Dirk Eddelbuettel <edd@debian.org>  Thu,  1 Apr 2004 14:50:52 -0600
+
+r-base (1.8.1.cvs.20040321-1) unstable; urgency=low
+
+  * Upgraded to beta release candidate 2004-03-21 of R 1.9.0
+
+ -- Dirk Eddelbuettel <edd@debian.org>  Sun, 21 Mar 2004 18:35:03 -0600
+
+r-base (1.8.1.cvs.20040314-1) unstable; urgency=low
+
+  * Upgraded to release candidate 2004-03-14 of R 1.9.0
+
+ -- Dirk Eddelbuettel <edd@debian.org>  Sun, 14 Mar 2004 17:37:03 -0600
+
+r-base (1.8.1.cvs.20040307-1) unstable; urgency=low
+
+  * Upgraded to release candidate 2004-03-07 of R 1.9.0
+
+ -- Dirk Eddelbuettel <edd@debian.org>  Sun,  7 Mar 2004 08:29:00 -0600
+
+r-base (1.8.1.cvs.20040229-2) unstable; urgency=low
+
+  * debian/control: Declare Replaces: r-recommended as well for r-base-html
+    and r-base-latex as they contain parts of 'grid' which used to be in
+    r-recommended, but is now in r-base-core and these two (Closes: #235891)
+  
+  * debian/rules: Do not ship usr/share/info/dir(.old) (Closes: #235713)
+
+ -- Dirk Eddelbuettel <edd@debian.org>  Tue,  2 Mar 2004 20:33:18 -0600
+
+r-base (1.8.1.cvs.20040229-1) unstable; urgency=low
+
+  * Upgraded to release candidate 2004-02-29 of R 1.9.0
+  
+  * debian/rules changes to configure call
+     --without-r-recommended (as r-recommended is now a meta-package)
+     --with-bzlib to override default of no
+     --with-pcre to override default of no
+     --with-zlib to override default of no
+     R_BROWSER=sensible-browser to not depend on mozilla
+
+  * debian/control: r-base-core Replace r-recommended (<= 1.8.1-1) as 
+    the grid package moved 
+  
+  * debian/control: r-recommended is now a metapackage that depends on the
+    individual packages which are now part of the Debian distribution; 
+    and added appropriate Depends for all of them
+  * debian/rules: Hence 'configure [...] --without-recommended-packages	[...]'
+  * debian/control: Added Conflicts: r-recommended (<< 1.9.0) to r-base-core
+  
+  * debian/rules: In make-arch target, now call "make docs" with 
+    R_CMD_BUILD_HELP_OPTS="--txt --example" to build only the documentation 
+    needed for binary-arch targets (thanks to Kurt Hornik for enabling this)
+  
+  * debian/rules: configure with PAGER=/usr/bin/pager as all the good
+    reasons pointed out in #230524 regarding octave2.1 apply to R too
+  
+  * debian/control: Depends for r-base-dev changed from the imperfect 
+    "g77 | f2c" to to "g77 | m68k, f2c | not+m68k, type-handling" with 
+    thanks to Wouter Verhelst
+  
+  * debian/control: Changed Build-Depends from 'blas-dev (>=1.0-9),lapack-dev'
+     to 'refblas3-dev | atlas3-base-dev, lapack3-dev | atlas3-base-dev'
+  * debian/control: Dito for Depends: for r-base-dev 
+  * debian/rules: Set configure arguments for refblas3/atlas3 and 
+    lapack3/atlas3, respectively, instead of blas/atlas v2.
+
+ -- Dirk Eddelbuettel <edd@debian.org>  Sun, 29 Feb 2004 16:55:55 -0600
+
+r-base (1.8.1-2) unstable; urgency=low
+
+  * debian/control: Added to Build-Depends
+     libpaper-utils for paperconf
+     libjpeg62-dev for jpeg (thanks to Kurt Hornik for the suggestion)
+     libprce3-dev for pcre
+     linpng12-dev for png
+     zlib1g-dev for zlib
+    
+  * debian/control: Added to Depends for r-base-dev
+     libjpeg62-dev, libpcre3-dev  (thanks to Kurt Hornik for the suggestion)
+
+ -- Dirk Eddelbuettel <edd@debian.org>  Mon, 19 Jan 2004 10:45:47 -0600
+  
+r-base (1.8.1-1) unstable; urgency=low
+
+  * Upgraded to version 1.8.1 released today
+  
+  * debian/control: Move r-base-html and r-base-latex from the Depends: for
+    r-base to Recommends: as one cannot depend on packages of lower priority
+  * debian/rules: Use --without-blas on arm
+
+ -- Dirk Eddelbuettel <edd@debian.org>  Fri, 21 Nov 2003 10:09:48 -0600
+
 r-base (1.8.0.cvs.20031114-1) unstable; urgency=low
 
   * Upgraded to the initial 1.8.1 beta release of 2003-11-14
