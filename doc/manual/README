@@ -1,0 +1,28 @@
+The version of Rd.sty here uses url.sty. This is normally installed,
+and can be obtained from any CTAN node or mirror: see
+
+	http://www.tug.org/ctan.html
+
+
+The Reference manual is made using the ae virtual fonts package. If
+you do not have that available, you can get it from CTAN, or set the
+macro AE, for example
+
+	make AE=. dvi 
+
+but the latin1 characters in text.Rd (and a few other places) will be
+missing.  The ae font package provides a reasonable approximation.
+You will get better rendition by using a Rd.cfg containing
+
+\usepackage[T1]{fontenc}
+
+BUT you cannot use t1 postscript fonts with that setting.
+
+
+Support for making PDF versions of the manuals is currently
+experimental.  You will need pdftex and the hyperref package (and ae,
+see above).  Hyperref versions 6.56 and 6.67 are known to work.
+
+
+For Windows builds you may need to alter the TEXINPUTS.  The examples
+in Makefile.win work with fptex.
