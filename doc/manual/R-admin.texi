@@ -860,7 +860,7 @@ is to search for @command{g77}, @command{f77}, @command{xlf},
 @command{af77}, @command{fort77}, @command{f90}, @command{xlf90},
 @command{pgf90}, @command{epcf90}, @command{f95}, @command{xlf95},
 @command{lf9}5, @command{g95}, and @command{fc} (in that
-order)@footnote{On HPUX @command{fort77} is the @acronym{POSIX}
+order)@footnote{On HP-UX @command{fort77} is the @acronym{POSIX}
 compliant FORTRAN compiler, and comes second in the search list.}, and
 then for @command{f2c}, and use whichever is found first; if none is
 found, @R{} cannot be compiled.  The search mechanism can be changed
@@ -1030,7 +1030,7 @@ of compilers and support libraries.
 @menu
 * MacOS X::                     
 * Solaris::                     
-* HPUX::                        
+* HP-UX::                        
 * IRIX::                        
 * Alpha/OSF1::                  
 * Alpha/FreeBSD::               
@@ -1056,7 +1056,7 @@ binary distribution and needed to be installed directly; for example for
 fink install g77
 @end smallexample
 
-@node Solaris, HPUX, MacOS X, Platform notes
+@node Solaris, HP-UX, MacOS X, Platform notes
 @subsection Solaris on Sparc
 
 @R{} has been built successfully on Solaris 2.7 aka Solaris 7 aka SunOS
@@ -1148,21 +1148,28 @@ you may need to set it to avoid finding 32-bit addons (as in the
 @c and the cure is to compile @file{src/main/arithmetic.c} without
 @c optimization.
 
-@node HPUX, IRIX, Solaris, Platform notes
-@subsection HPUX
+@node HP-UX, IRIX, Solaris, Platform notes
+@subsection HP-UX
 
-@R{} has been built successfully on HPUX 10.2 and HPUX 11.0 using both
+@R{} has been built successfully on HP-UX 10.2 and HP-UX 11.0 using both
 native compilers and @command{gcc}.  However, 10.2 has not been tested
 since R 1.4.0.  By default, R is configured to use @command{gcc} and
-@command{g77} on HPUX (if available).  Some installations of
+@command{g77} on HP-UX (if available).  Some installations of
 @command{g77} only install a static version of the @command{g2c} library
 that cannot be linked into a shared library since its files have not
 been compiled with the appropriate flag for producing position
 independent code (@acronym{PIC}).  This will result in @command{make}
-failing with a linker error complaining that code needs to be compiled
-with a @option{+z} or @option{+Z} flag, the native @command{cc}
-@acronym{PIC} flag.  If this is the case you either need to modify your
-@command{g77} installation or configure with
+failing with a linker error similar to
+
+@smallexample
+ld: CODE_ONE_SYM fixup to non-code subspace in file foo.o - 
+shared library must be position independent. Use +z or +Z to recompile.
+@end smallexample
+
+@noindent
+(@option{+z} and @option{+Z} are the @acronym{PIC} flags for the native
+compiler @command{cc}.)  If this is the case you either need to modify
+your @command{g77} installation or configure with
 
 @smallexample
 F77=fort77
@@ -1172,10 +1179,22 @@ F77=fort77
 to specify use of the native @acronym{POSIX}-compliant FORTRAN 77
 compiler.
 
-You may find that @command{configure} detects other libraries, such as
-BLAS, that R needs to use as shared libraries but are only available as
-static libraries.  If you cannot install shared versions you will need
-to tell @command{configure} not to use these libraries.
+You may find that @command{configure} detects other libraries that R
+needs to use as shared libraries but are only available as static
+libraries.  If you cannot install shared versions you will need to tell
+@command{configure} not to use these libraries, or make sure they are
+not in the library path.  The symptom will the linker error shown in the
+last paragraph.  Static libraries that might be found and would cause
+problems are
+@smallexample
+BLAS                   use --without-blas
+Tcl/Tk                 use --without-tcltk
+GNOME                  not built by default
+libpng  jpeg  zlib     (need not to be in the path) 
+@end smallexample
+@noindent
+and @code{bzip2} and @code{pcre} are problematic when building
+@file{libR.so}, only.
 
 Some versions of @command{gcc} may contain what appears to be a bug at
 the @option{-O2} optimization level that causes
@@ -1192,12 +1211,12 @@ which will cause @command{make check} to fail.  If this is the case, you
 should use @code{CFLAGS} to specify @option{-O} as the optimization
 level to use.
 
-Some systems running HPUX 11.0 may have a @command{gcc} that was
-installed under HPUX 10.2.  Between versions 10.2 and 11.0 HPUX changed
+Some systems running HP-UX 11.0 may have a @command{gcc} that was
+installed under HP-UX 10.2.  Between versions 10.2 and 11.0 HP-UX changed
 its support functions for @acronym{IEEE} arithmetic from the recommended
 functions of the @acronym{IEEE} standard to the ones specified in the
 C9x draft standard.  In particular, this means that @code{finite} has
-been replaced by @code{isfinite}.  A @command{gcc} configured for HPUX
+been replaced by @code{isfinite}.  A @command{gcc} configured for HP-UX
 10.2 run on 11.0 will not find @code{isfinite}, and as a result
 @command{configure} does not recognize the machine as fully supporting
 @acronym{IEEE} arithmetic and does not define @code{IEEE_754} when
@@ -1221,7 +1240,7 @@ add this directory to the linker path via the configure variable
 LDFLAGS=/opt/fortran90/lib}).
 
 
-@node IRIX, Alpha/OSF1, HPUX, Platform notes
+@node IRIX, Alpha/OSF1, HP-UX, Platform notes
 @subsection IRIX
 
 @R{} has been built successfully on IRIX64 6.5 using
