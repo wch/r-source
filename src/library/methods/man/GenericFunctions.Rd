@@ -162,7 +162,7 @@ callGeneric(\dots)
   environment (i.e., use the search list), or the namespace of a
   package from which the call came.  It is important to supply this
   argument when calling any of these functions indirectly.  With
-  package namespaces, the default is likely to be wrong in such calls.
+  package namespaces, the default is likely to be wrong in such calls.}
 
   \item{signature}{ The class signature of the relevant method.  A
     signature is a named or unnamed vector of character strings.  If
