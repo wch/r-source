@@ -69,6 +69,8 @@ BUG FIXES
 
     o	rbind.data.frame caused character-to-factor coercion a bit too often
 
+    o	couple of messups in dotplot
+
 
 		CHANGES IN R VERSION 0.63
 
