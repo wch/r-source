@@ -1,7 +1,7 @@
-R 1.2.1 for Windows
+R 1.2.2 for Windows
 ====================
 
-This distribution contains the sources to build a port of R-1.2.1 to
+This distribution contains the sources to build a port of R-1.2.2 to
 run on Windows 95, 98, ME, NT4 and 2000 on Intel/clone chips. See the
 file `readme' for fuller details, including how to install the binary
 versions.
@@ -69,12 +69,12 @@ appropriate environment variables set.
 Building
 --------
 
-You also need: the R source (R-1.2.1.tgz), and to build the
+You also need: the R source (R-1.2.2.tgz), and to build the
 installer, unzip541.zip or unzip542.zip from any Info-ZIP mirror.
 
-Then: untar R-1.2.1.tgz somewhere (with no spaces in the path names),
+Then: untar R-1.2.2.tgz somewhere (with no spaces in the path names),
 
-	cd /somewhere/R-1.2.1/src/gnuwin32
+	cd /somewhere/R-1.2.2/src/gnuwin32
 
 IMPORTANT: edit MkRules to set the appropriate paths as needed.  If
 you have Mingw32/cross-compiler and gcc-2.95.2.1 or later you can set
@@ -87,11 +87,11 @@ and run
 	make BUILD=MINGW32 or CYGWIN
 
 
-Note 1: the file rw1022\unzip\unzip32.dll is not in the source
+Note 1: the file rw1023\unzip\unzip32.dll is not in the source
 distribution. It can be found in file unz542dN.zip at any Info-ZIP
 mirror, or you can copy it from a binary distribution.
 
-The file rw1022\bin\Rchtml.dll is only built if CHM help is specified
+The file rw1023\bin\Rchtml.dll is only built if CHM help is specified
 in the main Makefile. Its source is the help directory, and you need
 the HTML Help Workshop files to build it. It contains instructions
 to build it under VC++6, and it is preferable to use that as the 
@@ -121,7 +121,7 @@ temporary directory: the default is c:\TEMP.
 Building bitmap device support
 ------------------------------
 
-The file rw1022\bin\Rbitmap.dll is not built automatically:
+The file rw1023\bin\Rbitmap.dll is not built automatically:
 instructions on how to build it are in the file bitmap\INSTALL.  You
 can just copy this from a binary distribution.
 
@@ -167,12 +167,12 @@ cross-built version of binutils 2.9.4.
 
 You will need Perl, zip and unzip installed.
 
-You also need: the R source (R-1.2.1.tgz), and to build the installer,
+You also need: the R source (R-1.2.2.tgz), and to build the installer,
 unzip542.zip from any Info-ZIP mirror.
 
-Then: untar R-1.2.1.tgz somewhere, and
+Then: untar R-1.2.2.tgz somewhere, and
 
-	cd /somewhere/R-1.2.1/src/gnuwin32
+	cd /somewhere/R-1.2.2/src/gnuwin32
 
 Edit MkRules to set BUILD=CROSS and the appropriate paths (including
 HEADER) as needed.  With our set of cross-compilers you can uncomment
