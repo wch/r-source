@@ -1415,9 +1415,9 @@ static Rboolean GA_Open(NewDevDesc *dd, gadesc *xd, char *dsp,
     if (!dsp[0]) {
 	if (!setupScreenDevice(dd, xd, w, h, recording, resize)) 
 	    return FALSE;
-    } else if (!strcmp(dsp, "win.print")) {
+    } else if (!strncmp(dsp, "win.print:", 10)) {
 	xd->kind = PRINTER;
-	xd->gawin = newprinter(MM_PER_INCH * w, MM_PER_INCH * h);
+	xd->gawin = newprinter(MM_PER_INCH * w, MM_PER_INCH * h, &dsp[10]);
 	if (!xd->gawin)
 	    return FALSE;
     } else if (!strncmp(dsp, "png:", 4) || !strncmp(dsp,"bmp:", 4)) {
@@ -1440,7 +1440,7 @@ static Rboolean GA_Open(NewDevDesc *dd, gadesc *xd, char *dsp,
 	    warning("Unable to allocate bitmap");
 	    return FALSE;
 	}  
-	if ((xd->fp = fopen(&dsp[4],"wb")) == NULL) {
+	if ((xd->fp = fopen(&dsp[4], "wb")) == NULL) {
 	    del(xd->gawin);
 	    warning("Unable to open file `%s' for writing", &dsp[4]);
 	    return FALSE;

@@ -101,7 +101,7 @@ image  bitmaptoimage(bitmap bm);
 
 /* printer.c  */
 typedef objptr printer;
-printer newprinter(double w,  double h);
+printer newprinter(double w,  double h, char *name);
 void    nextpage();
 
 /* metafile.c */

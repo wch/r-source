@@ -19,8 +19,9 @@ windows <- function(width = 7, height = 7, pointsize = 12,
 win.graph <- function(width = 7, height = 7, pointsize = 12)
     .Internal(devga("", width, height, pointsize, FALSE, 1, NA, NA, "white", 1))
 
-win.print <- function(width = 7, height = 7, pointsize = 12)
-    .Internal(devga("win.print", width, height, pointsize, FALSE, 1,
+win.print <- function(width = 7, height = 7, pointsize = 12, printer = "")
+    .Internal(devga(paste("win.print:", printer, sep=""),
+                    width, height, pointsize, FALSE, 1,
                     NA, NA, "white", 1))
 
 win.metafile <- function(filename = "", width = 7, height = 7, pointsize = 12)

@@ -19,7 +19,7 @@ win.graph(width = 7, height = 7, pointsize = 12)
 x11(width = 7, height = 7, pointsize = 12)
 X11(width = 7, height = 7, pointsize = 12)
 win.metafile(filename = "", width = 7, height = 7, pointsize = 12)
-win.print(width = 7, height = 7, pointsize = 12)
+win.print(width = 7, height = 7, pointsize = 12, printer = "")
 }
 
 \arguments{
@@ -42,6 +42,8 @@ win.print(width = 7, height = 7, pointsize = 12)
     \code{\link{options}("gamma"}, or is 1 (no correction) if that is
     unset.  It sets \code{par("gamma")} for the device.
   }
+  \item{printer}{The name of a printer as known to Windows. The default
+    causes a dialog box to come for the user to choose a printer.}
 }
 
 \description{

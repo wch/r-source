@@ -11,6 +11,8 @@ There are no new Windows-specific features in this release: it has been
 modified to work better on Windows XP and a number of workarounds added.
 
 
+win.print() allows a printer to be specified.
+
 Very small circles are now forced to be visible: not all Windows
 versions would display them.
 
