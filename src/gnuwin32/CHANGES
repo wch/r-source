@@ -68,6 +68,8 @@ control word: see ?dyn.load for the details.
 Changed Windows README to README.rw1062, included standard README
 and RESOURCES file in binary distribution.
 
+Printing and copying now preserve the active graphics device.
+
 
 
 rw1061

@@ -174,7 +174,7 @@ BUG FIXES
 	even when there are possible resolutions in other packages.
 
     o	If readBin(what=character()) is used incorrectly on a file which
-	does not contain C-style charcter strings, warnings (usually
+	does not contain C-style character strings, warnings (usually
 	many) are now given.
 
     o	Building libR.so with the zlib in the R sources was not
@@ -184,6 +184,16 @@ BUG FIXES
 	119 chars both on Unix and Windows.  The limit is now 8096 and
 	documented.  On Unix (only) every 120th character used to be 
 	discarded.
+
+    o	plot.POSIX[cl]t were not passing graphics parameters on to
+	axis.POSIXct.
+
+    o	On some HP-UX systems, installed scripts were not executable
+	when using the BSD-compatible install system program found by
+	configure.  We now always use install-sh on HP-UX. (PR#2091)
+
+    o   c() was converting NA names to "NA": now proper NA strings are
+	used wherever possible. (PR#2358)
 
 
 

@@ -316,14 +316,14 @@ axis.POSIXct <- function(side, x, at, format, ...)
 plot.POSIXct <- function(x, y, xlab = "", xaxt = par("xaxt"), ...)
 {
     plot.default(x, y, xaxt = "n", xlab = xlab, ...)
-    if(xaxt != "n") axis.POSIXct(1, x)
+    if(xaxt != "n") axis.POSIXct(1, x, ...)
 }
 
 plot.POSIXlt <- function(x, y, xlab = "",  xaxt = par("xaxt"), ...)
 {
     x <- as.POSIXct(x)
     plot.default(x, y, xaxt = "n", xlab = xlab, ...)
-    if(xaxt != "n") axis.POSIXct(1, x)
+    if(xaxt != "n") axis.POSIXct(1, x, ...)
 }
 
 ISOdatetime <- function(year, month, day, hour, min, sec, tz="")

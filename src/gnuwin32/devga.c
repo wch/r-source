@@ -142,7 +142,7 @@ typedef struct {
     int npage;
     double w, h;
   /* Used to rescale font size so that bitmap devices have 72dpi */
-    int truedpi, wanteddpi; 
+    int truedpi, wanteddpi;
     rgb   fgcolor;		/* Foreground color */
     rgb   bgcolor;		/* Background color */
     rgb   canvascolor;		/* Canvas color */
@@ -187,7 +187,7 @@ static void GA_Activate(NewDevDesc *dd);
 static void GA_Circle(double x, double y, double r,
 		      int col, int fill, double gamma, int lty, double lwd,
 		      NewDevDesc *dd);
-static void GA_Clip(double x0, double x1, double y0, double y1, 
+static void GA_Clip(double x0, double x1, double y0, double y1,
 		     NewDevDesc *dd);
 static void GA_Close(NewDevDesc *dd);
 static void GA_Deactivate(NewDevDesc *dd);
@@ -201,10 +201,10 @@ static void GA_MetricInfo(int c, int font, double cex, double ps,
 			  double* width, NewDevDesc *dd);
 static void GA_Mode(int mode, NewDevDesc *dd);
 static void GA_NewPage(int fill, double gamma, NewDevDesc *dd);
-static void GA_Polygon(int n, double *x, double *y, 
+static void GA_Polygon(int n, double *x, double *y,
 		       int col, int fill, double gamma, int lty, double lwd,
 		       NewDevDesc *dd);
-static void GA_Polyline(int n, double *x, double *y, 
+static void GA_Polyline(int n, double *x, double *y,
 			int col, double gamma, int lty, double lwd,
 			NewDevDesc *dd);
 static void GA_Rect(double x0, double y0, double x1, double y1,
@@ -216,11 +216,11 @@ static void GA_Size(double *left, double *right,
 static void GA_Resize(NewDevDesc *dd);
 static double GA_StrWidth(char *str, int font,
 			  double cex, double ps, NewDevDesc *dd);
-static void GA_Text(double x, double y, char *str, 
-		    double rot, double hadj, 
+static void GA_Text(double x, double y, char *str,
+		    double rot, double hadj,
 		    int col, double gamma, int font, double cex, double ps,
 		    NewDevDesc *dd);
-static Rboolean GA_Open(NewDevDesc*, gadesc*, char*, double, double, 
+static Rboolean GA_Open(NewDevDesc*, gadesc*, char*, double, double,
 			Rboolean, int, int, double);
 
 	/********************************************************/
@@ -244,6 +244,7 @@ static void SaveAsBitmap(NewDevDesc *dd);
 static void PrivateCopyDevice(NewDevDesc *dd, NewDevDesc *ndd, char *name)
 {
     GEDevDesc* gdd;
+    int saveDev = curDevice();
     gadesc *xd = (gadesc *) dd->deviceSpecific;
     gsetcursor(xd->gawin, WatchCursor);
     gsetVar(install(".Device"),
@@ -252,6 +253,7 @@ static void PrivateCopyDevice(NewDevDesc *dd, NewDevDesc *ndd, char *name)
     addDevice((DevDesc*) gdd);
     GEcopyDisplayList(devNumber((DevDesc*) dd));
     KillDevice((DevDesc*) gdd);
+    selectDevice(saveDev);
 /*    KillDevice(GetDevice(devNumber((DevDesc*) ndd))); */
     gsetcursor(xd->gawin, ArrowCursor);
     show(xd->gawin);
@@ -270,12 +272,12 @@ static void SaveAsWin(NewDevDesc *dd, char *display)
 	R_ShowMessage("No device available to copy graphics window");
 	return;
     }
-    
+
     ndd->displayList = R_NilValue;
     if (GADeviceDriver(ndd, display,
-		       fromDeviceWidth(toDeviceWidth(1.0, GE_NDC, gdd), 
+		       fromDeviceWidth(toDeviceWidth(1.0, GE_NDC, gdd),
 				       GE_INCHES, gdd),
-		       fromDeviceHeight(toDeviceHeight(-1.0, GE_NDC, gdd), 
+		       fromDeviceHeight(toDeviceHeight(-1.0, GE_NDC, gdd),
 					GE_INCHES, gdd),
 		       ((gadesc*) dd->deviceSpecific)->basefontsize,
 		       0, 1, White, 1))
@@ -288,7 +290,7 @@ static void SaveAsPostscript(NewDevDesc *dd, char *fn)
     SEXP s = findVar(install(".PostScript.Options"), R_GlobalEnv);
     NewDevDesc *ndd = (NewDevDesc *) calloc(1, sizeof(NewDevDesc));
     GEDevDesc* gdd = (GEDevDesc*) GetDevice(devNumber((DevDesc*) dd));
-    char family[256], encoding[256], paper[256], bg[256], fg[256], 
+    char family[256], encoding[256], paper[256], bg[256], fg[256],
 	**afmpaths = NULL;
 
     if (!ndd) {
@@ -332,11 +334,11 @@ static void SaveAsPostscript(NewDevDesc *dd, char *fn)
 	    }
 	}
     }
-    if (PSDeviceDriver((DevDesc *) ndd, 
+    if (PSDeviceDriver((DevDesc *) ndd,
 		       fn, paper, family, afmpaths, encoding, bg, fg,
-		       fromDeviceWidth(toDeviceWidth(1.0, GE_NDC, gdd), 
+		       fromDeviceWidth(toDeviceWidth(1.0, GE_NDC, gdd),
 				       GE_INCHES, gdd),
-		       fromDeviceHeight(toDeviceHeight(-1.0, GE_NDC, gdd), 
+		       fromDeviceHeight(toDeviceHeight(-1.0, GE_NDC, gdd),
 					GE_INCHES, gdd),
 		       (double)0, ((gadesc*) dd->deviceSpecific)->basefontsize,
 		       0, 1, 0, ""))
@@ -389,9 +391,9 @@ static void SaveAsPDF(NewDevDesc *dd, char *fn)
 	}
     }
     if (PDFDeviceDriver((DevDesc *) ndd, fn, family, encoding, bg, fg,
-			fromDeviceWidth(toDeviceWidth(1.0, GE_NDC, gdd), 
+			fromDeviceWidth(toDeviceWidth(1.0, GE_NDC, gdd),
 					GE_INCHES, gdd),
-			fromDeviceHeight(toDeviceHeight(-1.0, GE_NDC, gdd), 
+			fromDeviceHeight(toDeviceHeight(-1.0, GE_NDC, gdd),
 					 GE_INCHES, gdd),
 			((gadesc*) dd->deviceSpecific)->basefontsize, 1))
 	PrivateCopyDevice(dd, ndd, "PDF");
@@ -503,7 +505,7 @@ static int SetBaseFont(gadesc *xd)
     xd->fontsize = xd->basefontsize;
     xd->fontangle = 0.0;
     xd->usefixed = FALSE;
-    xd->font = gnewfont(xd->gawin, fontname[0], fontstyle[0], 
+    xd->font = gnewfont(xd->gawin, fontname[0], fontstyle[0],
 			MulDiv(xd->fontsize, xd->wanteddpi, xd->truedpi), 0.0);
     if (!xd->font) {
 	xd->usefixed= TRUE;
@@ -702,8 +704,8 @@ static void menufilebitmap(control m)
       fn = askfilesave("Portable network graphics file", "");
     } else if (m==xd->mbmp) {
       setuserfilter("Windows bitmap files (*.bmp)\0*.bmp\0\0");
-      fn = askfilesave("Windows bitmap file", "");      
-    } else { 
+      fn = askfilesave("Windows bitmap file", "");
+    } else {
       setuserfilter("Jpeg files (*.jpeg,*jpg)\0*.jpeg;*.jpg\0\0");
       fn = askfilesave("Jpeg file", "");
     }
@@ -850,7 +852,7 @@ static SEXP NewPlotHistory(int n)
 	SET_VECTOR_ELT(pHISTORY, i, R_NilValue);
     PROTECT(class = allocVector(STRSXP, 1));
     SET_STRING_ELT(class, 0, mkChar("SavedPlots"));
-    classgets(vDL, class);    
+    classgets(vDL, class);
     SETDL;
     UNPROTECT(7);
     return vDL;
@@ -897,7 +899,7 @@ static void AddtoPlotHistory(SEXP snapshot, int replace)
     PROTECT(snapshot);
     PROTECT(class = allocVector(STRSXP, 1));
     SET_STRING_ELT(class, 0, mkChar("recordedplot"));
-    classgets(snapshot, class);    
+    classgets(snapshot, class);
     SET_VECTOR_ELT(pHISTORY, where, snapshot);
     pCURRENTPOS = where;
     if (!replace) pNUMPLOTS += 1;
@@ -1204,9 +1206,9 @@ static void devga_sbf(control c, int pos)
 }
 
 
-static int 
-setupScreenDevice(NewDevDesc *dd, gadesc *xd, double w, double h, 
-		  Rboolean recording, int resize) 
+static int
+setupScreenDevice(NewDevDesc *dd, gadesc *xd, double w, double h,
+		  Rboolean recording, int resize)
 {
     menu  m;
     int   iw, ih;
@@ -1254,17 +1256,17 @@ setupScreenDevice(NewDevDesc *dd, gadesc *xd, double w, double h,
 	int btsize = 24;
 	rect r = rect(2, 2, btsize, btsize);
 	control bt, tb;
-    
+
 	MCHECK(tb = newtoolbar(btsize + 4));
 	gsetcursor(tb, ArrowCursor);
 	addto(tb);
-    
+
 	MCHECK(bt = newtoolbutton(cam_image, r, menuclpwm));
 	MCHECK(addtooltip(bt, "Copy to the clipboard as a metafile"));
 	gsetcursor(bt, ArrowCursor);
 	setdata(bt, (void *) dd);
 	r.x += (btsize + 6);
-    
+
 	MCHECK(bt = newtoolbutton(print_image, r, menuprint));
 	MCHECK(addtooltip(bt, "Print"));
 	gsetcursor(bt, ArrowCursor);
@@ -1295,7 +1297,7 @@ setupScreenDevice(NewDevDesc *dd, gadesc *xd, double w, double h,
     MCHECK(m = newmenuitem("Stop", 0, menustop));
     setdata(m, (void *) dd);
     MCHECK(newmenuitem("Continue", 0, NULL));
-  
+
     /* Normal menubar */
     MCHECK(xd->mbar = newmenubar(mbarf));
     MCHECK(m = newmenu("File"));
@@ -1358,7 +1360,7 @@ setupScreenDevice(NewDevDesc *dd, gadesc *xd, double w, double h,
     setdata(m, (void *) dd);
     gchangepopup(xd->gawin, xd->grpopup);
 
-    MCHECK(xd->bm = newbitmap(getwidth(xd->gawin), getheight(xd->gawin), 
+    MCHECK(xd->bm = newbitmap(getwidth(xd->gawin), getheight(xd->gawin),
 			      getdepth(xd->gawin)));
     gfillrect(xd->gawin, xd->outcolor, getrect(xd->gawin));
     gfillrect(xd->bm, xd->outcolor, getrect(xd->bm));
@@ -1424,7 +1426,7 @@ static Rboolean GA_Open(NewDevDesc *dd, gadesc *xd, char *dsp,
     xd->xshift = xd->yshift = 0;
     xd->npage = 0;
     if (!dsp[0]) {
-	if (!setupScreenDevice(dd, xd, w, h, recording, resize)) 
+	if (!setupScreenDevice(dd, xd, w, h, recording, resize))
 	    return FALSE;
     } else if (!strncmp(dsp, "win.print:", 10)) {
 	xd->kind = PRINTER;
@@ -1444,7 +1446,7 @@ static Rboolean GA_Open(NewDevDesc *dd, gadesc *xd, char *dsp,
 	    return FALSE;
 	}
 	/*
-	  Observe that given actual graphapp implementation 256 is 
+	  Observe that given actual graphapp implementation 256 is
 	  irrelevant,i.e., depth of the bitmap is the one of graphic card
 	  if required depth > 1
 	*/
@@ -1474,7 +1476,7 @@ static Rboolean GA_Open(NewDevDesc *dd, gadesc *xd, char *dsp,
 	if((xd->gawin = newbitmap(w, h, 256)) == NULL) {
 	    warning("Unable to allocate bitmap");
 	    return FALSE;
-	}  
+	}
 	sprintf(buf, xd->filename, 1);
 	if ((xd->fp = fopen(buf, "wb")) == NULL) {
 	    del(xd->gawin);
@@ -1511,7 +1513,7 @@ static Rboolean GA_Open(NewDevDesc *dd, gadesc *xd, char *dsp,
 	}
     }
     xd->truedpi = devicepixelsy(xd->gawin);
-    if ((xd->kind == PNG) || (xd->kind == JPEG) || (xd->kind == BMP)) 
+    if ((xd->kind == PNG) || (xd->kind == JPEG) || (xd->kind == BMP))
       xd->wanteddpi = 72 ;
     else
       xd->wanteddpi = xd->truedpi;
@@ -1624,7 +1626,7 @@ static void GA_Resize(NewDevDesc *dd)
     SEXP scale;
     PROTECT(scale = allocVector(REALSXP, 1));
     if (xd->resize) {
-	int   iw, ih, iw0 = dd->right - dd->left, 
+	int   iw, ih, iw0 = dd->right - dd->left,
 	    ih0 = dd->bottom - dd->top;
 	double fw, fh, rf, shift;
 
@@ -1671,19 +1673,19 @@ static void GA_Resize(NewDevDesc *dd)
 	    }
 	    xd->clip = getregion(xd);
 	} else if (xd->resizing == 3) {
-	    if(iw0 < iw) shift = (iw - iw0)/2.0; 
+	    if(iw0 < iw) shift = (iw - iw0)/2.0;
 	    else shift = min(0, xd->xshift);
 	    dd->left = shift;
 	    dd->right = iw0 + shift;
 	    xd->xshift = shift;
-	    gchangescrollbar(xd->gawin, HWINSB, max(-shift,0)/SF, 
+	    gchangescrollbar(xd->gawin, HWINSB, max(-shift,0)/SF,
 			     xd->origWidth/SF - 1, xd->windowWidth/SF, 0);
-	    if(ih0 < ih) shift = (ih - ih0)/2.0; 
+	    if(ih0 < ih) shift = (ih - ih0)/2.0;
 	    else shift = min(0, xd->yshift);
 	    dd->top = shift;
 	    dd->bottom = ih0 + shift;
 	    xd->yshift = shift;
-	    gchangescrollbar(xd->gawin, VWINSB, max(-shift,0)/SF, 
+	    gchangescrollbar(xd->gawin, VWINSB, max(-shift,0)/SF,
 			     xd->origHeight/SF - 1, xd->windowHeight/SF, 0);
 	    xd->showWidth = xd->origWidth + min(0, xd->xshift);
 	    xd->showHeight = xd->origHeight + min(0,  xd->yshift);
@@ -1727,7 +1729,7 @@ static void GA_NewPage(int fill, double gamma, NewDevDesc *dd)
 	    xd->gawin = newmetafile(buf, xd->w, xd->h);
 	}
     }
-    if ((xd->kind == PNG || xd->kind == JPEG || xd->kind == BMP) 
+    if ((xd->kind == PNG || xd->kind == JPEG || xd->kind == BMP)
 	&& xd->needsave) {
 	SaveAsBitmap(dd);
 	sprintf(buf, xd->filename, xd->npage);
@@ -1745,16 +1747,16 @@ static void GA_NewPage(int fill, double gamma, NewDevDesc *dd)
 #endif
     }
     xd->bg = fill;
-    if (!R_OPAQUE(xd->bg)) 
+    if (!R_OPAQUE(xd->bg))
 	xd->bgcolor = xd->canvascolor;
     else
 	xd->bgcolor = GArgb(xd->bg, gamma);
     if (xd->kind != SCREEN) {
 	xd->needsave = TRUE;
 	xd->clip = getrect(xd->gawin);
-	if(R_OPAQUE(xd->bg) || xd->kind == PNG || 
+	if(R_OPAQUE(xd->bg) || xd->kind == PNG ||
 	   xd->kind == BMP || xd->kind == JPEG )
-	    DRAW(gfillrect(_d, R_OPAQUE(xd->bg) ? xd->bgcolor : PNG_TRANS, 
+	    DRAW(gfillrect(_d, R_OPAQUE(xd->bg) ? xd->bgcolor : PNG_TRANS,
 			   xd->clip));
 	if(xd->kind == PNG) xd->pngtrans = ggetpixel(xd->gawin, pt(0,0));
     } else {
@@ -1780,14 +1782,14 @@ static void GA_Close(NewDevDesc *dd)
 	del(xd->bm);
     } else if ((xd->kind == PNG) || (xd->kind == JPEG) || (xd->kind == BMP)) {
       SaveAsBitmap(dd);
-    } 
+    }
     del(xd->font);
     del(xd->gawin);
-/* 
- * this is needed since the GraphApp delayed clean-up 
- * ,i.e, I want free all resources NOW 
+/*
+ * this is needed since the GraphApp delayed clean-up
+ * ,i.e, I want free all resources NOW
 */
-    doevent();			
+    doevent();
     free(xd);
 }
 
@@ -1973,7 +1975,7 @@ static void GA_Line(double x1, double y1, double x2, double y2,
 	/* DEVICE coordinates using GConvert			*/
 	/********************************************************/
 
-static void GA_Polyline(int n, double *x, double *y, 
+static void GA_Polyline(int n, double *x, double *y,
 			    int col, double gamma, int lty, double lwd,
 			    NewDevDesc *dd)
 {
@@ -2010,7 +2012,7 @@ static void GA_Polyline(int n, double *x, double *y,
 	/* DEVICE coordinates using GConvert			*/
 	/********************************************************/
 
-static void GA_Polygon(int n, double *x, double *y, 
+static void GA_Polygon(int n, double *x, double *y,
 			int col, int fill, double gamma, int lty, double lwd,
 			NewDevDesc *dd)
 {
@@ -2053,8 +2055,8 @@ static void GA_Polygon(int n, double *x, double *y,
 	/********************************************************/
 
 
-static void GA_Text(double x, double y, char *str, 
-		     double rot, double hadj, 
+static void GA_Text(double x, double y, char *str,
+		     double rot, double hadj,
 		     int col, double gamma, int font, double cex, double ps,
 		     NewDevDesc *dd)
 {
@@ -2189,9 +2191,9 @@ static void GA_Hold(NewDevDesc *dd)
 
 
 
-Rboolean GADeviceDriver(NewDevDesc *dd, char *display, double width, 
-			double height, double pointsize, 
-			Rboolean recording, int resize, int canvas, 
+Rboolean GADeviceDriver(NewDevDesc *dd, char *display, double width,
+			double height, double pointsize,
+			Rboolean recording, int resize, int canvas,
 			double gamma)
 {
     /* if need to bail out with some sort of "error" then */
@@ -2263,7 +2265,7 @@ Rboolean GADeviceDriver(NewDevDesc *dd, char *display, double width,
     dd->bottom = dd->top + rr.height;	/* bottom */
 
     if (resize == 3) { /* might have got a shrunken window */
-	int iw = width/pixelWidth(NULL) + 0.5, 
+	int iw = width/pixelWidth(NULL) + 0.5,
 	    ih = height/pixelHeight(NULL) + 0.5;
 	xd->origWidth = dd->right = iw;
 	xd->origHeight = dd->bottom = ih;
@@ -2346,7 +2348,7 @@ SEXP do_saveDevga(SEXP call, SEXP op, SEXP args, SEXP env)
         SaveAsBmp(dd,fn);
     } else if(!strcmp(tp, "jpeg") || !strcmp(tp,"jpg")) {
       /*Default quality suggested in libjpeg*/
-        SaveAsJpeg(dd, 75, fn); 
+        SaveAsJpeg(dd, 75, fn);
     } else if (!strcmp(tp, "wmf")) {
 	sprintf(display, "win.metafile:%s", fn);
 	SaveAsWin(dd, display);
@@ -2368,28 +2370,28 @@ static int RbitmapAlreadyLoaded = 0;
 static HINSTANCE hRbitmapDll;
 
 static int Load_Rbitmap_Dll()
-{    
+{
     if (!RbitmapAlreadyLoaded) {
 	char szFullPath[PATH_MAX];
 	strcpy(szFullPath, R_HomeDir());
 	strcat(szFullPath, BITMAP_DLL_NAME);
-	if (((hRbitmapDll = LoadLibrary(szFullPath)) != NULL) && 
+	if (((hRbitmapDll = LoadLibrary(szFullPath)) != NULL) &&
 	    ((R_SaveAsPng=
-	      (R_SaveAsBitmap)GetProcAddress(hRbitmapDll, "R_SaveAsPng")) 
+	      (R_SaveAsBitmap)GetProcAddress(hRbitmapDll, "R_SaveAsPng"))
 	     != NULL) &&
 	    ((R_SaveAsBmp=
-	      (R_SaveAsBitmap)GetProcAddress(hRbitmapDll, "R_SaveAsBmp")) 
+	      (R_SaveAsBitmap)GetProcAddress(hRbitmapDll, "R_SaveAsBmp"))
 	     != NULL) &&
 	    ((R_SaveAsJpeg=
-	      (R_SaveAsBitmap)GetProcAddress(hRbitmapDll, "R_SaveAsJpeg")) 
+	      (R_SaveAsBitmap)GetProcAddress(hRbitmapDll, "R_SaveAsJpeg"))
 	     != NULL)) {
 	    RbitmapAlreadyLoaded = 1;
-	} else {	
+	} else {
 	    if (hRbitmapDll != NULL) FreeLibrary(hRbitmapDll);
 	    RbitmapAlreadyLoaded= -1;
 	}
     }
-    return (RbitmapAlreadyLoaded>0);    
+    return (RbitmapAlreadyLoaded>0);
 }
 
 void UnLoad_Rbitmap_Dll()
@@ -2398,7 +2400,7 @@ void UnLoad_Rbitmap_Dll()
     RbitmapAlreadyLoaded = 0;
 }
 
-static unsigned long privategetpixel(void *d,int i, int j) 
+static unsigned long privategetpixel(void *d,int i, int j)
 {
     return ggetpixel((bitmap)d,pt(j,i));
 }
@@ -2411,14 +2413,14 @@ static void SaveAsBitmap(NewDevDesc *dd)
     r = ggetcliprect(xd->gawin);
     gsetcliprect(xd->gawin, getrect(xd->gawin));
     if(xd->fp) {
-	if (xd->kind==PNG) 
+	if (xd->kind==PNG)
 	    R_SaveAsPng(xd->gawin, xd->windowWidth, xd->windowHeight,
 			privategetpixel, 0, xd->fp,
 			R_OPAQUE(xd->bg) ? 0 : xd->pngtrans) ;
 	else if (xd->kind==JPEG)
 	    R_SaveAsJpeg(xd->gawin, xd->windowWidth, xd->windowHeight,
 			 privategetpixel, 0, xd->quality, xd->fp) ;
-	else 
+	else
 	    R_SaveAsBmp(xd->gawin, xd->windowWidth, xd->windowHeight,
 			privategetpixel, 0, xd->fp);
 	fclose(xd->fp);

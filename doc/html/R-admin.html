@@ -14,7 +14,7 @@
 
    <p>This is a guide to installation and administration for R.
 
-   <p>The current version of this document is 1.7.0 (2002-12-04).
+   <p>The current version of this document is 1.7.0 (2002-12-10).
 
    ISBN 3-901167-52-8
 
@@ -1007,11 +1007,14 @@ problems are
 <pre class="smallexample">     BLAS                   use --without-blas
      Tcl/Tk                 use --without-tcltk
      GNOME                  not built by default
-     libpng  jpeg  zlib     (need not to be in the path)
+     libpng                 use --without-libpng
+     jpeg                   use --without-jpeglib
+     zlib                   use --without-zlib
      </pre>
 
 <p>and <code>bzip2</code> and <code>pcre</code> are problematic when building
-<code>libR.so</code>, only.
+<code>libR.so</code>, only.  These can be avoided by <code>--without-bzlib</code>
+and <code>--without-pcre</code> respectively.
 
    <p>Some versions of <code>gcc</code> may contain what appears to be a bug at
 the <code>-O2</code> optimization level that causes
