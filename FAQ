@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 1.2-27, 2001-02-20
+Version 1.2-28, 2001-02-23
 Kurt Hornik
 
 
@@ -1070,6 +1070,9 @@ works, was published in the Journal of Statistical Software
 *Devore5*
      Data sets and sample analyses from "Probability and Statistics for
      Engineering and the Sciences (5th ed)" by Jay L. Devore, 2000, Duxbury.
+
+*GLMMGibbs*
+     Generalised Linear Mixed Models by Gibbs sampling.
 
 *GenKern*
      Functions for generating and manipulating generalised binned kernel
