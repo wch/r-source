@@ -3,6 +3,7 @@ Section: math
 Priority: optional
 Maintainer: Douglas Bates <bates@stat.wisc.edu>
 Standards-Version: 2.4.0.0
+Build-depends: atlas2-dev, libgnome-dev, tcl8.0-dev, tk8.0-dev, libglade-gnome0-dev,bison, g77, groff, libncurses5-dev, libreadline4-dev, tetex-bin, tetex-extra, debhelper
 
 Package: r-base
 Architecture: any
