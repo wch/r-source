@@ -2576,58 +2576,40 @@ void GForceClip(DevDesc *dd)
 #define	CS_TOP		004
 #define	CS_RIGHT	010
 
+typedef struct {
+    double xl;
+    double xr;
+    double yb;
+    double yt;
+} cliprect;
 
-static int clipcode(double x, double y,
-		    double left, double right, double bottom, double top,
-		    DevDesc *dd)
+
+static int clipcode(double x, double y, cliprect *cr)
 {
     int c = 0;
-    if(x < left)
+    if(x < cr->xl)
 	c |= CS_LEFT;
-    else if(x > right)
+    else if(x > cr->xr)
 	c |= CS_RIGHT;
-    if(y < bottom)
+    if(y < cr->yb)
 	c |= CS_BOTTOM;
-    else if(y > top)
+    else if(y > cr->yt)
 	c |= CS_TOP;
     return c;
 }
 
 static int CSclipline(double *x1, double *y1, double *x2, double *y2,
-		      int *clipped1, int *clipped2, int coords, DevDesc *dd)
+		      int *clipped1, int *clipped2, int coords, cliprect *cr)
 {
     int c, c1, c2;
-    double x, y, temp;
-    double Clipxl = 0;
-    double Clipxr = 1;
-    double Clipyb = 0;
-    double Clipyt = 1;
+    double x, y;
 
-    if (dd->gp.xpd) {
-	GConvert(&Clipxl, &Clipyb, NDC, coords, dd);
-	GConvert(&Clipxr, &Clipyt, NDC, coords, dd);
-    }
-    else {
-	GConvert(&Clipxl, &Clipyb, NPC, coords, dd);
-	GConvert(&Clipxr, &Clipyt, NPC, coords, dd);
-    }
-    if (Clipxr < Clipxl) {
-	temp = Clipxl;
-	Clipxl = Clipxr;
-	Clipxr = temp;
-    }
-    if (Clipyt < Clipyb) {
-	temp = Clipyb;
-	Clipyb = Clipyt;
-	Clipyt = temp;
-    }
     *clipped1 = 0;
     *clipped2 = 0;
-
-    c1 = clipcode(*x1, *y1, Clipxl, Clipxr, Clipyb, Clipyt, dd);
-    c2 = clipcode(*x2, *y2, Clipxl, Clipxr, Clipyb, Clipyt, dd);
-    x = Clipxl;		/* keep -Wall happy */
-    y = Clipyb;		/* keep -Wall happy */
+    c1 = clipcode(*x1, *y1, cr);
+    c2 = clipcode(*x2, *y2, cr);
+    x = cr->xl;		/* keep -Wall happy */
+    y = cr->yb;		/* keep -Wall happy */
     while( c1 || c2 ) {
 	if(c1 & c2)
 	    return 0;
@@ -2636,33 +2618,33 @@ static int CSclipline(double *x1, double *y1, double *x2, double *y2,
 	else
 	    c = c2;
 	if( c & CS_LEFT ) {
-	    y = *y1+(*y2-*y1)*(Clipxl-*x1)/(*x2-*x1);
-	    x = Clipxl;
+	    y = *y1 + (*y2 - *y1) * (cr->xl - *x1) / (*x2 - *x1);
+	    x = cr->xl;
 	}
 	else if( c & CS_RIGHT ) {
-	    y = *y1+(*y2-*y1)*(Clipxr-*x1)/(*x2-*x1);
-	    x = Clipxr;
+	    y = *y1 + (*y2 - *y1) * (cr->xr - *x1) / (*x2 -  *x1);
+	    x = cr->xr;
 	}
 	else if( c & CS_BOTTOM ) {
-	    x = *x1+(*x2-*x1)*(Clipyb-*y1)/(*y2-*y1);
-	    y = Clipyb;
+	    x = *x1 + (*x2 - *x1) * (cr->yb - *y1) / (*y2 - *y1);
+	    y = cr->yb;
 	}
 	else if( c & CS_TOP ) {
-	    x = *x1+(*x2-*x1)*(Clipyt-*y1)/(*y2-*y1);
-	    y = Clipyt;
+	    x = *x1 + (*x2 - *x1) * (cr->yt - *y1)/(*y2 - *y1);
+	    y = cr->yt;
 	}
 
 	if( c==c1 ) {
 	    *x1 = x;
 	    *y1 = y;
 	    *clipped1 = 1;
-	    c1 = clipcode(x,y, Clipxl, Clipxr, Clipyb, Clipyt, dd);
+	    c1 = clipcode(x, y, cr);
 	}
 	else {
 	    *x2 = x;
 	    *y2 = y;
 	    *clipped2 = 1;
-	    c2 = clipcode(x,y, Clipxl, Clipxr, Clipyb, Clipyt, dd);
+	    c2 = clipcode(x, y, cr);
 	}
     }
     return 1;
@@ -2671,42 +2653,80 @@ static int CSclipline(double *x1, double *y1, double *x2, double *y2,
 
 static void CScliplines(int n, double *x, double *y, int coords, DevDesc *dd)
 {
-    int lineStart, lineEnd;
+    int ind1, ind2;
     int firstPoint = 1;
     int count = 0;
     int i = 0;
-    double *xx, *yy;
+    double *xx, *yy, temp;
     double x1, y1, x2, y2;
+    cliprect cr;
 
-    yy = (double *) NULL;	/* keep -Wall happy */
-    if (((xx = (double *) C_alloc(n, sizeof(double))) == NULL) ||
-	((yy = (double *) C_alloc(n, sizeof(double))) == NULL))
+    cr.xl = 0; cr.xr = 1; cr.yb = 0; cr.yt = 1;
+    if (dd->gp.xpd) {
+	GConvert(&cr.xl, &cr.yb, NDC, coords, dd);
+	GConvert(&cr.xr, &cr.yt, NDC, coords, dd);
+    }
+    else {
+	GConvert(&cr.xl, &cr.yb, NPC, coords, dd);
+	GConvert(&cr.xr, &cr.yt, NPC, coords, dd);
+    }
+    if (cr.xr < cr.xl) {
+	temp = cr.xl;
+	cr.xl = cr.xr;
+	cr.xr = temp;
+    }
+    if (cr.yt < cr.yb) {
+	temp = cr.yb;
+	cr.yb = cr.yt;
+	cr.yt = temp;
+    }
+
+    xx = (double *) C_alloc(n, sizeof(double));
+    yy = (double *) C_alloc(n, sizeof(double));
+    if (xx == NULL || yy == NULL)
 	error("out of memory while clipping polyline\n");
 
-    x1 = x[i]; y1 = y[i++];
-    while (i < n) {
-	x2 = x[i]; y2 = y[i++];
-	if (CSclipline(&x1, &y1, &x2, &y2, &lineStart, &lineEnd,
-		       coords, dd)) {
-	    if (firstPoint) {
-		xx[count] = x1; yy[count++] = y1;
-		firstPoint = 0;
+    xx[0] = x1 = x[0];
+    yy[0] = y1 = y[0];
+    count = 1;
+
+    for (i = 1; i < n; i++) {
+	x2 = x[i];
+	y2 = y[i];
+	if (CSclipline(&x1, &y1, &x2, &y2, &ind1, &ind2, coords, &cr)) {
+	    if (ind1 && ind2) {
+		xx[0] = x1;
+		yy[0] = y1;
+		xx[1] = x2;
+		yy[1] = y2;
+		dd->dp.polyline(2, xx, yy, coords, dd);
 	    }
-	    else if (lineStart) {
-		xx[count] = x1; yy[count++] = y1;
+	    else if (ind1) {
+		xx[0] = x1;
+		yy[0] = y1;
+		xx[1] = x2;
+		yy[1] = y2;
+		count = 2;
+		if (i == n - 1)
+		    dd->dp.polyline(count, xx, yy, coords, dd);
 	    }
-	    xx[count] = x2; yy[count++] = y2;
-	    if (lineEnd || (i == n)) {
+	    else if (ind2) {
+		xx[count] = x2;
+		yy[count] = y2;
+		count++;
 		if (count > 1)
-		    dd->dp.polyline(count, xx, yy,
-				    coords, dd);
-		count = 0;
+		    dd->dp.polyline(count, xx, yy, coords, dd);
+	    }
+	    else {
+		xx[count] = x2;
+		yy[count] = y2;
+		count++;
+		if (i == n - 1 && count > 1)
+		    dd->dp.polyline(count, xx, yy, coords, dd);
 	    }
 	}
-	/*
-	  x1 = x[i-1]; y1 = y[i-1];
-	*/
-	x1 = x2; y1 = y2;
+	x1 = x[i];
+	y1 = y[i];
     }
 
     C_free((char *) xx);
@@ -2717,16 +2737,19 @@ static void CScliplines(int n, double *x, double *y, int coords, DevDesc *dd)
 /* Draw a line. */
 void GLine(double x1, double y1, double x2, double y2, int coords, DevDesc *dd)
 {
-    int lineStart, lineEnd;
-
     GClip(dd);
     if (dd->dp.canClip) {
 	dd->dp.line(x1, y1, x2, y2, coords, dd);
     }
-    else
-	if (CSclipline(&x1, &y1, &x2, &y2, &lineStart, &lineEnd,
-		       coords, dd))
-	    dd->dp.line(x1, y1, x2, y2, coords, dd);
+    else {
+	double x[2];
+	double y[2];
+	x[0] = x1;
+	y[0] = y1;
+	x[1] = x2;
+	y[1] = y2;
+	CScliplines(2, x, y, coords, dd);
+    }
 }
 
 
