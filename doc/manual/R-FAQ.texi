@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2005
-@set FAQ-VERSION 2.0.@value{FAQ-YEAR}-04-01
+@set FAQ-VERSION 2.0.@value{FAQ-YEAR}-04-02
 @set REL-VERSION 2.0.1
 @set REL-YEAR 2004
 @c <COMMENT>
@@ -1993,6 +1993,8 @@ Adaptive quadrature in up to 20 dimensions.
 Multivariate data analysis and graphical display.
 @item adehabitat
 A collection of tools for the analysis of habitat selection by animals.
+@item adlift
+Adaptive Wavelet transforms for signal denoising.
 @item agce
 Analysis of growth curve experiments.
 @item akima
