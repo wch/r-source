@@ -3,7 +3,7 @@ include MkRules
 HELP=YES
 
 PACKAGES=base eda lqs modreg mva stepfun
-RPREFIX=rw0641-3
+RPREFIX=rw0641
 
 ifdef DEBUG
  OPTFLAGS=-g -O2
@@ -29,7 +29,7 @@ EXTRALIBS=rx.a ga.a gl.a xdr.a em.a
 
 .PHONY:  clean veryclean  rlibs fixfiles front-ends
 
-all: rbuild rdemo rpackage rinstaller
+all: rbuild rdemo rpackage
 
 CFLAGS=$(OPTFLAGS) -I../include
 FFLAGS=$(OPTFLAGS)
@@ -196,6 +196,7 @@ srcdist:
 	$(MKDIR)  ../src/gnuwin32
 	$(CP)  -pr ./* ../src/gnuwin32
 	$(RM) -r ../src/gnuwin32/old ../src/gnuwin32/*.zip
+	$(RM) -r ../src/gnuwin32/installer/unzip
 	$(MAKE) -C ../src/gnuwin32 cleanwin
 	mv ../src .
 	$(RM) $(RPREFIX)s.zip

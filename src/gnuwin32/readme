@@ -252,7 +252,8 @@ groff, available at http://www.itribe.net/virtunix/groff-1.10nt.zip.
 All of these need to be installed and in your path, and the
 appropriate environment variables set.  
 
-You also need: the R source (R-0.64.1.tgz).
+You also need: the R source (R-0.64.1.tgz), and to build the installer,
+unzip5.40.zip from any Info-Zip mirror.
 
 Then: untar R-0.64.1.tgz somewhere (ignore warnings about the aux directory),
 
