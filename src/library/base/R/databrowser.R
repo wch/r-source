@@ -1,9 +1,12 @@
 browseEnv <- function(envir = .GlobalEnv, pattern,
+                      excludepatt = "^last\\.warning",
 		      html = .Platform$OS.type != "mac",
 		      expanded = TRUE, properties = NULL,
 		      main = NULL, debugMe = FALSE)
 {
     objlist <- ls(envir = envir, pattern = pattern)#, all.names = FALSE
+    if(length(iX <- grep(excludepatt, objlist)))
+        objlist <- objlist[ - iX]
     if(debugMe) { cat("envir= "); print(envir)
 		  cat("objlist =\n"); print(objlist) }
     n <- length(objlist)
@@ -13,7 +16,7 @@ browseEnv <- function(envir = .GlobalEnv, pattern,
     }
 
     str1 <- function(obj) {
-	md     <- mode(obj)
+	md <- mode(obj)
 	lg <- length(obj)
 	objdim <- dim(obj)
 	if(length(objdim) == 0)
@@ -61,9 +64,9 @@ browseEnv <- function(envir = .GlobalEnv, pattern,
 	TYPES[N] <- sOb$type
 	DIMS[N] <- sOb$dim.field
 
-	if(is.recursive(obj) && !is.function(obj)
-	   && (lg <- length(obj)) > 0) {
+	if(is.recursive(obj) && !is.function(obj) && !is.environment(obj)
 	    ## includes "list", "expression", also "data.frame", ..
+	   && (lg <- length(obj)) > 0) {
 	    Container[N] <- TRUE
 	    ItemsPerContainer[N] <- lg
 	    nm <- names(obj)
@@ -145,7 +148,7 @@ browseEnv <- function(envir = .GlobalEnv, pattern,
     ItemsPerContainer <- c(ItemsPerContainer, rep(0, M-N))
 
     if(is.null(main))
-	main <- paste(deparse(substitute(envir))," R objects")
+	main <- paste("R objects in", deparse(substitute(envir)))
     if(is.null(properties)) {
 	properties <- as.list(c(date = format(Sys.time(), "%Y-%b-%d %H:%M"),
 				local({
@@ -247,7 +250,8 @@ wsbrowser <- function(IDS, IsRoot, IsContainer, ItemsPerContainer,
     url <- paste("file://", url, sep = "")
 
     browseURL(url = url, browser = browser)
-    cat("R's ", main, " environment is shown in browser `",browser, "'\n", sep="")
+    cat(main, "environment is shown in browser",
+        if(!is.null(browser))paste("`",browser, "'", sep=""),"\n")
 
     invisible(filename = fname)
 }

@@ -7,7 +7,7 @@
   in \code{sys.frame()} environment.
 }
 \usage{
-browseEnv(envir = .GlobalEnv, pattern,
+browseEnv(envir = .GlobalEnv, pattern, excludepatt = "^last\\.warning",
           html = .Platform$OS.type != "mac",
           expanded = TRUE, properties = NULL,
           main = NULL, debugMe = FALSE)
@@ -17,6 +17,8 @@ browseEnv(envir = .GlobalEnv, pattern,
     be browsed.}
   \item{pattern}{a regular expression for object subselection is passed
     to the internal \code{\link{ls}()} call.}
+  \item{excludepatt}{a regular expression for \emph{dropping} objects
+    with matching names.}
   \item{html}{is used on non Macintosh machines to display the workspace on
     a HTML page in your favorite browser.}
   \item{expanded}{whether to show one level of recursion.  It can be useful
@@ -39,6 +41,9 @@ browseEnv(envir = .GlobalEnv, pattern,
 
   \code{wsbrowser()} is currently just an internally used function;
   its argument list will certainly change.
+
+  Most probably, this should rather work through using the \file{tkWidget}
+  package (from \url{www.Bioconductor.org}).
 }
 \seealso{
   \code{\link{str}}, \code{\link{ls}}.
