@@ -103,9 +103,10 @@ rep <- 50 # << adjust to your CPU
 c1 <- c2 <- numeric(Sim)
 for(is in 1:Sim){
   x <- rnorm(N)
-  gc()  ## sort should not have to pay for gc
-  c1[is] <- system.time(for(i in 1:rep) sort(x, method = "shell"))[1]
-  c2[is] <- system.time(for(i in 1:rep) sort(x, method = "quick"))[1]
+  c1[is] <- system.time(for(i in 1:rep) sort(x, method = "shell"),
+                        gcFirst = TRUE)[1]
+  c2[is] <- system.time(for(i in 1:rep) sort(x, method = "quick"),
+                        gcFirst = TRUE)[1]
   stopifnot(sort(x, meth = "s") == sort(x, meth = "q"))
 }
 100 * rbind(ShellSort = c1, QuickSort = c2)
@@ -114,10 +115,8 @@ summary({qq <- c1 / c2; qq[is.finite(qq)]})
 
 ## A larger test
 x <- rnorm(1e6)
-gc()
-system.time(x1 <- sort(x, method = "shell"))
-gc()
-system.time(x2 <- sort(x, method = "quick"))
+system.time(x1 <- sort(x, method = "shell"), gcFirst = TRUE)
+system.time(x2 <- sort(x, method = "quick"), gcFirst = TRUE)
 stopifnot(identical(x1, x2))
 }}
 \keyword{univar}
