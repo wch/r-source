@@ -24,7 +24,7 @@
 ## writing to the Free Software Foundation, Inc., 59 Temple Place,
 ## Suite 330, Boston, MA  02111-1307, U.S.A.
 
-revision='$Revision: 1.1 $'
+revision='$Revision: 1.2 $'
 version=`set - ${revision}; echo ${2}`
 version="R configuration information retrieval script ${version}
 
@@ -102,7 +102,7 @@ Report bugs to <r-bugs@r-project.org>."
 ## info as well as the list ok accepted variables below automatically.
 
 makefiles="-f ${R_HOME}/etc/Makeconf -f ${R_HOME}/share/make/config.mk"
-query="make ${makefiles} print R_HOME=${R_HOME}"
+query="${MAKE} -s ${makefiles} print R_HOME=${R_HOME}"
 
 LIBR=`eval $query VAR=LIBR`
 
