@@ -38,7 +38,7 @@ lchoose(n,k)
   \code{pentagamma} return the first, second, third and fourth
   derivatives of the logarithm of the gamma function.
   \deqn{\code{digamma(x)} = \psi(x) = \frac{d}{dx}\ln\Gamma(x) =
-    \frac{\Gamma'(x)/\Gamma(x)}}{%
+    \frac{\Gamma'(x)}{\Gamma(x)}}{%
     \code{digamma(x)} = psi(x) = d/dx {ln Gamma(x)} = Gamma'(x) / Gamma(x)}
 
   The functions \code{choose} and \code{lchoose} return binomial
