@@ -284,6 +284,10 @@ Date: Tue, 10 Apr 2001 17:50:44 +0200 (MET DST)
 
 Directory:  incoming
 
+* PR# 917 *
+Subject: boxplot
+From: skala@incoma.cz
+Date: Fri, 20 Apr 2001 08:43:29 +0200 (MET DST)
 * PR# 916 *
 Subject:  par(mgp) bug 
 From: paul@stat.auckland.ac.nz
