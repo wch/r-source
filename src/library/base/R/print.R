@@ -25,7 +25,7 @@ prmatrix <- .Alias(print.matrix)
 
 noquote <- function(obj) {
     ## constructor for a useful "minor" class
-    if(!inherits(obj,"noquote")) class(obj) <- c(class(obj),"noquote")
+    if(!inherits(obj,"noquote")) class(obj) <- c(attr(obj, "class"),"noquote")
     obj
 }
 as.matrix.noquote <- function(x) noquote(NextMethod("as.matrix", x))
@@ -40,8 +40,11 @@ as.matrix.noquote <- function(x) noquote(NextMethod("as.matrix", x))
 }
 
 print.noquote <- function(x, ...) {
-    if(!is.null(cl <- class(x)))
-	class(x) <- cl[cl != "noquote"]
+    if(!is.null(cl <- attr(x, "class"))) {
+	cl <- cl[cl != "noquote"]
+        attr(x, "class") <-
+          (if(length(cl)>0) cl else NULL)
+      }
     print(x, quote = FALSE, ...)
 }
 

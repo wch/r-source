@@ -78,7 +78,7 @@ as.data.frame.default <- function(x, row.names = NULL, optional = FALSE)
 as.data.frame <- function(x, row.names = NULL, optional = FALSE) {
     if(is.null(x))			# can't assign class to NULL
 	return(as.data.frame(list()))
-    if(is.null(class(x))) class(x) <- data.class(x)
+    if(is.null(attr(x, "class"))) class(x) <- data.class(x)
     UseMethod("as.data.frame", x, row.names, optional)
 }
 as.data.frame.default <- function(x, row.names = NULL, optional = FALSE)
@@ -887,7 +887,7 @@ as.matrix.data.frame <- function (x)
 				  sep = ".")
 	}
 	if(length(levels(xj)) > 0 || !(is.numeric(xj) || is.complex(xj))
-	   || (!is.null(cl <- class(xj)) && # numeric classed objects to format:
+	   || (!is.null(cl <- attr(xj, "class")) && # numeric classed objects to format:
 	       any(cl == c("POSIXct", "POSIXlt"))))
 	    non.numeric <- TRUE
 	if(!is.atomic(xj))

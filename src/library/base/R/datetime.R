@@ -149,7 +149,7 @@ summary.POSIXlt <- function(object, digits = 15, ...)
     if (nargs() == 1) stop("unary - is not defined for POSIXt objects")
     if(inherits(e2, "POSIXt")) return(difftime(e1, e2))
     if (inherits(e2, "difftime")) e2 <- unclass(coerceTimeUnit(e2))
-    if(!is.null(class(e2)))
+    if(!is.null(attr(e2, "class")))
         stop("can only subtract numbers from POSIXt objects")
     structure(unclass(as.POSIXct(e1)) - e2, class = c("POSIXt", "POSIXct"))
 }

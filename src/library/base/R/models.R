@@ -213,7 +213,7 @@ model.frame.default <-
     }
     if(missing(data))
 	data <- environment(formula)
-    else if (!is.data.frame(data) && !is.environment(data) && !is.null(class(data)))
+    else if (!is.data.frame(data) && !is.environment(data) && !is.null(attr(data, "class")))
         data <- as.data.frame(data)
     env<-environment(formula)
     if(!inherits(formula, "terms"))
