@@ -103,7 +103,7 @@ setOldClass(Classes, where, test = FALSE)
 }
 
 \section{Register or Convert?}{
-A call to \section{setOldClass} creates formal classes corresponding
+A call to \code{setOldClass} creates formal classes corresponding
 to S3 classes, allows these to be used as slots in other classes or in
 a signature in \code{\link{setMethod}}, and mimics the S3 inheritance.
 
