@@ -682,9 +682,9 @@ SEXP do_return(SEXP call, SEXP op, SEXP args, SEXP rho)
 	break;
     }
     if (R_BrowseLevel)
-	findcontext(CTXT_BROWSER | CTXT_RETURN, rho, v);
+	findcontext(CTXT_BROWSER | CTXT_FUNCTION, rho, v);
     else
-	findcontext(CTXT_RETURN, rho, v);
+	findcontext(CTXT_FUNCTION, rho, v);
     return R_NilValue; /*NOTREACHED*/
 }
 

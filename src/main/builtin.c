@@ -52,9 +52,9 @@ SEXP do_onexit(SEXP call, SEXP op, SEXP args, SEXP rho)
 	code = R_NilValue;/* for -Wall */
     }
     ctxt = R_GlobalContext;
-    while (ctxt != R_ToplevelContext && ctxt->callflag != CTXT_RETURN)
+    while (ctxt != R_ToplevelContext && !(ctxt->callflag & CTXT_FUNCTION) )
 	ctxt = ctxt->nextcontext;
-    if (ctxt->callflag == CTXT_RETURN)
+    if (ctxt->callflag & CTXT_FUNCTION)
 	ctxt->conexit = code;
     return R_NilValue;
 }

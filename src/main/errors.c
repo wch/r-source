@@ -83,7 +83,7 @@ void warningcall(SEXP call, char *format, ...)
         if( !isLanguage(s) &&  ! isExpression(s) )
             error("invalid option \"warning.expression\"\n"); 
         cptr = R_GlobalContext;
-        while (cptr->callflag != CTXT_RETURN && cptr->callflag )
+        while ( !(cptr->callflag & CTXT_FUNCTION) && cptr->callflag )
             cptr = cptr->nextcontext;
         eval(s, cptr->cloenv);
         return;
@@ -194,9 +194,9 @@ void errorcall(SEXP call, char *format,...)
 #ifdef FOO
     RCNTXT *cptr;
     cptr = R_GlobalContext;
-    while (cptr->callflag != CTXT_RETURN && cptr->nextcontext != NULL)
+    while ( !(cptr->callflag & CTXT_FUNCTION) && cptr->nextcontext != NULL)
         cptr = cptr->nextcontext;
-    if( cptr->callflag == CTXT_RETURN )
+    if( cptr->callflag & CTXT_FUNCTION )
         do_browser(cptr->call, R_NilValue, R_NilValue, cptr->cloenv);
 #endif
     if(call != R_NilValue ) {
@@ -279,7 +279,7 @@ void jump_to_toplevel()
     for (c = R_GlobalContext; c; c = c->nextcontext) {
 	if (c->cloenv != R_NilValue && c->conexit != R_NilValue)
 	    eval(c->conexit, c->cloenv);
-	if (c->callflag == CTXT_RETURN)
+	if (c->callflag == CTXT_RETURN || c->callflag == CTXT_GENERIC )
 	    nback++;
 	if (c->callflag == CTXT_RESTART) {
 		inError=0;
@@ -291,7 +291,7 @@ void jump_to_toplevel()
     PROTECT(s = allocList(nback));
     t = s;
     for (c = R_GlobalContext ; c ; c = c->nextcontext)
-	if (c->callflag == CTXT_RETURN) {
+	if (c->callflag & CTXT_FUNCTION ) {
 	    CAR(t) = deparse1(c->call, 0);
 	    t = CDR(t);
 	}
@@ -360,7 +360,7 @@ SEXP do_warning(SEXP call, SEXP op, SEXP args, SEXP rho)
     RCNTXT *cptr;
 
     cptr = R_GlobalContext->nextcontext;
-    while (cptr->callflag != CTXT_RETURN && cptr->nextcontext != NULL)
+    while ( !(cptr->callflag & CTXT_FUNCTION) && cptr->nextcontext != NULL)
 	cptr = cptr->nextcontext;
     if (CAR(args) != R_NilValue) {
 	CAR(args) = coerceVector(CAR(args), STRSXP);

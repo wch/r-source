@@ -504,7 +504,7 @@ SEXP do_browser(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     if (!DEBUG(rho)) {
 	cptr=R_GlobalContext;
-	while (cptr->callflag != CTXT_RETURN && cptr->callflag )
+	while ( !(cptr->callflag & CTXT_FUNCTION) && cptr->callflag )
 	    cptr = cptr->nextcontext;
 	Rprintf("Called from: ");
 	PrintValueRec(cptr->call,rho);

@@ -179,19 +179,37 @@ typedef struct RCNTXT {
 /* The Various Context Types.  In general the type is a */
 /* bitwise OR of the values below.  Note that CTXT_LOOP */
 /* is already the or of CTXT_NEXT and CTXT_BREAK. */
+/* Only functions should have the third bit turned on; */
+/* this allows us to move up the context stack easily */
+/* with either RETURN's or GENERIC's or RESTART's */
+/* If you add a new context type for functions make sure
+/*   CTXT_NEWTYPE & CTXT_FUNCTION > 0 */
+
 enum {
     CTXT_TOPLEVEL = 0,
     CTXT_NEXT	  = 1,
     CTXT_BREAK	  = 2,
     CTXT_LOOP	  = 3,	/* break OR next target */
-    CTXT_RETURN	  = 4,
+    CTXT_FUNCTION = 4,
     CTXT_CCODE	  = 8,
-    CTXT_BROWSER  = 12,
-    CTXT_GENERIC  = 16,
-    CTXT_RESTART  = 36
+    CTXT_RETURN	  = 12,
+    CTXT_BROWSER  = 16,
+    CTXT_GENERIC  = 20,
+    CTXT_RESTART  = 28
 };
 
-
+/*
+TOP   0 0 0 0 0 0  = 0
+NEX   1 0 0 0 0 0  = 1
+BRE   0 1 0 0 0 0  = 2
+LOO   1 1 0 0 0 0  = 3
+FUN   0 0 1 0 0 0  = 4
+CCO   0 0 0 1 0 0  = 8
+BRO   0 0 0 0 1 0  = 16
+RET   0 0 1 1 0 0  = 12
+GEN   0 0 1 0 1 0  = 20
+RES   0 0 1 1 1 0  = 28
+*/
 /* Miscellaneous Definitions */
 #define streql(s, t)	(!strcmp((s), (t)))
 
