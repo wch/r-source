@@ -292,7 +292,23 @@ none
 
 Directory:  incoming
 
+* PR# 769 *
+Subject: fourfoldplot
+From: Thomas Lumley <thomas@biostat.washington.edu>
+Date: Fri, 15 Dec 2000 10:50:18 -0800 (PST)
+* PR# 766 *
+Subject: R1.2.0
+From: Jim Lindsey <james.lindsey@luc.ac.be>
+Date: Fri, 15 Dec 2000 16:12:12 +0100 (MET)
 * PR# 765 *
 Subject: cannot allocate vector of size in merge
 From: viktorm@pdf.com
 Date: Fri, 15 Dec 2000 00:06:56 +0100 (MET)
+* PR# 768 *
+Subject: R on Redhat 7 / glibc problem
+From: B.Rowlingson@lancaster.ac.uk
+Date: Fri, 15 Dec 2000 19:12:29 +0100 (MET)
+* PR# 767 *
+Subject: R install doesn't set permissions
+From: B.Rowlingson@lancaster.ac.uk
+Date: Fri, 15 Dec 2000 17:54:50 +0100 (MET)
