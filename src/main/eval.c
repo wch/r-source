@@ -951,6 +951,9 @@ void WrongArgCount(char *s)
 /* Evaluate the first argument in the environment specified by */
 /* the second argument. */
 
+SEXP OldToNewList(SEXP);
+SEXP NewToOldList(SEXP);
+
 SEXP do_eval(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP expr, env;
@@ -967,6 +970,12 @@ SEXP do_eval(SEXP call, SEXP op, SEXP args, SEXP rho)
 	PROTECT(env = allocSExp(ENVSXP));
 	FRAME(env) = duplicate(CADR(args));
 	ENCLOS(env) = R_GlobalEnv;
+	break;
+    case VECSXP:
+	PROTECT(env = allocSExp(ENVSXP));
+	FRAME(env) = NewToOldList(CADR(args));
+	ENCLOS(env) = R_GlobalEnv;
+	break;
 	break;
     case INTSXP:
     case REALSXP:
