@@ -53,6 +53,9 @@ NEW FEATURES
 
 BUG FIXES
 
+    o   subscripting arrays and matrices no longer loses the names of
+	the dimnames vector.  Transpose also preserves the names.
+
     o   examples in help files containing \testonly are no longer
 	(partially) duplicated.
 
@@ -64,7 +67,7 @@ BUG FIXES
 
     o	blank-line reject code in parse.dcf was wrong (Martyn Plummer)
 
-    o	made filled.contour independent on pointsize. Make plot key
+    o	made filled.contour independent of pointsize. Make plot key
 	wider so there's room for a title. Touchup example.
 
     o	font size fixups for the X11 driver (mainly)

@@ -27,9 +27,9 @@
  *  Note on Matrix Subscripts
  *
  *  The special [ subscripting where dim(x) == ncol(subscript matrix)
- *  is handled inside vectorSubset. The subscript matrix is turned
+ *  is handled inside VectorSubset. The subscript matrix is turned
  *  into a subscript vector of the appropriate size and then
- *  vectorSubset continues.  This provides coherence especially
+ *  VectorSubset continues.  This provides coherence especially
  *  regarding attributes etc. (it would be quicker handle this case
  *  separately, but then we would have more to keep in step.
  */
@@ -249,8 +249,9 @@ SEXP MatrixSubset(SEXP x, SEXP s, SEXP call, int drop)
     /* the dimnames of the returned value. */
 
     if (nrs >= 0 && ncs >= 0) {
-	SEXP dimnames, newdimnames;
+	SEXP dimnames, dimnamesnames, newdimnames;
 	dimnames = getAttrib(x, R_DimNamesSymbol);
+	dimnamesnames = getAttrib(dimnames, R_NamesSymbol);
 	if (!isNull(dimnames)) {
 	    PROTECT(newdimnames = allocVector(VECSXP, 2));
 	    if (TYPEOF(dimnames) == VECSXP) {
@@ -269,6 +270,7 @@ SEXP MatrixSubset(SEXP x, SEXP s, SEXP call, int drop)
 		    = ExtractSubset(CADR(dimnames),
 				    allocVector(STRSXP, ncs), sc, call);
 	    }
+	    setAttrib(newdimnames, R_NamesSymbol, dimnamesnames);
 	    setAttrib(result, R_DimNamesSymbol, newdimnames);
 	    UNPROTECT(1);
 	}
@@ -286,7 +288,7 @@ static SEXP ArraySubset(SEXP x, SEXP s, SEXP call, int drop)
 {
     int i, j, k, ii, jj, mode, n;
     int **subs, *index, *offset, *bound;
-    SEXP dimnames, p, q, r, result, xdims;
+    SEXP dimnames, dimnamesnames, p, q, r, result, xdims;
     char *vmaxsave;
 
     mode = TYPEOF(x);
@@ -393,6 +395,7 @@ static SEXP ArraySubset(SEXP x, SEXP s, SEXP call, int drop)
     /* dimnames of the returned value. */
 
     dimnames = getAttrib(x, R_DimNamesSymbol);
+    dimnamesnames = getAttrib(dimnames, R_NamesSymbol);
     if (dimnames != R_NilValue) {
 	SEXP xdims;
 	int j = 0;
@@ -421,6 +424,7 @@ static SEXP ArraySubset(SEXP x, SEXP s, SEXP call, int drop)
 		r = CDR(r);
 	    }
 	}
+	setAttrib(xdims, R_NamesSymbol, dimnamesnames);
 	setAttrib(result, R_DimNamesSymbol, xdims);
 	UNPROTECT(1);
     }

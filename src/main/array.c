@@ -200,7 +200,8 @@ SEXP DropDims(SEXP x)
     }
     else {
 	/* We have a lower dimensional array. */
-	SEXP newdims;
+	SEXP newdims, dimnamesnames, newnamesnames = R_NilValue;
+	dimnamesnames = getAttrib(dimnames, R_NamesSymbol);
 	PROTECT(newdims = allocVector(INTSXP, n));
 	for (i = 0, n = 0; i < ndims; i++)
 	    if (INTEGER(dims)[i] != 1)
@@ -212,9 +213,12 @@ SEXP DropDims(SEXP x)
 		    havenames = 1;
 	    if (havenames) {
 		PROTECT(newnames = allocVector(VECSXP, n));
-		for (i = 0, n= 0; i < ndims; i++) {
-		    if (INTEGER(dims)[i] != 1)
+		PROTECT(newnamesnames = allocVector(STRSXP, n));
+		for (i = 0, n = 0; i < ndims; i++) {
+		    if (INTEGER(dims)[i] != 1) {
+			STRING(newnamesnames)[n] = STRING(dimnamesnames)[i];
 			VECTOR(newnames)[n++] = VECTOR(dimnames)[i];
+		    }
 		}
 	    }
 	    else dimnames = R_NilValue;
@@ -224,8 +228,9 @@ SEXP DropDims(SEXP x)
 	setAttrib(x, R_DimSymbol, newdims);
 	if (dimnames != R_NilValue)
 	{
+	    setAttrib(newnames, R_NamesSymbol, newnamesnames);
 	    setAttrib(x, R_DimNamesSymbol, newnames);
-	    UNPROTECT(1);
+	    UNPROTECT(2);
 	}
 	UNPROTECT(2);
     }
@@ -568,7 +573,8 @@ SEXP do_matprod(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 SEXP do_transpose(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    SEXP a, r, dims, dimnames, rnames, cnames;
+    SEXP a, r, dims, dimnames, dimnamesnames=R_NilValue, 
+	ndimnamesnames, rnames, cnames;
     int i, len = 0, ncol=0, nrow=0;
 
     checkArity(op, args);
@@ -599,6 +605,7 @@ SEXP do_transpose(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    if (dimnames != R_NilValue) {
 		rnames = VECTOR(dimnames)[0];
 		cnames = VECTOR(dimnames)[1];
+		dimnamesnames = getAttrib(dimnames, R_NamesSymbol);
 	    }
 	    break;
 	default:
@@ -640,10 +647,14 @@ SEXP do_transpose(SEXP call, SEXP op, SEXP args, SEXP rho)
     UNPROTECT(1);
     if(rnames != R_NilValue || cnames != R_NilValue) {
 	PROTECT(dimnames = allocVector(VECSXP, 2));
+	PROTECT(ndimnamesnames = allocVector(VECSXP, 2));
 	VECTOR(dimnames)[0] = cnames;
 	VECTOR(dimnames)[1] = rnames;
+	STRING(ndimnamesnames)[1] = STRING(dimnamesnames)[0];
+	STRING(ndimnamesnames)[0] = STRING(dimnamesnames)[1];
+	setAttrib(dimnames, R_NamesSymbol, ndimnamesnames);
 	setAttrib(r, R_DimNamesSymbol, dimnames);
-	UNPROTECT(1);
+	UNPROTECT(2);
     }
     copyMostAttrib(a, r);
     UNPROTECT(1);
