@@ -15,6 +15,7 @@ count.fields <- function(file, sep = "", quote = "\"'", skip = 0,
 type.convert <- function(x, na.strings = "NA", as.is = FALSE, dec = ".")
     .Internal(type.convert(x, na.strings, as.is, dec))
 
+
 read.table <-
     function (file, header = FALSE, sep = "", quote = "\"'", dec = ".",
               row.names, col.names, as.is = FALSE,
@@ -37,20 +38,22 @@ read.table <-
 
     if(skip > 0) readLines(file, skip)
     ## read a few lines to determine header, no of cols.
-    nlines <- 0
-    lines <- NULL
-    while(nlines < 5) {
-        ## read up to five non-blank and non-comment lines.
-        line <- readLines(file, 1, ok = TRUE)
-        if(length(line) == 0) break
-        if(blank.lines.skip && length(grep("^[ \\t]*$", line))) next
-        if(length(comment.char) && nchar(comment.char)) {
-            pattern <- paste("^[ \\t]*", substring(comment.char,1,1),
-                             sep ="")
-            if(length(grep(pattern, line))) next
-        }
-        lines <- c(lines, line)
-    }
+#    nlines <- 0
+#    lines <- NULL
+#     while(nlines < 5) {
+#         ## read up to five non-blank and non-comment lines.
+#         line <- readLines(file, 1, ok = TRUE)
+#         if(length(line) == 0) break
+#         if(blank.lines.skip && length(grep("^[ \\t]*$", line))) next
+#         if(length(comment.char) && nchar(comment.char)) {
+#             pattern <- paste("^[ \\t]*", substring(comment.char,1,1),
+#                              sep ="")
+#             if(length(grep(pattern, line))) next
+#         }
+#         lines <- c(lines, line)
+#     }
+    lines <- .Internal(readTableHead(file, 5, comment.char,
+                                     blank.lines.skip))
     nlines <- length(lines)
     if(!nlines) {
         if(missing(col.names))
