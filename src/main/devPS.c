@@ -360,7 +360,7 @@ static int GetKPX(char *buf, int nkp, FontMetricInfo *metrics)
 
 /* Load Fontmetrics from a File */
 
-int PostScriptLoadFontMetrics(char *fontname, FontMetricInfo *metrics)
+static int PostScriptLoadFontMetrics(char *fontname, FontMetricInfo *metrics)
 {
     char buf[BUFSIZE], *p;
     int mode, i = 0, ii, nKPX=0;
@@ -448,7 +448,8 @@ int PostScriptLoadFontMetrics(char *fontname, FontMetricInfo *metrics)
     return 0;
 }
 
-double PostScriptStringWidth(unsigned char *p, FontMetricInfo *metrics)
+static double
+PostScriptStringWidth(unsigned char *p, FontMetricInfo *metrics)
 {
     int sum = 0, i;
     unsigned char p1, p2;
@@ -470,8 +471,9 @@ double PostScriptStringWidth(unsigned char *p, FontMetricInfo *metrics)
     return 0.001 * sum;
 }
 
-void PostScriptMetricInfo(int c, double *ascent, double *descent,
-			  double *width, FontMetricInfo *metrics)
+static void
+PostScriptMetricInfo(int c, double *ascent, double *descent,
+		     double *width, FontMetricInfo *metrics)
 {
     if (c == 0) {
 	*ascent = 0.001 * metrics->FontBBox[3];
@@ -524,29 +526,24 @@ static void PSFileHeader(FILE *fp, int font, int encoding, char *papername,
 	fprintf(fp, "%%!PS-Adobe-3.0 EPSF-3.0\n");
     else
 	fprintf(fp, "%%!PS-Adobe-3.0\n");
-    fprintf(fp, "%%%%DocumentFonts: %s %s %s\n%%%%+ %s %s\n",
+    fprintf(fp, "%%%%DocumentNeededResources: font %s %s %s\n%%%%+ font %s %s\n",
 	    Family[font].font[0].name, Family[font].font[1].name,
 	    Family[font].font[2].name, Family[font].font[3].name,
 	    Family[font].font[4].name);
     if(!EPSFheader)
-	fprintf(fp, "%%%%DocumentMedia: %s %.0f %.0f 0 ()\n",
+	fprintf(fp, "%%%%DocumentMedia: %s %.0f %.0f 0 () ()\n",
 		papername, paperwidth, paperheight);
     fprintf(fp, "%%%%Title: R Graphics Output\n");
     fprintf(fp, "%%%%Creator: R Software\n");
     fprintf(fp, "%%%%Pages: (atend)\n");
     if (landscape) {
 	fprintf(fp, "%%%%Orientation: Landscape\n");
-	fprintf(fp, "%%%%BoundingBox: %.0f %.0f %.0f %.0f\n",
-		left, bottom, right, top);
-/* This appears to be wrong, use *same* BBox as Portrait
-		bottom, left, top, right);
-*/
     }
     else {
 	fprintf(fp, "%%%%Orientation: Portrait\n");
-	fprintf(fp, "%%%%BoundingBox: %.0f %.0f %.0f %.0f\n",
-		left, bottom, right, top);
     }
+    fprintf(fp, "%%%%BoundingBox: %.0f %.0f %.0f %.0f\n",
+	    left, bottom, right, top);
     fprintf(fp, "%%%%EndComments\n");
     fprintf(fp, "%%%%BeginProlog\n");
     fprintf(fp, "/gs  { gsave } def\n");
@@ -587,7 +584,7 @@ static void PSFileHeader(FILE *fp, int font, int encoding, char *papername,
     fprintf(fp, "%%%%EndProlog\n");
 }
 
-void PostScriptFileTrailer(FILE *fp, int pageno)
+static void PostScriptFileTrailer(FILE *fp, int pageno)
 {
     fprintf(fp, "ep\n");
     fprintf(fp, "%%%%Trailer\n");
@@ -595,39 +592,34 @@ void PostScriptFileTrailer(FILE *fp, int pageno)
     fprintf(fp, "%%%%EOF\n");
 }
 
-void PostScriptStartPage(FILE *fp, int pageno)
+static void PostScriptStartPage(FILE *fp, int pageno)
 {
     fprintf(fp, "%%%%Page: %d %d\n", pageno, pageno);
     fprintf(fp, "bp\n");
 }
 
-void PostScriptEndPage(FILE *fp)
+static void PostScriptEndPage(FILE *fp)
 {
     fprintf(fp, "ep\n");
 }
 
-void PostScriptSetClipRect(FILE *fp, double x0, double x1,
-			   double y0, double y1)
+static void PostScriptSetClipRect(FILE *fp, double x0, double x1,
+				  double y0, double y1)
 {
-        fprintf(fp, "%.2f %.2f %.2f %.2f cl\n", x0, y0, x1, y1);
+    fprintf(fp, "%.2f %.2f %.2f %.2f cl\n", x0, y0, x1, y1);
 }
 
-void PostScriptSetLineWidth(FILE *fp, double linewidth)
+static void PostScriptSetLineWidth(FILE *fp, double linewidth)
 {
     fprintf(fp, "%.2f setlinewidth\n", linewidth);
 }
 
-void PostScriptSetFont(FILE *fp, int typeface, double size)
+static void PostScriptSetFont(FILE *fp, int typeface, double size)
 {
     fprintf(fp, "/ps %.0f def %s %.0f s\n", size, TypeFaceDef[typeface], size);
 }
 
-void PostScriptSetColor(FILE *fp, double r, double g, double b)
-{
-    fprintf(fp,"%.4f %.4f %.4f rgb\n", r, g, b);
-}
-
-void PostScriptSetLineTexture(FILE *fp, int *lty, int nlty, double lwd)
+static void PostScriptSetLineTexture(FILE *fp, int *lty, int nlty, double lwd)
 {
     double dash;
     int i;
@@ -641,32 +633,33 @@ void PostScriptSetLineTexture(FILE *fp, int *lty, int nlty, double lwd)
 }
 
 
-void PostScriptMoveTo(FILE *fp, double x, double y)
+static void PostScriptMoveTo(FILE *fp, double x, double y)
 {
     fprintf(fp, "%.2f %.2f m\n", x, y);
 }
 
-void PostScriptLineTo(FILE *fp, double x, double y)
+static void PostScriptLineTo(FILE *fp, double x, double y)
 {
     fprintf(fp, "%.2f %.2f l\n", x, y);
 }
 
-void PostScriptStartPath(FILE *fp)
+static void PostScriptStartPath(FILE *fp)
 {
     fprintf(fp, "np\n");
 }
 
-void PostScriptEndPath(FILE *fp)
+static void PostScriptEndPath(FILE *fp)
 {
     fprintf(fp, "o\n");
 }
 
-void PostScriptRectangle(FILE *fp, double x0, double y0, double x1, double y1)
+static void PostScriptRectangle(FILE *fp, double x0, double y0,
+				double x1, double y1)
 {
     fprintf(fp, "%.2f %.2f %.2f %.2f r ", x0, y0, x1, y1);
 }
 
-void PostScriptCircle(FILE *fp, double x, double y, double r)
+static void PostScriptCircle(FILE *fp, double x, double y, double r)
 {
     fprintf(fp, "%.2f %.2f %.2f c ", x, y, r);
 }
@@ -699,8 +692,8 @@ static void PostScriptWriteString(FILE *fp, char *str)
     fputc(')', fp);
 }
 
-void PostScriptText(FILE *fp, double x, double y,
-		    char *str, double xc, double yc, double rot)
+static void PostScriptText(FILE *fp, double x, double y,
+			   char *str, double xc, double yc, double rot)
 {
     fprintf(fp, "%.2f %.2f ", x, y);
     PostScriptWriteString(fp, str);
@@ -736,9 +729,9 @@ typedef struct {
 
     int onefile;         /* EPSF header etc*/
 
-    /* This group of variables track the current device status. 
+    /* This group of variables track the current device status.
      * They should only be set by routines that emit PostScript code. */
-    struct { 
+    struct {
 	double lwd;		 /* line width */
 	int lty;		 /* line type */
 	int fontstyle;	         /* font style, R, B, I, BI, S */
@@ -1162,8 +1155,8 @@ static void Invalidate(DevDesc *dd)
 
     pd->current.fontsize = -1;
     pd->current.fontstyle = -1;
-    pd->current.lwd = -1; 
-    pd->current.lty = -1; 
+    pd->current.lwd = -1;
+    pd->current.lty = -1;
     pd->current.col = 0xffffffff;
     pd->current.fill = 0xffffffff;
     pd->current.bg = 0xffffffff;
@@ -1200,7 +1193,7 @@ static void PS_NewPage(DevDesc *dd)
     Invalidate(dd);
 
     if(dd->gp.bg != R_RGB(255,255,255)) {
-	PS_Rect(0, 0, 72.0 * pd->pagewidth, 72.0 * pd->pageheight, 
+	PS_Rect(0, 0, 72.0 * pd->pagewidth, 72.0 * pd->pageheight,
 		DEVICE, dd->gp.bg, NA_INTEGER, dd);
     }
 }
@@ -1253,7 +1246,7 @@ static double PS_StrWidth(char *str, DevDesc *dd)
     PostScriptDesc *pd = (PostScriptDesc *) dd->deviceSpecific;
 
     return floor(dd->gp.cex * dd->gp.ps + 0.5) *
-	PostScriptStringWidth((unsigned char *)str, 
+	PostScriptStringWidth((unsigned char *)str,
 			      &(pd->metrics[dd->gp.font-1]));
 }
 
@@ -1262,7 +1255,7 @@ static void PS_MetricInfo(int c, double *ascent, double *descent,
 {
     PostScriptDesc *pd = (PostScriptDesc *) dd->deviceSpecific;
 
-    PostScriptMetricInfo(c, ascent, descent, width, 
+    PostScriptMetricInfo(c, ascent, descent, width,
 			 &(pd->metrics[dd->gp.font-1]));
     *ascent = floor(dd->gp.cex * dd->gp.ps + 0.5) * *ascent;
     *descent = floor(dd->gp.cex * dd->gp.ps + 0.5) * *descent;
@@ -2114,7 +2107,7 @@ static double XFig_StrWidth(char *str, DevDesc *dd)
     XFigDesc *pd = (XFigDesc *) dd->deviceSpecific;
 
     return floor(dd->gp.cex * dd->gp.ps + 0.5) *
-	PostScriptStringWidth((unsigned char *)str, 
+	PostScriptStringWidth((unsigned char *)str,
 			      &(pd->metrics[dd->gp.font-1]));
 }
 
@@ -2123,7 +2116,7 @@ static void XFig_MetricInfo(int c, double *ascent, double *descent,
 {
     XFigDesc *pd = (XFigDesc *) dd->deviceSpecific;
 
-    PostScriptMetricInfo(c, ascent, descent, width, 
+    PostScriptMetricInfo(c, ascent, descent, width,
 			 &(pd->metrics[dd->gp.font-1]));
     *ascent = floor(dd->gp.cex * dd->gp.ps + 0.5) * *ascent;
     *descent = floor(dd->gp.cex * dd->gp.ps + 0.5) * *descent;
