@@ -71,7 +71,7 @@ print.TukeyHSD <- function(x, ...)
         "% family-wise confidence level\n", sep="")
     if (attr(x, "ordered"))
         cat("    factor levels have been ordered\n")
-    cat("\nFit: ", deparse(attr(x, "orig.call")), "\n\n", sep="")
+    cat("\nFit: ", deparse(attr(x, "orig.call", 500)), "\n\n", sep="")
     attr(x, "orig.call") <- attr(x, "conf.level") <- attr(x, "ordered") <- NULL
     print.default(unclass(x), ...)
 }

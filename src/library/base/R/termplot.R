@@ -20,7 +20,7 @@ termplot <- function(model, data=NULL,envir=environment(formula(model)),
         data<-eval(model$call$data,envir)
     if (is.null(data))
         data<-mf
-    
+
     nmt <- colnames(tms)
     cn <- parse(text=nmt)
     ## Defaults:
@@ -29,7 +29,7 @@ termplot <- function(model, data=NULL,envir=environment(formula(model)),
     if (is.null(main))
         main <- ""
     else if(is.logical(main))
-        main <- if(main) deparse(model$call) else ""
+        main <- if(main) deparse(model$call, 500) else ""
     else if(!is.character(main))
         stop("`main' must be TRUE, FALSE, NULL or character (vector).")
     main <- rep(main, length = n.tms) # recycling
@@ -48,7 +48,7 @@ termplot <- function(model, data=NULL,envir=environment(formula(model)),
     }
     if (is.null(xlabs))
         xlabs<-unlist(lapply(cn,carrier.name))
-    
+
     if (partial.resid)
 	pres <- residuals(model, "partial")
     is.fac <- sapply(nmt, function(i) is.factor(mf[,i]))
