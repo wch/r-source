@@ -4,7 +4,7 @@
 : ${R_HOME=R_HOME_DIR}
 export R_HOME
 
-R_binary="R.X11"
+R_binary="R.bin"
 
 # Default printer paper size
 # Choose one of the following:
@@ -72,7 +72,7 @@ Options:
   --verbose             Print more information about progress
   -d, --debugger=NAME   Run R through debugger NAME
   -g, --gui=TYPE	Use TYPE as GUI; possible values are \`X11'
-			(default), \`none' and \`GNOME'
+			(default), \`none' and \`gnome'
 
 Commands:
   BATCH			Run R in batch mode
@@ -99,7 +99,6 @@ Report bugs to <R-bugs@lists.r-project.org>."
 # Argument loop
 args=
 debugger=
-gui=X11
 while test -n "${1}"; do
   case ${1} in
     RHOME|--print-home)
@@ -109,7 +108,7 @@ while test -n "${1}"; do
     CMD)
       shift; PATH="${R_HOME}/bin:${PATH}" exec "${@}" ;;
     --gnome)
-      echo "option \`${1}' is defunct, use \`--gui=GNOME'"
+      echo "option \`${1}' is defunct, use \`--gui=gnome'"
       exit 1
       ;;
     -d|--debugger)
@@ -142,9 +141,6 @@ if [ ! -x ${R_HOME} ]; then
   echo "R_HOME = \`${R_HOME}' not found"
   exit 1
 fi
-
-R_binary=R.X11
-
 
 # Startup
 if ${use_r_environ}; then # use the one in current dir, or default

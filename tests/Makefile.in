@@ -113,17 +113,16 @@ test-undoc:
 
 $(test-out): Makefile stamp-R
 
-stamp-R: $(top_builddir)/bin/R.X11 $(top_builddir)/library/base/R/base
+stamp-R: $(top_builddir)/bin/R.bin $(top_builddir)/library/base/R/base
 	@touch $@
 
 mostlyclean: clean
 clean:
-	-(cd Examples; $(MAKE) $@)
-	rm -f stamp-R Makedeps Rplots.* *.Rd
+	@-(cd Examples; $(MAKE) $@)
+	@rm -f stamp-R Makedeps Rplots.* *.Rd
 distclean: clean
-	@rm -f $(test-out)
-	-(cd Examples; $(MAKE) $@)
-	@rm -f Makefile $(test-src-auto)
+	@-(cd Examples; $(MAKE) $@)
+	@rm -f Makefile $(test-out) $(test-src-auto)
 maintainer-clean: distclean
 
 distdir: $(DISTFILES)

@@ -128,9 +128,8 @@ Makedeps: Makefile $(DEPENDS)
 	@touch $@
 
 R: Makefile
-	@for t in Makedeps $(top_builddir)/bin/R.X11; do \
-	  $(MAKE) $${t}; \
-	done
+	@$(MAKE) Makedeps
+	@$(MAKE) $(top_builddir)/bin/R.bin
 
 ../include/config.h:
 	(cd ../include; $(MAKE) $(@F))
@@ -139,7 +138,7 @@ R: Makefile
 ../include/FFDecl.h: $(top_srcdir)/src/appl/ROUTINES
 	(cd ../include; $(top_srcdir)/tools/GETSYMBOLS)
 
-$(top_builddir)/bin/R.X11: $(OBJECTS) $(RLIBS) @EXPORTFILE@
+$(top_builddir)/bin/R.bin: $(OBJECTS) $(RLIBS) @EXPORTFILE@
 	@$(MKINSTALLDIRS) $(top_builddir)/bin
 	$(MAINLD) $(MAINLDFLAGS) $(LDFLAGS) -o $@ $(OBJECTS) $(ALL_LIBS)
 
