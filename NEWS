@@ -70,7 +70,8 @@ BUG FIXES
 
     o	matplot() now allows the same `type's as plot().
 
-    o	dev.print() and dev.copy2eps() now work when called from a function.
+    o	dev.print() and dev.copy2eps() now work when called from a
+	function, such as dev2bitmap().
 
     o	anova.glmlist works correctly with decreasing models and
 	test="F" now gets the correct residual df.
@@ -88,6 +89,10 @@ BUG FIXES
 	`utilities', for example.
 
     o	aov() with multiple strata was setting some spurious options.
+
+    o	Under UNIX, help(, htmlhelp=TRUE) uses the linked copy of the
+	HTML file in ~/.R if help.start() has been run recently in the
+	session, so the style sheet and hyperlinks should now be found.
 
 
 

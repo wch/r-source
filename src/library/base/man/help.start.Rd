@@ -22,9 +22,14 @@ help.start(gui = "irrelevant", browser = "irrelevant")
 }
 \details{
 #ifdef unix
+  All the packages in the current value of \code{.lib.loc} are linked to
+  a directory \code{.R} in the user's home directory.
+
   The \code{browser} needs to work with a \code{"-remote openURL(..)"}
   call. Then, the hypertext \R help interface is opened in any already
   running browser or a new one if necessary.
+
+  All future help requests are sent to the browser.
 #endif
 #ifdef windows
   The Windows file association mechanism is used to send the HTML file
@@ -35,6 +40,14 @@ help.start(gui = "irrelevant", browser = "irrelevant")
   to set that.
 #endif
 }
+
+#ifdef unix
+\note{
+  As a side-effect, the variable \code{"help.start.has.been.run"} in the
+  environment \code{"package:base"} is set to true.
+}
+#endif
+
 \seealso{
   \code{\link{help}()} for on- and off-line help in ASCII/Editor or
   PostScript format.
