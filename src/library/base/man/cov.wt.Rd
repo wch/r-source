@@ -31,7 +31,6 @@ cov.wt(x, wt = rep(1/nrow(x), nrow(x)), cor = FALSE, center = TRUE)
   \item{cor}{the estimated correlation matrix.  Only returned if
     \code{cor} is \code{TRUE}.}
 }
-\seealso{
-  \code{\link{cov}}
+\seealso{\code{\link{cov}} and \code{\link{var}}.
 }
 \keyword{multivariate}
