@@ -28,7 +28,7 @@ prompt.default(object,
   
   \code{\link{help}} and the chapter on ``Writing \R documentation'' in
   ``Writing \R Extensions'' (see the \file{doc/manual}
-  subdirectory of the \R\ source tree).
+  subdirectory of the \R source tree).
 }
 \examples{
 prompt(plot.default)
