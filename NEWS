@@ -54,6 +54,9 @@ BUG FIXES
 	45 characters, and works correctly if the field width is
 	larger than the window width.
 
+    o	Recording plots used to ignore graphics events before the last
+	replay.
+
 
 
 		CHANGES IN R VERSION 1.1.0

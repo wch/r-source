@@ -3268,6 +3268,7 @@ SEXP do_playDL(SEXP call, SEXP op, SEXP args, SEXP env)
     checkArity(op, args);
     if(!isList(theList = CAR(args)))
        errorcall(call, "invalid argument");
+    dd->displayList = theList;
     if (theList != R_NilValue) {
 	ask = dd->gp.ask;
 	dd->gp.ask = 1;
