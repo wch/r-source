@@ -2767,9 +2767,8 @@ int NewEditWindow(char *fileName)
     frameOptions = kTXNShowWindowMask|kTXNDoNotInstallDragProcsMask|kTXNDrawGrowIconMask; 
     frameOptions |= kTXNWantHScrollBarMask | kTXNWantVScrollBarMask|kTXNMonostyledTextMask;
 
-    SetRect(&WinBounds, 0, 0,  400, 400 ) ;
-    
-    
+	SetRect(&WinBounds, 0, 0,  (int)(80.0*(double)RFontSizes[CurrentPrefs.RFontSize-1] / 1.61), 400);
+
      if( (err = CreateNewWindow( kDocumentWindowClass, kWindowStandardHandlerAttribute | kWindowStandardDocumentAttributes, &WinBounds, &EditWindow) != noErr))
      goto fail;
     
@@ -2970,8 +2969,8 @@ int NewHelpWindow(char *fileName, char *title, char *WinTitle)
     frameOptions = kTXNShowWindowMask|kTXNDoNotInstallDragProcsMask|kTXNDrawGrowIconMask; 
     frameOptions |= kTXNWantHScrollBarMask | kTXNWantVScrollBarMask | kTXNReadOnlyMask|kTXNMonostyledTextMask;
 
-    SetRect(&WinBounds, 0, 0, 400, 400);
-    
+    SetRect(&WinBounds, 0, 0,  (int)(80.0*(double)RFontSizes[CurrentPrefs.RFontSize-1] / 1.61), 400);
+
      if( (err = CreateNewWindow( kDocumentWindowClass, kWindowStandardHandlerAttribute | 
      kWindowStandardDocumentAttributes, &WinBounds, &HelpWindow) != noErr))
      goto fail;
