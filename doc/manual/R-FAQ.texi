@@ -4,13 +4,15 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2004
-@set FAQ-VERSION 1.9-49 @value{FAQ-YEAR}-09-11
+@set FAQ-VERSION 1.9-50 @value{FAQ-YEAR}-09-14
 @set REL-VERSION 1.9.1
 @set REL-YEAR 2004
 @c <FIXME>
-@c 2.0
+@c 2.0.0
 @set FAQ-ISBN 3-900051-01-1
+@set R-ISBN 3-900051-00-3
 @c set FAQ-ISBN 3-900051-08-9
+@c set R-ISBN 3-900051-07-0
 @c </FIXME>
 @documentlanguage en
 @documentencoding ISO-8859-1
@@ -178,7 +180,8 @@ prompt, and a @samp{$} for the shell prompt (where applicable).
 @node Feedback,  , Notation, Introduction
 @section Feedback
 
-Feedback is of course most welcome.
+Feedback via email to @email{Kurt.Hornik@@R-project.org} is of course
+most welcome.
 
 In particular, note that I do not have access to Windows or Macintosh
 systems.  Features specific to the Windows and Mac OS X ports of R are
@@ -262,13 +265,17 @@ official part of the @acronym{GNU} project (``@acronym{GNU} S'').
 @section What machines does R run on?
 
 R is being developed for the Unix, Windows and Mac families of operating
-systems.  Support for Mac OS Classic will end with the 1.7 series.
+systems.  Support for Mac OS Classic ended with R 1.7.1.
 
 The current version of R will configure and build under a number of
-common Unix platforms including i386-freebsd, @var{cpu}-linux-gnu for
-the i386, alpha, arm, hppa, ia64, m68k, powerpc, and sparc CPUs (see
-e.g.@: @uref{http://buildd.debian.org/build.php?&pkg=r-base}),
-i386-sun-solaris, powerpc-apple-darwin, mips-sgi-irix, alpha-dec-osf4,
+common Unix platforms including @var{cpu}-linux-gnu for the i386, alpha,
+arm, hppa, ia64, m68k, mips/mipsel, powerpc, s390, sparc (e.g.,
+@uref{http://buildd.debian.org/build.php?&pkg=r-base}), and x86_64 CPUs,
+i386-freebsd, i386-sun-solaris, powerpc-apple-darwin, mips-sgi-irix,
+@c <FIXME>
+@c Not sure anymore ...
+@c alpha-dec-osf4,
+@c </FIXME>
 rs6000-ibm-aix, hppa-hp-hpux, and sparc-sun-solaris.
 
 @c and according to @email{jlindsey@@luc.ac.be, Jim Lindsey} also on
@@ -281,10 +288,10 @@ If you know about other platforms, please drop us a note.
  
 The current released version is @value{REL-VERSION}.  Based on this
 `major.minor.patchlevel' numbering scheme, there are two development
-versions of R, working towards the next patch (`r-patched') and minor or
-eventually major (`r-devel') releases of R, respectively.  Version
-r-patched is for bug fixes mostly.  New features are typically
-introduced in r-devel.
+versions of R, a patched version of the current release (`r-patched')
+and one working towards the next minor or eventually major (`r-devel')
+releases of R, respectively.  Version r-patched is for bug fixes mostly.
+New features are typically introduced in r-devel.
 
 @node How can R be obtained?, How can R be installed?, What is the current version of R?, R Basics
 @section How can R be obtained?
@@ -293,7 +300,8 @@ Sources, binaries and documentation for R can be obtained via @CRAN{},
 the ``Comprehensive R Archive Network'' (see @ref{What is CRAN?}).
 
 Sources are also available via @uref{https://svn.r-project.org/R/}, the
-R Subversion repository, but currently not via anonymous rsync (or CVS).
+R Subversion repository, but currently not via anonymous rsync (nor
+CVS).
 
 @c Sources are also available via anonymous rsync.  Use
 
@@ -336,6 +344,9 @@ R Subversion repository, but currently not via anonymous rsync (or CVS).
 @node How can R be installed (Unix), How can R be installed (Windows), How can R be installed?, How can R be installed?
 @subsection How can R be installed (Unix)
 
+If R is already installed, it can be started by typing @kbd{R} at the
+shell prompt (of course, provided that the executable is in your path).
+
 If binaries are available for your platform (see @ref{Are there Unix
 binaries for R?}), you can use these, following the instructions that
 come with them.
@@ -347,10 +358,11 @@ R distribution contains a brief introduction, and the ``R Installation
 and Administration'' guide (@pxref{What documentation exists for R?})
 has full details.
 
-Note that you need a @FORTRAN{} compiler or @command{f2c} in addition to
-a C compiler to build R.  Also, you need Perl version 5 to build the R
-object documentations.  (If this is not available on your system, you
-can obtain a PDF version of the object reference manual via @CRAN{}.)
+Note that you need a @FORTRAN{} compiler or perhaps @command{f2c} in
+addition to a C compiler to build R.  Also, you need Perl version 5 to
+build the R object documentations.  (If this is not available on your
+system, you can obtain a PDF version of the object reference manual via
+@CRAN{}.)
 
 In the simplest case, untar the R source code, change to the directory
 thus created, and issue the following commands (at the shell prompt):
@@ -377,7 +389,7 @@ manuals, and view these using e.g.@: Acrobat.  Manuals written in the
 @acronym{GNU} Texinfo system can also be converted to info files
 suitable for reading online with Emacs or stand-alone @acronym{GNU}
 Info; use @kbd{make info} to create these versions (note that this
-requires @command{makeinfo} version 4).
+requires Makeinfo version 4.5).
 
 Finally, use @kbd{make check} to find out whether your R system works
 correctly.
@@ -419,9 +431,9 @@ The @file{bin/windows} directory of a @CRAN{} site contains binaries for
 a base distribution and a large number of add-on packages from @CRAN{}
 to run on Windows 95, 98, ME, NT4, 2000, and XP (at least) on Intel and
 clones (but not on other platforms).  The Windows version of R was
-created by Robert Gentleman, and is now being developed and maintained
-by @email{murdoch@@stats.uwo.ca, Duncan Murdoch} and
-@email{Brian.Ripley@@R-project.org, Brian D. Ripley}.
+created by Robert Gentleman and Guido Masarotto, and is now being
+developed and maintained by @email{murdoch@@stats.uwo.ca, Duncan
+Murdoch} and @email{Brian.Ripley@@R-project.org, Brian D. Ripley}.
 
 @c Note that when uncompressing the zip files, the pkunzip program needs to
 @c be invoked with the @samp{-D} flag to create subdirectories.  Also, be
@@ -671,11 +683,14 @@ To cite R in publications, use
   organization = @{R Foundation for Statistical Computing@},
   address      = @{Vienna, Austria@},
   year         = @value{REL-YEAR},
-  note         = @{ISBN 3-900051-00-3@},
+  note         = @{@value{R-ISBN}@},
   url          = @{http://www.R-project.org@}
 @}
 @end group
 @end example
+
+Citation strings (or Bib@TeX{} entroes) for R and R packages can also be
+obtained by @code{citation()}.
 
 @node What mailing lists exist for R?, What is CRAN?, Citing R, R Basics
 @section What mailing lists exist for R?
@@ -822,10 +837,11 @@ Please always use the @acronym{URL} of the master site when referring to
 @node Can I use R for commercial purposes?, Why is R named R?, What is CRAN?, R Basics
 @section Can I use R for commercial purposes?
 
-R is released under the @uref{http://www.gnu.org/copyleft/gpl.html,, GNU
-General Public License (GPL)}.  If you have any questions regarding the
-legality of using R in any particular situation you should bring it up
-with your legal counsel.  We are in no position to offer legal advice.
+R is released under the @uref{http://www.gnu.org/copyleft/gpl.html,,
+@acronym{GNU} General Public License (GPL)}.  If you have any questions
+regarding the legality of using R in any particular situation you should
+bring it up with your legal counsel.  We are in no position to offer
+legal advice.
 
 It is the opinion of the R Core Team that one can use R for commercial
 purposes (e.g., in business or in consulting).  The GPL, like all Open
@@ -964,8 +980,7 @@ Based on the S language, @SPLUS{} provides functionality in a wide
 variety of areas, including robust regression, modern non-parametric
 regression, time series, survival analysis, multivariate analysis,
 classical statistical tests, quality control, and graphics drivers.
-Add-on modules add additional capabilities for wavelet analysis, spatial
-statistics, GARCH models, and design of experiments.
+Add-on modules add additional capabilities.
 
 See the @uref{http://www.insightful.com/products/splus/, Insightful
 @SPLUS{} page} for further information.
@@ -1561,13 +1576,13 @@ The R distribution comes with the following packages:
 
 @table @strong
 @c <FIXME>
-@c 2.0
+@c 2.0.0
 @item base
-Base R functions (and datasets before R 2.0).
+Base R functions (and datasets before R 2.0.0).
 @item datasets
-Base R datasets (added in R 2.0).
+Base R datasets (added in R 2.0.0).
 @item grDevices
-Graphics devices for base and grid graphics (added in R 2.0).
+Graphics devices for base and grid graphics (added in R 2.0.0).
 @c </FIXME>
 @item graphics
 R functions for base graphics.
@@ -1590,7 +1605,7 @@ Tools for package development and administration.
 @item utils
 R utility functions.
 @end table
-These ``base packages'' were substantially reorganized in R 1.9.  The
+These ``base packages'' were substantially reorganized in R 1.9.0.  The
 former @strong{base} was split into the four packages @strong{base},
 @strong{graphics}, @strong{stats}, and @strong{utils}.  Packages
 @strong{ctest}, @strong{eda}, @strong{modreg}, @strong{mva},
@@ -3376,8 +3391,9 @@ at the R prompt.
 
 This produces something like
 
+@quotation
+@cartouche
 @smallexample
-@group
 Packages in `/home/me/lib/R':
 
 mystuff       My own R functions, nicely packaged but not documented
@@ -3386,16 +3402,18 @@ Packages in `/usr/local/lib/R/library':
 
 KernSmooth    Functions for kernel smoothing for Wand & Jones (1995)
 MASS          Main Package of Venables and Ripley's MASS
-base          The R base package
+base          The R Base package
 boot          Bootstrap R (S-Plus) Functions (Canty)
 class         Functions for Classification
 cluster       Functions for clustering (by Rousseeuw et al.)
+datasets      The R datasets Package
 foreign       Read data stored by Minitab, S, SAS, SPSS, Stata, ...
+grDevices     The R Graphics Devices and Support for Colours and Fonts
 graphics      The R Graphics Package
 grid          The Grid Graphics Package
 lattice       Lattice Graphics
 methods       Formal Methods and Classes
-mgcv          Multiple smoothing parameter estimation and GAMs by GCV
+mgcv          GAMs with GCV smoothness estimation and GAMMs by REML/PQ
 nlme          Linear and nonlinear mixed effects models
 nnet          Feed-forward Neural Networks and Multinomial Log-Linear
               Models
@@ -3408,8 +3426,9 @@ survival      Survival analysis, including penalised likelihood
 tcltk         Tcl/Tk Interface
 tools         Tools for Package Development
 utils         The R Utils Package
-@end group
 @end smallexample
+@end cartouche
+@end quotation
 
 You can ``load'' the installed package @var{pkg} by
 
@@ -3631,8 +3650,6 @@ dir /opt/R/src/unix
 @chapter R Miscellanea
 
 @menu
-* Why does R run out of memory?::  
-* Why does sourcing a correct file fail?::  
 * How can I set components of a list to NULL?::  
 * How can I save my workspace?::  
 * How can I clean up my workspace?::  
@@ -3659,99 +3676,39 @@ dir /opt/R/src/unix
 * Why does the help.start() search engine not work?::  
 * Why did my .Rprofile stop working when I updated R?::  
 * Where have all the methods gone?::  
+* How can I create rotated axis labels?::  
 @end menu
 
-@node Why does R run out of memory?, Why does sourcing a correct file fail?, R Miscellanea, R Miscellanea
-@section Why does R run out of memory?
+@c @node Why does R run out of memory?, Why does sourcing a correct file fail?, R Miscellanea, R Miscellanea
+@c @section Why does R run out of memory?
 
-@c  R (currently) uses a @emph{static} memory model.  This means that when
-@c  it starts up, it asks the operating system to reserve a fixed amount of
-@c  memory for it.  The size of this chunk cannot be changed subsequently.
-@c  Hence, it can happen that not enough memory was allocated, e.g., when
-@c  trying to read large data sets into R.
+@c Versions of R prior to 1.2.0 used a @emph{static} memory model.  At
+@c startup, R asked the operating system to reserve a fixed amount of
+@c memory for it.  The size of this chunk could not be changed
+@c subsequently.  Hence, it could happen that not enough memory was
+@c allocated, e.g., when trying to read large data sets into R.  In such
+@c cases, it was necessary to restart R with more memory available, as
+@c controlled by the command line options @option{--nsize} and
+@c @option{--vsize}.
 
-@c  In these cases, you should restart R with more memory available, using
-@c  the command line options @option{--nsize} and @option{--vsize}.  To
-@c  understand these options, one needs to know that R maintains separate
-@c  areas for fixed and variable sized objects.  The first of these is
-@c  allocated as an array of ``cons cells'' (Lisp programmers will know what
-@c  they are, others may think of them as the building blocks of the
-@c  language itself, parse trees, etc.), and the second are thrown on a
-@c  ``heap''.  The @option{--nsize} option can be used to specify the number
-@c  of cons cells which R is to use (the default is 250000), and the
-@c  @option{--vsize} option to specify the size of the vector heap in bytes
-@c  (the default is @w{6 MB}).  Both options must either be integers or
-@c  integers ending with @samp{M}, @samp{K}, or @samp{k} meaning `Mega'
-@c  (2^20), (computer) `Kilo' (2^10), or regular `kilo' (1000).
+@c R version 1.2.0 introduces a new ``generational'' garbage collector,
+@c which will increase the memory available to R as needed.  Hence, user
+@c intervention is no longer necessary for ensuring that enough memory is
+@c available.
 
-@c  E.g., to read in a table of 5000 observations on 40 numeric variables,
-@c  @samp{R --vsize=6M} should do (which currently is the default).
+@c The new garbage collector does not move objects in memory, meaning that
+@c it is possible for the free memory to become fragmented so that large
+@c objects cannot be allocated even when there is apparently enough memory
+@c for them.
 
-@c  Note that the information on where to find vectors and strings on the
-@c  heap is stored using cons cells.  Thus, it may also be necessary to
-@c  allocate more space for cons cells in order to perform computations with
-@c  very ``large'' variable-size objects.
+@c @node Why does sourcing a correct file fail?, How can I set components of a list to NULL?, Why does R run out of memory?, R Miscellanea
+@c @section Why does sourcing a correct file fail?
 
-@c  You can find out the current memory consumption (the proportion of heap
-@c  and cons cells used) by typing @kbd{gc()} at the R prompt.  This may
-@c  help you in finding out whether to increase @option{--vsize} or
-@c  @option{--nsize}.  Note that following @kbd{gcinfo(TRUE)}, automatic
-@c  garbage collection always prints memory use statistics.
+@c Versions of R prior to 1.2.1 may have had problems parsing files not
+@c ending in a newline.  Earlier R versions had a similar problem when
+@c reading in data files.  This should no longer happen.
 
-@c  As of version 0.62.3, R will tell you whether you ran out of cons or
-@c  heap memory.
-
-@c  The defaults for @option{--nsize} and @option{--vsize} can be changed by
-@c  setting the environment variables @env{R_NSIZE} and @env{R_VSIZE}
-@c  respectively, perhaps most conveniently on Unix in the R environment
-@c  file (@file{~/.Renviron} by default).
-
-@c  When using @code{read.table()}, the memory requirements are in fact
-@c  higher than anticipated, because the file is first read in as one long
-@c  string which is then split again.  Use @code{scan()} if possible in
-@c  case you run out of memory when reading in a large table.
-
-@c  R version 1.2.0 introduces a new ``generational'' garbage collector,
-@c  which will increase the memory available to R as needed.  The interface
-@c  for controlling the generational collector is still experimental and in
-@c  flux.  Currently, the command line arguments and environment variables
-@c  described above can be used to supply minimal values for the sizes of
-@c  the node and vector heaps.
-
-Versions of R prior to 1.2.0 used a @emph{static} memory model.  At
-startup, R asked the operating system to reserve a fixed amount of
-memory for it.  The size of this chunk could not be changed
-subsequently.  Hence, it could happen that not enough memory was
-allocated, e.g., when trying to read large data sets into R.  In such
-cases, it was necessary to restart R with more memory available, as
-controlled by the command line options @option{--nsize} and
-@option{--vsize}.
-
-R version 1.2.0 introduces a new ``generational'' garbage collector,
-which will increase the memory available to R as needed.  Hence, user
-intervention is no longer necessary for ensuring that enough memory is
-available.
-
-The new garbage collector does not move objects in memory, meaning that
-it is possible for the free memory to become fragmented so that large
-objects cannot be allocated even when there is apparently enough memory
-for them.
-
-@node Why does sourcing a correct file fail?, How can I set components of a list to NULL?, Why does R run out of memory?, R Miscellanea
-@section Why does sourcing a correct file fail?
-
-Versions of R prior to 1.2.1 may have had problems parsing files not
-ending in a newline.  Earlier R versions had a similar problem when
-reading in data files.  This should no longer happen.
-
-@c  This can happen for example when Emacs is used for editing the file and
-@c  @code{next-line-add-newlines} is set to @code{nil}.  To avoid the
-@c  problem, either set @code{require-final-newline} to a non-@code{nil}
-@c  value in one of your Emacs startup files, or make sure R-mode (@pxref{Is
-@c  there Emacs support for R?}) is used for editing R source files (which
-@c  locally ensures this setting).
-
-@node How can I set components of a list to NULL?, How can I save my workspace?, Why does sourcing a correct file fail?, R Miscellanea
+@node How can I set components of a list to NULL?, How can I save my workspace?, R Miscellanea, R Miscellanea
 @section How can I set components of a list to NULL?
 
 You can use
@@ -3935,11 +3892,12 @@ can also replace @samp{\} by @samp{/} (@code{"c:/data/money.dat"}).
 @node Why does plotting give a color allocation error?, How do I convert factors to numeric?, How do file names work in Windows?, R Miscellanea
 @section Why does plotting give a color allocation error?
 
-Sometimes plotting, e.g., when running @code{demo("image")}, results in
-``Error: color allocation error''.  This is an X problem, and only
-indirectly related to R.  It occurs when applications started prior to R
-have used all the available colors.  (How many colors are available
-depends on the X configuration; sometimes only 256 colors can be used.)
+On an X11 device, plotting sometimes, e.g., when running
+@code{demo("image")}, results in ``Error: color allocation error''.
+This is an X problem, and only indirectly related to R.  It occurs when
+applications started prior to R have used all the available colors.
+(How many colors are available depends on the X configuration; sometimes
+only 256 colors can be used.)
 
 One application which is notorious for ``eating'' colors is Netscape.
 If the problem occurs when Netscape is running, try (re)starting it with
@@ -4258,8 +4216,9 @@ problem in batch mode or for remote operation.  If you have Ghostscript
 you can use @code{bitmap()}, which produces a PostScript file then
 converts it to any bitmap format supported by ghostscript.  On some
 installations this produces ugly output, on others it is perfectly
-satisfactory.  In theory one could also use Xvfb, which provides an X
-server with no display.
+satisfactory.  In theory one could also use Xvfb from
+@url{http://www.x.org/Downloads.html, X.Org}, which provides an X server
+with no display.
 
 @node How can I get command line editing to work?, How can I turn a string into a variable?, How do I produce PNG graphics in batch mode?, R Miscellanea
 @section How can I get command line editing to work?
@@ -4397,12 +4356,12 @@ utils::help.start()
 @end example
 
 @c <FIXME>
-@c 2.0
+@c 2.0.0
 @noindent
-(@code{grDevices::ps.options(horizontal = FALSE)} in R 2.0).
+(@code{grDevices::ps.options(horizontal = FALSE)} in R 2.0.0).
 @c </FIXME>
 
-@node Where have all the methods gone?,  , Why did my .Rprofile stop working when I updated R?, R Miscellanea
+@node Where have all the methods gone?, How can I create rotated axis labels?, Why did my .Rprofile stop working when I updated R?, R Miscellanea
 @section Where have all the methods gone?
 
 Many functions, particularly S3 methods, are now hidden in namespaces.
@@ -4420,6 +4379,42 @@ To see the code for an unexported function @code{foo()} in the namespace
 of package @code{"bar"} use @code{bar:::foo}.  Don't use these
 constructions to call unexported functions in your own code---they are
 probably unexported for a reason and may change without warning.
+
+@node How can I create rotated axis labels?,  , Where have all the methods gone?, R Miscellanea
+@section How can I create rotated axis labels?
+
+To rotate axis labels (using base graphics), you need to use
+@code{text()}, rather than @code{mtext()}, as the latter does not
+support @code{par("srt")}.
+
+@example
+## @r{Increase bottom margin to make room for rotated labels}
+par(mar = c(7, 4, 4, 2) + 0.1)
+## @r{Create plot with no x axis and no x axis label}
+plot(1 : 8, xaxt = "n",  xlab = "")
+## @r{Set up x axis with tick marks alone}
+axis(1, labels = FALSE)
+## @r{Create some text labels}
+labels <- paste("Label", 1:8, sep = " ")
+## @r{Plot x axis labels at default tick marks}
+text(1:8, par("usr")[3] - 0.25, srt = 45, adj = 1,
+     labels = labels, xpd = TRUE)
+## @r{Plot x axis label at line 6 (of 7)}
+mtext(1, text = "X Axis Label", line = 6)
+@end example
+
+@noindent
+When plotting the x axis labels, we use @code{srt = 45} for text
+rotation angle, @code{adj = 1} to place the right end of text at the
+tick marks, and @code{xpd = TRUE} to allow for text outside the plot
+region.  You can adjust the value of the @code{0.25} offset as required
+to move the axis labels up or down relative to the x axis.  See
+@code{?par} for more information.
+
+Also see Figure 1 and associated code in Paul Murrell (2003),
+``Integrating grid Graphics Output with Base Graphics Output'',
+@emph{RNews}, @strong{3/2}, 7--12.
+
 
 @node R Programming, R Bugs, R Miscellanea, Top
 @chapter R Programming
@@ -4482,14 +4477,16 @@ R-exts, Writing R Extensions}.
 Suppose you have C code file for dynloading into R, but you want to use
 @code{R CMD SHLIB} with compilation flags other than the default ones
 (which were determined when R was built).  You could change the file
-@file{@env{R_HOME}/etc/Makeconf} to reflect your preferences.  If you
-are a Bourne shell user, you can also pass the desired flags to Make
-(which is used for controlling compilation) via the Make variable
-@code{MAKEFLAGS}, as in
-
-@example
-MAKEFLAGS="CFLAGS=-O3" R CMD SHLIB *.c
-@end example
+@file{@env{R_HOME}/etc/Makeconf} to reflect your preferences, or (at
+least for systems using @acronym{GNU} Make) override them by the
+environment variable @env{MAKEFLAGS}.
+@ifclear UseExternalXrefs
+See section ``Creating shared objects'' in @cite{Writing R Extensions}.
+@end ifclear
+@ifset UseExternalXrefs
+@xref{Creating shared objects, , Creating shared objects, R-exts,
+Writing R Extensions}.
+@end ifset
 
 @node How can I debug S4 methods?,  , How can I change compilation flags?, R Programming
 @section How can I debug S4 methods?
