@@ -17,7 +17,8 @@ getenv(x)
 
   \code{.Deprecated("<new name>")} is called from deprecated functions.
 
-  \code{getenv} is a deprecated alternative name for \code{\link{Sys.getenv}}.
+  \code{getenv} is a deprecated alternative name for
+  \code{\link{Sys.getenv}}.
 }
 \seealso{\code{\link{Defunct}}}
 %\examples{

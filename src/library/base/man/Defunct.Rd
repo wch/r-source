@@ -6,34 +6,36 @@
 .Defunct()
 
 %--- oldfun(.)
+provide(package)
+% Removed in 1.2.0
+.Provided
 category(\dots)
 dnchisq(.)
 pnchisq(.)
 qnchisq(.)
 rnchisq(.)
-print.anova.lm(.)
 print.anova.glm(.)
+print.anova.lm(.)
 print.tabular(.)
 print.plot(.)
 save.plot(.)
-provide(package)
-.Provided
+system.test(.)
 }
 %------ PLEASE: put \alias{.} here for  EACH !
+\alias{provide}
+\alias{.Provided}
+\alias{Version}
 \alias{category}
 \alias{dnchisq}
 \alias{pnchisq}
 \alias{qnchisq}
 \alias{rnchisq}
-\alias{print.anova.lm}
 \alias{print.anova.glm}
+\alias{print.anova.lm}
 \alias{print.tabular}
 \alias{print.plot}
 \alias{save.plot}
-\alias{Version}
 \alias{system.test}
-\alias{provide}
-\alias{.Provided}
 %
 \description{
   The functions listed here are no longer part of \R as they are not
