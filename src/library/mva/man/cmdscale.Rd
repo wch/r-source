@@ -101,7 +101,7 @@ text(x, y, names(eurodist), cex=0.8)
 
 cmdsE <- cmdscale(eurodist, k=20, add = TRUE, eig = TRUE, x.ret = TRUE)
 str(cmdsE)
-\testonly{
+\dontshow{
 ## failed in versions <= 1.4.0 :
 cbind(sort(cmdscale(eurodist, k = 1)))
 cm1 <- cmdscale(eurodist, k=1, add=TRUE, x.ret = TRUE)

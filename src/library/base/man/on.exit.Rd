@@ -29,6 +29,6 @@ on.exit(expr, add = FALSE)
 \examples{
 opar <- par(mai = c(1,1,1,1))
 on.exit(par(opar))
-\testonly{par(opar)}
+\dontshow{par(opar)}
 }
 \keyword{programming}

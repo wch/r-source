@@ -72,7 +72,7 @@ prototype(...)
 ## representation for a new class with a directly define slot "smooth"
 ## which should be a "numeric" object, and extending class "track"
 representation("track", smooth ="numeric")
-\testonly{
+\dontshow{
 prev <- getClassDef("class3")
 setClass("class1", representation(a="numeric", b = "character"))
 setClass("class2", representation(a2 = "numeric", b = "numeric"))
@@ -87,7 +87,7 @@ setClass("Character",representation("character"))
 setClass("TypedCharacter",representation("Character",type="character"),
           prototype(character(0),type="plain"))
 ttt <- new("TypedCharacter", "foo", type = "character")
-\testonly{
+\dontshow{
 stopifnot(identical(as(ttt, "character"), "foo"))
 }
 
@@ -95,7 +95,7 @@ setClass("num1", representation(comment = "character"),
          contains = "numeric",
          prototype = prototype(pi, comment = "Start with pi"))
 
-\testonly{
+\dontshow{
 stopifnot(identical(new("num1"), new("num1", pi, comment = "Start with pi")))
 for(cl in c("num1", "TypedCharacter", "Character", "class2", "class1"))
     removeClass(cl)

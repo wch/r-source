@@ -1,4 +1,4 @@
-% $Id: SSlogis.Rd,v 1.4 2001/08/13 19:55:13 ripley Exp $
+% $Id: SSlogis.Rd,v 1.5 2003/09/01 09:38:22 ripley Exp $
 \name{SSlogis}
 \title{Logistic Model}
 \usage{
@@ -39,7 +39,7 @@ getInitial(weight ~ SSlogis(Time, Asym, xmid, scal), data = Chick.1)
 ## Initial values are in fact the converged values
 fm1 <- nls(weight ~ SSlogis(Time, Asym, xmid, scal), data = Chick.1)
 summary(fm1)
-\testonly{
+\dontshow{
   xx <- seq(-0.5, 5, len = 101)
   yy <- 5 / ( 1 + exp((2-xx)))
   par(mar = c(0, 0, 3.5, 0))

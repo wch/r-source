@@ -207,7 +207,7 @@ setGroupGeneric(name, def, group=NULL, valueClass=NULL, knownMembers,
   pointers from that page.
 }
 \examples{
-\testonly{
+\dontshow{
 setClass("track",
             representation(x="numeric", y="numeric"))
 }
@@ -224,7 +224,7 @@ setGeneric("authorNames",
       value
       })
 
-\testonly{
+\dontshow{
 
 setMethod("authorNames", "character", function(text)text)
 
@@ -264,7 +264,7 @@ t1 - 100
 
 1/t1
 
-\testonly{
+\dontshow{
 removeGeneric("authorNames")
 removeClass("track")
 removeMethods("Arith")

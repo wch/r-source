@@ -241,7 +241,7 @@ anova(glm.D93)
 summary(glm.D93)
 
 ## an example with offsets from Venables & Ripley (2002, p.189)
-\testonly{"anorexia" <-
+\dontshow{"anorexia" <-
 structure(list(Treat = structure(c(2, 2, 2, 2, 2, 2, 2, 2, 2,
 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 1, 1, 1,
 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
@@ -269,7 +269,7 @@ structure(list(Treat = structure(c(2, 2, 2, 2, 2, 2, 2, 2, 2,
 "50", "51", "52", "53", "54", "55", "56", "57", "58", "59", "60",
 "61", "62", "63", "64", "65", "66", "67", "68", "69", "70", "71",
 "72"))}
-%% "else" (not testonly)
+%% "else" (not dontshow)
 \dontrun{
 ## Need the anorexia data from a recent version of the package 'MASS':
 library(MASS)

@@ -40,7 +40,7 @@ newX <- seq(58, 72, len = 51)
 # evaluate the basis at the new data
 predict(basis, newX)
 
-\testonly{
+\dontshow{
 ## Consistency:
 wh <- women$height
 bbase <- bs(wh)

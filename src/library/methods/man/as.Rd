@@ -262,7 +262,7 @@ datatypes.  For example, \code{as(x, "numeric")} uses the existing
 \examples{
 ## using the definition of class "track" from \link{Classes}
 
-\testonly{
+\dontshow{
 setClass("track",
             representation(x="numeric", y="numeric"))
 setClass("trackCurve",
@@ -299,7 +299,7 @@ setAs("cb", "ca", function(from, to )new(to, a=from@b, id = from@id))
 
 as(CB, "numeric")
 
-\testonly{
+\dontshow{
 ## should generate an error (should have been a function of one argument)
 try(setAs("track", "numeric", function(x, y,z)x@y))
 

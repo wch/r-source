@@ -29,7 +29,7 @@ fix(x, \dots)
  fix(my.data.frame) # calls up data editor
  fix(my.data.frame, factor.mode="char") # use of ...
 }
-\testonly{
+\dontshow{
 oo <- options(editor="touch") # not really changing anything
 fix(pi)
 if(!is.numeric(pi) || length(pi)!=1 ||

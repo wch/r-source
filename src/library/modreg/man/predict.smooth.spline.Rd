@@ -26,7 +26,7 @@
 data(cars)
 attach(cars)
 cars.spl <- smooth.spline(speed, dist, df=6.4)
-\testonly{
+\dontshow{
 print.default(cars.spl)
 }
 
@@ -52,7 +52,7 @@ for(d in 1:3){
        main= paste("s",paste(rep("'",d), collapse=""),"(x)", sep=""))
   mtext("Difference quotient approx.(last)", col = "blue")
   lines(pp <- predict(cars.spl, xx, deriv = d), col = "red")
-\testonly{
+\dontshow{
   print(pp)
 }
   points(kn, pp$y[i.kn], pch = 3, col="dark red")

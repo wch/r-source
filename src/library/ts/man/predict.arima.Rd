@@ -55,7 +55,7 @@ data(USAccDeaths, package="ts")
 (fit <- arima(USAccDeaths, order = c(0,1,1),
               seasonal = list(order=c(0,1,1))))
 predict(fit, n.ahead = 6)
-\testonly{
+\dontshow{
 
 ## tests of prediction
 predict(arima(lh, order=c(1,0,1)), n.ahead=5)

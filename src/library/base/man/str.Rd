@@ -107,7 +107,7 @@ lsf.str()#- how do the functions look like which I am using?
 ls.str(mode = "list")#- what are the structured objects I have defined?
 ## which base functions have "file" in their name ?
 lsf.str(pos = length(search()), pattern = "file")
-\testonly{
+\dontshow{
  ##-- Some "crazy" objects
  str(array(1:5, dim=20))
  str(factor(character(0)))

@@ -273,7 +273,7 @@ TestChars()
 TestChars("ISOLatin2")
 TestChars("WinAnsi")
 }
-\testonly{
+\dontshow{
 xx <- seq(0, 7, length=701)
 yy <- sin(xx)/xx; yy[1] <- 1
 plot(xx,yy)                     # produce the desired graph(s)

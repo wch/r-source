@@ -1,4 +1,4 @@
-% $Id: SSfpl.Rd,v 1.3 2001/08/13 19:55:13 ripley Exp $
+% $Id: SSfpl.Rd,v 1.4 2003/09/01 09:38:22 ripley Exp $
 \name{SSfpl}
 \title{Four-parameter Logistic Model}
 \usage{
@@ -42,7 +42,7 @@ getInitial(weight ~ SSfpl(Time, A, B, xmid, scal), data = Chick.1)
 ## Initial values are in fact the converged values
 fm1 <- nls(weight ~ SSfpl(Time, A, B, xmid, scal), data = Chick.1)
 summary(fm1)
-\testonly{
+\dontshow{
   xx <- seq(-0.5, 5, len = 101)
   yy <- 1 + 4 / ( 1 + exp((2-xx)))
   par(mar = c(0, 0, 3.5, 0))

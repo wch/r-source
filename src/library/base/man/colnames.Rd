@@ -51,7 +51,7 @@ colnames(x) <- value
 \examples{
 m0 <- matrix(NA, 4, 0)
 rownames(m0)
-\testonly{
+\dontshow{
         rownames(m0, do.NULL = FALSE)
         colnames(m0, do.NULL = FALSE)
 }

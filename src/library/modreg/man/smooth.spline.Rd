@@ -197,7 +197,7 @@ plot(speed, dist, main = "data(cars)  &  smoothing splines")
 cars.spl <- smooth.spline(speed, dist)
 (cars.spl)
 ## This example has duplicate points, so avoid cv=TRUE
-\testonly{
+\dontshow{
   all(cars.spl $ w == table(speed)) # TRUE (weights = multiplicities)
   str(cars.spl, digits=5, vec.len=6)
   cars.spl$fit
@@ -223,7 +223,7 @@ lines(predict(s02, xx), col = 3); mtext(deparse(s02$call), col = 3)
 (s2m <- smooth.spline(y18, cv=TRUE, con=list(trace=TRUE,tol=1e-6, low= -1.5)))
 ## both above do quite similarly (Df = 8.5 +- 0.2)
 
-\testonly{
+\dontshow{
 % not for the user
   s2. <- smooth.spline(y18, cv=TRUE,con=list(trace=TRUE, tol=1e-6,low= -3,maxit=20))
   s2. ## Intel-Linux: Df ~= (even! > ) 18 : interpolating -- much smaller PRESS

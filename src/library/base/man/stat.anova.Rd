@@ -30,7 +30,7 @@ stat.anova(table, test = c("Chisq", "F", "Cp"), scale, df.scale, n)
 \seealso{\code{\link{anova.lm}}, \code{\link{anova.glm}}.}
 \examples{
 ##-- Continued from '?glm':
-\testonly{example("glm", echo = FALSE)}
+\dontshow{example("glm", echo = FALSE)}
 print(ag <- anova(glm.D93))
 stat.anova(ag$table, test = "Cp",
            scale = sum(resid(glm.D93, "pearson")^2)/4, df = 4, n = 9)

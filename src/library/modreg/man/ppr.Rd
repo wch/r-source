@@ -200,7 +200,7 @@ plot(rock.ppr, main="ppr(log(perm)~ ., nterms=2, max.terms=5)")
 plot(update(rock.ppr, bass=5), main = "update(..., bass = 5)")
 plot(update(rock.ppr, sm.method="gcv", gcvpen=2),
      main = "update(..., sm.method=\"gcv\", gcvpen=2)")
-\testonly{predict(rock.ppr, rock)}
+\dontshow{predict(rock.ppr, rock)}
 detach()
 }
 \keyword{regression}

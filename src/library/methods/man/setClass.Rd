@@ -222,7 +222,7 @@ sealClass(Class, where)
   pointers from that page.
 }
 \examples{
-\testonly{
+\dontshow{
 if(isClass("trackMultiCurve"))
   removeClass("trackMultiCurve")
 if(isClass("trackCurve"))
@@ -261,7 +261,7 @@ setIs("trackMultiCurve", "trackCurve",
          y = as.numeric(slot(obj,"y")),
          smooth = as.numeric(slot(obj, "smooth")))
   })
-\testonly{
+\dontshow{
 tMC <- new("trackMultiCurve")
 is.matrix(slot(tMC, "y"))
 is.matrix(slot(tMC, "smooth"))

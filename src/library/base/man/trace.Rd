@@ -160,7 +160,7 @@ tracingState(on)
   constructing general expressions.
 }
 \examples{
-\testonly{ hasMethods <- .isMethodsDispatchOn()}
+\dontshow{ hasMethods <- .isMethodsDispatchOn()}
 
 f <- function(x, y) {
     y <- pmax(y, .001)

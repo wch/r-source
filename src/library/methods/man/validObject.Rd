@@ -83,24 +83,24 @@ setValidity(Class, method, where = 1 )
 \seealso{ \code{\link{setClass}}. }
 
 \examples{
-  setClass("track",
-    representation(x="numeric", y = "numeric"))
-  t1 <- new("track", x=1:10, y=sort(rnorm(10)))
-  ## A valid "track" object has the same number of x, y values
-  validTrackObject <- function(x){
+setClass("track",
+          representation(x="numeric", y = "numeric"))
+t1 <- new("track", x=1:10, y=sort(rnorm(10)))
+## A valid "track" object has the same number of x, y values
+validTrackObject <- function(x){
     if(length(x@x) == length(x@y)) TRUE
     else paste("Unequal x,y lengths: ", length(x@x), ", ", length(x@y),
     sep="")
-  }
-  ## assign the function as the validity method for the class
-  setValidity("track", validTrackObject)
-  ## t1 should be a valid "track" object
-  validObject(t1)
-  ## Now we do something bad
-  t1@x <- 1:20
-  ## This should generate an error
-  \dontrun{try(validObject(t1))}
- \testonly{stopifnot(is(try(validObject(t1)), "try-error"))}
+}
+## assign the function as the validity method for the class
+setValidity("track", validTrackObject)
+## t1 should be a valid "track" object
+validObject(t1)
+## Now we do something bad
+t1@x <- 1:20
+## This should generate an error
+\dontrun{try(validObject(t1))}
+\dontshow{stopifnot(is(try(validObject(t1)), "try-error"))}
 }
 
 \keyword{programming}

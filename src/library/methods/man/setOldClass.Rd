@@ -160,7 +160,7 @@ setMethod("dfResidual", "lm", function(model)model$df.residual)
 myData <- data.frame(time = 1:10, y = (1:10)^.5)
 myLm <- lm(cbind(y, y^3)  ~ time, myData)
 
-\testonly{
+\dontshow{
 stopifnot(identical(dfResidual(myLm), myLm$df.residual))}
 
 rm(myData, myLm)

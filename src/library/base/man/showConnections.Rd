@@ -65,7 +65,7 @@ showConnections()
 #  class     description      mode text   isopen   can read can write
 #3 "letters" "textConnection" "r"  "text" "opened" "yes"    "no"     
 \dontrun{close(getConnection(3))}
-\testonly{r <- as.numeric(row.names(showConnections()))
+\dontshow{r <- as.numeric(row.names(showConnections()))
 close(getConnection(r))}
 showConnections()
 }

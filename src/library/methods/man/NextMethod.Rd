@@ -102,7 +102,7 @@ f(b2)
 
 f(b1)
 
-\testonly{
+\dontshow{
 
 stopifnot(identical(f(b2), c(b2@b2, paste(b2@b1,":"), b2@b0^2, "B2")))
 

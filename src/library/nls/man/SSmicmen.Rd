@@ -1,4 +1,4 @@
-% $Id: SSmicmen.Rd,v 1.4 2001/08/13 19:55:13 ripley Exp $
+% $Id: SSmicmen.Rd,v 1.5 2003/09/01 09:38:22 ripley Exp $
 \name{SSmicmen}
 \title{Michaelis-Menten Model}
 \usage{
@@ -41,7 +41,7 @@ summary( fm1 )
 fm2 <- nls(rate ~ SSmicmen(conc, Vm, K), data = Puromycin,
            subset = state == "treated")
 summary(fm2)
-\testonly{
+\dontshow{
   xx <- seq(0, 5, len = 101)
   yy <- 5 * xx/(1+xx)
   par(mar = c(0, 0, 3.5, 0))

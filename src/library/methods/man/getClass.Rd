@@ -61,7 +61,7 @@ getClassDef(Class, where, package)
 \examples{
 getClass("numeric") ## a built in class
 
-\testonly{
+\dontshow{
 getClass("thisIsAnUndefinedClass", .Force = TRUE) ## returns NULL
 try(getClass("thisIsAnUndefinedClass")) ## generates an error
 try(getClassDef("thisIsAnUndefinedClass")) ## generates an error

@@ -73,7 +73,7 @@ promptClass(clName, filename = NULL, type = "class",
   subdirectory of a package.
 }
 \examples{
-\testonly{
+\dontshow{
 ## from setClass
 ## A simple class with two slots
 setClass("track",

@@ -119,7 +119,7 @@ removeMethod(f, signature, where)
   pointers from that page.
 }
 \examples{
-\testonly{  require(modreg)
+\dontshow{  require(modreg)
   setClass("track",
     representation(x="numeric", y = "numeric"))
   setClass("trackCurve", representation("track",
@@ -188,7 +188,7 @@ setGeneric("summary") ## make the function into a generic
 
 setMethod("summary", "missing", function() "<No Object>")
 
-\testonly{
+\dontshow{
 
 stopifnot(identical(summary(), "<No Object>"))
 

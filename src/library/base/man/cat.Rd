@@ -60,7 +60,7 @@ cat(\dots , file = "", sep = " ", fill = FALSE, labels = NULL,
   which concatenates into a string.
 }
 \examples{
-\testonly{iter <- rpois(1, lambda=10)}
+\dontshow{iter <- rpois(1, lambda=10)}
 ## print an informative message
 cat("iteration = ", iter <- iter + 1, "\n")
 

@@ -63,13 +63,14 @@ initialize(.Object, ...)
 \examples{
 ## using the definition of class "track" from \link{Classes}
 
-\testonly{
+\dontshow{
 setClass("track",
          representation(x="numeric", y="numeric"))
 setClass("trackCurve",
          representation("track", smooth = "numeric"))
 
-ydata <- rnorm(10); ysmooth <- 1:10}
+ydata <- rnorm(10); ysmooth <- 1:10
+}
 
 ## a new object with two slots specified
 t1 <- new("track", x = seq(along=ydata), y = ydata)

@@ -66,7 +66,7 @@ showMethods(f=character(), where=-1, classes=NULL, includeDefs=FALSE,
   particular function and signature of classes for the arguments.
 }
 \examples{
-\testonly{
+\dontshow{
 setClass("track",
             representation(x="numeric", y="numeric"))
 ## First, with only one object as argument:

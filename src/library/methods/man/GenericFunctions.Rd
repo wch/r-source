@@ -321,7 +321,7 @@ callGeneric(\dots)
     fdef <- get("myFun", allF[[1]])
 }
   
-\testonly{
+\dontshow{
 ## because nosegfault runs standardGeneric w/o the methods package, nothing
 ## really gets tested.  The following check that it catches some errors
 mustDie <- function(expr) stopifnot(is(trySilent(expr), "try-error"))

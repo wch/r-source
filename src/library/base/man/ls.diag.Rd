@@ -37,7 +37,7 @@ ls.diag(ls.out)
   \code{\link{anova}}.
 }
 \examples{
-\testonly{example("lm", echo = FALSE)}
+\dontshow{example("lm", echo = FALSE)}
 ##-- Using the same data as the lm(.) example:
 lsD9 <- lsfit(x = as.numeric(gl(2, 10, 20)), y = weight)
 dlsD9 <- ls.diag(lsD9)

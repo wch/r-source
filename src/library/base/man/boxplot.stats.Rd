@@ -77,7 +77,7 @@ str(r <- boxplot.stats(c(x, -1:1/0)))
 stopifnot(r$out == c(1000, -Inf, Inf))
 
 %% extended example (for the NG of Rdoc):
-\testonly{
+\dontshow{
  ## Difference between quartiles and hinges :
  nn <- 1:17 ;  n4 <- nn \%\% 4
  hin <- sapply(sapply(nn, seq), function(x) boxplot.stats(x)$stats[c(2,4)])

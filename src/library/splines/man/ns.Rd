@@ -69,7 +69,7 @@ plot(women, xlab = "Height (in)", ylab = "Weight (lb)")
 ht <- seq(57, 73, len = 200)
 lines(ht, predict(fm1, data.frame(height=ht)))
 
-\testonly{
+\dontshow{
 ## Consistency:
 x <- c(1:3,5:6)
 stopifnot(identical(ns(x), ns(x, df = 1)),

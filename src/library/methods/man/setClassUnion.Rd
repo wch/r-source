@@ -93,7 +93,7 @@ setClassUnion("maybeCode",
     c("expression", "language", "OptionalFunction"))
 
 is(quote(sqrt(1:10)), "maybeCode")  ## TRUE
-\testonly{
+\dontshow{
 ## The following test is less trivial than it looks.
 ## It depends on the assignment of the data part NOT performing a
 ## strict coerce to "numeric" on the way to satisfying

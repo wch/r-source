@@ -1,4 +1,4 @@
-% $Id: SSasymp.Rd,v 1.3 2001/08/13 19:55:13 ripley Exp $
+% $Id: SSasymp.Rd,v 1.4 2003/09/01 09:38:22 ripley Exp $
 \name{SSasymp}
 \title{Asymptotic Regression Model}
 \usage{
@@ -42,7 +42,7 @@ getInitial(height ~ SSasymp( age, Asym, resp0, lrc), data = Lob.329)
 ## Initial values are in fact the converged values
 fm1 <- nls(height ~ SSasymp( age, Asym, resp0, lrc), data = Lob.329)
 summary(fm1)
-\testonly{
+\dontshow{
   xx <- seq(0, 5, len = 101)
   yy <- 5 - 4 * exp(-xx/(2*log(2)))
   par(mar = c(0, 0, 4.1, 0))

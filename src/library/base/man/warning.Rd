@@ -56,13 +56,13 @@ suppressWarnings(expr)
   and \code{\link{options}} with argument \code{warn=}.
 }
 \examples{
-\testonly{oldopt <- options(warn=1)}
+\dontshow{oldopt <- options(warn=1)}
 testit <- function() warning("testit")
 testit() ## shows call
 testit <- function() warning("problem in testit", call. = FALSE)
 testit() ## no call
 suppressWarnings(warning("testit"))
-\testonly{eigenval <- 10 ^ -rnorm(1, m=6)
+\dontshow{eigenval <- 10 ^ -rnorm(1, m=6)
 if(eigenval < 1.e-7) warning("system near singular")
 options(oldopt)}
 }

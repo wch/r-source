@@ -80,7 +80,7 @@
   The model fitting function \code{\link{lm}}, \code{\link{summary}}.
 }
 \examples{
-\testonly{example("lm", echo = FALSE)}
+\dontshow{example("lm", echo = FALSE)}
 ##-- Continuing the  lm(.) example:
 coef(lm.D90)# the bare coefficients
 sld90 <- summary(lm.D90 <- lm(weight ~ group -1))# omitting intercept

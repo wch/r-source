@@ -164,7 +164,7 @@ setIs(class1, class2, test=NULL, coerce=NULL, replace=NULL,
   pointers from that page.
 }
 \examples{
-\testonly{
+\dontshow{
 ## A simple class with two slots
 setClass("track",
          representation(x="numeric", y="numeric"))
@@ -212,7 +212,7 @@ setIs("trackMultiCurve",
         obj@x <- value@x
         obj@smooth <- value@smooth
         obj})
-\testonly{
+\dontshow{
 removeClass("trackMultiCurve")
 removeClass("trackCurve")
 removeClass("track")

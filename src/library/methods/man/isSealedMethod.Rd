@@ -70,7 +70,7 @@ isSealedClass("A Name for an undefined Class")
 isSealedMethod("+", c("track", "numeric"))
 isSealedMethod("+", c("numeric", "track"))
 
-\testonly{
+\dontshow{
 removeClass("track")
 }
 }

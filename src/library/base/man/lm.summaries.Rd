@@ -57,7 +57,7 @@ weights(object, \dots)
   eds J. M. Chambers and T. J. Hastie, Wadsworth \& Brooks/Cole.
 }
 \examples{
-\testonly{example("lm", echo = FALSE)}
+\dontshow{example("lm", echo = FALSE)}
 ##-- Continuing the  lm(.) example:
 coef(lm.D90)# the bare coefficients
 

@@ -4,7 +4,7 @@
 \description{
   Run all the \R code from the \bold{Examples} part of \R's online help
   topic \code{topic} with two possible exceptions, \code{dontrun} and
-  \code{testonly}, see Details below.
+  \code{dontshow}, see Details below.
 }
 \usage{
 example(topic, package = .packages(), lib.loc = NULL,
@@ -48,9 +48,10 @@ example(topic, package = .packages(), lib.loc = NULL,
   the help page can markup parts of the examples for two exception rules
   \describe{
     \item{\code{dontrun}}{encloses code that should not be run.}
-    \item{\code{testonly}}{encloses code that is invisible on help
+    \item{\code{dontshow}}{encloses code that is invisible on help
       pages, but will be run both by the package checking tools,
-      and the \code{example()} function.}
+      and the \code{example()} function.  This was previously
+      \code{testonly}, and that form is still accepted.}
     }
 }
 \note{
