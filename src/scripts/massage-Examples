@@ -23,9 +23,10 @@ FILES="$@"
 
 ## 1) ---- Header ----
 (cat <<_EOF_
-.ptime <- proc.time()
+..CheckEnv <- new.env()
+assign("ptime",proc.time(), env=..CheckEnv)
 postscript('PKG-Examples.ps')
-.par.postscript <- par(no.readonly = TRUE)
+assign("par.postscript", par(no.readonly = TRUE), env=..CheckEnv)
 options(contrasts = c(unordered = "contr.treatment", ordered =  "contr.poly"))
 _EOF_
 ) | sed "s/PKG/${PKG}/"
@@ -37,7 +38,7 @@ do
  bf=`basename $file .R`
  if [ -n "`grep '_ Examples _' $file`" ]
  then
-    echo 'rm(list = ls()); .Random.seed <- c(0,rep(7654,3))'
+    echo 'll <- ls(all=TRUE);rm(list= ll[ll != "..CheckEnv"]); .Random.seed <- c(0,rep(7654,3))'
  else
     if [ "$USER" = maechler ];then
 	## Remind certain people to upgrade the online help
@@ -49,7 +50,7 @@ do
 
  if [ -n "`grep 'par(' $file`" ];then
     ## if there were 'par(..)' calls, now reset them:
-    echo 'par(.par.postscript)'
+    echo 'par(get("par.postscript",env=..CheckEnv))'
  fi
  if [ -n "`grep 'options(contrasts' $file`" ];then
     ## if contrasts were set, now reset them:
@@ -58,6 +59,6 @@ do
 done
 ## 3) ---- Footer ----
 cat <<_EOF_
-cat("Time elapsed: ", proc.time() - .ptime,"\n")
+cat("Time elapsed: ", proc.time() - get("ptime",env=..CheckEnv),"\n")
 dev.off(); quit('no')
 _EOF_
