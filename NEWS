@@ -215,6 +215,10 @@ BUG FIXES
     o	seq.POSIXt(from, to, by="DSTday") was failing or calculating
 	the length incorrectly.
 
+    o	On some machines the internal rounding used in postscript() was
+	imperfect, causing unnecessarily verbose output (-0.00 instead of
+	0) and problems with make check.
+
 
 
 		CHANGES IN R VERSION 1.7.1
