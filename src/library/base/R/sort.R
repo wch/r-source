@@ -17,8 +17,7 @@ sort <- function(x, partial=NULL, na.last=NA, decreasing = FALSE,
     }
     else {
         nms <- names(x)
-        meth <- if(is.null(nms) && is.numeric(x))
-            match.arg(method) else "shell"
+        meth <- if(is.numeric(x)) match.arg(method) else "shell"
         ## work around sys.function() {called from match.arg(.)} bug :
         if(is.character(meth) && length(meth)== 1)
             method <- meth
@@ -27,19 +26,28 @@ sort <- function(x, partial=NULL, na.last=NA, decreasing = FALSE,
                 method <- "quick"
             else method <- "shell"
             warning("`meth' is wrong -- bug from match.arg():",
-                    meth,"\n setting method to", method)
+                    meth, "\n setting method to", method)
         }
         switch(method,
                "quick" = {
                    if(decreasing)
                        stop("qsort only handles increasing sort")
-                   y <- .Internal(qsort(x, index.return))
+                   if(index.return && !is.na(na.last))
+                       stop("index.return only for na.last = NA")
+                   if(index.return && isfact)
+                       stop("index.return only non-factors")
+                   if(!is.null(nms)) {
+                       y <- .Internal(qsort(x, TRUE))
+                       names(y$x) <- nms[y$ix]
+                       if (!index.return) y <- y$x
+                   } else
+                       y <- .Internal(qsort(x, index.return))
                },
                "shell" = {
                    if(!is.null(nms)) {
-                       o <- sort.list(x, decreasing=decreasing)
+                       o <- sort.list(x, decreasing = decreasing)
                        y <- x[o]
-                       names(y) <- nms[o]
+                       ## names(y) <- nms[o] # pointless!
                    }
                    else
                        y <- .Internal(sort(x, decreasing))

@@ -44,15 +44,15 @@ is.unsorted(x, na.rm = FALSE)
   \eqn{O(n^{-4/3})} variant of Sedgewick (1996)).
 
   Method \code{"quick"} uses Singleton's Quicksort implementation and is
-  only available when \code{x} is numeric (and not integer), the sort is
-  increasing, \code{partial} is \code{NULL} and \code{x} has no
-  \code{\link{names}}.  It is normally somewhat faster than Shellsort
-  (perhaps twice as fast on vectors of length a million) but has poor
-  worst-case behaviour.
+  only available when \code{x} is numeric, the sort is increasing,
+  \code{partial} is \code{NULL} and \code{na.last = NA} or
+  \code{index.return = FALSE}.  It is normally
+  somewhat faster than Shellsort (perhaps twice as fast on vectors of
+  length a million) but has poor performance in the rare worst case.
 }
 \value{
-  For \code{sort} the sorted vector unless\code{method == "quick"} and
-  \code{index.return} is true, when the result is
+  For \code{sort} the sorted vector unless
+  \code{method == "quick"} and \code{index.return} is true, when the result is
   a list with components named \code{x} and \code{ix} containing the
   sorted numbers and the ordering index vector.  In the latter case,
   ties may be reversed in the ordering, unlike \code{sort.list}, as
