@@ -8,6 +8,7 @@ CRAN.packages <- function(CRAN=.Options$CRAN, method="auto")
         tmpf <- tempfile()
         download.file(url=paste(CRAN, "/src/contrib/PACKAGES", sep=""),
                       destfile=tmpf, method=method)
+        on.exit(unlink(tmpf))
     }
     parse.dcf(file=tmpf, fields=c("Package", "Version", "Priority"),
               versionfix=TRUE)
@@ -48,35 +49,36 @@ update.packages <- function(lib.loc=.lib.loc, CRAN=.Options$CRAN,
 }
 
 
-install.packages <- function(pkglist, lib, CRAN=.Options$CRAN,
+install.packages <- function(pkgs, lib, CRAN=.Options$CRAN,
                              method="auto", available=NULL)
 {
+    if(!missing(pkgs))
+        pkgs <- as.character(substitute(pkgs))
     localcran <- length(grep("^file:", CRAN)) > 0
-    pkgs <- NULL
     if(missing(lib) || is.null(lib)) {
         lib <- .lib.loc[1]
         warning(paste("argument `lib' is missing: using", lib))
     }
     tmpd <- tempfile("Rinstdir")
     system(paste("mkdir", tmpd))
-    pkgs <- download.packages(pkglist, destdir=tmpd,
-                              available=available,
-                              CRAN=CRAN, method=method)
-    update <- cbind(pkglist, lib)
-    colnames(update) <- c("Package", "LibPath")
+    foundpkgs <- download.packages(pkgs, destdir=tmpd,
+                                   available=available,
+                                   CRAN=CRAN, method=method)
 
-    if(!is.null(pkgs))
+    if(!is.null(foundpkgs))
     {
+        update <- cbind(pkgs, lib)
+        colnames(update) <- c("Package", "LibPath")
         for(lib in unique(update[,"LibPath"]))
         {
             oklib <- lib==update[,"LibPath"]
-            for(p in update[oklib,"Package"])
+            for(p in update[oklib, "Package"])
             {
-                okp <- p==pkgs[, 1]
-                if(length(okp)>0){
+                okp <- p == foundpkgs[, 1]
+                if(length(okp) > 0){
                     cmd <- paste(file.path(R.home(),"bin","R"),
                                  "INSTALL -l", lib,
-                                 pkgs[okp, 2])
+                                 foundpkgs[okp, 2])
                     system(cmd)
                 }
             }

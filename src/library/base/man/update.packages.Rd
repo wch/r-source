@@ -16,7 +16,7 @@ CRAN.packages(CRAN=options("CRAN"), method="auto")
 download.file(url, destfile, method="auto")
 download.packages(pkgs, destdir, available=NULL,
                   CRAN=options("CRAN"), method="auto")
-install.packages(pkgs, lib, available=NULL,
+install.packages(pkglist, lib, available=NULL,
                   CRAN=options("CRAN"), method="auto")
 }
 \arguments{ 
@@ -31,8 +31,8 @@ install.packages(pkgs, lib, available=NULL,
  \item{url}{A character string with the URL of a file to be downloaded.}
  \item{destfile}{A character string with the name where the downloaded
      file is saved.}
- \item{pkgs}{A character vector of package names that shall be
-     downloaded from CRAN.}
+   \item{pkgs}{A character vector of the short names of
+     packages whose current versions should be downloaded from \code{CRAN}.}
  \item{destdir}{Directory where downloaded packages are stored.}
  \item{available}{List of packages available at CRAN as returned by
      \code{CRAN.packages()}.}
@@ -82,7 +82,8 @@ install.packages(pkgs, lib, available=NULL,
   takes a vector of package names and a destination directory, downloads
   the packages from CRAN and installs them. If the destination directory
   is omitted it defaults to the first directory in \code{.lib.loc}, with
-  a warning.
+  a warning.  The first argument can be an unquoted name, as in
+  \code{install.packages(nlme)}.
 }
 \seealso{\code{\link{INSTALL}}, \code{\link{REMOVE}},
   \code{\link{library}}, \code{\link{.packages}},
