@@ -91,9 +91,9 @@ isIncomplete(con)
   \code{unz} reads (only) single files within zip files, in binary mode.
   The description is the full path, with \file{.zip} extension if required.
 
-  All platforms support (gz)file connections and \code{url("file://")}
-  connections.  The other types may be partially implemented or
-  not implemented at all.  (They do work on most Unix
+  All platforms support \code{file}, \code{gzfile}, \code{bzfile} and
+  \code{url("file://")} connections.  The other types may be partially
+  implemented or not implemented at all.  (They do work on most Unix
   platforms, and all but \code{fifo} on Windows.)
 
   Proxies can be specified for \code{url} connections: see
