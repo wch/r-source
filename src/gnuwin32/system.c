@@ -376,6 +376,8 @@ void R_CleanUp(int saveact, int status, int runLast)
     AllDevicesKilled = 1;
     if (CharacterMode == RGui)
 	savehistory(RConsole, ".Rhistory");
+    if (CharacterMode == RTerm)
+	gl_savehistory(".Rhistory");
     UnLoad_Unzip_Dll();
     UnLoad_Rbitmap_Dll();
     app_cleanup();
