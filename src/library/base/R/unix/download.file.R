@@ -1,13 +1,13 @@
-download.file <- function(url, destfile, method = "internal", quiet = FALSE)
+download.file <- function(url, destfile, method = "internal",
+                          quiet = FALSE, mode = "w")
 {
     method <- if(missing(method)) "internal" else
     match.arg(method,
               c("internal", "wget", "lynx", "cp", "socket"))
 
-    if(method == "internal" || method == "wget")
-#    if(method == "internal")
-#        status <- .Internal(download(url, destfile, quiet))
-#    else if(method == "wget")
+    if(method == "internal")
+        status <- .Internal(download(url, destfile, quiet, mode))
+    else if(method == "wget")
         if(quiet)
             status <- system(paste("wget --quiet '", url,
                                    "' -O", destfile, sep=""))

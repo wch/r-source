@@ -370,6 +370,7 @@ AC_CHECK_LIB(ncurses, main,,
 ))
 AC_CHECK_LIB(dl, dlopen)
 AC_CHECK_LIB(z, main)
+AC_CHECK_LIB(xml, xmlNanoHTTPInit)
 
 ## Special checks for odd OS specific things
 AC_CHECK_FUNC(gethostbyname)

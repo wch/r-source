@@ -2203,7 +2203,7 @@ static Rconnection newurl(char *description, char *mode)
 SEXP do_url(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP scmd, sopen, ans, class, enc;
-    char *url, *open;
+    char *url, *open, *class2 = "url";
     int i, ncon;
     Rconnection con = NULL;
 
@@ -2223,12 +2223,13 @@ SEXP do_url(SEXP call, SEXP op, SEXP args, SEXP env)
 	error("invalid `enc' argument");
 
     ncon = NextConnection();
-    if(strncmp(url, "file://", 7) == 0)
+    if(strncmp(url, "file://", 7) == 0) {
        con = newfile(url + 7, strlen(open) ? open : "r");
-    else if (strncmp(url, "http://", 7) == 0 || 
-	     strncmp(url, "ftp://", 6) == 0)
+       class2 = "file";
+    } else if (strncmp(url, "http://", 7) == 0 || 
+	       strncmp(url, "ftp://", 6) == 0) {
        con = newurl(url, strlen(open) ? open : "r");
-    else
+    } else
 	error("unsupported URL schema");
 
     Connections[ncon] = con;
@@ -2241,7 +2242,7 @@ SEXP do_url(SEXP call, SEXP op, SEXP args, SEXP env)
     PROTECT(ans = allocVector(INTSXP, 1));
     INTEGER(ans)[0] = ncon;
     PROTECT(class = allocVector(STRSXP, 2));
-    SET_STRING_ELT(class, 0, mkChar("url"));
+    SET_STRING_ELT(class, 0, mkChar(class2));
     SET_STRING_ELT(class, 1, mkChar("connection"));
     classgets(ans, class);
     UNPROTECT(2);
@@ -2249,19 +2250,31 @@ SEXP do_url(SEXP call, SEXP op, SEXP args, SEXP env)
     return ans;
 }
 
-#if 0
-#include "libxml/nanoftp.h"
-#include "libxml/nanohttp.h"
+#ifdef HAVE_LIBXML
+void	xmlNanoHTTPInit		(void);
+void	xmlNanoHTTPCleanup	(void);
+void *	xmlNanoHTTPOpen		(const char *URL, char **contentType);
+int	xmlNanoHTTPRead		(void *ctx, void *dest, int len);
+void	xmlNanoHTTPClose	(void *ctx);
+int 	xmlNanoHTTPReturnCode	(void *ctx);
+
+void	xmlNanoFTPInit		(void);
+void	xmlNanoFTPCleanup	(void);
+void *	xmlNanoFTPOpen		(const char *URL);
+int	xmlNanoFTPRead		(void *ctx, void *dest, int len);
+void	xmlNanoFTPClose		(void *ctx);
 #endif
 
 /* download(url, destfile, quiet) */
+
+#define CPBUFSIZE 65536
+#define IBUFSIZE 4096
 SEXP do_download(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    SEXP ans, scmd, sfile;
-    char *url, *file;
+    SEXP ans, scmd, sfile, smode;
+    char *url, *file, *mode;
     int quiet, status = 0;
 
-    status = 0;
     checkArity(op, args);
     scmd = CAR(args);
     if(!isString(scmd) || length(scmd) < 1)
@@ -2272,50 +2285,118 @@ SEXP do_download(SEXP call, SEXP op, SEXP args, SEXP env)
     sfile = CADR(args);
     if(!isString(sfile) || length(sfile) < 1)
 	error("invalid `destfile' argument");
-    if(length(scmd) > 1)
+    if(length(sfile) > 1)
 	warning("only first element of `destfile' argument used");
     file = CHAR(STRING_ELT(sfile, 0));
     quiet = asLogical(CADDR(args));
     if(quiet == NA_LOGICAL)
 	error("invalid `quiet' argument");
+    smode =  CADDDR(args);
+    if(!isString(smode) || length(smode) != 1)
+	error("invalid `mode' argument");
+    mode = CHAR(STRING_ELT(smode, 0));
     
     if(strncmp(url, "file://", 7) == 0) {
 	FILE *in, *out;
-	char *buf[65536];
+	char *buf[CPBUFSIZE];
 	size_t n;
 	
 	/* Use binary transfers */
-	in = R_fopen(R_ExpandFileName(url+7), "rb");
+	in = R_fopen(R_ExpandFileName(url+7), (mode[2] == 'b') ? "rb" : "r");
 	if(!in) error("cannot open URL `%s'", url);
-	out = R_fopen(R_ExpandFileName(file), "wb");
+	out = R_fopen(R_ExpandFileName(file), mode);
 	if(!out) error("cannot open destfile `%s'", file);
-	while((n = fread(buf, 1, 65536, in)) > 0)
+	while((n = fread(buf, 1, CPBUFSIZE, in)) > 0)
 	    fwrite(buf, 1, n, out);
 	fclose(out); fclose(in);
-    } 
-#if 0
-    else if (strncmp(url, "http://", 7) == 0) {
-	char *contentType = NULL;
-	
-	xmlNanoHTTPFetch(url, file, &contentType);
-	if (contentType != NULL) xmlFree(contentType);
-	xmlNanoHTTPCleanup();
-    } else if (strncmp(url, "ftp://", 6) == 0) {
+
+#ifdef HAVE_LIBXML
+    } else if (strncmp(url, "http://", 7) == 0) {
+
 	FILE *out;
-	xmlNanoFTPCtxtPtr ctxt;
+	void *ctxt;
+	int len, nreads = 0, nbytes = 0, rc;
+	char buf[IBUFSIZE];
+
+	out = R_fopen(R_ExpandFileName(file), mode);
+	if(!out) error("cannot open destfile `%s'", file);
+
+	xmlNanoHTTPInit();
+	if(!quiet) REprintf("trying URL `%s'\n", url);
+	ctxt = xmlNanoHTTPOpen(url, NULL);
+	rc = xmlNanoHTTPReturnCode(ctxt);
+	
+	if(ctxt == NULL) status = 1;
+	else {
+	    int rc = xmlNanoHTTPReturnCode(ctxt);
+	    if(rc != 200) {
+		xmlNanoHTTPClose(ctxt);
+		status = 1;
+		if(!quiet) REprintf("return code %d\n", rc);
+	    } else {
+		if(!quiet) REprintf("opened URL `%s'\n", url);
+		while ((len = xmlNanoHTTPRead(ctxt, buf, sizeof(buf))) > 0) {
+		    fwrite(buf, 1, len, out);
+		    nbytes += len;
+		    nreads++;
+		    if(!quiet) {
+			REprintf("."); fflush(stderr);
+			if(nreads % 50 == 0) REprintf("\n"); fflush(stderr);
+		    }
+		}
+		xmlNanoHTTPClose(ctxt);
+		fclose(out);
+		if(!quiet) {
+		    if(nbytes > 10240)
+			REprintf("\ndownloaded %dKb\n", nbytes/1024, url);
+		    else
+			REprintf("\ndownloaded %d bytes\n", nbytes, url);
+		}
+	    }
+	}
+	xmlNanoHTTPCleanup();
+	if (status == 1) error("cannot open URL `%s'", url);
+
+    } else if (strncmp(url, "ftp://", 6) == 0) {
+
+	FILE *out;
+	void *ctxt;
+	int len, nreads = 0, nbytes = 0;
+	char buf[IBUFSIZE];
+
+	out = R_fopen(R_ExpandFileName(file), mode);
+	if(!out) error("cannot open destfile `%s'", file);
 
 	xmlNanoFTPInit();
+	if(!quiet) REprintf("trying URL `%s'\n", url);
 	ctxt = xmlNanoFTPOpen(url);
-	if(!ctxt) error("cannot open URL `%s'", url);
-	out = R_fopen(R_ExpandFileName(file), "w");
-	if(!out) error("cannot open destfile `%s'", file);
-	if (xmlNanoFTPGet(ctxt, ftpData, (void *) out, ctxt->path) < 0)
-	    error"Failed to fetch URL");
-        xmlNanoFTPClose(ctxt);
-    
+	if(ctxt == NULL) status = 1;
+	else {
+	    if(!quiet) REprintf("opened URL `%s'\n", url);
+	    while ((len = xmlNanoFTPRead(ctxt, buf, sizeof(buf))) > 0) {
+		fwrite(buf, 1, len, out);
+		nbytes += len;
+		nreads++;
+		if(!quiet) {
+		    REprintf("."); fflush(stderr);
+		    if(nreads % 50 == 0) REprintf("\n"); fflush(stderr);
+		}
+	    }
+	    xmlNanoFTPClose(ctxt);
+	    fclose(out);
+	    if(!quiet) {
+		if(nbytes > 10240)
+		    REprintf("\ndownloaded %dKb\n", nbytes/1024, url);
+		else
+		    REprintf("\ndownloaded %d bytes\n", nbytes, url);
+	    }
+	}
+	xmlNanoFTPCleanup();
+	if (status == 1) error("cannot open URL `%s'", url);
+#endif
+
     } else
 	error("unsupported URL scheme");
-#endif
 
     PROTECT(ans = allocVector(INTSXP, 1));
     INTEGER(ans)[0] = status;

@@ -66,6 +66,9 @@ isSeekable(con)
   argument \code{open}.  \code{gzfile} applies to files compressed by
   \code{gzip}: such connections can only be binary.
 
+  Proxies can be specified for \code{url} connections by environment
+  variables: see \code{\link{download.file}}.
+  
   \code{open}, \code{close} and \code{seek} are generic functions: the
   following applies to the methods relevant to connections.
   

@@ -13,12 +13,13 @@ NEW FEATURES
 
     o	Changes to connections:
 
-	-  New function url() to read from URLs. [Not yet operational]
+	-  New function url() to read from URLs. [Not yet operational
+           except for file://.]
 
-	-  New function gzfile() to read/write from compressed files.
+	-  New function gzfile() to read from / write to compressed files.
 
-	-  Text input from file, pipe and url connections can be read
-	   with a user-specified encoding.
+	-  Text input from file, pipe, gzfile and url connections 
+	   can be read with a user-specified encoding.
 
 	-  New functions readChar() and writeChar() to read
 	   character strings with known lengths and no terminators,
@@ -38,7 +39,7 @@ NEW FEATURES
 
     o	The default method for download.file() (and functions which use
 	it such as update.packages()) is now "internal", and uses code
-	compiled into R. [Not yet operational: "wget" is used in its place]
+	compiled into R. [Operational if libxml is available.]
 
     o	`hessian' argument added to deriv and its methods.  A new function
 	deriv3() provides identical capabilities to deriv() except that
@@ -113,7 +114,7 @@ NEW FEATURES
 
     o	demo() has new arguments, mainly to be run in "make check".
 
-    o	Perl scripts now use Cwd::cwd() in place of Cwd:getcwd(), as
+    o	Perl scripts now use Cwd::cwd() in place of Cwd::getcwd(), as
 	cwd() can be much faster.
 
 
