@@ -25290,9 +25290,9 @@ EOF
 if test -n "${r_cv_prog_cc_m}"; then
   cat << \EOF >> ${r_cc_rules_frag}
 .c.d:
-	@echo "making \$@ from \$<"
-	@${r_cv_prog_cc_m} \$(ALL_CPPFLAGS) $< | \\
-	  $(SED) -e 's/^\([^:]*\)\.o\([ 	]\)*:/\1.o \1.lo\2:/' > \$@
+	@echo "making $@ from $<"
+	@${r_cv_prog_cc_m} $(ALL_CPPFLAGS) $< | \\
+	  $(SED) -e 's/^\([^:]*\)\.o\([ 	]\)*:/\1.o \1.lo\2:/' > $@
 EOF
 else
   cat << \EOF >> ${r_cc_rules_frag}
