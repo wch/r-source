@@ -145,22 +145,14 @@ distdir: $(DISTFILES)
 	    || exit 1; \
 	done
 
-dvi info pdf::
+dvi info pdf:
 	-@(cd doc && $(MAKE) $@)
-install-dvi install-info install-pdf::
+install-dvi install-info install-pdf:
 	-@(cd doc/manual && $(MAKE) $@)
-uninstall-dvi uninstall-info uninstall-pdf::
+uninstall-dvi uninstall-info uninstall-pdf:
 	-@(cd doc/manual && $(MAKE) $@)
+
+check:
+	@(cd tests && $(MAKE) $@)
 
 TAGS:
-
-check test:: test-All
-test-All test-Examples test-Specific::
-	@(cd tests && $(MAKE) $@)
-check-force: test-All-force
-test-All-force:
-	@(cd tests && $(MAKE) test-All FORCE=FORCE)
-test-Examples-force:
-	@(cd tests && $(MAKE) test-Examples FORCE=FORCE)
-test-Specific-force:
-	@(cd tests && $(MAKE) test-Specific FORCE=FORCE)
