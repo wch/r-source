@@ -13,4 +13,5 @@
     graphics.off()
     .Call("L_killGrid", PACKAGE="grid")
   }
+    library.dynam.unload("grid", libpath)
 }
