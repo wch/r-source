@@ -564,7 +564,7 @@ function (x, Rowv=NULL, Colv=if(symm)"Rowv" else NULL,
     if(revC) {
         iy <- nr:1
         ddr <- rev(ddr)
-        x <- x[iy,]
+        x <- x[,iy]
     } else iy <- 1:nr
 
     image(1:nc, 1:nr, x, xlim = 0.5+ c(0, nc), ylim = 0.5+ c(0, nr),
