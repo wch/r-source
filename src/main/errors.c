@@ -43,6 +43,8 @@ static int inError = 0;
 static int inWarning = 0;
 static int inPrintWarnings = 0;
 
+static void jump_to_top_ex(Rboolean, Rboolean, Rboolean, Rboolean);
+
 /* Interface / Calling Hierarchy :
 
   R__stop()   -> do_error ->   errorcall --> jump_to_toplevel
@@ -81,7 +83,10 @@ void R_CheckUserInterrupt(void)
 void onintr()
 {
     REprintf("\n");
-    jump_to_toplevel();
+    /* attempt to run user error option, save a traceback, show
+       warnings, and reset console; not clear this is what we really
+       want, but this preserves current behavior */
+    jump_to_top_ex(TRUE, TRUE, TRUE, TRUE);
 }
 
 /* SIGUSR1: save and quit
@@ -194,6 +199,9 @@ void warningcall(SEXP call, const char *format, ...)
     RCNTXT *cptr;
     RCNTXT cntxt;
 
+    if (inWarning)
+	return;
+    
     if (R_WarningHook != NULL) {
 	va_list(ap);
 	va_start(ap, format);
@@ -397,7 +405,7 @@ void errorcall(SEXP call, const char *format,...)
 	    R_Warnings = R_NilValue;
 	    REprintf("Lost warning messages\n");
 	}
-	jump_to_toplevel();
+	jump_to_top_ex(FALSE, FALSE, FALSE, FALSE);
     }
 
     /* set up a context to restore inError value on exit */
@@ -406,6 +414,7 @@ void errorcall(SEXP call, const char *format,...)
     cntxt.cend = &restore_inError;
     cntxt.cenddata = &oldInError;
     oldInError = inError;
+    inError = 1;
 
     if(call != R_NilValue) {
 	char *head = "Error in ";
@@ -413,7 +422,6 @@ void errorcall(SEXP call, const char *format,...)
 	char *tail = "\n\t";/* <- TAB */
 	int len = strlen(head) + strlen(mid) + strlen(tail);
 
-	inError = 1;
 	dcall = CHAR(STRING_ELT(deparse1(call, 0), 0));
 	if (strlen(dcall) + len < BUFSIZE) {
 	    sprintf(errbuf, "%s%s%s", head, dcall, mid);
@@ -421,7 +429,6 @@ void errorcall(SEXP call, const char *format,...)
 	}
 	else
 	    sprintf(errbuf, "Error: ");
-	inError = 0;
     }
     else
 	sprintf(errbuf, "Error: ");
@@ -439,10 +446,11 @@ void errorcall(SEXP call, const char *format,...)
 	PrintWarnings();
     }
 
-    jump_to_toplevel();
+    jump_to_top_ex(TRUE, TRUE, TRUE, TRUE);
 
     /* not reached */
     endcontext(&cntxt);
+    inError = oldInError;
 }
 
 SEXP do_geterrmessage(SEXP call, SEXP op, SEXP args, SEXP env)
@@ -473,14 +481,16 @@ void error(const char *format, ...)
 /* calling the code installed by on.exit along the way */
 /* and finally longjmping to the innermost TOPLEVEL context */
 
-void jump_to_toplevel()
+static void jump_to_top_ex(Rboolean traceback,
+			   Rboolean tryUserHandler,
+			   Rboolean processWarnings,
+			   Rboolean resetConsole)
 {
     RCNTXT cntxt;
     RCNTXT *c;
     SEXP s, t;
     int haveHandler, oldInError;
     int nback = 0;
-    Rboolean traceback;
 
     /* set up a context to restore inError value on exit */
     begincontext(&cntxt, CTXT_CCODE, R_NilValue, R_NilValue, R_NilValue,
@@ -490,14 +500,11 @@ void jump_to_toplevel()
 
     oldInError = inError;
 
-    if (inError) {
-	traceback = FALSE;
-	haveHandler = FALSE;
-    }
-    else {
-	traceback = TRUE;
+    haveHandler = FALSE;
 
-	inError = 1;
+    if (tryUserHandler && inError < 3) {
+	if (! inError)
+	    inError = 1;
 
 	/*now see if options("error") is set */
 	s = GetOption(install("error"), R_NilValue);
@@ -515,22 +522,25 @@ void jump_to_toplevel()
 			for (i = 0 ; i < n ; i++)
 			    eval(VECTOR_ELT(s, i), R_GlobalEnv);
 		    }
-		inError = 1;
+		inError = oldInError;
 	    }
 	}
+	inError = oldInError;
+    }
 
-	/* print warnings if there are any left to be printed */
-	if( R_CollectWarnings )
-	    PrintWarnings();
+    /* print warnings if there are any left to be printed */
+    if( processWarnings && R_CollectWarnings )
+	PrintWarnings();
 
-	/* reset some stuff--not sure (all) this belongs here */
+    /* reset some stuff--not sure (all) this belongs here */
+    if (resetConsole) {
 	R_ResetConsole();
 	R_FlushConsole();
 	R_ClearerrConsole();
 	R_ParseError = 0;
     }
 
-    /* WARNING: If inError > 0 ABSOLUTELY NO ALLOCATION can be
+    /* WARNING: If oldInError > 0 ABSOLUTELY NO ALLOCATION can be
        triggered after this point except whatever happens in
        R_run_onexits.  The error could be an out of memory error and
        any allocation could result in an infinite-loop condition. All
@@ -562,7 +572,7 @@ void jump_to_toplevel()
        LT. */
     R_run_onexits(R_ToplevelContext);
 
-    if ( !R_Interactive && !haveHandler && inError ) {
+    if ( !R_Interactive && !haveHandler ) {
 	REprintf("Execution halted\n");
 	R_CleanUp(SA_NOSAVE, 1, 0); /* quit, no save, no .Last, status=1 */
     }
@@ -581,9 +591,6 @@ void jump_to_toplevel()
 	UNPROTECT(1);
     }
 
-    inError=0;
-    inWarning=0;
-
     R_GlobalContext = R_ToplevelContext;
     R_restore_globals(R_GlobalContext);
 
@@ -591,6 +598,15 @@ void jump_to_toplevel()
 
     /* not reached */
     endcontext(&cntxt);
+    inError = oldInError;
+}
+
+void jump_to_toplevel()
+{
+    /* no traceback, no user error option; for now, warnings are
+       printed here and console is reset -- eventually these should be
+       done after arriving at the jump target */
+    jump_to_top_ex(FALSE, FALSE, TRUE, TRUE);
 }
 
 SEXP do_stop(SEXP call, SEXP op, SEXP args, SEXP rho)
