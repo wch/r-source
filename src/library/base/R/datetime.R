@@ -355,13 +355,16 @@ difftime <-
     time1 <- as.POSIXct(time1, tz = tz)
     time2 <- as.POSIXct(time2, tz = tz)
     z <- unclass(time1) - unclass(time2)
-    zz <- min(abs(z),na.rm=TRUE)
     units <- match.arg(units)
     if(units == "auto") {
-        if(is.na(zz) || zz < 60) units <- "secs"
-        else if(zz < 3600) units <- "mins"
-        else if(zz < 86400) units <- "hours"
-        else units <- "days"
+        if(all(is.na(z))) units <- "secs"
+        else {
+            zz <- min(abs(z),na.rm=TRUE)
+            if(is.na(zz) || zz < 60) units <- "secs"
+            else if(zz < 3600) units <- "mins"
+            else if(zz < 86400) units <- "hours"
+            else units <- "days"
+        }
     }
     switch(units,
            "secs" = structure(z, units="secs", class="difftime"),
