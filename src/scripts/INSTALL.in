@@ -4,7 +4,7 @@
 
 # @configure_input@
 
-revision='$Revision: 1.69 $'
+revision='$Revision: 1.70 $'
 version=`set - ${revision}; echo ${2}`
 version="R add-on package installer ${version}
 
@@ -96,6 +96,7 @@ configure_args=
 configure_vars=
 
 save="CHECK"
+save_args="";
 
 while test -n "${1}"; do
   case ${1} in
@@ -106,7 +107,9 @@ while test -n "${1}"; do
     -c|--clean)
       clean=true ;;
     -s|--save)
-      save=true ;;
+      save=true;;
+    --save=*)
+      save_args=`echo "${1}" | sed -e 's/[^=]*=//'` ;;
     --no-save)
       save=false ;;
     -d|--debug)
@@ -331,7 +334,7 @@ do_install () {
 
     case ${save} in
       CHECK)
-	if test -r INSTALL.R; then
+	if test -r install.R; then
 	  R_SAVE_IMAGE=true;
         else
 	  R_SAVE_IMAGE=false;
@@ -352,13 +355,11 @@ do_install () {
       export R_PROFILE
       (echo " .lib.loc <- c(\"${lib}\", .lib.loc)";
         cat ${lib}/${pkg}/R/${pkg};
-        echo "rm(.lib.loc)") | ${R_HOME}/bin/R --save --silent \
+        echo "rm(.lib.loc)") | ${R_HOME}/bin/R --save --silent ${save_args}\
           || (echo "Execution of package source for ${pkg} failed"; exit 1)
       mv .RData ${lib}/${pkg}/R/all.rda
       mv ${lib}/${pkg}/R/${pkg} ${lib}/${pkg}/R/${pkg}.R
-      if test -s INSTALL.R; then cp INSTALL.R ${lib}/${pkg}/R/${pkg}
-      else
-        cat > ${lib}/${pkg}/R/${pkg} <<EOF
+      cat > ${lib}/${pkg}/R/${pkg} <<EOF
 .First.lib <- function(libname, pkgname) {
   fullName <- paste("package", pkgname, sep=":")
   myEnv <- pos.to.env(match(fullName, search()))
@@ -374,6 +375,10 @@ do_install () {
   }
 }
 EOF
+      ## if install.R is non-empty, arrange to evaluate the R code it contains
+      ## after the package source (maybe for some kind of cleanup).
+      if test -s install.R; then
+        cat install.R >> ${lib}/${pkg}/R/${pkg}
       fi
     fi
 

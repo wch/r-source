@@ -151,7 +151,7 @@ static int	xxvalue(SEXP, int);
 %left		':'
 %left		UMINUS UPLUS
 %right		'^'
-%left		'$'
+%left		'$' '@'
 %nonassoc	'(' '[' LBB
 
 %%
@@ -209,6 +209,8 @@ expr	: 	NUM_CONST			{ $$ = $1; }
 	|	expr '[' sublist ']'		{ $$ = xxsubscript($1,$2,$3); }
 	|	expr '$' SYMBOL			{ $$ = xxbinary($2,$1,$3); }
 	|	expr '$' STR_CONST		{ $$ = xxbinary($2,$1,$3); }
+	|	expr '@' SYMBOL			{ $$ = xxbinary($2,$1,$3); }
+	|	expr '@' STR_CONST		{ $$ = xxbinary($2,$1,$3); }
 	|	NEXT				{ $$ = xxnxtbrk($1); }
 	|	BREAK				{ $$ = xxnxtbrk($1); }
 	;
@@ -1828,6 +1830,7 @@ static int token()
     case '^':
     case '~':
     case '$':
+    case '@':
 	yytext[0] = c;
 	yytext[1] = '\0';
 	yylval = install(yytext);
@@ -1947,6 +1950,7 @@ int yylex(void)
     case ':':
     case '~':
     case '$':
+    case '@':
     case LEFT_ASSIGN:
     case RIGHT_ASSIGN:
 	EatLines = 1;

@@ -645,7 +645,7 @@ static void deparse2buff(SEXP s)
 		    break;
 		case PP_DOLLAR:
 		    deparse2buff(CAR(s));
-		    print2buff("$");
+		    deparse2buff(op);
 		    /*temp fix to handle printing of x$a's */
 		    if( isString(CADR(s)) &&
 			isValidName(CHAR(STRING_ELT(CADR(s), 0))))

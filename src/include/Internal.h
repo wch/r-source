@@ -85,6 +85,8 @@ SEXP do_asfunction(SEXP, SEXP, SEXP, SEXP);
 SEXP do_asmatrixdf(SEXP, SEXP, SEXP, SEXP);
 SEXP do_assign(SEXP, SEXP, SEXP, SEXP);
 SEXP do_asvector(SEXP, SEXP, SEXP, SEXP);
+SEXP do_AT(SEXP call, SEXP op, SEXP args, SEXP env);
+SEXP do_AT_assign(SEXP call, SEXP op, SEXP args, SEXP env);
 SEXP do_atan(SEXP, SEXP, SEXP, SEXP);
 SEXP do_attach(SEXP,SEXP,SEXP,SEXP);
 SEXP do_attr(SEXP, SEXP, SEXP, SEXP);

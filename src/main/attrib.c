@@ -25,6 +25,7 @@
 
 #include <Defn.h>
 #include <Rmath.h>
+#include <Rdefines.h>
 
 static void checkNames(SEXP, SEXP);
 static SEXP installAttrib(SEXP, SEXP, SEXP);
@@ -810,5 +811,104 @@ void GetMatrixDimnames(SEXP x, SEXP *rl, SEXP *cl, char **rn, char **cn)
 SEXP GetArrayDimnames(SEXP x)
 {
     return getAttrib(x, R_DimNamesSymbol);
+}
+
+
+/* the code to manage slots in formal classes. These are attributes,
+   but without partial matching and enforcing legal slot names (it's
+   an error to get a slot that doesn't exist. */
+
+
+static SEXP pseudo_NULL = 0;
+
+static void init_pseudo_NULL() {
+  /* create and preserve an object that is NOT R_NilValue, and is used
+     to represent slots that are NULL (which an attribute can not
+     be).  The point is not just to store NULL as a slot, but also to
+     provide a check on invalid slot names (see get_slot below). 
+
+     The object has to be a symbol if we're going to check identity by
+     just looking at referential equality. */
+  pseudo_NULL = install("\001NULL\001");
+}
+
+SEXP R_do_slot(SEXP obj, SEXP name) {
+  /* currently we just use attributes, with all the current semantics
+     (except of course for no partial matching).  (So all the vagaries
+     of name, dimnames, etc carray over.)  Probably reasonable for
+     back compatibility. */
+  SEXP value = getAttrib(obj, name);
+  if(value == R_NilValue) 
+    /* not there.  But since even NULL really does get stored, this
+       implies that there is no slot of this name.  Or somebody
+       screwed up by using atttr(..) <- NULL */
+    error("\"%s\" is not a valid slot for this object (or was mistakenly deleted)",
+	  CHAR(asChar(name)));
+  else if(value == pseudo_NULL)
+    value = R_NilValue;
+  return value;
+}
+
+SEXP R_do_slot_assign(SEXP obj, SEXP name, SEXP check, SEXP value) {
+  if(check == R_NilValue || LOGICAL_VALUE(check))
+    /*  an error will occur in getting the slot if it's not defined */
+    R_do_slot(obj, name);
+  if(value == R_NilValue) {
+    /* slots, but not attributes, can be NULL.  Store a special symbol
+       instead. */
+    if(pseudo_NULL == 0)
+      init_pseudo_NULL();
+    value = pseudo_NULL;
+  }
+  PROTECT(obj);
+  setAttrib(obj, name, value);
+  UNPROTECT(1);
+  return obj;
+}
+
+SEXP R_pseudo_null() {
+  if(pseudo_NULL == 0)
+    init_pseudo_NULL();
+  return pseudo_NULL;
+}
+
+
+/* the @ operator, and its assignment form.  Processed much like $
+   (see do_subset3) but without S3-style methods.
+*/
+
+SEXP do_AT(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    SEXP input, nlist, slotName, object, ans;
+    input = PROTECT(allocVector(STRSXP, 1));
+
+    nlist = CADR(args);
+    if(isSymbol(nlist) )
+	SET_STRING_ELT(input, 0, PRINTNAME(nlist));
+    else if(isString(nlist) )
+	SET_STRING_ELT(input, 0, STRING_ELT(nlist, 0));
+    else {
+	errorcall_return(call, "invalid slot type");
+    }
+    PROTECT(object = eval(CAR(args), env));
+    ans = R_do_slot(object, input);
+    UNPROTECT(2);
+    return ans;
+}
+
+SEXP do_AT_assign(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    SEXP nlist, object, ans, value; 
+    PROTECT(object = eval(CAR(args), env));
+    nlist = CADR(args);
+    if(!(isSymbol(nlist) || isString(nlist)))
+	errorcall_return(call, "invalid slot type");
+    /* The code for "$<-" claims that the RHS is already evaluated, but
+       this is not quite right.  It can, at the least, be a promise
+       for the "@" case. */
+    value = eval(CADDR(args), env);
+    ans = R_do_slot_assign(object, nlist, R_NilValue, value);
+    UNPROTECT(1);
+    return ans;
 }
 

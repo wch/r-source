@@ -24,6 +24,7 @@ PKGS = $(R_PKGS)
 ## See e.g. `src/gnuwin32/help/Makefile'.
 R_CMD_BUILD_HELP = $(top_builddir)/bin/R CMD perl $(top_srcdir)/share/perl/build-help.pl
 R_CMD_RD2CONTENTS = $(top_builddir)/bin/R CMD perl $(top_srcdir)/share/perl/Rd2contents.pl
+R_INSTALL = $(top_builddir)/bin/R INSTALL -c -l $(top_builddir)/library
 ## </NOTE>
 
 all: Makefile R
@@ -37,6 +38,9 @@ R:
 	@$(MKINSTALLDIRS) $(top_builddir)/library
 	@for pkg in $(SUBDIRS); do \
 	  (cd $${pkg} && $(MAKE)) || exit 1; \
+	done
+	@for pkg in $(R_REGULAR_PKGS); do \
+	  $(R_INSTALL) $${pkg} || exit 1 ; echo "$${pkg} installed";\
 	done
 	@$(INSTALL_DATA) $(top_srcdir)/doc/html/R.css \
 	  $(top_builddir)/library
@@ -86,7 +90,7 @@ install-strip:
 uninstall:
 	@echo "uninstalling packages ..."
 	@(cd $(rhome)/library; \
-	  for p in $(R_PKGS); do rm -rf $${p}; done)
+	  for p in $(R_PKGS) $(R_REGULAR_PKGS); do rm -rf $${p}; done)
 
 mostlyclean: clean
 clean:
@@ -95,7 +99,7 @@ clean:
 	done
 	@rm -f stamp-*
 distclean:
-	@for d in $(SUBDIRS); do \
+	@for d in $(SUBDIRS) $(R_REGULAR_PKGS); do \
 	  (cd $${d} && $(MAKE) $@); \
 	done
 	@rm -f Makefile
