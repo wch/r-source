@@ -175,9 +175,9 @@ sub listFiles {
 	    $component = "html devel";
 	    $mini = 0;
 	} elsif ($_ eq "doc\\html\\faq.html"
-		 || $_ eq "doc\\html\\rw-FAQ.html") {
+		 || $_ eq "doc\\html\\rw-FAQ.html"
+		 || $_ eq "share\\texmf\\Sweave.sty") {
 	    $component = "main";
-	    $mini = 1;
 	} elsif (m/^doc\\html/
 		 || m/^doc\\manual\\[^\\]*\.html/
 		 || m/^library\\[^\\]*\\html/
@@ -194,8 +194,8 @@ sub listFiles {
 	    }
 	} elsif (m/^library\\[^\\]*\\latex/
 		 || m/^share\\texmf/) {
-	    $component = "latex";
-	    $mini = 0;
+	    	$component = "latex";
+	    	$mini = 0;
 	} elsif (m/^Tcl/) {
 	    $component = "tcl";
 	    $mini = 0;

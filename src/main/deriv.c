@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Langage for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998-2001   The R Development Core Team.
+ *  Copyright (C) 1998-2003   The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -935,14 +935,23 @@ SEXP do_deriv(SEXP call, SEXP op, SEXP args, SEXP env)
 		}
 		UNPROTECT(2);
 	    }
-	} else {			/* the first derivative is a constant */
+	} else { /* the first derivative is constant or simple variable */
 	    PROTECT(ans = duplicate(expr));
 	    PROTECT(ans = D(ans, install(CHAR(STRING_ELT(names, i)))));
 	    Accumulate2(ans, exprlist);
 	    UNPROTECT(2);
 	    if (hessian) {
-		for (j = i; j < nderiv; j++) { /* hessians are skipped */
-		    Accumulate2(R_MissingArg, exprlist); /* these are placeholders */
+		for (j = i; j < nderiv; j++) {
+		    if (d2_index[k]) {
+			Accumulate2(MakeVariable(d2_index[k], tag), exprlist);
+		    } else {
+			PROTECT(ans2 = duplicate(ans));
+			PROTECT(ans2 = D(ans2,
+					 install(CHAR(STRING_ELT(names, j)))));
+			if(isZero(ans2)) Accumulate2(R_MissingArg, exprlist);
+			else Accumulate2(ans2, exprlist);
+			UNPROTECT(2);
+		    }
 		    k++;
 		}
 	    }

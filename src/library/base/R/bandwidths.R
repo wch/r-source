@@ -4,6 +4,7 @@
 
 bw.nrd0 <- function (x)
 {
+    if(length(x) < 2) stop("need at least 2 data points")
     hi <- sd(x)
     if(!(lo <- min(hi, IQR(x)/1.34)))# qnorm(.75) - qnorm(.25) = 1.34898
         (lo <- hi) || (lo <- abs(x[1])) || (lo <- 1.)
@@ -12,6 +13,7 @@ bw.nrd0 <- function (x)
 
 bw.nrd <- function (x)
 {
+    if(length(x) < 2) stop("need at least 2 data points")
     r <- quantile(x, c(0.25, 0.75))
     h <- (r[2] - r[1])/1.34
     1.06 * min(sqrt(var(x)), h) * length(x)^(-1/5)
@@ -20,6 +22,7 @@ bw.nrd <- function (x)
 bw.SJ <- function(x, nb = 1000, lower = 0.1*hmax, upper = hmax,
                   method = c("ste", "dpi"))
 {
+    if(length(x) < 2) stop("need at least 2 data points")
     fSD <- function(h, x, alph2, c1, n, d)
         (c1/SDh(x, alph2 * h^(5/7), n, d))^(1/5) - h
     SDh <- function(x, h, n, d)
@@ -81,6 +84,7 @@ bw.SJ <- function(x, nb = 1000, lower = 0.1*hmax, upper = hmax,
 
 bw.ucv <- function(x, nb = 1000, lower = 0.1*hmax, upper = hmax)
 {
+    if(length(x) < 2) stop("need at least 2 data points")
     fucv <- function(h, x, n, d)
         .C("band_ucv_bin",
            as.integer(n),
@@ -114,6 +118,7 @@ bw.ucv <- function(x, nb = 1000, lower = 0.1*hmax, upper = hmax)
 
 bw.bcv <- function(x, nb = 1000, lower = 0.1*hmax, upper = hmax)
 {
+    if(length(x) < 2) stop("need at least 2 data points")
     fbcv <- function(h, x, n, d)
         .C("band_bcv_bin",
            as.integer(n),

@@ -59,6 +59,8 @@ density <-
         if(is.character(width)) bw <- width
     }
     if (is.character(bw)) {
+        if(length(x) < 2)
+            stop("need at least 2 points to select a bandwidth automatically")
         bw <- switch(tolower(bw),
                      nrd0 = bw.nrd0(x),
                      nrd = bw.nrd(x),

@@ -49,6 +49,8 @@ help, for consistency with Unix versions.
 Default in installer changed so a normal user installation will 
 include the source package installation files.
 
+Moved the Sweave style file to the main install group.
+
 
 
 rw1070
