@@ -29,6 +29,8 @@ options(\dots)
   since stack overflow is likely if this is set too high.}
 \item{na.action}{the name of a function for treating missing values
   (\code{\link{NA}}'s) for certain situations.}
+\item{pager}{the (standalone) program used for displaying ASCII files on
+  \R's console.  Defaults to \file{\$RHOME/bin/pager}.}
 \item{papersize}{the paper format used for graphics printing; currently
   \bold{read-only}, set by environment variable R\_PAPERSIZE, or in
   \file{config.site}.}

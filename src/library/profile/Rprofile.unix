@@ -10,4 +10,5 @@ options(device = if(interactive() && getenv("DISPLAY") != "")
 
 options(browser = "netscape")
 
-# .First <- function() { if (interactive() && getenv("DISPLAY") != "") x11() }
+## .First <- function() { if (interactive() && getenv("DISPLAY") != "") x11() }
+options(pager = "${RHOME}/bin/pager")
