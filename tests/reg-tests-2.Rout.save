@@ -1,6 +1,6 @@
 
 R : Copyright 2003, The R Development Core Team
-Version 1.8.0 Under development (unstable) (2003-06-19)
+Version 1.8.0 Under development (unstable) (2003-06-29)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -1797,8 +1797,8 @@ Warning messages:
 23: Step size truncated: out of bounds
 24: Step size truncated: out of bounds
 25: Step size truncated: out of bounds
-26: Algorithm did not converge in: (if (is.empty.model(mt)) glm.fit.null else glm.fit)(x = X, y = Y,   ...
-27: Algorithm stopped at boundary value in: (if (is.empty.model(mt)) glm.fit.null else glm.fit)(x = X, y = Y,   ...
+26: Algorithm did not converge in: glm.fit(x = X, y = Y, weights = weights, start = start, etastart = etastart,   ...
+27: Algorithm stopped at boundary value in: glm.fit(x = X, y = Y, weights = weights, start = start, etastart = etastart,   ...
 > 
 > 
 > ## extending char arrrays

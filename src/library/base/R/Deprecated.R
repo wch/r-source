@@ -135,4 +135,67 @@ lm.wfit.null <- function (x, y, w, method = "qr", tol = 1e-07, ...)
     list(coefficients = numeric(0), residuals = y, fitted.values = 0 *
          y, weights = w, rank = 0, df.residual = length(y))
 }
+glm.fit.null <-
+    function (x, y, weights = rep(1, nobs), start = NULL,
+              etastart = NULL, mustart = NULL, offset = rep(0, nobs),
+              family = gaussian(), control = glm.control(), intercept = FALSE)
+{
+    .Deprecated("glm.fit")
+    if(intercept) stop("null models have no intercept")
+    ynames <- names(y)
+    conv <- TRUE
+    nobs <- NROW(y)
+    nvars <- NCOL(x)
+    ## define weights and offset if needed
+    ## get family functions
+    if (is.null(weights))
+	weights <- rep.int(1, nobs)
+    if (is.null(offset))
+	offset <- rep.int(0, nobs)
+    variance <- family$variance
+    dev.resids <- family$dev.resids
+    linkinv <- family$linkinv
+    mu.eta <- family$mu.eta
+    valideta <- family$valideta
+    if (is.null(valideta))
+	valideta <- function(eta) TRUE
+    validmu <- family$validmu
+    if (is.null(validmu))
+	validmu <- function(mu) TRUE
+	## next line may change y and weights, and set n.
+    eval(family$initialize)
+    if (NCOL(y) > 1)
+	stop("y must be univariate unless binomial")
+    eta <- rep.int(0, nobs)
+    if (!valideta(eta + offset))
+	stop("Invalid linear predictor values in empty model")
+    mu <- linkinv(eta + offset)
+    ## calculate initial deviance and coefficient
+    if (!validmu(mu))
+	stop("Invalid fitted means in empty model")
+    dev <- sum(dev.resids(y, mu, weights))
+    w <- ((weights * mu.eta(eta + offset)^2)/variance(mu))^0.5
+    ##	residuals[good] <- z - eta
+    residuals <- (y - mu)/mu.eta(eta + offset)
+    ## name output
+    names(residuals) <- ynames
+    names(mu) <- ynames
+    names(eta) <- ynames
+    names(w) <- ynames
+    names(weights) <- ynames
+    names(y) <- ynames
+    ## calculate null deviance
+    wtdmu <- linkinv(offset)
+    nulldev <- sum(dev.resids(y, wtdmu, weights))
+    ## calculate df
+    resdf <- nulldf <- n.ok <- nobs - sum(weights==0)
+    aic.model <- family$aic(y, n, mu, weights, dev)
+    return(list(coefficients = numeric(0), residuals = residuals,
+		fitted.values = mu, rank = 0, family = family,
+		linear.predictors = eta + offset, deviance = dev,
+		aic = aic.model,
+		null.deviance = nulldev, iter = 0, weights = w^2,
+		prior.weights = weights, df.residual = resdf,
+		df.null = nulldf, y = y, converged = conv, boundary = FALSE))
+}
 ## </entry>

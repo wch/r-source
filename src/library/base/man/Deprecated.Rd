@@ -12,6 +12,7 @@
 \alias{anovalist.lm}
 \alias{lm.fit.null}
 \alias{lm.wfit.null}
+\alias{glm.fit.null}
 %------ PLEASE: put \alias{.} here for EACH !
 \description{
   These functions are provided for compatibility with older versions of
@@ -36,6 +37,9 @@ codes(x, \dots) <- value
 anovalist.lm(object, \dots, test = NULL)
 lm.fit.null(x, y, method = "qr", tol = 1e-07, \dots)
 lm.wfit.null(x, y, w, method = "qr", tol = 1e-07, \dots)
+glm.fit.null(x, y, weights = rep(1, nobs), start = NULL,
+             etastart = NULL, mustart = NULL, offset = rep(0, nobs),
+             family = gaussian(), control = glm.control(), intercept = FALSE)
 % </Deprecated 1.8.0>
 }
 \details{
@@ -63,6 +67,7 @@ lm.wfit.null(x, y, w, method = "qr", tol = 1e-07, \dots)
 
   \code{lm.fit.null} and \code{lm.wfit.null} are superseded by
   \code{lm.fit} and \code{lm.wfit} which handle null models now.
+  Similarly, \code{glm.fit.null} is superseded by \code{glm.fit}.
 }
 \seealso{
   \code{\link{Defunct}},

@@ -213,7 +213,7 @@ DEPRECATED & DEFUNCT
     o	- and Ops methods for POSIX[cl]t objects are removed: the
 	POSIXt methods have been used since 1.3.0.
 
-    o	lm.fit.null() and lm.wfit.null() are deprecated.
+    o	glm.fit.null(), lm.fit.null() and lm.wfit.null() are deprecated.
 
     o	Classes "lm.null" and "glm.null" are deprecated and all of their
 	methods have been removed.
