@@ -587,6 +587,9 @@ BUG FIXES
 	pivoting had occurred (PR#1331).  Step-halving to avoid the
 	boundary of feasible values was not working.
 
+    o   Internal representation of logical values was not being
+	treated consistently. (Related to PR#1439)
+
 
 
 	**************************************************
