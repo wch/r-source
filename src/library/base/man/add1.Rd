@@ -84,7 +84,8 @@ drop1.glm(object, scope, scale = 0, test=c("none", "Chisq"),
     Their authors' definitions of Mallows' Cp and Akaike's AIC are used, not
     those of the authors of the models chapter of S.
 }
-\seealso{\code{\link{aov}}, \code{\link{lm}}}
+\seealso{\code{\link{step}}, \code{\link{aov}}, \code{\link{lm}},
+    \code{\link{extractAIC}}.}
 \examples{
 example(step)#-> swiss
 (alm1 <- add1(lm1, ~ I(Education^2) + .^2))
