@@ -19,7 +19,7 @@
 
 #include <stdio.h>
 #include <ctype.h>
-#include "PostScript.h"
+#include "PS.h"
 #include "Fileio.h"
 
 	/*  PostScript Graphics Utilities			  */
