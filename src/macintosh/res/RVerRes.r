@@ -44,10 +44,10 @@
 #define fbRImage				'BINA'
 
 #define kMajorVersNumber	0x01
-#define kMinorVersNumber	0x23
+#define kMinorVersNumber	0x30
 #define kReleaseStage		Development
 #define kNonFinalRelease	0x01
-#define kVersString			"1.2.3"
+#define kVersString			"1.3.0"
 
 #define kRegionCode			verUS
 
