@@ -156,7 +156,7 @@ de <- function(..., Modes=list(), Names=NULL)
     if(any(coltypes != 1)) {
 	if(length(rdata) == sum(ncols))
 	    rdata <- de.restore(rdata, ncols, coltypes, snames, sdata)
-	else warning("could not restore data types properly")
+	else warning("could not restore variables properly")
     }
     return(rdata)
 }

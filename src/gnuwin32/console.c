@@ -2207,10 +2207,19 @@ FBEGIN
     clear(c);
 FVOIDEND
 
+static void menudehelp(control m)
+{
+    char s[] = "Navigation.\n  Keyboard: cursor keys move selection\n\tTab move right, Shift+Tab moves left\n\tPgDn or Ctrl+F: move down one screenful\n\tPgUp or Ctrl+B: move up one screenful\n\tHome: move to (1,1) cell\n\tEnd: show last rows of last column.\n   Mouse: left-click in a cell, use the scrollbar(s).\n\nEditing.\n  Type in the currently hightlighted cell\n  Double-click in a cell for an editable field\n\nMisc.\n  Ctrl-L redraws the screen, auto-resizing the columns\n  Ctrl-C copies selected cell\n  Ctrl-V pastes to selected cell\n  Right-click menu for copy, paste, autosize currently selected column\n\n";
+    askok(s);
+}
+
+
 static MenuItem DePopup[28] = {
-    {"Copy", de_copy, 0},
-    {"Paste", de_paste, 0},
-    {"Autosize", de_autosize, 0},
+    {"Help", menudehelp, 0},
+    {"-", 0, 0},
+    {"Copy selected cell", de_copy, 0},
+    {"Paste selected cell", de_paste, 0},
+    {"Autosize column", de_autosize, 0},
     {"-", 0, 0},
     {"Close", declose, 0},
     LASTMENUITEM
@@ -2221,12 +2230,18 @@ static void demenuact(control m)
     /* use this to customize the menu */
 }
 
+static void depopupact(control m)
+{
+    /* use this to customize the menu */
+}
+
 dataeditor newdataeditor()
 {
     ConsoleData p;
     int w, h, x, y;
     dataeditor c;
-
+    menuitem m;
+    
     p = newconsoledata((consolefn) ? consolefn : FixedFont,
 		       pagerrow, pagercol,
 		       consolefg, consoleuser, consolebg,
@@ -2267,7 +2282,15 @@ dataeditor newdataeditor()
         MCHECK(tb = newtoolbar(btsize + 4));
 	gsetcursor(tb, ArrowCursor);
     }
-    MCHECK(gpopup(demenuact, DePopup));
+    MCHECK(gpopup(depopupact, DePopup));
+    MCHECK(m = newmenubar(demenuact));
+    MCHECK(newmenu("File"));
+/*    MCHECK(m = newmenuitem("-", 0, NULL));*/
+    MCHECK(m = newmenuitem("Close", 0, declose));
+    newmdimenu();
+    MCHECK(m = newmenu("Help"));
+    MCHECK(newmenuitem("Data editor", 0, menudehelp));
+ 
     setdata(c, p);
     setresize(c, deresize);
     setredraw(c, de_redraw);

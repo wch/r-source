@@ -1,11 +1,16 @@
 edit <- function(name,...)UseMethod("edit")
 
 edit.default <-
-    function (name = NULL, file = "", editor = getOption("editor"))
-    .Internal(edit(name, file, editor))
+    function (name = NULL, file = "", editor = getOption("editor"), ...)
+{
+    if(is.matrix(name) &&
+       (mode(name) == "numeric" || mode(name) == "character"))
+        edit.matrix(name=name, ...)
+    else .Internal(edit(name, file, editor))
+}
 
 edit.data.frame <-
-    function(name, factor.mode=c("character", "numeric"),
+    function(name, factor.mode = c("character", "numeric"),
              edit.row.names =  any(row.names(name) != 1:nrow(name)), ...)
 {
     if (.Platform$OS.type == "unix")
@@ -70,6 +75,44 @@ edit.data.frame <-
         else row.names(out) <- rn
     }
     as.data.frame(out)
+}
+
+edit.matrix <-
+    function(name, edit.row.names = any(rownames(name) != 1:nrow(name)), ...)
+{
+    if (.Platform$OS.type == "unix")
+        if(.Platform$GUI == "unknown" || getenv("DISPLAY")=="" )
+            return (edit.default(name, ...))
+    if(!is.matrix(name) ||
+       !(mode(name) == "numeric" || mode(name) == "character")
+       || any(dim(name) < 1))
+        stop("invalid input matrix")
+    dn <- dimnames(name)
+    if(is.null(dn[[1]])) edit.row.names <- FALSE
+    datalist <- split(name, col(name))
+    if(!is.null(dn[[2]])) names(datalist) <- dn[[2]]
+    else names(datalist) <- paste("col", 1:ncol(m), sep = "")
+    modes <- as.list(rep(mode(name), ncol(name)))
+    if (edit.row.names) {
+        datalist <- c(list(row.names=dn[[1]]), datalist)
+        modes <- c(list(row.names="character"), modes)
+    }
+    out <- .Internal(dataentry(datalist, modes))
+       lengths <- sapply(out, length)
+    maxlength <- max(lengths)
+    if (edit.row.names) rn <- out[[1]]
+    for (i in which(lengths != maxlength))
+         out[[i]] <- c(out[[i]], rep(NA, maxlength - lengths[i]))
+    if (edit.row.names) {
+        out <- out[-1]
+        if((ln <- length(rn)) < maxlength)
+            rn <- c(rn, paste("row", (ln+1):maxlength, sep=""))
+    }
+    out <- do.call("cbind", out)
+    if (edit.row.names) rownames(out) <- rn
+    else if(!is.null(dn[[1]]))  rownames(out) <- dn[[1]]
+    if(!is.null(dn[[2]]))  colnames(out) <- dn[[2]]
+    out
 }
 
 vi <- function(name=NULL, file="")

@@ -140,9 +140,16 @@ NEW FEATURES
 
     o   $ and $<- are now generic functions.
 
-
     o   approx() and approxfun() have an extra argument ties= to control
  	handling of tied x values
+
+    o   Many interface enhancements to the data editor, which now uses
+	variable-width columns and much less redrawing.  See
+	?dataentry for a description of the current user interface.
+
+    o   edit() or fix() applied to a numeric or character matrix now
+	uses the data entry editor.
+
 
 BUG FIXES
 
@@ -204,6 +211,8 @@ BUG FIXES
 
     o   predict(,type="terms",se.fit=T) gives correct standard errors
  	(thanks to John Maindonald)
+
+    o	guard against segfault in dataentry(x<-1, Modes = plot), and the like.
 
 
 		CHANGES IN R VERSION 1.0.1

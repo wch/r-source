@@ -12,10 +12,23 @@ de(\dots, Modes = NULL, Names = NULL)
 \alias{de.restore}
 \alias{de.setup}
 \description{
-  This is a suite of functions designed to make the interface
-  to the spreadsheet painless for users.
+  A spreadsheet-lie editor for entering or editing data.
+}
+\arguments{
+  \item{...}{A list of variables: currently these should be numeric or
+    character vectors or list containing such vectors.}
+  \item{Modes}{The modes to be used for the variables.}
+  \item{Names}{The names to be used for the variables.}
+  \item{data}{A list of numeric and/or character vectors.}
+  \item{modes}{A list of the the same length as \code{data} giving the
+    modes of the variables.}
 }
 \details{
+  The data entry editor is only available on some platforms and GUIs.
+  Where available it provides a means to visually edit a matrix or
+  a collection of variables (including a data frame) as described in the
+  ``Notes'' section.
+  
   \code{data.entry} has side
   effects, any changes made in the spreadsheet are reflected in the
   variables.  The functions \code{de}, \code{de.ncols}, \code{de.setup}
@@ -38,6 +51,12 @@ de(\dots, Modes = NULL, Names = NULL)
   columns can be regrouped and reassigned to the correct name. This
   is handled by \code{de.restore}.
 }
+\value{
+  \code{de} and \code{dataentry} return the edited value of their
+  arguments. \code{data.entry} invisibly returns a vector of variable
+  names but its main value is its side effect of assigning new version
+  of those variables in the user's workspace.
+}
 \note{
   The details of interface to the data grid may differ by platform and
   GUI.  The following description applies to
@@ -47,7 +66,7 @@ de(\dots, Modes = NULL, Names = NULL)
 #ifdef windows
   the GraphApp-based implementation under Windows.
 #endif
-  
+
   You can navigate around the grid using the cursor keys or by clicking
   with the (left) mouse button on any cell.  The active cell is
   highlighted by thickening the surrounding rectangle.  Moving to the
@@ -55,15 +74,16 @@ de(\dots, Modes = NULL, Names = NULL)
   to the rows or columns currently in use.
 
   The are alternative ways to navigate using the keys.  Return and
-  (keypad) Enter and LineFeed all move down. Tab moves left.  Home moves
-  to the top left.
+  (keypad) Enter and LineFeed all move down. Tab moves right and
+  Shift-Tab move left.  Home moves to the top left.
 
 #ifdef unix
   Control-F moves down a page, and Control-B up by a page.
 #endif
 #ifdef windows
   PageDown or Control-F moves down a page, and PageUp or
-  Control-B up by a page.
+  Control-B up by a page.  END will show the last used column and the
+  last few rows used (in any column).
 #endif
 
   Using any other key starts an editing process on the currently
@@ -93,13 +113,13 @@ de(\dots, Modes = NULL, Names = NULL)
   preferable not to edit in the right-most displayed column.  (The
   editable field is itself scrollable.)
 #endif
-  
+
   Entering a value in a cell further down a column than the last used
   cell extends the variable and fills the gap (if any) by \code{NA}s (not
   shown on screen).
 
   The column names can only be selected by clicking in them.  This gives
-  a popup-menu to select the column type (currently Real (numeric) or
+  a popup menu to select the column type (currently Real (numeric) or
   Character) or to change the name.  Changing the type converts the
   current contents of the column (and converting from Character to Real
   may generate \code{NA}s.)
@@ -112,13 +132,29 @@ de(\dots, Modes = NULL, Names = NULL)
 #ifdef windows
   Enter the changes made in the popup window by clicking on its close box.
 #endif
-  
+
   New columns are created by entering values in them (and not by just
   assigning a new name).  The mode of the column is auto-detected from
   the first value entered: if this is a valid number it gives a numeric
   column.  Unused columns are ignored, so
   adding data in \code{var5} to a three-column grid adds one extra
   variable, not two.
+
+#ifdef windows
+  There is a popup-menu accessed by right-clicking anywhere in the window
+  that refers to the currently selected cell. This can copy the value to
+  or paste from the clipboard, or paste in common values in that column.
+  Copying and pasting can also be accessed by the usual keyboard shortcuts
+  Control-C and Control-V.
+
+  Columns can be resized by selecting and dragging a line (the cursor
+  will change) within limits: columns must be between 4 and 50 chars wide.
+  The Autosize item on the popup menu will resize the currently selected
+  column.
+  #endif
+
+  Control-L will refresh the display, recalculating field widths to fit
+  the current entries.
 }
 \seealso{
   \code{\link{vi}}, \code{\link{edit}}: \code{edit} uses

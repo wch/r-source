@@ -64,7 +64,12 @@ rbind <- function(..., deparse.level=1) {
     .Internal(rbind(...))
 }
 
-dataentry <- function(data, modes).Internal(dataentry(data, modes))
+dataentry <- function (data, modes) {
+    if(!all(md <- sapply(data, is.vector))) stop("invalid data argument")
+    if(!all(mm <- sapply(modes, is.character))) stop("invalid modes argument")
+    if(length(mm) != length(md)) stop("data and modes have different lengths")
+    .Internal(dataentry(data, modes))
+}
 deparse <-
     function(expr, width.cutoff = 60).Internal(deparse(expr, width.cutoff))
 
