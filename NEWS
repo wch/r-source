@@ -157,7 +157,16 @@ BUG FIXES
 
     o	Postscript driver no longer uses the initclip operator, which
 	was against the EPSF specifications and broke inclusion of
-	graphics in some documents.
+	graphics in some documents. 
+
+    o   In postscript driver, cleaned up the internals to fix some
+	cases where it was unclear whether a variable was meant to set
+	or track device status.
+
+    o   In some cases, emitted postscript violated the PS Document
+	Structuring Conventions since some settings were carried from
+	one page to the next. (Caused breakage when turning
+	antialiasing on/off in "gv" for instance.)
 
     o	Help aliases "(" and "{" now work, apart from as PDF hyperlinks.
 
