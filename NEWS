@@ -363,6 +363,9 @@ BUG FIXES
     o	filter(method="recursive") was unnecessarily requiring the
 	time series to be longer than the filter.
 
+    o   Printing `nls' objects misbehaved when `data' was a composite
+        expression. 
+
 
 
 
@@ -432,9 +435,6 @@ BUG FIXES
 	incorrect output.
 
     o	str(x) gives better output when x is of mode "(".
-
-    o   Printing `nls' objects misbehaved when `data' was a composite
-        expression. 
 
     o	Lapack error messages corrected (PR#3494) and incorrect call to 
 	DGEQP3 (PR#2867).
