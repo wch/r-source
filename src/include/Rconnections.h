@@ -80,6 +80,7 @@ int Rconn_fgetc(Rconnection con);
 int Rconn_ungetc(int c, Rconnection con);
 int Rconn_printf(Rconnection con, const char *format, ...);
 Rconnection getConnection(int n);
+Rconnection getConnection_no_err(int n);
 Rboolean switch_stdout(int icon, int closeOnExit);
 SEXP R_ParseConn(Rconnection con, int n, int *status);
 void con_close(int i);

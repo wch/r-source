@@ -458,10 +458,14 @@ void Rvprintf(const char *format, va_list arg)
 void REvprintf(const char *format, va_list arg)
 {
     if(R_ErrorCon != 2) {
-	Rconnection con = getConnection(R_ErrorCon);
-    
-	con->vfprintf(con, format, arg);
-	con->fflush(con);
+	Rconnection con = getConnection_no_err(R_ErrorCon);
+	if(con == NULL) {
+	    /* should never happen, but in case of corruption... */
+	    R_Suicide("error connection has been corrupted");
+	} else {
+	    con->vfprintf(con, format, arg);
+	    con->fflush(con);
+	}
     } else if(R_Consolefile) {
 	vfprintf(R_Consolefile, format, arg);
     } else {
