@@ -87,7 +87,7 @@ function(dir, type, all.files = FALSE, full.names = TRUE)
     files <-
         listFilesWithExts(dir, exts, all.files = all.files,
                           full.names = full.names)
-    
+
     if(type %in% c("code", "docs")) {
         OSdir <- file.path(dir, .Platform$OS)
         if(fileTest("-d", OSdir)) {
@@ -126,10 +126,10 @@ function(x, delim = c("\{", "\}"), syntax = "Rd")
 ### ** texi2dvi
 
 texi2dvi <- function(file, pdf = FALSE, clean = TRUE,
-                     quiet = TRUE, texi2dvi = getOption("texi2dvi")) 
+                     quiet = TRUE, texi2dvi = getOption("texi2dvi"))
 {
     ## run texi2dvi on a file
-    
+
     if(pdf) pdf <- "--pdf" else pdf <- ""
     if(clean) clean <- "--clean" else clean <- ""
     if(quiet) quiet <- "--quiet" else quiet <- ""
@@ -139,7 +139,7 @@ texi2dvi <- function(file, pdf = FALSE, clean = TRUE,
         else
             texi2dvi <- "texi2dvi"
     }
-    
+
     yy <- system(paste(texi2dvi, quiet, pdf, clean, file))
     if(yy > 0) stop(paste("running texi2dvi on", file, "failed"))
 }
@@ -161,7 +161,18 @@ function()
       "is.complex", "is.double", "is.environment", "is.function",
       "is.integer", "is.language", "is.logical", "is.list", "is.matrix",
       "is.na", "is.nan", "is.null", "is.numeric", "is.object",
-      "is.pairlist", "is.recursive", "is.single", "is.symbol")
+      "is.pairlist", "is.recursive", "is.single", "is.symbol",
+      ## and also the members of the group generics from groupGeneric.Rd
+      "abs", "sign", "sqrt", "floor", "ceiling", "trunc", "round", "signif",
+      "exp", "log", "cos", "sin", "tan", "acos", "asin", "atan",
+      "cosh", "sinh", "tanh", "acosh", "asinh", "atanh",
+      "lgamma", "gamma", "gammaCody", "digamma", "trigamma",
+      "tetragamma", "pentagamma", "cumsum", "cumprod", "cummax", "cummin",
+      "+", "-", "*", "/", "^", "%%", "%/", "&", "|", "!", "==", "!=",
+      "<", "<=", ">=", ">",
+      "all", "any", "sum", "prod", "man", "min", "range",
+      "Arg", "Conj", "Im", "Mod", "Re"
+      )
 }
 
 ### ** .getNamespaceS3methodsList
