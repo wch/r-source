@@ -113,6 +113,9 @@ BUG FIXES
 	with "", whereas changing the length extended with NA_STRING.
 	Now NA_STRING is used for both.
 
+    o	boxplot()s with logarithmic scale in "width-direction" now have
+        proper widths, i.e. typically constant.
+
 
 
 	**************************************************
@@ -127,7 +130,7 @@ BUG FIXES
 
 NEW FEATURES
 
-    o   Enhancements to mathematical annotation of plots:
+    o	Enhancements to mathematical annotation of plots:
 
 	- expressions involving dot(<something>) now produce a dot accent
 	  above the <something> (initial patch from Ben Bolker).
@@ -153,43 +156,43 @@ BUG FIXES
     o	Subsetting non-existent rows in a data frame would produce
 	missing row names, which are not allowed.
 
-    o   On Unix, R_PAPERSIZE was set to '' instead of 'a4' as default on
+    o	On Unix, R_PAPERSIZE was set to '' instead of 'a4' as default on
 	systems without paperconf.
 
     o	Under GNOME, capabilities() now reports correctly that X11, png
 	and jpeg are available (if they are under X11).
 
     o	The names of some results of unlist() had the wrong internal
-	length, which confused paste().  Both have been corrected. (PR#1524)
+	length, which confused paste().	 Both have been corrected. (PR#1524)
 
-    o   RweaveLatex.Rd had unbalanced braces in section "Supported
-        Options".
+    o	RweaveLatex.Rd had unbalanced braces in section "Supported
+	Options".
 
-    o   merge() with multiple and differently-named match columns
-        failed. (PR#1510)
+    o	merge() with multiple and differently-named match columns
+	failed. (PR#1510)
 
-    o   NAs in right-justified unquoted character matrices were being 
+    o	NAs in right-justified unquoted character matrices were being
 	mis-aligned.  This mainly affected printing data frames.
 
     o	predict.*bSpline() bugs extrapolating for deriv >= 1 (PR#1473),
-        and predict.[bn]s bug e.g. for bs(x), reported by Ch.Sangiorgio.
+	and predict.[bn]s bug e.g. for bs(x), reported by Ch.Sangiorgio.
 
-    o   qr.X was failing if n < p.  Fixed, but only in the case when
+    o	qr.X was failing if n < p.  Fixed, but only in the case when
 	pivoting does not occur. (PR#1519)
 
-    o   xx[, 1:3] was returning a list if xx had only one row, even
+    o	xx[, 1:3] was returning a list if xx had only one row, even
 	though xx[1, 1:3] was a data frame. (PR#1530)
 
-    o   nls() was reporting incorrectly the number of iterations if the
+    o	nls() was reporting incorrectly the number of iterations if the
 	maximum was reached.
 
-    o   rbind.data.frame() was coercing logical columns to factors.
+    o	rbind.data.frame() was coercing logical columns to factors.
 	(PR#1536)
 
-    o   Rprof(NULL) or Rprof("") called when not profiling caused a
-	segfault: now silently ignored.  (PR#1471)
+    o	Rprof(NULL) or Rprof("") called when not profiling caused a
+	segfault: now silently ignored.	 (PR#1471)
 
-    o   On systems (e.g. Windows) using R's own code for expm1, the
+    o	On systems (e.g. Windows) using R's own code for expm1, the
 	values were wrong for large negative x, and this affected
 	pweibull(), for example.
 
@@ -202,15 +205,15 @@ BUG FIXES
 
     o	predict(smooth.spline(x,*), deriv =1) did not predict at all `x'
 	values, and
-     	smooth.spline(x,*, all.knots = TRUE) used much too much memory
+	smooth.spline(x,*, all.knots = TRUE) used much too much memory
 	when length(x) was largish.
-        smooth.spline(*, .... trace = TRUE ..) is a bit more self-explaining.
+	smooth.spline(*, .... trace = TRUE ..) is a bit more self-explaining.
 
-    o   pexp(x, log=TRUE) and pweibull(*) were losing precision for large x.
+    o	pexp(x, log=TRUE) and pweibull(*) were losing precision for large x.
 
-    o   Workaround for NetBSD bug in compiling dounzip.c. (PR#1565/6)
+    o	Workaround for NetBSD bug in compiling dounzip.c. (PR#1565/6)
 
-    o   Conversions to numeric in type.convert were always treating "NA" as
+    o	Conversions to numeric in type.convert were always treating "NA" as
 	missing whatever the setting of na.strings. (PR#1568)
 
     o	R CMD check now deals correctly with package names containing a
@@ -219,10 +222,10 @@ BUG FIXES
     o	pbinom() and pbinom() were misssing the "fuzz" that other discrete
 	distributions have in order to guard against truncation.
 
-    o   The "=" assignment operator behaved as "<<-" in some constructions
+    o	The "=" assignment operator behaved as "<<-" in some constructions
 	with composite left-hand sides.
 
-    o   Added print.AsIs() method to ensure "AsIs" objects are printed
+    o	Added print.AsIs() method to ensure "AsIs" objects are printed
 	by the method for their real class. (PR#1587)
 
     o	mosaicplot(*, color = v) now recycles v[] if needed.
@@ -235,7 +238,7 @@ BUG FIXES
     o	The C function fprec might overflow for > 16 digits, showing
 	up in example(str) on some platforms.
 
-    o   Changes to the methods package:
+    o	Changes to the methods package:
 
 	- Nonstandard generic function definitions given to
 	  setGeneric now work; these were previously ignored.
@@ -267,12 +270,12 @@ BUG FIXES
     o	round/trunc.POSIXt were erroneously retaining information on
 	DST. (PR#1543)
 
-    o   tcltk package didn't work with tcl8.0.x.  Compatibility code
-        inserted (PR#1640, thanks to René Bertin for helping out with
-        this).
+    o	tcltk package didn't work with tcl8.0.x.  Compatibility code
+	inserted (PR#1640, thanks to René Bertin for helping out with
+	this).
 
     o	selfStart() {pkg "nls"} now works again when parameter names are
-        not specified (but implicit).
+	not specified (but implicit).
 
     o	legend() now treats lty="0" properly (as solid).
 
@@ -283,9 +286,9 @@ BUG FIXES
 	library, and so update.packages() would only update a bundle
 	in the first location in lib.loc.
 
-    o   fisher.test() could miscalculate odds ratio and confidence
-        interval for tables with large entries, due to numerical
-        overflow.
+    o	fisher.test() could miscalculate odds ratio and confidence
+	interval for tables with large entries, due to numerical
+	overflow.
 
     o	Using lty = "1" (or "10") does no longer produce invalid
 	postscript or pdf.  Using "0" in a character lty is currently not
@@ -297,22 +300,24 @@ BUG FIXES
 	MacOS) warning/error messages longer than 8192 chars could
 	crash R. (PR#1651)
 
-    o   Comparisons between objects of mode "call" using "==" now return
-        TRUE if both sides deparse to the same string (as always intended).
+    o	Comparisons between objects of mode "call" using "==" now return
+	TRUE if both sides deparse to the same string (as always intended).
 
     o	HoltWinters() now initializes correctly in the exponential
-	smoothing case, and plot.HoltWinters() allows lty to be set. 
+	smoothing case, and plot.HoltWinters() allows lty to be set.
 
     o	fisher.test() crashed due to corruption on some large
 	problems.  It also crashed on tables with total one. (PR#1662)
 
-    o   The substitution code for strptime (used e.g. on Windows)
+    o	The substitution code for strptime (used e.g. on Windows)
 	cached the month names and so did not recognise locale changes
 	during an R session, as used by get.hist.quote{tseries}.
 	Caching has been supressed.  (PR#1116)
 
-    o   Some functions used the non-existing error() function instead
-        of stop().
+    o	Some functions used the non-existing error() function instead
+	of stop().
+
+    o	vector("complex",n)  doesn't return random garbage anymore.
 
 
 		CHANGES IN R VERSION 1.5.0
