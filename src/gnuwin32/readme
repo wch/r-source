@@ -167,7 +167,7 @@ installed you can use
 Private libraries of packages can be used and can be specified by the
 environment variable RLIBS. (Separate directories by ";" in this
 version.)  They will not be linked to HTML help.  In more detail, to
-use packages installed in directory R:\libraries\gm set
+use packages installed in directory R:\libraries\gm, set
 
 RLIBS=R:\libraries\gm
 
@@ -210,35 +210,27 @@ Differences from Unix
 Building From Source
 ====================
 
+[Some further details, including how to debug, are given in the RW-FAQ.]
+
 First collect the tools that you need.
 
 Building on Windows
 -------------------
 
-EITHER
+We recommend that you use the mingw32 port of gcc-2.95 by Mumit Khan from
+ftp://ftp.xraylith.wisc.edu/pub/khan/gnu-win32/mingw32. You will also
+need suitable versions of make, sh, rm, sed, awk, mkdir, echo, cp and
+cat; we have packaged a set extracted from the cygwin distribution
+(http://sourceware.cygnus.com/cygwin and several mirrors). To avoid
+past problems on some versions of Windows95, we use the cygwin ld
+contained in that set, which must be before the mingw32 one in your
+path. (We have no way of knowing if this is still necessary.)
 
-The cygwin-B20.x set of tools available from
-http://sourceware.cygnus.com/cygwin and several mirrors, the Fortran
-additions ecgs-1.1-f77.tar.gz from that page or directly from
-http://www.xraylith.wisc.edu/~khan/software/gnu-win32/ and the Fortran
-library libg2c.mingw32.a.bz2 from CRAN/bin/windows/windows-NT/base/etc.
-You can also use the gcc-2.95 or egcs-1.1.2 compilers upgrade from
-Mumit Khan's site.
-
-Do remember to set MAKE_MODE to UNIX.
-
-OR
-
-The mingw32 port of gcc-2.95 or egcs-1.1.2  from
-ftp://ftp.xraylith.wisc.edu/pub/khan/gnu-win32/mingw32, the
-ld.exe and cygwin1.dll from the B20 set in your path ahead of the
-mingw32 binaries (if you don't want to download all the B20 distribution,
-you can find the two files in
-CRAN/bin/windows/windows-NT/base/etc/ld.cygwin.zip).
-
-
-Suitable versions of rm, sed, awk, mkdir, echo, cp and cat, for example
-a cygwin set.
+It is also possible to use earlier mingw32 compilers or cygwin-b20.1
+with the --no-cygwin flag, but we suggest you do so only if you have a
+working setup from building earlier versions of R.  We have also
+successfully used the variant of mingw32 that uses the MSVCRT run-time 
+system (under gcc-2.95 but not earlier versions).
 
 perl5, available via http://www.perl.com/CPAN/ports.
 
@@ -247,8 +239,10 @@ groff, available at http://www.itribe.net/virtunix/groff-1.10nt.zip.
 All of these need to be installed and in your path, and the
 appropriate environment variables set.
 
-You also need: the R source (R-0.65.0.tgz), and to build the installer,
-unzip5.40.zip from any Info-Zip mirror.
+You also need: the R source (R-0.65.0.tgz), and to build the
+installer, unzip5.40.zip from any Info-Zip mirror.  Do remember to set
+MAKE_MODE to UNIX.
+
 
 Then: untar R-0.65.0.tgz somewhere,
 
@@ -265,10 +259,10 @@ distribution, nor are the sources (it is the standard Info-Zip unzip
 5.40, built with MSVC++4.2). You will need to copy it from a binary
 distribution.
 
-Note 2: we are aware that because of limitations in line length or in the
-shell used that the Makefiles do not work unchanged on all the possible
-combinations of tools, compilers and OSes.  We use the Cygwin make and
-shell under NT, and cross-building (see below).
+Note 2: we are aware that because of limitations in line length or in
+the shell used that the Makefiles do not work unchanged on all the
+possible combinations of tools, compilers and OSes.  We have tested
+the Cygwin make and shell under NT, and cross-building (see below).
 
 Note 3: building libR.a is highly disk intensive and can take several
 minutes even on a local disc. We have seen times from 30 secs to 20
@@ -279,8 +273,8 @@ You can test a build by `make check': expect some differences in the tests
 of print routines.
 
 
-Cross-building on Linux
------------------------
+Cross-building on i386 Linux
+----------------------------
 
 You will need i386-mingw32 cross-compilers installed: see
 
@@ -307,12 +301,7 @@ readme.packages.
 Feedback
 ========
 
-Please send comments and bug reports to
+Please send comments and bug reports to (preferably both of)
 
     Guido Masarotto <guido@hal.stat.unipd.it>
-
-and comments on the documentation and help system (but not its
-contents) to
-
     Brian Ripley <ripley@stats.ox.ac.uk>
-

@@ -10,6 +10,9 @@ becomes R_LIBS.)
 Saving a plot as postscript will produce a portrait plot irrespective
 of the setting of ps.options().
 
+Saving a plot as a metafile should be more robust on machines which
+report wrong information on the size of the screen.
+
 New flag --no-environ suppresses reading .Renviron and is implied by
 --vanilla.
 
@@ -21,17 +24,20 @@ More support for building R into other applications: see the examples
 in the front-ends directory of the source distribution.
 
 Internally interrupting by Esc or Ctrl-Break is handled by signals, so the
-`User Break' response will no longer appear.
+`User Break' response will no longer appear, but in rterm ^C will be
+echoed.
 
 There is limited support for `tilde-expansion': file paths
 ~/rest will be expanded to ${HOME}/rest if HOME is set, or to
 ${HOMEDIR}${HOMEPATH}/rest if those vars are set.
 
-Saving a plot as a metafile should be more robust on machines which
-report wrong information on the size of the screen.
-
 Using rterm either interactively or with --ess will be more responsive and
-use much less CPU time when waiting for input.
+use much less CPU time when waiting for input.  Interruptions by Ctrl-Break
+or (under --ess, for use by ESS) Ctrl-C should happen immediately and be 
+handled correctly.
+
+The installer can now install correctly in a top-level directory (e.g.
+C:\).
 
 
 rw0642

@@ -3,38 +3,26 @@ Building from a source-code library under Windows
 
 First collect the tools that you need.
 
-EITHER
+We recommend that you use the mingw32 port of gcc-2.95 by Mumit Khan from
+ftp://ftp.xraylith.wisc.edu/pub/khan/gnu-win32/mingw32. You will also
+need suitable versions of make, sh, rm, sed, awk, mkdir, echo, cp and
+cat; we have packaged a set extracted from the cygwin distribution
+(http://sourceware.cygnus.com/cygwin and several mirrors). To avoid
+past problems on some versions of Windows95, we use the cygwin ld
+contained in that set, which must be before the mingw32 one in your
+path. (We have no way of knowing if this is still necessary.)
 
-The cygwin-B20.x set of tools available from
-http://sourceware.cygnus.com/cygwin and several mirrors, the Fortran
-additions ecgs-1.1-f77.tar.gz from that page or directly from
-http://www.xraylith.wisc.edu/~khan/software/gnu-win32/ and the Fortran
-library libg2c.mingw32.a.bz2 from
-CRAN/bin/windows/windows-NT/base/etc.  You can also use the gcc-2.95
-or egcs-1.1.2 compilers upgrade from Mumit Khan's site.
-
-Do remember to set MAKE_MODE to UNIX.
-
-OR
-
-The mingw32 port of gcc-2.95 (or egcs-1.1.2) from
-ftp://ftp.xraylith.wisc.edu/pub/khan/gnu-win32/mingw32, the
-ld.exe and cygwin1.dll from the B20 set in your path ahead of the
-mingw32 binaries (if you don't want to download all the B20 distribution,
-you can find the two files in
-CRAN/bin/windows/windows-NT/base/etc/ld.cygwin.zip).
-
-
-Suitable versions of rm, sed, mkdir, echo, cp and cat, for example
-a cygwin set.
+It is also possible to use earlier mingw32 compilers or cygwin-b20.1
+with the --no-cygwin flag, but we suggest you do so only if you have a
+working setup from building earlier versions of R.
 
 perl5, available via http://www.perl.com/CPAN/ports.
 
 groff, available at http://www.itribe.net/virtunix/groff-1.10nt.zip.
 
 All of these need to be installed and in your path, and the
-appropriate environment variables set.  Edit MkRules to set the
-appropriate paths as needed Then
+appropriate environment variables set.  Edit MkRules to set target and
+the appropriate paths as needed. Then
 
 	cd RHOME\src\gnuwin32
 
@@ -43,9 +31,9 @@ and run
 	make libR.a
 
 which may take several minutes. (We have seen times from 30 secs to 20
-minutes depending on processor speed, RAM, disk speed and mingw32 /
-cygwin. Using a network file system is likely to take longer.)  This
-only needs to be done once.
+minutes depending on processor speed, RAM, disk speed and
+compiler. Using a network file system is likely to take longer.)  This
+only needs to be done once for each R release.
 
 
 For each package you want to install, unpack it to a directory, say
@@ -80,20 +68,30 @@ The equivalent of `R CMD check mypkg' on Unix is
 This runs all the examples in the help files.
 
 
+Debugging
+=========
+
+See the RW-FAQ.
+
+
 Using Visual C++
 ================
 
-You may if you prefer use Visual C++ to make the DLLs. First build the
-import library R.lib by
+You may if you prefer use Visual C++ to make the DLLs (unless they use
+Fortan source!). First build the import library R.lib by
 
-	lib /def:R.exp
+	lib /def:R.exp /out:Rdll.lib
 
 Then you can compile the objects and build the DLL by
 
 	cl /MT /Ox /D "WIN32"  /c *.c
-	link /dll /out:mypkg.dll *.obj R.lib
+	link /dll /out:mypkg.dll *.obj Rdll.lib
 
 (at least under VC++ 4.2).  If the C sources use R header files you
 will need to arrange for these to be searched, perhaps by
 
-	/I ../../../include
+	/I ..\..\..\include
+
+If you build a debug version of the DLL in the development
+environment, you can debug the DLL code there just by setting the
+executable to be debugged to the full path to the R front-end.

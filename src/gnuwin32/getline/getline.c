@@ -26,7 +26,9 @@ static int      gl_tab();  /* forward reference needed for gl_tab_hook */
 #include <string.h>
 #include <ctype.h>
 #include <errno.h>
+#ifdef __unix__
 #include <signal.h>
+#endif
 
 extern int     isatty();	
 extern void    *malloc();
@@ -127,8 +129,8 @@ extern void     exit();
 #ifdef Win32
 /* guido masarotto (3/12/98)*/
 #include <windows.h>
-HANDLE Win32InputStream = NULL;
-DWORD OldWin32Mode;
+static HANDLE Win32InputStream = NULL;
+static DWORD OldWin32Mode;
 #endif
 
 #ifdef __unix__
@@ -233,7 +235,7 @@ gl_char_init()			/* turn off input echo */
    if (!Win32InputStream)  
        Win32InputStream = GetStdHandle(STD_INPUT_HANDLE);
 /*   GetConsoleMode(Win32InputStream,&OldWin32Mode);*/
-   SetConsoleMode(Win32InputStream,0);
+   SetConsoleMode(Win32InputStream, 0);
 #endif      
    
 }
@@ -340,72 +342,72 @@ gl_getc()
 /* guido masarotto (3/12/98)
  * get Ansi char code from a Win32 console
 */
-{DWORD a;
- INPUT_RECORD r;
- DWORD st;
- WORD vk;
- int bbb=0,ddd;
- c = 0; 
- while (!c) {
-   a = 0;
+{   DWORD a;
+    INPUT_RECORD r;
+    DWORD st;
+    WORD vk;
+    int bbb = 0, ddd;
+    c = 0; 
+    while (!c) {
+	a = 0;
 /*   while(!a) {
-      PeekConsoleInput(Win32InputStream,&r,1,&a); 
-      if (gl_events_hook) 
-             gl_events_hook();
-	     }*/
-   ReadConsoleInput(Win32InputStream,&r,1,&a);
-   if (!(r.EventType==KEY_EVENT)) break;
-   if (r.Event.KeyEvent.bKeyDown) {
-     st =   r.Event.KeyEvent.dwControlKeyState;
-     vk = r.Event.KeyEvent.wVirtualKeyCode;
-     if (st>CAPSLOCK_ON)
-        switch(vk) {
-	   case VK_LEFT: c=2 ;break;
-	   case VK_RIGHT: c=6;break;
-	   case VK_HOME:  c='\001';break;
-	   case VK_END: c='\005';break;
+     PeekConsoleInput(Win32InputStream, &r, 1, &a); 
+     if (gl_events_hook) 
+     gl_events_hook();
+     }*/
+	ReadConsoleInput(Win32InputStream, &r, 1, &a);
+	if (!(r.EventType == KEY_EVENT)) break;
+	if (r.Event.KeyEvent.bKeyDown) {
+	    st = r.Event.KeyEvent.dwControlKeyState;
+	    vk = r.Event.KeyEvent.wVirtualKeyCode;
+	    if (st > CAPSLOCK_ON)
+		switch(vk) {
+		case VK_LEFT: c=2 ;break;
+		case VK_RIGHT: c=6;break;
+		case VK_HOME:  c='\001';break;
+		case VK_END: c='\005';break;
+		}
+	    else 
+		ddd = r.Event.KeyEvent.uChar.AsciiChar;
 	}
-     else 
-	ddd = r.Event.KeyEvent.uChar.AsciiChar;
-   }
-   else { 
-     st =   r.Event.KeyEvent.dwControlKeyState;
-     vk = r.Event.KeyEvent.wVirtualKeyCode;
-     if (st>CAPSLOCK_ON)
-        switch(vk) {
-	   case VK_UP:  c=16;break;
-	   case VK_DOWN: c=14;break;		
-	   case VK_DELETE:  c='\004';break;
-     }
-     if (st==LEFT_ALT_PRESSED+NUMLOCK_ON) {
-      int n;
-      switch (vk) {
-       case VK_INSERT: n=0; break;
-       case VK_END: n=1; break;
-       case VK_DOWN: n=2; break;
-       case VK_NEXT: n=3;break;
-       case VK_LEFT: n=4; break;
-       case VK_CLEAR:  n=5; break;
-       case VK_RIGHT: n=6; break;
-       case VK_HOME: n=7; break;
-       case VK_UP: n=8; break;
-       case VK_PRIOR: n=9; break;	 
-       default: n=-1;
-      }
-      if (n>=0) bbb = 10*bbb+n;
-     }
-     if (vk==VK_MENU) { 
-	c = (bbb<256)&&(bbb>0) ? bbb : 0;
-	bbb = 0;
-     }
-     if ((c==0) && (st!=LEFT_ALT_PRESSED) &&
-	 (st!=LEFT_ALT_PRESSED) && r.Event.KeyEvent.uChar.AsciiChar) 
-	c = (!ddd) ? r.Event.KeyEvent.uChar.AsciiChar : ddd;
-   }
-   if ((c<-127) || (c>255)) c = 0; 
-   if (c<0) c=256+c;    
- }
-}
+	else { 
+	    st = r.Event.KeyEvent.dwControlKeyState;
+	    vk = r.Event.KeyEvent.wVirtualKeyCode;
+	    if (st > CAPSLOCK_ON)
+		switch(vk) {
+		case VK_UP:  c=16;break;
+		case VK_DOWN: c=14;break;		
+		case VK_DELETE:  c='\004';break;
+		}
+	    if (st == LEFT_ALT_PRESSED + NUMLOCK_ON) {
+		int n;
+		switch (vk) {
+		case VK_INSERT: n = 0; break;
+		case VK_END: n = 1; break;
+		case VK_DOWN: n = 2; break;
+		case VK_NEXT: n = 3;break;
+		case VK_LEFT: n = 4; break;
+		case VK_CLEAR:  n = 5; break;
+		case VK_RIGHT: n = 6; break;
+		case VK_HOME: n = 7; break;
+		case VK_UP: n = 8; break;
+		case VK_PRIOR: n = 9; break;	 
+		default: n = -1;
+		}
+		if (n >= 0) bbb = 10 * bbb + n;
+	    }
+	    if (vk == VK_MENU) { 
+		c = (bbb < 256) && (bbb > 0) ? bbb : 0;
+		bbb = 0;
+	    }
+	    if ((c == 0) && (st != LEFT_ALT_PRESSED) &&
+		(st != LEFT_ALT_PRESSED) && r.Event.KeyEvent.uChar.AsciiChar) 
+		c = (!ddd) ? r.Event.KeyEvent.uChar.AsciiChar : ddd;
+	}
+	if ((c < -127) || (c > 255)) c = 0; 
+	if (c < 0) c = 256 + c;    
+    }
+    }
 #endif      
    
     return c;

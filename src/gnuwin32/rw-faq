@@ -6,10 +6,12 @@ that version. The main R FAQ can be found at
 http://www.ci.tuwien.ac.at/~hornik/R/R-FAQ.html.
 
 There are two versions of R for Windows, but only is under active
-development, that described here. It is often called something like rw0642
-(although not officially). There is also information on the use of R for
-Windows in the Venables & Ripley `R Complements' at
-http://www.stats.ox.ac.uk/pub/MASS2.
+development, that described here. It is often called something like rw0650
+(although not officially). The information here applies only to
+recent versions (rw0642 or later).
+
+There is also information on the use of R for Windows in the Venables
+& Ripley `R Complements' at http://www.stats.ox.ac.uk/pub/MASS2.
 
   ------------------------------------------------------------------------
 
@@ -78,9 +80,9 @@ offline printing), and the installer, rwinst.exe.
 
 1.2) How do I install R for Windows?
 
-First, you need Windows 95 or 98 or NT4 (or possibly earlier): Windows
-3.11+win32s will not work. Your file system must allow long file names (as
-is likely except perhaps for some network-mounted systems).
+First, you need Windows 95 or 98 or NT4: Windows 3.11+win32s will not
+work. Your file system must allow long file names (as is likely except
+perhaps for some network-mounted systems).
 
 The simplest way is to run the installer (double-click on the icon for
 rwinst.exe and navigate its wizard-like pages).  Alternatively, choose
@@ -95,9 +97,9 @@ file tree. Right-click the shortcut, select Properties... and change
 the `Start in' field to your working directory.
 
 You may also want to add command-line arguments at the end of the
-Target field. We use --vsize 10M --nsize 300k. You can also set
+Target field. We use --vsize 10M --nsize 400k. You can also set
 environment variables at the end of the Target field, for
-example RLIBS=e:/R/library.
+example R_LIBS=e:/R/library.
 
 
 1.3) How do I run it?
@@ -139,7 +141,7 @@ path_to_R\bin\rterm.exe --vsize 10M --nsize 300k --no-restore --no-save < %1 > %
 1.7) Can I use rw06xx with ESS and emacs?
 
 Yes. Some time soon versions of ESS will come with support for this
-version of R (5.1.7 has prototype support). If yours does not, try
+version of R (5.1.8 has prototype support). If yours does not, try
 editing essd-r.el to have
 
       (inferior-ess-start-args . "--ess"))
@@ -173,13 +175,13 @@ so, installation is easy: just run `make pkg-pkgname'. To check the package
 2.2) I don't have permission to write to the rw06xx\library directory. Is
 this fatal?
 
-You can install packages anywhere and use the environment variable RLIBS to
+You can install packages anywhere and use the environment variable R_LIBS to
 point to the library location(s). You can also set the R variable `.lib.loc'
 in your .Rprofile or when running R.
 
 Suppose your packages are in installed in p:\mylibs. Then you can EITHER
 
-set RLIBS to p:\mylibs
+set R_LIBS to p:\mylibs
 
 OR put in the .Rprofile in the working directory or your home directory
 
@@ -195,14 +197,17 @@ launch Rgui / Rterm. Under Windows NT you can use the control
 panel. You can also set them on the command line, for example in the
 shortcut you could have
 
-      path_to_R\bin\rgui.exe --vsize 10M --nsize 300k RLIBS=e:/R/library
+      path_to_R\bin\rgui.exe --vsize 10M --nsize 300k R_LIBS=e:/R/library
 
-and from rw0641 you can set variables in a file .Renviron in your home
-directory, for example
+and you can set variables in a file .Renviron in your home directory,
+for example
 
-      RLIBS=e:/R/library
+      R_LIBS=e:/R/library
       R_VSIZE=10M
       R_NSIZE=400k
+
+The order of search is the command line then .Renviron then the inherited
+environment.
 
 You can also build packages anywhere, but that is much trickier: it is
 simpler to install a private copy of R to do the building.
@@ -232,8 +237,7 @@ help search system.
 The following conditions need to hold:
 
    * the package is installed in rw06xx\library.
-   * you are using rw0633 or later.
-   * the package contains a CONTENTS file in top-level directory (many of
+   * the package contains a CONTENTS file in top-level directory (a few of
      the binary distributions do not).
    * you updated the indices as described in the answer to Q2.2 after
      installing the package.
@@ -265,11 +269,11 @@ version of R?
 
 3.2) I hear about some nifty features: please tell me about them!
 
-You have read the README? There are file menus on the R console, pager and
-graphics windows. You can source and save from those menus, and copy the
-graphics to gif, postscript or metafile. As from rw0641 there are
-right-click menus giving shortcuts to menu items, and optionally toolbars
-with buttons giving shortcuts to frequent operations.
+You have read the README? There are file menus on the R console, pager
+and graphics windows. You can source and save from those menus, and
+copy the graphics to gif, postscript or metafile. There are
+right-click menus giving shortcuts to menu items, and optionally
+toolbars with buttons giving shortcuts to frequent operations.
 
 If you resize the R console the options(width=) is automatically set to the
 console width (unless disabled in the configuration file).
@@ -285,7 +289,7 @@ The graphics has a history mechanism. As the README says:
   There is only one graphics history shared by all the x11 devices.'
 
 The R console and graphics windows have configuration files stored in the
-RHOME\etc directory called Rconsole and (rw0633 and later) Rdevga; you can
+RHOME\etc directory called Rconsole and Rdevga; you can
 keep personal copies in your HOME directory. They contain comments which
 should suffice for you to edit them to your preferences. For more details
 see ?Rconsole.
@@ -303,15 +307,13 @@ Have you changed the working directory?: see Q4.2.
 
 Use the `File | Change Dir' menu item to select a new working
 directory: this defaults to the last directory you loaded a file
-from. From rw0641 this has a browse button. The workspace is saved in
-the working directory. You can also save a snapshot of the workspace
-from the `Save Image' menu item.
+from. The workspace is saved in the working directory. You can also
+save a snapshot of the workspace from the `Save Image' menu item.
 
 
 4.3) Can I load workspaces saved under Unix/GNU-Linux?
 
-Yes, on rw0633 or later. The converse (saving on Windows, loading on Unix)
-also works.
+Yes. The converse (saving on Windows, loading on Unix) also works.
 
 
 5) The R Console and Fonts
@@ -355,10 +357,10 @@ and so update the console.
 
 6.1) How can I compile R from source?
 
-Get the R sources. Suppose you want to compile R-0.64.2.
+Get the R sources. Suppose you want to compile R-0.50.0.
 
-      tar zxvf R-0.64.2.tgz
-      cd R-0.64.2
+      tar zxvf R-0.50.0.tgz
+      cd R-0.50.0
       cd src\gnuwin32
 
 Now read the README and set up all the tools needed. Then you can just use
@@ -422,4 +424,4 @@ http://sourceware.cygnus.com/cygwin) and provides a graphical user
 interface to gdb.
 
   ------------------------------------------------------------------------
-Last edited 30 June 1999 by Brian Ripley ripley@stats.ox.ac.uk
+Last edited 20 August 1999 by Brian Ripley ripley@stats.ox.ac.uk
