@@ -133,30 +133,21 @@ poisson <- function (link = "log")
 
 gaussian <- function ()
 {
-	stats <- make.link("identity")
-	## this is a function used in  glm();
-	## it holds everything personal to the family
-	variance <- function(mu) rep(1, length(mu))
-	dev.resids <- function(y, mu, wt) wt * ((y - mu)^2)
-	aic <- function(y, n, mu, wt, dev)
-		sum(wt)*(log(dev/sum(wt)*2*pi)+1)+2
-	initialize <- expression({
-		n <- rep(1, nobs)
-		mustart <- y
-	})
-	validmu <- function(mu) TRUE
-	structure(list(family = "gaussian",
-			link = "identity",
-			linkfun = stats$linkfun,
-			linkinv = stats$linkinv,
-			variance = variance,
-			dev.resids = dev.resids,
-			aic = aic,
-			mu.eta = stats$mu.eta,
-			initialize = initialize,
-			validmu = validmu,
-			valideta = stats$valideta),
-		  class = "family")
+ ## this is a function used in  glm();
+ ## it holds everything personal to the family
+ structure(c(make.link("identity"),
+             list(family = "gaussian",
+                  link = "identity",
+                  variance = function(mu) rep(1, length(mu)),
+                  dev.resids = function(y, mu, wt) wt * ((y - mu)^2),
+                  aic =	function(y, n, mu, wt, dev)
+	                        sum(wt)*(log(dev/sum(wt)*2*pi)+1)+2,
+                  initialize = expression({
+                  		n <- rep(1, nobs)
+				mustart <- y }),
+                  validmu = function(mu) TRUE
+                  )),
+           class = "family")
 }
 
 binomial <- function (link = "logit")
