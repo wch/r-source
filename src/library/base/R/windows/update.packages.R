@@ -10,6 +10,10 @@ install.packages <- function(pkgs, lib, CRAN=getOption("CRAN"),
     }
     pkgnames <- basename(pkgs)
     pkgnames <- sub("\\.zip$", "", pkgnames)
+    pkgnames <- sub("_[0-9.-]+$", "", pkgnames)
+    ## there is no guarantee we have got the package name right:
+    ## foo.zip might contain package bar or Foo or FOO or ....
+    ## but we can't tell without trying to unpack it.
     inuse <- search()
     inuse <- sub("^package:", "", inuse[grep("^package:", inuse)])
     inuse <- pkgnames %in% inuse
