@@ -17,6 +17,7 @@
 
 use File::Basename;
 use Getopt::Long;
+use R::Rd;
 use R::Rdtools;
 use R::Utils;
 
@@ -64,42 +65,25 @@ if($out) {
     $outfile = STDOUT;
 }
 
-my $filespec;
-if($OSdir eq "unix") {$filespec = "*.[Rr]d"; } else {$filespec = "*.Rd"; }
-while(glob file_path($ARGV[0], "man", $filespec)) { &do_one; }
-if(-d  &file_path($ARGV[0], "man", $OSdir)) {
-    while(glob file_path($ARGV[0], "man",  $OSdir, $filespec)){ &do_one; }
+my $mandir = &file_path($ARGV[0], "man");
+my @Rdfiles = &list_files_with_exts($mandir, "[Rr]d");
+$mandir = &file_path($mandir, $OSdir);
+if(-d $mandir) {
+    @Rdfiles = (@Rdfiles, &list_files_with_exts($mandir, "[Rr]d"));
 }
 
-sub do_one {
-    my $file = basename($_, (".Rd", ".rd"));
-    my ($text, $rdname, $rdtitle, @aliases, @keywords);
+foreach my $rdfile (@Rdfiles) {
+    my $file = basename($rdfile, (".Rd", ".rd"));
+    my $rdinfo = R::Rd->info($rdfile, $OSdir);
+    print $outfile "Entry: " . $rdinfo->{"name"} . "\n";
+    print $outfile "Aliases: " .
+	join(" ", @{$rdinfo->{"aliases"}}) . "\n";
+    print $outfile "Keywords: " .
+	join(" ", @{$rdinfo->{"keywords"}}) . "\n";
+    print $outfile "Description: " . $rdinfo->{"title"} . "\n";
 
-    $text = &Rdpp($_, $OSdir);
-
-    $text =~ /\\name\{\s*([^\}]+)\s*\}/s;
-    $rdname = $1;
-    $rdname =~ s/\n/ /sg;
-
-    $text =~ /\\title\{\s*([^\}]+)\s*\}/s;
-    $rdtitle = $1;
-    $rdtitle =~ s/\n/ /sg;
-
-    while($text =~ s/\\alias\{\s*(.*)\s*\}//) {
-	my $alias = $1;
-	$alias =~ s/\\%/%/g;
-	push @aliases, $alias;
-    }
-
-    while($text =~ s/\\keyword\{\s*(.*)\s*\}//) {
-	my $keyword = $1;
-	$keyword =~ s/\\%/%/g;
-	push @keywords, $keyword;
-    }
-
-    print $outfile "Entry: $rdname\n";
-    print $outfile "Aliases: " . join(" ", @aliases) . "\n";
-    print $outfile "Keywords: " . join(" ", @keywords) . "\n";
-    print $outfile "Description: $rdtitle\n";
+    ## <FIXME>
+    ## This has extension `html' hard-wired.
     print $outfile "URL: ../../../library/$pkg/html/$file.html\n\n";
+    ## </FIXME>
 }
