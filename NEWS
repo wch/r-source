@@ -680,10 +680,14 @@ BUG FIXES
     o	Contrasts needed to be coerced to numeric (e.g. from integer)
 	inside model.matrix.  (PR#7695)
 
-    o   socketSelect() did not check for buffered input.
+    o	socketSelect() did not check for buffered input.
 
-    o   Reads on a non-blocking socket with no available data was
-        not handled properly and could result in a segfault.
+    o	Reads on a non-blocking socket with no available data was
+	not handled properly and could result in a segfault.
+
+    o	The "aovlist" method for se.contrast() failed in some very
+	simple cases that were effectively not multistratum designs,
+	e.g. only one treatment occurring in only one stratum.
 
 
 

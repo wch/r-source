@@ -37,11 +37,14 @@ se.contrast(object, \dots)
   In multistratum models, the contrasts can appear in more than one
   stratum; the contrast and standard error are computed in the lowest
   stratum and adjusted for efficiencies and comparisons between strata.
+  (See the comments in the note in the help for \code{\link{aov}} about
+  using orthogonal contrasts: using treatment \sQuote{contrasts} may
+  result in an apparent loss of efficiency.)
 
   Suitable matrices for use with \code{coef} can be found by
   calling \code{\link{contrasts}} and indexing the columns by a factor.
 }
- \value{
+\value{
   A vector giving the standard errors for each contrast.
 }
 
@@ -59,7 +62,8 @@ yield <- c(49.5,62.8,46.8,57.0,59.8,58.5,55.5,56.0,62.8,55.8,69.5,
 
 npk <- data.frame(block = gl(6,4), N = factor(N), P = factor(P),
                   K = factor(K), yield = yield)
-options(contrasts=c("contr.treatment", "contr.poly"))
+## Set proper contrasts.
+options(contrasts=c("contr.helmert", "contr.poly"))
 npk.aov1 <- aov(yield ~ block + N + K, npk)
 se.contrast(npk.aov1, list(N=="0", N=="1"), data=npk)
 # or via a matrix
