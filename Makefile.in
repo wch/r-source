@@ -174,17 +174,17 @@ install-aqua: aqualaunch
 install-Rframework:
 	@(cd $(top_builddir) && \
 	$(MAKE) install \
-	rhome=/Library/Frameworks/R.framework/Versions/$(VERSION)/Resources \
-	mandir=/Library/Frameworks/R.framework/Versions/$(VERSION)/Resources \
-	bindir=/Library/Frameworks/R.framework/Versions/$(VERSION)/Resources )
+	rhome="${Rframework_path}/Library/Frameworks/R.framework/Versions/$(VERSION)/Resources" \
+	mandir="${Rframework_path}/R.framework/Versions/$(VERSION)/Resources" \
+	bindir="${Rframework_path}/R.framework/Versions/$(VERSION)/Resources" )
 	@(cd $(top_builddir)/src/modules/aqua && \
-	cp Info.plist /Library/Frameworks/R.framework/Versions/$(VERSION)/Resources)
-	@(cd /Library/Frameworks/R.framework/Versions/$(VERSION) && \
+	cp Info.plist "${Rframework_path}/R.framework/Versions/$(VERSION)/Resources")
+	@(cd "${Rframework_path}/R.framework/Versions/$(VERSION)" && \
 	ln -s Resources/include Headers && \
 	ln -s Resources/bin/libR.dylib R)
-	@(cd /Library/Frameworks/R.framework/Versions && \
+	@(cd "${Rframework_path}/R.framework/Versions" && \
 	ln -f -s $(VERSION) Current)
-	@(cd /Library/Frameworks/R.framework  && \
+	@(cd "${Rframework_path}/R.framework"  && \
 	ln -f -s Versions/Current/Headers Headers&& \
 	ln -f -s Versions/Current/R R && \
 	ln -f -s Versions/Current/Resources Resources)
