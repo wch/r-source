@@ -34,6 +34,10 @@ rm140
 * Finally fixed copy and paste of graphic windows contents
   and saving of them onto files. For some reason the previous
   algorithm did not copy text characters under MacOS X.
+* Fixed a bug that appear when trying to reading files or
+  directories on a different volume w.r.t. the current
+  working directory of R.
+    
 
 
 
