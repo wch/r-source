@@ -82,7 +82,7 @@ spec.pgram <-
     x <- na.action(as.ts(x))
     xfreq <- frequency(x)
     x <- as.matrix(x)
-    N <- nrow(x)
+    N <- N0 <- nrow(x)
     nser <- ncol(x)
     if(!is.null(spans)) # allow user to mistake order of args
         if(is.tskernel(spans)) kernel <- spans
@@ -98,6 +98,7 @@ spec.pgram <-
     else if (demean) {
         x <- sweep(x, 2, colMeans(x))
     }
+    ## apply taper:
     x <- spec.taper(x, taper)
     ## to correct for tapering: Bloomfield (1976, p. 194)
     ## Total taper is taper*2
@@ -116,8 +117,8 @@ spec.pgram <-
     pgram <- array(NA, dim = c(N, ncol(x), ncol(x)))
     for (i in 1:ncol(x)) {
         for (j in 1:ncol(x)) {
-            pgram[, i, j] <- xfft[, i] * Conj(xfft[, j])/(N*xfreq)
-        ## value at zero is invalid as mean has been removed, so interpolate
+            pgram[, i, j] <- xfft[, i] * Conj(xfft[, j])/(N0*xfreq)# N0= #{non-0-padded}
+        ## value at zero is invalid as mean has been removed, so interpolate:
             pgram[1, i, j] <- 0.5*(pgram[2, i, j] + pgram[N, i, j])
         }
     }

@@ -48,7 +48,7 @@ USER-VISIBLE CHANGES
 NEW FEATURES
 
     o	$, $<-, [[, [[<- can be applied to environments. Only character
-	arguments are allowed and no partial matching is done.  The
+	arguments are allowed and no partial matching is done.	The
 	semantics are basically that of get/assign to the environment with
 	inherits=FALSE.
 
@@ -129,8 +129,8 @@ NEW FEATURES
 	longer returns methods for non-visible generics (and
 	eliminates various mismatches).
 
-    o   A new function mget() will retrieve multiple values from an
-        environment.
+    o	A new function mget() will retrieve multiple values from an
+	environment.
 
     o	model.frame() methods, for example those for "lm" and "glm",
 	pass relevant parts of ... onto the default method.  (This has
@@ -158,7 +158,7 @@ NEW FEATURES
 	and returns scores only if the centring used is known.
 
     o	psigamma(x, deriv=0), a new function generalizes, digamma() etc.
-        All these (psigamma, digamma,trigamma,...) now also work for  x < 0.
+	All these (psigamma, digamma,trigamma,...) now also work for  x < 0.
 
     o	read.table() now allows embedded newlines in quoted fields. (PR#4555)
 
@@ -241,126 +241,126 @@ NEW FEATURES
 
     o	Added experimental support for conditionals in NAMESPACE files.
 
-    o   Added as.list.environment to coerce environments to lists
-        (efficiently).
+    o	Added as.list.environment to coerce environments to lists
+	(efficiently).
 
     o	New function addmargins() in the stats package to add marginal
 	summaries to tables, e.g. row and column totals.  (Based on a
 	contribution by Bendix Carstensen.)
 
-    o   Changes to package 'grid':
+    o	Changes to package 'grid':
 
-        - Renamed push/pop.viewport() to push/popViewport().
+	- Renamed push/pop.viewport() to push/popViewport().
 
-        - Added upViewport(), downViewport(), and seekViewport() to
-          allow creation and navigation of viewport tree
-          (rather than just viewport stack).
+	- Added upViewport(), downViewport(), and seekViewport() to
+	  allow creation and navigation of viewport tree
+	  (rather than just viewport stack).
 
-        - Added id and id.lengths arguments to grid.polygon() to allow
-          multiple polygons within single grid.polygon() call.
+	- Added id and id.lengths arguments to grid.polygon() to allow
+	  multiple polygons within single grid.polygon() call.
 
-        - Added vpList(), vpStack(), vpTree(), and current.vpTree()
-          to allow creation of viewport "bundles" that may be pushed
-          at once (lists are pushed in parallel, stacks in series).
+	- Added vpList(), vpStack(), vpTree(), and current.vpTree()
+	  to allow creation of viewport "bundles" that may be pushed
+	  at once (lists are pushed in parallel, stacks in series).
 
-          current.vpTree() returns the current viewport tree.
+	  current.vpTree() returns the current viewport tree.
 
-        - Added vpPath() to allow specification of viewport path
-          in downViewport() and seekViewport().
+	- Added vpPath() to allow specification of viewport path
+	  in downViewport() and seekViewport().
 
-          See ?viewports for an example of its use.
+	  See ?viewports for an example of its use.
 
-          NOTE: it is also possible to specify a path directly,
-          e.g., something like "vp1::vp2", but this is only
-          advised for interactive use (in case I decide to change the
-          separator :: in later versions).
+	  NOTE: it is also possible to specify a path directly,
+	  e.g., something like "vp1::vp2", but this is only
+	  advised for interactive use (in case I decide to change the
+	  separator :: in later versions).
 
-        - Added "just" argument to grid.layout() to allow justification
-          of layout relative to parent viewport *IF* the layout is not
-          the same size as the viewport.  There's an example in
-          help(grid.layout).
+	- Added "just" argument to grid.layout() to allow justification
+	  of layout relative to parent viewport *IF* the layout is not
+	  the same size as the viewport.  There's an example in
+	  help(grid.layout).
 
-        - Allowed the "vp" slot in a grob to be a viewport name or a
-          vpPath.  The interpretation of these new alternatives is to
-          call downViewport() with the name or vpPath before drawing the
-          grob and upViewport() the appropriate amount after drawing the
-          grob.  Here's an example of the possible usage:
+	- Allowed the "vp" slot in a grob to be a viewport name or a
+	  vpPath.  The interpretation of these new alternatives is to
+	  call downViewport() with the name or vpPath before drawing the
+	  grob and upViewport() the appropriate amount after drawing the
+	  grob.	 Here's an example of the possible usage:
 
-              pushViewport(viewport(w=.5, h=.5, name="A"))
-              grid.rect()
-              pushViewport(viewport(w=.5, h=.5, name="B"))
-              grid.rect(gp=gpar(col="grey"))
-              upViewport(2)
-              grid.rect(vp="A", gp=gpar(fill="red"))
-              grid.rect(vp=vpPath("A", "B"), gp=gpar(fill="blue"))
+	      pushViewport(viewport(w=.5, h=.5, name="A"))
+	      grid.rect()
+	      pushViewport(viewport(w=.5, h=.5, name="B"))
+	      grid.rect(gp=gpar(col="grey"))
+	      upViewport(2)
+	      grid.rect(vp="A", gp=gpar(fill="red"))
+	      grid.rect(vp=vpPath("A", "B"), gp=gpar(fill="blue"))
 
-        - Added engine.display.list() function.  This allows the user to
-          tell grid NOT to use the graphics engine display list and to handle
-          ALL redraws using its own display list (including redraws after
-          device resizes and copies).
+	- Added engine.display.list() function.	 This allows the user to
+	  tell grid NOT to use the graphics engine display list and to handle
+	  ALL redraws using its own display list (including redraws after
+	  device resizes and copies).
 
-          This provides a way to avoid some of the problems with resizing
-          a device when you have used grid.convert(), or the gridBase package,
-          or even base functions such as legend().
+	  This provides a way to avoid some of the problems with resizing
+	  a device when you have used grid.convert(), or the gridBase package,
+	  or even base functions such as legend().
 
-          There is a document discussing the use of display lists in grid
-          on the grid web site
-          (http://www.stat.auckland.ac.nz/~paul/grid/grid.html)
+	  There is a document discussing the use of display lists in grid
+	  on the grid web site
+	  (http://www.stat.auckland.ac.nz/~paul/grid/grid.html)
 
-        - Changed the implementation of grob objects.  They are no longer
-          implemented as external references.  They are now regular R objects
-          which copy-by-value.  This means that they can be saved/loaded
-          like normal R objects.  In order to retain some existing grob
-          behaviour, the following changes were necessary:
+	- Changed the implementation of grob objects.  They are no longer
+	  implemented as external references.  They are now regular R objects
+	  which copy-by-value.	This means that they can be saved/loaded
+	  like normal R objects.  In order to retain some existing grob
+	  behaviour, the following changes were necessary:
 
-          + grobs all now have a "name" slot.  The grob name is used to
-            uniquely identify a "drawn" grob (i.e., a grob on the display
-            list).
-          + grid.edit() and grid.pack() now take a grob name as the first
-            argument instead of a grob.  (Actually, they take a gPath -
-            see below)
-          + the "grobwidth" and "grobheight" units take either a grob
-            OR a grob name (actually a gPath - see below).  Only in the
-            latter case will the unit be updated if the grob "pointed to"
-            is modified.
+	  + grobs all now have a "name" slot.  The grob name is used to
+	    uniquely identify a "drawn" grob (i.e., a grob on the display
+	    list).
+	  + grid.edit() and grid.pack() now take a grob name as the first
+	    argument instead of a grob.	 (Actually, they take a gPath -
+	    see below)
+	  + the "grobwidth" and "grobheight" units take either a grob
+	    OR a grob name (actually a gPath - see below).  Only in the
+	    latter case will the unit be updated if the grob "pointed to"
+	    is modified.
 
-          In addition, the following features are now possible with grobs:
+	  In addition, the following features are now possible with grobs:
 
-          + grobs now save()/load() like any normal R object.
-          + many grid.*() functions now have a *Grob() counterpart.  The
-            grid.*() version is used for its side-effect of drawing
-            something or modifying something which has been drawn;  the
-            *Grob() version is used for its return value, which is a grob.
-            This makes it more convenient to just work with grob
-            objects without producing any graphical output
-            (by using the *Grob() functions).
-          + there is a gTree object (derived from grob), which is a grob
-            that can have children.  A gTree also has a "childrenvp" slot
-            which is a viewport which is pushed and then "up"ed before the
-            children are drawn;  this allows the children of a gTree to
-            place themselves somewhere in the viewports specified in the
-            childrenvp by having a vpPath in their vp slot.
-          + there is a gPath object, which is essentially a concatenation
-            of grob names.  This is used to specify the child of
-            (a child of ...) a gTree.
-          + there is a new API for creating/accessing/modifying grob objects:
-            grid.add(), grid.remove(), grid.edit(), grid.get() (and their
-            *Grob() counterparts can be used to add, remove, edit, or extract
-            a grob or the child of a gTree.  NOTE: the new grid.edit() API
-            is incompatible with the previous version.
+	  + grobs now save()/load() like any normal R object.
+	  + many grid.*() functions now have a *Grob() counterpart.  The
+	    grid.*() version is used for its side-effect of drawing
+	    something or modifying something which has been drawn;  the
+	    *Grob() version is used for its return value, which is a grob.
+	    This makes it more convenient to just work with grob
+	    objects without producing any graphical output
+	    (by using the *Grob() functions).
+	  + there is a gTree object (derived from grob), which is a grob
+	    that can have children.  A gTree also has a "childrenvp" slot
+	    which is a viewport which is pushed and then "up"ed before the
+	    children are drawn;	 this allows the children of a gTree to
+	    place themselves somewhere in the viewports specified in the
+	    childrenvp by having a vpPath in their vp slot.
+	  + there is a gPath object, which is essentially a concatenation
+	    of grob names.  This is used to specify the child of
+	    (a child of ...) a gTree.
+	  + there is a new API for creating/accessing/modifying grob objects:
+	    grid.add(), grid.remove(), grid.edit(), grid.get() (and their
+	    *Grob() counterparts can be used to add, remove, edit, or extract
+	    a grob or the child of a gTree.  NOTE: the new grid.edit() API
+	    is incompatible with the previous version.
 
-        - Added stringWidth(), stringHeight(), grobWidth(), and grobHeight()
-          convenience functions (they produce "strwidth", "strheight",
-          "grobwidth", and "grobheight" unit objects, respectively).
+	- Added stringWidth(), stringHeight(), grobWidth(), and grobHeight()
+	  convenience functions (they produce "strwidth", "strheight",
+	  "grobwidth", and "grobheight" unit objects, respectively).
 
-        - Allowed viewports to turn off clipping altogether.
-          Possible settings for viewport clip arg are now:
+	- Allowed viewports to turn off clipping altogether.
+	  Possible settings for viewport clip arg are now:
 
-            "on"      = clip to the viewport (was TRUE)
-            "inherit" = clip to whatever parent says (was FALSE)
-            "off"     = turn off clipping
+	    "on"      = clip to the viewport (was TRUE)
+	    "inherit" = clip to whatever parent says (was FALSE)
+	    "off"     = turn off clipping
 
-          Still accept logical values (and NA maps to "off")
+	  Still accept logical values (and NA maps to "off")
 
 
 UTILITIES
@@ -646,6 +646,10 @@ BUG FIXES
     o	stem() was running into integer overflows with nearly-constant
 	inputs, and scaling badly for constant ones.  (Partly PR#6645)
 
+    o	spec.pgram(x, ..., pad, fast, ...) computed the periodogram with a
+	bias (downward) whenever 'pad > 0' (non-default) or 'fast = TRUE'
+	(default) and  nextn(n) > n  where n = length(x).
+
 
 
 
@@ -691,9 +695,9 @@ NEW FEATURES
     o	heatmap() allows Rowv/Colv = NA, suppressing the corresponding
 	dendrogram.
 
-    o   An "antifeature": Tcl 8.0 is now officially unsupported. In 1.8.0
+    o	An "antifeature": Tcl 8.0 is now officially unsupported. In 1.8.0
 	it just didn't work. This very old version lacks several features
-        that are needed for the new version of the tcltk package. R will
+	that are needed for the new version of the tcltk package. R will
 	still build the tcltk package against Tcl 8.0 but the resulting
 	package will not load.
 
@@ -725,7 +729,7 @@ BUG FIXES
 	row i and col j.
 
     o	Even more user errors in recursive indexing of lists are now
-	caught.  (PR#4486)
+	caught.	 (PR#4486)
 
     o	cor(<matrix>, use = "pairwise") gave wrong result in 1.8.0 (only).
 	(PR#4646)
@@ -733,7 +737,7 @@ BUG FIXES
     o	merge.data.frame() could give incorrect names when one of the
 	arguments had only one column.	(PR#4299)
 
-    o   Subsetting a one-dimensional array dropped dimensions even when
+    o	Subsetting a one-dimensional array dropped dimensions even when
 	they were not of length one.  (Related to PR#4110)
 
     o	The plot() method for `ecdf' objects, plot.ecdf(), now allows to
@@ -766,22 +770,22 @@ BUG FIXES
 	documented.  The call to texi2dvi is wrapped in the new
 	function texi2dvi() which also works on Windows.
 
-    o   hclust() was sometimes not finding the correct inter-cluster
+    o	hclust() was sometimes not finding the correct inter-cluster
 	distances with non-monotone methods.  (PR#4195)
 
-    o   plot.hclust() now tolerates mode changes on dumped objects. (PR#4361)
+    o	plot.hclust() now tolerates mode changes on dumped objects. (PR#4361)
 
-    o   prompt() no longer insists files are in the current directory.
+    o	prompt() no longer insists files are in the current directory.
 	(PR#4978)
 
-    o   filter() did not use init in reverse order as documented. (PR#5017)
+    o	filter() did not use init in reverse order as documented. (PR#5017)
 
     o	contrasts<-() and model.matrix() now have sanity checks that
 	factors having at least 2 levels (or one level and a contrast
 	matrix): model.matrix() gave nonsensical results for 0-level
 	factors.
 
-    o   writeChar() could segfault if more characters were requested
+    o	writeChar() could segfault if more characters were requested
 	than exist. (PR#5090)
 
     o	round() and signif() dropped attributes with 0-length inputs,
@@ -1125,7 +1129,7 @@ STANDARD PACKAGES
 	approximate confidence limits based upon it.  A well-behaved
 	likelihood function is assumed, and it is the responsibility
 	of the user to gauge the applicability of the asymptotic
-	theory.  This package is based on S4 methods and classes.
+	theory.	 This package is based on S4 methods and classes.
 
     o	Changes in package 'mva':
 
@@ -1380,7 +1384,7 @@ BUG FIXES
     o	ARMAacf() sometimes gave too many results or failed if `lag.max'
 	was used.
 
-    o   termplot() with a subset of terms now gives correct partial residuals
+    o	termplot() with a subset of terms now gives correct partial residuals
 
     o	Functions anova.glm(), contrasts(), getS3method(), glm() and
 	make.tables() were applying get() without asking for a
@@ -2379,7 +2383,7 @@ C-LEVEL FACILITIES
 
 BUG FIXES
 
-    o   The redefinition of the internal do_dataentry by both the aqua and X11
+    o	The redefinition of the internal do_dataentry by both the aqua and X11
 	modules, casued a bus error when launching R without the --gui=aqua option
 	under X11 using a version of R built to use the aqua module. This has
 	now been fixed. (PR#6438)
