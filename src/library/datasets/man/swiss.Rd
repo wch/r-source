@@ -59,8 +59,9 @@
   Wadsworth \& Brooks/Cole.
 }
 \note{
-  Files for all 182 districts in 1888 and other years are available at
-  \url{http://opr.princeton.edu/archive/eufert/switz.html}.
+  Files for all 182 districts in 1888 and other years have been available at
+  \url{http://opr.princeton.edu/archive/eufert/switz.html} or
+  \url{http://opr.princeton.edu/archive/pefp/switz.asp}.
 
   They state that variables \code{Examination} and \code{Education}
   are averages for 1887, 1888 and 1889.
