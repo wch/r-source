@@ -203,17 +203,21 @@ MethodsListSelect <-
       value <- mlist
     }
   }
-  ## end of assignment to value of updated methods list (or NULL)
-  if(!(is.null(fname) || is.null(value))) {
-    ## update the generic's methods in the metadata
-    fdef <- getFromMethodMetaData(fname)
-    if(is.function(fdef))
-      assign(".Methods", value, environment(fdef))
-    else
-      warning("MethodsListSelect called on a currently undefined generic (\"",
-              fname, "\"):  result will not be saved in the environment")
+  if(!is.null(fname)) {
+    ## top level
+    if(is(value, "EmptyMethodsList")) ## selection failed
+      value <- NULL
+    else {
+      ## update the generic's methods in the metadata
+      fdef <- getFromMethodMetaData(fname)
+      if(is.function(fdef))
+        assign(".Methods", value, environment(fdef))
+      else
+        warning("MethodsListSelect called on a currently undefined generic (\"",
+                fname, "\"):  result will not be saved in the environment")
     }
-    value
+  }
+  value
 }
 
 emptyMethodsList <-
