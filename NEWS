@@ -49,6 +49,10 @@ BUG FIXES
     o	The internal zip.unpack() could crash if more that 500 files
 	were to be extracted. (PR#2818)
 
+    o	The "r+" and "r+b" modes of opening file connections disallowed
+	writing.
+    
+
 
 		CHANGES IN R VERSION 1.7.0
 
