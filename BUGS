@@ -54,10 +54,6 @@ Date: Mon, 5 Mar 2001 15:01:49 +0100 (MET)
 
 Directory:  Documentation
 
-* PR# 919 *
-Subject: barplot documentation bug
-From: Rich Heiberger <rmh@surfer.sbm.temple.edu>
-Date: Sun, 22 Apr 2001 23:24:01 -0400 (EDT)
 * PR# 899 *
 Subject: documentation problems in str.Rd
 From: Kurt Hornik <Kurt.Hornik@ci.tuwien.ac.at>
@@ -144,6 +140,10 @@ Date: Tue, 27 Feb 2001 10:00:30 +0100 (MET)
 Subject: screen doesn't handle redrawing properly
 From: Thomas Vogels <tov@ece.cmu.edu>
 Date: 01 Feb 2001 14:20:52 -0500
+* PR# 916 *
+Subject:  par(mgp) bug 
+From: paul@stat.auckland.ac.nz
+Date: Fri, 20 Apr 2001 08:33:45 +1200 (NZST)
 * PR# 887 *
 Subject: axis(adj=anything) has no effect
 From: jhallman@frb.gov
@@ -152,15 +152,6 @@ Date: Wed, 28 Mar 2001 20:51:05 +0200 (MET DST)
 Subject:  axis(...,las=1) breaks postscript code in certain cases 
 From: maechler@stat.math.ethz.ch
 Date: Wed, 7 Mar 2001 18:08:58 +0100
-* PR# 916 *
-Subject:  par(mgp) bug 
-From: paul@stat.auckland.ac.nz
-Date: Fri, 20 Apr 2001 08:33:45 +1200 (NZST)
-* PR# 897 *
-Subject:  bug in contour() ? 
-From: kuensch@stat.math.ethz.ch
-Date: Fri, 6 Apr 2001 16:21:24 +0200
---infinite loop; fixed for 1.2.3
 
 Directory:  In-Out
 
@@ -201,10 +192,6 @@ Subject:  Segmentation fault in subscripting array of lists
 From: J.C.Rougier@durham.ac.uk
 Date: Tue, 10 Apr 2001 15:01:52 +0100 (BST)
 --The usage is incorrect, but should not segfault
-* PR# 877 *
-Subject: segmentation fault of unknown cause
-From: Martin Schlather <Martin.Schlather@uni-bayreuth.de>
-Date: Wed, 14 Mar 2001 17:45:25 +0100
 * PR# 505 *
 Subject: interrupted save 
 From: Thomas Lumley <thomas@biostat.washington.edu>
@@ -212,11 +199,7 @@ Date: Sat, 25 Mar 2000 12:16:50 -0800 (PST)
 
 Directory:  Misc
 
-* PR# 875 *
-Subject: Re: [R] Bug in qchisq?
-From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
-Date: 10 Mar 2001 02:26:11 +0100
---fixed for 1.2.3 
+none
 
 Directory:  Models
 
@@ -300,4 +283,7 @@ Date: Tue, 10 Apr 2001 17:50:44 +0200 (MET DST)
 
 Directory:  incoming
 
-none
+* PR# 921 *
+Subject:  Managed to confuse match.arg 
+From: J.C.Rougier@durham.ac.uk
+Date: Wed, 25 Apr 2001 12:22:54 +0100 (BST)
