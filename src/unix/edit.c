@@ -96,9 +96,10 @@ SEXP do_edit(SEXP call, SEXP op, SEXP args, SEXP rho)
 #else
 	x = parse(fp, 0);
 #endif
-	fclose(fp);
 	if (R_ParseError)
 		errorcall(call, "An error occurred on line %d\n use a command like\n x <- vi()\n to recover\n", R_ParseError);
+	else
+		fclose(fp);
 	ResetConsole();
 	x = eval(CAR(x), R_GlobalEnv);
 	if (TYPEOF(x) == CLOSXP && envir != R_NilValue)
