@@ -1,5 +1,7 @@
 \name{mosaicplot}
 \alias{mosaicplot}
+\alias{mosaicplot.default}
+\alias{mosaicplot.formula}
 \title{Mosaic Plots}
 \usage{
 mosaicplot(x, \dots)
