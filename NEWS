@@ -101,7 +101,7 @@ DOCUMENTATION
     o	Manual 'Writing R Extensions' has further details on writing
 	new front-ends for R using the new public header files.
 
-    o	There are no longer any restrictions on character in the
+    o	There are no longer any restrictions on characters in the
 	\name{} field of a .Rd file: in particular _ is supported.
 
 
@@ -166,6 +166,8 @@ BUG FIXES
 
 	- Fixed bug in grid.text() when "rot" argument has length 0.
           (reported by Emmanuel Paradis)
+
+
 
 
 	**************************************************
