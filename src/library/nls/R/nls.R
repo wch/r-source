@@ -1,4 +1,4 @@
-### $Id: nls.R,v 1.27 2003/11/23 07:07:33 ripley Exp $
+### $Id: nls.R,v 1.28 2003/11/23 07:36:56 ripley Exp $
 ###
 ###            Nonlinear least squares for R
 ###
@@ -216,15 +216,7 @@ nlsModel.plinear <- function( form, data, start ) {
            },
            predict = function(newdata = list(), qr = FALSE)
            {
-               Env <- new.env()
-               for (i in objects(envir = env)) {
-                   assign(i, get(i, envir = env), envir = Env)
-               }
-               newdata <- as.list(newdata)
-               for (i in names(newdata)) {
-                   assign(i, newdata[[i]], envir = Env)
-               }
-               getPred(eval(form[[3]], env = Env))
+               getPred(eval(form[[3]], as.list(newdata), env))
            })
     class(m) <- c("nlsModel.plinear", "nlsModel")
     m$conv()
@@ -374,15 +366,7 @@ nlsModel <- function( form, data, start ) {
            Rmat = function() qr.R( QR ),
            predict = function(newdata = list(), qr = FALSE)
            {
-               Env <- new.env()
-               for (i in objects(envir = env)) {
-                   assign(i, get(i, envir = env), envir = Env)
-               }
-               newdata <- as.list(newdata)
-               for (i in names(newdata)) {
-                   assign(i, newdata[[i]], envir = Env)
-               }
-               eval(form[[3]], env = Env)
+               eval(form[[3]], as.list(newdata), env)
            })
     class(m) <- "nlsModel"
     m
@@ -395,7 +379,7 @@ nls.control <- function( maxiter = 50, tol = 0.00001, minFactor = 1/1024 ) {
 nls <-
   function (formula, data = parent.frame(), start, control = nls.control(),
             algorithm = "default", trace = FALSE,
-            subset, weights, na.action)
+            subset, weights, na.action, model = FALSE)
 {
     mf <- match.call()             # for creating the model frame
     formula <- as.formula( formula )
@@ -439,10 +423,7 @@ nls <-
     mf$start <- mf$control <- mf$algorithm <- mf$trace <- NULL
     mf[[1]] <- as.name("model.frame")
     mf <- as.list(eval(mf, parent.frame()))
-    na.act <- attr(mf, "na.action")
-    if (missing(start)) {
-        start <- getInitial(formula, mf)
-    }
+    if (missing(start)) start <- getInitial(formula, mf)
     for(var in varNames[!varIndex])
         mf[[var]] <- eval(as.name(var), data)
 
@@ -454,12 +435,13 @@ nls <-
         control <- as.list(control)
         ctrl[names(control)] <- control
     }
-    nls.out <- list(m = .Call("nls_iter", m, ctrl, trace,
-                              PACKAGE = "nls"),
+    nls.out <- list(m = .Call("nls_iter", m, ctrl, trace, PACKAGE = "nls"),
                     data = substitute( data ), call = match.call())
     nls.out$call$control <- ctrl
     nls.out$call$trace <- trace
-    if(!is.null(na.act)) nls.out$na.action <- na.act
+    nls.out$na.action <- attr(mf, "na.action")
+    nls.out$dataClasses <- attr(attr(mf, "terms"), "dataClasses")
+    if(model) nls.out <- mf
     class(nls.out) <- "nls"
     nls.out
 }
@@ -557,19 +539,18 @@ predict.nls <-
            interval = c("none", "confidence", "prediction"), level = 0.95,
            ...)
 {
-    if (missing(newdata)) return(as.vector(fitted(object)))
+    if (missing(newdata))
+        return(as.vector(fitted(object)))
+    if(!is.null(cl <- object$dataClasses)) .checkMFClasses(cl, newdata)
     object$m$predict(newdata)
 }
 
 fitted.nls <- function(object, ...)
 {
     val <- as.vector(object$m$fitted())
-    if(!is.null(object$na.action))
-        val <- napredict(object$na.action, val)
+    if(!is.null(object$na.action)) val <- napredict(object$na.action, val)
     lab <- "Fitted values"
-    if (!is.null(aux <- attr(object, "units")$y)) {
-        lab <- paste(lab, aux)
-    }
+    if (!is.null(aux <- attr(object, "units")$y)) lab <- paste(lab, aux)
     attr(val, "label") <- lab
     val
 }
@@ -618,9 +599,7 @@ logLik.nls <- function(object, REML = FALSE, ...)
 }
 
 df.residual.nls <- function(object, ...)
-{
-    return(length(resid(object)) - length(coef(object)))
-}
+    length(resid(object)) - length(coef(object))
 
 deviance.nls <- function(object, ...) object$m$deviance()
 
@@ -633,9 +612,8 @@ vcov.nls <- function(object, ...)
 
 anova.nls <- function(object, ...)
 {
-    if(length(list(object, ...)) > 1) {
+    if(length(list(object, ...)) > 1)
 	return(anovalist.nls(object, ...))
-    }
     stop("Anova is only defined for sequences of nls objects")
 }
 

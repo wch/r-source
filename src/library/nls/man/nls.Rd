@@ -21,7 +21,7 @@
 \usage{
 nls(formula, data = parent.frame(), start, control = nls.control(),
     algorithm = "default", trace = FALSE, subset,
-    weights, na.action)
+    weights, na.action, model = FALSE)
 }
 \arguments{
  \item{formula}{a nonlinear model formula including variables and parameters}
@@ -48,6 +48,8 @@ nls(formula, data = parent.frame(), start, control = nls.control(),
      yet implemented}}
 \item{na.action}{a function which indicates what should happen
     when the data contain \code{NA}s.}
+\item{model}{logical.  If true, the model frame is returned as part of
+  the object.}
 }
 \details{
   \bold{Do not use \code{nls} on artificial "zero-residual" data.}
