@@ -63,12 +63,9 @@ show <- function(object)
               where = envir)
     setMethod("show", "MethodWithNext",
               function(object)  {
-                  cat("Method Definition (Class \"", class(object), "\"):\n\n", sep = "")
-                  show(object@.Data)
-                  mm <- rbind(.methodSignatureMatrix(object),
-                              NextMethod = object@nextMethod@defined)
-                  cat("\nSignatures:\n")
-                  print(mm)
+                  callNextMethod()
+                  cat("\nExcluded from nextMethod:\n")
+                  print(unlist(object@excluded))
               },
               where = envir)
     setMethod("show", "genericFunction",
