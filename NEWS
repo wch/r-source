@@ -797,7 +797,6 @@ BUG FIXES
 
 
 
-
 	**************************************************
 	*						 *
 	*	       2.0 SERIES NEWS			 *
@@ -1114,6 +1113,10 @@ BUG FIXES
     o	Function getGroupMembers(), part of the definition of S4
 	classes, had been promised for release 2.0, but slipped through.
 
+    o   toLatex(sessionInfo()) produced incorrect LaTeX on some
+        platforms due to special characters in the platform
+        identifier.
+	
 
 
 
