@@ -18,9 +18,10 @@ checkFF <- function(file, package, lib.loc = .lib.loc) {
                           fQuote(which.lib.loc)))
         }
         file <- file.path(which.lib.loc, package, "R", package)
+        ## </FIXME>
     }
     if(!file.exists(file))
-        stop("file", fQuote(file), "does not exist")
+        stop(paste("file", fQuote(file), "does not exist"))
     checkFFPackageArg <- function(e) {
         if(is.call(e) || is.expression(e)) {
             if((e[[1]] == as.name(".C")) ||
