@@ -19,7 +19,6 @@ provide(name)
 \alias{provide}
 \alias{require}
 \alias{R_LIBS}
-\alias{RLIBS}
 \alias{.Autoloaded}
 \alias{.First.lib}
 \alias{.Library}
@@ -110,8 +109,14 @@ provide(name)
   \code{.lib.loc} is a character vector with the locations of all
   library trees that \R should use.  It is initialized at startup from
   the environment variable \code{R_LIBS} (\code{RLIBS} as used by older
-  versions of \R is now deprecated), which should be a colon-separated
-  list of directories at which \R library trees are rooted, and
+  versions of \R is no longer accepted) (which should be a
+#ifdef unix
+  colon-separated
+#endif
+#ifdef windows
+  semicolon-separated
+#endif
+  list of directories at which \R library trees are rooted) followed by
   \code{.Library}.
 }
 \value{
@@ -125,10 +130,10 @@ provide(name)
 \seealso{
     \code{\link{attach}}, \code{\link{detach}}, \code{\link{search}},
     \code{\link{objects}}, \code{\link{autoload}},
-    \code{\link{library.dynam}};
-    \code{\link{data}};
+    \code{\link{library.dynam}},
+    \code{\link{data}}, \code{\link{install.packages}}.
 #ifdef unix
-    \code{\link{INSTALL}}, \code{\link{REMOVE}}
+    \code{\link{INSTALL}}, \code{\link{REMOVE}} 
 #endif
 }
 \examples{
