@@ -1084,11 +1084,11 @@ listbox newdroplist(char *list[], rect r, scrollfn fn)
 		r.height += h;
 
 	obj = newchildwin("combobox", NULL,
-				CBS_DROPDOWNLIST |
-				//CBS_DISABLENOSCROLL |
-				WS_BORDER |
-				WS_VSCROLL | WS_HSCROLL,
-				r, NULL);
+			  CBS_DROPDOWNLIST |
+			  //CBS_DISABLENOSCROLL |
+			  WS_BORDER |
+			  WS_VSCROLL | WS_HSCROLL,
+			  r, NULL);
 	if (! obj)
 		return obj;
 	obj->kind = DroplistObject;
@@ -1111,11 +1111,11 @@ listbox newdropfield(char *list[], rect r, scrollfn fn)
 		r.height += h;
 
 	obj = newchildwin("combobox", NULL,
-				CBS_DROPDOWN |
-				CBS_DISABLENOSCROLL |
-				WS_BORDER |
-				WS_VSCROLL | WS_HSCROLL,
-				r, NULL);
+			  CBS_DROPDOWN |
+			  // CBS_DISABLENOSCROLL |
+			  WS_BORDER |
+			  WS_VSCROLL | WS_HSCROLL,
+			  r, NULL);
 	if (! obj)
 		return obj;
 	obj->kind = DroplistObject;
