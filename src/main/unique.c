@@ -281,15 +281,17 @@ SEXP do_duplicated(SEXP call, SEXP op, SEXP args, SEXP env)
 
     checkArity(op, args);
     x = CAR(args);
-    /* handle zero length vectors */
-    if ((n = LENGTH(x)) == 0)
+    /* handle zero length vectors, and NULL */
+    if ((n = length(x)) == 0)
 	return(allocVector(PRIMVAL(op) != 1 ? LGLSXP : TYPEOF(x), 0));
 
     if (PRIMVAL(op) == 2) return duplicated_list(x);
 
-    if (!(isVectorAtomic(x)))
+    if (!(isVectorAtomic(x))) {
+	PrintValue(x);
 	error("%s() applies only to atomic vectors",
 	      (PRIMVAL(op) == 0 ? "duplicated" : "unique"));
+    }
 
     dup = duplicated(x);
     if (PRIMVAL(op) == 0) /* "duplicated()" : */
