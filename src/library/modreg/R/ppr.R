@@ -13,7 +13,6 @@ function(formula, data, weights, subset,
     m$contrasts <- m$... <- NULL
     m[[1]] <- as.name("model.frame")
     m <- eval(m, parent.frame())
-    na.act <- attr(m, "na.action")
     Terms <- attr(m, "terms")
     attr(Terms, "intercept") <- 0
     X <- model.matrix(Terms, m, contrasts)
@@ -21,11 +20,13 @@ function(formula, data, weights, subset,
     w <- model.weights(m)
     if(length(w) == 0) w <- rep(1, nrow(X))
     fit <- ppr.default(X, Y, w, ...)
-    if(!is.null(na.act)) fit$na.action <- na.act
+    fit$na.action <- attr(m, "na.action")
     fit$terms <- Terms
     ## fix up call to refer to the generic, but leave arg name as `formula'
     call[[1]] <- as.name("ppr")
     fit$call <- call
+    fit$contrasts <- attr(X, "contrasts")
+    fit$xlevels <- .getXlevels(Terms, m)
     if(model) fit$model <- m
     structure(fit, class=c("ppr.form", "ppr"))
 }
@@ -43,6 +44,8 @@ function(x, y, weights=rep(1,n), ww=rep(1,q), nterms, max.terms=nterms,
     mu <- nterms; ml <- max.terms
     x <- as.matrix(x)
     y <- as.matrix(y)
+    if(!is.numeric(x) || !is.numeric(y))
+        stop("ppr applies only to numerical variables")
     n <- nrow(x)
     if(nrow(y) != n) stop("mismatched x and y")
     p <- ncol(x)
@@ -176,7 +179,8 @@ predict.ppr <- function(object, newdata, ...)
         rn <- row.names(newdata)
 # work hard to predict NA for rows with missing data
         Terms <- delete.response(object$terms)
-        m <- model.frame(Terms, newdata, na.action = na.omit)
+        m <- model.frame(Terms, newdata, na.action = na.omit,
+                         xlev = object$xlevels)
         if(!is.null(cl <- attr(Terms, "dataClasses"))) .checkMFClasses(cl, m)
         keep <- match(row.names(m), rn)
         x <- model.matrix(Terms, m, contrasts = object$contrasts)

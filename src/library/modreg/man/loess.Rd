@@ -14,7 +14,7 @@ loess(formula, data, weights, subset, na.action, model = FALSE,
 %\alias{summary.loess}
 %\alias{print.summary.loess}
 \arguments{
-  \item{formula}{a formula specifying the response and one to four
+  \item{formula}{a formula specifying the numeric response and one to four
     numeric predictors (best specified via an interaction, but can also
     be specified additively).}
   \item{data}{an optional data frame within which to look first for the

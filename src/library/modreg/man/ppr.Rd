@@ -1,6 +1,6 @@
 % file modreg/man/ppr.Rd
 % copyright (C) 1995-8 B. D. Ripley
-% copyright (C) 2000   The R Core Development Team
+% copyright (C) 2000-3   The R Core Development Team
 %
 \name{ppr}
 \alias{ppr}
@@ -27,15 +27,15 @@ ppr(x, \dots)
 }
 \arguments{
   \item{formula}{
-    a formula specifying one or more response variables and the
+    a formula specifying one or more numeric response variables and the
     explanatory variables.
   }
   \item{x}{
-    matrix of explanatory variables.  Rows represent observations, and
+    numeric matrix of explanatory variables.  Rows represent observations, and
     columns represent variables.  Missing values are not accepted.
   }
   \item{y}{
-    matrix of response variables.  Rows represent observations, and
+    numeric matrix of response variables.  Rows represent observations, and
     columns represent variables.  Missing values are not accepted.
   }
   \item{nterms}{number of terms to include in the final model.}

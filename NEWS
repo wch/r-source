@@ -63,7 +63,10 @@ NEW FEATURES
 	returned as part of the fitted object.
 
     o	glm() arguments `etastart' and `mustart' are now evaluated in
-	the same way as `subset' and `weights'.
+
+    o	factanal(), loess() and princomp() now explicitly check for
+	numerical inputs; they might have silently coded factor
+	variables in formulae.
 
 
 UTILITIES
@@ -126,6 +129,9 @@ BUG FIXES
     o	The defaults data=list() in lm() and glm() could never be
 	used and have been removed.  glm had na.action=na.fail, again
 	never used.
+
+    o	ppr() now fully supports categorical explanatory variables,
+	even for prediction.
 
 
 
