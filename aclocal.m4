@@ -549,37 +549,6 @@ EOF
   else
     FLIBS="${FLIBS} ${LIBM}"
   fi])
-AC_DEFUN([R_FUNC_CONNECT],
-  AC_CACHE_VAL(r_cv_func_connect,
-    [ r_cv_func_connect=no
-      AC_CHECK_FUNC(connect)
-      if test "${ac_cv_func_connect}" = no; then
-        AC_CHECK_LIB(socket, connect)
-      fi
-      if test "${ac_cv_func_connect}" = yes \
-          || test "${ac_cv_lib_socket_connect}" = yes; then
-        r_cv_func_connect=yes
-      fi
-    ]))
-AC_DEFUN([R_FUNC_GETHOSTBYNAME],
-  AC_CACHE_VAL(r_cv_func_gethostbyname,
-    [ r_cv_func_gethostbyname=no
-      AC_CHECK_FUNC(gethostbyname)
-      if test "${ac_cv_func_gethostbyname}" = no; then
-        AC_CHECK_LIB(nsl, gethostbyname)
-        ## A. Gebhardt <albrecht.gebhardt@uni-klu.ac.at> says that on
-        ## Unixware 7 we need -lsocket; -lnsl in addition is ok but not
-        ## needed.
-        if test "${ac_cv_lib_nsl_gethostbyname}" = no; then
-          AC_CHECK_LIB(socket, gethostbyname)
-        fi
-      fi
-      if test "${ac_cv_func_gethostbyname}" = yes \
-          || test "${ac_cv_lib_nsl_gethostbyname}" = yes \
-          || test "${ac_cv_lib_socket_gethostbyname}" = yes; then
-        r_cv_func_gethostbyname=yes
-      fi
-    ]))
 AC_DEFUN([R_FUNC___SETFPUCW],
   [ AC_CHECK_FUNC(__setfpucw,
     [ AC_CACHE_CHECK([whether __setfpucw is needed],
@@ -822,8 +791,8 @@ AC_CACHE_CHECK([for BSD networking],
   [ if test "${ac_cv_header_netdb_h}" = yes \
         && test "${ac_cv_header_netinet_in_h}" = yes \
         && test "${ac_cv_header_sys_socket_h}" = yes \
-        && test "${r_cv_func_connect}" = yes \
-        && test "${r_cv_func_gethostbyname}" = yes; then
+        && test "${ac_cv_search_connect}" != no \
+        && test "${ac_cv_search_gethostbyname}" !=  no; then
       r_cv_bsd_networking=yes
     else
       r_cv_bsd_networking=no
@@ -1031,8 +1000,6 @@ AC_SUBST(TCLTK_CPPFLAGS)
 AC_SUBST(TCLTK_LIBS)
 AC_SUBST(use_tcltk)
 ])
-
-
 AC_DEFUN([R_BLAS_LIBS], [
 if test "${r_cv_prog_f77_append_underscore}" = yes \
   || test -n "${F2C}"; then
@@ -1120,7 +1087,20 @@ fi
 
 AC_SUBST(BLAS_LIBS)
 ])
-
+AC_DEFUN([R_XDR], [
+AC_CACHE_CHECK([for XDR support],
+  r_cv_xdr,
+  [ if test "${ac_cv_header_rpc_rpc_h}" = yes \
+        && test "${ac_cv_header_rpc_xdr_h}" = yes \
+        && test "${ac_cv_search_xdr_string}" != no ; then
+      r_cv_xdr=yes
+    else
+      r_cv_xdr=no
+    fi])
+if test "${r_cv_xdr}" = yes; then
+  AC_DEFINE(HAVE_XDR)
+fi
+])
 AC_DEFUN([R_ZLIB], [
   have_zlib=no
   AC_CHECK_LIB(z, gzopen, [

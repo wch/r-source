@@ -140,6 +140,9 @@
    GUI to be built. */
 #undef HAVE_X11
 
+/* Define if you have the XDR headers and library routines. */
+#undef HAVE_XDR
+
 /* Define if you have the zlib headers and libraries. */
 #undef HAVE_ZLIB
 
@@ -410,14 +413,8 @@
 /* Define if you have the ncurses library (-lncurses).  */
 #undef HAVE_LIBNCURSES
 
-/* Define if you have the nsl library (-lnsl).  */
-#undef HAVE_LIBNSL
-
 /* Define if you have the readline library (-lreadline).  */
 #undef HAVE_LIBREADLINE
-
-/* Define if you have the socket library (-lsocket).  */
-#undef HAVE_LIBSOCKET
 
 /* Define if you have the tk library (-ltk).  */
 #undef HAVE_LIBTK
