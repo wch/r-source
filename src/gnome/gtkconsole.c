@@ -221,7 +221,7 @@ void gtk_console_read(GtkConsole *object, gchar *buf, guint buf_len, gboolean ad
 
   strncpy(buf, text_chars, buf_len);
 
-  // add command to history
+  /* add command to history */
   term_ptr = strchr(text_chars, '\n');
   if((add_to_history == TRUE) && (term_ptr != NULL) && (*text_chars != '\n')) {
     history_buf = g_malloc(term_ptr - text_chars + 1);
@@ -266,7 +266,7 @@ void gtk_console_enable_input(GtkConsole *object, gchar *prompt, guint prompt_le
 
   object->buffer_index = 0;
 
-  // reset history index
+  /* reset history index */
   object->history_index = 0;
   object->history_cur = object->history;
 }
@@ -297,39 +297,39 @@ void gtk_console_write(GtkConsole *object, gchar *buf, guint buf_len)
 
   switch(object->buffer_type) {
   case CONSOLE_BUF_LINE:
-    // run out of buffer space - flush the buffer to free some space
+    /* run out of buffer space - flush the buffer to free some space */
     if((object->buffer_index > 0) && (object->buffer_index + buf_len > CONSOLE_MAX_BUF - 1)) {
       gtk_console_flush(object);
     }
     
-    // copy
+    /* copy */
     strncpy(object->out_buf + object->buffer_index, buf, CONSOLE_MAX_BUF - object->buffer_index - 1);
 
     object->buffer_index = MIN(CONSOLE_MAX_BUF - 1, object->buffer_index + buf_len);
     object->out_buf[object->buffer_index] = '\0';
 
-    // check for newline
-    // FIXME: this just checks the end of the buffer.  Maybe we should
-    // scan the entire buffer?
+    /* check for newline */
+    /* FIXME: this just checks the end of the buffer.  Maybe we should */
+    /* scan the entire buffer? */
     if(object->out_buf[object->buffer_index] == '\n') {
       gtk_console_flush(object);
     }
     break;
 
   case CONSOLE_BUF_BLOCK:
-    // run out of buffer space - flush the buffer to free some space
+    /* run out of buffer space - flush the buffer to free some space */
     if((object->buffer_index > 0) && (object->buffer_index + buf_len > CONSOLE_MAX_BUF - 1)) {
       gtk_console_flush(object);
     }
     
-    // copy
+    /* copy */
     strncpy(object->out_buf + object->buffer_index, buf, CONSOLE_MAX_BUF - object->buffer_index - 1);
 
     object->buffer_index = MIN(CONSOLE_MAX_BUF - 1, object->buffer_index + buf_len);
     object->out_buf[object->buffer_index] = '\0';
     break;
 
-  default: // no buffering
+  default: /* no buffering */
     strncpy(object->out_buf, buf, CONSOLE_MAX_BUF - 1);
     object->out_buf[CONSOLE_MAX_BUF - 1] = '\0';
     gtk_console_flush(object);
@@ -364,12 +364,12 @@ void gtk_console_flush(GtkConsole *object)
   object->out_buf[0] = '\0';
 }
 
-// FIXME: return an error message if things go wrong
-// FIXME: if errmsg is null, don't return an error message
-// FIXME: read maxitems from history first, and use them to
-//        fill up to maxitems after current history is written.
-//        However, the simplest way to do that is for the app
-//        to restore the history first.
+/* FIXME: return an error message if things go wrong */
+/* FIXME: if errmsg is null, don't return an error message */
+/* FIXME: read maxitems from history first, and use them to */
+/*        fill up to maxitems after current history is written. */
+/*        However, the simplest way to do that is for the app */
+/*        to restore the history first. */
 gboolean gtk_console_save_history(GtkConsole *object, gchar *filename, guint maxitems, gchar *errmsg)
 {
   FILE *hist_file;
@@ -381,7 +381,7 @@ gboolean gtk_console_save_history(GtkConsole *object, gchar *filename, guint max
 
   hist_file = fopen(filename, "w");
 
-  // check file OK
+  /* check file OK */
   if(hist_file == NULL)
     return FALSE;
 
@@ -410,29 +410,29 @@ gboolean gtk_console_restore_history(GtkConsole *object, gchar *filename, guint 
 
   hist_file = fopen(filename, "r");
 
-  // check file ok
+  /* check file ok */
   if(hist_file == NULL)
     return FALSE;
 
   for(n = 0; n < maxitems, !ferror(hist_file), !feof(hist_file); n++) {
-    // read line
+    /* read line */
     line_buf[0] = '\0';
     fgets(line_buf, CONSOLE_MAX_BUF - 1, hist_file);
     line_buf[CONSOLE_MAX_BUF - 1] = '\0';
 
-    // remove \n if it's there
+    /* remove \n if it's there */
     term_ptr = strchr(line_buf, '\n');
     if(term_ptr != NULL)
       *term_ptr = '\0';
 
-    // copy to real place
+    /* copy to real place */
     buf_len = strlen(line_buf) + 1;
     history_buf = g_malloc(buf_len);
     *history_buf = '\0';
     strncpy(history_buf, line_buf, buf_len - 1);
     *(history_buf + buf_len - 1) = '\0';
 
-    // add it to the list
+    /* add it to the list */
     g_list_prepend(object->history, history_buf);
 
     object->history_num_items++;
@@ -483,12 +483,12 @@ static void key_gdk_up(GtkConsole *console)
     console->history_index++;
     console->history_cur = console->history_cur->next;
 
-    // delete any existing input
+    /* delete any existing input */
     if(gtk_text_get_length(GTK_TEXT(console)) > console->input_start_index)
       gtk_editable_delete_text(GTK_EDITABLE(console), console->input_start_index, gtk_text_get_length(GTK_TEXT(console)));
 
     insert_pos = gtk_text_get_length(GTK_TEXT(console));
-    //    history_buf = g_list_nth(console->history, console->history_index - 1)->data;
+    /*    history_buf = g_list_nth(console->history, console->history_index - 1)->data; */
     history_buf = console->history_cur->prev->data;
     
     gtk_editable_insert_text(GTK_EDITABLE(console), history_buf, strlen(history_buf), &insert_pos);
@@ -504,13 +504,13 @@ static void key_gdk_down(GtkConsole *console)
   console->history_index--;
   console->history_cur = console->history_cur->prev;
 
-  // delete any existing input
+  /* delete any existing input */
   if(gtk_text_get_length(GTK_TEXT(console)) > console->input_start_index)
     gtk_editable_delete_text(GTK_EDITABLE(console), console->input_start_index, gtk_text_get_length(GTK_TEXT(console)));
 
   if(console->history_index > 0) {
     insert_pos = gtk_text_get_length(GTK_TEXT(console));
-    //    history_buf = g_list_nth(console->history, console->history_index - 1)->data;
+    /*    history_buf = g_list_nth(console->history, console->history_index - 1)->data; */
     history_buf = console->history_cur->prev->data;
     
     gtk_editable_insert_text(GTK_EDITABLE(console), history_buf, strlen(history_buf), &insert_pos);
@@ -527,24 +527,24 @@ static gint gtk_console_key_press (GtkWidget *widget,
   g_return_val_if_fail (event != NULL, FALSE);
   g_return_val_if_fail (GTK_IS_CONSOLE (widget), FALSE);
 
-  // stuff that we only change if the point is in the input area
+  /* stuff that we only change if the point is in the input area */
   if(gtk_editable_get_position(GTK_EDITABLE(widget)) >= GTK_CONSOLE(widget)->input_start_index) {
     if(GTK_CONSOLE(widget)->input_enabled == TRUE) {
       switch(event->keyval) {
 
       case GDK_Tab:
-	// do completion
+	/* do completion */
 	break;
 
       case GDK_Up:
-	// previous history item
+	/* previous history item */
 	key_gdk_up(GTK_CONSOLE(widget));
 	gtk_signal_emit_stop_by_name(GTK_OBJECT(widget), "key_press_event");
 	return TRUE;
 	break;
 
       case GDK_Down:
-	// next history item
+	/* next history item */
 	if(GTK_CONSOLE(widget)->history_index > 0) {
 	  key_gdk_down(GTK_CONSOLE(widget));
 	}
@@ -570,7 +570,7 @@ static gint gtk_console_key_press (GtkWidget *widget,
     }
   }
 
-  // things that apply wherever the point is
+  /* things that apply wherever the point is */
   if(GTK_CONSOLE(widget)->input_enabled == TRUE) {
     switch(event->keyval) {
 

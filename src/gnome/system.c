@@ -495,7 +495,7 @@ void R_InitialData(void)
 void R_CleanUp(int ask)
 {
     GtkWidget *dialog;
-    gint which; // yes = 0, no = 1, cancel = 2 || -1
+    gint which; /* yes = 0, no = 1, cancel = 2 || -1 */
 
     GList *curfile = R_gtk_editfiles;
     R_gtk_edititem *edititem;

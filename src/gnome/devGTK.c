@@ -4,6 +4,7 @@
 #include "Graphics.h"
 #include "devGTK.h"
 #include "terminal.h"
+#include "gdkrotated.h"
 
 #define CURSOR		GDK_CROSSHAIR		/* Default cursor */
 #define MM_PER_INCH	25.4			/* mm -> inch conversion */
@@ -37,7 +38,6 @@ typedef struct {
     GdkCursor *gcursor;
   
     int usefixed;
-    GdkFont *fixedfont;
     GdkFont *font;
 
 } gtkDesc;
@@ -68,7 +68,7 @@ static void   GTK_Text(double, double, int, char*, double, double, double,
 		       DevDesc*);
 static void   GTK_MetricInfo(int, double*, double*, double*, DevDesc*);
 
-			/* Pixel Dimensions (Inches) */
+/* Pixel Dimensions (Inches) */
 
 static double pixelWidth(void)
 {
@@ -88,6 +88,113 @@ static double pixelHeight(void)
 
 /* font stuff */
 
+static char *fontname_R6 = "-adobe-helvetica-%s-%s-*-*-*-%d-*-*-*-*-*-*";
+static char *symbolname = "-adobe-symbol-*-*-*-*-*-%d-*-*-*-*-*-*";
+static char *fixedname = "fixed";
+
+static char *slant[] = {"r", "o"};
+static char *weight[] = {"medium", "bold"};
+
+char *fontname;
+GHashTable *font_htab = NULL;
+
+struct _FontMetricCache {
+  gint ascent[255];
+  gint descent[255];
+  gint width[255];
+  gint font_ascent;
+  gint font_descent;
+  gint max_width;
+};
+
+static gint SetBaseFont(gtkDesc *gtkd)
+{
+  GdkFont *tmp_font;
+
+  gtkd->fontface = 1;
+  gtkd->fontsize = 12;
+  gtkd->usefixed = 0;
+
+  if(font_htab == NULL)
+    font_htab = g_hash_table_new(g_str_hash, g_str_equal);
+
+  fontname = g_strdup_printf(fontname_R6, weight[0], slant[0], gtkd->fontsize * 10);
+
+  tmp_font = g_hash_table_lookup(font_htab, (gpointer) fontname);
+  if(tmp_font == NULL) {
+    gtkd->font = gdk_font_load(fontname);
+    if(gtkd->font != NULL)
+      g_hash_table_insert(font_htab, (gpointer) fontname, (gpointer) gtkd->font);
+  }
+  else
+    gtkd->font = tmp_font;
+
+  if(gtkd->font != NULL)
+    return 1;
+
+  gtkd->usefixed = 1;
+  fontname = fixedname;
+
+  tmp_font = g_hash_table_lookup(font_htab, (gpointer) fontname);
+  if(tmp_font == NULL) {
+    gtkd->font = gdk_font_load(fontname);
+    if(gtkd->font != NULL)
+      g_hash_table_insert(font_htab, (gpointer) fontname, (gpointer) gtkd->font);
+  }
+  else {
+    gtkd->font = tmp_font;
+    g_free(fontname);
+  }
+
+  if(gtkd->font != NULL)
+    return 1;
+  
+  return 0;
+}
+
+#define SMALLEST 8
+#define LARGEST 24
+
+static void SetFont(DevDesc *dd, gint face, gint size)
+{
+  GdkFont *tmp_font;
+  gtkDesc *gtkd = (gtkDesc *) dd->deviceSpecific;
+
+  if(face < 1 || face > 5)
+    face = 1;
+
+  size = 2 * size / 2;
+  if(size < SMALLEST)
+    size = SMALLEST;
+  else if(size > LARGEST)
+    size = LARGEST;
+
+  gtkd->fontface = face;
+  gtkd->fontsize = size;
+
+  if(gtkd->usefixed == 0){
+    if(face == 5)
+      fontname = g_strdup_printf(symbolname, 10 * size);
+    else
+      fontname = g_strdup_printf(fontname_R6,
+				 weight[(face-1)%2],
+				 slant[((face-1)/2)%2],
+				 10 * size);
+      
+    tmp_font = g_hash_table_lookup(font_htab, (gpointer) fontname);
+
+    if(tmp_font == NULL) {
+      gtkd->font = gdk_font_load(fontname);
+
+      if(gtkd->font != NULL)
+	g_hash_table_insert(font_htab, (gpointer) fontname, (gpointer) gtkd->font);
+    }
+    else {
+      gtkd->font = tmp_font;
+      g_free(fontname);
+    }
+  }
+}
 
 
 /* set the r, g, b, and pixel values of gcol to color */
@@ -288,8 +395,6 @@ static int GTK_Open(DevDesc *dd, gtkDesc *gtkd, char *dsp, double w, double h)
   gtkd->wgc = NULL;
   gtkd->gcursor = NULL;
 
-  /* FIXME: SetBaseFont */
-
   /* create window etc */
   gtkd->windowWidth = iw = w / pixelWidth();
   gtkd->windowHeight = ih = h / pixelHeight();
@@ -340,17 +445,60 @@ static int GTK_Open(DevDesc *dd, gtkDesc *gtkd, char *dsp, double w, double h)
   gtkd->lty = -1;
   gtkd->lwd = -1;
 
+  /* Set base font */
+  if(!SetBaseFont(gtkd)) {
+    Rprintf("can't find X11 font\n");
+    return 0;
+  }
+
   /* we made it! */
   return 1;
 }
 
 static double GTK_StrWidth(char *str, DevDesc *dd)
 {
-  return 6.0;
+  int size;
+  gtkDesc *gtkd = (gtkDesc *) dd->deviceSpecific;
+
+  size = dd->gp.cex * dd->gp.ps + 0.5;
+  SetFont(dd, dd->gp.font, size);
+  
+  return (double) gdk_string_width(gtkd->font, str);
 }
 
 static void GTK_MetricInfo(int c, double *ascent, double *descent, double *width, DevDesc *dd)
 {
+  gint size;
+  gint lbearing, rbearing, iascent, idescent, iwidth;
+  gint cumwidth;
+  gchar tmp[2];
+  gtkDesc *gtkd = (gtkDesc *) dd->deviceSpecific;
+
+  size = dd->gp.cex * dd->gp.ps + 0.5;
+  SetFont(dd, dd->gp.font, size);
+
+  if(c == 0) {
+    cumwidth = 0;
+
+    for(c = 0; c <= 255; c++) {
+      g_snprintf(tmp, 2, "%c", (gchar) c);
+      cumwidth += gdk_string_width(gtkd->font, tmp);
+    }
+
+    *ascent = (double) gtkd->font->ascent;
+    *descent = (double) gtkd->font->descent;
+    *width = (double) cumwidth;
+  }
+  else {
+    g_snprintf(tmp, 2, "%c", (gchar) c);
+    gdk_string_extents(gtkd->font, tmp,
+		       &lbearing, &rbearing,
+		       &iascent, &idescent, &iwidth);
+
+    *ascent = (double) iascent;
+    *descent = (double) idescent;
+    *width = (double) iwidth;
+  }
 }
 
 /* set clipping */
@@ -632,7 +780,7 @@ static void GTK_Polygon(int n, double *x, double *y, int coords,
   g_free(points);
 }
 
-extern double deg2rad; /* in devGTK.c */
+double deg2rad = 0.01745329251994329576;
 
 static void GTK_Text(double x, double y, int coords,
 		       char *str, double xc, double yc, double rot, DevDesc *dd)
@@ -640,16 +788,36 @@ static void GTK_Text(double x, double y, int coords,
   GnomeCanvasItem *item;
   gtkDesc *gtkd = (gtkDesc *) dd->deviceSpecific;
   GdkColor gcol_fill;
-
-  g_message("text");
+  gint size;
+  double x1, y1;
 
   GConvert(&x, &y, coords, DEVICE, dd);
 
+  size = dd->gp.cex * dd->gp.ps + 0.5;
+  SetFont(dd, dd->gp.font, size);
+  gdk_gc_set_font(gtkd->wgc, gtkd->font);
+
   SetColor(&gcol_fill, dd->gp.col);
+  gdk_gc_set_foreground(gtkd->wgc, &gcol_fill);
+
+  if(xc != 0.0 || yc != 0.0) {
+    x1 = GTK_StrWidth(str, dd);
+    y1 = GConvertYUnits(1, CHARS, DEVICE, dd);
+    x += -xc * x1 * cos(deg2rad * rot) +
+      yc * y1 * sin(deg2rad * rot);
+    y -= -xc * x1 * sin(deg2rad * rot) -
+      yc * y1 * cos(deg2rad * rot);
+  }
+
+  gdk_draw_text_rot(gtkd->drawing->window,
+		      gtkd->font, gtkd->wgc, 
+		      (gint) x, (gint) y,
+		      str, strlen(str), rot);
 }
 
 static int GTK_Locator(double *x, double *y, DevDesc *dd)
 {
+  /* FIXME: implement this */
   g_message("locator");
 }
 
@@ -666,6 +834,9 @@ static void GTK_Hold(DevDesc *dd)
 int X11DeviceDriver(DevDesc *dd, char *display, double width, double height, double pointsize)
 {
   int ps;
+  gchar tmp[2];
+  gint cumwidth, c, rbearing, lbearing;
+  double max_rbearing, min_lbearing;
   gtkDesc *gtkd;
 
   if(!(gtkd = (gtkDesc *) malloc(sizeof(gtkDesc))))
@@ -673,7 +844,7 @@ int X11DeviceDriver(DevDesc *dd, char *display, double width, double height, dou
 
   dd->deviceSpecific = (void *) gtkd;
 
-  /* FIXME: font loading */
+  /* font loading */
   ps = pointsize;
   if(ps < 6 || ps > 24) ps = 12;
   ps = 2 * (ps / 2);
@@ -713,11 +884,24 @@ int X11DeviceDriver(DevDesc *dd, char *display, double width, double height, dou
   dd->dp.bottom = gtkd->windowHeight;
   dd->dp.top = 0;
 
-  /* FIXME: nominal character sizes */
-  dd->dp.cra[0] = 10;
-  dd->dp.cra[1] = 10;
+  /* nominal character sizes */
+  cumwidth = 0;
+  max_rbearing = 0;
+  for(c = 0; c <= 255; c++) {
+    g_snprintf(tmp, 2, "%c", (gchar) c);
+    gdk_string_extents(gtkd->font, tmp,
+		       &lbearing, &rbearing,
+		       NULL, NULL, NULL);
+    if(lbearing < min_lbearing || c == 0)
+      min_lbearing = lbearing;
+    if(rbearing > max_rbearing)
+      max_rbearing = rbearing;
+  }
 
-  /* FIXME: character addressing offsets */
+  dd->dp.cra[0] = max_rbearing - min_lbearing;
+  dd->dp.cra[1] = (double) gtkd->font->ascent + (double) gtkd->font->descent;
+
+  /* character addressing offsets */
   dd->dp.xCharOffset = 0.4900;
   dd->dp.yCharOffset = 0.3333;
   dd->dp.yLineBias = 0.1;
@@ -733,14 +917,14 @@ int X11DeviceDriver(DevDesc *dd, char *display, double width, double height, dou
   dd->dp.canResizeText = 1;
   dd->dp.canClip = 0;
 
-  // x11 device description stuff
+  /* gtk device description stuff */
   gtkd->cex = 1.0;
   gtkd->srt = 0.0;
   gtkd->resize = 0;
 
   dd->displayListOn = 1;
 
-  // finish
+  /* finish */
   return 1;
 }
 

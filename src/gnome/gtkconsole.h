@@ -62,7 +62,7 @@ struct _GtkConsole
   guint buffer_type;
   guint buffer_index;
   gchar out_buf[CONSOLE_MAX_BUF];
-  //  gchar in_buf[1024];
+  /*  gchar in_buf[1024]; */
 
   GdkColormap *cmap;
 };

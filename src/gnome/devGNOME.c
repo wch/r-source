@@ -83,11 +83,11 @@ static double pixelHeight(void)
     return ((double)heightMM / (double)height) / MM_PER_INCH;
 }
 
-// font stuff
+/* font stuff */
 
 
 
-// set the r, g, b, and pixel values of gcol to color
+/* set the r, g, b, and pixel values of gcol to color */
 static void SetColor(GdkColor *gcol, int color)
 {
   int red, green, blue;
@@ -101,7 +101,7 @@ static void SetColor(GdkColor *gcol, int color)
   gcol->pixel = gdk_rgb_xpixel_from_rgb((red << 16)|(green << 8)|(blue));
 }
 
-// line type
+/* line type */
 static void SetLineType(GdkBitmap *stipple, int newlty, int newlwd)
 {
   /*  static gchar dashlist[8];
@@ -125,7 +125,7 @@ static void SetLineType(GdkBitmap *stipple, int newlty, int newlwd)
     newlty = newlty >> 4;
   }
 
-  // set dashes
+  /* set dashes */
   gdk_gc_set_dashes(gc, 0, dashlist, i);*/
 }
 
@@ -331,7 +331,7 @@ static void GNOME_NewPage(DevDesc *dd)
     }*/
 }
 
-// kill off the window etc
+/* kill off the window etc */
 static void GNOME_Close(DevDesc *dd)
 {
   gnomeDesc *gtkd = (gnomeDesc *) dd->deviceSpecific;
@@ -402,7 +402,7 @@ static void GNOME_Deactivate(DevDesc *dd)
   g_free(title_text);
 }
 
-// drawing stuff
+/* drawing stuff */
 
 static void GNOME_Rect(double x0, double y0, double x1, double y1,
 		     int coords, int bg, int fg, DevDesc *dd)
@@ -624,19 +624,19 @@ static void GNOME_Text(double x, double y, int coords,
 			       "anchor", GTK_ANCHOR_NW,
 			       "x", x,
 			       "y", y,
-			       //"font", "-adobe-times-medium-r-normal-*-*-120-*-*-p-*-iso8859-1",
+			       /*"font", "-adobe-times-medium-r-normal-*-*-120-*-*-p-*-iso8859-1",*/
 			       "font", "-*-times-medium-r-*-*-120-*-*-*-*-*-*-*",
 			       "fill_color_gdk", &gcol_fill,
 			       NULL);
 }
 
-// locator
+/* locator */
 static int GNOME_Locator(double *x, double *y, DevDesc *dd)
 {
   return 0;
 }
 
-// useless stuff
+/* useless stuff */
 
 static void GNOME_Mode(gint mode)
 {
@@ -647,7 +647,7 @@ static void GNOME_Hold(DevDesc *dd)
 }
 
 
-// Device driver entry point
+/* Device driver entry point */
 int GnomeDeviceDriver(DevDesc *dd, char *display, double width, double height, double pointsize)
 {
   int ps;
@@ -658,7 +658,7 @@ int GnomeDeviceDriver(DevDesc *dd, char *display, double width, double height, d
 
   dd->deviceSpecific = (void *) gtkd;
 
-  // FIXME: font loading
+  /* FIXME: font loading */
   ps = pointsize;
   if(ps < 6 || ps > 24) ps = 12;
   ps = 2 * (ps / 2);
@@ -667,13 +667,13 @@ int GnomeDeviceDriver(DevDesc *dd, char *display, double width, double height, d
   dd->dp.font = 1;
   dd->dp.ps = ps;
   
-  // device driver start
+  /* device driver start */
   if(!GNOME_Open(dd, gtkd, display, width, height)) {
     free(gtkd);
     return 0;
   }
 
-  // setup data structure
+  /* setup data structure */
   dd->dp.open = GNOME_Open;
   dd->dp.close = GNOME_Close;
   dd->dp.activate = GNOME_Activate;
@@ -698,34 +698,34 @@ int GnomeDeviceDriver(DevDesc *dd, char *display, double width, double height, d
   dd->dp.bottom = gtkd->windowHeight;
   dd->dp.top = 0;
 
-  // FIXME: nominal character sizes
+  /* FIXME: nominal character sizes */
   dd->dp.cra[0] = 10;
   dd->dp.cra[1] = 10;
 
-  // FIXME: character addressing offsets
+  /* FIXME: character addressing offsets */
   dd->dp.xCharOffset = 0.4900;
   dd->dp.yCharOffset = 0.3333;
   dd->dp.yLineBias = 0.1;
 
-  // inches per raster unit
+  /* inches per raster unit */
   dd->dp.ipr[0] = pixelWidth();
   dd->dp.ipr[1] = pixelHeight();
 
-  // device capabilities
+  /* device capabilities */
   dd->dp.canResizePlot = 1;
-  dd->dp.canChangeFont = 0; // FIXME: surely this is possible
+  dd->dp.canChangeFont = 0; /* FIXME: surely this is possible */
   dd->dp.canRotateText = 1;
   dd->dp.canResizeText = 1;
   dd->dp.canClip = 0;
 
-  // x11 device description stuff
+  /* x11 device description stuff */
   gtkd->cex = 1.0;
   gtkd->srt = 0.0;
   gtkd->resize = 0;
 
   dd->displayListOn = 1;
 
-  // finish
+  /* finish */
   return 1;
 }
 
