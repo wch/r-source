@@ -33,11 +33,6 @@ help <-
         type <- if(offline) "latex" else if (htmlhelp) "html" else "help"
         INDICES <- system.file(pkg=package, lib=lib.loc)
         file <- index.search(topic, INDICES, "AnIndex", type)
-        if (file == "") {
-            # try data .doc -- this is OUTDATED
-            file <- system.file(file.path("data", paste(topic, ".doc",
-                sep = "")), pkg = package, lib = lib.loc)
-        }
         if (length(file) && file != "") {
             if (verbose)
                 cat("\t\t\t\t\t\tHelp file name `", sub(".*/", "", file),
@@ -120,17 +115,25 @@ help <-
                 if(file.exists(zfile)) {
                     FILE <- "Rdoc"
                     tFILE <- paste(FILE, ".tex", sep="")
-                    cat("\\documentclass[", .Options$papersize, "paper]{article}\n",
+                    cat("\\documentclass[",
+                        .Options$papersize,
+                        "paper]{article}",
+                        "\n",
+                        "\\usepackage[",
+                        if(nchar(opt <- getenv("R_RD4DVI"))) opt else "ae",
+                        "]{Rd}",
+                        "\n",
+                        "\\InputIfFileExists{Rhelp.cfg}{}{}\n",
+                        "\\begin{document}\n",
                         file = tFILE, sep = "")
-                    file.append(tFILE,
-                                file.path(R.home(), "doc", "manual", "Rd.sty"))
-                    cat("\\InputIfFileExists{Rhelp.cfg}{}{}\n\\begin{document}\n",
-                        file = tFILE, append = TRUE)
                     file.append(tFILE, zfile)
                     cat("\\end{document}\n", file = tFILE, append = TRUE)
-                    system(paste('"',
+                    cmd <- paste('"',
                                  paste(R.home(), "bin", "helpPRINT", sep="/"),
-                                 '" "', FILE, '" ', topic, sep=""), wait=F)
+                                 '"', sep="")
+                    texpath <- gsub("\\\\", "/",
+                                    file.path(R.home(), "doc", "manual"))
+                    system(paste(cmd, FILE, topic, texpath), wait=F)
                     return(invisible())
                 }
                 else

@@ -98,9 +98,6 @@ double atanh(double);
 /* HPUX rint is broken */
 #undef USE_BUILTIN_RINT
 
-/* POSIX Regular Expressions Available */
-#define HAVE_REGCOMP 1
-
 /* Compatibility for "memmove" on older BSD platforms */
 #undef HAVE_MEMMOVE
 #undef HAVE_MEMCPY

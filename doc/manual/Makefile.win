@@ -12,6 +12,7 @@ OBJECTS_INFO = $(SOURCES_TEXI:.texi=.info)
 OBJECTS_PDF = $(SOURCES_TEXI:.texi=.pdf)
 
 R_PAPERSIZE = a4
+# set the next to `ae' to omit the hyperlinks
 R_RD4PDF = ae,hyper
 
 PDFLATEX = pdflatex
@@ -19,10 +20,7 @@ PDFTEX = pdftex
 MAKEINDEX = makeindex
 TEXINDEX = texindex
 RHOME=$(shell cd ../..; pwd)
-R_PKGS=base eda lqs modreg mva nls splines stepfun ts
-
-# set the next to `ae' to omit the hyperlinks
-PDF=pdf
+R_PKGS=base ctest eda lqs modreg mva nls splines stepfun ts
 
 pkgsrcs = $(R_PKGS:=-pkg.tex)
 
@@ -67,13 +65,10 @@ FORCE:
 refman.pdf: refman.tex version.tex $(pkgsrcs) $(srcdir)/Rd.sty
 	@echo " PDF LaTeX documentation: Reference Index ..."
 	@$(RM) -f *.aux refman.toc refman.ind
-	@TEXINPUTS=".;" \
-	  $(PDFLATEX) '\nonstopmode\input{refman.tex}'
+	@$(PDFLATEX) '\nonstopmode\input{refman.tex}'
 	@$(MAKEINDEX) refman
-	@TEXINPUTS=".;" \
-	  $(PDFLATEX) '\nonstopmode\input{refman.tex}'
-	@TEXINPUTS=".;" \
-	  $(PDFLATEX) '\nonstopmode\input{refman.tex}'
+	@$(PDFLATEX) '\nonstopmode\input{refman.tex}'
+	@$(PDFLATEX) '\nonstopmode\input{refman.tex}'
 
 R-exts.pdf: R-exts.texi version.texi 
 	$(PDFTEX) R-exts.texi
@@ -91,9 +86,9 @@ clean:
 	@echo cleaning in doc/manual
 	@-rm -f *.aux *.toc refman.i?? *.out *.log
 	@-rm -f *.cp *.cps *.fn *.fns *.ky *.kys \
-	  *.out *.pg *.pgs *.tmp *.tp *.vr *.vrs
+	  *.out *.pg *.pgs *.tmp *.tp *.vr *.vrs \
+	  version.tex version.texi refman.tex *-pkg.tex 
 distclean: clean
-	@-rm -f version.tex *-pkg.tex lib2tex.pl \
-	  refman.tex *.pdf
+	@-rm -f lib2tex.pl *.pdf
 maintainer-clean: distclean
 
