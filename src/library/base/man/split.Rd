@@ -33,7 +33,10 @@ unsplit(value, f)
 \details{ 
   \code{f} is recycled as necessary and if the length of \code{x} is not
   a multiple of the length of \code{f} a warning is printed.
-  \code{unsplit} works only with  lists of vectors.
+  \code{unsplit} works only with  lists of vectors. The data frame
+  method can also be used to split a matrix into a list of matrices,
+  and the assignment form likewise, provided they are invoked
+  explicitly. 
 }
 \value{
   The value returned from \code{split} is a list of vectors containing

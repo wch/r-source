@@ -1,11 +1,11 @@
 split <- function(x, f) UseMethod("split")
 
 split.default <- function(x, f) {
-    if(is.list(f))
+    if (is.list(f))
         f <- factor(do.call("interaction", f))
     else
         f <- factor(f)                  # drop extraneous levels
-    if(is.null(attr(x, "class")) && is.null(names(x)))
+    if (is.null(attr(x, "class")) && is.null(names(x)))
         return(.Internal(split(x, f)))
     ## else
     lf <- levels(f)
@@ -18,7 +18,7 @@ split.default <- function(x, f) {
 }
 
 split.data.frame <- function(x, f) {
-    lapply(split(1:nrow(x), f), function(ind) x[ind, , drop = FALSE ])
+    lapply(split(seq(length=nrow(x)), f), function(ind) x[ind, , drop = FALSE ])
 }
 
 "split<-" <- function(x, f, value) UseMethod("split<-")
@@ -28,8 +28,8 @@ split.data.frame <- function(x, f) {
     x
 }
 
-"split<-.data.frame" <- function(x, f, value){
-    x[unlist(split(rownames(x), f)),] <- do.call("rbind", value)
+"split.data.frame<-" <- "split<-.data.frame" <- function(x, f, value){
+    x[unlist(split(seq(length=nrow(x)), f)),] <- do.call("rbind", value)
     x
 }
 
