@@ -20,6 +20,7 @@ insects		The Effect of Insecticides on Insect Counts
 iris		Edgar Anderson's Iris Data  as data.frame
 iris3		Edgar Anderson's Iris Data  as array of rank 3
 islands		World Landmass Areas
+judges		Lawyer's rating's of State Judges in the Superior Court.
 longley		Longley's Economic Regression Data
 mtcars		Motor Trend Car Data
 nhtemp		Yearly Average Temperatures in New Haven CT
