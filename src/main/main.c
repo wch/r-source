@@ -562,6 +562,7 @@ SEXP do_browser(SEXP call, SEXP op, SEXP args, SEXP rho)
 	SETJMP(thiscontext.cjmpbuf);
 	R_GlobalContext = R_ToplevelContext = &thiscontext;
 	R_BrowseLevel = savebrowselevel;
+        signal(SIGINT, onintr);
 	R_ReplConsole(rho, savestack, R_BrowseLevel);
 	endcontext(&thiscontext);
     }
