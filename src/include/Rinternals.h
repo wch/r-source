@@ -77,14 +77,12 @@ typedef unsigned int SEXPTYPE;
 
 #define FUNSXP      99    /* Closure or Builtin */
 
-#define USE_WRITE_BARRIER
 #define USE_GENERATIONAL_GC
 
-#ifdef TESTING_RINTERNALS
-#define USE_RINTERNALS
-#define STRING(x)	((x)->u.vecsxp.type.s)
-#define VECTOR(x)	((x)->u.vecsxp.type.s)
+#ifdef USE_GENERATIONAL_GC
+# define USE_WRITE_BARRIER
 #endif
+
 #ifdef USE_RINTERNALS
 typedef struct SEXPREC {
 
