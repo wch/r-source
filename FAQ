@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.9-23 2004-06-11
+Version 1.9-24 2004-06-15
 ISBN 3-900051-01-1
 Kurt Hornik
 
@@ -2419,6 +2419,12 @@ distributions of R.)
      references and a memory efficient refdata type that transparently
      encapsulates matrices and data frames.
 
+*regress*
+     Fitting Gaussian linear models where the covariance structure is a
+     linear combination of known matrices by maximising the residual log
+     likelihood.  Can be used for multivariate models and random effects
+     models.
+
 *relimp*
      Functions to facilitate inference on the relative importance of
      predictors in a linear or generalized linear model.
@@ -2618,6 +2624,10 @@ distributions of R.)
 
 *survrec*
      Survival analysis for recurrent event data.
+
+*svmpath*
+     Computes the entire regularization path for the two-class svm
+     classifier with essentialy the same cost as a single SVM fit.
 
 *systemfit*
      Contains functions for fitting simultaneous systems of equations using
