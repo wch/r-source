@@ -7,7 +7,7 @@ pmatch(x, table, nomatch = NA, duplicates.ok = FALSE)
 \arguments{
   \item{x}{the values to be matched.}
   \item{table}{the values to be matched against.}
-  \item{nomatch}{the value returned at non-matching or mutliply
+  \item{nomatch}{the value returned at non-matching or multiply
     partially matching positions.}
   \item{duplicates.ok}{should elements be in \code{table} be used more
     than once?}
@@ -20,7 +20,9 @@ pmatch(x, table, nomatch = NA, duplicates.ok = FALSE)
   The behaviour differs by the value of \code{duplicates.ok}. Consider
   first the case if this is true.  First exact matches are considered,
   and the positions of the first exact matches are recorded. Then unique
-  partial matches are considered, and if found recorded.  Finally,
+  partial matches are considered, and if found recorded. (A partial
+  match occurs if the whole of the element of \code{x} matches the
+  beginning of the element of \code{table}.)  Finally,
   all remaining elements of \code{x} are regarded as unmatched.
   In addition, an empty string can match nothing, not even an exact
   match to an empty string.  This is the appropriate behaviour for
