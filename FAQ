@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 1.3-18, 2001-08-11
+Version 1.3-19, 2001-08-23
 Kurt Hornik
 
 
@@ -214,9 +214,10 @@ project ("GNU S").
 systems.
 
    The current version of R will configure and build under a number of
-common Unix platforms including i386-freebsd, i386-linux, i386-sun-solaris,
-ppc-linux, mips-sgi-irix, alpha-linux, alpha-dec-osf4, rs6000-ibm-aix,
-hppa-hp-hpux, sparc-linux, and sparc-sun-solaris.
+common Unix platforms including i386-freebsd, i386-linux-gnu,
+i386-sun-solaris, powerpc-linux-gnu, powerpc-apple-darwin, mips-sgi-irix,
+alpha-linux-gnu, alpha-dec-osf4, rs6000-ibm-aix, hppa-hp-hpux,
+sparc-linux-gnu, and sparc-sun-solaris.
 
    If you know about other platforms, please drop us a note.
 
@@ -1669,6 +1670,9 @@ Currently, there are
      Allows Python programs to invoke S functions, methods, etc., and S code
      to call Python functionality.
 
+*SASXML*
+     Example for reading XML files in SAS 8.2 manner.
+
 *SJava*
      An interface from R to Java to create and call Java objects and
      methods.
@@ -1689,6 +1693,10 @@ Currently, there are
      generate interfaces from S to that code, including the table of
      S-accessible native symbols, parameter count and type information, S
      constructors from C objects, call graphs, etc.
+
+*Sxslt*
+     An extension module for libxslt, the XML-XSL document translator, that
+     allows XSL functions to be implemented via R functions.
 
    Jim Lindsey <jlindsey@luc.ac.be> has written a collection of R packages
 for nonlinear regression and repeated measurements, consisting of *event*

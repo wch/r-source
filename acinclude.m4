@@ -1139,6 +1139,29 @@ if test -z "${TCLTK_LIBS}"; then
       fi
     fi
   fi
+  ## Postprocessing for AIX.
+  ## On AIX, the *_LIB_SPEC variables need to contain `-bI:' flags for
+  ## the Tcl export file.  These are really flags for ld rather than the
+  ## C/C++ compilers, and hence may need protection via `-Wl,'.
+  ## We have two ways of doing that:
+  ## * Recording whether `-Wl,' is needed for the C or C++ compilers,
+  ##   and getting this info into the TCLTK_LIBS make variable ... mess!
+  ## * Protecting all entries in TCLTK_LIBS that do not start with `-l'
+  ##   or `-L' with `-Wl,' (hoping that all compilers understand this).
+  ##   Easy, hence ...
+  case "${host}" in
+    *aix*)
+      orig_TCLTK_LIBS="${TCLTK_LIBS}"
+      TCLTK_LIBS=
+      for flag in ${orig_TCLTK_LIBS}; do
+        case "${flag}" in
+	  -l*|-L*|-Wl,*) ;;
+	  *) flag="-Wl,${flag}" ;;
+	esac
+	TCLTK_LIBS="${TCLTK_LIBS} ${flag}"
+      done
+      ;;
+  esac
 fi
 ])
 ##
