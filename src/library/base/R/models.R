@@ -88,6 +88,7 @@ reformulate <- function (termlabels, response=NULL)
     rval <- eval(parse(text = termtext)[[1]])
     if(has.resp) rval[[2]] <-
         if(is.character(response)) as.symbol(response) else response
+    ## response can be a symbol or call as  Surv(ftime, case)
     environment(rval) <- parent.frame()
     rval
 }
