@@ -17,7 +17,7 @@ cut.default <- function (x, breaks, labels=NULL, include.lowest = FALSE,
     codes.only <- FALSE
     if (is.null(labels)) {#- try to construct nice ones ..
 	for(dig in dig.lab:12) {
-	    ch.br <- formatC(breaks, dig=dig, wid=1)
+	    ch.br <- formatC(breaks, digits=dig, wid=1)
 	    if(ok <- all(ch.br[-1]!=ch.br[-nb])) break
 	}
 	labels <-

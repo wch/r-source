@@ -333,12 +333,12 @@ print.summary.lm <-
 	format(signif(x$sigma, digits)), "on", rdf, "degrees of freedom\n")
     if (!is.null(x$fstatistic)) {
 	cat("Multiple R-Squared:", formatC(x$r.squared, digits=digits))
-	cat(",\tAdjusted R-squared:",formatC(x$adj.r.squared,d=digits),
+	cat(",\tAdjusted R-squared:",formatC(x$adj.r.squared,digits=digits),
 	    "\nF-statistic:", formatC(x$fstatistic[1], digits=digits),
 	    "on", x$fstatistic[2], "and",
 	    x$fstatistic[3], "DF,  p-value:",
-	    formatC(1 - pf(x$fstatistic[1], x$fstatistic[2],
-			   x$fstatistic[3]), dig=digits),
+	    formatC(pf(x$fstatistic[1], x$fstatistic[2],
+                       x$fstatistic[3], lower.tail = FALSE), digits=digits),
 	    "\n")
     }
     correl <- x$correlation
