@@ -53,6 +53,8 @@ void Rsockclose(int *sockp)
 void Rsockread(int *sockp, char **buf, int *maxlen)
 void Rsockwrite(int *sockp, char **buf, int *start, int *end, int *len)
 
+int Rsockselect(int nsock, int *insockfd, int *ready, int *write,
+                double timeout)
  */
 
 static int initialized = 0;
@@ -234,3 +236,16 @@ void Rsockwrite(int *sockp, char **buf, int *start, int *end, int *len)
     else
 	error("socket routines cannot be loaded");
 }
+
+int Rsockselect(int nsock, int *insockfd, int *ready, int *write,
+		double timeout)
+{
+    if(!initialized) internet_Init();
+    if(initialized > 0)
+	return (*ptr->sockselect)(nsock, insockfd, ready, write, timeout);
+    else {
+	error("socket routines cannot be loaded");
+	return 0;
+    }
+}
+    

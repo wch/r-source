@@ -911,5 +911,7 @@ void R_init_internet(DllInfo *info)
     tmp->sockclose = in_Rsockclose;
     tmp->sockread = in_Rsockread;
     tmp->sockwrite = in_Rsockwrite;
+
+    tmp->sockselect = in_Rsockselect;
     R_setInternetRoutines(tmp);
 }

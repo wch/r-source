@@ -3506,3 +3506,39 @@ SEXP R_decompress1(SEXP in)
     memcpy(CHAR(ans), buf, outlen);
     return ScalarString(ans);
 }
+
+SEXP do_sockselect(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    int nsock, i;
+    SEXP insock, write, val, insockfd;
+    double timeout;
+
+    checkArity(op, args);
+
+    insock = CAR(args);
+    if (TYPEOF(insock) != VECSXP || LENGTH(insock) == 0)
+	errorcall(call, "not a list of sockets");
+    nsock = LENGTH(insock);
+
+    write = CADR(args);
+    if (TYPEOF(write) != LGLSXP || LENGTH(write) != nsock)
+	errorcall(call, "bad write indicators");
+
+    timeout = asReal(CADDR(args));
+    
+    PROTECT(insockfd = allocVector(INTSXP, nsock));
+    PROTECT(val = allocVector(LGLSXP, nsock));
+
+    for (i = 0; i < nsock; i++) {
+	Rconnection conn = getConnection(asInteger(VECTOR_ELT(insock, i)));
+	if (strcmp(conn->class, "socket") != 0)
+	    errorcall(call, "not a socket connection");
+	INTEGER(insockfd)[i] = ((Rsockconn) conn->private)->fd;
+    }
+
+    Rsockselect(nsock, INTEGER(insockfd), LOGICAL(val), LOGICAL(write),
+		timeout);
+    
+    UNPROTECT(2);
+    return val;
+}

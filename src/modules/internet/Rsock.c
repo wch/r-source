@@ -236,13 +236,16 @@ static int R_SocketWait(int sockfd, int write)
 	if(write) FD_SET(sockfd, &wfd); else FD_SET(sockfd, &rfd);
 	if(maxfd < sockfd) maxfd = sockfd;
 
+	/* increment used value _before_ the select in case select
+	   modifies tv (as Linux does) */
+	used += tv.tv_sec + 1e-6 * tv.tv_usec;
+
 	howmany = R_SelectEx(maxfd+1, &rfd, &wfd, NULL, &tv, NULL);
 
 	if (howmany < 0) {
 	    return -1;
 	}
 	if (howmany == 0) {
-	    used += tv.tv_sec + 1e-6 * tv.tv_usec;
 	    if(used >= timeout) return 1;
 	    continue;
 	}
@@ -261,6 +264,110 @@ static int R_SocketWait(int sockfd, int write)
 	break;
     }
     return 0;
+}
+
+/**** FIXME: merge with R_SocketWait */
+/**** FIXME: add timeout argument instead of using global?? */
+int R_SocketWaitMultiple(int nsock, int *insockfd, int *ready, int *write,
+			 double mytimeout)
+{
+    fd_set rfd, wfd;
+    struct timeval tv;
+    double used = 0.0;
+    int nready = 0;
+
+    while(1) {
+	int maxfd = 0, howmany, i;
+#ifdef Unix
+	InputHandler *what;
+
+	if(R_wait_usec > 0) {
+	    int delta;
+	    if (mytimeout < 0 || R_wait_usec / 1e-6 < mytimeout - used)
+		delta = R_wait_usec;
+	    else
+		delta = 1e6 * (mytimeout - used);
+	    R_PolledEvents();
+	    tv.tv_sec = 0;
+	    tv.tv_usec = delta;
+	} else if (mytimeout >= 0) {
+	    tv.tv_sec = mytimeout - used;
+	    tv.tv_usec = 1e6 * (mytimeout - used - tv.tv_sec);
+	} else {  /* always poll occationally--not really necessary */
+	    tv.tv_sec = timeout;
+	    tv.tv_usec = 0;
+	}
+#elif defined(Win32)
+	tv.tv_sec = 0;
+	tv.tv_usec = 2e5;
+	R_ProcessEvents();
+#else
+	if (mytimeout >= 0) {
+	    tv.tv_sec = mytimeout - used;
+	    tv.tv_usec = 1e6 * (mytimeout - used - tv.tv_sec);
+	} else {  /* always poll occationally--not really necessary */
+	    tv.tv_sec = timeout;
+	    tv.tv_usec = 0;
+	}
+#endif
+
+
+#ifdef Unix
+	maxfd = setSelectMask(R_InputHandlers, &rfd);
+#else
+	FD_ZERO(&rfd);
+#endif
+	FD_ZERO(&wfd);
+	for (i = 0; i < nsock; i++) {
+	    if(write[i]) FD_SET(insockfd[i], &wfd);
+	    else FD_SET(insockfd[i], &rfd);
+	    if(maxfd < insockfd[i]) maxfd = insockfd[i];
+	}
+
+	/* increment used value _before_ the select in case select
+	   modifies tv (as Linux does) */
+	used += tv.tv_sec + 1e-6 * tv.tv_usec;
+
+	howmany = R_SelectEx(maxfd+1, &rfd, &wfd, NULL, &tv, NULL);
+
+	if (howmany < 0) {
+	    return -1;
+	}
+	if (howmany == 0) {
+	    if(mytimeout >= 0 && used >= mytimeout) {
+		for (i = 0; i < nsock; i++)
+		    ready[i] = 0; /* FALSE */
+		return 0;
+	    }
+	    continue;
+	}
+
+	for (i = 0; i < nsock; i++)
+	    if ((!write[i] && FD_ISSET(insockfd[i], &rfd)) ||
+		(write[i] && FD_ISSET(insockfd[i], &wfd))) {
+		ready[i] = 1; /* TRUE */
+		nready++;
+	    }
+	    else ready[i] = 0; /* FALSE */
+
+#ifdef Unix
+	if(howmany > nready) {
+	    /* one of the extras is ready */
+	    what = getSelectedHandler(R_InputHandlers, &rfd);
+	    if(what != NULL) what->handler((void*) NULL);
+	    continue;
+	}
+#endif
+	/* some sockets are ready */
+	break;
+    }
+    return nready;
+}
+
+int in_Rsockselect(int nsock, int *insockfd, int *ready, int *write,
+		   double timeout)
+{
+    return R_SocketWaitMultiple(nsock, insockfd, ready, write, timeout);
 }
 
 void R_SockTimeout(int delay)
