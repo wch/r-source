@@ -6,12 +6,11 @@ use File::Basename;
 use Getopt::Long;
 use R::Dcf;
 use R::Utils;
-#use strict;
 
 ## don't buffer output
 $|=1;
 
-my $revision = ' $Revision: 1.7 $ ';
+my $revision = ' $Revision: 1.8 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -72,13 +71,19 @@ foreach $pkg (@ARGV){
 	}
     }
 
-    my $log = new R::Logfile("$pkgoutdir/check.log");
+    my $log = new R::Logfile("$pkgoutdir/00check.log");
     $log->message("using log directory $pkgoutdir");
 
     if(! $opt_library){
 	$library = $pkgoutdir;
 	$ENV{'R_LIBS'} = "$library:$R_libs";
     }
+
+    print "\n";
+    if(system("${R_HOME}/bin/R INSTALL -l $library $pkg")){
+	$log->error("installation failed");
+    }
+    print("\n");
 
     my $description;
     $log->checking("for file \`$pkg/DESCRIPTION'");
@@ -101,121 +106,18 @@ foreach $pkg (@ARGV){
 	    $log->message("checking \`$ppkg' in bundle \`$pkg'");
 	    $log->setstars("**");
 	    chdir($startdir);
-	    check_pkg("$pkg/$ppkg", $is_bundle, $description, $log);
+	    check_pkg("$pkg/$ppkg", $pkgoutdir, $startdir, $library,
+		      $is_bundle, $description, $log);
 	    $log->setstars("*");
 	}
     }
     else{
 	$is_bundle=0;
 	chdir($startdir);
-	check_pkg("$pkg", $is_bundle, $description, $log);
+	check_pkg("$pkg", $pkgoutdir, $startdir, $library,
+		  $is_bundle, $description, $log);
     }
     
-    chdir($startdir);
-    print "\n";
-    if(system("${R_HOME}/bin/R INSTALL -l $library $pkg")){
-	$log->error("installation failed");
-    }
-    print("\n");
-
-    if(!$is_bundle){
-	chdir($pkgoutdir);
-
-	if($opt_examples && (-d "$library/$pkgname/R-ex")){
-	    $log->creating("examples.R");
-	    if(system("${R_HOME}/bin/massage-Examples ".
-		      "${pkgname} ${library}/${pkgname}/R-ex/*.R ".
-		      "> examples.R")){
-		$log->error();
-		exit(1);
-	    }
-	    $log->result("OK");
-	    $log->checking("examples");
-	    if(system("${R_HOME}/bin/R BATCH $R_opts examples.R")){
-		$log->error("running examples.R failed");
-		exit(1);
-	    }
-	    $log->result("OK");
-	}
-
-	if($opt_tests && (-d "$startdir/$pkg/tests")){
-	    my $testdir="$startdir/$pkg/tests";
-	    $log->checking("tests");
-	    my $makefiles="-f ${R_HOME}/etc/Makeconf-tests";
-	    my $makevars="";
-	    if(-r "$testdir/Makefile"){
-		$makefiles .= " -f $testdir/Makefile";
-	    }
-	    if(-r "$testdir/Makevars"){
-		$makevars = " -f $testdir/Makevars";
-	    }
-	    else{
-		open makevars, "> Makevars";
-		print makevars "makevars = -f Makevars\n";
-		print makevars "srcdir = $testdir\n";
-		print makevars "VPATH = \$(srcdir)\n\n";
-		print makevars "test-src-1=";
-		while(<$testdir/*.R>){
-		    print makevars "\\\n " . basename($_);
-		}
-		print makevars "\n";
-		print makevars "test-src-auto=";
-		while(<$testdir/*.Rin>){
-		    s/Rin$/R/;
-		    print makevars "\\\n " . basename($_);
-		}
-		print makevars "\n";
-		close makevars;
-		$makevars = " -f Makevars";
-	    }
-	    print "\n";
-	    if(system("$make $makefiles $makevars")){
-		$log->error();
-		exit(1);
-	    }
-	    $log->result("OK");
-	}
-		
-	    
-
-
-		
-	if($opt_latex && (-d "$library/$pkgname/latex")){
-	    $ENV{'TEXINPUTS'}="$R_HOME/doc/manual:$ENV{'TEXINPUTS'}";
-	    $log->creating("manual.tex");
-	    open manual, "> manual.tex";
-	    print manual "\\documentclass\{article\}\n" .
-		"\\usepackage\{Rd\}\n".
-		    "\\begin\{document\}\n";
-	    while(<$library/$pkgname/latex/*.tex>){
-		my $file=$_;
-		open file, "< $file" ||
-		    $log->error("cannot open file \`$file' for reading");
-		while(<file>){
-		    print manual $_;
-		}
-	    }
-	    print manual "\\end\{document\}\n";
-	    close manual;
-	    $log->result("OK");
-	    if(-x $latex){
-		$log->checking("manual.tex");
-		print "\n";
-		if(system("$latex manual")){
-		    $log->error();
-		    exit(1);
-		}
-		$log->result("OK");
-	    }
-	}
-	    
-	    
-    }
-    else{
-	$log->message("Running examples, tests and latex " .
-		      "not yet implemented for bundles");
-    }
-
     if($log->{"warnings"}){
 	print("\n") ;
 	$log->summary();
@@ -259,7 +161,10 @@ sub updateIndex {
 
 sub check_pkg {
 
-    my ($pkg, $in_bundle, $description, $log) = @_;
+    my ($pkg, $pkgoutdir, $startdir, $library,
+	$in_bundle, $description, $log) = @_;
+
+    my $pkgname = basename($pkg);
 
     $log->checking("package directory");
     my $dir;
@@ -383,7 +288,7 @@ sub check_pkg {
 	    }
 	}
 
-	my $any;
+	my $any=0;
 	foreach $tag (@mandatoryTags){
 	    if(exists $badmandatory{$tag}){
 		$log->warning("") unless $any;
@@ -434,8 +339,97 @@ sub check_pkg {
 	}
     }
 
+    chdir($pkgoutdir);
+
+    if($opt_examples && (-d "$library/$pkgname/R-ex")){
+	$log->creating("${pkgname}-Ex.R");
+	if(system("${R_HOME}/bin/massage-Examples ".
+		  "${pkgname} ${library}/${pkgname}/R-ex/*.R ".
+		  "> ${pkgname}-Ex.R")){
+	    $log->error();
+	    exit(1);
+	}
+	$log->result("OK");
+	$log->checking("examples");
+	if(system("${R_HOME}/bin/R BATCH $R_opts ${pkgname}-Ex.R")){
+	    $log->error("running examples failed");
+	    exit(1);
+	}
+	$log->result("OK");
+    }
+
+    if($opt_tests && (-d "$startdir/$pkg/tests")){
+        my $testdir="$startdir/$pkg/tests";
+        $log->checking("tests");
+        my $makefiles="-f ${R_HOME}/etc/Makeconf-tests";
+        my $makevars="";
+        if(-r "$testdir/Makefile"){
+            $makefiles .= " -f $testdir/Makefile";
+        }
+        if(-r "$testdir/Makevars"){
+            $makevars = " -f $testdir/Makevars";
+        }
+        else{
+            open makevars, "> Makevars";
+            print makevars "makevars = -f Makevars\n";
+            print makevars "srcdir = $testdir\n";
+            print makevars "VPATH = \$(srcdir)\n\n";
+            print makevars "test-src-1=";
+            while(<$testdir/*.R>){
+                print makevars "\\\n " . basename($_);
+            }
+            print makevars "\n";
+            print makevars "test-src-auto=";
+            while(<$testdir/*.Rin>){
+                s/Rin$/R/;
+                print makevars "\\\n " . basename($_);
+            }
+            print makevars "\n";
+            close makevars;
+            $makevars = " -f Makevars";
+        }
+        print "\n";
+        if(system("$make $makefiles $makevars")){
+            $log->error();
+            exit(1);
+        }
+        $log->result("OK");
+    }
+            
+        
+
+
+            
+    if($opt_latex && (-d "$library/$pkgname/latex")){
+        $ENV{'TEXINPUTS'}="$R_HOME/doc/manual:$ENV{'TEXINPUTS'}";
+        $log->creating("${pkgname}-manual.tex");
+        open manual, "> ${pkgname}-manual.tex";
+        print manual "\\documentclass\{article\}\n" .
+            "\\usepackage\{Rd\}\n".
+                "\\begin\{document\}\n";
+        while(<$library/$pkgname/latex/*.tex>){
+            my $file=$_;
+            open file, "< $file" ||
+                $log->error("cannot open file \`$file' for reading");
+            while(<file>){
+                print manual $_;
+            }
+        }
+        print manual "\\end\{document\}\n";
+        close manual;
+        $log->result("OK");
+        if(-x $latex){
+            $log->checking("${pkgname}-manual.tex");
+            print "\n";
+            if(system("$latex ${pkgname}-manual")){
+                $log->error();
+                exit(1);
+            }
+            $log->result("OK");
+        }
+    }
 }
-	    
+            
 
 #**********************************************************
 
@@ -455,11 +449,11 @@ If necessary for passing the checks, use the \`--vsize' and \`--nsize'
 options to increase R's memory (\`--vanilla' is used by default).
 
 Options:
-  -h, --help		print short help message and exit
-  -v, --version		print version info and exit
+  -h, --help            print short help message and exit
+  -v, --version         print version info and exit
 
-  --vsize=N		set R's vector heap size to N bytes
-  --nsize=N		set R's number of cons cells to N
+  --vsize=N             set R's vector heap size to N bytes
+  --nsize=N             set R's number of cons cells to N
   -l, --library         library directory used for test installation
                         of packages (default is outdir)
 
