@@ -821,7 +821,7 @@ case "${host_os}" in
     fpicflags=
     ;;
   netbsd*)
-    if ${CPP} - -dM < /dev/null | grep -q __ELF__; then
+    if ${CPP} - -dM < /dev/null | grep __ELF__ >/dev/null ; then
       main_ldflags="-export-dynamic"
       shlib_ldflags="-shared"
     else
