@@ -102,7 +102,7 @@ static int numWinDevices = 0;
 
 	/* Device Driver Entry Point */
 
-int WinDeviceDriver(DevDesc*, char*, double, double, double);
+int WinDeviceDriver(DevDesc*, SEXP, int, SEXP, int);
 
 	/********************************************************/
 	/* There are a number of actions that every device 	*/

@@ -17,7 +17,7 @@
  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
-#include <math.h>
+#include "Mathlib.h"
 
 int isnan(double x)
 {
@@ -35,4 +35,21 @@ int finite(double x)
 {
 	int hx = ((int*)&x)[1];
 	return (int)((unsigned)((hx&0x7fffffff)-0x7ff00000)>>31);
+}
+
+
+/* quick hacks at erf and erfc these need to be fixed up */
+
+double erf(double x)
+{
+	return(pnorm(x, 0, 1));
+}
+
+
+
+
+/* 1-erf(x); should be done better than this */
+double erfc(double x)
+{
+	return (pnorm(-x,0,1));
 }
