@@ -39,8 +39,7 @@ void massdist(double *x, int *nx, double *xlow, double *xhigh,
 	y[i] = 0;
 
     for(i=0 ; i<*nx ; i++) {
-      if(!ISNAN(x[i])) {
-
+      if(R_FINITE(x[i])) {
 	xpos = (x[i] - *xlow) / xdelta;
 	ix = floor(xpos);
 	fx = xpos - ix;

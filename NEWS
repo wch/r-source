@@ -15,11 +15,16 @@ BUG FIXES
 
     o   Problem w/ formatReal on non IEEE systems
 
-    o   Switch to <tt> in HTML pages since Linux Netscape mangles 
+    o   Switch to <tt> in HTML pages since Linux Netscape mangles
         Courier.
 
     o	demos/dynload/Makefile used macros that gave incorrect build
 	on some non-GNU makes.
+
+    o	density() should work better with NAs, even on DEC Alpha
+
+    o	R CMD check had a typo which made the final message fail
+
 
 
 	**************************************************
@@ -304,8 +309,8 @@ NEW FEATURES
 
     o	hdf5{read|write} now allow more kinds of attributes and add support
 	for HDF5 version 1.2 (or newer)	thanks to Marcus G. Daniels.
-	Configure checks for HDF5 1.2 availability, older versions will 
-	no longer work. 
+	Configure checks for HDF5 1.2 availability, older versions will
+	no longer work.
 
 
 
@@ -382,7 +387,7 @@ BUG FIXES
 
     o   get("zzz", mode="xxx") missed promise objects.
 
-    o   match.fun failed when a data frame was attached containing a 
+    o   match.fun failed when a data frame was attached containing a
 	"length" variable (e.g.)
 
 
