@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2003 The R Development Core Team.
+ *  Copyright (C) 2003-4 The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -30,7 +30,9 @@
 extern "C" {
 #endif
 
-/* Selected Double Precision Lapack Routines */
+/* Selected Double Precision Lapack Routines 
+   ========
+ */
 
 /* Double precision BiDiagonal matrices */
 
@@ -1224,6 +1226,17 @@ F77_NAME(dsyevx)(const char* jobz, const char* range,
     		 int* m, double* w,
     		 double* z, const int* ldz,
     		 double* work, const int* lwork, int* iwork,
+/* DSYEVR - compute all eigenvalues and, optionally, eigenvectors   */
+/* of a real symmetric matrix A                                    */
+void F77_NAME(dsyevr)(const char *jobz, const char *range, const char *uplo,
+		      const int *n, double *a, const int *lda,
+		      const double *vl, const double *vu,
+		      const int *il, const int *iu,
+		      const double *abstol, int *m, double *w, 
+		      double *z, const int *ldz, int *isuppz, 
+		      double *work, const int *lwork,
+		      int *iwork, const int *liwork,
+		      int *info);
     		 int* ifail, int* info);
 /* DSYGS2 - reduce a real symmetric-definite generalized */
 /* eigenproblem to standard form */
