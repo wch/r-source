@@ -156,8 +156,7 @@ $(RLIBS):
 	(cd $(@D); $(MAKE) $(@F))
 
 libR.la: $(libR_la_OBJECTS) $(libR_la_DEPENDENCIES)
-## FIXME
-	$(LTLINK) -o $@ $(libR_la_OBJECTS) `ls ../appl/*.lo ../nmath/*.lo ../unix/*.lo` $(LIBS) $(BLAS_LIBS) $(FLIBS) $(R_XTRA_LIBS)
+	$(LTLINK) -rpath $(Rexeclibdir) -avoid-version -o $@ $(libR_la_OBJECTS) `ls ../appl/*.lo ../nmath/*.lo ../unix/*.lo` $(LIBS) $(BLAS_LIBS) $(FLIBS) $(R_XTRA_LIBS)
 ## FIXME
 	@$(MAKE) rhome=`cd $(top_builddir); pwd` install
 
