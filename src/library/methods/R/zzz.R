@@ -62,10 +62,16 @@
         ## cache metadata for all environments in search path.  The assumption is that
         ## this has not been done, since cacheMetaData is in this package.  library, attach,
         ## and detach functions look for cacheMetaData and call it if it's found.
-        for(i in rev(seq(along = search()))) {            ev <- as.environment(i)
-            if(!exists(".noGenerics", where = ev, inherits = FALSE) &&
+        sch <- rev(search())[-(1:2)]  # skip base and autoloads
+        sch <- sch[! sch %in% paste("package", c("utils", "graphics", "stats"),
+                                    sep=":")]
+        for(i in sch) {
+            nev <- ev <- as.environment(i)
+            try(nev <- asNamespace(getPackageName(ev)), silent = TRUE)
+            if(!exists(".noGenerics", where = nev, inherits = FALSE) &&
                !identical(getPackageName(ev), "methods"))
                 cacheMetaData(ev, TRUE, searchWhere = .GlobalEnv)
+
         }
     }
 }

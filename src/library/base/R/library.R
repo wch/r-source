@@ -45,7 +45,9 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
 
     checkNoGenerics <- function(env)
     {
-        if (exists(".noGenerics", envir = env, inherits = FALSE))
+        nenv <- env
+        try(nev <- asNamespace(getPackageName(ev)), silent = TRUE)
+        if (exists(".noGenerics", envir = nenv, inherits = FALSE))
             TRUE
         else {
             ## A package will have created a generic
