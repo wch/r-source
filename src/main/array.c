@@ -787,6 +787,7 @@ SEXP do_aperm(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    j = swap(i, dimsa, dimsr, perm, ind1, ind2);
 	    SET_VECTOR_ELT(r, j, VECTOR_ELT(a, i));
 	}
+	break;
     default:
 	errorcall(call, R_MSG_IA);
     }
