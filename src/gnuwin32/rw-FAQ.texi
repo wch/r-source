@@ -364,6 +364,9 @@ the date-time functions.
 It seems that on some versions of Windows (but not 2000/XP) you also
 need to put the @code{@RWVER@\bin} directory early in your path.
 
+We have installed a workaround as from @code{rw1051} that hopefully
+avoids this.
+
 @node The internet download functions fail.,  , Entering certain characters crashes Rgui., Installation and Usage
 @section The internet download functions fail.
 

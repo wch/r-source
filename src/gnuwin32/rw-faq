@@ -322,6 +322,9 @@ the date-time functions.
 It seems that on some versions of Windows (but not 2000/XP) you also
 need to put the `rw1051\bin' directory early in your path.
 
+We have installed a workaround as from `rw1051' that hopefully avoids
+this.
+
 2.15 The internet download functions fail.
 ==========================================
 
