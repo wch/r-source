@@ -838,7 +838,6 @@ void Rstd_savehistory(SEXP call, SEXP op, SEXP args, SEXP env)
 
 SEXP do_syssleep(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    RCNTXT cntxt;
     int Timeout;
     double tm;
     struct tms timeinfo;
