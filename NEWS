@@ -79,8 +79,9 @@ NEW FEATURES
         the help file and the package. The description section now
         comes first.
 
-    o   All the standard packages have DESCRIPTION files, so
-	installed.packages and package.description will work with them.
+    o   All the standard packages have DESCRIPTION files with
+        "Priority: base", so installed.packages and
+        package.description will work with them.  
 
     o   The R-external manual which describes programming for the
 	.Call and .External interfaces is in the doc/manual directory.
