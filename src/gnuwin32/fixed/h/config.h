@@ -191,6 +191,9 @@
 /* Define if you have the finite function.  */
 #define HAVE_FINITE 1
 
+/* Define if you have the ftruncate function.  */
+#undef HAVE_FTRUNCATE
+
 /* Define if you have the getcwd function.  */
 #undef HAVE_GETCWD
 
