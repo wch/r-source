@@ -146,6 +146,9 @@ NEW FEATURES
 	per-session temporary directory and not ~/.R.  A side effect
 	is that ~/.R is now never deleted by R.
 
+    o	*very* experimental browseEnv() for browsing objects in an
+        environment.
+
     o	cbind/rbind() used to ignore all zero-length vectors, an
 	undocumented quirk for S-compatibility.  This caused problems
 	when combining zero-extent matrices and zero-length vectors, and
@@ -288,7 +291,7 @@ BUG FIXES
 
     o   abline() on log scale doesn't draw -ve points. (PR#1243)
 
-    o   The Java search engine now works within Mozilla 1.0 and 
+    o   The Java search engine now works within Mozilla 1.0 and
 	Netscape 6.2.x / 7.0pr1.
 
     o   unsplit() failed if f was a list of factors. (PR#1843)
