@@ -13,24 +13,24 @@ need suitable versions of make, sh, cat, cp, diff, echo, g(awk),
 mkdir, mv, rm, sed; we have packaged a set at
 http://www.stats.ox.ac.uk/pub/Rtools/tools.zip extracted from the
 cygwin distribution (http://sourceware.cygnus.com/cygwin/mirrors.html)
-or (make, gzip, tar) compiled from the sources.
+or (gzip, tar) compiled from the sources.
 
-BEWARE: Most `native' ports of make are _not_ suitable, and the 18 Jan
-2000 cygwin port of make crashes when building packages.  There are
-also problems with version 1.1.1 of the cygwin1.dll and we have used a
-later snapshot of the DLL.  To avoid frustration, please use our tool
-set.
+BEWARE: `Native' ports of make are _not_ suitable, and the 18 Jan 2000
+cygwin port of make crashes when building packages.  There are also
+problems with version 1.1.1 of the cygwin1.dll and we have used
+version 1.1.2.  To avoid frustration, please use our tool set.
 
 
 It is also possible to use the compilers from the cygwin 1.1 release
 with the -mno-cygwin flag.  (You will need the cygwin*, gcc* and
 binutils* bundles. You will need to ensure that you have only one
 version of cygwin1.dll in your path, and there is one in our tools
-distribution.)  We have also successfully used the variant of mingw32
-that uses the MSVCRT run-time system (under gcc-2.95.x but not earlier
-versions), and in the case of the mclust library we found this more
-successful than the standard version.  Be aware that many Windows 95
-machines do not have MSVCRT.DLL installed.
+distribution.)  
+
+We have also successfully used the variant of mingw32 that uses the
+MSVCRT run-time system, and in the case of the mclust library we found
+this more successful than the standard version.  Be aware that many
+Windows 95 machines do not have MSVCRT.DLL installed.
 
 perl5, available via http://www.activestate.com/Products/ActivePerl/
 
@@ -250,7 +250,7 @@ checks its examples.
 Cross-building packages on Linux
 ================================
 
-It is straightforward to build a package on a i386-linux system,
+It is straightforward to build a package on a ix86-linux system,
 although it is not possible (as far as we know) to cross-build .chm or
 .hlp files.  For a package without compiled code you can just zip up
 the Linux installation of the package.

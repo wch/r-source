@@ -608,12 +608,12 @@ the @code{cygwin gdb} was able to catch but which terminated the
 @code{mingw32 gdb}.
 @end itemize
 
-If you have an X server available on the PC, there is a version of @code{DDD}
-available that runs under the cygwin emulation layer (follow the links
-at @uref{http://sourceware.cygnus.com/cygwin}) and provides a graphical
-user interface to @code{gdb}.  Another (Windows-native) GUI for
-@code{gdb} is @code{Insight}, from
-@uref{ftp://ftp.xraylith.wisc.edu/pub/khan/gnu-win32/cygwin/ports/}.
+If you have an X server available on the PC, there is a version of
+@code{DDD} available that runs under the cygwin emulation layer (follow
+the links at @uref{http://sourceware.cygnus.com/cygwin}) and provides a
+graphical user interface to @code{gdb}.  Another (Windows-native) GUI
+for @code{gdb} is @code{Insight}, part of the latest @code{cygwin}
+version of @code{gdb}
 
 
 
@@ -689,14 +689,14 @@ If you want output to be updated on the console, call
 @html
 <p><hr WIDTH="100%">
 <address>
-Last edited 2000 May 20 by Brian Ripley
+Last edited 2000 June 10 by Brian Ripley
 <code><a href="mailto:ripley@@stats.ox.ac.uk">ripley@@stats.ox.ac.uk</a></code>
 </address>
 @end html
 @end ifhtml
 @ifinfo
 @sp 2
-Last edited 2000 May 20 by Brian Ripley <ripley@@stats.ox.ac.uk>
+Last edited 2000 June 10 by Brian Ripley <ripley@@stats.ox.ac.uk>
 @end ifinfo
 
 @bye

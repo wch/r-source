@@ -25,16 +25,15 @@ ftp://ftp.xraylith.wisc.edu/pub/khan/gnu-win32/mingw32.  You will also
 need suitable versions of at least make, sh, cat, cp, cut, diff, echo,
 egrep, expr, g(awk), grep, ls, mkdir, mv, rm, sed, touch; we use those
 from the cygwin distribution
-(http://sourceware.cygnus.com/cygwin/mirrors.html) or (make, gzip,
-tar) compiled from the sources.  We have packaged a set at
-http://www.stats.ox.ac.uk/pub/Rtools/tools.zip.
+(http://sourceware.cygnus.com/cygwin/mirrors.html) or (gzip, tar,
+makeinfo, texindex) compiled from the sources.  We have packaged a set
+at http://www.stats.ox.ac.uk/pub/Rtools/tools.zip.
 
-BEWARE: Most `native' ports of make are not suitable (including that
-at the mingw32 site), nor is the make dated 18-Jan-2000 in the Cygwin
-1.1 net release. (We supply a patched version of the Cygwin make.)
-There are also problems with version 1.1.1 of the cygwin1.dll and we
-have used a later snapshot of the DLL. To avoid frustration, please
-use our tool set.
+BEWARE: `Native' ports of make are not suitable (including that at the
+mingw32 site), nor is the make dated 18-Jan-2000 in the Cygwin 1.1 net
+release.  There are also problems with version 1.1.1 of the
+cygwin1.dll and we have used 1.1.2. To avoid frustration, please use
+our tool set.
 
 It is also possible to use the compilers from the cygwin 1.1 release
 with the -mno-cygwin flag.  (You will need the cygwin*, gcc* and

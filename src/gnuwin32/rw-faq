@@ -479,12 +479,11 @@ However, note
      that the `cygwin gdb' was able to catch but which terminated the
      `mingw32 gdb'.
 
-If you have an X server available on the PC, there is a version of `DDD'
-available that runs under the cygwin emulation layer (follow the links
-at `http://sourceware.cygnus.com/cygwin') and provides a graphical user
-interface to `gdb'.  Another (Windows-native) GUI for `gdb' is
-`Insight', from
-`ftp://ftp.xraylith.wisc.edu/pub/khan/gnu-win32/cygwin/ports/'.
+If you have an X server available on the PC, there is a version of
+`DDD' available that runs under the cygwin emulation layer (follow the
+links at `http://sourceware.cygnus.com/cygwin') and provides a
+graphical user interface to `gdb'.  Another (Windows-native) GUI for
+`gdb' is `Insight', part of the latest `cygwin' version of `gdb'
 
 7.3 How do I include C++ code?
 ==============================
@@ -549,5 +548,5 @@ then `R_ProcessEvents()'.
 
 
 
-Last edited 2000 May 20 by Brian Ripley <ripley@stats.ox.ac.uk>
+Last edited 2000 June 10 by Brian Ripley <ripley@stats.ox.ac.uk>
 
