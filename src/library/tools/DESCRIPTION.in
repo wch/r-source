@@ -1,8 +1,9 @@
 Package: tools
 Version: @VERSION@
 Priority: base
-Title: Tools for Package Development and Administration
-Author: Kurt Hornik.
+Title: Tools and Utilities
+Author: Kurt Hornik and Friedrich Leisch
 Maintainer: R Core Team <R-core@r-project.org>
-Description: Tools for package development and administration.
+Description: Tools for package development and administration,
+  literate statistical data analysis, documentation, ...
 License: GPL Version 2 or later.

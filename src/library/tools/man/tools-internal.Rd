@@ -2,6 +2,14 @@
 \title{Internal tools functions}
 \alias{listFilesWithExts}
 \alias{sQuote}
+\alias{SweaveParseOptions}
+\alias{RweaveLatexRuncode}
+\alias{RweaveLatexWritedoc}
+\alias{RweaveLatexFinish}
+\alias{RweaveLatexOptions}
+\alias{RweaveChunkPrefix}
+\alias{RtangleRuncode}
+\alias{RtangleFinish}
 \description{
   Internal tools functions.
 }

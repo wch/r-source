@@ -1,0 +1,16 @@
+\RequirePackage[T1]{fontenc}
+\RequirePackage{graphicx,verbatim,ae}
+\setkeys{Gin}{width=0.8\textwidth}
+
+\newenvironment{Sinput}{%
+  \def\verbatim@font{\normalfont\ttfamily\slshape
+    \let\do\do@noligs
+    \verbatim@nolig@list}
+  \verbatim}{\endverbatim}
+\newenvironment{Soutput}{%
+  \def\verbatim@font{\normalfont\ttfamily
+    \let\do\do@noligs
+    \verbatim@nolig@list}
+  \verbatim}{\endverbatim}
+
+  

@@ -21,6 +21,11 @@ NEW FEATURES
 
     o	Function arima.sim() in package ts.
 
+    o   Sweave(), Stangle() and friends in package tools. Sweave allows
+        to mix latex documentation and R code in a single source file,
+        the R code can be replaced by its output (text, figures) to
+        allow automatic report generation.
+
 
 DEPRECATED & DEFUNCT
 
