@@ -49,6 +49,11 @@
 #include "Defn.h"
 #include "Print.h"
 
+#ifdef SUPPORT_MBCS
+/* This only uses a FontSet in a MBCS */
+# define USE_FONTSET 1
+#endif
+
 #ifndef HAVE_KEYSYM
 #define KeySym int
 #endif
@@ -168,7 +173,7 @@ static GC               iogc;
 static XSizeHints       iohint;
 static XFontStruct      *font_info;
 static char             *font_name="9x15";
-#ifdef SUPPORT_UTF8
+#ifdef USE_FONTSET
 static XFontSet         font_set;
 static XFontStruct	**fs_list;
 static int		font_set_cnt;
@@ -967,17 +972,17 @@ static void clearrect(void)
    should get this far */
 
 /* --- Not true! E.g. ESC ends up in here... */
-#ifdef SUPPORT_UTF8
-/* <FIXME> This is not correct for stateful MBCSs, but that's hard to 
-   do as we get a char at a time */
+#ifdef USE_FONTSET
 #include <wchar.h>
 #include <wctype.h>
 #endif
 
+/* <FIXME> This is not correct for stateful MBCSs, but that's hard to 
+   do as we get a char at a time */
 static void handlechar(char *text)
 {
     int i, c = text[0];
-#ifdef SUPPORT_UTF8
+#ifdef USE_FONTSET
     wchar_t wc;
 #endif
 
@@ -1007,7 +1012,7 @@ static void handlechar(char *text)
     }
 
     if (currentexp == 1) {	/* we are parsing a number */
-#ifdef SUPPORT_UTF8
+#ifdef USE_FONTSET
 	mbrtowc(&wc, text, MB_CUR_MAX, NULL);
 	switch (wc) {
 	case L'-':
@@ -1049,7 +1054,7 @@ static void handlechar(char *text)
 #endif
     }
     if (currentexp == 3) {
-#ifdef SUPPORT_UTF8
+#ifdef USE_FONTSET
 	mbrtowc(&wc, text, MB_CUR_MAX , NULL);
 	if (iswspace(wc)) goto donehc;
 	if (clength == 0 && wc != '.' && !iswalpha(wc)) goto donehc;
@@ -1321,8 +1326,8 @@ static char *GetCharP(DEEvent * event)
     static char text[8];
     KeySym iokey;
 
-#ifdef SUPPORT_UTF8
-    if(utf8locale) {
+#ifdef USE_FONTSET
+    if(mbcslocale) {
 #ifdef HAVE_XUTF8LOOKUPSTRING
 	Xutf8LookupString(ioic, (XKeyEvent *)event, text, 8, &iokey, NULL);
 #else
@@ -1389,8 +1394,8 @@ static void RefreshKeyboardMapping(DEEvent * event)
 void closewin(void)
 {
     XFreeGC(iodisplay, iogc);
-#ifdef SUPPORT_UTF8
-    if(utf8locale) {
+#ifdef USE_FONTSET
+    if(mbcslocale) {
 	XDestroyIC(ioic);
 	XCloseIM(ioim);
     }
@@ -1430,7 +1435,7 @@ static Rboolean initwin(void) /* TRUE = Error */
 
     strcpy(copycontents, "");
 
-#ifdef SUPPORT_UTF8
+#ifdef USE_FONTSET
     if (!XSupportsLocale ()) 
 	warning("locale not supported by Xlib: some X ops will operate in C locale");
     if (!XSetLocaleModifiers ("")) warning("X cannot set locale modifiers");
@@ -1445,8 +1450,8 @@ static Rboolean initwin(void) /* TRUE = Error */
 
     /* Get Font Loaded if we can */
 
-#ifdef SUPPORT_UTF8
-    if(utf8locale) {
+#ifdef USE_FONTSET
+    if(mbcslocale) {
 	int  missing_charset_count;
 	char **missing_charset_list;
 	char *def_string;
@@ -1477,8 +1482,8 @@ static Rboolean initwin(void) /* TRUE = Error */
     twidth = textwidth(digits, strlen(digits));
     if (nboxchars > 0) twidth = (twidth * nboxchars)/10;
     box_w = twidth + 4;
-#ifdef SUPPORT_UTF8
-    if(utf8locale) {
+#ifdef USE_FONTSET
+    if(mbcslocale) {
 	XFontSetExtents *extent = XExtentsOfFontSet(font_set);
 	char **ml;
 	box_h = (extent->max_logical_extent.height)
@@ -1554,8 +1559,8 @@ static Rboolean initwin(void) /* TRUE = Error */
     protocol = XInternAtom(iodisplay, "WM_DELETE_WINDOW", 0);
     XSetWMProtocols(iodisplay, iowindow, &protocol, 1);
     XSetWMHints(iodisplay, iowindow, &hints);
-#ifdef SUPPORT_UTF8
-    if(utf8locale) {
+#ifdef USE_FONTSET
+    if(mbcslocale) {
 	ioim = XOpenIM(iodisplay, NULL, NULL, NULL);
 	if(!ioim) {
 	    XDestroyWindow(iodisplay, iowindow);
@@ -1577,8 +1582,8 @@ static Rboolean initwin(void) /* TRUE = Error */
 #endif
 
     iogc = XCreateGC(iodisplay, iowindow, 0, 0);
-#ifdef SUPPORT_UTF8
-    if(!utf8locale)
+#ifdef USE_FONTSET
+    if(!mbcslocale)
 #endif
 	XSetFont(iodisplay, iogc, font_info->fid);
     XSetBackground(iodisplay, iogc, iowhite);
@@ -1687,8 +1692,8 @@ static void drawrectangle(int xpos, int ypos, int width, int height,
 
 static void drawtext(int xpos, int ypos, char *text, int len)
 {
-#ifdef SUPPORT_UTF8
-    if(utf8locale)
+#ifdef USE_FONTSET
+    if(mbcslocale)
 #ifdef HAVE_XUTF8DRAWIMAGESTRING
 	Xutf8DrawImageString(iodisplay, iowindow, font_set, iogc, xpos, ypos,
 			     text, len);
@@ -1709,8 +1714,8 @@ static void Rsync()
 
 static int textwidth(char *text, int nchar)
 {
-#ifdef SUPPORT_UTF8
-    if(utf8locale)
+#ifdef USE_FONTSET
+    if(mbcslocale)
 #ifdef HAVE_XUTF8TEXTESCAPEMENT
 	return Xutf8TextEscapement(font_set, text, nchar);
 #else

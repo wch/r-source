@@ -170,7 +170,7 @@ static void substr(char *buf, char *str, int sa, int so)
 /* Store the substring	str [sa:so]  into buf[] */
     int i;
 #ifdef SUPPORT_MBCS
-    if(utf8locale && !utf8strIsASCII(str)) {
+    if(mbcslocale && !utf8strIsASCII(str)) {
 	int j, used;
 	mbstate_t mb_st;    
 	mbs_init(&mb_st);
@@ -237,7 +237,7 @@ static void substrset(char *buf, char *str, int sa, int so)
 /* Replace the substring buf [sa:so] by str[] */
 #ifdef SUPPORT_MBCS
     /* This cannot work for stateful encodings */
-    if(utf8locale) { /* probably not worth optimizing for non-utf8 strings */
+    if(mbcslocale) { /* probably not worth optimizing for non-utf8 strings */
 	int i, in = 0, out = 0;
 
 	for(i = 1; i < sa; i++) buf += Mbrtowc(NULL, buf, MB_CUR_MAX, NULL);
@@ -499,7 +499,7 @@ SEXP do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 	} else {
 	    /* split into individual characters (not bytes) */
 #ifdef SUPPORT_MBCS
-	    if(utf8locale && !utf8strIsASCII(buf)) {
+	    if(mbcslocale && !utf8strIsASCII(buf)) {
 		char bf[20 /* > MB_CUR_MAX */], *p = buf;
 		int used;
 		mbstate_t mb_st;
@@ -731,7 +731,7 @@ SEXP do_makenames(SEXP call, SEXP op, SEXP args, SEXP env)
 	   well as . followed by a number */
 	need_prefix = FALSE;
 #ifdef SUPPORT_MBCS
-	if (utf8locale && this[0]) {
+	if (mbcslocale && this[0]) {
 	    int nc = l, used;
 	    wchar_t wc;
 	    mbstate_t mb_st;
@@ -762,7 +762,7 @@ SEXP do_makenames(SEXP call, SEXP op, SEXP args, SEXP env)
 	}
 	this = CHAR(STRING_ELT(ans, i));
 #ifdef SUPPORT_MBCS
-	if (utf8locale) {
+	if (mbcslocale) {
 	    /* This cannot lengthen the string, so safe to overwrite it.
 	       Would also be possible a char at a time.
 	     */
@@ -1153,7 +1153,7 @@ SEXP do_regexpr(SEXP call, SEXP op, SEXP args, SEXP env)
 		st = fgrep_one(spat, CHAR(STRING_ELT(text, i)));
 		INTEGER(ans)[i] = (st > -1)?(st +1):-1;
 #ifdef SUPPORT_MBCS
-		if(utf8locale)
+		if(mbcslocale)
 		    INTEGER(matchlen)[i] = INTEGER(ans)[i] >= 0 ?
 			mbstowcs(NULL, spat, 0):-1;
 		else
@@ -1166,7 +1166,7 @@ SEXP do_regexpr(SEXP call, SEXP op, SEXP args, SEXP env)
 		    st = regmatch[0].rm_so;
 		    INTEGER(ans)[i] = st + 1; /* index from one */
 #ifdef SUPPORT_MBCS
-		    if(utf8locale) {
+		    if(mbcslocale) {
 			/* we need the matched string. */
 			int mlen = regmatch[0].rm_eo - st;
 			AllocBuffer(mlen+1);
@@ -1205,7 +1205,7 @@ do_tolower(SEXP call, SEXP op, SEXP args, SEXP env)
     n = LENGTH(x);
     PROTECT(y = allocVector(STRSXP, n));
 #ifdef SUPPORT_MBCS
-    if(utf8locale) {
+    if(mbcslocale) {
 	int nb, nc, j;
 	wctrans_t tr = wctrans(ul ? "toupper" : "tolower");
 	wchar_t * wc;
@@ -1443,7 +1443,7 @@ do_chartr(SEXP call, SEXP op, SEXP args, SEXP env)
     }
 
 #ifdef SUPPORT_MBCS
-    if(utf8locale) {
+    if(mbcslocale) {
 	int j, nb, nc;
 	wchar_t xtable[65536 + 1], c_old, c_new, *wc;
 	char *xi;
@@ -1638,7 +1638,7 @@ do_agrep(SEXP call, SEXP op, SEXP args, SEXP env)
 
 #ifdef SUPPORT_UTF8
     /* test for non-ASCII strings */
-    if(utf8locale) {
+    if(mbcslocale) {
 	Rboolean warn = !utf8strIsASCII(CHAR(STRING_ELT(pat, 0)));
 	if(!warn)
 	    for(i = 0 ; i < length(vec) ; i++)

@@ -1387,6 +1387,7 @@ SEXP do_readln(SEXP call, SEXP op, SEXP args, SEXP rho)
     return ans;
 }
 
+/* Works with digits, but OK in UTF-8 */
 SEXP do_menu(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     int c, j;

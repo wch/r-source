@@ -1636,8 +1636,9 @@ static int StringValue(int c)
 		}
 		c = val;
 	    }
-#ifdef SUPPORT_UTF8
-	    else if(utf8locale && (c == 'u' || c == 'U')) {
+#ifdef SUPPORT_MBCS
+	    /* Only realy valid in UTF-8, but useful shorthand elsewhere */
+	    else if(mbcslocale && (c == 'u' || c == 'U')) {
 		wint_t val = 0; int i, ext; size_t res;
 		char buff[9];
 		for(i = 0; i < 8; i++) { /* probably only ever 6 */
@@ -1722,8 +1723,8 @@ int isValidName(char *name)
     char *p = name;
     int i;
 
-#ifdef SUPPORT_UTF8
-    if(utf8locale) {
+#ifdef SUPPORT_MBCS
+    if(mbcslocale) {
 	/* the only way to establish which chars are alpha etc is to
 	   use the wchar variants */
 	int n = strlen(name), used;
@@ -1849,7 +1850,6 @@ static int token()
 
     if (c == '.') return NumericValue(c);
 #ifdef SUPPORT_UTF8
-    /* FIXME add validity checks here */
     if(utf8locale && (clen = utf8clen(c)) > 1) {
 	s[0] = c; s[clen] = '\0';
 	for(i = 1; i < clen; i++) s[i] = xxgetc();
@@ -1879,7 +1879,6 @@ static int token()
 
     if (c == '.') return SymbolValue(c);
 #ifdef SUPPORT_UTF8
-    /* FIXME add validity checks here */
     if(utf8locale && (clen = utf8clen(c)) > 1) {
 	s[0] = c; s[clen] = '\0';
 	for(i = 1; i < clen; i++) s[i] = xxgetc();

@@ -26,10 +26,6 @@
 # include <config.h>
 #endif
 
-#ifdef SUPPORT_UTF8
-# define USE_FONTSET 1
-#endif
-
 #ifdef HAVE_RINT
 #define R_rint(x) rint(x)
 #else
@@ -53,6 +49,13 @@
 #include <R_ext/eventloop.h>
 #include <R_ext/Memory.h>	/* vmaxget */
 #include "Rdevices.h"
+
+#ifdef SUPPORT_MBCS
+/* This uses fontsets even in single-byte charsets.
+   We may want to change that. */
+# define USE_FONTSET 1
+#endif
+
 
 #define R_X11_DEVICE 1
 #include "devX11.h"
@@ -867,14 +870,7 @@ static void *RLoadFont(newX11Desc *xd, char* family, int face, int size)
     if (nfonts == MAXFONTS) /* make room in the font cache */
     {
 	for (i = 0 ; i < CLRFONTS ; i++)
-	  if (fontcache[i].face == SYMBOL_FONTFACE -1)
 	      R_XFreeFont(display, fontcache[i].font);
-	  else
-#ifdef USE_FONTSET
-	      R_XFreeFont(display, fontcache[i].font);
-#else
-	      R_XFreeFont(display, fontcache[i].font);
-#endif
 	for (i = CLRFONTS ; i < MAXFONTS ; i++)
 	    fontcache[i - CLRFONTS] = fontcache[i];
 	nfonts -= CLRFONTS;
@@ -1341,10 +1337,11 @@ static double newX11_StrWidth(char *str,
     int size = gc->cex * gc->ps + 0.5;
     SetFont(translateFontFamily(gc->fontfamily, xd),
 	    gc->fontface, size, dd);
+
+#ifdef USE_FONTSET
     if (xd->fontface == SYMBOL_FONTFACE)
 	return (double) XTextWidth(xd->font->font, str, strlen(str));
-    else
-#ifdef USE_FONTSET
+    else  {
 #ifdef HAVE_XUTF8TEXTESCAPEMENT
 	if(utf8locale)
 	    return (double) Xutf8TextEscapement(xd->font->fontset,
@@ -1353,8 +1350,9 @@ static double newX11_StrWidth(char *str,
 #endif
 	    return (double) XmbTextEscapement(xd->font->fontset,
 					      str, strlen(str));
+    }
 #else
-       return (double) XTextWidth(xd->font->font, str, strlen(str));
+    return (double) XTextWidth(xd->font->font, str, strlen(str));
 #endif
 }
 

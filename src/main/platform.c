@@ -1020,6 +1020,9 @@ SEXP do_getlocale(SEXP call, SEXP op, SEXP args, SEXP rho)
 #ifdef HAVE_LANGINFO_CODESET
     utf8locale = strcmp(nl_langinfo(CODESET), "UTF-8") == 0;
 #endif
+#ifdef SUPPORT_MBCS
+    mbcslocale = MB_CUR_MAX > 1;
+#endif
     return ans;
 #else
     return R_NilValue;

@@ -458,6 +458,9 @@ void setup_Rmainloop(void)
 #ifdef HAVE_LANGINFO_CODESET
     utf8locale = strcmp(nl_langinfo(CODESET), "UTF-8") == 0;
 #endif
+#ifdef SUPPORT_MBCS
+    mbcslocale = MB_CUR_MAX > 1;
+#endif
     /* gc_inhibit_torture = 0; */
 
     /* Initialize the global context for error handling. */

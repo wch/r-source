@@ -1076,7 +1076,7 @@ strptime (const char *buf, const char *format, struct tm *tm)
     enum locale_status decided;
     decided = raw;
 #ifdef SUPPORT_MBCS
-    if(utf8locale) {
+    if(mbcslocale) {
 	wchar_t wbuf[1001], wfmt[1001]; size_t n;
 #if defined(HAVE_LOCALE_H) && defined(HAVE_WCSFTIME)
 	get_locale_w_strings();
