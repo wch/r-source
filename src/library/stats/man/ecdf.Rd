@@ -64,12 +64,12 @@ y <- round(rnorm(12),1); y[3] <- y[1]
 Fn12 <- ecdf(y)
 Fn12
 print(knots(Fn12), dig=2)
-12*Fn12(knots(Fn12)) ## ~= 1:12  if there where no ties
+12*Fn12(knots(Fn12)) ## ~= 1:12  if there were no ties
 
 summary(Fn12)
 summary.stepfun(Fn12)
 print(ls.Fn12 <- ls(env= environment(Fn12)))
-##[1] "f"  "method"  "n"  "ties"   "x"  "y"  "yleft"  "yright"
+##[1] "f"  "method"  "n"  "x"  "y"  "yleft"  "yright"
 
 12 * Fn12((-20:20)/10)
 
