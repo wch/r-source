@@ -32,7 +32,8 @@ library <-
 			      "using the one found in `", which.lib.loc,
 			      "'", sep = ""))
 	    }
-	    file <- system.file("R", package, pkg = package, lib = lib.loc)
+	    file <- system.file("R", package, pkg = package,
+                                lib = which.lib.loc)
 	    ## allowed zipped R source files
 	    if (file == "") {
 		tfile <- file.path(which.lib.loc, package, "R", package)
@@ -46,7 +47,7 @@ library <-
 	    env <- attach(NULL, name = pkgname)
             ## detach does not allow character vector args
             on.exit(detach(2))
-            path <- system.file(pkg = package, lib = lib.loc)
+            path <- system.file(pkg = package, lib = which.lib.loc)
             attr(env, "path") <- path
 	    ## "source" file into env
 	    if (file == "")
