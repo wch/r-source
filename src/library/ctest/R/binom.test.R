@@ -11,7 +11,8 @@ binom.test <- function(x, n, p = 0.5, alternative = "two.sided",
     alternative <- char.expand(alternative,
                                c("two.sided", "less", "greater"))
     if(length(alternative) > 1 || is.na(alternative))
-        stop("alternative must be \"two.sided\", \"less\" or \"greater\"")
+        stop(paste("alternative must be \"two.sided\",",
+                   "\"less\" or \"greater\""))
 
     if(!((length(conf.level) == 1) && is.finite(conf.level) &&
          (conf.level > 0) && (conf.level < 1)))
@@ -28,6 +29,10 @@ binom.test <- function(x, n, p = 0.5, alternative = "two.sided",
                        else if(p == 1)
                            (x == n)
                        else {
+                           ## Do
+                           ##   d <- dbinom(0 : n, n, p)
+                           ##   sum(d[d <= dbinom(x, n, p)])
+                           ## a bit more efficiently ...
                            d <- dbinom(x, n, p)
                            if(x / n < p) {
                                i <- seq(from = x + 1, to = n)
@@ -42,12 +47,28 @@ binom.test <- function(x, n, p = 0.5, alternative = "two.sided",
                            }
                        }
                    })
+    ## Determine p s.t. Prob(B(n,p) >= x) = alpha
+    p.U <- function(x, alpha) {
+        if(x == 0)                      # No solution
+            0
+        else
+            uniroot(function(p) 1 - pbinom(x - 1, n, p) - alpha,
+                    c(0, 1))$root
+    }
+    ## Determine p s.t. Prob(B(n,p) <= x) = alpha
+    p.L <- function(x, alpha) {
+        if(x == n)                      # No solution
+            1
+        else
+            uniroot(function(p) pbinom(x, n, p) - alpha,
+                    c(0, 1))$root
+    }
     CINT <- switch(alternative,
-                   less = c(0, qbinom(conf.level, n, p)),
-                   greater = c(n - qbinom(conf.level, n, 1 - p), n),
+                   less = c(0, p.U(x, 1 - conf.level)),
+                   greater = c(p.L(x, 1 - conf.level), 1),
                    two.sided = {
-                       beta <- (1 + conf.level) / 2
-                       c(n - qbinom(beta, n, 1 - p), qbinom(beta, n, p))
+                       alpha <- (1 - conf.level) / 2
+                       c(p.L(x, alpha), p.U(x, alpha))
                    })
     attr(CINT, "conf.level") <- conf.level
   
@@ -55,10 +76,14 @@ binom.test <- function(x, n, p = 0.5, alternative = "two.sided",
     names(n) <- "number of trials"	# or simply "n" ??
     names(p) <- "probability of success"# or simply "p" ??
 
+    ESTIMATE <- x / n
+    names(ESTIMATE) <- names(p)
+
     structure(list(statistic = x,
                    parameter = n,
                    p.value = PVAL,
                    conf.int = CINT,
+                   estimate = ESTIMATE,
                    null.value = p,
                    alternative = alternative,
                    method = "Exact binomial test",
