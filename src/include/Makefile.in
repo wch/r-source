@@ -13,8 +13,8 @@ include $(top_builddir)/Makeconf
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = $(shell cd $(srcdir) && ls Makefile.in Platform.h.in *.h)
 
-SRC_HEADERS = S.h S_compat.h f2c.h Arith.h Complex.h Error.h Fortran.h \
-	Applic.h Blas.h Linpack.h Mathlib.h Memory.h PrtUtil.h Utils.h
+SRC_HEADERS = S.h S_compat.h f2c.h Arith.h Complex.h Error.h Errormsg.h \
+	 Fortran.h Applic.h Blas.h Linpack.h Mathlib.h Memory.h PrtUtil.h Utils.h
 OBJ_HEADERS = Platform.h
 
 all: R

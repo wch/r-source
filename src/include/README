@@ -19,6 +19,8 @@ There are 2 kinds:
          NESTING Hierarchy
 -------------------------------------------------------------------
 
+i)
+
 Graphics.h
 	-> Defn.h	-> .......
 
@@ -26,32 +28,37 @@ IOStuff.h
 	-> Defn.h	-> .......
 
 Print.h
-	-> PrtUtil.h
+	-> PrtUtil.h 	-> Complex.h
 	-> Defn.h	-> .......
 
 Defn.h
 	-> Arith.h	-> Platform.h
-	-> Platform.h
 	-> Complex.h
 	-> Errormsg.h	-> Error.h
 	-> Memory.h
-	-> PrtUtil.h
-	-> Utils.h
+	-> PrtUtil.h 	-> Complex.h
+	-> Utils.h 	-> Complex.h
 
     -------------
+
+ii)
 
 Mathlib.h
 	-> Arith.h	-> Platform.h
 
 S_compat.h
-	-> S.h		-> Platform.h
+	-> S.h		-> Platform.h , Error.h , Memory.h
 	-> Linpack.h	-> Blas.h ,	Platform.h
 
 S.h
 	-> Platform.h
+	-> Error.h
 	-> Memory.h
 
 Applic.h
+	-> Platform.h
+
+Arith.h
 	-> Platform.h
 
 Fortran.h
@@ -62,9 +69,11 @@ Linpack.h
 	-> Platform.h
 	-> Blas.h
 
-Arith.h
-	-> Platform.h
+PrtUtil.h
+	-> Complex.h
 
 Errormsg.h
 	-> Error.h
 
+Utils.h
+ 	-> Complex.h
