@@ -151,7 +151,7 @@ cat("             Intercourse\n",
 file.show(file)
 ft <- read.ftable(file)
 ft
-unlink{file)
+unlink(file)
 
 ## Agresti (1990), page 297, Table 8.16.
 ## Almost o.k., but misses the name of the row variable.
