@@ -583,7 +583,11 @@ case "${host_os}" in
     AC_DEFINE(USE_BUILTIN_RINT)
     case "${CC}" in
       cc|c89)
-	R_XTRA_CFLAGS="${R_XTRA_CFLAGS} -D_HPUX_SOURCE"
+	## Luke Tierney says we also need '-Wp,-H16000' which tells the
+	## pre-processor to increase the size of an internal table.  It
+	## seems that src/modules/vfonts/g_her_glyph.c contains a line
+	## that is too long for the pre-processor without this flag.
+	R_XTRA_CFLAGS="${R_XTRA_CFLAGS} -D_HPUX_SOURCE -Wp,-H16000"
 	;;
     esac
     AC_CHECK_LIB(dld, shl_load, R_XTRA_LIBS="${R_XTRA_LIBS} -ldld")
