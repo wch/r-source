@@ -12,7 +12,7 @@
 \details{
   The value of a top-level assignment \emph{is} put in \code{.Last.value},
   unlike S.
-  
+
   Do not assign to \code{.Last.value} in the workspace, because this
   will always mask the object of the same name in \code{package:base}.
 }
@@ -25,8 +25,8 @@
 gamma(1:15)          # think of some intensive calculation...
 fac14 <- .Last.value # keep them
 
-library("stepfun") # returns invisibly
+library("splines") # returns invisibly
 .Last.value    # shows what library(.) above returned
-\dontshow{detach("package:stepfun")}
+\dontshow{detach("package:splines")}
 }
 \keyword{programming}

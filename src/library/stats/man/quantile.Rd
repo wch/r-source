@@ -44,7 +44,7 @@ quantile(x, \dots)
   Wadsworth \& Brooks/Cole.
 }
 \seealso{
-  \code{\link[stepfun]{ecdf}} (in the \pkg{stepfun} package) for
+  \code{\link[stats]{ecdf}} (in the \pkg{stats} package) for
   empirical distributions of which \code{quantile} is the
   \dQuote{inverse};
   \code{\link{boxplot.stats}} and \code{\link{fivenum}} for computing

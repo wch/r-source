@@ -15,7 +15,7 @@ detach(name, pos = 2, version)
     detach.  When \code{name} is \code{\link{numeric}}, \code{pos = name}
     is used.
   }
-    \item{version}{A character string denoting a version number of the 
+    \item{version}{A character string denoting a version number of the
      package to be loaded.  If no version is given, a suitable default
      is chosen.}
 }
@@ -52,8 +52,8 @@ library(eda)
 pkg <- "package:eda"
 detach(pos = match(pkg, search()))
 
-## careful: do not do this unless 'stepfun' is not already loaded.
-library(stepfun)
+## careful: do not do this unless 'splines' is not already loaded.
+library(splines)
 detach(2)# 'pos' used for 'name'
 }
 \keyword{data}

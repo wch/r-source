@@ -32,7 +32,7 @@ system.file(\dots, package = "base", lib.loc = NULL)
 system.file()                  # The root of the 'base' package
 system.file(package = "stats") # The root of package 'stats'
 system.file("INDEX")
-system.file("help", "AnIndex", package = "stepfun")
+system.file("help", "AnIndex", package = "splines")
 }
 \keyword{file}
 \keyword{utilities}

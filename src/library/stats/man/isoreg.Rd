@@ -23,9 +23,8 @@ isoreg(x, y = NULL)
   linear and the result is \eqn{m'(x)}, a step function with level
   changes at locations where the convex \eqn{m(x)} touches the
   cumulative data polygon and changes slope.\cr
-  \code{\link[stepfun]{as.stepfun}()} in \pkg{stepfun}
-  returns a \code{\link[stepfun]{stepfun}} object
-  which can be more parsimonious.
+  \code{\link[stats]{as.stepfun}()} returns a \code{\link[stats]{stepfun}}
+  object which can be more parsimonious.
 }
 \value{
   \code{isoreg()} returns an object of class \code{isoreg} which is
@@ -64,7 +63,6 @@ isoreg(x, y = NULL)
 plot(ir, plot.type = "row")
 
 (ir3 <- isoreg(y3 <- c(1,0,4,3,3,5,4,2, 3)))# last "3", not "0"
-library(stepfun)
 (fi3 <- as.stepfun(ir3))
 (ir4 <- isoreg(1:10, y4 <- c(5, 9, 1:2, 5:8, 3, 8)))
 cat("R^2 =", formatC(sum(residuals(ir4)^2) / (9*var(y4)), dig=2),"\n")

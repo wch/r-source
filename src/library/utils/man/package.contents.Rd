@@ -22,7 +22,7 @@ package.contents(pkg, lib.loc = NULL)
 }
 \seealso{\code{\link{read.dcf}}, \code{\link{package.description}}}
 \examples{
-package.contents("stepfun")
-package.contents("stepfun")[, c("Entry", "Description")]
+package.contents("splines")
+package.contents("splines")[, c("Entry", "Description")]
 }
 \keyword{utilities}

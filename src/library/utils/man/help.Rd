@@ -136,7 +136,7 @@ type?topic
   The expression \code{methods ? f} will look for the overall
   documentation methods for the function \code{f}.  Currently, this
   means the documentation file containing the alias \code{f-methods}.
-  
+
   There are two different ways to look for documentation on a
   particular method.  The first is to supply the \code{topic} argument
   in the form of a function call, omitting the \code{type} argument.
@@ -150,7 +150,7 @@ type?topic
   a function call, but the arguments are now interpreted as specifying
   the class of the argument, not the actual expression that will
   appear in a real call to the function.  See the examples below.
-  
+
   The first approach will be tedious if the actual call involves
   complicated expressions, and may be slow if the arguments take a
   long time to evaluate.  The second approach avoids these
@@ -161,7 +161,7 @@ type?topic
   the method to be looked up is found by using \code{selectMethod}
  (see the documentation for  \code{\link[methods]{getMethod}}).
 
-  
+
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
@@ -191,7 +191,7 @@ help(lapply)
 help("for")             # or ?"for", but the quotes are needed
 ?"+"
 
-help(package="stepfun") # get help even when package is not loaded
+help(package="splines") # get help even when package is not loaded
 
 data()                  # list all available data sets
 ?women                  # information about data set "women"
