@@ -557,6 +557,45 @@ and send a message to @url{WWWadmin@@ci.tuwien.ac.at} about it.  The
 @acronym{CRAN} maintainers will run these tests before putting a
 submission in the main archive.
 
+Note that the fully qualified name of the @file{.tar.gz} file must be of
+the form
+
+@quotation
+@file{@var{package}_@var{version}@r{[}_@var{engine}@r{[}_@var{type}@r{]]}},
+@end quotation
+
+@noindent
+where the @samp{[ ]} indicates that the enclosed component is optional,
+@var{package} and @var{version} are the corresponding entries in file
+@file{DESCRIPTION}, @var{engine} gives the S engine the package is
+targeted for and defaults to @samp{R}, and @var{type} indicated whether
+the file contains source or binaries for a certain platform, and
+defaults to @samp{source}.  I.e.,
+
+@smallexample
+OOP_0.1-3.tar.gz
+OOP_0.1-3_R.tar.gz
+OOP_0.1-3_R_source.tar.gz
+@end smallexample
+
+@noindent
+are all equivalent and indicate an R source package, whereas
+
+@smallexample
+OOP_0.1-3_Splus6_sparc-sun-solaris.tar.gz
+@end smallexample
+
+@noindent
+is a binary package for installation under Splus6 on the given
+platform.
+
+This naming scheme has been adopted to ensure useability of code across
+S engines.  R code and utilities operating on package @file{.tar.gz}
+files can only be assumed to work provided that this naming scheme is
+respected.  E.g., @command{R CMD INSTALL} will not work on
+@file{@var{package}.tgz} files.  Of course, @command{R CMD build}
+automatically creates valid file names.
+
 @node Writing R documentation, Tidying and profiling R code, Creating R packages, Top
 @chapter Writing R documentation
 @cindex Documentation, writing
