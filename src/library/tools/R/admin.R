@@ -167,6 +167,7 @@ function(dir, outDir)
 .installPackageIndices <-
 function(dir, outDir)
 {
+    options(warn=1) # to ensure warnings get seen
     if(!fileTest("-d", dir))
         stop(paste("directory", sQuote(dir), "does not exist"))
     if(!fileTest("-d", outDir))
