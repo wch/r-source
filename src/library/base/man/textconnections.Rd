@@ -18,7 +18,7 @@ textConnection(object, open = "r", local = FALSE)
     connection.}
   \item{local}{logical.  Used only for output connections.  If \code{TRUE},
     output is assigned to a variable in the calling environment.  Otherwise
-    the global environment is used.
+    the global environment is used.}
 }
 \details{
   An input text connection is opened and the character vector is copied
