@@ -2,6 +2,9 @@
 
 NEW FEATURES
 
+    o   New functions {d,p,q,r}signrank for the Wilcoxon signed rank
+	distribution.
+
     o   Command line options GNUified a bit further.
 	New command line option `--verbose' for printing more
 	information about progress.
