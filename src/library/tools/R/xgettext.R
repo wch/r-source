@@ -14,8 +14,9 @@ xgettext <- function(dir, verbose = FALSE, asCall = TRUE)
     find_strings <- function(e) {
          if(is.call(e) && is.name(e[[1]])
            && as.character(e[[1]]) %in% c("warning", "stop", "gettext")) {
-             if(asCall)
-                 strings <<- c(strings, as.character(e)[-1])
+             ## remove named args
+             if(!is.null(names(e))) e <- e[nchar(names(e)) == 0]
+             if(asCall) strings <<- c(strings, as.character(e)[-1])
              else for(i in seq(along = e)) find_strings2(e[[i]])
         } else if(is.recursive(e))
             for(i in seq(along = e)) Recall(e[[i]])
