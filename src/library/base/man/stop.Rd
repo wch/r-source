@@ -49,3 +49,4 @@ options(error = NULL)# revert to default
 }
 \keyword{environment}
 \keyword{programming}
+\keyword{error}

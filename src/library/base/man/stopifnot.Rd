@@ -37,3 +37,4 @@ options(error = NULL)# revert to default error handler
 }
 \keyword{environment}
 \keyword{programming}
+\keyword{error}

@@ -203,7 +203,12 @@ options(contrasts=c("contr.helmert", "contr.poly"))
 \dontrun{## on error, terminate the R session with error status 66
 options(error=quote(q("no", status=66, runLast=FALSE)))
 stop("test it")
+}
+\dontrun{## set an error action for debugging: see ?debugger.
+options(error=quote(dump.frames()))
+## A possible setting for non-interactive sessions
+options(error=quote({dump.frames(to.file=TRUE); q()}))
 }}
 \keyword{environment}
-%later, when we'll have an error handler : \keyword{error}
+\keyword{error}
 \keyword{print}

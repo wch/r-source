@@ -93,3 +93,4 @@ Selection: 0
 options(error=quote({dump.frames(to.file=TRUE); q()}))
 }}
 \keyword{utilities}
+\keyword{error}
