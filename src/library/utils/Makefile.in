@@ -23,7 +23,8 @@ RSRC = $(RSRC0) @BUILD_AQUA_TRUE@ `LC_COLLATE=C ls $(srcdir)/R/aqua/*.R`
 RdSRC = $(srcdir)/man/*.Rd $(srcdir)/man/$(R_OSTYPE)/*.Rd @BUILD_AQUA_TRUE@ $(srcdir)/man/aqua/*.Rd
 NSFILES = $(srcdir)/NAMESPACE @BUILD_AQUA_TRUE@ $(srcdir)/NAMESPACE.aqua
 
-all: Makefile DESCRIPTION $(top_builddir)/library/$(pkg)/iconvlist
+all: Makefile DESCRIPTION most $(top_builddir)/library/$(pkg)/iconvlist
+most:
 	@echo "building package '$(pkg)'"
 	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/R
 	@(f=$${TMPDIR:-/tmp}/R$$$$; \
