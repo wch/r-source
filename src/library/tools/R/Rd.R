@@ -172,15 +172,13 @@ function(RdFiles)
 function(contents, outFile)
 {
     ## Save Rd contents db to @file{outFile}.
-    ## <FIXME>
-    ## Change this as soon as we have Luke's code for serializing R
-    ## objects in base R.
-    ## </FIXME>
     
-    ## Change e.g. when we use a different format for the contents db
-    ## (e.g., with aliases and keywords not collapsed).
-    version <- "0.1"
-    save(list = c("contents", "version"), file = outFile)
+    ## <NOTE>
+    ## To deal with possible changes in the format of the contents db
+    ## (e.g., with aliases and keywords not collapsed) in the future,
+    ## use a version attribute and/or a formal class.
+    .saveRDA(contents, file = outFile)
+    ## </NOTE>
 }
 
 ### * .writeContentsDCF
