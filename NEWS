@@ -39,6 +39,9 @@ INSTALLATION ISSUES
 	reasonably well.  (Infs and NAs are still not handled properly
 	in complex arithmetics and functions such as sin().)
 
+    o	Installation will now work in et_EE* locales, which sort z
+	before u.  (PR#6958)
+
 
 BUG FIXES
 
