@@ -311,7 +311,7 @@ function(x)
     ## not.
     as.logical(sapply(as.character(x),
                       function(txt)
-                      all(charToRaw(txt) <= as.raw("0x7f"))))
+                      all(charToRaw(txt) <= as.raw(127))))
 }
 
 ### ** .is_ISO_8859
