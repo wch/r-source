@@ -17,6 +17,15 @@ iconvlist <- function()
 
 ## If you were wondering what these language codes stand for, see
 ## ftp://ftp.ilog.fr/pub/Users/haible/utf8/ISO_639
+## PUTTY suggests rather mapping Windows code pages as
+## 1250 -> ISO 8859-2
+## 1251 -> KOI8-U
+## 1252 -> ISO 8859-1
+## 1253 -> ISO 8859-7
+## 1254 -> ISO 8859-9
+## 1255 -> ISO 8859-8
+## 1256 -> ISO 8859-6
+## 1257 -> ISO 8859-13
 localeToCharset <- function(locale = Sys.getlocale("LC_CTYPE"))
 {
     guess <- function(en)

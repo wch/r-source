@@ -19,7 +19,9 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-/* <UTF8> char here is handled as a whole string */
+/* <UTF8> char here is handled as a whole string.
+   Does rely on strcoll being correct.
+ */
 
 #ifdef HAVE_CONFIG_H
 #include <config.h>

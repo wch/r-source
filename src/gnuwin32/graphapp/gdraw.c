@@ -716,7 +716,7 @@ static cp2charset_table cp2charset [] = {
     {874, THAI_CHARSET},
     {932, SHIFTJIS_CHARSET},
     {936, GB2312_CHARSET},
-    {949, HANGEUL_CHARSET},
+    {949, HANGUL_CHARSET},
     {950, CHINESEBIG5_CHARSET},
     {1250,EASTEUROPE_CHARSET},
     {1251,RUSSIAN_CHARSET},
@@ -733,7 +733,10 @@ static cp2charset_table cp2charset [] = {
 int getcharset(void)
 {
     int i, acp = GetACP();
+    /* From Nakama's patch.  I don't know the reason for this
+       as Win9x should support these CHARSET names. */
     DWORD dwVersion = GetVersion();
+    /* High-order bit is 0 for NT, 1 for Win9x (and before) */
     if (!(dwVersion & 0x80000000)) return (DEFAULT_CHARSET);
     else
 	for (i = 0; i < sizeof(cp2charset)/sizeof(cp2charset_table); i++)

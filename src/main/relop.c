@@ -19,7 +19,7 @@
  */
 
 /* <UTF8> char here is handled as a whole.
-   Collation is locale-specific.
+   Collation is locale-specific if strcoll exists and works.
  */
 
 
