@@ -80,13 +80,27 @@ status message that is displayed at the end of configure.
 USING FORTRAN
 
 To compile R, you need a FORTRAN compiler or f2c, the FORTRAN-to-C
-converter.  The default is to search for g77, fort77, f77, f90, xlf,
+converter.  The default is to search for f77, g77, fort77, f90, xlf,
 cf77, and fc (in that order), and then for f2c, and use whichever is
 found first; if none is found, R cannot be compiled.  The search
 mechanism can be changed using the `--with-g77', `--with-f77', and
 `--with-f2c' command line options to configure.  If your FORTRAN
 compiler is in a non-standard location, you can specify it via
 `--with-f77=path.to.f77'.
+
+
+TWO-LEVEL MAKE
+
+If you don't need to supply any special arguments to "configure", you
+can actually build R simply by typing "make", which will automatically
+run "configure" if the configuration files are absent. Since the build
+process depends on the results of "configure", the toplevel Makefile
+does little more than passing control to Makefile.2nd after ensuring
+that "configure" has been run.
+
+This has the curious, but harmless, consequence that "make distclean"
+and the like may run "configure" and remove the configuration files a
+moment later. This looks odd, but is fairly hard to avoid.
 
 
 NEW PLATFORMS (Standards Hah!)

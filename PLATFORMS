@@ -9,7 +9,10 @@ our installation procedures.
 
 	i386-unknown-freebsd2.2.5	gcc / f77
 	i386-unknown-linux debian 1.3	gcc / g77
-	i386-unknown-linux debian 2.0	egcc/ g77
+	i386-unknown-linux debian 2.0	egcs/ g77
+	i386-unknown-linux Redhat 4.2	egcs/ g77
+	i386-unknown-linux Redhat 4.2	gcc/ f2c
+	i386-unknown-linux RedHat 5.0 	(??)
 	mips-sgi-irix6.2		cc  / f77	(1)
 	sparc-sun-solaris2.5.1		gcc / g77
 		"			gcc / f77
