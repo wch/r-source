@@ -23,6 +23,10 @@ any(\dots, na.rm = FALSE)
   If \code{x} consists of a mix of \code{FALSE} and \code{NA} values,
   the value is \code{NA}.
 }
+\details{
+  This is a generic function: methods can be defined for it
+  directly or via the \code{\link{Summary}} group generic.
+}
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.

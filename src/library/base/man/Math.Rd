@@ -14,6 +14,10 @@ such as C or Fortran.
 \arguments{
   \item{x}{a numeric vector}
 }
+\details{
+  These are generic functions: methods can be defined for them
+  individually or via the \code{\link{Math}} group generic.
+}
 \seealso{
 \code{\link{Arithmetic}} for simple, \code{\link{log}} for logarithmic,
 \code{\link{sin}} for trigonometric, and \code{\link{Special}} for

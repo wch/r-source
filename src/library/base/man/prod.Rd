@@ -17,6 +17,9 @@ prod(\dots, na.rm = FALSE)
   value in any of the arguments will cause
   a value of \code{NA} to be returned, otherwise
   \code{NA} values are ignored.
+
+  This is a generic function: methods can be defined for it
+  directly or via the \code{\link{Summary}} group generic.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

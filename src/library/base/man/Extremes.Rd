@@ -49,6 +49,9 @@ pmin(\dots, na.rm=FALSE)
   \code{TRUE}, \code{NA} values are ignored.
   \code{\link{attributes}} (such as \code{\link{names}} or
   \code{\link{dim}}) are transferred from the first argument (if applicable).
+
+  \code{max} and \code{min} are generic functions: methods can be defined
+  for them individually or via the \code{\link{Summary}} group generic.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

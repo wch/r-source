@@ -8,7 +8,7 @@
 \alias{Comparison}
 \title{Relational Operators}
 \description{
-  Binary operators which allow the comparison of values in vectors.
+  Binary operators which allow the comparison of values in atomic vectors.
 }
 \usage{
 x < y
@@ -18,7 +18,15 @@ x >= y
 x == y
 x != y
 }
+\arguments{
+  \item{x, y}{atomic vectors, or other objects for which methods have
+    been written.}
+}
 \details{
+  The binary comparison operators are generic functions: methods can be
+  written for them individually or via the \code{\link{Ops}}) group generic
+  function.
+
   Comparison of strings in character vectors is lexicographic within the
   strings using the collating sequence of the locale in use: see
   \code{\link{locales}}.  The collating sequence of locales such as

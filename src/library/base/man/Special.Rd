@@ -52,6 +52,9 @@ lchoose(n, k)
 
   The functions \code{choose} and \code{lchoose} return binomial
   coefficients and their logarithms.
+
+  All the \code{*gamma*} functions are generic: methods can be
+  defined for them individually or via the \code{\link{Math}} group generic.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

@@ -14,6 +14,10 @@ sign(x)
 
   Note that \code{sign} does not operate on complex vectors.
 }
+\details{
+  This is a generic function: methods can be defined for it
+  directly or via the \code{\link{Math}} group generic.
+}
 \seealso{
   \code{\link{abs}}
 }

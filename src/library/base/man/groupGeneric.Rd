@@ -17,6 +17,7 @@
 \alias{Compare}
 \alias{Complex}
 \alias{Math2}
+\alias{group generic}
 \title{Group Generic Functions}
 \description{
   Group generic functions can be defined with either S3 and S4 methods

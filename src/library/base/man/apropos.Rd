@@ -14,7 +14,7 @@ find(what, mode = "any", numeric. = FALSE, simple.words = TRUE)
   \item{mode}{character; if not \code{"any"}, only objects who's
     \code{\link{mode}} equals \code{mode} are searched.}
   \item{simple.words}{logical; if \code{TRUE}, the \code{what} argument is
-    only searched as whole only word.}
+    only searched as whole word.}
 }
 \description{
   \code{apropos} returns a character vector giving the names of
@@ -30,7 +30,7 @@ find(what, mode = "any", numeric. = FALSE, simple.words = TRUE)
 
   \code{find} is a different user interface for the same task as \code{apropos}.
   However, by default (\code{simple.words == TRUE}), only full words are
-  searched.
+  searched with \code{grep(fixed = TRUE)}.
 }
 \author{Kurt Hornik and Martin Maechler (May 1997).}
 \seealso{

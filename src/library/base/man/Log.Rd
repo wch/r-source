@@ -45,6 +45,10 @@ log1p(x)
   \code{log} and \code{logb} are the same thing in \R, but \code{logb}
   is preferred if \code{base} is specified, for S-PLUS compatibility.
 }
+\details{
+  \code{exp} and \code{log} are generic functions: methods can be defined
+  for them individually or via the \code{\link{Math}} group generic.
+}
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.

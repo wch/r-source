@@ -20,7 +20,8 @@ range(\dots, na.rm = FALSE)
 }
 \details{
   This is a generic function; currently, it has only a default method
-  (\code{\link{range.default}}).
+  (\code{\link{range.default}}).  It is also a member of the
+  \code{\link{Summary}} group generic.
 
   It is also a member of the \code{Summary} group of functions, see
   \code{\link[base]{Methods}}.

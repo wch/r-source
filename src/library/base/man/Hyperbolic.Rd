@@ -22,6 +22,10 @@ arc-cosine, arc-sine, arc-tangent.
 \arguments{
   \item{x}{a numeric vector}
 }
+\details{
+  These are generic functions: methods can be defined for them
+  individually or via the \code{\link{Math}} group generic.
+}
 \seealso{
 \code{\link{cos}}, \code{\link{sin}}, \code{\link{tan}},
 \code{\link{acos}}, \code{\link{asin}}, \code{\link{atan}}.

@@ -19,7 +19,8 @@ xor(x, y)
   These operators act on logical vectors.
 }
 \arguments{
-  \item{x, y}{logical vectors}
+  \item{x, y}{logical vectors, or objects which can be coerced to such
+    or for which methods have been written.}
 }
 \details{
   \code{!} indicates logical negation (NOT).
@@ -33,6 +34,13 @@ xor(x, y)
   preferred in \code{\link{if}} clauses.
 
   \code{xor} indicates elementwise exclusive OR.
+
+  Numeric and complex vectors will be coerced to logical values, with
+  zero being false and all non-zero values being true.
+  
+  The operators \code{!}, \code{&} and \code{|} are generic functions:
+  methods can be written for them individually or via the
+  \code{\link{Ops}}) group generic function.
 
   \code{\link{NA}} is a valid logical object.  Where a component of
   \code{x} or \code{y} is \code{NA}, the result will be \code{NA} if the

@@ -32,6 +32,9 @@ atan2(y, x)
 
   Angles are in radians, not degrees (i.e., a right angle is
   \eqn{\pi/2}).
+
+  All except \code{atan2} are generic functions: methods can be defined
+  for them individually or via the \code{\link{Math}} group generic.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

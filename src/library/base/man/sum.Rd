@@ -23,6 +23,10 @@ sum(\dots, na.rm=FALSE)
 
   NB: the sum of an empty set is zero, by definition.
 }
+\details{
+  This is a generic function: methods can be defined for it
+  directly or via the \code{\link{Summary}} group generic.
+}
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.
