@@ -531,7 +531,8 @@ AC_DEFUN(R_GNOME,
 	    RGNOMEBIN="\$(top_builddir)/bin/R.gnome"
 	    GNOME_IF_FILES="gnome-interface.glade"],
 	  [ AC_MSG_WARN(
-	      [GNOME support requires libglade version >= 0.3])])
+	      [GNOME support requires libglade version >= 0.4])],
+          gnome)
       fi
     fi
     if test "${use_gnome}" != yes; then

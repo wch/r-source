@@ -3150,7 +3150,7 @@ fi
 
 
 module_args=
-for module in . ; do
+for module in . gnome; do
   case "$module" in
     gnome)
       module_args="$module_args gnome"
@@ -3198,7 +3198,7 @@ echo $ac_n "checking for libglade""... $ac_c" 1>&6
 echo "configure:3199: checking for libglade" >&5
 if test "$LIBGLADE_CONFIG" = "no"; then
   echo "$ac_t""no" 1>&6
-   echo "configure: warning: GNOME support requires libglade version >= 0.3" 1>&2
+   echo "configure: warning: GNOME support requires libglade version >= 0.4" 1>&2
 else
   if $LIBGLADE_CONFIG --check $module_args; then
     LIBGLADE_CFLAGS=`$LIBGLADE_CONFIG --cflags $module_args`
@@ -3211,7 +3211,7 @@ else
   else
     echo "*** libglade was not compiled with support for $module_args" 1>&2
     echo "$ac_t""no" 1>&6
-     echo "configure: warning: GNOME support requires libglade version >= 0.3" 1>&2
+     echo "configure: warning: GNOME support requires libglade version >= 0.4" 1>&2
   fi
 fi
 
