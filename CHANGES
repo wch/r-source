@@ -43,6 +43,17 @@ BUG FIXES
 
     o   binomial (family) now works when 'n=0'. [J.Lindsey]
 
+    o	split() now also works in split(1:10,1:2)
+
+    o	strsplit() now also works for strsplit(c,NULL)
+
+    o   A LANG='..' environment variable no longer affects  scan()ing of
+	numbers.
+
+    o   seq(.) doesn't segfault anymore in  gl(2,3):gl(1,6)
+
+    o   contour(.) now also works with integer arguments
+
 
 		CHANGES IN R VERSION 0.61
 
