@@ -33,7 +33,7 @@ Testing R build under Windows
     o run the tcl/tk demos by
 
         library(tcltk)
-	demo(tktest)
+	demo(tkttest)
 	demo(tkdensity)
 	demo(tkcanvas)
 	demo(tkfaq)
@@ -100,3 +100,4 @@ Testing R build under Windows
 
 BDR
 2001-12-03
+
