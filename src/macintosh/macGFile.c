@@ -46,12 +46,11 @@
 #include "Defn.h"
 #include "Graphics.h"
 #include "RIntf.h"
+#include "Fileio.h"
 #include <Rdevices.h>
 
-//OSErr  doWritePictData(WindowPtr windowPtr,SInt16 tempFileRefNum);
 OSErr  doCopyAppNameResource(WindowPtr windowPtr);
 OSErr  doCopyGraResource(ResType, SInt16, SInt16, SInt16);
-//OSErr  doWriteFile(WindowPtr windowPtr);
 void PutPictToFile(PicHandle thePicture);
 
 extern pascal	OSErr	FSpGetFullPath (const FSSpec*, short*, Handle*);
@@ -65,27 +64,6 @@ extern Boolean WeArePasting;
 
 
 
-/*
-#define	rAppStringsID			128
-
-enum {
-	sApplicationName 		= 1,
-	sTranslationLockedErr,
-	sTranslationErr,
-	sOpeningErr,
-	sReadErr,				
-	sWriteToBusyFileErr,
-	sBusyOpen,
-	sChooseFile,
-	sChooseFolder,
-	sChooseVolume,		
-	sCreateFolder,
-	sChooseObject,
-	sChooseApp
-};
-
-#define kSelectFolderPrefKey	4
-*/
 
 OSErr  doRSave(Boolean *haveCancel)
 {
@@ -98,7 +76,7 @@ OSErr  doRSave(Boolean *haveCancel)
 	*haveCancel = false;
 	err = noErr;
 
-	fp = fopen(InitFile, "wb"); /* binary file */
+	fp = R_fopen(InitFile, "wb"); /* binary file */
 	if (!fp)
 	    error("can't save data -- unable to write ./%s\n", InitFile);
 	if (HASHTAB(R_GlobalEnv) != R_NilValue)
@@ -166,7 +144,7 @@ OSErr  doRSaveAs(Boolean *haveCancel) {
 					HUnlock((Handle) pathName);
 
 
-					if( fp = fopen(InitFile, "wb") ){ /* binary file */
+					if( fp = R_fopen(InitFile, "wb") ){ /* binary file */
 						if (HASHTAB(R_GlobalEnv) != R_NilValue)
 	    					R_SaveToFile(HASHTAB(R_GlobalEnv), fp, 0);
 						else

@@ -99,6 +99,7 @@
 #include <config.h>
 #endif
 #include "Defn.h"
+#include "Fileio.h"
 
 extern char*	R_Home;	
 
@@ -115,8 +116,6 @@ EnviromentPair *ParseLine(char *line)
     static EnviromentPair Env;
     unsigned short length = strlen(line);
 
-   // Env->key   = "";
-   // Env->value = "";
 
     for (tmpPtr = line; *tmpPtr; tmpPtr++)
     {
@@ -183,7 +182,7 @@ FILE * FSp_fopen(ConstFSSpecPtr spec, const char * open_mode){
 	filetoopen[pathLen] = '\0';
 	HUnlock((Handle) pathName);
 
-	fp = fopen(filetoopen,"r");
+	fp = R_fopen(filetoopen,"r");
 
     return(fp);
 }
@@ -206,7 +205,7 @@ char *mac_getenv(const char *name)
 	return NULL;  /* user wants to ignore the environment vars */
 
     if (name == NULL)
-	return err_str;//NULL;
+	return err_str;
     
     if(strcmp(name,"R_HOME")==0)
      return R_Home;
@@ -385,7 +384,7 @@ int get_char(FILE *file)
 {
     int ch;
 
-    ch = getc(file);
+    ch = R_fgetc(file);
     if (ch == '\n')
         {
         Set_LineNum(LineNumber + 1);
