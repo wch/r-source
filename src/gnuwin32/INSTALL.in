@@ -53,8 +53,8 @@ PCRE from ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/.
 Unpack this (we used prce-3.9.tar.bz2) and copy the files into
 src/extra/pcre.
 
-bzip2-1.0.2 from  http://sources.redhat.com/bzip2.  Unpack this in
-src/extra and change the directory name to bzip2.
+bzip2-1.0.2 from http://sources.redhat.com/bzip2.  Unpack this and
+copy the files to src/extra/bzip2.
 
 
 If you want to make compiled html (.chm) files you will need the
@@ -119,10 +119,6 @@ used.  You can opt out of this by commenting the line LEA_MALLOC=YES
 in MkRules, in which case the Windows malloc is used.  The one
 in crtdll.dll is unlikely to be satisfactory: the one in msvcrt.dll
 does work but imposes a considerable performance penalty.
-
-Note 4: Function bzfile() is not supported out-of-the-box on this
-port: it is straightforward to build libbz2 under mingw32 and define
-HAVE_BZLIB in config.h if this is desired.
 
 
 You can test a build by `make check': expect some differences in the
