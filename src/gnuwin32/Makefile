@@ -5,10 +5,10 @@ WINHELP=BOTH # NO, CHM, BOTH
 
 PACKAGES=base eda lqs modreg mva nls splines stepfun ts
 RPREFIX=rw0901
-RHOME=$(shell cd ../..; pwd) # must be absolute path
+RHOME=$(shell cd ../..; pwd)# must be absolute path
 RLIBS=$(RHOME)/library
 PKGDIR=$(RHOME)/src/library
-PKGD=$(shell cd $(PKGDIR); pwd) # must be absolute path
+PKGD=$(shell cd $(PKGDIR); pwd)# must be absolute path
 
 ifdef DEBUG
  OPTFLAGS=-g -O2
@@ -121,7 +121,7 @@ base-HELP=ziponly
 
 pkg-%:  libR.a #../include/globalvar.h
 	$(MAKE) DLLNM=$($*-DLLNM)  EXTRADOCS=$($*-EXTRADOCS) \
-	  -C $(PKGDIR)/$* PKG=$* RHOME=$(RHOME) RLIBS=$(RLIBS)\
+	  -C $(PKGDIR)/$* PKG=$* RHOME=$(RHOME) RLIBS=$(RLIBS) \
 	  -f $(RHOME)/src/gnuwin32/MakePkg
 ifeq ($(strip $(HELP)),YES)
 	$(MAKE) -C ./help RHOME=$(RHOME) PKGDIR=$(PKGD) RLIBS=$(RLIBS) $($*-HELP)help-$*
@@ -289,7 +289,7 @@ pkgcheck-base:
 	@(cd ../../library/base/R-ex; rm -f *.R)
 
 bundle-%:
-	sh fixed/dobundle.sh $* $(PKGD) $(RLIBS)
+	$(PERL) fixed/dobundle.pl $* $(PKGD) $(RLIBS)
 
 docs manuals:
 	@$(MAKE) -C $(RHOME)/doc/manual -f Makefile.win clean
