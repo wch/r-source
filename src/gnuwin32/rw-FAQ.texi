@@ -323,6 +323,12 @@ or your home directory, for example containing the line
 R_LIBS=p:/myRlib
 @end example
 
+If you have permission to do so, you can also create an environment file
+@file{etc\Renviron.site} and set environmental variables in that file in
+the same way.  This is useful for variables which should be set for all
+users and all usages of this R installation.  (Their values can be
+overridden in a @file{.Renviron} or on the command line.)
+
 See @code{?Startup} for more details of environment files.
 
 @item

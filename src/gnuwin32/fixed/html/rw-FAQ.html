@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta name="generator" content=
-"HTML Tidy for Linux/x86 (vers 1st April 2002), see www.w3.org">
+"HTML Tidy for Windows (vers 1st April 2002), see www.w3.org">
 <title>R for Windows FAQ</title>
 <meta http-equiv="Content-Type" content="text/html">
 <meta name="description" content="R for Windows FAQ">
@@ -476,6 +476,13 @@ line<br>
 <pre>
 R_LIBS=p:/myRlib
 </pre>
+
+<p>If you have permission to do so, you can also create an
+environment file <code>etc\Renviron.site</code> and set
+environmental variables in that file in the same way. This is
+useful for variables which should be set for all users and all
+usages of this R installation. (Their values can be overridden in a
+<code>.Renviron</code> or on the command line.)</p>
 
 <p>See <code>?Startup</code> for more details of environment
 files.</p>
