@@ -15,7 +15,6 @@ DISTFILES = Rdconvlib.pl buildlib.pl html-layout.pl \
 	Makeconf.in Makefile.in \
 	colors.big colors.small test-things.Rd \
 	gnome-interface.glade
-SUBDIRS = Rdoc
 
 EXPORTFILE = @EXPORTFILE@
 GNOME_IF_FILES = @GNOME_IF_FILES@
@@ -80,7 +79,3 @@ distdir: $(DISTFILES)
 	    || ln $(srcdir)/$${f} $(distdir)/$${f} 2>/dev/null \
 	    || cp -p $(srcdir)/$${f} $(distdir)/$${f}; \
 	done
-	@((cd $(srcdir); \
-	      $(TAR) -c -f - --exclude=CVS $(SUBDIRS)) \
-	    | (cd $(distdir); $(TAR) -x -f -)) \
-	  || exit 1; \
