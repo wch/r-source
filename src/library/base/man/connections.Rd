@@ -22,7 +22,7 @@
   Functions to create, open and close connections.
 }
 \usage{
-file(description, open = "", blocking = TRUE,
+file(description = "", open = "", blocking = TRUE,
      encoding = getOption("encoding"))
 pipe(description, open = "", encoding = getOption("encoding"))
 gzfile(description, open = "", encoding = getOption("encoding"),
@@ -70,6 +70,11 @@ isIncomplete(con)
   argument \code{open}.  \code{gzfile} applies to files compressed by
   \code{gzip}: such connections can only be binary.
 
+  All platforms support file connections and \code{url("file://")}
+  connections.  The other four types may be partially implemented or
+  not implemented at all.  (They do work on Windows and on most Unix
+  platforms.)
+
   Proxies can be specified for \code{url} connections: see
   \code{\link{download.file}}.
 
@@ -84,9 +89,9 @@ isIncomplete(con)
 
   Possible values for the mode \code{open} to open a connection are
   \describe{
-    \item{\code{"r"}}{or \code{"rt"}. Open for reading in text mode.}
-    \item{\code{"w"}}{or \code{"wt"}. Open for writing in text mode.}
-    \item{\code{"a"}}{or \code{"at"}. Open for appending in text mode.}
+    \item{\code{"r"} or \code{"wt"}}{Open for reading in text mode.}
+    \item{\code{"w"} or \code{"wt"}}{Open for writing in text mode.}
+    \item{\code{"a"} or \code{"at"}}{Open for appending in text mode.}
     \item{\code{"rb"}}{Open for reading in binary mode.}
     \item{\code{"wb"}}{Open for writing in binary mode.}
     \item{\code{"ab"}}{Open for appending in binary mode.}
@@ -150,16 +155,14 @@ isIncomplete(con)
 \note{
   \R's connections are modelled on those in S version 4 (see Chambers,
   1998), but the implementation is currently incomplete.  In particular,
-  pipes are only implemented on Unix and \code{Rterm} on
-  Windows, and fifos are not yet implemented.
+  fifos are not yet implemented.
 
   However \R also goes well beyond the Svr4 model, for example in output
   text connections and URL and socket connections.
 
   The default mode in \R is \code{"r"} except for socket
   connections. This differs from Svr4, where it is the equivalent of
-  \code{"r+"}, knoes as \code{"*"}.
-
+  \code{"r+"}, known as \code{"*"}.
 }
 \references{
   Chambers, J. M. (1998)
@@ -170,8 +173,8 @@ isIncomplete(con)
   \code{\link{textConnection}}, \code{\link{seek}}, \code{\link{readLines}},
   \code{\link{showConnections}}, \code{\link{pushBack}}.
 
-  \code{\link{capabilities}} to see if \code{gzfile} and \code{url} are
-  supported by this build of \R.
+  \code{\link{capabilities}} to see if \code{gzfile}, \code{url} and
+  \code{socketConnection} are supported by this build of \R.
 }
 
 \examples{
@@ -235,13 +238,13 @@ gsub(" *$", "", readLines(con))
 close(con)}
 
 \dontrun{## two R processes communicating via non-blocking sockets
-# window 1
+# R process 1
 con1 <- socketConnection(port = 6011, server=TRUE)
 writeLines(LETTERS, con1)
 close(con1)
 
-# window 2
-con2 <- socketConnection(port = 6011)
+# R process 2
+con2 <- socketConnection(Sys.info$nodename, port = 6011)
 # as non-blocking, may need to loop for input
 readLines(con2)
 while(isIncomplete(con2)) {Sys.sleep(1); readLines(con2)}

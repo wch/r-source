@@ -7,8 +7,8 @@ HELP = YES
 WINHELP = CHM# NO, CHM, BOTH
 
 LEA_MALLOC=YES
-USE_LIBXML=YES
-#USE_WININET=YES
+#USE_LIBXML=YES
+USE_WININET=YES
 
 PACKAGES = base ctest eda lqs modreg mva nls splines stepfun ts
 ALLPACKAGES = $(PACKAGES) tcltk
