@@ -1,6 +1,16 @@
 packageStatus <- function(lib.loc = NULL,
                            repositories = getOption("repositories")())
 {
+    newestVersion <- function(x)
+    {
+        ## only used for length(x) >= 2
+        for(k in 1:length(x)){
+            if(length(x) == 1) return(k)
+            y <- sapply(x[-1], compareVersion, b=x[1])
+            if(all(y <= 0)) return(k) else x <- x[-1]
+        }
+    }
+
     if(is.null(lib.loc))
         lib.loc <- .libPaths()
     if(is.null(repositories))
@@ -105,7 +115,7 @@ packageStatus <- function(lib.loc = NULL,
     z$Status <- as.factor(z$Status)
 
     retval <- list(inst=y, avail=z)
-    class(retval) <- c("packageStatus")
+    class(retval) <- "packageStatus"
     retval
 }
 
@@ -146,19 +156,6 @@ print.packageStatus <- function(x, ...)
     invisible(x)
 }
 
-newestVersion <- function(x)
-{
-    ## only used for length(x) >= 2
-    for(k in 1:length(x)){
-        if(length(x) == 1) return(k)
-        y <- sapply(x[-1], compareVersion, b=x[1])
-        if(all(y <= 0))
-            return(k)
-        else
-            x <- x[-1]
-    }
-}
-
 update.packageStatus <-
     function(object, lib.loc=levels(object$inst$LibPath),
              repositories=levels(object$avail$Repository),
@@ -171,8 +168,8 @@ update.packageStatus <-
 upgrade <- function(object, ...)
     UseMethod("upgrade")
 
-upgrade.packageStatus <- function(object, ask=TRUE, ...){
-
+upgrade.packageStatus <- function(object, ask=TRUE, ...)
+{
     update <- NULL
     old <- which(object$inst$Status=="upgrade")
     if(length(old)==0){

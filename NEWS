@@ -38,6 +38,9 @@ DEPRECATED & DEFUNCT
     o	La.eigen(), tetragamma(), pentagamma(), package.contents() and
 	package.description() are defunct.
 
+    o	The undocumented function newestVersion is no longer exported
+	from package utils.  (Mainly because it was not completely general.)
+
 
 
 INSTALLATION CHANGES
