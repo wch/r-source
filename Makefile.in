@@ -121,6 +121,7 @@ maintainer-clean: distclean
 dist: dist-unix
 dist-unix: distdir
 	-chmod -R a+r $(distdir)
+	-chmod -R go-w $(distdir)
 	GZIP=$(GZIP) $(TAR) czf $(distdir).tar.gz $(distdir)
 	rm -rf $(distdir)
 dist-win:
