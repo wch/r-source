@@ -51,7 +51,7 @@ sub buildinit {
 	die("Package $pkg does not exist\n") unless (-d $pkg);
     }
     else{
-	$pkg="$main::R_HOME${main::sep}src${main::sep}library${main::sep}base";
+	$pkg="$main::R_HOME/src/library/base";
     }
 
     chdir $currentdir;
@@ -63,7 +63,7 @@ sub buildinit {
 	chdir $currentdir;
     }
     else{
-	$lib = "$main::R_HOME${main::sep}library";
+	$lib="$main::R_HOME/library";
     }
 
     chdir $currentdir;
@@ -77,7 +77,7 @@ sub buildinit {
 #    $pkg = basename(cwd());
 
     chdir "man" or die("There are no man pages in $pkg\n");
-    opendir man, $main::curdir;
+    opendir man, '.';
     @mandir = sort(readdir(man));
     closedir man;
 
@@ -86,7 +86,7 @@ sub buildinit {
 	opendir man, $main::OSdir;
 	foreach $file (readdir(man)) {
 	    delete $Rds{$file};
-	    $RdsOS{$file} = $main::OSdir.$main::sep.$file;
+	    $RdsOS{$file} = $main::OSdir."/".$file;
 	}
 	@mandir = sort(values %Rds);
 	push @mandir, sort(values %RdsOS);
@@ -110,10 +110,10 @@ sub read_titles {
     closedir lib;
 
     foreach $pkg (@libs) {
-	if(-d "$lib$main::sep$pkg"){
+	if(-d "$lib/$pkg"){
 	    if(! ( ($pkg =~ /^CVS$/) || ($pkg =~ /^\.+$/))){
-		if(-r "$lib$main::sep$pkg$main::sep"."TITLE"){
-		    open rtitle, "< $lib$main::sep$pkg$main::sep"."TITLE";
+		if(-r "$lib/$pkg/TITLE"){
+		    open rtitle, "< $lib/$pkg/TITLE";
 		    $_ = <rtitle>;
 		    /^(\S*)\s*(.*)/;
 		    my $pkgname = $1;
@@ -148,13 +148,13 @@ sub read_htmlindex {
     closedir lib;
 
     foreach $pkg (@libs) {
-	if(-d "$lib$main::sep$pkg"){
+	if(-d "$lib/$pkg"){
 	    if(! ( ($pkg =~ /^CVS$/) || ($pkg =~ /^\.+$/))){
-		if(-r "$lib$main::sep$pkg$main::sep"."help"."$main::sep"."AnIndex"){
-		    open ranindex, "< $lib$main::sep$pkg$main::sep"."help".$main::sep."AnIndex";
+		if(-r "$lib/$pkg/help/AnIndex"){
+		    open ranindex, "< $lib/$pkg/help/AnIndex";
 		    while(<ranindex>){
 			/^([^\t]*)\s*\t(.*)/;
-			$htmlindex{$1} = "$pkg$main::sep"."html"."$main::sep$2.$HTML";
+			$htmlindex{$1} = "$pkg/html/$2.$HTML";
 		    }
 		    close ranindex;
 		}
@@ -175,10 +175,10 @@ sub read_anindex {
     closedir lib;
 
     foreach $pkg (@libs) {
-	if(-d "$lib$main::sep$pkg"){
+	if(-d "$lib/$pkg"){
 	    if(! ( ($pkg =~ /^CVS$/) || ($pkg =~ /^\.+$/))){
-		if(-r "$lib$main::sep$pkg$main::sep"."help"."$main:sep"."AnIndex"){
-		    open ranindex, "< $lib$main::sep$pkg$main::sep"."help".$main::sep."AnIndex";
+		if(-r "$lib/$pkg/help/AnIndex"){
+		    open ranindex, "< $lib/$pkg/help/AnIndex";
 		    while(<ranindex>){
 			/^([^\t]*)\s*\t(.*)/;
 			$anindex{$1} = $2;
@@ -202,8 +202,8 @@ sub build_htmlpkglist {
     my %htmltitles = read_titles($lib);
     my $key;
 
-    open(htmlfile, "> $main::R_HOME$main::sep"."doc"."$main::sep"."html"."$main::sep"."packages.$HTML") ||
-	die "Could not open $main::R_HOME"."$main::sep"."doc"."$main::sep"."html"."$main::sep"."packages.$HTML";
+    open(htmlfile, "> $main::R_HOME/doc/html/packages.$HTML") ||
+	die "Could not open $main::R_HOME/doc/html/packages.$HTML";
 
     print htmlfile html_pagehead("Package Index", ".",
 				 "index.$HTML", "Top",
@@ -262,17 +262,16 @@ sub build_index { # lib, dest
     chomp $title;
     $title =~ s/^\S*\s*(.*)/$1/;
 
-    mkdir "$dest$main::sep"."help", $dir_mod || die "Could not create $dest$main::sep"."help: $!\n";
-    mkdir "$dest$main::sep"."html", $dir_mod || die "Could not create $dest$main::sep"."html: $!\n";
-    my $anindex = "$dest$main::sep"."help"."$main::sep"."AnIndex";
+    mkdir "$dest/help", $dir_mod || die "Could not create $dest/help: $!\n";
+    mkdir "$dest/html", $dir_mod || die "Could not create $dest/html: $!\n";
+    my $anindex = "$dest/help/AnIndex";
 
     my %alltitles;
     my $naliases;
     my $nmanfiles;
     my %firstlettersfound;
     my %internal;
-    my $tfile;
-
+                           
     foreach $manfile (@mandir) {
 	if($manfile =~ /\.Rd$/i){
 
@@ -334,12 +333,13 @@ sub build_index { # lib, dest
     }
     close anindex;
 
+
     open(anindex, "< $anindex");
-    $tfile = "$dest${main::sep}html${main::sep}00Index.$HTML";
-    open(htmlfile, "> $tfile") || die "Could not open $tfile";
+    open(htmlfile, "> $dest/html/00Index.$HTML")
+	|| die "Could not open $dest/html/00Index.$HTML";
     if($main::opt_chm) {
-	$tfile = "$chmdir${main::sep}00Index.$HTML";
-	open(chmfile, "> $tfile") || die "Could not open $tfile";
+	open(chmfile, "> $chmdir/00Index.$HTML") ||
+	    die "Could not open $chmdir/00Index.$HTML";
     }
 
     print htmlfile html_pagehead("$title", "../../../doc/html",
@@ -380,16 +380,16 @@ sub build_index { # lib, dest
 		$firstletter = $aliasfirst;
 	    }
             ## skip method aliases.
-	    $generic = $alias;
+	    $generic = $alias;  
 	    $generic =~ s/\.data\.frame$/.dataframe/o;
 	    $generic =~ s/\.model\.matrix$/.modelmatrix/o;
 	    $generic =~ s/\.[^.]+$//o;
 
 	    next if $alias =~ /<-$/o || $generic =~ /<-$/o;
-	    if ($generic ne "" && $generic eq $current &&
-		$file eq $currentfile && $generic ne "ar") {
+	    if ($generic ne "" && $generic eq $current && 
+		$file eq $currentfile && $generic ne "ar") { 
 
-		next;
+		next; 
 	    } else { $current = $alias; $currentfile = $file;}
 
 	    my $title = striptitle($main::alltitles{$alias});
@@ -422,11 +422,11 @@ sub fileolder {
 
 
 ## Return the first letter in uppercase, empty string for <=A and
-## "misc" for >=Z
+## "misc" for >=Z 
 ## used for indexing various HTML lists.
 sub firstLetterCategory {
     my ($x) = @_;
-
+    
     $x = uc substr($x, 0, 1);
     if($x lt "A") { $x = ""; }
     if($x gt "Z") { $x = "misc"; }
@@ -449,7 +449,7 @@ sub html_alphabet
 
 sub html_pagehead
 {
-    my ($title, $top, $up, $uptext, $prev, $prevtext, $next, $nextext,
+    my ($title, $top, $up, $uptext, $prev, $prevtext, $next, $nextext, 
 	$cssloc) = @_;
 
     my $retval = "<html><head><title>R: $title</title>\n" .

@@ -70,22 +70,18 @@ sub Rdconv { # Rdconv(foobar.Rd, type, debug, filename, pkgname)
 	## filename = 0	  ==>	use stdout
 	$htmlfile= $txtfile= $Sdfile= $latexfile=
 	    $Exfile = $chmfile = $_[3];
-    }
-    else { # have "," in $type: Multiple types with multiple output files
+    } else { # have "," in $type: Multiple types with multiple output files
 	$dirname = $_[3]; # The super-directory , such as  <Rlib>/library/<pkg>
 	die "Rdconv(): '$dirname' is NOT a valid directory:$!\n"
 	  unless -d $dirname;
-	$htmlfile = $dirname .$main::sep."html".$main::sep .$Rdname.".html"
-	  if $type =~ /html/i;
-	$txtfile= $dirname .$main::sep."help".$main::sep . $Rdname
-	  if $type =~ /txt/i;
+	$htmlfile = $dirname ."/html/" .$Rdname.".html" if $type =~ /html/i;
+	$txtfile= $dirname ."/help/" . $Rdname	        if $type =~ /txt/i;
 	die "Rdconv(): type 'Sd' must not be used with other types (',')\n"
 	  if $type =~ /Sd/i;
-	$latexfile= $dirname .$main::sep."latex".$main::sep. $Rdname.".tex"
-	  if $type =~ /tex/i;
-	$Exfile	  = $dirname .$main::sep."R-ex".$main::sep . $Rdname.".R"
-	  if $type =~ /example/i;
+	$latexfile= $dirname ."/latex/". $Rdname.".tex"	if $type =~ /tex/i;
+	$Exfile	  = $dirname ."/R-ex/" . $Rdname.".R"	if $type =~ /example/i;
     }
+
 
     $max_bracket = 0;
     $max_section = 0;
@@ -592,7 +588,7 @@ sub text2html {
 	    }
 	}
 	else {
-	    $main::misslink = $main::misslink . " " . $argkey
+	    $main::misslink = $main::misslink . " " . $argkey 
 		unless $opt ne "";
 	    if($using_chm){
 		if($opt ne "") {
@@ -718,7 +714,7 @@ sub code2html {
 	    }
 	}
 	else{
-	    $main::misslink = $main::misslink . " " . $argkey
+	    $main::misslink = $main::misslink . " " . $argkey 
 		unless $opt ne "";
 	    if($using_chm){
 		if($opt ne "") {
