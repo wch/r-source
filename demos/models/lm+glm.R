@@ -100,39 +100,42 @@ anova(z, update(z, dead ~ dose -1))
 ## Note that the proportions below are not exactly
 ## in accord with the sample sizes quoted below.
 ## In particular, the value 0.555 does not seem sensible.
+##	[MM: huh?  round(round(n*p)/n, 3) looks almost exactly like "p" !]
 n <- c(102,  99,   108,	 76,   81,   90)
 p <- c(0.539,0.525,0.528,0.724,0.617,0.555)
-					# x <- round(n*p)
+## x <- round(n*p)
 x <- n*p
 y <- cbind(x,n-x)
 f <- rep(c(40,150,350),2)
-g <- gl(2,3)
-summary(glm(y~g*f,family=binomial(link="logit")))
-summary(glm(y~g+f,family=binomial(link="logit")))
-summary(glm(y~f,  family=binomial(link="logit")))
-
+(g <- gl(2,3))
+summary(glm(y~g*f, family=binomial(link="logit")))
+summary(glm(y~g+f, family=binomial(link="logit")))
+## The "final model"
+summary(glm.p84 <- glm(y~g,  family=binomial(link="logit")))
+op <- par(mfrow = c(2,2), oma = c(0,0,1,0))
+plot(glm.p84) # well ?
+par(op)
 
 ## Tumour Data (Page 92)
 counts <- c(22,2,10,16,54,115,19,33,73,11,17,28)
 type <- gl(4,3,12,labels=c("freckle","superficial","nodular","indeterminate"))
 site <- gl(3,1,12,labels=c("head/neck","trunk","extremities"))
 data.frame(counts,type,site)
-summary(z <- glm(counts ~ type + site,family=poisson()))
-
+summary(z <- glm(counts ~ type + site, family=poisson()))
 
 ## Randomized Controlled Trial (Page 93)
-counts <- c(18,17,15,20,10,20,25,13,12)
-outcome <- gl(3,1, length(counts))
+counts <- c(18,17,15, 20,10,20, 25,13,12)
+outcome   <- gl(3,1, length(counts))
 treatment <- gl(3,3)
 summary(z <- glm(counts ~ outcome + treatment,family=poisson()))
 
 ## Peptic Ulcers and Blood Groups
 counts <- c(579,4219,911,4578,246,3775,361,4532,291,5261,396,6598)
-group <- gl(2,1,12,labels=c("cases","controls"))
-blood <- gl(2,2,12,labels=c("A","O"))
-city  <- gl(3,4,12,labels=c("London","Manchester","Newcastle"))
-cbind(codes(group),codes(blood),codes(city),counts)
+group <- gl(2,1, 12, labels=c("cases","controls"))
+blood <- gl(2,2, 12, labels=c("A","O"))
+city  <- gl(3,4, 12, labels=c("London","Manchester","Newcastle"))
+cbind(group,blood,city,counts) # same as  codes(*),codes(*),..
 
-summary(z1 <- glm(counts ~ group*city + group*blood, family=poisson()),corr=FALSE)
-summary(z2 <- glm(counts ~ group*city + blood, family=poisson()), corr=FALSE)
-anova(z2,z1)
+summary(z1 <- glm(counts ~ group*(city + blood), family=poisson()))
+summary(z2 <- glm(counts ~ group*city + blood, family=poisson()), corr = TRUE)
+anova(z2,z1, test = "Chisq")
