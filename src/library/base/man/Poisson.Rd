@@ -31,8 +31,10 @@ rpois(n, lambda)
   \code{rpois} generates random deviates.
 }
 \details{
-  The Poisson distribution has density \deqn{p(x) = \frac{{\lambda}^{x}
-      {e}^{-\lambda}}{x!}}{p(x) = lambda^x exp(-lambda)/x!}
+  The Poisson distribution has density
+%-- please leave the linebreaking for the next two ! --
+  \deqn{p(x) = \frac{\lambda^x e^{-\lambda}}{x!}}{%
+        p(x) = lambda^x exp(-lambda)/x!}
   for \eqn{x = 0, 1, 2, \ldots}.
 
   If an element of \code{x} is not integer, the result of \code{dpois}

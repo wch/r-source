@@ -35,10 +35,8 @@ rweibull(n, shape, scale = 1)
 
   The Weibull distribution with \code{shape} parameter \eqn{a} and
   \code{scale} parameter \eqn{b} has density given by
-  \deqn{
-    f(x) =
-    (a/b) {(x/b)}^{a-1} \exp (-{(x/b)}^{a})}{
-    f(x) = (a/b) (x/b)^(a-1) exp(- (x/b)^a)}
+  \deqn{f(x) = (a/b) {(x/b)}^{a-1} \exp (-{(x/b)}^{a})}{%
+        f(x) = (a/b) (x/b)^(a-1) exp(- (x/b)^a)}
   for \eqn{x > 0}.
 }
 \note{
