@@ -192,6 +192,7 @@ formatC <- function (x, digits = NULL, width = NULL,
 	     rep.int(digits+8, n)
 	     )
     ## sanity check for flags added 2.1.0
+    flag <- as.character(flag)
     nf <- strsplit(flag, "")[[1]]
     if(!all(nf %in% c("0", "+", "-", " ", "#")))
        stop("'flag' can contain only '0+- #'")

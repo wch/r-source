@@ -390,14 +390,14 @@ code <- c(252,254,256,262:269,275,278:281,284,745,746,750:768,796:802,
           804:807,809,814:828,830:834,840:844)
 draw.title("Raw Hershey Escape Sequences", i=0, nr, nc)
 for (i in 1:75)
-    draw.vf.cell(tf, fi, paste("\\#H",formatC(code[i],wid=4,flag=0),sep=""),
+    draw.vf.cell(tf, fi, paste("\\#H",formatC(code[i],wid=4,flag="0"),sep=""),
                  i-1, nr)
 make.table(nr, nc)
 code <- c(845:847,850:856,860:874,899:909,2296:2299,2318:2332,2367:2382,
           4014,4109)
 draw.title("More Raw Hershey Escape Sequences", i=0, nr, nc)
 for (i in 1:73)
-    draw.vf.cell(tf, fi, paste("\\#H",formatC(code[i],wid=4,flag=0),sep=""),
+    draw.vf.cell(tf, fi, paste("\\#H",formatC(code[i],wid=4,flag="0"),sep=""),
                  i-1, nr)
 
 par(oldpar)
