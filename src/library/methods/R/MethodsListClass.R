@@ -28,6 +28,7 @@
              sealed = TRUE, where = envir)
     setClass("MethodWithNext",
              representation("MethodDefinition", nextMethod = "PossibleMethod", excluded = "list"), sealed = TRUE, where = envir)
+    setClass("SealedMethodDefinition", contains = "MethodDefinition")
     setClass("genericFunction",
              representation("function", generic = "character", package = "character",
                             group = "list", valueClass = "character",
@@ -52,7 +53,7 @@
 
 ## some intiializations that need to be done late
 .InitMethodDefinitions <- function(envir) {
-    assign("asMethodDefinition",  function(def, signature = list()) {
+    assign("asMethodDefinition",  function(def, signature = list(), sealed = FALSE) {
         ## primitives can't take slots, but they are only legal as default methods
         ## and the code will just have to accomodate them in that role, w/o the
         ## MethodDefinition information.
@@ -67,6 +68,8 @@
             value <- def
         else
             value <- new("MethodDefinition", def)
+        if(sealed)
+            value <- new("SealedMethodDefinition", value)
         ## this is really new("signature",  def, signature)
         ## but bootstrapping problems force us to make
         ## the initialize method explicit here

@@ -208,9 +208,9 @@ setMethod <-
   ##
   ## Note that assigning methods anywhere but the global environment (`where==1') will
   ## not have a permanent effect beyond the current R session.
-  function(f, signature = character(), definition, where = 1, valueClass = NULL)
+  function(f, signature = character(), definition, where = 1, valueClass = NULL,
+           sealed = FALSE)
 {
-    whereString <- if(is.environment(where)) deparse(where) else where
     ## Methods are stored in metadata in database where.  A generic function will be
     ## assigned if there is no current generic, and the function is NOT a primitive.
     ## Primitives are dispatched from the main C code, and an explicit generic NEVER
@@ -227,11 +227,17 @@ setMethod <-
       fdef <- deflt
     if(is.null(fdef))
       stop(paste("No existing definition for function \"",f,"\"", sep=""))
+    if(isSealedMethod(f, signature, fdef))
+      stop("The method for function \"", f, "\" and signature ", .signatureString(fdef, signature),
+           " is sealed and cannot be re-defined")
     if(!hasMethods) {
-      message("Creating a new generic function for \"", f, "\" in package ",
+        if(identical(where, 1) || identical(where, .GlobalEnv))
+            message("Creating a new generic function for \"", f, "\"")
+        else
+            message("Creating a new generic function for \"", f, "\" in package ",
                     getPackageName(where))
-      setGeneric(f, where = where)
-      fdef <- getGeneric(f)
+        setGeneric(f, where = where)
+        fdef <- getGeneric(f)
     }
     signature <- matchSignature(signature, fdef)
     allMethods <- .getOrMakeMethodsList(f, where, fdef)
@@ -263,7 +269,7 @@ setMethod <-
            }, # Will remove the method, if any, currently in this signature
            stop("Invalid method definition: not a function"))
     allMethods <- insertMethod(allMethods, signature, def,
-                               asMethodDefinition(definition, signature))
+                               asMethodDefinition(definition, signature, sealed))
     ## assign the methods (also updates the session info)
     assignMethodsMetaData(f, allMethods, fdef, where, deflt)
     f
@@ -703,3 +709,17 @@ callGeneric <- function(...)
 
 initMethodDispatch <- function()
     .C("R_initMethodDispatch", PACKAGE = "methods")# C-level initialization
+
+isSealedMethod <- function(f, signature, fdef = getGeneric(f, FALSE)) {
+    fNonGen <- getFunction(f, FALSE, FALSE)
+    if(!is.primitive(fNonGen)) {
+        mdef <- getMethod(f, signature, optional = TRUE)
+        return(is(mdef, "SealedMethodDefinition"))
+    }
+    if(is(fdef, "genericFunction"))
+        signature <- matchSignature(signature, fdef)
+    if(length(signature)==0)
+        TRUE # default method for primitive
+    else
+        !is.na(match(signature[[1]], .BasicClasses))
+}

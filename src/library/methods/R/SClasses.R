@@ -500,3 +500,14 @@ findClass <- function(Class) {
         ok[i] <- exists(what, where[i], inherits = FALSE)
     where[ok]
 }
+
+isSealedClass <- function(Class) {
+    if(is.character(Class)) {
+        if(isClass(Class))
+            Class <- getClass(Class, FALSE)
+    }
+    if(!is(Class, "classRepresentation"))
+        FALSE
+    else
+        Class@sealed
+}

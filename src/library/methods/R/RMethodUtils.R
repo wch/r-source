@@ -859,3 +859,20 @@ metaNameUndo <- function(strings, prefix = "M", searchForm = FALSE) {
     mlist@methods <- methods
     mlist
 }
+
+.signatureString <- function(fdef, signature) {
+    snames <- names(signature)
+    if(is.null(snames)) {
+        if(is(fdef, "genericFunction")) {
+            snames <- fdef@signature
+            signature <- matchSignature(signature, fdef)
+            if(length(snames)>length(signature))
+                length(snames) <- length(signature)
+        }
+        else # shouldn't happen,...
+            return(paste(signature, collapse=", "))
+    }
+    else
+        signature <- as.character(signature)
+    paste(paste(snames, "=\"", signature, "\"", sep=""), collapse = ", ")
+}
