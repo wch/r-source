@@ -1,20 +1,18 @@
-<html lang="en">
-<head>
+<html lang="en"><head>
 <title>R Installation and Administration</title>
 <meta http-equiv="Content-Type" content="text/html">
 <meta name=description content="R Installation and Administration">
-<meta name=generator content="makeinfo 4.0b">
+<meta name=generator content="makeinfo 4.0">
 <link href="http://texinfo.org/" rel=generator-home>
-</head>
+</head><body>
 
-<body>
 <a name="Top"></a>
 
 <h1>R Installation and Administration</h1>
 
 <p>This is a guide to installation and administration for R.
 
-<p>The current version of this document is 1.4.0 (2001-12-07).
+<p>The current version of this document is 1.4.0 (2001-12-09).
 
 </ul>
 
@@ -642,7 +640,8 @@ a good idea to remove that file before re-configuring.
 <p>To compile R, you will most likely find it easiest to use GNU
 <code>make</code>.  On Solaris 2.6/7/8 in particular, you need a version of
 GNU <code>make</code> different from 3.77; 3.79 works fine, as does the Sun
-<code>make</code>.
+<code>make</code>.  The native <code>make</code> is reported to fail on SGI
+Irix 6.5.
 
 <p>To build in a separate directory you need a <code>make</code> that uses the
 <code>VPATH</code> variable, for example GNU <code>make</code>, or Sun
@@ -691,6 +690,11 @@ compiler flags<a rel=footnote href="#fn-6"><sup>6</sup></a> asserting
 FORTRAN 77 compliance.
 
 <p>For performance reasons<a rel=footnote href="#fn-7"><sup>7</sup></a> you may want to choose a FORTRAN 90/95 compiler.
+
+<p>If you use <code>f2c</code> you may need to ensure that the FORTRAN type
+<code>integer</code> is translated to the C type <code>int</code>.  Normally
+<code>f2c.h</code> contains <code>typedef long int integer;</code>, which will
+work on a 32-bit platform but not on a 64-bit platform.
 
 <a name="Compile%20and%20load%20flags"></a>
 
