@@ -4,11 +4,11 @@
 
 # @configure_input@
 
-revision='$Revision: 1.105 $'
+revision='$Revision: 1.106 $'
 version=`set - ${revision}; echo ${2}`
 version="R add-on package installer ${version}
 
-Copyright (C) 2000-2002 The R Core Development Team.
+Copyright (C) 2000-2003 The R Core Development Team.
 This is free software; see the GNU General Public Licence version 2
 or later for copying conditions.  There is NO warranty."
 
@@ -118,6 +118,9 @@ get_packages () {
     pkgs="${pkgs} \"`cd "${1}" && ${GETWD}`\""
   fi
 }
+
+### 
+### Setup and command line processing.
 
 if test -n "${R_LIBS}"; then
   lib=`echo "${R_LIBS}" | cut -f1 -d:`
@@ -250,17 +253,20 @@ elif ${debug}; then
   build_help_opts="--debug ${build_help_opts}"
 fi
 
+### 
+### Install a *binary* package from the current directory. 
+
 do_install_binary () {
-  ## Install a binary package from the current directory.
   pkg="${1}"
   message "Installing *binary* package '${pkg}' ..."
   cp -r . "${lib}/${pkg}"
 }
 
-do_install_source () {
-  ## Install a source package from the current directory.
-  pkg="${1}"
+### 
+### Install a *source* package from the current directory.
 
+do_install_source () {
+  pkg="${1}"
   message "Installing *source* package '${pkg}' ..."
   stars="**"
 
@@ -365,6 +371,11 @@ do_install_source () {
 
   if test -d inst; then
     message "inst"
+    ## <FIXME>
+    ## When installing from a source directory under CVS control, we
+    ## should really exclude the CVS subdirs.  (In fact, we should also
+    ## exclude everything in @file{.Rbuildignore}, but that's another
+    ## story ...)
     cp -r inst/* "${lib}/${pkg}"
   fi
 
@@ -492,6 +503,9 @@ do_install_source () {
   stars="*"
 }
 
+### 
+### Install a package.
+
 do_install () {
   cd "${1}"
   pkg=`basename "${1}"`
@@ -556,15 +570,23 @@ do_install () {
   fi
 
   chmod -R a+r "${lib}/${pkg}"
-  
+
+  ## <FIXME>
+  ## This is really something we should do once at the end, and not for
+  ## each package.  However, attempting to install a package can result
+  ## in a non-local exit without any cleanups ...
   if test "${lib}" = `cd "${R_HOME}/library" && ${GETWD}`; then
     cat "${R_HOME}"/library/*/CONTENTS \
       > "${R_HOME}"/doc/html/search/index.txt
   fi
+  ## </FIXME>
 
   message "DONE (${pkg})"
   echo
 }
+
+### 
+### Main loop and cleanup.
 
 startdir=`${GETWD}`
 eval "for pkg in ${pkgs}; do do_install \"\${pkg}\"; done"
