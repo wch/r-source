@@ -83,7 +83,8 @@ Machine()
   \emph{Transactions on Mathematical Software}, \bold{14}, 4, 303--311.
 }
 \seealso{
-  \code{\link{machine}} to determine the computer type which \R is running on.
+  \code{\link{machine}} to determine the computer type which \R is
+  running on, \code{\link{.Platform}} for more details of the platform.
 }
 \examples{
 str(Machine())
