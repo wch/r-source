@@ -123,8 +123,3 @@ is.null(class(unclass(d1$b)))
 ## bugs in R 1.2.0
 format(as.POSIXct(relR120 <- "2000-12-15 11:24:40")) == relR120
 format(as.POSIXct(substr(relR120,1,10))) == substr(relR120,1,10)
-
-require(ts)
-## Start new year (i.e. line) at Jan:
-(tt <- ts(1:10, start = c(1920,7), end = c(1921,4), freq = 12))
-cbind(tt, tt + 1)

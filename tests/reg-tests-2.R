@@ -157,6 +157,10 @@ kernel("modified.daniell", m=5)
 kernel("daniell", m=c(3,5,7))
 ## fixed by patch from Adrian Trapletti 2001-03-08
 
+## Start new year (i.e. line) at Jan:
+(tt <- ts(1:10, start = c(1920,7), end = c(1921,4), freq = 12))
+cbind(tt, tt + 1)
+
 
 ## PR 883 (cor(x,y) when is.null(y))
 try(cov(rnorm(10), NULL))
