@@ -31,7 +31,7 @@ AC_CONFIG_AUX_DIR(tools)
 ## In an ideal world we would use AC_CANONICAL_HOST here, but this fails
 ## on platforms like the i686 (aka Pentium-Pro) because of some sort of
 ## sanity check written into configure.  We bypass the check by invoking
-## config.guess directly and parsing the results ourselves. 
+## config.guess directly and parsing the results ourselves.
 
 AC_MSG_CHECKING(host system type)
 host=`${srcdir}/tools/config.guess`
@@ -52,14 +52,13 @@ AC_SUBST(VERSION)
 
 ### Defaults
 
-if test -r "${srcdir}/config.site"; then
-  echo "loading site script ${srcdir}/config.site"
-  . ${srcdir}/config.site
-fi
-if test -r "${HOME}/.Rconf"; then
-  echo "loading user script ${HOME}/.Rconf"
-  . ${HOME}/.Rconf
-fi
+f="${srcdir}/config.site"
+if test -r $f; then echo "loading site script $f"; . $f ; fi
+f="${HOME}/.Rconf"
+if test -r $f; then echo "loading user script $f"; . $f ; fi
+f="./config.site"
+if test -r $f; then echo "loading buildspecific script $f"; . $f ; fi
+
 
 ### Handle arguments to configure
 
@@ -107,7 +106,7 @@ AC_ARG_WITH(libmoto,
       use_libmoto=true;
     fi],
   use_libmoto=true)
-      
+
 AC_ARG_WITH(blas,
   [  --with-blas             use BLAS library (if available)],
   [ if test "${withval}" = no; then
@@ -120,7 +119,7 @@ AC_ARG_WITH(blas,
 AC_ARG_WITH(blas_risc,
   [  --with-blas_risc        use RISC Optimized BLAS library (if available)],
   [ if test "${withval}" = no; then
-      use_blas_risc=false;  
+      use_blas_risc=false;
     else
       use_blas_risc=true;
     fi],
@@ -244,7 +243,7 @@ R_PROG_CC_M
 
 if test -n "${FC}"; then
   F77=${FC}
-  AC_MSG_RESULT([defining F77 to be ${F77}])  
+  AC_MSG_RESULT([defining F77 to be ${F77}])
 elif ${use_f77}; then
   if test "${with_f77}" = yes; then
     F77=f77
@@ -465,7 +464,7 @@ AC_SUBST(R_XTRA_LIBS)
 ##
 ## LDCMD, DLLFLAGS
 ##   command and flags for loading the main binary so that it will load
-##   shared libraries (DLLs) at runtime 
+##   shared libraries (DLLs) at runtime
 ## CPICFLAGS, FPICFLAGS
 ##   flags for compiling C and Fortran library code
 ## SHLIBLD, SHLIBLDFLAGS
@@ -490,7 +489,7 @@ if test -n "${XMKMF}"; then
   ${XMKMF} > /dev/null
   cc=`${srcdir}/tools/GETMAKEVAL CC`
   if test "`which ${cc}`" = "`which ${CC}`"; then
-    shlibldflags=`${srcdir}/tools/GETMAKEVAL SHLIBLDFLAGS`  
+    shlibldflags=`${srcdir}/tools/GETMAKEVAL SHLIBLDFLAGS`
     cpicflags=`${srcdir}/tools/GETMAKEVAL PICFLAGS`
     fpicflags=${cpicflags}
   fi
@@ -599,7 +598,7 @@ fi
 if test -z "${SHLIBLDFLAGS}"; then
   AC_MSG_WARN([Could not determine SHLIBLDFLAGS.])
   AC_MSG_ERROR([See the file INSTALL for more information.])
-fi  
+fi
 
 AC_SUBST(LDCMD)
 AC_SUBST(DLLFLAGS)
@@ -683,7 +682,7 @@ AC_OUTPUT(Makeconf
   src/scripts/R.sh
   src/scripts/Rd2contents
   src/scripts/Rd2txt
-  src/scripts/Rdconv 
+  src/scripts/Rdconv
   src/scripts/Rdindex
   src/scripts/Rman2Rd
   src/scripts/SHLIB
