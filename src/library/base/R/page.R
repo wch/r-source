@@ -7,8 +7,7 @@ page <- function(x) {
     if(exists(subx, inherits=TRUE)) {
         file <- tempfile("Rpage.")
         dput(get(subx, inherits=TRUE), file)
-        on.exit(unlink(file))
-	file.show(file, title=subx)
+	file.show(file, title=subx, delete.file=T)
     } else
 	stop(paste("no object named \"", subx, "\" to edit",sep=""))
 }

@@ -5,26 +5,35 @@ R.home <- function()
 .Internal(R.home())
 
 file.show <-
-function (file, header=rep("", length(file)), title = "R Information") 
-.Internal(file.show(file, header, title))
+function (..., header=rep("", nfiles), title="R Information",
+          delete.file=FALSE, pager=options()$pager)
+{
+    file <- c(...)
+    nfiles <- length(file)
+    if(delete.file) on.exit(file.remove(file))
+    .Internal(file.show(file, header, title))
+}
 
 file.append <- function(file1, file2)
 .Internal(file.append(file1, file2))
 
-file.remove <- function(file)
-.Internal(file.remove(file))
+file.remove <- function(...) 
+.Internal(file.remove(c(...)))
+
 
 list.files <- function(path, pattern=NULL, all.files=FALSE, full.names=FALSE)
 .Internal(list.files(path, pattern, all.files, full.names))
+dir <- .Alias(list.files)
 
 file.path <- function(..., fsep=.Platform$file.sep)
 paste(..., sep=fsep)
 
-file.exists <- function(file)
-.Internal(file.exists(file))
+file.exists <- function(...)
+.Internal(file.exists(c(...)))
 
-file.create <- function(file)
-.Internal(file.create(file))
+
+file.create <- function(...)
+.Internal(file.create(c(...)))
 
 file.choose <- function(new=FALSE)
 .Internal(file.choose(new))

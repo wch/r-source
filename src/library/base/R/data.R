@@ -66,7 +66,6 @@ show.data <-
   ## give `index' of all possible data sets
   file <- tempfile("R.")
   file.create(file)
-  on.exit(unlink(file))
   first <- TRUE
   for (lib in lib.loc) for (pkg in package) {
     INDEX <- system.file("data", "index.doc", pkg = pkg, lib = lib)
@@ -77,7 +76,8 @@ show.data <-
       first <- FALSE
     }
   }
-  if (first) 
+  if (first) {
+    unlink(file)
     stop("No data sets found")
-  else file.show(file)
+  } else file.show(file, delete.file=T)
 }

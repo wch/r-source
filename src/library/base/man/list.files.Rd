@@ -1,8 +1,11 @@
 \name{list.files}
 \alias{list.files}
+\alias{dir}
 \title{List the Files in a Directory/Folder}
 \usage{
 list.files(path, pattern=NULL, all.files=FALSE,
+    full.names=FALSE)
+dir(path, pattern=NULL, all.files=FALSE,
     full.names=FALSE)
 }
 \arguments{
@@ -18,7 +21,7 @@ list.files(path, pattern=NULL, all.files=FALSE,
 }
 \description{
 This function produces a list containing the names of files
-in the named directory.
+in the named directory. \code{dir} is an alias.
 }
 \value{
 A character vector containing the names of the files in the

@@ -83,8 +83,7 @@ library <-
       help <- as.character(substitute(help))
     file <- system.file("INDEX", pkg=help, lib=lib.loc)
     if (file == "") 
-      stop(paste("No documentation for package `", help, 
-                 "'", sep = ""))
+      stop(paste("No documentation for package `", help, "'", sep = ""))
     else file.show(file)
   }
   else {
@@ -113,8 +112,7 @@ library <-
       }
       avail <- c(avail, a)
     }
-    file.show(libfil)
-    unlink(libfil)
+    file.show(libfil, delete.file=T)
     return(invisible(avail))
   }
   if (logical.return) 

@@ -2,9 +2,9 @@
 \alias{file}
 \title{File manipulation}
 \usage{
-file.create(file)
-file.exists(file)
-file.remove(file)
+file.create(\dots)
+file.exists(\dots)
+file.remove(\dots)
 file.append(file1, file2)
 }
 \alias{file.create}
@@ -12,13 +12,16 @@ file.append(file1, file2)
 \alias{file.remove}
 \alias{file.exists}
 \arguments{
- \item{file, file1, file2}{character vectors, containing file names.}
+ \item{\dots, file1, file2}{character vectors, containing file names.}
 }
 \description{
 These functions provide a very basic interface to the computer's
 filestore.  
 }
 \details{
+The \code{\dots} arguments are concatenated to form one character
+string: you can specify the files separately or as one vector.
+
 \code{file.create} creates files with the given names if they
 do not already exist and truncates them if they do.
 It returns a logical vector indicating the success or failure
@@ -49,6 +52,6 @@ file.create("A")
 file.append("A", rep("B", 10))
 if(interactive()) file.show("A")
 
-file.remove("A"); file.remove("B")
+file.remove("A","B")
 }
 \keyword{file}
