@@ -12,11 +12,11 @@ Building R with Aqua GUI from Source:
   under ESS you will want to have X11 support
   
 Without either X11 or Tcl/Tk:
-%  ./configure --enable-R-shlib --with-blas='-framework vecLib' 
+%  ./configure --with-blas='-framework vecLib' 
    --with-lapack --with-aqua --without-x 
 
 With both:
-%  ./configure --enable-R-shlib --with-blas='-framework vecLib' 
+%  ./configure --with-blas='-framework vecLib' 
    --with-lapack    --with-aqua
 provided that you have built and installed tk and tcl from the unix tree 
 of the respective sources.
@@ -40,13 +40,13 @@ for more information on where to get it and how to install it.
 2)  R with Aqua GUI requires R to be built as a framework, which is 
     default. Thus  you need to install R as a framework with
 
-%  sudo make install-Rframework
+%  sudo make install
 
  which installs, by default, the R framework inside /Library/Frameworks. 
-You can change the R framework location at build-time in the near future 
-by specifying the flag  
+You can change the R framework location at build-time specifying the flag  
      --enable-R-framework[=DIR]  
-at configure time. The default is --enable-R-framework=/Library/Frameworks
+at configure time or using the --prefix option in make install.
+The default is --enable-R-framework=/Library/Frameworks
 
         
 3) To install the R with Aqua GUI you must have already installed the
@@ -169,5 +169,5 @@ you can't find a local declaration for a variable look at the top of the
 file.
 
 
-This version: 2004-8-1
+This version: 2004-3-13
 	
