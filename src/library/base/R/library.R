@@ -58,7 +58,7 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
     {
         dont.mind <- c("last.dump", "last.warning", ".Last.value",
                        ".Random.seed", ".First.lib", ".Last.lib",
-                       ".packageName", ".noGenerics")
+                       ".packageName", ".noGenerics", ".required")
         sp <- search()
         lib.pos <- match(pkgname, sp)
         ## ignore generics not defined for the package
@@ -433,7 +433,7 @@ function(chname, libpath, verbose = getOption("verbose"),
 require <-
 function(package, quietly = FALSE, warn.conflicts = TRUE,
          keep.source = getOption("keep.source.pkgs"),
-         character.only = FALSE, version)
+         character.only = FALSE, version, save = TRUE)
 {
     if( !character.only )
         package <- as.character(substitute(package)) # allowing "require(eda)"
@@ -445,10 +445,32 @@ function(package, quietly = FALSE, warn.conflicts = TRUE,
 
     if (is.na(match(paste("package", pkgName, sep = ":"), search()))) {
 	if (!quietly) cat("Loading required package:", package, "\n")
-	library(package, character.only = TRUE, logical = TRUE,
+	value <- library(package, character.only = TRUE, logical = TRUE,
 		warn.conflicts = warn.conflicts, keep.source = keep.source,
                 version = version)
-    } else TRUE
+    } else value <- TRUE
+
+    if(identical(save, FALSE)) {}
+    else {
+        ## update the ".required" variable
+        if(identical(save, TRUE)) {
+            save <- topenv() # a package namespace, topLevelEnvironment option or .GlobalEnv
+            if(identical(save, .GlobalEnv)) {
+                ## try to detect call from .First.lib in  a package
+                if(exists("pkgname", sys.frame(sys.parent(1)), inherits = FALSE))
+                    save <- as.environment(paste("package:", get("pkgname", sys.frame(sys.parent(1))), sep=""))
+                ## else either from prompt or in the source for install with saved image ?
+            }
+        }
+        else
+            save <- as.environment(save)
+        if(exists(".required", save, inherits=FALSE))
+            packages <- unique(c(package, get(".required", save)))
+        else
+            packages <- package
+        assign(".required", packages, save)
+    }
+    value
 }
 
 .packages <- function(all.available = FALSE, lib.loc = NULL)

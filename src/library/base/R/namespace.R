@@ -252,11 +252,13 @@ saveNamespaceImage <- function (package, rdafile, lib.loc = NULL,
     vars <- vars[vars != ".__NAMESPACE__."]
     save(list = vars, file = rdafile, envir = ns)
 }
-topenv <- function(envir = parent.frame()) {
+topenv <- function(envir = parent.frame(), matchThisEnv = options("topLevelEnvironment")[[1]]) {
     while (! is.null(envir)) {
         if (! is.null(attr(envir, "name")) ||
+            identical(envir, matchThisEnv) ||
             identical(envir, .GlobalEnv) ||
-            .Internal(isNamespaceEnv(envir)))
+            .Internal(isNamespaceEnv(envir)) ||
+            exists(".packageName", envir = envir, inherits = FALSE))
             return(envir)
         else envir <- parent.env(envir)
     }
@@ -330,7 +332,7 @@ unloadNamespace <- function(ns) {
     }
     if (dynGet("__NamespaceDeclarativeOnly__", FALSE))
         stop("imperative name space directives are disabled")
-    ns <- topenv(parent.frame())
+    ns <- topenv(parent.frame(), NULL)
     if (identical(ns, .BaseNamespaceEnv))
         warning("all objects in base name space are currently exported.")
     else if (! isNamespace(ns))

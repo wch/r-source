@@ -33,19 +33,26 @@ detach <- function(name, pos=2, version)
 	    stop("invalid name")
     }
     env <- as.environment(pos)
+    packageName <- search()[[pos]]
     if(exists(".Last.lib", mode = "function", where = pos, inherits=FALSE)) {
         .Last.lib <- get(".Last.lib",  mode = "function", pos = pos,
                          inherits=FALSE)
         libpath <- attr(env, "path")
         if(!is.null(libpath)) try(.Last.lib(libpath))
     }
+    .Internal(detach(pos))
+    ## check for detaching a required package
+    for(pkgs in search()) {
+        if(exists(".required", pkgs, inherits = FALSE)
+           && packageName %in% paste("package:", get(".required", pkgs, inherits = FALSE),sep=""))
+            warning(packageName, " is required by ", pkgs, " (still attached)")
+    }
     if(.isMethodsDispatchOn()) {
-        if(pos != match("package:methods", search()))
+        if("package:methods" %in% search())
             cacheMetaData(env, FALSE)
         else
             .isMethodsDispatchOn(FALSE)
     }
-    .Internal(detach(pos))
 }
 
 ls <- objects <-

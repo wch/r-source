@@ -94,7 +94,8 @@ function(file, envir = NULL, chdir = FALSE,
 {
     if(!(is.character(file) && file.exists(file)))
 	stop(paste(sQuote(file), "is not an existing file"))
-    oop <- options(keep.source = as.logical(keep.source))
+    oop <- options(keep.source = as.logical(keep.source),
+                   topLevelEnvironment = as.environment(envir))
     on.exit(options(oop))
     exprs <- parse(n = -1, file = file)
     if (length(exprs) == 0)

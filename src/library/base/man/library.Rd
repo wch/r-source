@@ -35,7 +35,7 @@ library(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
         verbose = getOption("verbose"), version)
 require(package, quietly = FALSE, warn.conflicts = TRUE,
         keep.source = getOption("keep.source.pkgs"),
-        character.only = FALSE, version)
+        character.only = FALSE, version, save = TRUE)
 
 .First.lib(libname, pkgname)
 .Last.lib(libpath)
@@ -79,6 +79,11 @@ require(package, quietly = FALSE, warn.conflicts = TRUE,
     printed.}
   \item{quietly}{a logical.  If \code{TRUE}, no message confirming
     package loading is printed.}
+  \item{save}{logical or environment.  IF \code{TRUE}, a call to
+  \code{require} from the source for a package will save the name of
+  the required package in the variable \code{".required"}, allowing
+  function \code{\link{detach}} to warn if a required package is
+  detached. See section \sQuote{Packages that require other packages} below.}
   \item{libname}{a character string giving the library directory where
     the package was found.}
   \item{pkgname}{a character string giving the name of the package.}
@@ -195,15 +200,28 @@ require(package, quietly = FALSE, warn.conflicts = TRUE,
   \code{require} returns a logical indicating whether the required
   package is available.
 }
+\section{Packages that require other packages}{The source code for a
+  package that requires one or more other packages should have a call
+  to \code{require}, preferably near the beginning of the source, and
+  of course before any code that uses functions, classes or methods
+  from the other package.  The default for argument \code{save} will
+  save the names of all required packages in the environment of the
+  new package.  The saved package names are used by
+  \code{\link{detach}} when a package is detached to warn if other
+  packages still require the detached package.  Also, if a package is
+  installed with saved image (see \link{INSTALL}), the saved package
+  names are used to require these packages when the new package is attached.}
 \section{Formal methods}{
   \code{library} takes some further actions when package \pkg{methods}
   is attached (as it is by default).  Packages may define formal generic
   functions as well as re-defining functions in other packages (notably
   \pkg{base}) to be generic, and this information is cached whenever
   such a package is loaded after \pkg{methods} and re-defined functions
-  are excluded from the list of conflicts.  This may take appreciable
-  time and can be prevented by defining an object \code{.noGenerics}
-  (with any value) in the package.
+  are excluded from the list of conflicts.  The check requires looking
+  for a pattern of objects; the pattern search may be avoided by
+  defining an object \code{.noGenerics}
+  (with any value) in the package.  Naturally, if the package
+  \emph{does} have any such methods, this will prevent them from being used.
 }
 \note{
   \code{library} and \code{require} can only load an \emph{installed}
@@ -248,14 +266,14 @@ require(package, quietly = FALSE, warn.conflicts = TRUE,
   Wadsworth \& Brooks/Cole.
 }
 \examples{
-(.packages())		    # maybe just "base"
+(.packages())               # maybe just "base"
 .packages(all = TRUE)       # return all available as character vector
 library()                   # list all available packages
 library(lib = .Library)     # list all packages in the default library
 library(help = eda)         # documentation on package 'eda'
 library(eda)                # load package 'eda'
 require(eda)                # the same
-(.packages())		    # "eda", too
+(.packages())               # "eda", too
 detach("package:eda")
 
 # if the package name is in a character vector, use

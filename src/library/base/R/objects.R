@@ -168,6 +168,14 @@ getS3method <-  function(f, class, optional = FALSE)
         {
             if(!exists(fname, mode = "function", envir = envir)) return("")
             f <- get(fname, mode = "function", envir = envir)
+            if(.isMethodsDispatchOn() && is(f, "genericFunction")) {
+                ## maybe an S3 pseudo-generic was turned into the default
+                fdeflt <- finalDefaultMethod(getMethodsForDispatch(fname, f))
+                if(is(fdeflt, "derivedDefaultMethod"))
+                    f <- fdeflt
+                else
+                    warning("\"", fname, "\" is a formal generic function; S3 methods will not likely be found")
+            }
             isUMEbrace <- function(e) {
                 for (ee in as.list(e[-1]))
                     if (nchar(res <- isUME(ee))) return(res)
@@ -289,7 +297,7 @@ getAnywhere <- function(x)
             gen <- paste(parts[1:(i-1)], collapse="")
             cl <- paste(parts[2:length(parts)], collapse="")
             if(!is.null(f <- getS3method(gen, cl, TRUE))) {
-                ev <- topenv(environment(f))
+                ev <- topenv(environment(f), NULL)
                 nmev <- if(isNamespace(ev)) getNamespaceName(ev) else NULL
                 objs <- c(objs, f)
                 msg <- paste("registered S3 method for", gen)
