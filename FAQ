@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 2.0.2005-01-01
+Version 2.0.2005-01-06
 ISBN 3-900051-08-9
 Kurt Hornik
 
@@ -1404,6 +1404,10 @@ distributions of R.)
 *Malmig*
      An implementation of Malecot migration model together with a number of
      related functions.
+
+*MatchIt*
+     Select matched samples of the original treated and control groups with
+     similar covariate distributions.
 
 *Matching*
      Multivariate and propensity score matching with formal tests of
