@@ -243,6 +243,10 @@ is.na.POSIXlt <- function(x) is.na(as.POSIXct(x))
 c.POSIXct <- function(...)
     structure(c(unlist(lapply(list(...), unclass))), class="POSIXct")
 
+## we need conversion to POSIXct as POSIXlt objects can be in different tz.
+c.POSIXlt <- function(...)
+    as.POSIXlt(do.call("c", lapply(list(...), as.POSIXct)))
+
 ## force absolute comparisons
 all.equal.POSIXct <- function(..., scale=1)
     NextMethod("all.equal")
