@@ -47,6 +47,7 @@ OBJS=		arithmetic.o \
 		par.o \
 		paste.o\
 		plot.o \
+		plot3d.o \
 		plotmath.o \
 		print.o \
 		printarray.o \

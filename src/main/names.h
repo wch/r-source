@@ -204,6 +204,7 @@ SEXP do_paren(SEXP, SEXP, SEXP, SEXP);
 SEXP do_parse(SEXP, SEXP, SEXP, SEXP);
 SEXP do_paste(SEXP, SEXP, SEXP, SEXP);
 SEXP do_pause(SEXP, SEXP, SEXP, SEXP);
+SEXP do_persp(SEXP, SEXP, SEXP, SEXP);
 SEXP do_polyroot(SEXP, SEXP, SEXP, SEXP);
 SEXP do_pos2env(SEXP, SEXP, SEXP, SEXP);
 SEXP do_abline(SEXP, SEXP, SEXP, SEXP);
