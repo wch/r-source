@@ -1,17 +1,31 @@
 \name{apropos}
-\title{Find Objects by Partial Name}
-\usage{apropos(pattern, where=FALSE)}
+\title{Find Objects by (Partial) Name}
+\usage{
+apropos(pattern, where = FALSE, mode = "any")
+find(what, mode = "any", numeric. = FALSE, simple.words = TRUE)
+}
 \arguments{
-\item{pattern}{a regular expression to match against}
-\item{where}{a logical indicating whether positions in the search list
-should also be returned}
+\item{what,pattern}{name of an object, or regular expression to match against}
+\item{where, numeric.}{a logical indicating whether positions in the
+  search list should also be returned}
+\item{mode}{character; if not \code{"any"}, only objects who's
+  \code{\link{mode}(.)} equals \code{mode} are searched.}
+\item{simple.words}{logical; if \code{TRUE}, the \code{what} argument is
+  only searched as whole only word.}
 }
 \alias{apropos}
+\alias{find}
 \description{
 \code{apropos} returns a vector of character strings giving the names of
-all objects in the search list matching \code{pattern}.  If \code{where}
-is \code{TRUE}, their position in the search list is returned as their
-names attribute.
+all objects in the search list matching \code{pattern}.
+If \code{mode != "any"} only those objects which are of mode \code{mode}
+are considered.
+If \code{where} is \code{TRUE}, their position in the search list is
+returned as their names attribute.
+
+\code{find} is a different user interface to the same task as \code{apropos}.
+However, by default (\code{simple.words == TRUE}), only full words are
+searched.
 }
 \author{Kurt Hornik and Martin Maechler (May 1997).}
 \seealso{
@@ -20,8 +34,16 @@ names attribute.
 }
 \examples{
 apropos("lm")
-apropos("ls")
+apropos(ls)
 apropos("lq")
+
+lm <- 1:pi
+find(lm)        ##> ".GlobalEnv"   "package:base"
+find(lm, num=T) ## .. numbers with these names
+find(lm, num=T, mode="function")# only the second one
+rm(lm)
+
+apropos(".", mode="list")
 
 # need a DOUBLE backslash `\\\\' (in case you don't see it anymore)
 apropos("\\\\[")
