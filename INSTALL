@@ -11,7 +11,7 @@ to build under Classic MacOS see the file `src/macintosh/INSTALL'.
 
 The main source of information on installation is the `R Installation
 and Administration Manual', an HTML copy of which is available as file
-`doc/manual/R-admin.html'.  Please read that before installing R.  But
+`doc/html/R-admin.html'.  Please read that before installing R.  But
 if you are impatient, read on but please refer to the manual to
 resolve any problems.
 
@@ -24,8 +24,8 @@ presumably in the top directory.  Issue the following commands:
 	./configure
 	make
 
-(If your make is not called make, set the environment variable MAKE to
-its name, and use the name throughout these instructions.)
+(If your make is not called `make', set the environment variable MAKE to
+its name, and use that name throughout these instructions.)
 This will take a while, giving you time to read `R-admin.html'.
 
 Then check the built system worked correctly, by
@@ -54,4 +54,4 @@ For a site-wide installation, use
 choosing to install the manuals that you made.
 
 This installs to the default location (typically `/usr/local') for your
-platform: see the manual for other options.
+platform: see the Installation and Administration Manual for other options.
