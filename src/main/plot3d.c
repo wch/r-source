@@ -841,7 +841,8 @@ static void DepthOrder(double *z, double *x, double *y, int nx, int ny,
 
 
 static void DrawFacets(double *z, double *x, double *y, int nx, int ny,
-		       int *index, int *col, int ncol, double *shade)
+		       int *index, int *col, int ncol, int border,
+		       double *shade)
 {
     double xx[4], yy[4];
     Vector3d u, v;
@@ -903,7 +904,7 @@ static void DrawFacets(double *z, double *x, double *y, int nx, int ny,
 	    blue = shadeval * R_BLUE(newcol);
 	    newcol = R_RGB(red, green, blue);
 	  }
-	  GPolygon(nv, xx, yy, USER, newcol, dd->gp.fg, dd);
+	  GPolygon(nv, xx, yy, USER, newcol, border, dd);
 	}
     }
 }
@@ -1205,7 +1206,8 @@ SEXP do_persp(SEXP call, SEXP op, SEXP args, SEXP env)
     PerspBox(0, REAL(xlim), REAL(ylim), REAL(zlim), dd);
 
     DrawFacets(REAL(z), REAL(x), REAL(y), nrows(z), ncols(z), INTEGER(index),
-	       INTEGER(col), ncol, isNull(shade) ? NULL : REAL(shade));
+	       INTEGER(col), ncol, INTEGER(border)[0],
+	       isNull(shade) ? NULL : REAL(shade));
 
     PerspBox(1, REAL(xlim), REAL(ylim), REAL(zlim), dd);
 
