@@ -2,6 +2,7 @@ install.packages <- function(pkgs, lib, CRAN=getOption("CRAN"),
                              contriburl=contrib.url(CRAN),
                              method, available=NULL, destdir=NULL)
 {
+    if(!length(pkgs)) return(invisible())
     if(missing(lib) || is.null(lib)) {
         lib <- .libPaths()[1]
         if(length(.libPaths()) > 1)
