@@ -374,7 +374,8 @@ package, run at the R prompt.
      > link.html.help()
 
 This is done automatically when installing from the Packages menu or by
-`install.packages()'.
+`install.packages()', and when `help.start' is run, provided you have
+write permission in `rw1050\library'.
 
 3.4 My functions are not found by the HTML help search system.
 ==============================================================
@@ -783,6 +784,6 @@ then `R_ProcessEvents()'.
 
 
 
-Last edited 2001 December 7 by Professor B. D. Ripley
+Last edited 2002 January 17 by Professor B. D. Ripley
 <ripley@stats.ox.ac.uk>
 
