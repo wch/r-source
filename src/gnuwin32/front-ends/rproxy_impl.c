@@ -554,6 +554,7 @@ int R_Proxy_init (char const* pParameterString)
 
 /* 01-06-05 | baier | SETJMP and fatal error handling around eval() */
 /* 04-08-01 | baier | ref-counting in case of error */
+/* 04-10-11 | baier | restore original ref-counting */
 int R_Proxy_evaluate (char const* pCmd,BDX_Data** pData)
 {
   SEXP rho = R_GlobalEnv;
@@ -599,7 +600,6 @@ int R_Proxy_evaluate (char const* pCmd,BDX_Data** pData)
 	  }
 	else
 	  {
-	    UNPROTECT(1);
 	    return SC_PROXY_ERR_EVALUATE_STOP;
 	  }
       }
@@ -627,6 +627,7 @@ int R_Proxy_evaluate (char const* pCmd,BDX_Data** pData)
 
 /* 01-06-05 | baier | SETJMP and fatal error handling around eval() */
 /* 04-08-01 | baier | ref-counting in case of error */
+/* 04-10-11 | baier | restore original ref-counting */
 int R_Proxy_evaluate_noreturn (char const* pCmd)
 {
   SEXP rho = R_GlobalEnv;
@@ -672,7 +673,6 @@ int R_Proxy_evaluate_noreturn (char const* pCmd)
 	  }
 	else
 	  {
-	    UNPROTECT(1);
 	    return SC_PROXY_ERR_EVALUATE_STOP;
 	  }
       }

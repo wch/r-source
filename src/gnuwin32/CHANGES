@@ -16,6 +16,8 @@ requires \ not / in filepaths, so help(topic, htmlhelp=TRUE) now uses
 Changes to help() meant that help(topic, chmhelp=TRUE) was no longer
 working if `topic' was an alias.  (PR#7269)
 
+Recent changes caused (D)COM to sometimes go into infinite loops.
+
 
     -------------------------------------------------------------------
 
