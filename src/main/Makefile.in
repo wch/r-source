@@ -41,13 +41,17 @@ $(top_builddir)/bin/R.binary: $(OBJS) $(RLIBS)
 
 $(OBJS): $(top_srcdir)/src/include/Defn.h
 
-gram.c:	gram.y
-	$(YACC) gram.y
-	mv y.tab.c gram.c
+#$(srcdir)/gram.c: $(srcdir)/gram.y
+#	$(YACC) $<
+#	mv y.tab.c $@
+
+gram.c: $(srcdir)/gram.y
+	$(YACC) $<
+	mv y.tab.c $@
 
 mostlyclean: clean
 clean:
-	@-rm -f R.binary R-Image *core *.o
+	@-rm -f R.binary R-Image *core *.o gram.c
 distclean: clean
 	@-rm -f Makefile
 maintainer-clean: distclean
