@@ -45,6 +45,11 @@ NEW FEATURES
 	consists of only alphanumeric characters, whitespace or a dash,
 	approximate matching is used.
 
+    o	Memory sizes specified by flags are now computed as unsigned
+	longs rather than ints, and so are only limited by the OS.
+	The size of the heap is no longer limited to 16Gb on 64-bit
+	platforms.
+
     o	axis() has three new optional arguments `col', `lty', and `lwd'
 	all for drawing the axis line and tick marks.
 
@@ -79,6 +84,9 @@ BUG FIXES
 	as if par(tcl = a) was called (i.e. was persistent).  Further,
 	after par(tcl= <.>), highlevel graphic setting of tcl didn't work
 	anymore.  "tck" has now S' default -0.01 (when tcl=NA).
+
+    o   data() was not checking if ./data was a directory before
+	warning.
 
 
 

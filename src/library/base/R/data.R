@@ -4,7 +4,7 @@ function(..., list = character(0),
          verbose = getOption("verbose"))
 {
     sQuote <- function(s) paste("`", s, "'", sep = "")
-    
+
     names <- c(as.character(substitute(list(...))[-1]), list)
     if(!missing(package))
         if(is.name(y <- substitute(package)))
@@ -14,13 +14,14 @@ function(..., list = character(0),
 
     ## Find the directories of the given packages and maybe the working
     ## directory.
-    paths <- .find.package(package, lib.loc, verbose = verbose)    
+    paths <- .find.package(package, lib.loc, verbose = verbose)
     if(is.null(lib.loc))
         paths <- c(.path.package(package, TRUE), getwd(), paths)
     paths <- unique(paths[file.exists(paths)])
 
     ## Find the directories with a `data' subdirectory.
     nodata <- !file.exists(file.path(paths, "data"))
+    nodata[!file.info(file.path(paths, "data"))$isdir] <- TRUE
     if(any(nodata)) {
         if(!missing(package) && (length(package) > 0)) {
             ## Warn about given packages which do not have a `data'
@@ -74,7 +75,7 @@ function(..., list = character(0),
             if(!missing(package) && (length(package) > 0)) {
                 ## Warn about given packages which do not have a data
                 ## index.
-                packagesWithNoIndex <- package[package %in% noindex]        
+                packagesWithNoIndex <- package[package %in% noindex]
                 if(length(packagesWithNoIndex) > 1) {
                     warning(paste("packages",
                                   paste(sQuote(packagesWithNoIndex),
@@ -86,7 +87,7 @@ function(..., list = character(0),
                                   "contains datasets but no index"))
             }
         }
-        
+
         footer <- if(missing(package))
             paste("Use `data(package = ",
                   ".packages(all.available = TRUE))'\n",
