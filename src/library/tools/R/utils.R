@@ -10,7 +10,7 @@ function(x)
     ## Seems the only way we can do this is 'temporarily' change the
     ## working dir and see where this takes us.
     if(!file.exists(epath <- path.expand(x)))
-        stop(paste("file", sQuote(x), "does not exist"))
+        stop("file ", sQuote(x), " does not exist")
     cwd <- getwd()
     on.exit(setwd(cwd))
     if(file_test("-d", epath)) {
@@ -54,7 +54,7 @@ function(op, x, y)
            "-ot" = (!is.na(mt.x <- file.info(x)$mtime)
                     & !is.na(mt.y <- file.info(y)$mtime)
                     & (mt.x < mt.y)),
-           stop(paste("test", sQuote(op), "is not available")))
+           stop("test ", sQuote(op), " is not available"))
 }
 
 ### ** list_files_with_exts
@@ -177,7 +177,7 @@ function(file, pdf = FALSE, clean = FALSE,
     yy <- system(paste(shQuote(texi2dvi),
                        quiet, pdf, clean,
                        shQuote(file)))
-    if(yy > 0) stop(paste("running texi2dvi on", sQuote(file), "failed"))
+    if(yy > 0) stop("running texi2dvi on ", sQuote(file), " failed")
 }
 
 
@@ -519,10 +519,10 @@ function(dfile)
     ## vector.
     ## </NOTE>
     if(!file_test("-f", dfile))
-        stop(paste("file", sQuote(dfile), "does not exist"))
+        stop("file ", sQuote(dfile), " does not exist")
     db <- try(read.dcf(dfile)[1, ], silent = TRUE)
     if(inherits(db, "try-error"))
-        stop(paste("file", sQuote(dfile), "is not in valid DCF format"))
+        stop("file ", sQuote(dfile), " is not in valid DCF format")
     db
 }
 
@@ -560,7 +560,7 @@ function(dir, env)
     con <- tempfile("Rcode")
     on.exit(unlink(con))
     if(!file.create(con))
-        stop(paste("unable to create", con))
+        stop("unable to create ", con)
     if(!all(file.append(con, list_files_with_type(dir, "code"))))
         stop("unable to write code files")
     .source_assignments(con, env)

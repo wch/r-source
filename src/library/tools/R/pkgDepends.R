@@ -1,13 +1,13 @@
 pkgDepends <- function(pkg, recursive=TRUE, local=TRUE,
                        reduce=TRUE, lib.loc=NULL) {
     if (length(pkg) != 1)
-        stop("Argument 'pkg' must be of length 1")
+        stop("argument 'pkg' must be of length 1")
 
     instPkgs <- utils::installed.packages(lib.loc=lib.loc)
 
     depMtrx <- getDepMtrx(pkg, instPkgs, local)
     if (is.null(depMtrx)) ## Package was not found
-        stop("Package ", pkg, " was not found.")
+        stop("package ", sQuote(pkg), " was not found.")
 
     getDepList(depMtrx, instPkgs, recursive, local, reduce, lib.loc)
 }

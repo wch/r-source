@@ -47,7 +47,7 @@ function(package, dir, lib.loc = NULL)
             stop("you must specify 'package' or 'dir'")
         ## Using sources from directory @code{dir} ...
         if(!file_test("-d", dir))
-            stop(paste("directory", sQuote(dir), "does not exist"))
+            stop("directory ", sQuote(dir), " does not exist")
         else
             dir <- file_path_as_absolute(dir)
         is_base <- basename(dir) == "base"
@@ -145,7 +145,7 @@ function(package, dir, lib.loc = NULL)
 
     ## Undocumented objects?
     if((length(code_objs) == 0) && (length(data_objs) == 0))
-        warning("Neither code nor data objects found")
+        warning("neither code nor data objects found")
 
     if(!is_base) {
         ## Code objects in add-on packages with names starting with a
@@ -338,12 +338,10 @@ function(package, dir, lib.loc = NULL,
         ## Using package installed in @code{dir} ...
         code_dir <- file.path(dir, "R")
         if(!file_test("-d", code_dir))
-            stop(paste("directory", sQuote(dir),
-                       "does not contain R code"))
+            stop("directory ", sQuote(dir), " does not contain R code")
         docs_dir <- file.path(dir, "man")
         if(!file_test("-d", docs_dir))
-            stop(paste("directory", sQuote(dir),
-                       "does not contain Rd sources"))
+            stop("directory ", sQuote(dir), " does not contain Rd sources")
         is_base <- basename(dir) == "base"
 
         ## Load package into code_env.
@@ -374,17 +372,15 @@ function(package, dir, lib.loc = NULL,
             stop("you must specify 'package' or 'dir'")
         ## Using sources from directory @code{dir} ...
         if(!file_test("-d", dir))
-            stop(paste("directory", sQuote(dir), "does not exist"))
+            stop("directory ", sQuote(dir), " does not exist")
         else
             dir <- file_path_as_absolute(dir)
         code_dir <- file.path(dir, "R")
         if(!file_test("-d", code_dir))
-            stop(paste("directory", sQuote(dir),
-                       "does not contain R code"))
+            stop("directory ", sQuote(dir), " does not contain R code")
         docs_dir <- file.path(dir, "man")
         if(!file_test("-d", docs_dir))
-            stop(paste("directory", sQuote(dir),
-                       "does not contain Rd sources"))
+            stop("directory ", sQuote(dir), " does not contain Rd sources")
         is_base <- basename(dir) == "base"
 
         code_env <- new.env()
@@ -807,11 +803,9 @@ function(package, lib.loc = NULL)
         stop(.wrong_args("package", "must be of length 1"))
     dir <- .find.package(package, lib.loc)
     if(!file_test("-d", file.path(dir, "R")))
-        stop(paste("directory", sQuote(dir),
-                   "does not contain R code"))
+        stop("directory ", sQuote(dir), " does not contain R code")
     if(!file_test("-d", file.path(dir, "man")))
-        stop(paste("directory", sQuote(dir),
-                   "does not contain Rd sources"))
+        stop("directory ", sQuote(dir), " does not contain Rd sources")
     is_base <- basename(dir) == "base"
 
     ## Load package into code_env.
@@ -951,8 +945,7 @@ function(package, lib.loc = NULL)
 
     dir <- .find.package(package, lib.loc)
     if(!file_test("-d", file.path(dir, "man")))
-       stop(paste("directory", sQuote(dir),
-                  "does not contain Rd sources"))
+       stop("directory ", sQuote(dir), " does not contain Rd sources")
     is_base <- basename(dir) == "base"
     has_namespace <- !is_base && packageHasNamespace(package, dirname(dir))
 
@@ -1115,15 +1108,14 @@ function(package, dir, lib.loc = NULL)
             stop("you must specify 'package' or 'dir'")
         ## Using sources from directory @code{dir} ...
         if(!file_test("-d", dir))
-            stop(paste("directory", sQuote(dir), "does not exist"))
+            stop("directory ", sQuote(dir), " does not exist")
         else
             dir <- file_path_as_absolute(dir)
     }
 
     docs_dir <- file.path(dir, "man")
     if(!file_test("-d", docs_dir))
-        stop(paste("directory", sQuote(dir),
-                   "does not contain Rd sources"))
+        stop("directory ", sQuote(dir), " does not contain Rd sources")
 
     db <- if(!missing(package))
         Rd_db(package, lib.loc = dirname(dir))
@@ -1350,12 +1342,10 @@ function(package, dir, lib.loc = NULL)
         ## Using package installed in 'dir' ...
         code_dir <- file.path(dir, "R")
         if(!file_test("-d", code_dir))
-            stop(paste("directory", sQuote(dir),
-                       "does not contain R code"))
+            stop("directory ", sQuote(dir), " does not contain R code")
         docs_dir <- file.path(dir, "man")
         if(!file_test("-d", docs_dir))
-            stop(paste("directory", sQuote(dir),
-                       "does not contain Rd sources"))
+            stop("directory ", sQuote(dir), " does not contain Rd sources")
         is_base <- basename(dir) == "base"
 
         ## Load package into code_env.
@@ -1380,17 +1370,15 @@ function(package, dir, lib.loc = NULL)
             stop("you must specify 'package' or 'dir'")
         ## Using sources from directory @code{dir} ...
         if(!file_test("-d", dir))
-            stop(paste("directory", sQuote(dir), "does not exist"))
+            stop("directory ", sQuote(dir), " does not exist")
         else
             dir <- file_path_as_absolute(dir)
         code_dir <- file.path(dir, "R")
         if(!file_test("-d", code_dir))
-            stop(paste("directory", sQuote(dir),
-                       "does not contain R code"))
+            stop("directory ", sQuote(dir), " does not contain R code")
         docs_dir <- file.path(dir, "man")
         if(!file_test("-d", docs_dir))
-            stop(paste("directory", sQuote(dir),
-                       "does not contain Rd sources"))
+            stop("directory ", sQuote(dir), " does not contain Rd sources")
         is_base <- basename(dir) == "base"
 
         code_env <- new.env()
@@ -1587,8 +1575,7 @@ function(package, dir, file, lib.loc = NULL,
         ## Using package installed in @code{dir} ...
         code_dir <- file.path(dir, "R")
         if(!file_test("-d", code_dir))
-            stop(paste("directory", sQuote(dir),
-                       "does not contain R code"))
+            stop("directory ", sQuote(dir), " does not contain R code")
         if(basename(dir) != "base")
             .load_package_quietly(package, lib.loc)
         code_env <- if(packageHasNamespace(package, dirname(dir))) {
@@ -1600,13 +1587,12 @@ function(package, dir, file, lib.loc = NULL,
     else if(!missing(dir)) {
         ## Using sources from directory @code{dir} ...
         if(!file_test("-d", dir))
-            stop(paste("directory", sQuote(dir), "does not exist"))
+            stop("directory ", sQuote(dir), " does not exist")
         else
             dir <- file_path_as_absolute(dir)
         code_dir <- file.path(dir, "R")
         if(!file_test("-d", code_dir))
-            stop(paste("directory", sQuote(dir),
-                       "does not contain R code"))
+            stop("directory ", sQuote(dir), " does not contain R code")
         file <- tempfile()
         on.exit(unlink(file))
         if(!file.create(file)) stop("unable to create ", file)
@@ -1618,7 +1604,7 @@ function(package, dir, file, lib.loc = NULL,
     }
 
     if(missing(package) && !file_test("-f", file))
-        stop(paste("file", sQuote(file), "does not exist"))
+        stop("file ", sQuote(file), " does not exist")
 
     ## <FIXME>
     ## Should there really be a 'verbose' argument?
@@ -1684,7 +1670,7 @@ function(package, dir, file, lib.loc = NULL,
     else {
         exprs <- try(parse(file = file, n = -1))
         if(inherits(exprs, "try-error"))
-            stop(paste("parse error in file", sQuote(file)))
+            stop("parse error in file ", sQuote(file))
     }
     for(i in seq(along = exprs)) find_bad_exprs(exprs[[i]])
     class(bad_exprs) <- "checkFF"
@@ -1730,8 +1716,7 @@ function(package, dir, lib.loc = NULL)
         ## Using package installed in @code{dir} ...
         code_dir <- file.path(dir, "R")
         if(!file_test("-d", code_dir))
-            stop(paste("directory", sQuote(dir),
-                       "does not contain R code"))
+            stop("directory ", sQuote(dir), " does not contain R code")
         is_base <- basename(dir) == "base"
 
         ## Load package into code_env.
@@ -1758,13 +1743,12 @@ function(package, dir, lib.loc = NULL)
             stop("you must specify 'package' or 'dir'")
         ## Using sources from directory @code{dir} ...
         if(!file_test("-d", dir))
-            stop(paste("directory", sQuote(dir), "does not exist"))
+            stop("directory ", sQuote(dir), " does not exist")
         else
             dir <- file_path_as_absolute(dir)
         code_dir <- file.path(dir, "R")
         if(!file_test("-d", code_dir))
-            stop(paste("directory", sQuote(dir),
-                       "does not contain R code"))
+            stop("directory ", sQuote(dir), " does not contain R code")
         is_base <- basename(dir) == "base"
 
         code_env <- new.env()
@@ -1825,8 +1809,7 @@ function(package, dir, lib.loc = NULL)
                 else .BaseNamespaceEnv
             S3Table <- get(".__S3MethodsTable__.", envir = defenv)
             if(!exists(m, envir = S3Table)) {
-                warning(paste("declared S3 method", sQuote(m),
-                              "not found"),
+                warning("declared S3 method ", sQuote(m), " not found",
                         call. = FALSE)
                 return(NULL)
             } else get(m, envir = S3Table)
@@ -2007,8 +1990,7 @@ function(package, dir, lib.loc = NULL)
         ## Using package installed in @code{dir} ...
         code_dir <- file.path(dir, "R")
         if(!file_test("-d", code_dir))
-            stop(paste("directory", sQuote(dir),
-                       "does not contain R code"))
+            stop("directory ", sQuote(dir), " does not contain R code")
         is_base <- basename(dir) == "base"
 
         ## Load package into code_env.
@@ -2032,13 +2014,12 @@ function(package, dir, lib.loc = NULL)
             stop("you must specify 'package' or 'dir'")
         ## Using sources from directory @code{dir} ...
         if(!file_test("-d", dir))
-            stop(paste("directory", sQuote(dir), "does not exist"))
+            stop("directory ", sQuote(dir), " does not exist")
         else
             dir <- file_path_as_absolute(dir)
         code_dir <- file.path(dir, "R")
         if(!file_test("-d", code_dir))
-            stop(paste("directory", sQuote(dir),
-                       "does not contain R code"))
+            stop("directory ", sQuote(dir), " does not contain R code")
         is_base <- basename(dir) == "base"
 
         code_env <- new.env()
@@ -2163,7 +2144,7 @@ function(package, dir, file, lib.loc = NULL)
     else if(!missing(dir)) {
         ## Using sources from directory @code{dir} ...
         if(!file_test("-d", dir))
-            stop(paste("directory", sQuote(dir), "does not exist"))
+            stop("directory ", sQuote(dir), " does not exist")
         else
             dir <- file_path_as_absolute(dir)
         code_dir <- file.path(dir, "R")
@@ -2175,13 +2156,13 @@ function(package, dir, file, lib.loc = NULL)
     }
     else if(!missing(file)) {
         if(!file_test("-f", file))
-            stop(paste("file", sQuote(file), "does not exist"))
+            stop("file ", sQuote(file), " does not exist")
         else
             code_files <- file
     }
     else
-        stop(paste("you must specify ", sQuote("package"), ", ",
-                   sQuote("dir"), " or ", sQuote("file"), sep = ""))
+        stop("you must specify ", sQuote("package"), ", ",
+             sQuote("dir"), " or ", sQuote("file"))
 
     find_TnF_in_code <- function(file, txt) {
         ## If 'txt' is given, it contains the extracted examples from
@@ -2204,13 +2185,12 @@ function(package, dir, file, lib.loc = NULL)
         if(missing(txt)) {
             exprs <- try(parse(file = file, n = -1))
             if(inherits(exprs, "try-error"))
-                stop(paste("parse error in file", sQuote(file)))
+                stop("parse error in file ", sQuote(file))
         }
         else {
             exprs <- try(parse(text = txt))
             if(inherits(exprs, "try-error"))
-                stop(paste("parse error in examples from file",
-                           sQuote(file)))
+                stop("parse error in examples from file ", sQuote(file))
         }
         for(i in seq(along = exprs))
             find_bad_exprs(exprs[[i]], NULL)
@@ -2400,10 +2380,8 @@ function(package, lib.loc = NULL)
     ## (Actually, Rd_db() would check on this too ...)
     db <- Rd_db(package, lib.loc)
     if(is.null(names(db)))
-        stop(paste("Package Rd sources were installed ",
-                   "without preserving Rd file names.\n",
-                   "Please reinstall using a current version of R.",
-                   sep = ""))
+        stop("Package Rd sources were installed without preserving Rd file names.\n",
+             "Please reinstall using a current version of R.")
     .check_Rd_files_in_Rd_db(db)
 }
 
@@ -2413,7 +2391,7 @@ check_Rd_files_in_man_dir <-
 function(dir)
 {
     if(!file_test("-d", dir))
-        stop(paste("directory", sQuote(dir), "does not exist"))
+        stop("directory ", sQuote(dir), " does not exist")
     dir <- file_path_as_absolute(dir)
     ## Argh.  We cannot call Rd_db() directly, because this works on
     ## the top-level package source directory ...

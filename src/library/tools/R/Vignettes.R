@@ -102,7 +102,7 @@ pkgVignettes <- function(package, dir, lib.loc = NULL)
             stop("you must specify 'package' or 'dir'")
         ## Using sources from directory @code{dir} ...
         if(!file_test("-d", dir))
-            stop(paste("directory", sQuote(dir), "does not exist"))
+            stop("directory ", sQuote(dir), " does not exist")
         else
             ## maybe perform tilde expansion on @code{dir}
             docdir <- file.path(dirname(dir), basename(dir), "inst", "doc")
@@ -200,7 +200,7 @@ vignetteInfo <- function(file) {
 function(vignetteDir)
 {
     if(!file_test("-d", vignetteDir))
-        stop(paste("directory", sQuote(vignetteDir), "does not exist"))
+        stop("directory ", sQuote(vignetteDir), " does not exist")
     vignetteFiles <-
         path.expand(list_files_with_type(vignetteDir, "vignette"))
 
@@ -230,8 +230,7 @@ function(vignetteDir)
                  INDEX <- file.path(vignetteDir, "00Index.dcf"))) {
         vignetteEntries <- try(read.dcf(INDEX))
         if(inherits(vignetteEntries, "try-error"))
-            warning(paste("cannot read index information in file",
-                          sQuote(INDEX)))
+            warning("cannot read index information in file ", sQuote(INDEX))
         else
             vignetteEntries <-
                 cbind(colnames(vignetteEntries), c(vignetteEntries))
@@ -258,7 +257,7 @@ function(vignetteDir)
 function(vignetteDir)
 {
     if(!file_test("-d", vignetteDir))
-        stop(paste("directory", sQuote(vignetteDir), "does not exist"))
+        stop("directory ", sQuote(vignetteDir), " does not exist")
     vignetteIndex <- .build_vignette_index(vignetteDir)
     badEntries <-
         vignetteIndex[grep("^[[:space:]]*$", vignetteIndex[, "Title"]),

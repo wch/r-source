@@ -9,8 +9,8 @@ function(file)
         }
     }
     if(!inherits(file, "connection"))
-        stop(paste("argument", sQuote("file"),
-                   "must be a character string or connection"))
+        stop("argument ", sQuote("file"),
+             " must be a character string or connection")
 
     y <- matrix("", nr = 0, nc = 2)
     x <- paste(readLines(file), collapse = "\n")

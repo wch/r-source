@@ -29,7 +29,7 @@ function(lines)
         ## Ouch, invalid in the current locale.
         ## (Can only happen in a MBCS locale.)
         ## Try re-encoding from Latin1.
-        ## Could this fail in a non-C locale?            
+        ## Could this fail in a non-C locale?
         lines <- utils::iconv(lines, "latin1", "")
     }
 
@@ -139,21 +139,21 @@ function(file)
 
     Rd_name <- .get_Rd_name(txt)
     if(!length(Rd_name))
-        stop(paste("missing/empty \\name field in ",
-                   sQuote(summary(file)$description), "\n",
-                   "Rd files must have a non-empty \\name.\n",
-                   "See chapter ", sQuote("Writing R documentation"),
-                   " in manual ", sQuote("Writing R Extensions"),
-                   ".", sep = ""))
+        stop("missing/empty \\name field in ",
+             sQuote(summary(file)$description), "\n",
+             "Rd files must have a non-empty \\name.\n",
+             "See chapter ", sQuote("Writing R documentation"),
+             " in manual ", sQuote("Writing R Extensions"),
+             ".")
 
     Rd_title <- .get_Rd_title(txt)
     if(!length(Rd_title))
-        stop(paste("missing/empty \\title field in ",
-                   sQuote(summary(file)$description), "\n",
-                   "Rd files must have a non-empty \\title.\n",
-                   "See chapter ", sQuote("Writing R documentation"),
-                   " in manual ", sQuote("Writing R Extensions"),
-                   ".", sep = ""))
+        stop("missing/empty \\title field in ",
+             sQuote(summary(file)$description), "\n",
+             "Rd files must have a non-empty \\title.\n",
+             "See chapter ", sQuote("Writing R documentation"),
+             " in manual ", sQuote("Writing R Extensions"),
+             ".")
 
     list(name = Rd_name, type = Rd_type, title = Rd_title,
          aliases = aliases, concepts = concepts, keywords = keywords,
@@ -371,8 +371,7 @@ function(package, dir, lib.loc = NULL)
         ## Using package installed in @code{dir} ...
         docsDir <- file.path(dir, "man")
         if(!file_test("-d", docsDir))
-            stop(paste("directory", sQuote(dir),
-                       "does not contain Rd objects"))
+            stop("directory ", sQuote(dir), " does not contain Rd objects")
         docsFiles <- list_files_with_type(docsDir, "docs")
         db <- list()
         for(f in docsFiles) {
@@ -398,17 +397,15 @@ function(package, dir, lib.loc = NULL)
     }
     else {
         if(missing(dir))
-            stop(paste("you must specify", sQuote("package"),
-                       "or", sQuote("dir")))
+            stop("you must specify ", sQuote("package"), " or ", sQuote("dir"))
         ## Using sources from directory @code{dir} ...
         if(!file_test("-d", dir))
-            stop(paste("directory", sQuote(dir), "does not exist"))
+            stop("directory ", sQuote(dir), " does not exist")
         else
             dir <- file_path_as_absolute(dir)
         docsDir <- file.path(dir, "man")
         if(!file_test("-d", docsDir))
-            stop(paste("directory", sQuote(dir),
-                       "does not contain Rd sources"))
+            stop("directory ", sQuote(dir), " does not contain Rd sources")
         docsFiles <- list_files_with_type(docsDir, "docs")
         db <- lapply(docsFiles, .read_Rd_lines_quietly)
         names(db) <- docsFiles
@@ -491,20 +488,18 @@ function(file, text = NULL)
         start <- substring(start, 1, pos - 1)
         pos <- delimMatch(txt)
         if(pos == -1)
-            stop(paste("unterminated section", sQuote(tag)))
+            stop("unterminated section ", sQuote(tag))
         if(tag == "section") {
             tmp <- substring(txt, 2, attr(pos, "match.length") - 1)
             txt <- substring(txt, pos + attr(pos, "match.length"))
             ## Should 'txt' now really start with an open brace?
             if(substring(txt, 1, 1) != "{")
-                stop(paste("incomplete section",
-                           sQuote(paste("section{", tmp, "}",
-                                        sep = ""))))
+                stop("incomplete section ",
+                     sQuote(paste("section{", tmp, "}", sep = "")))
             pos <- delimMatch(txt)
             if(pos == -1)
-                stop(paste("unterminated section",
-                           sQuote(paste("section{", tmp, "}",
-                                        sep = ""))))
+                stop("unterminated section ",
+                     sQuote(paste("section{", tmp, "}", sep = "")))
             tag <- c(tag, tmp)
         }
         if(regexpr("^[[:space:]]*(^|\n)[[:space:]]*$", start) == -1) {
@@ -564,7 +559,7 @@ function(txt, type, predefined = TRUE)
                 pos <- regexpr("\\{([^\n]*)\\}(\n|$)", txt)
             }
             if(pos == -1)
-                stop(paste("unterminated section", sQuote(type)))
+                stop("unterminated section ", sQuote(type))
             else {
                 out <- c(out, sub("\\{([^\n]*)\\}(\n|$).*", "\\1", txt))
                 txt <- substring(txt, pos + attr(pos, "match.length"))
@@ -595,10 +590,10 @@ function(txt)
     while((pos <- regexpr(pattern, txt)) != -1) {
         txt <- substring(txt, pos + attr(pos, "match.length") - 1)
         if((pos <- delimMatch(txt)) == -1)
-            stop(paste("unmatched \\item name in",
-                       sQuote(paste("\\item{",
-                                    sub("\n.*$", "", txt),
-                                    sep = ""))),
+            stop("unmatched \\item name in ",
+                 sQuote(paste("\\item{",
+                              sub("\n.*$", "", txt),
+                              sep = "")),
                  call. = FALSE)
         out <- c(out,
                  substring(txt,
@@ -608,13 +603,12 @@ function(txt)
         ## The next character should really be a '{'.  Let's be nice
         ## and tolerate whitespace in between ...
         if((pos <- regexpr("^[[:space:]]*\\{", txt)) == -1)
-            stop(paste("no \\item description for item",
-                       sQuote(out[length(out)])),
+            stop("no \\item description for item ", sQuote(out[length(out)]),
                  call. = FALSE)
         txt <- substring(txt, pos + attr(pos, "match.length") - 1)
         if((pos <- delimMatch(txt)) == -1)
-            stop(paste("unmatched \\item description for item",
-                       sQuote(out[length(out)])),
+            stop("unmatched \\item description for item",
+                 sQuote(out[length(out)]),
                  call. = FALSE)
         txt <- substring(txt, pos + attr(pos, "match.length"))
     }
@@ -723,10 +717,10 @@ function(db, FUN, ...)
     db <- lapply(db, function(t) try(FUN(t, ...), silent = TRUE))
     idx <- as.logical(sapply(db, inherits, "try-error"))
     if(any(idx)) {
-        msg <- "Rd syntax errors found"
+        msg <- gettext("Rd syntax errors found")
         for(i in which(idx))
             msg <- c(msg,
-                     paste("Syntax error in documentation object ",
+                     paste(gettext("Syntax error in documentation object "),
                            sQuote(names(db)[i]), ":", sep = ""),
                      db[[i]])
         stop(paste(msg, collapse = "\n"), call. = FALSE)
@@ -757,7 +751,7 @@ function(db)
             stop("cannot deal with Rd objects with missing/empty names")
         }
         else {
-            stop(paste("missing/empty \\name field in Rd file(s)",
+            stop(paste(gettext("missing/empty \\name field in Rd file(s)"),
                        paste(" ", Rd_paths[idx], collapse = "\n"),
                        sep = "\n"),
                  call. = FALSE)

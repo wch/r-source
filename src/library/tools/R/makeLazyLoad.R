@@ -5,7 +5,7 @@ code2LazyLoadDB <-
 {
     pkgpath <- .find.package(package, lib.loc, quiet = TRUE)
     if(length(pkgpath) == 0)
-        stop(paste("There is no package called", sQuote(package)))
+        stop("there is no package called ", sQuote(package))
     barepackage <- sub("([^-]+)_.*", "\\1", package)
     loadenv <- new.env(hash=TRUE)
     codeFile <- file.path(pkgpath, "R", barepackage)
@@ -35,10 +35,10 @@ rda2LazyLoadDB <- function(package, lib.loc = NULL, compress = TRUE)
 {
     pkgpath <- .find.package(package, lib.loc, quiet = TRUE)
     if(length(pkgpath) == 0)
-        stop(paste("There is no package called", sQuote(package)))
+        stop("there is no package called ", sQuote(package))
     rdafile <- file.path(pkgpath, "R", "all.rda")
     if (! file.exists(rdafile))
-        stop(paste("Package", sQuote(package), "has no .rda file"))
+        stop("package ", sQuote(package), " has no .rda file")
     dbbase <- file.path(pkgpath, "R", package)
     e <- new.env(hash=TRUE)
     load(rdafile, e)
@@ -57,7 +57,7 @@ list_data_in_pkg <- function(package, lib.loc = NULL, dataDir = NULL)
     if(is.null(dataDir)) {
         pkgpath <- .find.package(package, lib.loc, quiet = TRUE)
         if(length(pkgpath) == 0)
-            stop(paste("There is no package called", sQuote(package)))
+            stop("there is no package called ", sQuote(package))
         dataDir <- file.path(pkgpath, "data")
     } else {
         pkgpath <- sub("/data$", "", dataDir)
@@ -96,7 +96,7 @@ data2LazyLoadDB <- function(package, lib.loc = NULL, compress = TRUE)
 {
     pkgpath <- .find.package(package, lib.loc, quiet = TRUE)
     if(length(pkgpath) == 0)
-        stop(paste("There is no package called", sQuote(package)))
+        stop("there is no package called ", sQuote(package))
     dataDir <- file.path(pkgpath, "data")
     if(tools:::file_test("-d", dataDir)) {
         if(file.exists(file.path(dataDir, "Rdata.rds")))
@@ -239,7 +239,7 @@ makeLazyLoading <-
     findpack <- function(package, lib.loc) {
         pkgpath <- .find.package(package, lib.loc, quiet = TRUE)
         if(length(pkgpath) == 0)
-            stop(paste("There is no package called", sQuote(package)))
+            stop("there is no package called", sQuote(package))
         pkgpath
     }
 
