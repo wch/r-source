@@ -52,7 +52,7 @@ save <- function(..., list = character(0),
     else {
         if (is.character(file)) {
             if (file == "") stop("`file' must be non-empty string")
-            if (compress && capabilities("libz")) con <- gzfile(file, "wb")
+            if (compress) con <- gzfile(file, "wb")
             else con <- file(file, "wb")
             on.exit(close(con))
         }
