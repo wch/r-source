@@ -25,8 +25,8 @@
 gamma(1:15)          # think of some intensive calculation...
 fac14 <- .Last.value # keep them
 
-library("eda") # returns invisibly
+library("stepfun") # returns invisibly
 .Last.value    # shows what library(.) above returned
-\dontshow{detach("package:eda")}
+\dontshow{detach("package:stepfun")}
 }
 \keyword{programming}

@@ -12,6 +12,7 @@ subdir = src/library/$(pkg)/src
 R_HOME = $(top_builddir)
 
 SOURCES_C = ansari.c chisqsim.c d2x2xk.c fexact.c kendall.c ks.c \
+  init.c line.c smooth.c \
   prho.c swilk.c init.c \
   init.c ksmooth.c loessc.c isoreg.c Srunmed.c Trunmed.c
 

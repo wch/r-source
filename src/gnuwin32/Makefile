@@ -51,7 +51,7 @@ R-DLLFLAGS = -mwindows
 endif
 R-DLLLIBS =-L. $(FLIBS) -lRblas -lcomctl32 -lversion
 SOURCES = $(filter-out malloc.c blas00.c,$(wildcard *.c *.f))
-OBJS = $(SOURCES:.c=.o)
+OBJS = $(SOURCES:.c=.o) # e_pow.o
 MAINLIBS = libmain.a libappl.a libmath.a
 EXTRALIBS = ga.a gl.a xdr.a ../extra/zlib/libz.a ../extra/pcre/libRpcre.a\
    ../extra/bzip2/libbz2.a

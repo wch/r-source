@@ -59,9 +59,9 @@ write.dcf(x, file = "", append = FALSE,
   \code{\link{write.table}}.
 }
 \examples{
-## Create a reduced version of the 'CONTENTS' file in package 'eda'
-x <- read.dcf(file = system.file("CONTENTS", package = "eda"),
-               fields = c("Entry", "Description"))
+## Create a reduced version of the 'CONTENTS' file in package 'splines'
+x <- read.dcf(file = system.file("CONTENTS", package = "splines"),
+              fields = c("Entry", "Description"))
 write.dcf(x)
 }
 \keyword{print}

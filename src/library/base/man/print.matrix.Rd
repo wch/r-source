@@ -39,7 +39,7 @@ prmatrix(x, rowlab =, collab =,
 \examples{
 prmatrix(m6 <- diag(6), row = rep("",6), coll=rep("",6))
 
-chm <- matrix(scan(system.file("help", "AnIndex", package = "eda"),
+chm <- matrix(scan(system.file("help", "AnIndex", package = "splines"),
                    what = ""), , 2, byrow = TRUE)
 chm  # uses print.matrix()
 prmatrix(chm, collab = paste("Column",1:3), right=TRUE, quote=FALSE)

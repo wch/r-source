@@ -39,8 +39,8 @@ formatDL(x, y, style = c("table", "list"),
   displayed on a line of their own.
 }
 \examples{
-## Use R to create the 'INDEX' for package 'eda' from its 'CONTENTS'
-x <- read.dcf(file = system.file("CONTENTS", package = "eda"),
+## Use R to create the 'INDEX' for package 'splines' from its 'CONTENTS'
+x <- read.dcf(file = system.file("CONTENTS", package = "splines"),
                fields = c("Entry", "Description"))
 x <- as.data.frame(x)
 writeLines(formatDL(x$Entry, x$Description))

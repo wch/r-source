@@ -29,19 +29,18 @@ of \R 1.7.0.
 \code{\link{delay}}, \code{\link{library}}
 }
 \examples{
-autoload("line","eda")
+autoload("ecdf", "stepfun")
 search()
 ls("Autoloads")
 
-data(cars)
-plot(cars)
-z<-line(cars)
-abline(coef(z))
+Fn <- ecdf(rnorm(12))
+Fn; summary(Fn)
 search()
-detach("package:eda")
+detach("package:stepfun")
 search()
-z<-line(cars)
+Fn <- ecdf(rnorm(12))
 search()
+detach("package:stepfun")
 }
 \keyword{data}
 \keyword{programming}

@@ -64,7 +64,7 @@ listFilesWithType(dir, type, all.files = FALSE. full.names = TRUE)
   \code{\link{list.files}}
 }
 \examples{
-dir <- file.path(R.home(), "library", "eda")
+dir <- file.path(R.home(), "library", "stats")
 fileTest("-d", dir)
 fileTest("-nt", file.path(dir, "R"), file.path(dir, "demo"))
 listFilesWithExts(file.path(dir, "demo"), "R")

@@ -23,6 +23,6 @@
 \examples{
 data(USPersonalExpenditure)
 USPersonalExpenditure
-eda::medpolish(log10(USPersonalExpenditure))
+medpolish(log10(USPersonalExpenditure))
 }
 \keyword{datasets}

@@ -131,6 +131,17 @@ S3method(var.test, formula)
 S3method(wilcox.test, default)
 S3method(wilcox.test, formula)
 
+## from eda
+export(line, medpolish, smooth)
+
+S3method(plot, medpolish)
+S3method(print, medpolish)
+S3method(print, tukeyline)
+S3method(print, tukeysmooth)
+S3method(residuals, tukeyline)
+S3method(summary, tukeysmooth)
+
+
 ## from modreg
 export(isoreg, ksmooth, loess, loess.control, loess.smooth, ppr,
        runmed, scatter.smooth, smooth.spline, smoothEnds, supsmu)
