@@ -16,8 +16,6 @@ INSTFILES = \
 	left.jpg logo.jpg logosm.jpg right.jpg up.jpg \
 	about.html \
 	faq.html \
-	packages-foot.html \
-	packages-head.html \
 	resources.html \
 	template.html \
 	thanks.html
@@ -27,7 +25,7 @@ INSTFILES = \
 ## in *this* directory.
 CLEANFILES = $(INSTFILES) function.html packages.html resource.html
 ## </FIXME>
-DISTFILES = Makefile.in $(INSTFILES) index-default.html
+DISTFILES = Makefile.in $(INSTFILES) packages-head.html index-default.html
 SUBDIRS = search
 
 OBJECTS = index.html
