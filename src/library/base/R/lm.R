@@ -1,43 +1,33 @@
-lm <-
-function (formula, data=list(), subset, weights, na.action,
-	method="qr", model=TRUE, singular.ok = TRUE, ...)
+"lm" <-
+function (formula, data = NULL, subset = NULL, weights = NULL, 
+        na.action = na.fail, singular.ok = TRUE) 
 {
-	mt <- terms(formula, data=data)
-	mf <- match.call()
-	mf$singular.ok <- NULL
-	mf$model <- NULL
-	mf$method <- NULL
-	mf[[1]] <- as.name("model.frame")
-	mf <- eval(mf, sys.frame(sys.parent()))
-	if(method == "model.frame")
-		return(mf)
-	else if(method != "qr")
-		warning(paste("method =",method,
-			      "is not supported. Using \"qr\"."))
-	if(length(list(...)))
-		warning(paste("Extra arguments", deparse(substitute(...)),
-			      "are just disregarded."))
-	if(!singular.ok)
-		warning("only `singular.ok = TRUE' is currently implemented.")
-	y <- model.response(mf, "numeric")
-	w <- model.weights(mf)
-	if (is.empty.model(mt)){
-		z <- list(coefficients = numeric(0), residuals = y,
-			fitted.values = 0 * y, weights = w, rank = 0,
-			df.residual = length(y))
-		class(z) <- if (is.matrix(y))
-			c("mlm.null", "lm.null", "mlm", "lm")
-		else c("lm.null", "lm")
-	}
-	else {
-		x <- model.matrix(mt, mf)
-		z <- if (is.null(w)) lm.fit(x, y) else lm.wfit(x, y, w)
-		class(z) <- c(if(is.matrix(y)) "mlm", "lm")
-	}
-	z$call <- match.call()
-	z$terms <- mt
-	if(model) z$model <- mf
-	z
+        mt <- terms(formula)
+        if (is.null(data)) 
+                data <- sys.frame(sys.parent())
+        mf <- match.call()
+        mf$singular.ok <- NULL
+        mf$use.data <- TRUE
+        mf[[1]] <- as.name("model.frame")
+        mf <- eval(mf, sys.frame(sys.parent()))
+        if (!is.null(model.offset(mf))) 
+                stop("offset() not implemented in lm(), use glm()")
+        x <- model.matrix(mt, mf)
+        y <- model.response(mf, "numeric")
+        w <- model.weights(mf)
+        if (is.null(w)) {
+                z <- lm.fit(x, y)
+        }
+        else {
+                z <- lm.w.fit(x, y, w)
+        }
+        z$call <- match.call()
+        z$terms <- mt
+        z$model.frame <- mf
+        class(z) <- if (is.matrix(y)) 
+                c("mlm", "lm")
+        else "lm"
+        z
 }
 
 lm.fit <- function (x, y, method = "qr", tol = 1e-07, ...)
