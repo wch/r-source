@@ -21,10 +21,15 @@
     \item A number, taken to be in seconds.
     \item A object of class \code{\link{difftime}}
     \item A character string, containing one of \code{"sec"},
-    \code{"min"}, \code{"hour"}, \code{"day"}, \code{"week"},
-    \code{"month"} or \code{"year"}.  This can optionally be
-    preceded by an integer and a space.
+    \code{"min"}, \code{"hour"}, \code{"day"}, \code{"DSTday"},
+    \code{"week"}, \code{"month"} or \code{"year"}.  This can optionally be
+    preceded by an integer and a space, or followed by \code{"s"}.
   }
+  The difference between \code{"day"} and \code{"DSTday"} is that the
+  former ignores changes to/from daylight savings time and the latter takes
+  the same clock time each day.  (\code{"week"} ignores DST, but
+  \code{"7 DSTdays"}) can be used as an alternative.  \code{"month"} and
+  \code{"year"} allow for DST as from \R 1.5.0.)
 }
 \value{
   A vector of class \code{"POSIXct"}.
@@ -32,12 +37,16 @@
 \seealso{\code{\link{DateTimeClasses}}}
 
 \examples{
-## first days of years in the (commonly used) 20th century
+## first days of years
 seq(ISOdate(1910,1,1), ISOdate(1999,1,1), "years")
 ## by month
 seq(ISOdate(2000,1,1), by="month", length=12)
 ## quarters
 seq(ISOdate(1990,1,1), ISOdate(2000,1,1), by="3 months")
+## days vs DSTdays
+seq(ISOdate(2000,3,20), by="day", length = 10)
+seq(ISOdate(2000,3,20), by="DSTday", length = 10)
+seq(ISOdate(2000,3,20), by="7 DSTdays", length = 4)
 }
 \keyword{manip}
 \keyword{chron}

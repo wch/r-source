@@ -1,6 +1,6 @@
 
-R : Copyright 2001, The R Development Core Team
-Version 1.4.0 Under development (unstable) (2001-12-12)
+R : Copyright 2002, The R Development Core Team
+Version 1.5.0 Under development (unstable) (2002-01-12)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -208,6 +208,8 @@ Error in as.character.octmode(x) : calling wrong method
  [9] "Component 1: Attributes: < names for current but not for target >"             
 [10] "Component 1: Attributes: < target is NULL, current is list >"                  
 [11] "Component 1: target is numeric, current is data.frame"                         
+> f <- as.data.frame.POSIXlt( x );  all.equal(f, as.data.frame.POSIXlt( f ), tol=0)
+Error in as.POSIXct.default(x) : Don't know how to convert `x' to class "POSIXct"
 > f <- as.data.frame.character( x );  all.equal(f, as.data.frame.character( f ), tol=0)
 [1] "Attributes: < Component 2: Lengths: 0, 1 >"                                    
 [2] "Attributes: < Component 2: Lengths (0, 1) differ (string compare on first 0) >"
@@ -591,6 +593,8 @@ Error in as.character.octmode(x) : calling wrong method
  [9] "Component 1: Attributes: < names for current but not for target >"             
 [10] "Component 1: Attributes: < target is NULL, current is list >"                  
 [11] "Component 1: target is NULL, current is data.frame"                            
+> f <- as.data.frame.POSIXlt( x );  all.equal(f, as.data.frame.POSIXlt( f ), tol=0)
+Error in as.POSIXct.default(x) : Don't know how to convert `x' to class "POSIXct"
 > f <- as.data.frame.character( x );  all.equal(f, as.data.frame.character( f ), tol=0)
 Error in sort(x) : only atomic vectors can be sorted
 > f <- as.data.frame.complex( x );  all.equal(f, as.data.frame.complex( f ), tol=0)
@@ -969,6 +973,8 @@ Error in as.complex.default(x) : (list) object cannot be coerced to vector type 
  [8] "Component 1: Attributes: < names for current but not for target >"             
  [9] "Component 1: Attributes: < target is NULL, current is list >"                  
 [10] "Component 1: Length mismatch: comparison on first 0 components"                
+> f <- as.data.frame.POSIXlt( x );  all.equal(f, as.data.frame.POSIXlt( f ), tol=0)
+Error in as.POSIXct.default(x) : Don't know how to convert `x' to class "POSIXct"
 > f <- as.data.frame.character( x );  all.equal(f, as.data.frame.character( f ), tol=0)
 Error in sort(x) : only atomic vectors can be sorted
 > f <- as.data.frame.complex( x );  all.equal(f, as.data.frame.complex( f ), tol=0)
@@ -1338,6 +1344,8 @@ Error in as.character.octmode(x) : calling wrong method
 [7] "Component 1: Attributes: < names for current but not for target >"
 [8] "Component 1: Attributes: < target is NULL, current is list >"     
 [9] "Component 1: target is numeric, current is data.frame"            
+> f <- as.data.frame.POSIXlt( x );  all.equal(f, as.data.frame.POSIXlt( f ), tol=0)
+Error in as.POSIXct.default(x) : Don't know how to convert `x' to class "POSIXct"
 > f <- as.data.frame.character( x );  all.equal(f, as.data.frame.character( f ), tol=0)
 [1] "Attributes: < Component 2: 1 string mismatches >" 
 [2] "Component 1: names for current but not for target"
@@ -1699,6 +1707,8 @@ Error in as.character.octmode(x) : calling wrong method
 [7] "Component 1: Attributes: < names for current but not for target >"
 [8] "Component 1: Attributes: < target is NULL, current is list >"     
 [9] "Component 1: target is numeric, current is data.frame"            
+> f <- as.data.frame.POSIXlt( x );  all.equal(f, as.data.frame.POSIXlt( f ), tol=0)
+Error in as.POSIXct.default(x) : Don't know how to convert `x' to class "POSIXct"
 > f <- as.data.frame.character( x );  all.equal(f, as.data.frame.character( f ), tol=0)
 [1] "Attributes: < Component 2: 1 string mismatches >" 
 [2] "Component 1: names for current but not for target"
@@ -2060,6 +2070,8 @@ Error in as.character.octmode(x) : calling wrong method
 [7] "Component 1: Attributes: < names for current but not for target >"
 [8] "Component 1: Attributes: < target is NULL, current is list >"     
 [9] "Component 1: target is character, current is data.frame"          
+> f <- as.data.frame.POSIXlt( x );  all.equal(f, as.data.frame.POSIXlt( f ), tol=0)
+Error in fromchar(x) : character string is not in a standard unambiguous format
 > f <- as.data.frame.character( x );  all.equal(f, as.data.frame.character( f ), tol=0)
 [1] "Attributes: < Component 2: 1 string mismatches >" 
 [2] "Component 1: names for current but not for target"
@@ -2421,6 +2433,8 @@ Error in as.character.octmode(x) : calling wrong method
 [7] "Component 1: Component 1: Modes: numeric, list"                                
 [8] "Component 1: Component 1: names for current but not for target"                
 [9] "Component 1: Component 1: target is numeric, current is list"                  
+> f <- as.data.frame.POSIXlt( x );  all.equal(f, as.data.frame.POSIXlt( f ), tol=0)
+Error in as.POSIXct.default(x) : Don't know how to convert `x' to class "POSIXct"
 > f <- as.data.frame.character( x );  all.equal(f, as.data.frame.character( f ), tol=0)
 Error in unique.default(x) : unique() applies only to vectors
 > f <- as.data.frame.complex( x );  all.equal(f, as.data.frame.complex( f ), tol=0)
@@ -2777,6 +2791,8 @@ Error in as.character.octmode(x) : calling wrong method
 [4] "Component 1: Attributes: < Component 2: Lengths: 0, 1 >"                                    
 [5] "Component 1: Attributes: < Component 2: Lengths (0, 1) differ (string compare on first 0) >"
 [6] "Component 1: Component 1: `current' is not a factor"                                        
+> f <- as.data.frame.POSIXlt( x );  all.equal(f, as.data.frame.POSIXlt( f ), tol=0)
+Error in as.POSIXct.default(x) : Don't know how to convert `x' to class "POSIXct"
 > f <- as.data.frame.character( x );  all.equal(f, as.data.frame.character( f ), tol=0)
 [1] TRUE
 > f <- as.data.frame.complex( x );  all.equal(f, as.data.frame.complex( f ), tol=0)
@@ -2928,6 +2944,6 @@ Error in ts(x) : ts object must have one or more observations
 > f <- as.vector.factor( x );  all.equal(f, as.vector.factor( f ), tol=0)
 [1] TRUE
 > cat('Time elapsed: ', proc.time() - .proctime00,'\n')
-Time elapsed:  1.6 0.15 3.79 0 0 
+Time elapsed:  8.33 1.9 10.51 0 0 
 > 
 > 

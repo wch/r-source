@@ -5,22 +5,32 @@ predict.princomp <- function(object, newdata, ...) {
     scale(newdata, object$center, object$scale) %*% object$loadings
 }
 
-summary.princomp <-
-function(object, loadings = FALSE, cutoff = 0.1, digits = 3, ...) {
-    vars <- object$sdev^2
+summary.princomp <- function(object, loadings = FALSE, cutoff = 0.1, ...)
+{
+    object$cutoff <- cutoff
+    object$print.loadings <- loadings
+    class(object) <- "summary.princomp"
+    object
+}
+
+print.summary.princomp <-
+    function(x, digits = 3, loadings = x$print.loadings, cutoff = x$cutoff,
+             ...)
+{
+    vars <- x$sdev^2
     vars <- vars/sum(vars)
     cat("Importance of components:\n")
-    print(rbind("Standard deviation" = object$sdev,
+    print(rbind("Standard deviation" = x$sdev,
                 "Proportion of Variance" = vars,
                 "Cumulative Proportion" = cumsum(vars)))
     if(loadings) {
         cat("\nLoadings:\n")
-        cx <- format(round(object$loadings, digits = digits))
-        cx[abs(object$loadings) < cutoff] <-
+        cx <- format(round(x$loadings, digits = digits))
+        cx[abs(x$loadings) < cutoff] <-
             substring("       ", 1, nchar(cx[1,1]))
         print(cx, quote = FALSE, ...)
     }
-    invisible(object)
+    invisible(x)
 }
 
 plot.princomp <- function(x, main = deparse(substitute(x)), ...)

@@ -38,6 +38,13 @@ NEW FEATURES
 	The internal call is made available as rep.int(), again for
 	help in porting code.
 
+    o	Methods for [, [<- and as.data.frame() for class "POSIXlt".
+
+    o	New option by = "DSTday" for seq.POSIXt().
+
+    o	summary.princomp() now has a separate print() method, and
+	`digits' is now an argument to the print method and not to
+	summary.princomp itself.
 
 
 DEPRECATED & DEFUNCT
@@ -51,14 +58,16 @@ UTILITIES
 
 C-LEVEL FACILITIES
 
-    o	findInterval(xt[],n,x,...) gives the index (or interval number) of x
-	in the sorted sequence xt[].  There's an F77_SUB(interv)(.) to be
-	called from Fortran; this used to be part of predict.smooth.spline's
-	underlying Fortran code.
+    o	findInterval(xt[],n,x,...) gives the index (or interval number)
+	of x in the sorted sequence xt[].  There's an
+	F77_SUB(interv)(.) to be called from Fortran; this used to be
+	part of predict.smooth.spline's underlying Fortran code.
 
 
 BUG FIXES
 
+    o	Options by = "month" and "year" to seq.POSIXt() take account
+	of changes to/from daylight savings time.
 
 
 

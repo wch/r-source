@@ -82,7 +82,8 @@ format.POSIXlt <- function(x, format = "", usetz = FALSE, ...)
 {
     if(!inherits(x, "POSIXlt")) stop("wrong class")
     if(format == "") {
-        times <- unlist(x[1:3])
+        ## need list [ method here.
+        times <- unlist(unclass(x)[1:3])
         format <- if(all(times[!is.na(times)] == 0)) "%Y-%m-%d"
         else "%Y-%m-%d %H:%M:%S"
     }
@@ -469,7 +470,7 @@ seq.POSIXt <-
             stop("invalid `by' string")
         valid <- pmatch(by2[length(by2)],
                         c("secs", "mins", "hours", "days", "weeks",
-                          "months", "years"))
+                          "months", "years", "DSTdays"))
         if(is.na(valid)) stop("invalid string for `by'")
         if(valid <= 5) {
             by <- c(1, 60, 3600, 86400, 7*86400)[valid]
@@ -488,17 +489,19 @@ seq.POSIXt <-
             res <- seq.default(from, to, by)
         }
         return(structure(res, class=c("POSIXt", "POSIXct")))
-    } else {  # months or years
+    } else {  # months or years or Days
         r1 <- as.POSIXlt(from)
         if(valid == 7) {
-            if(missing(to)) {
+            if(missing(to)) { # years
                 yr <- seq(r1$year, by = by, length = length.out)
             } else {
                 to <- as.POSIXlt(to)
                 yr <- seq(r1$year, to$year, by)
             }
             r1$year <- yr
-        } else {
+            r1$isdst <- -1
+            res <- as.POSIXct(r1)
+        } else if(valid == 6) { # months
             if(missing(to)) {
                 mon <- seq(r1$mon, by = by, length = length.out)
             } else {
@@ -506,8 +509,19 @@ seq.POSIXt <-
                 mon <- seq(r1$mon, 12*(to$year - r1$year) + to$mon, by)
             }
             r1$mon <- mon
+            r1$isdst <- -1
+            res <- as.POSIXct(r1)
+        } else if(valid == 8) { # DSTdays
+            if(!missing(to)) {
+                length.out <- 1 + floor((as.POSIXct(to) -
+                                         as.POSIXct(from))/(7*86400))
+            }
+            r1$mday <- seq(r1$mday, by = by, length = length.out)
+            r1$isdst <- -1
+            res <- as.POSIXct(r1)
+            if(!missing(to)) res <- res[res <= as.POSIXct(to)]
         }
-        return(as.POSIXct(r1))
+        return(res)
     }
 }
 
@@ -596,4 +610,33 @@ round.POSIXt <- function(x, units=c("secs", "mins", "hours", "days"))
     x <- x + switch(units,
                     "secs" = 0.5, "mins" = 30, "hours"= 1800, "days" = 43200)
     trunc.POSIXt(x, units = units)
+}
+
+# ---- additions in 1.5.0 -----
+
+"[.POSIXlt" <- function(x, ..., drop = TRUE)
+{
+    val <- lapply(x, "[", ..., drop = drop)
+    attributes(val) <- attributes(x) # need to preserve timezones
+    val
+}
+
+"[<-.POSIXlt" <- function(x, i, value)
+{
+    if(!as.logical(length(value))) return(x)
+    value <- as.POSIXlt(value)
+    cl <- class(x)
+    class(x) <- class(value) <- NULL
+    browser()
+    for(n in names(x)) x[[n]][i] <- value[[n]]
+    class(x) <- cl
+    x
+}
+
+as.data.frame.POSIXlt <- function(x, row.names = NULL, optional = FALSE)
+{
+    value <- as.data.frame.POSIXct(as.POSIXct(x), row.names, optional)
+    if (!optional)
+        names(value) <- deparse(substitute(x))[[1]]
+    value
 }
