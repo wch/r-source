@@ -1,15 +1,16 @@
 \input texinfo
 @c %**start of header
-@setfilename MacOSX-FAQ.info
+@setfilename RMacOSX-FAQ.info
 @settitle R for Mac OS X FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2004
-@set FAQ-VERSION 1.8-52 @value{FAQ-YEAR}-03-16
-@set REL-VERSION 1.8.1
-@set FAQ-ISBN 3-900051-01-1
+@set FAQ-VERSION 1.9-1 @value{FAQ-YEAR}-03-22
+@set REL-VERSION 1.9.0
 @documentlanguage en
 @documentencoding ISO-8859-1
 @c %**end of header
+
+@c % makeinfo -D UseExternalXrefs --html --force --no-split RMacOSX-FAQ.texi
 
 @dircategory Programming
 @direntry
@@ -20,6 +21,10 @@
 
 @macro SPLUS{}
 @sc{S-Plus}
+@end macro
+
+@macro R{}
+@acronym{R}
 @end macro
 
 @macro CRAN{}
@@ -90,7 +95,7 @@ Stefano M. Iacus                 @*
 * Acknowledgments::             
 @end menu
 
-@node Introduction, , Top, Top
+@node Introduction, Building R from sources, Top, Top
 @chapter Introduction
 This is a very first try of writing a R for Mac OS X. I hope to finish it in time for R-1.9.0.
 In any case, please send me requests/questions you would like answers on.
@@ -102,7 +107,7 @@ In any case, please send me requests/questions you would like answers on.
 * How can R for Mac OS X be obtained and installed?::      
 @end menu
 
-@node How many versions of R for Mac OS X?, What machines does R for Mac OS X run on?, Aqua GUI for R for Mac OS X, Top
+@node How many versions of R for Mac OS X?, What machines does R for Mac OS X run on?, , Introduction
 @section How many versions of R for Mac OS X?
 
 There is currently only one version of R for Mac OS X.
@@ -110,20 +115,25 @@ But R on Mac OS X can be used as a command-line application (@pxref{Command line
 other unix-like system, or via the Aqua GUI (@pxref{R with Aqua GUI}). This second approach in using R
 for Mac OS X is mostly preferred by "traditional" Macintosh users.
 
-@node What machines does R for Mac OS X run on?, How many versions of R for Mac OS X?, Aqua GUI for R for Mac OS X, Top
+@node What machines does R for Mac OS X run on?, How can R for Mac OS X be obtained and installed?, How many versions of R for Mac OS X?, Introduction
 @section What machines does R for Mac OS X run on?
 
 R for Mac OS X requires Mac OS X version 10.2 or higher to run. The latest version of the system is
 always preferable though. We do not support Mac OS X version 10.1.
 
-@section Building R from sources
+@node How can R for Mac OS X be obtained and installed?, , What machines does R for Mac OS X run on?, Introduction
+@section How can R for Mac OS X be obtained and installed?
+
+@node Building R from sources, Command line version of R, Introduction, Top
+@chapter Building R from sources
 @menu
 * What is needed to build R::
 * How to configure and build R::
 * How to install R::
+* How to build and install the Aqua GUI::
 @end menu
 
-@node What is needed to build R
+@node What is needed to build R, How to configure and build R, , Building R from sources
 @section What is needed to build R
 @menu
 * the C/C++ compiler gcc 3.3::
@@ -232,6 +242,7 @@ There is a nice installer, called the i-installer II, that allows you to install
 teTeX distribution. You can find details on the i-installer at @uref{http://www.rna.nl/ii.html}. 
 The teTeX is one of the i-Packages.
 
+@node How to configure and build R, How to install R, What is needed to build R, Building R from sources  
 @section How to configure and build R
 Download the latest sources of R from @CRAN{}. Unpack the archive with tar -zxf @emph{name_of_R_sources_archive} and cd
 inside the R sources directory. Then you need to configure R for your system and build R. 
@@ -251,7 +262,7 @@ with something like
 and the final destination of the @emph{R.framework} will be @emph{FOO/R.framework}, which means that you 
 don't have to specify the @emph{R.framework} text in the path. 
 
-@node How to install R
+@node How to install R, How to build and install the Aqua GUI, How to configure and build R, Building R from sources
 @section How to install R
 A standard installation of R requires you have built it as a Framework. At this point just type (a root 
 password will be required):
@@ -262,7 +273,7 @@ and all will be installed in @emph{/Library/Frameworks}.
 You can decide to change the R.framework destination by using the @emph{--prefix} option specifying the final destination.
 As in the above, you don't need to specify the name @emph{R.framework} in the path.
 
-@node  How to build and install the Aqua GUI
+@node  How to build and install the Aqua GUI,  ,How to install R, Building R from sources
 @section How to build and install the Aqua GUI
 At the moment, there is nothing to  do to build the Aqua GUI.
 You just need to install it using
@@ -273,19 +284,20 @@ and it will install the @emph{R.app} application in the @emph{Applications} fold
 
 
 
-@node Command line version of R
+@node Command line version of R, R with Aqua GUI, Building R from sources, Top
 @chapter Command line version of R
-The command line version of R is nothing but a classic unix-like implementation of R. So general documentation for R applies
-to this version as well.
+The command line version of @R{} is nothing but a classic unix-like implementation of @R{}. So general 
+documentation for @R{} applies to this version as well.
 On each release (and patched-release) ready to use binaries are distributed through @CRAN{}.
-Thies binaries come with a common installer used by R with Aqua GUI so please read
+These binaries come with a common installer used by R with Aqua GUI so please read
 the releated notes (@pxref{How to get R with Aqua GUI}).
-To use R you probably need to add a symbolic link on your System as the R binary is located inside the framework.
-Suppose you have the @emph{/usr/local/bin} directory on your System, than you should just type in your Terminal (a root password is required)
-@example
-sudo ln -s /Library/Frameworks/R.framework/Resources/bin/R 
-           /usr/local/bin/R
-@end example
+To use @R{} you probably need to add a symbolic link on your System as the @R{} binary is 
+located inside the framework.
+Suppose you have the @emph{/usr/local/bin} directory on your System, than you should just 
+type in your Terminal (a root password is required)
+@smallexample
+sudo ln -s /Library/Frameworks/R.framework/Resources/bin/R /usr/local/bin/R
+@end smallexample
 Assuming that you have @emph{/usr/local/bin} in your @emph{PATH} environment variable, you'll be able to launch R from any location
 on your System just by typing @emph{R}.
 In this way, when you install a new version of the @emph{R.framework} this link will point to the latest R binary.
@@ -315,8 +327,10 @@ be used with R corresponding to the ``@var{x}.@var{y}'' release of
 R. The installation of these packages is available through the
 ``Package'' menu of the Aqua GUI (@pxref{Packages Menu}). 
 
+@node How to install the Aqua GUI
 @section How to install the Aqua GUI
 
+@node The R Console
 @section The R Console
 @menu 
 * The Input and the Output::
@@ -416,6 +430,8 @@ with a pure Cocoa GUI. This will allow for a better integration of R with Mac OS
 a fully Aqua-compliant GUI.
 A preview of the Cocoa GUI for Darwin R can be obtained after the official
 release of R 1.9.0 is out from @uref{http://www.economia.unimi.it/R}.
+
+@node Aqua GUI Bugs, ,The near future of the Aqua GUI, R with Aqua GUI
 @section Aqua GUI Bugs
 On Unix systems a bug report can be generated using the function
 @code{bug.report()}.  This automatically includes the version
@@ -429,13 +445,23 @@ In any circumstances, in case of a crash, please report the
 crash.log for the @emph{R.bin} application. You can get this
 crash.log using the @emph{Console.app} located inside @emph{/Applications/Utilities}.
 
+@node How to install packages
+@chapter How to install packages
 
-@node Quartz device
+@node R and external applications, Quartz device, How to install packages, Top
+@chapter R and external applications
+
+@node Quartz device, Additional resources, R and external applications, Top
 @chapter Quartz device
 
 @node Additional resources
 @chapter Additional resources
 Here are few references that can be of interest for Mac OS X and/or developers.
+
+@menu
+* Apple Developer Connection::
+* The R for Mac OS X Developer page::
+@end menu
 
 @node Apple Developer Connection
 @section Apple Developer Connection
@@ -450,6 +476,7 @@ There is a page dedicated to the latest R-devel version of R. This page is locat
 This page is inteded to give additional documentation for building  the latest R-devel
 version of R. From time to time, snapshots of R-devel binaries are available for testing purposes.
 
+@node Acknowledgments
 @chapter Acknowledgments
 
 Special thanks go to Simon Urbanek, Jan de Leeuw, Byron Ellis and Thomas Lumley

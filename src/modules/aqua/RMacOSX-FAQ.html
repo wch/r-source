@@ -1,469 +1,782 @@
-<HTML>
-<HEAD>
-<!-- Created by texi2html 1.57 from RMacOSX-FAQ.texi on March, 22  2004 -->
+<html lang="en">
+<head>
+<title>R for Mac OS X FAQ</title>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<meta name="description" content="R for Mac OS X FAQ">
+<meta name="generator" content="makeinfo 4.6">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<style type="text/css"><!--
+  pre.display { font-family:inherit }
+  pre.format  { font-family:inherit }
+  pre.smalldisplay { font-family:inherit; font-size:smaller }
+  pre.smallformat  { font-family:inherit; font-size:smaller }
+  pre.smallexample { font-size:smaller }
+  pre.smalllisp    { font-size:smaller }
+--></style>
+</head>
+<body>
+<h1 class="settitle">R for Mac OS X FAQ</h1>
+<div class="node">
+<p><hr>
+Node:&nbsp;<a name="Top">Top</a>,
+Next:&nbsp;<a rel="next" accesskey="n" href="#Introduction">Introduction</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#dir">(dir)</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#dir">(dir)</a>
+<br>
+</div>
 
-<TITLE>R for Mac OS X FAQ</TITLE>
-</HEAD>
-<BODY >
-<H1>R for Mac OS X @acronym{FAQ}</H1>
-<H2>Frequently Asked Questions on R for Mac OS X</H2>
-<H2>Version 1.8-52 2004-03-16</H2>
-<ADDRESS>Stefano M. Iacus</ADDRESS>
-<P>
-<P><HR><P>
-@html
+<h2 class="unnumbered">R for Mac OS X FAQ</h2>
+
 <h2>Frequently Asked Questions on R for Mac OS X</h2>
-<h2>Version @value{FAQ-VERSION}</h2>
+<h2>Version 1.9-1 2004-03-22</h2>
 <address>Stefano M. Iacus</address>
 <p><p><hr><p>
-@end html
 
+<ul class="menu">
+<li><a accesskey="1" href="#Introduction">Introduction</a>: 
+<li><a accesskey="2" href="#Building%20R%20from%20sources">Building R from sources</a>: 
+<li><a accesskey="3" href="#Command%20line%20version%20of%20R">Command line version of R</a>: 
+<li><a accesskey="4" href="#R%20with%20Aqua%20GUI">R with Aqua GUI</a>: 
+<li><a accesskey="5" href="#How%20to%20install%20packages">How to install packages</a>: 
+<li><a accesskey="6" href="#R%20and%20external%20applications">R and external applications</a>: 
+<li><a accesskey="7" href="#The%20near%20future%20of%20the%20Aqua%20GUI">The near future of the Aqua GUI</a>: 
+<li><a accesskey="8" href="#Aqua%20GUI%20Bugs">Aqua GUI Bugs</a>: 
+<li><a accesskey="9" href="#Quartz%20device">Quartz device</a>: 
+<li><a href="#Additional%20resources">Additional resources</a>: 
+<li><a href="#Acknowledgments">Acknowledgments</a>: 
+</ul>
 
-<H1><A NAME="SEC1">Introduction</A></H1>
-<P>
-This is a very first try of writing a R for Mac OS X. I hope to finish it in time for R-1.9.0.
+<div class="node">
+<p><hr>
+Node:&nbsp;<a name="Introduction">Introduction</a>,
+Next:&nbsp;<a rel="next" accesskey="n" href="#Building%20R%20from%20sources">Building R from sources</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#Top">Top</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#Top">Top</a>
+<br>
+</div>
+
+<h2 class="chapter">Introduction</h2>
+
+<p>This is a very first try of writing a R for Mac OS X. I hope to finish it in time for R-1.9.0. 
 In any case, please send me requests/questions you would like answers on.
 
+<ul class="menu">
+<li><a accesskey="1" href="#How%20many%20versions%20of%20R%20for%20Mac%20OS%20X%3f">How many versions of R for Mac OS X?</a>: 
+<li><a accesskey="2" href="#What%20machines%20does%20R%20for%20Mac%20OS%20X%20run%20on%3f">What machines does R for Mac OS X run on?</a>: 
+<li><a accesskey="3" href="#How%20can%20R%20for%20Mac%20OS%20X%20be%20obtained%20and%20installed%3f">How can R for Mac OS X be obtained and installed?</a>: 
+</ul>
 
-<P>
- 
+<div class="node">
+<p><hr>
+Node:&nbsp;<a name="How%20many%20versions%20of%20R%20for%20Mac%20OS%20X%3f">How many versions of R for Mac OS X?</a>,
+Next:&nbsp;<a rel="next" accesskey="n" href="#What%20machines%20does%20R%20for%20Mac%20OS%20X%20run%20on%3f">What machines does R for Mac OS X run on?</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#Introduction">Introduction</a>
+<br>
+</div>
 
+<h3 class="section">How many versions of R for Mac OS X?</h3>
 
-
-
-<H2><A NAME="SEC2">How many versions of R for Mac OS X?</A></H2>
-
-<P>
-There is currently only one version of R for Mac OS X.
-But R on Mac OS X can be used as a command-line application (see section <A HREF="RMacOSX-FAQ.html#SEC15">Command line version of R</A>), like on any
-other unix-like system, or via the Aqua GUI (see section <A HREF="RMacOSX-FAQ.html#SEC16">R with Aqua GUI</A>). This second approach in using R
+<p>There is currently only one version of R for Mac OS X. 
+But R on Mac OS X can be used as a command-line application (see <a href="#Command%20line%20version%20of%20R">Command line version of R</a>), like on any
+other unix-like system, or via the Aqua GUI (see <a href="#R%20with%20Aqua%20GUI">R with Aqua GUI</a>). This second approach in using R
 for Mac OS X is mostly preferred by "traditional" Macintosh users.
 
+<div class="node">
+<p><hr>
+Node:&nbsp;<a name="What%20machines%20does%20R%20for%20Mac%20OS%20X%20run%20on%3f">What machines does R for Mac OS X run on?</a>,
+Next:&nbsp;<a rel="next" accesskey="n" href="#How%20can%20R%20for%20Mac%20OS%20X%20be%20obtained%20and%20installed%3f">How can R for Mac OS X be obtained and installed?</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#How%20many%20versions%20of%20R%20for%20Mac%20OS%20X%3f">How many versions of R for Mac OS X?</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#Introduction">Introduction</a>
+<br>
+</div>
 
+<h3 class="section">What machines does R for Mac OS X run on?</h3>
 
-
-<H2><A NAME="SEC3">What machines does R for Mac OS X run on?</A></H2>
-
-<P>
-R for Mac OS X requires Mac OS X version 10.2 or higher to run. The latest version of the system is
+<p>R for Mac OS X requires Mac OS X version 10.2 or higher to run. The latest version of the system is
 always preferable though. We do not support Mac OS X version 10.1.
 
+<div class="node">
+<p><hr>
+Node:&nbsp;<a name="How%20can%20R%20for%20Mac%20OS%20X%20be%20obtained%20and%20installed%3f">How can R for Mac OS X be obtained and installed?</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#What%20machines%20does%20R%20for%20Mac%20OS%20X%20run%20on%3f">What machines does R for Mac OS X run on?</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#Introduction">Introduction</a>
+<br>
+</div>
 
+<h3 class="section">How can R for Mac OS X be obtained and installed?</h3>
 
+<div class="node">
+<p><hr>
+Node:&nbsp;<a name="Building%20R%20from%20sources">Building R from sources</a>,
+Next:&nbsp;<a rel="next" accesskey="n" href="#Command%20line%20version%20of%20R">Command line version of R</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#Introduction">Introduction</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#Top">Top</a>
+<br>
+</div>
 
-<H2><A NAME="SEC4">Building R from sources</A></H2>
+<h2 class="chapter">Building R from sources</h2>
 
+<ul class="menu">
+<li><a accesskey="1" href="#What%20is%20needed%20to%20build%20R">What is needed to build R</a>: 
+<li><a accesskey="2" href="#How%20to%20configure%20and%20build%20R">How to configure and build R</a>: 
+<li><a accesskey="3" href="#How%20to%20install%20R">How to install R</a>: 
+<li><a accesskey="4" href="#How%20to%20build%20and%20install%20the%20Aqua%20GUI">How to build and install the Aqua GUI</a>: 
+</ul>
 
+<div class="node">
+<p><hr>
+Node:&nbsp;<a name="What%20is%20needed%20to%20build%20R">What is needed to build R</a>,
+Next:&nbsp;<a rel="next" accesskey="n" href="#How%20to%20configure%20and%20build%20R">How to configure and build R</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#Building%20R%20from%20sources">Building R from sources</a>
+<br>
+</div>
 
-<H2><A NAME="SEC5">What is needed to build R</A></H2>
+<h3 class="section">What is needed to build R</h3>
 
+<ul class="menu">
+<li><a accesskey="1" href="#the%20C%2fC++%20compiler%20gcc%203.3">the C/C++ compiler gcc 3.3</a>: 
+<li><a accesskey="2" href="#the%20Fortran%20compiler%20g77%20for%20gcc%203.3">the Fortran compiler g77 for gcc 3.3</a>: 
+<li><a accesskey="3" href="#the%20libreadline%204.3%20(optional)">the libreadline 4.3 (optional)</a>: 
+<li><a accesskey="4" href="#the%20X11%20window%20server%20(optional)">the X11 window server (optional)</a>: 
+<li><a accesskey="5" href="#the%20TclTk%208.4%20headers%20and%20libraries%20(optional)">the TclTk 8.4 headers and libraries (optional)</a>: 
+<li><a accesskey="6" href="#a%20TeX%20suite%20of%20tools%20for%20documentation%20(optional)">a TeX suite of tools for documentation (optional)</a>: 
+</ul>
 
+<div class="node">
+<p><hr>
+Node:&nbsp;<a name="the%20C%2fC++%20compiler%20gcc%203.3">the C/C++ compiler gcc 3.3</a>,
+Next:&nbsp;<a rel="next" accesskey="n" href="#the%20Fortran%20compiler%20g77%20for%20gcc%203.3">the Fortran compiler g77 for gcc 3.3</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#What%20is%20needed%20to%20build%20R">What is needed to build R</a>
+<br>
+</div>
 
-<H3><A NAME="SEC6">the C/C++ compiler gcc 3.3</A></H3>
-<P>
-If you have Mac OS X 10.3 (aka Panther) you just need to install the software inside the Xcode Tools CD 
-(which is CD number 4). This is only true if you bought Panther. In most of the cases you have 
-Panther already installed on your brand new machine, which means that you don't have the forth 
-Developer CD. You should take it from Apple Developer Connection site (see section <A HREF="RMacOSX-FAQ.html#SEC39">Apple Developer Connection</A>): in the
+<h3 class="subsection">the C/C++ compiler gcc 3.3</h4>
+
+<p>If you have Mac OS X 10.3 (aka Panther) you just need to install the software inside the Xcode Tools CD
+(which is CD number 4). This is only true if you bought Panther. In most of the cases you have
+Panther already installed on your brand new machine, which means that you don't have the forth
+Developer CD. You should take it from Apple Developer Connection site (see <a href="#Apple%20Developer%20Connection">Apple Developer Connection</a>): in the
 download section, look for Xcode Tools v 1.1 or above.
 
+   <p>If you are using Mac OS X 10.2 (aka Jaguar) then you should download and install the
+Apple Developers Tools Dec 2002 including the latest updates which dates August 2003. Either it comes
+on a separate CD with your Mac, either you can download these  from the Apple Developer Connection site (see <a href="#Apple%20Developer%20Connection">Apple Developer Connection</a>)
+In either cases be sure you have gcc version 3.3 just by typing in a Terminal window
+<pre class="example">     gcc -vv
+     </pre>
 
-<P>
-If you are using Mac OS X 10.2 (aka Jaguar) then you should download and install the 
-Apple Developers Tools Dec 2002 including the latest updates which dates August 2003. Either it comes 
-on a separate CD with your Mac, either you can download these  from the Apple Developer Connection site (see section <A HREF="RMacOSX-FAQ.html#SEC39">Apple Developer Connection</A>)
-In either cases be sure you have gcc version 3.3 just by typing in a Terminal window 
+<div class="node">
+<p><hr>
+Node:&nbsp;<a name="the%20Fortran%20compiler%20g77%20for%20gcc%203.3">the Fortran compiler g77 for gcc 3.3</a>,
+Next:&nbsp;<a rel="next" accesskey="n" href="#the%20libreadline%204.3%20(optional)">the libreadline 4.3 (optional)</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#the%20C%2fC++%20compiler%20gcc%203.3">the C/C++ compiler gcc 3.3</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#What%20is%20needed%20to%20build%20R">What is needed to build R</a>
+<br>
+</div>
 
-<PRE>
-gcc -vv
-</PRE>
+<h3 class="subsection">the Fortran compiler g77 for gcc 3.3</h4>
 
-
-
-<H3><A NAME="SEC7">the Fortran compiler g77 for gcc 3.3</A></H3>
-<P>
-You need to install a version of the g77 Fortran compiler which is built for gcc 3.3. 
-The following instructions apply to binaries coming from  HPC for Mac OS X page <A HREF="http://hpc.sourceforge.net">http://hpc.sourceforge.net</A>. 
+<p>You need to install a version of the g77 Fortran compiler which is built for gcc 3.3. 
+The following instructions apply to binaries coming from  HPC for Mac OS X page <a href="http://hpc.sourceforge.net">http://hpc.sourceforge.net</a>. 
 Please take care: there are two versions of the g77 binaries, one for Jaguar and one for Panther. 
 Use the appropriate one.
 
-
-<P>
-Once you have the binaries, please do the following (you'll be asked for a root password):
+   <p>Once you have the binaries, please do the following (you'll be asked for a root password):
 cd to the download folder and type
+<pre class="example">     sudo tar -zxvf g77v3.4-bin.tar.gz -C /
+     rehash
+     </pre>
+   It installs everything in <em>/usr/local</em>. The name of the .tar.gz archive can be different, see the related web page.
 
-<PRE>
-sudo tar -zxvf g77v3.4-bin.tar.gz -C /
-rehash
-</PRE>
+<div class="node">
+<p><hr>
+Node:&nbsp;<a name="the%20libreadline%204.3%20(optional)">the libreadline 4.3 (optional)</a>,
+Next:&nbsp;<a rel="next" accesskey="n" href="#the%20X11%20window%20server%20(optional)">the X11 window server (optional)</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#the%20Fortran%20compiler%20g77%20for%20gcc%203.3">the Fortran compiler g77 for gcc 3.3</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#What%20is%20needed%20to%20build%20R">What is needed to build R</a>
+<br>
+</div>
 
-<P>
-It installs everything in <EM>/usr/local</EM>. The name of the .tar.gz archive can be different, see the related web page.
+<h3 class="subsection">the libreadline 4.3 (optional)</h4>
 
-
-
-
-<H3><A NAME="SEC8">the libreadline 4.3 (optional)</A></H3>
-<P>
-This library is optional. 
+<p>This library is optional. 
 You need this library to be able to retrive history using use arrow keys or for tab completion of filenames
-when you run R as a command line tool. The original source archive is located at GNU Org web page <A HREF="ftp://www.gnu.org">ftp://www.gnu.org</A>. 
-You need to modify the original file <EM>shlib/Makefile.in</EM> in order to make it
+when you run R as a command line tool. The original source archive is located at GNU Org web page <a href="ftp://www.gnu.org">ftp://www.gnu.org</a>. 
+You need to modify the original file <em>shlib/Makefile.in</em> in order to make it
 work under MacOS X 10.2.x and later (this is because libreadline needs to be linked against
-<EM>-lncurses -lcc_dynamic</EM>). If you can do better at configure time working on the original archive 
-let me know. I suggest you to download my patched version from <A HREF="http://www.economia.unimi.it/R">http://www.economia.unimi.it/R</A>. 
+<em>-lncurses -lcc_dynamic</em>). If you can do better at configure time working on the original archive
+let me know. I suggest you to download my patched version from <a href="http://www.economia.unimi.it/R">http://www.economia.unimi.it/R</a>. 
 Once you have done, please do the following (you'll be asked for a root password):
 uncompress the archive, cd inside the folder and type the following
-
-<PRE>
-./configure
-make
-sudo make install
-</PRE>
-
-<P>
-It installs everything in <EM>/usr/local</EM>.
+<pre class="example">     ./configure
+     make
+     sudo make install
+     </pre>
+   It installs everything in <em>/usr/local</em>. 
 These instructions apply to both Jaguar and Panther.
 
+<div class="node">
+<p><hr>
+Node:&nbsp;<a name="the%20X11%20window%20server%20(optional)">the X11 window server (optional)</a>,
+Next:&nbsp;<a rel="next" accesskey="n" href="#the%20TclTk%208.4%20headers%20and%20libraries%20(optional)">the TclTk 8.4 headers and libraries (optional)</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#the%20libreadline%204.3%20(optional)">the libreadline 4.3 (optional)</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#What%20is%20needed%20to%20build%20R">What is needed to build R</a>
+<br>
+</div>
 
+<h3 class="subsection">the X11 window server (optional)</h4>
 
-
-<H3><A NAME="SEC9">the X11 window server (optional)</A></H3>
-<P>
-If you have Panther, you probably have the X11 Window server already installed on your system. 
+<p>If you have Panther, you probably have the X11 Window server already installed on your system. 
 This is what you need to run a version of R with the capability of using the X11 device, but it isn't sufficient
-if you want to build it.
+if you want to build it. 
 You need to install the additional X11 SDK package from the Xcode Tools CD. 
-Please note: the installer on the Xcode Tools CD does not install the X11 SDK by default: 
+Please note: the installer on the Xcode Tools CD does not install the X11 SDK by default:
 you should look inside the Xcode Tools CD and install manually the X11 SDK.
 
-
-<P>
-If you have Jaguar, you'll need to install both the X11 Window server and the X11 SDK package from 
-the XFree86 web page.  Apple site only supports the latest version of his OS (at the moment Panther).
+   <p>If you have Jaguar, you'll need to install both the X11 Window server and the X11 SDK package from
+the XFree86 web page.  Apple site only supports the latest version of his OS (at the moment Panther). 
 Users report that other version of X11 Window Servers (other than the one distributed by Apple) work as well.
 
+<div class="node">
+<p><hr>
+Node:&nbsp;<a name="the%20TclTk%208.4%20headers%20and%20libraries%20(optional)">the TclTk 8.4 headers and libraries (optional)</a>,
+Next:&nbsp;<a rel="next" accesskey="n" href="#a%20TeX%20suite%20of%20tools%20for%20documentation%20(optional)">a TeX suite of tools for documentation (optional)</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#the%20X11%20window%20server%20(optional)">the X11 window server (optional)</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#What%20is%20needed%20to%20build%20R">What is needed to build R</a>
+<br>
+</div>
 
+<h3 class="subsection">the TclTk 8.4 headers and libraries (optional)</h4>
 
-
-<H3><A NAME="SEC10">the TclTk 8.4 headers and libraries (optional)</A></H3>
-<P>
-You need to download the sources of the Tcl and Tk 8.4.x packages to build yourself the sources. 
-The original sources can be found on the official TclTk web page <A HREF="http://www.tcl.tk/software/tcltk/8.4.html">http://www.tcl.tk/software/tcltk/8.4.html</A>.
+<p>You need to download the sources of the Tcl and Tk 8.4.x packages to build yourself the sources. 
+The original sources can be found on the official TclTk web page <a href="http://www.tcl.tk/software/tcltk/8.4.html">http://www.tcl.tk/software/tcltk/8.4.html</a>. 
 Please do the following respecting the sequence (you'll be asked for a root password). These are examples for version 8.4.4
 of the Tcl and Tk sources, you'll probably find new version on the web page, thus only the name of the .tar.gz archives
 changes.
 
-
-<P>
-For Tcl: download the tlc 8.4 sources, cd inside the folder where you have downloaded the archive and
+   <p>For Tcl: download the tlc 8.4 sources, cd inside the folder where you have downloaded the archive and
 type:
+<pre class="example">     tar zxf tcl8.4.4-src.tar.gz
+     cd tcl8.4.4/unix/
+     ./configure
+     make
+     sudo make install
+     </pre>
 
-<PRE>
-tar zxf tcl8.4.4-src.tar.gz
-cd tcl8.4.4/unix/
-./configure
-make
-sudo make install
-</PRE>
+   <p>For Tk: download the tk 8.4 sources, cd inside the folder where you have downloaded the archive and type:
+<pre class="example">     tar zxf tk8.4.4-src.tar.gz
+     cd tk8.4.4/unix/
+     ./configure
+     make
+     sudo make install
+     </pre>
 
-<P>
-For Tk: download the tk 8.4 sources, cd inside the folder where you have downloaded the archive and type:
+<div class="node">
+<p><hr>
+Node:&nbsp;<a name="a%20TeX%20suite%20of%20tools%20for%20documentation%20(optional)">a TeX suite of tools for documentation (optional)</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#the%20TclTk%208.4%20headers%20and%20libraries%20(optional)">the TclTk 8.4 headers and libraries (optional)</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#What%20is%20needed%20to%20build%20R">What is needed to build R</a>
+<br>
+</div>
 
-<PRE>
-tar zxf tk8.4.4-src.tar.gz
-cd tk8.4.4/unix/
-./configure
-make
-sudo make install
-</PRE>
+<h3 class="subsection">a TeX suite of tools for documentation (optional)</h4>
 
-
-
-<H3><A NAME="SEC11">a TeX suite of tools for documentation (optional)</A></H3>
-<P>
-There is a nice installer, called the i-installer II, that allows you to install a complete 
-teTeX distribution. You can find details on the i-installer at <A HREF="http://www.rna.nl/ii.html">http://www.rna.nl/ii.html</A>. 
+<p>There is a nice installer, called the i-installer II, that allows you to install a complete
+teTeX distribution. You can find details on the i-installer at <a href="http://www.rna.nl/ii.html">http://www.rna.nl/ii.html</a>. 
 The teTeX is one of the i-Packages.
 
+<div class="node">
+<p><hr>
+Node:&nbsp;<a name="How%20to%20configure%20and%20build%20R">How to configure and build R</a>,
+Next:&nbsp;<a rel="next" accesskey="n" href="#How%20to%20install%20R">How to install R</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#What%20is%20needed%20to%20build%20R">What is needed to build R</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#Building%20R%20from%20sources">Building R from sources</a>
+<br>
+</div>
 
+<h3 class="section">How to configure and build R</h3>
 
-
-<H2><A NAME="SEC12">How to configure and build R</A></H2>
-<P>
-Download the latest sources of R from @CRAN{}. Unpack the archive with tar -zxf <EM>name_of_R_sources_archive</EM> and cd
+<p>Download the latest sources of R from <small>CRAN</small>. Unpack the archive with tar -zxf <em>name_of_R_sources_archive</em> and cd
 inside the R sources directory. Then you need to configure R for your system and build R. 
 Just type
-
-<PRE>
-./configure --with-blas='-framework vecLib' --with-lapack --with-aqua 
-make
-</PRE>
-
-<P>
-This will configure R to be built as a Framework to be installed inside your <EM>/Library/Frameworks</EM> directory with the name 
-<EM>R.framework</EM>. You can change the default location of the <EM>R.framework</EM> 
-installation at configure time by specifying the flag <EM>--enable-R-framework[=DIR]</EM>, i.e. 
+<pre class="example">     ./configure --with-blas='-framework vecLib' --with-lapack --with-aqua
+     make
+     </pre>
+   This will configure R to be built as a Framework to be installed inside your <em>/Library/Frameworks</em> directory with the name
+<em>R.framework</em>. You can change the default location of the <em>R.framework</em>
+installation at configure time by specifying the flag <em>-enable-R-framework[=DIR]</em>, i.e. 
 with something like
+<pre class="example">     ./configure --with-blas='-framework vecLib' --with-lapack
+                 --with-aqua --enable-R-framework=FOO
+     </pre>
+   and the final destination of the <em>R.framework</em> will be <em>FOO/R.framework</em>, which means that you
+don't have to specify the <em>R.framework</em> text in the path.
 
-<PRE>
-./configure --with-blas='-framework vecLib' --with-lapack 
-            --with-aqua --enable-R-framework=FOO
-</PRE>
+<div class="node">
+<p><hr>
+Node:&nbsp;<a name="How%20to%20install%20R">How to install R</a>,
+Next:&nbsp;<a rel="next" accesskey="n" href="#How%20to%20build%20and%20install%20the%20Aqua%20GUI">How to build and install the Aqua GUI</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#How%20to%20configure%20and%20build%20R">How to configure and build R</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#Building%20R%20from%20sources">Building R from sources</a>
+<br>
+</div>
 
-<P>
-and the final destination of the <EM>R.framework</EM> will be <EM>FOO/R.framework</EM>, which means that you 
-don't have to specify the <EM>R.framework</EM> text in the path. 
+<h3 class="section">How to install R</h3>
 
-
-
-
-<H2><A NAME="SEC13">How to install R</A></H2>
-<P>
-A standard installation of R requires you have built it as a Framework. At this point just type (a root 
+<p>A standard installation of R requires you have built it as a Framework. At this point just type (a root
 password will be required):
+<pre class="example">     sudo make install
+     </pre>
+   and all will be installed in <em>/Library/Frameworks</em>. 
+You can decide to change the R.framework destination by using the <em>-prefix</em> option specifying the final destination. 
+As in the above, you don't need to specify the name <em>R.framework</em> in the path.
 
-<PRE>
-sudo make install
-</PRE>
+<div class="node">
+<p><hr>
+Node:&nbsp;<a name="How%20to%20build%20and%20install%20the%20Aqua%20GUI">How to build and install the Aqua GUI</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#How%20to%20install%20R">How to install R</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#Building%20R%20from%20sources">Building R from sources</a>
+<br>
+</div>
 
-<P>
-and all will be installed in <EM>/Library/Frameworks</EM>.
-You can decide to change the R.framework destination by using the <EM>--prefix</EM> option specifying the final destination.
-As in the above, you don't need to specify the name <EM>R.framework</EM> in the path.
+<h3 class="section">How to build and install the Aqua GUI</h3>
 
-
-
-
-<H2><A NAME="SEC14">How to build and install the Aqua GUI</A></H2>
-<P>
-At the moment, there is nothing to  do to build the Aqua GUI.
+<p>At the moment, there is nothing to  do to build the Aqua GUI. 
 You just need to install it using
+<pre class="example">     make install-aqua
+     </pre>
+   and it will install the <em>R.app</em> application in the <em>Applications</em> folder on your system.
 
-<PRE>
-make install-aqua
-</PRE>
+<div class="node">
+<p><hr>
+Node:&nbsp;<a name="Command%20line%20version%20of%20R">Command line version of R</a>,
+Next:&nbsp;<a rel="next" accesskey="n" href="#R%20with%20Aqua%20GUI">R with Aqua GUI</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#Building%20R%20from%20sources">Building R from sources</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#Top">Top</a>
+<br>
+</div>
 
-<P>
-and it will install the <EM>R.app</EM> application in the <EM>Applications</EM> folder on your system.
+<h2 class="chapter">Command line version of R</h2>
 
+<p>The command line version of <small>R</small> is nothing but a classic unix-like implementation of <small>R</small>. So general
+documentation for <small>R</small> applies to this version as well. 
+On each release (and patched-release) ready to use binaries are distributed through <small>CRAN</small>. 
+These binaries come with a common installer used by R with Aqua GUI so please read
+the releated notes (see <a href="#How%20to%20get%20R%20with%20Aqua%20GUI">How to get R with Aqua GUI</a>). 
+To use <small>R</small> you probably need to add a symbolic link on your System as the <small>R</small> binary is
+located inside the framework. 
+Suppose you have the <em>/usr/local/bin</em> directory on your System, than you should just
+type in your Terminal (a root password is required)
+<pre class="smallexample">     sudo ln -s /Library/Frameworks/R.framework/Resources/bin/R /usr/local/bin/R
+     </pre>
+   Assuming that you have <em>/usr/local/bin</em> in your <em>PATH</em> environment variable, you'll be able to launch R from any location
+on your System just by typing <em>R</em>. 
+In this way, when you install a new version of the <em>R.framework</em> this link will point to the latest R binary.
 
+<div class="node">
+<p><hr>
+Node:&nbsp;<a name="R%20with%20Aqua%20GUI">R with Aqua GUI</a>,
+Next:&nbsp;<a rel="next" accesskey="n" href="#How%20to%20install%20packages">How to install packages</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#Command%20line%20version%20of%20R">Command line version of R</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#Top">Top</a>
+<br>
+</div>
 
+<h2 class="chapter">R with Aqua GUI</h2>
 
-<H1><A NAME="SEC15">Command line version of R</A></H1>
-<P>
-The command line version of R is nothing but a classic unix-like implementation of R. So general documentation for R applies
-to this version as well.
-On each release (and patched-release) ready to use binaries are distributed through @CRAN{}.
-Thies binaries come with a common installer used by R with Aqua GUI so please read
-the releated notes (see section <A HREF="RMacOSX-FAQ.html#SEC17">How to get R with Aqua GUI</A>).
-To use R you probably need to add a symbolic link on your System as the R binary is located inside the framework.
-Suppose you have the <EM>/usr/local/bin</EM> directory on your System, than you should just type in your Terminal (a root password is required)
+<ul class="menu">
+<li><a accesskey="1" href="#How%20to%20get%20R%20with%20Aqua%20GUI">How to get R with Aqua GUI</a>: 
+<li><a accesskey="2" href="#How%20to%20install%20the%20Aqua%20GUI">How to install the Aqua GUI</a>: 
+<li><a accesskey="3" href="#The%20R%20Console">The R Console</a>: 
+<li><a accesskey="4" href="#The%20Menus">The Menus</a>: 
+<li><a accesskey="5" href="#Preferences">Preferences</a>: 
+<li><a accesskey="6" href="#The%20near%20future%20of%20the%20Aqua%20GUI">The near future of the Aqua GUI</a>: 
+<li><a accesskey="7" href="#Aqua%20GUI%20Bugs">Aqua GUI Bugs</a>: 
+</ul>
 
-<PRE>
-sudo ln -s /Library/Frameworks/R.framework/Resources/bin/R 
-           /usr/local/bin/R
-</PRE>
+<div class="node">
+<p><hr>
+Node:&nbsp;<a name="How%20to%20get%20R%20with%20Aqua%20GUI">How to get R with Aqua GUI</a>,
+Next:&nbsp;<a rel="next" accesskey="n" href="#How%20to%20install%20the%20Aqua%20GUI">How to install the Aqua GUI</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#R%20with%20Aqua%20GUI">R with Aqua GUI</a>
+<br>
+</div>
 
-<P>
-Assuming that you have <EM>/usr/local/bin</EM> in your <EM>PATH</EM> environment variable, you'll be able to launch R from any location
-on your System just by typing <EM>R</EM>.
-In this way, when you install a new version of the <EM>R.framework</EM> this link will point to the latest R binary.
+<h3 class="section">How to get R with Aqua GUI</h3>
 
-
-
-
-<H1><A NAME="SEC16">R with Aqua GUI</A></H1>
-
-
-
-<H2><A NAME="SEC17">How to get R with Aqua GUI</A></H2>
-<P>
-The <TT>`bin/macosx'</TT> directory of a @CRAN{} site contains a standard
-Apple installer package named <TT>`R.dmg.sit'</TT> compressed in Aladdin
+<p>The <code>bin/macosx</code> directory of a <small>CRAN</small> site contains a standard
+Apple installer package named <code>R.dmg.sit</code> compressed in Aladdin
 Stuffit format.  Once downloaded, uncompressed and executed, the
 installer will install the current non-developer release of R.  R  is
 a native Mac OS X Darwin version of R with an Aqua GUI. 
 Inside
-<TT>`bin/macosx/<VAR>x</VAR>.<VAR>y</VAR>'</TT> there are prebuilt binary packages to
-be used with R corresponding to the "<VAR>x</VAR>.<VAR>y</VAR>" release of
+<code>bin/macosx/</code><var>x</var><code>.</code><var>y</var><code></code> there are prebuilt binary packages to
+be used with R corresponding to the "<var>x</var>.<var>y</var>" release of
 R. The installation of these packages is available through the
-"Package" menu of the Aqua GUI (see section <A HREF="RMacOSX-FAQ.html#SEC28">Packages Menu</A>). 
+"Package" menu of the Aqua GUI (see <a href="#Packages%20Menu">Packages Menu</a>).
 
+<div class="node">
+<p><hr>
+Node:&nbsp;<a name="How%20to%20install%20the%20Aqua%20GUI">How to install the Aqua GUI</a>,
+Next:&nbsp;<a rel="next" accesskey="n" href="#The%20R%20Console">The R Console</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#How%20to%20get%20R%20with%20Aqua%20GUI">How to get R with Aqua GUI</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#R%20with%20Aqua%20GUI">R with Aqua GUI</a>
+<br>
+</div>
 
+<h3 class="section">How to install the Aqua GUI</h3>
 
+<div class="node">
+<p><hr>
+Node:&nbsp;<a name="The%20R%20Console">The R Console</a>,
+Next:&nbsp;<a rel="next" accesskey="n" href="#The%20Menus">The Menus</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#How%20to%20install%20the%20Aqua%20GUI">How to install the Aqua GUI</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#R%20with%20Aqua%20GUI">R with Aqua GUI</a>
+<br>
+</div>
 
-<H2><A NAME="SEC18">How to install the Aqua GUI</A></H2>
+<h3 class="section">The R Console</h3>
 
+<ul class="menu">
+<li><a accesskey="1" href="#The%20Input%20and%20the%20Output">The Input and the Output</a>: 
+<li><a accesskey="2" href="#Copy%20and%20Paste">Copy and Paste</a>: 
+<li><a accesskey="3" href="#The%20current%20and%20startup%20working%20directories">The current and startup working directories</a>: 
+<li><a accesskey="4" href="#Resizing%20the%20R%20Console">Resizing the R Console</a>: 
+<li><a accesskey="5" href="#Input%20and%20Output%20text%20colors">Input and Output text colors</a>: 
+</ul>
 
+<div class="node">
+<p><hr>
+Node:&nbsp;<a name="The%20Input%20and%20the%20Output">The Input and the Output</a>,
+Next:&nbsp;<a rel="next" accesskey="n" href="#Copy%20and%20Paste">Copy and Paste</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#The%20R%20Console">The R Console</a>
+<br>
+</div>
 
-<H2><A NAME="SEC19">The R Console</A></H2>
+<h3 class="subsection">The Input and the Output</h4>
 
-
-
-<H3><A NAME="SEC20">The Input and the Output</A></H3>
-<P>
-The current desing of the R Console is to have separate frames for input (user) and output (R).
+<p>The current desing of the R Console is to have separate frames for input (user) and output (R). 
 The user is supposed to type command into the bottom frame of the R Console, this input is echoed
-into the upper frame and R will give any related output in the upper frame.
-The output frame (the upper one) is a read-only frame. 
+into the upper frame and R will give any related output in the upper frame. 
+The output frame (the upper one) is a read-only frame.
 
+<div class="node">
+<p><hr>
+Node:&nbsp;<a name="Copy%20and%20Paste">Copy and Paste</a>,
+Next:&nbsp;<a rel="next" accesskey="n" href="#The%20current%20and%20startup%20working%20directories">The current and startup working directories</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#The%20Input%20and%20the%20Output">The Input and the Output</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#The%20R%20Console">The R Console</a>
+<br>
+</div>
 
+<h3 class="subsection">Copy and Paste</h4>
 
+<p>Copy and paste works in R as in any other Macintosh application. 
+But when two selection are active: one in the output frame and one in the input frame, the output frame takes precedence
+when copying to the clipboard. 
+You can also copy from the <em>quartz()</em> graphic device (see <a href="#Quartz%20device">Quartz device</a>) to the clipboard. In this case a bitmap image is
+created. If you want high resolution graphic exports, you should better save the image using the <em>File/Save as</em> menu item (see <a href="#Quartz%20device">Quartz device</a>).
 
-<H3><A NAME="SEC21">Copy and Paste</A></H3>
-<P>
-Copy and paste works in R as in any other Macintosh application.
-But when two selection are active: one in the output frame and one in the input frame, the output frame takes precedence 
-when copying to the clipboard.
-You can also copy from the <EM>quartz()</EM> graphic device (see section <A HREF="RMacOSX-FAQ.html#SEC37">Quartz device</A>) to the clipboard. In this case a bitmap image is
-created. If you want high resolution graphic exports, you should better save the image using the <EM>File/Save as</EM> menu item (see section <A HREF="RMacOSX-FAQ.html#SEC37">Quartz device</A>).
+<div class="node">
+<p><hr>
+Node:&nbsp;<a name="The%20current%20and%20startup%20working%20directories">The current and startup working directories</a>,
+Next:&nbsp;<a rel="next" accesskey="n" href="#Resizing%20the%20R%20Console">Resizing the R Console</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#Copy%20and%20Paste">Copy and Paste</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#The%20R%20Console">The R Console</a>
+<br>
+</div>
 
+<h3 class="subsection">The current and startup working directories</h4>
 
-
-
-<H3><A NAME="SEC22">The current and startup working directories</A></H3>
-<P>
-If not otherwise specified in the Preferences (see section <A HREF="RMacOSX-FAQ.html#SEC30">Preferences</A>), or if the specified path is no longer available, then
-the default working directory at startup is the user home.
-The working directory can be changed using the <EM>setwd</EM> R command or using the <EM>Tools</EM> menut item <EM>Change working directory</EM>.
+<p>If not otherwise specified in the Preferences (see <a href="#Preferences">Preferences</a>), or if the specified path is no longer available, then
+the default working directory at startup is the user home. 
+The working directory can be changed using the <em>setwd</em> R command or using the <em>Tools</em> menut item <em>Change working directory</em>. 
 The current working directory is displayed on the main bar of the R Console window.
- 
 
+<div class="node">
+<p><hr>
+Node:&nbsp;<a name="Resizing%20the%20R%20Console">Resizing the R Console</a>,
+Next:&nbsp;<a rel="next" accesskey="n" href="#Input%20and%20Output%20text%20colors">Input and Output text colors</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#The%20current%20and%20startup%20working%20directories">The current and startup working directories</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#The%20R%20Console">The R Console</a>
+<br>
+</div>
 
-<H3><A NAME="SEC23">Resizing the R Console</A></H3>
-<P>
-When the R Console Window is resized, the R option <EM>width</EM> is set appropriately so that any future
-output will fit the window size. This behaviour can be inihibited using the Preferences settings (see section <A HREF="RMacOSX-FAQ.html#SEC30">Preferences</A>).
+<h3 class="subsection">Resizing the R Console</h4>
+
+<p>When the R Console Window is resized, the R option <em>width</em> is set appropriately so that any future
+output will fit the window size. This behaviour can be inihibited using the Preferences settings (see <a href="#Preferences">Preferences</a>). 
 On closing the R application, the position and the size of the R Console window are saved in the Preferences and reused
 next time you launch R. You can inihibit R to do this using the appropriate Preferences settings.
 
+<div class="node">
+<p><hr>
+Node:&nbsp;<a name="Input%20and%20Output%20text%20colors">Input and Output text colors</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#Resizing%20the%20R%20Console">Resizing the R Console</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#The%20R%20Console">The R Console</a>
+<br>
+</div>
 
+<h3 class="subsection">Input and Output text colors</h4>
 
+<p>Text windows and frames are divided in Read-Only and Read and Write ones. Text colors can be set separately
+for the two kinds of windows. This happens as well for their respectives backgrounds. Use the Preferences window to set these
+colors (see <a href="#Preferences">Preferences</a>).
 
-<H3><A NAME="SEC24">Input and Output text colors</A></H3>
-<P>
-Text windows and frames are divided in Read-Only and Read and Write ones. Text colors can be set separately
-for the two kinds of windows. This happens as well for their respectives backgrounds. Use the Preferences window to set these 
-colors (see section <A HREF="RMacOSX-FAQ.html#SEC30">Preferences</A>).
+<div class="node">
+<p><hr>
+Node:&nbsp;<a name="The%20Menus">The Menus</a>,
+Next:&nbsp;<a rel="next" accesskey="n" href="#Preferences">Preferences</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#The%20R%20Console">The R Console</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#R%20with%20Aqua%20GUI">R with Aqua GUI</a>
+<br>
+</div>
 
+<h3 class="section">The Menus</h3>
 
+<ul class="menu">
+<li><a accesskey="1" href="#Tools%20Menu">Tools Menu</a>: 
+<li><a accesskey="2" href="#Workspace%20Menu">Workspace Menu</a>: 
+<li><a accesskey="3" href="#Packages%20Menu">Packages Menu</a>: 
+<li><a accesskey="4" href="#The%20Help%20menu">The Help menu</a>: 
+</ul>
 
+<div class="node">
+<p><hr>
+Node:&nbsp;<a name="Tools%20Menu">Tools Menu</a>,
+Next:&nbsp;<a rel="next" accesskey="n" href="#Workspace%20Menu">Workspace Menu</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#The%20Menus">The Menus</a>
+<br>
+</div>
 
-<H2><A NAME="SEC25">The Menus</A></H2>
+<h3 class="subsection">Tools Menu</h4>
 
+<div class="node">
+<p><hr>
+Node:&nbsp;<a name="Workspace%20Menu">Workspace Menu</a>,
+Next:&nbsp;<a rel="next" accesskey="n" href="#Packages%20Menu">Packages Menu</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#Tools%20Menu">Tools Menu</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#The%20Menus">The Menus</a>
+<br>
+</div>
 
+<h3 class="subsection">Workspace Menu</h4>
 
-<H3><A NAME="SEC26">Tools Menu</A></H3>
+<div class="node">
+<p><hr>
+Node:&nbsp;<a name="Packages%20Menu">Packages Menu</a>,
+Next:&nbsp;<a rel="next" accesskey="n" href="#The%20Help%20menu">The Help menu</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#Workspace%20Menu">Workspace Menu</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#The%20Menus">The Menus</a>
+<br>
+</div>
 
+<h3 class="subsection">Packages Menu</h4>
 
+<div class="node">
+<p><hr>
+Node:&nbsp;<a name="The%20Help%20menu">The Help menu</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#Packages%20Menu">Packages Menu</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#The%20Menus">The Menus</a>
+<br>
+</div>
 
-<H3><A NAME="SEC27">Workspace Menu</A></H3>
+<h3 class="subsection">The Help menu</h4>
 
+<p>Using this menu you can open the on-line manuals (<em>R Help</em>), read this FAQ and  review the latest changes, bug fixes and new features of R for Mac OS X (<em>What's new in this version</em>). 
+There are also interfaces to the R <em>help</em> and <em>help.search</em> functions as well as the <em>example</em> function.
 
+<div class="node">
+<p><hr>
+Node:&nbsp;<a name="Preferences">Preferences</a>,
+Next:&nbsp;<a rel="next" accesskey="n" href="#The%20near%20future%20of%20the%20Aqua%20GUI">The near future of the Aqua GUI</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#The%20Menus">The Menus</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#R%20with%20Aqua%20GUI">R with Aqua GUI</a>
+<br>
+</div>
 
-<H3><A NAME="SEC28">Packages Menu</A></H3>
+<h3 class="section">Preferences</h3>
 
+<ul class="menu">
+<li><a accesskey="1" href="#Text%20Windows%20tab">Text Windows tab</a>: 
+<li><a accesskey="2" href="#Quartz%20device%20tab">Quartz device tab</a>: 
+<li><a accesskey="3" href="#Packages%20tab">Packages tab</a>: 
+<li><a accesskey="4" href="#Misc%20tab">Misc tab</a>: 
+</ul>
 
+<div class="node">
+<p><hr>
+Node:&nbsp;<a name="Text%20Windows%20tab">Text Windows tab</a>,
+Next:&nbsp;<a rel="next" accesskey="n" href="#Quartz%20device%20tab">Quartz device tab</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#Preferences">Preferences</a>
+<br>
+</div>
 
-<H3><A NAME="SEC29">The Help menu</A></H3>
-<P>
-Using this menu you can open the on-line manuals (<EM>R Help</EM>), read this FAQ and  review the latest changes, bug fixes and new features of R for Mac OS X (<EM>What's new in this version</EM>).
-There are also interfaces to the R <EM>help</EM> and <EM>help.search</EM> functions as well as the <EM>example</EM> function. 
+<h3 class="subsection">Text Windows tab</h4>
 
+<div class="node">
+<p><hr>
+Node:&nbsp;<a name="Quartz%20device%20tab">Quartz device tab</a>,
+Next:&nbsp;<a rel="next" accesskey="n" href="#Packages%20tab">Packages tab</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#Text%20Windows%20tab">Text Windows tab</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#Preferences">Preferences</a>
+<br>
+</div>
 
+<h3 class="subsection">Quartz device tab</h4>
 
+<div class="node">
+<p><hr>
+Node:&nbsp;<a name="Packages%20tab">Packages tab</a>,
+Next:&nbsp;<a rel="next" accesskey="n" href="#Misc%20tab">Misc tab</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#Quartz%20device%20tab">Quartz device tab</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#Preferences">Preferences</a>
+<br>
+</div>
 
-<H2><A NAME="SEC30">Preferences</A></H2>
+<h3 class="subsection">Packages tab</h4>
 
+<div class="node">
+<p><hr>
+Node:&nbsp;<a name="Misc%20tab">Misc tab</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#Packages%20tab">Packages tab</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#Preferences">Preferences</a>
+<br>
+</div>
 
+<h3 class="subsection">Misc tab</h4>
 
-<H3><A NAME="SEC31">Text Windows tab</A></H3>
+<div class="node">
+<p><hr>
+Node:&nbsp;<a name="The%20near%20future%20of%20the%20Aqua%20GUI">The near future of the Aqua GUI</a>,
+Next:&nbsp;<a rel="next" accesskey="n" href="#Aqua%20GUI%20Bugs">Aqua GUI Bugs</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#Preferences">Preferences</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#R%20with%20Aqua%20GUI">R with Aqua GUI</a>
+<br>
+</div>
 
+<h3 class="section">The near future of the Aqua GUI</h3>
 
-
-<H3><A NAME="SEC32">Quartz device tab</A></H3>
-
-
-
-<H3><A NAME="SEC33">Packages tab</A></H3>
-
-
-
-<H3><A NAME="SEC34">Misc tab</A></H3>
-
-
-
-<H2><A NAME="SEC35">The near future of the Aqua GUI</A></H2>
-<P>
-Jointly with Simon Urbanek we are currently working to replace the current Aqua GUI, which is Carbon-based,
+<p>Jointly with Simon Urbanek we are currently working to replace the current Aqua GUI, which is Carbon-based,
 with a pure Cocoa GUI. This will allow for a better integration of R with Mac OS X and
-a fully Aqua-compliant GUI.
+a fully Aqua-compliant GUI. 
 A preview of the Cocoa GUI for Darwin R can be obtained after the official
-release of R 1.9.0 is out from <A HREF="http://www.economia.unimi.it/R">http://www.economia.unimi.it/R</A>.
+release of R 1.9.0 is out from <a href="http://www.economia.unimi.it/R">http://www.economia.unimi.it/R</a>.
 
+<div class="node">
+<p><hr>
+Node:&nbsp;<a name="Aqua%20GUI%20Bugs">Aqua GUI Bugs</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#The%20near%20future%20of%20the%20Aqua%20GUI">The near future of the Aqua GUI</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#R%20with%20Aqua%20GUI">R with Aqua GUI</a>
+<br>
+</div>
 
-<H2><A NAME="SEC36">Aqua GUI Bugs</A></H2>
-<P>
-On Unix systems a bug report can be generated using the function
-<CODE>bug.report()</CODE>.  This automatically includes the version
+<h3 class="section">Aqua GUI Bugs</h3>
+
+<p>On Unix systems a bug report can be generated using the function
+<code>bug.report()</code>.  This automatically includes the version
 information and sends the bug to the correct address.  Alternatively the
-bug report can be emailed to <A HREF="mailto:R-bugs@R-project.org">R-bugs@R-project.org</A> or submitted
-to the Web page at <A HREF="http://bugs.R-project.org/">http://bugs.R-project.org/</A>.
+bug report can be emailed to <a href="mailto:R-bugs@R-project.org">R-bugs@R-project.org</a> or submitted
+to the Web page at <a href="http://bugs.R-project.org/">http://bugs.R-project.org/</a>.
 
+   <p>You can also send specific Aqua GUI bugs directly to <a href="mailto:stefano.iacus@unimi.it">stefano.iacus@unimi.it</a>
 
-<P>
-You can also send specific Aqua GUI bugs directly to <A HREF="mailto:stefano.iacus@unimi.it">stefano.iacus@unimi.it</A>
+   <p>In any circumstances, in case of a crash, please report the
+crash.log for the <em>R.bin</em> application. You can get this
+crash.log using the <em>Console.app</em> located inside <em>/Applications/Utilities</em>.
 
+<div class="node">
+<p><hr>
+Node:&nbsp;<a name="How%20to%20install%20packages">How to install packages</a>,
+Next:&nbsp;<a rel="next" accesskey="n" href="#R%20and%20external%20applications">R and external applications</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#R%20with%20Aqua%20GUI">R with Aqua GUI</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#Top">Top</a>
+<br>
+</div>
 
-<P>
-In any circumstances, in case of a crash, please report the 
-crash.log for the <EM>R.bin</EM> application. You can get this
-crash.log using the <EM>Console.app</EM> located inside <EM>/Applications/Utilities</EM>.
+<h2 class="chapter">How to install packages</h2>
 
+<div class="node">
+<p><hr>
+Node:&nbsp;<a name="R%20and%20external%20applications">R and external applications</a>,
+Next:&nbsp;<a rel="next" accesskey="n" href="#Quartz%20device">Quartz device</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#How%20to%20install%20packages">How to install packages</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#Top">Top</a>
+<br>
+</div>
 
+<h2 class="chapter">R and external applications</h2>
 
+<div class="node">
+<p><hr>
+Node:&nbsp;<a name="Quartz%20device">Quartz device</a>,
+Next:&nbsp;<a rel="next" accesskey="n" href="#Additional%20resources">Additional resources</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#R%20and%20external%20applications">R and external applications</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#Top">Top</a>
+<br>
+</div>
 
-<H1><A NAME="SEC37">Quartz device</A></H1>
+<h2 class="chapter">Quartz device</h2>
 
+<div class="node">
+<p><hr>
+Node:&nbsp;<a name="Additional%20resources">Additional resources</a>,
+Next:&nbsp;<a rel="next" accesskey="n" href="#Acknowledgments">Acknowledgments</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#Quartz%20device">Quartz device</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#Top">Top</a>
+<br>
+</div>
 
+<h2 class="chapter">Additional resources</h2>
 
-<H1><A NAME="SEC38">Additional resources</A></H1>
-<P>
-Here are few references that can be of interest for Mac OS X and/or developers.
+<p>Here are few references that can be of interest for Mac OS X and/or developers.
 
+<ul class="menu">
+<li><a accesskey="1" href="#Apple%20Developer%20Connection">Apple Developer Connection</a>: 
+<li><a accesskey="2" href="#The%20R%20for%20Mac%20OS%20X%20Developer%20page">The R for Mac OS X Developer page</a>: 
+</ul>
 
+<div class="node">
+<p><hr>
+Node:&nbsp;<a name="Apple%20Developer%20Connection">Apple Developer Connection</a>,
+Next:&nbsp;<a rel="next" accesskey="n" href="#The%20R%20for%20Mac%20OS%20X%20Developer%20page">The R for Mac OS X Developer page</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#Additional%20resources">Additional resources</a>
+<br>
+</div>
 
+<h3 class="section">Apple Developer Connection</h3>
 
-<H2><A NAME="SEC39">Apple Developer Connection</A></H2>
-<P>
-The Apple Developer Connection (can be reached at <A HREF="http://developer.apple.com">http://developer.apple.com</A>) is the main source
+<p>The Apple Developer Connection (can be reached at <a href="http://developer.apple.com">http://developer.apple.com</a>) is the main source
 of information for Apple products (OS, hardware, software) for developers. You can subscribe for free to
 ADC and get the latest up-to-date tools from Apple (compilers for example).
 
+<div class="node">
+<p><hr>
+Node:&nbsp;<a name="The%20R%20for%20Mac%20OS%20X%20Developer%20page">The R for Mac OS X Developer page</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#Apple%20Developer%20Connection">Apple Developer Connection</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#Additional%20resources">Additional resources</a>
+<br>
+</div>
 
+<h3 class="section">The R for Mac OS X Developer page</h3>
 
-
-<H2><A NAME="SEC40">The R for Mac OS X Developer page</A></H2>
-<P>
-There is a page dedicated to the latest R-devel version of R. This page is located at
-<A HREF="http://www.economia.unimi.it/R">http://www.economia.unimi.it/R</A> and is mantained by Stefano M. Iacus.
+<p>There is a page dedicated to the latest R-devel version of R. This page is located at
+<a href="http://www.economia.unimi.it/R">http://www.economia.unimi.it/R</a> and is mantained by Stefano M. Iacus. 
 This page is inteded to give additional documentation for building  the latest R-devel
 version of R. From time to time, snapshots of R-devel binaries are available for testing purposes.
 
+<div class="node">
+<p><hr>
+Node:&nbsp;<a name="Acknowledgments">Acknowledgments</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#Additional%20resources">Additional resources</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#Top">Top</a>
+<br>
+</div>
 
+<h2 class="chapter">Acknowledgments</h2>
 
-
-<H1><A NAME="SEC41">Acknowledgments</A></H1>
-
-<P>
-Special thanks go to Simon Urbanek, Jan de Leeuw, Byron Ellis and Thomas Lumley
+<p>Special thanks go to Simon Urbanek, Jan de Leeuw, Byron Ellis and Thomas Lumley
 in random order. Last but not least Apple for amazing OS and GUI.
 
+   </body></html>
 
-<P><HR><P>
-This document was generated on March, 22  2004 using
-<A HREF="http://www.mathematik.uni-kl.de/~obachman/Texi2html">texi2html</A>&nbsp;1.57.
-
-</BODY>
-</HTML>
