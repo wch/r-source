@@ -136,6 +136,9 @@ DEPRECATED & DEFUNCT
 
     o	Capabilities "bzip2", "GNOME, "libz" and "PCRE" are deprecated.
 
+    o	The GNOME GUI on Unix-alikes is deprecated as part of R;
+	it will be available in another form as from R 2.1.0.
+
     o	The undocumented use of UseMethod() with no argument is now 
 	formally deprecated.
 
