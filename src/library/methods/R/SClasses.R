@@ -44,7 +44,7 @@ representation <-
 prototype <- function(...) {
     props <- list(...)
     names <- allNames(props)
-    data <- nchar(names) == ""
+    data <- nchar(names) == 0
     if(any(data)) {
         if(sum(data) > 1)
             stop("only one data object (unnamed argument to prototype) allowed")
@@ -76,11 +76,15 @@ setSClass <-
         prototype <- pp$prototype
         superClasses <- pp$superClasses
     }
-    extends <- list()
-    ## create the SClassExtension objects (will be simple, possibly dataPart, which is why
-    ## the slots are supplied explicitly--not from the class definition)
-    for(what in superClasses)
-        elNamed(extends, what) <- makeExtends(name, what, slots = properties)
+    extends <- list();
+    for(what in superClasses) {
+        whatClassDef <- getClass(what)
+        ## Create the SClassExtension objects (will be simple, possibly dataPart).
+        ## The slots are supplied explicitly, since `name' is currently an undefined class
+        elNamed(extends, what) <- makeExtends(name, what, slots = properties,
+                                              classDef2 = whatClassDef)
+    }
+    validity <- .makeValidityMethod(name, validity)
     if(is.na(virtual))
         virtual <- testVirtual(properties, superClasses, prototype)
     package <- getPackageName(where)
@@ -357,6 +361,7 @@ setValidity <-
     else {
       ClassDef <- getClassDef(Class)
   }
+    method <- .makeValidityMethod(Class, method)
     if(is.null(method) ||
       (is(method, "function") && length(formalArgs(method))==1))
       ClassDef@validity <- method
@@ -368,9 +373,10 @@ setValidity <-
   }
 
 resetClass <-
-    function(Class, ## TO DO: use ClassDef = getClassDef(Class),
+    function(Class, 
              resetSubclasses = TRUE) {
-       ##  Class <- getClassName(ClassDef)
+        if(is(Class, "classRepresentation"))
+            Class <- getClassName(Class)
         cname <- classMetaName(Class) ## TODO:  change to allow same name, different package
         def <- getFromClassMetaData(cname)
         if(!is.null(def)) {

@@ -23,6 +23,11 @@
     object@.Data <- value
     object
 }
+
+.dataPartReplace2 <- function(object, Class, value){
+    object@.Data <- as(value, THISCLASS, strict = FALSE)
+    object
+}
 .ErrorReplace <- function(object, Class, value)
     stop(paste("No replace method was defined for as(x, \"", Class,
                "\") <- value for class \"", class(object), "\"", sep=""))
@@ -42,7 +47,8 @@ makeExtends <- function(Class, to,
                         slots = getSlots(classDef1),
                         classDef1 = getClass(Class), classDef2 = getClass(to)) {
     simple <- is.null(coerce) && is.null(test) && is.null(replace) && (length(by)==0)
-    dataPart <- simple && identical(elNamed(slots, ".Data"), to)
+    dataPartClass <- elNamed(slots, ".Data")
+    dataPart <- simple && !is.null(dataPartClass) && extends(to, dataPartClass)
     if(is.null(coerce)) {
         coerce <- .simpleExtCoerce
         if(!isVirtualClass(classDef2))
@@ -52,8 +58,21 @@ makeExtends <- function(Class, to,
     if(is.null(test))
         test <- .simpleExtTest
     if(is.null(replace)) {
-        if(dataPart)
-            replace <- .dataPartReplace
+        if(dataPart) {
+            extn <- elNamed(classDef2@contains, dataPartClass)
+            if(is(extn, "SClassExtension"))
+                easy <- extn@simple
+            else
+                easy <- FALSE
+            if(easy)
+                replace <- .dataPartReplace
+            else {
+                replace <- .dataPartReplace2
+                bdy <- body(replace)
+                body(replace, envir = environment(replace)) <-
+                    substituteDirect(bdy, list(THISCLASS = dataPartClass))
+            }
+        }
         else if(simple)
             replace <- .simpleExtReplace
         else

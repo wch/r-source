@@ -18,7 +18,7 @@
 validObject(object, test)
 
 getValidity(ClassDef)
-setValidity(ClassDef, method)
+setValidity(ClassDef, method, where = 1 )
 }
 \arguments{
   \item{object}{ Any object, but not much will happen unless the
@@ -27,7 +27,7 @@ setValidity(ClassDef, method)
     function returns a vector of strings describing the problems.  If
     \code{test} is \code{FALSE} (the default) validity failure generates
     an error.}
-  \item{ClassDef}{The name of the class whose validity method is to be
+  \item{ClassDef}{The name or class definition of the class whose validity method is to be
     set.}
   \item{method}{A validity method;  that is, either \code{NULL} or a
     function of one argument (the \code{object}).  Like
@@ -35,6 +35,9 @@ setValidity(ClassDef, method)
     object is valid, and one or more descriptive strings if any problems
     are found.  Unlike \code{validObject}, it should never generate an
     error.
+  \item{where}{ The modified class definition will be stored in this
+  position on the search list.
+  }
 
     Note that validity methods do not have to check validity of any
     slots or superclasses:  the logic of \code{validObject} ensures
@@ -93,7 +96,8 @@ setValidity(ClassDef, method)
   ## Now we do something bad
   t1@x <- 1:20
   ## This should generate an error
-  try(validObject(t1))
+  \dontrun{try(validObject(t1))}
+ \testonly{stopifnot(is(try(validObject(t1)), "try-error"))}
 }
 
 \keyword{programming}

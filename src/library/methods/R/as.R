@@ -91,31 +91,16 @@ setAs <-
     else {
       args <- formalArgs(def)
       if(!is.na(match("strict", args))) args <- args[-match("strict", args)]
-      bdy <- body(def)
-      if(length(args) == 1) {
-          if(!identical(args, "from")) {
-              ll <- list(quote(from), as.name(args))
-              names(ll) <- c(args, "from")
-              bdy <- substituteDirect(bdy, ll)
-              message("Argument name in def changed to \"from\" instead of \"",
-                      args, "\"")
-          }
-      }
-      else if(length(args) == 2) {
-          if(!identical(args, c("from", "to"))) {
-              ll <- list(quote(from), quote(to), as.name(args[[1]]), as.name(args[[2]]))
-              names(ll) <- c(args, "from", "to")
-              bdy <- substituteDirect(bdy, ll)
-              message("Argument names in def changed to c(\"from\", \"to\") instead of ",
-                      deparse(args))
-          }
-      }
+      if(length(args) == 1)
+          def <- substituteFunctionArgs(def, "from")
+      else if(length(args) == 2)
+          def <- substituteFunctionArgs(def, c("from", "to"))
       else stop(paste("as method must have one or two arguments, plus optional `strict'; got (",
                       paste(formalArgs(def), collapse = ", "), ")", sep=""))
-      method <- as.list(function(from, to, strict = TRUE)NULL)
+      method <- as.list(coerce@.Data) # the function def'n, just to get arguments correct
       method$to <- to
       method <- as.function(method)
-      functionBody(method, envir = .GlobalEnv) <- bdy
+      body(method, envir = environment(def)) <- body(def)
       setMethod("coerce", c(from, to), method, where = where)
       if(!is.null(replace)) {
         args <- formalArgs(replace)

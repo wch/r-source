@@ -554,6 +554,7 @@ reconcilePropertiesAndPrototype <-
                   stop(paste("Conflicting definition of data part: .Data = \"",
                              elNamed(properties, ".Data"),"\", super class implies \"",
                              dataPartClass, "\"", sep=""))
+              pslots <- NULL
               if(is.null(prototype)) {
                   if(isVirtualClass(dataPartClass))
                       ## the equivalent of new("vector")
@@ -561,10 +562,16 @@ reconcilePropertiesAndPrototype <-
                   else
                       prototype <- new(dataPartClass)
               }
-              else if(!is(prototype, dataPartClass))
+              else {
+                  if(is(prototype, "classPrototypeDef"))
+                      pobject <- prototype@object
+                  else
+                      pobject <- prototype
+                  if(!is(pobject, dataPartClass))
                   stop(paste("Class of supplied prototype (\"",
-                             class(prototype), "\") conflicts with the class of ",
+                             class(pobject), "\") conflicts with the class of ",
                              " the data part (\"", dataPartClass, "\")",sep=""))
+              }
           }
           if(is.null(prototype)) { ## non-vector (may extend NULL)
               prototype <- StandardPrototype
@@ -594,10 +601,14 @@ reconcilePropertiesAndPrototype <-
                          cl, "\"", sep=""))
       }
       if(is.null(dataPartClass)) {
-          if(is.list(prototype))
-              prototype <- do.call("prototype", prototype)
-          if(is.null(prototype))
-              prototype <- StandardPrototype
+          if(is(prototype, "classPrototypeDef"))
+          {}
+          else {
+              if(is.list(prototype))
+               prototype <- do.call("prototype", prototype)
+              if(is.null(prototype))
+                  prototype <- StandardPrototype
+          }
       }
       else {
           dataPartDef <- getClass(dataPartClass)
@@ -605,7 +616,9 @@ reconcilePropertiesAndPrototype <-
              !isVirtualClass(dataPartDef)) ||
              length(dataPartDef@slots) > 0)
               stop(paste("\"", dataPartClass, "\" is not eligible to be the data part of another class (must be a basic class or a virtual class with no slots", sep=""))
-          if(is(prototype, dataPartClass)) {
+          if(is(prototype, "classPrototypeDef"))
+          {}
+          else if(is(prototype, dataPartClass)) {
               if(is(prototype, "list") && length(names(prototype)) > 0)
                   warning("prototype is a list with named elements (could be ambiguous):  better to use function prototype() to avoid trouble.")
           }
@@ -1064,7 +1077,7 @@ setDataPart <- function(object, value) {
             ## (e.g., simple test's).  But a composite of two non-simple extensions
             ## seems pretty weird.  So we'll wait for examples to show up.
             body(f, envir = environment(f)) <-
-                substitute(as(as(object, BY), TO),
+                substitute(as(as(from, BY), TO),
                            list(BY = by, TO = to))
             ff <- byExt@test
             body(ff, envir = environment(ff)) <-
@@ -1164,3 +1177,46 @@ newClassRepresentation <- function(...) {
 ## if the methods package version of class dropped the extra strings).
 .class1 <- function(x)
     class(x)[[1]]
+
+substituteFunctionArgs <- function(def, newArgs, args = formalArgs(def), silent = FALSE) {
+    if(!identical(args, newArgs)) {
+        n <- length(args)
+        if(n != length(newArgs))
+            stop(paste("Trying to change the argument list of a function with ",
+                       n, " arguments to have arguments (",
+                 paste(newArgs, collapse = ", "), ")", sep=""))
+        bdy <- body(def)
+        ## check for other uses of newArgs
+        checkFor <- newArgs[is.na(match(newArgs, args))]
+        locals <- all.vars(bdy)
+        if(length(checkFor) > 0 && any(!is.na(match(checkFor, locals))))
+            stop(paste("Get rid of variables in definition (",
+                       paste(checkFor[!is.na(match(checkFor, locals))], collapse = ", "),
+                       "); they conflict with the needed change to argument names (",
+                       paste(newArgs, collapse = ", "), ")", sep=""))
+        ll <- vector("list", 2*n)
+        for(i in seq(length = n)) {
+            ll[[i]] <- as.name(args[[i]])
+            ll[[n+i]] <- as.name(newArgs[[i]])
+        }
+        names(ll) <- c(args, newArgs)
+        body(def, envir = environment(def)) <- substituteDirect(bdy, ll)
+        if(!silent)
+            message("Arguments in definition changed from (",
+                    paste(args, collapse = ", "), ") to (",
+                    paste(newArgs, collapse = ", "), ")")
+    }
+    def
+}    
+
+.makeValidityMethod <- function(Class, validity) {
+    if(is.null(validity)) {
+    }
+    else {
+        if(!is(validity, "function"))
+            stop(paste("A validity method must be a function of one argument, got an object of class \"",
+                       class(validity), "\"", sep=""))
+        validity <- substituteFunctionArgs(validity, "object")
+    }
+    validity
+}
