@@ -2339,6 +2339,7 @@ static BBOX RenderRadical(SEXP expr, int draw)
     SetPrimeStyle(style);
     orderBBox = CombineBBoxes(orderBBox, RenderElement(body, draw));
     orderBBox = CombineBBoxes(orderBBox, RenderGap(2 * radTrail, draw));
+    orderBBox = EnlargeBBox(orderBBox, radGap, 0, 0);/* << fixes PR#1101 */
     SetStyle(style);
     return orderBBox;
 }
@@ -2967,7 +2968,7 @@ void GMMathText(SEXP str, int side, double line, int outer,
     }
     /* Note: I changed dd->gp.yLineBias to 0.3 here. */
     /* Purely visual tuning. RI */
-    /* Note: I removed the 0.3 fiddle here because mathematical 
+    /* Note: I removed the 0.3 fiddle here because mathematical
      * annotation stuff can do "exact" centering.
      * i.e., 0.3 fiddle is effectively replaced by yadj=0.5
      */

@@ -238,7 +238,7 @@ NEW FEATURES
     o	Printing factors with both level "NA" and missing values
 	uses `<NA>' for the missing values to distinguish them.
 
-    o	New Fortran entry points rwarn() and rexit() for warnings and 
+    o	New Fortran entry points rwarn() and rexit() for warnings and
 	error exits from compiled Fortran code.
 
 
@@ -291,10 +291,14 @@ BUG FIXES
 
     o	plot(ts(0:99), log = "y") now works
 
-    o   method "gnudoit" of bug.report() was incorrectly documented as
-        "gnuclient" (PR#1108)
+    o	method "gnudoit" of bug.report() was incorrectly documented as
+	"gnuclient" (PR#1108)
 
-    o   saving with ascii=TRUE mangled backslashes (PR#1115)
+    o	saving with ascii=TRUE mangled backslashes (PR#1115)
+
+    o	frac(,) {and others} now adds a gap appropriately (PR#1101)
+
+    o	logLik.lm() now uses the correct "df" (nlme legacy code).
 
 
 	**************************************************
