@@ -24,11 +24,26 @@ setOldClass(Classes)
 \seealso{  \code{\link{setClass}}, \code{\link{setMethod}}  }
 
 \examples{
-  setOldClass(c("pframe", "data.frame"))
+  setOldClass(c("mlm", "lm"))
 
-  setMethod("show", "data.frame", function(object)print.data.frame(object))
+  setGeneric("dfResidual", function(model)standardGeneric("dfResidual"))
 
-  ## show(x) will now dispatch on this method for an object of class "pframe"
+  setMethod("dfResidual", "lm", function(model)model$df.residual)
+ 
+  ## dfResidual will work on mlm objects as well as lm objects
+
+\testonly{
+
+  myData <- data.frame(time = 1:10, y = cbind((1:10)^.5, (1:10)^1.5))
+
+  myLm <- lm(y ~ time, myData)
+
+  stopifnot(identical(dfResidual(mylm), mylm$df.residual))
+
+  rm(myData, myLm)
+  removeGeneric("dfResidual")
+  removeClass("lm")
+  removeClass("mlm")
 }
 \keyword{ programming }
 \keyword{ methods }
