@@ -70,7 +70,10 @@ none
 
 Directory:  Documentation
 
-none
+* PR# 988 *
+Subject: input for R-intro
+From: "Paul E. Johnson" <pauljohn@ku.edu>
+Date: Mon, 18 Jun 2001 13:57:10 -0500
 
 Directory:  Graphics
 
@@ -201,6 +204,10 @@ Date: Mon, 25 Sep 2000 10:17:15 +0200
 
 Directory:  Low-level
 
+* PR# 989 *
+Subject: "[.data.frame" allows un-named 3rd subscript
+From: "Charles C. Berry" <cberry@tajo.ucsd.edu>
+Date: Mon, 18 Jun 2001 13:13:46 -0700 (PDT)
 * PR# 956 *
 Subject: unbelievable parser bug
 From: Martin Maechler <maechler@stat.math.ethz.ch>
@@ -297,31 +304,4 @@ Date: Tue, 10 Apr 2001 17:50:44 +0200 (MET DST)
 
 Directory:  incoming
 
-* PR# 989 *
-Subject: "[.data.frame" allows un-named 3rd subscript
-From: "Charles C. Berry" <cberry@tajo.ucsd.edu>
-Date: Mon, 18 Jun 2001 13:13:46 -0700 (PDT)
-* PR# 983 *
-Subject: laser supplies
-From: <jwayne45@care2.com>
-Date: Sun, 17 Jun 2001 19:10:13
-* PR# 985 *
-Subject: Macintosh device not implemented in dev.copy2eps
-From: papritz@ito.umnw.ethz.ch
-Date: Mon, 18 Jun 2001 07:07:07 +0200 (MET DST)
-* PR# 984 *
-Subject: typos in doc for write.table
-From: eglen@pcg.wustl.edu
-Date: Mon, 18 Jun 2001 02:26:03 +0200 (MET DST)
-* PR# 988 *
-Subject: input for R-intro
-From: "Paul E. Johnson" <pauljohn@ku.edu>
-Date: Mon, 18 Jun 2001 13:57:10 -0500
-* PR# 987 *
-Subject: 1.3.0 .RData
-From: Paul Gilbert <pgilbert@bank-banque-canada.ca>
-Date: Mon, 18 Jun 2001 13:17:05 -0400
-* PR# 986 *
-Subject: approxfun(*, ties=) returning "random" result
-From: Martin Maechler <maechler@stat.math.ethz.ch>
-Date: Mon, 18 Jun 2001 12:35:37 +0200
+none
