@@ -1,6 +1,6 @@
 
 R : Copyright 2000, The R Development Core Team
-Version 1.1.0 Under development (unstable) (June 6, 2000)
+Version 1.2.0 Under development (unstable) (2000-08-25)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -140,6 +140,32 @@ Warning messages:
 3: NaNs produced in: pgamma(q, shape, scale, lower.tail, log.p) 
 > pgamma(Inf,1,xMax) == 1 && pgamma(xMax,1,Inf) == 0
 [1] TRUE
+> 
+> ##--- Beta (need more):
+> 
+> ## big a & b (PR #643)
+> summary(a <- rlnorm(20, 5.5))
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+  27.65  122.90  217.40  425.70  405.00 2017.00 
+> summary(b <- rlnorm(20, 6.5))
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+  102.5   298.7   543.5   880.6   850.4  3144.0 
+> pab <- expand.grid(seq(0,1,by=.1), a, b)
+> p <- pab[,1]; a <- pab[,2]; b <- pab[,3]
+> all.equal(dbeta(p,a,b), exp(pab <- dbeta(p,a,b, log = TRUE)), tol = 1e-11)
+[1] TRUE
+> sample(pab, 50)
+ [1]          -Inf  -130.5211148 -1156.3350120     2.5609305  -167.6013444
+ [6]          -Inf          -Inf   -22.3322711 -2669.6168481   -12.1267476
+[11]          -Inf          -Inf    -1.2433125 -2056.3157102          -Inf
+[16]   -72.8824245          -Inf   -38.4107147     2.4819954   -89.2725781
+[21]  -133.6280003     1.9256240  -354.6259852    -6.7038414   -71.6237059
+[26]  -383.7528143   -38.5976396          -Inf  -416.7312451 -1295.2560781
+[31]   -20.2485404  -414.3568613   -32.5299950 -1041.8994173   -31.1549695
+[36]  -267.0701042     2.5164276   -30.2187014    -0.6049374 -1275.5518021
+[41]  -909.6115927     1.1920417  -751.4409130 -1487.3397345  -247.6706732
+[46]     2.3257866   -84.9386146          -Inf  -628.0888136  -122.1900394
+> 
 > 
 > ##--- Normal (& Lognormal) :
 > 
@@ -653,5 +679,5 @@ Warning messages:
 [1] TRUE
 > 
 > cat("Time elapsed: ", proc.time() - .ptime,"\n")
-Time elapsed:  10.17 0.15 10.37 0 0 
+Time elapsed:  8.35 0.17 8.53 0 0 
 > 

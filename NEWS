@@ -164,6 +164,8 @@ BUG FIXES
     o	[internal] .C("strsignif",*) doesn't use fixed size strings anymore
 	(possible overflow).
 
+    o	dbeta(x, a,b) was giving NaN and Inf for large a and b.
+
 
 	**************************************************
 	*						 *

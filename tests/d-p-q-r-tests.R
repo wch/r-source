@@ -100,6 +100,17 @@ pgamma(1,Inf,Inf) == 0
 all(is.nan(c(pgamma(Inf,1,Inf), pgamma(Inf,Inf,1), pgamma(Inf,Inf,Inf))))
 pgamma(Inf,1,xMax) == 1 && pgamma(xMax,1,Inf) == 0
 
+##--- Beta (need more):
+
+## big a & b (PR #643)
+summary(a <- rlnorm(20, 5.5))
+summary(b <- rlnorm(20, 6.5))
+pab <- expand.grid(seq(0,1,by=.1), a, b)
+p <- pab[,1]; a <- pab[,2]; b <- pab[,3]
+all.equal(dbeta(p,a,b), exp(pab <- dbeta(p,a,b, log = TRUE)), tol = 1e-11)
+sample(pab, 50)
+
+
 ##--- Normal (& Lognormal) :
 
 ## 3 Test data from Wichura (1988) :
