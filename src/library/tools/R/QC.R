@@ -2305,6 +2305,101 @@ function(x, ...)
     invisible(x)
 }
 
+### * .checkPackageDepends
+
+.checkPackageDepends <-
+function(dir) {
+    
+    if(!fileTest("-d", dir))
+        stop(paste("directory", sQuote(dir), "does not exist"))
+    dir <- filePathAsAbsolute(dir)
+    
+    ## We definitely need a valid DESCRIPTION file.
+    db <- try(read.dcf(file.path(dir, "DESCRIPTION"))[1, ],
+              silent = TRUE)
+    if(inherits(db, "try-error"))
+        stop(paste("package directory", sQuote(dir),
+                   "has no valid DESCRIPTION file"))
+
+    packageName <- basename(dir)
+    ## (Should really use db["Package"], but then we need to check
+    ## whether this is really there ...)
+    if("Depends" %in% names(db)) {
+        depends <- unlist(strsplit(db["Depends"], ","))
+        depends <-
+            sub("^[[:space:]]*([[:alnum:].]+).*$", "\\1", depends)
+        depends <- depends[depends != "R"]
+    }
+    else
+        depends <- character()
+    if("Suggests" %in% names(db)) {
+        suggests <- unlist(strsplit(db["Suggests"], ","))
+        suggests <-
+            sub("^[[:space:]]*([[:alnum:].]+).*$", "\\1", suggests)
+    }
+    else
+        suggests <- character()
+
+    badDepends <- list()
+
+    if(installed) {
+        ## Are all packages listed in Depends/Suggests installed?
+        reqs <- unique(c(depends, suggests))
+        reqs <- reqs[!reqs %in%
+                     utils::installed.packages()[ , "Package"]]
+        if(length(reqs))
+            badDepends$requiredButNotInstalled <- reqs
+    }
+
+    ## Are all vignette dependencies at least suggested or equal to
+    ## the package name?
+    vignetteDir <- file.path(dir, "inst", "doc")
+    if(fileTest("-d", vignetteDir)
+       && length(listFilesWithType(vignetteDir), "vignette")) {
+        reqs <- .buildVignetteIndex(dir)$Depends
+        reqs <- reqs[!reqs %in% c(depends, suggests, packageName)]
+        if(length(reqs))
+            badDepends$missingVignetteDepends <- reqs
+    }
+    
+    ## Are all namespace dependencies listed as package dependencies?
+    if(fileTest("-f", file.path(dir, "NAMESPACE"))) {
+        reqs <- .getNamespacePackageDepends(dir)
+        ## <FIXME>
+        ## Not clear whether we want to require *all* namespace package
+        ## dependencies listed in DESCRIPTION, or e.g. just the ones on
+        ## non-base packages.  Do the latter for time being ...
+        basePackageNames <-
+            utils::installed.packages(priority = "base")[, "Package"]
+        reqs <- reqs[!reqs %in% c(depends, basePackageNames)]
+        ## </FIXME>
+        if(length(reqs))
+            badDepends$missingNamespaceDepends <- reqs
+    }
+
+    class(badDepends) <- "checkPackageDepends"
+    badDepends
+}
+
+print.checkPackageDepends <- function(x, ...) {
+    if(length(bad <- x$requiredButNotInstalled)) {
+        writeLines("Packages required but not available:")
+        .prettyPrint(bad)
+        writeLines("")
+    }
+    if(length(bad <- x$missingVignetteDepends)) {
+        writeLines("Vignette dependencies not required:")
+        .prettyPrint(bad)
+        writeLines("")
+    }
+    if(length(bad <- x$missingNamespaceDepends)) {
+        writeLines("Namespace dependencies not required:")
+        .prettyPrint(bad)
+        writeLines("")
+    }
+    invisible(x)
+}
+
 ### * as.alist.call
 
 as.alist.call <-
