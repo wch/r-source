@@ -75,7 +75,10 @@ BUG FIXES
     o	file.copy() ignored the overwrite argument (PR#3529)
 
     o	The length of a string specification of lty is now checked: it
-	must be even.
+
+    o	Rd conversion was limiting a file to 1000 pairs of braces,
+	without any warning.  Now the limit is 10000, with a warning.
+	(PR#3400)
 
 
 
