@@ -52,7 +52,7 @@ Sys.time() - z                # just over 3600 seconds.
 ISOdate(2001, 4, 26) - ISOdate(2001, 2, 26)
 
 as.difftime(c("0:3:20", "11:23:15"))
-as.difftime(c("3:20", "23:15", "2:"), format= "%H:%M")# 3rd gives NA
+as.difftime(c("3:20", "23:15", "2:"), format= "\%H:\%M")# 3rd gives NA
 }
 \keyword{utilities}
 \keyword{chron}
