@@ -713,20 +713,33 @@ SEXP do_memsize(SEXP call, SEXP op, SEXP args, SEXP rho)
     int maxmem;
     
     checkArity(op, args);
-    maxmem = asLogical(CAR(args));
-    PROTECT(ans = allocVector(INTSXP, 1));
+    if(isLogical(CAR(args))) {
+	maxmem = asLogical(CAR(args));
+	PROTECT(ans = allocVector(INTSXP, 1));
 #ifdef LEA_MALLOC
-    if(maxmem == NA_LOGICAL) 
-	INTEGER(ans)[0] = R_max_memory;
-    else if(maxmem)
-	INTEGER(ans)[0] = max_total_mem;
-    else
-	INTEGER(ans)[0] = mallinfo().uordblks;
+	if(maxmem == NA_LOGICAL) 
+	    INTEGER(ans)[0] = R_max_memory;
+	else if(maxmem)
+	    INTEGER(ans)[0] = max_total_mem;
+	else
+	    INTEGER(ans)[0] = mallinfo().uordblks;
 #else
-    INTEGER(ans)[0] = NA_INTEGER;
+	INTEGER(ans)[0] = NA_INTEGER;
 #endif
-    UNPROTECT(1);
-    return ans;
+	UNPROTECT(1);
+	return ans;
+    } else if(isReal(CAR(args))) {
+	unsigned int newmax;
+	double mem = asReal(CAR(args));
+	if (!R_FINITE(mem))
+	    errorcall(call, "incorrect argument");
+	newmax = mem * 1048576.0;
+	if (newmax < R_max_memory)
+	    errorcall(call, "cannot decrease memory limit");
+	R_max_memory = newmax;
+    } else
+	errorcall(call, "incorrect argument");
+    return R_NilValue;
 }
 
 SEXP do_dllversion(SEXP call, SEXP op, SEXP args, SEXP rho)
