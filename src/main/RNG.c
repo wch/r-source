@@ -29,7 +29,7 @@
 #define RNG_DEFAULT MARSAGLIA_MULTICARRY
 
 static RNGtype RNG_kind = RNG_DEFAULT;
-extern N01type N01_kind; /* from .../nmath/snorm.c */
+extern N01type N01_kind; /* from ../nmath/snorm.c */
 
 #if (SIZEOF_LONG == 4)
 typedef unsigned long Int32;
@@ -80,36 +80,36 @@ static void RNG_Init_KT(Int32);
 double unif_rand(void)
 {
     double value;
-    
+
     switch(RNG_kind) {
-	
+
     case WICHMANN_HILL:
 	I1 = I1 * 171 % 30269;
 	I2 = I2 * 172 % 30307;
 	I3 = I3 * 170 % 30323;
 	value = I1 / 30269.0 + I2 / 30307.0 + I3 / 30323.0;
 	return value - (int) value;/* in [0,1) */
-	
+
     case MARSAGLIA_MULTICARRY:/* 0177777(octal) == 65535(decimal)*/
 	I1= 36969*(I1 & 0177777) + (I1>>16);
 	I2= 18000*(I2 & 0177777) + (I2>>16);
 	return ((I1 << 16)^(I2 & 0177777)) * i2_32m1; /* in [0,1) */
-	
+
     case SUPER_DUPER:
-	/* This is Reeds et al (1984) implementation; 
+	/* This is Reeds et al (1984) implementation;
 	 * modified using __unsigned__	seeds instead of signed ones
 	 */
 	I1 ^= ((I1 >> 15) & 0377777); /* Tausworthe */
 	I1 ^= I1 << 17;
 	I2 *= 69069;		/* Congruential */
 	return (I1^I2) * i2_32m1; /* in [0,1) */
-	
+
     case MERSENNE_TWISTER:
 	return MT_genrand();
 
     case KNUTH_TAOCP:
 	return KT_next() * KT;
-	
+
     default:/* can never happen (enum type)*/ return -1.;
     }
 }
@@ -117,17 +117,17 @@ double unif_rand(void)
 static void FixupSeeds(RNGtype kind, int initial)
 {
 /* Depending on RNG, set 0 values to non-0, etc. */
-    
-    int j, notallzero = 0; 
+
+    int j, notallzero = 0;
 
     /* Set 0 to 1 :
        for(j = 0; j <= RNG_Table[kind].n_seed - 1; j++)
        if(!RNG_Table[kind].i_seed[j]) RNG_Table[kind].i_seed[j]++; */
-    
+
     switch(kind) {
     case WICHMANN_HILL:
 	I1 = I1 % 30269; I2 = I2 % 30307; I3 = I3 % 30323;
-	
+
 	/* map values equal to 0 mod modulus to 1. */
 	if(I1 == 0) I1 = 1;
 	if(I2 == 0) I2 = 1;
@@ -139,8 +139,8 @@ static void FixupSeeds(RNGtype kind, int initial)
 	/* I2 = Congruential: must be ODD */
 	I2 |= 1;
 	break;
-	
-    case MARSAGLIA_MULTICARRY: 
+
+    case MARSAGLIA_MULTICARRY:
 	if(I1 == 0) I1 = 1;
 	if(I2 == 0) I2 = 1;
 	break;
@@ -165,7 +165,7 @@ static void FixupSeeds(RNGtype kind, int initial)
 static void RNG_Init(RNGtype kind, Int32 seed)
 {
     int j;
-    
+
     /* Initial scrambling */
     for(j = 0; j < 50; j++)
 	seed = (69069 * seed + 1) & 0xffffffff;
@@ -183,7 +183,7 @@ static void RNG_Init(RNGtype kind, Int32 seed)
 static void Randomize(RNGtype kind)
 {
 /* Only called by  GetRNGstate() when there's no .Random.seed */
-    
+
     RNG_Init(kind, (Int32) time(NULL));
 }
 
@@ -209,7 +209,7 @@ void GetRNGstate()
 	    error(".Random.seed[0] is not a valid integer");
 	RNG_kind = tmp % 100;
 	N01_kind = tmp / 100;
-	if (RNG_kind > KNUTH_TAOCP || RNG_kind < 0) RNG_kind = RNG_DEFAULT; 
+	if (RNG_kind > KNUTH_TAOCP || RNG_kind < 0) RNG_kind = RNG_DEFAULT;
 	len_seed = RNG_Table[RNG_kind].n_seed;
 	if(LENGTH(seeds) > 1 && LENGTH(seeds) < len_seed + 1)
 	    error(".Random.seed has wrong length");
@@ -341,37 +341,37 @@ void seed_out(long *ignored)
 /* ===================  Mersenne Twister ========================== */
 /* From http://www.math.keio.ac.jp/~matumoto/emt.html */
 
-/* A C-program for MT19937: Real number version([0,1)-interval) 
-   (1999/10/28)                                                 
-     genrand() generates one pseudorandom real number (double)  
-   which is uniformly distributed on [0,1)-interval, for each   
-   call. sgenrand(seed) sets initial values to the working area 
-   of 624 words. Before genrand(), sgenrand(seed) must be       
-   called once. (seed is any 32-bit integer.)                   
-   Integer generator is obtained by modifying two lines.        
-     Coded by Takuji Nishimura, considering the suggestions by  
-   Topher Cooper and Marc Rieffel in July-Aug. 1997.            
+/* A C-program for MT19937: Real number version([0,1)-interval)
+   (1999/10/28)
+     genrand() generates one pseudorandom real number (double)
+   which is uniformly distributed on [0,1)-interval, for each
+   call. sgenrand(seed) sets initial values to the working area
+   of 624 words. Before genrand(), sgenrand(seed) must be
+   called once. (seed is any 32-bit integer.)
+   Integer generator is obtained by modifying two lines.
+     Coded by Takuji Nishimura, considering the suggestions by
+   Topher Cooper and Marc Rieffel in July-Aug. 1997.
 
-   Copyright (C) 1997, 1999 Makoto Matsumoto and Takuji Nishimura. 
-   When you use this, send an email to: matumoto@math.keio.ac.jp   
-   with an appropriate reference to your work.                     
+   Copyright (C) 1997, 1999 Makoto Matsumoto and Takuji Nishimura.
+   When you use this, send an email to: matumoto@math.keio.ac.jp
+   with an appropriate reference to your work.
 
-   REFERENCE                                                       
-   M. Matsumoto and T. Nishimura,                                  
-   "Mersenne Twister: A 623-Dimensionally Equidistributed Uniform  
-   Pseudo-Random Number Generator",                                
-   ACM Transactions on Modeling and Computer Simulation,           
-   Vol. 8, No. 1, January 1998, pp 3--30.                          
+   REFERENCE
+   M. Matsumoto and T. Nishimura,
+   "Mersenne Twister: A 623-Dimensionally Equidistributed Uniform
+   Pseudo-Random Number Generator",
+   ACM Transactions on Modeling and Computer Simulation,
+   Vol. 8, No. 1, January 1998, pp 3--30.
 */
 
-/* Period parameters */  
+/* Period parameters */
 #define N 624
 #define M 397
 #define MATRIX_A 0x9908b0df   /* constant vector a */
 #define UPPER_MASK 0x80000000 /* most significant w-r bits */
 #define LOWER_MASK 0x7fffffff /* least significant r bits */
 
-/* Tempering parameters */   
+/* Tempering parameters */
 #define TEMPERING_MASK_B 0x9d2c5680
 #define TEMPERING_MASK_C 0xefc60000
 #define TEMPERING_SHIFT_U(y)  (y >> 11)
@@ -397,13 +397,13 @@ MT_sgenrand(Int32 seed)
     mti = N;
 }
 
-/* Initialization by "sgenrand()" is an example. Theoretically,      
-   there are 2^19937-1 possible states as an intial state.           
-   Essential bits in "seed_array[]" is following 19937 bits:         
-    (seed_array[0]&UPPER_MASK), seed_array[1], ..., seed_array[N-1]. 
-   (seed_array[0]&LOWER_MASK) is discarded.                           
-   Theoretically,                                                    
-    (seed_array[0]&UPPER_MASK), seed_array[1], ..., seed_array[N-1]  
+/* Initialization by "sgenrand()" is an example. Theoretically,
+   there are 2^19937-1 possible states as an intial state.
+   Essential bits in "seed_array[]" is following 19937 bits:
+    (seed_array[0]&UPPER_MASK), seed_array[1], ..., seed_array[N-1].
+   (seed_array[0]&LOWER_MASK) is discarded.
+   Theoretically,
+    (seed_array[0]&UPPER_MASK), seed_array[1], ..., seed_array[N-1]
    can take any values except all zeros.                             */
 
 static double MT_genrand()
@@ -413,7 +413,7 @@ static double MT_genrand()
     /* mag01[x] = x * MATRIX_A  for x=0,1 */
 
     mti = dummy[0];
-    
+
     if (mti >= N) { /* generate N words at one time */
         int kk;
 
@@ -433,14 +433,14 @@ static double MT_genrand()
 
         mti = 0;
     }
-  
+
     y = mt[mti++];
     y ^= TEMPERING_SHIFT_U(y);
     y ^= TEMPERING_SHIFT_S(y) & TEMPERING_MASK_B;
     y ^= TEMPERING_SHIFT_T(y) & TEMPERING_MASK_C;
     y ^= TEMPERING_SHIFT_L(y);
     dummy[0] = mti;
-    
+
     return ( (double)y * 2.3283064365386963e-10 ); /* reals: [0,1)-interval */
 }
 
@@ -484,7 +484,7 @@ void ran_array(aa,n)    /* put n new random numbers in aa */
   long *aa;   /* destination */
   int n;      /* array length (must be at least KK) */
 {
-  register int i,j;  
+  register int i,j;
   for (j=0;j<KK;j++) aa[j]=ran_x[j];
   for (;j<n;j++) aa[j]=mod_diff(aa[j-KK],aa[j-LL]);
   for (i=0;i<LL;i++,j++) ran_x[i]=mod_diff(aa[j-KK],aa[j-LL]);
