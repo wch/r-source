@@ -4,7 +4,7 @@
 
 # @configure_input@
 
-revision='$Revision: 1.142 $'
+revision='$Revision: 1.143 $'
 version=`set - ${revision}; echo ${2}`
 version="R add-on package installer ${version}
 
@@ -84,13 +84,16 @@ else
   MKDIR_P="${R_HOME}/bin/mkinstalldirs"
 fi
 
+warning () { echo "WARNING: $*" >&2 ; }
+error ()   { echo "ERROR: $*" >&2 ; }
+
 startdir=`${GETWD}`
 tmpdir="${TMPDIR-/tmp}/R.INSTALL.$$"
 if (test -d "${tmpdir}" && test -w "${tmpdir}") || \
     ${MKDIR_P} "${tmpdir}" 2> /dev/null; then
   tmpdir=`cd "${tmpdir}" && ${GETWD}`
 else
-  echo "ERROR: cannot write to or create temporary directory '${tmpdir}'"
+  error "cannot write to or create temporary directory '${tmpdir}'"
   exit 1
 fi
 
@@ -98,14 +101,6 @@ fi
 ## <NOTE>
 ## Unix only ... but Windows has INSTALL as a Perl script.
 R_EXE="${R_HOME}/bin/R"
-## </NOTE>
-
-## <NOTE>
-## It might make sense to abstract error and warnings into functions
-## like
-##   warning () { echo "WARNING: $*" }
-##   error ()   { echo "ERROR: $*" }
-## and maybe even redirect this to stderr on Unix.
 ## </NOTE>
 
 ## <NOTE>
@@ -236,13 +231,13 @@ while test -n "${1}"; do
 	if test -f "${tmpdir}/${pkgname}/DESCRIPTION"; then
 	  get_packages "${tmpdir}/${pkgname}"
 	else
-	  echo "ERROR: cannot extract package from '${1}'"
+	  error "cannot extract package from '${1}'"
 	  exit 1
 	fi    
       elif test -f "${1}/DESCRIPTION"; then
         get_packages "${1}"
       else
-	echo "WARNING: invalid package '${1}'"
+	warning "invalid package '${1}'"
       fi
       ;;
   esac
@@ -250,7 +245,7 @@ while test -n "${1}"; do
 done
 
 if test -z "${pkgs}"; then
-  echo "ERROR: no packages specified"
+  error "no packages specified"
   exit 1
 fi
 
@@ -258,19 +253,19 @@ if (test -d "${lib}" && test -w "${lib}") || \
     ${MKDIR_P} "${lib}" 2> /dev/null; then
   lib=`cd "${lib}" && ${GETWD}`
 else
-  echo "ERROR: cannot write to or create directory '${lib}'"
+  error "cannot write to or create directory '${lib}'"
   exit 2
 fi
 lockdir="${lib}/00LOCK"
 if test -d "${lockdir}" || test -f "${lockdir}"; then
-  echo "ERROR: failed to lock directory '${lib}' for modifying"
-  echo "Try removing '${lockdir}'"
+  error "failed to lock directory '${lib}' for modifying"
+  echo "Try removing '${lockdir}'" >&2
   exit 3
 else
   ${MKDIR_P} "${lockdir}"
   if test ${?} -ne 0; then
     ## This should not really happen ...
-    echo "ERROR: failed to lock directory '${lib}' for modifying"
+    error "failed to lock directory '${lib}' for modifying"
     exit 3
   fi
 fi
@@ -327,7 +322,7 @@ do_install_binary () {
     (${TAR} cf - . | (cd "${R_PACKAGE_DIR}" && ${TAR} xf -))
 
   if test ${?} -ne 0; then
-    echo "ERROR: installing binary package failed"
+    error "installing binary package failed"
     do_exit_on_error
   fi
 }
@@ -375,7 +370,7 @@ do_install_source () {
   if ${use_configure} && test -x ./configure ; then
     eval ${configure_vars} ./configure ${configure_args}
     if test ${?} -ne 0; then
-      echo "ERROR: configuration failed for package '${pkg_name}'"
+      error "configuration failed for package '${pkg_name}'"
       do_exit_on_error
     fi
   fi
@@ -395,7 +390,7 @@ do_install_source () {
   echo ".installPackageDescription(\".\", \"${R_PACKAGE_DIR}\")" | \
     R_DEFAULT_PACKAGES=tools ${R_EXE} --vanilla >/dev/null
   if test ${?} -ne 0; then
-    echo "ERROR: installing package DESCRIPTION failed"
+    error "installing package DESCRIPTION failed"
     do_exit_on_error
   fi
 
@@ -428,12 +423,12 @@ do_install_source () {
 	  rm -f *.o *@SHLIB_EXT@
 	fi
       else
-	echo "WARNING: no source files found"
+	warning "no source files found"
       fi
       cd ..
     fi
     if ${error}; then
-      echo "ERROR: compilation failed for package '${pkg_name}'"
+      error "compilation failed for package '${pkg_name}'"
       do_exit_on_error
     fi
     chmod 755 "${R_PACKAGE_DIR}/libs/"*
@@ -447,7 +442,7 @@ do_install_source () {
       echo ".installPackageCodeFiles(\".\", \"${R_PACKAGE_DIR}\")" | \
         R_DEFAULT_PACKAGES=tools ${R_EXE} --vanilla >/dev/null
       if test ${?} -ne 0; then
-        echo "ERROR: unable to collate files for package '${pkg_name}'"
+        error "unable to collate files for package '${pkg_name}'"
         do_exit_on_error
       fi
     if ${fake}; then
@@ -541,7 +536,7 @@ do_install_source () {
       echo "invisible(.libPaths(c(\"${lib}\", .libPaths())))"; \
       ${code_cmd}) | R_DEFAULT_PACKAGES= ${R_SAVE_EXE} ${save_args}
     if test ${?} -ne 0; then
-      echo "ERROR: execution of package source for '${pkg_name}' failed"
+      error "execution of package source for '${pkg_name}' failed"
       do_exit_on_error
     fi
     test -f NAMESPACE || mv .RData "${rda_file}"
@@ -578,7 +573,7 @@ do_install_source () {
 	  ${build_help_opts} \
 	  "${pkg_dir}" "${lib}" "${R_PACKAGE_DIR}" "${pkg_name}"
 	if test ${?} -ne 0; then
-	  echo "ERROR: building help failed for package '${pkg_name}'"
+	  error "building help failed for package '${pkg_name}'"
 	  do_exit_on_error
         fi
       fi
@@ -605,7 +600,7 @@ do_install_source () {
   echo ".installPackageIndices(\".\", \"${R_PACKAGE_DIR}\")" | \
     R_DEFAULT_PACKAGES=tools ${R_EXE} --vanilla >/dev/null
   if test ${?} -ne 0; then
-    echo "ERROR: installing package indices failed"
+    error "installing package indices failed"
     do_exit_on_error
   fi
 
@@ -637,7 +632,7 @@ do_install () {
   ## (The basename of ${pkg_dir} might be different from ${pkg_name},
   ## e.g., when building Debian packages from R packages.)
   if test -z "${pkg_name}"; then
-    echo "ERROR: no 'Package' field in 'DESCRIPTION'"
+    error "no 'Package' field in 'DESCRIPTION'"
     do_exit_on_error no
   fi
 
@@ -646,7 +641,7 @@ do_install () {
   if ${with_package_versions}; then
     version=`get_dcf_field Version DESCRIPTION`
     if test -z "${version}"; then
-      echo "ERROR: no 'Version' field in 'DESCRIPTION'"
+      error "no 'Version' field in 'DESCRIPTION'"
       do_exit_on_error no
     fi
     R_PACKAGE_NAME="${pkg_name}_${version}"
@@ -671,12 +666,12 @@ do_install () {
          && test -n "${dep_version}"; then
       dep_ok=`expr ${R_VERSION} ${dep_operator} ${dep_version} `
       if test ${dep_ok} -eq 0; then
-        echo "ERROR: This R is version ${R_VERSION}"
-        echo "       package '${pkg_name}' depends on R ${dep_version}"
+        error "This R is version ${R_VERSION}"
+        echo "       package '${pkg_name}' depends on R ${dep_version}" >&2
         do_exit_on_error
       fi
     else
-      echo "WARNING: malformed 'Depends' field in 'DESCRIPTION'"
+      warning "malformed 'Depends' field in 'DESCRIPTION'"
     fi
   fi
 
@@ -684,7 +679,7 @@ do_install () {
 
   ## Make sure we do not attempt installing to srcdir.
   if test "`cd \"${R_PACKAGE_DIR}\" && ${GETWD}`" = "`${GETWD}`"; then
-    echo "ERROR: cannot install to srcdir"
+    error "cannot install to srcdir"
     do_exit_on_error no
   fi  
 
