@@ -653,6 +653,10 @@ Date: Thu, 10 Jun 2004 12:37:06 +0100 (BST)
 Subject: out-of-date information in R for Mac OS X FAQ
 From: d.firth@warwick.ac.uk
 Date: Tue, 15 Jun 2004 12:50:38 +0200 (CEST)
+* PR# 7000 *
+Subject: Re: [R] Html help does not work in Mac OSX 10.3.4
+From: Ulises Mora Alvarez <umalvarez@fata.unam.mx>
+Date: Mon, 21 Jun 2004 19:34:45 -0500 (CDT)
 
 Directory:  Misc
 
@@ -902,3 +906,23 @@ Date: Tue, 20 Apr 2004 14:15:05 -0400
 Subject: Failure to preserve package attribute when coercing S4 objects
 From: "Swinton, Jonathan" <Jonathan.Swinton@astrazeneca.com>
 Date: Fri, 21 May 2004 15:04:10 +0100
+* PR# 7005 *
+Subject: X11 device, plot(..., xlab=expression(...)): missing parentheses
+From: humbertc@univ-mlv.fr
+Date: Tue, 22 Jun 2004 13:16:55 +0200 (CEST)
+* PR# 7006 *
+Subject: 
+From: "Sallie Foster" <cartelalp@attbi.com>
+Date: Tue, 22 Jun 2004 10:45:55 -0500
+* PR# 7007 *
+Subject: lme4 fails to install on R-1.9/FreeBSD-5.2
+From: wb@arb-phys.uni-dortmund.de
+Date: Tue, 22 Jun 2004 20:53:01 +0200 (CEST)
+* PR# 7008 *
+Subject: dates
+From: gilescrane@doh.state.nj.us
+Date: Tue, 22 Jun 2004 22:18:41 +0200 (CEST)
+* PR# 7009 *
+Subject: Broker Identification #:23-----apiece
+From: "Alma Hunt" <Alma_Hunt_80@activatormail.com>
+Date: Tue, 22 Jun 2004 18:34:44 -0300
