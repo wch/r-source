@@ -28,6 +28,7 @@
 #include <gnome.h>
 #include <glade/glade.h>
 #include <libgnome/libgnome.h>
+#include <locale.h>
 
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -287,6 +288,12 @@ void gnome_start(int ac, char **av, Rstart Rp)
 			       R_STATUS, R_YEAR, R_MONTH, R_DAY),
 	       ac, av);
     R_gnome_initialised = TRUE;
+
+    /* Reset locale information */
+    setlocale(LC_ALL, "C");
+    setlocale(LC_CTYPE, "");/*- make ISO-latin1 etc. work for LOCALE users */
+    setlocale(LC_COLLATE, "");/*- alphabetically sorting */
+    setlocale(LC_TIME, "");/*- names and defaults for date-time formats */
 
     /* Initialise libglade */
     glade_gnome_init();
