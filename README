@@ -32,7 +32,7 @@ Since mid-1997 there has been a core group who can modify the R
 source code CVS archive.  The group currently consists of
 
 	Peter Dalgaard, Robert Gentleman, Kurt Hornik
-	Ross Ihaka, Thomas Lumley, Martin Maechler,
+	Ross Ihaka, Friederich Leisch, Thomas Lumley, Martin Maechler,
 	Paul Murrell, Heiner Schwarte and Luke Tierney.
 
 As noted above, discussions of the development process take
