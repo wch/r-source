@@ -134,6 +134,15 @@ BUG FIXES
         generic and the method have different argument lists; the
         evaluator checks for internal consistency of these argument lists.
 
+    o   Some implicit coercions to lists could cause segfaults, e.g. 
+          x <- matrix(nrow=20000, ncol=20); x$any <- numeric(0)
+        due to a PROTECT bug. (PR#2923)
+
+    o	The replacement functions for colnames() and rownames() did not
+	work for arrays with more than two dimensions.  They could
+	create dimnames of the form list(NULL, NULL) rather than
+	remove the dimnames attribute.
+
 
 
 		CHANGES IN R VERSION 1.7.0

@@ -2168,6 +2168,14 @@ stopifnot(any(qrx$pivot != 1:4)) # check for pivoting
 ##
 
 
+## rownames<- did not work on an array with > 2 dims in 1.7.0
+A <- array(1:12, dim=c(2, 3, 2))
+rownames(A) <- letters[1:2]
+A <- array(1:12, dim=c(2, 3, 2))
+colnames(A) <- 1:3
+## failed in 1.7.0
+
+
 ## keep at end, as package `methods' has had persistent side effects
 library(methods)
 stopifnot(all.equal(3:3, 3.), all.equal(1., 1:1))
