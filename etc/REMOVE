@@ -1,0 +1,32 @@
+#! /bin/sh
+
+# ${RHOME}/etc/REMOVE for removing add-on packages
+# Usage:
+#	R REMOVE pkg [lib]
+
+if [ "$1" ]
+then
+    pkg=$1
+else
+    echo "usage:  R REMOVE pkg [lib]"
+    exit 1
+fi
+
+lib=${2:-${RHOME}/library}
+if mkdir -p ${lib}
+then
+    lib=`cd ${lib}; pwd`
+else    
+    echo "Cannot write to \`${lib}'"
+    exit 1
+fi    
+
+cd ${lib}
+if test -d ${pkg};
+then
+    rm -rf ${pkg}
+    cat */TITLE > LibIndex 2> /dev/null
+else
+    echo "There is no pkg \`${pkg}' in lib \`${lib}'"
+    exit 1
+fi
