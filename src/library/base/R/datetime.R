@@ -695,6 +695,8 @@ trunc.POSIXt <- function(x, units=c("secs", "mins", "hours", "days"))
 
 round.POSIXt <- function(x, units=c("secs", "mins", "hours", "days"))
 {
+    # this gets the default from the generic, as that has two args.
+    if(is.numeric(units) && units == 0.0) units <-"secs"
     units <- match.arg(units)
     x <- as.POSIXct(x)
     x <- x + switch(units,
