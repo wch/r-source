@@ -373,8 +373,8 @@ clean:
 	-@rm -f *.aux *.cp *.cps *.dvi *.fn *.fns *.html *.info* \
 	  *.ky *.kys *.log *.out *.pdf *.pg *.pgs *.ps *.ps-2 *.tmp \
 	  *.toc *.tp *.vr *.vrs \
-	  *-pkg.tex refman.i?? refman.tex version.tex \
-	  version.texi
+	  *-pkg.tex refman.i?? refman.tex fullrefman.i?? fullrefman.tex \
+	  version.tex version.texi
 	-@rm -f stamp-*
 distclean: clean
 	-@rm -f Makefile
