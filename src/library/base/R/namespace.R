@@ -186,10 +186,18 @@ loadNamespace <- function (package, lib.loc = NULL,
             setNamespaceInfo(ns, "dynlibs", c(dynlibs, newlibs))
         }
 
+        bindTranslations <- function(pkgname, pkgpath)
+        {
+            popath <- file.path(pkgpath, "po")
+            if(!file.exists(popath)) return()
+            bindtextdomain(pkgname, popath)
+            bindtextdomain(paste("R", pkgname, sep="-"), popath)
+        }
         # find package and check it has a name space
         pkgpath <- .find.package(package, lib.loc, quiet = TRUE)
         if (length(pkgpath) == 0)
             stop("there is no package called ", sQuote(package))
+        bindTranslations(package, pkgpath)
         package.lib <- dirname(pkgpath)
         package<- basename(pkgpath) # need the versioned name
         if (! packageHasNamespace(package, package.lib))

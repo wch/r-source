@@ -249,7 +249,6 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
             ## If the name space mechanism is available and the package
             ## has a name space, then the name space loading mechanism
             ## takes over.
-            bindTranslations(libraryPkgName(package), pkgpath)
             if (packageHasNamespace(package, which.lib.loc)) {
                 tt <- try({
                     ns <- loadNamespace(package, c(which.lib.loc, lib.loc))
@@ -314,6 +313,9 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
             ## the actual copy has to be done by C code to avoid forcing
             ## promises that might have been created using delay().
             .Internal(lib.fixup(loadenv, env))
+
+            ## Do this before we use any code from the package
+            bindTranslations(libraryPkgName(package), pkgpath)
 
             ## run .First.lib
             if(exists(".First.lib", mode = "function",
