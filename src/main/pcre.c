@@ -64,11 +64,11 @@ SEXP do_pgrep(SEXP call, SEXP op, SEXP args, SEXP env)
     nmatches = 0;
     for (i = 0 ; i < n ; i++) {
 	int rc, ovector;
+	char *s = CHAR(STRING_ELT(vec, i));
 	if (STRING_ELT(vec,i)==NA_STRING){
 	    INTEGER(ind)[i]=0;
 	    continue;
 	}
-	char *s = CHAR(STRING_ELT(vec, i));
 	rc = pcre_exec(re_pcre, NULL, s, strlen(s), 0, 0, &ovector, 0);
 	if (rc >= 0) {
 	    INTEGER(ind)[i] = 1;
