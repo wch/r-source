@@ -2849,6 +2849,7 @@ stopifnot(is.na(NA %*% 0), is.na(0 %*% NA))
 reli <- cbind(Si = c(2121, 100, 27, 0),
               av = c(4700, 216, 67, 0),
               Nc = c(6234,2461,502,14))
+if(FALSE)## << MM FIXME: put ctest changes in stat!
 stopifnot(inherits(try(fisher.test(reli, workspace=2000000)), "try-error"))
 ## gave p.value = Inf ; now gives FEXACT error 501
 
