@@ -384,6 +384,7 @@ endif
 	mkdir -p  $(RPREFIX)/doc/html
 	$(CP) -p ../../doc/html/faq.html ../../doc/html/rw-FAQ.html \
 	  $(RPREFIX)/doc/html
+	zip -rm9X $(RPREFIX)m.zip $(RPREFIX)/library/*/man
 	zip -rm9X $(RPREFIX)b2.zip $(RPREFIX)/library $(RPREFIX)/doc/html \
 	  $(RPREFIX)/afm
 	zip -r9X $(RPREFIX)b1.zip $(RPREFIX)
