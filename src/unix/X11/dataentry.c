@@ -235,19 +235,10 @@ SEXP RX11_dataentry(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 /* Window Drawing Routines */
 
-void drawwindow()
+static void setcellwidths()
 {
-    int i, st, w, dw;
-    XWindowAttributes attribs;
+    int i, w, dw;
 
-    /* if there is an active cell enter the data in it */
-    closerect();
-
-    /* now set up the window with the new dimensions */
-    XGetWindowAttributes(iodisplay, iowindow, &attribs);
-    bwidth = attribs.border_width;
-    fullwindowWidth = attribs.width;
-    fullwindowHeight = attribs.height;
     windowWidth = w = 2*bwidth + boxw[0] + BOXW(colmin);
     nwide = 2;
     for (i = 2; i < 100; i++) { /* 100 on-screen columns cannot occur */
@@ -258,6 +249,22 @@ void drawwindow()
 	    break;
 	}
     }
+}
+
+void drawwindow()
+{
+    int i, st;
+    XWindowAttributes attribs;
+
+    /* if there is an active cell enter the data in it */
+    closerect();
+
+    /* now set up the window with the new dimensions */
+    XGetWindowAttributes(iodisplay, iowindow, &attribs);
+    bwidth = attribs.border_width;
+    fullwindowWidth = attribs.width;
+    fullwindowHeight = attribs.height;
+    setcellwidths();
     nhigh = (fullwindowHeight - 2 * bwidth - hwidth) / box_h;
     windowHeight = nhigh * box_h + 2 * bwidth;
 
@@ -301,20 +308,11 @@ void drawwindow()
 
 void doHscroll(int oldcol)
 {
-    int i, w, dw;
+    int i, dw;
     int oldnwide = nwide, oldwindowWidth = windowWidth;
 
     /* horizontal re-position */
-    windowWidth = w = 2*bwidth + boxw[0] + BOXW(colmin);
-    nwide = 2;
-    for (i = 2; i < 100; i++) {
-	dw = BOXW(i + colmin - 1);
-	if((w += dw) > fullwindowWidth) {
-	    nwide = i;
-	    windowWidth = w - dw;
-	    break;
-	}
-    }
+    setcellwidths();
     colmax = colmin + (nwide - 2);
     if (oldcol < colmin) { /* drop oldcol...colmin-1 */
 	dw = boxw[0];
@@ -341,7 +339,7 @@ void doHscroll(int oldcol)
 /* find_coords finds the coordinates of the upper left corner of the
    given cell on the screen: row and col are on-screen coords */
 
-void find_coords(int row, int col, int *xcoord, int *ycoord)
+static void find_coords(int row, int col, int *xcoord, int *ycoord)
 {
     int i, w;
     w = bwidth;
@@ -353,7 +351,7 @@ void find_coords(int row, int col, int *xcoord, int *ycoord)
 
 /* draw the window with the top left box at column wcol and row wrow */
 
-void jumpwin(int wcol, int wrow)
+static void jumpwin(int wcol, int wrow)
 {
     if (wcol < 0 || wrow < 0) {
 	bell();
@@ -367,7 +365,7 @@ void jumpwin(int wcol, int wrow)
     } else highlightrect();
 }
 
-void advancerect(int which)
+static void advancerect(int which)
 {
 
     /* if we are in the header, changing a name then only down is
@@ -476,7 +474,7 @@ static CellType get_col_type(int col)
 
 
 /* whichcol is absolute col no, col is position on screen */
-void drawcol(int whichcol)
+static void drawcol(int whichcol)
 {
     int i, src_x, src_y, len, col = whichcol - colmin + 1, bw = BOXW(whichcol);
     char *clab;
@@ -504,7 +502,7 @@ void drawcol(int whichcol)
 
 
 /* whichrow is absolute row no */
-void drawrow(int whichrow)
+static void drawrow(int whichrow)
 {
     int i, src_x, src_y, lenip, row = whichrow - rowmin + 1, w;
     char rlab[15];
@@ -541,7 +539,7 @@ void drawrow(int whichrow)
 /* WARNING: This has no check that you're not beyond the end of the
    vector. Caller must check. */
 
-void printelt(SEXP invec, int vrow, int ssrow, int sscol)
+static void printelt(SEXP invec, int vrow, int ssrow, int sscol)
 {
     char *strp;
     PrintDefaults(R_NilValue);
@@ -584,7 +582,7 @@ static void drawelt(int whichrow, int whichcol)
     Rsync();
 }
 
-void jumppage(int dir)
+static void jumppage(int dir)
 {
     int i, w, oldcol, wcol;
 
@@ -624,7 +622,7 @@ void jumppage(int dir)
 }
 /* draw a rectangle, used to highlight/downlight the current box */
 
-void printrect(int lwd, int fore)
+static void printrect(int lwd, int fore)
 {
     int x, y;
     find_coords(crow, ccol, &x, &y);
@@ -634,13 +632,13 @@ void printrect(int lwd, int fore)
     Rsync();
 }
 
-void downlightrect()
+static void downlightrect()
 {
     printrect(2, 0);
     printrect(1, 1);
 }
 
-void highlightrect()
+static void highlightrect()
 {
     printrect(2, 1);
 }
@@ -695,7 +693,7 @@ static SEXP getccol()
 
 extern double R_strtod(char *c, char **end); /* in coerce.c */
 
-void closerect()
+static void closerect()
 {
     SEXP cvec, c0vec, tvec;
     int wcol = ccol + colmin - 1, wrow = rowmin + crow - 1, wrow0;
@@ -770,7 +768,7 @@ void closerect()
    the print area and print it, left adjusted if necessary; clear the
    area of previous text; */
 
-void printstring(char *ibuf, int buflen, int row, int col, int left)
+static void printstring(char *ibuf, int buflen, int row, int col, int left)
 {
     int i, x_pos, y_pos, bw;
     char buf[45], *pc = buf;
@@ -794,7 +792,7 @@ void printstring(char *ibuf, int buflen, int row, int col, int left)
     Rsync();
 }
 
-void clearrect()
+static void clearrect()
 {
     int x_pos, y_pos;
 
@@ -809,7 +807,7 @@ void clearrect()
 
 /* --- Not true! E.g. ESC ends up in here... */
 
-void handlechar(char *text)
+static void handlechar(char *text)
 {
     int c = text[0];
 
@@ -890,7 +888,7 @@ void handlechar(char *text)
     bell();
 }
 
-void printlabs()
+static void printlabs()
 {
     char clab[10], *p;
     int i;
@@ -1233,11 +1231,12 @@ int initwin()
     box_h = font_info->max_bounds.ascent
 	+ font_info->max_bounds.descent + 4;
     text_offset = 2 + font_info->max_bounds.descent;
-    windowWidth = 0;
     windowHeight = 26 * box_h + hwidth + 2;
     boxw[0] = textwidth("1234 ", 5) + 8;
     for(i = 1; i < 100; i++) boxw[i] = get_col_width(i);
-    w = 0;
+    /* try for a window width that covers all the columns, or is around
+       800 pixels */
+    w = windowWidth = 0;
     for(i = 0; i <= xmaxused; i++) {
 	w += boxw[i];
 	if(w > 800) {
