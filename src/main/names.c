@@ -491,9 +491,9 @@ FUNTAB R_FunTab[] =
 #endif
 #ifdef Win32
 {"tempfile",	do_tempfile,	0,	11,	1,	PP_FUNCALL},
-{"unlink",	do_unlink,	0,	11,	1,	PP_FUNCALL},   
+{"unlink",	do_unlink,	0,	11,	1,	PP_FUNCALL},
 {"getenv",	do_getenv,	0,	11,	1,	PP_FUNCALL},
-{"help.start",	do_helpstart,	0,	11,	0,	PP_FUNCALL},    
+{"help.start",	do_helpstart,	0,	11,	0,	PP_FUNCALL},
 {"show.help.item",do_helpitem,	0,	11,	3,	PP_FUNCALL},
 {"flush.console",do_flushconsole,0,     11,     0,      PP_FUNCALL},
 {"int.unzip",   do_int_unzip,   0,      11,    -1,      PP_FUNCALL},
@@ -838,6 +838,8 @@ SEXP do_internal(SEXP call, SEXP op, SEXP args, SEXP env)
     int save = R_PPStackTop;
     checkArity(op, args);
     s = CAR(args);
+    if (!isList(s))
+	errorcall(call, "invalid .Internal() argument\n");
     fun = CAR(s);
     if (!isSymbol(fun))
 	errorcall(call, "invalid internal function\n");
