@@ -3,7 +3,7 @@
 \title{Time Series Lag Plots}
 \description{
   Plot time series against lagged versions of themselves.
-  Helps visualizing ``auto-dependence'' even when auto-correlations vanish. 
+  Helps visualizing ``auto-dependence'' even when auto-correlations vanish.
 }
 \usage{
 lag.plot(x, lags = 1, layout = NULL, set.lags = 1:lags,
@@ -50,12 +50,13 @@ lag.plot(nhtemp, 5, main="Average Temperatures in New Haven")
 lag.plot(nhtemp, 6, layout = c(2,1), asp = NA,
          main = "New Haven Temperatures", col.main = "blue")
 
-\dontrun{data(sunspots) # no lines for long series :
-lag.plot(sqrt(sunspots), set = c(1:4, 9:12), pch = ".", col = "gold")
-
 ## Multivariate (but non-stationary! ...)
 data(freeny)
 lag.plot(freeny.x, lag = 3)
-}}
+\dontrun{
+data(sunspots) # no lines for long series :
+lag.plot(sqrt(sunspots), set = c(1:4, 9:12), pch = ".", col = "gold")
+}
+}
 \keyword{hplot}
 \keyword{ts}
