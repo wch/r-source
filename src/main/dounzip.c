@@ -155,12 +155,18 @@ do_unzip(char *zipname, char *dest, int nfiles, char **files,
 	for (i = 0; i < gi.number_entry; i++) {
 	    if (i > 0) 
 		if((err = unzGoToNextFile(uf)) != UNZ_OK) break;
-	    if ((err = extract_one(uf, dest, NULL, names, nnames)) != UNZ_OK) break;	    
+	    if ((err = extract_one(uf, dest, NULL, names, nnames)) != UNZ_OK) break;
+#ifdef Win32
+	    R_ProcessEvents();
+#endif
 	}
     } else {
 	for (i = 0; i < nfiles; i++) {
 	    if ((err = unzLocateFile(uf, files[i], 0)) != UNZ_OK) break;
 	    if ((err = extract_one(uf, dest, files[i], names, nnames)) != UNZ_OK) break;
+#ifdef Win32
+	    R_ProcessEvents();
+#endif
 	}
     }
     unzClose(uf);
