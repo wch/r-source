@@ -38,7 +38,8 @@ Sys.setlocale(category = "LC_ALL", locale = "")
 \value{
   A character string of length one describing the locale in use (after
   setting for \code{Sys.setlocale}), or an empty character string if the
-  locale is invalid or \code{NULL} if locale information is unavailable.
+  locale is invalid (with a warning) or \code{NULL} if locale
+  information is unavailable.
 
   For \code{category = "LC_ALL"} the details of the string are
   system-specific: it might be a single locale or a set of locales

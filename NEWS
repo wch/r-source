@@ -355,7 +355,9 @@ NEW FEATURES
 
     o	contour() is now generic.
 
-    o	rle() now returns a class, has a print method and an inverse.
+    o	rle() now returns a classed object, has a print method and an inverse.
+
+    o	Sys.setlocale() now issues a warning if it fails.
 
 
 DOCUMENTATION CHANGES

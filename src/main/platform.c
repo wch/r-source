@@ -756,7 +756,10 @@ SEXP do_setlocale(SEXP call, SEXP op, SEXP args, SEXP rho)
     p = setlocale(cat, CHAR(STRING_ELT(locale, 0)));
     PROTECT(ans = allocVector(STRSXP, 1));
     if(p) SET_STRING_ELT(ans, 0, mkChar(p));
-    else  SET_STRING_ELT(ans, 0, mkChar(""));
+    else  {
+	SET_STRING_ELT(ans, 0, mkChar(""));
+	warningcall(call, "OS reports request cannot be honored");
+    }
     UNPROTECT(1);
     return ans;
 #else
