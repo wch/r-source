@@ -137,6 +137,9 @@ From: marchini@stats.ox.ac.uk
 Date: Tue, 27 Feb 2001 10:00:30 +0100 (MET)
 --This needs at least to be documented, and preferably par("usr")
 --set to the coordinate system of the plotting region after use.
+--
+--Added note and example to help file to explain how to annotate
+--filled contour.  Paul 24/5/01
 * PR# 837 *
 Subject: screen doesn't handle redrawing properly
 From: Thomas Vogels <tov@ece.cmu.edu>
@@ -319,4 +322,7 @@ Date: Tue, 10 Apr 2001 17:50:44 +0200 (MET DST)
 
 Directory:  incoming
 
-none
+* PR# 947 *
+Subject: Problem with hist(x, prob=T)
+From: rpeng@stat.ucla.edu
+Date: Thu, 24 May 2001 03:18:11 +0200 (MET DST)
