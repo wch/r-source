@@ -37,7 +37,7 @@ use Text::Wrap;
 ## don't buffer output
 $| = 1;
 
-my $revision = ' $Revision: 1.160 $ ';
+my $revision = ' $Revision: 1.161 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -965,7 +965,7 @@ sub check_pkg {
 	}
 
         my @out = R_runR($Rcmd, "${R_opts} --quiet",
-			 "R_DEFAULT_PACKAGES='stats,graphics,utils,tools'");
+			 "R_DEFAULT_PACKAGES='utils,graphics,stats,tools'");
 	@out = grep(!/^\>/, @out);
 	if($#out >= 0) {
 	    $log->warning();
@@ -991,7 +991,7 @@ sub check_pkg {
 	}
 
         my @out = R_runR($Rcmd, "${R_opts} --quiet",
-			 "R_DEFAULT_PACKAGES='stats,graphics,utils,tools'");
+			 "R_DEFAULT_PACKAGES='utils,graphics,stats,tools'");
         @out = grep(!/^\>/, @out);
 	if($#out >= 0) {
 	    ## <NOTE>
@@ -1021,7 +1021,7 @@ sub check_pkg {
 	}
 
         my @out = R_runR($Rcmd, "${R_opts} --quiet",
-			 "R_DEFAULT_PACKAGES='stats,graphics,utils,tools'");
+			 "R_DEFAULT_PACKAGES='utils,graphics,stats,tools'");
 	@out = grep(!/^\>/, @out);
 	if($#out >= 0) {
 	    $log->warning();
@@ -1245,7 +1245,7 @@ sub check_pkg {
 	}
 
         my @out = R_runR($Rcmd, "${R_opts} --quiet",
-                         "R_DEFAULT_PACKAGES='stats,graphics,utils,tools'");
+                         "R_DEFAULT_PACKAGES='utils,graphics,stats,tools'");
 	my @err = grep(/^Error/, @out);
 	@out = grep(!/^\>/, @out);
 	if($#err < 0) {
@@ -1288,7 +1288,7 @@ sub check_pkg {
 		$Rcmd .= "codoc(dir = \"${pkgdir}\")\n";
 	    }
 	    my @out = R_runR($Rcmd, "${R_opts} --quiet",
-			     "R_DEFAULT_PACKAGES='stats,graphics,utils,tools'");
+			     "R_DEFAULT_PACKAGES='utils,graphics,stats,tools'");
 
 	    ## <FIXME>
 	    ## With the current heuristics codoc() may throw an error
@@ -1308,7 +1308,7 @@ sub check_pkg {
 	if($opt_install) {
 	    my $Rcmd = "codocData(package = \"${pkgname}\")\n";
 	    my @out = R_runR($Rcmd, "${R_opts} --quiet",
-			     "R_DEFAULT_PACKAGES='stats,graphics,utils,tools'");
+			     "R_DEFAULT_PACKAGES='utils,graphics,stats,tools'");
 	    @out = grep(!/^\>/, @out);
 	    if($#out >= 0) {
 		$log->warning() unless($any);
@@ -1321,7 +1321,7 @@ sub check_pkg {
 	if($opt_install && (-d "R")) {
 	    my $Rcmd = "codocClasses(package = \"${pkgname}\")\n";
 	    my @out = R_runR($Rcmd, "${R_opts} --quiet",
-			     "R_DEFAULT_PACKAGES='stats,graphics,utils,tools'");
+			     "R_DEFAULT_PACKAGES='utils,graphics,stats,tools'");
 	    @out = grep(!/^\>/, @out);
 	    if($#out >= 0) {
 		$log->warning() unless($any);
@@ -1350,7 +1350,7 @@ sub check_pkg {
 	}
 
         my @out = R_runR($Rcmd, "${R_opts} --quiet",
-			 "R_DEFAULT_PACKAGES='stats,graphics,utils,tools'");
+			 "R_DEFAULT_PACKAGES='utils,graphics,stats,tools'");
 	@out = grep(!/^\>/, @out);
 	if($#out >= 0) {
 	    $log->warning();
