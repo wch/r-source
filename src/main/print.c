@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995-1998	Robert Gentleman and Ross Ihaka.
- *  Copyright (C) 2000-2002	The R Development Core Team.
+ *  Copyright (C) 2000-2003	The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -20,6 +20,12 @@
  *
  *  print.default()  ->	 do_printdefault & its sub-functions.
  *			 do_sink, do_invisible
+ *
+ *  auto-printing   ->  PrintValueEnv
+ *                      -> PrintValueRec
+ *                      -> call print() for objects
+ *  Note that auto-printing does not call print.default.
+ *  PrintValue, R_PV are similar to auto-printing.
  *
  *  do_printdefault
  *	-> PrintDefaults
@@ -46,6 +52,10 @@
  *  Also ./printvector.c,  ./printarray.c
  *
  *  do_sink.c moved to connections.c as of 1.3.0
+ *
+ *  <FIXME> These routines are not re-entrant: they reset the
+ *  global R_print.
+ *  </FIXME>
  */
 
 #ifdef HAVE_CONFIG_H
@@ -120,7 +130,7 @@ SEXP do_prmatrix(SEXP call, SEXP op, SEXP args, SEXP rho)
 	if(!isString(naprint) || LENGTH(naprint) < 1)
 	    errorcall(call, "invalid na.print specification");
 	R_print.na_string = R_print.na_string_noquote = STRING_ELT(naprint, 0);
-	R_print.na_width = R_print.na_width_noquote = 
+	R_print.na_width = R_print.na_width_noquote =
 	    strlen(CHAR(R_print.na_string));
     }
 
@@ -131,7 +141,7 @@ SEXP do_prmatrix(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (!isNull(collab) && !isString(collab))
 	errorcall(call, "invalid column labels");
 
-    printMatrix(x, 0, getAttrib(x, R_DimSymbol), quote, R_print.right, 
+    printMatrix(x, 0, getAttrib(x, R_DimSymbol), quote, R_print.right,
 		rowlab, collab, rowname, colname);
     PrintDefaults(rho); /* reset, as na.print.etc may have been set */
     return x;
@@ -166,7 +176,7 @@ SEXP do_printdefault(SEXP call, SEXP op, SEXP args, SEXP rho)
 	if(!isString(naprint) || LENGTH(naprint) < 1)
 	    errorcall(call, "invalid na.print specification");
 	R_print.na_string = R_print.na_string_noquote = STRING_ELT(naprint, 0);
-	R_print.na_width = R_print.na_width_noquote = 
+	R_print.na_width = R_print.na_width_noquote =
 	    strlen(CHAR(R_print.na_string));
     }
     args = CDR(args);
@@ -222,7 +232,7 @@ static void PrintGenericVector(SEXP s, SEXP env)
 		} else {
 		    if (LENGTH(tmp) == 1) {
 			formatInteger(INTEGER(tmp), 1, &w);
-			pbuf = Rsprintf("%s", EncodeInteger(INTEGER(tmp)[0], 
+			pbuf = Rsprintf("%s", EncodeInteger(INTEGER(tmp)[0],
 							    w));
 		    } else
 			pbuf = Rsprintf("Integer,%d", LENGTH(tmp));
@@ -441,7 +451,7 @@ static void PrintExpression(SEXP s)
 
     u = deparse1(s, 0);
     n = LENGTH(u);
-    for (i = 0; i < n ; i++) 
+    for (i = 0; i < n ; i++)
 	Rprintf("%s\n", CHAR(STRING_ELT(u, i)));
 }
 
@@ -618,7 +628,39 @@ static void printAttributes(SEXP s, SEXP env)
 		    EncodeString(CHAR(PRINTNAME(TAG(a))), 0, 0,
 				 Rprt_adj_left));
 	    Rprintf(tagbuf); Rprintf("\n");
-	    PrintValueRec(CAR(a), env);
+	    if (isObject(CAR(a))) {
+		/* Need to construct a call to
+		   print(CAR(a), digits, quote, right)
+		   based on the R_print structure, then eval(call, env).
+		   See do_docall for the template for this sort of thing
+		*/
+		SEXP s, t;
+		int quote = R_print.quote, right = R_print.right,
+		    digits = R_print.digits, gap = R_print.gap;
+		PROTECT(t = s = allocList(6));
+		SET_TYPEOF(s, LANGSXP);
+		CAR(t) = install("print"); t = CDR(t);
+		CAR(t) = CAR(a); t = CDR(t);
+		CAR(t) = allocVector(LGLSXP, 1);
+		LOGICAL(CAR(t))[0] = quote;
+		SET_TAG(t, install("quote")); t = CDR(t);
+		CAR(t) = allocVector(LGLSXP, 1);
+		LOGICAL(CAR(t))[0] = right;
+		SET_TAG(t, install("right")); t = CDR(t);
+		CAR(t) = allocVector(INTSXP, 1);
+		INTEGER(CAR(t))[0] = digits;
+		SET_TAG(t, install("digits")); t = CDR(t);
+		CAR(t) = allocVector(INTSXP, 1);
+		INTEGER(CAR(t))[0] = gap;
+		SET_TAG(t, install("gap"));
+		eval(s, env);
+		UNPROTECT(1);
+		R_print.quote = quote;
+		R_print.right = right;
+		R_print.digits = digits;
+		R_print.gap = gap;
+	    } else
+		PrintValueRec(CAR(a), env);
 	nextattr:
 	    *ptag = '\0';
 	    a = CDR(a);

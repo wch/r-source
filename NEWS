@@ -212,6 +212,10 @@ NEW FEATURES
 	formula is not simplified unless the new argument `simplify'
 	is true.
 
+     o	Printing an object with attributes now dispatches on the
+	class(es) of the attributes. See ?print.default for the fine
+	print. (PR#2506)
+
 
 INSTALLATION CHANGES
 
