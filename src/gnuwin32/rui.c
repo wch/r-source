@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Langage for Statistical Data Analysis
  *  Copyright (C) 1998--2003  Guido Masarotto and Brian Ripley
- *  Copyright (C) 2004        The R Foundation
+ *  Copyright (C) 2004--2005  The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -812,6 +812,7 @@ void readconsolecfg()
     }
     if (cfgerr) {
 	app_cleanup();
+	RConsole = NULL;
 	exit(10);
     }
     setconsoleoptions(fn, sty, pointsize, consoler, consolec,
