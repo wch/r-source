@@ -288,3 +288,7 @@ Date: Thu, 27 Jan 2000 17:12:35 +0100 (MET)
 Subject: NA not printed after table
 From: Andreas Weingessel <Andreas.Weingessel@ci.tuwien.ac.at>
 Date: Thu, 27 Jan 2000 18:47:38 +0100
+* PR# 408 *
+Subject: convolution bug
+From: wsimpson@gcal.ac.uk
+Date: Fri, 28 Jan 2000 11:17:36 +0100 (MET)
