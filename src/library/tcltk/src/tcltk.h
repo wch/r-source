@@ -1,7 +1,6 @@
 /* Globals exported from  ./tcltk.c : */
 
 void tcltk_init(void);
-char* tk_eval(char *cmd);
 
 SEXP dotTcl(SEXP args);
 SEXP dotTclcallback(SEXP args);

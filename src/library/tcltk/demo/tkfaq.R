@@ -11,8 +11,8 @@ local({
     tkpack(txt, side="left", fill="both", expand=TRUE)
     tkpack(scr, side="right", fill="y")
 
-    chn <- tkcmd("open", file.path(Sys.getenv("R_HOME"),"FAQ"))
-    tkinsert(txt, "end", tkcmd("read", chn))
+    chn <- tclvalue(tkcmd("open", file.path(Sys.getenv("R_HOME"),"FAQ")))
+    tkinsert(txt, "end", tclvalue(tkcmd("read", chn)))
     tkcmd("close", chn)
     
     tkconfigure(txt, state="disabled")

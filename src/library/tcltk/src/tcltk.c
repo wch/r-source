@@ -30,7 +30,22 @@ extern int (*R_timeout_handler)();
 extern long R_timeout_val;
 extern int (*ptr_gnome_start)();
 
-static Tcl_Interp *Tcl_interp;      /* Interpreter for this application. */
+static Tcl_Interp *RTcl_interp;      /* Interpreter for this application. */
+
+static void RTcl_dec_refcount(SEXP R_tclobj)
+{
+    Tcl_DecrRefCount((Tcl_Obj *) R_ExternalPtrAddr(R_tclobj));
+}
+
+static SEXP makeRTclObject(Tcl_Obj *tclobj)
+{
+    SEXP obj;
+
+    obj = R_MakeExternalPtr(tclobj, R_NilValue, R_NilValue);
+    Tcl_IncrRefCount(tclobj);
+    R_RegisterCFinalizer(obj, RTcl_dec_refcount);
+    return obj;
+}
 
 static int R_eval(ClientData clientData,
 		  Tcl_Interp *interp,
@@ -117,18 +132,18 @@ static int R_call_lang(ClientData clientData,
 }
 
 
-char* tk_eval(char *cmd)
+Tcl_Obj * tk_eval(char *cmd)
 {
-    if (Tcl_Eval(Tcl_interp, cmd) == TCL_ERROR)
+    if (Tcl_Eval(RTcl_interp, cmd) == TCL_ERROR)
     {
 	char p[512];
-	if (strlen(Tcl_interp->result)>500)
+	if (strlen(RTcl_interp->result)>500)
 	    strcpy(p,"tcl error.\n");
 	else
-	    sprintf(p,"[tcl] %s.\n",Tcl_interp->result);
+	    sprintf(p,"[tcl] %s.\n",RTcl_interp->result);
 	error(p);
     }
-    return Tcl_interp->result;
+    return Tcl_GetObjResult(RTcl_interp);
 }
 
 /* FIXME get rid of fixed size buffers in do_Tclcallback et al. (low
@@ -139,14 +154,193 @@ SEXP dotTcl(SEXP args)
 {
     SEXP ans;
     char *cmd;
-    char *val;
+    Tcl_Obj *val;
     if(!isValidString(CADR(args)))
 	error("invalid argument");
     cmd = CHAR(STRING_ELT(CADR(args), 0));
     val = tk_eval(cmd);
-    ans = mkString(val);
+    ans = makeRTclObject(val);
     return ans;
 }
+
+
+SEXP RTcl_ObjFromVar(SEXP args)
+{
+    Tcl_Obj *tclobj;
+
+    tclobj = Tcl_GetVar2Ex(RTcl_interp, 
+			   CHAR(STRING_ELT(CADR(args), 0)),
+			   NULL,
+			   0);
+    return makeRTclObject(tclobj);
+}
+
+SEXP RTcl_AssignObjToVar(SEXP args)
+{
+    Tcl_Obj *tclobj;
+
+    tclobj = Tcl_SetVar2Ex(RTcl_interp, 
+			   CHAR(STRING_ELT(CADR(args), 0)),
+			   NULL,
+			   (Tcl_Obj *) R_ExternalPtrAddr(CADDR(args)),
+			   0);
+    return R_NilValue;
+}
+
+
+SEXP RTcl_StringFromObj(SEXP args)
+{
+    char *str;
+
+    str = Tcl_GetString((Tcl_Obj *) R_ExternalPtrAddr(CADR(args)));
+    return mkString(str);
+}
+
+SEXP RTcl_ObjAsCharVector(SEXP args)
+{
+    int count;
+    Tcl_Obj **elem;
+    int ret, i;
+    SEXP ans;
+
+    ret = Tcl_ListObjGetElements(RTcl_interp,
+				 (Tcl_Obj *) R_ExternalPtrAddr(CADR(args)),
+				 &count, &elem);
+    if (ret != TCL_OK)
+	return RTcl_StringFromObj(args);
+
+    PROTECT(ans = allocVector(STRSXP, count));
+    for (i = 0 ; i < count ; i++)
+	SET_STRING_ELT(ans, i, mkChar(Tcl_GetString(elem[i])));
+    UNPROTECT(1);
+    return ans;
+}
+
+SEXP RTcl_ObjFromCharVector(SEXP args)
+{
+    int count;
+    Tcl_Obj *tclobj, *elem;
+    int ret, i;
+    SEXP obj, val;
+
+    val = CADR(args);
+
+    tclobj = Tcl_NewObj();
+
+    count = length(val);
+    for ( i = 0 ; i < count ; i++) {
+	elem = Tcl_NewObj();
+	Tcl_SetStringObj(elem, CHAR(STRING_ELT(val, i)), -1);
+	Tcl_ListObjAppendElement(RTcl_interp, tclobj, elem);
+    }
+
+    return makeRTclObject(tclobj);
+}
+
+SEXP RTcl_ObjAsDoubleVector(SEXP args)
+{
+    int count;
+    Tcl_Obj **elem, *obj;
+    int ret, i;
+    double x;
+    SEXP ans;
+
+    obj = (Tcl_Obj *) R_ExternalPtrAddr(CADR(args));
+
+    /* First try for single value */
+    ret = Tcl_GetDoubleFromObj(RTcl_interp, obj, &x);
+    if (ret == TCL_OK) {
+	ans = allocVector(REALSXP, 1);
+	REAL(ans)[0] = x;
+	return ans;
+    }
+
+    /* Then try as list */
+    ret = Tcl_ListObjGetElements(RTcl_interp, obj, &count, &elem);
+    if (ret != TCL_OK) /* didn't work, return NULL */
+	return R_NilValue;
+
+    ans = allocVector(REALSXP, count);
+    for (i = 0 ; i < count ; i++){
+	ret = Tcl_GetDoubleFromObj(RTcl_interp, elem[i], &x);
+	if (ret != TCL_OK) x = NA_REAL;
+	REAL(ans)[i] = x;
+    }
+    return ans;
+}
+
+SEXP RTcl_ObjFromDoubleVector(SEXP args)
+{
+    int count;
+    Tcl_Obj *tclobj, *elem;
+    int ret, i;
+    SEXP obj, val;
+
+    val = CADR(args);
+
+    tclobj = Tcl_NewObj();
+
+    count = length(val);
+    for ( i = 0 ; i < count ; i++) {
+	elem = Tcl_NewDoubleObj(REAL(val)[i]);
+	Tcl_ListObjAppendElement(RTcl_interp, tclobj, elem);
+    }
+
+    return makeRTclObject(tclobj);
+}
+
+SEXP RTcl_ObjAsIntVector(SEXP args)
+{
+    int count;
+    Tcl_Obj **elem, *obj;
+    int ret, i;
+    int x;
+    SEXP ans;
+
+    obj = (Tcl_Obj *) R_ExternalPtrAddr(CADR(args));
+
+    /* First try for single value */
+    ret = Tcl_GetIntFromObj(RTcl_interp, obj, &x);
+    if (ret == TCL_OK) {
+	ans = allocVector(INTSXP, 1);
+	INTEGER(ans)[0] = x;
+	return ans;
+    }
+
+    /* Then try as list */
+    ret = Tcl_ListObjGetElements(RTcl_interp, obj, &count, &elem);
+    if (ret != TCL_OK) /* didn't work, return NULL */
+	return R_NilValue;
+
+    ans = allocVector(INTSXP, count);
+    for (i = 0 ; i < count ; i++){
+	ret = Tcl_GetIntFromObj(RTcl_interp, elem[i], &x);
+	if (ret != TCL_OK) x = NA_REAL;
+	INTEGER(ans)[i] = x;
+    }
+    return ans;
+}
+
+SEXP RTcl_ObjFromIntVector(SEXP args)
+{
+    int count;
+    Tcl_Obj *tclobj, *elem;
+    int ret, i;
+    SEXP obj, val;
+
+    val = CADR(args);
+
+    tclobj = Tcl_NewObj();
+
+    count = length(val);
+    for ( i = 0 ; i < count ; i++) {
+	elem = Tcl_NewIntObj(INTEGER(val)[i]);
+	Tcl_ListObjAppendElement(RTcl_interp, tclobj, elem);
+    }
+
+    return makeRTclObject(tclobj);
+}
+
 
 /* Warning: These two functions return a pointer to internal static
    data. Copy immediately. */
@@ -267,36 +461,36 @@ void tcltk_init(void)
 {
     int code;
 
-    Tcl_interp = Tcl_CreateInterp();
-    code = Tcl_Init(Tcl_interp); /* Undocumented... If omitted, you
+    RTcl_interp = Tcl_CreateInterp();
+    code = Tcl_Init(RTcl_interp); /* Undocumented... If omitted, you
 				    get the windows but no event
 				    handling. */
     if (code != TCL_OK)
-	error(Tcl_interp->result);
+	error(RTcl_interp->result);
 
-    code = Tk_Init(Tcl_interp);  /* Load Tk into interpreter */
+    code = Tk_Init(RTcl_interp);  /* Load Tk into interpreter */
     if (code != TCL_OK)
-	error(Tcl_interp->result);
+	error(RTcl_interp->result);
 
-    Tcl_StaticPackage(Tcl_interp, "Tk", Tk_Init, Tk_SafeInit);
+    Tcl_StaticPackage(RTcl_interp, "Tk", Tk_Init, Tk_SafeInit);
 
-    code = Tcl_Eval(Tcl_interp, "wm withdraw .");  /* Hide window */
+    code = Tcl_Eval(RTcl_interp, "wm withdraw .");  /* Hide window */
     if (code != TCL_OK)
-	error(Tcl_interp->result);
+	error(RTcl_interp->result);
 
-    Tcl_CreateCommand(Tcl_interp,
+    Tcl_CreateCommand(RTcl_interp,
 		      "R_eval",
 		      R_eval,
 		      (ClientData) NULL,
 		      (Tcl_CmdDeleteProc *) NULL);
 
-    Tcl_CreateCommand(Tcl_interp,
+    Tcl_CreateCommand(RTcl_interp,
 		      "R_call",
 		      R_call,
 		      (ClientData) NULL,
 		      (Tcl_CmdDeleteProc *) NULL);
 
-    Tcl_CreateCommand(Tcl_interp,
+    Tcl_CreateCommand(RTcl_interp,
 		      "R_call_lang",
 		      R_call_lang,
 		      (ClientData) NULL,
@@ -311,9 +505,9 @@ void tcltk_init(void)
 /*** We may want to revive this at some point ***/
 
 #if 0
-  code = Tcl_EvalFile(Tcl_interp, "init.tcl");
+  code = Tcl_EvalFile(RTcl_interp, "init.tcl");
   if (code != TCL_OK)
-    error("%s\n", Tcl_interp->result);
+    error("%s\n", RTcl_interp->result);
 #endif
 
 }

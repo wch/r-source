@@ -2,7 +2,8 @@
 
 
 .Tcl <- function(...)
-    .External("dotTcl", ..., PACKAGE = "tcltk")
+    structure(.External("dotTcl", ..., PACKAGE = "tcltk"),
+              class="tclObj")
 .Tcl.callback <- function(...)
     .External("dotTclcallback", ..., PACKAGE = "tcltk")
 
@@ -132,17 +133,57 @@ tclVar <- function(init="") {
    l
 }
 
+tclObj <- function(x) UseMethod("tclObj")
+"tclObj<-" <- function(x, value) UseMethod("tclObj<-")
+
+tclObj.tclVar <- function(x){
+    z <- .External("RTcl_ObjFromVar", ls(x$env), PACKAGE="tcltk")
+    class(z) <- "tclObj"
+    z
+}
+
+"tclObj<-.tclVar" <- function(x, value){
+    value <- as.tclObj(value)
+    .External("RTcl_AssignObjToVar", ls(x$env), value)
+    x
+}
+
 tclvalue <- function(x) UseMethod("tclvalue")
 "tclvalue<-" <- function(x, value) UseMethod("tclvalue<-")
 
-tclvalue.tclVar <- function(x) tkcmd("set",ls(x$env))
+tclvalue.tclVar <- function(x) tclvalue(tclObj(x))
+tclvalue.tclObj <- function(x) .External("RTcl_StringFromObj", x,
+                                         PACKAGE="tcltk")
 "tclvalue<-.tclVar" <- function(x, value) {tkcmd("set",ls(x$env), value); x}
 
-tclvalue.default <- function(x) tkcmd("set", as.character(x))
-"tclvalue<-.default" <- function(x, value)
-   {tkcmd("set", as.character(x), value); x}
+tclvalue.default <- function(x) tclvalue(tkcmd("set", as.character(x)))
+
+"tclvalue<-.default" <- function(x, value) {
+    tkcmd("set", as.character(x), value)
+    x
+}
 
 as.character.tclVar <- function(x) ls(x$env)
+
+as.character.tclObj <- function(x) .External("RTcl_ObjAsCharVector",
+                                             x, PACKAGE="tcltk")
+as.double.tclObj <- function(x, ...) .External("RTcl_ObjAsDoubleVector",
+                                             x, PACKAGE="tcltk")
+as.integer.tclObj <- function(x, ...) .External("RTcl_ObjAsIntVector",
+                                             x, PACKAGE="tcltk")
+
+is.tclObj <- function(x) inherits(x, "tclObj")
+
+as.tclObj <- function(x) {
+    if (is.tclObj(x)) return(x)
+    z <- switch (storage.mode(x),
+                 character = .External("RTcl_ObjFromCharVector", x),
+                 double = .External("RTcl_ObjFromDoubleVector", x),
+                 integer = .External("RTcl_ObjFromIntVector", x),
+                 stop(paste("Cannot handle object of mode ", storage.mode(x))))
+    class(z) <- "tclObj"
+    z
+}
 # Actually makes .default and .tclVar methods equivalent, the latter
 # just saves a level of function dispatching
 

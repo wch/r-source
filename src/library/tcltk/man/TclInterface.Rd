@@ -16,6 +16,17 @@
 \alias{tclvalue<-.default}
 \alias{tclvalue.tclVar}
 \alias{tclvalue<-.tclVar}
+\alias{tclvalue.tclObj}
+\alias{tclvalue<-.tclObj}
+\alias{as.character.tclObj}
+\alias{as.integer.tclObj}
+\alias{as.double.tclObj}
+\alias{as.tclObj}
+\alias{is.tclObj}
+\alias{tclObj}
+\alias{tclObj<-}
+\alias{tclObj.tclVar}
+\alias{tclObj<-.tclVar}
 \alias{.Tk.ID}
 \alias{.Tk.newwin}
 \alias{.Tk.subwin}
@@ -29,9 +40,10 @@
   These functions and variables provide the basic glue between \R and the
   Tcl interpreter and Tk GUI toolkit. Tk
   windows may be represented via \R objects. Tcl variables can be accessed
-  via the pseudo-list \code{tclvar}.
+  via objects of class \code{tclVar} and the C level interface to Tcl
+  objects is accessed via objects of class \code{tclObj}.
 }
-\usage{
+\synopsis{
 .Tcl(...)
 .Tcl.args(...)
 .Tcl.callback(...)
@@ -44,13 +56,21 @@
 tkdestroy(win)
 is.tkwin(x)
 
-tclvar$name           # Deprecated
-tclvar$name <- value  # Deprecated
-
 tclVar(init="")
-as.character.tclVar(x)
-tclvalue(x)
+as.character(x) # x of class "tclVar" or "tclObj"
+
+tclvalue(x) # x of class "tclVar" or "tclObj"
 tclvalue(x) <- value
+
+tclObj(x)  # x of class "tclVar"
+tclObj(x) <- value
+
+as.tclObj(x)
+is.tclObj(x)
+
+as.integer(x)   # x of class "tclObj"
+as.double(x)    # x of class "tclObj"
+
 
 addTclPath(path = ".")
 tclRequire(package, warn = TRUE)
@@ -123,12 +143,6 @@ tclRequire(package, warn = TRUE)
   \code{is.tkwin} can be used to test whether a given object is a window
   environment.
 
-  \code{tclvar} is used to access Tcl variables. The Tcl variable name
-  is used as if it were a list element name in \code{tclvar}, but in
-  reality \code{tclvar} is an object of class \code{tclvar} and \code{$}
-  and  \code{$<-} have special methods for that class. NOTE: This interface
-  is deprecated, use the \code{tclVar} object class instead.
-
   \code{tclVar} creates a new Tcl variable and initializes it to
   \code{init}. An R object of class \code{tclVar} is created to
   represent it. Using \code{as.character} on the object returns the Tcl
@@ -140,10 +154,20 @@ tclRequire(package, warn = TRUE)
   \code{tclVar}  are  uniquely named and automatically unset by the 
   garbage collector when the representing object is no longer in use. 
 
+  It is possible to access Tcl's `dual-ported' objects directly, thus
+  avoiding parsing and deparsing of their string representation. This
+  works by using objects of class \code{tclObj}. The string
+  representation of such objects can be extracted (but not set) using
+  \code{tclvalue} and conversion to vectors of mode \code{"character"},
+  \code{"double"}, or \code{"integer"}. Conversely, such vectors can be
+  converted using \code{as.tclObj}. The object behind a Tcl variable
+  is extracted using \code{tclObj(x)} which also allows an assignment
+  form, in which the right hand side of the assignment is automatically
+  converted using \code{as.tclObj}.  
+  
   Tcl packages can be loaded with \code{tclRequire}; it may be necessary
   to add the directory where they are found to the Tcl search path with
   \code{addTclPath}.
-  
 }
 \note{ Strings containing unbalanced braces are currently not handled
   well in many circumstances.

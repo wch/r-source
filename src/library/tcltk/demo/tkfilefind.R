@@ -19,19 +19,17 @@ local({
 
         .tclfilename <- NULL
         selected <- function(){
-            index <- tkcurselection(dirtree)
-            index <- strsplit(index," ")[[1]] # multiple selections
-            fname <- tkget(dirtree, index)
+            index <- as.integer(tkcurselection(dirtree))
+            fnamelist <- as.character(tkget(dirtree, index))
             tkdestroy(base)
-            if (fname==""){
+            if (identical(fnamelist,"")){
                 .tclfilename <<- NULL
                 return()
             }
-            fnamelist<-strsplit(fname,"}")[[1]]
             for (i in seq(along=fnamelist)){
-                fnamelist[i] <- gsub("[ ]*{","",fnamelist[i])
-                fnamelist[i] <- paste(strsplit(fnamelist[i]," ")[[1]],
-                                      collapse=Platform()$file.sep)
+                                fnamelist[i] <-
+                                    paste(strsplit(fnamelist[i]," ")[[1]],
+                                          collapse=Platform()$file.sep)
             }
             .tclfilename <<- fnamelist
         }
