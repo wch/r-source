@@ -673,3 +673,7 @@ Date: Wed, 18 Dec 2002 23:03:57 +0100 (MET)
 Subject: Re: [Rd] Unix Symbolic links failing ("ls -s realfile linkedas")
 From: ripley@stats.ox.ac.uk
 Date: Wed, 18 Dec 2002 22:31:55 +0000 (GMT)
+* PR# 2383 *
+Subject: Perl library problem in docs install
+From: annis@biostat.wisc.edu
+Date: Thu, 19 Dec 2002 20:57:39 +0100 (MET)
