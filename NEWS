@@ -186,8 +186,9 @@ BUG FIXES
 	only of the first object matching a regular expression found
 	in a package.
 
-    o	Memory leaks in [dpq]wilcox have been plugged.  (PR#5314, plus
-	another potential leak.)
+    o	Memory leaks in [dpq]wilcox and [dqr]signrank have been plugged.
+	These only occurred when multiple values of m or n > 50 were
+	used in a single call. (PR#5314, plus another potential leak.)
 
     o	Non-finite input values to eigen(), La.eigen(), svd() and
 	La.svd() are now errors: they often caused infinite

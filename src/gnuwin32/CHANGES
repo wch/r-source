@@ -43,6 +43,9 @@ Fixed list.files() to properly handle paths like "C:", etc.
 
 Fixed unlink() to accept empty file list for Unix consistency.
 
+Fix to allow system malloc to be used (see rw1071) reduced the ability
+to use large memory areas via --max-mem-size with the usual malloc.
+
 
 
 rw1081
