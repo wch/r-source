@@ -13,13 +13,21 @@ NEW FEATURES
     o	R CMD Rd2dvi has new options --pdf, --title and --output
 
     o	new Date, URL and Title fields in DESCRIPTION file of
-	packages. The Title field preplaces the seperate TITLE file of
-	packages which is no longer necessary.
+	packages. The Title field replaces the separate TITLE file of
+	packages, which is no longer necessary.
 
     o	residuals.lm() has "type" argument, as S does.
 
-    o	the underlying code for nlm has been translated from Fortran
+    o	The underlying code for nlm has been translated from Fortran
 	to C and made re-entrant (changes contributed by Saikat DebRoy).
+
+    o	New suite of optimization methods optim(), covering
+	Nelder-Mead, BFGS quasi-Newton and conjugate-gradients methods
+	for unconstrained minimization and maximization with and
+	without derivatives.
+
+	optim() also allows box constraints (interval bounds on
+	individual variables) in its limited-memory BFGS option.
 
     o	R now compiles in the GNU version of regex, so regular
 	expressions (grep, sub, gsub, regexpr, "pattern" in ls) are
@@ -41,14 +49,6 @@ NEW FEATURES
 
     o	Building help for a package now removes help files that no
 	longer exist in the source.
-
-    o	New suite of optimization methods optim(), covering
-	Nelder-Mead, BFGS quasi-Newton and conjugate-gradients methods
-	for unconstrained minimization and maximization with and
-	without derivatives.
-
-	optim() also allows box constraints (interval bounds on
-	individual variables) in its limited-memory BFGS option.
 
     o	strsplit() now uses split regexps, and no longer insists on
 	splitting into non-empty tokens.
@@ -73,25 +73,33 @@ NEW FEATURES
     o	model.frame now accepts data= arguments that can be coerced to
 	data frames
 
-    o	help files can now contain \describe groups.
+    o	Help files can now contain \describe groups.
+
+    o	hyperlinks in help files can now LaTeX special characters, but
+	will not function as hyperlinks in PDF output.
+
+    o	rstandard() now also works for glm objects.
+
+    o	glm drops 0-weight observations when fitting so that the
+	output is compatible with lm.influence() and plot.lm().
 
 
 BUG FIXES
 
     o   strsplit fix broke copy.url.
 
-    o	0 ^ -1 == Inf  &  min(NA,NaN) is NA now always
+    o	0 ^ -1 == Inf  &  min(NA, NaN) is now always NA
 
     o	R CMD xxx sets $R_HOME/bin to be first in PATH
 
-    o	added more warnings to update.packages & friends. new function
+    o	Added more warnings to update.packages & friends. New function
 	old.packages for better control of update.packages.
 
-    o	adding matrices to data frames now happens column by column as
+    o	Adding matrices to data frames now happens column by column as
 	documented, so character or logical matrices generate factor
 	columns.
 
-    o	formulae containing interactions with the response were
+    o	Formulae containing interactions with the response were
 	handled incorrectly by model.matrix, giving wrong answers or crashes.
 
     o	anova(lm(.)) with 0 weights now works.
@@ -99,18 +107,16 @@ BUG FIXES
     o	plot.lm(), dffits(), covratio() now do the right thing for weighted
 	lm regression.
 
-    o	rstandard() now also works for glm objects.
-
     o	formatC(as.integer(c(1,0,NA))) now works. PR#394, thanks to Jens O.-A.
 
     o	format.char(.) is much faster for long vector argument [Jens O.-A.]
 
     o	\enumerate now enumerates in text conversion of .Rd files.
 
-    o	glm no longer fails with names<- errors in cases where
+    o	glm() no longer fails with names<- errors in cases where
         observations with fits on the mu.eta boundary have been dropped.
 
-    o	deviance residuals could be NaN instead of 0 by rounding error.
+    o	Deviance residuals could be NaN instead of 0 by rounding error.
 
     o	shapiro.test(x) now gives better error messages (eg. x=rep(1,5))
 	and doesn't print ANYTHING anymore (in some cases).
