@@ -549,6 +549,37 @@ EOF
   else
     FLIBS="${FLIBS} ${LIBM}"
   fi])
+AC_DEFUN([R_FUNC_CONNECT],
+  AC_CACHE_VAL(r_cv_func_connect,
+    [ r_cv_func_connect=no
+      AC_CHECK_FUNC(connect)
+      if test "${ac_cv_func_connect}" = no; then
+        AC_CHECK_LIB(socket, connect)
+      fi
+      if test "${ac_cv_func_connect}" = yes \
+          || test "${ac_cv_lib_socket_connect}" = yes; then
+        r_cv_func_connect=yes
+      fi
+    ]))
+AC_DEFUN([R_FUNC_GETHOSTBYNAME],
+  AC_CACHE_VAL(r_cv_func_gethostbyname,
+    [ r_cv_func_gethostbyname=no
+      AC_CHECK_FUNC(gethostbyname)
+      if test "${ac_cv_func_gethostbyname}" = no; then
+        AC_CHECK_LIB(nsl, gethostbyname)
+        ## A. Gebhardt <albrecht.gebhardt@uni-klu.ac.at> says that on
+        ## Unixware 7 we need -lsocket; -lnsl in addition is ok but not
+        ## needed.
+        if test "${ac_cv_lib_nls_gethostbyname}" = no; then
+          AC_CHECK_LIB(socket, gethostbyname)
+        fi
+      fi
+      if test "${ac_cv_func_gethostbyname}" = yes \
+          || test "${ac_cv_lib_nsl_gethostbyname}" = yes \
+          || test "${ac_cv_lib_socket_gethostbyname}" = yes; then
+        r_cv_func_gethostbyname=yes
+      fi
+    ]))
 AC_DEFUN([R_FUNC___SETFPUCW],
   [ AC_CHECK_FUNC(__setfpucw,
     [ AC_CACHE_CHECK([whether __setfpucw is needed],
@@ -639,6 +670,33 @@ int main () {
 	r_cv_func_log_broken=yes))
     if test "${r_cv_func_log_broken}" = yes; then
       AC_DEFINE(LOG_BROKEN)
+    fi
+  ])
+AC_DEFUN([R_FUNC_STRPTIME],
+  [ AC_CACHE_CHECK([whether strptime is broken],
+      r_cv_func_strptime_broken,
+      AC_TRY_RUN(
+	changequote(<<, >>)dnl
+	<<
+#include <time.h>
+int main () {
+#ifdef HAVE_STRPTIME
+  struct tm tm;
+  char *p;
+
+  p = strptime("1960-01-01", "%Y-%m-%d", &tm);
+  return(p == 0);
+#else
+  return(1);
+#endif
+}
+	>>,
+	changequote([, ])dnl
+	r_cv_func_strptime_broken=no,
+	r_cv_func_strptime_broken=yes,
+	r_cv_func_strptime_broken=yes))
+    if test "${r_cv_func_strptime_broken}" = yes; then
+      AC_DEFINE(STRPTIME_BROKEN)
     fi
   ])
 AC_DEFUN([R_HEADER_SETJMP],
@@ -764,10 +822,8 @@ AC_CACHE_CHECK([for BSD networking],
   [ if test "${ac_cv_header_netdb_h}" = yes \
         && test "${ac_cv_header_netinet_in_h}" = yes \
         && test "${ac_cv_header_sys_socket_h}" = yes \
-        && (test "${ac_cv_func_connect}" = yes \
-          || test "${ac_cv_lib_socket_connect}" = yes) \
-        && (test "${ac_cv_func_gethostbyname}" = yes \
-          || test "${ac_cv_lib_nsl_gethostbyname}" = yes); then
+        && test "${r_cv_func_connect}" = yes \
+        && test "${r_cv_func_gethostbyname}" = yes; then
       r_cv_bsd_networking=yes
     else
       r_cv_bsd_networking=no
@@ -1118,34 +1174,6 @@ int main () {
 	r_cv_uses_leapseconds=no))
     if test "${r_cv_uses_leapseconds}" = yes; then
       AC_DEFINE(USING_LEAPSECONDS, 1)
-    fi
-  ])
-
-AC_DEFUN([R_FUNC_STRPTIME],
-  [ AC_CACHE_CHECK([whether strptime is broken],
-      r_cv_func_strptime_broken,
-      AC_TRY_RUN(
-	changequote(<<, >>)dnl
-	<<
-#include <time.h>
-int main () {
-#ifdef HAVE_STRPTIME
-  struct tm tm;
-  char *p;
-
-  p = strptime("1960-01-01", "%Y-%m-%d", &tm);
-  return(p == 0);
-#else
-  return(1);
-#endif
-}
-	>>,
-	changequote([, ])dnl
-	r_cv_func_strptime_broken=no,
-	r_cv_func_strptime_broken=yes,
-	r_cv_func_strptime_broken=yes))
-    if test "${r_cv_func_strptime_broken}" = yes; then
-      AC_DEFINE(STRPTIME_BROKEN)
     fi
   ])
 dnl Usage:
