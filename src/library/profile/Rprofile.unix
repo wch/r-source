@@ -7,6 +7,7 @@ F <- FALSE
 version <- Version()
 .Machine <- Machine()
 options(na.action = "na.omit")
+options(show.signif.stars = TRUE)
 
 .Library <- paste(getenv("RHOME"), "library", sep = "/")
 
