@@ -232,22 +232,24 @@ int R_wait_usec = 0; /* 0 means no timeout */
 
 static int setSelectMask(InputHandler *, fd_set *);
 
-static InputHandler* waitForActivity()
+
+fd_set *R_checkActivity(int usec, int ignore_stdin)
 {
     int maxfd;
-    fd_set readMask;
     struct timeval tv;
+    static fd_set readMask;
 
 
-    do {
-	R_PolledEvents();
-	tv.tv_sec = 0;
-	tv.tv_usec = R_wait_usec;
-	maxfd = setSelectMask(R_InputHandlers, &readMask);
-    } while (!select(maxfd+1, &readMask, NULL, NULL,
-		     (R_wait_usec) ? &tv : NULL));
-
-    return(getSelectedHandler(R_InputHandlers, &readMask));
+    tv.tv_sec = 0;
+    tv.tv_usec = usec;
+    maxfd = setSelectMask(R_InputHandlers, &readMask);
+    if (ignore_stdin)
+	FD_CLR(fileno(stdin), &readMask);
+    if (select(maxfd+1, &readMask, NULL, NULL,
+		     (usec >= 0) ? &tv : NULL))
+	return(&readMask);
+    else
+	return(NULL);
 }
 
 /*
@@ -280,13 +282,24 @@ setSelectMask(InputHandler *handlers, fd_set *readMask)
     return(maxfd);
 }
 
-/*
-  Determine which handler was identified as having input pending
-  by the call to select().
-  We have a very simple version of scheduling. We skip the first one
-  if it is the standard input one. This allows the others to not be `starved'.
-  Change this as one wants by not skipping the first one.
- */
+void R_runHandlers(InputHandler *handlers, fd_set *readMask)
+{
+    InputHandler *tmp = handlers;
+
+    if (readMask == NULL)
+	R_PolledEvents();
+    else
+	while(tmp) {
+	    if(FD_ISSET(tmp->fileDescriptor, readMask) 
+	       && tmp->handler != NULL)
+		tmp->handler((void*) NULL);
+	    tmp = tmp->next;
+	}
+}
+
+/* The following routine is still used by the internet routines, but
+ * it should eventually go away. */
+
 InputHandler *
 getSelectedHandler(InputHandler *handlers, fd_set *readMask)
 {
@@ -310,6 +323,7 @@ getSelectedHandler(InputHandler *handlers, fd_set *readMask)
 
     return((InputHandler*) NULL);
 }
+
 
 
 #ifdef HAVE_LIBREADLINE
@@ -472,31 +486,39 @@ int Rstd_ReadConsole(char *prompt, unsigned char *buf, int len,
 	}
 
 	if(R_InputHandlers == NULL)
-	  initStdinHandler();
+	    initStdinHandler();
 
 	for (;;) {
-	    InputHandler *what = waitForActivity();
-	    if(what != NULL) {
-		if(what->fileDescriptor == fileno(stdin)) {
-  	        /* We could make this a regular handler, but we need to pass additional arguments. */
+	    fd_set *what;
+
+	    what = R_checkActivity(R_wait_usec ? R_wait_usec : -1, 0);
+	    /* This is slightly clumsy. We have advertised the
+	     * convention that R_wait_usec == 0 means "wait forever",
+	     * but we also need to enable R_checkActivity to return
+	     * immediately. */
+
+	    R_runHandlers(R_InputHandlers, what);
+	    if (what == NULL) 
+		continue;
+	    if (FD_ISSET(fileno(stdin), what)) {
+		/* We could make this a regular handler, but we need
+		 * to pass additional arguments. */
 #ifdef HAVE_LIBREADLINE
-		    if (UsingReadline) {
-			rl_callback_read_char();
-			if(rl_data.readline_eof || rl_data.readline_gotaline) {
- 		            rl_top = rl_data.prev;
-			    return(rl_data.readline_eof ? 0 : 1);
-			}
+		if (UsingReadline) {
+		    rl_callback_read_char();
+		    if(rl_data.readline_eof || rl_data.readline_gotaline) {
+			rl_top = rl_data.prev;
+			return(rl_data.readline_eof ? 0 : 1);
 		    }
-		    else
+		}
+		else
 #endif /* HAVE_LIBREADLINE */
-		    {
-			if(fgets((char *)buf, len, stdin) == NULL)
-			    return 0;
-			else
-			    return 1;
-		    }
-		} else
-		    what->handler((void*) NULL);
+		{
+		    if(fgets((char *)buf, len, stdin) == NULL)
+			return 0;
+		    else
+			return 1;
+		}
 	    }
 	}
     }
@@ -828,14 +850,8 @@ SEXP do_syssleep(SEXP call, SEXP op, SEXP args, SEXP rho)
     start = times(&timeinfo);
     if(setjmp(sleep_return) != 100)
 	for (;;) {
-	    InputHandler *what = waitForActivity();
-	    if(what != NULL) {
-		if(what->fileDescriptor != fileno(stdin))
-		    what->handler((void*) NULL);
-		else usleep(R_wait_usec/2);
-	    /* we can't handle console read events here,
-	       so just sleep for a while */
-	    }
+	    fd_set *what = R_checkActivity(R_wait_usec, 1);
+	    R_runHandlers(R_InputHandlers, what);
 	}
 
     R_PolledEvents = OldHandler;
