@@ -8,6 +8,10 @@
 
 		CHANGES IN R VERSION 1.4.0
 
+EXPERIMENTAL BRANCH
+  
+    o   as.character(NA) produces a string NA, "NA" doesn't.
+
 
 NEW FEATURES
 
