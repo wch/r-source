@@ -15,7 +15,7 @@ axis(side, at = NULL, labels = TRUE, tick = TRUE, line = NA,
   2=left, 3=above and 4=right.}
   \item{at}{the points at which tick-marks are to be drawn.  Non-finite
     (infinite, \code{NaN} or \code{NA}) values are omitted.  By default,
-  when \code{NULL}, tickmark locations are computed, see Details below.}
+    when \code{NULL}, tickmark locations are computed, see Details below.}
   \item{labels}{this can either be a logical value specifying whether
     (numerical) annotations are to be made at the tickmarks, or a vector
     of character strings to be placed at the tickpoints.}
@@ -25,8 +25,8 @@ axis(side, at = NULL, labels = TRUE, tick = TRUE, line = NA,
     be drawn.  This overrides the value of the graphical parameter
     \code{mgp[3]}.  The relative placing of tickmarks and tick labels
     is unchanged.}
-  \item{pos}{the coordinate at which the axis line is to be drawn.
-    this overrides the value of both \code{line} and \code{mgp[3]}.}
+  \item{pos}{the coordinate at which the axis line is to be drawn:
+    this overrides the values of both \code{line} and \code{mgp[3]}.}
   \item{outer}{a logical value indicating whether the axis should be
     drawn in the outer plot margin, rather than the standard plot
     margin.}
@@ -59,10 +59,12 @@ axis(side, at = NULL, labels = TRUE, tick = TRUE, line = NA,
 
   Several of the graphics parameters affect the way axes are drawn. The
   vertical (for sides 1 and 3) positions of the axis and the tick labels
-  are controlled by \code{mpg}, the size of the ticks is controlled by
+  are controlled by \code{mgp}, the size of the ticks is controlled by
   \code{tck} and \code{tcl} and the appearance of the tick labels by
   \code{cex.axis}, \code{col.axis} and \code{font.axis} with
-  orientation controlled by \code{las} (but not \code{srt}).
+  orientation controlled by \code{las} (but not \code{srt}, unlike S
+  which uses \code{srt} if \code{at} is supplied and \code{las} if it is
+  not).
 }
 \seealso{
   \code{\link{axTicks}} returns the axis tick locations
@@ -82,10 +84,10 @@ axis(2)
 box() #- to make it look "as usual"
 
 plot(1:7, rnorm(7), main = "axis() examples",
-     type = "s", xaxt="n", frame = FALSE, col = "red")
+     type = "s", xaxt = "n", frame = FALSE, col = "red")
 axis(1, 1:7, LETTERS[1:7], col.axis = "blue")
 # unusual options:
-axis(4, col = "violet", col.axis="dark violet",lwd = 2)
+axis(4, col = "violet", col.axis="dark violet", lwd = 2)
 axis(3, col = "gold", lty = 2, lwd = 0.5)
 }
 \keyword{aplot}
