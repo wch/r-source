@@ -101,6 +101,13 @@ txt[gsub("g","#", txt) !=
     gsub("g","#", txt, ignore.case = TRUE)] # the "G" words
 
 regexpr("en", txt)
+
+## trim trailing white space
+str = 'Now is the time      '
+sub(' +$', '', str)  ## spaces only
+sub('[[:space:]]+$', '', str) ## white space, POSIX-style
+if(capabilities("PCRE"))
+  sub('\\s+$', '', str, perl = TRUE) ## perl-style white space
 }
 \keyword{character}
 \keyword{utilities}
