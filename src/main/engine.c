@@ -2165,7 +2165,7 @@ void GEcopyDisplayList(int fromDevice)
 SEXP GEcreateSnapshot(GEDevDesc *dd)
 {
     int i;
-    SEXP snapshot;
+    SEXP snapshot, tmp;
     SEXP state;
     /* Create a list with one spot for the display list 
      * and one spot each for the registered graphics systems
@@ -2174,7 +2174,11 @@ SEXP GEcreateSnapshot(GEDevDesc *dd)
     PROTECT(snapshot = allocVector(VECSXP, 1 + numGraphicsSystems));
     /* The first element of the snapshot is the display list.
      */
-    SET_VECTOR_ELT(snapshot, 0, duplicate(dd->dev->displayList));
+    tmp = dd->dev->displayList;
+    if(!isNull(tmp)) tmp = duplicate(tmp);
+    PROTECT(tmp);
+    SET_VECTOR_ELT(snapshot, 0, tmp);
+    UNPROTECT(1);
     /* For each registered system, obtain state information,
      * and store that in the snapshot.
      */
