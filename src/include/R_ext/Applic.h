@@ -251,7 +251,8 @@ int F77_SYMBOL(dtrco)(double *t, int *ldt, int *n, double *rcond,
 int F77_SYMBOL(dtrsl)(double *t, int *ldt, int *n, double *b, int *job,
 		      int *info);
 
-double F77_SYMBOL(fmin)(double *ax, double *bx, D_fp f, double *tol);
+double Brent_fmin(double ax, double bx, double (*f)(double, void *), 
+		  void *info, double tol);
 int F77_SYMBOL(lminfl)(double *x, int *ldx, int *n, int *k, double *qraux,
 		       double *resid, double *hat, double *coef, double *sigma);
 

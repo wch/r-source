@@ -26,6 +26,7 @@ SOURCES_C = \
 	cumsum.c \
 	distance.c \
 	fft.c \
+	fmin.c \
 	fortran.c \
 	lbfgsb.c \
 	loglin.c \
@@ -60,7 +61,7 @@ SOURCES_F = \
 	dtrco.f \
 	dtrsl.f \
 	eigen.f \
-	fmin.f \
+#	fmin.f \
 	lminfl.f
 DEPENDS = $(SOURCES_C:.c=.d)
 OBJECTS = $(SOURCES_C:.c=.o) $(SOURCES_F:.f=.o) $(BLAS)

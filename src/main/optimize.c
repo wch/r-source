@@ -29,22 +29,22 @@
 #include "Applic.h"
 #include "RS.h"			/* for Memcpy */
 
-/* WARNING : As things stand, these routines should not be called
- *	     recursively because of the way global variables are used.
- *	     This could be fixed by saving and restoring these global variables.
- */
-
 
 /* One Dimensional Minimization --- just wrapper code for Brent's "fmin" */
 
-static SEXP R_fcall1;
-static SEXP R_env1;
+struct callinfo {
+  SEXP R_fcall;
+  SEXP R_env;
+} ;
 
-static double F77_SYMBOL(fcn1)(double *x)
+/*static SEXP R_fcall1;
+  static SEXP R_env1; */
+
+static double fcn1(double x, struct callinfo *info)
 {
     SEXP s;
-    REAL(CADR(R_fcall1))[0] = *x;
-    s = eval(R_fcall1, R_env1);
+    REAL(CADR(info->R_fcall))[0] = x;
+    s = eval(info->R_fcall, info->R_env);
     switch(TYPEOF(s)) {
     case INTSXP:
 	if (length(s) != 1) goto badvalue;
@@ -66,7 +66,7 @@ static double F77_SYMBOL(fcn1)(double *x)
 	goto badvalue;
     }
  badvalue:
-    error("invalid function value in 'fmin' optimizer");
+    error("invalid function value in 'optimize'");
     return 0;/* for -Wall */
 }
 
@@ -74,7 +74,8 @@ static double F77_SYMBOL(fcn1)(double *x)
 SEXP do_fmin(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     double xmin, xmax, tol;
-    SEXP v;
+    SEXP v, res;
+    struct callinfo info;
 
     checkArity(op, args);
     PrintDefaults(rho);
@@ -108,28 +109,26 @@ SEXP do_fmin(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (!R_FINITE(tol) || tol <= 0.0)
 	errorcall(call, "invalid tol value");
 
-    R_env1 = rho;
-    PROTECT(R_fcall1 = lang2(v, R_NilValue));
-    CADR(R_fcall1) = allocVector(REALSXP, 1);
-    REAL(CADR(R_fcall1))[0] = F77_SYMBOL(fmin)(&xmin, &xmax, F77_SYMBOL(fcn1), &tol);
-    UNPROTECT(1);
-    return CADR(R_fcall1);
+    info.R_env = rho;
+    PROTECT(info.R_fcall = lang2(v, R_NilValue));
+    PROTECT(res = allocVector(REALSXP, 1));
+    CADR(info.R_fcall) = allocVector(REALSXP, 1);
+    REAL(res)[0] = Brent_fmin(xmin, xmax, 
+			      (double (*)(double, void*)) fcn1, &info, tol);
+    UNPROTECT(2);
+    return res;
 }
 
 
 
 /* One Dimensional Root Finding --  just wrapper code for Brent's "zeroin" */
 
-struct callinfo {
-  SEXP R_fcall2;
-  SEXP R_env2;
-} ;
 
-double fcn2(double x, struct callinfo *info)
+static double fcn2(double x, struct callinfo *info)
 {
     SEXP s;
-    REAL(CADR(info->R_fcall2))[0] = x;
-    s = eval(info->R_fcall2, info->R_env2);
+    REAL(CADR(info->R_fcall))[0] = x;
+    s = eval(info->R_fcall, info->R_env);
     switch(TYPEOF(s)) {
     case INTSXP:
 	if (length(s) != 1) goto badvalue;
@@ -202,9 +201,9 @@ SEXP do_zeroin(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (iter <= 0)
 	errorcall(call, "maxiter must be positive");
 
-    info.R_env2 = rho;
-    PROTECT(info.R_fcall2 = lang2(v, R_NilValue)); /* the info used in fcn2() */
-    CADR(info.R_fcall2) = allocVector(REALSXP, 1);
+    info.R_env = rho;
+    PROTECT(info.R_fcall = lang2(v, R_NilValue)); /* the info used in fcn2() */
+    CADR(info.R_fcall) = allocVector(REALSXP, 1);
     PROTECT(res = allocVector(REALSXP, 3));
     REAL(res)[0] =
 	R_zeroin(xmin, xmax,   (double (*)(double, void*)) fcn2,
