@@ -2,6 +2,8 @@
 
 include Makeconf
 
+all: R docs
+
 R: config.status
 	@echo "Building R"
 	cd src; make R
@@ -15,9 +17,11 @@ docs: build-docs
 help: build-help
 html: build-html
 latex: build-latex
+dvi: build-dvi
 
-build-docs build-help build-latex build-html::
+build-docs build-help build-latex build-html build-dvi::
 	-@cd etc; make $@
+
 tests test-Examples::
 	-@cd tests; make $@
 
@@ -70,3 +74,4 @@ install: R help html
 	@echo "Installing library ..."
 	cd library; tar c [a-z]* | (cd $(rhome)/library; tar x) 
 	$(INSTALL_DATA) library/LibIndex $(rhome)/library
+
