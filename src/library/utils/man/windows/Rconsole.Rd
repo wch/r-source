@@ -42,7 +42,7 @@
   otherwise to the working directory.  This is as described in the file
   \file{rw-FAQ}.
 }
-\section{Chinese/Japanese/Kprean}{
+\section{Chinese/Japanese/Korean}{
   Users of these languages will need to select a suitable font for the
   console (perhaps \code{FixedSys} or \code{MS Mincho}) and for the
   graphics device (\code{Arial} can be replaced by \code{Arial Unicode MS}).
