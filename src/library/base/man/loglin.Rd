@@ -88,8 +88,12 @@ loglin(table, margin, start = rep(1, length(table)), fit = FALSE,
 \author{Kurt Hornik}
 \seealso{\code{\link{table}}}
 \examples{
-data(UCBAdmissions)
-loglin(UCBAdmissions, list(c(1, 3), c(2, 3)))
+data(HairEyeColor)
+## Model of joint independence of sex from hair and eye color.
+fm <- loglin(HairEyeColor, list(c(1, 2), c(1, 3), c(2, 3)))
+fm
+1 - pchisq(fm$lrt, fm$df)
+## Model with no three-factor interactions fits well.
 }
 \keyword{category}
 \keyword{models}
