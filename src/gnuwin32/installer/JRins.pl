@@ -246,6 +246,10 @@ sub listFiles {
 	} elsif ($_ eq "modules\\iconv.dll") {
 	    $component = "main";
 	    $mini = 0;
+	} elsif (m/^share\\locale/ 
+		 || m/^library\\[^\\]*\\po/) { # needs iconv
+	    $component = "main";
+	    $mini = 0;
 	} elsif ($_ eq "bin\\Rmbcs.dll") {
 	    $component = "mbcs";
 	    $mini = 0;
