@@ -1,1 +1,2 @@
-windows<- function() .Internal(device("Win32","",c(0,0,0)))
+windows<- function(width = 7, height = 7, pointsize = 12) 
+	.Internal(Windows(width,height,pointsize))
