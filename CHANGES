@@ -12,6 +12,9 @@ BUG FIXES
 
     o   dyn.load statement in demos/dynload/zero.R fixed
 
+    o   Factors could get allocated without the OBJECT bit, which
+	nearly drove Kurt mad trying to write plot.factor...
+
 		CHANGES IN R VERSION 0.61.1
 
 NEW FEATURES
