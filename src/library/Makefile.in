@@ -41,11 +41,11 @@ R:
 	  (cd $${pkg} && $(MAKE)) || exit 1; \
 	done
 	@echo "tools:::.vinstall_package_descriptions_as_RDS(\"$(top_builddir)/library\", \"$(R_PKGS_BASE)\")" | \
-	  R_DEFAULT_PACKAGES=tools $(R_EXE) --slave > /dev/null
+	  R_DEFAULT_PACKAGES=tools LC_ALL=C $(R_EXE) --slave > /dev/null
 	@echo "installing parsed NAMESPACE files"
 	@rm -f $(top_builddir)/library/tools/Meta/nsInfo.rds
 	@echo "tools:::.vinstall_package_namespaces_as_RDS(\"$(top_builddir)/library\", \"$(R_PKGS_BASE)\")" | \
-	  R_DEFAULT_PACKAGES=tools $(R_EXE) --slave > /dev/null
+	  R_DEFAULT_PACKAGES=tools LC_ALL=C $(R_EXE) --slave > /dev/null
 	@$(INSTALL_DATA) $(top_srcdir)/doc/html/R.css \
 	  $(top_builddir)/library
 
@@ -82,7 +82,7 @@ vignettes:
 	    if test -d "$(srcdir)/$${pkg}/inst/doc"; then \
 	      echo "building/updating vignettes for package '$${pkg}' ..."; \
 	      (echo "tools:::.install_package_vignettes(\"$(srcdir)/$${pkg}\", \"$(top_builddir)/library/$${pkg}\")") | \
-	          R_DEFAULT_PACKAGES="utils,tools" LC_COLLATE=C \
+	          R_DEFAULT_PACKAGES="utils,tools" LC_ALL=C \
 	            $(R_EXE) --slave > /dev/null; \
 	    fi; \
 	  done; \
@@ -90,7 +90,7 @@ vignettes:
 indices:
 	@echo "building/updating package indices ..."
 	@echo "tools:::.vinstall_package_indices(\"$(srcdir)\", \"$(top_builddir)/library\", \"$(R_PKGS_BASE)\")" | \
-	  R_DEFAULT_PACKAGES=tools LC_COLLATE=C $(R_EXE) --slave > /dev/null
+	  R_DEFAULT_PACKAGES=tools LC_ALL=C $(R_EXE) --slave > /dev/null
 	@cat $(top_builddir)/library/*/CONTENTS \
 	  > $(top_builddir)/doc/html/search/index.txt
 

@@ -489,7 +489,7 @@ do_install_source () {
 
   ## Install DESCRIPTION file with build information.
   echo "tools:::.install_package_description(\".\", \"${R_PACKAGE_DIR}\")" | \
-    R_DEFAULT_PACKAGES=NULL LANG=C "${R_EXE}" --vanilla >/dev/null
+    R_DEFAULT_PACKAGES=NULL LC_ALL=C "${R_EXE}" --vanilla >/dev/null
   if test ${?} -ne 0; then
     error "installing package DESCRIPTION failed"
     do_exit_on_error
@@ -539,14 +539,14 @@ do_install_source () {
       ${MKDIR_P} "${R_PACKAGE_DIR}/R"
       rm -f "${R_PACKAGE_DIR}/R/"*
       echo "tools:::.install_package_code_files(\".\", \"${R_PACKAGE_DIR}\")" | \
-        R_DEFAULT_PACKAGES=NULL LANG=C "${R_EXE}" --vanilla >/dev/null
+        R_DEFAULT_PACKAGES=NULL LC_ALL=C "${R_EXE}" --vanilla >/dev/null
       if test ${?} -ne 0; then
         error "unable to collate files for package '${pkg_name}'"
         do_exit_on_error
       fi
     if test -f "R/sysdata.rda"; then
       echo "tools:::sysdata2LazyLoadDB(\"R/sysdata.rda\", \"${R_PACKAGE_DIR}/R\")" | \
-        R_DEFAULT_PACKAGES=NULL LANG=C "${R_EXE}" --vanilla > /dev/null ; \
+        R_DEFAULT_PACKAGES=NULL LC_ALL=C "${R_EXE}" --vanilla > /dev/null ; \
       if test ${?} -ne 0; then \
         error "unable to build sysdata DB for package '${pkg_name}'" ; \
         do_exit_on_error ; \
@@ -582,7 +582,7 @@ do_install_source () {
       ## code in the package, so ensure the package we have just
       ## installed is on the library path.
       echo "invisible(.libPaths(c(\"${lib}\", .libPaths()))); tools:::data2LazyLoadDB(\"${R_PACKAGE_NAME}\", \"${lib}\")" | \
-        R_DEFAULT_PACKAGES=NULL LANG=C "${R_EXE}" --vanilla > /dev/null
+        R_DEFAULT_PACKAGES=NULL LC_ALL=C "${R_EXE}" --vanilla > /dev/null
     if test ${?} -ne 0; then
       error "lazydata failed for package '${pkg_name}'"
       do_exit_on_error
@@ -670,7 +670,7 @@ do_install_source () {
       if test -s R_PROFILE.R; then cat R_PROFILE.R; fi; \
       echo "invisible(.libPaths(c(\"${lib}\", .libPaths()))); .getRequiredPackages()"; \
       ${code_cmd}) | \
-        R_DEFAULT_PACKAGES= LANG=C "${R_EXE}" ${R_save_args} ${save_args}
+        R_DEFAULT_PACKAGES= LC_ALL=C "${R_EXE}" ${R_save_args} ${save_args}
     if test ${?} -ne 0; then
       error "execution of package source for '${pkg_name}' failed"
       do_exit_on_error
@@ -711,7 +711,7 @@ do_install_source () {
     message "preparing package for lazy loading"
     (if test -s R_PROFILE.R; then cat R_PROFILE.R; fi; \
     echo "tools:::makeLazyLoading(\"${R_PACKAGE_NAME}\", \"${lib}\")") | \
-      R_DEFAULT_PACKAGES= LC_COLLATE=C "${R_EXE}" --vanilla --slave
+      R_DEFAULT_PACKAGES= LC_ALL=C "${R_EXE}" --vanilla --slave
     if test ${?} -ne 0; then
       error "lazy loading failed for package '${pkg_name}'"
       do_exit_on_error
@@ -775,7 +775,7 @@ do_install_source () {
 
   message "building package indices ..."
   echo "invisible(.libPaths(c(\"${lib}\", .libPaths()))); tools:::.install_package_indices(\".\", \"${R_PACKAGE_DIR}\")" | \
-    R_DEFAULT_PACKAGES=NULL LANG=C "${R_EXE}" --vanilla >/dev/null
+    R_DEFAULT_PACKAGES=NULL LC_ALL=C "${R_EXE}" --vanilla >/dev/null
   if test ${?} -ne 0; then
     error "installing package indices failed"
     do_exit_on_error
@@ -784,7 +784,7 @@ do_install_source () {
   ## Install a dump of the parsed NAMESPACE file
   if test -f NAMESPACE && test "${fake}" != "true"; then
       echo "tools:::.install_package_namespace_info(\".\", \"${R_PACKAGE_DIR}\")" | \
-        R_DEFAULT_PACKAGES=NULL LANG=C "${R_EXE}" --vanilla >/dev/null
+        R_DEFAULT_PACKAGES=NULL LC_ALL=C "${R_EXE}" --vanilla >/dev/null
     if test ${?} -ne 0; then
       error "installing namespace metadata failed"
       do_exit_on_error
