@@ -5,8 +5,9 @@ print.coefmat(x, digits=max(3, .Options$digits - 2),
               signif.stars = .Options$show.signif.stars,
               dig.tst = max(1, min(5, digits - 1)),
               cs.ind = 1:k, tst.ind = k + 1, zap.ind = integer(0),
-              has.Pvalue = d[2] >= 4 && substr(colnames(x)[d[2]],1,3) == "Pr(",
-              \dots)
+              P.values = NULL,
+              has.Pvalue = nc >= 4 && substr(colnames(x)[nc],1,3) == "Pr(",
+	      na.print = "", \dots)
 }
 \alias{print.coefmat}
 \arguments{
@@ -24,16 +25,25 @@ print.coefmat(x, digits=max(3, .Options$digits - 2),
  \item{zap.ind}{indices (integer) of column numbers which should be
    formatted by \code{\link{zapsmall}(.)}, i.e., by ``zapping'' values
    close to 0.}
+ \item{P.values}{logical or \code{NULL}; if \code{TRUE}, the last column
+     of \code{x} is formatted by \code{\link{format.pval}} as P values.
+     If \code{P.values = NULL}, the default, it is set to \code{TRUE}
+     only if \code{link{options}("show.coef.Pvalue")} is \code{TRUE}
+     \emph{and} \code{x} has at least 4 columns
+     \emph{and} the last column name of \code{x} starts with \code{"Pr("}.}
  \item{has.Pvalue}{logical; if \code{TRUE}, the last column of \code{x}
-   is formatted by \code{\link{format.pval}} as P values.}
+   contains P values; in that case, it is printed \emph{iff}
+   \code{P.values} (above).}
+ \item{na.print}{a character string to code \code{\link{NA}} values in
+    printed output.}
  \item{\dots}{Further arguments for \code{print(..)}.}
 }
 \description{
   Utility function to be used in ``higher level'' \code{\link{print}}
-  methods,  such as \code{\link{print.summary.lm}} and
-  \code{\link{print.summary.glm}}.  The goal is to provide a flexible
-  interface with smart defaults such that often, only \code{x} needs to
-  be specified.
+  methods,  such as \code{\link{print.summary.lm}},
+  \code{\link{print.summary.glm}} and \code{\link{print.anova}}.  The
+  goal is to provide a flexible interface with smart defaults such that
+  often, only \code{x} needs to be specified.
 }
 \details{
  Despite its name, this is \bold{not} (yet) a method for the generic
@@ -45,10 +55,15 @@ print.coefmat(x, digits=max(3, .Options$digits - 2),
 \seealso{\code{\link{print.pval}}, \code{\link{print.summary.lm}},
   \code{\link{format}}.}
 \examples{
-cmat <- cbind(Estimate = rnorm(3, 10), Std.Err = sqrt(rchisq(3, 12)))
-cmat <- cbind(cmat, z.val = cmat[,1]/cmat[,2])
-cmat <- cbind(cmat, P.val = 2*pnorm(-cmat[,3]))
+cmat <- cbind(rnorm(3, 10), sqrt(rchisq(3, 12)))
+cmat <- cbind(cmat, cmat[,1]/cmat[,2])
+cmat <- cbind(cmat, 2*pnorm(-cmat[,3]))
+colnames(cmat) <- c("Estimate", "Std.Err", "Z value", "Pr(>z)")
+print.coefmat(cmat[,1:3])
 print.coefmat(cmat)
-print.coefmat(cmat, digits=2, has.P = TRUE)
+options(show.coef.Pvalues = FALSE)
+print.coefmat(cmat, digits=2)
+print.coefmat(cmat, digits=2, P.values = TRUE)
+options(show.coef.Pvalues = TRUE)# revert
 }
 \keyword{print}
