@@ -87,11 +87,6 @@ static Rboolean have_broken_mktime(void)
 
 }
 
-#if (defined(Macintosh) & defined(__MRC__))
-#define mktime POSIXMakeTime
-#endif
-
- 
 #ifndef HAVE_WORKING_STRPTIME
 /* Substitute based on glibc code. */
 # include "Rstrptime.h"
@@ -339,32 +334,12 @@ SEXP do_systime(SEXP call, SEXP op, SEXP args, SEXP env)
 
 #ifdef Win32
 #define tzname _tzname
-#else
-# ifdef Macintosh
-#define tzname mytzname
-static char mytzname[2][21];
-static int tz_is_set = 0;
-static void mac_find_tznames(void)
-{
-    time_t ct;
-    struct tm *ltm;
-
-    ct = time(NULL); ltm = localtime(&ct);
-    ltm->tm_isdst = 0; strftime(tzname[0], 20, "%Z", ltm);
-    ltm->tm_isdst = 1; strftime(tzname[1], 20, "%Z", ltm);
-    tz_is_set = 1;
-}
-# else /* Unix */
+#else /* Unix */
 extern char *tzname[2];
-# endif
 #endif
 
 static int set_tz(char *tz, char *oldtz)
 {
-#ifdef Macintosh
-    warning("timezones except "" and UTC are not supported on the Mac");
-    return 0;
-#else
     char *p = NULL;
     int settz = 0;
     static char buff[200];
@@ -386,14 +361,10 @@ static int set_tz(char *tz, char *oldtz)
 #endif
     tzset();
     return settz;
-#endif /* Macintosh */
 }
 
 static void reset_tz(char *tz)
 {
-#ifdef Macintosh
-    return;
-#else
     if(strlen(tz)) {
 #ifdef HAVE_PUTENV
         static char buff[200];
@@ -414,7 +385,6 @@ static void reset_tz(char *tz)
 #endif
     }
     tzset();
-#endif /* Macintosh */
 }
 
 
@@ -457,9 +427,6 @@ SEXP do_asPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
     tz = CHAR(STRING_ELT(stz, 0));
     if(strcmp(tz, "GMT") == 0  || strcmp(tz, "UTC") == 0) isgmt = 1;
     if(!isgmt && strlen(tz) > 0) settz = set_tz(tz, oldtz);
-#ifdef Macintosh
-    if(!isgmt && !tz_is_set) mac_find_tznames();
-#endif
 
     n = LENGTH(x);
     PROTECT(ans = allocVector(VECSXP, 9));

@@ -22,11 +22,7 @@
 /* Exports setulb()
  *         ======
  * called from lbfgsb() in ../main/optim.c */
-#ifndef Macintosh
 #include <math.h>
-#else
-#include <fp.h>
-#endif /* mac */
 #include <float.h> /* for DBL_EPSILON */
 #include <string.h>
 #include <R_ext/RS.h> /* for F77_CALL */

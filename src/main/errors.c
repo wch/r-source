@@ -506,26 +506,6 @@ void jump_now()
 }
 
 
-#ifdef OLD_Macintosh
-
-#include <signal.h>
-#include <errno.h>
-
-void isintrpt()
-{
-    register EvQElPtr q;
-
-    for (q = (EvQElPtr) GetEvQHdr()->qHead; q; q = (EvQElPtr) q->qLink)
-	if (q->evtQWhat == keyDown && (char) q->evtQMessage == '.')
-	    if (q->evtQModifiers & cmdKey) {
-		FlushEvents(keyDownMask, 0);
-		raise(SIGINT);
-				/* errno = EINTR; */
-		return;
-	    }
-}
-#endif
-
 SEXP do_stop(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
 /* error(.) : really doesn't return anything; but all do_foo() must be SEXP */

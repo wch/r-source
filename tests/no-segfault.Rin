@@ -36,7 +36,7 @@ stop.list[["base"]] <-
                              "packages",sep="."))
 	socket.fun <- apropos("socket")
 	## "Interactive" ones:
-	dev.int <- c("X11", "x11", "windows", "macintosh", "postscript",
+	dev.int <- c("X11", "x11", "windows", "postscript",
                      "xfig", "jpeg", "png", "pictex")
 	misc.2 <- c("help.start", "browseEnv",
 		    "gctorture", "q", "quit", "restart", "try",

@@ -157,7 +157,7 @@ dev.copy2eps <- function(...)
     current.device <- dev.cur()
     nm <- names(current.device)[1]
     if(nm == "null device") stop("no device to print from")
-    if(!(nm %in% c("X11", "GTK", "gnome", "windows", "Macintosh")))
+    if(!(nm %in% c("X11", "GTK", "gnome", "windows")))
         stop("can only print from screen device")
     oc <- match.call()
     oc[[1]] <- as.name("dev.copy")

@@ -196,7 +196,7 @@ Model 2: Fr ~ M.user * Temp * Soft + Brand * M.user * Temp
 > if (dev.cur() <= 1) get(getOption("device"))()
 
 > opar <- par(ask = interactive() && (.Device %in% c("X11", 
-    "GTK", "gnome", "windows", "Macintosh")))
+    "GTK", "gnome", "windows")))
 
 > x <- rnorm(50)
 
@@ -376,7 +376,7 @@ Model 2: Fr ~ M.user * Temp * Soft + Brand * M.user * Temp
 > if (dev.cur() <= 1) get(getOption("device"))()
 
 > opar <- par(ask = interactive() && (.Device %in% c("X11", 
-    "GTK", "windows", "Macintosh")))
+    "GTK", "windows")))
 
 > data(volcano)
 

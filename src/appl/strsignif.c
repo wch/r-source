@@ -67,11 +67,7 @@
 #endif
 #include <stdio.h>
 #include <string.h>
-#ifndef Macintosh
-# include <math.h>
-#else
-# include <fp.h>
-#endif /* Macintosh */
+#include <math.h>
 
 #ifdef Win32
 #include <ctype.h>

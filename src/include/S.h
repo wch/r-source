@@ -38,11 +38,7 @@ extern "C" {
 #include <stdio.h>
 #include <limits.h>
 #include <float.h>
-#ifdef Macintosh
-# include <fp.h>
-#else
 # include <math.h>
-#endif
 
 #include <Rconfig.h>
 #include <R_ext/Constants.h>

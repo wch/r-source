@@ -26,11 +26,7 @@
 
 /*--- The Dennis + Schnabel Minimizer -- used by R's  nlm() ---*/
 
-#ifndef Macintosh
 #include <math.h>
-#else
-#include <fp.h>
-#endif /* mac */
 #include <R_ext/Applic.h>
 #include <R_ext/Boolean.h>
 #include <R_ext/PrtUtil.h> /* printRealVector */

@@ -103,15 +103,6 @@ static void closeLibrary(HINSTANCE handle)
 static void deleteCachedSymbols(DllInfo *dll)
 {
 #ifdef CACHE_DLL_SYM
-#ifdef Macintosh
-    /* This goes in a different order than the Unix version. */
-    for(i = 0; i < nCPFun; i++)
-	if(!strcmp(CPFun[i].pkg, dll->name)) {
-	    strcpy(CPFun[i].pkg, CPFun[nCPFun].pkg);
-	    strcpy(CPFun[i].name, CPFun[nCPFun].name);
-	    CPFun[i].func = CPFun[nCPFun--].func;
-	}
-#else /* Not Macintosh, so Unix */
     int i;
     /* Wouldn't a linked list be easier here?
        Potentially ruin the contiguity of the memory.
@@ -124,7 +115,6 @@ static void deleteCachedSymbols(DllInfo *dll)
 		CPFun[i].func = CPFun[nCPFun].func;
 	    } else nCPFun--;
 	}
-#endif /* Macintosh */
 #endif /* CACHE_DLL_SYM */
 }
 
@@ -226,21 +216,6 @@ static DL_FUNC R_dlsym(DllInfo *info, char const *name)
 
 static void getFullDLLPath(SEXP call, char *buf, char *path)
 {
-#ifdef Macintosh
-    if(path[0] != ':') {
-	if(R_Home == NULL){
-	    if (!getcwd(buf, PATH_MAX))
-		errorcall(call, "can't get working directory!");
-	    strcat(buf, path);
-	}
-	else
-	    strcpy(buf,path);
-    } else
-	strcpy(buf, path);
-    return;
-
-#else /* Macintosh */
-
     if(path[0] == '~')
 	strcpy(buf, R_ExpandFileName(path));
     else if(path[0] != '/') {
@@ -252,7 +227,6 @@ static void getFullDLLPath(SEXP call, char *buf, char *path)
 	strcat(buf, path);
     }
     else strcpy(buf, path);
-#endif
 }
 
 #endif /* end of `ifdef HAVE_DYNAMIC_LOADING' */

@@ -25,7 +25,7 @@ Furthermore:
 
 /*
 
-  $Id: apse.h,v 1.2 2002/07/14 12:02:55 iacus Exp $
+  $Id: apse.h,v 1.3 2003/04/25 16:37:46 ripley Exp $
 
 */
 
@@ -35,11 +35,7 @@ Furthermore:
 #define APSE_MAJOR_VERSION	0
 #define APSE_MINOR_VERSION	15
 
-#ifndef Macintosh
 #include <sys/types.h>
-#else
-#include <types.h>
-#endif
 
 #ifdef APSE_VEC_T
 typedef	APSE_VEC_T	apse_vec_t;

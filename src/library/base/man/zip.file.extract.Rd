@@ -16,7 +16,7 @@ zip.file.extract(file, zipname = "R.zip")
 \details{
   The method used is selected by \code{options(unzip=)}. All platforms
   support an \code{"internal"} unzip: this is the default under
-  Windows and MacOS, and the fall-back under Unix if no \code{unzip}
+  Windows and the fall-back under Unix if no \code{unzip}
   program was found during configuration and \code{R\_UNZIPCMD} is not set.
   
   The file will be extracted if it is in the archive and any required

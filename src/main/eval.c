@@ -31,32 +31,6 @@
 
 SEXP do_browser(SEXP, SEXP, SEXP, SEXP);
 
-#ifdef Macintosh
-
-/* Now R correctly handles user breaks
-   This is the fastest way to do handle user breaks
-   and performance are no rather good. 
-   Jago, 13 Jun 2001, Stefano M. Iacus
-*/
-extern Boolean Interrupt;
-
-void isintrpt()
-{
-   if(!Interrupt)
-     return;
-     
-   if(CheckEventQueueForUserCancel()){  
-	Rprintf("\n");
-	error("user break");
-	raise(SIGINT);
-	return;
-    }
-
-}
-
-#endif /* Macintosh */
-
-
 #ifdef R_PROFILING
 
 /* BDR 2000-07-15
@@ -293,13 +267,6 @@ SEXP eval(SEXP e, SEXP rho)
 
     if (R_EvalDepth > R_Expressions)
 	error("evaluation is nested too deeply: infinite recursion?");
-#ifdef Macintosh
-    /* check for a user abort */
-    if ((R_EvalCount++ % 100) == 0) {
-	isintrpt();
-	R_EvalCount = 0 ;
-    }
-#endif /* Macintosh */
 #ifdef Win32
     if ((R_EvalCount++ % 100) == 0) {
 	R_ProcessEvents();

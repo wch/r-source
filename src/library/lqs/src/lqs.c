@@ -177,9 +177,6 @@ lqs_fitlots(double *x, double *y, int *n, int *p, int *qn,
     for(trial = 0; trial < *ntrials; trial++) {
 
 	/* check for a user interrupt */
-#ifdef Macintosh
-	if(trial % 10) isintrpt();
-#endif
 #ifdef WIN32
 	if(trial % 10) R_ProcessEvents();
 #endif
@@ -362,9 +359,6 @@ mve_fitlots(double *x, int *n, int *p, int *qn, int *mcd,
     for(trial = 0; trial < *ntrials; trial++) {
 
 	/* check for a user interrupt */
-#ifdef Macintosh
-	if(trial % 10) isintrpt();
-#endif
 #ifdef WIN32
 	if(trial % 10) R_ProcessEvents();
 #endif

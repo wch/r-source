@@ -21,11 +21,7 @@
 /* Written by Ulrich Drepper <drepper@gnu.ai.mit.edu>, 1995.  */
 
 #include <Rconfig.h>
-#ifndef Macintosh
 #include <sys/types.h>
-#else
-#include <types.h>
-#endif
 
 # include <stdlib.h>
 # include <string.h>

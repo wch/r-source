@@ -4,11 +4,7 @@
    Generate random two-way table with given marginal totals.
    */
 
-#ifdef Macintosh
-# include <fp.h>
-#else
-# include <math.h>
-#endif
+#include <math.h>
 
 #include <R_ext/Random.h>
 

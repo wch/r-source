@@ -73,11 +73,7 @@
  */
 
 #include <float.h>
-#ifndef Macintosh
 #include <math.h>
-#else
-#include <fp.h>
-#endif /* mac */
 
 #include <R_ext/Applic.h>
 

@@ -21,11 +21,7 @@
 #ifndef R_ARITH_H_
 #define R_ARITH_H_
 
-#ifdef Macintosh
-#include <fp.h> 
-#else
 #include <math.h>
-#endif
 
 #include <R_ext/libextern.h>
 #ifdef  __cplusplus
