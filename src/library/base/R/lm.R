@@ -355,7 +355,7 @@ coef.lm <- function(z) z$coefficients
 weights.lm <- function(z) z$weights
 df.residual.lm <- function(z) z$df.residual
 deviance.lm <- function(z) sum((z$residuals)^2)
-formula.lm <- function(x)formula(x$terms)
+formula.lm <- function(x) formula(x$terms)
 family.lm <- function(x) { gaussian() }
 
 model.frame.lm <-
@@ -510,18 +510,21 @@ predict.lm <- function (object, newdata = model.frame(object),
 	pred.l=pred.l,pred.u=pred.u,row.names=rownames(newdata))
 }
 
-effects.lm <- function(z, term) {
-	term <- deparse(substitute(term))
-	k <- match(term,attr(z$terms,"term.labels"))
-	if(is.na(k)) stop("effect not found")
-	pattern <- attr(z$terms,"factors")[,k]
-	factors <- as.logical(lapply(z$model.frame,is.factor))
-	y <- model.response(z$model.frame,"numeric")
-	k <- range(seq(length(z$assign))[z$assign==k])
-	yhat0 <- if(k[1] > 1) qr.fitted(z$qr,y,k[1]-1) else 0
-	yhat1 <- qr.fitted(z$qr,y,k[2])
-	effects <- yhat1-yhat0
-	tapply(effects,z$model.frame[factors & pattern!=0],mean,na.rm=TRUE)
-}
+## Old version below, did it ever work?
+## effects.lm <- function(z, term) {
+##  term <- deparse(substitute(term))
+##  k <- match(term,attr(z$terms,"term.labels"))
+##  if(is.na(k)) stop("effect not found")
+##  pattern <- attr(z$terms,"factors")[,k]
+##  factors <- as.logical(lapply(z$model.frame,is.factor))
+##  y <- model.response(z$model.frame,"numeric")
+##  k <- range(seq(length(z$assign))[z$assign==k])
+##  yhat0 <- if(k[1] > 1) qr.fitted(z$qr,y,k[1]-1) else 0
+##  yhat1 <- qr.fitted(z$qr,y,k[2])
+##  effects <- yhat1-yhat0
+##  tapply(effects,z$model.frame[factors & pattern!=0],mean,na.rm=TRUE)
+##}
 
+effects.lm <- function(...) .NotYetImplemented()
+                                        
 plot.lm <- function(...) .NotYetImplemented()
