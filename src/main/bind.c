@@ -1061,7 +1061,7 @@ static SEXP cbind(SEXP call, SEXP args, SEXPTYPE mode, SEXP rho)
 		UNPROTECT(1);
 	    }
 	    dn = getAttrib(u, R_NamesSymbol);
-	    if (k && (TAG(t) != R_NilValue ||
+	    if (k >= lenmin && (TAG(t) != R_NilValue ||
 		      ((data.deparse_level == 1) &&
 		       isSymbol(substitute(CAR(t),R_NilValue)))))
 		have_cnames = 1;
