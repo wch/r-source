@@ -228,6 +228,9 @@ UTILITIES
 
     o   list_files_with_exts (package tools) now handles zipped directories.
 
+    o	Package 'tools' now provides Rd_parse(), a simple top-level
+        parser/analyzer for R documentation format.
+
 
 C-LEVEL FACILITIES
 
