@@ -1,5 +1,5 @@
 \name{table}
-\title{Cross Tabulation}
+\title{Cross Tabulation and Table Creation}
 \alias{table}
 \alias{summary.table}
 \alias{print.summary.table}
@@ -82,17 +82,22 @@ data(UCBAdmissions) ## already a contingency table
 DF <- as.data.frame(UCBAdmissions)
 class(tab <- xtabs(Freq ~ ., DF))# xtabs & table
 ## tab *is* ``the same'' as the original table:
-all(tab == UCBAdmissions) 
+all(tab == UCBAdmissions)
 all.equal(dimnames(tab), dimnames(UCBAdmissions))
 
-a<-1/rep(0:3,10)
+a <- 1/rep(0:3,10)
 table(a)
 table(a, exclude=NULL)
-b<-factor(rep(c("A","B","C"),10))
+b <- factor(rep(c("A","B","C"), 10))
 table(b)
-table(b,exclude="B")
-d<-factor(rep(c("A","B","C"),10), levels=c("A","B","C","D","E"))
+table(b, exclude="B")
+d <- factor(rep(c("A","B","C"), 10), levels=c("A","B","C","D","E"))
 table(d, exclude="B")
 
+## NA counting:
+is.na(d) <- 3:4
+d <- factor(d, exclude=NULL)
+d[1:7]
+table(d, exclude = NULL)
 }
 \keyword{category}
