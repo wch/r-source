@@ -364,6 +364,7 @@ foreach $pkg (@ARGV){
 	    system("zip $startdir/$filename.zip $topLevelFiles");
 	    chdir($currentDir);
 	}
+	chdir($startdir);
     }
     # wipe out lockdir
     rmtree($lockdir) if $safe;
