@@ -111,7 +111,7 @@ char *R_PromptString(int browselevel, int type)
 
 static void R_ReplConsole(SEXP rho, int savestack, int browselevel)
 {
-    int c, status, prompt;
+    int c, status;
     char *bufp, buf[1024];
 
     R_IoBufferWriteReset(&R_ConsoleIob);
@@ -138,10 +138,7 @@ static void R_ReplConsole(SEXP rho, int savestack, int browselevel)
 #endif
 	while((c = *bufp++)) {
 	    R_IoBufferPutc(c, &R_ConsoleIob);
-	    if(c == ';' || c == '\n') {
-		prompt = (c == '\n');
-		break;
-	    }
+	    if(c == ';' || c == '\n') break;
 	}
 	if (browselevel)
 	    Reset_C_alloc();
@@ -201,6 +198,75 @@ static void R_ReplConsole(SEXP rho, int savestack, int browselevel)
     }
 }
 
+
+static char DLLbuf[1024], *DLLbufp;
+
+void R_ReplDLLinit()
+{
+    R_IoBufferWriteReset(&R_ConsoleIob);
+    prompt_type = 1;
+    DLLbuf[0] = '\0';
+    DLLbufp = DLLbuf;
+}
+
+
+int R_ReplDLLdo1()
+{
+    int c, status;
+    SEXP rho = R_GlobalEnv;
+    
+    if(!*DLLbufp) {
+	R_Busy(0);
+	if (R_ReadConsole(R_PromptString(0, prompt_type), DLLbuf, 1024, 1) == 0) 
+	    return -1;
+	DLLbufp = DLLbuf;
+    }
+    while((c = *DLLbufp++)) {
+	R_IoBufferPutc(c, &R_ConsoleIob);
+	if(c == ';' || c == '\n') break;
+    }
+    R_PPStackTop = 0;
+    R_CurrentExpr = R_Parse1Buffer(&R_ConsoleIob, 0, &status);
+
+    switch(status) {
+    case PARSE_NULL:
+	R_IoBufferWriteReset(&R_ConsoleIob);
+	prompt_type = 1;
+	break;
+    case PARSE_OK:
+	R_IoBufferReadReset(&R_ConsoleIob);
+	R_CurrentExpr = R_Parse1Buffer(&R_ConsoleIob, 1, &status);
+	R_Visible = 0;
+	R_EvalDepth = 0;
+	PROTECT(R_CurrentExpr);
+	R_Busy(1);
+	R_CurrentExpr = eval(R_CurrentExpr, rho);
+	SYMVALUE(R_LastvalueSymbol) = R_CurrentExpr;
+	UNPROTECT(1);
+	if (R_Visible)
+	    PrintValueEnv(R_CurrentExpr, rho);
+	if (R_CollectWarnings)
+	    PrintWarnings();
+	R_IoBufferWriteReset(&R_ConsoleIob);
+	R_Busy(0);
+	prompt_type = 1;
+	break;
+    case PARSE_ERROR:
+	error("syntax error\n");
+	R_IoBufferWriteReset(&R_ConsoleIob);
+	prompt_type = 1;
+	break;
+    case PARSE_INCOMPLETE:
+	R_IoBufferReadReset(&R_ConsoleIob);
+	prompt_type = 2;
+	break;
+    case PARSE_EOF:
+	return -1;
+	break;
+    }
+    return prompt_type;
+}
+
 /* Main Loop: It is assumed that at this point that operating system */
 /* specific tasks (dialog window creation etc) have been performed. */
 /* We can now print a greeting, run the .First function and then enter */
@@ -234,7 +300,7 @@ static void R_LoadProfile(FILE *fp)
     }
 }
 
-void mainloop(void)
+void setup_Rmainloop(void)
 {
     SEXP cmd;
     FILE *fp;
@@ -353,7 +419,6 @@ void mainloop(void)
 	}
 	UNPROTECT(1);
     }
-
     /* gc_inhibit_torture = 0; */
 
     /* Here is the real R read-eval-loop. */
@@ -363,10 +428,19 @@ void mainloop(void)
     SETJMP(R_Toplevel.cjmpbuf);
     R_GlobalContext = R_ToplevelContext = &R_Toplevel;
     signal(SIGINT, onintr);
+}
+
+
+void run_Rmainloop(void)
+{
     R_ReplConsole(R_GlobalEnv, 0, 0);
+}
+
+void end_Rmainloop(void)
+{
+    SEXP cmd;
+
     Rprintf("\n");
-
-
     /* We have now exited from the read-eval loop. */
     /* Now we run the .Last function and exit. */
     /* Errors here should kick us back into the repl. */
@@ -382,6 +456,14 @@ void mainloop(void)
     UNPROTECT(1);
     R_CleanUp(1);	/* query save */
 }
+
+void mainloop(void)
+{
+    setup_Rmainloop();
+    run_Rmainloop();
+    end_Rmainloop();
+}
+
 
 static int ParseBrowser(SEXP CExpr, SEXP rho)
 {
