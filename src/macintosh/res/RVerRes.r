@@ -44,10 +44,10 @@
 #define fbRImage				'BINA'
 
 #define kMajorVersNumber	0x01
-#define kMinorVersNumber	0x30
+#define kMinorVersNumber	0x31
 #define kReleaseStage		Development
 #define kNonFinalRelease	0x01
-#define kVersString			"1.3.0"
+#define kVersString			"1.3.1"
 
 #define kRegionCode			verUS
 
@@ -147,7 +147,8 @@ enum {
 	kMenuFile,
 	kMenuEdit,
 	kMenuTools,
-	kMenuWindows
+	kMenuWindows,
+	kMenuConfig
 };
 
 
@@ -158,7 +159,8 @@ resource 'MBAR' ( 128, purgeable )
 		kMenuFile,
 		kMenuEdit,
 		kMenuTools,
-	    kMenuWindows
+	    kMenuWindows,
+	    kMenuConfig
 	}
 } ;
 
