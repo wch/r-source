@@ -70,7 +70,8 @@ BUG FIXES
 
     o	The checking of R versions incorrectly assumed 1.9.1 >= 1.50.
 
-    o	str(Surv(..)) failed for  type = "counting"  Surv objects.
+    o	str(Surv(..)) failed for  type = "counting"  Surv objects and for
+	promises.
 
 
 
