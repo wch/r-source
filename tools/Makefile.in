@@ -12,6 +12,7 @@ include $(top_builddir)/Makeconf
 
 SCRIPT_SOURCES = \
 	Rdnewer.in \
+	help2man.in \
 	install-info.in \
 	keyword-test.in \
 	pkg2tex.in
