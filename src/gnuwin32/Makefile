@@ -350,23 +350,8 @@ docs manuals:
 
 RVER = $(shell cut -d' ' -f1 ../../VERSION | sed -n 1p)
 
-docfiles: INSTALL FAQs
-SEDVER = -e s/@RVER@/$(RVER)/g -e s/@RWVER@/$(RPREFIX)/g
-
-INSTALL: INSTALL.in ../../VERSION RWVERSION
-	$(SED) $(SEDVER) INSTALL.in > INSTALL
-
-FAQs: rw-faq fixed/html/rw-FAQ.html
-
-fixed/html/rw-FAQ.html: rw-FAQ.texi ../../VERSION RWVERSION
-	@$(SED) $(SEDVER) $< > tmp.texi
-	makeinfo --no-split --html --no-headers --number-sections -o tmp.html tmp.texi
-	-tidy tmp.html > $@ 2> /dev/null
-	@$(RM) tmp.texi tmp.html
-
-rw-faq: rw-FAQ.texi ../../VERSION RWVERSION
-	$(SED) $(SEDVER) $< | \
-	  makeinfo --no-headers --number-sections -o $@
+docfiles:
+	$(MAKE) -f Makefile.docfiles
 
 bitmapdll:
 	$(MAKE) -C bitmap
