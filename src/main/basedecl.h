@@ -45,6 +45,7 @@ SEXP La_dgesv(SEXP, SEXP);
 SEXP La_dgeqp3(SEXP);
 SEXP qr_coef_real(SEXP, SEXP);
 SEXP qr_qy_real(SEXP, SEXP, SEXP);
+SEXP det_ge_real(SEXP, SEXP);
 
 void signrank_free();
 void wilcox_free();

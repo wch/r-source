@@ -36,6 +36,11 @@ void F77_NAME(dgesdd)(const char *jobz,
 		      double *vt, const int *ldvt,
 		      double *work, const int *lwork, int *iwork, int *info);
 
+/* DGETRF - compute an LU factorization of a general M-by-N */
+/* matrix A using partial pivoting with row interchanges */
+void F77_NAME(dgetrf)(const int* m, const int* n, double* a, const int* lda,
+		      int* ipiv, int* info);
+
 #ifdef HAVE_LAPACK
 
 /* DGEEV - compute for an N-by-N real nonsymmetric matrix A, the   */
@@ -46,12 +51,6 @@ void F77_NAME(dgeev)(const char *jobvl, const char *jobvr,
 		     double *vl, const int *ldvl,
 		     double *vr, const int *ldvr,
 		     double *work, const int *lwork, int *info);
-
-/* DGETRF - compute an LU factorization of a general M-by-N */
-/* matrix A using partial pivoting with row interchanges */
-void
-F77_NAME(dgetrf)(const int* m, const int* n, double* a, const int* lda,
-		 int* ipiv, int* info);
 
 /* DSYEV - compute all eigenvalues and, optionally, eigenvectors   */
 /* of a real symmetric matrix A                                    */

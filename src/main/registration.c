@@ -204,6 +204,7 @@ static R_CallMethodDef callMethods [] = {
     CALLDEF(La_dgeqp3, 1),
     CALLDEF(qr_coef_real, 2),
     CALLDEF(qr_qy_real, 3),
+    CALLDEF(det_ge_real, 2),
 
     /* In ../main/unique.c to use hashing. */
     CALLDEF(Rrowsum_matrix, 4),
