@@ -5,3 +5,4 @@
 #undef TRUE
 typedef enum { FALSE = 0, TRUE /*, MAYBE */ } Rboolean;
 
+#endif
