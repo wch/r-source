@@ -15,9 +15,10 @@ if test "${DVIPS}" = "false"; then
     exit 2
 fi
 ODIR=`pwd`
-cd `dirname "${1}"`
+cd `(dirname "${1}") 2>/dev/null || \
+     echo "${1}" | sed -e 's,[^/]*$,,;s,/$,,;s,^$,.,'`
 ${LATEX} "\\nonstopmode\\input{${1}}" >/dev/null 2>&1
-${DVIPS} ${1} 2>/dev/null
+${DVIPS} "${1}" 2>/dev/null
 if test -f "${1}.ps"; then
     echo "Saving help page to '${2}.ps'"
     mv "${1}.ps" "${ODIR}/${2}.ps"
