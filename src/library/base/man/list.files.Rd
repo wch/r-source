@@ -9,7 +9,7 @@ dir(path, pattern=NULL, all.files=FALSE,
     full.names=FALSE)
 }
 \arguments{
- \item{path}{the fill path name to the directory.}
+ \item{path}{the full path name to the directory.}
  \item{pattern}{an optional regular expression.  Only file names
    which match the regular expression will be returned.}
  \item{all.files}{a logical value. If \code{FALSE}, only the
@@ -27,7 +27,7 @@ in the named directory. \code{dir} is an alias.
 A character vector containing the names of the files in the
 specified directory, or \code{""} if there were no files.
 }
-\author{Ross Ihaka.}
+\author{Ross Ihaka}
 \note{File naming conventions are very platform dependent.}
 
 \examples{
