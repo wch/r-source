@@ -4765,7 +4765,7 @@ to move the axis labels up or down relative to the x axis.  See
 
 Also see Figure 1 and associated code in Paul Murrell (2003),
 ``Integrating grid Graphics Output with Base Graphics Output'',
-@emph{RNews}, @strong{3/2}, 7--12.
+@emph{R News}, @strong{3/2}, 7--12.
 
 @node Why is read.table() so inefficient?, What is the difference between package and library?, How can I create rotated axis labels?, R Miscellanea
 @section Why is read.table() so inefficient?
@@ -4783,10 +4783,14 @@ columns of the table.
 A @dfn{package} is a standardized collection of material extending R,
 e.g.@: providing code, data, or documentation.  A @dfn{library} is a
 place (directory) where R knows to find packages it can use (i.e., which
-were @emph{installed}).  R is told to use a package (to ``load'' it and
+were @dfn{installed}).  R is told to use a package (to ``load'' it and
 add it to the search path) via calls to the function @code{library}.
+I.e., @code{library()} is employed to load a package from libraries
+containing packages.
 
-@xref{R Add-On Packages}, for more details.
+@xref{R Add-On Packages}, for more details.  See also Uwe Ligges (2003),
+``R Help Desk: Package Management'', @emph{R News}, @strong{3/3},
+37--39.
 
 @node R Programming, R Bugs, R Miscellanea, Top
 @chapter R Programming
@@ -4851,7 +4855,7 @@ Suppose you have C code file for dynloading into R, but you want to use
 (which were determined when R was built).
 
 Starting with R 2.1.0, users can provide personal Makevars configuration
-files in @file{HOME/.R} to override the default flags.
+files in @file{$@env{HOME}/.R} to override the default flags.
 @c <FIXME>
 @c 2.1.0
 @c Provide refs/xrefs.
@@ -4866,7 +4870,7 @@ files in @file{HOME/.R} to override the default flags.
 @c </FIXME>
 
 For earlier versions of R, you could change the file
-@file{@env{R_HOME}/etc/Makeconf} to reflect your preferences, or (at
+@file{$@env{R_HOME}/etc/Makeconf} to reflect your preferences, or (at
 least for systems using @acronym{GNU} Make) override them by the
 environment variable @env{MAKEFLAGS}.
 @ifclear UseExternalXrefs
