@@ -34,16 +34,19 @@ lfactorial(x)
   \item{n, k, deriv}{integer vectors.}
 }
 \details{
-%---- This should be improved! ---  want mathematical definitions
-%----   AND References to Abramowitz and Stegun
   The functions \code{beta} and \code{lbeta} return the beta function
   and the natural logarithm of the beta function,
   \deqn{B(a,b) = \frac{\Gamma(a)\Gamma(b)}{\Gamma(a+b)}.}{%
-        B(a,b) = (Gamma(a)Gamma(b))/(Gamma(a+b)).}
-
+    B(a,b) = (Gamma(a)Gamma(b))/(Gamma(a+b)).}
+  The formal definition is
+  \deqn{B(a, b) = \int_0^1 t^{a-1} (1-t)^{b-1} dt}{integral_0^1 t^(a-1) (1-t)^(b-1) dt}
+  (Abramowitz and Stegun (6.2.1), page 258).
+  
   The functions \code{gamma} and \code{lgamma} return the gamma function
   \eqn{\Gamma(x)} and the natural logarithm of the absolute value of the
-  gamma function.   \code{factorial(x)} is \eqn{x!} and identical to
+  gamma function.  The gamma function is defined by (Abramowitz and Stegun (6.1.1), page 255)
+  \deqn{\Gamma(x) = \int_0^\infty t^{a-1} e^{-t} dt}{integral0^Inf t^(a-1) exp(-t) dt}
+  \code{factorial(x)} is \eqn{x!} and identical to
   \code{gamma(x+1)} and \code{lfactorial} is \code{lgamma(x+1)}.
 
   The functions \code{digamma} and \code{trigamma} return the first and second
@@ -73,6 +76,10 @@ lfactorial(x)
   \code{\link{Arithmetic}} for simple, \code{\link{sqrt}} for
   miscellaneous mathematical functions and \code{\link{Bessel}} for the
   real Bessel functions.
+
+  For the incomplete gamma function see \code{\link{pgamma}}: in the
+  notation of Abramowitz and Stegun 6.5.1 the incomplete gamma
+  function \eqn{P(a, x)} is \code{pgamma(x, a)}.
 }
 \examples{
 choose(5, 2)

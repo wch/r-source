@@ -50,10 +50,18 @@ rgamma(n, shape, rate = 1, scale = 1/rate)
 }
 \note{
   The S parametrization is via \code{shape} and \code{rate}: S has no
-  \code{scale} parameter.  Prior to 1.4.0 \R only had \code{scale}.
+  \code{scale} parameter.
 
   The cumulative hazard \eqn{H(t) = - \log(1 - F(t))}{H(t) = - log(1 - F(t))}
   is \code{-pgamma(t, ..., lower = FALSE, log = TRUE)}.
+
+  \code{pgamma} is closely related to the incomplete gamma function.  As
+  defined by Abramowitz and Stegun 6.5.1
+  \deqn{P(a,x) = \frac{1}{\Gamma(a)} \int_0^x t^{a-1} e^{-t} dt}{P(a,x) =
+      1/Gamma(a) integral_0^x t^(a-1) exp(-t) dt}
+  \eqn{P(a, x)} is \code{pgamma(x, a)}.  Other authors (for example
+  Karl Pearson in his 1922 tables) omit the normalizing factor,
+  defining the incomplete gamma function as \code{pgamma(x, a) * gamma(a)}.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
@@ -63,6 +71,10 @@ rgamma(n, shape, rate = 1, scale = 1/rate)
   Shea, B. L. (1988)
   Algorithm AS 239,  Chi-squared and Incomplete Gamma Integral,
   \emph{Applied Statistics (JRSS C)} \bold{37}, 466--473.
+
+  Abramowitz, M. and Stegun, I. A. (1972)
+  \emph{Handbook of Mathematical Functions.} New York: Dover.
+  Chapter 6: Gamma and Related Functions.
 }
 \seealso{
   \code{\link{gamma}} for the Gamma function, \code{\link{dbeta}} for
