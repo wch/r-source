@@ -864,8 +864,8 @@ AC_DEFUN([R_GNOME], [
       AM_PATH_LIBGLADE(
         [use_gnome="yes"
 	  GNOME_IF_FILES="gnome-interface.glade"],
-        [ warn_libglade="GNOME support requires libglade version >= 0.3"
-	  AC_MSG_WARN(${warn_libglade})],
+        [ warn_libglade_version="GNOME support requires libglade version >= 0.3"
+	  AC_MSG_WARN(${warn_libglade_version})],
         gnome)
     fi
   fi
@@ -1242,7 +1242,7 @@ int main() {
         AC_MSG_RESULT([no]))
     ])
   ])
-  if test "${r_cv_zlib}" = yes; then
+  if test "${have_zlib}" = yes; then
     AC_DEFINE(HAVE_ZLIB)
   fi
 ])

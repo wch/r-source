@@ -419,8 +419,8 @@ AC_FUNC_ALLOCA
 AC_FUNC_VFORK
 AC_FUNC_VPRINTF
 AC_CHECK_FUNCS(access acosh asinh atanh bcopy finite ftruncate getcwd \
-  getgrgid getpwuid getuid hypot isnan matherr memcpy memmove mkfifo popen \
-  putenv rint setenv snprintf strcoll stat strptime system times \
+  getgrgid getpwuid getuid hypot isnan matherr memcpy memmove mkfifo \
+  popen putenv rint setenv snprintf strcoll stat strptime system times \
   unsetenv vsnprintf)
 AC_REPLACE_FUNCS(strdup)
 R_FUNC___SETFPUCW
@@ -438,7 +438,7 @@ AC_CHECK_HEADERS(dl.h dlfcn.h elf.h errno.h fcntl.h floatingpoint.h \
   fpu_control.h grp.h ieee754.h ieeefp.h locale.h netdb.h netinet/in.h \
   netinet/tcp.h pwd.h readline/history.h readline/readline.h rpc/rpc.h \
   rpc/xdr.h string.h sys/param.h sys/select.h sys/socket.h sys/stat.h \
-  sys/time.h sys/times.h sys/utsname.h unistd.h zlib.h)
+  sys/time.h sys/times.h sys/utsname.h unistd.h)
 case "${host}" in
   *sunos4*)
     AC_DEFINE(SunOS4) ;;
@@ -1082,8 +1082,8 @@ fi
 if test -n "${warn_shlib_cxxldflags}"; then
   AC_MSG_WARN(${warn_shlib_cxxldflags})
 fi
-if test -n "${warn_libglade}"; then
-  AC_MSG_WARN(${warn_libglade})
+if test -n "${warn_libglade_version}"; then
+  AC_MSG_WARN(${warn_libglade_version})
 fi
 if test -n "${warn_tcltk_version}"; then
   AC_MSG_WARN(${warn_tcltk_version})
