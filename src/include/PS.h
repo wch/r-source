@@ -50,7 +50,7 @@ void   PostScriptOpenRectangle(FILE*, double, double, double, double);
 void   PostScriptSetClipRect(FILE*, double, double, double, double);
 void   PostScriptSetColor(FILE*, double, double, double);
 void   PostScriptSetFont(FILE*, int, double);
-void   PostScriptSetLineTexture(FILE*, int*, int);
+void   PostScriptSetLineTexture(FILE*, int*, int, double);
 void   PostScriptSetLineWidth(FILE*, double);
 void   PostScriptStartPage(FILE*, int);
 void   PostScriptStartPath(FILE*);
