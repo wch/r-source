@@ -747,7 +747,9 @@ SEXP do_browser(SEXP call, SEXP op, SEXP args, SEXP rho)
 	}
 	R_GlobalContext = &thiscontext;
 	R_BrowseLevel = savebrowselevel;
+#ifdef REINSTALL_SIGNAL_HANDLERS
 	signal(SIGINT, handleInterrupt);
+#endif
 	R_ReplConsole(rho, savestack, R_BrowseLevel);
 	endcontext(&thiscontext);
     }
