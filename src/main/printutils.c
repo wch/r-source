@@ -222,6 +222,7 @@ static int hexdigit(unsigned int x)
 }
 #endif
 
+/* strlen() using escaped rather than literal form */
 int Rstrlen(char *s)
 {
     char *p;
