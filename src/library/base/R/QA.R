@@ -181,6 +181,7 @@ function(dir) {
                "split.screen",
                "update.packages"),
                ts = "lag.plot",
+               sm = "print.graph",
                character(0))
 
     checkArgs <- function(g, m, env) {
@@ -319,7 +320,7 @@ function(file, package, dir, lib.loc = .lib.loc)
         else
             stop("you must specify `file', `package' or `dir'")
     }
-    
+
     if(!file.exists(file))
         stop(paste("file", fQuote(file), "does not exist"))
     exprs <- parse(file = file, n = -1)
@@ -422,7 +423,7 @@ function(dir) {
     envList <- list(.CodeEnv)
     if(!isBase) envList <- c(envList, list(as.environment(NULL)))
     for(env in envList) {
-        allObjs <- ls(envir = env, all.names = TRUE)        
+        allObjs <- ls(envir = env, all.names = TRUE)
         allGenerics <-
             c(allGenerics, allObjs[sapply(allObjs, isS3Generic, env)])
     }
@@ -490,7 +491,7 @@ function(dir) {
                    simplify = FALSE)
         methodsWithGeneric <-
             methodsWithGeneric[lapply(methodsWithGeneric, length) > 0]
-            
+
         methodsWithFullName <-
             sapply(usages[usages %in% allMethodsInPackage],
                    function(f) any(grep(paste(f, "*<-"), usageTxt)))
@@ -520,7 +521,7 @@ function(dir) {
             }
             writeLines("")
         }
-                
+
         rm(list = usages, envir = .DocsEnv)
     }
 
