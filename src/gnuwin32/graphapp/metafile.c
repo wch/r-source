@@ -88,12 +88,19 @@ metafile newmetafile(char *name, double width, double height)
        cppiy = 25.40 * deviceheight(NULL) / deviceheightmm(NULL);
        ppiy = 100 * devicepixelsy(NULL);
     }
+    /* This is all very peculiar. We would really like to create 
+       a metafile measured in some snesible units, but it seems 
+       we get it in units of 0.01mm *on the current screen* with
+       horizontal and vertical resolution set for that screen.
+       And of course Windows is famous for getting screen sizes wrong.
+    */
 
     wr.left = 0;
     wr.top =  0 ;
     wr.right =  (ppix * width) / cppix ;
     wr.bottom = (ppiy * height) / cppiy ;
 
+    /* Here the size is in 0.01mm units */
     hDC = CreateEnhMetaFile(NULL, strlen(name) ? name : NULL, &wr, 
 			    "GraphApp\0\0");
     if ( !hDC ) {
@@ -106,7 +113,11 @@ metafile newmetafile(char *name, double width, double height)
 	DeleteEnhMetaFile(CloseEnhMetaFile(hDC));
 	return NULL;
     }
-    obj->rect = rect(0, 0, (ppix * width)/2540, (ppiy * height)/2540);
+    /* In looks like Windows rounds up the width and height, so we
+       do too.  1 out is common, but 2 out has been seen.
+       This is needed to get complete painting of the background.
+    */
+    obj->rect = rect(0, 0, 2+(ppix * width)/2540, 2+(ppiy * height)/2540);
     obj->depth = GetDeviceCaps(hDC, BITSPIXEL) * GetDeviceCaps(hDC, PLANES);
     obj->die = private_delmetafile;
     obj->drawstate = copydrawstate();
