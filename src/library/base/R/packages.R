@@ -14,8 +14,11 @@ compareVersion <- function(a, b)
     if(length(b) > length(a)) return(-1) else return(0)
 }
 
-package.dependencies <- function(x, check = FALSE,
-                                 depLevel = c("Depends", "Suggests"))
+## This is called only with check = FALSE in getDepMtrx/getRemotePkgDepends
+## and with check = TRUE in library() and packageStatus().
+
+package.dependencies <-
+    function(x, check = FALSE, depLevel = c("Depends", "Imports", "Suggests"))
 {
     depLevel <- match.arg(depLevel)
 
@@ -248,3 +251,6 @@ function(x, name)
 }
 
 as.data.frame.package_version <- as.data.frame.vector
+
+getRversion <- function()
+    package_version(paste(R.version[c("major", "minor")], collapse = "."))
