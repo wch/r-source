@@ -287,7 +287,7 @@ static SEXP scanVector(SEXPTYPE type, int maxitems, int maxlines,
 	    }
 	}
 	if (flush) {
-	    while ((c=scanchar()) != '\n')
+	    while ((c=scanchar()) != '\n' && (c != R_EOF))
 		;
 	    unscanchar(c);
 	}
@@ -408,10 +408,9 @@ static SEXP scanFrame(SEXP what, int maxitems, int maxlines, int flush,
 		n++;
 		ii = 0;
 		colsread = 0;
-		if (flush) {
-		    while (c != '\n' && c != R_EOF)
-			c=scanchar();
-		    unscanchar(c);
+		if (flush && (bch != '\n') && (bch != R_EOF)) {
+		    while ((c = scanchar()) != '\n' && c != R_EOF);
+		    bch = c;
 		}
 		if (length(stripwhite) == length(what))
 		    strip = LOGICAL(stripwhite)[0];
