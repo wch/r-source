@@ -635,7 +635,7 @@ When all the testing is done, upload the @file{.tar.gz} file to
 @end smallexample
 
 @noindent
-and send a message to @url{cran@@ci.tuwien.ac.at} about it.  The
+and send a message to @url{cran@@r-project.org} about it.  The
 @acronym{CRAN} maintainers will run these tests before putting a
 submission in the main archive.
 
