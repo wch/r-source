@@ -3,7 +3,7 @@ include MkRules
 HELP=YES
 WINHELP=BOTH # NO, CHM, BOTH
 
-PACKAGES=base eda lqs modreg mva stepfun ts
+PACKAGES=base eda lqs modreg mva splines stepfun ts
 RPREFIX=rw0900
 
 ifdef DEBUG
