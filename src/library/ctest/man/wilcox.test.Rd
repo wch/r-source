@@ -135,5 +135,11 @@ wilcox.test(x, y, alternative = "greater",
                                             # approximation
 
 wilcox.test(rnorm(10), rnorm(10, 2), conf.int = TRUE)
+
+## Formula interface.
+data(airquality)
+boxplot(Ozone ~ Month, data = airquality)
+wilcox.test(Ozone ~ Month, data = airquality,
+            subset = Month \%in\% c(5, 8))
 }
 \keyword{htest}
