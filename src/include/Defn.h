@@ -23,7 +23,7 @@
 
 #define COUNTING
 
-#include "Rinternals.h"         /*-> Arith.h, Complex.h, Errormsg.h, Memor.hy
+#include "Rinternals.h"		/*-> Arith.h, Complex.h, Errormsg.h, Memory.h
 				  PrtUtil.h, Utils.h, Platform.h */
 
 /*  Heap and Pointer Protection Stack Sizes.  */
@@ -207,7 +207,7 @@ enum {
 
 /* Defined and initialized in names.c (not main.c) :*/
 #ifndef __R_Names__
-extern 
+extern
 #endif
 FUNTAB	R_FunTab[];	    /* Built in functions */
 
