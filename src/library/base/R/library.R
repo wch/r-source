@@ -95,9 +95,9 @@ library <-
         headers <- c("", "Description:\n\n", "Index:\n\n")
         footers <- c("\n", "\n", "")
         for(i in which(file.exists(docFiles))) {
-            writeLines(headers[i], outConn)
+            writeLines(headers[i], outConn, sep="")
             writeLines(readLines(docFiles[i]), outConn)
-            writeLines(footers[i], outConn)
+            writeLines(footers[i], outConn, sep="")
         }
         close(outConn)
         file.show(outFile, delete.file = TRUE,
