@@ -45,8 +45,7 @@ glm <- function(formula, family=gaussian, data=list(), weights=NULL,
     X <- if (!is.empty.model(mt)) model.matrix(mt, mf, contrasts)# else NULL
     Y <- model.response(mf, "numeric")
     weights <- model.weights(mf)
-    if(is.null(offset)) offset <- model.offset(mf)
-
+    offset <- model.offset(mf)
     ## check weights and offset
     if( !is.null(weights) && any(weights<0) )
 	stop("Negative wts not allowed")

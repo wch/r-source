@@ -231,11 +231,13 @@ model.weights <- function(x) x$"(weights)"
 model.offset <- function(x) {
     offsets <- attr(attr(x, "terms"),"offset")
     if(length(offsets) > 0) {
-	ans <- 0
+	ans <- x$"(offset)"
+        if (is.null(ans)) 
+	   ans <- 0
 	for(i in offsets) ans <- ans+x[[i]]
 	ans
     }
-    else NULL
+    else x$"(offset)"
 }
 
 model.matrix <- function(object, ...) UseMethod("model.matrix")
