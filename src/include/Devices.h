@@ -51,7 +51,7 @@ Rboolean
 PicTeXDeviceDriver(DevDesc*, char*, char*, char*, double, double, Rboolean);
 
 Rboolean 
-PSDeviceDriver(DevDesc*, char*, char*, char*, char**,
+PSDeviceDriver(DevDesc*, char*, char*, char*, char**, char*,
 	       char*, char*, double, double, Rboolean, double, 
 	       Rboolean, Rboolean, Rboolean, char*);
 Rboolean 

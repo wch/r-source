@@ -14,7 +14,7 @@ postscript(file = ifelse(onefile, "Rplots.ps", "Rplot\%03d.ps"),
 %  paper, horizontal, width, height, family, pointsize, bg, fg)
 ps.options(paper, horizontal, width, height, family, pointsize, bg, fg,
            onefile = TRUE, print.it = FALSE, append = FALSE,
-           reset = FALSE, override.check = FALSE)
+           reset = FALSE, override.check = FALSE, encoding)
 .PostScript.Options
 }
 %% The definitive doc is the source :-)
@@ -64,6 +64,9 @@ ps.options(paper, horizontal, width, height, family, pointsize, bg, fg,
     \code{"Helvetica-Narrow"}, \code{"NewCenturySchoolbook"},
     \code{"Palatino"} or \code{"Times"}, OR a character vector of length
     four. }
+  \item{encoding}{the name of an encoding file. Defaults to
+    "ISOLatin1.enc" in the \file{R\_HOME/afm} directory.  That file has
+    comments giving details of the format.}
   \item{pointsize}{the default point size to be used.}
   \item{bg}{the default background color to be used.}
   \item{fg}{the default foreground color to be used.}

@@ -106,7 +106,8 @@ postscript <- function (file = ifelse(onefile,"Rplots.ps", "Rplot%03d.ps"),
         old$command <- if(!is.null(cmd <- getOption("printcmd"))) cmd else ""
     ## handle family separately as length can be 1 or 4
     if(!missing(family)) old$family <- family
-    .Internal(PS(file, old$paper, old$family, old$bg, old$fg,
+    if(is.null(old$encoding)) old$encoding <- "ISOLatin1.enc"
+    .Internal(PS(file, old$paper, old$family, old$encoding, old$bg, old$fg,
 		 old$width, old$height, old$horizontal, old$pointsize,
                  old$onefile, old$pagecentre, old$print.it, old$command))
 }

@@ -62,7 +62,7 @@ SEXP do_PS(SEXP call, SEXP op, SEXP args, SEXP env)
     DevDesc *dd;
     char *vmax;
     char *file, *paper, *family=NULL, *bg, *fg, *cmd;
-    char *afms[4];
+    char *afms[4], encoding;
     int i, horizontal, onefile, pagecentre, printit;
     double height, width, ps;
     SEXP fam;
@@ -83,6 +83,7 @@ SEXP do_PS(SEXP call, SEXP op, SEXP args, SEXP env)
     } else 
 	errorcall(call, "invalid `family' parameter");
     
+    encoding = SaveString(CAR(args), 0);    args = CDR(args);
     bg = SaveString(CAR(args), 0);    args = CDR(args);
     fg = SaveString(CAR(args), 0);    args = CDR(args);
     width = asReal(CAR(args));	      args = CDR(args);
@@ -103,7 +104,7 @@ SEXP do_PS(SEXP call, SEXP op, SEXP args, SEXP env)
 	/* Do this for early redraw attempts */
 	dd->displayList = R_NilValue;
 	GInit(&dd->dp);
-	if(!PSDeviceDriver(dd, file, paper, family, afms, bg, fg,
+	if(!PSDeviceDriver(dd, file, paper, family, afms, encoding, bg, fg,
 			   width, height, (double)horizontal, ps, onefile,
 			   pagecentre, printit, cmd)) {
 	    free(dd);

@@ -18,8 +18,7 @@ INSTFILES = \
 	hvn_____.afm hvnb____.afm hvnbo___.afm hvno____.afm hvo_____.afm \
 	ncb_____.afm ncbi____.afm nci_____.afm ncr_____.afm pob_____.afm \
 	pobi____.afm poi_____.afm por_____.afm tib_____.afm tibi____.afm \
-	tii_____.afm tir_____.afm \
-	sy______.afm
+	tii_____.afm tir_____.afm sy______.afm ISOLatin1.enc
 DISTFILES = Makefile.in $(INSTFILES) README
 
 all: Makefile R

@@ -32,13 +32,6 @@
 #include "Fileio.h"
 #include "Devices.h"
 
-#define PS_minus_default 45
-/* wrongly was 177 (plusminus);
-   hyphen = 173;   (endash not available as code!)
-   175 = "¯" (macron)
-*/
-static char PS_minus = PS_minus_default;/*-> TODO: make this a ps.option() !*/
-
 #define USERAFM 999
 
 /* Part 0.  AFM File Names */
@@ -87,45 +80,8 @@ Family[] = {
     { NULL }
 };
 
-static char *ISOLatin1Encoding[] =
-{
-"space", "exclam", "quotedbl", "numbersign", "dollar", "percent",
-"ampersand", "quoteright", "parenleft", "parenright", "asterisk",
-"plus", "comma", "minus", "period", "slash", "zero", "one", "two",
-"three", "four", "five", "six", "seven", "eight", "nine", "colon",
-"semicolon", "less", "equal", "greater", "question", "at",
-"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N",
-"O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z",
-"bracketleft", "backslash", "bracketright", "asciicircum", "underscore",
-"quoteleft",
-"a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n",
-"o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z",
-"braceleft", "bar", "braceright", "asciitilde", ".notdef", ".notdef",
-".notdef", ".notdef", ".notdef", ".notdef", ".notdef", ".notdef",
-".notdef", ".notdef", ".notdef", ".notdef", ".notdef", ".notdef",
-".notdef", ".notdef", ".notdef", "dotlessi", "grave", "acute",
-"circumflex", "tilde", "macron", "breve", "dotaccent", "dieresis",
-".notdef", "ring", "cedilla", ".notdef", "hungarumlaut", "ogonek",
-"caron", "space", "exclamdown", "cent", "sterling", "currency",
-"yen", "brokenbar", "section", "dieresis", "copyright", "ordfeminine",
-"guillemotleft", "logicalnot", "hyphen", "registered", "macron", 
-"degree", "plusminus", "twosuperior", "threesuperior", "acute", "mu",
-"paragraph", "periodcentered", "cedilla", "onesuperior", "ordmasculine",
-"guillemotright", "onequarter", "onehalf", "threequarters", "questiondown",
-"Agrave", "Aacute", "Acircumflex", "Atilde", "Adieresis", "Aring", "AE",
-"Ccedilla", "Egrave", "Eacute", "Ecircumflex", "Edieresis", "Igrave",
-"Iacute", "Icircumflex", "Idieresis", "Eth", "Ntilde", "Ograve", "Oacute",
-"Ocircumflex", "Otilde", "Odieresis", "multiply", "Oslash", "Ugrave",
-"Uacute", "Ucircumflex", "Udieresis", "Yacute", "Thorn", "germandbls",
-"agrave", "aacute", "acircumflex", "atilde", "adieresis", "aring", "ae",
-"ccedilla", "egrave", "eacute", "ecircumflex", "edieresis", "igrave",
-"iacute", "icircumflex", "idieresis", "eth", "ntilde", "ograve", "oacute",
-"ocircumflex", "otilde", "odieresis", "divide", "oslash", "ugrave", "uacute",
-"ucircumflex", "udieresis", "yacute", "thorn", "ydieresis"
-};
 
 static char familyname[5][50];
-
 
 /* Part 1.  AFM File Parsing.  */
 
@@ -280,9 +236,10 @@ static int GetFontBBox(char *buf, FontMetricInfo *metrics)
 }
 
 static char charnames[256][25];
+static char encnames[256][25];
 
-/* If ISOLatin1 > 0, remap to ISOLatin1 encoding */
-static int GetCharInfo(char *buf, FontMetricInfo *metrics, int ISOLatin1)
+/* If reencode > 0, remap to new encoding */
+static int GetCharInfo(char *buf, FontMetricInfo *metrics, int reencode)
 {
     char *p = buf, charname[25];
     int nchar, nchar2=-1, i;
@@ -291,7 +248,7 @@ static int GetCharInfo(char *buf, FontMetricInfo *metrics, int ISOLatin1)
     if (!MatchKey(buf, "C ")) return 0;
     p = SkipToNextItem(p);
     sscanf(p, "%d", &nchar);
-    if (nchar < 0 && !ISOLatin1) return 1;
+    if (nchar < 0 && !reencode) return 1;
     p = SkipToNextKey(p);
 
     if (!MatchKey(p, "WX")) return 0;
@@ -301,15 +258,15 @@ static int GetCharInfo(char *buf, FontMetricInfo *metrics, int ISOLatin1)
 
     if (!MatchKey(p, "N ")) return 0;
     p = SkipToNextItem(p);
-    if(ISOLatin1) {
+    if(reencode) {
 	sscanf(p, "%s", charname);
 #ifdef DEBUG_PS
 	Rprintf("char name %s\n", charname);
 #endif
 	/* a few chars appear twice in ISOLatin1 */
 	nchar = nchar2 = -1;
-	for (i = 32; i < 256; i++)
-	    if(!strcmp(charname, ISOLatin1Encoding[i-32])) {
+	for (i = 0; i < 256; i++)
+	    if(!strcmp(charname, encnames[i])) {
 		strcpy(charnames[i], charname); 
 		if(nchar == -1) nchar = i; else nchar2 = i;
 	    }
@@ -379,12 +336,64 @@ static int GetKPX(char *buf, int nkp, FontMetricInfo *metrics)
     return (done==2);
 }
 
+static char enccode[5000];
 
-/* Load Fontmetrics from a file: defaults to the R_HOME/afm directory */
+static int GetNextItem(FILE *fp, char *dest)
+{
+    static char buf[1000], *p = NULL, *p0;
+
+    while (1) {
+	if (feof(fp)) { p = NULL; return 1; }
+	if (!p || *p == '\n' || *p == '\0') {
+	    p = fgets(buf, 1000, fp);
+	    strcat(enccode, p);
+	}
+	while (isspace((int)*p)) p++;
+	if (p == '\0' || *p == '%'|| *p == '\n') { p = NULL; continue; }
+	p0 = p;
+	while (!isspace((int)*p)) p++;
+	if (p != '\0') *p++ = '\0';
+	strcpy(dest, p0);
+	break;
+    }
+    return 0;
+}
+
+
+/* Load encoding array from a file: defaults to the R_HOME/afm directory */
+static int
+LoadEncoding(char *fontpath, char *encname)
+{
+    char buf[BUFSIZE];
+    int i;
+    FILE *fp;
+
+    if(strchr(fontpath, FILESEP[0])) strcpy(buf, fontpath);
+    else sprintf(buf, "%s%safm%s%s", R_Home, FILESEP, FILESEP, fontpath);
+#ifdef DEBUG_PS
+    Rprintf("encoding path is %s\n", buf);
+#endif
+    strcpy(enccode, "");
+    if (!(fp = R_fopen(buf, "r"))) return 0;
+    if (GetNextItem(fp, buf)) return 0; /* encoding name */
+    strcpy(encname, buf+1);
+    if (GetNextItem(fp, buf)) { fclose(fp); return 0;} /* [ */
+    for(i = 0; i < 256; i++) {
+	if (GetNextItem(fp, buf)) { fclose(fp); return 0; }
+	strcpy(encnames[i], buf+1);
+    }
+    if (GetNextItem(fp, buf)) { fclose(fp); return 0;} /* ] */
+    fclose(fp);
+    return 1;
+}
+
+
+
+/* Load font metrics from a file: defaults to the R_HOME/afm directory */
 
 static int
 PostScriptLoadFontMetrics(char *fontpath, FontMetricInfo *metrics,
-			  char *fontname, int ISOLatin1)
+			  char *fontname, int reencode)
 {
     char buf[BUFSIZE], *p;
     int mode, i = 0, j, ii, nKPX=0;
@@ -421,7 +430,7 @@ PostScriptLoadFontMetrics(char *fontpath, FontMetricInfo *metrics,
 
 	case C:
 	    if (mode != StartFontMetrics) goto error;
-	    if (!GetCharInfo(buf, metrics, ISOLatin1)) goto error;
+	    if (!GetCharInfo(buf, metrics, reencode)) goto error;
 	    break;
 
 	case StartKernData:
@@ -491,10 +500,7 @@ PostScriptStringWidth(unsigned char *p, FontMetricInfo *metrics)
     short wx;
     unsigned char p1, p2;
     for ( ; *p; p++) {
-	if (*p == '-' && isdigit(p[1]))
-	    wx = metrics->CharInfo[(int)PS_minus].WX;
-	else
-	    wx = metrics->CharInfo[*p].WX;
+	wx = metrics->CharInfo[*p].WX;
 	if(wx == NA_SHORT)
 	    warning("font width unknown for character `%c'");
 	else sum += wx;
@@ -528,7 +534,7 @@ PostScriptMetricInfo(int c, double *ascent, double *descent,
 	*descent = -0.001 * metrics->CharInfo[c].BBox[1];
 	wx = metrics->CharInfo[c].WX;
 	if(wx == NA_SHORT) {
-	    warning("font metrics unknown for character `%c'");
+	    warning("font metrics unknown for character `%c'", c);
 	    wx = 0;
 	}
 	*width = 0.001 * wx;
@@ -540,14 +546,17 @@ PostScriptMetricInfo(int c, double *ascent, double *descent,
 
 static char *TypeFaceDef[] = { "R", "B", "I", "BI", "S" };
 
-static void PSEncodeFont(FILE *fp, int encoding)
+static void PSEncodeFont(FILE *fp, int encoding, char *encname)
 {
     int i;
+
+    if (encoding && strcmp(encname, "ISOLatin1Encoding")) 
+	fprintf(fp, "%% begin encoding\n%s def\n%% end encoding\n", enccode);
     for (i = 0; i < 4 ; i++) {
 	fprintf(fp, "/%s findfont\n", familyname[i]);
 	fprintf(fp, "dup length dict begin\n");
 	fprintf(fp, "  {1 index /FID ne {def} {pop pop} ifelse} forall\n");
-	if (encoding) fprintf(fp, "  /Encoding ISOLatin1Encoding def\n");
+	if (encoding) fprintf(fp, "  /Encoding %s def\n", encname);
 	fprintf(fp, "  currentdict\n");
 	fprintf(fp, "  end\n");
 	fprintf(fp, "/Font%d exch definefont pop\n", i + 1);
@@ -564,7 +573,7 @@ static void PSEncodeFont(FILE *fp, int encoding)
 /* of the (unrotated) printer page in points whereas the graphics */
 /* region box is for the rotated page. */
 
-static void PSFileHeader(FILE *fp, int encoding, char *papername,
+static void PSFileHeader(FILE *fp, int encoding, char* encname, char *papername,
 			 double paperwidth, double paperheight, Rboolean landscape,
 			 int EPSFheader,
 			 double left, double bottom, double right, double top)
@@ -606,7 +615,7 @@ static void PSFileHeader(FILE *fp, int encoding, char *papername,
     for (i = 0; i < length(prolog); i++)
 	fprintf(fp, "%s\n", CHAR(STRING_ELT(prolog, i)));
     fprintf(fp, "%% end   .ps.prolog\n");
-    PSEncodeFont(fp, encoding);
+    PSEncodeFont(fp, encoding, encname);
     fprintf(fp, "%%%%EndProlog\n");
 }
 
@@ -702,10 +711,7 @@ static void PostScriptWriteString(FILE *fp, char *str)
 	    fprintf(fp, "\\\\");
 	    break;
 	case '-':
-	    if (isdigit((int)str[1]))
-		fputc(PS_minus, fp);
-	    else
-		fputc(*str, fp);
+	    fputc(*str, fp);
 	    break;
 	case '(':
 	case ')':
@@ -741,6 +747,7 @@ typedef struct {
 			
     int fontfamily;	/* font family */
     int encoding;	/* font encoding */
+    char encname[50];
     char **afmpaths;	/* for user-specified family */
     int maxpointsize;
 
@@ -822,7 +829,7 @@ static int  MatchFamily(char *name);
 
 Rboolean
 PSDeviceDriver(DevDesc *dd, char *file, char *paper, char *family,
-	       char **afmpaths,
+	       char **afmpaths, char *encoding,
 	       char *bg, char *fg,
 	       double width, double height,
 	       Rboolean horizontal, double ps,
@@ -874,7 +881,7 @@ PSDeviceDriver(DevDesc *dd, char *file, char *paper, char *family,
     pd->printit = printit;
     strcpy(pd->command, cmd);
     if (printit && strlen(cmd) == 0)
-	error("postscript(prinit.it=T) used with an empty print command");
+	error("postscript(print.it=T) used with an empty print command");
     strcpy(pd->command, cmd);
 
 
@@ -1100,16 +1107,18 @@ static Rboolean PS_Open(DevDesc *dd, PostScriptDesc *pd)
     char buf[512], *p;
     int i;
 
+    if (!LoadEncoding("ISOLatin1.enc", pd->encname))
+	error("problem loading encoding file");
     for(i = 0; i < 4 ; i++) {
 	if(pd->fontfamily == USERAFM) p = pd->afmpaths[i];
 	else p = Family[pd->fontfamily].afmfile[i];
-	if(!PostScriptLoadFontMetrics(p, &(pd->metrics[i]), 
+	if(!PostScriptLoadFontMetrics(p, &(pd->metrics[i]),
 				      familyname[i], 1)) {
 	    warning("cannot read afm file %s", buf);
 	    return FALSE;
 	}
     }
-    if(!PostScriptLoadFontMetrics("sy______.afm", &(pd->metrics[4]), 
+    if(!PostScriptLoadFontMetrics("sy______.afm", &(pd->metrics[4]),
 				  familyname[4], 0)) {
 	warning("cannot read afm file %s", buf);
 	return FALSE;
@@ -1149,6 +1158,7 @@ static Rboolean PS_Open(DevDesc *dd, PostScriptDesc *pd)
     if(pd->landscape)
 	PSFileHeader(pd->psfp,
 		     pd->encoding,
+		     pd->encname,
 		     pd->papername,
 		     pd->paperwidth,
 		     pd->paperheight,
@@ -1161,6 +1171,7 @@ static Rboolean PS_Open(DevDesc *dd, PostScriptDesc *pd)
     else
 	PSFileHeader(pd->psfp,
 		     pd->encoding,
+		     pd->encname,
 		     pd->papername,
 		     pd->paperwidth,
 		     pd->paperheight,
@@ -1848,8 +1859,10 @@ static Rboolean XFig_Open(DevDesc *dd, XFigDesc *pd)
     char buf[512], name[50];
     int i;
 
+    if (!LoadEncoding("ISOLatin1.enc", buf))
+	error("problem loading encoding file");
     for(i = 0; i < 4 ; i++) {
-	if(!PostScriptLoadFontMetrics(Family[pd->fontfamily].afmfile[i], 
+	if(!PostScriptLoadFontMetrics(Family[pd->fontfamily].afmfile[i],
 				      &(pd->metrics[i]), name, 1)) {
 	    warning("cannot read afm file %s", buf);
 	    return FALSE;

@@ -628,7 +628,7 @@ FUNTAB R_FunTab[] =
 
 /* Device Drivers */
 
-{"PS",		do_PS,		0,	111,   14,	PP_FUNCALL},
+{"PS",		do_PS,		0,	111,   15,	PP_FUNCALL},
 {"PicTeX",	do_PicTeX,	0,	111,	6,	PP_FUNCALL},
 {"XFig",	do_XFig,	0,	111,   12,	PP_FUNCALL},
 #ifdef Win32
