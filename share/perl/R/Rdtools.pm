@@ -134,7 +134,12 @@ sub get_usages {
 		## and hence remember S3 methods markup found.
 		$generic = $2;
 		$class = $3;
-		$prefix = "$generic.$class" unless($mode eq "style");
+		if($mode eq "style") {
+		    $prefix = "\\method{${generic}}{${class}}";
+		}
+		else {
+		    $prefix = "${generic}.${class}";
+		}
 	    }
 	    if($prefix =~
 	       /\\S4method\{([[:alnum:].]+)\}\{([[:alnum:].,]+)\}/) {
@@ -168,7 +173,7 @@ sub get_usages {
 		if($siglist) {
 		    if($S4methods{$prefix}) {
 			print("Multiple usage for S4 method" .
-			      "$generic-$siglist in $name\n");
+			      "${generic}-${siglist} in ${name}\n");
 		    }
 		    else {
 			$S4methods{$prefix} = $match;
@@ -234,9 +239,15 @@ sub get_usages {
 			##   \method{GENERIC<-}{CLASS}(ARGLIST) <- RHS
 			## here but Rdconv() would not get this right
 			## for the time being ...
-			$prefix = "$generic<-.$class";
+			if($mode eq "style") {
+			    $prefix =
+			      "\\method{${generic}<-}{${class}}";
+			}
+			else {
+			    $prefix = "${generic}<-.${class}";
+			}
 		    } else {
-			$prefix = "$prefix<-";
+			$prefix = "${prefix}<-";
 		    }
 		    $functions{$prefix} =
 		      substr($match, 0, -1) . ", $1)";
