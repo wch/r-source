@@ -36,7 +36,7 @@ in the DLL object to resolve symbols more directly in \R.}
 
 
 \seealso{
-\code{\link{getgetDLLRegisteredRoutines}},
+\code{\link{getDLLRegisteredRoutines}},
 \code{\link{getNativeSymbolInfo}}
 }
 \examples{

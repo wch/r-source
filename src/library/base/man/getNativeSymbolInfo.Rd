@@ -92,7 +92,7 @@ getNativeSymbolInfo(name, PACKAGE)
   objects directly as callback objects.
 }
 \seealso{
-  \code{\link{getgetDLLRegisteredRoutines}},
+  \code{\link{getDLLRegisteredRoutines}},
   \code{\link{is.loaded}},
   \code{\link{.C}},
   \code{\link{.Fortran}},
