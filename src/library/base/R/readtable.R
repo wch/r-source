@@ -1,11 +1,12 @@
-count.fields <- function(file, sep = "", quote = "\"\'", skip = 0)
+count.fields <- function(file, sep = "", quote = "\"'", skip = 0)
     .Internal(count.fields(file, sep, quote, skip))
 
 
 read.table <-
-    function (file, header=FALSE, sep="", quote="\"\'", dec=".",
+    function (file, header=FALSE, sep="", quote="\"'", dec=".",
               row.names, col.names, as.is=FALSE,
-	      na.strings="NA", skip=0)
+	      na.strings="NA", skip=0,
+              check.names = TRUE, strip.white = FALSE)
 {
     type.convert <- function(x, na.strings = "NA",
                              as.is = FALSE, dec = ".")
@@ -22,12 +23,14 @@ read.table <-
 
     if (header) { # read in the header
 	col.names <- scan(file, what="", sep=sep, quote=quote, nlines=1,
-			  quiet=TRUE, skip=skip)
+			  quiet=TRUE, skip=skip, strip.white=TRUE)
 	skip <- skip + 1
 	row.lens <- row.lens[-1]
 	nlines <- nlines - 1
     } else if (missing(col.names))
 	col.names <- paste("V", 1:row.lens[1], sep="")
+
+    if(check.names) col.names <- make.names(col.names)
 
     ##	check that all rows have equal lengths
 
@@ -45,7 +48,8 @@ read.table <-
 	col.names <- c("row.names", col.names)
     names(what) <- col.names
     data <- scan(file=file, what=what, sep=sep, quote=quote, skip=skip,
-		 na.strings=na.strings, quiet=TRUE)
+		 na.strings=na.strings, quiet=TRUE,
+                 strip.white=strip.white)
 
     ##	now we have the data;
     ##	convert to numeric or factor variables
@@ -53,7 +57,7 @@ read.table <-
     ##	we do this here so that columns match up
 
     if(cols != length(data)) { # this should never happen
-	warning(paste("cols =",cols," != length(data) =", length(data)))
+	warning(paste("cols =", cols," != length(data) =", length(data)))
 	cols <- length(data)
     }
 
@@ -103,12 +107,8 @@ read.table <-
 }
 
 read.csv <-
-    function (file, header = TRUE, sep = ",", quote="\"", dec=".",
-              row.names, col.names, as.is=FALSE, na.strings="", skip=0)
-    read.table(file, header, sep, quote, dec, row.names, col.names,
-               as.is, na.strings, skip)
+    function (file, header = TRUE, sep = ",", quote="\"", dec=".", ...)
+    read.table(file, header, sep, quote, dec, ...)
 read.csv2 <-
-    function (file, header = TRUE, sep = ";", quote="\"", dec=",",
-              row.names, col.names, as.is=FALSE, na.strings="", skip=0)
-    read.table(file, header, sep, quote, dec, row.names, col.names,
-               as.is, na.strings, skip)
+    function (file, header = TRUE, sep = ";", quote="\"", dec=",", ...)
+    read.table(file, header, sep, quote, dec, ...)

@@ -39,9 +39,9 @@ scan(file = "", what = double(0), nmax = -1, n = -1, sep = "",
     This allows putting comments after the last field.}
   \item{strip.white}{vector of logical value(s) corresponding to items
     in the \code{what} argument. It is used only when \code{sep} has
-    been specified, and allows to strip leading and trailing white space
-    from \code{character} fields (\code{numeric} fields are always
-    stripped).
+    been specified, and allows the stripping of leading and trailing
+    white space from \code{character} fields (\code{numeric} fields
+    are always stripped).
 
     If \code{strip.white} is of length 1, it applies to all fields;
     otherwise, if \code{strip.white[i]} is \code{TRUE} \emph{and} the
