@@ -4,14 +4,10 @@
 	*						 *
 	**************************************************
 
-BUG FIXES
+NEW FEATURES
 
+    o	zero.R tries to find the zero DLL is a system-independent way.
 
-	**************************************************
-	*						 *
-	*	       0.65 SERIES NEWS			 *
-	*						 *
-	**************************************************
 
 BUG FIXES
 
@@ -21,6 +17,16 @@ BUG FIXES
 
     o   Switch to <tt> in HTML pages since Linux Netscape mangles 
         Courier.
+
+    o	demos/dynload/Makefile used macros that gave incorrect build
+	on some non-GNU makes.
+
+
+	**************************************************
+	*						 *
+	*	       0.65 SERIES NEWS			 *
+	*						 *
+	**************************************************
 
 
 		CHANGES IN R VERSION 0.65.1
