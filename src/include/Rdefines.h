@@ -1,6 +1,5 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *  Copyright (C) 1999, The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -22,14 +21,16 @@
 #define R_DEFINES_H
 
 /*
- *  Some of this is from Doug Bates.
  *  Much is from John Chambers' "Programming With Data".
+ *  Some of this is from Doug Bates.
  *
- *  It is presented here to support:
+ *  It is presented here to support a joint programming style which
+ *  will work in both R and S.  In particular it helps with:
  *
  *    1. Duncan Temple Lang's CORBA code.
  *    2. John Chambers' Java Code.
- *    3. Hiding of some internal nastiness.
+ *
+ *  And to hide some internal nastiness.
  */
 
 #define NULL_USER_OBJECT	R_NilValue
@@ -80,5 +81,17 @@
 #define CREATE_FUNCTION_CALL(name, argList) createFunctionCall(name, argList)
 
 #define EVAL(x)			eval(x,R_GlobalEnv)
+
+/* S Like Memory Management */
+
+#define Calloc(n, t)   (t *) R_chk_calloc( (size_t) (n), sizeof(t) )
+#define Realloc(p,n,t) (t *) R_chk_realloc( (void *)(p), (size_t)((n) * sizeof(t)) )
+#define Free(p)        R_chk_free( (void *)(p) )
+#define Memcpy(p,q,n)  memcpy( p, q, (size_t)( (n) * sizeof(*p) ) )
+
+/* S Like Fortran Interface */
+
+#define F77_CALL(x)    F77_SYMBOL(x)
+#define F77_NAME(x)    F77_SYMBOL(x)
 
 #endif

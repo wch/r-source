@@ -62,15 +62,8 @@ extern void R_chk_free(void *);
 
 #include "Rdefines.h"
 
-#define Calloc(n, t)   (t *) R_chk_calloc( (size_t) (n), sizeof(t) )
-#define Realloc(p,n,t) (t *) R_chk_realloc( (void *)(p), (size_t)((n) * sizeof(t)) )
-#define Free(p)        R_chk_free( (void *)(p) )
-#define Memcpy(p,q,n)  memcpy( p, q, (size_t)( (n) * sizeof(*p) ) )
-
-#define F77_CALL(x)    F77_SYMBOL(x)
-#define F77_NAME(x)    F77_SYMBOL(x)
-
 /* Can't be sure Mathlib.h or math.h is included */
+
 #ifndef M_PI
 #define M_PI 3.141592653589793238462643383279502884197169399375
 #endif
