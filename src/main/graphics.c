@@ -3550,7 +3550,7 @@ void GPretty(double *lo, double *up, int *ndiv)
 #ifdef Macintosh
 #define CMAG	1.0
 #else
-#define CMAG	1.1				/* Circle magnifier */
+#define CMAG	1.0				/* Circle magnifier, now defunct */
 #endif
 #ifdef OLDSYMSIZE
 #define GSTR_0  GStrWidth("0", INCHES, dd)
