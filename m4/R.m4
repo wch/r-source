@@ -429,7 +429,7 @@ AC_DEFUN([R_PROG_CC_FLAG_D__NO_MATH_INLINES],
 
 ## R_C_OPTIEEE
 ## -----------
-## Check whethter the C compiler needs '-OPT:IEEE_NaN_inf=ON' to 
+## Check whether the C compiler needs '-OPT:IEEE_NaN_inf=ON' to
 ## correctly deal with IEEE NaN/Inf.
 ## This flag is needed for the native SGI C compiler.
 ## If needed, add the flag to R_XTRA_CFLAGS.
@@ -1926,11 +1926,11 @@ LIBS="${LIBS} ${FLIBS}"
 ## First, check BLAS_LIBS environment variable
 if test "${acx_blas_ok}" = no; then
   if test "x${BLAS_LIBS}" != x; then
-    save_LIBS="${LIBS}"; LIBS="${BLAS_LIBS} ${LIBS}"
+    r_save_LIBS="${LIBS}"; LIBS="${BLAS_LIBS} ${LIBS}"
     AC_MSG_CHECKING([for ${sgemm} in ${BLAS_LIBS}])
     AC_TRY_LINK_FUNC(${sgemm}, [acx_blas_ok=yes], [BLAS_LIBS=""])
     AC_MSG_RESULT([${acx_blas_ok}])
-    LIBS="$save_LIBS"
+    LIBS="${r_save_LIBS}"
   fi
 fi
 
@@ -1939,7 +1939,7 @@ if test "${acx_blas_ok}" = no; then
   AC_CHECK_FUNC(${sgemm}, [acx_blas_ok=yes])
 fi
 
-## BLAS in ATLAS library? (http://math-atlas.sourceforge.net/)
+## BLAS in ATLAS library?  (http://math-atlas.sourceforge.net/)
 if test "${acx_blas_ok}" = no; then
   AC_CHECK_LIB(atlas, ATL_xerbla,
                [AC_CHECK_LIB(f77blas, ${sgemm},
@@ -1948,7 +1948,7 @@ if test "${acx_blas_ok}" = no; then
 			     [], [-latlas])])
 fi
 
-## BLAS in PhiPACK libraries? (requires generic BLAS lib, too)
+## BLAS in PhiPACK libraries?  (requires generic BLAS lib, too)
 if test "${acx_blas_ok}" = no; then
   AC_CHECK_LIB(blas, ${sgemm},
 	       [AC_CHECK_LIB(dgemm, $dgemm,
@@ -2029,16 +2029,33 @@ LIBS="${acx_blas_save_LIBS}"
 AC_SUBST(BLAS_LIBS)
 ])# R_BLAS_LIBS
 
-
 ## R_LAPACK_LIBS
 ## -------------
-## Look for a library that implements LAPACK
-## (see http://www.netlib.org/lapack/).  On success, sets LAPACK_LIBS to the
-## requisite library linkages.  Only used by the lapack module at present.
+## Look for a library that implements LAPACK (see
+## http://www.netlib.org/lapack/).  On success, sets LAPACK_LIBS to the
+## requisite library linkages.  Only used by the lapack module at
+## present. 
+##
+## This is roughly based on ACX_LAPACK by Steven G. Johnson
+## <stevenj@alum.mit.edu> from the Official Autoconf Macro Archive
+## (http://www.gnu.org/software/ac-archive/htmldoc/acx_lapack.m4),
+## with the following changes:
+## * We also handle HPUX .sl command line specifications.
+## * We explictly deal with the case of f2c.  Most likely pointless.
+## * We test for a LAPACK_LIBS environment variable after checking
+##   whether LAPACK is already linked (could override, though?).
+## * We do not test for the generic lapack_rs6k library (why not?).
+## * We do not use ACTION-IF-FOUND and ACTION-IF-NOT-FOUND.
+## Note that Debian ATLAS has LAPACK libs in /usr/lib/atlas (or $arch
+## variants) which should be used if ATLAS is used for BLAS, and not
+## found at configure time but used at run time ...
+## Based on acx_lapack.m4 version 1.3 (2002-03-12).
+
 AC_DEFUN([R_LAPACK_LIBS],
 [AC_REQUIRE([R_PROG_F77_FLIBS])
 AC_REQUIRE([R_PROG_F77_APPEND_UNDERSCORE])
 AC_REQUIRE([R_PROG_F2C_FLIBS])
+AC_REQUIRE([R_BLAS_LIBS])
 
 acx_lapack_ok=no
 case "${with_lapack}" in
@@ -2057,6 +2074,11 @@ else
   zgeev=zgeev
 fi
 
+# We cannot use LAPACK if BLAS is not found
+if test "x${acx_blas_ok}" != xyes; then
+  acx_lapack_ok=noblas
+fi
+
 acx_lapack_save_LIBS="${LIBS}"
 LIBS="${LIBS} ${BLAS_LIBS} ${FLIBS}"
 
@@ -2068,16 +2090,16 @@ fi
 ## Next, check LAPACK_LIBS environment variable
 if test "${acx_lapack_ok}" = no; then
   if test "x${LAPACK_LIBS}" != x; then
-    save_LIBS="${LIBS}"; LIBS="${LAPACK_LIBS} ${LIBS}"
+    r_save_LIBS="${LIBS}"; LIBS="${LAPACK_LIBS} ${LIBS}"
     AC_MSG_CHECKING([for ${zgeev} in ${LAPACK_LIBS}])
     AC_TRY_LINK_FUNC(${zgeev}, [acx_lapack_ok=yes], [LAPACK_LIBS=""])
     AC_MSG_RESULT([${acx_lapack_ok}])
-    LIBS="$save_LIBS"
+    LIBS="${r_save_LIBS}"
   fi
 fi
 
 ## LAPACK in Sun Performance library?
-## no longer test here as will be picked up by the default test.
+## No longer test here as will be picked up by the default test.
 
 ## Generic LAPACK library?
 if test "${acx_lapack_ok}" = no; then
@@ -2094,7 +2116,6 @@ fi
 
 AC_SUBST(LAPACK_LIBS)
 ])# R_LAPACK_LIBS
-
 
 ## R_XDR
 ## -----
