@@ -2596,6 +2596,14 @@ and the types of arguments to a C function or FORTRAN subroutine.
 @end multitable
 @end quotation
 
+Do please note the first two.  On the 64-bit Unix/Linux platforms,
+@code{long} is 64-bit whereas @code{int} and @code{INTEGER} are 32-bit.
+Code ported from S-PLUS (which uses @code{long *} for @code{logical} and
+@code{integer}) will not work on all 64-bit platforms (although it may
+appear to work on some).  Note too that if your compiled code is a
+mixture of C functions and FORTRAN subprogams the argument types must
+match as given in the table above.
+
 C type @code{Rcomplex} is a structure with @code{double} members
 @code{r} and @code{i} defined in the header file @file{Complex.h}
 included by @file{R.h}.  Only a single character string can be passed to
