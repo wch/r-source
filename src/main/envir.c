@@ -1675,8 +1675,13 @@ static int isMissing(SEXP symbol, SEXP rho)
     else
 	s = symbol;
 
-    if (rho == R_NilValue)  /* is this really the right thing to do? LT */
-	return 0;
+#ifdef EXPERIMENTAL_NAMESPACES
+    if (rho == R_NilValue || rho == R_BaseNamespace)
+	return 0;  /* is this really the right thing to do? LT */
+#else
+    if (rho == R_NilValue)
+	return 0;  /* is this really the right thing to do? LT */
+#endif
 
     vl = findVarLocInFrame(rho, s, NULL);
     if (vl != R_NilValue) {
