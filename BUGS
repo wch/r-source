@@ -236,21 +236,29 @@ none
 
 Directory:  incoming
 
-* PR# 632 *
-From: gb <gb@stat.umu.se>
-Date: Fri, 11 Aug 2000 21:20:31 +0200 (CEST)
-* PR# 626 *
-Subject: predict.lm is broken in 1.1.0-patched (2000-August-7)
-From: Prof Brian D Ripley <ripley@stats.ox.ac.uk>
-Date: Mon, 7 Aug 2000 19:43:38 +0100 (BST)
-* PR# 628 *
-Subject: Re: [Rd] predict.lm is broken in 1.1.0-patched (2000-August-7)
-From: Prof Brian D Ripley <ripley@stats.ox.ac.uk>
-Date: Mon, 7 Aug 2000 22:41:50 +0100 (BST)
+* PR# 633 *
+Subject: Possible bug
+From: Agustin Alonso Rodriguez <agusalon@mcr.ucm.es>
+Date: Sun, 13 Aug 2000 20:59:56 +0200
 * PR# 627 *
 Subject: Re: [Rd] predict.lm is broken in 1.1.0-patched (2000-August-7)
 From: Thomas Lumley <thomas@biostat.washington.edu>
 Date: Mon, 7 Aug 2000 12:58:22 -0700 (PDT)
+* PR# 626 *
+Subject: predict.lm is broken in 1.1.0-patched (2000-August-7)
+From: Prof Brian D Ripley <ripley@stats.ox.ac.uk>
+Date: Mon, 7 Aug 2000 19:43:38 +0100 (BST)
+* PR# 629 *
+Subject: circles overshoot
+From: Valerio Aimale <valerio.aimale@biosgroup.com>
+Date: Wed, 9 Aug 2000 14:33:37 -0600 
+* PR# 628 *
+Subject: Re: [Rd] predict.lm is broken in 1.1.0-patched (2000-August-7)
+From: Prof Brian D Ripley <ripley@stats.ox.ac.uk>
+Date: Mon, 7 Aug 2000 22:41:50 +0100 (BST)
+* PR# 632 *
+From: gb <gb@stat.umu.se>
+Date: Fri, 11 Aug 2000 21:20:31 +0200 (CEST)
 * PR# 631 *
 Subject: svd error 
 From: =?iso-8859-1?Q?J=F6rg?= Polzehl <polzehl@wias-berlin.de>
@@ -259,7 +267,3 @@ Date: Thu, 10 Aug 2000 16:54:46 +0200
 Subject: lda and svd error
 From: Torsten Hothorn <Torsten.Hothorn@rzmail.uni-erlangen.de>
 Date: Thu, 10 Aug 2000 15:13:38 +0200 (CEST)
-* PR# 629 *
-Subject: circles overshoot
-From: Valerio Aimale <valerio.aimale@biosgroup.com>
-Date: Wed, 9 Aug 2000 14:33:37 -0600 
