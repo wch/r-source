@@ -46,7 +46,7 @@
 /* #undef HAVE_BSD_NETWORKING */
 
 /* Define if you have the bzip2 headers and libraries. */
-/* #undef HAVE_BZLIB */
+#define HAVE_BZLIB 1
 
 /* Define to 1 if you have the `chdir' function. */
 #define HAVE_CHDIR 1
@@ -65,7 +65,7 @@
 
 /* Define to 1 if you have the declaration of `isfinite', and to 0 if you
    don't. */
-#define HAVE_DECL_ISFINITE 0
+#define HAVE_DECL_ISFINITE 1
 
 /* Define to 1 if you have the declaration of `isnan', and to 0 if you don't.
    */
@@ -167,7 +167,7 @@
 #define HAVE_INTERNET 1
 
 /* Define to 1 if you have the <inttypes.h> header file. */
-/* #undef HAVE_INTTYPES_H */
+#define HAVE_INTTYPES_H 1
 
 /* Define to 1 if you have the `isascii' function. */
 #define HAVE_ISASCII 1
@@ -259,7 +259,7 @@
 /* #undef HAVE_READLINE_READLINE_H */
 
 /* Define to 1 if you have the `rint' function. */
-/* #undef HAVE_RINT */
+#define HAVE_RINT 1
 
 /* Define to 1 if you have the `setenv' function. */
 /* #undef HAVE_SETENV */

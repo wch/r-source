@@ -13,7 +13,7 @@ OBJS=$(CSOURCES:.c=.o) $(FSOURCES:.f=.o)
 gram.c: ;
 
 saveload-CFLAGS=-I../extra/xdr
-connections-CFLAGS=-I../extra/zlib
+connections-CFLAGS=-I../extra/zlib -I../extra/bzip2
 dounzip-CFLAGS=-I../extra/zlib
 pcre-CFLAGS=-I../extra/pcre -DSTATIC
 

@@ -44,7 +44,8 @@ FLIBS+=-lRblas
 SOURCES = $(filter-out malloc.c blas00.c,$(wildcard *.c *.f))
 OBJS = $(SOURCES:.c=.o)
 MAINLIBS = libmain.a libappl.a libmath.a
-EXTRALIBS = ga.a gl.a xdr.a ../extra/zlib/libz.a ../extra/pcre/libRpcre.a
+EXTRALIBS = ga.a gl.a xdr.a ../extra/zlib/libz.a ../extra/pcre/libRpcre.a\
+   ../extra/bzip2/libbz2.a
 
 LIBFILES = $(foreach i, $(ALLPACKAGES), ../../library/$i) ../../library/R.css
 PKGS = $(foreach i,$(PACKAGES),pkg-$i)
@@ -164,6 +165,9 @@ Rm.exp1: $(OBJS-EXTRA)
 
 ../extra/pcre/libRpcre.a:
 	$(MAKE) -C ../extra/pcre -f Makefile.win
+
+../extra/bzip2/libbz2.a:
+	$(MAKE) -C ../extra/bzip2 libbz2.a
 
 rdocs:
 	@$(MAKE) -C ../../doc/manual -f Makefile.win html BUILD=$(BUILD)
