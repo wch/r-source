@@ -258,13 +258,17 @@ function(dir, outDir)
     if(!fileTest("-d", outVignetteDir) && !dir.create(outVignetteDir))
         stop("cannot open directory", sQuote(outVignetteDir))
 
+    ## If there is an HTML index in the @file{inst/doc} subdirectory of
+    ## the package source directory (@code{dir}), we do not overwrite it
+    ## (similar to top-level @file{INDEX} files).  Installation already
+    ## copies/d this over.
+    hasHtmlIndex <- fileTest("-f", file.path(vignetteDir, "index.html"))
     htmlIndex <- file.path(outDir, "doc", "index.html")
 
     ## Write dummy HTML index if no vignettes are found and exit.
     if(!length(listFilesWithType(vignetteDir, "vignette"))) {
-        if(!file.exists(htmlIndex)) {
+        if(!hasHtmlIndex)
             .writeVignetteHtmlIndex(packageName, htmlIndex)
-        }
         return(invisible())
     }
 
@@ -278,9 +282,8 @@ function(dir, outDir)
         ind <- fileTest("-f", file.path(outVignetteDir, vignettePDFs))
         vignetteIndex$PDF[ind] <- vignettePDFs[ind]
     }
-    if(!file.exists(htmlIndex)) {
+    if(!hasHtmlIndex)
         .writeVignetteHtmlIndex(packageName, htmlIndex, vignetteIndex)
-    }
 
     .saveRDS(vignetteIndex,
              file = file.path(outDir, "Meta", "vignette.rds"))
