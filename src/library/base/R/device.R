@@ -102,14 +102,54 @@ dev.copy <- function(device, ..., which = dev.next())
     dev.cur()
 }
 
-dev.print <- function(device = postscript, ...)
+dev.print <- function(device = postscript,  ...)
 {
     current.device <- dev.cur()
     nm <- names(current.device)[1]
     if(nm == "null device") stop("no device to print from")
     if(nm != "X11" && nm != "windows" && nm != "gtk"  && nm != "gnome")
         stop("can only print from screen device")
-    dev.off(dev.copy(device = device, ...)) # user must still print this
+    oc <- match.call()
+    oc[[1]] <- as.name("dev.copy")
+    oc$device <- device
+    din <- par("din"); w <- din[1]; h <- din[2]
+    if(missing(device)) {
+        if(is.null(oc$file)) oc$file <- ""
+        hz <- oc$horizontal
+        if(is.null(hz)) hz <- ps.options()$horizontal
+        h0 <- ifelse(hz, 8, 10)
+        if(h > h0) {w <- w * h0 /h; h<- h0 }
+        w0 <- ifelse(hz, 10, 8)
+        if(w > w0) { h <- h * w0 /w;  w <- w0}
+        if(is.null(oc$pointsize)) {
+            pt <- ps.options()$pointsize
+            oc$pointsize <- pt * w/din[1]
+        }
+    }
+    if(is.null(oc$width)) oc$width <- w
+    if(is.null(oc$height)) oc$height <- h
+    dev.off(eval(oc))
+    dev.set(current.device)
+}
+
+dev.copy2eps <- function(...)
+{
+    current.device <- dev.cur()
+    nm <- names(current.device)[1]
+    if(nm == "null device") stop("no device to print from")
+    if(nm != "X11" && nm != "windows" && nm != "gtk"  && nm != "gnome")
+        stop("can only print from screen device")
+    oc <- match.call()
+    oc[[1]] <- as.name("dev.copy")
+    oc$device <- postscript
+    oc$onefile <- FALSE
+    oc$horizontal <- FALSE
+    oc$paper <- "special"
+    din <- par("din"); w <- din[1]; h <- din[2]
+    if(is.null(oc$width)) oc$width <- w
+    if(is.null(oc$height)) oc$height <- h
+    if(is.null(oc$file)) oc$file <- "Rplot.eps"
+    dev.off(eval(oc))
     dev.set(current.device)
 }
 

@@ -1,11 +1,13 @@
 \name{dev2}
 \alias{dev.copy}
 \alias{dev.print}
+\alias{dev.copy2eps}
 \alias{dev.control}
 \title{Copy Graphics Between Multiple Devices}
 \usage{
 dev.copy(device, \dots, which=dev.next())
 dev.print(device=postscript, \dots)
+dev.copy.eps(\dots)
 dev.control(displaylist)
 }
 \arguments{
@@ -22,12 +24,22 @@ dev.control(displaylist)
   to the device specified by \code{which} or to a new device which has
   been created by the function specified by \code{device} (it is an
   error to specify both \code{which} and \code{device}).
-    
+
   \code{dev.print} copies the graphics contents of the current device
   to a new device which has been created by the function specified by
   \code{device} and then shuts the new device.  This is most useful
-  for producing a postscript copy from an on-screen device.
-  
+  for producing a postscript print from an on-screen device.  Unless
+  \code{file} is specified, the plot will be printed.  Unless
+  \code{width}, \code{height} and \code{pointsize} are specified
+  the plot dimensions will be taken from the current device, shrunk
+  if necessary to fit on the paper. (\code{pointsize} is rescaled if the
+  plot is shrunk.)
+
+  \code{dev.copy2eps} is similar to \code{dev.print} but produces an
+  EPSF output file.  Unless otherwise specified \code{width} and
+  \code{height} are taken from the current device, but \code{pointsize}
+  is taken from \code{\link{ps.options}}.
+
   \code{dev.control} allows the user to control the recording of
   graphics operations in a device.  If \code{displaylist} is "inhibit"
   then recording is turned off.
@@ -35,15 +47,14 @@ dev.control(displaylist)
 \value{
   \code{dev.copy} returns the name and number of the device which has
   been copied to.
-  
-  \code{dev.print} returns the name and number of the device which has
-  been copied from.
+
+  \code{dev.print} and \code{dev.copy2eps} return the name and number of
+  the device which has been copied from.
 }
 \note{
-  Most devices (including all screen devices have a display list
-  which records all of the graphics
-  operations that occur in the device.  \code{dev.copy} and
-  \code{dev.print} copy graphics contents by copying the display list
+  Most devices (including all screen devices) have a display list
+  which records all of the graphics operations that occur in the device.
+  \code{dev.copy} copies graphics contents by copying the display list
   from one device to another device.  Also, automatic redrawing of
   graphics contents following the resizing of a device depends on the
   contents of the display list.
@@ -66,7 +77,7 @@ x11()
 plot(rnorm(10), main="Plot 1")
 dev.copy(device=x11)
 mtext("Copy 1", 3)
-dev.print(width=6, height=6, horizontal=FALSE)
+dev.print(width=6, height=6, horizontal=FALSE) # prints it
 dev.off(dev.prev())
 dev.off()
 }

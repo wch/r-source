@@ -154,7 +154,14 @@ NEW FEATURES
 
     o   New bitmap devices png() and jpeg() on Unix/X11.
 
-    o   expand.model.frame() for adding variables to a model frame
+    o   expand.model.frame() for adding variables to a model frame.
+
+    o   dev.print() now prints if possible, and takes the size from
+        the device being copied.
+
+    o   New function dev.copy2eps copies the current device to an eps
+        file, taking the size from that of the device.
+
 
 BUG FIXES
 
