@@ -14,7 +14,8 @@ scan(file = "", what = double(0), nmax = -1, n = -1, sep = "",
 \arguments{
   \item{file}{the name of a file to read data values from.  If the
     specified file is \code{""}, then input is taken from the keyboard
-    (in this case input can be terminated by a blank line).
+    (in this case input can be terminated by a blank line or an EOF
+    signal, \code{Ctrl-D} on Unix and \code{Ctrl-Z} on Windows.).
 
     Otherwise, the file name is interpreted \emph{relative} to the
     current working directory (given by \code{\link{getwd}()}),
@@ -122,7 +123,7 @@ scan(file = "", what = double(0), nmax = -1, n = -1, sep = "",
 
   Note that since \code{sep} is a separator and not a terminator,
   reading a file by \code{scan("foo", sep="\n", blank.lines.skip=FALSE)}
-  will give an empty file line if the file ends in a linefeed and not it
+  will give an empty file line if the file ends in a linefeed and not if
   it does not.  This might not be what you expected; see also
   \code{\link{readLines}}.
 
