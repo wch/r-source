@@ -1,9 +1,9 @@
-xy.coords <- function(x, y, xlab=NULL, ylab=NULL)
+xy.coords <- function(x, y, xlab=NULL, ylab=NULL, log = NULL)
 {
     if(is.null(y)) {
 	ylab <- xlab
 	if(is.language(x)) {
-            if (inherits(x, "formula") && length(x) == 3) {
+	    if (inherits(x, "formula") && length(x) == 3) {
 		ylab <- deparse(x[[2]])
 		xlab <- deparse(x[[3]])
 		y <- eval(x[[2]], sys.frame(sys.parent()))
@@ -12,8 +12,7 @@ xy.coords <- function(x, y, xlab=NULL, ylab=NULL)
 	    else stop("invalid first argument")
 	}
 	else if(is.ts(x)) {
-	    if(is.matrix(x)) y <- x[,1]
-	    else y <- x
+	    y <- if(is.matrix(x)) x[,1] else x
 	    x <- time(x)
 	    xlab <- "Time"
 	}
@@ -57,14 +56,31 @@ xy.coords <- function(x, y, xlab=NULL, ylab=NULL)
 	    x <- 1:length(x)
 	}
     }
-    else if(length(x) != length(y)) stop("x and y lengths differ")
+
+    if(length(x) != length(y)) stop("x and y lengths differ")
+
+    if(length(log) && log != "") {
+	log <- strsplit(log, NULL)[[1]]
+	if("x" %in% log && any(ii <- x <= 0)) {
+	    n <- sum(ii)
+	    warning(paste(n, " x value", if(n>1)"s",
+			  " <= 0 omitted from logarithmic plot", sep=""))
+	    x[ii] <- NA
+	}
+	if("y" %in% log && any(ii <- y <= 0)) {
+	    n <- sum(ii)
+	    warning(paste(n, " y value", if(n>1)"s",
+			  " <= 0 omitted from logarithmic plot", sep=""))
+	    y[ii] <- NA
+	}
+    }
     return(list(x=as.real(x), y=as.real(y), xlab=xlab, ylab=ylab))
 }
 
 plot <- function(x, ...) UseMethod("plot")
 
 plot.default <- function(x, y=NULL, type="p", xlim=NULL, ylim=NULL,
-			 log="", main=NULL,  sub=NULL, xlab=NULL, ylab=NULL,
+			 log="", main=NULL, sub=NULL, xlab=NULL, ylab=NULL,
 			 ann=par("ann"), axes=TRUE, frame.plot=axes,
 			 panel.first=NULL, panel.last=NULL,
 			 col=par("fg"), bg=NA, pch=par("pch"),
@@ -73,7 +89,7 @@ plot.default <- function(x, y=NULL, type="p", xlim=NULL, ylim=NULL,
 {
     xlabel <- if (!missing(x)) deparse(substitute(x))	else NULL
     ylabel <- if (!missing(y)) deparse(substitute(y))	else NULL
-    xy <- xy.coords(x, y, xlabel, ylabel)
+    xy <- xy.coords(x, y, xlabel, ylabel, log)
     xlab <- if (is.null(xlab)) xy$xlab	else xlab
     ylab <- if (is.null(ylab)) xy$ylab	else ylab
     xlim <- if (is.null(xlim)) range(xy$x, finite=TRUE) else xlim
@@ -97,33 +113,33 @@ plot.default <- function(x, y=NULL, type="p", xlim=NULL, ylim=NULL,
 plot.factor <- function(x, y, ...)
 {
     if (missing(y))
-        barplot(table(x), ...)
+	barplot(table(x), ...)
     else if (is.numeric(y))
-        boxplot(y ~ x, ...)
+	boxplot(y ~ x, ...)
     else NextMethod("plot")
 }
 
 plot.formula <- function(formula, data = NULL, subset, na.action,
-                         ..., ask = TRUE)
+			 ..., ask = TRUE)
 {
     if (missing(na.action)) na.action <- options()$na.action
     m <- match.call(expand.dots = FALSE)
     if (is.matrix(eval(m$data, sys.parent())))
-        m$data <- as.data.frame(data)
+	m$data <- as.data.frame(data)
     m$... <- NULL
     m[[1]] <- as.name("model.frame")
     mf <- eval(m, sys.parent())
     response <- attr(attr(mf, "terms"), "response")
     if (response) {
-        varnames <- names(mf)
-        y <- mf[[response]]
-        ylab <- varnames[response]
-        if (length(varnames) > 2) {
-            opar <- par(ask = ask)
-            on.exit(par(opar))
-        }
-        for (i in varnames[-response])
-            plot(mf[[i]], y, xlab = i, ylab = ylab, ...)
+	varnames <- names(mf)
+	y <- mf[[response]]
+	ylab <- varnames[response]
+	if (length(varnames) > 2) {
+	    opar <- par(ask = ask)
+	    on.exit(par(opar))
+	}
+	for (i in varnames[-response])
+	    plot(mf[[i]], y, xlab = i, ylab = ylab, ...)
     }
     else plot.data.frame(mf)
 }

@@ -1,4 +1,4 @@
-###---- As S  (just 'better' ...)
+## Author: Martin Maechler, Date: 27 Jun 97
 
 matpoints <- function(x, y, lty=1:5, pch=NULL, col=1:6, ...)
     matplot(x=x, y=y, type = 'p', lty=lty, pch=pch, col=col, add=TRUE, ...)
@@ -10,10 +10,6 @@ matplot <- function(x, y, type="p",
 		    xlab=NULL, ylab=NULL, xlim=NULL, ylim=NULL,
 		    ..., add= FALSE, verbose = .Options$verbose)
 {
-    ## Purpose: Plots columns of  x	  vs. columns of  y.	--> ?matplot
-    ## ------------------------------------------------------------------
-    ## Author: Martin Maechler, Date: 27 Jun 97
-
     types <- c("p", "l", "b", "o", "h", "n")
     paste.ch <- function(chv) paste('"',chv,'"', sep="", collapse=" ")
     str2vec <- function(string)
@@ -52,7 +48,9 @@ matplot <- function(x, y, type="p",
 	    paste(" col= (", paste.ch(col), ")", sep=''),
 	    if(do.points) paste(" pch= (", paste.ch(pch), ")", sep=''),
 	    " ...\n\n")
-    xy <- xy.coords(x, y, xlabel, ylabel)
+    ii <- match("log", names(xargs <- list(...)), nomatch = 0)
+    log <- xargs[[ii]]
+    xy <- xy.coords(x, y, xlabel, ylabel, log=log)
     xlab <- if (is.null(xlab)) xy$xlab	else xlab
     ylab <- if (is.null(ylab)) xy$ylab	else ylab
     xlim <- if (is.null(xlim)) range(xy$x, finite = TRUE)  else xlim
