@@ -47,6 +47,10 @@ BUG FIXES
 
 BUG FIXES
 
+    o	First lattice plot (first grid.newpage() call) did not start
+	a new page IF there had been a previous traditional graphics
+	plot (on the same device).
+
     o	model.frame.default() takes row names from the response
 	variable if that has suitable names and there is no 'data'
 	argument.  (This follows S but was not previously implemented
