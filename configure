@@ -20917,8 +20917,8 @@ LIBTOOL='$(SHELL) $(top_builddir)/libtool'
 
 
 if test -n "${MAKEINFO_CMD}"; then
-  echo "$as_me:$LINENO: checking whether makeinfo version is at least 4.5" >&5
-echo $ECHO_N "checking whether makeinfo version is at least 4.5... $ECHO_C" >&6
+  echo "$as_me:$LINENO: checking whether makeinfo version is at least 4.7" >&5
+echo $ECHO_N "checking whether makeinfo version is at least 4.7... $ECHO_C" >&6
 if test "${r_cv_prog_makeinfo_v4+set}" = set; then
   echo $ECHO_N "(cached) $ECHO_C" >&6
 else
@@ -20930,7 +20930,7 @@ if test -z "${makeinfo_version_maj}" \
      || test -z "${makeinfo_version_min}"; then
   r_cv_prog_makeinfo_v4=no
 elif test ${makeinfo_version_maj} -lt 4 \
-     || test ${makeinfo_version_min} -lt 5; then
+     || test ${makeinfo_version_min} -lt 7; then
   r_cv_prog_makeinfo_v4=no
 else
   r_cv_prog_makeinfo_v4=yes
@@ -29957,6 +29957,87 @@ _ACEOF
 
 fi
 
+echo "$as_me:$LINENO: checking whether alloca is declared" >&5
+echo $ECHO_N "checking whether alloca is declared... $ECHO_C" >&6
+if test "${ac_cv_have_decl_alloca+set}" = set; then
+  echo $ECHO_N "(cached) $ECHO_C" >&6
+else
+  cat >conftest.$ac_ext <<_ACEOF
+/* confdefs.h.  */
+_ACEOF
+cat confdefs.h >>conftest.$ac_ext
+cat >>conftest.$ac_ext <<_ACEOF
+/* end confdefs.h.  */
+#include <alloca.h>
+
+#ifdef F77_DUMMY_MAIN
+
+#  ifdef __cplusplus
+     extern "C"
+#  endif
+   int F77_DUMMY_MAIN() { return 1; }
+
+#endif
+int
+main ()
+{
+#ifndef alloca
+  char *p = (char *) alloca;
+#endif
+
+  ;
+  return 0;
+}
+_ACEOF
+rm -f conftest.$ac_objext
+if { (eval echo "$as_me:$LINENO: \"$ac_compile\"") >&5
+  (eval $ac_compile) 2>conftest.er1
+  ac_status=$?
+  grep -v '^ *+' conftest.er1 >conftest.err
+  rm -f conftest.er1
+  cat conftest.err >&5
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); } &&
+	 { ac_try='test -z "$ac_c_werror_flag"
+			 || test ! -s conftest.err'
+  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
+  (eval $ac_try) 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); }; } &&
+	 { ac_try='test -s conftest.$ac_objext'
+  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
+  (eval $ac_try) 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); }; }; then
+  ac_cv_have_decl_alloca=yes
+else
+  echo "$as_me: failed program was:" >&5
+sed 's/^/| /' conftest.$ac_ext >&5
+
+ac_cv_have_decl_alloca=no
+fi
+rm -f conftest.err conftest.$ac_objext conftest.$ac_ext
+fi
+echo "$as_me:$LINENO: result: $ac_cv_have_decl_alloca" >&5
+echo "${ECHO_T}$ac_cv_have_decl_alloca" >&6
+if test $ac_cv_have_decl_alloca = yes; then
+
+cat >>confdefs.h <<_ACEOF
+#define HAVE_DECL_ALLOCA 1
+_ACEOF
+
+
+else
+  cat >>confdefs.h <<_ACEOF
+#define HAVE_DECL_ALLOCA 0
+_ACEOF
+
+
+fi
+
+
 
 
 
@@ -33633,7 +33714,7 @@ fi
 
 ## UTF-8 locales - support for MBCS and specifically UTF-8
 
-if test "$want_utf8_support" == yes ; then
+if test "$want_utf8_support" = yes ; then
 
 
 for ac_header in wchar.h wctype.h
@@ -33904,7 +33985,166 @@ _ACEOF
 fi
 done
 
+echo "$as_me:$LINENO: checking whether wcwidth is declared" >&5
+echo $ECHO_N "checking whether wcwidth is declared... $ECHO_C" >&6
+if test "${ac_cv_have_decl_wcwidth+set}" = set; then
+  echo $ECHO_N "(cached) $ECHO_C" >&6
+else
+  cat >conftest.$ac_ext <<_ACEOF
+/* confdefs.h.  */
+_ACEOF
+cat confdefs.h >>conftest.$ac_ext
+cat >>conftest.$ac_ext <<_ACEOF
+/* end confdefs.h.  */
+#include <wchar.h>
+
+#ifdef F77_DUMMY_MAIN
+
+#  ifdef __cplusplus
+     extern "C"
+#  endif
+   int F77_DUMMY_MAIN() { return 1; }
+
+#endif
+int
+main ()
+{
+#ifndef wcwidth
+  char *p = (char *) wcwidth;
+#endif
+
+  ;
+  return 0;
+}
+_ACEOF
+rm -f conftest.$ac_objext
+if { (eval echo "$as_me:$LINENO: \"$ac_compile\"") >&5
+  (eval $ac_compile) 2>conftest.er1
+  ac_status=$?
+  grep -v '^ *+' conftest.er1 >conftest.err
+  rm -f conftest.er1
+  cat conftest.err >&5
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); } &&
+	 { ac_try='test -z "$ac_c_werror_flag"
+			 || test ! -s conftest.err'
+  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
+  (eval $ac_try) 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); }; } &&
+	 { ac_try='test -s conftest.$ac_objext'
+  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
+  (eval $ac_try) 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); }; }; then
+  ac_cv_have_decl_wcwidth=yes
+else
+  echo "$as_me: failed program was:" >&5
+sed 's/^/| /' conftest.$ac_ext >&5
+
+ac_cv_have_decl_wcwidth=no
 fi
+rm -f conftest.err conftest.$ac_objext conftest.$ac_ext
+fi
+echo "$as_me:$LINENO: result: $ac_cv_have_decl_wcwidth" >&5
+echo "${ECHO_T}$ac_cv_have_decl_wcwidth" >&6
+if test $ac_cv_have_decl_wcwidth = yes; then
+
+cat >>confdefs.h <<_ACEOF
+#define HAVE_DECL_WCWIDTH 1
+_ACEOF
+
+
+else
+  cat >>confdefs.h <<_ACEOF
+#define HAVE_DECL_WCWIDTH 0
+_ACEOF
+
+
+fi
+echo "$as_me:$LINENO: checking whether wcswidth is declared" >&5
+echo $ECHO_N "checking whether wcswidth is declared... $ECHO_C" >&6
+if test "${ac_cv_have_decl_wcswidth+set}" = set; then
+  echo $ECHO_N "(cached) $ECHO_C" >&6
+else
+  cat >conftest.$ac_ext <<_ACEOF
+/* confdefs.h.  */
+_ACEOF
+cat confdefs.h >>conftest.$ac_ext
+cat >>conftest.$ac_ext <<_ACEOF
+/* end confdefs.h.  */
+#include <wchar.h>
+
+#ifdef F77_DUMMY_MAIN
+
+#  ifdef __cplusplus
+     extern "C"
+#  endif
+   int F77_DUMMY_MAIN() { return 1; }
+
+#endif
+int
+main ()
+{
+#ifndef wcswidth
+  char *p = (char *) wcswidth;
+#endif
+
+  ;
+  return 0;
+}
+_ACEOF
+rm -f conftest.$ac_objext
+if { (eval echo "$as_me:$LINENO: \"$ac_compile\"") >&5
+  (eval $ac_compile) 2>conftest.er1
+  ac_status=$?
+  grep -v '^ *+' conftest.er1 >conftest.err
+  rm -f conftest.er1
+  cat conftest.err >&5
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); } &&
+	 { ac_try='test -z "$ac_c_werror_flag"
+			 || test ! -s conftest.err'
+  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
+  (eval $ac_try) 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); }; } &&
+	 { ac_try='test -s conftest.$ac_objext'
+  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
+  (eval $ac_try) 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); }; }; then
+  ac_cv_have_decl_wcswidth=yes
+else
+  echo "$as_me: failed program was:" >&5
+sed 's/^/| /' conftest.$ac_ext >&5
+
+ac_cv_have_decl_wcswidth=no
+fi
+rm -f conftest.err conftest.$ac_objext conftest.$ac_ext
+fi
+echo "$as_me:$LINENO: result: $ac_cv_have_decl_wcswidth" >&5
+echo "${ECHO_T}$ac_cv_have_decl_wcswidth" >&6
+if test $ac_cv_have_decl_wcswidth = yes; then
+
+cat >>confdefs.h <<_ACEOF
+#define HAVE_DECL_WCSWIDTH 1
+_ACEOF
+
+
+else
+  cat >>confdefs.h <<_ACEOF
+#define HAVE_DECL_WCSWIDTH 0
+_ACEOF
+
+
+fi
+
+
 for ac_func in mbrtowc mbstowcs wcrtomb wcscoll wcsftime wcstombs \
                wctrans
 do
@@ -33913,6 +34153,7 @@ if test "x$this" = xno; then
   want_utf8_support=no
 fi
 done
+fi
 if test "x${want_utf8_support}" = xyes; then
 
 cat >>confdefs.h <<\_ACEOF
@@ -35906,7 +36147,7 @@ cat >>confdefs.h <<\_ACEOF
 _ACEOF
 
   r_save_LIBS=${LIBS}
-  if test "$want_utf8_support" = yes ; then
+  if test "$want_utf8_support" == yes ; then
     LIBS="${LIBS} ${X_LIBS}"
 
 

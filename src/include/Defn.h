@@ -874,9 +874,7 @@ char *EncodeString(SEXP, int, int, Rprt_adj);
 
 
 #if defined(HAVE_WCHAR_H) && defined(SUPPORT_MBCS)
-#define __USE_XOPEN 1 /* glibc needs this for wcwidth/wcswidth */
 #include <wchar.h>
-#undef __USE_XOPEN
 #endif
 
 /* main/util.c */

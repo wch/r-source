@@ -46,10 +46,16 @@
 
 
 #ifdef SUPPORT_MBCS
-#define __USE_XOPEN 1 /* glibc needs this for wcwidth/wcswidth */
 # include <wchar.h>
 # include <wctype.h>
+#if !HAVE_DECL_WCWIDTH
+extern int wcwidth(wchar_t c);
 #endif
+#if !HAVE_DECL_WCSWIDTH
+extern int wcswidth(const wchar_t *s, size_t n);
+#endif
+#endif
+
 
 /* The next must come after other header files to redefine RE_DUP_MAX */
 #ifdef USE_SYSTEM_REGEX

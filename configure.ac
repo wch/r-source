@@ -1199,6 +1199,7 @@ fi
 
 AC_CHECK_TYPES([off_t])
 AC_FUNC_ALLOCA
+AC_CHECK_DECLS([alloca], , , [#include <alloca.h>])
 AC_CHECK_FUNCS(access chdir expm1 fcntl finite fseeko ftello ftruncate \
   getcwd getgrgid getpwuid getuid hypot isascii log1p \
   matherr mkfifo popen putenv rint \

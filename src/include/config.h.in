@@ -61,6 +61,10 @@
    */
 #undef HAVE_DECL_ACOSH
 
+/* Define to 1 if you have the declaration of `alloca', and to 0 if you don't.
+   */
+#undef HAVE_DECL_ALLOCA
+
 /* Define to 1 if you have the declaration of `asinh', and to 0 if you don't.
    */
 #undef HAVE_DECL_ASINH
@@ -96,6 +100,14 @@
 /* Define to 1 if you have the declaration of `vsnprintf', and to 0 if you
    don't. */
 #undef HAVE_DECL_VSNPRINTF
+
+/* Define to 1 if you have the declaration of `wcswidth', and to 0 if you
+   don't. */
+#undef HAVE_DECL_WCSWIDTH
+
+/* Define to 1 if you have the declaration of `wcwidth', and to 0 if you
+   don't. */
+#undef HAVE_DECL_WCWIDTH
 
 /* Define to 1 if you have the <dirent.h> header file, and it defines `DIR'.
    */

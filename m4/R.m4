@@ -2790,7 +2790,7 @@ if test "$want_utf8_support" = yes ; then
 AC_CHECK_HEADERS(wchar.h wctype.h)
 AC_CHECK_FUNCS(mbrtowc mbstowcs wcrtomb wcscoll wcsftime wcstombs \
                wcswidth wctrans wcwidth)
-fi
+AC_CHECK_DECLS([wcwidth, wcswidth], , , [#include <wchar.h>])
 ## can manage without wc[s]width
 for ac_func in mbrtowc mbstowcs wcrtomb wcscoll wcsftime wcstombs \
                wctrans
@@ -2800,6 +2800,7 @@ if test "x$this" = xno; then
   want_utf8_support=no
 fi
 done
+fi
 if test "x${want_utf8_support}" = xyes; then
 AC_DEFINE(SUPPORT_UTF8, 1, [Define this to enable support for UTF-8 locales.])
 AC_SUBST(SUPPORT_UTF8)

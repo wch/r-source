@@ -40,7 +40,8 @@
 
 #ifdef HAVE_ALLOCA_H
 #include <alloca.h>
-#else
+#endif
+#if !HAVE_DECL_ALLOCA
 extern char *alloca(size_t);
 #endif
 
@@ -730,6 +731,10 @@ void UNIMPLEMENTED_TYPE(char *s, SEXP x)
 {
     UNIMPLEMENTED_TYPEt(s, TYPEOF(x));
 }
+
+#ifdef SUPPORT_MBCS
+#include <wctype.h>
+#endif
 
 Rboolean isBlankString(char *s)
 {
