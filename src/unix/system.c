@@ -915,7 +915,7 @@ int R_ShowFiles(int nfile, char **file, char **title, char *wtitle)
 	filename = tmpnam(NULL);
         if ((tfp = fopen(filename, "w")) != NULL) {
 	    for(i = 0; i < nfile; i++) {
-		if (title[i])
+		if (title[i] && *title[i])
 		    fprintf(tfp, "%s\n\n", title[i]);
 		if ((fp = fopen(file[i], "r")) != NULL) {
 		    while ((c = fgetc(fp)) != EOF)
@@ -928,7 +928,7 @@ int R_ShowFiles(int nfile, char **file, char **title, char *wtitle)
 	    }
 	    fclose(tfp);
 	}
-	sprintf(buf, "%s %s", pager, filename);
+	sprintf(buf, "%s < %s", pager, filename);
 	if (system(buf) != 0) return 0;
 	else return 1;
     }

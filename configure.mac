@@ -84,7 +84,7 @@ rm gram.y
 
 # (4) Interpreted Functions
 
-echo "Interpreted Function Libraries"
+echo "Interpreted function libraries"
 
 cd $RHOME/src/library/base/R
 cat `ls *.R | sed '/system.*/d'` system.mac.R > $MHOME/library/base/R/base
@@ -93,9 +93,15 @@ cat $RHOME/src/library/profile/Common.R \
 
 # (5) Manual entries etc (just grab the unix ones for now)
 
+echo "Manual entries, examples and data"
+
 cd $RHOME
 cp -R library/LibIndex Macintosh/library
 cp -R library/base/INDEX Macintosh/library/base
-cp -R library/base/help Macintosh/library/base
 cp -R library/base/data Macintosh/library/base
 cp -R library/base/R-ex Macintosh/library/base
+mkdir Macintosh/library/base/help
+for i in  `ls $RHOME/library/base/help`
+do
+  sed 's/.//g' library/base/help/$i > Macintosh/library/base/help/$i
+done
