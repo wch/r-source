@@ -2356,59 +2356,96 @@ SEXP do_box(SEXP call, SEXP op, SEXP args, SEXP env)
     return R_NilValue;
 }
 
+static void drawPointsLines(double xp, double yp, double xold, double yold,
+			    char type, int first, DevDesc *dd) 
+{
+    if (type == 'p' || type == 'o')
+	GSymbol(xp, yp, DEVICE, dd->gp.pch, dd);
+    if ((type == 'l' || type == 'o') && !first)
+	GLine(xold, yold, xp, yp, DEVICE, dd);
+}
+
 SEXP do_locator(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    SEXP x, y, nobs, ans;
+    SEXP x, y, nobs, ans, saveans, stype;
     int i, n, type='p';
     double xp, yp, xold=0, yold=0;
     DevDesc *dd = CurrentDevice();
 
-    GCheckState(dd);
-
-    checkArity(op, args);
-    n = asInteger(CAR(args));
-    if (n <= 0 || n == NA_INTEGER)
-	error("invalid number of points in locator");
-    args = CDR(args);
-    if (isString(CAR(args)) && LENGTH(CAR(args)) == 1)
-	type = CHAR(STRING(CAR(args))[0])[0];
-    else errorcall(call, "invalid plot type");
-    PROTECT(x = allocVector(REALSXP, n));
-    PROTECT(y = allocVector(REALSXP, n));
-    PROTECT(nobs=allocVector(INTSXP,1));
-    i = 0;
-
-    GMode(2, dd);
-    while (i < n) {
-	if (!GLocator(&(REAL(x)[i]), &(REAL(y)[i]), USER, dd))
-	    break;
+    /* If replaying, just draw the points and lines that were recorded */
+    if (call == R_NilValue) {
+	x = CAR(args); args = CDR(args);
+	y = CAR(args); args = CDR(args);
+	nobs = CAR(args); args = CDR(args);
+	n = INTEGER(nobs)[0];
+	stype = CAR(args); args = CDR(args);
+	type = CHAR(STRING(stype)[0])[0];
 	if (type != 'n') {
 	    GMode(1, dd);
-	    xp = REAL(x)[i];
-	    yp = REAL(y)[i];
-	    GConvert(&xp, &yp, USER, DEVICE, dd);
-	    if (type == 'p' || type == 'o')
-		GSymbol(xp, yp, DEVICE, dd->gp.pch, dd);
-	    if ((type == 'l' || type == 'o') && (i > 0))
-		GLine(xold, yold, xp, yp, DEVICE, dd);
-	    GMode(2, dd);
-	    xold = xp; yold = yp;
+	    for (i=0; i<n; i++) {
+		xp = REAL(x)[i];
+		yp = REAL(y)[i];
+		GConvert(&xp, &yp, USER, DEVICE, dd);
+		drawPointsLines(xp, yp, xold, yold, type, i==0, dd);
+		xold = xp;
+		yold = yp;
+	    }
+	    GMode(0, dd);
 	}
-	i += 1;
+    } else {
+	GCheckState(dd);
+
+	checkArity(op, args);
+	n = asInteger(CAR(args));
+	if (n <= 0 || n == NA_INTEGER)
+	    error("invalid number of points in locator");
+	args = CDR(args);
+	if (isString(CAR(args)) && LENGTH(CAR(args)) == 1)
+	    stype = CAR(args);
+	else 
+	    errorcall(call, "invalid plot type");
+	type = CHAR(STRING(stype)[0])[0];
+	PROTECT(x = allocVector(REALSXP, n));
+	PROTECT(y = allocVector(REALSXP, n));
+	PROTECT(nobs=allocVector(INTSXP,1));
+	i = 0;
+	
+	GMode(2, dd);
+	while (i < n) {
+	    if (!GLocator(&(REAL(x)[i]), &(REAL(y)[i]), USER, dd))
+		break;
+	    if (type != 'n') {
+		GMode(1, dd);
+		xp = REAL(x)[i];
+		yp = REAL(y)[i];
+		GConvert(&xp, &yp, USER, DEVICE, dd);
+		drawPointsLines(xp, yp, xold, yold, type, i==0, dd);
+		GMode(2, dd);
+		xold = xp; yold = yp;
+	    }
+	    i += 1;
+	}
+	GMode(0, dd);
+	INTEGER(nobs)[0] = i;
+	while (i < n) {
+	    REAL(x)[i] = NA_REAL;
+	    REAL(y)[i] = NA_REAL;
+	    i += 1;
+	}
+	PROTECT(ans = allocList(3));
+	CAR(ans) = x;
+	CADR(ans) = y;
+	CADDR(ans) = nobs;
+	PROTECT(saveans = allocList(4));
+	CAR(saveans) = x;
+	CADR(saveans) = y;
+	CADDR(saveans) = nobs;
+	CADDDR(saveans) = CAR(args); 
+	/* Record the points and lines that were drawn in the display list */
+	recordGraphicOperation(op, saveans, dd);
+	UNPROTECT(5);
+	return ans;
     }
-    GMode(0, dd);
-    INTEGER(nobs)[0] = i;
-    while (i < n) {
-	REAL(x)[i] = NA_REAL;
-	REAL(y)[i] = NA_REAL;
-	i += 1;
-    }
-    ans = allocList(3);
-    UNPROTECT(3);
-    CAR(ans) = x;
-    CADR(ans) = y;
-    CADDR(ans) = nobs;
-    return ans;
 }
 
 
