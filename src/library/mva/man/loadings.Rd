@@ -1,17 +1,20 @@
 \name{loadings}
+\alias{loadings}
 \alias{print.loadings}
 \alias{print.factanal}
 \title{Print Loadings in Factor Analysis}
 \description{
-  Print loadings in factor analysis.
+  Extract or print loadings in factor analysis (or principal
+  components analysis).
 }
 \usage{
+loadings(x)
 print.loadings(x, digits = 3, cutoff = 0.1, sort = FALSE, ...)
 print.factanal(x, digits = 3, ...)
 }
 \arguments{
-  \item{x}{an object of class \code{"factanal"} or the \code{loadings}
-    component of such an object.}
+  \item{x}{an object of class \code{"factanal"} or \code{"princomp"}
+    or the \code{loadings} component of such an object.}
   \item{digits}{number of decimal places to use in printing uniquenesses
     and loadings.}
   \item{cutoff}{loadings smaller than this (in absolute value) are suppressed.}
@@ -26,7 +29,7 @@ print.factanal(x, digits = 3, ...)
 \author{B. D. Ripley}
 
 \seealso{
-  \code{\link{factanal}}
+  \code{\link{factanal}}, \code{\link{princomp}}
 }
 
 \keyword{multivariate}
