@@ -21,6 +21,11 @@ data.class(x)
   for method dispatching.  (Or, what the basic creator functions already
   and maybe eventually all will attach as a class attribute.)
 }
+\note{
+  For compatibility reasons, there is one exception to the rule above:
+  When \code{x} is \code{\link{integer}}, the result of
+  \code{data.class(x)} is \code{"numeric"} even when \code{x} is classed.
+}
 \seealso{
   \code{\link[base]{class}}
 }
@@ -30,6 +35,8 @@ data.class(factor(x))                 # has a class attribute
 data.class(matrix(x, nc = 13))        # has a dim attribute
 data.class(list(x))                   # the same as mode(x)
 data.class(x)                         # the same as mode(x)
+
+stopifnot(data.class(1:2) == "numeric")# compatibility "rule"
 }
 \keyword{classes}
 \keyword{methods}
