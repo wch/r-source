@@ -17,6 +17,8 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+#if !defined(Unix) || defined(HAVE_BSD_NETWORKING)
+
 /* based on libxml2-2.3.6:
  * nanohttp.c: minimalist HTTP GET implementation to fetch external subsets.
  *             focuses on size, streamability, reentrancy and portability
@@ -88,8 +90,8 @@
 
 static void RxmlNanoHTTPScanProxy(const char *URL);
 static void *RxmlNanoHTTPMethod(const char *URL, const char *method,
-			       const char *input, char **contentType,
-			       const char *headers);
+				const char *input, char **contentType,
+				const char *headers);
 
 #ifdef Unix
 #include <R_ext/eventloop.h>
@@ -111,9 +113,6 @@ setSelectMask(InputHandler *handlers, fd_set *readMask)
     return(maxfd);
 }
 #endif
-
-#include <R_ext/Error.h>
-#define err warning
 
 /**
  * A couple of portability macros
@@ -152,6 +151,7 @@ typedef struct RxmlNanoHTTPCtxt {
     int last;		/* return code for last operation */
     int returnValue;	/* the protocol return value */
     char *contentType;	/* the MIME type for the input */
+    int contentLength;	/* the reported length */
     char *location;	/* the new URL in case of redirect */
     char *authHeader;	/* contents of {WWW,Proxy}-Authenticate header */
 } RxmlNanoHTTPCtxt, *RxmlNanoHTTPCtxtPtr;
@@ -354,12 +354,10 @@ RxmlNanoHTTPScanProxy(const char *URL)
     if (proxyPort != 0) {
 	proxyPort = 0;
     }
-#ifdef DEBUG_HTTP
     if (URL == NULL)
-	err("Removing HTTP proxy info\n");
+	RxmlMessage(0, "Removing HTTP proxy info");
     else
-	err("Using HTTP proxy %s\n", URL);
-#endif
+	RxmlMessage(1, "Using HTTP proxy %s", URL);
     if (URL == NULL) return;
     buf[indx] = 0;
     while (*cur != 0) {
@@ -420,6 +418,7 @@ RxmlNanoHTTPNewCtxt(const char *URL)
     memset(ret, 0, sizeof(RxmlNanoHTTPCtxt));
     ret->port = 80;
     ret->returnValue = 0;
+    ret->contentLength = -1;
     ret->fd = -1;
 
     RxmlNanoHTTPScanURL(ret, URL);
@@ -710,6 +709,10 @@ RxmlNanoHTTPScanAnswer(RxmlNanoHTTPCtxtPtr ctxt, const char *line)
 	if (ctxt->contentType != NULL) return;
 	while ((*cur == ' ') || (*cur == '\t')) cur++;
 	ctxt->contentType = xmlMemStrdup(cur);
+    } else if (!xmlStrncasecmp(BAD_CAST line, BAD_CAST"Content-Length:", 15)) {
+        cur += 15;
+	while ((*cur == ' ') || (*cur == '\t')) cur++;
+	ctxt->contentLength = atoi(cur);
     } else if (!xmlStrncasecmp(BAD_CAST line, BAD_CAST"Location:", 9)) {
         cur += 9;
 	while ((*cur == ' ') || (*cur == '\t')) cur++;
@@ -911,9 +914,7 @@ RxmlNanoHTTPConnectHost(const char *host, int port)
     h=gethostbyname(host);
     if (h==NULL)
     {
-#ifdef DEBUG_HTTP
-	err("unable to resolve '%s'.\n", host);
-#endif
+	RxmlMessage(2, "unable to resolve '%s'.", host);
 	return(-1);
     }
 
@@ -943,9 +944,7 @@ RxmlNanoHTTPConnectHost(const char *host, int port)
 	    return(s);
     }
 
-#ifdef DEBUG_HTTP
-    err("unable to connect to '%s'.\n", host);
-#endif
+    RxmlMessage(2, "unable to connect to '%s'.", host);
     return(-1);
 }
 
@@ -1118,11 +1117,9 @@ RxmlNanoHTTPMethod(const char *URL, const char *method, const char *input,
 	sprintf(p, "Content-Length: %d\r\n\r\n%s", ilen, input);
     else
 	strcpy(p, "\r\n");
-#ifdef DEBUG_HTTP
-    err("-> %s%s", proxy? "(Proxy) " : "", bp);
+    RxmlMessage(0, "-> %s%s", proxy? "(Proxy) " : "", bp);
     if ((blen -= strlen(bp)+1) < 0)
-	err("ERROR: overflowed buffer by %d bytes\n", -blen);
-#endif
+	RxmlMessage(0, "ERROR: overflowed buffer by %d bytes\n", -blen);
     ctxt->outptr = ctxt->out = bp;
     ctxt->state = XML_NANO_HTTP_WRITE;
     RxmlNanoHTTPSend(ctxt);
@@ -1138,17 +1135,13 @@ RxmlNanoHTTPMethod(const char *URL, const char *method, const char *input,
 	}
 	RxmlNanoHTTPScanAnswer(ctxt, p);
 
-#ifdef DEBUG_HTTP
-	err("<- %s\n", p);
-#endif
+	RxmlMessage(0, "<- %s\n", p);
         xmlFree(p);
     }
 
     if ((ctxt->location != NULL) && (ctxt->returnValue >= 300) &&
         (ctxt->returnValue < 400)) {
-#ifdef DEBUG_HTTP
-	err("\nRedirect to: %s\n", ctxt->location);
-#endif
+	RxmlMessage(1, "Redirect to: %s", ctxt->location);
 	while (RxmlNanoHTTPRecv(ctxt)) ;
         if (nbRedirects < XML_NANO_HTTP_MAX_REDIR) {
 	    nbRedirects++;
@@ -1157,9 +1150,7 @@ RxmlNanoHTTPMethod(const char *URL, const char *method, const char *input,
 	    goto retry;
 	}
 	RxmlNanoHTTPFreeCtxt(ctxt);
-#ifdef DEBUG_HTTP
-	err("Too many redirects, aborting ...\n");
-#endif
+	RxmlMessage(2, "Too many redirects, aborting ...");
 	return(NULL);
 
     }
@@ -1171,14 +1162,12 @@ RxmlNanoHTTPMethod(const char *URL, const char *method, const char *input,
 	    *contentType = NULL;
     }
 
-#ifdef DEBUG_HTTP
     if (ctxt->contentType != NULL)
-	err("\nCode %d, content-type '%s'\n\n",
-	    ctxt->returnValue, ctxt->contentType);
+	RxmlMessage(1, "Code %d, content-type '%s'",
+		    ctxt->returnValue, ctxt->contentType);
     else
-	err("\nCode %d, no content-type\n\n",
-	    ctxt->returnValue);
-#endif
+	RxmlMessage(1, "Code %d, no content-type",
+		    ctxt->returnValue);
 
     return((void *) ctxt);
 }
@@ -1201,3 +1190,21 @@ RxmlNanoHTTPReturnCode(void *ctx)
     return(ctxt->returnValue);
 }
 
+int
+RxmlNanoHTTPContentLength(void *ctx)
+{
+    RxmlNanoHTTPCtxtPtr ctxt = (RxmlNanoHTTPCtxtPtr) ctx;
+
+    if (ctxt == NULL) return(-1);
+
+    return(ctxt->contentLength);
+}
+
+char *
+RxmlNanoHTTPContentType(void *ctx)
+{
+    RxmlNanoHTTPCtxtPtr ctxt = (RxmlNanoHTTPCtxtPtr) ctx;
+    return(ctxt->contentType);
+}
+
+#endif /* !Unix or BSD_NETWORKING */

@@ -2478,10 +2478,19 @@ void *R_HTTPOpen(const char *url)
 	int rc = RxmlNanoHTTPReturnCode(ctxt);
 	if(rc != 200) {
 	    RxmlNanoHTTPClose(ctxt);
+	    error("cannot open: HTTP status was `%d'", rc);
 	    ctxt = NULL;
+	} else {
+	    char *p = RxmlNanoHTTPContentType(ctxt);
+	    Rprintf("Content type `%s' length %d bytes\n",
+		    p ? p : "unknown",
+		    RxmlNanoHTTPContentLength(ctxt));
+#ifdef Win32
+	    R_FlushConsole();
+#endif
 	}
-    }
-    return ctxt;
+    }     
+return ctxt;
 }
 
 int R_HTTPRead(void *ctx, void *dest, int len)
@@ -2496,11 +2505,20 @@ void R_HTTPClose(void *ctx)
 
 void *R_FTPOpen(const char *url)
 {
+    void *ctxt;
     int timeout = asInteger(GetOption(install("timeout"), R_NilValue));
 
     if(timeout == NA_INTEGER || timeout <= 0) timeout = 60;
     RxmlNanoFTPTimeout(timeout);
-    return RxmlNanoFTPOpen(url);
+    ctxt = RxmlNanoFTPOpen(url);
+    if(ctxt) {
+	Rprintf("ftp data connection made, file length %d bytes\n",
+		RxmlNanoFTPContentLength(ctxt));
+#ifdef Win32
+	R_FlushConsole();
+#endif
+    }    
+    return ctxt;
 }
 
 int R_FTPRead(void *ctx, void *dest, int len)
@@ -2631,7 +2649,7 @@ void *R_HTTPOpen(const char *url)
 	InternetCloseHandle(wictxt->session);
 	InternetCloseHandle(wictxt->hand);
 	free(wictxt);
-	error("cannot open: HTTP status was `%d %s'\n", status, buf);
+	error("cannot open: HTTP status was `%d %s'", status, buf);
     }
 
     if(!IDquiet) {
@@ -2784,3 +2802,26 @@ void R_FTPClose(void *ctx)
 {
 }
 #endif
+
+
+#define MBUFSIZE 8192
+void RxmlMessage(int level, const char *format, ...)
+{
+    char buf[MBUFSIZE], *p;
+    va_list(ap);
+
+    if(level < 2) return;
+    
+    va_start(ap, format);
+#ifdef HAVE_VSNPRINTF
+    vsnprintf(buf, MBUFSIZE, format, ap);
+    buf[MBUFSIZE-1] = '\0';
+#else
+    vsprintf(buf, format, ap);
+#endif
+    va_end(ap);
+    p = buf + strlen(buf) - 1;
+    if(strlen(buf) > 0 && *p == '\n') *p = '\0';
+    Rprintf(buf);
+    Rprintf("\n");
+}

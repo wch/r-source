@@ -17,6 +17,8 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+#if !defined(Unix) || defined(HAVE_BSD_NETWORKING)
+
 /* based on libxml2-2.3.6:
  * nanoftp.c: basic FTP client support
  *
@@ -94,11 +96,6 @@ setSelectMask(InputHandler *handlers, fd_set *readMask)
 }
 #endif
 
-#include <R_ext/Error.h>
-#define err warning
-
-/* #define DEBUG_FTP 1  */
-
 /**
  * A couple of portability macros
  */
@@ -127,6 +124,7 @@ typedef struct RxmlNanoFTPCtxt {
     SOCKET dataFd;	/* the file descriptor for the data socket */
     int state;		/* WRITE / READ / CLOSED */
     int returnValue;	/* the protocol return value */
+    int contentLength;
     /* buffer for data received from the control connection */
     char controlBuf[FTP_BUF_SIZE + 1];
     int controlBufIndex;
@@ -328,12 +326,10 @@ RxmlNanoFTPScanProxy(const char *URL) {
     if (proxyPort != 0) {
 	proxyPort = 0;
     }
-#ifdef DEBUG_FTP
     if (URL == NULL)
-	err("Removing FTP proxy info\n");
+	RxmlMessage(0, "Removing FTP proxy info");
     else
-	err("Using FTP proxy %s\n", URL);
-#endif
+	RxmlMessage(0, "Using FTP proxy %s", URL);
     if (URL == NULL) return;
     buf[indx] = 0;
     while (*cur != 0) {
@@ -394,6 +390,7 @@ RxmlNanoFTPNewCtxt(const char *URL) {
     ret->port = 21;
     ret->passive = 1;
     ret->returnValue = 0;
+    ret->contentLength = -1;
     ret->controlBufIndex = 0;
     ret->controlBufUsed = 0;
 
@@ -476,25 +473,19 @@ RxmlNanoFTPGetMore(void *ctx) {
     int size;
 
     if ((ctxt->controlBufIndex < 0) || (ctxt->controlBufIndex > FTP_BUF_SIZE)) {
-#ifdef DEBUG_FTP
-        err("RxmlNanoFTPGetMore : controlBufIndex = %d\n",
-	    ctxt->controlBufIndex);
-#endif
+        RxmlMessage(0, "RxmlNanoFTPGetMore : controlBufIndex = %d",
+		    ctxt->controlBufIndex);
 	return(-1);
     }
 
     if ((ctxt->controlBufUsed < 0) || (ctxt->controlBufUsed > FTP_BUF_SIZE)) {
-#ifdef DEBUG_FTP
-        err("RxmlNanoFTPGetMore : controlBufUsed = %d\n",
+        RxmlMessage(0, "RxmlNanoFTPGetMore : controlBufUsed = %d",
 	    ctxt->controlBufUsed);
-#endif
 	return(-1);
     }
     if (ctxt->controlBufIndex > ctxt->controlBufUsed) {
-#ifdef DEBUG_FTP
-        err("RxmlNanoFTPGetMore : controlBufIndex > controlBufUsed %d > %d\n",
+        RxmlMessage(0, "RxmlNanoFTPGetMore : controlBufIndex > controlBufUsed %d > %d\n",
 	    ctxt->controlBufIndex, ctxt->controlBufUsed);
-#endif
 	return(-1);
     }
 
@@ -509,9 +500,7 @@ RxmlNanoFTPGetMore(void *ctx) {
     }
     size = FTP_BUF_SIZE - ctxt->controlBufUsed;
     if (size == 0) {
-#ifdef DEBUG_FTP
-        err("RxmlNanoFTPGetMore : buffer full %d \n", ctxt->controlBufUsed);
-#endif
+        RxmlMessage(0, "RxmlNanoFTPGetMore : buffer full %d", ctxt->controlBufUsed);
 	return(0);
     }
 
@@ -524,14 +513,27 @@ RxmlNanoFTPGetMore(void *ctx) {
         ctxt->controlFd = -1;
         return(-1);
     }
-#ifdef DEBUG_FTP
-    err("RxmlNanoFTPGetMore : read %d [%d - %d]\n", len,
-	ctxt->controlBufUsed, ctxt->controlBufUsed + len);
-#endif
+    RxmlMessage(0, "RxmlNanoFTPGetMore : read %d [%d - %d]", len,
+		ctxt->controlBufUsed, ctxt->controlBufUsed + len);
     ctxt->controlBufUsed += len;
     ctxt->controlBuf[ctxt->controlBufUsed] = 0;
 
     return(len);
+}
+
+static void RxmlFindLength(void *ctxt, char *ptr)
+{
+    char *p, *q;
+    int len;
+    
+    p = strrchr(ptr, '(');
+    if(p) {
+	p++;
+	q = strchr(p, 'b');
+	if(!q || strncmp(q, "bytes)", 6) != 0) return;
+	len = atoi(p);
+	if(len >=0) ((RxmlNanoFTPCtxtPtr) ctxt)->contentLength = len;
+    }
 }
 
 /**
@@ -563,9 +565,7 @@ get_more:
     ptr = &ctxt->controlBuf[ctxt->controlBufIndex];
     end = &ctxt->controlBuf[ctxt->controlBufUsed];
 
-#ifdef DEBUG_FTP
-    err("\n<<<\n%s\n--\n", ptr);
-#endif
+    RxmlMessage(0, "\n<<<\n%s\n--\n", ptr);
     while (ptr < end) {
         cur = RxmlNanoFTPParseResponse(ptr, end - ptr);
 	if (cur > 0) {
@@ -575,6 +575,7 @@ get_more:
 	     * able to analyze the result if needed.
 	     */
 	    res = cur;
+	    if(res == 150) RxmlFindLength(ctxt, ptr);
 	    ptr += 3;
 	    ctxt->controlBufAnswer = ptr - ctxt->controlBuf;
 	    while ((ptr < end) && (*ptr != '\n')) ptr++;
@@ -592,14 +593,9 @@ get_more:
 
     if (res < 0) goto get_more;
     ctxt->controlBufIndex = ptr - ctxt->controlBuf;
-#ifdef DEBUG_FTP
     ptr = &ctxt->controlBuf[ctxt->controlBufIndex];
-    err("\n---\n%s\n--\n", ptr);
-#endif
-
-#ifdef DEBUG_FTP
-    err("Got %d\n", res);
-#endif
+    RxmlMessage(1, "\n---\n%s\n--\n", ptr);
+    RxmlMessage(1, "Got %d", res);
     return(res / 100);
 }
 
@@ -674,9 +670,7 @@ RxmlNanoFTPSendUser(void *ctx) {
 #endif
     buf[sizeof(buf) - 1] = 0;
     len = strlen(buf);
-#ifdef DEBUG_FTP
-    err(buf);
-#endif
+    RxmlMessage(0, buf);
     res = send(ctxt->controlFd, buf, len, 0);
     if (res < 0) return(res);
     return(0);
@@ -707,9 +701,7 @@ RxmlNanoFTPSendPasswd(void *ctx) {
 #endif
     buf[sizeof(buf) - 1] = 0;
     len = strlen(buf);
-#ifdef DEBUG_FTP
-    err(buf);
-#endif
+    RxmlMessage(0, buf);
     res = send(ctxt->controlFd, buf, len, 0);
     if (res < 0) return(res);
     return(0);
@@ -734,9 +726,7 @@ RxmlNanoFTPQuit(void *ctx) {
 
     sprintf(buf, "QUIT\r\n");
     len = strlen(buf);
-#ifdef DEBUG_FTP
-    err(buf);
-#endif
+    RxmlMessage(0, buf);
     res = send(ctxt->controlFd, buf, len, 0);
     return(0);
 }
@@ -860,9 +850,7 @@ RxmlNanoFTPConnect(void *ctx) {
 #endif
             buf[sizeof(buf) - 1] = 0;
             len = strlen(buf);
-#ifdef DEBUG_FTP
-	    err(buf);
-#endif
+	    RxmlMessage(0, buf);
 	    res = send(ctxt->controlFd, buf, len, 0);
 	    if (res < 0) {
 		closesocket(ctxt->controlFd);
@@ -890,9 +878,7 @@ RxmlNanoFTPConnect(void *ctx) {
 #endif
                     buf[sizeof(buf) - 1] = 0;
                     len = strlen(buf);
-#ifdef DEBUG_FTP
-		    err(buf);
-#endif
+		    RxmlMessage(0, buf);
 		    res = send(ctxt->controlFd, buf, len, 0);
 		    if (res < 0) {
 			closesocket(ctxt->controlFd);
@@ -934,9 +920,7 @@ RxmlNanoFTPConnect(void *ctx) {
 #endif
                 buf[sizeof(buf) - 1] = 0;
                 len = strlen(buf);
-#ifdef DEBUG_FTP
-		err(buf);
-#endif
+		RxmlMessage(0, buf);
 		res = send(ctxt->controlFd, buf, len, 0);
 		if (res < 0) {
 		    closesocket(ctxt->controlFd); ctxt->controlFd = -1;
@@ -973,9 +957,7 @@ RxmlNanoFTPConnect(void *ctx) {
 #endif
                 buf[sizeof(buf) - 1] = 0;
                 len = strlen(buf);
-#ifdef DEBUG_FTP
-		err(buf);
-#endif
+		RxmlMessage(0, buf);
 		res = send(ctxt->controlFd, buf, len, 0);
 		if (res < 0) {
 		    closesocket(ctxt->controlFd); ctxt->controlFd = -1;
@@ -1002,9 +984,7 @@ RxmlNanoFTPConnect(void *ctx) {
 #endif
                 buf[sizeof(buf) - 1] = 0;
                 len = strlen(buf);
-#ifdef DEBUG_FTP
-		err(buf);
-#endif
+		RxmlMessage(0, buf);
 		res = send(ctxt->controlFd, buf, len, 0);
 		if (res < 0) {
 		    closesocket(ctxt->controlFd); ctxt->controlFd = -1;
@@ -1068,7 +1048,7 @@ RxmlNanoFTPConnect(void *ctx) {
 	case 2:
 	    break;
 	case 3:
-	    err("FTP server asking for ACCNT on anonymous\n");
+	    RxmlMessage(1, "FTP server asking for ACCNT on anonymous");
 	case 1:
 	case 4:
 	case 5:
@@ -1107,7 +1087,7 @@ RxmlNanoFTPGetConnection(void *ctx) {
 
     ctxt->dataFd = socket (AF_INET, SOCK_STREAM, IPPROTO_TCP);
     if (ctxt->dataFd < 0) {
-        err("RxmlNanoFTPGetConnection: failed to create socket\n");
+        RxmlMessage(2, "RxmlNanoFTPGetConnection: failed to create socket");
 	return(-1);
     }
     dataAddrLen = sizeof(dataAddr);
@@ -1118,7 +1098,7 @@ RxmlNanoFTPGetConnection(void *ctx) {
 	sprintf(buf, "PASV\r\n");
         len = strlen(buf);
 #ifdef DEBUG_FTP
-	err(buf);
+	RxmlMessage(0, buf);
 #endif
 	res = send(ctxt->controlFd, buf, len, 0);
 	if (res < 0) {
@@ -1142,7 +1122,7 @@ RxmlNanoFTPGetConnection(void *ctx) {
 	while (((*cur < '0') || (*cur > '9')) && *cur != '\0') cur++;
 	if (sscanf(cur, "%u,%u,%u,%u,%u,%u", &temp[0], &temp[1], &temp[2],
 	            &temp[3], &temp[4], &temp[5]) != 6) {
-	    err("Invalid answer to PASV\n");
+	    RxmlMessage(1,"Invalid answer to PASV");
 	    if (ctxt->dataFd != -1) {
 		closesocket(ctxt->dataFd); ctxt->dataFd = -1;
 	    }
@@ -1152,7 +1132,7 @@ RxmlNanoFTPGetConnection(void *ctx) {
 	memcpy(&dataAddr.sin_addr, &ad[0], 4);
 	memcpy(&dataAddr.sin_port, &ad[4], 2);
 	if (connect(ctxt->dataFd, (struct sockaddr *) &dataAddr, dataAddrLen) < 0) {
-	    err("Failed to create a data connection\n");
+	    RxmlMessage(2, "Failed to create a data connection");
 	    closesocket(ctxt->dataFd); ctxt->dataFd = -1;
 	    return (-1);
 	}
@@ -1160,15 +1140,15 @@ RxmlNanoFTPGetConnection(void *ctx) {
         getsockname(ctxt->dataFd, (struct sockaddr *) &dataAddr, &dataAddrLen);
 	dataAddr.sin_port = 0;
 	if (bind(ctxt->dataFd, (struct sockaddr *) &dataAddr, dataAddrLen) < 0) {
-	    err("Failed to bind a port\n");
+	    RxmlMessage(2, "Failed to bind a port");
 	    closesocket(ctxt->dataFd); ctxt->dataFd = -1;
 	    return (-1);
 	}
         getsockname(ctxt->dataFd, (struct sockaddr *) &dataAddr, &dataAddrLen);
 
 	if (listen(ctxt->dataFd, 1) < 0) {
-	    err("Could not listen on port %d\n",
-		ntohs(dataAddr.sin_port));
+	    RxmlMessage(2, "Could not listen on port %d",
+			ntohs(dataAddr.sin_port));
 	    closesocket(ctxt->dataFd); ctxt->dataFd = -1;
 	    return (-1);
 	}
@@ -1186,7 +1166,7 @@ RxmlNanoFTPGetConnection(void *ctx) {
         buf[sizeof(buf) - 1] = 0;
         len = strlen(buf);
 #ifdef DEBUG_FTP
-	err(buf);
+	RxmlMessage(1, buf);
 #endif
 
 	res = send(ctxt->controlFd, buf, len, 0);
@@ -1231,7 +1211,7 @@ RxmlNanoFTPGetSocket(void *ctx, const char *filename) {
     sprintf(buf, "TYPE I\r\n");
     len = strlen(buf);
 #ifdef DEBUG_FTP
-    err(buf);
+    RxmlMessage(0, buf);
 #endif
     res = send(ctxt->controlFd, buf, len, 0);
     if (res < 0) {
@@ -1258,7 +1238,7 @@ RxmlNanoFTPGetSocket(void *ctx, const char *filename) {
     buf[sizeof(buf) - 1] = 0;
     len = strlen(buf);
 #ifdef DEBUG_FTP
-    err(buf);
+    RxmlMessage(0, buf);
 #endif
     res = send(ctxt->controlFd, buf, len, 0);
     if (res < 0) {
@@ -1443,3 +1423,14 @@ void
 RxmlNanoFTPTimeout(int delay) {
     timeout = (unsigned int) delay;
 }
+
+int
+RxmlNanoFTPContentLength(void *ctx)
+{
+    RxmlNanoFTPCtxtPtr ctxt = (RxmlNanoFTPCtxtPtr) ctx;
+
+    if (ctxt == NULL) return(-1);
+    return(ctxt->contentLength);
+}
+
+#endif /* !Unix or BSD_NETWORKING */
