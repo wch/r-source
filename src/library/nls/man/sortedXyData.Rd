@@ -1,4 +1,4 @@
-% $Id: sortedXyData.Rd,v 1.1 1999/11/12 13:34:35 bates Exp $
+% $Id: sortedXyData.Rd,v 1.1.24.1 2001/01/24 12:20:54 ripley Exp $
 \name{sortedXyData}
 \title{Create a sortedXyData object}
 \alias{sortedXyData}
@@ -37,4 +37,4 @@ data( DNase )
 DNase.2 <- DNase[ DNase$Run == "2", ]
 sortedXyData( expression(log(conc)), expression(density), DNase.2 )
 }
-\keyword{data}
+\keyword{manip}
