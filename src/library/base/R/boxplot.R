@@ -33,29 +33,29 @@ function(x, ..., range = 1.5, width = NULL, varwidth = FALSE, notch =
     else {
 	if(is.null(attr(groups, "names")))
 	    attr(groups, "names") <- 1:n
-        names <- attr(groups, "names") 
+        names <- attr(groups, "names")
     }
     for(i in 1:n)
 	groups[i] <- list(boxplot.stats(groups[[i]], range)) # do.conf=notch)
-    stats<-matrix(0,nr=5,nc=n)
-    conf<-matrix(0,nr=2,nc=n)
-    ng<-vector(length=0)
-    out<-vector(length=0)
-    group<-vector(length=0)
-    ct<-1
+    stats <- matrix(0,nr=5,nc=n)
+    conf  <- matrix(0,nr=2,nc=n)
+    ng <- out <- group <- numeric(0)
+    ct <- 1
     for(i in groups) {
-	stats[,ct]<-i$stats
-        ng<-c(ng, i$n)
-        conf[,ct]<-i$conf
-	out<-c(out,i$out)
-        group<-c(group, rep(ct, length(i$out)))
-        ct<-ct+1
+	stats[,ct] <- i$stats
+        conf [,ct] <- i$conf
+        ng <- c(ng, i$n)
+        if((lo <- length(i$out))) {
+            out   <- c(out,i$out)
+            group <- c(group, rep(ct, lo))
+        }
+        ct <- ct+1
     }
-    z<-list(stats = stats, n = ng, conf = conf, out = out, group = group,
-         names = names)
+    z <- list(stats = stats, n = ng, conf = conf, out = out, group = group,
+              names = names)
     if(plot) {
-	bxp(z, width, varwidth = varwidth, notch = notch, border =
-            border, col = col, log = log, pars = pars) 
+	bxp(z, width, varwidth = varwidth, notch = notch,
+            border = border, col = col, log = log, pars = pars)
 	invisible(z)
     }
     else z
@@ -142,7 +142,7 @@ bxp <- function(z, notch=FALSE, width=NULL, varwidth=FALSE,
     if( is.null(z$out) )
 	z$out<-vector(length=0)
     if( is.null(z$group) )
-        z$group<-vector(length=0) 
+        z$group<-vector(length=0)
     for(i in 1:n) {
 	nmax <- max(nmax,z$n)
 	limits <- range(limits,
