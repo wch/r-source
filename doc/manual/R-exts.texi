@@ -65,17 +65,17 @@ The current version of this document is @value{VERSION}.
 @end ifnottex
 
 @menu
-* Acknowledgements::            
-* Creating R packages::         
-* Writing R documentation files::  
-* Tidying and profiling R code::  
-* System and foreign language interfaces::  
-* The R API::                   
-* Generic functions and methods::  
-* R (internal) programming miscellanea::  
-* R coding standards::          
-* Function and variable index::  
-* Concept index::               
+* Acknowledgements::
+* Creating R packages::
+* Writing R documentation files::
+* Tidying and profiling R code::
+* System and foreign language interfaces::
+* The R API::
+* Generic functions and methods::
+* R (internal) programming miscellanea::
+* R coding standards::
+* Function and variable index::
+* Concept index::
 @end menu
 
 @node Acknowledgements, Creating R packages, Top, Top
@@ -117,12 +117,12 @@ Unix-alikes that is done by @code{R CMD INSTALL}.  Under Windows,
 installation) for the tools that you need to have installed.
 
 @menu
-* Package structure::           
-* Configure and cleanup::       
-* Checking and building packages::  
-* Writing package vignettes::   
-* Submitting a package to CRAN::  
-* Package name spaces::         
+* Package structure::
+* Configure and cleanup::
+* Checking and building packages::
+* Writing package vignettes::
+* Submitting a package to CRAN::
+* Package name spaces::
 @end menu
 
 @node Package structure, Configure and cleanup, Creating R packages, Creating R packages
@@ -159,10 +159,10 @@ The @R{} function @code{package.skeleton} can help to create the
 structure for a new package: see its help page for details.
 
 @menu
-* The DESCRIPTION file::        
-* The INDEX file::              
-* Package subdirectories::      
-* Package bundles::             
+* The DESCRIPTION file::
+* The INDEX file::
+* Package subdirectories::
+* Package bundles::
 @end menu
 
 @node The DESCRIPTION file, The INDEX file, Package structure, Package structure
@@ -592,7 +592,7 @@ installed is available from the shell variable @env{R_PACKAGE_NAME}.
 
 
 @menu
-* Using Makevars::              
+* Using Makevars::
 @end menu
 
 @node Using Makevars,  , Configure and cleanup, Configure and cleanup
@@ -953,13 +953,12 @@ file names.
 @section Package name spaces
 @cindex name spaces
 
-@R{} 1.7.0 introduces an experimental name space management system for
-packages.  This system allows the package writer to specify which
-variables in the package should be @emph{exported} to make them
-available to package users, and which variables should be
-@emph{imported} from other packages.
+@R{} has a name space management system for packages.  This system
+allows the package writer to specify which variables in the package
+should be @emph{exported} to make them available to package users, and
+which variables should be @emph{imported} from other packages.
 
-The current mechanism@footnote{Alternate approaches are under
+The current mechanism@footnote{Alternative approaches are under
 consideration and may replace this approach in future @R{} releases.}
 for specifying a name space for a package is to place a @file{NAMESPACE}
 file in the top level package directory.  This file contains @emph{name
@@ -1171,26 +1170,22 @@ strategy for the name space mechanism.  Sealing also allows code
 analysis and compilation tools to accurately identify the definition
 corresponding to a global variable reference in a function body.
 
-The name space mechanism included in @R{} 1.7.0 does not yet support
-code based on the @pkg{methods} package.  Support for @pkg{methods} is
-anticipated for the following release of @R{}.
-
 
 @node Writing R documentation files, Tidying and profiling R code, Creating R packages, Top
 @chapter Writing R documentation files
 @cindex Documentation, writing
 
 @menu
-* Rd format::                   
-* Sectioning::                  
-* Marking text::                
-* Lists and tables::            
-* Cross-references::            
-* Mathematics::                 
-* Insertions::                  
-* Indices::                     
-* Platform-specific sections::  
-* Processing Rd format::        
+* Rd format::
+* Sectioning::
+* Marking text::
+* Lists and tables::
+* Cross-references::
+* Mathematics::
+* Insertions::
+* Indices::
+* Platform-specific sections::
+* Processing Rd format::
 @end menu
 
 @node Rd format, Sectioning, Writing R documentation files, Writing R documentation files
@@ -1263,9 +1258,9 @@ files''} for guidelines for writing documentation in Rd format which
 should be useful for package writers.
 
 @menu
-* Documenting functions::       
-* Documenting data sets::       
-* Documenting S4 classes and methods::  
+* Documenting functions::
+* Documenting data sets::
+* Documenting S4 classes and methods::
 @end menu
 
 @node Documenting functions, Documenting data sets, Rd format, Rd format
@@ -2044,8 +2039,8 @@ distribution for installing source packages to be installed.)
 @chapter Tidying and profiling R code
 
 @menu
-* Tidying R code::              
-* Profiling R code::            
+* Tidying R code::
+* Profiling R code::
 @end menu
 
 @R{} code which is worth preserving in a package and perhaps making
@@ -2230,17 +2225,17 @@ output files can be very large if long runs are profiled.
 @chapter System and foreign language interfaces
 
 @menu
-* Operating system access::     
-* Interface functions .C and .Fortran::  
-* dyn.load and dyn.unload::     
-* Registering native routines::  
-* Creating shared objects::     
-* Interfacing C++ code::        
-* Handling R objects in C::     
-* Interface functions .Call and .External::  
-* Evaluating R expressions from C::  
-* Parsing R code from C::       
-* Debugging::                   
+* Operating system access::
+* Interface functions .C and .Fortran::
+* dyn.load and dyn.unload::
+* Registering native routines::
+* Creating shared objects::
+* Interfacing C++ code::
+* Handling R objects in C::
+* Interface functions .Call and .External::
+* Evaluating R expressions from C::
+* Parsing R code from C::
+* Debugging::
 @end menu
 
 @node  Operating system access, Interface functions .C and .Fortran, System and foreign language interfaces, System and foreign language interfaces
@@ -2928,13 +2923,13 @@ needed.  As in interpreted @R{} code, much use is made of coercion to
 force the variant object to the right type.
 
 @menu
-* Garbage Collection::          
-* Allocating storage::          
-* Details of R types::          
-* Attributes::                  
-* Classes::                     
-* Handling lists::              
-* Finding and setting variables::  
+* Garbage Collection::
+* Allocating storage::
+* Details of R types::
+* Attributes::
+* Classes::
+* Handling lists::
+* Finding and setting variables::
 @end menu
 
 @node Garbage Collection, Allocating storage, Handling R objects in C, Handling R objects in C
@@ -3167,7 +3162,7 @@ vectors (which @code{outer} and @code{%o%} already do).  As usual the
 @R{} code is simple
 
 @smallexample
-out <- function(x, y) 
+out <- function(x, y)
 @{
    storage.mode(x) <- storage.mode(y) <- "double"
    .Call("out", x, y)
@@ -3451,9 +3446,9 @@ based on the interface of the same name in @Sl{} version 4, and
 complex but allows a variable number of arguments.
 
 @menu
-* Calling .Call::               
-* Calling .External::           
-* Missing and special values::  
+* Calling .Call::
+* Calling .External::
+* Missing and special values::
 @end menu
 
 @node Calling .Call, Calling .External, Interface functions .Call and .External, Interface functions .Call and .External
@@ -3847,8 +3842,8 @@ called) and two argument values, the first unnamed and the second named.
 Setting the type makes this a call which can be evaluated.
 
 @menu
-* Zero-finding::                
-* Calculating numerical derivatives::  
+* Zero-finding::
+* Calculating numerical derivatives::
 @end menu
 
 @node Zero-finding, Calculating numerical derivatives, Evaluating R expressions from C, Evaluating R expressions from C
@@ -4215,8 +4210,8 @@ compiled code loaded into @R{}.  Some ``tricks'' are worth knowing.
 
 
 @menu
-* Finding entry points::        
-* Inspecting R objects::        
+* Finding entry points::
+* Inspecting R objects::
 @end menu
 
 @node Finding entry points, Inspecting R objects, Debugging, Debugging
@@ -4392,18 +4387,19 @@ $7 = 5
 @chapter The R @acronym{API}: entry points for C code
 
 @menu
-* Memory allocation::           
-* Error handling::              
-* Random numbers::              
-* Missing and IEEE values::     
-* Printing::                    
-* Calling C from FORTRAN and vice versa::  
-* Numerical analysis subroutines::  
-* Optimization::                
-* Integration::                 
-* Utility functions::           
-* Platform and version information::  
-* Standalone Mathlib::          
+* Memory allocation::
+* Error handling::
+* Random numbers::
+* Missing and IEEE values::
+* Printing::
+* Calling C from FORTRAN and vice versa::
+* Numerical analysis subroutines::
+* Optimization::
+* Integration::
+* Utility functions::
+* Allowing interrupts::
+* Platform and version information::
+* Standalone Mathlib::
 @end menu
 
 There are a large number of entry points in the @R{} executable/DLL that
@@ -4430,7 +4426,7 @@ useful when porting code from @Sl{}.  This includes rather less than
 the @code{S_complex} type from @Sl{}).
 
 The defines used for compatibility with @Sl{} sometimes causes
-conflicts@footnote{notably with Windows headers}, and the known
+conflicts (notably with Windows headers), and the known
 problematic defines can be removed by defining @code{STRICT_R_HEADERS}.
 
 Most of these header files, including all those included by @file{R.h},
@@ -4442,19 +4438,19 @@ clashes with user code, it is @emph{essential} to include the
 appropriate header files when using these entry points.
 @end quotation
 
-This remapping can cause problems@footnote{known problems are redefining
+This remapping can cause problems@footnote{Known problems are redefining
 @code{error}, @code{length}, @code{vector} and @code{warning}}, and can
 be eliminated by defining @code{R_NO_REMAP} and prepending @code{Rf_} to
 @emph{all} the function names used from @file{Rinternals.h} and
-@file{R_exts/Error.h}.
+@file{R_ext/Error.h}.
 
 @node Memory allocation, Error handling, The R API, The R API
 @section Memory allocation
 @cindex Memory allocation from C
 
 @menu
-* Transient::                   
-* User-controlled::             
+* Transient::
+* User-controlled::
 @end menu
 
 There are two types of memory allocation available to the C programmer,
@@ -4567,7 +4563,7 @@ the last two being the forms available in all @Sl{} versions.  Here
 or a format string followed by arguments separated by commas.
 
 @menu
-* Error handling from FORTRAN::  
+* Error handling from FORTRAN::
 @end menu
 
 @node Error handling from FORTRAN,  , Error handling, Error handling
@@ -4586,6 +4582,7 @@ subroutine rwarn(@var{message})
 @end smallexample
 
 Messages of more than 255 characters are truncated, with a warning.
+
 
 @node Random numbers, Missing and IEEE values, Error handling, The R API
 @section Random number generation
@@ -4709,7 +4706,7 @@ output stream.  Functions @code{Rvprintf} and @code{REvprintf} are the
 analogues using the @code{vprintf} interface.
 
 @menu
-* Printing from FORTRAN::       
+* Printing from FORTRAN::
 @end menu
 
 @node Printing from FORTRAN,  , Printing, Printing
@@ -4769,6 +4766,7 @@ rely on this.
 For example, suppose we want to call R's normal random numbers from
 FORTRAN.  We need a C wrapper along the lines of
 
+@cindex Random numbers in FORTRAN
 @smallexample
 @group
 #include <R.h>
@@ -4829,10 +4827,10 @@ C interfaces to the code behind @R{} functions, so the @R{} function
 documentation may give further details.
 
 @menu
-* Distribution functions::      
-* Mathematical functions::      
-* Utilities::                   
-* Mathematical constants::      
+* Distribution functions::
+* Mathematical functions::
+* Utilities::
+* Mathematical constants::
 @end menu
 
 @node Distribution functions, Mathematical functions, Numerical analysis subroutines, Numerical analysis subroutines
@@ -5108,9 +5106,8 @@ use @code{ln(x)} for the natural logarithm (@code{log(x)} in @R{}).
 @end quotation
 
 There are a set of constants (@code{PI}, @code{DOUBLE_EPS}) (and so on)
-defined@footnote{unless @code{STRICT_R_HEADERS} is defined} in the
-included header @file{R_ext/Constants.h}, mainly for compatibility with
-@Sl{}.
+defined (unless @code{STRICT_R_HEADERS} is defined) in the included
+header @file{R_ext/Constants.h}, mainly for compatibility with @Sl{}.
 
 @findex TRUE
 @findex FALSE
@@ -5292,7 +5289,7 @@ arrays and the length of the second one as
 The comments in the source code in @file{src/appl/integrate.c} give
 more details, particularly about reasons for failure (@code{ier >= 1}).
 
-@node Utility functions, Platform and version information, Integration, The R API
+@node Utility functions, Allowing interrupts, Integration, The R API
 @section Utility functions
 @cindex Sort functions from C
 
@@ -5377,6 +5374,16 @@ There is also an @code{F77_CALL(interv)()} version of
 @code{findInterval()} with the same arguments, but all pointers.
 @end deftypefun
 
+The following two functions do @emph{numerical} colorspace conversion from
+HSV to RGB and back.  Note that all colours must be in [0,1].
+
+@deftypefun void hsv2rgb (double @var{h}, double @var{s}, double @var{v}, double *@var{r}, double *@var{g}, double *@var{b})
+@end deftypefun
+
+@deftypefun void rgb2hsv (double @var{r}, double @var{g}, double @var{b}, double *@var{h}, double *@var{s}, double *@var{v})
+@end deftypefun
+
+
 A system-independent interface to produce the name of a temporary
 file is provided as
 
@@ -5398,7 +5405,27 @@ this is defined.
 @end deftypefun
 
 
-@node Platform and version information, Standalone Mathlib, Utility functions, The R API
+@node Allowing interrupts, Platform and version information, Utility functions, The R API
+@section Allowing interrupts
+@cindex Interrupts
+
+As from @R{} 1.8.0 no port of @R{} can be interrupted whilst running
+long computations in compiled code, so programmers should make provision
+for the code to be interrupted at suitable points by calling from C
+@smallexample
+#include <R_ext/Utils.h>
+
+void R_CheckUserInterrupt(void);
+@end smallexample
+and from FORTRAN
+@smallexample
+subroutine rchkusr()
+@end smallexample
+These check if the user has requested an interrupt, and if so branch to
+@R{}'s error handling functions.
+
+
+@node Platform and version information, Standalone Mathlib, Allowing interrupts, The R API
 @section Platform and version information
 @cindex Version information from C
 @findex R_Version
@@ -5605,7 +5632,7 @@ Here there might be justifiable exceptions, which will need careful
 documentation.
 
 @menu
-* Adding new generics::         
+* Adding new generics::
 @end menu
 
 @node Adding new generics,  , Generic functions and methods, Generic functions and methods
@@ -5658,8 +5685,8 @@ foo.default <- base::foo
 @appendix R (internal) programming miscellanea
 
 @menu
-* .Internal and .Primitive::    
-* Testing R code::              
+* .Internal and .Primitive::
+* Testing R code::
 @end menu
 
 @node .Internal and .Primitive, Testing R code, R (internal) programming miscellanea, R (internal) programming miscellanea
