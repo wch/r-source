@@ -9,7 +9,8 @@
 \title{Windows graphics devices}
 
 \usage{
-windows(width = 7, height = 7, pointsize = 12)
+windows(width = 7, height = 7, pointsize = 12,
+        record = getOption("graphics.record"))
 win.graph(width = 7, height = 7, pointsize = 12)
 x11(width = 7, height = 7, pointsize = 12)
 X11(width = 7, height = 7, pointsize = 12)
@@ -24,6 +25,7 @@ win.print(width = 7, height = 7, pointsize = 12)
   \item{width}{the (nominal) width of the plotting window in inches.}
   \item{height}{the (nominal) height of the plotting window in inches.}
   \item{pointsize}{the default pointsize of plotted text.}
+  \item{record}{sets the initial state of the flag for recording plots.}
 }
 
 \description{

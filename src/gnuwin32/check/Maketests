@@ -4,7 +4,7 @@
 
 srcdir = .
 
-R= $(RHOME)/bin/Rterm  --vanilla
+R= $(RHOME)/bin/Rterm --vanilla LC_ALL=C
 RDIFF = $(RHOME)/src/scripts/Rdiff
 RVAL_IF_DIFF=0
 

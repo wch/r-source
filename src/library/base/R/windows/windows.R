@@ -1,30 +1,31 @@
-windows <- function(width = 7, height = 7, pointsize = 12)
-    .Internal(devga("", width=width, height=height, pointsize=pointsize, 1))
+windows <- function(width = 7, height = 7, pointsize = 12,
+                    record = getOption("graphics.record"))
+    .Internal(devga("", width, height, pointsize, record))
 
 win.graph <- function(width = 7, height = 7, pointsize = 12)
-    .Internal(devga("", width=width, height=height, pointsize=pointsize, 1))
+    .Internal(devga("", width, height, pointsize, FALSE))
 
 win.print <- function(width = 7, height = 7, pointsize = 12)
-    .Internal(devga("win.print", width=width, height=height, pointsize=pointsize, 1))
+    .Internal(devga("win.print", width, height, pointsize, FALSE))
 
 win.metafile <- function(filename = "", width = 7, height = 7, pointsize = 12)
     .Internal(devga(paste("win.metafile:", filename, sep=""),
-                  width=width, height=height, pointsize=pointsize, 1))
+                  width, height, pointsize, FALSE))
 
 png <- function(filename = "Rplot.png", width = 480, height = 480,
                 pointsize = 12)
     .Internal(devga(paste("png:", filename, sep=""),
-                  width=width, height=height, pointsize=pointsize, 1))
+                  width, height, pointsize, FALSE))
 
 bmp <- function(filename = "Rplot.bmp", width = 480, height = 480,
                 pointsize = 12)
     .Internal(devga(paste("bmp:", filename, sep=""),
-                  width=width, height=height, pointsize=pointsize, 1))
+                  width, height, pointsize, FALSE))
 
 jpeg <- function(filename = "Rplot.jpg", width = 480, height = 480,
                  pointsize = 12, quality=75)
     .Internal(devga(paste("jpeg:", quality, ":",filename, sep=""),
-                  width=width, height=height, pointsize=pointsize, 1))
+                  width, height, pointsize, FALSE))
 
 savePlot <- function(filename = "Rplot",
                      type = c("wmf", "png", "jpeg", "jpg", "bmp","ps"),

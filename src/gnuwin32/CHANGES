@@ -30,9 +30,12 @@ of Unix versions of R.
     behaviour.  Further, users of Windows 9x machines should be able
     to use their native character set for the names of R objects (as
     NT users always have: this is related to the change to msvcrt.dll).
+    (For the benefit of those used to Unix, LC_ALL can be set in the
+    environment, although this is not usually supported by Windows, and
+    setting individual LC_* such as LC_COLLATE will not work.)
 
 -   make check no longer makes R, just runs the tests (as make test
-    always has).
+    always has).  Tests are run in the C locale.
 
 -   It is possible to make DVI versions of the manuals: see file INSTALL.
 
@@ -110,8 +113,12 @@ automatically gain version information when compiled under this
 version.  (Use the Version tab on the Properties dialog box to see it,
 or the new function DLL.version within R.)
 
-Windows help files now have hyperlinks to other objects within the same
-package.
+Windows (.hlp) help files now have hyperlinks to other objects within
+the same package.
+
+The windows() graphics device has a new argument `record' to set the
+initial state of the recording flag, and this defaults to the option
+"graphics.record".
 
 
 rw1011

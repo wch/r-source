@@ -337,10 +337,21 @@ void setup_Rmainloop(void)
     /* internal structures. */
 
 #ifdef HAVE_LOCALE_H
-    setlocale(LC_CTYPE,"");/*- make ISO-latin1 etc. work for LOCALE users */
-    setlocale(LC_COLLATE,"");/*- alphabetically sorting */
-    setlocale(LC_TIME,"");/*- names and defaults for date-time formats */
+#ifdef Win32
+    {
+	char *p, Rlocale[1000]; /* Windows' locales can be very long */
+	p = getenv("LC_ALL");
+	if(p) strcpy(Rlocale, p); else strcpy(Rlocale, "");
+	setlocale(LC_CTYPE, Rlocale);
+	setlocale(LC_COLLATE, Rlocale);
+	setlocale(LC_TIME, Rlocale);
+    }
+#else
+    setlocale(LC_CTYPE, "");/*- make ISO-latin1 etc. work for LOCALE users */
+    setlocale(LC_COLLATE, "");/*- alphabetically sorting */
+    setlocale(LC_TIME, "");/*- names and defaults for date-time formats */
     /* setlocale(LC_MESSAGES,""); */
+#endif
 #endif
     InitMemory();
     InitNames();

@@ -18,5 +18,5 @@
  */
 
 #include "Graphics.h"
-int GADeviceDriver(DevDesc*, char*, double, double, double);
+int GADeviceDriver(DevDesc*, char*, double, double, double, int);
 
