@@ -640,7 +640,7 @@ static SEXP NewList(void)
 static SEXP GrowList(SEXP l, SEXP s)
 {
     SEXP tmp;
-    PROTECT(l);
+    PROTECT(s);
     tmp = CONS(s, R_NilValue);
     UNPROTECT(1);
     SETCDR(CAR(l), tmp);

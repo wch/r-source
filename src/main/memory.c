@@ -53,6 +53,21 @@
 
 static int gc_reporting = 0;
 static int gc_count = 0;
+int gc_inhibit_torture = 1; /* gets set to zero after initialisations */
+
+/*
+#define GC_TORTURE
+*/
+
+#ifdef GC_TORTURE
+#define FORCE_GC !gc_inhibit_torture
+#else 
+#define FORCE_GC 0
+#endif
+
+
+#define GC_PROT(X) {int __t = gc_inhibit_torture; \
+	gc_inhibit_torture = 1 ; X ; gc_inhibit_torture = __t;}
 
 void installIntVector(SEXP, int, FILE *);
 
@@ -187,7 +202,7 @@ char *R_alloc(long nelem, int eltsize)
 {
     unsigned int size = BYTE2VEC(nelem * eltsize);
     if (size != 0) {
-	if (R_VMax - R_VTop < size) {
+	if (FORCE_GC || R_VMax - R_VTop < size) {
 	    gc();
 	    if (R_VMax - R_VTop < size)
 		mem_err_heap();
@@ -228,7 +243,7 @@ char *S_realloc(char *p, long new, long old, int size)
 SEXP allocSExp(SEXPTYPE t)
 {
     SEXP s;
-    if (R_FreeSEXP == NULL) {
+    if (FORCE_GC || R_FreeSEXP == NULL) {
 	gc();
 	if (R_FreeSEXP == NULL)
 	    mem_err_cons();
@@ -255,14 +270,16 @@ SEXP allocString(int length)
     /* number of vector cells to allocate */
     size = 1 + BYTE2VEC(length + 1);
     /* we need to do the gc here so allocSExp doesn't! */
-    if (R_FreeSEXP == NULL || R_VMax - R_VTop < size) {
+    if (FORCE_GC || R_FreeSEXP == NULL || R_VMax - R_VTop < size) {
 	gc();
 	if (R_FreeSEXP == NULL)
 	    mem_err_cons();
 	if (R_VMax - R_VTop < size)
 	    mem_err_heap();
     }
-    s = allocSExp(CHARSXP);
+
+    GC_PROT(s = allocSExp(CHARSXP));
+
     CHAR(s) = (char *) (R_VTop + 1);
     LENGTH(s) = length;
     BACKPOINTER(*R_VTop) = s;
@@ -326,14 +343,15 @@ SEXP allocVector(SEXPTYPE type, int length)
 	error("invalid type/length (%d/%d) in vector allocation\n", type, length);
     }
     /* we need to do the gc here so allocSExp doesn't! */
-    if (R_FreeSEXP == NULL || R_VMax - R_VTop < size) {
+    if (FORCE_GC || R_FreeSEXP == NULL || R_VMax - R_VTop < size) {
 	gc();
 	if (R_FreeSEXP == NULL)
 	    mem_err_cons();
 	if (R_VMax - R_VTop < size)
 	    mem_err_heap();
     }
-    s = allocSExp(type);
+    GC_PROT(s = allocSExp(type));
+
     LENGTH(s) = length;
     NAMED(s) = 0;
     ATTRIB(s) = R_NilValue;

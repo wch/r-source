@@ -669,6 +669,7 @@ void InitNames()
 {
     int i;
 
+
     /* THIS MUST BE THE FIRST CONS CELL ALLOCATED */
     /* OR ARMAGEDON HAPPENS. */
 

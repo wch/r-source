@@ -356,6 +356,8 @@ void mainloop()
     InitGraphics();
     Init_C_alloc();
 
+    gc_inhibit_torture = 0;
+
     /* Initialize the global context for error handling. */
     /* This provides a target for any non-local gotos */
     /* which occur during error handling */

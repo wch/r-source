@@ -696,5 +696,6 @@ void yyinit(void);
 int yyparse(void);
 void yyprompt(char *format, ...);
 int yywrap(void);
+int gc_inhibit_torture;
 
 #endif

@@ -388,6 +388,7 @@ int main(int ac, char **av)
     int value;
     char *p;
 
+  gc_inhibit_torture = 1;
 #ifdef HAVE_TIMES
     StartTime = times(&timeinfo);
 #endif
