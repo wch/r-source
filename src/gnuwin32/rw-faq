@@ -545,9 +545,8 @@ function `setwd': see its help page.
 5.3 Can I load workspaces saved under Unix/GNU-Linux?
 =====================================================
 
-Yes.  The converse (saving on Windows, loading on Unix) also works on
-almost all Unix systems, and workspaces can be interchanged with the
-Macintosh ports too.
+Yes.  All ports of R use the same format for workspaces, so they are
+interchangeable (for the same 1.x version of R, at least).
 
 
 6 The R Console and Fonts
