@@ -1,3 +1,3 @@
 ## fft():
-options(digits=9)
-for(n in 1:30) print(fft(1:n))
+options(digits=7)
+for(n in 1:30) cat("\nn=",n,":", round(fft(1:n), 8),"\n")
