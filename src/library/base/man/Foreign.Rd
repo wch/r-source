@@ -12,10 +12,10 @@
 \usage{
                 .C(name, \dots, NAOK = FALSE, DUP = TRUE, PACKAGE)
           .Fortran(name, \dots, NAOK = FALSE, DUP = TRUE, PACKAGE)
-         .External(name, \dots)
-             .Call(name, \dots)
-.External.graphics(name, \dots)
-    .Call.graphics(name, \dots)
+         .External(name, \dots, PACKAGE)
+             .Call(name, \dots, PACKAGE)
+.External.graphics(name, \dots, PACKAGE)
+    .Call.graphics(name, \dots, PACKAGE)
 }
 \arguments{
   \item{name}{a character string giving the name of a C function or
@@ -30,8 +30,8 @@
   \item{PACKAGE}{if supplied, confine the search for the \code{name} to
     the DLL given by this argument (plus the conventional extension,
     \code{.so}, \code{.sl}, \code{.dll}, \dots).  This is intended to
-    add safety for packages, which can ensure that no other package can
-    override their external symbols by using this argument.  Use
+    add safety for packages, which can ensure by using this argument
+    that no other package can override their external symbols.  Use
     \code{PACKAGE="base"} for symbols linked in to \R.}
 }
 \value{
