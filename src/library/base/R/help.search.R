@@ -95,8 +95,8 @@ function(pattern, fields = c("alias", "title"),
 	if(nchar(dir) == 0) dir <- getwd()
 	dir <- file.path(dir, ".R")
 	dbfile <- file.path(dir, "help.db")
-	if(((file.exists(dir) && file.info(dir)$isdir)
-	    || ((unlink(dir) == 0) && dir.create(dir)))
+	if((tools::fileTest("-d", dir)
+            || ((unlink(dir) == 0) && dir.create(dir)))
 	   && (unlink(dbfile) == 0))
 	    save.db <- TRUE
         ## If we cannot save the help db only use the given packages.
