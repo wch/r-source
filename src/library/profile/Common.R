@@ -41,7 +41,8 @@ options(locatorBell = TRUE)
 options(ts.eps = 1e-5)   # default as S
 local({dp <- as.vector(Sys.getenv("R_DEFAULT_PACKAGES"))
        if(identical(dp, "")) # marginally faster to do methods last
-           dp <- c("datasets", "utils", "graphics", "stats", "methods")
+           dp <- c("datasets", "utils", "grDevices", "graphics",
+                   "stats", "methods")
        else if(identical(dp, "NULL")) dp <- character(0)
        else dp <- strsplit(dp, ",")[[1]]
        dp <- sub("[[:blank:]]*([[:alnum:]]+)", "\\1", dp) # strip whitespace

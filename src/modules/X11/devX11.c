@@ -1142,7 +1142,7 @@ static char* translateFontFamily(char* family, newX11Desc* xd) {
     char* result = xd->basefontfamily;
     PROTECT_INDEX xpi;
 
-    PROTECT(graphicsNS = R_FindNamespace(ScalarString(mkChar("graphics"))));
+    PROTECT(graphicsNS = R_FindNamespace(ScalarString(mkChar("grDevices"))));
     PROTECT_WITH_INDEX(x11env = findVar(install(".X11env"), graphicsNS), &xpi);
     if(TYPEOF(x11env) == PROMSXP)
 	REPROTECT(x11env = eval(x11env, graphicsNS), xpi);

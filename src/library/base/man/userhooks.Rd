@@ -75,6 +75,6 @@ packageEvent(pkgname, event=c("onLoad", "attach", "detach", "onUnload"))
 }
 \examples{
 setHook(packageEvent("graphics", "onLoad"),
-        function(...) graphics::ps.options(horizontal=FALSE)) 
+        function(...) grDevices::ps.options(horizontal=FALSE)) 
 }
 \keyword{utilities}

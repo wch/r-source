@@ -54,7 +54,7 @@ stop.list[["base"]] <-
 ## warning: browseAll will tend to read all the script and/or loop forever
 stop.list[["methods"]] <- c("browseAll", "recover")
 stop.list[["ts"]] <- c("arma0f", "KalmanLike")
-stop.list[["graphics"]] <- dev.int
+stop.list[["grDevices"]] <- dev.int
 stop.list[["utils"]] <- c(inet.list, socket.fun, edit.int, misc.int, misc.2)
 
 sink("no-segfault.R")

@@ -75,13 +75,13 @@ assign("cleanEx",
 		       " have been removed from the search path")
            nms <- loadedNamespaces()
 	   # don't unload grid or graphics with a device open
-	   newitems <- nms[! nms %in% c("graphics", "grid", .oldNS)]
+	   newitems <- nms[! nms %in% c("grDevices", "graphics", "grid", .oldNS)]
 	   for(item in rev(newitems)) unloadNamespace(item)
        },
        env = .CheckExEnv)
 assign("..nameEx", "__{must remake R-ex/*.R}__", env = .CheckExEnv) # for now
 assign("ptime", proc.time(), env = .CheckExEnv)
-graphics::postscript("$PKG-Examples.ps")
+grDevices::postscript("$PKG-Examples.ps")
 assign("par.postscript", graphics::par(no.readonly = TRUE), env = .CheckExEnv)
 options(contrasts = c(unordered = "contr.treatment", ordered = "contr.poly"))
 _EOF_
@@ -140,7 +140,7 @@ print <<_EOF_;
 ### * <FOOTER>
 ###
 cat("Time elapsed: ", proc.time() - get("ptime", env = .CheckExEnv),"\\n")
-graphics::dev.off()
+grDevices::dev.off()
 ###
 ### Local variables: ***
 ### mode: outline-minor ***

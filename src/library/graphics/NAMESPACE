@@ -1,26 +1,26 @@
-# leave most of the default methods visible as people seem to call them.
-export(Hershey, abline, arrows, assocplot, axTicks, axis, axis.Date,
-       axis.POSIXct, barplot, barplot, barplot.default, box, boxplot,
-       boxplot.default, boxplot.stats, bxp, check.options,
-       close.screen, cm.colors, co.intervals, col2rgb, colors,
-       colours, contour, contour.default, contourLines, coplot, curve,
-       dev.control, dev.copy, dev.copy2eps, dev.cur, dev.interactive,
-       dev.list, dev.next, dev.off, dev.prev, dev.print, dev.set,
-       dotchart, erase.screen, filled.contour, fourfoldplot, frame,
-       graphics.off, gray, grey, grid, heat.colors, hist,
-       hist.default, hsv, identify, image, image.default, layout,
-       layout.show, lcm, legend, lines, lines.default, locator,
-       matlines, matplot, matpoints, mosaicplot, mtext, n2mfrow,
-       nclass.FD, nclass.Sturges, nclass.scott, pairs, pairs.default,
-       palette, panel.smooth, par, pdf, persp, pictex, pie, plot,
-       plot.default, plot.design, plot.new, plot.window, plot.xy,
-       points, points.default, polygon, postscript, ps.options,
-       rainbow, recordPlot, rect, replayPlot, rgb, rgb2hsv, rug, screen,
-       segments, split.screen, stars, stem, strheight, stripchart,
-       strwidth, sunflowerplot, symbols, terrain.colors, text,
-       text.default, title, topo.colors, xfig, xy.coords, xyz.coords)
+import(grDevices)
+export(dev.list) # temp measure for lattice
 
-export(postscriptFont, postscriptFonts)
+export(Hershey, abline, arrows, assocplot, axTicks, axis, axis.Date,
+       axis.POSIXct, barplot, barplot, box, boxplot, boxplot.stats,
+       bxp, close.screen, cm.colors, co.intervals, col2rgb, colors,
+       colours, contour, contourLines, coplot, curve, dotchart,
+       erase.screen, filled.contour, fourfoldplot, frame, gray, grey,
+       grid, heat.colors, hist, hist.default, hsv, identify, image,
+       layout, layout.show, lcm, legend, lines, lines.default,
+       locator, matlines, matplot, matpoints, mosaicplot, mtext,
+       n2mfrow, nclass.FD, nclass.Sturges, nclass.scott, pairs,
+       palette, panel.smooth, par, persp, pie, plot, plot.design,
+       plot.new, plot.window, plot.xy, points, polygon, rainbow, rect,
+       rgb, rgb2hsv, rug, screen, segments, split.screen, stars, stem,
+       strheight, stripchart, strwidth, sunflowerplot, symbols,
+       terrain.colors, text, title, topo.colors, xy.coords,
+       xyz.coords)
+
+# leave most of the default methods visible as people seem to call them.
+export(barplot.default, boxplot.default, contour.default,
+       image.default, pairs.default, plot.default, points.default,
+       text.default)
 
 S3method(barplot, default)
 S3method(boxplot, default)
@@ -50,18 +50,4 @@ S3method(plot, POSIXlt)
 S3method(plot, table)
 S3method(points, default)
 S3method(points, formula)
-S3method(print, recordedplot)
 S3method(text, default)
-
-if(tools:::.OStype() == "unix") {
-export(GNOME, X11, bitmap, dev2bitmap, gnome, jpeg, png, quartz, x11,
-       X11Font, X11Fonts)
-}
-
-if(tools:::.OStype() == "windows") {
-export(X11, bitmap, bmp, bringToTop, dev2bitmap, jpeg, png, savePlot,
-       win.graph, win.metafile, win.print, windows, x11)
-
-S3method("[", SavedPlots)
-S3method(print, SavedPlots)
-}
