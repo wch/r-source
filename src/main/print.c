@@ -471,7 +471,9 @@ void PrintValueRec(SEXP s,SEXP env)
 	break;
     case CLOSXP:
     case LANGSXP:
-	t = deparse1(s, 0);
+	t = getAttrib(s, R_SourceSymbol);
+	if (isNull(t))
+	    t = deparse1(s, 0);
 	for (i = 0; i < LENGTH(t); i++)
 	    Rprintf("%s\n", CHAR(STRING(t)[i]));
 	if (TYPEOF(s) == CLOSXP) t = CLOENV(s);
@@ -578,7 +580,7 @@ static void printAttributes(SEXP s,SEXP env)
 		if (TAG(a) == R_NamesSymbol)
 		    goto nextattr;
 	    }
-	    if(TAG(a) == R_CommentSymbol)
+	    if(TAG(a) == R_CommentSymbol || TAG(a) == R_SourceSymbol)
 		goto nextattr;
 	    if (i > 1)
 		Rprintf("\n");

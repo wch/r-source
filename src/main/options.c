@@ -170,7 +170,7 @@ int R_SetOptionWarn(int w)
 void InitOptions(void)
 {
     SEXP t, val, v;
-    PROTECT(v = val = allocList(10));
+    PROTECT(v = val = allocList(11));
 
     TAG(v) = install("prompt");
     CAR(v) = mkString("> ");
@@ -219,7 +219,13 @@ void InitOptions(void)
     TAG(v) = install("check.bounds");
     CAR(v) = allocVector(LGLSXP, 1);
     LOGICAL(CAR(v))[0] = 0;	/* no checking */
+    v = CDR(v);
     
+    TAG(v) = install("keep.source");
+    CAR(v) = allocVector(LGLSXP, 1);
+    LOGICAL(CAR(v))[0] = 0;	/* no storage of function source */
+                                /* turned on after load of base  */
+
     SYMVALUE(install(".Options")) = val;
     UNPROTECT(2);
 }

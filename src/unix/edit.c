@@ -69,7 +69,7 @@ void CleanEd()
 SEXP do_edit(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     int   i, rc, status;
-    SEXP  x, fn, envir, ed;
+    SEXP  x, fn, envir, ed, t;
     char *filename, *editcmd, *vmaxsave;
     FILE *fp;
 
@@ -93,12 +93,14 @@ SEXP do_edit(SEXP call, SEXP op, SEXP args, SEXP rho)
     else filename = DefaultFileName;
 
     if (x != R_NilValue) {
+	
 	if((fp=R_fopen(R_ExpandFileName(filename), "w")) == NULL)
 	    errorcall(call, "unable to open file\n");
 	if (LENGTH(STRING(fn)[0]) == 0) EdFileUsed++;
-	x = deparse1(x, 0);
-	for (i = 0; i < LENGTH(x); i++)
-	    fprintf(fp, "%s\n", CHAR(STRING(x)[i]));
+	if (TYPEOF(x) != CLOSXP || isNull(t = getAttrib(x, R_SourceSymbol)))
+	    t = deparse1(x, 0);
+	for (i = 0; i < LENGTH(t); i++)
+	    fprintf(fp, "%s\n", CHAR(STRING(t)[i]));
 	fclose(fp);
     }
 
