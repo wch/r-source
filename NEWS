@@ -16,10 +16,17 @@ USER-VISIBLE CHANGES
 	normalization of eigen/singular vectors may change from
 	earlier versions.
 
-    o   The methods package is now attached by default.
+    o   The `methods' package is now attached by default.
         The option "defaultPackages" has been added and initially set
         to c("methods", "ctest"), causing those packages to be
         attached at startup.  See ?Startup and ?options for details.
+
+	class() now always (not just when `methods' is attached) gives
+	a non-null class, and UseMethod() always dispatches on the
+	class that class() returns.  This means that methods like
+	foo.matrix and foo.integer will be used.  Functions oldClass()
+	and oldClass<-() get and set the "class" attribute as R
+	without `methods' used to.
 
     o   Formulae are not longer automatically simplified when terms()
 	is called, so the formulae in results may still be in the
@@ -33,9 +40,9 @@ USER-VISIBLE CHANGES
 
 NEW FEATURES
 
-    o	library() was changed so that when the methods package is
-	attached it no longer complains about generic functions not
-	specific to the library.
+    o   library() was changed so that when the methods package is
+	attached it no longer complains about formal generic functions
+	not specific to the library.
 
     o	require() has a new argument, character.only,
 	  -- to make it align with library.
@@ -155,7 +162,7 @@ NEW FEATURES
 	one argument but not if it had two.  This allows trunc.POSIXt()
 	to be called via the group generic trunc().
 
-     o  hist.default now returns the nominal break points, not those
+     o  hist.default() now returns the nominal break points, not those
 	adjusted for numerical tolerances.
 
      o	New function slice.index() for identifying indexes with respect
