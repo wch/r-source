@@ -511,11 +511,11 @@ rsync-recommended:
 	(cd ../library; \
 	rsync -rvCt --delete --exclude=Makefile.in --exclude=.cvsignore \
 	  --include=*.tar.gz $(CRANREC) . ); \
-	(cd ../library/Recommended; for i in ${RECOMMENDED} ; do cp -p $${i}*.tar.gz $${i}_tgz ; done)
+	(cd ../library/Recommended; for i in ${RECOMMENDED} ; do cp -p $${i}*.tar.gz $${i}.tgz ; done)
 
-../library/%/DESCRIPTION: ../library/RECOMMENDED/%_tgz
+../library/%/DESCRIPTION: ../library/RECOMMENDED/%.tgz
 	@echo "---- $*"
-	(cd ../library; tar zxf Recommended/$*_tgz; touch $@)
+	(cd ../library; tar zxf Recommended/$*.tgz; touch $@)
 
 unpack-recommended:
 	@echo "--- Unpacking recommended packages"

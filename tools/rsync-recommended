@@ -2,7 +2,6 @@
 #
 # ${RHOME}/tools/rsync-recommended
 
-
 : ${CRAN_RSYNC='cran.r-project.org::CRAN'}
 
 TOOLS_DIR=`echo ${0} | sed 's%/[^/][^/]*$%%'`
@@ -11,26 +10,29 @@ TOOLS_DIR=`echo ${0} | sed 's%/[^/][^/]*$%%'`
   PKGS=`grep '^R_PKGS_RECOMMENDED *=' Makeconf.in | sed 's/.*=//'`
   cd src/library/Recommended
 
+  ## <FIXME>
+  ## Remove eventually.
+  rm -f *_tgz
+  ## </FIXME>
+
   ## The purpose of the rsync options is to get the timestamps on the
   ## downloaded files to reflect time of download.
-  ## We can't use -t because then we could download a changed file that 
-  ## was older the last build and therefore would not be installed. 
-  ## The -c (checksum first) is necessary because otherwise all the 
+  ## We can't use -t because then we could download a changed file that
+  ## was older the last build and therefore would not be installed.
+  ## The -c (checksum first) is necessary because otherwise all the
   ## files get their mtime changed whether updated or not.
-  ## -C prevents --delete from removing the CVS subdirectory.
+  ## -C prevents -delete from removing the CVS subdirectory.
 
   rsync -rcIzC --delete \
     --exclude=Makefile.in --exclude=Makefile --exclude=.cvsignore \
     --include=*.tar.gz \
     "${CRAN_RSYNC}"/src/contrib/${version}/Recommended/ .
 
-  ## Link each package to a simplified name so that Make has an
-  ## easier time. Notice that we cannot use pkgname.tgz because of
-  ## the way R CMD INSTALL works, but pkgname_tgz works OK.
-  ## Notice that as far as Make is concerned, the symlinks have the same
-  ## timestamp as the file they point to.
+  ## Link each package to a simplified name so that Make has an easier
+  ## time.  Notice that as far as Make is concerned, the symlinks have
+  ## the same timestamp as the file they point to.
 
   for i in ${PKGS} ; do
-    ln -s $i*.tar.gz ${i}_tgz
+    ln -s $i*.tar.gz ${i}.tgz
   done
 )
