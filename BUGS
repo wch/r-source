@@ -178,10 +178,6 @@ Date: 01 Feb 2001 14:20:52 -0500
 Subject: axis(adj=anything) has no effect
 From: jhallman@frb.gov
 Date: Wed, 28 Mar 2001 20:51:05 +0200 (MET DST)
-* PR# 916 *
-Subject:  par(mgp) bug 
-From: paul@stat.auckland.ac.nz
-Date: Fri, 20 Apr 2001 08:33:45 +1200 (NZST)
 * PR# 943 *
 Subject: legend() with xpd=T; omission of initial plot character
 From: John Maindonald <john.maindonald@anu.edu.au>
@@ -525,3 +521,19 @@ Date: Fri, 28 Jun 2002 13:53:05 +0200 (MET DST)
 Subject: Re: [R] browser/debug and for loop
 From: Thomas Lumley <tlumley@u.washington.edu>
 Date: Fri, 28 Jun 2002 17:07:01 -0700 (PDT)
+* PR# 1723 *
+Subject: ¤¾ ¤? ¤© ¤? ¤µ ¤?  ??°?°? µ??µ?? ¾?µ¥???® ??µ¥~~!!
+From: ???? <2002world_cup_sang1254@japan.co.jp>
+Date: Sun, 30 Jun 2002 05:39:06 +0900
+* PR# 1724 *
+Subject: [±¤°?]?¾???°°?**?????­?²??µ??°?°**°??­????**°???????**?¾?±?­**?¾????**???¶????**±?´???????µ?µ?
+From: ¾¾?¥???? <test@test.net>
+Date: Sun, 30 Jun 2002 07:45:38 +0900
+* PR# 1725 *
+Subject: please kindly get back to me
+From: "SANDRA SAVIMBI" <san_sav@mail.com>
+Date: Sun, 30 Jun 2002 20:50:01 +0200
+* PR# 1726 *
+Subject: please kindly get back to me
+From: "SANDRA SAVIMBI" <san_sav@mail.com>
+Date: Sun, 30 Jun 2002 21:44:45 +0200
