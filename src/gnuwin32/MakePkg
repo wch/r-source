@@ -67,7 +67,7 @@ ifeq ($(strip $(SRCMAKE)),)
 else
 	$(MAKE) -C $(SSPKG) RHOME=$(RHOME) -f Makefile.win clean
 endif
-	$(RM) -rf $(SPKG)/chm -rf $(SPKG)/check
+	$(RM) -rf $(SPKG)/chm $(SPKG)/check
 
 SEDP='/^[	 ]*$$/d;s/$(DLLNAME).so/$(DLLNAME).dll/'
 
