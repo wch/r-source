@@ -37,7 +37,7 @@ use Text::Wrap;
 ## don't buffer output
 $| = 1;
 
-my $revision = ' $Revision: 1.147 $ ';
+my $revision = ' $Revision: 1.148 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -62,7 +62,8 @@ R::Vars::error("R_HOME", "R_CMD", "R_EXE");
 my @known_options = ("help|h", "version|v", "outdir|o:s", "library|l:s",
 		    "no-clean", "no-examples", "no-tests", "no-latex",
 		    "use-gct" => \$opt_use_gct, "no-codoc", "no-perms",
-		    "install=s" => \$opt_install, "no-vignettes");
+		    "install=s" => \$opt_install, "no-install",
+		     "no-vignettes");
 GetOptions(@known_options) or usage();
 
 R_version("R add-on package checker", $version) if $opt_version;
@@ -1241,33 +1242,65 @@ sub check_pkg {
 	}
     }
 
-    ## Check for code/documentation mismatches in functions.
+    ## Check for code/documentation mismatches.
 
-    if($opt_codoc && (-d "R") && (-d "man")) {
-	$log->checking("for code/documentation mismatches in functions");
+    if($opt_codoc && (-d "man")) {
+	$log->checking("for code/documentation mismatches");
+	my $any = 0;
 
-	my $Rcmd = "library(tools)\n";
+	## Check for code/documentation mismatches in functions.
+	if(-d "R") {
+	    my $Rcmd = "library(tools)\n";
+	    if($opt_install) {
+		$Rcmd .= "codoc(package = \"${pkgname}\")\n";
+	    }
+	    else {
+		$Rcmd .= "codoc(dir = \"${pkgdir}\")\n";
+	    }
+	    my @out = R_runR($Rcmd, "${R_opts} --quiet");
+
+	    ## <FIXME>
+	    ## With the current heuristics codoc() may throw an error
+	    ## even though the documentation is valid.  Change this when
+	    ## we know what must be valid R code, similar to the above
+	    ## for undoc().
+	    @out = grep(!/^\>/, @out);
+	    if($#out >= 0) {
+		$any++;
+		$log->warning();
+		$log->print(join("\n", @out) . "\n");
+	    }
+	    ## </FIXME>
+	}
+
+	## Check for code/documentation mismatches in data sets.
 	if($opt_install) {
-	    $Rcmd .= "codoc(package = \"${pkgname}\")\n";
+	    my $Rcmd = "library(tools)\n";
+	    $Rcmd .= "codocData(package = \"${pkgname}\")\n";
+	    my @out = R_runR($Rcmd, "${R_opts} --quiet");
+	    @out = grep(!/^\>/, @out);
+	    if($#out >= 0) {
+		$log->warning() unless($any);
+		$any++;
+		$log->print(join("\n", @out) . "\n");
+	    }
 	}
-	else {
-	    $Rcmd .= "codoc(dir = \"${pkgdir}\")\n";
-	}
-        my @out = R_runR($Rcmd, "${R_opts} --quiet");
 
-	## <FIXME>
-	## With the current heuristics codoc() may throw an error even
-	## though the documentation is valid.  Change this when we know
-	## what must be valid R code, similar to the above for undoc().
-	@out = grep(!/^\>/, @out);
-	if($#out >= 0) {
-	    $log->warning();
-	    $log->print(join("\n", @out) . "\n");
+	## Check for code/documentation mismatches in S4 classes.
+	if($opt_install && (-d "R")) {
+	    my $Rcmd = "library(tools)\n";
+	    $Rcmd .= "codocClasses(package = \"${pkgname}\")\n";
+	    my @out = R_runR($Rcmd, "${R_opts} --quiet");
+	    @out = grep(!/^\>/, @out);
+	    if($#out >= 0) {
+		$log->warning() unless($any);
+		$any++;
+		$log->print(join("\n", @out) . "\n");
+	    }
 	}
-	else {
-	    $log->result("OK");
-	}
-	## </FIXME>
+
+	$log->result("OK") unless($any);
+
     }
 
     ## Check Rd files, for consistency of \usage with \arguments (are
@@ -1393,7 +1426,7 @@ sub check_pkg {
 	}
 	if(R_system($cmd)) {
 	    $log->error();
-	    $log->print("Running examples failed.\n");
+	    $log->print("Running examples in ${pkgname}-Ex.R failed.\n");
 	    exit(1);
 	}
 	$log->result("OK");
