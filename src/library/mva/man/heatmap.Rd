@@ -71,7 +71,9 @@ heatmap(x, Rowv=NULL, Colv=NULL, distfun = dist, hclustfun = hclust, add.expr,
   zero and standard deviation one.  There is some empirical evidence
   from genomic plotting that this is useful.
 
-  The default colors are not pretty.  Consider using RColorBrewer.
+  The default colors are not pretty.  Consider using enhancements such
+  as the \pkg{RColorBrewer} package,
+  \url{http://cran.r-project.org/src/contrib/PACKAGES.html#RColorBrewer}.
 }
 \value{
   Invisibly, a list with components
