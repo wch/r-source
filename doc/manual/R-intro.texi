@@ -6209,9 +6209,9 @@ Windows, and @R{} interfaces are available for each.
 
 All @R{} functions and datasets are stored in @emph{packages}.  
 Only when a package is loaded are its contents available.  
-This is done both for efficiency (it would take longer to search
-through the full list than it does through the subset
-that is loaded), and to aid package developers, who are
+This is done both for efficiency (the full list would take more 
+memory and would take longer to search than a subset),
+and to aid package developers, who are
 protected from name clashes with other code.  The 
 process of developing packages is described in the @emph{Writing
 @R{} Extensions} manual; here we will describe them from a user's
@@ -6245,7 +6245,7 @@ available on the search list; @pxref{Namespaces}.
 To see a list of all available help topics in an installed package,
 use
 @example
-help.start()
+> help.start()
 @end example
 @noindent
 to start the HTML help system, and then navigate to the package
@@ -6310,19 +6310,10 @@ as @code{base::t}, because it is defined in the @code{base} package.
 Only functions that are exported from the package can be retrieved in
 this way.
 
-The triple-colon operator @code{:::} is used in those rare occasions
-when it is necessary to override the package author's decision on
-which functions to export.  Like the double-colon operator, it selects
-definitions from a particular namespace, but it can retrieve internal
-objects as well.  For example, methods (@pxref{Object orientation})
-are often left as internal functions; only the generic function is exported.  
-To see their definition, use something like this:
-@example
-> stats:::print.power.htest
-@end example
-@noindent
-This example would display the @code{print} method for the @code{power.htest} 
-class in the @code{stats} package.
+The triple-colon operator @code{:::} may be seen in a few places in R 
+code: it acts like the double-colon operator but also allows access to 
+hidden objects.  Users are more likely to use the @code{getAnywhere()}
+function, which searches multiple packages.
 
 Packages are often inter-dependent, and loading one may cause others
 to be automatically loaded.  The colon operators described above
