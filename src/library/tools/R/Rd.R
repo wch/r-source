@@ -100,9 +100,12 @@ function(file)
 
     lines <- Rdpp(readLines(file))
 
-    aliases <- .getRdAliasesFromRdLines(lines)
-    keywords <- .getRdKeywordsFromRdLines(lines)
-    RdType <- .getRdDocTypeFromRdLines(lines)
+    aliases <- .getRdMetaDataFromRdLines(lines, "alias")
+    concepts <- .getRdMetaDataFromRdLines(lines, "concepts")    
+    keywords <- .getRdMetaDataFromRdLines(lines, "keywords")
+    
+    ## Could be none or more than one ... argh.    
+    RdType <- c(.getRdMetaDataFromRdLines(lines, "docType"), "")[1]
 
     txt <- paste(lines, collapse = "\n")
 
@@ -125,7 +128,7 @@ function(file)
                    ".", sep = ""))
 
     list(name = RdName, type = RdType, title = RdTitle,
-         aliases = aliases, keywords = keywords)
+         aliases = aliases, concepts = concepts, keywords = keywords)
 }
 
 ### * Rdcontents
@@ -143,15 +146,16 @@ function(RdFiles)
                           Type = I(character(0)),
                           Title = I(character(0)),
                           Aliases = I(list()),
+                          Concepts = I(list()),
                           Keywords = I(list())))
 
-    contents <- vector("list", length(RdFiles) * 5)
-    dim(contents) <- c(length(RdFiles), 5)
+    contents <- vector("list", length(RdFiles) * 6)
+    dim(contents) <- c(length(RdFiles), 6)
     for(i in seq(along = RdFiles)) {
         contents[i, ] <- Rdinfo(RdFiles[i])
     }
     colnames(contents) <-
-        c("Name", "Type", "Title", "Aliases", "Keywords")
+        c("Name", "Type", "Title", "Aliases", "Concepts", "Keywords")
 
     ## Although R-exts says about the Rd title slot that
     ## <QUOTE>
@@ -178,6 +182,7 @@ function(RdFiles)
                Type = I(unlist(contents[ , "Type"])),
                Title = I(title),
                Aliases = I(contents[ , "Aliases"]),
+               Concepts = I(contents[ , "Concepts"]),
                Keywords = I(contents[ , "Keywords"]),
                row.names = NULL)  # avoid trying to compute row names
 }
@@ -477,52 +482,16 @@ function(txt)
     out
 }
 
-### * .getRdAliasesFromRdLines
-.getRdAliasesFromRdLines <-
-function(lines)
-{
-    aliasesRegExp <-
-        "^[[:space:]]*\\\\alias{[[:space:]]*(.*)[[:space:]]*}.*"
-    aliases <- grep(aliasesRegExp, lines, value = TRUE)
-    aliases <- gsub(aliasesRegExp, "\\1", aliases)
-    aliases <- gsub("\\\\%", "%", aliases)
-    aliases
-}
+### * .getRdMetaDataFromRdLines
 
-### * .getRdConceptsFromRdLines
-.getRdConceptsFromRdLines <-
-function(lines)
-{
-    conceptsRegExp <-
-        "^[[:space:]]*\\\\concept{[[:space:]]*(.*)[[:space:]]*}.*"
-    concepts <- grep(conceptsRegExp, lines, value = TRUE)
-    concepts <- gsub(conceptsRegExp, "\\1", concepts)
-    concepts <- gsub("\\\\%", "%", concepts)
-    concepts
-}
-
-### * .getRdKeywordsFromRdLines
-.getRdKeywordsFromRdLines <-
-function(lines)
-{
-    keywordsRegExp <-
-        "^[[:space:]]*\\\\keyword{[[:space:]]*(.*)[[:space:]]*}.*"
-    keywords <- grep(keywordsRegExp, lines, value = TRUE)
-    keywords <- gsub(keywordsRegExp, "\\1", keywords)
-    keywords <- gsub("\\\\%", "%", keywords)
-    keywords
-}
-
-### * .getRdDocTypeFromRdLines
-.getRdDocTypeFromRdLines <-
-function(lines)
-{
-    RdDocTypeRegExp <-
-        "^[[:space:]]*\\\\docType{[[:space:]]*(.*)[[:space:]]*}.*"
-    RdDocType <- grep(RdDocTypeRegExp, lines, value = TRUE)
-    ## Could be none or more than one ... argh.
-    RdDocType <- c(gsub(RdDocTypeRegExp, "\\1", RdDocType), "")[1]
-    RdDocType
+.getRdMetaDataFromRdLines <-
+function(lines, kind) {
+    pattern <- paste("^[[:space:]]*\\\\", kind,
+                     "{[[:space:]]*(.*)[[:space:]]*}.*", sep = "")
+    lines <- grep(pattern, lines, value = TRUE)
+    lines <- sub(pattern, "\\1", lines)
+    lines <- gsub("\\\\%", "%", lines)
+    lines
 }
 
 ### * .getRdArgumentNames
