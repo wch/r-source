@@ -897,8 +897,6 @@ void setulb(int n, int m, double *x, double *l, double *u, int *nbd,
 	    double *wa, int * iwa, char *task, int iprint, 
 	    int *lsave, int *isave, double *dsave);
 
-
-
 static
 void lbfgsb(int n, int m, double *x, double *l, double *u, int *nbd, 
 	    double *Fmin, int *fail, OptStruct OS, 
@@ -906,11 +904,13 @@ void lbfgsb(int n, int m, double *x, double *l, double *u, int *nbd,
 	    int *fncount, int *grcount, int maxit, char *msg)
 {
     char task[60];
-    double f, *g, dsave[29], wa[2*m*n+4*n+11*m*m+8*m];
-    int iter = 0, iwa[3*n], isave[44], lsave[4];
+    double f, *g, dsave[29], *wa;
+    int iter = 0, *iwa, isave[44], lsave[4];
 
     *fail = 0;
     g = vect(n);
+    wa = vect(2*m*n+4*n+11*m*m+8*m);
+    iwa = (int *) R_alloc(3*n, sizeof(int));
     strcpy(task, "START");
     while(1) {
 	setulb(n, m, x, l, u, nbd, &f, g, factr, &pgtol, wa, iwa, task, 0,
