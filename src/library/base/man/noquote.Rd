@@ -8,6 +8,7 @@ obj[j]
 \alias{noquote}
 \alias{[.noquote}
 \alias{print.noquote}
+\alias{as.matrix.noquote}
 \arguments{
  \item{obj}{any \R object; typically a vector of \code{\link{character}}
    strings.}
@@ -38,16 +39,11 @@ nql[1:12]
 cmp.logical <- function(log.v)
 {
   ## Purpose: compact printing of logicals
-  if(!is.logical(log.v)) {
-    warning("coercing argument 'log.v' to logical")
-    log.v <- as.logical(log.v)
-  }
-  structure(if(length(log.v)==0)"()" else c(".","|")[1+log.v],
-	    class = "noquote")
+  log.v <- as.logical(log.v)
+  noquote(if(length(log.v)==0)"()" else c(".","|")[1+log.v])
 }
 cmp.logical(runif(20) > 0.8)
 }
 \keyword{print}
 \keyword{methods}
 \keyword{utilities}
-

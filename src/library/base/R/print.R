@@ -27,9 +27,10 @@ noquote <- function(obj) {
     if(!inherits(obj,"noquote")) class(obj) <- c(class(obj),"noquote")
     obj
 }
+as.matrix.noquote <- function(x) noquote(NextMethod("as.matrix", x))
 
 "[.noquote" <- function (x, ...) {
-    attr <- attributes(x,"legend")
+    attr <- attributes(x)
     r <- unclass(x)[...]
     attributes(r) <- c(attributes(r),
 		       attr[is.na(match(names(attr),c("dim","dimnames")))])
@@ -37,9 +38,8 @@ noquote <- function(obj) {
 }
 
 print.noquote <- function(obj,...) {
-    ## method for (character) objects of class 'noquote'
-    cl <- class(obj)
-    if(!is.null(cl)) class(obj) <- cl[cl != "noquote"]
+    if(!is.null(cl <- class(obj)))
+	class(obj) <- cl[cl != "noquote"]
     NextMethod("print", obj, quote = FALSE, ...)
 }
 
@@ -84,9 +84,9 @@ print.coefmat <-
 	stop("'P.values is TRUE, but has.Pvalue not!")
 
     if(has.Pvalue && !P.values) {# P values are there, but not wanted
-        d <- dim(xm <- as.matrix(x[,-nc]))
-        nc <- nc - 1
-        has.Pvalue <- FALSE
+	d <- dim(xm <- as.matrix(x[,-nc]))
+	nc <- nc - 1
+	has.Pvalue <- FALSE
     } else xm <- as.matrix(x)
 
     k <- nc - has.Pvalue - (if(missing(tst.ind)) 1 else length(tst.ind))
@@ -149,7 +149,7 @@ print.anova <- function(x, digits = max(.Options$digits - 2, 3),
 	zap.i <- zap.i[!(zap.i %in% i)]
 
     print.coefmat(x, digits = digits, signif.stars = signif.stars,
-                  has.Pvalue = has.P, P.values = has.P,
+		  has.Pvalue = has.P, P.values = has.P,
 		  cs.ind = NULL, zap.ind = zap.i, tst.ind= tst.i,
 		  na.print = "", # not yet in print.matrix:  print.gap = 2,
 		  ...)
