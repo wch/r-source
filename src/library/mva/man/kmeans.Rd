@@ -22,8 +22,8 @@ A data frame or matrix of data.
   The maximum number of iterations allowed.
 }}
 \details{
-  The data given by \code{x} is clustered by the k-Means algorithm.
-  When this terminates, all cluster centres are at to the mean of
+  The data given by \code{x} is clustered by the k-means algorithm.
+  When this terminates, all cluster centres are at the mean of
   their Voronoi sets (the set of data points which are nearest to
   the cluster centre).
 

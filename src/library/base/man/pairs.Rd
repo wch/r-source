@@ -27,7 +27,7 @@ pairs.default(x, labels = colnames(x), panel = points, \dots,
   \item{label.pos}{\code{y} position of labels in the text panel.}
   \item{cex.labels, font.labels}{graphics parameters for the text panel.}
   \item{row1attop}{logical. Should the layout be matrix-like with row 1
-    at the top, or graphi-like with row 1 at the bottom?}
+    at the top, or graph-like with row 1 at the bottom?}
 }
 \description{
   A matrix of scatterplots is produced.
