@@ -1,4 +1,7 @@
-\ProvidesFile{omsaer.fd}
+%%
+%% This is file `omsaer.fd',
+%% 
+\ProvidesFile{omsaer.fd}[1999/12/27]
 \DeclareFontFamily{OMS}{aer}{\skewchar\font48 }
 \DeclareFontShape{OMS}{aer}{m}{n}%
    {<->ssub*cmsy/m/n}{}
