@@ -32,7 +32,7 @@ plot(y ~ x, \dots)
 data(swiss)
 op <- par(mfrow=c(2,1))
 plot(Fertility ~ Education, data = swiss)
-plot(Fertility ~ Education, data = swiss, subset = Education < .2)
+plot(Fertility ~ Education, data = swiss, subset = Education < 20)
 par(op)
 }
 \keyword{hplot}
