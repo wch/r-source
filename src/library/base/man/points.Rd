@@ -53,6 +53,13 @@ plot(-4:4, -4:4, type = "n")# setting up coord. system
 points(rnorm(200), rnorm(200), col = "red")
 points(rnorm(100)/2, rnorm(100)/2, col = "blue", cex = 1.5)
 
+op <- par(bg = "light blue")
+x <- seq(0,2*pi, len=51)
+## something ``between type="b" and type="o" '' :
+plot(x, sin(x), type="o", pch=21, bg=par("bg"), col = "blue", cex=.6,
+ main='plot(.., type="o", pch=21, bg=par("bg"))')
+par(op)
+
 ##-------- Showing all the extra & some char graphics symbols ------------
 Pex <- 3 ## good for both .Device=="postscript" and "x11"
 ipch <- 1:(np <- 25+11); k <- floor(sqrt(np)); dd <- c(-1,1)/2
