@@ -16,6 +16,12 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ *
+ *
+ *  This is an extensive reworking by Paul Murrell of and original
+ *  quick hack by Ross Ihaka designed to give a superset of the
+ *  functionality in the AT&T Bell Laboratories GRZ library.
+ *
  */
 
 #include "Defn.h"
@@ -27,85 +33,120 @@
 #include <string.h>
 #include <stdlib.h>
 
+
 	/********************************************************/
-	/********************************************************/
-	/*							*/
-	/* This file consists of several sections of code:   	*/
 	/*							*/
 	/* 	TRANSFORMATIONS are concerned with converting 	*/
 	/*	locations between coordinate systems and 	*/
 	/*	dimensions between different units		*/
 	/*							*/
+	/********************************************************/
 
-int GMapUnits(int);	/* convert an R unit (e.g., "user") into */
-			/* an internal unit (e.g., USER) 	 */
+
+int GMapUnits(int);
+		/* Convert an R unit (e.g., "user") into */
+		/* an internal unit (e.g., USER) 	 */
+
+
 void GConvert(double*, double*, int, int, DevDesc*);
-			/* convert a location from one coordinate */
-			/* system to another */
+		/* Convert a location from one coordinate */
+		/* system to another */
+
+
 double GConvertXUnits(double, int, int, DevDesc*);
 double GConvertYUnits(double, int, int, DevDesc*);
-			/* convert an x/y-dimension from one set of */
-			/* units to another */
-void GReset(DevDesc*);  
-			/* set up the different regions on a device */
-			/* (i.e., inner region, figure region,      */
-			/* plot region) and transformations for     */
-			/* associated coordinate systems */
-			/* (called whenever anything that affects   */
-			/* the coordinate transformations changes)  */
-void GMapWin2Fig(DevDesc*);
-			/* set up the user coordinate transformations */
-void GNewPlot(DevDesc*, int);
-			/* set up the device for a new plot by */
-			/* resetting graphics parameters and   */
-			/* resetting the regions and coordinate */
-			/* systems */
-void GScale(double, double, int, DevDesc*);
-			/* set up the user coordinates based on */
-			/* the axis limits */
-void GSetupAxis(int, DevDesc*);
-			/* set up the axis limits based on the */
-			/* user coordinates */
-void currentFigureLocation(int*, int*, DevDesc*);
-			/* return row and column of current figure */
-			/* in the layout matrix */
+		/* Convert an x/y-dimension from one set of */
+		/* units to another */
 
+
+void GReset(DevDesc*);  
+		/* Set up the different regions on a device */
+		/* (i.e., inner region, figure region,      */
+		/* plot region) and transformations for     */
+		/* associated coordinate systems	    */
+		/* (called whenever anything that affects   */
+		/* the coordinate transformations changes)  */
+
+
+void GMapWin2Fig(DevDesc*);
+		/* Set up the user coordinate transformations */
+
+
+void GNewPlot(DevDesc*, int);
+		/* Set up the device for a new plot by */
+		/* Resetting graphics parameters and   */
+		/* Resetting the regions and coordinate */
+		/* Systems */
+
+
+void GScale(double, double, int, DevDesc*);
+		/* Set up the user coordinates based on */
+		/* the axis limits */
+
+
+void GSetupAxis(int, DevDesc*);
+		/* Set up the axis limits based on the */
+		/* user coordinates */
+
+
+void currentFigureLocation(int*, int*, DevDesc*);
+		/* Return row and column of current figure */
+		/* in the layout matrix */
+
+
+	/********************************************************/
 	/*							*/
 	/*	GPAR FUNCTIONS are concerned with operations 	*/
 	/*	on the entire set of graphics parameters for 	*/
 	/* 	a device (e.g., initialisation, saving, and	*/
 	/* 	restoring)					*/
 	/*							*/
+	/********************************************************/
+
 
 void GInit(GPar*);
-			/* default the settings for general     */
-			/* graphical parameters (i.e., defaults */
-			/* that do not depend on the device     */
-			/* type */
-void GRestore(DevDesc*);
-			/* reset the current graphical parameters */
-			/* from the default graphical parameters */
-void GSavePars(DevDesc*);
-			/* make a temporary copy of the current */
-			/* parameters */
-void GRestorePars(DevDesc*);
-			/* restore the temporary copy saved by */
-			/* GSavePars */
+		/* Default the settings for general     */
+		/* graphical parameters (i.e., defaults */
+		/* that do not depend on the device     */
+		/* type */
 
+
+void GRestore(DevDesc*);
+		/* Reset the current graphical parameters */
+		/* from the default graphical parameters */
+
+
+void GSavePars(DevDesc*);
+		/* Make a temporary copy of the current */
+		/* parameters */
+
+
+void GRestorePars(DevDesc*);
+		/* Restore the temporary copy saved by */
+		/* GSavePars */
+
+
+	/********************************************************/
 	/*							*/
 	/* 	DEVICE STATE FUNCTIONS are concerned with 	*/
 	/* 	getting and setting the current state of 	*/
 	/* 	the device;  is it ready to be drawn into ?	*/
 	/* 	(i.e., has plot.new been called yet ?)		*/
 	/*							*/
+	/********************************************************/
+
 
 void GCheckState(DevDesc*);  
-			/* has plot.new been called yet ? */
-void GSetState(int, DevDesc*);
-			/* set to 1 when plot.new succeeds */
-			/* set to 0 when don't want drawing to */
-			/* go ahead */
+		/* has plot.new been called yet ? */
 
+
+void GSetState(int, DevDesc*);
+		/* set to 1 when plot.new succeeds */
+		/* set to 0 when don't want drawing to */
+		/* go ahead */
+
+
+	/********************************************************/
 	/*							*/
 	/* 	GRAPHICAL PRIMITIVES are the generic front-end	*/
 	/* 	for the functions that every device driver must */
@@ -118,178 +159,262 @@ void GSetState(int, DevDesc*);
 	/* 	for calling GConvert to get the location into 	*/
 	/* 	device coordinates				*/
 	/*							*/
+	/********************************************************/
+
 
 void GCircle(double, double, int, double, int, int, DevDesc*);
-			/* draw a circle, centred on (x,y) with */
-			/* radius r (in inches) */
-void GClip(DevDesc*);
-			/* set clipping region (based on current */
-			/* setting of dd->gp.xpd) */
-			/* only clip if new clipping region is */
-			/* different from current clipping region */
-void GForceClip(DevDesc*);
-			/* always clips */
-void GLine(double, double, double, double, int, DevDesc*);
-			/* draw a line from x1,y1 to x2,y2 */
-int  GLocator(double*, double*, int, DevDesc*);
-			/* return the location of the next mouse click */
-void GMetricInfo(int, double*, double*, double*, int, DevDesc*);
-			/* return the height, depth, and width of */
-			/* the specified character in the specified */
-			/* units */
-void GMode(DevDesc*, int);
-			/* set device "mode" (drawing or not drawing) */
-			/* here for windows and mac drivers */
-void GPolygon(int, double*, double*, int, int, int, DevDesc*);
-			/* draw a polygon using the specified lists */
-			/* of x and y values */
-void GPolyline(int, double*, double*, int, DevDesc*);
-			/* draw series of straight lines using the */
-			/* specified lists of x and y values */
-void GRect(double, double, double, double, int, int, int, DevDesc*);
-			/* draw a rectangle given two opposite corners */
-double GStrHeight(char*, int, DevDesc*);
-			/* return the height of the specified string */
-			/* in the specified units */
-double GStrWidth(char*, int, DevDesc*);
-			/* return the width of the specified string */
-			/* in the specified units */
-void GText(double, double, int, char*, double, double, double, DevDesc*);
-			/* draw the specified text at location (x,y) */
-			/* with the specified rotation and justification */
+		/* draw a circle, centred on (x,y) with */
+		/* radius r (in inches) */
 
+
+void GClip(DevDesc*);
+		/* set clipping region (based on current */
+		/* setting of dd->gp.xpd) */
+		/* only clip if new clipping region is */
+		/* different from current clipping region */
+
+
+void GForceClip(DevDesc*);
+		/* always clips */
+
+
+void GLine(double, double, double, double, int, DevDesc*);
+		/* draw a line from x1,y1 to x2,y2 */
+
+
+int  GLocator(double*, double*, int, DevDesc*);
+		/* return the location of the next mouse click */
+
+
+void GMetricInfo(int, double*, double*, double*, int, DevDesc*);
+		/* return the height, depth, and width of */
+		/* the specified character in the specified */
+		/* units */
+
+
+void GMode(DevDesc*, int);
+		/* set device "mode" (drawing or not drawing) */
+		/* here for windows and mac drivers */
+
+
+void GPolygon(int, double*, double*, int, int, int, DevDesc*);
+		/* draw a polygon using the specified lists */
+		/* of x and y values */
+
+
+void GPolyline(int, double*, double*, int, DevDesc*);
+		/* draw series of straight lines using the */
+		/* specified lists of x and y values */
+
+
+void GRect(double, double, double, double, int, int, int, DevDesc*);
+		/* draw a rectangle given two opposite corners */
+
+double GStrHeight(char*, int, DevDesc*);
+		/* return the height of the specified string */
+		/* in the specified units */
+
+
+double GStrWidth(char*, int, DevDesc*);
+		/* return the width of the specified string */
+		/* in the specified units */
+
+
+void GText(double, double, int, char*, double, double, double, DevDesc*);
+		/* draw the specified text at location (x,y) */
+		/* with the specified rotation and justification */
+
+
+	/********************************************************/
 	/*							*/
 	/* 	GRAPHICAL UTILITIES are functions that produce	*/
 	/* 	graphical output using the graphical primitives */
 	/* 	(i.e., they are generic - NOT device-specific)	*/
 	/*							*/
+	/********************************************************/
+
 
 void GArrow(double, double, double, double, int, double, double, int, DevDesc*);
-			/* draw a line from (x1,y1) to (x2,y2)  */
-			/* with an arrow head at either or both */
-			/* ends */
-void GBox(int, DevDesc*);
-			/* draw a box around specified region */
-			/* 1=plot region, 2=figure region,    */
-			/* 3=inner region, 4=device */
-void GLPretty(double*, double*, int*);
-			/* return a "nice" min, max and number */
-			/* of intervals for a given range */
-			/* on a log scale */
-void GMtext(char*, int, double, int, double, int, DevDesc*);
-			/* draw text in margins */
-void GPretty(double*, double*, int*);
-			/* return a "nice" min, max and number */
-			/* of intervals for a given range */
-			/* on a linear scale */
-void GSymbol(double, double, int, int, DevDesc*);
-			/* draw one of the predefined symbols */
-			/* (circle, square, diamond, ...) */
+		/* draw a line from (x1,y1) to (x2,y2)  */
+		/* with an arrow head at either or both */
+		/* ends */
 
+
+void GBox(int, DevDesc*);
+		/* draw a box around specified region */
+		/* 1=plot region, 2=figure region,    */
+		/* 3=inner region, 4=device */
+
+
+void GLPretty(double*, double*, int*);
+		/* return a "nice" min, max and number */
+		/* of intervals for a given range */
+		/* on a log scale */
+
+
+void GMtext(char*, int, double, int, double, int, DevDesc*);
+		/* draw text in margins */
+
+
+void GPretty(double*, double*, int*);
+		/* return a "nice" min, max and number */
+		/* of intervals for a given range */
+		/* on a linear scale */
+
+
+void GSymbol(double, double, int, int, DevDesc*);
+		/* draw one of the predefined symbols */
+		/* (circle, square, diamond, ...) */
+
+
+	/********************************************************/
 	/*							*/
 	/* 	COLOUR CODE is concerned with the internals of 	*/
 	/* 	R colour representation 			*/
 	/*							*/
+	/********************************************************/
+
 
 unsigned RGBpar(SEXP, int, DevDesc*);
-			/* convert an R colour specification (which */
-			/* might be a number or a string) */
-			/* into an internal colour specification */
+		/* convert an R colour specification (which */
+		/* might be a number or a string) */
+		/* into an internal colour specification */
 
+	/********************************************************/
 	/*							*/
-	/* 	LINE TEXTURE CODE is concerned with the internals */
-	/* 	of R line texture representation		*/
+	/* 	LINE TEXTURE CODE is concerned with the		*/
+	/*	internals of R line texture representation	*/
 	/*							*/
-	/* 	DEVICE FUNCTIONS are concerned with the creation */
-	/* 	and destruction of devices			*/
+	/********************************************************/
+
+
+unsigned int LTYpar(SEXP, int);
+
+	/********************************************************/
 	/*							*/
+	/* 	DEVICE FUNCTIONS are concerned with the		*/
+	/*	creation and destruction of devices		*/
+	/*							*/
+	/********************************************************/
+
 
 DevDesc* CurrentDevice();
-			/* return a pointer to the current device */
-DevDesc* GetDevice(int);
-			/* return a pointer to a device which is */
-			/* identified by number */
-void InitGraphics(void);
-			/* initialise internal device structures */
-void KillDevice(DevDesc*);
-			/* kill device which is identified by number */
-void KillAllDevices();
-int NoDevices();
-			/* is the null device the current device ? */
-int NumDevices();
-			/* how many devices exist ? (>= 1) */
-int StartDevice(SEXP, SEXP, int, SEXP, int);
-			/* create a new device */
+		/* return a pointer to the current device */
 
+
+DevDesc* GetDevice(int);
+		/* return a pointer to a device which is */
+		/* identified by number */
+
+
+void InitGraphics(void);
+		/* initialise internal device structures */
+
+
+void KillDevice(DevDesc*);
+		/* kill device which is identified by number */
+
+
+void KillAllDevices();
+		/* kill all active devices (used at shutdown) */
+
+int NoDevices();
+		/* is the null device the current device ? */
+
+
+int NumDevices();
+		/* how many devices exist ? (>= 1) */
+
+
+int StartDevice(SEXP, SEXP, int, SEXP, int);
+		/* create a new device */
+
+
+	/********************************************************/
 	/*							*/
 	/* 	DEVICE UTILITIES are concerned with providing  	*/
 	/* 	information for R interpreted functions		*/
 	/*							*/
+	/********************************************************/
+
 
 int curDevice();
-			/* return the number of the current device */
+		/* return the number of the current device */
+
+
 int nextDevice(int);
-			/* return the number of the next device */
+		/* return the number of the next device */
+
+
 int prevDevice(int);
-			/* return the number of the previous device */
+		/* return the number of the previous device */
+
+
 int selectDevice(int);
-			/* make the specified device (specified by number) */
-			/* the current device */
+		/* make the specified device (specified by number) */
+		/* the current device */
+
+
 void killDevice(int);
-			/* kill device which is identified by number */
+		/* kill device which is identified by number */
 
-	/*							*/
-	/********************************************************/
-	/********************************************************/
 
-	/********************************************************/
-	/* TRANSFORMATIONS 					*/
-	/********************************************************/
 
-	/*
-	 * There are five major regions on a device, for any particular
-	 * figure:  the outer margins, which "stick" to the edges of 
-	 * the device;  the inner region, which is defined as the 
-	 * total device less the outer margins;  the figure region,
-	 * which defaults from the current layout (mfrow, mfcol, layout)
-	 * unless the user specifies it directly (fig, fin);  the 
-	 * figure margins, which "stick" to the edges of the plot
-	 * region;  and the plot region, which is the figure region
-	 * less the figure margins by default unless the user 
-	 * specifies it directly (plt, pin)
-	 *
-	 * COORDINATE SYSTEMS 
-	 * 
-	 * DEVICE = devices natural coordinate system (e.g., pixels, 1/72", ...)
-	 * NDC = normalised device coordinates (0..1 on device)
-	 * INCHES = inches
-	 * OMA1..4 = outer margin coordinates
-	 * NIC = normalised inner region coordinates (0..1 on inner region)
-	 * NFC = normalised figure coordinates (0..1 on figure region)
-	 * MAR1..4 = figure margin coordinates 
-	 * NPC = normalised plot coordinates (0..1 on plot region)
-	 * USER = world or data coordinates
-	 *
-	 * UNITS
-	 *
-	 * all of the above, except OMA1..4 and MAR1..4, plus ...
-	 * LINES = line coordinates (lines of margin;  based on mex)
-	 * CHARS = char coordinates (lines of text;  based on cex)
-	 *
-	 * The function Convert(value, from, to) is provided 
-	 * to transform between any pair of coordinate systems
-	 * (for transforming locations)
-	 *
-	 * The functions ConvertXUnits(value, from, to) and
-	 * ConvertYUnits(value, from, to) are provided to transform
-	 * between any pair of units (for transforming dimensions)
-	 *
-	 * IMPORTANT:  if user coordinates are logged, then the 
-	 * conversion to/from USER units will not work.  in this
-	 * case it is necessary to use convert(x1) - convert(x2)
-	 * rather than convert(x1 - x2)
-	 *
-	 */
+
+/***************************************************************
+ *
+ * TRANSFORMATIONS
+ *
+ *    There are five major regions on a device, for any
+ *    particular figure:  the outer margins, which "stick"
+ *    to the edges of the device;  the inner region, which
+ *    is defined as the total device less the outer margins;
+ *    the figure region, which defaults from the current
+ *    layout (mfrow, mfcol, layout) unless the user specifies
+ *    it directly (fig, fin);  the figure margins, which
+ *    "stick" to the edges of the plot region;  and thed
+ *    plot region, which is the figure region less the figure
+ *    margins by default unless the user specifies it directly
+ *    (plt, pin)
+ *
+ *  COORDINATE SYSTEMS 
+ * 
+ *    DEVICE  = devices natural coordinate system
+ *		(e.g., pixels, 1/72", ...)
+ *    NDC     = normalised device coordinates (0..1 on device)
+ *    INCHES  = inches
+ *    OMA1..4 = outer margin coordinates
+ *    NIC     = normalised inner region coordinates
+ *		(0..1 on inner region)
+ *    NFC     = normalised figure coordinates
+ *		(0..1 on figure region)
+ *    MAR1..4 = figure margin coordinates 
+ *    NPC     = normalised plot coordinates
+ *		(0..1 on plot region)
+ *    USER    = world or data coordinates
+ *
+ *
+ *  UNITS
+ *
+ *    All of the above, except OMA1..4 and MAR1..4, plus ...
+ *
+ *      LINES = line coordinates (lines of margin;  based on mex)
+ *      CHARS = char coordinates (lines of text;  based on cex)
+ *
+ *    The function Convert(value, from, to) is provided 
+ *    to transform between any pair of coordinate systems
+ *    (for transforming locations)
+ *
+ *    The functions ConvertXUnits(value, from, to) and
+ *    ConvertYUnits(value, from, to) are provided to transform
+ *    between any pair of units (for transforming dimensions)
+ *
+ *    IMPORTANT:  if user coordinates are logged, then the 
+ *    conversion to/from USER units will not work.  in this
+ *    case it is necessary to use convert(x1) - convert(x2)
+ *    rather than convert(x1 - x2)
+ *
+ **************************************************************/
 
 #define	DEG2RAD		0.01745329251994329576
 
@@ -298,15 +423,17 @@ double Log10(double x)
         return (FINITE(x) && x > 0.0) ? log10(x) : NA_REAL;
 }
 
-	/* within interpreted R, units are as follows: */
-	/* 	1 = "user"	*/
-	/*	2 = "figure"	*/
-	/*	3 = "inches"	*/
-	/* the function mapUnits provides a mapping between */
-	/* interpreted units and internal units */
 
 int GMapUnits(int Runits)
 {
+	/* within interpreted R, units are as follows:	*/
+	/* 	1 = "user"				*/
+	/*	2 = "figure"				*/
+	/*	3 = "inches"				*/
+	/* the function mapUnits provides a mapping	*/
+	/* between interpreted units and internal	*/
+	/* units.					*/
+
 	switch (Runits) {
 		case 1: return USER;
 		case 2: return NFC;
@@ -537,31 +664,31 @@ double yDevtoNFC(double y, DevDesc *dd);
 
 double xNDCtoDev(double x, DevDesc *dd) 
 { 
-	return dd->gp.ndc2dev.ax + x*dd->gp.ndc2dev.bx; 
+    return dd->gp.ndc2dev.ax + x*dd->gp.ndc2dev.bx; 
 }
 double yNDCtoDev(double y, DevDesc *dd) 
 { 
-	return dd->gp.ndc2dev.ay + y*dd->gp.ndc2dev.by; 
+    return dd->gp.ndc2dev.ay + y*dd->gp.ndc2dev.by; 
 }
 double xInchtoDev(double x, DevDesc *dd) 
 { 
-	return xNDCtoDev(x*dd->gp.xNDCPerInch, dd); 
+    return xNDCtoDev(x*dd->gp.xNDCPerInch, dd); 
 }
 double yInchtoDev(double y, DevDesc *dd) 
 { 
-	return yNDCtoDev(y*dd->gp.yNDCPerInch, dd); 
+    return yNDCtoDev(y*dd->gp.yNDCPerInch, dd); 
 }
 double xLinetoDev(double x, DevDesc *dd) 
 { 
-	return xNDCtoDev(x*dd->gp.xNDCPerLine, dd); 
+    return xNDCtoDev(x*dd->gp.xNDCPerLine, dd); 
 }
 double yLinetoDev(double y, DevDesc *dd) 
 { 
-	return yNDCtoDev(y*dd->gp.yNDCPerLine, dd); 
+    return yNDCtoDev(y*dd->gp.yNDCPerLine, dd); 
 }
 double xNICtoDev(double x, DevDesc *dd) 
 { 
-	return dd->gp.inner2dev.ax + x*dd->gp.inner2dev.bx; 
+    return dd->gp.inner2dev.ax + x*dd->gp.inner2dev.bx; 
 }
 double yNICtoDev(double y, DevDesc *dd) 
 { 
@@ -1874,12 +2001,15 @@ void GSetupAxis(int axis, DevDesc *dd)
 	/* GPAR FUNCTIONS					*/
 	/********************************************************/
 
-/*  GInit --  Set default graphics parameter values in a GPar */
-/*  This initialises the plot state, plus the other graphical */
-/*  parameters that are not the responsibility of the device initialisation */
 
 void GInit(GPar *gp)
 {
+	/*  Set default graphics parameter values in  */
+	/*  a GPar This initialises the plot state,   */
+	/*  plus the other graphical parameters that  */
+	/*  are not the responsibility of the device  */
+	/*  initialisation                            */
+
 	gp->state = 0;
 
 	gp->ann = 1;
@@ -1901,7 +2031,8 @@ void GInit(GPar *gp)
 	gp->colaxis = 0;
 	gp->gamma = 1;
 
-	/* gp->ps = 10; */
+	/* gp->ps = 10; */	/* Device Specific */
+	gp->metricInfo = 0;
 	gp->font = 1;
 	gp->fontmain = 2;
 	gp->fontlab = 1;
@@ -1998,26 +2129,29 @@ void GInit(GPar *gp)
 	gp->usr[3] = 1.0;
 }
 
-	/* copy a GPar structure from source to dest */
 
 void copyGPar(GPar *source, GPar *dest)
 {
+	/* copy a GPar structure from source to dest */
+
 	memcpy(dest, source, sizeof(GPar));
 }
 
-/*  GRestore -- Restore the graphics parameters from the device copy  */
 
 void GRestore(DevDesc *dd)
 {
+	/*  Restore the graphics parameters from the device copy  */
+
 	if (NoDevices())
 		error("No graphics device is active\n");
 	copyGPar(&(dd->dp), &(dd->gp));
 }
 
 
-/* Saving and restoring of "inline" graphical parameters. */
-/* These are the ones which can be specified as a arguments */
-/* to high-level graphics functions. */
+	/*  Saving and restoring of "inline" graphical  */
+	/*  parameters.  These are the ones which can be  */
+	/*  specified as a arguments to high-level  */
+	/*  graphics functions.  */
 
 static double	adjsave;	/* adj */
 static int	annsave;	/* ann */
@@ -2062,10 +2196,10 @@ static int	yaxssave;	/* y axis calculation style */
 static int	yaxtsave;	/* y axis type */
 
 
-/*  GSavePars -- Make a temporary copy of the inline parameter values  */
-
 void GSavePars(DevDesc *dd)
 {
+	/*  Make a temporary copy of the inline parameter values  */
+
 	adjsave = dd->gp.adj;
 	annsave = dd->gp.ann;
 	btysave = dd->gp.bty;
@@ -2116,10 +2250,10 @@ void GSavePars(DevDesc *dd)
 }
 
 
-/*  GRestorePars -- Restore temorarily saved inline parameter values  */
-
 void GRestorePars(DevDesc *dd)
 {
+	/*  Restore temorarily saved inline parameter values  */
+
 	dd->gp.adj = adjsave;
 	dd->gp.ann = annsave;
 	dd->gp.bty = btysave;
@@ -2173,18 +2307,20 @@ void GRestorePars(DevDesc *dd)
 	/* DEVICE STATE FUNCTIONS				*/
 	/********************************************************/
 
-/*  GSetState -- This records whether GNewPlot has been called  */
 
 void GSetState(int newstate, DevDesc *dd)
 {
+	/*  This records whether GNewPlot has been called  */
+
 	dd->dp.state = dd->gp.state = newstate;
 }
 
 
-/*  GCheckState -- Enquire whether GNewPlot has been called  */
 
 void GCheckState(DevDesc *dd)
 {
+	/*  Enquire whether GNewPlot has been called  */
+
 	if(dd->gp.state == 0)
 		error("plot.new has not been called yet\n");
 	if (dd->gp.valid == 0)
@@ -2195,11 +2331,12 @@ void GCheckState(DevDesc *dd)
 	/* GRAPHICAL PRIMITIVES 				*/
 	/********************************************************/
 
-/*  GCircle -- Draw a circle (radius is given in inches)  */
 
 void GCircle(double x, double y, int coords,
 	     double radius, int col, int border, DevDesc *dd)
 {
+	/*  Draw a circle (radius is given in inches)  */
+
 	double ir;
 #ifdef POINTS
 	ir = radius/(72.0 * dd->gp.ipr[0]);
@@ -2208,10 +2345,11 @@ void GCircle(double x, double y, int coords,
 	dd->dp.circle(x, y, coords, ir, col, border, dd);
 }
 
-/*  GClip -- Update the device clipping region (depends on GP->xpd)  */
 
 void GClip(DevDesc *dd)
 {
+	/*  Update the device clipping region (depends on GP->xpd)  */
+
 	if (dd->gp.xpd != dd->gp.oldxpd) {
 		if(dd->gp.xpd)
 			dd->dp.clip(dd->gp.left, dd->gp.right, 
@@ -2225,10 +2363,11 @@ void GClip(DevDesc *dd)
 	}
 }
 
-/*  GForceClip -- Forced update of the device clipping region  */
 
 void GForceClip(DevDesc *dd)
 {
+	/*  Forced update of the device clipping region  */
+
 	if(dd->gp.xpd)
 		dd->dp.clip(dd->gp.left, dd->gp.right, 
 			    dd->gp.bottom, dd->gp.top, dd);
@@ -2239,32 +2378,31 @@ void GForceClip(DevDesc *dd)
 			    yNFCtoDev(dd->gp.plt[3], dd), dd);
 }
 
-/* Draw Line Segments, Clipping to the Viewport */
-/* Cohen-Sutherland Algorithm -- Unneeded if the device can do the clipping */
 
-#define	BOTTOM	001
-#define	LEFT	002
-#define	TOP	004
-#define	RIGHT	010
+	/* Draw Line Segments, Clipping to the Viewport */
+	/* Cohen-Sutherland Algorithm */
+	/* Unneeded if the device can do the clipping */
 
-/* Parameters for clipping to the plot region in figure coordinates */
+
+#define	CS_BOTTOM	001
+#define	CS_LEFT		002
+#define	CS_TOP		004
+#define	CS_RIGHT	010
 
 
 static int clipcode(double x, double y, 
 		    double left, double right, double bottom, double top,
 		    DevDesc *dd)
 {
-	int c;
-
-	c = 0;
+	int c = 0;
 	if(x < left)
-		c |= LEFT;
+		c |= CS_LEFT;
 	else if(x > right)
-		c |= RIGHT;
+		c |= CS_RIGHT;
 	if(y < bottom)
-		c |= BOTTOM;
+		c |= CS_BOTTOM;
 	else if(y > top)
-		c |= TOP;
+		c |= CS_TOP;
 	return c;
 }
 
@@ -2308,19 +2446,19 @@ static int CSclipline(double *x1, double *y1, double *x2, double *y2,
 			c = c1;
 		else 
 			c = c2;
-		if( c & LEFT ) {
+		if( c & CS_LEFT ) {
 			y = *y1+(*y2-*y1)*(Clipxl-*x1)/(*x2-*x1);
 			x = Clipxl;
 		}
-		else if( c & RIGHT ) {
+		else if( c & CS_RIGHT ) {
 			y = *y1+(*y2-*y1)*(Clipxr-*x1)/(*x2-*x1);
 			x = Clipxr;
 		}
-		else if( c & BOTTOM ) {
+		else if( c & CS_BOTTOM ) {
 			x = *x1+(*x2-*x1)*(Clipyb-*y1)/(*y2-*y1);
 			y = Clipyb;
 		}
-		else if( c & TOP ) {
+		else if( c & CS_TOP ) {
 			x = *x1+(*x2-*x1)*(Clipyt-*y1)/(*y2-*y1);
 			y = Clipyt;
 		}
@@ -2341,6 +2479,7 @@ static int CSclipline(double *x1, double *y1, double *x2, double *y2,
 
 	return 1;
 }
+
 
 static void CScliplines(int n, double *x, double *y, int coords, DevDesc *dd)
 {
@@ -2385,10 +2524,11 @@ static void CScliplines(int n, double *x, double *y, int coords, DevDesc *dd)
 	C_free((char *) yy);
 }
 
-/*  GLine -- draw a line */
 
 void GLine(double x1, double y1, double x2, double y2, int coords, DevDesc *dd)
 {
+	/*  Draw a line */
+
 	int lineStart, lineEnd;
 
 	if (dd->dp.canClip) {
@@ -2401,10 +2541,11 @@ void GLine(double x1, double y1, double x2, double y2, int coords, DevDesc *dd)
 			dd->dp.line(x1, y1, x2, y2, coords, dd);
 }
 
-/*  GLocator -- Read the current pen position */
 
 int GLocator(double *x, double *y, int coords, DevDesc *dd)
 {
+	/*  Read the current pen position */
+
 	double ix, iy;
 	if(!dd->dp.locator)
 		error("no locator capability in device driver\n");
@@ -2416,11 +2557,11 @@ int GLocator(double *x, double *y, int coords, DevDesc *dd)
 		return 0;
 }
 
-/* GMetricInfo -- Access character fontr metric information  */
-
 void GMetricInfo(int c, double *ascent, double *descent, double *width, 
 		 int units, DevDesc *dd)
 {
+	/* Access character font metric information  */
+
 	if(dd->dp.metricInfo)
 		dd->dp.metricInfo(c, ascent, descent, width, dd);
 	else
@@ -2433,16 +2574,16 @@ void GMetricInfo(int c, double *ascent, double *descent, double *width,
 	}
 }
 
+
+void GMode(DevDesc *dd, int mode)
+{
+	/*  Check that everything is initialized  */
 	/*  Interpretation  */
 	/*  mode = 0, graphics off */
 	/*  mode = 1, graphics on */
 	/*  mode = 2, graphical input on */
 	/*  (Ignored by most drivers)  */
 
-/*  GMode - Check that everything is initialized  */
-
-void GMode(DevDesc *dd, int mode)
-{
 	if (NoDevices())
 		error("No graphics device is active\n");
 	if(mode != dd->gp.devmode)
@@ -2451,25 +2592,26 @@ void GMode(DevDesc *dd, int mode)
 	dd->gp.devmode = dd->dp.devmode = mode;
 }
 
-/*  GPolygon -- Draw a polygon  */
-/*  Filled with color bg and outlined with color fg  */
-/*  These may both be NA_INTEGER  */
 
 void GPolygon(int n, double *x, double *y, int coords,
 	      int bg, int fg, DevDesc *dd)
 {
-	/* If device can't clip we should use something */
-	/* like Sutherland-Hodgman here */
+	/*  GPolygon -- Draw a polygon  */
+	/*  Filled with color bg and outlined with color fg  */
+	/*  These may both be NA_INTEGER  */
+	/*  If device can't clip we should use something */
+	/*  like Sutherland-Hodgman here */
 
 	if(dd->dp.canClip) 
 		GClip(dd);
 	dd->dp.polygon(n, x, y, coords, bg, fg, dd);
 }
 
-/*  GPolyline -- Draw a series of line segments */
 
 void GPolyline(int n, double *x, double *y, int coords, DevDesc *dd)
 {
+	/*  Draw a series of line segments */
+
 	if (dd->dp.canClip) { 
 		GClip(dd);
 		dd->dp.polyline(n, x, y, coords, dd);
@@ -2478,39 +2620,46 @@ void GPolyline(int n, double *x, double *y, int coords, DevDesc *dd)
 		CScliplines(n, x, y, coords, dd);
 }
 
-/*  GRect -- Draw a rectangle  */
-/*  Filled with color bg and outlined with color fg  */
-/*  These may both be NA_INTEGER  */
 
 void GRect(double x0, double y0, double x1, double y1, int coords,
 	   int bg, int fg, DevDesc *dd)
 {
+	/*  Draw a rectangle  */
+	/*  Filled with color bg and outlined with color fg  */
+	/*  These may both be NA_INTEGER  */
+	/*  This should be adjusted so that rectangles are clipped */
+
 	dd->dp.rect(x0, y0, x1, y1, coords, bg, fg, dd);
 }
 
-/*  GStrWidth -- Compute string width  */
 
 double GStrWidth(char *str, int units, DevDesc *dd)
 {
+	/*  Compute string width  */
+
 	double w = dd->dp.strWidth(str, dd);
 	if (units != DEVICE)
 		w = GConvertXUnits(w, DEVICE, units, dd);
 	return w;
 }
 
+
 double GStrHeight(char *str, int units, DevDesc *dd)
 {
+	/*  Compute string height  */
+
 	double h = dd->gp.cex * dd->gp.cra[1];
 	if (units != DEVICE)
 		h = GConvertYUnits(h, DEVICE, units, dd);
 	return h;
 }
 
-/*  GText -- Draw text in a plot  */
 
 void GText(double x, double y, int coords, char *str, 
 	   double xc, double yc, double rot, DevDesc *dd)
 {
+	/*  Draw text in a plot  */
+
 	if(str && *str)
 		if(dd->dp.canClip) {
 			GClip(dd);
@@ -2529,16 +2678,18 @@ void GText(double x, double y, int coords, char *str,
 		}
 }
 
+
 	/********************************************************/
 	/* GRAPHICAL UTILITIES					*/
 	/********************************************************/
 
-/*  GArrow -- Draw an arrow  */
-/*  NOTE that the length parameter is in inches */
 
 void GArrow(double xfrom, double yfrom, double xto, double yto, int coords,
 	double length, double angle, int code, DevDesc *dd)
 {
+	/*  GArrow -- Draw an arrow  */
+	/*  NOTE that the length parameter is in inches */
+
 	double xfromInch = xfrom;
 	double yfromInch = yfrom;
 	double xtoInch = xto;
@@ -2577,10 +2728,10 @@ void GArrow(double xfrom, double yfrom, double xto, double yto, int coords,
 }
 
 
-/*  GBox -- Draw a box about one of several regions  */
-
 void GBox(int which, DevDesc *dd)
 {
+	/*  Draw a box about one of several regions  */
+
 	double x[5], y[5];
 	GClip(dd);
 	if (which == 1) {
@@ -2632,18 +2783,12 @@ void GBox(int which, DevDesc *dd)
 	}
 }
 
-#ifdef OUT
-void GLPretty(double*, double*, int*);
-void GPretty(double*, double*, int*);
-void GLScale(double, double, int);
-void GScale(double, double, int);
-#endif
-
-/*  GLPretty -- Set scale and ticks for logarithmic scales  */
-/*  Note: 1 2 5 10 looks good on logarithmic scales  */
 
 void GLPretty(double *xmin, double *xmax, int *n)
 {
+	/*  Set scale and ticks for logarithmic scales  */
+	/*  Note: 1 2 5 10 looks good on logarithmic scales  */
+
 	double u1, u2, v1, v2, p1, p2;
 	
 	if((*xmax) <= 7.8651*(*xmin))
@@ -2681,6 +2826,8 @@ void GLPretty(double *xmin, double *xmax, int *n)
 
 void GPretty(double *s, double *u, int *ndiv)
 {
+	/*  Set scale and ticks for linear scales  */
+
 	double base, cell, unit, tmp;
 	int ns, nu;
 
@@ -2708,7 +2855,6 @@ void GPretty(double *s, double *u, int *ndiv)
 	*ndiv = (*u-*s)/unit+0.5;
 }
 
-/*  GSymbol -- Draw one of the R special symbols  */
 
 #define SMALL	0.25
 #ifdef OLD
@@ -2723,8 +2869,11 @@ void GPretty(double *s, double *u, int *ndiv)
 #define TRC2	0.77756015077810708036		/* TRC0 / 2 */
 #define CMAG	1.1				/* Circle magnifier */
 
+
 void GSymbol(double x, double y, int coords, int pch, DevDesc *dd)
 {
+	/*  Draw one of the R special symbols  */
+
 	double r, xc, yc;
 	double xx[4], yy[4];
 	char str[2];
@@ -2991,11 +3140,12 @@ void GSymbol(double x, double y, int coords, int pch, DevDesc *dd)
 	}
 }
 
-/*  GMtext -- Draw text in plot margins  */
 
 void GMtext(char *str, int side, double line, int outer, double at, int las,
 	    DevDesc *dd)
 {
+	/*  Draw text in plot margins  */
+
 	double a, xadj, yadj;
 	int coords;
 
@@ -3105,16 +3255,18 @@ void GMtext(char *str, int side, double line, int outer, double at, int las,
 	}
 }
 
+
 	/********************************************************/
 	/* COLOUR CODE						*/
 	/********************************************************/
 
-/*  hsv2rgb -- HSV to RGB conversion  */
-/*  Based on HSV_TO_RGB from Foley and Van Dam First Ed. Page 616 */
-/*  See Alvy Ray Smith, Color Gamut Transform Pairs, SIGGRAPH '78 */
 
 void hsv2rgb(double h, double s, double v, double *r, double *g, double *b)
 {
+	/*  hsv2rgb -- HSV to RGB conversion  */
+	/*  Based on HSV_TO_RGB from Foley and Van Dam First Ed. Page 616 */
+	/*  See Alvy Ray Smith, Color Gamut Transform Pairs, SIGGRAPH '78 */
+
 	double	f, p, q, t;
 	double	modf();
 	int i;
@@ -3864,48 +4016,51 @@ ColorDataBaseEntry ColorDataBase[] = {
 int ColorTableSize;
 unsigned int ColorTable[COLOR_TABLE_SIZE];
 
-	/* Hex Digit to Integer Conversion */
-
 static unsigned hexdigit(int digit)
 {
+	/* Hex Digit to Integer Conversion */
+
 	if('0' <= digit && digit <= '9') return digit - '0';
 	else if('A' <= digit && digit <= 'F') return 10 + digit - 'A';
 	else if('a' <= digit && digit <= 'f') return 10 + digit - 'a';
 	else error("invalid hex digit in color\n");
 }
 
-	/* Integer to Hex Digit */
-
 static char HexDigits[] = "0123456789ABCDEF";
 
 #ifdef UNUSED
 static unsigned digithex(int digit)
 {
+	/* Integer to Hex Digit */
+
 	return HexDigits[abs(digit) % 16];
 }
 #endif
 
-	/* String Comparison Ignoring Case and Squeezing Out Blanks */
-
 static int StrMatch(char *s, char *t)
 {
+	/* String Comparison Ignoring Case and Squeezing Out Blanks */
+
 	for(;;) {
-		if(*s == '\0' && *t == '\0') return 1;
+		if(*s == '\0' && *t == '\0') {
+			return 1;
+		}
 		if(*s == ' ') {
 			s++; continue;
 		}
 		if(*t == ' ') {
 			t++; continue;
 		}
-		if(tolower(*s++) != tolower(*t++)) return 0;
+		if(tolower(*s++) != tolower(*t++))
+			return 0;
 	}
 }
 
 
-	/* #RRGGBB String to Internal Color Code */
-
 unsigned int rgb2col(char *rgb)
 {
+	/* #RRGGBB String to Internal Color Code */
+
 	unsigned int r, g, b;
 	if(rgb[0] != '#' || strlen(rgb) != 7)
 		error("invalid RGB specification\n");
@@ -3915,10 +4070,11 @@ unsigned int rgb2col(char *rgb)
 	return R_RGB(r, g, b);
 }
 
-	/* External Color Name to Internal Color Code */
 
 unsigned int name2col(char *nm)
 {
+	/* External Color Name to Internal Color Code */
+
 	int i;
 	for(i=0 ; ColorDataBase[i].name ; i++) {
 		if(StrMatch(ColorDataBase[i].name, nm))
@@ -3927,10 +4083,11 @@ unsigned int name2col(char *nm)
 	error("invalid color name\n");
 }
 
-	/* Index (as string) to Internal Color Code */
 
 unsigned int number2col(char *nm, DevDesc *dd)
 {
+	/* Index (as string) to Internal Color Code */
+
 	int index;
 	char *ptr;
 	index = strtod(nm, &ptr);
@@ -3938,6 +4095,7 @@ unsigned int number2col(char *nm, DevDesc *dd)
 	if(index == 0) return dd->dp.bg;
 	else return ColorTable[(index-1) % ColorTableSize];
 }
+
 
 static char ColBuf[8];
 
@@ -3954,13 +4112,13 @@ char *RGB2rgb(unsigned int r, unsigned int g, unsigned int b)
 	return &ColBuf[0];
 }
 
+
+char *col2name(unsigned int col)
+{
 	/* Internal to External Color Representation */
 	/* Search the color name database first */
 	/* If this fails, create an #RRGGBB string */
 
-
-char *col2name(unsigned int col)
-{
 	int i;
 	for(i=0 ; ColorDataBase[i].name ; i++) {
 		if(col == ColorDataBase[i].code)
@@ -3977,23 +4135,27 @@ char *col2name(unsigned int col)
 	return &ColBuf[0];
 }
 
-	/* NOTE that this is called with dd == NULL by initialisation code */
-	/* in which case, str2col assumes that `s' is a name */
-
 unsigned str2col(char *s, DevDesc *dd)
 {
-	if (dd)
+	/* NOTE that this is called with dd == NULL by */
+	/* the initialisation code in which case, str2col */
+	/* assumes that `s' is a name */
+
+	if (dd) {
 		if(s[0] == '#') return rgb2col(s);
 		else if(isdigit(s[0])) return number2col(s, dd);
 		else return name2col(s);
+	}
 	else
 		return name2col(s);
 }
 
-	/* We Assume that Checks Have Been Done */
 
 unsigned RGBpar(SEXP x, int i, DevDesc *dd)
 {
+	/* Convert a sexp element to an R  color desc */
+	/* We Assume that Checks Have Been Done */
+
 	int index;
 	if(isString(x)) {
 		return str2col(CHAR(STRING(x)[i]), dd);
@@ -4012,10 +4174,11 @@ unsigned RGBpar(SEXP x, int i, DevDesc *dd)
 	}
 }
 
-	/* Initialize the Color Databases */
 
 void InitColors()
 {
+	/* Initialize the Color Databases */
+
 	int i;
 
 	/* Initialize the Color Database */
@@ -4121,37 +4284,41 @@ SEXP LTYget(unsigned int lty)
 	return ans;
 }
 
-	/********************************************************/
-	/* DEVICE FUNCTIONS 					*/
-	/********************************************************/
-
-	/*
-	 * R allows there to be (up to 64) multiple devices in 
-	 * existence at the same time
-	 * Only one device is the active device and all drawing 
-	 * occurs in this device 
-	 * Each device has its own set of graphics parameters
-	 * so that switching between devices, switches between 
-	 * their graphical contexts (e.g., if you set the line 
-	 * width on one device then switch to another device,
-	 * don't expect to be using the line width you just set !)
-	 * Each device has additional device-specific graphics
-	 * parameters which the device driver (i.e., NOT this 
-	 * generic graphics code) is wholly responsible for 
-	 * maintaining (including creating and destroying special
-	 * resources such as X11 windows)
-	 * Each device has a display list which records every
-	 * graphical operation since the last dd->dp.newPage; 
-	 * this is used to redraw the output on the device 
-	 * when it is resized and to copy output from one device
-	 * to another (this can be disabled, which is the default
-	 * for postscript)  
-	 * NOTE that graphical operations should only be 
-	 * recorded in the displayList if they are "guaranteed" 
-	 * to succeed (to avoid heaps of error messages on a redraw)
-	 * which means that the recording should be the last thing
-	 * done in a graphical operation (see do_* in plot.c)
-	 */
+/***********************************************************************
+ *
+ *  DEVICE FUNCTIONS
+ *
+ *    R allows there to be (up to 64) multiple devices in
+ *    existence at the same time.  Only one device is the
+ *    active device and all drawing occurs in this device
+ *
+ *    Each device has its own set of graphics parameters
+ *    so that switching between devices, switches between
+ *    their graphical contexts (e.g., if you set the line
+ *    width on one device then switch to another device,
+ *    don't expect to be using the line width you just set !)
+ *
+ *    Each device has additional device-specific graphics
+ *    parameters which the device driver (i.e., NOT this 
+ *    generic graphics code) is wholly responsible for 
+ *    maintaining (including creating and destroying special
+ *    resources such as X11 windows).
+ *
+ *    Each device has a display list which records every
+ *    graphical operation since the last dd->dp.newPage; 
+ *    this is used to redraw the output on the device 
+ *    when it is resized and to copy output from one device
+ *    to another (this can be disabled, which is the default
+ *    for postscript).
+ *
+ *    NOTE: that graphical operations should only be 
+ *    recorded in the displayList if they are "guaranteed" 
+ *    to succeed (to avoid heaps of error messages on a
+ *    redraw) which means that the recording should be the
+ *    last thing done in a graphical operation (see do_*
+ *    in plot.c).
+ *
+ ***********************************************************************/
 
 void DevNull() {}
 
@@ -4180,18 +4347,36 @@ int WinDeviceDriver(char**, int, double*, int);
 int MacDeviceDriver(char**, int, double*, int);
 #endif
 
+
 void devError()
 {
 	error("No graphics device is active\n");
 }
 
-int NoDevices() { return (R_NumDevices == 1 || R_CurrentDevice == 0); }
 
-int NumDevices() { return R_NumDevices; }
+int NoDevices()
+{
+	return (R_NumDevices == 1 || R_CurrentDevice == 0);
+}
 
-DevDesc* CurrentDevice() { return R_Devices[R_CurrentDevice]; }
 
-DevDesc* GetDevice(int i) { return R_Devices[i]; }
+int NumDevices()
+{
+	return R_NumDevices;
+}
+
+
+DevDesc* CurrentDevice()
+{
+	return R_Devices[R_CurrentDevice];
+}
+
+
+DevDesc* GetDevice(int i)
+{
+	return R_Devices[i];
+}
+
 
 void InitGraphics(void)
 {
@@ -4211,9 +4396,11 @@ void InitGraphics(void)
 	UNPROTECT(2);
 }
 
-/* code to get ith element of a list */
+
 SEXP elt(SEXP list, int i)
 {
+	/* Get the i-th element of a list */
+
 	int j;
 	SEXP result = list;
 
@@ -4226,6 +4413,7 @@ SEXP elt(SEXP list, int i)
 	return CAR(result);
 }
 
+
 static SEXP getSymbolValue(char *symbolName)
 {
 	SEXP s, t;
@@ -4233,10 +4421,12 @@ static SEXP getSymbolValue(char *symbolName)
 	return t;
 }
 
+
 int curDevice()
 {
 	return R_CurrentDevice;
 }
+
 
 int nextDevice(int from)
 {
@@ -4259,6 +4449,7 @@ int nextDevice(int from)
 	}
 }
 
+
 int prevDevice(int from)
 {
 	if (R_NumDevices == 1)
@@ -4279,6 +4470,7 @@ int prevDevice(int from)
 		return prevDev;
 	}
 }
+
 
 void addDevice(DevDesc *dd)
 {
@@ -4326,6 +4518,7 @@ void addDevice(DevDesc *dd)
 	GReset(dd);
 }
 
+
 int deviceNumber(DevDesc *dd)
 {
 	int i;
@@ -4334,6 +4527,7 @@ int deviceNumber(DevDesc *dd)
 			return i;
 	return 0;
 }
+
 
 int selectDevice(int devNum)
 {
@@ -4366,6 +4560,7 @@ int selectDevice(int devNum)
 	else
 		return selectDevice(nextDevice(devNum));
 }
+
 
 void removeDevice(int devNum)
 {
@@ -4408,7 +4603,9 @@ void removeDevice(int devNum)
 	}
 }
 
+
 void initDisplayList();
+
 
 int SetDevice(SEXP name, SEXP cpars, int ncpars, SEXP npars, int nnpars)
 {
@@ -4416,12 +4613,6 @@ int SetDevice(SEXP name, SEXP cpars, int ncpars, SEXP npars, int nnpars)
 	
 	if (!(dd = (DevDesc *) malloc(sizeof(DevDesc))))
 		return 0;
-
-	/* Hardcopy facilities */
-	/* Currently only X11 provides this */
-
-	dd->dp.metricInfo = 0;
-
 	GInit(&dd->dp);
 	
 #ifdef Macintosh
@@ -4471,11 +4662,13 @@ have_device:
 	return 1;
 }
 
+
 void KillDevice(DevDesc *dd)
 {
 	dd->dp.close(dd);
 	removeDevice(deviceNumber(dd));
 }
+
 
 void killDevice(int devNum)
 {
@@ -4488,6 +4681,7 @@ void killDevice(int devNum)
 	}
 }
 
+
 void KillAllDevices()
 {
 	/* don't try to close or remove the null device ! */
@@ -4495,11 +4689,14 @@ void KillAllDevices()
 		killDevice(R_CurrentDevice);
 }
 
-	/* code for maintaining display lists */
 
-	/* return last element of a list */
+	/* code for maintaining */
+	/* DISPLAY LISTS */
+
 SEXP lastElt(SEXP list)
 {
+	/* Return the last element of a list */
+
 	SEXP result = R_NilValue;
 	while (list != R_NilValue) {
 		result = list;
@@ -4508,12 +4705,14 @@ SEXP lastElt(SEXP list)
 	return result;
 }
 
+
 void initDisplayList(DevDesc *dd)
 {
-		/* init saveParams */
+	/* init saveParams */
 	copyGPar(&(dd->dp), &(dd->dpSaved));
 	dd->displayList = R_NilValue;
 }
+
 
 void recordGraphicOperation(SEXP op, SEXP args, DevDesc *dd)
 {
@@ -4527,10 +4726,12 @@ void recordGraphicOperation(SEXP op, SEXP args, DevDesc *dd)
 	}
 }
 
-	/* NOTE that not all params should be restored before playing */
-	/* the display list (e.g., don't restore the device size) */
+
 void restoredpSaved(DevDesc *dd)
 {
+	/* NOTE that not all params should be restored before playing */
+	/* the display list (e.g., don't restore the device size) */
+
 	int i, j;
 
 	/* do NOT restore basic device driver properties;  they are */
@@ -4673,6 +4874,7 @@ void restoredpSaved(DevDesc *dd)
 	dd->dp.logusr[3] = dd->dpSaved.logusr[3];
 }
 
+
 void playDisplayList(DevDesc *dd)
 {
 	int ask, savedDevice;
@@ -4695,6 +4897,7 @@ void playDisplayList(DevDesc *dd)
 	selectDevice(savedDevice);
 }
 
+
 void copyDisplayList(int fromDevice)
 {
 	DevDesc *dd = CurrentDevice();
@@ -4705,9 +4908,9 @@ void copyDisplayList(int fromDevice)
 		initDisplayList(dd);
 }
 
+
 void inhibitDisplayList(DevDesc *dd)
 {
 	initDisplayList(dd);
 	dd->displayListOn = 0;
 }
-
