@@ -133,6 +133,9 @@ BUG FIXES
 	repository, and contacts the correct paths in the repositories
 	under Windows.
 
+    o	.setOldIs (methods) contained a typo stopping POSIXct objects
+	being included in formal classes.
+
 
 
 		CHANGES IN R VERSION 1.8.0
