@@ -65,7 +65,10 @@ $(DLLNAME).a: $(OBJS)
 $(DLLNAME).dll : $(DLLNAME).a $(RCOBJ)
 
 # Dependencies
-DEPS=$(CSOURCES:.c=.d) $(CXXSOURCES:.cc=.d) $(CXXSOURCES:.cpp=.d) $(CXXSOURCES:.C=.d)
+CXXSOURCES1=$(wildcard -f *.cc)
+CXXSOURCES2=$(wildcard -f *.cpp)
+CXXSOURCES3=$(wildcard -f *.C)
+DEPS=$(CSOURCES:.c=.d) $(CXXSOURCES1:.cc=.d) $(CXXSOURCES2:.cpp=.d) $(CXXSOURCES3:.C=.d)
 
 makeMakedeps: $(DEPS)
 	@$(RM) Makedeps

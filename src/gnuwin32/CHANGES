@@ -8,6 +8,13 @@ rw1070
 
 Changed titles on help windows so topic name shows when minimized.
 
+rw1061
+======
+
+Dependencies were not being generated properly in packages using C++.
+
+
+
 rw1060
 ======
 

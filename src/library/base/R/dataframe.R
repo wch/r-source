@@ -931,7 +931,10 @@ as.matrix.data.frame <- function (x)
 	    if (is.character(X[[j]]))
 		next
 	    xj <- X[[j]]
-	    X[[j]] <- if(length(levels(xj))) as.vector(xj) else format(xj)
+            miss<-is.na(xj)
+	    xj <- if(length(levels(xj))) as.vector(xj) else format(xj)
+            is.na(xj)<-miss
+            X[[j]]<-xj
 	}
     }
     X <- unlist(X, recursive = FALSE, use.names = FALSE)
