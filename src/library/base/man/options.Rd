@@ -158,7 +158,7 @@ getOption(x)
     Currently download methods \code{"internal"}, \code{"wget"} and
     \code{"lynx"} are available.  There is no default for this option,
     when \code{method = "auto"} is chosen: see \code{\link{download.file}}.}
-  
+
   \item{unzip}{the command used for unzipping help files.
 #ifdef unix
     Defaults to the value of \code{R\_UNZIPCMD}, which is set in
@@ -196,7 +196,8 @@ getOption(x)
 }
 \details{
   Invoking \code{options()} with no arguments returns a list with the
-  current values of the options.  To access the value of a single
+  current values of the options.  Note that not all options listed above
+  are set initially.  To access the value of a single
   option, one should use \code{getOption("width")}, e.g., rather than
   \code{options("width")} which is a \emph{list} of length one.
 
