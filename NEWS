@@ -245,6 +245,10 @@ NEW FEATURES
         character vector of length 0, rather than generating an
         error.  This is consistent with other functions and with S.
 
+    o	data(), demo() and library() now also return the information
+	about available data sets, demos or packages.  Similarly,
+	help.search() returns its results.
+
 
 
 BUG FIXES

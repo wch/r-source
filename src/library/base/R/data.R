@@ -49,42 +49,6 @@ function(..., list = character(0),
         }
         colnames(db) <- c("Package", "LibPath", "Item", "Title")
 
-        ## Output.
-        outFile <- tempfile("Rdata.")
-        outConn <- file(outFile, open = "w")
-        first <- TRUE
-        ## Split according to Package.
-        out <- lapply(split(1 : nrow(db), db[, "Package"]),
-                      function(ind) db[ind, c("Item", "Title"),
-                                       drop = FALSE])
-        for(pkg in names(out)) {
-            writeLines(paste(ifelse(first, "", "\n"),
-                             "Data sets in package `", pkg, "':\n",
-                             sep = ""),
-                       outConn)
-            writeLines(formatDL(out[[pkg]][, "Item"],
-                                out[[pkg]][, "Title"]),
-                       outConn)
-            first <- FALSE
-        }
-        if(first) {
-            warning("no data listings found")
-            close(outConn)
-            unlink(outFile)
-        }
-        else {
-            if(missing(package))
-                writeLines(paste("\n",
-                                 "Use `data(package = ",
-                                 ".packages(all.available = TRUE))'\n",
-                                 "to list the data sets in all ",
-                                 "*available* packages.", sep = ""),
-                           outConn)
-            close(outConn)
-            file.show(outFile, delete.file = TRUE,
-                      title = "R data sets")
-        }
-
         if(!missing(package) && (length(package) > 0)) {
             nodata <- nodata[nodata %in% package]
             if(length(nodata) > 1)
@@ -101,8 +65,18 @@ function(..., list = character(0),
         else if(length(noindex) == 1)
             warning(paste("package `", noindex,
                           "' contains datasets but no index", sep=""))
-        
-        return(invisible(db))
+
+        footer <- if(missing(package))
+            paste("Use `data(package = ",
+                  ".packages(all.available = TRUE))'\n",
+                  "to list the data sets in all ",
+                  "*available* packages.", sep = "")
+        else
+            NULL
+        y <- list(type = "data",
+                  header = NULL, results = db, footer = footer)
+        class(y) <- "packageIQR"
+        return(y)
     }
 
     for(name in names) {

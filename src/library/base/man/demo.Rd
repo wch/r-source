@@ -23,6 +23,13 @@ demo(topic, device = getOption("device"),
   \item{character.only}{logical; if \code{TRUE}, use \code{topic} as
     character string instead of name.}
 }
+\details{
+  If no topics are given, \code{demo} lists the available demos.  The
+  corresponding information is returned in an object of class
+  \code{"packageIQR"}.  The structure of this class is experimental.  In
+  earlier versions of R, an empty character vector was returned along
+  with listing available demos.
+}
 \seealso{\code{\link{source}} which is called by \code{demo}.}
 \examples{
 % Most demos are strictly tested anyway, since R 1.3.0,

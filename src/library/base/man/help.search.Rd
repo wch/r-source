@@ -63,6 +63,12 @@ help.search(pattern, fields = c("alias", "title"),
   Note that currently, the aliases in the matching help files are not
   displayed.
 }
+\value{
+  The results are returned in an object of class \code{"hsearch"}, which
+  has a print method for nicely displaying the results of the query.
+  This mechanism is experimental, and may change in future versions of
+  R.
+}
 \seealso{
   \code{\link{help}};
   \code{\link{help.start}} for starting the hypertext (currently HTML)

@@ -24,3 +24,77 @@ function(file)
     colnames(y) <- c("Item", "Description")
     y
 }
+
+print.libraryIQR <-
+function(x, ...)
+{
+    db <- x$results
+    outFile <- tempfile("RlibraryIQR")
+    outConn <- file(outFile, open = "w")
+    first <- TRUE
+    ## Split according to LibPath.
+    out <- lapply(split(1 : nrow(db), db[, "LibPath"]),
+                  function(ind) db[ind, c("Package", "Title"),
+                                   drop = FALSE])
+    for(lib in names(out)) {
+        writeLines(paste(ifelse(first, "", "\n"),
+                         "Packages in library `", lib, "':\n",
+                         sep = ""),
+                   outConn)
+        writeLines(formatDL(out[[lib]][, "Package"],
+                            out[[lib]][, "Title"]),
+                   outConn)
+        first <- FALSE
+    }
+    if(first) {
+        warning("no packages found")
+        close(outConn)
+        unlink(outFile)
+    }
+    else {
+        close(outConn)
+        file.show(outFile, delete.file = TRUE,
+                  title = "R packages available")
+    }
+}
+
+print.packageIQR <-
+function(x, ...)
+{
+    db <- x$results
+    outFile <- tempfile("RpackageIQR.")
+    outConn <- file(outFile, open = "w")
+    first <- TRUE
+    ## Split according to Package.
+    out <- lapply(split(1 : nrow(db), db[, "Package"]),
+                  function(ind) db[ind, c("Item", "Title"),
+                                   drop = FALSE])
+    for(pkg in names(out)) {
+        writeLines(paste(ifelse(first, "", "\n"),
+                         switch(x$type,
+                                data = "Data sets",
+                                demo = "Demos"),
+                         " in package `", pkg, "':\n",
+                         sep = ""),
+                   outConn)
+        writeLines(formatDL(out[[pkg]][, "Item"],
+                            out[[pkg]][, "Title"]),
+                   outConn)
+        first <- FALSE
+    }
+    if(first) {
+        warning(paste("no", x$type, "listings found"))
+        close(outConn)
+        unlink(outFile)
+    }
+    else {
+        if(!is.null(x$footer))
+            writeLines(c("\n", x$footer), outConn)
+        close(outConn)
+        file.show(outFile, delete.file = TRUE,
+                  title = paste("R",
+                                switch(x$type,
+                                       data = "data sets",
+                                       demo = "demos")))
+    }
+}

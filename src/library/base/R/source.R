@@ -136,42 +136,17 @@ function(topic, device = getOption("device"),
         }
         colnames(db) <- c("Package", "LibPath", "Item", "Title")
 
-        ## Output.
-        outFile <- tempfile("Rdemo.")
-        outConn <- file(outFile, open = "w")
-        first <- TRUE
-        ## Split according to Package.
-        out <- lapply(split(1 : nrow(db), db[, "Package"]),
-                      function(ind) db[ind, c("Item", "Title"),
-                                       drop = FALSE])
-        for(pkg in names(out)) {
-            writeLines(paste(ifelse(first, "", "\n"),
-                             "Demos in package `", pkg, "':\n",
-                             sep = ""),
-                       outConn)
-            writeLines(formatDL(out[[pkg]][, "Item"],
-                                out[[pkg]][, "Title"]),
-                       outConn)
-            first <- FALSE
-        }
-        if(first) {
-            warning("no demo listings found")
-            close(outConn)
-            unlink(outFile)
-        }
-        else {
-            if(missing(package))
-                writeLines(paste("\n",
-                                 "Use `demo(package = ",
-                                 ".packages(all.available = TRUE))'\n",
-                                 "to list the demos in all ",
-                                 "*available* packages.", sep = ""),
-                           outConn)
-            close(outConn)
-            file.show(outFile, delete.file = TRUE, title = "R demos")
-        }
-        
-        return(invisible(db))
+        footer <- if(missing(package))
+            paste("Use `demo(package = ",
+                  ".packages(all.available = TRUE))'\n",
+                  "to list the demos in all ",
+                  "*available* packages.", sep = "")
+        else
+            NULL
+        y <- list(type = "demo",
+                  header = NULL, results = db, footer = footer)
+        class(y) <- "packageIQR"
+        return(y)
     }
             
     if(!character.only)

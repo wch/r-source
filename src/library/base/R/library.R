@@ -123,40 +123,13 @@ function(package, help, lib.loc = .lib.loc, character.only = FALSE,
         }
         colnames(db) <- c("Package", "LibPath", "Title")
 
-        ## Output.
-	outFile <- tempfile("Rlibrary")
-        outConn <- file(outFile, open = "w")
-        first <- TRUE
-        ## Split according to LibPath.
-        out <- lapply(split(1 : nrow(db), db[, "LibPath"]),
-                      function(ind) db[ind, c("Package", "Title"),
-                                       drop = FALSE])
-        for(lib in names(out)) {
-            writeLines(paste(ifelse(first, "", "\n"),
-                             "Packages in library `", lib, "':\n",
-                             sep = ""),
-                       outConn)
-            writeLines(formatDL(out[[lib]][, "Package"],
-                                out[[lib]][, "Title"]),
-                       outConn)
-            first <- FALSE
-        }
+        y <- list(header = NULL, results = db, footer = NULL)
         ## <FIXME>
         ## Should do something about libraries without packages, as
 	## recorded in nopkgs.
         ## </FIXME>
-        if(first) {
-            warning("no packages found")
-            close(outConn)
-            unlink(outFile)
-        }
-        else {
-            close(outConn)
-            file.show(outFile, delete.file = TRUE,
-                      title = "R packages available")
-        }
-
-        return(invisible(db))
+        class(y) <- "libraryIQR"
+        return(y)
     }
 
     if (logical.return)

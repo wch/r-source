@@ -11,6 +11,7 @@
 \alias{.packages}
 \alias{.path.package}
 \alias{.lib.loc}
+\alias{print.libraryIQR}
 \description{
   \code{library} and \code{require} load add-on packages.
   \code{.First.lib} is called when a package is loaded;
@@ -82,9 +83,12 @@ require(package, quietly = FALSE, warn.conflicts = TRUE,
   a bit of memory.
 
   If \code{library} is called with no \code{package} or \code{help}
-  argument, it gives a list of all available packages in \code{lib.loc}
-  and invisibly returns their names (same as
-  \code{.packages(all = TRUE)}).
+  argument, it lists all available packages in \code{lib.loc} and
+  returns the corresponding information in an object of class
+  \code{"libraryIQR"}.  The structure of this class may change in future
+  versions.  In earlier versions of R, only the names of all available
+  packages were returned; use \code{.packages(all = TRUE)} for obtaining
+  these.
 
   \code{library(help = somename)} prints information on the package
   \code{somename}, typically by listing the most important user level
