@@ -154,7 +154,7 @@ proj.aovlist <- function(object, onedf = FALSE, unweighted.scale = FALSE)
     t <- attr(Terms, "variables")[[1 + i]]
     error <- Terms
     error[[3]] <- t[[2]]
-    e.factor <- attr(terms(as.formula(error)), "factor")
+    e.factor <- attr(terms(formula(error)), "factor")
     n <- nrow(err.qr$qr)
     n.object <- length(object)
     result <- vector("list", n.object)
