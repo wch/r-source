@@ -127,7 +127,7 @@ as.ordered(x)
   \code{\link{gl}} for construction of \dQuote{balanced} factors and
   \code{\link{C}} for factors with specified contrasts.
   \code{\link{levels}} and \code{\link{nlevels}} for accessing the
-  levels, and \code{\link{codes}} to get integer codes.
+  levels, and \code{\link{unclass}} to get integer codes.
 }
 \examples{
 (ff <- factor(substring("statistics", 1:10, 1:10), levels=letters))
