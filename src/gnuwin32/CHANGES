@@ -81,6 +81,10 @@ file selector).
 Removed some calls to reset the size of the console, so it will 
 stay maximized throughout window operations.
 
+The internal pager will page down with space or CTRL-F and page up
+with minus or CTRL-B (key sequences which are widely used in Unix
+pagers).
+
 Installing packages
 -------------------
 

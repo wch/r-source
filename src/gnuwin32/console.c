@@ -761,6 +761,10 @@ FBEGIN
     if (st == -1) return;
     if (p->kind == PAGER) {
 	if(k == 'q' || k == 'Q') pagerbclose(c);
+	if(k == ' ') setfirstvisible(c, NEWFV + ROWS);
+	if(k == '-') setfirstvisible(c, NEWFV - ROWS);
+	if(k == 'F' - 'A' + 1) setfirstvisible(c, NEWFV + ROWS);
+	if(k == 'B' - 'A' + 1) setfirstvisible(c, NEWFV - ROWS);
 	return;
     }
     storekey(c, k);
