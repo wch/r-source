@@ -56,7 +56,7 @@ show.data(package = .packages(), lib.loc = .lib.loc)
 
   If \code{lib.loc} is not specified, the packages are searched for
   amongst those already loaded, followed by the \file{data} directory
-  (if any) of the currrent working directory.  If \code{lib.loc} is
+  (if any) of the current working directory.  If \code{lib.loc} is
   specified, they are searched for in the specified libraries, even if
   they are already loaded from another library.
 
