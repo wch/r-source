@@ -130,11 +130,11 @@ function(package, dir, lib.loc = NULL)
         ## setGeneric() or setMethod() on 'ordinary' functions.
         ## The test below exempts objects that are generic functions if
         ## there is a visible nongeneric function and the default method
-        ## is "derived", by a call to setGeneric.  This test allows nondocumentd
-        ## generics in some cases (e.g., the generic was created locally from
-        ## an inconsistent version).
+        ## is "derived", by a call to setGeneric.  This test allows
+        ## nondocumentd generics in some cases (e.g., the generic was
+        ## created locally from an inconsistent version).
         ## In the long run we need dynamic documentation.
-        if("package:methods" %in% search()) {
+        if(.isMethodsDispatchOn()) {
             codeObjs <-
                 codeObjs[sapply(codeObjs, function(f) {
                     fdef <- get(f, envir = codeEnv)
@@ -146,8 +146,8 @@ function(package, dir, lib.loc = NULL)
                         if(is.null(fOther))
                             TRUE
                         else 
-                            !is(finalDefaultMethod(getMethodsMetaData(f, codeEnv)), 
-                                          "derivedDefaultMethod")
+                            !is(finalDefaultMethod(getMethodsMetaData(f, codeEnv)),
+                                "derivedDefaultMethod")
                     }
                     else
                         TRUE
@@ -177,7 +177,7 @@ function(package, dir, lib.loc = NULL)
              "data sets" =
              unique(dataObjs[! dataObjs %in% allDocTopics]))
 
-    if(!is.na(match("package:methods", search()))) {
+    if(.isMethodsDispatchOn()) {
         ## Undocumented S4 classes?
         S4classes <- getClasses(codeEnv)
         ## The bad ones:
@@ -189,7 +189,7 @@ function(package, dir, lib.loc = NULL)
             c(undocThings, list("S4 classes" = unique(S4classes)))
     }
 
-    if(!is.na(match("package:methods", search()))) {
+    if(.isMethodsDispatchOn()) {
         ## Undocumented S4 methods?
         methodsSignatures <- function(f) {
             mlist <- getMethodsMetaData(f, codeEnv)
@@ -386,7 +386,7 @@ function(package, dir, lib.loc = NULL,
         lapply(functionsInCode,
                function(f) formals(get(f, envir = codeEnv)))
     names(functionArgsInCode) <- functionsInCode
-    if(!is.na(match("package:methods", search()))) {
+    if(.isMethodsDispatchOn()) {
         lapply(getGenerics(codeEnv),
                function(f) {
                    meths <- linearizeMlist(getMethodsMetaData(f, codeEnv))
@@ -717,7 +717,7 @@ function(package, lib.loc = NULL)
     codeEnv <-
         as.environment(paste("package", package, sep = ":"))
 
-    if(is.na(match("package:methods", search())))
+    if(!.isMethodsDispatchOn())
         return(badRdObjects)
 
     S4classes <- getClasses(codeEnv)
@@ -1600,7 +1600,7 @@ function(package, dir, file, lib.loc = NULL,
                             else
                                 NULL
                         })
-        if(!is.na(match("package:methods", search()))) {
+        if(.isMethodsDispatchOn()) {
             ## Also check the code in S4 methods.
             ## This may find things twice if a setMethod() with a bad FF
             ## call is from inside a function (e.g., InitMethods()).
@@ -2002,7 +2002,7 @@ function(package, dir, lib.loc = NULL)
             .checkLastFormalArg(f)
         }) == FALSE]
 
-    if(!is.na(match("package:methods", search()))) {
+    if(.isMethodsDispatchOn()) {
         S4generics <- getGenerics(codeEnv)
         ## Assume that the ones with names ending in '<-' are always
         ## replacement functions.
