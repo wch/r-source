@@ -2,9 +2,9 @@
 \alias{n2mfrow}
 \title{Compute Default mfrow From Number of Plots}
 \description{
-  Easy Setup for plotting multiple figures (in a rectangular layout) on
-  one page.  It allows to specify a main title and uses \emph{smart}
-  defaults for several \code{\link{par}} calls.
+  Easy setup for plotting multiple figures (in a rectangular layout) on
+  one page.  This computes a sensible default for
+  \code{\link{par}(mfrow)}.
 }
 \usage{
 n2mfrow(nr.plots)
