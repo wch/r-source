@@ -1,6 +1,4 @@
 undoc <- function(pkg, dir, code.dir, docs.dir) {
-    if (.Platform$OS.type != "Unix")
-        stop("currently only works under Unix")
     if (!missing(pkg)) {
         pkgdir <- system.file(pkg = pkg)
         if (length(pkgdir) > 1) {
