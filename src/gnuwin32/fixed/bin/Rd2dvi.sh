@@ -8,7 +8,7 @@
 
 R_PAPERSIZE=${R_PAPERSIZE-a4}
 
-revision='$Revision: 1.14 $'
+revision='$Revision: 1.15 $'
 version=`set - ${revision}; echo ${2}`
 version="Rd2dvi.sh ${version}
 
@@ -22,18 +22,19 @@ Generate DVI (or PDF) output from the Rd sources specified by files, by
 either giving the paths to the files, or the path to a directory with
 the sources of a package.
 
-Unless specified via option \`--output', the basename of the output file
-equals the basename of argument \`files' if this specifies a package
-(bundle) or a single file, and \`Rd2' otherwise.
+Unless specified via option '--output', the basename of the output file
+equals the basename of argument 'files' if this specifies a package
+(bundle) or a single file, and 'Rd2' otherwise.
 
 Options:
   -h, --help		print short help message and exit
-  -v, --version		print version info and exit  
+  -v, --version		print version info and exit
+      --batch		no interaction
       --debug		turn on shell debugging (set -x)
       --no-clean	do not remove created temporary files
       --no-preview	do not preview generated output file
-      --os=NAME		use OS subdir \`NAME' (unix, mac or windows)
-      --OS=NAME		the same as \`--os'
+      --os=NAME		use OS subdir 'NAME' (unix, mac or windows)
+      --OS=NAME		the same as '--os'
   -o, --output=FILE	write output to FILE
       --pdf		generate PDF output
       --title=NAME	use NAME as the title of the document
@@ -46,6 +47,7 @@ export TEXINPUTS
 
 start_dir=`pwd`
 
+batch=false
 clean=true
 debug=false
 out_ext="dvi"
@@ -60,6 +62,8 @@ while test -n "${1}"; do
       echo "${usage}"; exit 0 ;;
     -v|--version)
       echo "${version}"; exit 0 ;;
+    --batch)
+      batch=true ;;
     --debug)
       debug=true ;;
     --no-clean)
@@ -77,7 +81,7 @@ while test -n "${1}"; do
       if test -n "`echo ${2} | sed 's/^-.*//'`"; then      
 	output="${2}"; shift
       else
-	echo "ERROR: option \`${1}' requires an argument"
+	echo "ERROR: option '${1}' requires an argument"
 	exit 1
       fi
       ;;
@@ -184,7 +188,8 @@ if test -d "${1}"; then
     else
       dir=${1}
     fi
-    subj="all in \\file{`echo ${dir} | sed ${file_sed}`}"
+    subj0=`echo ${dir} | sed -e ${file_sed}`
+    subj="all in \\file{${subj0}}"
   fi
 else
   if test ${#} -gt 1 ; then
@@ -197,7 +202,8 @@ else
       output="`echo ${output} | sed 's/[Rr]d$//'`${out_ext}"
     fi
   fi
-  subj="\\file{`echo ${1} | sed ${file_sed}`}${subj}"
+  subj0=`echo ${1} | sed -e ${file_sed}`
+  subj="\\file{${subj0}}${subj}"
 fi
 ## substitution went wrong under ash
 title1="\\R{} documentation}} \\par\\bigskip{{\\Large of ${subj}"
@@ -208,7 +214,7 @@ if test -z "${output}"; then
   output="Rd2.${out_ext}"
 fi
 if test -f ${output}; then
-  echo "file \`${output}' exists; please remove first"
+  echo "file '${output}' exists; please remove first"
   exit 1
 fi
 # pid is always 1000 on Windows sh.exe
@@ -220,7 +226,15 @@ fi
 mkdir ${build_dir}
 
 ## Rd2.tex part 1: header
-cat > ${build_dir}/Rd2.tex <<EOF
+if test ${batch}; then
+  cat > ${build_dir}/Rd2.tex <<EOF
+\\nonstopmode{}
+EOF
+else
+  cat > ${build_dir}/Rd2.tex <<EOF
+EOF
+fi
+cat >> ${build_dir}/Rd2.tex <<EOF
 \\documentclass[${R_PAPERSIZE}paper]{book}
 \\usepackage[${R_RD4DVI-ae}]{Rd}
 \\usepackage{makeidx}
@@ -277,7 +291,7 @@ else
 \\pagenumbering{arabic}
 EOF
   for p in ${bundle_pkgs}; do
-    echo "Bundle package: \`${p}'"
+    echo "Bundle package: '${p}'"
     echo "\\chapter{Package \`${p}'}" >> ${build_dir}/Rd2.tex
     if test -f ${1}/${p}/DESCRIPTION.in; then
       Rd_DESCRIPTION_to_LaTeX ${1}/${p}/DESCRIPTION.in \
@@ -295,26 +309,31 @@ cat >> ${build_dir}/Rd2.tex <<EOF
 \\end{document}
 EOF
 
+## <FIXME>
+## Need to do something smarter about the exit status in batch mode.
+status=0
+## <FIXME>
+
 echo "Creating ${out_ext} output from LaTeX ..."
 cd ${build_dir}
-${R_LATEXCMD-latex} Rd2
+${R_LATEXCMD-latex} Rd2 || status=1
 ${R_MAKEINDEXCMD-makeindex} Rd2
 ${R_LATEXCMD-latex} Rd2
 if test "${out_ext}" = pdf; then
   ${R_LATEXCMD-latex} Rd2
 fi
 cd ${start_dir}
-echo "Saving output to \`${output}' ..."
+echo "Saving output to '${output}' ..."
 cp ${build_dir}/Rd2.${out_ext} ${output}
 echo "Done"
 
 if ${clean}; then
   rm -rf ${build_dir}
 else
-  echo "You may want to clean up by \`rm -rf ${build_dir}'"
+  echo "You may want to clean up by 'rm -rf ${build_dir}'"
 fi
 ${preview} ${output}
-exit 0
+exit ${status}
 
 ### Local Variables: ***
 ### mode: sh ***
