@@ -78,7 +78,10 @@ image.default(x, y, z, zlim, xlim, ylim, col = heat.colors(12),
   \email{tlumley@u.washington.edu}.
 }
 \seealso{
-  \code{\link{contour}},
+  \code{\link{filled.contour}} or \code{\link[mva]{heatmap}} which can
+  look nicer (but are less modular),
+  \code{\link{contour}};
+
   \code{\link{heat.colors}}, \code{\link{topo.colors}},
   \code{\link{terrain.colors}}, \code{\link{rainbow}},
   \code{\link{hsv}}, \code{\link{par}}.
