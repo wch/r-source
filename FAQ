@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 1.1-14, 2000-10-01
+Version 1.1-15, 2000-10-04
 Kurt Hornik
 
 
@@ -1342,6 +1342,11 @@ these a try, of course.  This area of CRAN currently contains
 
 *hdf5*
      Interface to the NCSA HDF5 library.
+
+*mgcv*
+     Routines for multiple smoothing parameter selection by GCV or UBRE for
+     generalized ridge regression problems (e.g., GAMs) with multiple
+     smoothing parameters.
 
 *multidim*
      Code for correspondence analysis and other multidimensional descriptive
