@@ -990,6 +990,7 @@ SEXP do_asvector(SEXP call, SEXP op, SEXP args, SEXP rho)
 	errorcall(call, "invalid mode\n");
     }
     ans = ascommon(call, CAR(args), type);
+    ATTRIB(ans) = R_NilValue;
     UNPROTECT(1);
     return ans;
 }
