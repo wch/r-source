@@ -14,20 +14,19 @@ plot.lm <- function (x, which = 1:4,
     r <- residuals(x)
     n <- length(r)
     yh <- predict(x) # != fitted() for glm
-    hii <- lm.influence(x)$hat
-    s <- sqrt(deviance(x)/df.residual(x))
     if (any(show[2:3])) {
-        w <- weights(x)
-        ## r.wgt <- weighted.residuals(x,drop=FALSE):
-        r.w <- if(is.null(w)) .Alias(r) else (sqrt(w)*r)[w!=0]
         ylab23 <- if(inherits(x, "glm"))
-          "Std. dev. residuals" else "Standardized residuals"
-        rs <- r.w/sqrt(1 - hii)/s
+          "Std. deviance resid." else "Standardized residuals"
+        hii <- lm.influence(x)$hat
+        s <- sqrt(deviance(x)/df.residual(x))
+        w <- weights(x)
+        # r.w := weighted.residuals(x):
+        r.w <- if(is.null(w)) .Alias(r) else (sqrt(w)*r)[w!=0]
+        rs <- r.w/(s * sqrt(1 - hii))
     }
-    one.fig <- prod(par("mfcol")) == 1
-    if (ask) {
-	op <- par(ask = TRUE)
-	on.exit(par(op))
+    if (any(show[c(1,3)])) {
+        l.fit <- paste(if(inherits(x,"glm")) "Predict" else "Fit","ed values",
+                       sep="")
     }
     if (is.null(id.n))
 	id.n <- 0
@@ -36,28 +35,37 @@ plot.lm <- function (x, which = 1:4,
 	if(id.n < 0 || id.n > n)
 	    stop(paste("`id.n' must be in { 1,..,",n,"}"))
     }
-    if(id.n > 0)
-	show.id <- order(-abs(r))[1:id.n]
-
-    if (is.null(labels.id))
-	labels.id <- paste(1:n)
+    if(id.n > 0) {
+        if(is.null(labels.id))
+            labels.id <- paste(1:n)
+        iid <- 1:id.n
+	show.r <- order(-abs(r))[iid]
+        if(any(show[2:3]))
+            show.rs <- order(-abs(rs))[iid]
+        text.id <- function(x,y, ind, adj.x = FALSE)
+            text(x - if(adj.x) strwidth(" ")*cex.id else 0, y, labels.id[ind],
+                 cex = cex.id, xpd = TRUE, adj = if(adj.x) 1)
+    }
+    one.fig <- prod(par("mfcol")) == 1
+    if (ask) {
+	op <- par(ask = TRUE)
+	on.exit(par(op))
+    }
+    ##---------- Do the individual plots : ----------
     if (show[1]) {
 	ylim <- range(r)
 	if(id.n > 0)
 	    ylim <- ylim + c(-1,1)* 0.08 * diff(ylim)
-	plot(yh, r, xlab = "Fitted values", ylab = "Residuals", main = main,
+	plot(yh, r, xlab = l.fit, ylab = "Residuals", main = main,
 	     ylim = ylim, type = "n", ...)
 	panel(yh, r, ...)
 	if (one.fig)
 	    title(sub = sub.caption, ...)
 	mtext(caption[1], 3, 0.25)
 	if(id.n > 0) {
-	    chh <- strheight(" ")
-	    chw <- strwidth(" ")
-	    y.id <- r[show.id]
-	    y.id[y.id < 0] <- y.id[y.id < 0] - chh/3
-	    text(yh[show.id] - cex.id * chw, y.id, labels.id[show.id],
-		 cex = cex.id, xpd = TRUE, adj = 1)
+	    y.id <- r[show.r]
+	    y.id[y.id < 0] <- y.id[y.id < 0] - strheight(" ")/3
+	    text.id(yh[show.r], y.id, show.r, adj.x = TRUE)
 	}
 	abline(h = 0, lty = 3, col = "gray")
     }
@@ -68,41 +76,36 @@ plot.lm <- function (x, which = 1:4,
 	if (one.fig)
 	    title(sub = sub.caption, ...)
 	mtext(caption[2], 3, 0.25)
-	if(id.n > 0) {
-	    chw <- strwidth(" ")
-	    text(qq$x[show.id] - cex.id * chw,
-		 qq$y[show.id],
-		 labels.id[show.id], cex = cex.id, adj = 1, xpd = TRUE)
-	}
+	if(id.n > 0)
+	    text.id(qq$x[show.rs], qq$y[show.rs], show.rs, adj.x = TRUE)
     }
     if (show[3]) {
 	sqrtabsr <- sqrt(abs(rs))
 	ylim <- c(0, max(sqrtabsr))
 	yl <- as.expression(substitute(sqrt(abs(YL)), list(YL=as.name(ylab23))))
         yhn0 <- if(is.null(w)) .Alias(yh) else yh[w!=0]
-	plot(yhn0, sqrtabsr, xlab = "Fitted values", ylab = yl, main = main,
+	plot(yhn0, sqrtabsr, xlab = l.fit, ylab = yl, main = main,
 	     ylim = ylim, type = "n", ...)
 	panel(yhn0, sqrtabsr, ...)
 	if (one.fig)
 	    title(sub = sub.caption, ...)
 	mtext(caption[3], 3, 0.25)
+	if(id.n > 0)
+	    text.id(yhn0[show.rs], sqrtabsr[show.rs], show.rs, adj.x = TRUE)
     }
     if (show[4]) {
 	cook <- cooks.distance(x)
 	if(id.n > 0) {
-	    show.id <- order(-cook)[1:id.n]# index of largest `id.n' ones
-	    ymx <- cook[show.id[1]] * 1.075
+	    show.r <- order(-cook)[iid]# index of largest `id.n' ones
+	    ymx <- cook[show.r[1]] * 1.075
 	} else ymx <- max(cook)
 	plot(cook, type = "h", ylim = c(0, ymx), main = main,
 	     xlab = "Obs. number", ylab = "Cook's distance", ...)
 	if (one.fig)
 	    title(sub = sub.caption, ...)
 	mtext(caption[4], 3, 0.25)
-	if(id.n > 0) {
-	    chh <- strheight(" ")
-	    text(show.id, cook[show.id] + 0.4 * cex.id * chh,
-		 labels.id[show.id], cex = cex.id, xpd = TRUE)
-	}
+	if(id.n > 0)
+	    text.id(show.r, cook[show.r] + 0.4*cex.id * strheight(" "), show.r)
     }
     if (!one.fig && par("oma")[3] >= 1)
 	mtext(sub.caption, outer = TRUE, cex = 1.25)
