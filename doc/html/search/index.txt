@@ -1488,6 +1488,11 @@ Keywords: outer %o% array
 Description: Outer Product of Arrays
 URL: ../../../library/base/html/outer.html
 
+Entry: edit
+Keywords: page utilities
+Description: Invoke a Pager on an R Object
+URL: ../../../library/base/html/edit.html
+
 Entry: pairs
 Keywords: pairs pairs.default hplot
 Description: Scatterplot Matrices

@@ -857,6 +857,7 @@ static SEXP R_Parse1(int *status)
     switch(yyparse()) {
     case 0:                     /* End of file */
         *status = PARSE_EOF;
+        if (EndOfFile == 2) *status = PARSE_INCOMPLETE;
         break;
     case 1:                     /* Syntax error / incomplete */
         *status = PARSE_ERROR;
