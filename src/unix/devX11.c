@@ -102,7 +102,7 @@ static int screen;				/* Screen */
 static Window rootwin;				/* Root Window */
 static Visual *visual;				/* Visual */
 static int depth;				/* Pixmap depth */
-static int class;                               /* Viasual class */
+static int class;                               /* Visual class */
 static XSetWindowAttributes attributes;		/* Window attributes */
 static Colormap colormap;                       /* Default color map */
 static int blackpixel;				/* Black */
