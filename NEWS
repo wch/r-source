@@ -99,7 +99,7 @@ BUG FIXES
 	if x is a vector.  (PR#883).
 
     o	?smooth.spline now properly describes `spar' which is *not*
-	lambda.  smooth.spline(1:20, spar = 50) gives an error instead
+	lambda.	 smooth.spline(1:20, spar = 50) gives an error instead
 	of silent nonsense.  print.smooth.spline() now makes use of a
 	digits argument.
 
@@ -108,13 +108,14 @@ BUG FIXES
 	correction wrong (PR#896).
 
     o	Using out-of-range font values in text() on a postscript()
-	device on Windows could crash.  .ps.prolog was incorrectly
+	device on Windows could crash.	.ps.prolog was incorrectly
 	named in some of the documentation.  (PR#914)
 
     o	Warning messages of > 8191 chars could crash R (PR#902), as
 	could errors.  Now they are truncated to 8191 chars on
 	machines which have vsnprintf (almost all).
 
+    o	range() now works properly for date-time objects.
 
 
 

@@ -243,11 +243,11 @@ as.data.frame.POSIXct <- .Alias(as.data.frame.vector)
 
 is.na.POSIXlt <- function(x) is.na(as.POSIXct(x))
 
-c.POSIXct <- function(...)
+c.POSIXct <- function(..., recursive=FALSE)
     structure(c(unlist(lapply(list(...), unclass))), class="POSIXct")
 
 ## we need conversion to POSIXct as POSIXlt objects can be in different tz.
-c.POSIXlt <- function(...)
+c.POSIXlt <- function(..., recursive=FALSE)
     as.POSIXlt(do.call("c", lapply(list(...), as.POSIXct)))
 
 ## force absolute comparisons
