@@ -404,6 +404,10 @@ UTILITIES
     o	R CMD Rdindex is now deprecated in favor of function Rdindex()
 	in package tools.
 
+    o   Sweave() now encloses the Sinput and Soutput environments of
+        each chunk in an Schunk environment. This allows to fix some
+        vertical spacing problems when using the latex class slides.
+
 
 C-LEVEL FACILITIES
 

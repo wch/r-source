@@ -316,7 +316,8 @@ RweaveLatexRuncode <- function(object, chunk, options)
     SweaveHooks(options, run=TRUE)
     chunkexps <- parse(text=chunk)
     openSinput <- FALSE
-
+    openSchunk <- FALSE
+    
     if(length(chunkexps)==0)
         return(object)
 
@@ -328,6 +329,11 @@ RweaveLatexRuncode <- function(object, chunk, options)
             cat("\nRnw> ", paste(dce, collapse="\n+  "),"\n")
         if(options$echo){
             if(!openSinput){
+                if(!openSchunk){
+                    cat("\\begin{Schunk}\n",
+                        file=chunkout, append=TRUE)
+                    openSchunk <- TRUE
+                }
                 cat("\\begin{Sinput}",
                     file=chunkout, append=TRUE)
                 openSinput <- TRUE
@@ -357,6 +363,11 @@ RweaveLatexRuncode <- function(object, chunk, options)
             cat(paste(output, collapse="\n"))
 
         if(length(output)>0 & (options$results!="hide")){
+            if(!openSchunk){
+                cat("\\begin{Schunk}\n",
+                    file=chunkout, append=TRUE)
+                openSchunk <- TRUE
+            }
             if(openSinput){
                 cat("\n\\end{Sinput}\n", file=chunkout, append=TRUE)
                 openSinput <- FALSE
@@ -381,6 +392,10 @@ RweaveLatexRuncode <- function(object, chunk, options)
 
     if(openSinput){
         cat("\n\\end{Sinput}\n", file=chunkout, append=TRUE)
+    }
+
+    if(openSchunk){
+        cat("\\end{Schunk}\n", file=chunkout, append=TRUE)
     }
 
     if(is.null(options$label) & options$split)
