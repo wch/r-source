@@ -4,14 +4,14 @@
 anova(object, \dots)
 anovalist.lm(object, \dots, test = NULL)
 summary(object, correlation = FALSE)
-coefficients(x) ; coef(x)
-df.residual(x)
-family(x)
-formula(x)
-fitted.values(x)
-residuals(x, type = c("working", "pearson", "deviance"), \dots)
-weights(x)
-plot(x)
+coefficients(object) ; coef(object)
+df.residual(object)
+family(object)
+formula(object)
+fitted.values(object)
+residuals(object,
+          type=c("working","response", "deviance","pearson", "partial"), \dots)
+weights(object)
 
 print(summary.lm.obj, digits = max(3, getOption("digits") - 3),
       symbolic.cor = p > 4,
@@ -22,7 +22,7 @@ print(summary.lm.obj, digits = max(3, getOption("digits") - 3),
 \alias{anovalist.lm}
 \alias{summary.lm}
 \alias{summary.lm.null}
-\alias{summary.mlm}
+\alias{summary.mlm}% mlm is *not* mentioned at all
 \alias{coefficients.lm}
 \alias{df.residual.lm}
 \alias{family.lm}
@@ -32,7 +32,6 @@ print(summary.lm.obj, digits = max(3, getOption("digits") - 3),
 \alias{weights}
 \alias{weights.lm}
 \alias{weights.default}
-\alias{plot.mlm}
 \alias{print.lm}
 \alias{print.lm.null}
 \alias{print.summary.lm}
@@ -97,16 +96,16 @@ various useful features of the value returned by \code{lm}.
   missing values and \R's default of \code{na.action = na.omit} is used.
 }
 \seealso{
-The model fitting function \code{\link{lm}}.
+  The model fitting function \code{\link{lm}}.
 
-\code{\link{anova}} for the ANOVA table,
-\code{\link{coefficients}}, \code{\link{deviance}},
-\code{\link{effects}}, \code{\link{fitted.values}},
-\code{\link{glm}} for \bold{generalized} linear models,
-\code{\link{lm.influence}} for regression diagnostics,
-\code{\link{weighted.residuals}},
-\code{\link{residuals}}, \code{\link{residuals.glm}},
-\code{\link{summary}}.
+  \code{\link{anova}} for the ANOVA table,
+  \code{\link{coefficients}}, \code{\link{deviance}},
+  \code{\link{effects}}, \code{\link{fitted.values}},
+  \code{\link{glm}} for \bold{generalized} linear models,
+  \code{\link{lm.influence}} for regression diagnostics,
+  \code{\link{weighted.residuals}},
+  \code{\link{residuals}}, \code{\link{residuals.glm}},
+  \code{\link{summary}}.
 }
 \examples{
 \testonly{example("lm", echo = FALSE)}

@@ -13,7 +13,7 @@ NEW FEATURES
 
     o	attach() now works for R data files.
 
-    o   R (under Unix) can be sent SIGUSR1 to quit and save or SIGUSR2
+    o	R (under Unix) can be sent SIGUSR1 to quit and save or SIGUSR2
 	to quit and save without running .Last and on.exit
 	expressions.
 
@@ -61,7 +61,7 @@ NEW FEATURES
 	and postscript() and functions that use them (for example, write()).
 
     o	postscript(print.it=TRUE) now does print the plot file.
-    	postscript(onefile=FALSE) now produces multiple separate files.
+	postscript(onefile=FALSE) now produces multiple separate files.
 
     o	image() has a new argument "breaks" and divides the zlim range
 	into equal-length intervals.
@@ -138,29 +138,32 @@ NEW FEATURES
 	and will allow the row names to be edited, by default if they
 	are not 1:nrow(name).
 
-    o   $ and $<- are now generic functions.
+    o	$ and $<- are now generic functions.
 
-    o   approx() and approxfun() have an extra argument ties= to control
- 	handling of tied x values
+    o	approx() and approxfun() have an extra argument ties= to control
+	handling of tied x values
 
-    o   termplot() has similar functionality to plot.gam
+    o	termplot() has similar functionality to plot.gam
 
-    o   Many interface enhancements to the data editor, which now uses
-	variable-width columns and much less redrawing.  See
+    o	Many interface enhancements to the data editor, which now uses
+	variable-width columns and much less redrawing.	 See
 	?dataentry for a description of the current user interface.
 
-    o   edit() or fix() applied to a numeric or character matrix now
+    o	edit() or fix() applied to a numeric or character matrix now
 	uses the data entry editor.
 
-    o   New bitmap devices png() and jpeg() on Unix/X11.
+    o	New bitmap devices png() and jpeg() on Unix/X11.
 
-    o   expand.model.frame() for adding variables to a model frame.
+    o	expand.model.frame() for adding variables to a model frame.
 
-    o   dev.print() now prints if possible, and takes the size from
-        the device being copied.
+    o	dev.print() now prints if possible, and takes the size from
+	the device being copied.
 
-    o   New function dev.copy2eps copies the current device to an eps
-        file, taking the size from that of the device.
+    o	New function dev.copy2eps copies the current device to an eps
+	file, taking the size from that of the device.
+
+    o	residuals.lm() also allows type = "partial" & "response"
+	as residuals.glm().
 
 
 BUG FIXES
@@ -221,8 +224,8 @@ BUG FIXES
 
     o	M <- 2 ; print(ppr(.., nterms = M))  now works.
 
-    o   predict(,type="terms",se.fit=T) gives correct standard errors
- 	(thanks to John Maindonald)
+    o	predict(,type="terms",se.fit=T) gives correct standard errors
+	(thanks to John Maindonald)
 
     o	guard against segfault in dataentry(x<-1, Modes = plot), and the like.
 

@@ -45,7 +45,8 @@ lm <- function (formula, data = list(), subset, weights, na.action,
 	    if (is.matrix(y))
 		c("mlm.null", "lm.null", "mlm", "lm")
 	    else c("lm.null", "lm")
-    } else {
+    }
+    else {
 	x <- model.matrix(mt, mf, contrasts)
 	z <- if(is.null(w)) lm.fit(x, y, offset=offset)
 	else lm.wfit(x, y, w, offset=offset)
@@ -348,20 +349,21 @@ print.summary.lm <-
     invisible(x)
 }
 
-## Commented by KH on 1998/07/10
-## update.default() should be more general now ...
-## update.lm <- function(lm.obj, formula, data, weights, subset, na.action)
-## .....
+## KH on 1998/07/10: update.default() is now used ...
 
-residuals.lm <- function(object,
-                         type = c("working", "pearson", "deviance"), ...)
+residuals.lm <-
+    function(object,
+             type = c("working","response", "deviance","pearson", "partial"),
+             ...)
 {
     type <- match.arg(type)
     r <- .Alias(object$residuals)
     switch(type,
-           working = r,
+           working =, response = r,
            deviance=,
-           pearson =if(is.null(object$weights)) r else r * sqrt(object$weights))
+           pearson =if(is.null(object$weights)) r else r * sqrt(object$weights),
+	   partial = r + predict(object,type="terms")
+           )
 }
 fitted.lm <- function(object, ...) object$fitted.values
 coef.lm <- function(object, ...) object$coefficients
@@ -568,12 +570,12 @@ predict.lm <- function(object, newdata,
         for (i in seq(1, nterms,length=nterms)){
             ii <- piv[asgn[[i]]]
             predictor[,i]  <- X[, ii, drop=FALSE] %*% (beta[ii])
-            
+
             if (se.fit || interval != "none"){
                 ii2 <- asgn[[i]]
                 vci <- Rinv[ii2, ii2]*res.var
                 for(j in (1:NROW(X))){
-                    xi <- X[j, ii, drop=FALSE] 
+                    xi <- X[j, ii, drop=FALSE]
                     ip[j,i] <- sum(xi%*% vci %*%t(xi))
                 }
             }
