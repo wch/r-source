@@ -18,7 +18,7 @@ pkg = utils
 
 R_EXE = $(top_builddir)/bin/R --vanilla
 
-RSRC0 = `LC_COLLATE=C $(srcdir)/R/*.R $(srcdir)/R/$(R_OSTYPE)/*.R`
+RSRC0 = `LC_COLLATE=C ls $(srcdir)/R/*.R $(srcdir)/R/$(R_OSTYPE)/*.R`
 RSRC = $(RSRC0) @BUILD_AQUA_TRUE@ `LC_COLLATE=C $(srcdir)/R/aqua/*.R`
 RdSRC = $(srcdir)/man/*.Rd $(srcdir)/man/$(R_OSTYPE)/*.Rd @BUILD_AQUA_TRUE@ $(srcdir)/man/aqua/*.Rd
 NSFILES = $(srcdir)/NAMESPACE $(srcdir)/NAMESPACE.unix @BUILD_AQUA_TRUE@ $(srcdir)/NAMESPACE.aqua
