@@ -29,7 +29,6 @@ void loess_prune(Sint *parameter, Sint *a,
 		 double *xi, double *vert, double *vval);
 void loess_grow (Sint *parameter, Sint *a, 
 		 double *xi, double *vert, double *vval);
-void loess_free(void);
 
 /* These (and many more) are in ./loessf.f : */
 void F77_SUB(lowesa)();
@@ -113,29 +112,24 @@ loess_raw(double *y, double *x, double *weights, double *robust, Sint *d,
 	F77_SUB(lowesa)(trL, n, d, &tau, &nsing, one_delta, two_delta);
     }
     else if (!strcmp(*surf_stat, "interpolate/exact")) {
-	hat_matrix = Calloc((*n)*(*n), double);
-	LL = Calloc((*n)*(*n), double);
+	hat_matrix = (double *) R_alloc((*n)*(*n), sizeof(double));
+	LL = (double *) R_alloc((*n)*(*n), sizeof(double));
 	F77_SUB(lowesb)(x, y, weights, diagonal, &one, iv, &liv, &lv, v);
 	F77_SUB(lowesl)(iv, &liv, &lv, v, n, x, hat_matrix);
 	F77_SUB(lowesc)(n, hat_matrix, LL, trL, one_delta, two_delta);
 	F77_SUB(lowese)(iv, &liv, &lv, v, n, x, surface);
 	loess_prune(parameter, a, xi, vert, vval);
-	Free(hat_matrix);
-	Free(LL);
     }
     else if (!strcmp(*surf_stat, "direct/exact")) {
-	hat_matrix = Calloc((*n)*(*n), double);
-	LL = Calloc((*n)*(*n), double);
+	hat_matrix = (double *) R_alloc((*n)*(*n), sizeof(double));
+	LL = (double *) R_alloc((*n)*(*n), sizeof(double));
 	F77_SUB(lowesf)(x, y, weights, iv, liv, lv, v, n, x,
 			hat_matrix, &two, surface);
 	F77_SUB(lowesc)(n, hat_matrix, LL, trL, one_delta, two_delta);
 	k = (*n) + 1;
 	for(i = 0; i < (*n); i++)
 	    diagonal[i] = hat_matrix[i * k];
-	Free(hat_matrix);
-	Free(LL);
     }
-    loess_free();
 }
 
 void 
@@ -150,7 +144,6 @@ loess_dfit(double *y, double *x, double *x_evaluate, double *weights,
 		    sum_drop_sqr, &zero);
     F77_SUB(lowesf)(x, y, weights, iv, &liv, &lv, v, m, x_evaluate,
 		    &zero, &zero, fit);
-    loess_free();
 }
 
 void 
@@ -174,7 +167,6 @@ loess_dfitse(double *y, double *x, double *x_evaluate, double *weights,
 	F77_SUB(lowesf)(x, y, robust, iv, &liv, &lv, v, m,
 			x_evaluate, &zero, &zero, fit);
     }
-    loess_free();
 }
 void 
 loess_ifit(Sint *parameter, Sint *a, double *xi, double *vert, 
@@ -182,7 +174,6 @@ loess_ifit(Sint *parameter, Sint *a, double *xi, double *vert,
 {
     loess_grow(parameter, a, xi, vert, vval);
     F77_SUB(lowese)(iv, &liv, &lv, v, m, x_evaluate, fit);
-    loess_free();
 }
 
 void 
@@ -198,7 +189,6 @@ loess_ise(double *y, double *x, double *x_evaluate, double *weights,
     v[1] = *cell;
     F77_SUB(lowesb)(x, y, weights, &zero, &zero, iv, &liv, &lv, v);
     F77_SUB(lowesl)(iv, &liv, &lv, v, m, x_evaluate, L);
-    loess_free();
 }
 
 void 
@@ -220,8 +210,8 @@ loess_workspace(Sint *d, Sint *n, double *span, Sint *degree,
 	lv = lv + (D + 1) * nf * nvmax;
 	liv = liv + nf * nvmax;
     }
-    iv = Calloc(liv, Sint);
-    v = Calloc(lv, double);
+    iv = (Sint *) R_alloc(liv, sizeof(Sint));
+    v = (double *) R_alloc(lv, sizeof(double));
 
     F77_SUB(lowesd)(&version, iv, &liv, &lv, v, d, n, span, degree,
 		    &nvmax, setLf);
@@ -277,8 +267,8 @@ loess_grow(Sint *parameter, Sint *a, double *xi,
     nv = parameter[4];
     liv = parameter[5];
     lv = parameter[6];
-    iv = Calloc(liv, Sint);
-    v = Calloc(lv, double);
+    iv = (Sint *) R_alloc(liv, sizeof(Sint));
+    v = (double *) R_alloc(lv, sizeof(double));
 
     iv[1] = d;
     iv[2] = parameter[1];
@@ -316,11 +306,6 @@ loess_grow(Sint *parameter, Sint *a, double *xi,
 		    v+xi1, iv+iv[7]-1, iv+iv[8]-1, iv+iv[9]-1);
 }
 
-void loess_free(void)
-{
-    Free(v);
-    Free(iv);
-}
 
 /* begin ehg's FORTRAN-callable C-codes */
 

@@ -250,8 +250,8 @@ void arma0_kfore(int *pd, int *psd, int *n_ahead, double *x, double *var)
     ird = ir + d;
     irz = ird*(ird+1)/2;
     
-    del = Calloc(d+1, double);
-    del2 = Calloc(d+1, double);
+    del = (double *) R_alloc(d+1, sizeof(double));
+    del2 = (double *) R_alloc(d+1, sizeof(double));
     del[0] = 1;
     for(i = 1; i <= d; i++) del[i] = 0;
     for (j = 0; j < *pd; j ++) {
@@ -266,11 +266,11 @@ void arma0_kfore(int *pd, int *psd, int *n_ahead, double *x, double *var)
     /*for(i = 1; i <= d; i++) printf(" %f", del[i]); printf("\n");*/
 
     
-    a1 = Calloc(ird, double);
-    p1 = Calloc(irz, double);
-    resid = Calloc(n, double);
-    e1 = Calloc(ir, double);
-    store = Calloc(ird, double);
+    a1 = (double *) R_alloc(ird, sizeof(double));
+    p1 = (double *) R_alloc(irz, sizeof(double));
+    resid = (double *) R_alloc(n, sizeof(double));
+    e1 = (double *) R_alloc(ir, sizeof(double));
+    store = (double *) R_alloc(ird, sizeof(double));
 
     F77_CALL(forkal)(&ip, &iq, &ir, &np, &ird, 
 		     &irz, &d, &il, &n, &nrbar, 
@@ -279,9 +279,6 @@ void arma0_kfore(int *pd, int *psd, int *n_ahead, double *x, double *var)
 		     p1, v, resid, e1, 
 		     xnext, xrow, rbar, 
 		     thetab, store, &ifault);
-    Free(del); Free(del2); 
-    Free(a1); Free(p1); Free(e1);
-    Free(store);
 }
 
 #ifdef WHEN_USED

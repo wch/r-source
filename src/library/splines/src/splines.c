@@ -44,15 +44,6 @@ SEXP spline_basis(SEXP knots, SEXP order, SEXP xvals, SEXP derivs);
 SEXP spline_value(SEXP knots, SEXP coeff, SEXP order, SEXP x, SEXP deriv);
 
 
-static void			/* free storage from a spl_struct */
-splFree(splPTR this)
-{
-    Free(this->ldel);
-    Free(this->rdel);
-    if (this->a != (double *) 0) Free(this->a);
-    Free(this);
-}
-
 /* set sp->curs to the index of the first knot position > x.
    Special handling for x == sp->knots[sp->nknots - sp-order + 1] */
 static int 
@@ -144,15 +135,15 @@ spline_value(SEXP knots, SEXP coeff, SEXP order, SEXP x, SEXP deriv)
     der = INTEGER(deriv)[0];
     PROTECT(val = allocVector(REALSXP, n));
 				/* populate the spl_struct */
-    sp = Calloc(1, struct spl_struct);
+    sp = (struct spl_struct *) R_alloc(1, sizeof(struct spl_struct));
     sp->order = INTEGER(order)[0];
     if (sp->order <= 0) { error("ord must be a positive integer"); }
     sp->ordm1 = sp->order - 1;
-    sp->ldel = Calloc(sp->ordm1, double);
-    sp->rdel = Calloc(sp->ordm1, double);
+    sp->ldel = (double *) R_alloc(sp->ordm1, sizeof(double));
+    sp->rdel = (double *) R_alloc(sp->ordm1, sizeof(double));
     sp->knots = kk; sp->nknots = nk;
     sp->coeff = REAL(coeff);
-    sp->a = Calloc(sp->order, double);
+    sp->a = (double *) R_alloc(sp->order, sizeof(double));
     
     for (i = 0; i < n; i++) {
 	set_cursor(sp, xx[i]);
@@ -163,7 +154,7 @@ spline_value(SEXP knots, SEXP coeff, SEXP order, SEXP x, SEXP deriv)
 	    REAL(val)[i] = evaluate(sp, xx[i], der);
 	}
     }
-    splFree(sp); UNPROTECT(6);
+    UNPROTECT(6);
     return val;
 }
 
@@ -175,7 +166,7 @@ spline_basis(SEXP knots, SEXP order, SEXP xvals, SEXP derivs)
     int nd, nk, nx, i, j, *ders;
     double *kk, *xx;
     SEXP val, offsets;
-    splPTR sp = Calloc(1, struct spl_struct);
+    splPTR sp = (struct spl_struct *) R_alloc(1, sizeof(struct spl_struct));
 
     PROTECT(knots = coerceVector(knots, REALSXP));
     kk = REAL(knots); nk = length(knots);
@@ -186,10 +177,10 @@ spline_basis(SEXP knots, SEXP order, SEXP xvals, SEXP derivs)
     PROTECT(order = coerceVector(order, INTSXP));
     sp->order = INTEGER(order)[0];
     sp->ordm1 = sp->order - 1;
-    sp->rdel = Calloc(sp->ordm1, double);
-    sp->ldel = Calloc(sp->ordm1, double);
+    sp->rdel = (double *) R_alloc(sp->ordm1, sizeof(double));
+    sp->ldel = (double *) R_alloc(sp->ordm1, sizeof(double));
     sp->knots = kk; sp->nknots = nk; 
-    sp->a = Calloc(sp->order, double);
+    sp->a = (double *) R_alloc(sp->order, sizeof(double));
     PROTECT(val = allocMatrix(REALSXP, sp->order, nx));
     PROTECT(offsets = allocVector(INTSXP, nx));
 
@@ -214,7 +205,6 @@ spline_basis(SEXP knots, SEXP order, SEXP xvals, SEXP derivs)
 	    }
 	}
     }
-    splFree(sp); 
     setAttrib(val, install("Offsets"), offsets);
     UNPROTECT(6);
     return val;
