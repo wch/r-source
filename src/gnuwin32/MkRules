@@ -1,14 +1,11 @@
 .SUFFIXES: .c .f .o .a .def .exp .dll .exe .d
 
-# Alternatives CYGWIN (-B20.1), MINGW32 (-1.1.x-mingw32), CROSS (my Linux Box)
+# Alternatives CYGWIN (-B20.1), MINGW32 (mingw32 gcc), CROSS (my Linux Box)
 
 BUILD=MINGW32
 
 ifeq ($(strip $(BUILD)),CYGWIN)
 BINPREF=
-# HEADER=e:/cygwin-b20/H-i586-cygwin32/i586-cygwin32/include/mingw32
-# Cygwin B20 (not B20.1) needs
-# MINGW32CFLAG= -mno-cygwin -isystem $(HEADER) -DWIN32
 MINGW32CFLAG= -mno-cygwin -DWIN32
 MINGW32LDFLAG= -mno-cygwin
 FLIBS=-lg2c.mingw32
