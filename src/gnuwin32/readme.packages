@@ -29,12 +29,12 @@ ftp://ftp.xraylith.wisc.edu/pub/khan/gnu-win32/mingw32. (The `portal'
 gives more precise instructions.)  As R itself is built against
 msvcrt.dll, we recommend that you use that version of the compilers.
 
-It may also  be possible to use the compilers from  the cygwin 1.1 net
-release with  the -mno-cygwin -mwin32 flags; the  current versions use
-mscrt.dll.   (You  will need  the  cygwin,  gcc,  mingw32, w32api  and
-binutils  bundles. gcc-2.95.2-8, the  latest we  looked at,  had fatal
-mistakes in its  spec file, as did -7.)  You  most likely cannot build
-addons  using  C++ with  cygwin,  as  cygwin  does not  provide  mingw
+It may also be possible to use the compilers from the cygwin 1.1 net
+release with the -mno-cygwin -mwin32 flags; the current versions use
+mscrt.dll.  (You will need the cygwin, gcc, mingw32, w32api and
+binutils bundles. gcc-2.95.2-8, the latest we looked at, had fatal
+mistakes in its spec file, as did -7.)  You most likely cannot build
+addons using C++ with cygwin, as cygwin does not provide mingw
 versions of the C++ libraries.
 
 
