@@ -65,7 +65,7 @@ SEXP do_split(SEXP call, SEXP op, SEXP args, SEXP env)
     }
     for (i = 0; i < nlevs; i++)
 	INTEGER(counts)[i] = 0;
-    for (i = 0;  i< nobs; i++) {
+    for (i = 0;  i < nobs; i++) {
 	j = INTEGER(f)[i % nfac];
 	if (j != NA_INTEGER) {
 	    k = INTEGER(counts)[j - 1];
@@ -83,6 +83,16 @@ SEXP do_split(SEXP call, SEXP op, SEXP args, SEXP env)
 	    case STRSXP:
 		SET_STRING_ELT(VECTOR_ELT(vec, j - 1), k, STRING_ELT(x, i));
 		break;
+	    case VECSXP:
+		SET_VECTOR_ELT(VECTOR_ELT(vec, j - 1), k, VECTOR_ELT(x, i));
+		break;
+	    case RAWSXP:
+		RAW(VECTOR_ELT(vec, j - 1))[k] = RAW(x)[i];
+		break;
+	    default:
+		errorcall(call, 
+			  "split for this type (%d) is not implemented", 
+			  TYPEOF(x));
 	    }
 	    INTEGER(counts)[j - 1] += 1;
 	}

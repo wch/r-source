@@ -167,6 +167,15 @@ BUG FIXES
 	**************************************************
 
 
+		CHANGES IN R VERSION 2.0.1 patched
+
+
+BUG FIXES
+
+    o	split() was accepting raw and list vectors as input, but
+	not populating the output correctly.
+
+
 		CHANGES IN R VERSION 2.0.1
 
 
