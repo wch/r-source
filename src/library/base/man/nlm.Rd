@@ -107,3 +107,4 @@ str(nlm(f, c(5), hessian = TRUE))
 \dontrun{demo(nlm)}
 }
 \keyword{nonlinear}
+\keyword{optimize}
