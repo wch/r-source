@@ -82,7 +82,7 @@ AC_DEFUN(R_PROG_F77_G77,
       ])
     if test "${r_cv_prog_f77_is_g77}" = yes; then
       G77=yes
-      : ${FFLAGS=-O2}
+      : ${FFLAGS="-g -O2"}
     else
       G77=
     fi
