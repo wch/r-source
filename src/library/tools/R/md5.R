@@ -14,7 +14,8 @@ md5sum <- function(files)
 
 checkMD5sums <- function(pkg, dir)
 {
-    dir <- .find.package(pkg)
+    dir <- .find.package(pkg, quiet=TRUE)
+    if(!length(dir)) return(NA)
     md5file <- file.path(dir, "MD5")
     if(!file.exists(md5file)) return(NA)
     infile <- scan(md5file, what=list(md5="", name=""), quiet = TRUE)
