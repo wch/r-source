@@ -1317,7 +1317,7 @@ with value @code{3.0}.  We could use
 @example
   @{ SEXP version;
   PROTECT(version = allocVector(REALSXP, 1));
-  REAL(vector) = 3.0;
+  REAL(version) = 3.0;
   setAttrib(ans, install("version"), version);
   UNPROTECT(1);
   @}
@@ -1749,9 +1749,9 @@ SEXP lapply2(SEXP list, SEXP expr, SEXP rho)
   SEXP R_fcall, s, ans;
 
   if(!isNewList(list)) error("`list' must be a list");
-  if(!isFunction(fn)) error("`fn' must be a function");
+  if(!isFunction(expr)) error("`expr' must be a function");
   if(!isEnvironment(rho)) error("`rho' should be an environment");
-  PROTECT(R_fcall = lang2(fn, R_NilValue));
+  PROTECT(R_fcall = lang2(expr, R_NilValue));
   PROTECT(ans = allocVector(VECSXP, n));
   for(i = 0; i < n; i++) @{
     CADR(R_fcall) = VECTOR(list)[i];
