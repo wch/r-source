@@ -396,8 +396,8 @@ static SEXP scanFrame(SEXP what, int maxitems, int maxlines, int flush,
 	else if (bch == '\n') {
 	    linesread++;
 	    if (colsread != 0 && !badline)
-		badline=linesread;
-	    if (maxitems > 0 && nc*linesread >= maxitems)
+		badline = linesread;
+	    if (maxitems > 0 && linesread >= maxitems)
 		goto done;
 	    if (maxlines > 0 && linesread == maxlines)
 		goto done;
@@ -448,7 +448,7 @@ static SEXP scanFrame(SEXP what, int maxitems, int maxlines, int flush,
 
     if (colsread != 0) {
 	warning("number of items read is not a multiple of the number of columns");
-	buffer[0] = '\0';   /* this is an NA */
+	buffer[0] = '\0';	/* this is an NA */
 	for (ii = colsread; ii < nc; ii++) {
 	    extractItem(buffer, VECTOR(ans)[ii], n);
 	}
@@ -580,7 +580,7 @@ SEXP do_countfields(SEXP call, SEXP op, SEXP args, SEXP rho)
     SEXP ans, file, sep, bns;
     int nfields, nskip, i, c;
     int blocksize, nlines;
-    char *filename;
+    char *filename = "";	/* -Wall */
 
     checkArity(op, args);
 
