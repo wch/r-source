@@ -17,13 +17,13 @@ plot.window(xlim, ylim, log = "", asp = NA, \dots)
 }
 \details{
   Note that if \code{asp} is a finite positive value then
-  the window is set up so that one data unit in the y direction
+  the window is set up so that one data unit in the x direction
   is equal in length to \code{asp} \eqn{\times}{*} one data unit in the
-  x direction.
+  y direction.
 
   The special case \code{asp == 1} produces plots where distances
   between points are represented accurately on screen.  Values
-  with \code{asp < 1} can be used to produce more accurate maps when
+  with \code{asp > 1} can be used to produce more accurate maps when
   using latitude and longitude.
 
   Usually, one should rather use the higher level functions such as

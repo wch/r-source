@@ -23,13 +23,33 @@
 levels <- function(x) attr(x, "levels")
 nlevels <- function(x) length(levels(x))
 
-"levels<-" <- function(x, value) {
-    x <- as.factor(x)
-    ## if (length(value) != nlevels(x))
-    ## 	stop("Length mismatch in levels<-")
-    value <- as.character(value)
-    uvalue <- unique(value)
-    factor(match(value, uvalue), labels = uvalue)[x]
+"levels<-" <-
+function(x, value)
+  UseMethod("levels<-")
+
+"levels<-.default" <-
+function(x, value)
+{
+  attr(x, "levels") <- value
+  x
+}
+ 
+"levels<-.factor" <-
+function (x, value)
+{
+  xlevs <- levels(x)
+  if (is.list(value)) {
+      nlevs <- rep(names(value), lapply(value, length))
+      value <- unlist(value)
+      m <- match(value, xlevs, nomatch=0)
+      xlevs[m] <- nlevs
+  }
+  else {
+    if (length(xlevs) > length(value))
+      stop("number of levels differs")
+    xlevs <- as.character(value)
+  }
+  factor(xlevs[x], levels=unique(xlevs))
 }
 
 codes <- function(x, ...) UseMethod("codes")

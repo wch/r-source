@@ -318,12 +318,11 @@ SEXP do_plot_new(SEXP call, SEXP op, SEXP args, SEXP env)
  *	This function sets up the world coordinates for a graphics
  *	window.	 Note that if asp is a finite positive value then
  *	the window is set up so that one data unit in the y direction
- *	is equal in length to asp * one data unit in the x direction.
+ *	is equal in length to one data unit in the x direction divided
+ *	by asp.
  *
  *	The special case asp == 1 produces plots where distances
- *	between points are represented accurately on screen.  Values
- *	with asp < 1 can be used to produce more accurate maps when
- *	using latitude and longitude.
+ *	between points are represented accurately on screen.
  *
  *  NOTE
  *
@@ -415,12 +414,12 @@ SEXP do_plot_window(SEXP call, SEXP op, SEXP args, SEXP env)
 	double pin1, pin2, scale, xdelta, ydelta, xscale, yscale, xadd, yadd;
 	pin1 = GConvertXUnits(1.0, NPC, INCHES, dd);
 	pin2 = GConvertYUnits(1.0, NPC, INCHES, dd);
-	xdelta = asp * fabs(xmax - xmin);
+	xdelta = fabs(xmax - xmin) / asp;
 	ydelta = fabs(ymax - ymin);
 	xscale = pin1 / xdelta;
 	yscale = pin2 / ydelta;
 	scale = (xscale < yscale) ? xscale : yscale;
-	xadd = .5 * (pin1 / scale - xdelta) / asp;
+	xadd = .5 * (pin1 / scale - xdelta) * asp;
 	yadd = .5 * (pin2 / scale - ydelta);
 	GScale(xmin - xadd, xmax + xadd, 1, dd);
 	GScale(ymin - yadd, ymax + yadd, 2, dd);
