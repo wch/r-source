@@ -76,6 +76,8 @@ BUG FIXES
 	argument.  Now results are computed to full precision but 
 	formatted using `digits'.
 
+    o	summary(m, digits=*) also properly works for matrices.
+
     o	When returning parameters from .C/.Fortran, the OBJECT field was
 	not copied even though class attributes were (PR#834).
 
@@ -87,7 +89,7 @@ BUG FIXES
 
     o	dnbinom(*, size, *) now works again for size < 1 (PR#842).
 
-    o	dgeom(*, p = 0) doesn't give NaN anymore.
+    o	dgeom(*, p = 0) and pgeom(*, p = 0) don't give NaN anymore.
 
     o	smooth.spline() allows zero weights again.
 
@@ -99,40 +101,43 @@ BUG FIXES
 
     o	spec.ar() now handles order 1 correctly.
 
-    o   Add fuzz to prevent anomalies with hist().
+    o	Add fuzz to prevent anomalies with hist().
 
-    o   print.matrix() checks length of rowlab, collab (PR#850)
+    o	print.matrix() checks length of rowlab, collab (PR#850)
 
-    o   add1.glm() was using the wrong weights for binomial glms in
+    o	add1.glm() was using the wrong weights for binomial glms in
 	cbind(successes, failures) ~ lhs  form, since 1.2.0.
 
-    o   Eliminate packing of the `structRstart' structure, which was
+    o	Eliminate packing of the `structRstart' structure, which was
 	probably non-ISO C and caused some compilers problems (PR#852).
 
-    o   all.vars() no longer returns empty `names' (PR#829).
+    o	all.vars() no longer returns empty `names' (PR#829).
 
-    o   dotplot() passes `cex' down to the mtext() calls used for the
+    o	dotplot() passes `cex' down to the mtext() calls used for the
 	labels (PR#816).
 
-    o   The pictex() driver was drawing polylines incorrectly (PR#845).
+    o	The pictex() driver was drawing polylines incorrectly (PR#845).
 
-    o   In the event of a fatal X11 error (this can be generated under FVWM
-        by selecting Destroy), the input handler would loop, leaving the
-        "please save work and shut down R" advice useless. There should now
+    o	In the event of a fatal X11 error (this can be generated under FVWM
+	by selecting Destroy), the input handler would loop, leaving the
+	"please save work and shut down R" advice useless. There should now
 	be an opportunity for a relatively graceful exit.  
 
-    o   polyroot() misbehaved if all coefficients except that of the highest
-        degree term were zero (partial fix for PR#751)
+    o	polyroot() misbehaved if all coefficients except that of the highest
+	degree term were zero (partial fix for PR#751)
 
-    o   spline(method="natural") was extrapolating incorrectly (both
+    o	spline(method="natural") was extrapolating incorrectly (both
 	to the left and to the right, for different reasons).  (PR#653)
 
-    o   Line clipping was incorrect for log-plots. (PR#839)
+    o	Line clipping was incorrect for log-plots. (PR#839)
 
-    o   Add explicit test for rank-deficient residuals to summary.manova().
+    o	Add explicit test for rank-deficient residuals to summary.manova().
 
-    o   The help search databases did not contain the data from the
+    o	The help search databases did not contain the data from the
 	platform-specific help files.
+
+    o	parse.dcf() and hence package.contents() now work with a warning
+	for empty contents' files.
 
 
 
