@@ -626,70 +626,44 @@ PostScriptLoadFontMetrics(const char * const fontpath,
 }
 
 static double
-PostScriptStringWidth(unsigned char *p, FontMetricInfo *metrics, int face)
+PostScriptStringWidth(unsigned char *str, FontMetricInfo *metrics, int face)
 {
     int sum = 0, i;
     short wx;
+    unsigned char *p, *str1 = str;
+    unsigned char p1, p2;
 
 #ifdef SUPPORT_MBCS
-    mbstate_t mb_st;
-    if(utf8locale && !utf8strIsASCII((char *) p) && face != 5) {
-	wchar_t wc, wc2;
-	mbs_init(&mb_st);
-	while (*p) {
-	    int res = mbrtowc(&wc, (char *)p, MB_CUR_MAX, &mb_st);
-	    if(res > 0) p += res;
-	    else {
-		warning("invalid character in PostScriptStringWidth");
-		return 0;
+    char *buff;
+    if(utf8locale && !utf8strIsASCII((char *) str) && face != 5) {
+	    buff = alloca(strlen((char *)str)+1);
+	    /* Output string cannot be longer */
+	    if(!buff) error("allocation failure in PS_Text");
+	    mbcsToLatin1((char *)str, buff); 
+	    str1 = (unsigned char *)buff;
+    }
+#endif
+
+    for (p = str1; *p; p++) {
+#ifdef USE_HYPHEN
+	if (*p == '-' && !isdigit(p[1]))
+	    wx = metrics->CharInfo[(int)PS_hyphen].WX;
+	else
+#endif
+	    wx = metrics->CharInfo[*p].WX;
+	if(wx == NA_SHORT)
+	    warning("font width unknown for character 0x%x", *p);
+	else sum += wx;
+
+	/* check for kerning adjustment */
+	p1 = p[0]; p2 = p[1];
+	for (i =  metrics->KPstart[p1]; i < metrics->KPend[p1]; i++)
+	    /* second test is a safety check: should all start with p1  */
+	    if(metrics->KernPairs[i].c2 == p2 &&
+	       metrics->KernPairs[i].c1 == p1) {
+		sum += metrics->KernPairs[i].kern;
+		break;
 	    }
-	    if(*p) mbrtowc(&wc2, (char *)p, MB_CUR_MAX, &mb_st); else wc2 = 0;
-#ifdef USE_HYPHEN
-	    if (wc == L'-' && !iswdigit(wc2))
-		wx = metrics->CharInfo[(int)PS_hyphen].WX;
-	    else
-#endif
-		if (wc < 256)
-		    wx = metrics->CharInfo[wc].WX;
-		else wx = NA_SHORT;
-	    if(wx == NA_SHORT)
-		warning("font width unknown for character 0x%x", wc);
-	    else sum += wx;
-
-	    /* check for kerning adjustment */
-	    for (i =  metrics->KPstart[wc]; i < metrics->KPend[wc]; i++)
-		/* second test is a safety check: should all start with p1  */
-		if(metrics->KernPairs[i].c2 == wc2 &&
-		   metrics->KernPairs[i].c1 == wc) {
-		    sum += metrics->KernPairs[i].kern;
-		    break;
-		}
-	}
-    } else 
-#endif
-    {
-	unsigned char p1, p2;
-	for ( ; *p; p++) {
-#ifdef USE_HYPHEN
-	    if (*p == '-' && !isdigit(p[1]))
-		wx = metrics->CharInfo[(int)PS_hyphen].WX;
-	    else
-#endif
-		wx = metrics->CharInfo[*p].WX;
-	    if(wx == NA_SHORT)
-		warning("font width unknown for character 0x%x", *p);
-	    else sum += wx;
-
-	    /* check for kerning adjustment */
-	    p1 = p[0]; p2 = p[1];
-	    for (i =  metrics->KPstart[p1]; i < metrics->KPend[p1]; i++)
-		/* second test is a safety check: should all start with p1  */
-		if(metrics->KernPairs[i].c2 == p2 &&
-		   metrics->KernPairs[i].c1 == p1) {
-		    sum += metrics->KernPairs[i].kern;
-		    break;
-		}
-	}
     }
     return 0.001 * sum;
 }
