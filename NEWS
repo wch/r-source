@@ -207,6 +207,12 @@ NEW FEATURES
     o	Mathlib can be built as a standalone library: see directory
 	src/nmath/standalone.
 
+    o	Using "~" when specifying lib.loc (for example to help or
+	library) is now supported.
+
+    o	If present in the package, a function .Last.lib will be called
+	when a package is detached.
+
 
 BUG FIXES
 
@@ -295,8 +301,8 @@ BUG FIXES
     o	barplot(c(0.1, 0.5, 1), ylim = c(0, 1)) now works: [xy]axs="i"
 	and exact limits now labels the limits.
 
-    o	entry-point "pythag" is now loaded even though it is not used
-	in R.
+    o	Entry-point "pythag" is now loaded even though it is not
+	necessarily used in R.
 
     o	Rdconv now reports if an invalid type is specified (rather
 	than using latex).
@@ -313,6 +319,8 @@ BUG FIXES
 
     o	call_R will now correctly handle character vector arguments.
 
+    o	library() will not leave the package on the search path if
+	loading fails (including if .First.lib fails).
 
 
 		CHANGES IN R VERSION 1.0.1

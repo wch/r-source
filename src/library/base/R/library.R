@@ -44,6 +44,8 @@ library <-
 	    }
 	    ## create environment
 	    env <- attach(NULL, name = pkgname)
+            ## detach does not allow character vector args
+            on.exit(detach(substitute(pkgname, list(pkgname = pkgname))))
             lastbit<- file.path("", "R", package)
             path <- gsub(paste(lastbit, "$", sep=""), "", file)
             attr(env, "path") <- path
@@ -86,6 +88,7 @@ library <-
 		    }
 		}
 	    }
+            on.exit()
 	}
 	else {
 	    if (getOption("verbose"))

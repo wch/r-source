@@ -9,6 +9,7 @@ require(package, quietly = FALSE, warn.conflicts = TRUE,
 provide(package)
 
 .First.lib(libname, pkgname)
+.Last.lib(libpath)
 
 .packages(all.available = FALSE, lib.loc = .lib.loc)
 .path.package(package = .packages())
@@ -23,6 +24,7 @@ provide(package)
 \alias{R_LIBS}
 \alias{.Autoloaded}
 \alias{.First.lib}
+\alias{.Last.lib}
 \alias{.Library}
 \alias{.Provided}
 \alias{.packages}
@@ -47,6 +49,7 @@ provide(package)
   \item{libname}{a character string giving the library directory where
       the package was found.}
   \item{pkgname}{a character string giving the name of the package.}
+  \item{libpath}{a character string giving the complete path to the package.}
   \item{all.available}{logical; if \code{TRUE} return \code{character}
       vector of all available packages in \code{lib.loc}.}
 }
@@ -70,7 +73,8 @@ provide(package)
   For large packages, setting \code{keep.source = FALSE} may save quite
   a bit of memory.
 
-  \code{provide} allows code to register services that it provides.  The
+  \code{provide} allows code to register the names of packages that it
+  encompasses.  The
   argument is stored in the list \code{.Provided}.  \code{provide}
   returns \code{FALSE} if the package was already present in
   \code{.Provided} or among the packages in \code{search()}.  The main
@@ -87,17 +91,24 @@ provide(package)
   \code{somename}, typically by listing the most important user level
   objects it contains.
 
-  \code{.First.lib()} is called when a package is loaded by
-  \code{library()}.  It is called with two arguments, the name of the
-  library tree where the package was found (i.e., the corresponding
+  \code{.First.lib} is called when a package is loaded by
+  \code{library}.  It is called with two arguments, the name of the
+  library directory where the package was found (i.e., the corresponding
   element of \code{lib.loc}), and the name of the package (in that
   order).  It is a good place to put calls to \code{library.dynam()}
   which are needed when loading a package into this function (don't call
   \code{library.dynam()} directly, as this will not work if the package
-  is not installed in a ``standard'' location).  \code{.First.lib()}
+  is not installed in a ``standard'' location).  \code{.First.lib}
   is invoked after \code{search()} has been updated, so
   \code{pos.to.env(match("package:name"), search())} will return the
-  environment in which the package is stored.
+  environment in which the package is stored.  If calling
+  \code{.First.lib} gives an error the loading of the package is
+  abandoned, and the package will be unavailable.
+
+  \code{.Last.lib} is called when a package is detached.  Beware
+  that it might be called if \code{.First.lib} has failed, so it
+  should be written defensively. (It is called within \code{\link{try}},
+  so errors will not stop the package being detached.)
 
   \code{.packages()} returns the ``base names'' of the currently attached
   packages \emph{invisibly} whereas
