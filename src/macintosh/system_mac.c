@@ -933,13 +933,13 @@ SEXP do_helpstart(SEXP call, SEXP op, SEXP args, SEXP env)
 
     if (home == NULL)
 	error("R_HOME not set");
-    sprintf(buf, "%s:doc:html:rmac.html", home);
+    sprintf(buf, "%s:doc:html:index.html", home);
     ff = fopen(buf, "r");
     if (!ff) {
-	sprintf(buf, "%s:doc:html:rmac.htm", home);
+	sprintf(buf, "%s:doc:html:index.htm", home);
 	ff = fopen(buf, "r");
 	if (!ff) {
-	    sprintf(buf, "%s:doc:html:rmac.htm[l] not found", home);
+	    sprintf(buf, "%s:doc:html:index.htm[l] not found", home);
 	    error(buf);
 	}
     }
