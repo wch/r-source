@@ -413,6 +413,78 @@ EOF
     AC_MSG_ERROR([Maybe change CFLAGS or FFLAGS?])
   fi
 ])
+AC_DEFUN([R_PROG_F77_CC_COMPAT_COMPLEX],
+ [AC_REQUIRE([AC_CHECK_LIBM])
+  AC_MSG_CHECKING([whether ${F77-f77} and ${CC-cc} agree on double complex])
+  AC_CACHE_VAL(r_cv_prog_complex_compat,
+    [ cat > conftestf.f <<EOF
+      subroutine cftest(x)
+      complex*16 x(3)
+
+c a few tests of constructs that are sometimes missing
+      if(x(1) .eq. x(1)) i = 0
+      x(1) = x(1)*x(2) + x(3)
+      end
+EOF
+      ${F77} ${FFLAGS} -c conftestf.f 1>&AC_FD_CC 2>&AC_FD_CC
+      changequote(, )
+      cat > conftest.c <<EOF
+#include <math.h>
+#include "confdefs.h"
+#ifdef HAVE_F77_UNDERSCORE
+# define F77_SYMBOL(x)   x ## _
+#else
+# define F77_SYMBOL(x)   x
+#endif
+
+typedef struct {
+        double r;
+        double i;
+} Rcomplex;
+
+extern void F77_SYMBOL(cftest)(Rcomplex *x);
+
+int main () {
+    Rcomplex z[3];
+    
+    z[0].r = 3.14159265;
+    z[0].i = 2.172;
+    z[1].i = 3.14159265;
+    z[1].r = 2.172;
+    z[2].r = 123.456;
+    z[2].i = 0.123456;
+    F77_SYMBOL(cftest)(z);
+    printf("%f %f\n", z[0].r, z[0].i);
+    if(fabs(z[0].r - 123.456) < 1e-4 && fabs(z[0].i - 14.71065) < 1e-4)
+	return 0;
+    else return 1;
+}
+EOF
+      changequote([, ])
+      if ${CC-cc} ${CFLAGS} -c conftest.c 1>&AC_FD_CC 2>&AC_FD_CC; then
+	## FIXME
+	## This should really use MAIN_LD, and hence come after this is
+	## determined.  Or maybe we can always use ${CC} eventually?
+	## Also, this used to have `-lm' hardwired ...
+	if ${CC-cc} ${LDFLAGS} ${MAIN_LDFLAGS} -o conftest${ac_exeext} \
+	    conftest.${ac_objext} conftestf.${ac_objext} ${FLIBS} \
+	    ${LIBM} 1>&AC_FD_CC 2>&AC_FD_CC; then
+          output=`./conftest${ac_exeext} 2>&1`
+	  if test ${?} = 0; then
+	    r_cv_prog_complex_compat=yes
+	  fi
+	fi
+      fi
+    ])
+  rm -rf conftest conftest.* conftestf.* core
+  if test -n "${r_cv_prog_complex_compat}"; then
+    AC_MSG_RESULT([yes])
+    AC_DEFINE(HAVE_DOUBLE_COMPLEX)
+  else
+    AC_MSG_WARN([${F77-f77} and ${CC-cc} disagree on double complex])
+  fi
+    AC_SUBST(HAVE_DOUBLE_COMPLEX)
+])
 AC_DEFUN([R_PROG_F77_C_O_LO],
 [AC_CACHE_CHECK([whether ${F77} supports -c -o FILE.lo],
   r_cv_prog_f77_c_o_lo,

@@ -228,10 +228,6 @@ SEXP La_rg(SEXP x, SEXP only_values)
     return ret;
 }
 
-#ifdef Unix
-/* FIXME: until configure test is in place */
-#define HAVE_DOUBLE_COMPLEX
-#endif
 SEXP La_zgesv(SEXP A, SEXP B)
 {
 #ifdef HAVE_DOUBLE_COMPLEX

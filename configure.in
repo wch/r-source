@@ -288,6 +288,7 @@ if test -n "${F77}"; then
   AC_F77_LIBRARY_LDFLAGS
   R_PROG_F77_APPEND_UNDERSCORE
   R_PROG_F77_CC_COMPAT
+  R_PROG_F77_CC_COMPAT_COMPLEX
   f77_rules_frag=Makefrag.f77
   cat << \EOF > ${f77_rules_frag}
 .f.c:
