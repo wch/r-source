@@ -502,13 +502,12 @@ do_install_source () {
     ${MKDIR_P} "${R_PACKAGE_DIR}/libs"
     if test -f src/Makefile; then
       cd src;
-      makefiles="-f \"${R_HOME}\"/share/make/shlib.mk"
+      makefiles="-f \"${R_HOME}\"/share/make/shlib.mk -f Makefile"
       if test -r "${HOME}/.R/Makevars-${R_PLATFORM}"; then
 	  makefiles="${makefiles} -f \"${HOME}/.R/Makevars-${R_PLATFORM}\""
       elif test -r "${HOME}/.R/Makevars"; then
 	  makefiles="${makefiles} -f \"${HOME}/.R/Makevars\""
       fi
-      makefiles="${makefiles} -f Makefile"
       if test -r Makevars; then
 	makefiles="-f Makevars ${makefiles}"
       fi
