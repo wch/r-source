@@ -325,6 +325,9 @@ UTILITIES
     o	The Perl code to build help now removes an existing example
 	file if there are no examples in the current help file.
 
+    o	R CMD Rdindex is now deprecated in favor of function Rdindex()
+	in package tools.
+
 
 C-LEVEL FACILITIES
 
@@ -1736,7 +1739,7 @@ UTILITIES
 
     o	R CMD check, build and INSTALL produce outline-type output.
 
-    o	QA functions in package 'tools' now return the results of their
+    o	QC functions in package 'tools' now return the results of their
 	computations as objects with suitable print() methods.	By
 	default, output	is only produced if a problem was found.
 
@@ -2583,7 +2586,7 @@ DOCUMENTATION CHANGES
 UTILITIES
 
     o	New package `tools' for package development and administration
-	tools, containing the QA tools checkFF(), codoc() and undoc()
+	tools, containing the QC tools checkFF(), codoc() and undoc()
 	previously in package base, as well as the following new ones:
 
 	-  checkAssignFuns() for checking whether the final argument of
