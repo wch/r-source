@@ -246,7 +246,7 @@ function(file, envir)
     oop <- options(keep.source = FALSE)
     on.exit(options(oop))
     assignmentSymbol <- as.name("<-")
-    exprs <- parse(n = -1, file = file)
+    exprs <- try(parse(n = -1, file = file))
     if(length(exprs) == 0)
         return(invisible())
     for(e in exprs) {

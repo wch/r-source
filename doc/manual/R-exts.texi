@@ -134,11 +134,18 @@ A package consists of a subdirectory containing the files
 @file{R}, @file{data}, @file{demo}, @file{exec}, @file{inst},
 @file{man}, @file{src}, and @file{tests} (some of which can be missing).
 
-The package subdirectory should be given the same name as the package.  Because
-some file systems (e.g. those on Windows) are not case-sensitive, to maintain
-portability it is strongly recommended that case distinctions not be used to
-distinguish different packages.  For example, if you have a package 
-named @file{foo}, do not also create a package named @file{Foo}.
+The package subdirectory should be given the same name as the package.
+Because some file systems (e.g., those on Windows) are not
+case-sensitive, to maintain portability it is strongly recommended that
+case distinctions not be used to distinguish different packages.  For
+example, if you have a package named @file{foo}, do not also create a
+package named @file{Foo}.
+
+To ensure that file names are valid across file systems and supported
+operating system platforms, the @acronym{ASCII} control characters as
+well as the characters @samp{"}, @samp{*}, @samp{:}, @samp{/}, @samp{<},
+@samp{>}, @samp{?}, @samp{\}, and @samp{|} are not allowed in file
+names.
 
 Optionally the package can contain (Bourne shell) script files
 @file{configure} and @file{cleanup} which are executed before and
@@ -503,7 +510,7 @@ configure information by direct extraction (using grep and sed) from
 recorded there as literals.  R 1.5.0 has added @code{R CMD config} for
 getting the value of the basic configuration variables, or the header
 and library flags necessary for linking against @R{}, see @kbd{R CMD
-config --help} for more information.
+config --help} for details.
 
 If @R{} was configured to use the FORTRAN-to-C converter (f2c),
 configure variable @code{F77} is set to a shell script wrapper to
@@ -526,7 +533,8 @@ FORTRAN 77 code works on all R platforms.  Calls to the Autoconf macro
 @code{AC_F77_LIBRARY_LDFLAGS}, which would overwrite @code{FLIBS}, must
 not be used (and hence e.g.@: removed from @code{ACX_BLAS}).  (Recent
 versions of Autoconf in fact allow an already set @code{FLIBS} to
-override the test for the Fortran linker flags.)
+override the test for the Fortran linker flags.  Also, recent versions
+of @R{} can detect external BLAS and LAPACK libraries.)
 
 You should bear in mind that the configure script may well not work on
 Windows systems (this seems normally to be the case for those generated
@@ -633,6 +641,10 @@ The package is installed.  This will warn about missing cross-references
 and duplicate aliases in help files.
 
 @item
+The file names are checked to be valid across file systems and supported
+operating system platforms.
+
+@item
 The files and directories are checked for sufficient permissions (Unix
 only).
 
@@ -728,7 +740,8 @@ directory.  These patterns should be Perl regexps, one per line, to be
 matched against the file names relative to the top-level source
 directory.  In addition, files called @file{CVS} or @file{GNUMakefile},
 or with base names starting with @samp{.#}, or starting and ending with
-@samp{#}, or ending in @samp{~} or @samp{.swp}, are excluded by default.
+@samp{#}, or ending in @samp{~} or @samp{.bak} or @samp{.swp}, are
+excluded by default.
 
 @quotation
 @strong{Note:} file exclusion does not work correctly with @acronym{GNU}
@@ -1316,6 +1329,14 @@ For example, @file{print.ts.Rd} contains
 @}
 @end group
 @end smallexample
+
+Usage for replacement functions should be given in the style of
+@code{dim(x) <- value} rather than explicitly indicating the name of the
+replacement function (@w{@code{"dim<-"}} in the above).  Similarly, one
+can use @code{\method@{@var{generic}@}@{@var{class}@}(@var{arglist}) <-
+value} to indicate the usage of an S3 replacement method for the generic
+replacement function @code{"@var{generic}<-"} for objects inheriting
+from class @code{"@var{class}"}.
 
 @item \arguments@{@dots{}@}
 @findex \arguments
@@ -4159,10 +4180,10 @@ appropriate header files when using these entry points.
 @end quotation
 
 This remapping can cause problems@footnote{known problems are redefining
-@code{error}, @code{length}, @code{vector} and @code{warning}}, and it
-can be eliminated by defining @code{R_NO_REMAP} and prepending
-@code{Rf_} to @emph{all} the function names used from
-@file{Rinternals.h} and @file{R_exts/Error.h}.
+@code{error}, @code{length}, @code{vector} and @code{warning}}, and can
+be eliminated by defining @code{R_NO_REMAP} and prepending @code{Rf_} to
+@emph{all} the function names used from @file{Rinternals.h} and
+@file{R_exts/Error.h}.
 
 @node Memory allocation, Error handling, The R API, The R API
 @section Memory allocation

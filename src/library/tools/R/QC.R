@@ -376,7 +376,7 @@ function(package, dir, lib.loc = NULL,
         }
         exprs <- try(parse(n = -1, text = readLines(txtConn, n)))
         if(inherits(exprs, "try-error"))
-            stop(paste("cannot source usages in documentation object",
+            stop(paste("cannot parse usages in documentation object",
                        sQuote(docObj)))
         for(i in exprs) {
             yy <- try(eval(i, env = docsEnv))
@@ -573,7 +573,7 @@ function(package, dir, lib.loc = NULL)
         }
         exprs <- try(parse(n = -1, text = readLines(txtConn, n)))
         if(inherits(exprs, "try-error"))
-            stop(paste("cannot source usages in documentation object",
+            stop(paste("cannot parse usages in documentation object",
                        sQuote(docObj)))
         for(i in exprs) {
             yy <- try(eval(i, env = argsEnv))
@@ -776,7 +776,7 @@ function(package, dir, lib.loc = NULL)
                                              sep = ""),
                                        "\\1.\\2", usageTxt)))
         if(inherits(exprs, "try-error"))
-            stop(paste("cannot source usages in documentation object",
+            stop(paste("cannot parse usages in documentation object",
                        sQuote(docObj)))
         for(i in exprs) {
             yy <- try(eval(i, env = docsEnv))
@@ -934,7 +934,9 @@ function(package, dir, file, lib.loc = NULL,
                })
     }
     else
-        parse(file = file, n = -1)
+        try(parse(file = file, n = -1))
+    if(inherits(exprs, "try-error"))
+        stop(paste("parse error in file", sQuote(file)))
     for(i in seq(along = exprs)) findBadExprs(exprs[[i]])
     class(badExprs) <- "checkFF"
     if(verbose)
@@ -1300,7 +1302,9 @@ function(package, dir, file, lib.loc = NULL)
                 for(i in seq(along = e)) Recall(e[[i]], e)
             }
         }
-        exprs <- parse(file = file, n = -1)
+        exprs <- try(parse(file = file, n = -1))
+        if(inherits(exprs, "try-error"))
+            stop(paste("parse error in file", sQuote(file)))
         for(i in seq(along = exprs))
             findBadExprs(exprs[[i]], NULL)
         matches

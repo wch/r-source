@@ -121,6 +121,8 @@ DEPRECATED & DEFUNCT
 
     o	anovalist.lm (replaced in 1.2.0) is now deprecated.
 
+    o	The deprecated argument 'white' of parse() has been removed.
+
 
 INSTALLATION CHANGES
 
@@ -132,6 +134,17 @@ INSTALLATION CHANGES
     o	There are new macros DYLIB_* for building dynamic libraries,
 	and these are used for the dynamic Rmath library (which was
 	previously built as a shared object).
+
+
+UTILITIES
+
+    o	R CMD build excludes possible (obsolete) data and vignette
+        indices in DCF format (and hence also no longer rebuilds them).
+
+    o	R CMD check now tests whether file names are valid across file
+	systems and supported operating system platforms.  Replacement
+	functions and S3 methods in \usage sections are no longer
+	ignored.
 
 
 BUG FIXES
