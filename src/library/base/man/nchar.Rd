@@ -12,15 +12,14 @@
     vector.} 
 }
 \details{
-  The internal equivalent of \code{\link{as.character}} is performed on
-  \code{x}. If you want to operate
+  The internal equivalent of the default method of
+  \code{\link{as.character}} is performed on \code{x}.  If you want to operate
   on non-vector objects passing them through \code{\link{deparse}} first
   will be required.
 }
 \value{
-  An integer vector giving the number of characters in each string
-  (up to the first \code{nul} character).  Missing values are regarded
-  as having two characters, for \code{"NA"}.
+  An integer vector giving the number of characters in each string,
+  \code{2} for missing values (for \code{NA}).
 }
 \note{
   This does \strong{not} give the number of characters that will be used
@@ -28,6 +27,10 @@
   2.0.1.  Because of escape sequences for non-printable characters, the
   latter may be greater.  Also, it is possible (but unsupported) that
   multichar sequences might be displayed as a single character.
+
+  As from \R 2.1.0 embedded \code{nul} characters are included in the
+  count (but not the final \code{nul}): previously the count stopped
+  immediately before the first \code{nul}.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

@@ -156,8 +156,11 @@ NEW FEATURES
 	everywhere instead of just inside the "inner" knots, by setting the
 	new argument `outer.ok = TRUE'.
 
-    o	plot.data.frame tries hards to produce sensible plots for
+    o	plot.data.frame() tries harder to produce sensible plots for
 	non-numeric data frames with one or two columns.
+
+    o	nchar() returns the true number of characters stored
+	(including any embedded nuls), this being 2 for missing values.
 
 
 UTILITIES

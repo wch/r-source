@@ -53,7 +53,7 @@
 
 SEXP do_nchar(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    SEXP d, s, x, ch;
+    SEXP d, s, x;
     int i, len;
 
     checkArity(op, args);
@@ -63,10 +63,11 @@ SEXP do_nchar(SEXP call, SEXP op, SEXP args, SEXP env)
     len = LENGTH(x);
     PROTECT(s = allocVector(INTSXP, len));
     for (i = 0; i < len; i++) {
+	/* NA_STRINGS are treated the same way, for now
 	ch = STRING_ELT(x, i);
-	/* give print width for an NA_STRING */
-	INTEGER(s)[i] =
-	    (ch == NA_STRING) ? R_print.na_width : strlen(CHAR(ch));
+	give print width for an NA_STRING
+	INTEGER(s)[i] = (ch == NA_STRING) ? R_print.na_width : length(ch); */
+	INTEGER(s)[i] = length(STRING_ELT(x, i));
     }
     if ((d = getAttrib(x, R_DimSymbol)) != R_NilValue)
 	setAttrib(s, R_DimSymbol, d);
