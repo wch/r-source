@@ -11,4 +11,8 @@ given probabilities.
 The smallest observation corresponds to
 a probability of 0 and the largest to a probability of 1.
 }
+\examples{
+quantile(x <- rnorm(1000))# Extremes & Quartiles by default
+quantile(x,  probs=c(.1,.5,1,2,5,10,50)/100)
+}
 \keyword{univar}
