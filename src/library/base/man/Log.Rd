@@ -2,12 +2,14 @@
 \title{Logarithms and Exponentials}
 \usage{
 log(x, base = exp(1))
+logb(x, base = exp(1))
 log10(x)
 log2(x)
 exp(x)
 log1p(x)
 }
 \alias{log}
+\alias{logb}
 \alias{log1p}
 \alias{log10}
 \alias{log2}
@@ -21,7 +23,7 @@ log1p(x)
   \code{log} computes natural logarithms,
   \code{log10} computes common (i.e., base 10) logarithms, and
   \code{log2} computes binary (i.e., base 2) logarithms.
-  The general form \code{log(x, base)} computes logarithms with base
+  The general form \code{logb(x, base)} computes logarithms with base
   \code{base} (\code{log10} and \code{log2} are only special cases).
 
   \code{log1p(x)} computes \eqn{\log(1+x)}{log(1+x)} accurately also for
@@ -33,6 +35,10 @@ log1p(x)
 \value{
   A vector of the same length as \code{x} containing the transformed
   values.  \code{log(0)} gives \code{-Inf} (when available).
+}
+\note{
+  \code{log} and \code{logb} are the same thing in \R, but \code{logb}
+  is preferred if \code{base} is specified, for S-PLUS compatibility.
 }
 \seealso{
   \code{\link{Trig}},
