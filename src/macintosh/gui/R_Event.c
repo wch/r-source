@@ -665,6 +665,7 @@ void DoWindowEvent( const EventRecord *event )
     {
     if(window != Console_Window)
      BringToFront(Console_Window);
+    BringToFront(window); 
 	DoActivate( ( event->modifiers & activeFlag) != 0, window );
 	break;
     }
@@ -1154,17 +1155,6 @@ static OSStatus HandleWindowCommand(EventRef inEvent)
 				result = noErr;
 				
 				RPrefs();
-				/*
-				EventRef event; CreateEvent(
-					NULL, kEventClassWindow, 
-					kEventWindowClose, GetCurrentEventTime(), 
-					kEventAttributeUserEvent, &event);
-				
-				SetEventParameter(
-					event, kEventParamDirectObject, 
-			        typeWindowRef, sizeof(window), &window);
-				
-				SendEventToWindow(event, GetUserFocusWindow());*/
 			}
 		}
 		break;
