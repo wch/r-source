@@ -1,5 +1,5 @@
 \name{SignRank}
-\title{Distribution of the Wilcoxon Signed Ranke Statistic}
+\title{Distribution of the Wilcoxon Signed Rank Statistic}
 \usage{
 dsignrank(x, n)
 psignrank(q, n)
@@ -33,6 +33,13 @@ rsignrank(nn, n)
     \eqn{n(n+1)(2n+1)/24}, respectively.
 }
 \author{Kurt Hornik \email{hornik@ci.tuwien.ac.at}}
-\seealso{}
+\seealso{\code{\link{dwilcox}} etc, for the \emph{two-sample} Wilcoxon
+    rank sum statistic.}
 \examples{
+par(mfrow=c(2,2))
+for(n in c(4:5,10,40)) {
+  x <- seq(0, n*(n+1)/2, length=501)
+  plot(x, dsignrank(x,n=n), type='l', main=paste("dsignrank(x,n=",n,")"))
+}
+}
 \keyword{distribution}
