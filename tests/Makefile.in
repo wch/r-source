@@ -180,7 +180,8 @@ test-DocArgs:
 	  out="package"; \
 	  echo @ECHO_N@ "$${out} \`$${p}' ...@ECHO_C@"; \
 	  dir="$(top_srcdir)/src/library/$${p}"; \
-	  out=`echo "checkDocArgs(\"$${dir}\")" | \
+	  out=`(echo "library(tools)"; \
+                echo "checkDocArgs(\"$${dir}\")") | \
 	       $(R) -q | sed '/^>/d'`; \
 	  if test -n "$${out}"; then \
 	    echo "@ECHO_T@ WARNING"; \
@@ -197,7 +198,8 @@ test-DocStyle:
 	  out="package"; \
 	  echo @ECHO_N@ "$${out} \`$${p}' ...@ECHO_C@"; \
 	  dir="$(top_srcdir)/src/library/$${p}"; \
-	  out=`echo "checkDocStyle(\"$${dir}\")" | \
+	  out=`(echo "library(tools)"; \
+	        echo "checkDocStyle(\"$${dir}\")") | \
 	       $(R) -q | sed '/^>/d'`; \
 	  if test -n "$${out}"; then \
 	    echo "@ECHO_T@ WARNING"; \
@@ -213,7 +215,8 @@ test-FF:
 	@for p in $(R_PKGS); do \
 	  out="package"; \
 	  echo @ECHO_N@ "$${out} \`$${p}' ...@ECHO_C@"; \
-	  out=`echo "checkFF(package = \"$${p}\")" | \
+	  out=`(echo "library(tools)"; \
+	        echo "checkFF(package = \"$${p}\")") | \
 	       $(R) -q | sed '/^>/d; /^loading/d'`; \
 	  if test -n "$${out}"; then \
 	    echo "@ECHO_T@ WARNING"; \
@@ -228,7 +231,8 @@ test-Methods:
 	  out="package"; \
 	  echo @ECHO_N@ "$${out} \`$${p}' ...@ECHO_C@"; \
 	  dir="$(top_srcdir)/src/library/$${p}"; \
-	  out=`echo "checkMethods(\"$${dir}\")" | \
+	  out=`(echo "library(tools)"; \
+	        echo "checkMethods(\"$${dir}\")") | \
 	       $(R) -q | sed '/^>/d'`; \
 	  if test -n "$${out}"; then \
 	    echo "@ECHO_T@ WARNING"; \
@@ -244,7 +248,8 @@ test-codoc:
 	@for p in $(R_PKGS); do \
 	  out="package"; \
 	  echo @ECHO_N@ "$${out} \`$${p}' ...@ECHO_C@"; \
-	  out=`echo "codoc(\"$(top_srcdir)/src/library/$${p}\")" | \
+	  out=`(echo "library(tools)"; \
+	        echo "codoc(\"$(top_srcdir)/src/library/$${p}\")") | \
 	       $(R) -q | sed '/^>/d; /^Using/d'`; \
 	  if test -n "$${out}"; then \
 	    echo "@ECHO_T@ WARNING"; \
@@ -260,7 +265,8 @@ test-undoc:
 	@for p in $(R_PKGS); do \
 	  out="package"; \
 	  echo @ECHO_N@ "$${out} \`$${p}' ...@ECHO_C@"; \
-	  out=`echo "undoc(\"$${p}\")" | \
+	  out=`(echo "library(tools)"; \
+	        echo "undoc(\"$${p}\")") | \
 	       $(R) -q | sed '/^>/d; /^character/d'`; \
 	  if test -n "$${out}"; then \
 	    echo "@ECHO_T@ WARNING"; \

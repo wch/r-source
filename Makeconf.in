@@ -56,7 +56,7 @@ MKINSTALLDIRS = $(top_srcdir)/tools/mkinstalldirs
 PERL = @PERL@
 R_GUIS = @R_GUIS@
 # fixme: tcltk needs to be optional
-R_PKGS = base ctest eda lqs methods modreg mva nls splines stepfun ts tcltk
+R_PKGS = base ctest eda lqs methods modreg mva nls splines stepfun tcltk tools ts
 R_XTRA_CFLAGS = @R_XTRA_CFLAGS@
 R_XTRA_CPPFLAGS = -I. -I$(top_builddir)/src/include -I$(top_srcdir)/src/include
 R_XTRA_FFLAGS = @R_XTRA_FFLAGS@

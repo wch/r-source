@@ -1,0 +1,5 @@
+QA                       QA Checks for R Code and/or Documentation
+checkFF                  Check Foreign Function Calls
+checkTnF                 Check R Code for T/F
+codoc                    Check Code/Documentation Consistency
+undoc                    Find Undocumented Objects

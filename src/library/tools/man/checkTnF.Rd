@@ -1,6 +1,6 @@
 \name{checkTnF}
 \alias{checkTnF}
-\title{Check R code for T/F}
+\title{Check R Code for T/F}
 \description{
   Checks the specified R code for occurrences of \code{T} or \code{F},
   and reports the expression containing these.  This is useful as in R

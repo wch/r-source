@@ -1,0 +1,8 @@
+Package: tools
+Version: @VERSION@
+Priority: base
+Title: Tools for Package Development and Administration
+Author: Kurt Hornik.
+Maintainer: R Core Team <R-core@r-project.org>
+Description: Tools for package development and administration.
+License: GPL Version 2 or later.
