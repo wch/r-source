@@ -116,7 +116,7 @@ summary.manova <-
         nt <- nterms + 1
         df[nt] <- rdf
         ss[[nt]] <- crossprod(resid)
-        nmrows[nt] <- "Residuals"
+        names(ss)[nt] <- nmrows[nt] <- "Residuals"
         ok <- df[-nt] > 0
         eigs <- array(NA, c(nterms, nresp))
         dimnames(eigs) <- list(nmrows[-nt], NULL)

@@ -27,7 +27,7 @@
 }
 \value{
   A list with components
-  \item{SS}{A names list of sums of squares and product matrices.}
+  \item{SS}{A named list of sums of squares and product matrices.}
   \item{Eigenvalues}{A matrix of eigenvalues, }
   \item{stats}{A matrix of the statistics, approximate F value and
     degrees of freedom.}
