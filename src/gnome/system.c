@@ -798,37 +798,6 @@ int __main() {return 0;}
 
 /* Local Time and Date */
 
-/* If the time/ctime version fails */
-/* use the follwing */
-
-#ifdef FALLBACK
-static char datebuf[64];
-char *R_Date()
-{
-    FILE *fp;
-    char *p;
-    if ((fp = popen("date", "r")) == NULL)
-	error("unix pipe error in date function\n");
-    fgets(datebuf, 64, fp);
-    fclose(fp);
-    for (p = datebuf; *p ; p++)
-	if (*p == '\n') {
-	    *p = '\0';
-	    break;
-	}
-    return datebuf;
-}
-#else
-#include <time.h>
-
-char *R_Date()
-{
-    time_t t;
-    time(&t);
-    return ctime(&t);
-}
-#endif
-
 int R_ShowFile(char *file, char *title)
 {
     FILE *fp;
@@ -839,3 +808,18 @@ int R_ShowFile(char *file, char *title)
       /* FIXME: do something here */;
     fclose(fp);
 }
+
+char *R_HomeDir()
+{
+	return getenv("RHOME");
+}
+
+/* Unix file names which begin with "." are invisible. */
+/* Macintosh file names which end with "\r" are invisible. */
+
+int R_HiddenFile(char *name)
+{
+    if (name && name[0] != '.') return 0;
+    else return 1;
+}
+
