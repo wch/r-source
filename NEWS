@@ -63,7 +63,7 @@ BUG FIXES
 	classed columns.
 
     o	Plotting histograms where the expression used to deparse to
-	multiple lines now gives a sensible title.  (PR#7421)
+	multiple lines now gives a sensible default title.  (PR#7421)
 
     o	The print method for getDLLRegisteredRoutines() was badly
 	designed, and failed for all the standard packages' DLLs.
@@ -71,6 +71,8 @@ BUG FIXES
     o	getDLLRegisteredRoutines.character() was broken.
 
     o	write.table(x, row.names=FALSE) was incorrect for a 0-column x.
+
+    o	write.table() assumed dec = "," if it was not ".".
 
 
 

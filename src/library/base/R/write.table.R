@@ -20,7 +20,7 @@ function (x, file = "", append = FALSE, quote = TRUE, sep = " ",
                                    || is.complex(x))))
 	if(length(num))
            x[num] <- lapply(x[num],
-                            function(z) gsub("\\.", ",", as.character(z)))
+                            function(z) gsub("\\.", dec, as.character(z)))
     }
     ## as.matrix might turn integer or numeric columns into a complex matrix
     cmplx <- sapply(x, is.complex)
