@@ -15,6 +15,8 @@ DISTFILES = Makefile.in
 
 SUBDIRS = X11 gnome
 
+MODULES = $(R_GUIS)
+
 all: Makefile R
 
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
@@ -23,7 +25,7 @@ Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	  $(SHELL) ./config.status
 
 R: Makefile
-	@for g in $(R_GUIS) ""; do \
+	@for g in $(MODULES) ""; do \
 	  if test -n "$${g}"; then \
 	    (cd $${g} && $(MAKE) R) || exit 1; \
 	  fi; \
@@ -33,7 +35,7 @@ mostlyclean: clean
 clean:
 ## <FIXME>
 ## This should really work for all subdirs ...
-	@for g in $(R_GUIS) ""; do \
+	@for g in $(MODULES) ""; do \
 	  if test -n "$${g}"; then \
 	    (cd $${g} && $(MAKE) $@); \
 	  fi; \
@@ -42,7 +44,7 @@ clean:
 distclean: clean
 ## <FIXME>
 ## This should really work for all subdirs ...
-	@for g in $(R_GUIS) ""; do \
+	@for g in $(MODULES) ""; do \
 	  if test -n "$${g}"; then \
 	    (cd $${g} && $(MAKE) $@); \
 	  fi; \
