@@ -109,6 +109,17 @@ Date: Mon, 6 Sep 1999 11:04:03 +0200
 Subject: text( col=, cex=, font=) : doesn't allow more than length-1 arg
 From: Martin Maechler <maechler@stat.math.ethz.ch>
 Date: Mon, 27 Sep 1999 11:12:08 +0200
+* PR# 299 *
+Subject: Wrong text() adjustment with (math)expression and "\n"
+From: Martin Maechler <maechler@stat.math.ethz.ch>
+Date: Tue, 26 Oct 1999 19:57:01 +0200 (MET DST)
+--Not clear this is really a bug
+* PR# 308 *
+Subject:  R abnormal exit when plotting lm 
+From: Ulf Mehlig <umehlig@uni-bremen.de>
+Date: Tue, 2 Nov 1999 22:18:23 +0100
+--This is a problem with the X library (or possibly X server) when using plot.lm.
+--We need further details (promised later).
 
 Directory:  In-Out
 
@@ -167,6 +178,11 @@ From: Patrick Lindsey <plindsey@alpha.luc.ac.be>
 Date: Wed, 1 Sep 1999 11:58:51 +0200 (MET DST)
 --There is a 128K limit on functions wirh keep.source set. Try modular
 --programming!
+* PR# 293 *
+Subject: dimnames and subscripting
+From: Jonathan Rougier <J.C.Rougier@durham.ac.uk>
+Date: Fri, 8 Oct 1999 09:43:51 +0100 (BST)
+--same as PR#257
 
 Directory:  Low-level
 
@@ -206,6 +222,11 @@ Subject: definition of R_problem_buf in S.h
 From: vogels@ieee.org
 Date: Mon, 14 Jun 1999 17:56:04 +0200 (MET DST)
 --Same as #185
+* PR# 296 *
+Subject: source(,echo=T) doesn't echo comments
+From: Thomas Lumley <thomas@biostat.washington.edu>
+Date: Thu, 21 Oct 1999 08:59:22 -0700 (PDT)
+--Currently, a feature
 
 Directory:  Misc
 
@@ -283,50 +304,6 @@ none
 
 Directory:  incoming
 
-* PR# 291 *
-Subject: floor(NaN) problem fixed in massdist.c
-From: ntakebay@bio.indiana.edu
-Date: Fri, 8 Oct 1999 04:57:42 +0200 (MET DST)
-* PR# 292 *
-Subject: Check script
-From: Martyn Plummer <plummer@iarc.fr>
-Date: Fri, 08 Oct 1999 09:59:04 +0200 (CEST)
-* PR# 293 *
-Subject: dimnames and subscripting
-From: Jonathan Rougier <J.C.Rougier@durham.ac.uk>
-Date: Fri, 8 Oct 1999 09:43:51 +0100 (BST)
-* PR# 295 *
-Subject: free heap < 0
-From: Thomas Lumley <thomas@biostat.washington.edu>
-Date: Thu, 21 Oct 1999 08:36:35 -0700 (PDT)
-* PR# 296 *
-Subject: source(,echo=T) doesn't echo comments
-From: Thomas Lumley <thomas@biostat.washington.edu>
-Date: Thu, 21 Oct 1999 08:59:22 -0700 (PDT)
-* PR# 297 *
-Subject: explicit weights=NULL fails in glm,lm
-From: Thomas Lumley <thomas@biostat.washington.edu>
-Date: Mon, 25 Oct 1999 10:34:28 -0700 (PDT)
-* PR# 298 *
-Subject: dodgy list operation
-From: Jonathan Rougier <J.C.Rougier@durham.ac.uk>
-Date: Tue, 26 Oct 1999 14:46:11 +0100 (BST)
-* PR# 299 *
-Subject: Wrong text() adjustment with (math)expression and "\n"
-From: Martin Maechler <maechler@stat.math.ethz.ch>
-Date: Tue, 26 Oct 1999 19:57:01 +0200 (MET DST)
-* PR# 300 *
-Subject: Plotting bug in R
-From: Stephen Turner <S.R.E.Turner@statslab.cam.ac.uk>
-Date: Wed, 27 Oct 1999 17:31:01 +0100 (GMT)
-* PR# 301 *
-Subject: expand.grid()
-From: Jonathan Rougier <J.C.Rougier@durham.ac.uk>
-Date: Thu, 28 Oct 1999 17:23:02 +0100 (BST)
-* PR# 302 *
-Subject: modreg buggy: uninitialized variable in sinerp.f
-From: "Thomas Hoffmann" <thoffman@zappa.sax.de>
-Date: Sat, 30 Oct 99 13:24:14 +0100
 * PR# 303 *
 Subject: read.table problem on Linux/Alpha (seg faults caused by isspace(R_EOF))
 From: ntakebay@bio.indiana.edu
@@ -339,31 +316,11 @@ Date: Mon, 1 Nov 1999 12:20:33 +1300 (NZDT)
 Subject: bug in sample
 From: Robert Gentleman <rgentlem@jimmy.harvard.edu>
 Date: Mon, 1 Nov 1999 16:32:15 -0500
-* PR# 306 *
-Subject: problem with "[[<-"
-From: Saikat DebRoy <saikat@stat.wisc.edu>
-Date: 01 Nov 1999 16:11:09 -0600
 * PR# 307 *
 Subject: bugs in scan()
 From: Ray Brownrigg <Ray.Brownrigg@mcs.vuw.ac.nz>
 Date: Wed, 3 Nov 1999 10:05:26 +1300 (NZDT)
-* PR# 308 *
-Subject:  R abnormal exit when plotting lm 
-From: Ulf Mehlig <umehlig@uni-bremen.de>
-Date: Tue, 2 Nov 1999 22:18:23 +0100
-* PR# 310 *
-Subject: Re: discrepancy between PACKAGES file and contents of the contrib
-From: Prof Brian D Ripley <ripley@stats.ox.ac.uk>
-Date: Wed, 3 Nov 1999 07:53:58 +0000 (GMT)
-* PR# 311 *
-Subject: bug in Rdconvlib.pl converting to latex
-From: Ray Brownrigg <Ray.Brownrigg@mcs.vuw.ac.nz>
-Date: Thu, 4 Nov 1999 11:16:49 +1300 (NZDT)
-* PR# 312 *
-Subject: R_OpenSiteFile: Do not use a null ptr as filename in fopen
-From: Thomas Hoffmann <hoffmann@ehmgs2.et.tu-dresden.de>
-Date: Thu, 4 Nov 1999 10:08:45 +0100 (MET)
-* PR# 313 *
-Subject: rpart problem
-From: "Potter, David M" <david_m_potter@groton.pfizer.com>
-Date: Fri, 5 Nov 1999 13:09:50 -0500 
+* PR# 314 *
+Subject: arima0()
+From: hammour@msn.com
+Date: Sun, 7 Nov 1999 17:56:46 +0100 (MET)
