@@ -15,10 +15,10 @@
 
 /* Define to a macro mangling the given C identifier (in lower and upper
    case), which must not contain underscores, for linking with Fortran. */
-/* #undef F77_FUNC */
+#define F77_FUNC(name,NAME) name ## _
 
 /* As F77_FUNC, but for C identifiers containing underscores. */
-/* #undef F77_FUNC_ */
+#define F77_FUNC_(name,NAME) name ## __
 
 /* Define if you have the `access' function. */
 #define HAVE_ACCESS 1
@@ -59,7 +59,7 @@
 
 /* Define to 1 if you have the declaration of `isnan', and to 0 if you don't.
    */
-#define HAVE_DECL_ISNAN 0
+#define HAVE_DECL_ISNAN 1
 
 /* Define if you have the <dirent.h> header file, and it defines `DIR'. */
 #define HAVE_DIRENT_H 1
@@ -71,7 +71,7 @@
 /* #undef HAVE_DL_H */
 
 /* Define if you don't have `vprintf' but do have `_doprnt.' */
-#define HAVE_DOPRNT 1
+/* #undef HAVE_DOPRNT */
 
 /* Define if C's Rcomplex and Fortran's COMPLEX*16 can be interchanged, and
    can do arithmetic on the latter. */
@@ -84,7 +84,7 @@
 #define HAVE_ERRNO_H 1
 
 /* Define if you have the `expm1' function. */
-#undef HAVE_EXPM1
+/* #undef HAVE_EXPM1 */
 
 /* Define if your Fortran compiler appends an underscore to external names. */
 #define HAVE_F77_UNDERSCORE 1
@@ -159,7 +159,7 @@
 /* #undef HAVE_LIBDL */
 
 /* Define if you have the `m' library (-lm). */
-#undef HAVE_LIBM
+#define HAVE_LIBM 1
 
 /* Define if you have the `ncurses' library (-lncurses). */
 /* #undef HAVE_LIBNCURSES */
@@ -275,7 +275,7 @@
 #define HAVE_STRDUP 1
 
 /* Define if you have the <strings.h> header file. */
-/* #undef HAVE_STRINGS 1 */
+/* #undef HAVE_STRINGS_H  */
 
 /* Define if you have the <string.h> header file. */
 #define HAVE_STRING_H 1
@@ -371,7 +371,7 @@
 /* #undef HAVE_XDR */
 
 /* Define if you have the zlib headers and libraries. */
-#define HAVE_ZLIB 1
+/* #undef HAVE_ZLIB */
 
 /* Define if you have IEEE 754 floating point arithmetic. */
 #define IEEE_754 1
