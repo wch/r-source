@@ -59,6 +59,8 @@ BUG FIXES
     o	scan(strip.white=TRUE) and readline() could give incorrect 
 	answers when an input field was empty or blank.
 
+    o   dchisq() now behaves better for large values of its ncp parameter 
+
 
 
 		CHANGES IN R VERSION 1.2.0
