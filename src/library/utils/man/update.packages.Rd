@@ -55,13 +55,17 @@ install.packages(pkgs, lib, repos = CRAN,
     \code{"http://cran.r-project.org"} or its Statlib mirror,
     \code{"http://lib.stat.cmu.edu/R/CRAN"}.
 #ifdef windows
-    Can also be \code{NULL} to install from local \code{.zip} files.
+    Can be \code{NULL} to install from local \code{.zip} files.
 #endif
   }
   \item{contriburl}{URL(s) of the contrib section of the repositories.
     Use this argument only if your CRAN mirror is incomplete, e.g.,
     because you burned
-    only the contrib section on a CD.  Overrides argument \code{repos}.}
+    only the contrib section on a CD.  Overrides argument \code{repos}.
+#ifdef windows
+    Can also be \code{NULL} to install from local \code{.zip} files.
+#endif
+  }
   \item{CRAN}{character, an earlier way to specify \code{repos}.}
   \item{method}{Download method, see \code{\link{download.file}}.}
   \item{pkgs}{character vector of the short names of packages/bundles whose

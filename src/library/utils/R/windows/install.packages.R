@@ -226,7 +226,7 @@ install.packages <- function(pkgs, lib, repos = CRAN,
         pkgs <- pkgs[!inuse]
         pkgnames <- pkgnames[!inuse]
     }
-    if(is.null(repos) & missing(contriburl)) {
+    if(is.null(contriburl)) {
         for(i in seq(along=pkgs))
             unpackPkg(pkgs[i], pkgnames[i], lib, installWithVers)
         link.html.help(verbose=TRUE)
@@ -403,6 +403,7 @@ chooseCRANmirror <- function()
 contrib.url <- function(repos, type = c("binary", "source"))
 {
     type <- if(missing(type)) "binary" else match.arg(type)
+    if(is.null(repos)) return(NULL)
     if(length(grep("@CRAN@", repos)) > 0)
         if(interactive()) {
             cat("--- Please select a CRAN mirror for use in this session ---\n")
