@@ -1348,10 +1348,8 @@ function(package, dir, lib.loc = NULL)
             ## Determine names of declared S3 methods and associated S3
             ## generics.
             nsS3methodsList <- getNamespaceInfo(package, "S3methods")
-            nsS3generics <-
-                as.character(sapply(nsS3methodsList, "[[", 1))
-            nsS3methods <-
-                as.character(sapply(nsS3methodsList, "[[", 3))
+            nsS3generics <- nsS3methodsList[, 1]
+            nsS3methods <- nsS3methodsList[, 3]
         }
     }
     else {
@@ -1402,10 +1400,8 @@ function(package, dir, lib.loc = NULL)
             ## Determine names of declared S3 methods and associated S3
             ## generics.
             nsS3methodsList <- .getNamespaceS3methodsList(nsInfo)
-            nsS3generics <-
-                as.character(sapply(nsS3methodsList, "[[", 1))
-            nsS3methods <-
-                as.character(sapply(nsS3methodsList, "[[", 3))
+            nsS3generics <- nsS3methodsList[, 1]
+            nsS3methods <- nsS3methodsList[, 3]
         }
 
     }
@@ -1764,10 +1760,8 @@ function(package, dir, lib.loc = NULL)
             ## Determine names of declared S3 methods and associated S3
             ## generics.
             nsS3methodsList <- getNamespaceInfo(package, "S3methods")
-            nsS3generics <-
-                as.character(sapply(nsS3methodsList, "[[", 1))
-            nsS3methods <-
-                as.character(sapply(nsS3methodsList, "[[", 3))
+            nsS3generics <- nsS3methodsList[, 1]
+            nsS3methods <- nsS3methodsList[, 3]
             ## Determine unexported but declared S3 methods.
             S3reg <- nsS3methods[! nsS3methods %in% objectsInCode]
         }
@@ -1816,10 +1810,8 @@ function(package, dir, lib.loc = NULL)
             ## Determine names of declared S3 methods and associated S3
             ## generics.
             nsS3methodsList <- .getNamespaceS3methodsList(nsInfo)
-            nsS3generics <-
-                as.character(sapply(nsS3methodsList, "[[", 1))
-            nsS3methods <-
-                as.character(sapply(nsS3methodsList, "[[", 3))
+            nsS3generics <- nsS3methodsList[, 1]
+            nsS3methods <- nsS3methodsList[, 3]
         }
 
     }
@@ -2067,10 +2059,8 @@ function(package, dir, lib.loc = NULL)
     replaceFuns <- character()
 
     if(hasNamespace) {
-        nsS3generics <-
-            as.character(sapply(nsS3methodsList, "[[", 1))
-        nsS3methods <-
-            as.character(sapply(nsS3methodsList, "[[", 3))
+        nsS3generics <- nsS3methodsList[, 1]
+        nsS3methods <- nsS3methodsList[, 3]
         ## S3 replacement methods from namespace registration?
         idx <- grep("<-$", nsS3generics)
         if(any(idx)) replaceFuns <- nsS3methods[idx]

@@ -15,6 +15,7 @@
 \alias{parseNamespaceFile}
 \alias{registerS3method}
 \alias{setNamespaceInfo}
+\alias{registerS3methods}
 \alias{.__S3MethodsTable__.}
 \alias{.mergeExportMethods}
 \usage{
@@ -30,6 +31,7 @@ namespaceImportMethods(self, ns, vars)
 packageHasNamespace(package, package.lib)
 parseNamespaceFile(package, package.lib, mustExist = TRUE)
 registerS3method(genname, class, method, envir = parent.frame())
+registerS3methods(info, env)
 setNamespaceInfo(ns, which, val)
 .mergeExportMethods(new, ns)
 }
@@ -46,7 +48,8 @@ setNamespaceInfo(ns, which, val)
   \item{mustExist}{logical.}
   \item{genname}{character.}
   \item{class}{character.}
-  \item{envir}{environment.}
+  \item{envir, env}{environment.}
+  \item{info}{a 3-column character matrix.}
   \item{which}{character.}
   \item{val}{any object.}
   \item{\dots}{character arguments.}
