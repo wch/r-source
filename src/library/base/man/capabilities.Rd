@@ -30,7 +30,7 @@ capabilities(what = NULL)
       the \R event loop?}
     \item{cledit}{Is command-line editing available in the current \R
       session?  This is false in non-interactive sessions.
-#ifdef Unix
+#ifdef unix
       It will be true if \code{readline} supported has been compiled in
       and \code{--no-readline} was \emph{not} invoked.
 #endif
