@@ -8,7 +8,7 @@
   already, or unloads it.
 }
 \usage{
-library.dynam(chname, package = .packages(), lib.loc = NULL,
+library.dynam(chname, package = NULL, lib.loc = NULL,
               verbose = getOption("verbose"),
               file.ext = .Platform$dynlib.ext, \dots)
 library.dynam.unload(chname, libpath,
@@ -19,7 +19,8 @@ library.dynam.unload(chname, libpath,
 \arguments{
   \item{chname}{a character string naming a shared library to load.}
   \item{package}{a character vector with the names of packages to search
-    through.}
+    through, or \code{NULL}.  By default, all packages in the search
+    path are used.}
   \item{lib.loc}{a character vector describing the location of \R
     library trees to search through, or \code{NULL}.  The default value
     of \code{NULL} corresponds to all libraries currently known.}

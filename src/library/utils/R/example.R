@@ -1,6 +1,5 @@
-
 example <-
-function(topic, package = .packages(), lib.loc = NULL, local = FALSE,
+function(topic, package = NULL, lib.loc = NULL, local = FALSE,
 	 echo = TRUE, verbose = getOption("verbose"), setRNG = FALSE,
 	 prompt.echo = paste(abbreviate(topic, 6), "> ", sep = ""))
 {

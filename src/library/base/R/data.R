@@ -1,6 +1,6 @@
 data <-
 function(..., list = character(0),
-         package = .packages(), lib.loc = NULL,
+         package = NULL, lib.loc = NULL,
          verbose = getOption("verbose"), envir = .GlobalEnv)
 {
     fileExt <- function(x) sub(".*\\.", "", x)

@@ -6,7 +6,7 @@
   Loads specified data sets, or list the available data sets.
 }
 \usage{
-data(\dots, list = character(0), package = .packages(),
+data(\dots, list = character(0), package = NULL,
      lib.loc = NULL, verbose = getOption("verbose"),
      envir = .GlobalEnv)
 }
@@ -14,9 +14,9 @@ data(\dots, list = character(0), package = .packages(),
   \item{\dots}{a sequence of names or literal character strings.}
   \item{list}{a character vector.}
   \item{package}{a character vector giving the packages to look
-    in for data sets.  By default, all packages in the search path are
-    used, then the \file{data} subdirectory (if present) of the current
-    working directory.}
+    in for data sets, or \code{NULL}.  By default, all packages in the
+    search path are used, then the \file{data} subdirectory (if present)
+    of the current working directory.}
   \item{lib.loc}{a character vector of directory names of \R libraries,
     or \code{NULL}.  The default value of \code{NULL} corresponds to all
     libraries currently known.  If the default is used, the loaded

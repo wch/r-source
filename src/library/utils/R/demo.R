@@ -1,6 +1,6 @@
 demo <-
 function(topic, device = getOption("device"),
-	 package = .packages(), lib.loc = NULL,
+	 package = NULL, lib.loc = NULL,
 	 character.only = FALSE, verbose = getOption("verbose"))
 {
     paths <- .find.package(package, lib.loc, verbose = verbose)
