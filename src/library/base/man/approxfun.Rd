@@ -57,9 +57,10 @@ approxfun(x, y = NULL,       method="linear",
 }
 \details{
   The inputs can contain missing values which are deleted, so at least
-  two complete \code{(x, y)} pairs are required.  If there are
-  duplicated (tied) \code{x} values and \code{ties} is a function it is
-  applied to the \code{y} values for each distinct \code{x} value.
+  two complete \code{(x, y)} pairs are required (for \code{method =
+  "linear"}, one otherwise).  If there are duplicated (tied) \code{x}
+  values and \code{ties} is a function it is applied to the \code{y}
+  values for each distinct \code{x} value.
   Useful functions in this context include \code{\link{mean}},
   \code{\link{min}}, and \code{\link{max}}.  If \code{ties="ordered"}
   the \code{x} values are assumed to be already ordered.  The first
