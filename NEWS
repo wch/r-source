@@ -359,6 +359,9 @@ BUG FIXES
     o	StructTS() now accepts numeric time series of integer storage mode.
 
 
+    o   all(), any() now handle NAs as documented.
+
+
 
 	**************************************************
 	*						 *
