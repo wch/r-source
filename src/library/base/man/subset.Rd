@@ -12,29 +12,31 @@ subset.default(x, subset, \dots)
 subset.data.frame(x, subset, select, \dots)
 }
 \arguments{
-  \item{x}{object to be subsetted}
-  \item{\dots}{how to subset, depends on object}
-  \item{subset}{logical expression}
-  \item{select}{expression, indicating variables to select from a
-    data frame}
+  \item{x}{object to be subsetted.}
+  \item{subset}{logical expression.}
+  \item{select}{expression, indicating columns to select from a
+    data frame.}
+  \item{\dots}{further arguments to be passed to or from other methods.}
 }
 \details{
   For ordinary vectors, the result is simply
   \code{x[subset & !is.na(subset)]}.
 
   For data frames, the \code{subset} argument works similarly on the
-  rows.  Note that \code{subset} will be evaluated in the data frame.
+  rows.  Note that \code{subset} will be evaluated in the data frame, so
+  columns can be referred to (by name) as variables.
 
   The \code{select} argument exists only for the method for data frames.
   It works by
-  first replacing variable names in the selection expression with the
+  first replacing names in the selection expression with the
   corresponding column numbers in the data frame and then using the
   resulting integer vector to index the columns.  This allows the use
-  of the standard indexing conventions so that for examples ranges of
-  variables can be specified easily.
+  of the standard indexing conventions so that for example ranges of
+  columns can be specified easily.
 }
 \value{
-  Selected rows and columns of the object \code{x}.
+  An object similar to \code{x} contain just the selected elements (for
+  a vector), rows and columns (for a data frame), and so on.
 }
 \author{Peter Dalgaard}
 \seealso{
