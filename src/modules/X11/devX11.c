@@ -668,7 +668,7 @@ static XFontSet RXLoadQueryFontSet(Display *display,
                                   const char *fontset_name)
 {
   XFontSet fontset;
-  int  i, missing_charset_count;
+  int  /*i,*/ missing_charset_count;
   char **missing_charset_list, *def_string;
   char fs_name[1001];
   
@@ -677,7 +677,7 @@ static XFontSet RXLoadQueryFontSet(Display *display,
 			   &missing_charset_count, &def_string);
   if (missing_charset_count) {
       /* for(i = 0; i < missing_charset_count; i++)
-	 warning("font for charset %s is lacking.", missing_charset_list[i]); */
+	 warning("font for charset %s is lacking.", missing_charset_list[i]);*/
       XFreeStringList(missing_charset_list);
   }
   return fontset;
