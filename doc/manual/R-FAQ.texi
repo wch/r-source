@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2004
-@set FAQ-VERSION 1.9-25 @value{FAQ-YEAR}-06-21
+@set FAQ-VERSION 1.9-26 @value{FAQ-YEAR}-06-23
 @set REL-VERSION 1.9.1
 @set REL-YEAR 2004
 @set FAQ-ISBN 3-900051-01-1
@@ -2519,6 +2519,9 @@ R interface to PVM (Parallel Virtual Machine).  Provides interface to
 PVM APIs, and examples and documentation for its use.
 @item rqmcmb2
 Markov chain marginal bootstrap for quantile regression.
+@item rrcov
+Functions for robust location and scatter estimation and robust
+regression with HBDP.
 @item rsprng
 Provides interface to SPRNG (Scalable Parallel Random Number Generators)
 APIs, and examples and documentation for its use.
