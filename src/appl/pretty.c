@@ -1,6 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
+ *  Copyright (C) 1998  Robert Gentleman, Ross Ihaka and R core team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -31,7 +32,7 @@
  *
  * We determine
  * if the interval (up - lo) is ``small'' [<==>	 i_small == 1, below].
- * In that case integer overflow might occur in *lo/unit[k] or *up/unit[k].
+ * In that case integer overflow might occur in *lo/unit or *up/unit.
 
  * For the ``i_small'' situation, there is a NEW PARAMETER `shrink_sml',
  * the factor by which the "scale" is shrunk.		    ~~~~~~~~~~
@@ -46,8 +47,8 @@
 
 int pretty(double *lo, double *up, int *ndiv, double *shrink_sml)
 {
-	double	dx, cell, unit[4], dif[4];
-	int	i, k, ns, nu;
+	double	dx, cell, unit, base, U;
+	int	ns, nu;
 	short	i_small;
 
 	dx = *up - *lo;
@@ -66,29 +67,27 @@ int pretty(double *lo, double *up, int *ndiv, double *shrink_sml)
 		cell = dx;
 	cell /= *ndiv;
 
-	unit[0] = pow(10.0,((int)(999+log10(cell)))-999);
-	unit[1] =  2*unit[0];
-	unit[2] =  5*unit[0];
-	unit[3] = 10*unit[0];
-	for( i=0; i<4; i++ )
-		dif[i] = fabs(cell-unit[i]);
-	/* k := arg min_{j} dif[j]  : */
-	k = 0; for( i=1; i<4; i++ ) if(dif[i] < dif[k]) k=i;
+	base = pow(10, ((int)(999+log10(cell)))-999);
+	/* unit :=  arg min _u { |u - cell| ;  u = c(1,2,5,10) * base } */
+	unit = base;
+	if(fabs((U = 2*base)-cell) < fabs(unit-cell)) unit = U;
+	if(fabs((U = 5*base)-cell) < fabs(unit-cell)) unit = U;
+	if(fabs((U =10*base)-cell) < fabs(unit-cell)) unit = U;
 
 #ifdef DEBUG
 	fprintf(stderr, "pretty(lo=%g,up=%g,ndiv=%d)\n", *lo, *up, *ndiv);
-	fprintf(stderr, "\t dx=%g; is.small:%d. ==> cell=%g; unit[%d]=%g\n",
-		dx, (int)i_small, cell, k, unit[k]);
+	fprintf(stderr, "\t dx=%g; is.small:%d. ==> cell=%g; unit=%g\n",
+		dx, (int)i_small, cell, unit);
 #endif
-	ns = ((int)(999+ *lo/unit[k]))-999;
-	while( ns*unit[k] > *lo )
+	ns = ((int)(999+ *lo/unit))-999;
+	while( ns*unit > *lo )
 		ns--;
-	*lo = unit[k]*ns;
-	nu = 999-(int)(999- *up/unit[k]);
-	while( nu*unit[k] < *up )
+	nu = 999-(int)(999- *up/unit);
+	while( nu*unit < *up )
 		nu++;
-	*up = unit[k]*nu;
-	*ndiv = (*up - *lo)/unit[k] +0.5;
+	*lo = ns * unit;
+	*up = nu * unit;
+	*ndiv = nu - ns;
 #ifdef DEBUG
 	fprintf(stderr, "\t ns=%d ==> lo=%g\n", ns, *lo);
 	fprintf(stderr, "\t nu=%d ==> up=%g  ==> ndiv = %d\n", nu, *up, *ndiv);
