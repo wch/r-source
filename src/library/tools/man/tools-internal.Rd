@@ -43,6 +43,7 @@
 \alias{print.checkVignetteIndex}
 \alias{.checkDemoIndex}
 \alias{print.checkDemoIndex}
+\alias{.stripRdComments}
 \description{
   Internal tools functions.
 }
@@ -63,6 +64,7 @@ Rdcontents(RdFiles)
 Rdindex(RdFiles, outFile = "", type = NULL,
         width = 0.9 * getOption("width"), indent = NULL)
 Rd2contents(dir, outFile = "")
+.stripRdComments(lines)
 .writeContentsRDS(contents, outFile)
 .writeContentsDCF(contents, packageName, outFile)
 .buildDataIndex(dataDir, contents)
