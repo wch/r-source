@@ -74,7 +74,7 @@ if test "$dir"
 then
  echo "${dir}"
  test -d ${lib}/${pkg}/R || mkdir ${lib}/${pkg}/R
- cat `ls ${dir}/[a-z]* | sed '/CVS/d; /~$/d; /\.orig$/d; /\.bak$/d; \
+ cat `ls ${dir}/[a-z]* | sed '/CVS/d; /~$/d; /\.orig$/d; /\.bak$/d;
 		/^core$/d; /system.*/d'` > ${lib}/${pkg}/R/${pkg}
 fi
 
