@@ -118,7 +118,8 @@ $(libRmath_la): $(libRmath_la_OBJECTS)
 	$(SHLIB_LINK) -o $@ $(libRmath_la_LDFLAGS) $(libRmath_la_OBJECTS)
 
 test: $(srcdir)/test.c
-	$(CC) -o $@ $(ALL_CPPFLAGS) $(ALL_CFLAGS) $< -L. -lRmath -lm
+	$(CC) -o $@ $(ALL_CPPFLAGS) $(ALL_CFLAGS) $(srcdir)/test.c \
+	  -L. -lRmath -lm
 
 mostlyclean: clean
 clean:
