@@ -54,13 +54,8 @@
 void R_StartConsole(Rboolean OpenConsole) { ptr_R_StartConsole(); }
 #endif
 
-
+Rboolean UsingReadline = TRUE;  /* used in sys-std.c & ../main/platform.c */
 SA_TYPE SaveAction = SA_SAVEASK;
-SA_TYPE	RestoreAction = SA_RESTORE;
-Rboolean UsingReadline = TRUE;
-Rboolean LoadSiteFile = TRUE;
-Rboolean LoadInitFile = TRUE;
-Rboolean DebugInitFile = FALSE;
 
 /* call pointers to allow interface switching */
 
@@ -260,7 +255,8 @@ int Rf_initialize_R(int ac, char **av)
  *  Since users' expectations for save/no-save will differ, we decided
  *  that they should be forced to specify in the non-interactive case.
  */
-    if (!R_Interactive && SaveAction != SA_SAVE && SaveAction != SA_NOSAVE)
+    if (!R_Interactive && Rp->SaveAction != SA_SAVE && 
+	Rp->SaveAction != SA_NOSAVE)
 	R_Suicide("you must specify `--save', `--no-save' or `--vanilla'");
 
     if ((R_HistoryFile = getenv("R_HISTFILE")) == NULL)

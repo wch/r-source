@@ -46,7 +46,7 @@ R-DLLLIBS =-L. $(FLIBS) -lRblas -lcomctl32 -lversion
 SOURCES = \
   console.c dataentry.c devga.c dodevga.c dynload.c edit.c editor.c extra.c \
   opt.c pager.c preferences.c psignal.c rhome.c rui.c run.c shext.c \
-  sys-common.c sys-win32.c system.c
+  sys-win32.c system.c
 OBJS = $(SOURCES:.c=.o) e_pow.o
 MAINLIBS = ../main/libmain.a ../appl/libappl.a ../nmath/libnmath.a
 EXTRALIBS = graphapp/ga.a getline/gl.a ../extra/xdr/xdr.a \
