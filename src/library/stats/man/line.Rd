@@ -31,7 +31,6 @@ line(x, y)
   \code{\link{lm}}.
 }
 \examples{
-library(eda)
 data(cars)
 plot(cars)
 (z <- line(cars))
