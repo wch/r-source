@@ -155,7 +155,7 @@ arima(x, order = c(0, 0, 0),
 
   \item{series}{the name of the series \code{x}.}
 
-  \item{convergence}{the value returned by \code{\link{optim}}.}
+  \item{code}{the convergence value returned by \code{\link{optim}}.}
 
   \item{n.cond}{the number of initial observations not used in the fitting.}
 
