@@ -7,29 +7,24 @@
 Adjust for Missing Values
 }
 \description{
-  Use missing value information to adjust residuals and predictions,
-  or to report the effects of an \code{na.action}.
+  Use missing value information to report the effects of an \code{na.action}.
 }
 \usage{
-naprint(omit, x, \dots)
+naprint(x, \dots)
 }
 \arguments{
-\item{omit}{
-An object produced by an \code{na.action} function.
-}
-\item{x}{
-  A vector, data frame, or matrix to be adjusted based upon the
-  missing value information.
-}}
-\value{
-These return \code{object}.
+  \item{x}{
+    An object produced by an \code{na.action} function.
+  }
 }
 \details{
-Currently these functions do nothing. They are provided to enable
-other functions to be written in ways compatible with the code in
-S-PLUS 2000 which does use these for the \code{na.exclude} action to
-pad the object with \code{NA}s in the correct positions to have the same
-number of rows as the original data frame.
+  This is a generic function, and the exact information differs by
+  method. \code{naprint.omit} reports the number of rows omitted:
+  \code{naprint.default} reports an empty string.
+}
+\value{
+  A character string providing information on missing values, for
+  example the number.
 }
 \keyword{NA}
 \keyword{models}
