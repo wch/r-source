@@ -444,6 +444,8 @@ endif
 ## ===================== Maintainer targets ========================
 
 RVER = $(shell cut -d' ' -f1 ../../VERSION | sed -n 1p)
+RVER-PAT = $(shell if test "`cut -f2 -d' ' ../../VERSION`" = "Patched"; then echo "-patched"; else echo ""; fi)
+
 
 docfiles:
 	$(MAKE) -f Makefile.docfiles
@@ -451,7 +453,7 @@ docfiles:
 bitmapdll:
 	$(MAKE) -C bitmap
 
-CRANREC = cran.r-project.org::CRAN/src/contrib/$(RVER)/Recommended
+CRANREC = cran.r-project.org::CRAN/src/contrib/$(RVER)$(RVER-PAT)/Recommended
 
 rsync-recommended:
 	@(cd ../library; \
