@@ -682,6 +682,10 @@ static R_code_t replcon_loop_cont_fun(R_code_t code)
     rs = (struct replstate_st *) CHAR(EVAL_FRAME_VAR1());
 
     if(*rs->bufp == 0) {
+	/**** for some reason this seems to be needed on PPC Linuc
+	   then LC_ALL=C.  I have no idea why -- LT */
+        memset(rs->buf, 0, rs->len);
+
 	if (rs->prompt_needed) {
 	    char *prompt = R_PromptString(R_BrowseLevel, rs->prompt_type);
 	    R_Busy(0);
