@@ -4274,12 +4274,24 @@ the left, larger ones to the right.
 @deftypefunx void R_qsort_I (double *@var{v}, int *@var{I}, int @var{i}, int @var{j})
 @deftypefunx void R_qsort_int  (int *@var{iv},  int @var{i}, int @var{j})
 @deftypefunx void R_qsort_int_I(int *@var{iv}, int *@var{I}, int @var{i}, int @var{j})
-These sort @code{v[i:j]} or @code{iv[i:j]} (using 1-indexing,
+
+@deftypefunx int F77_NAME(qsort4)(double *@var{v}, int *@var{indx}, int *@var{ii}, int *@var{jj});
+@deftypefunx int F77_NAME(qsort3)(double *@var{v},            int *@var{ii}, int *@var{jj});
+
+These routines sort @code{v[i:j]} or @code{iv[i:j]} (using 1-indexing,
 i.e. @code{v[1]} is the first element) calling the same quicksort algorithm
 as used by @R{}'s @code{sort(v, method = "quick")} and documented there.
-Note that @code{NA}s are not handled (explicitely) and you should rather
+The @code{..._I()} versions also return the @code{sort.index()} verctor in
+@code{I} (where the ordering is @emph{not} stable for ties).
+
+The FORTRAN interface routines for double precision vectors are
+@code{qsort3} and @code{qsort4}.
+
+Note that @code{NA}s are not handled (explicitely) and you should
 use different sorting functions if NAs can be present.
 @end deftypefun
+
+
 
 @deftypefun void R_max_col (double* @var{matrix}, int* @var{nr}, int* @var{nc}, int* @var{maxes})
 Given the @var{nr} by @var{ny} matrix @code{matrix} in row (``FORTRAN'')
@@ -4301,7 +4313,7 @@ outside the @var{xt}[] range.  On return, @code{*@var{mflag}} equals
 @var{xt}[@var{n}], and 0 otherwise.
 
 The algorithm is particularly fast when @var{ilo} is set to the last
-result of @code{interv()} and @var{x} is a value of a sequence which
+result of @code{findInterval()} and @var{x} is a value of a sequence which
 is increasing or decreasing for subsequent calls.
 
 There is also an @code{F77_CALL(interv)()} version of
