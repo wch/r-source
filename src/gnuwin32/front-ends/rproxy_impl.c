@@ -1,6 +1,10 @@
 /*
  *  RProxy: Connector implementation between application and R language
  *  Copyright (C) 1999 Thomas Baier
+ *
+ *  R_Proxy_init based on rtest.c,  Copyright (C) 1998--1999  
+ *                                  R Development Core Team
+ *
  * 
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Library General Public
