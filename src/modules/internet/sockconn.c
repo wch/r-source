@@ -120,7 +120,7 @@ static int sock_read_helper(Rconnection con, void *ptr, size_t size)
 	    while (-res == EINTR);
 	    if (! con->blocking && -res == EAGAIN) {
 		con->incomplete = TRUE;
-		return nread > 0 ? nread : res;
+		return nread;
 	    }
 	    else if (con->blocking && res == 0) /* should mean EOF */
 		return nread;

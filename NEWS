@@ -682,6 +682,9 @@ BUG FIXES
 
     o   socketSelect() did not check for buffered input.
 
+    o   Reads on a non-blocking socket with no available data was
+        not handled properly and could result in a segfault.
+
 
 
 
