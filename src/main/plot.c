@@ -2194,7 +2194,8 @@ SEXP do_box(SEXP call, SEXP op, SEXP args, SEXP env)
 SEXP do_locator(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP x, y, nobs, ans;
-    int i, n;
+    int i, n, type='p';
+    double xp, yp, xold=0, yold=0;
     DevDesc *dd = CurrentDevice();
 
     GCheckState(dd);
@@ -2203,6 +2204,10 @@ SEXP do_locator(SEXP call, SEXP op, SEXP args, SEXP env)
     n = asInteger(CAR(args));
     if(n <= 0 || n == NA_INTEGER)
 	error("invalid number of points in locator\n");
+    args = CDR(args);
+    if(isString(CAR(args)) && LENGTH(CAR(args)) == 1)
+	type = CHAR(STRING(CAR(args))[0])[0];
+    else errorcall(call, "invalid plot type\n");
     PROTECT(x = allocVector(REALSXP, n));
     PROTECT(y = allocVector(REALSXP, n));
     PROTECT(nobs=allocVector(INTSXP,1));
@@ -2212,6 +2217,18 @@ SEXP do_locator(SEXP call, SEXP op, SEXP args, SEXP env)
     while(i < n) {
 	if(!GLocator(&(REAL(x)[i]), &(REAL(y)[i]), USER, dd))
 	    break;
+	if(type != 'n') {
+	    GMode(1, dd);
+	    xp = REAL(x)[i];
+	    yp = REAL(y)[i];
+	    GConvert(&xp, &yp, USER, DEVICE, dd);
+	    if(type == 'p' || type == 'o')
+		GSymbol(xp, yp, DEVICE, dd->gp.pch, dd);
+	    if((type == 'l' || type == 'o') && (i > 0))
+		GLine(xold, yold, xp, yp, DEVICE, dd);
+	    GMode(2, dd);
+	    xold = xp; yold = yp;
+	}
 	i += 1;
     }
     GMode(0, dd);

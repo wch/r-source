@@ -7,6 +7,9 @@
 
 NEW FEATURES
 
+    o	locator(, type=) is implemented to plot points or draw lines
+	interactively.
+
     o	A new scheme for keeping source code with user-defined
         functions has been implemented. In particular, comments
 	will no longer move about or disappear. The flip side of the
@@ -87,7 +90,7 @@ NEW FEATURES
 
 BUG FIXES
 
-    o	substr/substring, deparse, dput, dump, print  
+    o	substr/substring, deparse, dput, dump, print
 	will work for arbitrarily long strings.
 
     o	diag and diag<- now handle correctly matrices with zero rows or cols.
