@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2001
-@set FAQ-VERSION 1.3-25, 2001-10-28
+@set FAQ-VERSION 1.3-26, 2001-10-30
 @set REL-VERSION 1.3.1
 @c %**end of header
 
@@ -1692,6 +1692,8 @@ manipulations.
 Fits a principal curve to a matrix of points in arbitrary dimension.
 @item pspline
 Smoothing splines with penalties on order @math{m} derivatives.
+@item qtl
+Analysis of experimental crosses to identify QTLs.
 @item quadprog
 For solving quadratic programming problems.
 @item quantreg
@@ -2268,6 +2270,7 @@ dir /opt/R/src/unix
 * Are GAMs implemented in R?::  
 * Why is the output not printed when I source() a file?::  
 * Why does outer() behave strangely with my function?::  
+* Why does the output from anova() depend on the order of factors in the model?::  
 @end menu
 
 @node Why does R run out of memory?, Why does sourcing a correct file fail?, R Miscellanea, R Miscellanea
@@ -2784,7 +2787,7 @@ print(summary(glm(y~x+z, family=binomial)))
 @noindent
 instead, or use @code{source(@var{file}, echo=TRUE)}.
 
-@node Why does outer() behave strangely with my function?,  , Why is the output not printed when I source() a file?, R Miscellanea
+@node Why does outer() behave strangely with my function?, Why does the output from anova() depend on the order of factors in the model?, Why is the output not printed when I source() a file?, R Miscellanea
 @section Why does outer() behave strangely with my function?
 
 As the help for @code{outer()} indicates, it does not work on arbitrary
@@ -2822,6 +2825,32 @@ then you can use @code{outer()} by writing, e.g.,
 @smallexample
 outer(1:4, 1:2, FUN = wrapper, my.fun = foo, happy = 10)
 @end smallexample
+
+@node Why does the output from anova() depend on the order of factors in the model?,  , Why does outer() behave strangely with my function?, R Miscellanea
+@section Why does the output from anova() depend on the order of factors in the model?
+
+In a model such as @code{~A+B+A:B}, R will report the difference in sums
+of squares between the models @code{~1}, @code{~A}, @code{~A+B} and
+@code{~A+B+A:B}.  If the model were @code{~B+A+A:B}, R would report
+differences between @code{~1}, @code{~B}, @code{~A+B}, and
+@code{~A+B+A:B} . In the first case the sum of squares for @code{A} is
+comparing @code{~1} and @code{~A}, in the second case it is comparing
+@code{~B} and @code{~B+A}.  In a non-orthogonal design (i.e., most
+unbalanced designs) these comparisons are (conceptually and numerically)
+different.
+
+Some packages report instead the sums of squares based on comparing the
+full model to the models with each factor removed one at a time (the
+famous `Type III sums of squares' from SAS, for example).  These do not
+depend on the order of factors in the model.  The question of which set
+of sums of squares is the Right Thing provokes low-level holy wars on
+r-help from time to time.
+
+There is no need to be agitated about the particular sums of squares
+that R reports.  You can compute your favorite sums of squares quite
+easily.  Any two models can be compared with @code{anova(model1,
+model2)}, and @code{drop1(model1)} will show the sums of squares
+resulting from dropping single terms.
 
 
 @node R Programming, R Bugs, R Miscellanea, Top

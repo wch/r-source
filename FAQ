@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 1.3-25, 2001-10-28
+Version 1.3-26, 2001-10-30
 Kurt Hornik
 
 
@@ -77,6 +77,7 @@ R FAQ
   7.17 Are GAMs implemented in R?
   7.18 Why is the output not printed when I source() a file?
   7.19 Why does outer() behave strangely with my function?
+  7.20 Why does the output from anova() depend on the order of factors in the model?
 
 8 R Programming
   8.1 How should I write summary methods?
@@ -1491,6 +1492,9 @@ works, was published in the Journal of Statistical Software
 *pspline*
      Smoothing splines with penalties on order m derivatives.
 
+*qtl*
+     Analysis of experimental crosses to identify QTLs.
+
 *quadprog*
      For solving quadratic programming problems.
 
@@ -2416,6 +2420,30 @@ If you define the general function
 then you can use `outer()' by writing, e.g.,
 
      outer(1:4, 1:2, FUN = wrapper, my.fun = foo, happy = 10)
+
+7.20 Why does the output from anova() depend on the order of factors in the model?
+==================================================================================
+
+   In a model such as `~A+B+A:B', R will report the difference in sums of
+squares between the models `~1', `~A', `~A+B' and `~A+B+A:B'.  If the model
+were `~B+A+A:B', R would report differences between `~1', `~B', `~A+B', and
+`~A+B+A:B' . In the first case the sum of squares for `A' is comparing `~1'
+and `~A', in the second case it is comparing `~B' and `~B+A'.  In a
+non-orthogonal design (i.e., most unbalanced designs) these comparisons are
+(conceptually and numerically) different.
+
+   Some packages report instead the sums of squares based on comparing the
+full model to the models with each factor removed one at a time (the famous
+`Type III sums of squares' from SAS, for example).  These do not depend on
+the order of factors in the model.  The question of which set of sums of
+squares is the Right Thing provokes low-level holy wars on r-help from time
+to time.
+
+   There is no need to be agitated about the particular sums of squares
+that R reports.  You can compute your favorite sums of squares quite
+easily.  Any two models can be compared with `anova(model1, model2)', and
+`drop1(model1)' will show the sums of squares resulting from dropping
+single terms.
 
 8 R Programming
 ***************
