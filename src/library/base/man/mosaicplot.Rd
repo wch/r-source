@@ -56,11 +56,11 @@
     \code{"FT"} for the Freeman-Tukey residuals.  The value of this
     argument can be abbreviated.}
   \item{formula}{a formula, such as \code{y ~ x}.}
-  \item{data}{a data.frame (or list), or a contingency table from which
+  \item{data}{a data frame (or list), or a contingency table from which
     the variables in \code{formula} should be taken.}
   \item{\dots}{further arguments to be passed to or from methods.}
   \item{subset}{an optional vector specifying a subset of observations
-    to be used for plotting.}
+    in the data frame to be used for plotting.}
 }
 \details{
   This is a generic function.  It currently has a default method
