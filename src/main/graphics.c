@@ -1360,7 +1360,7 @@ static void mapNDC2Dev(DevDesc *dd)
     Rf_gpptr(dd)->ndc2dev.ay = Rf_dpptr(dd)->ndc2dev.ay =
 	((GEDevDesc*) dd)->dev->bottom;
     /* Units Conversion */
-    
+
     Rf_gpptr(dd)->xNDCPerInch = Rf_dpptr(dd)->xNDCPerInch =
 	1.0/fabs(Rf_gpptr(dd)->ndc2dev.bx * Rf_gpptr(dd)->ipr[0]);
     Rf_gpptr(dd)->yNDCPerInch = Rf_dpptr(dd)->yNDCPerInch =
@@ -2404,13 +2404,13 @@ void GForceClip(DevDesc *dd)
     GESetClip(x1, y1, x2, y2, (GEDevDesc*) dd);
 }
 
-/* 
+/*
  * Function to generate an R_GE_gcontext from Rf_gpptr info
- * 
+ *
  * In some cases, the settings made here will need to be overridden
  * (eps. the fill setting)
  */
-void gcontextFromGP(R_GE_gcontext *gc, DevDesc *dd) 
+void gcontextFromGP(R_GE_gcontext *gc, DevDesc *dd)
 {
     gc->col = Rf_gpptr(dd)->col;
     gc->fill = Rf_gpptr(dd)->bg;  /* This may need manual adjusting */
@@ -2437,7 +2437,7 @@ void GLine(double x1, double y1, double x2, double y2, int coords, DevDesc *dd)
 {
     R_GE_gcontext gc; gcontextFromGP(&gc, dd);
     if (Rf_gpptr(dd)->lty == LTY_BLANK) return;
-    /* 
+    /*
      * Work in device coordinates because that is what the
      * graphics engine needs.
      */
@@ -2467,7 +2467,7 @@ Rboolean GLocator(double *x, double *y, int coords, DevDesc *dd)
 void GMetricInfo(int c, double *ascent, double *descent, double *width,
 		 GUnit units, DevDesc *dd)
 {
-    R_GE_gcontext gc; 
+    R_GE_gcontext gc;
     gcontextFromGP(&gc, dd);
     ((GEDevDesc*) dd)->dev->metricInfo(c & 0xFF, &gc,
 				       ascent, descent, width,
@@ -2501,7 +2501,7 @@ void GMode(int mode, DevDesc *dd)
 /*
 ***********************************
 * START GClipPolygon code
-* 
+*
 * Everything up to END GClipPolygon code
 * is just here to support GClipPolygon
 * which only exists to satisfy the
@@ -2700,9 +2700,9 @@ int GClipPolygon(double *x, double *y, int n, int coords, int store,
 ***********************************
 */
 
-/* 
+/*
  * This is just here to satisfy the Rgraphics.h API.
- * This allows new graphics API (GraphicsDevice.h, GraphicsEngine.h) 
+ * This allows new graphics API (GraphicsDevice.h, GraphicsEngine.h)
  * to be developed alongside.
  * Could be removed if Rgraphics.h ever gets REPLACED by new API
  * NOTE that base graphics code (in plot.c) still calls this.
@@ -2723,7 +2723,7 @@ void GPolygon(int n, double *x, double *y, int coords,
     if (Rf_gpptr(dd)->lty == LTY_BLANK)
 	fg = NA_INTEGER; /* transparent for the border */
 
-    /* 
+    /*
      * Work in device coordinates because that is what the
      * graphics engine needs.
      */
@@ -2759,7 +2759,7 @@ void GPolyline(int n, double *x, double *y, int coords, DevDesc *dd)
     char *vmaxsave = vmaxget();
     R_GE_gcontext gc; gcontextFromGP(&gc, dd);
 
-    /* 
+    /*
      * Work in device coordinates because that is what the
      * graphics engine needs.
      */
@@ -2781,9 +2781,9 @@ void GPolyline(int n, double *x, double *y, int coords, DevDesc *dd)
 }
 
 
-/* 
+/*
  * This is just here to satisfy the Rgraphics.h API.
- * This allows new graphics API (GraphicsDevice.h, GraphicsEngine.h) 
+ * This allows new graphics API (GraphicsDevice.h, GraphicsEngine.h)
  * to be developed alongside.
  * Could be removed if Rgraphics.h ever gets REPLACED by new API
  * NOTE that base graphics code (in plot.c) still calls this.
@@ -2800,7 +2800,7 @@ void GCircle(double x, double y, int coords,
     if (Rf_gpptr(dd)->lty == LTY_BLANK)
 	fg = NA_INTEGER; /* transparent for the border */
 
-    /* 
+    /*
      * Work in device coordinates because that is what the
      * graphics engine needs.
      */
@@ -2825,7 +2825,7 @@ void GRect(double x0, double y0, double x1, double y1, int coords,
     if (Rf_gpptr(dd)->lty == LTY_BLANK)
 	fg = NA_INTEGER; /* transparent for the border */
 
-    /* 
+    /*
      * Work in device coordinates because that is what the
      * graphics engine needs.
      */
@@ -2871,7 +2871,7 @@ void GText(double x, double y, int coords, char *str,
 	   double xc, double yc, double rot, DevDesc *dd)
 {
     R_GE_gcontext gc; gcontextFromGP(&gc, dd);
-    /* 
+    /*
      * Work in device coordinates because that is what the
      * graphics engine needs.
      */
@@ -3072,7 +3072,7 @@ void GSymbol(double x, double y, int coords, int pch, DevDesc *dd)
 {
     double size = GConvertYUnits(GSTR_0, INCHES, DEVICE, dd);
     R_GE_gcontext gc; gcontextFromGP(&gc, dd);
-    /* 
+    /*
      * Work in device coordinates because that is what the
      * graphics engine needs.
      */
@@ -3080,7 +3080,7 @@ void GSymbol(double x, double y, int coords, int pch, DevDesc *dd)
     /*
      * Ensure that the base clipping region is set on the device
      */
-    GClip(dd);    
+    GClip(dd);
     /*
      * Force line type LTY_SOLID
      * i.e., current par(lty) is ignored when drawing symbols
@@ -3222,48 +3222,48 @@ void hsv2rgb(double h, double s, double v, double *r, double *g, double *b)
  */
 void rgb2hsv(double r, double g, double b,
 	     double *h, double *s, double *v)
+    /* all (r,g,b, h,s,v) values in [0,1] */
 {
     double min, max, delta;
-
-    /* Compute  min(r,g,b) and max(r,g,b): */
+    Rboolean r_max = TRUE, b_max = FALSE;
+    /* Compute  min(r,g,b) and max(r,g,b) and remember where max is: */
     min = max = r;
     if(min > g) { /* g < r */
 	if(b < g)
 	    min = b;/* &  max = r */
         else { /* g <= b, g < r */
 	    min = g;
-	    if(b > r) max = g; /* else : g <= b <=r */
+	    if(b > r) { max = b; b_max = TRUE; r_max = FALSE; }
+	    /* else : g <= b <=r */
 	}
     } else { /* r <= g */
-	if(b > g)
-	    max = b;/* &  min = r */
-        else { /* b,r <= g */
-	    max = g;
+	if(b > g) {
+	    max = b; b_max = TRUE; r_max = FALSE; /* &  min = r */
+	} else { /* b,r <= g */
+	    max = g; r_max = FALSE; /* &  min = r */
 	    if(b < r) min = b; /* else : r <= b <= g */
 	}
     }
 
     *v = max;
     if( max == 0 || (delta = max - min) == 0) {
-	/*   r = g = b : "gray" : s = 0, h is undefined */
-	*s = 0;
-	*h = NA_REAL;
+	/*   r = g = b : "gray" : s = h = 0 */
+	*s = *h = 0;
 	return;
     }
     /* else : */
     *s = delta / max;
 
-    if( r == max )
-	*h = ( g - b ) / delta;  /* between yellow & magenta */
-    else if( g == max )
-	*h = 2 + ( b - r ) / delta; /* between cyan & yellow*/
-    else
+    if(r_max)
+	*h =     ( g - b ) / delta; /* between yellow & magenta */
+    else if(b_max)
 	*h = 4 + ( r - g ) / delta; /* between magenta & cyan */
+    else /* g == max */
+	*h = 2 + ( b - r ) / delta; /* between cyan & yellow*/
 
-    *h *= 60; /* degrees */
+    *h /= 6;
     if(*h < 0)
-	*h += 360;
-    *h /= 360;
+	*h += 1.;
     return;
 }
 
@@ -4214,7 +4214,7 @@ unsigned int LTYpar(SEXP value, int ind)
     }
     else if(isInteger(value)) {
 	code = INTEGER(value)[ind];
-	if(code == NA_INTEGER || code < 0) 
+	if(code == NA_INTEGER || code < 0)
 	    error("invalid line type");
 	if (code > 0)
 	    code = (code-1) % nlinetype + 1;
@@ -4222,7 +4222,7 @@ unsigned int LTYpar(SEXP value, int ind)
     }
     else if(isReal(value)) {
 	rcode = REAL(value)[ind];
-	if(!R_FINITE(rcode) || rcode < 0) 
+	if(!R_FINITE(rcode) || rcode < 0)
 	    error("invalid line type");
 	code = rcode;
 	if (code > 0)
@@ -4338,9 +4338,9 @@ DevDesc* CurrentDevice(void)
      * If there is one, start it up. */
     if (NoDevices()) {
 	SEXP defdev = GetOption(install("device"), R_NilValue);
-	if (isString(defdev) && length(defdev) > 0) 
+	if (isString(defdev) && length(defdev) > 0)
 	    PROTECT(defdev = lang1(install(CHAR(STRING_ELT(defdev, 0)))));
-	else 
+	else
 	    error("No active or default device");
 	eval(defdev, R_GlobalEnv);
 	UNPROTECT(1);

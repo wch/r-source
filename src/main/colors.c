@@ -264,3 +264,42 @@ SEXP do_col2RGB(SEXP call, SEXP op, SEXP args, SEXP env)
     UNPROTECT(3);
     return ans;
 }
+
+SEXP do_RGB2hsv(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+/* (r,g,b) -> (h,s,v) conversion */
+    SEXP rgb, dd, ans, names, dmns;
+    int n, i, i3;
+
+    checkArity(op, args);
+
+    PROTECT(rgb = coerceVector(CAR(args),REALSXP)); args = CDR(args);
+    if(!isMatrix(rgb))
+	errorcall(call, "rgb is not a matrix (internally)");
+    dd = getAttrib(rgb, R_DimSymbol);
+    if(INTEGER(dd)[0] != 3)
+	errorcall(call, "rgb must have 3 rows (internally)");
+    n = INTEGER(dd)[1];
+
+    PROTECT(ans = allocMatrix(REALSXP, 3, n));
+    PROTECT(dmns = allocVector(VECSXP, 2));
+    /* row names: */
+    PROTECT(names = allocVector(STRSXP, 3));
+    SET_STRING_ELT(names, 0, mkChar("h"));
+    SET_STRING_ELT(names, 1, mkChar("s"));
+    SET_STRING_ELT(names, 2, mkChar("v"));
+    SET_VECTOR_ELT(dmns, 0, names);
+    /* column names if input has: */
+    if ((dd = getAttrib(rgb, R_DimNamesSymbol)) != R_NilValue &&
+	(names = VECTOR_ELT(dd, 1)) != R_NilValue)
+	SET_VECTOR_ELT(dmns, 1, names);
+    setAttrib(ans, R_DimNamesSymbol, dmns);
+    UNPROTECT(2);/* names, dmns */
+
+    for(i = i3 = 0; i < n; i++, i3 += 3) {
+	rgb2hsv(REAL(rgb)[i3+ 0],  REAL(rgb)[i3+ 1],  REAL(rgb)[i3+ 2],
+		&REAL(ans)[i3+ 0], &REAL(ans)[i3+ 1], &REAL(ans)[i3 +2]);
+    }
+    UNPROTECT(2);
+    return ans;
+}

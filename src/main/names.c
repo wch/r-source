@@ -732,6 +732,7 @@ FUNTAB R_FunTab[] =
 {"dev.set",	do_devset,	0,	111,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"rgb",		do_rgb,		0,	11,	5,	{PP_FUNCALL, PREC_FN,	0}},
 {"rgb256",	do_rgb,		1,	11,	4,	{PP_FUNCALL, PREC_FN,	0}},
+{"rgb2hsv",	do_RGB2hsv,	0,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"hsv",		do_hsv,		0,	11,	4,	{PP_FUNCALL, PREC_FN,	0}},
 {"gray",	do_gray,	0,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"colors",	do_colors,	0,	11,	0,	{PP_FUNCALL, PREC_FN,	0}},

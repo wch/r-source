@@ -15,7 +15,7 @@ export(Hershey, abline, arrows, assocplot, axTicks, axis, axis.Date,
        palette, panel.smooth, par, pdf, persp, pictex, pie, plot,
        plot.default, plot.design, plot.new, plot.window, plot.xy,
        points, points.default, polygon, postscript, ps.options,
-       rainbow, recordPlot, rect, replayPlot, rgb, rug, screen,
+       rainbow, recordPlot, rect, replayPlot, rgb, rgb2hsv, rug, screen,
        segments, split.screen, stars, stem, strheight, stripchart,
        strwidth, sunflowerplot, symbols, terrain.colors, text,
        text.default, title, topo.colors, xfig, xy.coords, xyz.coords)

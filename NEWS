@@ -175,6 +175,8 @@ NEW FEATURES
 	The "POSIXct" and "POSIXlt" methods for rep() now pass ... on
 	to the default method (as expected by PR#5818).
 
+    o	rgb2hsv() is new, an R interface the C API function with the same name.
+
     o	User hooks can be set for onLoad, library, detach and
 	onUnload of packages/namespaces: see ?setHook.
 
@@ -404,6 +406,8 @@ C-LEVEL FACILITIES
     o	R_CheckUserInterrupts is now described in `Writing R Extensions'
 	and there is a new equivalent subroutine rchkusr for calling
 	from FORTRAN code.
+
+    o	hsv2rgb and rgb2hsv are newly in the C API.
 
     o	Salloc and Srealloc are provided in S.h as wrappers for S_alloc
 	and S_realloc, since current S versions use these forms.

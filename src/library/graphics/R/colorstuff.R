@@ -17,6 +17,27 @@ rgb <- function(red, green, blue, names=NULL, maxColorValue = 1)
 hsv <- function(h=1,s=1,v=1,gamma=1)
     .Internal(hsv(h,s,v,gamma))
 
+rgb2hsv <- function(r, g = NULL, b = NULL, gamma = 1, maxColorValue = 255)
+{
+    rgb <-
+        if(is.null(g) && is.null(b)) as.matrix(r)
+        else rbind(r,g,b)
+    if(!is.numeric(rgb)) stop("rgb matrix must be numeric")
+    d <- dim(rgb)
+    if(d[1] != 3) stop("rgb matrix must have 3 rows")
+    n <- d[2]
+    if(n == 0)
+        return(cbind(c(h=1,s=1,v=1))[,0])
+    ## else:
+    rgb <- rgb/maxColorValue
+    if(gamma != 1)# revert gamma corrected hsv values
+        rgb <- rgb ^ (1/gamma)
+    if(any(0 > rgb) || any(rgb > 1))
+        stop("rgb values must be in [0,maxColorValue]")
+
+    .Internal(rgb2hsv(rgb))
+}
+
 palette <- function(value)
 {
     if(missing(value)) .Internal(palette(character()))
