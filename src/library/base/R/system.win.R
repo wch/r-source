@@ -2,31 +2,27 @@
     list(OS.type = "Windows",
          file.sep = "\\\\",
          dynlib.ext = ".dll",
-         show.file = function(file) .NotYetImplemented(),
-         append.file = function(f1,f2) .NotYetImplemented(), # concat(f1,f2)
-         show.libraries = function(lib.loc, fsep) .NotYetImplemented(),
+         ## The next few are from Guido's:
+	 show.file = function(filename) {
+                       a <- scan(filename,what="c",sep="\n",quiet=TRUE)
+                       for (i in 1:length(a))
+                       cat(a[i],"\n")},
+	 append.file = function(f1,f2) {# append to 'f1' the file 'f2':
+             a <- scan(f1, what = "c", sep = "\n", quiet = TRUE)
+             for (i in 1:length(a)) cat(a[i], "\n",file=f2,append=TRUE)
+         },
+	 show.data = function(package,lib.loc,fsep) {
+	 ## give `index' of all possible data sets
+             for (lib in lib.loc)
+             for (pkg in package) {
+	      INDEX <- system.file(paste("data", "index.doc", sep = fsep),
+			      pkg, lib)
+	      if (INDEX != "") {
+	       cat(paste("\n\nData sets in package `", pkg, "':\n\n",
+                         sep = fsep))
+               .Platform$ show.file(INDEX)
+              }}},	 
          )
-
-data <- function(..., list = character(0), package = .packages(),
-		 lib.loc = .lib.loc) {
-    ## FIXME add support for package and lib.loc args
-    names <- c(as.character(substitute(list(...))[-1]), list)
-    if (length(names) == 0) {
-	datafile<-system.file("data","index.doc")
-	if( datafile == "" )
-	    stop("no index file for data")
-	xx<-scan(datafile,skip=3,what="",sep="\t")
-	cat("	R DATA SETS \n")
-	cat(t(matrix(xx[!is.na(xx)],nc=2,byrow=TRUE)),sep=c("\t\t","\n"))
-    }
-    else
-	for (name in names) {
-	    file <- system.file("data", name)
-	    if(file == "") stop(paste("no data set called", name))
-	    else source(file)
-	}
-    invisible(names)
-}
 
 getenv <- function(names) .Internal(getenv(names))
 
