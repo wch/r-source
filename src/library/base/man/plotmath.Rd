@@ -100,10 +100,10 @@ axis(1, at = c(-pi, -pi/2, 0, pi/2, pi),
 
 plot(1:10, 1:10)
 text(4, 9, expression(hat(beta) == (X^t * X)^{-1} * X^t * y))
-text(4, 8.4, "expression(hat(beta) == (X^t * X)^{-1} * X^t * y)", cex = .6)
+text(4, 8.4, "expression(hat(beta) == (X^t * X)^{-1} * X^t * y)", cex = .8)
 text(4, 7, expression(bar(x) == sum(frac(x[i], n), i==1, n)))
-text(4, 6.4, "expression(bar(x) == sum(frac(x[i], n), i==1, n))", cex = .6)
+text(4, 6.4, "expression(bar(x) == sum(frac(x[i], n), i==1, n))", cex = .8)
 text(8, 5, expression(paste(frac(1, sigma*sqrt(2*pi)), " ",
-                            plain(e)^{frac(-(x-mu)^2, 2*sigma^2)})))
+                            plain(e)^{frac(-(x-mu)^2, 2*sigma^2)})), cex= 1.2)
 }
 \keyword{aplot}
