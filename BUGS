@@ -307,6 +307,10 @@ Date: Mon, 2 Sep 2002 04:55:41 +0200 (MET DST)
 Subject: split.screen problem
 From: cbodily@att.net
 Date: Thu, 26 Sep 2002 19:37:40 +0200 (MET DST)
+* PR# 2283 *
+Subject: Wandering usr values in par(no.readonly=TRUW)
+From: Jari Oksanen <jarioksa@sun3.oulu.fi>
+Date: Tue, 12 Nov 2002 13:50:44 +0200
 
 Directory:  In-Out
 
@@ -643,19 +647,11 @@ Date: Tue, 5 Nov 2002 15:36:45 +0100
 Subject: rbind
 From: louisept@pweh.com
 Date: Thu, 7 Nov 2002 01:47:50 +0100 (MET)
-* PR# 2278 *
-Subject: Quality Inkjets, 8O percent off today rurx
-From: dgtramrheinc <pcbsrgr@excite.com>
-Date: Sat, 9 Nov 2002 09:58:29 -0800
-* PR# 2279 *
-Subject: (성인광고) 이모든걸 하루에 단돈1000원에?! @.@
-From: 한솔이 <sun486077@lycos.co.kr>
-Date: Sun, 10 Nov 2002 15:49:12 +0900
-* PR# 2280 *
-Subject: (광고)쥐포 좋아하세요?!!   
-From: 쥐포나라<chacha019@empal.com>
-Date: Sun, 10 Nov 2002 23:13:06 -0600
 * PR# 2281 *
 Subject: PDF graphics -- color weirdness
 From: jenny@stat.ubc.ca
 Date: Mon, 11 Nov 2002 20:49:56 +0100 (MET)
+* PR# 2282 *
+Subject: Re: [R] grid(): defaults of nx and ny do not correspond with axis() 
+From: Uwe Ligges <ligges@statistik.uni-dortmund.de>
+Date: Tue, 12 Nov 2002 09:43:54 +0100
