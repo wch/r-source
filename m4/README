@@ -3,6 +3,10 @@ automake package) which uses them to create aclocal.m4 which is in turn
 used by autoconf to create the configure script at the the top level in
 this distribution.
 
+(Actually, as we need to change a few `standard' macros, we need to
+create acinclude.m4 by concatenating all m4 files in this directory
+before running aclocal.)
+
 The files are as follows.
 
   R.m4
