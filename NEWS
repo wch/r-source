@@ -213,7 +213,11 @@ UTILITIES
 	package, and sets 'T' and 'F' to 'NULL' when running the
 	examples.
 
-    o   New function SweaveSyntConv() converts between Sweave file syntaxes.
+    o   New function SweaveSyntConv() converts between Sweave file
+        syntaxes. RweaveLatex() now gets its prompt from options() and
+        uses the text width as linebreak cutoff for deparsing input
+        statements.
+    
 
 
 BUG FIXES
