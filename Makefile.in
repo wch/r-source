@@ -160,18 +160,12 @@ check check-devel check-all:
 
 reset-recommended:
 	@(cd src/library/Recommended && $(MAKE) clean)
-aqualaunch: 
-	@(cd $(top_builddir)/src/modules/aqua && \
-        $(MAKE) aqualaunch)
-install-aqua: aqualaunch
-	@(rm -rf /Applications/StartR.app);	
-	@(cd $(top_builddir) && \
-	$(MAKE) install \
-	rhome=/Applications/StartR.app/RAqua.app/Contents \
-	mandir=/Applications/StartR.app/RAqua.app/Contents \
-	bindir=/Applications/StartR.app/RAqua.app/Contents )
-	@(cd src/modules/aqua && sh AquaInstall)
+
 install-Rframework:
+	@if test -z ${Rframework_path} ; then \
+	echo "please define the variable Rframework_path first"; \
+	exit 1 ;\
+	fi
 	@(cd $(top_builddir) && \
 	$(MAKE) install \
 	rhome="${Rframework_path}/R.framework/Versions/$(VERSION)/Resources" \
@@ -188,4 +182,27 @@ install-Rframework:
 	ln -f -s Versions/Current/Headers Headers&& \
 	ln -f -s Versions/Current/R R && \
 	ln -f -s Versions/Current/Resources Resources)
+	@(cd "$(srcdir)/src/modules/aqua/Contents/Resources" && \
+	cp -R * "${Rframework_path}/R.framework/Resources/bin")
+	@(cd "${Rframework_path}/R.framework/Resources/bin" && \
+	sed 's/^args=/args=--gui=aqua/' < R > RAqua && \
+	chmod 755 RAqua)
+
+install-aqua:
+	@if test -z ${Rframework_path} ; then \
+	echo "please define the variable Rframework_path first"; \
+	exit 1 ;\
+	fi
+	@(rm -rf /Applications/R.app)
+	@(mkdir -p /Applications/R.app/Contents/Resources)
+	@(cd "$(srcdir)/src/modules/aqua/Contents" && \
+	cp Info.plist PkgInfo /Applications/R.app/Contents)
+	@(cd "$(srcdir)/src/modules/aqua/Contents/Resources" && \
+	cp -R * /Applications/R.app/Contents/Resources)
+	@(mkdir -p /Applications/R.app/Contents/MacOS)
+	@test -f "${Rframework_path}/R.framework/Resources/bin/RAqua"  \
+	|| (echo "please, make install-Rframework first" &&  exit 1)
+	@(cd /Applications/R.app/Contents/MacOS && \
+	ln -f "${Rframework_path}/R.framework/Resources/bin/RAqua" R && \
+	chmod 755 R)
 TAGS:
