@@ -140,8 +140,24 @@ function(package, help, lib.loc = NULL, character.only = FALSE,
         docFiles <- file.path(pkgPath, entries)
         pkgInfo <- vector(length = 3, mode = "list")
         names(pkgInfo) <- entries
+        readDocFile <- function(f) {
+            if(basename(f) == "DESCRIPTION") {
+                ## This should be in valid DCF format ...
+                txt <- try(read.dcf(f)[1, ])
+                if(inherits(txt, "try-error")) {
+                    warning("DESCRIPTION file not in valid DCF format")
+                    return(NULL)
+                }
+                ## Return a list so that the print method knows to
+                ## format as a description list.
+                txt <- list(names(txt), txt)
+            }
+            else
+                txt <- readLines(f)
+            txt
+        }
         for(i in which(file.exists(docFiles)))
-            pkgInfo[[i]] <- readLines(docFiles[i])
+            pkgInfo[[i]] <- readDocFile(docFiles[i])
         y <- list(name = pkgName, info = pkgInfo)
         class(y) <- "packageInfo"
         return(y)
@@ -349,9 +365,15 @@ function(x, ...)
     outConn <- file(outFile, open = "w")
     headers <- c("", "Description:\n\n", "Index:\n\n")
     footers <- c("\n", "\n", "")
+    formatDocEntry <- function(entry) {
+        if(is.list(entry))
+            formatDL(entry, style = "list")
+        else
+            entry
+    }
     for(i in which(!sapply(x$info, is.null))) {
         writeLines(headers[i], outConn, sep = "")
-        writeLines(x$info[[i]], outConn)
+        writeLines(formatDocEntry(x$info[[i]]), outConn)
         writeLines(footers[i], outConn, sep = "")
     }
     close(outConn)
