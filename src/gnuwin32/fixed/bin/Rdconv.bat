@@ -76,7 +76,7 @@ END
   exit 0;
 }
 
-my $OSdir ="windows";
+$OSdir ="windows";
 
 if($ENV{"R_HOME"}){
     $R_HOME=$ENV{"R_HOME"};

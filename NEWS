@@ -71,6 +71,9 @@ BUG FIXES
     o	functions created (not just edited) with fix() now get
 	environment .GlobalEnv not the body of fix.
 
+    o	Rdconv was ignoring OS-specific parts of the files with some
+	Perl versions. (This did not affect installing packages.)
+
 
 		CHANGES IN R VERSION 1.1.0
 
