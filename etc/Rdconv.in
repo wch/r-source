@@ -54,6 +54,10 @@ if($opt_type =~ /nroff/i){
     open(nroffout, "| cat");
 }
 
+if($opt_type =~ /Sd/i){
+    open(Sdout, "| cat");
+}
+
 if($opt_type =~ /latex/i){
     open(latexout, "| cat");
 }
@@ -66,7 +70,7 @@ sub usage {
 
     print "Rdconv version $VERSION\n";
     print "Usage: Rdconv [--debug/-d] [--help/-h]";
-    print " [--type/-t html|nroff|latex|examp] file\n\n";
+    print " [--type/-t html|nroff|Sd|latex|examp] file\n\n";
 
     exit 0;
 }
