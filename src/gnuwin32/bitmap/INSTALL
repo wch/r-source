@@ -1,0 +1,21 @@
+===============================================================================
+IMPORTANT: Tested only with zlib ver. 1.13, libpng ver. 1.05, jpeg ver. 6b
+===============================================================================
+
+1) You need libpng, zlib and jpeg sources (available, e.g., from
+   ftp.uu.net/graphics/[png,jpeg].
+
+2) Sources must be unpacked in sub-directories of this dir.
+   zlib and libpng sources must be in  sub-dirs named 'zlib' and
+   'libpng' (these fixed names are required by libpng documentation).
+   Example:
+   > unzip -d zlib zlib113.zip
+   > tar xzvf libpng-1.05.tar.gz
+   > mv libpng-1.05
+   > tar xzvf jpegsrc.vb6.tar.gz
+   If jpeg version is different from 6b, edit 'Makefile' and change 
+   the definition of JPEGDIR.
+
+3) Then,
+   > make
+   should build and install in the binary directory Rbitmap.dll.
