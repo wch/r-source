@@ -45,7 +45,7 @@ imagedir:
 	$(CP) -p $(foreach i,$(GW_INFO_FILES),../$i) $(RPREFIX)
 	$(SED) -e s/@RWVER@/$(RPREFIX)/g \
 	  -e s/@RVER@/$(RVER)/g ../README > $(RPREFIX)/README.$(RPREFIX)
-	$(SED) -e 3,5d ../readme.packages > $(RPREFIX)/README.packages
+	$(SED) -e 3,5d ../README.packages > $(RPREFIX)/README.packages
 # convert docs and batch files to CRLF: might already be on Windows, though.
 ifeq ($(strip $(BUILD)),CROSS)
 	zip -l dosfiles.zip $(RPREFIX)/* $(RPREFIX)/bin/*.bat
