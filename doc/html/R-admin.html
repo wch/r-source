@@ -14,7 +14,7 @@
 
 <p>This is a guide to installation and administration for R.
 
-<p>The current version of this document is 1.5.0 (2002-06-05).
+<p>The current version of this document is 1.5.1 (2002-06-17).
 
 ISBN 3-901167-52-8
 
@@ -373,9 +373,10 @@ more than one library, of course.
 <br><pre>R CMD INSTALL -l /path/to/library <var>pkg1</var> <var>pkg2</var> <small>...</small>
 </pre>
 
-<p>The part <code>-l /path/to/library</code> can be omitted, when the first
-library in <code>R_LIBS</code> is used if set, otherwise the main library
-<code><var>R_HOME</var>/library</code>.
+<p>The part <code>-l /path/to/library</code> can be omitted, in which case the
+first library in <code>R_LIBS</code> is used if set, otherwise the main
+library <code><var>R_HOME</var>/library</code> is used.  (<code>R_LIBS</code> is looked
+for in the environment: <code>.Renviron</code> is not read by <code>R CMD</code>.)
 
 <p>The Windows equivalent is<a rel=footnote href="#fn-1"><sup>1</sup></a>
 
