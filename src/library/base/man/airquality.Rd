@@ -28,6 +28,9 @@ temperature (Temp) in degrees Fahrenheit at La Guardia Airport.
 \references{Chambers, J. M., W. S. Cleveland, B. Kleiner and P. A. Tukey (1983).
 Graphical Methods for Data Analysis.
 Belmont, CA: Wadsworth.
-
+}
+\examples{
+data(airquality)
+pairs(airquality, main = "airquality data")
 }
 \keyword{datasets}
