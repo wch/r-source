@@ -18,7 +18,7 @@ Up:<a rel=up href="#dir">(dir)</a>
 <h2>R FAQ</h2>
 
 <h2>Frequently Asked Questions on R</h2>
-<h2>Version 1.5-15, 2002-07-11</h2>
+<h2>Version 1.5-16, 2002-07-21</h2>
 <h2>ISBN 3-901167-51-X</h2>
 <address>Kurt Hornik</address>
 <p><p><hr><p>
@@ -2475,6 +2475,7 @@ Up:<a rel=up href="#Top">Top</a>
 <li><a href="#Why%20does%20outer()%20behave%20strangely%20with%20my%20function%3f">Why does outer() behave strangely with my function?</a>: 
 <li><a href="#Why%20does%20the%20output%20from%20anova()%20depend%20on%20the%20order%20of%20factors%20in%20the%20model%3f">Why does the output from anova() depend on the order of factors in the model?</a>: 
 <li><a href="#How%20do%20I%20produce%20PNG%20graphics%20in%20batch%20mode%3f">How do I produce PNG graphics in batch mode?</a>: 
+<li><a href="#How%20can%20I%20get%20command%20line%20editing%20to%20work%3f">How can I get command line editing to work?</a>: 
 </ul>
 
 <p><hr>
@@ -3058,6 +3059,7 @@ squares resulting from dropping single terms.
 
 <p><hr>
 Node:<a name="How%20do%20I%20produce%20PNG%20graphics%20in%20batch%20mode%3f">How do I produce PNG graphics in batch mode?</a>,
+Next:<a rel=next href="#How%20can%20I%20get%20command%20line%20editing%20to%20work%3f">How can I get command line editing to work?</a>,
 Previous:<a rel=previous href="#Why%20does%20the%20output%20from%20anova()%20depend%20on%20the%20order%20of%20factors%20in%20the%20model%3f">Why does the output from anova() depend on the order of factors in the model?</a>,
 Up:<a rel=up href="#R%20Miscellanea">R Miscellanea</a>
 <br>
@@ -3071,6 +3073,23 @@ converts it to any bitmap format supported by ghostscript.  On some
 installations this produces ugly output, on others it is perfectly
 satisfactory.  In theory one could also use Xvfb, which provides an X
 server with no display.
+
+<p><hr>
+Node:<a name="How%20can%20I%20get%20command%20line%20editing%20to%20work%3f">How can I get command line editing to work?</a>,
+Previous:<a rel=previous href="#How%20do%20I%20produce%20PNG%20graphics%20in%20batch%20mode%3f">How do I produce PNG graphics in batch mode?</a>,
+Up:<a rel=up href="#R%20Miscellanea">R Miscellanea</a>
+<br>
+
+<h3>7.22 How can I get command line editing to work?</h3>
+
+<p>The Unix command-line interface to R can only provide the inbuilt
+command line editor which allows recall, editing and re-submission of
+prior commands provided that the <small>GNU</small> readline library is
+available at the time R is configured for compilation.  Note that the
+`development' version of readline including the appropriate headers is
+needed: users of Linux binary distributions will need to install
+packages such as <code>libreadline-dev</code> (Debian) or
+<code>readline-devel</code> (Red Hat).
 
 <p><hr>
 Node:<a name="R%20Programming">R Programming</a>,

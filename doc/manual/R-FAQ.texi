@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2002
-@set FAQ-VERSION 1.5-15, 2002-07-11
+@set FAQ-VERSION 1.5-16, 2002-07-21
 @set REL-VERSION 1.5.1
 @set FAQ-ISBN 3-901167-51-X
 @c %**end of header
@@ -2022,13 +2022,14 @@ Functions for exporting R objects & graphics in an @HTML{} document.
 @item RODBC
 An @acronym{ODBC} database interface.
 @c </NOTE>
-@c <FIXME>
-@c Tim Keitt should tell us what do to with these ...
+@c <COMMENT>
+@c Moved to Attic for 1.5.1 as no longer needed.
+@c (See also the info on rdbi.sourceforge.net.)
 @c @item Rdbi
 @c Generic framework for database access in R.
 @c @item Rdbi.PgSQL
 @c Provides methods for accessing data stored in PostgreSQL tables.
-@c </FIXME>
+@c </COMMENT>
 @item StatDataML
 Read and write StatDataML.
 @c <COMMENT>
@@ -2573,6 +2574,7 @@ dir /opt/R/src/unix
 * Why does outer() behave strangely with my function?::  
 * Why does the output from anova() depend on the order of factors in the model?::  
 * How do I produce PNG graphics in batch mode?::  
+* How can I get command line editing to work?::  
 @end menu
 
 @node Why does R run out of memory?, Why does sourcing a correct file fail?, R Miscellanea, R Miscellanea
@@ -3147,7 +3149,7 @@ easily.  Any two models can be compared with @code{anova(@var{model1},
 @var{model2})}, and @code{drop1(@var{model1})} will show the sums of
 squares resulting from dropping single terms.
 
-@node How do I produce PNG graphics in batch mode?,  , Why does the output from anova() depend on the order of factors in the model?, R Miscellanea
+@node How do I produce PNG graphics in batch mode?, How can I get command line editing to work?, Why does the output from anova() depend on the order of factors in the model?, R Miscellanea
 @section How do I produce PNG graphics in batch mode?
 
 Under Unix, the @code{png()} device uses the X11 driver, which is a
@@ -3157,6 +3159,19 @@ converts it to any bitmap format supported by ghostscript.  On some
 installations this produces ugly output, on others it is perfectly
 satisfactory.  In theory one could also use Xvfb, which provides an X
 server with no display.
+
+@node How can I get command line editing to work?,  , How do I produce PNG graphics in batch mode?, R Miscellanea
+@section How can I get command line editing to work?
+
+The Unix command-line interface to R can only provide the inbuilt
+command line editor which allows recall, editing and re-submission of
+prior commands provided that the @acronym{GNU} readline library is
+available at the time R is configured for compilation.  Note that the
+`development' version of readline including the appropriate headers is
+needed: users of Linux binary distributions will need to install
+packages such as @code{libreadline-dev} (Debian) or
+@code{readline-devel} (Red Hat).
+
 
 @node R Programming, R Bugs, R Miscellanea, Top
 @chapter R Programming

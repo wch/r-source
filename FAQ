@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.5-15, 2002-07-11
+Version 1.5-16, 2002-07-21
 ISBN 3-901167-51-X
 Kurt Hornik
 
@@ -85,6 +85,7 @@ R FAQ
   7.19 Why does outer() behave strangely with my function?
   7.20 Why does the output from anova() depend on the order of factors in the model?
   7.21 How do I produce PNG graphics in batch mode?
+  7.22 How can I get command line editing to work?
 
 8 R Programming
   8.1 How should I write summary methods?
@@ -2729,6 +2730,17 @@ in batch mode or for remote operation.  If you have ghostscript you can use
 format supported by ghostscript.  On some installations this produces ugly
 output, on others it is perfectly satisfactory.  In theory one could also
 use Xvfb, which provides an X server with no display.
+
+7.22 How can I get command line editing to work?
+================================================
+
+   The Unix command-line interface to R can only provide the inbuilt
+command line editor which allows recall, editing and re-submission of prior
+commands provided that the GNU readline library is available at the time R
+is configured for compilation.  Note that the `development' version of
+readline including the appropriate headers is needed: users of Linux binary
+distributions will need to install packages such as `libreadline-dev'
+(Debian) or `readline-devel' (Red Hat).
 
 8 R Programming
 ***************
