@@ -11,11 +11,11 @@ top_builddir = ../../../..
 subdir = src/library/$(pkg)/src
 R_HOME = $(top_builddir)
 
-SRCS_C = ansari.c chisqsim.c d2x2xk.c fexact.c kendall.c ks.c prho.c \
-	swilk.c init.c
-SRCS_F =
-DEPS = $(SRCS_C:.c=.d)
-OBJS = $(SRCS_C:.c=.o) $(SRCS_F:.f=.o)
+SOURCES_C = ansari.c chisqsim.c d2x2xk.c fexact.c kendall.c ks.c \
+  prho.c swilk.c init.c
+SOURCES_F =
+DEPENDS = $(SOURCES_C:.c=.d)
+OBJECTS = $(SOURCES_C:.c=.o) $(SOURCES_F:.f=.o)
 
 SHLIB = $(pkg)@SHLIB_EXT@
 
@@ -35,8 +35,8 @@ Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	  CONFIG_FILES=$(subdir)/$@ CONFIG_HEADERS= \
 	  $(SHELL) ./config.status
 
-Makedeps: Makefile $(DEPS)
-	@cat $(DEPS) >> Makefile
+Makedeps: Makefile $(DEPENDS)
+	@cat $(DEPENDS) >> Makefile
 	@touch $@
 
 shlib: $(SHLIB)
@@ -50,7 +50,7 @@ include $(top_srcdir)/share/make/shlib.mk
 mostlyclean: clean
 clean:
 	@-rm -rf .libs _libs
-	@-rm -f *.o *$(SHLIB_EXT)
+	@-rm -f Makedeps *.d *.o *$(SHLIB_EXT)
 distclean: clean
 	@-rm -f Makefile
 maintainer-clean: distclean

@@ -11,8 +11,12 @@ top_builddir = ../../../..
 subdir = src/library/$(pkg)/src
 R_HOME = $(top_builddir)
 
-OBJS = bsplvd.o bvalue.o bvalus.o init.o ksmooth.o loessc.o loessf.o \
-	ppr.o qsbart.o sbart.o sgram.o sinerp.o sslvrg.o stxwx.o
+SOURCES_C = init.c ksmooth.c loessc.c
+SOURCES_F = bsplvd.f bvalue.f bvalus.f loessf.f ppr.f qsbart.f sbart.f \
+  sgram.f sinerp.f sslvrg.f stxwx.f
+DEPENDS = $(SOURCES_C:.c=.d)
+OBJECTS = $(SOURCES_C:.c=.o) $(SOURCES_F:.f=.o)
+
 SHLIB = $(pkg)@SHLIB_EXT@
 
 ## FIXME:
@@ -22,23 +26,33 @@ SHLIB = $(pkg)@SHLIB_EXT@
 PKG_LIBS = @BLAS_LIBS@ @FLIBS@
 ## </FIXME>
 
-all: Makefile $(SHLIB)
-	@$(top_srcdir)/tools/mkinstalldirs \
-	  $(top_builddir)/library/$(pkg)/libs
-	@$(top_srcdir)/tools/copy-if-change $(SHLIB) \
-	  $(top_builddir)/library/$(pkg)/libs/$(SHLIB)
+all: Makefile Makedeps
+	@$(MAKE) Makedeps
+	@$(MAKE) shlib
 
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@cd $(top_builddir) && \
 	  CONFIG_FILES=$(subdir)/$@ CONFIG_HEADERS= \
 	  $(SHELL) ./config.status
 
+Makedeps: Makefile $(DEPENDS)
+	@cat $(DEPENDS) >> Makefile
+	@touch $@
+
+shlib: $(SHLIB)
+	@$(top_srcdir)/tools/mkinstalldirs \
+	  $(top_builddir)/library/$(pkg)/libs
+	@$(top_srcdir)/tools/copy-if-change $(SHLIB) \
+	  $(top_builddir)/library/$(pkg)/libs/$(SHLIB)
+
 include $(top_srcdir)/share/make/shlib.mk
 
 mostlyclean: clean
 clean:
 	@-rm -rf .libs _libs
-	@-rm -f *.o *$(SHLIB_EXT)
+	@-rm -f Makedeps *.d *.o *$(SHLIB_EXT)
 distclean: clean
 	@-rm -f Makefile
 maintainer-clean: distclean
+
+## Automagically generated dependencies:
