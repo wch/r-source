@@ -8,7 +8,8 @@
 \method{plot}{acf}(x, ci = 0.95, type = "h",
      xlab = "Lag", ylab = NULL, ylim = NULL, main = NULL,
      ci.col="blue", ci.type = c("white", "ma"), max.mfrow = 5,
-     ask, mar = if(nser > 2) c(3,3,2,1.2) else par("mar"),
+     ask = Npgs > 1 && dev.interactive(),
+     mar = if(nser > 2) c(3,3,2,1.2) else par("mar"),
      oma = if(nser > 2) c(1, 1.2, 1, 1) else par("oma"),
      mgp = if(nser > 2) c(1.5,0.6,0) else par("mgp"),
      cex.main = if(nser > 2) 1 else par("cex.main"),
@@ -48,6 +49,14 @@
   misleading.
 }
 \seealso{\code{\link{acf}} which calls \code{plot.acf} by default.
+}
+\examples{
+%%-- FIXME: use less trivial data :
+z4  <- ts(matrix(rnorm(400), 100, 4), start=c(1961, 1), frequency=12)
+z7  <- ts(matrix(rnorm(700), 100, 7), start=c(1961, 1), frequency=12)
+acf(z4)
+acf(z7, max.mfrow = 7)# squeeze on 1 page
+acf(z7) # multi-page
 }
 \keyword{hplot}
 \keyword{ts}

@@ -112,7 +112,7 @@ plot.acf <-
               ylim = NULL, main = NULL, ci.col="blue",
               ci.type = c("white", "ma"),
               max.mfrow = 6,
-              ask = interactive() && Npgs > 1 && .Device != "postscript",
+              ask = Npgs > 1 && dev.interactive(),
               mar = if(nser > 2) c(3,2,2,0.8) else par("mar"),
               oma = if(nser > 2) c(1,1.2,1,1) else par("oma"),
               mgp = if(nser > 2) c(1.5,0.6,0) else par("mgp"),
