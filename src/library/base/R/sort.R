@@ -60,7 +60,7 @@ order <- function(..., na.last = TRUE, decreasing = FALSE)
         ok <- !apply(sapply(z, is.na), 1, any)
         if(all(!ok)) stop("all elements contain an NA")
         z[[1]][!ok] <- NA
-        ans <- do.call("order", z)
+        ans <- do.call("order", c(z, decreasing=decreasing))
         keep <- seq(along=ok)[ok]
         ans[ans %in% keep]
     }

@@ -344,6 +344,9 @@ BUG FIXES
 
     o	apply(matrix("", 3,0), 2, length) now works.
 
+    o	order(na.last = NA, decreasing = TRUE) now sorts in decreasing
+	order.  (PR#1906)
+
 
 
 	**************************************************
