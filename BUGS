@@ -293,10 +293,6 @@ Date: Wed, 15 Aug 2001 12:11:42 -0400
 Subject: crt1.o skipped at configure time ?
 From: laurent@cbs.dtu.dk
 Date: Thu, 16 Aug 2001 08:52:34 +0200 (MET DST)
-* PR# 1065 *
-Subject: X11 protocol errors after all x11 devices are closed
-From: Prof Brian D Ripley <ripley@stats.ox.ac.uk>
-Date: Wed, 22 Aug 2001 07:25:36 +0100 (BST)
 * PR# 1066 *
 Subject: Corrupted binary??
 From: L C G Rogers <maslcgr@bath.ac.uk>
@@ -305,3 +301,15 @@ Date: Wed, 22 Aug 2001 12:04:44 +0100 (BST)
 Subject: cutree
 From: heydebre@molgen.mpg.de
 Date: Wed, 22 Aug 2001 20:29:27 +0200 (MET DST)
+* PR# 1068 *
+Subject: Interrupts (was Re: [Rd] X11 protocol errors ...)
+From: Luke Tierney <luke@nokomis.stat.umn.edu>
+Date: Wed, 22 Aug 2001 19:32:51 -0500
+* PR# 1069 *
+Subject: Interrupts (was Re: [Rd] X11 protocol errors ...)
+From: "John W. Eaton" <jwe@bevo.che.wisc.edu>
+Date: Wed, 22 Aug 2001 21:56:33 -0500
+* PR# 1071 *
+Subject: postscript & ps.options documentation
+From: Kevin.Wright@pioneer.com
+Date: Thu, 23 Aug 2001 20:38:13 +0200 (MET DST)
