@@ -71,6 +71,8 @@ help.start(update = TRUE, gui = "irrelevant",
   PostScript format.
 
   \code{\link{browseURL}} for how the help file is displayed.
+
+  \code{\link{RSiteSearch}} to access an on-line search of \R resources.
 }
 \examples{
 \dontrun{help.start()

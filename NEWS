@@ -186,6 +186,9 @@ NEW FEATURES
 	encodings, on those OSes which support this.  See the new
 	capabilities("iconv").
 
+    o	New function RSiteSearch() to query R-related resources 
+	on-line (contributed by Jonathan Baron and Andy Liaw).
+
 
 UTILITIES
 

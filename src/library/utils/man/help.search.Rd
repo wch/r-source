@@ -95,6 +95,8 @@ help.search(pattern, fields = c("alias", "concept", "title"),
   version of \R's online documentation, which offers a similar search
   mechanism.
 
+  \code{\link{RSiteSearch}} to access an on-line search of \R resources.
+  
   \code{\link{apropos}} uses regexps and has nice examples.
 }
 \examples{
