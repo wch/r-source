@@ -286,7 +286,7 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
 				  "contains no R code"))
                 dbbase <- file.path(which.lib.loc, package, "data", "Rdata")
                 if(file.exists(paste(dbbase, ".rdb", sep="")))
-                    lazyLoad(dbbase, env)
+                    lazyLoad(dbbase, loadenv)
 		## now transfer contents of loadenv to an attached frame
 		env <- attach(NULL, pos = pos, name = pkgname)
 		## detach does not allow character vector args
