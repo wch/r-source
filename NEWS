@@ -404,7 +404,7 @@ C-LEVEL FACILITIES
 	strings (such as the names vector) rather than assuming these
 	are passed in.
 
-    o	R_CheckUserInterrupts is now described in `Writing R Extensions'
+    o	R_CheckUserInterrupt is now described in `Writing R Extensions'
 	and there is a new equivalent subroutine rchkusr for calling
 	from FORTRAN code.
 
