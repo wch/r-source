@@ -34,12 +34,16 @@ $BN = "bracket_normal";
 $EOB = "escaped_opening_bracket";
 $ECB = "escaped_closing_bracket";
 $ID = "$NB\\d+$BN";
+
+
 $ECODE = "this_is_escaped_code";
 
 $LATEX_SPECIAL = '\$\^%&~_#\{\}\\\\';
 $LATEX_DO_MATH = '-+\*/\|<>=!';
 $MD = ',,,Math,del;;;'; #-- should NOT contain any characters from $LATEX_..
 $Math_del = "\$"; #UNquoted '$'
+$MAXLOOPS = 1000;
+
 
 sub Rdconv {
 
@@ -59,7 +63,9 @@ sub Rdconv {
 
     #-- remove comments (everything after a %)
     while(<rdfile>){
-	while(s/^\\%|([^\\])\\%/$1escaped_percent_sign/go){};
+	my $loopcount = 0;
+	while(checkloop($loopcount++, $_, "\\%") &&
+	      s/^\\%|([^\\])\\%/$1escaped_percent_sign/go){};
 	next if /^\s*%/o;#- completely drop full comment lines
 	s/^([^%]*)%.*$/$1/o;
 	s/escaped_percent_sign/\\%/go;
@@ -68,7 +74,7 @@ sub Rdconv {
     printf stderr "-- read file '%s';\n",$_[0] if $debug;
 
     mark_brackets();
-    ##HARD Debug: print "$complete_text\n"; exit;
+    ##HARD Debug:print "$complete_text\n"; exit;
     escape_codes();
     if($debug) {
       print stderr "\n--------------\nescape codes: '\@ecodes' =\n";
@@ -91,6 +97,28 @@ sub Rdconv {
 }
 
 
+sub checkloop {
+    my $loopcount = $_[0];
+    my $text = $_[1];
+    my $what = $_[2];
+    
+    if($loopcount > $MAXLOOPS){
+	
+	while($text =~ /$ECODE($ID)/){
+	    my $id = $1;
+	    my $ec = $ecodes{$id};
+	    $text =~ s/$ECODE$id/$ec/;
+	}
+	$text = unmark_brackets($text);
+
+	die("\n\n******* Syntax error: $what\n$text\n");
+    }
+    
+    1;
+}
+
+
+
 # Mark each matching opening and closing bracket with a unique id.
 # Idea and original code from latex2html
 sub mark_brackets {
@@ -99,7 +127,10 @@ sub mark_brackets {
     $complete_text =~ s/^\\}|([^\\])\\}/$1$ECB/gso;
 
     print stderr "\n-- mark_brackets:" if $debug;
-    while($complete_text =~ /{([^{}]*)}/s){
+    my $loopcount = 0; 
+    while(checkloop($loopcount++, $complete_text,
+		    "mismatched or missing brackets in") &&
+	  $complete_text =~ /{([^{}]*)}/s){
 	my $id = $NB . ++$max_bracket . $BN;
 	$complete_text =~ s/{([^{}]*)}/$id$1$id/s;
 	print stderr "." if $debug;
@@ -110,13 +141,15 @@ sub mark_brackets {
 sub unmark_brackets {
     my $text = $_[0];
 
-    while($text =~ /($ID)(.*)($ID)/s){
+    my $loopcount = 0;
+    while(($loopcount++ < $MAXLOOPS) && $text =~ /($ID)(.*)($ID)/s){
 	$id = $1;
 	if($text =~ s/$id(.*)$id/\{$1\}/s){
 	    $text =~ s/$id(.*)$id/\{$1\}/so;
 	}
 	else{
-	    return $text;
+#	    return $text;
+	    $text =~ s/$id/\{/so;
 	}
     }
     $text =~ s/$EOB/\{/gso;
@@ -126,7 +159,10 @@ sub unmark_brackets {
 
 sub escape_codes {
     print stderr "\n-- escape_codes:" if $debug;
-    while($complete_text =~ /\\code/){
+    my $loopcount = 0; 
+    while(checkloop($loopcount++, $complete_text,
+		    "while replacing all \\code{...}") &&
+	  $complete_text =~ /\\code/){
 	my ($id, $arg)	= get_arguments("code", $complete_text, 1);
 	$complete_text =~ s/\\code$id(.*)$id/$ECODE$id/s;
 	$ecodes{$id} = $1;
@@ -178,7 +214,9 @@ sub get_multi {
     my ($text, $name) = @_; # name: "alias" or "keyword"
     my @res, $k=0;
     print stderr "--- Multi: $name\n" if $debug;
-    while($text =~ /\\$name($ID)/) {
+    my $loopcount = 0; 
+    while(checkloop($loopcount++, $text, "\\name")
+	  && $text =~ /\\$name($ID)/) {
 	my $id = $1;
 	my ($endid, $arg) =
 	    get_arguments($name, $text, 1);
@@ -200,7 +238,9 @@ sub get_sections {
     my $text = $_[0];
 
     print stderr "--- Sections\n" if $debug;
-    while($text =~ /\\section($ID)/){
+    my $loopcount = 0; 
+    while(checkloop($loopcount++, $text, "\\section") &&
+	  $text =~ /\\section($ID)/){
 	my $id = $1;
 	my ($endid, $section, $body)
 	    = get_arguments("section", $text, 2);
@@ -272,7 +312,9 @@ sub undefined_command {
 
     my ($text, $cmd) = @_;
 
-    while($text =~ /\\$cmd/){
+    my $loopcount = 0; 
+    while(checkloop($loopcount++, $text, "\\$cmd")
+	  &&  $text =~ /\\$cmd/){
 	my ($id, $arg)	= get_arguments($cmd, $text, 1);
 	$text =~ s/\\$cmd$id(.*)$id/$1/s;
     }
@@ -284,14 +326,16 @@ sub replace_command {
 
     my ($text, $cmd, $before, $after) = @_;
 
-    while($text =~ /\\$cmd/){
+    my $loopcount = 0; 
+    while(checkloop($loopcount++, $text, "\\$cmd") &&
+	  $text =~ /\\$cmd/){
 	my ($id, $arg)	= get_arguments($cmd, $text, 1);
 	$text =~ s/\\$cmd$id(.*)$id/$before$1$after/s;
     }
     $text;
 }
 
-
+
 #************************** HTML ********************************
 
 
@@ -363,7 +407,9 @@ sub text2html {
     $text = replace_command($text, "bold", "<B>", "</B>");
     $text = replace_command($text, "file", "`", "'");
 
-    while($text =~ /\\link/){
+    my $loopcount = 0; 
+    while(checkloop($loopcount++, $text, "\\link")
+	  &&  $text =~ /\\link/){
 	my ($id, $arg)	= get_arguments("link", $text, 1);
 	$htmlfile = $htmlindex{$arg};
 	if($htmlfile){
@@ -374,24 +420,33 @@ sub text2html {
 	}
     }
 
-    while($text =~ /\\email/){
+    $loopcount = 0; 
+    while(checkloop($loopcount++, $text, "\\email")
+	  &&  $text =~ /\\email/){
 	my ($id, $arg)	= get_arguments("email", $text, 1);
 	$text =~ s/\\email$id.*$id/<A HREF=\"mailto:$arg\">$arg<\/A>/s;
     }
 
-    while($text =~ /\\url/){
+    $loopcount = 0; 
+    while(checkloop($loopcount++, $text, "\\url")
+	  &&  $text =~ /\\url/){
 	my ($id, $arg)	= get_arguments("url", $text, 1);
 	$text =~ s/\\url.*$id/<A HREF=\"$arg\">$arg<\/A>/s;
     }
 
+    
     # handle equations:
-    while($text =~ /\\eqn/){
+    $loopcount = 0; 
+    while(checkloop($loopcount++, $text, "\\eqn")
+	  &&  $text =~ /\\eqn/){
 	my ($id, $eqn, $ascii) = get_arguments("eqn", $text, 2);
 	$eqn = $ascii if $ascii;
 	$text =~ s/\\eqn(.*)$id/<I>$eqn<\/I>/s;
     }
 
-    while($text =~ /\\deqn/){
+    $loopcount = 0; 
+    while(checkloop($loopcount++, $text, "\\deqn")
+	  &&  $text =~ /\\deqn/){
 	my ($id, $eqn, $ascii) = get_arguments("deqn", $text, 2);
 	$eqn = $ascii if $ascii;
 	$text =~ s/\\deqn(.*)$id/<P align=center><I>$eqn<\/I><\/P>/s;
@@ -418,7 +473,9 @@ sub code2html {
     $text =~ s/\\dots/.../go;
 
 
-    while($text =~ /\\link/){
+    my $loopcount = 0; 
+    while(checkloop($loopcount++, $text, "\\link")
+	  &&  $text =~ /\\link/){
 	my ($id, $arg)	= get_arguments("link", $text, 1);
 	$htmlfile = $htmlindex{$arg};
 	if($htmlfile){
@@ -475,8 +532,11 @@ sub html_print_argblock {
 		$text =~ s/^$begin//s;
 	    }
 	    print htmlout "<TABLE>\n";
-	    while($text =~ /\\item/s){
-		my ($id, $arg, $desc)  = get_arguments("item", $text, 2);
+	    my $loopcount = 0; 
+	    while(checkloop($loopcount++, $text, "\\item")
+		  && $text =~ /\\item/s){
+		my ($id, $arg, $desc)  =
+		    get_arguments("item", $text, 2);
 		print htmlout "<TR VALIGN=TOP><TD><CODE>";
 		print htmlout text2html($arg);
 		print htmlout "</CODE>\n<TD>\n";
@@ -507,7 +567,10 @@ sub html_print_sections {
 sub html_unescape_codes {
 
     my $text = $_[0];
-    while($text =~ /$ECODE($ID)/){
+    
+    my $loopcount = 0; 
+    while(checkloop($loopcount++, $text, "escaped code")
+	  && $text =~ /$ECODE($ID)/){
 	my $id = $1;
 	my $ec = code2html($ecodes{$id});
 	$text =~ s/$ECODE$id/<CODE>$ec<\/CODE>/;
@@ -515,7 +578,7 @@ sub html_unescape_codes {
     $text;
 }
 
-
+
 #**************************** nroff ******************************
 
 
@@ -599,13 +662,16 @@ sub text2nroff {
     $text = replace_command($text, "url", "<URL: ", ">");
 
     # handle equations:
-    while($text =~ /\\eqn/){
+    my $loopcount = 0; 
+    while(checkloop($loopcount++, $text, "\\eqn")
+	  &&  $text =~ /\\eqn/){
 	my ($id, $eqn, $ascii) = get_arguments("eqn", $text, 2);
 	$eqn = $ascii if $ascii;
 	$text =~ s/\\eqn(.*)$id/$eqn/s;
     }
 
-    while($text =~ /\\deqn/){
+    $loopcount = 0; 
+    while(checkloop($loopcount++, $text, "\\deqn") &&  $text =~ /\\deqn/){
 	my ($id, $eqn, $ascii) = get_arguments("deqn", $text, 2);
 	$eqn = $ascii if $ascii;
 	$text =~ s/\\deqn(.*)$id/\n.DS B\n$eqn\n.DE\n/s;
@@ -633,7 +699,9 @@ sub nroff_parse_lists {
 
     my $text = $_[0];
 
-    while($text =~ /\\itemize|\\enumerate/){
+    my $loopcount = 0; 
+    while(checkloop($loopcount++, $text, "\\itemize|\\enumerate") &&
+	  $text =~ /\\itemize|\\enumerate/){
 	my ($id, $innertext) = get_arguments("deqn", $text, 1);
 	if($innertext =~ /\\itemize/){
 	    my $tmptext = html_parse_lists($innertext);
@@ -730,7 +798,9 @@ sub nroff_print_argblock {
 		print nroffout text2nroff($begin);
 		$text =~ s/^$begin//s;
 	    }
-	    while($text =~ /\\item/s){
+	    my $loopcount = 0; 
+	    while(checkloop($loopcount++, $text, "\\item") &&
+		  $text =~ /\\item/s){
 		my ($id, $arg, $desc)  = get_arguments("item", $text, 2);
 		$arg = text2nroff($arg);
 		$desc = text2nroff($desc);
@@ -773,7 +843,10 @@ sub nroff_print_sections {
 sub nroff_unescape_codes {
 
     my $text = $_[0];
-    while($text =~ /$ECODE($ID)/){
+
+    my $loopcount = 0; 
+    while(checkloop($loopcount++, $text, "escaped code")
+	  && $text =~ /$ECODE($ID)/){
 	my $id = $1;
 	my $ec = code2nroff($ecodes{$id});
 	$text =~ s/$ECODE$id/\`$ec\'/;
@@ -890,12 +963,16 @@ sub text2latex {
     $text =~ s/\\itemize/\\Itemize/o;
     $text =~ s/\\enumerate/\\Enumerate/o;
 
-    while($text =~ /\\eqn/){
+    my $loopcount = 0; 
+    while(checkloop($loopcount++, $text, "\\eqn")
+	  &&  $text =~ /\\eqn/){
 	my ($id, $eqn, $ascii) = get_arguments("eqn", $text, 2);
 	$text =~ s/\\eqn.*$id/\\eeeeqn\{$eqn\}\{$ascii\}/s;
     }
 
-    while($text =~ /\\deqn/){
+    $loopcount = 0; 
+    while(checkloop($loopcount++, $text, "\\deqn")
+	  &&  $text =~ /\\deqn/){
 	my ($id, $eqn, $ascii) = get_arguments("deqn", $text, 2);
 	$text =~ s/\\deqn.*$id/\\dddeqn\{$eqn\}\{$ascii\}/s;
     }
@@ -921,12 +998,14 @@ sub code2latex {
 
     $text =~ s/\\\\/\\bsl{}/go;
     if($hyper) {
-      while($text =~ /\\link/) {
-	my ($id, $arg) = get_arguments("link", $text, 1);
-	$text =~ s/\\link$id.*$id/HYPERLINK($arg)/s;
-      }
+	my $loopcount = 0; 
+	while(checkloop($loopcount++, $text, "\\link")
+	      && $text =~ /\\link/) {
+	    my ($id, $arg) = get_arguments("link", $text, 1);
+	    $text =~ s/\\link$id.*$id/HYPERLINK($arg)/s;
+	}
     } else {
-      $text = undefined_command($text, "link");
+	$text = undefined_command($text, "link");
     }
     unmark_brackets($text);
 }
@@ -986,7 +1065,9 @@ sub latex_print_argblock {
 		$text =~ s/^$begin//s;
 	    }
 	    print latexout "\\begin\{ldescription\}\n";
-	    while($text =~ /\\item/s){
+	    my $loopcount = 0; 
+	    while(checkloop($loopcount++, $text, "\\item")
+		  &&  $text =~ /\\item/s){
 		my ($id, $arg, $desc)  = get_arguments("item", $text, 2);
 		print latexout "\\item\[";
 		print latexout latex_code_cmd(code2latex($arg,1));
@@ -1018,7 +1099,10 @@ sub latex_print_sections {
 sub latex_unescape_codes {
 
     my $text = $_[0];
-    while($text =~ /$ECODE($ID)/){
+
+    my $loopcount = 0; 
+    while(checkloop($loopcount++, $text, "escaped code")
+	  && $text =~ /$ECODE($ID)/){
 	my $id = $1;
 	my $ec = latex_code_cmd(code2latex($ecodes{$id},1));
 	$text =~ s/$ECODE$id/$ec/;
