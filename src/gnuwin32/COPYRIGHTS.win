@@ -9,6 +9,12 @@ and the import library src/gnuwin32/libR.a made from R.exp falls under the
 same licence.
 
 
+src/gnuwin32/e_pow.S
+
+is distributed under the Lesser GNU Public Licence (file COPYING.LIB),
+being based closely on code in the GNU C Library.
+
+
 src/gnuwin32/getline/*
 
 /*

@@ -7,49 +7,34 @@ See the file NEWS for changes that affect all versions of R.
 rw1090
 ======
 
-The fast bmp/png/jpeg code introduced in R 1.8.0 is used even for
-256-color displays (as we have now been able to test it on such).
-
-R's internal malloc etc are now remapped to Rm_malloc etc and only
-used in allocating memory for R objects, the Wilcoxon tests and a few
-other memory-intensive applications.
-
-Improved malloc routines from the current version of Doug Lea's malloc
-(as suggested by David Teller) should enable large memory areas to be
-used more effectively, in particular those over 2Gb where OS support
-has been enabled.  The initially requested memory is no longer
-reserved, but as this malloc is able to work with non-contiguous
-memory chunks that should not matter.
-
 Both Rterm and Rgui now give usage information via the --help
 command-line flag.
 
-There is now a "Misc|Break to debugger" menu option, enabled by the 
+There is now a "Misc|Break to debugger" menu option, enabled by the
 "--debug" command line option.  This will cause a trap to an external
-debugger, e.g. for running Rgui under gdb.  If the menu item
-is selected when not running under a debugger R is likely to crash.
+debugger, e.g. for running Rgui under gdb.  If the menu item is
+selected when not running under a debugger R is likely to crash.
 
 Added "stay" argument to bringToTop(), to allow the user to specify
 that a window should stay on top of other windows.  Also added "stay
 on top" item to the popup menus.  All of these require R to be running
-in SDI mode ("Rgui --sdi").
+in SDI mode ("Rgui --sdi" or via the settings in file `Rconsole').
 
 Changed windows() so that new windows fit within the MDI client
 area.
 
-Installing (binary) package bundles now checks the MD5 sums and
-reports success, just as for packages.
 
-Rcmd INSTALL now supports versioned install via --with-package-versions.
+Installation
+------------
+
+Parallel make (make -j2, say) can be used, but only usefully on
+dual-processor (or perhaps hyperthreaded) hosts with at least 384Mb of
+memory.
 
 Installing now sorts in the C locale to ensure that a consistent sort
 order is used.  (Some aspects of sorting used to be done in the locale
 of the host machine, but Perl and the cygwin-based tools used the
 ASCII collation order.)
-
-Parallel make (make -j2, say) can be used, but only usefully on
-dual-processor (or perhaps hyperthreaded) hosts with at least 384Mb of
-memory.
 
 The long-untested support for making Windows .hlp files has been withdrawn.
 
@@ -63,8 +48,40 @@ svd(A)	16.2	7.77	6.83
 Note that using a fast BLAS is much less effective for smaller
 matrices as are more common in statistical applications.
 
+Faster assembler code for exponentiation is used.
+
+Cross-building of R itself now works again.  (It had been broken since
+1.8.0.)
+
+
+Building/installing packages
+----------------------------
+
 Rcmd INSTALL/build/check map path names with spaces in to their short
 forms.
+
+Rcmd INSTALL now supports versioned install via --with-package-versions.
+
+Installing (binary) package bundles now checks the MD5 sums and
+reports success, just as for packages.
+
+
+Internal changes
+----------------
+
+The fast bmp/png/jpeg code introduced in R 1.8.0 is used even for
+256-color displays (as we have now been able to test it on such).
+
+R's internal malloc etc are now remapped to Rm_malloc etc and only
+used in allocating memory for R objects, the Wilcoxon tests and a few
+other memory-intensive applications.
+
+Improved malloc routines from the current version of Doug Lea's malloc
+(as suggested by David Teller) should enable large memory areas to be
+used more effectively, in particular those over 2Gb where OS support
+has been enabled.  The initially requested memory is no longer
+reserved, but as this malloc is able to work with non-contiguous
+memory chunks that should not matter.
 
 
 Bug fixes
@@ -83,8 +100,6 @@ In RGui, ^T would not transpose the first and second characters on a
 line.  (PR#5593)
 
 Fixed junk character at start of a pipe(). (PR#5053)
-
-Cross-building of R itself now works again.  (It had been broken since 1.8.0.)
 
 Rcmd SHLIB was computing dependencies for all C files, not just those
 specified on the command line, and building the DLL from all *.o files
