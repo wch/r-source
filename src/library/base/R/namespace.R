@@ -320,8 +320,10 @@ namespaceImportFrom <- function(self, ns, vars) {
     else impvars <- vars
     impvars <- makeImportExportNames(impvars)
     impnames <- names(impvars)
-    if (any(duplicated(impnames)))
-        stop("duplicate import names")
+    if (any(duplicated(impnames))) {
+        stop("duplicate import names ",
+             paste(impnames[duplicated(impnames)], collapse=", "))
+    }
     if (isNamespace(self) && isBaseNamespace(self)) {
         impenv <- self
         msg <- "replacing local value with import:"
@@ -386,7 +388,8 @@ namespaceExport <- function(ns, vars) {
         }
         new <- makeImportExportNames(vars)
         if (any(duplicated(new)))
-            stop("duplicate export names")
+            stop("duplicate export names ",
+             paste(new[duplicated(new)], collapse=", "))
         undef <- new[! sapply(new, exists, env = ns)]
         if (length(undef) != 0) {
            undef <- do.call("paste", as.list(c(undef, sep=", ")))
