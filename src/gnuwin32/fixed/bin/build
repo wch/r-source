@@ -31,7 +31,7 @@ use R::Rd;
 ## don't buffer output
 $|=1;
 
-my $revision = ' $Revision: 1.1 $ ';
+my $revision = ' $Revision: 1.2 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -40,7 +40,7 @@ $version = $1;
 
 $make = "make";
 
-my @knownoptions = ("help|h", "version|v", "binary", 
+my @knownoptions = ("help|h", "version|v", "binary", "docs:s",
 		    "use-zip", "use-zip-help", "use-zip-data");
 
 GetOptions (@knownoptions) || usage();
@@ -56,6 +56,7 @@ my $R_HOME = $ENV{'R_HOME'} ||
     die "Error: Environment variable R_HOME not found\n";
 
 my $INS_opts = "";
+$INS_opts .= " --docs=$opt_docs" if $opt_docs;
 $INS_opts .= " --use-zip" if $opt_use_zip;
 $INS_opts .= " --use-zip-data" if $opt_use_zip_data;
 $INS_opts .= " --use-zip-help" if $opt_use_zip_help;
@@ -64,7 +65,7 @@ if(!$opt_binary && $INS_opts ne "") {
     printf "** Options $INS_opts for --binary ignored\n";
 }
 
-## this is the main loop over all packages that shall be checked
+## this is the main loop over all packages to be checked
 my $pkg;
 foreach $pkg (@ARGV){
     my $is_bundle=0;
@@ -91,7 +92,7 @@ foreach $pkg (@ARGV){
 	mkdir("$tmpdir/Rbuild.$$", 0755) ||
 	    die "Cannot create directory $tmpdir/Rbuild.$$\n";
 
-	if(system("${R_HOME}/bin/Rcmd INSTALL -l $libdir $INS_opts $pkg")){
+	if(system("Rcmd INSTALL -l $libdir $INS_opts $pkg")){
 	    $log->error("installation failed");
 	}
 	print("\n");
@@ -213,6 +214,7 @@ Options:
   -v, --version		print version info and exit
 
   --binary              build pre-compiled binary packages, with options:
+  --docs=TYPE	        type(s) of documentation to build and install
   --use-zip-data        collect data files in zip archive
   --use-zip-help        collect help and examples into zip archives
   --use-zip             combine `--use-zip-data' and `--use-zip-help'
