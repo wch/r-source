@@ -95,7 +95,9 @@ extern double m_tiny;
 #define	rround	fround
 #define	prec	fprec
 #define	trunc	ftrunc
-#define	sign	fsign
+/* NO!  fsign(.) has 2 arguments;  sign(.) has 1..
+ #define	sign	fsign
+*/
 
 	/* Machine Characteristics */
 
@@ -108,6 +110,7 @@ int	i1mach_(int*);
 
 int	imax2(int, int);
 int	imin2(int, int);
+double	sign(double);
 double	fmax2(double, double);
 double	fmin2(double, double);
 double	fmod(double, double);
