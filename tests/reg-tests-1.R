@@ -3031,3 +3031,7 @@ stopifnot(inherits(try(list(1) <= list(2)), "try-error"))
 e <- expression(3 + 2 * 4)
 stopifnot(inherits(try(e == e), "try-error"))
 ## both were allowed but nonsense in 1.9.0
+
+## "nowhere" interpolation (PR#6809)
+approx(list(x=rep(NaN,9),y=1:9), xout=NaN)
+## gave a seg.fault in 1.9.0
