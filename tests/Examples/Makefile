@@ -1,6 +1,6 @@
 ###-*- Makefile -*- for 'test-Examples', also see ${RHOME}/tests/Makefile
 
-CleanMe =
+CleanMe = .RData sink-examp.txt
 ## The following must be an ABSOLUTE path
 ## or RELATIVE to 'Ex_Tests' (RHOME/test/Examples/ :
 rRHOME= ../..
