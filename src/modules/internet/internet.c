@@ -60,7 +60,8 @@ static Rboolean url_open(Rconnection con)
     UrlScheme type = ((Rurlconn)(con->private))->type;
 
     if(con->mode[0] != 'r') {
-	error("can only open URLs for reading");
+	REprintf("can only open URLs for reading");
+	return FALSE;
     }
 
     switch(type) {
@@ -447,7 +448,7 @@ void *in_R_HTTPOpen(const char *url, int cacheOK)
 	int rc = RxmlNanoHTTPReturnCode(ctxt);
 	if(rc != 200) {
 	    RxmlNanoHTTPClose(ctxt);
-	    error("cannot open: HTTP status was `%d %s'", rc,
+	    REprintf("cannot open: HTTP status was `%d %s'", rc,
 		  RxmlNanoHTTPStatusMsg(ctxt));
 	    return NULL;
 	} else {

@@ -207,10 +207,9 @@ install.from.file <- function(pkg=file.choose()){
                  maxcubesize = 256, canvas = "white"){
    
    if(display=="" && .Platform$GUI=="AQUA" && Sys.getenv("DISPLAY")==""){
-     ps<-system("ps axc", intern=TRUE)
-     ## Blame http://www.netneurotic.de/mac/testx/testx
-     if (any(c(grep("Xquartz", ps), grep("xinit", ps))))
-       Sys.putenv(DISPLAY=":0")
+     ##ps<-system("ps axc", intern=TRUE)
+     ##if (any(c(grep("Xquartz", ps), grep("xinit", ps))))
+     Sys.putenv(DISPLAY=":0")
    }
    
    .Internal(X11(display, width, height, pointsize, gamma, colortype,
