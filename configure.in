@@ -36,6 +36,9 @@ AC_DEFINE_UNQUOTED(R_CPU, "${host_cpu}")
 AC_DEFINE_UNQUOTED(R_VENDOR, "${host_vendor}")
 AC_DEFINE_UNQUOTED(R_OS, "${host_os}")
 
+R_PLATFORM="${host}"
+AC_SUBST(R_PLATFORM)
+
 PACKAGE="R"
 VERSION=`cat ${srcdir}/VERSION | cut -d" " -f1`
 AC_SUBST(PACKAGE)

@@ -13,7 +13,7 @@ use R::Rd;
 ## don't buffer output
 $|=1;
 
-my $revision = ' $Revision: 1.2 $ ';
+my $revision = ' $Revision: 1.3 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -22,8 +22,7 @@ $version = $1;
 
 $make = "@MAKE@";
 
-$opt_clean = $opt_examples = $opt_tests = $opt_latex = 1;
-my @knownoptions = ("help|h", "version|v", "nsize:s", "vsize:s");
+my @knownoptions = ("help|h", "version|v", "binary");
 
 GetOptions (@knownoptions) || usage();
 
@@ -33,6 +32,7 @@ usage() if $opt_help;
 my $startdir=getcwd();
 
 my $tmpdir = R_getenv("TMPDIR", "/tmp");
+my $R_platform = R_getenv("R_PLATFORM", "unknown-binary");
 my $R_HOME = $ENV{'R_HOME'} ||
     die "Error: Environment variable R_HOME not found\n";
 
@@ -61,44 +61,67 @@ foreach $pkg (@ARGV){
 	exit(1);
     }
 	
-    if($description->{"Contains"}){
-	$log->message("Looks like \`${pkg}' is a package bundle");
-	$is_bundle=1;
-	my @bundlepkgs = split(/\s+/, $description->{"Contains"});
-	my $ppkg="";
-	foreach $ppkg (@bundlepkgs){
-	    $log->message("preparing \`$ppkg' in bundle \`$pkg':");
-	    $log->setstars("**");
-	    chdir($startdir);
-	    prepare_pkg("$pkg/$ppkg", $is_bundle, $description, $log);
-	    $log->setstars("*");
+    
+    if($opt_binary){
+	my $libdir = "$tmpdir/Rbuild.$$";
+	mkdir("$tmpdir/Rbuild.$$", 0755) ||
+	    die "Cannot create directory $tmpdir/Rbuild.$$\n";
+
+	if(system("${R_HOME}/bin/R INSTALL -l $libdir $pkg")){
+	    $log->error("installation failed");
 	}
+	print("\n");
+	chdir($libdir);
+	my $filename =  "${pkgname}_" . $description->{"Version"} .
+	    "_${R_platform}.tar";
+	$log->message("building \`$filename.gz'");
+	
+	## use */ below such that LibIndex is ignored
+	system("tar -c -h */ > $startdir/$filename");
+	system("rm -rf $libdir");
+	chdir($startdir);
+	unlink("$filename.gz") if (-f "$filename.gz");	
+	system("gzip -9 $filename");
     }
     else{
-	$is_bundle=0;
+	if($description->{"Contains"}){
+	    $log->message("Looks like \`${pkg}' is a package bundle");
+	    $is_bundle=1;
+	    my @bundlepkgs = split(/\s+/, $description->{"Contains"});
+	    my $ppkg="";
+	    foreach $ppkg (@bundlepkgs){
+		$log->message("preparing \`$ppkg' in bundle \`$pkg':");
+		$log->setstars("**");
+		chdir($startdir);
+		prepare_pkg("$pkg/$ppkg", $is_bundle, $description, $log);
+		$log->setstars("*");
+	    }
+	}
+	else{
+	    $is_bundle=0;
+	    chdir($startdir);
+	    $log->message("preparing \`$pkg':");
+	    prepare_pkg("$pkg", $is_bundle, $description, $log);
+	}
+	
 	chdir($startdir);
-	$log->message("preparing \`$pkg':");
-	prepare_pkg("$pkg", $is_bundle, $description, $log);
+	
+	$log->message("Removing junk files");
+	find(\&deleteJunkFiles, $pkg);
+	
+	$exclude = "$tmpdir/Rbuild.$$";
+	open exclude, "> $exclude" ||
+	    die "Cannot write to \`$exlude'\n";
+	find(\&findExcludeFiles, $pkg);
+	close exclude;
+	
+	my $filename = "${pkgname}_" . $description->{"Version"} . ".tar";
+	$log->message("building \`$filename.gz'");
+	system("tar -c -h -X $exclude -f $filename $pkg");
+	unlink("$filename.gz") if (-f "$filename.gz");
+	system("gzip -9 $filename");
+	unlink($exclude);
     }
-
-    chdir($startdir);
-
-    $log->message("Removing junk files");
-    find(\&deleteJunkFiles, $pkg);
-    
-    $exclude = "$tmpdir/Rbuild.$$";
-    open exclude, "> $exclude" ||
-	die "Cannot write to \`$exlude'\n";
-    find(\&findExcludeFiles, $pkg);
-    close exclude;
-
-    my $filename = "${pkg}_" . $description->{"Version"} . ".tar";
-    $log->message("building \`$filename.gz'");
-    system("tar -c -h -X $exclude -f $filename $pkg");
-    unlink("$filename.gz") if (-f "$filename.gz");
-    system("gzip -9 $filename");
-    unlink($exclude);
-
     $log->close();
     print("\n");
 }
@@ -164,16 +187,11 @@ Usage: $name [options] pkgdirs
 Build R packages from package sources in the directories specified by
 pkgdirs. 
 
-If necessary for creating .Rout.save files (for regression testing),
-use the \`--vsize' and \`--nsize' options to increase R's memory
-(\`--vanilla' is used by default).
-
 Options:
   -h, --help		print short help message and exit
   -v, --version		print version info and exit
 
-  --vsize=N		set R's vector heap size to N bytes
-  --nsize=N		set R's number of cons cells to N
+  --binary              build pre-compiled binary packages
 
 Email bug reports to <r-bugs\@lists.r-project.org>.
 END
