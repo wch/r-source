@@ -559,6 +559,9 @@ BUG FIXES
 	converting to HTML (PR#1257) and not fixing up mal-formed
 	\item fields in \describe{} when converting to text (PR#1330).
 
+    o   filled.contour() was not checking consistency of x, y, z.
+	(PR#1432)
+
 
 	**************************************************
 	*						 *

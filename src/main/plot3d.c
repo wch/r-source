@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997-2001   Robert Gentleman, Ross Ihaka and the R core team.
+ *  Copyright (C) 1997-2002   Robert Gentleman, Ross Ihaka and the R core team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -1161,11 +1161,6 @@ SEXP do_contour(SEXP call, SEXP op, SEXP args, SEXP env)
 	    errorcall(call, "increasing y values expected");
     }
 
-#ifdef OLDcontour
-    ctr_xtol = 1e-3 * fabs(REAL(x)[nx-1]-REAL(x)[0]);
-    ctr_ytol = 1e-3 * fabs(REAL(y)[ny-1]-REAL(y)[0]);
-#endif
-
     for (i = 0; i < nc; i++)
 	if (!R_FINITE(REAL(c)[i]))
 	    errorcall(call, "illegal NA contour values");
@@ -1186,16 +1181,11 @@ SEXP do_contour(SEXP call, SEXP op, SEXP args, SEXP env)
 	return R_NilValue;
     }
 
-#ifdef OLDcontour 
-    /* R versions up to incl. 0.61.3, 1998-05-03): */
-    atom = DBL_EPSILON * (zmax - zmin);
-#else
     /* change to 1e-3, reconsidered because of PR#897
      * but 1e-7, and even  2*DBL_EPSILON do not prevent inf.loop in contour().
      * maybe something like   16 * DBL_EPSILON * (..).
      * see also MAX_ns above */
     atom = 1e-3 * (zmax - zmin);
-#endif
 
     /* Initialize the segment data base */
 
@@ -1402,6 +1392,15 @@ SEXP do_filledcontour(SEXP call, SEXP op, SEXP args, SEXP env)
     internalTypeCheck(call, sc, REALSXP);
     nc = length(sc);
     args = CDR(args);
+
+    if (nx < 2 || ny < 2)
+	errorcall(call, "insufficient x or y values");
+
+    if (nrows(sz) != nx || ncols(sz) != ny)
+	errorcall(call, "dimension mismatch");
+
+    if (nc < 1)
+	errorcall(call, "no contour values");
 
     PROTECT(scol = FixupCol(CAR(args), NA_INTEGER));
     ncol = length(scol);
