@@ -158,6 +158,16 @@ function(package, dir, lib.loc = NULL)
     undocObjs <- list(code = codeObjs[! codeObjs %in% allDocTopics],
                       data = dataObjs[! dataObjs %in% allDocTopics])
 
+    ## allow group generics to be undocumented other than in base
+    ## in particular, those from methods partially duplicate base and
+    ## are documented in base's groupGenerics.Rd
+    if(!isBase) {
+        undocObjs$code <-
+            undocObjs$code[! undocObjs$code %in%
+                           c("Arith","Compare", "Complex",
+                             "Math", "Math2", "Ops", "Summary")]
+    }
+
     if(!is.na(match("package:methods", search()))) {
         S4ClassObjs <- getClasses(codeEnv)
         ## Note that currently, topicName() is not vectorized in its
