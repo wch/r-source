@@ -156,21 +156,20 @@ OSStatus StartUpGUI(void){
     loadRGUIBundle(&cocoaBundleRef);
 
 
-    /* if the bundle is loaded and at least basic features are provided, we can use the bundle instead of the Carbon window */
+    /* if the bundle is loaded and at least basic features are provided,
+     * we can use the bundle instead of the Carbon window */
     if (cocoaBundleRef && ((cocoaFeatures&cocoa_basic)>0))
         CocoaGUI=true; 
     else
 		return(-1000);
 
-if (CocoaGUI && cocoaSelectWindow) cocoaSelectWindow(0);
+    if (CocoaGUI && cocoaSelectWindow) cocoaSelectWindow(0);
 
 
-//ptr_R_ReadConsole = Rstd_ReadConsole;
+    /* ptr_R_ReadConsole = Rstd_ReadConsole; */
     ptr_R_ReadConsole = RGUI_ReadConsole;
-//	if(!ptr_R_ReadConsole) R_Suicide("Cannot load R_ReadConsole");
+    /* if(!ptr_R_ReadConsole) R_Suicide("Cannot load R_ReadConsole"); */
     ptr_R_WriteConsole = RGUI_WriteConsole;
-
-
 
     
 guifailure:
@@ -387,10 +386,11 @@ void R_ProcessEvents(void)
        onintr();
       return;
     }
-//    if(CocoaGUI)
-//	 cocoaProcessEvents(0);
-
-//return;
+    /*    
+    if(CocoaGUI)
+	cocoaProcessEvents(0);
+    return;
+    */
 
     theTarget = GetEventDispatcherTarget();
     if(CheckEventQueueForUserCancel())
