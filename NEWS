@@ -242,6 +242,10 @@ NEW FEATURES
 	error exits from compiled Fortran code.
 
 
+    o   substring() and substring()<- do nothing silently on a
+        character vector of length 0, rather than generating an
+        error.  This is consistent with other functions and with S-Plus.
+
 
 BUG FIXES
 
