@@ -72,7 +72,7 @@ getOption(x)
 
   \item{printcmd}{the command used by \code{\link{postscript}} for
     printing; set by environment variable \code{R_PRINTCMD}. This should
-    be a command that expects input to be piped to \fiel{stdin}.}
+    be a command that expects input to be piped to \file{stdin}.}
 #ifdef unix
   \item{latexcmd, dvipscmd}{character strings giving commands to be used
     in off-line printing of help pages.}
