@@ -267,7 +267,7 @@ SEXP do_isloaded(SEXP call, SEXP op, SEXP args, SEXP env)
 SEXP do_External(SEXP call, SEXP op, SEXP args, SEXP env)
 {
       DL_FUNC fun;
-      char buf[128], *p, *q;
+      /*      char buf[128], *p, *q;  */
       SEXP retval;
 
       /* I don't like this messing with vmax <TSL> */
@@ -277,10 +277,11 @@ SEXP do_External(SEXP call, SEXP op, SEXP args, SEXP env)
 	  errorcall(call,"function name must be a string\n");
 
       /* make up load symbol & look it up */
-      p = CHAR(STRING(op)[0]);
+      /*      p = CHAR(STRING(op)[0]);
       q = buf; while ((*q = *p) != '\0') { p++; q++; }
 
-      if (!(fun=R_FindSymbol(buf)))
+      if (!(fun=R_FindSymbol(buf))) */
+      if (!(fun=R_FindSymbol(CHAR(STRING(op)[0]))))
 	  errorcall(call, "C-R function not in load table\n");
 
       retval = (SEXP)fun(args);
