@@ -78,7 +78,7 @@ docs: html
 	$(TEXI2HTML) -D UseExternalXrefs -I$(srcdir) $< -o $@ || touch $@
 .texi.info:
 	@if test "$(MAKEINFO)" = false; then \
-	  echo "ERROR: 'makeinfo' v4 needed but missing on your system."; \
+	  echo "ERROR: 'makeinfo' v4.5 or later needed but missing on your system."; \
 	  exit 1; \
 	fi
 	$(MAKEINFO) -D UseExternalXrefs -I$(srcdir) $<
