@@ -28,6 +28,10 @@
 #include "IOStuff.h"
 #include "Parse.h"
 
+#ifdef HAVE_LOCALE_H
+# include <locale.h>
+#endif
+
 
 /* The `real' main() program is in ../<SYSTEM>/system.c */
 /* e.g. ../unix/system.c */

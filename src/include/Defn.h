@@ -25,12 +25,12 @@
 
 /* To test the write barrier used by the generational collector,
    define TESTING_WRITE_BARRIER.  This makes the internal structure of
-   SEXPREC's visible only inside of files that explicitly define
+   SEXPRECs visible only inside of files that explicitly define
    USE_RINTERNALS, and all uses of SEXPREC fields that do not go
-   through the appropriate functions or macros will become compiler
+   through the appropriate functions or macros will become compilation
    errors.  Since this does impose a small but noticable performance
-   penalty, code that includes Defs.h (or code that explicitly defines
-   USE_RINTERNALS) can access SEXPREC's field directly. */
+   penalty, code that includes Defn.h (or code that explicitly defines
+   USE_RINTERNALS) can access a SEXPREC's fields directly. */
 
 #ifndef TESTING_WRITE_BARRIER
 # define USE_RINTERNALS
@@ -51,9 +51,6 @@
 # ifndef NULL
 #  define	NULL		0
 # endif
-# ifndef RAND_MAX
-#  define	RAND_MAX	32767
-# endif
 #endif /* SunOS4 */
 
 /* PSIGNAL may be defined on Win32 in config.h */
@@ -64,22 +61,26 @@
 # include <setjmp.h>
 #endif
 
+/* 
 #include <time.h>
 
 #ifdef HAVE_LOCALE_H
 # include <locale.h>
 #endif
+*/
 
 #ifdef Unix
 # define OSTYPE      "unix"
 # define FILESEP     "/"
 # define DYNLOADEXT  "." ## SHLIB_EXT
 #endif /* Unix */
+
 #ifdef Macintosh
 # define OSTYPE      "mac"
 # define FILESEP     ":"
 # define DYNLOADEXT  ".dll"
 #endif /* Macintosh */
+
 #ifdef Win32
 # define OSTYPE      "windows"
 # define FILESEP     "/"
