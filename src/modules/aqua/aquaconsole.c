@@ -224,6 +224,7 @@ void SendReturnKey(void);
 static char CMDString[CMDLineSize+1];
 
 pascal OSErr  HandleDoCommandLine (AppleEvent *theAppleEvent, AppleEvent* reply, long handlerRefCon);
+pascal OSErr HandleOpenDocument( const AppleEvent *ae, AppleEvent *reply, SInt32 refCon );
 
 /*
  -------------------------------------------------------- Cocoa interface functions ------
@@ -863,6 +864,9 @@ OSStatus InstallAppHandlers(void){
 	err = InstallApplicationEventHandler( NewEventHandlerUPP(RWinHandler), GetEventTypeCount(RGlobalWinEvents),
 										  RGlobalWinEvents, 0, NULL);
 	
+ 	err = AEInstallEventHandler(kCoreEventClass, kAEOpenDocuments, 
+								NewAEEventHandlerUPP( HandleOpenDocument ), 0, false );
+
 	err = AEInstallEventHandler(kCoreEventClass, kAEQuitApplication, 
 								NewAEEventHandlerUPP((AEEventHandlerProcPtr)QuitAppleEventHandler), 
 								0, false);
@@ -3737,7 +3741,79 @@ cleanup:
 					 return noErr;
 				 }
 				 
+OSErr GotRequiredParams( const AppleEvent *ae );
 				 
+/* HandleOpenDocument routine :
+   Description :
+   This Event will be generated when you click on a R file icon.
+   This event can only be depatched by the ProcessEvent routine.
+   Thus, even you click on the file icon of R to start R, this event
+   will not be catch until the R_readConsole start.
+   FIXME: This function does not control if the file can be sourced by R
+		just try to do this. We should check if it is an RDA file for
+		example. To be done in 1.9.1.
+*/
+pascal OSErr HandleOpenDocument( const AppleEvent *ae,
+					AppleEvent *reply, SInt32 refCon )
+{
+#pragma unused ( reply, refCon )
+    AEDescList		docList;
+    AEKeyword		keyword;
+    DescType		actualType;
+    Size		actualSize;
+    SInt32		numberOfDocuments;
+    FSSpec		fileSpec;
+    OSErr		err;
+    FInfo		fileInfo;
+    SInt16		pathLen;
+    Handle		pathName=NULL;
+    char InitFile[300];
+	char buf[310], cmd[500];
+	
+    docList.descriptorType = typeNull;
+    docList.dataHandle = nil;
+    
+	/* extracts direct parameter from the Apple event */
+	
+    if ( ( err = AEGetParamDesc( ae, keyDirectObject, typeAEList, &docList ) ) != noErr )
+	goto cleanup;
+
+    /* perform the recommended check for additional required parameters */
+
+    if ( ( err = GotRequiredParams( ae ) ) != noErr )
+	goto cleanup;
+
+    if ( ( err = AEGetNthPtr( &docList, 1, typeFSS, &keyword, &actualType,
+			      &fileSpec, sizeof( fileSpec ), &actualSize ) ) != noErr )
+	goto cleanup;
+
+    err = FSpGetFInfo(&fileSpec, &fileInfo);
+    if (err != noErr) goto cleanup;
+
+	err = FSMakePath(fileSpec.vRefNum, fileSpec.parID, fileSpec.name, buf, 300);  
+	sprintf(cmd,"source(\"%s\")",buf);
+	consolecmd(cmd);
+	goto cleanup;
+    
+cleanup:
+    return err;
+
+}
+
+OSErr GotRequiredParams( const AppleEvent *ae )
+{
+    DescType actualType;
+    Size actualSize;
+    OSErr err;
+    
+    err = AEGetAttributePtr( ae, keyMissedKeywordAttr, typeWildCard, &actualType, nil, 0, &actualSize );
+
+    return	( err == errAEDescNotFound ) ? noErr :
+	( err == noErr ) ? errAEParamMissed : err;
+
+}
+
+
 				 void DoNothing(void){
 					 return;
 				 }

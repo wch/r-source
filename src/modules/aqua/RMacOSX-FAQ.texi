@@ -92,7 +92,8 @@ Stefano M. Iacus                 @*
 * Aqua GUI Bugs::       
 * Quartz device::               
 * Additional resources::
-* Acknowledgments::             
+* Acknowledgments::       
+* Sparse questions::
 @end menu
 
 @node Introduction, Building R from sources, Top, Top
@@ -271,7 +272,11 @@ password will be required):
 sudo make install
 @end example
 and all will be installed in @emph{/Library/Frameworks}.
-You can decide to change the R.framework destination by using the @emph{--prefix} option specifying the final destination.
+You can decide to change the R.framework destination by using the @emph{prefix} option specifying the 
+final destination.
+@smallexample
+sudo make prefix=/where/you/want/R.framework/to/go install
+@end smallexample
 As in the above, you don't need to specify the name @emph{R.framework} in the path.
 
 @node  How to build and install the Aqua GUI,  ,How to install R, Building R from sources
@@ -366,6 +371,13 @@ If not otherwise specified in the Preferences (@pxref{Preferences}), or if the s
 the default working directory at startup is the user home.
 The working directory can be changed using the @emph{setwd} R command or using the @emph{Tools} menut item @emph{Change working directory}.
 The current working directory is displayed on the main bar of the R Console window.
+
+@noindent
+This feature is useful if you want different startup procedures defined by the @file{.Rprofile}; you can 
+edit a @file{.Rprofile} (contaning you personale initialization @R{} commands) in a particular directory and use
+the Preferences to change the startup directory. Next time you launch @file{R.app} the @file{.Rprofile} is readed and executed
+by @R{} at startup. This is the equivalent on Unix (or the command line) to launch @R{} from different directories.
+
  
 @node Resizing the R Console
 @subsection Resizing the R Console
@@ -470,16 +482,190 @@ crash.log using the @emph{Console.app} located inside @emph{/Applications/Utilit
 
 @node How to install packages
 @chapter How to install packages
+You have several options for installing new packages on your system. We discuss here only the interface to the standard
+@R{} functions like @command{install.package}. For the @R{} functions see the standard @R{} documentation.
+
+@menu
+* Which kind of packages can I install using the GUI?::
+* Installation of packages from source::
+* Installation of pre-built binary packages::
+* Can I install packages built for other platforms?::
+* Where are the packages I've installed?::
+@end menu
+
+@node Which kind of packages can I install using the GUI?, Installation of packages from source, , How to install packages
+@section Which kind of packages can I install using the GUI?
+At the moment the GUI menus only provide direct access/download/installation of packages located on @CRAN{} or in the
+Bioconductor repository. You can also install packages from local files, either binary of source packages, as explained
+below. Otherwise you can use the appropriate @R{} commands to install packages from a specific location other than the above mentioned ones.
+
+
+@node Installation of packages from source, Installation of pre-built binary packages, Which kind of packages can I install using the GUI?, How to install packages
+@section Installation of packages from source
+You can choose to install packages from source if they are located on @CRAN{}, on the BioConductor repository and
+on your local disk. In any case, in order to be able to build packages from source, you need to have the same working
+setup for building @R{} itself (@pxref{Building R from sources}). In same cases you can still build packages without all
+the tools installed, but surely not for all the packages contaning C/C++ or Fortran source code.
+
+@noindent
+If you decide to install packages from @CRAN{} you should use the @emph{Packages} menu of the GUI. In particular the subitem @emph{Get CRAN packages.../Source}.
+This will connect to @CRAN{} through the Internet and a list of available packages will be shown.
+This is list tells you if a package is already installed on your system, the version of the package available on @CRAN{} and the version
+of the same package if already installed.
+You can make multiple selection of packages you intend to install using the checkboxes (one per package).
+When you close this window, you'll be asked if you really want to download the selected packages and the process of installation
+begins. If you don't select any package, nothing happens.
+@R{} will not respond on the Console until you  close this window.
+The same applies for packages in the BioConductor repository. You have also several other options specific to the
+BioConductor way of managing repositories of packages.
+
+@noindent
+You can also download any other package from the Internet yourself and decide to install it from source.
+You have to use @emph{Packages/->Install form local file} submenus. Where you can choose a standard @file{package.tar.gz}
+tarball or the directory containing your package if you have the package in expanded form.
+
+
+
+@node Installation of pre-built binary packages, Can I install packages built for other platforms? ,Installation of packages from source, How to install packages
+@section Installation of pre-built binary packages
+Same considerations of above apply with two minor differences. The first one is that se only distribute pre-built
+version of packages which pass all the test/checks on Mac OS X. So you'll see that some of the packages are missing with respect to the huge list
+of source packages available on @CRAN{}.
+
+@noindent
+The second difference is that, when you install packages from local file, it is assumed that the binary package is named
+as @file{package.tgz}. This is to distinguish among source and binary archives.
+
+@node Can I install packages built for other platforms?,  Where are the packages I've installed?,Installation of pre-built binary packages, How to install packages
+@section Can I install packages built for other platforms?
+As a general rule the answer is @emph{yes} if the package does not contain any C/C++/Fortran code in the sources, otherwise
+the answer is negative. Another caution should be taken, that is, the package and the installed version of @R{} should be 
+the same major release, i.e. you can install a package built for @R{} 1.8.0 on @R{} 1.8.1, but usually not the same
+package on @R{} 1.9.0.
+
+@noindent
+A Mac OS X specific requirements, is that a prebuilt package is assumed to be named (and accordingly archived and
+compressed) as @file{package_name.tgz}.
+On Windows, for example, packages come in a zipped format.
+
+
+@node Where are the packages I've installed?, ,Can I install packages built for other platforms?, How to install packages
+@section Where are the packages I've installed?
+The main library of packages is the one located inside the R.framework. This library contains the packages (base and
+reccomended ones) distributed along with @R{}. At the moment you cannot use the GUI Console to install packages 
+in this location because of authentication problems, you can surely do this from the command line with an admin
+password, with something like
+@example
+sudo R CMD INSTALL pkg_ver.tar.gz
+@end example
+
+@noindent
+By default, the user of @file{R.app} installs packages inside the @file{Library/R/library} directory 
+in his home directory, i.e. @file{~/Library/R/library}.
+If you install a package using the @file{R.app} interfaces and you then use @R{} from the command line,
+you won't see or have access to these packages unless you add the @file{~/Library/R/library} to the
+list of libraries locations. You can do the following from inside @R{}
+@example
+.libPaths("~/Library/R/library")
+@end example
+or write this command in the @file{.Rprofile} file in your startup directory.
+On some version of OS X the @file{~} symbol is not correctly expanded. You should preferably use this
+version of the above command
+@example
+.libPaths(path.expand("~/Library/R/library"))
+@end example
+
+@noindent 
+If you have a version of @file{RAqua.app} installed on your system, it is likely that you have all the
+packages installed in @file{~/Library/RAqua/library}. You can add this library of packages in the @command{.libPaths()}
+but most of them will probably not work as they were built for release 1.8.x of @R{}.
+
 
 @node R and external applications, Quartz device, How to install packages, Top
 @chapter R and external applications
+
+@menu 
+* Apple Script support::
+* External editors::
+* Finder actions::
+@end menu
+
+@node Apple Script support, External editors, ,  R and external applications
+@section Apple Script support
+
+
+@R{} has partial support for AppleScripts. 
+At the moment R can be invoked and asked to run commands from an AppleScript script.
+What follows is an example of script that interacts with @R{}. It firstly  invokes @R{} and then
+sends commands to @R{} with the @command{cmd} applescript command. 
+
+@example
+set CommandLine to "R.Version()"
+try
+	tell application "R"
+		activate
+		with timeout of 90000 seconds
+			cmd CommandLine
+			cmd "Sys.getenv()"
+			cmd "print(\"HelloWorld!\")"
+		end timeout
+	end tell
+end try
+@end example
+
+@noindent
+In the above, @command{cmd} is the (only) applescript command in the @R{} dictionary that is 
+used to tell @R{} to execute an @R{} command in the R Console. The syntax is 
+@example
+cmd <command string>
+@end example
+where command string have to be in quotes. Actually, the output of the command
+is not sent back to the application that is calling @R{} but to the @R{} Console directly.
+
+@noindent
+There are some issues. The first is that if @R{} is still not running, it will take a while (depending on 
+how fast your machine is) to startup. In the meanwhile the script sends commands without waiting and it
+could happen that some commands are missed by @R{}, i.e. they arrive before @R{} is ready to 
+receive applescript commands. The second issue, is that it could be that the applescript calls a bad version
+of @R{}. This could happen if you have an old version of @R{} (for example the old Carbon @R{}) installed on your
+System.
+
+@noindent
+As an example, we report here a small script that asks @R{} to @command{source} a file using a file dialog.
+@smallexample
+set file_to_source to (choose file with prompt "Choose file to source") as alias
+
+try
+	tell application "R"
+		activate
+		with timeout of 90000 seconds
+			cmd "source(\"" & file_to_source & "\")"
+		end timeout
+	end tell
+end try
+@end smallexample
+
+
+@node External editors, Finder actions, Apple Script support,  R and external applications
+@section External editors
+@R{} accepts the Apple Event command @emph{open}. This means than an external editor can communicate with @R{} sending
+portions of @R{} code to execute via files. This is the approach used by the @R{}-Tcl Mode in Alpha X 
+(see @uref{http://www.kelehers.org/alpha/}).
+
+
+@node Finder actions, , External editors,R and external applications
+@section Finder actions
+Dragging a file on the @R{} icon, causes @R{} to source this file via the @command{source} @R{} command.
+At the moment there is no control over the file types, i.e. dragging a binary file simply gives an error and
+in particular you cannot load workspaces or @file{.rda} data files by simply dragging them on @R{}.
+
 
 @node Quartz device, Additional resources, R and external applications, Top
 @chapter Quartz device
 The quartz device is the native graphic device in R for Mac OS X. It's name derives from Apple's Quartz Tecnology
 which is essentially similar to PDF rendering. One of the most amazing features of Quartz is antialising which gives you
-@emph{very nice} plots and images. Try to compare with a quartz plot done with any other interactive device.
-It is also resolution independent.
+@emph{very nice} plots and images. Try to compare  a quartz plot  with the same plot generated on
+any other interactive device. For its PDF nature it is also resolution independent.
  
 @menu
 * Interactive mode::
@@ -516,7 +702,7 @@ dimensions and you cannot resize the image from the inside another applications 
 When rendering text and/or mathematical symbols the style is ignored, i.e. only plain style is drawn.
 The printing function is not yet implemented.
 
-@node Additional resources
+@node Additional resources, Acknowledgments, Quartz device, Top
 @chapter Additional resources
 Here are few references that can be of interest for Mac OS X and/or developers.
 
@@ -538,11 +724,28 @@ There is a page dedicated to the latest R-devel version of R. This page is locat
 This page is inteded to give additional documentation for building  the latest R-devel
 version of R. From time to time, snapshots of R-devel binaries are available for testing purposes.
 
-@node Acknowledgments
+@node Acknowledgments, Sparse questions,  Additional resources, Top
 @chapter Acknowledgments
 
 Special thanks go to Simon Urbanek, Jan de Leeuw, Byron Ellis and Thomas Lumley
 in random order. Last but not least Apple for amazing OS and GUI.
+
+@node Sparse questions, , Acknowledgments, Top
+@chapter Sparse questions
+@menu
+* How can I have a per session .Rprofile?::
+* What happens if I drag a file on the R icon?::
+@end menu
+
+@node How can I have a per session .Rprofile?,What happens if I drag a file on the R icon?,,Sparse questions
+@section How can I have a per session .Rprofile?
+You can by writing a @file{.Rprofile} file in your favourite
+session directory and change accordingly the startup working directory using the Preferences (@pxref{The current and startup working directories}).
+
+@node What happens if I drag a file on the R icon?,,How can I have a per session .Rprofile?,Sparse questions
+@section What happens if I drag a file on the R icon?
+In this case @R{} will try to source this file no matter what's its contents (@pxref{Finder actions}).
+
 
 @bye
 

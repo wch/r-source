@@ -10,6 +10,10 @@ CHANGES IN R (AQUA) VERSION 1.9.0
 
 
 NEW FEATURES
+    o   Dragging a file on the R icon, causes R to source the
+        file. At the moment there is no control over the file
+        type.
+
     o   The user can select a startup working directory in the 
         Preferences using the Misc tab.
 
@@ -76,6 +80,9 @@ BUG FIXES
 
     o   Zooming in and out edit and helps windows did not adjust the
         scroll bars. Now fixed.
+
+    o   It has been fixed a problem that causes RAqua fail to called
+        from the S/R-tcl Mode in Alpha X.
 
 INSTALLATION CHANGES
     o   The defaults for configure for Darwin systems is
