@@ -204,10 +204,10 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#What%20is%20needed%20to%20build%20R">W
 <h3 class="subsection">the libreadline 4.3 (optional)</h4>
 
 <p>This library is optional. 
-You need this library to be able to retrive history using use arrow keys or for tab completion of filenames
+You need this library to be able to retrieve history using use arrow keys or for tab completion of filenames
 when you run R as a command line tool. The original source archive is located at GNU Org web page <a href="ftp://www.gnu.org">ftp://www.gnu.org</a>. 
 You need to modify the original file <em>shlib/Makefile.in</em> in order to make it
-work under MacOS X 10.2.x and later (this is because libreadline needs to be linked against
+work under Mac OS X 10.2.x and later (this is because libreadline needs to be linked against
 <em>-lncurses -lcc_dynamic</em>). If you can do better at configure time working on the original archive
 let me know. I suggest you to download my patched version from <a href="http://www.economia.unimi.it/R">http://www.economia.unimi.it/R</a>. 
 Once you have done, please do the following (you'll be asked for a root password):
@@ -370,7 +370,7 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#Top">Top</a>
 documentation for <small>R</small> applies to this version as well. 
 On each release (and patched-release) ready to use binaries are distributed through <small>CRAN</small>. 
 These binaries come with a common installer used by R with Aqua GUI so please read
-the releated notes (see <a href="#How%20to%20get%20R%20with%20Aqua%20GUI">How to get R with Aqua GUI</a>). 
+the related notes (see <a href="#How%20to%20get%20R%20with%20Aqua%20GUI">How to get R with Aqua GUI</a>). 
 To use <small>R</small> you probably need to add a symbolic link on your System as the <small>R</small> binary is
 located inside the framework. 
 Suppose you have the <em>/usr/local/bin</em> directory on your System, than you should just
@@ -466,7 +466,7 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#The%20R%20Console">The R Console</a>
 
 <h3 class="subsection">The Input and the Output</h4>
 
-<p>The current desing of the R Console is to have separate frames for input (user) and output (R). 
+<p>The current design of the R Console is to have separate frames for input (user) and output (R). 
 The user is supposed to type command into the bottom frame of the R Console, this input is echoed
 into the upper frame and R will give any related output in the upper frame. 
 The output frame (the upper one) is a read-only frame.
@@ -501,12 +501,12 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#The%20R%20Console">The R Console</a>
 
 <p>If not otherwise specified in the Preferences (see <a href="#Preferences">Preferences</a>), or if the specified path is no longer available, then
 the default working directory at startup is the user home. 
-The working directory can be changed using the <em>setwd</em> R command or using the <em>Tools</em> menut item <em>Change working directory</em>. 
+The working directory can be changed using the <em>setwd</em> R command or using the <em>Tools</em> menu item <em>Change working directory</em>. 
 The current working directory is displayed on the main bar of the R Console window.
 
 <p>This feature is useful if you want different startup procedures defined by the <code>.Rprofile</code>; you can
-edit a <code>.Rprofile</code> (contaning you personale initialization <small>R</small> commands) in a particular directory and use
-the Preferences to change the startup directory. Next time you launch <code>R.app</code> the <code>.Rprofile</code> is readed and executed
+edit a <code>.Rprofile</code> (containing you personal initialization <small>R</small> commands) in a particular directory and use
+the Preferences to change the startup directory. Next time you launch <code>R.app</code> the <code>.Rprofile</code> is read and executed
 by <small>R</small> at startup. This is the equivalent on Unix (or the command line) to launch <small>R</small> from different directories.
 
 <div class="node">
@@ -521,9 +521,9 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#The%20R%20Console">The R Console</a>
 <h3 class="subsection">Resizing the R Console</h4>
 
 <p>When the R Console Window is resized, the R option <em>width</em> is set appropriately so that any future
-output will fit the window size. This behaviour can be inihibited using the Preferences settings (see <a href="#Preferences">Preferences</a>). 
+output will fit the window size. This behavior can be inhibited using the Preferences settings (see <a href="#Preferences">Preferences</a>). 
 On closing the R application, the position and the size of the R Console window are saved in the Preferences and reused
-next time you launch R. You can inihibit R to do this using the appropriate Preferences settings.
+next time you launch R. You can inhibit R to do this using the appropriate Preferences settings.
 
 <div class="node">
 <p><hr>
@@ -536,7 +536,7 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#The%20R%20Console">The R Console</a>
 <h3 class="subsection">Input and Output text colors</h4>
 
 <p>Text windows and frames are divided in Read-Only and Read and Write ones. Text colors can be set separately
-for the two kinds of windows. This happens as well for their respectives backgrounds. Use the Preferences window to set these
+for the two kinds of windows. This happens as well for their respective backgrounds. Use the Preferences window to set these
 colors (see <a href="#Preferences">Preferences</a>).
 
 <div class="node">
@@ -557,7 +557,7 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#R%20with%20Aqua%20GUI">R with Aqua GUI
 <li><a accesskey="4" href="#Tools%20Menu">Tools Menu</a>: 
 <li><a accesskey="5" href="#Workspace%20Menu">Workspace Menu</a>: 
 <li><a accesskey="6" href="#Packages%20Menu">Packages Menu</a>: 
-<li><a accesskey="7" href="#The%20Help%20menu">The Help menu</a>: 
+<li><a accesskey="7" href="#The%20Help%20Menu">The Help Menu</a>: 
 </ul>
 
 <div class="node">
@@ -571,7 +571,7 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#The%20Menus">The Menus</a>
 <h3 class="subsection">Application Menu</h4>
 
 <p>The Application menu is the first one after the main Apple Menu. In Mac OS X 10.3 it reports the name R.bin under Mac OS X 10.2 it is just R (as it should be). 
-We are not able to fix this behaviour at the moment.
+We are not able to fix this behavior at the moment.
 
    <p>With this menu you can access three items: 1. the About box, which tells you which version of R is currently in use, 2. Check for updates, which search on <small>CRAN</small> if a new version
 of the binary distribution of <small>R</small> for Mac OS X is available (you need an internet connection), 3. you can access the Preferences (see <a href="#Preferences">Preferences</a>).
@@ -616,7 +616,7 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#The%20Menus">The Menus</a>
 
 <h3 class="subsection">Tools Menu</h4>
 
-<p>With this menu you can load and save the history of commands tyoed in the <small>R</small> Console or view what's currently inside. 
+<p>With this menu you can load and save the history of commands typed in the <small>R</small> Console or view what's currently inside. 
 You can also change the current working directory, let <small>R</small> show you the current working directory or set it back to the
 startup directory. From release 1.9.0 of <small>R</small> the current working directory is also shown on the main window bar.
 
@@ -639,7 +639,7 @@ description of the objects in your workspace. Complex objects (like lists, data.
 <div class="node">
 <p><hr>
 Node:&nbsp;<a name="Packages%20Menu">Packages Menu</a>,
-Next:&nbsp;<a rel="next" accesskey="n" href="#The%20Help%20menu">The Help menu</a>,
+Next:&nbsp;<a rel="next" accesskey="n" href="#The%20Help%20Menu">The Help Menu</a>,
 Previous:&nbsp;<a rel="previous" accesskey="p" href="#Workspace%20Menu">Workspace Menu</a>,
 Up:&nbsp;<a rel="up" accesskey="u" href="#The%20Menus">The Menus</a>
 <br>
@@ -647,20 +647,20 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#The%20Menus">The Menus</a>
 
 <h3 class="subsection">Packages Menu</h4>
 
-<p>Using this menu you can have access to the list of packages and datasets installed on your system and to the ones
+<p>Using this menu you can have access to the list of packages and data-sets installed on your system and to the ones
 on <small>CRAN</small> or on the Bioconductor site.
 
-   <p>With the first two menus you can load and detach packages and dataset from the workspace. 
-Let's start with the <em>Package Manager</em>. This opens a window with serval columns displayed. 
+   <p>With the first two menus you can load and detach packages and data-set from the workspace. 
+Let's start with the <em>Package Manager</em>. This opens a window with several columns displayed. 
 For each package on your system you can see a check box, the current status of the package (loaded/not loaded), its name
 and the package description text. You use the check box to select/de-select the packages you want. 
-On window closure, the checked packaged will be loaded and the uncheked ones (if loaded) will the detached (not completely as on Mac OS X you cannot
+On window closure, the checked packaged will be loaded and the unchecked ones (if loaded) will the detached (not completely as on Mac OS X you cannot
 unload completely dynamic libraries).
 
-   <p>The same applies to the <em>Dataset Manager</em> menu but for datasets.
+   <p>The same applies to the <em>Dataset Manager</em> menu but for data-sets.
 
    <p>You can than get or update packages <small>CRAN</small> either in binary or source format. Daily build of <small>CRAN</small> packages are available
-for Mac OS X. If you don't know how to buld <small>R</small> itslef from source (see <a href="#Building%20R%20from%20sources">Building R from sources</a>),
+for Mac OS X. If you don't know how to build <small>R</small> itself from source (see <a href="#Building%20R%20from%20sources">Building R from sources</a>),
 you'll probably be unable to build packages from source on your own. 
 In this case, you should always choose for the binary option. These binary packages work (for sure!) for the release version of <small>R</small> for Mac OS X
 you find on <small>CRAN</small> even though it is not excluded that they will work for other prebuilt versions of <small>R</small>.
@@ -668,26 +668,26 @@ you find on <small>CRAN</small> even though it is not excluded that they will wo
    <p>When you attempt to install packages from <small>CRAN</small>, <small>R</small> first tries to get a connection to the Internet to download
 the list of available packages. Than a window will open similar to the one in the package manager with the only difference that
 for each package there is also the information concerning the version of the package installed on your system (if any) and
-the version of the prebuilt package available on <small>CRAN</small>. Whe you close the window, the select packages will be downloaded.
+the version of the prebuilt package available on <small>CRAN</small>. When you close the window, the select packages will be downloaded.
 
    <p>The same strategy applies to the Bioconductor menu item, with some more options typical of the Bioconductor way
 of managing packages.
 
-   <p>For some reason it could happen that you have the package you wnat to install (either in binary or source form) on one of your
-local disks, or even a directory containig a package source. You can use the last menu to do the task of installing the package. 
+   <p>For some reason it could happen that you have the package you want to install (either in binary or source form) on one of your
+local disks, or even a directory containing a package source. You can use the last menu to do the task of installing the package. 
 Having a package in a directory form usually applies to people that are developing packages themselves.
 
    <p>For more information on this topic see also <a href="#How%20to%20install%20packages">How to install packages</a>.
 
 <div class="node">
 <p><hr>
-Node:&nbsp;<a name="The%20Help%20menu">The Help menu</a>,
+Node:&nbsp;<a name="The%20Help%20Menu">The Help Menu</a>,
 Previous:&nbsp;<a rel="previous" accesskey="p" href="#Packages%20Menu">Packages Menu</a>,
 Up:&nbsp;<a rel="up" accesskey="u" href="#The%20Menus">The Menus</a>
 <br>
 </div>
 
-<h3 class="subsection">The Help menu</h4>
+<h3 class="subsection">The Help Menu</h4>
 
 <p>Using this menu you can open the on-line manuals (<em>R Help</em>), read this FAQ and  review the latest changes, bug fixes and new features of R for Mac OS X (<em>What's new in this version</em>). 
 There are also interfaces to the R <em>help</em> and <em>help.search</em> functions as well as the <em>example</em> function.
@@ -726,11 +726,11 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#Preferences">Preferences</a>
 
 <p>You can change the font size, face and the tab size in all the windows including the Console. 
 If you have help windows opened, the changed only apply to the Console window and to the window
-you'll open from now on. This is a misfeature more tha a bug.
+you'll open from now on. This is a misfeature more than a bug.
 
    <p>You can also change the foreground and background colors for the read-only windows (i.e. the <small>R</small> Console
 output and the Help windows) and for read-and-write windows (i.e. the <small>R</small> Console input and the Edit windows). 
-At the moment you cannot chnage the color of the cursor which always stays black which ever  background you choose. 
+At the moment you cannot change the color of the cursor which always stays black which ever  background you choose. 
 So, for the time being, it's a bad idea to set the background of the <small>R</small> Console to black.
 
    <p>You have also the possibility to check two options. The first is for adapting the <small>R</small> output when you resize the
@@ -778,8 +778,11 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#Preferences">Preferences</a>
 <h3 class="subsection">Misc tab</h4>
 
 <p>For this tab you can decide to redirect the stderr and stdout of <small>R</small> and the tasks launched by <small>R</small>, to the <small>R</small> Console. 
-This is useful, for example, during package installation. If you don't check these options, every otuptu will be sent to the <em>Console</em>
+This is useful, for example, during package installation. If you don't check these options, every output will be sent to the <em>Console</em>
 application which you can find on every Mac OS X installation inside the directory <code>/Applications/Utilities</code>.
+
+   <p>You can also set the startup working directory. This is very useful for having different sessions in different
+directories (see <a href="#The%20current%20and%20startup%20working%20directories">The current and startup working directories</a> and <a href="#How%20can%20I%20have%20a%20per%20session%20.Rprofile%3f">How can I have a per session .Rprofile?</a>).
 
 <div class="node">
 <p><hr>
@@ -870,9 +873,9 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#How%20to%20install%20packages">How to 
 <p>You can choose to install packages from source if they are located on <small>CRAN</small>, on the BioConductor repository and
 on your local disk. In any case, in order to be able to build packages from source, you need to have the same working
 setup for building <small>R</small> itself (see <a href="#Building%20R%20from%20sources">Building R from sources</a>). In same cases you can still build packages without all
-the tools installed, but surely not for all the packages contaning C/C++ or Fortran source code.
+the tools installed, but surely not for all the packages containing C/C++ or Fortran source code.
 
-<p>If you decide to install packages from <small>CRAN</small> you should use the <em>Packages</em> menu of the GUI. In particular the subitem <em>Get CRAN packages.../Source</em>. 
+<p>If you decide to install packages from <small>CRAN</small> you should use the <em>Packages</em> menu of the GUI. In particular the sub-item <em>Get CRAN packages.../Source</em>. 
 This will connect to <small>CRAN</small> through the Internet and a list of available packages will be shown. 
 This is list tells you if a package is already installed on your system, the version of the package available on <small>CRAN</small> and the version
 of the same package if already installed. 
@@ -936,7 +939,7 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#How%20to%20install%20packages">How to 
 <h3 class="section">Where are the packages I've installed?</h3>
 
 <p>The main library of packages is the one located inside the R.framework. This library contains the packages (base and
-reccomended ones) distributed along with <small>R</small>. At the moment you cannot use the GUI Console to install packages
+recommended ones) distributed along with <small>R</small>. At the moment you cannot use the GUI Console to install packages
 in this location because of authentication problems, you can surely do this from the command line with an admin
 password, with something like
 <pre class="example">     sudo R CMD INSTALL pkg_ver.tar.gz
@@ -971,22 +974,22 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#Top">Top</a>
 <h2 class="chapter">R and external applications</h2>
 
 <ul class="menu">
-<li><a accesskey="1" href="#Apple%20Script%20support">Apple Script support</a>: 
+<li><a accesskey="1" href="#AppleScript%20support">AppleScript support</a>: 
 <li><a accesskey="2" href="#External%20editors">External editors</a>: 
 <li><a accesskey="3" href="#Finder%20actions">Finder actions</a>: 
 </ul>
 
 <div class="node">
 <p><hr>
-Node:&nbsp;<a name="Apple%20Script%20support">Apple Script support</a>,
+Node:&nbsp;<a name="AppleScript%20support">AppleScript support</a>,
 Next:&nbsp;<a rel="next" accesskey="n" href="#External%20editors">External editors</a>,
 Up:&nbsp;<a rel="up" accesskey="u" href="#R%20and%20external%20applications">R and external applications</a>
 <br>
 </div>
 
-<h3 class="section">Apple Script support</h3>
+<h3 class="section">AppleScript support</h3>
 
-<p><small>R</small> has partial support for AppleScripts. 
+<p><small>R</small> has partial support for Apple-Scripts. 
 At the moment R can be invoked and asked to run commands from an AppleScript script. 
 What follows is an example of script that interacts with <small>R</small>. It firstly  invokes <small>R</small> and then
 sends commands to <small>R</small> with the <code>cmd</code> applescript command.
@@ -1035,7 +1038,7 @@ System.
 <p><hr>
 Node:&nbsp;<a name="External%20editors">External editors</a>,
 Next:&nbsp;<a rel="next" accesskey="n" href="#Finder%20actions">Finder actions</a>,
-Previous:&nbsp;<a rel="previous" accesskey="p" href="#Apple%20Script%20support">Apple Script support</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#AppleScript%20support">AppleScript support</a>,
 Up:&nbsp;<a rel="up" accesskey="u" href="#R%20and%20external%20applications">R and external applications</a>
 <br>
 </div>
@@ -1058,7 +1061,7 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#R%20and%20external%20applications">R a
 
 <p>Dragging a file on the <small>R</small> icon, causes <small>R</small> to source this file via the <code>source</code> <small>R</small> command or,
 if the file is an <small>R</small> image data file RDX1 or RDX2 (normally files with extension <code>.rda</code> or <code>.Rdata</code>), the data is loaded in the workspace and every object
-with the same name in the workspace is overwritten wihtout notice. Loading a data file is equivalent to
+with the same name in the workspace is overwritten without notice. Loading a data file is equivalent to
 the <small>R</small> command <code>load</code>. 
 At the moment there is no control over the file types, i.e. dragging wrong files (i.e. files that are
 not <small>R</small> scripts or image data) simply gives an error. It's up to the user to <em>do the right thing</em>.
@@ -1076,8 +1079,8 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#Top">Top</a>
 
 <h2 class="chapter">Quartz device</h2>
 
-<p>The quartz device is the native graphic device in R for Mac OS X. It's name derives from Apple's Quartz Tecnology
-which is essentially similar to PDF rendering. One of the most amazing features of Quartz is antialising which gives you
+<p>The quartz device is the native graphic device in R for Mac OS X. It's name derives from Apple's Quartz Technology
+which is essentially similar to PDF rendering. One of the most amazing features of Quartz is antialiasing which gives you
 <em>very nice</em> plots and images. Try to compare  a quartz plot  with the same plot generated on
 any other interactive device. For its PDF nature it is also resolution independent.
 
@@ -1192,8 +1195,8 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#Additional%20resources">Additional res
 <h3 class="section">The R for Mac OS X Developer page</h3>
 
 <p>There is a page dedicated to the latest R-devel version of R. This page is located at
-<a href="http://www.economia.unimi.it/R">http://www.economia.unimi.it/R</a> and is mantained by Stefano M. Iacus. 
-This page is inteded to give additional documentation for building  the latest R-devel
+<a href="http://www.economia.unimi.it/R">http://www.economia.unimi.it/R</a> and is maintained by Stefano M. Iacus. 
+This page is intended to give additional documentation for building  the latest R-devel
 version of R. From time to time, snapshots of R-devel binaries are available for testing purposes.
 
 <div class="node">
@@ -1237,7 +1240,7 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#Sparse%20questions">Sparse questions</
 
 <h3 class="section">How can I have a per session .Rprofile?</h3>
 
-<p>You can by writing a <code>.Rprofile</code> file in your favourite
+<p>You can by writing a <code>.Rprofile</code> file in your favorite
 session directory and change accordingly the startup working directory using the Preferences (see <a href="#The%20current%20and%20startup%20working%20directories">The current and startup working directories</a>).
 
 <div class="node">
@@ -1278,11 +1281,11 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#Sparse%20questions">Sparse questions</
 
 <h3 class="section">I don't see a thing when installing packages!</h3>
 
-<p>Well, this is not a question but the answer is that you are not looking ain the right place. 
+<p>Well, this is not a question but the answer is that you are not looking at the right place. 
 Every input and output which is not <small>R</small> specific (i.e. the output of standard commands) is generally sent to
 the standard output (stdout) or standard error (stderr) depending on its nature. In particular every call to the
 <code>system</code> function, executes outside <small>R</small> in a Mac OS X shell. The package installation is done via
-the <code>system</code> facilty. 
+the <code>system</code> facility. 
 You have to use the Preferences to redirect the stderr and/or the stdout to the <small>R</small> Console (see <a href="#Misc%20tab">Misc tab</a>)
 or you can look at the <em>Console</em> application inside <code>/Applications/Utilities</code> on your system. 
 This applies to every GUI application on Mac OS X so, as a general rule, if an application behaves strangely or quits,

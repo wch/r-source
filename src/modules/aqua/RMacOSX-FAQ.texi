@@ -181,10 +181,10 @@ It installs everything in @emph{/usr/local}. The name of the .tar.gz archive can
 @node the libreadline 4.3 (optional)
 @subsection the libreadline 4.3 (optional)
 This library is optional. 
-You need this library to be able to retrive history using use arrow keys or for tab completion of filenames
+You need this library to be able to retrieve history using use arrow keys or for tab completion of filenames
 when you run R as a command line tool. The original source archive is located at GNU Org web page @uref{ftp://www.gnu.org}. 
 You need to modify the original file @emph{shlib/Makefile.in} in order to make it
-work under MacOS X 10.2.x and later (this is because libreadline needs to be linked against
+work under Mac OS X 10.2.x and later (this is because libreadline needs to be linked against
 @emph{-lncurses -lcc_dynamic}). If you can do better at configure time working on the original archive 
 let me know. I suggest you to download my patched version from @uref{http://www.economia.unimi.it/R}. 
 Once you have done, please do the following (you'll be asked for a root password):
@@ -296,7 +296,7 @@ The command line version of @R{} is nothing but a classic unix-like implementati
 documentation for @R{} applies to this version as well.
 On each release (and patched-release) ready to use binaries are distributed through @CRAN{}.
 These binaries come with a common installer used by R with Aqua GUI so please read
-the releated notes (@pxref{How to get R with Aqua GUI}).
+the related notes (@pxref{How to get R with Aqua GUI}).
 To use @R{} you probably need to add a symbolic link on your System as the @R{} binary is 
 located inside the framework.
 Suppose you have the @emph{/usr/local/bin} directory on your System, than you should just 
@@ -351,7 +351,7 @@ can be done via the Aqua GUI using menus you should read below (@pxref{The Menus
 
 @node The Input and the Output
 @subsection The Input and the Output
-The current desing of the R Console is to have separate frames for input (user) and output (R).
+The current design of the R Console is to have separate frames for input (user) and output (R).
 The user is supposed to type command into the bottom frame of the R Console, this input is echoed
 into the upper frame and R will give any related output in the upper frame.
 The output frame (the upper one) is a read-only frame. 
@@ -369,27 +369,27 @@ created. If you want high resolution graphic exports, you should better save the
 @subsection The current and startup working directories
 If not otherwise specified in the Preferences (@pxref{Preferences}), or if the specified path is no longer available, then
 the default working directory at startup is the user home.
-The working directory can be changed using the @emph{setwd} R command or using the @emph{Tools} menut item @emph{Change working directory}.
+The working directory can be changed using the @emph{setwd} R command or using the @emph{Tools} menu item @emph{Change working directory}.
 The current working directory is displayed on the main bar of the R Console window.
 
 @noindent
 This feature is useful if you want different startup procedures defined by the @file{.Rprofile}; you can 
-edit a @file{.Rprofile} (contaning you personale initialization @R{} commands) in a particular directory and use
-the Preferences to change the startup directory. Next time you launch @file{R.app} the @file{.Rprofile} is readed and executed
+edit a @file{.Rprofile} (containing you personal initialization @R{} commands) in a particular directory and use
+the Preferences to change the startup directory. Next time you launch @file{R.app} the @file{.Rprofile} is read and executed
 by @R{} at startup. This is the equivalent on Unix (or the command line) to launch @R{} from different directories.
 
  
 @node Resizing the R Console
 @subsection Resizing the R Console
 When the R Console Window is resized, the R option @emph{width} is set appropriately so that any future
-output will fit the window size. This behaviour can be inihibited using the Preferences settings (@pxref{Preferences}).
+output will fit the window size. This behavior can be inhibited using the Preferences settings (@pxref{Preferences}).
 On closing the R application, the position and the size of the R Console window are saved in the Preferences and reused
-next time you launch R. You can inihibit R to do this using the appropriate Preferences settings.
+next time you launch R. You can inhibit R to do this using the appropriate Preferences settings.
 
 @node Input and Output text colors
 @subsection Input and Output text colors
 Text windows and frames are divided in Read-Only and Read and Write ones. Text colors can be set separately
-for the two kinds of windows. This happens as well for their respectives backgrounds. Use the Preferences window to set these 
+for the two kinds of windows. This happens as well for their respective backgrounds. Use the Preferences window to set these 
 colors (@pxref{Preferences}).
 
 @node The Menus
@@ -401,13 +401,13 @@ colors (@pxref{Preferences}).
 * Tools Menu::
 * Workspace Menu::
 * Packages Menu::
-* The Help menu::
+* The Help Menu::
 @end menu
 
 @node Application Menu
 @subsection Application Menu
 The Application menu is the first one after the main Apple Menu. In Mac OS X 10.3 it reports the name R.bin under Mac OS X 10.2 it is just R (as it should be).
-We are not able to fix this behaviour at the moment.
+We are not able to fix this behavior at the moment.
 
 With this menu you can access three items: 1. the About box, which tells you which version of R is currently in use, 2. Check for updates, which search on @CRAN{} if a new version
 of the binary distribution of @R{} for Mac OS X is available (you need an internet connection), 3. you can access the Preferences (@pxref{Preferences}). 
@@ -425,7 +425,7 @@ the  @R{} @command{edit} function.
 
 @node Tools Menu
 @subsection Tools Menu
-With this menu you can load and save the history of commands tyoed in the @R{} Console or view what's currently inside.
+With this menu you can load and save the history of commands typed in the @R{} Console or view what's currently inside.
 You can also change the current working directory, let @R{} show you the current working directory or set it back to the
 startup directory. From release 1.9.0 of @R{} the current working directory is also shown on the main window bar.
 
@@ -438,20 +438,20 @@ description of the objects in your workspace. Complex objects (like lists, data.
 
 @node Packages Menu
 @subsection Packages Menu
-Using this menu you can have access to the list of packages and datasets installed on your system and to the ones
+Using this menu you can have access to the list of packages and data-sets installed on your system and to the ones
 on @CRAN{} or on the Bioconductor site.
 
-With the first two menus you can load and detach packages and dataset from the workspace.
-Let's start with the @emph{Package Manager}. This opens a window with serval columns displayed. 
+With the first two menus you can load and detach packages and data-set from the workspace.
+Let's start with the @emph{Package Manager}. This opens a window with several columns displayed. 
 For each package on your system you can see a check box, the current status of the package (loaded/not loaded), its name
 and the package description text. You use the check box to select/de-select the packages you want.
-On window closure, the checked packaged will be loaded and the uncheked ones (if loaded) will the detached (not completely as on Mac OS X you cannot
+On window closure, the checked packaged will be loaded and the unchecked ones (if loaded) will the detached (not completely as on Mac OS X you cannot
 unload completely dynamic libraries).
 
-The same applies to the @emph{Dataset Manager} menu but for datasets.
+The same applies to the @emph{Dataset Manager} menu but for data-sets.
 
 You can than get or update packages @CRAN{} either in binary or source format. Daily build of @CRAN{} packages are available
-for Mac OS X. If you don't know how to buld @R{} itslef from source (@pxref{Building R from sources}), 
+for Mac OS X. If you don't know how to build @R{} itself from source (@pxref{Building R from sources}), 
 you'll probably be unable to build packages from source on your own.
 In this case, you should always choose for the binary option. These binary packages work (for sure!) for the release version of @R{} for Mac OS X
 you find on @CRAN{} even though it is not excluded that they will work for other prebuilt versions of @R{}.
@@ -460,20 +460,20 @@ you find on @CRAN{} even though it is not excluded that they will work for other
 When you attempt to install packages from @CRAN{}, @R{} first tries to get a connection to the Internet to download
 the list of available packages. Than a window will open similar to the one in the package manager with the only difference that
 for each package there is also the information concerning the version of the package installed on your system (if any) and
-the version of the prebuilt package available on @CRAN{}. Whe you close the window, the select packages will be downloaded.
+the version of the prebuilt package available on @CRAN{}. When you close the window, the select packages will be downloaded.
 
 The same strategy applies to the Bioconductor menu item, with some more options typical of the Bioconductor way
 of managing packages.
 
-For some reason it could happen that you have the package you wnat to install (either in binary or source form) on one of your
-local disks, or even a directory containig a package source. You can use the last menu to do the task of installing the package.
+For some reason it could happen that you have the package you want to install (either in binary or source form) on one of your
+local disks, or even a directory containing a package source. You can use the last menu to do the task of installing the package.
 Having a package in a directory form usually applies to people that are developing packages themselves.
 
 
 For more information on this topic see also @ref{How to install packages}.
 
-@node The Help menu
-@subsection The Help menu
+@node The Help Menu
+@subsection The Help Menu
 Using this menu you can open the on-line manuals (@emph{R Help}), read this FAQ and  review the latest changes, bug fixes and new features of R for Mac OS X (@emph{What's new in this version}).
 There are also interfaces to the R @emph{help} and @emph{help.search} functions as well as the @emph{example} function. 
 
@@ -494,11 +494,11 @@ Preferences are organized in Tabs, more or less grouped for content.
 @subsection Text Windows tab
 You can change the font size, face and the tab size in all the windows including the Console.
 If you have help windows opened, the changed only apply to the Console window and to the window
-you'll open from now on. This is a misfeature more tha a bug.
+you'll open from now on. This is a misfeature more than a bug.
 
 You can also change the foreground and background colors for the read-only windows (i.e. the @R{} Console
 output and the Help windows) and for read-and-write windows (i.e. the @R{} Console input and the Edit windows).
-At the moment you cannot chnage the color of the cursor which always stays black which ever  background you choose.
+At the moment you cannot change the color of the cursor which always stays black which ever  background you choose.
 So, for the time being, it's a bad idea to set the background of the @R{} Console to black.
 
 You have also the possibility to check two options. The first is for adapting the @R{} output when you resize the
@@ -521,8 +521,11 @@ corresponding @R{} @command{options}.
 @node Misc tab
 @subsection Misc tab
 For this tab you can decide to redirect the stderr and stdout of @R{} and the tasks launched by @R{}, to the @R{} Console.
-This is useful, for example, during package installation. If you don't check these options, every otuptu will be sent to the @emph{Console}
+This is useful, for example, during package installation. If you don't check these options, every output will be sent to the @emph{Console}
 application which you can find on every Mac OS X installation inside the directory @file{/Applications/Utilities}.
+
+You can also set the startup working directory. This is very useful for having different sessions in different
+directories (see @ref{The current and startup working directories} and @ref{How can I have a per session .Rprofile?}).
 
 @node The near future of the Aqua GUI
 @section The near future of the Aqua GUI
@@ -571,10 +574,10 @@ below. Otherwise you can use the appropriate @R{} commands to install packages f
 You can choose to install packages from source if they are located on @CRAN{}, on the BioConductor repository and
 on your local disk. In any case, in order to be able to build packages from source, you need to have the same working
 setup for building @R{} itself (@pxref{Building R from sources}). In same cases you can still build packages without all
-the tools installed, but surely not for all the packages contaning C/C++ or Fortran source code.
+the tools installed, but surely not for all the packages containing C/C++ or Fortran source code.
 
 @noindent
-If you decide to install packages from @CRAN{} you should use the @emph{Packages} menu of the GUI. In particular the subitem @emph{Get CRAN packages.../Source}.
+If you decide to install packages from @CRAN{} you should use the @emph{Packages} menu of the GUI. In particular the sub-item @emph{Get CRAN packages.../Source}.
 This will connect to @CRAN{} through the Internet and a list of available packages will be shown.
 This is list tells you if a package is already installed on your system, the version of the package available on @CRAN{} and the version
 of the same package if already installed.
@@ -618,7 +621,7 @@ On Windows, for example, packages come in a zipped format.
 @node Where are the packages I've installed?, ,Can I install packages built for other platforms?, How to install packages
 @section Where are the packages I've installed?
 The main library of packages is the one located inside the R.framework. This library contains the packages (base and
-reccomended ones) distributed along with @R{}. At the moment you cannot use the GUI Console to install packages 
+recommended ones) distributed along with @R{}. At the moment you cannot use the GUI Console to install packages 
 in this location because of authentication problems, you can surely do this from the command line with an admin
 password, with something like
 @example
@@ -651,16 +654,16 @@ but most of them will probably not work as they were built for release 1.8.x of 
 @chapter R and external applications
 
 @menu 
-* Apple Script support::
+* AppleScript support::
 * External editors::
 * Finder actions::
 @end menu
 
-@node Apple Script support, External editors, ,  R and external applications
-@section Apple Script support
+@node AppleScript support, External editors, ,  R and external applications
+@section AppleScript support
 
 
-@R{} has partial support for AppleScripts. 
+@R{} has partial support for Apple-Scripts. 
 At the moment R can be invoked and asked to run commands from an AppleScript script.
 What follows is an example of script that interacts with @R{}. It firstly  invokes @R{} and then
 sends commands to @R{} with the @command{cmd} applescript command. 
@@ -712,7 +715,7 @@ end try
 @end smallexample
 
 
-@node External editors, Finder actions, Apple Script support,  R and external applications
+@node External editors, Finder actions, AppleScript support,  R and external applications
 @section External editors
 @R{} accepts the Apple Event command @emph{open}. This means than an external editor can communicate with @R{} sending
 portions of @R{} code to execute via files. This is the approach used by the @R{}-Tcl Mode in Alpha X 
@@ -723,7 +726,7 @@ portions of @R{} code to execute via files. This is the approach used by the @R{
 @section Finder actions
 Dragging a file on the @R{} icon, causes @R{} to source this file via the @command{source} @R{} command or,
 if the file is an @R{} image data file RDX1 or RDX2 (normally files with extension @file{.rda} or @file{.Rdata}), the data is loaded in the workspace and every object
-with the same name in the workspace is overwritten wihtout notice. Loading a data file is equivalent to
+with the same name in the workspace is overwritten without notice. Loading a data file is equivalent to
 the @R{} command @command{load}.
 At the moment there is no control over the file types, i.e. dragging wrong files (i.e. files that are
 not @R{} scripts or image data) simply gives an error. It's up to the user to @emph{do the right thing}.
@@ -733,8 +736,8 @@ If @R{} is not yet running this action causes @R{} to startup.
 
 @node Quartz device, Additional resources, R and external applications, Top
 @chapter Quartz device
-The quartz device is the native graphic device in R for Mac OS X. It's name derives from Apple's Quartz Tecnology
-which is essentially similar to PDF rendering. One of the most amazing features of Quartz is antialising which gives you
+The quartz device is the native graphic device in R for Mac OS X. It's name derives from Apple's Quartz Technology
+which is essentially similar to PDF rendering. One of the most amazing features of Quartz is antialiasing which gives you
 @emph{very nice} plots and images. Try to compare  a quartz plot  with the same plot generated on
 any other interactive device. For its PDF nature it is also resolution independent.
  
@@ -791,8 +794,8 @@ ADC and get the latest up-to-date tools from Apple (compilers for example).
 @node The R for Mac OS X Developer page
 @section The R for Mac OS X Developer page
 There is a page dedicated to the latest R-devel version of R. This page is located at
-@uref{http://www.economia.unimi.it/R} and is mantained by Stefano M. Iacus.
-This page is inteded to give additional documentation for building  the latest R-devel
+@uref{http://www.economia.unimi.it/R} and is maintained by Stefano M. Iacus.
+This page is intended to give additional documentation for building  the latest R-devel
 version of R. From time to time, snapshots of R-devel binaries are available for testing purposes.
 
 @node Acknowledgments, Sparse questions,  Additional resources, Top
@@ -812,7 +815,7 @@ in random order. Last but not least Apple for amazing OS and GUI.
 
 @node How can I have a per session .Rprofile?,What happens if I drag a file on the R icon?,,Sparse questions
 @section How can I have a per session .Rprofile?
-You can by writing a @file{.Rprofile} file in your favourite
+You can by writing a @file{.Rprofile} file in your favorite
 session directory and change accordingly the startup working directory using the Preferences (@pxref{The current and startup working directories}).
 
 @node What happens if I drag a file on the R icon?,How can I interrupt lengthy operations or output?,How can I have a per session .Rprofile?,Sparse questions
@@ -827,11 +830,11 @@ You can now use the standard Macintosh control break sequence, that is you shoul
 
 @node I don't see a thing when installing packages!,,How can I interrupt lengthy operations or output?, Sparse questions
 @section I don't see a thing when installing packages!
-Well, this is not a question but the answer is that you are not looking ain the right place.
+Well, this is not a question but the answer is that you are not looking at the right place.
 Every input and output which is not @R{} specific (i.e. the output of standard commands) is generally sent to
 the standard output (stdout) or standard error (stderr) depending on its nature. In particular every call to the
 @command{system} function, executes outside @R{} in a Mac OS X shell. The package installation is done via
-the @command{system} facilty. 
+the @command{system} facility. 
 You have to use the Preferences to redirect the stderr and/or the stdout to the @R{} Console (see @ref{Misc tab})
 or you can look at the @emph{Console} application inside @file{/Applications/Utilities} on your system.
 This applies to every GUI application on Mac OS X so, as a general rule, if an application behaves strangely or quits,
