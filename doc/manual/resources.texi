@@ -145,6 +145,8 @@ It is currently mirrored daily at
 (Rhodes University, South Africa)
 @item http://mirror.aarnet.edu.au/pub/CRAN/
 (AARNet, Australia [accessible only from Australia and New Zealand])
+@item http://www.termix.ufv.br/CRAN/
+(Federal University of Vicosa, Brazil)
 @item ftp://ftp.u-aizu.ac.jp/pub/lang/R/CRAN/
 (University of Aizu, Japan)
 @c @item ftp://dola.snu.ac.kr/pub/R/CRAN/
