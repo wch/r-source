@@ -1,12 +1,10 @@
 ## Seber pages 506-507, after a Golub original
 
-cancor <-
-    function(x, y, xcenter=TRUE, ycenter=TRUE)
+cancor <- function(x, y, xcenter=TRUE, ycenter=TRUE)
 {
     x <- as.matrix(x)
     y <- as.matrix(y)
-    if(nrow(x) != nrow(y)) stop("unequal number of rows in cancor")
-    nr <- nrow(x)
+    if((nr <- nrow(x)) != nrow(y)) stop("unequal number of rows in cancor")
     ncx <- ncol(x)
     ncy <- ncol(y)
     if(is.logical(xcenter)) {
