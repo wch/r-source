@@ -34,7 +34,7 @@ config.status: $(srcdir)/configure
 $(srcdir)/configure: @MAINTAINER_MODE_TRUE@ $(srcdir)/configure.in $(srcdir)/aclocal.m4
 	@cd $(srcdir) && autoconf
 
-R:
+R: Makefile
 	@if [ "$(srcdir)" != "." ]; then \
 	  for f in $(INSTFILES); do \
 	    $(INSTALL_DATA) $(srcdir)/$${f} $(top_builddir); \
@@ -47,7 +47,10 @@ R:
 	  echo "you should \`make docs' now ..."; \
 	fi
 
-docs help html latex examples:: FORCE
+docs: FORCE
+	-@(cd doc && $(MAKE) $@)
+	-@(cd src/library && $(MAKE) $@)
+help html latex examples: FORCE
 	-@(cd src/library && $(MAKE) $@)
 FORCE:
 
