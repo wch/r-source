@@ -248,6 +248,27 @@ postscript("cm_test.eps", width = 4.0, height = 3.0,
            horizontal = FALSE, onefile = FALSE, paper = "special",
            family = "ComputerModern")
 ## The resultant postscript file can be used by dvips -Ppfb -j0.
+
+## To test out encodings, you can use
+TestChars <- function(encoding="ISOLatin1", family="URWHelvetica")
+{
+    postscript(encoding=encoding, family=family)
+    par(pty="s")
+    plot(c(0,15), c(0,15), type="n", xlab="", ylab="")
+    title(paste("Centred chars in encoding", encoding))
+    grid(15, 15, lty=1)
+    for(i in c(32:255)) {
+	x <- i %% 16
+	y <- i %/% 16
+	points(x, y, pch=i)
+    }
+    dev.off()
+}
+## there will be many warnings. We use URW to get a complete enough
+## set of font metrics.
+TestChars()
+TestChars("ISOLatin2")
+TestChars("WinAnsi")
 }
 \testonly{
 xx <- seq(0, 7, length=701)
