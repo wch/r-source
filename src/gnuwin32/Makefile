@@ -153,6 +153,7 @@ bitmap/zlib/libz.a:
 rdocs:
 	@$(MAKE) -C ../../doc/manual -f Makefile.win html
 
+
 #                          ===== Packages ======
 
 CHTML:
@@ -166,6 +167,10 @@ endif
 endif
 
 base-HELP = ziponly
+nls-HELP = ziponly
+ts-HELP = ziponly
+base-ZIPDATA = zip
+ts-ZIPDATA = zip
 
 bundle-%:
 	$(PERL) fixed/dobundle.pl $* $(PKGD) $(RLIB)
@@ -174,6 +179,9 @@ pkg-%:  libR.a #../include/globalvar.h
 	$(MAKE) DLLNM=$($*-DLLNM)  EXTRADOCS=$($*-EXTRADOCS) \
 	  -C $(PKGDIR)/$* PKG=$* RHOME=$(RHOME) RLIB=$(RLIB) \
 	  -f $(RHOME)/src/gnuwin32/MakePkg
+	@if test -d $(RLIB)/$*/data ; then \
+	  $(MAKE) $($*-ZIPDATA)data-$* ; \
+	fi
 ifeq ($(strip $(HELP)),YES)
 	$(MAKE) -C ./help RHOME=$(RHOME) PKGDIR=$(PKGD) RLIB=$(RLIB) $($*-HELP)help-$*
 	$(MAKE) -C ./help RHOME=$(RHOME) PKGDIR=$(PKGD) RLIB=$(RLIB) contents-$*
@@ -206,8 +214,17 @@ ziponly-%:
 	$(MAKE) -C ./help RHOME=$(RHOME) PKGDIR=$(PKGD) RLIB=$(RLIB) ziponlyhelp-$*
 
 zipdata-%:
-	(cd $(RLIB)/$*/data; ls -1 > filelist; \
+	@echo "  zipping data"
+	@(cd $(RLIB)/$*/data; \
+	  if test -f Rdata.zip ; then \
+	    unzip -qou Rdata; \
+	  fi; \
+	  $(RM) Rdata.zip filelist ; \
+	  ls -1 > filelist; \
 	  zip -rmq9X Rdata * -x filelist 00Index)
+
+data-%:
+	@echo "  not zipping data"
 
 
 #                          ===== cleaning ======
@@ -220,23 +237,24 @@ clean: cleanwin $(PKGCLEAN)
 	-$(MAKE) -C ../../tests -f Makefile.win clean
 
 distclean veryclean: clean
-	$(RM) -rf R.exp globalvar.h ../../bin ../../library ../../modules
-	$(RM) -f ../include/config.h ../include/psignal.h \
+	$(RM) R.exp Rm.exp globalvar.h 
+	$(RM) -r ../../bin ../../library ../../modules
+	$(RM) ../include/config.h ../include/psignal.h \
 	../include/Rconfig.h ../include/version.h 
-	$(RM) -f ../library/*/src/*.o ../library/*/src/*.a
-	$(RM) -f ../library/*/src/*.dll
-	$(RM) -rf ../library/*/check
-	$(RM) -f ../../doc/html/search/index.txt \
+	$(RM) ../library/*/src/*.o ../library/*/src/*.a
+	$(RM) ../library/*/src/*.dll
+	$(RM) -r ../library/*/check
+	$(RM) ../../doc/html/search/index.txt \
 	../../doc/html/packages.html ../../doc/html/rwin.html \
 	../../doc/html/rw-FAQ.html ../../doc/html/search/SearchEngine.html
-	$(RM) -f ../../etc/Rconsole ../../etc/Rdevga ../../etc/Rprofile \
+	$(RM) ../../etc/Rconsole ../../etc/Rdevga ../../etc/Rprofile \
 	../../etc/rgb.txt ../../share/make/tests.mk \
 	../include/FFDecl.h ../include/FFTab.h ../include/Platform.h \
 	../include/globalvar.h ../../tests/*.Rout ../../tests/*.Rout.fail
 	-$(MAKE) -C installer ISdistclean
 
 cleanwin:
-	$(RM) *.o *.exe *.dll *.a *~ \#*\# rw*.zip R.def R.exp1 \
+	$(RM) *.o *.exe *.dll *.a *~ \#*\# rw*.zip R.def R.exp1 Rm.exp1\
 	   .RData .Rhistory Makedeps *.d
 	$(MAKE) -C graphapp clean
 	$(MAKE) -C fixed clean
@@ -293,10 +311,12 @@ rw-faq: rw-FAQ.texi ../../VERSION
 	$(SED) $(SEDVER) $< | \
 	  makeinfo --no-headers --number-sections -o $@
 
+bitmapdll:
+	$(MAKE) -C bitmap
 
 distribution: bindist packagedist docsdist
 
-bindist: docfiles
+bindist: tcl bitmapdll docfiles
 	$(RM) -r $(RPREFIX)
 	$(MKDIR) $(RPREFIX)
 	$(CP) -pr ../../bin ../../modules ../../afm ../../unzip $(RPREFIX)
@@ -369,7 +389,7 @@ packagedist:
 	$(CP) ../../doc/html/logo.jpg $(RPREFIX)/doc/html
 	$(CP) ../../doc/KEYWORDS* $(RPREFIX)/doc
 	$(CP) -p exported-vars R.exp MkRules MakePkg MakeDll \
-	  pwd.pl makeDllRes.pl $(RPREFIX)/src/gnuwin32
+	  pwd.pl makeDllRes.pl install-save.sh $(RPREFIX)/src/gnuwin32
 	$(CP) -p Makefile.packages $(RPREFIX)/src/gnuwin32/Makefile
 	$(CP) fixed/dobundle.pl $(RPREFIX)/src/gnuwin32/fixed
 	$(CP) -pr help check $(RPREFIX)/src/gnuwin32

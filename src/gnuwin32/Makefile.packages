@@ -59,13 +59,15 @@ pkgcheck-%:
 ziphelp-%:
 	$(MAKE) -C ./help RHOME=$(RHOME) PKGDIR=$(PKGD) RLIB=$(RLIB) ziphelp-$*
 
-
 ziponly-%:
 	$(MAKE) -C ./help RHOME=$(RHOME) PKGDIR=$(PKGD) RLIB=$(RLIB) ziponlyhelp-$*
 
-
 zipdata-%:
-	(cd $(RLIB)/$*/data; ls -1 > filelist; \
+	@echo "  zipping data"
+	@(cd $(RLIB)/$*/data; \
+	  if test -f Rdata.zip ; then \
+	    unzip -qou Rdata; \
+	  fi; \
+	  $(RM) Rdata.zip filelist ; \
+	  ls -1 > filelist; \
 	  zip -rmq9X Rdata * -x filelist 00Index)
-
-
