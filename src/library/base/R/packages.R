@@ -25,7 +25,8 @@ update.packages <- function(lib.loc=.lib.loc, CRAN=.Options$CRAN,
 
     old <- old.packages(lib.loc=lib.loc,
                         contriburl=contriburl,
-                        method=method)
+                        method=method,
+                        available=available)
 
     update <- NULL
     if(ask & !is.null(old)){
@@ -42,12 +43,12 @@ update.packages <- function(lib.loc=.lib.loc, CRAN=.Options$CRAN,
     }
     else
         update <- old
-    
-    
+
+
     if(!is.null(update)){
         if(is.null(instlib))
             instlib <-  update[,"LibPath"]
-        
+
         install.packages(update[,"Package"], instlib,
                          contriburl=contriburl,
                          method=method,
