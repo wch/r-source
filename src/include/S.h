@@ -44,15 +44,16 @@ extern "C" {
 #include <math.h>
 #endif
 
-extern char *S_alloc();  
-extern void seed_in(long *);
-extern void seed_out();
-extern double unif_rand(void);
-extern double norm_rand(void);
+  extern void REprintf();
+  extern char *S_alloc();  
+  extern void seed_in(long *);
+  extern void seed_out();
+  extern double unif_rand(void);
+  extern double norm_rand(void);
 
 #define NULL_ENTRY
-#define PROBLEM		fprintf(stderr,
-#define RECOVER(x)	); fprintf(stderr, "\n")
+#define PROBLEM		REprintf("\n"); REprintf(
+#define RECOVER(x)	); REprintf("\n")
 
 #define Calloc(n, t)   (t *) calloc( (size_t) (n), sizeof(t) )
 #define Realloc(p,n,t) (t *) realloc( (void *)(p), (size_t)((n) * sizeof(t)) )
