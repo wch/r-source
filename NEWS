@@ -11,6 +11,10 @@
 
 NEW FEATURES
 
+    o   arraySubscript and vectorSubscript are now available to package users.
+        All "array-like" packages can use a standard method for calculating
+        subscripts.
+
     o   new.env is now internal and allows you to set hashing. Also,
         parent.env and parent.env<- are included to provide direct access
         to setting and retrieving environments.

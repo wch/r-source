@@ -543,6 +543,7 @@ extern SEXP	R_BlankString;	    /* "" as a CHARSXP */
 #define unprotect		Rf_unprotect
 #define unprotect_ptr		Rf_unprotect_ptr
 #define VectorToPairList	Rf_VectorToPairList
+#define vectorSubscript         Rf_vectorSubscript
 #endif
 
 /* Type Coercions of all kinds */
@@ -707,6 +708,8 @@ Rboolean StringBlank(SEXP);
 SEXP substitute(SEXP,SEXP);
 void unprotect(int);
 void unprotect_ptr(SEXP);
+SEXP vectorSubscript(int, SEXP, int*, SEXP(), SEXP);
+
 void R_ProtectWithIndex(SEXP, PROTECT_INDEX *);
 void R_Reprotect(SEXP, PROTECT_INDEX);
 SEXP R_subassign3_dflt(SEXP, SEXP, SEXP, SEXP);
