@@ -195,12 +195,8 @@ model.matrix <- function(object, ...) UseMethod("model.matrix")
 model.matrix.default <- function(formula, data, contrasts = NULL)
 {
  t <- terms(formula)
- if (missing(data)) {
-	vars <- attr(t, "variables")
-	# comes out as list(x,y,z), make it data.frame(x,y,z)
-	vars[[1]] <- as.name("data.frame")
-	data <- eval(vars, sys.frame(sys.parent()))
- }
+ if (missing(data)) 
+     data <- eval(substitute(model.frame(formula)), sys.frame(sys.parent()))
  else if (is.null(attr(data, "terms")))
      data <- model.frame(formula, data)
  contrastsL <- contrasts
