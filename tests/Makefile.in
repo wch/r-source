@@ -11,17 +11,7 @@ subdir = tests
 include $(top_builddir)/Makeconf
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
-DISTFILES = Makefile.in README \
-	$(TESTsrc-strict-1) $(TESTsrc-strict-1:.R=.Rout.save) \
-	$(TESTsrc-sloppy-1) $(TESTsrc-sloppy-1:.R=.Rout.save) \
-	isas-tests.Rin isas-tests.Rout.save \
-	no-segfault.Rin
-SUBDIRS = Examples
-
-R = LC_ALL=C $(top_builddir)/bin/R --vanilla
-RDIFF = $(top_srcdir)/tools/Rdiff
-
-TESTsrc-strict-1 = \
+test-src-strict-1 = \
 	arith-true.R \
 	arith.R \
 	d-p-q-r-tests.R \
@@ -31,21 +21,30 @@ TESTsrc-strict-1 = \
 	primitive-funs.R \
 	method-dispatch.R \
 	simple-true.R
-TESTsrc-strict-auto = \
+test-src-strict-auto = \
 	isas-tests.R
-TESTsrc-sloppy-1 = \
+test-src-sloppy-1 = \
 	print-tests.R
-TESTsrc-sloppy-auto = \
+test-src-sloppy-auto = \
 	no-segfault.R
+DISTFILES = Makefile.in README \
+	$(test-src-strict-1) $(test-src-strict-1:.R=.Rout.save) \
+	$(test-src-sloppy-1) $(test-src-sloppy-1:.R=.Rout.save) \
+	isas-tests.Rin isas-tests.Rout.save \
+	no-segfault.Rin
+SUBDIRS = Examples
 
-TESTsrc-strict = $(TESTsrc-strict-1) $(TESTsrc-strict-auto)
-TESTsrc-sloppy = $(TESTsrc-sloppy-1) $(TESTsrc-sloppy-auto)
-TESTsrc-auto = $(TESTsrc-strict-auto) $(TESTsrc-sloppy-auto)
-TESTsrc = $(TESTsrc-strict) $(TESTsrc-sloppy)
+R = LC_ALL=C $(top_builddir)/bin/R --vanilla
+RDIFF = $(top_srcdir)/tools/Rdiff
 
-TESTout-strict = $(TESTsrc-strict:.R=.Rout)
-TESTout-sloppy = $(TESTsrc-sloppy:.R=.Rout)
-TESTout = $(TESTsrc:.R=.Rout)
+test-src-strict = $(test-src-strict-1) $(test-src-strict-auto)
+test-src-sloppy = $(test-src-sloppy-1) $(test-src-sloppy-auto)
+test-src-auto = $(test-src-strict-auto) $(test-src-sloppy-auto)
+test-src = $(test-src-strict) $(test-src-sloppy)
+
+test-out-strict = $(test-src-strict:.R=.Rout)
+test-out-sloppy = $(test-src-sloppy:.R=.Rout)
+test-out = $(test-src:.R=.Rout)
 
 .SUFFIXES:
 .SUFFIXES: .R .Rin .Rout
@@ -57,7 +56,7 @@ Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	  CONFIG_FILES=$(subdir)/$@ CONFIG_HEADERS= \
 	  $(SHELL) ./config.status
 Makedeps: Makefile
-	@(for f in $(TESTsrc); do \
+	@(for f in $(test-src); do \
 	    if [ -f $(srcdir)/${f}out.save ]; then \
 	      echo "$${f}out: $${f} \$$(srcdir)/$${f}out.save \$$(FORCE)"; \
 	    else \
@@ -89,8 +88,8 @@ test-All: Makefile
 	@$(MAKE) test-Specific
 test-Examples:
 	@(cd Examples && $(MAKE) $@)
-test-Specific-strict: $(TESTout-strict)
-test-Specific-sloppy: $(TESTout-sloppy)
+test-Specific-strict: $(test-out-strict)
+test-Specific-sloppy: $(test-out-sloppy)
 test-Specific:
 	@echo "updating test dependencies"
 	@$(MAKE) Makedeps
@@ -112,10 +111,9 @@ test-undoc:
 	  echo; \
 	done
 
-$(TESTout): Makefile stamp-R
+$(test-out): Makefile stamp-R
 
 stamp-R: $(top_builddir)/bin/R.X11 $(top_builddir)/library/base/R/base
-#	@cd $(top_builddir) && $(MAKE) R
 	@touch $@
 
 mostlyclean: clean
@@ -123,9 +121,9 @@ clean:
 	-(cd Examples; $(MAKE) $@)
 	rm -f stamp-R Makedeps Rplots.* *.Rd
 distclean: clean
-	@rm -f $(TESTout)
+	@rm -f $(test-out)
 	-(cd Examples; $(MAKE) $@)
-	@rm -f Makefile $(TESTsrc-auto)
+	@rm -f Makefile $(test-src-auto)
 maintainer-clean: distclean
 
 distdir: $(DISTFILES)

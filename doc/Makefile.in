@@ -50,11 +50,11 @@ install-html:
 	@for f in $(srcdir)/html/*.html \
 	          $(srcdir)/html/*.jpg \
 	          $(srcdir)/html/*.css; do \
-	  $(INSTALL_DATA) $$f $(rhome)/doc/html; \
+	  $(INSTALL_DATA) $${f} $(rhome)/doc/html; \
 	done
 	@for f in $(srcdir)/html/search/*.class \
 	          $(srcdir)/html/search/*.html; do \
-	  $(INSTALL_DATA) $$f $(rhome)/doc/html/search; \
+	  $(INSTALL_DATA) $${f} $(rhome)/doc/html/search; \
 	done
 	@if test -f $(top_builddir)/doc/html/search/index.txt \
 	         -a "$(top_builddir)" != "$(rhome)"; then \
@@ -84,7 +84,9 @@ clean:
 	@if [ "$(srcdir)" != "." ]; then \
 	  rm -rf html; \
 	else \
-	  rm -f html/function.html html/packages.html html/search/index.txt; \
+	  rm -f html/function.html \
+	        html/packages.html \
+	        html/search/index.txt; \
 	fi
 	@(cd manual && $(MAKE) $@)
 distclean: clean

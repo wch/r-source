@@ -36,7 +36,7 @@ R:
 install: installdirs
 	@echo "installing afm ..."
 	@for f in `ls $(srcdir)/*.afm $(srcdir)/*.lt1`; \
-	  do $(INSTALL_DATA) $$f $(rhome)/afm; \
+	  do $(INSTALL_DATA) $${f} $(rhome)/afm; \
 	done
 installdirs:
 	@$(MKINSTALLDIRS) $(rhome)/afm
