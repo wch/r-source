@@ -188,6 +188,11 @@ Date: Mon, 04 Aug 2003 10:12:14 +0200
 
 Directory:  Analyses
 
+* PR# 3325 *
+Subject: optim with constraints 
+From: aa@tango.stat.unipd.it (Adelchi Azzalini)
+Date: Mon, 23 Jun 2003 17:51:19 +0200 (CEST)
+..deep inside the L-BFGS-B code, but looks a badly scaled problem.
 * PR# 3666 *
 Subject: wilcox.test, CI
 From: d.a.wooff@durham.ac.uk
@@ -337,12 +342,6 @@ Date: Wed, 12 Mar 2003 23:35:59 +0100 (MET)
 Subject: surprising behaviour of "bgroup": sets all in greek letters
 From: Uwe Ligges <ligges@statistik.uni-dortmund.de>
 Date: Sun, 25 May 2003 18:33:49 +0200
-* PR# 3217 *
-Subject: inconsistent handling of NA lty
-From: paul@stat.auckland.ac.nz
-Date: Tue, 10 Jun 2003 01:23:42 +0200 (MET DST)
-..The issue here is that the graphics engine sets lty to NA_INTEGER,
-..and no one told the device drivers to handle that case.
 
 Directory:  In-Out
 
@@ -567,6 +566,11 @@ Date: Thu, 1 Aug 2002 19:01:59 +0200 (MET DST)
 ..  d$calls <- d$fitted + d$res[i]
 ..  coef(update(fit, data=d))
 ..}
+* PR# 3671 *
+Subject: model.frame() call from inside a function
+From: Jerome Asselin <jerome@hivnet.ubc.ca>
+Date: Wed, 6 Aug 2003 15:41:16 -0700
+..is this a bug?
 
 Directory:  Startup
 
@@ -686,10 +690,21 @@ Date: Wed, 11 Jun 2003 12:09:38 +0100
 Subject: Windows 2000 Bug in GMT +/- n Timezones
 From: Gabor Grothendieck <ggrothendieck@volcanomail.com>
 Date: Sun, 3 Aug 2003 20:06:49 -0700 (PDT)
-* PR# 3663 *
-Subject: windows(record=T) loses last plot
-From: Arni Magnusson <arnima@u.washington.edu>
-Date: Tue, 5 Aug 2003 15:25:42 -0700 (PDT)
+..As it says, a Windows 2000 bug
+* PR# 3841 *
+Subject: end-of-loop-timeout problem and submit-bug-report output (resending)
+Subject: ess-mode 5.1.24; end of loop timeout
+Subject: Re:  where should i increase ess-loop-timeout
+From: Scot W McNary <smcnary@charm.net>
+From: Rich Heiberger <rmh@surfer.sbm.temple.edu>
+Date: Tue, 19 Aug 2003 16:25:18 -0400 (EDT)
+Date: Mon, 28 Jul 2003 14:30:03 -0400 (EDT)
+..Misdirected from ess-bugs?
+* PR# 4047 *
+Subject: File in use error
+From: oakeley@fmi.ch
+Date: Tue, 2 Sep 2003 11:06:16 +0200 (MET DST)
+..Windows / R(D)COM
 
 Directory:  incoming
 
@@ -701,161 +716,12 @@ Date: Wed, 19 Mar 2003 12:23:40 +0100 (MET)
 Subject: sweave provoked segfault
 From: Paul Gilbert <pgilbert@bank-banque-canada.ca>
 Date: Mon, 21 Apr 2003 17:01:53 -0400
-* PR# 3325 *
-Subject: optim with constraints 
-From: aa@tango.stat.unipd.it (Adelchi Azzalini)
-Date: Mon, 23 Jun 2003 17:51:19 +0200 (CEST)
-* PR# 3671 *
-Subject: model.frame() call from inside a function
-From: Jerome Asselin <jerome@hivnet.ubc.ca>
-Date: Wed, 6 Aug 2003 15:41:16 -0700
-..is this a bug?
-* PR# 3841 *
-Subject: end-of-loop-timeout problem and submit-bug-report output (resending)
-Subject: ess-mode 5.1.24; end of loop timeout
-Subject: Re:  where should i increase ess-loop-timeout
-From: Scot W McNary <smcnary@charm.net>
-From: Rich Heiberger <rmh@surfer.sbm.temple.edu>
-Date: Tue, 19 Aug 2003 16:25:18 -0400 (EDT)
-Date: Mon, 28 Jul 2003 14:30:03 -0400 (EDT)
-..Misdirected from ess-bugs?
-* PR# 4006 *
-Subject: Re: Your application
-From: <riksarkivet@riksarkivaren.dep.no>
-Date: Thu, 28 Aug 2003 23:54:30 --0700
-* PR# 4007 *
-Subject: What men want, and women crave!
-From: "Rosella Cooper" <mds3wfhzq@imagination.co.uk>
-Date: Fri, 29 Aug 03 00:08:53 GMT
-* PR# 4008 *
-Subject: r-bird get Free Printer Cartridges and more
-From: Mike3@yahoo.com
-Date: 28 Aug 2003 21:36:17 -0500
-* PR# 4009 *
-Subject: urgent transfer pls.
-From: sanzi john <johnsanzi2@123.com>
-Date: Fri, 29 Aug 2003 13:24:17 +0200
-* PR# 4010 *
-Subject: Your details
-From: <cmuldrow@fredericksburg.com>
-Date: Fri, 29 Aug 2003 15:19:38 --0700
-* PR# 4011 *
-Subject: b- VIAGRA, Generic - dt doqahylspc
-From: "Nola Jolly" <i2uoxer@smtp.secureserver.net>
-Date: Fri, 29 Aug 03 12:11:45 GMT
-* PR# 4012 *
-Subject: Fw:Win the tax lien lottery. w 
-From: "Manuel Roe" <tjxynx@netwalk.com>
-Date: Fri, 29 Aug 03 22:13:20 GMT
-* PR# 4013 *
-Subject: Lowest price Email advertisement
-From: "Carlos Mayer" <*@amexmail.com>
-Date: Sat, 30 Aug 03 01:23:24 GMT
-* PR# 4014 *
-Subject: Re: Re: My details
-From: <ewan@gmx.at>
-Date: Fri, 29 Aug 2003 21:58:20 --0700
-* PR# 4015 *
-Subject: Fw[0]:Health Insurance for Your Life - Free Quotes!
-From: dyoung6330@luger.se
-Date: Fri, 29 Aug 2003 13:30:52 -0800
-* PR# 4016 *
-Subject: The solution to your debt has arrived - READ!
-From: "renee" <naedpjkjrryc@msn.com>
-Date: Fri, 29 Aug 2003 00:17:51 +0200
-* PR# 4017 *
-Subject: Online Pharmacy - Viagra delivered overnight
-From: "Curtis Brantley" <fl0dqx@aeieng.com>
-Date: Fri, 29 Aug 03 21:45:05 GMT
-* PR# 4018 *
-Subject: 0- Generic VIAGRA - kcymqxydb
-From: "Raul George" <ebd4nc@smtp.secureserver.net>
-Date: Fri, 29 Aug 03 17:15:38 GMT
-* PR# 4019 *
-Subject: fisher.test() gives wrong confidence interval
-From: Jerome Asselin <jerome@hivnet.ubc.ca>
-Date: Fri, 29 Aug 2003 17:04:53 -0700
-* PR# 4020 *
-Subject: HELLO!!!!!!!!MY GOOD FRIEND
-From: "stevowode@katamail.com" <stevowode@katamail.com>
-Date: Sat, 30 Aug 2003 02:07:54 +0000
-* PR# 4021 *
-Subject: Make your penis thicker, fuller and harder  retrorocket
-From: "Terry Flores" <yq0f120kosv@163.net>
-Date: Sat, 30 Aug 03 07:07:51 GMT
-* PR# 4022 *
-Subject: If you can't sleep, try this
-From: "Ava Metz" <lor59kwlmd@qualityman.com>
-Date: Sat, 30 Aug 03 09:38:58 GMT
-* PR# 4023 *
-Subject: Thank you!
-From: <benschop@iae.nl>
-Date: Sat, 30 Aug 2003 15:30:09 --0700
-* PR# 4025 *
-Subject: A better night's sleep - try this!
-From: "Valentin Rosa" <bm67ye@dasher.com>
-Date: Sat, 30 Aug 03 19:46:46 GMT
-* PR# 4026 *
-Subject: 7_ Size DOES Matter_ uy nsw e
-From: "Lucy Tate" <uil86dux@smtp.secureserver.net>
-Date: Sun, 31 Aug 03 03:58:04 GMT
-* PR# 4027 *
-Subject: Fw:Looking for a new way to make money. rodrefotn obf
-From: "Issac John" <y947nn@quik.com>
-Date: Sun, 31 Aug 03 23:35:45 GMT
-* PR# 4028 *
-Subject: Free Affordable Health Insurance Quotes
-From: "Jaime Allison" <67h965Z1DJv5o0Ti@downwithnobody.com>
-Date: Mon, 01 Sep 03 03:09:15 GMT
-* PR# 4029 *
-Subject: Largest Govt. Sponsored Free Loan Program
-From: "Norbert Belanger" <gmje42@dasher.net>
-Date: Sun, 31 Aug 03 16:21:30 GMT
-* PR# 4030 *
-Subject: Satisfy your lover with an increased penis size  charon
-From: "Cindy Holman" <42dt67ffmm2@cnnb.net>
-Date: Mon, 01 Sep 03 03:57:08 GMT
-* PR# 4031 *
-Subject: Thank you!
-From: <70760.3134@compuserve.com>
-Date: Mon, 1 Sep 2003 5:21:13 --0700
-* PR# 4032 *
-Subject: (광고)세스영어.,이벤트/무료샘플,무료배송!
-From: 경품정보<mnbvc748596@yahoo.co.kr>
-Date: Mon, 1 Sep 2003 13:16:49 +0900
-* PR# 4033 *
-Subject: BE OUR AGENT
-From: "DR. MARCUS COLE" <drmarcole@indiatimes.com>
-Date: Mon, 1 Sep 2003 04:06:32 +0200
-* PR# 4034 *
-Subject: (광고)외국어 이젠 할리/미즈노/보챙과 함께하세요(무료증정)
-From: 아이센스<5454tygfd@hotmail.com>
-Date: Mon, 1 Sep 2003 20:36:10 +0900
-* PR# 4035 *
-Subject: URGENT
-From: dianedlamini200@netscape.net
-Date: Mon, 1 Sep 2003 04:19:29 +0200
-* PR# 4036 *
-Subject: From Blaise Bouguiba Samuel
-From: "From Bouguiba Samuel Blaise" <sa_guiba101@simbamail.fm>
-Date: Sat, 19 Apr 2003 09:27:00 +0400
-* PR# 4039 *
-Subject: Re: Approved
-From: <rweisgerber@mtroyal.ab.ca>
-Date: Mon, 1 Sep 2003 20:50:25 +0200
-* PR# 4042 *
-Subject: Re: Wicked screensaver
-From: <pilott38@aol.com>
-Date: Mon, 1 Sep 2003 21:40:22 --0700
-* PR# 4043 *
-Subject: Re: [R] File Reading Problem
-From: Duncan Murdoch <dmurdoch@pair.com>
-Date: Mon, 01 Sep 2003 16:32:26 -0400
-* PR# 4044 *
-Subject: Re: [R] File Reading Problem
-From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
-Date: 01 Sep 2003 22:55:20 +0200
-* PR# 4045 *
-Subject: Sincere Regards,
-From: "Michael Stevens Junior." <michael_stevensj@yahoo.co.uk>
-Date: Sun, 8 Sep 2002 02:34:20 +0200
+* PR# 4051 *
+Subject: completeSubclasses() methods bug
+From: colin@colinsmith.org
+Date: Tue, 2 Sep 2003 22:15:26 +0200 (MET DST)
+..methods package
+* PR# 4052 *
+Subject: STRICTLY CONFIDENTIAL.
+From: "KWAMI OBETE" <3kobete@zwallet.com>
+Date: Tue, 2 Sep 2003 21:22:12 +0000
