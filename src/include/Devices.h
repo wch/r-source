@@ -33,14 +33,15 @@ void KillAllDevices(void);
 		/* Drivers from ../main/dev....c , description there: */
 
 int PSDeviceDriver(DevDesc*, char*, char*, char*, char**,
-		   char*, char*, double, double, double, double, int,
-		   int, int, char*);
+		   char*, char*, double, double, double, double, 
+		   int, int, int, char*);
 
 int PicTeXDeviceDriver(DevDesc*, char*, char*, char*, double, double, int);
 
 int XFigDeviceDriver(DevDesc*, char*, char*, char*,
-		     char*, char*, double, double, double, double, int,
-		     int);
+		     char*, char*, double, double, double, double, 
+		     int, int);
+
 
 #ifdef OLD_Macintosh
 int MacDeviceDriver(char**, int, double*, int);
