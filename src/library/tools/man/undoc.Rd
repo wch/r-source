@@ -37,6 +37,9 @@ undoc(package, dir, lib.loc = NULL)
   There is a \code{print} method for nicely displaying the information
   contained in such objects.
 }
+\seealso{
+  \code{\link{codoc}}, \code{\link{QC}}
+}
 \examples{
 undoc("tools")                  # Undocumented objects in 'tools'
 }

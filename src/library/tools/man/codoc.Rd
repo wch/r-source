@@ -91,7 +91,7 @@ codocData(package, lib.loc = NULL)
   contained in such objects.
 }
 \seealso{
-  \code{\link{undoc}}
+  \code{\link{undoc}}, \code{\link{QC}}
 }
 \section{Warning}{
   Both \code{codocClasses} and \code{codocData} are still experimental.
