@@ -796,9 +796,7 @@ static Rconnection newouttext(char *description, SEXP sfile, char *mode)
 	free(new->class); free(new);
 	error("allocation of text connection failed");
     }
-    /* Remove quotes around name */
-    strcpy(new->description, description + 1);
-    new->description[strlen(description) - 2] = '\0';
+    strcpy(new->description, description);
     strcpy(new->mode, mode); /* must be "w" or "a" at this point */
     new->isopen = new->text = TRUE;
     new->incomplete = FALSE;
@@ -847,7 +845,8 @@ SEXP do_textconnection(SEXP call, SEXP op, SEXP args, SEXP env)
     if(!strlen(open) || strncmp(open, "r", 1) == 0) 
 	con = Connections[ncon] = newtext(desc, stext);
     else if (strncmp(open, "w", 1) == 0 || strncmp(open, "a", 1) == 0)
-	con = Connections[ncon] = newouttext(desc, sfile, open);
+	con = Connections[ncon] = 
+	    newouttext(CHAR(STRING_ELT(stext, 0)), sfile, open);
     else
 	errorcall(call, "unsupported mode");
     /* already opened */
