@@ -26,10 +26,10 @@ listFilesWithType(dir, type)
   \item{exts}{a character vector of possible file extensions.}
   \item{full.names}{a logical indicating whether the full paths of the
     files found are returned (default), or just the file names.}
-  \item{type}{a character string giving the ``type'' of the files to be
-    listed, as characterized by their extensions.  Currently, possible
-    values are \code{"code"} (R code), \code{"data"} (data sets),
-    \code{"demo"} (demos), \code{"docs"} (R documentation), and
+  \item{type}{a character string giving the \dQuote{type} of the files
+    to be listed, as characterized by their extensions.  Currently,
+    possible values are \code{"code"} (R code), \code{"data"} (data
+    sets), \code{"demo"} (demos), \code{"docs"} (R documentation), and
     \code{"vignette"} (vignettes).}
 }
 \details{
@@ -53,9 +53,9 @@ listFilesWithType(dir, type)
   currently, only visible files are used.
 
   \code{listFilesWithType} returns the paths of the files in \code{dir}
-  of the given ``type'', as determined by the extensions recognized by
-  \R.  When listing R code and documentation files, files in OS-specific
-  subdirectories are included if present.
+  of the given \dQuote{type}, as determined by the extensions recognized
+  by \R.  When listing R code and documentation files, files in
+  OS-specific subdirectories are included if present.
 }
 \seealso{
   \code{\link{file.path}},

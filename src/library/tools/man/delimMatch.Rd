@@ -12,11 +12,11 @@ delimMatch(x, delim = c("\{", "\}"), syntax = "Rd")
   \item{delim}{a character vector of length 2 giving the start and end
     delimiters.  Currently, both must be single characters.  Future
     versions might allow for arbitrary regular expressions.}
-  \item{syntax}{currently, always the string \code{"Rd"} indicating Rd
-    syntax (i.e., \code{\%} starts a comment extending till the end of
-    the line, and \code{\\} escapes).  Future versions might know about
-    other syntaxes, perhaps via ``syntax tables'' allowing to flexibly
-    specify comment, escape, and quote characters.}
+  \item{syntax}{currently, always the string \samp{"Rd"} indicating Rd
+    syntax (i.e., \samp{\%} starts a comment extending till the end of
+    the line, and \samp{\\} escapes).  Future versions might know about
+    other syntaxes, perhaps via \dQuote{syntax tables} allowing to
+    flexibly specify comment, escape, and quote characters.}
 }
 \value{
   An integer vector of the same length as \code{x} giving the starting
@@ -25,7 +25,7 @@ delimMatch(x, delim = c("\{", "\}"), syntax = "Rd")
   (or \eqn{-1} for no match).
 }
 \seealso{
-  \code{\link{regexpr}} for ``simple'' pattern matching.
+  \code{\link{regexpr}} for \dQuote{simple} pattern matching.
 }
 \examples{
 x <- c("\value\{foo\}", "function(bar)")

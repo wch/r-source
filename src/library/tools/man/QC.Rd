@@ -49,7 +49,7 @@ checkReplaceFuns(package, dir, lib.loc = NULL)
   \emph{may} be called \code{formula} even if this is not the name used
   by the generic.  Currently, only functions the body of which starts
   with a call to \code{UseMethod} are recognized as (S3) generics;
-  internal method dispatch (see section ``Simple Dispatching'' in
+  internal method dispatch (see section \dQuote{Simple Dispatching} in
   \link[base]{zMethods}) are not taken into account.  The generics are
   sought first in the given package and then in the base package.  The
   rules when \code{\dots} is involved are subtle: see the source code.

@@ -1562,38 +1562,87 @@ examples), no matter where they appear in the input.
 @section Marking text
 @cindex Marking text in documentation
 
+The following logical markup commands are available for emphasizing or
+quoting text.
+
+@table @code
+@item \emph@{@var{text}@}
+@findex \emph
+@itemx \strong@{@var{text}@}
+@findex \strong
+Emphasize @var{text} using @emph{italic} and @strong{bold} font if
+possible; @code{\strong} is stronger.
+
+@item \bold@{@var{text}@}
+@findex \bold
+Set @var{text} in @b{bold} font if possible.
+
+@item \sQuote@{@var{text}@}
+@findex \sQuote
+@itemx \dQuote@{@var{text}@}
+@findex \dQuote
+Portably single or double quote @var{text} (without hard-wiring the
+quotation marks).
+@end table
+
 The following logical markup commands are available for indicating
 specific kinds of text.
 
-@quotation
-@multitable @columnfractions .20 .70
-@item @code{\bold@{@var{word}@}}
-@findex \bold
-@tab set @var{word} in @strong{bold} font if possible
-@item @code{\emph@{@var{word}@}}
-@findex \emph
-@tab emphasize @var{word} using @emph{italic} font if possible
-@item @code{\code@{@var{word}@}}
+@table @code
+@item \code@{@var{text}@}
 @findex \code
-@tab for pieces of code, using @code{typewriter} font if possible
-@item @code{\file@{@var{word}@}}
+Indicate text that is a literal example of a piece of a program, e.g., a
+fragment of @R{} code or the name of an @R{} object, using
+@code{typewriter} font if possible.  Only backslashes and percent signs
+need to be escaped (by a backslash) inside @code{\code}.
+
+@item \kbd@{@var{keyboard-characters}@}
+@findex \kbd
+Indicate keyboard input, using @kbd{slanted typewriter} font if
+possible, so users can distinguish the characters they are supposed to
+type from those the computer outputs.
+
+@item \samp@{@var{text}@}
+@findex \samp
+Indicate text that is a literal example of a sequence of characters.
+
+@item \pkg@{@var{package-name}@}
+@findex \pkg
+Indicate the name of an @R{} package.
+
+@item \file@{@var{file-name}@}
 @findex \file
-@tab for file names
-@item @code{\email@{@var{word}@}}
+Indicate the name of a file.
+@item \email@{@var{email-address}@}
 @findex \email
-@tab for email addresses
-@item @code{\url@{@var{word}@}}
+Indicate an electronic mail address.
+@item \url@{@var{uniform-resource-locator}@}
 @findex \url
-@tab for @acronym{URL}s
-@end multitable
-@end quotation
+Indicate a uniform resource locator (@acronym{URL}) for the World Wide
+Web.
 
-@noindent The first two, @code{\bold} and @code{\emph}, should be used
-in plain text for emphasis.
+@item \env@{@var{environment-variable}@}
+@findex \env
+Indicate an environment variable.
+@item \option@{@var{option}@}
+@findex \option
+Indicate a command-line option.
+@item \command@{@var{command-name}@}
+@findex \command
+Indicate the name of a command.
+@item \dfn@{@var{term}@}
+@findex \dfn
+Indicate the introductory or defining use of a term.
+@item \cite@{@var{reference}@}
+@findex \cite
+Indicate a reference without a direct cross-reference via @code{\link}
+(@pxref{Cross-references}), such as the name of a book.
+@item \acronym@{@var{acronym}@}
+@findex \acronym
+Indicate an acronym (an abbreviation written in all capital letters),
+such as @acronym{GNU}.
+@end table
 
-Fragments of @R{} code, including the names of @R{} objects, should be
-marked using @code{\code}.  Only backslashes and percent signs need to
-be escaped (by a backslash) inside @code{\code}.
 
 @node Lists and tables, Cross-references, Marking text, Writing R help files
 @section Lists and tables
