@@ -26,5 +26,4 @@ tmp <- 1:3
 names(tmp) <-  c("foo", "bar", "baz")
 tmp
 }
-\keyword{data}
 \keyword{list}

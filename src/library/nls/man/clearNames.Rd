@@ -21,5 +21,4 @@ data( women )
 lapply( women, mean )               # has a names attribute
 clearNames( lapply( women, mean ) ) # removes the names
 }
-\keyword{data}
 \keyword{list}
