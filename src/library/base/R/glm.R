@@ -271,7 +271,7 @@ glm.fit <-
     coef[fit$pivot] <- coef
     xxnames <- xnames[fit$pivot]
     residuals <- rep(NA, nobs)
-    residuals[good] <- z - (eta+offset)[good] # z does not have offset in.
+    residuals[good] <- z - (eta-offset)[good] # z does not have offset in.
     fit$qr <- as.matrix(fit$qr)
     nr <- min(sum(good), nvars)
     if (nr < nvars) {
