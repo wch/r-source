@@ -154,6 +154,21 @@ AC_SUBST(R_BROWSER)
 ])# R_BROWSER
 
 
+AC_DEFUN([R_PROG_CPP_CPPFLAGS],
+[AC_REQUIRE([AC_PROG_CC])
+AC_REQUIRE([AC_PROG_CPP])
+if test "${GCC}" = yes; then
+  AC_LANG_PUSH(C)
+  AC_LANG_CONFTEST([AC_LANG_PROGRAM()])
+  if ${CPP} ${CPPFLAGS} conftest.${ac_ext} 2>&1 1>/dev/null | \
+      grep -q 'warning:.*system directory.*/usr/local/include'; then
+    CPPFLAGS=`echo ${CPPFLAGS} | \
+      sed 's|\(.*\)-I/usr/local/include *\(.*\)|\1\2|'`
+  fi
+  rm -f conftest.${ac_ext}
+  AC_LANG_POP(C)
+fi])# R_PROG_CPP_CPPFLAGS
+
 AC_DEFUN([R_PROG_CC_M],
 [AC_CACHE_CHECK([whether ${CC} accepts -M for generating dependencies],
                 [r_cv_prog_cc_m],

@@ -14,7 +14,7 @@
 
 <p>This is a guide to installation and administration for R.
 
-<p>The current version of this document is 1.6.0 (2002-10-05).
+<p>The current version of this document is 1.6.1 (2002-10-19).
 
 ISBN 3-901167-52-8
 
@@ -670,6 +670,10 @@ compiler/linker does not support re-ordering of <code>-L</code> and
 <code>-l</code> flags (this has been reported to be a problem on HP-UX with
 the native <code>cc</code>).  In this case, use a different compiler (or a
 front end shell script which does the re-ordering).
+
+<p>For <code>gcc 3.2</code>, the default <code>CPPFLAGS</code> causes many messages
+about <code>/usr/local/include</code> which can be avoided by setting
+<code>CPPFLAGS</code> to be empty.
 
 <p>If you find you need to alter configure variables, it is worth noting
 that some settings may be cached in the file <code>config.cache</code>, and it
