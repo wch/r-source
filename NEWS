@@ -25,7 +25,9 @@ BUG FIXES
 
     o  unique() & duplicated() only work for atomic vectors;
        unique(data.frame(""[F])) doesn't segfault anymore.
-       
+
+    o  get("attr<-")(""[0],""[0]) doesn't segfault anymore.
+
 
 		CHANGES IN R VERSION 0.90.0
 
