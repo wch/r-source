@@ -4,11 +4,11 @@
 
 # @configure_input@
 
-revision='$Revision: 1.84 $'
+revision='$Revision: 1.85 $'
 version=`set - ${revision}; echo ${2}`
 version="R add-on package installer ${version}
 
-Copyright (C) 2000-2001 The R Core Development Team.
+Copyright (C) 2000-2002 The R Core Development Team.
 This is free software; see the GNU General Public Licence version 2
 or later for copying conditions.  There is NO warranty."
 
@@ -16,8 +16,8 @@ usage="Usage: R CMD INSTALL [options] pkgs
 
 Install the add-on packages specified by pkgs.  The elements of pkgs can
 be relative or absolute paths to directories with the package (bundle)
-sources, or to gzipped package \`tar' archives.  The library tree to
-install to can be specified via \`--library'.  By default, packages are
+sources, or to gzipped package 'tar' archives.  The library tree to
+install to can be specified via '--library'.  By default, packages are
 installed in the library tree rooted at the first directory given in the
 environment variable R_LIBS if this is set and non-null, and into the
 default R library tree (${R_HOME}/library) otherwise.
@@ -41,9 +41,17 @@ Options:
       --no-docs		do not build and install documentation
       --use-zip-data	collect data files in zip archive
       --use-zip-help	collect help and examples into zip archives
-      --use-zip		combine \`--use-zip-data' and \`--use-zip-help'
+      --use-zip		combine '--use-zip-data' and '--use-zip-help'
 
 Report bugs to <r-bugs@r-project.org>."
+
+## <NOTE>
+## This is a *shell* script.
+## According to the R Coding Standards (see R-exts), Perl can be assumed
+## for *source*, but not for *binary* installations.
+## </NOTE>
+
+umask 022
 
 R_VERSION='@VERSION@'
 GETWD='@GETWD@'
@@ -58,9 +66,31 @@ NO_PERL5_MSG="\
 ***    http://cran.r-project.org/"
 tmpdir="${TMPDIR-/tmp}/R.INSTALL.$$"
 
-umask 022
+: ${R_OSTYPE=unix}
+## <FIXME>
+## Unix only ...
+R_EXE="${R_HOME}/bin/R"
+## </FIXME>
 
-. ${R_HOME}/share/sh/dcf.sh	# get_dcf_field()
+## <NOTE>
+## It might make sense to abstract error and warnings into functions
+## like
+##   warning () { echo "WARNING: $*" }
+##   error ()   { echo "ERROR: $*" }
+## and maybe even redirect this to stderr on Unix.
+## </NOTE>
+
+## <NOTE>
+## This could be made a bit more general: if R CMD INSTALL is run by
+## another tool (e.g., when building or checking a package, its messages
+## should be a section level deeper (at least).  So we could have an
+## argument to set the initial secnumdepth (0 by default), and work
+## against this ...
+message () { echo "${stars} $*"; }
+stars="*"
+## </NOTE>
+
+. "${R_HOME}/share/sh/dcf.sh"	# get_dcf_field()
 
 get_packages () {
   ## get the full path names to all packages contained in $1.
@@ -68,18 +98,22 @@ get_packages () {
   if grep -s "^Contains:" "${1}/DESCRIPTION"; then
     bundlepkg=`get_dcf_field Contains "${1}/DESCRIPTION"`
     for p in ${bundlepkg}; do
-      pkgs="${pkgs} \"`cd "${1}/${p}"; pwd`\""
+      pkgs="${pkgs} \"`cd "${1}/${p}" && ${GETWD}`\""
       if test -f "${1}/${p}/DESCRIPTION.in"; then
         cat "${1}/${p}/DESCRIPTION.in"  > "${1}/${p}/DESCRIPTION"
         grep -v "^Contains:" "${1}/DESCRIPTION" >> "${1}/${p}/DESCRIPTION"
       fi
     done
   else 
-    pkgs="${pkgs} \"`cd "${1}"; pwd`\""
+    pkgs="${pkgs} \"`cd "${1}" && ${GETWD}`\""
   fi
 }
 
+## <NOTE>
+## Using ${VAR:-value} is not portable shell programming.
+## But we cannot simply use ${VAR-value}: see the usage info.
 lib=`echo ${R_LIBS:-"${R_HOME}/library"} | cut -f1 -d:`
+## </NOTE>
 pkgs=
 clean=false
 debug=false
@@ -138,7 +172,7 @@ while test -n "${1}"; do
     --use-zip-help)
       use_zip_help=true ;;
     -l|--library)
-      lib=${2}; shift ;;
+      lib="${2}"; shift ;;
     --library=*)
       lib=`echo "${1}" | sed -e 's/[^=]*=//'` ;;
     --configure-args=*)
@@ -150,17 +184,17 @@ while test -n "${1}"; do
         mkdir -p ${tmpdir}
 	pkgname=`basename "${1}"`
 	pkgname=`echo "${pkgname}" | sed 's/_.*//'`
-	gzip -dc "${1}" | (cd ${tmpdir} && tar -xf -)
+	gzip -dc "${1}" | (cd "${tmpdir}" && tar -xf -)
 	if test -d "${tmpdir}/${pkgname}"; then
 	  get_packages "${tmpdir}/${pkgname}"
 	else
-	  echo "ERROR: cannot extract package from ${1}"
+	  echo "ERROR: cannot extract package from '${1}'"
 	  exit 1
 	fi    
       elif test -d "${1}"; then
         get_packages "${1}"
       else
-	echo "WARNING: package \`${1}' does not exist"
+	echo "WARNING: package '${1}' does not exist"
       fi
       ;;
   esac
@@ -172,19 +206,10 @@ if test -z "${pkgs}"; then
   exit 1
 fi
 
-if test -d ${lib} -a -w ${lib} || mkdir ${lib} 2> /dev/null; then
-  lib=`cd ${lib}; pwd`
-  ## <FIXME>
-  ## Remove eventually.
-  rm -f ${lib}/LibIndex
-  ## </FIXME>
-  ## <FIXME>
-  ## We should only do this if at least one package gets installed: if
-  ## e.g. builddir is srcdir there will be none.
-  cp ${R_HOME}/doc/html/R.css ${lib}
-  ## </FIXME>
+if test -d "${lib}" -a -w "${lib}" || mkdir "${lib}" 2> /dev/null; then
+  lib=`cd ${lib} && ${GETWD}`
 else
-  echo "ERROR: cannot write to or create directory \`${lib}'"
+  echo "ERROR: cannot write to or create directory '${lib}'"
   exit 2
 fi
 
@@ -211,9 +236,9 @@ do_install () {
   pkg=`basename "${1}"`
 
   depends=`get_dcf_field Depends DESCRIPTION`
-  depends=`echo ${depends} | grep 'R *('`
+  depends=`echo "${depends}" | grep 'R *('`
   if test "${depends}"; then
-    depends=`echo ${depends} | sed 's/.*R *(\([^)]*\)).*/\1/;s/=/= /'`
+    depends=`echo "${depends}" | sed 's/.*R *(\([^)]*\)).*/\1/;s/=/= /'`
     dep_operator=`set - ${depends}; echo ${1}`
     dep_version=`set - ${depends}; echo ${2}`
     ## Currently, only operators `<=' and `>=' are supported.  Hence we
@@ -224,27 +249,27 @@ do_install () {
       dep_ok=`expr ${R_VERSION} ${dep_operator} ${dep_version} `
       if test ${dep_ok} -eq 0; then
 	echo "ERROR: This R is version ${R_VERSION}"
-	echo "       package \`${pkg}' depends on R ${dep_version}"
+	echo "       package '${pkg}' depends on R ${dep_version}"
 	exit 1;
       fi
     else
-      echo "WARNING: malformed \`Depends' field in \`DESCRIPTION'"
+      echo "WARNING: malformed 'Depends' field in 'DESCRIPTION'"
     fi
   fi
 
-  mkdir -p ${lib}/${pkg} || exit 2
+  mkdir -p "${lib}/${pkg}" || exit 2
 
   ## Make sure we do not attempt installing to srcdir.
-  if test "`cd ${lib}/${pkg} && ${GETWD}`" = "`${GETWD}`"; then
-    echo "cannot install to srcdir"
+  if test "`cd \"${lib}/${pkg}\" && ${GETWD}`" = "`${GETWD}`"; then
+    echo "ERROR: cannot install to srcdir"
     exit 3
   fi  
 
   ## Figure out whether this is a source or binary package.
   if grep "^Built:" DESCRIPTION >/dev/null ; then
-    ## If DESCRIPTION has a 'Built:' entry this is a binary package.
-    ## This is the right test but available only for recently enough
-    ## installed packages.
+    ## If DESCRIPTION has a @samp{Built:} entry this is a binary
+    ## package.  This is the right test but available only for recently
+    ## enough installed packages.
     is_source_package=false
   elif test -d man; then
     ## Versions of R prior to 1.4 did not install man pages.  Hence
@@ -256,13 +281,14 @@ do_install () {
 
   if ${is_source_package}; then
     ## This is a source package ... hopefully.
-    echo "Installing *source* package \`${pkg}' ..."
+    message "Installing *source* package '${pkg}' ..."
+    stars="**"
 
     ## Make the destination directories available to the developer's
     ## installation scripts (e.g. configure, etc.)
-    R_PACKAGE_DIR=${lib}/${pkg}
-    R_LIBRARY_DIR=${lib}
-    R_PACKAGE_NAME=${pkg}
+    R_PACKAGE_DIR="${lib}/${pkg}"
+    R_LIBRARY_DIR="${lib}"
+    R_PACKAGE_NAME="${pkg}"
     export R_LIBRARY_DIR
     export R_PACKAGE_DIR
     export R_PACKAGE_NAME
@@ -270,95 +296,98 @@ do_install () {
     if ${use_configure} && test -x ./configure ; then
       eval ${configure_vars} ./configure ${configure_args}
       if test ${?} -ne 0; then
-	echo "ERROR: configuration failed for package \`${pkg}'"
+	echo "ERROR: configuration failed for package '${pkg}'"
 	exit 4
       fi
     fi
 
     if test -d src; then
-      echo " libs"
+      message "libs"
       if ${debug}; then set -x; fi
-      mkdir -p ${lib}/${pkg}/libs
+      ## <FIXME>
+      ## Is 'mkdir -p' portable?
+      mkdir -p "${lib}/${pkg}/libs"
+      ## </FIXME>
       if test -f src/Makefile; then
         cd src;
-          makefiles="-f ${R_HOME}/share/make/shlib.mk -f Makefile"
-	  if test -r Makevars; then
-	    makefiles="-f Makevars ${makefiles}"
-	  fi
-	  ${MAKE} ${makefiles} \
-	    && cp *@SHLIB_EXT@ ${lib}/${pkg}/libs \
-	    || error=true; \
-	  if ${clean}; then
-	    ${MAKE} clean
-	  fi
+        makefiles="-f \"${R_HOME}\"/share/make/shlib.mk -f Makefile"
+	if test -r Makevars; then
+	  makefiles="-f Makevars ${makefiles}"
+	fi
+	${MAKE} ${makefiles} \
+	  && cp *@SHLIB_EXT@ "${lib}/${pkg}/libs" \
+	  || error=true; \
+	if ${clean}; then
+	  ${MAKE} clean
+	fi
 	cd ..
       else
         cd src;
-          srcs=`ls *.[cfC] *.cc *.cpp 2>/dev/null`
-	  if test -n "${srcs}"; then
-	    sh ${R_HOME}/bin/SHLIB -o ${pkg}@SHLIB_EXT@ ${srcs} \
-	      && cp *@SHLIB_EXT@ ${lib}/${pkg}/libs \
-  	      || error=true; \
-	    if ${clean}; then
-	      rm -rf .libs _libs
-	      rm -f *.o *@SHLIB_EXT@
-	    fi
-	  else
-	    echo "WARNING: no source files found"
+        srcs=`ls *.[cfC] *.cc *.cpp 2>/dev/null`
+	if test -n "${srcs}"; then
+	  sh "${R_HOME}/bin/SHLIB" -o "${pkg}@SHLIB_EXT@" ${srcs} \
+	    && cp *@SHLIB_EXT@ "${lib}/${pkg}/libs" \
+  	    || error=true; \
+	  if ${clean}; then
+	    rm -rf .libs _libs
+	    rm -f *.o *@SHLIB_EXT@
 	  fi
+	else
+	  echo "WARNING: no source files found"
+	fi
 	cd ..
       fi
       if ${error}; then
-	echo "ERROR: compilation failed for package \`${pkg}'"
+	echo "ERROR: compilation failed for package '${pkg}'"
 	exit 5
       fi
       if ${debug}; then set +x; fi
     fi
 
     if test -d R; then
-      echo " R"
-      Rsrcs=`ls R/*.[RSqrs] R/unix/*.[RSqrs] 2>/dev/null`
+      message "R"
+      Rsrcs=`ls R/*.[RSqrs] R/${R_OSTYPE}/*.[RSqrs] 2>/dev/null`
       if test -n "${Rsrcs}"; then
-        mkdir -p ${lib}/${pkg}/R
-	rm -f ${lib}/${pkg}/R/*
-        cat ${Rsrcs} > ${lib}/${pkg}/R/${pkg}
+        mkdir -p "${lib}/${pkg}/R"
+	rm -f "${lib}/${pkg}/R/"*
+        cat ${Rsrcs} > "${lib}/${pkg}/R/${pkg}"
       fi
     fi
 
     if test -d data; then
-      echo " data"
-      mkdir -p ${lib}/${pkg}/data
-      rm -f ${lib}/${pkg}/data/*
-      cp data/* ${lib}/${pkg}/data
-      chmod 644 ${lib}/${pkg}/data/*
+      message "data"
+      mkdir -p "${lib}/${pkg}/data"
+      rm -f "${lib}/${pkg}/data/"*
+      cp data/* "${lib}/${pkg}/data"
+      chmod 644 "${lib}/${pkg}/data/"*
       if test -n "${use_zip_data}" \
           -a -n "${R_UNZIPCMD}" \
           -a -n "${R_ZIPCMD}"; then
-        (cd ${lib}/${pkg}/data;
+        (cd "${lib}/${pkg}/data";
           find . -type f -print > filelist
           ${R_ZIPCMD} -m Rdata * -x filelist 00Index)
       fi
     fi
 
     if test -d demo; then
-      echo " demo"
-      mkdir -p ${lib}/${pkg}/demo
-      rm -f ${lib}/${pkg}/demo/*
-      cp demo/* ${lib}/${pkg}/demo
-      chmod 644 ${lib}/${pkg}/demo/*
+      message "demo"
+      mkdir -p "${lib}/${pkg}/demo"
+      rm -f "${lib}/${pkg}/demo/"*
+      cp demo/* "${lib}/${pkg}/demo"
+      chmod 644 "${lib}/${pkg}/demo/"*
     fi
 
     if test -d exec; then
-      echo " exec"
-      mkdir -p ${lib}/${pkg}/exec
-      rm -f ${lib}/${pkg}/exec/*
-      cp exec/* ${lib}/${pkg}/exec
-      chmod 755 ${lib}/${pkg}/exec/*
+      message "exec"
+      mkdir -p "${lib}/${pkg}/exec"
+      rm -f "${lib}/${pkg}/exec/"*
+      cp exec/* "${lib}/${pkg}/exec"
+      chmod 755 "${lib}/${pkg}/exec/"*
     fi
 
     if test -d inst; then
-      echo " inst"
-      cp -r inst/* ${lib}/${pkg}
+      message "inst"
+      cp -r inst/* "${lib}/${pkg}"
     fi
 
     case ${save} in
@@ -375,7 +404,7 @@ do_install () {
     export R_SAVE_IMAGE
 
     if ${R_SAVE_IMAGE}; then
-      echo " save image"
+      message "save image"
       ## <NOTE>
       ## We want R to run as quietly as possible when creating the save
       ## image.  But this is tricky: sending options(echo=FALSE) to R via
@@ -383,54 +412,56 @@ do_install () {
       ## echoes what we sent before shutting up R, which is not what we
       ## want.  Option '--slave' gets around this but also turns off
       ## saving ... hence we call R with '--slave --save'.  Argh.
-      (if test -s R_PROFILE.R; then cat R_PROFILE.R; fi; \
+      save_image_defaults="list(compress=TRUE, safe=FALSE)"
+      (echo "options(save.image.defaults=${save_image_defaults})"; \
+        if test -s R_PROFILE.R; then cat R_PROFILE.R; fi; \
         echo "invisible(.libPaths(c(\"${lib}\", .libPaths())))"; \
-        cat ${lib}/${pkg}/R/${pkg}) | \
-	${R_HOME}/bin/R --slave --save ${save_args}
+        cat "${lib}/${pkg}/R/${pkg}") | \
+	  ${R_EXE} --slave --save ${save_args}
       ## </NOTE>
       if test ${?} -ne 0; then
-        echo "ERROR: execution of package source for ${pkg} failed"
+        echo "ERROR: execution of package source for '${pkg}' failed"
 	exit 1
       fi
-      mv .RData ${lib}/${pkg}/R/all.rda
-      mv ${lib}/${pkg}/R/${pkg} ${lib}/${pkg}/R/${pkg}.R
-      cat ${R_HOME}/share/R/firstlib.R > ${lib}/${pkg}/R/${pkg}
-      ## if install.R is non-empty, arrange to evaluate the R code it
+      mv .RData "${lib}/${pkg}/R/all.rda"
+      mv "${lib}/${pkg}/R/${pkg}" "${lib}/${pkg}/R/${pkg}.R"
+      cat "${R_HOME}/share/R/firstlib.R" > "${lib}/${pkg}/R/${pkg}"
+      ## If install.R is non-empty, arrange to evaluate the R code it
       ## contains after the package source (maybe for some kind of
       ## cleanup).
       if test -s install.R; then
-        cat install.R >> ${lib}/${pkg}/R/${pkg}
+        cat install.R >> "${lib}/${pkg}/R/${pkg}"
       fi
     fi
 
     for f in COPYING INDEX; do
-      if test -f ${f}; then cp ${f} ${lib}/${pkg}; fi
+      if test -f "${f}"; then cp "${f}" "${lib}/${pkg}"; fi
     done
     title=`get_dcf_field Title DESCRIPTION`
     if test "${title}"; then
-      ${R_CMD} perl ${R_HOME}/share/perl/maketitle.pl DESCRIPTION \
-        > ${lib}/${pkg}/TITLE
+      ${R_CMD} perl "${R_HOME}/share/perl/maketitle.pl" DESCRIPTION \
+        > "${lib}/${pkg}/TITLE"
     elif test -f TITLE; then
-      cp TITLE ${lib}/${pkg}
+      cp TITLE "${lib}/${pkg}"
     fi
     ## copy DESCRIPTION file and remove blank lines
     if test -f DESCRIPTION; then
       cat DESCRIPTION | sed '/^[	]*$/d;' \
-	> ${lib}/${pkg}/DESCRIPTION
+	> "${lib}/${pkg}/DESCRIPTION"
     fi
     ## stamp DESCRIPTION with build information
     echo "Built: R" ${R_VERSION}\;  ${R_PLATFORM}\;  `date` \
-      >> ${lib}/${pkg}/DESCRIPTION
+      >> "${lib}/${pkg}/DESCRIPTION"
 
     if test -d man; then
-      echo " help"
+      message "help"
       ## Install man sources ...
-      Rdfiles=`ls man/*.[Rr]d man/unix/*.[Rr]d 2>/dev/null`
+      Rdfiles=`ls man/*.[Rr]d man/${R_OSTYPE}/*.[Rr]d 2>/dev/null`
       if test -n "${Rdfiles}"; then
-	mkdir -p ${lib}/${pkg}/man
-	rm -f ${lib}/${pkg}/man/*
-	cat ${Rdfiles} > ${lib}/${pkg}/man/${pkg}.Rd
-	chmod 644 ${lib}/${pkg}/man/${pkg}.Rd
+	mkdir -p "${lib}/${pkg}/man"
+	rm -f "${lib}/${pkg}/man/"*
+	cat ${Rdfiles} > "${lib}/${pkg}/man/${pkg}.Rd"
+	chmod 644 "${lib}/${pkg}/man/${pkg}.Rd"
       fi
       ## Maybe build preformatted help pages ...
       if ${build_help}; then
@@ -438,26 +469,26 @@ do_install () {
 	  echo "${NO_PERL5_MSG}"
 	else
 	  if ${debug}; then
-	    echo "  build-help ${BUILD_HELP_OPTS} ../${pkg} ${lib}"
+	    echo "DEBUG: build-help ${BUILD_HELP_OPTS} ../${pkg} ${lib}"
 	  fi
-	  ${R_CMD} perl ${R_HOME}/share/perl/build-help.pl \
-	    ${build_help_opts} ../${pkg} ${lib}
+	  ${R_CMD} perl "${R_HOME}/share/perl/build-help.pl" \
+	    ${build_help_opts} "../${pkg}" "${lib}"
 	  if test ${?} -ne 0; then
-	    echo "ERROR: building help failed for package \`${pkg}'"
+	    echo "ERROR: building help failed for package '${pkg}'"
 	    exit 6
 	  fi
-	  ${R_CMD} perl ${R_HOME}/share/perl/Rd2contents.pl \
-	    --os=unix ../${pkg} > ${lib}/${pkg}/CONTENTS
-	  if test ${lib} = ${R_HOME}/library; then 
-	    ${R_CMD} perl ${R_HOME}/share/perl/build-help.pl --htmllists
-	    cat ${R_HOME}/library/*/CONTENTS \
-	      > ${R_HOME}/doc/html/search/index.txt
+	  ${R_CMD} perl "${R_HOME}/share/perl/Rd2contents.pl" \
+	    --os=${R_OSTYPE} "../${pkg}" > "${lib}/${pkg}/CONTENTS"
+	  if test "${lib}" = "${R_HOME}/library"; then 
+	    ${R_CMD} perl "${R_HOME}/share/perl/build-help.pl" --htmllists
+	    cat "${R_HOME}"/library/*/CONTENTS \
+	      > "${R_HOME}"/doc/html/search/index.txt
 	  fi	
 	fi
 	if test -n "${use_zip_help}" \
             -a -n "${R_UNZIPCMD}" \
 	    -a -n "${R_ZIPCMD}"; then
-	  cd ${lib}/${pkg}
+	  cd "${lib}/${pkg}"
 	  if test -d R-ex; then
 	    (cd R-ex; ${R_ZIPCMD} -m Rex *.R)
 	  fi
@@ -471,7 +502,7 @@ do_install () {
         fi
       fi
     else
-      echo "  No man pages found in package \`${pkg}'"
+      echo "No man pages found in package '${pkg}'"
     fi
 
     if ${clean}; then
@@ -480,26 +511,29 @@ do_install () {
       fi
     fi
 
+    stars="*"
   else  
     ## This is a binary package ... hopefully.
-    echo "Installing *binary* package \`${pkg}' ..."
-    cp -r . ${lib}/${pkg}
+    message "Installing *binary* package '${pkg}' ..."
+    cp -r . "${lib}/${pkg}"
   fi
 
-  chmod -R a+r ${lib}/${pkg}
+  chmod -R a+r "${lib}/${pkg}"
 
-  echo " DONE (${pkg})"
+  message "DONE (${pkg})"
   echo
 }
 
 eval "for pkg in ${pkgs}; do do_install \"\${pkg}\"; done"
+
+cp "${R_HOME}/doc/html/R.css" "${lib}"
 
 if test -d "${tmpdir}"; then
   cd /
   rm -rf "${tmpdir}"
 fi
 
-echo "DONE (INSTALL)"
+message "DONE (INSTALL)"
 
 ### Local Variables: ***
 ### mode: sh ***
