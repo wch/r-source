@@ -13,7 +13,6 @@ include $(top_builddir)/Makeconf
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = Makefile.in Makefile.win
 
-## gnome is still there, but not part of the R build.
 SUBDIRS = X11 internet lapack vfonts
 
 MODULES = $(R_MODULES) internet lapack vfonts
