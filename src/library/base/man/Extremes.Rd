@@ -38,7 +38,7 @@ pmin(\dots, na.rm=FALSE)
   arguments will cause a value of \code{NA} to be returned, otherwise
   \code{NA} values are ignored.
 
-  \code{pmax} and \code{pmin} take several vectors as arguments and
+  \code{pmax} and \code{pmin} take several vectors (or matrices) as arguments and
   return a single vector giving the parallel maxima (or minima) of the
   vectors.  The first element of the result is the maximum (minimum) of
   the first elements of all the arguments, the second element of the
