@@ -29,8 +29,11 @@ all: Makefile DESCRIPTION
 	done
 	@if test -f DESCRIPTION; then \
 	  $(INSTALL_DATA) DESCRIPTION $(top_builddir)/library/$(pkg); \
-	  echo "Built: R" $(VERSION)\;  $(R_PLATFORM)\;  `date` >> \
-	    $(top_builddir)/library/$(pkg)/DESCRIPTION; \
+	  (if test -d $(srcdir)/src; then \
+	      echo "Built: R" $(VERSION)\;  $(R_PLATFORM)\;  `date`; \
+	    else \
+	      echo "Built: R" $(VERSION)\;  \;  `date`; \
+	    fi) >> $(top_builddir)/library/$(pkg)/DESCRIPTION; \
 	fi
 	@if test -d $(srcdir)/data; then \
 	  $(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/data; \
