@@ -31,7 +31,8 @@ Added some conditional compilation directives to the source so that the
 replacement malloc() (see INSTALL) need not be used.
 
 Changed the installer build code so that patch versions are named
-rwXXXXpat.exe and development versions are named rwXXXXdev.exe.
+rwXXXXpat.exe, development versions are named rwXXXXdev.exe, and 
+beta versions are named rwXXXXbeta.exe.
 
 Fixed bugs that caused crash when windows were resized repeatedly.(PR#1711)
 

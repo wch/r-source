@@ -5,6 +5,7 @@ while(<>) {
     my $patch = $3;
     $patch = $patch."pat" if /Patched/;
     $patch = $patch."dev" if /unstable/;
+    $patch = $patch."beta" if /Beta/;
     $minor = "0".$minor if $minor < 10;
     $ans = "rw$major$minor$patch\n";
 }
