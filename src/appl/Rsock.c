@@ -120,34 +120,6 @@ void Rsockwrite(int *sockp, char **buf, int *start, int *end, int *len)
     *len = (int) n;
 }
 
-/* --------- unused ? ---------- */
-
-#ifdef Unix
-#include <signal.h>
-#include <sys/wait.h>
-static void sig_child(int sig)
-{  
-    int stat;
-    while (waitpid(-1, &stat, WNOHANG) > 0);
-}
-
-static int sig_fork_inited = 0;
-
-void Rsockfork(int *pidno)
-{
-    pid_t pid;
-    if (! sig_fork_inited) {
-	struct sigaction sa;
-	sa.sa_handler = sig_child;
-	sa.sa_flags = 0;
-	sigaction(SIGCHLD, &sa, NULL);
-	sig_fork_inited = 1;
-    }
-    pid = fork();
-    *pidno = (int) pid;
-}
-#endif
-
 /* --------- for use in socket connections ---------- */
 
 #if defined(Win32) || defined(HAVE_BSD_NETWORKING) 

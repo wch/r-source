@@ -66,7 +66,6 @@ C_FUNCTION(Rsocklisten)
 C_FUNCTION(Rsockclose)
 C_FUNCTION(Rsockread)
 C_FUNCTION(Rsockwrite)
-C_FUNCTION(Rsockfork)
 # integrate
 C_FUNCTION(call_dqagi)
 C_FUNCTION(call_dqags)
