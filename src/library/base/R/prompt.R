@@ -139,7 +139,7 @@ function (object, filename = paste0(name, ".Rd"))
               "##---- Should be DIRECTLY executable !! ----",
               paste0("data(", name, ")"),
               "}",
-              "\\keyword(datasets)")
+              "\\keyword{datasets}")
     cat(file, file = filename, sep = "\n")
     RHOME <- R.home()
     if (substr(RHOME, 1, 8) == "/tmp_mnt") 
