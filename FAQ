@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 1.1-6, 2000-07-27
+Version 1.1-7, 2000-08-02
 Kurt Hornik
 
 
@@ -1251,6 +1251,9 @@ these a try, of course.  This area of CRAN currently contains
 
 *RPgSQL*
      An interface between R and the PostgreSQL database system.
+
+*Rstreams*
+     Binary file stream support functions.
 
 *cmprsk*
      Estimation, testing and regression modeling of subdistribution
