@@ -17,8 +17,19 @@ R = $(RHOME)/bin/Rterm --vanilla LC_ALL=C
 RDIFF = $(RHOME)/bin/Rcmd Rdiff.sh
 
 run: $(PKG)-Ex.R
+	@if test -f $(PKG)-Ex.Rout ; then \
+	  mv $(PKG)-Ex.Rout $(PKG)-Ex.Rout.prev ; fi
+	@rm -f $(PKG)-Ex.Rout.fail
 	@$(ECHO) "Running examples in '$(PKG)-Ex.R' ..."
-	$(R) R_LIBS='$(RLIB);$(R_LIBS)' < $(PKG)-Ex.R > $(PKG)-Ex.Rout
+	@$(R) R_LIBS='$(RLIB);$(R_LIBS)' < $(PKG)-Ex.R > $(PKG)-Ex.Rout \
+	  || mv  $(PKG)-Ex.Rout $(PKG)-Ex.Rout.fail
+	@if test -f $(PKG)-Ex.Rout.prev ; then \
+	  mv $(PKG)-Ex.Rout $(PKG)-Ex.Rout.fail; \
+	  echo -n "Comparing \`$(PKG)-Ex.Rout' to \`$(PKG)-Ex.Rout.prev' ..."; \
+	  $(RDIFF) $(PKG)-Ex.Rout.fail $(PKG)-Ex.Rout.prev 0 || exit 1; \
+	  mv $(PKG)-Ex.Rout.fail $(PKG)-Ex.Rout; \
+	  echo "OK"; \
+	fi
 
 
 $(PKG)-Ex.R: $(RLIB)/$(PKG)/R-ex/*
@@ -46,7 +57,7 @@ test-out = $(test-src:.R=.Rout)
 .R.Rout:
 	@rm -f $@ $@.fail
 	@echo "  Running \`$<'"
-	@$(R) R_LIBS="$(RLIB);$(R_LIBS)" < $< > $@
+	@$(R) R_LIBS="$(RLIB);$(R_LIBS)" < $< > $@ || (mv $@ $@.fail && exit 1)
 	@if test -f $@.save ; then \
 	  mv $@ $@.fail; \
 	  echo -n "  Comparing \`$@' to \`$@.save' ..."; \
