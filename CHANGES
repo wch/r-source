@@ -2,58 +2,61 @@
 
 NEW FEATURES
 
-    o 	Conversion of functions to and from lists. formals<- and body<-.
+    o	Conversion of functions to and from lists. formals<- and body<-.
 	The alist() function makes it easier to construct argument lists,
 	etc. Added expression-->list coercion.
 
-    o   layout() documented and improved: starts default device if needed, and
+    o	complex(.) now has optional 'argument' and 'modulus' arguments,
+	allowing ``polar coordinate'' specifications.
+
+    o	layout() documented and improved: starts default device if needed, and
 	returns number of figures.
 
-    o   New find() function [relying on apropos(..)].
+    o	New find() function [relying on apropos(..)].
 
-    o   objects(<integer>) now works, being equivalent to
+    o	objects(<integer>) now works, being equivalent to
 	objects(pos=<int.>).
 
-    o   storage.mode() and related functions now return
+    o	storage.mode() and related functions now return
 	"double" instead of "real", for compatibility.
 	"real" is still allowed as synomym for "double".
 
-    o   A tests/ directory has been added (in the source), and "make tests"
+    o	A tests/ directory has been added (in the source), and "make tests"
 	has been modified to run more than all the examples from the base
 	package.  The exact 'make tests' behavior is still bound to change.
 
-    o   An experimental directory etc/Rdoc has been added with a perl5
-	module to parse R documentation files.  Sample perl programs
+    o	An experimental directory etc/Rdoc has been added with a perl5
+	module to parse R documentation files.	Sample perl programs
 	to use this module are also included.
 
-    o 	All internal mechanisms to support factors and data.frames
+    o	All internal mechanisms to support factors and data.frames
 	have been removed.  These are now entirely supported by
 	interpreted code! `is.unordered' has been eliminated.
 	Thanks to John Chambers for allowing the distribution of his
 	StatLib code.
 
-    o 	"pmatch" is now completely S compatible and is not just another
+    o	"pmatch" is now completely S compatible and is not just another
 	name for "charmatch".
 
-    o   There is now a function called ".Alias" which can be used to
+    o	There is now a function called ".Alias" which can be used to
 	provide multiple names for the same object.  Example:
 		lm2 <- .Alias(lm)
 	This is dangerous because it can be used to defeat the
-	call-by-value illusion.  Should it be documented?
+	call-by-value illusion.	 Should it be documented?
 
-    o   Many functions changed from <primitive> to .Internal(..).
+    o	Many functions changed from <primitive> to .Internal(..).
 	Currently, new .Internal(.)s in ..library/base/R/New-Internal.R
 
-    o   [dpqr]hyper(.) now also work with some 0 arguments.
+    o	[dpqr]hyper(.) now also work with some 0 arguments.
 
-    o   C-code: Many "-Wall" fixes (MM & DB).
+    o	C-code: Many "-Wall" fixes (MM & DB).
 
-    o   mva's dist() now takes arguments diag and upper which control
-        how the distance matrix is printed. plot.hclust() now takes a
-        labels argument.
+    o	mva's dist() now takes arguments diag and upper which control
+	how the distance matrix is printed. plot.hclust() now takes a
+	labels argument.
 
     o	Attributes are now propagated correctly in binary operations.
-        Changes from:
+	Changes from:
 	  Steve Oncley and Gordon Maclean
 	  National Center for Atmospheric Research
 	  Boulder, Colorado USA
@@ -74,48 +77,48 @@ NEW FEATURES
     o	Usage of R SHLIB now is R SHLIB [-o libname] files, where the
 	file names can be that of source or object files.
 
-    o   Data files are now also documented using the Rd format, all
-        data documentation in the base package has been converted
-        accordingly. Rd files for data have a \keyword{datasets} as
-        identifier.
+    o	Data files are now also documented using the Rd format, all
+	data documentation in the base package has been converted
+	accordingly. Rd files for data have a \keyword{datasets} as
+	identifier.
 
-    o   new function mahalanobis() for Mahalanobis distance
+    o	new function mahalanobis() for Mahalanobis distance
 
     o	quantile.default() now handles Inf's correctly.
 
     o	New command line options `--enable-blas' and `--enable-readline'
 	to configure.
 
-    o   pretty(x) is more reasonable when max(x)-min(x) < 1e-10 max(|x|),
+    o	pretty(x) is more reasonable when max(x)-min(x) < 1e-10 max(|x|),
 	and has a new argument "shrink.sml" for that case.
 
-    o   formatC(.) supports a new "fg" format for flexible
+    o	formatC(.) supports a new "fg" format for flexible
 	non-exponential formatting.
 
-    o   etc/build-htmlpkglist has been integrated into etc/build-help
-        (option --htmllists)
+    o	etc/build-htmlpkglist has been integrated into etc/build-help
+	(option --htmllists)
 
-    o   family	gaussian(.) and inverse.gaussian(.) both accept several
+    o	family	gaussian(.) and inverse.gaussian(.) both accept several
 	link arguments [J.Lindsey].
 
-    o   The graphics function "tck" now produces effects just
+    o	The graphics function "tck" now produces effects just
 	like those in S (e.g. par(tck=1) now produces grid lines).
 	Since using "tck" produces nasty results in some circumstances
 	there is also an alternative parameter "tcl" which defines
 	the tick length in terms of lines of text.  The default
 	setting is par(tcl=-0.5).
 
-    o   menu() now takes additional arguments `graphics' (currently
+    o	menu() now takes additional arguments `graphics' (currently
 	unused) and `title'.
 
-    o   New function plot.formula().
-        plot.factor() now produces boxplots when given 2 arguments.
+    o	New function plot.formula().
+	plot.factor() now produces boxplots when given 2 arguments.
 
-    o   New function write.table().
+    o	New function write.table().
 
-    o   signif() now has a `digits' default of 6.
+    o	signif() now has a `digits' default of 6.
 
-    o   Old-style long command line options (`-save' etc) changed to
+    o	Old-style long command line options (`-save' etc) changed to
 	GNU-style (`--save' etc).
 	Debugging options (`-ddd', `-gdb', `-xxgdb') unified into the
 	new `--debugger' (`-d').
@@ -129,44 +132,44 @@ NEW FEATURES
 	Then, unless the new `--no-init-file' was given, the user
 	profiles (`.Rprofile' and `~/.Rprofile') are sought.
 
-    o   New functions subset() and transform() intended primarily to
+    o	New functions subset() and transform() intended primarily to
 	make life with dataframes easier.
 
-    o   debian directory has been added so Debian GNU/Linux packages can be
-        created from raw source.
+    o	debian directory has been added so Debian GNU/Linux packages can be
+	created from raw source.
 
-    o   The graphics system has been through a major overhaul.
+    o	The graphics system has been through a major overhaul.
 	It is now possible to have multiple active device drivers
 	and to control them with full suite of dev.xxx() functions
-	available in S.  Display lists are now kept for interactive
+	available in S.	 Display lists are now kept for interactive
 	devices.  When an on-screen graphics window is resized,
 	the content of that window is redrawn at the new size.
 	At present only X11 and PostScript graphics device drivers
 	are available, but more are on the way.
 
-    o   On systems using IEEE arithmetic, the builtin Inf and NaN
+    o	On systems using IEEE arithmetic, the builtin Inf and NaN
 	values are now recognised and used.  NA and NaN should
 	propagate correctly in computations, with NA dominating
 	in computations involving both quantities.
-        E.g. NA+NaN is NA.
+	E.g. NA+NaN is NA.
 
-    o   Some of the t, F, and chisq distribution/probability functions
+    o	Some of the t, F, and chisq distribution/probability functions
 	now allow a noncentrality parameter `ncp'.
 
-    o   Functions ptukey() and qtukey() provide the distribution and
+    o	Functions ptukey() and qtukey() provide the distribution and
 	quantile functions for the maximum of several studentized
 	ranges.
 
-    o   system.file()  [now documented] returns all files matched by
+    o	system.file()  [now documented] returns all files matched by
 	wildcards.
 
-    o   data() now supports more file formats: .RData for binary
-        files, .txt or .tab for data to be read by
-        `read.table(file, header=TRUE)' and .csv for data to be read
-        by `read.table(file, header=TRUE, sep=";")'
+    o	data() now supports more file formats: .RData for binary
+	files, .txt or .tab for data to be read by
+	`read.table(file, header=TRUE)' and .csv for data to be read
+	by `read.table(file, header=TRUE, sep=";")'
 
     o	Rdconv: new tabular environment, new sections `\format' and
-        `\source', new output format `-type Sd' for S documentation
+	`\source', new output format `-type Sd' for S documentation
 
     o	.First.lib() now implemented; called by library() after loading
 	a package.
@@ -176,13 +179,13 @@ NEW FEATURES
 
     o	new is.R() function.
 
-    o   glm() now also returns an AIC value [from JL].
+    o	glm() now also returns an AIC value [from JL].
 	print..glm methods indicate the options()$contrasts in some cases.
 	In summary.glm(..., correlation=..), the default has been changed to
-	corr. = FALSE  which is consistent with  summary.lm().
+	corr. = FALSE  which is consistent with	 summary.lm().
 	predict() now works again for glm objects.
 
-    o   the `flag' argument in formatC(.) can now have more than one
+    o	the `flag' argument in formatC(.) can now have more than one
 	character.
 
     o	nlm() returns the number of iterations used [from J.Lindsey].
@@ -192,47 +195,49 @@ NEW FEATURES
 
     o	save.image() as short-cut to save the current session in .RData.
 
-    o   new design of HTML help pages, including an index of all
+    o	new design of HTML help pages, including an index of all
 	functions from all installed packages.
 
     o	new editor function pico()
 
-    o   matrices and arrays can have zero extents
+    o	matrices and arrays can have zero extents
 
 BUG FIXES (many of which resulted from the added features...)
 
-    o   which(.) now returns integer.
+    o	min(.), max(.), sum(.)	now return integer for integer arguments.
 
-    o   Rd files: leading whitespace of lines in user-defined sections
+    o	which(.) now returns integer.
+
+    o	Rd files: leading whitespace of lines in user-defined sections
 	was not correctly removed by Rdconv
 
-    o   sign(.) works again.
+    o	sign(.) works again.
 
-    o   [.data.frame segfaulted if arg. wasn't a data frame
+    o	[.data.frame segfaulted if arg. wasn't a data frame
 
-    o   "R --no-readline" now again gives proper prompts.
+    o	"R --no-readline" now again gives proper prompts.
 
-    o   demos/zero.R  dyn.load(.) now should be working more easily.
+    o	demos/zero.R  dyn.load(.) now should be working more easily.
 
-    o   mode(.) now returns "(" for a "parentheses 'call'".
+    o	mode(.) now returns "(" for a "parentheses 'call'".
 
-    o   Bug fix in mva dist.c for method binary (gave "invalid
-        distance"). plot.hclust failed for data without row names.
+    o	Bug fix in mva dist.c for method binary (gave "invalid
+	distance"). plot.hclust failed for data without row names.
 
     o	R INSTALL should work (again) now when `pkg' is a relative file
 	name.
 
     o	.not.yet.implemented() now takes an arbitrary number of args.
 
-    o   Plotting of dendrograms is working again.
+    o	Plotting of dendrograms is working again.
 
-    o   data.frame(.) now uses "1:n" as default row.names.
+    o	data.frame(.) now uses "1:n" as default row.names.
 
-    o   image(.) and contour(.) now also work called as, e.g., ``image(z)''.
+    o	image(.) and contour(.) now also work called as, e.g., ``image(z)''.
 
-    o   the first argument of axis(.) is now called `side' as in S.
+    o	the first argument of axis(.) is now called `side' as in S.
 
-    o   format(NULL) now works.
+    o	format(NULL) now works.
 
     o	minor fix in symnum.
 
@@ -244,111 +249,111 @@ BUG FIXES (many of which resulted from the added features...)
     o	Many small code changes (eliminating extraneous variables, nested comm.)
 	in C code in order to satisfy `gcc -Wall' [Doug Bates].
 
-    o   model.extract() will now extract arbitrary model frame arguments.
+    o	model.extract() will now extract arbitrary model frame arguments.
 
 
-    o   list of currently loaded libraries (.Dyn.libs) not saved
+    o	list of currently loaded libraries (.Dyn.libs) not saved
 	from session to session (really, this time)
 
-    o   rhyper works with vectorisation, degenerate cases.
+    o	rhyper works with vectorisation, degenerate cases.
 
 		CHANGES IN R VERSION 0.61.2
 
 BUG FIXES
 
-    o   pretty(999) resulted in an infinite loop due to integer overflow.
+    o	pretty(999) resulted in an infinite loop due to integer overflow.
 	pretty(.) now sometimes returns different results than before.
 
-    o   pi:6  returned integer, instead of real.
+    o	pi:6  returned integer, instead of real.
 
     o	[.data.frame caused segfault if called with non-dataframe argument
 
     o	hist() now is more compatible to S, has a new `labels' argument,
 	and should work ok for non-equidistant breaks.
 
-    o   lgamma(-1e7) segfaulted.
+    o	lgamma(-1e7) segfaulted.
 	gamma(.) and lgamma(.) now give proper results for negative integers.
 
-    o   formatC(pi,dig=20,wid=2) segfaulted.
+    o	formatC(pi,dig=20,wid=2) segfaulted.
 
-    o   quantile(..., pr = c(1,2,5)/1000)  gave all names as "0%".
+    o	quantile(..., pr = c(1,2,5)/1000)  gave all names as "0%".
 
-    o   In 0.61.1, model.matrix was fixed to pay attention to the names of
+    o	In 0.61.1, model.matrix was fixed to pay attention to the names of
 	the names of its data arg, but the data arg was defaulting to an
 	unnamed list, so  model.matrix(~x)  failed...
 
-    o   Indexing with [[]] and a zero-length vector segfaulted.
+    o	Indexing with [[]] and a zero-length vector segfaulted.
 
-    o   Coercion of factors as in S-plus
+    o	Coercion of factors as in S-plus
 
-    o   dyn.load statement in demos/dynload/zero.R fixed
+    o	dyn.load statement in demos/dynload/zero.R fixed
 
-    o   Factors could get allocated without the OBJECT bit, which
+    o	Factors could get allocated without the OBJECT bit, which
 	nearly drove Kurt mad trying to write plot.factor...
 
-    o   Fixed confidence limit problem in t.test
+    o	Fixed confidence limit problem in t.test
 
 		CHANGES IN R VERSION 0.61.1
 
 NEW FEATURES
 
-    o   None (by definition, x.y.z releases are bugfix releases now)
+    o	None (by definition, x.y.z releases are bugfix releases now)
 
 BUG FIXES
 
-    o   Return statements of the form return(x,y) will now return
-        a list with named components.
+    o	Return statements of the form return(x,y) will now return
+	a list with named components.
 
-    o   Parsing of nested "if" statments was broken.  This is fixed now.
+    o	Parsing of nested "if" statments was broken.  This is fixed now.
 	(Reported by Paul Gilbert).
 
-    o   Wrong declaration of ConsoleBufCnt in src/main/scan.c caused crash
+    o	Wrong declaration of ConsoleBufCnt in src/main/scan.c caused crash
 	in Irix (George White <gwhite@bodnext.bio.dfo.ca>)
 
-    o   if(nmatch = 0) bug in src/main/character.c fixed (Doug Bates)
+    o	if(nmatch = 0) bug in src/main/character.c fixed (Doug Bates)
 
-    o   R_alloc/S_alloc fixes. The former allocated 4 times more than
+    o	R_alloc/S_alloc fixes. The former allocated 4 times more than
 	needed, the latter zeroed half of what it got, sizeof() mistakes
 	in both cases.
 
-    o   c(ordered factor) caused segfault (uninitalised pointer), now
+    o	c(ordered factor) caused segfault (uninitalised pointer), now
 	fixed.
 
-    o   behaviour of as.numeric() on factors changed recently; now
+    o	behaviour of as.numeric() on factors changed recently; now
 	documented.
 
-    o   model.matrix() now pays attention to the names on its dataframe
+    o	model.matrix() now pays attention to the names on its dataframe
 	argument.
 
-    o   Fixes to group methods.
+    o	Fixes to group methods.
 
-    o   autoload() caused infinite loop if function  wasn't found in
+    o	autoload() caused infinite loop if function  wasn't found in
 	library on loading
 
-    o   The pager ate the rest of stdin in batch mode, now fixed. Also,
+    o	The pager ate the rest of stdin in batch mode, now fixed. Also,
 	stdout was not flushed before call to system(). "make tests"
 	should work now.
 
-    o   Empty directories now created by configure (so that it doesn't
-        matter that "CVS export" doesn't do it)
+    o	Empty directories now created by configure (so that it doesn't
+	matter that "CVS export" doesn't do it)
 
-    o   as.name() made idempotent (i.e. if is.name(x) then as.name(x)==x)
+    o	as.name() made idempotent (i.e. if is.name(x) then as.name(x)==x)
 
-    o   3 problems with glm, 2 in glm.fit and a one in print.glm fixed
+    o	3 problems with glm, 2 in glm.fit and a one in print.glm fixed
 	[Jim Lindsey]
 
-    o   binomial (family) now works when 'n=0'. [J.Lindsey]
+    o	binomial (family) now works when 'n=0'. [J.Lindsey]
 
     o	split() now also works in split(1:10,1:2)
 
     o	strsplit() now also works for strsplit(c,NULL)
 
-    o   A LANG='..' environment variable no longer affects  scan()ing of
+    o	A LANG='..' environment variable no longer affects  scan()ing of
 	numbers.
 
-    o   seq(.) doesn't segfault anymore in  gl(2,3):gl(1,6)
+    o	seq(.) doesn't segfault anymore in  gl(2,3):gl(1,6)
 
-    o   contour(.) now also works with integer arguments
+    o	contour(.) now also works with integer arguments
 
 
 		CHANGES IN R VERSION 0.61
@@ -563,7 +568,7 @@ NEW FEATURES
     Many manual entries have been revised.
 
  o  "expressions" are now implemented as a basic type rather than as
-    a class of object.  This change was made as move toward compatibility
+    a class of object.	This change was made as move toward compatibility
     with S and also to implement mathematical annotation in graphs.
     For some examples of the latter, see ?text and ?title.
 
@@ -580,7 +585,7 @@ NEW FEATURES
     a promise to evaluate an expression.  This provides direct access
     to the lazy evaluation mechanism used by R.
 
- o  >>>>  'make tests'   allows to test--run all the help() examples.
+ o  >>>>  'make tests'	 allows to test--run all the help() examples.
 
  o  New functions   matplot / matpoints / matlines.
 
