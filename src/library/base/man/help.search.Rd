@@ -78,8 +78,13 @@ help.search("linear models")    # In case you forgot how to fit linear
 help.search("print")            # All help pages with topics or title
                                 # matching `print'
 help.search(apropos = "print")  # The same
+
 help.search(keyword = "hplot")  # All help pages documenting high-level
                                 # plots.
+
+## Help pages with documented topics starting with `try'.
+help.search("\\\\btry", fields = "alias")
+## Do not use `^' or `$' when matching aliases or keywords.
 }
 }
 \keyword{documentation}
