@@ -403,6 +403,11 @@ stopifnot(all.equal(resid(glm3,"pearson"),resid(glm4,"pearson")))
 stopifnot(pt(-Inf, 3, ncp=0) == 0, pt(Inf, 3, ncp=0) == 1)
 ##  Comments: were 0.5 in 1.3.1
 
+## Paul Gilbert, 2001-12-07
+library(mva)
+cancor(matrix(rnorm(100),100,1), matrix(rnorm(300),100,3))
+detach("package:mva")
+##  Comments: failed in R-devel.
 
 ## This example last ##
 
