@@ -22,19 +22,22 @@ Returns the response, offset, subset, weights or other special components of a m
 The specified component of the model frame, usually a vector.
 }
 
-\seealso{ \code{\link{model.frame}}, \code{\link{offset}}}
+\seealso{\code{\link{model.frame}}, \code{\link{offset}}}
 
 \examples{
 data(esoph)
-a<-model.frame(cbind(ncases,ncontrols)~agegp+tobgp+alcgp,data=esoph)
+a <- model.frame(cbind(ncases,ncontrols)~agegp+tobgp+alcgp,data=esoph)
 model.extract(a,"response")
-model.response(a)
-a<-model.frame(ncases/(ncases+ncontrols)~agegp+tobgp+alcgp,data=esoph,weights=ncases+ncontrols)
+all(model.extract(a,"response") == model.response(a))
+
+a <- model.frame(ncases/(ncases+ncontrols)~agegp+tobgp+alcgp,
+		 data=esoph, weights=ncases+ncontrols)
 model.response(a)
 model.extract(a,"weights")
-a<-model.frame(cbind(ncases,ncontrols)~agegp,something=tobgp,data=esoph)
+
+a <- model.frame(cbind(ncases,ncontrols)~agegp, something=tobgp, data=esoph)
 names(a)
-all(model.extract(a,"something")==esoph$tobgp)
+all(model.extract(a,"something")==esoph$tobgp) # TRUE
 }
 \keyword{manip}
 \keyword{programming}
