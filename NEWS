@@ -362,6 +362,90 @@ NEW FEATURES
     o	Collected warnings during start-up are now printed before the
 	initial prompt rather than after the first command.
 
+    o	Changes to package 'grid':
+
+	- preDrawDetails(), drawDetails(), and postDrawDetails() 
+          methods are now recorded on the graphics engine
+          display list.   This means that calculations within these 
+          methods are now run when a device is resized or
+          when output is copied from one device to another.  
+
+	- Fixed bug in grid.text() when 'rot' argument has length 0.
+          (privately reported by Emmanuel Paradis)
+
+	- New getNames() function to return just the names of all top-level
+          grobs on the display list.
+
+	- Recording on the grid display list is turned off within 
+          preDrawDetails(), drawDetails(), and postDrawDetails() methods.
+
+        - Grid should recover better from errors or user-interrupts
+          during drawing (i.e., not leave you in a strange viewport
+          or with strange graphical parameter settings).
+
+	- New function grid.refresh() to redraw the grid display list.
+
+	- New function grid.record() to capture calculations
+          with grid graphics output.  
+
+	- grobWidth and grobHeight ("grobwidth" and "grobheight" units)
+          for primitives (text, rects, etc, ...) are now
+          calculated based on a bounding box for the relevant grob.
+
+          NOTE: this has changed the calculation of the size of a scalar
+	  rect (or circle or lines).
+
+	- New arguments 'warn' and 'wrap' for function grid.grab()
+    
+        - New function grid.grabExpr() which captures the output from
+          an expression (i.e., not from the current scene) without
+          doing any drawing (i.e., no impact on the current scene).
+
+	- upViewport() now (invisibly) returns the path that it goes up
+          (suggested by Ross Ihaka).
+
+        - The 'gamma' gpar has been deprecated (this is a device property
+          not a property of graphical objects;  suggested by Ross Ihaka).
+
+        - New 'lex' gpar;  a line width multiplier.
+
+        - grid.text() now handles any language object as mathematical
+          annotation (instead of just expressions).  
+ 
+        - plotViewport() has default value for 'margins' argument (that match
+          the default value for par(mar)).
+
+        - The 'extension' argument to dataViewport() can now be vector, 
+          in which case the first value is used to extend the xscale and
+          the second value is used to extend the y scale.
+          (suggested by Ross Ihaka).
+
+        - All 'just' arguments (for viewports, layouts, rectangles, text)
+          can now be numeric values (typically between 0 [left] and 1 [right])
+          as well as character values ("left", "right", ...).
+
+          For rectangles and text, there are additional 'hjust' and 'vjust'
+          arguments which allow numeric vectors of justification in
+          each direction (e.g., so that several pieces of text can have 
+          different justifications).  
+          (suggested by Ross Ihaka)
+
+        - New 'edits' argument for grid.xaxis() and grid.yaxis() to
+          allow specification of on-the-fly edits to axis children.
+
+        - applyEdit(x, edit) returns x if target of edit (i.e., child
+          specified by a gPath) cannot be found.
+
+        - Fix for calculation of length of max/min/sum unit.  Length is
+          now (correctly) reported as 1 (was reported as length of first arg).
+
+        - Viewport names can now be any string (they used to have to be a
+          valid R symbol).
+
+        - The 'label' argument for grid.xaxis() and grid.yaxis() can now 
+          also be a language object or string vector, in which case it 
+          specifies custom labels for the tick marks.
+
 
 INTERNATIONALIZATION
 
