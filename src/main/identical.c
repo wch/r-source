@@ -164,8 +164,6 @@ static Rboolean compute_identical(SEXP x, SEXP y)
     }
     return(y == R_NilValue);
   }
-  case SYMSXP:
-    return(strcmp(CHAR(x), CHAR(y)) == 0 ? TRUE : FALSE);
   case CLOSXP:
     return(compute_identical(FORMALS(x), FORMALS(y)) &&
 	   compute_identical(BODY(x), BODY(y)) &&
@@ -174,6 +172,8 @@ static Rboolean compute_identical(SEXP x, SEXP y)
   case BUILTINSXP:
     return(PRIMOFFSET(x) == PRIMOFFSET(y) ? TRUE : FALSE);
   case ENVSXP:
+  case SYMSXP:
+  case EXTPTRSXP:
     return(x == y ? TRUE : FALSE);
     /*  case PROMSXP: */
     /* test for equality of the substituted expression -- or should
