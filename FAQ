@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 1.9-50 2004-09-14
+Version 1.9-51 2004-09-15
 ISBN 3-900051-01-1
 Kurt Hornik
 
@@ -1602,6 +1602,10 @@ distributions of R.)
 
 *aws*
      Functions to perform adaptive weights smoothing.
+
+*bayesSurv*
+     Bayesian survival regression with flexible error and (later on also
+     random effects) distributions.
 
 *bayesmix*
      Bayesian mixture models of univariate Gaussian distributions using
