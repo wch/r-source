@@ -242,7 +242,7 @@ SEXP FixupFont(SEXP font, int dflt)
     return ans;
 }
 
-SEXP FixupCol(SEXP col, int dflt)
+SEXP FixupCol(SEXP col, unsigned int dflt)
 {
     int i, n;
     SEXP ans;

@@ -510,7 +510,7 @@ void Specify2(char*, SEXP, DevDesc*);
 SEXP FixupPch(SEXP, int);
 SEXP FixupLty(SEXP, int);
 SEXP FixupFont(SEXP, int);
-SEXP FixupCol(SEXP, int);
+SEXP FixupCol(SEXP, unsigned int);
 SEXP FixupCex(SEXP, double);
 SEXP FixupLwd(SEXP, double);
 
