@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 1.3-26, 2001-10-30
+Version 1.3-28, 2001-11-04
 Kurt Hornik
 
 
@@ -1177,8 +1177,16 @@ works, was published in the Journal of Statistical Software
 *RODBC*
      An ODBC database interface.
 
+*ROracle*
+     Oracle Database Interface driver for R.  Uses the ProC/C++ embedded
+     SQL.
+
 *RPgSQL*
      Provides methods for accessing data stored in PostgreSQL tables.
+
+*RSQLite*
+     Database Interface R driver for SQLite.  Embeds the SQLite database
+     engine in R.
 
 *RmSQL*
      An interface between R and the mSQL database system.
@@ -1419,6 +1427,10 @@ works, was published in the Journal of Statistical Software
 *mlbench*
      A collection of artificial and real-world machine learning benchmark
      problems, including the Boston housing data.
+
+*moc*
+     Fits a variety of mixtures models for multivariate observations with
+     user-difined distributions and curves.
 
 *muhaz*
      Hazard function estimation in survival analysis.

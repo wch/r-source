@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2001
-@set FAQ-VERSION 1.3-26, 2001-10-30
+@set FAQ-VERSION 1.3-28, 2001-11-04
 @set REL-VERSION 1.3.1
 @c %**end of header
 
@@ -1449,8 +1449,13 @@ Creating random fields using various methods.
 An interface between R and the MySQL database system.
 @item RODBC
 An @acronym{ODBC} database interface.
+@item ROracle
+Oracle Database Interface driver for R.  Uses the ProC/C++ embedded SQL.
 @item RPgSQL
 Provides methods for accessing data stored in PostgreSQL tables.
+@item RSQLite
+Database Interface R driver for SQLite.  Embeds the SQLite database
+engine in R.
 @item RmSQL
 An interface between R and the mSQL database system.
 @c @item Rnotes
@@ -1640,6 +1645,9 @@ multiple smoothing parameter selection by GCV or UBRE.
 @item mlbench
 A collection of artificial and real-world machine learning benchmark
 problems, including the Boston housing data.
+@item moc
+Fits a variety of mixtures models for multivariate observations with
+user-difined distributions and curves.
 @item muhaz
 Hazard function estimation in survival analysis.
 @item multiv
