@@ -1,15 +1,15 @@
 include MkRules
 
 HELP=YES
-WINHELP=CHM # NO, CHM, BOTH
+WINHELP=BITH # NO, CHM, BOTH
 
 PACKAGES=base ctest eda lqs modreg mva nls splines stepfun ts
 RPREFIX=rw1010
 
-RHOME=$(shell cd ../..; perl src/gnuwin32/pwd.pl)# must be absolute path
+RHOME=$(shell perl pwd.pl ../..)# must be absolute path
 RLIB=$(RHOME)/library
 PKGDIR=$(RHOME)/src/library
-PKGD=$(shell cd $(PKGDIR); perl $(RHOME)/src/gnuwin32/pwd.pl)# must be absolute path
+PKGD=$(shell perl pwd.pl $(PKGDIR))# must be absolute path
 
 ifdef DEBUG
  OPTFLAGS=-g -O2 -Wall
@@ -69,7 +69,7 @@ fixfiles:
 	$(RM) ../../unzip/*.h
 
 fixed/fixdesc:
-	sh fixed/GETDESC $(PACKAGES)
+	sh fixed/GETDESC $(PACKAGES) tcltk
 
 dllversion.o: ../include/Rversion.h
 
@@ -107,8 +107,13 @@ R.exp1: R.a $(MAINLIBS) $(EXTRALIBS) exported-vars
 
 # avoid building globalvar.h with errors
 ../include/globalvar.h: exported-vars
-	$(AWK) -- '//{if ($$1 != "") print "#define " $$1 " (*_imp__" $$1 ")"}' \
-	           exported-vars > ../include/globalvar.h
+	perl -n makeimps.pl exported-vars > $@
+
+tcl:
+	$(MAKE) -C ../library/tcltk RHOME=$(RHOME) PKG=tcltk \
+	  -f $(RHOME)/src/gnuwin32/MakePkg bare
+	$(MAKE) -C ../library/tcltk/src RHOME=$(RHOME) -f Makefile.win
+
 
 CHTML:
 ifeq ($(strip $(HELP)),YES)

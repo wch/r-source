@@ -54,7 +54,8 @@ OFILES=$(filter-out $(OFILES2),$(OFILES0))
 INSTFILES=$(wildcard $(SPKG)/inst/*)
 
 
-all:  $(DPKG)/zzzz  $(DPKG)/R/$(PKG)  $(DATA) $(DYNLIB)
+all:  bare  $(DATA) $(DYNLIB)
+bare: $(DPKG)/zzzz  $(DPKG)/R/$(PKG)
 
 include $(RHOME)/src//gnuwin32/MkRules
 

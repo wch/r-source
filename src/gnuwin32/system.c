@@ -69,6 +69,9 @@ static void (*my_R_Busy)(int);
  *   Called at I/O, during eval etc to process GUI events.
  */
 
+void (* R_tcldo)();
+static void tcl_do_none() {}
+
 void R_ProcessEvents(void)
 {
     while (peekevent()) doevent();
@@ -77,6 +80,7 @@ void R_ProcessEvents(void)
 	raise(SIGINT);
     }
     R_CallBackHook();
+    R_tcldo();
 }
 
 
@@ -110,8 +114,8 @@ void R_Suicide(char *s)
  *
  * BTW, 3 and 4 are different on input  since fgets,ReadFile...
  * "blocks" =>  (e.g.) you cannot give focus to the graphics device if
- * you are wating for input. For this reason, input is got in a different 
- * thread 
+ * you are wating for input. For this reason, input is got in a different
+ * thread
  *
  * All works in this way:
  * R_ReadConsole calls TrueReadConsole which points to:
@@ -119,7 +123,7 @@ void R_Suicide(char *s)
  * case 2 and 3: ThreadedReadConsole
  * case 4: FileReadConsole
  * ThreadedReadConsole wake up our 'reader thread' and wait until
- * a new line of input is available. The 'reader thread' uses 
+ * a new line of input is available. The 'reader thread' uses
  * InThreadReadConsole to get it. InThreadReadConsole points to:
  * case 2: CharReadConsole
  * case 3: FileReadConsole
@@ -161,7 +165,7 @@ void Rconsolesetwidth(int cols)
 	R_SetOptionWidth(cols);
 }
 
-static int 
+static int
 GuiReadConsole(char *prompt, char *buf, int len, int addtohistory)
 {
     char *p;
@@ -187,23 +191,23 @@ GuiReadConsole(char *prompt, char *buf, int len, int addtohistory)
 
 /* 'Reader thread' main function */
 static void __cdecl ReaderThread(void *unused)
-{ 
+{
   while(1) {
     WaitForSingleObject(EhiWakeUp,INFINITE);
     tlen = InThreadReadConsole(tprompt,tbuf,tlen,thist);
     lineavailable = 1;
     PostThreadMessage(mainThreadId, 0, 0, 0);
   }
-}  
+}
 
-static int 
+static int
 ThreadedReadConsole(char *prompt, char *buf, int len, int addtohistory)
-{ 
+{
   sighandler_t oldint,oldbreak;
-  /* 
-   *   SIGINT/SIGBREAK when ESS is waiting for output are a real pain: 
-   *   they get processed after user hit <return>. 
-   *   The '^C\n' in raw Rterm is nice. But, do we really need it ? 
+  /*
+   *   SIGINT/SIGBREAK when ESS is waiting for output are a real pain:
+   *   they get processed after user hit <return>.
+   *   The '^C\n' in raw Rterm is nice. But, do we really need it ?
   */
   oldint = signal(SIGINT, SIG_IGN);
   oldbreak = signal(SIGBREAK, SIG_IGN);
@@ -253,7 +257,7 @@ FileReadConsole(char *prompt, char *buf, int len, int addhistory)
 
 
 /* Rgui */
-static void 
+static void
 GuiWriteConsole(char *buf,int len)
 {
     char *p;
@@ -381,7 +385,7 @@ void R_CleanUp(int saveact, int status, int runLast)
 	gl_savehistory(".Rhistory");
     UnLoad_Unzip_Dll();
     UnLoad_Rbitmap_Dll();
-    if (R_CollectWarnings && saveact != SA_SUICIDE 
+    if (R_CollectWarnings && saveact != SA_SUICIDE
 	&& CharacterMode == RTerm)
 	PrintWarnings();
     app_cleanup();
@@ -466,7 +470,7 @@ int internal_ShowFile(char *file, char *header)
 {
     SEXP pager = GetOption(install("pager"), R_NilValue);
     char *files[1], *headers[1];
-    
+
     files[0] = file;
     headers[0] = header;
     return R_ShowFiles(1, files, headers, "File", 0, CHAR(STRING(pager)[0]));
@@ -705,6 +709,7 @@ int cmdlineoptions(int ac, char **av)
     }
     Rp->rhome = getRHOME();
 
+    R_tcldo = tcl_do_none;
 /*
  * try R_USER then HOME then working directory
  */
@@ -729,7 +734,7 @@ int cmdlineoptions(int ac, char **av)
     if (!R_Interactive && SaveAction != SA_SAVE && SaveAction != SA_NOSAVE)
 	R_Suicide("you must specify `--save', `--no-save' or `--vanilla'");
 
-    if (InThreadReadConsole && 
+    if (InThreadReadConsole &&
         (!(EhiWakeUp = CreateEvent(NULL, FALSE, FALSE, NULL)) ||
 	 (_beginthread(ReaderThread, 0, NULL) == -1)))
       R_Suicide("impossible to create 'reader thread'; you must free some system resources");
