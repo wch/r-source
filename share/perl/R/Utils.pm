@@ -25,7 +25,7 @@ $R_MAKE = R_getenv("MAKE", "make");
 
 $R_HOME = $ENV{'R_HOME'} ||
     croak "Error: environment variable R_HOME not found";
-    
+
 $R_CMD = $ENV{'R_CMD'} ||
     croak "Error: environment variable R_CMD not found";
 
@@ -37,7 +37,7 @@ else{
     $R_EXE = file_path($R_HOME, "bin", "R");
     $R_TMPDIR = R_getenv("TMPDIR", "/tmp");
 }
-croak "Error: please set TMPDIR to a valid temporary directory\n" 
+croak "Error: please set TMPDIR to a valid temporary directory\n"
     unless (-e $R_TMPDIR);
 
 
@@ -61,9 +61,9 @@ sub R_version {
     print STDERR <<END;
 $name $version
 
-Copyright (C) 1997-2001 R Core Development Team.
+Copyright (C) 1997-2002 R Core Development Team.
 This is free software; see the GNU General Public Licence version 2
-or later for copying conditions.  There is NO warranty.    
+or later for copying conditions.  There is NO warranty.
 END
     exit 0;
 }
@@ -78,7 +78,7 @@ sub text2latex {
     s/\~/\\textasciitilde{}/g;
     $_;
 }
-      
+
 sub text2html {
 
     s/&/&amp;/g;
@@ -167,8 +167,8 @@ sub R_runR
     open ROUT, "< $Rout";
     while(<ROUT>) {chomp; push(@out, $_);}
     close ROUT;
-	unlink($Rcmd);
-	unlink($Rout);
+    unlink($Rcmd);
+    unlink($Rout);
     return(@out);
 }
 
