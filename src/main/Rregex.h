@@ -175,7 +175,7 @@ typedef unsigned long int reg_syntax_t;
    some interfaces).  When a regexp is compiled, the syntax used is
    stored in the pattern buffer, so changing this does not affect
    already-compiled regexps.  */
-extern reg_syntax_t re_syntax_options;
+/* extern reg_syntax_t re_syntax_options; */
 
 /* Define combinations of the above bits for the standard possibilities.
    (The [[[ comments delimit what gets put into the Texinfo file, so
@@ -452,12 +452,12 @@ typedef struct
 
 /* Sets the current default syntax to SYNTAX, and return the old syntax.
    You can also simply assign to the `re_syntax_options' variable.  */
-extern reg_syntax_t re_set_syntax _RE_ARGS ((reg_syntax_t syntax));
+static reg_syntax_t re_set_syntax _RE_ARGS ((reg_syntax_t syntax));
 
 /* Compile the regular expression PATTERN, with length LENGTH
    and syntax given by the global `re_syntax_options', into the buffer
    BUFFER.  Return NULL if successful, and an error string if not.  */
-extern const char *re_compile_pattern
+static const char *re_compile_pattern
   _RE_ARGS ((const char *pattern, size_t length,
              struct re_pattern_buffer *buffer));
 
@@ -465,7 +465,7 @@ extern const char *re_compile_pattern
 /* Compile a fastmap for the compiled pattern in BUFFER; used to
    accelerate searches.  Return 0 if successful and -2 if was an
    internal error.  */
-extern int re_compile_fastmap _RE_ARGS ((struct re_pattern_buffer *buffer));
+static int re_compile_fastmap _RE_ARGS ((struct re_pattern_buffer *buffer));
 
 
 /* Search in the string STRING (with length LENGTH) for the pattern
@@ -473,14 +473,14 @@ extern int re_compile_fastmap _RE_ARGS ((struct re_pattern_buffer *buffer));
    characters.  Return the starting position of the match, -1 for no
    match, or -2 for an internal error.  Also return register
    information in REGS (if REGS and BUFFER->no_sub are nonzero).  */
-extern int re_search
+static int re_search
   _RE_ARGS ((struct re_pattern_buffer *buffer, const char *string,
             int length, int start, int range, struct re_registers *regs));
 
 
 /* Like `re_search', but search in the concatenation of STRING1 and
    STRING2.  Also, stop searching at index START + STOP.  */
-extern int re_search_2
+static int re_search_2
   _RE_ARGS ((struct re_pattern_buffer *buffer, const char *string1,
              int length1, const char *string2, int length2,
              int start, int range, struct re_registers *regs, int stop));
@@ -488,13 +488,13 @@ extern int re_search_2
 
 /* Like `re_search', but return how many characters in STRING the regexp
    in BUFFER matched, starting at position START.  */
-extern int re_match
+static int re_match
   _RE_ARGS ((struct re_pattern_buffer *buffer, const char *string,
              int length, int start, struct re_registers *regs));
 
 
 /* Relates to `re_match' as `re_search_2' relates to `re_search'.  */
-extern int re_match_2
+static int re_match_2
   _RE_ARGS ((struct re_pattern_buffer *buffer, const char *string1,
              int length1, const char *string2, int length2,
              int start, struct re_registers *regs, int stop));
@@ -512,7 +512,7 @@ extern int re_match_2
    Unless this function is called, the first search or match using
    PATTERN_BUFFER will allocate its own register data, without
    freeing the old data.  */
-extern void re_set_registers
+static void re_set_registers
   _RE_ARGS ((struct re_pattern_buffer *buffer, struct re_registers *regs,
              unsigned num_regs, regoff_t *starts, regoff_t *ends));
 

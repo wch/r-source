@@ -59,6 +59,9 @@ BUG FIXES
     o	qr(LAPACK=TRUE) (and qr for complex arguments) might have failed
 	to pivot for rank-deficient inputs. (PR#2867)
 
+    o	Only re-mapped symbols are exported by regex.o, to avoid
+	problems with embedded R on RedHat 9.
+
 
 
 		CHANGES IN R VERSION 1.7.0
