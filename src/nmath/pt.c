@@ -34,12 +34,10 @@ double pt(double x, double n, int lower_tail, int log_p)
 #endif
     if (n <= 0.0) ML_ERR_return_NAN;
 
-#ifdef IEEE_754
     if(!R_FINITE(x))
 	return (x < 0) ? R_DT_0 : R_DT_1;
     if(!R_FINITE(n))
 	return pnorm(x, 0.0, 1.0, lower_tail, log_p);
-#endif
     if (n > 4e5) { /*-- Fixme(?): test should depend on `n' AND `x' ! */
 	/* Approx. from	 Abramowitz & Stegun 26.7.8 (p.949) */
 	val = 1./(4.*n);

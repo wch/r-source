@@ -26,8 +26,5 @@
 
 double dchisq(double x, double df, int give_log)
 {
-#ifdef IEEE_754
-    /* NaNs propagated correctly */
-#endif
     return dgamma(x, df / 2., 2., give_log);
 }

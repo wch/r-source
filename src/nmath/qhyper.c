@@ -32,9 +32,9 @@ double qhyper(double p, double NR, double NB, double n,
 #ifdef IEEE_754
     if (ISNAN(p) || ISNAN(NR) || ISNAN(NB) || ISNAN(n))
 	return p + NR + NB + n;
+#endif
     if(!R_FINITE(p) || !R_FINITE(NR) || !R_FINITE(NB) || !R_FINITE(n))
 	ML_ERR_return_NAN;
-#endif
     R_Q_P01_check(p);
 
     NR = floor(NR + 0.5);

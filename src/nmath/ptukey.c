@@ -326,10 +326,8 @@ double ptukey(double q, double rr, double cc, double df,
 
     if (df < 2 || rr < 1 || cc < 2) ML_ERR_return_NAN;
 
-#ifdef IEEE_754
     if(!R_FINITE(q))
 	return R_DT_1;
-#endif
 
     if (df > dlarg)
 	return R_DT_val(wprob(q, rr, cc));

@@ -35,10 +35,8 @@ double ppois(double x, double lambda, int lower_tail, int log_p)
     x = floor(x + 1e-7);
     if (x < 0)
 	return R_DT_0;
-#ifdef IEEE_754
     if (!R_FINITE(x))
 	return R_DT_1;
-#endif
 
     return pgamma(lambda, x + 1, 1., !lower_tail, log_p);
 }

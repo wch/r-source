@@ -339,6 +339,24 @@ double R_pow(double x, double y) /* = x ^ y */
 }
 #endif
 
+double R_pow_di(double x, int n)
+{
+    double pow = 1.0;
+
+    if (ISNAN(x)) return x;
+    if (n == NA_INTEGER) return NA_REAL;
+    if (n != 0) {
+	if (!R_FINITE(x)) return R_pow(x, (double)n);
+	if (n < 0) { n = -n; x = 1/x; }
+	for(;;) {
+	    if(n & 01) pow *= x;
+	    if(n >>= 1) x *= x; else break;
+	}
+    }
+    return pow;
+}
+
+
 /* General Base Logarithms */
 
 static double logbase(double x, double base)

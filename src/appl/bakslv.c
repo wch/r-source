@@ -27,8 +27,7 @@
 #include <config.h>
 #endif
 
-#include "Fortran.h"		/* incl config.h */
-#include "Linpack.h"		/* incl Blas.h    */
+#include "Linpack.h"
 #include "Applic.h"
 
 void bakslv(double *t, int *ldt, int *n,

@@ -58,11 +58,9 @@ double beta(double a, double b)
     else if (a == 0 || b == 0) {
 	return ML_POSINF;
     }
-#ifdef IEEE_754
     else if (!R_FINITE(a) || !R_FINITE(b)) {
 	return 0;
     }
-#endif
 
     if (a + b < xmax)
 	return gammafn(a) * gammafn(b) / gammafn(a+b);

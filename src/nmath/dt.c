@@ -32,12 +32,10 @@ double dt(double x, double n, int give_log)
 #endif
     if (n <= 0.) ML_ERR_return_NAN;
 
-#ifdef IEEE_754
     if(!R_FINITE(x))
 	return R_D__0;
     if(!R_FINITE(n))
 	return dnorm(x, 0.0, 1.0, give_log);
-#endif
     return give_log ?
 	log(1. + x * x / n)*(-0.5 * (n + 1.)) -.5*log(n) - lbeta(.5, .5 * n) :
 	pow(1. + x * x / n , -0.5 * (n + 1.)) / (sqrt(n) *  beta(.5, .5 * n));

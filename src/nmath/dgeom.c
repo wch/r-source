@@ -37,9 +37,7 @@ double dgeom(double x, double p, int give_log)
     }
     if (x < 0)
 	return R_D__0;
-#ifdef IEEE_754
     if(!R_FINITE(x)) return R_D__1;
-#endif
     return give_log ?
       log(p) + log(1 - p) * x :
 	  p  * pow(1 - p, x);

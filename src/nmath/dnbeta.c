@@ -69,10 +69,8 @@ double dnbeta(double x, double a, double b, double lambda, int give_log)
     if (lambda < 0 || a <= 0 || b <= 0)
 	ML_ERR_return_NAN;
 
-#ifdef IEEE_754
     if (!R_FINITE(a) || !R_FINITE(b) || !R_FINITE(lambda))
 	ML_ERR_return_NAN;
-#endif
 
     if(x <= 0) return R_D__0;
 

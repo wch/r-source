@@ -30,9 +30,9 @@ double qcauchy(double p, double location, double scale,
 #ifdef IEEE_754
     if (ISNAN(p) || ISNAN(location) || ISNAN(scale))
 	return p + location + scale;
+#endif
     if(!R_FINITE(p) || !R_FINITE(location) || !R_FINITE(scale))
 	ML_ERR_return_NAN;
-#endif
     R_Q_P01_check(p);
     if (scale <= 0) ML_ERR_return_NAN;
 

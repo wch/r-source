@@ -39,9 +39,6 @@ double pnbinom(double x, double n, double p, int lower_tail, int log_p)
 
     x = floor(x + 1e-7);
     if (x < 0) return R_DT_0;
-#ifdef IEEE_754
-    if (!R_FINITE(x))
-	return R_DT_1;
-#endif
+    if (!R_FINITE(x)) return R_DT_1;
     return pbeta(p, n, x + 1, lower_tail, log_p);
 }

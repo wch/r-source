@@ -38,9 +38,9 @@ double qpois(double p, double lambda, int lower_tail, int log_p)
 #ifdef IEEE_754
     if (ISNAN(p) || ISNAN(lambda))
 	return p + lambda;
+#endif
     if(!R_FINITE(lambda))
 	ML_ERR_return_NAN;
-#endif
     R_Q_P01_check(p);
     if(lambda <= 0) ML_ERR_return_NAN;
 

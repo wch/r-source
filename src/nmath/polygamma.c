@@ -422,9 +422,7 @@ double digamma(double x)
 {
     double ans;
     int nz, ierr;
-#ifdef IEEE_754
     if(ISNAN(x)) return x;
-#endif
     dpsifn(x, 0, 1, 1, &ans, &nz, &ierr);
     if(ierr != 0) {
 	errno = EDOM;
@@ -437,9 +435,7 @@ double trigamma(double x)
 {
     double ans;
     int nz, ierr;
-#ifdef IEEE_754
     if(ISNAN(x)) return x;
-#endif
     dpsifn(x, 1, 1, 1, &ans, &nz, &ierr);
     if(ierr != 0) {
 	errno = EDOM;
@@ -452,9 +448,7 @@ double tetragamma(double x)
 {
     double ans;
     int nz, ierr;
-#ifdef IEEE_754
     if(ISNAN(x)) return x;
-#endif
     dpsifn(x, 2, 1, 1, &ans, &nz, &ierr);
     if(ierr != 0) {
 	errno = EDOM;
@@ -467,9 +461,7 @@ double pentagamma(double x)
 {
     double ans;
     int nz, ierr;
-#ifdef IEEE_754
     if(ISNAN(x)) return x;
-#endif
     dpsifn(x, 3, 1, 1, &ans, &nz, &ierr);
     if(ierr != 0) {
 	errno = EDOM;

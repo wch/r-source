@@ -38,10 +38,8 @@ double dnchisq(double x, double df, double lambda, int give_log)
 #endif
     if (lambda < 0 || df <= 0) ML_ERR_return_NAN;
 
-#ifdef IEEE_754
     if (!R_FINITE(df) || !R_FINITE(lambda))
 	ML_ERR_return_NAN;
-#endif
 
     if(x <= 0) return R_D__0;
 

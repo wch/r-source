@@ -53,9 +53,7 @@ double qnbinom(double p, double n, double pr, int lower_tail, int log_p)
     if (pr <= 0 || pr >= 1 || n <= 0) ML_ERR_return_NAN;
 
     if (p == R_DT_0) return 0;
-#ifdef IEEE_754
     if (p == R_DT_1) return ML_POSINF;
-#endif
     Q = 1.0 / pr;
     P = (1.0 - pr) * Q;
     mu = n * P;

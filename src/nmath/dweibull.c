@@ -34,9 +34,7 @@ double dweibull(double x, double shape, double scale, int give_log)
     if (shape <= 0 || scale <= 0) ML_ERR_return_NAN;
 
     if (x <= 0) return R_D__0;
-#ifdef IEEE_754
     if (!R_FINITE(x)) return R_D__0;
-#endif
     tmp1 = pow(x / scale, shape - 1);
     tmp2 = tmp1 * (x / scale);
     return  give_log ?

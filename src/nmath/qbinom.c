@@ -38,9 +38,9 @@ double qbinom(double p, double n, double pr, int lower_tail, int log_p)
 #ifdef IEEE_754
     if (ISNAN(p) || ISNAN(n) || ISNAN(pr))
 	return p + n + pr;
+#endif
     if(!R_FINITE(p) || !R_FINITE(n) || !R_FINITE(pr))
 	ML_ERR_return_NAN;
-#endif
     R_Q_P01_check(p);
 
     n = floor(n + 0.5);

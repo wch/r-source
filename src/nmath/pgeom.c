@@ -34,9 +34,7 @@ double pgeom(double x, double p, int lower_tail, int log_p)
     if(p <= 0 || p >= 1) ML_ERR_return_NAN;
 
     if (x < 0.) return R_DT_0;
-#ifdef IEEE_754
     if (!R_FINITE(x)) return R_DT_1;
-#endif
     if(log_p && !lower_tail)
 	return log(1 - p) * (x + 1);
     return R_DT_Cval(pow(1 - p, x + 1));

@@ -404,10 +404,11 @@ void ml_error(int n);
 	ML_ERR_return_NAN
 
 
-	/* R's version of C functions: */
+	/* R's versions with !R_FINITE checks */
 
 double R_log(double x);
 double R_pow(double x, double y);
+double R_pow_di(double, int);
 
 	/* Machine Characteristics */
 

@@ -40,9 +40,9 @@ double qt(double p, double ndf, int lower_tail, int log_p)
 #ifdef IEEE_754
     if (ISNAN(p) || ISNAN(ndf))
 	return p + ndf;
+#endif
     if (p == R_DT_0) return ML_NEGINF;
     if (p == R_DT_1) return ML_POSINF;
-#endif
     R_Q_P01_check(p);
     if (ndf < 1) ML_ERR_return_NAN;
 

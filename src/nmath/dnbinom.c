@@ -43,10 +43,8 @@ double dnbinom(double x, double n, double p, int give_log)
     }
     if (x < 0)
 	return R_D__0;
-#ifdef IEEE_754
     if (!R_FINITE(x))
 	return R_D__0;
-#endif
     return R_D_exp(lfastchoose(x + n - 1, x)
 		   + n * log(p) + x * log(1 - p));
 }

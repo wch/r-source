@@ -34,9 +34,7 @@
 
 double sign(double x)
 {
-#ifdef IEEE_754
     if (ISNAN(x))
 	return x;
-#endif
     return ((x > 0) ? 1 : ((x == 0)? 0 : -1));
 }

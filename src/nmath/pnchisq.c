@@ -42,10 +42,8 @@ double pnchisq(double x, double f, double theta, int lower_tail, int log_p)
 
     if (x <= 0.)
 	return R_DT_0;
-#ifdef IEEE_754
     if(!R_FINITE(x))
 	return R_DT_1;
-#endif
 
     lam = theta * half;
 #ifdef DEBUG_pnch
