@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-03-03 12:50\n"
+"POT-Creation-Date: 2005-03-08 13:17\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1293,6 +1293,9 @@ msgid "na.action must be a function"
 msgstr ""
 
 msgid "non-factors ignored:"
+msgstr ""
+
+msgid "eff.aovlist: non-orthogonal contrasts would give an incorrect answer"
 msgstr ""
 
 msgid "no terms component"
