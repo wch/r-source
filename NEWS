@@ -125,6 +125,8 @@ BUG FIXES
     o	dir.create() sometimes erroneously continue to report a directory
 	already existed after the first instance.  (PR#6892)
 
+    o	arima.sim() allows a null model.
+
 
 
 		CHANGES IN R VERSION 1.9.0
