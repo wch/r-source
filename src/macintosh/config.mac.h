@@ -85,7 +85,7 @@
 
 /* Define if C's Rcomplex and Fortran's COMPLEX*16 can be interchanged,
    and can do arithmetic on the latter */
-#undef HAVE_DOUBLE_COMPLEX
+#define HAVE_DOUBLE_COMPLEX 1
 
 /* Define if calloc(0) does not return a null pointer. */
 #undef CALLOC_BROKEN

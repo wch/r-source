@@ -50,7 +50,7 @@ void *dlopen(const char *name, int mode)
 #if ! TARGET_API_MAC_CARBON	
     CtoPstr((char *) libName);
 #else
-    CopyCStringToPascal(libName,libName);
+    CopyCStringToPascal((char *)libName,libName);
 #endif
     err = FSMakeFSSpecFromPath((ConstStr255Param) libName, &fileSpec);
     if (err != noErr) {
@@ -69,7 +69,7 @@ void *dlopen(const char *name, int mode)
 #if ! TARGET_API_MAC_CARBON	
 	PtoCstr(errName);
 #else
-	CopyPascalStringToC(errName,errName);
+	CopyPascalStringToC(errName,(char *)errName);
 #endif
 	sprintf(errbuf, "error code %d getting disk fragment %s for library %s",
 		err, errName, name);
@@ -97,7 +97,7 @@ void *dlsym(void *lib, const char *name)
 #if ! TARGET_API_MAC_CARBON	
     CtoPstr((char *) symName);
 #else
-    CopyCStringToPascal(symName,symName);
+    CopyCStringToPascal((char *)symName,symName);
 #endif
     err = FindSymbol(connID, symName, &symAddr, &symClass);
     if (err == noErr)
