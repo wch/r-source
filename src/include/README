@@ -59,10 +59,6 @@ Applic.h
 
 Arith.h
 
-Fortran.h
-	-> Mathlib.h
-	-> config.h
-	-> Complex.h
 
 Linpack.h
 	-> Rconfig.h

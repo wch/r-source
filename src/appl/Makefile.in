@@ -20,7 +20,7 @@ SOURCES_C = \
 	bakslv.c binning.c \
 	chisqsim.c chull.c cpoly.c cumsum.c \
 	distance.c \
-	fft.c fmin.c fortran.c \
+	fft.c fmin.c \
 	lbfgsb.c loglin.c lowess.c \
 	machar.c maxcol.c massdist.c \
 	pretty.c \
@@ -45,8 +45,7 @@ DISTFILES = COPYRIGHT COPYRIGHT.ftn README ROUTINES lowess.doc \
 	$(HEADERS) \
 	$(SOURCES_C) \
 	$(SOURCES_F) \
-	blas.f \
-	zblas.f zhico.f zhifa.f zhisl.f zsico.f zsifa.f zsisl.f
+	blas.f
 
 noinst_LIBRARIES = libappl.a
 libappl_a_SOURCES = $(SOURCES)
