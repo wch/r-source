@@ -128,7 +128,7 @@ simpleLoess <-
             trL = double(1),
             delta1 = double(1),
             delta2 = double(1),
-            as.integer(surf.stat != "interpolate/exact"))
+            as.integer(surf.stat == "interpolate/exact"))
     if(j==1) {
       trace.hat.out <- z$trL
       one.delta <- z$delta1
