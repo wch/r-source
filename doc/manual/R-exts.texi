@@ -65,17 +65,17 @@ The current version of this document is @value{VERSION}.
 @end ifnottex
 
 @menu
-* Acknowledgements::            
-* Creating R packages::         
-* Writing R help files::        
-* Tidying and profiling R code::  
-* System and foreign language interfaces::  
-* The R API::                   
-* Generic functions and methods::  
-* R (internal) programming miscellanea::  
-* R coding standards::          
-* Function and variable index::  
-* Concept index::               
+* Acknowledgements::
+* Creating R packages::
+* Writing R help files::
+* Tidying and profiling R code::
+* System and foreign language interfaces::
+* The R API::
+* Generic functions and methods::
+* R (internal) programming miscellanea::
+* R coding standards::
+* Function and variable index::
+* Concept index::
 @end menu
 
 @node Acknowledgements, Creating R packages, Top, Top
@@ -110,11 +110,11 @@ before reading on.  If the package you are writing uses the
 @code{methods} package, look at the corresponding section in @code{?INSTALL}.
 
 @menu
-* Package structure::           
-* Configure and cleanup::       
-* Checking and building packages::  
-* Writing package vignettes::   
-* Submitting a package to CRAN::  
+* Package structure::
+* Configure and cleanup::
+* Checking and building packages::
+* Writing package vignettes::
+* Submitting a package to CRAN::
 @end menu
 
 @node Package structure, Configure and cleanup, Creating R packages, Creating R packages
@@ -132,10 +132,10 @@ Optionally the package can also contain (Bourne shell) script files
 Unix, @xref{Configure and cleanup}.
 
 @menu
-* The DESCRIPTION file::        
-* The INDEX file::              
-* Package subdirectories::      
-* Package bundles::             
+* The DESCRIPTION file::
+* The INDEX file::
+* Package subdirectories::
+* Package bundles::
 @end menu
 
 @node The DESCRIPTION file, The INDEX file, Package structure, Package structure
@@ -534,7 +534,7 @@ installed is available from the shell variable @env{R_PACKAGE_NAME}.
 
 
 @menu
-* Using Makevars::              
+* Using Makevars::
 @end menu
 
 @node Using Makevars,  , Configure and cleanup, Configure and cleanup
@@ -869,15 +869,15 @@ automatically creates valid file names.
 @cindex Documentation, writing
 
 @menu
-* Rd format::                   
-* Sectioning::                  
-* Marking text::                
-* Lists and tables::            
-* Cross-references::            
-* Mathematics::                 
-* Insertions::                  
-* Platform-specific sections::  
-* Processing Rd format::        
+* Rd format::
+* Sectioning::
+* Marking text::
+* Lists and tables::
+* Cross-references::
+* Mathematics::
+* Insertions::
+* Platform-specific sections::
+* Processing Rd format::
 @end menu
 
 @node Rd format, Sectioning, Writing R help files, Writing R help files
@@ -1562,8 +1562,8 @@ distribution for installing source packages to be installed.)
 @chapter Tidying and profiling R code
 
 @menu
-* Tidying R code::              
-* Profiling R code::            
+* Tidying R code::
+* Profiling R code::
 @end menu
 
 @R{} code which is worth preserving in a package and perhaps making
@@ -1651,7 +1651,7 @@ fixed intervals (by default every 20 msecs) which @R{} function is being
 used, and recording the results in a file (default @file{Rprof.out} in
 the working directory).  Then the function @code{summaryRprof} or the
 command-line utility @code{R CMD Rprof @var{Rprof.out}} can be used to summarize the
-activity.  
+activity.
 
 As an example, consider the following code (from Venables & Ripley,
 1999).
@@ -1748,16 +1748,16 @@ output files can be very large if long runs are profiled.
 @chapter System and foreign language interfaces
 
 @menu
-* Operating system access::     
-* Interface functions .C and .Fortran::  
-* dyn.load and dyn.unload::     
-* Registering native routines::  
-* Creating shared libraries::   
-* Interfacing C++ code::        
-* Handling R objects in C::     
-* Interface functions .Call and .External::  
-* Evaluating R expressions from C::  
-* Debugging::                   
+* Operating system access::
+* Interface functions .C and .Fortran::
+* dyn.load and dyn.unload::
+* Registering native routines::
+* Creating shared libraries::
+* Interfacing C++ code::
+* Handling R objects in C::
+* Interface functions .Call and .External::
+* Evaluating R expressions from C::
+* Debugging::
 @end menu
 
 @node  Operating system access, Interface functions .C and .Fortran, System and foreign language interfaces, System and foreign language interfaces
@@ -2063,7 +2063,7 @@ SEXP myCall(SEXP a, SEXP b, SEXP c);
 @end smallexample
 
 @noindent
-we would describe this as 
+we would describe this as
 
 @smallexample
 R_CallMethodDef callMethods[]  = @{
@@ -2100,7 +2100,7 @@ following table:
 @end multitable
 @end quotation
 
-Consider a C routine, @code{myC}, declared as 
+Consider a C routine, @code{myC}, declared as
 
 @smallexample
 void myC(double *x, int *n, char **names, int *status);
@@ -2203,7 +2203,7 @@ The Windows equivalent is the command @code{Rcmd SHLIB}; files
 @file{Makevars.win} or @file{Makefile.win} are used in preference to
 @file{Makevars} or @file{Makefile} if they exist.  (This does need the
 files in the @R{} binary Windows distribution for installing source
-packages to be installed.)  For details of building DLLs with 
+packages to be installed.)  For details of building DLLs with
 a variety of compilers, see @samp{readme.packages}.
 
 @node Interfacing C++ code, Handling R objects in C, Creating shared libraries, System and foreign language interfaces
@@ -2445,13 +2445,13 @@ needed.  As in interpreted @R{} code, much use is made of coercion to
 force the variant object to the right type.
 
 @menu
-* Garbage Collection::          
-* Allocating storage::          
-* Details of R types::          
-* Attributes::                  
-* Classes::                     
-* Handling lists::              
-* Finding and setting variables::  
+* Garbage Collection::
+* Allocating storage::
+* Details of R types::
+* Attributes::
+* Classes::
+* Handling lists::
+* Finding and setting variables::
 @end menu
 
 @node Garbage Collection, Allocating storage, Handling R objects in C, Handling R objects in C
@@ -2944,9 +2944,9 @@ based on the interface of the same name in @Sl{} version 4, and
 complex but allows a variable number of arguments.
 
 @menu
-* Calling .Call::               
-* Calling .External::           
-* Missing and special values::  
+* Calling .Call::
+* Calling .External::
+* Missing and special values::
 @end menu
 
 @node Calling .Call, Calling .External, Interface functions .Call and .External, Interface functions .Call and .External
@@ -3653,8 +3653,8 @@ compiled code loaded into @R{}.  Some ``tricks'' are worth knowing.
 
 
 @menu
-* Finding entry points::        
-* Inspecting R objects::        
+* Finding entry points::
+* Inspecting R objects::
 @end menu
 
 @node Finding entry points, Inspecting R objects, Debugging, Debugging
@@ -3830,18 +3830,18 @@ $7 = 5
 @chapter The R @acronym{API}: entry points for C code
 
 @menu
-* Memory allocation::           
-* Error handling::              
-* Random numbers::              
-* Missing and IEEE values::     
-* Printing::                    
-* Calling C from FORTRAN and vice versa::  
-* Numerical analysis subroutines::  
-* Optimization::                
-* Integration::                 
-* Utility functions::           
-* Platform and version information::  
-* Standalone Mathlib::          
+* Memory allocation::
+* Error handling::
+* Random numbers::
+* Missing and IEEE values::
+* Printing::
+* Calling C from FORTRAN and vice versa::
+* Numerical analysis subroutines::
+* Optimization::
+* Integration::
+* Utility functions::
+* Platform and version information::
+* Standalone Mathlib::
 @end menu
 
 There are a large number of entry points in the @R{} executable/DLL that
@@ -3891,8 +3891,8 @@ can be eliminated by defining @code{R_NO_REMAP} and prepending
 @cindex Memory allocation from C
 
 @menu
-* Transient::                   
-* User-controlled::             
+* Transient::
+* User-controlled::
 @end menu
 
 There are two types of memory allocation available to the C programmer,
@@ -4075,6 +4075,7 @@ including the header file @file{Rmath.h}; @xref{Distribution
 functions}.  Those calls generate a single variate and should also be
 enclosed in calls to @code{GetRNGstate} and @code{PutRNGstate}.
 
+@comment MM: FIXME   void rmultinom() is different, returning a vector!
 
 @node Missing and IEEE values, Printing, Random numbers, The R API
 @section Missing and @acronym{IEEE} special values
@@ -4239,6 +4240,11 @@ further examples.
 @R{} contains a large number of mathematical functions for its own use,
 for example numerical linear algebra computations and special functions.
 
+@c FIXME: Change this paragraph!
+@c 1. @file{R_ext/BLAS.h}
+@c 2. @file{R_ext/Lapack.h}
+@c 3. @file{R_ext/Linpack.h} is older and you should use Lapack.h,
+@c    but we won't drop support for it soon...
 The header file @file{R_ext/Linpack.h} contains details of the BLAS,
 LINPACK and EISPACK linear algebra functions included in @R{}.  These
 are expressed as calls to FORTRAN subroutines, and they will also be
@@ -4252,10 +4258,10 @@ C interfaces to the code behind @R{} functions, so the @R{} function
 documentation may give further details.
 
 @menu
-* Distribution functions::      
-* Mathematical functions::      
-* Utilities::                   
-* Mathematical constants::      
+* Distribution functions::
+* Mathematical functions::
+* Utilities::
+* Mathematical constants::
 @end menu
 
 @node Distribution functions, Mathematical functions, Numerical analysis subroutines, Numerical analysis subroutines
@@ -5023,7 +5029,7 @@ Here there might be justifiable exceptions, which will need careful
 documentation.
 
 @menu
-* Adding new generics::         
+* Adding new generics::
 @end menu
 
 @node Adding new generics,  , Generic functions and methods, Generic functions and methods
@@ -5066,7 +5072,7 @@ Note that this cannot be used for functions in another package, as the
 order of packages on the search path cannot be controlled, except that
 all precede the base package.  Where the name of the package is known
 and it is in a namespace (currently only @pkg{base}) another way to
-access the orignal form is 
+access the orignal form is
 
 @smallexample
 foo.default <- base::foo
@@ -5077,8 +5083,8 @@ foo.default <- base::foo
 @appendix R (internal) programming miscellanea
 
 @menu
-* .Internal and .Primitive::    
-* Testing R code::              
+* .Internal and .Primitive::
+* Testing R code::
 @end menu
 
 @node .Internal and .Primitive, Testing R code, R (internal) programming miscellanea, R (internal) programming miscellanea
