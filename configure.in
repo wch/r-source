@@ -1,4 +1,27 @@
+dnl configure.in
+dnl
 dnl Process this file with autoconf to produce a configure script.
+dnl
+dnl Copyright (C) 1998 R Core Team
+###
+### This file is part of R.
+###
+### R is free software; you can redistribute it and/or modify it under
+### the terms of the GNU General Public License as published by the Free
+### Software Foundation; either version 2 of the License, or (at your
+### option) any later version. 
+###
+### R is distributed in the hope that it will be useful, but WITHOUT ANY
+### WARRANTY; without even the implied warranty of MERCHANTABILITY or
+### FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public
+### License for more details. 
+###
+### You should have received a copy of the GNU General Public License
+### along with R; if not, you can obtain it via the World Wide Web at
+### `http://www.gnu.org/copyleft/gpl.html', or by writing to the Free
+### Software Foundation, 59 Temple Place -- Suite 330, Boston, MA
+### 02111-3307, USE.
+
 AC_INIT(src/include/Defn.h)
 AC_CONFIG_HEADER(src/include/Platform.h)
 
@@ -6,13 +29,12 @@ AC_CONFIG_HEADER(src/include/Platform.h)
 
 AC_CONFIG_AUX_DIR(etc)
 
-#  PLATFORM
-#
-#  In an ideal world we would use AC_CANONICAL_HOST here, but
-#  this fails on platforms like the i686 (aka Pentium-Pro) because
-#  of some sort of sanity check written into configure.  We bypass
-#  the check by invoking config.guess directly and parsing the
-#  results ourselves.
+### Platform
+###
+### In an ideal world we would use AC_CANONICAL_HOST here, but this
+### fails on platforms like the i686 (aka Pentium-Pro) because of some
+### sort of sanity check written into configure.  We bypass the check by
+### invoking config.guess directly and parsing the results ourselves.
 
 host=`etc/config.guess`
 set `echo ${host} | tr '-' ' '`
@@ -24,130 +46,209 @@ AC_DEFINE(R_MAJOR, "0")
 AC_DEFINE(R_MINOR, "62.0")
 AC_DEFINE(R_STATUS, "Alpha")
 AC_DEFINE(R_STATUS_REV, "0")
-AC_DEFINE(R_DAY, "21")
-AC_DEFINE(R_MONTH, "December")
-AC_DEFINE(R_YEAR, "1997")
+AC_DEFINE(R_DAY, "22")
+AC_DEFINE(R_MONTH, "February")
+AC_DEFINE(R_YEAR, "1998")
 AC_DEFINE_UNQUOTED(R_PLATFORM, "${host}")
 AC_DEFINE_UNQUOTED(R_CPU, "${host_cpu}")
 AC_DEFINE_UNQUOTED(R_VENDOR, "${host_vendor}")
 AC_DEFINE_UNQUOTED(R_OS, "${host_os}")
 
-#  COMPILERS AND TOOLS
+### Handle arguments to configure
 
-#  C: If a C compiler is specified in config.site we use that.
-#  Otherwise, we use the autoconfigure procedures for C compiler
-#  detection.
+config_opts=${ac_configure_args}
+AC_SUBST(config_opts)
 
-if test -z "$CC"
-then
-AC_PROG_CC
-else
-AC_CHECK_PROG(CC, $CC)
-fi
+## Allow the user to force us to use f2c.
 
-case $host in
-*hpux*) LIBS="-L/lib/pa1.1 $LIBS"
-	case ${CC} in
-	c89) CFLAGS="-D_HPUX_SOURCE ${CFLAGS}" ;;
-	esac
-esac
+AC_ARG_WITH(f2c,
+  [  --with-f2c              use f2c even if FORTRAN compiler is available],
+  [if test "${withval}" = no; then use_f2c=false; else use_f2c=true; fi],
+  use_f2c=false)
 
-#  Fortran:
-#  Check whether there is a native fortran compiler.
+## Allow the user to force us to use g77.
 
-if test "$FC" = "no"
-then
-FC=
-else
-if test -z "$FC"
-then
-AC_CHECK_PROGS(FC, f77 g77 fc)
-fi
-fi
+AC_ARG_WITH(g77,
+  [  --with-g77              use g77 to compile FORTRAN subroutines],
+  [if test "${withval}" = no; then use_g77=false; else use_g77=true; fi],
+  use_g77=false)
 
-#  yacc et al:  Note any of bison -y, yacc or byacc should do the job.
-#  The results of byacc are most portable.  Thats what we distribute.
+## Allow the user to force us to use f77.
 
-AC_PROG_YACC
+AC_ARG_WITH(f77,
+  [  --with-f77              use f77 to compile FORTRAN subroutines],
+  [if test "${withval}" = no; then use_f77=false; else use_f77=true; fi],
+  use_f77=false)
+
+## Here we should maybe check that only one of the above options for
+## dealing with FORTRAN were specified.
+
+### Programs.
+
+AC_PROG_INSTALL
+AC_PROG_LN_S
 AC_PROG_RANLIB
+AC_PROG_YACC
+
 AC_CHECK_PROG(AR, ar, ar)
 
-#  C AND FORTRAN LINKING
-#
-#  Most UNIX Fortran compilers append an underscore to symbols
-#  and this has to be taken into account in C functions which call
-#  Fortran code.  This check looks to see if this is the case.
+## Perl.
 
-if test -z "$FC"
-then
-AC_DEFINE(HAVE_F77_UNDERSCORE)
+AC_PATH_PROG(PERL, perl)
+if test -n "${PERL}"; then
+  AC_MSG_CHECKING(whether perl is perl 5)
+  perl_version=`${PERL} -v | sed -n 's/^.*perl.*version \(.\).*/\1/p'`
+  if test ${perl_version} -ge 5
+  then
+    NO_PERL5=false
+    AC_MSG_RESULT(yes)
+  else
+    NO_PERL5=true
+    AC_MSG_RESULT(no)
+  fi
 else
-AC_MSG_CHECKING(for underscore after Fortran symbols)
-cat > conftestf.f <<EOF
+  NO_PERL5=true
+fi
+AC_SUBST(NO_PERL5)
+
+## C compiler.
+##
+## If a C compiler is specified in config.site we use that.
+## Otherwise, we use the autoconfigure procedures for detecting one.
+
+if test -z "${CC}"
+then
+  AC_PROG_CC
+else
+  AC_CHECK_PROG(CC, ${CC})
+fi
+
+CFLAGS=${CFLAGS-"-g"}
+
+case ${host} in
+  *hpux*)
+    LIBS="-L/lib/pa1.1 ${LIBS}"
+    case ${CC} in
+      c89)
+        CFLAGS="-D_HPUX_SOURCE ${CFLAGS}" ;;
+    esac
+esac
+
+## FORTRAN compiler
+##
+## If we haven't been forced to use a particular FORTRAN compiler, try
+## to find one using one of the several common names.
+##
+## The configure options `--with-g77', `--with-f77', or `--with-f2c'
+## force g77, f77, or f2c to be used.  It is also possible to use these
+## options to specify the full path name of the compiler.
+
+if ${use_f77}; then
+  if test "${with_f77}" = yes; then
+    F77=f77
+  else
+    F77="${with_f77}"
+  fi
+  AC_MSG_RESULT([defining F77 to be ${F77}])
+elif ${use_g77}; then
+  if test "${with_g77}" = yes; then
+    F77=g77
+  else
+    F77="${with_g77}"
+  fi
+  AC_MSG_RESULT([defining F77 to be ${F77}])
+elif ${use_f2c}; then
+  F77=
+  if test "${with_f2c}" = yes; then
+    F2C=f2c
+  else
+    F2C="${with_f2c}"
+  fi
+  AC_MSG_RESULT([defining F2C to be ${F2C}])
+else
+  if test -z "${FC}"; then
+    AC_CHECK_PROGS(F77, g77 f77 f90 xlf cf77 fc)
+  else
+    F77=${FC}
+  fi
+  if test -z "${F77}"; then
+    AC_CHECK_PROG(F2C, f2c)
+  fi    
+fi
+
+if test -n "${F77}"; then
+  FC=${F77}
+  LDCMD=${FC}
+  AC_MSG_CHECKING(for underscore after Fortran symbols)
+  cat > conftestf.f <<EOF
       subroutine try
       end
 EOF
-${FC} -c ${FFLAGS} conftestf.f 2>/dev/null 1>/dev/null
-cat > conftest.c <<EOF
+  ${FC} -c ${FFLAGS} conftestf.f 2>/dev/null 1>/dev/null
+  cat > conftest.c <<EOF
 main() { try_(); }
 EOF
-${CC} ${CFLAGS} ${CPPFLAGS} ${LDFLAGS} -o conftest conftest.c conftestf.o 1>/dev/null 2>/dev/null
-if test $? = 0
-then
-AC_MSG_RESULT(yes)
-AC_DEFINE(HAVE_F77_UNDERSCORE)
-else
-cat > conftest.c <<EOF
+  ${CC} ${CFLAGS} ${CPPFLAGS} ${LDFLAGS} -o conftest \
+    conftest.c conftestf.o 1>/dev/null 2>/dev/null
+  if test $? = 0; then
+    AC_MSG_RESULT(yes)
+    AC_DEFINE(HAVE_F77_UNDERSCORE)
+  else
+    cat > conftest.c <<EOF
 main() { try(); }
 EOF
-${CC} ${CFLAGS} ${CPPFLAGS} ${LDFLAGS} -o conftest conftest.c conftestf.o 1>/dev/null 2>/dev/null
-if test $? = 0
-then
-AC_MSG_RESULT(no)
+    ${CC} ${CFLAGS} ${CPPFLAGS} ${LDFLAGS} -o conftest \
+      conftest.c conftestf.o 1>/dev/null 2>/dev/null
+    if test $? = 0; then
+      AC_MSG_RESULT(no)
+    else
+      AC_MSG_ERROR([Nothing worked - cannot use FORTRAN])
+    fi
+  fi
+  rm -rf conftest conftest.* conftestf.*
+  f77_rules_frag=Makefrag.f77
+  cat << \EOF > ${f77_rules_frag}
+
+%.c: %.f
+
+%.o: %.f
+	$(FC) $(FFLAGS) -c $< -o $@
+
+EOF
+elif test -n "${F2C}"; then
+  LDCMD=${CC}
+  AC_DEFINE(HAVE_F77_UNDERSCORE)
+  AC_CHECK_LIB(f2c, f_open, FLIBS=-lf2c, FLIBS=, -lm)
+  if test -z "${FLIBS}"; then
+    AC_CHECK_LIB(F77, d_sin, FLIBS=-lF77, FLIBS=, -lm)
+    if test -n "${FLIBS}"; then
+      AC_CHECK_LIB(I77, f_rew, FLIBS="${FLIBS} -lI77", FLIBS=, -lF77)
+    fi
+  fi
+  if test -z "${FLIBS}"; then
+    AC_MSG_WARN([I found f2c but not libf2c, or libF77 and libI77])
+  fi
+  f77_rules_frag=Makefrag.f77
+  cat << \EOF > ${f77_rules_frag}
+
+%.c: %.f
+	cat $< | $(F2C) $(F2CFLAGS) > $(@F)
+%.o: %.f
+
+EOF
 else
-AC_MSG_RESULT(nothing worked - won't use fortran)
-FC=
-fi
-fi
-rm -rf conftest conftest.* conftestf.*
+  AC_MSG_ERROR([Neither an F77 compiler nor f2c found])
 fi
 
+if test "${FC}" = g77; then
+  FFLAGS=${FFLAGS-"-O2"}
+fi  
 
-#  PRINTING
-#
-#  We look to see whether we have "lpr" or "lp".  Some platforms
-#  provide both (SunOS and HPUX), and in those cases we choose lpr.
+AC_SUBST(FC)
+AC_SUBST(F2C)
+AC_SUBST_FILE(f77_rules_frag)
 
-if test -z "$R_PRINTCMD"
-then
-AC_CHECK_PROGS(R_PRINTCMD, lpr lp)
-fi
-
-if test -z "$R_PAPERSIZE"
-then
-R_PAPERSIZE=a4
-fi
-AC_SUBST(R_PAPERSIZE)
-
-# SAVE MODE
-
-AC_SUBST(R_BATCHSAVE)
-
-
-#  X11 LOCATIONS
-#
-#  Here we use the standard X11 search macro.
-#  We force the use of -lX11 (perhaps this is not necessary).
-
-AC_PATH_XTRA
-if test -z "${no_x}"
-then
-	X_LIBS="$X_LIBS -lX11"
-fi
-
-#  LIBRARIES
-#
-#  This is set up so we only get one of one of -ltermcap and -ltermlib
+### Libraries.
 
 AC_CHECK_LIB(m, sin)
 AC_CHECK_LIB(ncurses, main,,
@@ -155,45 +256,32 @@ AC_CHECK_LIB(ncurses, main,,
     AC_CHECK_LIB(termlib, main)
 ))
 AC_CHECK_LIB(readline, main)
-AC_CHECK_LIB(dl,dlopen)
+AC_CHECK_LIB(dl, dlopen)
+AC_CHECK_LIB(blas, main, LIBS="-lblas ${LIBS}" BLAS="", BLAS="blas.o")
+AC_SUBST(BLAS)
 
-# AC_CHECK_FUNC(xdrstdio_creat)
-AC_CHECK_FUNCS(strcoll)
+### Library functions.
 
-if test -z "$FC"
-then
-BLAS="blas.o zblas.o"
-else
-AC_CHECK_LIB(blas, main,
-LIBS="-lblas $LIBS"
-BLAS="",
-BLAS="blas.o")
-fi
+AC_FUNC_VFORK
+AC_FUNC_VPRINTF
+AC_CHECK_FUNCS(acosh asinh atanh bcopy finite isnan matherr memcpy \
+  memmove regcomp rint strcoll strtod strtol times)
 
-#  HEADER FILES
+### Header files
 
 AC_HEADER_STDC
-AC_CHECK_HEADERS(fcntl.h limits.h dlfcn.h dl.h elf.h time.h sys/times.h rpc/xdr.h readline/history.h locale.h)
+AC_CHECK_HEADERS(dl.h dlfcn.h elf.h fcntl.h limits.h locale.h \
+  readline/history.h rpc/xdr.h sys/times.h time.h)
 
+### Typedefs
 
-#  TYPEDEFS, STRUCTURES, AND COMPILER CHARACTERISTICS
+AC_TYPE_SIGNAL
+
+### Compiler characteristics.
 
 AC_C_CONST
 
-
-#  LIBRARY FUNCTIONS
-
-AC_TYPE_SIGNAL
-AC_FUNC_VFORK
-AC_FUNC_VPRINTF
-AC_CHECK_FUNCS(strtod strtol isnan finite matherr times)
-AC_CHECK_FUNCS(rint)
-AC_CHECK_FUNCS(asinh acosh atanh)
-AC_CHECK_FUNCS(regcomp)
-AC_CHECK_FUNCS(memmove memcpy bcopy)
-
-
-#  CHECK FOR NASTY OSF SPRINTF BUG
+## Check for nasty OSF sprintf bug
 
 # AC_MSG_CHECKING(for osf sprintf bug)
 # AC_TRY_RUN(
@@ -216,34 +304,14 @@ AC_CHECK_FUNCS(memmove memcpy bcopy)
 # AC_MSG_RESULT(yes),
 # AC_MSG_ERROR(You can't cross compile R))
 
-#  If Fortran is not available or we were not able to find out
-#  how to make Fortran and C communicate we use the smaller
-#  C-only applications library.
+##  DLL linking.
 
-if test -z "$FC"
-then
-FFLAGS=
-APPL_DIR=applc
-LIBSRC=src-c
-LDCMD=${CC}
-else
-# FFLAGS="-O"
-APPL_DIR=appl
-LIBSRC=src
-LDCMD=${FC}
-fi
-AC_SUBST(APPL_DIR)
-AC_SUBST(FFLAGS)
-
-
-#  DLL LINKING
-#
 #  We create a fake Imakefile and then run xmkmf so that we can
 #  determine PICFLAGS and SHLIBLDFLAGS.  The only platform I know
 #  of which uses DLLFLAGS is linux-elf which requires -rdynamic.
 #
 #  DLLFLAGS     - flags for loading the main
-#  PICFLAGS     - flags for compiling C library code
+#  CPICFLAGS    - flags for compiling C library code
 #  FPICFLAGS    - flags for compiling Fortran library code
 #  SHLIBLDFLAGS - flags for creating DLLs
 #
@@ -254,174 +322,139 @@ AC_SUBST(FFLAGS)
 #  As a final safeguard, any options specified in config.site will
 #  override anything we discover below.
 
-USERPICFLAGS="$PICFLAGS"
-USERFPICFLAGS="$FPICFLAGS"
-USERSHLIBLDFLAGS="$SHLIBLDFLAGS"
-USERDLLFLAGS="$USERDLLFLAGS"
-
-AC_CHECK_PROG(XMKMF,xmkmf,xmkmf)
-if test -n "$XMKMF"
-then
-	AC_MSG_CHECKING(how to make shared libraries)
-	mv Makefile Makefile-SAFE
-	echo > Imakefile
-	xmkmf > /dev/null
-	PICFLAGS=`grep '^ *PICFLAGS' Makefile | sed 's/^ *PICFLAGS *= *//'`
-	SHLIBLDFLAGS=`grep 'SHLIBLDFLAGS' Makefile | sed 's/ *SHLIBLDFLAGS *= *//'`
-	DLLFLAGS=
-	rm Imakefile Makefile
-	mv Makefile-SAFE Makefile
-	AC_MSG_RESULT(done)
+AC_CHECK_PROG(XMKMF, xmkmf, xmkmf)
+if test -n "${XMKMF}"; then
+  AC_MSG_CHECKING(how to make shared libraries)
+  mv Makefile Makefile-SAFE
+  echo > Imakefile
+  xmkmf > /dev/null
+  cpicflags=`grep '^ *PICFLAGS' Makefile | sed 's/^ *PICFLAGS *= *//'`
+  shlibldflags=`grep 'SHLIBLDFLAGS' Makefile | sed 's/ *SHLIBLDFLAGS *= *//'`
+  rm Imakefile Makefile
+  mv Makefile-SAFE Makefile
+  AC_MSG_RESULT(done)
 else
-	PICFLAGS=
-	SHLIBLDFLAGS=
-	DLLFLAGS=
+  cpicflags=
+  shlibldflags=
 fi
 
-if test "${CC}" = gcc
-then
-	PICFLAGS=-fpic
+if test "${CC}" = gcc; then
+  cpicflags=-fpic
 fi
 
-FPICFLAGS="$PICFLAGS"
+CPICFLAGS=${CPICFLAGS-${cpicflags}}
+FPICFLAGS=${FPICFLAGS-${CPICFLAGS}}
+SHLIBLDFLAGS=${SHLIBLDFLAGS-${shlibldflags}}
 
-if test -n "$USERPICFLAGS"
-then
-PICFLAGS="$USERPICFLAGS"
-fi
+## Individual platform overrides.
 
-if test -n "$USERFPICFLAGS"
-then
-FPICFLAGS="$USERFPICFLAGS"
-fi
-
-if test -n "$USERSHLIBLDFLAGS"
-then
-SHLIBLDFLAGS="$USERSHLIBLDFLAGS"
-fi
-
-if test -n "$USERDLLFLAGS"
-then
-DLLFLAGS="$USERDLLFLAGS"
-fi
-
-#
-#  Individual platform overrides.
-#
-
-case $host in
-
-alpha*osf*)
-	CFLAGS="-ieee_with_inexact $CFLAGS"
-	AC_DEFINE(HAVE_NO_SYMBOL_UNDERSCORE)
-	PICFLAGS=
-	SHLIBLDFLAGS=-shared
-	;;
-
-*linuxaout)
-	sed '/HAVE_ELF_H/d' confdefs.h > tmp.h ; mv tmp.h confdefs.h
-	LDCMD=gcc
-	LIBS="-lf2c $LIBS"
-	;;
-
-*linux)
-	LDCMD=gcc
-	LIBS="-lf2c $LIBS"
-	DLLFLAGS=-rdynamic
-	;;
-
-*sgi*)
-	SHLIBLDFLAGS="-shared"
-	;;
-
-*hpux*)
-	AC_DEFINE(USE_BUILTIN_RINT)
-        case "$CC" in
-        c89*) PICFLAGS="+z" ;;
-        gcc*) PICFLAGS="-fpic" ;;
-        esac
-	DLLFLAGS="-Wl,-E"
-	SHLIBLDFLAGS=-b
-	LIBS="$LIBS -ldld"
-	;;
-
-*solaris*)
-	SHLIBLDFLAGS="-G"
-	;;
-
+case "${host}" in
+  alpha*osf*)
+    CFLAGS="-ieee_with_inexact ${CFLAGS}"
+    AC_DEFINE(HAVE_NO_SYMBOL_UNDERSCORE)
+    CPICFLAGS=
+    SHLIBLDFLAGS=-shared
+    ;;
+  *linuxaout)
+    sed '/HAVE_ELF_H/d' confdefs.h > tmp.h ; mv tmp.h confdefs.h
+    LDCMD=gcc
+    LIBS="-lf2c ${LIBS}"
+    ;;
+  *linux)
+    LDCMD=gcc
+    LIBS="-lf2c ${LIBS}"
+    DLLFLAGS=-rdynamic
+    ;;
+  *sgi*)
+    SHLIBLDFLAGS="-shared"
+    ;;
+  *hpux*)
+    AC_DEFINE(USE_BUILTIN_RINT)
+    case "${CC}" in
+      c89*)
+        CPICFLAGS="+z" ;;
+      gcc*)
+	CPICFLAGS="-fpic" ;;
+    esac
+    DLLFLAGS="-Wl,-E"
+    SHLIBLDFLAGS=-b
+    LIBS="${LIBS} -ldld"
+    ;;
+  *solaris*)
+    SHLIBLDFLAGS="-G"
+    ;;
 esac
-
-for i in `ls src/appl.c|grep '.c$'` `ls src/appl.f|grep '\.f'`
-do
-	rm -f src/appl/$i
-done
-
-if test -z "$FC"
-then
-	ln src/appl.c/*.c src/appl
-else
-	ln src/appl.f/*.f src/appl
-fi
-
-AC_PATH_PROG(PERL, perl)
-
-if test -n "$PERL"
-then
-    AC_MSG_CHECKING(whether perl is perl 5)
-    PERL_VERSION_NUMBER=`$PERL -v | sed -n 's/^.*perl.*version \(.\).*/\1/p'`
-    if test $PERL_VERSION_NUMBER -ge 5
-    then
-        NO_PERL5=""
-        AC_MSG_RESULT(yes)
-    else
-        NO_PERL5="true"
-        AC_MSG_RESULT(no)
-    fi
-else
-    NO_PERL5="true"
-fi
-
 
 AC_SUBST(LDCMD)
 AC_SUBST(DLLFLAGS)
-AC_SUBST(PICFLAGS)
-AC_SUBST(LIBSRC)
-AC_SUBST(SHLIBLDFLAGS)
-AC_SUBST(BLAS)
-AC_SUBST(FFLAGS)
+AC_SUBST(CPICFLAGS)
 AC_SUBST(FPICFLAGS)
-AC_SUBST(PERL)
-AC_SUBST(NO_PERL5)
+AC_SUBST(SHLIBLDFLAGS)
 
-AC_OUTPUT(
-src/main/Makefile
-src/graphics/Makefile
-src/nmath/Makefile
-src/appl/Makefile
-src/regex/Makefile
-src/unix/Makefile
-src/front/R.sh
-etc/SHLIB
-etc/COMPILE
-etc/INSTALL
-etc/REMOVE
-etc/Rdconv
-etc/Rdindex
-etc/Rman2Rd
-etc/Sd2Rd
-etc/build-help
-etc/help.pretty
-etc/html2dos
-doc/keyword-test
-demos/dynload/Makefile
-src/library/LIBCLEAN
-cmd/fwf2table
+### System services.
+
+## X11 locations
+##
+## Here we use the standard X11 search macro.
+## We force the use of -lX11 (perhaps this is not necessary).
+
+AC_PATH_XTRA
+if test -z "${no_x}"; then
+  X_LIBS="${X_LIBS} -lX11"
+fi
+
+### Miscellaneous.
+
+## Printing
+##
+## We look to see whether we have "lpr" or "lp".  Some platforms
+## provide both (SunOS and HPUX), and in those cases we choose lpr.
+
+if test -z "${R_PRINTCMD}"; then
+  AC_CHECK_PROGS(R_PRINTCMD, lpr lp)
+fi
+
+if test -z "${R_PAPERSIZE}"; then
+  R_PAPERSIZE=a4
+fi
+AC_SUBST(R_PAPERSIZE)
+
+## Saving.
+
+AC_SUBST(R_BATCHSAVE)
+
+### Output.
+
+AC_SUBST(CFLAGS)
+AC_SUBST(FFLAGS)
+AC_SUBST(F2CFLAGS)
+
+AC_OUTPUT(Makeconf cmd/fwf2table doc/keyword-test etc/INSTALL
+  etc/Makeconf etc/REMOVE etc/Rdconv etc/Rdindex etc/Rman2Rd etc/SHLIB
+  etc/Sd2Rd etc/build-help etc/build-htmlpkglist etc/help.pretty
+  etc/html2dos src/front/R.sh demos/dynload/Makefile
 )
 
 AC_OUTPUT_COMMANDS(
-(cd etc; chmod +x INSTALL REMOVE Rdconv Rdindex Rman2Rd Sd2Rd \
-         build-help build-htmlpkglist help.pretty html2dos)
 (cd cmd; chmod +x fwf2table)
 (cd doc; chmod +x keyword-test)
+(cd etc; chmod +x INSTALL REMOVE Rdconv Rdindex Rman2Rd Sd2Rd \
+         build-help help.pretty html2dos)
 mkdir -p bin include library src/lib
 )
+
+if test -z "${F77}"; then
+  FORT="${F2C} ${F2CFLAGS}"
+else
+  FORT="${F77} ${FFLAGS}"
+fi
+
+AC_MSG_RESULT([
+
+R is now configured for ${host}
+
+  Source directory:         ${srcdir}
+  Installation directory:   ${prefix}
+  C compiler:               ${CC} ${CFLAGS}
+  FORTRAN compiler:         ${FORT}
+])
