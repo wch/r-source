@@ -26,10 +26,13 @@ lchoose(n,k)
 %---- This should be improved! ---  want mathematical definitions
 %----   AND References to Abramowitz and Stegun
   The functions \code{beta} and \code{lbeta} return the beta function
-  and the natural logarithm of the beta function.
+  and the natural logarithm of the beta function,
+  \deqn{B(a,b) = \frac{\Gamma(a)\Gamma(b)}{\Gamma(a+b)}.}{%
+        B(a,b) = (Gamma(a)Gamma(b))/(Gamma(a+b)).}
 
   The functions \code{gamma} and \code{lgamma} return the gamma function
-  and the natural logarithm of the gamma function.
+  \eqn{\Gamma(x)}
+  and the natural logarithm of the absolute value of the gamma function.
 
   The functions \code{digamma}, \code{trigamma}, \code{tetragamma} and
   \code{pentagamma} return the first, second, third and fourth
@@ -46,6 +49,10 @@ mathematical functions.
 choose(5, 2)
 for (n in 0:10) print(choose(n, k = 0:n))
 
+curve(gamma(x),-3,4, n=1001, ylim=c(-10,100),
+      col="red", lwd=2, main="gamma(x)")
+abline(h=0,v=0, lty=3, col="midnightblue")
+
 x <- seq(.1, 4, length = 201); dx <- diff(x)[1]
 par(mfrow = c(2, 3))
 for (ch in c("", "l","di","tri","tetra","penta")) {
@@ -60,3 +67,4 @@ for (ch in c("", "l","di","tri","tetra","penta")) {
 par(mfrow = c(2, 2))
 }
 \keyword{math}
+

@@ -12,8 +12,9 @@ The naming follows the standard for computer languages
 such as C or Fortran.
 }
 \seealso{
-\code{\link{Arithmetic}} for simple and \code{\link{Special}} for special
-mathematical functions.
+\code{\link{Arithmetic}} for simple, \code{\link{log}} for logarithmic,
+\code{\link{sin}} for trigonometric, and \code{\link{Special}} for
+special mathematical functions.
 }
 \examples{
 xx <- -9:9
