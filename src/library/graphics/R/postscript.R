@@ -33,7 +33,7 @@ check.options <-
 	stop("'name.opt' must be character, name of an existing list")
     if(reset) {
 	if(exists(name.opt, envir=envir, inherits=FALSE)) {
-	    if(length(find(name.opt)) > 1)
+	    if(length(utils::find(name.opt)) > 1)
 		rm(list=name.opt, envir=envir)
 ##-	    else
 ##-		stop(paste("Cannot reset '", name.opt,
