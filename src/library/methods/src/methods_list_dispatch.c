@@ -11,7 +11,9 @@ SEXP type2str(SEXPTYPE);
 #define type2symbol		Rf_type2symbol
 SEXP type2symbol(SEXPTYPE);
 #define findVarInFrame		Rf_findVarInFrame
+#define setVarInFrame		Rf_setVarInFrame
 SEXP findVarInFrame(SEXP, SEXP);
+SEXP setVarInFrame(SEXP, SEXP, SEXP);
 #define streql(s, t)	(!strcmp((s), (t)))
 void R_PreserveObject(SEXP);
 
@@ -508,13 +510,17 @@ SEXP R_standardGeneric(SEXP fname, SEXP ev)
 	       object, and also stores the revised MethodsList in the
 	       methods metadata.
 	    */
+	    R_assign_to_method_metadata(fsym, get_skeleton(fsym, R_NilValue));
 	    PROTECT(value = R_S_MethodsListSelect(fname, ev, mlist)); nprotect++;
+	    R_assign_to_method_metadata(fsym, fdef);
 	    R_clear_method_selection(); /* to be safe.
 				     The S language code is supposed
 				     to clear also. */
 	    if(isNull(value))
 	      error("No direct or inherited method for function \"%s\" for this call",
 		    CHAR_STAR(fname));
+	    else /* update the methods list in the function's environment*/
+	      setVarInFrame(f_env, s_dot_Methods, value);
 	    mlist = value;
 	    /* now look again.  This time the necessary method should
 	       have been inserted in the MethodsList object */
