@@ -43,7 +43,7 @@ use Text::Wrap;
 ## don't buffer output
 $| = 1;
 
-my $revision = ' $Revision: 1.68 $ ';
+my $revision = ' $Revision: 1.69 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -72,6 +72,9 @@ GetOptions(@known_options) or usage();
 
 R_version("R add-on package builder", $version) if $opt_version;
 usage() if $opt_help;
+
+## Use system default unless explicitly specified otherwise.
+$ENV{"R_DEFAULT_PACKAGES"} = "";
 
 my $startdir = cwd();
 
@@ -365,9 +368,9 @@ sub prepare_pkg {
 				"vignette")) {
 	if(!$opt_no_vignettes) {
 	    $log->creating("vignettes");
-	    my $Rcmd = "buildVignettes(dir = '.')\n";
-	    my @out = R_runR($Rcmd, "--vanilla --no-save --quiet",
-			     "R_DEFAULT_PACKAGES=tools");
+	    my $Rcmd = "library(tools)\n";
+	    $Rcmd .= "buildVignettes(dir = '.')\n";
+	    my @out = R_runR($Rcmd, "--vanilla --no-save --quiet");
 	    my @err = grep(/^Error/, @out);
 	    if($#err >= 0) {
 		@out = grep(!/^\>/, @out);
