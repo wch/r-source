@@ -1,0 +1,43 @@
+\name{promptMethods}
+\alias{promptMethods}
+%- Also NEED an `\alias' for EACH other topic documented here.
+\title{ Generate a Shell for Documentation of Formal Methods }
+\description{
+  Generates a shell of documentation for the methods of a generic
+  function.  Usually invoked by including the \code{methods=TRUE} option
+  to the \code{\link{prompt}} function.
+}
+\usage{
+promptMethods(f, print=FALSE, inherited=FALSE, useArgName=TRUE)
+}
+%- maybe also `usage' for other objects documented here.
+\arguments{
+  \item{f}{ The name of the generic function whose methods are to be documented.  }
+  \item{print}{ Should a file be written with the documentation shell?
+    If \code{FALSE}, the text is returned, presumably to be used in the
+    documentation of the generic function itself (see
+    \code{\link{prompt}}). May also be the name of a file on which to
+    write the documentation. Default \code{FALSE}.
+  }
+  \item{inherited}{ Should inherited methods be included?  Default \code{FALSE}. }
+  \item{useArgName}{ Should the argument names be used in the signatures
+  as displayed in the documentation.  Default \code{TRUE}.}
+}
+\value{
+  If \code{print} is \code{FALSE}, the text generated; otherwise, the
+  name of the file written.
+}
+\seealso{  \code{\link{prompt}} }
+
+\references{
+The web page \url{http://www.omegahat.org/RSMethods/index.html} is the primary documentation.
+
+The functions in this package emulate the facility for classes and methods described in
+\emph{Programming with Data}, (John M. Chambers, Springer, 1998).  See this book
+for further details and examples.
+}
+\author{
+  John Chambers
+}
+\keyword{programming}
+\keyword{methods}
