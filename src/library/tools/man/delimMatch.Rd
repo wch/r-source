@@ -10,7 +10,7 @@ delimMatch(x, delim = c("\{", "\}"), syntax = "Rd")
 \arguments{
   \item{x}{a character vector.}
   \item{delim}{a character vector of length 2 giving the start and end
-    delimiters.  Currently, both must be single characters.  Future
+    delimiters.  Currently, both must be single ASCII characters.  Future
     versions might allow for arbitrary regular expressions.}
   \item{syntax}{currently, always the string \samp{"Rd"} indicating Rd
     syntax (i.e., \samp{\%} starts a comment extending till the end of
@@ -21,8 +21,8 @@ delimMatch(x, delim = c("\{", "\}"), syntax = "Rd")
 \value{
   An integer vector of the same length as \code{x} giving the starting
   position of the first match, or \eqn{-1} if there is none, with
-  attribute \code{"match.length"} giving the length of the matched text
-  (or \eqn{-1} for no match).
+  attribute \code{"match.length"} giving the length (in characters)
+  of the matched text (or \eqn{-1} for no match).
 }
 \seealso{
   \code{\link{regexpr}} for \dQuote{simple} pattern matching.

@@ -5,6 +5,11 @@
 #include <R.h>
 #include "tools.h"
 
+#ifdef SUPPORT_UTF8
+/* Not used on Windows, so OK not to LibExtern*/
+extern Rboolean utf8locale;
+#endif
+
 SEXP
 delim_match(SEXP x, SEXP delims)
 {
@@ -29,7 +34,7 @@ delim_match(SEXP x, SEXP delims)
       Nevertheless, this is already useful for parsing Rd.
     */
 
-    char c, *s, delim_start, delim_end;
+    char c, *s, *s0, delim_start, delim_end;
     Sint n, i, pos, start, end, delim_depth;
     Rboolean is_escaped, equal_start_and_end_delims;
     SEXP ans, matchlen;
@@ -47,7 +52,7 @@ delim_match(SEXP x, SEXP delims)
 
     for(i = 0; i < n; i++) {
 	start = end = -1;
-	s = CHAR(STRING_ELT(x, i));
+	s0 = s = CHAR(STRING_ELT(x, i));
 	/* if(*s == '\0') continue; */
 	pos = is_escaped = delim_depth = 0;
 	while((c = *s++) != '\0') {
@@ -84,7 +89,17 @@ delim_match(SEXP x, SEXP delims)
 	}
 	if(end > -1) {
 	    INTEGER(ans)[i] = start + 1; /* index from one */
-	    INTEGER(matchlen)[i] = end - start + 1;
+#ifdef SUPPORT_UTF8
+	    if(utf8locale) {
+		char save = s0[end];
+		s[end] = '\0';
+		INTEGER(matchlen)[i] = mbstowcs(NULL, s0 + start, 0);
+		s0[end] = save;
+		if(INTEGER(matchlen)[i] < 0)
+		    warning("invalid UTF-8 string in delimMatch");
+	    } else
+#endif
+		INTEGER(matchlen)[i] = end - start + 1;
 	}
 	else {
 	    INTEGER(ans)[i] = INTEGER(matchlen)[i] = -1;
