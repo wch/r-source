@@ -1,9 +1,43 @@
 				Dear Emacs, please make this -*-Text-*- mode!
 	**************************************************
 	*						 *
+	*	       1.8 SERIES NEWS			 *
+	*						 *
+	**************************************************
+
+
+		CHANGES IN R VERSION 1.8.0
+
+
+USER-VISIBLE CHANGES
+
+
+
+NEW FEATURES
+
+
+
+DEPRECATED & DEFUNCT
+
+    o	The assignment operator `_' has been removed.
+
+    o	printNoClass() is defunct.
+
+    o	The classic MacOS port is not longer supported, and its files
+	have been removed from the sources.
+
+
+
+BUG FIXES
+
+
+
+	**************************************************
+	*						 *
 	*	       1.7 SERIES NEWS			 *
 	*						 *
 	**************************************************
+
 
 		CHANGES IN R VERSION 1.7.1
 

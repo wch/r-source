@@ -399,7 +399,6 @@ void setup_Rmainloop(void)
     volatile SEXP baseEnv;
     SEXP cmd;
     FILE *fp;
-    char *p = getenv("R_NO_UNDERLINE");
 
     InitConnections(); /* needed to get any output at all */
 
@@ -465,9 +464,6 @@ void setup_Rmainloop(void)
 #else
     baseEnv = R_NilValue;
 #endif
-
-    /* Temporary flag to disable _ for a session */
-    if(p && strlen(p)) R_no_underline = TRUE;
 
     /* Set up some global variables */
     Init_R_Variables(baseEnv);

@@ -1743,14 +1743,6 @@ static int token()
     if (c == '.' || isalpha(c))
 	return SymbolValue(c);
 
-    /* gag, barf, but the punters want it */
-
-    if (!R_no_underline && c == '_') {
-	yylval = install("<-");
-	    warning("The use of _ is soon to be removed: you will be warned repeatedly");
-	return LEFT_ASSIGN;
-    }
-
     /* compound tokens */
 
     switch (c) {

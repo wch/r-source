@@ -53,3 +53,8 @@ Machine <- function(...) .Defunct()
 Platform <- function(...) .Defunct()
 restart <- function(...) .Defunct()
 ## </entry>
+
+## Deprecated in 1.7.0
+## Defunct in 1.8.0
+printNoClass <- function(...) .Defunct()
+## </entry>

@@ -523,9 +523,6 @@ SEXP R_primitive_methods(SEXP op);
 SEXP R_do_slot(SEXP obj, SEXP name);
 SEXP R_do_slot_assign(SEXP obj, SEXP name, SEXP value);
 
-/* temporary switch to control underline-as-assigment */
-extern Rboolean R_no_underline		INI_as(FALSE);
-
 /* smallest decimal exponent, needed in format.c, set in Init_R_Machine */
 extern int R_dec_min_exponent		INI_as(-308);
 

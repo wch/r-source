@@ -36,6 +36,7 @@
 \alias{Platform}
 \alias{Machine}
 \alias{restart}
+\alias{printNoClass}
 %
 \description{
   The functions or variables listed here are no longer part of \R as
@@ -95,6 +96,10 @@ Machine()
 Platform()
 restart()
 % </Removed 1.7.0>
+% Removed in 1.8.0
+printNoClass(x, digits = NULL, quote = TRUE, na.print = NULL,
+             print.gap = NULL, right = FALSE, \dots)
+% </Removed 1.8.0>
 }
 \details{
   \code{.Defunct} is the function to which defunct functions are set.
@@ -154,6 +159,9 @@ restart()
   for an exception-based implementation.  If you use \code{restart()} in
   a way that cannot be replaced with \code{try()} then ask for help
   on \code{r-devel}.
+
+  \code{printNoClass} was in package \code{methods} and calls directly the
+  internal function \code{print.default}.
 }
 \seealso{\code{\link{Deprecated}}}
 \keyword{documentation}
