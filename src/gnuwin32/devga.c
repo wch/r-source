@@ -1638,9 +1638,18 @@ static void GA_MetricInfo(int c, int font, double cex, double ps,
 
     SetFont(font, size, 0.0, dd);
     gcharmetric(xd->gawin, xd->font, c, &a, &d, &w);
-    *ascent = (double) a;
-    *descent = (double) d;
-    *width = (double) w;
+    /* Some Windows systems report that space has height and depth,
+       so we have a kludge.  Note that 32 is space in symbol font too */
+    if(c == 32) {
+	*ascent  = 0.0;
+	*descent = 0.0;
+	*width   = (double) w;
+	
+    } else {
+	*ascent  = (double) a;
+	*descent = (double) d;
+	*width   = (double) w;
+    }
 }
 
 	/********************************************************/

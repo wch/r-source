@@ -48,6 +48,11 @@ devices had been closed.
 
 doc/manual/Makefile.win now has targets for fullrefman.{dvi,pdf}.
 
+The windows (etc) devices use the Windows character metrics, which at
+least on some systems have non-zero height and depth for space.  This
+is now overridden.  (This showed up in the baseline placing for
+plotmath expressions containing a space.)
+
 
 
 rw1072
