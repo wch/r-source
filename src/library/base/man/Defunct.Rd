@@ -30,10 +30,12 @@
 \alias{reshapeWide}
 \alias{piechart}
 \alias{print.ordered}
+\alias{.Dyn.libs}
+\alias{.lib.loc}
 %
 \description{
-  The functions listed here are no longer part of \R as they are not
-  needed (any more).
+  The functions or variables listed here are no longer part of \R as
+  they are not needed (any more).
 }
 \usage{
 .Defunct()
@@ -80,6 +82,8 @@ reshapeLong(x,jvars,  ilev = row.names(x),
 piechart(x, labels = names(x), edges = 200, radius = 0.8,
          density = NULL, angle = 45, col = NULL, main = NULL, ...)
 print.ordered(.)
+.Dyn.libs
+.lib.loc
 % </Removed 1.6.0>
 }
 \details{
@@ -113,7 +117,7 @@ print.ordered(.)
   \code{parse.dcf} has been replaced by \code{read.dcf}, which is much
   faster, but has a slightly different interface.
 
-    \code{.Alias} provided an unreliable way to create duplicate
+  \code{.Alias} provided an unreliable way to create duplicate
   references to the same object. There is no direct replacement. Where
   multiple references to a single object are required for semantic
   reasons consider using environments or external pointers. There are
@@ -125,6 +129,12 @@ print.ordered(.)
 
   \code{piechart} is the old name for \code{pie}, but clashed with usage
   in Trellis.
+
+  \code{.Dyn.libs} and \code{.lib.loc} were internal variables used for
+  storing and manipulating the information about packages with dynloaded
+  shared libs, and the known \R library trees.  These are now dynamic
+  variables which one can get or set using \code{\link{.dynLibs}} and
+  \code{\link{.libPaths}}, respectively.
 }
 \seealso{\code{\link{Deprecated}}}
 \keyword{documentation}

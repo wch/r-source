@@ -1,10 +1,15 @@
 \name{library.dynam}
 \alias{library.dynam}
-\alias{.Dyn.libs}
+\alias{.dynLibs}
 \title{Loading Shared Libraries}
+\description{
+  Load the specified file of compiled code if it has not been loaded
+  already.
+}
 \usage{
 library.dynam(chname, package = .packages(), lib.loc = NULL,
               verbose = getOption("verbose"), file.ext, \dots)
+.dynLibs(new)
 }
 \arguments{
   \item{chname}{a character string naming a shared library to load.}
@@ -23,14 +28,13 @@ library.dynam(chname, package = .packages(), lib.loc = NULL,
   \item{\dots}{additional arguments needed by some libraries that
     are passed to the call to \code{\link{dyn.load}} to control
     how the library is loaded.}
-}
-\description{
-  Load the specified file of compiled code if it has not been loaded already.
+  \item{new}{a character vector of packages which have loaded shared
+    libraries.}
 }
 \details{
-  This is designed to be used inside a
-  package rather than at the command line, and should really only be
-  used inside \code{\link{.First.lib}()}.  The system-specific extension
+  This is designed to be used inside a package rather than at the
+  command line, and should really only be used inside
+  \code{\link{.First.lib}()}.  The system-specific extension 
   for shared libraries
 #ifdef unix
   (e.g., \file{.so} or \file{.sl} on Unix systems)
@@ -39,15 +43,17 @@ library.dynam(chname, package = .packages(), lib.loc = NULL,
   (\file{.dll} on Windows)
 #endif
   should not be added.
+
+  \code{.dynLibs} is used for getting or setting the packages that have
+  loaded shared libraries (using \code{library.dynam}).  Versions of \R
+  prior to 1.6.0 used an internal global variable \code{.Dyn.libs} for
+  storing this information: this variable is now defunct.
 }
 \value{
-  The \code{.Dyn.libs} vector with the names of packages
-  which have used \code{library.dynam} in the current \R session.
-
-  It is returned as \code{\link{invisible}}, unless the \code{chname}
-  argument is missing.
-
-  Users should never set \code{.Dyn.libs} directly.
+  \code{library.dynam} returns a character vector with the names of
+  packages which have used it in the current \R session to load shared
+  libraries.  This vector is returned as \code{\link{invisible}}, unless
+  the \code{chname} argument is missing.
 }
 \seealso{
   \code{\link{.First.lib}}, \code{\link{library}},

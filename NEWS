@@ -182,6 +182,10 @@ DEPRECATED & DEFUNCT
 
     o	print.ordered() has been removed, so print.factor() is used.
 
+    o	The global internal variables .Dyn.libs and .lib.loc are
+	removed in favor of the internal functions .dynLibs() and
+	.libPaths().
+
 
 DOCUMENTATION CHANGES
 

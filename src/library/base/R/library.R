@@ -229,23 +229,15 @@ library.dynam <-
 function(chname, package = .packages(), lib.loc = NULL, verbose =
          getOption("verbose"), file.ext = .Platform$dynlib.ext, ...)
 {
-    ## <NOTE>
-    ## Versions of R prior to 1.4.0 had .Dyn.libs in .AutoloadEnv
-    ## (and did not always ensure getting it from there).
-    ## We now consistently use the base environment.
-    ## </NOTE>
-
     sQuote <- function(s) paste("`", s, "'", sep = "")
 
-    if(!exists(".Dyn.libs", envir = NULL)) {
-        assign(".Dyn.libs", character(0), envir = NULL)
-    }
+    .Dyn.libs <- .dynLibs()
     if(missing(chname) || (ncChname <- nchar(chname)) == 0)
-        return(get(".Dyn.libs", envir = NULL))
+        return(.Dyn.libs)
     ncFileExt <- nchar(file.ext)
     if(substr(chname, ncChname - ncFileExt + 1, ncChname) == file.ext)
         chname <- substr(chname, 1, ncChname - ncFileExt)
-    if(is.na(match(chname, get(".Dyn.libs", envir = NULL)))) {
+    if(is.na(match(chname, .Dyn.libs))) {
         for(pkg in .find.package(package, lib.loc, verbose = verbose)) {
             file <- file.path(pkg, "libs",
                               paste(chname, file.ext, sep = ""))
@@ -259,11 +251,9 @@ function(chname, package = .packages(), lib.loc = NULL, verbose =
         if(verbose)
             cat("now dyn.load(", file, ") ...\n", sep = "")
         dyn.load(file, ...)
-        assign(".Dyn.libs",
-               c(get(".Dyn.libs", envir = NULL), chname),
-               envir = NULL)
+        .dynLibs(c(.Dyn.libs, chname))
     }
-    invisible(get(".Dyn.libs", envir = NULL))
+    invisible(.dynLibs())
 }
 
 require <-
@@ -372,14 +362,6 @@ function(package, lib.loc = NULL, quiet = FALSE,
     }
 
     paths
-}
-
-.libPaths <-
-function(new)
-{
-    if(!missing(new))
-        assign(".lib.loc", unique(c(new, .Library)), envir = NULL)
-    get(".lib.loc", envir = NULL)
 }
 
 print.packageInfo <-

@@ -17,11 +17,11 @@
         ## <NOTE>
         ## Versions of R prior to 1.4.0 had .Dyn.libs in .AutoloadEnv
         ## (and did not always ensure getting it from there).
-        ## We now consistently use the base environment.
+        ## Until 1.6.0, we consistently used the base environment.        
+        ## Now we have a dynamic variable instead.
         ## </NOTE>
-        num <- match("tcltk", get(".Dyn.libs", envir = NULL))
-        assign(".Dyn.libs",
-               get(".Dyn.libs", envir = NULL)[-num],
-               envir = NULL)
+        .Dyn.libs <- .dynLibs()
+        num <- match("tcltk", .Dyn.libs)
+        .dynLibs(.Dyn.libs[-num])
     }
 }

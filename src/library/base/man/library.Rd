@@ -10,7 +10,6 @@
 \alias{.find.package}
 \alias{.packages}
 \alias{.path.package}
-\alias{.lib.loc}
 \alias{.libPaths}
 \alias{print.libraryIQR}
 \alias{print.packageInfo}
@@ -169,9 +168,6 @@ require(package, quietly = FALSE, warn.conflicts = TRUE,
 #endif
   list of directories at which \R library trees are rooted) by calling
   \code{.libPaths} with the directories specified in \code{R_LIBS}. 
-  Currently, the global variable \code{.lib.loc} is used for storing the
-  paths to the known library trees; however, this variable should not be
-  accessed directly.
 }
 \value{
   \code{library} returns the list of loaded (or available) packages
