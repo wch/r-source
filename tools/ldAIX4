@@ -57,7 +57,4 @@ echo "#! ." > $mainexp
 $nm $nmopts $ofiles | sed -n -e "$regex1" -e "$regex2" | \
     sort | uniq >> $mainexp
 
-# Invoke linker
-eval "$@" "-bE:$mainexp"
-
 exit $?

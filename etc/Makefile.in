@@ -34,7 +34,7 @@ R:
 
 install: installdirs install-perl
 	@echo "Installing etc ..."
-	@$(INSTALL_DATA) Makeconf $(rhome)/etc
+	@$(INSTALL_DATA) Makeconf @EXPORTFILE@ $(rhome)/etc
 installdirs:
 	@$(MKINSTALLDIRS) $(rhome)/etc
 install-perl:
@@ -45,7 +45,7 @@ install-strip: install
 uninstall:
 	@echo "Uninstalling etc ..."
 	@(cd $(rhome)/etc; \
-	  rm -f *.pl Makeconf)
+	  rm -f *.pl Makeconf @EXPORTFILE@)
 	@rmdir $(rhome)/etc 2> /dev/null \
 	  || echo "  subdir etc not removed"
 
