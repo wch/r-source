@@ -207,6 +207,10 @@ NEW FEATURES
 
     o	sunflowerplot() has new arguments 'col' and 'bg'.
 
+    o	scan() used on an open connection now pushes back on the
+	connection its private `ungetc' and so is safer to use to
+	read partial lines.
+
 
 INTERNATIONALIZATION
 
@@ -256,6 +260,7 @@ INTERNATIONALIZATION
     o	read/writeChar() work in units of characters, not bytes.
 
     o	.C() now accepts an ENCODING= argument where re-encoding is
+	supported by the OS.  See `Writing R Extensions'.
 
     o	delimMatch (tools) now reports match lengths in units of 
 	characters, not bytes.
@@ -365,8 +370,7 @@ DEPRECATED & DEFUNCT
 
 INSTALLATION CHANGES
 
-    o	[Experimental!]
-	New configure option --enable-utf8 to enable support for
+    o	New configure option --enable-utf8 to enable support for
 	UTF-8 locales.
 
     o	R_XTRA_[CF]FLAGS are now used during the configuration tests,
@@ -511,8 +515,8 @@ BUG FIXES
     o	X11() was only scaling its fonts to pointsize if the dpi
 	was within 0.5 of 100dpi.
 
-    o   X11() font selection was looking for any symbol font, and sometimes
-	got e.g. bold italic if the server has such a font.
+    o	X11() font selection was looking for any symbol font, and
+	sometimes got e.g. bold italic if the server has such a font.
 
 
 

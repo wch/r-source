@@ -3456,3 +3456,17 @@ A[is.na(A)] <- 0
 A <- as.data.frame(A)
 A[is.na(A)] <- 0
 ## last not accepted prior to 2.1.0
+
+
+## scan on partial lines on an open connection
+cat("TITLE extra line", "235 335 535 735", "115 135 175",
+    file="ex.data", sep="\n")
+cn.x <- file("ex.data", open="r")
+res <- scan(cn.x, skip=1, n=2)
+res <- c(res, scan(cn.x, n=2))
+res <- c(res, scan(cn.x, n=2))
+res <- c(res, scan(cn.x, n=2))
+close(cn.x, sep=" ")
+unlink("ex.data")
+stopifnot(identical(res, c(235, 335, 535, 735, 115, 135, 175)))
+## dropped some first chars < 2.1.0

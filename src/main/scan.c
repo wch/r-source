@@ -45,6 +45,9 @@
 #define CONSOLE_BUFFER_SIZE	1024
 #define CONSOLE_PROMPT_SIZE	256
 
+#define NO_COMCHAR 100000 /* won't occur even in Unicode */
+
+
 /* The number of distinct strings to track */
 #define MAX_STRINGS	10000
 
@@ -138,8 +141,7 @@ static SEXP insertString(char *str, HashData *d)
 }
 
 
-#define NO_COMCHAR 100000 /* won't occur even in Unicode */
-
+/* used by readline() and menu() */
 static int ConsoleGetchar()
 {
     if (--ConsoleBufCnt < 0) {
@@ -156,6 +158,7 @@ static int ConsoleGetchar()
     return *ConsoleBufp++;
 }
 
+/* used by scan() */
 static int ConsoleGetcharWithPushBack(Rconnection con)
 {
     char *curLine;
@@ -988,6 +991,13 @@ SEXP do_scan(SEXP call, SEXP op, SEXP args, SEXP rho)
 	if (!data.ttyflag && !data.wasopen)
 	    data.con->close(data.con);
 	errorcall(call, "invalid \"what=\" specified");
+    }
+    /* we might have a character that was unscanned.
+       So pushback if possible */
+    if (data.save && !data.ttyflag && data.wasopen) {
+	char line[2] = " ";
+	line[0] = data.save;
+	con_pushback(data.con, FALSE, line);
     }
     if (!data.ttyflag && !data.wasopen)
 	data.con->close(data.con);

@@ -180,6 +180,9 @@ scan(file = "", what = double(0), nmax = -1, n = -1, sep = "",
   copies.)  If you can, specify either \code{n} or \code{nmax} whenever
   inputting a large vector, and \code{nmax} or \code{nlines} when
   inputting a large list.
+
+  Using \code{scan} on an open connection to read partial lines can lose
+  chars: use an explicit separator to avoid this.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

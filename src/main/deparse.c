@@ -598,7 +598,7 @@ static char * backquotify(char *s)
     if(mbcslocale && !utf8locale) {
 	mbstate_t mb_st; int j, used;
 	mbs_init(&mb_st);
-	while( used = Mbrtowc(NULL, s, MB_CUR_MAX, &mb_st) ) {
+	while( (used = Mbrtowc(NULL, s, MB_CUR_MAX, &mb_st)) ) {
 	    if ( *s  == '`' || *s == '\\' ) *t++ = '\\';
 	    for(j = 0; j < used; j++) *t++ = *s++;
 	}
