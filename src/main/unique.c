@@ -65,18 +65,33 @@ static int ihash(SEXP x, int indx)
 
 static int rhash(SEXP x, int indx)
 {
+    unsigned int u;
     /* There is a problem with signed 0s under IEEE */
     double tmp = (REAL(x)[indx] == 0.0) ? 0.0 : REAL(x)[indx];
-    return scatter(*((unsigned int *) (&tmp)));
+    /* need to use both 32-byte chunks or endianness is an issue */
+    if (sizeof(double)>=sizeof(unsigned int)*2){
+	    u  = *((unsigned int *) (&tmp));
+	    u += *(1+ (unsigned int *) (&tmp));
+	    return scatter(u);
+    } else
+	    return scatter(*((unsigned int *) (&tmp)));
 }
 
 static int chash(SEXP x, int indx)
 {
     Rcomplex tmp;
+    unsigned int u;
     tmp.r = (COMPLEX(x)[indx].r == 0.0) ? 0.0 : COMPLEX(x)[indx].r;
     tmp.i = (COMPLEX(x)[indx].i == 0.0) ? 0.0 : COMPLEX(x)[indx].i;
-    return scatter((*((unsigned int *)(&tmp.r)) |
-		    (*((unsigned int *)(&tmp.r)))));
+    if (sizeof(double)>=sizeof(unsigned int)*2){
+	    u  = *((unsigned int *) (&tmp.r));
+	    u += *(1+ (unsigned int *) (&tmp.r));
+	    u += *((unsigned int *) (&tmp.i));
+	    u += *(1+ (unsigned int *) (&tmp.i));
+	    return scatter(u);
+    } else
+	    return scatter((*((unsigned int *)(&tmp.r)) |
+			    (*((unsigned int *)(&tmp.r)))));
 }
 
 static int shash(SEXP x, int indx)
@@ -85,7 +100,7 @@ static int shash(SEXP x, int indx)
     char *p = CHAR(STRING_ELT(x, indx));
     k = 0;
     while (*p++)
-	k = 8 * k + *p;
+	    k = 11 * k + *p; /* was 8 but 11 isn't a power of 2 */
     return scatter(k);
 }
 
