@@ -360,6 +360,10 @@ BUG FIXES
 
     o	seq(0,0,1) now works (PR#1133).
 
+    o   reshapeWide got it wrong if the "i" factor was not sorted (the
+        function is now deprecated since reshape() is there, but the bug
+        still needed fixing...)
+
     o   PR#757 was fixed incorrectly, causing improper subsetting of
         pch etc. in plot.formula.
 
@@ -386,7 +390,6 @@ BUG FIXES
     o	Several memory leaks on interrupting functions have been
 	circumvented.  Functions lqs() and mve() can now be
 	interrupted on Windows and MacOS.
-
 
 
 	**************************************************

@@ -157,5 +157,6 @@ reshapeWide <-
     names(resp) <- jnames
     if (ncol(xr) == 0) return(resp)
     reduced <- xr[as.numeric(j)==1,,drop=FALSE]
-    cbind(reduced,resp)
+    ireduced <- i[as.numeric(j)==1]
+    cbind(reduced,resp[ireduced,])
 }
