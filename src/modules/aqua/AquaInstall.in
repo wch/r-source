@@ -41,10 +41,10 @@ cp src/modules/aqua/RAqua/Contents/Resources/RAqua.icns \
 cp src/modules/aqua/RAqua/Contents/PkgInfo /Applications/StartR.app/Contents/
 cp src/modules/aqua/RAqua/Contents/Info.plist /Applications/StartR.app/Contents/
 # move libR.dylib inside Frameworks
-mkdir -p /Applications/StartR.app/RAqua.app/Frameworks
+mkdir -p /Applications/StartR.app/RAqua.app/Contents/Frameworks
 if test /Applications/StartR.app/RAqua.app/Contents/MacOS/libR.dylib; then
  mv /Applications/StartR.app/RAqua.app/Contents/MacOS/libR.dylib \
-   /Applications/StartR.app/RAqua.app/Frameworks/
+   /Applications/StartR.app/RAqua.app/Contents/Frameworks/
 fi
 
 cd ${here}

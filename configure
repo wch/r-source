@@ -18201,7 +18201,7 @@ case "${host_os}" in
     ## </FIXME>
     ## </NOTE>
     if test "x${want_aqua}" = xyes; then
-      LIBR_LDFLAGS="-dynamiclib -install_name /Applications/StartR.app/RAqua.app/Frameworks/libR.dylib"
+      LIBR_LDFLAGS="-dynamiclib -install_name /Applications/StartR.app/RAqua.app/Contents/Frameworks/libR.dylib"
     else
       LIBR_LDFLAGS="-dynamiclib -install_name \$(Rexeclibdir)/libR.dylib"
     fi
