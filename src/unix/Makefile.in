@@ -15,14 +15,14 @@ ALL_CPPFLAGS = $(R_XTRA_CPPFLAGS) $(X_CFLAGS) $(CPPFLAGS) $(DEFS)
 SOURCES = dynload.c edit.c stubs.c system.c sys-unix.c sys-common.c sys-std.c
 DEPENDS = $(SOURCES:.c=.d)
 OBJECTS = $(SOURCES:.c=.o)
-HEADERS = devX11.h
+HEADERS = Runix.h devX11.h eventloop.h
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = \
 	Makefile.in PSPAPER $(SOURCES) $(HEADERS) \
 	hpdlfcn.c system.txt
 
-SUBDIRS = @RX11DIR@ @RGNOMEDIR@
+SUBDIRS = X11 gnome
 
 LIB = libunix.a
 
@@ -45,9 +45,11 @@ Makedeps: Makefile $(DEPENDS)
 R: Makefile
 	@$(MAKE) Makedeps
 	@$(MAKE) $(LIB)
-@NO_X@	@for d in  $(SUBDIRS); do \
-@NO_X@	  (cd $${d} && $(MAKE) all) || exit 1; \
-@NO_X@	done
+	@if test -n "$(R_GUIS)"; then \
+	  for g in $(R_GUIS); do \
+	    (cd $${g} && $(MAKE) $@) || exit 1; \
+	  done; \
+	fi
 
 ../include/Rversion.h:
 	(cd ../include; $(MAKE) $(@F))
@@ -61,15 +63,22 @@ $(LIB): $(OBJECTS)
 mostlyclean: clean
 clean:
 	@echo "cleaning in $(subdir)"
+	@if test -n "$(R_GUIS)"; then \
+	  for g in $(R_GUIS); do \
+	    (cd $${g} && $(MAKE) $@); \
+	  done; \
+	fi
 	@-rm -f Makedeps *.d *.o *.a
-@NO_X@	@for d in  $(SUBDIRS); do \
-@NO_X@	  (cd $${d} && $(MAKE) clean) || exit 1; \
-@NO_X@	done
 distclean: clean
+	@if test -n "$(R_GUIS)"; then \
+	  for g in $(R_GUIS); do \
+	    (cd $${g} && $(MAKE) $@); \
+	  done; \
+	fi
+	@for d in $(SUBDIRS); do \
+	  rm -f $${d}/Makefile; \
+	done
 	@-rm -f Makefile
-@NO_X@	@for d in  $(SUBDIRS); do \
-@NO_X@	  (cd $${d} && $(MAKE) distclean) || exit 1; \
-@NO_X@	done
 maintainer-clean: distclean
 
 distdir: $(DISTFILES)
@@ -77,6 +86,14 @@ distdir: $(DISTFILES)
 	  test -f $(distdir)/$${f} \
 	    || ln $(srcdir)/$${f} $(distdir)/$${f} 2>/dev/null \
 	    || cp -p $(srcdir)/$${f} $(distdir)/$${f}; \
+	done
+	@for d in $(SUBDIRS); do \
+	  test -d $(distdir)/$${d} \
+	    || mkdir $(distdir)/$${d} \
+	    || exit 1; \
+	  chmod 755 $(distdir)/$${d}; \
+	  (cd $${d} && $(MAKE) distdir) \
+	    || exit 1; \
 	done
 
 ## Automagically generated dependencies:

@@ -401,8 +401,6 @@ if ${use_readline}; then
   AC_CHECK_LIB(readline, rl_callback_read_char)
 fi
 
-R_GNOME
-
 ### Library functions.
 
 AC_FUNC_ALLOCA
@@ -720,17 +718,22 @@ AC_SUBST(EXPORTFILE)
 AC_PATH_XTRA
 if test -z "${no_x}"; then
   X_LIBS="${X_LIBS} -lX11"
-  NO_X=""
-  RX11DIR="X11"
   use_X11="yes"
+  R_GUIS=X11
   AC_DEFINE(HAVE_X11, 1)
 else
-  NO_X="#"
-  RX11DIR=""
   use_X11="no"
+  R_GUIS=
 fi
-AC_SUBST(NO_X)
-AC_SUBST(RX11DIR)
+
+## GNOME
+
+R_GNOME
+if test "${use_gnome}" = yes; then
+  R_GUIS="${R_GUIS} gnome";
+fi
+
+AC_SUBST(R_GUIS)
 
 ### Miscellaneous.
 

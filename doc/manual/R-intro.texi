@@ -6491,8 +6491,8 @@ starting the @R{} executable from inside the debugger.
 @itemx -g @var{type}
 Use @var{type} as graphical user interface (note that this also includes
 interactive graphics).  Currently, possible values for @var{type} are
-@code{X11} (the default) and @code{GNOME} provided that GNOME support
-available.
+@samp{X11} (the default), @samp{gnome} provided that GNOME support is
+available, and @samp{none}.
 @end table
 
 Note that input and output can be redirected in the usual way (using

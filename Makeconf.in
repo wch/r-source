@@ -34,6 +34,7 @@ MAINLD = @MAINLD@
 MAINLDFLAGS = @MAINLDFLAGS@
 MAKEINDEX = @MAKEINDEX@
 MKINSTALLDIRS = $(top_srcdir)/tools/mkinstalldirs
+R_GUIS = @R_GUIS@
 R_PKGS = base ctest eda lqs modreg mva nls splines stepfun ts
 R_XTRA_CFLAGS = @R_XTRA_CFLAGS@
 R_XTRA_CPPFLAGS = -I. -I$(top_builddir)/src/include -I$(top_srcdir)/src/include -I$(top_srcdir)/src/include/R_ext
