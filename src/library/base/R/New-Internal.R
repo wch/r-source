@@ -98,17 +98,13 @@ sink <- function(file=NULL) .Internal(sink(file))
 t.default <- function(x).Internal(t.default(x))
 typeof <- function(x).Internal(typeof(x))
 
-unique <- function(x).Internal(unique(x))
+unique <- function(x){
+	z<-.Internal(unique(x))
+	if (is.factor(x))
+		z <- factor(z,labels=levels(x))
+	z
+}
 update.formula <- function(old, new).Internal(update.formula(old, new))
 
 stop <- function(message = NULL).Internal(stop(message))
 warning <- function(message = NULL).Internal(warning(message))
-
-
-
-
-
-
-
-
-

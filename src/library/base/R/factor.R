@@ -3,6 +3,12 @@
 {
   if (length(x) == 0)
     return(character(0))
+  if(is.factor(x)) {
+    levels <- as.integer(levels)
+    levels <- levels[!is.na(levels)]
+    labels <- attr(x,"levels")[levels]
+    x <- as.integer(x)
+  }
   exclude <- as.vector(exclude, typeof(x))
   levels <- levels[is.na(match(levels, exclude))]
   f <- match(x, levels)
@@ -25,9 +31,11 @@ nlevels <- function(x) length(levels(x))
 
 "levels<-" <- function(x, value)
 {
-  value <- as.character(value)
-  attr(x, "levels") <- value
-  x
+	if (length(value) != nlevels(x)) 
+		stop("Length mismatch in levels<-")
+	value <- as.character(value)
+	uvalue <- unique(value)
+	factor(match(value, uvalue), labels = uvalue)[x]
 }
 
 codes <- function(x, ...) UseMethod("codes")
@@ -99,8 +107,8 @@ codes.factor <- function(x)
 "[.factor" <- function(x, i)
 {
   y <- NextMethod("[")
-  levels(y) <- levels(x)
-  class(y) <- class(x)
+  class(y)<-"factor"
+  attr(y,"levels")<-attr(x,"levels")
   y
 }
 
@@ -116,7 +124,7 @@ codes.factor <- function(x)
     warning("invalid factor level, NAs generated")
   class(x) <- NULL
   x[i] <- m
-  levels(x) <- lx
+  attr(x,"levels") <- lx
   class(x) <- cx
   x
 }
