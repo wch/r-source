@@ -13,7 +13,8 @@ BUG FIXES
 
     o	dput(), dump() and deparse()  now always use DBL_DIG (=15) digits
 	for numeric formatting.
-
+    
+    o	chull() now works for vertical borders, such as in chull(c(1,1,2),3:1)
 
 
 		CHANGES IN R VERSION 0.64.1
