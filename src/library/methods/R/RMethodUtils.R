@@ -229,7 +229,7 @@ mergeMethods <-
   ## merge the methods in the second MethodsList object into the first,
   ## and return the merged result.
   function(m1, m2) {
-    if(is.null(m1))
+    if(is.null(m1) || is(m1, "EmptyMethodsList"))
       return(m2)
     tmp <- listFromMlist(m2)
     sigs <- el(tmp, 1)
@@ -528,11 +528,12 @@ cacheGenericsMetaData <- function(generics, attach = TRUE, where, package) {
                 if( !isGeneric(fdef@generic))
                     next
                 methods <- getMethods(f)
-                if(is.null(methods))
+                if(!is.null(methods))
+                    methods <- methods@methods
+                if(length(methods)==0) {
+                    resetGeneric(f, fdef)
                     next
-                methods <- methods@methods
-                if(length(methods)==0)
-                    next
+                }
             }
             ## else, this is a primitive generic, so the assertion is that we
             ## found methods for it, or for one of its group generics.  So go
