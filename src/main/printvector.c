@@ -329,16 +329,16 @@ static void printNamedComplexVector(complex *x, int n, SEXP *names)
 		Rprintf("%s", EncodeReal(NA_REAL, w, 0, 0));
 	    }
 	    else {
-		Rprintf("%*s%s", PRINT_GAP, "", EncodeReal(x[j].r, wr, dr, er));
+		Rprintf("%*s%s", PRINT_GAP, "", EncodeReal(x[k].r, wr, dr, er));
 #ifdef IEEE_754
-		if(ISNAN(x[j].i))
+		if(ISNAN(x[k].i))
 		    Rprintf("+%si", "NaN");
 		else
 #endif
-		    if(x[j].i >= 0)
-			Rprintf("+%si", EncodeReal(x[j].i, wi, di, ei));
+		    if(x[k].i >= 0)
+			Rprintf("+%si", EncodeReal(x[k].i, wi, di, ei));
 		    else
-			Rprintf("-%si", EncodeReal(-x[j].i, wi, di, ei));
+			Rprintf("-%si", EncodeReal(-x[k].i, wi, di, ei));
 	    }
 	}
     }
