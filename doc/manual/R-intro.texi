@@ -6546,7 +6546,7 @@ Build add-on packages.
 @item check
 Check add-on packages.
 @item LINK
-Front-end for linking against @R{} shared libraries.
+Front-end for creating executable programs.
 @item Rprof
 Post-process @R{} profiling files.
 @item Rdconv
