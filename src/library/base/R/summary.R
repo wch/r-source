@@ -6,7 +6,7 @@ summary.default <-
     if(is.factor(object))
 	return(summary.factor(object, ...))
     else if(is.matrix(object))
-	return(summary.matrix(object, ...))
+	return(summary.matrix(object, digits = digits, ...))
 
     value <- if(is.numeric(object)) {
 	nas <- is.na(object)

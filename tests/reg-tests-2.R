@@ -58,10 +58,11 @@ test.list
 # $B$subset
 # [1] TRUE
 
-## Marc Feldesman 2001-Feb-1.  Precision in summary.data.frame
+## Marc Feldesman 2001-Feb-1.  Precision in summary.data.frame & *.matric
 data(attenu)
 summary(attenu)
 summary(attenu, digits = 5)
+summary(data.matrix(attenu), digits = 5)# the same for matrix
 ## Comments:
 ## No difference between these in 1.2.1 and earlier
 set.seed(1)
@@ -136,3 +137,6 @@ gofX.df<-
 gofX.manova <- manova(formula = cbind(A, B, C, D) ~ groups, data = gofX.df)
 try(summary(gofX.manova))
 ## should fail with error message
+
+
+## summary.matrix(*, digits) 

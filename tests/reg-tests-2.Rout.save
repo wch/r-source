@@ -1,6 +1,6 @@
 
 R : Copyright 2001, The R Development Core Team
-Version 1.2.1 Patched (2001-02-22)
+Version 1.2.1 Patched (2001-02-23)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -106,7 +106,7 @@ $B$subset
 > # $B$subset
 > # [1] TRUE
 > 
-> ## Marc Feldesman 2001-Feb-1.  Precision in summary.data.frame
+> ## Marc Feldesman 2001-Feb-1.  Precision in summary.data.frame & *.matric
 > data(attenu)
 > summary(attenu)
      event            mag           station         dist       
@@ -134,6 +134,23 @@ $B$subset
  3rd Qu.:20.000   3rd Qu.:6.6000   135    :  3   3rd Qu.: 47.550  
  Max.   :23.000   Max.   :7.7000   (Other):147   Max.   :370.000  
                                    NA's   : 16                    
+     accel        
+ Min.   :0.00300  
+ 1st Qu.:0.04425  
+ Median :0.11300  
+ Mean   :0.15422  
+ 3rd Qu.:0.21925  
+ Max.   :0.81000  
+                  
+> summary(data.matrix(attenu), digits = 5)# the same for matrix
+     event             mag            station             dist        
+ Min.   : 1.000   Min.   :5.0000   Min.   :  1.000   Min.   :  0.500  
+ 1st Qu.: 9.000   1st Qu.:5.3000   1st Qu.: 24.250   1st Qu.: 11.325  
+ Median :18.000   Median :6.1000   Median : 56.500   Median : 23.400  
+ Mean   :14.742   Mean   :6.0841   Mean   : 56.928   Mean   : 45.603  
+ 3rd Qu.:20.000   3rd Qu.:6.6000   3rd Qu.: 86.750   3rd Qu.: 47.550  
+ Max.   :23.000   Max.   :7.7000   Max.   :117.000   Max.   :370.000  
+                                   NA's   : 16.000                    
      accel        
  Min.   :0.00300  
  1st Qu.:0.04425  
@@ -283,4 +300,7 @@ Residual Deviance: 5.656 	AIC: 71.35
 > try(summary(gofX.manova))
 Error in summary.manova(gofX.manova) : residuals have rank 3 < 4
 > ## should fail with error message
+> 
+> 
+> ## summary.matrix(*, digits) 
 > 
