@@ -48,7 +48,7 @@ TukeyHSD(x, which, ordered = FALSE, conf.level = 0.95, \dots)
   for sample size that produces sensible intervals for mildly unbalanced
   designs.
 
-  If \code{which} specifies non-factor terms whese will be dropped with
+  If \code{which} specifies non-factor terms these will be dropped with
   a warning: if no terms are left this is a an error.
 }
 \value{
