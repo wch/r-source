@@ -24,7 +24,7 @@ Platform()
   }
   \item{dynlib.ext}{character, giving the file name \bold{ext}ension of
     \bold{dyn}amically loadable \bold{lib}raries, e.g., \code{".dll"} on
-    MS Windows.
+    Windows.
   }
 }
 \seealso{\code{\link{system}} for invoking platform specific system commands.}
