@@ -181,6 +181,9 @@
 /* Define if you have the JPEG headers and libraries. */
 #undef HAVE_JPEG
 
+/* Define if external LAPACK is available. */
+#undef HAVE_LAPACK
+
 /* Define to 1 if you have the `dl' library (-ldl). */
 #undef HAVE_LIBDL
 

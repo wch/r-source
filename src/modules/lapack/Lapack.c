@@ -139,11 +139,19 @@ static SEXP modLa_rs(SEXP xin, SEXP only_values, SEXP method)
     if(strcmp(meth, "dsyevr")) {
 	/* ask for optimal size of work array */
 	lwork = -1;
+#ifdef HAVE_LAPACK
 	F77_CALL(dsyev)(jobv, uplo, &n, rx, &n, rvalues, &tmp, &lwork, &info);
+#else
+        F77_CALL(rsyev)(jobv, uplo, &n, rx, &n, rvalues, &tmp, &lwork, &info);
+#endif
 	lwork = (int) tmp;
 	if (lwork < 3*n-1) lwork = 3*n-1;  /* Sanity check */
 	work = (double *) R_alloc(lwork, sizeof(double));
+#ifdef HAVE_LAPACK
 	F77_CALL(dsyev)(jobv, uplo, &n, rx, &n, rvalues, work, &lwork, &info);
+#else
+        F77_CALL(rsyev)(jobv, uplo, &n, rx, &n, rvalues, work, &lwork, &info);
+#endif
 	if (info != 0)
 	    error("error code %d from Lapack routine dsyev", info);
     } else {
@@ -156,19 +164,33 @@ static SEXP modLa_rs(SEXP xin, SEXP only_values, SEXP method)
 	isuppz = (int *) R_alloc(2*n, sizeof(int));
 	/* ask for optimal size of work arrays */
 	lwork = -1; liwork = -1;
+#ifdef HAVE_LAPACK
 	F77_CALL(dsyevr)(jobv, range, uplo, &n, rx, &n,
 			 &vl, &vu, &il, &iu, &abstol, &m, rvalues,
 			 REAL(z), &n, isuppz,
 			 &tmp, &lwork, &itmp, &liwork, &info);
+#else
+        F77_CALL(rsyevr)(jobv, range, uplo, &n, rx, &n,
+                         &vl, &vu, &il, &iu, &abstol, &m, rvalues,
+                         REAL(z), &n, isuppz,
+                         &tmp, &lwork, &itmp, &liwork, &info);
+#endif
 	lwork = (int) tmp;
 	liwork = itmp;
 
 	work = (double *) R_alloc(lwork, sizeof(double));
 	iwork = (int *) R_alloc(liwork, sizeof(int));
+#ifdef HAVE_LAPACK
 	F77_CALL(dsyevr)(jobv, range, uplo, &n, rx, &n,
 			 &vl, &vu, &il, &iu, &abstol, &m, rvalues,
 			 REAL(z), &n, isuppz,
 			 work, &lwork, iwork, &liwork, &info);
+#else
+        F77_CALL(rsyevr)(jobv, range, uplo, &n, rx, &n,
+                         &vl, &vu, &il, &iu, &abstol, &m, rvalues,
+                         REAL(z), &n, isuppz,
+                         work, &lwork, iwork, &liwork, &info);
+#endif
 	if (info != 0)
 	    error("error code %d from Lapack routine dsyev", info);
     }

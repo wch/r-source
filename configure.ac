@@ -188,9 +188,9 @@ AC_ARG_WITH([blas],
 ## LAPACK.
 AC_ARG_WITH([lapack],
 [AC_HELP_STRING([--with-lapack],
-                [use LAPACK library, or specify it @<:@yes@:>@])],
+                [use LAPACK library, or specify it @<:@no@:>@])],
 [R_ARG_USE(lapack)],
-[use_lapack=yes])
+[use_lapack=no])
 
 ## Readline.
 AC_ARG_WITH([readline],

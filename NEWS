@@ -89,7 +89,7 @@ INSTALLATION CHANGES
 
     o	New configure option --with-lapack to allow high-performance
 	LAPACK libraries to be used: a generic LAPACK library will be
-	used if found.
+	used if found.  This option is not the default.
 
 
 DEPRECATED & DEFUNCT

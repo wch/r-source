@@ -718,12 +718,11 @@ As from @R{} 1.7.0, provision is made for using an external LAPACK
 library, principally to cope with BLAS libraries which contain a copy
 of LAPACK (such as @code{libsunperf} on Solaris and @code{vecLib} on
 MacOS 10.2.2).  However, the likely performance gains are thought to
-be small.  You can specify a specific LAPACK library by the
-configuration option @option{--with-lapack} and not to use an external
-LAPACK library by @option{--without-lapack} (although the latter may
-cause conflicts on fussy platforms if the BLAS library contains parts
-of LAPACK).  The default is to check the BLAS library and then for an
-external library @code{-llapack}.
+be small, and the default is not to search for a suitable LAPACK
+library.  You can specify a specific LAPACK library or a search for a
+generic library by the configuration option @option{--with-lapack}.
+The default for @option{--with-lapack} is to check the BLAS library and 
+then look for an external library @code{-llapack}.
 
 As with all libraries, you need to ensure that they and @R{} were
 compiled with compatible compilers and flags.  For example, this means
@@ -1120,14 +1119,6 @@ CXX=CC
 CXXFLAGS="-xO5 -xlibmil -dalign -xarch=v9"
 @end smallexample
 
-@cindex BLAS library
-@cindex LAPACK library
-@noindent
-in @file{config.site}.  Note that using @command{f95} allows the Sun
-performance library @code{libsunperf} to be selected: it will not work
-with @command{f77}, nor with @command{g77}.  @code{libsunperf}
-contains both BLAS and LAPACK code.
-
 For 64-bit compilation with @command{gcc} 3.2 we used
 
 @smallexample
@@ -1138,6 +1129,20 @@ LDFLAGS="-L/usr/local/lib/sparcv9 -L/usr/local/lib"
 @end smallexample
 @noindent
 This @emph{does} work with @command{gcc} 3.2.1.
+
+
+@cindex BLAS library
+@cindex LAPACK library
+@noindent
+in @file{config.site}.
+
+Note that using @command{f95} allows the Sun
+performance library @code{libsunperf} to be selected: it will not work
+with @command{f77}, nor with @command{g77}.  @code{libsunperf}
+contains both BLAS and LAPACK code, and @option{--with-lapack} is 
+recommended for 32-bit builds using @command{f95}, but not for
+64-bit builds where on our test system some of the routines in 
+@code{libsunperf} took excessively large amounts of memory.
 
 Some care is needed to ensure that libraries found by
 @command{configure} are compatible with the R executable and modules, as

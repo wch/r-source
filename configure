@@ -1128,7 +1128,7 @@ Optional Packages:
   --with-PACKAGE[=ARG]    use PACKAGE [ARG=yes]
   --without-PACKAGE       do not use PACKAGE (same as --with-PACKAGE=no)
   --with-blas             use BLAS library, or specify it [yes]
-  --with-lapack           use LAPACK library, or specify it [yes]
+  --with-lapack           use LAPACK library, or specify it [no]
   --with-readline         use readline library (if available) [yes]
   --with-gnome            use GNOME, or specify its prefix [no]
   --with-aqua             use Aqua (if available) (experimental) [no]
@@ -2132,7 +2132,7 @@ else
 fi
 
 else
-  use_lapack=yes
+  use_lapack=no
 fi;
 
 ## Readline.
@@ -19589,129 +19589,6 @@ echo "${ECHO_T}${acx_lapack_ok}" >&6
   fi
 fi
 
-if test "${acx_lapack_ok}" = no; then
-  if test "x$GCC" != xyes; then # only works with Sun CC
-    echo "$as_me:$LINENO: checking for acosp in -lsunmath" >&5
-echo $ECHO_N "checking for acosp in -lsunmath... $ECHO_C" >&6
-if test "${ac_cv_lib_sunmath_acosp+set}" = set; then
-  echo $ECHO_N "(cached) $ECHO_C" >&6
-else
-  ac_check_lib_save_LIBS=$LIBS
-LIBS="-lsunmath  $LIBS"
-cat >conftest.$ac_ext <<_ACEOF
-#line $LINENO "configure"
-#include "confdefs.h"
-
-/* Override any gcc2 internal prototype to avoid an error.  */
-#ifdef __cplusplus
-extern "C"
-#endif
-/* We use char because int might match the return type of a gcc2
-   builtin and then its argument prototype would still apply.  */
-char acosp ();
-#ifdef F77_DUMMY_MAIN
-#  ifdef __cplusplus
-     extern "C"
-#  endif
-   int F77_DUMMY_MAIN() { return 1; }
-#endif
-int
-main ()
-{
-acosp ();
-  ;
-  return 0;
-}
-_ACEOF
-rm -f conftest.$ac_objext conftest$ac_exeext
-if { (eval echo "$as_me:$LINENO: \"$ac_link\"") >&5
-  (eval $ac_link) 2>&5
-  ac_status=$?
-  echo "$as_me:$LINENO: \$? = $ac_status" >&5
-  (exit $ac_status); } &&
-         { ac_try='test -s conftest$ac_exeext'
-  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
-  (eval $ac_try) 2>&5
-  ac_status=$?
-  echo "$as_me:$LINENO: \$? = $ac_status" >&5
-  (exit $ac_status); }; }; then
-  ac_cv_lib_sunmath_acosp=yes
-else
-  echo "$as_me: failed program was:" >&5
-cat conftest.$ac_ext >&5
-ac_cv_lib_sunmath_acosp=no
-fi
-rm -f conftest.$ac_objext conftest$ac_exeext conftest.$ac_ext
-LIBS=$ac_check_lib_save_LIBS
-fi
-echo "$as_me:$LINENO: result: $ac_cv_lib_sunmath_acosp" >&5
-echo "${ECHO_T}$ac_cv_lib_sunmath_acosp" >&6
-if test $ac_cv_lib_sunmath_acosp = yes; then
-  as_ac_Lib=`echo "ac_cv_lib_sunperf_${zgeev}" | $as_tr_sh`
-echo "$as_me:$LINENO: checking for ${zgeev} in -lsunperf" >&5
-echo $ECHO_N "checking for ${zgeev} in -lsunperf... $ECHO_C" >&6
-if eval "test \"\${$as_ac_Lib+set}\" = set"; then
-  echo $ECHO_N "(cached) $ECHO_C" >&6
-else
-  ac_check_lib_save_LIBS=$LIBS
-LIBS="-lsunperf -lsunmath $LIBS"
-cat >conftest.$ac_ext <<_ACEOF
-#line $LINENO "configure"
-#include "confdefs.h"
-
-/* Override any gcc2 internal prototype to avoid an error.  */
-#ifdef __cplusplus
-extern "C"
-#endif
-/* We use char because int might match the return type of a gcc2
-   builtin and then its argument prototype would still apply.  */
-char ${zgeev} ();
-#ifdef F77_DUMMY_MAIN
-#  ifdef __cplusplus
-     extern "C"
-#  endif
-   int F77_DUMMY_MAIN() { return 1; }
-#endif
-int
-main ()
-{
-${zgeev} ();
-  ;
-  return 0;
-}
-_ACEOF
-rm -f conftest.$ac_objext conftest$ac_exeext
-if { (eval echo "$as_me:$LINENO: \"$ac_link\"") >&5
-  (eval $ac_link) 2>&5
-  ac_status=$?
-  echo "$as_me:$LINENO: \$? = $ac_status" >&5
-  (exit $ac_status); } &&
-         { ac_try='test -s conftest$ac_exeext'
-  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
-  (eval $ac_try) 2>&5
-  ac_status=$?
-  echo "$as_me:$LINENO: \$? = $ac_status" >&5
-  (exit $ac_status); }; }; then
-  eval "$as_ac_Lib=yes"
-else
-  echo "$as_me: failed program was:" >&5
-cat conftest.$ac_ext >&5
-eval "$as_ac_Lib=no"
-fi
-rm -f conftest.$ac_objext conftest$ac_exeext conftest.$ac_ext
-LIBS=$ac_check_lib_save_LIBS
-fi
-echo "$as_me:$LINENO: result: `eval echo '${'$as_ac_Lib'}'`" >&5
-echo "${ECHO_T}`eval echo '${'$as_ac_Lib'}'`" >&6
-if test `eval echo '${'$as_ac_Lib'}'` = yes; then
-  LAPACK_LIBS="-xlic_lib=sunperf -lsunmath"
-                                acx_lapack_ok=yes
-fi
-
-fi
-
-  fi
-fi
 
 if test "${acx_lapack_ok}" = no; then
   as_ac_Lib=`echo "ac_cv_lib_lapack_${zgeev}" | $as_tr_sh`
@@ -19777,6 +19654,14 @@ fi
 fi
 
 LIBS="${acx_lapack_save_LIBS}"
+
+if test "${acx_lapack_ok}" = yes; then
+
+cat >>confdefs.h <<\_ACEOF
+#define HAVE_LAPACK 1
+_ACEOF
+
+fi
 
 
 

@@ -1605,15 +1605,6 @@ if test "${acx_lapack_ok}" = no; then
   fi
 fi
 
-if test "${acx_lapack_ok}" = no; then
-  if test "x$GCC" != xyes; then # only works with Sun CC
-    AC_CHECK_LIB(sunmath, acosp,
-                 [AC_CHECK_LIB(sunperf, ${zgeev},
-                               [LAPACK_LIBS="-xlic_lib=sunperf -lsunmath"
-                                acx_lapack_ok=yes],
-                               [], [-lsunmath])])
-  fi
-fi
 
 if test "${acx_lapack_ok}" = no; then
   AC_CHECK_LIB(lapack, ${zgeev},
@@ -1621,6 +1612,11 @@ if test "${acx_lapack_ok}" = no; then
 fi
 
 LIBS="${acx_lapack_save_LIBS}"
+
+if test "${acx_lapack_ok}" = yes; then
+  AC_DEFINE(HAVE_LAPACK, 1,
+            [Define if external LAPACK is available.])
+fi
 
 AC_SUBST(LAPACK_LIBS)
 ])# R_LAPACK_LIBS
