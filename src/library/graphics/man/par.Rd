@@ -200,6 +200,10 @@ par(\dots, no.readonly = FALSE)
       array on the device by \emph{columns} (\code{mfcol}), or
       \emph{rows} (\code{mfrow}), respectively.
 
+      In a layout with exactly two rows and columns the base value of
+      \code{"cex"} is reduced by a factor of 0.83: if there are three or
+      more of either rows or columns, the reduction factor is 0.66.
+
       Consider the alternatives, \code{\link{layout}} and
       \code{\link{split.screen}}.
     }

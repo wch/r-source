@@ -136,9 +136,9 @@ and David M. Smith (Insightful Corporation).  We have made a number of
 small changes to reflect differences between the @R{} and @Sl{}
 programs, and expanded some of the material.
 
-We would like to extend warm thanks to Bill Venables for granting
-permission to distribute this modified version of the notes in this way,
-and for being a supporter of @R{} from way back.
+We would like to extend warm thanks to Bill Venables (and David Smith)
+for granting permission to distribute this modified version of the notes
+in this way, and for being a supporter of @R{} from way back.
 
 Comments and corrections are always welcome.  Please address email
 correspondence to @email{R-core@@r-project.org}.
@@ -5246,6 +5246,12 @@ pointing device such as a mouse.
 In addition, @R{} maintains a list of @emph{graphical parameters} which
 can be manipulated to customize your plots.
 
+This manual only describes what are known as `base' graphics.  A
+separate graphics sub-system in package @pkg{grid} coexists with base --
+it is more powerful but harder to use.  There is a recommended package
+@pkg{lattice} which builds on @pkg{grid} and provides ways to produce
+multi-panel plots akin to those in the @emph{Trellis} system in @Sl{}.
+
 @menu
 * High-level plotting commands::
 * Low-level plotting commands::
@@ -6013,6 +6019,12 @@ The layout in the Figure could have been created by setting
 @code{mfrow=c(3,2)}; the figure shows the page after four plots have
 been drawn.
 
+Setting either of these can reduce the base size of symbols and text
+(controlled by @code{par("cex")} and the pointsize of the device).  In a
+layout with exactly two rows and columns the base size is reduced by a
+factor of 0.83: if there are three or more of either rows or columns,
+the reduction factor is 0.66.
+
 @item mfg=c(2, 2, 3, 2)
 Position of current figure in a multiple figure environment.  The first
 two numbers are the row and column of the current figure; the last two
@@ -6072,14 +6084,27 @@ PostScript format.  Some commonly-used device drivers are:
 @table @code
 @item X11()
 @findex X11
-For use with the X11 window system
+For use with the X11 window system on Unix-alikes
+@item windows()
+@findex windows
+For use on Windows
+@item quartz()
+@findex quartz
+For use on MacOS X
 @item postscript()
 @findex postscript
 For printing on PostScript printers, or creating PostScript graphics
 files.
-@item pictex()
-@findex pictex
-Produces a La@TeX{} file
+@item pdf()
+@findex pdf
+Produces a PDF file, which can also be included into PDF files.
+@item png()
+@findex png
+Produces a bitmap PNG file. (Not always available: see its help page.)
+@item jpeg()
+@findex jpeg
+Produces a bitmap JPEG file, best used for @code{image} plots. 
+(Not always available: see its help page.)
 @end table
 
 When you have finished with a device, be sure to terminate the device
@@ -6151,8 +6176,10 @@ meanings are as follows:
 [UNIX]
 @item windows()
 [Windows]
+@item quartz()
+[MacOS X]
 @item postscript()
-@itemx pictex()
+@itemx pdf()
 @itemx @dots{}
 Each new call to a device driver function opens a new graphics device,
 thus extending by one the device list.  This device becomes the current
