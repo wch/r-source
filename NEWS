@@ -209,6 +209,8 @@ BUG FIXES
 
     o	pairs() now obeys an "cex = " argument, and so does panel.smooth().
 
+    o	prompt(fn) uses fn's "source" attribute if it has one.
+
 
 	**************************************************
 	*						 *

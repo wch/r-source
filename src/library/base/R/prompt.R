@@ -40,7 +40,9 @@ prompt.default <-
 	    file <- c(file, "\\arguments{",
 		      paste0("  \\item{", arg.n, "}{",
 			     " ~~Describe \\code{", arg.n, "} here~~ }"),"}")
-	fn.def <- deparse(fn)
+	fn.def <- attr(fn, "source")
+	if(is.null(fn.def))
+            fn.def <- deparse(fn)
 	if(any(br <- substr(fn.def,1,1) == "}"))
 	    fn.def[br] <- paste(" ", fn.def[br])
 	file <- c(file,
