@@ -32,7 +32,10 @@ truncate(con, \dots)
   argument the connection is re-positioned (if possible) to the
   specified position. \code{isSeekable} returns whether the connection
   in principle supports \code{seek}: currently only (possibly
-  compressed) file connections do.
+  gz-compressed) file connections do.  \code{gzfile} connections do not
+  support \code{origin = "end"}, and the file position they use is that
+  of the uncompressed file.
+  
 #ifdef windows
   The value returned by \code{seek(where=NA)} appears to be unreliable
   on Windows systems, at least for text files.  Clipboard connections
@@ -40,7 +43,7 @@ truncate(con, \dots)
 #endif
   
   File connections can be open for both writing/appending, in which case
-  \R keeps separate positions for reading and writing. Which \code{seek}
+  \R keeps separate positions for reading and writing.  Which \code{seek}
   refers to can be set by its \code{rw} argument: the default is the
   last mode (reading or writing) which was used.  Most files are
   only opened for reading or writing and so default to that state.

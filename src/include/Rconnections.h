@@ -38,7 +38,7 @@ struct Rconn {
     int (*vfprintf)(struct Rconn *, const char *, va_list);
     int (*fgetc)(struct Rconn *);
 /*    int (*ungetc)(int c, struct Rconn *); */
-    long (*seek)(struct Rconn *, double, int, int);
+    double (*seek)(struct Rconn *, double, int, int);
     void (*truncate)(struct Rconn *);
     int (*fflush)(struct Rconn *);
     size_t (*read)(void *, size_t, size_t, struct Rconn *);

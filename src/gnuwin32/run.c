@@ -426,7 +426,7 @@ static int Wpipe_fgetc(Rconnection con)
 }
 
 
-static long null_seek(Rconnection con, double where, int origin, int rw)
+static double null_seek(Rconnection con, double where, int origin, int rw)
 {
     error("seek not enabled for this connection");
     return 0; /* -Wall */
