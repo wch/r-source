@@ -28,8 +28,9 @@ browseURL(url, browser = getOption("browser"))
   Netscape 4.x, 6.2.x (but not 6.0/1), 7.1, Opera 5/6, Mozilla >= 0.9.5
   and Mozilla Firefox),
   Galeon, KDE konqueror (via kfmclient) and the GNOME interface to
-  Mozilla.  Netscape 7.0 behaves slightly differently, and you will need
-  to open it first.  Note that the type of browser is determined from
+  Mozilla.  Netscape 7.0 and Opera 7 behave slightly differently,
+  and you will need
+  to open them first.  Note that the type of browser is determined from
   its name, so this mechanism will only be used if the browser is
   installed under its canonical name.
 
