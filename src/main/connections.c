@@ -213,7 +213,7 @@ void init_con(Rconnection new, char *description, char *mode)
     new->save = -1000;
 }
 
-/* ------------------- file connections --------------------- */
+/* ------------------- file and fifo connections --------------------- */
 #ifdef Unix
 char * Runix_tmpnam(char * prefix);
 #endif
@@ -268,7 +268,7 @@ static void file_open(Rconnection con)
 	flags = fcntl(fd, F_GETFL);
 	flags |= O_NONBLOCK;
 	fcntl(fd, F_SETFL, flags);
-	}
+    }
 #endif
 }
 
@@ -431,9 +431,79 @@ static Rconnection newfile(char *description, char *mode)
     return new;
 }
 
-#ifdef UNUSED
-SEXP do_file(SEXP call, SEXP op, SEXP args, SEXP env)
+#if defined(HAVE_MKFIFO) && defined(HAVE_FCNTL_H)
+static void fifo_open(Rconnection con)
 {
+    char *name;
+    FILE *fp;
+    Rfileconn this = con->private;
+    int fd, flags;
+    int mlen = strlen(con->mode);
+
+/* FIXME
+   need do more if we are to create (not just use) a fifo here */
+
+    name = R_ExpandFileName(con->description);
+    fp = R_fopen(name, con->mode);
+    if(!fp) error("cannot open file `%s'", name);
+    this->fp = fp;
+    fd = fileno(fp);
+    con->isopen = TRUE;
+    con->canwrite = (con->mode[0] == 'w' || con->mode[0] == 'a');
+    con->canread = !con->canwrite;
+    if(mlen >= 2 && con->mode[1] == '+') con->canread = TRUE;
+    this->last_was_write = !con->canread;
+    if(mlen >= 2 && con->mode[mlen-1] == 'b') con->text = FALSE;
+    else con->text = TRUE;
+    con->save = -1000;
+
+    if(!con->blocking) {
+	flags = fcntl(fd, F_GETFL);
+	flags |= O_NONBLOCK;
+	fcntl(fd, F_SETFL, flags);
+    }
+    /* unbuffer it. setvbuf is ISO C89 */
+    setvbuf(this->fp, (char *)NULL, _IONBF, 0);
+}
+
+static Rconnection newfifo(char *description, char *mode)
+{
+    Rconnection new;
+    new = (Rconnection) malloc(sizeof(struct Rconn));
+    if(!new) error("allocation of fifo connection failed");
+    new->class = (char *) malloc(strlen("fifo") + 1);
+    if(!new->class) {
+	free(new);
+	error("allocation of fifo connection failed");
+    }
+    strcpy(new->class, "fifo");
+    new->description = (char *) malloc(strlen(description) + 1);
+    if(!new->description) {
+	free(new->class); free(new);
+	error("allocation of fifo connection failed");
+    }
+    init_con(new, description, mode);
+    new->open = &fifo_open;
+    new->close = &file_close;
+    new->vfprintf = &file_vfprintf;
+    new->fgetc = &file_fgetc;
+    new->seek = &null_seek;
+    new->truncate = &null_truncate;
+    new->fflush = &file_fflush;
+    new->read = &file_read;
+    new->write = &file_write;
+    new->private = (void *) malloc(sizeof(struct fileconn));
+    if(!new->private) {
+	free(new->description); free(new->class); free(new);
+	error("allocation of fifo connection failed");
+    }
+    return new;
+}
+#endif
+
+SEXP do_fifo(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+#if defined(HAVE_MKFIFO) && defined(HAVE_FCNTL_H)
     SEXP sfile, sopen, ans, class, enc;
     char *file, *open;
     int i, ncon, block;
@@ -457,7 +527,7 @@ SEXP do_file(SEXP call, SEXP op, SEXP args, SEXP env)
 	error("invalid `enc' argument");
     open = CHAR(STRING_ELT(sopen, 0));
     ncon = NextConnection();
-    con = Connections[ncon] = newfile(file, strlen(open) ? open : "r");
+    con = Connections[ncon] = newfifo(file, strlen(open) ? open : "r");
     for(i = 0; i < 256; i++)
 	con->encoding[i] = (unsigned char) INTEGER(enc)[i];
     con->blocking = block;
@@ -468,14 +538,17 @@ SEXP do_file(SEXP call, SEXP op, SEXP args, SEXP env)
     PROTECT(ans = allocVector(INTSXP, 1));
     INTEGER(ans)[0] = ncon;
     PROTECT(class = allocVector(STRSXP, 2));
-    SET_STRING_ELT(class, 0, mkChar("file"));
+    SET_STRING_ELT(class, 0, mkChar("fifo"));
     SET_STRING_ELT(class, 1, mkChar("connection"));
     classgets(ans, class);
     UNPROTECT(2);
 
     return ans;
-}
+#else
+    error("fifo connections are not available on this system");
+    return R_NilValue; /* -Wall */
 #endif
+}
 
 /* ------------------- pipe connections --------------------- */
 

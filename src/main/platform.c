@@ -831,8 +831,8 @@ SEXP do_capabilities(SEXP call, SEXP op, SEXP args, SEXP rho)
     int i = 0;
     
     checkArity(op, args);
-    PROTECT(ans = allocVector(LGLSXP, 8));
-    PROTECT(ansnames = allocVector(STRSXP, 8));
+    PROTECT(ans = allocVector(LGLSXP, 9));
+    PROTECT(ansnames = allocVector(STRSXP, 9));
 
     SET_STRING_ELT(ansnames, i, mkChar("jpeg"));
 #ifdef HAVE_JPEG
@@ -890,6 +890,12 @@ SEXP do_capabilities(SEXP call, SEXP op, SEXP args, SEXP rho)
     INTEGER(ans)[i++] = 0;
 #endif
 
+    SET_STRING_ELT(ansnames, i, mkChar("fifo"));
+#if defined(HAVE_MKFIFO) && defined(HAVE_FCNTL_H)
+    INTEGER(ans)[i++] = 1;
+#else
+    INTEGER(ans)[i++] = 0;
+#endif
     setAttrib(ans, R_NamesSymbol, ansnames);
     UNPROTECT(2);
     return ans;

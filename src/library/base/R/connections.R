@@ -59,6 +59,10 @@ file <- function(description = "", open = "", blocking = TRUE,
 pipe <- function(description, open = "", encoding = getOption("encoding"))
     .Internal(pipe(description, open, encoding))
 
+fifo <- function(description = "", open = "", blocking = FALSE,
+                 encoding = getOption("encoding"))
+    .Internal(fifo(description, open, blocking, encoding))
+
 url <- function(description, open = "", blocking = TRUE,
                 encoding = getOption("encoding"))
     .Internal(url(description, open, blocking, encoding))

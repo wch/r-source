@@ -2,6 +2,7 @@
 \alias{connection}
 \alias{file}
 \alias{pipe}
+\alias{fifo}
 \alias{gzfile}
 \alias{url}
 \alias{socketConnection}
@@ -25,6 +26,8 @@
 file(description = "", open = "", blocking = TRUE,
      encoding = getOption("encoding"))
 pipe(description, open = "", encoding = getOption("encoding"))
+fifo(description = "", open = "", blocking = FALSE,
+     encoding = getOption("encoding"))
 gzfile(description, open = "", encoding = getOption("encoding"),
        compression = 6)
 url(description, open = "", blocking = TRUE,
@@ -64,16 +67,16 @@ isIncomplete(con)
     partial matches allowed.}
 }
 \details{
-  The first five functions create connections.  By default the connection
+  The first six functions create connections.  By default the connection
   is not opened (except for \code{socketConnection}, but may be opened
   by setting a non-empty value of
   argument \code{open}.  \code{gzfile} applies to files compressed by
   \code{gzip}: such connections can only be binary.
 
   All platforms support file connections and \code{url("file://")}
-  connections.  The other four types may be partially implemented or
-  not implemented at all.  (They do work on Windows and on most Unix
-  platforms.)
+  connections.  The other types may be partially implemented or
+  not implemented at all.  (They do work on most Unix
+  platforms, and all bu \code{fifo} on Windows.)
 
   Proxies can be specified for \code{url} connections: see
   \code{\link{download.file}}.
@@ -120,7 +123,7 @@ isIncomplete(con)
   characters are mapped to a space in these encodings.
 }
 \value{
-  \code{file}, \code{pipe}, \code{url}, \code{gzfile} and
+  \code{file}, \code{pipe}, \code{fifo}, \code{url}, \code{gzfile} and
   \code{socketConnection} return a connection object
   which inherits from class \code{"connection"} and has a first more
   specific class.
@@ -154,11 +157,8 @@ isIncomplete(con)
 }
 \note{
   \R's connections are modelled on those in S version 4 (see Chambers,
-  1998), but the implementation is currently incomplete.  In particular,
-  fifos are not yet implemented.
-
-  However \R also goes well beyond the Svr4 model, for example in output
-  text connections and URL and socket connections.
+  1998). However \R also goes well beyond the Svr4 model, for example
+  in output text connections and URL and socket connections.
 
   The default mode in \R is \code{"r"} except for socket
   connections. This differs from Svr4, where it is the equivalent of
@@ -173,8 +173,8 @@ isIncomplete(con)
   \code{\link{textConnection}}, \code{\link{seek}}, \code{\link{readLines}},
   \code{\link{showConnections}}, \code{\link{pushBack}}.
 
-  \code{\link{capabilities}} to see if \code{gzfile}, \code{url} and
-  \code{socketConnection} are supported by this build of \R.
+  \code{\link{capabilities}} to see if \code{gzfile}, \code{url},
+  \code{fifo} and \code{socketConnection} are supported by this build of \R.
 }
 
 \examples{

@@ -23,8 +23,11 @@ NEW FEATURES
 
 	-  New function gzfile() to read from / write to compressed files.
 
-	-  Text input from file, pipe, gzfile and url connections can be
-	   read with a user-specified encoding.
+	-  New function fifo() for fifo connections.
+	   [Not quite finished yet.]
+
+	-  Text input from file, pipe, fifo, gzfile and url connections
+	   can be read with a user-specified encoding.
 
 	-  New functions readChar() and writeChar() to read character
 	   strings with known lengths and no terminators, and to write

@@ -241,6 +241,9 @@
 /* Define if you have the memmove function.  */
 #undef HAVE_MEMMOVE
 
+/* Define if you have the mkfifo function.  */
+#undef HAVE_MKFIFO
+
 /* Define if you have the popen function.  */
 #undef HAVE_POPEN
 

@@ -407,7 +407,7 @@ SEXP do_isopen(SEXP, SEXP, SEXP, SEXP);
 SEXP do_isincomplete(SEXP, SEXP, SEXP, SEXP);
 SEXP do_isseekable(SEXP, SEXP, SEXP, SEXP);
 SEXP do_close(SEXP, SEXP, SEXP, SEXP);
-SEXP do_file(SEXP, SEXP, SEXP, SEXP);
+SEXP do_fifo(SEXP, SEXP, SEXP, SEXP);
 SEXP do_pipe(SEXP, SEXP, SEXP, SEXP);
 SEXP do_url(SEXP, SEXP, SEXP, SEXP);
 SEXP do_gzfile(SEXP, SEXP, SEXP, SEXP);
