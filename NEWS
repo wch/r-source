@@ -4,6 +4,12 @@ NEW FEATURES
 
     o	xy.coords(.) has a  "recycle = FALSE" argument,	 used in text().
 
+    o	RNGtype() allows to choose different Random Number Generators.
+		__EXPERIMENTAL__ 
+
+    o	print.default(.) now also works with a `right = TRUE' argument.
+	{{ print.matrix(.) is bound to become deprecated... }}
+
 
 BUG FIXES
 
@@ -44,6 +50,8 @@ BUG FIXES
     o	matplot(.) works with lwd vectors
 
     o	par("cex.axis") now has the desired effect...
+
+    o	which(.) now omits NAs in its argument.
 
 
 		CHANGES IN R VERSION 0.63
