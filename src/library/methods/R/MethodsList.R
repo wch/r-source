@@ -545,13 +545,14 @@ promptMethods <-
       aliases <- character(n)
       fullName <- topicName("methods", f)
       for(i in seq(length = n)) {
-          labels[[i]] <- paste(args[[i]], signatures[[i]], collapse = ", ", sep = " = ")
+          sigi <- paste("\"", signatures[[i]], "\"", sep ="")
+          labels[[i]] <- paste(args[[i]], sigi, collapse = ", ", sep = " = ")
           aliases[[i]] <- paste0("\\alias{", topicName("method", c(f, signatures[[i]])),
                                 "}")
       }
-      text <- paste0(aliases, "\n\\item{", labels, "}{ ~~describe this method here }")
+      text <- paste0("\n\\item{", labels, "}{ ~~describe this method here }")
       text <- c("\\section{Methods}{\\describe{", text, "}}")
-      aliasText <- paste0("\\alias{", fullName, "}")
+      aliasText <- c(paste0("\\alias{", fullName, "}"), aliases)
       endText <- c("\\keyword{methods}", "\\keyword{ ~~ other possible keyword(s)}")
       if(identical(filename, FALSE))
           return(c(aliasText, text))

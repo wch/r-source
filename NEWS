@@ -106,7 +106,9 @@ BUG FIXES
 	will be removed in 1.8.0.  (PR#2962)
 
     o   A bug could produce apparent loops in formal method selection when
-        inheritance was restricted (used for the as() function).
+        inheritance was restricted (used for the as() function).  A
+        related problem sometimes broke attaching a package that had
+        methods for basic functions, such as names(), used in method selection.
 
     o	Empty expressions as in return(x,) could generate subsequent
 	segfaults: they are now errors.  (PR#2880)
@@ -119,6 +121,11 @@ BUG FIXES
         reproducibility of older results, under the name 
         "Buggy Kinderman-Ramage". A warning is issued if you select it 
         (also indirectly via RNGversion()).
+
+    o    promptMethods() now puts the \alias lines for methods in the
+         normal place, near the top of the file, and quotes class
+         names in signatures.
+
 
 
 
