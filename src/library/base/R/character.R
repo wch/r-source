@@ -65,27 +65,25 @@ make.names <- function(names, unique = FALSE)
     names
 }
 
-make.unique<-function (names, sep = ".")
-{
-    if (!is.character(names))
-        stop("names must be a character vector")
-    cnt<-1
-    repeat {
-        i <- which(duplicated(names))
-        j <- i[!duplicated(names[i])]
-        if (length(i) == 0)
-            break
-        newnames<-paste(names[j],cnt,sep=sep)
-        ok<- !(newnames %in% names) & !duplicated(newnames)
-        names[j][ok]<-newnames[ok]
-        if (identical(i,j) && all(ok))
-          break
-        cnt<-cnt+1
-      }
-    names
-  }
+# make.unique <- function (names, sep = ".")
+# {
+#     if (!is.character(names))
+#         stop("names must be a character vector")
+#     cnt <- 1
+#     repeat {
+#         i <- which(duplicated(names))
+#         if (length(i) == 0) break
+#         j <- i[!duplicated(names[i])]
+#         newnames <- paste(names[j], cnt, sep=sep)
+#         ok<- !(newnames %in% names) & !duplicated(newnames)
+#         names[j][ok] <- newnames[ok]
+#         if (identical(i, j) && all(ok)) break
+#         cnt <- cnt + 1
+#       }
+#     names
+# }
 
-
+make.unique <- function (names, sep = ".") .Internal(make.unique(names, sep))
 
 chartr <- function(old, new, x) .Internal(chartr(old, new, x))
 tolower <- function(x) .Internal(tolower(x))

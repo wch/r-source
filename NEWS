@@ -159,9 +159,10 @@ NEW FEATURES
     o   file.path() now returns an empty character vector if given at
 	least one zero-length argument.
 
-    o   make.names() has improvements, and there is a new auxiliary
-	function make.unique().  (Based on code contributed by Tom Minka.)
-	In particular make.names() now recognises that names beginning
+    o	make.names() has improvements, and there is a new auxiliary
+	function make.unique().  (Based on code contributed by Tom
+	Minka, since converted to a .Internal function.)  In
+	particular make.names() now recognises that names beginning
 	with a dot are valid and that reserved words are not.
 
     o   format() and hence print() make an effort to handle corrupt

@@ -259,6 +259,30 @@ SEXP duplicated(SEXP x)
     return ans;
 }
 
+static SEXP duplicated2(SEXP x, HashData *d)
+{
+    SEXP ans;
+    int *h, *v;
+    int i, n;
+
+    n = LENGTH(x);
+    HashTableSetup(x, d);
+    PROTECT(d->HashTable);
+    ans = allocVector(LGLSXP, n);
+    UNPROTECT(1);
+    h = INTEGER(d->HashTable);
+    v = LOGICAL(ans);
+
+    for (i = 0; i < d->M; i++)
+	h[i] = NIL;
+
+    for (i = 0; i < n; i++)
+	v[i] = isDuplicated(x, i, d);
+
+    return ans;
+}
+
+
 /* .Internal(duplicated(x)) [op=0]  and
    .Internal(unique(x))	    [op=1] :
 */
@@ -905,12 +929,15 @@ SEXP Rrowsum_df(SEXP x, SEXP ncol, SEXP g, SEXP uniqueg)
     return ans;
 }
 
+#include <R_ext/RS.h>
+
+
 SEXP do_makeunique(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP names, sep, ans, dup, newx;
-    int i, n, cnt;
+    int i, n, cnt, len, maxlen = 0;
     HashData data;
-    char *csep, buf[512];
+    char *csep, *buf;
     
     checkArity(op, args);
     names = CAR(args);
@@ -921,29 +948,31 @@ SEXP do_makeunique(SEXP call, SEXP op, SEXP args, SEXP env)
 	errorcall(call, "sep must be a character string");
     csep = CHAR(STRING_ELT(sep, 0));
     PROTECT(ans = allocVector(STRSXP, n));
-    for(i = 0; i < n; i++)
+    for(i = 0; i < n; i++) {
 	SET_STRING_ELT(ans, i, STRING_ELT(names, i));
+	len = strlen(CHAR(STRING_ELT(names, i)));
+	if(len > maxlen) maxlen = len;
+    }
     if(n > 1) {
-	HashTableSetup(names, &data);
+	/* +2 for terminator and rounding error */
+	buf = Calloc(maxlen +  strlen(csep) + log((double)n)/log(10.0) + 2, 
+		     char*);
 	data.nomatch = 0;
-	PROTECT(data.HashTable);
-	PROTECT(dup = duplicated(names));
 	PROTECT(newx = allocVector(STRSXP, 1));
+	dup = duplicated2(names, &data);
 	for(i = 1; i < n; i++) { /* first cannot be a duplicate */
 	    if(!LOGICAL(dup)[i]) continue;
 	    /* Try appending 1,2,3, ..., n-1 until it is not already in use */
 	    for(cnt = 1; cnt < n; cnt++) {
 		sprintf(buf, "%s%s%d", CHAR(STRING_ELT(names, i)), csep, cnt);
 		SET_STRING_ELT(newx, 0, mkChar(buf));
-		PrintValue(newx);
-		if(Lookup(names, newx, 0, &data) == data.nomatch) break;
+		if(Lookup(ans, newx, 0, &data) == data.nomatch) break;
 	    }
-	    /* insert it */
-	    PrintValue(newx);
-	    (void) isDuplicated(newx, 0, &data);
 	    SET_STRING_ELT(ans, i, STRING_ELT(newx, 0));
+	    /* insert it */ (void) isDuplicated(ans, i, &data);
 	}
-	UNPROTECT(3);
+	Free(buf);
+	UNPROTECT(1);
     }
     UNPROTECT(1);
     return ans;
