@@ -1,17 +1,18 @@
 
-R : Copyright 2003, The R Development Core Team
-Version 1.8.0 Under development (unstable) (2003-06-04)
+R : Copyright 2003, The R Foundation for Statistical Computing
+Version 1.9.0 Under development (unstable) (2003-12-04), ISBN 3-900051-00-3
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
-Type `license()' or `licence()' for distribution details.
+Type 'license()' or 'licence()' for distribution details.
 
 R is a collaborative project with many contributors.
-Type `contributors()' for more information.
+Type 'contributors()' for more information and
+'citation()' on how to cite R in publications.
 
-Type `demo()' for some demos, `help()' for on-line help, or
-`help.start()' for a HTML browser interface to help.
-Type `q()' to quit R.
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for a HTML browser interface to help.
+Type 'q()' to quit R.
 
 > .proctime00 <- proc.time()
 > 
@@ -86,11 +87,11 @@ Type `q()' to quit R.
 > if(!inherits(res, 'try-error')) report(is.symbol(res))
 > res <- try(as.table( x ), silent = TRUE)
 > if(!inherits(res, 'try-error')) report(is.table(res))
-> res <- try(as.ts( x ), silent = TRUE)
-> if(!inherits(res, 'try-error')) report(is.ts(res))
 > res <- try(as.vector( x ), silent = TRUE)
 > if(!inherits(res, 'try-error')) report(is.vector(res))
 [1] TRUE
+> res <- try(as.ts( x ), silent = TRUE)
+> if(!inherits(res, 'try-error')) report(is.ts(res))
 > 
 > res <- try(as.array( x ), silent = TRUE)
 > if(!inherits(res, 'try-error'))
@@ -200,15 +201,15 @@ IS: [1] TRUE
 > if(!inherits(res, 'try-error'))
 +    report({if(is.table(x)) { cat('IS: ');all.equal(x, res, tol=0)
 +    } else   !isall.equal(x, res)})
-> res <- try(as.ts( x ), silent = TRUE)
-> if(!inherits(res, 'try-error'))
-+    report({if(is.ts(x)) { cat('IS: ');all.equal(x, res, tol=0)
-+    } else   !isall.equal(x, res)})
 > res <- try(as.vector( x ), silent = TRUE)
 > if(!inherits(res, 'try-error'))
 +    report({if(is.vector(x)) { cat('IS: ');all.equal(x, res, tol=0)
 +    } else   !isall.equal(x, res)})
 IS: [1] TRUE
+> res <- try(as.ts( x ), silent = TRUE)
+> if(!inherits(res, 'try-error'))
++    report({if(is.ts(x)) { cat('IS: ');all.equal(x, res, tol=0)
++    } else   !isall.equal(x, res)})
 > f <- try(as.POSIXct( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.POSIXct( f )))
 > f <- try(as.POSIXlt( x ), silent = TRUE)
@@ -240,8 +241,6 @@ IS: [1] TRUE
 > f <- try(as.factor( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.factor( f )))
 [1] TRUE
-> f <- try(as.formula( x ), silent = TRUE)
->   if(!inherits(f, 'try-error')) report(identical(f, as.formula( f )))
 > f <- try(as.function( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.function( f )))
 > f <- try(as.integer( x ), silent = TRUE)
@@ -282,11 +281,13 @@ IS: [1] TRUE
 >   if(!inherits(f, 'try-error')) report(identical(f, as.symbol( f )))
 > f <- try(as.table( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.table( f )))
-> f <- try(as.ts( x ), silent = TRUE)
->   if(!inherits(f, 'try-error')) report(identical(f, as.ts( f )))
 > f <- try(as.vector( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.vector( f )))
 [1] TRUE
+> f <- try(as.formula( x ), silent = TRUE)
+>   if(!inherits(f, 'try-error')) report(identical(f, as.formula( f )))
+> f <- try(as.ts( x ), silent = TRUE)
+>   if(!inherits(f, 'try-error')) report(identical(f, as.ts( f )))
 > 
 > ###--------
 >  x <- NULL
@@ -350,12 +351,12 @@ Error: x is not TRUE
 > if(!inherits(res, 'try-error')) report(is.symbol(res))
 > res <- try(as.table( x ), silent = TRUE)
 > if(!inherits(res, 'try-error')) report(is.table(res))
-> res <- try(as.ts( x ), silent = TRUE)
-> if(!inherits(res, 'try-error')) report(is.ts(res))
 > res <- try(as.vector( x ), silent = TRUE)
 > if(!inherits(res, 'try-error')) report(is.vector(res))
 [1] FALSE
 Error: x is not TRUE
+> res <- try(as.ts( x ), silent = TRUE)
+> if(!inherits(res, 'try-error')) report(is.ts(res))
 > 
 > res <- try(as.array( x ), silent = TRUE)
 > if(!inherits(res, 'try-error'))
@@ -463,16 +464,16 @@ IS: [1] TRUE
 > if(!inherits(res, 'try-error'))
 +    report({if(is.table(x)) { cat('IS: ');all.equal(x, res, tol=0)
 +    } else   !isall.equal(x, res)})
-> res <- try(as.ts( x ), silent = TRUE)
-> if(!inherits(res, 'try-error'))
-+    report({if(is.ts(x)) { cat('IS: ');all.equal(x, res, tol=0)
-+    } else   !isall.equal(x, res)})
 > res <- try(as.vector( x ), silent = TRUE)
 > if(!inherits(res, 'try-error'))
 +    report({if(is.vector(x)) { cat('IS: ');all.equal(x, res, tol=0)
 +    } else   !isall.equal(x, res)})
 [1] FALSE
 Error: x is not TRUE
+> res <- try(as.ts( x ), silent = TRUE)
+> if(!inherits(res, 'try-error'))
++    report({if(is.ts(x)) { cat('IS: ');all.equal(x, res, tol=0)
++    } else   !isall.equal(x, res)})
 > f <- try(as.POSIXct( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.POSIXct( f )))
 > f <- try(as.POSIXlt( x ), silent = TRUE)
@@ -503,9 +504,6 @@ Error: x is not TRUE
 [1] TRUE
 > f <- try(as.factor( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.factor( f )))
-> f <- try(as.formula( x ), silent = TRUE)
->   if(!inherits(f, 'try-error')) report(identical(f, as.formula( f )))
-[1] TRUE
 > f <- try(as.function( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.function( f )))
 > f <- try(as.integer( x ), silent = TRUE)
@@ -544,11 +542,14 @@ Error: x is not TRUE
 >   if(!inherits(f, 'try-error')) report(identical(f, as.symbol( f )))
 > f <- try(as.table( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.table( f )))
-> f <- try(as.ts( x ), silent = TRUE)
->   if(!inherits(f, 'try-error')) report(identical(f, as.ts( f )))
 > f <- try(as.vector( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.vector( f )))
 [1] TRUE
+> f <- try(as.formula( x ), silent = TRUE)
+>   if(!inherits(f, 'try-error')) report(identical(f, as.formula( f )))
+[1] TRUE
+> f <- try(as.ts( x ), silent = TRUE)
+>   if(!inherits(f, 'try-error')) report(identical(f, as.ts( f )))
 > 
 > ###--------
 >  x <- list()
@@ -612,11 +613,11 @@ Error: x is not TRUE
 > if(!inherits(res, 'try-error')) report(is.symbol(res))
 > res <- try(as.table( x ), silent = TRUE)
 > if(!inherits(res, 'try-error')) report(is.table(res))
-> res <- try(as.ts( x ), silent = TRUE)
-> if(!inherits(res, 'try-error')) report(is.ts(res))
 > res <- try(as.vector( x ), silent = TRUE)
 > if(!inherits(res, 'try-error')) report(is.vector(res))
 [1] TRUE
+> res <- try(as.ts( x ), silent = TRUE)
+> if(!inherits(res, 'try-error')) report(is.ts(res))
 > 
 > res <- try(as.array( x ), silent = TRUE)
 > if(!inherits(res, 'try-error'))
@@ -724,15 +725,15 @@ IS: [1] TRUE
 > if(!inherits(res, 'try-error'))
 +    report({if(is.table(x)) { cat('IS: ');all.equal(x, res, tol=0)
 +    } else   !isall.equal(x, res)})
-> res <- try(as.ts( x ), silent = TRUE)
-> if(!inherits(res, 'try-error'))
-+    report({if(is.ts(x)) { cat('IS: ');all.equal(x, res, tol=0)
-+    } else   !isall.equal(x, res)})
 > res <- try(as.vector( x ), silent = TRUE)
 > if(!inherits(res, 'try-error'))
 +    report({if(is.vector(x)) { cat('IS: ');all.equal(x, res, tol=0)
 +    } else   !isall.equal(x, res)})
 IS: [1] TRUE
+> res <- try(as.ts( x ), silent = TRUE)
+> if(!inherits(res, 'try-error'))
++    report({if(is.ts(x)) { cat('IS: ');all.equal(x, res, tol=0)
++    } else   !isall.equal(x, res)})
 > f <- try(as.POSIXct( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.POSIXct( f )))
 > f <- try(as.POSIXlt( x ), silent = TRUE)
@@ -763,8 +764,6 @@ IS: [1] TRUE
 [1] TRUE
 > f <- try(as.factor( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.factor( f )))
-> f <- try(as.formula( x ), silent = TRUE)
->   if(!inherits(f, 'try-error')) report(identical(f, as.formula( f )))
 > f <- try(as.function( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.function( f )))
 > f <- try(as.integer( x ), silent = TRUE)
@@ -804,11 +803,13 @@ IS: [1] TRUE
 >   if(!inherits(f, 'try-error')) report(identical(f, as.symbol( f )))
 > f <- try(as.table( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.table( f )))
-> f <- try(as.ts( x ), silent = TRUE)
->   if(!inherits(f, 'try-error')) report(identical(f, as.ts( f )))
 > f <- try(as.vector( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.vector( f )))
 [1] TRUE
+> f <- try(as.formula( x ), silent = TRUE)
+>   if(!inherits(f, 'try-error')) report(identical(f, as.formula( f )))
+> f <- try(as.ts( x ), silent = TRUE)
+>   if(!inherits(f, 'try-error')) report(identical(f, as.ts( f )))
 > 
 > ###--------
 >  x <- 1:1
@@ -878,11 +879,11 @@ IS: [1] TRUE
 > res <- try(as.table( x ), silent = TRUE)
 > if(!inherits(res, 'try-error')) report(is.table(res))
 [1] TRUE
-> res <- try(as.ts( x ), silent = TRUE)
-> if(!inherits(res, 'try-error')) report(is.ts(res))
-[1] TRUE
 > res <- try(as.vector( x ), silent = TRUE)
 > if(!inherits(res, 'try-error')) report(is.vector(res))
+[1] TRUE
+> res <- try(as.ts( x ), silent = TRUE)
+> if(!inherits(res, 'try-error')) report(is.ts(res))
 [1] TRUE
 > 
 > res <- try(as.array( x ), silent = TRUE)
@@ -997,16 +998,16 @@ IS: [1] TRUE
 +    report({if(is.table(x)) { cat('IS: ');all.equal(x, res, tol=0)
 +    } else   !isall.equal(x, res)})
 [1] TRUE
-> res <- try(as.ts( x ), silent = TRUE)
-> if(!inherits(res, 'try-error'))
-+    report({if(is.ts(x)) { cat('IS: ');all.equal(x, res, tol=0)
-+    } else   !isall.equal(x, res)})
-[1] TRUE
 > res <- try(as.vector( x ), silent = TRUE)
 > if(!inherits(res, 'try-error'))
 +    report({if(is.vector(x)) { cat('IS: ');all.equal(x, res, tol=0)
 +    } else   !isall.equal(x, res)})
 IS: [1] TRUE
+> res <- try(as.ts( x ), silent = TRUE)
+> if(!inherits(res, 'try-error'))
++    report({if(is.ts(x)) { cat('IS: ');all.equal(x, res, tol=0)
++    } else   !isall.equal(x, res)})
+[1] TRUE
 > f <- try(as.POSIXct( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.POSIXct( f )))
 > f <- try(as.POSIXlt( x ), silent = TRUE)
@@ -1039,8 +1040,6 @@ IS: [1] TRUE
 > f <- try(as.factor( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.factor( f )))
 [1] TRUE
-> f <- try(as.formula( x ), silent = TRUE)
->   if(!inherits(f, 'try-error')) report(identical(f, as.formula( f )))
 > f <- try(as.function( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.function( f )))
 > f <- try(as.integer( x ), silent = TRUE)
@@ -1084,11 +1083,13 @@ IS: [1] TRUE
 > f <- try(as.table( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.table( f )))
 [1] TRUE
-> f <- try(as.ts( x ), silent = TRUE)
->   if(!inherits(f, 'try-error')) report(identical(f, as.ts( f )))
-[1] TRUE
 > f <- try(as.vector( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.vector( f )))
+[1] TRUE
+> f <- try(as.formula( x ), silent = TRUE)
+>   if(!inherits(f, 'try-error')) report(identical(f, as.formula( f )))
+> f <- try(as.ts( x ), silent = TRUE)
+>   if(!inherits(f, 'try-error')) report(identical(f, as.ts( f )))
 [1] TRUE
 > 
 > ###--------
@@ -1159,11 +1160,11 @@ IS: [1] TRUE
 > res <- try(as.table( x ), silent = TRUE)
 > if(!inherits(res, 'try-error')) report(is.table(res))
 [1] TRUE
-> res <- try(as.ts( x ), silent = TRUE)
-> if(!inherits(res, 'try-error')) report(is.ts(res))
-[1] TRUE
 > res <- try(as.vector( x ), silent = TRUE)
 > if(!inherits(res, 'try-error')) report(is.vector(res))
+[1] TRUE
+> res <- try(as.ts( x ), silent = TRUE)
+> if(!inherits(res, 'try-error')) report(is.ts(res))
 [1] TRUE
 > 
 > res <- try(as.array( x ), silent = TRUE)
@@ -1278,16 +1279,16 @@ IS: [1] TRUE
 +    report({if(is.table(x)) { cat('IS: ');all.equal(x, res, tol=0)
 +    } else   !isall.equal(x, res)})
 [1] TRUE
-> res <- try(as.ts( x ), silent = TRUE)
-> if(!inherits(res, 'try-error'))
-+    report({if(is.ts(x)) { cat('IS: ');all.equal(x, res, tol=0)
-+    } else   !isall.equal(x, res)})
-[1] TRUE
 > res <- try(as.vector( x ), silent = TRUE)
 > if(!inherits(res, 'try-error'))
 +    report({if(is.vector(x)) { cat('IS: ');all.equal(x, res, tol=0)
 +    } else   !isall.equal(x, res)})
 IS: [1] TRUE
+> res <- try(as.ts( x ), silent = TRUE)
+> if(!inherits(res, 'try-error'))
++    report({if(is.ts(x)) { cat('IS: ');all.equal(x, res, tol=0)
++    } else   !isall.equal(x, res)})
+[1] TRUE
 > f <- try(as.POSIXct( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.POSIXct( f )))
 > f <- try(as.POSIXlt( x ), silent = TRUE)
@@ -1320,8 +1321,6 @@ IS: [1] TRUE
 > f <- try(as.factor( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.factor( f )))
 [1] TRUE
-> f <- try(as.formula( x ), silent = TRUE)
->   if(!inherits(f, 'try-error')) report(identical(f, as.formula( f )))
 > f <- try(as.function( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.function( f )))
 > f <- try(as.integer( x ), silent = TRUE)
@@ -1365,11 +1364,13 @@ IS: [1] TRUE
 > f <- try(as.table( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.table( f )))
 [1] TRUE
-> f <- try(as.ts( x ), silent = TRUE)
->   if(!inherits(f, 'try-error')) report(identical(f, as.ts( f )))
-[1] TRUE
 > f <- try(as.vector( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.vector( f )))
+[1] TRUE
+> f <- try(as.formula( x ), silent = TRUE)
+>   if(!inherits(f, 'try-error')) report(identical(f, as.formula( f )))
+> f <- try(as.ts( x ), silent = TRUE)
+>   if(!inherits(f, 'try-error')) report(identical(f, as.ts( f )))
 [1] TRUE
 > 
 > ###--------
@@ -1438,11 +1439,11 @@ IS: [1] TRUE
 [1] TRUE
 > res <- try(as.table( x ), silent = TRUE)
 > if(!inherits(res, 'try-error')) report(is.table(res))
-> res <- try(as.ts( x ), silent = TRUE)
-> if(!inherits(res, 'try-error')) report(is.ts(res))
-[1] TRUE
 > res <- try(as.vector( x ), silent = TRUE)
 > if(!inherits(res, 'try-error')) report(is.vector(res))
+[1] TRUE
+> res <- try(as.ts( x ), silent = TRUE)
+> if(!inherits(res, 'try-error')) report(is.ts(res))
 [1] TRUE
 > 
 > res <- try(as.array( x ), silent = TRUE)
@@ -1555,16 +1556,16 @@ IS: [1] TRUE
 > if(!inherits(res, 'try-error'))
 +    report({if(is.table(x)) { cat('IS: ');all.equal(x, res, tol=0)
 +    } else   !isall.equal(x, res)})
-> res <- try(as.ts( x ), silent = TRUE)
-> if(!inherits(res, 'try-error'))
-+    report({if(is.ts(x)) { cat('IS: ');all.equal(x, res, tol=0)
-+    } else   !isall.equal(x, res)})
-[1] TRUE
 > res <- try(as.vector( x ), silent = TRUE)
 > if(!inherits(res, 'try-error'))
 +    report({if(is.vector(x)) { cat('IS: ');all.equal(x, res, tol=0)
 +    } else   !isall.equal(x, res)})
 IS: [1] TRUE
+> res <- try(as.ts( x ), silent = TRUE)
+> if(!inherits(res, 'try-error'))
++    report({if(is.ts(x)) { cat('IS: ');all.equal(x, res, tol=0)
++    } else   !isall.equal(x, res)})
+[1] TRUE
 > f <- try(as.POSIXct( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.POSIXct( f )))
 > f <- try(as.POSIXlt( x ), silent = TRUE)
@@ -1597,8 +1598,6 @@ Error in strptime(tim, format = format) : invalid `x' argument
 > f <- try(as.factor( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.factor( f )))
 [1] TRUE
-> f <- try(as.formula( x ), silent = TRUE)
->   if(!inherits(f, 'try-error')) report(identical(f, as.formula( f )))
 > f <- try(as.function( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.function( f )))
 > f <- try(as.integer( x ), silent = TRUE)
@@ -1641,11 +1640,13 @@ Error in strptime(tim, format = format) : invalid `x' argument
 [1] TRUE
 > f <- try(as.table( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.table( f )))
-> f <- try(as.ts( x ), silent = TRUE)
->   if(!inherits(f, 'try-error')) report(identical(f, as.ts( f )))
-[1] TRUE
 > f <- try(as.vector( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.vector( f )))
+[1] TRUE
+> f <- try(as.formula( x ), silent = TRUE)
+>   if(!inherits(f, 'try-error')) report(identical(f, as.formula( f )))
+> f <- try(as.ts( x ), silent = TRUE)
+>   if(!inherits(f, 'try-error')) report(identical(f, as.ts( f )))
 [1] TRUE
 > 
 > ###--------
@@ -1712,11 +1713,11 @@ Error in strptime(tim, format = format) : invalid `x' argument
 > if(!inherits(res, 'try-error')) report(is.symbol(res))
 > res <- try(as.table( x ), silent = TRUE)
 > if(!inherits(res, 'try-error')) report(is.table(res))
-> res <- try(as.ts( x ), silent = TRUE)
-> if(!inherits(res, 'try-error')) report(is.ts(res))
-[1] TRUE
 > res <- try(as.vector( x ), silent = TRUE)
 > if(!inherits(res, 'try-error')) report(is.vector(res))
+[1] TRUE
+> res <- try(as.ts( x ), silent = TRUE)
+> if(!inherits(res, 'try-error')) report(is.ts(res))
 [1] TRUE
 > 
 > res <- try(as.array( x ), silent = TRUE)
@@ -1827,16 +1828,16 @@ IS: [1] TRUE
 > if(!inherits(res, 'try-error'))
 +    report({if(is.table(x)) { cat('IS: ');all.equal(x, res, tol=0)
 +    } else   !isall.equal(x, res)})
-> res <- try(as.ts( x ), silent = TRUE)
-> if(!inherits(res, 'try-error'))
-+    report({if(is.ts(x)) { cat('IS: ');all.equal(x, res, tol=0)
-+    } else   !isall.equal(x, res)})
-[1] TRUE
 > res <- try(as.vector( x ), silent = TRUE)
 > if(!inherits(res, 'try-error'))
 +    report({if(is.vector(x)) { cat('IS: ');all.equal(x, res, tol=0)
 +    } else   !isall.equal(x, res)})
 IS: [1] TRUE
+> res <- try(as.ts( x ), silent = TRUE)
+> if(!inherits(res, 'try-error'))
++    report({if(is.ts(x)) { cat('IS: ');all.equal(x, res, tol=0)
++    } else   !isall.equal(x, res)})
+[1] TRUE
 > f <- try(as.POSIXct( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.POSIXct( f )))
 > f <- try(as.POSIXlt( x ), silent = TRUE)
@@ -1868,8 +1869,6 @@ IS: [1] TRUE
 [1] TRUE
 > f <- try(as.factor( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.factor( f )))
-> f <- try(as.formula( x ), silent = TRUE)
->   if(!inherits(f, 'try-error')) report(identical(f, as.formula( f )))
 > f <- try(as.function( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.function( f )))
 [1] TRUE
@@ -1910,11 +1909,13 @@ IS: [1] TRUE
 >   if(!inherits(f, 'try-error')) report(identical(f, as.symbol( f )))
 > f <- try(as.table( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.table( f )))
-> f <- try(as.ts( x ), silent = TRUE)
->   if(!inherits(f, 'try-error')) report(identical(f, as.ts( f )))
-[1] TRUE
 > f <- try(as.vector( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.vector( f )))
+[1] TRUE
+> f <- try(as.formula( x ), silent = TRUE)
+>   if(!inherits(f, 'try-error')) report(identical(f, as.formula( f )))
+> f <- try(as.ts( x ), silent = TRUE)
+>   if(!inherits(f, 'try-error')) report(identical(f, as.ts( f )))
 [1] TRUE
 > 
 > ###--------
@@ -1980,12 +1981,12 @@ IS: [1] TRUE
 > if(!inherits(res, 'try-error')) report(is.symbol(res))
 > res <- try(as.table( x ), silent = TRUE)
 > if(!inherits(res, 'try-error')) report(is.table(res))
-> res <- try(as.ts( x ), silent = TRUE)
-> if(!inherits(res, 'try-error')) report(is.ts(res))
 > res <- try(as.vector( x ), silent = TRUE)
 > if(!inherits(res, 'try-error')) report(is.vector(res))
 [1] FALSE
 Error: x is not TRUE
+> res <- try(as.ts( x ), silent = TRUE)
+> if(!inherits(res, 'try-error')) report(is.ts(res))
 > 
 > res <- try(as.array( x ), silent = TRUE)
 > if(!inherits(res, 'try-error'))
@@ -2097,16 +2098,16 @@ Error: x is not TRUE
 > if(!inherits(res, 'try-error'))
 +    report({if(is.table(x)) { cat('IS: ');all.equal(x, res, tol=0)
 +    } else   !isall.equal(x, res)})
-> res <- try(as.ts( x ), silent = TRUE)
-> if(!inherits(res, 'try-error'))
-+    report({if(is.ts(x)) { cat('IS: ');all.equal(x, res, tol=0)
-+    } else   !isall.equal(x, res)})
 > res <- try(as.vector( x ), silent = TRUE)
 > if(!inherits(res, 'try-error'))
 +    report({if(is.vector(x)) { cat('IS: ');all.equal(x, res, tol=0)
 +    } else   !isall.equal(x, res)})
 [1] FALSE
 Error: x is not TRUE
+> res <- try(as.ts( x ), silent = TRUE)
+> if(!inherits(res, 'try-error'))
++    report({if(is.ts(x)) { cat('IS: ');all.equal(x, res, tol=0)
++    } else   !isall.equal(x, res)})
 > f <- try(as.POSIXct( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.POSIXct( f )))
 > f <- try(as.POSIXlt( x ), silent = TRUE)
@@ -2137,9 +2138,6 @@ Error: x is not TRUE
 [1] TRUE
 > f <- try(as.factor( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.factor( f )))
-> f <- try(as.formula( x ), silent = TRUE)
->   if(!inherits(f, 'try-error')) report(identical(f, as.formula( f )))
-[1] TRUE
 > f <- try(as.function( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.function( f )))
 [1] TRUE
@@ -2180,12 +2178,15 @@ Error: x is not TRUE
 >   if(!inherits(f, 'try-error')) report(identical(f, as.symbol( f )))
 > f <- try(as.table( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.table( f )))
-> f <- try(as.ts( x ), silent = TRUE)
->   if(!inherits(f, 'try-error')) report(identical(f, as.ts( f )))
 > f <- try(as.vector( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.vector( f )))
 [1] TRUE
+> f <- try(as.formula( x ), silent = TRUE)
+>   if(!inherits(f, 'try-error')) report(identical(f, as.formula( f )))
+[1] TRUE
+> f <- try(as.ts( x ), silent = TRUE)
+>   if(!inherits(f, 'try-error')) report(identical(f, as.ts( f )))
 > cat('Time elapsed: ', proc.time() - .proctime00,'\n')
-Time elapsed:  0.48 0.01 0.51 NA NA 
+Time elapsed:  0.23 0.01 0.24 0 0 
 > 
 > 

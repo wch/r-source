@@ -3,11 +3,12 @@
 .Random.seed <- c(0,rep(7654, 3))
 
 ## Drop these for strict testing {and add them to demos2.R)
-## in ../src/library/base/man/demo.Rd }:
-dont <- list(base = c("Hershey", "Japanese", "lm.glm", "nlm", "plotmath")
+## lm.glm is in ../src/library/utils/man/demo.Rd }:
+dont <- list(graphics = c("Hershey", "Japanese", "plotmath"),
+             stats = c("lm.glm", "nlm")
              )
 ## don't take tcltk here
-for(pkg in c("base", "eda")) {
+for(pkg in c("base", "eda", "graphics", "stats")) {
 
     demos <- list.files(file.path(system.file(package = pkg), "demo"),
                         pattern = "\\.R$")

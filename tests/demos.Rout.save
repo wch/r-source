@@ -1,13 +1,14 @@
 
-R : Copyright 2003, The R Development Core Team
-Version 1.8.0 Patched (2003-10-18)
+R : Copyright 2003, The R Foundation for Statistical Computing
+Version 1.9.0 Under development (unstable) (2003-12-04), ISBN 3-900051-00-3
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
 Type 'license()' or 'licence()' for distribution details.
 
 R is a collaborative project with many contributors.
-Type 'contributors()' for more information.
+Type 'contributors()' for more information and
+'citation()' on how to cite R in publications.
 
 Type 'demo()' for some demos, 'help()' for on-line help, or
 'help.start()' for a HTML browser interface to help.
@@ -18,11 +19,12 @@ Type 'q()' to quit R.
 > .Random.seed <- c(0,rep(7654, 3))
 > 
 > ## Drop these for strict testing {and add them to demos2.R)
-> ## in ../src/library/base/man/demo.Rd }:
-> dont <- list(base = c("Hershey", "Japanese", "lm.glm", "nlm", "plotmath")
+> ## lm.glm is in ../src/library/utils/man/demo.Rd }:
+> dont <- list(graphics = c("Hershey", "Japanese", "plotmath"),
++              stats = c("lm.glm", "nlm")
 +              )
 > ## don't take tcltk here
-> for(pkg in c("base", "eda")) {
+> for(pkg in c("base", "eda", "graphics", "stats")) {
 + 
 +     demos <- list.files(file.path(system.file(package = pkg), "demo"),
 +                         pattern = "\\.R$")
@@ -41,153 +43,653 @@ Type 'q()' to quit R.
 + }
 
 
-	demo(glm.vr)
+	demo(is.things)
+	---- ~~~~~~~~~
+
+> ls.base <- ls("package:base")
+
+> base.is.f <- sapply(ls.base, function(x) is.function(get(x)))
+
+> bi <- ls.base[base.is.f]
+
+> cat("\nNumber of base objects:\t\t", length(ls.base), 
+    "\nNumber of builtin functions:\t", sum(base.is.f), "\n\t starting with 'is.' :\t ", 
+    length(is.bi <- bi[substring(bi, 1, 3) == "is."]), "\n")
+
+Number of base objects:		 996 
+Number of builtin functions:	 969 
+	 starting with 'is.' :	  42 
+
+> is.primitive <- function(obj) is.function(obj) && 
+    is.null(args(obj))
+
+> is.method <- function(fname) {
+    isFun <- function(name) (exists(name, mode = "function") && 
+        is.na(match(name, c("is", "as"))))
+    np <- length(sp <- strsplit(fname, split = "\\.")[[1]])
+    if (np <= 1) 
+        FALSE
+    else (isFun(pas .... [TRUNCATED] 
+
+> is.ALL <- function(obj, func.names = ls(pos = length(search())), 
+    not.using = c("is.single", "is.loaded", "is.empty.model", 
+        "is.R", "is.element"), true.only = FALSE, debug = FALSE) {
+    is.fn <- func.names[substring(func.names, 1, 3) == .... [TRUNCATED] 
+
+> print.isList <- function(x, ..., verbose = getOption("verbose")) {
+    if (is.list(x)) {
+        if (verbose) 
+            cat("print.isList(): list case (length=", length(x), 
+                ")\n")
+        nm <- format(names(x))
+        rr <- lappl .... [TRUNCATED] 
+
+> is.ALL(NULL)
+is.array       : . 
+is.atomic      : | 
+is.call        : . 
+is.character   : . 
+is.complex     : . 
+is.data.frame  : . 
+is.double      : . 
+is.environment : . 
+is.expression  : . 
+is.factor      : . 
+is.finite      : NA 
+is.function    : . 
+is.infinite    :  
+is.integer     : . 
+is.language    : . 
+is.list        : . 
+is.logical     : . 
+is.matrix      : . 
+is.na          : NA 
+is.name        : . 
+is.nan         :  
+is.null        : | 
+is.numeric     : . 
+is.object      : . 
+is.ordered     : . 
+is.pairlist    : | 
+is.qr          : . 
+is.real        : . 
+is.recursive   : . 
+is.symbol      : . 
+is.table       : . 
+is.unsorted    : . 
+is.vector      : . 
+
+> is.ALL(NULL, true.only = TRUE)
+[1] "is.atomic"   "is.null"     "is.pairlist"
+
+> all.equal(NULL, pairlist())
+[1] TRUE
+
+> is.ALL(list(), true.only = TRUE)
+[1] "is.list"      "is.recursive" "is.vector"   
+
+> (pl <- is.ALL(pairlist(1, list(3, "A")), true.only = TRUE))
+[1] "is.list"      "is.pairlist"  "is.recursive"
+
+> (ll <- is.ALL(list(1, pairlist(3, "A")), true.only = TRUE))
+[1] "is.list"      "is.recursive" "is.vector"   
+
+> all.equal(pl[pl != "is.pairlist"], ll[ll != "is.vector"])
+[1] TRUE
+
+> is.ALL(1:5)
+is.array       : . 
+is.atomic      : | 
+is.call        : . 
+is.character   : . 
+is.complex     : . 
+is.data.frame  : . 
+is.double      : . 
+is.environment : . 
+is.expression  : . 
+is.factor      : . 
+is.finite      : | | | | | 
+is.function    : . 
+is.infinite    : . . . . . 
+is.integer     : | 
+is.language    : . 
+is.list        : . 
+is.logical     : . 
+is.matrix      : . 
+is.na          : . . . . . 
+is.name        : . 
+is.nan         : . . . . . 
+is.null        : . 
+is.numeric     : | 
+is.object      : . 
+is.ordered     : . 
+is.pairlist    : . 
+is.qr          : . 
+is.real        : . 
+is.recursive   : . 
+is.symbol      : . 
+is.table       : . 
+is.unsorted    : . 
+is.vector      : | 
+
+> is.ALL(array(1:24, 2:4))
+is.array       : | 
+is.atomic      : | 
+is.call        : . 
+is.character   : . 
+is.complex     : . 
+is.data.frame  : . 
+is.double      : . 
+is.environment : . 
+is.expression  : . 
+is.factor      : . 
+is.finite      : | | | | | | | | | | | | | | | | | | | | | | | | 
+is.function    : . 
+is.infinite    : . . . . . . . . . . . . . . . . . . . . . . . . 
+is.integer     : | 
+is.language    : . 
+is.list        : . 
+is.logical     : . 
+is.matrix      : . 
+is.na          : . . . . . . . . . . . . . . . . . . . . . . . . 
+is.name        : . 
+is.nan         : . . . . . . . . . . . . . . . . . . . . . . . . 
+is.null        : . 
+is.numeric     : | 
+is.object      : . 
+is.ordered     : . 
+is.pairlist    : . 
+is.qr          : . 
+is.real        : . 
+is.recursive   : . 
+is.symbol      : . 
+is.table       : . 
+is.unsorted    : . 
+is.vector      : . 
+
+> is.ALL(1 + 3)
+is.array       : . 
+is.atomic      : | 
+is.call        : . 
+is.character   : . 
+is.complex     : . 
+is.data.frame  : . 
+is.double      : | 
+is.environment : . 
+is.expression  : . 
+is.factor      : . 
+is.finite      : | 
+is.function    : . 
+is.infinite    : . 
+is.integer     : . 
+is.language    : . 
+is.list        : . 
+is.logical     : . 
+is.matrix      : . 
+is.na          : . 
+is.name        : . 
+is.nan         : . 
+is.null        : . 
+is.numeric     : | 
+is.object      : . 
+is.ordered     : . 
+is.pairlist    : . 
+is.qr          : . 
+is.real        : | 
+is.recursive   : . 
+is.symbol      : . 
+is.table       : . 
+is.unsorted    : . 
+is.vector      : | 
+
+> e13 <- expression(1 + 3)
+
+> is.ALL(e13)
+is.array       : . 
+is.atomic      : . 
+is.call        : . 
+is.character   : . 
+is.complex     : . 
+is.data.frame  : . 
+is.double      : . 
+is.environment : . 
+is.expression  : | 
+is.factor      : . 
+is.finite      : . 
+is.function    : . 
+is.infinite    : . 
+is.integer     : . 
+is.language    : | 
+is.list        : . 
+is.logical     : . 
+is.matrix      : . 
+is.na          : . 
+is.name        : . 
+is.nan         : . 
+is.null        : . 
+is.numeric     : . 
+is.object      : . 
+is.ordered     : . 
+is.pairlist    : . 
+is.qr          : . 
+is.real        : . 
+is.recursive   : | 
+is.symbol      : . 
+is.table       : . 
+is.unsorted    : NA 
+is.vector      : | 
+
+> is.ALL(substitute(expression(a + 3), list(a = 1)), 
+    true.only = TRUE)
+[1] "is.call"      "is.language"  "is.recursive"
+
+> is.ALL(y ~ x)
+is.array       : . 
+is.atomic      : . 
+is.call        : | 
+is.character   : . 
+is.complex     : . 
+is.data.frame  : . 
+is.double      : . 
+is.environment : . 
+is.expression  : . 
+is.factor      : . 
+is.finite      : NA 
+is.function    : . 
+is.infinite    : . . . 
+is.integer     : . 
+is.language    : | 
+is.list        : . 
+is.logical     : . 
+is.matrix      : . 
+is.na          : NA 
+is.name        : . 
+is.nan         : . . . 
+is.null        : . 
+is.numeric     : . 
+is.object      : | 
+is.ordered     : . 
+is.pairlist    : . 
+is.qr          : . 
+is.real        : . 
+is.recursive   : | 
+is.symbol      : . 
+is.table       : . 
+is.unsorted    : NA 
+is.vector      : . 
+
+> is0 <- is.ALL(numeric(0))
+
+> is0.ok <- 1 == (lis0 <- sapply(is0, length))
+
+> is0[!is0.ok]
+$is.finite
+logical(0)
+
+$is.infinite
+logical(0)
+
+$is.na
+logical(0)
+
+$is.nan
+logical(0)
+
+
+> is0 <- unlist(is0)
+
+> is0
+      is.array      is.atomic        is.call   is.character     is.complex 
+         FALSE           TRUE          FALSE          FALSE          FALSE 
+ is.data.frame      is.double is.environment  is.expression      is.factor 
+         FALSE           TRUE          FALSE          FALSE          FALSE 
+   is.function     is.integer    is.language        is.list     is.logical 
+         FALSE          FALSE          FALSE          FALSE          FALSE 
+     is.matrix        is.name        is.null     is.numeric      is.object 
+         FALSE          FALSE          FALSE           TRUE          FALSE 
+    is.ordered    is.pairlist          is.qr        is.real   is.recursive 
+         FALSE          FALSE          FALSE           TRUE          FALSE 
+     is.symbol       is.table    is.unsorted      is.vector 
+         FALSE          FALSE          FALSE           TRUE 
+
+> ispi <- unlist(is.ALL(pi))
+
+> all(ispi[is0.ok] == is0)
+[1] TRUE
+
+> is.ALL(numeric(0), true = TRUE)
+[1] "is.atomic"  "is.double"  "is.numeric" "is.real"    "is.vector" 
+
+> is.ALL(array(1, 1:3), true = TRUE)
+[1] "is.array"   "is.atomic"  "is.double"  "is.numeric" "is.real"   
+
+> is.ALL(cbind(1:3), true = TRUE)
+[1] "is.array"   "is.atomic"  "is.integer" "is.matrix"  "is.numeric"
+
+> is.ALL(structure(1:7, names = paste("a", 1:7, sep = "")))
+is.array       : . 
+is.atomic      : | 
+is.call        : . 
+is.character   : . 
+is.complex     : . 
+is.data.frame  : . 
+is.double      : . 
+is.environment : . 
+is.expression  : . 
+is.factor      : . 
+is.finite      : | | | | | | | 
+is.function    : . 
+is.infinite    : . . . . . . . 
+is.integer     : | 
+is.language    : . 
+is.list        : . 
+is.logical     : . 
+is.matrix      : . 
+is.na          : . . . . . . . 
+is.name        : . 
+is.nan         : . . . . . . . 
+is.null        : . 
+is.numeric     : | 
+is.object      : . 
+is.ordered     : . 
+is.pairlist    : . 
+is.qr          : . 
+is.real        : . 
+is.recursive   : . 
+is.symbol      : . 
+is.table       : . 
+is.unsorted    : . 
+is.vector      : | 
+
+> is.ALL(structure(1:7, names = paste("a", 1:7, sep = "")), 
+    true.only = TRUE)
+[1] "is.atomic"  "is.integer" "is.numeric" "is.vector" 
+
+> x <- 1:20
+
+> y <- 5 + 6 * x + rnorm(20)
+
+> lm.xy <- lm(y ~ x)
+
+> is.ALL(lm.xy)
+is.array       : . 
+is.atomic      : . 
+is.call        : . 
+is.character   : . 
+is.complex     : . 
+is.data.frame  : . 
+is.double      : . 
+is.environment : . 
+is.expression  : . 
+is.factor      : . 
+is.finite      : . . . . . . . . . . . . 
+is.function    : . 
+is.infinite    : . . . . . . . . . . . . 
+is.integer     : . 
+is.language    : . 
+is.list        : | 
+is.logical     : . 
+is.matrix      : . 
+is.na          : . . . . . . . . . . . . 
+is.name        : . 
+is.nan         : . . . . . . . . . . . . 
+is.null        : . 
+is.numeric     : . 
+is.object      : | 
+is.ordered     : . 
+is.pairlist    : . 
+is.qr          : . 
+is.real        : . 
+is.recursive   : | 
+is.symbol      : . 
+is.table       : . 
+is.unsorted    : NA 
+is.vector      : . 
+
+> is.ALL(structure(1:7, names = paste("a", 1:7, sep = "")))
+is.array       : . 
+is.atomic      : | 
+is.call        : . 
+is.character   : . 
+is.complex     : . 
+is.data.frame  : . 
+is.double      : . 
+is.environment : . 
+is.expression  : . 
+is.factor      : . 
+is.finite      : | | | | | | | 
+is.function    : . 
+is.infinite    : . . . . . . . 
+is.integer     : | 
+is.language    : . 
+is.list        : . 
+is.logical     : . 
+is.matrix      : . 
+is.na          : . . . . . . . 
+is.name        : . 
+is.nan         : . . . . . . . 
+is.null        : . 
+is.numeric     : | 
+is.object      : . 
+is.ordered     : . 
+is.pairlist    : . 
+is.qr          : . 
+is.real        : . 
+is.recursive   : . 
+is.symbol      : . 
+is.table       : . 
+is.unsorted    : . 
+is.vector      : | 
+
+> is.ALL(structure(1:7, names = paste("a", 1:7, sep = "")), 
+    true.only = TRUE)
+[1] "is.atomic"  "is.integer" "is.numeric" "is.vector" 
+
+
+	demo(recursion)
+	---- ~~~~~~~~~
+
+> area <- function(f, a, b, ..., fa = f(a, ...), fb = f(b, 
+    ...), limit = 10, eps = 1e-05) {
+    h <- b - a
+    d <- (a + b)/2
+    fd <- f(d, ...)
+    a1 <- ((fa + fb) * h)/2
+    a2 <- ((fa + 4 * fd + fb) * h)/6
+    if (abs(a1 - a2) < eps) 
+        .... [TRUNCATED] 
+
+> fbeta <- function(x, alpha, beta) {
+    x^(alpha - 1) * (1 - x)^(beta - 1)
+}
+
+> b0 <- area(fbeta, 0, 1, alpha = 3.5, beta = 1.5)
+
+> b1 <- exp(lgamma(3.5) + lgamma(1.5) - lgamma(5))
+
+> c(b0, b1, b0 - b1)
+[1]  1.227170e-01  1.227185e-01 -1.443996e-06
+
+> fbeta.tmp <- function(x, alpha, beta) {
+    val <<- c(val, x)
+    x^(alpha - 1) * (1 - x)^(beta - 1)
+}
+
+> val <- NULL
+
+> b0 <- area(fbeta.tmp, 0, 1, alpha = 3.5, beta = 1.5)
+
+> plot(val, fbeta(val, 3.5, 1.5), pch = 0)
+
+> area <- function(f, a, b, ..., limit = 10, eps = 1e-05) {
+    area2 <- function(f, a, b, ..., fa = f(a, ...), fb = f(b, 
+        ...), limit = limit, eps = eps) {
+        h <- b - a
+        d <- (a + b)/2
+        fd <- f(d, ...)
+        a1 <- ((fa +  .... [TRUNCATED] 
+
+
+	demo(scoping)
+	---- ~~~~~~~
+
+> open.account <- function(total) {
+    list(deposit = function(amount) {
+        if (amount <= 0) stop("Deposits must be positive!\n")
+        total <<- total + amount
+        cat(amount, "deposited. Your balance is", total, "\n\n")
+    }, withdraw =  .... [TRUNCATED] 
+
+> ross <- open.account(100)
+
+> robert <- open.account(200)
+
+> ross$withdraw(30)
+30 withdrawn.  Your balance is 70 
+
+
+> ross$balance()
+Your balance is 70 
+
+
+> robert$balance()
+Your balance is 200 
+
+
+> ross$deposit(50)
+50 deposited. Your balance is 120 
+
+
+> ross$balance()
+Your balance is 120 
+
+
+> try(ross$withdraw(500))
+Error in ross$withdraw(500) : You don't have that much money!
+In addition: Warning messages: 
+1: is.nan() applied to non-(list or vector) in: fn(obj) 
+2: is.nan() applied to non-(list or vector) in: fn(obj) 
+3: is.na() applied to non-(list or vector) in: fn(obj) 
+4: is.nan() applied to non-(list or vector) in: fn(obj) 
+5: is.nan() applied to non-(list or vector) in: fn(obj) 
+6: is.nan() applied to non-(list or vector) in: fn(obj) 
+
+
+	demo(smooth)
 	---- ~~~~~~
 
-> Fr <- c(68, 42, 42, 30, 37, 52, 24, 43, 66, 50, 33, 
-    23, 47, 55, 23, 47, 63, 53, 29, 27, 57, 49, 19, 29)
+> op <- par(ask = interactive(), mfrow = c(1, 1))
 
-> Temp <- gl(2, 2, 24, labels = c("Low", "High"))
+> example(smooth)
 
-> Soft <- gl(3, 8, 24, labels = c("Hard", "Medium", 
-    "Soft"))
+smooth> x1 <- c(4, 1, 3, 6, 6, 4, 1, 6, 2, 4, 2)
 
-> M.user <- gl(2, 4, 24, labels = c("N", "Y"))
+smooth> (x3R <- smooth(x1, "3R"))
+3R Tukey smoother resulting from  smooth(x = x1, kind = "3R") 
+ used 2 iterations
+ [1] 3 3 3 6 6 4 4 4 2 2 2
 
-> Brand <- gl(2, 1, 24, labels = c("X", "M"))
+smooth> smooth(x3R, kind = "S")
+S Tukey smoother resulting from  smooth(x = x3R, kind = "S") 
+ changed
+ [1] 3 3 3 3 4 4 4 4 2 2 2
 
-> detg <- data.frame(Fr, Temp, Soft, M.user, Brand)
+smooth> sm.3RS <- function(x, ...) smooth(smooth(x, "3R", 
+    ...), "S", ...)
 
-> detg.m0 <- glm(Fr ~ M.user * Temp * Soft + Brand, 
-    family = poisson, data = detg)
+smooth> y <- c(1, 1, 19:1)
 
-> summary(detg.m0)
+smooth> plot(y, main = "misbehaviour of \"3RSR\"", col.main = 3)
 
-Call:
-glm(formula = Fr ~ M.user * Temp * Soft + Brand, family = poisson, 
-    data = detg)
+smooth> lines(sm.3RS(y))
 
-Deviance Residuals: 
-      Min         1Q     Median         3Q        Max  
--2.208764  -0.991898  -0.001264   0.935415   1.976008  
+smooth> lines(smooth(y))
 
-Coefficients:
-                            Estimate Std. Error z value Pr(>|z|)    
-(Intercept)                  4.01524    0.10034  40.018  < 2e-16 ***
-M.userY                     -0.21184    0.14257  -1.486  0.13731    
-TempHigh                    -0.42381    0.15159  -2.796  0.00518 ** 
-SoftMedium                   0.05311    0.13308   0.399  0.68984    
-SoftSoft                     0.05311    0.13308   0.399  0.68984    
-BrandM                      -0.01587    0.06300  -0.252  0.80106    
-M.userY:TempHigh             0.13987    0.22168   0.631  0.52806    
-M.userY:SoftMedium           0.08323    0.19685   0.423  0.67245    
-M.userY:SoftSoft             0.12169    0.19591   0.621  0.53449    
-TempHigh:SoftMedium         -0.30442    0.22239  -1.369  0.17104    
-TempHigh:SoftSoft           -0.30442    0.22239  -1.369  0.17104    
-M.userY:TempHigh:SoftMedium  0.21189    0.31577   0.671  0.50220    
-M.userY:TempHigh:SoftSoft   -0.20387    0.32540  -0.627  0.53098    
----
-Signif. codes:  0 `***' 0.001 `**' 0.01 `*' 0.05 `.' 0.1 ` ' 1 
+smooth> lines(smooth(y, "3RSR"), col = 3, lwd = 2)
 
-(Dispersion parameter for poisson family taken to be 1)
+smooth> x <- c(8:10, 10, 0, 0, 9, 9)
 
-    Null deviance: 118.627  on 23  degrees of freedom
-Residual deviance:  32.826  on 11  degrees of freedom
-AIC: 191.24
+smooth> plot(x, main = "breakdown of  3R  and  S  and hence  3RSS")
 
-Number of Fisher Scoring iterations: 4
+smooth> matlines(cbind(smooth(x, "3R"), smooth(x, "S"), smooth(x, 
+    "3RSS"), smooth(x)))
 
+smooth> data(presidents)
 
-> detg.mod <- glm(terms(Fr ~ M.user * Temp * Soft + 
-    Brand * M.user * Temp, keep.order = TRUE), family = poisson, 
-    data = detg)
+smooth> presidents[is.na(presidents)] <- 0
 
-> summary(detg.mod, correlation = FALSE)
+smooth> summary(sm3 <- smooth(presidents, "3R"))
+3R Tukey smoother resulting from
+ smooth(x = presidents, kind = "3R") ;  n = 120 
+ used 4 iterations
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+    0.0    44.0    57.0    54.2    71.0    82.0 
 
-Call:
-glm(formula = terms(Fr ~ M.user * Temp * Soft + Brand * M.user * 
-    Temp, keep.order = TRUE), family = poisson, data = detg)
+smooth> summary(sm2 <- smooth(presidents, "3RSS"))
+3RSS Tukey smoother resulting from
+ smooth(x = presidents, kind = "3RSS") ;  n = 120 
+ used 5 iterations
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+   0.00   44.00   57.00   55.45   69.00   82.00 
 
-Deviance Residuals: 
-      Min         1Q     Median         3Q        Max  
--0.913649  -0.355846   0.002531   0.330274   0.921460  
+smooth> summary(sm <- smooth(presidents))
+3RS3R Tukey smoother resulting from
+ smooth(x = presidents) ;  n = 120 
+ used 7 iterations
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+  24.00   44.00   57.00   55.88   69.00   82.00 
 
-Coefficients:
-                            Estimate Std. Error z value Pr(>|z|)    
-(Intercept)                  4.14887    0.10603  39.128   <2e-16 ***
-M.userY                     -0.40521    0.16188  -2.503   0.0123 *  
-TempHigh                    -0.44275    0.17121  -2.586   0.0097 ** 
-M.userY:TempHigh            -0.12692    0.26257  -0.483   0.6288    
-SoftMedium                   0.05311    0.13308   0.399   0.6898    
-SoftSoft                     0.05311    0.13308   0.399   0.6898    
-M.userY:SoftMedium           0.08323    0.19685   0.423   0.6725    
-M.userY:SoftSoft             0.12169    0.19591   0.621   0.5345    
-TempHigh:SoftMedium         -0.30442    0.22239  -1.369   0.1710    
-TempHigh:SoftSoft           -0.30442    0.22239  -1.369   0.1710    
-M.userY:TempHigh:SoftMedium  0.21189    0.31577   0.671   0.5022    
-M.userY:TempHigh:SoftSoft   -0.20387    0.32540  -0.627   0.5310    
-BrandM                      -0.30647    0.10942  -2.801   0.0051 ** 
-M.userY:BrandM               0.40757    0.15961   2.554   0.0107 *  
-TempHigh:BrandM              0.04411    0.18463   0.239   0.8112    
-M.userY:TempHigh:BrandM      0.44427    0.26673   1.666   0.0958 .  
----
-Signif. codes:  0 `***' 0.001 `**' 0.01 `*' 0.05 `.' 0.1 ` ' 1 
+smooth> all.equal(c(sm2), c(smooth(smooth(sm3, "S"), "S")))
+[1] TRUE
 
-(Dispersion parameter for poisson family taken to be 1)
+smooth> all.equal(c(sm), c(smooth(smooth(sm3, "S"), "3R")))
+[1] TRUE
 
-    Null deviance: 118.627  on 23  degrees of freedom
-Residual deviance:   5.656  on  8  degrees of freedom
-AIC: 170.07
+smooth> plot(presidents, main = "smooth(presidents0, *) :  3R and default 3RS3R")
 
-Number of Fisher Scoring iterations: 4
+smooth> lines(sm3, col = 3, lwd = 1.5)
 
+smooth> lines(sm, col = 2, lwd = 1.25)
 
-> symnum(summary(detg.mod, correlation = TRUE)$corr)
-                            ( M.sY TmH M.sY:TH SM SS M.Y:SM M.Y:SS TH:SM TH:SS
-(Intercept)                 1                                                 
-M.userY                     , 1                                               
-TempHigh                    , .    1                                          
-M.userY:TempHigh            . ,    ,   1                                      
-SoftMedium                  , .    .           1                              
-SoftSoft                    , .    .           .  1                           
-M.userY:SoftMedium          . ,        .       ,  .  1                        
-M.userY:SoftSoft            . ,        .       .  ,  .      1                 
-TempHigh:SoftMedium         .      ,   .       .  .  .             1          
-TempHigh:SoftSoft           .      ,   .       .  .         .      .     1    
-M.userY:TempHigh:SoftMedium   .    .   .       .     ,      .      ,     .    
-M.userY:TempHigh:SoftSoft     .    .   .          .  .      ,      .     ,    
-BrandM                      .                                                 
-M.userY:BrandM                .                                               
-TempHigh:BrandM                    .   .                                      
-M.userY:TempHigh:BrandM            .   .                                      
-                            M.Y:TH:SM M.Y:TH:SS B M.Y:B TH:B M.Y:TH:B
-(Intercept)                                                          
-M.userY                                                              
-TempHigh                                                             
-M.userY:TempHigh                                                     
-SoftMedium                                                           
-SoftSoft                                                             
-M.userY:SoftMedium                                                   
-M.userY:SoftSoft                                                     
-TempHigh:SoftMedium                                                  
-TempHigh:SoftSoft                                                    
-M.userY:TempHigh:SoftMedium 1                                        
-M.userY:TempHigh:SoftSoft   .         1                              
-BrandM                                          1                    
-M.userY:BrandM                                  , 1                  
-TempHigh:BrandM                                 . .     1            
-M.userY:TempHigh:BrandM                         . .     ,    1       
-attr(,"legend")
-[1] 0 ` ' 0.3 `.' 0.6 `,' 0.8 `+' 0.9 `*' 0.95 `B' 1
+> showSmooth <- function(x, leg.x = 1, leg.y = max(x)) {
+    ss <- cbind(x, "3c" = smooth(x, "3", end = "copy"), "3" = smooth(x, 
+        "3"), "3Rc" = smooth(x, "3R", end = "copy"), "3R" = smooth(x, 
+        "3R"), sm = smooth(x))
+    k <- ncol(ss) -  .... [TRUNCATED] 
 
-> anova(detg.m0, detg.mod)
-Analysis of Deviance Table
+> for (x in list(c(4, 6, 2, 2, 6, 3, 6, 6, 5, 2), c(3, 
+    2, 1, 4, 5, 1, 3, 2, 4, 5, 2), c(2, 4, 2, 6, 1, 1, 2, 6, 
+    3, 1, 6), x1, )) print(t(showSmooth(x)))
+    [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10]
+x      4    6    2    2    6    3    6    6    5     2
+3c     4    4    2    2    3    6    6    6    5     2
+3      4    4    2    2    3    6    6    6    5     3
+3Rc    4    4    2    2    3    6    6    6    5     2
+3R     4    4    2    2    3    6    6    6    5     3
+sm     4    4    4    3    3    6    6    6    5     3
+    [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,11]
+x      3    2    1    4    5    1    3    2    4     5     2
+3c     3    2    2    4    4    3    2    3    4     4     2
+3      2    2    2    4    4    3    2    3    4     4     4
+3Rc    3    2    2    4    4    3    3    3    4     4     2
+3R     2    2    2    4    4    3    3    3    4     4     4
+sm     2    2    2    2    3    3    3    3    4     4     4
+    [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,11]
+x      2    4    2    6    1    1    2    6    3     1     6
+3c     2    2    4    2    1    1    2    3    3     3     6
+3      2    2    4    2    1    1    2    3    3     3     3
+3Rc    2    2    2    2    1    1    2    3    3     3     6
+3R     2    2    2    2    1    1    2    3    3     3     3
+sm     2    2    2    2    2    2    2    3    3     3     3
+    [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,11]
+x      4    1    3    6    6    4    1    6    2     4     2
+3c     4    3    3    6    6    4    4    2    4     2     2
+3      3    3    3    6    6    4    4    2    4     2     2
+3Rc    4    3    3    6    6    4    4    4    2     2     2
+3R     3    3    3    6    6    4    4    4    2     2     2
+sm     3    3    3    3    4    4    4    4    2     2     2
 
-Model 1: Fr ~ M.user * Temp * Soft + Brand
-Model 2: Fr ~ M.user * Temp * Soft + Brand * M.user * Temp
-  Resid. Df Resid. Dev Df Deviance
-1        11     32.826            
-2         8      5.656  3   27.170
+> par(op)
 
 
 	demo(graphics)
@@ -472,469 +974,6 @@ flld.c> filled.contour(cos(r^2) * exp(-r/(2 * pi)), frame.plot = FALSE,
 > par(opar)
 
 
-	demo(is.things)
-	---- ~~~~~~~~~
-
-> ls.base <- ls("package:base")
-
-> base.is.f <- sapply(ls.base, function(x) is.function(get(x)))
-
-> bi <- ls.base[base.is.f]
-
-> cat("\nNumber of base objects:\t\t", length(ls.base), 
-    "\nNumber of builtin functions:\t", sum(base.is.f), "\n\t starting with 'is.' :\t ", 
-    length(is.bi <- bi[substring(bi, 1, 3) == "is."]), "\n")
-
-Number of base objects:		 1671 
-Number of builtin functions:	 1638 
-	 starting with 'is.' :	  45 
-
-> is.primitive <- function(obj) is.function(obj) && 
-    is.null(args(obj))
-
-> is.method <- function(fname) {
-    isFun <- function(name) (exists(name, mode = "function") && 
-        is.na(match(name, c("is", "as"))))
-    np <- length(sp <- strsplit(fname, split = "\\.")[[1]])
-    if (np <= 1) 
-        FALSE
-    else (isFun(pas .... [TRUNCATED] 
-
-> is.ALL <- function(obj, func.names = ls(pos = length(search())), 
-    not.using = c("is.single", "is.loaded", "is.empty.model", 
-        "is.R", "is.element"), true.only = FALSE, debug = FALSE) {
-    is.fn <- func.names[substring(func.names, 1, 3) == .... [TRUNCATED] 
-
-> print.isList <- function(x, ..., verbose = getOption("verbose")) {
-    if (is.list(x)) {
-        if (verbose) 
-            cat("print.isList(): list case (length=", length(x), 
-                ")\n")
-        nm <- format(names(x))
-        rr <- lappl .... [TRUNCATED] 
-
-> is.ALL(NULL)
-is.array       : . 
-is.atomic      : | 
-is.call        : . 
-is.character   : . 
-is.complex     : . 
-is.data.frame  : . 
-is.double      : . 
-is.environment : . 
-is.expression  : . 
-is.factor      : . 
-is.finite      : NA 
-is.function    : . 
-is.infinite    :  
-is.integer     : . 
-is.language    : . 
-is.list        : . 
-is.logical     : . 
-is.matrix      : . 
-is.mts         : . 
-is.na          : NA 
-is.name        : . 
-is.nan         :  
-is.null        : | 
-is.numeric     : . 
-is.object      : . 
-is.ordered     : . 
-is.pairlist    : | 
-is.qr          : . 
-is.real        : . 
-is.recursive   : . 
-is.symbol      : . 
-is.table       : . 
-is.ts          : . 
-is.unsorted    : . 
-is.vector      : . 
-
-> is.ALL(NULL, true.only = TRUE)
-[1] "is.atomic"   "is.null"     "is.pairlist"
-
-> all.equal(NULL, pairlist())
-[1] TRUE
-
-> is.ALL(list(), true.only = TRUE)
-[1] "is.list"      "is.recursive" "is.vector"   
-
-> (pl <- is.ALL(pairlist(1, list(3, "A")), true.only = TRUE))
-[1] "is.list"      "is.pairlist"  "is.recursive"
-
-> (ll <- is.ALL(list(1, pairlist(3, "A")), true.only = TRUE))
-[1] "is.list"      "is.recursive" "is.vector"   
-
-> all.equal(pl[pl != "is.pairlist"], ll[ll != "is.vector"])
-[1] TRUE
-
-> is.ALL(1:5)
-is.array       : . 
-is.atomic      : | 
-is.call        : . 
-is.character   : . 
-is.complex     : . 
-is.data.frame  : . 
-is.double      : . 
-is.environment : . 
-is.expression  : . 
-is.factor      : . 
-is.finite      : | | | | | 
-is.function    : . 
-is.infinite    : . . . . . 
-is.integer     : | 
-is.language    : . 
-is.list        : . 
-is.logical     : . 
-is.matrix      : . 
-is.mts         : . 
-is.na          : . . . . . 
-is.name        : . 
-is.nan         : . . . . . 
-is.null        : . 
-is.numeric     : | 
-is.object      : . 
-is.ordered     : . 
-is.pairlist    : . 
-is.qr          : . 
-is.real        : . 
-is.recursive   : . 
-is.symbol      : . 
-is.table       : . 
-is.ts          : . 
-is.unsorted    : . 
-is.vector      : | 
-
-> is.ALL(array(1:24, 2:4))
-is.array       : | 
-is.atomic      : | 
-is.call        : . 
-is.character   : . 
-is.complex     : . 
-is.data.frame  : . 
-is.double      : . 
-is.environment : . 
-is.expression  : . 
-is.factor      : . 
-is.finite      : | | | | | | | | | | | | | | | | | | | | | | | | 
-is.function    : . 
-is.infinite    : . . . . . . . . . . . . . . . . . . . . . . . . 
-is.integer     : | 
-is.language    : . 
-is.list        : . 
-is.logical     : . 
-is.matrix      : . 
-is.mts         : . 
-is.na          : . . . . . . . . . . . . . . . . . . . . . . . . 
-is.name        : . 
-is.nan         : . . . . . . . . . . . . . . . . . . . . . . . . 
-is.null        : . 
-is.numeric     : | 
-is.object      : . 
-is.ordered     : . 
-is.pairlist    : . 
-is.qr          : . 
-is.real        : . 
-is.recursive   : . 
-is.symbol      : . 
-is.table       : . 
-is.ts          : . 
-is.unsorted    : . 
-is.vector      : . 
-
-> is.ALL(1 + 3)
-is.array       : . 
-is.atomic      : | 
-is.call        : . 
-is.character   : . 
-is.complex     : . 
-is.data.frame  : . 
-is.double      : | 
-is.environment : . 
-is.expression  : . 
-is.factor      : . 
-is.finite      : | 
-is.function    : . 
-is.infinite    : . 
-is.integer     : . 
-is.language    : . 
-is.list        : . 
-is.logical     : . 
-is.matrix      : . 
-is.mts         : . 
-is.na          : . 
-is.name        : . 
-is.nan         : . 
-is.null        : . 
-is.numeric     : | 
-is.object      : . 
-is.ordered     : . 
-is.pairlist    : . 
-is.qr          : . 
-is.real        : | 
-is.recursive   : . 
-is.symbol      : . 
-is.table       : . 
-is.ts          : . 
-is.unsorted    : . 
-is.vector      : | 
-
-> e13 <- expression(1 + 3)
-
-> is.ALL(e13)
-is.array       : . 
-is.atomic      : . 
-is.call        : . 
-is.character   : . 
-is.complex     : . 
-is.data.frame  : . 
-is.double      : . 
-is.environment : . 
-is.expression  : | 
-is.factor      : . 
-is.finite      : . 
-is.function    : . 
-is.infinite    : . 
-is.integer     : . 
-is.language    : | 
-is.list        : . 
-is.logical     : . 
-is.matrix      : . 
-is.mts         : . 
-is.na          : . 
-is.name        : . 
-is.nan         : . 
-is.null        : . 
-is.numeric     : . 
-is.object      : . 
-is.ordered     : . 
-is.pairlist    : . 
-is.qr          : . 
-is.real        : . 
-is.recursive   : | 
-is.symbol      : . 
-is.table       : . 
-is.ts          : . 
-is.unsorted    : NA 
-is.vector      : | 
-
-> is.ALL(substitute(expression(a + 3), list(a = 1)), 
-    true.only = TRUE)
-[1] "is.call"      "is.language"  "is.recursive"
-
-> is.ALL(y ~ x)
-is.array       : . 
-is.atomic      : . 
-is.call        : | 
-is.character   : . 
-is.complex     : . 
-is.data.frame  : . 
-is.double      : . 
-is.environment : . 
-is.expression  : . 
-is.factor      : . 
-is.finite      : NA 
-is.function    : . 
-is.infinite    : . . . 
-is.integer     : . 
-is.language    : | 
-is.list        : . 
-is.logical     : . 
-is.matrix      : . 
-is.mts         : . 
-is.na          : NA 
-is.name        : . 
-is.nan         : . . . 
-is.null        : . 
-is.numeric     : . 
-is.object      : | 
-is.ordered     : . 
-is.pairlist    : . 
-is.qr          : . 
-is.real        : . 
-is.recursive   : | 
-is.symbol      : . 
-is.table       : . 
-is.ts          : . 
-is.unsorted    : NA 
-is.vector      : . 
-
-> is0 <- is.ALL(numeric(0))
-
-> is0.ok <- 1 == (lis0 <- sapply(is0, length))
-
-> is0[!is0.ok]
-$is.finite
-logical(0)
-
-$is.infinite
-logical(0)
-
-$is.na
-logical(0)
-
-$is.nan
-logical(0)
-
-
-> is0 <- unlist(is0)
-
-> is0
-      is.array      is.atomic        is.call   is.character     is.complex 
-         FALSE           TRUE          FALSE          FALSE          FALSE 
- is.data.frame      is.double is.environment  is.expression      is.factor 
-         FALSE           TRUE          FALSE          FALSE          FALSE 
-   is.function     is.integer    is.language        is.list     is.logical 
-         FALSE          FALSE          FALSE          FALSE          FALSE 
-     is.matrix         is.mts        is.name        is.null     is.numeric 
-         FALSE          FALSE          FALSE          FALSE           TRUE 
-     is.object     is.ordered    is.pairlist          is.qr        is.real 
-         FALSE          FALSE          FALSE          FALSE           TRUE 
-  is.recursive      is.symbol       is.table          is.ts    is.unsorted 
-         FALSE          FALSE          FALSE          FALSE          FALSE 
-     is.vector 
-          TRUE 
-
-> ispi <- unlist(is.ALL(pi))
-
-> all(ispi[is0.ok] == is0)
-[1] TRUE
-
-> is.ALL(numeric(0), true = TRUE)
-[1] "is.atomic"  "is.double"  "is.numeric" "is.real"    "is.vector" 
-
-> is.ALL(array(1, 1:3), true = TRUE)
-[1] "is.array"   "is.atomic"  "is.double"  "is.numeric" "is.real"   
-
-> is.ALL(cbind(1:3), true = TRUE)
-[1] "is.array"   "is.atomic"  "is.integer" "is.matrix"  "is.numeric"
-
-> is.ALL(structure(1:7, names = paste("a", 1:7, sep = "")))
-is.array       : . 
-is.atomic      : | 
-is.call        : . 
-is.character   : . 
-is.complex     : . 
-is.data.frame  : . 
-is.double      : . 
-is.environment : . 
-is.expression  : . 
-is.factor      : . 
-is.finite      : | | | | | | | 
-is.function    : . 
-is.infinite    : . . . . . . . 
-is.integer     : | 
-is.language    : . 
-is.list        : . 
-is.logical     : . 
-is.matrix      : . 
-is.mts         : . 
-is.na          : . . . . . . . 
-is.name        : . 
-is.nan         : . . . . . . . 
-is.null        : . 
-is.numeric     : | 
-is.object      : . 
-is.ordered     : . 
-is.pairlist    : . 
-is.qr          : . 
-is.real        : . 
-is.recursive   : . 
-is.symbol      : . 
-is.table       : . 
-is.ts          : . 
-is.unsorted    : . 
-is.vector      : | 
-
-> is.ALL(structure(1:7, names = paste("a", 1:7, sep = "")), 
-    true.only = TRUE)
-[1] "is.atomic"  "is.integer" "is.numeric" "is.vector" 
-
-> x <- 1:20
-
-> y <- 5 + 6 * x + rnorm(20)
-
-> lm.xy <- lm(y ~ x)
-
-> is.ALL(lm.xy)
-is.array       : . 
-is.atomic      : . 
-is.call        : . 
-is.character   : . 
-is.complex     : . 
-is.data.frame  : . 
-is.double      : . 
-is.environment : . 
-is.expression  : . 
-is.factor      : . 
-is.finite      : . . . . . . . . . . . . 
-is.function    : . 
-is.infinite    : . . . . . . . . . . . . 
-is.integer     : . 
-is.language    : . 
-is.list        : | 
-is.logical     : . 
-is.matrix      : . 
-is.mts         : . 
-is.na          : . . . . . . . . . . . . 
-is.name        : . 
-is.nan         : . . . . . . . . . . . . 
-is.null        : . 
-is.numeric     : . 
-is.object      : | 
-is.ordered     : . 
-is.pairlist    : . 
-is.qr          : . 
-is.real        : . 
-is.recursive   : | 
-is.symbol      : . 
-is.table       : . 
-is.ts          : . 
-is.unsorted    : NA 
-is.vector      : . 
-
-> is.ALL(structure(1:7, names = paste("a", 1:7, sep = "")))
-is.array       : . 
-is.atomic      : | 
-is.call        : . 
-is.character   : . 
-is.complex     : . 
-is.data.frame  : . 
-is.double      : . 
-is.environment : . 
-is.expression  : . 
-is.factor      : . 
-is.finite      : | | | | | | | 
-is.function    : . 
-is.infinite    : . . . . . . . 
-is.integer     : | 
-is.language    : . 
-is.list        : . 
-is.logical     : . 
-is.matrix      : . 
-is.mts         : . 
-is.na          : . . . . . . . 
-is.name        : . 
-is.nan         : . . . . . . . 
-is.null        : . 
-is.numeric     : | 
-is.object      : . 
-is.ordered     : . 
-is.pairlist    : . 
-is.qr          : . 
-is.real        : . 
-is.recursive   : . 
-is.symbol      : . 
-is.table       : . 
-is.ts          : . 
-is.unsorted    : . 
-is.vector      : | 
-
-> is.ALL(structure(1:7, names = paste("a", 1:7, sep = "")), 
-    true.only = TRUE)
-[1] "is.atomic"  "is.integer" "is.numeric" "is.vector" 
-
-
 	demo(persp)
 	---- ~~~~~
 
@@ -1042,211 +1081,154 @@ is.vector      : |
 > par(op)
 
 
-	demo(recursion)
-	---- ~~~~~~~~~
-
-> area <- function(f, a, b, ..., fa = f(a, ...), fb = f(b, 
-    ...), limit = 10, eps = 1e-05) {
-    h <- b - a
-    d <- (a + b)/2
-    fd <- f(d, ...)
-    a1 <- ((fa + fb) * h)/2
-    a2 <- ((fa + 4 * fd + fb) * h)/6
-    if (abs(a1 - a2) < eps) 
-        .... [TRUNCATED] 
-
-> fbeta <- function(x, alpha, beta) {
-    x^(alpha - 1) * (1 - x)^(beta - 1)
-}
-
-> b0 <- area(fbeta, 0, 1, alpha = 3.5, beta = 1.5)
-
-> b1 <- exp(lgamma(3.5) + lgamma(1.5) - lgamma(5))
-
-> c(b0, b1, b0 - b1)
-[1]  1.227170e-01  1.227185e-01 -1.443996e-06
-
-> fbeta.tmp <- function(x, alpha, beta) {
-    val <<- c(val, x)
-    x^(alpha - 1) * (1 - x)^(beta - 1)
-}
-
-> val <- NULL
-
-> b0 <- area(fbeta.tmp, 0, 1, alpha = 3.5, beta = 1.5)
-
-> plot(val, fbeta(val, 3.5, 1.5), pch = 0)
-
-> area <- function(f, a, b, ..., limit = 10, eps = 1e-05) {
-    area2 <- function(f, a, b, ..., fa = f(a, ...), fb = f(b, 
-        ...), limit = limit, eps = eps) {
-        h <- b - a
-        d <- (a + b)/2
-        fd <- f(d, ...)
-        a1 <- ((fa +  .... [TRUNCATED] 
-
-
-	demo(scoping)
-	---- ~~~~~~~
-
-> open.account <- function(total) {
-    list(deposit = function(amount) {
-        if (amount <= 0) stop("Deposits must be positive!\n")
-        total <<- total + amount
-        cat(amount, "deposited. Your balance is", total, "\n\n")
-    }, withdraw =  .... [TRUNCATED] 
-
-> ross <- open.account(100)
-
-> robert <- open.account(200)
-
-> ross$withdraw(30)
-30 withdrawn.  Your balance is 70 
-
-
-> ross$balance()
-Your balance is 70 
-
-
-> robert$balance()
-Your balance is 200 
-
-
-> ross$deposit(50)
-50 deposited. Your balance is 120 
-
-
-> ross$balance()
-Your balance is 120 
-
-
-> try(ross$withdraw(500))
-Error in ross$withdraw(500) : You don't have that much money!
-In addition: Warning messages: 
-1: is.nan() applied to non-(list or vector) in: fn(obj) 
-2: is.nan() applied to non-(list or vector) in: fn(obj) 
-3: is.na() applied to non-(list or vector) in: fn(obj) 
-4: is.nan() applied to non-(list or vector) in: fn(obj) 
-5: is.nan() applied to non-(list or vector) in: fn(obj) 
-6: is.nan() applied to non-(list or vector) in: fn(obj) 
-
-
-	demo(smooth)
+	demo(glm.vr)
 	---- ~~~~~~
 
-> op <- par(ask = interactive(), mfrow = c(1, 1))
+> Fr <- c(68, 42, 42, 30, 37, 52, 24, 43, 66, 50, 33, 
+    23, 47, 55, 23, 47, 63, 53, 29, 27, 57, 49, 19, 29)
 
-> example(smooth)
+> Temp <- gl(2, 2, 24, labels = c("Low", "High"))
 
-smooth> x1 <- c(4, 1, 3, 6, 6, 4, 1, 6, 2, 4, 2)
+> Soft <- gl(3, 8, 24, labels = c("Hard", "Medium", 
+    "Soft"))
 
-smooth> (x3R <- smooth(x1, "3R"))
-3R Tukey smoother resulting from  smooth(x = x1, kind = "3R") 
- used 2 iterations
- [1] 3 3 3 6 6 4 4 4 2 2 2
+> M.user <- gl(2, 4, 24, labels = c("N", "Y"))
 
-smooth> smooth(x3R, kind = "S")
-S Tukey smoother resulting from  smooth(x = x3R, kind = "S") 
- changed
- [1] 3 3 3 3 4 4 4 4 2 2 2
+> Brand <- gl(2, 1, 24, labels = c("X", "M"))
 
-smooth> sm.3RS <- function(x, ...) smooth(smooth(x, "3R", 
-    ...), "S", ...)
+> detg <- data.frame(Fr, Temp, Soft, M.user, Brand)
 
-smooth> y <- c(1, 1, 19:1)
+> detg.m0 <- glm(Fr ~ M.user * Temp * Soft + Brand, 
+    family = poisson, data = detg)
 
-smooth> plot(y, main = "misbehaviour of \"3RSR\"", col.main = 3)
+> summary(detg.m0)
 
-smooth> lines(sm.3RS(y))
+Call:
+glm(formula = Fr ~ M.user * Temp * Soft + Brand, family = poisson, 
+    data = detg)
 
-smooth> lines(smooth(y))
+Deviance Residuals: 
+      Min         1Q     Median         3Q        Max  
+-2.208764  -0.991898  -0.001264   0.935415   1.976008  
 
-smooth> lines(smooth(y, "3RSR"), col = 3, lwd = 2)
+Coefficients:
+                            Estimate Std. Error z value Pr(>|z|)    
+(Intercept)                  4.01524    0.10034  40.018  < 2e-16 ***
+M.userY                     -0.21184    0.14257  -1.486  0.13731    
+TempHigh                    -0.42381    0.15159  -2.796  0.00518 ** 
+SoftMedium                   0.05311    0.13308   0.399  0.68984    
+SoftSoft                     0.05311    0.13308   0.399  0.68984    
+BrandM                      -0.01587    0.06300  -0.252  0.80106    
+M.userY:TempHigh             0.13987    0.22168   0.631  0.52806    
+M.userY:SoftMedium           0.08323    0.19685   0.423  0.67245    
+M.userY:SoftSoft             0.12169    0.19591   0.621  0.53449    
+TempHigh:SoftMedium         -0.30442    0.22239  -1.369  0.17104    
+TempHigh:SoftSoft           -0.30442    0.22239  -1.369  0.17104    
+M.userY:TempHigh:SoftMedium  0.21189    0.31577   0.671  0.50220    
+M.userY:TempHigh:SoftSoft   -0.20387    0.32540  -0.627  0.53098    
+---
+Signif. codes:  0 `***' 0.001 `**' 0.01 `*' 0.05 `.' 0.1 ` ' 1 
 
-smooth> x <- c(8:10, 10, 0, 0, 9, 9)
+(Dispersion parameter for poisson family taken to be 1)
 
-smooth> plot(x, main = "breakdown of  3R  and  S  and hence  3RSS")
+    Null deviance: 118.627  on 23  degrees of freedom
+Residual deviance:  32.826  on 11  degrees of freedom
+AIC: 191.24
 
-smooth> matlines(cbind(smooth(x, "3R"), smooth(x, "S"), smooth(x, 
-    "3RSS"), smooth(x)))
+Number of Fisher Scoring iterations: 4
 
-smooth> data(presidents)
 
-smooth> presidents[is.na(presidents)] <- 0
+> detg.mod <- glm(terms(Fr ~ M.user * Temp * Soft + 
+    Brand * M.user * Temp, keep.order = TRUE), family = poisson, 
+    data = detg)
 
-smooth> summary(sm3 <- smooth(presidents, "3R"))
-3R Tukey smoother resulting from
- smooth(x = presidents, kind = "3R") ;  n = 120 
- used 4 iterations
-   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-    0.0    44.0    57.0    54.2    71.0    82.0 
+> summary(detg.mod, correlation = FALSE)
 
-smooth> summary(sm2 <- smooth(presidents, "3RSS"))
-3RSS Tukey smoother resulting from
- smooth(x = presidents, kind = "3RSS") ;  n = 120 
- used 5 iterations
-   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-   0.00   44.00   57.00   55.45   69.00   82.00 
+Call:
+glm(formula = terms(Fr ~ M.user * Temp * Soft + Brand * M.user * 
+    Temp, keep.order = TRUE), family = poisson, data = detg)
 
-smooth> summary(sm <- smooth(presidents))
-3RS3R Tukey smoother resulting from
- smooth(x = presidents) ;  n = 120 
- used 7 iterations
-   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-  24.00   44.00   57.00   55.88   69.00   82.00 
+Deviance Residuals: 
+      Min         1Q     Median         3Q        Max  
+-0.913649  -0.355846   0.002531   0.330274   0.921460  
 
-smooth> all.equal(c(sm2), c(smooth(smooth(sm3, "S"), "S")))
-[1] TRUE
+Coefficients:
+                            Estimate Std. Error z value Pr(>|z|)    
+(Intercept)                  4.14887    0.10603  39.128   <2e-16 ***
+M.userY                     -0.40521    0.16188  -2.503   0.0123 *  
+TempHigh                    -0.44275    0.17121  -2.586   0.0097 ** 
+M.userY:TempHigh            -0.12692    0.26257  -0.483   0.6288    
+SoftMedium                   0.05311    0.13308   0.399   0.6898    
+SoftSoft                     0.05311    0.13308   0.399   0.6898    
+M.userY:SoftMedium           0.08323    0.19685   0.423   0.6725    
+M.userY:SoftSoft             0.12169    0.19591   0.621   0.5345    
+TempHigh:SoftMedium         -0.30442    0.22239  -1.369   0.1710    
+TempHigh:SoftSoft           -0.30442    0.22239  -1.369   0.1710    
+M.userY:TempHigh:SoftMedium  0.21189    0.31577   0.671   0.5022    
+M.userY:TempHigh:SoftSoft   -0.20387    0.32540  -0.627   0.5310    
+BrandM                      -0.30647    0.10942  -2.801   0.0051 ** 
+M.userY:BrandM               0.40757    0.15961   2.554   0.0107 *  
+TempHigh:BrandM              0.04411    0.18463   0.239   0.8112    
+M.userY:TempHigh:BrandM      0.44427    0.26673   1.666   0.0958 .  
+---
+Signif. codes:  0 `***' 0.001 `**' 0.01 `*' 0.05 `.' 0.1 ` ' 1 
 
-smooth> all.equal(c(sm), c(smooth(smooth(sm3, "S"), "3R")))
-[1] TRUE
+(Dispersion parameter for poisson family taken to be 1)
 
-smooth> plot(presidents, main = "smooth(presidents0, *) :  3R and default 3RS3R")
+    Null deviance: 118.627  on 23  degrees of freedom
+Residual deviance:   5.656  on  8  degrees of freedom
+AIC: 170.07
 
-smooth> lines(sm3, col = 3, lwd = 1.5)
+Number of Fisher Scoring iterations: 4
 
-smooth> lines(sm, col = 2, lwd = 1.25)
 
-> showSmooth <- function(x, leg.x = 1, leg.y = max(x)) {
-    ss <- cbind(x, "3c" = smooth(x, "3", end = "copy"), "3" = smooth(x, 
-        "3"), "3Rc" = smooth(x, "3R", end = "copy"), "3R" = smooth(x, 
-        "3R"), sm = smooth(x))
-    k <- ncol(ss) -  .... [TRUNCATED] 
+> symnum(summary(detg.mod, correlation = TRUE)$corr)
+                            ( M.sY TmH M.sY:TH SM SS M.Y:SM M.Y:SS TH:SM TH:SS
+(Intercept)                 1                                                 
+M.userY                     , 1                                               
+TempHigh                    , .    1                                          
+M.userY:TempHigh            . ,    ,   1                                      
+SoftMedium                  , .    .           1                              
+SoftSoft                    , .    .           .  1                           
+M.userY:SoftMedium          . ,        .       ,  .  1                        
+M.userY:SoftSoft            . ,        .       .  ,  .      1                 
+TempHigh:SoftMedium         .      ,   .       .  .  .             1          
+TempHigh:SoftSoft           .      ,   .       .  .         .      .     1    
+M.userY:TempHigh:SoftMedium   .    .   .       .     ,      .      ,     .    
+M.userY:TempHigh:SoftSoft     .    .   .          .  .      ,      .     ,    
+BrandM                      .                                                 
+M.userY:BrandM                .                                               
+TempHigh:BrandM                    .   .                                      
+M.userY:TempHigh:BrandM            .   .                                      
+                            M.Y:TH:SM M.Y:TH:SS B M.Y:B TH:B M.Y:TH:B
+(Intercept)                                                          
+M.userY                                                              
+TempHigh                                                             
+M.userY:TempHigh                                                     
+SoftMedium                                                           
+SoftSoft                                                             
+M.userY:SoftMedium                                                   
+M.userY:SoftSoft                                                     
+TempHigh:SoftMedium                                                  
+TempHigh:SoftSoft                                                    
+M.userY:TempHigh:SoftMedium 1                                        
+M.userY:TempHigh:SoftSoft   .         1                              
+BrandM                                          1                    
+M.userY:BrandM                                  , 1                  
+TempHigh:BrandM                                 . .     1            
+M.userY:TempHigh:BrandM                         . .     ,    1       
+attr(,"legend")
+[1] 0 ` ' 0.3 `.' 0.6 `,' 0.8 `+' 0.9 `*' 0.95 `B' 1
 
-> for (x in list(c(4, 6, 2, 2, 6, 3, 6, 6, 5, 2), c(3, 
-    2, 1, 4, 5, 1, 3, 2, 4, 5, 2), c(2, 4, 2, 6, 1, 1, 2, 6, 
-    3, 1, 6), x1, )) print(t(showSmooth(x)))
-    [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10]
-x      4    6    2    2    6    3    6    6    5     2
-3c     4    4    2    2    3    6    6    6    5     2
-3      4    4    2    2    3    6    6    6    5     3
-3Rc    4    4    2    2    3    6    6    6    5     2
-3R     4    4    2    2    3    6    6    6    5     3
-sm     4    4    4    3    3    6    6    6    5     3
-    [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,11]
-x      3    2    1    4    5    1    3    2    4     5     2
-3c     3    2    2    4    4    3    2    3    4     4     2
-3      2    2    2    4    4    3    2    3    4     4     4
-3Rc    3    2    2    4    4    3    3    3    4     4     2
-3R     2    2    2    4    4    3    3    3    4     4     4
-sm     2    2    2    2    3    3    3    3    4     4     4
-    [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,11]
-x      2    4    2    6    1    1    2    6    3     1     6
-3c     2    2    4    2    1    1    2    3    3     3     6
-3      2    2    4    2    1    1    2    3    3     3     3
-3Rc    2    2    2    2    1    1    2    3    3     3     6
-3R     2    2    2    2    1    1    2    3    3     3     3
-sm     2    2    2    2    2    2    2    3    3     3     3
-    [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,11]
-x      4    1    3    6    6    4    1    6    2     4     2
-3c     4    3    3    6    6    4    4    2    4     2     2
-3      3    3    3    6    6    4    4    2    4     2     2
-3Rc    4    3    3    6    6    4    4    4    2     2     2
-3R     3    3    3    6    6    4    4    4    2     2     2
-sm     3    3    3    3    4    4    4    4    2     2     2
+> anova(detg.m0, detg.mod)
+Analysis of Deviance Table
 
-> par(op)
+Model 1: Fr ~ M.user * Temp * Soft + Brand
+Model 2: Fr ~ M.user * Temp * Soft + Brand * M.user * Temp
+  Resid. Df Resid. Dev Df Deviance
+1        11     32.826            
+2         8      5.656  3   27.170
 > 
 > cat("Time elapsed: ", proc.time() - .ptime, "\n")
-Time elapsed:  8.04 0.22 8.74 0 0 
+Time elapsed:  10.66 0.46 11.15 NA NA 
 > 

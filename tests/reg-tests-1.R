@@ -2848,5 +2848,5 @@ stopifnot(is.na(NA %*% 0), is.na(0 %*% NA))
 ll <- data.frame(a = rpois(10,1) > 0, b = rpois(10,1) > 0)
 stopifnot(mode(as.matrix(ll)) == "logical")
 lll <- data.frame(a = LETTERS[1:10], b = rpois(10,1) > 0)
-stopifnot(mode(as.matrix(ll)) == "character")
+stopifnot(mode(as.matrix(lll)) == "character")
 ## both were char before 1.9.0

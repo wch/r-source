@@ -10,7 +10,7 @@
 ##
 ## One problem with the last is that no realistic x's are used.
 ##
-ls.base <- ls("package:base")
+ls.base <- c(ls("package:base"), ls("package:stats"))
 base.is.f <- sapply(ls.base, function(x) is.function(get(x)))
 bi <- ls.base[base.is.f]
 iroot <- substring(is.bi <- bi[substring(bi,1,3) == "is."],4)
