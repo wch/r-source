@@ -4,9 +4,8 @@ attach(NULL, name = "Autoloads")
 assign(".Autoloaded", NULL, env=.AutoloadEnv)
 T <- TRUE
 F <- FALSE
-version <- Version()
+version <- Version(); class(version) <- "simple.list"
 .Machine <- Machine()
 
 options(na.action = "na.omit")
-options(show.P.values = TRUE)
 options(show.signif.stars = TRUE)
