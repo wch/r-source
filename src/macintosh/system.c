@@ -33,6 +33,13 @@
 #include "RFLaunch.h"
 #include "TFLaunch.h"
 #include <Rdevices.h>
+#include <CFBundle.h>
+#include <Folders.h>
+
+#include "IOStuff.h"		/*-> Defn.h */
+#include "Fileio.h"
+#include "Parse.h"
+
 
 extern long start_Time;
 extern long last_Time;
@@ -60,6 +67,9 @@ void R_Suicide(char *s);
 
 #include <sioux.h>
 
+#ifndef MIN
+#define MIN(a,b)                 ((a) < (b) ? (a) : (b))
+#endif
 
 typedef struct _EnviromentPair {
     char *key;
@@ -70,6 +80,14 @@ FILE * FSp_fopen(ConstFSSpecPtr spec, const char * open_mode);
 char *load_entry(FILE *file);
 EnviromentPair *ParseLine(char *line);
 
+Boolean finished=true;	/* Boolean variable that takes into account the fact we are */
+						/* currently editing an R object with the internal editor   */
+
+static char *DefaultFileName;
+static int  EdFileUsed = 0;
+extern SInt16               Edit_Window;
+extern WindowPtr            Edit_Windows[MAX_NUM_E_WIN + 1];
+FSSpec tempeditFSS;    	/* This is the temporary edit file FSSpec used by do_edit */
 
 static int DefaultSaveAction = 0;
 static int DefaultRestoreAction = 1;
@@ -96,9 +114,11 @@ void  R_doErrorAlert(Str255 labelText);
 void  StrToStr255(char* sourceText, Str255 targetText);
 void R_ShowMessage(char *);
 
+OSStatus GoToMyHelpPage(CFStringRef pagePath,CFStringRef anchorName);
+
 extern void R_Edit(char** lines, int nlines);
 extern void main_1 ( void );
-
+extern Boolean              Have_Console;
 
 char *mac_getenv(const char *name);
 
@@ -121,13 +141,12 @@ int R_ReadConsoleXX(char *prompt, unsigned char *buf, int len,
 
 int R_ReadConsole(char *prompt, unsigned char *buf, int len,int addtohistory)
 {
-    char buffo[1000];
+   // char buffo[1000];
 	 
-    if(fileno(stdin) > 1) {
-	return( FileReadConsole(prompt, buf, len, addtohistory) ); 
-    }
+    if(fileno(stdin) > 1) 
+		return( FileReadConsole(prompt, buf, len, addtohistory) ); 
     else 
-	R_ReadConsole1(prompt, buf, len, addtohistory); 
+		R_ReadConsole1(prompt, buf, len, addtohistory); 
 
     buf[strlen(buf)-1] = '\n';
     buf[strlen(buf)] = '\0';
@@ -165,9 +184,9 @@ FileReadConsole(char *prompt, char *buf, int len, int addhistory)
 void R_WriteConsole(char *buf, int len)
 {
     if(fileno(stdout) > 1)
-	fputs(buf,stdout);
+	 fputs(buf,stdout);
     else
-	R_WriteConsole1(buf, len);
+     R_WriteConsole1(buf, len);
 }
 
 
@@ -319,9 +338,9 @@ int main(int ac, char **av)
     int value;
     char *p;
     SInt16 a;
+ 
     gc_inhibit_torture = 1;
     
-
     SIOUXSettings.standalone = false;  // I only use SIOUX to have command line
     SIOUXSettings.setupmenus = false;  // I'll set up the menus
     SIOUXSettings.initializeTB = false;  // I manage the ToolBox
@@ -329,7 +348,8 @@ int main(int ac, char **av)
     SIOUXSettings.autocloseonquit = true;
 
     ac = ccommand(&av);  // This must be the first  command after variables initializations !!!
-	
+ 
+    	
     /* FIXME HERE: record the time at which the program started. */
     /* This is probably zero on the mac as we have direct */
     /* access to the number of ticks since process start */
@@ -345,7 +365,7 @@ int main(int ac, char **av)
 	
 /* *** */
     if(R_Interactive)
-    changeSize(Console_Window, gTextSize);
+     changeSize(Console_Window, gTextSize);
      
     /* Call the real R main program (in ../main/main.c) */
     mainloop();
@@ -359,20 +379,20 @@ int Mac_initialize_R(int ac, char **av)
     char *p, msg[1024], **avv;
     structRstart rstart;
     Rstart Rp = &rstart;
-
+    
+    GetHomeLocation(); /* should stay here because getenv depends on this */
+    if((R_Home = R_HomeDir()) == NULL)
+		R_Suicide("R home directory is not defined");
+    
     if ( Initialize() == noErr ) {
 	gAppResFileRefNum = CurResFile();
 	doGetPreferences();
-	for(i = 0; i < kMaxWindows+2; i++)
-	    gWindowPtrArray[i] = NULL;
+	DoNew(true);
+  	Console_Window = FrontWindow();  
     }
     else
-	return(1);
+	 return(1);
 
-    GetHomeLocation();
-    
-    if((R_Home = R_HomeDir()) == NULL)
-	R_Suicide("R home directory is not defined");
 
 
 #ifdef HAVE_TIMES
@@ -411,11 +431,13 @@ int Mac_initialize_R(int ac, char **av)
  
     /* On Unix the console is a file; we just use stdio to write on it */
     if(fileno(stdin) > 1){
-	R_Consolefile = stdin;	/* We get input from file specified by the user */
+	R_Consolefile = stdout;	
 	R_Interactive = FALSE;
+	Rp->R_Interactive = R_Interactive;
     }
     else{
     R_Interactive = TRUE;	/* On the Mac we must be interactive */
+    Rp->R_Interactive = R_Interactive;
 	R_Consolefile = NULL;	/* We get the input from the GUI console*/
     }
     
@@ -425,6 +447,7 @@ int Mac_initialize_R(int ac, char **av)
 	R_Outputfile = NULL;	/* We send the output to the GUI console*/
 
     R_Sinkfile = NULL;		/* We begin writing to the console. */
+
 
 /*
  *  Since users' expectations for save/no-save will differ, we decided
@@ -557,7 +580,7 @@ void R_RestoreGlobalEnv(void)
 
     if(RestoreAction == SA_RESTORE) {
 	if(!(fp = R_fopen(".RData", "rb"))){
-	    warning("No workspace to load");
+	  /*  warning("No workspace to load"); */
 	    return;
 	}
 #ifdef OLD
@@ -663,7 +686,8 @@ SEXP do_getenv(SEXP call, SEXP op, SEXP args, SEXP env)
 	    fp = FSp_fopen(&spec,"r");
 	    if (fp == NULL)
 	    {
-		errorcall(call,"There is no environment file");
+		if(Have_Console)
+		 errorcall(call,"There is no environment file");
 		return R_NilValue; /* there is no enviroment-file */
 	    }
 	}
@@ -729,47 +753,64 @@ SEXP do_system(SEXP call, SEXP op, SEXP args, SEXP rho)
 }
 
 /* 
-   Rmac_tmpnam is a version of Runix_tmpnam for Macintosh. It assumes
-   that the directory "tmp" exists in the same directory where the
-   R application resides if not, it attemps to create it. 
-   (Stefano M. Iacus) Jago Nov-00, implemented pre-alpha 3
+   	Rmac_tmpnam is a version of Runix_tmpnam for Macintosh. 
+   	This routine has been rewritten. Now temporary files are
+   	written in the default System's Temporary Files directory.
+   	This directory is freed as needed by the MasOS from time
+   	to time.
+   	First version: (Stefano M. Iacus) Jago Nov-00, R pre-alpha 3
+	Jago April 2001, Stefano M. Iacus
 */
    
 #define MAC_SIZE FILENAME_MAX
 #define MAC_READ_OR_WRITE	0x0 /* fake a UNIX mode */
    
+
+
 char *Rmac_tmpnam(char * prefix)
 {
     char *tmp, tm[PATH_MAX], tmp1[PATH_MAX], *res;
     char curFolder[MAC_SIZE], newFolder[MAC_SIZE];
     unsigned int n, done = 0, pid;
-
-    getcwd( curFolder, MAC_SIZE );
-	
+    short 	foundVRefNum,plen;
+    long	foundDirID;
+    OSStatus	err;
+    Str255		string;
+    Handle		path = NULL;
     
-    if( chdir(":tmp") ) 
-	{
-	 sprintf(newFolder,"%s%s", curFolder, "tmp" );
-     if( mkdir(newFolder, MAC_READ_OR_WRITE ) == -1 )
-	  error("Failed to create temporary folder"); 	  	
-	}
-	
-	
-    chdir( curFolder );		
-	
-    strcpy(tmp1, ":tmp");
+    /* We search for the System Temporary directory */
+    err = FindFolder(kOnSystemDisk,kTemporaryFolderType, 
+    		kCreateFolder, &foundVRefNum, &foundDirID);
+
+    if(err != noErr){
+    	done = false;
+    	goto cleanup;
+    }
+
     pid = (unsigned int) getpid();
     for (n = 0; n < 100; n++) {
 	/* try a random number at the end */
-        sprintf(tm, "%s:%sR%xS%x\0", tmp1, prefix, pid, rand());
+        sprintf(tm, "%sR%xS%x\0", prefix, pid, rand());
+        CopyCStringToPascal(tm,string);
+        err = GetFullPath(foundVRefNum,foundDirID,string,&plen,&path);
+
+     	HLock((Handle) path);
+        strncpy(tm, *path, plen);
+	    tm[plen] = '\0';
+	    HUnlock((Handle) path);
+ 
         if (!R_FileExists(tm)) { done = 1; break; }
     }
+    
+cleanup:
     if(!done)
-	error("cannot find unused tempfile name");
-    res = (char *)malloc(strlen(tm));
+  	 error("cannot write tempfile");
+    res = (char *)malloc(strlen(tm)+1);
     strcpy(res, tm);
     return res;
 }
+
+
 
 
 /*
@@ -842,7 +883,13 @@ SEXP do_helpstart(SEXP call, SEXP op, SEXP args, SEXP env)
     OSErr err;
     Str255 HelpFileName;
     char errbuf[512];
-                                     
+    short  foundVRefNum,vrefnum;
+    SInt32 foundDirID;  
+    Str255	string;
+    Handle	path = NULL;
+    short 	plen;
+    FSSpec	spec;
+                                          
     checkArity(op, args);
     
     home =  R_Home; // No env, Jago
@@ -868,7 +915,12 @@ SEXP do_helpstart(SEXP call, SEXP op, SEXP args, SEXP env)
 	error("file name too long");
 	return R_NilValue;
     }
+    
+#if ! TARGET_API_MAC_CARBON
     CtoPstr((char *) HelpFileName);
+#else    
+    CopyCStringToPascal(HelpFileName,HelpFileName);
+#endif
     err = FSMakeFSSpecFromPath((ConstStr255Param) HelpFileName, &fileSpec);
     if (err != noErr) {
 	sprintf(errbuf, "error code %d creating file spec for help file %s",
@@ -880,8 +932,50 @@ SEXP do_helpstart(SEXP call, SEXP op, SEXP args, SEXP env)
     err = FinderLaunch(1, &fileSpec);
     if(err!=noErr)
 	error("Cannot launch browser");
+   
+  
+   // err = GoToMyHelpPage(NULL,NULL);
+
     
     return R_NilValue;
+}
+
+OSStatus GoToMyHelpPage(
+            CFStringRef pagePath,   /* If NULL, goes to main TOC */
+            CFStringRef anchorName) /* If NULL, goes to top of page */
+    { 
+    CFBundleRef myAppsBundle;
+    CFTypeRef myBookName;
+    OSStatus err;
+
+        /* set up a known state */
+    myAppsBundle = NULL;
+    myBookName = NULL;
+
+        /* Get our application's main bundle from Core Foundation */
+    myAppsBundle = CFBundleGetMainBundle();
+    if (myAppsBundle == NULL) { err = fnfErr; goto bail; } 
+
+        /* get the help book's name */
+    myBookName = CFBundleGetValueForInfoDictionaryKey( 
+    myAppsBundle, CFSTR("CFBundleHelpBookName")); 
+    if (myAppsBundle == NULL) { err = fnfErr; goto bail; } 
+
+        /* verify the data type returned */
+    if(CFGetTypeID(myBookName) == CFStringGetTypeID()) {
+        err = paramErr;
+        goto bail;
+    }
+
+        /* go to the page */
+    err = AHGotoPage(myBookName, pagePath, anchorName); 
+    if (err != noErr) goto bail;
+
+        /* done */
+    return noErr;
+
+bail:
+    return err;
 }
 
 
@@ -904,6 +998,7 @@ SEXP do_helpitem(SEXP call, SEXP op, SEXP args, SEXP env)
     FSSpec  fileSpec;
     OSErr err;
     char errbuf[512];
+    char tempname[2048];
      
     checkArity(op, args);
     if (!isString(CAR(args)))
@@ -925,7 +1020,11 @@ SEXP do_helpitem(SEXP call, SEXP op, SEXP args, SEXP env)
 	    return R_NilValue;
 	}
 
-	CtoPstr((char *) HelpFileName);
+//	CtoPstr((char *) HelpFileName);
+	
+    CopyCStringToPascal(HelpFileName,HelpFileName);
+//    CopyCStringToPascal(HelpFileName,tempname);
+
 	err = FSMakeFSSpecFromPath((ConstStr255Param) HelpFileName, &fileSpec);
 	if (err != noErr) {
 	    sprintf(errbuf, "error code %d creating file spec for help file %s",
@@ -950,37 +1049,115 @@ SEXP do_dataentry(SEXP call, SEXP op, SEXP args, SEXP rho)
 }
 
 
+
+/*  This routine has been completely rewritten. This is the unix equivalent to
+    what is found src/unix/edit.c file adn adpted for the Macintosh.
+    For the time beeing the internal editor is used, next step is to allow the 
+    user to use an external editor.
+    Jago April 2001, Stefano M. Iacus
+*/
+    
 SEXP do_edit(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    int i, n;
-    SEXP x;
-    char **lines, *vmaxsave;
+    int   i, rc, status;
+    SEXP  x, fn, envir, ed, t;
+    char *filename, *editcmd, *vmaxsave, *cmd;
+    FILE *fp;
+    Str255	editname;	
+	OSStatus err;
 
+    DefaultFileName = Rmac_tmpnam(NULL);
+    
     checkArity(op, args);
 
     vmaxsave = vmaxget();
 
-    /* x is the object to be edited */
-    /* note that we ignore the file and editor args */
+    x = CAR(args);
+    if (TYPEOF(x) == CLOSXP) envir = CLOENV(x);
+    else envir = R_NilValue;
+    PROTECT(envir);
 
-    PROTECT(x = deparse1(CAR(args), 0));
-    n = length(x);
-    lines = (char**)R_alloc(n, sizeof(char*));
-    for (i = 0; i < n; i++) {
-	lines[i] = CHAR( STRING_ELT(x,i) );
+    fn = CADR(args);
+    if (!isString(fn))
+	error("invalid argument to edit()");
+
+    if (LENGTH(STRING_ELT(fn, 0)) > 0) {
+	filename = R_alloc(strlen(CHAR(STRING_ELT(fn, 0))), sizeof(char));
+	strcpy(filename, CHAR(STRING_ELT(fn, 0)));
     }
-    for (i = 0; i < n; i++) {
-    	Rprintf("%s\n", lines[i]);
+    else filename = DefaultFileName;
+
+    if (x != R_NilValue) {
+
+	if((fp=R_fopen(R_ExpandFileName(filename), "w")) == NULL)
+	    errorcall(call, "unable to open file");
+	if (LENGTH(STRING_ELT(fn, 0)) == 0) EdFileUsed++;
+	if (TYPEOF(x) != CLOSXP || isNull(t = getAttrib(x, R_SourceSymbol)))
+	    t = deparse1(x, 0);
+	for (i = 0; i < LENGTH(t); i++)
+	    fprintf(fp, "%s\n", CHAR(STRING_ELT(t, i)));
+	fclose(fp);
     }
-    R_Edit(lines, n);
+
+
+    ed = CAR(CDDR(args));
+    if (!isString(ed)) errorcall(call, "argument `editor' type not valid");
+    cmd = CHAR(STRING_ELT(ed, 0));
+    if (strlen(cmd) == 0) errorcall(call, "argument `editor' is not set");
+    editcmd = R_alloc(strlen(cmd) + strlen(filename) + 6, sizeof(char));
+
+
+    CopyCStringToPascal(filename,editname);
+
+    err = FSMakeFSSpecFromPath(editname, &tempeditFSS);
+    
+    DoNew(true);
+       
+    RemWinMenuItem();
+   
+    err = ReadTextFile(&tempeditFSS,
+		       GetWindowWE(Edit_Windows[Edit_Window-1]));
+    
+    
+    if(err != noErr)
+	 REprintf("\n ReadTextFile error: %d\n",err);
+   	
+   	UniqueWinTitle();
+	if(Edit_Window>2)
+    	RepositionWindow(Edit_Windows[Edit_Window - 1], 
+        Edit_Windows[Edit_Window - 2],kWindowCascadeOnParentWindow);
+
+    finished=false;
+    while(!finished)
+	{
+		ProcessEvent ( );
+	}
+
+
+    if((fp = R_fopen(R_ExpandFileName(filename), "r")) == NULL)
+	errorcall(call, "unable to open file to read");
+    R_ParseCnt = 0;
+    x = PROTECT(R_ParseFile(fp, -1, &status));
+    fclose(fp);
+    if (status != PARSE_OK)
+	errorcall(call,
+		  "An error occurred on line %d\n use a command like\n x <- edit()\n to recover", R_ParseError);
+    R_ResetConsole();
+    {   /* can't just eval(x) here */
+	int j, n;
+	SEXP tmp = R_NilValue;
+
+	n = LENGTH(x);
+	for (j = 0 ; j < n ; j++)
+	    tmp = eval(VECTOR_ELT(x, j), R_GlobalEnv);
+	x = tmp;
+    }
+    if (TYPEOF(x) == CLOSXP && envir != R_NilValue)
+	SET_CLOENV(x, envir);
+    UNPROTECT(2);
     vmaxset(vmaxsave);
-    UNPROTECT(1);
-    R_Visible = 0;
-    return R_NilValue;
-
+    return (x);
 }
-
-
 
 /* Adapted from Windows code for Macintosh
    It does not allow wildcards and only files/dirs
@@ -1637,5 +1814,34 @@ SEXP do_sysinfo(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     warning("Sys.info is not implemented on this system");
     return R_NilValue;		/* -Wall */
+}
+
+
+/* doCopyPString
+ */
+void doCopyPString(Str255 sourceString,Str255 destinationString)
+{
+    SInt16   stringLength;
+
+    stringLength = sourceString[0];
+    BlockMove(sourceString + 1,destinationString + 1,stringLength);
+    destinationString[0] = stringLength;
+}
+
+
+/* doConcatPStrings
+ */
+void  doConcatPStrings(Str255 targetString, Str255 appendString)
+{
+    SInt16   appendLength;
+
+    appendLength = MIN(appendString[0],255 - targetString[0]);
+
+    if(appendLength > 0)
+    {
+	BlockMoveData(appendString+1, targetString+targetString[0]+1,
+		      (SInt32) appendLength);
+	targetString[0] += appendLength;
+    }
 }
 
