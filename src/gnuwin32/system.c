@@ -631,6 +631,7 @@ static void env_command_line(int *pac, char **argv)
     *pac = newac;
 }
 
+#include <winbase.h>
 
 int cmdlineoptions(int ac, char **av)
 {
@@ -683,6 +684,19 @@ int cmdlineoptions(int ac, char **av)
 	} else {
 	    Rp->R_Interactive = FALSE;
 	    Rp->ReadConsole = FileReadConsole;
+	}
+	/* Windows 95/98/ME have a shell that cannot redirect stderr,
+	   so don't use that on those OSes */
+	{
+	    OSVERSIONINFO verinfo;
+	    GetVersionEx(&verinfo);
+	    switch(verinfo.dwPlatformId) {
+	    case VER_PLATFORM_WIN32_WINDOWS:
+		R_Consolefile = stdout; /* used for errors */
+		break;
+	    default:
+		R_Consolefile = stderr; /* used for errors */
+	    }
 	}
 	R_Consolefile = stderr; /* used for errors */
 	R_Outputfile = stdout;  /* used for sink-able output */
