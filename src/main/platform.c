@@ -74,11 +74,11 @@ SEXP do_Platform(SEXP call, SEXP op, SEXP args, SEXP rho)
 char *R_Date()
 {
     time_t t;
-    static char s[26];/* own space */
+    static char s[26];		/* own space */
 
     time(&t);
     strcpy(s, ctime(&t));
-    s[24] = '\0'; /* overwriting the final \n */
+    s[24] = '\0';		/* overwriting the final \n */
     return s;
 }
 
@@ -655,9 +655,8 @@ SEXP do_fileaccess(SEXP call, SEXP op, SEXP args, SEXP rho)
 #endif
 
 #ifdef HAVE_LOCALE_H
-#include <locale.h>
+# include <locale.h>
 #endif
-
 
 SEXP do_getlocale(SEXP call, SEXP op, SEXP args, SEXP rho)
 {

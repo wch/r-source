@@ -19,28 +19,28 @@ details.
 
 GETTING AND UNPACKING THE SOURCES
 
-The simplest way is to download the most recent R-x.y.z.tgz package, and
-unpack them with
+The simplest way is to download the most recent `R-x.y.z.tgz' package,
+and unpack them with
 
 	tar xvfz R-x.y.z.tgz
 
 on systems that have GNU tar installed.  On other systems you need at
-least to have the "gzip" program installed.  Then you can use
+least to have the `gzip' program installed.  Then you can use
 
 	gzip -dc R-x.y.z.tgz | tar xvf -
 
 If you need to transport the sources on floppy disks, you can download
-the R-x.y.z.tgz-split.* files and paste them together at the destination
-with
+the `R-x.y.z.tgz-split.*' files and paste them together at the
+destination with
 
 	cat R-x.y.z.tgz-split.* > R-x.y.z.tgz
 
 and proceed as above.
 
 Finally, for minor-minor releases (x.y.z with z != 0), a patch against
-the preceding release is made available in R-x.y.{z-1}-x.y.z.diff.gz
+the preceding release is made available in `R-x.y.{z-1}-x.y.z.diff.gz'
 (e.g., R-0.63.2-0.63.3.diff.gz), which is generally a much shorter file
-that the .tgz files.  Such a file can be applied to the sources of the
+that the `.tgz' files.  Such a file can be applied to the sources of the
 previous version by changing to the top directory of it and
 
 	gzip -dc /path/to/it/R-x.y.{z-1}-x.y.z.diff.gz | patch -E -p1
@@ -77,7 +77,7 @@ You do not necessarily have to build R in the top-level source directory
 	make
 
 and so on, as described further below.  This has the advantage of always
-keeping your source tree `clean'.  (You may need GNU make to allow
+keeping your source tree ``clean''.  (You may need GNU make to allow
 this.)
 
 If you need or want to set certain configure variables to something
@@ -93,7 +93,7 @@ letter.
 If you have libraries and header files, e.g., for GNU readline, in
 non-system directories, use the variables LIBS (for libraries) and
 CPPFLAGS (for header files), respectively, to specify these locations.
-These default to /usr/local/lib and /usr/local/include to catch the
+These default to `/usr/local/lib' and `/usr/local/include' to catch the
 most common cases.  If libraries are still not found, then maybe your
 compiler/linker does not support re-ordering of `-L' and `-l' flags
 (this has been reported to be a problem on HP-UX with native cc).  In
@@ -106,15 +106,15 @@ good idea to remove that file before re-configuring.
 
 Make will also build plain text help pages as well as HTML and LaTeX
 versions of the R object documentation (the three kinds can also be
-generated separately using make help, make html and make latex).  Note
-that you need Perl version 5, available via http://www.perl.com/CPAN/,
-to build this documentation.  If this is not available on your system,
-you can obtain PDF versions of the documentation files via the
-Comprehensive R Archive Network (CRAN), see the file `RESOURCES' for
-information on CRAN.
+generated separately using `make help', `make html' and `make latex').
+Note that you need Perl version 5, available via
+http://www.perl.com/CPAN/, to build this documentation.  If this is not
+available on your system, you can obtain PDF versions of the
+documentation files via the Comprehensive R Archive Network (CRAN), see
+the file `RESOURCES' for information on CRAN.
 
 Now rehash if necessary, type `R', and read the R manuals and the R FAQ
-(files FAQ or doc/html/faq.html or the latest version at
+(files `FAQ' or `doc/html/faq.html' or the latest version at
 http://www.ci.tuwien.ac.at/~hornik/R/R-FAQ.html).
 
 The GNOME interface for R will only be built if you specify it: see the
@@ -126,8 +126,8 @@ MAKING THE MANUALS
 There is a set of manuals that can be built from the sources,
 
 	refman		Printed versions of all the help pages.
-	R-intro		`An Introduction to R'.
-	R-exts		`Writing R Extensions'.
+	R-intro		``An Introduction to R''.
+	R-exts		``Writing R Extensions''.
 	R-FAQ		R FAQ (which is already built for you).
 
 To make these, cd to the `doc/manual' directory and use
@@ -137,7 +137,7 @@ To make these, cd to the `doc/manual' directory and use
 	make info	to create info files (not refman)
 
 You will not be able to build the info files unless you have makeinfo
-version 4 or later installed (and most Linux distributions have 3.12).
+version 4 or later installed (and some Linux distributions have 3.12).
 
 The DVI versions can be previewed and printed using standard programs
 such as `xdvi' and `dvips'.  The PDF versions can be viewed using
@@ -183,12 +183,13 @@ install-dvi', `make install-info' and `make install-pdf', respectively.
 
 USING MAKE
 
-To compile R, you will most likely find it easiest to use GNU make.
-On Solaris 2.6/7 in particular, you need a version of GNU make
-different from 3.77; 3.79 works fine, as does the Sun make.
+To compile R, you will most likely find it easiest to use GNU make.  On
+Solaris 2.6/7 in particular, you need a version of GNU make different
+from 3.77; 3.79 works fine, as does the Sun make.
 
 To build in a separate directory you need a make that uses the VPATH
-variable, for example GNU make, or Sun make on Solaris 2.7 (but not earlier).
+variable, for example GNU make, or Sun make on Solaris 2.7 (but not
+earlier).
 
 If you want to use a make by another name, for example if your GNU make
 is called `gmake', you need to set MAKE at configure time, for example
@@ -221,13 +222,13 @@ during the configuration process.
 BUILDING THE GNOME INTERFACE
 
 This interface is experimental, incomplete and not currently being
-developed. It provides a console and a graphics device (gtk(); the x11() 
+developed. It provides a console and a graphics device (gtk(); the x11()
 device can also be used).  Many of the `features' of the console are
 currently stubs.
 
 The GNOME interface for R will only be built if you specify it by
-running configure with the --with-gnome option.  For example, you might
-run
+running configure with the `--with-gnome' option.  For example, you
+might run
 
 	./configure --with-gnome
 
@@ -267,7 +268,7 @@ A wide range of flags can be set in the file config.site or via
 environment variables.  We have already mentioned
 
 	CPPFLAGS	extra include flags
-	LIBS		libraries and -L/lib/path flags
+	LIBS		libraries and `-L/lib/path' flags
 
 and others include
 
@@ -300,10 +301,10 @@ hardware/os platform.
     problem is that there is no agreement on how to set the signalling
     behavior;  sgi/irix and i386 linux require no special action, freebsd
     requires a call to (the macro) fpsetmask(0) and osf1 requires
-    that computation be done with a -ieee_with_inexact flag etc...
+    that computation be done with a `-ieee_with_inexact' flag etc ...
     On a new platform you must find out the magic recipe and add some
     code to make it work.  This can often be done via the file
-    config.site which resides in the top level directory.
+    `config.site' which resides in the top level directory.
 
  2. Shared Libraries: There seems to be very little agreement across
     platforms on what needs to be done to build shared libraries.
@@ -322,6 +323,6 @@ platform.
 
 If you are having trouble getting R to work on your platform please
 feel free to get in touch to ask questions.  We've had a fair amount
-of practice at porting R to new platforms...
+of practice at porting R to new platforms ...
 
 	R Core Members
