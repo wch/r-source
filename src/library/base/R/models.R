@@ -238,7 +238,7 @@ offset <- function(object) object
 
 model.frame <- function(formula, ...) UseMethod("model.frame")
 model.frame.default <-
-    function(formula, data = NULL, subset=NULL, na.action = na.fail,
+    function(formula, data = NULL, subset = NULL, na.action = na.fail,
 	     drop.unused.levels = FALSE, xlev = NULL,...)
 {
     if(missing(formula)) {
@@ -266,9 +266,9 @@ model.frame.default <-
         data <- as.data.frame(data)
     else if (is.array(data))
         stop("`data' must be a data.frame, not a matrix or  array")
-    env <- environment(formula)
     if(!inherits(formula, "terms"))
 	formula <- terms(formula, data = data)
+    env <- environment(formula)
     rownames <- attr(data, "row.names")
     vars <- attr(formula, "variables")
     predvars <- attr(formula, "predvars")
