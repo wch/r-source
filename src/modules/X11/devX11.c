@@ -1089,6 +1089,7 @@ X11_Open(DevDesc *dd, x11Desc *xd, char *dsp, double w, double h,
         return FALSE;
       DisplayOpened = TRUE;
       Rf_setX11Display(display, gamma_fac, colormodel, maxcube, TRUE);
+      displayOpen = TRUE;
       if(xd->handleOwnEvents == FALSE)
 	  addInputHandler(R_InputHandlers, ConnectionNumber(display),
 			  R_ProcessEvents, XActivity);
@@ -1458,7 +1459,6 @@ static void X11_Close(DevDesc *dd)
         if(xd->handleOwnEvents == FALSE)
 	    removeInputHandler(&R_InputHandlers,
 			       getInputHandler(R_InputHandlers,fd));
-	
 	XCloseDisplay(display);
 	displayOpen = FALSE;
     }
@@ -1956,39 +1956,38 @@ Rf_getX11Display()
  Finally, setHandlers controls whether the code establishes handlers for the X errors.
  */
 int
-Rf_setX11Display(Display *dpy, double gamma_fac, X_COLORTYPE colormodel, int maxcube, Rboolean setHandlers)
+Rf_setX11Display(Display *dpy, double gamma_fac, X_COLORTYPE colormodel, 
+		 int maxcube, Rboolean setHandlers)
 {
-  static int alreadyDone = 0;
-  if(alreadyDone) {
-    return(TRUE);
-  }
-  alreadyDone = 1;
-  display = dpy;
+    static int alreadyDone = 0;
+    if(alreadyDone) return(TRUE);
+    alreadyDone = 1;
+    display = dpy;
 
 #define SETGAMMA
 #ifdef SETGAMMA
-	RedGamma   = gamma_fac;
-	GreenGamma = gamma_fac;
-	BlueGamma  = gamma_fac;
+    RedGamma   = gamma_fac;
+    GreenGamma = gamma_fac;
+    BlueGamma  = gamma_fac;
 #endif
-	screen = DefaultScreen(display);
-	rootwin = DefaultRootWindow(display);
-	depth = DefaultDepth(display, screen);
-	visual = DefaultVisual(display, screen);
-	colormap = DefaultColormap(display, screen);
-	Vclass = visual->class;
-	model = colormodel;
-	maxcubesize = maxcube;
-	SetupX11Color();
-	devPtrContext = XUniqueContext();
-	displayOpen = TRUE;
-	/* set error handlers */
-        if(setHandlers == TRUE) {
-  	  XSetErrorHandler(R_X11Err);
-	  XSetIOErrorHandler(R_X11IOErr);
-	}
+    screen = DefaultScreen(display);
+    rootwin = DefaultRootWindow(display);
+    depth = DefaultDepth(display, screen);
+    visual = DefaultVisual(display, screen);
+    colormap = DefaultColormap(display, screen);
+    Vclass = visual->class;
+    model = colormodel;
+    maxcubesize = maxcube;
+    SetupX11Color();
+    devPtrContext = XUniqueContext();
+    displayOpen = TRUE;
+    /* set error handlers */
+    if(setHandlers == TRUE) {
+	XSetErrorHandler(R_X11Err);
+	XSetIOErrorHandler(R_X11IOErr);
+    }
 
- return(TRUE);
+    return(TRUE);
 }
 
 /**
