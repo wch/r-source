@@ -465,3 +465,23 @@ Date: Sat, 23 Feb 2002 04:56:14 +0100 (MET)
 Subject: bug in options() - help page
 From: Ole Christensen <o.christensen@lancaster.ac.uk>
 Date: Sat, 23 Feb 2002 16:56:56 +0000
+* PR# 1324 *
+Subject: did you see this???
+From: "" <laurie-martin@excite.com>
+Date: Mon, 25 Feb 2002 10:32:06 +0100 (MET)
+* PR# 1325 *
+Subject:  delete.response() incorrectly handles terms-objects without response 
+From: David Meyer <meyer@ci.tuwien.ac.at>
+Date: Mon, 25 Feb 2002 11:33:37 +0100
+* PR# 1326 *
+Subject: Re: [Rd] delete.response() incorrectly handles terms-objects without
+From: Prof Brian D Ripley <ripley@stats.ox.ac.uk>
+Date: Mon, 25 Feb 2002 14:39:00 +0000 (GMT Standard Time)
+* PR# 1327 *
+Subject: Re: [Rd] delete.response() incorrectly handles terms-objects 
+From: David Meyer <david.meyer@ci.tuwien.ac.at>
+Date: Mon, 25 Feb 2002 16:44:10 +0100
+* PR# 1328 *
+Subject: Re: [Rd] delete.response() incorrectly handles terms-objects 
+From: Prof Brian D Ripley <ripley@stats.ox.ac.uk>
+Date: Mon, 25 Feb 2002 15:50:51 +0000 (GMT Standard Time)
