@@ -2,7 +2,7 @@
 
 NEW FEATURES
 
-    o   xy.coords(.) has a  "recycle = FALSE" argument,  used in text().
+    o	xy.coords(.) has a  "recycle = FALSE" argument,	 used in text().
 
 
 BUG FIXES
@@ -32,6 +32,10 @@ BUG FIXES
     o	fix problem with step() and offsets
 
     o	drop attributes on matrix subsetting
+
+    o	kappa(.) now works [dtrco now in load table (ROUTINES)].
+
+    o	pmin() and pmax() now preserve attributes.
 
 
 		CHANGES IN R VERSION 0.63
