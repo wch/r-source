@@ -22,8 +22,12 @@ function(new, name.opt, reset = FALSE, assign.opt = FALSE,
 	 stop(paste("invalid arguments in \"",
 		    deparse(sys.call(sys.parent())),
 		    "\" (need NAMED args)", sep=""))
- if(reset && exists(name.opt, envir=envir, inherits=FALSE))
-	 rm(list=name.opt, envir=envir)
+ if(reset && exists(name.opt, envir=envir, inherits=FALSE)) {
+   if(length(find(name.opt)) <= 1)
+     stop(paste("Cannot reset '", name.opt,
+                "'  since it exists only once in search()!\n", sep=""))
+   else rm(list=name.opt, envir=envir)
+ }
  old <- get(name.opt, envir=envir)
  if(!is.list(old))
 	 stop(paste("invalid options in `",name.opt,"'",sep=""))
@@ -84,10 +88,12 @@ postscript <- function (file = "Rplots.ps", ...)
 	new <- list(...)# eval
 	old <- check.options(new = new, name.opt = ".PostScript.Options",
 			     reset = FALSE, assign.opt = FALSE)
+	.Internal(PS(file, old$paper, old$family, old$bg, old$fg,
+		old$width, old$height, old$horizontal, old$pointsize))
+}
+##--> source in ../../../main/devices.c  and ../../../unix/devPS.c
+
 ##	cpars <- old[c("paper", "family", "bg", "fg")]
 ##	npars <- old[c("width", "height", "horizontal", "pointsize")]
 ##	cpars <- c(file, as.character(unlist(lapply(cpars, "[", 1))))
 ##	npars <- as.numeric(unlist(lapply(npars, "[", 1)))
-	.Internal(PS(file, old$paper, old$family, old$bg, old$fg,
-		old$width, old$height, old$horizontal, old$pointsize))
-}
