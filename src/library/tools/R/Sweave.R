@@ -147,16 +147,16 @@ SweaveSyntConv <- function(file, syntax, output=NULL)
     if(is.null(syntax$trans))
         stop("Target syntax contains no translation table.\n")
              
-    syntax <- SweaveGetSyntax(file)
+    insynt <- SweaveGetSyntax(file)
     text = readLines(file)
     if(is.null(output))
-        output = sub(syntax$extension, syntax$trans$extension, basename(file))
+        output = sub(insynt$extension, syntax$trans$extension, basename(file))
 
     TN = names(syntax$trans)
     
     for(n in TN){
         if(n!="extension")
-            text = gsub(syntax[[n]], syntax$trans[[n]], text)
+            text = gsub(insynt[[n]], syntax$trans[[n]], text)
     }
     
     cat(text, file=output, sep="\n")

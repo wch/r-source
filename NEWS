@@ -210,6 +210,8 @@ UTILITIES
 	package, and sets 'T' and 'F' to 'NULL' when running the
 	examples.
 
+    o   New function SweaveSyntConv() converts between Sweave file syntaxes.
+
 
 BUG FIXES
 

@@ -1,4 +1,5 @@
 \name{SweaveSyntConv}
+\alias{SweaveSyntConv}
 \title{Convert Sweave Syntax}
 \description{
   This function converts the syntax of files in \code{\link{Sweave}}
@@ -28,6 +29,11 @@ testfile <- file.path(.path.package("tools"),
 
 ## convert the file to latex syntax
 SweaveSyntConv(testfile, SweaveSyntaxLatex)
+
+## and run it through Sweave
+Sweave("Sweave-test-1.Stex")
+
+\testonly{if(!interactive()) unlink("Sweave-test-1*")}
 }
 \keyword{utilities}
 
