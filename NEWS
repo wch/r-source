@@ -253,6 +253,10 @@ NEW FEATURES
 	summaries to tables, e.g. row and column totals.  (Based on a
 	contribution by Bendix Carstensen.)
 
+    o	dendrogam edge and node labels can now be expressions (to be
+	plotted via stats:::plotNode called from plot.dendrogram). The
+	diamond frames around edge labels are nicer scaled horizontally.
+
     o	Changes to package 'grid':
 
 	- Renamed push/pop.viewport() to push/popViewport().
@@ -689,8 +693,8 @@ BUG FIXES
 
     o	The QC files now check that their file operations succeeded.
 
-    o   replicate() worked by making the supplied expression the 
-        body of an anonymous function(x), leading to a variable 
+    o   replicate() worked by making the supplied expression the
+        body of an anonymous function(x), leading to a variable
 	capture issue. Now, function(...) is used instead.
 
     o   chisq.test(simulate.p.value = TRUE) was returning slightly
@@ -700,14 +704,14 @@ BUG FIXES
     o   terms.formula(simplify = TRUE) was losing offset terms.
 	Multiple offset terms were not being removed correctly if two
 	of them appeared first or last in the formula.  (PR#6656)
- 
+
     o	Rd conversion to latex did not add a new line before
 	\end{Section} in more cases than were corrected in 1.8.1.
- 
+
     o	split.default() dropped NA levels in its internal code but
 	returned them as NA in all components in the interpreted code
 	for factors.  (PR#6672)
- 
+
     o	points.formula() had problems if there was a subset argument
 	and no data argument.  (PR#6652)
 

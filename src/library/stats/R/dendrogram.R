@@ -252,6 +252,8 @@ plotNode <-
 
     Xtract <- function(nam, L, default, indx)
 	rep(if(any(nam == names(L))) L[[nam]] else default, length.out = indx)[indx]
+    asTxt <- function(x)
+        if(is.character(x) || is.expression(x)) x else as.character(x)
 
     if(!is.null(nPar)) { ## draw this node
 	i <- if(inner || hasP) 1 else 2 # only 1 node specific par
@@ -275,30 +277,30 @@ plotNode <-
 	}
     }
     else if (inner) {
+	segmentsHV <- function(x0, y0, x1, y1) {
+	    if (horiz)
+		segments(y0, x0, y1, x1, col = col, lty = lty, lwd = lwd)
+	    else segments(x0, y0, x1, y1, col = col, lty = lty, lwd = lwd)
+	}
 	for (k in 1:length(subtree)) {
 	    child <- subtree[[k]]
 	    ## draw lines to the children and draw themselves recursively
 	    yBot <- attr(child, "height")
-	    if (getOption("verbose"))
-		cat("ch.", k, "@ h=", yBot, "; ")
+	    if (getOption("verbose")) cat("ch.", k, "@ h=", yBot, "; ")
 	    if (is.null(yBot))
 		yBot <- 0
 	    xBot <-
-                if (center) mean(bx$limit[k:(k + 1)])
-                else bx$limit[k] + .midDend(child)
+		if (center) mean(bx$limit[k:(k + 1)])
+		else bx$limit[k] + .midDend(child)
 
 	    hasE <- !is.null(ePar <- attr(child, "edgePar"))
 	    if (!hasE)
 		ePar <- edgePar
 	    i <- if (!isLeaf(child) || hasE) 1 else 2
+	    ## define line attributes for segmentsHV():
 	    col <- Xtract("col", ePar, default = par("col"), i)
 	    lty <- Xtract("lty", ePar, default = par("lty"), i)
 	    lwd <- Xtract("lwd", ePar, default = par("lwd"), i)
-	    segmentsHV <- function(x0, y0, x1, y1) {
-		if (horiz)
-		     segments(y0, x0, y1, x1, col = col, lty = lty, lwd = lwd)
-		else segments(x0, y0, x1, y1, col = col, lty = lty, lwd = lwd)
-	    }
 	    if (type == "triangle") {
 		segmentsHV(xTop, yTop, xBot, yBot)
 	    }
@@ -308,8 +310,9 @@ plotNode <-
 	    }
 	    vln <- NULL
 	    if (isLeaf(child) && leaflab == "textlike") {
-		nodeText <- as.character(attr(child,"label"))
-		if(getOption("verbose")) cat('-- with "label"',nodeText)
+		nodeText <- asTxt(attr(child,"label"))
+		if(getOption("verbose"))
+		    cat('-- with "label"',format(nodeText))
 		hln <- 0.6 * strwidth(nodeText)/2
 		vln <- 1.5 * strheight(nodeText)/2
 		rect(xBot - hln, yBot,
@@ -317,35 +320,31 @@ plotNode <-
 		text(xBot, yBot + vln, nodeText)
 	    }
 	    if (!is.null(attr(child, "edgetext"))) {
-		edgeText <- as.character(attr(child, "edgetext"))
-		if(getOption("verbose")) cat('-- with "edgetext"',edgeText)
-		hlm <- 1.2 * strwidth(edgeText)/2
+		edgeText <- asTxt(attr(child, "edgetext"))
+		if(getOption("verbose"))
+		    cat('-- with "edgetext"',format(edgeText))
 		vlm <- 1.5 * strheight(edgeText)/2
+		hlm <- strwidth(edgeText)/2
 		if (!is.null(vln)) {
-		  mx <- (xTop + xBot + ((xTop - xBot)/(yTop - yBot)) * vln)/2
-		  my <- (yTop + yBot + 2 * vln)/2
+		    mx <-
+			if(type == "triangle")
+			    (xTop+ xBot+ ((xTop - xBot)/(yTop - yBot)) * vln)/2
+			else xBot
+		    my <- (yTop + yBot + 2 * vln)/2
 		}
 		else {
-		  mx <- (xTop + xBot)/2
-		  my <- (yTop + yBot)/2
-	      }
-		if (type == "triangle") {
-		    polygon(c(mx - hlm, mx - 1.3*hlm, mx - hlm,
-			      mx + hlm, mx + 1.3*hlm, mx + hlm),
-			    c(my - vlm, my, my + vlm, my + vlm, my, my - vlm),
-			    col = "white")
-		  text(mx, my, edgeText)
+		    mx <- if(type == "triangle") (xTop + xBot)/2 else xBot
+		    my <- (yTop + yBot)/2
 		}
-		else {
-		  polygon(c(xBot - hlm, xBot - 1.3*hlm, xBot - hlm,
-			    xBot + hlm, xBot + 1.3*hlm, xBot + hlm),
-			  c(my - vlm, my, my + vlm, my + vlm, my, my - vlm),
-			  col = "white")
-		  text(xBot, my, edgeText)
-		}
+		## Both for "triangle" and "rectangle" : Diamond + Text
+                hlm <- hlm+ 0.6*vlm+ c(0,2*vlm,0)# + vlm => constant shape ">"
+		polygon(c(mx - hlm, mx + hlm),
+			c(my - vlm, my, my + vlm, my + vlm, my, my - vlm),
+			col = "white")
+		text(mx, my, edgeText)
 	    }
 	    plotNode(bx$limit[k], bx$limit[k + 1], subtree = child,
-                     type, center, leaflab, nodePar, edgePar, horiz)
+		     type, center, leaflab, nodePar, edgePar, horiz)
 	}
     }
 }
