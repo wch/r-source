@@ -41,6 +41,10 @@ void F77_SUB(lowesf)();
 void F77_SUB(lowesl)();
 void F77_SUB(ehg169)();
 void F77_SUB(ehg196)();
+/* exported (for loessf.f) : */
+void F77_SUB(ehg182)(int *i);
+void F77_SUB(ehg183a)(char *s, int *nc,int *i,int *n,int *inc);
+void F77_SUB(ehg184a)(char *s, int *nc, double *x, int *n, int *inc);
 
 
 static void warnmsg(char *string)
@@ -323,47 +327,50 @@ void loess_free(void)
 void F77_SUB(ehg182)(int *i)
 {
     char *msg, msg2[50];
+#define MSG(_m_)	msg = _m_ ; break ;
+
 switch(*i){
- case 100:msg="wrong version number in lowesd.   Probably typo in caller.";break;
- case 101:msg="d>dMAX in ehg131.  Need to recompile with increased dimensions.";break;
- case 102:msg="liv too small.    (Discovered by lowesd)";break;
- case 103:msg="lv too small.     (Discovered by lowesd)";break;
- case 104:msg="span too small.   fewer data values than degrees of freedom.";break;
- case 105:msg="k>d2MAX in ehg136.  Need to recompile with increased dimensions.";break;
- case 106:msg="lwork too small";break;
- case 107:msg="invalid value for kernel";break;
- case 108:msg="invalid value for ideg";break;
- case 109:msg="lowstt only applies when kernel=1.";break;
- case 110:msg="not enough extra workspace for robustness calculation";break;
- case 120:msg="zero-width neighborhood. make span bigger";break;
- case 121:msg="all data on boundary of neighborhood. make span bigger";break;
- case 122:msg="extrapolation not allowed with blending";break;
- case 123:msg="ihat=1 (diag L) in l2fit only makes sense if z=x (eval=data).";break;
- case 171:msg="lowesd must be called first.";break;
- case 172:msg="lowesf must not come between lowesb and lowese, lowesr, or lowesl.";break;
- case 173:msg="lowesb must come before lowese, lowesr, or lowesl.";break;
- case 174:msg="lowesb need not be called twice.";break;
- case 175:msg="need setLf=.true. for lowesl.";break;
- case 180:msg="nv>nvmax in cpvert.";break;
- case 181:msg="nt>20 in eval.";break;
- case 182:msg="svddc failed in l2fit.";break;
- case 183:msg="didnt find edge in vleaf.";break;
- case 184:msg="zero-width cell found in vleaf.";break;
- case 185:msg="trouble descending to leaf in vleaf.";break;
- case 186:msg="insufficient workspace for lowesf.";break;
- case 187:msg="insufficient stack space";break;
- case 188:msg="lv too small for computing explicit L";break;
- case 191:msg="computed trace L was negative; something is wrong!";break;
- case 192:msg="computed delta was negative; something is wrong!";break;
- case 193:msg="workspace in loread appears to be corrupted";break;
- case 194:msg="trouble in l2fit/l2tr";break;
- case 195:msg="only constant, linear, or quadratic local models allowed";break;
- case 196:msg="degree must be at least 1 for vertex influence matrix";break;
- case 999:msg="not yet implemented";break;
+ case 100:MSG("wrong version number in lowesd.   Probably typo in caller.")
+ case 101:MSG("d>dMAX in ehg131.  Need to recompile with increased dimensions.")
+ case 102:MSG("liv too small.    (Discovered by lowesd)")
+ case 103:MSG("lv too small.     (Discovered by lowesd)")
+ case 104:MSG("span too small.   fewer data values than degrees of freedom.")
+ case 105:MSG("k>d2MAX in ehg136.  Need to recompile with increased dimensions.")
+ case 106:MSG("lwork too small")
+ case 107:MSG("invalid value for kernel")
+ case 108:MSG("invalid value for ideg")
+ case 109:MSG("lowstt only applies when kernel=1.")
+ case 110:MSG("not enough extra workspace for robustness calculation")
+ case 120:MSG("zero-width neighborhood. make span bigger")
+ case 121:MSG("all data on boundary of neighborhood. make span bigger")
+ case 122:MSG("extrapolation not allowed with blending")
+ case 123:MSG("ihat=1 (diag L) in l2fit only makes sense if z=x (eval=data).")
+ case 171:MSG("lowesd must be called first.")
+ case 172:MSG("lowesf must not come between lowesb and lowese, lowesr, or lowesl.")
+ case 173:MSG("lowesb must come before lowese, lowesr, or lowesl.")
+ case 174:MSG("lowesb need not be called twice.")
+ case 175:MSG("need setLf=.true. for lowesl.")
+ case 180:MSG("nv>nvmax in cpvert.")
+ case 181:MSG("nt>20 in eval.")
+ case 182:MSG("svddc failed in l2fit.")
+ case 183:MSG("didnt find edge in vleaf.")
+ case 184:MSG("zero-width cell found in vleaf.")
+ case 185:MSG("trouble descending to leaf in vleaf.")
+ case 186:MSG("insufficient workspace for lowesf.")
+ case 187:MSG("insufficient stack space")
+ case 188:MSG("lv too small for computing explicit L")
+ case 191:MSG("computed trace L was negative; something is wrong!")
+ case 192:MSG("computed delta was negative; something is wrong!")
+ case 193:MSG("workspace in loread appears to be corrupted")
+ case 194:MSG("trouble in l2fit/l2tr")
+ case 195:MSG("only constant, linear, or quadratic local models allowed")
+ case 196:MSG("degree must be at least 1 for vertex influence matrix")
+ case 999:MSG("not yet implemented")
  default: sprintf(msg=msg2,"Assert failed; error code %d\n",*i);
 }
 warnmsg(msg);
 }
+#undef MSG
 
 void F77_SUB(ehg183a)(char *s, int *nc,int *i,int *n,int *inc)
 {
