@@ -32,8 +32,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-02-05 10:47+0000\n"
-"PO-Revision-Date: 2005-02-05 10:47+0000\n"
+"POT-Creation-Date: 2005-02-06 14:44+0000\n"
+"PO-Revision-Date: 2005-02-06 14:44+0000\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -151,7 +151,7 @@ msgid "type not yet implemented"
 msgstr "type not yet implemented"
 
 #: src/gnuwin32/extra.c:402 src/gnuwin32/extra.c:619 src/gnuwin32/extra.c:634
-#: src/main/platform.c:841 src/unix/sys-std.c:896 src/unix/sys-std.c:918
+#: src/main/platform.c:841 src/unix/sys-std.c:897 src/unix/sys-std.c:919
 msgid "invalid file argument"
 msgstr "invalid file argument"
 
@@ -212,7 +212,7 @@ msgstr "savehistory can only be used in Rgui and Rterm"
 msgid "loadhistory can only be used in Rgui and Rterm"
 msgstr "loadhistory can only be used in Rgui and Rterm"
 
-#: src/gnuwin32/extra.c:706 src/unix/sys-std.c:967
+#: src/gnuwin32/extra.c:706 src/unix/sys-std.c:968
 msgid "invalid 'time' value"
 msgstr "invalid ‘[1mtime[0m’ value"
 
@@ -360,17 +360,17 @@ msgstr "character string expected as first argument"
 msgid "character string expected as third argument"
 msgstr "character string expected as third argument"
 
-#: src/gnuwin32/system.c:112 src/unix/sys-std.c:65
+#: src/gnuwin32/system.c:112
 #, c-format
 msgid "Fatal error: %s\n"
 msgstr "Fatal error: %s\n"
 
-#: src/gnuwin32/system.c:282 src/unix/sys-std.c:587
+#: src/gnuwin32/system.c:282 src/unix/sys-std.c:588
 #, c-format
 msgid "encoding '%s' is not recognised"
 msgstr "encoding ‘[1m%s[0m’ is not recognised"
 
-#: src/gnuwin32/system.c:288 src/unix/sys-std.c:593
+#: src/gnuwin32/system.c:288 src/unix/sys-std.c:594
 msgid "<ERROR: invalid input in encoding> "
 msgstr "<ERROR: invalid input in encoding> "
 
@@ -384,46 +384,42 @@ msgstr "Unable to open file ‘[1m%s[0m’"
 msgid "file.show(): file %s does not exist\n"
 msgstr "file.show(): file %s does not exist\n"
 
-#: src/gnuwin32/system.c:619
-msgid "Invalid R_HOME"
-msgstr "Invalid R_HOME"
-
-#: src/gnuwin32/system.c:841
+#: src/gnuwin32/system.c:846
 msgid "WARNING: no max-mem-size given\n"
 msgstr "WARNING: no max-mem-size given\n"
 
-#: src/gnuwin32/system.c:847
+#: src/gnuwin32/system.c:852
 #, c-format
 msgid "WARNING: --max-mem-size value is invalid: ignored\n"
 msgstr "WARNING: --max-mem-size value is invalid: ignored\n"
 
-#: src/gnuwin32/system.c:849
+#: src/gnuwin32/system.c:854
 #, c-format
 msgid "WARNING: --max-mem-size=%lu`%c': too large and ignored\n"
 msgstr "WARNING: --max-mem-size=%lu‘[1m%c[0m’: too large and ignored\n"
 
-#: src/gnuwin32/system.c:854
+#: src/gnuwin32/system.c:859
 #, c-format
 msgid "WARNING: max-mem-size =%4.1fM too small and ignored\n"
 msgstr "WARNING: max-mem-size =%4.1fM too small and ignored\n"
 
-#: src/gnuwin32/system.c:864
+#: src/gnuwin32/system.c:869
 #, c-format
 msgid "WARNING: unknown option %s\n"
 msgstr "WARNING: unknown option %s\n"
 
-#: src/gnuwin32/system.c:907
+#: src/gnuwin32/system.c:912
 msgid "you must specify `--save', `--no-save' or `--vanilla'"
 msgstr ""
 "you must specify ‘[1m--save[0m’, ‘[1m--no-save[0m’ or ‘[1m--vanilla[0m’"
 
-#: src/gnuwin32/system.c:912
+#: src/gnuwin32/system.c:917
 msgid ""
 "impossible to create 'reader thread'; you must free some system resources"
 msgstr ""
 "impossible to create 'reader thread'; you must free some system resources"
 
-#: src/gnuwin32/system.c:921
+#: src/gnuwin32/system.c:926
 msgid "WARNING: invalid R_HISTSIZE ignored;"
 msgstr "WARNING: invalid R_HISTSIZE ignored;"
 
@@ -3698,58 +3694,58 @@ msgstr "error: system commands are not supported in this version of R.\n"
 msgid "syntax error"
 msgstr "syntax error"
 
-#: src/main/main.c:532
+#: src/main/main.c:536
 msgid "unable to open the base package\n"
 msgstr "unable to open the base package\n"
 
-#: src/main/main.c:571
+#: src/main/main.c:575
 msgid "WARNING: UTF-8 locales are not supported in this build of R\n"
 msgstr "WARNING: UTF-8 locales are not supported in this build of R\n"
 
-#: src/main/main.c:600
+#: src/main/main.c:604
 msgid "unable to restore saved data in .RData\n"
 msgstr "unable to restore saved data in .RData\n"
 
-#: src/main/main.c:850
+#: src/main/main.c:854
 msgid "can't quit from browser"
 msgstr "can't quit from browser"
 
-#: src/main/main.c:854
+#: src/main/main.c:858
 msgid "one of \"yes\", \"no\", \"ask\" or \"default\" expected."
 msgstr ""
 "one of “[1myes[0m”, “[1mno[0m”, “[1mask[0m” or “[1mdefault[0m” expected."
 
-#: src/main/main.c:859
+#: src/main/main.c:863
 msgid "save=\"ask\" in non-interactive use: command-line default will be used"
 msgstr ""
 "save=“[1mask[0m” in non-interactive use: command-line default will be used"
 
-#: src/main/main.c:867
+#: src/main/main.c:871
 msgid "unrecognized value of save"
 msgstr "unrecognized value of save"
 
-#: src/main/main.c:870
+#: src/main/main.c:874
 msgid "invalid status, 0 assumed"
 msgstr "invalid status, 0 assumed"
 
-#: src/main/main.c:875
+#: src/main/main.c:879
 msgid "invalid runLast, FALSE assumed"
 msgstr "invalid runLast, FALSE assumed"
 
-#: src/main/main.c:906
+#: src/main/main.c:910
 msgid "cannot allocate space for toplevel callback element"
 msgstr "cannot allocate space for toplevel callback element"
 
-#: src/main/main.c:984
+#: src/main/main.c:988
 msgid "negative index passed to R_removeTaskCallbackByIndex"
 msgstr "negative index passed to R_removeTaskCallbackByIndex"
 
-#: src/main/main.c:1097
+#: src/main/main.c:1101
 #, c-format
 msgid "warning messages from top-level task callback '%s'\n"
 msgstr "warning messages from top-level task callback ‘[1m%s[0m’\n"
 
-#: src/main/main.c:1157
+#: src/main/main.c:1161
 msgid "top-level task callback did not return a logical value"
 msgstr "top-level task callback did not return a logical value"
 
@@ -7202,11 +7198,11 @@ msgstr ""
 " x <- edit()\n"
 " to recover"
 
-#: src/unix/sys-std.c:119
+#: src/unix/sys-std.c:120
 msgid "interrupt handler must not return"
 msgstr "interrupt handler must not return"
 
-#: src/unix/sys-std.c:482
+#: src/unix/sys-std.c:483
 msgid ""
 "An unusual circumstance has arisen in the nesting of readline input. Please "
 "report using bug.report()"
@@ -7214,23 +7210,23 @@ msgstr ""
 "An unusual circumstance has arisen in the nesting of readline input. Please "
 "report using bug.report()"
 
-#: src/unix/sys-std.c:597
+#: src/unix/sys-std.c:598
 msgid "re-encoding is not available on this system"
 msgstr "re-encoding is not available on this system"
 
-#: src/unix/sys-std.c:899 src/unix/sys-std.c:921
+#: src/unix/sys-std.c:900 src/unix/sys-std.c:922
 msgid "file argument is too long"
 msgstr "file argument is too long"
 
-#: src/unix/sys-std.c:905 src/unix/sys-std.c:907
+#: src/unix/sys-std.c:906 src/unix/sys-std.c:908
 msgid "no history mechanism available"
 msgstr "no history mechanism available"
 
-#: src/unix/sys-std.c:929 src/unix/sys-std.c:931
+#: src/unix/sys-std.c:930 src/unix/sys-std.c:932
 msgid "no history available to save"
 msgstr "no history available to save"
 
-#: src/unix/sys-std.c:996
+#: src/unix/sys-std.c:997
 msgid "Sys.sleep is not implemented on this system"
 msgstr "Sys.sleep is not implemented on this system"
 

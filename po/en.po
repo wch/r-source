@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-02-05 10:47+0000\n"
+"POT-Creation-Date: 2005-02-06 14:44+0000\n"
 "PO-Revision-Date: 2005-01-25 12:01+0000\n"
 "Last-Translator: Brian Ripley <Brian.Ripley@R-project.org>\n"
 "Language-Team: R-core <R-core@R-project.org>\n"
@@ -124,7 +124,7 @@ msgid "type not yet implemented"
 msgstr ""
 
 #: src/gnuwin32/extra.c:402 src/gnuwin32/extra.c:619 src/gnuwin32/extra.c:634
-#: src/main/platform.c:841 src/unix/sys-std.c:896 src/unix/sys-std.c:918
+#: src/main/platform.c:841 src/unix/sys-std.c:897 src/unix/sys-std.c:919
 msgid "invalid file argument"
 msgstr ""
 
@@ -185,7 +185,7 @@ msgstr ""
 msgid "loadhistory can only be used in Rgui and Rterm"
 msgstr ""
 
-#: src/gnuwin32/extra.c:706 src/unix/sys-std.c:967
+#: src/gnuwin32/extra.c:706 src/unix/sys-std.c:968
 msgid "invalid 'time' value"
 msgstr ""
 
@@ -333,17 +333,17 @@ msgstr ""
 msgid "character string expected as third argument"
 msgstr ""
 
-#: src/gnuwin32/system.c:112 src/unix/sys-std.c:65
+#: src/gnuwin32/system.c:112
 #, c-format
 msgid "Fatal error: %s\n"
 msgstr ""
 
-#: src/gnuwin32/system.c:282 src/unix/sys-std.c:587
+#: src/gnuwin32/system.c:282 src/unix/sys-std.c:588
 #, c-format
 msgid "encoding '%s' is not recognised"
 msgstr ""
 
-#: src/gnuwin32/system.c:288 src/unix/sys-std.c:593
+#: src/gnuwin32/system.c:288 src/unix/sys-std.c:594
 msgid "<ERROR: invalid input in encoding> "
 msgstr ""
 
@@ -357,44 +357,40 @@ msgstr ""
 msgid "file.show(): file %s does not exist\n"
 msgstr ""
 
-#: src/gnuwin32/system.c:619
-msgid "Invalid R_HOME"
-msgstr ""
-
-#: src/gnuwin32/system.c:841
+#: src/gnuwin32/system.c:846
 msgid "WARNING: no max-mem-size given\n"
 msgstr ""
 
-#: src/gnuwin32/system.c:847
+#: src/gnuwin32/system.c:852
 #, c-format
 msgid "WARNING: --max-mem-size value is invalid: ignored\n"
 msgstr ""
 
-#: src/gnuwin32/system.c:849
+#: src/gnuwin32/system.c:854
 #, c-format
 msgid "WARNING: --max-mem-size=%lu`%c': too large and ignored\n"
 msgstr ""
 
-#: src/gnuwin32/system.c:854
+#: src/gnuwin32/system.c:859
 #, c-format
 msgid "WARNING: max-mem-size =%4.1fM too small and ignored\n"
 msgstr ""
 
-#: src/gnuwin32/system.c:864
+#: src/gnuwin32/system.c:869
 #, c-format
 msgid "WARNING: unknown option %s\n"
 msgstr ""
 
-#: src/gnuwin32/system.c:907
+#: src/gnuwin32/system.c:912
 msgid "you must specify `--save', `--no-save' or `--vanilla'"
 msgstr ""
 
-#: src/gnuwin32/system.c:912
+#: src/gnuwin32/system.c:917
 msgid ""
 "impossible to create 'reader thread'; you must free some system resources"
 msgstr ""
 
-#: src/gnuwin32/system.c:921
+#: src/gnuwin32/system.c:926
 msgid "WARNING: invalid R_HISTSIZE ignored;"
 msgstr ""
 
@@ -3634,56 +3630,56 @@ msgstr ""
 msgid "syntax error"
 msgstr ""
 
-#: src/main/main.c:532
+#: src/main/main.c:536
 msgid "unable to open the base package\n"
 msgstr ""
 
-#: src/main/main.c:571
+#: src/main/main.c:575
 msgid "WARNING: UTF-8 locales are not supported in this build of R\n"
 msgstr ""
 
-#: src/main/main.c:600
+#: src/main/main.c:604
 msgid "unable to restore saved data in .RData\n"
 msgstr ""
 
-#: src/main/main.c:850
+#: src/main/main.c:854
 msgid "can't quit from browser"
 msgstr ""
 
-#: src/main/main.c:854
+#: src/main/main.c:858
 msgid "one of \"yes\", \"no\", \"ask\" or \"default\" expected."
 msgstr ""
 
-#: src/main/main.c:859
+#: src/main/main.c:863
 msgid "save=\"ask\" in non-interactive use: command-line default will be used"
 msgstr ""
 
-#: src/main/main.c:867
+#: src/main/main.c:871
 msgid "unrecognized value of save"
 msgstr ""
 
-#: src/main/main.c:870
+#: src/main/main.c:874
 msgid "invalid status, 0 assumed"
 msgstr ""
 
-#: src/main/main.c:875
+#: src/main/main.c:879
 msgid "invalid runLast, FALSE assumed"
 msgstr ""
 
-#: src/main/main.c:906
+#: src/main/main.c:910
 msgid "cannot allocate space for toplevel callback element"
 msgstr ""
 
-#: src/main/main.c:984
+#: src/main/main.c:988
 msgid "negative index passed to R_removeTaskCallbackByIndex"
 msgstr ""
 
-#: src/main/main.c:1097
+#: src/main/main.c:1101
 #, c-format
 msgid "warning messages from top-level task callback '%s'\n"
 msgstr ""
 
-#: src/main/main.c:1157
+#: src/main/main.c:1161
 msgid "top-level task callback did not return a logical value"
 msgstr ""
 
@@ -7081,33 +7077,33 @@ msgid ""
 " to recover"
 msgstr ""
 
-#: src/unix/sys-std.c:119
+#: src/unix/sys-std.c:120
 msgid "interrupt handler must not return"
 msgstr ""
 
-#: src/unix/sys-std.c:482
+#: src/unix/sys-std.c:483
 msgid ""
 "An unusual circumstance has arisen in the nesting of readline input. Please "
 "report using bug.report()"
 msgstr ""
 
-#: src/unix/sys-std.c:597
+#: src/unix/sys-std.c:598
 msgid "re-encoding is not available on this system"
 msgstr ""
 
-#: src/unix/sys-std.c:899 src/unix/sys-std.c:921
+#: src/unix/sys-std.c:900 src/unix/sys-std.c:922
 msgid "file argument is too long"
 msgstr ""
 
-#: src/unix/sys-std.c:905 src/unix/sys-std.c:907
+#: src/unix/sys-std.c:906 src/unix/sys-std.c:908
 msgid "no history mechanism available"
 msgstr ""
 
-#: src/unix/sys-std.c:929 src/unix/sys-std.c:931
+#: src/unix/sys-std.c:930 src/unix/sys-std.c:932
 msgid "no history available to save"
 msgstr ""
 
-#: src/unix/sys-std.c:996
+#: src/unix/sys-std.c:997
 msgid "Sys.sleep is not implemented on this system"
 msgstr ""
 
