@@ -722,12 +722,12 @@ showClass <-
           .class1(getPrototype(ClassDef)), "\"\n", sep="")
     ext <- getExtends(ClassDef)
     if(length(ext)>0) {
-      cat("\nExtends:\n")
+      cat("\nExtends: ")
       showExtends(ext)
     }
     ext <- getSubclasses(ClassDef)
     if(length(ext)>0) {
-      cat("\nKnown Subclasses:\n")
+      cat("\nKnown Subclasses: ")
       showExtends(ext)
     }
   }
@@ -761,7 +761,13 @@ showExtends <-
       }
       if(identical(printTo, FALSE))
           list(what = what, how = how)
-      else cat(file = printTo, paste("Class \"", what, "\", ", how, ".\n", sep=""), sep="")
+      else if(all(nchar(how)==0)|| all(how == "directly")) {
+          what <- paste('"', what, '"', sep="")
+          if(length(what)>1)
+              what <- c(paste(what[-length(what)], ",", sep=""), what[[length(what)]])
+          cat(file = printTo, what, fill=TRUE)
+      }
+      else cat(file = printTo, "\n", paste("Class \"", what, "\", ", how, "\n", sep=""), sep="")
   }
 
 
