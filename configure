@@ -572,11 +572,11 @@ cat >> confdefs.h <<\EOF
 EOF
 
 cat >> confdefs.h <<\EOF
-#define R_MINOR "62.2"
+#define R_MINOR "62.3"
 EOF
 
 cat >> confdefs.h <<\EOF
-#define R_STATUS ""
+#define R_STATUS "in progress"
 EOF
 
 cat >> confdefs.h <<\EOF
