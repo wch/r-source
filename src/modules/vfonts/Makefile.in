@@ -18,7 +18,7 @@ HEADERS = g_cntrlify.h g_extern.h g_her_metr.h g_jis.h
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = \
-	Makefile.in Makefile.win $(SOURCES) $(HEADERS) vfonts.c
+	Makefile.in Makefile.win $(SOURCES) $(HEADERS)
 
 ## FIXME:
 ## Change to `vfonts.la' when using libtool for shlibs.

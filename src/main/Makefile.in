@@ -33,8 +33,7 @@ SOURCES_C = \
 	saveload.c scan.c seq.c size.c sort.c source.c split.c \
 	subassign.c subscript.c subset.c summary.c \
 	unique.c util.c \
-	version.c \
-	../modules/vfonts/vfonts.c
+	version.c
 SOURCES_F = \
 	xxxpr.f
 ## FIXME: Need better names ...
@@ -57,7 +56,8 @@ DISTFILES = Makefile.in Makefile.win \
 
 ## FIXME:
 ## Names in here should use `$(top_builddir)' instead ...
-RLIBS = ../unix/libunix.a ../appl/libappl.a ../nmath/libnmath.a ../extra/libxml/libxml.a
+RLIBS = ../unix/libunix.a ../appl/libappl.a ../nmath/libnmath.a \
+  ../extra/libxml/libxml.a ../modules/libmodules.a
 ## </FIXME>
 
 Rexecbin_PROGRAMS = R.bin
@@ -87,7 +87,7 @@ libR_la_OBJECTS = $(OBJECTS:.o=.lo)
 ## This should also have `ls ../appl/*.lo ../nmath/*.lo ../unix/*.lo`, but
 ## of course this will not work when the files do not exist yet :-)
 libR_la_LIBADD = @LTLIBOBJS@ @LTALLOCA@ $(BLAS_LIBS) $(FLIBS) $(R_XTRA_LIBS)
-libR_la_DEPENDENCIES = @LTLIBOBJS@ @LTALLOCA@ ../appl/stamp-lo ../nmath/stamp-lo ../unix/stamp-lo ../extra/libxml/stamp-lo
+libR_la_DEPENDENCIES = @LTLIBOBJS@ @LTALLOCA@ ../appl/stamp-lo ../nmath/stamp-lo ../unix/stamp-lo ../extra/libxml/stamp-lo ../modules/stamp-lo
 ## </FIXME>
 @USE_LIBTOOL_TRUE@libR_la_LDFLAGS = -avoid-version -rpath $(Rexeclibdir)
 
@@ -128,12 +128,12 @@ $(RLIBS):
 
 libR: $(libR_la)
 $(libR_la): $(libR_la_OBJECTS) $(libR_la_DEPENDENCIES)
-	$(SHLIB_LINK) -o $@ $(libR_la_LDFLAGS) $(libR_la_OBJECTS) `ls ../appl/*.lo ../nmath/*.lo ../unix/*.lo ../extra/libxml/*.lo 2>/dev/null` $(libR_la_LIBADD) $(LIBS)
+	$(SHLIB_LINK) -o $@ $(libR_la_LDFLAGS) $(libR_la_OBJECTS) `ls ../appl/*.lo ../nmath/*.lo ../unix/*.lo ../extra/libxml/*.lo ../modules/*.lo 2>/dev/null` $(libR_la_LIBADD) $(LIBS)
 ## FIXME: Not sure if we want to do this ...
 	@$(MAKE) rhome=`cd $(top_builddir); pwd` install-lib
 ## </FIXME>
 
-../appl/stamp-lo ../nmath/stamp-lo ../unix/stamp-lo ../extra/libxml/stamp-lo:
+../appl/stamp-lo ../nmath/stamp-lo ../unix/stamp-lo ../extra/libxml/stamp-lo ../modules/stamp-lo:
 	(cd $(@D); $(MAKE) $(@F))
 
 $(srcdir)/gram.c: @MAINTAINER_MODE_TRUE@ $(srcdir)/gram.y

@@ -10,7 +10,7 @@ OBJS=$(foreach i, $(SOURCES), $(basename $i).o) vfont.o
 
 gram.c: ;
 
-vfont.o: ../modules/vfonts/vfonts.c
+vfont.o: ../modules/vfonts.c
 	$(CC)  $(CFLAGS) $($*-CFLAGS) -c $< -o $@
 
 saveload-CFLAGS=-I../extra/xdr
