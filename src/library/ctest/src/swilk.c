@@ -3,7 +3,9 @@
  */
 #include "Mathlib.h"
 
-#define	min(a, b)		((a) > (b) ? (b) : (a))
+#ifndef min
+# define min(a, b)		((a) > (b) ? (b) : (a))
+#endif
 
 void swilk(int *init,/* logical: is a[] already initialized ? */
 	   float *x, int *n, int *n1, int *n2,
