@@ -21,7 +21,7 @@ ar.ols <- function (x, aic = TRUE, order.max = NULL, na.action = na.fail,
     order.max <- if (is.null(order.max)) floor(10 * log10(n.used))
     else round(order.max)
 
-    if (order.max < 0) stop ("order.max must be >= 0")
+    if (order.max < 0) stop ("'order.max' must be >= 0")
     if (aic) order.min <- 0
     else order.min <- order.max
     A <- vector("list", order.max - order.min + 1)

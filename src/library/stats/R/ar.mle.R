@@ -16,7 +16,7 @@ ar.mle <- function (x, aic = TRUE, order.max = NULL, na.action = na.fail,
     order.max <- if (is.null(order.max)) min(12, floor(10 * log10(n.used)))
     else round(order.max)
 
-    if (order.max < 0) stop ("order.max must be >= 0")
+    if (order.max < 0) stop ("'order.max' must be >= 0")
     if (aic) {
         coefs <- matrix(NA, order.max+1, order.max+1)
         var.pred <- numeric(order.max+1)

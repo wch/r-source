@@ -81,7 +81,7 @@ arima0 <- function(x, order = c(0, 0, 0),
     if(is.null(xreg)) {
         ncxreg <- 0
     } else {
-        if(NROW(xreg) != n) stop("lengths of x and xreg do not match")
+        if(NROW(xreg) != n) stop("lengths of 'x' and 'xreg' do not match")
         ncxreg <- NCOL(xreg)
     }
     class(xreg) <- NULL
@@ -93,7 +93,7 @@ arima0 <- function(x, order = c(0, 0, 0),
     }
 
     if (is.null(fixed)) fixed <- rep(as.numeric(NA), narma + ncxreg)
-    else if(length(fixed) != narma + ncxreg) stop("wrong length for fixed")
+    else if(length(fixed) != narma + ncxreg) stop("wrong length for 'fixed'")
     mask <- is.na(fixed)
     if(!any(mask)) stop("all parameters were fixed")
     if(transform.pars && any(!mask[1:narma])) {
@@ -105,7 +105,7 @@ arima0 <- function(x, order = c(0, 0, 0),
         if(d <- order[2]) xreg <- diff(xreg, 1, d)
         if(d <- seasonal$order[2]) xreg <- diff(xreg, seasonal$period, d)
         xreg <- as.matrix(xreg)
-        if(qr(na.omit(xreg))$rank < ncol(xreg)) stop("xreg is collinear")
+        if(qr(na.omit(xreg))$rank < ncol(xreg)) stop("'xreg' is collinear")
         if(is.null(cn <- colnames(xreg)))
             cn <- paste("xreg", 1:ncxreg, sep = "")
     }
@@ -258,7 +258,7 @@ predict.arima0 <-
     xreg <- if(!is.null(xr)) eval.parent(xr) else NULL
     ncxreg <- myNCOL(xreg)
     if(myNCOL(newxreg) != ncxreg)
-        stop("xreg and newxreg have different numbers of columns")
+        stop("'xreg' and 'newxreg' have different numbers of columns")
     class(xreg) <- NULL
     xtsp <- tsp(object$residuals)
     n <- length(data)

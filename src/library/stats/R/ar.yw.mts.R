@@ -24,7 +24,7 @@ function (x, aic = TRUE, order.max = NULL, na.action = na.fail,
         floor(10 * log10(n.used))
     else floor(order.max)
     if (order.max < 1)
-        stop("order.max must be >= 1")
+        stop("'order.max' must be >= 1")
     xacf <- acf(x, type = "cov", plot = FALSE, lag.max = order.max)$acf
     z <- .C("multi_yw",
             aperm(xacf, c(3, 2, 1)),

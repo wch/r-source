@@ -43,7 +43,7 @@ ar.yw.default <-
     n.used <- nrow(x)
     order.max <- if (is.null(order.max)) floor(10 * log10(n.used))
                  else round(order.max)
-    if (order.max < 1) stop("order.max must be >= 1")
+    if (order.max < 1) stop("'order.max' must be >= 1")
     xacf <- acf(x, type = "covariance", lag.max = order.max, plot = FALSE,
                 demean = demean)$acf
     if(nser > 1) {
@@ -192,7 +192,7 @@ predict.ar <- function(object, newdata, n.ahead = 1, se.fit=TRUE, ...)
     tsp(newdata) <- NULL
     class(newdata) <- NULL
     if(NCOL(ar) != nser)
-        stop("number of series in fit and newdata do not match")
+        stop("number of series in 'object' and 'newdata' do not match")
     n <- NROW(newdata)
     if(nser > 1) {
         if(is.null(object$x.intercept)) xint <- rep(0, nser)
@@ -212,7 +212,7 @@ predict.ar <- function(object, newdata, n.ahead = 1, se.fit=TRUE, ...)
         pred <- pred + matrix(object$x.mean, n.ahead, nser, byrow=TRUE)
         colnames(pred) <- colnames(object$var.pred)
         if(se.fit) {
-            warning("se.fit not yet implemented for multivariate models")
+            warning("'se.fit' not yet implemented for multivariate models")
             se <- matrix(NA, n.ahead, nser)
         }
     } else {

@@ -125,7 +125,7 @@ arima <- function(x, order = c(0, 0, 0),
         ncxreg <- 0
     } else {
         nmxreg <- deparse(substitute(xreg))
-        if (NROW(xreg) != n) stop("lengths of x and xreg do not match")
+        if (NROW(xreg) != n) stop("lengths of 'x' and 'xreg' do not match")
         ncxreg <- NCOL(xreg)
         xreg <- as.matrix(xreg)
         storage.mode(xreg) <- "double"
@@ -152,7 +152,7 @@ arima <- function(x, order = c(0, 0, 0),
     } else ncond <- 0
 
     if (is.null(fixed)) fixed <- rep(as.numeric(NA), narma + ncxreg)
-    else if(length(fixed) != narma + ncxreg) stop("wrong length for fixed")
+    else if(length(fixed) != narma + ncxreg) stop("wrong length for 'fixed'")
     mask <- is.na(fixed)
 ##    if(!any(mask)) stop("all parameters were fixed")
     no.optim <- !any(mask)
@@ -374,7 +374,7 @@ predict.Arima <-
     xreg <- if (!is.null(xr)) eval.parent(xr) else NULL
     ncxreg <- myNCOL(xreg)
     if (myNCOL(newxreg) != ncxreg)
-        stop("xreg and newxreg have different numbers of columns")
+        stop("'xreg' and 'newxreg' have different numbers of columns")
     class(xreg) <- NULL
     xtsp <- tsp(rsd)
     n <- length(rsd)

@@ -19,7 +19,7 @@ printCoefmat <-
     ##	  columns {tst.ind}= test-statistics (as "z", "t", or "F")  [def.: k+1]
 
     if(is.null(d <- dim(x)) || length(d) != 2)
-	stop("1st arg. 'x' must be coefficient matrix/d.f./...")
+	stop("'x' must be coefficient matrix/data frame")
     nc <- d[2]
     if(is.null(P.values)) {
         scp <- getOption("show.coef.Pvalues")

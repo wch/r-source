@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-02-16 08:35\n"
+"POT-Creation-Date: 2005-02-24 09:22\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -65,10 +65,10 @@ msgstr ""
 msgid "'which' specified some non-factors which will be dropped"
 msgstr ""
 
-msgid "lag.max must be at least 1"
+msgid "'lag.max' must be at least 1"
 msgstr ""
 
-msgid "NAs in x"
+msgid "NAs in 'x'"
 msgstr ""
 
 msgid "x$lag must have at least 1 column"
@@ -140,7 +140,7 @@ msgstr ""
 msgid "to"
 msgstr ""
 
-msgid "1st arg. 'x' must be coefficient matrix/d.f./..."
+msgid "'x' must be coefficient matrix/data frame"
 msgstr ""
 
 msgid "option \"show.coef.Pvalues\" is invalid: assuming TRUE"
@@ -191,25 +191,19 @@ msgstr ""
 msgid "grouping factor must have exactly 2 levels"
 msgstr ""
 
-msgid "there are"
-msgstr ""
-
-msgid "Error terms: only 1 is allowed"
-msgstr ""
-
 msgid "Error model is singular"
 msgstr ""
 
-msgid "the split argument must be a list"
+msgid "the 'split' argument must be a list"
 msgstr ""
 
-msgid "unknown name(s) in the split list"
+msgid "unknown name(s) in the 'split' list"
 msgstr ""
 
-msgid "coef must define a contrast, i.e., sum to 0"
+msgid "'coef' must define a contrast, i.e., sum to 0"
 msgstr ""
 
-msgid "coef must have same length as contrast.obj"
+msgid "'coef' must have same length as 'contrast.obj'"
 msgstr ""
 
 msgid "each element of"
@@ -221,16 +215,16 @@ msgstr ""
 msgid "the contrast defined is empty (has no TRUE elements)"
 msgstr ""
 
-msgid "columns of contrast.obj must define a contrast (sum to zero)"
+msgid "columns of 'contrast.obj' must define a contrast (sum to zero)"
 msgstr ""
 
-msgid "argument does not include an error 'qr' component"
+msgid "'object' does not include an error 'qr' component"
 msgstr ""
 
 msgid "Each element of"
 msgstr ""
 
-msgid "columns of contrast.obj must define a contrast(sum to zero)"
+msgid "columns of 'contrast.obj' must define a contrast(sum to zero)"
 msgstr ""
 
 msgid "invalid interpolation method"
@@ -254,13 +248,16 @@ msgstr ""
 msgid "'vec' must be sorted non-decreasingly"
 msgstr ""
 
-msgid "order.max must be >= 1"
+msgid "NAs in x"
 msgstr ""
 
-msgid "number of series in fit and newdata do not match"
+msgid "'order.max' must be >= 1"
 msgstr ""
 
-msgid "se.fit not yet implemented for multivariate models"
+msgid "number of series in 'object' and 'newdata' do not match"
+msgstr ""
+
+msgid "'se.fit' not yet implemented for multivariate models"
 msgstr ""
 
 msgid "Burg's algorithm only implemented for univariate series"
@@ -269,7 +266,7 @@ msgstr ""
 msgid "MLE only implemented for univariate series"
 msgstr ""
 
-msgid "order.max must be >= 0"
+msgid "'order.max' must be >= 0"
 msgstr ""
 
 msgid "model order:"
@@ -290,10 +287,10 @@ msgstr ""
 msgid "'seasonal$order' must be a non-negative numeric vector of length 3"
 msgstr ""
 
-msgid "lengths of x and xreg do not match"
+msgid "lengths of 'x' and 'xreg' do not match"
 msgstr ""
 
-msgid "wrong length for fixed"
+msgid "wrong length for 'fixed'"
 msgstr ""
 
 msgid "some AR parameters were fixed: setting transform.pars = FALSE"
@@ -317,7 +314,7 @@ msgstr ""
 msgid "non-stationary seasonal AR part from CSS"
 msgstr ""
 
-msgid "xreg and newxreg have different numbers of columns"
+msgid "'xreg' and 'newxreg' have different numbers of columns"
 msgstr ""
 
 msgid "ma part of model is not invertible"
@@ -332,7 +329,7 @@ msgstr ""
 msgid "some ARMA parameters were fixed: setting transform.pars = FALSE"
 msgstr ""
 
-msgid "xreg is collinear"
+msgid "'xreg' is collinear"
 msgstr ""
 
 msgid "NAs present: setting delta to -1"
@@ -2026,6 +2023,11 @@ msgstr ""
 
 msgid "all x values must be non-negative to fit the Weibull growth model"
 msgstr ""
+
+msgid        "there are %d Error terms: only 1 is allowed"
+msgid_plural "there are %d Error terms: only 1 is allowed"
+msgstr[0]    ""
+msgstr[1]    ""
 
 msgid        "parameter %s does not occur in the model formula"
 msgid_plural "parameters %s do not occur in the model formula"
