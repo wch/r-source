@@ -126,11 +126,11 @@ function(x, y = NULL, alternative = c("two.sided", "less", "greater"),
                 ## These are sample based limits for the median
                 mumin <- min(x)
                 mumax <- max(x)
-                ## wdiff(d, zq) returns the abolute difference between
+                ## wdiff(d, zq) returns the absolute difference between
                 ## the asymptotic Wilcoxon statistic of x - mu - d and
-                ## the quantile zq 
+                ## the quantile zq.
                 wdiff <- function(d, zq) {
-                    xd <- x  - d
+                    xd <- x - d
                     xd <- xd[xd != 0]
                     nx <- length(xd)
                     dr <- rank(abs(xd))
@@ -160,19 +160,19 @@ function(x, y = NULL, alternative = c("two.sided", "less", "greater"),
                 ##
                 ## As in the exact case, interchange quantiles.
                 cint <- switch(alternative, "two.sided" = {
-                    u <- optimize(wdiff, c(mumin, mumax), tol=1e-4,
+                    l <- optimize(wdiff, c(mumin, mumax), tol=1e-4,
                                   zq=qnorm(alpha/2, lower=FALSE))$minimum
-                    l <- optimize(wdiff, c(mumin, mumax), tol=1e-4,
-                                  zq=qnorm(alpha/2))$minimum
-                    c(u, l)
-                }, "greater"= {
                     u <- optimize(wdiff, c(mumin, mumax), tol=1e-4,
-                                  zq=qnorm(alpha, lower=FALSE))$minimum
-                    c(u, NA)
-                }, "less"= {
+                                  zq=qnorm(alpha/2))$minimum
+                    c(l, u)
+                }, "greater"= {
                     l <- optimize(wdiff, c(mumin, mumax), tol=1e-4,
+                                  zq=qnorm(alpha, lower=FALSE))$minimum
+                    c(l, NA)
+                }, "less"= {
+                    u <- optimize(wdiff, c(mumin, mumax), tol=1e-4,
                                   zq=qnorm(alpha))$minimum
-                    c(NA, l)
+                    c(NA, u)
                 })
                 attr(cint, "conf.level") <- conf.level    
             }
@@ -208,20 +208,24 @@ function(x, y = NULL, alternative = c("two.sided", "less", "greater"),
             PVAL <-
                 switch(alternative,
                        "two.sided" = {
-                           p <- if(STATISTIC > (n.x * n.y / 2)) 
-                               pwilcox(STATISTIC - 1, n.x, n.y, lower = FALSE)
+                           p <- if(STATISTIC > (n.x * n.y / 2))
+                               pwilcox(STATISTIC - 1, n.x, n.y,
+                                       lower = FALSE)
                            else
                                pwilcox(STATISTIC, n.x, n.y)
                            min(2 * p, 1)
                        },
-                       "greater" = pwilcox(STATISTIC - 1, n.x, n.y, lower = FALSE), 
+                       "greater" = {
+                           pwilcox(STATISTIC - 1, n.x, n.y,
+                                   lower = FALSE)
+                       },
                        "less" = pwilcox(STATISTIC, n.x, n.y))
             if(conf.int) {
                 ## Exact confidence interval for the location parameter 
-                ## mean(y) - mean(x) in the two-sample case (cf. the
+                ## mean(x) - mean(y) in the two-sample case (cf. the
                 ## one-sample case).
                 alpha <- 1 - conf.level
-                diffs <- sort(outer(y, x, "-"))
+                diffs <- sort(outer(x, y, "-"))
                 cint <-
                     switch(alternative,
                            "two.sided" = {
@@ -270,16 +274,16 @@ function(x, y = NULL, alternative = c("two.sided", "less", "greater"),
 
             if(conf.int) {
                 ## Asymptotic confidence interval for the location
-                ## parameter mean(y) - mean(x) in the two-sample case
+                ## parameter mean(x) - mean(y) in the two-sample case
                 ## (cf. one-sample case).
                 ##
                 ## Algorithm not published, for a documentation see the
-                ## one sample case.
+                ## one-sample case.
                 alpha <- 1 - conf.level
-                mumin <- min(y) - max(x)
-                mumax <- max(y) - min(x)
+                mumin <- min(x) - max(y)
+                mumax <- max(x) - min(y)
                 wdiff <- function(d, zq) {
-                    dr <- rank(c(x - mu, y - d)) 
+                    dr <- rank(c(x - mu - d, y))
                     NTIES.CI <- table(dr)
                     dz <- (sum(dr[seq(along = x)])
                            - n.x * (n.x + 1) / 2 - n.x * n.y / 2)
@@ -298,19 +302,19 @@ function(x, y = NULL, alternative = c("two.sided", "less", "greater"),
                     abs(dz - zq)
                 }
                 cint <- switch(alternative, "two.sided" = {
-                    u <- optimize(wdiff, c(mumin, mumax), tol=1e-4,
-                                  zq=qnorm(alpha/2))$minimum
                     l <- optimize(wdiff, c(mumin, mumax), tol=1e-4,
                                   zq=qnorm(alpha/2, lower=FALSE))$minimum
-                    c(u, l)
-                }, "greater"= {
                     u <- optimize(wdiff, c(mumin, mumax), tol=1e-4,
-                                  zq=qnorm(alpha))$minimum
-                    c(u, NA)
-                }, "less"= {
+                                  zq=qnorm(alpha/2))$minimum
+                    c(l, u)
+                }, "greater"= {
                     l <- optimize(wdiff, c(mumin, mumax), tol=1e-4,
                                   zq=qnorm(alpha, lower=FALSE))$minimum
-                    c(NA, l)
+                    c(l, NA)
+                }, "less"= {
+                    u <- optimize(wdiff, c(mumin, mumax), tol=1e-4,
+                                  zq=qnorm(alpha))$minimum
+                    c(NA, u)
                 })
                 attr(cint, "conf.level") <- conf.level    
             }
@@ -326,7 +330,7 @@ function(x, y = NULL, alternative = c("two.sided", "less", "greater"),
 
     RVAL <- list(statistic = STATISTIC,
                  parameter = NULL,
-                 p.value = PVAL, 
+                 p.value = PVAL,
                  null.value = c(mu = mu),
                  alternative = alternative,
                  method = METHOD, 
