@@ -316,6 +316,8 @@ NEW FEATURES
     o	DESCRIPTION file in installed packages has a new `Built:' field
 	giving build information (R version, platform, date).
 
+    o	Recommended include file "Rmath.h" replaces "R_ext/Mathlib.h".
+
 
 BUG FIXES
 
