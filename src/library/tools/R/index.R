@@ -9,17 +9,17 @@
 ## which could be abstracted into a function .mergeIndexEntries().
 ## </NOTE>
 
-### * .buildDataIndex
+### * .build_data_index
 
-.buildDataIndex <-
+.build_data_index <-
 function(dataDir, contents)
 {
     ## Build an index with information about all available data sets.
-    ## See .buildDemoIndex() for an explanation of what we do here.
+    ## See .build_demo_index() for an explanation of what we do here.
 
     ## <NOTE>
     ## We could also have an interface like
-    ##   .buildDataIndex(dir, contents = NULL)
+    ##   .build_data_index(dir, contents = NULL)
     ## where @code{dir} is the path to a package's root source dir and
     ## contents is Rdcontents(listFilesWithType(file.path(dir, "man"),
     ## "docs")).
@@ -46,9 +46,9 @@ function(dataDir, contents)
     dataIndex
 }
 
-### * .buildDemoIndex
+### * .build_demo_index
 
-.buildDemoIndex <-
+.build_demo_index <-
 function(demoDir)
 {
     ## Build an index with information about all available demos.
@@ -59,7 +59,7 @@ function(demoDir)
     ## demo index.
     ## This ensures that demo() really lists all *available* demos, even
     ## if some might be 'undocumented', i.e., without index information.
-    ## Use .checkDemoIndex() to check whether available demo code and
+    ## Use .check_demo_index() to check whether available demo code and
     ## docs are in sync.
     ## </NOTE>
 
@@ -81,14 +81,14 @@ function(demoDir)
     demoIndex
 }
 
-### * .checkDemoIndex
+### * .check_demo_index
 
-.checkDemoIndex <-
+.check_demo_index <-
 function(demoDir)
 {
     if(!fileTest("-d", demoDir))
         stop(paste("directory", sQuote(demoDir), "does not exist"))
-    infoFromBuild <- .buildDemoIndex(demoDir)
+    infoFromBuild <- .build_demo_index(demoDir)
     infoFromIndex <- try(read.00Index(file.path(demoDir, "00Index")))
     if(inherits(infoFromIndex, "try-error"))
         stop(paste("cannot read index information in file",
@@ -102,11 +102,11 @@ function(demoDir)
              infoFromIndex[!infoFromIndex[ , 1]
                            %in% infoFromBuild[ , 1],
                            1])
-    class(badEntries) <- "checkDemoIndex"
+    class(badEntries) <- "check_demo_index"
     badEntries
 }
 
-print.checkDemoIndex <-
+print.check_demo_index <-
 function(x, ...)
 {
     if(length(x$missingFromIndex) > 0) {
@@ -120,9 +120,9 @@ function(x, ...)
     invisible(x)
 }
 
-### * .buildHsearchIndex
+### * .build_hsearch_index
 
-.buildHsearchIndex <-
+.build_hsearch_index <-
 function(contents, packageName, libDir)
 {
     ## Build an index of the Rd contents in 'contents', of a package

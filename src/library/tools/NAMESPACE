@@ -9,17 +9,18 @@ export(".installMD5sums", "Rdindex",
        "texi2dvi", "buildVignettes", "pkgVignettes", "pkgDepends",
        "getDepList", "installFoundDepends", "vignetteDepends")
 
-S3method("print", "checkDemoIndex")
 S3method("print", "checkDocFiles")
 S3method("print", "checkDocStyle")
 S3method("print", "checkFF")
 S3method("print", "checkReplaceFuns")
 S3method("print", "checkS3methods")
 S3method("print", "checkTnF")
-S3method("print", "checkVignetteIndex")
 S3method("print", "checkVignettes")
 S3method("print", "codoc")
 S3method("print", "codocClasses")
 S3method("print", "codocData")
 S3method("print", "undoc")
-S3method("print", "checkPackageDepends")
+
+S3method("print", "check_demo_index")
+S3method("print", "check_package_depends")
+S3method("print", "check_vignette_index")

@@ -117,10 +117,10 @@ function(pattern, fields = c("alias", "concept", "title"),
         ## Starting with R 1.8.0, prebuilt hsearch indices are available
         ## in Meta/hsearch.rds, and the code to build this from the Rd
         ## contents (as obtained from both new and old style Rd indices)
-        ## has been moved to tools:::.buildHsearchIndex(), which creates
-        ## a per-package list of base, aliases and keywords information.
-        ## When building the global index, it again (see e.g. also the
-        ## code in tools:::Rdcontents()), it seems most efficient to
+        ## has been moved to tools:::.build_hsearch_index() which
+        ## creates a per-package list of base, aliases and keywords
+        ## information.  When building the global index, it seems (see
+        ## e.g. also the code in tools:::Rdcontents()), most efficient to
         ## create a list *matrix* (dbMat below), stuff the individual
         ## indices into its rows, and finally create the base, aliases
         ## and keyword information in rbind() calls on the columns.
@@ -160,8 +160,8 @@ function(pattern, fields = c("alias", "concept", "title"),
                 ## If we found Rd contents information ...
                 if(!is.null(contents)) {
                     ## build the hsearch index from it;
-                    hDB <- tools:::.buildHsearchIndex(contents, p,
-                                                      dirname(path))
+                    hDB <- tools:::.build_hsearch_index(contents, p,
+                                                        dirname(path))
                 }
                 else {
                     ## otherwise, issue a warning.

@@ -19,7 +19,7 @@ function(..., list = character(0),
     ## Earlier versions remembered given packages with no 'data'
     ## subdirectory, and warned about them.
 
-    dataExts <- tools:::.makeFileExts("data")
+    dataExts <- tools:::.make_file_exts("data")
 
     if(length(names) == 0) {
         ## List all possible data sets.

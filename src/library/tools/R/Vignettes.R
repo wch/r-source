@@ -161,8 +161,7 @@ buildVignettes <-function(package, dir, lib.loc = NULL, quiet=TRUE)
     invisible(NULL)
 }
 
-### * .buildVignetteIndex
-
+### * .build_vignette_index
 
 vignetteMetaRE <- function(tag)
     paste("[[:space:]]*%+[[:space:]]*\\\\Vignette", tag,
@@ -196,7 +195,7 @@ vignetteInfo <- function(file) {
          keywords = keywords)
 }
 
-.buildVignetteIndex <-
+.build_vignette_index <-
 function(vignetteDir)
 {
     if(!fileTest("-d", vignetteDir))
@@ -252,22 +251,22 @@ function(vignetteDir)
                row.names = NULL) # avoid trying to compute row names
 }
 
-### * .checkVignetteIndex
+### * .check_vignette_index
 
-.checkVignetteIndex <-
+.check_vignette_index <-
 function(vignetteDir)
 {
     if(!fileTest("-d", vignetteDir))
         stop(paste("directory", sQuote(vignetteDir), "does not exist"))
-    vignetteIndex <- .buildVignetteIndex(vignetteDir)
+    vignetteIndex <- .build_vignette_index(vignetteDir)
     badEntries <-
         vignetteIndex[grep("^[[:space:]]*$", vignetteIndex[, "Title"]),
                       "File"]
-    class(badEntries) <- "checkVignetteIndex"
+    class(badEntries) <- "check_vignette_index"
     badEntries
 }
 
-print.checkVignetteIndex <-
+print.check_vignette_index <-
 function(x, ...)
 {
     if(length(x) > 0) {

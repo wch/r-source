@@ -71,13 +71,13 @@ function(topic, package = NULL, lib.loc = NULL)
                 entries <- .readRDS(INDEX)
             }
             else {
-                ## ... if not found, let tools:::.buildVignetteIndex()
+                ## ... if not found, let tools:::.build_vignette_index()
                 ## do the job, including worrying about old-style
                 ## 'doc/00Index.dcf' files.
                 ## <FIXME>
                 ## Currently not exported, should it be?
                 entries <-
-                    tools:::.buildVignetteIndex(file.path(dir, "doc"))
+                    tools:::.build_vignette_index(file.path(dir, "doc"))
                 ## </FIXME>
             }
             if(NROW(entries) > 0)

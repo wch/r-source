@@ -1,6 +1,6 @@
-### * .installPackageDescription
+### * .install_package_description
 
-.installPackageDescription <-
+.install_package_description <-
 function(dir, outDir)
 {
     ## Function for taking the DESCRIPTION package meta-information,
@@ -44,9 +44,9 @@ function(dir, outDir)
     invisible()
 }
 
-### * .installPackageCodeFiles
+### * .install_package_code_files
 
-.installPackageCodeFiles <-
+.install_package_code_files <-
 function(dir, outDir)
 {
     if(!fileTest("-d", dir))
@@ -154,9 +154,9 @@ function(dir, outDir)
 }
 
 
-### * .installPackageIndices
+### * .install_package_indices
 
-.installPackageIndices <-
+.install_package_indices <-
 function(dir, outDir)
 {
     options(warn=1) # to ensure warnings get seen
@@ -176,15 +176,15 @@ function(dir, outDir)
     outMetaDir <- file.path(outDir, "Meta")
     if(!fileTest("-d", outMetaDir) && !dir.create(outMetaDir))
          stop("cannot open directory", sQuote(outMetaDir))
-    .installPackageRdIndices(dir, outDir)
-    .installPackageVignetteIndex(dir, outDir)
-    .installPackageDemoIndex(dir, outDir)
+    .install_package_Rd_indices(dir, outDir)
+    .install_package_vignette_index(dir, outDir)
+    .install_package_demo_index(dir, outDir)
     invisible()
 }
 
-### * .installPackageRdIndices
+### * .install_package_Rd_indices
 
-.installPackageRdIndices <-
+.install_package_Rd_indices <-
 function(dir, outDir)
 {
     dir <- filePathAsAbsolute(dir)
@@ -222,7 +222,7 @@ function(dir, outDir)
     .write_contents_as_RDS(contents,
                            file.path(outDir, "Meta", "Rd.rds"))
 
-    .saveRDS(.buildHsearchIndex(contents, packageName, outDir),
+    .saveRDS(.build_hsearch_index(contents, packageName, outDir),
              file.path(outDir, "Meta", "hsearch.rds"))
 
     .write_contents_as_DCF(contents, packageName,
@@ -238,15 +238,15 @@ function(dir, outDir)
     ## </FIXME>
 
     if(fileTest("-d", dataDir)) {
-        .saveRDS(.buildDataIndex(dataDir, contents),
+        .saveRDS(.build_data_index(dataDir, contents),
                  file.path(outDir, "Meta", "data.rds"))
     }
     invisible()
 }
 
-### * .installPackageVignetteIndex
+### * .install_package_vignette_index
 
-.installPackageVignetteIndex <-
+.install_package_vignette_index <-
 function(dir, outDir)
 {
     dir <- filePathAsAbsolute(dir)
@@ -282,7 +282,7 @@ function(dir, outDir)
         return(invisible())
     }
 
-    vignetteIndex <- .buildVignetteIndex(vignetteDir)
+    vignetteIndex <- .build_vignette_index(vignetteDir)
     ## For base package vignettes there is no PDF in @file{vignetteDir}
     ## but there might/should be one in @file{outVignetteDir}.
     if(NROW(vignetteIndex) > 0) {
@@ -301,9 +301,9 @@ function(dir, outDir)
     invisible()
 }
 
-### * .installPackageVignettes
+### * .install_package_vignettes
 
-.installPackageVignettes <-
+.install_package_vignettes <-
 function(dir, outDir)
 {
     dir <- filePathAsAbsolute(dir)
@@ -392,29 +392,30 @@ function(dir, outDir)
             stop(paste("cannot copy", sQuote(pdffile), "to",
                        sQuote(outVignetteDir)))
     }
-    ## need to change out of this dir before we delete it, at least on Windows
+    ## Need to change out of this dir before we delete it, at least on
+    ## Windows.
     setwd(cwd)
     unlink(buildDir, recursive = TRUE)
     invisible()
 }
 
 
-### * .installPackageDemoIndex
+### * .install_package_demo_index
 
-.installPackageDemoIndex <-
+.install_package_demo_index <-
 function(dir, outDir)
 {
     demoDir <- file.path(dir, "demo")
     if(!fileTest("-d", demoDir)) return(invisible())
-    demoIndex <- .buildDemoIndex(demoDir)
+    demoIndex <- .build_demo_index(demoDir)
     .saveRDS(demoIndex,
              file = file.path(outDir, "Meta", "demo.rds"))
     invisible()
 }
 
-### * .installPackageNamespaceInfo
+### * .install_package_namespace_info
 
-.installPackageNamespaceInfo <-
+.install_package_namespace_info <-
 function(dir, outDir)
 {
     dir <- filePathAsAbsolute(dir)

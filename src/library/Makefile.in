@@ -44,7 +44,7 @@ R:
 	@rm -f $(top_builddir)/library/tools/Meta/nsInfo.rds
 	@for pkg in $(R_PKGS_BASE) ; do \
 	  if test -f "$(srcdir)/$${pkg}/NAMESPACE"; then \
-          echo "tools:::.installPackageNamespaceInfo(\"$(top_builddir)/library/$${pkg}\", \"$(top_builddir)/library/$${pkg}\")" \
+          echo "tools:::.install_package_namespace_info(\"$(top_builddir)/library/$${pkg}\", \"$(top_builddir)/library/$${pkg}\")" \
 	    | R_DEFAULT_PACKAGES=tools $(R_EXE) --slave > /dev/null ; \
           fi ; \
 	done
@@ -75,7 +75,7 @@ vignettes:
 	  for pkg in $(R_PKGS_BASE); do \
 	    if test -d "$(srcdir)/$${pkg}/inst/doc"; then \
 	      echo "building/updating vignettes for package '$${pkg}' ..."; \
-	      (echo "tools:::.installPackageVignettes(\"$(srcdir)/$${pkg}\", \"$(top_builddir)/library/$${pkg}\")") | \
+	      (echo "tools:::.install_package_vignettes(\"$(srcdir)/$${pkg}\", \"$(top_builddir)/library/$${pkg}\")") | \
 	          R_DEFAULT_PACKAGES="utils,tools" \
 	            $(R_EXE) --slave > /dev/null; \
 	    fi; \
@@ -83,7 +83,7 @@ vignettes:
 	fi
 indices:
 	@for pkg in $(R_PKGS_BASE); do \
-	  ( echo "tools:::.installPackageIndices(\"$(srcdir)/$${pkg}\","; \
+	  ( echo "tools:::.install_package_indices(\"$(srcdir)/$${pkg}\","; \
 	    echo " \"$(top_builddir)/library/$${pkg}\")") | \
 	      R_DEFAULT_PACKAGES=tools $(R_EXE) --slave > /dev/null; \
 	done

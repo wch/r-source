@@ -52,9 +52,9 @@ methods <- function (generic.function, class)
               dnew[keep[(n+1):(n+n2)] , ])
     }
 
-    S3MethodsStopList <- tools:::.makeS3MethodsStopList(NULL)
+    S3MethodsStopList <- tools:::.make_S3_methods_stop_list(NULL)
     knownGenerics <- c(names(.knownS3Generics),
-                       tools:::.getInternalS3generics())
+                       tools:::.get_internal_S3_generics())
 
     an <- lapply(seq(along=(sp <- search())), ls)
     names(an) <- sp
@@ -167,7 +167,7 @@ print.MethodsFunction <- function(x, ...)
 
 getS3method <-  function(f, class, optional = FALSE)
 {
-    knownGenerics <- c(tools:::.getInternalS3generics(),
+    knownGenerics <- c(tools:::.get_internal_S3_generics(),
                        names(.knownS3Generics))
     if(!any(f == knownGenerics)) {
         truegf <- findGeneric(f, parent.frame())
@@ -182,7 +182,7 @@ getS3method <-  function(f, class, optional = FALSE)
         return(get(method, mode = "function", envir = parent.frame()))
     ## also look for registered method in namespaces
     defenv <- if(!is.na(w <- .knownS3Generics[f])) asNamespace(w)
-    else if(f %in% tools:::.getInternalS3generics()) .BaseNamespaceEnv
+    else if(f %in% tools:::.get_internal_S3_generics()) .BaseNamespaceEnv
     else {
         genfun <- get(f, mode="function", envir = parent.frame())
         if(.isMethodsDispatchOn() && methods::is(genfun, "genericFunction"))

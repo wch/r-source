@@ -1008,7 +1008,7 @@ function(package, lib.loc = NULL)
     dataEnv <- new.env()
     dataDir <- file.path(dir, "data")
     hasData <- fileTest("-d", dataDir)
-    dataExts <- .makeFileExts("data")
+    dataExts <- .make_file_exts("data")
 
     ## Now go through the aliases.
     dataFramesChecked <- character()
@@ -1347,9 +1347,9 @@ function(package, dir, lib.loc = NULL)
             hasNamespace <- TRUE
             ## Determine names of declared S3 methods and associated S3
             ## generics.
-            nsS3methodsList <- getNamespaceInfo(package, "S3methods")
-            nsS3generics <- nsS3methodsList[, 1]
-            nsS3methods <- nsS3methodsList[, 3]
+            ns_S3_methods_db <- getNamespaceInfo(package, "S3methods")
+            ns_S3_generics <- ns_S3_methods_db[, 1]
+            ns_S3_methods <- ns_S3_methods_db[, 3]
         }
     }
     else {
@@ -1402,9 +1402,9 @@ function(package, dir, lib.loc = NULL)
             objectsInCode <- unique(OK)
             ## Determine names of declared S3 methods and associated S3
             ## generics.
-            nsS3methodsList <- .get_namespace_S3_methods_list(nsInfo)
-            nsS3generics <- nsS3methodsList[, 1]
-            nsS3methods <- nsS3methodsList[, 3]
+            ns_S3_methods_db <- .get_namespace_S3_methods_db(nsInfo)
+            ns_S3_generics <- ns_S3_methods_db[, 1]
+            ns_S3_methods <- ns_S3_methods_db[, 3]
         }
 
     }
@@ -1438,13 +1438,13 @@ function(package, dir, lib.loc = NULL)
     ## Add internal S3 generics and S3 group generics.
     allGenerics <-
         c(allGenerics,
-          .getInternalS3generics(),
+          .get_internal_S3_generics(),
           .get_S3_group_generics())
 
     ## Find all methods in the given package for the generic functions
     ## determined above.  Store as a list indexed by the names of the
     ## generic functions.
-    methodsStopList <- .makeS3MethodsStopList(basename(dir))
+    methodsStopList <- .make_S3_methods_stop_list(basename(dir))
     methodsInPackage <- sapply(allGenerics, function(g) {
         ## <FIXME>
         ## We should really determine the name g dispatches for, see
@@ -1460,7 +1460,7 @@ function(package, dir, lib.loc = NULL)
         methods <- methods[! methods %in% methodsStopList]
         if(hasNamespace) {
             ## Find registered methods for generic g.
-            methods <- c(methods, nsS3methods[nsS3generics == g])
+            methods <- c(methods, ns_S3_methods[ns_S3_generics == g])
         }
         methods
     })
@@ -1734,11 +1734,11 @@ function(package, dir, lib.loc = NULL)
             hasNamespace <- TRUE
             ## Determine names of declared S3 methods and associated S3
             ## generics.
-            nsS3methodsList <- getNamespaceInfo(package, "S3methods")
-            nsS3generics <- nsS3methodsList[, 1]
-            nsS3methods <- nsS3methodsList[, 3]
+            ns_S3_methods_db <- getNamespaceInfo(package, "S3methods")
+            ns_S3_generics <- ns_S3_methods_db[, 1]
+            ns_S3_methods <- ns_S3_methods_db[, 3]
             ## Determine unexported but declared S3 methods.
-            S3reg <- nsS3methods[! nsS3methods %in% objectsInCode]
+            S3reg <- ns_S3_methods[! ns_S3_methods %in% objectsInCode]
         }
     }
     else {
@@ -1787,9 +1787,9 @@ function(package, dir, lib.loc = NULL)
             objectsInCode <- unique(OK)
             ## Determine names of declared S3 methods and associated S3
             ## generics.
-            nsS3methodsList <- .get_namespace_S3_methods_list(nsInfo)
-            nsS3generics <- nsS3methodsList[, 1]
-            nsS3methods <- nsS3methodsList[, 3]
+            ns_S3_methods_db <- .get_namespace_S3_methods_db(nsInfo)
+            ns_S3_generics <- ns_S3_methods_db[, 1]
+            ns_S3_methods <- ns_S3_methods_db[, 3]
         }
 
     }
@@ -1801,7 +1801,7 @@ function(package, dir, lib.loc = NULL)
                              is.function(get(f, envir = codeEnv)))
                       == TRUE]
 
-    methodsStopList <- .makeS3MethodsStopList(basename(dir))
+    methodsStopList <- .make_S3_methods_stop_list(basename(dir))
     S3groupGenerics <- .get_S3_group_generics()
 
     checkArgs <- function(g, m, env) {
@@ -1933,7 +1933,7 @@ function(package, dir, lib.loc = NULL)
         ## For base, also add the internal S3 generics which are not
         ## .Primitive (as checkArgs() does not deal with these).
         if(identical(env, as.environment(NULL))) {
-            internalS3generics <- .getInternalS3generics()
+            internalS3generics <- .get_internal_S3_generics()
             internalS3generics <-
                 internalS3generics[sapply(internalS3generics,
                                           .is_primitive,
@@ -1958,7 +1958,7 @@ function(package, dir, lib.loc = NULL)
             methods <- methods[! methods %in% methodsStopList]
             if(hasNamespace) {
                 ## Find registered methods for generic g.
-                methods <- c(methods, nsS3methods[nsS3generics == g])
+                methods <- c(methods, ns_S3_methods[ns_S3_generics == g])
             }
 
             for(m in methods)
@@ -2021,7 +2021,7 @@ function(package, dir, lib.loc = NULL)
         if(packageHasNamespace(package, dirname(dir))) {
             hasNamespace <- TRUE
             codeEnv <- asNamespace(package)
-            nsS3methodsList <- getNamespaceInfo(package, "S3methods")
+            ns_S3_methods_db <- getNamespaceInfo(package, "S3methods")
         }
         else
             codeEnv <- .packageEnv(package)
@@ -2064,7 +2064,7 @@ function(package, dir, lib.loc = NULL)
         if(file.exists(file.path(dir, "NAMESPACE"))) {
             hasNamespace <- TRUE
             nsInfo <- parseNamespaceFile(basename(dir), dirname(dir))
-            nsS3methodsList <- .get_namespace_S3_methods_list(nsInfo)
+            ns_S3_methods_db <- .get_namespace_S3_methods_db(nsInfo)
         }
     }
 
@@ -2072,14 +2072,14 @@ function(package, dir, lib.loc = NULL)
     replaceFuns <- character()
 
     if(hasNamespace) {
-        nsS3generics <- nsS3methodsList[, 1]
-        nsS3methods <- nsS3methodsList[, 3]
+        ns_S3_generics <- ns_S3_methods_db[, 1]
+        ns_S3_methods <- ns_S3_methods_db[, 3]
         ## S3 replacement methods from namespace registration?
-        idx <- grep("<-$", nsS3generics)
-        if(any(idx)) replaceFuns <- nsS3methods[idx]
+        idx <- grep("<-$", ns_S3_generics)
+        if(any(idx)) replaceFuns <- ns_S3_methods[idx]
         ## Now remove the functions registered as S3 methods.
         objectsInCode <-
-            objectsInCode[! objectsInCode %in% nsS3methods]
+            objectsInCode[! objectsInCode %in% ns_S3_methods]
     }
 
     replaceFuns <-
@@ -2269,9 +2269,9 @@ function(x, ...)
     invisible(x)
 }
 
-### * .checkPackageDepends
+### * .check_package_depends
 
-.checkPackageDepends <-
+.check_package_depends <-
 function(package)
 {
     if(length(package) != 1)
@@ -2320,7 +2320,7 @@ function(package)
     vignetteDir <- file.path(dir, "doc")
     if(fileTest("-d", vignetteDir)
        && length(listFilesWithType(vignetteDir, "vignette"))) {
-        reqs <- .buildVignetteIndex(dir)$Depends
+        reqs <- .build_vignette_index(dir)$Depends
         reqs <- reqs[!reqs %in% c(depends, suggests, packageName)]
         if(length(reqs))
             badDepends$missingVignetteDepends <- reqs
@@ -2341,11 +2341,11 @@ function(package)
             badDepends$missingNamespaceDepends <- reqs
     }
 
-    class(badDepends) <- "checkPackageDepends"
+    class(badDepends) <- "check_package_depends"
     badDepends
 }
 
-print.checkPackageDepends <- function(x, ...) {
+print.check_package_depends <- function(x, ...) {
     if(length(bad <- x$requiredButNotInstalled)) {
         writeLines("Packages required but not available:")
         .prettyPrint(bad)
