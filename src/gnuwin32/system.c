@@ -678,6 +678,8 @@ int cmdlineoptions(int ac, char **av)
     }
 
     R_ShowMessage = Rp->message; /* used here */
+    TrueWriteConsole = Rp->WriteConsole;
+    R_CallBackHook = Rp->CallBack;
 
 #ifdef HAVE_TIMES
     StartTime = currenttime();
@@ -688,8 +690,8 @@ int cmdlineoptions(int ac, char **av)
 	if (**++av == '-') {
 	    if (!strcmp(*av, "--version")) {
 		PrintVersion(s);
-		Rprintf(s);
-		R_ShowMessage(s);
+		/* R_ShowMessage(s);*/
+		char_message(s);
 		exit(0);
 	    } else if (!strcmp(*av, "--save")) {
 		Rp->SaveAction = SA_SAVE;

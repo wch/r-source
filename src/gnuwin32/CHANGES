@@ -15,7 +15,7 @@ New flag --no-environ suppresses reading .Renviron and is implied by
 More support for building R into other applications: see the examples
 in the front-ends directory of the source distribution.
 
-Internally interrupting by Esc of Ctrl-Break is handled by signals, so the
+Internally interrupting by Esc or Ctrl-Break is handled by signals, so the
 `User Break' response will no longer appear.
 
 There is limited support for `tilde-expansion': file paths

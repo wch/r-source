@@ -1,10 +1,9 @@
 include ../gnuwin32/MkRules
 
-all: makeMakedeps ../gnuwin32/nmath.a
+all: makeMakedeps ../gnuwin32/libmath.a
 
 CFLAGS=$(OPTFLAGS) -I../include -I../gnuwin32
 FFLAGS=$(OPTFLAGS)
-DIRS = .
 SOURCES=$(wildcard *.c *.f)
 OBJS=$(foreach i, $(SOURCES), $(basename $i).o)
 
@@ -12,7 +11,7 @@ fround.o: fround.c
 	$(CC) -I../include  -o $@ -c $<
 
 
-../gnuwin32/nmath.a: $(OBJS)
+../gnuwin32/libmath.a: $(OBJS)
 
 # Dependencies
 CSOURCES=$(wildcard *.c)

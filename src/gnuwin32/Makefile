@@ -17,8 +17,7 @@ R-DLLFLAGS= $(STRIPFLAG) -mwindows
 R-DLLLIBS=-L. $(FLIBS) -lwsock32 -lcomctl32
 SOURCES=$(wildcard *.c *.f)
 OBJS=$(foreach i, $(SOURCES), $(basename $i).o)
-
-MAINLIBS=main.a appl.a nmath.a
+MAINLIBS=libmain.a libappl.a libmath.a
 EXTRALIBS=rx.a ga.a gl.a xdr.a em.a
 
 LIBFILES=$(foreach i, $(PACKAGES), ../../library/$i)
