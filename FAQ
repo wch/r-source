@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 1.1-0, 2000/06/12
+Version 1.1-1, 2000/06/17
 Kurt Hornik
 
 
@@ -1368,6 +1368,7 @@ at the R prompt.
      splines      Regression spline functions and classes
      stepfun      Step functions, including empirical distributions
      survival5    Survival analysis
+     tcltk        Interface to Tcl/Tk
      ts           Time series functions
 
    You can "load" the installed package PKG by
