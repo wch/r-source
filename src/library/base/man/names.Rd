@@ -18,6 +18,7 @@ In this case, \code{value} must be a vector of character strings of the
 same length as \code{x}.
 }
 \examples{
+\testonly{data(islands)}
 # print the names attribute of the islands data set
 names(islands)
 
