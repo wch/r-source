@@ -872,7 +872,27 @@ Date: Wed, 21 Apr 2004 17:49:03 -0400
 Subject: Re: jar acapulco
 From: Lucinda Starr <vsvaajhchgieq@loveable.com>
 Date: Thu, 22 Apr 2004 11:16:27 -0600
-* PR# 6811 *
-Subject: as.Date in dev release
-From: "Lyden, Scott" <slyden@us.nomura.com>
-Date: Thu, 22 Apr 2004 13:02:43 -0400
+* PR# 6813 *
+Subject: DCI Services E-Mail Notification
+From: "DCI Services" <dci@wizards.com>
+Date: Thu, 22 Apr 2004 19:08:19 -0700
+* PR# 6814 *
+Subject: is.na(valid_date) too often true on SGI MIPS
+From: aa056@chebucto.ns.ca
+Date: Fri, 23 Apr 2004 18:27:45 +0200 (CEST)
+* PR# 6815 *
+Subject: make fails with Sun Forte compiler
+From: rsparapa@mcw.edu
+Date: Fri, 23 Apr 2004 20:07:05 +0200 (CEST)
+* PR# 6816 *
+Subject: CONGRATULATION FOR WINNING.
+From: infobeetopromo1 <infobeetopromo1@telstra.com>
+Date: Fri, 23 Apr 2004 10:54:27 -0700
+* PR# 6817 *
+Subject: Start saving now
+From: "Marcus Prater" <FXCMLWEUD@mailsent.net>
+Date: Fri, 23 Apr 2004 18:08:42 -0700
+* PR# 6818 *
+Subject: Weirdness with choose.files on Microsoft Windows
+From: kwright@eskimo.com
+Date: Fri, 23 Apr 2004 23:55:27 +0200 (CEST)
