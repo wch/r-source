@@ -125,7 +125,7 @@
 #define eGWin       11
 extern 	Str255	PostFont, UserFont;
 extern	char 	*mac_getenv(const char *name);
-
+extern SInt32		systemVersion ;
 
 void UniqueWinTitle(void);
 void RemWinMenuItem(void);
@@ -1500,8 +1500,10 @@ OSStatus newWindow ( const FSSpec * pFileSpec, WindowRef * outWindow, int graphi
 
  
       
-   
+    if(systemVersion > kMinSystemVersion)
     fontFamily = FMGetFontFamilyFromName(UserFont);
+    else
+     GetFNum(UserFont,&fontFamily);
     
     WESetOneAttribute ( kCurrentSelection, kCurrentSelection, weTagFontFamily,
 			& fontFamily, sizeof ( fontFamily ), GetWindowWE ( window ) ) ;

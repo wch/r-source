@@ -85,8 +85,8 @@
 int		EIGHTY, F_HEIGHT;
 #define FixedToInt(a)	((int)(a) / fixed1)
 
-
-extern Boolean              Have_Console;
+extern SInt32		systemVersion ;
+extern Boolean      Have_Console;
 /* ************************************************************************************************ */
 /*                          Constant, Global variables and prototype                                */
 /* ************************************************************************************************ */
@@ -222,7 +222,7 @@ void  doGetPreferences(void)
    SInt16               fileRefNum;
    appPrefsHandle       appPrefsHdl;
    char 				userfont[25];
-   
+   FMFontFamily 		postFontId;
      
       strcpy(genvString, ".Renviron");
       SetTab();
@@ -253,8 +253,15 @@ void  doGetPreferences(void)
       if(strlen(userfont)>0)
        CopyCStringToPascal(userfont,UserFont);
   
+      if(systemVersion > kMinSystemVersion){
       if( FMGetFontFamilyFromName(UserFont) == kInvalidFontFamily)
          doCopyPString("\pmonaco", UserFont); /* Emergency font ! */
+      }
+      else {
+       GetFNum(UserFont, &postFontId);
+       if( postFontId == kInvalidFontFamily)
+          doCopyPString("\pmonaco", UserFont); /* Emergency font ! */
+      }
 
       EIGHTY = EightyWidth();
       
@@ -287,7 +294,10 @@ int EightyWidth(void)
 	if(tempPort == NULL)
 	 return(eightywidth);
 	  
+    if(systemVersion > kMinSystemVersion)	  
     fontFamily = FMGetFontFamilyFromName(UserFont);
+    else
+     GetFNum(UserFont,&fontFamily);
   
     if(fontFamily == kInvalidFontFamily)
      return(eightywidth);
