@@ -546,7 +546,8 @@ fi
 ## the R API have one argument only and therefore cannot deal with 
 ## Fortran 77 compilers which convert to upper case or add an extra
 ## underscore for identifiers containing underscores.  We give an error
-## and a warning, respectively, in these cases.
+## in the former case; as ISO FORTRAN 77 does not allow underscores in
+## function names, we do nothing about the latter.
 AC_DEFUN([R_PROG_F77_APPEND_UNDERSCORE],
 [AC_REQUIRE([AC_F77_WRAPPERS])
 ## DANGER!  We really needs the results of _AC_F77_NAME_MANGLING as
@@ -556,11 +557,6 @@ case ${ac_cv_f77_mangling} in
   "upper "*)
     AC_MSG_WARN([FORTRAN compiler uses uppercase external names])
     AC_MSG_ERROR([cannot use FORTRAN])
-    ;;
-  *", extra "*)
-    warn_f77_mangling="cannot deal with underscores in FORTRAN"
-    warn_f77_mangling="${warn_f77_mangling} external names"
-    AC_MSG_WARN([${warn_f77_mangling}])
     ;;
 esac
 AC_CACHE_VAL(r_cv_prog_f77_append_underscore,
@@ -1566,7 +1562,9 @@ else
   AC_MSG_RESULT([yes])
   _R_ZLIB_MMAP
 fi
-AM_CONDITIONAL(BUILD_ZLIB, test "x${have_zlib}" = xno)
+AM_CONDITIONAL(BUILD_ZLIB, [test "x${have_zlib}" = xno])
+AM_CONDITIONAL(USE_MMAP_ZLIB,
+[test "x${have_zlib}" = xno && test "x${r_cv_zlib_mmap}" = xyes])
 ])# R_ZLIB
 
 ## _R_HEADER_ZLIB
@@ -1606,7 +1604,6 @@ caddr_t hello() {
 	       [r_cv_zlib_mmap=no],
 	       [r_cv_zlib_mmap=yes],
 	       [r_cv_zlib_mmap=yes]))
-AM_CONDITIONAL(USE_MMAP_ZLIB, test "x${r_cv_zlib_mmap}" = xyes)
 ])# _R_ZLIB_MMAP
 
 ## R_SYS_POSIX_LEAPSECONDS

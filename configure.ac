@@ -1232,9 +1232,6 @@ fi
 if test -n "${warn_g77_and_f2c}"; then
   AC_MSG_WARN([${warn_g77_and_f2c}])
 fi
-if test -n "${warn_f77_mangling}"; then
-  AC_MSG_WARN([${warn_f77_mangling}])
-fi
 if test -n "${warn_f2c_flibs}"; then
   AC_MSG_WARN([${warn_f2c_flibs}])
 fi
