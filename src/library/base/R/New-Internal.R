@@ -65,10 +65,6 @@ gcinfo <- function(verbose).Internal(gcinfo(verbose))
 gctorture <- function(on=TRUE)invisible(.Internal(gctorture(on)))
 gray <- function(level).Internal(gray(level))
 
-hdf5save <- function(file, ...) .Internal(hdf5save(file, ...))
-hdf5load <- function(file, load=TRUE) .Internal(hdf5load(file, load=TRUE))
-
-
 lib.fixup <- function(env, globenv).Internal(lib.fixup(env, globenv)) ### NO DOC
 
 nchar <- function(x).Internal(nchar(x))
