@@ -1,3 +1,9 @@
+r-base (0.99.0-0) unstable; urgency=low
+
+  * Test builds in preparation for the 0.99.0 release
+
+ -- Douglas Bates <bates@stat.wisc.edu>  Fri,  7 Jan 2000 14:33:03 -0600
+
 r-base (0.90.1-1) unstable; urgency=low
 
   * New upstream release
