@@ -2926,3 +2926,15 @@ length(aa) <- 20
 aa
 stopifnot(is.factor(aa))
 ## returned a vector in 1.8.1
+
+## spec.pgram() was too
+pAR <- c(2.7607, -3.82, 2.6535, -0.9238)
+N <- 1 + 2^14# 16385
+set.seed(123)
+x <- arima.sim(model = list(ar = pAR), n = N)
+spP <- spec.pgram(x, spans = 41, plot=FALSE)
+spA <- spec.ar(x=list(ar=pAR, order=4, var.pred=1, frequency=1),
+               n.freq = spP$n.used %/% 2, plot=FALSE)
+r <- spP$spec / spA$spec
+stopifnot(abs(mean(r) - 1) < 0.003)
+## was 0.0268 in R 1.8.1
