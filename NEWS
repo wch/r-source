@@ -10,6 +10,8 @@
 
 NEW FEATURES
 
+    o   new date and URL fields in DESCRIPTION file of packages.
+
     o	residuals.lm() has "type" argument, as S does.
 
     o   the underlying code for nlm has been translated from Fortran
