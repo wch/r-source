@@ -98,7 +98,7 @@ prompt.default <-
               "\\title{ ~~data-name / kind ...  }",
               "\\description{",
 		  "  ~~ A concise (1-5 lines) description of what the function does. ~~",
-              "}"
+              "}",
               paste0("\\usage{data(", name, ")}"),
               "\\format{", "  The format is:", str.txt, "}",
               ## remaining lines are IDENTICAL to those in prompt.data.frame():
