@@ -94,6 +94,9 @@ assign("cleanEx",
 	   if(length(missitems))
 	       warning("items ", paste(missitems, collapse=", "),
 		       " have been removed from the search path")
+           nms <- loadedNamespaces()
+	   newitems <- nms[! nms %in% .oldNS]
+	   for(item in rev(newitems)) unloadNamespace(item)
        },
        env = .CheckExEnv)
 assign("..nameEx", "__{must remake R-ex/*.R}__", env = .CheckExEnv) # for now
@@ -109,6 +112,7 @@ if($PKG eq "tcltk") {
     print "library('$PKG')\n\n";
 }
 print "assign(\".oldSearch\", search(), env = .CheckExEnv)\n";
+print "assign(\".oldNS\", loadedNamespaces(), env = .CheckExEnv)\n";
 
 ### * Loop over all R files, and edit a few of them ...
 foreach my $file (@Rfiles) {
