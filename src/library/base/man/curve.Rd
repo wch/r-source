@@ -10,7 +10,7 @@ curve(expr, from, to, n = 101, add = FALSE, type = "l",
 }
 \arguments{
   \item{expr}{an expression written as a function of \code{x}, or
-    alternatively a function which will be plotted.}
+    alternatively the name of a function which will be plotted.}
   \item{x}{a \sQuote{vectorizing} numeric \R function.}
   \item{from,to}{the range over which the function will be plotted.}
   \item{n}{integer; the number of x values at which to evaluate.}

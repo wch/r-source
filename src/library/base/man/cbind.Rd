@@ -44,9 +44,10 @@ rbind(\dots, deparse.level = 1)
   (rows) of the matrix arguments.  Any vectors have their values
   recycled or subsetted to achieve this length.
 
-  For \code{cbind} (\code{rbind}), vectors of zero length are ignored
-  unless the result would have zero rows (columns), for S compatibility.
-  (Zero-extent matrices do not occur in S and are not ignored in \R.)
+  For \code{cbind} (\code{rbind}), vectors of zero length (including
+  \code{NULL}) are ignored unless the result would have zero rows
+  (columns),  for S compatibility.
+  (Zero-extent matrices do not occur in S3 and are not ignored in \R.)
 }
 \value{
   A matrix or data frame combining the \code{\dots} arguments
