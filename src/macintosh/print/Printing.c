@@ -1,12 +1,8 @@
-// ××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××
-// Printing.c
-// ××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××
 
-// ÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉ includes
 
 #include "Printing.h"
 
-// ÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉ global variables
+/* global variables */
 
 THPrint		gTPrintHdl;
 WindowPtr	gWindowPtr;
@@ -21,27 +17,23 @@ RGBColor	gBlackColour	= { 0x0000, 0x0000, 0x0000 };
 RGBColor	gBlueColour		= { 0x1818, 0x4B4B, 0x8181 };
 
 extern TPPrDlg				gTPrDlgStructurePtr;
-// extern PDlgInitUPP 		gInitialisationFunctionUPP;
+/*  extern PDlgInitUPP 		gInitialisationFunctionUPP; */
 extern PItemUPP				gNewItemEvaluateFunctionUPP;
 extern ModalFilterUPP	gEventFilterUPP;
 extern void Do_StandardAlert(Str255);
-// ××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××× main
 
-// ××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××× doUpdate
 
 void  doUpdate(EventRecord *eventStrucPtr)
 {
-	WindowPtr	windowPtr;
+    WindowPtr	windowPtr;
 
-	windowPtr = (WindowPtr) eventStrucPtr->message;
+    windowPtr = (WindowPtr) eventStrucPtr->message;
 
-	BeginUpdate(windowPtr);
-	//doPrintRecordsInfo();
-	EndUpdate(windowPtr);
+    BeginUpdate(windowPtr);
+    /* doPrintRecordsInfo(); */
+    EndUpdate(windowPtr);
 }
 
-
-// ××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××× doPrinting
 
 void  doPrinting(void)
 {
@@ -139,8 +131,6 @@ void  doPrinting(void)
  
 }
 
-// ×××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××× doCreatePrintRecord
-
 OSErr  doCreatePrintRecord(void)
 {
 	SInt16	printError;
@@ -158,7 +148,6 @@ OSErr  doCreatePrintRecord(void)
 		ExitToShell();
 }
 
-// ×××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××× doPrStyleDialog
 
 void  doPrStyleDialog(void)
 {
@@ -184,36 +173,30 @@ void  doPrStyleDialog(void)
 	PrClose();
 }
 
-// ×××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××× doCalcNumberOfPages
-
 SInt16  doCalcNumberOfPages(Rect pageRect)
 {
-	Rect		destRect, pictureRect;
-	SInt16	heightDestRect, linesPerPage, numberOfPages;
+    Rect		destRect, pictureRect;
+    SInt16	heightDestRect, linesPerPage, numberOfPages;
 
     SetRect(&destRect, pageRect.left, pageRect.top, pageRect.right, pageRect.bottom);	
-	OffsetRect(&destRect,- (kMargin - 5),- ((kMargin * 1.5) - 5));
-	TextFont(gFontNumber);
-	TextSize(gFontSize);
+    OffsetRect(&destRect,- (kMargin - 5),- ((kMargin * 1.5) - 5));
+    TextFont(gFontNumber);
+    TextSize(gFontSize);
 
-	gEditRecHdl = TENew(&destRect,&destRect);
-	TEInsert(*gTextHdl,GetHandleSize(gTextHdl),gEditRecHdl);
+    gEditRecHdl = TENew(&destRect,&destRect);
+    TEInsert(*gTextHdl,GetHandleSize(gTextHdl),gEditRecHdl);
 
-	heightDestRect = destRect.bottom - destRect.top;
-	linesPerPage = heightDestRect / (*gEditRecHdl)->lineHeight; 
-	numberOfPages = ((*gEditRecHdl)->nLines / linesPerPage) + 1;	
+    heightDestRect = destRect.bottom - destRect.top;
+    linesPerPage = heightDestRect / (*gEditRecHdl)->lineHeight; 
+    numberOfPages = ((*gEditRecHdl)->nLines / linesPerPage) + 1;	
  
-	//SetRect(&pictureRect,destRect.left,destRect.top,
-	//			destRect.left + ((*gPictureHdl)->picFrame.right - (*gPictureHdl)->picFrame.left),
-	//			destRect.top + ((*gPictureHdl)->picFrame.bottom - (*gPictureHdl)->picFrame.top));	
-	//DrawPicture(gPictureHdl,&pictureRect);
+    /* SetRect(&pictureRect,destRect.left,destRect.top, */
+    /* 			destRect.left + ((*gPictureHdl)->picFrame.right - (*gPictureHdl)->picFrame.left), */
+    /* 			destRect.top + ((*gPictureHdl)->picFrame.bottom - (*gPictureHdl)->picFrame.top));	 */
+    /* DrawPicture(gPictureHdl,&pictureRect); */
     return 1;
-	return(numberOfPages);
+    return(numberOfPages);
 }
-
-// ××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××× doDrawPage
-
-// ××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××× doDrawPage
 
 void  doDrawPage(Rect pageRect,SInt16 pageNumber,SInt16 numberOfpages)
 {
@@ -224,8 +207,8 @@ void  doDrawPage(Rect pageRect,SInt16 pageNumber,SInt16 numberOfpages)
 	SInt32		startOffset, endOffset;
 	Str255		theString;
 	short     LeftVal, RightVal, TopVal, BottomVal;
-	//SetRect(&destRect,pageRect.left + kMargin,pageRect.top + (kMargin * 1.5),
-	//				pageRect.right - kMargin,pageRect.bottom - (kMargin * 1.5));
+	/* SetRect(&destRect,pageRect.left + kMargin,pageRect.top + (kMargin * 1.5), */
+	/* 				pageRect.right - kMargin,pageRect.bottom - (kMargin * 1.5)); */
 
   SetRect(&destRect, pageRect.left, pageRect.top, pageRect.right, pageRect.bottom);
 	heightDestRect = destRect.bottom - destRect.top;
@@ -234,7 +217,7 @@ void  doDrawPage(Rect pageRect,SInt16 pageNumber,SInt16 numberOfpages)
 	TextFont(gFontNumber);
 	TextSize(gFontSize);
 	pageEditRecHdl = TENew(&destRect,&destRect);
-	textHdl = gTextHdl; //(*gEditRecHdl)->hText;
+	textHdl = gTextHdl; /* (*gEditRecHdl)->hText; */
 
 	startOffset = (*gEditRecHdl)->lineStarts[(pageNumber - 1) * linesPerPage];
 	if(pageNumber == numberOfpages)
@@ -261,12 +244,11 @@ void  doDrawPage(Rect pageRect,SInt16 pageNumber,SInt16 numberOfpages)
 		DrawPicture(gPictureHdl,&pictureRect);
 	}
 
-//  The following three lines is used to draw the page number.
-//	MoveTo(destRect.left,pageRect.bottom - 25);
-//	NumToString((SInt32) pageNumber,theString);
-//	DrawString(theString);
+/*   The following three lines is used to draw the page number. */
+/* 	MoveTo(destRect.left,pageRect.bottom - 25); */
+/* 	NumToString((SInt32) pageNumber,theString); */
+/* 	DrawString(theString); */
 }
-// ×××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××× drawPageOrientation
 
 void  doDrawPageOrientation(void)
 {
@@ -288,27 +270,24 @@ void  doDrawPageOrientation(void)
 #endif
 }
 
-// ××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××× doGetPageOrientation
 
 SInt16  doGetPageOrientation(void)
 {
-	TGetRotnBlk getRotRec;
+    TGetRotnBlk getRotRec;
 
-	if(doIsPrGeneralThere)
-	{
-		getRotRec.iOpCode = getRotnOp;
-		getRotRec.hPrint = gTPrintHdl;
-		PrGeneral((Ptr) &getRotRec);
-		if((getRotRec.iError == noErr) && (PrError() == noErr) && getRotRec.fLandscape)
-			return(1);
-		else
-			return(2);
-	}
+    if(doIsPrGeneralThere)
+    {
+	getRotRec.iOpCode = getRotnOp;
+	getRotRec.hPrint = gTPrintHdl;
+	PrGeneral((Ptr) &getRotRec);
+	if((getRotRec.iError == noErr) && (PrError() == noErr) && getRotRec.fLandscape)
+	    return(1);
 	else
-		return(3);
+	    return(2);
+    }
+    else
+	return(3);
 }
-
-// ××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××× doIsPrGeneralThere
 
 Boolean  doIsPrGeneralThere(void)
 {
@@ -330,114 +309,97 @@ Boolean  doIsPrGeneralThere(void)
 		return(true);
 }
 
-// ××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××× doPrintRecordsInfo
 
-// ×××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××× doDrawRectStrings
-
-void  doDrawRectStrings(Str255 s1,SInt16 x1,SInt16 y1,Str255 s2,SInt16 x2,SInt16 y2,Str255 s3)
+void  doDrawRectStrings(Str255 s1,SInt16 x1,SInt16 y1,Str255 s2,SInt16 x2,SInt16 y2,Str255 s3) 
 {
-	MoveTo(x1,y1);
-	DrawString(s1);
-	MoveTo(x2,y2);
-	DrawString("\p(");
-	DrawString(s2);
-	DrawString("\p,");
-	DrawString(s3);
-	DrawString("\p)");
+    MoveTo(x1,y1);
+    DrawString(s1);
+    MoveTo(x2,y2);
+    DrawString("\p(");
+    DrawString(s2);
+    DrawString("\p,");
+    DrawString(s3);
+    DrawString("\p)");
 }
 
-// ××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××× doErrorAlert
 
 void  doErrorAlert(SInt16 errorType,Boolean fatal)
 {
-	AlertStdAlertParamRec	paramRec;
-	Str255								theString, errorString = "\pPrinting Manager Error ";
-	SInt16								itemHit;
+    AlertStdAlertParamRec	paramRec;
+    Str255								theString, errorString = "\pPrinting Manager Error ";
+    SInt16								itemHit;
 
-	paramRec.movable				= true;
-	paramRec.helpButton			= false;
-	paramRec.filterProc			= NULL;
-	paramRec.defaultText		= (StringPtr) kAlertDefaultOKText;
-	paramRec.cancelText			= NULL;
-	paramRec.otherText			= NULL;
-	paramRec.defaultButton	= kAlertStdAlertOKButton;
-	paramRec.cancelButton		= 0;
-	paramRec.position				= kWindowDefaultPosition;
+    paramRec.movable				= true;
+    paramRec.helpButton			= false;
+    paramRec.filterProc			= NULL;
+    paramRec.defaultText		= (StringPtr) kAlertDefaultOKText;
+    paramRec.cancelText			= NULL;
+    paramRec.otherText			= NULL;
+    paramRec.defaultButton	= kAlertStdAlertOKButton;
+    paramRec.cancelButton		= 0;
+    paramRec.position				= kWindowDefaultPosition;
 
-	NumToString((long) errorType,theString);
-	doConcatPStrings(errorString,theString);
+    NumToString((long) errorType,theString);
+    doConcatPStrings(errorString,theString);
 
-	if(!fatal){
-	   Do_StandardAlert(errorString);
-		//StandardAlert(kAlertCautionAlert,errorString,NULL,&paramRec,&itemHit);
-	}else
-	{
-	  Do_StandardAlert(errorString);
-		//StandardAlert(kAlertStopAlert,errorString,NULL,&paramRec,&itemHit);
-		ExitToShell();
-	}
+    if(!fatal){
+	Do_StandardAlert(errorString);
+	/* StandardAlert(kAlertCautionAlert,errorString,NULL,&paramRec,&itemHit); */
+    }else
+    {
+	Do_StandardAlert(errorString);
+	/* StandardAlert(kAlertStopAlert,errorString,NULL,&paramRec,&itemHit); */
+	ExitToShell();
+    }
 }
 
-// ××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××× doConcatPStrings
 
 void  doConcatPStrings(Str255 targetString,Str255 appendString)
 {
-	SInt16	appendLength;
+    SInt16	appendLength;
 
-	appendLength = MIN(appendString[0],255 - targetString[0]);
+    appendLength = MIN(appendString[0],255 - targetString[0]);
 
-	if(appendLength > 0)
-	{
-		BlockMoveData(appendString+1,targetString+targetString[0]+1,(SInt32) appendLength);
-		targetString[0] += appendLength;
-	}
+    if(appendLength > 0)
+    {
+	BlockMoveData(appendString+1,targetString+targetString[0]+1,(SInt32) appendLength);
+	targetString[0] += appendLength;
+    }
 }
-
-// ××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××
 
 
 void PrintPicture(){
-	GrafPtr	savePort;
-	TPrStatus	prStatus;
-	TPPrPort	printPort;
-	OSErr	err, printError;
-	THPrint	hPrint;
+    GrafPtr	savePort;
+    TPrStatus	prStatus;
+    TPPrPort	printPort;
+    OSErr	err, printError;
+    THPrint	hPrint;
 
-	GetPort(&savePort);
-	PrOpen();
-	if(!gPrintStructureInited)
-		printError = doCreatePrintRecord();
-	else
-		printError = noErr;
+    GetPort(&savePort);
+    PrOpen();
+    if(!gPrintStructureInited)
+	printError = doCreatePrintRecord();
+    else
+	printError = noErr;
 		
-	//hPrint = (THPrint) NewHandle(sizeof(TPrint));
-	PrintDefault(gTPrintHdl);
-	//ClipRect ((*gTPrintHdl)->prInfo.rPage);
+    /* hPrint = (THPrint) NewHandle(sizeof(TPrint)); */
+    PrintDefault(gTPrintHdl);
+    /* ClipRect ((*gTPrintHdl)->prInfo.rPage); */
 
-	if (PrJobDialog(hPrint)) {
-			printPort = PrOpenDoc(gTPrintHdl, nil, nil);
-			SetPort(&printPort->gPort);
-			PrOpenPage(printPort, nil);		// Open this page ...
-			// ---------
-			DrawPicture(gPictureHdl, &((*gTPrintHdl)->prInfo.rPage));  // Or any other drawing
-														// commands ...
-			// ---------
-			PrClosePage(printPort);          	// Close this page ...
-			PrCloseDoc(printPort);
-			// Handle print spooler
-			if (((*gTPrintHdl)->prJob.bJDocLoop = bSpoolLoop) && (!PrError() ) )
-					PrPicFile(hPrint, nil, nil, nil, &prStatus);
-	}
-	PrClose();
-	SetPort(savePort);
-
-
-
-
-
-
-
-
-
-
+    if (PrJobDialog(hPrint)) {
+	printPort = PrOpenDoc(gTPrintHdl, nil, nil);
+	SetPort(&printPort->gPort);
+	PrOpenPage(printPort, nil);		/*  Open this page ... */
+	/*  --------- */
+	DrawPicture(gPictureHdl, &((*gTPrintHdl)->prInfo.rPage));  /*  Or any other drawing */
+	/*  commands ... */
+	/*  --------- */
+	PrClosePage(printPort);          	/*  Close this page ... */
+	PrCloseDoc(printPort);
+	/*  Handle print spooler */
+	if (((*gTPrintHdl)->prJob.bJDocLoop = bSpoolLoop) && (!PrError() ) )
+	    PrPicFile(hPrint, nil, nil, nil, &prStatus);
+    }
+    PrClose();
+    SetPort(savePort);
 }
