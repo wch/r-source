@@ -1,8 +1,7 @@
 \input texinfo
 @c %**start of header
 @setfilename R-exts.info
-@settitle R Extension Writer's Manual
-@set VERSION 0.0-0
+@settitle Writing R Extensions
 @setchapternewpage on
 @c %**end of header
 
@@ -10,12 +9,13 @@
 
 @dircategory Programming
 @direntry
-* R Extensions: (R-exts).      The R Extension Writer's Manual.
+* R Extensions: (R-exts).      Writing R Extensions.
 @end direntry
 
 @finalout
 
 @include R-defs.texi
+@include version.texi
 
 @ifinfo
 This is a guide to extending R.
@@ -45,7 +45,7 @@ approved by the Free Software Foundation.
 @end ifinfo
 
 @titlepage
-@title R Extension Writer's Manual
+@title Writing R Extensions
 @subtitle Version @value{VERSION}
 @author R Development Core Team
 @page
@@ -69,30 +69,26 @@ Copyright @copyright{} 1999 R Development Core Team
 
 @contents
 
-@node Top, Introduction, (dir), (dir)
+@node Top, Legalese, (dir), (dir)
 
 @menu
-* Introduction::                
-* System and foreign language interfaces::  
-* R (internal) programming miscellania::  
+* Legalese::                    
 * Creating R packages::         
 * Writing R documentation::     
+* System and foreign language interfaces::  
+* R (internal) programming miscellania::  
 * Function and variable index::  
 * Concept index::               
 @end menu
 
-@node Introduction, System and foreign language interfaces, Top, Top
-@chapter Introduction
+@node Legalese, Creating R packages, Top, Top
+@unnumbered Legalese
 
 @menu
-* Legalese::                    
 * Acknowledgments::             
 @end menu
 
-@node Legalese, Acknowledgments, Introduction, Introduction
-@section Legalese
-
-This document is @copyright{} 1999 by the R Core Team.
+This document is @copyright{} 1999 by the R Development Core Team.
 
 This document is free software; you can redistribute it and/or modify it
 under the terms of the GNU General Public License as published by the
@@ -114,13 +110,473 @@ A copy of the GNU General Public License is available via WWW at
 You can also obtain it by writing to the Free Software Foundation, Inc.,
 675 Mass Ave, Cambridge, MA 02139, USA.
 
-@node Acknowledgments,  , Legalese, Introduction
+@node Acknowledgments,  , Legalese, Legalese
 @section Acknowledgments
 
 The contributions of Saikat DebRoy (who wrote the first draft of a guide
 to using @code{.Call} and @code{.External}) are gratefully acknowledged.
 
-@node System and foreign language interfaces, R (internal) programming miscellania, Introduction, Top
+@node Creating R packages, Writing R documentation, Legalese, Top
+@chapter Creating R packages
+
+Packages provide a mechanism for loading optional code and attached
+documentation as needed.  The @R{} distribution provides several
+packages, such as @strong{eda}, @strong{mva}, and @strong{stepfun}.
+
+A package consists of a subdirectory containing the files
+@file{DESCRIPTION}, @file{INDEX}, and @file{TITLE}, and the
+subdirectories @file{R}, @file{data}, @file{exec}, @file{inst},
+@file{man}, and @file{src} (some of which can be missing).
+
+@c FIXME Add something about configure and cleanup.
+
+The @file{DESCRIPTION} file contains basic information about the package
+in the following format:
+
+@smallexample
+Package: e1071
+Version: 0.7-3
+Author: Compiled by Fritz Leisch <Friedrich.Leisch@@ci.tuwien.ac.at>.
+Description: Miscellaneous functions used at the Department of
+        Statistics at TU Wien (E1071). 
+Depends:
+License: GPL version 2 or later
+@end smallexample
+
+@noindent
+Continuation lines (e.g., for descriptions longer than one line) start
+with a whitespace character.  The license field should contain an
+explicit statement or a well-known abbreviation (such as @samp{GPL},
+@samp{LGPL}, @samp{BSD}, or @samp{Artistic}), perhaps followed by a
+reference to the actual license file.  It is very important that you
+include this information!  Otherwise, it may not even be legally correct
+for others to distribute copies of the package.
+
+The @file{TITLE} file contains a line giving the name of the package and
+a brief description.  @file{INDEX} contains a line for each sufficiently
+interesting object in the package, giving its name and a description
+(functions such as print methods not usually called explicitly might not
+be included).  Note that you can automatically create this file using
+something like @code{R CMD Rdindex man/*.Rd > INDEX}, provided that Perl
+is available on your system.
+
+The @file{R} subdirectory contains @R{} code files.  The code files to
+be installed must start with a (lower- or uppercase) letter and have one
+of the extensions @file{.R}, @file{.S}, @file{.q}, @file{.r}, or
+@file{.s}.  We recommend using @file{.R}, as this extension seems to be
+not used by any other software.  It should be possible to read in the
+files using @code{source()}, so R objects must be created by
+assignments.  Note that there need be no connection between the name
+of the file and the R objects created by it.  If necessary, one of these
+files (historically @file{zzz.R}) should use @code{library.dynam()}
+@emph{inside} @code{.First.lib()} to load compiled code.
+
+The @file{man} subdirectory should contain @R{} documentation files for
+the objects in the package.  The documentation files to be installed
+must also start with a (lower- or uppercase) letter and have the
+extension @file{.Rd} (the default) or @file{.rd}.
+
+The @file{R} and @file{man} subdirectories may contain OS-specific
+subdirectories named @code{unix}, @code{windows} or @code{mac}.
+
+The C or FORTRAN source and optionally a @file{Makefile} for the compiled
+code is in @file{src}.  Note that the @file{Makefile} most likely is not
+needed, and if one is to be distributed considerable care is needed to
+make it general enough to work on all @R{} platforms.
+
+The @file{data} subdirectory is for additional data files the package
+makes available for loading using @code{data()}.  Currently, data files
+can have one of three types as indicated by their extension: plain R
+code (@file{.R} or @file{.r}), tables (@file{.tab}, @file{.txt}, or
+@file{.csv}), or @code{save()} images (@file{.RData} or @file{.rda}).
+The subdirectory should contain a @file{00Index} file that describes the
+datasets available.
+
+The contents of the @file{inst} subdirectory will be copied recursively
+to the installation directory.
+
+Finally, @file{exec} could contain additional executables the package
+needs, typically shell or Perl scripts.  This mechanism is currently not
+used by any Unix package, and still experimental.
+
+@menu
+* Package bundles::             
+@end menu
+
+@node  Package bundles,  , Creating R packages, Creating R packages
+@section Package bundles
+
+Sometimes it is convenient to distribute several packages as a
+@emph{bundle}. (The main current example is @code{VR} which contains
+four packages.)  The installation scripts on both Unix and Windows can
+handle package bundles as from @R{} 0.90.1.
+
+The @file{DESCRIPTION} file of a bundle has an extra @code{Bundle:}
+field, as in
+
+@smallexample
+Bundle: VR
+Contains: MASS class nnet spatial
+Version: 6.1-6 (1999/11/26)
+Author: S original by Venables & Ripley.
+  R port by Brian Ripley <ripley@@stats.ox.ac.uk>, following earlier
+  work by Kurt Hornik and Albrecht Gebhardt.
+BundleDescription: Various functions from the libraries of Venables and
+  Ripley, `Modern Applied Statistics with S-PLUS' (3rd edition).
+License: GPL (version 2 or later)
+@end smallexample
+
+The @code{Contains:} field lists the packages, which should be contained
+in separate subdirectories with the names given.  These are standard
+packages in all respects except that the @file{DESCRIPTION} file is
+replaced by a @file{DESCRIPTION.in} file which just contains fields
+additional to the @file{DESCRIPTION} file of the bundle, for example
+
+@smallexample
+Package: spatial
+Description: Functions for kriging and point pattern analysis.
+@end smallexample
+
+@node Writing R documentation, System and foreign language interfaces, Creating R packages, Top
+@chapter Writing R documentation
+
+@menu
+* The documentation source tree::  
+* Documentation format::        
+* Sectioning::                  
+* Marking text::                
+* Mathematics::                 
+* Miscellaneous::               
+* Platform-specific sections::  
+@end menu
+
+@node The documentation source tree, Documentation format, Writing R documentation, Writing R documentation
+@section The documentation source tree
+
+The help files containing detailed documentation for (potentially) all
+@R{} objects are in the @file{src/library/*/man} subdirectories of the
+@R{} source tree, where @samp{*} stands for @strong{base} where all the
+standard objects are, and for ``standard'' packages such as @strong{eda}
+and @strong{mva}.  The @file{doc/manual} subdirectory contains code for
+running the translated help files through La@TeX{} and further documents
+pertaining to @R{}.
+
+@node Documentation format, Sectioning, The documentation source tree, Writing R documentation
+@section Documentation format
+
+The help files are written in a form and syntax---closely resembling
+@TeX{} and La@TeX{}---which can be processed into a variety of formats,
+including La@TeX{}, [TN]roff, and @HTML{}.  The translation is carried
+out by the @sc{Perl} script @file{Rdconv} in @file{$R_HOME/bin}.
+
+For a given @R{} function @code{myfun}, use the @R{} command
+@code{prompt(myfun)} to produce the file @file{myfun.Rd}, a ``raw''
+documentation file that can now be filled in with information.  The
+basic layout of such a file is as follows.
+
+@table @code
+@item \name@{myfun@}
+@findex \name
+@var{myfun} is the basename of the file.
+
+@item \alias@{myfun@}
+@itemx \alias@{@var{more_aliases_1}@}
+@itemx \alias@{@var{more_aliases_2}@}
+@findex \alias
+etc.  Need one @code{\alias@{@}} for each topic explained in the help
+file.
+@quotation
+@strong{Note:} Each file should contain at least the
+@code{\alias@{@var{name}@}} line.
+@end quotation
+
+
+@item \title@{@var{Title}@}
+@findex \title
+
+@item \description@{@dots{}@}
+@findex \description
+A short description of what the function(s) do(es) (one paragraph, a few
+lines only).
+
+@item \usage@{myfun(@var{arg1}, @var{arg2}, @dots{})@}
+@findex \usage
+One or more lines showing the synopsis of the function(s) and variables
+documented in the file.  These are set verbatim in typewriter font.
+
+@item \arguments@{@dots{}@}
+@findex \arguments
+Description of the function's arguments, in the following form:
+
+@display
+@var{Some optional text @emph{before} the optional list.} 
+@code{\item@{@var{arg1}@}@{@var{Description of arg1.}@}}
+@code{\item@{@var{arg2}@}@{@var{Description of arg2.}@}}
+@r{  etc.} 
+@var{Some optional text @emph{after} the list.}
+@end display
+
+
+@item \details@{@dots{}@}
+@findex \details
+A detailed if possible precise description of the functionality
+provided.  Sometimes, precise @code{\references@{@}} can be given
+instead.
+
+@item \value@{@dots{}@}
+@findex \value
+Description of the function's return value.  If a list with multiple
+values is returned, you can use
+
+@display
+@code{\item@{comp1@}@{@var{Description of result component `comp1'}@}}
+@code{\item@{comp2@}@{@var{Description of result component `comp2'}@}}
+@end display
+etc.
+
+@item \references@{@dots{}@}
+@findex \references
+Section of references to the literature; use @code{\url@{@}} for web
+pointers.  Optional as well as all the following sections.
+
+@item \section@{@var{name}@}@{@var{text}@}
+and maybe more @code{\section@{@}} environments.
+
+@item \note@{@var{Some note you want to have pointed out.}@}
+@findex \note
+
+@item \author@{@dots{}@}
+@findex \author
+Who you are.  Use @code{\email@{@}} without extra delimiters (@samp{( )}
+or @samp{< >}) or @code{\url@{@}}.
+
+@item \seealso@{@dots{}@}
+@findex \seealso
+Pointers to related @R{} objects, using @code{\link@{@}}, usually as
+@code{\code@{\link@{@}@}}.
+
+@findex \examples
+@findex \testonly
+@findex \dontrun
+@item \examples@{@dots{}@}
+Examples of how to use the function.  These are set verbatim in
+typewriter font.
+
+@quotation
+@strong{Note:} Use examples which are @emph{directly} executable!  Use
+random number generators (e.g., @code{x <- rnorm(100)}), or a standard
+data set loadable via @code{data(@dots{})} (see @code{data()} for info) to
+define data!
+@end quotation
+
+By default, text inside @code{\examples@{@}} will be displayed in the
+output of the help page and run by @kbd{make check}.  You can use
+@code{\dontrun@{@}} for commands that should only be shown, but not run,
+and @code{\testonly@{@}} for extra commands for testing @R{} that should
+not be shown to users.
+
+For example,
+@example
+x <- runif(10)       @r{Shown and run.}
+\dontrun@{plot(x)@}    @r{Only shown.}
+\testonly@{log(x@}     @r{Only run.}
+@end example
+
+@item \keyword@{@var{key_1}@}
+@itemx \keyword@{@var{key_2}@}
+@findex \keyword
+Use at least one keyword from the list in @file{$R_HOME/doc/KEYWORDS}.
+
+@end table
+
+@node Sectioning, Marking text, Documentation format, Writing R documentation
+@section Sectioning
+
+To begin a new paragraph or leave a blank in an example, just insert an
+empty line (as in (La)@TeX{}).  To break a line, use @code{\cr}.
+
+In addition to the predefined sections (such as @code{\description@{@}},
+@code{\value@{@}}, etc.), you can ``define'' arbitrary ones by
+@code{\section@{@var{section_title}@}@{@dots{}@}}.
+@findex \section
+E.g.,
+
+@display
+@code{\section@{Warning@}@{You must not call this function unless @dots{}@}}
+@end display
+
+@noindent Note that the additonal named sections are always inserted at
+fixed positions in the output (before @code{\note}, @code{\seealso} and
+the examples), no matter where they appear in the input.
+
+@node Marking text, Mathematics, Sectioning, Writing R documentation
+@section Marking text
+
+The following logical markup commands are available for indicating
+specific kinds of text.
+
+@quotation
+@multitable @columnfractions .20 .70
+@item @code{\bold@{@var{word}@}}
+@findex \bold
+@tab set @var{word} in @strong{bold} font if possible
+@item @code{\emph@{@var{word}@}}
+@findex \emph
+@tab emphasize @var{word} using @emph{italic} font if possible
+@item @code{\code@{@var{word}@}}
+@findex \code
+@tab for pieces of code, using @code{typewriter} font if possible
+@item @code{\file@{@var{word}@}}
+@findex \file
+@tab for file names
+@item @code{\email@{@var{word}@}}
+@findex \email
+@tab for email addresses
+@item @code{\url@{@var{word}@}}
+@findex \url
+@tab for URLs
+@end multitable
+@end quotation
+
+@noindent The first two, @code{\bold} and @code{\emph}, should be used
+in plain text for emphasis.
+
+Fragments of @R{} code, including the names of @R{} objects, should be
+marked using @code{\code}.  Only backslashes and percent signs need to be
+escaped (by a backslash) inside @code{\code}.
+
+Finally, @code{\link@{@var{foo}@}} (usually in the combination
+@code{\code@{\link@{@var{foo}@}@}}) produces a hyperlink to the help
+page for object @var{foo}.  One main usage of @code{\link} is in the
+@code{\seealso} section of the help page, @pxref{Documentation format},
+above.  (This only affects the creation of hyperlinks, for example in
+the @HTML{} pages used by @code{help.start()}.)
+
+@node Mathematics, Miscellaneous, Marking text, Writing R documentation
+@section Mathematics
+
+Mathematical formula are something we want ``perfectly'' for printed
+documentation (i.e., for the conversion to La@TeX{} and PostScript
+subsequently) and still want something useful for ASCII and @HTML{}
+online help.
+
+@findex \eqn
+@findex \deqn
+To this end, the two commands @code{\eqn@{@var{latex}@}@{@var{ascii}@}}
+and @code{\deqn@{@var{latex}@}@{@var{ascii}@}} are used.  Where
+@code{\eqn} is used for ``inline'' formula (corresponding to
+(La)@TeX{}'s @code{$@dots{}$}, @code{\deqn} gives ``displayed
+equations'' (a la La@TeX{}'s @code{displaymath} environment, or @TeX{}'s
+@code{$$@dots{}$$}).
+
+Both commands can also be used as @code{\eqn@{@var{latexascii}@}} (only
+@emph{one} argument) which then is used for both @var{latex} and
+@var{ascii}.
+
+The following example is from the @code{Poisson} help page:
+
+@example
+\deqn@{p(x) = @{\lambda^x\ \frac@{e^@{-\lambda@}@}@{x!@}@}
+     @{p(x) = lambda^x exp(-lambda)/x!@}
+for \eqn@{x = 0, 1, 2, ...@}.
+@end example
+
+@iftex
+For the La@TeX{} manual, this becomes
+@display
+@tex
+$$ p(x) = \lambda^x\ {e^{-\lambda} \over x!} $$
+for $x = 0, 1, 2, \ldots$.
+@end tex
+@end display
+@end iftex
+
+For the @HTML{} and the ``direct'' (man-like) on-line help we get
+
+@example
+    p(x) = lambda^x exp(-lambda)/x!
+
+for x = 0, 1, 2, ....
+@end example
+
+For historic reasons mostly, the @TeX{}/La@TeX{} commands @code{\alpha},
+@code{\Alpha}, @code{\beta}, @code{\Gamma}, @code{\epsilon},
+@code{\lambda}, @code{\mu}, @code{\pi}, @code{\sigma}, @code{\left(} and
+@code{\right)} exist.  These can be used directly, without using the
+@code{\eqn} diversion.
+@findex \alpha
+@findex \Alpha
+@findex \beta
+@findex \Gamma
+@findex \epsilon
+@findex \lambda
+@findex \mu
+@findex \pi
+@findex \sigma
+@findex \left(
+@findex \right)
+
+@node Miscellaneous, Platform-specific sections, Mathematics, Writing R documentation
+@section Miscellaneous
+
+@findex \R
+Use @code{\R} for the @R{} system itself (you don't need extra
+@samp{@{@}} or @samp{\}).  Use @code{\dots} for the dots in function
+argument lists @samp{@dots{}}, and @code{\ldots} for ellipsis dots.
+
+After a @samp{%}, you can put your own comments regarding the help
+text.  This will be completely disregarded, normally.  Therefore, you can
+also use it to make part of the ``help'' invisible.
+
+@noindent @strong{Escaping Special Characters.}  You can produce a
+backslash (@samp{\} by escaping it by another backslash.  (Note that
+@code{\cr} is used for generating line breaks.)
+
+The ``comment'' and ``control'' characters @samp{%} and @samp{\}
+@emph{always} need to be escaped.  Inside the verbatim-like commands
+(@code{\code} and @code{\examples}), no other characters are special.
+
+In ``regular'' text (no verbatim, no @code{\eqn}, @dots{}), you
+currently must escape all La@TeX{} special characters, i.e., besides
+@samp{%}, @samp{@{}, and @samp{@}}, the four specials @samp{$},
+@samp{&}, @samp{#}, and @samp{_} are produced by preceding each with a
+@samp{\}.  Further, enter @samp{^} as @code{\eqn@{\hat@{@}@}@{^@}}, and
+@samp{~} by @code{\eqn@{\tilde@{@}@}@{~@}}.  Also, @samp{<}, @samp{>},
+and @samp{|} must only be used in math mode, i.e., within @code{\eqn} or
+@code{\deqn}.
+
+@node  Platform-specific sections,  , Miscellaneous, Writing R documentation
+@section Platform-specific documentation
+
+Sometimes the documentation needs to differ by platform.  Currently
+three OS-specific options are available, @code{unix}, @code{windows} and
+@code{mac}, and lines in the help source file can be enclosed in
+
+@smallexample
+#ifdef OS
+   ...
+#endif
+@end smallexample
+
+@noindent
+or
+
+@smallexample
+#ifndef OS
+   ...
+#endif
+@end smallexample
+
+@noindent
+for OS-specific inclusion or exclusion.
+
+If the differences between platforms are extensive or the @R{} objects
+documented are only relevant to one platform, platform-specific
+@code{.Rd} files can be put in a  @file{unix}, @file{windows} or
+@file{mac} subdirectory.
+
+
+@node System and foreign language interfaces, R (internal) programming miscellania, Writing R documentation, Top
 @chapter System and foreign language interfaces
 
 @menu
@@ -143,8 +599,8 @@ execution (not necessarily by a shell) and the second argument will be
 @code{internal} which if true will collect the output of the command
 into an @R{} character vector.
 
-The function @code{unix.time} is available for timing (even on non-Unix
-platforms, although the information available may be limited there).
+The function @code{system.time} is available for timing (although the
+information available may be limited on non-Unix-like platforms).
 
 @node Interface functions .C and .Fortran, dyn.load and dyn.unload, Operating system access, System and foreign language interfaces
 @section Interface functions @code{.C} and @code{.Fortran}
@@ -169,7 +625,7 @@ There can be up to 65 further arguments giving @R{} objects to be passed
 to compiled code.  Normally these are copied before being passed in, and
 copied again to an @R{} list object when the compiled code returns.  If
 the arguments are given names, these are used as names for the
-components in the returned list object.
+components in the returned list object (but not passed to the compiled code).
 
 The following table gives the mapping between the modes of @R{} vectors
 and the types of arguments to a C function or Fortran subroutine.
@@ -191,7 +647,8 @@ a single character string can be passed to or from Fortran, and the
 success of this is compiler-dependent.  Other @R{} objects can be passed
 to @code{.C}, but it is better to use one of the other interfaces.  An
 exception is passing an @R{} function for use with @code{call_R}, when
-the object can be handled as @code{void *} en route to @code{call_R}.
+the object can be handled as @code{void *} en route to @code{call_R},
+but even there @code{.Call} is to be preferred.
 
 It is possible to pass numeric vectors of storage mode @code{double} to
 C as @code{float *} or Fortran as @code{REAL} by setting the attribute
@@ -206,7 +663,8 @@ checked for missing values @code{NA} and for the IEEE special values
 generates an error.  If it is true, these values are passed unchecked.
 
 Argument @code{DUP} can be used to suppress copying.  It is dangerous:
-see the on-line help for arguments against its use.
+see the on-line help for arguments against its use.  It is not possible
+to pass numeric vectors as @code{float *} or @code{REAL} if @code{DUP=TRUE}.
 
 Finally, argument @code{PACKAGE} confines the search for the symbol name
 to a specific shared library (or use @code{"base"} for code compiled
@@ -217,6 +675,36 @@ are normally sufficient to cause @R{} to crash.
 Note that the compiled code should not return anything except through
 its arguments: C functions should be of type @code{void} and Fortran
 subprograms should be subroutines.
+
+To fix ideas, let us consider a very simple example which convolves two
+finite sequences. (This is hard to do fast in interpreted @R{} code, but
+easy in C code.)  We could do this using @code{.C} by
+
+@example
+void convolve(double *a, int *na, double *b, int *nb, double *ab)
+@{
+  int i, j, nab = *na + *nb - 1;
+
+  for(i = 0; i < nab; i++) ab[i] = 0.0;
+  for(i = 0; i < *na; i++)
+    for(j = 0; j < *nb; j++) ab[i + j] += a[i] * b[j];
+@}
+@end example
+
+@noindent
+called from @R{} by
+
+@example
+conv <- function(a, b)
+  .C("convolve", as.double(a), as.integer(length(a)),
+     as.double(b), as.integer(length(b)),
+     ab = double(length(a) + length(b) - 1))$ab
+@end example
+
+Note that we take care to coerce all the arguments to the correct @R{}
+storage mode before calling @code{.C}; mistakes in matching the types
+can lead to wrong results or hard-to-catch errors.
+
 
 @node dyn.load and dyn.unload, Handling R objects in C, Interface functions .C and .Fortran, System and foreign language interfaces
 @section @code{dyn.load} and @code{dyn.unload}
@@ -240,12 +728,19 @@ file.path(path1, path2, paste("mylib", .Platform$dynlib.ext, sep=""))
 @end example
 
 @noindent
-for platform independence.  On some Unix systems the path supplied to
-@code{dyn.load} should contain a @samp{/} as the standard search path
-for shared libraries does not contain the current directory.
+for platform independence.  On Unix systems the path supplied to
+@code{dyn.load} can be an absolute path, one relative to the current
+directory or, if it starts with @code{~}, relative to the user's home
+directory.
 
 Loading is most often done via a call to @code{library.dynam} in the
-@code{.First.lib} function of a package.
+@code{.First.lib} function of a package. This has the form
+
+@smallexample
+library.dynam("libname", package, lib.loc)
+@end smallexample
+@noindent
+where @code{libname} is the library/DLL name with the extension omitted.
 
 Under some Unix systems there is a choice of how the symbols are
 resolved when the library is loaded, governed by the arguments
@@ -255,10 +750,13 @@ will terminate @R{} unceremoniously.
 
 If a library/DLL is loaded more than once the most recent version is
 used.  More generally, if the same symbol name appears in several
-libraries, the most recently loaded occurrence is used.
+libraries, the most recently loaded occurrence is used. The
+@code{PACKAGES} argument provides a good way to avoid any ambiguity in
+which occurrence is meant.
 
 @section Interfacing C++ code
 
+@noindent
 (Contributed by @emph{Adrian Trapletti}.)
 
 Suppose we have the following hypothetical C++ library, consisting of
@@ -386,7 +884,7 @@ a little simpler to use, but @code{.External} is a little more general.
 A call to @code{.Call} is very similar to @code{.C}, for example
 
 @example
-.Call("convolve", a, b)
+.Call("convolve2", a, b)
 @end example
 
 @noindent
@@ -397,7 +895,7 @@ can passed as arguments.  The C side of the interface is
 @example
 #include <S.h>
 
-SEXP convolveE(SEXP a, SEXP b)
+SEXP convolve2(SEXP a, SEXP b)
  ...
 @end example
 
@@ -461,7 +959,7 @@ Do make use of the source code for inspirational examples.
 It is necessary to know something about how @R{} objects are handled in
 C code.  All the @R{} objects you will deal with will be handled with
 the type @dfn{SEXP}@footnote{SEXP is an acronym for @emph{S}imple
-@emph{EXP}ression, common in LISP-like language syntaxes}, which is a
+@emph{EXP}ression, common in LISP-like language syntaxes.}, which is a
 pointer to a structure.  Think of this structure as a @emph{variant
 type} that can handle all the usual types of @R{} objects, that is
 vectors of various modes, functions, environments, language objects and
@@ -554,7 +1052,7 @@ Protection is not needed for objects which @R{} already knows are in
 use.  In particular, this applies to function arguments.
 
 There is a less-used@footnote{for historical reasons,
-@code{UNPROTECT_PTR(s)} exists only since @R{} version 0.63.0 (Nov.@:
+@code{UNPROTECT_PTR(s)} has existed only since @R{} version 0.63.0 (Nov.@:
 1998)} macro @code{UNPROTECT_PTR(s)} that unprotects the @code{SEXP} s.
 
 @findex UNPROTECT_PTR
@@ -624,7 +1122,7 @@ The usual @R{} object modes are given in the table.
 @end quotation
 @noindent
 Among the important internal @code{SEXPTYPE}s are @code{LANGSXP},
-@code{VECSXP}, @code{CHARSXP} etc.
+@code{CHARSXP} etc.
 
 Unless you are very sure about the type of the arguments, the code
 should check the data types.  Sometimes it may also be necessary to
@@ -657,7 +1155,7 @@ PROTECT(@var{newSexp} = AS_NUMERIC(@var{oldSexp}));
 @noindent
 Protection is needed as a new @emph{object} is created; the object
 formerly pointed to by the @code{SEXP} is re-used is still protected but
-now used.
+now unused.
 
 All the coercion functions do their own error-checking, and generate
 @code{NA}s with a warning or stop with an error as appropriate.
@@ -727,7 +1225,7 @@ SEXP out(SEXP x, SEXP y)
   SEXP ans, dim, dimnames;
 
   nx = length(x); ny = length(y);
-  PROTECT(ans = allocVector(REALSXP, nx*ny));
+  PROTECT(ans = allocVector(nx*ny, REALSXP));
   for(i = 0; i < nx; i++) @{
     tmp = REAL(x)[i];
     for(j = 0; j < ny; j++)
@@ -779,7 +1277,7 @@ installed.
 @subsection Classes
 @cindex Classes
 
-In @R{} the class is just the attribute names @code{"class"} so it can
+In @R{} the class is just the attribute named @code{"class"} so it can
 be handled as such, but there is a shortcut @code{classgets}.  Suppose
 we want to give the return value in our example the class @code{"mat"}.
 We can use
@@ -836,7 +1334,7 @@ one in package @code{nls}) is very useful:
 
 SEXP getListElement(SEXP list, char *str)
 @{
-  SEXP elmt = R_NilValue, names = getAttrib(a, R_NamesSymbol);
+  SEXP elmt = R_NilValue, names = getAttrib(list, R_NamesSymbol);
   int i;
 
   for (i = 0; i < length(list); i++)
@@ -906,30 +1404,6 @@ based on the interface of the same name in S version 4, and
 @code{.External} is based on @code{.Internal}.  @code{.External} is more
 complex but allows a variable number of arguments.
 
-To fix ideas, let us consider a very simple example which convolves two
-finite sequences. (This is hard to do fast in interpreted @R{} code, but
-easy in C code.)  We could do this using @code{.C} by
-
-@example
-void convolve(double *a, int *na, double *b, int *nb, double *ab)
-@{
-  int i, j, nab = *na + *nb - 1;
-
-  for(i = 0; i < nab; i++) ab[i] = 0.0;
-  for(i = 0; i < *na; i++)
-    for(j = 0; j < *nb; j++) ab[i + j] += a[i] * b[j];
-@}
-@end example
-
-@noindent
-called from @R{} by
-
-@example
-conv <- function(a, b)
-  .C("convolve", as.double(a), as.integer(length(a)),
-     as.double(b), as.integer(length(b)),
-     ab = double(length(a) + length(b) - 1))$ab
-@end example
 
 @menu
 * Calling .Call::               
@@ -942,8 +1416,8 @@ conv <- function(a, b)
 
 @findex .Call
 
-Now let us do the same thing via @code{.Call}, first using the
-@file{Rdefines.h} macros.  The calling function in @R{} is
+Let us convert our finite convolution example to use @code{.Call}, first
+using the @file{Rdefines.h} macros.  The calling function in @R{} is
 
 @example
 conv <- function(a, b) .Call("convolve2", a, b)
@@ -976,14 +1450,11 @@ SEXP convolve2(SEXP a, SEXP b)
 @}
 @end example
 
-The reader might have spotted that we have not protected @code{a} and
-@code{b}: as these are arguments we do not need to even though we may
-have changed their values by coercion.
-
 Note that unlike the macros in S version 4, the @R{} versions of these
 macros do check that coercion can be done and raise an error if it
 fails.  They will raise warnings if missing values are introduced by
-coercion.
+coercion. Although we illustrate doing the coercion in the C code here,
+it often is simpler to do the necessary coercions in the @R{} code.
 
 Now for the version in @R{}-internal style.  Only the C code changes.
 
@@ -999,7 +1470,7 @@ SEXP convolve2(SEXP a, SEXP b)
   PROTECT(a = coerceVector(a, REALSXP));
   PROTECT(b = coerceVector(b, REALSXP));
   na = length(a); nb = length(b); nab = na + nb - 1;
-  PROTECT(ab = allocVector(REALSXP, nab));
+  PROTECT(ab = allocVector(nab, REALSXP));
   xa = REAL(a); xb = REAL(b);
   xab = REAL(ab);
   for(i = 0; i < nab; i++) xab[i] = 0.0;
@@ -1022,7 +1493,7 @@ We can use the same example to illustrate @code{.External}.  The @R{}
 code changes only by replacing @code{.Call} by @code{.External}
 
 @example
-conv <- function(a, b) .External("convolve2", a, b)
+conv <- function(a, b) .External("convolveE", a, b)
 @end example
 
 @noindent
@@ -1033,7 +1504,7 @@ the arguments.
 @example
 #include <Rinternals.h>
 
-SEXP convolve2(SEXP args)
+SEXP convolveE(SEXP args)
 @{
   int i, j, na, nb, nab;
   double *xa, *xb, *xab;
@@ -1140,7 +1611,8 @@ this is also true of @code{NA} as it is a type of @code{NaN}, but it is
 unwise to rely on such details.  Thus we will re-write the code to
 handle @code{NA}s using macros defined in @file{Arith.h}.
 
-The code changes are the same in any of the versions of @code{convolve2}:
+The code changes are the same in any of the versions of @code{convolve2}
+or @code{convolveE}:
 @example
     ...
   for(i = 0; i < na; i++)
@@ -1166,7 +1638,7 @@ The constants @code{R_NaN}, @code{R_PosInf}, @code{R_NegInf} and
 @node Evaluating R Expressions from C,  , Interface Functions .Call and .External, System and foreign language interfaces
 @section Evaluating R Expressions from C
 
-We noted in the introduction that the @code{call_R} interface could be
+We noted that the @code{call_R} interface could be
 used to evaluate @R{} expressions from C code, but the current
 interfaces are much more convenient to use.  The main function we will
 use is
@@ -1212,8 +1684,8 @@ SEXP lapply(SEXP list, SEXP expr, SEXP rho)
 
 It would be closer to @code{lapply} if we could pass in a function
 rather than an expression.  One way to do this is @emph{via} interpreted
-@R{} code as in the next example, but it is possible (if obscure) to do
-this in C code.  The following is based on the code in
+@R{} code as in the next example, but it is possible (if somewhat
+obscure) to do this in C code.  The following is based on the code in
 @file{src/main/optimize.c}.
 
 @example
@@ -1516,8 +1988,8 @@ having the symbol @code{R_DimNamesSymbol}.  Finally we set the gradient
 matrix as the gradient attribute of @code{ans}, unprotect the remaining
 protected locations and return the answer @code{ans}.
 
-@node R (internal) programming miscellania, Creating R packages, System and foreign language interfaces, Top
-@chapter R (internal) programming miscellania
+@node R (internal) programming miscellania, Function and variable index, System and foreign language interfaces, Top
+@appendix R (internal) programming miscellania
 
 @menu
 * Which R functions should stay @sc{<primitive>}?::  
@@ -1536,7 +2008,7 @@ However, there are exceptions which are fully specified as follows:
 
 @item
 ``Special functions'' which really are @emph{language} elements, however
-exist as @sc{<primitive>} s in @R{}:
+exist as @sc{<primitive>}s in @R{}:
 
 @example
 @{       (         if       for  while  repeat  break  next
@@ -1650,460 +2122,7 @@ UseMethod  invisible
 
 @end enumerate
 
-@node Creating R packages, Writing R documentation, R (internal) programming miscellania, Top
-@chapter Creating R packages
-
-Packages provide a mechanism for loading optional code and attached
-documentation as needed.  The @R{} distribution provides several
-packages, such as @strong{eda}, @strong{mva}, and @strong{stepfun}.
-
-A package consists of a subdirectory containing the files
-@file{DESCRIPTION}, @file{INDEX}, and @file{TITLE}, and the
-subdirectories @file{R}, @file{data}, @file{exec}, @file{inst},
-@file{man}, and @file{src} (some of which can be missing).
-
-@c FIXME Add something about configure and cleanup.
-
-The @file{DESCRIPTION} file contains basic information about the package
-in the following format:
-
-@smallexample
-Package: e1071
-Version: 0.7-3
-Author: Compiled by Fritz Leisch <Friedrich.Leisch@@ci.tuwien.ac.at>.
-Description: Miscellaneous functions used at the Department of
-        Statistics at TU Wien (E1071). 
-Depends:
-License: GPL version 2 or later
-@end smallexample
-
-@noindent
-Continuation lines (e.g., for descriptions longer than one line) start
-with a whitespace character.  The license field should contain an
-explicit statement or a well-known abbreviation (such as @samp{GPL},
-@samp{LGPL}, @samp{BSD}, or @samp{Artistic}), perhaps followed by a
-reference to the actual license file.  It is very important that you
-include this information!  Otherwise, it may not even be legally correct
-for others to distribute copies of the package.
-
-The @file{TITLE} file contains a line giving the name of the package and
-a brief description.  @file{INDEX} contains a line for each sufficiently
-interesting object in the package, giving its name and a description
-(functions such as print methods not usually called explicitly might not
-be included).  Note that you can automatically create this file using
-something like @code{R CMD Rdindex man/*.Rd > INDEX}, provided that Perl
-is available on your system.
-
-The @file{R} subdirectory contains @R{} code files.  The code files to
-be installed must start with a (lower- or uppercase) letter and have one
-of the extensions @file{.R}, @file{.S}, @file{.q}, @file{.r}, or
-@file{.s}.  We recommend using @file{.R}, as this extension seems to be
-not used by any other software.  It should be possible to read in the
-files using @code{source()}, so R objects must be created by
-assignments.  Note that there has to be no connection between the name
-of the file and the R objects created by it.  If necessary, one of these
-files (historically @file{zzz.R}) should use @code{library.dynam()}
-@emph{inside} @code{.First.lib()} to load compiled code.
-
-The @file{man} subdirectory should contain @R{} documentation files for
-the objects in the package.  The documentation files to be installed
-must also start with a (lower- or uppercase) letter and have the
-extension @file{.Rd} (the default) or @file{.rd}.
-
-The @file{R} and @file{man} subdirectories may contain OS-specific
-subdirectories named @code{unix}, @code{windows} or @code{mac}.
-
-The C or FORTRAN source and optionally a @file{Makefile} for the compiled
-code is in @file{src}.  Note that the @file{Makefile} most likely is not
-needed.
-
-The @file{data} subdirectory is for additional data files the package
-makes available for loading using @code{data()}.  Currently, data files
-can have one of three types as indicated by their extension: plain R
-code (@file{.R} or @file{.r}), tables (@file{.tab}, @file{.txt}, or
-@file{.csv}), or @code{save()} images (@file{.RData} or @file{.rda}).
-The subdirectory should contain a @file{00Index} file that describes the
-datasets available.
-
-The contents of the @file{inst} subdirectory will be copied recursively
-to the installation directory.
-
-Finally, @file{exec} could contain additional executables the package
-needs, typically Shell or Perl scripts.  This mechanism is currently not
-used by any Unix package, and still experimental.
-
-@menu
-* Package bundles::             
-@end menu
-
-@node  Package bundles,  , Creating R packages, Creating R packages
-@section Package bundles
-
-Sometimes it is convenient to distribute several packages as a
-@emph{bundle}. (The main current example is @code{VR} which contains
-four packages.)  The installation scripts on both Unix and Windows can
-handle package bundles as from @R{} 0.90.1.
-
-The @file{DESCRIPTION} file of a bundle has an extra @code{Bundle:}
-field, as in
-
-@smallexample
-Bundle: VR
-Contains: MASS class nnet spatial
-Version: 6.1-6 (1999/11/26)
-Author: S original by Venables & Ripley.
-  R port by Brian Ripley <ripley@@stats.ox.ac.uk>, following earlier
-  work by Kurt Hornik and Albrecht Gebhardt.
-BundleDescription: Various functions from the libraries of Venables and
-  Ripley, `Modern Applied Statistics with S-PLUS' (3rd edition).
-License: GPL (version 2 or later)
-@end smallexample
-
-The @code{Contains:} field lists the packages, which should be contained
-in separate subdirectories with the names given.  These are standard
-packages in all respects except that the @file{DESCRIPTION} file is
-replaced by a @file{DESCRIPTION.in} file which just contains fields
-additional to the @file{DESCRIPTION} file of the bundle, for example
-
-@smallexample
-Package: spatial
-Description: Functions for kriging and point pattern analysis.
-@end smallexample
-
-@node Writing R documentation, Function and variable index, Creating R packages, Top
-@chapter Writing R documentation
-
-@menu
-* The documentation source tree::  
-* Documentation format::        
-* Sectioning::                  
-* Marking text::                
-* Mathematics::                 
-* Miscellaneous::               
-* Platform-specific sections::  
-@end menu
-
-@node The documentation source tree, Documentation format, Writing R documentation, Writing R documentation
-@section The documentation source tree
-
-The help files containing detailed documentation for (potentially) all
-@R{} objects are in the @file{src/library/*/man} subdirectories of the
-@R{} source tree, where @samp{*} stands for @strong{base} where all the
-standard objects are, and for ``standard'' packages such as @strong{eda}
-and @strong{mva}.  The @file{doc/manual} subdirectory contains code for
-running the translated help files through La@TeX{} and further documents
-pertaining to @R{}.
-
-@node Documentation format, Sectioning, The documentation source tree, Writing R documentation
-@section Documentation format
-
-The help files are written in a form and syntax---closely resembling
-@TeX{} and La@TeX{}---which can be processed into a variety of formats,
-including La@TeX{}, [TN]roff, and @HTML{}.  The translation is carried
-out by the @sc{Perl} script @file{Rdconv} in @file{$R_HOME/bin}.
-
-For a given @R{} function @code{myfun}, use the @R{} command
-@code{prompt(myfun)} to produce the file @file{myfun.Rd}, a ``raw''
-documentation file that can now be filled in with information.  The
-basic layout of such a file is as follows.
-
-@table @code
-@item \name@{myfun@}
-@findex \name
-@var{myfun} is the basename of the file.
-
-@item \alias@{myfun@}
-@itemx \alias@{@var{more_aliases_1}@}
-@itemx \alias@{@var{more_aliases_2}@}
-@findex \alias
-etc.  Need one @code{\alias@{@}} for each topic explained in the help
-file.
-@quotation
-@strong{Note:} Each file should contain at least the
-@code{\alias@{@var{name}@}} line.
-@end quotation
-
-
-@item \title@{@var{Title}@}
-@findex \title
-
-@item \description@{@dots{}@}
-@findex \description
-A short description of what the function(s) do(es) (one paragraph, a few
-lines only).
-
-@item \usage@{myfun(@var{arg1}, @var{arg2}, @dots{})@}
-@findex \usage
-One or more lines showing the synopsis of the function(s) and variables
-documented in the file.  These are set verbatim in typewriter font.
-
-@item \arguments@{@dots{}@}
-@findex \arguments
-Description of the function's arguments, in the following form:
-
-@display
-@var{Some optional text @emph{before} the optional list.} 
-@code{\item@{@var{arg1}@}@{@var{Description of arg1.}@}}
-@code{\item@{@var{arg2}@}@{@var{Description of arg2.}@}}
-@r{  etc.} 
-@var{Some optional text @emph{after} the list.}
-@end display
-
-
-@item \details@{@dots{}@}
-@findex \details
-A detailed if possible precise description of the functionality
-provided.  Sometimes, precise @code{\references@{@}} can be given
-instead.
-
-@item \value@{@dots{}@}
-@findex \value
-Description of the function's return value.  If a list with multiple
-values is returned, you can use
-
-@display
-@code{\item@{comp1@}@{@var{Description of result component `comp1'}@}}
-@code{\item@{comp2@}@{@var{Description of result component `comp2'}@}}
-@end display
-etc.
-
-@item \references@{@dots{}@}
-@findex \references
-Section of references to the literature; use @code{\url@{@}} for web
-pointers.  Optional as well as all the following sections.
-
-@item \section@{@var{name}@}@{@var{text}@}
-and maybe more @code{\section@{@}} environments.
-
-@item \note@{@var{Some note you want to have pointed out.}@}
-@findex \note
-
-@item \author@{@dots{}@}
-@findex \author
-Who you are.  Use @code{\email@{@}} without extra delimiters (@samp{( )}
-or @samp{< >}) or @code{\url@{@}}.
-
-@item \seealso@{@dots{}@}
-@findex \seealso
-Pointers to related @R{} objects, using @code{\link@{@}}, usually as
-@code{\code@{\link@{@}@}}.
-
-@findex \examples
-@findex \testonly
-@findex \dontrun
-@item \examples@{@dots{}@}
-Examples of how to use the function.  These are set verbatim in
-typewriter font.
-
-@quotation
-@strong{Note:} Use examples which are @emph{directly} executable!  Use
-random number generators (e.g., @code{x <- rnorm(100)}), or a standard
-data set loadable via @code{data(@dots{})} (see @code{data()} for info) to
-define data!
-@end quotation
-
-By default, text inside @code{\examples@{@}} will be displayed in the
-output of the help page and run by @kbd{make check}.  You can use
-@code{\dontrun@{@}} for commands that should only be shown, but not run,
-and @code{\testonly@{@}} for extra commands for testing @R{} that should
-not be shown.
-
-For example,
-@example
-x <- runif(10)       @r{Shown and run.}
-\dontrun@{plot(x)@}    @r{Only shown.}
-\testonly@{log(x@}     @r{Only run.}
-@end example
-
-@item \keyword@{@var{key_1}@}
-@itemx \keyword@{@var{key_2}@}
-@findex \keyword
-Use at least one keyword out of the list in @file{$R_HOME/doc/KEYWORDS}.
-
-@end table
-
-@node Sectioning, Marking text, Documentation format, Writing R documentation
-@section Sectioning
-
-To begin a new paragraph or leave a blank in an example, just insert an
-empty line (as in (La)@TeX{}).  To break a line, use @code{\cr}.
-
-In addition to the predefined sections (such as @code{\description@{@}},
-@code{\value@{@}}, etc.), you can ``define'' arbitrary ones by
-@code{\section@{@var{section_title}@}@{@dots{}@}}.
-@findex \section
-E.g.,
-
-@display
-@code{\section@{Warning@}@{You must not call this function unless @dots{}@}}
-@end display
-
-@noindent Note that the additonal named sections are always inserted at
-fixed positions in the output (before @code{\note}, @code{\seealso} and
-the examples), no matter where they appear in the input.
-
-@node Marking text, Mathematics, Sectioning, Writing R documentation
-@section Marking text
-
-The following logical markup commands are available for indicating
-specific kinds of text.
-
-@quotation
-@multitable @columnfractions .20 .70
-@item @code{\bold@{@var{word}@}}
-@findex \bold
-@tab set @var{word} in @strong{bold} font if possible
-@item @code{\emph@{@var{word}@}}
-@findex \emph
-@tab emphasize @var{word} using @emph{italic} font if possible
-@item @code{\code@{@var{word}@}}
-@findex \code
-@tab for pieces of code, using @code{typewriter} font if possible
-@item @code{\file@{@var{word}@}}
-@findex \file
-@tab for file names
-@item @code{\email@{@var{word}@}}
-@findex \email
-@tab for email addresses
-@item @code{\url@{@var{word}@}}
-@findex \url
-@tab for URLs
-@end multitable
-@end quotation
-
-@noindent The first two, @code{\bold} and @code{\emph}, should be used
-in plain text for emphasis.
-
-Fragments of @R{} code, including the names of @R{} objects, should be
-marked using @code{\code}.  Only backslashes and percent signs need to be
-escaped inside @code{\code}.
-
-Finally, @code{\link@{@var{foo}@}} (usually in the combination
-@code{\code@{\link@{@var{foo}@}@}}) produces a hyperlink to the help
-page for object @var{foo}.  One main usage of @code{\link} is in the
-@code{\seealso} section of the help page, @pxref{Documentation format},
-above.  (This only affects the creation of hyperlinks, for example in
-the @HTML{} pages used by @code{help.start()}.)
-
-@node Mathematics, Miscellaneous, Marking text, Writing R documentation
-@section Mathematics
-
-Mathematical formula are something we want ``perfectly'' for printed
-documentation (i.e., for the conversion to La@TeX{} and PostScript
-subsequently) and still want something useful for ASCII and @HTML{}
-online help.
-
-@findex \eqn
-@findex \deqn
-To this end, the two commands @code{\eqn@{@var{latex}@}@{@var{ascii}@}}
-and @code{\deqn@{@var{latex}@}@{@var{ascii}@}} are used.  Where
-@code{\eqn} is used for ``inline'' formula (corresponding to
-(La)@TeX{}'s @code{$@dots{}$}, @code{\deqn} gives ``displayed
-equations'' (a la La@TeX{}'s @code{displaymath} environment, or @TeX{}'s
-@code{$$@dots{}$$}).
-
-Both commands can also be used as @code{\eqn@{@var{latexascii}@}} (only
-@emph{one} argument) which then is used for both @var{latex} and
-@var{ascii}.
-
-The following example is from the @code{Poisson} help page:
-
-@example
-\deqn@{p(x) = @{\lambda^x\ \frac@{e^@{-\lambda@}@}@{x!@}@}
-     @{p(x) = lambda^x exp(-lambda)/x!@}
-for \eqn@{x = 0, 1, 2, ...@}.
-@end example
-
-@iftex
-For the La@TeX{} manual, this becomes
-@display
-@tex
-$$ p(x) = \lambda^x\ {e^{-\lambda} \over x!} $$
-for $x = 0, 1, 2, \ldots$.
-@end tex
-@end display
-@end iftex
-
-For the @HTML{} and the ``direct'' (man-like) on-line help we get
-
-@example
-    p(x) = lambda^x exp(-lambda)/x!
-
-for x = 0, 1, 2, ....
-@end example
-
-For historic reasons mostly, the @TeX{}/La@TeX{} commands @code{\alpha},
-@code{\Alpha}, @code{\beta}, @code{\Gamma}, @code{\epsilon},
-@code{\lambda}, @code{\mu}, @code{\pi}, @code{\sigma}, @code{\left(} and
-@code{\right)} exist.  These can be used directly, without using the
-@code{\eqn} diversion.
-@findex \alpha
-@findex \Alpha
-@findex \beta
-@findex \Gamma
-@findex \epsilon
-@findex \lambda
-@findex \mu
-@findex \pi
-@findex \sigma
-@findex \left(
-@findex \right)
-
-@node Miscellaneous, Platform-specific sections, Mathematics, Writing R documentation
-@section Miscellaneous
-
-@findex \R
-Use @code{\R} for the @R{} system itself (you don't need extra
-@samp{@{@}} or @samp{\}).  Use @code{\dots} for the dots in function
-argument lists @samp{@dots{}}, and @code{\ldots} for ellipsis dots.
-
-After a @samp{%}, you can put your own comments regarding the help
-text.  This will be completely disregarded, normally.  Therefore, you can
-also use it to make part of the ``help'' invisible.
-
-@noindent @strong{Escaping Special Characters.}  You can produce a
-backslash (@samp{\} by escaping it by another backslash.  (Note that
-@code{\cr} is used for generating line breaks.)
-
-The ``comment'' and ``control'' characters @samp{%} and @samp{\}
-@emph{always} need to be escaped.  Inside the verbatim-like commands
-(@code{\code} and @code{\examples}), no other characters are special.
-
-In ``regular'' text (no verbatim, no @code{\eqn}, @dots{}), you
-currently must escape all La@TeX{} special characters, i.e., besides
-@samp{%}, @samp{@{}, and @samp{@}}, the four specials @samp{$},
-@samp{&}, @samp{#}, and @samp{_} are simply produced by preceding with a
-@samp{\}.  Further, @samp{^} by @code{\eqn@{\hat@{@}@}@{^@}}, and
-@samp{~} by @code{\eqn@{\tilde@{@}@}@{~@}}.  Also, @samp{<}, @samp{>},
-and @samp{|} must only be used in math mode, i.e., within @code{\eqn} or
-@code{\deqn}.
-
-@node  Platform-specific sections,  , Miscellaneous, Writing R documentation
-@section Platform-specific documentation
-
-Sometimes the documentation needs to differ by platform.  Currently
-three OS-specific options are available, @code{unix}, @code{windows} and
-@code{mac}, and lines in the help source file can be enclosed in
-
-@smallexample
-#ifdef OS
-   ...
-#endif
-@end smallexample
-
-@noindent
-or
-
-@smallexample
-#ifndef OS
-   ...
-#endif
-@end smallexample
-
-@noindent
-for OS-specific inclusion or exclusion.
-
-@node Function and variable index, Concept index, Writing R documentation, Top
+@node Function and variable index, Concept index, R (internal) programming miscellania, Top
 @unnumbered Function and variable index
 
 @printindex vr

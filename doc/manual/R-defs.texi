@@ -7,11 +7,11 @@ S
 @end macro
 
 @macro SPLUS{}
-@sc{S-plus}
+@sc{S-Plus}
 @end macro
 
 @macro HTML{}
-@sc{Html}
+@sc{html}
 @end macro
 
 @macro plusminus
