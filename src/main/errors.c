@@ -208,12 +208,14 @@ void  ErrorMessage(SEXP call, int which_error, ...)
     int i;
     va_list(ap);
     char *dcall;
-    if (inError ) jump_now();
+    if (inError)
+	jump_now();
     if (call != R_NilValue) {
 	dcall = CHAR(STRING(deparse1(call, 0))[0]);
 	REprintf("Error in %s : ", dcall);
     }
-    else REprintf("Error: ", dcall); /*-- dcall = ??? */
+    else
+	REprintf("Error: ");	/* -- dcall = ??? */
     i = 0;
     while(ErrorDB[i].index != ERROR_UNKNOWN) {
 	if (ErrorDB[i].index == which_error)
@@ -239,12 +241,14 @@ void  WarningMessage(SEXP call, int which_warn, ...)
     int i;
     va_list(ap);
     char *dcall;
-    if (inError ) jump_now();
+    if (inError)
+	jump_now();
     if (call != R_NilValue) {
 	dcall = CHAR(STRING(deparse1(call, 0))[0]);
 	REprintf("Warning in %s : ", dcall);
     }
-    else REprintf("Warning: ", dcall); /*-- dcall = ??? */
+    else
+	REprintf("Warning: ");	/* -- dcall = ??? */
     i = 0;
     while(WarningDB[i].index != WARNING_UNKNOWN) {
 	if (WarningDB[i].index == which_warn)

@@ -66,6 +66,8 @@ SEXP eval(SEXP e, SEXP rho)
     }
 #endif
 
+    tmp = R_NilValue;		/* -Wall */
+
     R_Visible = 1;
     switch (TYPEOF(e)) {
     case NILSXP:

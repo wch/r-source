@@ -242,6 +242,8 @@ void K_bessel(double *x, double *alpha, long *nb,
     double d1, d2, d3, f0, f1, f2, p0, q0, t1, t2, twonu;
     double dm, ex, bk1, bk2, nu;
 
+    ii = 0;			/* -Wall */
+
     ex = *x;
     nu = *alpha;
     *ncalc = imin2(*nb,0) - 2;

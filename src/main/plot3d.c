@@ -1055,7 +1055,9 @@ SEXP do_persp(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP col, border;
     double theta, phi, r, d, expand, xc, yc, zc, xs, ys, zs;
     int i, j, scale, ncol;
-    DevDesc *dd;
+    DevDesc *dd = CurrentDevice();
+
+    GCheckState(dd);    
 
     if (length(args) < 12)
 	errorcall(call, "too few parameters\n");
