@@ -66,10 +66,14 @@ Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 DESCRIPTION: $(srcdir)/DESCRIPTION.in $(top_builddir)/config.status
 	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
 
-RfilesLazy:
+RfilesLazy: $(top_builddir)/library/$(pkg)/R/$(pkg).rdb
+
+$(top_builddir)/library/$(pkg)/R/$(pkg).rdb: $(top_builddir)/library/$(pkg)/R/all.rda
 	@echo "tools:::makeLazyLoading(\"$(pkg)\")" | \
-	  R_DEFAULT_PACKAGES=NULL LC_COLLATE=C $(R_EXE) --slave
+	  R_DEFAULT_PACKAGES=NULL LC_COLLATE=C $(R_EXE) --slave > /dev/null
 	@rm -f $(top_builddir)/library/$(pkg)/R/all.rda
+	@touch $<
+	@touch $^
 
 Rfiles: $(top_builddir)/library/$(pkg)/R/$(pkg) \
   $(top_builddir)/library/$(pkg)/R/all.rda
