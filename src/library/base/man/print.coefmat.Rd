@@ -4,9 +4,9 @@
 print.coefmat(x, digits=max(3, .Options$digits - 2),
               signif.stars = .Options$show.signif.stars,
               dig.tst = max(1, min(5, digits - 1)),
-              is.cs = NULL, is.tst = NULL, do.zap = FALSE,
-              has.Pvalue = substr(colnames(x),1,3) == "Pr(",
+              cs.ind = 1:k, tst.ind = k + 1, zap.ind = integer(0),
               P.values = NULL,
+              has.Pvalue = nc >= 4 && substr(colnames(x)[nc],1,3) == "Pr(",
 	      na.print = "", \dots)
 }
 \alias{print.coefmat}
@@ -19,23 +19,21 @@ print.coefmat(x, digits=max(3, .Options$digits - 2),
    slot of \code{\link{options}(.)}.}
  \item{dig.tst}{number of significant digits for the test statistics,
    see \code{tst.ind}.}
- \item{is.cs}{logical (length nc := \code{ncol(x)}) indicating which
-     columns are (like)
+ \item{cs.ind}{indices (integer) of column numbers which are (like)
    \bold{c}oefficients and \bold{s}tandard errors to be formatted together.}
- \item{is.tst}{logical (length nc) indicating columns for test statistics.}
- \item{do.zap}{logical (length nc) indicating columns which should be
+ \item{tst.ind}{indices (integer) of column numbers for test statistics.}
+ \item{zap.ind}{indices (integer) of column numbers which should be
    formatted by \code{\link{zapsmall}(.)}, i.e., by ``zapping'' values
    close to 0.}
- \item{has.Pvalue}{logical (length nc) indicating columns of \code{x}
-   containing P values; these are then only printed \emph{iff}
-   \code{P.values} (below).}
- \item{P.values}{logical or \code{NULL};
-     if \code{TRUE}, the columns of \code{x} where \code{has.Pvalue} is
-     \code{TRUE} are formatted by \code{\link{format.pval}} as P values.
-
+ \item{P.values}{logical or \code{NULL}; if \code{TRUE}, the last column
+     of \code{x} is formatted by \code{\link{format.pval}} as P values.
      If \code{P.values = NULL}, the default, it is set to \code{TRUE}
      only if \code{link{options}("show.coef.Pvalue")} is \code{TRUE}
-     \emph{and} at least one \code{has.Pvalue} is \code{TRUE}.}
+     \emph{and} \code{x} has at least 4 columns
+     \emph{and} the last column name of \code{x} starts with \code{"Pr("}.}
+ \item{has.Pvalue}{logical; if \code{TRUE}, the last column of \code{x}
+   contains P values; in that case, it is printed \emph{iff}
+   \code{P.values} (above).}
  \item{na.print}{a character string to code \code{\link{NA}} values in
     printed output.}
  \item{\dots}{Further arguments for \code{print(..)}.}
