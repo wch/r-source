@@ -12,6 +12,13 @@ There is support for building Windows help files (as in Windows 95) and
 compiled HTML files (as in Windows 98) and both are available for the
 standard libraries.
 
+The new function update.packages() is supported if you have wget.exe:
+a copy is in the windows/windows-NT/etc directory on CRAN. You can
+also use lynx, from http://www.fdisk.com/doslynx/lynxport.htm.
+
+On NT only, CPU times are returned by proc.time() (using a call to
+GetProcessTimes).
+
 Rotated text on a windows / win.* device is placed more accurately,
 especially for non-multiples of 90 degrees.
 
@@ -21,6 +28,9 @@ getenv() now returns all the environmental variables.
 
 The complex LINPACK routines which were not included in the Unix
 versions of R are now omitted here.
+
+There is more support for (support of) ActiveX Automation via the
+Rproxy.dll: see front-ends/readme.
 
 
 rw0650
@@ -51,8 +61,7 @@ specified: these is no longer a default of --no-save (for consistency
 with Unix).
 
 More support for building R into other applications: see the examples
-in the front-ends directory of the source distribution.  Thomas Baier has 
-used this to link a version of R to an out-of-process ActiveX server.
+in the front-ends directory of the source distribution.
 
 Interrupting by Esc or Ctrl-Break is handled internally by signals, so
 the `User Break' response will no longer appear, but in rterm ^C will

@@ -1,6 +1,7 @@
 include MkRules
 
 HELP=YES
+WINHELP=CHM # NO, CHM, BOTH
 
 PACKAGES=base eda lqs modreg mva stepfun ts
 RPREFIX=rw0651
@@ -104,9 +105,13 @@ pkg-%:  libR.a #../include/globalvar.h
 	$(MAKE) DLLNM=$($*-DLLNM)  EXTRADOCS=$($*-EXTRADOCS) -C ../library/$* PKG=$* -f ../../gnuwin32/MakePkg
 ifeq ($(strip $(HELP)),YES)
 	$(MAKE) -C ./help $($*-HELP)help-$*
-#	$(MAKE) -C ./help chm-$*
-	$(MAKE) -C ./help winhlp-$* # also makes chm
 	$(MAKE) -C ./help contents-$*
+ifeq ($(strip $(WINHELP)),CHM)
+	$(MAKE) -C ./help chm-$*
+endif
+ifeq ($(strip $(WINHELP)),BOTH)
+	$(MAKE) -C ./help winhlp-$* # also makes chm
+endif
 endif
 
 pkgclean-%:

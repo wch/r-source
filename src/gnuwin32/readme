@@ -138,8 +138,11 @@ file .Rprofile. In particular:
   the console (rgui.exe) or terminal window (rterm.exe).
 
 - If you wish to use HTML help where this is available, set
-  options(htmlhelp=T). If you prefer to use Windows help files where these
-  available, set options(winhelp=T).
+  options(htmlhelp=T). To use Windows 98/2000 style help files where
+  available set options(chmhelp=T).  If you prefer to use Windows-95
+  style help files where these available, set options(winhelp=T).
+  The priority order is chmhelp, htmlhelp, winhelp. The first of these
+  that is true is tried, then text help.
 
 
 Adding packages
@@ -255,6 +258,7 @@ Then: untar R-0.65.0.tgz somewhere,
 	cd /somewhere/R-0.65.0/src/gnuwin32
 
 edit MkRules to set the appropriate paths as needed
+edit Makefile to set the type(s) of help that you want built.
 
 and run
 
