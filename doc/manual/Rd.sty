@@ -3,6 +3,16 @@
 %%% Modified 1998/01/05 by Friedrich.Leisch@ci.tuwien.ac.at
 %%% Modified 1998/07/07 by Martin Maechler
 %%% Modified 1999/11/20 by Brian Ripley
+%%% Modified 1999/12/26 by Kurt Hornik
+
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{Rd}{}
+
+\RequirePackage{ifthen}
+\newboolean{Rd@has@ae}
+\newboolean{Rd@use@ae}
+\DeclareOption{ae}{\setboolean{Rd@use@ae}{true}}
+\ProcessOptions
 
 \RequirePackage{bm}              % standard boldsymbol
 \RequirePackage{alltt}           % {verbatim} allowing \..
@@ -126,9 +136,9 @@
 \newenvironment{ExampleCode}{\small\verbatim}{\endverbatim}
 
 \ifx\textbackslash\undefined%-- e.g. for MM
-\newcommand{\bsl}{\ifmmode\backslash\else$\backslash$\fi}
+  \newcommand{\bsl}{\ifmmode\backslash\else$\backslash$\fi}
 \else
-\newcommand{\bsl}{\ifmmode\backslash\else\textbackslash\fi}
+  \newcommand{\bsl}{\ifmmode\backslash\else\textbackslash\fi}
 \fi
 %fails for index (but is not used there...)
 \newcommand{\SIs}{\relax\ifmmode\leftarrow\else$\leftarrow$\fi}
@@ -138,10 +148,25 @@
 \newcommand{\deqn}[2]{\[#1\]}
 \newcommand{\eqn}[2]{$#1$}
 \newcommand{\bold}[1]{\ifmmode\bm{#1}\else\textbf{#1}\fi}
-\newcommand{\code}[1]{\texttt{#1}}
 \newcommand{\file}[1]{`\textsf{#1}'}
 \newcommand{\link}[1]{#1\index{#1}}
 \newcommand{\email}[1]{$\langle${#1}$\rangle$}
+%% \code without `-' ligatures
+{\catcode`\-=\active
+  \global\def\code{\bgroup
+    \catcode`\-=\active \let-\codedash
+    \Rd@code}}
+\def\codedash{-\discretionary{}{}{}}
+\def\Rd@code#1{\texttt{#1}\egroup}
+
+\IfFileExists{ae.sty}{\setboolean{Rd@has@ae}{true}}{}
+\ifthenelse{\boolean{Rd@use@ae}\and\boolean{Rd@has@ae}}{%
+  \usepackage[T1]{fontenc}
+  \usepackage{ae}
+  \input{t1aett.fd}
+  \DeclareFontShape{T1}{aett}{bx}{n}%
+    {<->ssub*aett/m/n}{}}
+  {\message{NOT loading ae}}
 
 \InputIfFileExists{Rd.cfg}{%
   \typeout{Reading personal defaults ...}}{}
