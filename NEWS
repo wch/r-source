@@ -298,7 +298,7 @@ NEW FEATURES
     o	eff.aovlist() assumed orthogonal contrasts for any term
 	with more than one degree of freedom: this is now documented
 	and checked for.  Where each term only occurs in only one
-	stratum the efficiencies are all one: this is detected and 
+	stratum the efficiencies are all one: this is detected and
 	orthogonal contrasts are not required.
 
     o	sys.function() now has argument 'which' (as has long been
@@ -309,9 +309,6 @@ NEW FEATURES
     o	Collected warnings during start-up are now printed before the
 	initial prompt rather than after the first command.
 
-    o	slotNames() is better documented and there's new .slotNames() {for
-	rare use}.
-	
     o	Added delayedAssign() function to replace delay(), which is now
     	deprecated.
 
@@ -518,7 +515,7 @@ DEPRECATED & DEFUNCT
     o	Option "repositories" is no longer used and so not set.
 
     o	loadURL() is now deprecated.
-    
+
     o 	delay() is now deprecated.
 
 
@@ -881,7 +878,7 @@ BUG FIXES
     o	The 'datalist' file was not being used during installation
 	(2.0.1 only).
 
-    o	replications() was wrongly reporting lack of balance in 
+    o	replications() was wrongly reporting lack of balance in
 	designs with interactions (and had since unique() gained a
 	matrix method).
 

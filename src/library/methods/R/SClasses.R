@@ -264,6 +264,9 @@ checkSlotAssignment <- function(obj, name, value)
 
 ##  The names of the class's slots.  The argument is either the name
 ##  of a class, or an object from the relevant class.
+
+## NOTA BENE:  .slotNames() shouldn't be needed,
+##             rather slotNames() should be changed (to work like .slotNames())!
 slotNames <- function(x)
     if(is(x, "classRepresentation")) names(x@slots) else .slotNames(x)
 

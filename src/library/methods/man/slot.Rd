@@ -17,8 +17,12 @@ slot(object, name)
 slot(object, name, check = TRUE) <- value
 
 slotNames(x)
-.slotNames(x)
-}
+%% .slotNames(x)
+%%
+%% NOTA BENE: We shouldn't advertize .slotNames() --
+%% - - - - -  rather  slotNames() should be changed {and getSlots() too}
+%%   such that it doesn't special-case class representations!
+%%
 \arguments{
   \item{object}{ An object from a formally defined class.}
   \item{name}{ The character-string name of the slot. The name must be a
@@ -55,6 +59,10 @@ slotNames(x)
   Unlike attributes, slots are not partially matched, and asking for (or
   trying to set) a slot with an invalid name for that class generates an
   error.
+
+  Note that currently, \code{slotNames()} behaves particularly for class
+  representation objects -- this is considered bogous and likely to be
+  changed.
 }
 \references{
   The R package \pkg{methods} implements, with a few exceptions, the
@@ -89,10 +97,11 @@ str(myTrack)
 slotNames("track") # is the same as
 slotNames(myTrack)
 
-## sophisticated:
-clDef <- getClass(class(myTrack))
-slotNames(clDef) # "x" and "y" -- as for myTrack
-.slotNames(clDef)# the slots of the class definition object itself
+%% Don't do this --- this is a bug
+% ## sophisticated:
+% clDef <- getClass(class(myTrack))
+% slotNames(clDef) # "x" and "y" -- as for myTrack
+% .slotNames(clDef)# the slots of the class definition object itself
 
 \dontshow{removeClass("track")##  should not be needed... see ./setClass.Rd}
 }
