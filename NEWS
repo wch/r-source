@@ -38,10 +38,10 @@ USER-VISIBLE CHANGES
 	via R CMD INSTALL --lazy-data or via a field in the
 	DESCRIPTION file.
 
-    o	Package 'graphics' has been split into 'grDevices' (the
-	graphics devices shared between base and grid graphics) and
-	'graphics' (base graphics).  Both graphics and grid packages
-	load grDevices when they are attached.
+    o	Package 'graphics' has been split into 'grDevices' (the graphics
+	devices shared between base and grid graphics) and 'graphics'
+	(base graphics).  Each of the 'graphics' and 'grid' packages
+	load 'grDevices' when they are attached.
 
     o	The semantics of data() have changed (and were incorrectly
 	documented in recent releases) and the function has been moved
@@ -56,10 +56,6 @@ USER-VISIBLE CHANGES
 	separately but not via data(sunspot) (which is used by package
 	lattice to retrieve a dataset 'sunspot').
 
-    o	text.default(x,y,labels) now also recycles (x,y) to the length of
-	'labels' if that is longer.  This is now compatible to grid.text()
-	and S-plus. (See also PR#7084.)
-
     o	Packages must have been re-installed for this version, and
 	library() will enforce this.
 
@@ -68,11 +64,10 @@ USER-VISIBLE CHANGES
 	case-sensitive or not.  So 'library(mass)' will not work, even
 	on Windows.
 
-    o   R no longer accepts associative use of relational
-        operators. That is, 3 < 2 < 1 (which used to evalute
-        as TRUE!) now causes a syntax error. If this breaks
-        existing code, just add parentheses - or braces in the
-        case of plotmath.
+    o	R no longer accepts associative use of relational operators.
+        That is, 3 < 2 < 1 (which used to evalute as TRUE!) now causes
+        a syntax error.  If this breaks existing code, just add
+        parentheses -- or braces in the case of plotmath.
 
 
 NEW FEATURES
@@ -280,6 +275,10 @@ NEW FEATURES
     o	The default method for text() now coerces a factor to character
 	and not to its internal codes.  This is incompatible with S
 	but seems what users would expect.
+
+    	It now also recycles (x,y) to the length of 'labels' if that
+	is longer.  This is now compatible to grid.text() and
+	S. (See also PR#7084.)
 
     o	TukeyHSD() now labels comparisons when applied to an
 	interaction in an aov() fit.

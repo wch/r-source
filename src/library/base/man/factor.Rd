@@ -119,6 +119,16 @@ as.ordered(x)
   may well depend on the locale at the time of creation, and should
   not be assumed to be ASCII.
 }
+\note{
+  Storing character data as a factor is more efficient storage if
+  there is even a small proportion of repeats.  On a 32-bit machine
+  storing a string of \eqn{n} bytes takes
+  \eqn{28 + 8\lceil(n+1)/8\rceil}{28 + 8*ceiling((n+1)/8)}
+  bytes whereas storing a factor code takes 4 bytes.  (On a 64-bit
+  machine 28 is replaced by 56 or more.)  Only if they were computed
+  from the same values (rather than, say, read from a file) will
+  identical strings share storage.
+}
 \references{
   Chambers, J. M. and Hastie, T. J. (1992)
   \emph{Statistical Models in S}.

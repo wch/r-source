@@ -3,6 +3,7 @@
 \alias{as.integer}
 \alias{as.integer.default}
 \alias{is.integer}
+\alias{is.integer.factor}
 \title{Integer Vectors}
 \description{
   Creates or tests for objects of type \code{"integer"}.
@@ -17,11 +18,19 @@ is.integer(x)
   \item{x}{object to be coerced or tested.}
   \item{\dots}{further arguments passed to or from other methods.}
 }
+\details{
+  Integer vectors exist so that data can be passed to C or Fortran code
+  which expects them, and so that small integer data can be represented
+  exactly and compactly.
+
+  Note that on almost all implementations of \R the range of
+  representable integers is restricted to about
+  \eqn{\pm 2 \times 10^9}{+/-2*10^9}: \code{\link{double}}s can hold
+  much larger integers exactly.
+}
 \value{
   \code{integer} creates a integer vector of the specified length.
   Each element of the vector is equal to \code{0}.
-  Integer vectors exist so that data can be passed to C or Fortran code
-  which expects them.
 
   \code{as.integer} attempts to coerce its argument to be of integer
   type. The answer will be \code{NA} unless the coercion succeeds.
@@ -36,8 +45,9 @@ is.integer(x)
   whether its argument is of integer type or not.
   \code{is.integer} is generic: you can write methods to handle
   specific classes of objects, see \link{InternalMethods}.
-  Note that factors are true for \code{is.integer} but false for
-  \code{\link{is.numeric}}.
+  There is a method for factors which returns \code{FALSE}.
+  (Prior to \R 2.0.0, there was no such method and for most (but not
+  all) factors \code{is.integer} returned \code{TRUE}.)
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

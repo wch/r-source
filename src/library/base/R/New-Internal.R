@@ -177,7 +177,7 @@ data.class <- function(x) {
 }
 
 is.numeric.factor <- function(x) FALSE
-# is.integer.factor <- function(x) FALSE
+is.integer.factor <- function(x) FALSE
 
 ## base has no S4 generics
 .noGenerics <- TRUE
