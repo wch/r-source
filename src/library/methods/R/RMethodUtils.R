@@ -326,7 +326,7 @@ assignMethodsMetaData <-
   ## Also updates cached information about this generic.
   function(f, value, where) {
     assign(mlistMetaName(f), value, where)
-    cacheGenericsMetaData(f, TRUE, where)
+    resetGeneric(f)
   }
 
 mlistMetaName <-
