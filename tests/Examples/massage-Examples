@@ -15,18 +15,22 @@
 )
 RHOME=`cd ${RHOME}; pwd`	# absolute
 
+PKG=$1; shift;
 FILES="$@"
 
 #Dbg> echo "RHOME=$RHOME"; echo
 #Dbg> echo "FILES=$FILES"; echo ; echo; exit
 
 ## 1) ---- Header ----
-cat <<_EOF_
+(cat <<_EOF_
 .ptime <- proc.time()
-postscript('All-Examples.ps')
+postscript('PKG-Examples.ps')
 .pp <- par()
 .par.postscript <- .pp[-match(c("cin","cra","csi","din"),names(.pp))]
 _EOF_
+) | sed "s/PKG/${PKG}/"
+if [ "$PKG" != "base" ]; then echo "library('$PKG')" ; fi
+
 ## 2) ---- edit a few of these files:
 for file in $FILES
 do

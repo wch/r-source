@@ -13,9 +13,13 @@ include $(top_builddir)/Makeconf
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = Makefile.in massage-Examples
 
-R = $(top_builddir)/bin/R --no-init-file --no-save --no-restore --vsize 6
-Rbase = $(top_builddir)/library/base/R/base
-Rbinary = $(top_builddir)/bin/R.binary
+R = $(top_builddir)/bin/R --vanilla --vsize 6
+
+Pkgs = base eda mva stepfun
+Ex_R = $(Pkgs:=-Ex.R)
+Ex_Rout = $(Ex_R:.R=.Rout)
+.SUFFIXES = -Ex.R -Ex.Rout
+.SECONDARY= $(Ex_R)
 
 all: Makefile test-Examples
 
@@ -24,24 +28,24 @@ Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	  CONFIG_FILES=$(subdir)/$@ CONFIG_HEADERS= \
 	  $(SHELL) ./config.status
 
-test-Examples: All-Ex.Rout
+test-Examples: $(Ex_Rout)
 
-All-Ex.Rout: All-Ex.R $(top_builddir)/stamp-R
+$(Ex_Rout): %-Ex.Rout: %-Ex.R $(top_builddir)/stamp-R
 	@if [ -f $@.bak ]; then mv $@.bak $@.bakk ; fi
 	@if [ -f $@ ]; then mv $@ $@.bak ; fi
 	@echo "Running all help() examples ..."
 	$(R) < $< > $@
 
-All-Ex.R: $(top_builddir)/library/base/R-ex/*.R
+#Always remakes:
+#$(Ex_R): %-Ex.R: $(top_builddir)/library/%/R-ex/*.R
+%-Ex.R: $(top_builddir)/library/%/R-ex/*.R
 	@if [ -f $@.bak ]; then mv $@.bak $@.bakk ; fi
 	@if [ -f $@ ]; then mv $@ $@.bak ; fi
 	@echo "Massaging examples into $@ ..."
-	@-$(srcdir)/massage-Examples \
-	  $(top_builddir)/library/base/R-ex/*.R > $@
+	-@$(srcdir)/massage-Examples $* $^ > $@
 
-$(top_builddir)/library/base/R-ex/%.R: $(top_srcdir)/src/library/base/man/%.Rd
-	(cd $(top_builddir)/src/library && \
-	  $(MAKE) PKGS=base stamp-examples)
+$(top_builddir)/library/*/R-ex/%.R:
+	(cd $(top_builddir)/src/library && $(MAKE) PKGS="$(Pkgs)" stamp-examples)
 
 $(top_builddir)/stamp-R:
 	-(cd $(top_builddir) && $(MAKE) R)
