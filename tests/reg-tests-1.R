@@ -229,6 +229,14 @@ x <- "abcdef"
 substr(x, 2, 3) <- "w"
 ## last was "aw" in 1.3.1
 
+## reading bytes from a connection,  Friedrich Leisch 2001-09-07
+cat("Hello World", file="world.txt")
+con <- file("world.txt", "r")
+zz <- readChar(con, 100)
+close(con)
+unlink("world.txt")
+stopifnot(zz == "Hello World")
+## was "" in 1.3.1.
 
 ## PR 902 segfaults when warning string is too long, Ben Bolker 2001-04-09
 provoke.bug <- function(n=9000) {

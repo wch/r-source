@@ -79,7 +79,7 @@ writeChar(object, con, nchars = nchar(object), eos = "")
   from the file.
 
   If the character length requested for \code{readChar} is longer than
-  the string, \code{nul}-padding is used.
+  the string, as from version 1.4.0 what is available is returned.
 }
 
 \value{

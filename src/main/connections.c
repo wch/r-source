@@ -2086,12 +2086,14 @@ static SEXP readFixedString(Rconnection con, int len)
     int  pos, m;
 
     buf = (char *) R_alloc(len+1, sizeof(char));
-    buf[len] = '\0';
     for(pos = 0; pos < len; pos++) {
 	p = buf + pos;
 	m = con->read(p, sizeof(char), 1, con);
-	if(!m) return R_NilValue;
+	if(!m) {
+	    if(pos == 0) return R_NilValue; else break;
+	}
     }
+    buf[pos] = '\0';
     return mkChar(buf);
 }
 
