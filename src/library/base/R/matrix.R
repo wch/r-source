@@ -17,7 +17,7 @@ rownames <- function(x) {
 }
 "rownames<-" <- function(x, value) {
     dn <- dimnames(x)
-    dimnames(x) <- list(value, if(is.null(dn)) dn else dn[[2]])
+    dimnames(x) <- list(value, if(!is.null(dn)) dn[[2]])
     x
 }
 colnames <- function(x) {
@@ -26,9 +26,16 @@ colnames <- function(x) {
 }
 "colnames<-" <- function(x, value) {
     dn <- dimnames(x)
-    dimnames(x) <- list(if(is.null(dn)) dn else dn[[1]], value)
+    dimnames(x) <- list(if(!is.null(dn)) dn[[1]], value)
     x
 }
+
+COLNAMES <- function(x, prefix = "col")
+    if(is.null(n <- colnames(x)))
+	paste(prefix, seq(length=NCOL(x)), sep="") else n
+ROWNAMES <- function(x, prefix = "row")
+    if(is.null(n <- rownames(x)))
+	paste(prefix, seq(length=NROW(x)), sep="") else n
 
 row <- function(x, as.factor=FALSE) {
     if(as.factor) factor(.Internal(row(x)), labels=rownames(x))
