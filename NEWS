@@ -24,7 +24,7 @@ NEW FEATURES
     o	Function identical(), a fast and reliable way to test for exact
 	equality of two objects.
 
-    o	bxp() has a show.names argument allowing labels on a single
+    o	bxp() has a `show.names' argument allowing labels on a single
 	boxplot
 
     o	Function nsl() to look up IP addresses of hosts: intended as
@@ -379,10 +379,10 @@ BUG FIXES
     o   PR#757 was fixed incorrectly, causing improper subsetting of
         pch etc. in plot.formula.
 
-    o   library() no longer removes environments of functions that are not
-	defined in the top-level package scope.  Also, packages loaded by
-	require() when sourcing package code are now visible in the remaining
-	source evaluations.
+    o	library() no longer removes environments of functions that are
+	not defined in the top-level package scope.  Also, packages
+	loaded by require() when sourcing package code are now visible
+	in the remaining source evaluations.
 
     o	names(d) <- v  now works (again) for "dist" objects d (PR#1129).
 
@@ -398,6 +398,10 @@ BUG FIXES
 	Windows and MacOS and don't leak memory.
 
     o	range(numeric(0)) is now c(NA, NA) not NA.
+
+    o	round(x, digits) for digits <= 0 always gives an integral
+	answer.  Previously it might not due to rounding errors in
+	fround. (PR#1138/9)
 
 
 

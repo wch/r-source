@@ -284,6 +284,7 @@ y <- data.frame(b = LETTERS[3:4], c = 1:2)
 stopifnot(1 == nrow(merge(x, y)))
 stopifnot(4 == nrow(merge(x, y, all = TRUE)))
 
+
 ## PR 1149.  promax was returning the wrong rotation matrix.
 library(mva)
 data(ability.cov)
@@ -294,6 +295,7 @@ tmp2 <- as.vector(pm$loadings)
 stopifnot(all.equal(tmp1, tmp2))
 detach("package:mva")
 rm(ability.cov)
+
 
 ## PR 1155. On some systems strptime was not setting the month or mday
 ## when yday was supplied.
@@ -317,6 +319,7 @@ library(ctest)
 x <- c(-0.15, 8.6, 5, 3.71, 4.29, 7.74, 2.48, 3.25, -1.15, 8.38)
 y <- c(2.55, 12.07, 0.46, 0.35, 2.69, -0.94, 1.73, 0.73, -0.35, -0.37)
 stopifnot(round(ks.test(x, y)$p.value, 4) == 0.0524)
+
 
 ## PR 1150.  Wilcoxon rank sum and signed rank tests did not return the
 ## Hodges-Lehmann estimators of the associated confidence interval
@@ -352,6 +355,13 @@ x1 <- integer(0) / (1:3)
 x2 <- integer(0) ^ (1:3)
 stopifnot(length(x1) == 0 & length(x2) == 0)
 ## were integer NAs in real answer in 1.3.1.
+
+
+## PR#1138/9  rounding could give non-integer answer.
+x <- round(100000/3, -2) - 33300
+stopifnot(x == 0)
+## failed in 1.3.x on Solaris and Windows but not Debian Linux.
+
 
 
 ## PR 902 segfaults when warning string is too long, Ben Bolker 2001-04-09

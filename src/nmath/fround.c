@@ -1,7 +1,7 @@
 /*
  *  Mathlib : A C Library of Special Functions
  *  Copyright (C) 1998 Ross Ihaka
- *  Copyright (C) 2000 The R Development Core Team
+ *  Copyright (C) 2000-2001 The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -100,7 +100,7 @@ double fround(double x, double digits)
 #define MAX_DIGITS DBL_MAX_10_EXP
     /* = 308 (IEEE); was till R 0.99: (DBL_DIG - 1) */
     /* Note that large digits make sense for very small numbers */
-    double pow10, sgn, intx;
+    double pow10, sgn, intx, res;
     int dig;
 
 #ifdef IEEE_754
@@ -124,5 +124,9 @@ double fround(double x, double digits)
     } else
 	intx = 0.;
 
-    return sgn * (intx + R_rint(x * pow10) / pow10);
+    res = (intx + R_rint(x * pow10) / pow10);
+    /* Force integer answer for digits <= 0: last expression can
+       introduce rounding errors */
+    if(dig <= 0) res = (int)floor(res + 0.5);
+    return sgn * res;
 }
