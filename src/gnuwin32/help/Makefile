@@ -11,23 +11,23 @@ PKGDIR=../../library
 RLIB=$(RHOME)/library
 
 indices:
-	PERL5LIB=$(RHOME)/share/perl $(PERL) \
+	@PERL5LIB=$(RHOME)/share/perl $(PERL) \
 	  ../../../share/perl/build-help-windows.pl ${DOS} -htmllists
 
 pkg-% help-%:
-	PERL5LIB=$(RHOME)/share/perl $(PERL) \
+	@PERL5LIB=$(RHOME)/share/perl $(PERL) \
 	  ../../../share/perl/build-help-windows.pl ${DOS} \
 	  -txt -html -example -latex $(PKGDIR)/$* $(RLIB)
 
 chm-%:
-	PERL5LIB=$(RHOME)/share/perl $(PERL) \
+	@PERL5LIB=$(RHOME)/share/perl $(PERL) \
 	  ../../../share/perl/build-help-windows.pl ${DOS} \
 	  -chm $(PKGDIR)/$* $(RLIB)
 # hhc always gives an error code
-	$(MAKE)  --no-print-directory -C $(PKGDIR)/$*/chm \
+	@$(MAKE)  --no-print-directory -C $(PKGDIR)/$*/chm \
 	  -f $(RHOME)/src/gnuwin32/help/Makefile $*.chm
-	$(MKDIR) -p $(RLIB)/$*/chtml
-	$(CP) $(PKGDIR)/$*/chm/$*.chm $(RLIB)/$*/chtml
+	@$(MKDIR) -p $(RLIB)/$*/chtml
+	@$(CP) $(PKGDIR)/$*/chm/$*.chm $(RLIB)/$*/chtml
 
 winhlp-%: chm-%
 	$(MAKE) --no-print-directory -C $(PKGDIR)/$*/chm \
@@ -37,12 +37,12 @@ winhlp-%: chm-%
 
 # need not have HTML installed when building packages
 contents-%:
-	PERL5LIB=$(RHOME)/share/perl $(PERL) \
+	@PERL5LIB=$(RHOME)/share/perl $(PERL) \
 	  ../../../share/perl/Rd2contents.pl \
 	  --os=windows -o $(RLIB)/$*/CONTENTS $(PKGDIR)/$*
 	@$(MKDIR) -p $(RHOME)/doc/html/search
-	$(CAT) $(RHOME)/library/*/CONTENTS > $(RHOME)/doc/html/search/index.txt
-	PERL5LIB=$(RHOME)/share/perl $(PERL) \
+	@$(CAT) $(RHOME)/library/*/CONTENTS > $(RHOME)/doc/html/search/index.txt
+	@PERL5LIB=$(RHOME)/share/perl $(PERL) \
 	  ../../../share/perl/build-help-windows.pl ${DOS} -htmllists
 
 ziphelp-%:
@@ -71,7 +71,7 @@ clean:
 
 HTM = $(filter-out 00Index.html, $(wildcard *.html))
 %.chm: $(HTM) Rchm.css logo.jpg
-	-hhc $*.hhp
+	-@hhc $*.hhp
 
 %.hlp: %.rtf logo.bmp
 	hcrtf /x $*.hpj
@@ -80,13 +80,13 @@ HTM = $(filter-out 00Index.html, $(wildcard *.html))
 	perl $(RHOME)/share/perl/hhw-to-rtf.pl $*.hhp
 
 Rchm.css: $(RHOME)/src/gnuwin32/help/Rchm.css
-	$(CP) $^ $@
+	@$(CP) $^ $@
 
 logo.jpg: $(RHOME)/doc/html/logo.jpg
-	$(CP) $^ $@
+	@$(CP) $^ $@
 
 logo.bmp: $(RHOME)/src/gnuwin32/help/logo.bmp
-	$(CP) $^ $@
+	@$(CP) $^ $@
 
 # following are designed to be run from the library/pkg directory:
 
