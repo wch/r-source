@@ -13,7 +13,7 @@ NEW FEATURES
         for most of the data sets in the base library.
 
     o   update.packages & friends have new argument contriburl for
-        incomplete CRAN mirrors 
+        incomplete CRAN mirrors
 
     o	RLIBS is no longer accepted as well as R_LIBS (which has been
 	the documented form since 0.65.0).
@@ -50,6 +50,8 @@ NEW FEATURES
 
 
 BUG FIXES
+
+    o	f <- get("function"); f(,); f(F,F)  now "ok" (PR#361).
 
     o	blank-line reject code in parse.dcf was wrong (Martyn Plummer)
 
