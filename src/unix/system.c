@@ -70,7 +70,7 @@ int DebugInitFile = False;
 void R_Suicide(char *s)
 {
     REprintf("Fatal error: %s\n", s);
-    R_CleanUp(SA_SUICIDE);
+    R_CleanUp(SA_SUICIDE, 2, 0);
 }
 
 /*
@@ -269,7 +269,7 @@ void R_Busy(int which)
 
 void R_dot_Last(void);		/* in main.c */
 
-void R_CleanUp(int saveact)
+void R_CleanUp(int saveact, int status, int runLast)
 {
     char buf[128];
 
@@ -303,7 +303,7 @@ void R_CleanUp(int saveact)
     }
     switch (saveact) {
     case SA_SAVE:
-	R_dot_Last();
+	if(runLast) R_dot_Last();
 	if(R_DirtyImage) R_SaveGlobalEnv();
 #ifdef HAVE_LIBREADLINE
 #ifdef HAVE_READLINE_HISTORY_H
@@ -314,7 +314,7 @@ void R_CleanUp(int saveact)
 #endif
 	break;
     case SA_NOSAVE:
-	R_dot_Last();
+	if(runLast) R_dot_Last();
 	break;
     case SA_SUICIDE:
     default:
@@ -324,7 +324,7 @@ void R_CleanUp(int saveact)
     KillAllDevices();
     fpu_setup(0);
 
-    exit(0);
+    exit(status);
 }
 
 /*

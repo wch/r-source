@@ -201,6 +201,7 @@ typedef void (*scrollfn)(scrollbar s, int position);
 
 int 	initapp(int argc, char *argv[]);
 void	exitapp(void);
+void	app_cleanup(void);
 
 void	drawall(void);
 int 	peekevent(void);

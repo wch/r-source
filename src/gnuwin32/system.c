@@ -44,7 +44,7 @@ int LoadInitFile = True;
 int DebugInitFile = False;
 
 UImode  CharacterMode;
-int   ConsoleAcceptCmd;
+int ConsoleAcceptCmd;
 void closeAllHlpFiles();
 void UnLoad_Unzip_Dll();
 
@@ -89,7 +89,7 @@ void R_Suicide(char *s)
 
     sprintf(pp, "Fatal error: %s\n", s);
     R_ShowMessage(pp);
-    R_CleanUp(SA_SUICIDE);
+    R_CleanUp(SA_SUICIDE, 2, 0);
 }
 
 /*
@@ -336,7 +336,7 @@ void R_Busy(int which)
 void R_dot_Last(void);		/* in main.c */
 
 
-void R_CleanUp(int saveact)
+void R_CleanUp(int saveact, int status, int runLast)
 {
     if(saveact == SA_DEFAULT) /* The normal case apart from R_Suicide */
 	saveact = SaveAction;
@@ -360,11 +360,11 @@ void R_CleanUp(int saveact)
 
     switch (saveact) {
     case SA_SAVE:
-	R_dot_Last();
+	if(runLast) R_dot_Last();
 	if(R_DirtyImage) R_SaveGlobalEnv();
 	break;
     case SA_NOSAVE:
-	R_dot_Last();
+	if(runLast) R_dot_Last();
 	break;
     case SA_SUICIDE:
     default:
@@ -377,7 +377,8 @@ void R_CleanUp(int saveact)
     if (CharacterMode == RGui)
 	savehistory(RConsole, ".Rhistory");
     UnLoad_Unzip_Dll();
-    exitapp();
+    app_cleanup();
+    exit(status);
 }
 
 /*

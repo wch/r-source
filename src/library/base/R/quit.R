@@ -1,2 +1,3 @@
-quit <- function(save = "default").Internal(quit(save))
+quit <- function(save = "default", status=0, runLast=TRUE)
+    .Internal(quit(save, status, runLast))
 q <- .Alias(quit)

@@ -140,7 +140,7 @@ static void menuprint(control m)
 
 static void menuexit(control m)
 {
-    R_CleanUp(1);
+    R_CleanUp(SA_DEFAULT, 0, 1);
 }
 
 static void menuselectall(control m)
@@ -451,7 +451,10 @@ static void readconsolecfg()
 	    cfgerr = 1;
 	}
     }
-    if (cfgerr) exitapp();
+    if (cfgerr) {
+	app_cleanup();
+	exit(10);
+    }
     setconsoleoptions(fn, sty, pointsize, consoler, consolec, consolefg,
 		      consoleuser, consolebg,
 		      pagerrow, pagercol, multiplewin, widthonresize);
@@ -459,7 +462,7 @@ static void readconsolecfg()
 
 static void closeconsole(control m)
 {
-    R_CleanUp(1);
+    R_CleanUp(SA_DEFAULT, 0, 1);
 }
 
 void setup_term_ui()

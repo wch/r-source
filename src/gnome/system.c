@@ -48,6 +48,7 @@
 /*-- necessary for some (older, i.e., ~ <= 1997) Linuxen:*/
 #ifdef linux
 #ifndef FD_SET
+#ifdef HAVE_SYS_TIME_H
 #include <sys/time.h>
 #endif
 #endif
@@ -91,7 +92,7 @@ void R_Suicide(char *s)
 
     gnome_dialog_run_and_close(GNOME_DIALOG(dialog));
 
-    R_CleanUp(SA_SUICIDE);
+    R_CleanUp(SA_SUICIDE, 2, 0);
 }
 
 
@@ -131,7 +132,7 @@ void R_Busy(int which)
 
 void R_dot_Last(void);		/* in main.c */
 
-void R_CleanUp(int saveact)
+void R_CleanUp(int saveact, int status, int runLast)
 {
     GtkWidget *dialog;
     gint which; /* yes = 0, no = 1, cancel = 2 || -1 */
@@ -176,14 +177,14 @@ void R_CleanUp(int saveact)
 
     switch (saveact) {
     case SA_SAVE:
-	R_dot_Last();
-	R_SaveGlobalEnv();
+	if(runLast) R_dot_Last();
+	if(R_DirtyImage) R_SaveGlobalEnv();
 	if(R_Interactive)
 	    gtk_console_save_history(GTK_CONSOLE(R_gtk_terminal_text), 
 				     R_HistoryFile, R_HistorySize, NULL);
 	break;
     case SA_NOSAVE:
-	R_dot_Last();
+	if(runLast) R_dot_Last();
 	break;
     case SA_SUICIDE:
     default:
@@ -205,7 +206,7 @@ void R_CleanUp(int saveact)
     KillAllDevices();
     fpu_setup(0);
 
-    exit(0);
+    exit(status);
 }
 
 void R_ShowMessage(char *s)

@@ -362,7 +362,7 @@ void	R_ResetConsole(void);
 void	R_FlushConsole(void);
 void	R_ClearerrConsole(void);
 void	R_Busy(int);
-void	R_CleanUp(int);
+void	R_CleanUp(int, int, int);
 void	R_StartUp(void);
 int	R_ShowFile(char*, char*);
 int	R_ShowFiles(int, char **, char **, char *, int, char *);

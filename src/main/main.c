@@ -447,7 +447,7 @@ void end_Rmainloop(void)
     Rprintf("\n");
     /* run the .Last function. If it gives an error, will drop back to main
        loop. */
-    R_CleanUp(SA_DEFAULT);
+    R_CleanUp(SA_DEFAULT, 0, 1);
 }
 
 void mainloop(void)
@@ -567,7 +567,7 @@ void R_dot_Last(void)
 SEXP do_quit(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     char *tmp;
-    int ask=SA_DEFAULT;
+    int ask=SA_DEFAULT, status, runLast;
 
     if(R_BrowseLevel) {
 	warning("can't quit from browser");
@@ -588,9 +588,19 @@ SEXP do_quit(SEXP call, SEXP op, SEXP args, SEXP rho)
 	ask = SA_DEFAULT;
     else
 	errorcall(call, "unrecognized value of save");
+    status = asInteger(CADR(args));
+    if (status == NA_INTEGER) {
+        warningcall(call, "invalid status, 0 assumed");
+	runLast = 0;
+    }
+    runLast = asLogical(CADDR(args));
+    if (runLast == NA_LOGICAL) {
+        warningcall(call, "invalid runLast, FALSE assumed");
+	runLast = 0;
+    }
     /* run the .Last function. If it gives an error, will drop back to main
        loop. */
-    R_CleanUp(ask);
+    R_CleanUp(ask, status, runLast);
     exit(0);
     /*NOTREACHED*/
 }

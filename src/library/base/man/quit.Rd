@@ -4,13 +4,17 @@
 \alias{.Last}
 \title{Terminate an R Session}
 \usage{
-quit(save="default")
-   q(save="default")
+quit(save="default", status=0, runLast=TRUE)
+   q(save="default", status=0, runLast=TRUE)
 .Last <- function(x) { \dots\dots }
 }
 \arguments{
     \item{save}{a character string indicating whether the environment
 	(workspace) should be saved.}
+    \item{status}{the (numerical) error status to be returned to the
+	operating system, where relevant. Conventionally \code{0}
+	indicates successful completion.}
+    \item{runLast}{should \coce{.Last()} be executed?}
 }
 \description{
     The function \code{quit} or its alias \code{q} terminate the current
@@ -18,11 +22,12 @@ quit(save="default")
     \code{"ask"} or \code{"default"}.  In the first case the workspace
     is not saved, in the second it is saved and in the third the user is
     prompted and can also decide \emph{not} to quit.  The default is to
-    ask in interactive use and not to save in non-interactive use, but
-    may be overridden by command-line arguments.
+    ask in interactive use but may be overridden by command-line
+    arguments (which must be supplied in non-interactive use).
 
     Immediately \emph{before} terminating, the function \code{.Last()}
-    is executed if it exists. If in interactive use there are errors in
+    is executed if it exists and \code{runLast} is true. If in
+    interactive use there are errors in
     the \code{.Last} function, control will be returned to the command
     prompt, so do test the function thoroughly.
 }

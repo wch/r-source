@@ -31,7 +31,7 @@
 extern void cmdlineoptions(int, char **);
 extern void setup_term_ui(void);
 extern void mainloop(void);
-extern int CharacterMode;
+extern UImode CharacterMode;
 extern int UserBreak;
 
 extern char *getDLLVersion();
