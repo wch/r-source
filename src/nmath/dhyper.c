@@ -1,7 +1,10 @@
 /*
- *  Mathlib : A C Library of Special Functions
- *  Copyright (C) 1998 Ross Ihaka
- *  Copyright (C) 2000 The R Development Core Team
+ *  AUTHOR
+ *    Catherine Loader, catherine@research.bell-labs.com.
+ *    October 23, 2000.
+ *
+ *  Merge in to R:
+ *	Copyright (C) 2000, The R Core Development Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -17,31 +20,50 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA.
  *
- *  DESCRIPTION
  *
- *    The density of the hypergeometric distribution.
+ * DESCRIPTION
+ *
+ *    Given a sequence of r successes and b failures, we sample n (\le b+r)
+ *    items without replacement. The hypergeometric probability is the
+ *    probability of x successes:
+ *
+ *                   dbinom(x,r,p) * dbinom(n-x,b,p)
+ *      p(x;r,b,n) = ---------------------------------
+ *                             dbinom(n,r+b,p)
+ *
+ *    for any p. For numerical stability, we take p=n/(r+b); with this choice,
+ *    the denominator is not exponentially small.
  */
 
 #include "nmath.h"
 #include "dpq.h"
 
-double dhyper(double x, double NR, double NB, double n, int give_log)
-{
-    double N;
+double dhyper(double x, double r, double b, double n, int give_log)
+{ 
+    double p, q, p1, p2, p3;
+
 #ifdef IEEE_754
-    if (ISNAN(x) || ISNAN(NR) || ISNAN(NB) || ISNAN(n))
-	return x + NR + NB + n;
+    if (ISNAN(x) || ISNAN(r) || ISNAN(b) || ISNAN(n))
+        return x + r + b + n;
 #endif
-    x = floor(x + 0.5);
-    NR = floor(NR + 0.5);
-    NB = floor(NB + 0.5);
-    N = NR + NB;
-    n = floor(n + 0.5);
-    if (NR < 0 || NB < 0 || n < 0 || n > N) {
+
+    if (R_D_notnnegint(r) || R_D_notnnegint(b) || R_D_notnnegint(n) || n > r+b)
 	ML_ERR_return_NAN;
-    }
-    if (x < fmax2(0, n - NB) || x > fmin2(n, NR))
-	return R_D__0;
-    return R_D_exp(lfastchoose(NR, x) + lfastchoose(NB, n - x)
-		   - lfastchoose(N, n));
+
+    if (R_D_notnnegint(x)) return(R_D__0);
+    x = R_D_forceint(x);
+    r = R_D_forceint(r);
+    b = R_D_forceint(b);
+    n = R_D_forceint(n);
+
+    if (n == 0) return((x == 0) ? R_D__1 : R_D__0);
+
+    p = ((double)n)/((double)(r+b));
+    q = ((double)(r+b-n))/((double)(r+b));
+
+    p1 = dbinom_raw(x,r,p,q,give_log);
+    p2 = dbinom_raw(n-x,b,p,q,give_log);
+    p3 = dbinom_raw(n,r+b,p,q,give_log);
+
+    return( (give_log) ? p1 + p2 - p3 : p1*p2/p3 );
 }

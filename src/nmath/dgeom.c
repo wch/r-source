@@ -1,7 +1,10 @@
 /*
- *  Mathlib : A C Library of Special Functions
- *  Copyright (C) 1998 Ross Ihaka
- *  Copyright (C) 2000 The R Development Core Team
+ *  AUTHOR
+ *    Catherine Loader, catherine@research.bell-labs.com.
+ *    October 23, 2000.
+ *
+ *  Merge in to R:
+ *	Copyright (C) 2000, The R Core Development Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -15,31 +18,33 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA.
+ *
  *
  *  DESCRIPTION
  *
- *    The density of the geometric distribution.
+ *    Computes the geometric probabilities, Pr(X=x) = p(1-p)^x.
  */
 
 #include "nmath.h"
 #include "dpq.h"
 
 double dgeom(double x, double p, int give_log)
-{
+{ 
+    double prob;
+
 #ifdef IEEE_754
     if (ISNAN(x) || ISNAN(p)) return x + p;
 #endif
-    if (p <= 0 || p >= 1) ML_ERR_return_NAN;
 
-    if(fabs(x - floor(x + 0.5)) > 1e-7) {
-	MATHLIB_WARNING("non-integer x = %f", x);
-	return R_D__0;
-    }
-    if (x < 0)
-	return R_D__0;
-    if(!R_FINITE(x)) return R_D__1;
-    return give_log ?
-      log(p) + log(1 - p) * x :
-	  p  * pow(1 - p, x);
+    if (p <= 0 || p > 1) ML_ERR_return_NAN;
+
+    R_D_nonint_check(x);
+    if (x < 0 || !R_FINITE(x))	return R_D__0;
+    x = R_D_forceint(x);
+
+    /* prob = (1-p)^x, stable for small p */
+    prob = dbinom_raw(0.,x, p,1-p, give_log);
+
+    return((give_log) ? log(p) + prob : p*prob);
 }

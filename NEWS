@@ -399,10 +399,18 @@ BUG FIXES
 	"name" instead of "namevec" (S compatibility), and gives a warning
 	when name has not length 1.
 
-    o	dbinom() and dpois() now use a more accurate algorithm; e.g., 
-	1 - 2*sum(dbinom(0:999, 1999, 1/2)) is now zero instead of 1.0e-12.
+    o	dbinom() and dpois() now use a the accurate algorithm of C.Loader;
+	e.g., 1 - 2*sum(dbinom(0:999, 1999, 1/2)) is now zero instead of 1e-12.
 
+    o	dbeta(), df(), dt(), dnbinom(), dgeom(), dgamma(),
+	now all use the more accurate algorithms of dbinom() and dpois();
+	More limits are computed correctly, e.g. dgeom(Inf,*), or
+	dnbinom(*,*,p=0), and integer argument coercion is more consistent.
+	
     o	dbeta(x, a,b) was giving NaN and Inf for large a and b.
+
+    o	The math functions now (again!) return NaN (not NA)
+	when the warning message says so (e.g. gamma(-1)).
 
     o	Paper sizes for "a4" and "legal" were interchanged in dev.print().
 
@@ -540,7 +548,6 @@ BUG FIXES
 
     o	t.test() allows an input vector of length 2.
 
-
     o	Method dispatch in primitive functions such as `c' only
 	occurred if they were called by that name, and in particular
 	not if used in lapply or called as .Primitive("c").  It now
@@ -567,9 +574,6 @@ BUG FIXES
     o	NULL == ... now gives logical(0) instead of an error.
 	This fixes a bug with e.g. apply(X,2,median, na.rm = TRUE) and
 	all(NULL == NULL) is now TRUE.
-
-    o	The math functions now (again!) return NaN (not NA)
-	when the warning message says so (e.g. gamma(-1)).
 
     o	polylines with more than 64K pieces will now work on more X
 	servers with the x11 device.

@@ -1,7 +1,10 @@
 /*
- *  Mathlib : A C Library of Special Functions
- *  Copyright (C) 1998 Ross Ihaka
- *  Copyright (C) 2000 The R Development Core Team
+ *  AUTHOR
+ *    Catherine Loader, catherine@research.bell-labs.com.
+ *    October 23, 2000.
+ *
+ *  Merge in to R:
+ *	Copyright (C) 2000, The R Core Development Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -15,49 +18,65 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA.
+ *
  *
  *  DESCRIPTION
+ *    Beta density,
+ *                   (a+b-1)!     a-1       b-1
+ *      p(x;a,b) = ------------ x     (1-x)
+ *                 (a-1)!(b-1)!
  *
- *    The density of the beta distribution.
+ *               = (a+b-1) dbinom(a-1; a+b-2,x)
+ *
+ *    We must modify this when a<1 or b<1, to avoid passing negative
+ *    arguments to dbinom_raw. Note that the modifications require
+ *    division by x and/or 1-x, so cannot be used except where necessary.
  */
 
 #include "nmath.h"
 #include "dpq.h"
 
 double dbeta(double x, double a, double b, int give_log)
-{
+{ 
+    double f, p;
+
 #ifdef IEEE_754
     /* NaNs propagated correctly */
     if (ISNAN(x) || ISNAN(a) || ISNAN(b)) return x + a + b;
-
-# define xmax 171.61447887182298/* (fixme) -->> ./gammalims.c */
-
-#else
-    static double xmax = 0; double xmin;
-    if (xmax == 0)
-	gammalims(&xmin, &xmax);
 #endif
 
     if (a <= 0 || b <= 0) ML_ERR_return_NAN;
-
-    if (x < 0 || x > 1)
-	return R_D__0;
-
-#define R_LOG_DBETA log(x)*(a - 1) + log(1 - x)*(b - 1) - lbeta(a, b)
-
-    if(give_log)
-	return R_LOG_DBETA;
-    else if (a + b >= xmax) /* beta(a,b) might be = 0 numerically */
-	return exp(R_LOG_DBETA);
-    else {
-	double y;
-	y = beta(a, b);
-	a = pow(x, a - 1);
-	b = pow(1 - x, b - 1);
-#ifndef IEEE_754
-	if(errno) return ML_NAN;
-#endif
-	return (a * b / y);
+    if (x < 0 || x > 1) return(R_D__0);
+    if (x == 0) {
+	if(a > 1) return(R_D__0);
+	if(a < 1) return(ML_POSINF);
+	/* a == 1 : */ return(R_D_val(b));
+    } 
+    if (x == 1) {
+	if(b > 1) return(R_D__0);
+	if(b < 1) return(ML_POSINF);
+	/* b == 1 : */ return(R_D_val(a));
+    } 
+    if (a < 1) { 
+	if (b < 1) {		/* a,b < 1 */
+	    f = a*b/((a+b)*x*(1-x));
+	    p = dbinom_raw(a,a+b, x,1-x, give_log);
+	}
+	else {			/* a < 1 <= b */
+	    f = a/x;
+	    p = dbinom_raw(a,a+b-1, x,1-x, give_log);
+	}
     }
+    else { 
+	if (b < 1) {		/* a >= 1 > b */
+	    f = b/(1-x);
+	    p = dbinom_raw(a-1,a+b-1, x,1-x, give_log);
+	}
+	else {			/* a,b >= 1 */
+	    f = a+b-1;
+	    p = dbinom_raw(a-1,a+b-2, x,1-x, give_log);
+	}
+    }
+    return( (give_log) ? p + log(f) : p*f );
 }

@@ -37,3 +37,20 @@
 	(!log_p && (p < 0 || p > 1)) )		\
 	ML_ERR_return_NAN
 
+
+/* additions for density functions (C.Loader) */
+#define R_D_fexp(f,x)     (give_log ? -0.5*log(f)+(x) : exp(x)/sqrt(f))
+#define R_D_forceint(x)   floor((x) + 0.5)
+#define R_D_nonint(x) 	  (fabs((x) - floor((x)+0.5)) > 1e-7)
+#define R_D_notnnegint(x) (x < 0. || R_D_nonint(x))
+
+#define R_D_nonint_check(x) 				\
+   if(R_D_nonint(x)) {					\
+	MATHLIB_WARNING("non-integer x = %f", x);	\
+	return R_D__0;					\
+   }
+
+#ifndef M_2PI
+#define M_2PI		6.283185307179586476925286766559	/* 2*pi */
+#endif
+

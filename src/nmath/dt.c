@@ -1,7 +1,10 @@
 /*
- *  Mathlib : A C Library of Special Functions
- *  Copyright (C) 1998 Ross Ihaka
- *  Copyright (C) 2000 The R Development Core Team
+ *  AUTHOR
+ *    Catherine Loader, catherine@research.bell-labs.com.
+ *    October 23, 2000.
+ *
+ *  Merge in to R:
+ *	Copyright (C) 2000, The R Core Development Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -17,33 +20,40 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA.
  *
- *  DESCRIPTION
  *
- *    The density of the "Student" t distribution.
+ * DESCRIPTION
+ *
+ *    The t density is evaluated as
+ *         sqrt(n/2) / ((n+1)/2) * Gamma((n+3)/2) / Gamma((n+2)/2).
+ *             * (1+x^2/n)^(-n/2)
+ *             / sqrt( 2 pi (1+x^2/n) )
+ *    This form leads to a stable computation for all
+ *    values of n, including n -> 0 and n -> infinity.
+ *
  */
 
 #include "nmath.h"
 #include "dpq.h"
 
 double dt(double x, double n, int give_log)
-{
+{ 
+    double t, u;
 #ifdef IEEE_754
     if (ISNAN(x) || ISNAN(n))
 	return x + n;
 #endif
-    if (n <= 0.) ML_ERR_return_NAN;
 
+    if (n <= 0) ML_ERR_return_NAN;
     if(!R_FINITE(x))
 	return R_D__0;
     if(!R_FINITE(n))
-	return dnorm(x, 0.0, 1.0, give_log);
-    return give_log ?
-	log(1. + x * x / n)*(-0.5 * (n + 1.)) -.5*log(n) - lbeta(.5, .5 * n) :
-	pow(1. + x * x / n , -0.5 * (n + 1.)) / (sqrt(n) *  beta(.5, .5 * n));
+	return dnorm(x, 0., 1., give_log);
+
+    t = -bd0(n/2.,(n+1)/2.) + stirlerr((n+1)/2.) - stirlerr(n/2.);
+    if ( x*x > 0.2*n )
+	u = log( 1+ x*x/n ) * n/2;
+    else
+	u = -bd0(n/2.,(n+x*x)/2.) + x*x/2.;
+
+    return R_D_fexp(M_2PI*(1+x*x/n), t-u);
 }
-
-
-
-
-
-

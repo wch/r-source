@@ -1,7 +1,10 @@
 /*
- *  Mathlib : A C Library of Special Functions
- *  Copyright (C) 1998 Ross Ihaka
- *  Copyright (C) 2000 The R Development Core Team
+ *  AUTHOR
+ *    Catherine Loader, catherine@research.bell-labs.com.
+ *    October 23, 2000.
+ *
+ *  Merge in to R:
+ *	Copyright (C) 2000, The R Core Development Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -15,35 +18,46 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA.
  *
- *  DESCRIPTION
  *
- *     Computes the density of the gamma distribution.
+ * DESCRIPTION
+ *
+ *   Gamma density,
+ *                    lb^r x^{r-1} exp(-lb*x)
+ *        p(x;r,lb) = -----------------------
+ *                            (r-1)!
+ *
+ *   If USE_SCALE is defined below, the lb argument will be interpreted
+ *   as a scale parameter (i.e. replace lb by 1/lb above).
+ *   Otherwise, it is interpreted as a rate parameter, as above.
  */
 
 #include "nmath.h"
 #include "dpq.h"
 
-double dgamma(double x, double shape, double scale, int give_log)
-{
+#define USE_SCALE
+
+double dgamma(double x, double r, double lambda, int give_log)
+{ 
+    double pr;
 #ifdef IEEE_754
-    if (ISNAN(x) || ISNAN(shape) || ISNAN(scale))
-	return x + shape + scale;
+    if (ISNAN(x) || ISNAN(r) || ISNAN(lambda))
+        return x + r + lambda;
 #endif
-    if (shape <= 0 || scale <= 0) ML_ERR_return_NAN;
 
-    if (x < 0)
-	return R_D__0;
-    if (x == 0) {
-	if (shape < 1) ML_ERR_return_NAN;
-	if (shape > 1) return R_D__0;
+    if (r <= 0 || lambda < 0) ML_ERR_return_NAN;
+    if (x <= 0) return(R_D__0);
 
-	return give_log ? -log(scale) : 1 / scale;
+#ifdef USE_SCALE
+    lambda = 1.0/lambda;
+#endif
+
+    if (r < 1) { 
+	pr = dpois_raw(r,lambda*x,give_log);
+	return( (give_log) ?  pr + log(r/x) : pr*r/x );
     }
-    x /= scale;
-    return give_log ?
-	   ((shape - 1) * log(x) - lgammafn(shape) - x) - log(scale) :
-	exp((shape - 1) * log(x) - lgammafn(shape) - x) / scale;
+    /* else  r >= 1 */
+    pr = dpois_raw(r-1,lambda*x,give_log);
+    return( (give_log) ? pr + log(lambda) : lambda*pr);
 }
-

@@ -1,7 +1,10 @@
 /*
- *  Mathlib : A C Library of Special Functions
- *  Copyright (C) 1998 Ross Ihaka
- *  Copyright (C) 2000 The R Development Core Team
+ * AUTHOR
+ *   Catherine Loader, catherine@research.bell-labs.com.
+ *   October 23, 2000.
+ *
+ *  Merge in to R:
+ *	Copyright (C) 2000, The R Core Development Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -15,63 +18,63 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA.
  *
- *  DESCRIPTION
  *
- *    The density of the binomial distribution.
+ * DESCRIPTION
  *
- * Using the new algorithm of C.Loader(1999) :
+ *   To compute the binomial probability, call dbinom(x,n,p).
+ *   This checks for argument validity, and calls dbinom_raw().
  *
- * This code provides functions for computing binomial probabilities, and
- * attempts to be accurate for a full range of parameter values
- * (standard algorithms are often inaccurate with large parameters).
- *
- * Merge in to R:
- * Copyright (C) 2000, The R Core Development Team
- *
- * NOTE: Loader's original code is now split (and merged into R's extras)
- *       into  ./dbinom.c, ./dpois.c and ./stirlerr.c
+ *   dbinom_raw() does the actual computation; note this is called by
+ *   other functions in addition to dbinom()).
+ *     (1) dbinom_raw() has both p and q arguments, when one may be represented
+ *         more accurately than the other (in particular, in df()).
+ *     (2) dbinom_raw() does NOT check that inputs x and n are integers. This
+ *         should be done in the calling function, where necessary.
+ *     (3) Also does not check for 0 <= p <= 1 and 0 <= q <= 1 or NaN's.
+ *         Do this in the calling function.
  */
 
 #include "nmath.h"
 #include "dpq.h"
 
+double dbinom_raw(double x, double n, double p, double q, int give_log)
+{ 
+    double f, lc;
+
+    if (p == 0) return((x == 0) ? R_D__1 : R_D__0);
+    if (q == 0) return((x == n) ? R_D__1 : R_D__0);
+
+    if (x == 0) { 
+	if(n == 0) return R_D__1;
+	lc = (p < 0.1) ? -bd0(n,n*q) - n*p : n*log(q);
+	return( R_D_exp(lc) );
+    }
+    if (x == n) { 
+	lc = (q < 0.1) ? -bd0(n,n*p) - n*q : n*log(p);
+	return( R_D_exp(lc) );
+    }
+    if (x < 0 || x > n) return( R_D__0 );
+
+    lc = stirlerr(n) - stirlerr(x) - stirlerr(n-x) - bd0(x,n*p) - bd0(n-x,n*q);
+    f = (M_2PI*x*(n-x))/n;
+
+    return R_D_fexp(f,lc);
+}
+
 double dbinom(double x, double n, double p, int give_log)
-{
-    double lc;
+{ 
 #ifdef IEEE_754
     /* NaNs propagated correctly */
     if (ISNAN(x) || ISNAN(n) || ISNAN(p)) return x + n + p;
 #endif
-    n = floor(n + 0.5);
-    if(n < 0 || p < 0 || p > 1) ML_ERR_return_NAN;
 
-    if(fabs(x - floor(x + 0.5)) > 1e-7) {
-	MATHLIB_WARNING("non-integer x = %f", x);
-	return R_D__0;
-    }
-    if (x < 0 || x > n)
-	return R_D__0;
-    if (x == 0)
-	return (n == 0 || p == 0) ? R_D__1
-	    : (p == 1) ? R_D__0 : R_D_exp(n*log1p(-p));
-    /* x > 0 : */
-    if (p == 0 || p == 1)
-	return (x == n && p == 1) ? R_D__1 : R_D__0;
-    /* 0 < p < 1 : */
-    if (x == n)
-	return give_log ? n*log(p) : pow(p,n);/* or R_pow_di() {w/o checks}*/
-    /* else (0 < x < n) : */
-#ifndef OLD_dbinom
-    lc = stirlerr(n) - stirlerr(x) - stirlerr(n-x)
-	- bd0(x, n*p)
-	- bd0(n-x, n*(1.-p));
-    if (give_log)
-	return lc - M_LN_SQRT_2PI + .5*log(n/(x*(n-x)));
-    else
-	return exp(lc) * sqrt(n/(2*M_PI*x*(n-x)));
-#else
-    return R_D_exp(lfastchoose(n, x) + log(p) * x + (n - x) * log1p(-p));
-#endif
+  if (p < 0 || p > 1 || R_D_notnnegint(n)) ML_ERR_return_NAN;
+  R_D_nonint_check(x);
+  
+  n = R_D_forceint(n);
+  x = R_D_forceint(x);
+
+  return dbinom_raw(x,n,p,1-p,give_log);
 }
