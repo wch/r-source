@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2001  Robert Gentleman, Ross Ihaka and the
+ *  Copyright (C) 1997--2002  Robert Gentleman, Ross Ihaka and the
  *			      R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -176,10 +176,10 @@ SEXP do_deparse(SEXP call, SEXP op, SEXP args, SEXP rho)
     cut0 = DEFAULT_Cutoff;
     if(!isNull(CAR(args))) {
 	cut0 = asInteger(CAR(args));
-	if(cut0 == NA_INTEGER|| cut0 < MIN_Cutoff || cut0 > MAX_Cutoff)
+	if(cut0 == NA_INTEGER|| cut0 < MIN_Cutoff || cut0 > MAX_Cutoff) {
 	    warning("invalid `cutoff' for deparse, using default");
-	else
 	    cut0 = DEFAULT_Cutoff;
+	}
     }
     ca1 = deparse1WithCutoff(ca1, 0, cut0);
     return ca1;
