@@ -96,13 +96,8 @@ function(x, y = NULL, alternative = c("two.sided", "less", "greater"),
                                lci <- diffs[ql+1]
                                c(-Inf, lci)        
                            })
-                attr(cint, "conf.level") <- conf.level    
-                wmean <- n*(n+1)/4
-                if(floor(wmean) != wmean)
-                    ESTIMATE <- mean(c(diffs[floor(wmean)],
-                                       diffs[ceiling(wmean)]))
-                else 
-                    ESTIMATE <- mean(c(diffs[wmean-1], diffs[wmean+1]))
+                attr(cint, "conf.level") <- conf.level
+                ESTIMATE <- median(diffs)
                 names(ESTIMATE) <- "(pseudo)median"
 
             }
@@ -265,12 +260,7 @@ function(x, y = NULL, alternative = c("two.sided", "less", "greater"),
                                c(-Inf, lci)
                            })
                 attr(cint, "conf.level") <- conf.level
-                wmean <- n.x*n.y/2
-                if(floor(wmean) != wmean)
-                    ESTIMATE <- mean(c(diffs[floor(wmean)],
-                                       diffs[ceiling(wmean)]))
-                else 
-                    ESTIMATE <- mean(c(diffs[wmean-1], diffs[wmean+1]))
+                ESTIMATE <- median(diffs)
                 names(ESTIMATE) <- "difference in location"
             }
         }
