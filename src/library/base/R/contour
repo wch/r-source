@@ -1,7 +1,7 @@
 contour <- function(x=seq(0,1,len=nrow(z)), y=seq(0,1,len=ncol(z)), z,
 	nlevels=10, levels=pretty(range(z,na.rm=TRUE), nlevels), labcex=0,
 	xlim=range(x,na.rm=TRUE), ylim=range(y,na.rm=TRUE),
-	col=par("fg"), lty=par("lty"), add=FALSE)
+	col=par("fg"), lty=par("lty"), add=FALSE, ...)
 {
         ## labcex is disregarded since we do NOT yet put  ANY labels...
         if(missing(z)) {
@@ -17,6 +17,7 @@ contour <- function(x=seq(0,1,len=nrow(z)), y=seq(0,1,len=ncol(z)), z,
 	if(!add) {
 		plot.new()
 		plot.window(xlim, ylim, "")
+                title(...)
 	}
 	if(!is.matrix(z) || nrow(z) <= 1 || ncol(z) <= 1)
 		stop("no proper `z' matrix specified")
