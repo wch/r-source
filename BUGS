@@ -428,6 +428,10 @@ Date: Tue, 6 Aug 2002 16:57:54 +0800
 Subject: [R] CTRL-C suspends echo of shell (R versions 1.6.0 and 1.6.1)
 From: Wolfram Fischer - Z/I/M <wolfram@fischer-zim.ch>
 Date: Mon, 4 Nov 2002 10:18:48 +0100
+* PR# 2846 *
+Subject: Kinderman-Ramage
+From: Josef Leydold <leydold@statistik.wu-wien.ac.at>
+Date: Fri, 25 Apr 2003 13:18:53 +0200 (CEST)
 
 Directory:  Macintosh
 
@@ -577,6 +581,14 @@ Subject: Re: Bug#187537: r-base: FTBFS: hangs in tcltk test
 From: Dirk Eddelbuettel <edd@debian.org>
 Date: Sun, 6 Apr 2003 21:20:29 -0500
 ..part of 2730
+* PR# 2836 *
+Subject: R-1.7.0: build feedback: OpenBSD 3.2
+From: "Nelson H. F. Beebe" <beebe@math.utah.edu>
+Date: Thu, 24 Apr 2003 11:40:35 -0600 (MDT)
+* PR# 2837 *
+Subject: R-1.7.0 build feedback: NetBSD 1.6
+From: "Nelson H. F. Beebe" <beebe@math.utah.edu>
+Date: Thu, 24 Apr 2003 11:45:20 -0600 (MDT)
 
 Directory:  TooMuchAtOnce
 
@@ -590,6 +602,10 @@ From: socrates@mail.ru
 Date: Thu, 27 Jun 2002 10:30:51 +0200 (MET DST)
 ..A crash that is *very* hard to trigger (after several
 ..minutes of continuous resizing)
+* PR# 2801 *
+Subject: Rgui crashes after setting par(ask=TRUE) and using lattice
+From: smcnary@charm.net
+Date: Sun, 20 Apr 2003 21:01:40 +0200 (MET DST)
 * PR# 2816 *
 Subject: Handling of upper/lowercase in package names
 From: "Philippe Grosjean" <phgrosjean@sciviews.org>
@@ -631,10 +647,6 @@ Date: Fri, 18 Apr 2003 09:13:56 +0200
 Subject: Re: [R] Keyboard problem using RWin 1.7.0
 From: DJNordlund@aol.com
 Date: Sat, 19 Apr 2003 18:56:25 EDT
-* PR# 2801 *
-Subject: Rgui crashes after setting par(ask=TRUE) and using lattice
-From: smcnary@charm.net
-Date: Sun, 20 Apr 2003 21:01:40 +0200 (MET DST)
 * PR# 2808 *
 Subject: building R 1.7.0 under RH7.3
 From: Tim Hoar <thoar@cgd.ucar.edu>
@@ -647,10 +659,6 @@ Date: Mon, 21 Apr 2003 17:01:53 -0400
 Subject: Search Engine
 From: leroy@ucsd.edu
 Date: Tue, 22 Apr 2003 06:21:19 +0200 (MET DST)
-* PR# 2818 *
-Subject: zip.unpack() crashes R
-From: hb@maths.lth.se
-Date: Tue, 22 Apr 2003 17:23:27 +0200 (MET DST)
 * PR# 2822 *
 Subject: "LAPACK routine DGESDD gave error code -12" with Debian
 From: Ramon Diaz <rdiaz@cnio.es>
@@ -659,27 +667,16 @@ Date: Tue, 22 Apr 2003 20:06:21 +0200
 Subject: Re: [Rd] 
 From: Kurt Hornik <hornik@ci.tuwien.ac.at>
 Date: Tue, 22 Apr 2003 20:15:19 +0200
+..part of 2822
 * PR# 2824 *
 Subject: coplot panels malrendered / 1653
 From: dmaszle@mendelbio.com
 Date: Wed, 23 Apr 2003 02:19:53 +0200 (MET DST)
-* PR# 2835 *
-Subject: Italian-crafted Rolex - only $65 - $140!! Free SHIPPING!!
-From: james@hello.com
-Date: Fri, 25 Apr 2003 01:06:14 +0800
-* PR# 2836 *
-Subject: R-1.7.0: build feedback: OpenBSD 3.2
-From: "Nelson H. F. Beebe" <beebe@math.utah.edu>
-Date: Thu, 24 Apr 2003 11:40:35 -0600 (MDT)
-* PR# 2837 *
-Subject: R-1.7.0 build feedback: NetBSD 1.6
-From: "Nelson H. F. Beebe" <beebe@math.utah.edu>
-Date: Thu, 24 Apr 2003 11:45:20 -0600 (MDT)
-* PR# 2838 *
-Subject: ATTN:  re^fina-nce and earn some money iiwm gmhpg
-From: "Barney Bermudez" <oj1m0fxvsny6@dellmail.com>
-Date: Thu, 24 Apr 03 16:44:49 GMT
-* PR# 2839 *
-Subject: KIND REQUEST FOR FAVOUR.
-From: "DR. GILBERT GUEI" <gilguie@netscpe.net>
-Date: Thu, 24 Apr 2003 23:04:08 +0200
+* PR# 2840 *
+Subject: FAQ/Website problems
+From: Ross Boylan <ross@biostat.ucsf.edu>
+Date: Thu, 24 Apr 2003 17:36:32 -0700
+* PR# 2849 *
+Subject: URGENT RESPONSE NEEDED
+From: LESLIE MABUZO <lesliemabuzo55@netscape.net>
+Date: Fri, 25 Apr 2003 23:30:20 +0200
