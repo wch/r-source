@@ -87,7 +87,7 @@ Sweave <- function(file, driver=RweaveLatex(),
 SweaveReadFile <- function(file, syntax)
 {
     ## file can be a vector to keep track of recursive calls to
-    ## SweaveReadFile.  ## In this case only the first element is
+    ## SweaveReadFile.  In this case only the first element is
     ## tried to read in, the rest are forbidden names for further
     ## SweaveInput
     f <- file[1]
@@ -756,7 +756,8 @@ RtangleWritedoc <- function(object, chunk)
     {
         opts <- sub(paste(".*", object$syntax$docopt, ".*", sep=""),
                     "\\1", chunk[pos[1]])
-        object$options <- SweaveParseOptions(opts, object$options)
+        object$options <- SweaveParseOptions(opts, object$options,
+                                             RweaveLatexOptions)
         chunk[pos[1]] <- sub(object$syntax$docopt, "", chunk[pos[1]])
     }
     return(object)
