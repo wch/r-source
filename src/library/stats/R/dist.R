@@ -48,11 +48,10 @@ as.matrix.dist <- function(x)
 }
 
 
-as.dist <-
-function(m, diag = FALSE, upper = FALSE)
+as.dist <- function(m, diag = FALSE, upper = FALSE)
     UseMethod("as.dist")
-as.dist.default <-
-function(m, diag = FALSE, upper = FALSE)
+
+as.dist.default <- function(m, diag = FALSE, upper = FALSE)
 {
     if (inherits(m,"dist"))
 	ans <- m
@@ -82,25 +81,28 @@ function(m, diag = FALSE, upper = FALSE)
 
 print.dist <-
     function(x, diag = NULL, upper = NULL,
-             digits = getOption("digits"), justify = "none", right = TRUE, ...)
+	     digits = getOption("digits"), justify = "none", right = TRUE, ...)
 {
-    if(is.null(diag))
-	diag <-	 if(is.null(a <- attr(x, "Diag"))) FALSE else a
-    if(is.null(upper))
-	upper <- if(is.null(a <- attr(x,"Upper"))) FALSE else a
+    if(length(x) > 0) {
+	if(is.null(diag))
+	    diag <-	 if(is.null(a <- attr(x, "Diag"))) FALSE else a
+	if(is.null(upper))
+	    upper <- if(is.null(a <- attr(x,"Upper"))) FALSE else a
 
-    m <- as.matrix(x)
-    cf <- format(m, digits = digits, justify = justify)
-    if(!upper)
-	cf[row(cf) < col(cf)] <- ""
-    if(!diag)
-	cf[row(cf) == col(cf)] <- ""
+	m <- as.matrix(x)
+	cf <- format(m, digits = digits, justify = justify)
+	if(!upper)
+	    cf[row(cf) < col(cf)] <- ""
+	if(!diag)
+	    cf[row(cf) == col(cf)] <- ""
 
-### Better: use an improved prettyNum() function -> ../../base/R/format.R
-
-##-     if(any((i <- m == floor(m))))
-##-         cf[i] <- sub("0+$", "", cf[i])
-    print(if(diag || upper) cf else cf[-1, -attr(x, "Size")],
-	  quote = FALSE, right = right, ...)
+	## Better: use an improved prettyNum() function -> ../../base/R/format.R
+	##-	if(any((i <- m == floor(m))))
+	##-	    cf[i] <- sub("0+$", "", cf[i])
+	print(if(diag || upper) cf else cf[-1, -attr(x, "Size")],
+	      quote = FALSE, right = right, ...)
+    } else {
+	cat(data.class(x),"(0)\n", sep='')
+    }
     invisible(x)
 }

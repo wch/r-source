@@ -3585,3 +3585,7 @@ stopifnot(identical(x, "x12"))
 (x <- gsub("^12", "x", "1212", perl = TRUE)) # was "xx"
 stopifnot(identical(x, "x12"))
 ## various fixes in 2.1.0
+
+## length(0) "dist":
+(d01. <- dist(matrix(0., 0,1)))
+## failed in 2.0.1 and earlier
