@@ -291,3 +291,7 @@ Date: Thu, 22 Apr 1999 13:16:38 +0930 (CST)
 Subject: mvfft
 From: Martyn Plummer <plummer@iarc.fr>
 Date: Thu, 22 Apr 1999 18:59:44 +0200 (CEST)
+* PR# 177 *
+Subject: R won't compile on Redhat 5.2
+From: pgutwin@us.ibm.com
+Date: Fri, 23 Apr 1999 20:08:55 +0200 (MET DST)
