@@ -161,30 +161,25 @@ esac
 AC_PROG_LN_S
 AC_PROG_RANLIB
 AC_PROG_YACC
-
-AC_CHECK_PROG(AR, ar, ar)
-AC_SUBST(AR)
+## Ar.
+AC_CHECK_PROG(AR, [${AR} ar], ar)
 : ${ARFLAGS="rc"}
 AC_SUBST(ARFLAGS)
-
-AC_PATH_PROG(LATEX, latex, false)
-AC_PATH_PROG(DVIPS, dvips, false)
-AC_PATH_PROG(MAKEINDEX, makeindex, false)
-
-AC_PATH_PROG(R_UNZIPCMD, unzip, "")
-AC_PATH_PROG(R_ZIPCMD, zip, "")
-
+## LaTeX && friends
+AC_PATH_PROG(LATEX, [${LATEX} latex], false)
+AC_PATH_PROG(DVIPS, [${DVIPS} dvips], false)
+AC_PATH_PROG(MAKEINDEX, [${MAKEINDEX} makeindex], false)
+## Nroff && friends
+AC_PATH_PROG(NROFF, [${NROFF} nroff], false)
+AC_PATH_PROG(TBL, [${TBL} tbl], false)
+## Unzip && zip
+AC_PATH_PROG(R_UNZIPCMD, [${UNZIP} unzip], "")
+AC_PATH_PROG(R_ZIPCMD, [${ZIP} zip], "")
 ## Make.
 : ${MAKE=make}
 AC_SUBST(MAKE)
-
-## Nroff.
-AC_PATH_PROG(NROFF, [${NROFF} nroff], false)
-AC_PATH_PROG(TBL, [${TBL} tbl], false)
-    
 ## Perl.
 R_PROG_PERL
-
 ## Tar.
 : ${TAR=tar}
 AC_SUBST(TAR)
@@ -437,7 +432,8 @@ AC_CHECK_SIZEOF(long, 4)
 if test "${GCC}" = yes; then
   case "${host}" in
     i[[3456789]]86-*-*)
-      R_XTRA_CFLAGS="${R_XTRA_CFLAGS} -mieee-fp"
+      R_PROG_CC_FLAG(-mieee-fp,
+	R_XTRA_CFLAGS="${R_XTRA_CFLAGS} -mieee-fp")
       ;;
   esac
 fi
@@ -445,18 +441,22 @@ fi
 case "${host}" in
   *aix4.[[2-9]]*)
     AC_DEFINE(HAVE_NO_SYMBOL_UNDERSCORE)
+    R_PROG_CC_FLAG(-mno-fp-in-toc,
+      R_XTRA_CFLAGS="${R_XTRA_CFLAGS} -mno-fp-in-toc")
     ;;
   alpha*osf*)
     AC_DEFINE(HAVE_NO_SYMBOL_UNDERSCORE)
-    R_XTRA_CFLAGS="${R_XTRA_CFLAGS} -ieee_with_inexact"
+    R_PROG_CC_FLAG(-ieee_with_inexact,
+      R_XTRA_CFLAGS="${R_XTRA_CFLAGS} -ieee_with_inexact")
     ;;
   alpha*linux)
-    R_XTRA_CFLAGS="${R_XTRA_CFLAGS} -mieee"
-    R_XTRA_FFLAGS="${R_XTRA_FFLAGS} -mieee"
+    R_PROG_CC_FLAG(-mieee,
+      R_XTRA_CFLAGS="${R_XTRA_CFLAGS} -mieee"
+      R_XTRA_FFLAGS="${R_XTRA_FFLAGS} -mieee")
     ;;
   *hpux*)
     AC_DEFINE(USE_BUILTIN_RINT)
-    R_XTRA_LIBS="${R_XTRA_LIBS} -ldld"
+    AC_CHECK_LIB(dld, shl_load, R_XTRA_LIBS="${R_XTRA_LIBS} -ldld")
     ;;
   *irix*)
     R_C_OPTIEEE
