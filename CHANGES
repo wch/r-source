@@ -2,6 +2,21 @@
 
 NEW FEATURES
 
+    o   The graphics system has been through a major overhaul.
+	It is now possible to have multiple active device drivers
+	and to control them with full suite of dev.xxx functions
+	available in S.  Display lists are now kept for interactive
+	devices.  When an on-screen graphics window is resized,
+	the content of that window is redrawn at the new size.
+	At present only X11 and PostScript graphics device drivers
+	are available, but more are on the way.
+
+    o   On systems using IEEE arithmetic, the builtin Inf and NaN
+	values are now recognised and used.  NA and NaN should
+	propagate correctly in computations, with NA dominating
+	in computations invoving both quantities.
+        E.g. NA+NaN is NA.
+	
     o   system.file()  [now documented] returns all files matched by
 	wildcards.
 
