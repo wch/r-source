@@ -92,7 +92,7 @@ resource 'DITL' ( kDITLAboutR, "R about", purgeable )
 		/*	The R copyright text */
 		{ 13, 221, 92, 500 }, StaticText {enabled, 
 		"R for MacOS and MacOS X\n"	/*	Version */
-		"\0xA9 2002 R Foundation\n"	/*	(c)  */
+		"\0xA9 1998-2002 R Foundation\n"	/*	(c)  */
 		"http://www.r-project.org\n"/*	HTTP URL */
 		kVersString " - " kStatusString 
 		 },
