@@ -4,6 +4,17 @@
 ###
 
 Meps <- .Machine $ double.eps
+
+options(rErr.eps = 1e-30)
+rErr <- function(approx, true, eps = .Options$rErr.eps)
+{
+    if(is.null(eps)) { eps <- 1e-30; options(rErr.eps = eps) }
+    ifelse(abs(true) >= eps,
+           1 - approx / true, # relative error
+           true - approx)     # absolute error (e.g. when true=0)
+}
+
+
 abs(1- .Machine$double.xmax * 10^(-.Machine$double.max.exp*log10(2)))/Meps < 1e3
 abs(1- .Machine$double.xmin * 10^(-.Machine$double.min.exp*log10(2)))/Meps < 1e3
 ##P (1- .Machine$double.xmax * 10^(-.Machine$double.max.exp*log10(2)))/Meps
@@ -11,13 +22,25 @@ abs(1- .Machine$double.xmin * 10^(-.Machine$double.min.exp*log10(2)))/Meps < 1e3
 log10(.Machine$double.xmax) / log10(2) == .Machine$double.max.exp
 log10(.Machine$double.xmin) / log10(2) == .Machine$double.min.exp
 
+## Real Trig.:
+cos(0) == 1
+sin(3*pi/2) == cos(pi)
+x <- rnorm(99)
+all( sin(-x) == - sin(x))
+all( cos(-x) == cos(x))
 
+x <- 1:99/100
+all(abs(1 - x / asin(sin(x))) <= .Machine$double.eps)
+all(abs(1 - x / atan(tan(x))) <= .Machine$double.eps)
+
+## Complex Trig.:
 abs(Im(cos(acos(1i))) -	 1) < 2*Meps
 abs(Im(sin(asin(1i))) -	 1) < 2*Meps
-abs(Im(acos(cos(1i))) -	 1) < 4*Meps
-abs(Im(asin(sin(1i))) -	 1) < 2*Meps
 ##P (1 - Im(sin(asin(Ii))))/Meps
 ##P (1 - Im(cos(acos(Ii))))/Meps
+abs(Im(asin(sin(1i))) -	 1) < 2*Meps
+cos(1i) == cos(-1i)# i.e. Im(acos(*)) gives + or - 1i:
+abs(abs(Im(acos(cos(1i)))) - 1) < 4*Meps
 
 .Random.seed <- c(0, 629, 6137, 22167) # want reproducible output
 Isi <- Im(sin(asin(1i + rnorm(100))))
@@ -30,11 +53,13 @@ Isi <- Im(atan(tan(1i + rnorm(100)))) #-- tan(atan(..)) does NOT work (Math!)
 all(abs(Isi-1) < 100* Meps)
 ##P table(2*abs(Isi-1)	/ Meps)
 
-all(names(c(a=pi, b=1, d=1:4)) == c("a","b", paste("d", 1:4, sep="")))
-##P names(c(a=pi, b=1, d=1:4))
-ncb <- dimnames(cbind(a=1, yy=1:3))[[2]]
-(!is.null(ncb)) && all(ncb == c("a","yy"))
+## gamma():
+abs(gamma(1/2)^2 - pi) < 4* Meps
+r <- rlnorm(5000)
+all(abs(rErr(gamma(r+1), r*gamma(r))) < 500 * Meps)
 
-all(cbind(a=1:2, b=1:3, c=1:6) == t(rbind(a=1:2, b=1:3, c=1:6)))
-##P rbind(a=1:2, b=1:3, c=1:6)
+n <-   10; all(          gamma(1:n) == cumprod(c(1,1:(n-1))))
+n <-   20; all(abs(rErr( gamma(1:n), cumprod(c(1,1:(n-1))))) < 100*Meps)
+n <-  120; all(abs(rErr( gamma(1:n), cumprod(c(1,1:(n-1))))) < 1000*Meps)
+n <- 10000;all(abs(rErr(lgamma(1:n),cumsum(log(c(1,1:(n-1)))))) < 100*Meps)
 
