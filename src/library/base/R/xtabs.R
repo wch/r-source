@@ -43,11 +43,11 @@ xtabs <- function(formula = ~., data = sys.frame(sys.parent()), subset,
     x
 }
 
-print.xtabs <- function(x)
+print.xtabs <- function(x, ...)
 {
     ox <- x
     attr(x, "call") <- NULL
-    print.table(x)
+    print.table(x, ...)
     invisible(ox)
 }
 
@@ -76,9 +76,7 @@ summary.xtabs <- function(x)
     y
 }
 
-## Hmm: "digits" should	 *really* depend on  getOption("digits")
-## ---	as all other print.* methods (should) do ...
-print.summary.xtabs <- function(x, digits = 4)
+print.summary.xtabs <- function(x, digits = max(1, getOption("digits") - 3))
 {
     if(!inherits(x, "summary.xtabs"))
 	stop("x must inherit from class `summary.xtabs'")
@@ -87,12 +85,10 @@ print.summary.xtabs <- function(x, digits = 4)
     cat("Number of cases in table:", x$n.cases, "\n")
     cat("Number of factors:", x$n.vars, "\n")
     cat("Test for independence of all factors:\n")
-    cat("\tChisq = ",
-	format(round(x$statistic, digits)),
-	", df = ",
-	x$parameter,
-	", p-value = ",
-	format.pval(x$p.value, digits),
+    ch <- .Alias(x$statistic)
+    cat("\tChisq = ",	format(round(ch, max(0, digits - log10(ch)))),
+	", df = ",	x$parameter,
+	", p-value = ",	format.pval(x$p.value, digits, eps = 0),
 	"\n", sep = "")
     if(!x$approx.ok)
 	cat("\tChi-square approximation may be incorrect\n")

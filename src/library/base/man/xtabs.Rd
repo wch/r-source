@@ -11,13 +11,14 @@
 \synopsis{
 xtabs(formula = ~., data = sys.frame(sys.parent()), subset, na.action,
       exclude = c(NA, NaN), drop.unused.levels = FALSE)
-print.xtabs(x)
-print.summary.xtabs(x, digits = 4)
+print.xtabs(x, \dots)
+print.summary.xtabs(x, digits = getOption("digits") - 3)
 summary.xtabs(x)
 }
 \usage{
 xtabs(formula = ~., data, subset, na.action, exclude = c(NA, NaN),
       drop.unused.levels = FALSE)
+summary.xtabs(x, \dots)
 }
 \arguments{
   \item{formula}{a formula object with the cross-classifying variables,
@@ -44,11 +45,11 @@ xtabs(formula = ~., data, subset, na.action, exclude = c(NA, NaN),
   There is a \code{summary} method for contingency table objects created
   by \code{xtabs}, which currently gives basic information and performs
   a chi-square test for independence of factors (note that the function
-  \code{chisq.test} in package \bold{ctest} currently only handles 2-d
-  tables).
+  \code{\link[ctest]{chisq.test}} in package \bold{ctest} currently only
+  handles 2-d tables).
 }
 \value{
-  An contingency table in array representation of class \code{"xtabs"},
+  A contingency table in array representation of class \code{"xtabs"},
   with a \code{"call"} attribute storing the matched call.
 }
 \seealso{
