@@ -73,7 +73,7 @@ NEW FEATURES
 
     o   methods() has a print method which asterisks functions which
 	are not user-visible.  methods(class = "foo") now lists
-	non-visible functions.
+	non-visible functions, and checks that there is a matching generic.
 
     o   library() has a pos argument, controlling where the package is
 	attached (defaulting to pos=2 as before).
@@ -275,7 +275,7 @@ NEW FEATURES
     o	data() now has an 'envir' argument.
 
     o	Error and warning handling has been modified to incorporate a
-	flexible condition handling mechanism. See online
+	flexible condition handling mechanism.  See the online
 	documentation of 'tryCatch' and 'signalCondition'.  Code that
 	does not use these new facilities should remain unaffected.
 

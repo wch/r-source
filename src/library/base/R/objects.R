@@ -49,7 +49,6 @@ methods <- function (generic.function, class)
     info <- data.frame(visible = rep.int(TRUE, length(an)),
                        from = names(an),
                        row.names = an)
-    an <- as.vector(an) # drop names
     if (!missing(generic.function)) {
 	if (!is.character(generic.function))
 	    generic.function <- deparse(substitute(generic.function))
@@ -63,58 +62,72 @@ methods <- function (generic.function, class)
         genfun <- get(generic.function, mode = "function",
                       envir = parent.frame())
 	name <- paste("^", generic.function, ".", sep = "")
-        name <- gsub("\\$", "\\\\$", name) # $ and $<- are generics
+        name <- gsub("([.[$])", "\\\\\\1",name)
+        info <- info[grep(name, row.names(info)), ]
+        info <- info[! row.names(info) %in% S3MethodsStopList, ]
+        ## check that there are all functions
+        keep <- sapply(row.names(info), function(nm) exists(nm, mode="function"))
+        info <- info[keep, ]
+
         ## also look for registered methods from namespaces
+        ## we assume that only functions get registered.
         if(generic.function %in% S3groupGenerics)
             defenv <- .BaseNamespaceEnv
         else {
             defenv <- if (typeof(genfun) == "closure") environment(genfun)
             else .BaseNamespaceEnv
         }
-        S3reg <- ls(get(".__S3MethodsTable__.", envir = defenv))
+        S3reg <- ls(get(".__S3MethodsTable__.", envir = defenv),
+                    pattern = name)
         if(length(S3reg)) {
             msg <- paste("registered S3method for", generic.function)
             nmS3reg <- rep.int(msg, length(S3reg))
-            an <- c(an, S3reg)
             info <- rbind(info,
                           data.frame(visible = rep.int(FALSE, length(S3reg)),
                                      from = nmS3reg,
                                      row.names = S3reg))
-            ## might both export and register a method
-            dups <- duplicated(an)
-            an <- an[!dups]; info <- info[!dups,]
         }
     }
     else if (!missing(class)) {
 	if (!is.character(class))
 	    class <- paste(deparse(substitute(class)))
 	name <- paste(".", class, "$", sep = "")
+        name <- gsub("([.[])", "\\\\\\1", name)
+        info <- info[grep(name, row.names(info)), ]
+        info <- info[! row.names(info) %in% S3MethodsStopList, ]
+
+        ## check if we can find a generic matching the name
+        possible.generics <- gsub(name, "", row.names(info))
+        keep <- sapply(possible.generics, function(nm) {
+            where <- find(nm, mode = "function")
+            if(!length(where)) return(FALSE)
+            any(sapply(where, function(w)
+                       nchar(findGeneric(nm, envir=as.environment(w))) > 0))
+        })
+        info <- info[keep, ]
+
         ## also look for registered methods in loaded namespaces.
         ## These should only be registered in environments containing
         ## the corresponding generic, so we don't check again.
         ## Note that the generic will not necessarily be visible,
         ## as the package may not be loaded -- we don't check.
         for(i in loadedNamespaces()) {
-            S3reg <- ls(get(".__S3MethodsTable__.", envir = asNamespace(i)))
+            S3reg <- ls(get(".__S3MethodsTable__.", envir = asNamespace(i)),
+                        pattern = name)
             if(length(S3reg)) {
                 nmS3reg <- rep.int("registered S3method", length(S3reg))
-                an <- c(an, S3reg)
                 info <- rbind(info,
                               data.frame(visible = rep.int(FALSE, length(S3reg)),
                                          from = nmS3reg, row.names = S3reg))
-                ## might both export and register a method
-                dups <- duplicated(an)
-                an <- an[!dups]; info <- info[!dups,]
             }
         }
     }
     else stop("must supply generic.function or class")
-    keep <- grep(gsub("([.[])", "\\\\\\1", name), an)
-    res <- an[keep]; info <- info[keep,]
-    keep <- ! res %in% S3MethodsStopList
-    res <- res[keep]; info <- info[keep,]
-    ord <- sort.list(res)
-    res <- res[ord]; info <- info[ord,]
+
+    ## might both export and register a method
+    info <- info[!duplicated(row.names(info)), ]
+    info <- info[sort.list(row.names(info)), ]
+    res <- row.names(info)
     class(res) <- "MethodsFunction"
     attr(res, "info") <- info
     res

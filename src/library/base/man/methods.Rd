@@ -4,7 +4,7 @@
 \alias{print.MethodsFunction}
 \description{
   List all available methods for an S3 generic function, or all
-  generics with a visible method for a class.
+  methods for a class.
 }
 \usage{
 methods(generic.function, class)
@@ -33,6 +33,9 @@ methods(generic.function, class)
   (known exceptions are discarded in the code).  Note that the listed
   methods may not be user-visible objects, but often help will be
   available for them.
+
+  If \code{class} is used, we check that a matching generic can be found
+  for each user-visible object named.
 }
 \note{
   This scheme is called \emph{S3} (S version 3).  For new projects,
