@@ -513,7 +513,9 @@ INSTALLATION CHANGES
 	which should now be done correctly.
 
     o	Makeinfo 4.5 or later is now required for building the HTML and
-	Info versions of the manuals.
+	Info versions of the manuals.  However, binary distributions
+	need to be made with 4.7 or later to ensure some of the 
+	links are correct.
 
     o   f2c is not allowed on 64-bit platforms, as it uses longs for
 	Fortran integers.
@@ -522,9 +524,9 @@ INSTALLATION CHANGES
 	reference manual -- see the 'R Administration and Installation
 	Manual' section 2.2.
 
-    o   The concatenated Rd files in the installed 'man' directory are 
-	now compressed and the R CMD check routines can read the compressed
-	files.
+    o	The concatenated Rd files in the installed 'man' directory are
+	now compressed and the R CMD check routines can read the
+	compressed files.
 
 
 PACKAGE INSTALLATION CHANGES
