@@ -312,7 +312,3 @@ Date: Mon, 1 Oct 2001 15:43:36 +0200 (MET DST)
 Subject: Wrong error message in Rdlists.pm
 From: Thomas Hoffmann <thoffman@zappa.sax.de>
 Date: Tue, 02 Oct 2001 00:01:35 +0100
-* PR# 1108 *
-Subject: Documentation bug in bug.report
-From: Thomas Hoffmann <thoffman@zappa.sax.de>
-Date: Tue, 02 Oct 2001 00:06:01 +0100
