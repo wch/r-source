@@ -764,6 +764,12 @@ BUG FIXES
 
     o	1:2 * 1e-100  now prints with correct number of spaces.
 
+    o   Negative subscripts that were out of range or NA were not handled 
+        correctly.
+
+    o   gzfile() connections had trouble at EOF when used on uncompressed
+	file
+
 
 	**************************************************
 	*						 *
