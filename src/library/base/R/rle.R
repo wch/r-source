@@ -4,6 +4,6 @@ rle <- function(x) {
     n <- length(x)
     if (n == 0)
         return(list(lengths = numeric(0), values = x))
-    i <- c(which(diff(x) != 0), n)
+    i <- c(which(x[-1] != x[-length(x)]), n)
     list(lengths = diff(c(0, i)), values = x[i])
 }

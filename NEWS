@@ -201,6 +201,8 @@ BUG FIXES
     o   Using duplicated new string indices in [<- caused a crash on
 	some platforms, e.g. x <- 1:2; x[c("3", "3")] <- 3; x.
 
+    o   rle() can now handle character vectors, as documented.
+
 
 	**************************************************
 	*						 *
