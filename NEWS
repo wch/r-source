@@ -29,6 +29,13 @@ NEW FEATURES
     o	Add function logb(), same as log() but for S-PLUS
 	compatibility (where log now has only one argument).
 
+    o	scan() can have NULL elements in `what', useful to save space
+	when columns need to be discarded.
+
+    o	rep() has a new argument `each' for S-PLUS compatibility.
+	The internal call is made available as rep.int(), again for
+	help in porting code.
+
 
 
 DEPRECATED & DEFUNCT

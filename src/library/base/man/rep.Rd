@@ -1,15 +1,20 @@
 \name{rep}
 \alias{rep}
+\alias{rep.int}
 \title{Replicate Elements of Vectors and Lists}
 \usage{
-rep(x, times, length.out)
+rep(x, times, length.out, each)
+rep.int(x, times)
 }
 \arguments{
   \item{x}{a vector (of any mode including a list) or a pairlist.}
   \item{times}{integer.  A vector giving the number of times to repeat
-    each element. Either of length 1 or \code{length(x)}.}
+    each element if of length \code{length(x)}, or to repeat the whole
+    vector if of length 1.}
   \item{length.out}{integer.  (Optional.)  The desired length of the
     output vector.}
+  \item{each}{optional integer. Each element of \code{x} is
+    repeated \code{each} times.}
 }
 \description{
   \code{rep} replicates the values in \code{x}
@@ -39,16 +44,23 @@ rep(x, times, length.out)
 \note{
   If the original vector has names, these are also replicated and so
   will almost always contain duplicates.
+
+  If \code{length.out} is used to extend the vector, the behaviour is
+  different from that of S-PLUS, which recycles the existing vector.
+
+  Function \code{rep.int} is a simple case handled by internal code, and
+  provided as a separate function purely for S compatibility.
 }
 \seealso{
   \code{\link{seq}}, \code{\link{sequence}}.
 }
 \examples{
 rep(1:4, 2)
-rep(1:4, c(2,2,2,2))     # same as above, length 8.
+rep(1:4, each = 2)       # not the same.
+rep(1:4, c(2,2,2,2))     # same as second.
 rep(1:4, c(2,1,2,1))
-rep(1:4, c(2,2,2,2), 4)  # first 4 only.
-rep(1:4, c(2,2,2,2), 10) # 8 intgers plus two NAs
+rep(1:4, each = 2, len = 4)  # first 4 only.
+rep(1:4, each = 2, len = 10)   # 8 integers plus two NAs
 
 rep(1, 40*(1-.8)) # length 7 on most platforms
 rep(1, 40*(1-.8)+1e-7) # better
