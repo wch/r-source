@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 1.2-10, 2001-01-03
+Version 1.2-11, 2001-01-05
 Kurt Hornik
 
 
@@ -868,13 +868,14 @@ the same time being as compatible as possible with S.
      for a site-wide startup profile unless the command line option
      `--no-site-file' was given.  The name of this file is taken from the
      value of the `R_PROFILE' environment variable.  If that variable is
-     unset, the default is ``$R_HOME'/etc/Rprofile'.  Then, unless
-     `--no-init-file' was given, R searches for a file called `.Rprofile'
-     in the current directory or in the user's home directory (in that
-     order) and sources it.  It also loads a saved image from `.RData' in
-     case there is one (unless `--no-restore' was specified).  If needed,
-     the functions `.First()' and `.Last()' should be defined in the
-     appropriate startup profiles.
+     unset, the default is ``$R_HOME'/etc/Rprofile'.  This code is loaded
+     in package *base*.  Then, unless `--no-init-file' was given, R
+     searches for a file called `.Rprofile' in the current directory or in
+     the user's home directory (in that order) and sources it into the user
+     workspace.  It then loads a saved image of the user workspace from
+     `.RData'  in case there is one (unless `--no-restore' was specified).
+     If needed, the functions `.First()' and `.Last()' should be defined in
+     the appropriate startup profiles.
 
    * In R, `T' and `F' are just variables being set to `TRUE' and `FALSE',
      respectively, but are not reserved words as in S and hence can be
