@@ -2996,7 +2996,8 @@ SEXP do_abline(SEXP call, SEXP op, SEXP args, SEXP env)
     if (GRecording(call, dd))
 	recordGraphicOperation(op, originalArgs, dd);
     return R_NilValue;
-}/* do_title */
+} /* do_abline */
+
 
 SEXP do_box(SEXP call, SEXP op, SEXP args, SEXP env)
 {
