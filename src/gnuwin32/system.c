@@ -161,7 +161,7 @@ void R_WriteConsole(char *buf, int len)
 
 
 /*1: from GUI console */
-static int R_is_running = 0;
+int R_is_running = 0;
 
 void Rconsolesetwidth(int cols)
 {

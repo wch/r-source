@@ -26,7 +26,9 @@ select.list(list, preselect = NULL, multiple = FALSE)
 }
 \value{
   A character vector of selected items.  If \code{multiple} is false and
-  no item was selected (or \code{Cancel} was used), \code{""} is returned.
+  no item was selected (or \code{Cancel} was used), \code{""} is
+  returned.   If \code{multiple} is true and no item was selected (or
+  \code{Cancel} was used) then a character vector of length 0 is returned.
 }
 \examples{\dontrun{
 select.list(sort(.packages(all.available = TRUE)))
