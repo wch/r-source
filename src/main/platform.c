@@ -1236,7 +1236,7 @@ SEXP do_dircreate(SEXP call, SEXP op, SEXP args, SEXP env)
     show = asLogical(CADR(args));
     if(show == NA_LOGICAL) show = 0;
     res = mkdir(CHAR(STRING_ELT(path, 0)), 0777);
-    if(show && errno == EEXIST)
+    if(show && res && errno == EEXIST)
 	warning("'%s' already exists", CHAR(STRING_ELT(path, 0)));
     PROTECT(ans = allocVector(LGLSXP, 1));
     LOGICAL(ans)[0] = (res==0);
@@ -1262,7 +1262,7 @@ SEXP do_dircreate(SEXP call, SEXP op, SEXP args, SEXP env)
     for(p = dir; *p != '\0'; p++)
 	if(*p == '/') *p = '\\';
     res = mkdir(dir);
-    if(show && errno == EEXIST)
+    if(show && res && errno == EEXIST)
 	warning("'%s' already exists", dir);
     PROTECT(ans = allocVector(LGLSXP, 1));
     LOGICAL(ans)[0] = (res==0);
