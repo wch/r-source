@@ -353,6 +353,10 @@ BUG FIXES
 
     o	scale(scale=TRUE) gave all NAs in any columns containing NAs.
 
+    o	polylines with more than 64K pieces will now work on more X
+	servers with the x11 device.
+
+
 
 	**************************************************
 	*						 *

@@ -1714,9 +1714,8 @@ static void X11_Polyline(int n, double *x, double *y, int coords, DevDesc *dd)
 {
     XPoint *points;
     double devx, devy;
-    int i;
+    int i, j;
     x11Desc *xd = (x11Desc *) dd->deviceSpecific;
-
     points = (XPoint *) C_alloc(n, sizeof(XPoint));
 
     for(i=0 ; i<n ; i++) {
@@ -1728,7 +1727,12 @@ static void X11_Polyline(int n, double *x, double *y, int coords, DevDesc *dd)
 
     SetColor(dd->gp.col, dd);
     SetLinetype(dd->gp.lty, dd->gp.lwd, dd);
-    XDrawLines(display, xd->window, xd->wgc, points, n, CoordModeOrigin);
+/* Some X servers need npoints < 64K */
+    for(i = 0; i < n; i+= 10000-1) {
+	j = n - i;
+	j = (j <= 10000) ? j: 10000; /* allow for overlap */
+	XDrawLines(display, xd->window, xd->wgc, points+i, j, CoordModeOrigin);
+    }
 #ifdef XSYNC
     if (xd->type == WINDOW) XSync(display, 0);
 #endif
