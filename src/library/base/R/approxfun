@@ -1,5 +1,5 @@
-approxfun <- function (x, y=NULL, method = "linear", rule=1,
-	yleft=y[1], yright=y[length(y)], f=0)
+approxfun <-
+function (x, y=NULL, method = "linear", yleft, yright, rule=1, f=0)
 {
 	x <- xy.coords(x, y)
 	y <- x$y
@@ -20,15 +20,11 @@ approxfun <- function (x, y=NULL, method = "linear", rule=1,
 	o <- order(x)
 	x <- x[o]
 	y <- y[o]
-	if (missing(yleft)) {
-		if(rule == 1) yleft <- NA
-		else yleft <- y[1]
-	}
-	if (missing(yright)) {
-		if(rule == 1) yright <- NA
-		else yleft <- y[length(y)]
-	} 
-	rm(o, ok)
+	if (missing(yleft))
+		yleft <- if(rule == 1) NA else y[1]
+	if (missing(yright))
+		yright <- if(rule == 1) NA else y[length(y)]
+	rm(o, ok, rule)
 	function(v) .C("approx", as.double(x), as.double(y),
 			n, xout = as.double(v), length(v), as.integer(method),
 			as.double(yleft), as.double(yright),

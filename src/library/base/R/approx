@@ -21,14 +21,10 @@ function (x, y=NULL, xout, method = "linear", n = 50,
 	o <- order(x)
 	x <- x[o]
 	y <- y[o]
-	if (missing(yleft)) {
-		if(rule == 1) yleft <- NA
-		else yleft <- y[1]
-	}
-	if (missing(yright)) {
-		if(rule == 1) yright <- NA
-		else yleft <- y[length(y)]
-	}
+	if (missing(yleft))
+		yleft <- if(rule == 1) NA else y[1]
+	if (missing(yright))
+		yright <- if(rule == 1) NA else y[length(y)]
 	if (missing(xout)) {
 		if (n <= 0) stop("approx requires n >= 1")
 		xout <- seq(x[1], x[nx], length = n)
