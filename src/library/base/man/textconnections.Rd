@@ -56,10 +56,10 @@ textConnection(object, open = "r")
   length of line for output connections: longer lines will be truncated
   with a warning.
 }
-
+ 
 \seealso{
   \code{\link{connections}}, \code{\link{showConnections}},
-  \code{\link{pushBack}}.
+  \code{\link{pushBack}}, \code{\link{capture.output}}.
 }
 
 \examples{

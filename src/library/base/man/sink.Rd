@@ -59,6 +59,7 @@ sink.number(type = c("output", "message"))
   Do not sink the messages stream unless you understand the source code
   implementing it and hence the pitfalls.
 }
+\seealso{\code{\link{capture.output}}}
 \examples{
 sink("sink-examp.txt")
 i <- 1:10

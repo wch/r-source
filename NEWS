@@ -382,6 +382,9 @@ NEW FEATURES
     o	The tempfile() function now takes an optional second argument
 	giving the directory name.
 
+    o   New function capture.output to send printed output from an expression
+        to a connection or a text string.
+   
 
 INSTALLATION CHANGES
 
