@@ -3071,19 +3071,18 @@ double GStrHeight(char *str, int units, DevDesc *dd)
 #else
     double h;
     char *s;
-    double asc, dummy;
+    double asc, dsc, wid;
     int n;
     /* Count the lines of text minus one */
     n = 0;
     for(s = str; *s ; s++)
 	if (*s == '\n')
 	    n++;
-    h = n ? n * GConvertYUnits(1, CHARS, DEVICE, dd) : 0.;
+    h = n * GConvertYUnits(1, CHARS, DEVICE, dd);
     /*  Add in the ascent of the font, if available */
-    if(dd->dp.metricInfo)
-	GMetricInfo('M', &asc, &dummy, &dummy, DEVICE, dd);
-    else
-	asc = 1;
+    GMetricInfo('M', &asc, &dsc, &wid, DEVICE, dd);
+    if (asc==0.0 & dsc==0.0 & wid==0.0) 
+	asc = GConvertYUnits(1, CHARS, DEVICE, dd);
     h += asc;
     if (units != DEVICE)
 	h = GConvertYUnits(h, DEVICE, units, dd);
