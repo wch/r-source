@@ -619,11 +619,15 @@ R_init_lapack(DllInfo *info)
 }
 
 #ifdef Win32
+#define PSIGNAL
+#include "psignal.h"
 /* force in malloc & free, so ATLAS gets the right ones */
+/* also force in signal, although what's using that is unclear */
 void lapack_dummy()
 {
     char *foo;
     foo = (char *) malloc(1);
     free(foo);
+    signal(SIGBREAK, NULL);
 }
 #endif
