@@ -387,8 +387,10 @@ int Mac_initialize_R(int ac, char **av)
     if ( Initialize() == noErr ) {
 	gAppResFileRefNum = CurResFile();
 	doGetPreferences();
-	DoNew(true);
-  	Console_Window = FrontWindow();  
+	if((fileno(stdin)==0) || (fileno(stdout)==1)){
+    	DoNew(true);
+  		Console_Window = FrontWindow();  
+    }
     }
     else
 	 return(1);
