@@ -1,13 +1,14 @@
 
-R : Copyright 2003, The R Development Core Team
-Version 1.8.0 Patched (2003-10-19)
+R : Copyright 2003, The R Foundation for Statistical Computing
+Version 1.8.1 alpha (2003-10-30), ISBN 3-900051-00-3
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
 Type 'license()' or 'licence()' for distribution details.
 
 R is a collaborative project with many contributors.
-Type 'contributors()' for more information.
+Type 'contributors()' for more information and
+'citation()' on how to cite R in publications.
 
 Type 'demo()' for some demos, 'help()' for on-line help, or
 'help.start()' for a HTML browser interface to help.
@@ -1106,9 +1107,9 @@ Volume 123.5503 261.5802
 Height  72.7       
 Volume  56.4   63.3
 > dist(z, method="manhattan")
-           Girth   Height
-Height 1954.8821         
-Volume  557.1448 1392.343
+           Girth    Height
+Height 1954.8821          
+Volume  557.1448 1392.3429
 > dist(z, method="canberra")
           Girth   Height
 Height 21.66477         
@@ -3272,4 +3273,18 @@ some
 b 
 2 
 > ## both dim and dimnames lost in 1.8.0
+> 
+> ## print.dist() didn't show NA's prior to 1.8.1
+> x <- cbind(c(1,NA,2,3), c(NA,2,NA,1))
+> (d <- dist(x))
+         1        2        3
+2       NA                  
+3 1.414214       NA         
+4 2.828427 1.414214 1.414214
+> print(d, diag = TRUE)
+         1        2        3        4
+1 0.000000                           
+2       NA 0.000000                  
+3 1.414214       NA 0.000000         
+4 2.828427 1.414214 1.414214 0.000000
 > 

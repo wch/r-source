@@ -68,6 +68,7 @@ BUG FIXES
     o	cor.test(*, method="spearman") gave wrong results `randomly'
 	(because of a wrong type passed to C; PR#4718).
 
+    o	dist() objects with NA's didn't print these, now do (PR#4866).
 
 
 
