@@ -607,6 +607,9 @@ predict.lm <-
     p <- object$rank
     p1 <- 1:p
     piv <- object$qr$pivot[p1]
+    if(p < ncol(X)) {
+        warning("prediction from a rank-deficient fit may be misleading")
+    }
 ### NB: Q[p1,] %*% X[,piv] = R[p1,p1]
     beta <- object$coefficients
     predictor <- drop(X[, piv, drop = FALSE] %*% beta[piv])

@@ -33,6 +33,11 @@
   standard errors, otherwise this is extracted from the model fit.
   Setting \code{intervals} specifies computation of confidence or
   prediction (tolerance) intervals at the specified \code{level}.
+
+  If the fit is rank-deficient, some of the columns of the design matrix
+  will have been dropped.  Prediction from such a fit only makes sense
+  if \code{newdata} is contained in the same subspace as the original
+  data. That cannot be checked accurately, so a warning is issued.
 }
 \value{
   \code{predict.lm} produces a vector of predictions or a matrix of
