@@ -11,8 +11,12 @@ Lines with lty > 1 and many pieces were being drawn very slowly on
 Windows 2000 (but not 98/ME).  To work around this, such lines are
 now drawn 5000 pieces at a time.
 
-The dialog for the `Change dir' item now uses a standard folder selection
-widget for its Browse button.
+The dialog for the `Change dir' item now uses a standard folder
+selection widget for its Browse button.
+
+White backgrounds are now omitted for metafiles (as they are for
+postscript, PDF and XFig plots), so white backgounds (the default)
+appear to be transparent.
 
 help.start() now updates the HTML search index (as well as the
 packages index) when it is started up.  link.html.help() works better
