@@ -17,6 +17,7 @@ weights(object, \dots)
   \item{object, x}{an object of class \code{lm}, usually, a result of a
     call to \code{\link{lm}}.}
   \item{\dots}{further arguments passed to or from other methods.}
+  \item{type}{the type of residuals which should be returned.}
 }
 \description{
 All these functions are \code{\link{methods}} for class \code{"lm"}  objects.
@@ -25,6 +26,11 @@ All these functions are \code{\link{methods}} for class \code{"lm"}  objects.
 The generic accessor functions \code{coef}, \code{effects},
 \code{fitted} and \code{residuals} can be used to extract
 various useful features of the value returned by \code{lm}.
+
+The working and response residuals are ``observed - fitted''.  The
+deviance and pearson residuals are weighted residuals, scaled by the
+square root of the weights used in fitting.  The partial residuals
+are a matrix with each column formed by omitting a term from the model.
 }
 \seealso{
   The model fitting function \code{\link{lm}}, \code{\link{anova.lm}}.
