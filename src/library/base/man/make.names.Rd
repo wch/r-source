@@ -36,7 +36,7 @@ make.names(names, unique = FALSE)
   \code{\link{data.frame}}.
 }
 \examples{
-make.names(c("a and b", "a_and_b"), unique=TRUE)
+make.names(c("a and b", "a-and-b"), unique=TRUE)
 # "a.and.b"  "a.and.b.1"
 
 data(state)
