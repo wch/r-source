@@ -1638,6 +1638,132 @@ SEXP do_get(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
 }
 
+static SEXP gfind(char *name, SEXP env, SEXPTYPE mode, SEXP ifnotfound, 
+	     int inherits, SEXP enclos)
+{
+  SEXP rval, t1, R_fcall, var;
+
+  t1 = install(name);
+
+  /* Search for the object - last arg is 1 to get */
+  rval = findVar1mode(t1, env, mode, inherits, 1);
+
+  if (rval == R_UnboundValue) {
+    if( isFunction(ifnotfound) ) {
+      PROTECT(var = mkString(name));
+      PROTECT(R_fcall = LCONS(ifnotfound, LCONS( var, R_NilValue)));
+      rval = eval(R_fcall, enclos);
+      UNPROTECT(2);
+    }
+    else
+      rval = ifnotfound;
+  }
+  
+  /* We need to evaluate if it is a promise */
+  if (TYPEOF(rval) == PROMSXP)
+    rval = eval(rval, env);
+  
+  if (!isNull(rval) && NAMED(rval) == 0)
+    SET_NAMED(rval, 1);
+  return rval;
+}
+
+/* return a vector of length 1 of the input type */
+static SEXP getOneVal(SEXP vec, int i)
+{
+  SEXP ans;
+
+  PROTECT(ans = allocVector(TYPEOF(vec), 1));
+  SET_VECTOR_ELT(ans, 0, duplicate(VECTOR_ELT(vec, i)));
+  UNPROTECT(1);
+  return ans;
+}
+
+/* get multiple values from an environment */
+SEXP do_mget(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    SEXP ans, env, t1, x, mode, ifnotfound, ifnfnd;
+    SEXPTYPE gmode;
+    int ginherits = 0, nvals, nmode, nifnfnd, i;
+
+    checkArity(op, args);
+
+    x = CAR(args);
+
+    nvals = length(x);
+
+    /* The first arg is the object name */
+    /* It must be present and a string */
+    if (!isString(x) )
+      errorcall(call, "invalid first argument");
+    for(i=0; i<nvals; i++) 
+      if( isNull(STRING_ELT(x, i)) || !CHAR(STRING_ELT(x, 0))[0] )
+	errorcall(call, "invalid name in position %d", i+1);
+
+    /* FIXME: should we install them all?) */
+
+    env = CADR(args);
+    if( !isEnvironment(env) )
+      errorcall(call, "second argument must be an environment");
+
+    mode = CAR(nthcdr(args, 2));
+    nmode = length(mode);
+    if( !isString(mode) )
+      errorcall(call, "invalid mode argument");
+
+    if( nmode != nvals && nmode != 1 )
+      errorcall(call, "wrong length for mode argument");
+
+    ifnotfound = CAR(nthcdr(args, 3));
+    nifnfnd = length(ifnotfound);
+    if( !isVector(ifnotfound) )
+      errorcall(call, "invalid ifnotfound argument");
+
+    if( nifnfnd != nvals && nifnfnd != 1 )
+      errorcall(call, "wrong length for ifnotfound argument");
+     
+    if (isLogical(CAR(nthcdr(args, 4))))
+	ginherits = LOGICAL(CAR(nthcdr(args, 4)))[0];
+    else
+	errorcall(call,"invalid inherits argument");
+
+    PROTECT(ans = allocVector(VECSXP, nvals));
+
+    /* now for each element of x, we look for it, using the inherits,
+       etc */
+
+    for(i=0; i<nvals; i++) {
+      if (isString(mode)) {
+	if (!strcmp(CHAR(STRING_ELT(CAR(CDDR(args)), i % nmode )),"function"))
+	  gmode = FUNSXP;
+	else
+	  gmode = str2type(CHAR(STRING_ELT(CAR(CDDR(args)), i % nmode )));
+      } 
+      else {
+	errorcall(call,"invalid mode argument");
+	gmode = FUNSXP;/* -Wall */
+      }
+
+      /* is the mode provided one of the real modes */
+      if( gmode < 0 ) 
+	errorcall(call, "invalid mode argument");
+
+
+      if( nifnfnd == 1 )
+	PROTECT(ifnfnd = ifnotfound);
+      else
+	PROTECT(ifnfnd = getOneVal(ifnotfound, i));
+
+      SET_VECTOR_ELT(ans, i, gfind(CHAR(STRING_ELT(x,i % nvals)), env, gmode,
+				   ifnfnd, ginherits, rho)); 
+
+      UNPROTECT(1);
+    }
+
+    setAttrib(ans, R_NamesSymbol, duplicate(x));
+    UNPROTECT(1);
+    return(ans);
+}
 
 /*----------------------------------------------------------------------
 

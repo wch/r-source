@@ -286,6 +286,7 @@ SEXP do_memlimits(SEXP, SEXP, SEXP, SEXP);
 SEXP do_memoryprofile(SEXP, SEXP, SEXP, SEXP);
 SEXP do_menu(SEXP, SEXP, SEXP, SEXP);
 SEXP do_merge(SEXP, SEXP, SEXP, SEXP);
+SEXP do_mget(SEXP, SEXP, SEXP, SEXP);
 SEXP do_missing(SEXP, SEXP, SEXP, SEXP);
 SEXP do_modelframe(SEXP, SEXP, SEXP, SEXP);
 SEXP do_modelmatrix(SEXP, SEXP, SEXP, SEXP);

@@ -1,11 +1,15 @@
 \name{get}
 \alias{get}
+\alias{mget}
 \title{Return the Value of a Named Object}
 \description{
   Search for an \R object with a given name and return it.
 }
 \usage{
 get(x, pos=-1, envir=as.environment(pos), mode="any", inherits=TRUE)
+mget(x, envir, mode = "any",
+     ifnotfound = list(function(x) stop(paste("value for \"", 
+    x, "\" not found", sep = ""), call. = FALSE)), inherits = FALSE)
 }
 \arguments{
   \item{x}{a variable name (given as a character string).}
@@ -17,6 +21,8 @@ get(x, pos=-1, envir=as.environment(pos), mode="any", inherits=TRUE)
   \item{mode}{the mode of object sought.}
   \item{inherits}{should the enclosing frames of the environment be
     searched?}
+  \item{ifnotfound}{A \code{list} of values to be used if the item is
+    not found.}
 }
 \details{
   The \code{pos} argument can specify the environment in which to look
@@ -39,6 +45,16 @@ get(x, pos=-1, envir=as.environment(pos), mode="any", inherits=TRUE)
 
   Using a \code{NULL} environment is equivalent to using the current
   environment.
+
+  For \code{mget} multiple values are returned in a named
+  \code{list}. This is true even if only one value is requested. The
+  value in \code{mode} and \code{ifnotfound} can be either the same length
+  as the number of requested items or of length 1. The argument
+  \code{ifnotfound} must be a list containing either the value to use if
+  the requested item is not found or a function of one argument which
+  will be called if the item is not found. The argument is the name of
+  the item being requested. The default value for \code{inherits} is
+  \code{FALSE}, in contrast to the default behavior for \code{get}.
 }
 \value{
   The object found.  (If no object is found an error results.)
@@ -53,5 +69,10 @@ get(x, pos=-1, envir=as.environment(pos), mode="any", inherits=TRUE)
 }
 \examples{
 get("\%o\%")
+
+##test mget
+e1 <- new.env()
+mget(letters, e1)
+mget(letters, e1, ifnotfound=LETTERS)
 }
 \keyword{data}

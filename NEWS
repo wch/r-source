@@ -351,6 +351,9 @@ NEW FEATURES
           Still accept logical values (and NA maps to "off")
 
 
+    o   A new function mget will retrieve multiple values from an 
+        environment. 
+
 UTILITIES
 
     o	R CMD check  now runs the (Rd) examples with default RNGkind
