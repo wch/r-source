@@ -173,9 +173,9 @@
 
 \newcommand{\email}[1]{$\langle${#1}$\rangle$}
 %% \code without `-' ligatures
-{\catcode`\-=\active
-  \global\def\code{\bgroup
-    \catcode`\-=\active \let-\codedash
+{\catcode`\-=\active%
+  \global\def\code{\bgroup%
+    \catcode`\-=\active \let-\codedash%
     \Rd@code}}
 \def\codedash{-\discretionary{}{}{}}
 \def\Rd@code#1{\texttt{#1}\egroup}
