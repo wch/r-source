@@ -1378,10 +1378,13 @@ A discussion of which Linux systems support large files can be found at
 @uref{http://www.suse.de/~aj/linux_lfs.html}: it has been available
 since about 2001.
 
-R used to include the compiler flag @option{-mieee-fp}, but it seems
+@R{} used to include the compiler flag @option{-mieee-fp}, but it seems
 this was really an alias for the linker flag @option{-lieee}.  Neither
 are needed for a modern Linux (e.g.@: using @code{glibc} 2.2 or 2.3) but
 could conceivably be needed on an older version.
+
+Experiments with using @code{gfortran} are currently (Nov 2004)
+unsuccessful.
 
 
 @node Mac OS X, Solaris, Linux, Platform notes
@@ -1758,7 +1761,7 @@ We understand that @option{--enable-R-shlib} does not work under AIX.
 
 
 @node Enabling search in HTML help, New platforms, Configuration on Unix, Top
-@chapter Enabling search in HTML help
+@appendix Enabling search in HTML help
 
 There is a search engine available from the front page of the
 @acronym{HTML} help system, the page that is displayed by
@@ -1829,8 +1832,8 @@ See @uref{http://www.MedAnalytics.com/INSTALL} for more information.
 
 We have not seen any problems on Windows provided a Java Virtual Machine
 has been installed and is operational: Sun's current @code{j2re
-1.4.2_04} works in Internet Explorer, Netscape 7.1, Mozilla 1.6/7 and
-Mozilla FireFox 0.8/0.9 on Windows XP.  Note that a recent Windows system
+1.5.0} works in Internet Explorer, Netscape 7.1, Mozilla 1.6/7 and
+Mozilla FireFox on Windows XP.  Note that a recent Windows system
 may not have Java installed at all.  For Netscape/Mozilla/FireFox visit
 @uref{http://java.sun.com/getjava/manual.html} to install a Sun JVM.
 Which (if any) JVM is enabled can be set in `Set Program Access and
