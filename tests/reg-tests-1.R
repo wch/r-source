@@ -880,6 +880,10 @@ DF <- data.frame(speed=4)
 stopifnot(all.equal(predict(cars.1, DF), predict(cars1, DF)))
 ## error in 1.5.1
 
+## Ops.data.frame (PR#1889)
+d <- data.frame(1:10)
+d > list(5)
+## failed in 1.5.1
 
 ## keep at end, as package `methods' has had persistent side effects
 library(methods)
