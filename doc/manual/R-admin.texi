@@ -681,17 +681,19 @@ Versions of Tcl/TK from 8.0 to 8.4.0 have been used successfully.
 
 @node Linear algebra,  , Tcl/Tk, Useful libraries and programs
 @subsection Linear algebra
+@cindex BLAS library
 
-The linear algebra routines in @R{} can make use of enhanced BLAS (Basic
-Linear Algebra Subprograms, @uref{http://www.netlib.org/blas/faq.html})
-routines.  Some are compiler-system-specific (@code{libsunperf} on Sun
+The linear algebra routines in @R{} can make use of enhanced BLAS
+(Basic Linear Algebra Subprograms,
+@uref{http://www.netlib.org/blas/faq.html}) routines.  Some are
+compiler-system-specific (@code{libsunperf} on Sun
 Sparc@footnote{Using the SunPro @command{cc} and @command{f95}
 compilers}, @code{libessl} on IBM) but ATLAS
-(@uref{http://math-atlas.sourceforge.net/}) is a ``tuned'' BLAS that runs on a
-wide range of Unix-alike platforms.  If no more specific library is
-found, a @code{libblas} library in the library path will be used.  You
-can specify a specific BLAS library by the configuration option
-@option{--with-blas} and not to use an external BLAS library by
+(@uref{http://math-atlas.sourceforge.net/}) is a ``tuned'' BLAS that
+runs on a wide range of Unix-alike platforms.  If no more specific
+library is found, a @code{libblas} library in the library path will be
+used.  You can specify a specific BLAS library by the configuration
+option @option{--with-blas} and not to use an external BLAS library by
 @option{--without-blas}.
 
 For systems with multiple processors it is in principle possible to use
@@ -705,14 +707,23 @@ in a future release.
 Note that the BLAS library will be used for several add-on packages as
 well as for @R{} itself.  This means that it is better to use a shared
 BLAS library, as most of a static library will be compiled into the @R{}
-executable and each BLAS-using package.
+executable and each BLAS-using package.  In any case, the BLAS library
+must be usable with dynamically-loadable code.
 
 You will need double-precision and double-complex versions of the BLAS,
 but not single-precision nor complex routines.
 
-Optimized versions of LAPACK are available, but no provision is made for
-using them with @R{} as the likely performance gains are thought to be
-small.
+@cindex LAPACK library
+As from @R{} 1.7.0, provision is made for using an external LAPACK
+library, principally to cope with BLAS libraries which contain a copy
+of LAPACK (such as @code{libsunperf} on Solaris and @code{vecLib} on
+MacOS 10.2.2).  However, the likely performance gains are thought to
+be small.  You can specify a specific LAPACK library by the
+configuration option @option{--with-lapack} and not to use an external
+LAPACK library by @option{--without-lapack} (although the latter may
+cause conflicts on fussy platforms if the BLAS library contains parts
+of LAPACK).  The default is to check the BLAS library and then for an
+external library @code{-llapack}.
 
 As with all libraries, you need to ensure that they and @R{} were
 compiled with compatible compilers and flags.  For example, this means
@@ -893,6 +904,7 @@ compiler flags@footnote{In particular, avoid @command{g77}'s
 @option{-pedantic}, which gives confusing error messages.} asserting
 FORTRAN 77 compliance.
 
+@cindex BLAS library
 For performance reasons@footnote{e.g., to use an optimized BLAS on
 Sun/Sparc} you may want to choose a FORTRAN 90/95 compiler.
 
@@ -1042,6 +1054,7 @@ of compilers and support libraries.
 
 @node MacOS X, Solaris, Platform notes, Platform notes
 @subsection MacOS X
+@cindex MacOS X
 
 You can build @R{} as a Unix application on MacOS X.  You will need the
 DevTools, @command{f2c} or @command{g77}, and the @code{dlcompat}
@@ -1061,6 +1074,7 @@ fink install g77
 
 @node Solaris, HPUX, MacOS X, Platform notes
 @subsection Solaris on Sparc
+@cindex Solaris
 
 @R{} has been built successfully on Solaris 2.7 aka Solaris 7 aka SunOS
 5.7 using @command{gcc}/@command{g77} and the SunPro @w{WorkShop 6}
@@ -1106,10 +1120,13 @@ CXX=CC
 CXXFLAGS="-xO5 -xlibmil -dalign -xarch=v9"
 @end smallexample
 
+@cindex BLAS library
+@cindex LAPACK library
 @noindent
 in @file{config.site}.  Note that using @command{f95} allows the Sun
-performance library to be selected: it will not work with @command{f77},
-nor with @command{g77}.
+performance library @code{libsunperf} to be selected: it will not work
+with @command{f77}, nor with @command{g77}.  @code{libsunperf}
+contains both BLAS and LAPACK code.
 
 For 64-bit compilation with @command{gcc} 3.2 we used
 
@@ -1151,8 +1168,10 @@ you may need to set it to avoid finding 32-bit addons (as in the
 @c and the cure is to compile @file{src/main/arithmetic.c} without
 @c optimization.
 
+
 @node HPUX, IRIX, Solaris, Platform notes
 @subsection HPUX
+@cindex HPUX
 
 @R{} has been built successfully on HPUX 10.2 and HPUX 11.0 using both
 native compilers and @command{gcc}.  However, 10.2 has not been tested
@@ -1226,6 +1245,7 @@ LDFLAGS=/opt/fortran90/lib}).
 
 @node IRIX, Alpha/OSF1, HPUX, Platform notes
 @subsection IRIX
+@cindex IRIS
 
 @R{} has been built successfully on IRIX64 6.5 using
 @command{gcc}/@command{f77} or @command{cc}/@command{f77} for 32-bit
@@ -1281,6 +1301,7 @@ port would be greatly appreciated.
 
 @node AIX,  , Alpha/FreeBSD, Platform notes
 @subsection AIX
+@cindex AIX
 
 On AIX 4.3.3 and AIX 5.1, it was found that the use of ``run time
 linking'' (as opposed to normal AIX style linking) was required.  For
@@ -1295,6 +1316,7 @@ When setting @code{MAIN_LDFLAGS} and @code{SHLIB_LDFLAGS} accordingly,
 note that linker flags must be escaped using @samp{-Wl,} if
 @command{gcc} is used for linking: use @samp{MAIN_LDFLAGS="-Wl,brtl"}
 and @samp{SHLIB_LDFLAGS="-Wl,-G"} in this case.
+
 
 @node New platforms, Function and variable index, Configuration on Unix, Top
 @appendix New platforms
