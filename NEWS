@@ -9,6 +9,8 @@
 
 NEW FEATURES
 
+    o   HTML help file conversion reports unsatisified \link{..}s. 
+
     o   `vsize' and `nsize' can be set by the environment variables
 	R_VSIZE and R_NSIZE respectively, perhaps most conveniently from
 	`~/.Renviron' under Unix. Command-line settings will take priority.
@@ -22,6 +24,11 @@ NEW FEATURES
 
 
 BUG FIXES
+
+    o   HTML help file conversions will find hyperlinks in the main 
+	library as well as the current library.
+
+    o   Rdconv conversion of \section{}{}s to Sd corrected.
 
     o   ppois rounded non-integer `q', should truncate.
 

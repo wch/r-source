@@ -1,4 +1,4 @@
-# Subroutines for converting R documentation into HTML, LaTeX, Nroff
+ Subroutines for converting R documentation into HTML, LaTeX, Nroff
 # and R (Examples) format
 
 # Copyright (C) 1997 Friedrich Leisch
@@ -520,6 +520,7 @@ sub text2html {
 		s/\\link$id.*$id/<A HREF=\"..\/..\/$htmlfile\">$arg<\/A>/s;
 	}
 	else{
+	    $misslink = $misslink . " " . $arg;
 	    $text =~ s/\\link$id.*$id/$arg/s;
 	}
     }
@@ -590,6 +591,7 @@ sub code2html {
 		s/\\link$id.*$id/<A HREF=\"..\/..\/$htmlfile\">$arg<\/A>/s;
 	}
 	else{
+	    $misslink = $misslink . " " . $arg;
 	    $text =~ s/\\link$id.*$id/$arg/s;
 	}
     }
@@ -1220,8 +1222,8 @@ sub Sd_print_sections {
 
     for($section=0; $section<$max_section; $section++){
 	print Sdout "\n";
-	print Sdout ".SH\n";
-	print Sdout $section_title[$section], ":\n";
+	print Sdout ".SH ";
+	print Sdout $section_title[$section], "\n";
 	print Sdout text2nroff($section_body[$section]), "\n";
     }
 }
