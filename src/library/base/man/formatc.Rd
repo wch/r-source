@@ -3,8 +3,10 @@
 \usage{
 formatC(x, digits = NULL, width = max(0, digits) + 1,
         format = NULL, flag = "", mode = NULL)
+format.char(x, width = NULL, flag = "-")
 }
 \alias{formatC}
+\alias{format.char}
 \arguments{
   \item{x}{an atomic numerical or character object, typically a vector
     of real numbers.}
@@ -34,8 +36,8 @@ formatC(x, digits = NULL, width = max(0, digits) + 1,
   loop over each element of \code{x}, calling \code{sprintf(\dots)} is
   done in the C function \code{str_signif}.
 
-  For character arguments \code{x}, simple (left or right) padding with white
-  space is done.
+  \code{format.char(x)} and \code{formatC}, for character \code{x}, do
+  simple (left or right) padding with white space.
 }
 \author{
  Originally written by Bill Dunlap, later much improved by Martin Maechler,
@@ -51,7 +53,9 @@ cbind(format(xx), formatC(xx))
 cbind(formatC(xx, wid = 9, flag = "-"))
 cbind(formatC(xx, dig = 5, wid = 8, format = "f", flag = "0"))
 
+format.char(c("a", "Abc", "no way"), wid = -7)  # <=> flag = "-"
 formatC(c("a", "Abc", "no way"), wid = -7)  # <=> flag = "-"
+formatC(c((-1:1)/0,c(1,100)*pi), wid=8, dig=1)
 }
 \keyword{character}
 \keyword{print}
