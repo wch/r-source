@@ -18,7 +18,7 @@ TESTsrc-strict-1 = \
 	is-things.R \
 	lm-tests.R \
 	primitive-funs.R \
-	mode-methods.R \
+	method-dispatch.R \
 	simple-true.R
 TESTsrc-strict-auto = \
 	isas-tests.R
@@ -36,13 +36,14 @@ TESTout-strict = $(TESTsrc-strict:.R=.Rout)
 TESTout-sloppy = $(TESTsrc-sloppy:.R=.Rout)
 
 .SUFFIXES:
-.SUFFIXES: .R .Rout
+.SUFFIXES: .R .Rin .Rout
 
 
-%.R : $(srcdir)/make-%.R
+.Rin.R:
+	@echo "creating \`$@'"
 	@$(R) < $< > /dev/null
 
-%.Rout : %.R
+.R.Rout:
 	@rm -f $@ $@.fail
 	@echo "running \`$<'"
 	@$(R) < $< > $@
