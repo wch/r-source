@@ -15,7 +15,7 @@ help.start() has a new argument `update'.
 Making packages now warns if there is a configure script.
 
 ga.h was needed for building package `windlgs', but was omitted from the
-`source package' code for rw1040. It is now included.
+`source package' code for rw1040.  It is now included.
 
 Rcmd check was failing on Windows 9X, because additions in 1.4.0 were
 not using Rsystem().
@@ -35,7 +35,7 @@ memory.limit() can now increase the memory limit of the current session.
 This will not work if the limit is currently reached!
 
 internet2.dll (see changes for rw1030) must be selected by the
---internet2 flag.can
+--internet2 flag.
 
 The miniR* distribution has grown to seven floppies, and no attempt is
 now made to confine the zip files to floppy-size.
