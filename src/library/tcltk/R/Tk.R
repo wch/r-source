@@ -188,7 +188,7 @@ tkwait.window    <- function(...) tkcmd("tkwait", "window", ...)
 ## Tkwinfo actually has a bazillion subcommands, but it's rarely
 ## used, so let's be lazy
 
-tkwinfo <- function(...) tkcmd("raise", ...)
+tkwinfo <- function(...) tkcmd("winfo", ...)
 
 ## Not so with tkwm.
 
@@ -272,6 +272,7 @@ tkdelete        <- function(widget, ...) tkcmd(widget, "delete", ...)
 tkdelta         <- function(widget, ...) tkcmd(widget, "delta", ...)
 tkdeselect      <- function(widget, ...) tkcmd(widget, "deselect", ...)
 tkdlineinfo     <- function(widget, ...) tkcmd(widget, "dlineinfo", ...)
+tkdtag          <- function(widget, ...) tkcmd(widget, "dtag", ...)
 tkdump          <- function(widget, ...) tkcmd(widget, "dump", ...)
 tkentryconfigure<- function(widget, ...) tkcmd(widget, "entryconfigure", ...)
 tkentrycget     <- function(widget, ...) tkcmd(widget, "entrycget", ...)

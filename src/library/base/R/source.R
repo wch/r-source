@@ -123,6 +123,7 @@ demo <- function(topic, device = getOption("device")) {
 		   tkfaq	= c("tcltk",	"tkfaq.R",	""),
 		   tkdensity	= c("tcltk",	"tkdensity.R",	"G"),
 		   tkfilefind	= c("tcltk",	"tkfilefind.R",	""),
+		   tkcanvas	= c("tcltk",	"tkcanvas.R",	""),
 		   dyn.load	= c("dynload",	"zero.R",	"")
 		   )
     dimnames(Topics)[[1]] <- c("dir", "file", "flag")

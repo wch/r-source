@@ -174,8 +174,8 @@ void addTcl(void)
     OldHandler = R_PolledEvents;
     OldTimeout = R_wait_usec;
     R_PolledEvents = TclHandler;
-    if ( R_wait_usec > 100000 || R_wait_usec == 0)
-	R_wait_usec = 100000;
+    if ( R_wait_usec > 10000 || R_wait_usec == 0)
+	R_wait_usec = 10000;
 }
 
 void delTcl(void)

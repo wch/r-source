@@ -223,14 +223,6 @@ NEW FEATURES
 	easier to read delimited files as Windows programs tend to
 	create (usually TAB separated).
 
-    o	tcltk library has had several canvas functions implemented.
-    
-    o	tcltk now wraps callbacks to R in a try() construct - the
-	nonlocal return from R's error handling could bring the Tk
-	system into a strange state.  
-
-    o	New `tkfaq' demo for tcltk: displays the R FAQ in a text widget.
-
     o	New function object.size() to give approximate memory allocation.
 
     o	New primitive gc.time() to report on time spent in garbage
@@ -253,6 +245,14 @@ NEW FEATURES
     o	tcltk is now more careful about removing the objects
 	representing widgets in the R workspace when the windows are
 	destroyed (e.g. using window manager controls)	
+
+    o	tcltk library has had several canvas functions implemented.
+    
+    o	tcltk now wraps callbacks to R in a try() construct - the
+	nonlocal return from R's error handling could bring the Tk
+	system into a strange state.  
+
+    o	New demos for tcltk: tkfaq, tkfilefind, tkcanvas
 
     o	termplot() now has an `ask' argument.
 
