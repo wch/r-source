@@ -490,12 +490,12 @@ static void menuhelpstart(control m)
 
 static void menuFAQ(control m)
 {
-    internal_shellexec("doc\\html\\faq.html");
+    internal_shellexec("doc\\manual\\R-FAQ.html");
 }
 
 static void menurwFAQ(control m)
 {
-    internal_shellexec("doc\\html\\rw-faq.html");
+    internal_shellexec("doc\\html\\rw-FAQ.html");
 }
 
 static void menuabout(control m)
@@ -911,9 +911,9 @@ int RguiCommonHelp(menu m)
     addto(m);
 
     MCHECK(mFAQ = newmenuitem("FAQ on R", 0, menuFAQ));
-    if (!check_doc_file("doc\\html\\faq.html")) disable(mFAQ);
+    if (!check_doc_file("doc\\manual\\R-FAQ.html")) disable(mFAQ);
     MCHECK(mrwFAQ = newmenuitem("FAQ on R for &Windows", 0, menurwFAQ));
-    if (!check_doc_file("doc\\html\\rw-faq.html")) disable(mrwFAQ);
+    if (!check_doc_file("doc\\html\\rw-FAQ.html")) disable(mrwFAQ);
 
     lmanintro = check_doc_file("doc\\manual\\R-intro.pdf");
     lmanref = check_doc_file("doc\\manual\\refman.pdf");

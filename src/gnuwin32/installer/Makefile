@@ -39,7 +39,7 @@ imagedir:
 	$(CP) -p $(R_HOME)/doc/manual/*.html $(R_HOME)/doc/manual/*.pdf \
 	  $(RPREFIX)/doc/manual
 #	html copies of these are in doc/html, and we don't have PDFs on menus
-	$(RM) $(RPREFIX)/doc/manual/R-FAQ.html $(RPREFIX)/doc/manual/R-FAQ.pdf
+	$(RM) $(RPREFIX)/doc/manual/R-FAQ.pdf
 	$(RM) $(RPREFIX)/doc/html/R-admin.html $(RPREFIX)/doc/manual/R-admin.pdf
 	$(RM) $(RPREFIX)/doc/html/index.html $(RM) $(RPREFIX)/doc/html/index-default.html
 #

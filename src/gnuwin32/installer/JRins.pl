@@ -181,7 +181,7 @@ sub listFiles {
 	} elsif ($_ eq "doc\\html\\logo.jpg") {
 	    $component = "html devel";
 	    $mini = 0;
-	} elsif ($_ eq "doc\\html\\faq.html"
+	} elsif ($_ eq "doc\\manual\\R-FAQ.html"
 		 || $_ eq "doc\\html\\rw-FAQ.html"
 		 || $_ eq "share\\texmf\\Sweave.sty") {
 	    $component = "main";
