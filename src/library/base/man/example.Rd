@@ -33,7 +33,8 @@ topic \code{topic}.
 \author{Martin Maechler}
 \seealso{\code{\link{demo}}}.
 \examples{
-example("smooth",package="eda")
+example("smooth", package="eda")
+example(dbinom)
 }
 \keyword{documentation}
 \keyword{utilities}
