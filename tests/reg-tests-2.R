@@ -1282,6 +1282,8 @@ boxplot(count ~ spray, data = InsectSprays, border=2:7)
 
 summary(as.Date(paste("2002-12", 26:31, sep="-")))
 ## printed all "2002.-12-29" in 1.9.1 {because digits was too small}
+as.matrix(data.frame(d = as.POSIXct("2004-07-20")))
+## gave a warning in 1.9.1
 
 
 ## Dump should quote when necessary (PR#6857)

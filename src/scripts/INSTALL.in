@@ -452,11 +452,11 @@ do_install_source () {
       fi
     if ${fake}; then
       if test -f NAMESPACE; then
-        echo ".onLoad <- function(list, pkg) NULL" >> \
+        (echo; echo ".onLoad <- function(list, pkg) NULL") >> \
 	  "${R_PACKAGE_DIR}/R/${R_PACKAGE_NAME}"
 	sed -e '/useDynLib/d' NAMESPACE > "${R_PACKAGE_DIR}/NAMESPACE"
       else
-        echo ".First.lib <- function(lib, pkg) NULL" >> \
+        (echo; echo ".First.lib <- function(lib, pkg) NULL") >> \
           "${R_PACKAGE_DIR}/R/${R_PACKAGE_NAME}"
       fi
     fi

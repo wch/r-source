@@ -73,7 +73,7 @@ endif
 	(cd ..; $(MAKE) --no-print-directory PKGDIR=. pkgclean-windlgs)
 	$(CP) -pr ../windlgs $(RPREFIX)/src/library
 #
-	find $(RPREFIX) -name CVS -prune -exec rm -rf \{\} \;
+	find $(RPREFIX) -name .svn -prune -exec rm -rf \{\} \;
 
 R.iss Rsmall.iss: JRins.pl imagedir
 	rm -rf $(RPREFIX)/library/*/man
