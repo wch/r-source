@@ -188,9 +188,13 @@ static void scientific(double *x, int *sgn, int *kpower, int *nsig, double eps)
 	    else
 		alpha = r * tbl[-kp + 1];
 	}
-	/* on IEEE 1e-308 is not representable except by gradual underflow */
-	else if (kp < -307) {
-	    alpha = (r * 1e+300)/pow(10.0, (double)(kp+300));
+	/* on IEEE 1e-308 is not representable except by gradual underflow.
+	   shifting by 30 allows for any potential denormalized numbers x,
+	   and makes the reasonable assumption that R_dec_min_exponent+30
+	   is in range.
+	 */
+	else if (kp <= R_dec_min_exponent) {
+	    alpha = (r * 1e+30)/pow(10.0, (double)(kp+30));
 	} 
 	else 
 	    alpha = r / pow(10.0, (double)kp);

@@ -39,6 +39,7 @@ static void Init_R_Machine(SEXP rho)
     machar(&ibeta, &it, &irnd, &ngrd, &machep, &negep, &iexp,
 	   &minexp, &maxexp, &eps, &epsneg, &xmin, &xmax);
 
+    R_dec_min_exponent = floor(log10(xmin)); /* smallest decimal exponent */
     PROTECT(ans = allocVector(VECSXP, 17));
     PROTECT(nms = allocVector(STRSXP, 17));
     SET_STRING_ELT(nms, 0, mkChar("double.eps"));
