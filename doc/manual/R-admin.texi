@@ -1523,7 +1523,6 @@ problems are
 @example
 BLAS                   @r{use @option{--without-blas}}
 Tcl/Tk                 @r{use @option{--without-tcltk}}
-GNOME                  @r{not built by default}
 libpng                 @r{use @option{--without-libpng}}
 jpeg                   @r{use @option{--without-jpeglib}}
 zlib                   @r{use @option{--without-zlib}}
@@ -1710,7 +1709,7 @@ Two graphics devices have been available but are currently unbundled.
 The @code{gtk()} graphics device is a port of the @code{x11()} device to
 @acronym{GDK} (the GIMP Drawing Kit), and is available from CRAN as
 package @pkg{gtkDevice}: this cooperates rather better with the console
-that the @code{x11()} device.  The @code{gnome()} device uses the
+than the @code{x11()} device.  The @code{gnome()} device used the
 @acronym{GNOME} canvas, and is not currently available.
 
 The sources for the @acronym{GNOME} console for @R{} are currently
