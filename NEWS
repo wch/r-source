@@ -28,7 +28,7 @@ NEW FEATURES
 	boxplot; it and hence boxplot() now makes use of pch, cex, and bg
 	for outlier points().
 	bxp() and boxplot() also have an argument `outline' to suppress
-	outlier drawing {S+ compatibly}.
+	outlier drawing {S-PLUS compatibly}.
 
     o	Function nsl() to look up IP addresses of hosts: intended as
 	a way to test for internet connectivity.
@@ -348,6 +348,13 @@ NEW FEATURES
         number of classes, and rules "Sturges" (the previous default,
 	"Scott" and "FD" (Freedman-Diaconis) are supplied (based on
 	package MASS).
+
+     o	stars() has been enhanced; new `mar' argument uses smaller mar(gins)
+	by default; further `nrow and `ncol' as S-PLUS, `frame.plot',
+	`flip.labels', `lty' and explicit `main', `sub', `xlab' and `ylab'.
+	Note that `colors' has been replaced by `col.segments' and there's
+	a new `col.stars'.
+	stars() now returns the locations invisibly.
 
 
 
