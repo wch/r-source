@@ -175,6 +175,9 @@ NEW FEATURES
 
     o	The set of valid R names is now described (at last) in R-intro.
 
+    o	New function fourfoldplot() for producing fourfold displays of
+	2 by 2 by k contingency tables.
+
 
 BUG FIXES
 
