@@ -810,9 +810,9 @@ static void GTK_Text(double x, double y, int coords,
   }
 
   gdk_draw_text_rot(gtkd->drawing->window,
-		      gtkd->font, gtkd->wgc, 
-		      (gint) x, (gint) y,
-		      str, strlen(str), rot);
+		    gtkd->font, gtkd->wgc, 
+		    (gint) x, (gint) y,
+		    str, strlen(str), rot);
 }
 
 static int GTK_Locator(double *x, double *y, DevDesc *dd)
