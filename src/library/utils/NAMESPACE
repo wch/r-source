@@ -12,7 +12,7 @@ export("?", CRAN.packages, Rprof, apropos, assignInNamespace,
        newestVersion, object.size, old.packages, package.contents,
        package.skeleton, packageStatus, page, pico, prompt,
        promptData, read.fwf, read.socket, recover, remove.packages,
-       savehistory, str, summaryRprof, tail, topicName,
+       savehistory, shQuote, str, summaryRprof, tail, topicName,
        update.packageStatus, update.packages, upgrade, url.show, vi,
        vignette, write.socket, wsbrowser, xedit, xemacs)
 

@@ -192,6 +192,8 @@ NEW FEATURES
 	"save.defaults", which is also used by save.image() if option
 	"save.image.defaults" is not present.
 
+    o	New function shQuote() to quote srings to be passed to OS shells.
+
     o	sink() now has a split= argument to direct output to both the
 	sink and the current output connection.
 
