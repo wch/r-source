@@ -73,8 +73,6 @@ gcinfo <- function(verbose).Internal(gcinfo(verbose))
 gctorture <- function(on=TRUE)invisible(.Internal(gctorture(on)))
 gray <- function(level).Internal(gray(level))
 
-lib.fixup <- function(env, globenv).Internal(lib.fixup(env, globenv)) ### NO DOC
-
 nchar <- function(x).Internal(nchar(x))
 
 ##=== FAILS: [	format(pi, dig=2) doesn't work afterwards ]
