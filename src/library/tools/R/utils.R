@@ -60,11 +60,11 @@ function(op, x, y)
 ### ** listFilesWithExts
 
 listFilesWithExts <-
-function(dir, exts, full.names = TRUE)
+function(dir, exts, all.files = FALSE, full.names = TRUE)
 {
     ## Return the paths or names of the files in @code{dir} with
     ## extension in @code{exts}.
-    files <- list.files(dir)
+    files <- list.files(dir, all.files = all.files)
     files <- files[sub(".*\\.", "", files) %in% exts]
     if(full.names)
         files <- if(length(files) > 0)
@@ -77,18 +77,28 @@ function(dir, exts, full.names = TRUE)
 ### ** listFilesWithType
 
 listFilesWithType <-
-function(dir, type)
+function(dir, type, all.files = FALSE, full.names = TRUE)
 {
     ## Return a character vector with the paths of the files in
     ## @code{dir} of type @code{type} (as in .makeFileExts()).
     ## When listing R code and documentation files, files in OS-specific
     ## subdirectories are included if present.
     exts <- .makeFileExts(type)
-    files <- listFilesWithExts(dir, exts)
+    files <-
+        listFilesWithExts(dir, exts, all.files = all.files,
+                          full.names = full.names)
+    
     if(type %in% c("code", "docs")) {
         OSdir <- file.path(dir, .Platform$OS)
-        if(fileTest("-d", OSdir))
-            files <- c(files, listFilesWithExts(OSdir, exts))
+        if(fileTest("-d", OSdir)) {
+            OSfiles <-
+                listFilesWithExts(OSdir, exts, all.files = all.files,
+                                  full.names = FALSE)
+            OSfiles <-
+                file.path(if(full.names) OSdir else .Platform$OS,
+                          OSfiles)
+            files <- c(files, OSfiles)
+        }
     }
     files
 }

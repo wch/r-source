@@ -12,8 +12,8 @@
 filePathAsAbsolute(x)
 filePathSansExt(x)
 fileTest(op, x, y)
-listFilesWithExts(dir, exts, full.names = TRUE)
-listFilesWithType(dir, type)
+listFilesWithExts(dir, exts, all.files = FALSE, full.names = TRUE)
+listFilesWithType(dir, type, all.files = FALSE. full.names = TRUE)
 }
 \arguments{
   \item{x,y}{character vectors giving file paths.}
@@ -24,6 +24,8 @@ listFilesWithType(dir, type)
     dates) and \code{"-ot"}.}
   \item{dir}{a character string with the path name to a directory.}
   \item{exts}{a character vector of possible file extensions.}
+  \item{all.files}{a logical.  If \code{FALSE} (default), only visible
+    files are considered; if \code{TRUE}, all files are used.}
   \item{full.names}{a logical indicating whether the full paths of the
     files found are returned (default), or just the file names.}
   \item{type}{a character string giving the \dQuote{type} of the files
@@ -46,13 +48,15 @@ listFilesWithType(dir, type)
 
   \code{listFilesWithExts} returns the paths or names of the files in
   directory \code{dir} with extension matching one of the elements of
-  \code{exts}.  Note that by default, paths are returned, and that
-  currently, only visible files are used.
+  \code{exts}.  Note that by default, full paths are returned, and that
+  only visible files are used.
 
   \code{listFilesWithType} returns the paths of the files in \code{dir}
   of the given \dQuote{type}, as determined by the extensions recognized
   by \R.  When listing R code and documentation files, files in
-  OS-specific subdirectories are included if present.
+  OS-specific subdirectories are included if present.  Note that by
+  default, full paths are returned, and that only visible files are
+  used.
 }
 \seealso{
   \code{\link{file.path}},
