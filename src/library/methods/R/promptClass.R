@@ -1,6 +1,7 @@
 "promptClass" <-
-function (clName, filename = paste(topicName(type, clName), ".Rd", sep = ""), type = "class",
-          where = find(classMetaName(clName)))
+function (clName,
+          filename = paste(topicName(type, clName), ".Rd", sep = ""),
+          type = "class", where = find(classMetaName(clName)))
 {
     classesInSig <- function(g, where) {
     # given a generic g, obtain list of all classes
@@ -122,15 +123,16 @@ function (clName, filename = paste(topicName(type, clName), ".Rd", sep = ""), ty
         if (nslots > 0) {
             .usage.body <-
                 paste0("\\code{    ", format(slotnames),
-                      " = ...., # Object of class ", slotclasses,"}\\cr")
+                      " = ...., # Object of class \"", slotclasses,"\"}\\cr")
         }
         .usage.tail <- "\\code{  )}}"
     }
     if (nslots > 0) {
         slotclasses <- slotClassWithSource(clName)
         .slots.head <- c("\\section{Slots}{", "  \\describe{")
-        .slots.body <-  paste0("    \\item{\\code{", slotnames,
-                "}:}", "{Object of class ", slotclasses, " ~~ }")
+        .slots.body <-
+            paste0("    \\item{\\code{", slotnames, "}:}",
+                   "{Object of class \\code{", slotclasses, "} ~~ }")
         .slots.tail <- c("  }","}")
         .slots <- c(.slots.head,  .slots.body,  .slots.tail)
     }
