@@ -1107,7 +1107,7 @@ setDataPart <- function(object, value) {
         f <- byExt@replace
         byExpr <- body(f)
         ## Is there a danger of infinite loop below?
-        expr <- substitute({.value <- as(from, BY); as(.value, TO) <- value; value <- .value; BYEXPR},
+        expr <- substitute({.value <- as(object, BY); as(.value, TO) <- value; value <- .value; BYEXPR},
                            list(BY=by, TO = to, BYEXPR = byExpr))
         body(f, envir = environment(f)) <- expr
         toExt@replace <- f
