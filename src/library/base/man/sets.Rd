@@ -23,9 +23,6 @@ is.element(x, y)
 \details{
   Each of \code{union}, \code{intersect} and \code{setdiff} will remove
   any duplicated values in the arguments.
-
-  \code{is.element} is for S compatibility, an \code{\link{.Alias}} for
-  \code{\link{\%in\%}} (which is more natural).
 }
 \value{
   A vector of the same \code{\link{mode}} as \code{x} or \code{y} for
