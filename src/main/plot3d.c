@@ -1372,9 +1372,7 @@ SEXP do_persp(SEXP call, SEXP op, SEXP args, SEXP env)
     double ltheta, lphi;
     double expand, xc, yc, zc, xs, ys, zs;
     int i, j, scale, ncol, dobox;
-    DevDesc *dd = CurrentDevice();
-
-    GCheckState(dd);
+    DevDesc *dd;
 
     if (length(args) < 18)
 	errorcall(call, "too few parameters\n");
@@ -1433,15 +1431,10 @@ SEXP do_persp(SEXP call, SEXP op, SEXP args, SEXP env)
     expand = asReal(CAR(args));
     args = CDR(args);
 
-    PROTECT(col = FixupCol(CAR(args), NA_INTEGER));
-    ncol = LENGTH(col);
-    if (ncol < 1)
-	errorcall(call, "invalid col specification\n");
+    col = CAR(args);
     args = CDR(args);
 
-    PROTECT(border = FixupCol(CAR(args), NA_INTEGER));
-    if (length(border) < 1)
-	errorcall(call, "invalid border specification\n");
+    border = CAR(args);
     args = CDR(args);
 
     ltheta = asReal(CAR(args));
@@ -1481,6 +1474,13 @@ SEXP do_persp(SEXP call, SEXP op, SEXP args, SEXP env)
 	scale = 0;
 
     dd = GNewPlot(call != R_NilValue, NA_LOGICAL);
+
+    PROTECT(col = FixupCol(col, dd->gp.bg));
+    ncol = LENGTH(col);
+    if (ncol < 1) errorcall(call, "invalid col specification\n");
+    PROTECT(border = FixupCol(border, dd->gp.fg));
+    if (length(border) < 1) errorcall(call, "invalid border specification\n");
+
     GSetState(1, dd);
     GSavePars(dd);
     ProcessInlinePars(args, dd);

@@ -107,7 +107,11 @@ NEW FEATURES
 
 BUG FIXES
 
-    o	axis now sorts `labels' when it sort `at'.
+    o   When persp was the first graphics command given to R it caused
+	the error message "plot.new() has not been called yet" to be
+	printed.  This no longer happens.
+
+    o	axis now sorts `labels' when it sorts `at'.
 
     o	abline now understands the "lwd" graphics parameter if it
 	is supplied as an inline argument.
