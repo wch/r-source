@@ -962,6 +962,63 @@ SEXP R_Parse1Vector(TextBuffer *textb, int gencode, int *status)
     }
     return R_CurrentExpr;
 }
+#define GENERAL
+#ifdef GENERAL
+
+static int savechar;
+static int (*R_fetchchar)();
+
+static int general_getc(void)
+{
+    int c;
+    if (savechar) {
+	c = savechar;
+	savechar = 0;
+    }
+    else {
+	c = R_fetchchar();
+	if (c == EOF) {
+	    EndOfFile = 1;
+	    return R_EOF;
+	}
+	if (c == '\n') R_ParseError += 1;
+	return c;
+    }
+}
+
+static int general_ungetc(int c)
+{
+    if (c == '\n') R_ParseError -= 1;
+    savechar = c;
+    return c;
+}
+
+SEXP R_Parse1General(int (*fetchchar)(), int gencode, int *status)
+{
+    ParseInit();
+    GenerateCode = gencode;
+    R_fetchchar = fetchchar;
+    xxgetc = general_getc;
+    xxungetc = general_ungetc;
+    switch(yyparse()) {
+    case 0:			/* End of file */
+	*status = PARSE_EOF;
+	break;
+    case 1:			/* Syntax error / incomplete */
+	*status = PARSE_ERROR;
+	if (EndOfFile) *status = PARSE_INCOMPLETE;
+	break;
+    case 2:			/* Empty Line */
+	*status = PARSE_NULL;
+	break;
+    case 3:			/* Valid expr '\n' terminated */
+    case 4:			/* Valid expr ';' terminated */
+	*status = PARSE_OK;
+	break;
+    }
+    return R_CurrentExpr;
+}
+#endif
 
 SEXP R_ParseFile(FILE *fp, int n, int *status)
 {
@@ -1082,6 +1139,66 @@ SEXP R_ParseVector(SEXP text, int n, int *status)
 	}
     }
 }
+
+#ifdef GENERAL
+SEXP R_ParseGeneral(int (*fetchchar)(), int n, int *status)
+{
+    SEXP rval, t;
+    int i;
+    R_ParseError = 1;
+    if (n >= 0) {
+	PROTECT(rval = allocVector(EXPRSXP, n));
+	for (i = 0 ; i < n ; i++) {
+	try_again:
+	    t = R_Parse1General(fetchchar, 1, status);
+	    switch(*status) {
+	    case PARSE_NULL:
+		goto try_again;
+		break;
+	    case PARSE_OK:
+		VECTOR(rval)[i] = t;
+		break;
+	    case PARSE_INCOMPLETE:
+	    case PARSE_ERROR:
+	    case PARSE_EOF:
+		rval = R_NilValue;
+		break;
+	    }
+	}
+	UNPROTECT(1);
+	return rval;
+    }
+    else {
+	PROTECT(t = NewList());
+	for(;;) {
+	    rval = R_Parse1General(fetchchar, 1, status);
+	    switch(*status) {
+	    case PARSE_NULL:
+		break;
+	    case PARSE_OK:
+		t = GrowList(t, rval);
+		break;
+	    case PARSE_INCOMPLETE:
+	    case PARSE_ERROR:
+		UNPROTECT(1);
+		return R_NilValue;
+		break;
+	    case PARSE_EOF:
+		t = CDR(t);
+		rval = allocVector(EXPRSXP, length(t));
+		for (n = 0 ; n < LENGTH(rval) ; n++) {
+		    VECTOR(rval)[n] = CAR(t);
+		    t = CDR(t);
+		}
+		UNPROTECT(1);
+		*status = PARSE_OK;
+		return rval;
+		break;
+	    }
+	}
+    }
+}
+#endif
 
 static char *Prompt(SEXP prompt, int type)
 {
