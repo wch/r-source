@@ -82,7 +82,8 @@ attachNamespace <- function(ns, pos = 2) {
     invisible(env)
 }
 loadNamespace <- function (package, lib.loc = NULL,
-                            keep.source = getOption("keep.source.pkgs")) {
+                            keep.source = getOption("keep.source.pkgs"),
+                            partial = FALSE) {
     # eventually allow version as second component; ignore for now.
     package <- as.character(package)[[1]]
 
@@ -172,6 +173,10 @@ loadNamespace <- function (package, lib.loc = NULL,
                                                   keep.source), i[[2]])
         }
 
+        # store info for loading name space for loadingNamespaceInfo to read
+        "__LoadingNamespaceInfo__" <- list(libname = package.lib,
+                                           pkgname = package)
+
         # load the code
         env <- asNamespace(ns)
         codeFile <- file.path(package.lib, package, "R", package)
@@ -181,6 +186,9 @@ loadNamespace <- function (package, lib.loc = NULL,
 
         # save the package name in the environment
         assign(".packageName", package, envir = env)
+
+        # partial loading stops at this point
+        if (partial) return(ns)
 
         # register any S3 methods
         for (spec in nsInfo$S3methods) {
@@ -218,6 +226,19 @@ loadNamespace <- function (package, lib.loc = NULL,
 
         ns
     }
+}
+loadingNamespaceInfo <- function() {
+    dynGet <- function(name, notFound = stop(paste(name, "not found"))) {
+        n <- sys.nframe()
+        while (n > 1) {
+            n <- n - 1
+            env <- sys.frame(n)
+            if (exists(name, env = env, inherits = FALSE))
+                return(get(name, env = env, inherits = FALSE))
+        }
+        notFound
+    }
+    dynGet("__LoadingNamespaceInfo__", stop("not loading a name space"))
 }
 topenv <- function(envir = parent.frame()) {
     while (! is.null(envir)) {
