@@ -250,8 +250,6 @@ rpipe * rpipeOpen(char *cmd, int visible, char *finput, int io)
     DWORD id;
     BOOL res;
 
-//    if(io) return NULL;
-
     if (!(r = (rpipe *) malloc(sizeof(struct structRPIPE)))) {
 	strcpy(RunError, "Insufficient memory (rpipeOpen)");
 	return NULL;

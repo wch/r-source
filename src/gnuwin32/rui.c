@@ -30,6 +30,7 @@
 #include "Defn.h"
 #undef append /* defined by graphapp/internal.h */
 #include <stdio.h>
+#undef DEBUG /* needed for mingw-runtime 2.0 */
 /* the user menu code looks at the internal structure */
 #include "graphapp/internal.h"
 #include "graphapp/ga.h"
@@ -498,9 +499,9 @@ void readconsolecfg()
     widthonresize = 1;
 #ifdef USE_MDI
     if (MDIset == 1)
-	RguiMDI = RguiMDI |= RW_MDI;
+	RguiMDI |= RW_MDI;
     if (MDIset == -1)
-	RguiMDI = RguiMDI &= ~RW_MDI;
+	RguiMDI &= ~RW_MDI;
 #endif
     sprintf(optf, "%s/RConsole", getenv("R_USER"));
     if (!optopenfile(optf)) {
@@ -572,23 +573,23 @@ void readconsolecfg()
 #ifdef USE_MDI
 	    if (!strcmp(opt[0], "MDI")) {
 		if (!MDIset && !strcmp(opt[1], "yes"))
-		    RguiMDI = RguiMDI |= RW_MDI;
+		    RguiMDI |= RW_MDI;
 		else if (!MDIset && !strcmp(opt[1], "no"))
-		    RguiMDI = RguiMDI &= ~RW_MDI;
+		    RguiMDI &= ~RW_MDI;
 		done = 1;
 	    }
 	    if (!strcmp(opt[0], "toolbar")) {
 		if (!strcmp(opt[1], "yes"))
-		    RguiMDI = RguiMDI |= RW_TOOLBAR;
+		    RguiMDI |= RW_TOOLBAR;
 		else if (!strcmp(opt[1], "no"))
-		    RguiMDI = RguiMDI &= ~RW_TOOLBAR;
+		    RguiMDI &= ~RW_TOOLBAR;
 		done = 1;
 	    }
 	    if (!strcmp(opt[0], "statusbar")) {
 		if (!strcmp(opt[1], "yes"))
-		    RguiMDI = RguiMDI |= RW_STATUSBAR;
+		    RguiMDI |= RW_STATUSBAR;
 		else if (!strcmp(opt[1], "no"))
-		    RguiMDI = RguiMDI &= ~RW_STATUSBAR;
+		    RguiMDI &= ~RW_STATUSBAR;
 		done = 1;
 	    }
 #endif
