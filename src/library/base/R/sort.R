@@ -73,5 +73,6 @@ sort.list <- function(x, partial = NULL, na.last = TRUE, decreasing = FALSE)
         stop("`x' must be atomic")
     if(!is.null(partial))
         .NotYetUsed("partial != NULL")
-    .Internal(order(na.last, decreasing, x))
+    if(is.na(na.last)) .Internal(order(TRUE, decreasing, x[!is.na(x)]))
+    else .Internal(order(na.last, decreasing, x))
 }
