@@ -152,6 +152,10 @@
   In this case the output variable did not exist before the call so it
   cannot cause trouble. If the input variable is not changed in the C
   code of \code{Cfunction} you are safe.
+
+  Neither \code{.Call} nor \code{.External} copy their arguments.  You
+  should treat arguments you receive through these interfaces as
+  read-only.
 }
 
 \section{Header files for external code}{

@@ -1982,7 +1982,9 @@ suffices.  The new interfaces are recent additions to @Sl{} and @R{},
 and a great deal of useful code has been written using just @code{.C}
 before they were available.  The @code{.Call} and @code{.External}
 interfaces allow much more control, but they also impose much greater
-responsibilities so need to be used with care.
+responsibilities so need to be used with care.  Neither @code{.Call} nor
+@code{.External} copy their arguments.  You should treat arguments you
+receive through these interfaces as read-only.
 
 There are two approaches that can be taken to handling @R{} objects from
 within C code.  The first (historically) is to use the macros and
