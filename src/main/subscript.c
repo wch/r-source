@@ -19,10 +19,24 @@
 
 #include "Defn.h"
 
-int OneIndex(SEXP x, SEXP s, int partial, SEXP *newname)
+static int integerOneIndex(int i, int len) {
+    int index = -1;
+
+    if (i > 0)
+	index = i - 1;
+    else if (i == 0 || len < 2)
+	error("attempt to select less than one element\n");
+    else if (len == 2 && i > -3)
+	index = 2 + i;
+    else
+	error("attempt to select more than one element\n");
+    return(index);
+}
+
+int OneIndex(SEXP x, SEXP s, int len, int partial, SEXP *newname)
 {
     SEXP names;
-    int i, index, len, nx;
+    int i, index, nx;
 
     if (length(s) > 1)
 	error("attempt to select more than one element\n");
@@ -34,10 +48,10 @@ int OneIndex(SEXP x, SEXP s, int partial, SEXP *newname)
     switch(TYPEOF(s)) {
     case LGLSXP:
     case INTSXP:
-	index = INTEGER(s)[0] - 1;
+	index = integerOneIndex(INTEGER(s)[0], len);
 	break;
     case REALSXP:
-	index = REAL(s)[0] - 1;
+	index = integerOneIndex(REAL(s)[0], len);
 	break;
     case STRSXP:
 	nx = length(x);
@@ -89,12 +103,12 @@ int OneIndex(SEXP x, SEXP s, int partial, SEXP *newname)
     return index;
 }
 
-/* Get a single index for the [[ operator. */
-/* Check that only one index is being selected. */
+/* Get a single index for the [[ operator.
+   Check that only one index is being selected. */
 
-int get1index(SEXP s, SEXP names, int pok)
+int get1index(SEXP s, SEXP names, int len, int pok)
 {
-    int index, i, len;
+    int index, i;
 
     if (length(s) > 1)
 	error("attempt to select more than one element\n");
@@ -105,10 +119,10 @@ int get1index(SEXP s, SEXP names, int pok)
     switch (TYPEOF(s)) {
     case LGLSXP:
     case INTSXP:
-	index = INTEGER(s)[0] - 1;
+	index = integerOneIndex(INTEGER(s)[0], len);
 	break;
     case REALSXP:
-	index = REAL(s)[0] - 1;
+	index = integerOneIndex(REAL(s)[0], len);
 	break;
     case STRSXP:
 	/* Try for exact match */

@@ -22,7 +22,7 @@
 
 #define COUNTING
 
-#include "Arith.h"/*-> Platform.h */
+#include "Arith.h"		/*-> Platform.h */
 #include "Complex.h"
 #include "Errormsg.h"
 #include "Memory.h"
@@ -549,7 +549,7 @@ void FrameClassFix(SEXP);
 int framedepth(RCNTXT*);
 SEXP frameSubscript(int, SEXP, SEXP);
 SEXP getAttrib(SEXP, SEXP);
-int get1index(SEXP,SEXP,int);
+int get1index(SEXP, SEXP, int, int);
 void GetMatrixDimnames(SEXP, SEXP*, SEXP*);
 SEXP GetArrayDimnames(SEXP);
 SEXP GetColNames(SEXP);
@@ -646,7 +646,7 @@ int nlevels(SEXP);
 int NonNullStringMatch(SEXP, SEXP);
 SEXP nthcdr(SEXP, int);
 void onintr();
-int OneIndex(SEXP, SEXP, int, SEXP*);
+int OneIndex(SEXP, SEXP, int, int, SEXP*);
 SEXP parse(FILE*, int);
 int pmatch(SEXP, SEXP, int);
 void PrintDefaults(SEXP);
