@@ -102,7 +102,7 @@ int main(int ac, char **av)
 }
 
 
-/* this should be a global variable as it used in unix/devQuartz.c */
+/* this should be a global variable as it used in unix/devQuartz.c */
 Rboolean useaqua = FALSE;
 
 
