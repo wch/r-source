@@ -7,6 +7,12 @@
 
 NEW FEATURES
 
+    o	All R environment variables are now of the form `R_xxx'.  In
+	particular, `RHOME', `RLIBS' and `RPROFILE' are now called
+	`R_HOME', `R_LIBS', and `R_PROFILE'.
+
+    o   New boxplot.formula() as a formula interface to boxplots.
+
     o   expression()'s have gotten semantics that are closer to
         those of S. They don't get evaluated except when expressedly
         specified. Example: e<-expression(x); e[[1]]<-expression(123);
