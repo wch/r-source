@@ -29,8 +29,8 @@ log10(.Machine$double.xmin) / log10(2) == .Machine$double.min.exp
 ## More IEEE  Infinity/NaN checks
 i1 <- pi / 0
 i1 == (i2 <- 1:1 / 0:0)
-is.infinite( i1) & is.infinite( i2) &   i1  > 0 &    i2 > 0
-is.infinite(-i1) & is.infinite(-i2) & (-i1) < 0 & (-i2) < 0
+is.infinite( i1) & is.infinite( i2) &   i1 > 12   &   i2 > 12
+is.infinite(-i1) & is.infinite(-i2) & (-i1) < -12 & (-i2) < -12
 
 is.nan(n1 <- 0 / 0)
 is.nan( - n1)
