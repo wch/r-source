@@ -3,7 +3,7 @@
 #   Copyright (C) 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999, 2000
 #   Free Software Foundation, Inc.
 
-version='2000-07-06'
+version='2000-07-27'
 
 # This file is (in principle) common to ALL GNU software.
 # The presence of a machine in this file suggests that SOME GNU software
@@ -299,14 +299,14 @@ case $basic_machine in
 		os=-sysv
 		;;
 	amiga | amiga-*)
-		basic_machine=m68k-cbm
+		basic_machine=m68k-unknown
 		;;
 	amigaos | amigados)
-		basic_machine=m68k-cbm
+		basic_machine=m68k-unknown
 		os=-amigaos
 		;;
 	amigaunix | amix)
-		basic_machine=m68k-cbm
+		basic_machine=m68k-unknown
 		os=-sysv4
 		;;
 	apollo68)
