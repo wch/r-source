@@ -118,89 +118,85 @@ function(..., list = character(0),
     paths <- file.path(paths, "data")
     for(name in names) {
 	if (name == "CO2") name <- "zCO2"
-        files <- NULL
         found <- FALSE
         for(p in paths) {
-            ## does this package have "Rdata"?
-            ## we need to handle that separately, so for now we
-            ## will assume that a match higher up the search path
-            ## will work out and so don't look here.
-            if(!length(files) &&
-               tools::file_test("-f", file.path(p, "Rdata.rds"))) {
+            ## does this package have "Rdata" databases?
+            if(tools::file_test("-f", file.path(p, "Rdata.rds"))) {
                 rds <- .readRDS(file.path(p, "Rdata.rds"))
                 if(name %in% names(rds)) {
-                    ## found it, so copy objects from database and be done
+                    ## found it, so copy objects from database
                     found <- TRUE
+                    if(verbose)
+                        cat("name=", name, ":\t found in Rdata.rdb\n")
                     thispkg <- sub(".*/([^/]*)/data$", "\\1", p)
                     thispkg <- sub("_.*$", "", thispkg) # versioned installs.
                     thispkg <- paste("package:", thispkg, sep="")
-                    objs <- rds[[name]]
+                    objs <- rds[[name]] # guaranteed an exact match
                     lazyLoad(file.path(p, "Rdata"), envir = envir,
                              filter = function(x) x %in% objs)
                     break
                 }
             }
+            ## check for zipped data dir
             if(tools::file_test("-f", file.path(p, "Rdata.zip"))) {
                 if(tools::file_test("-f",
                                     fp <- file.path(p, "filelist")))
-                    files <-
-                        c(files,
-                          file.path(p, scan(fp, what="", quiet = TRUE)))
-                else warning(paste(sQuote("filelist"),
-                                   "is missing for dir",
-                                   sQuote(p)))
+                    files <- file.path(p, scan(fp, what="", quiet = TRUE))
+                else {
+                    warning(paste(sQuote("filelist"), "is missing for dir",
+                                  sQuote(p)))
+                    next
+                }
             } else {
-                files <- c(files, list.files(p, full = TRUE))
+                files <- list.files(p, full = TRUE)
             }
             files <- files[grep(name, files, fixed = TRUE)]
-        }
-        if(found) next
-
-        if(length(files) > 1) {
-            ## more than one candidate
-            o <- match(fileExt(files), dataExts, nomatch = 100)
-            paths0 <- dirname(files)
-            paths0 <- factor(paths0, levels=paths0)
-            files <- files[order(paths0, o)]
-        }
-        if(length(files) > 0) {
-            for(file in files) {
-                if(verbose)
-                    cat("name=", name, ":\t file= ...",
-                        .Platform$file.sep, basename(file), "::\t",
-                        sep = "")
-                if(found)
-                    break
-                found <- TRUE
-                ext <- fileExt(file)
-                ## make sure the match is really for 'name.ext'
-                ## otherwise
-                if(basename(file) != paste(name, ".", ext, sep = ""))
-                    found <- FALSE
-                else {
-                    zfile <- zip.file.extract(file, "Rdata.zip")
-                    if(zfile != file) on.exit(unlink(zfile))
-                    switch(ext,
-                           R = , r =
-                           sys.source(zfile, chdir = TRUE,
-                                      envir = envir),
-                           RData = , rdata = , rda =
-                           load(zfile, envir = envir),
-                           TXT = , txt = , tab =
-                           assign(name,
-                                  read.table(zfile, header = TRUE),
-                                  envir = envir),
-                           CSV = , csv =
-                           assign(name,
-                                  read.table(zfile, header = TRUE,
-                                             sep = ";"),
-                                  envir = envir),
-                           found <- FALSE)
-                }
-                if(verbose)
-                    cat(if(!found) "*NOT* ", "found\n")
+            if(length(files) > 1) {
+                ## more than one candidate
+                o <- match(fileExt(files), dataExts, nomatch = 100)
+                paths0 <- dirname(files)
+                paths0 <- factor(paths0, levels=paths0)
+                files <- files[order(paths0, o)]
             }
+            if(length(files) > 0) {
+                ## have a plausible candidate (or more)
+                for(file in files) {
+                    if(verbose)
+                        cat("name=", name, ":\t file= ...",
+                            .Platform$file.sep, basename(file), "::\t",
+                            sep = "")
+                    ext <- fileExt(file)
+                    ## make sure the match is really for 'name.ext'
+                    if(basename(file) != paste(name, ".", ext, sep = ""))
+                        found <- FALSE
+                    else {
+                        found <- TRUE
+                        zfile <- zip.file.extract(file, "Rdata.zip")
+                        if(zfile != file) on.exit(unlink(zfile))
+                        switch(ext,
+                               R = , r =
+                               sys.source(zfile, chdir = TRUE,
+                                          envir = envir),
+                               RData = , rdata = , rda =
+                               load(zfile, envir = envir),
+                               TXT = , txt = , tab =
+                               assign(name,
+                                      read.table(zfile, header = TRUE),
+                                      envir = envir),
+                               CSV = , csv =
+                               assign(name,
+                                      read.table(zfile, header = TRUE,
+                                                 sep = ";"),
+                                      envir = envir),
+                               found <- FALSE)
+                    }
+                    if (found) break # from files
+                }
+                if(verbose) cat(if(!found) "*NOT* ", "found\n")
+            }
+            if (found) break # from paths
         }
+
         if(!found)
             warning(paste("Data set", sQuote(name), "not found"))
     }
