@@ -1465,7 +1465,7 @@ static char* sbrk_base = (char*)(-1);
 static unsigned long max_sbrked_mem = 0;
 
 /* The maximum via either sbrk or mmap */
-static unsigned long max_total_mem = 0;
+unsigned long max_total_mem = 0;
 
 /* internal working copy of mallinfo */
 static struct mallinfo current_mallinfo = {  0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };

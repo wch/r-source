@@ -611,8 +611,7 @@ SEXP do_sysinfo(SEXP call, SEXP op, SEXP args, SEXP rho)
 void R_ProcessEvents(void); /* from system.c */
 
 SEXP do_syssleep(SEXP call, SEXP op, SEXP args, SEXP rho)
-{
-    DWORD mtime;
+{    DWORD mtime;
     int ntime;
     double time;
     
@@ -629,3 +628,87 @@ SEXP do_syssleep(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
     return R_NilValue;
 }
+
+struct mallinfo {
+  int arena;    /* total space allocated from system */
+  int ordblks;  /* number of non-inuse chunks */
+  int smblks;   /* unused -- always zero */
+  int hblks;    /* number of mmapped regions */
+  int hblkhd;   /* total space in mmapped regions */
+  int usmblks;  /* unused -- always zero */
+  int fsmblks;  /* unused -- always zero */
+  int uordblks; /* total allocated space */
+  int fordblks; /* total non-inuse space */
+  int keepcost; /* top-most, releasable (via malloc_trim) space */
+};
+extern unsigned long max_total_mem;
+
+struct mallinfo mallinfo();
+
+SEXP do_memsize(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    SEXP ans;
+    int maxmem;
+    
+    checkArity(op, args);
+    maxmem = asLogical(CAR(args));
+    if(maxmem == NA_LOGICAL)
+	errorcall(call, "invalid `max' argument");
+    PROTECT(ans = allocVector(INTSXP, 1));
+    if(maxmem) {
+	INTEGER(ans)[0] = max_total_mem;
+    } else {
+	INTEGER(ans)[0] = mallinfo().uordblks;
+    }
+    UNPROTECT(1);
+    return ans;
+}
+
+SEXP do_dllversion(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    SEXP path=R_NilValue, ans;
+    char *dll;
+    DWORD dwVerInfoSize;
+    DWORD dwVerHnd;
+    
+    checkArity(op, args);
+    path = CAR(args);
+    if(!isString(path) || LENGTH(path) != 1)
+	errorcall(call, "invalid `path' argument");
+    dll = CHAR(STRING_ELT(path, 0));
+    dwVerInfoSize = GetFileVersionInfoSize(dll, &dwVerHnd);
+    PROTECT(ans = allocVector(STRSXP, 2));
+    STRING_ELT(ans, 0) = STRING_ELT(ans, 1) = mkChar("");
+    if (dwVerInfoSize) {
+	BOOL  fRet;
+	LPSTR lpstrVffInfo;
+	LPSTR lszVer = NULL;
+	UINT  cchVer = 0;
+
+	lpstrVffInfo = (LPSTR) malloc(dwVerInfoSize);
+	if (GetFileVersionInfo(dll, 0L, dwVerInfoSize, lpstrVffInfo))
+	{
+	    
+	    fRet = VerQueryValue(lpstrVffInfo,
+				 TEXT("\\StringFileInfo\\040904E4\\FileVersion"),
+				 (LPVOID)&lszVer, &cchVer);
+	    if(fRet) STRING_ELT(ans, 0) = mkChar(lszVer);
+
+	    fRet = VerQueryValue(lpstrVffInfo,
+				 TEXT("\\StringFileInfo\\040904E4\\R Version"),
+				 (LPVOID)&lszVer, &cchVer);
+	    if(fRet) STRING_ELT(ans, 1) = mkChar(lszVer);
+	    else {
+		fRet = VerQueryValue(lpstrVffInfo,
+				     TEXT("\\StringFileInfo\\040904E4\\Compiled under R Version"),
+				     (LPVOID)&lszVer, &cchVer);
+		if(fRet) STRING_ELT(ans, 1) = mkChar(lszVer);
+	    }
+	    
+	} else ans = R_NilValue;
+	free(lpstrVffInfo);
+    } else ans = R_NilValue;
+    UNPROTECT(1);
+    return ans;
+}
+
