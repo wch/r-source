@@ -3,10 +3,9 @@ useDynLib(lqs)
 export(cov.mcd, cov.mve, cov.rob, lmsreg, lqs, ltsreg)
 
 # documented but not exported
-export(lqs.formula, predict.lqs)
-
-# imported by MASS
-export(lqs.default)
+export(predict.lqs)
+# needed to use update, as match.call returns this
+export(lqs.formula)
 
 S3method(lqs, default)
 S3method(lqs, formula)

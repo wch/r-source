@@ -1,6 +1,6 @@
 # file modreg/R/ppr.R
 # copyright (C) 1998 B. D. Ripley
-# Copyright (C) 2000 The R Development Core Team
+# Copyright (C) 2000-3 The R Development Core Team
 #
 ppr <- function(x, ...) UseMethod("ppr")
 
@@ -33,6 +33,7 @@ function(x, y, weights=rep(1,n), ww=rep(1,q), nterms, max.terms=nterms,
 	 bass=0, span=0, df=5, gcvpen=1, ...)
 {
     call <- match.call()
+    call[[1]] <- as.name("ppr")
     sm.method <- match.arg(sm.method)
     ism <- switch(sm.method, supsmu=0, spline=1, gcvspline=2)
     if(missing(nterms)) stop("nterms is missing with no default")

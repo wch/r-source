@@ -14,12 +14,10 @@ export(as.dendrogram, as.dist, as.hclust, biplot, cancor, cmdscale,
 #        print.loadings, print.summary.princomp, str.dendrogram,
 #        summary.princomp)
 
-# cluster needs
-export(as.hclust.twins, plot.hclust)
-# MASS calls
-export(biplot.default)
+# package cluster calls
+export(plot.hclust)
 # using match.call needs
-export(princomp.default, princomp.formula)
+export(princomp.formula)
 
 S3method("[[", dendrogram)
 S3method(as.dendrogram, hclust)

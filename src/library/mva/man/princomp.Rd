@@ -7,16 +7,17 @@
 \alias{predict.princomp}
 \title{Principal Components Analysis}
 \usage{
-\method{princomp}{formula}(x, data = NULL, subset, na.action, ...)
+\method{princomp}{formula}(formula, data = NULL, subset, na.action, ...)
 \method{princomp}{default}(x, cor = FALSE, scores = TRUE, covmat = NULL,
          subset = rep(TRUE, nrow(as.matrix(x))), ...)
 }
 \arguments{
-  \item{x}{a formula or matrix (or data frame) which provides the data for the
-    principal components analysis.}
+  \item{formula}{a formula with no response variable.}
   \item{data}{an optional data frame containing the variables in the
-    formula \code{x}. By default the variables are taken from
-    \code{environment(x)}.}
+    formula \code{formula}. By default the variables are taken from
+    \code{environment(formula)}.}
+  \item{x}{a matrix or data frame which provides the data for the
+    principal components analysis.}
   \item{subset}{an optional vector used to select rows (observations) of the
     data matrix \code{x}.}
   \item{na.action}{a function which indicates what should happen

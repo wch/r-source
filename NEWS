@@ -351,6 +351,9 @@ NEW FEATURES
 	loaded). Some serious testing will be going on, but it should 
         have no effect unless specifically asked for.
 
+    o   princomp.factor() now has principal argument `formula', so
+	update() can be used.
+
 
 INSTALLATION CHANGES
 

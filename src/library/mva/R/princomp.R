@@ -1,15 +1,15 @@
 princomp <- function(x, ...) UseMethod("princomp")
 
-princomp.formula <- function(x, data = NULL, subset, na.action, ...)
+## use formula to allow update() to be used.
+princomp.formula <- function(formula, data = NULL, subset, na.action, ...)
 {
-    mt <- terms(x, data = data)
+    mt <- terms(formula, data = data)
     if(attr(mt, "response") > 0) stop("response not allowed in formula")
     attr(mt, "intercept") <- 0
     cl <- match.call()
     mf <- match.call(expand.dots = FALSE)
     mf$... <- NULL
     mf[[1]] <- as.name("model.frame")
-    names(mf)[names(mf) == "x"] <- "formula"
     mf <- eval(mf, parent.frame())
     na.act <- attr(mf, "na.action")
     x <- model.matrix(mt, mf)
@@ -27,6 +27,8 @@ princomp.default <-
     function(x, cor = FALSE, scores = TRUE, covmat = NULL,
              subset = rep(TRUE, nrow(as.matrix(x))), ...)
 {
+    cl <- match.call()
+    cl[[1]] <- as.name("princomp")
     z <- if(!missing(x)) as.matrix(x)[subset, , drop = FALSE]
     if (is.list(covmat)) {
         if(any(is.na(match(c("cov", "n.obs"), names(covmat)))))
@@ -73,7 +75,7 @@ princomp.default <-
     edc <- list(sdev = sdev,
                 loadings = structure(edc$vectors, class="loadings"),
                 center = cen, scale = sc, n.obs = n.obs,
-                scores = scr, call = match.call())
+                scores = scr, call = cl)
     ## The Splus function also return list elements factor.sdev,
     ## correlations and coef, but these are not documented in the help.
     ## coef seems to equal load.  The Splus function also returns list
