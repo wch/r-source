@@ -10,4 +10,5 @@ save <- function(..., list = character(0), file = "", ascii = FALSE,
 }
 
 save.image <- function (file = ".RData")
-    save(list = ls(all.names = TRUE), file = file, envir = .GlobalEnv)
+  save(list=ls(envir = .GlobalEnv, all.names=TRUE), file = file, envir = .GlobalEnv)
+
