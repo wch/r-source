@@ -25,6 +25,9 @@ for f in ${R_HOME}/doc/html/*; do
 done
 # we are going to recreate this in R code
 rm -f ${USER_R_HOME}/doc/html/packages.html
+# this needs to be copied for OS X 
+rm -f ${USER_R_HOME}/doc/html/index.html
+cp ${R_HOME}/doc/html/index.html ${USER_R_HOME}
 
 # class files must be copied for mozilla to work
 for f in ${R_HOME}/doc/html/search/*.class; do
