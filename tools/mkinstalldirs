@@ -4,7 +4,7 @@
 # Created: 1993-05-16
 # Public domain
 
-# $Id: mkinstalldirs,v 1.2 2000/11/04 14:32:15 hornik Exp $
+# $Id: mkinstalldirs,v 1.3 2002/02/01 10:26:46 hornik Exp $
 
 errstatus=0
 dirmode=""
@@ -16,17 +16,43 @@ Usage: mkinstalldirs [-h] [--help] [-m mode] dir ..."
 while test $# -gt 0 ; do
    case "${1}" in
      -h | --help | --h* )			# -h for help
-        echo "${usage}" 1>&2; exit 0 ;;
+	echo "${usage}" 1>&2; exit 0 ;;
      -m )					# -m PERM arg
-        shift
-        test $# -eq 0 && { echo "${usage}" 1>&2; exit 1; }
-        dirmode="${1}"
-        shift ;;
+	shift
+	test $# -eq 0 && { echo "${usage}" 1>&2; exit 1; }
+	dirmode="${1}"
+	shift ;;
      -- ) shift; break ;;			# stop option processing
      -* ) echo "${usage}" 1>&2; exit 1 ;;	# unknown option
      * )  break ;;				# first non-opt arg
    esac
 done
+
+for file
+do
+  if test -d "$file"; then
+    shift
+  else
+    break
+  fi
+done
+
+case $# in
+0) exit 0 ;;
+esac
+
+case $dirmode in
+'')
+  if mkdir -p -- . 2>/dev/null; then
+    echo "mkdir -p -- $*"
+    exec mkdir -p -- "$@"
+  fi ;;
+*)
+  if mkdir -m "$dirmode" -p -- . 2>/dev/null; then
+    echo "mkdir -m $dirmode -p -- $*"
+    exec mkdir -m "$dirmode" -p -- "$@"
+  fi ;;
+esac
 
 for file
 do
@@ -42,24 +68,24 @@ do
      esac
 
      if test ! -d "$pathcomp"; then
-        echo "mkdir $pathcomp"
+	echo "mkdir $pathcomp"
 
-        mkdir "$pathcomp" || lasterr=$?
+	mkdir "$pathcomp" || lasterr=$?
 
-        if test ! -d "$pathcomp"; then
-  	  errstatus=$lasterr
+	if test ! -d "$pathcomp"; then
+	  errstatus=$lasterr
 	else
 	  if test ! -z "$dirmode"; then
 	     echo "chmod $dirmode $pathcomp"
 
 	     lasterr=""
-	     chmod $dirmode "$pathcomp" || lasterr=$?
+	     chmod "$dirmode" "$pathcomp" || lasterr=$?
 
 	     if test ! -z "$lasterr"; then
 	       errstatus=$lasterr
 	     fi
 	  fi
-        fi
+	fi
      fi
 
      pathcomp="$pathcomp/"
@@ -69,6 +95,7 @@ done
 exit $errstatus
 
 # Local Variables:
-# mode:shell-script
-# sh-indentation:3
+# mode: shell-script
+# sh-indentation: 3
 # End:
+# mkinstalldirs ends here

@@ -87,7 +87,7 @@ Supported PROGRAM values:
     exit 1
     ;;
 
-  aclocal)
+  aclocal*)
     if test -z "$run" && ($1 --version) > /dev/null 2>&1; then
        # We have it, but it failed.
        exit 1
@@ -139,7 +139,7 @@ WARNING: \`$1' is missing on your system.  You should only need it if
     touch $touch_files
     ;;
 
-  automake)
+  automake*)
     if test -z "$run" && ($1 --version) > /dev/null 2>&1; then
        # We have it, but it failed.
        exit 1
