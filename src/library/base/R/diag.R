@@ -1,10 +1,8 @@
 diag <- function(x = 1, nrow, ncol = n)
 {
-    if(is.matrix(x) && nargs() == 1)
-    {
-        if((m <- min(dim(x))) > 0)
-            return(c(x)[1 + 0:(m - 1) * (dim(x)[1] + 1)])
-        else return(numeric(0))
+    if (is.matrix(x) && nargs() == 1) {
+        if((m <- min(dim(x))) == 0)
+            return(numeric(0))
 
         y <- c(x)[1 + 0:(m - 1) * (dim(x)[1] + 1)]
         nms <- dimnames(x)
