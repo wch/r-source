@@ -22,6 +22,10 @@
 # include <config.h>
 #endif
 
+/* Avoid braced-groups warning from -Wall */
+#define G_STMT_START do
+#define G_STMT_END   while(0)
+
 #include "gnome-find-dialog.h"
 
 #if defined (HAVE_STRING_H)
@@ -78,8 +82,9 @@ guint gnome_find_dialog_get_type (void)
       sizeof (GnomeFindDialogClass),
       (GtkClassInitFunc) gnome_find_dialog_class_init,
       (GtkObjectInitFunc) gnome_find_dialog_init,
-      (GtkArgSetFunc) NULL,
-      (GtkArgSetFunc) NULL,
+      /* Reserved */ NULL,
+      /* Reserved */ NULL,
+      (GtkClassInitFunc) NULL,
     };
 
     find_dialog_type = gtk_type_unique (gnome_dialog_get_type (),

@@ -22,6 +22,10 @@
 #include <config.h>
 #endif
 
+/* Avoid braced-groups warning from -Wall */
+#define G_STMT_START do
+#define G_STMT_END   while(0)
+
 #include <gnome.h>
 
 #include <Defn.h>
@@ -409,9 +413,15 @@ static void tb_close_cb(GtkWidget *widget, gpointer data)
 
 static GnomeUIInfo graphics_toolbar[] =
 {
-    { GNOME_APP_UI_ITEM, "Activate", "Make this window the current device", tb_activate_cb, NULL, NULL, GNOME_APP_PIXMAP_STOCK, GNOME_STOCK_PIXMAP_JUMP_TO, 0, (GdkModifierType) 0, NULL },
+    { GNOME_APP_UI_ITEM, "Activate", "Make this window the current device", 
+      (gpointer) tb_activate_cb, NULL, NULL, 
+      GNOME_APP_PIXMAP_STOCK, GNOME_STOCK_PIXMAP_JUMP_TO, 
+      0, (GdkModifierType) 0, NULL },
     GNOMEUIINFO_SEPARATOR,
-    { GNOME_APP_UI_ITEM, "Close", "Close this graphics device", tb_close_cb, NULL, NULL, GNOME_APP_PIXMAP_STOCK, GNOME_STOCK_PIXMAP_CLOSE, 0, (GdkModifierType) 0, NULL },
+    { GNOME_APP_UI_ITEM, "Close", "Close this graphics device", 
+      (gpointer) tb_close_cb, NULL, NULL, 
+      GNOME_APP_PIXMAP_STOCK, GNOME_STOCK_PIXMAP_CLOSE, 
+      0, (GdkModifierType) 0, NULL },
     GNOMEUIINFO_END
 };
 

@@ -22,6 +22,10 @@
 #include <config.h>
 #endif
 
+/* Avoid braced-groups warning from -Wall */
+#define G_STMT_START do
+#define G_STMT_END   while(0)
+
 #include <gdk/gdkkeysyms.h>
 #include <stdio.h>
 
@@ -100,8 +104,9 @@ gtk_console_get_type ()
 	sizeof (GtkConsoleClass),
 	(GtkClassInitFunc) gtk_console_class_init,
 	(GtkObjectInitFunc) gtk_console_init,
-	(GtkArgSetFunc) NULL,
-	(GtkArgGetFunc) NULL,
+	/* reserved */ NULL,
+	/* reserved */ NULL,
+	(GtkClassInitFunc) NULL,
       };
 
       console_type = gtk_type_unique (gtk_text_get_type (), &console_info);
