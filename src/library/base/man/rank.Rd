@@ -3,7 +3,7 @@
 \title{Sample Ranks}
 \description{
   Returns the sample ranks of the values in a numeric vector.
-  Ties, i.e., equal values, result in ranks being averaged.
+  Ties, i.e., equal values, result in ranks being averaged, by default.
 }
 \usage{
 rank(x, na.last = TRUE, ties.method = c("average", "first", "random"))
@@ -28,8 +28,9 @@ rank(x, na.last = TRUE, ties.method = c("average", "first", "random"))
   \code{NA}s for the moment.  Otherwise, with some values equal, called
   \sQuote{ties}, the argument \code{ties.method} determines
   the result at the corresponding indices.  The \code{"first"} method
-  results in a permutation By default, \code{"average"}, how these ranks de
-  For ranks without averaging, see the examples below.
+  results in a permutation with increasing values at each index set of
+  ties.  The \code{"random"} method puts these in random order whereas the
+  default, \code{"average"}, replaces them by their mean.
 }
 \seealso{\code{\link{order}} and \code{\link{sort}}.}
 \examples{
