@@ -1082,35 +1082,19 @@ SEXP do_writeClipboard(SEXP call, SEXP op, SEXP args, SEXP rho)
     return ans;
 }
 
-#define _WIN32_WINNT 0x0500
 SEXP do_normalizepath(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP ans, paths = CAR(args);
     int i, n = LENGTH(paths);
     char tmp[MAX_PATH], *tmp2;
-    Rboolean OK = FALSE;
-    OSVERSIONINFO verinfo;
     
     checkArity(op, args);
     if(!isString(paths))
        errorcall(call, "'path' must be a character vector");
 
-    /* Fathom out if this is recent enough Windows */
-    verinfo.dwOSVersionInfoSize = sizeof(OSVERSIONINFO);
-    GetVersionEx(&verinfo);
-    switch(verinfo.dwPlatformId) {
-    case VER_PLATFORM_WIN32_WINDOWS:
-	OK = verinfo.dwMinorVersion >= 10; /* >= Windows 98 */
-	break;
-    case VER_PLATFORM_WIN32_NT:
-	OK = (int)verinfo.dwMajorVersion >= 5; /* >= Windows 2000 */
-    default:
-	;
-    }
     PROTECT(ans = allocVector(STRSXP, n));
     for (i = 0; i < n; i++) {
 	GetFullPathName(CHAR(STRING_ELT(paths, i)), MAX_PATH, tmp, &tmp2);
-	if(OK) GetLongPathName(tmp, tmp, MAX_PATH);
 	SET_STRING_ELT(ans, i, mkChar(tmp));
     }
     UNPROTECT(1);
