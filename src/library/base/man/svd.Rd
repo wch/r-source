@@ -29,6 +29,6 @@ to the values returned by DSVDC.
 Dongarra, J. J., J. R. Bunch, C. B. Moler and G. W. Stewart (1978).
 \emph{LINPACK Users Guide}, SIAM Publications, Philadelphia.
 }
-\seealso{
-\code{\link{qr}}.
-}
+\seealso{\code{\link{eigen}}, \code{\link{qr}}.}
+\keyword{algebra}
+\keyword{array}

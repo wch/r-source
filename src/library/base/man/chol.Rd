@@ -21,3 +21,5 @@ Dongarra, J. J., J. R. Bunch, C. B. Moler and G. W. Stewart (1978).
 \code{\link{qr}},
 \code{\link{svd}}.
 }
+\keyword{algebra}
+\keyword{array}
