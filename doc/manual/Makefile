@@ -41,7 +41,7 @@ Man.dvi: Man.tex Version.tex Rd.sty $(Packages)
 	-latex '\nonstopmode\input{Man.tex}'
 ##-- need \nonstopmode, since we still have some 'alias' problems in Index
 Version.tex:
-	../../bin/R -nosave < /dev/null | head -10 | grep '^Version' > $@
+	../../bin/R --version 2> $@
 
 Manbooks:: $(Manbooks)
 
