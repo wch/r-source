@@ -3244,6 +3244,9 @@ Error in "[.data.frame"(x, 1, c("a", "c")) :
 [41] unstack      
 > meth2gen("dendrogram")
 [1] [[      cut     plot    print   reorder rev     str    
+> library(lqs)
+> meth2gen("lqs")
+[1] predict print  
 > ## --> the output may need somewhat frequent updating..
 > 
 > 
