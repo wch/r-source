@@ -14,7 +14,6 @@ window(x, ...) <- value
 \method{window}{default}(x, start = NULL, end = NULL,
        frequency = NULL, deltat = NULL, extend = FALSE, \dots)
 }
-}
 \usage{
 window(x, \dots)
 window(x, start, end, frequency, deltat, ...) <- value
