@@ -86,7 +86,8 @@ reformulate <- function (termlabels, response=NULL)
 		      paste(termlabels, collapse = "+"),
 		      collapse = "")
     rval <- eval(parse(text = termtext)[[1]])
-    if(has.resp) rval[[2]] <- as.symbol(response)
+    if(has.resp) rval[[2]] <-
+        if(is.character(response)) as.symbol(response) else response
     environment(rval) <- parent.frame()
     rval
 }
