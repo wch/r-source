@@ -3563,8 +3563,13 @@ void GMtext(char *str, int side, double line, int outer, double at, int las,
 		at = at/* + GConvertYUnits(dd->gp.yLineBias, LINES, USER, dd)*/;
 		line = line + dd->gp.yLineBias;
 		angle = 0;
+#ifdef OLD
 		xadj = dd->gp.adj;
 		yadj = 0.5;
+#else
+		xadj = 1.0;
+		yadj = 0.3333;
+#endif
 	    }
 	    else {
 		line = line + dd->gp.yLineBias;
@@ -3589,10 +3594,15 @@ void GMtext(char *str, int side, double line, int outer, double at, int las,
 	    break;
 	case 4:
 	    if(las == 1 || las == 2) {
-		at = at + GConvertYUnits(dd->gp.yLineBias, LINES, USER, dd);
+		at = at/* + GConvertYUnits(dd->gp.yLineBias, LINES, USER, dd)*/;
 		line = line + dd->gp.yLineBias;
 		angle = 0;
+#ifdef OLD
 		yadj = 0.5;
+#else
+		xadj = 0;
+		yadj = 0.3333;
+#endif
 	    }
 	    else {
 		line = line + 1 - dd->gp.yLineBias;

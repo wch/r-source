@@ -63,6 +63,7 @@
 SEXP do_indexsearch(SEXP, SEXP, SEXP, SEXP);
 SEXP do_surface(SEXP, SEXP, SEXP, SEXP);
 SEXP do_flatContour(SEXP, SEXP, SEXP, SEXP);
+SEXP do_filledcontour(SEXP, SEXP, SEXP, SEXP);
 
 FUNTAB R_FunTab[] =
 {
@@ -616,6 +617,7 @@ FUNTAB R_FunTab[] =
 {"erase",	do_erase,	0,	111,	1,	PP_FUNCALL},
 {"dotplot",	do_dotplot,	0,	111,	1,	PP_FUNCALL},
 {"persp",	do_persp,	0,	111,	4,	PP_FUNCALL},
+{"filledcontour",do_filledcontour,0,    111,    5,      PP_FUNCALL},
 #ifdef NICK
 {"shade",       do_shade,       0,      111,    14,     PP_FUNCALL},
 {"surface",     do_surface,     0,      111,    18,     PP_FUNCALL},

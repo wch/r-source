@@ -38,18 +38,16 @@ topo.colors <- function (n)
 
 terrain.colors <- function (n)
 {
-    if ((n <- as.integer(n[1])) > 0) {
-	j <- n %/% 3
-	k <- n %/% 3
-	i <- n - j - k
-	c(hsv(23/60, 1, v = seq(0.6, 0.85, length = i)),
-	  if(j > 0)
-	  hsv(h = seq(22/60, 10/60, length = j), s = 1,
-	      v = seq(0.85 ,	 1, length = j)),
-	  if(k > 0)
-	  hsv(h = seq(from = 9/60, to = 6/60, length = k),
-	      s = seq(from =	1, to = 0.3,  length = k), v = 1))
-    } else character(0)
+  k <- n%/%2
+  h <- c(4/12, 2/12, 0/12)
+  s <- c(1, 1, 0)
+  v <- c(0.65, 0.9, 0.95)
+  c(hsv(h = seq(h[1], h[2], length = k),
+        s = seq(s[1], s[2], length = k),
+        v = seq(v[1], v[2], length = k)),
+    hsv(h = seq(h[2], h[3], length = n - k + 1)[-1],
+        s = seq(s[2], s[3], length = n - k + 1)[-1],
+        v = seq(v[2], v[3], length = n - k + 1)[-1]))
 }
 
 heat.colors <- function (n)
@@ -63,3 +61,16 @@ heat.colors <- function (n)
 	      v = 1))
     } else character(0)
 }
+
+cm.colors <- function (n)
+{
+    k <- n%/%2
+    if (2 * k == n) {
+        c(hsv(h = 6/12, s = seq(0.5, 0, length = k + 1)[- k - 1], v = 1),
+          hsv(h = 10/12, s = seq(0, 0.5, length = n - k + 1)[-1]), v = 1)
+    } else {
+        c(hsv(h = 6/12, s = seq(0.5, 0, length = k + 1), v = 1),
+          hsv(h = 10/12, s = seq(0, 0.5, length = n - k)[-1]), v = 1)
+    }
+}
+

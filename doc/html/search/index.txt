@@ -958,6 +958,11 @@ Keywords: file.show file
 Description: Display One or More Files
 URL: ../../../library/base/html/file.show.html
 
+Entry: filled.contour
+Keywords: filled.contour hplot aplot
+Description: Level (Contour) Plots
+URL: ../../../library/base/html/filled.contour.html
+
 Entry: fitted.values
 Keywords: fitted.values fitted fitted.default fitted.lm fitted.glm models regression
 Description: Extract Model Fitted Values
@@ -1594,7 +1599,7 @@ Description: Set or View the Graphics Palette
 URL: ../../../library/base/html/palette.html
 
 Entry: Palettes
-Keywords: rainbow heat.colors terrain.colors topo.colors color dplot
+Keywords: rainbow heat.colors terrain.colors topo.colors cm.colors color dplot
 Description: Color Palettes
 URL: ../../../library/base/html/Palettes.html
 

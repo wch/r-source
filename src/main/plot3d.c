@@ -527,7 +527,226 @@ SEXP do_contour(SEXP call, SEXP op, SEXP args, SEXP env)
     return R_NilValue;
 }
 
+	/*  F i l l e d   C o n t o u r   P l o t s  */
+
+	/*  R o s s  I h a k a,  M a r c h  1 9 9 9  */
+
+static void
+FindCutPoints(double low, double high,
+	      double x1, double y1, double z1,
+	      double x2, double y2, double z2,
+	      double *x, double *y, double *z,
+	      int *npt)
+{
+    double c;
+
+    if (z1 > z2 ) {
+	if (z2 > high || z1 < low)
+	    return;
+	if (z1 < high) {
+	    x[*npt] = x1;
+	    y[*npt] = y1;
+	    z[*npt] = z1;
+	    ++*npt;
+	}
+	else {
+	    c = (z1 - high) / (z1 - z2);
+	    x[*npt] = x1 + c * (x2 - x1);
+	    y[*npt] = y1;
+	    z[*npt] = z1 + c * (z2 - z1);
+	    ++*npt;
+	}
+	if (z2 > low) {
+#ifdef OMIT
+	    /* Don't repeat corner vertices */
+	    x[*npt] = x2;
+	    y[*npt] = y2;
+	    z[*npt] = z2;
+	    ++*npt;
+#endif
+	}
+	else {
+	    c = (z2 -low) / (z2 - z1);
+	    x[*npt] = x2 - c * (x2 - x1);
+	    y[*npt] = y1;
+	    z[*npt] = z2 - c * (z2 - z1);
+	    ++*npt;
+	}
+    }
+    else if (z1 < z2) {
+	if (z2 < low || z1 > high)
+	    return;
+	if (z1 > low) {
+	    x[*npt] = x1;
+	    y[*npt] = y1;
+	    z[*npt] = z1;
+	    ++*npt;
+	}
+	else {
+	    c = (z1 - low) / (z1 - z2);
+	    x[*npt] = x1 + c * (x2 - x1);
+	    y[*npt] = y1;
+	    z[*npt] = z1 + c * (z2 - z1);
+	    ++*npt;
+	}
+	if (z2 < high) {
+#ifdef OMIT
+	    /* Don't repeat corner vertices */
+	    x[*npt] = x2;
+	    y[*npt] = y2;
+	    z[*npt] = z2;
+	    ++*npt;
+#endif
+	}
+	else {
+	    c = (z2 - high) / (z2 - z1);
+	    x[*npt] = x2 - c * (x2 - x1);
+	    y[*npt] = y1;
+	    z[*npt] = z2 - c * (z2 - z1);
+	    ++*npt;
+	}
+    }	
+    else {
+	if(low <= z1 && z1 <= high) {
+	    x[*npt] = x1;
+	    y[*npt] = y1;
+	    z[*npt] = z1;
+	    ++*npt;
+#ifdef OMIT
+	    /* Don't repeat corner vertices */
+	    x[*npt] = x2;
+	    y[*npt] = y2;
+	    z[*npt] = z2;
+	    ++*npt;
+#endif
+	}	    
+    }
+}
+
+/* FIXME - This could pretty easily be adapted to handle NA */
+/* values on the grid.  Just search the diagonals for cutpoints */
+/* instead of the cell sides.  Use the same switch idea as in */
+/* contour above.  There are 5 cases to handle. */
+
+static void
+FindPolygonVertices(double low, double high,
+		    double x1, double x2, double y1, double y2,
+		    double z11, double z21, double z12, double z22,
+		    double *x, double *y, double *z, int *npt)
+{
+    *npt = 0;
+    FindCutPoints(low, high, x1,  y1,  z11, x2,  y1,  z21, x, y, z, npt);
+    FindCutPoints(low, high, y1,  x2,  z21, y2,  x2,  z22, y, x, z, npt);
+    FindCutPoints(low, high, x2,  y2,  z22, x1,  y2,  z12, x, y, z, npt);
+    FindCutPoints(low, high, y2,  x1,  z12, y1,  x1,  z11, y, x, z, npt);
+}
+
+SEXP do_filledcontour(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    SEXP oargs, sx, sy, sz, sc, scol;
+    double *x, *y, *z, *c;
+    unsigned *col;
+    double xlow, xhigh, ylow, yhigh, zmin, zmax;
+    int i, j, k, npt, nx, ny, nz, nc, ncol, colsave, xpdsave;
+    double px[8], py[8], pz[8];
+    DevDesc *dd = CurrentDevice();
+
+    GCheckState(dd);
+
+    checkArity(op,args);
+    oargs = args;
+
+    sx = CAR(args);
+    internalTypeCheck(call, sx, REALSXP);
+    nx = LENGTH(sx);
+    args = CDR(args);
+
+    sy = CAR(args);
+    internalTypeCheck(call, sy, REALSXP);
+    ny = LENGTH(sy);
+    args = CDR(args);
+
+    sz = CAR(args);
+    internalTypeCheck(call, sz, REALSXP);
+    nz = length(sz);
+    args = CDR(args);
+
+    sc = CAR(args);
+    internalTypeCheck(call, sc, REALSXP);
+    nc = length(sc);
+    args = CDR(args);
+
+    PROTECT(scol = FixupCol(CAR(args), dd));
+    ncol = length(scol);
+
+    /* Shorthand Pointers */
+
+    x = REAL(sx);
+    y = REAL(sy);
+    z = REAL(sz);
+    c = REAL(sc);
+    col = (unsigned*)INTEGER(scol);
+
+    /* Check of grid coordinates */
+    /* We want them to all be finite */
+    /* and in strictly ascending order */
+
+    if (nx < 2 || ny < 2) goto badxy;
+    if (!FINITE(x[0])) goto badxy;
+    if (!FINITE(y[0])) goto badxy;
+    for (i = 1; i < nx; i++)
+	if (!FINITE(x[i]) || x[i] <= x[i - 1]) goto badxy;
+    for (j = 1; j < ny; j++)
+	if (!FINITE(y[j]) || y[j] <= y[j - 1]) goto badxy;
+
+    /* Check of the contour levels */
+
+    if (!FINITE(c[0])) goto badlev;
+    for (k = 1; k < nc; k++)
+	if (!FINITE(c[k]) || c[k] <= c[k - 1]) goto badlev;
+
+    colsave = dd->gp.col;
+    xpdsave = dd->gp.xpd;
+    dd->gp.xpd = 0;
+
+    GMode(1, dd);
+
+    for (i = 1; i < nx; i++) {
+	for (j = 1; j < ny; j++) {
+	    for (k = 1; k < nc ; k++) {
+		FindPolygonVertices(c[k - 1], c[k],
+				    x[i - 1], x[i],
+				    y[j - 1], y[j],
+				    z[i - 1 + (j - 1) * nx],
+				    z[i + (j - 1) * nx],
+				    z[i - 1 + j * nx],
+				    z[i + j * nx],
+				    px, py, pz, &npt);
+                if (npt > 2)
+		    GPolygon(npt, px, py, USER, col[(k-1)%ncol],
+			     NA_INTEGER, dd);
+	    }
+	}
+    }
+    GMode(0, dd);
+    dd->gp.col = colsave;
+    dd->gp.xpd = xpdsave;
+    R_Visible = 0;
+    UNPROTECT(1);
+    if (call != R_NilValue)
+	recordGraphicOperation(op, oargs, dd);
+    return R_NilValue;
+
+ badxy:
+    errorcall(call, "invalid x / y limits\n");
+ badlev:
+    errorcall(call, "invalid contour levels\n");
+    return R_NilValue;  /* never used; to keep -Wall happy */ 
+}
+
+
 	/*  I m a g e   R e n d e r i n g  */
+
 
 SEXP do_image(SEXP call, SEXP op, SEXP args, SEXP env)
 {

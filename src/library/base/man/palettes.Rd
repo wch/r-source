@@ -5,11 +5,13 @@ rainbow(n, s = 1, v = 1, start = 0, end = max(1,n - 1)/n, gamma = 1)
 heat.colors(n)
 terrain.colors(n)
 topo.colors(n)
+cm.colors(n)
 }
 \alias{rainbow}
 \alias{heat.colors}
 \alias{terrain.colors}
 \alias{topo.colors}
+\alias{cm.colors}
 \arguments{
 \item{n}{the number of colors (\eqn{\ge 1}{>= 1}) to be in the palette.}
 \item{s,v}{the ``saturation'' and ``value'' to be used to
@@ -63,6 +65,8 @@ rect(i-.5, 2*j+dy, i+.4, 3*j, col=terrain.colors(n))
 text(2*j,  3*j+dy/4,		 "terrain.colors(n)")
 rect(i-.5, 3*j+dy, i+.4, 4*j, col=topo.colors(n))
 text(2*j,  4*j+dy/4,		 "topo.colors(n)")
+rect(i-.5, 3*j+dy, i+.4, 4*j, col=cm.colors(n))
+text(2*j,  4*j+dy/4,		 "cm.colors(n)")
 }
 \keyword{color}
 \keyword{dplot}

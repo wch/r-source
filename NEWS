@@ -11,6 +11,16 @@
 
 NEW FEATURES
 
+    o	A new function filled.contour() has been added.  It produces a
+	variant contour plots where the area between contours is filled
+	with a solid colour.  The function (currently) uses the layout()
+	function and so is restricted to a full page display.
+
+    o	The function terrain.colors() has been modified to remove a
+	visual discontinuity (at yellow).  In addition, a function
+	cm.colors() which implements a Cleveland-style cyan-magenta
+	palette has been added.
+
     o   Primitive function .External() to call dynamically loaded
 	`internal'-style functions (code from Jean Meloche)
 
