@@ -189,3 +189,4 @@ optim(rep(3, 25), flb, NULL, "L-BFGS-B",
 
 }
 \keyword{nonlinear}
+\keyword{optimize}
