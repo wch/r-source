@@ -48,7 +48,7 @@ local({dp <- as.vector(Sys.getenv("R_DEFAULT_PACKAGES"))
 .First.sys <- function()
 {
     for(pkg in getOption("defaultPackages")) {
-        res <- require(pkg, quietly = TRUE, character.only = TRUE)
+        res <- require(pkg, quietly = TRUE, character.only = TRUE, save = FALSE)
         if(!res)
             warning("package ", pkg,
                     ' in options("defaultPackages") was not found', call.=FALSE)

@@ -42,11 +42,11 @@ detach <- function(name, pos=2, version)
     }
     .Internal(detach(pos))
     ## check for detaching a required package
-    for(pkgs in search()) {
-        if(exists(".required", pkgs, inherits = FALSE)
-           && packageName %in% paste("package:", get(".required", pkgs, inherits = FALSE),sep=""))
-            warning(packageName, " is required by ", pkgs, " (still attached)")
-    }
+#     for(pkgs in search()) {
+#         if(exists(".required", pkgs, inherits = FALSE)
+#            && packageName %in% paste("package:", get(".required", pkgs, inherits = FALSE),sep=""))
+#             warning(packageName, " is required by ", pkgs, " (still attached)")
+#     }
     if(.isMethodsDispatchOn()) {
         if("package:methods" %in% search())
             cacheMetaData(env, FALSE)

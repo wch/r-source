@@ -454,7 +454,7 @@ function(package, quietly = FALSE, warn.conflicts = TRUE,
     else {
         ## update the ".required" variable
         if(identical(save, TRUE)) {
-            save <- topenv() # a package namespace, topLevelEnvironment option or .GlobalEnv
+            save <- topenv(parent.frame()) # a package namespace, topLevelEnvironment option or .GlobalEnv
             if(identical(save, .GlobalEnv)) {
                 ## try to detect call from .First.lib in  a package
                 if(exists("pkgname", sys.frame(sys.parent(1)), inherits = FALSE))
@@ -464,11 +464,14 @@ function(package, quietly = FALSE, warn.conflicts = TRUE,
         }
         else
             save <- as.environment(save)
-        if(exists(".required", save, inherits=FALSE))
-            packages <- unique(c(package, get(".required", save)))
-        else
-            packages <- package
-        assign(".required", packages, save)
+        hasDotRequired <- exists(".required", save, inherits=FALSE)
+        if(!isNamespace(save) || hasDotRequired) { ## so assignment allowed
+            if(hasDotRequired)
+                packages <- unique(c(package, get(".required", save)))
+            else
+                packages <- package
+            assign(".required", packages, save)
+        }
     }
     value
 }
