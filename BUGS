@@ -168,6 +168,11 @@ none
 
 Directory:  incoming
 
+* PR# 528 *
+Subject: Wrong SEs in predict.lm(..., type="terms")
+Subject: Wrong SEs in predict.lm(..., type="terms")
+From: John Maindonald <john.maindonald@anu.edu.au>
+Date: Wed, 26 Apr 2000 12:42:00 +1000 (EST)
 * PR# 526 *
 Subject: INSTALL_SCRIPT during installation
 From: "Johnny C. Lam" <lamj@stat.cmu.edu>
