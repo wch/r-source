@@ -3151,7 +3151,7 @@ static void CheckSymbolPar(SEXP call, SEXP p, int *nr, int *nc)
 	errorcall(call, "invalid symbol parameter vector");
 }
 
-void do_symbols(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP do_symbols(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP x, y, p, fg, bg;
     double pmax, pmin, inches, rx, ry;
@@ -3168,8 +3168,8 @@ void do_symbols(SEXP call, SEXP op, SEXP args, SEXP env)
     if (length(args) < 7)
 	errorcall(call, "insufficient arguments");
 
-    x = PROTECT(coerceVector(CAR(args), REALSXP)); args = CDR(args);
-    y = PROTECT(coerceVector(CAR(args), REALSXP)); args = CDR(args);
+    PROTECT(x = coerceVector(CAR(args), REALSXP)); args = CDR(args);
+    PROTECT(y = coerceVector(CAR(args), REALSXP)); args = CDR(args);
     if (!isNumeric(x) || !isNumeric(y) || length(x) <= 0 || LENGTH(x) <= 0)
         errorcall(call, "invalid symbol coordinates");
 
@@ -3431,4 +3431,5 @@ void do_symbols(SEXP call, SEXP op, SEXP args, SEXP env)
     if (call != R_NilValue)
 	recordGraphicOperation(op, originalArgs, dd);
     UNPROTECT(5);
+    return R_NilValue;
 }
