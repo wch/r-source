@@ -18,8 +18,7 @@
  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
-int MacintoshDeviceDriver(DevDesc *dd, double width, double height,
-	double pointsize)
+int MacDeviceDriver(DevDesc *dd, double width, double height, double pointsize)
 {
-	error("No macintosh device driver yet!\n");
+     return 0;	/* Device startup failed */
 }
