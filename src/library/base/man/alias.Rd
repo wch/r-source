@@ -2,12 +2,8 @@
 \title{Find Aliases (Dependencies) in a Model }
 \usage{
 alias(object, ...)
-}
-\usage{
 alias.formula(object, data, ...)
-}
-\usage{
-alias.lm(object, complete = T, partial = F)
+alias.lm(object, complete = TRUE, partial = FALSE)
 }
 \alias{alias}
 \alias{alias.formula}
