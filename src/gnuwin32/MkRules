@@ -37,7 +37,7 @@ TCL_VERSION = 84
 ## ====== configuration macros for building installers ===========
 
 # location where Inno Setup 4.x or 5.x was installed
-ISDIR=C:/packages/Inno4
+ISDIR=C:/packages/Inno5
 
 ## =================== cross-compilation settings  =================
 
