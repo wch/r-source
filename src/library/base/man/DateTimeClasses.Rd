@@ -67,7 +67,7 @@ mean(time)
     or \code{>=}.}
   \item{units}{character.  Units in which the results are desired. If
     \code{"auto"}, a suitable set of units is chosen, the largest
-    possible in which all the absilute differences are greater than one.}
+    possible in which all the absolute differences are greater than one.}
 }
 \details{
   There are two basic classes of date/times.  Class \code{"POSIXct"}
