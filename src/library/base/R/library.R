@@ -362,7 +362,7 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
         for(lib in lib.loc) {
             a <- .packages(all.available = TRUE, lib.loc = lib)
             for(i in sort(a)) {
-                title <- package.description(i, lib.loc = lib, field="Title")
+                title <- packageDescription(i, lib.loc = lib, field="Title")
                 if(is.na(title)) title <- ""
                 db <- rbind(db, cbind(i, lib, title))
             }

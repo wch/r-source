@@ -86,24 +86,49 @@ package.dependencies <- function(x, check = FALSE,
     }
 }
 
-package.description <- function(pkg, lib.loc=NULL, fields=NULL)
-{
+packageDescription <- function(pkg, lib.loc=NULL, fields=NULL, drop=TRUE)
+{ 
+    retval <- list()
+    if(!is.null(fields)){
+        fields <- as.character(fields)
+        retval[fields] <- NA
+    }
+    
     file <- system.file("DESCRIPTION", package = pkg, lib.loc = lib.loc)
+    
     if(file != "") {
-        retval <- read.dcf(file=file, fields=fields)[1,]
+        desc <- as.list(read.dcf(file=file)[1,])
+        if(!is.null(fields)){
+            ok <- names(desc) %in% fields
+            retval[names(desc)[ok]] <- desc[ok]
+        }
+        else
+            retval[names(desc)] <- desc
     }
 
     if((file == "") || (length(retval) == 0)){
-        warning(paste("DESCRIPTION file of package", pkg,
-                      "missing or broken"))
-        if(!is.null(fields)){
-            retval <- rep.int(NA, length(fields))
-            names(retval) <- fields
-        }
-        else
-            retval <- NA
+        warning(paste("DESCRIPTION file of package ", sQuote(pkg),
+                      " missing or broken\n"))
+        return(NA)
     }
 
+    if(drop & length(fields)==1)
+        return(retval[[1]])
+    
+    class(retval) <- "packageDescription"
+    if(!is.null(fields)) attr(retval, "fields") <- fields
+    attr(retval, "file") <- file
     retval
 }
 
+
+print.packageDescription <- function(x, ...)
+{
+    write.dcf(as.data.frame.list(x))
+    cat("-- File:", attr(x, "file"), "\n")
+    if(!is.null(attr(x, "fields"))){
+        cat("-- Fields read: ")
+        cat(attr(x, "fields"), sep=", ")
+        cat("\n")
+    }
+}

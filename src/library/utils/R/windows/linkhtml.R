@@ -44,7 +44,7 @@ make.packages.html <- function(lib.loc=.libPaths())
             cat("<p>Cross-links from this library to other libraries may not work.\n\n", file = out)
         cat("<p>\n<table width=\"100%\">\n", file = out)
         for (i in  pg) {
-            title <- package.description(i, fields="Title", lib.loc = lib)[1]
+            title <- packageDescription(i, fields="Title", lib.loc = lib)[1]
             if (is.na(title)) title <- "-- Title is missing --"
             cat('<tr align="left" valign="top">\n',
                 '<td width="25%"><a href="', lib0, '/', i,

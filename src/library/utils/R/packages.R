@@ -130,18 +130,6 @@ old.packages <- function(lib.loc=NULL, CRAN=getOption("CRAN"),
     update
 }
 
-package.contents <- function(pkg, lib.loc=NULL)
-{
-    file <- system.file("CONTENTS", package = pkg, lib.loc = lib.loc)
-    if(file == "") {
-        warning(paste("Cannot find CONTENTS file of package", pkg))
-        return(NA)
-    }
-
-    read.dcf(file=file, fields=c("Entry", "Keywords", "Description"))
-}
-
-
 installed.packages <- function(lib.loc = NULL, priority = NULL)
 {
     if(is.null(lib.loc))
@@ -157,7 +145,7 @@ installed.packages <- function(lib.loc = NULL, priority = NULL)
     for(lib in lib.loc) {
         pkgs <- .packages(all.available=TRUE, lib.loc = lib)
         for(p in pkgs){
-            desc <- package.description(p, lib=lib, fields= pkgFlds)
+            desc <- unlist(packageDescription(p, lib=lib, fields= pkgFlds))
             if(!is.null(priority)) # skip if priority does not match
                 if(is.na(pmatch(desc["Priority"], priority))) next
             retval <- rbind(retval, c(p, lib, desc))

@@ -88,6 +88,9 @@ NEW FEATURES
 	vector now wraps it in as.integer() so it will be source()d
 	correctly.  (Related to PR#4361.)
 
+    o   .Deprecated() has a new argument `package' which is used in
+        the warning message for non-base packages.
+
     o	The print() method for "difftime" objects now handles arrays.
 
     o	dir.create() is now an internal function (rather than a call to
@@ -416,6 +419,9 @@ UTILITIES
 
     o	Option 'repositories' to list URLs for package repositories
 	added.
+
+    o   package.description() has been replaced by
+        packageDescription(), package.contents() has been deprecated.
 
 
 C-LEVEL FACILITIES

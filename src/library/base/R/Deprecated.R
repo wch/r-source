@@ -1,11 +1,13 @@
 ###----- NOTE:	../man/Deprecated.Rd   must be synchronized with this!
 ###		--------------------
-.Deprecated <- function(new) {
+.Deprecated <- function(new, package=NULL) {
     warning(paste(sQuote(as.character(sys.call(sys.parent())[[1]])),
 		  " is deprecated.\n",
 		  if (!missing(new))
 		  paste("Use", sQuote(new), "instead.\n"),
-		  "See ?Deprecated.",
+		  "See help(\"Deprecated\") ",
+                  if(!is.null(pkg))
+                  paste("and help(\"", package, "-deprecated\").", sep=""),
 		  sep = ""),
             call. = FALSE)
 }
@@ -64,5 +66,31 @@ tetragamma <- function(x) {
 pentagamma <- function(x) {
     .Deprecated("psigamma(*, deriv=3)")
     psigamma(x, deriv=3)
+}
+## </entry>
+
+
+## <entry>
+## Deprecated in 1.9.0
+package.description <- function(pkg, lib.loc=NULL, fields=NULL)
+{
+    .Deprecated("packageDescription")
+    file <- system.file("DESCRIPTION", package = pkg, lib.loc = lib.loc)
+    if(file != "") {
+        retval <- read.dcf(file=file, fields=fields)[1,]
+    }
+
+    if((file == "") || (length(retval) == 0)){
+        warning(paste("DESCRIPTION file of package", pkg,
+                      "missing or broken"))
+        if(!is.null(fields)){
+            retval <- rep.int(NA, length(fields))
+            names(retval) <- fields
+        }
+        else
+            retval <- NA
+    }
+
+    retval
 }
 ## </entry>

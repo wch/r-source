@@ -28,7 +28,7 @@ packageStatus <- function(lib.loc = NULL,
     {
         pkgs <- .packages(all.available=TRUE, lib.loc = lib)
         for(p in pkgs){
-            desc <- package.description(p, lib=lib, fields=FIELDS)
+            desc <- unlist(packageDescription(p, lib=lib, fields=FIELDS))
             desc["Package"] <-
                 ifelse(is.na(desc["Bundle"]),
                        desc["Package"],
