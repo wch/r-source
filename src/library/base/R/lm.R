@@ -191,18 +191,20 @@ print.lm <- function(x, digits = max(3, .Options$digits - 3), ...)
 	invisible(x)
 }
 
-summary.lm <- function (z, correlation = FALSE)
+summary.lm <- function (object, correlation = FALSE)
 {
-	n <- NROW(z$qr$qr)
+	z <- .Alias(object)
+        Qr <- .Alias(object$qr)
+	n <- NROW(Qr$qr)
 	p <- z$rank
+        rdf <- n - p
 	p1 <- 1:p
 	r <- resid(z)
 	f <- fitted(z)
 	w <- weights(z)
 	if (is.null(z$terms)) {
 		stop("invalid \'lm\' object:  no terms component")
-	}
-	else {
+	} else {
 		if (is.null(w)) {
 			mss <- if (attr(z$terms, "intercept"))
 				sum((f - mean(f))^2) else sum(f^2)
@@ -216,28 +218,25 @@ summary.lm <- function (z, correlation = FALSE)
 			r <- sqrt(w) * r
 		}
 	}
-	resvar <- rss/(n - p)
-	R <- chol2inv(z$qr$qr[p1, p1, drop = FALSE])
+	resvar <- rss/rdf
+	R <- chol2inv(Qr$qr[p1, p1, drop = FALSE])
 	se <- sqrt(diag(R) * resvar)
-	est <- z$coefficients[z$qr$pivot[p1]]
+	est <- z$coefficients[Qr$pivot[p1]]
 	tval <- est/se
 	ans <- z[c("call", "terms")]
 	ans$residuals <- r
-	ans$coefficients <- cbind(est, se, tval, 2*(1 - pt(abs(tval), n - p)))
-	dimnames(ans$coefficients)<-list(names(z$coefficients)[z$qr$pivot[p1]],
+	ans$coefficients <- cbind(est, se, tval, 2*(1 - pt(abs(tval), rdf)))
+	dimnames(ans$coefficients)<-list(names(z$coefficients)[Qr$pivot[p1]],
 		c("Estimate", "Std. Error", "t value", "Pr(>|t|)"))
 	ans$sigma <- sqrt(resvar)
-	ans$df <- c(p, n - p, NCOL(z$qr$qr))
+	ans$df <- c(p, rdf, NCOL(Qr$qr))
 	if (p != attr(z$terms, "intercept")) {
 		df.int <- if (attr(z$terms, "intercept")) 1 else 0
 		ans$r.squared <- mss/(mss + rss)
-		#0.14 :	(n/(n-p))
 		ans$adj.r.squared <- 1 - (1 - ans$r.squared) *
-			((n - df.int)/(n - p))
-		ans$fstatistic <- c((mss/(p - df.int))/(rss/(n - p)),
-			p - df.int, n - p)
-		#0.14: ans$fstatistic <- c((mss/(p-1))/(rss/(n-p)),p-1,n-p)
-		names(ans$fstatistic) <- c("value", "numdf", "dendf")
+			((n - df.int)/rdf)
+		ans$fstatistic <- c(value = (mss/(p - df.int))/resvar,
+                                    numdf = p - df.int, dendf = rdf)
 	}
 	ans$cov.unscaled <- R
 	dimnames(ans$cov.unscaled) <- dimnames(ans$coefficients)[c(1,1)]
@@ -367,8 +366,7 @@ function(formula, data, na.action, ...) {
   else formula$model
 }
 
-variable.names.lm <-
-function(obj, full=FALSE)
+variable.names.lm <- function(obj, full=FALSE)
 {
 	if(full)dimnames(obj$qr$qr)[[2]]
 	else	dimnames(obj$qr$qr)[[2]][1:obj$rank]
@@ -387,8 +385,9 @@ anova.lm <- function(object, ...)
 		return(anovalist.lm(object, ...))
 	w <- weights(object)
 	ssr <- if(is.null(w)) sum(resid(object)^2) else sum(w*resid(object)^2)
-	comp <- object$effects[1:object$rank]
-	asgn <- object$assign[object$qr$pivot][1:object$rank]
+	p1 <- 1:object$rank
+	comp <- object$effects[p1]
+	asgn <- object$assign[object$qr$pivot][p1]
 	dfr <- df.residual(object)
 	ss <- c(as.numeric(lapply(split(comp^2,asgn),sum)),ssr)
 	df <- c(as.numeric(lapply(split(asgn,  asgn),length)), dfr)
@@ -398,11 +397,11 @@ anova.lm <- function(object, ...)
 	}
 	ms <- ss/df
 	f <- ms/(ssr/dfr)
-	p <- 1-pf(f,df,dfr)
+	p <- 1 - pf(f,df,dfr)
 	table <- cbind(df,ss,ms,f,p)
 	table[length(p),4:5] <- NA
-	dimnames(table) <- list(c(attr(object$terms,"term.labels"),
-		"Residual"), c("Df","Sum Sq", "Mean Sq", "F", "Pr(>F)"))
+	dimnames(table) <- list(c(attr(object$terms,"term.labels"), "Residual"),
+                                c("Df","Sum Sq", "Mean Sq", "F", "Pr(>F)"))
 	result <- list(table=table,
 		       title=paste("Analysis of Variance Table\nResponse:",
 			 formula(object)[[2]]))
