@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-03-01 22:04\n"
+"POT-Creation-Date: 2005-03-02 09:34\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -881,9 +881,6 @@ msgstr ""
 msgid "length of start should equal %d and correspond to initial coefs for %s"
 msgstr ""
 
-msgid ","
-msgstr ""
-
 msgid "cannot find valid starting values: please specify some"
 msgstr ""
 
@@ -933,6 +930,9 @@ msgid "fitted rates numerically 0 occurred"
 msgstr ""
 
 msgid "the following arguments to 'anova.glm' are invalid and dropped:"
+msgstr ""
+
+msgid ","
 msgstr ""
 
 msgid "models with response"
