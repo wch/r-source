@@ -29,6 +29,8 @@ NEW FEATURES
 
      o  package.skeleton() helps with creating new packages.
 
+     o  Generalised "birthday paradox" functions [pq]birthday
+
 BUG FIXES
 
      o	Unused entry points in `src/appl/fortran.c' and `Fortran.h'
