@@ -30,7 +30,7 @@ library <-
         else stop(txt)
       }
       which.lib.loc <- lib.loc[match(packagedir[1],
-                                     paste(lib.loc, name, "", sep = fsep))]
+                                     paste(lib.loc, name, sep = fsep))]
       if (length(packagedir) > 1) {
         warning(paste("Package `", name, "' found more than once,\n  ", 
                       "using the one found in `", which.lib.loc, 
@@ -83,7 +83,7 @@ library <-
   else if (!missing(help)) {
     if (!character.only) 
       help <- as.character(substitute(help))
-    file <- system.file("INDEX", help, lib.loc)
+    file <- system.file("INDEX", pkg=help, lib=lib.loc)
     if (file == "") 
       stop(paste("No documentation for package `", help, 
                  "'", sep = ""))
@@ -93,8 +93,6 @@ library <-
     ## library():
     libfil <- tempfile("R.")
     avail <- NULL
-    file.exists <- function(f)          # yes, a hack..
-      system.test("-r", f)
     for (lib in lib.loc) {
       cat("\nPackages in library `", lib, "':\n\n", sep = "", 
           file = libfil, append = TRUE)
@@ -109,7 +107,7 @@ library <-
       else {
         a <- .packages(all.available = TRUE, lib.loc = lib)
         for (i in a) {
-          title <- system.file("TITLE", i, lib)
+          title <- system.file("TITLE", pkg=i, lib=lib)
           if (title != "") 
             file.append(libfil, title)
           else cat(i, "\n", file = libfil, append = TRUE)
@@ -187,11 +185,12 @@ provide <- function(name) {
 .packages <- function(all.available = FALSE, lib.loc = .lib.loc) {
     if(all.available) {
 	fsep <- .Platform$ file.sep
-	a <- strsplit(system.file("*","",lib.loc), fsep)
+	a <- strsplit(system.file("*", pkg="", lib=lib.loc), fsep)
 	ans <- character(0)
 	for (i in a) {
 	    name <- i[length(i)]
-	    pkg <- system.file(paste("R",name, sep=fsep), name, lib.loc) 
+	    pkg <- system.file(paste("R",name, sep=fsep), pkg=name,
+                               lib=lib.loc) 
 	    if (pkg != "") ans <- c(ans,name)
 	}
 	return(ans)

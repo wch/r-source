@@ -32,10 +32,14 @@ file.choose <- function(new=FALSE)
 
 system.file <- function (..., pkg = .packages(), lib = .lib.loc) 
 {
-    FILES <- paste(t(outer(lib, pkg, paste, sep = .Platform$file.sep)), 
-        paste(..., sep = .Platform$file.sep), sep = .Platform$file.sep)
+    flist <- list(...)
+    if(length(flist) > 1 || (length(flist) == 1 && nchar(flist[[1]]) > 0)) {
+        FILES <- paste(t(outer(lib, pkg, paste, sep = .Platform$file.sep)), 
+            paste(..., sep = .Platform$file.sep), sep = .Platform$file.sep)
+    } else {
+        FILES <- paste(lib, pkg, sep = .Platform$file.sep)
+    }
     present <- file.exists(FILES)
-    if (any(present))
-        FILES[present]
+    if (any(present)) FILES[present]
     else ""
 }
