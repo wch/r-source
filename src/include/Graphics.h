@@ -135,6 +135,8 @@
 
 #define R_MaxDevices 64
 
+#define	DEG2RAD 0.01745329251994329576
+
 typedef unsigned int rcolor;
 
 typedef struct {
