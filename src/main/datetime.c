@@ -212,7 +212,7 @@ static double mktime0 (struct tm *tm, const int local)
     if(!local) return mktime00(tm);
 
     if(tm->tm_year < 138 &&
-#ifdef WIN32
+#ifdef Win32
        tm->tm_year >= 70)
 #else
        tm->tm_year > 02)
@@ -239,7 +239,7 @@ static struct tm * localtime0(const double *tp, const int local)
     time_t t;
 
     if(d < 2147483647.0 &&
-#ifdef WIN32
+#ifdef Win32
        d >= 0.0) {
 #else
        d > -2147483647.0) {
@@ -310,7 +310,7 @@ SEXP do_systime(SEXP call, SEXP op, SEXP args, SEXP env)
 }
 
 
-#ifdef WIN32
+#ifdef Win32
 #define tzname _tzname
 #else
 # ifdef Macintosh
