@@ -1330,7 +1330,7 @@ SEXP do_subassign2(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    return x;
         }
         UNPROTECT(1);
-        PROTECT(x = allocVector(VECSXP, 0));
+        PROTECT(x = allocVector(TYPEOF(y), 0));
     }
 
     /* Ensure that the LHS is a local variable. */
