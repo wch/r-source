@@ -201,9 +201,9 @@ SEXP applyClosure(SEXP call, SEXP op, SEXP arglist, SEXP rho, SEXP suppliedenv)
 	/*set up a context with the call in it so error has access to it */
 	begincontext(&cntxt, CTXT_RETURN, call, newrho, rho, arglist);
 
-	actuals = matchArgs(formals, arglist);
-
+	PROTECT(actuals = matchArgs(formals, arglist));
 	PROTECT(newrho = extendEnv(savedrho, formals, actuals));
+
 	/* Use default code for unbound formals */
 	f = formals;
 	a = actuals;
@@ -274,8 +274,7 @@ SEXP applyClosure(SEXP call, SEXP op, SEXP arglist, SEXP rho, SEXP suppliedenv)
 		Rprintf("exiting from: ");
 		PrintValueRec(call,rho);
 	}
-	UNPROTECT(1);
-
+	UNPROTECT(2);
 	return (tmp);
 }
 
