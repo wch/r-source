@@ -60,6 +60,9 @@ NEW FEATURES
 
     o	gamma(n) is very slightly more precise for integer n in 11:50.
 
+    o   New option `locatorBell' to control the confirmation beep
+	during the use of locator() and identify().
+
 
 DEPRECATED & DEFUNCT
 

@@ -245,6 +245,10 @@ getOption(x)
       notation.  Positive values bias towards fixed and negative towards
       scientific notation: fixed notation will be preferred unless it is
       more than \code{scipen} digits wider.}
+
+    \item{\code{locatorBell}:}{logical.  Should selection in \code{locator}
+      and \code{identify} be confirmed by a bell.  Default \code{TRUE}.
+      Honoured at least on \code{X11} and \code{windows} devices.}
   }
 
   The default settings of some of these options are
@@ -265,7 +269,7 @@ getOption(x)
     \code{warning.length} \tab \code{1000}\cr
     \code{echo} \tab \code{TRUE} \tab
     \code{verbose} \tab \code{FALSE} \cr
-    \code{scipen} \tab \code{0} \tab \tab
+    \code{scipen} \tab \code{0} \tab \code{locatorBell} \tab \code{TRUE}
   }
   Others are set from environment variables or are platform-dependent.
 }

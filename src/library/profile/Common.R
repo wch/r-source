@@ -35,6 +35,7 @@ options(internet.info = 2)
 options(encoding = native.enc)
 options(show.error.messages = TRUE)
 options(scipen = 0)
+options(locatorBell = TRUE)
 local({dp <- as.vector(Sys.getenv("R_DEFAULT_PACKAGES"))
        if(identical(dp, "")) # marginally faster to do methods last
            dp <- c("ts", "nls", "modreg", "mva", "ctest", "methods")

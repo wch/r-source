@@ -47,6 +47,10 @@ and selecting `Stop' from the menu, or from the `Stop' menu on the
 graphics window.
 #endif
  
+  On most devices which support \code{locator}, successful selection of
+  a point is indicated by a bell sound unless
+  \code{\link{options}(locatorBell=FALSE}} has been set.
+
   If the window is resized or hidden and then exposed before the identification
   process has terminated, any labels drawn by \code{identify}
   will disappear.  These will reappear once the identification process has 

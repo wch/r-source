@@ -1759,11 +1759,13 @@ static Rboolean newX11_Locator(double *x, double *y, NewDevDesc *dd)
 	    ddEvent = (NewDevDesc *) temp;
 	    if (ddEvent == dd) {
 		if (event.xbutton.button == Button1) {
+		    int useBeep = asLogical(GetOption(install("locatorBell"), 
+						      R_NilValue));
 		    *x = event.xbutton.x;
 		    *y = event.xbutton.y;
   		       /* Make a beep! Was print "\07", but that
                           messes up some terminals. */
-                    XBell(display, X_BELL_VOLUME);
+                    if(useBeep) XBell(display, X_BELL_VOLUME);
 		    XSync(display, 0);
 		    done = 1;
 		}
