@@ -29,9 +29,7 @@ R:
 	@for pkg in $(R_PKGS) profile; do \
 	  (cd $${pkg} && $(MAKE)) || exit 1; \
 	done
-	@(cd $(top_builddir)/library; \
-	  cat */TITLE > LibIndex 2> /dev/null)
-	@cp $(top_srcdir)/doc/html/R.css $(top_builddir)/library/
+	@cp $(top_srcdir)/doc/html/R.css $(top_builddir)/library
 
 docs:
 	@echo "building all R object docs (help, HTML, LaTeX, examples)"
@@ -50,9 +48,6 @@ examples:
 
 indices:
 	@$(top_builddir)/bin/R CMD build-help --htmllists
-
-$(top_builddir)/library/LibIndex:
-	@if [ ! -f $@ ]; then touch $@; fi
 
 DOCS:
 	@if @NO_PERL5@; then \

@@ -110,25 +110,16 @@ function(package, help, lib.loc = .lib.loc, character.only = FALSE,
 	outFile <- tempfile("Rlibrary")
         outConn <- file(outFile, open = "w")
 	avail <- NULL
-	for (lib in lib.loc) {
+	for(lib in lib.loc) {
 	    cat("\nPackages in library `", lib, "':\n\n", sep = "",
 		file = outConn, append = TRUE)
-	    if (file.exists(libind <- file.path(lib, "LibIndex"))) {
-                writeLines(readLines(libind), outConn)
-		## This gives warnings and partly garbage,
-		## since contrib's LibIndex isn't really "clean":
-		## scan(libind, what=list("",""), sep="\t",
-		a <- NULL
-	    }
-	    else {
-		a <- .packages(all.available = TRUE, lib.loc = lib)
-		for (i in sort(a)) {
-		    title <- file.path(lib, i, "TITLE")
-		    if(file.exists(title))
-                        writeLines(readLines(title), outConn)
-		    else
-                        writeLines(i, outConn)
-		}
+            a <- .packages(all.available = TRUE, lib.loc = lib)
+            for (i in sort(a)) {
+                title <- file.path(lib, i, "TITLE")
+                if(file.exists(title))
+                    writeLines(readLines(title), outConn)
+                else
+                    writeLines(i, outConn)
 	    }
 	    avail <- c(avail, a)
 	}

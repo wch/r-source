@@ -239,20 +239,6 @@ remove.packages <- function(pkgs, lib) {
     updateIndices <- function(lib) {
         ## This should eventually be made public, as it could also be
         ## used by install.packages() && friends.
-
-        ## This is an R version of the shell command
-        ##   cat */TITLE > LibIndex 2> /dev/null
-        ## but a bit safer in case a package has no `TITLE'.
-        con <- file(file.path(lib, "LibIndex"), "w")
-        on.exit(close(con))
-        for(p in .packages(all.available = TRUE, lib)) {
-            TITLE <- file.path(lib, p, "TITLE")
-            if(file.exists(TITLE))
-                writeLines(readLines(TITLE), con)
-            else
-                writeLines(p, con)
-        }
-
         if(lib == .Library) {
             ## R version of
             ##   ${R_HOME}/bin/build-help --htmllists
@@ -273,4 +259,3 @@ remove.packages <- function(pkgs, lib) {
     for(lib in unique(dirname(paths)))
         updateIndices(lib)
 }
-
