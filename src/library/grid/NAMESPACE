@@ -33,7 +33,12 @@ export("draw.details", "editDetails", "grid.legend", "grid.multipanel",
 export("layout.torture")
 ## </FIXME>
 
-## methods for generics in base
+## <FIXME>
+## Needed by Hmisc and Design ...
+export("is.unit")
+## </FIXME>
+
+## S3 methods for generics in base
 S3method("[", "unit")
 S3method("[", "unit.arithmetic")
 S3method("[", "unit.list")
@@ -46,7 +51,7 @@ S3method("print", "grob")
 S3method("print", "unit")
 S3method("print", "viewport")
 
-## methods for exported generics in grid
+## S3 methods for exported generics in grid
 S3method("unit.length", "unit")
 S3method("unit.length", "unit.list")
 S3method("unit.length", "unit.arithmetic")
