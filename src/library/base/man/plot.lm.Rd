@@ -1,6 +1,6 @@
 \name{plot.lm}
 \alias{plot.lm}
-\title{function to plot diagnostics for an lm object}
+\title{Plot Diagnostics for an "lm" Object}
 \usage{
 plot.lm (x, which = 1:4,
          caption = c("Residuals vs Fitted", "Normal Q-Q plot",
@@ -47,7 +47,7 @@ plot.lm (x, which = 1:4,
     than \eqn{| E |} for Gaussian zero-mean \eqn{E}).
 
     This `S-L' and the Q-Q plot use \emph{standardized} residuals which
-    have identical variance (under the hypothesis), which are given as
+    have identical variance (under the hypothesis).  They are given as
     \eqn{R_i / \sqrt{1 - h_{ii}}}{R[i] / sqrt(1 - h.ii)} where
     \eqn{h_{ii}}{h.ii} are the diagonal entries of the hat matrix,
 % bug in Rdconv: "$" and \link inside \code fails; '\$' doesn't help...
@@ -66,7 +66,7 @@ plot.lm (x, which = 1:4,
 \author{John Maindonald and Martin Maechler.
 }
 \seealso{
-    \code{\link{lm.influence}},\code{\link{cooks.distance}}
+    \code{\link{lm.influence}}, \code{\link{cooks.distance}}
 }
 
 \examples{
