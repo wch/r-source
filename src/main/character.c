@@ -514,11 +514,20 @@ SEXP do_makenames(SEXP call, SEXP op, SEXP args, SEXP env)
 	    SET_STRING_ELT(ans, i, allocString(l));
 	    strcpy(CHAR(STRING_ELT(ans, i)), CHAR(STRING_ELT(arg, i)));
 	}
-	p = CHAR(STRING_ELT(ans, i));
+	this = p = CHAR(STRING_ELT(ans, i));
 	while (*p) {
-	    if (!isalnum((int)*p) && *p != '.')
-		*p = '.';
+	    if (!isalnum((int)*p) && *p != '.'
+#ifdef UNDERSCORE_IN_NAMES
+		&& *p != '_'
+#endif
+		) *p = '.';
 	    p++;
+	}
+	/* do we have a reserved word?  If so the name is invalid */
+	if (!isValidName(this)) {
+	    SET_STRING_ELT(ans, i, allocString(strlen(this) + 1));
+	    strcpy(CHAR(STRING_ELT(ans, i)), this);
+	    strcat(CHAR(STRING_ELT(ans, i)), ".");
 	}
     }
     UNPROTECT(1);

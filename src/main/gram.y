@@ -1656,7 +1656,11 @@ int isValidName(char *name)
     if (c == '.' && isdigit((int)*p)) 
 	return 0;
 
-    while ( c = *p++, (isalnum(c) || c=='.') )
+    while ( c = *p++, (isalnum(c) || c == '.' 
+#ifdef UNDERSCORE_IN_NAMES
+		       || c == '_'
+#endif
+		) )
 	;
 
     if (c != '\0') return 0;
@@ -1679,7 +1683,11 @@ static int SymbolValue(int c)
     do {
 	YYTEXT_PUSH(c, yyp);
     }
-    while ((c = xxgetc()) != R_EOF && (isalnum(c) || c == '.'));
+    while ((c = xxgetc()) != R_EOF && (isalnum(c) || c == '.' 
+#ifdef UNDERSCORE_IN_NAMES
+				       || c == '_'
+#endif
+	       ));
     xxungetc(c);
     YYTEXT_PUSH('\0', yyp);
     if ((kw = KeywordLookup(yytext))) {

@@ -58,32 +58,9 @@ abbreviate <-
 make.names <- function(names, unique = FALSE)
 {
     names <- .Internal(make.names(as.character(names)))
-    ## append `.' to keyword
-    i <- is.element(names, c("for", "while", "repeat", "if",
-                             "else", "function", "next", "break",
-                             "TRUE", "FALSE", "NULL", "NA", "Inf", "NaN"))
-    if(any(i)) names[i] <- paste(names[i], ".", sep = "")
     if(unique) names <- make.unique(names)
     names
 }
-
-# make.unique <- function (names, sep = ".")
-# {
-#     if (!is.character(names))
-#         stop("names must be a character vector")
-#     cnt <- 1
-#     repeat {
-#         i <- which(duplicated(names))
-#         if (length(i) == 0) break
-#         j <- i[!duplicated(names[i])]
-#         newnames <- paste(names[j], cnt, sep=sep)
-#         ok<- !(newnames %in% names) & !duplicated(newnames)
-#         names[j][ok] <- newnames[ok]
-#         if (identical(i, j) && all(ok)) break
-#         cnt <- cnt + 1
-#       }
-#     names
-# }
 
 make.unique <- function (names, sep = ".") .Internal(make.unique(names, sep))
 
