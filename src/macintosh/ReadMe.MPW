@@ -31,7 +31,7 @@ REQUIREMENTS:
 4) you also need the "sed" MPW tool. You should have
    a copy of it at
    http://www.ci.tuwien.ac.at/~iacus/R  
-5) A copy ofthe package "MoreFiles 1.5" or later.
+5) A copy ofthe package "MoreFiles 1.5.2" or later.
    This is usually distributed along with the Carbon SDK 
    kit (developer.apple.com)
 6) A copy of the Waste 2.x distribution. Please refer to the
