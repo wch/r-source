@@ -304,12 +304,8 @@ SEXP R_sysfunction(int n, RCNTXT *cptr)
     return R_NilValue;  /* just for -Wall */
 }
 
+/*some real insantiy to keep Duncan sane*/
 
-/* An implementation of S's frame access functions. They usually count */
-/* up from the globalEnv while we like to count down from the currentEnv. */
-/* So if the argument is negative count down if positive count up. */
-/* We don't want to count the closure that do_sys is contained in so the */
-/* indexing is adjusted to handle this. */
 SEXP do_restart(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     RCNTXT *cptr;
@@ -318,7 +314,8 @@ SEXP do_restart(SEXP call, SEXP op, SEXP args, SEXP rho)
     
     if( !asLogical(CAR(args)) )
 	return(R_NilValue);
-    for(cptr = R_GlobalContext; cptr = cptr->nextcontext; cptr!= R_ToplevelContext) {
+    for(cptr = R_GlobalContext->nextcontext; cptr!= R_ToplevelContext; 
+	    cptr = cptr->nextcontext) {
 	if (cptr->callflag == CTXT_RETURN) {
 		cptr->callflag = CTXT_RESTART;
 		break;
@@ -328,6 +325,12 @@ SEXP do_restart(SEXP call, SEXP op, SEXP args, SEXP rho)
 	errorcall(call, "no function to restart\n");
     return(R_NilValue);
 }
+
+/* An implementation of S's frame access functions. They usually count */
+/* up from the globalEnv while we like to count down from the currentEnv. */
+/* So if the argument is negative count down if positive count up. */
+/* We don't want to count the closure that do_sys is contained in so the */
+/* indexing is adjusted to handle this. */
 
 SEXP do_sys(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
