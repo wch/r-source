@@ -31,6 +31,9 @@ NEW FEATURES
 
 BUG FIXES
 
+    o	Background colours are set properly on X11 devices with 
+	colortype="pseudo": sometimes they were not allocated separately.
+
     o	C() works (again?) for a single argument
 
     o	is.na() didn't work properly for "list" arguments.
