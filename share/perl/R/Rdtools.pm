@@ -211,23 +211,29 @@ sub Rdpp {
 
     my ($file, $OS) = @_;
     my $fh = new FileHandle "< $file" or croak "open($file): $!\n";
-    my $skipping;
+    my $skip_level;
+    my @skip_state;
+    my $skip;
     my $text;
     $OS = "unix" unless $OS;    
     while(<$fh>) {
         if (/^#ifdef\s+([A-Za-z0-9]+)/o) {
-            if ($1 ne $OS) { $skipping = 1; }
+	    $skip = $1 ne $OS;
+	    $skip_level += $skip;
+	    push(@skip_state, $skip);
             next;
         }
         if (/^#ifndef\s+([A-Za-z0-9]+)/o) {
-            if ($1 eq $OS) { $skipping = 1; }
+	    $skip = $1 eq $OS;
+	    $skip_level += $skip;
+	    push(@skip_state, $skip);
             next;
         }
         if (/^#endif/o) {
-            $skipping = 0;
+	    $skip_level -= pop(@skip_state);
             next;
         }
-        next if $skipping > 0;
+        next if $skip_level > 0;
 	next if /^\s*%/o;
         $text .= $_;
     }
