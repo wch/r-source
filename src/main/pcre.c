@@ -68,8 +68,11 @@ SEXP do_pgrep(SEXP call, SEXP op, SEXP args, SEXP env)
     if (useBytes == NA_INTEGER) useBytes = 0;
 
 
-    if (!isString(pat) || length(pat) < 1 || !isString(vec))
-	errorcall(call, R_MSG_IA);
+    if (length(pat) < 1) errorcall(call, R_MSG_IA);
+    if (!isString(pat)) PROTECT(pat = coerceVector(pat, STRSXP));
+    else PROTECT(pat);
+    if (!isString(vec)) PROTECT(vec = coerceVector(vec, STRSXP));
+    else PROTECT(vec);
 
     /* NAs are removed in R code so this isn't used */
     /* it's left in case we change our minds again */
@@ -160,7 +163,7 @@ SEXP do_pgrep(SEXP call, SEXP op, SEXP args, SEXP env)
 	for (i = 0 ; i < n ; i++)
 	    if (INTEGER(ind)[i]) INTEGER(ans)[j++] = i + 1;
     }
-    UNPROTECT(1);
+    UNPROTECT(3);
     return ans;
 }
 
@@ -254,10 +257,15 @@ SEXP do_pgsub(SEXP call, SEXP op, SEXP args, SEXP env)
     if(mbcslocale && !mbcsValid(CHAR(STRING_ELT(rep, 0))))
 	errorcall(call, _("'replacement' is invalid in this locale"));
 #endif
-    if (!isString(pat) || length(pat) < 1 ||
-	!isString(rep) || length(rep) < 1 ||
-	!isString(vec))
+    if (length(pat) < 1 || length(rep) < 1)
 	errorcall(call, R_MSG_IA);
+
+    if (!isString(pat)) PROTECT(pat = coerceVector(pat, STRSXP));
+    else PROTECT(pat);
+    if (!isString(rep)) PROTECT(rep = coerceVector(rep, STRSXP));
+    else PROTECT(rep);
+    if (!isString(vec)) PROTECT(vec = coerceVector(vec, STRSXP));
+    else PROTECT(vec);
 
     if (igcase_opt) options |= PCRE_CASELESS;
 
@@ -343,7 +351,7 @@ SEXP do_pgsub(SEXP call, SEXP op, SEXP args, SEXP env)
     (pcre_free)(re_pe);
     (pcre_free)(re_pcre);
     pcre_free((void *)tables);
-    UNPROTECT(1);
+    UNPROTECT(4);
     return ans;
 }
 
@@ -363,9 +371,11 @@ SEXP do_pregexpr(SEXP call, SEXP op, SEXP args, SEXP env)
     useBytes = asLogical(CAR(args)); args = CDR(args);
     if (useBytes == NA_INTEGER) useBytes = 0;
 
-    if (!isString(pat) || length(pat) < 1 ||
-	!isString(text) || length(text) < 1 )
-	errorcall(call, R_MSG_IA);
+    if (length(pat) < 1 || length(text) < 1 ) errorcall(call, R_MSG_IA);
+    if (!isString(pat)) PROTECT(pat = coerceVector(pat, STRSXP));
+    else PROTECT(pat);
+    if (!isString(text)) PROTECT(text = coerceVector(text, STRSXP));
+    else PROTECT(text);
 
 #ifdef SUPPORT_UTF8
     if(useBytes) ;
@@ -433,6 +443,6 @@ SEXP do_pregexpr(SEXP call, SEXP op, SEXP args, SEXP env)
     (pcre_free)(re_pcre);
     pcre_free((void *)tables);
     setAttrib(ans, install("match.length"), matchlen);
-    UNPROTECT(2);
+    UNPROTECT(4);
     return ans;
 }

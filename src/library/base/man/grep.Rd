@@ -29,8 +29,9 @@ regexpr(pattern, text, extended = TRUE, perl = FALSE, fixed = FALSE,
 \arguments{
   \item{pattern}{character string containing a \link{regular expression}
     (or character string for \code{fixed = TRUE}) to be matched
-    in the given character vector.}
-  \item{x, text}{a character vector where matches are sought.}
+    in the given character vector.  Coerced to character if possible.}
+  \item{x, text}{a character vector where matches are sought.
+    Coerced to character if possible.}
   \item{ignore.case}{if \code{FALSE}, the pattern matching is \emph{case
       sensitive} and if \code{TRUE}, case is ignored during matching.}
   \item{extended}{if \code{TRUE}, extended regular expression matching
@@ -46,7 +47,7 @@ regexpr(pattern, text, extended = TRUE, perl = FALSE, fixed = FALSE,
   \item{useBytes}{logical.  If \code{TRUE} the matching is done
     byte-by-byte rather than character-by-character.  See Details.}
   \item{replacement}{a replacement for matched pattern in \code{sub} and
-    \code{gsub}.}
+    \code{gsub}.  Coerced to character if possible.}
 }
 \details{
   Arguments which should be character strings or character vectors are

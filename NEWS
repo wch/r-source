@@ -329,8 +329,11 @@ NEW FEATURES
 	which R uses, and Sys.setlocale("LC_NUMERIC", ) now gives a
 	warning (as it can cause R to malfunction).
 
-    o	[g]sub(perl=TRUE) now coerces non-character arguments to
-	character, as [g]sub(perl=FALSE) did (but undocumented).
+    o	grep(), gsub(), sub() and regexpr() now always attempt to
+	coerce their 'pattern', 'x', 'replacement' and 'text'
+	arguments to character.  Previously this was undocumented but
+	done by [g]sub() and regexpr() for some values of the 
+	other arguments.  (Wish of PR#7742.)
 
 
 INTERNATIONALIZATION
