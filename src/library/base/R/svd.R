@@ -43,7 +43,7 @@ svd <- function(x, nu=min(n,p), nv=min(n,p)) {
 		  double(n),
 		  as.integer(job),
 		  info=integer(1),
-		  DUP=FALSE)[c("d","u","v","info")]
+		  DUP=FALSE, PACKAGE="base")[c("d","u","v","info")]
     if(z$info)
 	stop(paste("error ",z$info," in dsvdc"))
     z$d <- z$d[1:mn]

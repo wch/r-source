@@ -14,12 +14,12 @@ make.socket <-
     else{
         if (host != "localhost")
             stop("Can only receive calls on local machine")
-        tmp <- .C("Rsockopen", port = as.integer(port))
+        tmp <- .C("Rsockopen", port = as.integer(port), PACKAGE="base")
         buffer <- paste(rep("#",256), collapse = "")
         tmp2 <- .C("Rsocklisten", port = as.integer(tmp[[1]]),
-                 buffer = buffer, len = as.integer(256))
+                 buffer = buffer, len = as.integer(256), PACKAGE="base")
         host <- substr(tmp2$buffer, 1, tmp2$len)
-        .C("Rsockclose", as.integer(tmp$port))
+        .C("Rsockclose", as.integer(tmp$port), PACKAGE="base")
     }
     if (tmp2$port <= 0){
         if (fail)
@@ -34,7 +34,7 @@ make.socket <-
 
 close.socket <- function(socket)
 {
-    as.logical(.C("Rsockclose", as.integer(socket$socket))[[1]])
+    as.logical(.C("Rsockclose", as.integer(socket$socket), PACKAGE="base")[[1]])
 }
 
 read.socket <- function(socket, maxlen=256, loop=FALSE)
@@ -42,7 +42,7 @@ read.socket <- function(socket, maxlen=256, loop=FALSE)
     buffer <- paste(rep("#",maxlen), collapse="")
     repeat {
         tmp <- .C("Rsockread", as.integer(socket$socket),
-                  buffer = buffer, len = as.integer(maxlen))
+                  buffer = buffer, len = as.integer(maxlen), PACKAGE="base")
         rval <- substr(tmp$buffer, 1, tmp$len)
         if ((rval > 0) | !loop) break
   }
@@ -53,7 +53,8 @@ write.socket <- function(socket, string)
 {
     strlen <- length(strsplit(string,NULL)[[1]])
     invisible(.C("Rsockwrite", as.integer(socket$socket), string,
-                 as.integer(0), as.integer(strlen), as.integer(strlen))[[5]])
+                 as.integer(0), as.integer(strlen), as.integer(strlen),
+                 PACKAGE="base")[[5]])
 }
 
 

@@ -73,7 +73,8 @@ lsfit <- function(x, y, wt=NULL, intercept=TRUE, tolerance=1e-07, yname=NULL)
 		  rank=integer(1),
 		  pivot=as.integer(1:ncx),
 		  qraux=double(ncx),
-		  work=double(2*ncx))
+		  work=double(2*ncx),
+                  PACKAGE="base")
 
     ## dimension and name output from linpack
 

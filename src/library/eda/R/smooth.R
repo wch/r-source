@@ -12,7 +12,7 @@ smooth <- function(x)
 	      double(n),
 	      n,
 	      double(1),
-	      DUP=FALSE)[[2]]
+	      DUP=FALSE, PACKAGE="eda")[[2]]
     if(is.ts(x))
 	smo <- ts(smo, start=start(x), freq=frequency(x))
     smo

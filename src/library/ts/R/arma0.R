@@ -38,7 +38,7 @@ arima0 <- function(x, order=c(0,0,0),
     .C("setup_starma",
        as.integer(arma), as.double(x), as.integer(n.used),
        as.double(xreg), as.integer(ncxreg), as.double(delta),
-       as.integer(transform.pars > 0))
+       as.integer(transform.pars > 0), PACKAGE="ts")
     init <- rep(0, sum(arma[1:4]))
     if(ncxreg > 0) {
         init <- c(init, coef(lm(x ~ xreg+0)))
@@ -48,18 +48,18 @@ arima0 <- function(x, order=c(0,0,0),
         warning(paste("possible convergence problem: nlm gave code=",
                       res$code))
     coef <- res$estimate
-    if(transform.pars) coef <- .C("dotrans", coef, new=coef)$new
-    .C("free_starma")
+    if(transform.pars) coef <- .C("dotrans", coef, new=coef, PACKAGE="ts")$new
+    .C("free_starma", PACKAGE="ts")
     if(transform.pars == 2) {
         .C("setup_starma",
            as.integer(arma), as.double(x), as.integer(n.used),
            as.double(xreg), as.integer(ncxreg), as.double(delta),
-           as.integer(0))
+           as.integer(0), PACKAGE="ts")
         res <- nlm(arma0f, coef, hessian=TRUE)
         coef <- res$estimate
     }
-    sigma2 <- .C("get_s2", res=double(1))$res
-    resid <- .C("get_resid", res=double(n.used))$res
+    sigma2 <- .C("get_s2", res=double(1), PACKAGE="ts")$res
+    resid <- .C("get_resid", res=double(n.used), PACKAGE="ts")$res
     tsp(resid) <- xtsp
     class(resid) <- "ts"
     nm <- NULL
@@ -90,7 +90,7 @@ arima0 <- function(x, order=c(0,0,0),
 
 arma0f <- function(p)
 {
-    .C("arma0fa", as.double(p), res=double(1))$res
+    .C("arma0fa", as.double(p), res=double(1), PACKAGE="ts")$res
 }
 
 print.arima0 <- function(x, digits = max(3, .Options$digits - 3),
@@ -151,11 +151,13 @@ predict.arima0 <- function(object, n.ahead=1, newxreg=NULL, se.fit=TRUE)
     .C("setup_starma",
        as.integer(arma), as.double(data),
        as.integer(n),
-       as.double(rep(0, n)), as.integer(0), as.double(-1), as.integer(0))
+       as.double(rep(0, n)), as.integer(0), as.double(-1), as.integer(0),
+       PACKAGE="ts")
     arma0f(coefs)
     z <- .C("arma0_kfore", as.integer(arma[6]), as.integer(arma[7]),
-            as.integer(n.ahead), x=double(n.ahead), var=double(n.ahead))
-    .C("free_starma")
+            as.integer(n.ahead), x=double(n.ahead), var=double(n.ahead),
+            PACKAGE="ts")
+    .C("free_starma", PACKAGE="ts")
     pred <- ts(z$x + xm, start = xtsp[2] + deltat(data), frequency=xtsp[3])
     if(se.fit) {
         se <- ts(sqrt(z$var),

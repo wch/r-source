@@ -87,7 +87,8 @@ smooth.spline <-
 		    ld4= as.integer(4),
 		    ldnk= as.integer(1),
 		    ier = as.integer(1),
-                    DUP = FALSE)[c("coef","ty","lev","spar","ier")]
+                    DUP = FALSE, PACKAGE="modreg"
+                    )[c("coef","ty","lev","spar","ier")]
     if(fit$ier > 0) {
 	warning("smoothing parameter value too small or too large")
 	fit$ty <- rep(mean(y), nx)
@@ -155,7 +156,7 @@ predict.smooth.spline.fit <- function(object, x, deriv = 0, ...)
 			      x	  = as.double(xs[interp]),
 			      s	  = double(n),
 			      order= as.integer(deriv),
-			      DUP = FALSE)$s
+			      DUP = FALSE, PACKAGE="modreg")$s
     if(any(extrap)) {
 	xrange <- c(object$min, object$min + object$range)
 	if(deriv == 0) {
@@ -209,7 +210,8 @@ supsmu <-
 		    as.double(span),
 		    as.double(bass),
 		    smo=double(leno),
-		    double(n*7), double(1))$smo
+		    double(n*7), double(1),
+                    PACKAGE="modreg")$smo
     ## eliminate duplicate xsort values and corresponding smoothed values
     dupx <- duplicated(xo)
     list(x = xo[!dupx], y = smo[!dupx])

@@ -109,7 +109,7 @@ ar.yw <- function (x, aic = TRUE, order.max = NULL, na.action = na.fail,
                       r, r,
                       coefs=double(order.max^2),
                       vars=double(order.max),
-                      double(order.max))
+                      double(order.max), PACKAGE="ts")
         coefs <- matrix(z$coefs, order.max, order.max)
         partialacf <- array(diag(coefs), dim=c(order.max, 1, 1))
         var.pred <- c(r[1], z$vars)
@@ -209,7 +209,7 @@ predict.ar <- function(object, newdata, n.ahead = 1, se.fit=TRUE, ...)
                 psi <- .C("artoma",
                         as.integer(object$order), as.double(ar),
                         psi = double(npsi+object$order+1),
-                        as.integer(npsi))$psi[1:npsi]
+                        as.integer(npsi), PACKAGE="ts")$psi[1:npsi]
                 vars <- cumsum(c(1, psi^2))
                 se <- sqrt(object$var.pred*vars)
             }

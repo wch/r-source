@@ -2,10 +2,10 @@ loglin <- function(table, margin, start = rep(1, length(table)), fit =
                    FALSE, eps = 0.1, iter = 20, param = FALSE, print =
                    TRUE) {
     rfit <- fit
-    
+
     dtab <- dim(table)
     nvar <- length(dtab)
-    
+
     ncon <- length(margin)
     conf <- matrix(0, nrow = nvar, ncol = ncon)
     nmar <- 0
@@ -20,7 +20,7 @@ loglin <- function(table, margin, start = rep(1, length(table)), fit =
         conf[1:length(tmp), k] <- tmp
         nmar <- nmar + prod(dtab[tmp])
     }
-    
+
     ntab <- length(table)
 
     storage.mode(conf) <- "integer"
@@ -44,7 +44,8 @@ loglin <- function(table, margin, start = rep(1, length(table)), fit =
             as.integer(iter),
             dev = double(iter),
             nlast = integer(1),
-            ifault = integer(1))
+            ifault = integer(1),
+            PACKAGE = "base")
     switch(z$ifault,
            stop("This should not happen"),
            stop("This should not happen"),
@@ -93,7 +94,7 @@ loglin <- function(table, margin, start = rep(1, length(table)), fit =
     } else {
         varnames <- as.character(1 : ntab)
     }
-    
+
     y <- list(lrt = lrt,
               pearson = pearson,
               df = ntab - sum(df) - 1,

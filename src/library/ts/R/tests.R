@@ -52,7 +52,7 @@ PP.test <- function (x, lshort = TRUE)
     else
         l <- trunc(12*(n/100)^0.25)
     ssqrtl <- .C ("R_pp_sum", as.vector(u,mode="double"), as.integer(n),
-                  as.integer(l), trm=as.double(ssqru))
+                  as.integer(l), trm=as.double(ssqru), PACKAGE="ts")
     ssqrtl <- ssqrtl$trm
     n2 <- n^2
     trm1 <- n2*(n2-1)*sum(yt1^2)/12

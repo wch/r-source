@@ -27,7 +27,7 @@ ar.burg <-
             as.integer(order.max),
             coefs=double(order.max^2),
             var1=double(1+order.max),
-            var2=double(1+order.max)
+            var2=double(1+order.max), PACKAGE="ts"
             )
     coefs <- matrix(z$coefs, order.max, order.max)
     partialacf <- array(diag(coefs), dim = c(order.max, 1, 1))

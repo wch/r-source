@@ -32,7 +32,8 @@ spline <-
 	    b=double(nx),
 	    c=double(nx),
 	    d=double(nx),
-	    e=double(if(method == 1) nx else 0))
+	    e=double(if(method == 1) nx else 0),
+            PACKAGE="base")
     u <- seq(xmin, xmax, length.out=n)
     ##-	 cat("spline(.): result of  .C(\"spline_coef\",...):\n")
     ##-	 str(z, vec.len=10)
@@ -48,7 +49,8 @@ spline <-
        z$y,
        z$b,
        z$c,
-       z$d)[c("x","y")]
+       z$d,
+       PACKAGE="base")[c("x","y")]
 }
 
 

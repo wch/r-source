@@ -34,6 +34,6 @@ approx <- function (x, y=NULL, xout, method = "linear", n = 50,
     y <- .C("approx", as.double(x), as.double(y), nx, xout=as.double(xout),
 	    length(xout), as.integer(method),
 	    as.double(yleft), as.double(yright), as.double(f),
-	    NAOK=TRUE)$xout
+	    NAOK=TRUE, PACKAGE="base")$xout
     list(x = xout, y = y)
 }

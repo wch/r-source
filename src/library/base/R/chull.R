@@ -12,6 +12,7 @@ chull <- function(x, y=NULL)
             integer(n),
             ih=integer(n),
             nh=integer(1),
-            il=integer(n))
+            il=integer(n),
+            PACKAGE="base")
     rev(z$ih[1:z$nh])
 }

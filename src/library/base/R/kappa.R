@@ -37,6 +37,7 @@ kappa.tri <- function(z, exact = FALSE, ...)
 		     p,
 		     k = double(1),
 		     double(p),
-		     as.integer(1)) $ k
+		     as.integer(1),
+                     PACKAGE="base")$k
     }
 }
