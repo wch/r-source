@@ -117,6 +117,12 @@ stars="*"
 
 . "${R_HOME}/share/sh/dcf.sh"	# get_dcf_field()
 
+tilde_expand () {
+    h=`echo "${HOME}" | sed 's,/,\\\/,g'`
+    ## (Need to escape whatever we use as sed delimiter.)
+    echo "$1" | sed "s/^~/${h}/"
+}
+
 get_packages () {
   ## get the full path names to all packages contained in $1.
   ## NOTE: modifies pkgs!
@@ -299,6 +305,7 @@ if test -z "${pkgs}"; then
   exit 1
 fi
 
+lib=`tilde_expand "${lib}"`
 if (test -d "${lib}" && test -w "${lib}") || \
     ${MKDIR_P} "${lib}" 2> /dev/null; then
   lib=`cd "${lib}" && ${GETWD}`
