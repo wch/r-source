@@ -19,9 +19,6 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-/* 27/03/2000 win32-api needs this for ANSI compliance */
-#define NONAMELESSUNION
-
 #include <windows.h>
 #include <shlobj.h>
 
@@ -81,3 +78,39 @@ int ShellGetPersonalDirectory(char *folder)  /* Folder is assumed to be at least
     }
     return(result);
 }
+
+
+static char RUser[MAX_PATH];
+#include <winbase.h>
+#include "shext.h"		/* for ShellGetPersonalDirectory */
+extern void R_Suicide(char *s);
+
+char * getRUser()
+{
+   /*
+    * try R_USER then HOME then Windows homes then working directory
+    */
+    char *p, *q;
+
+    if ((p = getenv("R_USER"))) {
+	if(strlen(p) >= MAX_PATH) R_Suicide("Invalid R_USER");
+	strcpy(RUser, p);
+    } else if ((p = getenv("HOME"))) {
+	if(strlen(p) >= MAX_PATH) R_Suicide("Invalid HOME");
+	strcpy(RUser, p);
+    } else if (ShellGetPersonalDirectory(RUser)) {
+	/* nothing to do */;
+    } else if ((p = getenv("HOMEDRIVE")) && (q = getenv("HOMEPATH"))) {
+	if(strlen(p) >= MAX_PATH) R_Suicide("Invalid HOMEDRIVE");
+	strcpy(RUser, p);
+	if(strlen(RUser) + strlen(q) >= MAX_PATH)
+	    R_Suicide("Invalid HOMEDRIVE+HOMEPATH");
+	strcat(RUser, q);
+    } else {
+	GetCurrentDirectory(MAX_PATH, RUser);
+    }
+    p = RUser + (strlen(RUser) - 1);
+    if (*p == '/' || *p == '\\') *p = '\0';
+    return RUser;
+}
+

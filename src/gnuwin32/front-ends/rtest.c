@@ -36,7 +36,7 @@ __declspec(dllimport) int UserBreak;
 
 /* calls into the R DLL */
 extern char *getDLLVersion(), *getRUser(), *get_R_HOME();
-extern void R_DefParams(Rstart), R_SetParams(Rstart);
+extern void R_DefParams(Rstart), R_SetParams(Rstart), R_setStartTime();
 extern void setup_term_ui(void), ProcessEvents(void);
 extern void run_Rmainloop(void), end_Rmainloop(void), R_ReplDLLinit(void);
 extern int R_ReplDLLdo1();
@@ -88,6 +88,7 @@ int main (int argc, char **argv)
         exit(1);
     }
 
+    R_setStartTime();
     R_DefParams(Rp);
     if((RHome = get_R_HOME()) == NULL) {
 	fprintf(stderr, 
@@ -101,8 +102,8 @@ int main (int argc, char **argv)
     Rp->WriteConsole = myWriteConsole;
     Rp->CallBack = myCallBack;
     Rp->ShowMessage = askok;
-    Rp->yesnocancel = askyesnocancel;
-    Rp->busy = myBusy;
+    Rp->YesNoCancel = askyesnocancel;
+    Rp->Busy = myBusy;
 
     Rp->R_Quiet = TRUE;
     Rp->R_Interactive = FALSE;
