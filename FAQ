@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.8-42, 2004-02-19
+Version 1.8-43, 2004-02-20
 ISBN 3-900051-01-1
 Kurt Hornik
 
@@ -1888,6 +1888,10 @@ distributions of R.)
 *homals*
      Homogeneity Analysis (HOMALS) package with optional Tcl/Tk interface.
 
+*httpRequest*
+     Implements HTTP Request protocols (GET, POST, and multipart POST
+     requests).
+
 *hwde*
      Models and tests for departure from Hardy-Weinberg equilibrium and
      independence between loci.
@@ -2320,6 +2324,10 @@ distributions of R.)
      drawn with probability proportional to te product of the quantities of
      the units included in the sample.
 
+*sandwich*
+     Model-robust standard error estimators for time series and longitudinal
+     data.
+
 *sca*
      Simple Component Analysis.
 
@@ -2503,6 +2511,10 @@ distributions of R.)
 
 *xtable*
      Export data to LaTeX and HTML tables.
+
+*zoo*
+     A class with methods for totally ordered indexed observations such as
+     irregular time series.
 
 See CRAN `src/contrib/PACKAGES' for more information.
 

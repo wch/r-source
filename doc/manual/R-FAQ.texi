@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2004
-@set FAQ-VERSION 1.8-42, @value{FAQ-YEAR}-02-19
+@set FAQ-VERSION 1.8-43, @value{FAQ-YEAR}-02-20
 @set REL-VERSION 1.8.1
 @set FAQ-ISBN 3-900051-01-1
 @documentlanguage en
@@ -2054,6 +2054,9 @@ Hierarchical Partitioning: variance partition of a multivariate data
 set.
 @item homals
 Homogeneity Analysis (HOMALS) package with optional Tcl/Tk interface.
+@item httpRequest
+Implements HTTP Request protocols (GET, POST, and multipart POST
+requests).
 @item hwde
 Models and tests for departure from Hardy-Weinberg equilibrium and
 independence between loci.
@@ -2394,6 +2397,9 @@ Implements a modified version of the Sampford sampling algorithm.  Given
 a quantity assigned to each unit in the population, samples are drawn
 with probability proportional to te product of the quantities of the
 units included in the sample.
+@item sandwich
+Model-robust standard error estimators for time series and longitudinal
+data.
 @item sca
 Simple Component Analysis.
 @item scatterplot3d
@@ -2560,6 +2566,9 @@ Robust statistical inference via a weighted likelihood approach.
 Interface to the XGobi and XGvis programs for graphical data analysis.
 @item xtable
 Export data to La@TeX{} and @HTML{} tables.
+@item zoo
+A class with methods for totally ordered indexed observations such as
+irregular time series.
 @end table
 
 @noindent
