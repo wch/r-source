@@ -43,5 +43,5 @@ double dbinom(double x, double n, double p, int give_log)
 	return (x == 0) ? R_D__1 : R_D__0;
     if (p == 1)
 	return (x == n) ? R_D__1 : R_D__0;
-    return R_D_exp(lfastchoose(n, x) + log(p) * x + (n - x) * log(1 - p));
+    return R_D_exp(lfastchoose(n, x) + log(p) * x + (n - x) * logrelerr(-p));
 }
