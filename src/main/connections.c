@@ -884,8 +884,6 @@ SEXP do_textconnection(SEXP call, SEXP op, SEXP args, SEXP env)
     classgets(ans, class);
     UNPROTECT(2);
     return ans;
-
-    return R_NilValue;
 }
 
 /* ------------------- open, close, seek --------------------- */
