@@ -30,7 +30,7 @@ boxplot.formula(formula, data = NULL, subset, na.action, \dots)
     \code{\link{boxplot.default}}.
 }
 \examples{
-data(bees)
-boxplot(decrease ~ treatment, data = bees, log = "y", col = "bisque")
+data(OrchardSprays)
+boxplot(decrease ~ treatment, data = OrchardSprays, log = "y", col = "bisque")
 }
 \keyword{hplot}

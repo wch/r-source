@@ -48,10 +48,12 @@ New York: Wiley.
 \code{\link{lm}}.
 }
 \examples{
-# Analysis of the life-cycle savings data
-# given in Belsley, Kuh and Welsch.
-data(savings)
-summary(lm.SR <- lm(sr ~ pop15 + pop75 + dpi + ddpi, data=savings),corr= TRUE)
+## Analysis of the life-cycle savings data given in Belsley, Kuh
+## and Welsch.
+data(LifeCycleSavings)
+summary(lm.SR <- lm(sr ~ pop15 + pop75 + dpi + ddpi,
+                    data = LifeCycleSavings),
+        corr = TRUE)
 rstudent(lm.SR)
 dfbetas(lm.SR)
 dffits(lm.SR)

@@ -63,10 +63,10 @@ prcomp(x, retx = TRUE, center = TRUE, scale. = FALSE, tol = NULL)
 }
 \examples{
 ## the variances of the variables in the
-## crimes data vary by orders of magnitude
-data(crimes)
-prcomp(crimes)
-prcomp(crimes, scale = TRUE)
-plot(prcomp(crimes))
-summary(prcomp(crimes))
+## USArrests data vary by orders of magnitude
+data(USArrests)
+prcomp(USArrests)
+prcomp(USArrests, scale = TRUE)
+plot(prcomp(USArrests))
+summary(prcomp(USArrests))
 }

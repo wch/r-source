@@ -68,13 +68,13 @@ print(obj,\dots)  summary(obj)  plot(obj,\dots)  predict(obj,\dots)
 }
 \examples{
 ## the variances of the variables in the
-## crimes data vary by orders of magnitude
-data(crimes)
-(pc.cr <- princomp(crimes))
-princomp(crimes, cor = TRUE)
-princomp(scale(crimes, scale = TRUE, center = TRUE), cor = FALSE)
+## USArrests data vary by orders of magnitude
+data(USArrests)
+(pc.cr <- princomp(USArrests))
+princomp(USArrests, cor = TRUE)
+princomp(scale(USArrests, scale = TRUE, center = TRUE), cor = FALSE)
 
-summary(pc.cr <- princomp(crimes))
+summary(pc.cr <- princomp(USArrests))
 loadings(pc.cr)
 plot(pc.cr)
 biplot(pc.cr)

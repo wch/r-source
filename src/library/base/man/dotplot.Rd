@@ -44,8 +44,8 @@ dotplot(x, labels = NULL, groups = NULL, gdata = NULL, cex = par("cex"),
   Monterey, CA: Wadsworth.
 }
 \examples{
-data(deaths)
-dotplot(deaths, main = "Death Rates in Virginia - 1940")
-dotplot(t(deaths), main = "Death Rates in Virginia - 1940")
+data(VADeaths)
+dotplot(VADeaths, main = "Death Rates in Virginia - 1940")
+dotplot(t(VADeaths), main = "Death Rates in Virginia - 1940")
 }
 \keyword{hplot}

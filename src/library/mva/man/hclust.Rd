@@ -114,8 +114,8 @@ contributed to STATLIB by F. Murtagh.}
 }
 \examples{
 library(mva)
-data(crimes)
-hc <- hclust(dist(crimes), "ave")
+data(USArrests)
+hc <- hclust(dist(USArrests), "ave")
 plot(hc, hang=-1)
 plot(hc)
 }

@@ -53,8 +53,8 @@ qr.R(qrstr, complete = FALSE)
 }
 \seealso{ \code{\link{qr}}, \code{\link{qr.qy}.}
 \examples{
-data(savings)
-p <- ncol(x <- savings[,-1]) # not the 'sr'
+data(LifeCycleSavings)
+p <- ncol(x <- LifeCycleSavings[,-1]) # not the `sr'
 qrstr <- qr(x)   # dim(x) == c(n,p)
 qrstr $ rank # = 4 = p
 Q <- qr.Q(qrstr) # dim(Q) == dim(x)

@@ -60,12 +60,12 @@ chisq.test(x, y = NULL, correct = TRUE,
     \item{expected}{the expected counts under the null hypothesis.}
 }
 \examples{
-data(insects)                   # Not really a good example
-chisq.test(insects$count > 7, insects$spray)
+data(InsectSprays)              # Not really a good example
+chisq.test(InsectSprays$count > 7, InsectSprays$spray)
                                 # Prints test summary
-chisq.test(insects$count > 7, insects$spray)$obs
+chisq.test(InsectSprays$count > 7, InsectSprays$spray)$obs
                                 # Counts observed
-chisq.test(insects$count > 7, insects$spray)$obs
+chisq.test(InsectSprays$count > 7, InsectSprays$spray)$obs
                                 # Counts expected under the null
 
 ## Effect of simulating p-values

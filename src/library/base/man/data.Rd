@@ -58,8 +58,8 @@ show.data(package = c(.packages(),.Autoloaded), lib.loc = .lib.loc)
 \examples{
 data()                       # list all available data sets
 data(package = base)         # list the data sets in the base package
-data(crimes, "deaths")       # load the data sets `crimes' and `deaths'
-help(crimes)                 # give information on data set `crimes'
+data(USArrests, "VADeaths")  # load the data sets `USArrests and `VADeaths'
+help(USArrests)              # give information on data set `USArrests'
 }
 \keyword{documentation}
 \keyword{datasets}

@@ -1,7 +1,7 @@
-\name{plants}
-\alias{plants}
+\name{PlantGrowth}
+\alias{PlantGrowth}
 \title{Results from an Experiment on Plant Growth}
-\usage{data(plants)}
+\usage{data(PlantGrowth)}
 \description{
     Results from an experiment to compare yields (as measured by dried
     weight of plants) obtained under a control and two different
@@ -17,8 +17,8 @@
 }
 \examples{
 ## One factor ANOVA example from Dobson's book, cf. Table 7.4:
-data(plants)
-anova(lm(weight ~ group, data = plants))
+data(PlantGrowth)
+anova(lm(weight ~ group, data = PlantGrowth))
 }
 \source{
     Dobson, A. J. (1983).
@@ -26,4 +26,3 @@ anova(lm(weight ~ group, data = plants))
     London: Chapman and Hall.
 }
 \keyword{datasets}
-

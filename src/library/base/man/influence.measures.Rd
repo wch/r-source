@@ -57,8 +57,8 @@ hat(xmat)
 \examples{
 ## Analysis of the life-cycle savings data
 ## given in Belsley, Kuh and Welsch.
-data(savings)
-lm.SR <- lm(sr ~ pop15 + pop75 + dpi + ddpi, data = savings)
+data(LifeCycleSavings)
+lm.SR <- lm(sr ~ pop15 + pop75 + dpi + ddpi, data = LifeCycleSavings)
 summary(inflm.SR <- influence.measures(lm.SR))
 inflm.SR
 which(apply(inflm.SR$is.inf, 1, any)) # which observations `are' influential

@@ -22,8 +22,8 @@ boxplot(x, \dots)
 }
 \examples{
 ## boxplot on a formula:
-data(insects)
-boxplot(count ~ spray, data = insects, col = "lightgray")
+data(InsectSprays)
+boxplot(count ~ spray, data = InsectSprays, col = "lightgray")
 
 ## boxplot on a matrix:
 mat <- cbind(Uni05 = (1:100)/21, Norm = rnorm(100),

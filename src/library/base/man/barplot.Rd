@@ -76,19 +76,19 @@ tN <- table(Ni <- rpois(100, lambda=5))
 r <- barplot(tN, col='gray')
 points(r, tN, type='h', col='red', lwd=2)#- type = "h" plotting *is* `bar'plot
 
-data(deaths, package = "base")
-mp <- barplot(deaths) # default
-tot <- apply(deaths,2,sum); text(mp, tot + 3, format(tot))
-barplot(deaths, beside = TRUE,
+data(VADeaths, package = "base")
+mp <- barplot(VADeaths) # default
+tot <- apply(VADeaths, 2, sum); text(mp, tot + 3, format(tot))
+barplot(VADeaths, beside = TRUE,
         col = c("lightblue", "mistyrose", "lightcyan",
                 "lavender", "cornsilk"),
-        legend = rownames(deaths), ylim = c(0, 100))
+        legend = rownames(VADeaths), ylim = c(0, 100))
 title(main = "Death Rates in Virginia", font.main = 4)
 
-barplot(t(deaths)[, 5:1], beside = TRUE,
+barplot(t(VADeaths)[, 5:1], beside = TRUE,
         col = c("lightblue", "mistyrose",
                 "lightcyan", "lavender"),
-        legend = colnames(deaths), ylim = c(0,80),
+        legend = colnames(VADeaths), ylim = c(0,80),
         main = "Death Rates in Virginia", font.main = 4)
         ## instead of title(.)
 }

@@ -1,7 +1,7 @@
 \name{plot.factor}
 \title{Plotting factor variables}
 \usage{
-plot.factor(x, y, legend.text = levels(y),\dots)
+plot.factor(x, y, legend.text = levels(y), \dots)
 }
 \alias{plot.factor}
 \arguments{
@@ -23,12 +23,9 @@ plot.factor(x, y, legend.text = levels(y),\dots)
     \code{\link{barplot}}, \code{\link{boxplot}}.
 }
 \examples{
-data(plants)
-plot(plants)                             # -> plot.data.frame
-plot(weight ~ group, data=plants)        # numeric vector ~ factor
-plot(cut(weight,2) ~ group, data=plants) # factor ~ factor
+data(PlantGrowth)
+plot(PlantGrowth)                                # -> plot.data.frame
+plot(weight ~ group, data = PlantGrowth)         # numeric vector ~ factor
+plot(cut(weight, 2) ~ group, data = PlantGrowth) # factor ~ factor
 }
 \keyword{hplot}
-
-
-

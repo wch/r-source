@@ -72,11 +72,11 @@ boxplot.default(x, \dots, range = 1.5, width = NULL, varwidth = FALSE,
     \code{\link{plot.default}} for some high-level plotting parameters.
 }
 \examples{
-data(insects)
-boxplot(count ~ spray, data = insects, col = "lightgray")
+data(InsectSprays)
+boxplot(count ~ spray, data = InsectSprays, col = "lightgray")
 
-data(bees)
-boxplot(decrease ~ treatment, data = bees, log = "y", col="bisque")
+data(OrchardSprays)
+boxplot(decrease ~ treatment, data = OrchardSprays, log = "y", col="bisque")
 
 ## boxplot(.) for a matrix:
 mat <- cbind(Uni05= (1:100)/21, Norm= rnorm(100),

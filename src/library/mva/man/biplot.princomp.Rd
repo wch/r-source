@@ -33,30 +33,32 @@ biplot.princomp(x, choices=1:2, scale=1, pc.biplot=FALSE, \dots)
 \item{\dots}{optional arguments to be passed to \code{\link{biplot.default}}.}
 }
 \section{Side Effects}{
-a plot is produced on the current graphics device.
+    a plot is produced on the current graphics device.
 }
 \details{
-This is a method for the generic function \code{biplot}.  There is
-considerable confusion over the precise definitions: those of the
-original paper, Gabriel (1971), are followed here.  Gabriel and
-Odoroff (1990) use the same definitions, but their plots actually
-correspond to \code{pc.biplot = TRUE}.
+    This is a method for the generic function \code{biplot}.  There is
+    considerable confusion over the precise definitions: those of the
+    original paper, Gabriel (1971), are followed here.  Gabriel and
+    Odoroff (1990) use the same definitions, but their plots actually
+    correspond to \code{pc.biplot = TRUE}.
 }
 \references{
-Gabriel, K. R. (1971).
-The biplot graphical display of matrices with applications to principal
-component analysis.
-\emph{Biometrika}, \bold{58} 453-467.
+    Gabriel, K. R. (1971).
+    The biplot graphical display of matrices with applications to
+    principal component analysis.
+    \emph{Biometrika}, \bold{58}, 453--467.
 
-Gabriel, K. R. and Odoroff, C. L. (1990).
-Biplots in biomedical research.
-\emph{Statistics in Medicine}, \bold{9} 469-485.
+    Gabriel, K. R. and Odoroff, C. L. (1990).
+    Biplots in biomedical research.
+    \emph{Statistics in Medicine}, \bold{9}, 469--485.
 }
-\seealso{\code{\link{biplot}}, \code{\link{princomp}}.}
+\seealso{
+    \code{\link{biplot}},
+    \code{\link{princomp}}.
+}
 \examples{
-data(crimes)
-biplot(princomp(crimes))
+data(USArrests)
+biplot(princomp(USArrests))
 }
 \keyword{multivariate}
 \keyword{hplot}
-
