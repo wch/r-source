@@ -558,8 +558,11 @@ cacheGenericsMetaData <- function(generics, attach = TRUE, where, package) {
                     if(is.numeric(where))
                         where <- search()[where]
                     ## are there other methods for f still left?
-                    if((is.environment(where)) ||
-                       (any(is.na(match(dbs, where)))))
+                    if(is.environment(where)){
+                        if(length(dbs)>1)
+                            code <- "reset"
+                    }
+                    else if(any(is.na(match(dbs, where))))
                         code <- "reset"
                 }
             }
