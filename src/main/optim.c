@@ -18,7 +18,6 @@
  */
 
 #include <Defn.h>
-#include <Rdefines.h>		/* for CREATE_STRING_VECTOR */
 #include <R_ext/Random.h>	/* for the random number generation in
 				   samin() */
 #include <R_ext/Applic.h>	/* setulb() */
@@ -322,7 +321,7 @@ SEXP do_optim(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    REAL(par)[i] = dpar[i] * (OS->parscale[i]);
 	UNPROTECT(1); /* OS->R_gcall */
 	PROTECT(smsg = allocVector(STRSXP, 1));
-	SET_STRING_ELT(smsg, 0, CREATE_STRING_VECTOR(msg));
+	SET_STRING_ELT(smsg, 0, mkChar(msg));
 	SET_VECTOR_ELT(res, 4, smsg);
 	UNPROTECT(1);
     } else
