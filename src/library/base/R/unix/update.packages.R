@@ -52,8 +52,8 @@ update.packages <- function(lib.loc=.lib.loc, CRAN=.Options$CRAN,
 install.packages <- function(pkgs, lib, CRAN=.Options$CRAN,
                              method="auto", available=NULL)
 {
-    if(!missing(pkgs))
-        pkgs <- as.character(substitute(pkgs))
+#    if(!missing(pkgs))
+#        pkgs <- as.character(substitute(pkgs))
     localcran <- length(grep("^file:", CRAN)) > 0
     if(missing(lib) || is.null(lib)) {
         lib <- .lib.loc[1]
