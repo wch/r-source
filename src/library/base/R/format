@@ -1,8 +1,10 @@
 
 format <- function(x, ...) UseMethod("format")
 
-.format.Internal <- format## <primitive>  defined in ../../../main/paste.c
+### .format.Internal <- format## <primitive>  defined in ../../../main/paste.c
 ###----- FIXME:  we should rather use .Internal(format(...))
+### FIXED: I made the function below do just this.
+### Without it there was an infinite recursion.  Ross
 
 ###	 -----
 ###----- FIXME ----- the 'digits handling should rather happen in
@@ -17,10 +19,10 @@ format.default <- function(x, trim=FALSE, digits=NULL)
                NULL = "NULL",
                list = sapply(
                  lapply(x, function(x)
-                        .format.Internal(unlist(x),trim=trim)),
+                        .Internal(format(unlist(x),trim=trim))),
                  paste, collapse=", "),
                ##else: numeric, complex, character, ??? :
-               .format.Internal(x, trim=trim))
+               .Internal(format(x, trim=trim)))
 }
 
 
