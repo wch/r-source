@@ -37,10 +37,18 @@
 # include <config.h>
 #endif
 
-#ifdef HAVE_GLIBC2
-# define _XOPEN_SOURCE		/* so that we get strptime() */
+#if defined(HAVE_GLIBC2) && !defined(__USE_BSD)
+# define __USE_BSD		/* so that we get unsetenv() */
+# include <stdlib.h>
+# undef __USE_BSD		/* just to make sure */
+#else
+# include <stdlib.h>
+#endif
+
+#if defined(HAVE_GLIBC2) && !defined(__USE_XOPEN)
+# define __USE_XOPEN		/* so that we get strptime() */
 # include <time.h>
-# undef _XOPEN_SOURCE		/* just to make sure */
+# undef __USE_XOPEN		/* just to make sure */
 #else
 # include <time.h>
 #endif
