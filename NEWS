@@ -68,10 +68,8 @@ NEW FEATURES
     o	There is now a "Complex" S3 group generic (a side-effect of
 	fixing up the corresponding S4 group generic).
 
-    o	help("regex") will now give a (preliminary) description of the
-	regular expressions used in R.  More details (including a
-	description of Perl-like regular expressions) will be added to
-	later releases of R.
+    o	help("regex") now gives a description of the regular expressions
+	used in R.
 
     o   The startup message now shows the R Foundation as copyright
         holder, and includes the R ISBN number and a pointer to the new
@@ -80,6 +78,7 @@ NEW FEATURES
     o	The solve() function now uses the `tol' argument for all
         non-complex cases.  The default tolerance for LINPACK is 1e-7,
         as before.  For LAPACK it currently is .Machine$double.eps but
+	may be changed in later versions of R.
 
     o   help.search() now defaults to agrep = FALSE when keyword= is
 	specified, since no one wants fuzzy matching of categories.
@@ -150,11 +149,11 @@ BUG FIXES
     o	terms() sometimes removed offset() terms incorrectly, since it
 	counted by variables and not terms.  Its "offset" attribute
 	was incorrectly documented as referring to terms not
-	variables.
+	variables. (Related to PR#4941)
 
-    o   buildVignettes() and pkgVignettes() in package tools are now
-        documented, the call to texi2dvi is wrapped in the new
-        function texi2dvi() which also works on Windows.
+    o	buildVignettes() and pkgVignettes() in package tools are now
+	documented, the call to texi2dvi is wrapped in the new
+	function texi2dvi() which also works on Windows.
 
 
 
