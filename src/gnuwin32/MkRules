@@ -17,7 +17,7 @@ endif
 
 ifeq ($(strip $(BUILD)),EGCS)
 BINPREF=
-MINGW32FLAG= 
+MINGW32CFLAG= 
 MINGW32LDFLAG= 
 FLIBS=-lg2c
 AWK=gawk

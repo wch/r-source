@@ -23,7 +23,7 @@
 #include <stdio.h>
 #include "Defn.h"
 #include "Fileio.h"
-#include <dir.h>
+#include <io.h>
 #include <time.h>
 #include <windows.h>
 #include "graphapp/ga.h"
