@@ -722,7 +722,6 @@ AC_OUTPUT(Makeconf
   src/scripts/build-help
   src/scripts/fwf2table
   src/scripts/help.pretty
-  src/scripts/html2dos
   src/unix/Makefile
   tests/Makefile
   tests/Examples/Makefile

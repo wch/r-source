@@ -14,7 +14,7 @@ SCRIPTS_S = BATCH Rd2dvi build check filename help help.links \
 	massage-Examples pager
 SCRIPTS_B_IN = COMPILE.in INSTALL.in REMOVE.in Rd2contents.in Rd2txt.in \
 	Rdconv.in Rdindex.in Rman2Rd.in SHLIB.in Sd2Rd.in build-help.in \
-	fwf2table.in help.pretty.in html2dos.in
+	fwf2table.in help.pretty.in
 SCRIPTS_B = $(SCRIPTS_B_IN:.in=)
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
