@@ -1,10 +1,11 @@
 /* From http://www.netlib.org/specfun/rybesl	Fortran translated by f2c,...
- *      ------------------------------=#----	Martin Maechler, ETH Zurich
+ *	------------------------------=#----	Martin Maechler, ETH Zurich
  */
 #include "Mathlib.h"
 #include "Error.h"
 
-double bessel_y(double x, double alpha) {
+double bessel_y(double x, double alpha)
+{
     long nb, ncalc;
     double *by;
 #ifdef IEEE_754
@@ -16,16 +17,18 @@ double bessel_y(double x, double alpha) {
     by = (double *) calloc(nb, sizeof(double));
     Y_bessel(&x, &alpha, &nb, by, &ncalc);
     if(ncalc != nb) {/* error input */
-        if(ncalc == -1)
+	if(ncalc == -1)
 	    return ML_POSINF;
-        else if(ncalc < -1)
+	else if(ncalc < -1)
 	    warning("bessel_y(%g): ncalc (=%d) != nb (=%d); alpha=%g.%s\n",
 		    x, ncalc, nb, alpha," Arg. out of range?");
 	else /* ncalc >= 0 */
 	    warning("bessel_y(%g,nu=%g): precision lost in result\n",
 		    x, nb+alpha);
     }
-    return by[nb-1];
+    x = by[nb-1];
+    free(by);
+    return x;
 }
 
 void Y_bessel(double *x, double *alpha, long *nb,
@@ -222,7 +225,7 @@ void Y_bessel(double *x, double *alpha, long *nb,
 	}
 	xna = ftrunc(nu + .5);
 	na = (long) xna;
-	if (na == 1) {/* <==>  .5 <= *alpha < 1  <==>  -5. <= nu < 0 */
+	if (na == 1) {/* <==>  .5 <= *alpha < 1	 <==>  -5. <= nu < 0 */
 	    nu -= xna;
 	}
 	if (nu == -.5) {
@@ -237,11 +240,11 @@ void Y_bessel(double *x, double *alpha, long *nb,
 	    d = -log(b);
 	    f = nu * d;
 	    e = pow(b, -nu);
-	    if (fabs(nu) < del) {
+	    if (fabs(nu) < del)
 		c = M_1_PI;
-	    } else {
+	    else
 		c = nu / sin(nu * M_PI);
-	    }
+
 	    /* ------------------------------------------------------------
 	       Computation of sinh(f)/f
 	       ------------------------------------------------------------ */
@@ -281,11 +284,11 @@ void Y_bessel(double *x, double *alpha, long *nb,
 	    p = g * c;
 	    q = M_1_PI / g;
 	    c = nu * M_PI_2;
-	    if (fabs(c) < del) {
+	    if (fabs(c) < del)
 		r = 1.;
-	    } else {
+	    else
 		r = sin(c) / c;
-	    }
+
 	    r = M_PI * c * r * r;
 	    c = 1.;
 	    d = -b * b;
@@ -408,11 +411,10 @@ L220:
 		}
 		p += 1.;
 		q += q0;
-		if (k == 1) {
+		if (k == 1)
 		    ya = M_SQRT_2dPI * (p * cosmu - q * sinmu) / den;
-		} else {
+		else
 		    ya1 = M_SQRT_2dPI * (p * cosmu - q * sinmu) / den;
-		}
 		dmu += 1.;
 	    }
 	}

@@ -1,12 +1,13 @@
 /* From http://www.netlib.org/specfun/rkbesl	Fortran translated by f2c,...
- *      ------------------------------=#----	Martin Maechler, ETH Zurich
+ *	------------------------------=#----	Martin Maechler, ETH Zurich
  */
 #include "Mathlib.h"
 #include "Error.h"
 
 static double xmax = 705.342;/* maximal x for UNscaled answer, see below */
 
-double bessel_k(double x, double alpha, double expo) {
+double bessel_k(double x, double alpha, double expo)
+{
     long nb, ncalc, ize;
     double *bk;
 #ifdef IEEE_754
@@ -26,7 +27,9 @@ double bessel_k(double x, double alpha, double expo) {
 	warning("bessel_k(%g,nu=%g): precision lost in result\n",
 		x, nb+alpha);
     }
-    return bk[nb-1];
+    x = bk[nb-1];
+    free(bk);
+    return x;
 }
 
 void K_bessel(double *x, double *alpha, long *nb,
@@ -272,7 +275,7 @@ void K_bessel(double *x, double *alpha, long *nb,
 		t1 = c * t1 + s[i];
 	    }
 	    /* d2 := sinh(f1)/ nu = sinh(f1)/(f1/f0)
-	     *     = f0 * sinh(f1)/f1 */
+	     *	   = f0 * sinh(f1)/f1 */
 	    if (fabs(f1) <= .5) {
 		f1 *= f1;
 		d2 = 0.;
@@ -309,18 +312,18 @@ void K_bessel(double *x, double *alpha, long *nb,
 		    ratio = twonu;
 		}
 		*ncalc = 1;
-		if (*nb == 1) {
+		if (*nb == 1)
 		    return;
-		}
+
 		/* -----------------------------------------------------
 		   Calculate  K(ALPHA+L,X)/K(ALPHA+L-1,X),
 		   L = 1, 2, ... , NB-1
 		   ----------------------------------------------------- */
 		*ncalc = -1;
 		for (i = 1; i < *nb; ++i) {
-		    if (ratio >= c) {
+		    if (ratio >= c)
 			return;
-		    }
+
 		    bk[i] = ratio / ex;
 		    twonu += 2.;
 		    ratio = twonu;
@@ -373,6 +376,7 @@ void K_bessel(double *x, double *alpha, long *nb,
 	    for (i = 0; i < *nb; ++i)
 		bk[i] = bk1;
 	    return;
+
 	} else {
 	    /* -------------------------------------------------------
 	       X > 1.0
@@ -461,16 +465,16 @@ void K_bessel(double *x, double *alpha, long *nb,
 	  -------------------------------------------------------------------*/
 	*ncalc = *nb;
 	bk[0] = bk1;
-	if (iend == 0) {
+	if (iend == 0)
 	    return;
-	}
+
 	j = 1 - k;
-	if (j >= 0) {
+	if (j >= 0)
 	    bk[j] = bk2;
-	}
-	if (iend == 1) {
+
+	if (iend == 1)
 	    return;
-	}
+
 	m = imin2((long) (wminf - nu),iend);
 	for (i = 2; i <= m; ++i) {
 	    t1 = bk1;
@@ -505,19 +509,18 @@ void K_bessel(double *x, double *alpha, long *nb,
 	    if (j >= 1) {
 		bk[j] = ratio;
 	    } else {
-		if (bk2 >= DBL_MAX / ratio) {
+		if (bk2 >= DBL_MAX / ratio)
 		    return;
-		}
+
 		bk2 *= ratio;
 	    }
 	}
 	*ncalc = imax2(1, mplus1 - k);
-	if (*ncalc == 1) {
+	if (*ncalc == 1)
 	    bk[0] = bk2;
-	}
-	if (*nb == 1) {
+	if (*nb == 1)
 	    return;
-	}
+
 L420:
 	for (i = *ncalc; i < *nb; ++i) { /* i == *ncalc */
 #ifndef IEEE_754
@@ -529,4 +532,3 @@ L420:
 	}
     }
 }
-

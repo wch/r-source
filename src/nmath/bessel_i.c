@@ -1,12 +1,13 @@
 /* From http://www.netlib.org/specfun/ribesl	Fortran translated by f2c,...
- *      ------------------------------=#----	Martin Maechler, ETH Zurich
+ *	------------------------------=#----	Martin Maechler, ETH Zurich
  */
 #include "Mathlib.h"
 #include "Error.h"
 
 static double exparg = 709.;/* maximal x for UNscaled answer, see below */
 
-double bessel_i(double x, double alpha, double expo) {
+double bessel_i(double x, double alpha, double expo)
+{
     long nb, ncalc, ize;
     double *bi;
 #ifdef IEEE_754
@@ -26,7 +27,9 @@ double bessel_i(double x, double alpha, double expo) {
 	warning("bessel_i(%g,nu=%g): precision lost in result\n",
 		x, nb+alpha);
     }
-    return bi[nb-1];
+    x = bi[nb-1];
+    free(bi);
+    return x;
 }
 
 void I_bessel(double *x, double *alpha, long *nb,
@@ -78,12 +81,12 @@ void I_bessel(double *x, double *alpha, long *nb,
 
   NB > NCALC > 0: Not all requested function values could
      be calculated accurately.	This usually occurs because NB is
-     much larger than ABS(X).  In this case, BI(N) is calculated
+     much larger than ABS(X).  In this case, BI[N] is calculated
      to the desired accuracy for N <= NCALC, but precision
-     is lost for NCALC < N <= NB.  If BI(N) does not vanish
+     is lost for NCALC < N <= NB.  If BI[N] does not vanish
      for N > NCALC (because it is too small to be represented),
-     and BI(N)/BI(NCALC) = 10**(-K), then only the first NSIG-K
-     significant figures of BI(N) can be trusted.
+     and BI[N]/BI[NCALC] = 10**(-K), then only the first NSIG-K
+     significant figures of BI[N] can be trusted.
 
 
  Intrinsic functions required are:
@@ -208,7 +211,7 @@ void I_bessel(double *x, double *alpha, long *nb,
   Machine-dependent parameters
  -------------------------------------------------------------------
 */
-    static long    nsig =   16;
+    static long	   nsig =   16;
     static double ensig = 1e16;
     static double rtnsig = 1e-4;
     static double enmten = 8.9e-308;
@@ -223,7 +226,7 @@ void I_bessel(double *x, double *alpha, long *nb,
     /* Local variables */
     long nend, intx, nbmx, k, l, n, nstart;
     double pold, test,	p, em, en, empal, emp2al, halfx,
-	tempa, tempb, tempc, psave, plast, tover, psavel, sum, nu, twonu;
+	aa, bb, cc, psave, plast, tover, psavel, sum, nu, twonu;
 
     /*Parameter adjustments */
     --bi;
@@ -297,13 +300,13 @@ void I_bessel(double *x, double *alpha, long *nb,
 			}
 			while (p <= 1.);
 
-			tempb = en / *x;
+			bb = en / *x;
 			/* ------------------------------------------------
 			   Calculate backward test, and find NCALC,
 			   the highest N such that the test is passed.
 			   ------------------------------------------------ */
 			test = pold * plast / ensig;
-			test *= .5 - .5 / (tempb * tempb);
+			test *= .5 - .5 / (bb * bb);
 			p = plast * tover;
 			--n;
 			en -= 2.;
@@ -341,24 +344,24 @@ L90:
 		p = en * plast / *x + pold;
 	    } while (p < test);
 
+L120:
 /* -------------------------------------------------------------------
  Initialize the backward recursion and the normalization sum.
  ------------------------------------------------------------------- */
-L120:
 	    ++n;
 	    en += 2.;
-	    tempb = 0.;
-	    tempa = 1. / p;
+	    bb = 0.;
+	    aa = 1. / p;
 	    em = (double) n - 1.;
 	    empal = em + nu;
 	    emp2al = em - 1. + twonu;
-	    sum = tempa * empal * emp2al / em;
+	    sum = aa * empal * emp2al / em;
 	    nend = n - *nb;
 	    if (nend < 0) {
 		/* -----------------------------------------------------
-		   N < NB, so store BI(N) and set higher orders to 0..
+		   N < NB, so store BI[N] and set higher orders to 0..
 		   ----------------------------------------------------- */
-		bi[n] = tempa;
+		bi[n] = aa;
 		nend = -nend;
 		for (l = 1; l <= nend; ++l) {
 		    bi[n + l] = 0.;
@@ -367,14 +370,14 @@ L120:
 		if (nend > 0) {
 		    /* -----------------------------------------------------
 		       Recur backward via difference equation,
-		       calculating (but not storing) BI(N), until N = NB.
+		       calculating (but not storing) BI[N], until N = NB.
 		       --------------------------------------------------- */
 		    for (l = 1; l <= nend; ++l) {
 			--n;
 			en -= 2.;
-			tempc = tempb;
-			tempb = tempa;
-			tempa = en * tempb / *x + tempc;
+			cc = bb;
+			bb = aa;
+			aa = en * bb / *x + cc;
 			em -= 1.;
 			emp2al -= 1.;
 			if (n == 1) {
@@ -384,74 +387,74 @@ L120:
 			    emp2al = 1.;
 			}
 			empal -= 1.;
-			sum = (sum + tempa * empal) * emp2al / em;
+			sum = (sum + aa * empal) * emp2al / em;
 		    }
 		}
 		/* ---------------------------------------------------
-		   Store BI(NB)
+		   Store BI[NB]
 		   --------------------------------------------------- */
-		bi[n] = tempa;
+		bi[n] = aa;
 		if (*nb <= 1) {
-		    sum = sum + sum + tempa;
+		    sum = sum + sum + aa;
 		    goto L230;
 		}
 		/* -------------------------------------------------
-		   Calculate and Store BI(NB-1)
+		   Calculate and Store BI[NB-1]
 		   ------------------------------------------------- */
 		--n;
 		en -= 2.;
-		bi[n] = en * tempa / *x + tempb;
+		bi[n] = en * aa / *x + bb;
 		if (n == 1) {
 		    goto L220;
 		}
 		em -= 1.;
-		emp2al -= 1.;
-		if (n == 2) {
+		if (n == 2)
 		    emp2al = 1.;
-		}
+		else
+		    emp2al -= 1.;
+
 		empal -= 1.;
 		sum = (sum + bi[n] * empal) * emp2al / em;
 	    }
 	    nend = n - 2;
 	    if (nend > 0) {
-/* -------------------------------------------------------------------
- Calculate via difference equation and store BI(N), until N = 2.
- ------------------------------------------------------------------- */
+		/* --------------------------------------------
+		   Calculate via difference equation
+		   and store BI[N], until N = 2.
+		   ------------------------------------------ */
 		for (l = 1; l <= nend; ++l) {
 		    --n;
 		    en -= 2.;
 		    bi[n] = en * bi[n + 1] / *x + bi[n + 2];
 		    em -= 1.;
-		    emp2al -= 1.;
-		    if (n == 2) {
+		    if (n == 2)
 			emp2al = 1.;
-		    }
+		    else
+			emp2al -= 1.;
 		    empal -= 1.;
 		    sum = (sum + bi[n] * empal) * emp2al / em;
 		}
 	    }
 	    /* ----------------------------------------------
-	       Calculate BI(1)
+	       Calculate BI[1]
 	       -------------------------------------------- */
 	    bi[1] = 2. * empal * bi[2] / *x + bi[3];
 L220:
 	    sum = sum + sum + bi[1];
-/* -------------------------------------------------------------------
- Normalize.  Divide all BI(N) by sum.
- ------------------------------------------------------------------- */
+
 L230:
-	    if (nu != 0.) {
+	    /* ---------------------------------------------------------
+	       Normalize.  Divide all BI[N] by sum.
+	       --------------------------------------------------------- */
+	    if (nu != 0.)
 		sum *= (gamma_cody(1. + nu) * pow(*x * .5, -nu));
-	    }
-	    if (*ize == 1) {
+	    if (*ize == 1)
 		sum *= exp(-(*x));
-	    }
-	    tempa = enmten;
-	    if (sum > 1.) {
-		tempa *= sum;
-	    }
+	    aa = enmten;
+	    if (sum > 1.)
+		aa *= sum;
 	    for (n = 1; n <= *nb; ++n) {
-		if (bi[n] < tempa)
+		if (bi[n] < aa)
 		    bi[n] = 0.;
 		else
 		    bi[n] /= sum;
@@ -461,19 +464,22 @@ L230:
 	    /* -----------------------------------------------------------
 	       Two-term ascending series for small X.
 	       -----------------------------------------------------------*/
-	    tempa = 1.;
+	    aa = 1.;
 	    empal = 1. + nu;
-	    halfx = 0.;
 	    if (*x > enmten)
 		halfx = .5 * *x;
+	    else
+		halfx = 0.;
 	    if (nu != 0.)
-		tempa = pow(halfx, nu) / gamma_cody(empal);
+		aa = pow(halfx, nu) / gamma_cody(empal);
 	    if (*ize == 2)
-		tempa *= exp(-(*x));
-	    tempb = 0.;
+		aa *= exp(-(*x));
 	    if (*x + 1. > 1.)
-		tempb = halfx * halfx;
-	    bi[1] = tempa + tempa * tempb / empal;
+		bb = halfx * halfx;
+	    else
+		bb = 0.;
+
+	    bi[1] = aa + aa * bb / empal;
 	    if (*x != 0. && bi[1] == 0.)
 		*ncalc = 0;
 	    if (*nb > 1) {
@@ -485,17 +491,18 @@ L230:
 		    /* -------------------------------------------------
 		       Calculate higher-order functions.
 		       ------------------------------------------------- */
-		    tempc = halfx;
+		    cc = halfx;
 		    tover = (enmten + enmten) / *x;
-		    if (tempb != 0.)
-			tover = enmten / tempb;
+		    if (bb != 0.)
+			tover = enmten / bb;
 		    for (n = 2; n <= *nb; ++n) {
-			tempa /= empal;
+			aa /= empal;
 			empal += 1.;
-			tempa *= tempc;
-			if (tempa <= tover * empal)
-			    tempa = 0.;
-			bi[n] = tempa + tempa * tempb / empal;
+			aa *= cc;
+			if (aa <= tover * empal)
+			    bi[n] = aa = 0.;
+			else
+			    bi[n] = aa + aa * bb / empal;
 			if (bi[n] == 0. && *ncalc > n)
 			    *ncalc = n - 1;
 		    }
