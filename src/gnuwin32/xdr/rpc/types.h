@@ -59,7 +59,7 @@
 #	define NULL 0
 #endif
 
-#ifndef WIN32
+#if !defined(WIN32) && !defined(macintosh)
 extern char *malloc();
 #endif
 #define mem_alloc	malloc
@@ -68,7 +68,7 @@ extern char *malloc();
 #ifndef makedev /* ie, we haven't already included it */
 #include <sys/types.h>
 #endif
-#ifndef WIN32
+#if !defined(WIN32) && !defined(macintosh)
 #include <sys/time.h>
 #endif
 

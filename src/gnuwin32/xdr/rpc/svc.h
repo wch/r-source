@@ -91,7 +91,9 @@ typedef struct {
 	    void	(*xp_destroy)(); /* destroy this struct */
 	} *xp_ops;
 	int		xp_addrlen;	 /* length of remote address */
+#ifndef macintosh
 	struct sockaddr_in xp_raddr;	 /* remote address */
+#endif
 	struct opaque_auth xp_verf;	 /* raw response verifier */
 	caddr_t		xp_p1;		 /* private */
 	caddr_t		xp_p2;		 /* private */
