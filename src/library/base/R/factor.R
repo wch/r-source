@@ -20,6 +20,9 @@ factor <- function (x, levels = sort(unique(x), na.last = TRUE),
 is.factor <- function(x) inherits(x, "factor")
 as.factor <- function (x) if (is.factor(x)) x else factor(x)
 
+## Help old S users:
+category <- function(...) .Defunct()
+
 levels <- function(x) attr(x, "levels")
 nlevels <- function(x) length(levels(x))
 
