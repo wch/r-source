@@ -167,7 +167,7 @@ Rm.exp1: $(OBJS-EXTRA)
 	$(MAKE) -C ../extra/pcre -f Makefile.win
 
 ../extra/bzip2/libbz2.a:
-	$(MAKE) -C ../extra/bzip2 libbz2.a
+	$(MAKE) -C ../extra/bzip2  -f Makefile.win libbz2.a
 
 rdocs:
 	@$(MAKE) -C ../../doc/manual -f Makefile.win html BUILD=$(BUILD)
@@ -324,6 +324,7 @@ cleanwin:
 	$(MAKE) -C front-ends clean
 	$(MAKE) -C ../extra/xdr -f Makefile.win clean
 	$(MAKE) -C ../extra/pcre -f Makefile.win distclean
+	$(MAKE) -C ../extra/bzip2 -f Makefile.win clean
 	$(MAKE) -C bitmap clean
 	-$(MAKE) -C installer clean ISclean
 

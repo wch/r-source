@@ -1,0 +1,23 @@
+#-*- Makefile -*-
+
+include ../../gnuwin32/MkRules
+
+CFLAGS=-Wall -Winline -O2 -fomit-frame-pointer -fno-strength-reduce
+
+OBJS= blocksort.o  \
+      huffman.o    \
+      crctable.o   \
+      randtable.o  \
+      compress.o   \
+      decompress.o \
+      bzlib.o
+
+all: libbz2.a
+
+libbz2.a: $(OBJS)
+	rm -f libbz2.a
+	$(AR) cq libbz2.a $(OBJS)
+	$(RANLIB) libbz2.a
+
+clean:
+	$(RM) *.o *~ libbz2.a
