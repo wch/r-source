@@ -556,6 +556,319 @@ function(x, ...)
     invisible(x)
 }
 
+### * codocClasses
+
+codocClasses <-
+function(package, lib.loc = NULL)
+{
+    ## Compare the 'structure' of S4 classes in an installed package
+    ## between code and documentation.
+    ## Currently, only compares the slot names.
+
+    ## <NOTE>
+    ## This is patterned after the current codoc().
+    ## It would be useful to return the whole information on class slot
+    ## names found in the code and matching documentation (rather than
+    ## just the ones with mismatches).
+    ## Currently, we only return the names of all classes checked.
+    ## </NOTE>
+    
+    ## Add sanity checking later ...
+
+    badRdObjects <- list()
+    class(badRdObjects) <- "codocClasses"
+
+    if(is.na(match("package:methods", search())))
+        return(badRdObjects)
+
+    dir <- .find.package(package, lib.loc)
+    isBase <- basename(dir) == "base"
+    
+    ## Load package into codeEnv.
+    if(!isBase)
+        .loadPackageQuietly(package, lib.loc)
+    codeEnv <-
+        as.environment(paste("package", package, sep = ":"))
+
+    S4classes <- getClasses(codeEnv)
+    if(!length(S4classes)) return(badRdObjects)
+
+    ## Build Rd data base.
+    db <- Rddb(package, lib.loc = dirname(dir))
+    db <- lapply(db, function(f) paste(Rdpp(f), collapse = "\n"))
+
+    ## Need some heuristics now.  When does an Rd object document just
+    ## one S4 class so that we can compare (at least) the slot names?
+    ## Try the following:
+    ## * \docType{} identical to "class";
+    ## * just one \alias{} (could also check whether it ends in
+    ##   "-class");
+    ## * a non-empty user-defined section 'Slots'.
+    
+    ## As going through the db to extract sections can take some time,
+    ## we try to subscript whenever possible.
+    aliases <- lapply(db, getRdSection, "alias")
+    idx <- (sapply(aliases, length) == 1)
+    if(!length(idx)) return(badRdObjects)
+    db <- db[idx]; aliases <- aliases[idx]
+    idx <- sapply(lapply(db, getRdSection, "docType"),
+                  identical, "class")
+    if(!length(idx)) return(badRdObjects)
+    db <- db[idx]; aliases <- aliases[idx]
+    RdSlots <- lapply(db, getRdSection, "Slots", FALSE)
+    idx <- !sapply(RdSlots, identical, character())
+    if(!length(idx)) return(badRdObjects)
+    db <- db[idx]
+    aliases <- unlist(aliases[idx])
+    RdSlots <- RdSlots[idx]
+
+    names(db) <- sapply(db, getRdSection, "name")
+
+    .getSlotNamesFromSlotSectionText <- function(txt) {
+        ## Get \describe (inside user-defined section 'Slots'
+        txt <- unlist(sapply(txt, getRdSection, "describe"))
+        ## Suppose this worked ...
+        ## Get the \items inside \describe
+        txt <- unlist(sapply(txt, getRdSection, "item"))
+        if(!length(txt)) return(character())
+        ## And now strip enclosing '\code{...}:'
+        txt <- gsub("\\\\code\{(.*)\}:?", "\\1", as.character(txt))
+        txt <- unlist(strsplit(txt, ", *"))
+        txt <- sub("^[[:space:]]*", "", txt)
+        txt <- sub("[[:space:]]*$", "", txt)
+        txt
+    }
+
+    S4classesChecked <- character()
+    for(cl in S4classes) {
+        idx <- which(topicName("class", cl) == aliases)
+        if(length(idx) == 1) {
+            ## Add sanity checking later ...
+            S4classesChecked <- c(S4classesChecked, cl)
+            codeSlots <-
+                sort(names(getClass(cl, where = codeEnv) @ slots))
+            docsSlots <-
+                sort(.getSlotNamesFromSlotSectionText(RdSlots[[idx]]))
+            if(!identical(codeSlots, docsSlots)) {
+                badRdObjects[[names(db)[idx]]] <-
+                    list(name = cl, code = codeSlots, docs = docsSlots)
+            }
+        }
+    }
+
+    attr(badRdObjects, "S4classesChecked") <-
+        as.character(S4classesChecked)
+    badRdObjects
+}
+
+### * print.codocClasses
+
+print.codocClasses <-
+function(x, ...)
+{
+    if (length(x) == 0) 
+        return(invisible(x))
+    formatArgs <- function(s) paste(s, collapse = " ")
+    for (docObj in names(x)) {
+        writeLines(paste("S4 class codoc mismatches from ",
+                         "documentation object ", sQuote(docObj), ":",
+                         sep = ""))
+        docObj <- x[[docObj]]
+        writeLines(c(paste("Slots for class", sQuote(docObj[["name"]])),
+                     strwrap(paste("Code:",
+                                   formatArgs(docObj[["code"]])),
+                             indent = 2, exdent = 8),
+                     strwrap(paste("Docs:",
+                                   formatArgs(docObj[["docs"]])),
+                             indent = 2, exdent = 8)))
+        writeLines("")
+    }
+    invisible(x)
+}
+
+### * codocData
+
+codocData <-
+function(package, lib.loc = NULL)
+{
+    ## Compare the 'structure' of 'data' objects (variables or data
+    ## sets) in an installed package between code and documentation.
+    ## Currently, only compares the variable names of data frames found.
+
+    ## <NOTE>
+    ## This is patterned after the current codoc().
+    ## It would be useful to return the whole information on data frame
+    ## variable names found in the code and matching documentation
+    ## (rather than just the ones with mismatches).
+    ## Currently, we only return the names of all data frames checked.
+    ## </NOTE>
+    
+    ## Add sanity checking later ...
+
+    badRdObjects <- list()
+    class(badRdObjects) <- "codocData"
+
+    dir <- .find.package(package, lib.loc)
+    isBase <- basename(dir) == "base"
+    
+    ## Load package into codeEnv.
+    if(!isBase)
+        .loadPackageQuietly(package, lib.loc)
+    codeEnv <-
+        as.environment(paste("package", package, sep = ":"))
+
+    ## Could check here whether the package has any variables or data
+    ## sets (and return if not).
+
+    ## Build Rd data base.
+    db <- Rddb(package, lib.loc = dirname(dir))
+    db <- lapply(db, function(f) paste(Rdpp(f), collapse = "\n"))
+
+    ## Need some heuristics now.  When does an Rd object document a
+    ## data.frame (could add support for other classes later) variable
+    ## or data set so that we can compare (at least) the names of the
+    ## variables in the data frame?  Try the following:
+    ## * just one \alias{};
+    ## * if documentation was generated via prompt, there is a \format
+    ##   section starting with 'A data frame with' (but many existing Rd
+    ##   files instead have 'This data frame contains' and containing
+    ##   one or more \describe sections inside.
+
+    ## As going through the db to extract sections can take some time,
+    ## we try to subscript whenever possible.
+    aliases <- lapply(db, getRdSection, "alias")
+    idx <- sapply(aliases, length) == 1
+    if(!length(idx)) return(badRdObjects)
+    db <- db[idx]; aliases <- aliases[idx]
+    
+    .getDataFrameVarNamesFromRdText <- function(txt) {
+        txt <- getRdSection(txt, "format")
+        ## Was there just one \format section?
+        if(length(txt) != 1) return(character())
+        ## What did it start with?
+        if(!length(grep("^[ \n\t]*(A|This) data frame", txt)))
+            return(character())
+        ## Get \describe inside \format
+        txt <- getRdSection(txt, "describe")
+        ## Suppose this worked ...
+        ## Get the \items inside \describe
+        txt <- unlist(sapply(txt, getRdSection, "item"))
+        if(!length(txt)) return(character())
+        txt <- gsub("(.*):$", "\\1", as.character(txt))
+        txt <- gsub("\\\\code\{(.*)\}:?", "\\1", txt)
+        txt <- unlist(strsplit(txt, ", *"))
+        txt <- sub("^[[:space:]]*", "", txt)
+        txt <- sub("[[:space:]]*$", "", txt)
+        txt
+    }
+
+    RdVarNames <- lapply(db, .getDataFrameVarNamesFromRdText)
+    idx <- (sapply(RdVarNames, length) > 0)
+    if(!length(idx)) return(badRdObjects)
+    aliases <- unlist(aliases[idx])
+    RdVarNames <- RdVarNames[idx]
+
+    names <- sapply(db[idx], getRdSection, "name")
+
+    .fileExt <- function(x) sub(".*\\.", "", x)
+
+    dataEnv <- new.env()
+    dataDir <- file.path(dir, "data")
+    hasData <- tools::fileTest("-d", dataDir)
+    dataExts <- .makeFileExts("data")
+    dataExtsRE <-
+        paste("(", paste(dataExts, collapse = "|"), ")", sep = "")
+    
+    ## Now go through the aliases.
+    dataFramesChecked <- character()
+    for(i in seq(along = aliases)) {
+        ## Clean up dataEnv.
+        rm(list = ls(envir = dataEnv, all.names = TRUE),
+           envir = dataEnv)
+        ## Store the documented variable names.
+        docsVarNames <- sort(RdVarNames[[i]])
+        ## Try finding the variable or data set given by the alias.
+        al <- aliases[i]
+        if(exists(al, envir = codeEnv, mode = "list",
+                  inherits = FALSE)) {
+            al <- get(al, envir = codeEnv, mode = "list")
+        }
+        else if(hasData) {
+            ## Must be a data set.  Argh.  Wouldn't it be wonderful if
+            ## we could get rid of data(), or at least have an option
+            ## for controlling *where* things go?
+            files <- dir(dataDir)
+            files <- files[files %in% paste(al, dataExts, sep = ".")]
+            if(!length(files)) next
+            ## If not, what the hell did we pick up?
+            if(length(files) > 1) {
+                ## More than one candidate, see data().
+                files <- files[which.min(match(files, dataExts))]
+            }
+            ## <FIXME>
+            ## Of course, the data sets could be in a zip archive!
+            zfile <- file.path(dataDir, files) # Should be exactly one.
+            switch(.fileExt(zfile),
+                   R = , r =
+                   sys.source(zfile, envir = dataEnv, chdir = TRUE),
+                   RData = , rdata = , rda =
+                   load(zfile, envir = dataEnv),
+                   TXT = , txt = , tab =
+                   assign(al,
+                          read.table(zfile, header = TRUE),
+                          envir = dataEnv),
+                   CSV = , csv =
+                   assign(al,
+                          read.table(zfile, header = TRUE, sep = ";"),
+                          envir = dataEnv))
+            if(exists(al, envir = dataEnv, mode = "list",
+                      inherits = FALSE)) {
+                al <- get(al, envir = dataEnv, mode = "list")
+            }
+        }
+        if(!is.data.frame(al)) next
+        ## Now we should be ready:
+        dataFramesChecked <- c(dataFramesChecked, aliases[i])
+        codeVarNames <- sort(variable.names(al))
+        if(!identical(codeVarNames, docsVarNames))
+            badRdObjects[[names[i]]] <-
+                list(name = aliases[i],
+                     code = codeVarNames,
+                     docs = docsVarNames)
+    }
+
+    attr(badRdObjects, "dataFramesChecked") <-
+        as.character(dataFramesChecked)
+    badRdObjects
+}
+                
+### * print.codocData
+
+print.codocData <-
+function(x, ...)
+{
+    formatArgs <- function(s) paste(s, collapse = " ")
+    for (docObj in names(x)) {
+        writeLines(paste("Data codoc mismatches from ",
+                         "documentation object ", sQuote(docObj), ":",
+                         sep = ""))
+        docObj <- x[[docObj]]
+        writeLines(c(paste("Variables in data frame",
+                           sQuote(docObj[["name"]])),
+                     strwrap(paste("Code:",
+                                   formatArgs(docObj[["code"]])),
+                             indent = 2, exdent = 8),
+                     strwrap(paste("Docs:",
+                                   formatArgs(docObj[["docs"]])),
+                             indent = 2, exdent = 8)))
+        writeLines("")
+    }
+    invisible(x)
+}
+    
+
+
+
 ### * checkDocArgs
 
 checkDocArgs <-

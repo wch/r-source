@@ -1,32 +1,41 @@
 useDynLib(tools)
 
-export(.installMD5sums, Rdindex, Rtangle, RtangleSetup, RweaveLatex,
-       RweaveLatexSetup, Stangle, Sweave, SweaveSyntConv,
-       SweaveSyntaxLatex, SweaveSyntaxNoweb, checkDocArgs,
-       checkDocStyle, checkFF, checkMD5sums, checkMethods, 
-       checkReplaceFuns, checkTnF, checkVignettes, codoc, md5sum, undoc,
-       filePathAsAbsolute, filePathSansExt, fileTest, listFilesWithExts,
-       listFilesWithType, delimMatch)
+export(".installMD5sums", "Rdindex", "Rtangle", "RtangleSetup",
+       "RweaveLatex", "RweaveLatexSetup", "Stangle", "Sweave",
+       "SweaveSyntConv", "SweaveSyntaxLatex", "SweaveSyntaxNoweb",
+       "checkDocArgs", "checkDocStyle", "checkFF", "checkMD5sums",
+       "checkMethods", "checkReplaceFuns", "checkTnF", "checkVignettes",
+       "codoc", "md5sum", "undoc", "filePathAsAbsolute",
+       "filePathSansExt", "fileTest", "listFilesWithExts", 
+       "listFilesWithType", "delimMatch")
 
-## documented as internal but called from scripts
-export(.installPackageDescription, .installPackageIndices, 
-       .checkDemoIndex, .checkVignetteIndex, buildVignettes)
+## <FIXME>
+## Documented as internal but called from scripts
+export(".installPackageDescription",
+       ".installPackageIndices",
+       ".checkDemoIndex",
+       ".checkVignetteIndex",
+       "buildVignettes")
+## </FIXME>
 
-## needed by Bioconductor's vExplorer(): will no longer be necessary 
+## <FIXME>
+## Needed by Bioconductor's vExplorer(): will no longer be necessary
 ## when Sweave objects are in place
-export(pkgVignettes, RtangleWritedoc, RweaveLatexOptions)
+export("pkgVignettes",
+       "RtangleWritedoc",
+       "RweaveLatexOptions")
+## </FIXME>
 
-## once upon a time these seem to need to be exported
-## exportPattern("^print")
-
-S3method(print, checkDemoIndex)
-S3method(print, checkDocArgs)
-S3method(print, checkDocStyle)
-S3method(print, checkFF)
-S3method(print, checkMethods)
-S3method(print, checkReplaceFuns)
-S3method(print, checkTnF)
-S3method(print, checkVignetteIndex)
-S3method(print, checkVignettes)
-S3method(print, codoc)
-S3method(print, undoc)
+S3method("print", "checkDemoIndex")
+S3method("print", "checkDocArgs")
+S3method("print", "checkDocStyle")
+S3method("print", "checkFF")
+S3method("print", "checkMethods")
+S3method("print", "checkReplaceFuns")
+S3method("print", "checkTnF")
+S3method("print", "checkVignetteIndex")
+S3method("print", "checkVignettes")
+S3method("print", "codoc")
+S3method("print", "codocClasses")
+S3method("print", "codocData")
+S3method("print", "undoc")
