@@ -452,8 +452,8 @@ static void z_asin(Rcomplex *r, Rcomplex *z)
     double alpha, beta, t1, t2, x, y;
     x = z->r;
     y = z->i;
-    t1 = 0.5 * sqrt((x + 1) * (x + 1) + y * y);
-    t2 = 0.5 * sqrt((x - 1) * (x - 1) + y * y);
+    t1 = 0.5 * pythag(x + 1, y);
+    t2 = 0.5 * pythag(x - 1, y);
     alpha = t1 + t2;
     beta = t1 - t2;
     r->r = asin(beta);

@@ -2451,11 +2451,9 @@ SEXP do_locator(SEXP call, SEXP op, SEXP args, SEXP env)
 }
 
 
+/* FIXME : Shouldn't we use  pythag() "everywhere" instead of hypot() ?? */
 #ifdef Macintosh
-double hypot(double x, double y)
-{
-    return sqrt(x*x+y*y);
-}
+# define hypot pythag
 #endif
 
 #define THRESHOLD	0.25
@@ -2735,7 +2733,7 @@ SEXP do_strheight(SEXP call, SEXP op, SEXP args, SEXP env)
 
     checkArity(op,args);
     GCheckState(dd);
-    
+
     str = CAR(args);
     if ((TYPEOF(str) != STRSXP) && (TYPEOF(str) != EXPRSXP))
 	errorcall(call, "character or expression first argument expected");
@@ -3085,7 +3083,7 @@ SEXP do_playDL(SEXP call, SEXP op, SEXP args, SEXP env)
 	    theList = CDR(theList);
 	}
 	dd->gp.ask = ask;
-    }    
+    }
     return R_NilValue;
 }
 
@@ -3097,7 +3095,7 @@ SEXP do_getGPar(SEXP call, SEXP op, SEXP args, SEXP env)
 
     checkArity(op, args);
     GP = allocVector(INTSXP, lGPar);
-    copyGPar(&dd->dpSaved, (GPar *) INTEGER(GP));    
+    copyGPar(&dd->dpSaved, (GPar *) INTEGER(GP));
     return GP;
 }
 
@@ -3106,12 +3104,12 @@ SEXP do_setGPar(SEXP call, SEXP op, SEXP args, SEXP env)
     DevDesc *dd = CurrentDevice();
     int lGPar = 1 + sizeof(GPar) / sizeof(int);
     SEXP GP;
-    
+
     checkArity(op, args);
     GP = CAR(args);
     if (!isInteger(GP) || length(GP) != lGPar)
 	errorcall(call, "invalid graphics parameter list");
-    copyGPar((GPar *) INTEGER(GP), &dd->dpSaved);    
+    copyGPar((GPar *) INTEGER(GP), &dd->dpSaved);
     return R_NilValue;
 }
 
@@ -3328,7 +3326,7 @@ SEXP do_symbols(SEXP call, SEXP op, SEXP args, SEXP env)
 		p0 = REAL(p)[i];
 		p1 = REAL(p)[i + nr];
 		p2 = REAL(p)[i + 2 * nr];
-		if (nc == 4) 
+		if (nc == 4)
 		    p3 = REAL(p)[i + 3 * nr];
 		else
 		    p3 = 0;
@@ -3348,7 +3346,7 @@ SEXP do_symbols(SEXP call, SEXP op, SEXP args, SEXP env)
 		    else {
 			rx = GConvertXUnits(0.5 * p0, USER, NDC, dd);
 			ry = GConvertYUnits(0.5 * p1, USER, NDC, dd);
-		    }	
+		    }
 		    GRect(xx - rx, yy - ry, xx + rx, yy + ry, NDC,
 			  INTEGER(bg)[i%nbg], INTEGER(fg)[i%nfg], dd);
 		    GRect(xx - rx,  yy - (1 - 2 * p2) * ry,

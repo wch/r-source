@@ -38,7 +38,7 @@
 #endif
 
 /*
-extern double F77_NAME(ddot)(int *, double *, int *, double *, 
+extern double F77_NAME(ddot)(int *, double *, int *, double *,
 			       int *);
 extern double F77_NAME(dnrm2)(int *, double *, int *);
 extern int F77_NAME(dtrsl)(double *, int *, int *, double *, int *,
@@ -84,7 +84,7 @@ extern int F77_NAME(dscal)(int *, double *, double *, int *);
 /* 	    step....a real array of length n */
 /* 	    f.......a double precision array of length n */
 
-/* Subroutine */ 
+/* Subroutine */
 void
 fdhess(int n, double *x, double fval, fcn_p fun, void
        *state, double *h, int nfd, double *step, double *f,
@@ -425,7 +425,7 @@ qraux2(int nr, int n, double *r, int i, double a, double b)
   double y, z, den;
   double *r1, *r2;
 
-  den = sqrt(a * a + b * b);
+  den = pythag(a,b);
   c = a / den;
   s = b / den;
 
@@ -483,7 +483,7 @@ qrupdt(int nr, int n, double *a, double *u, double *v)
 	u[i] = u[ii];
       } else {
 	qraux2(nr, n, a, i, u[i], -u[ii]);
-	u[i] = sqrt(u[i] * u[i] + u[ii] * u[ii]);
+	u[i] = pythag(u[i], u[ii]);
       }
       ii = i;
     }
@@ -649,9 +649,9 @@ tregup(int nr, int n, double *x, double f, double *g, double *a, fcn_p
       dltfp = slp + dltfp / 2.;
       if (*iretcd != 2 && (fabs(dltfp - dltf) <= fabs(dltf) * 0.1 &&
 			   nwtake && *dlt <= stepmx * .99)) {
-			     
+
 	/* double trust region and continue global step */
-	
+
 	*iretcd = 3;
 	for (i = 0; i < n; ++i) {
 	  xplsp[i] = xpls[i];
@@ -661,7 +661,7 @@ tregup(int nr, int n, double *x, double f, double *g, double *a, fcn_p
 	*dlt = min(temp1, stepmx);
       } else {
 	/* 	    accept xpls as next iterate.  choose new trust region. */
-      
+
 	*iretcd = 0;
 	if (*dlt > stepmx * .99) {
 	  *mxtake = 1;
@@ -769,7 +769,7 @@ lnsrch(int n, double *x, double f, double *g, double *p, double *xpls,
 	    /* solution not (yet) found */
 
 	    /* First find a point with a finite value */
-	    
+
 	    if (almbda < rmnlmb) {
 		/* no satisfactory xpls found sufficiently distinct from x */
 
@@ -777,7 +777,7 @@ lnsrch(int n, double *x, double f, double *g, double *p, double *xpls,
 		return;
 	    } else {
 		/* 	calculate new lambda */
-		/* modifications by BDR 2000/01/05 to cover non-finite values */		
+		/* modifications by BDR 2000/01/05 to cover non-finite values */
 		if (*fpls == DBL_MAX) {
 		    almbda *= 0.1;
 		    firstback = 1;
@@ -792,7 +792,7 @@ lnsrch(int n, double *x, double f, double *g, double *p, double *xpls,
 			t2 = pfpls - f - plmbda * slp;
 			t3 = 1. / (almbda - plmbda);
 			a = t3 * (t1 / (almbda * almbda) - t2 / (plmbda * plmbda));
-			b = t3 * (t2 * almbda / (plmbda * plmbda) - t1 * plmbda / (almbda * 
+			b = t3 * (t2 * almbda / (plmbda * plmbda) - t1 * plmbda / (almbda *
 										   almbda));
 			disc = b * b - a * 3. * slp;
 			if (disc > b * b) {
@@ -898,7 +898,7 @@ dogstp(int nr, int n, double *g, double *a, double *p, double *sx,
       ssd[i] = -(alpha / beta) * g[i] / sx[i];
     }
     *cln = alpha * sqrt(alpha) / beta;
-    *eta = (alpha * .8 * alpha / 
+    *eta = (alpha * .8 * alpha /
 	    (-beta * F77_CALL(ddot)(&n, g, &one, p, &one))) + .2;
     for (i = 0; i < n; ++i) {
       v[i] = *eta * sx[i] * p[i] - ssd[i];
@@ -974,7 +974,7 @@ dogstp(int nr, int n, double *g, double *a, double *p, double *sx,
 /* 	ipr	     --> device to which to send output */
 
 static void
-dogdrv(int nr, int n, double *x, double f, double *g, double *a, double *p, 
+dogdrv(int nr, int n, double *x, double f, double *g, double *a, double *p,
        double *xpls, double *fpls, fcn_p fcn, void *state, double *sx,
        double stepmx, double steptl, double *dlt, int *iretcd, int *mxtake,
        double *sc, double *wrk1, double *wrk2, double *wrk3, int
@@ -1107,7 +1107,7 @@ hookst(int nr, int n, double *g, double *a, double *udiag, double *p,
 	  a[i + j * nr] = a[j + i * nr];
 	}
       }
-      
+
       /* 	factor h=l(l+) */
 
       temp1 = sqrt(epsm);
@@ -1201,7 +1201,7 @@ hookst(int nr, int n, double *g, double *a, double *udiag, double *p,
 
 static void
 hookdr(int nr, int n, double *x, double f, double *g, double *a,
-       double *udiag, double *p, double *xpls, double *fpls, fcn_p fcn, 
+       double *udiag, double *p, double *xpls, double *fpls, fcn_p fcn,
        void *state, double *sx, double stepmx, double steptl, double *
        dlt, int *iretcd, int *mxtake, double *amu, double *
        dltp, double *phi, double *phip0, double *sc, double *
@@ -1249,7 +1249,7 @@ hookdr(int nr, int n, double *x, double f, double *g, double *a,
 
     /* 	find new step by more-hebdon algorithm */
 
-    hookst(nr, n, g, a, udiag, p, sx, rnwtln, 
+    hookst(nr, n, g, a, udiag, p, sx, rnwtln,
 	   dlt, amu, *dltp, phi, phip0, &fstime, sc, &nwtake, wrk0,
 	   epsm);
     *dltp = *dlt;
@@ -1367,7 +1367,7 @@ secunf(int nr, int n, double *x, double *g, double *a, double *udiag,
 
   for (j = 0; j < n; ++j) {
     for (i = j; i < n; ++i) {
-      a[i + j * nr] = a[i + j * nr] + y[i] * y[j] / den1 
+      a[i + j * nr] = a[i + j * nr] + y[i] * y[j] / den1
 	- t[i] * t[j] / den2;
     }
   }
@@ -1404,7 +1404,7 @@ secunf(int nr, int n, double *x, double *g, double *a, double *udiag,
 
 static void
 secfac(int nr, int n, double *x, double *g, double *a, double *xpls,
-       double *gpls, double epsm, int itncnt, double rnf, int iagflg, 
+       double *gpls, double epsm, int itncnt, double rnf, int iagflg,
        int *noupdt, double *s, double *y, double *u, double *w)
 {
   double ynrm2;
@@ -1990,7 +1990,7 @@ grdchk(int n, double *x, fcn_p fcn, void *state, double f, double *g,
   double gs;
   double wrk;
   double temp1, temp2;
-  
+
   /* 	compute first order finite difference gradient and compare to */
   /* 	analytic gradient. */
 
@@ -2171,7 +2171,7 @@ optstp(int n, double *xpls, double fpls, double *gpls, double *x, int
     }
     jtrmcd = 1;
     if (rgx > gradtl) {
-      
+
       if (itncnt == 0) {
 	return;
       }
@@ -2395,7 +2395,7 @@ optchk(int n, double *x, double *typsiz, double *sx, double *fscale,
  *  iflg   --> flag controlling info to print
  */
 
-static void 
+static void
 result(int nr, int n, const double x[], double f, const double g[],
        const double *a, const double p[], int itncnt, int iflg)
 {
@@ -2586,14 +2586,14 @@ optdrv(int nr, int n, double *x, fcn_p fcn, fcn_p d1fcn, d2fcn_p
   } else {
     (*d1fcn)(n, x, g, state);
     if (*msg / 2 % 2 == 0) {
-      grdchk(n, x, (fcn_p)fcn, state, f, g, typsiz, sx, fscale, rnf, 
+      grdchk(n, x, (fcn_p)fcn, state, f, g, typsiz, sx, fscale, rnf,
 	     analtl, wrk1, msg);
       if (*msg < 0) {
 	return;
       }
     }
   }
-  optstp(n, x, f, g, wrk1, *itncnt, &icscmx, itrmcd, gradtl, 
+  optstp(n, x, f, g, wrk1, *itncnt, &icscmx, itrmcd, gradtl,
 	 steptl, sx, fscale, itnlim, iretcd, mxtake, msg);
   if (*itrmcd != 0) {
     optdrv_end(nr, n, xpls, x, gpls, g, fpls, f, a, p, *itncnt,
@@ -2738,7 +2738,7 @@ optdrv(int nr, int n, double *x, fcn_p fcn, fcn_p d1fcn, d2fcn_p
     }
 
     /* 	check whether stopping criteria satisfied */
-    optstp(n, xpls, *fpls, gpls, x, *itncnt, &icscmx, itrmcd, 
+    optstp(n, xpls, *fpls, gpls, x, *itncnt, &icscmx, itrmcd,
 	   gradtl, steptl, sx, fscale, itnlim, iretcd, mxtake,
 	   msg);
     if(*itrmcd != 0) break;
@@ -2769,7 +2769,7 @@ optdrv(int nr, int n, double *x, fcn_p fcn, fcn_p d1fcn, d2fcn_p
     if (*msg / 16 % 2 == 1) {
       result(nr, n, xpls, *fpls, gpls, a, p, *itncnt, 1);
     }
-    
+
     /* 	x <-- xpls  and	 g <-- gpls  and  f <-- fpls */
 
     f = *fpls;
@@ -2811,9 +2811,9 @@ optdrv(int nr, int n, double *x, fcn_p fcn, fcn_p d1fcn, d2fcn_p
 /* 			 close enough to terminate algorithm */
 
 static void
-dfault(int n, double *x, double *typsiz, 
-       double *fscale, int *method, int *iexp, int *msg, 
-       int *ndigit, int *itnlim, int *iagflg, int *iahflg, 
+dfault(int n, double *x, double *typsiz,
+       double *fscale, int *method, int *iexp, int *msg,
+       int *ndigit, int *itnlim, int *iagflg, int *iahflg,
        double *dlt, double *gradtl, double *stepmx, double *steptl)
 {
   double epsm;
