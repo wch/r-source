@@ -23,11 +23,11 @@ function(lines)
     ## not, and NA for ends of conditionals.
     ppTypes <- rep(NA, nOfPpLines)
     if(any(i <- grep("^#ifdef", ppLines))) {
-        ppTypes[i] <- gsub("^#ifdef[[:space:]]+([[:alnum:]]+)",
+        ppTypes[i] <- gsub("^#ifdef[[:space:]]+([[:alnum:]]+).*",
                            "\\1", ppLines[i]) != OS
     }
     if(any(i <- grep("^#ifndef", ppLines))) {
-        ppTypes[i] <- gsub("^#ifndef[[:space:]]+([[:alnum:]]+)",
+        ppTypes[i] <- gsub("^#ifndef[[:space:]]+([[:alnum:]]+).*",
                            "\\1", ppLines[i]) == OS
     }
 
@@ -292,17 +292,11 @@ function(RdFiles, outFile = "", type = NULL,
     ## Create @file{INDEX} or @file{data/00Index} style files from Rd
     ## files.
     ##
-    ## R version of @code{R CMD Rdindex}.
-    ##
-    ## <NOTE>
-    ## It is not a good idea to rewrite @code{R CMD Rdindex} as a shell
-    ## wrapper to @code{Rdindex()} because passing a long list of Rd
-    ## files as arguments can be quite messy.  Wait for this until we
-    ## have R scripts.
-    ## </NOTE>
+    ## R version of defunct @code{R CMD Rdindex} (now removed).
 
     if((length(RdFiles) == 1) && .fileTest("-d", RdFiles)) {
-        ## Compatibility code for the @code{R CMD Rdindex} interface.
+        ## Compatibility code for the former @code{R CMD Rdindex}
+        ## interface.
         docsDir <- RdFiles
         if(.fileTest("-d", file.path(docsDir, "man")))
             docsDir <- file.path(docsDir, "man")
