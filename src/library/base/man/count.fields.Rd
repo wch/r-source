@@ -1,7 +1,7 @@
 \name{count.fields}
 \title{Count the Number of Fields per Line}
 \usage{
-count.fields(file, sep = "", quote = "\"\'", skip = 0)
+count.fields(file, sep = "", quote = "\"'", skip = 0)
 }
 \alias{count.fields}
 \arguments{
