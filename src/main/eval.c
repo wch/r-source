@@ -1413,6 +1413,16 @@ int DispatchGroup(char* group, SEXP call, SEXP op, SEXP args, SEXP rho,
     SEXP rclass, rmeth, rgr, rsxp;
     char lbuf[512], rbuf[512], generic[128], *pt;
 
+    /* pre-test to avoid string computations when there is nothing to
+       dispatch on because either there is only one argument and it
+       isn't an object or there are two or more arguments but neither
+       of the first two is an object -- both of these cases would be
+       rejected by the code following the string examination code
+       below */
+    if (args != R_NilValue && ! isObject(CAR(args)) &&
+        (CDR(args) == R_NilValue || ! isObject(CADR(args))))
+	return 0;
+
     /* check whether we are processing the default method */
     if ( isSymbol(CAR(call)) ) {
 	sprintf(lbuf, "%s", CHAR(PRINTNAME(CAR(call))) );
