@@ -572,35 +572,15 @@ Subject: FIX FOR OLD AND NEW PROBLEMS with order(): order fails with na.last=NA
 From: oehl_list@gmx.de
 Date: Tue, 3 Sep 2002 21:12:47 +0200 (MEST)
 --1 and 2 were already fixed for 1.6.0
-* PR# 1989 *
-Subject: Fw:r-bugs,sos!
-From: ukfeedback <ukfeedback@sports.com>
-Date: Sat, 7 Sep 2002 03:35:25 +0100
-* PR# 1990 *
-Subject: please kindly get back to me
-From: "LAURENT MPETI KABILA" <lmk2g@mail.com>
-Date: Sat, 7 Sep 2002 16:44:51 +0200
 * PR# 1991 *
 Subject: Mac Save As... bug
 From: Tim Cole <tjc1@cam.ac.uk>
 Date: Sun, 8 Sep 2002 13:47:00 +0100
-* PR# 1992 *
-Subject: [±¤°?]?? ???®??´? ¾???µ?°ú ??¾???????.,(¾???µ?°ú ??²²??´? ?¶??º??°??´?´?.)
-From: ?¶??º??° <joymaster@joyblock.net>
-Date: Mon, 9 Sep 2002 00:30:50 +0900
-* PR# 1993 *
-Subject: Returned mail: User unknown
-Subject: Returned mail--"questionnaire"
-Subject: questionnaire<br>
-From: Mail Delivery Subsystem <MAILER-DAEMON@aol.com>
-From: postmaster <postmaster@dreamworksrecords.com>
-From: weinbach@dreamworksrecords.com<br>
-Date: Sun, 8 Sep 2002 17:51:37 -0400 (EDT)
-Date: Sun, 8 Sep 2002 17:48:54 -0400 (EDT)
-* PR# 1994 *
-Subject: Returned mail: User unknown
-Subject: A very  humour game
-From: Mail Delivery Subsystem <MAILER-DAEMON@aol.com>
-From: r-bugs <r-bugs@r-project.org>
-Date: Sun, 8 Sep 2002 18:01:27 -0400 (EDT)
-Date: Sun, 8 Sep 2002 17:55:42 -0400 (EDT)
+* PR# 1995 *
+Subject:  2002-09-08 1.6.0 build fails in Recommended 
+From: <stvjc@channing.harvard.edu>
+Date: Sun, 8 Sep 2002 23:57:39 -0400 (EDT)
+* PR# 1996 *
+Subject:  config checks for --with-gnome need update 
+From: <stvjc@channing.harvard.edu>
+Date: Mon, 9 Sep 2002 00:08:59 -0400 (EDT)
