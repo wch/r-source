@@ -26,9 +26,10 @@
 #ifndef Macintosh
 #include <sys/types.h>
 #endif
-#include "regex.h"
 
 #include "Defn.h"
+/* The next must come after other header files to redefine RE_DUP_MAX */
+#include "regex.h"
 
 #ifndef MAX
 #define MAX(a, b) ((a) > (b) ? (a) : (b))
