@@ -40,7 +40,7 @@ R. Searle, John Wiley and Sons, 1982.}
 \author{Jonathan Rougier, \email{J.C.Rougier@durham.ac.uk}}
 
 \seealso{\code{\link{outer}}, on which \code{kronecker} is built
-and \code{\link{matmult}} for usual matrix multiplication.}
+and \code{\link{\%*\%}} for usual matrix multiplication.}
 
 \examples{
 # simple scalar multiplication

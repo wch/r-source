@@ -32,7 +32,7 @@ x \%o\% y
 }
 \author{Jonathan Rougier}
 \seealso{
-  \code{\link{matmult}} for usual (\emph{inner}) matrix vector
+  \code{\link{\%*\%}} for usual (\emph{inner}) matrix vector
   multiplication;
   \code{\link{kronecker}} which is based on \code{outer}.
 }
