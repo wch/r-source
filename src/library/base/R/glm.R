@@ -282,7 +282,9 @@ function (x, y, weights = rep(1, nobs), start = NULL,
         resdf  <- n.ok - fit$rank
         ## calculate AIC
         aic.model <-
-          if(resdf>0) aic(y, n, mu, weights, dev) + 2*fit$rank else -Inf
+          #Should not be necessary: --pd
+	  #if(resdf>0) aic(y, n, mu, weights, dev) + 2*fit$rank else -Inf
+          aic(y, n, mu, weights, dev) + 2*fit$rank
         list(coefficients = coef, residuals = residuals, fitted.values = mu,
              effects = fit$effects, R = Rmat, rank = fit$rank,
              qr = fit[c("qr", "rank", "qraux", "pivot", "tol")], family = family,
@@ -518,21 +520,20 @@ summary.glm <- function(object, dispersion = NULL,
 	## calculate coef table
 
 ##	nas <- is.na(object$coefficients)
-	if(df.r > 0) {
-		s.err <- sqrt(var.cf)
-		tvalue <- coef.p/s.err
-	}
+	s.err <- sqrt(var.cf)
+	tvalue <- coef.p/s.err
+
         dn <- c("Estimate", "Std. Error")
-	if(est.disp) {
-		pvalue <- 2*pt(-abs(tvalue), df.r)
-		coef.table <- cbind(coef.p, s.err, tvalue, pvalue)
-		dimnames(coef.table) <- list(names(coef.p),
-				     c(dn, "t value","Pr(>|t|)"))
-	} else if(df.r > 0) {
+	if(!est.disp) {
 		pvalue <- 2*pnorm(-abs(tvalue))
 		coef.table <- cbind(coef.p, s.err, tvalue, pvalue)
 		dimnames(coef.table) <- list(names(coef.p),
 				     c(dn, "z value","Pr(>|z|)"))
+	} else if(df.r > 0) {
+		pvalue <- 2*pt(-abs(tvalue), df.r)
+		coef.table <- cbind(coef.p, s.err, tvalue, pvalue)
+		dimnames(coef.table) <- list(names(coef.p),
+				     c(dn, "t value","Pr(>|t|)"))
 	} else { ## df.r == 0
 		coef.table <- cbind(coef.p, Inf)
 		dimnames(coef.table) <- list(names(coef.p), dn)
