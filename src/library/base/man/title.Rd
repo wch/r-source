@@ -40,12 +40,12 @@ a selection of the optional modifying graphical parameters
   \code{\link{plotmath}} for details on mathematical annotation.
 }
 \examples{
-\testonly{data(cars)}
-plot(cars, main = "")
+data(cars)
+plot(cars, main = "") # here, could use main directly
 title(main = "Stopping Distance versus Speed")
 
 plot(cars, main = "")
-title(main = list("Stopping Distance versus Speed", cex=1.25,
+title(main = list("Stopping Distance versus Speed", cex=1.5,
       col="red", font=3))
 
 x <- seq(-4, 4, len = 101)
