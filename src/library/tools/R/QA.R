@@ -28,10 +28,12 @@ sQuote <- function(s) paste("'", s, "'", sep = "")
     ## We should also add group methods.
     ## </FIXME>
     f <- get(fname, envir = envir)
-    if(!is.function(f) || length(e <- body(f)) == 0) return(FALSE)
+    if(!is.function(f)) return(FALSE)
     if(fname %in% c("as.data.frame", "plot")) return(TRUE)
-    while((e[[1]] == as.name("{")) && (length(e) > 1)) e <- e[[2]]
-    e[[1]] == as.name("UseMethod")
+    e <- body(f)
+    while(is.language(e) && !is.name(e) && (e[[1]] == as.name("{")))
+        e <- e[[2]]
+    is.language(e) && !is.name(e) && (e[[1]] == as.name("UseMethod"))
 }
 
 .listFilesWithExts <- function(dir, exts, path = TRUE) {
