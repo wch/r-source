@@ -1,6 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1998--1999  Tiki Wan, Ross Ihaka
+ *                2000-1  Stefano Iacus
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -16,93 +17,6 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
-
-/*
- *  SYSTEM DEPENDENT CODE
- *
- *  This source file contains the platform dependent code for
- *  the Macintosh port of R.
- *
- *  The first group of functions is concerned with reading and
- *  writing to the system console.
- *
- *    int   R_ReadConsole(char *prompt, char *buf, int buflen, int hist)
- *
- *  This function prints the given prompt at the console and then
- *  does a gets(3)-like operation, transfering up to "buflen" characters
- *  into the buffer "buf".  The last two characters are set to "\n\0"
- *  to preserve sanity.	 If "hist" is non-zero, then the line is added
- *  to any command history which is being maintained.  Note that this
- *  is one natural place from which to run an event loop.
- *
- *    void  R_WriteConsole(char *buf, int buflen)
- *
- *  This function writes the given buffer out to the console.  No
- *  special actions are required.  Under Unix the characters are
- *  just appended to stdout.
- *
- *    void  R_ResetConsole(void)
- *
- *  This function is called when the system is reset after an error.
- *  It probably isn't really needed.
- *
- *    void  R_FlushConsole(void)
- *
- *  This called to flush any output to the system console.  Under Unix
- *  this is just fflush(stdout).  Other systems may not need this.
- *
- *    void  R_ClearerrConsole(void)
- *
- *  This function clears any errors associated with reading from the
- *  console.  In Unix is is used to clear any EOF condition associated
- *  with stdin.
- *
- *    void  R_Suicide(char *msg)
- *
- *  This function displays the given message and the causes R to
- *  die immediately.  It is used for non-recoverable errors such as
- *  not having enough memory to launch etc.  The phrase "dialog box"
- *  springs to mind for non-unix platforms.
- *
- *    void  R_Busy(int which)
- *
- *  This function invokes actions (such as change of cursor) when
- *  R embarks on an extended computation (which=1) and when such a
- *  state terminates (which=0).
- *
- *    void  R_CleanUp(int ask)
- *
- *  This function invokes any actions which occur at system termination.
- *
- *    char* R_ExpandFileName(char *s)
- *
- *  This is a utility function which can be used to expand special
- *  characters in file names.  In Unix it's sole function is to expand
- *  and "~"s which occur in filenames (and then only when the readline
- *  library is available.  The minimal action is to return the argument
- *  unaltered.
- *
- *    void  R_InitialData(void)
- *    FILE* R_OpenInitFile(void)
- *    FILE* R_OpenLibraryFile(char *file)
- *    FILE* R_OpenSysInitFile(void)
- *
- *  The following two functions save and restore the user's global
- *  environment.  The system specific aspect of this what files
- *  are used for this.
- *
- *    void  R_RestoreGlobalEnv(void)
- *    void  R_SaveGlobalEnv(void)
- *
- *  Platform dependent functions.
- *
- *    SEXP  do_interactive(SEXP call, SEXP op, SEXP args, SEXP rho)
- *    SEXP  do_machine(SEXP call, SEXP op, SEXP args, SEXP rho)
- *    SEXP  do_proctime(SEXP call, SEXP op, SEXP args, SEXP rho)
- *    SEXP  do_quit(SEXP call, SEXP op, SEXP args, SEXP rho)
- *    SEXP  do_system(SEXP call, SEXP op, SEXP args, SEXP rho)
- */
-
  
 
 #include "Defn.h"
@@ -126,7 +40,6 @@ void R_Suicide(char *s);
 
 #include <unistd.h>
 #include <errno.h>
-//extern int errno;
 
 #include <stdio.h>
 #include <string.h>
@@ -160,15 +73,6 @@ Rboolean UsingReadline = TRUE;
 Rboolean LoadSiteFile = TRUE;
 Rboolean LoadInitFile = TRUE;
 Rboolean DebugInitFile = FALSE;
-
-	/*--- I/O Support Code ---*/
-
-	/* These routines provide hooks for supporting console I/O.
-	 * Under raw Unix these routines simply provide a
-	 * connection to the stdio library.
-	 * Under a Motif interface the routines would be
-	 * considerably more complex.
-	 */
 
 long                   start_Time, last_Time;
 SInt16		           gAppResFileRefNum;
@@ -369,10 +273,7 @@ int main(int ac, char **av)
 	
 
     /* ... */
-
-    /* Call the real R main program (in ../main/main.c) */
-    
-    
+ 
 //    start_Time = last_Time = TickCount();
 
 
@@ -383,6 +284,7 @@ int main(int ac, char **av)
 
     changeSize(Console_Window, gTextSize);
      
+    /* Call the real R main program (in ../main/main.c) */
     mainloop();
    
     return 0;
@@ -425,7 +327,6 @@ int Mac_initialize_R(int ac, char **av)
 
     R_set_command_line_arguments(ac, av, Rp);
 
-    /* first task is to select the GUI */
 /*
     for(i = 0, avv = av; i < ac; i++, avv++) {
 	if(!strncmp(*avv, "--gui", 5) || !strncmp(*avv, "-g", 2)) {
@@ -810,15 +711,6 @@ SEXP do_system(SEXP call, SEXP op, SEXP args, SEXP rho)
     return R_NilValue;
 }
 
-/*
-SEXP do_commandArgs(SEXP call, SEXP op, SEXP args, SEXP rho)
-{
-    errorcall(call, "\n The function \"commandArgs\" is not implemented on Macintosh\n");
-    return R_NilValue;
-} // Jago
-*/
-
-
 /* 
    Rmac_tmpnam is a version of Runix_tmpnam for Macintosh. It assumes
    that the directory "tmp" exists in the same directory where the
@@ -881,11 +773,9 @@ SEXP do_tempfile(SEXP call, SEXP op, SEXP args, SEXP env)
 	errorcall(call, "invalid file name argument");
     PROTECT(ans = allocVector(STRSXP, slen));
     for(i = 0; i < slen; i++) {
-//	tn = CHAR( STRING( CAR(args) )[i] );
 	tn = CHAR( STRING_ELT( CAR(args) ,i ) );
 	/* try to get a new file name */
 	tm = Rmac_tmpnam(tn);
-//	STRING(ans)[i] = mkChar(tm);
 	SET_STRING_ELT( ans,i,mkChar(tm) );	
 	free(tm);
     }
@@ -974,7 +864,7 @@ SEXP do_helpstart(SEXP call, SEXP op, SEXP args, SEXP env)
           
     err = FinderLaunch(1, &fileSpec);
     if(err!=noErr)
-     error("Cannot lauch browser");
+     error("Cannot launch browser");
     
     return R_NilValue;
 }
@@ -1076,7 +966,6 @@ SEXP do_edit(SEXP call, SEXP op, SEXP args, SEXP rho)
     n = length(x);
     lines = (char**)R_alloc(n, sizeof(char*));
     for (i = 0; i < n; i++) {
-//			lines[i] = CHAR(STRING(x)[i]);
 			lines[i] = CHAR( STRING_ELT(x,i) );
 			}
     for (i = 0; i < n; i++) {
@@ -1113,7 +1002,6 @@ SEXP do_unlink(SEXP call, SEXP op, SEXP args, SEXP env)
 	errorcall(call, "invalid file name argument");
  
     for(i = 0; i < nfiles; i++) {
-//	strcpy(tmp, CHAR(STRING(fn)[i]));
 	strcpy(tmp, CHAR( STRING_ELT(fn,i) ));
 	for(p = tmp; *p != '\0'; p++)
 	    if(*p == '/') *p = ':';
@@ -1248,92 +1136,6 @@ char **CommandLineArgs = NULL;
 
 
 
-/*
-FILE *R_OpenSysInitFile(void)
-{
-    char buf[256];
-    FILE *fp;
-
-    sprintf(buf, "%s/library/base/R/Rprofile", R_Home);
-    fp = R_fopen(buf, "r");
-    return fp;
-}
-*/
-
-/*
-FILE *R_OpenSiteFile(void)
-{
-    char buf[256];
-    FILE *fp;
-
-    fp = NULL;
-    if (LoadSiteFile) {
-	if ((fp = R_fopen(getenv("R_PROFILE"), "r")))
-	    return fp;
-	if ((fp = R_fopen(getenv("RPROFILE"), "r")))
-	    return fp;
-	sprintf(buf, "%s/etc/Rprofile", R_Home);
-	if ((fp = R_fopen(buf, "r")))
-	    return fp;
-    }
-    return fp;
-}
-*/
-
-	/* Saving and Restoring the Global Environment */
-/*
-void R_RestoreGlobalEnv(void)
-{
-    FILE *fp;
-    SEXP img, lst;
-    int i;
-
-    if(RestoreAction == SA_RESTORE) {
-	if(!(fp = R_fopen(".RData", "rb"))) { 
-	    return;
-	}
-#ifdef OLD
-	FRAME(R_GlobalEnv) = R_LoadFromFile(fp, 1);
-#else
-	PROTECT(img = R_LoadFromFile(fp, 1));
-	switch (TYPEOF(img)) {
-	case LISTSXP:
-	    while (img != R_NilValue) {
-		defineVar(TAG(img), CAR(img), R_GlobalEnv);
-		img = CDR(img);
-	    }
-	    break;
-	case VECSXP:
-	    for (i = 0; i < LENGTH(img); i++) {
-		lst = VECTOR_ELT(img, i);
-		while (lst != R_NilValue) {
-		    defineVar(TAG(lst), CAR(lst), R_GlobalEnv);
-		    lst = CDR(lst);
-		}
-	    }
-	    break;
-	}
-        UNPROTECT(1);
-#endif
-	if(!R_Quiet)
-	    Rprintf("[Previously saved workspace restored]\n\n");
-        fclose(fp);
-    }
-}
-*/
-/*
-void R_SaveGlobalEnv(void)
-{
-    FILE *fp = R_fopen(".RData", "wb"); 
-    if (!fp)
-	error("can't save data -- unable to open ./.RData");
-    if (HASHTAB(R_GlobalEnv) != R_NilValue)
-	R_SaveToFile(HASHTAB(R_GlobalEnv), fp, 0);
-    else
-	R_SaveToFile(FRAME(R_GlobalEnv), fp, 0);
-    fclose(fp);
-}
-*/
 
 /*
  * 5) FILESYSTEM INTERACTION
@@ -1349,14 +1151,6 @@ void R_SaveGlobalEnv(void)
 
 #include <stat.h>
 
-/*Rboolean R_FileExists(char *path)
-{
-	struct stat sb;
-	return stat(path, &sb) == 0;
-}
-*/
-
-
 Rboolean R_FileExists(char *path)
 {
     struct stat sb;
@@ -1369,27 +1163,12 @@ Rboolean R_FileExists(char *path)
 }
 #endif
 
-    /*
-     *  Unix file names which begin with "." are invisible.
-     */
-/*
-Rboolean R_HiddenFile(char *name)
-{
-    if (name && name[0] != '.') return 0;
-    else return 1;
-}
-*/
 
 FILE *R_fopen(const char *filename, const char *mode)
 {
     return(filename ? fopen(filename, mode) : NULL );
 }
 
-/*
- *  6) SYSTEM INFORMATION
- */
-
-          /* The location of the R system files */
 
 /*
  *  7) PLATFORM DEPENDENT FUNCTIONS
