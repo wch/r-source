@@ -418,6 +418,9 @@ int R_SockOpen(int port)
 int R_SockListen(int sockp, char *buf, int len)
 {
     check_init();
+    /* inserting a wait here will eliminate most blocking, but there
+       are scenarios under which the Sock_listen call might block
+       after the wait has completed. LT */
     R_SocketWait(sockp, 0);
     return Sock_listen(sockp, buf, len, NULL);
 }
