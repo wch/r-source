@@ -537,7 +537,6 @@ SEXP R_standardGeneric(SEXP fname, SEXP ev, SEXP fdef)
 	/* call the S language function to merge generic
 	   information. First assign a special version to trap recursive
 	   calls to the same generic. */
-      SEXP skeleton;
       if(prim_case) {
 	  do_set_prim_method(fdef, "suppress", NULL, NULL);
 	  PROTECT(mlist = R_S_getAllMethods(fname, fdef)); nprotect++;
@@ -750,8 +749,8 @@ SEXP R_M_setPrimitiveMethods(SEXP fname, SEXP op, SEXP code_vec,
 }
 
 SEXP R_nextMethodCall(SEXP matched_call, SEXP ev) {
-    SEXP e, val, args, arg1, this_sym, op;
-    int nprotect = 0, i, extras, nargs = length(matched_call)-1, error_flag;
+    SEXP e, val, args, this_sym, op;
+    int nprotect = 0, i, nargs = length(matched_call)-1, error_flag;
     Rboolean prim_case;
     PROTECT(e = duplicate(matched_call)); nprotect++;
     /* for primitive .nextMethod's, suppress further dispatch to avoid
