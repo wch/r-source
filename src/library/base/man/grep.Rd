@@ -31,8 +31,8 @@ regexpr(pattern, text,  extended = TRUE, perl = FALSE, fixed = FALSE)
       sensitive} and if \code{TRUE}, case is ignored during matching.}
   \item{extended}{if \code{TRUE}, extended regular expression matching
     is used, and if \code{FALSE} basic regular expressions are used.}
-  \item{perl}{logical. Should perl-compatible regexps be used if
-    available?  Has priority over \code{extended}.}
+  \item{perl}{logical. Should perl-compatible regexps be used?
+    Has priority over \code{extended}.}
   \item{value}{if \code{FALSE}, a vector containing the (\code{integer})
     indices of the matches determined by \code{grep} is returned, and if
     \code{TRUE}, a vector containing the matching elements themselves is
@@ -75,10 +75,10 @@ regexpr(pattern, text,  extended = TRUE, perl = FALSE, fixed = FALSE)
   matched text (or \eqn{-1} for no match).
 }
 \section{Warning}{
-  The standard code has been reported to be very slow or give errors
-  when applied to extremely long character strings (tens of thousands of
-  characters or more): the code used when \code{perl=TRUE} seems faster
-  and more reliable for such usages.
+  The standard regular-expression code has been reported to be very slow
+  or give errors when applied to extremely long character strings
+  (tens of thousands of characters or more): the code used when
+  \code{perl=TRUE} seems faster and more reliable for such usages.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

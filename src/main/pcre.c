@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2003  Robert Gentleman, Ross Ihaka and the
+ *  Copyright (C) 1997--2004  Robert Gentleman, Ross Ihaka and the
  *                            R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -220,6 +220,7 @@ SEXP do_pgsub(SEXP call, SEXP op, SEXP args, SEXP env)
     tables = pcre_maketables();
     re_pcre = pcre_compile(CHAR(STRING_ELT(pat, 0)), options, &errorptr, 
 			   &erroffset, tables);
+    pcre_free((void *)tables);
     if (!re_pcre) errorcall(call, "invalid regular expression");
     re_nsub = pcre_info(re_pcre, NULL, NULL);
     re_pe = pcre_study(re_pcre, 0, &errorptr);
@@ -315,6 +316,7 @@ SEXP do_pregexpr(SEXP call, SEXP op, SEXP args, SEXP env)
     tables = pcre_maketables();
     re_pcre = pcre_compile(CHAR(STRING_ELT(pat, 0)), 0, &errorptr, 
 			   &erroffset, tables);
+    pcre_free((void *)tables);
     if (!re_pcre) errorcall(call, "invalid regular expression");
     n = length(text);
     PROTECT(ans = allocVector(INTSXP, n));

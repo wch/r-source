@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2003  Robert Gentleman, Ross Ihaka and the
+ *  Copyright (C) 1997--2004  Robert Gentleman, Ross Ihaka and the
  *                            R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -37,6 +37,12 @@
 #include <Print.h> /* for R_print */
 
 #include "apse.h"
+
+#ifdef HAVE_PCRE_PCRE_H
+# include <pcre/pcre.h>
+#else
+# include <pcre.h>
+#endif
 
 #ifndef MAX
 # define MAX(a, b) ((a) > (b) ? (a) : (b))
@@ -230,20 +236,28 @@ SEXP do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP s, t, tok, x;
     int i, j, len, tlen, ntok, slen;
-    int extended_opt, eflags, fixed;
+    int extended_opt, eflags, fixed, perl;
     char *buf, *pt = NULL, *split = "", *bufp, *laststart;
     regex_t reg;
     regmatch_t regmatch[1];
+    pcre *re_pcre = NULL;
+    pcre_extra *re_pe = NULL;
+    const unsigned char *tables;
+    int options = 0, erroffset, ovector[30];
+    const char *errorptr;
+    Rboolean usedRegex = FALSE, usedPCRE = FALSE;
 
     checkArity(op, args);
     x = CAR(args);
     tok = CADR(args);
     extended_opt = asLogical(CADDR(args));
     fixed = asLogical(CADDDR(args));
+    perl = asLogical(CAD4R(args));
 
     if(!isString(x) || !isString(tok))
 	errorcall_return(call, "non-character argument in strsplit()");
     if(extended_opt == NA_INTEGER) extended_opt = 1;
+    if(perl == NA_INTEGER) perl = 0;
 
     eflags = 0;
     if(extended_opt) eflags = eflags | REG_EXTENDED;
@@ -290,6 +304,26 @@ SEXP do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 		    laststart = bufp+1;
 		}
 		bufp = laststart;
+	    } else if(perl) {
+		usedPCRE = TRUE;
+		tables = pcre_maketables();
+		re_pcre = pcre_compile(split, options, 
+				       &errorptr, &erroffset, tables);
+		pcre_free((void *)tables);
+		if (!re_pcre) errorcall(call, "invalid regular expression");
+		re_pe = pcre_study(re_pcre, 0, &errorptr);
+		bufp = buf;
+		if(*bufp != '\0') {
+		    while(pcre_exec(re_pcre, re_pe, bufp, strlen(bufp), 0, 0, 
+				    ovector, 30) >= 0) {
+			/* Empty matches get the next char, so move by
+			   one. */
+			bufp += MAX(ovector[1], 1);
+			ntok++;
+			if (*bufp == '\0')
+			    break;
+		    }
+		}
 	    } else {
 		/* Careful: need to distinguish empty (rm_eo == 0) from
 		   non-empty (rm_eo > 0) matches.  In the former case, the
@@ -297,6 +331,7 @@ SEXP do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 		   everything before the start of the match, which may be
 		   the empty string (not a ``token'' in the strict sense).
 		*/
+		usedRegex = TRUE;
 		if(regcomp(&reg, split, eflags))
 		    errorcall(call, "invalid split pattern");
 		bufp = buf;
@@ -335,6 +370,22 @@ SEXP do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 			break;
 		    }
 		    bufp = laststart;
+		} else if(perl) {
+		    pcre_exec(re_pcre, re_pe, bufp, strlen(bufp), 0, 0, 
+			      ovector, 30);
+		    if(ovector[1] > 0) {
+			/* Match was non-empty. */
+			if(ovector[0] > 0)
+			    strncpy(pt, bufp, ovector[0]);
+			pt[ovector[0]] = '\0';
+			bufp += ovector[1];
+		    } else {
+			/* Match was empty. */
+			pt[0] = *bufp;
+			pt[1] = '\0';
+			bufp++;			
+		    }
+		    SET_STRING_ELT(t, j, mkChar(pt));
 		} else {
 		    regexec(&reg, bufp, 1, regmatch, eflags);
 		    if(regmatch[0].rm_eo > 0) {
@@ -354,7 +405,6 @@ SEXP do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 	    }
 	    if(*bufp != '\0')
 		SET_STRING_ELT(t, ntok, mkChar(bufp));
-	    if(!fixed) regfree(&reg);
 	} else {
 	    /* split into individual characters */
 	    char bf[2];
@@ -370,6 +420,11 @@ SEXP do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 	SET_VECTOR_ELT(s, i, t);
     }
 
+    if(usedRegex) regfree(&reg);
+    if(usedPCRE) {
+	(pcre_free)(re_pe);
+	(pcre_free)(re_pcre);
+    }
     if (getAttrib(x, R_NamesSymbol) != R_NilValue)
 	namesgets(s, getAttrib(x, R_NamesSymbol));
     UNPROTECT(1);

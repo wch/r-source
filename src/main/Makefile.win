@@ -15,6 +15,7 @@ gram.c: ;
 saveload-CFLAGS=-I../extra/xdr
 connections-CFLAGS=-I../extra/zlib -I../extra/bzip2
 dounzip-CFLAGS=-I../extra/zlib
+character-CFLAGS=-I../extra/pcre -DSTATIC
 pcre-CFLAGS=-I../extra/pcre -DSTATIC
 
 

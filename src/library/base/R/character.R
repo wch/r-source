@@ -1,6 +1,6 @@
-strsplit <- function(x, split, extended = TRUE, fixed = FALSE)
+strsplit <- function(x, split, extended = TRUE, fixed = FALSE, perl = FALSE)
     .Internal(strsplit(x, as.character(split), as.logical(extended),
-                       as.logical(fixed)))
+                       as.logical(fixed), as.logical(perl)))
 
 substr <- function(x, start, stop)
     .Internal(substr(x, as.integer(start), as.integer(stop)))

@@ -234,6 +234,8 @@ NEW FEATURES
 
     o	legend() has a new argument 'text.col'.
 
+    o	strsplit() has a new argument 'perl'.
+
 
 UTILITIES
 

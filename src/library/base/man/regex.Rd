@@ -8,8 +8,6 @@
   This help page documents the regular expression patterns supported by
   \code{\link{grep}} and related functions \code{regexpr}, \code{sub}
   and \code{gsub}, as well as by \code{\link{strsplit}}.
-
-  This is preliminary documentation.
 }
 \details{
   A \sQuote{regular expression} is a pattern that describes a set of
@@ -23,7 +21,8 @@
   \code{grep}) include \code{apropos}, \code{browseEnv},
   \code{help.search}, \code{list.files}, \code{ls} and \code{strsplit}.
   These will all use \emph{extended} regular expressions, unless
-  \code{strsplit} is called with argument \code{extended = FALSE}.
+  \code{strsplit} is called with argument \code{extended = FALSE} or
+  \code{perl = TRUE}.
 
   Patterns are described here as they would be printed by \code{cat}: do
   remember that backslashes need to be doubled in entering \R character
@@ -178,10 +177,10 @@
   metacharacters are \code{. \\ [ ^ $ *}.
 }
 \section{Perl Regular Expressions}{
-  The \code{perl = TRUE} argument to \code{grep}, \code{regexpr}, \code{sub}
-  and \code{gsub} switches to the PCRE library that \sQuote{implements regular
-    expression pattern matching using the same syntax and semantics as Perl
-    5.6 or later, with just a few differences}.
+  The \code{perl = TRUE} argument to \code{grep}, \code{regexpr}, \code{sub},
+  \code{gsub} and \code{strsplit} switches to the PCRE library that
+  \sQuote{implements regular expression pattern matching using the same
+    syntax and semantics as Perl 5.6 or later, with just a few differences}.
 
   For complete details please consult the man pages for PCRE, especially
   \code{man pcrepattern} and \code{man pcreapi}) on your system or from

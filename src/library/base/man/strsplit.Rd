@@ -6,7 +6,7 @@
   according to the presence of substring \code{split} within them.
 }
 \usage{
-strsplit(x, split, extended = TRUE, fixed = FALSE)
+strsplit(x, split, extended = TRUE, fixed = FALSE, perl = FALSE)
 }
 \arguments{
   \item{x}{
@@ -27,6 +27,10 @@ strsplit(x, split, extended = TRUE, fixed = FALSE)
     logical. If \code{TRUE} match string exactly, otherwise
     use regular expressions.
   }
+  \item{perl}{
+    logical. Should perl-compatible regexps be used?
+    Has priority over \code{extended}.
+  }
 }
 \value{
   A list of length \code{length(x)} the \code{i}-th element of which
@@ -43,6 +47,12 @@ strsplit(x, split, extended = TRUE, fixed = FALSE)
 
   A missing value of \code{split} does not split the the corresponding
   element(s) of \code{x} at all.
+}
+\section{Warning}{
+  The standard regular expression code has been reported to be very slow
+  or give errors when applied to extremely long character strings
+  (tens of thousands of characters or more): the code used when
+  \code{perl=TRUE} seems faster and more reliable for such usages.
 }
 \seealso{
   \code{\link{paste}} for the reverse,
