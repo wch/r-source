@@ -454,3 +454,7 @@ Date: Sat, 16 Feb 2002 01:35:20 +0100 (MET)
 Subject: Error strata in aov
 From: jzacks@artsci.wustl.edu
 Date: Sun, 17 Feb 2002 21:39:03 +0100 (MET)
+* PR# 1316 *
+Subject: shared libraries on AIX
+From: lio@hpss1.ccs.ornl.gov
+Date: Mon, 18 Feb 2002 18:53:41 +0100 (MET)
