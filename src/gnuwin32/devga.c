@@ -268,7 +268,7 @@ static void GA_Text(double x, double y, char *str,
 		    int col, double gamma, int font, double cex, double ps,
 		    NewDevDesc *dd);
 static Rboolean GA_Open(NewDevDesc*, gadesc*, char*, double, double,
-			Rboolean, int, int, double);
+			Rboolean, int, int, double, int, int);
 
 	/********************************************************/
 	/* end of list of required device driver actions 	*/
@@ -311,7 +311,7 @@ static void SaveAsWin(NewDevDesc *dd, char *display)
     NewDevDesc *ndd = (NewDevDesc *) calloc(1, sizeof(NewDevDesc));
     GEDevDesc* gdd = (GEDevDesc*) GetDevice(devNumber((DevDesc*) dd));
     if (!ndd) {
-	R_ShowMessage("No enough memory to copy graphics window");
+	R_ShowMessage("Not enough memory to copy graphics window");
 	return;
     }
     if(!R_CheckDeviceAvailableBool()) {
@@ -327,7 +327,7 @@ static void SaveAsWin(NewDevDesc *dd, char *display)
 		       fromDeviceHeight(toDeviceHeight(-1.0, GE_NDC, gdd),
 					GE_INCHES, gdd),
 		       ((gadesc*) dd->deviceSpecific)->basefontsize,
-		       0, 1, White, 1))
+		       0, 1, White, 1, NA_INTEGER, NA_INTEGER))
         PrivateCopyDevice(dd, ndd, display);
 }
 
@@ -1258,7 +1258,7 @@ static void devga_sbf(control c, int pos)
 
 static int
 setupScreenDevice(NewDevDesc *dd, gadesc *xd, double w, double h,
-		  Rboolean recording, int resize)
+		  Rboolean recording, int resize, int xpos, int ypos)
 {
     menu  m;
     int   iw, ih;
@@ -1292,7 +1292,9 @@ setupScreenDevice(NewDevDesc *dd, gadesc *xd, double w, double h,
     ih = dh + 0.5;
     if (resize == 2) xd->rescale_factor = dw/dw0;
     {
-	int grx = graphicsx, gry = graphicsy;
+	int grx, gry;
+	grx = (xpos == NA_INTEGER) ? graphicsx : xpos;
+	gry = (ypos == NA_INTEGER) ? graphicsy : ypos;
 	if (grx < 0) grx = devicewidth(NULL)  - iw + grx;
 	if (gry < 0) gry = deviceheight(NULL) - ih + gry;
 	if (!(xd->gawin = newwindow("R Graphics",
@@ -1460,7 +1462,8 @@ setupScreenDevice(NewDevDesc *dd, gadesc *xd, double w, double h,
 
 static Rboolean GA_Open(NewDevDesc *dd, gadesc *xd, char *dsp,
 			double w, double h, Rboolean recording,
-			int resize, int canvascolor, double gamma)
+			int resize, int canvascolor, double gamma,
+			int xpos, int ypos)
 {
     rect  rr;
     char buf[512];
@@ -1480,7 +1483,7 @@ static Rboolean GA_Open(NewDevDesc *dd, gadesc *xd, char *dsp,
     xd->xshift = xd->yshift = 0;
     xd->npage = 0;
     if (!dsp[0]) {
-	if (!setupScreenDevice(dd, xd, w, h, recording, resize))
+	if (!setupScreenDevice(dd, xd, w, h, recording, resize, xpos, ypos))
 	    return FALSE;
     } else if (!strncmp(dsp, "win.print:", 10)) {
 	xd->kind = PRINTER;
@@ -2256,7 +2259,7 @@ static void GA_Hold(NewDevDesc *dd)
 Rboolean GADeviceDriver(NewDevDesc *dd, char *display, double width,
 			double height, double pointsize,
 			Rboolean recording, int resize, int canvas,
-			double gamma)
+			double gamma, int xpos, int ypos)
 {
     /* if need to bail out with some sort of "error" then */
     /* must free(dd) */
@@ -2290,7 +2293,7 @@ Rboolean GADeviceDriver(NewDevDesc *dd, char *display, double width,
     /* Start the Device Driver and Hardcopy.  */
 
     if (!GA_Open(dd, xd, display, width, height, recording, resize, canvas,
-		 gamma)) {
+		 gamma, xpos, ypos)) {
 	free(xd);
 	return FALSE;
     }

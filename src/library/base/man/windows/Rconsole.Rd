@@ -20,6 +20,10 @@
   The file \file{Rconsole} also configures the internal pager.  This
   shares the font and colours of the console, but can be sized
   separately.
+
+  \file{Rconsole} can also set the initial positions of the console and
+  the graphics device, as well as the size and position of the MDI
+  workspace in MDI mode.
 }
 \details{
   There are system copies of these files in \file{R\_HOME\\etc}. Users

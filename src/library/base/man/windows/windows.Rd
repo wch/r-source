@@ -14,7 +14,7 @@
 windows(width = 7, height = 7, pointsize = 12,
         record = getOption("graphics.record"),
         rescale = c("R", "fit", "fixed"), xpinch, ypinch,
-        canvas = "white", gamma = getOption("gamma"))
+        canvas = "white", gamma = getOption("gamma"), xpos = NA, ypos = NA)
 win.graph(width = 7, height = 7, pointsize = 12)
 x11(width = 7, height = 7, pointsize = 12)
 X11(width = 7, height = 7, pointsize = 12)
@@ -41,8 +41,13 @@ win.print(width = 7, height = 7, pointsize = 12, printer = "")
     to ensure that the colors displayed are linearly related to
     RGB values. By default this is taken from
     \code{\link{options}("gamma"}, or is 1 (no correction) if that is
-    unset.  It sets \code{par("gamma")} for the device.
-  }
+    unset.  It sets \code{par("gamma")} for the device.}
+  \item{xpos, ypos}{integer.  Position of the top left of the window, in
+    pixels.  Negative values are taken from the opposite edge of the
+    monitor.  Missing values meant take the default from the
+    \file{\link{Rconsole}} file, which in turn defaults to
+    \code{xpos=-25, ypos=0}: this puts the right edge of the windows 25
+    pixels from the right edge of the monitor.}
   \item{printer}{The name of a printer as known to Windows. The default
     causes a dialog box to come for the user to choose a printer.}
 }
