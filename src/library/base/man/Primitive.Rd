@@ -1,16 +1,15 @@
 \name{Primitive}
 \title{Call a ``Primitive'' Internal Function}
 \usage{
---no real usage--
+.Primitive(name)
 }
 \alias{.Primitive}
 \arguments{
 \item{name}{name of the \R function.}
 }
 \description{
-  \code{.Primitive} is not a real \R object, but rather the result of a
-  syntactically pleasing print method for so called ``primitive''
-  internal \R functions.
+  \code{.Primitive} returns an entry point to a ``primitive''
+  (internally implemented) function.
 
   The advantage of \code{.Primitive} over \code{\link{.Internal}}
   functions is the potential efficiency of argument passing.
@@ -19,6 +18,7 @@
 \code{\link{.Internal}}.
 }
 \examples{
+mysqrt <- .Primitive("sqrt")
 c
 .Internal # this one *must* be primitive!
 get("if") # just `if' or `print(if)' are not syntactically ok.

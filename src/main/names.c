@@ -71,6 +71,7 @@ SEXP do_surface(SEXP, SEXP, SEXP, SEXP);
 SEXP do_flatContour(SEXP, SEXP, SEXP, SEXP);
 SEXP do_filledcontour(SEXP, SEXP, SEXP, SEXP);
 SEXP do_restart(SEXP, SEXP, SEXP, SEXP);
+SEXP do_primitive(SEXP, SEXP, SEXP, SEXP);
 
 FUNTAB R_FunTab[] =
 {
@@ -112,6 +113,7 @@ FUNTAB R_FunTab[] =
 {"Recall",	do_recall,	0,	10,	-1,	PP_FUNCALL},
 {"delay",	do_delay,	0,	11,	2,	PP_FUNCALL},
 {".Alias",	do_alias,	0,	1,	1,	PP_FUNCALL},
+{".Primitive",	do_primitive,	0,	1,	1,	PP_FUNCALL},
 
 
 /* Binary Operators */
@@ -676,6 +678,24 @@ FUNTAB R_FunTab[] =
 };
 
 
+SEXP do_primitive(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    SEXP name;
+    int i;
+    checkArity(op, args);
+    name = CAR(args);
+    if (!isString(name) || length(name) < 1 || STRING(name)[0] == R_NilValue)
+	errorcall(call, "string argument required\n");
+    for (i = 0; R_FunTab[i].name; i++)
+	if (strcmp(CHAR(STRING(name)[0]), R_FunTab[i].name) == 0) {
+	    if ((R_FunTab[i].eval % 100 )/10)
+		return mkPRIMSXP(i, R_FunTab[i].eval % 10);
+	    else
+		return mkPRIMSXP(i, R_FunTab[i].eval % 10);
+	}
+    errorcall(call, "no such primitive function\n");
+}
+
 int StrToInternal(char *s)
 {
 	int i;
@@ -702,7 +722,7 @@ int hashpjw(char *s)
 extern void installFunTab(int i)
 {
 
-    if ( (R_FunTab[i].eval % 100 )/10 )
+    if ((R_FunTab[i].eval % 100 )/10)
 	INTERNAL(install(R_FunTab[i].name))
 	    = mkPRIMSXP(i, R_FunTab[i].eval % 10);
     else
