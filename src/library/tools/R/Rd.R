@@ -349,8 +349,18 @@ function(package, dir, lib.loc = NULL)
                               rep(seq(along = eofPos),
                                   times = diff(c(0, eofPos)))))
         }
-        ## Remove the artificial names attribute.
-        names(db) <- NULL
+        ## If this was installed using a recent enough version of R CMD
+        ## INSTALL, information on source file names is available, and
+        ## we use it for the names of the Rd db.  Otherwise, remove the
+        ## artificial names attribute.
+        paths <- as.character(sapply(db, "[", 1))
+        names(db) <-
+            if(length(paths)
+               && all(regexpr("^% --- Source file: (.+) ---$", paths)
+                      > -1))
+                sub("^% --- Source file: (.+) ---$", "\\1", paths)
+            else
+                NULL
     }
     else {
         if(missing(dir))

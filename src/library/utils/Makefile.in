@@ -61,6 +61,7 @@ all: Makefile DESCRIPTION
 	  $(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/man; \
 	  (f=$${TMPDIR:-/tmp}/R$$$$; \
 	    for rdfile in $(RdSRC); do \
+	      echo "% --- Source file: $${rdfile} ---"; \
 	      cat $${rdfile}; echo '\eof'; \
 	    done >> $${f}; \
 	    $(SHELL) $(top_srcdir)/tools/move-if-change $${f} \
