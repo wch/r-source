@@ -326,8 +326,8 @@ AC_DEFUN(R_C_OPTIEEE,
     >>,
     changequote([, ])dnl
     AC_MSG_RESULT(yes)
-    CFLAGS="${CFLAGS} -OPT:IEEE_NaN_inf=ON"
-    FFLAGS="${FFLAGS} -OPT:IEEE_NaN_inf=ON",
+    R_XTRA_CFLAGS="${R_XTRA_CFLAGS} -OPT:IEEE_NaN_inf=ON"
+    R_XTRA_FFLAGS="${R_XTRA_FFLAGS} -OPT:IEEE_NaN_inf=ON",
     AC_MSG_RESULT(no),
     AC_MSG_WARN(cannot determine when cross-compiling)
   )

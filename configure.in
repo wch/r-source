@@ -215,7 +215,7 @@ if test -n "`${CC} -M conftest.${ac_ext} | grep conftest`"; then
   cat << \EOF > ${depend_rules_frag}
 .c.d:
 	@echo "making $@ from $<"
-	@$(CC) -M $(CPPFLAGS) $< -o $@
+	@$(CC) -M $(ALL_CPPFLAGS) $< -o $@
 EOF
 else
   AC_MSG_RESULT(no)
@@ -280,17 +280,11 @@ if test -n "${F77}"; then
   R_PROG_F77_G77
   R_PROG_F77_APPEND_UNDERSCORE  
   OCTAVE_FLIBS
-  f77_rules_frag_top=Makefrag.top
-  cat << \EOF > ${f77_rules_frag_top}
+  f77_rules_frag=Makefrag.f77
+  cat << \EOF > ${f77_rules_frag}
 .f.c:
 .f.o:
-	$(FC) $(FFLAGS) -c $< -o $@
-EOF
-  f77_rules_frag_etc=Makefrag.etc
-  cat << \EOF > ${f77_rules_frag_etc}
-.f.c:
-.f.o:
-	$(FC) $(FFLAGS) $(FPICFLAGS) -c $< -o $@
+	$(FC) $(ALL_FFLAGS) -c $< -o $@
 EOF
 elif test -n "${F2C}"; then
   ## This seems to be necessary on some Linux system. -- you bet! -pd
@@ -316,17 +310,11 @@ EOF
   if test -z "${FLIBS}"; then
     AC_MSG_WARN([I found f2c but not libf2c, or libF77 and libI77])
   fi
-  f77_rules_frag_top=Makefrag.top
+  f77_rules_frag=Makefrag.f77
   ## for some reason these can't be .f.c/.f.o, at least in GNU make
   ## this probably makes *other* makes useless... (-pd)
   ## FIXME: maybe use a shell script f2c wrapper and the FC rules
-  cat << \EOF > ${f77_rules_frag_top}
-%.c: %.f
-	cat $< | $(F2C) $(F2CFLAGS) > $(@F)
-%.o: %.f
-EOF
-  f77_rules_frag_etc=Makefrag.etc
-  cat << \EOF > ${f77_rules_frag_etc}
+  cat << \EOF > ${f77_rules_frag}
 %.c: %.f
 	cat $< | $(F2C) $(F2CFLAGS) > $(@F)
 %.o: %.f
@@ -337,8 +325,7 @@ fi
 
 AC_SUBST(FC)
 AC_SUBST(F2C)
-AC_SUBST_FILE(f77_rules_frag_top)
-AC_SUBST_FILE(f77_rules_frag_etc)
+AC_SUBST_FILE(f77_rules_frag)
 
 ### Libraries.
 
@@ -445,11 +432,41 @@ AC_TYPE_SIGNAL
 AC_C_CONST
 AC_CHECK_SIZEOF(long, 4)
 
-case ${host} in
+if test "${GCC}" = yes; then
+  case "${host}" in
+    i[[3456789]]86-*-*)
+      R_XTRA_CFLAGS="${R_XTRA_CFLAGS} -mieee-fp"
+      ;;
+  esac
+fi
+
+case "${host}" in
+  *aix4.[[2-9]]*)
+    AC_DEFINE(HAVE_NO_SYMBOL_UNDERSCORE)
+    ;;
+  alpha*osf*)
+    AC_DEFINE(HAVE_NO_SYMBOL_UNDERSCORE)
+    R_XTRA_CFLAGS="${R_XTRA_CFLAGS} -ieee_with_inexact"
+    ;;
+  alpha*linux)
+    R_XTRA_CFLAGS="${R_XTRA_CFLAGS} -mieee"
+    R_XTRA_FFLAGS="${R_XTRA_FFLAGS} -mieee"
+    ;;
+  *hpux*)
+    AC_DEFINE(USE_BUILTIN_RINT)
+    R_XTRA_LIBS="${R_XTRA_LIBS} -ldld"
+    ;;
   *irix*)
     R_C_OPTIEEE
     ;;
-esac    
+esac
+
+AC_SUBST(CFLAGS)
+AC_SUBST(FFLAGS)
+AC_SUBST(F2CFLAGS)
+AC_SUBST(R_XTRA_CFLAGS)
+AC_SUBST(R_XTRA_FFLAGS)
+AC_SUBST(R_XTRA_LIBS)
 
 ## DLL stuff
 
@@ -503,7 +520,6 @@ AC_MSG_RESULT(done)
 
 case "${host}" in
   *aix4.[[2-9]]*)
-    AC_DEFINE(HAVE_NO_SYMBOL_UNDERSCORE)
     ldcmd="\$(top_srcdir)/tools/ldAIX4"
     dllflags="f77 -bdynamic"
     shlibld=f77
@@ -511,14 +527,10 @@ case "${host}" in
       -bI:\$(top_builddir)/src/main/lib.exp"
     ;;
   alpha*osf*)
-    CFLAGS="-ieee_with_inexact ${CFLAGS}"
-    AC_DEFINE(HAVE_NO_SYMBOL_UNDERSCORE)
     cpicflags=
     shlibldflags=-shared
     ;;
   alpha*linux)
-    CFLAGS="-mieee ${CFLAGS}"
-    FFLAGS="-mieee ${FFLAGS}"
     dllflags=-export-dynamic
     ;;
   *freebsd3.*)
@@ -553,8 +565,6 @@ case "${host}" in
     shlibldflags="-shared"
     ;;
   *hpux*)
-    AC_DEFINE(USE_BUILTIN_RINT)
-    LIBS="${LIBS} -ldld"
     case "${CC}" in
       c89*)
         cpicflags="+z" ;;
@@ -592,10 +602,6 @@ if test -z "${SHLIBLDFLAGS}"; then
   AC_MSG_WARN([Could not determine SHLIBLDFLAGS.])
   AC_MSG_ERROR([See the file INSTALL for more information.])
 fi  
-
-AC_SUBST(CFLAGS)
-AC_SUBST(FFLAGS)
-AC_SUBST(F2CFLAGS)
 
 AC_SUBST(LDCMD)
 AC_SUBST(DLLFLAGS)
@@ -670,7 +676,7 @@ AC_OUTPUT_COMMANDS(
 if test -z "${F77}"; then
   FORT="${F2C} ${F2CFLAGS}"
 else
-  FORT="${F77} ${FFLAGS}"
+  FORT="${F77} ${R_XTRA_FFLAGS} ${FFLAGS}"
 fi
 
 AC_MSG_RESULT([
@@ -679,7 +685,7 @@ R is now configured for ${host}
 
   Source directory:         ${srcdir}
   Installation directory:   ${prefix}
-  C compiler:               ${CC} ${CFLAGS}
+  C compiler:               ${CC} ${R_XTRA_CFLAGS} ${CFLAGS}
   FORTRAN compiler:         ${FORT}
   Gnome support:            ${use_gnome}
 ])
