@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2004
-@set FAQ-VERSION 2.0.@value{FAQ-YEAR}-10-08
+@set FAQ-VERSION 2.0.@value{FAQ-YEAR}-10-20
 @set REL-VERSION 2.0.0
 @set REL-YEAR 2004
 @c <COMMENT>
@@ -146,18 +146,18 @@ You can also obtain it by writing to the Free Software Foundation, Inc.,
 The latest version of this document is always available from
 
 @display
-@uref{http://www.ci.tuwien.ac.at/~hornik/R/}
+@uref{http://CRAN.R-project.org/doc/FAQ/}
 @end display
 
 From there, you can obtain versions converted to
-@uref{http://www.ci.tuwien.ac.at/~hornik/R/R-FAQ.txt,, plain
+@uref{http://CRAN.R-project.org/doc/FAQ/R-FAQ.txt,, plain
 @acronym{ASCII} text},
-@uref{http://www.ci.tuwien.ac.at/~hornik/R/R-FAQ.dvi.gz,, DVI},
-@uref{http://www.ci.tuwien.ac.at/~hornik/R/R-FAQ.info.gz,, @acronym{GNU}
-info}, @uref{http://www.ci.tuwien.ac.at/~hornik/R/R-FAQ.html,, @HTML{}},
-@uref{http://www.ci.tuwien.ac.at/~hornik/R/R-FAQ.pdf,, PDF},
-@uref{http://www.ci.tuwien.ac.at/~hornik/R/R-FAQ.ps.gz,, PostScript} as
-well as the @uref{http://www.ci.tuwien.ac.at/~hornik/R/R-FAQ.texi,,
+@uref{http://CRAN.R-project.org/doc/FAQ/R-FAQ.dvi.gz,, DVI},
+@uref{http://CRAN.R-project.org/doc/FAQ/R-FAQ.info.gz,, @acronym{GNU}
+info}, @uref{http://CRAN.R-project.org/doc/FAQ/R-FAQ.html,, @HTML{}},
+@uref{http://CRAN.R-project.org/doc/FAQ/R-FAQ.pdf,, PDF},
+@uref{http://CRAN.R-project.org/doc/FAQ/R-FAQ.ps.gz,, PostScript} as
+well as the @uref{http://CRAN.R-project.org/doc/FAQ/R-FAQ.texi,,
 Texinfo source} used for creating all these formats using the
 @uref{http://texinfo.org/, @acronym{GNU} Texinfo system}.
 
@@ -470,19 +470,17 @@ to Mac OS 9.2.2.  This port of R for Macintosh is no longer supported.
 @node Are there Unix binaries for R?, What documentation exists for R?, How can R be installed?, R Basics
 @section Are there Unix binaries for R?
 
-@c Linux binaries as of 2004-06-25:
+@c Linux binaries as of 2004-10-17:
 @c
 @c debian
 @c   woody   i386   1.8.0  Dirk Eddelbuettel <edd@debian.org>
 @c   sarge   i386   1.8.1  Dirk Eddelbuettel <edd@debian.org>
 @c   sid     i386   1.8.1  Dirk Eddelbuettel <edd@debian.org>
 @c mandrake
-@c   9.1     i386   1.9.0  Michele Alzetta <mikalzet@libero.it>
-@c   9.2     i386   1.9.0  Michele Alzetta <mikalzet@libero.it>
-@c   10.0    i386   1.9.1  Michele Alzetta <mikalzet@libero.it>
+@c   10.0    i386   2.0.0  Michele Alzetta <mikalzet@libero.it>
 @c redhat
-@c   8.x     i386   1.9.1  Martyn Plummer <plummer@iarc.fr>
-@c   9       i386   1.9.1  Martyn Plummer <plummer@iarc.fr>
+@c   8.x     i386   2.0.0  Martyn Plummer <plummer@iarc.fr>
+@c   9       i386   2.0.0  Martyn Plummer <plummer@iarc.fr>
 @c   Fedora1 i386   2.0.0  Martyn Plummer <plummer@iarc.fr>
 @c           x86_64 1.8.1  James Henstridge <james@daa.com.au>
 @c   Fedora2 i386   2.0.0  Martyn Plummer <plummer@iarc.fr>
@@ -490,11 +488,11 @@ to Mac OS 9.2.2.  This port of R for Macintosh is no longer supported.
 @c   7.3     i386   1.8.0  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
 @c   8.0     i386   1.8.1  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
 @c   8.1     i386   1.9.1  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
-@c   8.2     i386   1.9.1  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
-@c   9.0     i586   1.9.1  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
-@c   9.1     i586   1.9.1  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
+@c   8.2     i386   2.0.0  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
+@c   9.0     i586   2.0.0  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
+@c   9.1     i586   2.0.0  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
 @c vinelinux
-@c   2.6     i386   1.9.0  Susunu Tanimura <stanimura-ngs@umin.ac.jp>
+@c   3.0     i386   2.0.0  Susunu Tanimura <stanimura-ngs@umin.ac.jp>
 
 The @file{bin/linux} directory of a @CRAN{} site contains Debian
 stable/testing/unstable packages for the i386 platform (now part of the
@@ -2457,9 +2455,12 @@ misclassification rates.
 Hazard function estimation in survival analysis.
 @item multcomp
 Multiple comparison procedures for the one-way layout.
-@item multidim
-Multidimensional descriptive statistics: factorial methods and
-classification.
+@c <COMMENT>
+@c Removed from CRAN on 2004-10-20 due to possible legal problems.
+@c @item multidim
+@c Multidimensional descriptive statistics: factorial methods and
+@c classification.
+@c </COMMENT>
 @item multinomRob
 Overdispersed multinomial regression using robust (LQD and tanh)
 estimation.

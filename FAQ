@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 2.0.2004-10-08
+Version 2.0.2004-10-20
 ISBN 3-900051-08-9
 Kurt Hornik
 
@@ -134,7 +134,7 @@ Temple Place -- Suite 330, Boston, MA 02111-1307, USA.
 
 The latest version of this document is always available from
 
-     `http://www.ci.tuwien.ac.at/~hornik/R/'
+     `http://CRAN.R-project.org/doc/FAQ/'
 
    From there, you can obtain versions converted to plain ASCII text, DVI,
 GNU info, HTML, PDF, PostScript as well as the Texinfo source used for
@@ -2306,10 +2306,6 @@ distributions of R.)
 
 *multcomp*
      Multiple comparison procedures for the one-way layout.
-
-*multidim*
-     Multidimensional descriptive statistics: factorial methods and
-     classification.
 
 *multinomRob*
      Overdispersed multinomial regression using robust (LQD and tanh)
