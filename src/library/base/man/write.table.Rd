@@ -40,10 +40,12 @@ write.table(x, file = "", append = FALSE, quote = TRUE, sep = " ",
   If \code{col.names=NA} a blank column name is added. This can be
   used to write CSV files for input to spreadsheets.
 }
+
 \seealso{
   \code{\link{read.table}}, \code{\link{write}}.
 }
-\example{
+
+\examples{
 \dontrun{
 ## To write a CSV file for input to Excel one might use
 write.table(x, file="foo.csv", sep=",", col.names=NA)
