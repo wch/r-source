@@ -29,7 +29,6 @@
 #include <stdio.h>
 #include "Defn.h"
 #include "Fileio.h"
-#include <io.h>
 #include <direct.h>
 #include <time.h>
 #include <windows.h>
@@ -61,28 +60,6 @@ char * R_tmpnam(const char * prefix, const char * tempdir)
     strcpy(res, tm);
     return res;
 }
-
-
-SEXP do_dircreate(SEXP call, SEXP op, SEXP args, SEXP env)
-{
-    SEXP  path, ans;
-    char *p, dir[MAX_PATH];
-    int res;
-
-    checkArity(op, args);
-    path = CAR(args);
-    if (!isString(path) || length(path) != 1)
-	errorcall(call, "invalid path argument");
-    strcpy(dir, CHAR(STRING_ELT(path, 0)));
-    for(p = dir; *p != '\0'; p++)
-	if(*p == '/') *p = '\\';
-    res = mkdir(dir);
-    PROTECT(ans = allocVector(LGLSXP, 1));
-    LOGICAL(ans)[0] = (res==0);
-    UNPROTECT(1);
-    return (ans);
-}
-
 
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -1103,8 +1080,9 @@ SEXP do_chooseFiles(SEXP call, SEXP op, SEXP args, SEXP rho)
 		errorcall(call, "multi must be a logical value");
 	if(filterindex == NA_INTEGER)
 		errorcall(call, "filterindex must be an integer value");
-    lfilters = 1+length(filters);
-    for (i=0; i<length(filters); i++) lfilters += strlen(CHAR(STRING_ELT(filters,i)));
+    lfilters = 1 + length(filters);
+    for (i=0; i < length(filters); i++) 
+	lfilters += strlen(CHAR(STRING_ELT(filters,i)));
     cfilters = R_alloc(lfilters, sizeof(char));
     temp = cfilters;
     for (i=0; i<length(filters)/2; i++) {

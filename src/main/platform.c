@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998, 2001-3 The R Development Core Team
+ *  Copyright (C) 1998, 2001-4 The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -1222,7 +1222,7 @@ SEXP do_sysgetpid(SEXP call, SEXP op, SEXP args, SEXP rho)
 }
 
 
-#ifndef Win32 /* has own version in extra.c */
+#ifndef Win32
 /* mkdir is defined in <sys/stat.h> */
 SEXP do_dircreate(SEXP call, SEXP op, SEXP args, SEXP env)
 {
@@ -1238,6 +1238,32 @@ SEXP do_dircreate(SEXP call, SEXP op, SEXP args, SEXP env)
     res = mkdir(CHAR(STRING_ELT(path, 0)), 0777);
     if(show && errno == EEXIST)
 	warning("'%s' already exists", CHAR(STRING_ELT(path, 0)));
+    PROTECT(ans = allocVector(LGLSXP, 1));
+    LOGICAL(ans)[0] = (res==0);
+    UNPROTECT(1);
+    return (ans);
+}
+#else
+#include <io.h> /* mkdir is defined here */
+SEXP do_dircreate(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    SEXP  path, ans;
+    char *p, dir[MAX_PATH];
+    int res, show;
+
+    checkArity(op, args);
+    path = CAR(args);
+    if (!isString(path) || length(path) != 1)
+	errorcall(call, "invalid path argument");
+    show = asLogical(CADR(args));
+    if(show == NA_LOGICAL) show = 0;
+    strcpy(dir, CHAR(STRING_ELT(path, 0)));
+    /* need DOS paths on Win 9x */
+    for(p = dir; *p != '\0'; p++)
+	if(*p == '/') *p = '\\';
+    res = mkdir(dir);
+    if(show && errno == EEXIST)
+	warning("'%s' already exists", dir);
     PROTECT(ans = allocVector(LGLSXP, 1));
     LOGICAL(ans)[0] = (res==0);
     UNPROTECT(1);
