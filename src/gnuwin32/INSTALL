@@ -144,7 +144,6 @@ Then
 	make tcl
 
 will make the package.
-The TclTk support package is not built automatically.  To use this you
 
 
 
@@ -196,14 +195,11 @@ Recommended packages
 ====================
 
 The recommended packages can in the main be built as any other package.
-boot, cluster, nlme, rpart and survival should be made with
+boot, cluster, grid, lattice, nlme, rpart and survival should be made with
 Rcmd INSTALL --use-zip
 
-KernSmooth, mgcv and VR can be made by Rcmd INSTALL.  Package spatial
-(in VR) will not work if its data directory is zipped.
-
-foreign needs more work: unpack it and rename src/*.h.in to remove .in
-from the names.  Then INSTALL the package.
+KernSmooth, foreign, mgcv and VR can be made by Rcmd INSTALL.  
+Package spatial (in VR) will not work if its data directory is zipped.
 
 You cannot currently use Rcmd CHECK to install and check a package
 with --use-zip.
@@ -248,7 +244,7 @@ we leave as an exercise for the reader.)
 Feedback
 ========
 
-Please send comments and bug reports to (preferably both of)
+Please send comments and bug reports to
 
-    Guido Masarotto <guido@hal.stat.unipd.it>
-    Brian Ripley <ripley@stats.ox.ac.uk>
+	Windows@r-project.org
+
