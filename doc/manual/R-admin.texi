@@ -190,7 +190,7 @@ sources.
 If downloading manually from CRAN, do ensure that you have the correct
 versions of the recommended packages: if the number in the file
 @file{VERSION} is @samp{@var{x}.@var{y}.@var{z}} you need to download
-the contents of @samp{http://cran.r-project.org/src/contrib/@var{dir}},
+the contents of @samp{http://CRAN.R-project.org/src/contrib/@var{dir}},
 where @var{dir} is @samp{@var{x}.@var{y}.@var{z}/Recommended} for
 r-devel or @file{@var{x}.@var{y}.@var{z}-patched/Recommended} for
 r-patched, respectively, to directory @file{src/library/Recommended} in
@@ -202,7 +202,7 @@ A suitable incantation from the top level of the R sources using
 
 @smallexample
 wget -r -l1 --no-parent -A\*.gz -nd -P src/library/Recommended \
-  http://cran.r-project.org/src/contrib/@var{dir}
+  http://CRAN.R-project.org/src/contrib/@var{dir}
 ./tools/link-recommended
 @end smallexample
 
@@ -530,7 +530,7 @@ Installation is @emph{via} the installers @file{@value{RWVERSION}.exe}
 or @file{miniR.exe}.  Just double-click on the icon and follow the
 instructions.  You can uninstall @R{} from the Control Panel.
 
-See the @uref{http://cran.r-project.org/bin/windows/base/rw-FAQ.html, R Windows
+See the @uref{http://CRAN.R-project.org/bin/windows/base/rw-FAQ.html, R Windows
 @acronym{FAQ}}, for more details.
 
 @menu
@@ -575,7 +575,7 @@ The simplest way is to use @file{R.dmg.sit}.  Just double-click on the
 icon and the archive will be expanded as an image di file. Read the
 @file{ReadMe.txt} inside the disk image and follow the instructions.
 
-See the @uref{http://cran.r-project.org/bin/macosx/RMacOSX-FAQ.html, R for Mac OS X
+See the @uref{http://CRAN.R-project.org/bin/macosx/RMacOSX-FAQ.html, R for Mac OS X
 @acronym{FAQ}} for more details.
 
 @menu
@@ -586,7 +586,7 @@ See the @uref{http://cran.r-project.org/bin/macosx/RMacOSX-FAQ.html, R for Mac O
 @section Building from source on Mac OS X
 
 If you want to build this port from the sources, you can read the above
-mentioned @uref{http://cran.r-project.org/bin/macosx/RMacOSX-FAQ.html, R
+mentioned @uref{http://CRAN.R-project.org/bin/macosx/RMacOSX-FAQ.html, R
 for Mac OS X @acronym{FAQ}} for full details. You will need to collect
 and install some tools as explained in the document. Than you have to
 expand the @R{} sources and configure @R{} appropriately, for example
@@ -966,7 +966,7 @@ is needed so @code{libsunperf} can be used.
 
 An ATLAS `tuned' BLAS can also be used on Windows: see
 @file{src/gnuwin32/INSTALL} for how to enable this when building from
-source, and @uref{http://cran.r-project.org/bin/windows/rw-FAQ.html, R Windows
+source, and @uref{http://CRAN.R-project.org/bin/windows/rw-FAQ.html, R Windows
 @acronym{FAQ}} for adding pre-compiled support to binary versions.
 Goto's BLAS can also be used when building from source.
 
@@ -1388,7 +1388,7 @@ need to install an X sub-system or configure with
 OS X distribution since Mac OS X version 10.3 (Panther).
 
 For more information on how to find these tools please read the
-@uref{http://cran.r-project.org/bin/macosx/RMacOSX-FAQ.html, R for Mac
+@uref{http://CRAN.R-project.org/bin/macosx/RMacOSX-FAQ.html, R for Mac
 OS X @acronym{FAQ}}.
 
 If you use the X window manager and prefer @code{Terminal.app} to
