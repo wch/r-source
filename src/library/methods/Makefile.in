@@ -10,7 +10,7 @@ subdir = src/library/methods
 
 include $(top_builddir)/Makeconf
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
-DISTFILES = LICENSE INDEX TITLE DESCRIPTION.in Makefile.in
+DISTFILES = LICENSE INDEX DESCRIPTION.in Makefile.in
 
 pkg = methods
 
