@@ -52,4 +52,4 @@ Rprof(NULL)
 ## at the command prompt.
 }
 }
-\keyword{utility}
+\keyword{utilities}

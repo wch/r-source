@@ -23,4 +23,4 @@ DLL.version(path)
 DLL.version(file.path(R.home(), "bin/R.dll"))
 DLL.version(file.path(R.home(), "library/lqs/libs/lqs.dll"))
 }
-\keyword{utility}
+\keyword{utilities}
