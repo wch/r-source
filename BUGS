@@ -482,6 +482,19 @@ Date: Sun, 8 Sep 2002 13:47:00 +0100
 Subject: Mac specific - quartz leads to crash
 From: h95mr@mun.ca
 Date: Fri, 8 Nov 2002 16:28:50 +0100 (MET)
+* PR# 2287 *
+Subject: survreg (survival) reports erroneous results for left-censored data
+From: tim@timcohn.com
+Date: Wed, 13 Nov 2002 23:05:21 +0100 (MET)
+..MacOS only
+* PR# 2291 *
+Subject: Re: survreg (survival) reports erroneous results for left-censored
+From: Thomas Lumley <tlumley@u.washington.edu>
+Date: Thu, 14 Nov 2002 08:04:37 -0800 (PST)
+* PR# 2293 *
+Subject: Re: survreg (survival) reports erroneous results for left-censored
+From: Tim Cohn <tim@timcohn.com>
+Date: Thu, 14 Nov 2002 19:47:46 -0500
 
 Directory:  Misc
 
@@ -639,51 +652,7 @@ From: hb@maths.lth.se
 Date: Mon, 14 Oct 2002 01:34:45 +0200 (MET DST)
 ..Not a bug, but perhaps a useful feature: should the attributes of environments
 ..be copied on assignment?
-* PR# 2259 *
-Subject: [R] grid(): defaults of nx and ny do not correspond with axis()
-From: Wolfram Fischer <wolfram@fischer-zim.ch>
-Date: Tue, 5 Nov 2002 15:36:45 +0100
 * PR# 2266 *
 Subject: rbind
 From: louisept@pweh.com
 Date: Thu, 7 Nov 2002 01:47:50 +0100 (MET)
-* PR# 2281 *
-Subject: PDF graphics -- color weirdness
-From: jenny@stat.ubc.ca
-Date: Mon, 11 Nov 2002 20:49:56 +0100 (MET)
-* PR# 2282 *
-Subject: Re: [R] grid(): defaults of nx and ny do not correspond with axis() 
-From: Uwe Ligges <ligges@statistik.uni-dortmund.de>
-Date: Tue, 12 Nov 2002 09:43:54 +0100
-* PR# 2285 *
-Subject: Non Profit Fundraising Secrets
-From: Fundraising Secrets <fundraser@hotmail.com>
-Date: Wed, 13 Nov 2002 09:57:57 +0800
-* PR# 2286 *
-Subject: Quality conferencing at a low cost
-From: "US Telecenter" <jzlin@bnet.at>
-Date: Wed, 13 Nov 2002 11:16:42 -2000
-* PR# 2287 *
-Subject: survreg (survival) reports erroneous results for left-censored data
-From: tim@timcohn.com
-Date: Wed, 13 Nov 2002 23:05:21 +0100 (MET)
-* PR# 2288 *
-Subject: NEW STOCK PICK: PRCT - LAST PICK UP 150%.............................................................................................................................................................................................. pagw
-From: "WALL STREET BULLETIN..46700" <Subscriber_Services78060@earthlink.net>
-Date: Wed, 13 Nov 2002 19:23:40 -0600
-* PR# 2289 *
-Subject: Play Over 12 Unique Parlay Cards
-From: oddzzchannel03@oddzz.com
-Date: 13 Nov 2002 20:59:28 -0800
-* PR# 2290 *
-Subject: (광고)발냄새 안나는 양말... 넘 좋아요...
-From: 도우미 <kmg6165@hitel.net>
-Date: Thu, 14 Nov 2002 17:02:59 +0900
-* PR# 2291 *
-Subject: Re: survreg (survival) reports erroneous results for left-censored
-From: Thomas Lumley <tlumley@u.washington.edu>
-Date: Thu, 14 Nov 2002 08:04:37 -0800 (PST)
-* PR# 2292 *
-Subject: Quality conferencing at a low cost
-From: "US Telecenter" <jzlin@bnet.at>
-Date: Wed, 13 Nov 2002 11:16:42 -2000
