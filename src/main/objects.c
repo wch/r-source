@@ -493,8 +493,40 @@ SEXP do_nextmethod(SEXP call, SEXP op, SEXP args, SEXP env)
     if (TYPEOF(CAR(cptr->call)) == LANGSXP)
        error("NextMethod called from anonymous function");
 
+#ifdef EXPERIMENTAL_NAMESPACES
+    /* Find dispatching environments. Promises shouldn't occur, but
+       check to be on the safe side.  If the variables are not in the
+       environment (the method was called outside a method dispatch)
+       then chose reasonable defaults. */
+    if (R_UseNamespaceDispatch) {
+	callenv = findVarInFrame3(R_GlobalContext->sysparent,
+				  install(".GenericCallEnv"), TRUE);
+	if (TYPEOF(callenv) == PROMSXP)
+	    callenv = eval(callenv, R_NilValue);
+	else if (callenv == R_UnboundValue)
+	    callenv = env;
+	defenv = findVarInFrame3(R_GlobalContext->sysparent,
+				 install(".GenericDefEnv"), TRUE);
+	if (TYPEOF(defenv) == PROMSXP)
+	    defenv = eval(defenv, R_NilValue);
+	else if (defenv == R_UnboundValue)
+	    defenv = R_GlobalEnv;
+    }
+    else {
+	callenv = env;
+	defenv = R_GlobalEnv;
+    }
+#endif
+
     /* set up the arglist */
+#ifdef EXPERIMENTAL_NAMESPACES
+    /**** FIXME: need test for symbol? */
+    s = R_LookupMethod(CAR(cptr->call), env, callenv, defenv);
+    if (TYPEOF(s) == PROMSXP)
+	s = eval(s, env);
+#else
     s = findFun(CAR(cptr->call), cptr->sysparent);
+#endif
     if (TYPEOF(s) != CLOSXP){
 	errorcall(R_NilValue, "function is not a closure");
     }
@@ -656,31 +688,6 @@ SEXP do_nextmethod(SEXP call, SEXP op, SEXP args, SEXP env)
     else {
       sprintf(b,"%s", CHAR(PRINTNAME(CAR(cptr->call))));
     }
-
-#ifdef EXPERIMENTAL_NAMESPACES
-    /* Find dispatching environments. Promises shouldn't occur, but
-       check to be on the safe side.  If the variables are not in the
-       environment (the method was called outside a method dispatch)
-       then chose reasonable defaults. */
-    if (R_UseNamespaceDispatch) {
-	callenv = findVarInFrame3(R_GlobalContext->sysparent,
-				  install(".GenericCallEnv"), TRUE);
-	if (TYPEOF(callenv) == PROMSXP)
-	    callenv = eval(callenv, R_NilValue);
-	else if (callenv == R_UnboundValue)
-	    callenv = env;
-	defenv = findVarInFrame3(R_GlobalContext->sysparent,
-				 install(".GenericDefEnv"), TRUE);
-	if (TYPEOF(defenv) == PROMSXP)
-	    defenv = eval(defenv, R_NilValue);
-	else if (defenv == R_UnboundValue)
-	    defenv = R_GlobalEnv;
-    }
-    else {
-	callenv = env;
-	defenv = R_GlobalEnv;
-    }
-#endif
 
     for (j = 0; j < length(class); j++) {
       sprintf(buf,"%s.%s", CHAR(STRING_ELT(basename, 0)),
