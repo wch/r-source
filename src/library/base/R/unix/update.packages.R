@@ -1,31 +1,3 @@
-### the following functions are currently only tested on unix, maybe
-### we get them for more platforms soon.
-
-installed.packages <- function(lib.loc = .lib.loc)
-{
-    retval <- NULL
-    for(lib in lib.loc)
-    {
-        pkgs <- .packages(all.available=TRUE, lib.loc = lib)
-        for(p in pkgs){
-            descfile <- system.file("DESCRIPTION", pkg=p, lib=lib)
-            if(descfile != ""){
-                desc <- parse.dcf(file=descfile, versionfix=TRUE)
-            }
-            else
-            {
-                desc <- list(Version=NA)
-            }
-
-            retval <- rbind(retval, c(p, lib, desc$Version))
-
-        }
-    }
-    colnames(retval) <- c("Package", "LibPath", "Version")
-    retval
-}
-
-
 CRAN.packages <- function(CRAN=.Options$CRAN, method="auto")
 {
     localcran <- length(grep("^file:", CRAN)) > 0

@@ -85,5 +85,27 @@ package.description <- function(pkg, lib=.lib.loc){
     parse.dcf(contents, versionfix=TRUE)
 }
 
+installed.packages <- function(lib.loc = .lib.loc)
+{
+    retval <- NULL
+    for(lib in lib.loc)
+    {
+        pkgs <- .packages(all.available=TRUE, lib.loc = lib)
+        for(p in pkgs){
+            descfile <- system.file("DESCRIPTION", pkg=p, lib=lib)
+            if(descfile != ""){
+                desc <- parse.dcf(file=descfile, versionfix=TRUE)
+            }
+            else
+            {
+                desc <- list(Version=NA)
+            }
 
+            retval <- rbind(retval, c(p, lib, desc$Version))
+
+        }
+    }
+    colnames(retval) <- c("Package", "LibPath", "Version")
+    retval
+}
 
