@@ -457,6 +457,9 @@ BUG FIXES
 
     o   legend() allows shading without filling again.
 
+    o   There are many more checks for over-running internal buffers,
+	almost always reporting errors.
+
 
 
 
