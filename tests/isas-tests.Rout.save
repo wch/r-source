@@ -1,6 +1,6 @@
 
 R : Copyright 2003, The R Development Core Team
-Version 1.7.0 Under development (unstable) (2003-01-19)
+Version 1.7.0 Under development (unstable) (2003-02-02)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -1677,8 +1677,6 @@ Error in as.table.default(x) : cannot coerce into a table
 > f <- as.data.frame.vector( x );  identical(f, as.data.frame.vector( f ))
 [1] FALSE
 > f <- as.difftime( x );  identical(f, as.difftime( f ))
-Warning message: 
-no finite arguments to min; returning Inf 
 Error in strptime(tim, format = format) : invalid `x' argument
 > f <- as.double( x );  identical(f, as.double( f ))
 [1] TRUE
@@ -2333,6 +2331,6 @@ Error in ts(x) : ts object must have one or more observations
 > f <- as.vector.factor( x );  identical(f, as.vector.factor( f ))
 [1] TRUE
 > cat('Time elapsed: ', proc.time() - .proctime00,'\n')
-Time elapsed:  0.38 0.03 0.42 0 0 
+Time elapsed:  0.47 0.02 0.48 0 0 
 > 
 > 
