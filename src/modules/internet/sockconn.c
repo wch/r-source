@@ -112,7 +112,7 @@ static int sock_read_helper(Rconnection con, void *ptr, size_t size)
 	else
 	    n = this->pend - this->pstart;
 	memcpy(ptr, this->pstart, n);
-	ptr += n;
+	ptr = ((char *) ptr) + n;
 	this->pstart += n;
 	size -= n;
 	nread += n;
