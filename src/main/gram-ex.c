@@ -48,6 +48,11 @@ int R_fgetc(FILE *fp)
 #else
     int c = fgetc(fp);
 #endif
+#ifdef __MRC__
+   /* MRC needs to convert from Mac to Unix line endings */
+   if(c == 0x0D)
+    c = 0x0A;
+#endif
     /* get rid of  CR in CRLF line termination */
     if (c == '\r') {
 	c = fgetc(fp);
