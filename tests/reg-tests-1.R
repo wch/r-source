@@ -3274,3 +3274,8 @@ stopifnot(identical(AAA, array(c(27,27,3,4,27,27), c(6,1,1))))
 try(AAA[idx,,] <- 6:1) # was 6 5 3 4 5 6 in 1.9.1
 stopifnot(inherits(.Last.value, "try-error"))
 ## only length-1 values are allowed in >= 2.0.0.
+
+
+## hist with infinite values (PR#7220)
+hist(log(-5:100), plot=FALSE)
+## failed in 1.9.1: will warn, correctly.

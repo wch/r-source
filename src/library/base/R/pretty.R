@@ -6,6 +6,7 @@ pretty <- function(x, n=5, min.n= n %/% 3, shrink.sml = 0.75,
 	stop("x must be numeric")
     if(length(x)==0)
 	return(x)
+    x <- x[is.finite(x)]
     if(is.na(n <- as.integer(n[1])) || n < 0)# n=0 !!
 	stop("invalid n value")
     if(!is.numeric(shrink.sml) || shrink.sml <= 0)

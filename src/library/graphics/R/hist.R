@@ -13,7 +13,7 @@ hist.default <-
     if (!is.numeric(x))
 	stop("`x' must be numeric")
     xname <- deparse(substitute(x))
-    n <- length(x <- x[!is.na(x)])
+    n <- length(x <- x[is.finite(x)])
     use.br <- !missing(breaks)
     if(use.br) {
 	if(!missing(nclass))

@@ -733,7 +733,7 @@ BUG FIXES
 
     o	write.table() did not escape quotes in column names.  (PR#7171)
 
-    o	Range checks missing in recursive assignments using [[ ]]. (PR#7196)
+    o	Range checks missing in recursive assignments using [[ ]].  (PR#7196)
 
     o	packageStatus() reported partially-installed bundles as
 	installed.
@@ -752,6 +752,8 @@ BUG FIXES
 
     o   Support for S4 classes that extend basic classes has been fixed
         in several ways.  as() methods and x@.Data should work better.
+
+    o   hist() and pretty() accept (and ignore) infinite values.  (PR#7220)
 
 
 
