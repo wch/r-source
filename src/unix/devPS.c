@@ -545,6 +545,7 @@ void PostScriptSetLineTexture(FILE *fp, int *lty, int nlty, double lwd)
     fprintf(fp,"] 0 setdash\n");
 }
 
+
 void PostScriptMoveTo(FILE *fp, double x, double y)
 {
     fprintf(fp, "%.2f %.2f m\n", x, y);
@@ -665,6 +666,7 @@ static double PS_StrWidth(char*, DevDesc*);
 static void   PS_MetricInfo(int, double*, double*, double*, DevDesc*);
 static void   PS_Text(double, double, int, char*, double, double, double,
 		      DevDesc*);
+
 
 
 /* PostScript Support (formally in PostScript.c) */

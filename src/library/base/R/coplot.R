@@ -215,13 +215,13 @@ coplot <-
 	    panel(x[id], y[id], col = col[id], pch=pch[id], ...)
 	}
 	if((i == total.rows) && (j%%2 == 0))
-	    axis(1)
+	    axis(1, xpd=NA)
 	else if((i == istart || index + columns > nplots) && (j%%2 == 1))
-	    axis(3)
+	    axis(3, xpd=NA)
 	if((j == 1) && ((total.rows - i)%%2 == 0))
-	    axis(2)
+	    axis(2, xpd=NA)
 	else if((j == columns || index == nplots) && ((total.rows - i)%%2 == 1))
-	    axis(4)
+	    axis(4, xpd=NA)
 	## if(i == total.rows)
 	##	axis(1, labels = (j%%2 == 0))
 	## if(i == istart || index + columns > nplots)
@@ -249,8 +249,8 @@ coplot <-
 	    do.panel(i)
 	}
     }
-    mtext(x.name, side=1, at=0.5*f.col, outer=TRUE, line=3.5, xpd=TRUE)
-    mtext(y.name, side=2, at=0.5*f.row, outer=TRUE, line=3.5, xpd=TRUE)
+    mtext(x.name, side=1, at=0.5*f.col, outer=TRUE, line=3.5, xpd=NA)
+    mtext(y.name, side=2, at=0.5*f.row, outer=TRUE, line=3.5, xpd=NA)
 
     if(show.given[1]) {
 	mar <- par("mar")
@@ -271,13 +271,13 @@ coplot <-
         rect(a.intervals[, 1], 1:nint - 0.3,
              a.intervals[, 2], 1:nint + 0.3, col = bg)
 
-	axis(3)
+	axis(3, xpd=NA)
 	axis(1, labels=FALSE)
 	box()
-	mtext(xlab, side=3, at=mean(par("usr")[1:2]), line=3, xpd=TRUE)
+	mtext(xlab, side=3, at=mean(par("usr")[1:2]), line=3, xpd=NA)
     }
     else { ## i. e. !show.given
-        mtext(xlab, side=3, at= 0.5*f.col, line= 3.25, outer= TRUE, xpd=TRUE)
+        mtext(xlab, side=3, at= 0.5*f.col, line= 3.25, outer= TRUE, xpd=NA)
     }
     if(have.b) {
         if(show.given[2]) {
@@ -297,13 +297,13 @@ coplot <-
                 }
             rect(1:nint - 0.3, b.intervals[, 1],
                  1:nint + 0.3, b.intervals[, 2], col = bg)
-	    axis(4)
+	    axis(4, xpd=NA)
 	    axis(2, labels=FALSE)
 	    box()
-	    mtext(ylab, side=4, at=mean(par("usr")[3:4]), line=3, xpd=TRUE)
+	    mtext(ylab, side=4, at=mean(par("usr")[3:4]), line=3, xpd=NA)
 	}
         else {
-            mtext(ylab, side=4, at=0.5*f.row, line= 3.25, outer=TRUE, xpd=TRUE)
+            mtext(ylab, side=4, at=0.5*f.row, line= 3.25, outer=TRUE, xpd=NA)
         }
     }
     if (length(missingrows) > 0) {

@@ -9,6 +9,9 @@
 
 NEW FEATURES
 
+    o   par(xpd) now has three settings:  FALSE (clip to plot region), 
+        TRUE (clip to figure region), or NA (clip to device region).
+
     o	zapsmall(x) works for complex x.
 
     o	new global variable R.version.string (for plots & reports).
@@ -20,6 +23,12 @@ NEW FEATURES
 
 
 BUG FIXES
+
+    o   par(xpd) semantics were not compatible with S.
+
+    o   rect() output was not clipped in PostScript.
+
+    o   par(pin=c(width, height)) was behaving as par(pin=c(width, width)).
 
     o	Non-blank separated data files didn't have their 1st field
 	handled properly.
