@@ -438,18 +438,19 @@ static SEXP ArraySubset(SEXP x, SEXP s, SEXP call, int drop)
 }
 
 
-
-static SEXP ExtractDropArg(SEXP el, int *drop)
+/* Extracts the drop argument, if present, from the argument list.
+   The object being subsetted must be the first argument. */
+static void ExtractDropArg(SEXP el, int *drop)
 {
-    if(el == R_NilValue)
-	return R_NilValue;
-    if(TAG(el) == R_DropSymbol) {
-	*drop = asLogical(CAR(el));
-	if (*drop == NA_LOGICAL) *drop = 1;
-	return ExtractDropArg(CDR(el), drop);
+    SEXP last = el;
+    for (el = CDR(el); el != R_NilValue; el = CDR(el)) {
+	if(TAG(el) == R_DropSymbol) {
+	    *drop = asLogical(CAR(el));
+	    if (*drop == NA_LOGICAL) *drop = 1;
+	    SETCDR(last, CDR(el));
+	}
+	else last = el;
     }
-    SETCDR(el, ExtractDropArg(CDR(el), drop));
-    return el;
 }
 
 
@@ -556,8 +557,10 @@ SEXP do_subset_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
     else {
 	PROTECT(ans);
     }
-    setAttrib(ans, R_TspSymbol, R_NilValue);
-    setAttrib(ans, R_ClassSymbol, R_NilValue);
+    if (ATTRIB(ans) != R_NilValue) {
+	setAttrib(ans, R_TspSymbol, R_NilValue);
+	setAttrib(ans, R_ClassSymbol, R_NilValue);
+    }
     UNPROTECT(5);
     return ans;
 }
