@@ -6,14 +6,14 @@ cat("\nNumber of base objects:\t\t", length(ls.base),
     "\nNumber of builtin functions:\t", sum(base.is.f),
     "\n\t starting with 'is.' :\t ",
     length(is.bi <- bi[substring(bi,1,3) == "is."]), "\n")
-## 0.14 : 31
-## 0.50 : 33
-## 0.60 : 34
-## 0.62 : 35
-## 0.63 : 37
-
-## This can be useful:	Which of the  builtin functions are "primitive" ?
-is.primitive <- function(obj)  is.function(obj) && is.null(args(obj))
+## 0.14  : 31
+## 0.50  : 33
+## 0.60  : 34
+## 0.63  : 37
+## 1.0.0 : 38
+## 1.3.0 : 41
+## 1.6.0 : 45
+## 2.0.0 : 45
 
 ## Do we have a method (probably)?
 is.method <- function(fname) {
@@ -22,14 +22,14 @@ is.method <- function(fname) {
     np <- length(sp <- strsplit(fname, split = "\\.")[[1]])
     if(np <= 1 )
         FALSE
-    else 
+    else
         (isFun(paste(sp[1:(np-1)], collapse = '.')) ||
          (np>=3 &&
           isFun(paste(sp[1:(np-2)], collapse = '.'))))
 }
 
 is.ALL <- function(obj, func.names = ls(pos=length(search())),
-		   not.using = c("is.single", "is.loaded",
+		   not.using = c("is.single", "is.loaded", "is.all.equal",
                      "is.empty.model", "is.R", "is.element"),
 		   true.only = FALSE, debug = FALSE)
 {
