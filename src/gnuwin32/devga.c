@@ -1961,6 +1961,7 @@ static void GA_Polyline(int n, double *x, double *y,
     double devx, devy;
     int   i;
     gadesc *xd = (gadesc *) dd->deviceSpecific;
+
     TRACEDEVGA("pl");
     for (i = 0; i < n; i++) {
 	devx = x[i];
@@ -1968,10 +1969,11 @@ static void GA_Polyline(int n, double *x, double *y,
 	p[i].x = (int) devx;
 	p[i].y = (int) devy;
     }
-    SetColor(col, gamma, dd);
-    SetLinetype(lty, lwd, dd);
-    if (R_OPAQUE(xd->fgcolor))
+    if (R_OPAQUE(col)) {
+	SetColor(col, gamma, dd);
+	SetLinetype(lty, lwd, dd);
 	DRAW(gdrawpolyline(_d, xd->lwd, xd->lty, xd->fgcolor, p, n, 0, 0));
+    }
     vmaxset(vmax);
 }
 
