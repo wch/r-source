@@ -413,6 +413,10 @@ BUG FIXES
 
     o   ftable() incorrectly handled arguments named "x".  (PR#6541)
 
+    o	vector(), matrix(), array() and their internal equivalents
+	report correctly that the number of elements specified was too
+	large (rather than reporting it as negative).
+
 
 
 

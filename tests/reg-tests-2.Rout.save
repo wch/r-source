@@ -1,6 +1,6 @@
 
 R : Copyright 2004, The R Foundation for Statistical Computing
-Version 1.9.0 Under development (unstable) (2004-02-03), ISBN 3-900051-00-3
+Version 1.9.0 Under development (unstable) (2004-02-19), ISBN 3-900051-00-3
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -3691,4 +3691,21 @@ sample estimates:
 probability of success 
              0.9876543 
 
+> 
+> 
+> ## Misleading error messages on integer overflow
+> ## Uwe Ligges, R-devel, 2004-02-19
+> try(numeric(2^31))
+Error in vector("double", length) : vector: invalid length value (too large or NA)
+In addition: Warning message: 
+NAs introduced by coercion 
+> try(matrix( , 2^31, 1))
+Error in matrix(, 2^31, 1) : matrix: invalid nrow value (too large or NA)
+In addition: Warning message: 
+NAs introduced by coercion 
+> try(matrix( , 2^31/10, 100))
+Error in matrix(, 2^31/10, 100) : matrix: too many elements specified
+> try(array(dim=c(2^31/10, 100)))
+Error in array(dim = c(2^31/10, 100)) : dim specifies too large an array
+> ## reported negative values (really integer NA) for R < 1.9.0
 > 

@@ -465,6 +465,10 @@ SEXP do_makevector(SEXP call, SEXP op, SEXP args, SEXP rho)
     SEXPTYPE mode;
     checkArity(op, args);
     len = asInteger(CADR(args));
+    if (len == NA_INTEGER) /* is < 0 */
+	error("vector: invalid length value (too large or NA)");
+    if (len < 0)
+	error("vector: invalid length value (< 0)");
     s = coerceVector(CAR(args), STRSXP);
     if (length(s) == 0)
 	error("vector: zero-length type argument");
