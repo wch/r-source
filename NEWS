@@ -670,6 +670,11 @@ BUG FIXES
 	alph > 1e5 instead of alph > 1000.  This also improves the accuracy
 	of ppois().
 
+    o	qgamma() now does a final Newton step, increasing accuracy from
+	around 2e-8 to 3e-16 in some cases.  (PR#2214).	 It allows larger
+	values p close to 1 before returning Inf.  These also apply to
+	qchisq(), e.g., qchisq(1e-13, 4, lower=FALSE) now is finite.
+
     o	gamma(-n) now gives NaN for all negative integers -n.
 
     o	The Unix version of browseURL() now protects the URL from the

@@ -50,7 +50,7 @@ double qgamma(double p, double alpha, double scale, int lower_tail, int log_p)
 #define MAXIT 1000/* was 20 */
 
 #define pMIN 1e-100    /* was 0.000002 = 2e-6 */
-#define pMAX (1-1e-12)/* was 0.999998 = 1 - 2e-6 */
+#define pMAX (1-1e-15)/* was (1-1e-12) and 0.999998 = 1 - 2e-6 */
 
     const double
 	i420  = 1./ 420.,
@@ -72,10 +72,14 @@ double qgamma(double p, double alpha, double scale, int lower_tail, int log_p)
 
     /* FIXME: This (cutoff to {0, +Inf}) is far from optimal when log_p: */
     p_ = R_DT_qIv(p);/* lower_tail prob (in any case) */
-    if (/* 0 <= */ p_ < pMIN) return 0;
-    if (/* 1 >= */ p_ > pMAX) return ML_POSINF;
+    v = 2*alpha;/* = 'nu' == df  in qchisq() */
 
-    v = 2*alpha;/* == df  in qchisq() */
+    if (/* 0 <= */ p_ < pMIN) return 0;
+    if (/* 1 >= */ p_ > pMAX) {
+	/*was: return ML_POSINF; */
+	/* RATHER: Use approximation */
+
+    }
 
     c = alpha-1;
     g = lgammafn(alpha);/* log Gamma(v/2) */
@@ -169,5 +173,26 @@ double qgamma(double p, double alpha, double scale, int lower_tail, int log_p)
     ML_ERROR(ME_PRECISION);/* does nothing in R ! */
 #endif
  END:
-    return 0.5*scale*ch;
+/* PR# 2214 :	 From: Morten Welinder <terra@diku.dk>, Fri, 25 Oct 2002 16:50
+   --------	 To: R-bugs@biostat.ku.dk     Subject: qgamma precision
+
+   * With a final Newton step, double accuracy, e.g. for (p= 7e-4; df= 0.9)
+   *
+   * Improved (MM): only if rel.Err > 1e-15;
+   *		    also for lower_tail = FALSE	 or log_p = TRUE
+*/
+    x = 0.5*scale*ch;
+    p_ = pgamma(x, alpha, scale, lower_tail, log_p);
+    if(fabs(p1 = p_ - p) >= fabs(1e-15*p) &&
+       (g = dgamma(x, alpha, scale, FALSE)) != 0)
+    {
+	/* delta x = f(x)/f'(x);
+	 * if(log_p) f(x) := log P(x) - p; f'(x) = d/dx log P(x) = P' / P
+	 * ==> f(x)/f'(x) = f*P / P' = f*exp(p_) / P' (since p_ = log P(x))*/
+	t = log_p ? p1*exp(p_)/g : p1/g ;/* = "delta x" */
+	t = lower_tail ? x - t : x + t;
+	if (fabs(pgamma (t, alpha, scale, lower_tail, log_p) - p) < fabs(p1))
+	    x = t;
+    }
+    return x;
 }
