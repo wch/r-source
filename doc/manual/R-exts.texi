@@ -1260,6 +1260,7 @@ assignment operator @code{<-}.   This tidied version is much easier to
 read, not least by other users who are used to the standard format.
 
 We can subvert the keeping of source in two ways.
+
 @enumerate
 @item The option @code{keep.source} can be set to @code{FALSE} before
 the code is loaded into @R{}.
@@ -3755,10 +3756,6 @@ Returns the value of @var{x} rounded to @var{digits} @emph{significant}
 decimal digits.
 
 This is the function used by @R{}'s @code{signif()}.
-@end deftypefun
-
-@deftypefun double fmod (double @var{x})
-Returns the absolute value of value of @var{x}.
 @end deftypefun
 
 @deftypefun double ftrunc (double @var{x})

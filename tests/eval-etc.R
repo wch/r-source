@@ -58,6 +58,19 @@ a3 <- DD(1,2,3)
 all.equal(as.list(a3),
           list(as.name("CC"), 1, 2, 3))
 
+## More dots issues: March 19 2001 -pd
+## Didn't work up to and including 1.2.2
+
+f <- function(...) {
+	val <- match.call(expand.dots=F)$...
+        x <- val[[1]]
+	eval.parent(substitute(missing(x)))
+}
+g <- function(...) h(f(...))
+h <- function(...) list(...)
+k <- function(...) g(...)
+X <- k(a=) 
+all.equal(X, list(TRUE))
 
 ## Bug PR#24
 f <- function(x,...) substitute(list(x,...))

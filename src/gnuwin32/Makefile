@@ -357,8 +357,8 @@ packagedist:
 	$(CP) ../../bin/INSTALL ../../bin/REMOVE ../../bin/SHLIB \
 	  ../../bin/build ../../bin/check ../../bin/massage-Examples.sh \
 	  ../../bin/Rd2dvi.sh ../../bin/Rd2txt ../../bin/Rdconv \
-	  ../../bin/Rdindex ../../bin/Rdiff.sh ../../bin/Sd2Rd \
-	  ../../bin/Rcmd.exe \
+	  ../../bin/Rdindex ../../bin/Rdiff.sh ../../bin/extract-usage \
+	  ../../bin/Sd2Rd ../../bin/Rcmd.exe \
           $(RPREFIX)/bin
 	$(CP) ../../etc/Makeconf-tests $(RPREFIX)/etc
 	$(CP) -p graphapp/graphapp.h $(RPREFIX)/src/include

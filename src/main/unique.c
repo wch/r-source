@@ -576,7 +576,7 @@ static SEXP ExpandDots(SEXP s, int expdots)
 }
 static SEXP subDots(SEXP rho)
 {
-    SEXP rval, dots, a, b;
+    SEXP rval, dots, a, b, t;
     int len,i;
     char tbuf[10];
 
@@ -593,11 +593,13 @@ static SEXP subDots(SEXP rho)
     for(a=dots, b=rval, i=1; i<=len; a=CDR(a), b=CDR(b), i++) {
 	sprintf(tbuf,"..%d",i);
 	SET_TAG(b, TAG(a));
-	if( isSymbol(PREXPR(CAR(a))) || isLanguage(PREXPR(CAR(a))) ) {
-		SETCAR(b, mkSYMSXP(mkChar(tbuf), R_UnboundValue));
-	}
+	t = CAR(a);
+	while (TYPEOF(t) == PROMSXP)
+	    t = PREXPR(t);
+	if( isSymbol(t) || isLanguage(t) ) 
+	    SETCAR(b, mkSYMSXP(mkChar(tbuf), R_UnboundValue));
 	else
-		SETCAR(b, PREXPR(CAR(a)));
+	    SETCAR(b, t);
     }
     UNPROTECT(1);
     return rval;
