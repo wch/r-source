@@ -233,6 +233,8 @@ NEW FEATURES
 
     o	Added experimental support for conditionals in NAMESPACE files.
 
+    o   Added as.list.environment to coerce environments to lists 
+        (efficiently). 
 
 UTILITIES
 

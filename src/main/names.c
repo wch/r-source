@@ -634,6 +634,7 @@ FUNTAB R_FunTab[] =
 {"globalenv",	do_globalenv,	0,	1,	0,	{PP_FUNCALL, PREC_FN,	0}},
 {"environment",	do_envir,	0,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"environment<-",do_envirgets,	0,	1,	2,	{PP_FUNCALL, PREC_LEFT,	1}},
+{"env2list",	do_env2list,	0,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
 {"reg.finalizer",do_regFinaliz,	0,	1,	2,	{PP_FUNCALL, PREC_FN,	0}},
 {"options",	do_options,	0,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"sink",	do_sink,	0,	111,	4,	{PP_FUNCALL, PREC_FN,	0}},

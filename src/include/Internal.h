@@ -185,6 +185,7 @@ SEXP do_dynunload(SEXP, SEXP, SEXP, SEXP);
 SEXP do_edit(SEXP, SEXP, SEXP, SEXP);
 SEXP do_envir(SEXP, SEXP, SEXP, SEXP);
 SEXP do_envirgets(SEXP, SEXP, SEXP, SEXP);
+SEXP do_env2list(SEXP, SEXP, SEXP, SEXP);
 SEXP do_erase(SEXP, SEXP, SEXP, SEXP);
 SEXP do_External(SEXP, SEXP, SEXP, SEXP);
 SEXP do_Externalgr(SEXP, SEXP, SEXP, SEXP);
