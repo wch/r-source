@@ -23,269 +23,290 @@ Followups on older bugs can be done by including the string
 actual reference number, of course!).
 =================================================
 
-Directory:  Accuracy
+Directory:  Arial.sit.hqx
 
-* PR# 138 *
-Subject: Re: [R] bug? and New bug.
-From: Martin Maechler <maechler@stat.math.ethz.ch>
-Date: Wed, 10 Mar 1999 17:21:16 +0100
---pt() for large df. Solved, but problem remains for pf et al.
+* PR# 2 *
 
-Directory:  Add-ons
+Directory:  CIS
 
 none
 
-Directory:  Analyses
-
-* PR# 144 *
-Subject: glm throws erroneous(?)'names attribute must be the same length as the vector' 
-From: wagman@enteract.com
-Date: Thu, 18 Mar 1999 08:58:47 +0100
---Can anyone reproduce this ??
---Same error as when doing regression on empty subset. All fitted
---values might be 0 or 1
-
-Directory:  Documentation
+Directory:  CVS
 
 none
 
-Directory:  Graphics
-
-* PR# 120 *
-Subject: graphics bug: type="l"
-From: Matthew Wiener <mcw@ln.nimh.nih.gov>
-Date: Tue, 16 Feb 1999 15:30:25 -0500 (EST)
---X server problem drawing > 64K lines at once. Workaround?
-* PR# 149 *
-Subject: plot.formula and pch=
-From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
-Date: 25 Mar 1999 21:22:44 +0100
---plot(y~x,pch=z) may subset x and y but leave z.
---E.g. with missing values you can get incorrect plot symbols.
-* PR# 202 *
-Subject: persp box occlusion bug
-From: wsi@gcal.ac.uk
-Date: Wed, 2 Jun 1999 15:02:03 +0200 (MET DST)
---Don't think I (pd) got the point there...
-* PR# 225 *
-Subject: pch and mkh bug
-From: Stephen Harker <sjh@ph.adfa.edu.au>
-Date: Wed, 14 Jul 1999 13:10:31 +1000 (EST)
---(1) is an S incompatibility, but the S rules may not be a good model
---(2) is a bug, fixed for 0.65.0
---(3) has gone away in 0.65.0
-* PR# 230 *
-Subject: Use of lwd = 0, lty = 2 in segments.
-From: Douglas Bates <bates@stat.wisc.edu>
-Date: Sat, 17 Jul 1999 17:18:44 -0500 (CDT)
-* PR# 267 *
-Subject: matplot(... panel.first=..) fails  <==> dealing with "..."
-From: Martin Maechler <maechler@stat.math.ethz.ch>
-Date: Mon, 6 Sep 1999 11:04:03 +0200
-* PR# 287 *
-Subject: text( col=, cex=, font=) : doesn't allow more than length-1 arg
-From: Martin Maechler <maechler@stat.math.ethz.ch>
-Date: Mon, 27 Sep 1999 11:12:08 +0200
-* PR# 299 *
-Subject: Wrong text() adjustment with (math)expression and "\n"
-From: Martin Maechler <maechler@stat.math.ethz.ch>
-Date: Tue, 26 Oct 1999 19:57:01 +0200 (MET DST)
---Not clear this is really a bug
-* PR# 308 *
-Subject:  R abnormal exit when plotting lm 
-From: Ulf Mehlig <umehlig@uni-bremen.de>
-Date: Tue, 2 Nov 1999 22:18:23 +0100
---This is a problem with the X library (or possibly X server) when using plot.lm.
---We need further details (promised later).
-* PR# 334 *
-Subject: Re: [R] problems with postscript device
-From: "Wolfgang Koller" <koller2@fgr.wu-wien.ac.at>
-Date: Tue, 23 Nov 1999 16:29:22 CET (+0100)
-* PR# 335 *
-Subject: (Fwd) [R] problems with postscript device
-Subject:       [R] problems with postscript device
-From: "Wolfgang Koller" <koller2@fgr.wu-wien.ac.at>
-From:          "Wolfgang Koller" <koller2@fgr.wu-wien.ac.at>
-Date: Tue, 23 Nov 1999 16:30:58 CET (+0100)
-Date:          Tue, 23 Nov 1999 15:14:23 CET (+0100)
-* PR# 336 *
-Subject: Re: [R] problems with postscript device
-From: Martin Maechler <maechler@stat.math.ethz.ch>
-Date: Tue, 23 Nov 1999 16:47:45 +0100 (MET)
-* PR# 340 *
-Subject: "outer" argument in mtext
-From: Douglas Bates <bates@stat.wisc.edu>
-Date: 23 Nov 1999 12:31:36 -0600
-* PR# 341 *
-Subject: Re: [R] problems with postscript device
-From: Chong Gu <chong@stat.purdue.edu>
-Date: Wed, 24 Nov 1999 00:18:55 -0500
-* PR# 349 *
-Subject: size of text and numbers in graphs
-From: "Wolfgang Koller" <koller2@fgr.wu-wien.ac.at>
-Date: Sat, 27 Nov 1999 17:03:53 CET (+0100)
-* PR# 357 *
-Subject: filled.contour
-From: steuer@statistik.uni-dortmund.de
-Date: Fri, 3 Dec 1999 15:32:29 +0100 (MET)
-* PR# 365 *
-Subject: plot math - segfault and "frac", "^" bug(s)..
-From: Martin Maechler <maechler@stat.math.ethz.ch>
-Date: Wed, 8 Dec 1999 18:27:03 +0100 (MET)
-* PR# 366 *
-Subject: pch==NA
-From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
-Date: 07 Dec 1999 15:19:46 +0100
-* PR# 367 *
-Subject: plot math - segfault and "frac", "^" bug(s)..
-From: Martin Maechler <maechler@stat.math.ethz.ch>
-Date: Wed, 8 Dec 1999 12:50:44 +0100 (MET)
-* PR# 368 *
-Subject: plot math - segfault and "frac", "^" bug(s)..
-From: Martin Maechler <maechler@stat.math.ethz.ch>
-Date: Wed, 8 Dec 1999 17:27:46 +0100 (MET)
-* PR# 372 *
-Subject: hist() with horiz=TRUE does not give horiz. plots
-From: fran@stat.berkeley.edu
-Date: Sun, 12 Dec 1999 00:27:25 +0100 (MET)
-
-Directory:  In-Out
-
-* PR# 129 *
-Subject: Formatting in formatC and format
-From: Prof Brian D Ripley <ripley@stats.ox.ac.uk>
-Date: Sun, 28 Feb 1999 08:53:34 +0000 (GMT)
---Documentation and ``merge'' of format() and formatC() would be desired - MM
-
-Directory:  Installation
-
-* PR# 363 *
-Subject: Where should iofflush.c be?
-From: David Emile Lamy <delamy@uswest.net>
-Date: Tue, 7 Dec 1999 01:51:57 -0700 (MST)
---Linux installation problem, it seems. Too little to reproduce
-
-Directory:  Language
-
-* PR# 105 *
-Subject: an old bug resurfaces
-From: Jim Lindsey <jlindsey@alpha.luc.ac.be>
-Date: Fri, 29 Jan 1999 08:28:32 +0100 (MET)
---Model formulas. Proper fix probably requires extensive rewrite of model formula
---parser, which would make in non-S-compatible.
-* PR# 263 *
-Subject: Problems sourcing functions with R65.0
-From: Patrick Lindsey <plindsey@alpha.luc.ac.be>
-Date: Wed, 1 Sep 1999 11:58:51 +0200 (MET DST)
---There is a 128K limit on functions wirh keep.source set. Try modular
---programming!
-
-Directory:  Low-level
-
-* PR# 37 *
-Subject: S.h compatibility issues
-From: Prof Brian D Ripley <ripley@stats.ox.ac.uk>
-Date: Sun, 6 Sep 1998 19:58:47 +0100 (BST)
---1 is fixed
---2 R's own RNG entry points are still not public
---3 is the perennial issue of what is the `public' API -- specific points are
---fixed
-* PR# 101 *
-Subject: Re: [R] Re: R-0.63.2 for Windows - some comments
-From: Guido Masarotto <guido@hal.stat.unipd.it>
-Date: Fri, 22 Jan 1999 12:40:26 +0100
---This is really about fixed buffer sizes in printutils.c
-* PR# 135 *
-Subject: summary() of lm() problem
-From: Simon Fear <fears@roycastle.liv.ac.uk>
-Date: Tue, 9 Mar 1999 13:18:37 -0000 
---lm (?) AND Windows problem;  Win solved (fudged) for 0.63.3
---
---Another low-level buffer-size problem
-* PR# 197 *
-Subject: glm crash
-From: Cor en Aylin <Cor.Berrevoets@gironet.nl>
-Date: Fri, 21 May 1999 19:44:23 +0200
---Obscure report. Cannot reproduce from given info.
-* PR# 296 *
-Subject: source(,echo=T) doesn't echo comments
-From: Thomas Lumley <thomas@biostat.washington.edu>
-Date: Thu, 21 Oct 1999 08:59:22 -0700 (PDT)
---Currently, a feature
-* PR# 343 *
-Subject: rbind invisible return value
-From: Thomas Lumley <thomas@biostat.washington.edu>
-Date: Wed, 24 Nov 1999 11:34:10 -0800 (PST)
-* PR# 358 *
-Subject: [[ substitution
-From: clive@bell-labs.com
-Date: Fri, 3 Dec 1999 16:45:08 +0100 (MET)
-
-Directory:  Misc
-
-* PR# 91 *
-Subject: possible bug
-From: Rashid Nassar <rnassar@duke.edu>
-Date: Sat, 9 Jan 1999 14:50:58 -0500 (EST)
---Remaining issue is whether we can do something more friendly than dumping 
---users into vi?
-
-Directory:  Models
+Directory:  CVS2
 
 none
 
-Directory:  Startup
+Directory:  Canceled.mail
+
+* PR# 2 *
+
+Directory:  CompKeyDB
+
+* PR# 2 *
+
+Directory:  DSTS
 
 none
 
-Directory:  System-specific
+Directory:  Desktop
 
 none
 
-Directory:  TooMuchAtOnce
+Directory:  ESS-5.1.8.tar.gz
 
-* PR# 53 *
-Subject: 0.62.3 bugs, incompatibilities and problems
-From: Jim Lindsey <jlindsey@alpha.luc.ac.be>
-Date: Mon, 12 Oct 1998 09:43:51 +0200 (MET DST)
---Of Jims points: (checked in 0.65 April 26 compared to Splus 3.4)
--- 4. works the same as S
--- 5. Splus gives NA and the if(class(z)=="repeated") doesn't work in either
--- 10. seems to work
--- 7.  seems to do what Jim wants now
---  
-* PR# 76 *
-Subject: R-0.63.0
-From: Rashid Nassar <rnassar@acpub.duke.edu>
-Date: Fri, 11 Dec 1998 23:20:08 -0500 (EST)
+* PR# 2 *
 
-Directory:  Windows
+Directory:  FAQ
 
 none
 
-Directory:  incoming
+Directory:  FORTROLIGT
 
-* PR# 361 *
-Subject: "function" function -- infinite loops and bus error [not user problem]
-From: Martin Maechler <maechler@stat.math.ethz.ch>
-Date: Mon, 6 Dec 1999 12:19:36 +0100 (MET)
-* PR# 374 *
-Subject: Bug in R0.90.0?
-From: Claudio Lupi <c.lupi@isae.it>
-Date: Tue, 14 Dec 1999 12:55:00 +0100
-* PR# 376 *
-Subject: aggregate.ts
-From: Martyn Plummer <plummer@iarc.fr>
-Date: Thu, 16 Dec 1999 14:17:26 +0100 (CET)
-* PR# 377 *
-Subject: lists of functions
-From: Jim Lindsey <jlindsey@alpha.luc.ac.be>
-Date: Fri, 17 Dec 1999 09:10:50 +0100 (MET)
-* PR# 378 *
-Subject: plot()  after split.screen() on postscript() Device produces inconsistent PostScript file
-From: boble@usa.net
-Date: Fri, 17 Dec 1999 21:32:23 +0100 (MET)
-* PR# 379 *
-Subject: strsplit does not conform to documentation
-From: "Charles C. Berry" <cberry@tajo.ucsd.edu>
-Date: Fri, 17 Dec 1999 18:48:14 -0800 (PST)
+none
+
+Directory:  HTML
+
+none
+
+Directory:  Hardware-HOWTO
+
+* PR# 2 *
+
+Directory:  IASC-WWW
+
+* PR# 2 *
+
+Directory:  INDEX
+
+* PR# 2 *
+
+Directory:  ISI99
+
+none
+
+Directory:  IT-proj
+
+none
+
+Directory:  Jan
+
+* PR# 2 *
+
+Directory:  KONS
+
+none
+
+Directory:  KWstrat.tex
+
+* PR# 2 *
+
+Directory:  LOG.xsession
+
+* PR# 2 *
+
+Directory:  MAIL
+
+none
+
+Directory:  MSCLIENT
+
+none
+
+Directory:  Mail
+
+none
+
+Directory:  Mailcap
+
+* PR# 2 *
+
+Directory:  Makefile.in
+
+* PR# 2 *
+
+Directory:  Mvh
+
+* PR# 2 *
+
+Directory:  NFS
+
+none
+
+Directory:  News
+
+none
+
+Directory:  Notes.for.Robert
+
+* PR# 2 *
+
+Directory:  Office51
+
+none
+
+Directory:  R-0.50-a1
+
+* PR# 2 *
+
+Directory:  R-0.63.tgz
+
+* PR# 2 *
+
+Directory:  R-Sol
+
+none
+
+Directory:  R-W95
+
+none
+
+Directory:  R-admin
+
+none
+
+Directory:  R-contrib
+
+none
+
+Directory:  R-contrib.old
+
+none
+
+Directory:  R-dev-web
+
+none
+
+Directory:  R-devel
+
+none
+
+Directory:  R-logo-big.jpg
+
+* PR# 2 *
+
+Directory:  R-logo-big.ps
+
+* PR# 2 *
+
+Directory:  R-official
+
+* PR# 2 *
+
+Directory:  R-orig
+
+none
+
+Directory:  R-release.diff
+
+* PR# 2 *
+
+Directory:  R-sandbox
+
+none
+
+Directory:  R-tripack-1.0.R1-4.i386.rpm
+
+* PR# 2 *
+
+Directory:  R-win95
+
+none
+
+Directory:  R-work
+
+none
+
+Directory:  R.old
+
+none
+
+Directory:  RApril.zip
+
+* PR# 2 *
+
+Directory:  RBETA2
+
+none
+
+Directory:  RMAIL
+
+* PR# 2 *
+
+Directory:  RMAIL~
+
+* PR# 2 *
+
+Directory:  RWIN
+
+none
+
+Directory:  Rnotes
+
+none
+
+Directory:  Rnotes.ps.gz
+
+* PR# 2 *
+
+Directory:  Rnotes.tgz
+
+* PR# 2 *
+
+Directory:  Rplots.ps
+
+* PR# 2 *
+
+Directory:  Rsrc.zip
+
+* PR# 2 *
+
+Directory:  Rx971007.zip
+
+* PR# 2 *
+
+Directory:  Rx_01.zip
+
+* PR# 2 *
+
+Directory:  S-mode
+
+none
+
+Directory:  S-mode-4.8.6.tar.gz
+
+* PR# 2 *
+
+Directory:  S-mode-4.8.tar.gz
+
+* PR# 2 *
+
+Directory:  S-sink-fix
+
+none
+
+Directory:  S.fig
+
+* PR# 2 *
+
+Directory:  T3
+
+none
+
+Directory:  Welcome.tex
+
+* PR# 2 *
+
+Directory:  Win3.1_Dosemu.HOWTO.gz
+
+* PR# 2 *
+
+Directory:  XWp
+
+* PR# 2 *
+
+Directory:  Xrootenv.0
+
+* PR# 2 *
