@@ -22,8 +22,9 @@ example(topic, package = .packages(), lib.loc = NULL,
     \code{echo = TRUE}.}
 }
 \description{
-  Run all the \R code from the \code{Examples} part of \R's online help
-  topic \code{topic}.
+  Run all the \R code from the \bold{Examples} part of \R's online help
+  topic \code{topic} with two possible exceptions, \code{dontrun} and
+  \code{testonly}, see Details below.
 }
 \value{(the value of the last evaluated expression).}
 \details{
@@ -35,6 +36,15 @@ example(topic, package = .packages(), lib.loc = NULL,
 
   An attempt is made to load the package before running the examples,
   but this will not replace a package loaded from another location.
+
+  As detailed in the manual \emph{Writing \R Extensions}, the author of
+  the help page can markup parts of the examples for two exception rules
+  \describe{
+    \item{\code{dontrun}}{encloses code that should not be run.}
+    \item{\code{testonly}}{encloses code that is invisible on help
+      pages, but will be run both by the package checking tools,
+      and the \code{example()} function.}
+    }
 }
 \note{
   The examples can be many small files. On some file systems it is
