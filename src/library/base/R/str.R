@@ -4,7 +4,7 @@ str <- function(object, ...) UseMethod("str")
 str.data.frame <- function(object, ...)
 {
     ## Method to 'str' for  'data.frame' objects
-    ## $Id: str.R,v 1.24 2003/02/01 18:36:52 ripley Exp $
+    ## $Id: str.R,v 1.25 2003/02/07 11:24:06 maechler Exp $
     if(! is.data.frame(object)) {
 	warning("str.data.frame(.) called with non-data.frame. Coercing one.")
 	object <- data.frame(object)
@@ -41,7 +41,7 @@ str.default <-
     ## Author: Martin Maechler <maechler@stat.math.ethz.ch>	1990--1997
     ## ------ Please send Bug-reports, -fixes and improvements !
     ## ------------------------------------------------------------------------
-    ## $Id: str.R,v 1.24 2003/02/01 18:36:52 ripley Exp $
+    ## $Id: str.R,v 1.25 2003/02/07 11:24:06 maechler Exp $
 
     oo <- options(digits = digits.d); on.exit(options(oo))
     le <- length(object)
@@ -122,7 +122,7 @@ str.default <-
 		    mod <- paste("Named", mod)
 		    std.attr <- std.attr[std.attr != "names"]
 		}
-		str1 <- if(le == 1) paste(NULL, mod)
+		str1 <- if(le == 1 && !is.array(object)) paste(NULL, mod)
 		else	   paste(" ", mod, if(le>0)" ", le.str, sep = "")
 	    } else { ##-- not atomic, but vector: #
 		mod <- typeof(object)#-- typeof(.) is more precise than mode!
