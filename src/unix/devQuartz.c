@@ -894,10 +894,26 @@ static void 	Quartz_Clip(double x0, double x1, double y0, double y1,
 		height = (float)(y0-y1);
     }
 
- 
+/*  
+	Clipping on Quartz works on intersections of paths.
+	RestoreGState must be called before clipping. This
+	ensures that the clipping path is cleared.
+	As R makes subsequent calls of Clip() we need to
+	1. Save the GState before Clipping
+	2. Clipping
+	3. all the subsequent drawings will be in the clipped
+	   rectangle
+	4. on the next device->Clip() call we RestoreGState to
+	   clear the clipping path
+
+	See Apple's Technical Q&A QA1050 "Turn Off Core Graphics Clipping"
+	S.M.I.
+*/	   
+	CGContextRestoreGState(GetContext(xd)); 
+	
 	CGContextSaveGState( GetContext(xd) );
 	CGContextClipToRect( GetContext(xd), CGRectMake(x, y, width, height) );
-	CGContextRestoreGState(GetContext(xd));
+	
 }
 
 static double 	Quartz_StrWidth(char *str, 
