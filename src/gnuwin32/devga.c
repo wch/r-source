@@ -41,9 +41,9 @@ extern console RConsole;
 extern Rboolean AllDevicesKilled;
 
 /* a colour used to represent the background on png if transparent
-   NB: must be grey as used as RGB and BGR
+   NB: used as RGB and BGR
 */
-#define PNG_TRANS 0xfefefe
+#define PNG_TRANS 0xd6d3d6
 
 /* these really are globals: per machine, not per window */
 static double user_xpinch = 0.0, user_ypinch = 0.0;
@@ -154,6 +154,7 @@ typedef struct {
     int resizing; /* {1,2,3} */
     double rescale_factor;
     int fast; /* Use fast fixed-width lines? */
+    unsigned int pngtrans; /* what PNG_TRANS get mapped to */
 } gadesc;
 
 rect getregion(gadesc *xd)
@@ -1722,6 +1723,7 @@ static void GA_NewPage(int fill, double gamma, NewDevDesc *dd)
 	   xd->kind == BMP || xd->kind == JPEG )
 	    DRAW(gfillrect(_d, R_OPAQUE(xd->bg) ? xd->bgcolor : PNG_TRANS, 
 			   xd->clip));
+	if(xd->kind == PNG) xd->pngtrans = ggetpixel(xd->gawin, pt(0,0));
     } else {
 	xd->clip = getregion(xd);
 	DRAW(gfillrect(_d, xd->bgcolor, xd->clip));
@@ -2377,7 +2379,7 @@ static void SaveAsBitmap(NewDevDesc *dd)
     if (xd->kind==PNG) 
 	R_SaveAsPng(xd->gawin, xd->windowWidth, xd->windowHeight,
 		    privategetpixel, 0, xd->fp,
-		    R_OPAQUE(xd->bg) ? 0 : PNG_TRANS) ;
+		    R_OPAQUE(xd->bg) ? 0 : xd->pngtrans) ;
     else if (xd->kind==JPEG)
 	R_SaveAsJpeg(xd->gawin, xd->windowWidth, xd->windowHeight,
 		     privategetpixel, 0, xd->quality, xd->fp) ;

@@ -27,7 +27,7 @@
  *     returns the colour of the (x,y) pixels stored either as
  *     BGR (R model, see include/Graphics.h) or as RGB in the
  *     24 least sig. bits (8 bit for channel).
- *     (0,0) is the left-top corner. (3,2) is the second pixel 
+ *     (0,0) is the left-top corner. (3,2) is the third pixel 
  *     in the fourth scanline.
  * int bgr: if != 0, order is BGR else is RGB.
  * int quality: only for jpeg (0-100 measure of how much to compress).

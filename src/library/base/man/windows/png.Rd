@@ -20,7 +20,7 @@ png(filename="Rplot.png", width=480, height=480, pointsize=12,
  \item{height}{the height of the device in pixels.}
  \item{pointsize}{the default pointsize of plotted text, intepreted at
    72 dpi, so one point is approximately one pixel.}
- \item{bg}{the initial bacground colour: can be overridden by setting
+ \item{bg}{the initial background colour: can be overridden by setting
    par("bg").} 
  \item{quality}{the `quality' of the JPEG image, as a
    percentage. Smaller values will give more compression but also more
@@ -34,8 +34,8 @@ png(filename="Rplot.png", width=480, height=480, pointsize=12,
   but may be useful for image plots, for example. The BMP format is
   standard on Windows, and supported elsewhere.
 
-  \code{png} supports transparent backgrounds: use
-  \code{bg="transparent"}.
+  \code{png} supports transparent backgrounds on 16-bit (`High Color') or
+  better screens: use \code{bg="transparent"}.
   Not all PNG viewers render files with transparency correctly.
 }
 \value{
