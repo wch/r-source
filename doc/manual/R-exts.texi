@@ -115,6 +115,7 @@ before reading on.  If the package you are writing uses the
 * Checking and building packages::
 * Writing package vignettes::
 * Submitting a package to CRAN::
+* Package name spaces::
 @end menu
 
 @node Package structure, Configure and cleanup, Creating R packages, Creating R packages
@@ -774,7 +775,7 @@ builder (@pxref{Checking and building packages}).  The
 such that no definition of the command is necessary.
 
 
-@node Submitting a package to CRAN,  , Writing package vignettes, Creating R packages
+@node Submitting a package to CRAN, Package name spaces, Writing package vignettes, Creating R packages
 @section Submitting a package to @acronym{CRAN}
 @cindex CRAN
 @cindex CRAN submission
@@ -862,6 +863,222 @@ files can only be assumed to work provided that this naming scheme is
 respected.  E.g., @code{R CMD INSTALL} will not work on
 @file{@var{package}.tgz} files.  Of course, @code{R CMD build}
 automatically creates valid file names.
+
+
+@node Package name spaces,  , Submitting a package to CRAN, Creating R packages
+@section Package name spaces
+@cindex name spaces
+
+@R{} 1.7.0 introduces an experimental name space management system for
+packages.  This system allows the package writer to specify which
+variables in the package should be @emph{exported} to make them
+available to package users, and which variables should be
+@emph{imported} from other packages.
+
+The current mechanism@footnote{Alternate approaches are under
+consideration and may replace this approach in future @R{} releases.}
+for specifying a name space for a package is to place a @file{NAMESPACE}
+file in the top level package directory.  This file contains @emph{name
+space directives} describing the imports and exports of the name space.
+Additional directives register any shared libraries to be loaded and any
+S3-style methods that are provided.
+
+Like other packages, packages with name spaces are loaded and attached
+to the search path by calling @code{library}.  Only the exported
+variables are placed in the attached frame.  Loading a package that
+imports variables from other packages will cause these other packages to
+be loaded as well (unless they have already been loaded), but they will
+@emph{not} be placed on the search path by these implicit loads.
+
+Exports are specified using the @code{export} directive.
+A directive of the form
+
+@smallexample
+export(f,g)
+@end smallexample
+
+@noindent
+specifies that the variables @code{f} and @code{g} are to be exported.
+For packages with many variables to export it may be more convenient to
+specify the names to export with a regular expression using
+@code{exportPatters}.  The directive
+
+@smallexample
+exportPattern("^[^\\.]")
+@end smallexample
+
+@noindent
+exports all variables that do not start with a period.
+
+All packages implicitly import the base name space.  Variables from
+other packages need to be imported explicitly using the directives
+@code{import} and @code{importFrom}.  The @code{import} directive
+imports all exported variables from the specified packages.  Thus the
+directives
+
+@smallexample
+import(foo, bar)
+@end smallexample
+
+@noindent
+specifies that all exported variables in the packages @code{foo} and
+@code{bar} are to be imported.  If only some of the variables from a
+package are needed, then they can be imported using @code{importFrom}.
+The directive
+
+@smallexample
+importFrom(foo, f, g)
+@end smallexample
+
+@noindent
+specifies that the exported variables @code{f} and @code{g} of the
+package @code{foo} are to be imported.
+
+If a package only needs one function from another package it can use a
+fully qualified variable reference in the code instead of a formal
+import.  A fully qualified reference to the function @code{f} in package
+@code{foo} is of the form @code{foo::f}.  This is less efficient than a
+formal import and also loses the advantage of recording all dependencies
+in the @file{NAMESPACE} file, so this approach is usually not
+recommended.
+
+The standard dispatching method for S3-style @code{UseMethod}
+dispatching might fail to locate methods located in a package that is
+imported but not attached to the search path.  To insure that these
+methods are available they should be registered with @code{S3method}
+directives.  If a package defines a function @code{print.foo} intended
+to be used as a @code{print} method for class @code{foo}, then the
+directive
+
+@smallexample
+S3method(print,foo)
+@end smallexample
+
+@noindent
+insures that the method is registered and available for @code{UseMethod}
+dispatch.  The function @code{print.foo} does not need to be exported.
+
+Packages with name spaces do not use the @code{.First.lib} function.
+Since loading and attaching are distinct operations when a name space is
+used, separate hooks are provided for each.  These hook functions are
+called @code{.onLoad} and @code{.onAttach}.  They take the same
+arguments as @code{.First.lib}; they should be defined in the package
+but not exported.  Packages are not likely to need @code{.onAttach};
+code to set options and load shared libraries should be placed in
+@code{.onLoad} or use the @code{useDynLib} directive described next.
+
+The @code{useDynLib} directive allows shared libraries that need to be
+loaded to be specified in the @file{NAMESPACE} file.  The directive
+
+@smallexample
+useDynLib(foo)
+@end smallexample
+
+@noindent
+registers the shared library @code{foo} for loading with
+@code{library.dynam}.  Loading of registered libraries occurs after the
+package code has been loaded and before running the load hook function.
+Packages that would only need a load hook function to load a shared
+library can use the @code{useDynLib} directive instead.
+
+As an example consider two packages named @code{foo} and @code{bar}.
+The @R{} code for package @code{foo} in file @file{foo.R} is
+
+@quotation
+@cartouche
+@smallexample
+x <- 1
+f <- function(y) c(x,y)
+foo <- function(x) .Call("foo", x, PACKAGE="foo")
+print.foo <- function(x, ...) cat("<a foo>\n")
+@end smallexample
+@end cartouche
+@end quotation
+
+@noindent
+Some C code defines a C function @code{foo}.  The @file{NAMESPACE} file
+for this package is
+
+@quotation
+@cartouche
+@smallexample
+useDynLib(foo)
+export(f, foo)
+S3method(print,foo)
+@end smallexample
+@end cartouche
+@end quotation
+
+@noindent
+The second package @code{bar} has code file @file{bar.R}
+
+@quotation
+@cartouche
+@smallexample
+c <- function(...) sum(...)
+g <- function(y) f(c(y, 7))
+h <- function(y) y+9
+@end smallexample
+@end cartouche
+@end quotation
+
+@noindent
+and @file{NAMESPACE} file
+
+@quotation
+@cartouche
+@smallexample
+import(foo)
+export(g, h)
+@end smallexample
+@end cartouche
+@end quotation
+
+@noindent
+Calling @code{library(bar)} loads @code{bar} and attaches its exports to
+the search path.  @code{foo} is also loaded but not attached to the
+search path.  A call to @code{g} produces
+
+@smallexample
+> g(6)
+[1]  1 13
+@end smallexample
+
+@noindent
+This is consistent with the definitions of @code{c} in the two settings:
+in @code{bar} the function @code{c} is defined to be equivalent to
+@code{sum}, but in @code{foo} the variable @code{c} refers to the
+standard function @code{c} in base.
+
+
+To summarize, converting an existing package to use a name space involves
+several simple steps:
+
+@itemize @bullet
+@item Identify the public definitions and place them in @code{export}
+      directives.
+@item Identify S3-style method definitions and write corresponding
+      @code{S3method} declarations.
+@item Identify dependencies and replace any @code{require} calls by
+      @code{import} directives.
+@item Replace @code{.First.lib} functions with @code{.onLoad} functions
+      or @code{useDynLib} directives.
+@end itemize
+
+@noindent
+Some code analysis tools to aid in this process are currently under
+development.
+
+Name spaces are @emph{sealed} once they are loaded.  Sealing means that
+imports and exports cannot be changed and that internal variable
+bindings cannot be changed.  Sealing allows a simpler implementation
+strategy for the name space mechanism.  Sealing also allows code
+analysis and compilation tools to accurately identify the definition
+corresponding to a global variable reference in a function body.
+
+The name space mechanism included in @R{} 1.7.0 does not yet support
+code based on the @pkg{methods} package.  Support for @pkg{methods} is
+anticipated for the following release of @R{}.
 
 
 @node Writing R help files, Tidying and profiling R code, Creating R packages, Top

@@ -127,8 +127,7 @@ library <-
             # if the name space mechanism is available and the package
             # has a name space, then the name space loading mechanism
             # takes over.
-            if (exists("packageHasNamespace") &&
-                packageHasNamespace(package, which.lib.loc)) {
+            if (packageHasNamespace(package, which.lib.loc)) {
                 tt <- try({
                     ns <- loadNamespace(package, c(which.lib.loc, lib.loc))
                     env <- attachNamespace(ns)
