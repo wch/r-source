@@ -116,7 +116,7 @@ print.dendrogram <- function(x, digits = getOption("digits"), ...)
 {
     cat("`dendrogram' ")
     if(is.leaf(x))
-	cat("leaf", format(attr(x, "label"), digits = digits))
+	cat("leaf '", format(attr(x, "label"), digits = digits),"'", sep='')
     else
 	cat("with", length(x), "branches and",
 	    attr(x,"members"), "members total")
@@ -269,7 +269,7 @@ plotNode <-
 	rep(if(nam %in% names(L)) L[[nam]] else default,
 	    length.out = indx)[indx]
     asTxt <- function(x) # to allow 'plotmath' labels:
-	if(is.character(x) || is.expression(x)) x else as.character(x)
+	if(is.character(x) || is.expression(x) || is.null(x)) x else as.character(x)
 
     i <- if(inner || hasP) 1 else 2 # only 1 node specific par
 
