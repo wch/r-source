@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2003
-@set FAQ-VERSION 1.7-6, 2004-04-27
+@set FAQ-VERSION 1.7-7, @value{FAQ-YEAR}-05-02
 @set REL-VERSION 1.7.0
 @set FAQ-ISBN 3-901167-51-X
 @documentlanguage en
@@ -432,7 +432,7 @@ available by @email{deleeuw@@stat.ucla.edu, Jan de Leeuw} in the
 @node Are there Unix binaries for R?, What documentation exists for R?, How can R be installed?, R Basics
 @section Are there Unix binaries for R?
 
-@c Linux binaries as of 2003-01-15:
+@c Linux binaries as of 2003-05-02:
 @c
 @c debian    woody i386  1.7.0  Dirk Eddelbuettel <edd@debian.org>
 @c           sarge i386  1.7.0  Dirk Eddelbuettel <edd@debian.org>
@@ -448,6 +448,7 @@ available by @email{deleeuw@@stat.ucla.edu, Jan de Leeuw} in the
 @c suse      7.3   i386  1.7.0  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
 @c           8.0   i386  1.7.0  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
 @c           8.1   i386  1.7.0  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
+@c           8.2   i386  1.7.0  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
 @c vinelinux 2.6   i386  1.6.2  Susunu Tanimura <stanimura-ngs@umin.ac.jp>
 
 The @file{bin/linux} directory of a @acronym{CRAN} site contains Debian
@@ -455,7 +456,7 @@ stable/testing packages for the i386 platform (now part of the Debian
 distribution and maintained by Dirk Eddelbuettel), Mandrake
 8.0/8.1/8.2/9.0/9.1 i386 packages by Michele Alzetta, Red Hat 7.x/8.x/9
 i386 and 7.x alpha packages (maintained by Martyn Plummer and Naoki
-Takebayashi, respectively), SuSE 7.3/8.0/8.1 i386 packages by Detlef
+Takebayashi, respectively), SuSE 7.3/8.0/8.1/8.2 i386 packages by Detlef
 Steuer, and VineLinux 2.6 i386 packages by Susunu Tanimura.
  
 The Debian packages can be accessed through APT, the Debian package
