@@ -1436,6 +1436,12 @@ fi
 AM_CONDITIONAL(USE_RECOMMENDED_PACKAGES,
                [test "x${use_recommended_packages}" = xyes])
 
+# i18n support.  To update to a new version of gettext, run:
+# gettextize -f -c --intl
+AM_GNU_GETTEXT_VERSION(0.14.1)
+AM_GNU_GETTEXT([external])
+
+
 ### * Win32 overrides
 case "${host_os}" in
   mingw*)
@@ -1605,6 +1611,9 @@ if test "${r_cv_iconv_latin1}" = yes; then
 fi
 if test "${want_utf8_support}" = yes; then
   R_SH_VAR_ADD(r_capabilities, [UTF-8], [, ])
+fi
+if test "${USE_NLS}" = yes; then
+  R_SH_VAR_ADD(r_capabilities, [NLS], [, ])
 fi
 r_options=
 if test "${want_R_framework}" = yes; then

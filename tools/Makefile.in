@@ -16,6 +16,7 @@ DISTFILES = README \
 	GETCONFIG GETDISTNAME GETMAKEVAL GETVERSION \
 	Rdnewer.pl \
 	config.guess \
+	config.rpath \
 	config.sub \
 	copy-if-change \
 	help2man.pl \
