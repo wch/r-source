@@ -1588,7 +1588,7 @@ static void X11_Text(double x, double y, int coords,
 		     char *str, double xc, double yc, double rot, DevDesc *dd)
 {
     int len, size;
-    double xl, yl, rot1;
+/*    double xl, yl, rot1;*/
     x11Desc *xd = (x11Desc *) dd->deviceSpecific;
 
     size = dd->gp.cex * dd->gp.ps + 0.5;

@@ -581,7 +581,7 @@ static void PostScriptWriteString(FILE *fp, char *str)
 	    fprintf(fp, "\\n");
 	    break;
 	case '-':
-	    if (isdigit(str[1]))
+	    if (isdigit((int)str[1]))
 		fputc(PS_minus, fp);
 	    else
 		fputc(*str, fp);
