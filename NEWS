@@ -19,7 +19,9 @@ NEW FEATURES
 
 BUG FIXES
 
-    o	Ops.factor :  not Error, but a warning + NAs
+    o	Ops.factor:  not error, but a warning + NAs
+
+    o	bug.report() keeps report file if can't be e-mailed
 
     o	Ops.data.frame :  things like  d.fr < a	  now return a matrix
 
