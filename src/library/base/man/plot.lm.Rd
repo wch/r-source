@@ -8,7 +8,8 @@ plot.lm(x, which = 1:4,
                     "Scale-Location plot", "Cook's distance plot"),
         panel = points,
         sub.caption = deparse(x$call), main = "",
-        ask = interactive() && one.fig && .Device != "postscript",
+        ask = interactive() && one.fig && length(which) > 1
+         	&& .Device != "postscript",
         \dots,
         id.n = 3, labels.id = names(residuals(x)), cex.id = 0.25)
 }
@@ -55,7 +56,7 @@ plot.lm(x, which = 1:4,
   have identical variance (under the hypothesis).  They are given as
   \eqn{R_i / (s \times \sqrt{1 - h_{ii}})}{R[i] / (s*sqrt(1 - h.ii))}
   where \eqn{h_{ii}}{h.ii} are the diagonal entries of the hat matrix,
-% bug in Rdconv: "$" and \link inside \code fails; '\$' doesn't help...
+% bug in Rdconv: "$" and \link inside \code fails; '\$' doesn't help :
   \code{\link{lm.influence}()}\code{$hat}, see also \code{\link{hat}}.
 }
 \references{
@@ -99,6 +100,12 @@ plot(lm.SR, panel = function(x,y) panel.smooth(x, y, span = 1))
 
 par(mfrow=c(2,1))# same oma as above
 plot(lm.SR, which = 1:2, sub.caption = "Saving Rates, n=50, p=5")
+\testonly{% which=4 failed in R 1.0.1
+ par(mfrow=c(1,1), oma= rep(0,4))
+ data(longley)
+ summary(lm.fm2 <- lm(Employed ~ . - Population - GNP.deflator, data = longley))
+ for(wh in 1:4) plot(lm.fm2, which = wh)
+}
 }
 \keyword{hplot}
 \keyword{regression}

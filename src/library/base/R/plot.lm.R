@@ -1,11 +1,13 @@
-plot.lm <- function (x, which = 1:4,
-		     caption = c("Residuals vs Fitted", "Normal Q-Q plot",
-		     "Scale-Location plot", "Cook's distance plot"),
-		     panel = points,
-		     sub.caption = deparse(x$call), main = "",
-		     ask = interactive() && one.fig && .Device != "postscript",
-		     ...,
-		     id.n = 3, labels.id = names(residuals(x)), cex.id = 0.75)
+plot.lm <-
+function(x, which = 1:4,
+         caption = c("Residuals vs Fitted", "Normal Q-Q plot",
+         "Scale-Location plot", "Cook's distance plot"),
+         panel = points,
+         sub.caption = deparse(x$call), main = "",
+         ask = interactive() && one.fig && length(which) > 1
+         	&& .Device != "postscript",
+         ...,
+         id.n = 3, labels.id = names(residuals(x)), cex.id = 0.75)
 {
     if (!inherits(x, "lm"))
 	stop("Use only with 'lm' objects")
@@ -16,11 +18,12 @@ plot.lm <- function (x, which = 1:4,
     r <- residuals(x)
     n <- length(r)
     yh <- predict(x) # != fitted() for glm
+    if (any(show[2:4]))
+        s <- if(inherits(x, "rlm")) x$s else sqrt(deviance(x)/df.residual(x))
     if (any(show[2:3])) {
         ylab23 <- if(inherits(x, "glm"))
           "Std. deviance resid." else "Standardized residuals"
         hii <- lm.influence(x)$hat
-        s <- if(inherits(x, "rlm")) x$s else sqrt(deviance(x)/df.residual(x))
         w <- weights(x)
         # r.w := weighted.residuals(x):
         r.w <- if(is.null(w)) .Alias(r) else (sqrt(w)*r)[w!=0]

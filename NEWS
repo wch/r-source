@@ -322,6 +322,8 @@ BUG FIXES
     o	library() will not leave the package on the search path if
 	loading fails (including if .First.lib fails).
 
+    o	plot.lm(*, which=4) now works thanks to Marcel Wolbers.
+
 
 		CHANGES IN R VERSION 1.0.1
 
