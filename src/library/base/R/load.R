@@ -1,5 +1,5 @@
-load <- function(file)
-    .Internal(load(file))
+load <- function(file,envir = sys.frame(sys.parent()))
+    .Internal(load(file,envir))
 
 save <- function(..., list = character(0), file = "", ascii = FALSE) {
     names <- as.character( substitute( list(...)))[-1]

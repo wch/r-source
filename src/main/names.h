@@ -255,6 +255,7 @@ SEXP do_search(SEXP, SEXP, SEXP, SEXP);
 SEXP do_segments(SEXP, SEXP, SEXP, SEXP);
 SEXP do_seq(SEXP, SEXP, SEXP, SEXP);
 SEXP do_set(SEXP, SEXP, SEXP, SEXP);
+SEXP do_showfile(SEXP, SEXP, SEXP, SEXP);
 SEXP do_signif(SEXP, SEXP, SEXP, SEXP);
 SEXP do_strheight(SEXP, SEXP, SEXP, SEXP);
 SEXP do_strwidth(SEXP, SEXP, SEXP, SEXP);

@@ -472,7 +472,7 @@ FUNTAB R_FunTab[] =
 #endif
 {"parse",	do_parse,	0,	11,	4,	PP_FUNCALL},
 {"save",	do_save,	0,	111,	3,	PP_FUNCALL},
-{"load",	do_load,	0,	111,	1,	PP_FUNCALL},
+{"load",	do_load,	0,	111,	2,	PP_FUNCALL},
 {"hdf5save",	do_hdf5save,	0,	0,	-1,	PP_FUNCALL},
 {"hdf5load",	do_hdf5load,	0,	11,	 2,	PP_FUNCALL},
 {"deparse",	do_deparse,	0,	11,	2,	PP_FUNCALL},
@@ -535,6 +535,11 @@ FUNTAB R_FunTab[] =
 {"sink",	do_sink,	0,	111,	1,	PP_FUNCALL},
 {"lib.fixup",	do_libfixup,	0,	111,	2,	PP_FUNCALL},
 {"pos.to.env",	do_pos2env,	0,	1,	1,	PP_FUNCALL},
+
+/* Platform Dependent Functions */
+
+{"show.file",	do_showfile,	0,	111,	1,	PP_FUNCALL},
+
 
 /* Complex Valued Functions */
 {"fft",		do_fft,		0,	11,	2,	PP_FUNCALL},

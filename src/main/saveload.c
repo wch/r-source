@@ -1134,25 +1134,10 @@ static SEXP ConvertPairToVector(SEXP obj)
     return obj;
 }
 
-SEXP do_load(SEXP call, SEXP op, SEXP args, SEXP env)
+void R_LoadSavedData(FILE *fp, SEXP aenv)
 {
     SEXP a, ans, e;
-    int i;
-    FILE *fp;
-
-    checkArity(op, args);
-
-    if (TYPEOF(CAR(args)) != STRSXP)
-	errorcall(call, "first argument must be a string\n");
-    i = INTEGER(CADR(args))[0];
-
-    /* Process the saved file to obtain a list of saved objects. */
-
-    fp = R_fopen(CHAR(STRING(CAR(args))[0]), "rb");
-    if (!fp)
-	errorcall(call, "unable to open file\n");
     ans = R_LoadFromFile(fp);
-    fclose(fp);
 
     /* Store the components of the list in the Global Env */
     /* We either replace the existing objects in the Global */
@@ -1162,11 +1147,11 @@ SEXP do_load(SEXP call, SEXP op, SEXP args, SEXP env)
 
     PROTECT(a = ans);
     while (a != R_NilValue) {
-	for (e = FRAME(R_GlobalEnv); e != R_NilValue ; e = CDR(e)) {
+	for (e = FRAME(aenv); e != R_NilValue ; e = CDR(e)) {
 	    if (TAG(e) == TAG(a)) {
 		CAR(e) = CAR(a);
 		a = CDR(a);
-		CAR(a) = ConvertPairToVector(CAR(a));  /* PAIRLIST conv */
+		CAR(a) = ConvertPairToVector(CAR(a)); /* PAIRLIST conv */
 		goto NextItem;
 	    }
 	}
@@ -1174,13 +1159,38 @@ SEXP do_load(SEXP call, SEXP op, SEXP args, SEXP env)
 	a = CDR(a);
 	UNPROTECT(1);
 	PROTECT(a);
-	CDR(e) = FRAME(R_GlobalEnv);
-	FRAME(R_GlobalEnv) = e;
-	CAR(e) = ConvertPairToVector(CAR(e));	       /* PAIRLIST conv */
+	CDR(e) = FRAME(aenv);
+	FRAME(aenv) = e;
+	CAR(e) = ConvertPairToVector(CAR(e)); /* PAIRLIST conv */
     NextItem:
 	;
     }
     UNPROTECT(1);
+}
+
+SEXP do_load(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    SEXP a, ans, e, aenv;
+    FILE *fp;
+
+    checkArity(op, args);
+
+    if (TYPEOF(CAR(args)) != STRSXP)
+	errorcall(call, "first argument must be a string\n");
+
+    /* GRW 1/26/99 GRW : added environment parameter so that */
+    /* the loaded objects can be placed where desired  */
+
+    aenv = CADR(args);
+    if (TYPEOF(aenv) != ENVSXP && aenv != R_NilValue)
+	error("invalid envir argument\n");
+
+    /* Process the saved file to obtain a list of saved objects. */
+    fp = R_fopen(CHAR(STRING(CAR(args))[0]), "rb");
+    if (!fp)
+	errorcall(call, "unable to open file\n");
+    R_LoadSavedData(fp, aenv);
+    fclose(fp);
     return R_NilValue;
 }
 
