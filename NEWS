@@ -137,6 +137,9 @@ BUG FIXES
     o   Arithmetic functions such as log() lost the object bit from
 	classed objects if coercion was needed. (PR#2315)
 
+    o   exp_rand would go into an infinite loop if unif_rand returned 0.
+
+
 
 		CHANGES IN R VERSION 1.6.1
 
