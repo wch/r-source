@@ -266,7 +266,9 @@ void gnome_start(int ac, char **av, Rstart Rp)
 
     /* Gnome startup preferences */
     gnomelib_init("R",
-		  g_strdup_printf("%s.%s %s (%s %s %s)", R_MAJOR, R_MINOR, R_STATUS, R_MONTH, R_DAY, R_YEAR));
+		  g_strdup_printf("%s.%s %s (%s-%s-%s)", R_MAJOR,
+				  R_MINOR, R_STATUS, R_YEAR, R_MONTH,
+				  R_DAY));
     R_gnome_prefs_cmd_load(RestoreAction, SaveAction);
     R_set_gnome_prefs(Rp);
 
@@ -275,7 +277,8 @@ void gnome_start(int ac, char **av, Rstart Rp)
 
     /* Initialise Gnome library */
     gnome_init("R",
-	       g_strdup_printf("%s.%s %s (%s %s %s)", R_MAJOR, R_MINOR, R_STATUS, R_MONTH, R_DAY, R_YEAR),
+	       g_strdup_printf("%s.%s %s (%s-%s-%s)", R_MAJOR, R_MINOR,
+			       R_STATUS, R_YEAR, R_MONTH, R_DAY),
 	       ac, av);
     R_gnome_initialised = TRUE;
 
