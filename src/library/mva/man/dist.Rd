@@ -15,15 +15,15 @@ as.dist(m, diag = FALSE, upper = FALSE)
 \alias{names<-.dist}
 \alias{as.dist}
 \arguments{
-  \item{x}{A matrix or (data frame).  Distances between the rows of
+  \item{x}{numeric matrix or (data frame).  Distances between the rows of
     \code{x} will be computed.}
-  \item{method}{The distance measure to be used. This must be one of
+  \item{method}{the distance measure to be used. This must be one of
     \code{"euclidean"}, \code{"maximum"}, \code{"manhattan"},
     \code{"canberra"} or \code{"binary"}.
     Any unambiguous substring can be given.}
-  \item{diag}{A logical value indicating whether the diagonal of the
+  \item{diag}{logical value indicating whether the diagonal of the
     distance matrix should be printed by \code{print.dist}.}
-  \item{upper}{A logical value indicating whether the upper triangle of the
+  \item{upper}{logical value indicating whether the upper triangle of the
     distance matrix should be printed by \code{print.dist}.}
   \item{m}{A matrix of distances to be converted to a \code{"dist"}
     object (only the lower triangle is used, the rest is ignored).}
@@ -74,15 +74,33 @@ as.dist(m, diag = FALSE, upper = FALSE)
   An object of class \code{"dist"}.
 
   The lower triangle of the distance matrix stored by columns in a
-  single vector.  The vector has the attributes \code{"Size"},
-  \code{"Diag"}, \code{"Upper"}, \code{"Labels"} and \code{"class"} equal
-  to \code{"dist"}.
+  vector, say \code{do}. If \code{n} is the number of
+  observations, i.e., \code{n <- attr(do, "Size")}, then
+  for \eqn{i < j <= n}, the dissimilarity between (row) i and j is
+  \code{do[n*(i-1) - i*(i-1)/2 + j-i]}.
+  The length of the vector is \eqn{n*(n-1)/2}, i.e., of order \eqn{n^2}.
+
+  The object has the following attributes (besides \code{"class"} equal
+  to \code{"dist"}):
+  \item{Size}{integer, the number of observations in the dataset.}
+  \item{Labels}{optionally, contains the labels, if any, of the
+    observations of the dataset.}
+  \item{Diag, Upper}{logicals corresponding to the arguments \code{diag}
+    and \code{upper} above, specifying how the object should be printed.}
+  \item{call}{optionally, the \code{\link{call}} used to create the
+    object.}
+  \item{methods}{optionally, the distance method used; resulting form
+    \code{\link{dist}()}, the (\code{\link{match.arg}()}ed) \code{method}
+    argument.}
 }
 \references{
   Mardia, K. V., Kent, J. T. and Bibby, J. M. (1979)
   \emph{Multivariate Analysis.} London: Academic Press.
 }
 \seealso{
+  \code{\link[cluster]{daisy}} in the \file{cluster} package with more
+  possibilities in the case of \emph{mixed} (contiuous / categorical)
+  variables.
   \code{\link{hclust}}.
 }
 \examples{
