@@ -3864,11 +3864,11 @@ msgstr "formula modello non valida in EncodeVars"
 
 #: src/main/model.c:735
 msgid "argument is not a valid model"
-msgstr ""
+msgstr "l'argomento non è un modello valido"
 
 #: src/main/model.c:756
 msgid "data argument is of the wrong type"
-msgstr ""
+msgstr "l'argomento data è di tipo sbagliato"
 
 #: src/main/model.c:1150
 msgid "invalid formula in 'update'"
@@ -3876,7 +3876,7 @@ msgstr "formula non valida in 'update'"
 
 #: src/main/model.c:1188
 msgid "formula expected"
-msgstr ""
+msgstr "necessaria formula"
 
 #: src/main/model.c:1276
 msgid "invalid variables"
@@ -3884,7 +3884,7 @@ msgstr "variabili non valide"
 
 #: src/main/model.c:1280 src/main/model.c:1285
 msgid "number of variables != number of variable names"
-msgstr ""
+msgstr "numero di variabili != numero di nomi variabili"
 
 #: src/main/model.c:1283
 msgid "invalid extra variables"
@@ -3897,7 +3897,7 @@ msgstr "nomi variabili aggiuntive non validi"
 #: src/main/model.c:1310
 #, c-format
 msgid "overlong names in '%s'"
-msgstr ""
+msgstr "nomi troppo lunghi in '%s'"
 
 #: src/main/model.c:1330 src/main/model.c:1632
 msgid "invalid variable type"
@@ -3905,11 +3905,11 @@ msgstr "tipo variabile non valido"
 
 #: src/main/model.c:1332 src/main/model.c:1596
 msgid "variable lengths differ"
-msgstr ""
+msgstr "la lunghezza delle variabili differisce"
 
 #: src/main/model.c:1385
 msgid "invalid result from na.action"
-msgstr ""
+msgstr "risultato non valido da na.action"
 
 #: src/main/model.c:1559 src/main/model.c:1567
 msgid "invalid 'terms' argument"
@@ -3921,42 +3921,43 @@ msgstr "frame modello non valido"
 
 #: src/main/model.c:1580
 msgid "do not know how many cases"
-msgstr ""
+msgstr "numero di casi sconosciuto"
 
 #: src/main/model.c:1606 src/main/model.c:1613
 #, c-format
 msgid "variable %d has no levels"
-msgstr ""
+msgstr "la variabile %d non ha livelli"
 
 #: src/main/model.c:1721
 msgid "the response appeared on the right-hand side and was dropped"
-msgstr ""
+msgstr "la variabile risposta appare anche nel membro di destra ed è "
+"stata eliminata"
 
 #: src/main/model.c:1753
 #, c-format
 msgid "problem with term %d in model.matrix: no columns are assigned"
-msgstr ""
+msgstr "problema nel termine %d in model.matrix: nessuna colonna assegnata"
 
 #: src/main/model.c:1801 src/main/model.c:1806 src/main/model.c:1812
 #: src/main/model.c:1822 src/main/model.c:1828 src/main/model.c:1834
 msgid "term names will be truncated"
-msgstr ""
+msgstr "i nomi dei termini saranno troncati"
 
 #: src/main/names.c:915
 msgid "string argument required"
-msgstr ""
+msgstr "necessario argomento stringa"
 
 #: src/main/names.c:923
 msgid "no such primitive function"
-msgstr ""
+msgstr "funzione primitiva non esistente"
 
 #: src/main/names.c:1036
 msgid "attempt to use zero-length variable name"
-msgstr ""
+msgstr "tentativo di utilizzo di un nome variabile di lunghezza zero"
 
 #: src/main/names.c:1038
 msgid "symbol print-name too long"
-msgstr ""
+msgstr "nome di stampa del simbolo troppo lungo"
 
 #: src/main/names.c:1064
 msgid "invalid .Internal() argument"
@@ -3969,7 +3970,7 @@ msgstr "functione interna non valida"
 #: src/main/names.c:1069
 #, c-format
 msgid "no internal function \"%s\""
-msgstr ""
+msgstr "nessuna funzione interna \"%s\""
 
 #: src/main/objects.c:46
 msgid "generic 'function' is not a function"
@@ -3985,7 +3986,7 @@ msgstr "definizione generica environment errata"
 
 #: src/main/objects.c:225 src/main/objects.c:359
 msgid "'UseMethod' used in an inappropriate fashion"
-msgstr ""
+msgstr "'UseMethod' usata in modo non appropriato"
 
 #: src/main/objects.c:248
 msgid "Invalid generic function in 'usemethod'"
@@ -3995,11 +3996,11 @@ msgstr "funzione generica non valida per 'usemethod'"
 #: src/main/objects.c:681
 #, c-format
 msgid "class name too long in '%s'"
-msgstr ""
+msgstr "nome class troppo lungo in '%s'"
 
 #: src/main/objects.c:352
 msgid "corrupt internals!"
-msgstr ""
+msgstr "routine interne danneggiate!"
 
 #: src/main/objects.c:366
 msgid "there must be a first argument"
@@ -4007,32 +4008,32 @@ msgstr "deve esserci un primo argomento"
 
 #: src/main/objects.c:369
 msgid "arguments after the first two are ignored"
-msgstr ""
+msgstr "gli argomenti successivi ai primi due vengono ignorati"
 
 #: src/main/objects.c:380
 msgid "'UseMethod' called from outside a closure"
-msgstr ""
+msgstr "'UseMethod' chiamato al di fuori di una chiusura"
 
 #: src/main/objects.c:389
 msgid "first argument must be a generic name"
-msgstr ""
+msgstr "il primo argomento deve essere un nome generico"
 
 #: src/main/objects.c:399
 #, c-format
 msgid "no applicable method for \"%s\""
-msgstr ""
+msgstr "nessun metodo applicabile per \"%s\""
 
 #: src/main/objects.c:459
 msgid "'NextMethod' called from outside a function"
-msgstr ""
+msgstr "'NextMethod' chiamato al di fuori di una chiusura"
 
 #: src/main/objects.c:465
 msgid "'NextMethod' called from an anonymous function"
-msgstr ""
+msgstr "'NextMethod' chiamato da una funzione anonima"
 
 #: src/main/objects.c:495
 msgid "no calling generic was found: was a method called directly?"
-msgstr ""
+msgstr "nessuna chiamata generica: il metodo è stato chiamato direttamente?"
 
 #: src/main/objects.c:497
 #, c-format
@@ -4045,19 +4046,19 @@ msgstr "argomento sbagliato ..."
 
 #: src/main/objects.c:587
 msgid "object not specified"
-msgstr ""
+msgstr "oggetto non specificato"
 
 #: src/main/objects.c:597 src/main/objects.c:604
 msgid "generic function not specified"
-msgstr ""
+msgstr "funzione generica non specificata"
 
 #: src/main/objects.c:601
 msgid "invalid generic argument to NextMethod"
-msgstr ""
+msgstr "argomento genrico non valido in NextMethod"
 
 #: src/main/objects.c:616
 msgid "invalid 'group' argument found in NextMethod"
-msgstr ""
+msgstr "argomento 'group' non valido in NextMethod"
 
 #: src/main/objects.c:633
 msgid "wrong value for .Method"
@@ -4075,11 +4076,11 @@ msgstr "metodi incompatibili ignorati"
 #: src/main/objects.c:655
 #, c-format
 msgid "call name too long in '%s'"
-msgstr ""
+msgstr "nome chiamata troppo lungo in '%s'"
 
 #: src/main/objects.c:714 src/main/objects.c:719
 msgid "no method to invoke"
-msgstr ""
+msgstr "nessun metodo da invocare"
 
 #: src/main/objects.c:758
 msgid "cannot unclass an environment"
@@ -4087,7 +4088,7 @@ msgstr "non posso applicare 'unclass' a un environment"
 
 #: src/main/objects.c:761
 msgid "cannot unclass an external pointer"
-msgstr ""
+msgstr "non posso de-classificare un puntatore esterno"
 
 #: src/main/objects.c:837
 msgid "'what' must be a character vector"
@@ -4095,17 +4096,18 @@ msgstr "'what' deve essere un vettore character"
 
 #: src/main/objects.c:842
 msgid "'which' must be a length 1 logical vector"
-msgstr ""
+msgstr "'which' deve essere un vettore logico di lunghezza 1"
 
 #: src/main/objects.c:949
 #, c-format
 msgid "unable to find a non-generic version of function \"%s\""
-msgstr ""
+msgstr "non riesco a trovare una versione generica della funzione \"%s\""
 
 #: src/main/objects.c:989
 msgid ""
 "standardGeneric called without methods dispatch enabled (will be ignored)"
 msgstr ""
+"standardGeneric chiamato senza un dispatch abilitato (sarà ignorato)"
 
 #: src/main/objects.c:996
 msgid "argument to standardGeneric must be a non-empty character string"
@@ -4118,6 +4120,8 @@ msgid ""
 "call to standardGeneric(\"%s\") apparently not from the body of that generic "
 "function"
 msgstr ""
+"chiamata di standardGeneric(\"%s\") apparentemente al di fuori del corpo di quella "
+"funzione generica"
 
 #: src/main/objects.c:1022
 msgid "argument 'code' must be a character string"
@@ -4129,6 +4133,8 @@ msgid ""
 "invalid primitive methods code (\"%s\"): should be \"clear\", \"reset\", "
 "\"set\", or \"suppress\""
 msgstr ""
+"codice metodo primitiva (\"%s\") non valido : dovrebbe essere \"clear\", \"reset\", "
+"\"set\", o \"suppress\""
 
 #: src/main/objects.c:1069
 msgid "invalid object: must be a primitive function"
@@ -4140,10 +4146,12 @@ msgid ""
 "the formal definition of a primitive generic must be a function object (got "
 "type '%s')"
 msgstr ""
-
+"la definzione formale di una primitiva generica deve essere un oggetto funzione "
+"invece è di tipo '%s')"
+ 
 #: src/main/objects.c:1230
 msgid "invalid primitive operation given for dispatch"
-msgstr ""
+msgstr "operazione primitiva non valida fornita per il dispatch"
 
 #: src/main/objects.c:1259
 #, c-format
@@ -4151,38 +4159,40 @@ msgid ""
 "primitive function \"%s\" has been set for methods but no generic function "
 "supplied"
 msgstr ""
+"è stata impostata la funzione primitiva \"%s\" per i metodi ma non è stata "
+"fornita alcuna funzione generica"
 
 #: src/main/objects.c:1276
 msgid "C level MAKE_CLASS macro called with NULL string pointer"
-msgstr ""
+msgstr "macro C MAKE_CLASS chiamata passando un puntatore stringa NULL"
 
 #: src/main/objects.c:1297
 msgid "C level NEW macro called with null class definition pointer"
-msgstr ""
+msgstr "macro C NEW chiamata con puntatore definizione di classe null"
 
 #: src/main/objects.c:1301
 #, c-format
 msgid "trying to generate an object in C from a virtual class (\"%s\")"
-msgstr ""
+msgstr "provo a generare un oggetto in C a partire dalla classe virtuale (\"%s\")"
 
 #: src/main/optim.c:73 src/main/optim.c:99 src/main/optim.c:182
 msgid "non-finite value supplied by optim"
-msgstr ""
+msgstr "valore non finito fornito da optim"
 
 #: src/main/optim.c:80
 #, c-format
 msgid "objective function in optim evaluates to length %d not 1"
-msgstr ""
+msgstr "la funzione obiettivo in optim restituisce valori di lunghezza %d anziché 1"
 
 #: src/main/optim.c:106
 #, c-format
 msgid "gradient in optim evaluated to length %d not %d"
-msgstr ""
+msgstr "il gradiente in optim restituisce valori di lunghezza %d e non %d"
 
 #: src/main/optim.c:189
 #, c-format
 msgid "candidate point in optim evaluated to length %d not %d"
-msgstr ""
+msgstr "il punto candidato in optim ha lunghezza %d e non %d"
 
 #: src/main/optim.c:220 src/main/optim.c:409
 msgid "'fn' is not a function"
@@ -4194,15 +4204,15 @@ msgstr "argomento 'method' non valido"
 
 #: src/main/optim.c:236 src/main/optim.c:415
 msgid "'parscale' is of the wrong length"
-msgstr ""
+msgstr "'parscale' è della lunghezza sbagliata"
 
 #: src/main/optim.c:250
 msgid "'maxit' is not an integer"
-msgstr ""
+msgstr "'maxit' non è un intero"
 
 #: src/main/optim.c:268
 msgid "'tmax' is not an integer"
-msgstr ""
+msgstr "'tmax' non è un intero"
 
 #: src/main/optim.c:270 src/main/optim.c:287 src/main/optim.c:312
 #: src/main/optim.c:342 src/main/optim.c:423
@@ -4212,7 +4222,7 @@ msgstr "'gr' non è una funzione"
 #: src/main/optim.c:293 src/main/optim.c:318 src/main/optim.c:348
 #: src/main/optim.c:429
 msgid "'ndeps' is of the wrong length"
-msgstr ""
+msgstr "'ndeps' è della lunghezza sbagliata"
 
 #: src/main/optim.c:379
 msgid "unknown 'method'"
@@ -4220,15 +4230,15 @@ msgstr "'method' sconosciuto"
 
 #: src/main/optim.c:513
 msgid "REPORT must be > 0 (method = \"BFGS\")"
-msgstr ""
+msgstr "REPORT deve esser > 0 (method = \"BFGS\")"
 
 #: src/main/optim.c:524
 msgid "initial value in 'vmmin' is not finite"
-msgstr ""
+msgstr "valore iniziale in 'vmmin' non finito"
 
 #: src/main/optim.c:672
 msgid "function cannot be evaluated at initial parameters"
-msgstr ""
+msgstr "la funzione non può essere calcalata per i parametri iniziali"
 
 #: src/main/optim.c:869
 msgid "unknown 'type' in CG method of optim"
