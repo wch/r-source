@@ -23,18 +23,20 @@
   packages.
 }
 \usage{
-library(package, help = NULL, lib.loc = .lib.loc,
-        character.only = FALSE, logical.return = FALSE,
-        warn.conflicts = TRUE, keep.source = getOption("keep.source.pkgs"))
+library(package, help, lib.loc = NULL, character.only = FALSE,
+        logical.return = FALSE, warn.conflicts = TRUE,
+        keep.source = getOption("keep.source.pkgs"),
+        verbose = getOption("verbose"))
 require(package, quietly = FALSE, warn.conflicts = TRUE,
         keep.source = getOption("keep.source.pkgs"))
 
 .First.lib(libname, pkgname)
 .Last.lib(libpath)
 
-.packages(all.available = FALSE, lib.loc = .lib.loc)
+.packages(all.available = FALSE, lib.loc = NULL)
 .path.package(package = .packages(), quiet = FALSE)
-.find.package(package, lib.loc = .lib.loc, use.attached, quiet = FALSE)
+.find.package(package, lib.loc = NULL, use.attached, quiet = FALSE,
+              verbose = getOption("verbose"))
 .lib.loc
 .Library
 .Autoloaded
@@ -43,7 +45,8 @@ require(package, quietly = FALSE, warn.conflicts = TRUE,
   \item{package, help}{\link{name} or character string giving the name
     of a package.}
   \item{lib.loc}{a character vector describing the location of \R
-    library trees to search through.}
+    library trees to search through, or \code{NULL}.  The default value
+    of \code{NULL} corresponds to all libraries currently known.}
   \item{character.only}{a logical indicating whether \code{package} or
     \code{help} can be assumed to be character strings.}
   \item{logical.return}{logical.  If it is \code{TRUE},  \code{FALSE} or
@@ -52,7 +55,10 @@ require(package, quietly = FALSE, warn.conflicts = TRUE,
     printed about \code{\link{conflicts}} from attaching the new
     package, unless that package contains an object \code{.conflicts.OK}.}
   \item{keep.source}{logical.  If \code{TRUE}, functions ``keep their
-    source'' including comments, see \code{\link{options}(keep.source = *)}.}
+    source'' including comments, see argument \code{keep.source} to
+    \code{\link{options}}.}
+  \item{verbose}{a logical.  If \code{TRUE}, additional diagnostics are
+    printed.}  
   \item{quietly}{a logical.  If \code{TRUE}, a warning will not be
     printed if the package cannot be found.}
   \item{libname}{a character string giving the library directory where
@@ -83,12 +89,12 @@ require(package, quietly = FALSE, warn.conflicts = TRUE,
   a bit of memory.
 
   If \code{library} is called with no \code{package} or \code{help}
-  argument, it lists all available packages in \code{lib.loc} and
-  returns the corresponding information in an object of class
-  \code{"libraryIQR"}.  The structure of this class may change in future
-  versions.  In earlier versions of R, only the names of all available
-  packages were returned; use \code{.packages(all = TRUE)} for obtaining
-  these.
+  argument, it lists all available packages in the libraries specified
+  by \code{lib.loc}, and returns the corresponding information in an
+  object of class \code{"libraryIQR"}.  The structure of this class may
+  change in future versions.  In earlier versions of R, only the names
+  of all available packages were returned; use \code{.packages(all =
+    TRUE)} for obtaining these.
 
   \code{library(help = somename)} prints information on the package
   \code{somename}, typically by listing the most important user level
@@ -127,16 +133,20 @@ require(package, quietly = FALSE, warn.conflicts = TRUE,
   \code{.path.package} returns the paths from which the named packages
   were loaded, or if none were named, for all currently loaded packages.
   Unless \code{quiet = TRUE} it will warn if some of the packages named
-  are not loaded, and given an error if none are.
+  are not loaded, and given an error if none are.  This function is not
+  meant to be called by users, and its interface might change in future
+  versions.
 
   \code{.find.package} returns the paths to the locations where the
-  names packages can be found.  If \code{lib.loc} is not given or
-  \code{use.attached} is \code{TRUE}, then attached packages are
-  searched before the libraries.  If a package is found more than once,
-  the first match is used.  Unless \code{quiet = TRUE} a warning will be
-  given about the named packages which are not found, and an error if
-  none are.  This function is not meant to be called by users, and its
-  interface might change in future versions.
+  given packages can be found.  If \code{lib.loc} is \code{NULL}, then
+  then attached packages are searched before the libraries.  If a
+  package is found more than once, the first match is used.  Unless
+  \code{quiet = TRUE} a warning will be given about the named packages
+  which are not found, and an error if none are.  If \code{verbose} is
+  true, warnings about packages found more than once are given.
+  Argument \code{use.attached} is deprecated.  This function is not
+  meant to be called by users, and its interface might change in future
+  versions.
 
   \code{.Autoloaded} contains the ``base names'' of the packages for
   which autoloading has been promised.

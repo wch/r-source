@@ -2,7 +2,7 @@
 \alias{undoc}
 \title{Find Undocumented Objects}
 \usage{
-undoc(package, dir, lib.loc = .lib.loc)
+undoc(package, dir, lib.loc = NULL)
 }
 \description{
   Finds the objects in a package which are undocumented, in the sense
@@ -16,8 +16,10 @@ undoc(package, dir, lib.loc = .lib.loc)
     with \R documentation sources (in Rd format), and at least one of
     the \file{R} or \file{data} subdirectories with \R code or data
     objects, respectively.}
-  \item{lib.loc}{a character vector describing the location of \R
-    library trees to search for \code{package}.}
+  \item{lib.loc}{a character vector of directory names of \R libraries,
+    or \code{NULL}.  The default value of \code{NULL} corresponds to all
+    libraries currently known.  The specified library trees are used to
+    to search for \code{package}.}
 }
 \details{
   This function is useful for package maintainers mostly.  In principle,

@@ -10,7 +10,7 @@
   use \code{TRUE} and \code{FALSE} for the logicals.
 }
 \usage{
-checkTnF(package, dir, file, lib.loc = .lib.loc)
+checkTnF(package, dir, file, lib.loc = NULL)
 }
 \arguments{
   \item{package}{a character string naming an installed package.  If
@@ -21,8 +21,10 @@ checkTnF(package, dir, file, lib.loc = .lib.loc)
     (for R code).  Only used if \code{package} is not given.}
   \item{file}{the name of a file containing R code to be checked.  Used
     if neither \code{package} nor \code{dir} are given.}
-  \item{lib.loc}{a character vector describing the location of \R
-    library trees to search for \code{package}.}
+  \item{lib.loc}{a character vector of directory names of \R libraries,
+    or \code{NULL}.  The default value of \code{NULL} corresponds to all
+    libraries currently known.  The specified library trees are used to
+    to search for \code{package}.}
 }
 \section{Warning}{
   This function is still experimental.  Both name and interface might

@@ -1,7 +1,7 @@
 \name{example}
 \title{Run an Examples Section from the Online Help}
 \usage{
-example(topic, package = .packages(), lib.loc = .lib.loc,
+example(topic, package = .packages(), lib.loc = NULL,
         echo = TRUE, verbose = getOption("verbose"),
         prompt.echo = paste(abbreviate(topic, 6),"> ", sep=""))
 }
@@ -11,9 +11,10 @@ example(topic, package = .packages(), lib.loc = .lib.loc,
     the examples of which should be run.}
   \item{package}{a character vector with package names. By default,
     all packages in the search path are used.}
-  \item{lib.loc}{a character vector of directory names of \R libraries.
-    Defaults to all libraries currently known. If the default is used,
-    the loaded packages are searched before the libraries.}
+  \item{lib.loc}{a character vector of directory names of \R libraries,
+    or \code{NULL}.  The default value of \code{NULL} corresponds to all
+    libraries currently known.  If the default is used, the loaded
+    packages are searched before the libraries.}
   \item{echo}{logical;  if \code{TRUE}, show the \R input when sourcing.}
   \item{verbose}{logical;  if \code{TRUE}, show even more when running
     example code.}

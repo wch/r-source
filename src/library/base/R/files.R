@@ -99,7 +99,8 @@ print.octmode <- function(x, ...)
 }
 
 system.file <-
-function(..., package = "base", lib.loc = .lib.loc, pkg, lib) {
+function(..., package = "base", lib.loc = NULL, pkg, lib)
+{
     if(nargs() == 0)
         return(file.path(.Library, "base"))
     if(!missing(pkg)) {
@@ -112,9 +113,7 @@ function(..., package = "base", lib.loc = .lib.loc, pkg, lib) {
     }
     if(length(package) != 1)
         stop("argument `package' must be of length 1")
-    packagePath <- .find.package(package, lib.loc,
-                                 missing(lib.loc) && missing(lib),
-                                 quiet = TRUE)
+    packagePath <- .find.package(package, lib.loc, quiet = TRUE)
     if(length(packagePath) == 0)
         return("")
     FILES <- file.path(packagePath, ...)

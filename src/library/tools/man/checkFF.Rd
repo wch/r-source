@@ -2,7 +2,7 @@
 \alias{checkFF}
 \title{Check Foreign Function Calls}
 \usage{
-checkFF(package, dir, file, lib.loc = .lib.loc,
+checkFF(package, dir, file, lib.loc = NULL,
         verbose = getOption("verbose"))
 }
 \description{
@@ -19,8 +19,10 @@ checkFF(package, dir, file, lib.loc = .lib.loc,
     (for R code).  Only used if \code{package} is not given.}
   \item{file}{the name of a file containing R code to be checked.  Used
     if neither \code{package} nor \code{dir} are given.}
-  \item{lib.loc}{a character vector describing the location of \R
-    library trees to search for \code{package}.}
+  \item{lib.loc}{a character vector of directory names of \R libraries,
+    or \code{NULL}.  The default value of \code{NULL} corresponds to all
+    libraries currently known.  The specified library trees are used to
+    to search for \code{package}.}
   \item{verbose}{a logical.  If \code{TRUE}, additional diagnostics are
     printed.}
 }

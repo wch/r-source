@@ -1,9 +1,10 @@
 data <-
 function(..., list = character(0),
-         ## package = c(.packages(), .Autoloaded),
-         package = .packages(),
-         lib.loc = .lib.loc, verbose = getOption("verbose"))
+         package = .packages(), lib.loc = NULL,
+         verbose = getOption("verbose"))
 {
+    sQuote <- function(s) paste("`", s, "'", sep = "")
+    
     names <- c(as.character(substitute(list(...))[-1]), list)
     if(!missing(package))
         if(is.name(y <- substitute(package)))
@@ -11,27 +12,43 @@ function(..., list = character(0),
     found <- FALSE
     fsep <- .Platform$file.sep
 
+    ## Find the directories of the given packages and maybe the working
+    ## directory.
+    paths <- .find.package(package, lib.loc, verbose = verbose)    
+    if(is.null(lib.loc))
+        paths <- c(.path.package(package, TRUE), getwd(), paths)
+    paths <- unique(paths[file.exists(paths)])
+
+    ## Find the directories with a `data' subdirectory.
+    nodata <- !file.exists(file.path(paths, "data"))
+    if(any(nodata)) {
+        if(!missing(package) && (length(package) > 0)) {
+            ## Warn about given packages which do not have a `data'
+            ## subdirectory.
+            packagesWithNoData <-
+                package[package %in% sapply(paths[nodata], basename)]
+            if(length(packagesWithNoData) > 1) {
+                warning(paste("packages",
+                              paste(sQuote(packagesWithNoData),
+                                    collapse=", "),
+                              "contain no datasets"))
+            }
+            else if(length(packagesWithNoData) == 1) {
+                warning(paste("package", sQuote(packagesWithNoData),
+                              "contains no datasets"))
+
+            }
+        }
+        paths <- paths[!nodata]
+    }
+
     if(length(names) == 0) {
         ## Give `index' of all possible data sets.
 
-        ## <FIXME>
-        ## This is different from what is done for loading data sets:
-        ## here, we warn/stop if given packages are not found.
-        paths <- .find.package(package, lib.loc)
-        ## </FIXME>
-        if(missing(lib.loc))
-            paths <- c(.path.package(package, TRUE), getwd(), paths)
-        paths <- unique(paths[file.exists(paths)])
-
         ## Build the data db.
         db <- matrix(character(0), nr = 0, nc = 4)
-        nodata <- noindex <- character(0)
+        noindex <- character(0)
         for(path in paths) {
-            pkg <- basename(path)
-            if(!file.exists(file.path(path, "data"))) {
-                nodata <- c(nodata, pkg)
-                next
-            }
             INDEX <- file.path(path, "data", "00Index")
             ## <NOTE>
             ## Earlier versions also used to check for `index.doc'.
@@ -42,30 +59,30 @@ function(..., list = character(0),
                                   dirname(path),
                                   read.00Index(INDEX)))
             else {
-                ## no index: check for datasets -- won't work if zipped
+                ## no index: check for datasets---won't work if zipped
                 if(length(list.files(file.path(path, "data"))) > 0)
-                    noindex <- c(noindex, pkg)
+                    noindex <- c(noindex, basename(path))
             }
         }
         colnames(db) <- c("Package", "LibPath", "Item", "Title")
 
-        if(!missing(package) && (length(package) > 0)) {
-            nodata <- nodata[nodata %in% package]
-            if(length(nodata) > 1)
-                warning(paste("packages `",
-                              paste(nodata, collapse=", "),
-                              "' contain no datasets", sep=""))
-            else if(length(nodata) == 1)
-                warning(paste("package `", nodata,
-                              "' contains no datasets", sep=""))
+        if(length(noindex) > 0) {
+            if(!missing(package) && (length(package) > 0)) {
+                ## Warn about given packages which do not have a data
+                ## index.
+                packagesWithNoIndex <- package[package %in% noindex]        
+                if(length(packagesWithNoIndex) > 1) {
+                    warning(paste("packages",
+                                  paste(sQuote(packagesWithNoIndex),
+                                        collapse=", "),
+                                  "contain datasets but no index"))
+                }
+                else if(length(packagesWithNoIndex) == 1)
+                    warning(paste("package", sQuote(packagesWithNoIndex),
+                                  "contains datasets but no index"))
+            }
         }
-        if(length(noindex) > 1)
-            warning(paste("packages `", paste(noindex, collapse=", "),
-                          "' contain datasets but no index", sep=""))
-        else if(length(noindex) == 1)
-            warning(paste("package `", noindex,
-                          "' contains datasets but no index", sep=""))
-
+        
         footer <- if(missing(package))
             paste("Use `data(package = ",
                   ".packages(all.available = TRUE))'\n",
@@ -79,21 +96,18 @@ function(..., list = character(0),
         return(y)
     }
 
+    paths <- file.path(paths, "data")
     for(name in names) {
-        paths <- .find.package(package, lib.loc, quiet = TRUE)
-        if(missing(lib.loc))
-            paths <- c(.path.package(package, TRUE), getwd(), paths)
-        paths <- file.path(paths, "data")
-        paths <- unique(paths[file.exists(paths)])
         files <- NULL
         for (p in paths) {
             if(file.exists(file.path(p, "Rdata.zip"))) {
                 if(file.exists(fp <- file.path(p, "filelist")))
-                    files <- c(files,
-                               file.path(p, scan(fp, what="", quiet = TRUE)))
+                    files <-
+                        c(files,
+                          file.path(p, scan(fp, what="", quiet = TRUE)))
                 else warning(paste("`filelist' is missing for dir", p))
             } else {
-                files <- c(files, list.files(p, full=TRUE))
+                files <- c(files, list.files(p, full = TRUE))
             }
         }
         files <- files[grep(name, files)]
@@ -135,7 +149,7 @@ function(..., list = character(0),
             }
         }
         if (!found)
-            warning(paste("Data set `", name, "' not found", sep = ""))
+            warning(paste("Data set", sQuote(name), "not found"))
     }
     invisible(names)
 }

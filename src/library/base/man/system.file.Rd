@@ -1,7 +1,7 @@
 \name{system.file}
 \title{Find Names of R System Files}
 \usage{
-system.file(\dots, package = "base", lib.loc = .lib.loc, pkg, lib)
+system.file(\dots, package = "base", lib.loc = NULL, pkg, lib)
 }
 \alias{system.file}
 \arguments{
@@ -10,9 +10,10 @@ system.file(\dots, package = "base", lib.loc = .lib.loc, pkg, lib)
     root of the package.  Wildcards are not supported.}
   \item{package}{a character string with the name of a single package.
     An error occurs if more than one package name is given.}
-  \item{lib.loc}{a character vector with path names of \R libraries.
-    Defaults to all libraries currently known.  If the default is used,
-    the loaded packages are searched before the libraries.}
+  \item{lib.loc}{a character vector with path names of \R libraries, or
+    \code{NULL}.  The default value of \code{NULL} corresponds to all
+    libraries currently known.  If the default is used, the loaded
+    packages are searched before the libraries.}
   \item{pkg}{previous name for argument \code{package}.  Deprecated.}
   \item{lib}{previous name for argument \code{lib.loc}.  Deprecated.}
 }

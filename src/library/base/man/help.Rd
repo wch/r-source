@@ -2,7 +2,7 @@
 \title{Documentation}
 \usage{
 help(topic, offline = FALSE, package = .packages(),
-     lib.loc = .lib.loc, verbose = getOption("verbose"),
+     lib.loc = NULL, verbose = getOption("verbose"),
      try.all.packages = getOption("help.try.all.packages"),
 #ifdef unix
      htmlhelp = getOption("htmlhelp"),
@@ -28,9 +28,10 @@ help(topic, offline = FALSE, package = .packages(),
  \item{package}{a name or character vector giving the packages to look
    into for documentation.  By default, all packages in the search path
    are used.}
- \item{lib.loc}{a character vector of directory names of \R libraries.
-   Defaults to all libraries currently known. If the default is used,
-   the loaded packages are searched before the libraries.}
+ \item{lib.loc}{a character vector of directory names of \R libraries,
+   or \code{NULL}.  The default value of \code{NULL} corresponds to all
+   libraries currently known.  If the default is used, the loaded
+   packages are searched before the libraries.}
  \item{verbose}{logical; if \code{TRUE}, the file name is reported.}
  \item{try.all.packages}{logical; see \code{Notes}.}
 #ifdef unix

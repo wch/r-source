@@ -7,7 +7,7 @@
 }
 \usage{
 data(\dots, list = character(0), package = .packages(),
-     lib.loc = .lib.loc, verbose = getOption("verbose"))
+     lib.loc = NULL, verbose = getOption("verbose"))
 }
 \arguments{
   \item{\dots}{a sequence of names or character strings.}
@@ -16,9 +16,10 @@ data(\dots, list = character(0), package = .packages(),
     into for data sets.  By default, all packages in the search path are
     used, then the \file{data} directory (if present) of the current
     working directory.} 
-  \item{lib.loc}{a character vector of directory names of \R libraries.
-    Defaults to all libraries currently known.  If the default is used,
-    the loaded packages are searched before the libraries.}
+  \item{lib.loc}{a character vector of directory names of \R libraries,
+    or \code{NULL}.  The default value of \code{NULL} corresponds to all
+    libraries currently known.  If the default is used, the loaded
+    packages are searched before the libraries.}
   \item{verbose}{a logical.  If \code{TRUE}, additional diagnostics are
     printed.}
 }

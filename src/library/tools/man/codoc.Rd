@@ -3,7 +3,7 @@
 \alias{print.codoc}
 \title{Check Code/Documentation Consistency}
 \usage{
-codoc(package, dir, lib.loc = .lib.loc,
+codoc(package, dir, lib.loc = NULL,
       use.values = FALSE, use.positions = TRUE,
       ignore.generic.functions = FALSE,
       keep.tempfiles = FALSE,
@@ -21,8 +21,10 @@ codoc(package, dir, lib.loc = .lib.loc,
     source directory.  This must contain the subdirectories \file{man}
     with \R documentation sources (in Rd format) and \file{R} with \R
     code.  Only used if \code{package} is not given.}
-  \item{lib.loc}{a character vector describing the location of \R
-    library trees to search for \code{package}.}
+  \item{lib.loc}{a character vector of directory names of \R libraries,
+    or \code{NULL}.  The default value of \code{NULL} corresponds to all
+    libraries currently known.  The specified library trees are used to
+    to search for \code{package}.}
   \item{use.positions}{a logical indicating whether to use the positions
     of function arguments when comparing.}
   \item{use.values}{a logical indicating whether to use function default

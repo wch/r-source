@@ -9,10 +9,10 @@
   Functions for performing various quality checks.
 }
 \usage{
-checkAssignFuns(package, dir, lib.loc = .lib.loc)
-checkDocArgs(package, dir, lib.loc = .lib.loc)
-checkDocStyle(package, dir, lib.loc = .lib.loc)
-checkMethods(package, dir, lib.loc = .lib.loc)
+checkAssignFuns(package, dir, lib.loc = NULL)
+checkDocArgs(package, dir, lib.loc = NULL)
+checkDocStyle(package, dir, lib.loc = NULL)
+checkMethods(package, dir, lib.loc = NULL)
 }
 \arguments{
   \item{package}{a character string naming an installed package.}
@@ -20,8 +20,10 @@ checkMethods(package, dir, lib.loc = .lib.loc)
     source directory.  This should contain the subdirectories \code{R}
     (for R code) and \file{man} with \R documentation sources (in Rd
     format).  Only used if \code{package} is not given.}
-  \item{lib.loc}{a character vector describing the location of \R
-    library trees to search for \code{package}.}
+  \item{lib.loc}{a character vector of directory names of \R libraries,
+    or \code{NULL}.  The default value of \code{NULL} corresponds to all
+    libraries currently known.  The specified library trees are used to
+    to search for \code{package}.}
 }
 \details{
   \code{checkAssignFuns} checks whether assignment functions in the

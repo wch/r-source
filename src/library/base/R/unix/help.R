@@ -1,7 +1,7 @@
 ### NOTE: This is for Unix only (cf. ../{mac,windows}/help.R)
 
 help <- function(topic, offline = FALSE, package = .packages(),
-                 lib.loc = .lib.loc, verbose = getOption("verbose"),
+                 lib.loc = NULL, verbose = getOption("verbose"),
                  try.all.packages = getOption("help.try.all.packages"),
                  htmlhelp = getOption("htmlhelp"),
                  pager = getOption("pager"))
@@ -28,8 +28,7 @@ help <- function(topic, offline = FALSE, package = .packages(),
         else if (!is.na(match(topic, c("%*%"))))
             topic <- "matmult"
         type <- if(offline) "latex" else if (htmlhelp) "html" else "help"
-        INDICES <- .find.package(package, lib.loc, missing(lib.loc),
-                                 quiet = TRUE)
+        INDICES <- .find.package(package, lib.loc, verbose = verbose)
         file <- index.search(topic, INDICES, "AnIndex", type)
         if (length(file) && file != "") {
             if (verbose)
@@ -134,7 +133,9 @@ help <- function(topic, offline = FALSE, package = .packages(),
                 try.all.packages <- FALSE
             if(try.all.packages && missing(package) && missing(lib.loc)) {
                 ## try all the remaining packages
-                packages <- .packages(all.available = TRUE, lib.loc = lib.loc)
+                lib.loc <- .lib.loc
+                packages <- .packages(all.available = TRUE,
+                                      lib.loc = lib.loc)
                 packages <- packages[is.na(match(packages, .packages()))]
                 pkgs <- libs <- character(0)
                 for (lib in lib.loc)
@@ -174,8 +175,8 @@ help <- function(topic, offline = FALSE, package = .packages(),
         }
     }
     else if (!missing(package))
-        library(help = package, lib = lib.loc, character.only = TRUE)
+        library(help = package, lib.loc = lib.loc, character.only = TRUE)
     else if (!missing(lib.loc))
-        library(lib = lib.loc)
+        library(lib.loc = lib.loc)
     else help("help", package = "base", lib.loc = .Library)
 }

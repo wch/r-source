@@ -1,7 +1,7 @@
 help.search <-
 function(pattern, fields = c("alias", "title"),
          apropos, keyword, whatis, ignore.case = TRUE,
-         package = NULL, lib.loc = .lib.loc,
+         package = NULL, lib.loc = NULL,
          help.db = getOption("help.db"),
          verbose = getOption("verbose"),
          rebuild = FALSE)
@@ -59,6 +59,8 @@ function(pattern, fields = c("alias", "title"),
             cat("Packages:\n")
             np <- 0
         }
+        if(is.null(lib.loc))
+            lib.loc <- .lib.loc
         if(is.null(package))
             package <-.packages(all.available = TRUE, lib.loc = lib.loc)
         for(p in package) {

@@ -11,7 +11,7 @@
 \usage{
 help.search(pattern, fields = c("alias", "title"),
             apropos, keyword, whatis, ignore.case = TRUE,
-            package = NULL, lib.loc = .lib.loc,
+            package = NULL, lib.loc = NULL,
             help.db = getOption("help.db"),
             verbose = getOption("verbose"),
             rebuild = FALSE)
@@ -39,7 +39,8 @@ help.search(pattern, fields = c("alias", "title"),
     packages in the specified library trees \code{lib.loc} are
     searched.}
   \item{lib.loc}{a character vector describing the location of \R
-    library trees to search through.}
+    library trees to search through, or \code{NULL}.  The default value
+    of \code{NULL} corresponds to all libraries currently known.}
   \item{help.db}{a character string giving the file path to a previously
     built and saved help data base, or \code{NULL}.}
   \item{verbose}{logical; if \code{TRUE}, the search process is traced.}

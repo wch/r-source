@@ -112,13 +112,12 @@ function(file, envir = NULL, chdir = FALSE,
 
 demo <-
 function(topic, device = getOption("device"),
-         package = .packages(), lib.loc = .lib.loc,
-         character.only = FALSE)
+         package = .packages(), lib.loc = NULL,
+         character.only = FALSE, verbose = getOption("verbose"))
 {
-    fQuote <- function(s) paste("`", s, "'", sep = "")
-    
-    paths <- .find.package(package, lib.loc, missing(lib.loc),
-                           quiet = TRUE)
+    sQuote <- function(s) paste("`", s, "'", sep = "")
+
+    paths <- .find.package(package, lib.loc, verbose = verbose)
 
     if(missing(topic)) {
         ## List all available demos.
@@ -164,14 +163,14 @@ function(topic, device = getOption("device"),
         }
     }
     if(length(available) == 0)
-        stop(paste("No demo found for topic", fQuote(topic)))
+        stop(paste("No demo found for topic", sQuote(topic)))
     if(length(available) > 1) {
         available <- available[1]
         warning("Demo for topic",
-                fQuote(topic),
+                sQuote(topic),
                 "found more than once,\n",
                 "using the one found in",
-                fQuote(dirname(available[1])))
+                sQuote(dirname(available[1])))
     }
     cat("\n\n",
         "\tdemo(", topic, ")\n",
@@ -185,32 +184,34 @@ function(topic, device = getOption("device"),
 }
                 
 example <-
-function(topic, package = .packages(), lib.loc = .lib.loc,
+function(topic, package = .packages(), lib.loc = NULL,
          echo = TRUE, verbose = getOption("verbose"),
          prompt.echo = paste(abbreviate(topic, 6), "> ", sep = ""))
 {
+    sQuote <- function(s) paste("`", s, "'", sep = "")
+    
     topic <- substitute(topic)
     if(!is.character(topic))
 	topic <- deparse(topic)[1]
-    INDICES <- .find.package(package, lib.loc, missing(lib.loc),
-                             quiet = TRUE)
+    INDICES <- .find.package(package, lib.loc, verbose = verbose)
     file <- index.search(topic, INDICES, "AnIndex", "R-ex")
     if(file == "") {
-	warning(paste("No help file found for `", topic, "'", sep = ""))
+	warning(paste("No help file found for", sQuote(topic)))
 	return(invisible())
     }
     comp <- strsplit(file, .Platform$file.sep)[[1]]
     pkg <- comp[length(comp) - 2]
     if(length(file) > 1)
-	warning(paste("More than one help file found: using package", pkg))
+	warning(paste("More than one help file found: using package",
+                      sQuote(pkg)))
     lib <- sub(file.path("", pkg, "R-ex", ".*\\.R"), "", file[1])
     ## experimental code
     zfile <- zip.file.extract(file, "Rex.zip")
     if(zfile != file) on.exit(unlink(zfile))
     ## end of experimental code
     if(!file.exists(zfile)) {
-	warning(paste("`", topic, "' has a help file but no examples file",
-		      sep = ""))
+	warning(paste(sQuote(topic),
+                      "has a help file but no examples file",))
 	return(invisible())
     }
     if(pkg != "base")
