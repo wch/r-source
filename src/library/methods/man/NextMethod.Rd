@@ -13,17 +13,21 @@ callNextMethod(...)
 }
 \arguments{
   \item{\dots}{
-The arguments to the function in its next call
-(but note that the dispatch is as described below.) 
+Optionally, the arguments to the function in its next call
+(but note that the dispatch is as in the detailed description below;
+the arguments have no effect on selecting the next method.) 
 
-Eventually, the implementation will accept a call with no arguments.
-The current (R 1.7) implementation requires arguments; typically,
-these will be the same as the arguments of the generic function
-itself, in order to pass the current arguments to the next method.
+If no arguments are included in the call to \code{callNextMethod}, the
+    effect is to call the method with the current arguments.
+    See the detailed description for what this really means.
+
+Calling with no arguments is often the natural way to use
+    \code{callNextMethod}; see the examples.
     }
 }
 \details{
-  The definition of the first inherited method is that is the method
+  The ``next'' method (i.e., the first inherited method) is defined to
+    be that method
   which \emph{would} have been called if the current method did not
   exist.
   This is more-or-less literally what happens: The current method is
@@ -33,10 +37,15 @@ itself, in order to pass the current arguments to the next method.
   happens once per session per combination of argument classes).
 
   It is also legal, and often useful, for the method called by
-  \code{callNextMethod} to itself have a call to \code{callNextMethod}.  This
-  works the same way, except that now two methods are deleted before
-  selecting the next method, and so on for further nested calls to
-  \code{callNextMethod}.
+  \code{callNextMethod} to itself have a call to
+  \code{callNextMethod}. This generally works as you would expect, but
+  for completeness be aware that it is possible to have ambiguous
+  inheritance in the S structure, in the sense that the same two
+  classes can appear as superclasses \emph{in the opposite order} in
+  two other class definitions.  In this case the effect of a nested
+  instance of \code{callNextMethod} is not well defined.  Such
+  inconsistent class hierarchies are both rare and nearly always the
+  result of bad design, but they are possible, and currently undetected.
 
   The statement that the method is called with the current arguments is
   more precisely as follows.  Arguments that were missing in the current
@@ -81,9 +90,9 @@ setClass("B2", representation("B1", b2 = "logical"))
 
 f <- function(x) class(x)
 
-setMethod("f", "B0", function(x) c(x@b0, callNextMethod(x)))
+setMethod("f", "B0", function(x) c(x@b0, callNextMethod()))
 
-setMethod("f", "B2", function(x) c(x@b2, callNextMethod(x)))
+setMethod("f", "B2", function(x) c(x@b2, callNextMethod()))
 
 b2 <- new("B2", b2 = FALSE, b0 = 10)
 
@@ -92,6 +101,30 @@ b1 <- new("B1", b0 = 2)
 f(b2)
 
 f(b1)
+
+\testonly{
+
+stopifnot(identical(f(b2), c(b2@b2, b2@b0, "B2")))
+
+
+
+## next methods calling next methods; using group generics
+setMethod("Ops", "B2",
+    function(e1, e2) callNextMethod())
+setMethod("Ops", c("B0","numeric"),
+    function(e1, e2) callNextMethod(e1@b0, e2))
+
+b2 + 1 # 11
+
+b1 == 2 # TRUE
+
+removeClass("B2"); removeClass("B1"); removeClass("B0")
+
+removeGeneric("f")
+
+removeMethods("Ops")
+
+}
 
 }
 \keyword{programming}

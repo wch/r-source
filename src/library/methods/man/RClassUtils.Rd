@@ -67,7 +67,7 @@
 \usage{
 testVirtual(properties, extends, prototype)
 
-makePrototypeFromClassDef(properties, prototype, extends)
+makePrototypeFromClassDef(properties, ClassDef, extends)
 
 newEmptyObject()
 
@@ -164,14 +164,17 @@ setDataPart(object, value)
 
       If the class has slots, then the prototype for each slot is used
       by default, but a corresponding element in the explicitly supplied
-      prototype, if there is one, is used instead (but it must be
-      coercible to the class of the slot).
+      prototype in \code{ClassDef}, if there is one, is used instead (but it must be
+      coercible to the class of the slot). This includes the data part
+      (\code{".Data"} slot) if there is one.
 
       If there are no slots but a non-null prototype was specified, this
       is returned.
 
-      If there is a single non-virtual superclass (a class in the
-      extends list), then its prototype is used.
+      If there is a non-virtual superclass (a class in the
+      extends list), then its prototype is used.  The data part is
+      extracted if needed (it is allowed to have two superclasses
+      with a data part; the first is used and a warning issued on any others).
 
       If all three of the above fail, the prototype is \code{NULL}.
     }

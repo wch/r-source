@@ -1,14 +1,19 @@
 \name{MethodDefinition-class}
 \docType{class}
 \alias{MethodDefinition-class}
+\alias{SealedMethodDefinition-class}
 \title{Classes to Represent Method Definitions}
 \description{
   These classes extend the basic class \code{"function"} when
   functions are to be stored and used as method definitions.
 }
 \section{Objects from the Class}{
-  The action of setting a method creates an object of this class.  It's
+  The action of setting a method by a call to \code{\link{setMethod}} creates an object of this class.  It's
   unwise to create them directly.
+
+  The class \code{"SealedMethodDefinition"} is created by a call to
+  \code{\link{setMethod}} with argument \code{sealed = TRUE}.  It has
+  the same representation as \code{"MethodDefinition"}.
 }
 \section{Slots}{
   \describe{
