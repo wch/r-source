@@ -1089,7 +1089,7 @@ SEXP do_textconnection(SEXP call, SEXP op, SEXP args, SEXP env)
 
 /* ------------------- socket connections  --------------------- */
 
-
+#if defined(Win32) || defined(HAVE_BSD_NETWORKING)
 static void sock_open(Rconnection con)
 {
     Rsockconn this = (Rsockconn)con->private;
@@ -1208,6 +1208,7 @@ static Rconnection newsock(char *host, int port, int server, char *mode)
     ((Rsockconn)new->private)-> server = server;
     return new;
 }
+#endif
 
 /* socketConnection(host, port, server, blocking, open, encoding) */
 SEXP do_sockconn(SEXP call, SEXP op, SEXP args, SEXP env)
