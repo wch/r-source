@@ -172,7 +172,8 @@ NEW FEATURES
 
     o	interaction() has new argument 'sep'.
 
-    o	interaction.plot() allows 'type = "b"'.
+    o	interaction.plot() allows 'type = "b"' and doesn't give spurious
+	warnings when passed a matplot()-only argument such as 'main'.
 
     o	New functions is.leaf(), dendrapply() and a labels() method for
 	dendrogram objects.

@@ -84,7 +84,7 @@ with(OrchardSprays, {
 })
 
 with(esoph, {
-  interaction.plot(agegp, alcgp, ncases/ncontrols)
+  interaction.plot(agegp, alcgp, ncases/ncontrols, main = "'esoph' Data")
   interaction.plot(agegp, tobgp, ncases/ncontrols, trace.label="tobacco",
 		   fixed=TRUE, xaxt = "n")
 })
@@ -97,7 +97,8 @@ with(esophNA, {
   interaction.plot(agegp, alcgp, ncases/ncontrols, col= 2:5, type = "b")
   ## alternative take non-NA's  {"cheating"}
   interaction.plot(agegp, alcgp, ncases/ncontrols, col= 2:5,
-                   fun = function(x) mean(x, na.rm=TRUE))
+                   fun = function(x) mean(x, na.rm=TRUE),
+                   sub = "function(x) mean(x, na.rm=TRUE)")
 })
 rm(esophNA) # to clear up
 }
