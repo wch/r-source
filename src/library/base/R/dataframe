@@ -39,9 +39,12 @@ data.frame <- function (..., row.names=NULL, col.names=NULL, as.is=FALSE)
 			frame[[i]] <- frame.cvt(frame[[i]], as.is=as.is[i])
 	}
  }
- .Internal(data.frame(frame,
-		      as.character(if (is.null(row.names))1:n else row.names),
-		      as.logical(as.is)))
+ DF <- .Internal(data.frame(frame,
+                            as.character(row.names),
+                            as.logical(as.is)))
+ if (is.null(row.names))
+   rownames(DF) <- 1 : nrow(DF)
+ DF
 }
 
 row.names <- function(x) attr(x,"row.names")
