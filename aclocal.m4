@@ -46,18 +46,22 @@ AC_DEFUN(R_PROG_ECHO_N,
 dnl
 dnl R_PROG_PERL
 dnl
+changequote(<<, >>)dnl
+define(PERL5_CHECK,
+<<
+  if ${PERL} -e 'exit 1 if $]<5'
+  then
+    r_cv_prog_perl_v5=yes
+  else
+    r_cv_prog_perl_v5=no
+  fi
+>>)
+changequote([, ]) dnl
 AC_DEFUN(R_PROG_PERL,
  [AC_PATH_PROG(PERL, perl)
   if test -n "${PERL}"; then
     AC_CACHE_CHECK([whether perl version is at least 5],
-      r_cv_prog_perl_v5,
-      [ ${PERL} -e 'require 5' 2>/dev/null
-        if test ${?} -eq 0; then
-	  r_cv_prog_perl_v5=yes
-	else
-	  r_cv_prog_perl_v5=no
-	fi
-      ])
+      r_cv_prog_perl_v5, [PERL5_CHECK()] )
   else
     PERL=false
   fi
