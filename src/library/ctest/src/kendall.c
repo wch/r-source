@@ -4,10 +4,8 @@
    pairs.
    */
 
-#include <S.h>
+#include <R.h>
 #include <R_ext/Mathlib.h>
-
-#include "ctest.h"
 
 static double **w;
 

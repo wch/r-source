@@ -3,10 +3,7 @@
    Heavily hand-edited by KH.
  */
 
-#include <math.h>
-#include <S.h>
-
-#include "ctest.h"
+#include <R.h>
 
 #undef min
 #undef max

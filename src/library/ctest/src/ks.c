@@ -3,9 +3,7 @@
    distribution(s) of the Kolmogorov-Smirnov statistics.
    */
 
-#include <math.h>
-
-#include "ctest.h"
+#include <R.h>
 
 void
 pkstwo(Sint *n, double *x, double *tol) {
