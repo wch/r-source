@@ -1232,7 +1232,6 @@ SEXP do_persp(SEXP call, SEXP op, SEXP args, SEXP env)
 
 SEXP do_shade(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-
     SEXP x, y, z, xlim, ylim, zlim;
     SEXP shading, t;
     int nx, ny;
@@ -1246,8 +1245,6 @@ SEXP do_shade(SEXP call, SEXP op, SEXP args, SEXP env)
     double ambient, diffuse;
     Vector3d light, u;
 
-    printf("Shading...\n");
-    
     PROTECT(x = coerceVector(CAR(args), REALSXP));
     if (length(x) < 2) errorcall(call, "invalid x argument\n");
     nx = LENGTH(x);
@@ -1328,10 +1325,10 @@ SEXP do_shade(SEXP call, SEXP op, SEXP args, SEXP env)
 	    yl = REAL(y)[j];
 	    yh = REAL(y)[j + 1];
       
-	    //        (xl,yl, bottomLeft)
-	    //	(xl,yh, topLeft)
-	    //	(xh,yh, topRight)
-	    //        (xh,yl, bottomRight)
+	    /* (xl,yl, bottomLeft) */
+	    /* (xl,yh, topLeft) */
+	    /* (xh,yh, topRight) */
+	    /* (xh,yl, bottomRight) */
 
 	    v1x = (xh - xl);  // xbr - xtl
 	    v1y = (yl - yh);  // ybr - ytl
@@ -1343,10 +1340,11 @@ SEXP do_shade(SEXP call, SEXP op, SEXP args, SEXP env)
 	    normalX = v1y*v2z - v1z*v2y;
 	    normalY = v1z*v2x - v1x*v2z;
 	    normalZ = v1x*v2y - v1y*v2x;
-	    //printf("X: %f, Y: %f, Z: %f\n", normalX, normalY,normalZ);
+
 	    sum = sqrt(normalX * normalX +
 		       normalY * normalY +
 		       normalZ * normalZ);
+
 	    if (sum == 0) sum = 1;
 	    normalX /= sum;
 	    normalY /= sum;
@@ -1355,21 +1353,21 @@ SEXP do_shade(SEXP call, SEXP op, SEXP args, SEXP env)
 	    NdotL = 0.5 * (normalX * light[0] +
 			   normalY * light[1] +
 			   normalZ * light[2] + 1);
-	    // NdotL_Y = normalY * light[1];
-	    // NdotL_Z = normalZ * light[2];
 
-	    //printf("%f %f %f\n", NdotL_X, NdotL_Y, NdotL_Z);
+	    /* NdotL_Y = normalY * light[1]; */
+	    /* NdotL_Z = normalZ * light[2]; */
+
+	    /* printf("%f %f %f\n", NdotL_X, NdotL_Y, NdotL_Z); */
 
 	    i_red = ambient + diffuse * NdotL;
-	    //i_green = ambient + diffuse * NdotL_Y;
-	    //i_blue = ambient + diffuse * NdotL_Z;
+	    /* i_green = ambient + diffuse * NdotL_Y; */
+	    /* i_blue = ambient + diffuse * NdotL_Z; */
 
-	    //printf("%f %f %f\n", i_red, i_green, i_blue);
-	    //REAL(shading)[k] = (i_red << 16) + (i_green << 8) + i_blue;
-	    REAL(shading)[i + j * (nx - 1)] = (i_red);// + i_green + i_blue) / 3.0;
+	    /* printf("%f %f %f\n", i_red, i_green, i_blue); */
+	    /* REAL(shading)[k] = (i_red << 16) + (i_green << 8) + i_blue; */
+	    REAL(shading)[i + j * (nx - 1)] = (i_red);
+				/* + i_green + i_blue) / 3.0; */
 	}
     UNPROTECT(8);
     return shading;
 }
-
-
