@@ -19,4 +19,4 @@ writeClipboard{str}
 \seealso{
   \code{\link{file}} which can be used to set up a connection to a clipboard.
 }
-\keyword{utility}
+\keyword{utilities}
