@@ -44,6 +44,8 @@
 #endif
 
 /* Make alloca work the best possible way.  */
+/* glibc has already included alloca.h */
+#ifndef _ALLOCA_H
 #  ifdef __GNUC__
 #   define alloca __builtin_alloca
 #  else /* not __GNUC__ */
@@ -51,6 +53,7 @@
 #    include <alloca.h>
 #   endif /* HAVE_ALLOCA_H */
 #  endif /* not __GNUC__ */
+#endif
 
 /* POSIX says that <sys/types.h> must be included (by the caller) before
    <regex.h>.  */
@@ -300,7 +303,7 @@ typedef struct
     re_context_type ctx_type;	/* for ANCHOR */
   } opr;
 #if __GNUC__ >= 2
-  re_token_type_t type : 8;
+  __extension__ re_token_type_t type : 8;
 #else
   re_token_type_t type;
 #endif
