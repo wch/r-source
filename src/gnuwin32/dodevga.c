@@ -55,6 +55,7 @@ SEXP do_devga(SEXP call, SEXP op, SEXP args, SEXP env)
     DevDesc *dd;
     char *display, *vmax;
     double height, width, ps;
+    int recording = 0;
 
     gcall = call;
     vmax = vmaxget();
@@ -68,13 +69,16 @@ SEXP do_devga(SEXP call, SEXP op, SEXP args, SEXP env)
 	errorcall(call, "invalid width or height");
     ps = asReal(CAR(args));
     args = CDR(args);
+    recording = asLogical(CAR(args));
+    if (recording == NA_LOGICAL)
+	errorcall(call, "invalid value of recording");
     /* Allocate and initialize the device driver data */
     if (!(dd = (DevDesc *) malloc(sizeof(DevDesc))))
 	return 0;
     /* Do this for early redraw attempts */
     dd->displayList = R_NilValue;
     GInit(&dd->dp);
-    if (!GADeviceDriver(dd, display, width, height, ps)) {
+    if (!GADeviceDriver(dd, display, width, height, ps, recording)) {
 	free(dd);
 	errorcall(call, "unable to start device devga");
     }

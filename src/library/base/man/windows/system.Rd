@@ -3,7 +3,7 @@
 \usage{
 system(command, intern = FALSE, wait = TRUE, input,
        show.output.on.console = FALSE,
-       invisible = FALSE, minimized = FALSE)
+       minimized = FALSE, invisible = FALSE)
 }
 \alias{system}
 \alias{unix}
@@ -21,10 +21,10 @@ system(command, intern = FALSE, wait = TRUE, input,
           the output of the command and show it on the \R console (not used
 	  by \code{Rterm}, which captures the output unless \code{wait}
 	  is false).}
+    \item{minimized}{a logical, indicates whether the command window
+	  should be initially displayed as a minimized window.}      
     \item{invisible}{a logical, indicates whether the command window
 	  should be visible on the screen.}
-    \item{minimized}{a logical, indicates whether the command window
-	  should be initially displayed as iconic.}      
 }
 \description{
     \code{system} invokes the system command specified by \code{command}.
