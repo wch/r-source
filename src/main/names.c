@@ -626,8 +626,8 @@ FUNTAB R_FunTab[] =
 /* Complex Valued Functions */
 {"fft",		do_fft,		0,	11,	2,	PP_FUNCALL},
 {"mvfft",	do_mvfft,	0,	11,	2,	PP_FUNCALL},
-{"polyroot",	do_polyroot,	0,	11,	1,	PP_FUNCALL},
 {"nextn",	do_nextn,	0,	11,	2,	PP_FUNCALL},
+{"polyroot",	do_polyroot,	0,	11,	1,	PP_FUNCALL},
 
 /* Device Drivers */
 
