@@ -290,11 +290,6 @@ int R_ReplDLLdo1()
 /* the read-eval-print loop. */
 
 
-/* The following variable must be external to mainloop because gcc -O */
-/* seems to eliminate a local one? */
-
-static int doneit;
-
 FILE* R_OpenSysInitFile(void);
 FILE* R_OpenSiteFile(void);
 FILE* R_OpenInitFile(void);
@@ -302,24 +297,21 @@ FILE* R_OpenInitFile(void);
 #ifdef OLD
 static void R_LoadProfile(FILE *fp)
 #else
-static void R_LoadProfile(FILE *fp, SEXP env)
+static void R_LoadProfile(FILE *fparg, SEXP env)
 #endif
 {
+    FILE * volatile fp = fparg; /* is this needed? */
     if (fp != NULL) {
-	R_Inputfile = fp;
-	doneit = 0;
-	SETJMP(R_Toplevel.cjmpbuf);
-	R_GlobalContext = R_ToplevelContext = &R_Toplevel;
-	signal(SIGINT, onintr);
-	if (!doneit) {
-	    doneit = 1;
+	if (! SETJMP(R_Toplevel.cjmpbuf)) {
+	    R_GlobalContext = R_ToplevelContext = &R_Toplevel;
+	    signal(SIGINT, onintr);
 #ifdef OLD
-	    R_ReplFile(R_Inputfile, R_NilValue, 0, 0);
+	    R_ReplFile(fp, R_NilValue, 0, 0);
 #else
-	    R_ReplFile(R_Inputfile, env, 0, 0);
+	    R_ReplFile(fp, env, 0, 0);
 #endif
 	}
-        R_Inputfile = NULL;
+	fclose(fp);
     }
 }
 
@@ -329,6 +321,7 @@ int R_Is_Running = 0;
 
 void setup_Rmainloop(void)
 {
+    volatile int doneit;
     SEXP cmd;
     FILE *fp;
 
@@ -400,7 +393,6 @@ void setup_Rmainloop(void)
     */
 
     fp = R_OpenLibraryFile("base");
-    R_Inputfile = NULL;
     if (fp == NULL) {
 	R_Suicide("unable to open the base package\n");
     }
