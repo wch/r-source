@@ -1171,6 +1171,8 @@ static SEXP applydefine(SEXP call, SEXP op, SEXP args, SEXP rho)
     PROTECT(rhs); /* To get the loop right ... */
 
     while (isLanguage(CADR(expr))) {
+	if(strlen(CHAR(PRINTNAME(CAR(expr)))) + 3 > 32)
+	    error("overlong name in %s ", CHAR(PRINTNAME(CAR(expr))));
 	sprintf(buf, "%s<-", CHAR(PRINTNAME(CAR(expr))));
 	tmp = install(buf);
 	UNPROTECT(1);
@@ -1185,6 +1187,8 @@ static SEXP applydefine(SEXP call, SEXP op, SEXP args, SEXP rho)
 	lhs = CDR(lhs);
 	expr = CADR(expr);
     }
+    if(strlen(CHAR(PRINTNAME(CAR(expr)))) + 3 > 32)
+	error("overlong name in %s ", CHAR(PRINTNAME(CAR(expr))));
     sprintf(buf, "%s<-", CHAR(PRINTNAME(CAR(expr))));
     R_SetVarLocValue(tmploc, CAR(lhs));
     PROTECT(tmp = mkPROMISE(CADR(args), rho));
@@ -1736,6 +1740,9 @@ static void findmethod(SEXP class, char *group, char *generic,
     /* eg if class(x) is "foo" "bar" then x>3 should invoke */
     /* "Ops.foo" rather than ">.bar" */
     for (whichclass = 0 ; whichclass < len ; whichclass++) {
+	if(strlen(generic) + 
+	   strlen(CHAR(STRING_ELT(class, whichclass))) + 2 > 512)
+	    error("class name too long in %s", generic);
 	sprintf(buf, "%s.%s", generic, CHAR(STRING_ELT(class, whichclass)));
 	*meth = install(buf);
 	*sxp = R_LookupMethod(*meth, rho, rho, R_NilValue);
@@ -1743,6 +1750,9 @@ static void findmethod(SEXP class, char *group, char *generic,
 	    *gr = mkString("");
 	    break;
 	}
+	if(strlen(group) + 
+	   strlen(CHAR(STRING_ELT(class, whichclass))) + 2 > 512)
+	    error("class name too long in %s", group);
 	sprintf(buf, "%s.%s", group, CHAR(STRING_ELT(class, whichclass)));
 	*meth = install(buf);
 	*sxp = R_LookupMethod(*meth, rho, rho, R_NilValue);
@@ -1784,6 +1794,8 @@ int DispatchGroup(char* group, SEXP call, SEXP op, SEXP args, SEXP rho,
 
     /* check whether we are processing the default method */
     if ( isSymbol(CAR(call)) ) {
+	if(strlen(CHAR(PRINTNAME(CAR(call)))) >= 512)
+	   error("call name too long in %s", CHAR(PRINTNAME(CAR(call))));
 	sprintf(lbuf, "%s", CHAR(PRINTNAME(CAR(call))) );
 	pt = strtok(lbuf, ".");
 	pt = strtok(NULL, ".");
@@ -1802,7 +1814,9 @@ int DispatchGroup(char* group, SEXP call, SEXP op, SEXP args, SEXP rho,
 
     if(!isObject(CAR(args)) && !isObject(CADR(args)))
 	return 0;
-
+    
+    if(strlen(PRIMNAME(op)) >= 128)
+	error("generic name too long in %s", PRIMNAME(op));
     sprintf(generic, "%s", PRIMNAME(op) );
 
     lclass = getAttrib(CAR(args), R_ClassSymbol);
