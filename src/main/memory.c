@@ -805,9 +805,9 @@ static void SortNodes(void)
 #endif
 
 
-/* Finalization */
+/* Finalization and Weak References */
 
-static SEXP R_fin_registered = NULL;
+static SEXP R_weak_refs = NULL;
 
 #define READY_TO_FINALIZE_MASK 1
 
@@ -821,10 +821,41 @@ static SEXP R_fin_registered = NULL;
 #define CLEAR_FINALIZE_ON_EXIT(s) ((s)->sxpinfo.gp &= ~FINALIZE_ON_EXIT_MASK)
 #define FINALIZE_ON_EXIT(s) ((s)->sxpinfo.gp & FINALIZE_ON_EXIT_MASK)
 
+#define WEAKREF_NEXT(s) CDR(s)
+#define WEAKREF_VALUE(s) R_NilValue
+#define WEAKREF_KEY(s) CAR(s)
+#define WEAKREF_FINALIZER(s) TAG(s)
+
+static SEXP NewWeakRef(SEXP key, SEXP val, SEXP fin, Rboolean onexit)
+{
+    SEXP w;
+
+    switch (TYPEOF(key)) {
+    case ENVSXP:
+    case EXTPTRSXP:
+	break;
+    default: error("can only weakly reference/finalize reference objects");
+    }
+	
+    PROTECT(val);
+    PROTECT(fin);
+    w  = CONS(key, R_weak_refs);
+    SET_TAG(w, fin);
+    CLEAR_READY_TO_FINALIZE(w);
+    if (onexit)
+	SET_FINALIZE_ON_EXIT(w);
+    else
+	CLEAR_FINALIZE_ON_EXIT(w);
+    R_weak_refs = w;
+    UNPROTECT(2);
+    return w;
+}
+
+
 static void CheckFinalizers(void)
 {
     SEXP s;
-    for (s = R_fin_registered; s != R_NilValue; s = CDR(s))
+    for (s = R_weak_refs; s != R_NilValue; s = WEAKREF_NEXT(s))
 	if (! NODE_IS_MARKED(CAR(s)) && ! IS_READY_TO_FINALIZE(s))
 	    SET_READY_TO_FINALIZE(s);
 }
@@ -863,8 +894,8 @@ static Rboolean RunFinalizers(void)
     volatile SEXP s, last;
     volatile Rboolean finalizer_run = FALSE;
 
-    for (s = R_fin_registered, last = R_NilValue; s != R_NilValue;) {
-	SEXP next = CDR(s);
+    for (s = R_weak_refs, last = R_NilValue; s != R_NilValue;) {
+	SEXP next = WEAKREF_NEXT(s);
 	if (IS_READY_TO_FINALIZE(s)) {
 	    RCNTXT thiscontext;
 	    RCNTXT * volatile saveToplevelContext;
@@ -882,7 +913,7 @@ static Rboolean RunFinalizers(void)
 	    PROTECT(topExp = R_CurrentExpr);
 	    savestack = R_PPStackTop;
 	    if (! SETJMP(thiscontext.cjmpbuf)) {
-		SEXP val, fun, e;
+		SEXP key, fun, e;
 		R_GlobalContext = R_ToplevelContext = &thiscontext;
 
 		/* The entry in the finalization list is removed
@@ -890,20 +921,20 @@ static Rboolean RunFinalizers(void)
 		   finalizer is run only once, even if running it
 		   raises an error. */
 		if (last == R_NilValue)
-		    R_fin_registered = next;
+		    R_weak_refs = next;
 		else
 		    SETCDR(last, next);
 		PROTECT(s);
-		val = CAR(s);
-		fun = TAG(s);
+		key = WEAKREF_KEY(s);
+		fun = WEAKREF_FINALIZER(s);
 		if (isCFinalizer(fun)) {
 		    /* Must be a C finalizer. */
 		    R_CFinalizer_t cfun = GetCFinalizer(fun);
-		    cfun(val);
+		    cfun(key);
 		}
 		else {
 		    /* An R finalizer. */
-		    PROTECT(e = LCONS(fun, LCONS(val, R_NilValue)));
+		    PROTECT(e = LCONS(fun, LCONS(key, R_NilValue)));
 		    eval(e, R_GlobalEnv);
 		    UNPROTECT(1);
 		}
@@ -925,7 +956,7 @@ void R_RunExitFinalizers(void)
 {
     SEXP s;
 
-    for (s = R_fin_registered; s != R_NilValue; s = CDR(s))
+    for (s = R_weak_refs; s != R_NilValue; s = WEAKREF_NEXT(s))
 	if (FINALIZE_ON_EXIT(s))
 	    SET_READY_TO_FINALIZE(s);
     RunFinalizers();
@@ -933,13 +964,6 @@ void R_RunExitFinalizers(void)
 
 void R_RegisterFinalizerEx(SEXP s, SEXP fun, Rboolean onexit)
 {
-    switch (TYPEOF(s)) {
-    case ENVSXP:
-    case EXTPTRSXP:
-	break;
-    default: error("can only finalize reference objects");
-    }
-	
     switch (TYPEOF(fun)) {
     case CLOSXP:
     case BUILTINSXP:
@@ -948,13 +972,7 @@ void R_RegisterFinalizerEx(SEXP s, SEXP fun, Rboolean onexit)
     default: error("finalizer must be a function");
     }
 
-    R_fin_registered = CONS(s, R_fin_registered);
-    SET_TAG(R_fin_registered, fun);
-    CLEAR_READY_TO_FINALIZE(R_fin_registered);
-    if (onexit)
-	SET_FINALIZE_ON_EXIT(R_fin_registered);
-    else
-	CLEAR_FINALIZE_ON_EXIT(R_fin_registered);
+    NewWeakRef(s, R_NilValue, fun, onexit);
 }
 
 void R_RegisterFinalizer(SEXP s, SEXP fun)
@@ -964,25 +982,12 @@ void R_RegisterFinalizer(SEXP s, SEXP fun)
 
 void R_RegisterCFinalizerEx(SEXP s, R_CFinalizer_t fun, Rboolean onexit)
 {
-    switch (TYPEOF(s)) {
-    case ENVSXP:
-    case EXTPTRSXP:
-	break;
-    default: error("can only finalize reference objects");
-    }
-	
-    /* We need to protect s since otherwise when R_MakeExternalPtr is
+    /* We need to protect s since otherwise when MakeCFinalizer is
        called, its only link visible to the garbage collector might be
        the one in the finalization chain, resulting in it being
        registered as elligible for finalization. */
     PROTECT(s);
-    R_fin_registered = CONS(s, R_fin_registered);
-    SET_TAG(R_fin_registered, MakeCFinalizer(fun));
-    CLEAR_READY_TO_FINALIZE(R_fin_registered);
-    if (onexit)
-	SET_FINALIZE_ON_EXIT(R_fin_registered);
-    else
-	CLEAR_FINALIZE_ON_EXIT(R_fin_registered);
+    NewWeakRef(s, R_NilValue, MakeCFinalizer(fun), onexit);
     UNPROTECT(1);
 }
 
@@ -1116,11 +1121,36 @@ static void RunGenCollect(int size_needed)
     /* main processing loop */
     PROCESS_NODES();
 
+    /* identify weakly reachable nodes */
+    {
+	Rboolean recheck_weak_refs = FALSE;
+	do {
+	    for (s = R_weak_refs; s != R_NilValue; s = WEAKREF_NEXT(s)) {
+		if (NODE_IS_MARKED(WEAKREF_KEY(s))) {
+		    if (! NODE_IS_MARKED(WEAKREF_VALUE(s))) {
+			recheck_weak_refs = TRUE;
+			FORWARD_NODE(WEAKREF_VALUE(s));
+		    }
+		    if (! NODE_IS_MARKED(WEAKREF_FINALIZER(s))) {
+			recheck_weak_refs = TRUE;
+			FORWARD_NODE(WEAKREF_FINALIZER(s));
+		    }
+		}
+	    }
+	    PROCESS_NODES();
+	} while (recheck_weak_refs);
+    }
+
     /* mark nodes ready for finalizing */
     CheckFinalizers();
     
-    /* process finalizers */
-    FORWARD_NODE(R_fin_registered);
+    /* process the weak reference chain */
+    for (s = R_weak_refs; s != R_NilValue; s = WEAKREF_NEXT(s)) {
+	FORWARD_NODE(s);
+	FORWARD_NODE(WEAKREF_KEY(s));
+	FORWARD_NODE(WEAKREF_VALUE(s));
+	FORWARD_NODE(WEAKREF_FINALIZER(s));
+    }
     PROCESS_NODES();
 
     DEBUG_CHECK_NODE_COUNTS("after processing forwarded list");
@@ -1309,7 +1339,7 @@ void InitMemory()
     TAG(R_NilValue) = R_NilValue;
     ATTRIB(R_NilValue) = R_NilValue;
 
-    R_fin_registered = R_NilValue;
+    R_weak_refs = R_NilValue;
 }
 
 /* Since memory allocated from the heap is non-moving, R_alloc just
