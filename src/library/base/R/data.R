@@ -1,24 +1,26 @@
-## Was in  system.unix.R --  now system-independent
-## thanks to Guido's  .Platform$show.data(.) idea.
+## Was in `system.unix.R'.  Now system-independent, thanks to Guido's
+## .Platform$show.data() idea.
 data <-
 function (..., list = character(0),
           package = c(.packages(), .Autoloaded),
           lib.loc = .lib.loc, verbose = .Options$verbose)
 {
     names <- c(as.character(substitute(list(...))[-1]), list)
-    ## && !is.character(package))
     if (!missing(package))
         if (is.name(y <- substitute(package)))
             package <- as.character(y)
     found <- FALSE
     fsep <- .Platform$file.sep
     if (length(names) == 0) {
-        if(!missing(package)) show.data(package, lib.loc)
-        else show.data(lib.loc=lib.loc)
+        if(!missing(package))
+            show.data(package, lib.loc)
+        else
+            show.data(lib.loc = lib.loc)
     } else for (name in names) {
-        ## don't make this a single call: list.files sorts all the entries.
+        ## don't make this a single call: list.files() sorts all the
+        ## entries. 
         paths <- system.file("data", pkg = package, lib = lib.loc)
-        files <- unlist(lapply(paths, FUN=list.files, full = TRUE))
+        files <- unlist(lapply(paths, FUN = list.files, full = TRUE))
         files <- files[grep(name, files)]
         found <- FALSE
         if (length(files) > 0) {
@@ -37,7 +39,7 @@ function (..., list = character(0),
                     found <- FALSE
                 else switch(ext,
                             R = ,
-                            r = source(file),
+                            r = source(file, chdir = TRUE),
                             RData = ,
                             rdata = ,
                             rda = load(file, envir = .GlobalEnv),

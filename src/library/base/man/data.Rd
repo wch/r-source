@@ -8,34 +8,36 @@ show.data(package = c(.packages(),.Autoloaded), lib.loc = .lib.loc)
 \alias{data}
 \alias{show.data}
 \arguments{
- \item{\dots}{a sequence of \code{name}s or character strings}
- \item{list}{a character vector}
- \item{package}{a name or character vector giving the packages to look
-  into for data sets.
-  By default, all packages in the search path are used.}
- \item{lib.loc}{a character vector of directory names of \R libraries.
-  Defaults to all libraries currently known.}}
+    \item{\dots}{a sequence of \code{name}s or character strings}
+    \item{list}{a character vector}
+    \item{package}{a name or character vector giving the packages to
+	look into for data sets.  By default, all packages in the search
+ 	path are used.} 
+    \item{lib.loc}{a character vector of directory names of \R
+	libraries.  Defaults to all libraries currently known.}}
 \description{
-\code{data} loads or lists via \code{show.data} the available data sets.
-The data sets to be loaded can be specified as a sequence of \code{name}s
-or character strings, or as the character vector \code{list}, or as both.
-
-If no data sets are specified or \code{show.data} is called directly,
-the available data sets are displayed.
-
-Currently, four formats of data files are supported:
-\enumerate{
-  \item files ending \code{".RData"} or \code{".rda"} are
-  \code{\link{load}()ed}. 
-  \item files ending \code{".R"} or \code{".r"} are
-  \code{\link{source}()d} in.
-  \item files ending \code{".tab"} or \code{".txt"} are read using
-    \code{\link{read.table}(\dots, header = TRUE)}, and hence result in
-    a \code{\link{data.frame}}.
-  \item files ending \code{".csv"} are read using
-    \code{\link{read.table}(\dots, header = TRUE, sep=";")},
-    and also result in a \code{\link{data.frame}}.
+    \code{data} loads or lists via \code{show.data} the available data
+    sets.  The data sets to be loaded can be specified as a sequence of
+    \code{name}s or character strings, or as the character vector
+    \code{list}, or as both.  If no data sets are specified or
+    \code{show.data} is called directly, the available data sets are
+    displayed.
 }
+\details{
+    Currently, four formats of data files are supported:
+    \enumerate{
+  	\item files ending \code{".RData"} or \code{".rda"} are
+  	\code{\link{load}()ed}. 
+  	\item files ending \code{".R"} or \code{".r"} are
+  	\code{\link{source}()d} in, with the R working directory changed
+	temporarily to the directory containing the respective file.
+  	\item files ending \code{".tab"} or \code{".txt"} are read using
+ 	\code{\link{read.table}(\dots, header = TRUE)}, and hence result in
+    	a \code{\link{data.frame}}.
+  	\item files ending \code{".csv"} are read using
+    	\code{\link{read.table}(\dots, header = TRUE, sep=";")},
+    	and also result in a \code{\link{data.frame}}.
+    }
 }
 \value{
     A character vector of all data sets specified, an empty character
