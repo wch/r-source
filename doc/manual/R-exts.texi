@@ -50,14 +50,14 @@ Copyright @copyright{} 1999, 2000 R Development Core Team
 @node Top, Acknowledgments, (dir), (dir)
 
 @menu
-* Acknowledgments::
-* Creating R packages::
-* Writing R documentation::
-* System and foreign language interfaces::
-* The R API::
-* R (internal) programming miscellania::
-* Function and variable index::
-* Concept index::
+* Acknowledgments::             
+* Creating R packages::         
+* Writing R documentation::     
+* System and foreign language interfaces::  
+* The R API::                   
+* R (internal) programming miscellania::  
+* Function and variable index::  
+* Concept index::               
 @end menu
 
 @node Acknowledgments, Creating R packages, Top, Top
@@ -78,9 +78,9 @@ documentation as needed.  The @R{} distribution provides several
 packages, such as @pkg{eda}, @pkg{mva}, and @pkg{stepfun}.
 
 @menu
-* Package structure::
-* Configure and cleanup::
-* Checking and building packages::
+* Package structure::           
+* Configure and cleanup::       
+* Checking and building packages::  
 @end menu
 
 @node Package structure, Configure and cleanup, Creating R packages, Creating R packages
@@ -89,24 +89,22 @@ packages, such as @pkg{eda}, @pkg{mva}, and @pkg{stepfun}.
 
 A package consists of a subdirectory containing the files
 @file{DESCRIPTION} and @file{INDEX}, and the subdirectories @file{R},
-@file{data}, @file{exec}, @file{inst}, @file{man}, and @file{src} (some
-of which can be missing).  Optionally the package can also contain
-script files @file{configure} and @file{cleanup} which are executed
-before and after installation, @xref{Configure and cleanup}.
-
+@file{data}, @file{exec}, @file{inst}, @file{man}, @file{src}, and
+@file{tests} (some of which can be missing).  Optionally the package can
+also contain script files @file{configure} and @file{cleanup} which are
+executed before and after installation, @xref{Configure and cleanup}.
 
 @menu
-* The DESCRIPTION file::
-* Other files::
-* Package subdirectories::
-* Package bundles::
+* The DESCRIPTION file::        
+* Other files::                 
+* Package subdirectories::      
+* Package bundles::             
 @end menu
 
 @node The DESCRIPTION file, Other files, Package structure, Package structure
 @subsection The DESCRIPTION file
 @comment  node-name,  next,  previous,  up@subsection The DESCRIPTION file
 @cindex DESCRIPTION file
-
 
 The @file{DESCRIPTION} file contains basic information about the package
 in the following format:
@@ -230,6 +228,16 @@ datasets available.
 
 The contents of the @file{inst} subdirectory will be copied recursively
 to the installation directory.
+
+Subdirectory @file{tests} is for additional package-specific test code,
+similar to the specific tests that come with the @R{} distribution.
+Test code can either be provided directly in a @file{.R} file, or via a
+@file{.Rin} file containing code which in turn creates the corresponding
+@file{.R} file (e.g., by collecting all function objects in the package
+and then calling them with the strangest arguments).  The results of
+running a @file{.R} file are written to a @file{.Rout} file.  If there
+is a corresponding @file{.Rout.save} file, these two are compared, with
+differences being reported but not causing an error.
 
 Finally, @file{exec} could contain additional executables the package
 needs, typically shell or Perl scripts.  This mechanism is currently not
@@ -395,15 +403,15 @@ of the @R{} package builder.  There is no Windows equivalent.
 @cindex Documentation, writing
 
 @menu
-* Rd format::
-* Sectioning::
-* Marking text::
-* Lists and tables::
-* Cross-references::
-* Mathematics::
-* Insertions::
-* Platform-specific sections::
-* Processing Rd format::
+* Rd format::                   
+* Sectioning::                  
+* Marking text::                
+* Lists and tables::            
+* Cross-references::            
+* Mathematics::                 
+* Insertions::                  
+* Platform-specific sections::  
+* Processing Rd format::        
 @end menu
 
 @node Rd format, Sectioning, Writing R documentation, Writing R documentation
@@ -1036,15 +1044,15 @@ using @code{R --help}.
 @chapter System and foreign language interfaces
 
 @menu
-* Operating system access::
-* Interface functions .C and .Fortran::
-* dyn.load and dyn.unload::
-* Creating shared libraries::
-* Interfacing C++ code::
-* Handling R objects in C::
-* Interface functions .Call and .External::
-* Evaluating R expressions from C::
-* Debugging::
+* Operating system access::     
+* Interface functions .C and .Fortran::  
+* dyn.load and dyn.unload::     
+* Creating shared libraries::   
+* Interfacing C++ code::        
+* Handling R objects in C::     
+* Interface functions .Call and .External::  
+* Evaluating R expressions from C::  
+* Debugging::                   
 @end menu
 
 @node  Operating system access, Interface functions .C and .Fortran, System and foreign language interfaces, System and foreign language interfaces
@@ -1342,28 +1350,29 @@ void X_main () @{
 Compiling and linking should be done with the C++ compiler-linker
 (rather than the C compiler-linker or the linker itself); otherwise,
 the C++ initialization code (and hence the constructor of the static
-variable @code{Y}) are not called.  For example, under Linux we might
-use
+variable @code{Y}) are not called.  On a properly configured system
+(support for C++ was added in version 1.1), one can simply use
 
 @smallexample
-g++ -c X.cc
-g++ -c X_main.cc
-g++ -shared -o X.so X_main.o X.o
+R CMD SHLIB X.cc X_main.cc
 @end smallexample
 
-Now starting R yields
+@noindent
+to create the shared library, typically @file{X.so} (the file name
+extension may be different on your platform).  Now starting R yields
 
 @smallexample
-R: Copyright 1999, The R Development Core Team
-Version 0.63.2  (January 12, 1999)
+R : Copyright 2000, The R Development Core Team
+Version 1.1.0 Under development (unstable) (April 14, 2000)
 ...
 Type    "q()" to quit R.
 
-R> dyn.load("X.so")
+R> dyn.load(paste("X", .Platform$dynlib.ext, sep = ""))
 constructor Y
 R> .C("X_main")
 constructor X
 destructor X
+list()
 R> q()
 Save workspace image? [y/n/c]: y
 destructor Y
@@ -1489,13 +1498,13 @@ code, much use is made of coercion to force the variant object to the
 right type.
 
 @menu
-* Garbage Collection::
-* Allocating storage::
-* Details of R types::
-* Attributes::
-* Classes::
-* Handling lists::
-* Finding and setting variables::
+* Garbage Collection::          
+* Allocating storage::          
+* Details of R types::          
+* Attributes::                  
+* Classes::                     
+* Handling lists::              
+* Finding and setting variables::  
 @end menu
 
 @node Garbage Collection, Allocating storage, Handling R objects in C, Handling R objects in C
@@ -1927,9 +1936,9 @@ based on the interface of the same name in @Sl{} version 4, and
 complex but allows a variable number of arguments.
 
 @menu
-* Calling .Call::
-* Calling .External::
-* Missing and special values::
+* Calling .Call::               
+* Calling .External::           
+* Missing and special values::  
 @end menu
 
 @node Calling .Call, Calling .External, Interface functions .Call and .External, Interface functions .Call and .External
@@ -2534,8 +2543,8 @@ compiled code loaded into @R{}.  Some ``tricks'' are worth knowing.
 
 
 @menu
-* Finding entry points::
-* Inspecting R objects::
+* Finding entry points::        
+* Inspecting R objects::        
 @end menu
 
 @node Finding entry points, Inspecting R objects, Debugging, Debugging
@@ -2701,18 +2710,18 @@ $7 = 5
 @chapter The R API: entry points for C code
 
 @menu
-* Memory allocation::
-* Error handling::
-* Random numbers::
-* Missing and IEEE values::
-* Printing::
-* Calling C from Fortran::
-* Numerical analysis subroutines::
-* Distribution functions::
-* Mathematical Utilities::
-* Mathematical Constants::
-* Utility functions::
-* Version information::
+* Memory allocation::           
+* Error handling::              
+* Random numbers::              
+* Missing and IEEE values::     
+* Printing::                    
+* Calling C from Fortran::      
+* Numerical analysis subroutines::  
+* Distribution functions::      
+* Mathematical Utilities::      
+* Mathematical Constants::      
+* Utility functions::           
+* Version information::         
 @end menu
 
 There are a large number of entry points in the @R{} executable/DLL that
@@ -2749,8 +2758,8 @@ appropriate header files when using these entry points.
 @cindex Memory allocation from C
 
 @menu
-* Transient::
-* User-controlled::
+* Transient::                   
+* User-controlled::             
 @end menu
 
 There are two types of memory allocation available to the C programmer,
@@ -3369,8 +3378,8 @@ version includes the patchlevel (as in @code{99.0}).
 @appendix R (internal) programming miscellania
 
 @menu
-* .Internal and .Primitive::
-* Testing R code::
+* .Internal and .Primitive::    
+* Testing R code::              
 @end menu
 
 @node .Internal and .Primitive, Testing R code, R (internal) programming miscellania, R (internal) programming miscellania
