@@ -1361,7 +1361,6 @@ AC_CONFIG_FILES(
   src/library/ctest/Makefile
   src/library/eda/DESCRIPTION
   src/library/eda/Makefile
-  src/library/eda/src/Makefile
   src/library/graphics/DESCRIPTION
   src/library/graphics/Makefile
   src/library/grid/DESCRIPTION

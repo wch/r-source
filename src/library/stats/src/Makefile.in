@@ -13,8 +13,8 @@ R_HOME = $(top_builddir)
 
 SOURCES_C = ansari.c chisqsim.c d2x2xk.c fexact.c kendall.c ks.c \
   init.c line.c smooth.c \
-  prho.c swilk.c init.c \
-  init.c ksmooth.c loessc.c isoreg.c Srunmed.c Trunmed.c
+  prho.c swilk.c \
+  ksmooth.c loessc.c isoreg.c Srunmed.c Trunmed.c
 
 SOURCES_F = bsplvd.f bvalue.f bvalus.f loessf.f ppr.f qsbart.f sbart.f \
   sgram.f sinerp.f sslvrg.f stxwx.f

@@ -1,7 +1,7 @@
 Package: eda
 Version: @VERSION@
 Priority: base
-Title: Exploratory Data Analysis
+Title: Defunct Package for Exploratory Data Analysis
 Author: R Development Core Team
 Maintainer: R Core Team <R-core@r-project.org>
 Description: Exploratory Data Analysis, in the Tukey sense
