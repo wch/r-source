@@ -190,9 +190,9 @@ NEW FEATURES
 	- The tkpager() function had not been updated for the return
           value change from 1.5.0 
 
-    o	Under Unix-alikes, the jpeg() and png() devices can produce
-	multiple bitmaps, one for each page.  The defailt filenames
-	have changed to include a sequence number.
+    o	The bmp(), jpeg() and png() devices can produce multiple
+	bitmaps, one for each page.  The defailt filenames have
+	changed to include a sequence number.
 
 
 DEPRECATED & DEFUNCT

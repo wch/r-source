@@ -28,17 +28,17 @@ win.metafile <- function(filename = "", width = 7, height = 7, pointsize = 12)
     .Internal(devga(paste("win.metafile:", filename, sep=""),
                   width, height, pointsize, FALSE, 1, NA, NA, "white", 1))
 
-png <- function(filename = "Rplot.png", width = 480, height = 480,
+png <- function(filename = "Rplot%03d.png", width = 480, height = 480,
                 pointsize = 12, bg = "white")
     .Internal(devga(paste("png:", filename, sep=""),
                   width, height, pointsize, FALSE, 1, NA, NA, bg, 1))
 
-bmp <- function(filename = "Rplot.bmp", width = 480, height = 480,
+bmp <- function(filename = "Rplot%03d.bmp", width = 480, height = 480,
                 pointsize = 12, bg = "white")
     .Internal(devga(paste("bmp:", filename, sep=""),
                   width, height, pointsize, FALSE, 1, NA, NA, bg, 1))
 
-jpeg <- function(filename = "Rplot.jpg", width = 480, height = 480,
+jpeg <- function(filename = "Rplot%03d.jpg", width = 480, height = 480,
                  pointsize = 12, quality=75, bg = "white")
     .Internal(devga(paste("jpeg:", quality, ":",filename, sep=""),
                   width, height, pointsize, FALSE, 1, NA, NA, bg, 1))

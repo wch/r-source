@@ -7,15 +7,16 @@
   A graphics device for BMP, JPEG or PNG format bitmap files.
 }
 \usage{
-bmp(filename="Rplot.bmp", width=480, height=480, pointsize=12,
-    bg="white")
-jpeg(filename="Rplot.jpg", width=480, height=480, pointsize=12,
-     quality=75, bg="white")
-png(filename="Rplot.png", width=480, height=480, pointsize=12,
-    bg="white")
+bmp(filename = "Rplot\%03d.bmp", width = 480, height = 480, pointsize = 12,
+    bg = "white")
+jpeg(filename = "Rplot\%03d..jpg", width = 480, height = 480, pointsize = 12,
+     quality = 75, bg = "white")
+png(filename = "Rplot\%03d..png", width = 480, height = 480, pointsize = 12,
+    bg = "white")
 }
 \arguments{
- \item{filename}{the name of the output file.}
+ \item{filename}{the name of the output file.  The page number is
+   substituted if an integer format is included in the character string.}
  \item{width}{the width of the device in pixels.}
  \item{height}{the height of the device in pixels.}
  \item{pointsize}{the default pointsize of plotted text, intepreted at
@@ -35,7 +36,7 @@ png(filename="Rplot.png", width=480, height=480, pointsize=12,
   standard on Windows, and supported elsewhere.
 
   \code{png} supports transparent backgrounds on 16-bit (`High Color') or
-  better screens: use \code{bg="transparent"}.
+  better screens: use \code{bg = "transparent"}.
   Not all PNG viewers render files with transparency correctly.
 }
 \value{

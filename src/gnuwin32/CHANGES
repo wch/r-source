@@ -24,6 +24,9 @@ help(htmlhelp=TRUE) makes use of the setting of options("browser").
 Ctrl-Z in the Rgui or Rterm will signal EOF, and so can be used to
 terminate a read by readLines() or scan(), for example.
 
+bmp(), png(), jpeg() and win.metafile() devices can plot multiple
+pages in separate files.
+
 The preferred compiler is gcc-3.1: gcc-2.95.3 can still be used but
 up-to-date header files are needed.
 

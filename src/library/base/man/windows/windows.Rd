@@ -124,5 +124,7 @@ win.print(width = 7, height = 7, pointsize = 12, printer = "")
   \code{\link{savePlot}}, \code{\link{bringToTop}},
   \code{\link{Devices}}, \code{\link{postscript}}
 }
-
+\examples{\dontrun{## A series of plots written to a sequence of metafiles 
+win.metafile("Rplot\%02d.wmf", pointsize = 10)
+}}
 \keyword{device}

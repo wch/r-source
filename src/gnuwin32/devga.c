@@ -137,7 +137,10 @@ typedef struct {
     bitmap bm;
   /* PNG and JPEG section */
     FILE *fp;
+    char filename[512];
     int quality;
+    int npage;
+    double w, h;
   /* Used to rescale font size so that bitmap devices have 72dpi */
     int truedpi, wanteddpi; 
     rgb   fgcolor;		/* Foreground color */
@@ -1404,6 +1407,7 @@ static Rboolean GA_Open(NewDevDesc *dd, gadesc *xd, char *dsp,
 			int resize, int canvascolor, double gamma)
 {
     rect  rr;
+    char buf[512];
 
     if (!fontinitdone)
 	RFontInit();
@@ -1418,6 +1422,7 @@ static Rboolean GA_Open(NewDevDesc *dd, gadesc *xd, char *dsp,
     xd->rescale_factor = 1.0;
     xd->fast = 1;  /* Use `cosmetic pens' if available */
     xd->xshift = xd->yshift = 0;
+    xd->npage = 0;
     if (!dsp[0]) {
 	if (!setupScreenDevice(dd, xd, w, h, recording, resize)) 
 	    return FALSE;
@@ -1433,6 +1438,7 @@ static Rboolean GA_Open(NewDevDesc *dd, gadesc *xd, char *dsp,
 	    xd->bg = dd->startfill = canvascolor;
 	/* was R_RGB(255, 255, 255); white */
         xd->kind = (dsp[0]=='p') ? PNG : BMP;
+	strcpy(xd->filename, dsp+4);
 	if (!Load_Rbitmap_Dll()) {
 	    warning("Unable to load Rbitmap.dll");
 	    return FALSE;
@@ -1445,10 +1451,11 @@ static Rboolean GA_Open(NewDevDesc *dd, gadesc *xd, char *dsp,
 	if ((xd->gawin = newbitmap(w, h, 256)) == NULL) {
 	    warning("Unable to allocate bitmap");
 	    return FALSE;
-	}  
-	if ((xd->fp = fopen(&dsp[4], "wb")) == NULL) {
+	}
+	sprintf(buf, xd->filename, 1);
+	if ((xd->fp = fopen(buf, "wb")) == NULL) {
 	    del(xd->gawin);
-	    warning("Unable to open file `%s' for writing", &dsp[4]);
+	    warning("Unable to open file `%s' for writing", buf);
 	    return FALSE;
 	}
     } else if (!strncmp(dsp, "jpeg:", 5)) {
@@ -1463,13 +1470,15 @@ static Rboolean GA_Open(NewDevDesc *dd, gadesc *xd, char *dsp,
 	*p = '\0';
 	xd->quality = atoi(&dsp[5]);
 	*p = ':' ;
+	strcpy(xd->filename, p+1);
 	if((xd->gawin = newbitmap(w, h, 256)) == NULL) {
 	    warning("Unable to allocate bitmap");
 	    return FALSE;
 	}  
-	if ((xd->fp = fopen(p+1, "wb")) == NULL) {
+	sprintf(buf, xd->filename, 1);
+	if ((xd->fp = fopen(buf, "wb")) == NULL) {
 	    del(xd->gawin);
-	    warning("Unable to open file `%s' for writing", p+1);
+	    warning("Unable to open file `%s' for writing", buf);
 	    return FALSE;
 	}
     } else {
@@ -1486,14 +1495,16 @@ static Rboolean GA_Open(NewDevDesc *dd, gadesc *xd, char *dsp,
 	    return FALSE;
 	if (strncmp(dsp, s, ls) || (dsp[ls] && (dsp[ls] != ':')))
 	    return FALSE;
-	xd->gawin = newmetafile((ld > ls) ? &dsp[ls + 1] : "",
-				MM_PER_INCH * w, MM_PER_INCH * h);
+	strcpy(xd->filename, (ld > ls) ? &dsp[ls + 1] : "");
+	sprintf(buf, xd->filename, 1);
+	xd->w = MM_PER_INCH * w;
+	xd->h =  MM_PER_INCH * h;
+	xd->gawin = newmetafile(buf, MM_PER_INCH * w, MM_PER_INCH * h);
 	xd->kind = METAFILE;
 	xd->fast = 0; /* use scalable line widths */
 	if (!xd->gawin) {
 	    if(ld > ls)
-		warning("Unable to open metafile `%s' for writing", 
-			&dsp[ls + 1]);
+		warning("Unable to open metafile `%s' for writing", buf);
 	    else
 		warning("Unable to open clipboard to write metafile");
 	    return FALSE;
@@ -1702,17 +1713,27 @@ static void GA_Resize(NewDevDesc *dd)
 static void GA_NewPage(int fill, double gamma, NewDevDesc *dd)
 {
     gadesc *xd = (gadesc *) dd->deviceSpecific;
+    char buf[512];
 
+    xd->npage++;
     if ((xd->kind == PRINTER) && xd->needsave)
 	nextpage(xd->gawin);
-    if ((xd->kind == METAFILE) && xd->needsave)
-	error("A metafile can store only one figure.");
-    if ((xd->kind == PNG) && xd->needsave)
-	error("A png file can store only one figure.");
-    if ((xd->kind == JPEG) && xd->needsave)
-	error("A jpeg file can store only one figure.");
-    if ((xd->kind == BMP) && xd->needsave)
-	error("A bmp file can store only one figure.");
+    if ((xd->kind == METAFILE) && xd->needsave) {
+	if (strlen(xd->filename) == 0)
+	    error("A clipboard metafile can store only one figure.");
+	else {
+	    del(xd->gawin);
+	    sprintf(buf, xd->filename, xd->npage);
+	    xd->gawin = newmetafile(buf, xd->w, xd->h);
+	}
+    }
+    if ((xd->kind == PNG || xd->kind == JPEG || xd->kind == BMP) 
+	&& xd->needsave) {
+	SaveAsBitmap(dd);
+	sprintf(buf, xd->filename, xd->npage);
+	if ((xd->fp = fopen(buf, "wb")) == NULL)
+	    error("Unable to open file `%s' for writing", buf);
+    }
     if (xd->kind == SCREEN) {
 #ifdef PLOTHISTORY
 	if (xd->recording && xd->needsave)
@@ -2389,21 +2410,24 @@ static void SaveAsBitmap(NewDevDesc *dd)
     gadesc *xd = (gadesc *) dd->deviceSpecific;
     r = ggetcliprect(xd->gawin);
     gsetcliprect(xd->gawin, getrect(xd->gawin));
-    if (xd->kind==PNG) 
-	R_SaveAsPng(xd->gawin, xd->windowWidth, xd->windowHeight,
-		    privategetpixel, 0, xd->fp,
-		    R_OPAQUE(xd->bg) ? 0 : xd->pngtrans) ;
-    else if (xd->kind==JPEG)
-	R_SaveAsJpeg(xd->gawin, xd->windowWidth, xd->windowHeight,
-		     privategetpixel, 0, xd->quality, xd->fp) ;
-    else 
-	R_SaveAsBmp(xd->gawin, xd->windowWidth, xd->windowHeight,
-		    privategetpixel, 0, xd->fp) ;
+    if(xd->fp) {
+	if (xd->kind==PNG) 
+	    R_SaveAsPng(xd->gawin, xd->windowWidth, xd->windowHeight,
+			privategetpixel, 0, xd->fp,
+			R_OPAQUE(xd->bg) ? 0 : xd->pngtrans) ;
+	else if (xd->kind==JPEG)
+	    R_SaveAsJpeg(xd->gawin, xd->windowWidth, xd->windowHeight,
+			 privategetpixel, 0, xd->quality, xd->fp) ;
+	else 
+	    R_SaveAsBmp(xd->gawin, xd->windowWidth, xd->windowHeight,
+			privategetpixel, 0, xd->fp);
+	fclose(xd->fp);
+    }
     gsetcliprect(xd->gawin, r);
-    fclose(xd->fp);
+    xd->fp = NULL;
 }
 
-/* This are the menu item version */
+/* These are the menu item versions */
 static void SaveAsPng(NewDevDesc *dd,char *fn)
 {
     FILE *fp;
