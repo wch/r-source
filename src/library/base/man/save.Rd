@@ -43,7 +43,7 @@ sys.save.image(name)
 \description{
   \code{save} writes a external representation of \R objects to the
   specified file.  The objects can be read back from the file at a later
-  date by using the function \code{load}.
+  date by using the function \code{load} (or \code{data} in some cases).
 
   \code{save.image()} is just a short-cut for ``save my current
   environment'',
@@ -63,7 +63,8 @@ sys.save.image(name)
   These functions should not be called directly and are subject to change.
 }
 \seealso{
-  \code{\link{dput}}, \code{\link{dump}}, \code{\link{load}}.
+  \code{\link{dput}}, \code{\link{dump}}, \code{\link{load}},
+  \code{\link{data}}.
 }
 \examples{
 x <- runif(20)

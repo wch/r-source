@@ -15,7 +15,7 @@ data(\dots, list = character(0), package = .packages(),
   \item{package}{a name or character vector giving the packages to look
     into for data sets.  By default, all packages in the search path are
     used, then the \file{data} directory (if present) of the current
-    working directory.} 
+    working directory.}
   \item{lib.loc}{a character vector of directory names of \R libraries,
     or \code{NULL}.  The default value of \code{NULL} corresponds to all
     libraries currently known.  If the default is used, the loaded
@@ -86,7 +86,9 @@ data(\dots, list = character(0), package = .packages(),
   a metadata specification for the plaintext formats.
 }
 \seealso{
-  \code{\link{help}} for obtaining documentation on data sets.
+  \code{\link{help}} for obtaining documentation on data sets,
+  \code{\link{save}} for \emph{creating} the first (\file{.rda}) kind of
+  data, typically the most efficient one.
 }
 \examples{
 data()                      # list all available data sets
