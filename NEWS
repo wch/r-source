@@ -209,7 +209,6 @@ NEW FEATURES
 	Note that spar = 0 is no longer the default and no longer entails
 	crossvalidation.
 
-
     o	page() has a new `method' argument allowing `method = print'.
 
     o	mean() has `data frame' method applying mean column-by-column.
@@ -231,6 +230,13 @@ NEW FEATURES
 
     o	X11(), png() and jpeg() now give informative warnings if
 	they fail to open the device.
+
+    o	New generic function is.na<-(), from S4.  This is by default
+	equivalent to x[value] <- NA but may differ, e.g. for factors
+	where "NA" is a level.
+
+    o	Printing factors with both level "NA" and missing values
+	uses `<NA>' for the missing values to distinguish them.
 
 
 
@@ -279,6 +285,7 @@ BUG FIXES
 	`newxreg' arguments.
 
     o	cbind(d,f) now works for 0-column dataframes. This fixes PR#1102.
+
 
 
 	**************************************************

@@ -5,3 +5,10 @@ is.name <- .Alias(is.symbol) # which is Primitive
 ##Was is.symbol <- function(x) typeof(x)=="symbol"
 
 
+"is.na<-" <- function(x, value) UseMethod("is.na<-")
+
+"is.na<-.default" <- function(x, value)
+{
+    x[value] <- NA
+    x
+}

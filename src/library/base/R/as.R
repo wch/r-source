@@ -20,8 +20,6 @@ as.single.default <- function(x,...) {
 # preserve the semantics that for a call with an object argument
 # dispatching is done first on as.character and then on as.vector.
 as.character.default <- function(x,...) .Internal(as.vector(x,"character"))
-## The following just speeds up (the above would be sufficient):
-as.character.factor <- function(x,...) levels(x)[x]
 
 as.expression <- function(x,...) UseMethod("as.expression")
 as.expression.default <- function(x,...) .Internal(as.vector(x,"expression"))

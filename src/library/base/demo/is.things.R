@@ -36,9 +36,10 @@ is.ALL <- function(obj, func.names = ls(pos=length(search())),
     ## Author: Martin Maechler, Date: 6 Dec 1996
 
     is.fn <- func.names[substring(func.names,1,3) == "is."]
+    is.fn <- is.fn[substring(is.fn,1,7) != "is.na<-"]
     use.fn <- is.fn[ is.na(match(is.fn, not.using))
                     & ! sapply(is.fn, is.method) ]
-    
+
     r <- if(true.only) character(0)
     else structure(vector("list", length= length(use.fn)), names= use.fn)
     for(f in use.fn) {

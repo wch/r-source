@@ -4,10 +4,14 @@
 NA
 is.na(x)
 is.na.data.frame(x)
+
+is.na(x) <- value
 }
 \alias{NA}
 \alias{is.na}
 \alias{is.na.data.frame}
+\alias{is.na<-}
+\alias{is.na<-.default}
 \description{
 \code{NA} is a logical constant of length 1 which contains
 a missing value indicator.  \code{NA} can be freely coerced to any
@@ -18,15 +22,22 @@ of the same ``form'' as its argument \code{x}, containing \code{TRUE}
 for those elements marked \code{NA} or \code{\link{NaN}} (!)
 and \code{FALSE} otherwise.
 \code{dim}, \code{dimnames} and \code{names} attributes are preserved.
+
+The generic function \code{is.na<-} sets elements to \code{NA}.
 }
 \arguments{
   \item{x}{an \R object to be tested.}
+  \item{value}{a suitable index vector for use with \code{x}.}
 }
 \details{
-    \code{is.na(x)} works elementwise when \code{x} is a \code{\link{list}}.
+  For character vectors the value \code{"NA"} represents missingness.
 
-    The method dispatching is C-internal, rather than via
-    \code{\link{UseMethod}}.
+  \code{is.na(x)} works elementwise when \code{x} is a \code{\link{list}}.
+  The method dispatching is C-internal, rather than via
+  \code{\link{UseMethod}}.
+
+  Function \code{is.na<-} may provide a safer way to set missingness.
+  It behaves differently for factors, for example.
 }
 \seealso{
   \code{\link{NaN}}, \code{\link{is.nan}}, etc.

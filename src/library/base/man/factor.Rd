@@ -17,6 +17,7 @@ as.ordered(x)
 \alias{is.ordered}
 \alias{as.factor}
 \alias{as.ordered}
+\alias{is.na<-.factor}
 \description{
   The function \code{factor} is used to encode a vector as a factor (the
   names category and enumerated type are also used for factors).  If
@@ -88,6 +89,10 @@ as.ordered(x)
   The codes of a factor may contain \code{\link{NA}}. For a numeric
   \code{x}, set \code{exclude=NULL} to make \code{\link{NA}} an extra
   level (\code{"NA"}), by default the last level.
+
+  If \code{"NA"} is a level, the way to set a code to be missing is to
+  use \code{\link{is.na}} on the left-hand-side of an assignment.
+  Under those circumstances missing values are printed as \code{<NA>}.
 }
 \section{Warning}{
   The interpretation of a factor depends on both the codes and the
@@ -115,6 +120,13 @@ factor(factor(letters[7:10])[2:3]) # exercise indexing and reduction
 factor(letters[1:20], label="letter")
 
 class(ordered(4:1))# "ordered", inheriting from "factor"
+
+## suppose you want "NA" as a level, and to allowing missing values.
+(x <- factor(c(1, 2, "NA"), exclude = ""))
+is.na(x)[2] <- T
+x  # [1] 1    <NA> NA, <NA> used because NA is a level.
+is.na(x)
+# [1] FALSE  TRUE FALSE
 }
 \keyword{category}
 \keyword{NA}
