@@ -17,8 +17,9 @@ DVI = $(MANdest)/Man.dvi
 
 build-help: stamp-help
 build-html: stamp-html
-build-latex: stamp-latex $(DVI)
-build-docs: stamp-docs $(DVI)
+build-latex: stamp-latex
+build-docs: stamp-docs
+build-dvi:  $(DVI)
 
 stamp-help: $(MANSRC)
 	@echo "Building ALL help pages"
