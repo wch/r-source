@@ -12,7 +12,9 @@ Building From Source on Windows
 
 [Some further details, including how to debug, are given in the rw-FAQ.]
 
-First collect the tools that you need.
+First collect the tools that you need.  There is a `portal' with
+current links at http://www.stats.ox.ac.uk/pub/Rtools/.
+
 
 Collect the tools
 -----------------
