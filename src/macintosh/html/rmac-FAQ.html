@@ -5,21 +5,13 @@
 
 
 <h1 align="center">R for Macintosh FAQ/DOC</h1>
-<h2>Version for <tt>R 1.3.1</tt></h2>
+<h2>Version for <tt>R 1.4.0</tt></h2>
 <address>S. M. Iacus</address>
 <p>
 Changes specific to this version:
 
-<ul> Added the "Config" menu</ul>
-<ul> Fixed a bug in the lapack module. Complex functions are now available.</ul>
-<ul> Added MPW makefiles to build standard libraries and modules</ul>
-<ul> Added experimental script to build R via Apple's MRC compiler</ul>
-<ul> Now R needs a new shared library <a href="#f2cLib">"f2cLib"</a> that 
-   will increase portability for all fortran based packages</ul>
-<ul> Added support for apple events. R begins to be a scriptable
-  application. Very limited support by now but will increase soon.
-  Some demo scripts have been added.</ul>
-<ul> link.html.help() function has been added by picking windows code.</ul>
+<ul> Added item "Link Packages Help" in the "Help" menu.</ul>
+<ul> Fixed a bug that ghosted help menu items.</ul>
 
 
 <p><p><hr><p>
@@ -605,7 +597,7 @@ work with external editor such as Alpha.</td>
 
 <td></td>
 
-<td>&nbsp;&nbsp; Opens a dialog where the user canspecify an item he or
+<td>&nbsp;&nbsp; Opens a dialog where the user can specify an item he or
 she wants to see.&nbsp;&nbsp;&nbsp;&nbsp; Equivalentto "help(topic)" or
 "?topic"</td>
 </tr>
@@ -617,7 +609,7 @@ she wants to see.&nbsp;&nbsp;&nbsp;&nbsp; Equivalentto "help(topic)" or
 
 <td></td>
 
-<td>&nbsp; Opens a dialog where the user can&nbsp; specifyan argument to
+<td>&nbsp; Opens a dialog where the user can&nbsp; specify an argument to
 have help on. It&nbsp;&nbsp;&nbsp;&nbsp; is equivalent to"help.search("topic")"</td>
 </tr>
 
@@ -628,9 +620,18 @@ have help on. It&nbsp;&nbsp;&nbsp;&nbsp; is equivalent to"help.search("topic")"<
 
 <td></td>
 
-<td>Opens a dialog where the user can specifyan item of which he or she
+<td>Opens a dialog where the user can specify an item of which he or she
 wants to run&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; anexample of. It is equivalent
 to "example(topic)".</td>
+</tr>
+
+<tr>
+<td>&nbsp;</td>
+<td>Link Packages Help</td>
+
+<td></td>
+
+<td>After installing a new package you need to link help files database.</td>
 </tr>
 </table>
 <i><u></u></i>
