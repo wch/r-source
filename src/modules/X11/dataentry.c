@@ -1245,7 +1245,7 @@ static KeySym GetKey(DEEvent * event)
     char text[1];
     KeySym iokey;
 
-    XLookupString(event, text, 10, &iokey, 0);
+    XLookupString(event, text, 1, &iokey, 0);
     return iokey;
 }
 
