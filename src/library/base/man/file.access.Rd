@@ -28,6 +28,14 @@ than the effective IDs).
 Execute permission is ignored (always granted) under Windows, and all
 directories have both read and write permissions.
 #endif
+
+Please note that it is not good to use this function to test before
+trying to open a file.  On a multi-tasking system, it is possible that
+the accessibility of a file will change between the time you call
+\code{file.access()} and the time you try to open the file, and in
+recent Windows versions the underlying function in \code{msvcrt.dll}
+sometimes returns inaccurate values.  It is better to wrap 
+file open attempts in \code{\link{try}} instead.
 }
 \value{
   An integer vector with values \code{0} for success and \code{-1} for failure.
@@ -40,7 +48,7 @@ directories have both read and write permissions.
   the return value is \bold{false} for \bold{success}.
 }
 
-\seealso{\code{\link{file.info}}}
+\seealso{\code{\link{file.info}}, \code{\link{try}}}
 
 \examples{
 fa <- file.access(dir("."))
