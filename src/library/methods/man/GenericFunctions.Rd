@@ -277,10 +277,11 @@ findFuncStrict <- function(fName) {
     get(fName, allF[[1]])
 }
 
-try(findFuncStrict("myFun"))# no version
+try(findFuncStrict("myFun"))# Error: no version
 lm <- function(x) x+1
-try(findFuncStrict("lm"))# 2 versions
+try(findFuncStrict("lm"))#    Error: 2 versions
 findFuncStrict("findFuncStrict")# just 1 version
+rm(lm)
 
 \dontshow{
 ## because nosegfault runs standardGeneric w/o the methods package, nothing
@@ -292,7 +293,6 @@ mustDie(standardGeneric(NULL))
 mustDie(standardGeneric(""))
 mustDie(standardGeneric("notAGenericFunction"))
 mustDie(standardGeneric("show"))  # a generic, but not called from its body
-
 }
 }
 \keyword{programming}
