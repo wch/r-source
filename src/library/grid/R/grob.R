@@ -252,6 +252,22 @@ gTree <- function(..., name=NULL, gp=NULL, vp=NULL,
 }
 
 ################
+# Getting just the names of the top-level grobs on the DL
+################
+getName <- function(elt) {
+  if (inherits(elt, "grob"))
+    elt$name
+  else
+    ""
+}
+
+getNames <- function() {
+  dl <- grid.Call("L_getDisplayList")[1:grid.Call("L_getDLindex")]
+  names <- sapply(dl, getName)
+  names[nchar(names) != 0]
+}
+
+################
 # Getting/adding/removing/editing (children of [children of ...]) a gTree
 ################
 

@@ -1,4 +1,3 @@
-<<<<<<< .mine
 Changes from grid_2.0.1 to grid_2.1.0:
 ------------------------------------
 
@@ -18,6 +17,9 @@ Changes from grid_2.0.1 to grid_2.1.0:
 
 2.  Fixed bug in grid.text() when "rot" argument has length 0.
     (privately reported by Emmanuel Paradis)
+
+3.  New getNames() function to return just the names of all top-level
+    grobs on the display list.
 
 
 Changes from grid_2.0.0 to grid_2.0.1:

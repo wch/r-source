@@ -51,7 +51,7 @@ export(
        "grid.get", "grid.set", "grid.add", "grid.remove", "grid.edit",
        "getGrob", "setGrob", "addGrob", "removeGrob", "editGrob",
        "gEdit", "gEditList", "applyEdit", "applyEdits",
-       "childNames",
+       "getNames", "childNames",
        "grid.grab", 
        "setChildren",
 
