@@ -162,13 +162,13 @@ read.delim2(file, header = TRUE, sep = "\t", quote="\"", dec=",",
   TAB character for the delimiter.  Notice that \code{header = TRUE} and
   \code{fill = TRUE} in these variants.
 
-  Comment characters are allowed unless \code{comment.char = ""}, and
-  complete comment lines are allowed provided \code{blank.lines.skip = TRUE}
-  However, comment lines prior to the header must have
-  the comment character in the first non-blank column.
+  The rest of the line after a comment character is skipped; quotes
+  are not processed in comments.  Complete comment lines are allowed
+  provided \code{blank.lines.skip = TRUE}; however, comment lines prior
+  to the header must have the comment character in the first non-blank
+  column.
 
-  Fields with embedded newlines are not supported (even if quoted or
-  commented).
+  Fields with embedded newlines are not supported (even if quoted).
 }
 \note{
   The columns referred to in \code{as.is} and \code{colClasses} include
