@@ -19,6 +19,8 @@ NEW FEATURES
 
 BUG FIXES
 
+    o   boxplot(.., ylim=..) or (.., axes=..)  gave erronous warning
+
     o	glm had wrong init code for models with offsets. Also fixed
     	so that linear predictor includes offset, also when predicting. 
 
