@@ -80,7 +80,7 @@ AC_ARG_ENABLE(R-profiling,
 
 ## Allow the user to specify building R shared libraries.
 AC_ARG_ENABLE(R-shlibs,
-  [  --enable-R-shlibs       build R shared libraries [no]],
+  [  --enable-R-shlibs       build R as a shared library [no]],
   [ want_R_shlibs="${enableval}" ],
   want_R_shlibs=no)
 ## FIXME:
