@@ -51,17 +51,21 @@ plot(-4:4, -4:4, type = "n")# setting up coord. system
 points(rnorm(200), rnorm(200), col = "red")
 points(rnorm(100)/2, rnorm(100)/2, col = "blue", cex = 1.5)
 
-##-------- Showing all the graphics symbols ------------
+##-------- Showing all the extra & some char graphics symbols ------------
 Pex <- if(.Device=="postscript") 5 else 20
-ipch <- 1:25; dd <- c(-1,1)/2
-rx <- dd + range(ix <- (ipch-1) \%/\% 5)
-ry <- dd + range(iy <- 3 + 4-(ipch-1) \%\% 5)
+ipch <- 1:(np <- 25+11); k <- floor(sqrt(np)); dd <- c(-1,1)/2
+rx <- dd + range(ix <- (ipch-1) \%/\% k)
+ry <- dd + range(iy <- 3 + (k-1)-(ipch-1) \%\% k)
+pch <- as.list(ipch)
+pch[25+ 1:11] <- as.list(c("*",".", "o","O","0","+","-",":","|","\%","#"))
 plot(rx, ry, type="n", axes = F, xlab = "", ylab = "",
      main = "plot symbols :  points (..  pch = * )")
 abline(v = ix, h = iy, col = "lightgray", lty = "dotted")
-for(i in ipch) { # red symbols with a yellow interior (where available)
-  points(ix[i], iy[i], pch = i, col = "red", bg = "yellow", cex = Pex)
-  text(ix[i] - .3, iy[i], i, col = "brown", cex = 1.5)
+for(i in 1:np) {
+  pc <- pch[[i]]
+  points(ix[i], iy[i], pch = pc, col = "red", bg = "yellow", cex = Pex)
+  ## red symbols with a yellow interior (where available)
+  text(ix[i] - .3, iy[i], pc, col = "brown", cex = 1.5)
 }
 }
 \keyword{aplot}
