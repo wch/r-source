@@ -492,7 +492,7 @@ static void FreeColors()
 
 static void SetLinetype(int newlty, double nlwd, DevDesc *dd)
 {
-	char dashlist[8];
+	static char dashlist[8];
 	int i, ndash, newlwd;
 	x11Desc *xd = (x11Desc *) dd->deviceSpecific;
 
@@ -513,8 +513,10 @@ static void SetLinetype(int newlty, double nlwd, DevDesc *dd)
 		}
 		else {
 			ndash = 0;
-			for(i=0 ; i<8 && newlty&15 ; i++) {
-				dashlist[ndash++] = newlty & 15;
+			for(i=0 ; i<8 && newlty != 0 ; i++) {
+				int j = newlty & 15;
+				if (j == 0) j = 1; /* Or we die with an X Error */
+				dashlist[ndash++] = j;
 				newlty = newlty>>4;
 			}
 			XSetDashes(display, xd->wgc, 0, dashlist, ndash);
