@@ -28,6 +28,12 @@ then
         exec sh $RHOME/etc/INSTALL $*
 fi
 
+if [ "$1" = "REMOVE" ]
+then
+        shift
+        exec sh $RHOME/etc/REMOVE $*
+fi
+
 if [ "$1" = -xxgdb ]
 then
 	shift
