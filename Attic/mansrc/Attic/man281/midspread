@@ -1,7 +1,0 @@
-TITLE(midspread @@ Midspread)
-USAGE(
-midspread(x)
-)
-DESCRIPTION(
-LANG(midspread) calculates the midspread of the data in LANG(x).
-)
