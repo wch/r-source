@@ -860,7 +860,8 @@ interchangeable (for the same 1.x.? version of R, at least).
 @node I would like to be able to use Japanese fonts, I don't see characters with accents at the R console, The R Console and Fonts, The R Console and Fonts
 @section I would like to be able to use Japanese fonts
 
-for example, in the console and to annotate graphs.
+for example, in the console and to annotate graphs.  Similar comments
+apply to any non-Western European language.
 
 We believe this is possible by setting suitable fonts in the Rconsole and
 Rdevga configuration files (see Q4.2).  You can specify additional fonts in
@@ -872,6 +873,10 @@ par(font=, font.lab=, font.main=, font.sub=)
 
 Nineteen fonts are specified (as 1 to 19) by default: you can add to these
 (up to 13 more) or replace them.
+
+In addition, the Hershey vector fonts (see @code{?Hershey},
+@code{?Japanese} and @code{demo(Japanese)}) can be used on any graphics
+device to display Japanese characters.
 
 
 @node I don't see characters with accents at the R console, The output to the console seems to be delayed, I would like to be able to use Japanese fonts, The R Console and Fonts
@@ -885,6 +890,12 @@ non-Western European languages.
 Support for these characters within @code{Rterm} depends on the
 environment (the terminal window and shell, including locale settings)
 within which it is run as well as the font used by the terminal window.
+
+If you are using a non-Latin1 language, you do need to ensure that the
+fonts you selected support the language.  For example, it was found by
+one Czech user (under Windows 98) that he had to select @code{Times New
+Roman CE} or @code{Courier} (not @code{Courier New}) to get certain
+Czech characters displayed correctly.
 
 @node The output to the console seems to be delayed, Long lines seem to be truncated., I don't see characters with accents at the R console, The R Console and Fonts
 @section When using Rgui the output to the console seems to be delayed.
@@ -950,13 +961,12 @@ case) did not work.
 
 Fast BLAS (Basic Linear Algebra Subprograms,
 @uref{http://www.netlib.org/blas/faq.html}) routines are used to speed
-up numerical linear algebra.  There is support in the R sources for
-the `tuned' BLAS called ATLAS
-(@uref{http://math-atlas.sourceforge.net}).  The savings can be
-appreciable: on a 366MHz PIIM and a 1000 x 1000 matrix @code{La.svd}
-took 182 sec with the standard BLAS and 59 sec with ATLAS.  Because
-ATLAS is tuned to a particular chip we can't use it generally: the
-optimal routines for a PIII or an Athlon XP are quite different and
+up numerical linear algebra.  There is support in the R sources for the
+`tuned' BLAS called ATLAS (@uref{http://math-atlas.sourceforge.net}).
+The savings can be appreciable: on a 2.6GHz P4 and a 1000 x 1000 matrix
+@code{svd} took 16.2 sec with the standard BLAS and 7.8 sec with ATLAS.
+Because ATLAS is tuned to a particular chip we can't use it generally:
+the optimal routines for a PIII or an Athlon XP are quite different and
 neither will not run at all on a PII.
 
 BLAS support is supplied by the single DLL @file{R_HOME\bin\Rblas.dll},
@@ -970,6 +980,13 @@ are macros @code{USE_ATLAS} and @code{ATLAS_PATH}.  Set
 libraries are located.  You will need to make the libraries yourself:
 none of the binaries we have seen are compiled for the correct
 compiler.
+
+Even faster hand-coded routines are available as DLLs from Kazushige
+Goto for certain CPUs (Pentium III and 4 and Opteron).  He does not
+allow redistribution: they are currently available @emph{via}
+@uref{http://www.cs.utexas.edu/users/kgoto/signup_first.html} and there
+is support in the R sources to build @file{R_HOME\bin\Rblas.dll} to link
+to one of his DLLs.  On the @code{svd} problem they took 6.8 sec.
 
 
 @node  How do I include compiled C code?, How do I debug code that I have compiled and dyn.load-ed?, Can I use a fast BLAS?, Building from Source
