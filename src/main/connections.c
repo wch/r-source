@@ -140,11 +140,11 @@ int dummy_vfprintf(Rconnection con, const char *format, va_list ap)
     if(res >= BUFSIZE) { /* res is the desired output length */
 	usedRalloc = TRUE;
 	b = R_alloc(res + 1, sizeof(char));
-	vsprintf(buf, format, ap);
+	vsprintf(b, format, ap);
     } else if(res < 0) { /* just a failure indication */
 	usedRalloc = TRUE;
 	b = R_alloc(10*BUFSIZE, sizeof(char));
-	res = vsnprintf(buf, 10*BUFSIZE, format, ap);
+	res = vsnprintf(b, 10*BUFSIZE, format, ap);
 	if (res < 0) {
 	    *(b + 10*BUFSIZE) = '\0';
 	    warning("printing of extremely long output is truncated");
