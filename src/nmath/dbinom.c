@@ -21,19 +21,7 @@
  *
  *    The density of the binomial distribution.
  *
- * Using the new algorithm of Clive Loader(1999) :
- *
- * The author of this software is Clive Loader, clive@bell-labs.com.
- * Copyright (c) 1999-2000 Lucent Technologies, Bell Laboratories.
- * Permission to use, copy, modify, and distribute this software for any
- * purpose without fee is hereby granted, with the exceptions noted below,
- * and provided that this entire notice is included in all copies of any
- * software which is or includes a copy or modification of this software
- * and in all copies of the supporting documentation for such software.
- * THIS SOFTWARE IS BEING PROVIDED "AS IS", WITHOUT ANY EXPRESS OR IMPLIED
- * WARRANTY.  IN PARTICULAR, NEITHER THE AUTHOR NOR LUCENT TECHNOLOGIES
- * MAKE ANY REPRESENTATION OR WARRANTY OF ANY KIND CONCERNING THE
- * MERCHANTABILITY OF THIS SOFTWARE OR ITS FITNESS FOR ANY PARTICULAR PURPOSE.
+ * Using the new algorithm of C.Loader(1999) :
  *
  * This code provides functions for computing binomial probabilities, and
  * attempts to be accurate for a full range of parameter values
@@ -48,34 +36,6 @@
 
 #include "nmath.h"
 #include "dpq.h"
-
-/* The "deviance part"
-   M * D0(x/M) = M*[ x/M * log(x/M) + 1 - (x/M) ] =
-   = x*log(x/M) + M - x
-   where M = E[X] = n*p or = lambda
-*/
-double bd0(double x, double np)
-{
-    double ej, s, s1, v;
-    int j;
-
-    if (fabs(x-np) < 0.1*(x+np)) {
-	v = (x-np)/(x+np);
-	s = (x-np)*v;/* s using v -- change by MM */
-	ej = 2*x*v;
-	v = v*v;
-	for (j=1; ; j++) { /* Taylor series */
-	    ej *= v;
-	    s1 = s+ej/((j<<1)+1);
-	    if (s1==s) /* last term was effectively 0 */
-		return(s1);
-	    s = s1;
-	}
-    }
-    /* else:  | x - np |  is not too small */
-    return(x*log(x/np)+np-x);
-}
-
 
 double dbinom(double x, double n, double p, int give_log)
 {
@@ -102,7 +62,7 @@ double dbinom(double x, double n, double p, int give_log)
     /* 0 < p < 1 : */
     if (x == n)
 	return give_log ? n*log(p) : pow(p,n);/* or R_pow_di() {w/o checks}*/
-    /* else */
+    /* else (0 < x < n) : */
 #ifndef OLD_dbinom
     lc = stirlerr(n) - stirlerr(x) - stirlerr(n-x)
 	- bd0(x, n*p)
