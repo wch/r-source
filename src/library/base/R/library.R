@@ -67,8 +67,8 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
         ## ignore generics not defined for the package
         ob <- objects(lib.pos, all = TRUE)
         if(!nogenerics && .isMethodsDispatchOn()) {
-            gen <- methods::getGenerics(lib.pos)
-            gen <- gen[methods::slot(gen, "package") != ".GlobalEnv"]
+            gen <- methods:::getGenerics(lib.pos)
+            gen <- gen[methods:::slot(gen, "package") != ".GlobalEnv"]
             ob <- ob[!(ob %in% gen)]
         }
         fst <- TRUE
