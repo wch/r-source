@@ -16,6 +16,7 @@ test-src-gct = \
 	arith-true.R \
 	arith.R \
 	demos.R \
+	demos2.R \
 	lm-tests.R \
 	primitive-funs.R \
 	ok-errors.R \

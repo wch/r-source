@@ -35,21 +35,15 @@ demo(topic, device = getOption("device"),
 }
 \seealso{\code{\link{source}} which is called by \code{demo}.}
 \examples{
-% Most demos are strictly tested anyway, since R 1.3.0,
-% make sure, the others are run here: 
 demo() # for attached packages
 
 ## All available demos:
 demo(package = .packages(all.available = TRUE))
 
 demo(lm.glm)
-\testonly{
-demo(nlm)
-}
 \dontrun{
  ch <- "scoping"
  demo(ch, character = TRUE)
-}
-}
+}}
 \keyword{documentation}
 \keyword{utilities}

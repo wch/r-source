@@ -145,7 +145,4 @@ par(bg="cornsilk")
 data(quakes)
 coplot(lat ~ long | depth, data=quakes, pch=21, bg="green3")
 
-## --- "math annotation" in plots :
-example(plotmath)
-
 par(opar)

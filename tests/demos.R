@@ -2,9 +2,9 @@
 .ptime <- proc.time()
 .Random.seed <- c(0,rep(7654, 3))
 
-## Drop these for strict testing {and add them to (\testonly{.}) examples
+## Drop these for strict testing {and add them to demos2.R)
 ## in ../src/library/base/man/demo.Rd }:
-dont <- list(base = c("nlm", "lm.glm")
+dont <- list(base = c("Hershey", "Japanese", "nlm", "plotmath")
              )
 ## don't take tcltk here
 for(pkg in c("base", "eda")) {

@@ -31,11 +31,14 @@ USER-VISIBLE CHANGES
     o	Formulae are not longer automatically simplified when terms()
 	is called, so the formulae in results may still be in the
 	original form rather than the equivalent simplified form
-	(which may have reordered the terms): the result are now
+	(which may have reordered the terms): the results are now
 	much closer to those of S.
 
     o	The R_X11 module is no longer loaded until it is needed, so
 	do test that x11() works in a new Unix-alike R installation.
+
+    o	The tables for plotmath, Hershey and Japanese have been moved
+	from the help pages (example(plotmath)) to demo(plotmath) etc.
 
 
 NEW FEATURES
