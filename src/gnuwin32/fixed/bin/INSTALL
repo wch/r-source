@@ -26,7 +26,7 @@ use R::Dcf;
 use R::Utils;
 
 
-my $revision = ' $Revision: 1.37 $ ';
+my $revision = ' $Revision: 1.38 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -58,6 +58,8 @@ usage() if $opt_help;
 my $startdir = cwd();
 my $library;
 if($opt_library){
+    # remove quotes around the library path
+    $opt_library =~ s/^['"]//; $opt_library =~ s/['"]$//; #'"
     chdir($opt_library) ||
 	die "Error: cannot change to directory \`$opt_library'\n";
     $library = cwd();
