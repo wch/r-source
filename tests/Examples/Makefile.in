@@ -53,23 +53,24 @@ R:
 	@echo "running code in $< ..."
 	$(R) < $< > $@
 
-%-Ex.R: FORCE
-	@if $(top_builddir)/tools/Rdnewer \
-	    "$(top_srcdir)/src/library/$*" "$@"; then \
+$(EX_IN): FORCE
+	@(pkg=`basename $@ -Ex.R`; \
+	if $(top_builddir)/tools/Rdnewer \
+	    "$(top_srcdir)/src/library/$${pkg}" "$@"; then \
 	  if test -f $@.bak ; then mv $@.bak $@.bakk ; fi; \
 	  if test -f $@     ; then cp -p $@  $@.bak  ; fi; \
-	  echo "updating $@ ..."; \
+	  echo "collecting examples for package \`$${pkg}' ..."; \
 	  (cd $(top_builddir)/src/library && \
-	    OPTS="--txt --example" $(MAKE) R_PKGS="$*" DOCS); \
+	    OPTS="--txt --example" $(MAKE) R_PKGS="$${pkg}" DOCS); \
 	  f=$${TMPDIR:-/tmp}/R$$$$; \
-	  $(top_builddir)/bin/massage-Examples $* \
-	    $(top_builddir)/library/$*/R-ex/*.R > $${f}; \
+	  $(top_builddir)/bin/massage-Examples $${pkg} \
+	    $(top_builddir)/library/$${pkg}/R-ex/*.R > $${f}; \
 	  $(top_srcdir)/tools/move-if-change $${f} $@; \
-	fi
+	fi)
 FORCE:
 
 $(EX_OUT): Makefile \
-  $(top_builddir)/bin/R.X11 \
+  $(top_builddir)/bin/R.bin \
   $(top_builddir)/library/base/R/base
 
 mostlyclean: clean

@@ -91,14 +91,15 @@ version.tex: Makefile $(top_srcdir)/date-stamp $(top_srcdir)/VERSION
 	  echo "$${v} ($${m} $${d}, $${y})") > $@
 stamp-refman-dvi: $(pkgsrcs)
 	@touch $@
-%-pkg.tex: FORCE
-	@if $(top_builddir)/tools/Rdnewer \
-	    "$(top_srcdir)/src/library/$*" "$@"; then \
-	  echo "collecting LaTeX docs for package \`$*' ..."; \
+$(pkgsrcs): FORCE
+	@(pkg=`basename $@ -pkg.tex`; \
+	if $(top_builddir)/tools/Rdnewer \
+	    "$(top_srcdir)/src/library/$${pkg}" "$@"; then \
+	  echo "collecting LaTeX docs for package \`$${pkg}' ..."; \
 	  (cd $(top_builddir)/src/library && \
-	    OPTS="--latex" $(MAKE) R_PKGS="$*" DOCS); \
-	  $(top_builddir)/tools/pkg2tex $*; \
-	fi
+	    OPTS="--latex" $(MAKE) R_PKGS="$${pkg}" DOCS); \
+	  $(top_builddir)/tools/pkg2tex $${pkg}; \
+	fi)
 FORCE:
 
 $(OBJECTS_DVI): $(srcdir)/texinfo.tex
