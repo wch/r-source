@@ -260,7 +260,7 @@ loadNamespace <- function (package, lib.loc = NULL,
             else if(length(expMethods) > 0)
                 stop("Methods specified for export, but none defined: ",
                      paste(expMethods, collapse=", "))
-            exports <- c(exports, expClasses, expMethods)
+            exports <- unique(c(exports, expClasses, expMethods))
         }
         namespaceExport(ns, exports)
         sealNamespace(ns)
