@@ -101,7 +101,7 @@ SEXP do_PS(SEXP call, SEXP op, SEXP args, SEXP env)
 
     R_CheckDeviceAvailable();
     BEGIN_SUSPEND_INTERRUPTS {
-	if (!(dd = (DevDesc *) malloc(sizeof(DevDesc))))
+	if (!(dd = (DevDesc *) calloc(1,sizeof(DevDesc))))
 	    return 0;
 	/* Do this for early redraw attempts */
 	dd->displayList = R_NilValue;
@@ -150,7 +150,7 @@ SEXP do_PicTeX(SEXP call, SEXP op, SEXP args, SEXP env)
 
     R_CheckDeviceAvailable();
     BEGIN_SUSPEND_INTERRUPTS {
-	if (!(dd = (DevDesc *) malloc(sizeof(DevDesc))))
+	if (!(dd = (DevDesc *) calloc(1,sizeof(DevDesc))))
 	    return 0;
 	/* Do this for early redraw attempts */
 	dd->displayList = R_NilValue;
@@ -209,7 +209,7 @@ SEXP do_XFig(SEXP call, SEXP op, SEXP args, SEXP env)
 
     R_CheckDeviceAvailable();
     BEGIN_SUSPEND_INTERRUPTS {
-	if (!(dd = (DevDesc *) malloc(sizeof(DevDesc))))
+	if (!(dd = (DevDesc *) calloc(1,sizeof(DevDesc))))
 	    return 0;
 	/* Do this for early redraw attempts */
 	dd->displayList = R_NilValue;
@@ -262,7 +262,7 @@ SEXP do_PDF(SEXP call, SEXP op, SEXP args, SEXP env)
 
     R_CheckDeviceAvailable();
     BEGIN_SUSPEND_INTERRUPTS {
-	if (!(dd = (DevDesc *) malloc(sizeof(DevDesc))))
+	if (!(dd = (DevDesc *) calloc(1, sizeof(DevDesc))))
 	    return 0;
 	/* Do this for early redraw attempts */
 	dd->displayList = R_NilValue;

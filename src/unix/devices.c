@@ -127,7 +127,7 @@ Rf_addX11Device(char *display, double width, double height, double ps,
     R_CheckDeviceAvailable();
     BEGIN_SUSPEND_INTERRUPTS {
 	/* Allocate and initialize the device driver data */
-	if (!(dd = (DevDesc*)malloc(sizeof(DevDesc))))
+	if (!(dd = (DevDesc*)calloc(1, sizeof(DevDesc))))
 	    return 0;
 	/* Do this for early redraw attempts */
 	dd->displayList = R_NilValue;
@@ -165,7 +165,7 @@ SEXP do_GTK(SEXP call, SEXP op, SEXP args, SEXP env)
     R_CheckDeviceAvailable();
     BEGIN_SUSPEND_INTERRUPTS {
 	/* Allocate and initialize the device driver data */
-	if (!(dd = (DevDesc *) malloc(sizeof(DevDesc))))
+	if (!(dd = (DevDesc *) calloc(1, sizeof(DevDesc))))
 	    return 0;
 	/* Do this for early redraw attempts */
 	dd->displayList = R_NilValue;
@@ -199,7 +199,7 @@ SEXP do_Gnome(SEXP call, SEXP op, SEXP args, SEXP env)
     R_CheckDeviceAvailable();
     BEGIN_SUSPEND_INTERRUPTS {
 	/* Allocate and initialize the device driver data */
-	if (!(dd = (DevDesc *) malloc(sizeof(DevDesc))))
+	if (!(dd = (DevDesc *) calloc(1, sizeof(DevDesc))))
 	    return 0;
 	/* Do this for early redraw attempts */
 	dd->displayList = R_NilValue;
@@ -287,7 +287,7 @@ Rf_addX11Device(char *display, double width, double height, double ps,
     R_CheckDeviceAvailable();
     BEGIN_SUSPEND_INTERRUPTS {
 	/* Allocate and initialize the device driver data */
-	if (!(dev = (NewDevDesc*)malloc(sizeof(NewDevDesc))))
+	if (!(dev = (NewDevDesc*)calloc(1, sizeof(NewDevDesc))))
 	    return 0;
 	/* Do this for early redraw attempts */
 	dev->displayList = R_NilValue;

@@ -17,7 +17,7 @@
  *  Software Foundation, Inc., 59 Temple Place - Suite 330, Boston,
  *  MA 02111-1307, USA
  *
- *  $Id: rproxy.c,v 1.7 2001/04/05 09:42:35 ripley Exp $
+ *  $Id: rproxy.c,v 1.8 2001/11/26 13:13:53 pd Exp $
  */
 
 #define NONAMELESSUNION
@@ -480,7 +480,7 @@ int SYSCALL R_set_graphics_device (struct _SC_Proxy_Object* object,
 
   // add the graphics device to the set of drivers
   {
-    DevDesc* lDD = (DevDesc*) malloc (sizeof (DevDesc));
+    DevDesc* lDD = (DevDesc*) calloc (1, sizeof (DevDesc));
 
     /* Do this for early redraw attempts */
     lDD->displayList = R_NilValue;

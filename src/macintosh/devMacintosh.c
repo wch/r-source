@@ -69,7 +69,7 @@ SEXP do_Macintosh(SEXP call, SEXP op, SEXP args, SEXP env)
      R_CheckDeviceAvailable();
     /* Allocate and initialize the device driver data */
      BEGIN_SUSPEND_INTERRUPTS {
-      if (!(dd = (DevDesc *) malloc(sizeof(DevDesc))))
+      if (!(dd = (DevDesc *) calloc(1, sizeof(DevDesc))))
 	   return 0;
     /* Do this for early redraw attempts */
     dd->displayList = R_NilValue;

@@ -45,7 +45,7 @@ void SaveAsPostscript(DevDesc *dd, char *fn)
 {
   SEXP s = findVar(install(".PostScript.Options"), R_GlobalEnv);
 
-  DevDesc *ndd = (DevDesc *) malloc(sizeof(DevDesc));
+  DevDesc *ndd = (DevDesc *) calloc(1, sizeof(DevDesc));
   char family[256], encoding[256], paper[256], bg[256], fg[256], 
     command[256], **afmpaths = NULL;
   
@@ -89,7 +89,7 @@ void SaveAsPostscript(DevDesc *dd, char *fn)
 static void SaveAsPDF(DevDesc *dd, char *fn)
 {
     SEXP s = findVar(install(".PostScript.Options"), R_GlobalEnv);
-    DevDesc *ndd = (DevDesc *) malloc(sizeof(DevDesc));
+    DevDesc *ndd = (DevDesc *) calloc(1, sizeof(DevDesc));
     char family[256], encoding[256], bg[256], fg[256];
 
     if (!ndd) {

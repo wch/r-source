@@ -236,7 +236,7 @@ static void PrivateCopyDevice(DevDesc *dd,DevDesc *ndd, char *name)
 
 static void SaveAsWin(DevDesc *dd, char *display)
 {
-    DevDesc *ndd = (DevDesc *) malloc(sizeof(DevDesc));
+    DevDesc *ndd = (DevDesc *) calloc(1, sizeof(DevDesc));
     if (!ndd) {
 	R_ShowMessage("No enough memory to copy graphics window");
 	return;
@@ -260,7 +260,7 @@ static void SaveAsWin(DevDesc *dd, char *display)
 static void SaveAsPostscript(DevDesc *dd, char *fn)
 {
     SEXP s = findVar(install(".PostScript.Options"), R_GlobalEnv);
-    DevDesc *ndd = (DevDesc *) malloc(sizeof(DevDesc));
+    DevDesc *ndd = (DevDesc *) calloc(1, sizeof(DevDesc));
     char family[256], encoding[256], paper[256], bg[256], fg[256], 
 	**afmpaths = NULL;
 
@@ -318,7 +318,7 @@ static void SaveAsPostscript(DevDesc *dd, char *fn)
 static void SaveAsPDF(DevDesc *dd, char *fn)
 {
     SEXP s = findVar(install(".PostScript.Options"), R_GlobalEnv);
-    DevDesc *ndd = (DevDesc *) malloc(sizeof(DevDesc));
+    DevDesc *ndd = (DevDesc *) calloc(1, sizeof(DevDesc));
     char family[256], encoding[256], bg[256], fg[256];
 
     if (!ndd) {

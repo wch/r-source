@@ -1877,7 +1877,7 @@ newX11Desc * Rf_allocNewX11DeviceDesc(double ps)
 {
     newX11Desc *xd;
     /* allocate new device description */
-    if (!(xd = (newX11Desc*)malloc(sizeof(newX11Desc))))
+    if (!(xd = (newX11Desc*)calloc(1, sizeof(newX11Desc))))
 	return FALSE;
 
     /* From here on, if we need to bail out with "error", */
