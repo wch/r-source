@@ -549,10 +549,10 @@ static void PSFileHeader(FILE *fp, int font, int encoding, char *papername,
     fprintf(fp, "/gs  { gsave } def\n");
     fprintf(fp, "/gr  { grestore } def\n");
     if (landscape)
-	fprintf(fp, "/bp  { gs %.2f 0 translate 90 rotate} def\n", paperwidth);
+	fprintf(fp, "/bp  { gs %.2f 0 translate 90 rotate gs } def\n", paperwidth);
     else
-	fprintf(fp, "/bp  { gs } def\n");
-    fprintf(fp, "/ep  { showpage gr } def\n");
+	fprintf(fp, "/bp  { gs gs } def\n");
+    fprintf(fp, "/ep  { showpage gr gr } def\n");
     fprintf(fp, "/m   { moveto } def\n");
     fprintf(fp, "/l   { lineto } def\n");
     fprintf(fp, "/np  { newpath } def\n");
@@ -569,7 +569,7 @@ static void PSFileHeader(FILE *fp, int font, int encoding, char *papername,
     fprintf(fp, "       ps mul neg 0 2 1 roll rmoveto\n");
     fprintf(fp, "       1 index stringwidth pop\n");
     fprintf(fp, "       mul neg 0 rmoveto show grestore } def\n");
-    fprintf(fp, "/cl  { initclip newpath 3 index 3 index moveto 1 index\n");
+    fprintf(fp, "/cl  { gr gs newpath 3 index 3 index moveto 1 index\n");
     fprintf(fp, "       4 -1 roll lineto  exch 1 index lineto lineto\n");
     fprintf(fp, "       closepath clip newpath } def\n");
     fprintf(fp, "/rgb { setrgbcolor } def\n");
@@ -1133,6 +1133,8 @@ static void PS_Clip(double x0, double x1, double y0, double y1, DevDesc *dd)
     PostScriptDesc *pd = (PostScriptDesc *) dd->deviceSpecific;
 
     PostScriptSetClipRect(pd->psfp, x0, x1, y0, y1);
+    /* clipping does grestore so invalidate current font */
+    pd->fontsize = -1; 
 }
 
 static void PS_Resize(DevDesc *dd)
