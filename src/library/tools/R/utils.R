@@ -103,14 +103,6 @@ function(dir, type, all.files = FALSE, full.names = TRUE)
     files
 }
 
-### ** OSType
-
-.OStype <- function()
-{
-    OS <- Sys.getenv("R_OSTYPE")
-    if(nchar(OS)) OS else .Platform$OS.type
-}
-
 ### * Text utilities.
 
 ### ** delimMatch
@@ -133,10 +125,11 @@ function(x, delim = c("\{", "\}"), syntax = "Rd")
 
 ### ** texi2dvi
 
-texi2dvi <- function(file, pdf = FALSE, clean = FALSE,
-                     quiet = TRUE, texi2dvi = getOption("texi2dvi"))
+texi2dvi <-
+function(file, pdf = FALSE, clean = FALSE,
+         quiet = TRUE, texi2dvi = getOption("texi2dvi"))
 {
-    ## run texi2dvi on a file
+    ## Run texi2dvi on a file.
 
     if(pdf) pdf <- "--pdf" else pdf <- ""
     if(clean) clean <- "--clean" else clean <- ""
@@ -153,8 +146,16 @@ texi2dvi <- function(file, pdf = FALSE, clean = FALSE,
 }
 
 
-
 ### * Internal utility functions.
+
+### ** .OStype
+
+.OStype <-
+function()
+{
+    OS <- Sys.getenv("R_OSTYPE")
+    if(nchar(OS)) OS else .Platform$OS.type
+}
 
 ### ** .getInternalS3generics
 
@@ -331,12 +332,14 @@ function(package)
              "rep.int", "round.POSIXt"),
              Hmisc = "t.test.cluster",
              HyperbolicDist = "log.hist",
-             MASS = c("frequency.polygon", "gamma.dispersion", "gamma.shape",
+             MASS = c("frequency.polygon",
+             "gamma.dispersion", "gamma.shape",
              "hist.FD", "hist.scott"),
              XML = "text.SAX",
+             car = "scatterplot.matrix",
              graphics = c("boxplot.stats", "close.screen",
-             "plot.design", "plot.new",
-             "plot.window", "plot.xy", "split.screen"),
+             "plot.design", "plot.new", "plot.window", "plot.xy",
+             "split.screen"),
              hier.part = "all.regs",
              quadprog = c("solve.QP", "solve.QP.compact"),
              reposTools = "update.packages2",
