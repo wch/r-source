@@ -53,7 +53,7 @@ pchisq(1, df= 3, ncp = 0:4)# includes the above
 
 x <- 1:10
 ## Chisquare( df = 2) is a special exponential distribution
-dchisq(x, df=2) == dexp(x, 1/2)
-pchisq(x, df=2) == pexp(x, 1/2)#- only approximately
+all.equal(dchisq(x, df=2), dexp(x, 1/2))
+all.equal(pchisq(x, df=2), pexp(x, 1/2))
 }
 \keyword{distribution}
