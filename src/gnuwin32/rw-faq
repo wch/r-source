@@ -14,16 +14,18 @@ Table of Contents
   2.1 Where can I find the latest version?
   2.2 How do I install R for Windows?
   2.3 How do I run it?
-  2.4 There seems to be a limit on the memory it uses!
-  2.5 How can I keep workspaces for different projects in different directories?
-  2.6 How do I print from R?
-  2.7 Can I use `R BATCH'?
-  2.8 Can I use rw1050 with ESS and emacs?
-  2.9 What are HOME and working directories?
-  2.10 R can't find my file, but I know it is there!
-  2.11 Does R use the Registry?
-  2.12 Entering certain characters crashes Rgui.
-  2.13 The internet download functions fail.
+  2.4 How do I UNinstall R?
+  2.5 What's the best way to upgrade?
+  2.6 There seems to be a limit on the memory it uses!
+  2.7 How can I keep workspaces for different projects in different directories?
+  2.8 How do I print from R?
+  2.9 Can I use `R BATCH'?
+  2.10 Can I use rw1050 with ESS and emacs?
+  2.11 What are HOME and working directories?
+  2.12 R can't find my file, but I know it is there!
+  2.13 Does R use the Registry?
+  2.14 Entering certain characters crashes Rgui.
+  2.15 The internet download functions fail.
 
 3 Packages
   3.1 Can I install packages (libraries) in this version?
@@ -141,7 +143,31 @@ Just double-click on the shortcut you prepared at installation.
 If you want to set up another project, make a new shortcut or use the
 existing one and change the `Start in' field of the Properties.
 
-2.4 There seems to be a limit on the memory it uses!
+2.4 How do I UNinstall R?
+=========================
+
+Normally you can do this from the R group on the Start Menu or from the
+`Add/Remove Programs' in the Control Panel.  If it does not appear
+there or if you want to remove an old version, run `unis000.exe' in the
+top-level installation directory.
+
+Uninstallin R only removes files from the initial installation, not for
+example packages you have installed.
+
+If all else fails, you can just delete the whole R directory.
+
+2.5 What's the best way to upgrade?
+===================================
+
+That's a matter of taste.  For most people the best thing to do is to
+uninstall R (see the previous Q), install the new version, copy any
+installed packages to the library folder in the new installation, run
+`update.packages()' (from the menu, if you prefer) and then delete
+anything left of the old installation.  Different versions of R are
+quite deliberately installed in parallel folders so you can keep old
+versions around if you prefer.
+
+2.6 There seems to be a limit on the memory it uses!
 ====================================================
 
 Indeed there is.  It is set by the command-line flag `--max-mem-size'
@@ -150,10 +176,10 @@ of the amount of physical RAM in the machine and 256Mb.  It can be set
 to any amount over 10M. (R will not run in less.)  Be aware though that
 Windows has (in most versions) a maximum amount of user virtual memory
 of 2Gb, and parts of this can be reserved by processes but not used.  R
-itself reserves on startup the maximum of 256Mb and the amount
-specified by `--max-mem-size'.  Because of the way the memory manager
-works, it is possible that there will be free memory but R will not be
-able to reserve it.
+itself reserves on startup the larger of 256Mb and the amount specified
+by `--max-mem-size'.  Because of the way the memory manager works, it
+is possible that there will be free memory but R will not be able to
+reserve it.
 
 Use `?Memory' and `?memory.size' for information about memory usage.
 The limit can be raised by calling `memory.limit' from a running R
@@ -167,7 +193,7 @@ R can be compiled to use a different memory manager which might be
 better at using large amounts of memory, but is substantially slower
 (making R several times slower on some tasks).
 
-2.5 How can I keep workspaces for different projects in different directories?
+2.7 How can I keep workspaces for different projects in different directories?
 ==============================================================================
 
 Create a separate shortcut for each project: see Q2.3.  All the paths to
@@ -179,7 +205,7 @@ the directory for the project you want to use, or drag-and-drop a file
 with extension `.RData' onto an R shortcut.  In either case, the
 working directory will be set to that containing the file.
 
-2.6 How do I print from R?
+2.8 How do I print from R?
 ==========================
 
 It depends what you want to print.
@@ -198,7 +224,7 @@ It depends what you want to print.
      installed you can print help files by `help(fn_name,
      offline=TRUE)'.
 
-2.7 Can I use `R BATCH'?
+2.9 Can I use `R BATCH'?
 ========================
 
 Yes, if you have Perl and the files for making source packages (from
@@ -210,8 +236,8 @@ batch file might contain (as one line)
 
      path_to_R\bin\Rterm.exe --no-restore --no-save < %1 > %1.out
 
-2.8 Can I use rw1050 with ESS and emacs?
-========================================
+2.10 Can I use rw1050 with ESS and emacs?
+=========================================
 
 Yes.  The latest versions of ESS (e.g. 5.1.19) come with support for
 this version of R, and there is support for interrupting the R process
@@ -220,8 +246,8 @@ from ESS (by `C-c C-c').
 For help with ESS, please send email to <ESS-help@stat.ethz.ch>, not
 the R mailing lists.
 
-2.9 What are HOME and working directories?
-==========================================
+2.11 What are HOME and working directories?
+===========================================
 
 Several places in the documentation use these terms.
 
@@ -239,7 +265,7 @@ If all of these fail, the current working directory is used.
 
 You can find this from R code by `Sys.getenv("R_USER")'.
 
-2.10 R can't find my file, but I know it is there!
+2.12 R can't find my file, but I know it is there!
 ==================================================
 
 How did you specify it?  Backslashes have to be doubled in R character
@@ -255,7 +281,7 @@ short name (something like `PROGRA~1'; you can get it as the `MS-DOS
 name' from the Properties of the file on most versions of Windows, and
 from `dir /X' in a `Command Prompt' window on 2000/XP).
 
-2.11 Does R use the Registry?
+2.13 Does R use the Registry?
 =============================
 
 Not itself.
@@ -272,7 +298,7 @@ folder, and remove them by running this with argument `/U'.  Note that
 the settings are all per machine and not per user, and that this
 neither sets up nor removes the file associations.
 
-2.12 Entering certain characters crashes Rgui.
+2.14 Entering certain characters crashes Rgui.
 ==============================================
 
 This seems to happen occasionally, and all the occurrences we have
@@ -285,7 +311,7 @@ reverts to the standard behaviour.
 This fix has solved other problems too, for example incorrect results in
 the date-time functions.
 
-2.13 The internet download functions fail.
+2.15 The internet download functions fail.
 ==========================================
 
 for example `update.packages' and the menu items on the Packages menu.
@@ -308,7 +334,7 @@ installed).
 =======================================================
 
 Yes, but you will need a lot of tools to do so, unless the author or the
-maintainers of the `bin/windows/contrib' section on CRAN has been kind
+maintainers of the `bin/windows/contrib' section on CRAN have been kind
 enough to provide a pre-compiled version for Windows as a `.zip' file.
 
 You can install pre-compiled packages either from CRAN or from a local
@@ -330,6 +356,10 @@ have done so, just run `Rcmd INSTALL pkgname'.  To check the package
 (including running all the examples on its help pages and in its test
 suite, if any) use `Rcmd check pkgname': see the _`Writing R
 Extensions'_ manual.
+
+Note that this is rather tricky; please do ensure that you have followed
+the instructions *exactly*.  At least 90% of the questions asked are
+because people have not done so.
 
 3.2 I don't have permission to write to the `rw1050\library' directory.
 =======================================================================
@@ -552,7 +582,7 @@ function `setwd': see its help page.
 =====================================================
 
 Yes.  All ports of R use the same format for workspaces, so they are
-interchangeable (for the same 1.x version of R, at least).
+interchangeable (for the same 1.x.? version of R, at least).
 
 
 6 The R Console and Fonts
@@ -786,6 +816,6 @@ then `R_ProcessEvents()'.
 
 
 
-Last edited 2002 January 17 by Professor B. D. Ripley
+Last edited 2002 March 03 by Professor B. D. Ripley
 <ripley@stats.ox.ac.uk>
 

@@ -37,38 +37,44 @@ How do I install R for Windows?</a></li>
 <li><a href="#How%20do%20I%20run%20it%3f">2.3 How do I run
 it?</a></li>
 
+<li><a href="#How%20do%20I%20UNinstall%20R%3f">2.4 How do I
+UNinstall R?</a></li>
+
+<li><a href="#What's%20the%20best%20way%20to%20upgrade%3f">2.5
+What's the best way to upgrade?</a></li>
+
 <li><a href=
 "#There%20seems%20to%20be%20a%20limit%20on%20the%20memory%20it%20uses!">
-2.4 There seems to be a limit on the memory it uses!</a></li>
+2.6 There seems to be a limit on the memory it uses!</a></li>
 
 <li><a href=
 "#How%20can%20I%20keep%20workspaces%20for%20different%20projects%20in%20different%20directories%3f">
-2.5 How can I keep workspaces for different projects in different
+2.7 How can I keep workspaces for different projects in different
 directories?</a></li>
 
-<li><a href="#How%20do%20I%20print%20from%20R%3f">2.6 How do I
+<li><a href="#How%20do%20I%20print%20from%20R%3f">2.8 How do I
 print from R?</a></li>
 
-<li><a href="#Can%20I%20use%20R%20BATCH%3f">2.7 Can I use <code>R
+<li><a href="#Can%20I%20use%20R%20BATCH%3f">2.9 Can I use <code>R
 BATCH</code>?</a></li>
 
 <li><a href=
-"#Can%20I%20use%20rw1050%20with%20ESS%20and%20emacs%3f">2.8 Can I
+"#Can%20I%20use%20rw1050%20with%20ESS%20and%20emacs%3f">2.10 Can I
 use rw1050 with ESS and emacs?</a></li>
 
 <li><a href="#What%20are%20HOME%20and%20working%20directories%3f">
-2.9 What are HOME and working directories?</a></li>
+2.11 What are HOME and working directories?</a></li>
 
-<li><a href="#R%20can't%20find%20my%20file">2.10 R can't find my
+<li><a href="#R%20can't%20find%20my%20file">2.12 R can't find my
 file, but I know it is there!</a></li>
 
-<li><a href="#Does%20R%20use%20the%20Registry%3f">2.11 Does R use
+<li><a href="#Does%20R%20use%20the%20Registry%3f">2.13 Does R use
 the Registry?</a></li>
 
 <li><a href="#Entering%20certain%20characters%20crashes%20Rgui.">
-2.12 Entering certain characters crashes Rgui.</a></li>
+2.14 Entering certain characters crashes Rgui.</a></li>
 
-<li><a href="#The%20internet%20download%20functions%20fail.">2.13
+<li><a href="#The%20internet%20download%20functions%20fail.">2.15
 The internet download functions fail.</a></li>
 </ul>
 </li>
@@ -303,11 +309,36 @@ installation.</p>
 
 <p>If you want to set up another project, make a new shortcut or
 use the existing one and change the `Start in' field of the
-Properties. <a name=
+Properties. <a name="How%20do%20I%20UNinstall%20R%3f"></a></p>
+
+<h2>2.4 How do I UNinstall R?</h2>
+
+<p>Normally you can do this from the R group on the Start Menu or
+from the <code>Add/Remove Programs</code> in the Control Panel. If
+it does not appear there or if you want to remove an old version,
+run <code>unis000.exe</code> in the top-level installation
+directory.</p>
+
+<p>Uninstallin R only removes files from the initial installation,
+not for example packages you have installed.</p>
+
+<p>If all else fails, you can just delete the whole R directory. <a
+name="What's%20the%20best%20way%20to%20upgrade%3f"></a></p>
+
+<h2>2.5 What's the best way to upgrade?</h2>
+
+<p>That's a matter of taste. For most people the best thing to do
+is to uninstall R (see the previous Q), install the new version,
+copy any installed packages to the library folder in the new
+installation, run <code>update.packages()</code> (from the menu, if
+you prefer) and then delete anything left of the old installation.
+Different versions of R are quite deliberately installed in
+parallel folders so you can keep old versions around if you prefer.
+<a name=
 "There%20seems%20to%20be%20a%20limit%20on%20the%20memory%20it%20uses!">
 </a></p>
 
-<h2>2.4 There seems to be a limit on the memory it uses!</h2>
+<h2>2.6 There seems to be a limit on the memory it uses!</h2>
 
 <p>Indeed there is. It is set by the command-line flag <code>
 --max-mem-size</code> (see <a href=
@@ -317,7 +348,7 @@ physical RAM in the machine and 256Mb. It can be set to any amount
 over 10M. (R will not run in less.) Be aware though that Windows
 has (in most versions) a maximum amount of user virtual memory of
 2Gb, and parts of this can be reserved by processes but not used. R
-itself reserves on startup the maximum of 256Mb and the amount
+itself reserves on startup the larger of 256Mb and the amount
 specified by <code>--max-mem-size</code>. Because of the way the
 memory manager works, it is possible that there will be free memory
 but R will not be able to reserve it.</p>
@@ -336,7 +367,7 @@ slower (making R several times slower on some tasks). <a name=
 "How%20can%20I%20keep%20workspaces%20for%20different%20projects%20in%20different%20directories%3f">
 </a></p>
 
-<h2>2.5 How can I keep workspaces for different projects in
+<h2>2.7 How can I keep workspaces for different projects in
 different directories?</h2>
 
 <p>Create a separate shortcut for each project: see Q2.3. All the
@@ -351,7 +382,7 @@ onto an R shortcut. In either case, the working directory will be
 set to that containing the file. <a name=
 "How%20do%20I%20print%20from%20R%3f"></a></p>
 
-<h2>2.6 How do I print from R?</h2>
+<h2>2.8 How do I print from R?</h2>
 
 <p>It depends what you want to print.</p>
 
@@ -373,7 +404,7 @@ help(fn_name, offline=TRUE)</code>.</li>
 
 <a name="Can%20I%20use%20R%20BATCH%3f"></a> 
 
-<h2>2.7 Can I use <code>R BATCH</code>?</h2>
+<h2>2.9 Can I use <code>R BATCH</code>?</h2>
 
 <p>Yes, if you have Perl and the files for making source packages
 (from <code>SetupR.exe</code> or <code>rw1050sp.zip</code>)
@@ -391,7 +422,7 @@ path_to_R\bin\Rterm.exe --no-restore --no-save &lt; %1 &gt; %1.out
 <a name="Can%20I%20use%20rw1050%20with%20ESS%20and%20emacs%3f"></a>
 
 
-<h2>2.8 Can I use rw1050 with ESS and emacs?</h2>
+<h2>2.10 Can I use rw1050 with ESS and emacs?</h2>
 
 <p>Yes. The latest versions of ESS (e.g. 5.1.19) come with support
 for this version of R, and there is support for interrupting the R
@@ -402,7 +433,7 @@ process from ESS (by <code>C-c C-c</code>).</p>
 mailing lists. <a name=
 "What%20are%20HOME%20and%20working%20directories%3f"></a></p>
 
-<h2>2.9 What are HOME and working directories?</h2>
+<h2>2.11 What are HOME and working directories?</h2>
 
 <p>Several places in the documentation use these terms.</p>
 
@@ -426,7 +457,7 @@ If all of these fail, the current working directory is used.</p>
 Sys.getenv("R_USER")</code>. <a name=
 "R%20can't%20find%20my%20file"></a></p>
 
-<h2>2.10 R can't find my file, but I know it is there!</h2>
+<h2>2.12 R can't find my file, but I know it is there!</h2>
 
 <p>How did you specify it? Backslashes have to be doubled in R
 character strings, so for example one needs <code>
@@ -443,7 +474,7 @@ Properties of the file on most versions of Windows, and from <code>
 dir /X</code> in a <code>Command Prompt</code> window on 2000/XP).
 <a name="Does%20R%20use%20the%20Registry%3f"></a></p>
 
-<h2>2.11 Does R use the Registry?</h2>
+<h2>2.13 Does R use the Registry?</h2>
 
 <p>Not itself.</p>
 
@@ -463,7 +494,7 @@ settings are all per machine and not per user, and that this
 neither sets up nor removes the file associations. <a name=
 "Entering%20certain%20characters%20crashes%20Rgui."></a></p>
 
-<h2>2.12 Entering certain characters crashes Rgui.</h2>
+<h2>2.14 Entering certain characters crashes Rgui.</h2>
 
 <p>This seems to happen occasionally, and all the occurrences we
 have solved have been traced to faulty versions of <code>
@@ -479,7 +510,7 @@ behaviour.</p>
 results in the date-time functions. <a name=
 "The%20internet%20download%20functions%20fail."></a></p>
 
-<h2>2.13 The internet download functions fail.</h2>
+<h2>2.15 The internet download functions fail.</h2>
 
 <p>for example <code>update.packages</code> and the menu items on
 the Packages menu.</p>
@@ -510,7 +541,7 @@ so needs Internet Explorer 4 or later installed).</p>
 
 <p>Yes, but you will need a lot of tools to do so, unless the
 author or the maintainers of the <code>bin/windows/contrib</code>
-section on CRAN has been kind enough to provide a pre-compiled
+section on CRAN have been kind enough to provide a pre-compiled
 version for Windows as a <code>.zip</code> file.</p>
 
 <p>You can install pre-compiled packages either from CRAN or from a
@@ -537,7 +568,11 @@ http://www.stats.ox.ac.uk/pub/Rtools/</a>. Once you have done so,
 just run <code>Rcmd INSTALL pkgname</code>. To check the package
 (including running all the examples on its help pages and in its
 test suite, if any) use <code>Rcmd check pkgname</code>: see the
-<em>`Writing R Extensions'</em> manual. <a name=
+<em>`Writing R Extensions'</em> manual.</p>
+
+<p>Note that this is rather tricky; please do ensure that you have
+followed the instructions <strong>exactly</strong>. At least 90% of
+the questions asked are because people have not done so. <a name=
 "I%20don't%20have%20permission%20to%20write%20to%20the%20rw1050%5clibrary%20directory">
 </a></p>
 
@@ -825,7 +860,8 @@ the function <code>setwd</code>: see its help page. <a name=
 <h2>5.3 Can I load workspaces saved under Unix/GNU-Linux?</h2>
 
 <p>Yes. All ports of R use the same format for workspaces, so they
-are interchangeable (for the same 1.x version of R, at least).</p>
+are interchangeable (for the same 1.x.? version of R, at
+least).</p>
 
 <hr>
 <a name="The%20R%20Console%20and%20Fonts"></a> 
@@ -1120,8 +1156,8 @@ console, call <code>R_FlushConsole()</code> and then <code>
 R_ProcessEvents()</code>.</p>
 
 <hr width="100%">
-<address>Last edited 2002 January 17 by Professor B. D. Ripley
-<code><a href="mailto:ripley@stats.ox.ac.uk">
+<address>Last edited 2002 March 03 by Professor B. D. Ripley <code>
+<a href="mailto:ripley@stats.ox.ac.uk">
 ripley@stats.ox.ac.uk</a></code></address>
 </body>
 </html>

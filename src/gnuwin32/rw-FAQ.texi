@@ -103,6 +103,8 @@ The information here applies only to recent versions of R for Windows,
 * Where can I find the latest version?::  
 * How do I install R for Windows?::  
 * How do I run it?::            
+* How do I UNinstall R?::       
+* What's the best way to upgrade?::  
 * There seems to be a limit on the memory it uses!::  
 * How can I keep workspaces for different projects in different directories?::  
 * How do I print from R?::      
@@ -174,7 +176,7 @@ environment variables at the end of the Target field, for example
 @code{R_LIBS=p:/R/library}.
 
 
-@node How do I run it?, There seems to be a limit on the memory it uses!, How do I install R for Windows?, Installation and Usage
+@node How do I run it?, How do I UNinstall R?, How do I install R for Windows?, Installation and Usage
 @section How do I run it?
 
 Just double-click on the shortcut you prepared at installation.
@@ -182,8 +184,33 @@ Just double-click on the shortcut you prepared at installation.
 If you want to set up another project, make a new shortcut or use the
 existing one and change the `Start in' field of the Properties.
 
+@node How do I UNinstall R?, What's the best way to upgrade?, How do I run it?, Installation and Usage
+@section How do I UNinstall R?
 
-@node There seems to be a limit on the memory it uses!, How can I keep workspaces for different projects in different directories?, How do I run it?, Installation and Usage
+Normally you can do this from the R group on the Start Menu or from the
+@code{Add/Remove Programs} in the Control Panel.  If it does not appear
+there or if you want to remove an old version, run @file{unis000.exe} in
+the top-level installation directory.
+
+Uninstallin R only removes files from the initial installation, not for
+example packages you have installed.
+
+If all else fails, you can just delete the whole R directory.
+
+
+@node What's the best way to upgrade?, There seems to be a limit on the memory it uses!, How do I UNinstall R?, Installation and Usage
+@section What's the best way to upgrade?
+
+That's a matter of taste.  For most people the best thing to do is to
+uninstall R (see the previous Q), install the new version, copy any
+installed packages to the library folder in the new installation, run
+@code{update.packages()} (from the menu, if you prefer) and then delete
+anything left of the old installation.  Different versions of R are
+quite deliberately installed in parallel folders so you can keep old
+versions around if you prefer.
+
+
+@node There seems to be a limit on the memory it uses!, How can I keep workspaces for different projects in different directories?, What's the best way to upgrade?, Installation and Usage
 @section There seems to be a limit on the memory it uses!
 
 Indeed there is.  It is set by the command-line flag
@@ -192,7 +219,7 @@ defaults to the smaller of the amount of physical RAM in the machine and
 256Mb.  It can be set to any amount over 10M. (R will not run in less.)
 Be aware though that Windows has (in most versions) a maximum amount of
 user virtual memory of 2Gb, and parts of this can be reserved by
-processes but not used.  R itself reserves on startup the maximum of
+processes but not used.  R itself reserves on startup the larger of
 256Mb and the amount specified by @code{--max-mem-size}.  Because of the
 way the memory manager works, it is possible that there will be free
 memory but R will not be able to reserve it.
@@ -374,7 +401,7 @@ later installed).
 @section Can I install packages (libraries) in this version?
 
 Yes, but you will need a lot of tools to do so, unless the author or the
-maintainers of the @code{bin/windows/contrib} section on CRAN has been
+maintainers of the @code{bin/windows/contrib} section on CRAN have been
 kind enough to provide a pre-compiled version for Windows as a
 @code{.zip} file.
 
@@ -398,6 +425,11 @@ just run @code{Rcmd INSTALL pkgname}.  To check the package (including
 running all the examples on its help pages and in its test suite, if
 any) use @code{Rcmd check pkgname}: see the @emph{`Writing R
 Extensions'} manual.
+
+Note that this is rather tricky; please do ensure that you have followed
+the instructions @strong{exactly}.  At least 90% of the questions asked
+are because people have not done so.
+
 
 @node I don't have permission to write to the @RWVER@\library directory, The packages I installed do not appear in the HTML help system, Can I install packages (libraries) in this version?, Packages
 @section I don't have permission to write to the @file{@RWVER@\library} directory.
@@ -662,7 +694,7 @@ function @code{setwd}: see its help page.
 @section Can I load workspaces saved under Unix/GNU-Linux?
 
 Yes.  All ports of R use the same format for workspaces, so they are
-interchangeable (for the same 1.x version of R, at least).
+interchangeable (for the same 1.x.? version of R, at least).
 
 
 @newchap{}
@@ -964,14 +996,14 @@ If you want output to be updated on the console, call
 @html
 <p><hr WIDTH="100%">
 <address>
-Last edited 2002 January 17 by Professor B. D. Ripley
+Last edited 2002 March 03 by Professor B. D. Ripley
 <code><a href="mailto:ripley@@stats.ox.ac.uk">ripley@@stats.ox.ac.uk</a></code>
 </address>
 @end html
 @end ifhtml
 @ifinfo
 @sp 2
-Last edited 2002 January 17 by Professor B. D. Ripley <ripley@@stats.ox.ac.uk>
+Last edited 2002 March 03 by Professor B. D. Ripley <ripley@@stats.ox.ac.uk>
 @end ifinfo
 
 @bye
