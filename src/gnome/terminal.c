@@ -56,6 +56,8 @@ void R_gtk_terminal_new()
 
   textstyle = gtk_style_copy(gtk_widget_get_style(R_gtk_terminal_text));
   textstyle->font = gdk_font_load(R_gnome_userprefs.font);
+  textstyle->text[GTK_STATE_NORMAL] = R_gnome_userprefs.textcolor;
+  textstyle->base[GTK_STATE_NORMAL] = R_gnome_userprefs.bgcolor;
   gtk_widget_set_style(R_gtk_terminal_text, textstyle);
 
   /* tell R how many columns we've got */
@@ -97,18 +99,44 @@ void R_gtk_terminal_new()
 
 void R_gnome_load_prefs(void)
 {
+  gchar *tmp;
+  GdkColor text, bg;
+
   gnome_config_push_prefix("/R.gnome/preferences/");
 
   R_gnome_userprefs.font = gnome_config_get_string("font=fixed");
+
+  tmp = gnome_config_get_string("textcolor=black");
+  if(gdk_color_parse(tmp, &text) == 0) {
+    gdk_color_parse("black", &text);
+  }
+
+  tmp = gnome_config_get_string("bgcolor=white");
+  if(gdk_color_parse(tmp, &bg) == 0) {
+    gdk_color_parse("white", &bg);
+  }
+
+  R_gnome_userprefs.textcolor = text;
+  R_gnome_userprefs.bgcolor = bg;
 
   gnome_config_pop_prefix();
 }
 
 void R_gnome_save_prefs(void)
 {
+  GdkColor tmp;
+
   gnome_config_push_prefix("/R.gnome/preferences/");
 
   gnome_config_set_string("font", R_gnome_userprefs.font);
+
+  tmp = R_gnome_userprefs.textcolor;
+  gnome_config_set_string("textcolor",
+			  g_strdup_printf("rgb:%04x/%04x/%04x", tmp.red, tmp.green, tmp.blue));
+
+  tmp = R_gnome_userprefs.bgcolor;
+  gnome_config_set_string("bgcolor",
+			  g_strdup_printf("rgb:%04x/%04x/%04x", tmp.red, tmp.green, tmp.blue));
 
   gnome_config_pop_prefix();
 

@@ -35,6 +35,24 @@ static void prefs_font_picker_font_set(GtkWidget *widget, gchar *font)
   gnome_property_box_changed(GNOME_PROPERTY_BOX(prefs_dialog));
 }
 
+static void prefs_text_color_set(GtkWidget *widget, gint r, gint g, gint b, gint a, gpointer data)
+{
+  R_gnome_newprefs.textcolor.red = r;
+  R_gnome_newprefs.textcolor.green = g;
+  R_gnome_newprefs.textcolor.blue = b;
+
+  gnome_property_box_changed(GNOME_PROPERTY_BOX(prefs_dialog));
+}
+
+static void prefs_bg_color_set(GtkWidget *widget, gint r, gint g, gint b, gint a, gpointer data)
+{
+  R_gnome_newprefs.bgcolor.red = r;
+  R_gnome_newprefs.bgcolor.green = g;
+  R_gnome_newprefs.bgcolor.blue = b;
+
+  gnome_property_box_changed(GNOME_PROPERTY_BOX(prefs_dialog));
+}
+
 GtkWidget *prefs_text_page(void)
 {
   GtkWidget *frame, *table;
@@ -85,6 +103,11 @@ GtkWidget *prefs_text_page(void)
   textcol_label = gtk_label_new("Text colour: ");
   gtk_misc_set_alignment(GTK_MISC(textcol_label), 1.0, 0.5);
   textcol_button = gnome_color_picker_new();
+  gnome_color_picker_set_i16 (GNOME_COLOR_PICKER (textcol_button),
+			      R_gnome_userprefs.textcolor.red,
+			      R_gnome_userprefs.textcolor.green,
+			      R_gnome_userprefs.textcolor.blue,
+			      0);
   
   gtk_table_attach(GTK_TABLE(table), textcol_label,
 		   0, 1, 1, 2,
@@ -93,10 +116,20 @@ GtkWidget *prefs_text_page(void)
 		   1, 2, 1, 2,
 		   0, 0, 0, GNOME_PAD_SMALL);
 
+  gtk_signal_connect(GTK_OBJECT(textcol_button),
+		     "color_set",
+		     GTK_SIGNAL_FUNC(prefs_text_color_set),
+		     NULL);
+
   /* Background colour */
   bgcol_label = gtk_label_new("Background colour: ");
   gtk_misc_set_alignment(GTK_MISC(bgcol_label), 1.0, 0.5);
   bgcol_button = gnome_color_picker_new();
+  gnome_color_picker_set_i16 (GNOME_COLOR_PICKER (bgcol_button),
+			      R_gnome_userprefs.bgcolor.red,
+			      R_gnome_userprefs.bgcolor.green,
+			      R_gnome_userprefs.bgcolor.blue,
+			      0);
   
   gtk_table_attach(GTK_TABLE(table), bgcol_label,
 		   0, 1, 2, 3,
@@ -104,6 +137,11 @@ GtkWidget *prefs_text_page(void)
   gtk_table_attach(GTK_TABLE(table), bgcol_button,
 		   1, 2, 2, 3,
 		   0, 0, 0, GNOME_PAD_SMALL);
+
+  gtk_signal_connect(GTK_OBJECT(bgcol_button),
+		     "color_set",
+		     GTK_SIGNAL_FUNC(prefs_bg_color_set),
+		     NULL);
 
   return frame;
 }
