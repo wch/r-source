@@ -6,6 +6,7 @@ function (x, lag.max = NULL, plot = TRUE, type = c("correlation",
     if(type == "partial") {
         m <- match.call()
         m[[1]] <- as.name("pacf")
+        m$type <- NULL
         return(eval(m, sys.frame(sys.parent())))
     }
     series <- deparse(substitute(x))

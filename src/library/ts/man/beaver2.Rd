@@ -6,6 +6,7 @@
 \title{
 Body Temperature Series of Beaver 2
 }
+\usage{data(beavers)}
 \description{
 The \code{beaver2} data frame has 100 rows and 4 columns on body
 temperature measurements at 10 minute intervals.
