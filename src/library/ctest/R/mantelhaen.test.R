@@ -67,13 +67,10 @@ mantelhaen.test <- function(x, y = NULL, z = NULL, correct = TRUE)
                                         # n_{.jk}, j = 1 to J-1
             n <- n + c(f[-I, -J])
             m <- m + c(outer(rowsums, colsums, "*")) / ntot
-            ## Grr ... diag(as.array(3.5)) does not give 3.5 ...
-            rowtmp <- diag(I - 1)
-            diag(rowtmp) <- ntot * rowsums
-            coltmp <- diag(J - 1)
-            diag(coltmp) <- ntot * colsums
-            V <- V + (kronecker(rowtmp - outer(rowsums, rowsums),
-                                coltmp - outer(colsums, colsums))
+            V <- V + (kronecker(diag(ntot * rowsums, nrow = I - 1)
+                                - outer(rowsums, rowsums),
+                                diag(ntot * colsums, nrow = J - 1)
+                                - outer(colsums, colsums))
                       / (ntot^2 * (ntot - 1)))
         }
         n <- n - m
