@@ -20,15 +20,15 @@ BUG FIXES
 	follows glibc in silently `correcting' invalid inputs.
 
     o	The cor() function did not remove missing values in the
-	non-Pearson case
+	non-Pearson case.
 
     o	[l]choose() use a more accurate formula which also slightly
 	improves p- and qhyper(); choose(n, k) now returns 0 instead
 	of NaN for k < 0 or > n.
 
     o	find(simple.words=TRUE) (the default) was still using regular
-	expressions for e.g. "+" and "*".  Also, it checked the mode 
-	only of the first object matching a regular expression found 
+	expressions for e.g. "+" and "*".  Also, it checked the mode
+	only of the first object matching a regular expression found
 	in a package.
 
     o	Memory leaks in [dpq]wilcox have been plugged.  (PR#5314, plus
@@ -38,6 +38,9 @@ BUG FIXES
 	La.svd() are now errors: they often caused infinite
 	looping.  (PR#5406, PR#4366, PR#3723: the fix for 3723/4366
 	returned a vector of NAs, not a matrix, for the eigenvectors.)
+
+    o	stepfun(x,y) now gives an error when `x' has length 0 instead
+	of an invalid result (that could lead to a segmentation fault).
 
 
 

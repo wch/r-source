@@ -2780,3 +2780,8 @@ unlink(tf)
 x <- round(matrix(0, 0, 3))
 stopifnot(identical(dim(x), as.integer(c(0, 3))))
 ## numeric(0) in 1.8.0
+
+## PR#5405
+library(stepfun)
+try(stepfun(c(), 1)(2))# > Error
+## segfaults in 1.8.1 and earlier
