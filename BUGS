@@ -533,27 +533,17 @@ From: John Chambers <jmc@research.bell-labs.com>
 Date: Tue, 16 Jul 2002 16:59:22 -0400
 --follow up to 1796
 --stop() allows multiple args as from 1.6.0
-* PR# 1809 *
-Subject: read.table bug
-From: mmcstephen@cogstate.com
-Date: Fri, 19 Jul 2002 05:11:59 +0200 (MET DST)
-* PR# 1834 *
-Subject: src/nmath/pgeom.c
-From: terra@diku.dk
-Date: Thu, 25 Jul 2002 20:55:34 +0200 (MET DST)
 * PR# 1840 *
 Subject: predict() still not yet "safe"..
 From: Martin Maechler <maechler@stat.math.ethz.ch>
 Date: Fri, 26 Jul 2002 20:11:26 +0200
-* PR# 1852 *
-Subject: quantile()  bug
-From: "Ivan Frohne" <frohne@mtaonline.net>
-Date: Mon, 29 Jul 2002 11:23:19 -0800
-* PR# 1853 *
-Subject: (±¤°?)??°¡?? ?????°!! LPG???® ºñ?????ü±?@@
-From: ?¨²???<kidkyc@hotmail.com>
-Date: Tue, 30 Jul 2002 13:47:55 +0200 (MET DST)
-* PR# 1854 *
-Subject: Unable to install new package using local zip file
-From: rangrej@cheo.on.ca
-Date: Tue, 30 Jul 2002 23:24:58 +0200 (MET DST)
+* PR# 1855 *
+Subject: (±¤°?)win-win?¬?´???­ ´????? ??´???´?´?!
+From: "?¤º??¦°???" <bigbestman@dreamwiz.com>
+Date: Wed, 31 Jul 2002 20:38:10 +0900
+* PR# 1856 *
+Date: Wed, 31 Jul 2002 18:24:04 +0200 (MET DST)
+* PR# 1857 *
+Subject: Want to see the web sites they went to?
+From: "" <mary_gallyway@emaildelivery.org>
+Date: Wed, 31 Jul 2002 20:12:43 +0200 (MET DST)
