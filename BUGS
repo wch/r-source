@@ -51,6 +51,10 @@ Directory:  Documentation
 Subject: nlm docs
 From: Patrick Lindsey <plindsey@alpha.luc.ac.be>
 Date: Wed, 24 Mar 1999 15:48:41 +0100 (MET)
+* PR# 199 *
+Subject: help for trig functions
+From: Bill Simpson <wsi@gcal.ac.uk>
+Date: Wed, 26 May 1999 14:55:00 +0000
 
 Directory:  Graphics
 
@@ -108,6 +112,22 @@ Date: 25 Mar 1999 21:22:44 +0100
 Subject: image + x11
 From: Andreas Weingessel <Andreas.Weingessel@ci.tuwien.ac.at>
 Date: Wed, 31 Mar 1999 14:09:53 +0200
+* PR# 192 *
+Subject: dev.print aspect ratio
+From: wsi@gcal.ac.uk
+Date: Tue, 11 May 1999 13:43:50 +0200 (MET DST)
+* PR# 202 *
+Subject: persp box occlusion bug
+From: wsi@gcal.ac.uk
+Date: Wed, 2 Jun 1999 15:02:03 +0200 (MET DST)
+* PR# 206 *
+Subject: seg fault via text()
+From: P.Herkenrath@rrz.uni-koeln.de
+Date: Sat, 5 Jun 1999 16:18:42 +0200 (MET DST)
+* PR# 215 *
+Subject: plot(..., lab=..) fails in axis() --- wrong "..." propagation
+From: Martin Maechler <maechler@stat.math.ethz.ch>
+Date: Tue, 29 Jun 1999 10:48:25 +0200
 
 Directory:  In-Out
 
@@ -120,6 +140,26 @@ Subject: Formatting in formatC and format
 From: Prof Brian D Ripley <ripley@stats.ox.ac.uk>
 Date: Sun, 28 Feb 1999 08:53:34 +0000 (GMT)
 --Documentation and ``merge'' of format() and formatC() would be desired - MM
+* PR# 193 *
+Subject: matrix() can't handle NaN
+From: wsi@gcal.ac.uk
+Date: Tue, 11 May 1999 14:01:59 +0200 (MET DST)
+* PR# 203 *
+Subject: dput and options()$digits
+From: Paul Gilbert <pgilbert@bank-banque-canada.ca>
+Date: Wed, 02 Jun 1999 13:24:32 -0400
+* PR# 207 *
+Subject: Lines longer than ~1000 chars truncated at parsing
+From: msa@biostat.mgh.harvard.edu
+Date: Mon, 7 Jun 1999 22:27:10 +0200 (MET DST)
+* PR# 211 *
+Subject: readline/history size
+From: seniorr@teleport.com
+Date: Tue, 15 Jun 1999 00:08:59 +0200 (MET DST)
+* PR# 212 *
+Subject: Re: save.image()
+From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
+Date: 17 Jun 1999 11:29:01 +0200
 
 Directory:  Installation
 
@@ -148,6 +188,10 @@ Subject: outer fails with group generic operations on factors
 From: Prof Brian Ripley <ripley@stats.ox.ac.uk>
 Date: Tue, 13 Apr 1999 18:28:53 +0100 (BST)
 --There is a suggested solution (PD), but not yet implemented (99/05/07)
+* PR# 187 *
+Subject: subscripting in list()
+From: Wenxin Mao <mao@compstat.wharton.upenn.edu>
+Date: Sun, 9 May 1999 13:02:51 -0400 (EDT)
 
 Directory:  Low-level
 
@@ -181,6 +225,14 @@ Subject: Re: [R] R_problem_buf in the S.h files & lists in .C
 From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
 Date: 05 May 1999 00:32:49 +0200
 --S objects in .C calls (not just lists) are now documented in the help file
+* PR# 197 *
+Subject: glm crash
+From: Cor en Aylin <Cor.Berrevoets@gironet.nl>
+Date: Fri, 21 May 1999 19:44:23 +0200
+* PR# 210 *
+Subject: definition of R_problem_buf in S.h
+From: vogels@ieee.org
+Date: Mon, 14 Jun 1999 17:56:04 +0200 (MET DST)
 
 Directory:  Misc
 
@@ -199,6 +251,10 @@ From: Peter Dalgaard BSA <pd@biostat.ku.dk>
 Date: Thu, 18 Feb 1999 15:47:24 +0100
 --Subset in C code + attributes = mess
 --Switch to interpreted ("[")
+* PR# 189 *
+Subject: model.matrix crashes
+From: Jim Lindsey <jlindsey@alpha.luc.ac.be>
+Date: Tue, 11 May 1999 10:16:33 +0200 (MET DST)
 
 Directory:  Startup
 
@@ -219,6 +275,25 @@ Date: Tue, 23 Mar 1999 16:54:20 -0500 (EST)
 Subject: IRIX compile
 From: mtim@farm.ecs.umass.edu
 Date: Sat, 10 Apr 1999 19:35:43 +0200
+* PR# 196 *
+Subject: R 0.64 and -release fails to build on DU4.0
+From: Leif Johansson <leifj@matematik.su.se>
+Date: Fri, 14 May 1999 12:32:14 +0200
+* PR# 201 *
+Subject: RedHat Linux 6.0 Problems
+From: jacobm@magnet.drcmr.dk
+Date: Wed, 2 Jun 1999 10:58:45 +0200 (MET DST)
+* PR# 208 *
+Subject: R correct g77 flags for Linux/Alpha
+From: Naoki Takebayashi <ntakebay@bio.indiana.edu>
+Date: Tue, 8 Jun 1999 19:12:03 -0500 (EST)
+* PR# 209 *
+Subject: Compilation fails
+From: beimfohr@statistik.uni-dortmund.de
+Date: Thu, 10 Jun 1999 13:52:01 +0200 (MET DST)
+* PR# 214 *
+From: Charles Taylor <charles@amsta.leeds.ac.uk>
+Date: Thu, 24 Jun 1999 11:20:06 +0100 (BST)
 
 Directory:  TooMuchAtOnce
 
@@ -239,78 +314,6 @@ Date: Fri, 11 Dec 1998 23:20:08 -0500 (EST)
 
 Directory:  Windows
 
-none
-
-Directory:  incoming
-
-* PR# 174 *
-Subject:  do.call() mangles expressions in arguments 
-From: Peter Dalgaard BSA <pd@biostat.ku.dk>
-Date: Wed, 21 Apr 1999 19:39:53 +0200
-* PR# 186 *
-Subject: subscripting in list()
-From: Wenxin Mao <mao@compstat.wharton.upenn.edu>
-Date: Sun, 9 May 1999 12:42:29 -0400 (EDT)
-* PR# 187 *
-Subject: subscripting in list()
-From: Wenxin Mao <mao@compstat.wharton.upenn.edu>
-Date: Sun, 9 May 1999 13:02:51 -0400 (EDT)
-* PR# 189 *
-Subject: model.matrix crashes
-From: Jim Lindsey <jlindsey@alpha.luc.ac.be>
-Date: Tue, 11 May 1999 10:16:33 +0200 (MET DST)
-* PR# 190 *
-Subject: PRIVATE: xxxx
-From: barakil@nice.com
-Date: Tue, 11 May 1999 13:38:49 +0200 (MET DST)
-* PR# 191 *
-Subject: dev.print help page
-From: wsi@gcal.ac.uk
-Date: Tue, 11 May 1999 13:39:05 +0200 (MET DST)
-* PR# 192 *
-Subject: dev.print aspect ratio
-From: wsi@gcal.ac.uk
-Date: Tue, 11 May 1999 13:43:50 +0200 (MET DST)
-* PR# 193 *
-Subject: matrix() can't handle NaN
-From: wsi@gcal.ac.uk
-Date: Tue, 11 May 1999 14:01:59 +0200 (MET DST)
-* PR# 194 *
-Subject: Memory crash.
-From: Patrick Lindsey <plindsey@alpha.luc.ac.be>
-Date: Wed, 12 May 1999 14:43:45 +0200 (MET DST)
-* PR# 196 *
-Subject: R 0.64 and -release fails to build on DU4.0
-From: Leif Johansson <leifj@matematik.su.se>
-Date: Fri, 14 May 1999 12:32:14 +0200
-* PR# 197 *
-Subject: glm crash
-From: Cor en Aylin <Cor.Berrevoets@gironet.nl>
-Date: Fri, 21 May 1999 19:44:23 +0200
-* PR# 198 *
-Subject: Bug in loglin with variable called "c"
-From: Prof Brian D Ripley <ripley@stats.ox.ac.uk>
-Date: Sun, 23 May 1999 07:58:40 +0100 (BST)
-* PR# 199 *
-Subject: help for trig functions
-From: Bill Simpson <wsi@gcal.ac.uk>
-Date: Wed, 26 May 1999 14:55:00 +0000
-* PR# 200 *
-Subject: Factor structures not preserved after dump/dput
-From: msa@biostat.mgh.harvard.edu
-Date: Thu, 27 May 1999 18:40:01 +0200 (MET DST)
-* PR# 201 *
-Subject: RedHat Linux 6.0 Problems
-From: jacobm@magnet.drcmr.dk
-Date: Wed, 2 Jun 1999 10:58:45 +0200 (MET DST)
-* PR# 202 *
-Subject: persp box occlusion bug
-From: wsi@gcal.ac.uk
-Date: Wed, 2 Jun 1999 15:02:03 +0200 (MET DST)
-* PR# 203 *
-Subject: dput and options()$digits
-From: Paul Gilbert <pgilbert@bank-banque-canada.ca>
-Date: Wed, 02 Jun 1999 13:24:32 -0400
 * PR# 204 *
 Subject: very minor Rgui problem in rw0641
 From: Simon Fear <fears@roycastle.liv.ac.uk>
@@ -319,42 +322,7 @@ Date: Thu, 3 Jun 1999 14:09:04 +0100
 Subject: IE5 html help search failure
 From: Simon Fear <fears@roycastle.liv.ac.uk>
 Date: Thu, 3 Jun 1999 14:55:24 +0100 
-* PR# 206 *
-Subject: seg fault via text()
-From: P.Herkenrath@rrz.uni-koeln.de
-Date: Sat, 5 Jun 1999 16:18:42 +0200 (MET DST)
-* PR# 207 *
-Subject: Lines longer than ~1000 chars truncated at parsing
-From: msa@biostat.mgh.harvard.edu
-Date: Mon, 7 Jun 1999 22:27:10 +0200 (MET DST)
-* PR# 208 *
-Subject: R correct g77 flags for Linux/Alpha
-From: Naoki Takebayashi <ntakebay@bio.indiana.edu>
-Date: Tue, 8 Jun 1999 19:12:03 -0500 (EST)
-* PR# 209 *
-Subject: Compilation fails
-From: beimfohr@statistik.uni-dortmund.de
-Date: Thu, 10 Jun 1999 13:52:01 +0200 (MET DST)
-* PR# 210 *
-Subject: definition of R_problem_buf in S.h
-From: vogels@ieee.org
-Date: Mon, 14 Jun 1999 17:56:04 +0200 (MET DST)
-* PR# 211 *
-Subject: readline/history size
-From: seniorr@teleport.com
-Date: Tue, 15 Jun 1999 00:08:59 +0200 (MET DST)
-* PR# 212 *
-Subject: Re: save.image()
-From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
-Date: 17 Jun 1999 11:29:01 +0200
-* PR# 213 *
-Subject: as.numeric with trailing spaces
-From: John.Peters@tip.csiro.au (John Peters)
-Date: Mon, 21 Jun 1999 09:25:37 +1000 (EST)
-* PR# 214 *
-From: Charles Taylor <charles@amsta.leeds.ac.uk>
-Date: Thu, 24 Jun 1999 11:20:06 +0100 (BST)
-* PR# 215 *
-Subject: plot(..., lab=..) fails in axis() --- wrong "..." propagation
-From: Martin Maechler <maechler@stat.math.ethz.ch>
-Date: Tue, 29 Jun 1999 10:48:25 +0200
+
+Directory:  incoming
+
+none
