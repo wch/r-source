@@ -123,11 +123,6 @@ Date: Tue, 2 Nov 1999 22:18:23 +0100
 
 Directory:  In-Out
 
-* PR# 125 *
-Subject: scan rejects complex
-From: John.Peters@tip.csiro.au (John Peters)
-Date: Mon, 22 Feb 1999 10:08:14 +1100 (EST)
---Have put note in help file, at least.
 * PR# 129 *
 Subject: Formatting in formatC and format
 From: Prof Brian D Ripley <ripley@stats.ox.ac.uk>
@@ -137,10 +132,6 @@ Date: Sun, 28 Feb 1999 08:53:34 +0000 (GMT)
 Subject: scan() + error interferes with count.fields() in some cases
 From: Martin Maechler <maechler@stat.math.ethz.ch>
 Date: Fri, 13 Aug 1999 17:44:48 +0200
-* PR# 304 *
-Subject: bugs in scan()
-From: Ray Brownrigg <Ray.Brownrigg@mcs.vuw.ac.nz>
-Date: Mon, 1 Nov 1999 12:20:33 +1300 (NZDT)
 
 Directory:  Installation
 
@@ -157,21 +148,6 @@ From: Jim Lindsey <jlindsey@alpha.luc.ac.be>
 Date: Fri, 29 Jan 1999 08:28:32 +0100 (MET)
 --Model formulas. Proper fix probably requires extensive rewrite of model formula
 --parser, which would make in non-S-compatible.
-* PR# 239 *
-Subject: cbind is not generic as claimed, omits labels where S has them 
-From: Prof Brian D Ripley <ripley@stats.ox.ac.uk>
-Date: Thu, 5 Aug 1999 12:29:58 +0100 (BST)
---Cbind is now generic, still labelling issues. See also PR#240 and PR#241.
-* PR# 240 *
-Subject: Re: cbind is not generic as claimed, omits labels where S has them
-From: Prof Brian D Ripley <ripley@stats.ox.ac.uk>
-Date: Thu, 5 Aug 1999 17:19:08 +0100 (BST)
---See PR#239
-* PR# 241 *
-Subject: Re: cbind is not generic as claimed, omits labels where S has them
-From: Prof Brian D Ripley <ripley@stats.ox.ac.uk>
-Date: Fri, 6 Aug 1999 06:52:35 +0100 (BST)
---See PR#239
 * PR# 257 *
 Subject:  dimnames names lost when subscripting 
 From: Andreas Weingessel <weingessel@ci.tuwien.ac.at>
@@ -191,7 +167,7 @@ Date: Fri, 8 Oct 1999 09:43:51 +0100 (BST)
 Subject: bug in sample
 From: Robert Gentleman <rgentlem@jimmy.harvard.edu>
 Date: Mon, 1 Nov 1999 16:32:15 -0500
---Is this a bug? Seesm to be as documented and as the prototype
+--Is this a bug? Seems to be as documented and as the prototype
 
 Directory:  Low-level
 
@@ -313,11 +289,11 @@ none
 
 Directory:  incoming
 
-* PR# 321 *
-Subject: configure script error
-From: zeitler@corecomm.net
-Date: Sat, 13 Nov 1999 14:55:43 +0100 (MET)
-* PR# 322 *
-Subject: bug in arma.sim
-From: mgri@hal.stat.unipd.it (Matteo Grigoletto)
-Date: Sun, 14 Nov 1999 18:15:23 +0100 (MET)
+* PR# 323 *
+Subject:  { and } in examples get confused in help 
+From: Prof Brian Ripley <ripley@stats.ox.ac.uk>
+Date: Sun, 14 Nov 1999 22:51:43 GMT
+* PR# 324 *
+Subject: R 0.65.1 config bug
+From: "Dr K.M. Briggs" <kmb28@cus.cam.ac.uk>
+Date: Mon, 15 Nov 1999 13:38:42 +0000 (GMT)
