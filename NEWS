@@ -192,33 +192,62 @@ DOCUMENTATION CHANGES
 	random numbers from FORTRAN via C.
 
 
+INSTALLATION CHANGES
+
+    o	The configure script used when building R from source under Unix
+	is now generated using Autoconf 2.50 or better, which has the
+	following 'visible' consequences:
+
+	- By default, configure no longer uses a cache file.  Use the
+          command line options '--config-cache' (or '-C') to enable
+          caching.
+
+	- Key configuration variables such as 'CC' are now *precious*,
+          implying that the variables
+
+	  * no longer need to be exported to the environment and can and
+            should be set as command line arguments;
+
+	  * are kept in the cache even if not specified on the command
+            line, and checked for consistency between two configure runs
+            (provided that caching is used, see above);
+
+	  * are kept during automatic reconfiguration as if having been
+            passed as command line arguments, even if no cache is used.
+ 
+	  See the variable output section of 'configure --help' for a
+	  list of all these variables.
+
+	  
 UTILITIES
 
-    o	Sweave(), Stangle() and friends in package tools. Sweave allows
-	mixing latex documentation and R code in a single source file:
+    o	Sweave(), Stangle() and friends in package tools.  Sweave allows
+	mixing LaTeX documentation and R code in a single source file:
 	the R code can be replaced by its output (text, figures) to
-	allow automatic report generation. Sweave files found in
-	package subdir inst/doc are automatically tested by R CMD check.
+	allow automatic report generation.  Sweave files found in
+	package subdir 'inst/doc' are automatically tested by R CMD
+	check.
 
-    o	Rdconv can convert to the S4 .sgml format.
+    o	Rdconv can convert to the S4 '.sgml' format.
 
     o   R::Utils.pm masks some platform dependencies in perl code by
         providing global variables like R_OSTYPE or wrapper functions
         like R_runR().
 
-    o   If a directory `inst/doc' is present in the sources of a
+    o   If a directory 'inst/doc' is present in the sources of a
         package, the HTML index of the installed package has a link to
         the respective subdirectory.
 
     o	R CMD check is more stringent: it now also fails on malformed
-	`Depends' and `Maintainer' fields in `DESCRIPTION' files, and on
+	'Depends' and 'Maintainer' fields in 'DESCRIPTION' files, and on
 	unbalanced braces in Rd files.  It now also provides pointers to
 	documentation for problems it reports.
 
     o	R CMD check, build and INSTALL produce outline-type output.
 
     o	QA functions in package 'tools' now return the results of their
-	computations as objects with suitable print() methods.
+	computations as objects with suitable print() methods.  By
+	default, output	is only produced if a problem was found.
 
 
 C-LEVEL FACILITIES
