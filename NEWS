@@ -501,6 +501,7 @@ BUG FIXES
 
     o	stars() fix (for 0/NA columns) PR#739.
 	
+    o	match() does NOT use "as.character()" anymore, fixes PR#741.
 
 
 	**************************************************
