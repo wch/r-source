@@ -19,12 +19,6 @@
 
 # Send any bug reports to r-bugs@r-project.org
 
-## <FIXME>
-## This is not portable: has Unix-style file paths and system().  (But
-## we need to call tar/gzip and zip, respectively, so it is not clear
-## how platform-independent the code can be.)
-## </FIXME>
-
 use Cwd;
 use File::Basename;
 use File::Compare;
@@ -41,10 +35,10 @@ use R::Vars;
 use Text::DelimMatch;
 use Text::Wrap;
 
-## don't buffer output
+## Don't buffer output.
 $| = 1;
 
-my $revision = ' $Revision: 1.74 $ ';
+my $revision = ' $Revision: 1.75 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -122,7 +116,7 @@ foreach my $pkg (@ARGV) {
     if($opt_binary) {
 	my $libdir = "${R::Vars::TMPDIR}/Rbuild.$$";
 	mkdir("$libdir", 0755)
-	    or die "Cannot create directory '$libdir'\n";
+	    or die "Error: cannot create directory '$libdir'\n";
 
 	if(R_system("${R::Vars::R_CMD} INSTALL -l '$libdir' " .
 		    "$INSTALL_opts '$pkg'")) {
@@ -142,46 +136,61 @@ foreach my $pkg (@ARGV) {
 	    $pkgs = join(" ", @bundlepkgs);
 	    ## JG: Get a copy of the bundle's DESCRIPTION file and add
 	    ## it into the zip archive.
-	    $log->message("copying $pkg/DESCRIPTION");
+	    $log->message("copying '$pkg/DESCRIPTION'");
 	    copy("$startdir/$pkg/DESCRIPTION", "DESCRIPTION");
 	    $topLevelFiles = "DESCRIPTION";
 	}
 
+	my $filename;
 	if($WINDOWS) {
-	    my $filename = "${pkgname}_" . $description->{"Version"};
+	    $filename = "${pkgname}_" . $description->{"Version"};
 	    $log->message("building '$filename.zip'");
-	    R_system("rm -f $startdir/$filename.zip");
-	    R_system("zip -r9X $startdir/$filename.zip " .
-		     "$pkgs $topLevelFiles");
-	    chdir($startdir);
-	} else {
-	    ## <FIXME>
-	    ## As R CMD INSTALL recursively copies all of 'inst', we at
-	    ## least need to make sure that CVS subdirs are excluded.
-	    ## It is not clear whether more patterns should be excluded,
-	    ## and we also need to fix this under Windows.
-	    my $exclude = "${R::Vars::TMPDIR}/Rbuild-exclude.$$";
-	    open(EXCLUDE, "> $exclude")
-		or die "Cannot write to '$exclude'\n";
-	    sub findExcludeFiles {
-		print EXCLUDE "$File::Find::name\n" if /^CVS$/;
-	    }
-	    foreach my $p (split(/\s+/, $pkgs)) {
-		find(\&findExcludeFiles, "$p");
-	    }
-	    close(EXCLUDE);
-
-	    my $filename = "${pkgname}_" . $description->{"Version"} .
+	    unlink("$startdir/$filename.zip");
+	}
+	else {
+	    $filename = "${pkgname}_" . $description->{"Version"} .
 		"_R_${R_platform}.tar";
 	    $log->message("building '$filename.gz'");
-	    system("$tar chXf $exclude $startdir/$filename " .
-		   "$pkgs $topLevelFiles");
-	    chdir($startdir);
-	    system("gzip -9f $filename");
-	    unlink($exclude);
-	    ## </FIXME>
+	}
+	## <FIXME>
+	## As R CMD INSTALL recursively copies all of 'inst', we at
+	## least need to make sure that CVS subdirs are excluded. 
+	## It is not clear whether more patterns should be excluded,
+	my $exclude = "${R::Vars::TMPDIR}/Rbuild-exclude.$$";
+	open(EXCLUDE, "> $exclude")
+	    or die "Error: cannot open file '$exclude' for writing\n";
+	sub findExcludeFiles {
+	    print EXCLUDE "$File::Find::name\n" if /^CVS$/;
+	}
+	foreach my $p (split(/\s+/, $pkgs)) {
+	    find(\&findExcludeFiles, "$p");
+	}
+	close(EXCLUDE);
+	## Remove exclude files.
+	open(EXCLUDE, "< $exclude");
+	while(<EXCLUDE>) {
+	    rmtree($_);
+	}
+	close(EXCLUDE);
+	unlink($exclude);
+	## </FIXME>
+
+	## <NOTE>
+	## We maybe should add some build stamps as well ...
+	## (But not just 'Packaged', as then binary packages created
+	## from source packages would record conflicting data.)
+	## </NOTE>
+
+	my $filepath = &file_path($startdir, $filename);
+	if($WINDOWS) {
+	    R_system("zip -r9X $filepath.zip $pkgs $topLevelFiles");
+	}
+	else {
+	    R_system("$tar chf $filepath $pkgs $topLevelFiles");
+	    R_system("gzip -9f $filepath");
 	}
 
+	chdir($startdir);
 	rmtree($libdir);
     }
     else {
@@ -211,7 +220,7 @@ foreach my $pkg (@ARGV) {
 
 	my $exclude = "${R::Vars::TMPDIR}/Rbuild-exclude.$$";
 	open(EXCLUDE, "> $exclude")
-	  or die "Cannot write to '$exclude'\n";
+	  or die "Error: cannot open file '$exclude' for writing\n";
 	binmode EXCLUDE if $WINDOWS;
 	## <NOTE>
 	## For bundles, the .Rbuildignore mechanism is not consistent
@@ -271,20 +280,17 @@ foreach my $pkg (@ARGV) {
 
 	my $filename = "${pkgname}_" . $description->{"Version"} . ".tar";
 	$log->message("building '$filename.gz'");
-	my $filepath = "$startdir/$filename";
+	my $filepath = &file_path($startdir, $filename);
 	if($WINDOWS) {
 	    ## workaround for paths in Cygwin tar
 	    $filepath =~ s+^([A-Za-x]):+/cygdrive/\1+;
 	}
-	## <FIXME>
-	## Is option '-h' portable?
 	R_system("$tar chf $filepath $pkgname");
-	## </FIXME>
 	my $tmpdir = "${R::Vars::TMPDIR}/Rbuild.$$";
 	## (Same as $libdir for building a binary package.)
 	rmtree($tmpdir) if(-d $tmpdir);
 	mkdir("$tmpdir", 0755)
-	    or die "Cannot create directory '$tmpdir'\n";
+	    or die "Error: cannot create directory '$tmpdir'\n";
 	chdir($tmpdir);
 	R_system("$tar xhf $filepath");
 	## Remove exclude files.
@@ -311,35 +317,46 @@ foreach my $pkg (@ARGV) {
 	}
 	find(\&fix_permissions, "${pkgname}") if(!$WINDOWS);
 	## Add build stamp to the DESCRIPTION file.
-	my @lines = &read_lines(&file_path($pkgname, "DESCRIPTION"));
-	@lines = grep(!/^\s*$/, @lines); # Remove blank lines.
-	my $user_name;
-	if($WINDOWS) {
-	    $user_name = Win32::LoginName();
-	}
-	else {
-	    $user_name = (getpwuid($<))[0];
-	}
-	my $fh = new IO::File(&file_path($pkgname, "DESCRIPTION"), "w");
-	$fh->print(join("\n", @lines), "\n");
-	$fh->print("Packaged: ",
-		   scalar(localtime()), "; ",
-		   $user_name, "\n");
-	$fh->close();
+	&add_build_stamp_to_description_file(&file_path($pkgname,
+							"DESCRIPTION"));
 	## Finalize.
 	R_system("$tar chf $filepath $pkgname");
+	R_system("gzip -9f $filepath");
+	
 	chdir($startdir);
 	rmtree($tmpdir);
-	R_system("gzip -9f $filename");
     }
     $log->close();
     print("\n");
 }
 
+
+sub add_build_stamp_to_description_file {
+    my ($dpath) = @_;
+    
+    my @lines = &read_lines($dpath);
+    @lines = grep(!/^\s*$/, @lines); # Remove blank lines.
+    my $user_name;
+    if($WINDOWS) {
+	$user_name = Win32::LoginName();
+    }
+    else {
+	$user_name = (getpwuid($<))[0];
+    }
+    my $fh = new IO::File($dpath, "w")
+	or die "Error: cannot open file '$dpath' for writing\n";
+    ## Do not keep previous build stamps.
+    @lines = grep(!/^Packaged:/, @lines); 
+    $fh->print(join("\n", @lines), "\n");
+    $fh->print("Packaged: ",
+	       scalar(localtime()), "; ",
+	       $user_name, "\n");
+    $fh->close();
+}
+    
 
 
 sub prepare_pkg {
-
     my ($pkg, $in_bundle, $description, $log) = @_;
 
     chdir($pkg);
@@ -362,7 +379,7 @@ sub prepare_pkg {
 	    }
 	} else {
 	    if(-r "Makefile") {
-		system("${R::Vars::MAKE} -f Makefile clean");
+		R_system("${R::Vars::MAKE} -f Makefile clean");
 	    } else {
 		foreach my $file (<*.o *s[lo]>) {
 		    unlink($file);
@@ -374,7 +391,7 @@ sub prepare_pkg {
     chdir($pkgdir);
     if(!$WINDOWS && -x "./cleanup") {
 	$log->message("running cleanup");
-	system("./cleanup");
+	R_system("./cleanup");
     }
 
     ## Only update existing INDEX files.
