@@ -22,7 +22,7 @@
 
 <p>This is a guide to installation and administration for R.
 
-   <p>The current version of this document is 2.0.0 (2004-07-24).
+   <p>The current version of this document is 2.0.0 (2004-07-29).
 
    ISBN 3-900051-02-X
 
@@ -962,14 +962,16 @@ structures are passed.
 
 <h3 class="section">B.6 Building the <small>GNOME</small> interface</h3>
 
-<p>This interface is experimental and incomplete.  It provides a console
-and two graphics devices named <code>gtk()</code> and <code>gnome()</code>.  The
-console offers a basic command line editing and history mechanism, along
-with tool and button bars that give a point-and-click interface to some
-R commands.  Many of the features of the console are currently
-stubs. The <code>gtk()</code> graphics device is a port of the <code>x11()</code>
-device to <small>GDK</small> (the GIMP Drawing Kit). The <code>gnome()</code>
-device uses the <small>GNOME</small> canvas.
+<p>This interface is experimental and incomplete.  The console offers a
+basic command line editing and history mechanism, along with tool and
+button bars that give a point-and-click interface to some R commands. 
+Many of the features of the console are currently stubs.
+
+   <p>Two graphics devices have been available but are currently
+unbundled. The <code>gtk()</code> graphics device is a port of the
+<code>x11()</code> device to <small>GDK</small> (the GIMP Drawing Kit), and is
+available from CRAN as package <strong>gtkDevice</strong>.  The <code>gnome()</code>
+device uses the <small>GNOME</small> canvas, and is not currently available.
 
    <p>Due to its experimental nature, the <small>GNOME</small> interface for R
 will not be built automatically.  You must specify it by running
@@ -995,9 +997,7 @@ the following libraries (or later) installed
 
 <p>It is preferable to have a complete installation of the <small>GNOME</small>
 desktop environment.  If you use Linux, then this should be provided
-with your distribution.  In addition, packaged binary distributions of
-GNOME are available from <a href="http://www.ximian.com">http://www.ximian.com</a> for the most
-popular Linux distributions and for Solaris.
+with your distribution.
 
    <p>Remember that some package management systems (such as <small>RPM</small> and
 deb) make a distinction between the user version of a package and the
