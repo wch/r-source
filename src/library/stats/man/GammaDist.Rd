@@ -4,6 +4,7 @@
 \alias{pgamma}
 \alias{qgamma}
 \alias{rgamma}
+\concept{incomplete gamma function}
 \title{The Gamma Distribution}
 \description{
   Density, distribution function, quantile function and random
