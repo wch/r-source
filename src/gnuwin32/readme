@@ -83,7 +83,7 @@ starting argument --ess to essd-r.el at the line
 
     (inferior-ess-start-args       . "--ess"))
 
-You can also try the ESS-5.1.x betas, which have some in-built support.
+You can also try the ESS-5.1.x betas, which have in-built support.
 
 
 GRAPHICS:
@@ -117,9 +117,11 @@ Many aspects of the console (size, appearance, font, colours) can be
 customized by editing the file etc\Rconsole, and a copy with a user's
 settings can be put in her HOME directory or in the working
 directory. (The exact sequence is to search the directories pointed to
-by the environment variables R_USER then HOME then the working
-directory, finally R_HOME\etc.) The file contains a description of the
-settings that can be altered. See also ?Rconsole.
+by the environment variables R_USER then HOME then
+{HOMEDRIVE}{HOMEPATH} then the working directory, finally R_HOME\etc.
+This applies to .Renviron and other uses of `HOME' in our documentation.)
+The file contains a description of the settings that can be
+altered. See also ?Rconsole.
 
 The mapping between Windows fonts and R font's number can be set by
 editing the file etc\Rdevga, and a copy with a user's settings can be
@@ -245,6 +247,9 @@ If you want to make compiled html (.chm) files you will need the
 Microsoft HTML Help Workshop, available for download at 
 http://msdn.microsoft.com/workshop/author/htmlhelp.
 
+If you want to make Windows (.hlp) files you will need a Windows help
+compiler, preferably hcrtf.
+
 All of these need to be installed and in your path, and the
 appropriate environment variables set.
 
@@ -269,7 +274,7 @@ distribution, nor are the sources (it is the standard Info-Zip unzip
 5.40, built with MSVC++4.2). You will need to copy it from a binary
 distribution.
 
-The file rw0650\bin\Rchtml.zip is not built automatically. Its source
+The file rw0650\bin\Rchtml.dll is not built automatically. Its source
 is the help directory, and you need the HTML Help Workshop files and
 Visual C++ to build it. We suggest you copy it from the binary
 distribution.
@@ -307,6 +312,9 @@ Then: untar R-0.65.0.tgz somewhere
 	cd /somewhere/R-0.65.0/src/gnuwin32
 
 Edit MkRules to set BUILD=CROSS and the appropriate paths as needed.
+Edit Makefile to set the type(s) of help that you want built. (You
+will not be able to cross-build .chm or .hlp files.)
+
 Set the environment variable TEMP to, say, /tmp, and make.
 
 Packages can be made in the same way as natively: see the file

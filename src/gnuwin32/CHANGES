@@ -14,7 +14,7 @@ standard libraries.
 
 The new function update.packages() is supported if you have wget.exe:
 a copy is in the windows/windows-NT/etc directory on CRAN. You can
-also use lynx, from http://www.fdisk.com/doslynx/lynxport.htm.
+also use lynx.exe, from http://www.fdisk.com/doslynx/lynxport.htm.
 
 On NT only, CPU times are returned by proc.time() (using a call to
 GetProcessTimes).
@@ -26,11 +26,13 @@ A windows() device reports itself as `windows' not `X11'.
 
 getenv() now returns all the environmental variables.
 
+unlink() can now remove directories (but not using wildcard specifications).
+
 The complex LINPACK routines which were not included in the Unix
 versions of R are now omitted here.
 
 There is more support for (support of) ActiveX Automation via the
-Rproxy.dll: see front-ends/readme.
+Rproxy.dll: see the file front-ends/readme.
 
 
 rw0650
@@ -42,7 +44,7 @@ future enhancements.
 
 The environment variables have been changed: R_HOME is now R's home
 directory and R_USER is the HOME for the user which will be used by R
-(and defaults to HOME, if set, then to ${HOMEDIR}${HOMEPATH}, if that
+(and defaults to HOME, if set, then to ${HOMEDRIVE}${HOMEPATH}, if that
 is set, then the working directory). (There are many other such
 changes in R: for example RLIBS becomes R_LIBS, although for the time
 being RLIBS is also recognised.)
@@ -69,7 +71,7 @@ be echoed.
 
 There is limited support for `tilde-expansion': file paths such as
 ~/rest will be expanded to ${HOME}\rest if HOME is set, or to
-${HOMEDIR}${HOMEPATH}\rest if those variables are set.
+${HOMEDRIVE}${HOMEPATH}\rest if those variables are set.
 
 Using rterm either interactively or with --ess will be more responsive and
 use much less CPU time when waiting for input.  Interruptions by Ctrl-Break

@@ -73,7 +73,7 @@ char *R_ExpandFileName(char *s)
 	    strcpy(UserHOME, p);
 	    HaveHOME = 1;
 	} else {
-	    p = getenv("HOMEDIR");
+	    p = getenv("HOMEDRIVE");
 	    if(p) {
 		strcpy(UserHOME, p);
 		p = getenv("HOMEPATH");
