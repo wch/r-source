@@ -64,6 +64,7 @@ The current version of this document is @value{VERSION}.
 * Installing R under Windows::  
 * Installing R on Classic MacOS::  
 * Add-on Packages::             
+* Essential and Useful Other Programs::  
 * Configuration on Unix::       
 * Function and variable index::  
 * Concept index::               
@@ -71,9 +72,11 @@ The current version of this document is @value{VERSION}.
 
 @node Obtaining R, Installing R under Unix, Top, Top
 @chapter Obtaining R
+@cindex Obtaining R
 
-Sources, binaries and documentation for R can be obtained via
-@acronym{CRAN}, the ``Comprehensive R Archive Network''.
+Sources, binaries and documentation for @R{} can be obtained via
+@acronym{CRAN}, the ``Comprehensive R Archive Network''. See
+the file @file{RESOURCES} for information on CRAN.
 
 
 @menu
@@ -83,6 +86,7 @@ Sources, binaries and documentation for R can be obtained via
 
 @node Getting and Unpacking the Sources, Using rsync, Obtaining R, Obtaining R
 @section Getting and Unpacking the Sources
+@cindex Sources for R
 
 The simplest way is to download the most recent @code{R-x.y.z.tgz} package,
 and unpack it with
@@ -108,14 +112,15 @@ of users, set umask before unpacking so that the files will be
 readable by the target group (e.g. @code{umask 022} to be usable by all
 users).
 
+@cindex Patch files
 Finally, for minor-minor releases (@code{x.y.z} with @code{z != 0} ), a
 patch against the preceding release is made available in
-@code{R-x.y.{z-1}-x.y.z.diff.gz} (e.g., @code{R-0.63.2-0.63.3.diff.gz}),
+@code{R-x.y.@{z-1@}-x.y.z.diff.gz} (e.g., @code{R-0.63.2-0.63.3.diff.gz}),
 which is generally a much shorter file that the @code{.tgz} files.  Such
 a file can be applied to the sources of the previous version by changing
 to the top directory of it and
 @smallexample
-	gzip -dc /path/to/it/R-x.y.{z-1}-x.y.z.diff.gz | patch -E -p1
+	gzip -dc /path/to/it/R-x.y.@{z-1@}-x.y.z.diff.gz | patch -E -p1
 @end smallexample
 @noindent
 Beware that this does not necessarily work if the older sources have
@@ -123,6 +128,7 @@ been modified (e.g., by building in their directories).
 
 @node Using rsync,  , Getting and Unpacking the Sources, Obtaining R
 @section Using rsync
+@findex rsync
 
 Sources are also available via anonymous rsync.  Use
 
@@ -133,7 +139,7 @@ rsync -rC rsync.r-project.org::@var{module} R
 @noindent
 to create a copy of the source tree specified by @var{module} in the
 subdirectory @file{R} of the current directory, where @var{module}
-specifies one of the three existing flavors of the R sources, and can be
+specifies one of the three existing flavors of the @R{} sources, and can be
 one of @samp{r-release} (latest released version),
 @samp{r-release-patched} (latest released version with patches applied),
 and @samp{r-devel} (current development version).  The rsync trees are
@@ -146,41 +152,50 @@ CVS directories.  Further information on rsync is available at
 
 @node Installing R under Unix, Installing R under Windows, Obtaining R, Top
 @chapter Installing R under Unix
+@cindex Installing under Unix
 
 @R{} will configure and build from source under a number of common
 Unix-like platforms, including @code{i386-freebsd}, @code{i386-linux},
 @code{i386-sun-solaris}, @code{ppc-linux}, @code{mips-sgi-irix},
 @code{alpha-linux}, @code{alpha-dec-osf4}, @code{rs6000-ibm-aix},
-@code{hppa-hp-hpux}, @code{sparc-linux}, and @code{sparc-sun-solaris}
+@code{hppa-hp-hpux}, @code{sparc-linux} and @code{sparc-sun-solaris}.
 
+@cindex Linux
+@cindex MacOS X
 In addition, binary distributions are available for most common Linux
 distributions, Compaq Alpha systems running Unix 4.0, and for MacOS X.
 See the FAQ for current details.  These are installed in
 platform-specific ways.  So for the rest of this chapter we consider
 only building from the sources.
 
-
 @menu
 * Simple Compilation::          
 * Making the Manuals::          
-* Actual Installation::         
+* Installation::                
 @end menu
+
 
 @node Simple Compilation, Making the Manuals, Installing R under Unix, Installing R under Unix
 @section Simple Compilation
 
-Choose a place to install the R tree (R is not just a binary, but has
-additional data sets, help files, font metrics etc).  Let's call this
-place @file{R_HOME}.  Untar the source code.  This should create directories
-src, doc, and several more.  Issue the following commands:
+First review the essential and useful tools and libraries in the
+Appendix @ref{Essential and Useful Other Programs}, and install those
+you want or need.
 
+@findex R_HOME
+Choose a place to install the @R{} tree (@R{} is not just a binary, but
+has additional data sets, help files, font metrics etc).  Let's call
+this place @file{R_HOME}.  Untar the source code.  This should create
+directories src, doc, and several more.  Issue the following commands:
+
+@findex configure
 @smallexample
 	./configure
 	make
 @end smallexample
 @noindent
 
-(See USING MAKE below if your make is not called `make'.)
+(See @ref{Using make} if your make is not called @code{make}.)
 
 Then check the built system worked correctly, by
 
@@ -192,18 +207,21 @@ Then check the built system worked correctly, by
 Failures are not necessarily problems as they might be caused by missing
 functionality, but you should look carefully at any reported discrepancies.
 
-If these commands execute successfully, the R binary will be copied to
-the @file{${R_HOME}/bin} directory.  In addition, a shell script
-front-end called "@file{R} will be created and copied to the same
+If these commands execute successfully, the @R{} binary will be copied to
+the @file{$@{R_HOME@}/bin} directory.  In addition, a shell script
+front-end called @file{R} will be created and copied to the same
 directory.  You can copy this script to a place where users can invoke
 it, for example to @file{/usr/local/bin/R}.  You could also copy the man
 page @file{R.1} to a place where your @code{man} reader finds it, such
-as @file{/usr/local/man/man1}.  If you want to install the complete R
-tree to, e.g., @file{/usr/local/lib/R}, see section INSTALLATION below.
+as @file{/usr/local/man/man1}.  If you want to install the complete @R{}
+tree to, e.g., @file{/usr/local/lib/R}, see section @ref{Installation}.
+Note: you do not @emph{need} to install @R{}: you can run it from where it was
+built.
 
-You do not necessarily have to build R in the top-level source directory
+You do not necessarily have to build @R{} in the top-level source directory
 (say, @file{TOP_SRCDIR}).  To build in @file{BUILDDIR}, @code{cd} there
 and run
+@findex configure
 @smallexample
 	TOP_SRCDIR/configure
 	make
@@ -213,6 +231,326 @@ and so on, as described further below.  This has the advantage of always
 keeping your source tree ``clean''.  (You may need GNU @code{make} to allow
 this.)
 
+@cindex Help pages
+Make will also build plain text help pages as well as HTML and LaTeX
+versions of the @R{} object documentation (the three kinds can also be
+generated separately using @code{make help}, @code{make html} and
+@code{make latex}).  Note that you need Perl version 5: if this
+is not available on your system, you can obtain PDF versions of the
+documentation files via CRAN.
+
+Now @code{rehash} if necessary, type @code{R}, and read the @R{} manuals
+and the @R{} FAQ (files @file{FAQ} or @file{doc/html/faq.html} or the
+latest version at
+@uref{http://www.ci.tuwien.ac.at/~hornik/R/R-FAQ.html}).
+
+@node Making the Manuals, Installation, Simple Compilation, Installing R under Unix
+@section Making the Manuals
+@cindex Manuals
+
+There is a set of manuals that can be built from the sources,
+
+@smallexample
+	refman		Printed versions of all the help pages.
+	R-FAQ		R FAQ (which is already built for you).
+	R-intro		``An Introduction to R''.
+	R-data		``R Data Import/Export''.
+	R-admin		``R Installation and Adminstration''.
+	R-exts		``Writing R Extensions''.
+	R-lang		``The R Language Definition''.
+@end smallexample
+
+To make these, @code{cd} to the @file{doc/manual} directory and use
+
+@smallexample
+	make dvi	to create DVI versions
+	make pdf	to create PDF versions
+	make info	to create info files (not refman)
+@end smallexample
+
+
+You will not be able to build the info files unless you have
+@code{makeinfo} version 4 or later installed (and some Linux
+distributions have 3.12).
+
+The DVI versions can be previewed and printed using standard programs
+such as @code{xdvi} and @code{dvips}.  The PDF versions can be viewed
+using Acrobat Reader or (recent versions of) ghostscript: they have
+hyperlinks that can be followed in Acrobat Reader.  The info files are
+suitable for reading online with Emacs or the standalone GNU Info.
+
+@node Installation,  , Making the Manuals, Installing R under Unix
+@section Installation
+@cindex Installation
+
+After
+@findex configure
+@smallexample
+	./configure
+	make
+	make check
+@end smallexample
+@noindent
+have been completed successfully, you can install the complete @R{} tree
+to your system by typing
+@smallexample
+	make install
+@end smallexample
+@noindent
+This will install to the following directories:
+
+@smallexample
+	$@{prefix@}/bin		the front-end shell script
+	$@{prefix@}/man/man1	the man page
+	$@{prefix@}/lib/R		all the rest (libraries, on-line help
+				system, ...)
+@end smallexample
+@noindent
+where @code{prefix} is determined during configuration (typically
+@code{/usr/local}) and can be set by running @code{configure} with the option
+@findex configure
+@smallexample
+	./configure --prefix=/where/you/want/R/to/go
+@end smallexample
+@noindent
+This installs the @R{} executable to @file{/where/you/want/R/to/go/bin}, and so
+on.  The prefix of the installation directories can also be seen in the
+status message that is displayed at the end of @code{configure}.  You can
+install into another directory by using
+
+@smallexample
+	make prefix=/path/to/here install
+@end smallexample
+
+@cindex Manuals, installing
+
+To install DVI, info and PDF versions of the manuals, use one or more of
+@smallexample
+	make install-dvi
+	make install-info
+	make install-pdf
+@end smallexample
+@noindent
+To ensure that the installed tree is usable by the right group of users,
+set @code{umask} appropriately (perhaps to @code{022}) before unpacking the
+sources and throughout the build process.
+
+
+
+@node Installing R under Windows, Installing R on Classic MacOS, Installing R under Unix, Top
+@chapter Installing R under Windows
+@cindex Installing under Windows
+
+The @file{bin/windows} directory of a @acronym{CRAN} site contains
+binaries for a base distribution and a large number of add-on packages
+from @acronym{CRAN} to run on Windows 95, 98, NT4, 2000 and ME (at
+least) on Intel and clones (but not on other platforms).
+
+You do need one of those Windows versions: Windows 3.11+win32s will not
+work. 
+
+Your file system must allow long file names (as is likely except
+perhaps for some network-mounted systems).
+
+The simplest way is to use @code{SetupR.exe} or @code{miniR.exe}. Just
+double-click on the icon and follow the instructions.  If you installed
+R this way you can uninstall it from the Control Panel or Start Menu
+(unless you supressed making a group for @R{}).
+
+For more details see the
+@uref{http://www.stats.ox.ac.uk/pub/R/rw-FAQ.html, R Windows
+@acronym{FAQ}}.
+
+If you want to build this port from the sources, see the file
+@file{src/gnuwin32/INSTALL} in the source distribution.
+
+@node Installing R on Classic MacOS, Add-on Packages, Installing R under Windows, Top
+@chapter Installing R on Classic MacOS
+@cindex Installing under MacOS
+
+The @file{bin/macos} directory of a @acronym{CRAN} site contains
+@code{bin-hex}ed (@file{hqx}) and @code{stuffit} (@file{sit})
+self-extracting binaries for a base distribution and a large number of
+add-on packages to run under MacOS 8.6 to MacOS 9.1 or MacOS X under
+Classic Environment.
+
+Just extract one of these self-extracting binaries in a suitable folder.
+
+@cindex MacOS X
+There is also a port to MacOS X which is considered to be a Unix variant
+in this document.
+
+@node Add-on Packages, Essential and Useful Other Programs, Installing R on Classic MacOS, Top
+@chapter Add-on Packages
+@cindex Packages
+
+@menu
+* Installing packages::         
+* Updating packages::           
+* Removing packages::           
+@end menu
+
+This chapter applies to Unix-like and Windows versions of @R{}, but not
+to the Classic MacOS port.
+
+It is helpful to use the correct terminology.  A @emph{package} is
+loaded from a @emph{library} by the function @code{library}.  Thus a
+library is a directory containing installed packages; the main library
+is @file{R_HOME/library}, but others can be used, for example by setting
+the environment variable @code{R_LIBS} or the @R{} object @code{.lib.loc}.
+
+@node Installing packages, Updating packages, Add-on Packages, Add-on Packages
+@section Installing packages
+@cindex Packages, installing
+
+Note that you need to specify implicitly or explicitly the library to
+which the package is to be installed.  This is only an issue if you have
+more than one library, if course.
+
+To install packages from source on Unix use
+@smallexample
+        R CMD INSTALL -l /path/to/library pkg1 pkg2 ...
+@end smallexample
+@noindent
+The part @code{-l /path/to/library} can be omitted, when the first
+library in @code{R_LIBS} is used if set, otherwise the main library
+@file{R_HOME/library}.
+
+The Windows equivalent is
+@smallexample
+        Rcmd INSTALL -l /path/to/library pkg1 pkg2 ...
+@end smallexample
+
+@findex install.packages 
+Alternatively, packages can be downloaded and installed for within @R{}.
+First set the option @code{CRAN} to your nearest CRAN mirrror, for
+example
+@smallexample
+        options(CRAN = "cran.us.r-project.org")
+@end smallexample
+@noindent
+Then download and install package @code{foo} by
+@smallexample
+        install.packages("foo")
+@end smallexample
+@noindent
+Unless the library is specified (argument @code{libs}) the first library
+in @code{.lib.loc} is used.
+
+What this does is different on Unix and Windows. On Unix it consults the
+list of available source packages on CRAN, downloads the latest version
+of the @code{foo} sources, and installs it (via @code{R CMD INSTALL}).
+On Windows it looks at the list of @emph{binary} versions of packages
+and downloads the latest version (if any).
+
+On Windows @code{install.packages} can also install a binary package
+from a local @code{zip} file by setting argument @code{CRAN} to @code{NULL}
+
+@node Updating packages, Removing packages, Installing packages, Add-on Packages
+@section Updating packages
+@findex update.packages
+@cindex Packages, updating
+
+The command @code{update.packages()} is the simplest way to ensure that
+all the packages on your system are up to date. Set the @code{CRAN}
+option as in the previous section. The @code{update.packages()}
+downloads the list of available packages and their current versions,
+compares it with those installed and offers to fetch and install any
+that have later versions on CRAN.
+
+@node Removing packages,  , Updating packages, Add-on Packages
+@section Removing packages
+@findex remove.packages
+@cindex Packages, removing
+
+Packages can be removed in a number of ways.  From a command prompt they
+can be removed by
+
+@smallexample
+        R CMD REMOVE -l /path/to/library pkg1 pkg2 ...
+@end smallexample
+@noindent
+(Unix) or
+@smallexample
+        Rcmd REMOVE -l /path/to/library pkg1 pkg2 ...
+@end smallexample
+@noindent
+(Windows).
+
+From a running @R{} process they can be removed by
+@smallexample
+        remove.packages(c("pkg1", "pkg2"), lib="/path/to/library")
+@end smallexample
+
+Finally, in most installations one can just remove the package directory
+from the library.
+
+@node Essential and Useful Other Programs, Configuration on Unix, Add-on Packages, Top
+@appendix Essential and Useful Other Programs
+
+This appendix gives details of programs you will need to build @R{} on
+Unix-like platforms, or which will be used by @R{} if found by
+@code{./configure}.
+
+@menu
+* Essential Programs::          
+* Useful Libraries and Programs::  
+@end menu
+
+@node Essential Programs, Useful Libraries and Programs, Essential and Useful Other Programs, Essential and Useful Other Programs
+@section Essential Programs
+
+You will need Perl version 5, available via
+@uref{http://www.perl.com/CPAN/}, to build any of the on-line
+documentation.
+
+You will not be able to build the info files unless you have
+@code{makeinfo} version 4 or later installed (and some Linux
+distributions have 3.12).
+
+The typeset documentation needs @code{tex} and @code{latex}, or
+@code{pdftex} and @code{pdflatex}.
+
+
+@node Useful Libraries and Programs,  , Essential Programs, Essential and Useful Other Programs
+@section Useful Libraries and Programs
+
+The command-line editing depends on the @code{readline} library
+available from any GNU mirror: you will need a fairly recent version.
+
+The bitmapped graphics devices @code{jpeg()} and @code{png()} need the 
+appropriate libraries installed: @code{jpeg} version 6 or @code{libpng}
+and @code{libz} respectively.
+
+The @code{bitmap} and @code{dev2bitmap} devices make use of GhostScript.
+
+The @pkg{tcltk} package needs Tcl/Tk installed: the sources are
+available at @uref{dev.scriptics.com}.
+
+The linear algebra routines in @R{} can make use of enhanced BLAS (Basic
+Linear Algebra System) routines.  Some are compiler-system-specific
+(@code{libcxml} and @code{libdxml} on Alphas, @code{libsunperf} on Sun
+Sparc, @code{libscs} and @code{libcomplib.sgimath} on SGI,
+@code{libessl} on IBM) by ATLAS (@uref{www.netlib.org/atlas} is a
+`tuned' BLAS that runs on a wide range of platforms.  If no more
+specific library is found, a @code{libblas} library in the libray path
+will be used.
+
+@node Configuration on Unix, Function and variable index, Essential and Useful Other Programs, Top
+@appendix Configuration on Unix
+
+@menu
+* Configuration variables::     
+* Using make::                  
+* Using Fortran::               
+* Compile and Load Flags::      
+* Building the GNOME Interface::  
+@end menu
+
+@node Configuration variables, Using make, Configuration on Unix, Configuration on Unix
+@section Configuration variables
+
+@findex configure
 If you need or want to set certain configure variables to something
 other than their default, you can do that by either editing the file
 @file{config.site} (which documents all the variables you might want to set)
@@ -240,181 +578,129 @@ If you find you need to alter configure variables, it is worth noting
 that some settings are cached in the file @file{config.cache}, and it is
 a good idea to remove that file before re-configuring.
 
-Make will also build plain text help pages as well as HTML and LaTeX
-versions of the R object documentation (the three kinds can also be
-generated separately using `make help', `make html' and `make latex').
-Note that you need Perl version 5, available via
-http://www.perl.com/CPAN/, to build this documentation.  If this is not
-available on your system, you can obtain PDF versions of the
-documentation files via the Comprehensive R Archive Network (CRAN), see
-the file `RESOURCES' for information on CRAN.
+@node Using make, Using Fortran, Configuration variables, Configuration on Unix
+@section Using make
+@findex make
 
-Now rehash if necessary, type `R', and read the R manuals and the R FAQ
-(files `FAQ' or `doc/html/faq.html' or the latest version at
-http://www.ci.tuwien.ac.at/~hornik/R/R-FAQ.html).
+To compile @R{}, you will most likely find it easiest to use GNU
+@code{make}.  On Solaris 2.6/7/8 in particular, you need a version of
+GNU @code{make} different from 3.77; 3.79 works fine, as does the Sun
+@code{make}.
 
-The GNOME interface for R will only be built if you specify it: see the
-GNOME section below.
+To build in a separate directory you need a @code{make} that uses the
+@code{VPATH} variable, for example GNU @code{make}, or Sun @code{make}
+on Solaris 2.7/8 (but not earlier).
 
-@node Making the Manuals, Actual Installation, Simple Compilation, Installing R under Unix
-@section Making the Manuals
-
-There is a set of manuals that can be built from the sources,
-
+If you want to use a @code{make} by another name, for example if your
+GNU @code{make} is called @code{gmake}, you need to set the environment
+variable @code{MAKE} at configure time, for example
+@findex configure
 @smallexample
-	refman		Printed versions of all the help pages.
-	R-FAQ		R FAQ (which is already built for you).
-	R-intro		``An Introduction to R''.
-	R-data		``R Data Import/Export''.
-	R-exts		``Writing R Extensions''.
-	R-lang		``The R Language Definition''.
+	MAKE=gmake ./configure      (sh, bash)
+	env MAKE=gmake ./configure  (csh)
 @end smallexample
 
+@node Using Fortran, Compile and Load Flags, Using make, Configuration on Unix
+@section Using Fortran
+@cindex Fortran
 
-To make these, cd to the `doc/manual' directory and use
+To compile @R{}, you need a FORTRAN compiler or @code{f2c}, the
+FORTRAN-to-C converter (@uref{www.netlib.org/f2c}).  The default is to
+search for @code{g77}, @code{f77}, @code{xlf}, @code{cf77},
+@code{cft77}, @code{pgf77}, @code{fl32}, @code{af77}, @code{fort77},
+@code{f90}, @code{xlf90}, @code{pgf90}, @code{epcf90}, @code{f95},
+@code{xlf95}, @code{lf9}5, @code{g95}, and @code{fc} (in that order),
+and then for @code{f2c}, and use whichever is found first; if none is
+found, @R{} cannot be compiled.  The search mechanism can be changed
+using the @code{--with-g77}, @code{--with-f77}, and @code{--with-f2c}
+command line options to @code{configure}.  If your FORTRAN compiler is
+in a non-standard location, you should set the enviroment variable
+@code{PATH} accordingly before running @code{configure}.
 
+If your FORTRAN libraries are in slightly peculiar places, you should
+also look at @code{LD_LIBRARY_PATH} to make sure that all libraries are
+on this path.
+
+You must set whatever compilation flags (if any) are needed to ensure
+that FORTRAN @code{integer} is equivalent to a C @code{int} pointer and
+FORTRAN @code{double precision} is equivalent to a C @code{double}
+pointer.  This is checked during the configuration process.
+
+@node Compile and Load Flags, Building the GNOME Interface, Using Fortran, Configuration on Unix
+@section Compile and Load Flags
+
+A wide range of flags can be set in the file config.site or via
+environment variables.  We have already mentioned
 @smallexample
-	make dvi	to create DVI versions
-	make pdf	to create PDF versions
-	make info	to create info files (not refman)
-@end smallexample
-@noindent
-
-You will not be able to build the info files unless you have
-@code{makeinfo} version 4 or later installed (and some Linux
-distributions have 3.12).
-
-The DVI versions can be previewed and printed using standard programs
-such as `xdvi' and `dvips'.  The PDF versions can be viewed using
-Acrobat Reader or (recent versions of) ghostscript: they have
-hyperlinks that can be followed in Acrobat Reader.  The info files are
-suitable for reading online with Emacs or the standalone GNU Info.
-
-@node Actual Installation,  , Making the Manuals, Installing R under Unix
-@section  Actual Installation
-After
-
-@smallexample
-	./configure
-	make
-	make check
+	CPPFLAGS	extra include flags
+	LIBS		libraries and `-L/lib/path' flags
 @end smallexample
 @noindent
-have been completed successfully, you can install the complete R tree
-to your system by typing
+and others include
 @smallexample
-	make install
+	CFLAGS		debugging and optimization flags, C
+	MAIN_CFLAGS	ditto, for compiling the main program
+	SHLIB_CFLAGS	  or shared libraries
+	FFLAGS		debugging and optimization flags, Fortran
+	MAIN_FFLAGS	ditto, for compiling the main program
+	SHLIB_FFLAGS	  or shared libraries
+	MAIN_LDFLAGS	additional flags for the main link
+	SHLIB_LDFLAGS	additional flags for the linking shared libraries
 @end smallexample
 @noindent
+Library paths specified as @code{-L/lib/path} in @code{LIBS} are
+collected together and prepended to @code{LD_LIBRARY_PATH}, so there
+should be no need for @code{-R} or @code{-rpath} flags.
 
-This will install to the following directories:
+To compile a profiling version of @R{}, one might for example want to
+use @code{MAIN_CFLAGS=-pg}, @code{MAIN_FFLAGS=-pg},
+@code{MAIN_LDFLAGS=-pg} on platforms where @code{-pg} cannot be used
+with position-independent code.
 
+
+@node Building the GNOME Interface,  , Compile and Load Flags, Configuration on Unix
+@section Building the GNOME Interface
+
+This interface is experimental, incomplete and not currently being
+developed. It provides a console and a graphics device @code{(gtk()};
+the @code{x11()} device can also be used).  Many of the `features' of
+the console are currently stubs.
+
+The GNOME interface for @R{} will only be built if you specify it by
+running configure with the @code{--with-gnome} option.  For example, you
+might run
 @smallexample
-	${prefix}/bin		the front-end shell script
-	${prefix}/man/man1	the man page
-	${prefix}/lib/R		all the rest (libraries, on-line help
-				system, ...)
+	./configure --with-gnome
 @end smallexample
 @noindent
-where @code{prefix} is determined during configuration (typically
-@code{/usr/local}) and can be set by running configure with the option
+but please check you have all the requirements first.  It is advisable
+to have reasonably-up-to-date versions of the @code{gnome} and
+@code{gtk+} libraries.
+You can find the versions you have by
 @smallexample
-	./configure --prefix=/where/you/want/R/to/go
+	gnome-config --version
+	gtk-config --version
 @end smallexample
 @noindent
-This installs the R executable to @file{/where/you/want/R/to/go/bin}, and so
-on.  The prefix of the installation directories can also be seen in the
-status message that is displayed at the end of configure.  You can
-install into another directory by using
-
+We know 1.0.10 and 1.2.3 suffice. You need the following RPMs and
+their dependencies installed:
 @smallexample
-	make prefix=/path/to/here install
+	gnome-libs
+	gnome-libs-devel
+	gtk+
+	gtk+-devel
+	glib
+	glib-devel
 @end smallexample
 
+You will need also @code{libglade} 0.5 or later for correct behaviour.
+For more information on @code{libglade} and to download the source, see
+@uref{http://www.daa.com.au/~james/gnome/}.  The sources are also
+available from the GNOME ftp site (@uref{ftp.gnome.org} and mirrors).
+RPMs are in RedHat 6.1 and later.
 
-To install DVI, info and PDF versions of the manuals, use one or more of
-
-@smallexample
-	make install-dvi
-	make install-info
-	make install-pdf
-@end smallexample
-@noindent
-To ensure that the installed tree is usable by the right group of users,
-set @code{umask} appropriately (perhaps to @code{022}) before unpacking the
-sources and throughout the build process.
-
-
-
-@node Installing R under Windows, Installing R on Classic MacOS, Installing R under Unix, Top
-@chapter Installing R under Windows
-
-The @file{bin/windows} directory of a @acronym{CRAN} site contains
-binaries for a base distribution and a large number of add-on packages
-from @acronym{CRAN} to run on Windows 95, 98, NT4, 2000 and ME (at
-least) on Intel and clones (but not on other platforms).
-
-You do need one of those Windows versions: Windows 3.11+win32s will not
-work. 
-
-Your file system must allow long file names (as is likely except
-perhaps for some network-mounted systems).
-
-The simplest way is to use @code{SetupR.exe} or @code{miniR.exe}. Just
-double-click on the icon and follow the instructions.  If you installed
-R this way you can uninstall it from the Control Panel or Start Menu
-(unless you supressed making a group for R).
-
-For more details see the
-@uref{http://www.stats.ox.ac.uk/pub/R/rw-FAQ.html, R Windows
-@acronym{FAQ}}.
-
-
-@node Installing R on Classic MacOS, Add-on Packages, Installing R under Windows, Top
-@chapter Installing R on Classic MacOS
-
-The @file{bin/macos} directory of a @acronym{CRAN} site contains
-bin-hexed (@file{hqx}) and stuffit (@file{sit}) self-extracting binaries
-for a base distribution and a large number of add-on packages to run
-under MacOS 8.6 to MacOS 9.1 or MacOS X under Classic Environment.  The
-Mac version of R and the Mac binaries are maintained by
-@email{stefano.iacus@@unimi.it, Stefano Iacus}.
-
-There is also a port to MacOS X which is considered to be a Unix variant
-in this document.
-
-@node Add-on Packages, Configuration on Unix, Installing R on Classic MacOS, Top
-@chapter Add-on Packages
-
-@menu
-* Installing packages::         
-* Updating packages::           
-@end menu
-
-This chapter applies to Unix-like and Windows versions of @R{}, but not
-to the Classic MacOS port.
-
-It is helpful to use the correct terminology.  A @emph{package} is
-loaded from a @emph{library} by the function @code{library}.  Thus a
-library is a directory containing installed packages; the main library
-is @file{R_HOME/library}, but others can be used, for example by setting
-the environment variable @code{R_LIBS} or the @R{} object @code{.lib.loc}.
-
-@node Installing packages, Updating packages, Add-on Packages, Add-on Packages
-@section Installing packages
-
-Note that you need to specify implicitly or explicitly the library to
-which the package is to be installed.  This is only an issue if you have
-more than one library, if course.
-
-@node Updating packages,  , Installing packages, Add-on Packages
-@section Updating packages
-
-The command @code{update.packages()} is the simplest way to ensure that
-all the packages on your system are up to date.
-
-@node Configuration on Unix, Function and variable index, Add-on Packages, Top
-@appendix Configuration on Unix
+libglade needs @code{libxml} 1.4 or later, the source for which is available
+from the GNOME ftp site (@uref{ftp.gnome.org} and mirrors).
 
 @node Function and variable index, Concept index, Configuration on Unix, Top
 @unnumbered Function and variable index
