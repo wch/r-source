@@ -10,28 +10,22 @@
   \code{size} and \code{prob}.
 }
 \usage{
-dnbinom(x, size, prob, log = FALSE)
-pnbinom(q, size, prob, lower.tail = TRUE, log.p = FALSE)
-qnbinom(p, size, prob, lower.tail = TRUE, log.p = FALSE)
-rnbinom(n, size, prob)
+dnbinom(x, size, prob, mu, log = FALSE)
+pnbinom(q, size, prob, mu, lower.tail = TRUE, log.p = FALSE)
+qnbinom(p, size, prob, mu, lower.tail = TRUE, log.p = FALSE)
+rnbinom(n, size, prob, mu)
 }
 \arguments{
-  \item{x, q}{vector of quantiles representing the number of failures
-    which occur in a sequence of Bernoulli trials before a target number
-    of successes is reached, or alternately the probability distribution
-    of a compound Poisson process whose intensity is distributed as a
-    gamma (\code{\link{pgamma}}) distribution with scale parameter
-    \code{(1-prob)/prob} and shape parameter \code{size} (this
-    definition allows non-integer values of \code{size}).}
+  \item{x, q}{vector of quantiles.}
   \item{x}{vector of (non-negative integer) quantiles.}
   \item{q}{vector of quantiles.}
   \item{p}{vector of probabilities.}
   \item{n}{number of observations. If \code{length(n) > 1}, the length
     is taken to be the number required.}
-  \item{size}{target for number of successful trials, or shape parameter
-    of gamma distribution.}
-  \item{prob}{probability of success in each trial, or scale of gamma
-    distribution (\code{prob} = \code{scale/(1+scale)}).}
+  \item{size}{target for number of successful trials, or dispersion
+    parameter (the shape parameter of the gamma mixing distribution).}
+  \item{prob}{probability of success in each trial.}
+  \item{mu}{alternative parametrization via mean: see Details}
   \item{log, log.p}{logical; if TRUE, probabilities p are given as log(p).}
   \item{lower.tail}{logical; if TRUE (default), probabilities are
     \eqn{P[X \le x]}{P[X <= x]}, otherwise, \eqn{P[X > x]}{P[X > x]}.}
@@ -49,6 +43,23 @@ rnbinom(n, size, prob)
     p(x) = \frac{\Gamma(x+n)}{\Gamma(n) x!} p^n (1-p)^x}{%
     p(x) = Gamma(x+n)/(Gamma(n) x!) p^n (1-p)^x}
   for \eqn{x = 0, 1, 2, \ldots}
+
+  This represents the number of failures
+  which occur in a sequence of Bernoulli trials before a target number
+  of successes is reached.
+
+  A negative binomial distribution can arise as a mixture of Poisson
+  distributions with mean distributed as a
+  gamma (\code{\link{pgamma}}) distribution with scale parameter
+  \code{(1 - prob)/prob} and shape parameter \code{size}.  (This
+  definition allows non-integer values of \code{size}.)
+  In this model \code{prob} = \code{scale/(1+scale)}, and the mean is
+  \code{size * (1 - prob)/prob)}
+  
+  The alternative parametrization (often used in ecology) is by the
+  \emph{mean} \code{mu}, and \code{size}, the \emph{dispersion parameter},
+  where \code{prob} = {size/(size+mu)}.  In this parametrization the
+  variance is \code{mu + mu^2/k}.
 
   If an element of \code{x} is not integer, the result of \code{dnbinom}
   is zero, with a warning.
@@ -78,5 +89,16 @@ title(tit <- "negative binomial density(x,s, pr = 0.4)  vs.  x & s")
 
 image  (x,size, log10(dnb), main= paste("log [",tit,"]"))
 contour(x,size, log10(dnb),add=TRUE)
+
+## Alternative parametrization
+x1 <- rnbinom(500, mu = 4, size = 1)
+x2 <- rnbinom(500, mu = 4, size = 10)
+x3 <- rnbinom(500, mu = 4, size = 100)
+h1 <- hist(x1, breaks = 20, plot = FALSE)
+h2 <- hist(x2, breaks = h1$breaks, plot = FALSE)
+h3 <- hist(x3, breaks = h1$breaks, plot = FALSE)
+barplot(rbind(h1$counts, h2$counts, h3$counts),
+        beside = TRUE, col = c("red","blue","cyan"),
+        names.arg = round(h1$breaks[-length(h1$breaks)]))
 }
 \keyword{distribution}

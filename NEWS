@@ -158,6 +158,9 @@ NEW FEATURES
     o   R::Dcf.pm now checks (a little bit) for continuation lines
         without leading whitespace.
 
+    o   [dpqr]nbinom also accept an alternative parametrization via the
+	mean and the dispersion parameter (thanks to Ben Bolker).
+
 
 
 BUG FIXES

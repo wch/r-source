@@ -123,13 +123,38 @@ qhyper <- function(p, m, n, k, lower.tail = TRUE, log.p = FALSE)
     .Internal(qhyper(p, m, n, k, lower.tail, log.p))
 rhyper <- function(nn, m, n, k) .Internal(rhyper(nn, m, n, k))
 
-dnbinom <- function(x, size, prob, log = FALSE)
+dnbinom <- function(x, size, prob, mu, log = FALSE)
+{
+    if (!missing(mu)) {
+        if (!missing(prob)) error("prob and mu both specified")
+        prob <- size/(size + mu)
+    }
     .Internal(dnbinom(x, size, prob, log))
-pnbinom <- function(q, size, prob, lower.tail = TRUE, log.p = FALSE)
+}
+pnbinom <- function(q, size, prob, mu, lower.tail = TRUE, log.p = FALSE)
+{
+    if (!missing(mu)) {
+        if (!missing(prob)) error("prob and mu both specified")
+        prob <- size/(size + mu)
+    }
     .Internal(pnbinom(q, size, prob, lower.tail, log.p))
-qnbinom <- function(p, size, prob, lower.tail = TRUE, log.p = FALSE)
+}
+qnbinom <- function(p, size, prob, mu, lower.tail = TRUE, log.p = FALSE)
+{
+    if (!missing(mu)) {
+        if (!missing(prob)) error("prob and mu both specified")
+        prob <- size/(size + mu)
+    }
     .Internal(qnbinom(p, size, prob, lower.tail, log.p))
-rnbinom <- function(n, size, prob) .Internal(rnbinom(n, size, prob))
+}
+rnbinom <- function(n, size, prob, mu)
+{
+    if (!missing(mu)) {
+        if (!missing(prob)) error("prob and mu both specified")
+        prob <- size/(size + mu)
+    }
+    .Internal(rnbinom(n, size, prob))
+}
 
 dpois <- function(x, lambda, log = FALSE) .Internal(dpois(x, lambda, log))
 ppois <- function(q, lambda, lower.tail = TRUE, log.p = FALSE)
