@@ -1283,6 +1283,7 @@ c           top of while loop
                i=i+1
                if(.not.(i.lt.nf))then
                   call ehg182(123)
+		  goto 7
                end if
                goto 6
 c           bottom of while loop
