@@ -412,6 +412,7 @@ static pager pagercreate()
         MCHECK(bt = newtoolbutton(open_image, r, menueditoropen));
         MCHECK(addtooltip(bt, "Open script"));
 	gsetcursor(bt, ArrowCursor);
+        setdata(bt, (void *) c);
         r.x += (btsize + 6) ;	
         MCHECK(bt = newtoolbutton(copy1_image, r, pagerpaste));
         MCHECK(addtooltip(bt, "Paste to console"));
@@ -431,6 +432,7 @@ static pager pagercreate()
         MCHECK(bt = newtoolbutton(console_image, r, pagerconsole));
         MCHECK(addtooltip(bt, "Return focus to Console"));
 	gsetcursor(bt, ArrowCursor);
+        setdata(bt, (void *) c);
     }
 #endif
     addto(c);

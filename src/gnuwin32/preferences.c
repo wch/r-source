@@ -194,7 +194,7 @@ static void do_apply()
 /*  Set a new font? */
     if(strcmp(newGUI.font, curGUI.font) ||
        newGUI.pointsize != curGUI.pointsize ||
-       newGUI.style != curGUI.style)
+       strcmp(newGUI.style, curGUI.style))
     {
 	char msg[LF_FACESIZE + 128];
 	int sty = Plain;
@@ -423,8 +423,8 @@ void Rgui_configure()
 
     l_font = newlabel("Font", rect(10, 100, 40, 20), AlignLeft);
 
-    f_font = newdropfield(FontsList, rect(60, 100, 120, 20), NULL);
-    tt_font = newcheckbox("TrueType only", rect(190, 100, 110, 20), NULL);
+    f_font = newdropfield(FontsList, rect(50, 100, 120, 20), NULL);
+    tt_font = newcheckbox("TrueType only", rect(180, 100, 110, 20), NULL);
     {
 	char *pf;
 	if ((strlen(fontname) > 1) &&
@@ -435,8 +435,8 @@ void Rgui_configure()
 	setlistitem(f_font, cmatch(pf, FontsList));
     }
 
-    l_point = newlabel("size", rect(300, 100, 30, 20), AlignLeft);
-    d_point = newdropfield(PointsList, rect(335, 100, 50, 20), NULL);
+    l_point = newlabel("size", rect(310, 100, 30, 20), AlignLeft);
+    d_point = newdropfield(PointsList, rect(345, 100, 50, 20), NULL);
     sprintf(buf, "%d", pointsize);
     setlistitem(d_point, cmatch(buf, PointsList));
     l_style = newlabel("style", rect(410, 100, 40, 20), AlignLeft);
@@ -468,7 +468,7 @@ void Rgui_configure()
     l_cbb = newlabel("buffer bytes", rect(270, 175, 70, 20), AlignLeft);
     sprintf(buf, "%ld", p->lbuf->dim);
     f_cbb = newfield(buf, rect(350, 175, 60, 20));
-    l_cbl = newlabel("lines", rect(430, 175, 70, 20), AlignLeft);
+    l_cbl = newlabel("lines", rect(430, 175, 50, 20), AlignLeft);
     sprintf(buf, "%d", p->lbuf->ms);
     f_cbl = newfield(buf, rect(480, 175, 40, 20));
 
