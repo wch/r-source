@@ -237,7 +237,7 @@ conformMethod <-
   function(signature, mnames, fnames)
 {
     if(any(is.na(match(mnames, fnames))))
-        stop(paste("Method has formal arguments not in generic function:",
+        stop(paste("Method", deparse(signature), "has formal arguments not in generic function:",
                    paste(mnames[is.na(match(mnames, fnames))], collapse = ", ")))
     ## TO DO:  arrange for "missing" to be a valid for "..." in a signature
     ## until then, allow an omitted "..." w/o checking
