@@ -11,7 +11,8 @@ subdir = tools
 include $(top_builddir)/Makeconf
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
-DISTFILES = Makefile.in \
+DISTFILES = README \
+	Makefile.in \
 	GETCONFIG GETMAKEVAL GETSYMBOLS GETVERSION \
 	Rdnewer.pl \
 	config.guess \

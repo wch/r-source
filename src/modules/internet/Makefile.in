@@ -18,7 +18,7 @@ OBJECTS = $(SOURCES:.c=.o)
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = \
-	Makefile.in Makefile.win $(SOURCES) $(HEADERS) \
+	README Makefile.in Makefile.win $(SOURCES) $(HEADERS) \
 	dllversion.rc internet.mcp.hqx
 
 ## FIXME:
