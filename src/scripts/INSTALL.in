@@ -4,11 +4,11 @@
 
 # @configure_input@
 
-revision='$Revision: 1.147.2.1 $'
+revision='$Revision: 1.147.2.2 $'
 version=`set - ${revision}; echo ${2}`
 version="R add-on package installer ${version}
 
-Copyright (C) 2000-2003 The R Core Development Team.
+Copyright (C) 2000-2004 The R Core Development Team.
 This is free software; see the GNU General Public Licence version 2
 or later for copying conditions.  There is NO warranty."
 
@@ -562,7 +562,7 @@ do_install_source () {
 	echo "${NO_PERL5_MSG}"
       else
 	if ${debug}; then
-	  echo "DEBUG: build-help ${BUILD_HELP_OPTS} ${pkg_dir} ${lib} ${R_PACKAGE_DIR} ${pkg_name}"
+	  echo "DEBUG: build-help ${build_help_opts} ${pkg_dir} ${lib} ${R_PACKAGE_DIR} ${pkg_name}"
 	fi
 	${R_CMD} perl "${R_HOME}/share/perl/build-help.pl" \
 	  ${build_help_opts} \
@@ -579,10 +579,13 @@ do_install_source () {
 	  if test -d R-ex; then
 	    (cd R-ex; ${R_ZIPCMD} -m Rex *.R)
 	  fi
+	  ## <FIXME>
+	  ## Eventually need to decide whether we want this ...
           ## NOT YET:
           ## if test -d latex; then
           ##   (cd latex; ${R_ZIPCMD} -m Rhelp *.tex)
           ## fi
+	  ## </FIXME>
 	  if test -d help; then
 	    (cd help; ${R_ZIPCMD} -m Rhelp * -x AnIndex);
 	  fi)
