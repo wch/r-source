@@ -33,6 +33,11 @@ NEW FEATURES
 
 BUG FIXES
 
+    o   mvfft fixes (from Martyn Plummer) - not working with vectors and
+        segfault problem.
+
+    o	Rephrased error message on invalid assignment target.
+
     o   ifelse() now evaluates yes/no only if needed
 
     o   PROTECT'ed some memory in NewExtractNames that was getting overwritten

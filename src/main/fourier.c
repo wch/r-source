@@ -123,7 +123,7 @@ SEXP do_mvfft(SEXP call, SEXP op, SEXP args, SEXP env)
     z = CAR(args);
 
     d = getAttrib(z, R_DimSymbol);
-    if (length(d) > 2)
+    if (d == R_NilValue || length(d) > 2)
 	errorcall(call, "vector-valued series required\n");
     n = INTEGER(d)[0];
     p = INTEGER(d)[1];
@@ -156,9 +156,11 @@ SEXP do_mvfft(SEXP call, SEXP op, SEXP args, SEXP env)
 	    errorcall(call, "fft factorization error\n");
 	work = (double*)R_alloc(4 * maxf, sizeof(double));
 	iwork = (int*)R_alloc(maxp, sizeof(int));
-	for (i = 0; i < p; i++)
+	for (i = 0; i < p; i++) {
+	    fft_factor(n, &maxf, &maxp);
 	    fft_work(&(COMPLEX(z)[i*n].r), &(COMPLEX(z)[i*n].i),
 		     1, n, 1, inv, work, iwork);
+        }
 	vmaxset(vmax);
     }
     UNPROTECT(1);
