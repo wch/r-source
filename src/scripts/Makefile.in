@@ -13,15 +13,18 @@ include $(top_builddir)/Makeconf
 SCRIPTS_S = BATCH LINK Rcmd Rdiff Rd2dvi Rd2txt config pager texi2dvi
 ## <NOTE>
 ## Need target rules for all elements of SCRIPTS_B_IN/SCRIPTS_B.
-SCRIPTS_B_IN = COMPILE.in INSTALL.in REMOVE.in Rdconv.in Rdindex.in \
-	Rprof.in SHLIB.in Sd2Rd.in build.in check.in f77.in
+SCRIPTS_B_IN = COMPILE.in INSTALL.in REMOVE.in Rdconv.in Rprof.in \
+	SHLIB.in Sd2Rd.in build.in check.in f77.in
 SCRIPTS_B = $(SCRIPTS_B_IN:.in=)
 ## </NOTE>
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = Makefile.in $(SCRIPTS_S) $(SCRIPTS_B_IN) R.sh.in
 
-CLEANFILES =
+## <FIXME>
+## Remove eventually.
+CLEANFILES = Rdindex
+## </FIXME>
 DISTCLEANFILES = Makefile R.fe R.sh $(SCRIPTS_B)
 
 all: Makefile R
@@ -44,8 +47,6 @@ INSTALL: $(srcdir)/INSTALL.in $(top_builddir)/config.status
 REMOVE: $(srcdir)/REMOVE.in $(top_builddir)/config.status
 	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
 Rdconv: $(srcdir)/Rdconv.in $(top_builddir)/config.status
-	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
-Rdindex: $(srcdir)/Rdindex.in $(top_builddir)/config.status
 	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
 Rprof: $(srcdir)/Rprof.in $(top_builddir)/config.status
 	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@

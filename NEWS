@@ -146,6 +146,8 @@ UTILITIES
 	functions and S3 methods in \usage sections are no longer
 	ignored.
 
+    o	R CMD Rdindex has been removed.
+
 
 BUG FIXES
 

@@ -1352,7 +1352,6 @@ AC_CONFIG_FILES(
   src/scripts/REMOVE
   src/scripts/R.sh
   src/scripts/Rdconv
-  src/scripts/Rdindex
   src/scripts/Rprof
   src/scripts/SHLIB
   src/scripts/Sd2Rd
