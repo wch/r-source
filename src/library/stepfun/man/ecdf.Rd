@@ -17,8 +17,9 @@ plot(ecdf(x), verticals = FALSE, col.01line = "gray70", \dots)
   \code{x}\eqn{= (}\eqn{x_1,x_2}{x1,x2},\ldots\eqn{x_n)}{xn)},
   \eqn{F_n}{Fn} is the fraction of observations less or equal to \eqn{t},
   i.e.,
-  \deqn{F_n(t) = \frac 1 n\sum_{i=1}^n \mathbf{1}_{[x_i \le t]}.}{
-    Fn(t) = 1/n  sum(i=1,..,n) Indicator(xi <= t).}
+  \deqn{F_n(t) = \#\{x_i\le t\}\ / n
+               = \frac1 n\sum_{i=1}^n \mathbf{1}_{[x_i \le t]}.}{
+    Fn(t) = \#\{x_i\le t\} /n  =  1/n sum(i=1,..,n) Indicator(xi <= t).}
 
   The function \code{plot.ecdf} which implements the \code{\link{plot}}
   method for \code{ecdf} objects, is implemented via a call to
@@ -29,8 +30,7 @@ plot(ecdf(x), verticals = FALSE, col.01line = "gray70", \dots)
   \code{"\link{stepfun}"} class.
 }
 \author{
-  Martin Maechler, \email{maechler@stat.math.ethz.ch} with some basic
-  code from Thomas Lumley.
+  Martin Maechler, \email{maechler@stat.math.ethz.ch}.
 }
 \seealso{\code{\link{stepfun}}, the more general class of step functions,
   \code{\link{approxfun}} and \code{\link{splinefun}}.

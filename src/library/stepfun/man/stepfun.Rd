@@ -33,12 +33,12 @@ summary(fn)
 
   The value of the constant \eqn{c_i}{c[i]} above depends on the
   ``continuity'' parameter \code{f}.
-  For the default, \code{f = 0}, \eqn{fn} is a ``cadlag'' function, i.e.
+  For the default, \code{f = 0}, \code{fn} is a ``cadlag'' function, i.e.
   continuous at right, limit (``the point'') at left.
   In general, \eqn{c_i}{c[i]} is interpolated in between the
   neighbouring \eqn{y} values,
   \eqn{c_i= (1-f) y_i + f\cdot y_{i+1}}{c[i] = (1-f)*y[i] + f*y[i+1]}.
-  Therefore, for non-0 values of \code{f}, \eqn{fn} may no longer be a proper
+  Therefore, for non-0 values of \code{f}, \code{fn} may no longer be a proper
   step function, since it can be discontinuous from both sides.
 }
 \value{
