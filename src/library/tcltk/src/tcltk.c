@@ -757,7 +757,7 @@ RTcl_ReadConsole (char *prompt, unsigned char *buf, int len,
     if (code != TCL_OK)
 	return 0;
     else
-	strncpy(buf, (unsigned char *) Tcl_GetStringResult(RTcl_interp), len);
+	strncpy((char *)buf, (char *) Tcl_GetStringResult(RTcl_interp), len);
 
     /* At some point we need to figure out what to do if the result is
      * longer than "len"... For now, just truncate. */
