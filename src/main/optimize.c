@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998--1998  Robert Gentleman, Ross Ihaka and the R core team
+ *  Copyright (C) 1998--1999  Robert Gentleman, Ross Ihaka and the R core team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -204,7 +204,7 @@ SEXP do_zeroin(SEXP call, SEXP op, SEXP args, SEXP rho)
     UNPROTECT(2);
     return res;
 }
-
+
 
 
 /* General Nonlinear Optimization */
@@ -393,7 +393,7 @@ SEXP do_nlm(SEXP call, SEXP op, SEXP args, SEXP rho)
     SEXP value, names, v;
 
     double *x, *typsiz, fscale, gradtl, stepmx,
-	steptl, *xpls, *gpls, fpls, *a, *wrk, dlt;
+	steptol, *xpls, *gpls, fpls, *a, *wrk, dlt;
 
     int code, i, j, k, ipr, itnlim, method, iexp, omsg, msg,
 	n, ndigit, iagflg, iahflg, want_hessian, itncnt;
@@ -452,8 +452,8 @@ SEXP do_nlm(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (R_IsNA(stepmx)) invalid_na(call);
     args = CDR(args);
 
-    steptl = asReal(CAR(args));
-    if (R_IsNA(steptl)) invalid_na(call);
+    steptol = asReal(CAR(args));
+    if (R_IsNA(steptol)) invalid_na(call);
     args = CDR(args);
 
     itnlim = asInteger(CAR(args));
@@ -479,7 +479,7 @@ SEXP do_nlm(SEXP call, SEXP op, SEXP args, SEXP rho)
      *
      *	  SUBROUTINE OPTIF9(NR,N,X,FCN,D1FCN,D2FCN,TYPSIZ,FSCALE,
      *	 +	   METHOD,IEXP,MSG,NDIGIT,ITNLIM,IAGFLG,IAHFLG,IPR,
-     *	 +	   DLT,GRADTL,STEPMX,STEPTL,
+     *	 +	   DLT,GRADTL,STEPMX,STEPTOL,
      *	 +	   XPLS,FPLS,GPLS,ITRMCD,A,WRK)
      *
      *
@@ -498,7 +498,7 @@ SEXP do_nlm(SEXP call, SEXP op, SEXP args, SEXP rho)
 		       F77_SYMBOL(d2fcn), typsiz, &fscale,
 		       &method, &iexp, &msg, &ndigit, &itnlim,
 		       &iagflg, &iahflg, &ipr,
-		       &dlt, &gradtl, &stepmx, &steptl,
+		       &dlt, &gradtl, &stepmx, &steptol,
 		       xpls, &fpls, gpls, &code, a, wrk, &itncnt);
 
     if (msg < 0)
@@ -626,6 +626,3 @@ int F77_SYMBOL(result)(int *nr, int *n, double *x, double *f, double *g,
     Rprintf("\n");
     return 0;
 }
-
-
-
