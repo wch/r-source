@@ -410,13 +410,13 @@ AC_TYPE_PID_T
 AC_TYPE_SIZE_T
 AC_CHECK_TYPE(blkcnt_t, long)
 
-### Byte order
+### C Compiler characteristics.
 
 AC_C_BIGENDIAN
-
-### Compiler characteristics.
-
 AC_C_CONST
+if test "${cross_compiling}" = yes; then
+  AC_MSG_WARN([assuming C longs are 4 byte on ${host}])
+fi
 AC_CHECK_SIZEOF(long, 4)
 
 if test "${GCC}" = yes; then
@@ -663,6 +663,10 @@ AC_SUBST(R_BATCHSAVE)
 
 ### Output.
 
+if test "${PERL}" = false; then
+  PERL="/bin/sh false"
+fi
+
 AC_OUTPUT(Makeconf
   Makefile
   afm/Makefile
@@ -727,6 +731,7 @@ AC_OUTPUT(Makeconf
   tests/Examples/Makefile
   tools/Makefile
   tools/Rdnewer
+  tools/help2man
   tools/keyword-test
   tools/install-info
   tools/pkg2tex
@@ -735,6 +740,7 @@ AC_OUTPUT(Makeconf
 AC_OUTPUT_COMMANDS(
   chmod +x \
   tools/Rdnewer \
+  tools/help2man \
   tools/install-info \
   tools/keyword-test \
   tools/pkg2tex
