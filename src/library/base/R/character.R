@@ -53,3 +53,6 @@ make.names <- function(names, unique=FALSE)
     }
     names
 }
+
+tolower <- function(x) .Internal(tolower(x))
+toupper <- function(x) .Internal(toupper(x))
