@@ -56,13 +56,16 @@ endif
 PKGDEMOS0=$(wildcard $(SPKG)/demo/*)
 PKGDEMOS=$(filter-out $(SPKG)/demo/CVS, $(PKGDEMOS0))
 
+# exec
+EXECFILES=$(filter-out $(SPKG)/exec/CVS, $(wildcard $(SPKG)/exec/*))
+
 # Others
-INSTFILES=$(wildcard $(SPKG)/inst/*)
+INSTFILES=$(filter-out $(SPKG)/inst/CVS, $(wildcard $(SPKG)/inst/*))
 
 # src Makefile?
 SRCMAKE=$(wildcard $(SSPKG)/Makefile.win)
 
-all:  $(DPKG)/zzzz $(DYNLIB) R $(DPKG)/demo $(DATA) mansrcs indices
+all:  $(DPKG)/zzzz $(DYNLIB) R $(DPKG)/demo $(DPKG)/exec $(DATA) mansrcs indices
 bare: $(DPKG)/zzzz R $(DPKG)/demo
 
 include $(RHOME)/src/gnuwin32/MkRules
@@ -101,6 +104,14 @@ ifneq ($(strip $(PKGDEMOS)),)
 	@$(RM) -rf $@
 	@$(MKDIR) -p $@
 	@$(CP) $(PKGDEMOS)   $@
+endif
+
+$(DPKG)/exec: $(EXECFILES)
+ifneq ($(strip $(EXECFILES)),)
+	@$(ECHO) "  installing exec files"
+	@$(RM) -rf $@
+	@$(MKDIR) -p $@
+	@$(CP) $(EXECFILES)   $@
 endif
 
 

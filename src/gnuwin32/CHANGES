@@ -7,23 +7,16 @@ See the file NEWS for changes that affect all versions of R.
 rw1070
 ======
 
-Removed some calls to reset the size of the console, so it will 
-stay maximized through window operations.
-
-Added (temporarily?) a warning to the internal dyn.load() 
-whenever the loaded DLL changes the floating point control word.
-If changed, it will be changed back to the R default.  NB:  if 
-the warning says "DLL attempted to change FPU control word from 
-XXXXX to 8001f", that's a sign of an internal bug somewhere else:
-8001f is the R default value.
-
-The output from formatC uses e+/-0n not e+/-00n for compatibility with
-other platforms and with format.
-
 There is a new option to use file("clipboard") to read from or write
 to the clipboard.  As most input/output functions in R use file(),
 this makes it possible to read data from or write data to the
 clipboard in many ways, including direct use of read/writeClipboard().
+
+Removed some calls to reset the size of the console, so it will 
+stay maximized through window operations.
+
+The output from formatC uses e+/-0n not e+/-00n for compatibility with
+other platforms and with format.
 
 A site-wide environment file R_HOME/etc/Renviron.site (or as set by
 the `R_ENVIRON' environment variable) is now implemented on Windows.
@@ -41,8 +34,8 @@ stamp `fixedHTMLlinks' is placed in the package directory, and
 correction will only be done again if the R installation directory
 is changed.
 
-The variable .SavedPlots in which plots are stored has been moved from base
-to the user's workspace.
+The variable .SavedPlots in which plots are stored has been moved from
+base to the user's workspace.
 
 Rcmd.exe and Rprof have been moved to the main distribution (although
 to use them you will need perl installed).
@@ -52,7 +45,15 @@ distribution) is 8.4.x.
 
 Files in the top-level directory of a source package are no longer
 installed automatically: files to be installed must be put in an `inst'
-sub-directory (as has long been recommended).
+sub-directory (as has long been recommended).  (The `demo' and `exec'
+directories are also installed, as before.)
+
+Added (temporarily?) a warning to the internal dyn.load() 
+whenever the loaded DLL changes the floating point control word.
+If changed, it will be changed back to the R default.  NB:  if 
+the warning says "DLL attempted to change FPU control word from 
+XXXXX to 8001f", that's a sign of an internal bug somewhere else:
+8001f is the R default value.
 
 
 
