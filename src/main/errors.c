@@ -260,6 +260,13 @@ void jump_to_toplevel()
     if(!R_Error_Halt && R_Verbose) 
 	REprintf(" >ERR: jump_to_toplevel()\n");
     inError = 1;
+
+    if( R_CollectWarnings ) {
+	inError = 2;
+	REprintf("In addition: ");
+	PrintWarnings();
+	inError = 1;
+    }
     if (R_Inputfile != NULL)
 	fclose(R_Inputfile);
     R_ResetConsole();
@@ -293,19 +300,25 @@ void jump_to_toplevel()
     jump_now();
 }
 
+/* 
+   Absolutely no allocation can be triggered in jump_now.
+   The error could be an out of memory error and any allocation
+   could result in an infinite-loop condition. All you can do
+   is reset things and exit.
+*/
 static void jump_now()
 {
+    if( inError == 2 ) 
+	REprintf("Lost warning messages\n");
     inError=0;
     inWarning=0;
     R_PPStackTop = 0;
-    /* I think the following is needed somewhere near here: BDR;
-       RG tells MM that he believes very differently.
-       if (R_CollectWarnings) PrintWarnings();*/
     R_Warnings = R_NilValue;
     R_CollectWarnings = 0;
     if (R_Interactive || !R_Error_Halt)
 	LONGJMP(R_ToplevelContext->cjmpbuf, 0);
-    else REprintf("Execution halted\n");
+    else 
+	REprintf("Execution halted\n");
     exit(1);
 }
 
