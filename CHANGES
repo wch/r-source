@@ -115,12 +115,16 @@ BUG FIXES
 	the result is still not perfect (the parse() returns).
 	This will be fixed by a future parse rewrite.
 
-    o   rainbow, topo.colors, etc., now also work with n in {1,2}.
+    o   rainbow, topo.colors, etc., now also work with n in {1,2};
+	don't return duplicate neighbor colors anymore.
 
     o   legend has new `text.width' argument and now also works with
 	mathematical expressions as text.
 
-    o   hist() now works better and also has a `plot = TRUE' argument.
+    o   hist() now works better, has a `plot = TRUE' argument, and returns
+	something useful.
+
+    o   barplot() improved for `names', now returns vector of midpoints.
 
     o   lm(), lm.fit, lm.wfit (was `lm.w.fit'):  Made more compatible.
 	Dealing with (close to) collinear situations is still not flexible
