@@ -498,7 +498,8 @@ step <-
                       "Resid. Df" = rdf, "Resid. Dev" = rd,
                       AIC = AIC, check.names = FALSE)
     attr(aod, "heading") <- heading
-    attr(aod, "class") <- c("anova", "data.frame")
+    attr(aod, "class") <- "data.frame"
+    #attr(aod, "class") <- c("anova", "data.frame")
     fit$anova <- aod
     fit
   }
