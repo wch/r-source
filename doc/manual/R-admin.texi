@@ -237,13 +237,14 @@ Note: you do not @emph{need} to install @R{}: you can run it from where
 it was built.
 
 You do not necessarily have to build @R{} in the top-level source
-directory (say, @file{TOP_SRCDIR}).  To build in @file{BUILDDIR}, run
+directory (say, @file{@var{TOP_SRCDIR}}).  To build in
+@file{@var{BUILDDIR}}, run
 
 @findex configure
 
 @smallexample
-cd BUILDDIR
-TOP_SRCDIR/configure
+cd @var{BUILDDIR}
+@var{TOP_SRCDIR}/configure
 make
 @end smallexample
 
@@ -478,7 +479,7 @@ more than one library, of course.
 To install packages from source on Unix use
 
 @smallexample
-R CMD INSTALL -l /path/to/library pkg1 pkg2 ...
+R CMD INSTALL -l /path/to/library @var{pkg1} @var{pkg2} @dots{}
 @end smallexample
 
 @noindent
@@ -490,7 +491,7 @@ The Windows equivalent is@footnote{if you have Perl and the source-code
 package files installed}
 
 @smallexample
-Rcmd INSTALL -l /path/to/library pkg1 pkg2 ...
+Rcmd INSTALL -l /path/to/library @var{pkg1} @var{pkg2} @dots{}
 @end smallexample
 
 @findex install.packages 
@@ -503,7 +504,7 @@ mirror, for example
 @end smallexample
 
 @noindent
-Then download and install package @strong{foo} by
+Then download and install package @pkg{foo} by
 
 @smallexample
 > install.packages("foo")
@@ -515,7 +516,7 @@ in the library search path is used.
 
 What this does is different on Unix and Windows.  On Unix it consults
 the list of available source packages on @acronym{CRAN}, downloads the
-latest version of the @strong{foo} sources, and installs it (via @code{R
+latest version of the @pkg{foo} sources, and installs it (via @code{R
 CMD INSTALL}).  On Windows it looks at the list of @emph{binary}
 versions of packages and downloads the latest version (if any).
 
@@ -558,12 +559,12 @@ Packages can be removed in a number of ways.  From a command prompt they
 can be removed by
 
 @smallexample
-R CMD REMOVE -l /path/to/library pkg1 pkg2 ...
+R CMD REMOVE -l /path/to/library @var{pkg1} @var{pkg2} @dots{}
 @end smallexample
 @noindent
 (Unix) or
 @smallexample
-Rcmd REMOVE -l /path/to/library pkg1 pkg2 ...
+Rcmd REMOVE -l /path/to/library @var{pkg1} @var{pkg2} @dots{}
 @end smallexample
 @noindent
 (Windows).
@@ -571,7 +572,8 @@ Rcmd REMOVE -l /path/to/library pkg1 pkg2 ...
 From a running @R{} process they can be removed by
 
 @smallexample
-> remove.packages(c("pkg1", "pkg2"), lib="/path/to/library")
+> remove.packages(c("pkg1", "pkg2"),
+                  lib = file.path("path", "to", "library"))
 @end smallexample
 
 Finally, in most installations one can just remove the package directory
@@ -673,15 +675,15 @@ small.
 
 As with all libraries, you need to ensure that they and @R{} were
 compiled with compatible compilers and flags.  For example, this means
-that on Sun Sparc using the native compilers the flag @option{-dalign} is
-needed so @code{libsunperf} can be used.
+that on Sun Sparc using the native compilers the flag @option{-dalign}
+is needed so @code{libsunperf} can be used.
 
 An ATLAS `tuned' BLAS can also be used on Windows: see
 @file{src/gnuwin32/INSTALL} for how to enable this.
 
 Note that if @R{} is compiled against a non-default BLAS, then all
-BLAS-using packages must also be.  So if @R{} is re-built after ATLAS
-is installed, then packages such as @code{quantreg} will need to be
+BLAS-using packages must also be.  So if @R{} is re-built after ATLAS is
+installed, then packages such as @pkg{quantreg} will need to be
 re-installed.
 
 
@@ -805,7 +807,9 @@ is to search for @command{g77}, @command{f77}, @command{xlf},
 @command{cf77}, @command{cft77}, @command{pgf77}, @command{fl32},
 @command{af77}, @command{fort77}, @command{f90}, @command{xlf90},
 @command{pgf90}, @command{epcf90}, @command{f95}, @command{xlf95},
-@command{lf9}5, @command{g95}, and @command{fc} (in that order), and
+@command{lf9}5, @command{g95}, and @command{fc} (in that
+order)@footnote{On HPUX @command{fort77} is the @acronym{POSIX}
+compliant FORTRAN compiler, and comes second in the search list.}, and
 then for @command{f2c}, and use whichever is found first; if none is
 found, @R{} cannot be compiled.  The search mechanism can be changed
 using the @option{--with-g77}, @option{--with-f77}, and
@@ -981,8 +985,8 @@ of compilers and support libraries.
 
 You can build @R{} as a Unix application on MacOS X.  You will need the
 DevTools, @command{f2c} or @command{g77}, and the @code{dlcompat}
-library.  You will also need to install a X sub-system or configure with
-@option{--without-x}.
+library.  You will also need to install an X sub-system or configure
+with @option{--without-x}.
 
 @command{f2c}, @command{g77}, the @code{dlcompat} library, and X server
 and support libraries are available from the Fink project
@@ -994,7 +998,7 @@ binary distribution and needed to be installed directly; for example for
 fink install g77
 @end smallexample
 
-Fink prefers to install in @code{/sw} so @code{CPPFLAGS}, @code{LDFLAGS}
+Fink prefers to install in @file{/sw} so @code{CPPFLAGS}, @code{LDFLAGS}
 need to be set accordingly.  If you want to use Tcl/Tk, also available
 from Fink, then you will also need to use the @command{configure}
 options to specify the Tcl and Tk config locations.
@@ -1004,16 +1008,19 @@ options to specify the Tcl and Tk config locations.
 @subsection Solaris on Sparc
 
 @R{} has been built successfully on Solaris 2.7 using
-@command{gcc}/@command{g77} and the SunPro WorkShop 6 compilers, and less
-regularly on 2.5.1, 2.6 and 8.  GNU @command{make} is needed prior to 2.7
-for building other than in the source tree, and perhaps even then.
+@command{gcc}/@command{g77} and the SunPro @w{WorkShop 6} compilers, and
+less regularly on 2.5.1, 2.6 and 8.  GNU @command{make} is needed prior
+to 2.7 for building other than in the source tree, and perhaps even
+then.
 
 When using the SunPro compilers do @emph{not} specify @option{-fast}, as
-this disables IEEE arithmetic and @command{make check} will fail.  The
-maximal set of optimization options known to work is
+this disables @acronym{IEEE} arithmetic and @command{make check} will
+fail.  The maximal set of optimization options known to work is
+
 @smallexample
 -xlibmil -xO5 -dalign
 @end smallexample
+
 We have found little performance difference between @command{gcc} and
 @command{cc} but considerable benefit from using a SunPro Fortran
 compiler: the @command{gcc}/@command{f77} combination works well.
@@ -1051,31 +1058,34 @@ need to reset it to avoid finding 32-bit addons.
 
 @node HPUX, IRIX, Solaris, Platform notes
 @subsection HPUX
+
 @R{} has been built successfully on HPUX 10.2 and HPUX 11.0 using both
 native compilers and @command{gcc}.  By default, R is configured to use
-@command{gcc} and @command{g77} on HPUX.  Some installations of @command{g77}
-only install a static version of the @command{g2c} library that cannot be
-linked into a shared library since its files have not been compiled with
-the appropriate flag for producing position independent code
-(@acronym{PIC}).  This will result in @command{make} failing with a linker
-error complaining that code needs to be compiled with a @code{+z} or
-@code{+Z} flag, the native @command{cc} @acronym{PIC} flag.  If this is the
-case you either need to modify your @command{g77} installation or configure
-with the
+@command{gcc} and @command{g77} on HPUX (if available).  Some
+installations of @command{g77} only install a static version of the
+@command{g2c} library that cannot be linked into a shared library since
+its files have not been compiled with the appropriate flag for producing
+position independent code (@acronym{PIC}).  This will result in
+@command{make} failing with a linker error complaining that code needs
+to be compiled with a @option{+z} or @option{+Z} flag, the native
+@command{cc} @acronym{PIC} flag.  If this is the case you either need to
+modify your @command{g77} installation or configure with the
+
 @smallexample
 --with-f77=fort77
 @end smallexample
+
 @noindent
 flag to specify use of the native @acronym{POSIX}-compliant FORTRAN 77
 compiler.
 
 You may find that @command{configure} detects other libraries, such as
 BLAS, that R needs to use as shared libraries but are only available as
-static libraries.  If you cannot install shared versions you will need to
-tell @command{configure} not to use these libraries.
+static libraries.  If you cannot install shared versions you will need
+to tell @command{configure} not to use these libraries.
 
-Some versions of @command{gcc} may contain what appears to be a bug at the
-@option{-O2} optimization level that causes
+Some versions of @command{gcc} may contain what appears to be a bug at
+the @option{-O2} optimization level that causes
 @smallexample
 > 2 %/% 2
 [1] 1
@@ -1084,24 +1094,25 @@ Some versions of @command{gcc} may contain what appears to be a bug at the
 @end smallexample
 @noindent
 which will cause @command{make check} to fail.  If this is the case, you
-should use @code{CFLAGS} to specify @option{-O} as the optimization level
-to use.
+should use @code{CFLAGS} to specify @option{-O} as the optimization
+level to use.
 
-Some systems running HPUX 11.0 may have a @command{gcc} that was installed
-under HPUX 10.2.  Between versions 10.2 and 11.0 HPUX changed its
-support functions for @acronym{IEEE} arithmetic from the recommended
+Some systems running HPUX 11.0 may have a @command{gcc} that was
+installed under HPUX 10.2.  Between versions 10.2 and 11.0 HPUX changed
+its support functions for @acronym{IEEE} arithmetic from the recommended
 functions of the @acronym{IEEE} standard to the ones specified in the
 C9x draft standard.  In particular, this means that @code{finite} has
-been replaced by @code{isfinite}.  A @command{gcc} configured for HPUX 10.2
-run on 11.0 will not find @code{isfinite}, and as a result
-@command{configure} does not recognize the machine as fully supporting IEEE
-arithmetic and does not define @code{IEEE_754} when compiling C code.
-This results in a failure in @command{make check}.  The best solution is to
-install a properly configures @command{gcc}.  An alternative work-around is
-to add @option{-DIEEE_754} to the @code{CFLAGS} variable.
+been replaced by @code{isfinite}.  A @command{gcc} configured for HPUX
+10.2 run on 11.0 will not find @code{isfinite}, and as a result
+@command{configure} does not recognize the machine as fully supporting
+@acronym{IEEE} arithmetic and does not define @code{IEEE_754} when
+compiling C code.  This results in a failure in @command{make check}.
+The best solution is to install a properly configured @command{gcc}.  An
+alternative work-around is to add @option{-DIEEE_754} to the
+@code{CFLAGS} variable.
 
-You can configure @R{} to use both the native @command{cc} and @command{fort77}
-with (assuming you are using a @command{csh} shell)
+You can configure @R{} to use both the native @command{cc} and
+@command{fort77} with (assuming you are using a @command{csh} shell)
 @smallexample
 env CC=cc ./configure --with-f77=fort77
 @end smallexample
@@ -1129,17 +1140,18 @@ tests.
 
 @node Alpha/OSF1, Alpha/FreeBSD, IRIX, Platform notes
 @subsection Alpha/OSF1
+
 @R{} has been built successfully on an Alpha running OSF1 V4.0 using
 @command{gcc}/@command{g77} and @command{cc}/@command{f77}.  Mixing
 @command{cc} and @command{g77} fails to configure.  The
-@command{configure} option @code{--without-blas} was used since the
+@command{configure} option @option{--without-blas} was used since the
 native blas seems not to have been built with the flags needed to
 suppress @code{SIGFPE}'s.  Currently R does not set a signal handler for
 @code{SIGFPE} on platforms that support @acronym{IEEE} arithmetic, so
 these are fatal.
 
 @command{make check} passes with no problems.  @command{make
-test-all-extras} in the @code{tests} directory fails at the end of
+test-all-extras} in the @file{tests} directory fails at the end of
 @code{reg-tests-1.R} since this system does not have @code{vsnprintf}.
 As currently written, the test at the end of @code{reg-tests-1.R} causes
 a segfault in this case.  You can complete the tests by executing
@@ -1152,9 +1164,9 @@ touch reg-tests-1.Rout
 @subsection Alpha/FreeBSD
 
 Attempts to build @R{} on an Alpha with FreeBSD 4.3 have been only
-partly successful.  Configuring with @code{-mieee} added to both
+partly successful.  Configuring with @option{-mieee} added to both
 @code{CFLAGS} and @code{FFLAGS} builds successfully, but tests fail with
-@code{SIGFPE}'s.  It would appear that @code{-mieee} only defers these
+@code{SIGFPE}'s.  It would appear that @option{-mieee} only defers these
 rather than suppressing them entirely.  Advice on how to complete this
 port would be greatly appreciated.
 
@@ -1163,7 +1175,7 @@ port would be greatly appreciated.
 @appendix New platforms
 
 There are a number of sources of problems when installing R on a new
-hardware/OS platform. These include
+hardware/OS platform.  These include
 
 @strong{Floating Point Arithmetic}: @R{} supports the @acronym{POSIX},
 SVID and @acronym{IEEE} models for floating point arithmetic.  The
@@ -1185,14 +1197,17 @@ SunPro compilers causes @R{}'s @code{NaN} to be set incorrectly.
 @strong{Shared Libraries}: There seems to be very little agreement
 across platforms on what needs to be done to build shared libraries.
 there are many different combinations of flags for the compilers and
-loaders.  The technique we use is to first interrogate the X window
-system about what it does (using @command{xmkmf}), and maybe override
-this in situations where we know better.  This often works, but you may
-have to manually override the results.  Scanning the @command{cc(1)} and
-@command{ld(1)} manual entries usually reveals the correct incantation.
-Once you know the recipe you can modify the file @file{config.site}
-(following the instructions therein) so that the build will use these
-options.
+loaders.  GNU libtool cannot be used (yet), as it currently does not
+fully support FORTRAN (and will most likely never support @command{f2c}:
+one would need a shell wrapper for this).  The technique we use is to
+first interrogate the X window system about what it does (using
+@command{xmkmf}), and then override this in situations where we know
+better (for tools from the GNU Compiler Collection and/or platforms we
+know about).  This typically works, but you may have to manually
+override the results.  Scanning the @command{cc(1)} and @command{ld(1)}
+manual entries usually reveals the correct incantation.  Once you know
+the recipe you can modify the file @file{config.site} (following the
+instructions therein) so that the build will use these options.
 
 If you do manage to get @R{} running on a new platform please let us
 know about it so we can modify the configuration procedures to include
