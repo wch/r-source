@@ -24,9 +24,12 @@
  *
  *== also ./printvector.c,  ./printarray.c
  */
+
 #include "Defn.h"
 #include "Print.h"
 #include "Fileio.h"
+#include "Platform.h"
+#include "S.h"
 
 static void printAttributes(SEXP, SEXP);
 
@@ -460,3 +463,32 @@ void CustomPrintValue(SEXP s, SEXP env)
 	tagbuf[0] = '\0';
 	PrintValueRec(s,env);
 }
+
+
+/* dblepr and intpr are mostly for S compatibility
+   (as mentioned in V&R) */
+
+int F77_SYMBOL(dblepr) (char *label, int *nchar, double *data, int *ndata)
+{
+    int k;
+    for(k=0;k<*nchar;k++){
+	Rprintf("%c", label[k]);
+    }
+    Rprintf("\n");
+
+    printRealVector(data, *ndata, 1);
+    return(0);
+}
+  
+int F77_SYMBOL(intpr) (char *label, int *nchar, int *data, int *ndata)
+{
+    int k;
+    for(k=0;k<*nchar;k++){
+	Rprintf("%c", label[k]);
+    }
+    Rprintf("\n");
+
+    printIntegerVector(data, *ndata, 1);
+    return(0);
+}
+  
