@@ -43,6 +43,9 @@ USER-VISIBLE CHANGES
 
 NEW FEATURES
 
+    o   qqnorm() and qqline() have an optional logical argument
+        `datax' to transpose the plot (S-PLUS compatibility).
+
     o	library() was changed so that when the methods package is
 	attached it no longer complains about formal generic functions
 	not specific to the library.
@@ -341,6 +344,10 @@ C-LEVEL FACILITIES
 	$(LAPACK_LIBS) $(BLAS_LIBS) in PKG_LIBS.
 	[Not currently operational on MacOS X unless vecLib is used,
 	and vecLib and libsunperf give incomplete libraries.]
+
+    o   Header file R_ext/Lapack.h added.  C declarations of BLAS
+        routines moved to R_ext/BLAS.h and included in R_ext/Applic.h
+        and R_ext/Linpack.h for backward compatibility.
 
     o	R will automatically call initialization and unload routines, if
 	present, in shared libraries/DLLs during dyn.load() and
