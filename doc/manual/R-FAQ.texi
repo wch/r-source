@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2002
-@set FAQ-VERSION 1.4-25, 2002-03-20
+@set FAQ-VERSION 1.4-26, 2002-03-29
 @set REL-VERSION 1.4.1
 @c %**end of header
 
@@ -1703,6 +1703,10 @@ Inequality, concentration and poverty measures, and Lorenz curves
 (empirical and theoretic).
 @c  @item integrate
 @c  Adaptive quadrature in up to 20 dimensions.
+@item ipred
+Improved predictive models by direct and indirect bootstrap aggregation
+in classification and regression as well as resampling based estimators
+of prediction error.
 @item lasso2
 Routines and documentation for solving regression problems while
 imposing an L1 constraint on the estimates, based on the algorithm of
