@@ -6017,7 +6017,8 @@ Position of the current figure on the page.  Values are the positions of
 the left, right, bottom and top edges respectively, as a percentage of
 the page measured from the bottom left corner.  The example value would
 be for a figure in the bottom right of the page.  Set this parameter for
-arbitrary positioning of figures within a page.
+arbitrary positioning of figures within a page.  If you want to add a
+figure to a current page, use @code{new=TRUE} as well (unlike S).
 
 @item oma=c(2, 0, 3, 0)
 @itemx omi=c(0, 0, 0.8, 0)

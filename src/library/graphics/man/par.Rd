@@ -141,9 +141,12 @@ par(\dots, no.readonly = FALSE)
       below.}
     \item{\code{fig}}{A numerical vector of the form \code{c(x1, x2, y1,
 	y2)} which gives the (NDC) coordinates of the figure region in
-      the display region of the device.}
+      the display region of the device. If you set this, unlike S, you
+      start a new plot, so to add to an existing plot use
+      \code{new=TRUE} as well.}
     \item{\code{fin}}{The figure region dimensions,
-      \code{(width,height)}, in inches.}  
+      \code{(width,height)}, in inches. If you set this, unlike S, you
+      start a new plot.}  
     \item{\code{font}}{An integer which specifies which font to use for
       text.  If possible, device drivers arrange so that 1 corresponds
       to plain text, 2 to bold face, 3 to italic and 4 to bold italic.}
