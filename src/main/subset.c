@@ -766,7 +766,7 @@ SEXP do_subset3(SEXP call, SEXP op, SEXP args, SEXP env)
 
 SEXP R_subset3_dflt(SEXP x, SEXP input)
 {
-    SEXP y, nlist, ans;
+    SEXP y, nlist;
     int slen;
 
     PROTECT(x);
