@@ -68,7 +68,7 @@ void fdhess(int n, double *x, double fval, fcn_p fun, void *state,
  *	n      the number of parameters
  *	x      vector of parameter values
  *	fval   double precision value of function at x
- *	fun    a function provided by the user which must be declared as 
+ *	fun    a function provided by the user which must be declared as
  *	       external in the calling program.	 its call must
  *	       be of the call fun(n,x,state,fval) where fval is the
  *	       computed value of the function
@@ -296,7 +296,7 @@ choldc(int nr, int n, double *a, double diagmx, double tol, double *addmax)
 	tmp1 = a[i + i * nr] - sum;
 	if (tmp1 >= amnlsq) {
 	    a[i + i * nr] = sqrt(tmp1);
-	} 
+	}
 	else {
 	    /*	find maximum off-diagonal element in row */
 	    offmax = 0.;
@@ -820,7 +820,7 @@ dog_1step(int nr, int n, double *g, double *a, double *p, double *sx,
 	/*	  take partial step in newton direction */
 	for (i = 0; i < n; ++i)
 	    sc[i] = *dlt / rnwtln * p[i];
-    } 
+    }
     else if (*cln >= *dlt) {
 	/*	    take step in steepest descent direction */
 	for (i = 0; i < n; ++i)
@@ -831,7 +831,7 @@ dog_1step(int nr, int n, double *g, double *a, double *p, double *sx,
 	   which has scaled length dlt */
 	dot1 = F77_CALL(ddot)(&n, v, &one, ssd, &one);
 	dot2 = F77_CALL(ddot)(&n, v, &one, v, &one);
-	alam = (-dot1 + sqrt(dot1 * dot1 - dot2 * (*cln * *cln - *dlt * *dlt))) 
+	alam = (-dot1 + sqrt(dot1 * dot1 - dot2 * (*cln * *cln - *dlt * *dlt)))
 	    / dot2;
 	for (i = 0; i < n; ++i)
 	    sc[i] = (ssd[i] + alam * v[i]) / sx[i];
@@ -916,7 +916,7 @@ hook_1step(int nr, int n, double *g, double *a, double *udiag, double *p,
  * repeatedly called by hookdrv() only.
 
  * PARAMETERS :
- 
+
  *	 nr	      --> row dimension of matrix
  *	 n	      --> dimension of problem
  *	 g(n)	      --> gradient at current iterate, g(x)
@@ -1123,7 +1123,7 @@ hookdrv(int nr, int n, double *x, double f, double *g, double *a,
 
 	/*	find new step by more-hebdon algorithm */
 
-	hook_1step(nr, n, g, a, udiag, p, sx, rnwtln, dlt, amu, 
+	hook_1step(nr, n, g, a, udiag, p, sx, rnwtln, dlt, amu,
 		   *dltp, phi, phip0, &fstime, sc, &nwtake, wrk0, epsm);
 	*dltp = *dlt;
 
@@ -1305,7 +1305,7 @@ secfac(int nr, int n, double *x, double *g, double *a, double *xpls,
 
     skpupd = TRUE;
     for (i = 0; i < n; ++i) {
-	skpupd = (fabs(y[i] - w[i]) < 
+	skpupd = (fabs(y[i] - w[i]) <
 		  reltol * fmax2(fabs(g[i]), fabs(gpls[i])));
 	if(!skpupd)
 	    break;
@@ -1856,8 +1856,8 @@ heschk(int nr, int n, double *x, fcn_p fcn, fcn_p d1fcn, d2fcn_p d2fcn,
     (*d2fcn)(nr, n, x, a, state);
     for (j = 0; j < n; ++j) {
 	hs = fmax2(fabs(g[j]), 1.0) / fmax2(fabs(x[j]), typsiz[j]);
-	if (fabs(a[j + j * nr] - udiag[j]) > 
-	    fmax2(fabs(udiag[j]), hs) * analtl) { 
+	if (fabs(a[j + j * nr] - udiag[j]) >
+	    fmax2(fabs(udiag[j]), hs) * analtl) {
 	    *msg = -22; return;
 	}
 	for (i = j+1; i < n; ++i) {
@@ -2027,13 +2027,12 @@ optchk(int n, double *x, double *typsiz, double *sx, double *fscale,
 	sx[i] = 1. / typsiz[i];
     }
 
-    /*	compute maximum step size if not provided */
+    /*	compute default maximum step size if not provided */
     if (*stepmx <= 0.) {
 	stpsiz = 0.;
 	for (i = 0; i < n; ++i)
 	    stpsiz += x[i] * x[i] * sx[i] * sx[i];
-	stpsiz = sqrt(stpsiz);
-	*stepmx = fmax2(stpsiz, 1) * 1e3;
+	*stepmx = 1000. * fmax2(sqrt(stpsiz), 1);
     }
 
     /*	check function scale */
@@ -2056,7 +2055,7 @@ optchk(int n, double *x, double *typsiz, double *sx, double *fscale,
     if (*ndigit == 0) {
 	*msg = -5;  return;/* 825 write(ipr,905) ndigit */
     }
-    else if (*ndigit < 0) /* use default */
+    else if (*ndigit < 0) /* use default, = 15 for IEEE double */
 	*ndigit = (int) (-log10(epsm));
 
     /*	check trust region radius */
@@ -2273,7 +2272,7 @@ optdrv(int nr, int n, double *x, fcn_p fcn, fcn_p d1fcn, d2fcn_p d2fcn,
 	    if (*msg < 0) return;
 	}
     }
-    *itrmcd = opt_stop(n, x, f, g, wrk1, *itncnt, &icscmx, 
+    *itrmcd = opt_stop(n, x, f, g, wrk1, *itncnt, &icscmx,
 		       gradtl, steptl, sx, fscale, itnlim, iretcd, mxtake,
 		       msg);
     if (*itrmcd != 0) {
@@ -2493,7 +2492,7 @@ dfault(int n, double *x,
   epsm = d1mach(4);		/* for IEEE : = 2^-52	  ~= 2.22  e-16 */
   *gradtl = pow(epsm, 1./3.);	/* for IEEE : = 2^(-52/3) ~= 6.055 e-6 */
   *steptl = sqrt(epsm);		/* for IEEE : = 2^-26	  ~= 1.490 e-8 */
-  *stepmx = 0.;
+  *stepmx = 0.;/* -> compute default in optchk() */
   *dlt = -1.;/* (not needed for method 1) */
 
   /* set flags */
@@ -2601,7 +2600,8 @@ optif9(int nr, int n, double *x, fcn_p fcn, fcn_p d1fcn, d2fcn_p d2fcn,
  *	xpls(n)	    <--> on exit:  xpls is local minimum
  *	fpls	    <--> on exit:  function value at solution, xpls
  *	gpls(n)	    <--> on exit:  gradient at solution xpls
- *	itrmcd	    <--	 termination code
+ *	itrmcd	    <--	 termination code (in 0..5 ; 0 is "perfect");
+ *			see optcode() in ../main/optimize.c for meaning
  *	a(n,n)	     --> workspace for hessian (or estimate)
  *			 and its cholesky decomposition
  *	wrk(n,8)     --> workspace
