@@ -780,7 +780,7 @@ fi
 
 ### Programs.
 
-for ac_prog in gawk mawk nawk awk
+for ac_prog in mawk gawk nawk awk
 do
 # Extract the first word of "$ac_prog", so it can be a program name with args.
 set dummy $ac_prog; ac_word=$2
@@ -1080,7 +1080,7 @@ if eval "test \"`echo '$''{'r_cv_prog_perl_v5'+set}'`\" = set"; then
   echo $ac_n "(cached) $ac_c" 1>&6
 else
   
-if ${PERL} -e 'exit 1 if $]<5'
+  if ${PERL} -e 'exit 1 if $]<5'
   then
     r_cv_prog_perl_v5=yes
   else
@@ -3978,7 +3978,7 @@ else
 #include "confdefs.h"
 #include <alloca.h>
 int main() {
-char *p = alloca(2 * sizeof(int));
+void *p = alloca(2 * sizeof(int));
 ; return 0; }
 EOF
 if { (eval echo configure:3985: \"$ac_link\") 1>&5; (eval $ac_link) 2>&5; } && test -s conftest${ac_exeext}; then
@@ -5713,7 +5713,7 @@ else
 int main() {
 
 /* Ultrix mips cc rejects this.  */
-typedef int charset[2]; const charset x;
+typedef int charset[2]; const charset x = {0,0};
 /* SunOS 4.1.1 cc rejects this.  */
 char const *const *ccp;
 char **p;
@@ -7593,6 +7593,7 @@ trap 'rm -fr `echo "Makeconf
   doc/manual/Makefile
   etc/Makefile
   etc/Makeconf
+  etc/Makeconf-tests  
   src/Makefile
   src/appl/Makefile
   src/gnome/Makefile
@@ -7641,6 +7642,7 @@ trap 'rm -fr `echo "Makeconf
   src/scripts/SHLIB
   src/scripts/Sd2Rd
   src/scripts/build-help
+  src/scripts/check
   src/scripts/fwf2table
   src/scripts/help.pretty
   src/unix/Makefile
@@ -7831,6 +7833,7 @@ CONFIG_FILES=\${CONFIG_FILES-"Makeconf
   doc/manual/Makefile
   etc/Makefile
   etc/Makeconf
+  etc/Makeconf-tests  
   src/Makefile
   src/appl/Makefile
   src/gnome/Makefile
@@ -7879,6 +7882,7 @@ CONFIG_FILES=\${CONFIG_FILES-"Makeconf
   src/scripts/SHLIB
   src/scripts/Sd2Rd
   src/scripts/build-help
+  src/scripts/check
   src/scripts/fwf2table
   src/scripts/help.pretty
   src/unix/Makefile

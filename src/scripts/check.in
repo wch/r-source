@@ -2,7 +2,7 @@
 
 # ${R_HOME}/bin/check for checking installed add-on packages
 
-revision='$Revision: 1.15 $'
+revision='$Revision: 1.1 $'
 version=`set - ${revision}; echo ${2}`
 version="R package checker ${version}
 
@@ -36,6 +36,8 @@ Options:
   -v, --version		print version info and exit
 
 Email bug reports to <r-bugs@lists.r-project.org>."
+
+MAKE=${MAKE-@MAKE@}
 
 opts=
 pkgs=
@@ -83,6 +85,7 @@ else
   exit 2
 fi
 R_LIBS="${lib}:${R_LIBS:-${RLIBS}}"
+R="LC_ALL=C ${R_HOME}/bin/R --vanilla ${R_opts}"
 
 start_dir=`pwd`
 
@@ -118,21 +121,47 @@ checkpkg () {
   test -d ${check_dir} || mkdir ${check_dir}
   cd ${check_dir}
 
+  ## Running package examples
   echo " Massaging examples into \`${pkg}-Ex.R' ..."
   ${R_HOME}/bin/massage-Examples ${pkg} ${lib}/${pkg}/R-ex/*.R \
     > ${pkg}-Ex.R
   echo " Running examples in package \`${pkg}' ..."
-  R_LIBS=${R_LIBS} ${R_HOME}/bin/R --vanilla ${R_opts} < ${pkg}-Ex.R \
-    > ${pkg}-Ex.Rout
+  R_LIBS=${R_LIBS} ${R} < ${pkg}-Ex.R > ${pkg}-Ex.Rout
   if test ${?} -eq 0; then
     echo " OK"
   else
     echo " ERROR" && exit 1
   fi
+
+  ## Running package specific tests
+  if test -d ../tests; then
+    cd ../tests
+    makefiles="-f ${R_HOME}/etc/Makeconf-tests"
+    if test -r Makefile; then
+      makefiles="${makefiles} -f Makefile"
+    fi
+    if test -r Makevars; then
+      makefiles="-f Makevars ${makefiles}"
+    else
+      makefiles="${makefiles} \
+	test-src-sloppy-1=`ls *.R 2>/dev/null` \
+	test-src-sloppy-auto=`ls *.Rin 2>/dev/null | sed 's/Rin$/R/'`"
+    fi
+    cp * ../${check_dir}
+    cd ../${check_dir}
+    echo " Running specific tests in package \`${pkg}' ..."
+    ${MAKE} ${makefiles} all
+    if test ${?} -eq 0; then
+      echo " OK"
+    else
+      echo " ERROR" && exit 1
+    fi
+  fi
+  
   if ${clean}; then
     cd .. && rm -rf ${check_dir}
   else
-    echo " Results of \`check' are available in directory ${check_dir}"
+    echo " Results of check are available in directory \`${check_dir}'"
   fi
 }
   
