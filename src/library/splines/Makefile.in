@@ -47,10 +47,9 @@ all: Makefile DESCRIPTION
 	@if test -d src; then \
 	  (cd src && $(MAKE)) || exit 1; \
 	fi
-	  $(INSTALL_DATA) all.R $(top_builddir)/library/$(pkg)/R/$(pkg)
-	  echo "preparing package '$(pkg)' for lazy loading"
-	  echo "tools:::makeLazyLoading(\"$(pkg)\")" | \
-	    R_DEFAULT_PACKAGES=NULL LC_COLLATE=C $(R_EXE) --slave > /dev/null
+	@$(INSTALL_DATA) all.R $(top_builddir)/library/$(pkg)/R/$(pkg)
+	@echo "tools:::makeLazyLoading(\"$(pkg)\")" | \
+	  R_DEFAULT_PACKAGES=NULL LC_COLLATE=C $(R_EXE) --slave > /dev/null
 
 
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
