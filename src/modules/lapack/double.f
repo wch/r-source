@@ -23972,7 +23972,7 @@ c      IF( INFO.EQ.0 .AND. LWORK.GE.1 ) THEN
 *     End of DSTERF
 *
       END
-      SUBROUTINE DSYEV( JOBZ, UPLO, N, A, LDA, W, WORK, LWORK, INFO )
+      SUBROUTINE RSYEV( JOBZ, UPLO, N, A, LDA, W, WORK, LWORK, INFO )
 *
 *  -- LAPACK driver routine (version 3.0) --
 *     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
@@ -35015,7 +35015,7 @@ C     ILAENV = 0
 *     End of DLAED6
 *
       END
-      SUBROUTINE DSYEVR( JOBZ, RANGE, UPLO, N, A, LDA, VL, VU, IL, IU,
+      SUBROUTINE RSYEVR( JOBZ, RANGE, UPLO, N, A, LDA, VL, VU, IL, IU,
      $                   ABSTOL, M, W, Z, LDZ, ISUPPZ, WORK, LWORK,
      $                   IWORK, LIWORK, INFO )
 *
