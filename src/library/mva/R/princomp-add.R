@@ -3,8 +3,8 @@
 #
 predict.princomp <- function(object, newdata,...)
 {
-  if(missing(newdata)) return(object$scores)
-  newdata %*% object$loadings
+  if (missing(newdata)) return(object$scores)
+  scale(newdata, object$center, object$scale) %*% object$loadings  
 }
 
 print.princomp <- function(x, ...)

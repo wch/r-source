@@ -1,24 +1,27 @@
 # file update.default.R
 # copyright (C) 1998 W. N. Venables and B. D. Ripley
 #
-update.default <- function(object, formula, ...)
+update.default <-
+function (object, formula, ..., evaluate=T) 
 {
-  if(is.null(call <- object$call))
+  if (is.null(call <- object$call)) 
     stop("need an object with call component")
-  this <- match.call()
-  allargs <- names(this)[-(1:2)] # remove function, object
-  vals <- as.character(this)[-(1:2)]
-  names(vals) <- allargs
-  oargs <- names(call)[-1]
-  posform <- pmatch("formula", allargs, 0)
-  if(posform) allargs <- allargs[-posform] # remove formula
-  if (!missing(formula))
+  extras <- match.call(expand.dots=F)$...
+  if (!missing(formula)) 
     call$formula <- update.formula(call$formula, formula)
-  for(a in allargs) {
-    tt <- paste(" call$", a, "<- substitute(", vals[a], ")", sep="")
-    eval(parse(text=tt))
+  for (a in names(extras)) {
+    if(extras[[a]] == "") term <- NULL else term <- extras[[a]]
+    if(!is.null(call[[a]])) call[[a]] <- term
+    else {
+      # can't ADD list components with [[a]] in R
+      term <-
+        if(is.character(term)) deparse(term) else as.character(term)
+      tt <- paste(" call$", a, "<- substitute(", term, ")", sep = "")
+      eval(parse(text = tt))
+    }
   }
-  eval(call, sys.frame(sys.parent()))
+  if(evaluate) eval(call, sys.frame(sys.parent()))
+  else call
 }
 
 # Added by KH on 1998/06/16
