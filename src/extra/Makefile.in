@@ -33,6 +33,9 @@ clean:
 	  (cd $${d} && $(MAKE) $@) || exit 1; \
 	done
 distclean: clean
+	@for d in $(SUBDIRS); do \
+	  (cd $${d} && $(MAKE) $@) || exit 1; \
+	done
 	@rm -f Makefile
 maintainer-clean: distclean
 
