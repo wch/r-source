@@ -1,16 +1,20 @@
 #
-#  Rd2dvi -- Convert man pages (*.Rd help files) via LaTeX to DVI/PDF.
-#
-# Examples:
-#  R CMD Rd2dvi /path/to/Rsrc/src/library/base/man/Normal.Rd
-#  R CMD Rd2dvi `grep -l "\\keyword{distr" \
-#                  /path/to/Rsrc/src/library/base/man/*.Rd | sort | uniq`
+##  Rd2dvi -- Convert man pages (*.Rd help files) via LaTeX to DVI/PDF.
+##
+## Examples:
+##  Rcmd Rd2dvi.sh /path/to/Rsrc/src/library/base/man/Normal.Rd
+##  Rcmd Rd2dvi.sh `grep -l "\\keyword{distr" \
+##                  /path/to/Rsrc/src/library/base/man/*.Rd | sort | uniq`
 
 R_PAPERSIZE=${R_PAPERSIZE:-a4}
 
-revision='$Revision: 1.8 $'
+revision='$Revision: 1.9 $'
 version=`set - ${revision}; echo ${2}`
-version="Rd2dvi ${version}" 
+version="Rd2dvi.sh ${version}" 
+
+Copyright (C) 2000 The R Core Development Team.
+This is free software; see the GNU General Public Licence version 2
+or later for copying conditions.  There is NO warranty." 
 
 usage="Usage: R CMD Rd2dvi [options] files
 
@@ -19,14 +23,14 @@ either giving the paths to the files, or the path to a directory with
 the sources of a package.
 
 Options:
-  --debug		turn on shell debugging (set -x)
   -h, --help		print short help message and exit
-  --no-clean		do not remove created temporary files
-  --no-preview		do not preview generated output file
+  -v, --version		print version info and exit  
+      --debug		turn on shell debugging (set -x)
+      --no-clean	do not remove created temporary files
+      --no-preview	do not preview generated output file
   -o, --output=FILE	write output to FILE
-  --pdf			generate PDF output
-  --title=NAME		use NAME as the title of the document
-  -v, --version		print version info and exit
+      --pdf		generate PDF output
+      --title=NAME	use NAME as the title of the document
   -V, --verbose		report on what is done
 
 Report bugs to <r-bugs@r-project.org>."

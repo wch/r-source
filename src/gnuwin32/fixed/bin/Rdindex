@@ -3,7 +3,7 @@
 # The titles are nicely formatted between two columns (defaults are 25
 # and 72, respectively).
 
-# Copyright (C) 1997-2000 Kurt Hornik and Fritz Leisch
+# Copyright (C) 1997-2000 The R Core Development Team
 #
 # This document is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -21,24 +21,15 @@
 # Suite 330, Boston, MA  02111-1307  USA.
 
 use Getopt::Long;
+use R::Utils;
 
-my $revision = ' $Revision: 1.3 $ ';
+my $revision = ' $Revision: 1.4 $ ';
 my $version;
 my $name;
 
 $revision =~ / ([\d\.]*) /;
 $version = $1;
 ($name = $0) =~ s|.*/||;
-
-sub version {
-    print STDERR <<END;
-Rdindex $version
-Copyright (C) 1997-2000 Kurt Hornik and Fritz Leisch
-This is free software; see the GNU General Public Licence version 2
-or later for copying conditions.  There is NO warranty.    
-END
-    exit 0;
-}
 
 sub usage {
     print STDERR <<END;
@@ -66,9 +57,9 @@ END
 my @options = ("h|help", "v|version", "l|left=s", "r|right=s",
 	       "d|data");
 GetOptions(@options) || &usage();
-
-&version() if $opt_v;
+&R_version($name, $version) if $opt_v;
 &usage() if $opt_h;
+
 $opt_l = 25 unless $opt_l;
 $opt_r = 72 unless $opt_r;
 
@@ -154,5 +145,3 @@ sub rep {
 ### mode: perl ***
 ### perl-indent-level: 4 ***
 ### End: ***
-__END__
-
