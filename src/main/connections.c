@@ -471,6 +471,223 @@ SEXP do_pipe(SEXP call, SEXP op, SEXP args, SEXP env)
 #endif
 }
 
+/* ------------------- gzipped file connections --------------------- */
+
+#ifdef HAVE_LIBZ
+#include <zlib.h>
+
+static void gzfile_open(Rconnection con)
+{
+    gzFile fp;
+
+    fp = gzopen(R_ExpandFileName(con->description), con->mode);
+    if(!fp) error("cannot open compressed file `%s'",
+		  R_ExpandFileName(con->description));
+    ((Rgzfileconn)(con->private))->fp = fp;
+    con->isopen = TRUE;
+    con->canwrite = (con->mode[0] == 'w' || con->mode[0] == 'a');
+    con->canread = !con->canwrite;
+    con->save = -1000;
+}
+
+static void gzfile_close(Rconnection con)
+{
+    gzclose(((Rgzfileconn)(con->private))->fp);
+    con->isopen = FALSE;
+}
+
+static void gzfile_destroy(Rconnection con)
+{
+    free(con->private);
+}
+
+#define BUFSIZE 1000
+static int gzfile_vfprintf(Rconnection con, const char *format, va_list ap)
+{
+    gzFile fp = ((Rgzfileconn)(con->private))->fp;
+    char buf[BUFSIZE], *b = buf, *vmax = vmaxget();
+    int res, usedRalloc = FALSE;
+
+#ifdef HAVE_VSNPRINTF
+    res = vsnprintf(buf, BUFSIZE, format, ap);
+    if(res >= BUFSIZE) { /* res is the desired output length */
+	usedRalloc = TRUE;
+	b = R_alloc(res + 1, sizeof(char));
+	vsprintf(buf, format, ap);
+    } else if(res < 0) { /* just a failure indication */
+	usedRalloc = TRUE;
+	b = R_alloc(10*BUFSIZE, sizeof(char));
+	res = vsnprintf(buf, 10*BUFSIZE, format, ap);
+	if (res < 0) {
+	    *(b + 10*BUFSIZE) = '\0';
+	    warning("printing of extremely long output is truncated");
+	    res = 10*BUFSIZE;
+	}
+    }
+    gzwrite(fp, b, res);
+#else
+    /* allocate a large buffer and hope */
+    b = R_alloc(10*BUFSIZE, sizeof(char));
+    res = vsprintf(b, format, ap);
+    gzwrite(fp, b, res);
+#endif
+    if(usedRalloc) vmaxset(vmax);
+    return res;
+}
+
+static int save = 0;
+static int gzfile_fgetc(Rconnection con)
+{
+    gzFile fp = ((Rgzfileconn)(con->private))->fp;
+    if (save) {
+	int c = save;
+	save = 0;
+	return c;
+    } else {
+	int c = con->encoding[gzgetc(fp)];
+	/* Looks like eof is signalled one char early */
+	return (!c && gzeof(fp)) ? R_EOF : c;
+    }
+}
+
+static int gzfile_ungetc(int c, Rconnection con)
+{
+    save = c;
+    return c;
+}
+
+static long gzfile_seek(Rconnection con, int where, int origin)
+{
+    gzFile  fp = ((Rgzfileconn)(con->private))->fp;
+    long pos = gztell(fp);
+    int whence = SEEK_SET;
+    
+    switch(origin) {
+    case 2: whence = SEEK_CUR;
+    case 3: whence = SEEK_END;
+    default: whence = SEEK_SET;
+    }
+    if(where >= 0) gzseek(fp, where, whence);
+    return pos;
+}
+
+static int gzfile_fflush(Rconnection con)
+{
+    gzFile fp = ((Rgzfileconn)(con->private))->fp;
+
+    return gzflush(fp, Z_SYNC_FLUSH);
+}
+
+static size_t gzfile_read(void *ptr, size_t size, size_t nitems,
+			Rconnection con)
+{
+    gzFile fp = ((Rgzfileconn)(con->private))->fp;
+    return gzread(fp, ptr, size*nitems);
+}
+
+static size_t gzfile_write(const void *ptr, size_t size, size_t nitems,
+			   Rconnection con)
+{
+    gzFile fp = ((Rgzfileconn)(con->private))->fp;
+    return gzwrite(fp, (const voidp)ptr, size*nitems);
+}
+
+static Rconnection newgzfile(char *description, char *mode, int compress)
+{
+    Rconnection new;
+    new = (Rconnection) malloc(sizeof(struct Rconn));
+    if(!new) error("allocation of file connection failed");
+    new->class = (char *) malloc(strlen("gzfile") + 1);
+    if(!new->class) {
+	free(new);
+	error("allocation of gzfile connection failed");
+    }
+    strcpy(new->class, "gzfile");
+    new->description = (char *) malloc(strlen(description) + 1);
+    if(!new->description) {
+	free(new->class); free(new);
+	error("allocation of gzfile connection failed");
+    }
+    strcpy(new->description, description);
+    strncpy(new->mode, mode, 1);
+    sprintf(new->mode+1, "b%1d", compress);
+    
+    new->isopen = new->incomplete = FALSE;
+    new->canread = new->canwrite = TRUE; /* in principle */
+    new->canseek = TRUE;
+    new->text = FALSE;
+    new->open = &gzfile_open;
+    new->close = &gzfile_close;
+    new->destroy = &gzfile_destroy;
+    new->vfprintf = &gzfile_vfprintf;
+    new->fgetc = &gzfile_fgetc;
+    new->ungetc = &gzfile_ungetc;
+    new->seek = &gzfile_seek;
+    new->truncate = &null_truncate;
+    new->fflush = &gzfile_fflush;
+    new->read = &gzfile_read;
+    new->write = &gzfile_write;
+    new->nPushBack = 0;
+    new->private = (void *) malloc(sizeof(struct fileconn));
+    if(!new->private) {
+	free(new->description); free(new->class); free(new);
+	error("allocation of gzfile connection failed");
+    }
+    return new;
+}
+
+SEXP do_gzfile(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    SEXP sfile, sopen, ans, class, enc;
+    char *file, *open;
+    int i, ncon, compress;
+    Rconnection con = NULL;
+
+    checkArity(op, args);
+    sfile = CAR(args);
+    if(!isString(sfile) || length(sfile) < 1)
+	errorcall(call, "invalid `description' argument");
+    if(length(sfile) > 1)
+	warning("only first element of `description' argument used");
+    file = CHAR(STRING_ELT(sfile, 0));
+    sopen = CADR(args);
+    if(!isString(sopen) || length(sopen) != 1)
+	error("invalid `open' argument");
+    enc = CADDR(args);
+    if(!isInteger(enc) || length(enc) != 256)
+	error("invalid `enc' argument");
+    compress = asInteger(CADDDR(args));
+    if(compress == NA_LOGICAL || compress < 0 || compress > 9)
+	error("invalid `compress' argument");
+    open = CHAR(STRING_ELT(sopen, 0));
+    ncon = NextConnection();
+    con = Connections[ncon] = newgzfile(file, strlen(open) ? open : "r", 
+					compress);
+
+    for(i = 0; i < 256; i++)
+	con->encoding[i] = (unsigned char) INTEGER(enc)[i];
+
+    /* open it if desired */
+    if(strlen(open)) con->open(con);
+
+    PROTECT(ans = allocVector(INTSXP, 1));
+    INTEGER(ans)[0] = ncon;
+    PROTECT(class = allocVector(STRSXP, 2));
+    SET_STRING_ELT(class, 0, mkChar("file"));
+    SET_STRING_ELT(class, 1, mkChar("connection"));
+    classgets(ans, class);
+    UNPROTECT(2);
+
+    return ans;
+}
+#else
+SEXP do_gzfile(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    error("zlib is not available on this system");
+    return R_NilValue; /* -Wall */
+}
+#endif
+
 /* ------------------- terminal connections --------------------- */
 
 /* The size of the console buffer */
@@ -495,7 +712,6 @@ static int ConsoleGetchar()
     return *ConsoleBufp++;
 }
 
-static int save = 0;
 static int stdin_fgetc(Rconnection con)
 {
     if (save) {
@@ -1983,6 +2199,7 @@ static Rconnection newurl(char *description, char *mode)
     return new;
 }
 
+/* url(description, open, encoding) */
 SEXP do_url(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP scmd, sopen, ans, class, enc;
@@ -2012,7 +2229,7 @@ SEXP do_url(SEXP call, SEXP op, SEXP args, SEXP env)
 	     strncmp(url, "ftp://", 6) == 0)
        con = newurl(url, strlen(open) ? open : "r");
     else
-	error("unknown URL method");
+	error("unsupported URL schema");
 
     Connections[ncon] = con;
     for(i = 0; i < 256; i++)
@@ -2032,10 +2249,72 @@ SEXP do_url(SEXP call, SEXP op, SEXP args, SEXP env)
     return ans;
 }
 
+#if 0
+#include "libxml/nanoftp.h"
+#include "libxml/nanohttp.h"
+#endif
+
+/* download(url, destfile, quiet) */
 SEXP do_download(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    SEXP ans;
-    int status = 99;
+    SEXP ans, scmd, sfile;
+    char *url, *file;
+    int quiet, status = 0;
+
+    status = 0;
+    checkArity(op, args);
+    scmd = CAR(args);
+    if(!isString(scmd) || length(scmd) < 1)
+	error("invalid `url' argument");
+    if(length(scmd) > 1)
+	warning("only first element of `url' argument used");
+    url = CHAR(STRING_ELT(scmd, 0));
+    sfile = CADR(args);
+    if(!isString(sfile) || length(sfile) < 1)
+	error("invalid `destfile' argument");
+    if(length(scmd) > 1)
+	warning("only first element of `destfile' argument used");
+    file = CHAR(STRING_ELT(sfile, 0));
+    quiet = asLogical(CADDR(args));
+    if(quiet == NA_LOGICAL)
+	error("invalid `quiet' argument");
+    
+    if(strncmp(url, "file://", 7) == 0) {
+	FILE *in, *out;
+	char *buf[65536];
+	size_t n;
+	
+	in = R_fopen(R_ExpandFileName(url+7), "r");
+	if(!in) error("cannot open URL `%s'", url);
+	out = R_fopen(R_ExpandFileName(file), "w");
+	if(!out) error("cannot open destfile `%s'", file);
+	while((n = fread(buf, 1, 65536, in)) > 0)
+	    fwrite(buf, 1, n, out);
+	fclose(out); fclose(in);
+    } 
+#if 0
+    else if (strncmp(url, "http://", 7) == 0) {
+	char *contentType = NULL;
+	
+	xmlNanoHTTPFetch(url, file, &contentType);
+	if (contentType != NULL) xmlFree(contentType);
+	xmlNanoHTTPCleanup();
+    } else if (strncmp(url, "ftp://", 6) == 0) {
+	FILE *out;
+	xmlNanoFTPCtxtPtr ctxt;
+
+	xmlNanoFTPInit();
+	ctxt = xmlNanoFTPOpen(url);
+	if(!ctxt) error("cannot open URL `%s'", url);
+	out = R_fopen(R_ExpandFileName(file), "w");
+	if(!out) error("cannot open destfile `%s'", file);
+	if (xmlNanoFTPGet(ctxt, ftpData, (void *) out, ctxt->path) < 0)
+	    error"Failed to fetch URL");
+        xmlNanoFTPClose(ctxt);
+    
+    } else
+	error("unsupported URL scheme");
+#endif
 
     PROTECT(ans = allocVector(INTSXP, 1));
     INTEGER(ans)[0] = status;

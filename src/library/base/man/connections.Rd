@@ -27,6 +27,8 @@
 \usage{
 file(description, open = "", blocking = TRUE, encoding = getOption("encoding"))
 pipe(description, open = "", encoding = getOption("encoding"))
+gzfile(description, open = "", encoding = getOption("encoding"),
+       compression = 6)
 url(description, open = "", encoding = getOption("encoding"))
 
 \method{open}{connection}(con, open = "r", blocking = TRUE)
@@ -41,13 +43,16 @@ isSeekable(con)
 \arguments{
   \item{description}{character. A description of the connection. For
     \code{file} and \code{path} this is a path to the file to be opened.
-    For \code{url} it is a complete URL, including method
+    For \code{url} it is a complete URL, including schemes
     (\code{http://}, \code{ftp://} or \code{file://}).
   }
   \item{open}{character.  A description of how to open the connection
     (if at all). See Details for possible values.}
-  \item{blocking}{logical. Currently ignored.}
+  \item{blocking}{logical.  Currently ignored.}
   \item{encoding}{An integer vector of length 256.}
+  \item{compression}{integer in 0--9.  The amount of compression to be
+    applied when writing, from none to maximal.  The default is a good
+    space/time compromise.}
   \item{type}{character. Currently ignored.}
   \item{where}{integer.  A file position (relative to the origin
     specified by \code{origin}), or \code{NA}.}
@@ -56,9 +61,10 @@ isSeekable(con)
     \code{"end"}.}
 }
 \details{
-  The first three functions create connections.  By default the connection
+  The first four functions create connections.  By default the connection
   is not opened, but may be opened by setting a non-empty value of
-  argument \code{open}.
+  argument \code{open}.  \code{gzfile} applies to files compressed by
+  \code{gzip}: such connections can only be binary.
 
   \code{open}, \code{close} and \code{seek} are generic functions: the
   following applies to the methods relevant to connections.

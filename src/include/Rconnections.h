@@ -48,6 +48,14 @@ typedef struct fileconn {
     FILE *fp;
 } *Rfileconn;
 
+#ifdef HAVE_LIBZ
+
+typedef struct gzfileconn {
+    void *fp;
+    int cp;
+} *Rgzfileconn;
+#endif
+
 typedef struct textconn {
     char *data;  /* all the data */
     int cur, nchars; /* current pos and number of chars */
