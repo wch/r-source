@@ -30,28 +30,28 @@
 #include "internal.h"
 
 
-void copytoclipboard(drawing sb) {
-       HBITMAP hbmpOldDest, hbmpNew;
-       HDC     hdcSrc, hdcDest;
-       rect r;
+void copytoclipboard(drawing sb)
+{
+    HBITMAP hbmpOldDest, hbmpNew;
+    HDC     hdcSrc, hdcDest;
+    rect r;
 
-       r = getrect(sb);
-       hdcSrc =  get_context((object)sb);
-       hdcDest = CreateCompatibleDC(hdcSrc);
+    r = getrect(sb);
+    hdcSrc =  get_context((object)sb);
+    hdcDest = CreateCompatibleDC(hdcSrc);
 
-       hbmpNew = CreateCompatibleBitmap(hdcSrc,r.width,r.height);
-       hbmpOldDest = SelectObject(hdcDest, hbmpNew);
-       BitBlt(hdcDest, 0, 0, r.width, r.height, hdcSrc, 0, 0,
-	              SRCCOPY);
-       SelectObject(hdcDest, hbmpOldDest);
-       DeleteDC(hdcDest);
+    hbmpNew = CreateCompatibleBitmap(hdcSrc, r.width, r.height);
+    hbmpOldDest = SelectObject(hdcDest, hbmpNew);
+    BitBlt(hdcDest, 0, 0, r.width, r.height, hdcSrc, 0, 0, SRCCOPY);
+    SelectObject(hdcDest, hbmpOldDest);
+    DeleteDC(hdcDest);
 
-     if (!OpenClipboard(NULL) || !EmptyClipboard()) {
-       askok("Impossible to open the clipboard");
-       DeleteObject(hbmpNew);
-       return;
-     }
-     SetClipboardData(CF_BITMAP,hbmpNew);
-     CloseClipboard();
-     return;
+    if (!OpenClipboard(NULL) || !EmptyClipboard()) {
+	askok("Unable to open the clipboard");
+	DeleteObject(hbmpNew);
+	return;
+    }
+    SetClipboardData(CF_BITMAP, hbmpNew);
+    CloseClipboard();
+    return;
 }

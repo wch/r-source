@@ -10,20 +10,13 @@ CFLAGS=-I. -Wall $(DEBUGFLAG)  -O2 -DINDLL
 SOURCES=$(filter-out graphappmain.c, $(wildcard *.c))
 OBJS=$(foreach i, $(SOURCES), $(basename $i).o)
 
-# Uncomment next line to get substitute of malloc and friends
+# Comment next line to stop substitution of malloc and friends
 winalloc-CFLAGS=-DDANGER=1
 
 ../ga.a: $(OBJS)
-# workaround line-limit problems on djtools make
-	$(AR) cr $@ *.o
-	$(RANLIB) $@ 
-
-#../graphapp.o: graphapp.o
-#	$(CP) graphapp.o ../graphapp.o
-
-
-#graphapp.o: $(filter-out graphappmain.c, $(wildcard *.c)) graphapp.h internal.h
-#	$(CC) $(CFLAGS) -c graphapp.c
+# uncomment to work around line-limit problems on djtools make
+#	$(AR) cr $@ *.o
+#	$(RANLIB) $@ 
 
 # to allow changing USE_NATIVE*
 buttons.o : internal.h
@@ -31,3 +24,36 @@ buttons.o : internal.h
 clean:
 	$(RM) *.o *.a *~ \#*\#
 	$(MAKE) -C gifs clean
+
+#dependencies
+arith.o: graphapp.h
+array.o: internal.h ga.h graphapp.h
+bitmap.o: internal.h ga.h graphapp.h
+buttons.o: internal.h ga.h graphapp.h
+clipboard.o: internal.h ga.h graphapp.h
+context.o: internal.h ga.h graphapp.h
+controls.o: internal.h ga.h graphapp.h
+drawing.o: internal.h ga.h graphapp.h
+drawtext.o: internal.h ga.h graphapp.h
+events.o: internal.h ga.h graphapp.h
+fonts.o: internal.h ga.h graphapp.h
+gbuttons.o: internal.h ga.h graphapp.h
+gdraw.o: internal.h ga.h graphapp.h
+gif.o: internal.h ga.h graphapp.h
+gimage.o: ga.h graphapp.h
+gmenus.o: internal.h ga.h graphapp.h
+graphappmain.o: internal.h ga.h graphapp.h
+image.o: internal.h ga.h graphapp.h
+init.o: internal.h ga.h graphapp.h
+menus.o: internal.h ga.h graphapp.h
+metafile.o: internal.h ga.h graphapp.h
+objects.o: internal.h ga.h graphapp.h
+printer.o: internal.h ga.h graphapp.h
+rgb.o: ga.h graphapp.h
+status.o: internal.h ga.h graphapp.h
+stdimg.o: graphapp.h
+strings.o: internal.h ga.h graphapp.h
+tooltips.o: internal.h ga.h graphapp.h
+winalloc.o: ga.h graphapp.h
+windows.o: internal.h ga.h graphapp.h
+xredef.o: internal.h ga.h graphapp.h
