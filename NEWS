@@ -75,7 +75,8 @@ NEW FEATURES
 	strptime() does not validate dates correctly, so we have added
 	extra code to do so.  However, this cannot correct scanning
 	errors in the OS's strptime (although we have been able to
-	correct this in the code used on Windows).
+
+    o	nls() and ppr() now have model= arguments to save the model frame.
 
 
 UTILITIES
