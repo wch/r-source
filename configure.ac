@@ -24,7 +24,7 @@
 
 AC_PREREQ(2.57)
 
-AC_REVISION($Revision: 1.81 $)
+AC_REVISION($Revision: 1.82 $)
 
 ## We want to get the version number from file 'VERSION' (rather than
 ## specifying the version info in 'configure.ac'.  Hence, we need a bit
@@ -1079,6 +1079,10 @@ AM_CONDITIONAL(USE_EXTERNAL_BLAS, [test "${acx_blas_ok}" = "yes"])
 if test "${use_lapack}" = "yes"; then
   R_LAPACK_LIBS
 fi
+if test "${acx_lapack_ok}" != "yes"; then
+  LAPACK_LIBS="-L\${R_HOME}/bin -lRlapack"
+fi
+AC_SUBST(LAPACK_LIBS)
 AM_CONDITIONAL(USE_EXTERNAL_LAPACK, [test "${acx_lapack_ok}" = "yes"])
 
 ### * Checks for system services.

@@ -12,9 +12,7 @@ R_HOME = $(top_builddir)
 include $(top_builddir)/Makeconf
 
 SOURCES_C = Lapack.c
-SOURCES_F = rgeev.f rsyev.f \
-   @USE_EXTERNAL_LAPACK_FALSE@ double.f \
-   @COMPILE_DOUBLE_COMPLEX_FALSE@ cmplx.f
+SOURCES_F = rgeev.f @USE_EXTERNAL_LAPACK_FALSE@ rsyev.f
 
 SOURCES_BLAS = @COMPILE_DOUBLE_COMPLEX_FALSE@ cmplxblas.f
 
@@ -24,22 +22,29 @@ OBJECTS_BLAS = @USE_EXTERNAL_BLAS_FALSE@ $(SOURCES_BLAS:.f=.lo)
 OBJECTS = $(SOURCES_C:.c=.lo) $(SOURCES_F:.f=.lo) $(OBJECTS_BLAS)
 HEADERS = Lapack.h
 
+LIBSOURCES = double.f @COMPILE_DOUBLE_COMPLEX_FALSE@ cmplx.f
+LIBOBJECTS = $(LIBSOURCES:.f=.lo)
+
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = \
 	README Makefile.in Makefile.win \
-	dllversion.rc $(HEADERS) $(SOURCES_C) \
-	cmplx.f cmplxblas.f double.f rgeev.f rsyev.f
+	dllversion.rc $(HEADERS) $(SOURCES_C) double.f cmplx.f \
+	cmplxblas.f rgeev.f rsyev.f
 
 ## <FIXME>
 ## Change to 'lapack.la' when using libtool for shlibs.
 ## Remove when using automake ... also fix target 'install' then.
 lapack_la = lapack$(SHLIB_EXT)
+Rlapack_la = libRlapack$(SHLIB_EXT)
 ## </FIXME>
 Rexecmodulesdir_LTLIBRARIES = $(lapack_la)
 lapack_la_SOURCES = $(SOURCES)
 lapack_la_OBJECTS = $(OBJECTS)
 @USE_LIBTOOL_TRUE@lapack_la_LDFLAGS = -avoid-version -rpath $(Rexecmodulesdir) -module
 lapack_la_LIBADD = $(LIBR)
+
+Rlapack_la_SOURCES = $(LIBSOURCES)
+Rlapack_la_OBJECTS = $(LIBOBJECTS)
 
 all: Makefile Makedeps R
 
@@ -54,18 +59,26 @@ Makedeps: Makefile $(DEPENDS)
 
 R: Makefile
 	@$(MAKE) Makedeps
+	@USE_EXTERNAL_LAPACK_FALSE@ @$(MAKE) $(Rlapack_la) Rlapack_install
 	@$(MAKE) $(Rexecmodulesdir_LTLIBRARIES)
 
 $(lapack_la): $(lapack_la_OBJECTS) $(lapack_la_DEPENDENCIES)
 	$(SHLIB_LINK) -o $@ $(lapack_la_LDFLAGS) $(lapack_la_OBJECTS) $(lapack_la_LIBADD) @LAPACK_LIBS@ @BLAS_LIBS@ $(FLIBS) $(LIBS)
 ## <FIXME>
-## Not sure of we want to do this ...
+## Not sure if we want to do this ...
 	@$(MAKE) rhome=`cd $(top_builddir); pwd` install
 ## </FIXME>
+
+$(Rlapack_la): $(Rlapack_la_OBJECTS)
+	$(SHLIB_LD) $(LIBR_LDFLAGS) $(LDFLAGS) -o $@ $(Rlapack_la_OBJECTS)
+Rlapack_install: $(Rlapack_la) 
+	@$(top_srcdir)/tools/copy-if-change $(Rlapack_la) \
+	  $(R_HOME)/bin/$(Rlapack_la)
 
 install: installdirs
 @USE_LIBTOOL_FALSE@	@$(top_srcdir)/tools/copy-if-change $(lapack_la) $(Rexecmodulesdir)/lapack$(SHLIB_EXT)
 @USE_LIBTOOL_TRUE@	@$(LIBTOOL) --mode=install $(INSTALL) $(lapack_la) $(Rexecmodulesdir)
+@USE_EXTERNAL_LAPACK_FALSE@	$(top_srcdir)/tools/copy-if-change $(Rlapack_la) $(Rexeclibdir)/libRlapack$(SHLIB_EXT)
 installdirs:
 	@$(MKINSTALLDIRS) $(Rexecmodulesdir)
 install-strip:
