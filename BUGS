@@ -51,12 +51,7 @@ Date: Thu, 18 Mar 1999 08:58:47 +0100
 
 Directory:  Documentation
 
-* PR# 265 *
-Subject: trouble with the 'exclude' parameter of factor()
-From: gautier@lion-ag.de
-Date: Thu, 2 Sep 1999 17:40:47 +0200 (MET DST)
---not a bug;
---improve docu!
+none
 
 Directory:  Graphics
 
@@ -119,6 +114,11 @@ From: David Middleton <dajm@deeq.demon.co.uk>
 Date: Tue, 03 Aug 1999 17:51:47 -0300
 --initclip is removed. Still need new argument onefile/onepage to ensure one page
 --and use %!PS-Adobe-3.0 EPSF-3.0 header
+* PR# 249 *
+Subject: axis ignores srt/crt
+From: Thomas Lumley <thomas@biostat.washington.edu>
+Date: Mon, 16 Aug 1999 15:51:49 -0700 (PDT)
+--`its's not a bug it is an imcomptibility'
 * PR# 267 *
 Subject: matplot(... panel.first=..) fails  <==> dealing with "..."
 From: Martin Maechler <maechler@stat.math.ethz.ch>
@@ -169,6 +169,11 @@ Subject: Re: cbind is not generic as claimed, omits labels where S has them
 From: Prof Brian D Ripley <ripley@stats.ox.ac.uk>
 Date: Fri, 6 Aug 1999 06:52:35 +0100 (BST)
 --See PR#239
+* PR# 263 *
+Subject: Problems sourcing functions with R65.0
+From: Patrick Lindsey <plindsey@alpha.luc.ac.be>
+Date: Wed, 1 Sep 1999 11:58:51 +0200 (MET DST)
+--There is a 64K limit on functions wirh keep.source set. Try modular programming!
 
 Directory:  Low-level
 
@@ -197,6 +202,7 @@ Subject: Re: [R] R_problem_buf in the S.h files & lists in .C
 From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
 Date: 05 May 1999 00:32:49 +0200
 --S objects in .C calls (not just lists) are now documented in the help file
+--Should we not make the buffer static?
 * PR# 197 *
 Subject: glm crash
 From: Cor en Aylin <Cor.Berrevoets@gironet.nl>
@@ -225,11 +231,6 @@ Date: Sat, 9 Jan 1999 14:50:58 -0500 (EST)
 Subject: R without X11?
 From: "Jack N." <jnf@pcisys.net>
 Date: Sat, 28 Aug 1999 09:22:57 -0600
-* PR# 261 *
-Subject: interface w/ emacs
-From: gautier@lion-ag.de
-Date: Mon, 30 Aug 1999 13:28:52 +0200 (MET DST)
---fixed for 0.65.1
 
 Directory:  Models
 
@@ -306,7 +307,12 @@ Date: Fri, 11 Dec 1998 23:20:08 -0500 (EST)
 
 Directory:  Windows
 
-none
+* PR# 271 *
+Subject: R with Windows 95
+From: pascal.grandeau@wanadoo.fr
+Date: Wed, 8 Sep 1999 17:56:12 +0200 (MET DST)
+--No response to questions, we can't reproduce this. Probably is a bug, but
+--impossible to take further.
 
 Directory:  incoming
 
@@ -314,10 +320,6 @@ Directory:  incoming
 Subject: scan() + error interferes with count.fields() in some cases
 From: Martin Maechler <maechler@stat.math.ethz.ch>
 Date: Fri, 13 Aug 1999 17:44:48 +0200
-* PR# 249 *
-Subject: axis ignores srt/crt
-From: Thomas Lumley <thomas@biostat.washington.edu>
-Date: Mon, 16 Aug 1999 15:51:49 -0700 (PDT)
 * PR# 250 *
 From: Peter Malewski <peter@tu-bs.de>
 Date: Tue, 17 Aug 1999 12:21:38 +0200 (CEST)
@@ -328,18 +330,10 @@ Date: Tue, 17 Aug 1999 12:21:45 +0200 (CEST)
 Subject: seg.fault for some illegal .Random.seed (new since 0.64)
 From: Martin Maechler <maechler@stat.math.ethz.ch>
 Date: Fri, 20 Aug 1999 14:17:31 +0200
-* PR# 254 *
-Subject: Strange 'Unimplemented feature in rep' error
-From: Lutz Prechelt <prechelt@ira.uka.de>
-Date: Mon, 23 Aug 1999 19:43:24 +0200
 * PR# 255 *
 Subject: broken link in R FAQ page?
 From: Tian-Xiong Lu <tian@chico.ma.adfa.edu.au>
 Date: Tue, 24 Aug 1999 13:41:21 +1000 (EST)
-* PR# 256 *
-Subject: Error in ?text
-From: Jonathan Rougier <J.C.Rougier@durham.ac.uk>
-Date: Wed, 25 Aug 1999 10:00:19 +0100 (BST)
 * PR# 257 *
 Subject:  dimnames names lost when subscripting 
 From: Andreas Weingessel <weingessel@ci.tuwien.ac.at>
@@ -352,10 +346,6 @@ Date: Thu, 26 Aug 1999 12:09:17 +0200
 Subject: Problems compiling R65.0
 From: Patrick Lindsey <plindsey@alpha.luc.ac.be>
 Date: Wed, 1 Sep 1999 11:52:29 +0200 (MET DST)
-* PR# 263 *
-Subject: Problems sourcing functions with R65.0
-From: Patrick Lindsey <plindsey@alpha.luc.ac.be>
-Date: Wed, 1 Sep 1999 11:58:51 +0200 (MET DST)
 * PR# 264 *
 Subject: R 0.65.x bug :  attach()/eval() {was "lib.source() within library()"}
 From: Martin Maechler <maechler@stat.math.ethz.ch>
@@ -364,63 +354,17 @@ Date: Thu, 2 Sep 1999 12:23:43 +0200
 Subject: Re: [R] data frame component replacement: feature or bug?
 From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
 Date: 06 Sep 1999 00:03:29 +0200
-* PR# 269 *
-Subject: sys.on.exit appears non-functional
-From: Prof Brian D Ripley <ripley@stats.ox.ac.uk>
-Date: Tue, 7 Sep 1999 17:41:28 +0100 (BST)
-* PR# 271 *
-Subject: R with Windows 95
-From: pascal.grandeau@wanadoo.fr
-Date: Wed, 8 Sep 1999 17:56:12 +0200 (MET DST)
-* PR# 272 *
-Subject:  problem in R.sh.in script 
-From: "Mitsuru Oka" <oka@debian.or.jp>
-Date: 10 Sep 1999 06:53:01 -0000
-* PR# 273 *
-Subject: Re: problem in R.sh.in script 
-From: Mitsuru Oka <oka@debian.or.jp>
-Date: Fri, 10 Sep 1999 16:08:39 +0900
-* PR# 275 *
-Subject: Re: R with a broken finite() (was [R] Problems with R-0.65.0)
-From: Prof Brian D Ripley <ripley@stats.ox.ac.uk>
-Date: Tue, 14 Sep 1999 15:17:17 +0100 (BST)
-* PR# 276 *
-Subject: Re: chisqsim broken on alpha (was Re: axis() produces junk on DEC
-From: Prof Brian D Ripley <ripley@stats.ox.ac.uk>
-Date: Wed, 15 Sep 1999 08:18:42 +0100 (BST)
 * PR# 277 *
 Subject: Re: chisqsim broken on alpha - solved + next bug in fft found
 From: Albrecht Gebhardt <albrecht.gebhardt@uni-klu.ac.at>
 Date: Wed, 15 Sep 1999 15:33:09 +0200 (MET DST)
-* PR# 278 *
-Subject: buglet in lm.influence() -- easy fix but...
-From: Martin Maechler <maechler@stat.math.ethz.ch>
-Date: Wed, 15 Sep 1999 17:36:46 +0200
-* PR# 280 *
-Subject: install/libraries on solaris2.6
-From: ulrich.poetter@ruhr-uni-bochum.de
-Date: Thu, 16 Sep 1999 22:43:34 +0200 (MET DST)
+--problem 1 is follow up to PR#276 - solved
+--problem 2 (crash in fft) remains open
 * PR# 281 *
 Subject: mtext(. col = ...) stopped working in 0.65.0
 From: Martin Maechler <maechler@stat.math.ethz.ch>
 Date: Fri, 17 Sep 1999 15:10:40 +0200
-* PR# 282 *
-Subject: Re: lambda error update
-From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
-Date: 18 Sep 1999 11:44:26 +0200
 * PR# 283 *
 Subject: hsv strangeness
 From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
 Date: 18 Sep 1999 21:07:50 +0200
-* PR# 284 *
-Subject: quasi-likelihood in glm
-From: Martyn Plummer <plummer@iarc.fr>
-Date: Wed, 22 Sep 1999 10:33:33 +0200 (CEST)
-* PR# 285 *
-Subject: model.matrix()
-From: Jonathan Rougier <J.C.Rougier@durham.ac.uk>
-Date: Wed, 22 Sep 1999 11:32:04 +0100 (BST)
-* PR# 286 *
-Subject:  segmentation fault in R 
-From: "Mitsuru Oka" <oka@debian.or.jp>
-Date: 25 Sep 1999 17:15:29 -0000
