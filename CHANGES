@@ -14,6 +14,7 @@ NEW FEATURES
 
     o   A new `language' demo, "is.things", is provided.
 
+    o   symnum(.) function
 
 BUG_FIXES
 
@@ -25,6 +26,8 @@ BUG_FIXES
     o   barplot(.) now also works for barplot(table(rpois(100,3))).
 
     o   make clean ; make    now should work;  ./Makefile.in eliminated
+
+    o   format(.) is now generic;  the default method has a `digits' argument.
 
 
 		CHANGES IN VERSION R VERSION 0.60.1
