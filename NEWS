@@ -170,6 +170,7 @@ BUG FIXES
     o	Better rendering of ^ and ~ in latex in \code{} (and they should
 	not appear outside code and verbatim sections).
 
+    o   Fixed unterminated string problem with lty (PR 584)
 
 
 		CHANGES IN R VERSION 1.1.0

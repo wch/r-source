@@ -5121,21 +5121,22 @@ SEXP LTYget(unsigned int lty)
     unsigned char dash[8];
     unsigned int l;
 
-    for(i = 0; linetype[i].name; i++) {
+    for (i = 0; linetype[i].name; i++) {
 	if(linetype[i].pattern == lty)
 	    return mkString(linetype[i].name);
     }
 
     l = lty; ndash = 0;
-    for(i = 0; i < 8 && l & 15; i++) {
+    for (i = 0; i < 8 && l & 15; i++) {
 	dash[ndash++] = l&15;
 	l = l >> 4;
     }
     PROTECT(ans = allocVector(STRSXP, 1));
     STRING(ans)[0] = allocString(ndash);
-    for(i=0 ; i<ndash ; i++) {
+    for (i = 0 ; i < ndash ; i++) {
 	CHAR(STRING(ans)[0])[i] = HexDigits[dash[i]];
     }
+    CHAR(STRING(ans)[0])[ndash] = '\0';
     UNPROTECT(1);
     return ans;
 }
