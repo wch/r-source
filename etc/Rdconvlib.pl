@@ -28,8 +28,9 @@ require "$RHOME/etc/html-layout.pl";
 
 # names of unique text blocks, these may NOT appear MORE THAN ONCE!
 @blocknames = ("name", "title", "usage", "arguments", "format",
-	       "description", "value", "references", "source", 
+	       "description", "details", "value", "references", "source", 
 	       "seealso", "examples", "author", "note");
+
 # These may appear multiply but are of simple structure:
 @multiblocknames = ("alias", "keyword");
 
@@ -365,6 +366,7 @@ sub rdoc2html {
     html_print_argblock("arguments", "Arguments");
     html_print_block("format", "Format");
     html_print_block("description", "Description");
+    html_print_block("details", "Details");
     html_print_argblock("value", "Value");
 
     html_print_sections();
@@ -680,6 +682,7 @@ sub rdoc2nroff {
     nroff_print_argblock("arguments", "Arguments");
     nroff_print_block("format", "Format");
     nroff_print_block("description", "Description");
+    nroff_print_block("details", "Details");
     nroff_print_argblock("value", "Value");
 
     nroff_print_sections();
@@ -1203,6 +1206,7 @@ sub rdoc2latex {
     latex_print_argblock("arguments", "Arguments");
     latex_print_block("format", "Format");
     latex_print_block("description", "Description");
+    latex_print_block("details", "Details");
     latex_print_argblock("value", "Value");
 
     latex_print_sections();
