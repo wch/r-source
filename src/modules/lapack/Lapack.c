@@ -8,9 +8,9 @@
 
 SEXP La_svd(SEXP jobu, SEXP jobv, SEXP x, SEXP s, SEXP u, SEXP v)
 {
-    int *xdims, n, p, mn, lwork, info;
+    int *xdims, n, p, lwork, info;
     double *work, tmp;
-    SEXP val;
+    SEXP val, nm;
 
     if (!(isString(jobu) && isString(jobv))) {
 	error("jobu and jobv must be character objects");
