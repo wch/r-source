@@ -30,23 +30,27 @@ system(command, intern = FALSE, wait = TRUE, input = "",
     \code{system} invokes the system command specified by \code{command}.
 }
 \value{
-  If \code{intern=TRUE}, a character vector giving the output of the
+  If \code{intern = TRUE}, a character vector giving the output of the
   command, one line per character string. If the command could not be
   run or gives an error a \R error is generated.
 
-  If \code{intern=FALSE}, the return value is a error code, given the
+  If \code{intern = FALSE}, the return value is a error code, given the
   invisible attribute (so needs to be printed explicitly). If the
   command could not be run for any reason, the value is \code{-1} and
-  an \R warning is generated. Otherwise if \code{wait=FALSE} the value
-  is the error code returned by the command, and if \code{wait=TRUE}
+  an \R warning is generated. Otherwise if \code{wait = FALSE} the value
+  is the error code returned by the command, and if \code{wait = TRUE}
   it is the zero (the conventional success value),
 
-  If \code{intern=FALSE} and \code{show.output.on.console=TRUE} 
+  If \code{intern = FALSE} and \code{show.output.on.console = TRUE} 
   the text output from a command that is a console application will 
   appear in the \R console (\code{Rgui}) or the window running \R 
   (\code{Rterm}).
 }
 \details{
+  \code{cmd} is parsed as a command plus arguments separated by spaces.
+  So if the path to the command contains spaces, it must be quoted.
+  See the examples.
+  
   The command is run directly as a Windows command by the Windows API
   call \code{CreateProcess}: extensions of \code{.exe}, \code{.com},
   \code{.cmd} and \code{.bat} are tried in turn if none
@@ -62,7 +66,7 @@ system(command, intern = FALSE, wait = TRUE, input = "",
   always be used, so a commands window will appear for the duration of
   console applications unless \code{invisible} is true. For
   \code{Rterm} a separate commands window
-  will appear for console applications only if \code{wait=FALSE}.
+  will appear for console applications only if \code{wait = FALSE}.
 
   \code{unix} is a \emph{deprecated} alternative, available for
   backwards compatibility.
@@ -71,8 +75,8 @@ system(command, intern = FALSE, wait = TRUE, input = "",
     The command cannot be interrupted by the \R process.
 
     Do not run console applications that require user
-    input from \code{Rgui} setting \code{intern=TRUE} and/or
-    \code{show.output.on.console=TRUE}. They will not work,
+    input from \code{Rgui} setting \code{intern = TRUE} and/or
+    \code{show.output.on.console = TRUE}. They will not work,
     may hang and then will probably hang \code{Rgui} too.
 }
 
@@ -84,9 +88,12 @@ system(command, intern = FALSE, wait = TRUE, input = "",
 # launch an editor, wait for it to quit
 \dontrun{system("notepad myfile.txt")}
 # launch a Windows 9x process monitor (from Win9x KernelToys)
-\dontrun{system("wintop", wait=FALSE)}
+\dontrun{system("wintop", wait = FALSE)}
 # launch your favourite (!) shell: 
 \dontrun{system("command.com")}
+\dontrun{
+system(paste('"c:/Program Files/Netscape/Netscape 6/netscp6.exe"',
+             '-url cran.r-project.org'), wait = FALSE)}
 }
 \keyword{interface}
 \keyword{file}
