@@ -29,9 +29,9 @@ wilcox.test(x, y = NULL, alternative = c("two.sided", "less", "greater"),
 \details{
   If only \code{x} is given, or if both \code{x} and \code{y} are given
   and \code{paired} is \code{TRUE}, a Wilcoxon signed rank test of the
-  null that the median of \code{x} (in the one sample case) or of
-  \code{x-y} (in the paired two sample case) equals \code{mu} is
-  performed.
+  null that the distribution of \code{x} (in the one sample case) or of
+  \code{x-y} (in the paired two sample case) is symmetric about
+  \code{mu} is performed.
 
   Otherwise, if both \code{x} and \code{y} are given and \code{paired}
   is \code{FALSE}, a Wilcoxon rank sum test (equivalent to the
@@ -44,11 +44,17 @@ wilcox.test(x, y = NULL, alternative = c("two.sided", "less", "greater"),
   are no ties.  Otherwise, a normal approximation is used.
 
   Optionally (if argument \code{conf.int} is true), a nonparametric
-  confidence interval for the median (one-sample case) or for the
-  difference of the location parameters \code{x-y} is computed.  If
-  exact p-values are available, an exact confidence interval is obtained
-  by the algorithm described in Bauer (1972).  Otherwise, an asymptotic
-  confidence interval is returned.
+  confidence interval and an estimator for the pseudomedian (one-sample
+  case) or for the difference of the location parameters \code{x-y} is
+  computed.  (The pseudomedian of a distribution \eqn{F} is the median
+  of the distribution of \eqn{(u+v)/2}, where \eqn{u} and \eqn{v} are
+  independent, each with distribution \eqn{F}.  If \eqn{F} is symmetric,
+  then the pseudomedian and median coincide.  See Hollander & Wolfe
+  (1973), page 34.)  If exact p-values are available, an exact
+  confidence interval is obtained by the algorithm described in Bauer
+  (1972), and the Hodges-Lehmann estimator is employed.  Otherwise, the
+  returned confidence interval and point estimate are based on normal
+  approximations.
 }
 \value{
   A list with class \code{"htest"} containing the following components:
@@ -63,6 +69,8 @@ wilcox.test(x, y = NULL, alternative = c("two.sided", "less", "greater"),
   \item{method}{the type of test applied.}
   \item{data.name}{a character string giving the names of the data.}
   \item{conf.int}{a confidence interval for the location parameter.
+    (Only present if argument \code{conf.int = TRUE}.)}
+  \item{estimate}{an estimate of the location parameter.
     (Only present if argument \code{conf.int = TRUE}.)}
 }
 \references{

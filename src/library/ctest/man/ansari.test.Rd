@@ -36,10 +36,12 @@ ansari.test(x, y, alternative = c("two.sided", "less", "greater"),
   computed if both samples contain less than 50 finite values and there
   are no ties.  Otherwise, a normal approximation is used.
 
-  Optionally, a nonparametric confidence interval for \eqn{s} is
-  computed.  If exact p-values are available, an exact confidence
-  interval is obtained by the algorithm described in Bauer (1972).
-  Otherwise, an asymptotic confidence interval is returned.
+  Optionally, a nonparametric confidence interval and an estimator for
+  \eqn{s} are computed.  If exact p-values are available, an exact
+  confidence interval is obtained by the algorithm described in Bauer
+  (1972), and the Hodges-Lehmann estimator is employed.  Otherwise, the
+  returned confidence interval and point estimate are based on normal
+  approximations.
 }
 \value{
   A list with class \code{"htest"} containing the following components:
@@ -51,6 +53,8 @@ ansari.test(x, y, alternative = c("two.sided", "less", "greater"),
   \item{method}{the string \code{"Ansari-Bradley test"}.}
   \item{data.name}{a character string giving the names of the data.}
   \item{conf.int}{a confidence interval for the scale parameter.
+    (Only present if argument \code{conf.int = TRUE}.)}
+  \item{estimate}{an estimate of the ratio of scales.
     (Only present if argument \code{conf.int = TRUE}.)}
 }
 \note{

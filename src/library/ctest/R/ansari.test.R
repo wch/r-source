@@ -60,7 +60,7 @@ ansari.test <- function(x, y,
                    as.integer(n),
                    PACKAGE = "ctest")$q
             }
-            # Bauer defines the CI for y/x, therefore interchange.
+            ## Bauer defines the CI for y/x, therefore interchange.
             help <- x
             x <- y
             y <- help
@@ -74,47 +74,26 @@ ansari.test <- function(x, y,
                 ## here follow Bauer directly
                 sum(pmin(rab, N - rab + 1)[seq(along = y)])
             }
-            xpos <- x[x > 0]
-            ypos <- y[y > 0]
-            xneg <- x[x <= 0]
-            yneg <- y[y <= 0]
-            signeg <- NULL
-            sigpos <- NULL
-            ## compute all stuff for the negative/positive values
-            ## separately 
-            if(length(xneg) > 0 && length(yneg) > 0) {
-                coefn <- function(j, i)
+            coefn <- function(j, i)
                     - abs(j+i-(N+1)/2) + abs(i+j-1-(N+1)/2)
-                signeg <- outer(yneg, xneg, "/")
-                coefneg <- outer(1:length(yneg), 1:length(xneg), "coefn")
-                coefneg <- coefneg[order(signeg)]
-                signeg <- sort(signeg)
-            }
-            if(length(xpos) > 0 && length(ypos) > 0) {
-                coefp <- function(j,i)
+            coefp <- function(j,i)
                     - abs(j+i-1-(N+1)/2) + abs(i+j-(N+1)/2)
-                sigpos <- outer(ypos, xpos, "/")
-                mpos <- min(which(x > 0))
-                npos <- min(which(y > 0))
-                coefpos <- outer(npos:n, mpos:m, "coefp")
-                coefpos <- coefpos[order(sigpos)]
-                sigpos <- sort(sigpos)
-                if(!is.null(signeg)) {
-                    sigma <- c(signeg, sigpos)
-                    coefs <- c(coefneg, coefpos)
-                    coefs <- coefs[order(sigma)]
-                    sigma <- sort(sigma)
-                } else {
-                    sigma <- sigpos
-                    coefs <- coefpos[order(sigpos)]
-                    sigma <- sort(sigma)
-                }
-            }
-            if(is.null(sigpos) && !is.null(signeg)) {
-                sigma <- signeg
-                coefs <- coefneg[order(signeg)]
-                sigma <- sort(sigma)
-            } 
+            signxy <- function(y,x) ifelse(sign(x) == sign(y), sign(x), 0)
+            ratio <- outer(y,x,"/")
+            signum <- outer(y,x, "signxy")
+            coefpos <- outer(1:n, 1:m, coefp)
+            coefneg <- outer(1:n, 1:m, coefn)
+
+            aratio <- ratio[ratio >= 0]
+            asignum <- signum[ratio >= 0]
+            acoefp <- coefpos[ratio >= 0 & signum == 1]
+            acoefn <- coefneg[ratio >= 0 & signum == -1]
+            acoef <- asignum
+            acoef[asignum == 1] <- acoefp
+            acoef[asignum == -1] <- acoefn
+            coefs <- acoef[order(aratio)]
+            sigma <- sort(aratio)
+
             ## compute step function
             cint <- if(length(sigma) < 1) {
                 warning("Cannot compute confidence interval")
@@ -167,7 +146,15 @@ ansari.test <- function(x, y,
                     c(0, lci)
                 })
             }
-            attr(cint, "conf.level") <- conf.level	
+            attr(cint, "conf.level") <- conf.level
+            u <- absigma - qansari(0.5, n, m)
+            sgr <- sigma[u < 0]
+            if (length(sgr) == 0) sgr <- NA
+            else sgr <- max(sgr)
+            sle <- sigma[u > 0]
+            if (length(sle) == 0) sle <- NA
+            else sle <- min(sgr)
+            ESTIMATE <- mean(c(sle, sgr))
         }
     }
     else {
@@ -203,7 +190,7 @@ ansari.test <- function(x, y,
                        greater = p)
     
         if(conf.int && !exact) {
-            # Bauer defines the CI for y/x, therefore interchange.
+            ## Bauer defines the CI for y/x, therefore interchange.
             help <- x
             x <- y
             y <- help
@@ -232,6 +219,7 @@ ansari.test <- function(x, y,
                 c(0, l)
             })
             attr(cint, "conf.level") <- conf.level
+            ESTIMATE <- optim(1, ab, zq=0)$par
         }
 
         if(exact && TIES) {
@@ -249,8 +237,10 @@ ansari.test <- function(x, y,
                  alternative = alternative,
                  method = "Ansari-Bradley test",
                  data.name = DNAME)
-    if(conf.int)
+    if(conf.int) {
         RVAL$conf.int <- cint
+        RVAL$estimate <- c("ratio of scales" = ESTIMATE)
+    }
     class(RVAL) <- "htest"
     return(RVAL)
 }

@@ -179,6 +179,9 @@ NEW FEATURES
     o	Exact p-values are available for the two-sided two-sample
 	Kolmogorov-Smirnov test.
 
+    o	The Wilcoxon and Ansari-Bradley tests now return point
+	estimators of the location or scale parameter of interest along
+	with confidence intervals for these.
 
 
 BUG FIXES
