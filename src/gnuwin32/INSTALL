@@ -32,21 +32,19 @@ versions of the cygwin tools and dll.  To avoid frustration, please
 use our tool set.
 
 
-We recommend that you use the mingw32 port of gcc-2.95.2 by Mumit Khan
-from http://www.mingw.org/ or
+We recommend that you use the mingw32 port of gcc-2.95.2-1 by Mumit
+Khan from http://www.mingw.org/ or
 ftp://ftp.xraylith.wisc.edu/pub/khan/gnu-win32/mingw32. (The `portal'
 gives more precise instructions.)  You can build R against either the
-crtdll.dll or msvcrt.dll runtime systems, and as from 1.2.0 we
-recommend the latter.  (In particular, locale support is poor with
-crtdll.dll, non-existent under Win9x.)
+crtdll.dll or msvcrt.dll runtime systems, and we recommend the latter.
+(In particular, locale support is poor with crtdll.dll, non-existent
+under Win9x and crtdll.dll has many memory leaks.)
 
 It may also be possible to use the compilers from the cygwin 1.1 net
-release with the -mno-cygwin flag.  (You will need the cygwin, gcc,
-mingw32, w32api and binutils bundles.  You will need to ensure that
-you have just one version of cygwin1.dll in your path, and there is
-one in our tools distribution.)  You can no longer use earlier
-versions (e.g. b20) of cygwin.  (It is not possible to compile R to
-use msvcrt.dll with the cygwin suite.)
+release with the -mno-cygwin -mwin32 flags; the current versions use
+mscrt.dll.  (You will need the cygwin, gcc, mingw32, w32api and
+binutils bundles. gcc-2.95.2-7, the latest we looked at, had
+several mistakes in its spec file.)
 
 
 perl5, available via http://www.activestate.com/Products/ActivePerl/
