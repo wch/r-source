@@ -255,7 +255,7 @@ clean: cleanwin $(PKGCLEAN)
 	-$(MAKE) -C ../../tests -f Makefile.win clean
 
 distclean veryclean: clean
-	$(RM) R.exp Rm.exp globalvar.h 
+	$(RM) COPYRIGHTS R.exp Rm.exp globalvar.h 
 	$(RM) -r ../../bin ../../library ../../modules
 	$(RM) ../include/config.h ../include/psignal.h \
 	../include/Rconfig.h ../include/version.h 
@@ -267,8 +267,9 @@ distclean veryclean: clean
 	../../doc/html/rw-FAQ.html ../../doc/html/search/SearchEngine.html
 	$(RM) ../../etc/Rconsole ../../etc/Rdevga ../../etc/Rprofile \
 	../../etc/rgb.txt ../../share/make/tests.mk \
-	../include/FFDecl.h ../include/FFTab.h ../include/Platform.h \
+	../include/Platform.h \
 	../include/globalvar.h ../../tests/*.Rout ../../tests/*.Rout.fail
+	$(MAKE) -C fixed distclean
 	-$(MAKE) -C installer ISdistclean
 
 cleanwin:

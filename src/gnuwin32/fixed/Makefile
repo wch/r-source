@@ -89,6 +89,9 @@ fixshare: ./share/tests.mk
 clean:
 	$(RM) *~ */*~ fixhtml fixh fixbin fixetc fixshare
 
+distclean: clean
+	$(RM) -f ../FFDecl.h ../FFTab.h ../../../tools/GV
+
 ../../../doc/html/search/SearchEngine.html:../../../doc/KEYWORDS.db
 	(cd ../../../doc; \
 	cat html/search/SearchEngine-head.html > html/search/SearchEngine.html; \
