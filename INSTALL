@@ -113,20 +113,6 @@ compiler is in a non-standard location, you should set the enviroment
 vaiable PATH accordingly before running configure.
 
 
-TWO-LEVEL MAKE
-
-If you don't need to supply any special arguments to "configure", you
-can actually build R simply by typing "make", which will automatically
-run "configure" if the configuration files are absent. Since the build
-process depends on the results of "configure", the top-level Makefile
-does little more than passing control to Makefile.2nd after ensuring
-that "configure" has been run.
-
-This has the curious, but harmless, consequence that "make distclean"
-and the like may run "configure" and remove the configuration files a
-moment later. This looks odd, but is fairly hard to avoid.
-
-
 NEW PLATFORMS (Standards Hah!)
 
 There are a number of sources of problems when installing R on a new
