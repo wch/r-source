@@ -19,6 +19,7 @@
 
 #include "Defn.h"
 #include "Mathlib.h"
+#include "Fortran.h"/*- for POW_DI */
 
 
 static int naflag;
@@ -54,7 +55,7 @@ SEXP complex_unary(int code, SEXP s1)
 	return ans;
     default:
 	error("illegal complex unary operator\n");
-	return ans;/* just for -Wall */
+	return R_NilValue;/* -Wall*/
     }
 }
 
@@ -91,7 +92,22 @@ static void complex_div(complex *c, complex *a, complex *b)
 static void complex_pow(complex *r, complex *a, complex *b)
 {
     double logr, logi, x, y;
+    int ib;
 
+    if(b->i == 0.) {/* be fast (and more accurate)*/
+	if(b->r == 1.) { /* a^1 */ r->r = a->r; r->i = a->i; return;}
+	if(a->i == 0.) { r->r = pow(a->r, b->r); r->i = 0.; return;}
+	if(a->r == 0. && b->r == (ib = (int)b->r)) {/* (|a|*i)^b */
+	    x = POW_DI(&(a->i), &ib);
+	    if(ib % 2) { /* ib is odd ==> imaginary r */
+		r->r = 0.;
+		r->i = ((ib>0 && ib %4 == 3)||(ib<0 && (-ib)%4 == 1))? -x : x;
+	    } else { /* even exponent b : real r */
+		r->r = (ib %4)? -x : x; r->i = 0.;
+	    }
+	    return;
+	}
+    }
     logr = log(hypot(a->r, a->i) );
     logi = atan2(a->i, a->r);
     x = exp( logr * b->r - logi * b->i );
@@ -226,7 +242,7 @@ SEXP complex_binary(int code, SEXP s1, SEXP s2)
 
 SEXP do_cmathfuns(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    SEXP x, y;
+    SEXP x, y = R_NilValue;/* -Wall*/
     int i, n;
 
     checkArity(op, args);
@@ -735,6 +751,8 @@ SEXP do_polyroot(SEXP call, SEXP op, SEXP args, SEXP rho)
     degree = n - 1;
     if(degree >= 1) {
 	if(n > 49) errorcall(call, "polynomial degree too high (49 max)\n");
+	/* <==>	 #define NMAX 50  in  ../appl/cpoly.c */
+
 	if(COMPLEX(z)[n-1].r == 0.0 && COMPLEX(z)[n-1].i == 0.0)
 	    errorcall(call, "highest power has coefficient 0\n");
 
