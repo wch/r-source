@@ -2763,10 +2763,6 @@ In this section we re-work the example of @code{call_S} in Becker,
 Chambers & Wilks (1988) on finding a zero of a univariate function,
 which used to be used as an example for @code{call_R} in the now defunct
 @code{demo(dynload)}.  The @R{} code and an example are
-In this section we re-work the example formerly in @file{demos/dynload}
-of @code{call_R} (based on that for @code{call_S} in Becker, Chambers &
-Wilks (1988)) on finding a zero of a univariate function.  The @R{} code
-and an example are
 
 @smallexample
 zero <- function(f, guesses, tol = 1e-7) @{
