@@ -258,6 +258,7 @@ function(package)
              "flush.console",
              "format.char", "format.info", "format.pval",
              "influence.measures",
+             "kappa.tri",
              "plot.new", "plot.window", "plot.xy", "print.coefmat",
              "rep.int",
              "split.screen",
