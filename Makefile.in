@@ -18,7 +18,6 @@ DISTFILES = COPYING COPYRIGHTS INSTALL MIRROR-SITES NEWS PLATFORMS \
 SUBDIRS = afm demos doc etc src tests
 
 GZIP = --best
-TAR = tar
 
 all: Makefile R docs
 
@@ -124,7 +123,7 @@ maintainer-clean: distclean
 dist: dist-unix
 dist-unix: distdir
 	-chmod -R a+r $(distdir)
-	GZIP=$(GZIP) $(TAR) chozf $(distdir).tar.gz $(distdir)
+	GZIP=$(GZIP) $(TAR) chzf $(distdir).tar.gz $(distdir)
 	rm -rf $(distdir)
 dist-win:
 distdir: $(DISTFILES)
@@ -145,9 +144,8 @@ distdir: $(DISTFILES)
 	    || exit 1; \
         done
 	@for d in aux debian; do \
-	  (cd $(srcdir); \
-	    FILES=`find $${d} | sed '/CVS/d'`; \
-	    tar cf - $${FILES} | (cd $(distdir); tar xf -)) \
+	  ((cd $(srcdir); $(TAR) -c -f - --exclude=CVS $${d}) \
+	    | (cd $(distdir); $(TAR) -x -f -)) \
 	    || exit 1; \
 	done
 
