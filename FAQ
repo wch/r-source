@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.9-25 2004-06-21
+Version 1.9-26 2004-06-23
 ISBN 3-900051-01-1
 Kurt Hornik
 
@@ -2462,6 +2462,10 @@ distributions of R.)
 
 *rqmcmb2*
      Markov chain marginal bootstrap for quantile regression.
+
+*rrcov*
+     Functions for robust location and scatter estimation and robust
+     regression with HBDP.
 
 *rsprng*
      Provides interface to SPRNG (Scalable Parallel Random Number
