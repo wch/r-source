@@ -76,3 +76,55 @@
     ## restore the true definition of the hidden functions
     assign("reconcilePropertiesAndPrototype", real.reconcileP, envir)
 }
+
+### The following methods are not currently installed.  (Tradeoff between intuition
+### of users that new("matrix", ...) should be like matrix(...) vs
+### consistency of new().  Relevant when new class has basic class as its data part.
+###
+### To install the methods below, uncomment the last line of the function
+### .InitMethodDefinitions
+.InitBasicClassMethods <- function(where) {
+    ## methods to initialize "informal" classes by using the
+    ## functions of the same name.
+    ##
+    ## These methods are designed to be inherited or extended
+    setMethod("initialize", "matrix",
+              function(object, data =   NA, nrow = 1, ncol = 1,
+                       byrow = FALSE, dimnames = NULL, ...) {
+                  if(nargs() < 2) # guaranteed to be called with object from new
+                      object
+                  else if(is.matrix(data) && nargs() == 2 + length(list(...)))
+                      .mergeAttrs(data, object, list(...))
+                  else {
+                      value <- matrix(data, nrow, ncol, byrow, dimnames)
+                      .mergeAttrs(value, object, list(...))
+                  }
+              })
+    setMethod("initialize", "array",
+              function(object, data =   NA, dim = length(data), dimnames = NULL, ...) {
+                  if(nargs() < 2) # guaranteed to be called with object from new
+                      object
+                  else if(is.array(data) && nargs() == 2 + length(list(...)))
+                      .mergeAttrs(data, object, list(...))
+                  else {
+                      value <- array(data, nrow, ncol, byrow, dimnames)
+                      .mergeAttrs(value, object, list(...))
+                  }
+              })
+    ## the "ts" method supports most of the arguments to ts()
+    ## but NOT the class argument (!), and it won't work right
+    ## if people set up "mts" objects with "ts" class (!, again)
+    setMethod("initialize", "ts",
+              function(object, data =   NA, start = 1, end = numeric(0), frequency = 1, 
+    deltat = 1, ts.eps = getOption("ts.eps"), names = NULL, ...) {
+                  if(nargs() < 2) # guaranteed to be called with object from new
+                      object
+                  else if(is.ts(data) && nargs() == 2 + length(list(...)))
+                      .mergeAttrs(data, object, list(...))
+                  else {
+                      value <- ts(data, start, end, frequency, 
+                                  deltat, ts.eps, names = names)
+                      .mergeAttrs(value, object, list(...))
+                  }
+              })
+}

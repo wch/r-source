@@ -3,7 +3,6 @@
 \alias{OldEvalSelectedMethod}
 \alias{getMethodsForDispatch}
 \alias{cacheMethod}
-\alias{hasMethod}
 \alias{resetGeneric}
 \title{Additional (Support) Functions for Methods}
 \description{
@@ -14,16 +13,10 @@ getMethodsForDispatch(f)
 
 cacheMethod(f, sig, def, args = names(sig))
 
-hasMethod(f, signature=character())
-
 resetGeneric(f)
 }
 \section{Summary of Functions}{
   \describe{
-    \item{\code{hasMethod}:}{ 
-      returns \code{TRUE} if \code{f} is the name of a generic function
-      with an (explicit) method for this signature.
-    }
     \item{\code{resetGeneric}:}{ 
       reset the currently defined methods for this generic by removing
       the corresponding definition from the methods metadata (to be

@@ -174,12 +174,18 @@ form[1]
 ## S3 arithmetic methods
 ISOdate(1990, 12, 1)- ISOdate(1980, 12, 1)
 
-## arithmetic:  switch to an "Arith" method when this automatically
-## generates methods for its member functions.
+## group methods
 
-setMethod("-", c("track", "numeric"), function(e1, e2){e1@y <- e1@y -e2; e1})
+setMethod("Arith", c("track", "numeric"), function(e1, e2){e1@y <-
+  callGeneric(e1@y , e2); e1})
+
+setGroupGeneric("Arith")
+
 
 t1  - 100.
+
+t1/2
+
 
 ## check it hasn't screwed up S3 methods
 ISOdate(1990, 12, 1)- ISOdate(1980, 12, 1)

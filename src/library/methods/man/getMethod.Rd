@@ -3,6 +3,7 @@
 \alias{findMethod}
 \alias{getMethods}
 \alias{selectMethod}
+\alias{hasMethod}
 \alias{MethodsListSelect}
 \title{ Get the Definition of a Method }
 \description{
@@ -28,8 +29,14 @@ findMethod(f, signature, where)
 
 getMethods(f, where=-1)
 
-MethodsListSelect(f, env, mlist, fEnv, finalDefault, evalArgs, useInherited)
+existsMethod(f, signature = character(), where)
+
+hasMethod(f, signature=character())
+
 selectMethod(f, signature, optional=FALSE, useInherited, mlist=getMethods(f))
+
+MethodsListSelect(f, env, mlist, fEnv, finalDefault, evalArgs, useInherited)
+
 }
 \arguments{
   \item{f}{ The character-string name of the generic function.
@@ -47,8 +54,8 @@ selectMethod(f, signature, optional=FALSE, useInherited, mlist=getMethods(f))
 
     For \code{selectMethod}, the signature can optionally be an
     environment with classes assigned to the names of the corresponding
-    arguments.  If the signature is not an environment, it must
-    currently be named.}
+    arguments.  Note:  the names correspond to the names of the classes, \emph{not}
+    to the objects supplied in a call to the generic function.}
   \item{where}{ The position or environment in which to look for the method:  by default,
       anywhere in
     the current search list.}
@@ -80,6 +87,20 @@ selectMethod(f, signature, optional=FALSE, useInherited, mlist=getMethods(f))
   the method is not found.  The search for the method makes no use of
   inheritance.
 
+  The function \code{selectMethod} also looks for a method given the
+  function and signature, but makes full use of the method dispatch
+  mechanism; i.e., inherited methods and group generics are taken into
+  account just as they would be in dispatching a method for the
+  corresponding signature, with the one exception that conditional
+  inheritance is not used.  Like \code{getMethod}, \code{selectMethod}
+  returns \code{NULL} or generates an error if
+  the method is not found, depending on the argument \code{optional}.
+
+  The functions \code{existsMethod} and \code{hasMethod} return
+  \code{TRUE} or \code{FALSE} according to whether a method is found,
+  the first corresponding to \code{getMethod} (no inheritance) and the
+  second to \code{selectMethod}.
+
   The function \code{getMethods} returns all the methods for a
   particular generic (in the form of a generic function with the
   methods information in its environment).  The function is called
@@ -105,11 +126,7 @@ selectMethod(f, signature, optional=FALSE, useInherited, mlist=getMethods(f))
   stored by the evaluator so that the search is not required next
   time.)
 
-  The \code{selectMethod} function is similar to
-  \code{MethodsListSelect} (and calls it) but differs in that it
-  is intended to be used with control over which arguments are allowed
-  to use inheritance.  The restriction is needed to make sensible
-  method selection for coerce methods (the \code{\link{as}} function).
+
 }
 \value{
   The call to \code{selectMethod} or \code{getMethod} returns a

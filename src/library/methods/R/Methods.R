@@ -25,8 +25,11 @@ setGeneric <-
         fdef <- getFunction(name, mustFind = FALSE)
         if(is.null(fdef))
             stop("Must supply a function skeleton, explicitly or via an existing function")
-        else if(is.primitive(fdef))
-            stop(paste("\"", name, "\" is a primitive function; methods can be defined for some of these but setGeneric must not be called", sep=""))
+        else if(is.primitive(fdef)) {
+            if(!isGeneric(name))
+                setMethod(name,character(),fdef)
+            return(name)
+        }
         body(fdef) <- stdBody
     }
     else
@@ -410,12 +413,23 @@ selectMethod <-
 }
 
 hasMethod <-
-  ## returns `TRUE' if `f' is the name of a generic function with an (explicit) method for
+  ## returns `TRUE' if `f' is the name of a generic function with an (explicit or inherited) method for
   ## this signature.
   function(f, signature = character())
 {
     if(isGeneric(f))
-        !is.null(getMethod(f, signature, optional = TRUE))
+        !is.null(selectMethod(f, signature, optional = TRUE))
+    else
+        FALSE
+}
+
+existsMethod <-
+  ## returns `TRUE' if `f' is the name of a generic function with an (explicit) method for
+  ## this signature.
+  function(f, signature = character(), where = -1)
+{
+    if(isGeneric(f))
+        !is.null(getMethod(f, signature, where = where, optional = TRUE))
     else
         FALSE
 }
@@ -604,22 +618,34 @@ setReplaceMethod <-
   setMethod(paste(f, "<-", sep=""), ...)
 
 setGroupGeneric <-
-  ## create a group generic function for this name.
-  function(name, def = NULL, group = NULL, valueClass = NULL,
-           knownMembers = character(), where = 1)
-  {
-    if(is.null(def))
-      def <- getFunction(def)
+    ## create a group generic function for this name.
+    function(name, def = NULL, group = NULL, valueClass = NULL,
+             knownMembers = character(), where = 1)
+{
+    if(is.null(def)) {
+        def <- getFunction(name)
+        if(isGroup(name, fdef = def)) {
+            ## a special R-only mechanism to turn on method dispatch
+            ## for the members of groups of primitives
+            members <- getGroupMembers(name, def)
+            if(length(members)>0 &&
+               is.primitive(getFunction(members[[1]], mustFind = FALSE))) {
+                for(what in members)
+                    setGeneric(what)
+                return(name)
+            }
+        }
+    }
     ## By definition, the body must generate an error.
     body(def) <- substitute(stop(MSG), list(MSG =
-                      paste("Function \"", name,
-                            "\" is a group generic; don't call it directly",
-                            sep ="")))
+                                            paste("Function \"", name,
+                                                  "\" is a group generic; don't call it directly",
+                                                  sep ="")))
     setGeneric(name = name, def = def, group = group, valueClass = valueClass, where = where,
                myDispatch = TRUE)
     setGroupMembers(name, knownMembers)
     name
-  }
+}
 
 isGroup <-
   function(f, where = -1, fdef = NULL)
@@ -633,23 +659,34 @@ isGroup <-
 
 callGeneric <- function(...)
 {
-    fdef <- sys.function(sys.parent())
-    env <- environment(fdef)
-    if(!exists(".Generic", env, inherits = FALSE))
-        stop("callGeneric must be called from a generic function or method")
-    f <- get(".Generic", env, inherits = FALSE)
-    fname <- as.name(f)
-    if(nargs() == 0) {
-        call <- sys.call(sys.parent())
-        call <- match.call(fdef, call)
-        anames <- names(call)
-        matched <- !is.na(match(anames, names(formals(fdef))))
-        for(i in seq(along = anames))
-            if(matched[[i]])
-                call[[i]] <- as.name(anames[[i]])
+    frame <- sys.parent()
+    fdef <- sys.function(frame)
+    if(is.primitive(fdef)) {
+        if(nargs() == 0)
+            stop("callGeneric with a primitive needs explict arguments (no formal args defined)")
+        else {
+            fname <- sys.call(frame)[[1]]
+            call <- substitute(fname(...))
+        }
     }
     else {
-        call <- substitute(fname(...))
+        env <- environment(fdef)
+        if(!exists(".Generic", env, inherits = FALSE))
+            stop("callGeneric must be called from a generic function or method")
+        f <- get(".Generic", env, inherits = FALSE)
+        fname <- as.name(f)
+        if(nargs() == 0) {
+            call <- sys.call(frame)
+            call <- match.call(fdef, call)
+            anames <- names(call)
+            matched <- !is.na(match(anames, names(formals(fdef))))
+            for(i in seq(along = anames))
+                if(matched[[i]])
+                    call[[i]] <- as.name(anames[[i]])
+        }
+        else {
+            call <- substitute(fname(...))
+        }
     }
     eval(call, sys.frame(sys.parent()))
 }

@@ -168,6 +168,37 @@ setGroupGeneric(name, def, group=NULL, valueClass=NULL, knownMembers, where=1)
   definition changes, through changes in the search list or direct
   specification of methods, etc.
 }
+\section{Generic Functions and Primitive Functions}{
+  A number of the basic R functions are specially implemented as
+  primitive functions, to be evaluated directly in the underlying C
+  code rather than by evaluating an S language definition.  Primitive
+  functions are eligible to have methods, but are handled differently
+  by \code{setGeneric} and \code{setGroupGeneric}.  A call to
+  \code{setGeneric} for a primitive function does not create a new
+  definition of the function, and the call is allowed only to ``turn
+  on'' methods for that function.
+
+  A call to \code{setGeneric} for a primitive causes the evaluator to
+  look for methods for that generic; a call to \code{setGroupGeneric}
+  for any of the groups that include primitives (\code{"Arith", "Logic",
+  "Compare", "Ops", "Math", "Math2", "Summary",} and \code{"Complex"})
+  does the same for each of the functions in that group.
+
+  You usually only need to use either function if the methods are
+  being defined only for the group generic.  Defining a method for a
+  primitive function, say \code{"+"}, by a call to \code{setMethod} 
+  turns on method dispatch for that function.  But in R defining a
+  method for the corresponding group generic, \code{"Arith"}, does not
+  currently turn on method dispatch (for efficiency reasons).  If
+  there are no non-group methods for the functions, you have two
+  choices.
+
+  You can turn on method dispatch for \emph{all} the functions in the
+  group by calling \code{setGroupGeneric("Arith")}, or you can turn on
+  method dispatch for only some of the functions by calling
+  \code{setGeneric("+")}, etc.  Note that in either case you should
+  give the name of the generic function as the only argument.
+}
 \value{
   The \code{setGeneric} function exists for its side effect: saving the
   generic function to allow methods to be specified later.  It returns

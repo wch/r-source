@@ -28,11 +28,19 @@ extends <-
   ## Returns `maybe' if the extension includes a test.
   function(class1, class2, maybe = TRUE)
 {
+    if(is(class1, "classRepEnvironment")) {
+        classDef1 <- class1
+        class1 <- getClassName(classDef1)
+    }
+    else if(is.character(class1) && length(class1)==1)
+        classDef1 <- getClass(class1, TRUE)
+    else
+        stop("class1 must be the name of a class or a class definition")
     if(missing(class2)) {
-        if(!isClass(class1))
+        if(is.null(classDef1))
             return(class1)
         ext <- getExtends(getClass(class1))
-        if(maybe)
+        if(identical(maybe, TRUE))
             return(c(class1, names(ext)))
         else {
             tested <- sapply(ext, function(obj)(is.list(obj) && is.function(obj$test)))
@@ -41,6 +49,10 @@ extends <-
     }
     if(identical(class1, class2))
         return(TRUE)
+    if(is(class2, "classRepEnvironment"))
+        class2 <- getClassName(class2)
+    else if(!(is.character(class2) && length(class2) == 1))
+        stop("class2 must be the name of a class or a class definition")
     value <- findExtends(class1, class2)
     if(is.logical(value))
         value
