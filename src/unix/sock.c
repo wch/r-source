@@ -14,6 +14,7 @@
 #include <errno.h>
 #if defined(Win32)
 #  include <winsock.h>
+#  include <io.h>
 #elif defined(MACINTOSH)
 #  include <GUSI.h>
 #else
