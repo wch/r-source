@@ -127,6 +127,7 @@ static int DefaultSaveAction = 0;
 static int DefaultRestoreAction = 1;
 static int LoadSiteFile = 1;
 static int LoadInitFile = 1;
+static int DebugInitFile = 0;
 
 	/*--- I/O Support Code ---*/
 
@@ -440,6 +441,9 @@ int main(int ac, char **av)
 	    }
 	    else if (!strcmp(*av, "--no-init-file")) {
 		LoadInitFile = 0;
+	    }
+	    else if (!strcmp(*av, "--debug-init")) {
+		DebugInitFile = 1;
 	    }
 	    else if (!strcmp(*av, "-save") ||
 		     !strcmp(*av, "-nosave") ||
