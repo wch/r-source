@@ -43,6 +43,7 @@
 #endif
 
 #define TRUE    (1)
+
 #define FALSE   (0)
 
 #define abs(x) ((x) >= 0 ? (x) : -(x))
@@ -51,7 +52,7 @@
 #define max(a,b) ((a) >= (b) ? (a) : (b))
 #define dmin(a,b) (double)min(a,b)
 #define dmax(a,b) (double)max(a,b)
-
+/*-- Note that ./Mathlib.h  has  [if]min2(.,.) and [if]max2(.,.) ! */
 
 typedef struct {
 	double r;
