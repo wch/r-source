@@ -12,6 +12,7 @@
 }
 \usage{
 match(x, table, nomatch = NA, incomparables = FALSE)
+
 x \%in\% table
 }
 \arguments{

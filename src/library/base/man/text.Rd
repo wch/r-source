@@ -1,10 +1,11 @@
 \name{text}
 \title{Add Text to a Plot}
 \usage{
-text (x, \dots)
-text.default (x, y = NULL, labels = seq(along = x), adj = NULL,
-       pos = NULL, offset = 0.5, vfont = NULL,
-       cex = 1, col = NULL, font = NULL, xpd = NULL, \dots)
+text(x, \dots)
+
+\method{text}{default} (x, y = NULL, labels = seq(along = x), adj = NULL,
+     pos = NULL, offset = 0.5, vfont = NULL,
+     cex = 1, col = NULL, font = NULL, xpd = NULL, \dots)
 }
 \alias{text}
 \alias{text.default}

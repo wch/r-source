@@ -24,6 +24,7 @@ x[i, j, \dots , drop=TRUE]
 x[[i]]
 x[[i, j, \dots]]
 x$name
+
 .subset(x, \dots)
 .subset2(x, \dots)
 }

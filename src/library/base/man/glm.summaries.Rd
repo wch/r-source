@@ -4,6 +4,7 @@
 \title{Accessing Generalized Linear Model Fits}
 \usage{
 \method{family}{glm}(object, \dots)
+
 \method{residuals}{glm}(object, type = c("deviance", "pearson", "working",
                       "response", "partial"), \dots)
 }

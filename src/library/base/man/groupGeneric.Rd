@@ -42,12 +42,12 @@ Summary.data.frame(x, \dots)
 Summary.factor(x, \dots)
 }
 \usage{
-S3 methods have prototypes:
-\method{Math}{data.frame}(x, \dots)
-\method{Ops}{data.frame}(e1, e2)
-\method{Summary}{data.frame}(x, \dots)
+## S3 methods have prototypes:
+Math(x, \dots)
+Ops(e1, e2)
+Summary(x, \dots)
 
-S4 methods have prototypes:
+## S4 methods have prototypes:
 Arith(e1, e2)
 Compare(e1, e2)
 Ops(e1, e2)

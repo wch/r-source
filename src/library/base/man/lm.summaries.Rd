@@ -7,9 +7,12 @@
 \title{Accessing Linear Model Fits}
 \usage{
 \method{family}{lm}(object, \dots)
+
 \method{formula}{lm}(x, \dots)
+
 \method{residuals}{lm}(object,
           type=c("working","response", "deviance","pearson", "partial"), \dots)
+
 weights(object, \dots)
 }
 \arguments{

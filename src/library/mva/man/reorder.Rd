@@ -10,7 +10,8 @@
 }
 \usage{
 reorder(x, \dots)
-reorder.dendrogram(x, wts, \dots)
+
+\method{reorder}{dendrogram}(x, wts, \dots)
 }
 \arguments{
   \item{x}{The object to be reordered}

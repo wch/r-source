@@ -10,8 +10,7 @@
 }
 \usage{
 isoreg(x, y = NULL)
-%\method{fitted}{isoreg}(object, \dots)
-%\method{residuals}{isoreg}(object, \dots)
+
 \method{as.stepfun}{isoreg}(x, \dots)
 }
 \arguments{

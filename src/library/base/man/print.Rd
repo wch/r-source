@@ -3,8 +3,8 @@
 \usage{
 print(x, \dots)
 
-print.factor(x, quote = FALSE, max.levels = NULL,
-             width = getOption("width"), \dots)
+\method{print}{factor}(x, quote = FALSE, max.levels = NULL,
+     width = getOption("width"), \dots)
 }
 \alias{print}
 \alias{print.factor}

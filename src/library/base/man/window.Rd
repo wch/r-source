@@ -2,10 +2,12 @@
 \title{Time Windows}
 \usage{
 window(x, \dots)
-window.default(x, start = NULL, end = NULL,
-               frequency = NULL, deltat = NULL, extend = FALSE, \dots)
-window.ts(x, start = NULL, end = NULL,
-          frequency = NULL, deltat = NULL, extend = FALSE, \dots)
+
+\method{window}{default}(x, start = NULL, end = NULL,
+      frequency = NULL, deltat = NULL, extend = FALSE, \dots)
+
+\method{window}{ts}(x, start = NULL, end = NULL,
+     frequency = NULL, deltat = NULL, extend = FALSE, \dots)
 }
 \synopsis{
 window(x, \dots)

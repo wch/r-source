@@ -5,6 +5,7 @@
 \usage{
 curve(expr, from, to, n = 101, add = FALSE, type = "l",
       ylab = NULL, log = NULL, xlim = NULL, \dots)
+
 \method{plot}{function}(x, from = 0, to = 1, xlim = NULL, \dots)
 }
 \arguments{

@@ -2,9 +2,6 @@
 \title{Find Labels from Object}
 \usage{
 labels(object, \dots)
-labels.default(object, \dots)
-labels.terms(object, \dots)
-labels.lm(object, \dots)
 }
 \alias{labels}
 \alias{labels.default}
@@ -16,7 +13,7 @@ labels.lm(object, \dots)
 }
 \description{
   Find a suitable set of labels from an object for use in printing or
-  plotting, for example.
+  plotting, for example.  A generic function.
 }
 \value{
   A character vector or list of such vectors. For a vector the results

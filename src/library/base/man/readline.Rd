@@ -1,7 +1,7 @@
 \name{readline}
 \title{Read a Line from the Terminal}
 \usage{
-readline(prompt="")
+readline(prompt = "")
 }
 \alias{readline}
 \arguments{

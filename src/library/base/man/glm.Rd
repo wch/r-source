@@ -21,11 +21,7 @@ glm.fit(x, y, weights = rep(1, nrow(x)),
         offset = rep(0, nrow(x)),
         family = gaussian(), control = glm.control(),
         intercept = TRUE)
-glm.fit.null(x, y, weights = rep(1, nrow(x)),
-        start = NULL, etastart = NULL, mustart = NULL,
-        offset = rep(0, nrow(x)),
-        family = gaussian(), control = glm.control(),
-        intercept = FALSE)
+
 \method{weights}{glm}(object, type = c("prior", "working"), \dots)
 }
 \arguments{

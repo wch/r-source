@@ -4,7 +4,8 @@
 \title{Range of Values}
 \usage{
 range(\dots, na.rm = FALSE)
-range.default(\dots, na.rm = FALSE, finite = FALSE)
+
+\method{range}{default}(\dots, na.rm = FALSE, finite = FALSE)
 }
 \arguments{
   \item{\dots}{any \code{\link{numeric}} objects.}

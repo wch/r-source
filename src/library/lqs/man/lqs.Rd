@@ -24,16 +24,21 @@ lqs.formula(formula, data, \dots,
             x.ret = FALSE, y.ret = FALSE, contrasts = NULL)
 lqs.default(x, y, intercept = TRUE, method = c("lts", "lqs", "lms", "S"),
             quantile, control = lqs.control(\dots), k0 = 1.548, seed, \dots)
+
 lmsreg(\ldots)
 ltsreg(\ldots)
 }
 \usage{
+lqs(x, \dots)
+
 \method{lqs}{formula}(formula, data, \dots,
     method = c("lts", "lqs", "lms", "S", "model.frame"),
     subset, na.action = na.fail, model = TRUE,
     x = FALSE, y = FALSE, contrasts = NULL)
+
 \method{lqs}{default}(x, y, intercept = TRUE, method = c("lts", "lqs", "lms", "S"),
     quantile, control = lqs.control(\dots), k0 = 1.548, seed, \dots)
+
 lmsreg(\ldots)
 ltsreg(\ldots)
 }

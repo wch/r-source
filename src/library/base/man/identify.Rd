@@ -4,8 +4,9 @@
 \title{Identify Points in a Scatter Plot}
 \usage{
 identify(x, \dots)
-identify.default(x, y = NULL, labels = seq(along = x), pos = FALSE,
-                 n = length(x), plot = TRUE, offset = 0.5, \dots)
+
+\method{identify}{default}(x, y = NULL, labels = seq(along = x), pos = FALSE,
+         n = length(x), plot = TRUE, offset = 0.5, \dots)
 }
 \arguments{
   \item{x,y}{coordinates of points in a scatter plot.  Alternatively, any

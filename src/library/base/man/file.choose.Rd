@@ -5,7 +5,7 @@
  Choose a file interactively.
 }
 \usage{
-file.choose(new=FALSE)
+file.choose(new = FALSE)
 }
 \arguments{
  \item{new}{Logical: choose the style of dialog box

@@ -3,7 +3,8 @@
 \alias{print.summary.princomp}
 \title{Summary method for Principal Components Analysis}
 \usage{
-\method{summary}{princomp}(object, loadings = FALSE, cutoff = 0.1, \dots) 
+\method{summary}{princomp}(object, loadings = FALSE, cutoff = 0.1, \dots)
+
 \method{print}{summary.princomp}(x, digits = 3, loadings = x$print.loadings,
       cutoff = x$cutoff, \dots)
 }

@@ -8,7 +8,10 @@
 }
 \usage{
 diff(x, \dots)
-diff.default(x, lag=1, differences=1, \dots)
+
+\method{diff}{default}(x, lag = 1, differences = 1, \dots)
+
+\method{diff}{POSIXt}(x, lag = 1, differences = 1, \dots)
 }
 \arguments{
   \item{x}{a numeric vector or matrix containing the values to be
@@ -41,7 +44,7 @@ diff.default(x, lag=1, differences=1, \dots)
   Wadsworth \& Brooks/Cole.
 }
 \seealso{
-  \code{\link{diff.ts}}.
+  \code{\link{diff.ts}}, \code{\link[ts]{diffinv}}.
 }
 \examples{
 diff(1:10, 2)

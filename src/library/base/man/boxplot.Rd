@@ -6,6 +6,8 @@
   Produce box-and-whisker plot(s) of the given (grouped) values.
 }
 \usage{
+boxplot(x, \dots)
+
 \method{boxplot}{default}(x, \dots, range = 1.5, width = NULL, varwidth = FALSE,
         notch = FALSE, outline = TRUE, names, boxwex = 0.8, plot = TRUE,
         border = par("fg"), col = NULL, log = "", pars = NULL,

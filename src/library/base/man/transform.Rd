@@ -5,8 +5,8 @@
 \title{Transform an Object, for Example a Data Frame}
 \usage{
 transform(x, \dots)
-transform.default(x, \dots)
-transform.data.frame(x, \dots)
+%transform.default(x, \dots)
+%transform.data.frame(x, \dots)
 }
 \arguments{
     \item{x}{The object to be transformed}

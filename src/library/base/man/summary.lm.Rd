@@ -1,4 +1,4 @@
-\name{summary/lm}
+\name{summary.lm}
 \alias{summary.lm}
 % \alias{summary.lm.null}
 \alias{summary.mlm}% mlm is *not* mentioned at all

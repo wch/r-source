@@ -15,22 +15,12 @@
   Fit a projection pursuit regression model.
 }
 \usage{
-ppr(formula, data = sys.parent(), weights,
-    subset, na.action, contrasts = NULL,
-    ww = rep(1,q), nterms, max.terms = nterms, optlevel = 2,
-    sm.method = c("supsmu", "spline", "gcvspline"),
-    bass = 0, span = 0, df = 5, gcvpen = 1)
-
-ppr(x, y, weights = rep(1,n),
-    ww = rep(1,q), nterms, max.terms = nterms, optlevel = 2,
-    sm.method = c("supsmu", "spline", "gcvspline"),
-    bass = 0, span = 0, df = 5, gcvpen = 1)
-}
-\synopsis{
 ppr(x, \dots)
-ppr.formula(formula, data = sys.parent(), weights, subset, na.action, 
-    contrasts = NULL, \dots) 
-ppr.default(x, y, weights = rep(1,n),
+
+\method{ppr}{formula}(formula, data = sys.parent(), weights,
+    subset, na.action, contrasts = NULL, \dots)
+
+\method{ppr}{default}(x, y, weights = rep(1,n),
     ww = rep(1,q), nterms, max.terms = nterms, optlevel = 2,
     sm.method = c("supsmu", "spline", "gcvspline"),
     bass = 0, span = 0, df = 5, gcvpen = 1, \dots)
@@ -103,6 +93,7 @@ ppr.default(x, y, weights = rep(1,n),
     if \code{sm.method} is \code{"gcvspline"} this is the penalty used
     in the GCV selection for each degree of freedom used.
   }
+  \item{\dots}{arguments to be passed to or from other methods.}
 }
 \value{
 A list with the following components, many of which are for use by the

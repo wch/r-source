@@ -1,4 +1,4 @@
-\name{fitted.values}
+\name{fitted}
 \title{Extract Model Fitted Values}
 \usage{
 fitted(object, \dots)

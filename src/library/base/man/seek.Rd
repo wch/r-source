@@ -9,10 +9,12 @@
   Functions to re-position connections.
 }
 \usage{
+seek(con, \dots)
 \method{seek}{connection}(con, where = NA, origin = "start", rw = "", \dots)
-\method{truncate}{connection}(con, \dots)
 
 isSeekable(con)
+
+truncate(con, \dots)
 }
 \arguments{
   \item{con}{a connection.}

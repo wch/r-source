@@ -9,7 +9,9 @@
 \usage{
 \method{plot}{formula}(formula, data = parent.frame(), \dots, subset,
              ylab = varnames[response], ask = TRUE)
+
 \method{points}{formula}(formula, data = parent.frame(), \dots, subset)
+
 \method{lines}{formula}(formula, data = parent.frame(), \dots, subset)
 }
 \arguments{

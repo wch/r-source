@@ -1,7 +1,8 @@
 \name{anova.lm}
 \title{ANOVA for Linear Model Fits}
 \usage{
-anova(object, \dots)
+\method{anova}{lm}(object, \dots)
+
 anova.lmlist(object, \dots, scale = 0, test = "F")
 }
 \alias{anova.lm}

@@ -9,6 +9,7 @@
 }
 \usage{
 splinefun(x, y = NULL, method = "fmm")
+
 spline(x, y = NULL, n = 3*length(x), method = "fmm",
        xmin = min(x), xmax = max(x))
 }

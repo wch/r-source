@@ -2,6 +2,7 @@
 \title{Find Objects by (Partial) Name}
 \usage{
 apropos(what, where = FALSE, mode = "any")
+
 find(what, mode = "any", numeric. = FALSE, simple.words = TRUE)
 }
 \alias{apropos}

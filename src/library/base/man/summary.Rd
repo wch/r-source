@@ -14,11 +14,11 @@
 \usage{
 summary(object, \dots)
 
-summary.default   (object, \dots, digits = max(3, getOption("digits")-3))
-summary.data.frame(object, maxsum = 7,
-                   digits = max(3, getOption("digits")-3), \dots)
-summary.factor    (object, maxsum = 100, \dots)
-summary.matrix    (object, \dots)
+\method{summary}{default}(object, \dots, digits = max(3, getOption("digits")-3))
+\method{summary}{data.frame}(object, maxsum = 7,
+       digits = max(3, getOption("digits")-3), \dots)
+\method{summary}{factor}(object, maxsum = 100, \dots)
+\method{summary}{matrix}(object, \dots)
 }
 \arguments{
   \item{object}{an object for which a summary is desired.}

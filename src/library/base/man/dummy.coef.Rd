@@ -2,8 +2,10 @@
 \title{Extract Coefficients in Original Coding}
 \usage{
 dummy.coef(object, \dots)
-dummy.coef.lm(object, use.na = FALSE, \dots)
-dummy.coef.aovlist(object, use.na = FALSE, \dots)
+
+\method{dummy.coef}{lm}(object, use.na = FALSE, \dots)
+
+\method{dummy.coef}{aovlist}(object, use.na = FALSE, \dots)
 }
 \alias{dummy.coef}
 \alias{dummy.coef.lm}

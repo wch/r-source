@@ -1,6 +1,8 @@
 \name{solve}
 \title{Solve a System of Equations}
 \usage{
+solve(a, b, \dots)
+
 \method{solve}{default}(a, b, tol = 1e-7, LINPACK = FALSE, \dots)
 }
 \alias{solve}

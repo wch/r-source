@@ -4,7 +4,8 @@
 \title{Display a Color Image}
 \usage{
 image(x, \dots)
-image.default(x, y, z, zlim, xlim, ylim, col = heat.colors(12),
+
+\method{image}{default}(x, y, z, zlim, xlim, ylim, col = heat.colors(12),
       add = FALSE, xaxs = "i", yaxs = "i", xlab, ylab,
       breaks, oldstyle = FALSE, \dots)
 }

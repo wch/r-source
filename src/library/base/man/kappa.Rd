@@ -2,10 +2,11 @@
 \title{Estimate the Condition Number}
 \usage{
 kappa(z, \dots)
-kappa.lm     (z, \dots)
-kappa.default(z, exact = FALSE, \dots)
-kappa.qr     (z, \dots) 
-kappa.tri    (z, exact = FALSE, \dots)
+\method{kappa}{lm}(z, \dots)
+\method{kappa}{default}(z, exact = FALSE, \dots)
+\method{kappa}{qr}(z, \dots) 
+
+kappa.tri(z, exact = FALSE, \dots)
 }
 \alias{kappa}
 \alias{kappa.default}
@@ -29,10 +30,12 @@ kappa.tri    (z, exact = FALSE, \dots)
  by a cheap approximation. Following S, this uses the LINPACK routine
  \file{dtrco.f}.  However, in \R (or S) the exact calculation is also
  likely to be quick enough.
+
+ \code{kappa.tri} is an internal function called by \code{kappa.qr}.
 }
 \value{
   The condition number, \eqn{kappa}, or an approximation if
-  \code{exact=FALSE}.  
+  \code{exact = FALSE}.  
 }
 \references{
   Chambers, J. M. (1992)

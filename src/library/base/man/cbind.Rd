@@ -6,8 +6,8 @@
 \title{Combine R Objects by Rows or Columns}
 \description{
   Take a sequence of vector, matrix or data frames arguments and combine
-  by \emph{c}olumns or \emph{r}ows, respectively.  There may be methods
-  for other \R classes.
+  by \emph{c}olumns or \emph{r}ows, respectively.  These are generic
+  functions with methods for other \R classes.
 }
 \usage{
 cbind(\dots, deparse.level = 1)

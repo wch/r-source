@@ -6,7 +6,7 @@
   appending sequence numbers to duplicates.
 }
 \usage{
-make.unique(names, sep=".")
+make.unique(names, sep = ".")
 }
 \arguments{
   \item{names}{a character vector}
@@ -14,7 +14,7 @@ make.unique(names, sep=".")
     its sequence number.}
 }
 \value{
-  a character vector of same length as \code{names} with duplicates changed.
+  A character vector of same length as \code{names} with duplicates changed.
 }
 \details{
   The algorithm used by \code{make.unique} has the property that

@@ -12,10 +12,10 @@
 }
 \usage{
 case.names(object, \dots)
-case.names.lm(object, full = FALSE, \dots)
+\method{case.names}{lm}(object, full = FALSE, \dots)
 
 variable.names(object, \dots)
-variable.names.lm(object, full = FALSE, \dots)
+\method{variable.names}{lm}(object, full = FALSE, \dots)
 }
 \arguments{
  \item{object}{an \R object, typically a fitted model.}

@@ -5,7 +5,7 @@
   Provide a way to alter the levels attribute of factor.
 }
 \usage{
-levels(x) <- value
+\method{levels}{factor}(x) <- value
 }
 \arguments{
   \item{x}{a factor.}

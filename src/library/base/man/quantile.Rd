@@ -9,6 +9,8 @@
   largest to a probability of 1.
 }
 \usage{
+quantile(x, \dots)
+
 \method{quantile}{default}(x, probs = seq(0, 1, 0.25), na.rm = FALSE,
          names = TRUE, \dots)
 }

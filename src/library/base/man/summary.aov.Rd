@@ -1,4 +1,4 @@
-\name{aov}
+\name{summary.aov}
 \alias{summary.aov}
 \alias{summary.aovlist}
 \alias{print.summary.aov}
@@ -7,6 +7,7 @@
 \usage{
 \method{summary}{aov}(object, intercept = FALSE, split,
          expand.split = TRUE, keep.zero.df = TRUE, \dots)
+
 \method{summary}{aovlist}(object, \dots)
 }
 \arguments{

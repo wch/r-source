@@ -10,8 +10,10 @@
 }
 \usage{
 model.tables(x, \dots)
-model.tables.aov(x, type = "effects", se = FALSE, cterms, \dots)
-model.tables.aovlist(x, type = "effects", se = FALSE, \dots)
+
+\method{model.tables}{aov}(x, type = "effects", se = FALSE, cterms, \dots)
+
+\method{model.tables}{aovlist}(x, type = "effects", se = FALSE, \dots)
 }
 \arguments{
   \item{x}{a model object, usually produced by \code{aov}}

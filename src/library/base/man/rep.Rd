@@ -11,6 +11,7 @@
 }
 \usage{
 rep(x, times, \dots)
+
 \method{rep}{default}(x, times, length.out, each, \dots)
 
 rep.int(x, times)

@@ -43,9 +43,12 @@ socketConnection(host = "localhost", port, server = FALSE,
                  blocking = FALSE, open = "a+",
                  encoding = getOption("encoding"))
 
+open(con, \dots)
 \method{open}{connection}(con, open = "r", blocking = TRUE, \dots)
+close(con, \dots)
 \method{close}{connection}(con, type = "rw", \dots)
-\method{flush}{connection}(con)
+
+flush(con)
 
 isOpen(con, rw = "")
 isIncomplete(con)

@@ -14,9 +14,16 @@
   for the internal date-time classes are documented here.
 }
 \usage{
+weekdays(x, abbreviate)
 \method{weekdays}{POSIXt}(x, abbreviate = FALSE)
+
+months(x, abbreviate)
 \method{months}{POSIXt}(x, abbreviate = FALSE)
+
+quarters(x, abbreviate)
 \method{quarters}{POSIXt}(x, \dots)
+
+julian(x, \dots)
 \method{julian}{POSIXt}(x, origin = as.POSIXct("1970-01-01", tz="GMT"), \dots)
 }
 \arguments{

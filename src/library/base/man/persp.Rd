@@ -8,7 +8,8 @@
 }
 \usage{
 persp(x, \dots)
-persp.default(x = seq(0, 1, len = nrow(z)), y = seq(0, 1, len = ncol(z)), z,
+
+\method{persp}{default}(x = seq(0, 1, len = nrow(z)), y = seq(0, 1, len = ncol(z)), z,
       xlim = range(x), ylim = range(y), zlim = range(z, na.rm = TRUE),
       xlab = NULL, ylab = NULL, zlab = NULL, main = NULL, sub = NULL,
       theta = 0, phi = 15, r = sqrt(3), d = 1, scale = TRUE, expand = 1,

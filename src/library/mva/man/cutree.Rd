@@ -7,7 +7,7 @@
   height(s).
 }
 \usage{
-cutree(tree, k=NULL, h=NULL)
+cutree(tree, k = NULL, h = NULL)
 }
 \arguments{
  \item{tree}{a tree as produced by \code{\link{hclust}}. \code{cutree()}

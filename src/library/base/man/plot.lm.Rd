@@ -4,13 +4,13 @@
 \title{Plot Diagnostics for an lm Object}
 \usage{
 \method{plot}{lm}(x, which = 1:4,
-        caption = c("Residuals vs Fitted", "Normal Q-Q plot",
-                    "Scale-Location plot", "Cook's distance plot"),
-        panel = points,
-        sub.caption = deparse(x$call), main = "",
-        ask = prod(par("mfcol")) < length(which) && dev.interactive(),
-        \dots,
-        id.n = 3, labels.id = names(residuals(x)), cex.id = 0.75)
+     caption = c("Residuals vs Fitted", "Normal Q-Q plot",
+                 "Scale-Location plot", "Cook's distance plot"),
+     panel = points,
+     sub.caption = deparse(x$call), main = "",
+     ask = prod(par("mfcol")) < length(which) && dev.interactive(),
+     \dots,
+     id.n = 3, labels.id = names(residuals(x)), cex.id = 0.75)
 }
 \arguments{
   \item{x}{\code{lm} object, typically result of \code{\link{lm}} or

@@ -1,7 +1,7 @@
 \name{interaction}
 \title{Compute Factor Interactions}
 \usage{
-interaction(\dots, drop=FALSE)
+interaction(\dots, drop = FALSE)
 }
 \alias{interaction}
 \arguments{

@@ -9,7 +9,7 @@
 }
 \usage{
 heatmap(x, Rowv, Colv, distfun = dist, hclustfun = hclust, add.expr,
-        scale=c("row", "column", "none"), na.rm = TRUE, \dots)
+        scale = c("row", "column", "none"), na.rm = TRUE, \dots)
 }
 \arguments{
   \item{x}{numeric matrix of the values to be plotted. }

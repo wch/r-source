@@ -8,7 +8,9 @@
 }
 \usage{
 lines(x, \dots)
-lines.default(x, y=NULL, type="l", col=par("col"), lty=par("lty"), \dots)
+
+\method{lines}{default}(x, y = NULL, type = "l", col = par("col"),
+      lty = par("lty"), \dots)
 }
 \arguments{
   \item{x, y}{coordinate vectors of points to join.}

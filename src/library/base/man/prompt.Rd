@@ -8,9 +8,11 @@
 }
 \usage{
 prompt(object, filename = NULL, name = NULL, \dots)
-prompt.default(object, filename = NULL, name = NULL,
-               force.function = FALSE, \dots)
-prompt.data.frame(object, filename = NULL, name = NULL, \dots)
+
+\method{prompt}{default}(object, filename = NULL, name = NULL,
+       force.function = FALSE, \dots)
+%
+%\method{prompt}{data.frame}(object, filename = NULL, name = NULL, \dots)
 }
 \arguments{
   \item{object}{an \R object, typically a function.}

@@ -9,14 +9,12 @@
 }
 \usage{
 rle(x)
-\method{print}{rle}(x, digits = getOption("digits"), \dots)
 inverse.rle(x, \dots)
 }
 \arguments{
   \item{x}{a simple vector for \code{rle()} or an object of class
-    \code{"rle"} for \code{print()} or \code{inverse.rle()}.}
-  \item{digits, \dots}{potentially further arguments to the
-    corresponding method.}
+    \code{"rle"} for \code{inverse.rle()}.}
+  \item{\dots}{further arguments which are ignored in \R.}
 }
 \value{
   \code{rle()} returns an object of class \code{"rle"} which is a list

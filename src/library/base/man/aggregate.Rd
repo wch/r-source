@@ -6,10 +6,13 @@
 \title{Compute Summary Statistics of Data Subsets}
 \usage{
 aggregate(x, \dots)
-aggregate.default(x, \dots)
-aggregate.data.frame(x, by, FUN, \dots)
-aggregate.ts(x, nfrequency = 1, FUN = sum, ndeltat = 1,
-             ts.eps = getOption("ts.eps"), \dots)
+
+\method{aggregate}{default}(x, \dots)
+
+\method{aggregate}{data.frame}(x, by, FUN, \dots)
+
+\method{aggregate}{ts}(x, nfrequency = 1, FUN = sum, ndeltat = 1,
+          ts.eps = getOption("ts.eps"), \dots)
 }
 \description{
   Splits the data into subsets, computes summary statistics for each,

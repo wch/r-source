@@ -5,10 +5,10 @@
 \usage{
 biplot(x, \dots)
 
-biplot.default(x, y, var.axes = TRUE, col, cex = rep(par("cex"), 2),
-               xlabs = NULL, ylabs = NULL, expand = 1,
-               xlim  = NULL, ylim  = NULL, arrow.len = 0.1,
-               main = NULL, sub = NULL, xlab = NULL, ylab = NULL, \dots)
+\method{biplot}{default}(x, y, var.axes = TRUE, col, cex = rep(par("cex"), 2),
+       xlabs = NULL, ylabs = NULL, expand = 1,
+       xlim  = NULL, ylim  = NULL, arrow.len = 0.1,
+       main = NULL, sub = NULL, xlab = NULL, ylab = NULL, \dots)
 }
 \arguments{
   \item{x}{The \code{biplot}, a fitted object. For \code{biplot.default},

@@ -13,11 +13,12 @@
 }
 \usage{
 stack(x, \dots)
-stack.default(x, \dots)
-stack.data.frame(x, select, \dots)
+\method{stack}{default}(x, \dots)
+\method{stack}{data.frame}(x, select, \dots)
+
 unstack(x, \dots)
-unstack.default(x, form, \dots)
-unstack.data.frame(x, form = formula(x), \dots)
+\method{unstack}{default}(x, form, \dots)
+\method{unstack}{data.frame}(x, form = formula(x), \dots)
 }
 \arguments{
   \item{x}{object to be stacked or unstacked}

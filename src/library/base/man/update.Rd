@@ -2,7 +2,8 @@
 \title{Update and Re-fit a Model Call}
 \usage{
 update(object, \dots)
-update.default(object, formula., \dots, evaluate = TRUE)
+
+\method{update}{default}(object, formula., \dots, evaluate = TRUE)
 }
 \alias{update}
 \alias{update.default}

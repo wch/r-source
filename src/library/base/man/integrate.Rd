@@ -66,7 +66,7 @@ integrate(f, lower, upper, subdivisions=100,
   Springer Verlag.
 }
 \seealso{
-  The function \code{\link[adapt]{adapt}} in the \code{adapt} package on
+  The function \code{\link[adapt]{adapt}} in the \pkg{adapt} package on
   CRAN, for multivariate integration.
 }
 \examples{

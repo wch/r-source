@@ -6,13 +6,13 @@
   in the active graphics window.
 }
 \usage{
-plot.default(x, y = NULL, type = "p",  xlim = NULL, ylim = NULL,
-             log = "", main = NULL, sub = NULL, xlab = NULL, ylab = NULL,
-             ann = par("ann"), axes = TRUE, frame.plot = axes,
-             panel.first = NULL, panel.last = NULL,
-             col = par("col"), bg = NA, pch = par("pch"),
-             cex = 1, lty = par("lty"), lab = par("lab"),
-             lwd = par("lwd"), asp = NA, \dots)
+\method{plot}{default}(x, y = NULL, type = "p",  xlim = NULL, ylim = NULL,
+     log = "", main = NULL, sub = NULL, xlab = NULL, ylab = NULL,
+     ann = par("ann"), axes = TRUE, frame.plot = axes,
+     panel.first = NULL, panel.last = NULL,
+     col = par("col"), bg = NA, pch = par("pch"),
+     cex = 1, lty = par("lty"), lab = par("lab"),
+     lwd = par("lwd"), asp = NA, \dots)
 }
 \arguments{
   \item{x,y}{the \code{x} and \code{y} arguments provide the x and y

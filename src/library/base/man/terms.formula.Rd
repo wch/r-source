@@ -7,8 +7,8 @@
   construct a \code{\link{model.matrix}}.
 }
 \usage{
-terms.formula(x, specials = NULL, abb = NULL, data = NULL, neg.out = TRUE,
-              keep.order = FALSE, simplify = FALSE, ...)
+\method{terms}{formula}(x, specials = NULL, abb = NULL, data = NULL, neg.out = TRUE,
+     keep.order = FALSE, simplify = FALSE, ...)
 }
 \arguments{
   \item{x}{a formula.}

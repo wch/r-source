@@ -9,6 +9,7 @@
 \usage{
 approx   (x, y = NULL, xout, method="linear", n=50,
           yleft, yright, rule = 1, f=0, ties = mean)
+
 approxfun(x, y = NULL,       method="linear",
           yleft, yright, rule = 1, f=0, ties = mean)
 }

@@ -8,8 +8,11 @@
   \code{"POSIXct"} representing calendar dates and times. 
 }
 \usage{
-\method{plot}{POSIXct}(x, y, xlab = "", \dots)
 axis.POSIXct(side, x, at, format, \dots)
+
+\method{plot}{POSIXct}(x, y, xlab = "", \dots)
+
+\method{plot}{POSIXlt}(x, y, xlab = "", \dots)
 }
 \synopsis{
 plot.POSIXct(x, y, xlab = "", xaxt = par("xaxt"), ...)

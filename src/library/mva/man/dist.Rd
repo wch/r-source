@@ -3,9 +3,11 @@
 \usage{
 dist(x, method = "euclidean", diag = FALSE, upper = FALSE)
 
-\method{print}{dist}(x, diag = NULL, upper = NULL, \dots)
-\method{as.matrix}{dist}(x)
 as.dist(m, diag = FALSE, upper = FALSE)
+
+\method{print}{dist}(x, diag = NULL, upper = NULL, \dots)
+
+\method{as.matrix}{dist}(x)
 }
 \alias{dist}
 \alias{print.dist}

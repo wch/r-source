@@ -14,9 +14,12 @@
   in the future and are currently work in progress.}
 \usage{
 packageStatus(lib.loc = NULL, repositories = getOption("repositories"))
+
 \method{summary}{packageStatus}(object, \dots)
+
 \method{update}{packageStatus}(object, lib.loc = levels(object$inst$LibPath),
        repositories = levels(object$avail$Repository), \dots)
+
 \method{upgrade}{packageStatus}(object, ask = TRUE, \dots)
 }
 \arguments{

@@ -2,8 +2,8 @@
 \title{Regression Diagnostics}
 \usage{
 influence(model, \dots)
-influence.lm (model, do.coef = TRUE, \dots)
-influence.glm(model, do.coef = TRUE, \dots)
+\method{influence}{lm}(model, do.coef = TRUE, \dots)
+\method{influence}{glm}(model, do.coef = TRUE, \dots)
 
 lm.influence(model, do.coef = TRUE)
 }

@@ -8,6 +8,7 @@
 }
 \usage{
 \method{diff}{ts}(x, lag=1, differences=1, \dots)
+
 \method{na.omit}{ts}(object, \dots)
 }
 \arguments{

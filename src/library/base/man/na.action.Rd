@@ -2,7 +2,7 @@
 \title{NA Action}
 \usage{
 na.action(object, \dots)
-na.action.default(object, \dots)
+%na.action.default(object, \dots)
 }
 \alias{na.action}
 \alias{na.action.default}

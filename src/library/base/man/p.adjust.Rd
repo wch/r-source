@@ -6,6 +6,7 @@
   one of several methods.}
 \usage{
 p.adjust(p, method=p.adjust.methods, n=length(p))
+
 p.adjust.methods
 }
 \arguments{

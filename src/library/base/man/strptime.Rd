@@ -13,8 +13,8 @@
   dates and times.
 }
 \synopsis{
-format.POSIXct(x, format = "", tz = "", usetz = FALSE, \dots)
-format.POSIXlt(x, format = "", usetz = FALSE, \dots)
+\method{format}{POSIXct}(x, format = "", tz = "", usetz = FALSE, \dots)
+\method{format}{POSIXlt}(x, format = "", usetz = FALSE, \dots)
 
 \method{as.character}{POSIXt}(x, \dots)
 

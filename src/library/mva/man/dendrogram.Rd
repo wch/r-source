@@ -23,12 +23,16 @@
 }
 \usage{
 as.dendrogram(object, \dots)
+
 \method{plot}{dendrogram}(x, type=c("rectangle", "triangle"),
          center=FALSE, edge.root= !is.null(attr(x,"edgetext")),
          nodePar = NULL, edgePar = list(), xlab="", ylab="",
          horiz = FALSE, \dots)
+
 \method{cut}{dendrogram}(x, h, \dots)
+
 \method{print}{dendrogram}(x, digits, \dots)
+
 \method{str}{dendrogram}(x, \dots)% codoc warning; MM: hate to document
 % all arguments: user should rather look at ?str
 % Also: 'object' has different meaning here

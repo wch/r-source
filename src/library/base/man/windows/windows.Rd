@@ -23,7 +23,6 @@ win.print(width = 7, height = 7, pointsize = 12, printer = "")
 }
 
 \arguments{
-  \item{display}{indicates the purpose of the device.}
   \item{filename}{the name of the output file: it will be an enhanced
     Windows metafile, usually given extension \code{.emf} or
     \code{.wmf}. Up to 511 characters are allowed.

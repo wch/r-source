@@ -7,6 +7,7 @@
 \usage{
 poly(x, \dots, degree = 1, coefs = NULL)
 polym(\dots, degree = 1)
+
 \method{predict}{poly}(object, newdata, \dots)
 }
 \description{

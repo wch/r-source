@@ -10,13 +10,10 @@
   of elements with smaller subscripts, and returns a logical vector
   indicating which elements (rows) are duplicates.
 }
-\synopsis{
-duplicated(x, incomparables = FALSE, ...)
-\method{duplicated}{array}(x, incomparables = FALSE, MARGIN = 1, ...)
-}
 \usage{
 duplicated(x, incomparables = FALSE, \dots)
-duplicated.array(x, incomparables = FALSE, MARGIN = 1, \dots)
+
+\method{duplicated}{array}(x, incomparables = FALSE, MARGIN = 1, \dots)
 }
 \arguments{
   \item{x}{an atomic vector or a data frame or an array.}

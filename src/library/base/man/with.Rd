@@ -6,7 +6,8 @@
   Evaluate an \R expression in an environment constructed from data.
 }
 \usage{
-\method{with}{default}(data, expr, \dots)
+with(data, expr, \dots)
+%\method{with}{default}(data, expr, \dots)
 }
 \arguments{
   \item{data}{data to use for constructing an environment. For the

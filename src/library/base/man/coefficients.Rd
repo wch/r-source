@@ -1,4 +1,4 @@
-\name{coefficients}
+\name{coef}
 \title{Extract Model Coefficients}
 \usage{
 coef(object, \dots)

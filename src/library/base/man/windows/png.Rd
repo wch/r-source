@@ -18,7 +18,7 @@ png(filename = "Rplot\%03d.png", width = 480, height = 480, pointsize = 12,
   \item{filename}{the name of the output file, up to 511 characters.
     The page number is substituted if an integer format is included
     in the character string. (The result must be less than 600
-    characters long.)
+    characters long.)}
  \item{width}{the width of the device in pixels.}
  \item{height}{the height of the device in pixels.}
  \item{pointsize}{the default pointsize of plotted text, intepreted at

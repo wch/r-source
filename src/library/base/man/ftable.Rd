@@ -5,10 +5,12 @@
 \title{Flat Contingency Tables}
 \description{Create \dQuote{flat} contingency tables.}
 \usage{
+ftable(x, \dots)
+
 \method{ftable}{default}(\dots, exclude = c(NA, NaN), row.vars = NULL, col.vars = NULL)
 }
 \arguments{
-  \item{\dots}{\R objects which can be interpreted as factors (including
+  \item{x, \dots}{\R objects which can be interpreted as factors (including
     character strings), or a list (or data frame) whose components can
     be so interpreted, or a contingency table object of class
     \code{"table"} or \code{"ftable"}.}

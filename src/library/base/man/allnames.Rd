@@ -7,10 +7,9 @@
   expression or call.
 }
 \usage{
-all.names(expr, functions = TRUE,
-        max.names = 200, unique = FALSE)
-all.vars(expr, functions = FALSE,
-        max.names = 200, unique = TRUE)
+all.names(expr, functions = TRUE, max.names = 200, unique = FALSE)
+
+all.vars(expr, functions = FALSE, max.names = 200, unique = TRUE)
 }
 \arguments{
   \item{expr}{an expression or call from which the names are to be

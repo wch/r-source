@@ -5,7 +5,7 @@ list(\dots)
 pairlist(\dots)
 
 as.list(x, \dots)
-as.list.default(x, \dots)
+%as.list.default(x, \dots)
 as.pairlist(x)
 
 is.list(x)
