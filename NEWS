@@ -219,6 +219,8 @@ BUG FIXES
     o	ppr(, sm.method="spline") has an internal limit of 250 rows:
 	this is now 2500 and is now checked.
 
+    o	Using `destroy' or `close' on the X11 dataentry window frame
+	killed R.
 
 
 		CHANGES IN R VERSION 1.0.1

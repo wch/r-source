@@ -28,6 +28,7 @@
 
 #include "dataentry.h"
 #include <stdlib.h>
+static Atom _XA_WM_PROTOCOLS, protocol;
 
 
 static void clearwindow(void);
@@ -990,6 +991,14 @@ static void eventloop()
 	    case ConfigureNotify:
 		doConfigure(&ioevent);
 		break;
+	    case ClientMessage:
+		if(ioevent.xclient.message_type == _XA_WM_PROTOCOLS
+		   && ioevent.xclient.data.l[0] == protocol) {
+		    /* user clicked on `close' aka `destroy' */
+		       closewin();
+		       done = 1;
+		}
+		break;
 	    }
 	}
     }
@@ -1199,6 +1208,13 @@ int initwin()
 
     winattr.backing_store = Always;
     XChangeWindowAttributes(iodisplay, iowindow, CWBackingStore, &winattr);
+
+    /* set up protocols so that window manager sends */
+    /* me an event when user "destroys" window */
+    _XA_WM_PROTOCOLS = XInternAtom(iodisplay, "WM_PROTOCOLS", 0);
+    protocol = XInternAtom(iodisplay, "WM_DELETE_WINDOW", 0);
+    XSetWMProtocols(iodisplay, iowindow, &protocol, 1);
+
 
     iogc = XCreateGC(iodisplay, iowindow, 0, 0);
     XSetFont(iodisplay, iogc, font_info->fid);
