@@ -22,7 +22,7 @@ all: $(LIB)
 	@cp $(LIB) $(top_builddir)/library/$(pkg)/libs
 
 $(LIB): $(OBJS)
-	$(top_builddir)/bin/R SHLIB -o $@ $(OBJS)
+	$(SHLIBLD) $(SHLIBLDFLAGS) -o $@ $(OBJS) $(FLIBS)
 
 mostlyclean: clean
 clean:
