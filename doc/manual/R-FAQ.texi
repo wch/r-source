@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2004
-@set FAQ-VERSION 2.0.@value{FAQ-YEAR}-11-22
+@set FAQ-VERSION 2.0.@value{FAQ-YEAR}-11-24
 @set REL-VERSION 2.0.1
 @set REL-YEAR 2004
 @c <COMMENT>
@@ -479,7 +479,6 @@ to Mac OS 9.2.2.  This port of R for Macintosh is no longer supported.
 @c mandrake
 @c   10.0    i386   2.0.0  Michele Alzetta <mikalzet@libero.it>
 @c redhat
-@c   el3     i386   2.0.1
 @c   rh8     i386   2.0.0  Martyn Plummer <plummer@iarc.fr>
 @c   rh9     i386   2.0.0  Martyn Plummer <plummer@iarc.fr>
 @c   fc1     i386   2.0.0  Martyn Plummer <plummer@iarc.fr>
@@ -487,6 +486,7 @@ to Mac OS 9.2.2.  This port of R for Macintosh is no longer supported.
 @c   fc2     i386   2.0.0  Martyn Plummer <plummer@iarc.fr>
 @c   fc3     i386   2.0.1  Martyn Plummer <plummer@iarc.fr>
 @c           x86_64 2.0.1  Brian Ripley
+@c   el3     i386   2.0.1  Matthew P Cox
 @c suse
 @c   7.3     i386   1.8.0  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
 @c   8.0     i386   1.8.1  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
@@ -509,6 +509,7 @@ packages.
 Plummer
 @item          @tab x86_64 @tab Fedora1 @tab James Henstridge
 @item          @tab x86_64 @tab Fedora3 @tab Brian Ripley
+@item          @tab i386   @tab Enterprise Linux @tab Matthew P Cox
 @item SuSE     @tab i386   @tab 7.3/8.0/8.1/8.2 @tab Detlef Steuer
 @item          @tab i586   @tab 9.0/9.1/9.2 @tab Detlef Steuer
 @item VineLinux @tab i386 @tab 2.6 @tab Susunu Tanimura
@@ -3095,6 +3096,8 @@ Dynamic CORBA client/server facilities for R.  Connects to other
 CORBA-aware applications developed in arbitrary languages, on different
 machines and allows R functionality to be exported in the same way to
 other applications.
+@item IDocs
+Infrastructure for interactive documents.
 @item OOP
 OOP style classes and methods for R and @SPLUS{}.  Object references and
 class-based method definition are supported in the style of languages
@@ -3102,6 +3105,11 @@ such as Java and C++.
 @item RCurl
 Allows one to compose HTTP requests to fetch URIs, post forms, etc., and
 process the results returned by the Web server.
+@item RDCOMClient
+Provides dynamic client-side access to (D)COM applications from within
+R.
+@item RDCOMServer
+Facilities for exporting S objects and functions as COM objects.
 @item REmbeddedPostgres
 Allows R functions and objects to be used to implement SQL functions ---
 per-record, aggregate and trigger functions.

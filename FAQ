@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 2.0.2004-11-22
+Version 2.0.2004-11-24
 ISBN 3-900051-08-9
 Kurt Hornik
 
@@ -375,6 +375,7 @@ The `bin/linux' directory of a CRAN site contains the following packages.
      Red Hat     i386     8/9/Fedora1/Fedora2/Fedora3     Martyn Plummer
                  x86_64   Fedora1                         James Henstridge
                  x86_64   Fedora3                         Brian Ripley
+                 i386     Enterprise Linux                Matthew P Cox
      SuSE        i386     7.3/8.0/8.1/8.2                 Detlef Steuer
                  i586     9.0/9.1/9.2                     Detlef Steuer
      VineLinux   i386     2.6                             Susunu Tanimura
@@ -2957,6 +2958,9 @@ available via `http://www.omegahat.org/R/'.
      machines and allows R functionality to be exported in the same way to
      other applications.
 
+*IDocs*
+     Infrastructure for interactive documents.
+
 *OOP*
      OOP style classes and methods for R and S-PLUS.  Object references and
      class-based method definition are supported in the style of languages
@@ -2965,6 +2969,13 @@ available via `http://www.omegahat.org/R/'.
 *RCurl*
      Allows one to compose HTTP requests to fetch URIs, post forms, etc.,
      and process the results returned by the Web server.
+
+*RDCOMClient*
+     Provides dynamic client-side access to (D)COM applications from within
+     R.
+
+*RDCOMServer*
+     Facilities for exporting S objects and functions as COM objects.
 
 *REmbeddedPostgres*
      Allows R functions and objects to be used to implement SQL functions --

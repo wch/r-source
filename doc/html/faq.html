@@ -31,7 +31,7 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#dir">(dir)</a>
 <h2 class="unnumbered">R FAQ</h2>
 
 <p><h2>Frequently Asked Questions on R</h2>
-<h2>Version 2.0.2004-11-22</h2>
+<h2>Version 2.0.2004-11-24</h2>
 <h2>ISBN 3-900051-08-9</h2>
 <address>Kurt Hornik</address>
 <p><p><hr><p>
@@ -506,7 +506,6 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#R-Basics">R Basics</a>
 <!-- mandrake -->
 <!-- 10.0    i386   2.0.0  Michele Alzetta <mikalzet@libero.it> -->
 <!-- redhat -->
-<!-- el3     i386   2.0.1 -->
 <!-- rh8     i386   2.0.0  Martyn Plummer <plummer@iarc.fr> -->
 <!-- rh9     i386   2.0.0  Martyn Plummer <plummer@iarc.fr> -->
 <!-- fc1     i386   2.0.0  Martyn Plummer <plummer@iarc.fr> -->
@@ -514,6 +513,7 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#R-Basics">R Basics</a>
 <!-- fc2     i386   2.0.0  Martyn Plummer <plummer@iarc.fr> -->
 <!-- fc3     i386   2.0.1  Martyn Plummer <plummer@iarc.fr> -->
 <!-- x86_64 2.0.1  Brian Ripley -->
+<!-- el3     i386   2.0.1  Matthew P Cox -->
 <!-- suse -->
 <!-- 7.3     i386   1.8.0  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de> -->
 <!-- 8.0     i386   1.8.1  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de> -->
@@ -534,6 +534,7 @@ packages.
 Plummer
 <br></td></tr><tr align="left"><td valign="top"></td><td valign="top">x86_64 </td><td valign="top">Fedora1 </td><td valign="top">James Henstridge
 <br></td></tr><tr align="left"><td valign="top"></td><td valign="top">x86_64 </td><td valign="top">Fedora3 </td><td valign="top">Brian Ripley
+<br></td></tr><tr align="left"><td valign="top"></td><td valign="top">i386   </td><td valign="top">Enterprise Linux </td><td valign="top">Matthew P Cox
 <br></td></tr><tr align="left"><td valign="top">SuSE     </td><td valign="top">i386   </td><td valign="top">7.3/8.0/8.1/8.2 </td><td valign="top">Detlef Steuer
 <br></td></tr><tr align="left"><td valign="top"></td><td valign="top">i586   </td><td valign="top">9.0/9.1/9.2 </td><td valign="top">Detlef Steuer
 <br></td></tr><tr align="left"><td valign="top">VineLinux </td><td valign="top">i386 </td><td valign="top">2.6 </td><td valign="top">Susunu Tanimura
@@ -2697,11 +2698,15 @@ R package repository is available via <a href="http://www.omegahat.org/R/">http:
 CORBA-aware applications developed in arbitrary languages, on different
 machines and allows R functionality to be exported in the same way to
 other applications. 
+<br><dt><strong>IDocs</strong><dd>Infrastructure for interactive documents. 
 <br><dt><strong>OOP</strong><dd>OOP style classes and methods for R and <span class="sc">S-Plus</span>.  Object references and
 class-based method definition are supported in the style of languages
 such as Java and C++. 
 <br><dt><strong>RCurl</strong><dd>Allows one to compose HTTP requests to fetch URIs, post forms, etc., and
 process the results returned by the Web server. 
+<br><dt><strong>RDCOMClient</strong><dd>Provides dynamic client-side access to (D)COM applications from within
+R. 
+<br><dt><strong>RDCOMServer</strong><dd>Facilities for exporting S objects and functions as COM objects. 
 <br><dt><strong>REmbeddedPostgres</strong><dd>Allows R functions and objects to be used to implement SQL functions &mdash;
 per-record, aggregate and trigger functions. 
 <br><dt><strong>REventLoop</strong><dd>An abstract event loop mechanism that is toolkit independent and can be
