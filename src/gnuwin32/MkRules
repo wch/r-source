@@ -60,6 +60,8 @@ MINGW32CFLAG=
 MINGW32LDFLAG=
 FLIBS=-lg2c
 AWK=gawk
+## only safe for gcc >= 3.1
+DEPARG=-MM
 endif
 
 ifeq ($(strip $(BUILD)),CROSS)
@@ -67,6 +69,8 @@ MINGW32CFLAG=-isystem $(HEADER)
 MINGW32LDFLAG=
 FLIBS=-lg2c
 AWK=awk
+## BDR's build of cross-compiler is 2.95.3
+DEPARG=-M
 endif
 
 PERL=perl
@@ -94,19 +98,19 @@ RESCOMP=$(BINPREF)windres
 
 .c.d:
 	@echo "making $@ from $<"
-	@$(CC) -M $(CFLAGS) $($*-CFLAGS) $< -o $@
+	@$(CC) $(DEPARG) $(CFLAGS) $($*-CFLAGS) $< -o $@
 
 .cc.d:
 	@echo "making $@ from $<"
-	@$(CXX) -M $(CXXFLAGS) $($*-CXXFLAGS) $< -o $@
+	@$(CXX) $(DEPARG) $(CXXFLAGS) $($*-CXXFLAGS) $< -o $@
 
 .cpp.d:
 	@echo "making $@ from $<"
-	@$(CXX) -M $(CXXFLAGS) $($*-CXXFLAGS) $< -o $@
+	@$(CXX) $(DEPARG) $(CXXFLAGS) $($*-CXXFLAGS) $< -o $@
 
 .C.d:
 	@echo "making $@ from $<"
-	@$(CXX) -M $(CXXFLAGS) $($*-CXXFLAGS) $< -o $@
+	@$(CXX) $(DEPARG) $(CXXFLAGS) $($*-CXXFLAGS) $< -o $@
 
 .c.o:
 	$(CC) $(CFLAGS) $($*-CFLAGS) -c $< -o $@
