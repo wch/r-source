@@ -1108,7 +1108,8 @@ SEXP do_capabilities(SEXP call, SEXP op, SEXP args, SEXP rho)
 #ifdef Unix
     Rboolean X11 = (strcmp(R_GUIType, "X11") == 0) ||
 	(strcmp(R_GUIType, "Tk") == 0) ||
-	(strcmp(R_GUIType, "GNOME") == 0);
+	(strcmp(R_GUIType, "GNOME") == 0)  || 
+	(strcmp(R_GUIType, "AQUA") == 0);
 #endif
 
     checkArity(op, args);
