@@ -9,6 +9,7 @@
 provide(package)
 % Removed in 1.2.0
 .Provided
+Version(.)
 category(\dots)
 dnchisq(.)
 pnchisq(.)
