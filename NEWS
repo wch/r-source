@@ -24,6 +24,8 @@ NEW FEATURES
     o   New function file.symlink() to create symbolic file links
 	where supported by the OS.
 
+    o   basename() and dirname() are now vectorized.
+
 
 INSTALLATION CHANGES
 

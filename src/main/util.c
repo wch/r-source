@@ -1004,27 +1004,33 @@ SEXP do_setwd(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 SEXP do_basename(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    SEXP s = R_NilValue;	/* -Wall */
+    SEXP ans, s = R_NilValue;	/* -Wall */
     char  buf[PATH_MAX], *p, fsp = FILESEP[0];
+    int i, n;
 
     checkArity(op, args);
-    if (!isPairList(args) || !isValidString(s = CAR(args)) || LENGTH(s) != 1)
-	errorcall(call, "a single character string argument expected");
-    p = R_ExpandFileName(CHAR(STRING_ELT(s, 0)));
-    if (strlen(p) > PATH_MAX - 1)
-	errorcall(call, "path too long");
-    strcpy (buf, p);
+    if (TYPEOF(s = CAR(args)) != STRSXP)
+	errorcall(call, "a character vector argument expected");
+    PROTECT(ans = allocVector(STRSXP, n = LENGTH(s)));
+    for(i = 0; i < n; i++) {
+	p = R_ExpandFileName(CHAR(STRING_ELT(s, i)));
+	if (strlen(p) > PATH_MAX - 1)
+	    errorcall(call, "path too long");
+	strcpy (buf, p);
 #ifdef Win32
-    for (p = buf; *p != '\0'; p++)
-	if (*p == '\\') *p = '/';
+	for (p = buf; *p != '\0'; p++)
+	    if (*p == '\\') *p = '/';
 #endif
-    /* remove trailing file separator(s) */
-    while ( *(p = buf + strlen(buf) - 1) == fsp ) *p = '\0';
-    if ((p = strrchr(buf, fsp)))
-	p++;
-    else
-	p = buf;
-    return(mkString(p));
+	/* remove trailing file separator(s) */
+	while ( *(p = buf + strlen(buf) - 1) == fsp ) *p = '\0';
+	if ((p = strrchr(buf, fsp)))
+	    p++;
+	else
+	    p = buf;
+	SET_STRING_ELT(ans, i, mkChar(p));
+    }
+    UNPROTECT(1);
+    return(ans);
 }
 
 /* remove portion of path after last file separator if one exists, else
@@ -1033,38 +1039,44 @@ SEXP do_basename(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 SEXP do_dirname(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    SEXP s = R_NilValue;	/* -Wall */
+    SEXP ans, s = R_NilValue;	/* -Wall */
     char  buf[PATH_MAX], *p, fsp = FILESEP[0];
+    int i, n;
 
     checkArity(op, args);
-    if (!isPairList(args) || !isValidString(s = CAR(args)) || LENGTH(s) != 1)
-	errorcall(call, "a single character string argument expected");
-    p = R_ExpandFileName(CHAR(STRING_ELT(s, 0)));
-    if (strlen(p) > PATH_MAX - 1)
-	errorcall(call, "path too long");
-    strcpy (buf, p);
+    if (TYPEOF(s = CAR(args)) != STRSXP)
+	errorcall(call, "a character vector argument expected");
+    PROTECT(ans = allocVector(STRSXP, n = LENGTH(s)));
+    for(i = 0; i < n; i++) {
+	p = R_ExpandFileName(CHAR(STRING_ELT(s, 0)));
+	if (strlen(p) > PATH_MAX - 1)
+	    errorcall(call, "path too long");
+	strcpy (buf, p);
 #ifdef Win32
-    for(p = buf; *p != '\0'; p++)
-	if(*p == '\\') *p = '/';
+	for(p = buf; *p != '\0'; p++)
+	    if(*p == '\\') *p = '/';
 #endif
-    /* remove trailing file separator(s) */
-    while ( *(p = buf + strlen(buf) - 1) == fsp  && p > buf
+	/* remove trailing file separator(s) */
+	while ( *(p = buf + strlen(buf) - 1) == fsp  && p > buf
 #ifdef Win32
-	    && *(p-1) != ':'
+		&& *(p-1) != ':'
 #endif
-	) *p = '\0';
-    p = strrchr(buf, fsp);
-    if(p == NULL)
-	strcpy(buf, ".");
-    else {
-	while(p > buf && *p == fsp
+	    ) *p = '\0';
+	p = strrchr(buf, fsp);
+	if(p == NULL)
+	    strcpy(buf, ".");
+	else {
+	    while(p > buf && *p == fsp
 #ifdef Win32
-	      && *(p-1) != ':'
+		  && *(p-1) != ':'
 #endif
-	    ) --p;
-	p[1] = '\0';
+		) --p;
+	    p[1] = '\0';
+	}
+	SET_STRING_ELT(ans, i, mkChar(buf));
     }
-    return(mkString(buf));
+    UNPROTECT(1);    
+    return(ans);
 }
 
 

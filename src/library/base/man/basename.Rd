@@ -15,7 +15,7 @@ basename(path)
 dirname(path)
 }
 \arguments{
-  \item{path}{character vector, containing a single path name.}
+  \item{path}{character vector, containing path names.}
 }
 \details{
   For \code{dirname} tilde expansion is done: see the description of
@@ -26,13 +26,15 @@ dirname(path)
   from the result.
 }
 \value{
-  A character vector.
+  A character vector of the same length as \code{path}.  A zero-length
+  input will give a zero-length output with no error (unlike \R < 1.7.0). 
 }
 \seealso{
   \code{\link{file.path}}, \code{\link{path.expand}}.
 }
 \examples{
-basename(file.path("","p1","p2","p3","filename"))
+basename(file.path("","p1","p2","p3", c("file1", "file2")))
 dirname(file.path("","p1","p2","p3","filename"))
+\testonly{dirname(character(0))}
 }
 \keyword{file}
