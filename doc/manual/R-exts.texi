@@ -213,13 +213,13 @@ configured and recorded in @file{$R_HOME/etc/Makeconf}).  If a package
 needs to specify additional directories for searching header files
 (@samp{-I} options) or additional libraries for linking (@samp{-l} and
 @samp{-L} options), it should do this by setting the variables
-@code{PKG_CPPFLAGS} and @code{PKG_LIBS} in @file{Makeconf}.  (Additional
-flags to be passed to the C or Fortran compiler can be specified by the
-variables @code{PKG_CFLAGS} and @code{PKG_FFLAGS}, respectively.)  Note
-that this mechanism should be general enough to eliminate the need for a
-package-specific @file{Makefile}.  If such a file is to be distributed,
-considerable care is needed to make it general enough to work on all
-@R{} platforms.
+@code{PKG_CPPFLAGS} and @code{PKG_LIBS} in @file{src/Makevars}.
+(Additional flags to be passed to the C or Fortran compiler can be
+specified by the variables @code{PKG_CFLAGS} and @code{PKG_FFLAGS},
+respectively.)  Note that this mechanism should be general enough to
+eliminate the need for a package-specific @file{Makefile}.  If such a
+file is to be distributed, considerable care is needed to make it
+general enough to work on all @R{} platforms.
 
 The @file{data} subdirectory is for additional data files the package
 makes available for loading using @code{data()}.  Currently, data files
