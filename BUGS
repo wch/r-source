@@ -253,10 +253,10 @@ none
 
 Directory:  incoming
 
-* PR# 881 *
-Subject: Incorrect values in non-central chisq values on Linux
-From: Prof Brian Ripley <ripley@stats.ox.ac.uk>
-Date: Wed, 21 Mar 2001 17:22:02 +0000 (GMT)
+* PR# 883 *
+Subject: cor(x,y) when is.null(y)
+From: "Charles C. Berry" <cberry@tajo.ucsd.edu>
+Date: Fri, 23 Mar 2001 11:38:05 -0800 (PST)
 * PR# 880 *
 Subject: A limitation for polyroot ?
 From: chyihung.hsu@pharma.Novartis.com
@@ -265,3 +265,11 @@ Date: Mon, 19 Mar 2001 16:45:59 -0500
 Subject: segmentation fault of unknown cause
 From: Martin Schlather <Martin.Schlather@uni-bayreuth.de>
 Date: Wed, 14 Mar 2001 17:45:25 +0100
+* PR# 882 *
+Subject:  eigen segfaults on 0-diml matrices 
+From: Prof Brian Ripley <ripley@stats.ox.ac.uk>
+Date: Fri, 23 Mar 2001 15:34:14 GMT
+* PR# 881 *
+Subject: Incorrect values in non-central chisq values on Linux
+From: Prof Brian Ripley <ripley@stats.ox.ac.uk>
+Date: Wed, 21 Mar 2001 17:22:02 +0000 (GMT)
