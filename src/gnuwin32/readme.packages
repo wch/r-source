@@ -239,8 +239,8 @@ executable to be debugged as the full path to the R front-end.
 
 Extra care is needed when referencing variables (rather than
 functions) exported from R.dll.  These must be declared
-__declspec(dllimport) (as in R's own header files).  A list of the
-relevant variables is in the file `exported-vars'.
+__declspec(dllimport) (as in R's own header files).  The list of the
+relevant variables is at the end of the file 'R.exp'.
 
 VC++ lacks some standard functions such as isnan and isfinite.  To use
 R's macros you will need
