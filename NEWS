@@ -201,7 +201,7 @@ BUG FIXES
 
     o	capabilities() was wrong for the Aqua GUI on MacOS X.
 
-    o   Using Rprof() with a non-writeable 'file' argument is now a 
+    o   Using Rprof() with a non-writable 'file' argument is now a 
 	non-fatal error and does not abort R.
 
     o   binom.test() did not deparse its arguments early enough such
@@ -220,6 +220,15 @@ BUG FIXES
 	knots and levels as the actual values.  Both print() and
 	summary() methods called the constant values "step heights",
 	although they were not the heights of the steps.
+
+    o	is.na/is.nan() were giving spurious warnings if applied to a
+	raw vector.
+
+    o	is.atomic() gave incorrect result (false) for a raw vector.
+
+    o	rank() and order() accepted raw and list inputs, but did not
+	give a sensible answer (always 1:n).  Similarly, partial sorts
+	of a raw vector were accepted but did nothing.
 
 
 

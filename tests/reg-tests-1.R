@@ -3323,3 +3323,18 @@ ecdf(x)
 ## Incorrect use of as.Date segfaulted on some x86_64 systems.
 as.Date("2001", "%Y")
 ## answer is usually current mon & day, but 2001-01-01 on Solaris.
+
+
+## rank and order accepted invalid inputs (and gave nonsense)
+x1 <- as.list(10:1)
+x2 <-  charToRaw("A test string")
+stopifnot(inherits(try(order(x1)), "try-error"),
+          inherits(try(order(x2)), "try-error"),
+          inherits(try(rank(x1)), "try-error"),
+          inherits(try(rank(x2)), "try-error"))
+## worked but gave 1:n in 2.0.0.
+stopifnot(inherits(try(sort(x1)), "try-error"),
+          inherits(try(sort(x2)), "try-error"),
+          inherits(try(sort(x1, partial=5)), "try-error"),
+          inherits(try(sort(x2, partial=5)), "try-error"))
+##
