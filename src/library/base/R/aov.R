@@ -260,7 +260,7 @@ summary.aov <- function(object, intercept = FALSE, keep.zero.df = TRUE, ...)
             TT <- ms/ms[nt]
             TP <- 1 - pf(TT, df, rdf)
             TT[nt] <- TP[nt] <- NA
-            x$"F Value" <- TT
+            x$"F value" <- TT
             x$"Pr(>F)" <- TP
             ## 'nterms' ~= 'Residuals' have no P-value
         }
