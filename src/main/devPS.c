@@ -32,6 +32,10 @@
 #include "Fileio.h"
 #include <Rdevices.h>
 
+#ifdef __MRC__
+extern char *R_fgets(char *buf, int i, FILE *fp);
+#endif
+
 #define INVALID_COL 0xff0a0b0c
 
 /* Define this to use hyphen except in -[0-9] */
@@ -204,7 +208,11 @@ static int MatchKey(char *l, char *k)
 static int KeyType(char *s)
 {
     int i;
+#ifdef __MRC__
+    if (*s == '\n' || *s == '\r')
+#else
     if (*s == '\n')
+#endif
 	return Empty;
     for (i = 0; KeyWordDictionary[i].keyword; i++)
 	if (MatchKey(s, KeyWordDictionary[i].keyword))
@@ -358,7 +366,12 @@ static int GetNextItem(FILE *fp, char *dest, int c)
     while (1) {
 	if (feof(fp)) { p = NULL; return 1; }
 	if (!p || *p == '\n' || *p == '\0') {
+#ifdef __MRC__
+	p = R_fgets(buf, 1000, fp);	 
+#else
 	    p = fgets(buf, 1000, fp);
+#endif
+	    
 	}
 	while (isspace((int)*p)) p++;
 	if (p == '\0' || *p == '%'|| *p == '\n') { p = NULL; continue; }
@@ -433,7 +446,11 @@ PostScriptLoadFontMetrics(char *fontpath, FontMetricInfo *metrics,
 	metrics->CharInfo[ii].WX = NA_SHORT;
 	for(j = 0; j < 4; j++) metrics->CharInfo[ii].BBox[j] = 0;
     }
+#ifdef __MRC__
+    while (R_fgets(buf, BUFSIZE, fp)) { 
+#else
     while (fgets(buf, BUFSIZE, fp)) {
+#endif
 	switch(KeyType(buf)) {
 
 	case StartFontMetrics:
