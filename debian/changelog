@@ -1,3 +1,31 @@
+r-base (1.4.1.cvs20020414-2) unstable; urgency=low
+
+  * debian/control: Added virtual fortran77-compiler, c-compiler to the
+    list of alternative compilers that r-base-dev Depends: on
+
+ --
+
+r-base (1.4.1.cvs20020414-1) unstable; urgency=low
+
+  * Upgraded to new release candidate 2002-04-14 of R 1.5.0
+
+ -- Dirk Eddelbuettel <edd@debian.org>  Sat, 13 Apr 2002 20:48:59 -0500
+
+r-base (1.4.1.cvs20020407-1) unstable; urgency=low
+
+  * Upgraded to new release candidate 2002-04-07 of R 1.5.0
+
+ -- Dirk Eddelbuettel <edd@debian.org>  Sun,  7 Apr 2002 07:59:43 -0500
+
+r-base (1.4.1.cvs20020331-1) unstable; urgency=low
+
+  * Upgraded to new release candidate 2002-03-23 of R 1.5.0
+
+  * debian/control: Build-Depends on texinfo (>= 4.1-2) to ensure that 
+    we will not be bitten by the epsf.tex bug 
+  
+ -- Dirk Eddelbuettel <edd@debian.org>  Sun, 31 Mar 2002 08:55:08 -0600
+
 r-base (1.4.1.cvs20020323-1) unstable; urgency=low
 
   * Upgraded to new release candidate 2002-03-23 of R 1.5.0

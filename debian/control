@@ -3,7 +3,7 @@ Section: math
 Priority: optional
 Maintainer: Dirk Eddelbuettel <edd@debian.org>
 Standards-Version: 3.5.0
-Build-Depends: blas-dev (>= 1.0-9), libgnome-dev, libzvt-dev, libgtkxmhtml-dev, tcl8.3-dev, tk8.3-dev, libglade-gnome0-dev, bison, g77 [!m68k !ia64], g77-3.0 [ia64], f2c [m68k], gcc-3.0 [ia64], g++-3.0 [ia64], groff-base, libncurses5-dev, libreadline4-dev, tetex-bin, tetex-extra, debhelper (>= 3.0.0), texi2html
+Build-Depends: blas-dev (>= 1.0-9), libgnome-dev, libzvt-dev, libgtkxmhtml-dev, tcl8.3-dev, tk8.3-dev, libglade-gnome0-dev, bison, g77 [!m68k !ia64], g77-3.0 [ia64], f2c [m68k], gcc-3.0 [ia64], g++-3.0 [ia64], groff-base, libncurses5-dev, libreadline4-dev, tetex-bin, tetex-extra, debhelper (>= 3.0.0), texi2html, texinfo (>= 4.1-2)
 
 Package: r-base
 Architecture: all
@@ -79,7 +79,7 @@ Description: GNU R Gnome gui for statistical computing system
 
 Package: r-base-dev
 Architecture: all
-Depends: r-base-core, blas-dev (>= 1.0-9), build-essential, g77 | g77-3.0 | f2c, gcc | gcc-3.0, g++ | g++-3.0
+Depends: r-base-core, blas-dev (>= 1.0-9), build-essential, g77 | g77-3.0 | f2c | fortran77-compiler , gcc | gcc-3.0 | c-compiler, g++ | g++-3.0
 Description: GNU R installation of auxiliary GNU R packages 
  R is `GNU S' - A language and environment for statistical computing
  and graphics. R is similar to the award-winning S system, which was
@@ -166,7 +166,6 @@ Description: GNU R LaTeX docs for statistical computing system functions
 
 Package: r-doc-pdf
 Architecture: all
-Priority: extra
 Section: doc
 Suggests: r-base-core, xpdf | acroread | pdf-viewer
 Description: GNU R pdf manuals for statistical computing system
@@ -188,7 +187,6 @@ Description: GNU R pdf manuals for statistical computing system
 
 Package: r-doc-html
 Architecture: all
-Priority: extra
 Section: doc
 Suggests: r-base-core, mozilla | konqueror | links | lynx | www-browser
 Replaces: r-base (<= 1.4.1-1)
