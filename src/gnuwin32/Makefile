@@ -39,7 +39,7 @@ else
 endif
 
 R-DLLFLAGS = -mwindows
-R-DLLLIBS =-L. $(FLIBS) -lcomctl32 -lversion -lRblas
+R-DLLLIBS =-L. $(FLIBS) -lcomctl32 -lversion
 FLIBS+=-lRblas
 SOURCES = $(filter-out malloc.c blas00.c,$(wildcard *.c *.f))
 OBJS = $(SOURCES:.c=.o)
