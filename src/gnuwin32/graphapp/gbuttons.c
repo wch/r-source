@@ -41,7 +41,7 @@ gchangescrollbar(scrollbar obj, int which, int where, int max, int pagesize,
     SetScrollInfo(hwnd, which, &si, 1);
 }
 
-void gsetcursor(drawing d,cursor c)
+void gsetcursor(drawing d, cursor c)
 {
     decrease_refcount(d->drawstate->crsr);
     d->drawstate->crsr = c;

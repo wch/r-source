@@ -1,7 +1,7 @@
-R 0.64.0 for Windows 9x and NT
+R 0.64.1 for Windows 9x and NT
 ==============================
 
-This distribution contains a binary distribution of R-0.64.0 to run on
+This distribution contains a binary distribution of R-0.64.1 to run on
 Windows 95, 98 and NT4 (at least) on Intel/clone chips. It is designed to
 be as close as possible to the implementation on Unix, but see the
 list of differences below. The port was by Guido Masarotto with
@@ -13,12 +13,12 @@ See Announce or CHANGES for the new features of this version.
 Installation
 ============
 
-Unpack rw0640b.zip anywhere you like. It will unpack to a directory
-tree under rw0640. The help, HTML and latex help files are in separate
-files rw0640h.zip, rw0640w.zip and rw0640l.zip which should be
-unpacked in the same directory you unpacked rw0640b.zip.
+Unpack rw0641b.zip anywhere you like. It will unpack to a directory
+tree under rw0641. The help, HTML and latex help files are in separate
+files rw0641h.zip, rw0641w.zip and rw0641l.zip which should be
+unpacked in the same directory you unpacked rw0641b.zip.
 
-The source-change file rw0640s.zip is unpacked inside rw0640.
+The source-change file rw0641s.zip is unpacked inside rw0641.
 
 An executable of INFO-ZIP's unzip is supplied with this
 distribution. If you already have a copy installed you may if you wish
@@ -30,14 +30,14 @@ delete the RHOME\unzip directory and edit RHOME\etc\Rprofile to set
 Usage
 =====
 
-There are two executables in rw0640\bin:
+There are two executables in rw0641\bin:
 
 GUI:
 
 Rgui.exe runs as a standard Windows GUI executable and provides an R
 console in its own window. It takes the standard R command-line
 arguments; these are most easily set by making a shortcut to 
-...\rw0640\bin\rgui.exe and adding the arguments in the Target field.
+...\rw0641\bin\rgui.exe and adding the arguments in the Target field.
 Set the `Start in' field of the shortcut to the directory you want to use
 as the working directory (where workspaces and files are saved and 
 loaded from).
@@ -58,10 +58,10 @@ saving the workspace at the end of the session.
 Observe that the help files use the latin1 encoding. To see all the
 characters you must use an appropriate font (European-language True
 Type fonts should be OK). To check if your preferred font has latin1
-capability, try "help(text)" and look at the examples.  [Note:
-only a couple of files make use of latin1 characters not contained in
-the standard ASCII set, i.e., if you like a font without latin1
-capability, use it.]
+capability, try "help(text)" and look at the examples.  [Note: only a
+couple of files make use of latin1 characters not contained in the
+standard ASCII set so if you like a font without latin1 capability,
+use it.]
 
 
 TERMINAL/BATCH:
@@ -71,7 +71,8 @@ Window running the standard shells, command.com (9x) and cmd.exe (NT),
 as well as the ports of bash and tcsh that we use.  Its primary
 purpose is to allow batch operation, but it does provide all the
 facilities needed for interactive use, including simple command-line
-editing.
+editing. (If you type too fast you the command-line editor will miss
+keystrokes).
 
 Batch use: At it simplest, rterm.exe can be used in a batch mode by
 commands like
@@ -119,13 +120,13 @@ Environment variables can be set as NAME=value on the command line,
 including in a short-cut.  They can also be set (as NAME=value lines)
 in the file HOME\.Renviron, if this exists.
 
-Various aspects of the console (size, font, colours) can be customized
-by editing the file etc\Rconsole, and a copy with a user's settings
-can be put in her HOME directory or in the working directory. (The
-exact sequence is to search the directories pointed to by the
-environment variables R_HOME then HOME then the working directory,
-finally RHOME\etc.) The file contains a description of the settings
-that can be altered. See also ?Rconsole.
+Many aspects of the console (size, appearance, font, colours) can be
+customized by editing the file etc\Rconsole, and a copy with a user's
+settings can be put in her HOME directory or in the working
+directory. (The exact sequence is to search the directories pointed to
+by the environment variables R_HOME then HOME then the working
+directory, finally RHOME\etc.) The file contains a description of the
+settings that can be altered. See also ?Rconsole.
 
 The mapping between Windows fonts and R font's number can be set by
 editing the file etc\Rdevga, and a copy with a user's settings can be
@@ -157,7 +158,7 @@ Adding packages
 
 Binaries for many packages are available at
 CRAN/bin/windows/windows-NT/contrib. These are zip files which should
-be unpacked in rw0640\library. They are then available for use.
+be unpacked in rw0641\library. They are then available for use.
 
 The list of packages and functions given by HTML help and used by the
 search engine can be updated from a running R process by the command
@@ -165,10 +166,10 @@ search engine can be updated from a running R process by the command
 	link.html.help()
 
 provided the owner of the process has write permission on
-rw0640\doc\html.  If you have the source-package files and Perl
+rw0641\doc\html.  If you have the source-package files and Perl
 installed you can use
 
-	cd ...\rw0640\src\gnuwin32\help
+	cd ...\rw0641\src\gnuwin32\help
 	make indices
 
 Private libraries of packages can be used and can be specified by the
@@ -185,7 +186,7 @@ in the environment or on the command line, or add the line
 to your .Rprofile or at the end of RHOME/etc/Rprofile.
 
 To install a package from source code you need the source-package
-distribution rw0640sp.zip installed (but not the R source). This contains
+distribution rw0641sp.zip installed (but not the R source). This contains
 detailed instructions.
 
 
@@ -253,10 +254,9 @@ groff, available at http://www.itribe.net/virtunix/groff-1.10nt.zip.
 All of these need to be installed and in your path, and the
 appropriate environment variables set.  
 
-You also need: the R source (R-0.64.0.tgz) and rw0640s.zip.
+You also need: the R source (R-0.64.1.tgz).
 
-Then: untar R-0.64.0.tgz somewhere (ignore warnings about the aux directory),
-unzip rw0640s.zip in /somewhere/R-0.64.0,
+Then: untar R-0.64.1.tgz somewhere (ignore warnings about the aux directory),
 
 	cd /somewhere/R-0.64.0/src/gnuwin32 
 
@@ -265,6 +265,10 @@ edit MkRules to set the appropriate paths as needed
 and run 
 
 	make BUILD=EGCS or CYGWIN
+
+Note: the file rw0641\unzip\unzip.exe is not in the source distribution,
+nor are the sources (it the standard Info-Zip unzip 5.40). You will need to
+copy it from a binary distribution.
 
 
 Cross-building on Linux
@@ -276,10 +280,10 @@ http://www.xraylith.wisc.edu/~khan/software/gnu-win32/mingw-cross-howto.txt
 
 and ensure that these are in your path. You also need Perl and nroff.
 
-You also need: the R source (R-0.64.0.tgz) and rw0640s.zip.
+You also need: the R source (R-0.64.0.tgz) and rw0641s.zip.
 
 Then: untar R-0.64.0.tgz somewhere 
-unzip -a rw0640s.zip in /somewhere/R-0.64.0,
+unzip -a rw0641s.zip in /somewhere/R-0.64.0,
 
 	cd /somewhere/R-0.64.0/src/gnuwin32 
 

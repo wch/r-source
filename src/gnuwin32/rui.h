@@ -24,7 +24,7 @@
 extern int RguiMDI;
 extern int MDIset;
 extern console RConsole;
-
+void Rconsolecmd(char *);
 
 
 

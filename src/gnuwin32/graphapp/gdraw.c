@@ -342,6 +342,7 @@ void gfillellipse(drawing d, rgb fill, rect r)
 	fastfillrect(c.x-a, c.y+y-1+h_odd, a+a+w_odd, 1);
     }
     SelectObject(dc, GetStockObject(NULL_BRUSH));
+    DeleteObject(br);
 }
 
 void gdrawpolygon(drawing d, int width, int style, rgb c, point *p, int n)

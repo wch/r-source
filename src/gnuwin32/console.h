@@ -45,3 +45,6 @@ void consoleflush(console c);
 void consoleprint(console c);
 void savehistory(control c, char *s);
 void readhistory(control c, char *s);
+
+extern int setWidthOnResize;
+int consolecols(console c);

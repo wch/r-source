@@ -1,6 +1,6 @@
-.SUFFIXES: .c .f .o .a  .def .exp .dll .exe 
+.SUFFIXES: .c .f .o .a .def .exp .dll .exe 
 
-#Alternatives CYGWIN (-B20), EGCS (-1.1-mingw32), CROSS (my Linux Box)
+# Alternatives CYGWIN (-B20.1), EGCS (-1.1.x-mingw32), CROSS (my Linux Box)
 
 BUILD=EGCS
 
@@ -17,7 +17,6 @@ endif
 
 ifeq ($(strip $(BUILD)),EGCS)
 BINPREF=
-HEADER=e:/packages/mingw32-1.1/i386-mingw32/include
 MINGW32FLAG= 
 MINGW32LDFLAG= 
 FLIBS=-lg2c
@@ -52,8 +51,6 @@ RANLIB=$(BINPREF)ranlib
 NM=$(BINPREF)nm
 CPP=$(CC) -E
 RESCOMP=$(BINPREF)windres 
-
-
 
 .c.o:
 	$(CC)  $(CFLAGS) $($*-CFLAGS) -c $< -o $@
