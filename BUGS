@@ -265,22 +265,30 @@ Date: Tue, 10 Apr 2001 17:50:44 +0200 (MET DST)
 
 Directory:  incoming
 
-* PR# 929 *
-Subject:  Segmentation fault linked to memory? 
-From: J.C.Rougier@durham.ac.uk
-Date: Mon, 30 Apr 2001 14:34:11 +0100 (BST)
-* PR# 923 *
-Subject: bug when compiling using --with-f2c option
-From: wang@rjka.com
-Date: Thu, 26 Apr 2001 19:56:59 +0200 (MET DST)
-* PR# 925 *
-Subject: modulus operator gets syntax error
-From: znmeb@aracnet.com
-Date: Sat, 28 Apr 2001 21:13:44 +0200 (MET DST)
+* PR# 930 *
+Subject: Re: [R] Crazy plots of time-series against dates
+From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
+Date: 01 May 2001 21:33:53 +0200
 * PR# 924 *
 Subject: bug when compiling using --with-f2c option
 From: wang@rjka.com
 Date: Thu, 26 Apr 2001 19:58:17 +0200 (MET DST)
+* PR# 923 *
+Subject: bug when compiling using --with-f2c option
+From: wang@rjka.com
+Date: Thu, 26 Apr 2001 19:56:59 +0200 (MET DST)
+* PR# 926 *
+Subject: Rgui crash
+From: bellis@hsph.harvard.edu
+Date: Sun, 29 Apr 2001 20:45:15 +0200 (MET DST)
+* PR# 925 *
+Subject: modulus operator gets syntax error
+From: znmeb@aracnet.com
+Date: Sat, 28 Apr 2001 21:13:44 +0200 (MET DST)
+* PR# 929 *
+Subject:  Segmentation fault linked to memory? 
+From: J.C.Rougier@durham.ac.uk
+Date: Mon, 30 Apr 2001 14:34:11 +0100 (BST)
 * PR# 928 *
 Subject: PR #927 -- R crash on huge CSV file
 From: "M. Edward Borasky" <znmeb@aracnet.com>
@@ -289,7 +297,3 @@ Date: Mon, 30 Apr 2001 06:33:41 -0700
 Subject: Rgui 1.2.3 for Windows crashes reading huge CSV file
 From: znmeb@aracnet.com
 Date: Mon, 30 Apr 2001 07:14:50 +0200 (MET DST)
-* PR# 926 *
-Subject: Rgui crash
-From: bellis@hsph.harvard.edu
-Date: Sun, 29 Apr 2001 20:45:15 +0200 (MET DST)
