@@ -27,7 +27,9 @@ ps.options(paper, horizontal, width, height, family, encoding,
 
   The auxiliary function \code{ps.options} can be used to set and view
   (if called without arguments)
-  default values for the arguments to \code{postscript}.
+  default values for the arguments to \code{postscript}.  It needs to be
+  called before calling \code{postscript}, and the default values it
+  sets can be overridden by supplying arguments to \code{postscript}.
 }
 \alias{postscript}
 \alias{ps.options}
