@@ -1078,22 +1078,24 @@ int DispatchOrEval(SEXP call, SEXP op, SEXP args, SEXP rho, SEXP *ans, int dropm
 	pt = strrchr(CHAR(PRINTNAME(CAR(call))), '.');
 
 	if( isObject(x) && (pt == NULL || strcmp(pt,".default")) ) {
-		PROTECT(args = promiseArgs(args, rho));
+		/* PROTECT(args = promiseArgs(args, rho)); */
 		PRVALUE(CAR(args)) = x;
 		sprintf(buf, "%s",CHAR(PRINTNAME(CAR(call))));
 		begincontext(&cntxt, CTXT_RETURN, call, rho, rho, args);
 		if(usemethod(buf, x, call, args, rho, ans)) {
 			endcontext(&cntxt);
-			UNPROTECT(3);
+			UNPROTECT(2);
 			return 1;
 		}
 		endcontext(&cntxt);
 	}
+   /*
 	else
 		PROTECT(args);
+  */
 	*ans = CONS(x, EvalArgs(CDR(args), rho, dropmissing));
 	TAG(*ans) = CreateTag(TAG(args));
-	UNPROTECT(3);
+	UNPROTECT(2);
 	return 0;
 }
 

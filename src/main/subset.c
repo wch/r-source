@@ -130,7 +130,7 @@ static SEXP vectorSubset(SEXP x, SEXP s, SEXP call)
 	SEXP index, result, attrib, nattrib;
 
 	if (s == R_MissingArg)
-		return x;
+		return duplicate(x);
 
 	PROTECT(s);
 	attrib = getAttrib(x, R_DimSymbol);
@@ -476,9 +476,6 @@ SEXP do_subset(SEXP call, SEXP op, SEXP args, SEXP rho)
 	drop = 1;
 	ExtractDropArg(args, &drop);
 	x = CAR(args);
-
-		/* This is intended for compatibility with S, */
-		/* but in fact S does not do this. */
 
 	if (x == R_NilValue) {
 		UNPROTECT(1);
