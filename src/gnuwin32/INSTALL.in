@@ -1,0 +1,176 @@
+R @RVER@ for Windows 9x and NT
+=============================
+
+This distribution contains a binary distribution of R-@RVER@ to run on
+Windows 95, 98, NT4 and 2000 on Intel/clone chips. See README for fuller
+details, including how to install the binary versions.
+
+
+Building From Source
+====================
+
+[Some further details, including how to debug, are given in the rw-FAQ.]
+
+First collect the tools that you need.
+
+Building on Windows
+-------------------
+
+We recommend that you use the mingw32 port of gcc-2.95.2 by Mumit Khan
+from http://www.mingw.org/ or
+ftp://ftp.xraylith.wisc.edu/pub/khan/gnu-win32/mingw32. You will also
+need suitable versions of at least make, sh, rm, sed, (g)awk, mkdir,
+echo, cp, cut, diff, grep, egrep, pwd, expr and cat; we use those from
+the cygwin distribution (http://sourceware.cygnus.com/cygwin and
+several mirrors).
+
+It is also possible to use cygwin-b20.1 with the -mno-cygwin flag, but
+we suggest you do so only if you have a working setup from building
+earlier versions of R.  We have also successfully used the variant of
+mingw32 that uses the MSVCRT run-time system.  Be aware that not all
+Windows machines have MSVCRT.DLL installed.
+
+(If you want to use cygwin, you will need to upgrade to gcc-2.95.2 by
+installing the files gcc-2.95.2-cygb20.tar.gz and
+gcc-2.95.2-mingw-extra.tar.gz from
+ftp://ftp.xraylith.wisc.edu/pub/khan/gnu-win32/cygwin32. The basic
+distribution does not contain a Fortran compiler, and that is needed
+to build R.)
+
+perl5, available via http://www.perl.com/CPAN/ports/.
+
+zip and unzip from the Info-ZIP project
+(ftp://ftp.cdrom.com/pub/infozip/Info-ZIP.html and mirrors).
+
+If you want to make compiled html (.chm) files you will need the
+Microsoft HTML Help Workshop, available for download at 
+http://msdn.microsoft.com/workshop/author/htmlhelp.
+
+If you want to make Windows (.hlp) files you will need a Windows help
+compiler, preferably hcrtf.exe. This has been available for download at
+ftp://ftp.microsoft.com/softlib/mslfiles/hcwsetup.exe.
+
+All of these need to be installed and in your path, and the
+appropriate environment variables set.
+
+You also need: the R source (R-@RVER@.tgz), and to build the
+installer, unzip5.40.zip from any Info-Zip mirror.  Do remember to set
+MAKE_MODE to UNIX (set MAKE_MODE=UNIX at the Windows command-line).
+
+
+Then: untar R-@RVER@.tgz somewhere (with no spaces in the path names),
+
+	cd /somewhere/R-@RVER@/src/gnuwin32
+
+edit MkRules to set the appropriate paths as needed
+edit Makefile to set the type(s) of help that you want built.
+
+and run
+
+	make BUILD=MINGW32 or CYGWIN
+
+
+Note 1: the file @RWVER@\unzip\unzip32.dll is not in the source
+distribution, nor are the sources (it is the standard Info-Zip unzip
+5.40, built with MSVC++4.2). You will need to copy it from a binary
+distribution.
+
+The file @RWVER@\bin\Rchtml.dll is only built if CHM help is specifed
+in the main Makefile. Its source is the help directory, and you need
+the HTML Help Workshop files to build it. It contains instructions
+to build it under VC++6, and it is preferable to use that as the 
+VC++ library will check versions of the components needed. You can just
+copy this from a binary distribution.
+
+The file @RWVER@\bin\Rbitmap.dll is not built automatically:
+instructions on how to build it are in the file bitmap\INSTALL.  You
+can just copy this from a binary distribution.
+
+
+Note 2: we are aware that because of limitations in line length or in
+the shell used that the Makefiles do not work unchanged on all the
+possible combinations of tools, compilers and OSes.  We have tested
+the Cygwin make and shell under NT, and cross-building (see below).
+
+
+Note 3: building libR.a is highly disk intensive and can take several
+minutes even on a local disc. We have seen times from 30 secs to 20
+minutes. Using a network file system is likely to take longer.
+
+
+You can test a build by `make check': expect some differences in the tests
+of the print routines.
+
+
+Cross-building on i586 Linux
+----------------------------
+
+You will need i386-mingw32 cross-compilers installed and in your path.
+
+A pre-built set of cross-tools based on gcc-2.95.2 is currently
+available from
+
+    http://www.devolution.com/~slouken/SDL/Xmingw32/
+
+Unfortunately these did not include a Fortran compiler, but may suffice for
+building some packages.
+
+Instructions for building a cross-compiler are given at
+
+    http://www.nanotech.wisc.edu/~khan/software/gnu-win32/mingw-cross-howto.txt
+
+At the time of writing these were somewhat outdated, and we suggest
+you build a gcc-2.95.2 cross-compiler (sources from any GNU mirror and
+patches from
+
+    ftp://ftp.xraylith.wisc.edu/pub/khan/gnu-win32/cygwin/gcc-2.95.2/patches/
+
+).  Apart from the compiler, you need the mingw32 runtime system and
+a cross-built version of binutils 2.9.4.
+
+You will need Perl, zip and unzip installed.
+
+You also need: the R source (R-@RVER@.tgz), and to build the installer,
+unzip5.40.zip from any Info-ZIP mirror.
+
+Then: untar R-@RVER@.tgz somewhere
+
+	cd /somewhere/R-@RVER@/src/gnuwin32
+
+Edit MkRules to set BUILD=CROSS and the appropriate paths as needed.
+Edit Makefile to set the type(s) of help that you want built. (You
+will not be able to cross-build .chm or .hlp files, nor Rchmtl.dll,
+so set WINHELP to NO.)
+
+Packages can be made in the same way as natively: see the file
+readme.packages.
+
+
+Building the Manuals
+====================
+
+To make the PDF versions of the manuals you will need pdftex installed
+and configured to work with a large file: see doc/manual/README.  Then the
+pdf manuals can be made by
+
+	make docs
+
+If you want to make the info versions, you will need a version of
+makeinfo 4 for Windows and texindex. Then
+
+	cd ../../doc/manuals
+	make -f Makefile.win info
+
+will make the info files.
+
+There is no provision to make DVI versions of the manuals, although
+../../doc/manuals/Makefile.win could easily be edited to do so.
+
+
+Feedback
+========
+
+Please send comments and bug reports to (preferably both of)
+
+    Guido Masarotto <guido@hal.stat.unipd.it>
+    Brian Ripley <ripley@stats.ox.ac.uk>

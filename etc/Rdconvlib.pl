@@ -557,7 +557,7 @@ sub text2html {
 	if($htmlfile){
 	    if($using_chm) {
 		if ($htmlfile =~ s+^$pkg/html/++) {
-		    # in the same file
+		    # in the same chm file
 		} else {
 		    $tmp = $htmlfile;
 		    ($base, $topic) = ($tmp =~ m+(.*)/(.*)+);
@@ -576,8 +576,10 @@ sub text2html {
 	    $misslink = $misslink . " " . $argkey unless $opt ne "";
 	    if($using_chm){
 		if($opt ne "") {
+		    my ($pkg, $topic) = split(/:/, $opt);
+		    $topic = $arg if $topic eq "";
 		    $opt =~ s/:.*$//o;
-		    $htmlfile = "ms-its:../../$opt/chtml/$opt.chm::/$arg.html";
+		    $htmlfile = "ms-its:../../$opt/chtml/$opt.chm::/$topic.html";
 		    $text =~ s/\\link(\[.*\])?$id.*$id/<A HREF=\"$htmlfile\">$arg<\/A>/s;
 		} else {
 		    $text =~ s/\\link(\[.*\])?$id.*$id/$arg/s;
@@ -587,7 +589,7 @@ sub text2html {
 		if($opt ne "") {
 		    my ($pkg, $topic) = split(/:/, $opt);
 		    $topic = $arg if $topic eq "";
-		    $htmlfile = $pkg."/".$topic.".html";
+		    $htmlfile = $pkg."/html/".$topic.".html";
 		    $text =~ s/\\link(\[.*\])?$id.*$id/<A HREF=\"..\/..\/$htmlfile\">$arg<\/A>/s;
 		} else {
 		    $text =~ s/\\link(\[.*\])?$id.*$id/<A HREF=\"..\/..\/..\/doc\/html\/search\/SearchObject.html?$argkey\">$arg<\/A>/s;
@@ -671,7 +673,7 @@ sub code2html {
 	if($htmlfile){
 	    if($using_chm) {
 		if ($htmlfile =~ s+^$pkg/html/++) {
-		    # in the same file
+		    # in the same chm file
 		} else {
 		    $tmp = $htmlfile;
 		    ($base, $topic) = ($tmp =~ m+(.*)/(.*)+);
@@ -690,9 +692,12 @@ sub code2html {
 	    $misslink = $misslink . " " . $argkey unless $opt ne "";
 	    if($using_chm){
 		if($opt ne "") {
+		    my ($pkg, $topic) = split(/:/, $opt);
+		    $topic = $arg if $topic eq "";
 		    $opt =~ s/:.*$//o;
-		    $htmlfile = "ms-its:../../$opt/chtml/$opt.chm::/$arg";
-		    $text =~ s/\\link(\[.*\])?$id.*$id/<A HREF=\"$htmlfile\">$arg<\/A>/s;
+		    $htmlfile = "ms-its:../../$opt/chtml/$opt.chm::/$topic.html";
+#		    print "$htmlfile\n";
+       		    $text =~ s/\\link(\[.*\])?$id.*$id/<A HREF=\"$htmlfile\">$arg<\/A>/s;
 		} else {
 		    $text =~ s/\\link(\[.*\])?$id.*$id/$arg/s;
 		} 
@@ -701,7 +706,7 @@ sub code2html {
 		if($opt ne "") {
 		    my ($pkg, $topic) = split(/:/, $opt);
 		    $topic = $arg if $topic eq "";
-		    $htmlfile = $pkg."/".$topic.".html";
+		    $htmlfile = $pkg."/html/".$topic.".html";
 		    $text =~ s/\\link(\[.*\])?$id.*$id/<A HREF=\"..\/..\/$htmlfile\">$arg<\/A>/s;
 		} else {
 		    $text =~ s/\\link(\[.*\])?$id.*$id/<A HREF=\"..\/..\/..\/doc\/html\/search\/SearchObject.html?$argkey\">$arg<\/A>/s;

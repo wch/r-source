@@ -1,4 +1,4 @@
-C 
+C
 C  The authors of this software are Cleveland, Grosse, and Shyu.
 C  Copyright (c) 1989, 1992 by AT&T.
 C  Permission to use, copy, modify, and distribute this software for any
@@ -10,7 +10,7 @@ C  THIS SOFTWARE IS BEING PROVIDED "AS IS", WITHOUT ANY EXPRESS OR IMPLIED
 C  WARRANTY.  IN PARTICULAR, NEITHER THE AUTHORS NOR AT&T MAKE ANY
 C  REPRESENTATION OR WARRANTY OF ANY KIND CONCERNING THE MERCHANTABILITY
 C  OF THIS SOFTWARE OR ITS FITNESS FOR ANY PARTICULAR PURPOSE.
-C 
+C
 C     altered by B.D. Ripley to
 C
 C     remove unused variables
@@ -401,7 +401,7 @@ c     solve least squares problem
    27 continue
       return
       end
-      
+
       subroutine ehg131(x,y,rw,trl,diagl,kernel,k,n,d,nc,ncmax,vc,nv,nvm
      +ax,nf,f,a,c,hi,lo,pi,psi,v,vhit,vval,xi,dist,eta,b,ntol,fd,w,vval2
      +,rcond,sing,dd,tdeg,cdeg,lq,lf,setlf)
@@ -455,7 +455,7 @@ c     smooth
      +g,cdeg,lq,lf,setlf,vval)
       return
       end
-      
+
       subroutine ehg133(n,d,vc,nvmax,nc,ncmax,a,c,hi,lo,v,vval,xi,m,z,s)
       integer d,execnt,i,i1,m,nc,ncmax,nvmax,vc
       integer a(ncmax),c(vc,ncmax),hi(ncmax),lo(ncmax)
@@ -474,7 +474,7 @@ c     smooth
     3 continue
       return
       end
-      
+
       subroutine ehg140(iw,i,j)
       integer execnt,i,j
       integer iw(i)
@@ -484,7 +484,7 @@ c     smooth
       iw(i)=j
       return
       end
-      
+
       subroutine ehg141(trl,n,deg,k,d,nsing,dk,delta1,delta2)
       integer d,deg,dk,k,n,nsing
       external ehg176
@@ -535,7 +535,7 @@ c     coef, d, deg, del
       delta2=n-trl*dexp(c1*z**c2*(1-z)**c3*c4)
       return
       end
-      
+
       subroutine lowesc(n,l,ll,trl,delta1,delta2)
       integer execnt,i,j,n
       double precision delta1,delta2,trl
@@ -1182,11 +1182,12 @@ c        Hermite basis
       if(ifloor.gt.x) ifloor=ifloor-1
       end
 
-      DOUBLE PRECISION function DSIGN(a1,a2)
-      DOUBLE PRECISION a1, a2
-      DSIGN=DABS(a1)
-      if(a2.ge.0)DSIGN=-DSIGN
-      end
+c DSIGN is unused, causes conflicts on some platforms
+c	DOUBLE PRECISION function DSIGN(a1,a2)
+c	DOUBLE PRECISION a1, a2
+c	DSIGN=DABS(a1)
+c	if(a2.ge.0)DSIGN=-DSIGN
+c	end
 
       subroutine ehg136(u,lm,m,n,d,nf,f,x,psi,y,rw,kernel,k,dist,eta,b,
      +     od,o,ihat,w,rcond,sing,dd,tdeg,cdeg,s)

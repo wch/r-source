@@ -1,15 +1,17 @@
 ## Author: Martin Maechler, Date: 27 Jun 97
 
-matpoints <- function(x, y, lty=1:5, lwd = 1, pch=NULL, col=1:6, ...)
-    matplot(x=x, y=y, type = 'p', lty=lty, lwd=lwd, pch=pch, col=col,
-            add=TRUE, ...)
-matlines  <- function(x, y, lty=1:5, lwd = 1, pch=NULL, col=1:6, ...)
-    matplot(x=x, y=y, type = 'l', lty=lty, lwd=lwd, pch=pch, col=col,
-            add=TRUE, ...)
+matpoints <-
+    function(x, y,  type = 'p', lty=1:5, lwd = 1, pch=NULL, col=1:6, ...)
+    matplot(x=x, y=y, type = type, lty=lty, lwd=lwd, pch=pch, col=col,
+	    add=TRUE, ...)
+matlines  <-
+    function(x, y, type = 'l', lty=1:5, lwd = 1, pch=NULL, col=1:6, ...)
+    matplot(x=x, y=y, type = type, lty=lty, lwd=lwd, pch=pch, col=col,
+	    add=TRUE, ...)
 
 matplot <- function(x, y, type="p",
 		    lty = 1:5, lwd = 1, pch=NULL, col=1:6, cex=NULL,
-		    xlab=NULL, ylab=NULL, xlim=NULL, ylim=NULL, 
+		    xlab=NULL, ylab=NULL, xlim=NULL, ylim=NULL,
 		    ..., add= FALSE, verbose = getOption("verbose"))
 {
     types <- c("p", "l", "b", "o", "h", "n")
@@ -74,7 +76,7 @@ matplot <- function(x, y, type="p",
 	tp <- type[i]
 	if(tp=='l' || tp=='b'|| tp=='o'|| tp=='h')
 	    lines(x[,i],y[,i], type=tp,
-                  lty=lty[i], lwd=lwd[i],pch=pch[i],col=col[i], cex=cex[i])
+		  lty=lty[i], lwd=lwd[i],pch=pch[i],col=col[i], cex=cex[i])
 	if(do.points && tp=='p')
 	    points(x[,i],y[,i], pch=pch[i], col=col[i], cex=cex[i])
     }

@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  file console.c
- *  Copyright (C) 1998--1999  Guido Masarotto and Brian Ripley
+ *  Copyright (C) 1998--2000  Guido Masarotto and Brian Ripley
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -18,6 +18,10 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+#ifdef HAVE_CONFIG_H
+#include <config.h>
+#endif
+
 #include "Error.h"
 #include <windows.h>
 #include <string.h>
@@ -28,12 +32,12 @@
 #include "rui.h"
 
 
-#define DIMLBUF 64*1024
-#define MLBUF   8*1024
-#define SLBUF   512
-#define DIMHIST 16*1024
-#define MHIST   512
-#define SHIST   128
+#define DIMLBUF 64*1024         /* console buffer size in chars */
+#define MLBUF   8*1024          /* console buffer size in lines */
+#define SLBUF   512             /* console buffer shift in lines */
+#define DIMHIST 16*1024         /* history buffer size in chars */
+#define MHIST   512             /* history buffer size in lines */
+#define SHIST   128             /* history buffer shift in lines */
 #define NKEYS   512		/* 8Kb paste buffer */
 #define TABSIZE 8
 
@@ -125,13 +129,14 @@ static void xbufshift(xbuf p)
 static int xbufmakeroom(xbuf p, xlong size)
 {
     if (size > p->dim) return 0;
-    while ((p->av < size) || (p->ns == p->ms))
+    while ((p->av < size) || (p->ns == p->ms)) {
 	xbufshift(p);
+    }
     p->av -= size;
     return 1;
 }
 
-#define XPUTC(c) {if (!p->av) xbufmakeroom(p,1); *p->free++=c; p->av--;}
+#define XPUTC(c) {xbufmakeroom(p,1); *p->free++=c;}
 
 static void xbufaddc(xbuf p, char c)
 {

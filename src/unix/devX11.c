@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--1999  Robert Gentleman, Ross Ihaka and the
+ *  Copyright (C) 1997--2000  Robert Gentleman, Ross Ihaka and the
  *                            R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -289,11 +289,19 @@ static int GetGrayPalette(Display *display, Colormap cmap, int n)
 
 static void SetupGrayScale()
 {
+    int res = 0, d;
     PaletteSize = 0;
-    if (depth > 8)
-	depth = 8;
-    if (GetGrayPalette(display, colormap, 1 << depth) == 0)
-	depth = 1;
+    /* try for 128 grays on an 8-bit display */
+    if (depth > 8) d = depth = 8; else d = depth - 1;
+    /* try (256), 128, 64, 32, 16 grays */
+    while (d >= 4 && !(res = GetGrayPalette(display, colormap, 1 << d)))
+	d--;
+    if(!res) {
+	/* Can't find a sensible grayscale, so revert to monochrome */
+	warning("can't set grayscale: reverting to monochrome");
+	model = MONOCHROME;
+	SetupMonochrome();
+    }
 }
 
 /* PseudoColor Displays : There are two strategies here. */
@@ -383,8 +391,9 @@ static void SetupPseudoColor()
 		break;
         }
 	if (PaletteSize == 0) {
-	    warning("X11 driver unable to obtain color cube");
-	    depth = 1;
+	    warning("X11 driver unable to obtain color cube\n  reverting to monochrome");
+	    model = MONOCHROME;
+	    SetupMonochrome();
 	}
     }
     else {
@@ -428,7 +437,7 @@ static unsigned int GetPseudoColor2Pixel(int r, int g, int b)
     XPalette[PaletteSize].blue  = pow(b / 255.0, BlueGamma) * 0xffff;
     if (PaletteSize == 256 ||
 	XAllocColor(display, colormap, &XPalette[PaletteSize]) == 0) {
-	error("Error: X11 cannot allocate additional graphics colors.\nConsider using colortype=\"pseudo.cube\" or \"gray\".");
+	error("Error: X11 cannot allocate additional graphics colors.\nConsider using X11 with colortype=\"pseudo.cube\" or \"gray\".");
     }
     RPalette[PaletteSize].red = r;
     RPalette[PaletteSize].green = g;

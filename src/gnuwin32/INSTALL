@@ -1,7 +1,7 @@
-R 1.0.0 for Windows 9x and NT
+R 1.0.1 for Windows 9x and NT
 =============================
 
-This distribution contains a binary distribution of R-1.0.0 to run on
+This distribution contains a binary distribution of R-1.0.1 to run on
 Windows 95, 98, NT4 and 2000 on Intel/clone chips. See README for fuller
 details, including how to install the binary versions.
 
@@ -24,7 +24,7 @@ echo, cp, cut, diff, grep, egrep, pwd, expr and cat; we use those from
 the cygwin distribution (http://sourceware.cygnus.com/cygwin and
 several mirrors).
 
-It is also possible to use cygwin-b20.1 with the --no-cygwin flag, but
+It is also possible to use cygwin-b20.1 with the -mno-cygwin flag, but
 we suggest you do so only if you have a working setup from building
 earlier versions of R.  We have also successfully used the variant of
 mingw32 that uses the MSVCRT run-time system.  Be aware that not all
@@ -47,20 +47,20 @@ Microsoft HTML Help Workshop, available for download at
 http://msdn.microsoft.com/workshop/author/htmlhelp.
 
 If you want to make Windows (.hlp) files you will need a Windows help
-compiler, preferably hcrtf.exe. This is available for download at
-ftp://ftp.microsoft.com/support/MSLFILES/HCWSETUP.EXE.
+compiler, preferably hcrtf.exe. This has been available for download at
+ftp://ftp.microsoft.com/softlib/mslfiles/hcwsetup.exe.
 
 All of these need to be installed and in your path, and the
 appropriate environment variables set.
 
-You also need: the R source (R-1.0.0.tgz), and to build the
+You also need: the R source (R-1.0.1.tgz), and to build the
 installer, unzip5.40.zip from any Info-Zip mirror.  Do remember to set
 MAKE_MODE to UNIX (set MAKE_MODE=UNIX at the Windows command-line).
 
 
-Then: untar R-1.0.0.tgz somewhere,
+Then: untar R-1.0.1.tgz somewhere (with no spaces in the path names),
 
-	cd /somewhere/R-1.0.0/src/gnuwin32
+	cd /somewhere/R-1.0.1/src/gnuwin32
 
 edit MkRules to set the appropriate paths as needed
 edit Makefile to set the type(s) of help that you want built.
@@ -70,19 +70,19 @@ and run
 	make BUILD=MINGW32 or CYGWIN
 
 
-Note 1: the file rw1000\unzip\unzip32.dll is not in the source
+Note 1: the file rw1001\unzip\unzip32.dll is not in the source
 distribution, nor are the sources (it is the standard Info-Zip unzip
 5.40, built with MSVC++4.2). You will need to copy it from a binary
 distribution.
 
-The file rw1000\bin\Rchtml.dll is only built if CHM help is specifed
+The file rw1001\bin\Rchtml.dll is only built if CHM help is specifed
 in the main Makefile. Its source is the help directory, and you need
 the HTML Help Workshop files to build it. It contains instructions
 to build it under VC++6, and it is preferable to use that as the 
 VC++ library will check versions of the components needed. You can just
 copy this from a binary distribution.
 
-The file rw1000\bin\Rbitmap.dll is not built automatically:
+The file rw1001\bin\Rbitmap.dll is not built automatically:
 instructions on how to build it are in the file bitmap\INSTALL.  You
 can just copy this from a binary distribution.
 
@@ -130,12 +130,12 @@ a cross-built version of binutils 2.9.4.
 
 You will need Perl, zip and unzip installed.
 
-You also need: the R source (R-1.0.0.tgz), and to build the installer,
+You also need: the R source (R-1.0.1.tgz), and to build the installer,
 unzip5.40.zip from any Info-ZIP mirror.
 
-Then: untar R-1.0.0.tgz somewhere
+Then: untar R-1.0.1.tgz somewhere
 
-	cd /somewhere/R-1.0.0/src/gnuwin32
+	cd /somewhere/R-1.0.1/src/gnuwin32
 
 Edit MkRules to set BUILD=CROSS and the appropriate paths as needed.
 Edit Makefile to set the type(s) of help that you want built. (You

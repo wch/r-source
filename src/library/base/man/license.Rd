@@ -3,7 +3,7 @@
 \alias{license}
 \alias{licence}
 \description{
-  The license terms under which \R. is distributed.
+  The license terms under which \R is distributed.
 }
 \details{
                     GNU GENERAL PUBLIC LICENSE\cr
@@ -11,7 +11,7 @@
 
 Copyright (C) 1989, 1991 Free Software Foundation, Inc.
 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- 
+
 Everyone is permitted to copy and distribute verbatim copies
 of this license document, but changing it is not allowed.
 
@@ -348,7 +348,7 @@ consider it more useful to permit linking proprietary applications with the
 library.  If this is what you want to do, use the GNU Library General
 Public License instead of this License.
 }
-\references{A copy of license is in \file{\$R\_HOME/COPYING} and you may
-  also want to look at the R FAQ in 
+\references{A copy of this license is in \file{\$R\_HOME/COPYING} and you may
+  also want to look at the R FAQ in
   \url{http://www.ci.tuwien.ac.at/~hornik/R/R-FAQ.html}.}
 \keyword{misc}

@@ -20,7 +20,7 @@ plot.lm <- function (x, which = 1:4,
         ylab23 <- if(inherits(x, "glm"))
           "Std. deviance resid." else "Standardized residuals"
         hii <- lm.influence(x)$hat
-        s <- sqrt(deviance(x)/df.residual(x))
+        s <- if(inherits(x, "rlm")) x$s else sqrt(deviance(x)/df.residual(x))
         w <- weights(x)
         # r.w := weighted.residuals(x):
         r.w <- if(is.null(w)) .Alias(r) else (sqrt(w)*r)[w!=0]
@@ -95,7 +95,7 @@ plot.lm <- function (x, which = 1:4,
 	    text.id(yhn0[show.rs], sqrtabsr[show.rs], show.rs, adj.x = TRUE)
     }
     if (show[4]) {
-	cook <- cooks.distance(x)
+	cook <- cooks.distance(x, sd=s)
 	if(id.n > 0) {
 	    show.r <- order(-cook)[iid]# index of largest `id.n' ones
 	    ymx <- cook[show.r[1]] * 1.075

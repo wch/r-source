@@ -50,14 +50,14 @@ Copyright @copyright{} 1999, 2000 R Development Core Team
 @node Top, Acknowledgments, (dir), (dir)
 
 @menu
-* Acknowledgments::
-* Creating R packages::
-* Writing R documentation::
-* System and foreign language interfaces::
-* The R API::
-* R (internal) programming miscellania::
-* Function and variable index::
-* Concept index::
+* Acknowledgments::             
+* Creating R packages::         
+* Writing R documentation::     
+* System and foreign language interfaces::  
+* The R API::                   
+* R (internal) programming miscellania::  
+* Function and variable index::  
+* Concept index::               
 @end menu
 
 @node Acknowledgments, Creating R packages, Top, Top
@@ -78,9 +78,10 @@ documentation as needed.  The @R{} distribution provides several
 packages, such as @pkg{eda}, @pkg{mva}, and @pkg{stepfun}.
 
 @menu
-* Package structure::
-* Configure and cleanup::
-* Checking and building packages::
+* Package structure::           
+* Configure and cleanup::       
+* Checking and building packages::  
+* Submitting a package to CRAN::  
 @end menu
 
 @node Package structure, Configure and cleanup, Creating R packages, Creating R packages
@@ -96,10 +97,10 @@ before and after installation, @xref{Configure and cleanup}.
 
 
 @menu
-* The DESCRIPTION file::
-* Other files::
-* Package subdirectories::
-* Package bundles::
+* The DESCRIPTION file::        
+* Other files::                 
+* Package subdirectories::      
+* Package bundles::             
 @end menu
 
 @node The DESCRIPTION file, Other files, Package structure, Package structure
@@ -226,7 +227,8 @@ can have one of three types as indicated by their extension: plain R
 code (@file{.R} or @file{.r}), tables (@file{.tab}, @file{.txt}, or
 @file{.csv}), or @code{save()} images (@file{.RData} or @file{.rda}).
 The subdirectory should contain a @file{00Index} file that describes the
-datasets available.
+datasets available.  Ideally this should have a one-line description of
+each dataset, with full documentation in the @file{man} directory.
 
 The contents of the @file{inst} subdirectory will be copied recursively
 to the installation directory.
@@ -349,7 +351,7 @@ work).  If your package is to be made publicly available, please give
 enough information for a user on a non-Unix platform to configure it
 manually.
 
-@node Checking and building packages,  , Configure and cleanup, Creating R packages
+@node Checking and building packages, Submitting a package to CRAN, Configure and cleanup, Creating R packages
 @section Checking and building packages
 @cindex Building packages
 @cindex Checking packages
@@ -367,7 +369,7 @@ examples.
 
 Use @kbd{R CMD check --help} to obtain more information about the usage
 of the @R{} package checker.  Under Windows the equivalent command is
-@kbd{make pkgcheck-mypkg}.  Note that some packages will require more
+@code{make pkgcheck-mypkg}.  Note that some packages will require more
 than the default workspace size to run their examples: this needs to be
 specified by setting the environment variables @code{R_NSIZE} and
 @code{R_VSIZE} or (Unix) the command-line options @code{--nsize} and
@@ -380,30 +382,85 @@ packages from their sources (for example, for subsequent release).
 Prior to actually building the package in the common gzipped tar file
 format, a variety of diagnostic checks and cleanups are performed.  In
 particular, it is tested whether the @file{DESCRIPTION} file contains
-the required entries, whether object and data indices exist and can be
-assumed to be up-to-date, whether the documentation sources contain the
-required name, alias, title, description, and keyword information, and
-whether there are any undocumented user level objects.  Run-time checks
-whether the package works correctly should be performed using @code{R
-CMD check} prior to invoking the build procedure.
+the required entries, whether object and data indices exist (it will
+build them if they do not) and can be assumed to be up-to-date, whether
+the documentation sources contain the required name, alias, title,
+description, and keyword information, and whether there are any
+undocumented user level objects.  Run-time checks whether the package
+works correctly should be performed using @code{R CMD check} prior to
+invoking the build procedure.
 
 Use @kbd{R CMD build --help} to obtain more information about the usage
 of the @R{} package builder.  There is no Windows equivalent.
+
+@node Submitting a package to CRAN,  , Checking and building packages, Creating R packages
+@section Submitting a package to CRAN
+@findex CRAN
+@cindex CRAN submission
+@cindex Submitting to CRAN
+
+CRAN is a network of WWW sites holding the @R{} distributions and
+contributed code, especially @R{} packages.  Users of @R{} are
+encouraged to join in the collaborative project and to submit their own
+packages to CRAN.
+
+Before submitting a package @code{mypkg}, do run the following steps to
+test it is complete and will install properly.  (Unix procedures only,
+run from the directory containing @file{mypkg} as a subdirectory.)
+
+@enumerate
+@item
+Install the package (by @code{R INSTALL mypkg}).  This will warn about
+missing cross-references and duplicate aliases in help files.  If you
+can, do the install on a `vanilla' system with no additional packages
+installed.
+
+@item
+Run @code{R CMD check} to check that all the examples on the help pages
+can be run, and to check the test suite in @file{tests} (if any).
+
+@item
+Run @code{R CMD Rd2dvi mypkg/man} to build a La@TeX{} version of the
+reference manual.  (This checks the @code{latex}-specific parts of the
+help files.)  An even better check if you have @code{pdftex} installed
+is @code{R CMD Rd2dvi --pdf mypkg/man} as this will build the PDF
+documentation as installed on CRAN.
+
+@item
+Run @code{R CMD build} to run further checks on the help files and
+documentation files such as @file{DESCRIPTION} and to make the release
+@file{.tar.gz} file.
+@end enumerate
+
+@noindent
+Please ensure that you can run through the complete procedure with only
+warnings that you understand and have reasons not to eliminate.
+
+When all the testing is done, upload the @file{.tar.gz} file to
+
+@smallexample
+@url{ftp://ftp.ci.tuwien.ac.at/incoming}
+@end smallexample
+
+@noindent
+and send a message to @url{WWWadmin@@ci.tuwien.ac.at} about it.  The
+CRAN maintainers will run these tests before putting a submission in the
+main archive.
 
 @node Writing R documentation, System and foreign language interfaces, Creating R packages, Top
 @chapter Writing R documentation
 @cindex Documentation, writing
 
 @menu
-* Rd format::
-* Sectioning::
-* Marking text::
-* Lists and tables::
-* Cross-references::
-* Mathematics::
-* Insertions::
-* Platform-specific sections::
-* Processing Rd format::
+* Rd format::                   
+* Sectioning::                  
+* Marking text::                
+* Lists and tables::            
+* Cross-references::            
+* Mathematics::                 
+* Insertions::                  
+* Platform-specific sections::  
+* Processing Rd format::        
 @end menu
 
 @node Rd format, Sectioning, Writing R documentation, Writing R documentation
@@ -991,7 +1048,7 @@ can be put in a @file{unix}, @file{windows} or @file{mac} subdirectory.
 @cindex Processing Rd format
 
 Under UNIX versions of @R{} there are several commands to process Rd
-files.
+files, if Perl is installed.
 
 @findex R CMD Rdconv
 Using @code{R CMD Rdconv} one can convert @R{} documentation format to
@@ -1031,20 +1088,27 @@ above commands can be obtained by running @code{R CMD command --help},
 e.g., @code{R CMD Rdconv --help}.  All available commands can be listed
 using @code{R --help}.
 
+All of these have Windows equivalents.  The batch files in the
+@file{bin} directory @file{Rd2txt.bat}, @file{Rdconv.bat},
+@file{Rdindex.bat} and @file{Sd2Rd.bat} can be used in exactly the same
+way as their Unix counterparts if the environment variable @code{R_HOME}
+is set.  (You will need Perl installed: you need that on Unix too.)
+There is a shell script @file{Rd2dvi.sh} which needs a Unix-like
+environment on Windows.
 
 @node System and foreign language interfaces, The R API, Writing R documentation, Top
 @chapter System and foreign language interfaces
 
 @menu
-* Operating system access::
-* Interface functions .C and .Fortran::
-* dyn.load and dyn.unload::
-* Creating shared libraries::
-* Interfacing C++ code::
-* Handling R objects in C::
-* Interface functions .Call and .External::
-* Evaluating R expressions from C::
-* Debugging::
+* Operating system access::     
+* Interface functions .C and .Fortran::  
+* dyn.load and dyn.unload::     
+* Creating shared libraries::   
+* Interfacing C++ code::        
+* Handling R objects in C::     
+* Interface functions .Call and .External::  
+* Evaluating R expressions from C::  
+* Debugging::                   
 @end menu
 
 @node  Operating system access, Interface functions .C and .Fortran, System and foreign language interfaces, System and foreign language interfaces
@@ -1489,13 +1553,13 @@ code, much use is made of coercion to force the variant object to the
 right type.
 
 @menu
-* Garbage Collection::
-* Allocating storage::
-* Details of R types::
-* Attributes::
-* Classes::
-* Handling lists::
-* Finding and setting variables::
+* Garbage Collection::          
+* Allocating storage::          
+* Details of R types::          
+* Attributes::                  
+* Classes::                     
+* Handling lists::              
+* Finding and setting variables::  
 @end menu
 
 @node Garbage Collection, Allocating storage, Handling R objects in C, Handling R objects in C
@@ -1927,9 +1991,9 @@ based on the interface of the same name in @Sl{} version 4, and
 complex but allows a variable number of arguments.
 
 @menu
-* Calling .Call::
-* Calling .External::
-* Missing and special values::
+* Calling .Call::               
+* Calling .External::           
+* Missing and special values::  
 @end menu
 
 @node Calling .Call, Calling .External, Interface functions .Call and .External, Interface functions .Call and .External
@@ -2534,8 +2598,8 @@ compiled code loaded into @R{}.  Some ``tricks'' are worth knowing.
 
 
 @menu
-* Finding entry points::
-* Inspecting R objects::
+* Finding entry points::        
+* Inspecting R objects::        
 @end menu
 
 @node Finding entry points, Inspecting R objects, Debugging, Debugging
@@ -2701,18 +2765,18 @@ $7 = 5
 @chapter The R API: entry points for C code
 
 @menu
-* Memory allocation::
-* Error handling::
-* Random numbers::
-* Missing and IEEE values::
-* Printing::
-* Calling C from Fortran::
-* Numerical analysis subroutines::
-* Distribution functions::
-* Mathematical Utilities::
-* Mathematical Constants::
-* Utility functions::
-* Version information::
+* Memory allocation::           
+* Error handling::              
+* Random numbers::              
+* Missing and IEEE values::     
+* Printing::                    
+* Calling C from Fortran::      
+* Numerical analysis subroutines::  
+* Distribution functions::      
+* Mathematical Utilities::      
+* Mathematical Constants::      
+* Utility functions::           
+* Version information::         
 @end menu
 
 There are a large number of entry points in the @R{} executable/DLL that
@@ -2729,7 +2793,7 @@ The recommended procedure to use these is to include the header file
 
 @noindent
 This will include a number of other header files from the directory
-@file{R_HOME/include/R_ext}, and there are other header files there that
+@file{$R_HOME/include/R_ext}, and there are other header files there that
 can be included too, but many of the features they contain should be
 regarded as undocumented and unstable.
 
@@ -2749,8 +2813,8 @@ appropriate header files when using these entry points.
 @cindex Memory allocation from C
 
 @menu
-* Transient::
-* User-controlled::
+* Transient::                   
+* User-controlled::             
 @end menu
 
 There are two types of memory allocation available to the C programmer,
@@ -2971,6 +3035,9 @@ The function @code{REprintf} is similar but writes on the error stream
 (@code{stderr}) which may or may not be different from the standard
 output stream.  Functions @code{Rvprintf} and @code{REvprintf} are the
 analogues using the @code{vprintf} interface.
+
+These routines are declared in @file{R_ext/PrtUtil.h} which is not
+included by @file{R.h}.
 
 @subsection Printing from Fortran
 @cindex Printing from C
@@ -3356,8 +3423,8 @@ version includes the patchlevel (as in @code{99.0}).
 @appendix R (internal) programming miscellania
 
 @menu
-* .Internal and .Primitive::
-* Testing R code::
+* .Internal and .Primitive::    
+* Testing R code::              
 @end menu
 
 @node .Internal and .Primitive, Testing R code, R (internal) programming miscellania, R (internal) programming miscellania

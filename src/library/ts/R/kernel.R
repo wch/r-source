@@ -66,7 +66,7 @@ kernel <- function (coef, m = length(coef)+1, r, name="unknown")
     if(is.character(coef)) {
         switch(coef,
                daniell = daniell.kernel(m),
-               dirichlet = dirichlet.kernel(m),
+               dirichlet = dirichlet.kernel(m, r),
                fejer = fejer.kernel(m, r),
                modified.daniell = modified.daniell.kernel(m),
                stop("unknown named kernel"))

@@ -1126,14 +1126,14 @@ echo "configure:1126: checking whether perl version is at least 5" >&5
 if eval "test \"`echo '$''{'r_cv_prog_perl_v5'+set}'`\" = set"; then
   echo $ac_n "(cached) $ac_c" 1>&6
 else
-   perl_version=`${PERL} -v | \
-	  sed -n 's/^.*perl.*version \(.\).*/\1/p'`
-	if test ${perl_version} -ge 5; then
-	  r_cv_prog_perl_v5=yes
-	else
-	  r_cv_prog_perl_v5=no
-	fi
-      
+  
+  if ${PERL} -e 'exit 1 if $]<5'
+  then
+    r_cv_prog_perl_v5=yes
+  else
+    r_cv_prog_perl_v5=no
+  fi
+ 
 fi
 
 echo "$ac_t""$r_cv_prog_perl_v5" 1>&6
@@ -3412,7 +3412,7 @@ else
 #include "confdefs.h"
 #include <alloca.h>
 int main() {
-char *p = alloca(2 * sizeof(int));
+void *p = alloca(2 * sizeof(int));
 ; return 0; }
 EOF
 if { (eval echo configure:3419: \"$ac_link\") 1>&5; (eval $ac_link) 2>&5; } && test -s conftest${ac_exeext}; then
@@ -5089,7 +5089,7 @@ else
 int main() {
 
 /* Ultrix mips cc rejects this.  */
-typedef int charset[2]; const charset x;
+typedef int charset[2]; const charset x = {0,0};
 /* SunOS 4.1.1 cc rejects this.  */
 char const *const *ccp;
 char **p;

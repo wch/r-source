@@ -1,6 +1,6 @@
 include ../MkRules
 
-Rchtml-CFLAGS= -I $(HHWDIR)/include
+Rchtml-CFLAGS= -I "$(HHWDIR)/include"
 Rchtml-DLLFLAGS= -s
 Rchtml-DLLLIBS= -L. -lhhctrl
 

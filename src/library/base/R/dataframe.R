@@ -156,6 +156,8 @@ as.data.frame.matrix <- function(x, row.names = NULL, optional = FALSE)
     dn <- dimnames(x)
     row.names <- dn[[1]]
     collabs <- dn[[2]]
+    if(any(empty <- nchar(collabs)==0))
+        collabs[empty] <- paste("V", 1:ncols, sep = "")[empty]
     value <- vector("list", ncols)
     if(mode(x) == "character" || mode(x) == "logical") {
         for(i in 1:ncols)
@@ -875,6 +877,8 @@ as.matrix.data.frame <- function (x)
 	}
     } else if(non.numeric) {
 	for (j in 1:p) {
+            if (mode(X[[j]]) == "character")
+                next;
 	    xj <- X[[j]]
 	    if(length(levels(xj)) > 0) {
 		X[[j]] <- as.vector(xj)

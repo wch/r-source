@@ -67,10 +67,10 @@ show.data(package = .packages(), lib.loc = .lib.loc)
 }
 \note{
   The data files can be many small files. On some file systems it is
-  desirable to save space, and the text files in the \file{help} directory
+  desirable to save space, and the files in the \file{data} directory
   of an installed package can be zipped up as a zip archive
-  \file{Rdata.zip}. You will need to proved a single-column file
-  \file{filelist} of file names.
+  \file{Rdata.zip}. You will need to provide a single-column file
+  \file{filelist} of file names in that directory.
 }
 
 \seealso{

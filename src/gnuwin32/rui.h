@@ -40,5 +40,6 @@ int winaddmenuitem(char * item, char * menu, char * action, char *errmsg);
 int windelmenu(char * menu, char *errmsg);
 int windelmenuitem(char * item, char * menu, char *errmsg);
 
+void Rwin_fpset();
 
 
