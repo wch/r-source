@@ -9,7 +9,7 @@
 optim(par, fn, gr = NULL,
       method = c("Nelder-Mead", "BFGS", "CG", "L-BFGS-B"),
       lower = -Inf, upper = +Inf,
-      control = list(), hessian = FALSE)%, \dots)
+      control = list(), hessian = FALSE), \dots)
 }
 \arguments{
  \item{par}{Initial values for the parameters to be optimized over.}
@@ -26,7 +26,7 @@ optim(par, fn, gr = NULL,
  \item{control}{A list of control parameters. See \bold{Details}.}
  \item{hessian}{Logical. Should a numerically differentiated Hessian
    matrix be returned?}
-% \item{\dots}{Further arguments to be passed to \code{fn} and \code{gr}.}
+ \item{\dots}{Further arguments to be passed to \code{fn} and \code{gr}.}
 }
 \details{
   By default this function performs minimization, but it will maximize
@@ -51,7 +51,8 @@ optim(par, fn, gr = NULL,
   \emph{box constrainsts}, that is each variable can be given a lower
   and/or upper bound. The initial value must satisfy the constraints.
   This uses a limited-memory modification of the BFGS quasi-Newton
-  method.
+  method. If non-trivial bounds are supplied, this method will be
+  selected, with a warning.
 
   Function \code{fn} can return \code{NA} or \code{Inf} if the function
   cannot be evaluated at the supplied value, but the initial value must
@@ -98,8 +99,8 @@ optim(par, fn, gr = NULL,
       retained in the \code{"L-BFGS-B"} method, It defaults to \code{5}.}
     \item{\code{factr}}{controls the convergence of the \code{"L-BFGS-B"}
       method. Convergence occurs when the reduction in the objective is
-      within this factor of the machine tolerance. Default is \code{1e12},
-      that is a tolerance of about \code{1e-3}.}
+      within this factor of the machine tolerance. Default is \code{1e7},
+      that is a tolerance of about \code{1e-8}.}
     \item{\code{pgtol}}{helps controls the convergence of the \code{"L-BFGS-B"}
       method. It is a tolerance on the projected gradient in the current
       search direction. This defaults to zero, when the check is suppressed.}
@@ -172,11 +173,11 @@ grr <- function(x) {
 }
 
 optim(c(-1.2,1), fr)
-optim(c(-1.2,1), fr, grr, "BFGS")
-optim(c(-1.2,1), fr, NULL, "BFGS", hessian = TRUE)
-optim(c(-1.2,1), fr, grr, "CG")
-optim(c(-1.2,1), fr, grr, "CG", list(type=2))
-optim(c(-1.2,1), fr, grr, "L-BFGS-B")
+optim(c(-1.2,1), fr, grr, method = "BFGS")
+optim(c(-1.2,1), fr, NULL, method = "BFGS", hessian = TRUE)
+optim(c(-1.2,1), fr, grr, method = "CG")
+optim(c(-1.2,1), fr, grr, method = "CG", control=list(type=2))
+optim(c(-1.2,1), fr, grr, method = "L-BFGS-B")
 
 flb <- function(x)
      sum(c(1, rep(4, length(x)-1))*(x - c(1, x[-length(x)])^2)^2)

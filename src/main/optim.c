@@ -32,7 +32,7 @@ static SEXP getListElement(SEXP list, char *str)
     int i;
     
     for (i = 0; i < length(list); i++)
-	if(strcmp(CHAR(STRING(names)[i]), str) == 0) {
+	if (strcmp(CHAR(STRING(names)[i]), str) == 0) {
 	    elmt = VECTOR(list)[i];
 	    break;
 	}
@@ -99,7 +99,7 @@ static void fmingr(int n, double *p, double *df, OptStruct OS)
     int i;
     double val1, val2, eps;
 
-    if(!isNull(OS->R_gcall)) { /* analytical derivatives */
+    if (!isNull(OS->R_gcall)) { /* analytical derivatives */
 	PROTECT(x = allocVector(REALSXP, n));
 	for (i = 0; i < n; i++) 
 	    REAL(x)[i] = p[i] * (OS->parscale[i]);
@@ -145,7 +145,7 @@ SEXP do_optim(SEXP call, SEXP op, SEXP args, SEXP rho)
     OS->R_env = rho;
     par = CAR(args);
     args = CDR(args); fn = CAR(args);
-    if(!isFunction(fn)) errorcall(call, "fn is not a function");
+    if (!isFunction(fn)) errorcall(call, "fn is not a function");
     args = CDR(args); gr = CAR(args);
     args = CDR(args); method = CAR(args);
     if (!isString(method)|| LENGTH(method) != 1) 
@@ -160,7 +160,7 @@ SEXP do_optim(SEXP call, SEXP op, SEXP args, SEXP rho)
     trace = asInteger(getListElement(options, "trace"));
     OS->fnscale = asReal(getListElement(options, "fnscale"));
     tmp = getListElement(options, "parscale");
-    if(LENGTH(tmp) != npar) 
+    if (LENGTH(tmp) != npar) 
 	errorcall(call, "parscale is of the wrong length");
     PROTECT(tmp = coerceVector(tmp, REALSXP));
     OS->parscale = vect(npar);
@@ -175,7 +175,7 @@ SEXP do_optim(SEXP call, SEXP op, SEXP args, SEXP rho)
     abstol = asReal(getListElement(options, "abstol"));
     reltol = asReal(getListElement(options, "reltol"));    
     maxit = asInteger(getListElement(options, "maxit"));	
-    if(maxit == NA_INTEGER) error("maxit is not an integer");
+    if (maxit == NA_INTEGER) error("maxit is not an integer");
 
     if (strcmp(tn, "Nelder-Mead") == 0) {
 	double alpha, beta, gamma;
@@ -192,13 +192,13 @@ SEXP do_optim(SEXP call, SEXP op, SEXP args, SEXP rho)
     } else if (strcmp(tn, "BFGS") == 0) {
 	SEXP ndeps;
 	nREPORT = asInteger(getListElement(options, "REPORT"));
-	if(!isNull(gr)) {
-	    if(!isFunction(gr)) error("gr is not a function");
+	if (!isNull(gr)) {
+	    if (!isFunction(gr)) error("gr is not a function");
 	    PROTECT(OS->R_gcall = lang2(gr, R_NilValue));
 	} else {
 	    PROTECT(OS->R_gcall = R_NilValue); /* for balance */
 	    ndeps = getListElement(options, "ndeps");	
-	    if(LENGTH(ndeps) != npar) error("ndeps is of the wrong length");
+	    if (LENGTH(ndeps) != npar) error("ndeps is of the wrong length");
 	    OS->ndeps = vect(npar);
 	    PROTECT(ndeps = coerceVector(ndeps, REALSXP));
 	    for (i = 0; i < npar; i++) OS->ndeps[i] = REAL(ndeps)[i];
@@ -216,13 +216,13 @@ SEXP do_optim(SEXP call, SEXP op, SEXP args, SEXP rho)
 	SEXP ndeps;
 
 	type = asInteger(getListElement(options, "type"));
-	if(!isNull(gr)) {
-	    if(!isFunction(gr)) error("gr is not a function");
+	if (!isNull(gr)) {
+	    if (!isFunction(gr)) error("gr is not a function");
 	    PROTECT(OS->R_gcall = lang2(gr, R_NilValue));
 	} else {
 	    PROTECT(OS->R_gcall = R_NilValue); /* for balance */
 	    ndeps = getListElement(options, "ndeps");	
-	    if(LENGTH(ndeps) != npar) error("ndeps is of the wrong length");
+	    if (LENGTH(ndeps) != npar) error("ndeps is of the wrong length");
 	    OS->ndeps = vect(npar);
 	    PROTECT(ndeps = coerceVector(ndeps, REALSXP));
 	    for (i = 0; i < npar; i++) OS->ndeps[i] = REAL(ndeps)[i];
@@ -243,13 +243,13 @@ SEXP do_optim(SEXP call, SEXP op, SEXP args, SEXP rho)
 	factr = asReal(getListElement(options, "factr"));
 	pgtol = asReal(getListElement(options, "pgtol"));
 	lmm = asInteger(getListElement(options, "lmm"));
-	if(!isNull(gr)) {
-	    if(!isFunction(gr)) error("gr is not a function");
+	if (!isNull(gr)) {
+	    if (!isFunction(gr)) error("gr is not a function");
 	    PROTECT(OS->R_gcall = lang2(gr, R_NilValue));
 	} else {
 	    PROTECT(OS->R_gcall = R_NilValue); /* for balance */
 	    ndeps = getListElement(options, "ndeps");	
-	    if(LENGTH(ndeps) != npar) error("ndeps is of the wrong length");
+	    if (LENGTH(ndeps) != npar) error("ndeps is of the wrong length");
 	    OS->ndeps = vect(npar);
 	    PROTECT(ndeps = coerceVector(ndeps, REALSXP));
 	    for (i = 0; i < npar; i++) OS->ndeps[i] = REAL(ndeps)[i];
@@ -302,12 +302,12 @@ SEXP do_optimhess(SEXP call, SEXP op, SEXP args, SEXP rho)
     par = CAR(args);
     npar = LENGTH(par);
     args = CDR(args); fn = CAR(args);
-    if(!isFunction(fn)) errorcall(call, "fn is not a function");
+    if (!isFunction(fn)) errorcall(call, "fn is not a function");
     args = CDR(args); gr = CAR(args);
     args = CDR(args); options = CAR(args);
     OS->fnscale = asReal(getListElement(options, "fnscale"));
     tmp = getListElement(options, "parscale");
-    if(LENGTH(tmp) != npar) 
+    if (LENGTH(tmp) != npar) 
 	errorcall(call, "parscale is of the wrong length");
     PROTECT(tmp = coerceVector(tmp, REALSXP));
     OS->parscale = vect(npar);
@@ -315,14 +315,14 @@ SEXP do_optimhess(SEXP call, SEXP op, SEXP args, SEXP rho)
     UNPROTECT(1);
     PROTECT(OS->R_fcall = lang2(fn, R_NilValue));
     PROTECT(par = coerceVector(par, REALSXP));
-    if(!isNull(gr)) {
-	if(!isFunction(gr)) error("gr is not a function");
+    if (!isNull(gr)) {
+	if (!isFunction(gr)) error("gr is not a function");
 	PROTECT(OS->R_gcall = lang2(gr, R_NilValue));
     } else {
 	PROTECT(OS->R_gcall = R_NilValue); /* for balance */
     }
     ndeps = getListElement(options, "ndeps");	
-    if(LENGTH(ndeps) != npar) error("ndeps is of the wrong length");
+    if (LENGTH(ndeps) != npar) error("ndeps is of the wrong length");
     OS->ndeps = vect(npar);
     PROTECT(ndeps = coerceVector(ndeps, REALSXP));
     for (i = 0; i < npar; i++) OS->ndeps[i] = REAL(ndeps)[i];
@@ -406,7 +406,7 @@ vmmin(int n0, double *b, double *Fmin, int maxit, int trace, int *mask,
     c = vect(n);
     B = Lmatrix(n);
     f = fminfn(n, b, OS);
-    if(!R_FINITE(f)) error("initial value in vmmin is not finite");
+    if (!R_FINITE(f)) error("initial value in vmmin is not finite");
     if (trace) Rprintf("initial  value %f \n", f);
     *Fmin = f;
     funcount = gradcount = 1;
@@ -541,7 +541,7 @@ void nmmin(int n, double *Bvec, double *X, double *Fmin,
     char tstr[6];
     double VH, VL, VN, VR;
 
-    if(trace)
+    if (trace)
 	Rprintf("  Nelder-Mead direct search function minimizer\n");
     P = matrix(n, n+1);
     *fail = false;
@@ -550,10 +550,10 @@ void nmmin(int n, double *Bvec, double *X, double *Fmin,
 	error("Function cannot be evaluated at initial parameters");
 	*fail = true;
     } else {
-	if(trace) Rprintf("Function value for initial parameters = %f\n", f);
+	if (trace) Rprintf("Function value for initial parameters = %f\n", f);
 	funcount = 1;
 	convtol = intol * (fabs(f) + intol);
-	if(trace) Rprintf("  Scaled convergence tolerance is %g\n", convtol);
+	if (trace) Rprintf("  Scaled convergence tolerance is %g\n", convtol);
 	n1 = n + 1;
 	C = n + 2;
 	P[n1 - 1][0] = f;
@@ -568,7 +568,8 @@ void nmmin(int n, double *Bvec, double *X, double *Fmin,
 	    if (0.1 * fabs(Bvec[i]) > step)
 		step = 0.1 * fabs(Bvec[i]);
 	}
-	if(trace) Rprintf("Stepsize computed as %f\n", step);
+	if (step == 0.0) step = 0.1;
+	if (trace) Rprintf("Stepsize computed as %f\n", step);
 	for (j = 2; j <= n1; j++) {
 	    strcpy(action, "BUILD          ");
 	    for (i = 0; i < n; i++)
@@ -622,7 +623,7 @@ void nmmin(int n, double *Bvec, double *X, double *Fmin,
 
 	    if (VH > VL + convtol && VL > abstol) {
 		sprintf(tstr, "%5d", funcount);
-		if(trace) Rprintf("%s%s %f %f\n", action, tstr, VH, VL);
+		if (trace) Rprintf("%s%s %f %f\n", action, tstr, VH, VL);
 		VN = beta * VL + (1.0 - beta) * VH;
 
 		for (i = 0; i < n; i++) {
@@ -694,7 +695,7 @@ void nmmin(int n, double *Bvec, double *X, double *Fmin,
 				shrinkfail = false;
 				oldsize = size;
 			    } else {
-				if(trace)
+				if (trace)
 				    Rprintf("Polytope size measure not decreased in shrink\n");
 				shrinkfail = true;
 			    }
@@ -708,7 +709,7 @@ void nmmin(int n, double *Bvec, double *X, double *Fmin,
 
     }
 
-    if(trace) {
+    if (trace) {
 	Rprintf("Exiting from Nelder Mead minimizer\n");
 	Rprintf("    %d function evaluations used\n", funcount);
     }
@@ -733,12 +734,12 @@ void cgmin(int n, double *Bvec, double *X, double *Fmin, int *fail,
     double newstep, oldstep, setstep, steplength=1.0;
     double tol, TEMP;
 
-    if(trace) Rprintf("  Conjugate gradients function minimiser\n");
+    if (trace) Rprintf("  Conjugate gradients function minimiser\n");
 
     c = vect(n); g = vect(n); t = vect(n);
     
     setstep = 1.7;
-    if(trace)
+    if (trace)
 	switch (type) {
 	    
 	case 1:
@@ -757,7 +758,7 @@ void cgmin(int n, double *Bvec, double *X, double *Fmin, int *fail,
     cyclimit = n;
     tol = intol * n * sqrt(intol);
 
-    if(trace) Rprintf("tolerance used in gradient test=%g\n", tol);
+    if (trace) Rprintf("tolerance used in gradient test=%g\n", tol);
     f = fminfn(n, Bvec, OS);
     if (!R_FINITE(f)) {
 	error("Function cannot be evaluated at initial parameters");
@@ -775,7 +776,7 @@ void cgmin(int n, double *Bvec, double *X, double *Fmin, int *fail,
 	    count = 0;
 	    do {
 		cycle++;
-		if(trace) {
+		if (trace) {
 		    Rprintf("%d %d %f\n", gradcount, funcount, *Fmin);
 		    Rprintf("parameters ");
 		    for (i = 1; i <= n; i++) {
@@ -787,7 +788,7 @@ void cgmin(int n, double *Bvec, double *X, double *Fmin, int *fail,
 		    Rprintf("\n");
 		}
 		gradcount++;
-		if(gradcount > maxit) {
+		if (gradcount > maxit) {
 		    *fncount = funcount;
 		    *grcount = gradcount;
 		    *fail = 1;
@@ -848,7 +849,7 @@ void cgmin(int n, double *Bvec, double *X, double *Fmin, int *fail,
 
 			    if (!accpoint) {
 				steplength *= stepredn;
-				if(trace) Rprintf("*");
+				if (trace) Rprintf("*");
 			    }
 			}
 		    } while (!(count == n || accpoint));
@@ -863,9 +864,9 @@ void cgmin(int n, double *Bvec, double *X, double *Fmin, int *fail,
 			    funcount++;
 			    if (f < *Fmin) {
 				*Fmin = f;
-				if(trace) Rprintf(" i< ");
+				if (trace) Rprintf(" i< ");
 			    } else {
-				if(trace) Rprintf(" i> ");
+				if (trace) Rprintf(" i> ");
 				for (i = 0; i < n; i++)
 				    Bvec[i] = X[i] + steplength * t[i];
 			    }
@@ -881,7 +882,7 @@ void cgmin(int n, double *Bvec, double *X, double *Fmin, int *fail,
 		 ((count != n) && (G1 > tol) && *Fmin > abstol));
 
     }
-    if(trace) {
+    if (trace) {
 	Rprintf("Exiting from conjugate gradients minimizer\n");
 	Rprintf("    %d function evaluations used\n", funcount);
 	Rprintf("    %d gradient evaluations used\n", gradcount);
