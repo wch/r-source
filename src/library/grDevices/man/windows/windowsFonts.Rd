@@ -5,7 +5,7 @@
 \concept{encoding}
 \title{Windows Fonts}
 \description{
-  These functions handle the translation of a generic R graphics
+  These functions handle the translation of a device-independent R graphics
   font family name to a windows font description.
 }
 \usage{
@@ -40,6 +40,9 @@ windowsFonts(...)
   sans-serif font,
   \code{"serif"} for a serif font, \code{"mono"} for a monospaced font,
   and \code{"symbol"} for a symbol font.
+
+  These mappings will only be used if the current font face is
+  1 (plain), 2 (bold), 3 (italic), or 4 (bolditalic).
 }
 \seealso{
   \code{\link{windows}}

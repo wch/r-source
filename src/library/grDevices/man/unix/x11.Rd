@@ -52,6 +52,15 @@ X11(display = "", width = 7, height = 7, pointsize = 12,
   are approximated by the closest value in the cube.  The default
   strategy for pseudocolor displays is \code{"pseudo"}.
 
+  An initial/default font family for the device can be specified via
+  the \code{fonts} argument, but
+  if a device-independent R graphics font family is specified
+  (e.g., via \code{par(family=)} in the graphics package),
+  the X11 device makes use of the X11 font database
+  (see \code{X11Fonts}) to
+  convert the R graphics font family
+  to an X11-specific font family description.  
+
   \bold{Note:} All \code{X11} devices share a \code{colortype} which is
   set by the first device to be opened.  To change the \code{colortype}
   you need to close \emph{all} open \code{X11} devices then open one

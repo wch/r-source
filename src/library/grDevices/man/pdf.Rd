@@ -45,7 +45,8 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
   \item{pointsize}{the default point size to be used.}
   \item{bg}{the default background color to be used.}
   \item{fg}{the default foreground color to be used.}
-  \item{fonts}{a character vector specifying font family names for fonts
+  \item{fonts}{a character vector specifying device-independent
+    R graphics font family names for fonts
     which will be included in the PDF file.}
   \item{version}{a string describing the PDF version that will be
     used to produce output.}
@@ -54,6 +55,21 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
   \code{pdf()} opens the file \code{file} and the PDF commands needed to
   plot any graphics requested are sent to that file.
 
+  The \code{family} argument can be used to specify a PDF-specific
+  font family as the initial/default font for the device.
+
+  If a device-independent R graphics font family is specified
+  (e.g., via \code{par(family=)} in the graphics package),
+  the PDF device makes use of the PostScript font mappings to
+  convert the R graphics font family
+  to a PDF-specific font family description.  R does \emph{not}
+  embed fonts in the PDF file though, so it is only possible to
+  use mappings to the font families that are
+  assumed to be available in a PDF viewer: \code{"Times"} or
+  \code{"Times New Roman"},
+  \code{"Helvetica"} or \code{"Arial"}, \code{"Courier"},
+  \code{"Symbol"}, and \code{"ZapfDingbats"}.
+  
   See \code{\link{postscript}} for details of encodings, as the internal
   code is shared between the drivers.  The native PDF encoding is given
   in file \file{PDFDoc.enc}.
@@ -81,6 +97,7 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
   Helvetica.
 }
 \seealso{
+  \code{\link{postscriptFonts}},
   \code{\link{Devices}},
   \code{\link{postscript}}
 }

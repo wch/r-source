@@ -95,7 +95,9 @@ ps.options(paper, horizontal, width, height, family, encoding,
   \item{reset, override.check}{logical arguments passed to
     \code{\link{check.options}}.  See the Examples.}
   \item{title}{title string to embed in the file.}
-  \item{fonts}{a character vector specifying font family names for fonts
+  \item{fonts}{a character vector specifying R graphics
+    (device-independent)
+    font family names for fonts
     which must be 
     included in the PostScript file.}
 }
@@ -150,12 +152,20 @@ ps.options(paper, horizontal, width, height, family, encoding,
   via \code{family}.  If other fonts are to be used when drawing to
   the PostScript device, these must be declared when the
   device is created via \code{fonts};  the font family names for this
-  argument are generic R graphics font family names (see the
+  argument are device-independent R graphics font family names (see the
   documentation for \code{postscriptFonts}).
 }
 
 \section{Families}{
-  The argument \code{family} specifies the font family to be used.
+  Font families may be specified in several ways.  The \code{family}
+  argument specifies an initial/default font family for the device.  This
+  is a PostScript-specific font family specification (see below).
+  The \code{fonts} argument specifies a set of device-independent
+  font families that are mapped to PostScript-specific fonts via
+  a font database (see \code{postscriptFonts}).  
+  
+  The argument \code{family} specifies the initial/default
+  font family to be used.
   In normal use it is one of \code{"AvantGarde"},
   \code{"Bookman"}, \code{"Courier"}, \code{"Helvetica"},
   \code{"Helvetica-Narrow"}, \code{"NewCenturySchoolbook"},

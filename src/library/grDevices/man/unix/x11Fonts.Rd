@@ -5,7 +5,7 @@
 \concept{encoding}
 \title{X11 Fonts}
 \description{
-  These functions handle the translation of a generic R graphics
+  These functions handle the translation of a device-independent R graphics
   font family name to an X11 font description.
 }
 \usage{

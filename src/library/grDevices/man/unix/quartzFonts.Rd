@@ -5,7 +5,7 @@
 \concept{encoding}
 \title{quartz Fonts}
 \description{
-  These functions handle the translation of a generic R graphics
+  These functions handle the translation of a device-independent R graphics
   font family name to a quartz font description.
 }
 \usage{

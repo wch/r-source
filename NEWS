@@ -245,12 +245,12 @@ NEW FEATURES
 	text.  This is a device-independent family specification
 	which gets mapped by the graphics device to a device-specific
 	font specification (see, for example, postscriptFonts()).
-	Currently, only PostScript, PDF, and X11 respond to this
-	setting.
+	Currently, only PostScript, PDF, X11, Quartz, and Windows
+	respond to this setting.
 
 	'lend', 'ljoin', and 'lmitre' control the cap style and
 	join style for drawing lines (only noticeable on thick lines
-	or borders).  Currently, only PostScript, PDF, and X11 
+	or borders).  Currently, only PostScript, PDF, X11, and Quartz 
 	respond to these settings.
 
 	'lheight' is a multiplier used in determining the vertical

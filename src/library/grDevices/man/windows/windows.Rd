@@ -133,6 +133,15 @@ win.print(width = 7, height = 7, pointsize = 12, printer = "")
   continuous plotting.  These times can be altered by setting
   \code{options("windowsTimeout")} to a vector of two integers before
   opening the device.
+
+  The font used for text drawn in a Windows device may be controlled in
+  two ways.  The file \code{RHOME\\etc\\Rdevga} can be used to
+  specify mappings for \code{par(font=)} (in the graphics package).
+  Alternatively, a device-independent R graphics font family
+  can be specified 
+  (e.g., via \code{par(family=)} in the graphics package)
+  and this will be mapped via the Windows font database (see
+  \code{windowsFonts}).  
 }
 
 \value{
@@ -140,6 +149,7 @@ win.print(width = 7, height = 7, pointsize = 12, printer = "")
 }
 
 \seealso{
+  \code{\link{windowsFonts}},
   \code{\link{savePlot}}, \code{\link{bringToTop}},
   \code{\link{Devices}}, \code{\link{postscript}}
 }
