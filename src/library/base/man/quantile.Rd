@@ -37,7 +37,9 @@
   propagated to the result.
 }
 \seealso{\code{\link[stepfun]{ecdf}} for empirical distributions of
-  \code{quantile} is  the "inverse".
+  which \code{quantile} is the "inverse".
+  \code{\link{boxplot.stats}} and \code{\link{fivenum}} for computing
+  ``versions'' of quartiles, etc.
 }
 \examples{
 quantile(x <- rnorm(1001))# Extremes & Quartiles by default
