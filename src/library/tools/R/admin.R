@@ -128,7 +128,7 @@ function(dir, outDir)
     ## Create a vignette index only if the vignette dir exists and
     ## really contains vignettes.
     if(!.fileTest("-d", vignetteDir)) return()
-    if(!.listFilesWithType(vignetteDir, "vignette")) return()
+    if(!length(.listFilesWithType(vignetteDir, "vignette"))) return()
 
     vignetteIndex <- .buildVignetteIndex(vignetteDir)
 
