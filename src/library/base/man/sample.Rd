@@ -10,7 +10,7 @@ sample(x, size, replace=FALSE, prob)
     choose, or a positive integer.}
   \item{size}{A positive integer giving the number of items to choose.}
   \item{replace}{Should sampling be with replacement?}
-  \item{prob}{A vector of probabilities of obtaining the elements
+  \item{prob}{A vector of probability weights for obtaining the elements
     of the vector being sampled.}
 }
 \description{
@@ -26,10 +26,13 @@ sample(x, size, replace=FALSE, prob)
   of the elements of \code{x} (or \code{1:x}).
   
   The optional \code{prob} argument can be used to give a vector
-  of probabilities of obtaining the elements of the vector being
-  sampled. If \code{replace} is false, these probabilities are applied
+  of weights for obtaining the elements of the vector being
+  sampled. They need not sum to one, but they should be nonnegative
+  and not all zero. 
+  If \code{replace} is false, these probabilities are applied
   sequentially, that is the probability of choosing the next item is
-  proportional to the probabilities amongst the remaining items.
+  proportional to the probabilities amongst the remaining items. The number
+  of nonzero weights must be at least \code{size} in this case.
 }
 \examples{
 x <- 1:12
