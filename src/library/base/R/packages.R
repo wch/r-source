@@ -87,7 +87,7 @@ old.packages <- function(lib.loc=.lib.loc, CRAN=getOption("CRAN"),
         ok <- (instp[k, "Priority"] != "base") &
                 (available[,"Package"] == instp[k, "Package"])
         if(any(ok))
-            ok[ok] <- sapply(available[ok, "Version"], biggerVersion,
+            ok[ok] <- sapply(available[ok, "Version"], newerVersion,
                              instp[k, "Version"])
         if(any(ok) && any(package.dependencies(available[ok, ], check=TRUE)))
         {
@@ -102,7 +102,7 @@ old.packages <- function(lib.loc=.lib.loc, CRAN=getOption("CRAN"),
     update
 }
 
-biggerVersion <- function(a, b){
+newerVersion <- function(a, b){
     a <- as.integer(strsplit(a, "[\\.-]")[[1]])
     b <- as.integer(strsplit(b, "[\\.-]")[[1]])
     for(k in 1:length(a)){

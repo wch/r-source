@@ -6,7 +6,7 @@
 \alias{download.packages}
 \alias{install.packages}
 \alias{contrib.url}
-\alias{biggerVersion}
+\alias{newerVersion}
 \title{Download Packages from CRAN}}
 \description{
   These functions can be used to automatically compare the version
@@ -32,7 +32,7 @@ download.packages(pkgs, destdir, available = NULL,
 install.packages(pkgs, lib, CRAN = options("CRAN"),
                  contriburl = contrib.url(CRAN),
                  method = "auto", available = NULL, destdir=NULL)
-biggerVersion(a, b)
+newerVersion(a, b)
 }
 \arguments{ 
   \item{lib.loc}{A character vector describing the location of R
@@ -109,7 +109,7 @@ biggerVersion(a, b)
   will be given the option of deleting the temporary files once the
   packages are installed.
 
-  \code{biggerVersion(a, b)} is a helper function that returns
+  \code{newerVersion(a, b)} is a helper function that returns
   \code{TRUE} when version \code{a} is newer than version \code{b}.
 }
 #ifdef windows
