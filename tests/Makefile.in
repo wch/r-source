@@ -72,7 +72,7 @@ Makedeps: Makefile
 	@touch $@
 FORCE:
 
-%.R : $(srcdir)/make-%.R
+%.R : $(srcdir)/make-%.R stamp-R
 	$(R) < $< > /dev/null
 
 %.Rout : %.R
