@@ -9,14 +9,15 @@
 		CHANGES IN R VERSION 1.9.1
 
 
-
 BUG FIXES
 
-    o	pbinom(q, N, prob) is now more accurate when prob is close to 0
-	(PR#6757).
+    o	pbinom(q, N, prob) is now more accurate when prob is close to 0.
+	(PR#6757)
 
     o	pcauchy(x, .., log.p) is now more accurate for large x,
-	particularly when log.p = TRUE	(PR#6756).
+	particularly when log.p = TRUE. (PR#6756)
+
+    o	makeARIMA() was not handling an ARMA(0, 0) model correctly.
 
 
 
@@ -495,7 +496,7 @@ DEPRECATED & DEFUNCT
     o	LTRUE/LFALSE in Rmath.h have been removed: they were
 	deprecated in 1.2.0.
 
-    o	package.contents() has been deprecated.
+    o	package.contents() and package.description() have been deprecated.
 
 
 INSTALLATION CHANGES
