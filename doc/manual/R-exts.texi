@@ -6155,15 +6155,20 @@ foo.default <- base::foo
 @node Linking GUIs and other front-ends to R, R (internal) programming miscellanea, Generic functions and methods, Top
 @chapter Linking GUIs and other front-ends to R
 
-@emph{The chapter is currently for Unix-like operating systems and does not
-cover Windows.}
+@menu
+* Embedding R under Unix-alikes::  
+* Embedding R under Windows::   
+@end menu
+
+@node Embedding R under Unix-alikes, Embedding R under Windows, Linking GUIs and other front-ends to R, Linking GUIs and other front-ends to R
+@section Embedding R under Unix-alikes
 
 @R{} can be built as a shared library@footnote{In the parlance of MacOS
 X this is a @emph{dynamic} library, and is the normal way to build R on
 that platform.} if configured with @option{--enable-R-shared}.  This
 shared library can be used to run @R{} from alternative front-end
 programs.  We will assume this has been done for the rest of this
-chapter.
+section.
 
 The command-line @R{} front-end, @file{R_HOME/bin/exec/R} is one such
 example, and the unbundled @acronym{GNOME} and MacOS X consoles are
@@ -6193,8 +6198,8 @@ environment for the executable, and this is used for
 Setting @env{R_HOME} and checking it is valid.
 
 @item
-Setting @env{LD_LIBRARY_PATH} to include the directories used in
-linking @R{}.  This is encoded as the default setting of
+Setting @env{LD_LIBRARY_PATH} to include the directories used in linking
+@R{}.  This is recorded as the default setting of
 @env{R_LD_LIBRARY_PATH} in the shell script.
 
 @item
@@ -6227,7 +6232,7 @@ and @R{} does look there for system components.)
 
 The other senses in which this example is too simple are that all the
 internal defaults are used and that control is handed over to the
-@R{} mainloop.  There are a number of small examples@footnote{but these
+@R{} main loop.  There are a number of small examples@footnote{but these
 are not part of the automated test procedures and so little tested.} in the
 @file{tests/Embedding} directory.  These make use of
 @code{Rf_initEmbeddedR} in @file{src/main/Rembedded.c}, and essentially
@@ -6267,6 +6272,62 @@ However, to make a GUI we do want to run @code{run_Rmainloop} after
 setting up various parts of @R{} to talk to our GUI, and arranging for
 our GUI callbacks to be called during the @R{} mainloop.  That is
 covered by public header files in @R{} 2.1.0, but not in this release.
+
+
+@node Embedding R under Windows,  , Embedding R under Unix-alikes, Linking GUIs and other front-ends to R
+@section Embedding R under Windows
+
+All Windows interfaces to @R{} call entry points in the DLL
+@file{R.dll}, directly or indirectly.  Simpler applications may find it
+easier to use the indirect route via @acronym{(D)COM}.
+
+@menu
+* Using (D)COM::                
+* Calling R.dll directly::      
+@end menu
+
+@node Using (D)COM, Calling R.dll directly, Embedding R under Windows, Embedding R under Windows
+@subsection Using (D)COM
+
+@acronym{(D)COM} is a standard Windows mechanism used for communication
+between Windows applications.  One application (here @R{}) is run as COM
+server which offers services to clients, here the front-end calling
+application.  The services are described in a `Type Library' and are
+(more or less) language-independent, so the calling application can be
+written in C or C++ or Visual Basic or Perl or Python and so on.
+The `D' in (D)COM refers to `distributed', as the client and server can
+be running on different machines.
+
+The basic @R{} distribution is not a (D)COM server, but two addons are
+currently available that interface directly with @R{} and provide a
+(D)COM server:
+@itemize
+@item
+There is a (D)COM server called @code{StatConnector} written by Thomas
+Baier available on CRAN
+(@uref{http://cran.r-project.org/other-software.html}) which works with
+@code{Rproxy.dll} (in the R distribution) and @code{R.dll} to support
+transfer of data to and from R and remote execution of R commands, as
+well as embedding of an R graphics window.
+
+@item 
+Another (D)COM server, @code{RDCOMServer}, is available from
+@uref{http://www.omegahat.org/}. Its philosophy is discussed in
+@uref{http://www.omegahat.org/RDCOMServer/Docs/Paradigm.html} and is
+very different from the purpose of this section.
+@end itemize
+@node Calling R.dll directly,  , Using (D)COM, Embedding R under Windows
+@subsection Calling R.dll directly
+
+The @code{R} DLL is mainly written in C and has @code{_cdecl} entry
+points.  Calling it directly will be tricky except from C code (or C++
+with a little care).
+
+Examples of calling @code{R.dll} directly are provided in the directory
+@file{src/gnuwin32/front-ends}, including @code{Rproxy.dll} used by
+@code{StatConnector} and a simple command-line front-end @file{rtest.c}.
+More details will be given in @R{} 2.1.0 which will have public header
+files documenting the interface.
 
 
 @node R (internal) programming miscellanea, R coding standards, Linking GUIs and other front-ends to R, Top
