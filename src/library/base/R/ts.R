@@ -60,10 +60,10 @@ ts <- function(data = NA, start = 1, end = numeric(0), frequency = 1,
 
 tsp <- function(x) attr(x, "tsp")
 
-"tsp<-" <- function(x, value, ts.eps = .Options$ts.eps) {
+"tsp<-" <- function(x, value) {
     cl <- class(x)
     fr.x <- value[3]
-    if(fr.x > 1 && abs(fr.x - round(fr.x)) < ts.eps)
+    if(fr.x > 1 && abs(fr.x - round(fr.x)) < .Options$ts.eps)
 	value[3] <- round(fr.x)
     attr(x,"tsp") <- value
     if (!inherits(x, "ts"))
