@@ -742,8 +742,13 @@ static void old_to_new(SEXP x, SEXP y)
   if (NODE_IS_OLDER(x, y)) old_to_new(x,y);  } while (0)
 
 
-/* Node Sorting. */
-
+/* Node Sorting.  SortNodes attempts to improve locality of reference
+by rearranging the free list to place nodes on the same place page
+together and order nodes within pages.  This involves a sweep of the
+heap, so it should not be done too often, but doing it at least
+occationally does seem essential.  Sorting on each full colllection s
+probably sufficient. */
+#define SORT_NODES
 #ifdef SORT_NODES
 static void SortNodes(void)
 {
@@ -751,7 +756,6 @@ static void SortNodes(void)
   int i;
 
   for (i = 0; i < NUM_SMALL_NODE_CLASSES; i++) {
-    int pages_free = 0;
     PAGE_HEADER *page;
     int node_size = NODE_SIZE(i);
     int page_count = (R_PAGE_SIZE - sizeof(PAGE_HEADER)) / node_size;
@@ -939,7 +943,7 @@ again:
     DEBUG_CHECK_NODE_COUNTS("after heap adjustment");
   }
 #ifdef SORT_NODES
-  if (gens_collected > 0)
+  if (gens_collected == NUM_OLD_GENERATIONS)
     SortNodes();
 #endif
 
