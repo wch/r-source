@@ -3,7 +3,7 @@
 ## ===== configuration macros for building packages or R  ===============
 
 # Alternatives MINGW (mingw), CROSS (Linux)
-BUILD=MINGW
+BUILD=CROSS
 
 HELP = YES
 ifeq ($(strip $(BUILD)),CROSS)
@@ -25,7 +25,7 @@ ATLAS_PATH=/R/ATLAS/lib/WinNT_PII
 HHWDIR=C:/Program Files/HTML Help Workshop
 
 # Where does Tcl/Tk live? Spaces allowed.
-TCL_HOME = C:/packages/Tcl
+TCL_HOME = /users/ripley/R/Rwin/Tcl
 TCL_VERSION = 83
 
 ## ====== configuration macros for building installers ===========
