@@ -1,6 +1,6 @@
 
 R : Copyright 1999, The R Development Core Team
-Version 0.90.0 Under development (unstable) (October 16, 1999)
+Version 0.90.0 Under development (unstable) (October 21, 1999)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -111,7 +111,7 @@ Error in as.data.frame.default(x) : can't coerce NULL into a data.frame
 > is.expression(as.expression( x ))
 [1] TRUE
 > is.factor(as.factor( x ))
-[1] FALSE
+[1] TRUE
 > is.function(as.function( x ))
 Error in as.function.default(l, envir) : argument must have length at least 1
 > is.integer(as.integer( x ))
@@ -341,7 +341,7 @@ Error in as.double.default(x) : (list) object cannot be coerced to vector type 1
 > is.expression(as.expression( x ))
 [1] TRUE
 > is.factor(as.factor( x ))
-[1] FALSE
+[1] TRUE
 > is.function(as.function( x ))
 Error in as.function.default(l, envir) : argument must have length at least 1
 > is.integer(as.integer( x ))

@@ -1,8 +1,11 @@
-###---- ALL tests here should return  TRUE !
+####=== Numerical / Arithmetic Tests
+####--- ALL tests here should return  TRUE !
 ###
 ### '##P': This lines give not 'T' but relevant ``Print output''
-###
 
+### --> d-p-q-r-tests.R  for distribution things
+
+opt.conformance <- 0
 Meps <- .Machine $ double.eps
 
 options(rErr.eps = 1e-30)
@@ -17,6 +20,9 @@ rErr <- function(approx, true, eps = .Options$rErr.eps)
 is.infinite(.Machine$double.base ^ .Machine$double.max.exp)# overflow
 abs(1- .Machine$double.xmin * 10^(-.Machine$double.min.exp*log10(2)))/Meps < 1e3
 ##P (1- .Machine$double.xmin * 10^(-.Machine$double.min.exp*log10(2)))/Meps
+if(opt.conformance)#fails at least on SGI/IRIX 6.5
+abs(1- .Machine$double.xmax * 10^(-.Machine$double.max.exp*log10(2)))/Meps < 1e3
+
 log10(.Machine$double.xmax) / log10(2) == .Machine$double.max.exp
 log10(.Machine$double.xmin) / log10(2) == .Machine$double.min.exp
 

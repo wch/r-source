@@ -27,3 +27,8 @@ ncb <- dimnames(cbind(a=1, yy=1:3))[[2]]
 all(cbind(a=1:2, b=1:3, c=1:6) == t(rbind(a=1:2, b=1:3, c=1:6)))
 ##P rbind(a=1:2, b=1:3, c=1:6)
 all(dim(cbind(cbind(I=1,x=1:4), c(a=pi))) == 4:3)# fails in S+
+
+## factor():
+is.factor(factor(list()))
+all(levels(ordered(rev(gl(3,4)))) == 1:3)# coercion to char
+all(levels(factor(factor(9:1)[3:5])) == 5:7)

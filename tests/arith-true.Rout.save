@@ -1,6 +1,6 @@
 
 R : Copyright 1999, The R Development Core Team
-Version 0.65.0 Under development (unstable) (August 20, 1999)
+Version 0.90.0 Under development (unstable) (October 22, 1999)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -13,11 +13,12 @@ Type	"demo()" for some demos, "help()" for on-line help, or
     	"help.start()" for a HTML browser interface to help.
 Type	"q()" to quit R.
 
-> ###---- ALL tests here should return  TRUE !
+> ####=== Numerical / Arithmetic Tests
+> ####--- ALL tests here should return  TRUE !
 > ###
 > ### '##P': This lines give not 'T' but relevant ``Print output''
-> ###
 > 
+> opt.conformance <- 0
 > Meps <- .Machine $ double.eps
 > 
 > options(rErr.eps = 1e-30)
@@ -34,6 +35,9 @@ Type	"q()" to quit R.
 > abs(1- .Machine$double.xmin * 10^(-.Machine$double.min.exp*log10(2)))/Meps < 1e3
 [1] TRUE
 > ##P (1- .Machine$double.xmin * 10^(-.Machine$double.min.exp*log10(2)))/Meps
+> if(opt.conformance)#fails at least on SGI/IRIX 6.5
++ abs(1- .Machine$double.xmax * 10^(-.Machine$double.max.exp*log10(2)))/Meps < 1e3
+> 
 > log10(.Machine$double.xmax) / log10(2) == .Machine$double.max.exp
 [1] TRUE
 > log10(.Machine$double.xmin) / log10(2) == .Machine$double.min.exp

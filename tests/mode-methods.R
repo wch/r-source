@@ -1,24 +1,17 @@
-
-##-- This REALLY does  NOT yet work in R (0.64.0, April 8, 1999) !
-##-- just alwas calls	abc.default(..)	 ...
+### Using Method Dispatch on "mode" etc :
 
 abc <- function(x, ...) {
     if (is.null(class(x))) class(x) <- data.class(x)
     cat("abc: Before dispatching; x="); str(x)
-    ##fails:
-    UseMethod("abc")
-    ##fails in all cases: NextMethod("abc",x)
+    UseMethod("abc", x,...) ## UseMethod("abc") (as in S) fails
 }
-
 
 abc.default <- function(x, ...) sys.call()
 
 "abc.(" <- function(x)
     cat("'(' method of abc:", deparse(sys.call(sys.parent())),"\n")
-
 abc.expression <- function(x)
     cat("'expression' method of abc:", deparse(sys.call(sys.parent())),"\n")
-
 
 abc(1)
 e0 <- expression((x))
