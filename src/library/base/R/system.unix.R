@@ -137,11 +137,8 @@ installed.packages <- function(lib.loc = .lib.loc)
 
 
 
-CRAN.packages <- function(CRAN=options("CRAN"),
-                          method=c("wget", "lynx"))
+CRAN.packages <- function(CRAN=options("CRAN"), method="auto")
 {
-    method <- match.arg(method)
-    
     tmpf <- tempfile()
     download.file(url=paste(CRAN, "/src/contrib/PACKAGES", sep=""),
                   destfile=tmpf, method=method)
@@ -159,7 +156,7 @@ CRAN.packages <- function(CRAN=options("CRAN"),
 
 
 update.packages <- function(lib.loc=.lib.loc, CRAN=options("CRAN"),
-                            method=c("wget", "lynx"))
+                            method="auto", instlib=NULL)
 {
     instp <- installed.packages(lib.loc=lib.loc)
     cranp <- CRAN.packages(CRAN=CRAN, method=method)
@@ -180,14 +177,29 @@ update.packages <- function(lib.loc=.lib.loc, CRAN=options("CRAN"),
             cat("\n")
         }
     }
-    pkgs <- NULL
-    if(!is.null(update))
-    {
-        tmpd <- tempfile("dir")
-        system(paste("mkdir", tmpd))
-        pkgs <- download.packages(update[,"Package"], destdir=tmpd,
-                                  available=cranp, CRAN=CRAN, method=method)
+
+    if(!is.null(update)){
+        if(is.null(instlib))
+            instlib <-  update[,"LibPath"]
+        
+        install.packages(update[,"Package"], instlib, CRAN=CRAN,
+                         method=method, available=cranp)
     }
+}
+
+
+install.packages <- function(pkglist, lib, CRAN=options("CRAN"),
+                             method="auto", available=NULL)
+{
+    pkgs <- NULL
+    tmpd <- tempfile("dir")
+    system(paste("mkdir", tmpd))
+    pkgs <- download.packages(pkglist, destdir=tmpd,
+                              available=available,
+                              CRAN=CRAN, method=method)
+    update <- cbind(pkglist, lib)
+    colnames(update) <- c("Package", "LibPath")
+    
     if(!is.null(pkgs))
     {
         for(lib in unique(update[,"LibPath"]))
@@ -215,27 +227,39 @@ update.packages <- function(lib.loc=.lib.loc, CRAN=options("CRAN"),
 }
 
 
-download.file <- function(url, destfile, method=c("wget", "lynx"))
+download.file <- function(url, destfile, method="auto")
 {
-    method <- match.arg(method)
+    method <- match.arg(method,
+                        c("auto", "wget", "lynx", "cp"))
 
+    if(method=="auto"){
+        if(length(grep("^file:", url)))
+            method <- "cp"
+        else if(system("wget --help > /dev/null")==0)
+            method <- "wget"
+        else if(system("lynx --help > /dev/null")==0)
+            method <- "lynx"
+        else
+            stop("No download method found")
+    }
+    
     if(method=="wget")
         status <- system(paste("wget", url, "-O", destfile))
     else if(method=="lynx")
         status <- system(paste("lynx -dump", url, ">", destfile))
-
+    else if(method=="cp"){
+        url <- sub("^file:","",url)
+        status <- system(paste("cp", url, destfile))
+    }
     invisible(status)
 }
     
     
     
 download.packages <- function(pkgs, destdir, available=NULL, 
-                              CRAN=options("CRAN"),
-                              method=c("wget", "lynx"))
+                              CRAN=options("CRAN"), method="auto")
 {
-    method <- match.arg(method)
-    
-    if(missing(available))
+    if(is.null(available))
         available <- CRAN.packages(CRAN=CRAN, method=method)
 
     retval <- NULL
