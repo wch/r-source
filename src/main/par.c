@@ -1573,9 +1573,25 @@ SEXP do_par(SEXP call, SEXP op, SEXP args, SEXP env)
 SEXP do_readonlypars(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP result;
-    GEDevDesc *dd = GEcurrentDevice();
-    Rboolean canChangeGamma = dd->dev->canChangeGamma;
+    GEDevDesc *dd;
+    Rboolean canChangeGamma;
     int nreadonly;
+
+    checkArity(op, args);
+    /* need a device open: called from par() which would open a 
+       device later, so do it now */
+    if (NoDevices()) {
+	SEXP defdev = GetOption(install("device"), R_NilValue);
+	if (isString(defdev) && length(defdev) > 0) {
+	    PROTECT(defdev = lang1(install(CHAR(STRING_ELT(defdev, 0)))));
+	}
+	else errorcall(call, "No active or default device");
+	eval(defdev, R_GlobalEnv);
+	UNPROTECT(1);
+    }
+    dd = GEcurrentDevice();
+    canChangeGamma = dd->dev->canChangeGamma;
+
     if (canChangeGamma) 
 	nreadonly = 5;
     else 
