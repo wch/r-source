@@ -1,7 +1,10 @@
 ## useDynLib("grid") # done in .onLoad
 
-export("absolute.size", "convertNative", "current.viewport",
-       "dataViewport", "gpar", "grid.arrows", "grid.circle",
+export("absolute.size", "convertNative", 
+       "current.viewport", "current.vpTree", 
+       "current.transform",
+       "dataViewport", "downViewport", "get.gpar",
+       "gpar", "grid.arrows", "grid.circle",
        "grid.collection", "grid.convert", "grid.convertHeight",
        "grid.convertWidth", "grid.convertX", "grid.convertY",
        "grid.copy", "grid.display.list", "grid.draw", "grid.edit",
@@ -12,9 +15,13 @@ export("absolute.size", "convertNative", "current.viewport",
        "grid.pretty", "grid.rect", "grid.segments", "grid.set",
        "grid.show.layout", "grid.show.viewport", "grid.text",
        "grid.xaxis", "grid.yaxis", "height.details", "is.unit",
-       "plotViewport", "pop.viewport", "push.viewport", "unit",
+       "plotViewport", "pop.viewport", "push.viewport", 
+       "popViewport", "pushViewport",
+       "seekViewport", "unit",
        "unit.c", "unit.length", "unit.pmax", "unit.pmin", "unit.rep",
-       "viewport", "width.details")
+       "upViewport",
+       "viewport", "vpList", "vpStack", "vpTree", "vpPath",
+       "width.details")
 
 ## Documented as internal but in Paul's first attempt at a sensible
 ## export list:
@@ -42,14 +49,22 @@ S3method("Summary", "unit")
 S3method("as.character", "unit")
 S3method("as.character", "unit.arithmetic")
 S3method("as.character", "unit.list")
+S3method("as.character", "viewport")
+S3method("as.character", "vpList")
+S3method("as.character", "vpStack")
+S3method("as.character", "vpTree")
 S3method("print", "grob")
 S3method("print", "unit")
 S3method("print", "viewport")
+S3method("print", "vpPath")
 
 ## S3 methods for exported generics in grid
 S3method("unit.length", "unit")
 S3method("unit.length", "unit.list")
 S3method("unit.length", "unit.arithmetic")
+
+S3method("downViewport", "default")
+S3method("downViewport", "vpPath")
 
 S3method("draw.details", "arrows")
 S3method("draw.details", "circle")
@@ -85,3 +100,19 @@ S3method("width.details", "text")
 S3method("width.details", "viewport")
 S3method("width.post.details", "default")
 S3method("width.pre.details", "default")
+
+# S3 methods for internal generics that are used in calls to external fns
+S3method("depth", "viewport")
+S3method("depth", "vpList")
+S3method("depth", "vpStack")
+S3method("depth", "vpTree")
+S3method("setvpgpar", "viewport")
+S3method("setvpgpar", "vpStack")
+S3method("setvpgpar", "vpList")
+S3method("setvpgpar", "vpTree")
+S3method("push.vp", "default")
+S3method("push.vp", "viewport")
+S3method("push.vp", "vpList")
+S3method("push.vp", "vpStack")
+S3method("push.vp", "vpTree")
+

@@ -189,6 +189,7 @@
 \alias{grid.strip}
 \alias{height.post.details}
 \alias{height.pre.details}
+\alias{is.unit}
 \alias{layoutRegion}
 \alias{viewport.layout}
 \alias{viewport.transform}

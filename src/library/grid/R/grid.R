@@ -2,79 +2,275 @@
 # FIXME:  all grid functions should check that .grid.started is TRUE
 .grid.loaded <- FALSE
 
-# Define a convenience function that is easy to call from C code
-grid.top.level.vp <- function() {
-  viewport(clip=TRUE)
+push.vp <- function(vp, recording) {
+  UseMethod("push.vp")
 }
 
-push.vp <- function(vps, index, len, recording) {
-  vp <- vps[[index]]
-  if (is.null(vp))
-    stop("Illegal to push NULL viewport")
+push.vp.default <- function(vp, recording) {
+  stop("Only valid to push viewports")
+}
+
+push.vp.viewport <- function(vp, recording) {
   # Record on the display list
   if (recording)
     record(vp)
   # Enforce gpar settings
   set.gpar(vp$gp)
-  # Later, we will query the viewport to ask "what were the gpar
-  # settings when you were drawn".  This is NOT the same as asking
-  # the viewport for its gpar settings because the viewport may only
-  # specify some gpar values.  So we record the default settings
-  # we will need to know about
-  vp$cur.fontfamily <- get.gpar("fontfamily")
-  vp$cur.font <- get.gpar("font")
-  vp$cur.fontsize <- get.gpar("fontsize")
-  vp$cur.lineheight <- get.gpar("lineheight")
-  # Calculate viewport transform
-  # NOTE that we will have modified "vp" within L_setviewport
-  # to record the current transformation and layout
-  grid.Call.graphics("L_setviewport", vp, TRUE)
-  # Push further viewports if required
-  if (index < len)
-    push.vp(vps, index+1, len, recording)
+  # Create a pushedvp object for the system to keep track of
+  pvp <- pushedvp(vp)
+  # Store the entire set of gpar settings for this viewport
+  pvp$gpar <- grid.Call("L_getGPar")
+  # Pass in the pushedvp structure which will be used to store
+  # things like the viewport transformation, parent-child links, ...
+  grid.Call.graphics("L_setviewport", pvp, TRUE)
+}
+
+# For all but the last viewport, push the
+# viewport then pop it
+# For the last viewport, just push
+push.vp.vpList <- function(vp, recording) {
+  push.vp.parallel <- function(vp, recording) {
+    push.vp(vp, recording)
+    upViewport(depth(vp), recording)
+  }
+  if (length(vp) == 1)
+    push.vp(vp[[1]], recording)
+  else {
+    lapply(vp[1:(length(vp) - 1)], push.vp.parallel, recording)
+    push.vp(vp[[length(vp)]], recording)
+  }
+}
+
+# Push viewports in series
+push.vp.vpStack <- function(vp, recording) {
+  lapply(vp, push.vp, recording)
+}
+
+# Push parent
+# Children are a vpList
+push.vp.vpTree <- function(vp, recording) {
+  # Special case if user has saved the entire vpTree
+  # parent will be the ROOT viewport, which we don't want to
+  # push (grid ensures it is ALWAYS there)
+  if (!(vp$paren$name %in% "ROOT"))
+    push.vp(vp$parent, recording)
+  push.vp(vp$children, recording)
 }
 
 push.viewport <- function(..., recording=TRUE) {
+  .Deprecated("pushViewport")
+  pushViewport(..., recording=recording)
+}
+
+pushViewport <- function(..., recording=TRUE) {
   if (missing(...))
     stop("Must specify at least one viewport")
   else {
     vps <- list(...)
-    nvp <- length(vps)
-    push.vp(vps, 1, nvp, recording)
+    lapply(vps, push.vp, recording)
   }
+  current.viewport()
+}
+
+# Helper functions called from C
+no.children <- function(children) {
+  length(ls(env=children)) == 0
+}
+
+child.exists <- function(name, children) {
+  exists(name, env=children, inherits=FALSE)
+}
+
+child.list <- function(children) {
+  ls(env=children)
+}
+
+pathMatch <- function(path, pathsofar) {
+  regexpr(paste(path, "$", sep=""), pathsofar) > 0
+}
+
+growPath <- function(pathsofar, name) {
+  paste(pathsofar, name, sep=vpPathSep)
+}
+
+# Rather than pushing a new viewport, navigate down to one that has
+# already been pushed
+downViewport <- function(name, recording=TRUE) {
+  UseMethod("downViewport")
+}
+
+downViewport.default <- function(name, recording=TRUE) {
+  name <- as.character(name)
+  # For interactive use, allow user to specify
+  # vpPath directly (i.e., w/o calling vpPath)
+  if (regexpr(vpPathSep, name) > 0) {
+    return(downViewport(vpPathDirect(name), recording=recording))
+  }
+  if (grid.Call.graphics("L_downviewport", name)) {
+    if (recording) {
+      class(name) <- "down"
+      record(name)
+    } 
+  } else {
+    stop(paste("Viewport", name, "was not found"))
+  }
+  current.viewport()
+}
+
+downViewport.vpPath <- function(name, recording=TRUE) {
+  if (grid.Call.graphics("L_downvppath", name$path, name$name)) {
+    if (recording) {
+      class(name) <- "down"
+      record(name)
+    } 
+  } else {
+    stop(paste("Viewport", name, "was not found"))
+  }
+  current.viewport()  
+}
+
+# Similar to down.viewport() except it starts searching from the
+# top-level viewport, so the result may be "up" or even "across"
+# the current viewport tree
+seekViewport <- function(name, recording=TRUE) {
+  # up to the top-level
+  upViewport(0, recording=recording)
+  downViewport(name, recording=recording)
+}
+
+# Depth of the current viewport
+vpDepth <- function() {
+  pvp <- grid.Call("L_currentViewport")
+  count <- 0
+  while (!is.null(pvp$parent)) {
+    pvp <- pvp$parent
+    count <- count + 1
+  }
+  count
 }
 
 pop.vp <- function(last.one, recording) {
-  vp <- grid.Call("L_currentViewport")
+  pvp <- grid.Call("L_currentViewport")
   # Fail if trying to pop top-level viewport
-  if (is.null(vp$parent))
+  if (is.null(pvp$parent))
     stop("Illegal to pop top-level viewport")
-  # Unset gpar settings
-  unset.gpar(vp$gp)
+  # Assert the gpar settings of the parent (which is about to become "current")
+  pgpar <- pvp$parent$gpar
+  set.gpar(pgpar)
   # Allow for recalculation of viewport transform if necessary
+  # and do things like updating parent/children slots in
+  # stored pushedvps
   grid.Call.graphics("L_unsetviewport", last.one)
 }
 
 pop.viewport <- function(n=1, recording=TRUE) {
-  if (n < 1)
+  .Deprecated("popViewport")
+  popViewport(n, recording=recording)
+}
+
+popViewport <- function(n=1, recording=TRUE) {
+  if (n < 0)
     stop("Must pop at least one viewport")
-  else {
+  if (n == 0)
+    n <- vpDepth()
+  if (n > 0) {
     for (i in 1:n)
       pop.vp(i==n, recording)
     # Record on the display list
-    if (recording)
+    if (recording) {
+      class(n) <- "pop"
       record(n)
+    }
+  }
+  current.viewport()
+}
+
+up.vp <- function(last.one, recording) {
+  pvp <- grid.Call("L_currentViewport")
+  # Fail if trying to up top-level viewport
+  if (is.null(pvp$parent))
+    stop("Illegal to navigate up past top-level viewport")
+  # Assert the gpar settings of the parent (which is about to become "current")
+  pgpar <- pvp$parent$gpar
+  class(pgpar) <- "gpar"
+  set.gpar(pgpar)
+  # Allow for recalculation of viewport transform if necessary
+  grid.Call.graphics("L_upviewport", last.one)
+}
+
+# Rather than removing the viewport from the viewport stack (tree),
+# simply navigate up, leaving pushed viewports in place.
+upViewport <- function(n=1, recording=TRUE) {
+  if (n < 0)
+    stop("Must navigate up at least one viewport")
+  if (n == 0) 
+    n <- vpDepth()
+  if (n > 0) {
+    for (i in 1:n)
+      up.vp(i==n, recording)
+    # Record on the display list
+    if (recording) {
+      class(n) <- "up"
+      record(n)
+    }
+  }
+  current.viewport()
+}
+                        
+# Function to obtain the current viewport
+current.viewport <- function(vp=NULL) {
+  if (is.null(vp)) 
+    # The system stores a pushedvp;  the user should only
+    # ever see normal viewports, so convert.
+    vpFromPushedvp(grid.Call("L_currentViewport"))
+  else {
+    warning("The vp argument is deprecated")
+    vp
   }
 }
 
-# Function to obtain the current viewport
-current.viewport <- function(vp=NULL) {
-  if (is.null(vp))
-    grid.Call("L_currentViewport")
-  else {
-    warning("The vp argument is going to be deprecated")
-    vp
+vpListFromNode <- function(node) {
+  childnames <- ls(env=node$children)
+  n <- length(childnames)
+  children <- vector("list", n)
+  index <- 1
+  for (i in childnames) {
+    children[[index]] <- vpTreeFromNode(get(i, env=node$children))
+    index <- index + 1
   }
+  vpListFromList(children)
+}
+
+vpTreeFromNode <- function(node) {
+  # If no children then just return viewport
+  if (length(ls(env=node$children)) == 0)
+    vpFromPushedvp(node)
+  # Otherwise return vpTree
+  else
+    vpTree(vpFromPushedvp(node),
+           vpListFromNode(node))
+}
+       
+# Obtain the current viewport tree
+# Either from the current location in the tree down
+# or ALL of the tree
+current.vpTree <- function(all=TRUE) {
+  cpvp <- grid.Call("L_currentViewport")
+  moving <- all && vpDepth() > 0
+  if (moving) {
+    savedname <- cpvp$name
+    upViewport(0)
+    cpvp <- grid.Call("L_currentViewport")
+  }
+  tree <- vpTreeFromNode(cpvp)
+  if (moving) {
+    downViewport(savedname)
+  }
+  tree
+}
+
+current.transform <- function() {
+  grid.Call("L_currentViewport")$trans
 }
 
 # Call this function if you want the graphics device erased or moved
@@ -155,6 +351,12 @@ record.viewport <- function(x) {
   grid.Call("L_setDLelt", x)
   inc.display.list()
 }
+
+record.down <- function(x) {
+  grid.Call("L_setDLelt", x)
+  inc.display.list()
+}
+
 
 # Wrapper for .Call and .Call.graphics
 # Used to make sure that grid-specific initialisation occurs just before

@@ -1,7 +1,7 @@
 
 grid.locator <- function(unit="native") {
   location <- c(grid.Call("L_locator"), 1)
-  transform <- solve(viewport.transform(current.viewport()))
+  transform <- solve(current.transform())
   location <- (location %*% transform)
   # The inverse viewport transform is from device coordinates into
   # inches relative to the current viewport

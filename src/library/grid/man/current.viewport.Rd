@@ -1,21 +1,31 @@
-\name{current.viewport}
+\name{Querying the Viewport Tree}
 \alias{current.viewport}
-\title{Get the Default Grid Viewport}
+\alias{current.vpTree}
+\alias{current.transform}
+\title{Get the Current Grid Viewport (Tree)}
 \description{
-  Returns the viewport that Grid is going to draw into.
+  \code{current.viewport()}
+  returns the viewport that Grid is going to draw into.
+
+  \code{current.vpTree} returns the entire Grid viewport tree.
+
+  \code{current.transform} returns the transformation
+  matrix for the current viewport.
 }
 \usage{
 current.viewport(vp=NULL)
+current.vpTree(all=TRUE)
+current.transform()
 }
 \arguments{
-  \item{vp}{A Grid viewport object.}
+  \item{vp}{A Grid viewport object.  Use of this argument has been deprecated.}
+  \item{all}{A logical value indicating whether the entire viewport
+    tree should be returned.}
 }
 \details{
-  This function should only be used without the \code{vp}
-  argument (i.e., only to return the current viewport).
-
-  The \code{vp} argument only exists for historical reasons.
-  It will be removed in future versions.
+  If \code{all} is \code{FALSE} then
+  \code{current.vpTree} only returns the subtree below
+  the current viewport.
 }
 \value{
   A Grid viewport object.
@@ -23,5 +33,19 @@ current.viewport(vp=NULL)
 \author{Paul Murrell}
 \seealso{
   \code{\link{viewport}}
+}
+\examples{
+grid.newpage()
+pushViewport(viewport(width=0.8, height=0.8, name="A"))
+pushViewport(viewport(x=0.1, width=0.3, height=0.6,
+  just="left", name="B"))
+upViewport(1)
+pushViewport(viewport(x=0.5, width=0.4, height=0.8,
+  just="left", name="C"))
+pushViewport(viewport(width=0.8, height=0.8, name="D"))
+upViewport(1)
+current.vpTree()
+current.viewport()
+current.vpTree(all=FALSE)
 }
 \keyword{dplot}

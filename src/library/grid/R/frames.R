@@ -13,9 +13,9 @@ height.details.frame <- function(x) {
 draw.frame.child <- function(grob) {
   temp.vp <- viewport(layout.pos.col=grob$col,
                       layout.pos.row=grob$row)
-  push.viewport(temp.vp, recording=FALSE)
+  pushViewport(temp.vp, recording=FALSE)
   if (!is.null(grob$border))
-    push.viewport(viewport(x=grob$border[2],
+    pushViewport(viewport(x=grob$border[2],
                            y=grob$border[1],
                            width=unit(1, "npc") - sum(grob$border[c(2,4)]),
                            height=unit(1, "npc") - sum(grob$border[c(1,3)]),
@@ -23,16 +23,16 @@ draw.frame.child <- function(grob) {
                   recording=FALSE)
   grid.draw(grob, recording=FALSE)
   if (!is.null(grob$border))
-    pop.viewport(recording=FALSE)
-  pop.viewport(recording=FALSE)
+    popViewport(recording=FALSE)
+  popViewport(recording=FALSE)
 }
 
 draw.details.frame <- function(x, x.wrapped, recording=TRUE) {
   if (!is.null(x$frame.vp))
-    push.viewport(x$frame.vp, recording=FALSE)
+    pushViewport(x$frame.vp, recording=FALSE)
   lapply(x$children, draw.frame.child)
   if (!is.null(x$frame.vp))
-    pop.viewport(recording=FALSE)
+    popViewport(recording=FALSE)
 }
 
 # NOTE that this never produces any actual graphical output

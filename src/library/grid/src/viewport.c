@@ -25,111 +25,124 @@ extern int gridRegisterIndex;
 
 /* Some access methods for viewports */
 SEXP viewportX(SEXP vp) {
-    return getListElement(vp, "x");
+    return VECTOR_ELT(vp, VP_X);
 }
 
 SEXP viewportY(SEXP vp) {
-    return getListElement(vp, "y");
+    return VECTOR_ELT(vp, VP_Y);
 }
 
 SEXP viewportWidth(SEXP vp) {
-    return getListElement(vp, "width");
+    return VECTOR_ELT(vp, VP_WIDTH);
 }
 
 SEXP viewportHeight(SEXP vp) {
-    return getListElement(vp, "height");
-}
-
-char* viewportFontFamily(SEXP vp) {
-    return CHAR(STRING_ELT(getListElement(vp, "cur.fontfamily"), 0));
-}
-
-int viewportFont(SEXP vp) {
-    return INTEGER(getListElement(vp, "cur.font"))[0];
-}
-
-double viewportFontSize(SEXP vp) {
-    return numeric(getListElement(vp, "cur.fontsize"), 0);
-}
-
-double viewportLineHeight(SEXP vp) {
-    return numeric(getListElement(vp, "cur.lineheight"), 0);
+    return VECTOR_ELT(vp, VP_HEIGHT);
 }
 
 Rboolean viewportClip(SEXP vp) {
-    return LOGICAL(getListElement(vp, "clip"))[0];
-}
-
-SEXP viewportCurClip(SEXP vp) {
-    return getListElement(vp, "cur.clip");
+    return LOGICAL(VECTOR_ELT(vp, VP_CLIP))[0];
 }
 
 double viewportXScaleMin(SEXP vp) {
-    return numeric(getListElement(vp, "xscale"), 0);
+    return numeric(VECTOR_ELT(vp, VP_XSCALE), 0);
 }
 
 double viewportXScaleMax(SEXP vp) {
-    return numeric(getListElement(vp, "xscale"), 1);
+    return numeric(VECTOR_ELT(vp, VP_XSCALE), 1);
 }
 
 double viewportYScaleMin(SEXP vp) {
-    return numeric(getListElement(vp, "yscale"), 0);
+    return numeric(VECTOR_ELT(vp, VP_YSCALE), 0);
 }
 
 double viewportYScaleMax(SEXP vp) {
-    return numeric(getListElement(vp, "yscale"), 1);
-}
-
-int viewportHJust(SEXP vp) {
-    return INTEGER(getListElement(vp, "valid.just"))[0];
-}
-
-int viewportVJust(SEXP vp) {
-    return INTEGER(getListElement(vp, "valid.just"))[1];
+    return numeric(VECTOR_ELT(vp, VP_YSCALE), 1);
 }
 
 double viewportAngle(SEXP vp) {
-    return numeric(getListElement(vp, "angle"), 0);
+    return numeric(VECTOR_ELT(vp, VP_ANGLE), 0);
 }
 
 SEXP viewportLayout(SEXP vp) {
-    return getListElement(vp, "layout");
+    return VECTOR_ELT(vp, VP_LAYOUT);
+}
+
+int viewportHJust(SEXP vp) {
+    return INTEGER(VECTOR_ELT(vp, VP_VALIDJUST))[0];
+}
+
+int viewportVJust(SEXP vp) {
+    return INTEGER(VECTOR_ELT(vp, VP_VALIDJUST))[1];
 }
 
 SEXP viewportLayoutPosRow(SEXP vp) {
-    return getListElement(vp, "valid.pos.row");
+    return VECTOR_ELT(vp, VP_VALIDLPOSROW);
 }
 
 SEXP viewportLayoutPosCol(SEXP vp) {
-    return getListElement(vp, "valid.pos.col");
+    return VECTOR_ELT(vp, VP_VALIDLPOSCOL);
+}
+
+char* viewportFontFamily(SEXP vp) {
+    return CHAR(STRING_ELT(VECTOR_ELT(VECTOR_ELT(vp, PVP_GPAR), GP_FONTFAMILY),
+			   0));
+}
+
+int viewportFont(SEXP vp) {
+    return INTEGER(VECTOR_ELT(VECTOR_ELT(vp, PVP_GPAR), GP_FONT))[0];
+}
+
+double viewportFontSize(SEXP vp) {
+    return REAL(VECTOR_ELT(VECTOR_ELT(vp, PVP_GPAR), GP_FONTSIZE))[0];
+}
+
+double viewportLineHeight(SEXP vp) {
+    return REAL(VECTOR_ELT(VECTOR_ELT(vp, PVP_GPAR), GP_LINEHEIGHT))[0];
+}
+
+SEXP viewportTransform(SEXP vp) {
+    return VECTOR_ELT(vp, PVP_TRANS);
+}
+
+SEXP viewportLayoutWidths(SEXP vp) {
+    return VECTOR_ELT(vp, PVP_WIDTHS);
+}
+
+SEXP viewportLayoutHeights(SEXP vp) {
+    return VECTOR_ELT(vp, PVP_HEIGHTS);
+}
+
+SEXP viewportWidthCM(SEXP vp) {
+    return VECTOR_ELT(vp, PVP_WIDTHCM);
+}
+
+SEXP viewportHeightCM(SEXP vp) {
+    return VECTOR_ELT(vp, PVP_HEIGHTCM);
+}
+
+SEXP viewportRotation(SEXP vp) {
+    return VECTOR_ELT(vp, PVP_ROTATION);
+}
+
+SEXP viewportClipRect(SEXP vp) {
+    return VECTOR_ELT(vp, PVP_CLIPRECT);
 }
 
 SEXP viewportParent(SEXP vp) {
-    return getListElement(vp, "parent");
+    return VECTOR_ELT(vp, PVP_PARENT);
 }
 
-SEXP viewportCurrentTransform(SEXP vp) {
-    return getListElement(vp, "cur.trans");
+SEXP viewportChildren(SEXP vp) {
+    return VECTOR_ELT(vp, PVP_CHILDREN);
 }
 
-SEXP viewportCurrentLayoutWidths(SEXP vp) {
-    return getListElement(vp, "cur.widths");
+SEXP viewportDevWidthCM(SEXP vp) {
+    return VECTOR_ELT(vp, PVP_DEVWIDTHCM);
 }
 
-SEXP viewportCurrentLayoutHeights(SEXP vp) {
-    return getListElement(vp, "cur.heights");
-}
-
-SEXP viewportCurrentWidthCM(SEXP vp) {
-    return getListElement(vp, "cur.width.cm");
-}
-
-SEXP viewportCurrentHeightCM(SEXP vp) {
-    return getListElement(vp, "cur.height.cm");
-}
-
-SEXP viewportCurrentRotation(SEXP vp) {
-    return getListElement(vp, "cur.rotation");
+SEXP viewportDevHeightCM(SEXP vp) {
+    return VECTOR_ELT(vp, PVP_DEVHEIGHTCM);
 }
 
 void fillViewportLocationFromViewport(SEXP vp, LViewportLocation *vpl) 
@@ -236,13 +249,13 @@ void calcViewportTransform(SEXP vp, SEXP parent, Rboolean incremental,
 	    calcViewportTransform(parent, viewportParent(parent), 0, dd);
 	/* Get information required to transform viewport location
 	 */
-	parentWidthCM = REAL(viewportCurrentWidthCM(parent))[0];
-	parentHeightCM = REAL(viewportCurrentHeightCM(parent))[0];
-	parentAngle = REAL(viewportCurrentRotation(parent))[0];
+	parentWidthCM = REAL(viewportWidthCM(parent))[0];
+	parentHeightCM = REAL(viewportHeightCM(parent))[0];
+	parentAngle = REAL(viewportRotation(parent))[0];
 	for (i=0; i<3; i++)
 	    for (j=0; j<3; j++)
 		parentTransform[i][j] = 
-		    REAL(viewportCurrentTransform(parent))[i +3*j];
+		    REAL(viewportTransform(parent))[i +3*j];
 	fillViewportContextFromViewport(parent, &parentContext);
 	/* In order for the vp to get its vpl from a layout
 	 * it must have specified a layout.pos and the parent
@@ -345,10 +358,10 @@ void calcViewportTransform(SEXP vp, SEXP parent, Rboolean incremental,
     for (i=0; i<3; i++)
 	for (j=0; j<3; j++)
 	    REAL(currentTransform)[i + 3*j] = transform[i][j];
-    setListElement(vp, "cur.width.cm", currentWidthCM);
-    setListElement(vp, "cur.height.cm", currentHeightCM);
-    setListElement(vp, "cur.rotation", currentRotation);
-    setListElement(vp, "cur.trans", currentTransform);
+    SET_VECTOR_ELT(vp, PVP_WIDTHCM, currentWidthCM);
+    SET_VECTOR_ELT(vp, PVP_HEIGHTCM, currentHeightCM);
+    SET_VECTOR_ELT(vp, PVP_ROTATION, currentRotation);
+    SET_VECTOR_ELT(vp, PVP_TRANS, currentTransform);
     UNPROTECT(4);
 }
 
@@ -356,7 +369,6 @@ void initVP(GEDevDesc *dd)
 {
     SEXP vpfnname, vpfn, vp;
     SEXP xscale, yscale;
-    SEXP ff, font, lh, fs;
     SEXP currentgp = gridStateElement(dd, GSS_GPAR);
     SEXP gsd = (SEXP) dd->gesd[gridRegisterIndex]->systemSpecific;
     PROTECT(vpfnname = findFun(install("grid.top.level.vp"), R_gridEvalEnv));
@@ -370,25 +382,14 @@ void initVP(GEDevDesc *dd)
     PROTECT(xscale = allocVector(REALSXP, 2));
     REAL(xscale)[0] = dd->dev->left;
     REAL(xscale)[1] = dd->dev->right;
-    setListElement(vp, "xscale", xscale);
+    SET_VECTOR_ELT(vp, VP_XSCALE, xscale);
     PROTECT(yscale = allocVector(REALSXP, 2));
     REAL(yscale)[0] = dd->dev->bottom;
     REAL(yscale)[1] = dd->dev->top;
-    setListElement(vp, "yscale", yscale);
-    PROTECT(ff = allocVector(STRSXP, 1));
-    SET_STRING_ELT(ff, 0, mkChar(gpFontFamily(currentgp, 0)));
-    setListElement(vp, "cur.fontfamily", ff);
-    PROTECT(font = allocVector(INTSXP, 1));
-    INTEGER(font)[0] = gpFont(currentgp, 0);
-    setListElement(vp, "cur.font", font);
-    PROTECT(lh = allocVector(REALSXP, 1));
-    REAL(lh)[0] = gpLineHeight(currentgp, 0);
-    setListElement(vp, "cur.lineheight", lh);
-    PROTECT(fs = allocVector(REALSXP, 1));
-    REAL(fs)[0] = gpFontSize(currentgp, 0);
-    setListElement(vp, "cur.fontsize", fs);
-    vp = doSetViewport(vp, R_NilValue, dd);
+    SET_VECTOR_ELT(vp, VP_YSCALE, yscale);
+    SET_VECTOR_ELT(vp, PVP_GPAR, currentgp);
+    vp = doSetViewport(vp, TRUE, TRUE, dd);
     SET_VECTOR_ELT(gsd, GSS_VP, vp);
-    UNPROTECT(9);
+    UNPROTECT(5);
 }
 

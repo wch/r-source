@@ -164,15 +164,18 @@ grid.draw <- function(x, recording=TRUE) {
       list.struct <- get.value(x)
       # automatically push/pop the viewport and set/unset the gpar
       if (!is.null(list.struct$vp))
-        push.viewport(list.struct$vp, recording=FALSE)
-      if (!is.null(list.struct$gp))
+        pushViewport(list.struct$vp, recording=FALSE)
+      if (!is.null(list.struct$gp)) {
+        tempgpar <- get.gpar()
         set.gpar(list.struct$gp)
+      }
       # Do any class-specific drawing
       draw.details(list.struct, x, recording)
       if (!is.null(list.struct$gp))
-        unset.gpar(list.struct$gp)
+        set.gpar(tempgpar)
       if (!is.null(list.struct$vp))
-          pop.viewport(recording=FALSE)
+        # NOTE that the grob's vp may be a vpStack/List/Tree
+        popViewport(depth(list.struct$vp), recording=FALSE)
       if (recording)
         record(x)
   }
@@ -188,17 +191,27 @@ draw.details <- function(x, x.wrapped, recording) {
   UseMethod("draw.details")
 }
 
-# When there is a pop.viewport, the number of viewports popped
-# gets put on the display list
 draw.details.default <- function(x, x.wrapped, recording) {
-  pop.viewport(x, recording)
+  stop("Invalid element in the display list")
 }
 
 draw.details.glist <- function(x, x.wrapped, recording) {
 }
 
 draw.details.viewport <- function(x, x.wrapped, recording) {
-  push.viewport(x, recording=FALSE)
+  pushViewport(x, recording=FALSE)
+}
+
+draw.details.down <- function(x, x.wrapped, recording) {
+  downViewport(x, recording=FALSE)
+}
+
+draw.details.pop <- function(x, x.wrapped, recording) {
+  popViewport(x, recording=FALSE)
+}
+
+draw.details.up <- function(x, x.wrapped, recording) {
+  upViewport(x, recording=FALSE)
 }
 
 print.grob <- function(x, ...) {

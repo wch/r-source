@@ -96,19 +96,6 @@ validGP <- function(gpars) {
   gpars
 }
 
-saved.pars <- function(pars) {
-  list(prev=NULL, pars=pars)
-}
-push.saved.gpars <- function(gpars) {
-  sp <- saved.pars(gpars)
-  sp$prev <- grid.Call("L_getGPsaved")
-  grid.Call("L_setGPsaved", sp)
-}
-
-pop.saved.gpars <- function() {
-  grid.Call("L_setGPsaved", grid.Call("L_getGPsaved")$prev)
-}
-
 # possible gpar names
 # The order must match the GP_* values in grid.h
 .grid.gpar.names <- c("fill", "col", "gamma", "lty", "lwd", "cex",
@@ -118,37 +105,26 @@ pop.saved.gpars <- function() {
                       # used in C code (it gets mapped to font)
                       "fontface")
 
-# Set .grid.gpars to keep grid record of current settings
 set.gpar <- function(gp) {
   if (!is.gpar(gp))
     stop("Argument must be a 'gpar' object")
-  subset <- match(names(gp), .grid.gpar.names)
-  cur.gpars <- grid.Call("L_getGPar")
-  push.saved.gpars(cur.gpars[subset])
-  temp <- cur.gpars
-  temp[subset] <- gp
+  temp <- grid.Call("L_getGPar")
+  temp[names(gp)] <- gp
   # Do this as a .Call.graphics to get it onto the base display list
   grid.Call.graphics("L_setGPar", temp)
 }
 
-unset.gpar <- function(gp) {
-  if (!is.gpar(gp))
-    stop("Argument must be a 'gpar' object")
-  # for debugging really
-  subset <- match(names(gp), .grid.gpar.names)
-  saved.gpars <- grid.Call("L_getGPsaved")
-  if (length(subset) != length(saved.gpars$pars))
-    stop(paste("Trying to reset", names(gp),
-               "with", saved.gpars$pars))
-  temp <- grid.Call("L_getGPar")
-  temp[subset] <- saved.gpars$pars
-  # Do this as a .Call.graphics to get it onto the base display list
-  grid.Call.graphics("L_setGPar", temp)
-  pop.saved.gpars()
-}  
-
-get.gpar <- function(gpar.name) {
-  grid.Call("L_getGPar")[[gpar.name]]
+get.gpar <- function(names=NULL) {
+  if (is.null(names))
+    result <- grid.Call("L_getGPar")
+  else {
+    if (!is.character(names) ||
+        !all(names %in% .grid.gpar.names))
+      stop("Must specify only valid gpar names")
+    result <- grid.Call("L_getGPar")[names]
+  }
+  class(result) <- "gpar"
+  result
 }
 
 

@@ -1,10 +1,13 @@
-\name{viewport}
+\name{Grid Viewports}
 \alias{viewport}
+\alias{vpList}
+\alias{vpStack}
+\alias{vpTree}
 \title{Create a Grid Viewport}
 \description{
-  This function creates a viewport, which describes a rectangular region
-  on a graphics device and defines a number of coordinate systems within
-  that region.
+  These functions create viewports, which describe a rectangular regions
+  on a graphics device and define a number of coordinate systems within
+  those regions.
 }
 \usage{
 viewport(x = unit(0.5, "npc"), y = unit(0.5, "npc"),
@@ -13,7 +16,11 @@ viewport(x = unit(0.5, "npc"), y = unit(0.5, "npc"),
          gp = gpar(), clip = FALSE,
          xscale = c(0, 1), yscale = c(0, 1),
          angle = 0,
-         layout = NULL, layout.pos.row = NULL, layout.pos.col = NULL)
+         layout = NULL, layout.pos.row = NULL, layout.pos.col = NULL,
+         name=NULL)
+vpList(...)
+vpStack(...)
+vpTree(parent, children)
 }
 \arguments{
   \item{x}{A numeric vector or unit object specifying x-location.}
@@ -49,6 +56,11 @@ viewport(x = unit(0.5, "npc"), y = unit(0.5, "npc"),
   \item{layout.pos.col}{A numeric vector giving the
     columns occupied by this viewport in its
     parent's layout.}
+  \item{name}{A character value to uniquely identify the viewport
+    once it has been pushed onto the viewport tree.  }
+  \item{...}{Any number of grid viewport objects.}
+  \item{parent}{A grid viewport object.}
+  \item{children}{A vpList object.}
 }
 \details{
   The location and size of a viewport are relative to the coordinate
@@ -81,7 +93,25 @@ viewport(x = unit(0.5, "npc"), y = unit(0.5, "npc"),
 
     If a viewport is rotated (because of its own \code{angle} setting
     or because it is within another viewport which is rotated) then
-    the \code{clip} flag is ignored.  
+    the \code{clip} flag is ignored.
+
+    Viewport names need not be unique.  When pushed, viewports
+    sharing the same parent must have unique names, which means that
+    if you push a viewport with the same name as an existing viewport,
+    the existing viewport will be replaced in the viewport tree.
+    A viewport name can be any valid \R symbol name, but
+    grid uses the
+    reserved name \code{"ROOT"} for the top-level viewport.  Also,
+    when specifying a viewport name in \code{downViewport}
+    and \code{seekViewport}, it is possible to provide a viewport
+    path, which consists of several names concatenated using the
+    separator  (currently \code{::}).  Consequently, it is not
+    advisable to use this separator in viewport names.
+
+The viewports in a \code{vpList} are pushed in parallel.  The
+    viewports in a \code{vpStack} are pushed in series.  When a
+    \code{vpTree} is pushed, the parent is pushed first, then the
+    children are pushed in parallel.
 }
 \value{
   An R object of class \code{viewport}.
@@ -89,6 +119,11 @@ viewport(x = unit(0.5, "npc"), y = unit(0.5, "npc"),
 \author{Paul Murrell}
 \seealso{
   \link{Grid},
+  \code{\link{pushViewport}},
+  \code{\link{popViewport}},
+  \code{\link{downViewport}},
+  \code{\link{seekViewport}},
+  \code{\link{upViewport}},
   \code{\link{unit}},
   \code{\link{grid.layout}},
   \code{\link{grid.show.layout}}.
@@ -99,27 +134,47 @@ viewport(x = unit(0.5, "npc"), y = unit(0.5, "npc"),
 grid.show.viewport(viewport(x=0.6, y=0.6,
                    w=unit(1, "inches"), h=unit(1, "inches")))
 # Demonstrate viewport clipping
-clip.demo <- function(i, j, clip1, clip2, title) {
-  push.viewport(viewport(layout.pos.col=i,
+clip.demo <- function(i, j, clip1, clip2) {
+  pushViewport(viewport(layout.pos.col=i,
                          layout.pos.row=j))
-  push.viewport(viewport(width=0.6, height=0.6, clip=clip1))
+  pushViewport(viewport(width=0.6, height=0.6, clip=clip1))
   grid.rect(gp=gpar(fill="white"))
   grid.circle(r=0.55, gp=gpar(col="red", fill="pink"))
-  pop.viewport()
-  push.viewport(viewport(width=0.6, height=0.6, clip=clip2))
+  popViewport()
+  pushViewport(viewport(width=0.6, height=0.6, clip=clip2))
   grid.polygon(x=c(0.5, 1.1, 0.6, 1.1, 0.5, -0.1, 0.4, -0.1),
                y=c(0.6, 1.1, 0.5, -0.1, 0.4, -0.1, 0.5, 1.1),
                gp=gpar(col="blue", fill="light blue"))
-  pop.viewport(2)
+  popViewport(2)
 }
 
 grid.newpage()
 grid.rect(gp=gpar(fill="grey"))
-push.viewport(viewport(layout=grid.layout(2, 2)))
+pushViewport(viewport(layout=grid.layout(2, 2)))
 clip.demo(1, 1, FALSE, FALSE)
 clip.demo(1, 2, TRUE, FALSE)
 clip.demo(2, 1, FALSE, TRUE)
 clip.demo(2, 2, TRUE, TRUE)
-pop.viewport()
+popViewport()
+# Demonstrate vpList, vpStack, and vpTree
+grid.newpage()
+tree <- vpTree(viewport(w=0.8, h=0.8, name="A"),
+               vpList(vpStack(viewport(x=0.1, y=0.1, w=0.5, h=0.5,
+                                       just=c("left", "bottom"), name="B"),
+                              viewport(x=0.1, y=0.1, w=0.5, h=0.5, 
+                                       just=c("left", "bottom"), name="C"),
+                              viewport(x=0.1, y=0.1, w=0.5, h=0.5, 
+                                       just=c("left", "bottom"), name="D")),
+                      viewport(x=0.5, w=0.4, h=0.9,
+                               just="left", name="E")))
+pushViewport(tree)
+for (i in LETTERS[1:5]) {
+  seekViewport(i)
+  grid.rect()
+  grid.text(current.vpTree(FALSE),
+            x=unit(1, "mm"), y=unit(1, "npc") - unit(1, "mm"),
+            just=c("left", "top"),
+            gp=gpar(fontsize=8))
+}
 }
 \keyword{dplot}
