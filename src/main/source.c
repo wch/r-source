@@ -19,7 +19,7 @@
 
 #include "Defn.h"
 #include "Fileio.h"
-#include "IOSupport.h"
+#include "IOStuff.h"
 #include "Parse.h"
 
 extern IoBuffer R_ConsoleIob;

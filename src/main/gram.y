@@ -19,7 +19,7 @@
  */
 
 #include "Defn.h"
-#include "IOSupport.h"
+#include "IOStuff.h"
 #include "Parse.h"
 
 	/* Useful defines so editors don't get confused ... */

@@ -17,7 +17,7 @@
  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
-#include "IOSupport.h"
+#include "IOStuff.h"
 
 	/* Move the iob->write_buf pointer to the next */
 	/* BufferListItem in the chain. If there no next */

@@ -19,7 +19,7 @@
 
 #include "Defn.h"
 #include "Graphics.h"
-#include "IOSupport.h"
+#include "IOStuff.h"
 #include "Parse.h"
 
 /*--- The `real'  main() program is in	../<SYSTEM>/system.c,
