@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 1.0-8, 2000/04/26
+Version 1.0-9, 2000/05/08
 Kurt Hornik
 
 
@@ -977,6 +977,10 @@ works, was published in the Journal of Statistical Software
 *Devore5*
      Data sets and sample analyses from "Probability and Statistics for
      Engineering and the Sciences (5th ed)" by Jay L. Devore, 2000, Duxbury.
+
+*GenKern*
+     Functions for generating and manipulating generalised binned kernel
+     density estimates.
 
 *KernSmooth*
      Functions for kernel smoothing (and density estimation) corresponding
