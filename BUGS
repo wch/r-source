@@ -385,6 +385,14 @@ Date: Fri, 4 Jan 2002 13:34:34 GMT
 Subject: lib.fixup, .GlobalEnv, and R1.5.0
 From: mark.bravington@csiro.au
 Date: Wed, 15 May 2002 08:30:50 +0200 (MET DST)
+* PR# 2541 *
+Subject: cbind rises floating point exception 
+From: Ramon Diaz <rdiaz@cnio.es>
+Date: Tue, 11 Feb 2003 19:23:53 +0100
+..The problem here is that a 1x0 matrix and 0-length vector
+..are not conformable.  The test for a zero-row was wrong.
+..
+..Fixed for 1.7.0
 
 Directory:  Low-level
 
@@ -429,6 +437,10 @@ Date: Sun, 8 Sep 2002 13:47:00 +0100
 Subject: Mac specific - quartz leads to crash
 From: h95mr@mun.ca
 Date: Fri, 8 Nov 2002 16:28:50 +0100 (MET)
+* PR# 2550 *
+Subject: eigen() error: R Version 1.6.1 on Mac OS X
+From: "Daniel E. Weeks" <dweeks@watson.hgen.pitt.edu>
+Date: Fri, 14 Feb 2003 15:36:15 -0500
 
 Directory:  Misc
 
@@ -551,10 +563,6 @@ Date: Sat, 1 Feb 2003 10:17:10 +0000 (GMT)
 Subject: removeMethods (methods) does not work in my examples
 From: ripley@stats.ox.ac.uk
 Date: Sat, 1 Feb 2003 20:27:31 +0000 (GMT)
-* PR# 2541 *
-Subject: cbind rises floating point exception 
-From: Ramon Diaz <rdiaz@cnio.es>
-Date: Tue, 11 Feb 2003 19:23:53 +0100
 * PR# 2545 *
 Subject: colSums etc. documentation
 From: "Gunter, Bert" <bert_gunter@merck.com>
@@ -563,83 +571,7 @@ Date: Thu, 13 Feb 2003 09:08:44 -0500
 Subject: error from sample if sampling length one character
 From: patrick@burns-stat.com
 Date: Thu, 13 Feb 2003 21:56:58 +0100 (MET)
-* PR# 2547 *
-Subject: ASSISTANCE
-From: "MRS MARIAM MAINASARA" <mmmainasara@netscape.net>
-Date: Fri, 14 Feb 2003 04:26:46
-* PR# 2548 *
-Subject: Re: lose fat, gain muscle, increase energy level? skhd
-From: bxdharrison <ybkwcaitlyn@juno.com>
-Date: Thu, 13 Feb 2003 21:52:49 -0800
-* PR# 2549 *
-Subject: Divx를 아십니까?
-From: ADULT바이러스<your@mail.com>
-Date: Fri, 14 Feb 2003 08:27:13 +0100 (MET)
-* PR# 2550 *
-Subject: eigen() error: R Version 1.6.1 on Mac OS X
-From: "Daniel E. Weeks" <dweeks@watson.hgen.pitt.edu>
-Date: Fri, 14 Feb 2003 15:36:15 -0500
-* PR# 2551 *
-Subject: (광고)이젠 진정한 영어를 알려드립니다 @ 
-From: (주)늘배움터<multiple73@korea.com>
-Date: Sat, 15 Feb 2003 04:35:16 +0100 (MET)
-* PR# 2552 *
-Subject: THANKS
-From: Mariam  Mobutu    <joseoph787&*^%$#@latinmail.com>
-Date: Sat, 15 Feb 2003 12:27:36 +0100
-* PR# 2553 *
-Subject: Fwd: SystemWorks 2003 Saves you time and money
-From: "Cornelia Harper" <Bernadette9502j@post-modern.org>
-Date: Sun, 16 Feb 03 16:59:16 GMT
-* PR# 2554 *
-Subject: Fwd: DVDs to CDs??
-From: "Gabriel Muller" <Alphonse4978t@americamail.net>
-Date: Mon, 17 Feb 03 00:40:46 GMT
-* PR# 2555 *
-Subject: Re: human growth hormone - health ideas gwovr
-From: yttlizeth <dbmgpriscilla@address.com>
-Date: Sun, 16 Feb 2003 05:42:40 -0800
-* PR# 2556 *
-Subject: (광고)CABio와 함께 건강을@
-From: 씨에이바이오<cabio@koreamail.co.kr>
-Date: Sun, 16 Feb 2003 15:15:12 +0100 (MET)
-* PR# 2557 *
-Subject: （광고） 졸업 & 입학 선물은 올마츠에서 ... @
-From: "올마츠" <bigscale@bigscale.com>
-Date: Sun, 16 Feb 2003 11:38:13 +0900
-* PR# 2558 *
-Subject: PARTNERSHIP
-From: "DR.JIM IGBINEDION" <jimigbinedion@rediffmail.com>
-Date: Mon, 17 Feb 2003 15:55:42 +0100
-* PR# 2559 *
-Subject: PARTNERSHIP
-From: "DR.JIM IGBINEDION" <jimigbinedion@rediffmail.com>
-Date: Mon, 17 Feb 2003 16:49:32 +0100
-* PR# 2560 *
-Subject: (성인광고)성인들만 보세요
-From: durisex<durisex@hotmail.com>
-Date: Tue, 18 Feb 2003 21:03:29 +0100 (MET)
-* PR# 2561 *
-Subject: AS SEEN ON NATIONAL TV                                                                             3129Fana0-295YFzi8561fZuI9-57-27
-From: <3popmeycde@yahoo.com>
-Date: Tue, 18 Feb 2003 09:18:42 +1100
-* PR# 2562 *
-Subject: R won't compile on FreeBSD 5.0
-From: vangyzen@stat.duke.edu
-Date: Tue, 18 Feb 2003 23:24:14 +0100 (MET)
-* PR# 2563 *
-Subject: Fwd: West Nile Virus < Anna Kournikova Virus, get protected.
-From: "Toby Scruggs" <Trinidad983d@congomail.com>
-Date: Fri, 21 Feb 03 08:35:48 GMT
-* PR# 2564 *
-Subject: From Mr Patrick Bekele
-From: <bek20@ecplaza.net>
-Date: Thu, 20 Feb 2003 23:46:50 +0900 (KST)
-* PR# 2565 *
-Subject: Earn Maga Money at Home
-From: "Peter Ronnau" <moreinfosfi@sbcglobal.net>
-Date: Thu, 20 Feb 2003 11:19:27
-* PR# 2566 *
-Subject: COMPUTER SYSTEM COME CONFIG YOUR OWN
-From: "Peter Ronnau" <johnvisnosky@sbcglobal.net>
-Date: Thu, 20 Feb 2003 12:37:05
+* PR# 2571 *
+Subject: ks.test gets stuck
+From: dirk@santafe.edu
+Date: Fri, 21 Feb 2003 14:51:37 +0100 (MET)
