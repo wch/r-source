@@ -42,6 +42,9 @@ The file.show code failed to close its FindFirst handle and so the
 directory on which it was used (often the R temporary directory) could
 not be deleted from within R.
 
+If a graphics window is opened in a minimized MDI session, it now
+uses the physical monitor size instead of the zero-sized MDI frame.
+
 
 
 rw1090
