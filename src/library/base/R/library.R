@@ -1,12 +1,7 @@
-##-- Keep  'library' and 'library.dynam'  PLATFORM-Independent !
-##-- Use  .Platform  (== Platform() from config.h ) to configure!
-##	  ~~~~~~~~~
-
 library <-
-  function (package, help, lib.loc = .lib.loc, character.only = FALSE,
-	    logical.return = FALSE, warn.conflicts = package != "MASS",
-            keep.source = getOption("keep.source.pkgs"))
-
+function(package, help, lib.loc = .lib.loc, character.only = FALSE,
+         logical.return = FALSE, warn.conflicts = package != "MASS",
+         keep.source = getOption("keep.source.pkgs"))
 {
     if (!missing(package)) {
 	if (!character.only)
@@ -102,23 +97,28 @@ library <-
 		warning(paste("Package",pkgname,"already present in search()"))
 	}
     }
-    else if (!missing(help)) {
-	if (!character.only)
+    else if(!missing(help)) {
+	if(!character.only)
 	    help <- as.character(substitute(help))
         help <- help[1]                 # only give help on one package
-	file <- system.file("INDEX", pkg=help, lib=lib.loc)
-	if (file == "")
-	    stop(paste("No documentation for package `", help, "'", sep = ""))
-        if(length(file) > 1) {
-	    which.lib.loc <-
-                lib.loc[match(system.file("", pkg = help, lib =
-                                          lib.loc)[1],
-                              file.path(lib.loc, help))]
+        descriptionFile <-
+            system.file("DESCRIPTION", pkg = help, lib = lib.loc)
+	if(descriptionFile == "")
+	    stop(paste("No documentation for package `", help, "'",
+                       sep = ""))
+        which.lib.loc <-
+            lib.loc[match(system.file("", pkg = help, lib = lib.loc)[1],
+                          file.path(lib.loc, help))]
+        if(length(descriptionFile) > 1) {
             warning(paste("Package `", help, "' found more than once,\n  ",
                           "using the one found in `", which.lib.loc,
                           "'", sep = ""))
         }
-	file.show(file[1], title = paste("Contents of package", help))
+        file.show(descriptionFile,
+                  system.file("INDEX", pkg = help, lib = which.lib.loc),
+                  header = c("", paste("Important user-level objects ",
+                  "in package `", help, "':", sep = "")),
+                  title = paste("Information on package", help))
     }
     else {
 	## library():
@@ -155,8 +155,8 @@ library <-
 }
 
 library.dynam <-
-  function (chname, package = .packages(), lib.loc = .lib.loc,
-	    verbose = getOption("verbose"), file.ext = .Platform$dynlib.ext, ...)
+function(chname, package = .packages(), lib.loc = .lib.loc, verbose =
+         getOption("verbose"), file.ext = .Platform$dynlib.ext, ...)
 {
   if (!exists(".Dyn.libs"))
     assign(".Dyn.libs", character(0), envir = .AutoloadEnv)
