@@ -1,3 +1,8 @@
+Entry: Alias
+Keywords: .Alias programming
+Description: Create ``Alias'' (Pointer) to \R Object
+URL: ../../../library/base/html/Alias.html
+
 Entry: Arithmetic
 Keywords: + - * / ^ %% %/% Arithmetic arith
 Description: Arithmetic Operators
@@ -44,12 +49,12 @@ Description: Control Flow
 URL: ../../../library/base/html/Control.html
 
 Entry: Defunct
-Keywords: Defunct
+Keywords: Defunct .Defunct . ... documentation utilities
 Description: Defunct Functions
 URL: ../../../library/base/html/Defunct.html
 
 Entry: Deprecated
-Keywords: Deprecated
+Keywords: Deprecated .Deprecated . dnchisq pnchisq qnchisq print.plot save.plot documentation utilities
 Description: Deprecated Functions
 URL: ../../../library/base/html/Deprecated.html
 
@@ -64,7 +69,7 @@ Description: The Exponential Distribution
 URL: ../../../library/base/html/Exponential.html
 
 Entry: Extract
-Keywords: Extract Subscript [ [[ $ array list
+Keywords: Extract Subscript [ [[ $ [<- [[<- $<- [.data.frame [[.data.frame [<-.data.frame [[<-.data.frame [.factor [.formula [.ts [<-.factor array list
 Description: Extract or Replace Parts of an Object
 URL: ../../../library/base/html/Extract.html
 
@@ -149,7 +154,7 @@ Description: Miscellaneous Mathematical Functions
 URL: ../../../library/base/html/Math.html
 
 Entry: NA
-Keywords: NA is.na NA logic manip
+Keywords: NA is.na is.na.data.frame NA logic manip
 Description: Not Available / ``Missing'' Values
 URL: ../../../library/base/html/NA.html
 
@@ -199,7 +204,7 @@ Description: Random Number Generation
 URL: ../../../library/base/html/Random.html
 
 Entry: Round
-Keywords: ceiling floor round signif trunc arith
+Keywords: ceiling floor round signif trunc trunc.default arith
 Description: Rounding of Numbers
 URL: ../../../library/base/html/Round.html
 
@@ -223,6 +228,11 @@ Keywords: cos sin tan acos asin atan atan2 math
 Description: Trigonometric Functions
 URL: ../../../library/base/html/Trig.html
 
+Entry: Tukey
+Keywords: ptukey qtukey distribution
+Description: The Studentized Range Distribution
+URL: ../../../library/base/html/Tukey.html
+
 Entry: Uniform
 Keywords: dunif punif qunif runif distribution
 Description: The Uniform Distribution
@@ -237,6 +247,11 @@ Entry: Weibull
 Keywords: dweibull pweibull qweibull rweibull distribution
 Description: The Weibull Distribution
 URL: ../../../library/base/html/Weibull.html
+
+Entry: Wilcoxon
+Keywords: dwilcox pwilcox qwilcox rwilcox distribution
+Description: Distribution of the Wilcoxon Rank Sum Statistic
+URL: ../../../library/base/html/Wilcoxon.html
 
 Entry: abbreviate
 Keywords: abbreviate character
@@ -324,12 +339,12 @@ Description: Add Arrows to a Plot
 URL: ../../../library/base/html/arrows.html
 
 Entry: as.function
-Keywords: as.function as.function.default programming 
+Keywords: as.function as.function.default programming
 Description: Convert Object to Function
 URL: ../../../library/base/html/as.function.html
 
 Entry: assign
-Keywords: assign data
+Keywords: assign <- <<- -> ->> data
 Description: Assign a Value to a Name
 URL: ../../../library/base/html/assign.html
 
@@ -344,19 +359,24 @@ Description: The Joyner-Boore Attenuation Data
 URL: ../../../library/base/html/attenu.html
 
 Entry: attr
-Keywords: attr attribute
+Keywords: attr attr<- attribute
 Description: Object Attributes
 URL: ../../../library/base/html/attr.html
 
 Entry: attributes
-Keywords: attributes attribute
+Keywords: attributes attributes<- attribute
 Description: Object Attribute Lists
 URL: ../../../library/base/html/attributes.html
 
 Entry: autoload
-Keywords: autoload .AutoloadEnv data programming
+Keywords: autoload autoloader .AutoloadEnv data programming
 Description: On-demand loading of packages
 URL: ../../../library/base/html/autoload.html
+
+Entry: ave
+Keywords: ave univar
+Description: Group Averages Over Level Combinations of Factors
+URL: ../../../library/base/html/ave.html
 
 Entry: axis
 Keywords: axis aplot
@@ -379,7 +399,7 @@ Description: Potency of Orchard Sprays
 URL: ../../../library/base/html/bees.html
 
 Entry: body
-Keywords: body programming
+Keywords: body body<- programming
 Description: Access to and Manipulation of the Body of a Function
 URL: ../../../library/base/html/body.html
 
@@ -423,14 +443,19 @@ Keywords: cars datasets
 Description: Stopping Distances of Cars
 URL: ../../../library/base/html/cars.html
 
+Entry: case.names
+Keywords: case.names case.names.lm variable.names variable.names.lm regression models
+Description: Case and Variable Names of Fitted Models
+URL: ../../../library/base/html/case.names.html
+
 Entry: cat
 Keywords: cat print file
 Description: Concatenate and Print
 URL: ../../../library/base/html/cat.html
 
 Entry: cbind
-Keywords: cbind array manip
-Description: Combine Columns into a Matrix
+Keywords: cbind rbind cbind.data.frame rbind.data.frame array manip
+Description: Combine Columns/Rows into a Matrix
 URL: ../../../library/base/html/cbind.html
 
 Entry: character
@@ -474,7 +499,7 @@ Description: Factor Codes
 URL: ../../../library/base/html/codes.html
 
 Entry: coefficients
-Keywords: coefficients coef regression models
+Keywords: coef coefficients coef.default coef.lm coef.glm regression models
 Description: Extract Model Coefficents
 URL: ../../../library/base/html/coefficients.html
 
@@ -484,7 +509,7 @@ Description: Column Indexes
 URL: ../../../library/base/html/col.html
 
 Entry: colnames
-Keywords: colnames array manip
+Keywords: colnames colnames<- array manip
 Description: Column Labels
 URL: ../../../library/base/html/colnames.html
 
@@ -492,6 +517,11 @@ Entry: colors
 Keywords: colors colours color dplot sysdata
 Description: Color Names
 URL: ../../../library/base/html/colors.html
+
+Entry: comment
+Keywords: comment comment<- attribute
+Description: ~~function to do ... ~~
+URL: ../../../library/base/html/comment.html
 
 Entry: complete.cases
 Keywords: complete.cases NA logic
@@ -519,9 +549,14 @@ Description: Contrast Matrices
 URL: ../../../library/base/html/contrast.html
 
 Entry: contrasts
-Keywords: contrasts design regression
+Keywords: contrasts contrasts<- design regression
 Description: Get and Set Contrast Matrices
 URL: ../../../library/base/html/contrasts.html
+
+Entry: contributors
+Keywords: contributors misc
+Description: R Project Contributors
+URL: ../../../library/base/html/contributors.html
 
 Entry: convolve
 Keywords: convolve math dplot
@@ -564,7 +599,7 @@ Description: Draw Function Plots
 URL: ../../../library/base/html/curve.html
 
 Entry: cut
-Keywords: cut category
+Keywords: cut cut.default category
 Description: Convert Numeric to Factor
 URL: ../../../library/base/html/cut.html
 
@@ -579,7 +614,7 @@ Description: Object Classes
 URL: ../../../library/base/html/data.class.html
 
 Entry: data.frame
-Keywords: data.frame as.data.frame is.data.frame row.names print.data.frame classes methods
+Keywords: data.frame as.data.frame is.data.frame row.names row.names<- row.names.default row.names<-.data.frame print.data.frame plot.data.frame as.data.frame.AsIs as.data.frame.character as.data.frame.complex as.data.frame.data.frame as.data.frame.default as.data.frame.factor as.data.frame.integer as.data.frame.list as.data.frame.logical as.data.frame.matrix as.data.frame.model.matrix as.data.frame.numeric as.data.frame.ordered as.data.frame.ts as.data.frame.vector classes methods
 Description: Data Frames
 URL: ../../../library/base/html/data.frame.html
 
@@ -608,13 +643,18 @@ Keywords: delay programming data
 Description: Delay Evaluation
 URL: ../../../library/base/html/delay.html
 
+Entry: delete.response
+Keywords: reformulate drop.terms delete.response programming
+Description: Modify terms objects
+URL: ../../../library/base/html/delete.response.html
+
 Entry: demo
 Keywords: demo documentation utilities
 Description: Demonstrations of \R functions
 URL: ../../../library/base/html/demo.html
 
 Entry: density
-Keywords: density bw.ucv bw.bcv bw.sj print.density plot.density dplot distribution smooth
+Keywords: density print.density plot.density dplot distribution smooth
 Description: Kernel Density Estimation
 URL: ../../../library/base/html/density.html
 
@@ -633,6 +673,16 @@ Keywords: detach data
 Description: Detach \R objects from search path
 URL: ../../../library/base/html/detach.html
 
+Entry: dev
+Keywords: dev.cur dev.list dev.next dev.prev dev.off dev.set .Device .Devices device
+Description: Control Multiple Devices
+URL: ../../../library/base/html/dev.html
+
+Entry: dev2
+Keywords: dev.copy dev.print dev.control device
+Description: Copy Graphics Between Multiple Devices
+URL: ../../../library/base/html/dev2.html
+
 Entry: deviance
 Keywords: deviance models
 Description: Model Deviance
@@ -644,22 +694,22 @@ Description: Residual Degrees-of-Freedom
 URL: ../../../library/base/html/df.residual.html
 
 Entry: diag
-Keywords: diag array
+Keywords: diag diag<- array
 Description: Matrix Diagonals
 URL: ../../../library/base/html/diag.html
 
 Entry: diff
-Keywords: diff ts arith
+Keywords: diff diff.default ts arith
 Description: Lagged Differences
 URL: ../../../library/base/html/diff.html
 
 Entry: dim
-Keywords: dim dim<- array
+Keywords: dim dim.data.frame dim<- array
 Description: Array Extents
 URL: ../../../library/base/html/dim.html
 
 Entry: dimnames
-Keywords: dimnames dimnames<- array manip
+Keywords: dimnames dimnames<- dimnames.data.frame dimnames<-.data.frame array manip
 Description: Array Labels
 URL: ../../../library/base/html/dimnames.html
 
@@ -719,7 +769,7 @@ Description: Spectral Decomposition of a Matrix
 URL: ../../../library/base/html/eigen.html
 
 Entry: environment
-Keywords: environment environment<- .GlobalEnv is.environment data programming
+Keywords: environment environment<- .GlobalEnv globalenv is.environment data programming
 Description: Environment Access
 URL: ../../../library/base/html/environment.html
 
@@ -759,7 +809,7 @@ Description: Old Faithful Geyser Data
 URL: ../../../library/base/html/faithful.html
 
 Entry: family
-Keywords: family binomial gaussian Gamma inverse.gaussian poisson quasi models
+Keywords: family family.lm binomial gaussian Gamma inverse.gaussian poisson quasi print.family models
 Description: Family Objects for Models
 URL: ../../../library/base/html/family.html
 
@@ -769,7 +819,7 @@ Description: Fast Discrete Fourier Transform
 URL: ../../../library/base/html/fft.html
 
 Entry: fitted.values
-Keywords: fitted.values fitted models regression
+Keywords: fitted.values fitted fitted.default fitted.lm fitted.glm models regression
 Description: Extract Model Fitted Values
 URL: ../../../library/base/html/fitted.values.html
 
@@ -784,7 +834,7 @@ Description: Fix an Object
 URL: ../../../library/base/html/fix.html
 
 Entry: formals
-Keywords: formals programming
+Keywords: formals formals<- programming
 Description: Access to and Manipulation of the Formal Arguments
 URL: ../../../library/base/html/formals.html
 
@@ -792,6 +842,11 @@ Entry: format
 Keywords: format format.default format.pval character print
 Description: Encode in a Common Format
 URL: ../../../library/base/html/format.html
+
+Entry: format.info
+Keywords: format.info character print programming
+Description: format(.) Information
+URL: ../../../library/base/html/format.info.html
 
 Entry: formatc
 Keywords: formatC format.char character print
@@ -839,7 +894,7 @@ Description: Generate Factor Levels
 URL: ../../../library/base/html/gl.html
 
 Entry: glm
-Keywords: glm glm.control glm.fit models regression
+Keywords: glm glm.control glm.fit glm.fit.null models regression
 Description: Fitting Generalized Linear Models
 URL: ../../../library/base/html/glm.html
 
@@ -849,7 +904,7 @@ Description: Accessing Generalized Linear Model Fits
 URL: ../../../library/base/html/glm.summaries.html
 
 Entry: graphics.off
-Keywords: dev.off graphics.off device iplot
+Keywords: graphics.off device iplot
 Description: Turn Off All Graphics Devices
 URL: ../../../library/base/html/graphics.off.html
 
@@ -874,7 +929,7 @@ Description: Online Documentation
 URL: ../../../library/base/html/help.html
 
 Entry: hist
-Keywords: hist hplot iplot distribution
+Keywords: hist hist.default hplot iplot distribution
 Description: Histograms
 URL: ../../../library/base/html/hist.html
 
@@ -989,7 +1044,7 @@ Description: Add Legends to Plots
 URL: ../../../library/base/html/legend.html
 
 Entry: length
-Keywords: length attribute
+Keywords: length length<- attribute
 Description: Length of a Vector or List
 URL: ../../../library/base/html/length.html
 
@@ -1010,7 +1065,7 @@ URL: ../../../library/base/html/library.dynam.html
 
 Entry: license
 Keywords: license licence misc
-Description: Show the License Terms for R
+Description: The R License Terms
 URL: ../../../library/base/html/license.html
 
 Entry: lines
@@ -1034,7 +1089,7 @@ Description: Regression Diagnostics
 URL: ../../../library/base/html/lm.influence.html
 
 Entry: lm.summaries
-Keywords: anova.lm anova.lm.null summary.lm summary.lm.null predict.lm coefficients.lm deviance.lm df.residual.lm effects.lm fitted.values.lm residuals.lm weights.lm print.lm print.lm.null print.summary.lm print.summary.lm.null print.anova.lm regression
+Keywords: anova.lm anova.lm.null anovalist.lm summary.lm summary.lm.null predict.lm coefficients.lm deviance.lm df.residual.lm effects.lm family.lm formula.lm fitted.values.lm residuals.lm weights weights.lm print.lm print.lm.null print.summary.lm print.summary.lm.null print.anova.lm regression
 Description: Accessing Linear Model Fits
 URL: ../../../library/base/html/lm.summaries.html
 
@@ -1049,7 +1104,7 @@ Description: Graphical Input
 URL: ../../../library/base/html/locator.html
 
 Entry: logical
-Keywords: logical as.logical is.logical classes logic
+Keywords: logical as.logical is.logical TRUE FALSE T F classes logic
 Description: Logical Vectors
 URL: ../../../library/base/html/logical.html
 
@@ -1128,18 +1183,23 @@ Keywords: match.call programming
 Description: Argument Matching
 URL: ../../../library/base/html/match.call.html
 
+Entry: matmult
+Keywords: %*% array arith
+Description: Matrix Multiplication
+URL: ../../../library/base/html/matmult.html
+
 Entry: matplot
 Keywords: matplot matpoints matlines hplot aplot array
 Description: Plot Columns of Matrices
 URL: ../../../library/base/html/matplot.html
 
 Entry: matrix
-Keywords: matrix as.matrix is.matrix array algebra
+Keywords: matrix as.matrix as.matrix.default as.matrix.data.frame is.matrix array algebra
 Description: Matrices
 URL: ../../../library/base/html/matrix.html
 
 Entry: mean
-Keywords: mean univar
+Keywords: mean mean.default univar
 Description: Arithmetic Mean
 URL: ../../../library/base/html/mean.html
 
@@ -1168,8 +1228,13 @@ Keywords: mode mode<- storage.mode storage.mode<- attribute
 Description: The (Storage) Mode of an Object
 URL: ../../../library/base/html/mode.html
 
+Entry: model.extract
+Keywords: model.extract model.offset model.response manip programming models
+Description: Extract components from a model frame
+URL: ../../../library/base/html/model.extract.html
+
 Entry: model.frame
-Keywords: model.frame model.frame.default models
+Keywords: model.frame model.frame.default model.frame.lm models
 Description: Extracting the ``Environment'' of a Model Formula
 URL: ../../../library/base/html/model.frame.html
 
@@ -1199,7 +1264,7 @@ Description: Variable Names
 URL: ../../../library/base/html/name.html
 
 Entry: names
-Keywords: names attribute
+Keywords: names names.default names<- names<-.default attribute
 Description: The Names Attribute of an Object
 URL: ../../../library/base/html/names.html
 
@@ -1238,6 +1303,11 @@ Keywords: noquote [.noquote print.noquote print methods utilities
 Description: Class for ``no quote'' Printing of Strings
 URL: ../../../library/base/html/noquote.html
 
+Entry: notyet
+Keywords: NotYetImplemented .NotYetImplemented . symbols plot.lm documentation utilities
+Description: Not Yet Implemented Functions and Unused Arguments
+URL: ../../../library/base/html/notyet.html
+
 Entry: nrow
 Keywords: nrow NROW ncol NCOL array
 Description: The Number of Rows/Columns of an Array
@@ -1248,18 +1318,23 @@ Keywords: numeric as.numeric is.numeric classes attribute
 Description: Numeric Vectors
 URL: ../../../library/base/html/numeric.html
 
+Entry: offset
+Keywords: offset models
+Description: Include an offset in a model formula
+URL: ../../../library/base/html/offset.html
+
 Entry: on.exit
 Keywords: on.exit programming
 Description: Function Exit Code
 URL: ../../../library/base/html/on.exit.html
 
 Entry: optimize
-Keywords: optimize optimize
+Keywords: optimize optimise optimize
 Description: One Dimensional Optimization
 URL: ../../../library/base/html/optimize.html
 
 Entry: options
-Keywords: options environment error print
+Keywords: options .Options environment error print
 Description: Options Settings
 URL: ../../../library/base/html/options.html
 
@@ -1269,12 +1344,12 @@ Description: Ordering Permutation
 URL: ../../../library/base/html/order.html
 
 Entry: outer
-Keywords: outer array
+Keywords: outer %o% array
 Description: Outer Product of Vectors
 URL: ../../../library/base/html/outer.html
 
 Entry: pairs
-Keywords: pairs hplot
+Keywords: pairs pairs.default hplot
 Description: Scatterplot Matrices
 URL: ../../../library/base/html/pairs.html
 
@@ -1389,7 +1464,7 @@ Description: Annual Precipitation in US Cities
 URL: ../../../library/base/html/precip.html
 
 Entry: predict
-Keywords: predict methods
+Keywords: predict predict.default methods
 Description: Model Predictions
 URL: ../../../library/base/html/predict.html
 
@@ -1404,12 +1479,12 @@ Description: Pretty Breakpoints
 URL: ../../../library/base/html/pretty.html
 
 Entry: print
-Keywords: print print
+Keywords: print print.factor print.ordered print.matrix print.htest print.table print.tabular print
 Description: Print Values
 URL: ../../../library/base/html/print.html
 
 Entry: print.default
-Keywords: print.default print.factor print.ordered print
+Keywords: print.default print.atomic print
 Description: Default Printing
 URL: ../../../library/base/html/print.default.html
 
@@ -1454,7 +1529,7 @@ Description: Locations of Earthquakes off Fiji
 URL: ../../../library/base/html/quakes.html
 
 Entry: quantile
-Keywords: quantile univar
+Keywords: quantile quantile.default univar
 Description: Sample Quantiles
 URL: ../../../library/base/html/quantile.html
 
@@ -1472,11 +1547,6 @@ Entry: rank
 Keywords: rank univar
 Description: Sample Ranks
 URL: ../../../library/base/html/rank.html
-
-Entry: rbind
-Keywords: rbind array manip
-Description: Combine Rows into a Matrix
-URL: ../../../library/base/html/rbind.html
 
 Entry: read.table
 Keywords: read.table file
@@ -1539,7 +1609,7 @@ Description: Row Indexes
 URL: ../../../library/base/html/row.html
 
 Entry: rownames
-Keywords: rownames array manip
+Keywords: rownames rownames<- array manip
 Description: Row Labels
 URL: ../../../library/base/html/rownames.html
 
@@ -1573,8 +1643,13 @@ Keywords: sd univar
 Description: Standard Deviation
 URL: ../../../library/base/html/sd.html
 
+Entry: search
+Keywords: search data
+Description: Give ``Search Path'' for \R Objects
+URL: ../../../library/base/html/search.html
+
 Entry: seq
-Keywords: seq : manip
+Keywords: seq seq.default : manip
 Description: Sequence Generation
 URL: ../../../library/base/html/seq.html
 
@@ -1594,7 +1669,7 @@ Description: Send \R Output to a File
 URL: ../../../library/base/html/sink.html
 
 Entry: solve
-Keywords: solve solve.qr algebra
+Keywords: solve solve.default solve.qr algebra
 Description: Solve a System of Equations
 URL: ../../../library/base/html/solve.html
 
@@ -1614,7 +1689,7 @@ Description: Interpolating Splines
 URL: ../../../library/base/html/splinefun.html
 
 Entry: split
-Keywords: split split.default category
+Keywords: split split.default split.data.frame category
 Description: Divide into Groups
 URL: ../../../library/base/html/split.html
 
@@ -1634,7 +1709,7 @@ Description: Stem-and-Leaf Plots
 URL: ../../../library/base/html/stem.html
 
 Entry: stop
-Keywords: stop enviroment programming
+Keywords: stop environment programming
 Description: Stop Function Execution
 URL: ../../../library/base/html/stop.html
 
@@ -1698,6 +1773,11 @@ Keywords: sweep array iteration
 Description: Sweep out Array Summaries
 URL: ../../../library/base/html/sweep.html
 
+Entry: swiss
+Keywords: swiss datasets
+Description: Swiss Fertility and Socioeconomic Indicators (1888) Data
+URL: ../../../library/base/html/swiss.html
+
 Entry: switch
 Keywords: switch programming
 Description: Select One of a List of Alternatives
@@ -1734,7 +1814,7 @@ Description: CPU Time Used
 URL: ../../../library/base/html/system.time.html
 
 Entry: t
-Keywords: t array
+Keywords: t t.default t.data.frame array
 Description: Matrix Transpose
 URL: ../../../library/base/html/t.html
 
@@ -1774,7 +1854,7 @@ Description: Add Text to a Plot
 URL: ../../../library/base/html/text.html
 
 Entry: time
-Keywords: time start end frequency tsp ts
+Keywords: time start end frequency tsp tsp<- time.default start.default end.default frequency.default time.ts start.ts end.ts frequency.ts ts
 Description: Sampling Times of Time-Series
 URL: ../../../library/base/html/time.html
 
@@ -1883,8 +1963,13 @@ Keywords: weighted.mean univar
 Description: Weighted Arithmetic Mean
 URL: ../../../library/base/html/weighted.mean.html
 
+Entry: which
+Keywords: which logic attribute
+Description: Which indices are TRUE ?
+URL: ../../../library/base/html/which.html
+
 Entry: window
-Keywords: window ts
+Keywords: window window.default window.ts ts
 Description: Time Windows
 URL: ../../../library/base/html/window.html
 
@@ -1912,4 +1997,59 @@ Entry: xy.coords
 Keywords: xy.coords dplot
 Description: Extracting Plotting Structures
 URL: ../../../library/base/html/xy.coords.html
+
+Entry: line
+Keywords: coefficients.tukeyline residuals.tukeyline fitted.values.tukeyline print.tukeyline
+Description: Robust Line Fitting
+URL: ../../../library/eda/html/line.html
+
+Entry: medpolish
+Keywords: plot.medpolish print.medpolish
+Description: Median Polish of a Matrix
+URL: ../../../library/eda/html/medpolish.html
+
+Entry: smooth
+Keywords: 
+Description: Median Smoothing
+URL: ../../../library/eda/html/smooth.html
+
+Entry: cancor
+Keywords: cancor multivariate
+Description: Canonical Correlations
+URL: ../../../library/mva/html/cancor.html
+
+Entry: cmdscale
+Keywords: cmdscale multivariate
+Description: Classical (Metric) Multidimensional Scaling
+URL: ../../../library/mva/html/cmdscale.html
+
+Entry: dist
+Keywords: dist print.dist as.matrix.dist multivariate cluster
+Description: Distance Matrix Computation
+URL: ../../../library/mva/html/dist.html
+
+Entry: hclust
+Keywords: hclust plot.hclust multivariate cluster
+Description: Hierarchical Clustering
+URL: ../../../library/mva/html/hclust.html
+
+Entry: prcomp
+Keywords: print.prcomp plot.prcomp prcomp multivariate
+Description: Principal Components Analysis
+URL: ../../../library/mva/html/prcomp.html
+
+Entry: ecdf
+Keywords: ecdf print.ecdf summary.ecdf plot.ecdf iplot hplot
+Description: Empirical Cumulative Distribution Function
+URL: ../../../library/stepfun/html/ecdf.html
+
+Entry: plot.stepfun
+Keywords: plot.stepfun hplot
+Description: Plot Step Functions
+URL: ../../../library/stepfun/html/plot.stepfun.html
+
+Entry: stepfun
+Keywords: stepfun is.stepfun print.stepfun summary.stepfun knots knots.stepfun iplot
+Description: Step Functions
+URL: ../../../library/stepfun/html/stepfun.html
 
