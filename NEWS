@@ -22,6 +22,8 @@ BUG FIXES
 
     o	pacf() was failing if called on a one-column matrix.
 
+    o	$<- did not duplicate when it needed to.
+
 
 
 		CHANGES IN R VERSION 1.7.1
