@@ -71,7 +71,7 @@
  *
  *	void begincontext(RCNTXT *cptr, int flags,
  *			  SEXP syscall, SEXP env, SEXP
- *			  sysp, SEXP promargs)
+ *			  sysp, SEXP promargs, SEXP callfun)
  *
  *  which sets up the context pointed to by cptr in the appropriate way.
  *  When the context goes "out-of-scope" a call to
@@ -357,7 +357,6 @@ SEXP R_syscall(int n, RCNTXT *cptr)
 
 SEXP R_sysfunction(int n, RCNTXT *cptr)
 {
-    SEXP s, t;
     if (n > 0)
 	n = framedepth(cptr) - n;
     else
