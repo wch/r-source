@@ -64,9 +64,11 @@ if($out) {
     $outfile = STDOUT;
 }
 
-while(glob file_path($ARGV[0], "man", "*.[Rr]d")) { &do_one; }
+my $filespec;
+if($OSdir eq "unix") {$filespec = "*.[Rr]d"; } else {$filespec = "*.Rd"; }
+while(glob file_path($ARGV[0], "man", $filespec)) { &do_one; }
 if(-d  &file_path($ARGV[0], "man", $OSdir)) {
-    while(glob file_path($ARGV[0], "man",  $OSdir, "*.[Rr]d")){ &do_one; }
+    while(glob file_path($ARGV[0], "man",  $OSdir, $filespec)){ &do_one; }
 }
 
 sub do_one {
