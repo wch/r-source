@@ -2,6 +2,9 @@
 
 NEW FEATURES
 
+    o   Added bug.report() to generate & send bug reports from
+        within R. 
+
     o   The PostScript device driver now uses the ISO Latin1 font
 	encoding.  This should allow Western Europeans to render
 	their languages correctly.  It is likely that additional
