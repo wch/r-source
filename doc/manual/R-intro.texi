@@ -6589,8 +6589,9 @@ Windows.  If the environment variable @env{R_USER} is defined, that
 gives the home directory. Next, if the environment variable @env{HOME}
 is defined, that gives the home directory. If not, and environment
 variables @env{HOMEDRIVE} and @env{HOMEPATH} are defined (and they
-normally are under Windows NT) these define the home directory. Failing
-all those, the home directory is taken to be the starting directory.
+normally are under Windows NT/2000) these define the home
+directory. Failing all those, the home directory is taken to be the
+starting directory.
 
 @itemize @bullet
 @item
@@ -6697,8 +6698,7 @@ or regular `kilo' (1000).
 @itemx --max-nsize=@var{N}
 Specify the amount of memory used for fixed size objects by setting the
 number of ``cons cells'' to @var{N}.  See the previous option for
-details on @var{N}.  A cons cell takes 28 bytes on a 32-bit machine, and
-usually 56 bytes on a 64-bit machine.
+details on @var{N}.  A cons cell takes 28 bytes.
 
 @item --max-mem-size=@var{N}
 Specify a limit for the amount of memory to be used both for @R{}
