@@ -6,21 +6,21 @@
  *  modify it under the terms of the GNU Library General Public
  *  License as published by the Free Software Foundation; either
  *  version 2 of the License, or (at your option) any later version.
- * 
+ *
  *  This library is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  *  Library General Public License for more details.
- * 
+ *
  *  You should have received a copy of the GNU Library General Public
  *  License along with this library; if not, write to the Free
  *  Software Foundation, Inc., 59 Temple Place - Suite 330, Boston,
  *  MA 02111-1307, USA
  *
- *  $Id: rproxy_dev.c,v 1.5 2001/12/21 06:55:37 ripley Exp $
+ *  $Id: rproxy_dev.c,v 1.6 2003/09/13 15:14:09 murdoch Exp $
  */
 
-// virtual device size
+/* virtual device size */
 #define DEV_X 500
 #define DEV_Y 500
 
@@ -55,7 +55,7 @@ static void R_Proxy_Graphics_Activate(NewDevDesc *dd);
 static void R_Proxy_Graphics_Circle(double x, double y, double r,
 		      int col, int fill, double gamma, int lty, double lwd,
 		      NewDevDesc *dd);
-static void R_Proxy_Graphics_Clip(double x0, double x1, double y0, double y1, 
+static void R_Proxy_Graphics_Clip(double x0, double x1, double y0, double y1,
 		     NewDevDesc *dd);
 static void R_Proxy_Graphics_Close(NewDevDesc *dd);
 static void R_Proxy_Graphics_Deactivate(NewDevDesc *dd);
@@ -69,10 +69,10 @@ static void R_Proxy_Graphics_MetricInfo(int c, int font, double cex, double ps,
 			  double* width, NewDevDesc *dd);
 static void R_Proxy_Graphics_Mode(int mode, NewDevDesc *dd);
 static void R_Proxy_Graphics_NewPage(int fill, double gamma, NewDevDesc *dd);
-static void R_Proxy_Graphics_Polygon(int n, double *x, double *y, 
+static void R_Proxy_Graphics_Polygon(int n, double *x, double *y,
 		       int col, int fill, double gamma, int lty, double lwd,
 		       NewDevDesc *dd);
-static void R_Proxy_Graphics_Polyline(int n, double *x, double *y, 
+static void R_Proxy_Graphics_Polyline(int n, double *x, double *y,
 			int col, double gamma, int lty, double lwd,
 			NewDevDesc *dd);
 static void R_Proxy_Graphics_Rect(double x0, double y0, double x1, double y1,
@@ -86,8 +86,8 @@ static void R_Proxy_Graphics_Resize(NewDevDesc *dd);
 #endif
 static double R_Proxy_Graphics_StrWidth(char *str, int font,
 			  double cex, double ps, NewDevDesc *dd);
-static void R_Proxy_Graphics_Text(double x, double y, char *str, 
-		    double rot, double hadj, 
+static void R_Proxy_Graphics_Text(double x, double y, char *str,
+		    double rot, double hadj,
 		    int col, double gamma, int font, double cex, double ps,
 		    NewDevDesc *dd);
 static Rboolean R_Proxy_Graphics_Open (NewDevDesc* pDD,
@@ -98,7 +98,7 @@ static Rboolean R_Proxy_Graphics_Open (NewDevDesc* pDD,
 				       Rboolean pRecording,
 				       int pResize);
 
-// 00-06-22 | baier | added line type and width
+/* 00-06-22 | baier | added line type and width */
 static void R_Proxy_Graphics_Circle (double pX,
 				     double pY,
 				     double pRad,
@@ -169,7 +169,7 @@ static void R_Proxy_Graphics_Hold (NewDevDesc* pDD)
 
   MessageBox (GetDesktopWindow (),"Hold()","R_Proxy_Graphics",MB_OK);
 }
-// 00-06-22 | baier | added color, line type and width
+/* 00-06-22 | baier | added color, line type and width */
 static void R_Proxy_Graphics_Line (double pX0,
 				   double pY0,
 				   double pX1,
@@ -191,7 +191,7 @@ static void R_Proxy_Graphics_Line (double pX0,
 
   MessageBox (GetDesktopWindow (),"Line()","R_Proxy_Graphics",MB_OK);
 }
-// 01-01-25 | changed return type
+/* 01-01-25 | changed return type */
 static Rboolean R_Proxy_Graphics_Locator (double* pX,
 					  double* pY,
 					  NewDevDesc* pDD)
@@ -226,7 +226,7 @@ static void R_Proxy_Graphics_NewPage (int pFill,
 
   MessageBox (GetDesktopWindow (),"NewPage()","R_Proxy_Graphics",MB_OK);
 }
-// 01-01-25 | baier | added new parameters "recording", "resize"
+/* 01-01-25 | baier | added new parameters "recording", "resize" */
 static Rboolean R_Proxy_Graphics_Open (NewDevDesc* pDD,
 				       void* pAXD,
 				       char* pDisplay,
@@ -257,12 +257,12 @@ static void R_Proxy_Graphics_Polygon (int pCount,
 {
   if (__graphics_device)
     {
-      // convert coordinates here: don't use alloca() -> overflow?
+      /* convert coordinates here: don't use alloca() -> overflow? */
       double* lX = (double*) malloc (pCount * sizeof (double));
       double* lY = (double*) malloc (pCount * sizeof (double));
       int i = 0;
 
-      // could use memcpy() for speed
+      /* could use memcpy() for speed */
       for (i = 0;i < pCount;i++)
 	{
 	  lX[i] = pX[i];
@@ -270,8 +270,8 @@ static void R_Proxy_Graphics_Polygon (int pCount,
 
 	}
 
-      //      sprintf (x,"device::Polygon: bg is %08x, fg is %08x\n",pFill,pCol);
-      //      OutputDebugString (x);
+      /*      sprintf (x,"device::Polygon: bg is %08x, fg is %08x\n",pFill,pCol); */
+      /*      OutputDebugString (x); */
       __graphics_device->vtbl->polygon (__graphics_device,
 					pCount,lX,lY,pFill,pCol);
 
@@ -283,7 +283,7 @@ static void R_Proxy_Graphics_Polygon (int pCount,
 
   MessageBox (GetDesktopWindow (),"Polygon()","R_Proxy_Graphics",MB_OK);
 }
-// 01-01-23 | baier | added "col" parameter
+/* 01-01-23 | baier | added "col" parameter */
 static void R_Proxy_Graphics_Polyline (int pCount,
 				       double* pX,
 				       double* pY,
@@ -295,12 +295,12 @@ static void R_Proxy_Graphics_Polyline (int pCount,
 {
   if (__graphics_device)
     {
-      // convert coordinates here: don't use alloca() -> overflow?
+      /* convert coordinates here: don't use alloca() -> overflow? */
       double* lX = (double*) malloc (pCount * sizeof (double));
       double* lY = (double*) malloc (pCount * sizeof (double));
       int i = 0;
 
-      // could use memcpy() for speed
+      /* could use memcpy() for speed */
       for (i = 0;i < pCount;i++)
 	{
 	  char x[1000];
@@ -309,7 +309,7 @@ static void R_Proxy_Graphics_Polyline (int pCount,
 
 	  sprintf (x,"Polyline: coord %d is %f/%f (was %f/%f)\n",
 		   i,lX[i],lY[i],pX[i],pY[i]);
-	  //	  OutputDebugString (x);
+	  /*	  OutputDebugString (x); */
 
 	}
 
@@ -324,7 +324,7 @@ static void R_Proxy_Graphics_Polyline (int pCount,
 
   MessageBox (GetDesktopWindow (),"Polyline()","R_Proxy_Graphics",MB_OK);
 }
-// 00-06-22 | baier | added line type and width
+/* 00-06-22 | baier | added line type and width */
 static void R_Proxy_Graphics_Rect (double pX0,
 				   double pY0,
 				   double pX1,
@@ -370,7 +370,7 @@ static void R_Proxy_Graphics_Resize (NewDevDesc* pDD)
 }
 #endif
 
-// 00-06-22 | baier | added font and size parameters
+/* 00-06-22 | baier | added font and size parameters */
 static double R_Proxy_Graphics_StrWidth (char* pString,
 					 int pFont,
 					 double pCex,
@@ -390,7 +390,7 @@ static double R_Proxy_Graphics_StrWidth (char* pString,
   return 0.0;
 }
 
-// 00-06-22 | baier | added color, font and size
+/* 00-06-22 | baier | added color, font and size */
 static void R_Proxy_Graphics_Text (double pX,
 				   double pY,
 				   char* pString,
@@ -416,12 +416,12 @@ static void R_Proxy_Graphics_Text (double pX,
   MessageBox (GetDesktopWindow (),"Text()","R_Proxy_Graphics",MB_OK);
 }
 
-// 00-06-22 | baier | added font and size parameters
+/* 00-06-22 | baier | added font and size parameters */
 static void R_Proxy_Graphics_MetricInfo(int c, int font, double cex, double ps,
 			  double* ascent, double* descent,
 			  double* width, NewDevDesc *dd);
 static void R_Proxy_Graphics_MetricInfo (int pC,
-					 int pFont, 
+					 int pFont,
 					 double pCex,
 					 double pPs,
 					 double* pAscent,
@@ -445,7 +445,7 @@ static void R_Proxy_Graphics_MetricInfo (int pC,
   MessageBox (GetDesktopWindow (),"MetricInfo()","R_Proxy_Graphics",MB_OK);
 }
 
-// 01-01-25 | baier | new paramters
+/* 01-01-25 | baier | new paramters */
 int R_Proxy_Graphics_Driver (NewDevDesc* pDD,
 			     char* pDisplay,
 			     double pWidth,

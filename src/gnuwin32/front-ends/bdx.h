@@ -1,29 +1,29 @@
 /*
  *  BDX: Binary Data eXchange format library
  *  Copyright (C) 1999--2001 Thomas Baier
- * 
+ *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Library General Public
  *  License as published by the Free Software Foundation; either
  *  version 2 of the License, or (at your option) any later version.
- * 
+ *
  *  This library is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  *  Library General Public License for more details.
- * 
+ *
  *  You should have received a copy of the GNU Library General Public
  *  License along with this library; if not, write to the Free
  *  Software Foundation, Inc., 59 Temple Place - Suite 330, Boston,
  *  MA 02111-1307, USA
  *
- *  $Id: bdx.h,v 1.5 2001/04/05 09:42:35 ripley Exp $
+ *  $Id: bdx.h,v 1.6 2003/09/13 15:14:09 murdoch Exp $
  */
 
 #ifndef _BDX_H_
 #define _BDX_H_
 
-// BDX: Binary Data eXchange Format
+/* BDX: Binary Data eXchange Format */
 
 /*
  * BDX version information
@@ -124,24 +124,24 @@ void bdx_free (BDX_Data* data);
  */
 #define BDX_TYPESPEC_SCALAR 0x00000001
 #define BDX_TYPESPEC_ARRAY  0x00000002
-// more to come
+/* more to come */
 
 #define BDX_SCALAR_BOOL     0x00000001
-//#define BDX_SCALAR_SHORT    0x00000002
+/*#define BDX_SCALAR_SHORT    0x00000002 */
 #define BDX_SCALAR_LONG     0x00000003
-//#define BDX_SCALAR_FLOAT    0x00000004
+/*#define BDX_SCALAR_FLOAT    0x00000004 */
 #define BDX_SCALAR_DOUBLE   0x00000005
-//#define BDX_SCALAR_COMPLEX  0x00000006
-//#define BDX_SCALAR_CHAR     0x00000007
-//#define BDX_SCALAR_STRING   0x00000008
-//#define BDX_SCALAR_SIGNED   0x80000000
+/*#define BDX_SCALAR_COMPLEX  0x00000006 */
+/*#define BDX_SCALAR_CHAR     0x00000007 */
+/*#define BDX_SCALAR_STRING   0x00000008 */
+/*#define BDX_SCALAR_SIGNED   0x80000000 */
 
-// mapping from BDX_SCALAR_* to C types
+/* mapping from BDX_SCALAR_* to C types */
 typedef unsigned long BDX_Scalar_BOOL;
 typedef long BDX_Scalar_LONG;
 typedef double BDX_Scalar_DOUBLE;
 
-// some typedefs for commonly used types
+/* some typedefs for commonly used types */
 typedef unsigned long BDX_Length;
 typedef unsigned long BDX_Offset;
 typedef unsigned long BDX_Compound_Type;
@@ -150,42 +150,42 @@ typedef long BDX_Dimension;
 typedef unsigned long BDX_Count;
 typedef unsigned long BDX_Magic;
 
-// a type specification
+/* a type specification */
 typedef struct _BDX_Type_Specification
 {
   BDX_Compound_Type type;
-  //  BDX_Offset        type_declaration;
+  /*  BDX_Offset        type_declaration; */
 } BDX_Type_Specification;
 
-// basic structure
+/* basic structure */
 typedef struct _BDX_Data
 {
   BDX_Magic              magic;
   BDX_Length             length;
   BDX_Type_Specification type_specification;
-  // depending on type_specification, either BDX_Array_Specificaton or 
-  // BDX_Scalar_Specification follows. After all type specifications, the
-  // data follows
+  /* depending on type_specification, either BDX_Array_Specificaton or */
+  /* BDX_Scalar_Specification follows. After all type specifications, the */
+  /* data follows */
 } BDX_Data;
 
 
-// bounds for an array type specification
+/* bounds for an array type specification */
 typedef struct _BDX_Array_Bounds
 {
   BDX_Dimension lower;
   BDX_Dimension upper;
 } BDX_Array_Bounds;
 
-// the array type specification itself
+/* the array type specification itself */
 typedef struct _BDX_Array_Specification
 {
   BDX_Count                dimensions;
-  //  BDX_Type_Specification base_type_specification;
-  // simplificaton: the base type is a scalar type at the moment
+  /*  BDX_Type_Specification base_type_specification; */
+  /* simplificaton: the base type is a scalar type at the moment */
   BDX_Scalar_Specification base_type;
   BDX_Array_Bounds         bounds[1];
-  // after dimensions bounds array members, the rest of the type specification
-  // follows. The the data...
+  /* after dimensions bounds array members, the rest of the type specification */
+  /* follows. The the data... */
 } BDX_Array_Specification;
 
 
