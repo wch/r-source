@@ -1,7 +1,7 @@
 #-*- Makefile -*-
 all:  $(DLLNAME).dll
 
-SOURCES=$(wildcard -f *.c *.f)
+SOURCES=$(wildcard -f *.c *.f *.cc)
 OBJSA=$(foreach i,$(SOURCES),$(basename $i).o)
 
 include $(RHOME)/src/gnuwin32/MkRules
@@ -14,13 +14,18 @@ else
   DEBUGFLAG=-Wall
 endif
 
-CFLAGS=-I$(RHOME)/src/include -include $(RHOME)/src/include/globalvar.h $(DEBUGFLAG) -O2
+CPPFLAGS=$(PKG_CPPFLAGS) -I$(RHOME)/src/include
+CFLAGS=$(CPPFLAGS) -include $(RHOME)/src/include/globalvar.h $(DEBUGFLAG) -O2 $(PKG_CFLAGS)
+CXXFLAGS=$(CPPFLAGS) $(DEBUGFLAG) -O2 $(PKG_CXXFLAGS)
 FFLAGS=-O2 $(DEBUGFLAG)
-DLLLIBS=-L$(RHOME)/src/gnuwin32  $(FLIBS) -lR 
+DLLLIBS=-L$(RHOME)/src/gnuwin32  $(FLIBS) $(PKG_LIBS) -lR 
 
 
 ifeq ($(PKG),RODBC)
   DLLLIBS+=-lodbc32
+endif 
+ifeq ($(PKG),Matrix)
+  DLLLIBS+=-lstdc++
 endif 
 
 
@@ -30,7 +35,12 @@ ifeq ($(AA),Makefile)
 else
  OBJS=$(filter-out $(OBJS-NO),$(OBJSA))
 endif
+AA=$(wildcard Makevars.win)
+ifeq ($(AA),Makevars.win)
+ include Makevars.win
+else
 -include Makevars
+endif
 
 $(DLLNAME).a: $(OBJS) #
 	$(RM) -f $@

@@ -27,6 +27,12 @@ history-recall mechanism in Rgui.
 Characters using the AltGr key now work in interactive use of Rterm.
 (AltGr used to work like Alt.)
 
+A file Makevars.win in the src directory of a package will be used in
+preference to a file Makevars.
+
+The Makefiles for packages now allow C++ code (with extension .cc)
+in the src directory. 
+
 
 rw1010
 ======

@@ -14,7 +14,7 @@ SRC = src
 #source directory
 SSPKG=$(SPKG)/$(SRC)
 
-LSOURCES=$(wildcard $(SSPKG)/*.c $(SSPKG)/*.f)
+LSOURCES=$(wildcard $(SSPKG)/*.c $(SSPKG)/*.f $(SSPKG)/*.cc)
 ifeq ($(strip $(LSOURCES)),)
   LOBJS=
   DYNLIB=
