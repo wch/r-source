@@ -4,7 +4,7 @@ f1=${1}
 f2=${2}
 exitstatus=${3}
 
-egrepv='(^Version|^Number of.*:|^Type|^R : Copyright'
+egrepv='(^Version|^Number of.*:|^Type|^R : Copyright|^Time '
 if test -n "`grep primitive-funs $f1`"; then
   egrepv=${egrepv}'|^\[1\] [19][0-9][0-9])'
 else
