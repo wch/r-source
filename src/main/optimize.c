@@ -60,7 +60,7 @@ static double F77_SYMBOL(fcn1)(double *x)
 	goto badvalue;
     }
  badvalue:
-    error("invalid function value in optimizer\n");
+    error("invalid function value in 'fmin' optimizer\n");
     return 0;/* for -Wall */
 }
 
@@ -143,16 +143,17 @@ static double F77_SYMBOL(fcn2)(double *x)
 	goto badvalue;
     }
  badvalue:
-    error("invalid function value in optimizer\n");
+    error("invalid function value in 'zeroin'\n");
     return 0;/* for -Wall */
 
 }
 
-/* zeroin(f, xmin, xmax, tol) */
+/* zeroin(f, xmin, xmax, tol, maxiter) */
 SEXP do_zeroin(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     double xmin, xmax, tol;
-    SEXP v;
+    int iter;
+    SEXP v, res;
 
     checkArity(op, args);
     PrintDefaults(rho);
@@ -185,14 +186,23 @@ SEXP do_zeroin(SEXP call, SEXP op, SEXP args, SEXP rho)
     tol = asReal(CAR(args));
     if (!FINITE(tol) || tol <= 0.0)
 	errorcall(call, "invalid tol value\n");
+    args = CDR(args);
+
+    /* maxiter */
+    iter = asInteger(CAR(args));
+    if (iter <= 0)
+	errorcall(call, "maxiter must be positive\n");
 
     R_env2 = rho;
-    PROTECT(R_fcall2 = lang2(v, R_NilValue));
+    PROTECT(R_fcall2 = lang2(v, R_NilValue));/* the GLOBAL used in fcn2() */
     CADR(R_fcall2) = allocVector(REALSXP, 1);
-    REAL(CADR(R_fcall2))[0] =
-	F77_SYMBOL(zeroin)(&xmin, &xmax, F77_SYMBOL(fcn2), &tol);
-    UNPROTECT(1);
-    return CADR(R_fcall2);
+    PROTECT(res = allocVector(REALSXP, 3));
+    REAL(res)[0] =
+	F77_SYMBOL(zeroin)(&xmin, &xmax, F77_SYMBOL(fcn2), &tol, &iter);
+    REAL(res)[1] = (double)iter;
+    REAL(res)[2] = tol;
+    UNPROTECT(2);
+    return res;
 }
 
 
@@ -249,7 +259,7 @@ static int F77_SYMBOL(fcn)(int *n, double *x, double *f)
     }
     return 0;
  badvalue:
-    error("invalid function value in optimizer\n");
+    error("invalid function value in 'nlm' optimizer\n");
     return 0;/* for -Wall */
 }
 
@@ -339,6 +349,8 @@ static void opterror(int nerr)
 	error("probable coding error in analytic gradient\n");
     case -22:
 	error("probable coding error in analytic Hessian\n");
+    default:
+	error("*** unknown error message (msg = %d) in nlm()\n*** should not happen!\n", nerr);
     }
 }
 
@@ -572,7 +584,7 @@ SEXP do_nlm(SEXP call, SEXP op, SEXP args, SEXP rho)
  */
 
 int F77_SYMBOL(result)(int *nr, int *n, double *x, double *f, double *g,
-	double *a, double *p, int *itncnt, int *iflg, int *ipr)
+		       double *a, double *p, int *itncnt, int *iflg, int *ipr)
 {
     /* Print iteration number */
 
@@ -614,3 +626,6 @@ int F77_SYMBOL(result)(int *nr, int *n, double *x, double *f, double *g,
     Rprintf("\n");
     return 0;
 }
+
+
+

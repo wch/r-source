@@ -2,6 +2,8 @@
 
 NEW FEATURES
 
+    o   uniroot has a new 'maxiter' argument and returns #{iter} and precision.
+
     o   New options "show.coef.Pvalue" (= TRUE).  If FALSE, print.summary.[g]lm
 	does not print P values.
 

@@ -3,12 +3,12 @@ c      a zero of the function  f(x)  is computed in the interval ax,bx .
 c
 c  input..
 c
-c  ax     left endpoint of initial interval
-c  bx     right endpoint of initial interval
-c  f      function subprogram which evaluates f(x) for any x in
-c         the interval  ax,bx
-c  tol    desired length of the interval of uncertainty of the
-c         final result ( .ge. 0.0d0)
+c  ax	  left endpoint of initial interval
+c  bx	  right endpoint of initial interval
+c  f	  function subprogram which evaluates f(x) for any x in
+c	  the interval	ax,bx
+c  tol	  desired length of the interval of uncertainty of the
+c	  final result ( .ge. 0.0d0)
 c
 c
 c  output..
@@ -16,21 +16,25 @@ c
 c  zeroin abcissa approximating a zero of  f  in the interval ax,bx
 c
 c
-c      it is assumed  that   f(ax)   and   f(bx)   have  opposite  signs
+c      it is assumed  that   f(ax)   and   f(bx)   have	 opposite  signs
 c  without  a  check.  zeroin  returns a zero  x  in the given interval
-c  ax,bx  to within a tolerance  4*macheps*abs(x) + tol, where macheps
+c  ax,bx  to within a tolerance	 4*macheps*abs(x) + tol, where macheps
 c  is the relative machine precision.
-c      this function subprogram is a slightly  modified  translation  of
-c  the algol 60 procedure  zero  given in  richard brent, algorithms for
+c
+c      this function subprogram is a slightly  modified	 translation  of
+c  the algol 60 procedure  zero	 given in  richard brent, algorithms for
 c  minimization without derivatives, prentice - hall, inc. (1973).
-c
-c
 
-      double precision function zeroin(ax,bx,f,tol)
-c     implicit undefined(a-z)
+      double precision function zeroin(ax,bx,f,tol,maxiter)
+      implicit none
+c arguments
       double precision ax,bx,f,tol
-      double precision  a,b,c,d,e,eps,fa,fb,fc,tol1,xm,p,q,r,s
-      double precision  dabs,dsign
+      integer maxiter
+c variables
+      integer iter
+      double precision	a,b,c,d,e,eps,fa,fb,fc,tol1,xm,p,q,r,s
+c functions
+      double precision	dabs,dsign
 c
 c  compute eps, the relative machine precision
 c
@@ -41,31 +45,38 @@ c
 c
 c initialization
 c
+      iter = 0
       a = ax
       b = bx
       fa = f(a)
       fb = f(b)
 c
-c begin step
+c begin iteration step
 c
-   20 c = a
+ 20   c = a
       fc = fa
       d = b - a
       e = d
-   30 if (dabs(fc) .ge. dabs(fb)) go to 40
-      a = b
-      b = c
-      c = a
-      fa = fb
-      fb = fc
-      fc = fa
+ 30   if (dabs(fc) .lt. dabs(fb)) then
+	 a = b
+	 b = c
+	 c = a
+	 fa = fb
+	 fb = fc
+	 fc = fa
+      endif
 c
 c convergence test
 c
-   40 tol1 = 2.0d0*eps*dabs(b) + 0.5d0*tol
+      tol1 = 2.0d0*eps*dabs(b) + 0.5d0*tol
       xm = .5d0*(c - b)
       if (dabs(xm) .le. tol1) go to 90
       if (fb .eq. 0.0d0) go to 90
+      if (iter .gt. maxiter) then
+c	non-convergence in 'maxiter' steps: "-" signals
+	 iter = -iter
+	 go to 90
+      endif
 c
 c is bisection necessary
 c
@@ -74,26 +85,27 @@ c
 c
 c is quadratic interpolation possible
 c
-      if (a .ne. c) go to 50
+      if (a .eq. c) then
 c
-c linear interpolation
+c	linear interpolation
 c
-      s = fb/fa
-      p = 2.0d0*xm*s
-      q = 1.0d0 - s
-      go to 60
+	 s = fb/fa
+	 p = 2.0d0*xm*s
+	 q = 1.0d0 - s
+      else
 c
-c inverse quadratic interpolation
+c	inverse quadratic interpolation
 c
-   50 q = fa/fc
-      r = fb/fc
-      s = fb/fa
-      p = s*(2.0d0*xm*q*(q - r) - (b - a)*(r - 1.0d0))
-      q = (q - 1.0d0)*(r - 1.0d0)*(s - 1.0d0)
+	 q = fa/fc
+	 r = fb/fc
+	 s = fb/fa
+	 p = s*(2.0d0*xm*q*(q - r) - (b - a)*(r - 1.0d0))
+	 q = (q - 1.0d0)*(r - 1.0d0)*(s - 1.0d0)
+      endif
 c
 c adjust signs
 c
-   60 if (p .gt. 0.0d0) q = -q
+      if (p .gt. 0.0d0) q = -q
       p = dabs(p)
 c
 c is interpolation acceptable
@@ -109,26 +121,25 @@ c
    70 d = xm
       e = d
 c
-c complete step
+c complete iteration step
 c
    80 a = b
       fa = fb
-      if (dabs(d) .gt. tol1) b = b + d
-      if (dabs(d) .le. tol1) b = b + dsign(tol1, xm)
+      if (dabs(d) .gt. tol1) then
+	 b = b + d
+      else
+	 b = b + dsign(tol1, xm)
+      endif
       fb = f(b)
+      iter = iter + 1
       if ((fb*(fc/dabs(fc))) .gt. 0.0d0) go to 20
       go to 30
 c
 c done
 c
    90 zeroin = b
-      return
-      end
-
-      subroutine root1d(ax, bx, f, tol, root)
-c     implicit undefined(a-z)
-      double precision ax, bx, f, tol, root, zeroin
-      external f
-      if(ax*bx .lt. 0) root = zeroin(ax, bx, f, tol)
+c further return  tol = reached precision;  maxiter = #{iterations}
+      tol = dabs(xm+xm)
+      maxiter = iter
       return
       end

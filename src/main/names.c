@@ -587,7 +587,7 @@ FUNTAB R_FunTab[] =
 
 {"nlm",		do_nlm,		0,	11,	11,	PP_FUNCALL},
 {"fmin",	do_fmin,	0,	11,	4,	PP_FUNCALL},
-{"zeroin",	do_zeroin,	0,	11,	4,	PP_FUNCALL},
+{"zeroin",	do_zeroin,	0,	11,	5,	PP_FUNCALL},
 {"terms.formula",do_termsform,	0,	11,	5,	PP_FUNCALL},
 {"update.formula",do_updateform,0,	11,	2,	PP_FUNCALL},
 {"model.frame",	do_modelframe,	0,	11,	8,	PP_FUNCALL},
