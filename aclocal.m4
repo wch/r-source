@@ -1671,7 +1671,7 @@ fi
 AC_MSG_CHECKING([whether bzip2 support needs to be compiled])
 if test "x${have_bzlib}" = xyes; then
   AC_MSG_RESULT([no])
-  LIBS="-lb2z ${LIBS}"
+  LIBS="-lbz2 ${LIBS}"
 else
   AC_MSG_RESULT([yes])
 fi
