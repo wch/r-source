@@ -293,8 +293,13 @@ AC_CHECK_FUNCS(acosh asinh atanh bcopy finite isnan matherr memcpy \
 ### Header files
 
 AC_HEADER_STDC
+<<<<<<< configure.in
+AC_CHECK_HEADERS(dl.h dlfcn.h elf.h fcntl.h limits.h locale.h \
+  readline/history.h rpc/xdr.h sys/times.h time.h ieeefp.h)
+=======
 AC_CHECK_HEADERS(dl.h dlfcn.h elf.h locale.h readline/history.h \
   rpc/xdr.h sys/times.h time.h)
+>>>>>>> 1.38
 
 ### Typedefs
 
