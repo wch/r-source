@@ -37,7 +37,9 @@ Be aware that not all Windows machines have MSVCRT.DLL installed.
 (If you want to use cygwin, you will need to upgrade to gcc-2.95.2 by
 installing the files gcc-2.95.2-cygb20.tar.gz and
 gcc-2.95.2-mingw-extra.tar.gz from
-ftp://ftp.xraylith.wisc.edu/pub/khan/gnu-win32/cygwin32.)
+ftp://ftp.xraylith.wisc.edu/pub/khan/gnu-win32/cygwin32. The basic
+distribution does not comtain a Fortran compiler, and that is needed
+to build R.)
 
 perl5, available via http://www.perl.com/CPAN/ports.
 
@@ -109,20 +111,23 @@ Cross-building on i586 Linux
 
 You will need i386-mingw32 cross-compilers installed and in your path.
 
-At one time a binary set of cross-compilers was available from
+A pre-built set of cross-tools based on gcc-2.95.2 is currently
+available from
 
-ftp://ftp.objsw.com/pub/crossgcc/linux-x-win32
+    http://www.devolution.com/~slouken/SDL/Xmingw32/
 
-but this seems to have been removed recently. Instructions for
-building a cross-compiler are given at
+Unfortunately these do not include a Fortran compiler, but may suffice for
+building some packages.
 
-http://www.nanotech.wisc.edu/~khan/software/gnu-win32/mingw-cross-howto.txt
+Instructions for building a cross-compiler are given at
+
+    http://www.nanotech.wisc.edu/~khan/software/gnu-win32/mingw-cross-howto.txt
 
 At the time of writing these were somewhat outdated, and we suggest
 you build a gcc-2.95.2 cross-compiler (sources from any GNU mirror and
 patches from
 
-ftp://ftp.xraylith.wisc.edu/pub/khan/gnu-win32/cygwin/gcc-2.95.2/patches/
+    ftp://ftp.xraylith.wisc.edu/pub/khan/gnu-win32/cygwin/gcc-2.95.2/patches/
 
 ).  Apart from the compiler, you need the mingw32 runtime system and
 a cross-built version of binutils 2.9.4.
@@ -140,8 +145,6 @@ Edit MkRules to set BUILD=CROSS and the appropriate paths as needed.
 Edit Makefile to set the type(s) of help that you want built. (You
 will not be able to cross-build .chm or .hlp files, nor Rchmtl.dll,
 so set WINHELP to NO.)
-
-Set the environment variable TEMP to, say, /tmp, and make.
 
 Packages can be made in the same way as natively: see the file
 readme.packages.

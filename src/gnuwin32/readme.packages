@@ -138,8 +138,6 @@ we have packaged a set at bin/windows/windows-NT/etc/tools.zip
 
 perl5, available via http://www.perl.com/CPAN/ports.
 
-groff, available at http://www.itribe.net/virtunix/groff-1.10nt.zip.
-
 All of these need to be installed and in your path, and the
 appropriate environment variables set.
 
@@ -152,8 +150,8 @@ mypkg, in RHOME\src\library, and run
 If you have a Unix/Linux box, it will suffice to zip up the Unix installation
 of the package.  Install the package, then
 
-cd `R RHOME`/library
-zip -rl /dest/mypkg.zip mypkg
+	cd `R RHOME`/library
+	zip -rl /dest/mypkg.zip mypkg
 
 (the -l flag converts to CRLF line endings: it is not absolutely necessary
 but users may want to read the information files in a Windows editor).
@@ -168,8 +166,8 @@ Non-standard locations
 You can specify the location of the package source by PKGDIR and the
 library in which to install the package by RLIB, as in
 
-make PKGDIR=/mysources RLIB=/R/library pkg-mypkg
-make PKGDIR=/mysources RLIB=/R/library pkgcheck-mypkg
+	make PKGDIR=/mysources RLIB=/R/library pkg-mypkg
+	make PKGDIR=/mysources RLIB=/R/library pkgcheck-mypkg
 
 which installs the package in \mysources\mypkg as \R\library\mypkg and
 checks its examples.
@@ -190,15 +188,13 @@ installation has Perl5, unzip and zip.
 Edit MkRules to set BUILD=CROSS and the appropriate paths as needed,
 and check that Makefile has WINHELP set to NO.
 
-Set the environment variable TEMP to, say, /tmp.
-
 Then packages can be made as natively, for example by
 
-cd .../src/gnuwin32
-make PKGDIR=/mysources RLIB=/R/win/library pkg-mypkg
-make PKGDIR=/mysources RLIB=/R/win/library pkgcheck-mypkg
-cd /R/win/library
-zip -rl /dest/mypkg.zip mypkg
+	cd .../src/gnuwin32
+	make PKGDIR=/mysources RLIB=/R/win/library pkg-mypkg
+	make PKGDIR=/mysources RLIB=/R/win/library pkgcheck-mypkg
+	cd /R/win/library
+	zip -rl /dest/mypkg.zip mypkg
 
 
 Feedback
