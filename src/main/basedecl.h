@@ -69,3 +69,6 @@ void F77_SYMBOL(dpbsl)(double *, int *, int *, int *, double *);
 
 void Rf_InitGraphics(void);
 void Rf_InitColors(void);
+
+SEXP R_compress1(SEXP);
+SEXP R_decompress1(SEXP);

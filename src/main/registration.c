@@ -224,6 +224,8 @@ static R_CallMethodDef callMethods [] = {
     /* Methods related routines. */
     CALLDEF(R_isMethodsDispatchOn, 1),
     CALLDEF(R_traceOnOff, 1),
+    CALLDEF(R_compress1, 1),
+    CALLDEF(R_decompress1, 1),
     {NULL, NULL, 0}
 };
 

@@ -3098,3 +3098,44 @@ size_t R_WriteConnection(Rconnection con, void *buf, size_t n)
 
     return con->write(buf, 1, n, con);
 }
+
+/* Experimental code for in-memory (de)compression
+   of data stored in a scalar string */
+
+SEXP R_compress1(SEXP in)
+{
+    uLong inlen, outlen;
+    int res;
+    Bytef *buf;
+    SEXP ans;
+
+    if(!isString(in) || length(in) !=1)
+	error("requires a scalar string");
+    inlen = LENGTH(STRING_ELT(in, 0));
+    outlen = 1.001*inlen + 12 + 1;
+    buf = (Bytef *) R_alloc(outlen, sizeof(Bytef));
+    res = compress(buf, &outlen, (Bytef *)CHAR(STRING_ELT(in, 0)), inlen);
+    if(res != Z_OK) error("internal error in compress1");
+    ans = allocVector(CHARSXP, outlen);
+    memcpy(CHAR(ans), buf, outlen);
+    return ScalarString(ans);
+}
+
+SEXP R_decompress1(SEXP in)
+{
+    uLong inlen, outlen;
+    int res;
+    Bytef *buf;
+    SEXP ans;
+
+    if(!isString(in) || length(in) !=1)
+	error("requires a scalar string");
+    inlen = LENGTH(STRING_ELT(in, 0));
+    outlen = 10*inlen;
+    buf = (Bytef *) R_alloc(outlen, sizeof(Bytef));
+    res = uncompress(buf, &outlen, (Bytef *)CHAR(STRING_ELT(in, 0)), inlen);
+    if(res != Z_OK) error("internal error in decompress1");
+    ans = allocVector(CHARSXP, outlen);
+    memcpy(CHAR(ans), buf, outlen);
+    return ScalarString(ans);
+}
