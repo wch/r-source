@@ -40,8 +40,10 @@ all: Makefile DESCRIPTION
 	fi
 	@if test -d $(srcdir)/man; then \
 	  $(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/man; \
-	  cp -p $(srcdir)/man/*.[Rr]d $(top_builddir)/library/$(pkg)/man; \
-	  chmod 644 $(top_builddir)/library/$(pkg)/man/*.[Rr]d; \
+	  (f=$${TMPDIR:-/tmp}/R$$$$; \
+	    cat $(srcdir)/man/*.Rd > $${f}; \
+	    $(top_srcdir)/tools/move-if-change $${f} \
+	      $(top_builddir)/library/$(pkg)/man/$(pkg).Rd); \
 	fi
 	@if test -d src; then \
 	  (cd src && $(MAKE)) || exit 1; \
