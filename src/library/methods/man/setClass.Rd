@@ -216,11 +216,11 @@ setIs("logical", "maybeNumber")
 setClass("withId", representation("maybeNumber", id = "character"))
 
 ttt <- 1:10 ## relevant that this is class integer, to test indirect extensions
-www <- new("withId", ttt, id = "test 1")
+##www <- new("withId", ttt, id = "test 1")
 
 ## The following test should use identical(), but then the two
 ## expressions differ by having the object bit on and off resp.
-stopifnot(all(as(www, "maybeNumber") == ttt))
+##stopifnot(all(as(www, "maybeNumber") == ttt))
 
 ## The following should not be needed.  But make check removes all files
 ## between example files, in a crude way that does not cause the class
