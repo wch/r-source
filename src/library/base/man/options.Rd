@@ -130,8 +130,8 @@ getOption(x)
     \code{x <- 1:3; x[5] <- 6}.}
 
   \item{echo}{logical.  Only used in non-interactive mode, when it
-    controls whether input is echoed. Command-line options
-    \code{--quiet} and \code{--slave} set this initially to \code{FALSE}.}
+    controls whether input is echoed. Command-line option
+    \code{--slave} sets this initially to \code{FALSE}.}
 
   \item{verbose}{logical.  Should \R report extra information on
     progress? Set to \code{TRUE} by the command-line option
