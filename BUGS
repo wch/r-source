@@ -25,7 +25,10 @@ actual reference number, of course!).
 
 Directory:  Accuracy
 
-none
+* PR# 138 *
+Subject: Re: [R] bug? and New bug.
+From: Martin Maechler <maechler@stat.math.ethz.ch>
+Date: Wed, 10 Mar 1999 17:21:16 +0100
 
 Directory:  Add-ons
 
@@ -83,11 +86,6 @@ Subject: apology: text(locator(),"sometext") works
 From: Rashid Nassar <rnassar@acpub.duke.edu>
 Date: Tue, 15 Dec 1998 19:45:29 -0500 (EST)
 --Clipping discrepancy x11/PS
-* PR# 93 *
-Subject: a bug and a question
-From: Jim Lindsey <jlindsey@alpha.luc.ac.be>
-Date: Wed, 13 Jan 1999 08:58:10 +0100 (MET)
---legend(...pch=0) gives blank, should be square.
 * PR# 106 *
 Subject: border-arg. in persp
 From: Andreas Weingessel <Andreas.Weingessel@ci.tuwien.ac.at>
@@ -118,6 +116,14 @@ Date: 28 Feb 1999 21:45:43 +0100
 Subject: plot.formula and pch=
 From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
 Date: 25 Mar 1999 21:22:44 +0100
+* PR# 150 *
+Subject: R: error report
+From: Adelchi Azzalini <adelchi.azzalini@jrc.it>
+Date: Fri, 26 Mar 1999 09:39:05 +0000
+* PR# 153 *
+Subject: image + x11
+From: Andreas Weingessel <Andreas.Weingessel@ci.tuwien.ac.at>
+Date: Wed, 31 Mar 1999 14:09:53 +0200
 
 Directory:  In-Out
 
@@ -126,6 +132,10 @@ Subject: load() -> segfault
 From: "Gregory R. Warnes" <warnes@biostat.washington.edu>
 Date: Mon, 8 Feb 1999 18:10:36 -0800 (PST)
 --Fixed-size buffer used to hold unlimited size object. Not good...
+* PR# 125 *
+Subject: scan rejects complex
+From: John.Peters@tip.csiro.au (John Peters)
+Date: Mon, 22 Feb 1999 10:08:14 +1100 (EST)
 * PR# 129 *
 Subject: Formatting in formatC and format
 From: Prof Brian D Ripley <ripley@stats.ox.ac.uk>
@@ -260,10 +270,6 @@ Date: Fri, 22 Jan 1999 12:40:26 +0100
 
 Directory:  incoming
 
-* PR# 125 *
-Subject: scan rejects complex
-From: John.Peters@tip.csiro.au (John Peters)
-Date: Mon, 22 Feb 1999 10:08:14 +1100 (EST)
 * PR# 127 *
 Subject: history
 From: jmhughes@globalnet.co.uk
@@ -281,10 +287,6 @@ Subject: summary() of lm() problem
 From: Simon Fear <fears@roycastle.liv.ac.uk>
 Date: Tue, 9 Mar 1999 13:18:37 -0000 
 --lm (?) AND Windows problem;  Win solved for 0.63.3
-* PR# 138 *
-Subject: Re: [R] bug? and New bug.
-From: Martin Maechler <maechler@stat.math.ethz.ch>
-Date: Wed, 10 Mar 1999 17:21:16 +0100
 * PR# 139 *
 Subject: : for factors
 From: Andreas Weingessel <Andreas.Weingessel@ci.tuwien.ac.at>
@@ -301,10 +303,6 @@ Date: Tue, 23 Mar 1999 16:54:20 -0500 (EST)
 Subject: Missing Warning in :
 From: Andreas Weingessel <Andreas.Weingessel@ci.tuwien.ac.at>
 Date: Thu, 25 Mar 1999 13:34:12 +0100
-* PR# 150 *
-Subject: R: error report
-From: Adelchi Azzalini <adelchi.azzalini@jrc.it>
-Date: Fri, 26 Mar 1999 09:39:05 +0000
 * PR# 151 *
 Subject: problems with formals and get
 From: Jim Lindsey <jlindsey@alpha.luc.ac.be>
@@ -313,14 +311,6 @@ Date: Mon, 29 Mar 1999 09:29:05 +0200 (MET DST)
 Subject: Example(persp) fails in 0.63.4 and 0.64
 From: Prof Brian D Ripley <ripley@stats.ox.ac.uk>
 Date: Tue, 30 Mar 1999 21:19:37 +0100 (BST)
-* PR# 153 *
-Subject: image + x11
-From: Andreas Weingessel <Andreas.Weingessel@ci.tuwien.ac.at>
-Date: Wed, 31 Mar 1999 14:09:53 +0200
-* PR# 156 *
-Subject: tabulate causes segmentation fault
-From: Bill Venables <wvenable@arcola.stats.adelaide.edu.au>
-Date: Sat, 3 Apr 1999 18:03:05 +0930 (CST)
 * PR# 157 *
 Subject: deparsing lhs of formula in print.anova.lm
 From: bates@stat.wisc.edu
