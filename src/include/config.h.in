@@ -1,6 +1,7 @@
-			/* Dear Emacs, I'm -*- C -*- code .. */
-#ifndef RCONFIG_H_
-#define RCONFIG_H_
+/* Dear Emacs, I'm -*- C -*- code .. */
+
+#ifndef _CONFIG_H
+#define _CONFIG_H
 
 #define Unix
 
