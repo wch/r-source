@@ -629,10 +629,11 @@ static void deparse2buff(SEXP s, LocalParseData *d)
 	break;
     case CLOSXP:
         if (!localForDisplay) attr1(s, d);
+	d->forDisplay = TRUE;
 	print2buff("function (", d);
 	args2buff(FORMALS(s), 0, 1, d);
 	print2buff(") ", d);
-	d->forDisplay = TRUE;
+
 	writeline(d);
 	deparse2buff(BODY_EXPR(s), d);
 	d->forDisplay = localForDisplay;
