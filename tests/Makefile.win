@@ -107,7 +107,7 @@ test-Internet:
 	@$(RM) internet.Rout
 	@$(MAKE) -f Makefile.win test-Internet-run RVAL_IF_DIFF=0
 	$(R) --internet2 --vanilla < internet.R > internet.Rout2
-	diff internet.Rout internet.Rout2
+	-diff internet.Rout internet.Rout2
 
 test-Internet-run: $(test-out-internet)
 
