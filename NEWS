@@ -742,6 +742,8 @@ BUG FIXES
     o	read.dcf() read incorrectly files which did not end in a new line.
 
 
+    o   read.socket dropped certain non-alphanumeric characters (PR#2639)
+
 
 	**************************************************
 	*						 *
