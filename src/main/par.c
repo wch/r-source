@@ -1307,7 +1307,7 @@ static SEXP Query(char *what, DevDesc *dd)
 		INTEGER(value)[2] = dd->dp.numrows;
 		INTEGER(value)[3] = dd->dp.numcols;
 	}
-	else if (streql(what, "mdp")) {
+	else if (streql(what, "mgp")) {
 		value = allocVector(REALSXP, 3);
 		REAL(value)[0] = dd->dp.mgp[0];
 		REAL(value)[1] = dd->dp.mgp[1];

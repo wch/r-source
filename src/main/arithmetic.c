@@ -728,13 +728,19 @@ static SEXP math1(SEXP op, SEXP sa, double(*f)())
 	    else {
 		y[i] = MATH_CHECK(f(a[i]));
 		if(ISNAN(y[i])) {
+#ifdef OLD
 		    y[i] = NA_REAL;
+#endif
 		    naflag = 1;
 		}
 	    }
 	}
 	if (naflag)
+#ifdef IEEE_754
+	    warning("NaNs produced in function \"%s\"\n", PRIMNAME(op));
+#else
 	    warning("NAs produced in function \"%s\"\n", PRIMNAME(op));
+#endif
 	ATTRIB(sy) = duplicate(ATTRIB(sa));
 	OBJECT(sy) = OBJECT(sa);
 	UNPROTECT(2);
@@ -829,14 +835,20 @@ static SEXP math2(SEXP op, SEXP sa, SEXP sb, double (*f)())
 	    else {
 		y[i] = MATH_CHECK(f(ai, bi));
 		if(ISNAN(y[i])) {
+#ifdef OLD
 		    y[i] = NA_REAL;
+#endif
 		    naflag = 1;
 		}
 	    }
 	}
     }
     if (naflag)
+#ifdef IEEE_754
+	warning("NaNs produced in function \"%s\"\n", PRIMNAME(op));
+#else
 	warning("NAs produced in function \"%s\"\n", PRIMNAME(op));
+#endif
     if(n == na) {
 	ATTRIB(sy) = duplicate(ATTRIB(sa));
 	OBJECT(sy) = OBJECT(sa);
@@ -1009,14 +1021,20 @@ static SEXP math3(SEXP op, SEXP sa, SEXP sb, SEXP sc, double (*f)())
 	    else {
 		y[i] = MATH_CHECK(f(ai, bi, ci));
 		if(ISNAN(y[i])) {
+#ifdef OLD
 		    y[i] = NA_REAL;
+#endif
 		    naflag = 1;
 		}
 	    }
 	}
     }
     if (naflag)
+#ifdef IEEE_754
+	warning("NaNs produced in function \"%s\"\n", PRIMNAME(op));
+#else
 	warning("NAs produced in function \"%s\"\n", PRIMNAME(op));
+#endif
     if(n == na) {
 	ATTRIB(sy) = duplicate(ATTRIB(sa));
 	OBJECT(sy) = OBJECT(sa);
@@ -1155,14 +1173,20 @@ static SEXP math4(SEXP op, SEXP sa, SEXP sb, SEXP sc, SEXP sd, double (*f)())
 	    else {
 		y[i] = MATH_CHECK(f(ai, bi, ci, di));
 		if(ISNAN(y[i])) {
+#ifdef OLD
 		    y[i] = NA_REAL;
+#endif
 		    naflag = 1;
 		}
 	    }
 	}
     }
     if (naflag)
+#ifdef IEEE_754
+	warning("NaNs produced in function \"%s\"\n", PRIMNAME(op));
+#else
 	warning("NAs produced in function \"%s\"\n", PRIMNAME(op));
+#endif
     if(n == na) {
 	ATTRIB(sy) = duplicate(ATTRIB(sa));
 	OBJECT(sy) = OBJECT(sa);
