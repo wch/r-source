@@ -836,7 +836,7 @@ msgid "image could not be renamed and is left in"
 msgstr "l'immagine non può essere rinominata ed è stata lasciata in"
 
 msgid "[Previously saved workspace restored]"
-msgstr "[Workspace precedentemente salvato ripristinato]"
+msgstr "[Caricato workspace precedentemente salvato]"
 
 msgid "invalid 'category' argument"
 msgstr "argomento 'category' non valido"
