@@ -17,7 +17,7 @@ formula.terms <- function(x) {
 	x
 }
 print.formula <- function(x) print.default(unclass(x))
-"[.formula" <- function(x,i) {  
+"[.formula" <- function(x,i) {
 	ans <- NextMethod("[")
 	if(as.character(ans[[1]]) == "~")
 		class(ans) <- "formula"
@@ -28,24 +28,23 @@ terms <- function(x, ...) UseMethod("terms")
 terms.default <- function(x) x$terms
 terms.terms <- function(x, ...) x
 print.terms <- function(x) print.default(unclass(x))
-"delete.response" <- function (termobj) 
+"delete.response" <- function (termobj)
 {
-        intercept <- if (attr(termobj, "intercept")) 
+        intercept <- if (attr(termobj, "intercept"))
                 "1"
         else "0"
-        terms(reformulate(c(attr(termobj, "term.labels"), intercept), 
+        terms(reformulate(c(attr(termobj, "term.labels"), intercept),
                 NULL), specials = names(attr(termobj, "specials")))
 }
 
-reformulate <- 
-function (termlabels, response=NULL) 
+reformulate <- function (termlabels, response=NULL)
 {
 	if (is.null(response)){
 		termtext <- paste("~", paste(termlabels, collapse="+"),collapse="")
 		termobj <- eval(parse(text=termtext)[[1]])
 	}
 	else {
-		termtext <- paste("response", "~", paste(termlabels, collapse="+"), 
+		termtext <- paste("response", "~", paste(termlabels, collapse="+"),
 			collapse="")
 		termobj <- eval(parse(text=termtext)[[1]])
 		termobj[[2]] <- response
@@ -53,19 +52,19 @@ function (termlabels, response=NULL)
 	termobj
 }
 
-drop.terms <-
-function(termobj, dropx=NULL, keep.response=FALSE) 
+drop.terms <-function(termobj, dropx=NULL, keep.response=FALSE)
 {
-	if (is.null(dropx)) 
-		termobj
-	else {
-		newformula <- reformulate(attr(termobj, "term.labels")[-dropx], if (keep.response) termobj[[2]] else NULL)
-		terms(newformula, specials=names(attr(termobj, "specials")))
-	}
+ if (is.null(dropx))
+	termobj
+ else {
+	newformula <- reformulate(attr(termobj, "term.labels")[-dropx],
+				if (keep.response) termobj[[2]] else NULL)
+	terms(newformula, specials=names(attr(termobj, "specials")))
+ }
 }
 
 terms.formula <-
-function (x, specials = NULL, abb = NULL, data = NULL, keep.order = FALSE) 
+function (x, specials = NULL, abb = NULL, data = NULL, keep.order = FALSE)
 {
         if(!is.null(data) && !is.environment(data) && !is.data.frame(data))
 		data <- as.data.frame(data)
@@ -87,49 +86,34 @@ function (x, specials = NULL, abb = NULL, data = NULL, keep.order = FALSE)
 	terms
 }
 
-coefficients <- function(x, ...)
-UseMethod("coefficients")
-
+coefficients <- function(x, ...)UseMethod("coefficients")
 coef <- coefficients
-
 coefficients.default <- function(x, ...) x$coefficients
 
-residuals <- function(x, ...) 
-UseMethod("residuals")
+residuals <- function(x, ...) UseMethod("residuals")
 resid <- residuals
 
-deviance <- function(x, ...)
-UseMethod("deviance")
+deviance <- function(x, ...)UseMethod("deviance")
 
-fitted.values <- function(x, ...) 
-UseMethod("fitted.values")
+fitted.values <- function(x, ...) UseMethod("fitted.values")
 fitted <- fitted.values
 
-anova <- function(x, ...)
-UseMethod("anova")
+anova <- function(x, ...)UseMethod("anova")
 
-effects <- function(x, ...)
-UseMethod("effects")
+effects <- function(x, ...)UseMethod("effects")
 
-weights <- function(x, ...)
-UseMethod("weights")
+weights <- function(x, ...)UseMethod("weights")
 
-df.residual <- function(x, ...)
-UseMethod("df.residual")
+df.residual <- function(x, ...)UseMethod("df.residual")
+
+variable.names <-function(obj, ...)UseMethod("variable.names")
+
+case.names <-function(obj, ...)UseMethod("case.names")
 
 offset <- function(x) x
+## ?
 
-variable.names <-
-function(obj, ...)
-UseMethod("variable.names")
-
-case.names <-
-function(obj, ...)
-UseMethod("case.names")
-
-na.action <- function(x, ...)
-UseMethod("na.action")
-
+na.action <- function(x, ...)UseMethod("na.action")
 na.action.default <- function(x) attr(x, "na.action")
 
 na.fail <- function(frame)
@@ -142,8 +126,8 @@ na.omit <- function(frame)
 {
 	ok <- complete.cases(frame)
 	if (all(ok))
-		return(frame)
-	else return(frame[ok, ])
+		frame
+	else frame[ok, ]
 }
 
 model.data.frame <- function(...) {
@@ -153,8 +137,7 @@ model.data.frame <- function(...) {
 	rval
 }
 
-model.frame <- function(x, ...)
-	UseMethod("model.frame")
+model.frame <- function(x, ...)	UseMethod("model.frame")
 
 model.frame.default <-
 function(formula, data = NULL, subset=NULL, na.action = na.fail, ...)
@@ -191,25 +174,27 @@ model.offset <- function(x) {
 	if(length(offsets) > 0) {
 		ans <- 0
 		for(i in offsets) ans <- ans+x[[i]]
+                ans
 	}
 	else NULL
 }
 
-model.matrix <-function (formula, data, contrasts = NULL) 
+model.matrix <- function(x, ...) UseMethod("model.matrix")
+model.matrix.default <- function(formula, data, contrasts = NULL)
 {
         t <- terms(formula)
-        if (missing(data)) 
+        if (missing(data))
                 data <- eval(attr(t, "variables"), sys.frame(sys.parent()))
         contrasts.spec <- contrasts
         rm(contrasts)
         if (!is.null(contrasts.spec)) {
-                if (!is.list(contrasts.spec)) 
+                if (!is.list(contrasts.spec))
                         stop("invalid contrasts")
-                if (is.null(names(contrasts.spec))) 
+                if (is.null(names(contrasts.spec)))
                         stop("invalid contrasts argument")
                 for (nn in names(contrasts.spec)) {
-                        if (is.na(match(nn, names(data)))) 
-                                warning(paste("Variable", nn, 
+                        if (is.na(match(nn, names(data))))
+                                warning(paste("Variable", nn,
                                  "absent, contrast ignored"))
                         else contrasts(data[[nn]]) <- contrasts.spec[[nn]]
                 }
@@ -257,11 +242,9 @@ model.extract <- function(frame, component)
 	return(rval)
 }
 
-update <-
-function(x, ...)
-	UseMethod("update")
+update <- function(x, ...) UseMethod("update")
 
-is.empty.model<-function (x) 
+is.empty.model<-function (x)
 {
         tt <- terms(x)
         (length(attr(tt, "factors")) == 0) & (attr(tt, "intercept")==0)
