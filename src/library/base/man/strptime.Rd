@@ -13,13 +13,12 @@
   dates and times.
 }
 \usage{
-format.POSIXct(x, format = "", tz = "", usetz = FALSE, ...)
-format.POSIXlt(x, format = "", usetz = FALSE, ...)
+format.POSIXct(x, format = "", tz = "", usetz = FALSE, \dots)
+format.POSIXlt(x, format = "", usetz = FALSE, \dots)
 
-as.character.POSIXct(x, ...)
-as.character.POSIXlt(x, ...)
+\method{as.character}{POSIXt}(x, \dots)
 
-strftime(x, format="\%Y-\%m-\%d \%X", usetz = FALSE, ...)
+strftime(x, format="\%Y-\%m-\%d \%X", usetz = FALSE, \dots)
 strptime(x, format)
 
 ISOdatetime(year, month, day, hour, min, sec, tz = "")

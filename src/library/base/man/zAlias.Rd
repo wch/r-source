@@ -1,16 +1,19 @@
 \name{.Alias}
-\title{Create Alias (Pointer) to R Object}
-\usage{
-new <- .Alias(expr)
-}
 \alias{.Alias}
-\arguments{
-  \item{expr}{an \R expression; typically a name.}
-  \item{new}{new name by which \code{expr} can be accessed.}
-}
+\title{Create Alias (Pointer) to R Object}
 \description{
   \code{.Alias} creates an \bold{alias} to another (part of) an \R
   object which is more (memory-) efficient than usual assignment.
+}
+\usage{
+.Alias(expr)
+}
+\arguments{
+  \item{expr}{an \R expression; typically a name.}
+}
+\details{
+  Use as \code{new <- .Alias(expr)}, where \code{new} is a new name by
+  which \code{expr} can be accessed.
 }
 \value{
   \emph{an identical copy} of \code{expr}.
