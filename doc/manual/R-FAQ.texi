@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2004
-@set FAQ-VERSION 1.9-14 @value{FAQ-YEAR}-05-15
+@set FAQ-VERSION 1.9-15 @value{FAQ-YEAR}-05-18
 @set REL-VERSION 1.9.0
 @set REL-YEAR 2004
 @set FAQ-ISBN 3-900051-01-1
@@ -1906,6 +1906,10 @@ and fractional factorial designs.
 Robust covariance estimation via nearest neighbor cleaning.
 @item cramer
 Routine for the multivariate nonparametric Cramer test.
+@item crossdes
+Functions for the construction and randomization of balanced carryover
+balanced designs, to check given designs for balance, and for simulation
+studies on the validity of two randomization procedures.
 @item date
 Functions for dealing with dates.  The most useful of them accepts a
 vector of input dates in any of the forms @samp{8/30/53},

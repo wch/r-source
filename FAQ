@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.9-14 2004-05-15
+Version 1.9-15 2004-05-18
 ISBN 3-900051-01-1
 Kurt Hornik
 
@@ -1676,6 +1676,11 @@ distributions of R.)
 
 *cramer*
      Routine for the multivariate nonparametric Cramer test.
+
+*crossdes*
+     Functions for the construction and randomization of balanced carryover
+     balanced designs, to check given designs for balance, and for
+     simulation studies on the validity of two randomization procedures.
 
 *date*
      Functions for dealing with dates.  The most useful of them accepts a
