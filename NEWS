@@ -45,30 +45,17 @@ NEW FEATURES
 	more comprehensively, with tables in the examples.
 
     o	New functions dump.frames() and debugger() allow post-mortem
-	debugging.  See the help on debugger().
+	debugging.  See the help on debugger.
+
+    o	New functions by() and merge() to split and join data frames.
 
     o   Generic methods now do "match before dispatch", so
-        plot(pch=2,y~x) invokes plot.formula. Notice that this will
+        plot(pch=2, y ~ x) invokes plot.formula. Notice that this will
         break user code if it has renamed the dispatch argument and
         uses the original name for a different argument.
 
+
 BUG FIXES
-
-    o	printutils.c compiles on platforms where va_list is not
-	a pointer.
-
-    o	nlm had a conversion-to-C error that could cause an infinite
-	loop.
-
-    o	tempfile("") now works on all Unix platforms, and
-	tempfile("a b c") returns a single name (with spaces in).
-
-    o	The search semantics of data(), example() and help() have changed
-	(see their help pages). In particular, they will normally
-	look in the package which was loaded, even if it is not in
-	one of the libraries given in .lib.loc.	 Autoloads are no
-	longer included in the search (as they searched whole objects,
-	not the autoloaded objects).
 
     o   (0.99.0a) The internal code for strsplit no longer destroys
 	other internal structures, e.g. postscript file output on
@@ -81,9 +68,21 @@ BUG FIXES
     o   (0.99.0a) edit.data.frame() now handles character vectors
         better, provided they were generated with I().
 
-    o   (0.99.0a) attempt to special-case printing with no arguments
-        was abandoned, since there is no portable way of doing it and
-        it caused compile problem on Alpha.
+    o   (0.99.0a) attempt to special-case print buffer allocation
+	with just a format argument was abandoned, since there is
+	no portable way of doing it and it caused compile problem 
+	on Alpha.
+
+    o	tempfile("") now works on all Unix platforms, and
+	tempfile("a b c") returns a single name (with spaces in).
+	The documentation no longer (incorrectly) guarantees uniqueness.
+
+    o	The search semantics of data(), example() and help() have changed
+	(see their help pages). In particular, they will normally
+	look in the package which was loaded, even if it is not in
+	one of the libraries given in .lib.loc.	 Autoloads are no
+	longer included in the search (as they searched whole packages,
+	not just the autoloaded objects).
 
     o	The search semantics of data() and example() have changed
 	(see the help pages). In particular, they will normally
@@ -103,7 +102,7 @@ BUG FIXES
 	multiple matches are found on lib.loc.
 
     o	C functions fprec() and fround() [= R's signif() and round()],
-	now use R_pow_di(10., n) which is clean and more efficient.
+	now use R_pow_di(10.0, n) which is clean and more efficient.
 	This changes some results in the least significant bits.
 
     o   rpois sometimes had problems with mu=0, now special-cased
@@ -112,7 +111,7 @@ BUG FIXES
 
     o   plot.stepfun had renamed the dispatch argument and used the
         original name "x" for a different argument which broke on the
-        new "match & dispatch" code. Changed to "xval".
+        new `match & dispatch' code. Changed to "xval".
 
 
 	**************************************************
