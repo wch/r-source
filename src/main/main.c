@@ -469,6 +469,23 @@ void mainloop(void)
     end_Rmainloop();
 }
 
+/*this functionality now appears in 3
+  places-jump_to_toplevel/profile/here */
+
+static void printwhere(void)
+{
+  RCNTXT *cptr;
+  int lct = 0;
+
+  for (cptr = R_GlobalContext; cptr; cptr = cptr->nextcontext) {
+    if ((cptr->callflag & CTXT_FUNCTION) && 
+	(TYPEOF(cptr->call) == LANGSXP)) {
+	Rprintf("where %d: ",lct++);
+	PrintValue(cptr->call);
+    }
+  }
+  Rprintf("\n");
+}
 
 static int ParseBrowser(SEXP CExpr, SEXP rho)
 {
@@ -489,6 +506,11 @@ static int ParseBrowser(SEXP CExpr, SEXP rho)
 	if (!strcmp(CHAR(PRINTNAME(CExpr)),"Q")) {
 	    R_BrowseLevel = 0;
             LONGJMP(R_Toplevel.cjmpbuf, CTXT_TOPLEVEL);
+	}
+	if (!strcmp(CHAR(PRINTNAME(CExpr)),"where")) {
+	    printwhere();
+	    DEBUG(rho)=1;
+	    rval=1;
 	}
     }
     return rval;
