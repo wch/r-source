@@ -1095,12 +1095,6 @@ if test "${use_blas}" = yes; then
   R_BLAS_LIBS
 fi
 ## </NOTE>
-if test "${acx_blas_ok}" = "yes"; then
-  BLAS=
-else
-  BLAS="blas.o"
-fi
-AC_SUBST(BLAS)
 AM_CONDITIONAL(USE_EXTERNAL_BLAS, [test "${acx_blas_ok}" = "yes"])
 
 ## LAPACK.
