@@ -35,6 +35,9 @@
 #ifdef USE_BUILTIN_RINT
 #define R_rint private_rint
 
+/* Old version was inaccurate, confused on i386 with 80-bit intermediate
+   results, and did not round to even as the help page says */
+#ifdef OLD
 	/* The largest integer which can be represented */
 	/* exactly in floating point form. */
 
@@ -44,7 +47,6 @@ static double private_rint(double x)
 {
     static double biggest = BIGGEST;
     double tmp;
-    long ltmp;
 
     if (x != x) return x;			/* NaN */
 
@@ -52,29 +54,40 @@ static double private_rint(double x)
 	return x;
 
     if(x >= 0) {
-	if(x < (double) LONG_MAX) {
-	    ltmp = x + 0.5;
-	    /* implement round to even */
-	    if(fabs(x + 0.5 - ltmp) < 10*DBL_EPSILON 
-	       && (ltmp % 2 == 1)) ltmp--;
-	    return (double) ltmp;
-	} else {
-	    tmp = x + biggest;
-	    return tmp - biggest;
-	}
+	tmp = x + biggest;
+	return tmp - biggest;
     }
     else {
-	if(-x < (double) LONG_MAX) {
-	    ltmp = (-x) + 0.5;
-	    if(fabs((-x) + 0.5 - ltmp) < 10*DBL_EPSILON 
-	       && (ltmp % 2 == 1)) ltmp--;
-	    return (- (double) ltmp);
-	} else {
-	    tmp = x - biggest;
-	    return tmp + biggest;
-	}
+	tmp = x - biggest;
+	return tmp + biggest;
     }
 }
+#else
+static double private_rint(double x)
+{
+    double tmp, sgn = 1.0;
+    long ltmp;
+
+    if (x != x) return x;			/* NaN */
+
+    if (x < 0.0) {
+	x = -x;
+	sgn = -1.0;
+    }
+	
+    if(x < (double) LONG_MAX) {
+	ltmp = x + 0.5;
+	/* implement round to even */
+	if(fabs(x + 0.5 - ltmp) < 10*DBL_EPSILON 
+	   && (ltmp % 2 == 1)) ltmp--;
+	tmp = ltmp;
+    } else {
+	/* ignore round to even: too small a point to bother */
+	tmp = floor(x + 0.5);
+    }
+    return sgn * tmp;
+}
+#endif
 
 #else
 #define R_rint rint
