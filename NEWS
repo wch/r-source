@@ -215,11 +215,10 @@ NEW FEATURES
 
 BUG FIXES
 
-    o	arma0f(NULL), cancor(F,F) and prcomp(F[F]) no longer segfault.
+    o	svd(matrix(2,1,0)),
+	arma0f(NULL), cancor(F,F) and prcomp(F[F]) no longer segfault.
 
     o	loess.smooth(F[F],F[F]) and supsmu(F[F],F[F]) no longer segfault.
-
-    o	Overflow of the pointer protection stack is handled correctly
 
     o	save(1, file = ""[F])  no longer segfaults.
 
@@ -227,8 +226,7 @@ BUG FIXES
 
     o	system(""[F]) and save(1, file = ""[F])	 no longer segfault.
 
-    o	read.fwf(character(0),..) and source("")
-	no longer start gobbling standard input.
+    o	Overflow of the pointer protection stack is handled correctly
 
     o	predict.glm(, type="link", se.fit=T) works
 
