@@ -209,13 +209,10 @@ can be made by
 
 	make docs
 
-If you want to make the info versions (not the Reference Manual), you
-will need a version of makeinfo 4.2 (included in our tool set). Then
+If you want to make the info versions (not the Reference Manual), use
 
 	cd ../../doc/manual
 	make -f Makefile.win info
-
-will make the info files.
 
 To make DVI versions of the manuals use
 
