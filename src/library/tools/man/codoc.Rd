@@ -8,7 +8,7 @@
 \title{Check Code/Documentation Consistency}
 \usage{
 codoc(package, dir, lib.loc = NULL,
-      use.values = FALSE, use.positions = TRUE,
+      use.values = NULL, use.positions = TRUE,
       ignore.generic.functions = FALSE,
       verbose = getOption("verbose"))
 codocClasses(package, lib.loc = NULL)
@@ -34,18 +34,18 @@ codocData(package, lib.loc = NULL)
     to search for \code{package}.}
   \item{use.positions}{a logical indicating whether to use the positions
     of function arguments when comparing.  \emph{Deprecated}.}
-  \item{use.values}{if \code{FALSE} (current default), do not use
-    function default values when comparing code and docs.  Otherwise,
-    compare \emph{all} default values if \code{TRUE}, and only the ones
-    documented in the usage otherwise.}
+  \item{use.values}{if \code{FALSE}, do not use function default values
+    when comparing code and docs.  Otherwise, compare \emph{all} default
+    values if \code{TRUE}, and only the ones documented in the usage
+    otherwise (default).}
   \item{ignore.generic.functions}{if \code{TRUE}, functions recognized
     as S3 generics are ignored.  \emph{Deprecated}.}
   \item{verbose}{a logical.  If \code{TRUE}, additional diagnostics are
     printed.}
 }
 \note{
-  The default for \code{use.values} is going to be changed from
-  \code{FALSE} to \code{NULL}, right after release of \R version 1.8.0.
+  The default for \code{use.values} has been changed from
+  \code{FALSE} to \code{NULL}, for \R versions 1.9.0 and later.
 }
 \details{
   The purpose of \code{codoc} is to check whether the documented usage

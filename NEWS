@@ -36,6 +36,13 @@ DEPRECATED & DEFUNCT
     o	print.atomic() is defunct.
 
 
+STANDARD PACKAGES
+
+    o	undoc() in `tools' has a new default of	 `use.values = NULL'
+	which produces a warning whenever the default values of function
+	arguments differ between documenation and code.
+	Note that this affects "R CMD check" as well.
+
 
 	**************************************************
 	*						 *

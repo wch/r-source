@@ -172,7 +172,7 @@ function(package, dir, lib.loc = NULL)
                                                  where = topenv(environment(fdef)))
                         if(is.null(fOther))
                             TRUE
-                        else 
+                        else
                             !methods::is(methods::finalDefaultMethod(methods::getMethodsMetaData(f, codeEnv)),
                                          "derivedDefaultMethod")
                     }
@@ -284,7 +284,7 @@ function(x, ...)
 
 codoc <-
 function(package, dir, lib.loc = NULL,
-         use.values = FALSE, use.positions = TRUE,
+         use.values = NULL, use.positions = TRUE,
          ignore.generic.functions = FALSE,
          verbose = getOption("verbose"))
 {
@@ -946,7 +946,7 @@ function(package, lib.loc = NULL)
     if(length(package) != 1)
         stop(paste("argument", sQuote("package"),
                    "must be of length 1"))
-    
+
     dir <- .find.package(package, lib.loc)
     if(!fileTest("-d", file.path(dir, "man")))
        stop(paste("directory", sQuote(dir),
@@ -2092,7 +2092,7 @@ function(package, dir, lib.loc = NULL)
             .checkLastFormalArg(f)
         }) == FALSE]
 
-    if(.isMethodsDispatchOn()) { 
+    if(.isMethodsDispatchOn()) {
         S4generics <- methods::getGenerics(codeEnv)
         ## Assume that the ones with names ending in '<-' are always
         ## replacement functions.
