@@ -347,6 +347,8 @@ static gint configure_event(GtkWidget *widget, GdkEventConfigure *event, gpointe
     return FALSE;
 }
 
+static void GTK_resize(NewDevDesc *dd);
+
 static gint expose_event(GtkWidget *widget, GdkEventExpose *event, gpointer data)
 {
     NewDevDesc *dd;
@@ -361,7 +363,7 @@ static gint expose_event(GtkWidget *widget, GdkEventExpose *event, gpointer data
     g_return_val_if_fail(GTK_IS_DRAWING_AREA(gtkd->drawing), FALSE);
 
     if(gtkd->resize != 0) {
-	/* FIXME GTK_resize(dd); */
+	GTK_resize(dd); 
     }
 
   
@@ -369,9 +371,7 @@ static gint expose_event(GtkWidget *widget, GdkEventExpose *event, gpointer data
 		    event->area.x, event->area.y, event->area.x, event->area.y,
 		    event->area.width, event->area.height);
 
-#if 0
-    playDisplayList(dd);
-#endif
+    GEHandleEvent(GE_Redraw, dd);
 
     return FALSE;
 }
@@ -383,7 +383,7 @@ static gint delete_event(GtkWidget *widget, GdkEvent *event, gpointer data)
     dd = (NewDevDesc *) data;
     g_return_val_if_fail(dd != NULL, FALSE);
 
-    KillDevice((DevDesc*)dd);
+    KillDevice((DevDesc*) GetDevice(devNumber((DevDesc*) dd)));
 
     return TRUE;
 }
@@ -405,7 +405,7 @@ static void tb_close_cb(GtkWidget *widget, gpointer data)
     dd = (NewDevDesc *) data;
     g_return_if_fail(dd != NULL);
 
-    KillDevice((DevDesc*)dd);
+    KillDevice((DevDesc*) GetDevice(devNumber((DevDesc*) dd)));
 }
 
 static GnomeUIInfo graphics_toolbar[] =
@@ -583,16 +583,15 @@ static void GTK_Size(double *left, double *right,
     *top = 0.0;
 }
 
-/* FIXME
 static void GTK_resize(NewDevDesc *dd)
 {
     gtkDesc *gtkd = (gtkDesc *) dd->deviceSpecific;
 
     if (gtkd->resize != 0) {
-	dd->left = left = 0.0;
-	dd->right = right =  gtkd->windowWidth;
-	dd->bottom = bottom = gtkd->windowHeight;
-	dd->top = top = 0.0;
+	dd->left = 0.0;
+	dd->right = gtkd->windowWidth;
+	dd->bottom = gtkd->windowHeight;
+	dd->top = 0.0;
 	gtkd->resize = 0;
 
 	gdk_pixmap_unref(gtkd->pixmap);
@@ -604,7 +603,6 @@ static void GTK_resize(NewDevDesc *dd)
 			   gtkd->windowWidth, gtkd->windowHeight);
     }
 }
-*/
 
 /* clear the drawing area */
 static void GTK_NewPage(int fill, NewDevDesc *dd)

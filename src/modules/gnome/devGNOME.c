@@ -31,40 +31,6 @@
 #define CURSOR		GDK_CROSSHAIR		/* Default cursor */
 #define MM_PER_INCH	25.4			/* mm -> inch conversion */
 
-typedef struct {
-  /* R Graphics Parameters */
-  /* local device copy so that we can detect */
-  /* when parameter changes */
-
-  double cex;				/* Character expansion */
-  double srt;				/* String rotation */
-
-  int fontface;                         /* Typeface */
-  int fontsize;                         /* Size in points */
-
-  gint lty, lwd;                        /* line params */
-
-  /* GNOME Driver Specific */
-
-  GdkGC *wgc;
-
-  int windowWidth;			/* Window width (pixels) */
-  int windowHeight;			/* Window height (pixels) */
-  Rboolean resize;			/* Window resized */
-  GtkWidget *window;			/* Graphics Window */
-
-  GtkWidget *canvas;                    /* Gnome canvas */
-  GnomeCanvasGroup *group;              /* Canvas group for plotting */
-  GnomeCanvasItem *plotarea;            /* Plotting area */
-
-  GdkCursor *gcursor;
-
-  Rboolean usefixed;                    /* not yet used (??) */
-  GdkFont *fixedfont;
-  GdkFont *font;
-
-} gnomeDesc;
-
 /* routines from here */
 //Rboolean GnomeDeviceDriver(NewDevDesc *dd, char *display, 
 //			   double width, double height, double pointsize);
@@ -322,7 +288,7 @@ static gint delete_event(GtkWidget *widget, GdkEvent *event, gpointer data)
     dd = (NewDevDesc *) data;
     g_return_val_if_fail(dd != NULL, FALSE);
 
-    KillDevice((DevDesc*)dd);
+    KillDevice((DevDesc*) GetDevice(devNumber((DevDesc*) dd)));
 
     return TRUE;
 }
@@ -344,7 +310,7 @@ static void toolbar_close_cb(GtkWidget *widget, gpointer data)
     dd = (NewDevDesc *) data;
     g_return_if_fail(dd != NULL);
 
-    KillDevice((DevDesc*)dd);
+    KillDevice((DevDesc*) GetDevice(devNumber((DevDesc*) dd)));
 }
 
 static void
@@ -357,7 +323,7 @@ save_ok (GtkWidget *ok_button, gpointer data)
   if (!filename)
     return;
   dd = gtk_object_get_user_data(GTK_OBJECT(fsel));
-  SaveAsPostscript((DevDesc*)dd, filename);
+  SaveAsPostscript(dd, filename);
   gtk_widget_destroy (GTK_WIDGET(fsel));
 }
 
@@ -388,7 +354,7 @@ static void toolbar_save_as_cb(GtkWidget *widget, gpointer data)
 static void toolbar_print_cb (GtkWidget *widget, gpointer data)
 {
   NewDevDesc *dd = (NewDevDesc*) data;
-  SaveAsPostscript((DevDesc*)dd, "");
+  SaveAsPostscript(dd, "");
 }
 
 static GnomeUIInfo graphics_toolbar[] =

@@ -18,6 +18,39 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+typedef struct {
+  /* R Graphics Parameters */
+  /* local device copy so that we can detect */
+  /* when parameter changes */
+
+  double cex;				/* Character expansion */
+  double srt;				/* String rotation */
+
+  int fontface;                         /* Typeface */
+  int fontsize;                         /* Size in points */
+
+  gint lty, lwd;                        /* line params */
+
+  /* GNOME Driver Specific */
+
+  GdkGC *wgc;
+
+  int windowWidth;			/* Window width (pixels) */
+  int windowHeight;			/* Window height (pixels) */
+  Rboolean resize;			/* Window resized */
+  GtkWidget *window;			/* Graphics Window */
+
+  GtkWidget *canvas;                    /* Gnome canvas */
+  GnomeCanvasGroup *group;              /* Canvas group for plotting */
+  GnomeCanvasItem *plotarea;            /* Plotting area */
+
+  GdkCursor *gcursor;
+
+  Rboolean usefixed;                    /* not yet used (??) */
+  GdkFont *fixedfont;
+  GdkFont *font;
+
+} gnomeDesc;
 
 Rboolean GnomeDeviceDriver(DevDesc *dd, char *display, double width,
 			   double height, double pointsize);

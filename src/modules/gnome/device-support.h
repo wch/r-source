@@ -17,5 +17,5 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-void SaveAsPostscript(DevDesc *dd, char *fn);
+void SaveAsPostscript(NewDevDesc *dd, char *fn);
 

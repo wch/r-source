@@ -5,21 +5,24 @@
    - SaveAsPostscript: Set "command" so we can print
 */
 
+#include <gnome.h>
 #include "Defn.h"
 #include "Graphics.h"
 #include "Rdevices.h"
+#include "devGNOME.h"
 #include "device-support.h"
 
-static void PrivateCopyDevice(DevDesc *dd, DevDesc *ndd, char *name)
+/* WARNING:  This code is base-graphics(-GRZ)-specific
+ */
+static void PrivateCopyDevice(NewDevDesc *dd, NewDevDesc *ndev, char *name)
 {
+    GEDevDesc* ndd;
   R_Busy(TRUE);
   gsetVar(install(".Device"), mkString(name), R_NilValue);
-  addDevice(ndd);
-  initDisplayList(ndd);
-  ndd->displayList = dd->displayList;
-  ndd->dpSaved = dd->dpSaved;
-  playDisplayList(ndd);
-  KillDevice(ndd);
+  ndd = GEcreateDevDesc(ndev);
+  addDevice((DevDesc*) ndd);
+  GEcopyDisplayList(devNumber((DevDesc*) dd));
+  KillDevice((DevDesc*) ndd);
   R_Busy(FALSE);
 }   
 
@@ -41,26 +44,26 @@ static void GetPSOption (char *buf, const SEXP s, const char *name,
   }
 }
 
-void SaveAsPostscript(DevDesc *dd, char *fn)
+void SaveAsPostscript(NewDevDesc *dd, char *fn)
 {
   SEXP s = findVar(install(".PostScript.Options"), R_GlobalEnv);
 
-  DevDesc *ndd = (DevDesc *) calloc(1, sizeof(DevDesc));
+  NewDevDesc *ndev = (NewDevDesc *) calloc(1, sizeof(NewDevDesc));
+  GEDevDesc* gdd = (GEDevDesc*) GetDevice(devNumber((DevDesc*) dd));
   char family[256], encoding[256], paper[256], bg[256], fg[256], 
     command[256], **afmpaths = NULL;
   
-  if (!ndd) {
+  if (!ndev) {
     R_ShowMessage("Not enough memory to copy graphics window");
     return;
   }
   if(!R_CheckDeviceAvailableBool()) {
-    free(ndd);
+    free(ndev);
     R_ShowMessage("No device available to copy graphics window");
     return;
   }
 
-  ndd->displayList = R_NilValue;
-  GInit(&ndd->dp);
+  ndev->displayList = R_NilValue;
 
   /* Set default values... */
   strcpy(encoding, "ISOLatin1.enc"); /*FIXME: should be machine dependent */
@@ -78,32 +81,36 @@ void SaveAsPostscript(DevDesc *dd, char *fn)
     strcpy(command, cmd);
   }
 
-  if (PSDeviceDriver(ndd, fn, paper, family, afmpaths, encoding, bg, fg,
-		     GConvertXUnits(1.0, NDC, INCHES, dd),
-		     GConvertYUnits(1.0, NDC, INCHES, dd),
-		     (double)0, dd->gp.ps, 0, 1, 0, command))
+  if (PSDeviceDriver((DevDesc*) ndev, 
+		     fn, paper, family, afmpaths, encoding, bg, fg,
+		     fromDeviceWidth(toDeviceWidth(1.0, GE_NDC, gdd), 
+				     GE_INCHES, gdd),
+		     fromDeviceHeight(toDeviceHeight(1.0, GE_NDC, gdd), 
+				      GE_INCHES, gdd),
+		     (double)0, ((gnomeDesc*) dd->deviceSpecific)->fontsize,
+		     0, 1, 0, command))
     /* horizontal=F, onefile=F, pagecentre=T, print.it=F */
-    PrivateCopyDevice(dd, ndd, "postscript");
+    PrivateCopyDevice(dd, ndev, "postscript");
 }
 
-static void SaveAsPDF(DevDesc *dd, char *fn)
+static void SaveAsPDF(NewDevDesc *dd, char *fn)
 {
     SEXP s = findVar(install(".PostScript.Options"), R_GlobalEnv);
-    DevDesc *ndd = (DevDesc *) calloc(1, sizeof(DevDesc));
+    NewDevDesc *ndev = (NewDevDesc *) calloc(1, sizeof(NewDevDesc));
+    GEDevDesc* gdd = (GEDevDesc*) GetDevice(devNumber((DevDesc*) dd));
     char family[256], encoding[256], bg[256], fg[256];
 
-    if (!ndd) {
+    if (!ndev) {
 	R_ShowMessage("Not enough memory to copy graphics window");
 	return;
     }
     if(!R_CheckDeviceAvailableBool()) {
-	free(ndd);
+	free(ndev);
 	R_ShowMessage("No device available to copy graphics window");
 	return;
     }
 
-    ndd->displayList = R_NilValue;
-    GInit(&ndd->dp);
+    ndev->displayList = R_NilValue;
 
     /* Set default values... */
     strcpy(family, "Helvetica");
@@ -129,9 +136,12 @@ static void SaveAsPDF(DevDesc *dd, char *fn)
 	    }
 	}
     }
-    if (PDFDeviceDriver(ndd, fn, family, encoding, bg, fg,
-			GConvertXUnits(1.0, NDC, INCHES, dd),
-			GConvertYUnits(1.0, NDC, INCHES, dd),
-			dd->gp.ps, 1))
-	PrivateCopyDevice(dd, ndd, "PDF");
+    if (PDFDeviceDriver((DevDesc*) ndev, 
+			fn, family, encoding, bg, fg,
+			fromDeviceWidth(toDeviceWidth(1.0, GE_NDC, gdd), 
+					GE_INCHES, gdd),
+			fromDeviceHeight(toDeviceHeight(1.0, GE_NDC, gdd), 
+					 GE_INCHES, gdd),
+			((gnomeDesc*) dd->deviceSpecific)->fontsize, 1))
+	PrivateCopyDevice(dd, ndev, "PDF");
 }
