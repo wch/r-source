@@ -92,8 +92,8 @@ static void fmingr(int n, double *p, double *df, void *ex)
 	SETCADR(OS->R_gcall, x);
 	PROTECT_WITH_INDEX(s = eval(OS->R_gcall, OS->R_env), &ipx);
 	REPROTECT(s = coerceVector(s, REALSXP), ipx);
-	if(LENGTH(s) != n) 
-	    error("gradient in optim evaluated to length %d not %d", 
+	if(LENGTH(s) != n)
+	    error("gradient in optim evaluated to length %d not %d",
 		  LENGTH(s), n);
 	for (i = 0; i < n; i++)
 	    df[i] = REAL(s)[i] * (OS->parscale[i])/(OS->fnscale);
@@ -214,7 +214,7 @@ SEXP do_optim(SEXP call, SEXP op, SEXP args, SEXP rho)
 	alpha = asReal(getListElement(options, "alpha"));
 	beta = asReal(getListElement(options, "beta"));
 	gamm = asReal(getListElement(options, "gamma"));
-	nmmin(npar, dpar, opar, &val, fminfn, &ifail, abstol, reltol, 
+	nmmin(npar, dpar, opar, &val, fminfn, &ifail, abstol, reltol,
 	      (void *)OS, alpha, beta, gamm, trace, &fncount, maxit);
 	for (i = 0; i < npar; i++)
 	    REAL(par)[i] = opar[i] * (OS->parscale[i]);
@@ -249,7 +249,7 @@ SEXP do_optim(SEXP call, SEXP op, SEXP args, SEXP rho)
 	}
 	mask = (int *) R_alloc(npar, sizeof(int));
 	for (i = 0; i < npar; i++) mask[i] = 1;
-	vmmin(npar, dpar, &val, fminfn, fmingr, maxit, trace, mask, abstol, 
+	vmmin(npar, dpar, &val, fminfn, fmingr, maxit, trace, mask, abstol,
 	      reltol, nREPORT, (void *)OS, &fncount, &grcount, &ifail);
 	for (i = 0; i < npar; i++)
 	    REAL(par)[i] = dpar[i] * (OS->parscale[i]);
@@ -271,7 +271,7 @@ SEXP do_optim(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    for (i = 0; i < npar; i++) OS->ndeps[i] = REAL(ndeps)[i];
 	    UNPROTECT(1);
 	}
-	cgmin(npar, dpar, opar, &val, fminfn, fmingr, &ifail, abstol, 
+	cgmin(npar, dpar, opar, &val, fminfn, fmingr, &ifail, abstol,
 	      reltol, (void *)OS, type, trace, &fncount, &grcount, maxit);
 	for (i = 0; i < npar; i++)
 	    REAL(par)[i] = opar[i] * (OS->parscale[i]);
@@ -314,8 +314,8 @@ SEXP do_optim(SEXP call, SEXP op, SEXP args, SEXP rho)
 	OS->usebounds = 1;
 	OS->lower = lower;
 	OS->upper = upper;
-	lbfgsb(npar, lmm, dpar, lower, upper, nbd, &val, fminfn, fmingr, 
-	       &ifail, (void *)OS, factr, pgtol, &fncount, &grcount, 
+	lbfgsb(npar, lmm, dpar, lower, upper, nbd, &val, fminfn, fmingr,
+	       &ifail, (void *)OS, factr, pgtol, &fncount, &grcount,
 	       maxit, msg, trace, nREPORT);
 	for (i = 0; i < npar; i++)
 	    REAL(par)[i] = dpar[i] * (OS->parscale[i]);
@@ -437,7 +437,7 @@ in J.C. Nash, `Compact Numerical Methods for Computers', 2nd edition,
 converted by p2c then re-crafted by B.D. Ripley */
 
 void
-vmmin(int n0, double *b, double *Fmin, optimfn fminfn, optimgr fmingr, 
+vmmin(int n0, double *b, double *Fmin, optimfn fminfn, optimgr fmingr,
       int maxit, int trace, int *mask,
       double abstol, double reltol, int nREPORT, void *ex,
       int *fncount, int *grcount, int *fail)
@@ -591,7 +591,7 @@ vmmin(int n0, double *b, double *Fmin, optimfn fminfn, optimgr fmingr,
 /* Nelder-Mead */
 void nmmin(int n, double *Bvec, double *X, double *Fmin, optimfn fminfn,
 	   int *fail, double abstol, double intol, void *ex,
-	   double alpha, double beta, double gamm, int trace,
+	   double alpha, double bet, double gamm, int trace,
 	   int *fncount, int maxit)
 {
     char action[50];
@@ -736,7 +736,7 @@ void nmmin(int n, double *Bvec, double *X, double *Fmin, optimfn fminfn,
 		    }
 
 		    for (i = 0; i < n; i++)
-			Bvec[i] = (1 - beta) * P[i][H - 1] + beta * P[i][C - 1];
+			Bvec[i] = (1 - bet) * P[i][H - 1] + bet * P[i][C - 1];
 		    f = fminfn(n, Bvec, ex);
 		    if (!R_FINITE(f)) f = big;
 		    funcount++;
@@ -753,7 +753,8 @@ void nmmin(int n, double *Bvec, double *X, double *Fmin, optimfn fminfn,
 			    for (j = 0; j < n1; j++) {
 				if (j + 1 != L) {
 				    for (i = 0; i < n; i++) {
-					P[i][j] = beta * (P[i][j] - P[i][L - 1]) + P[i][L - 1];
+					P[i][j] = bet * (P[i][j] - P[i][L - 1])
+					    + P[i][L - 1];
 					size += fabs(P[i][j] - P[i][L - 1]);
 				    }
 				}
@@ -787,7 +788,7 @@ void nmmin(int n, double *Bvec, double *X, double *Fmin, optimfn fminfn,
     *fncount = funcount;
 }
 
-void cgmin(int n, double *Bvec, double *X, double *Fmin, 
+void cgmin(int n, double *Bvec, double *X, double *Fmin,
 	   optimfn fminfn, optimgr fmingr, int *fail,
 	   double abstol, double intol, void *ex, int type, int trace,
 	   int *fncount, int *grcount, int maxit)
@@ -957,7 +958,7 @@ void cgmin(int n, double *Bvec, double *X, double *Fmin,
 }
 
 void lbfgsb(int n, int m, double *x, double *l, double *u, int *nbd,
-	    double *Fmin, optimfn fminfn, optimgr fmingr, int *fail, 
+	    double *Fmin, optimfn fminfn, optimgr fmingr, int *fail,
 	    void *ex, double factr, double pgtol,
 	    int *fncount, int *grcount, int maxit, char *msg,
 	    int trace, int nREPORT)

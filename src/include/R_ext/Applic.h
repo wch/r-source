@@ -171,13 +171,13 @@ void optif0(int nr, int n, double *x, fcn_p fcn, void *state,
 	    double *a, double *wrk);
 
 
-/* ALL ../appl/<foobar>.f	[semi-automatically by
+/* ALL ../../appl/<foobar>.f	[semi-automatically by
  *				 f2c -A -P *.f; cat *.P > all.h	 and editing]
  */
 typedef double (*D_fp)();
 typedef /* Subroutine */ int (*S_fp)();
 
-/* ../appl/blas.f ---> see also ./Linpack.h */
+/* ../../appl/blas.f ---> see also ./Linpack.h */
 extern double
 F77_NAME(dasum)(int *, double *, int *);
 extern void
@@ -292,7 +292,7 @@ void F77_NAME(dqrsl)(double *x, int *ldx, int *n, int *k,
 		     double *qy, double *qty, double *b,
 		     double *rsd, double *xb, int *job, int *info);
 
-/* ../appl/dqrutl.f */
+/* ../../appl/dqrutl.f */
 void F77_NAME(dqrqty)(double *x, int *n, int *k, double *qraux,
 		      double *y, int *ny, double *qty);
 void F77_NAME(dqrqy)(double *x, int *n, int *k, double *qraux,
@@ -319,7 +319,7 @@ double Brent_fmin(double ax, double bx, double (*f)(double, void *),
 void F77_NAME(lminfl)(double *x, int *ldx, int *n, int *k, double *qraux,
 		      double *resid, double *hat, double *coef, double *sigma);
 
-/* ../appl/interv.c */
+/* ../../appl/interv.c */
 int findInterval(double *xt, int n, double x,
 		 Rboolean rightmost_closed,  Rboolean all_inside, int ilo,
 		 int *mflag);
@@ -329,23 +329,39 @@ int F77_SUB(interv)(double *xt, int *n, double *x,
 void find_interv_vec(double *xt, int *n,	double *x,   int *nx,
 		     int *rightmost_closed, int *all_inside, int *indx);
 
-/* ../appl/zeroin.c */
+/* ../../appl/zeroin.c */
 double R_zeroin(double ax, double bx, double (*f)(double, void *), void *info,
 		double *Tol, int *Maxit);
 
-/* ../appl/lbfgsb.c */
+/* ../../appl/lbfgsb.c */
 void setulb(int n, int m, double *x, double *l, double *u, int *nbd,
 	    double *f, double *g, double factr, double *pgtol,
 	    double *wa, int * iwa, char *task, int iprint,
 	    int *lsave, int *isave, double *dsave);
 
-/* ../appl/loglin.c */
+/* ../../appl/loglin.c */
 void loglin(int *nvar, int *dim, int *ncon, int *config, int *ntab,
 	    double *table, double *fit, int *locmar, int *nmar, double *marg,
 	    int *nu, double *u, double *maxdev, int *maxit,
 	    double *dev, int *nlast, int *ifault);
 
-/* ../main/optim.c */
+/* ../../appl/integrate.c */
+typedef void integr_fn(double *x, int n, void *ex);
+/* vectorizing function   f(x[1:n], ...) -> x[]  {overwriting x[]}. */
+
+void Rdqags(integr_fn f, void *ex, double *a, double *b,
+	    double *epsabs, double *epsrel,
+	    double *result, double *abserr, int *neval, int *ier,
+	    int *limit, int *lenw, int *last, int *iwork, double *work);
+
+void Rdqagi(integr_fn f, void *ex, double *bound, int *inf,
+	    double *epsabs, double *epsrel,
+	    double *result, double *abserr, int *neval, int *ier,
+	    int *limit, int *lenw, int *last,
+	    int *iwork, double *work);
+
+
+/* ../../main/optim.c */
 typedef double optimfn(int, double *, void *);
 typedef void optimgr(int, double *, double *, void *);
 
@@ -355,7 +371,7 @@ void vmmin(int n, double *b, double *Fmin,
 	   void *ex, int *fncount, int *grcount, int *fail);
 void nmmin(int n, double *Bvec, double *X, double *Fmin, optimfn fn,
 	   int *fail, double abstol, double intol, void *ex,
-	   double alpha, double beta, double gamm, int trace,
+	   double alpha, double bet, double gamm, int trace,
 	   int *fncount, int maxit);
 void cgmin(int n, double *Bvec, double *X, double *Fmin,
 	   optimfn fn, optimgr gr,
@@ -368,7 +384,7 @@ void lbfgsb(int n, int m, double *x, double *l, double *u, int *nbd,
 void samin(int n, double *pb, double *yb, optimfn fn, int maxit,
 	   int tmax, double ti, int trace, void *ex);
 
-/* ../main/qsort.c -- only F77 ones: */
+/* ../../main/qsort.c -- only F77 ones: */
 void F77_NAME(qsort4)(double *v, int *indx, int *ii, int *jj);
 void F77_NAME(qsort3)(double *v,            int *ii, int *jj);
 
