@@ -163,18 +163,13 @@ will work from this directory.
 Building Tcl/Tk support
 -----------------------
 
-The TclTk support package is not built automatically.  To use this you
-need to download and install ActiveTcl 8.4.x from
-http://aspn.activestate.com/ASPN/Downloads/ActiveTcl/ and set TCL_HOME
-in MkRules to where you installed it (perhaps c:/Tcl).
-Then
+The TclTk support package is not built automatically.  Get
+http://www.stats.ox.ac.uk/pub/Rtools/R_Tcl.zip and unzip it at the top
+level ofthe R sources: it will add a Tcl directory.  Then
 
 	make tcl
 
 will make the package.
-
-ActiveTcl 8.3.x can also be used, but a binary distribution can only be used
-with one of 8.3.x and 8.4.x.
 
 
 Recommended packages
@@ -243,6 +238,7 @@ packages.
 Once everything is set up
 
 	make
+	make tcl
 	make recommended
 	make distribution
 	make fullcheck

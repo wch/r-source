@@ -118,14 +118,16 @@ for a list), navigate to the @code{bin/windows/base}
 directory and collect the files you need.  There are two versions of
 the distribution.
 
-1) @code{@RWVER@.exe} is about 19Mb and gives a complete installation.
+1) @code{@RWVER@.exe} is about 20Mb.  This contains all the components
+and allows as complete as installation as you choose.
 
 2) Directory @code{miniR} contains @code{miniR.exe} and eight files
 @code{miniR-?.bin}.  You can put @code{miniR.exe} and @code{miniR-1.bin}
 on one floppy and the remaining @code{miniR-?.bin} on a floppy each.
 This is a small installation, containing the text and compiled HTML
 versions of the help files and the @emph{An Introduction to R} and
-@emph{Data Import/Export} manuals in PDF.
+@emph{Data Import/Export} manuals in PDF.  There is no support for
+@code{tcltk} in this version.
 
 
 
@@ -175,7 +177,7 @@ set the default Start-menu group name
 @item /COMPONENTS="comma separated list of component names"
 set the initial list of components.  This is only useful with
 @code{@RWVER@.exe}, which has components @code{main}, @code{chtml},
-@code{html}, @code{latex}, @code{manuals} and @code{devel}.
+@code{html}, @code{latex}, @code{manuals}, @code{devel} and @code{tcl}.
 @end table
 
 @noindent
@@ -640,27 +642,30 @@ line or version tab, the package was compiled too long ago.
 
 For package @code{tcltk} to work (try @code{demo(tkdensity)} or
 @code{demo(tkttest)} after @code{library(tcltk)}) you need to have Tcl
-installed.  Download ActiveTcl 8.4.x from
-@uref{http://aspn.activestate.com/ASPN/Downloads/ActiveTcl/} and install
-it.  (Most of the installers that ActiveTcl uses will put the @file{bin}
-directory containing the Tcl and Tk DLLs in your path, but you should
-check.  From R, run @code{Sys.getenv("PATH")} to do so.)  Note that you
-do need 8.4.x and not 8.3.x as from R 1.7.0.  (If you build R from the
-sources yourself you can configure it to use 8.3.x.)
+installed.  This is an optional part of the installation by
+@code{@value{VERSION}.exe}, although it is selected by default.
 
-You then need to set the environment variable @code{TCL_LIBRARY}
-(@pxref{How do I set environment variables?}), to something like
-@code{c:/Program Files/Tcl/lib/tcl8.4}.  (The startup code for the
-package will warn you if this is unset.  NB: do not quote the path, even
-if as here it contains spaces. If you forget, you can set the variable
-inside R by something like
-@smallexample
-    Sys.putenv("TCL_LIBRARY"="c:/Program Files/Tcl/lib/tcl8.4")
-@end smallexample
-.)  Similarly, you can set the path if needed by something like
-@smallexample
-    Sys.putenv(PATH=paste(Sys.getenv("PATH"), "c:/Tcl/bin", sep = ";"))
-@end smallexample
+@c Download ActiveTcl 8.4.x from
+@c @uref{http://aspn.activestate.com/ASPN/Downloads/ActiveTcl/} and install
+@c it.  (Most of the installers that ActiveTcl uses will put the @file{bin}
+@c directory containing the Tcl and Tk DLLs in your path, but you should
+@c check.  From R, run @code{Sys.getenv("PATH")} to do so.)  Note that you
+@c do need 8.4.x and not 8.3.x as from R 1.7.0.  (If you build R from the
+@c sources yourself you can configure it to use 8.3.x.)
+
+@c You then need to set the environment variable @code{TCL_LIBRARY}
+@c (@pxref{How do I set environment variables?}), to something like
+@c @code{c:/Program Files/Tcl/lib/tcl8.4}.  (The startup code for the
+@c package will warn you if this is unset.  NB: do not quote the path, even
+@c if as here it contains spaces. If you forget, you can set the variable
+@c inside R by something like
+@c @smallexample
+@c     Sys.putenv("TCL_LIBRARY"="c:/Program Files/Tcl/lib/tcl8.4")
+@c @end smallexample
+@c .)  Similarly, you can set the path if needed by something like
+@c @smallexample
+@c     Sys.putenv(PATH=paste(Sys.getenv("PATH"), "c:/Tcl/bin", sep = ";"))
+@c @end smallexample
 
 
 
@@ -1130,14 +1135,14 @@ If you want output to be updated on the console, call
 @html
 <p><hr WIDTH="100%">
 <address>
-Last edited 2003 January 22 by Professor B. D. Ripley
+Last edited 2003 February 11 by Professor B. D. Ripley
 <code><a href="mailto:ripley@@stats.ox.ac.uk">ripley@@stats.ox.ac.uk</a></code>
 </address>
 @end html
 @end ifhtml
 @ifinfo
 @sp 2
-Last edited 2003 January 22 by Professor B. D. Ripley <ripley@@stats.ox.ac.uk>
+Last edited 2003 February 11 by Professor B. D. Ripley <ripley@@stats.ox.ac.uk>
 @end ifinfo
 
 @bye

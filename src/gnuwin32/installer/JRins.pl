@@ -65,17 +65,18 @@ print insfile <<END;
 [Types]
 Name: "user"; Description: "User installation"
 Name: "compact"; Description: "Minimal user installation"
-Name: "developer"; Description: "Developer installation"
+Name: "full"; Description: "Full installation"
 Name: "custom"; Description: "Custom installation"; Flags: iscustom
 
 [Components]
-Name: "main"; Description: "Main Files"; Types: user compact developer custom; Flags: fixed
-Name: "chtml"; Description: "Compiled HTML Help Files"; Types: user developer custom
-Name: "html"; Description: "HTML Help Files"; Types: user developer custom
-Name: "latex"; Description: "Latex Help Files"; Types: developer custom
-Name: "manuals"; Description: "On-line (PDF) Manuals"; Types: user developer custom
-Name: "refman"; Description: "Reference Manual"; Types: developer custom
-Name: "devel"; Description: "Source Package Installation Files"; Types: developer custom
+Name: "main"; Description: "Main Files"; Types: user compact full custom; Flags: fixed
+Name: "chtml"; Description: "Compiled HTML Help Files"; Types: user full custom
+Name: "html"; Description: "HTML Help Files"; Types: user full custom
+Name: "latex"; Description: "Latex Help Files"; Types: full custom
+Name: "manuals"; Description: "On-line (PDF) Manuals"; Types: user full custom
+Name: "refman"; Description: "Reference Manual"; Types: full custom
+Name: "devel"; Description: "Source Package Installation Files"; Types: full custom
+Name: "tcl"; Description: "Support Files for library(tcltk)"; Types: user full custom
 
 [Tasks]
 Name: "desktopicon"; Description: "Create a &desktop icon"; GroupDescription: "Additional icons:"; MinVersion: 4,4
@@ -133,6 +134,10 @@ find(\&listFiles, ".");
 
 chdir($startdir);
 $path="${RW}l\\${RW}";$component="latex";chdir($path);
+find(\&listFiles, ".");
+
+chdir($startdir);
+$path="Tcl";$component="tcl";chdir($path);
 find(\&listFiles, ".");
 
 close insfile;

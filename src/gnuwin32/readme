@@ -23,7 +23,7 @@ Installation
 
 The distribution can be obtained in two versions:
 
-1) A 19Mb file @RWVER@.exe.  Just run this for a Windows-2000 style
+1) A 20Mb file @RWVER@.exe.  Just run this for a Windows-XP style
 installer.  It contains all the R components, and you can select what
 want installed.
 
@@ -34,6 +34,7 @@ miniR-8.bin on separate floppies.
 
 This is a small installation, containing text and compiled HTML help
 and the Introduction to R and Data Import/Export manuals in PDF.
+There is no package tcltk.
 
 
 For more details, including command-line options for the installers 

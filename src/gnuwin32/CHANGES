@@ -49,8 +49,7 @@ the creation of Registry entries to be de-selected by the user.
 Rcmd.exe and Rprof have been moved to the main distribution (although
 to use them you will need perl installed).
 
-The default version of Tcl/Tk (and hence that used in the binary
-distribution) is 8.4.x.
+Tcl/Tk 8.4.1 is bundled in rw1070.exe.
 
 HTML help changes
 -----------------

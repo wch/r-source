@@ -35,6 +35,7 @@ R.iss: JRins.pl ../$(RPREFIX)b.zip ../$(RPREFIX)h.zip \
 	echo "make.packages.html(.Library)" | $(RPREFIX)/bin/rterm --vanilla --slave
 	$(CP) $(RPREFIX)/doc/html/packages.html $(RPREFIX)w/$(RPREFIX)/doc/html
 	$(RM) $(RPREFIX)/doc/html/packages*
+	$(CP) -pr ../../../Tcl .
 	perl JRins.pl $(RPREFIX) $(IS_VERSION)
 
 
@@ -56,16 +57,16 @@ Rsmall.iss: JRsmall.pl ../$(RPREFIX)b.zip \
 	done
 	rm -rf $(RPREFIX)/library/*/html $(RPREFIX)/library/*/latex \
 	  $(RPREFIX)/library/*/man
+	rm -rf $(RPREFIX)/library/tcltk
 	rm -rf $(RPREFIX)/library/grid/doc
-	rm -rf $(RPREFIX)/library/rpart/Manuscript
-	rm -rf $(RPREFIX)/library/survival/doc $(RPREFIX)/library/survival/survival.ps.gz
+	rm -rf $(RPREFIX)/library/survival/survival.ps.gz
 	perl JRsmall.pl $(RPREFIX) $(IS_VERSION)
 
 miniR.exe: Rsmall.iss
 	"$(ISDIR)/iscc" Rsmall.iss > miniR.log
 
 clean:
-	rm -rf R.iss Rsmall.iss *.log $(RPREFIX) $(RPREFIX)? $(RPREFIX)??
+	rm -rf R.iss Rsmall.iss *.log $(RPREFIX) $(RPREFIX)? $(RPREFIX)?? Tcl
 
 distclean: clean
 	rm -f $(RPREFIX).exe miniR*
