@@ -39,7 +39,7 @@
  *3 PRIMNAME	PRIMFUN	PRIMVAL	 [*]  PRIMARITY PPINFO
  *
  * where "2" are the component names of the FUNTAB struct (Defn.h)
- * and   "3" are the accessor macros. [*]: PRIMPRINT(.) uses the eval component
+ * and	 "3" are the accessor macros. [*]: PRIMPRINT(.) uses the eval component
  *
  * printname:	The function name in R
  *
@@ -70,16 +70,6 @@
  *
  */
 
-SEXP do_indexsearch(SEXP, SEXP, SEXP, SEXP);
-SEXP do_surface(SEXP, SEXP, SEXP, SEXP);
-SEXP do_flatContour(SEXP, SEXP, SEXP, SEXP);
-SEXP do_filledcontour(SEXP, SEXP, SEXP, SEXP);
-SEXP do_restart(SEXP, SEXP, SEXP, SEXP);
-SEXP do_primitive(SEXP, SEXP, SEXP, SEXP);
-SEXP do_symbols(SEXP, SEXP, SEXP, SEXP);
-SEXP do_attr(SEXP, SEXP, SEXP, SEXP);
-SEXP do_ascharacter(SEXP, SEXP, SEXP, SEXP);
-
 FUNTAB R_FunTab[] =
 {
 
@@ -96,7 +86,7 @@ FUNTAB R_FunTab[] =
 {"return",	do_return,	0,	0,	-1,	PP_RETURN},
 {"stop",	do_stop,	0,	11,	1,	PP_FUNCALL},
 {"warning",	do_warning,	0,	111,	1,	PP_FUNCALL},
-{"geterrmessage",do_geterrmessage,	0,	11,	0,	PP_FUNCALL},
+{"geterrmessage",do_geterrmessage, 0,	11,	0,	PP_FUNCALL},
 {"restart",	do_restart,	0,	11,	1,	PP_FUNCALL},
 {"function",	do_function,	0,	0,	-1,	PP_FUNCTION},
 {"as.function.default",do_asfunction,0,	11,	2,	PP_FUNCTION},
@@ -185,8 +175,6 @@ FUNTAB R_FunTab[] =
 {"dim<-",	do_dimgets,	0,	0,	2,	PP_FUNCALL},
 {"attributes",	do_attributes,	0,	1,	1,	PP_FUNCALL},
 {"attributes<-",do_attributesgets,0,	1,	1,	PP_FUNCALL},
- /*KH {"attr",	do_attr,	0,	1,	2,	PP_FUNCALL},
-  */
 {"attr",	do_attr,	0,	1,	2,	PP_FUNCALL},
 {"attr<-",	do_attrgets,	0,	0,	3,	PP_FUNCALL},
 {"comment",	do_comment,	0,	11,	1,	PP_FUNCALL},
@@ -500,7 +488,7 @@ FUNTAB R_FunTab[] =
 {"Version",	do_version,	0,	11,	0,	PP_FUNCALL},
 {"machine",	do_machine,	0,	11,	0,	PP_FUNCALL},
 {"Machine",	do_Machine,	0,	11,	0,	PP_FUNCALL},
-{"commandArgs", do_commandArgs, 0,      11,     0,      PP_FUNCALL},
+{"commandArgs", do_commandArgs, 0,	11,	0,	PP_FUNCALL},
 #ifdef Win32
 {"system",	do_system,	0,	11,	3,	PP_FUNCALL},
 #else
@@ -510,16 +498,16 @@ FUNTAB R_FunTab[] =
 {"unlink",	do_unlink,	0,	11,	2,	PP_FUNCALL},
 {"help.start",	do_helpstart,	0,	11,	0,	PP_FUNCALL},
 {"show.help.item",do_helpitem,	0,	11,	3,	PP_FUNCALL},
-{"flush.console",do_flushconsole,0,     11,     0,      PP_FUNCALL},
-{"int.unzip",   do_int_unzip,   0,      11,    -1,      PP_FUNCALL},
-{"win.version", do_winver,      0,      11,     0,      PP_FUNCALL},
-{"saveDevga",   do_saveDevga,   0,      11,     3,      PP_FUNCALL},
-{"shell.exec",  do_shellexec,   0,      11,     1,      PP_FUNCALL},
-{"dir.create",  do_dircreate,   0,      11,     1,      PP_FUNCALL},
-{"winDialog",   do_windialog,   0,      11,     2,      PP_FUNCALL},
-{"winDialogString",  do_windialogstring,   0,      11,     2,      PP_FUNCALL},
-{"winMenuAdd",  do_winmenuadd,	0,      11,     3,      PP_FUNCALL},
-{"winMenuDel",  do_winmenudel,	0,      11,     2,      PP_FUNCALL},
+{"flush.console",do_flushconsole,0,	11,	0,	PP_FUNCALL},
+{"int.unzip",	do_int_unzip,	0,	11,    -1,	PP_FUNCALL},
+{"win.version", do_winver,	0,	11,	0,	PP_FUNCALL},
+{"saveDevga",	do_saveDevga,	0,	11,	3,	PP_FUNCALL},
+{"shell.exec",	do_shellexec,	0,	11,	1,	PP_FUNCALL},
+{"dir.create",	do_dircreate,	0,	11,	1,	PP_FUNCALL},
+{"winDialog",	do_windialog,	0,	11,	2,	PP_FUNCALL},
+{"winDialogString", do_windialogstring, 0, 11,	2,	PP_FUNCALL},
+{"winMenuAdd",	do_winmenuadd,	0,	11,	3,	PP_FUNCALL},
+{"winMenuDel",	do_winmenudel,	0,	11,	2,	PP_FUNCALL},
 {"memory.size",	do_memsize,	0,	11,	1,	PP_FUNCALL},
 {"DLL.version",	do_dllversion,	0,	11,	1,	PP_FUNCALL},
 #endif
@@ -549,8 +537,8 @@ FUNTAB R_FunTab[] =
 {"is.loaded",	do_isloaded,	0,	1,	1,	PP_FOREIGN},
 {".C",		do_dotCode,	0,	1,	-1,	PP_FOREIGN},
 {".Fortran",	do_dotCode,	1,	1,	-1,	PP_FOREIGN},
-{".External",   do_External,    0,      1,      -1,     PP_FOREIGN},
-{".Call",       do_dotcall,     0,      1,      -1,     PP_FOREIGN},
+{".External",	do_External,	0,	1,	-1,	PP_FOREIGN},
+{".Call",	do_dotcall,	0,	1,	-1,	PP_FOREIGN},
 {"dyn.load",	do_dynload,	0,	111,	3,	PP_FUNCALL},
 {"dyn.unload",	do_dynunload,	0,	111,	1,	PP_FUNCALL},
 {"ls",		do_ls,		1,	11,	2,	PP_FUNCALL},
@@ -601,16 +589,16 @@ FUNTAB R_FunTab[] =
 {"file.create",	do_filecreate,	0,	11,	1,	PP_FUNCALL},
 {"file.remove",	do_fileremove,	0,	11,	1,	PP_FUNCALL},
 {"file.append",	do_fileappend,	0,	11,	2,	PP_FUNCALL},
-{"list.files",  do_listfiles,   0,      11,     4,      PP_FUNCALL},
-{"file.exists", do_fileexists,  0,      11,     1,      PP_FUNCALL},
-{"file.choose", do_filechoose,  0,      11,     1,      PP_FUNCALL},
+{"list.files",	do_listfiles,	0,	11,	4,	PP_FUNCALL},
+{"file.exists", do_fileexists,	0,	11,	1,	PP_FUNCALL},
+{"file.choose", do_filechoose,	0,	11,	1,	PP_FUNCALL},
 {"file.info",	do_fileinfo,	0,	11,	1,	PP_FUNCALL},
 {"file.access",	do_fileaccess,	0,	11,	2,	PP_FUNCALL},
 {"tempfile",	do_tempfile,	0,	11,	1,	PP_FUNCALL},
 {"R.home",	do_Rhome,	0,	11,	0,	PP_FUNCALL},
 {"date",	do_date,	0,	11,	0,	PP_FUNCALL},
 {"Platform",	do_Platform,	0,	11,	0,	PP_FUNCALL},
-{"index.search",do_indexsearch, 0,      11,     5,      PP_FUNCALL},
+{"index.search",do_indexsearch, 0,	11,	5,	PP_FUNCALL},
 {"getenv",	do_getenv,	0,	11,	1,	PP_FUNCALL},
 {"putenv",	do_putenv,	0,	11,	1,	PP_FUNCALL},
 {"getwd",	do_getwd,	0,	11,	0,	PP_FUNCALL},
@@ -639,8 +627,8 @@ FUNTAB R_FunTab[] =
 #endif
 #ifdef Unix
 {"X11",		do_X11,		0,	111,	7,	PP_FUNCALL},
-{"gnome",       do_Gnome,       0,      111,    4,      PP_FUNCALL},
-{"GTK",       	do_GTK,       	0,      111,    4,      PP_FUNCALL},
+{"gnome",	do_Gnome,	0,	111,	4,	PP_FUNCALL},
+{"GTK",		do_GTK,		0,	111,	4,	PP_FUNCALL},
 #endif
 
 /* Graphics */
@@ -687,7 +675,7 @@ FUNTAB R_FunTab[] =
 {"erase",	do_erase,	0,	111,	1,	PP_FUNCALL},
 {"dotplot",	do_dotplot,	0,	111,	1,	PP_FUNCALL},
 {"persp",	do_persp,	0,	111,	4,	PP_FUNCALL},
-{"filledcontour",do_filledcontour,0,    111,    5,      PP_FUNCALL},
+{"filledcontour",do_filledcontour,0,	111,	5,	PP_FUNCALL},
 {"getDL",	do_getDL,	0,	111,	0,	PP_FUNCALL},
 {"playDL",	do_playDL,	0,	111,	1,	PP_FUNCALL},
 {"getGPar",	do_getGPar,	0,	111,	0,	PP_FUNCALL},
@@ -695,7 +683,7 @@ FUNTAB R_FunTab[] =
 {"symbols",	do_symbols,	0,	111,	-1,	PP_FUNCALL},
 
 /* Objects */
-{"inherits",    do_inherits,    0,      11,     3,     PP_FUNCALL},
+{"inherits",	do_inherits,	0,	11,	3,	PP_FUNCALL},
 {"UseMethod",	do_usemethod,	0,	 0,	-1,	PP_FUNCALL},
 {"NextMethod",	do_nextmethod,	0,	10,	-1,	PP_FUNCALL},
 
@@ -715,8 +703,8 @@ FUNTAB R_FunTab[] =
 {"deriv.default",do_deriv,	0,	11,	4,	PP_FUNCALL},
 
 /* History manipulation */
-{"loadhistory", do_loadhistory,	0,      11,     1,      PP_FUNCALL},
-{"savehistory", do_savehistory,	0,      11,     1,      PP_FUNCALL},
+{"loadhistory", do_loadhistory,	0,	11,	1,	PP_FUNCALL},
+{"savehistory", do_savehistory,	0,	11,	1,	PP_FUNCALL},
 
 /* data-time manipulations */
 {"Sys.time",	do_systime,	0,	11,	0,	PP_FUNCALL},

@@ -140,7 +140,7 @@ struct sxpinfo_struct {
     unsigned int fin   :  1;  /* has finalizer installed */
     unsigned int gcgen :  1;  /* old generation number */
     unsigned int gccls :  3;  /* node class */
-}; /*	Tot: 32 */
+}; /*		    Tot: 32 */
 
 struct vecsxp_struct {
     int	length;
@@ -736,6 +736,8 @@ void unprotect(int);
 void unprotect_ptr(SEXP);
 void R_ProtectWithIndex(SEXP, PROTECT_INDEX *);
 void R_Reprotect(SEXP, PROTECT_INDEX);
+SEXP R_subassign3_dflt(SEXP, SEXP, SEXP, SEXP);
+SEXP R_subset3_dflt(SEXP, SEXP);
 
 				/* return(.) NOT reached : for -Wall */
 #define error_return(msg)	{ error(msg);		return R_NilValue; }

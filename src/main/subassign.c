@@ -1141,7 +1141,6 @@ static void SubAssignArgs(SEXP args, SEXP *x, SEXP *s, SEXP *y)
 SEXP do_subassign(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP ans;
-    SEXP do_subassign_dflt(SEXP, SEXP, SEXP, SEXP);
 
     /* This code performs an internal version of method dispatch. */
     /* We evaluate the first argument and attempt to dispatch on it. */
@@ -1270,7 +1269,6 @@ static SEXP DeleteOneVectorListItem(SEXP x, int which)
 SEXP do_subassign2(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP ans;
-    SEXP do_subassign2_dflt(SEXP, SEXP, SEXP, SEXP);
 
     if(DispatchOrEval(call, "[[<-", args, rho, &ans, 0))
       return(ans);
@@ -1535,7 +1533,6 @@ SEXP do_subassign3(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP nlist, ans, input;
     int iS;
-    SEXP R_subassign3_dflt(SEXP, SEXP, SEXP, SEXP);
 
     checkArity(op, args);
 

@@ -530,7 +530,6 @@ static SEXP ExtractOptionals(SEXP ans, int *recurse, int *usenames)
 SEXP do_c(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP ans;
-    SEXP do_c_dflt(SEXP, SEXP, SEXP, SEXP);
 
     checkArity(op, args);
 
