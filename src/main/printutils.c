@@ -132,16 +132,12 @@ char *EncodeReal(double x, int w, int d, int e)
     /* IEEE allows signed zeros (yuck!) */
     if (x == 0.0) x = 0.0;
     if (!R_FINITE(x)) {
+	if(ISNA(x)) sprintf(Encodebuf, "%*s", w, CHAR(R_print.na_string));
 #ifdef IEEE_754
-	if(ISNA(x)) sprintf(Encodebuf, "%*s", w, CHAR(R_print.na_string));
 	else if(ISNAN(x)) sprintf(Encodebuf, "%*s", w, "NaN");
-	else if(x > 0) sprintf(Encodebuf, "%*s", w, "Inf");
-	else sprintf(Encodebuf, "%*s", w, "-Inf");
-#else
-	if(ISNA(x)) sprintf(Encodebuf, "%*s", w, CHAR(R_print.na_string));
-	else if(x > 0) sprintf(Encodebuf, "%*s", w, "Inf");
-	else sprintf(Encodebuf, "%*s", w, "-Inf");
 #endif
+	else if(x > 0) sprintf(Encodebuf, "%*s", w, "Inf");
+	else sprintf(Encodebuf, "%*s", w, "-Inf");
     }
     else if (e) {
 #ifndef Win32
