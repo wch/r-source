@@ -2,12 +2,12 @@
 
 geterrmessage <- function() .Internal(geterrmessage())
 
-try <- function(expr, silent = FALSE, first = TRUE)
+try <- function(expr, silent = FALSE)
 {
-    if (is.logical(first) && first) {
+    if (! exists("first", inherits = FALSE)) {
         first <- FALSE
         # turn on the restart bit of the current context, push an
-        # exception handler on the condition handler stack, and push
+        # error handler on the condition handler stack, and push
         # a tryRestart restart on the restart stack
         .Internal(.addTryHandlers())
         if (silent) {

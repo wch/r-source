@@ -8,22 +8,31 @@ geterrmessage()
 \alias{geterrmessage}
 \arguments{
   \item{\dots}{character vectors (which are pasted together with no
-    separator) or \code{NULL}.}
+    separator), a condition object, or \code{NULL}.}
   \item{call.}{logical, indicating if the call should become part of the
     error message.}
 }
 \description{
-  \code{stop} stops execution of the current expression, prints the
-  message given as its argument, then executes an error action.
+  \code{stop} stops execution of the current expression and executes
+  an error action.
 
   \code{geterrmessage} gives the last error message.
 }
 \details{
-  The error action is controlled by the current error handler set by
-  \code{options(error=)}. The default behaviour  (the \code{NULL}
-  error-handler) in interactive use is
-  to return to the top level prompt, and in non-interactive use to
+
+  The error action is controlled by error handlers established within
+  the executing code and by the current default error handler set by
+  \code{options(error=)}.  The error is first signaled as if using
+  \code{signalCondition}.  If there are no handlers or if all handlers
+  return, then the error message is printed (if
+  \code{options("show.error.messages")} is true) and the default error
+  handler is used.  The default behaviour (the \code{NULL}
+  error-handler) in interactive use is to return to the top level
+  prompt or the top level browser, and in non-interactive use to
   (effectively) call \code{\link{q}("no", status=1, runLast=FALSE}).
+  The default handler stores the error message in a buffer; it can be
+  retrieved by \code{geterrmessage}.  It also stores a trace of the
+  call stack that can be retrieved by  code{traceback}.
 
   Errors will be truncated to \code{getOption("warning.length")}
   characters, default 1000.
@@ -40,7 +49,9 @@ geterrmessage()
 \seealso{
   \code{\link{warning}}, \code{\link{try}} to catch errors and retry,
   and \code{\link{options}} for setting error handlers.
-  \code{\link{stopifnot}} for validity testing.
+  \code{\link{stopifnot}} for validity testing.  \code{tryCatch}
+  and \code{withCallingHandlers} can be used to establish custom handlers
+  while executing an expression.
 }
 \examples{
 options(error = expression(NULL))# don't stop on stop(.)  << Use with CARE! >>

@@ -10,18 +10,23 @@ warning(\dots, call. = TRUE)
 }
 \arguments{
   \item{\dots}{character vectors (which are pasted together with no
-    separator) or \code{NULL}.}
+    separator), a condition object, or \code{NULL}.}
   \item{call.}{logical, indicating if the call should become part of the
     warning message.}
 }
 \details{
   The result \emph{depends} on the value of
-  \code{\link{options}("warn")}.
+  \code{\link{options}("warn")} and on handlers established in the
+  executing code.
 
-  If \code{warn} is negative warnings are ignored; if it is zero they
-  are stored and printed after the top--level function has completed; if
-  it is one they are printed as they occur and if it is 2 (or larger)
-  warnings are turned into errors.
+  \code{warning} signals a warning condition by (effectively) calling
+  \code{signalCondition}.  If there are no handlers or if all handlers
+  return, then the value of \code{warn} is used to determine the
+  appropriate action.  If \code{warn} is negative warnings are
+  ignored; if it is zero they are stored and printed after the
+  top--level function has completed; if it is one they are printed as
+  they occur and if it is 2 (or larger) warnings are turned into
+  errors.
 
   If \code{warn} is zero (the default), a top-level variable
   \code{last.warning} is created.  It contains the warnings which can be
@@ -29,6 +34,10 @@ warning(\dots, call. = TRUE)
 
   Warnings will be truncated to \code{getOption("warning.length")}
   characters, default 1000.
+
+  While the warning is being processed, a \code{muffleWarning} restart
+  is available.  If this restart is invoked with \code{invokeRestart},
+  then \code{warning} returns immediately.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

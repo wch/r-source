@@ -6,18 +6,18 @@
   the user's code to handle error-recovery.
 }
 \usage{
-try(expr, silent = FALSE, first = TRUE)
+try(expr, silent = FALSE)
 }
 \arguments{
   \item{expr}{an \R expression to try.}
   \item{silent}{logical: should the report of error messages be suppressed?}
-  \item{first}{not for user use!}
 }
 \details{
-  \code{try} is a user-friendly wrapper to \code{\link{restart}}.
-  The argument \code{first} is used to record if \code{restart} has
-  already been used, and so ensure that \code{restart} is called only
-  once.
+  \code{try} evaluates an expression and traps any errors that occur
+  during the evaluation.  \code{try} establishes a handler for
+  errors that uses the default error handling protocol. It also
+  establishes a \code{tryRestart} restart that can be used by
+  \code{invokeRestart}.
 }
 \value{
   The value of the expression if \code{expr} is evaluated without error,
@@ -30,6 +30,8 @@ try(expr, silent = FALSE, first = TRUE)
   \code{\link{options}} for setting error handlers and suppressing the
   printing of error messages;
   \code{\link{geterrmessage}} for retrieving the last error message.
+  \code{tryCatch} provides another means of catching and handling
+  errors.
 }
 \examples{
 ## this example will not work correctly in example(try), but
