@@ -10,7 +10,7 @@ rw2000
 Added Rgui script editor by Chris Jackson.  Supports object name
 in window caption in edit() and fix().
 
-Changed preferences menu "Finish" to "OK".
+Changed preferences menu button "Finish" to "OK".
 
 Changed search order for user home directory to use "My Documents" 
 directory after HOME and before HOMEDRIVE/HOMEPATH.
@@ -31,6 +31,10 @@ most other file system functions do.
 
 (For those building R:) The Makefile now aborts if sub-makes in any of
 several for-loops fail.
+
+R BATCH|SHLIB|INSTALL|REMOVE no longer work: use Rcmd or R CMD (as
+required under Unix) instead.
+
 
 
 rw1091
