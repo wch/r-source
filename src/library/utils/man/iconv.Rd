@@ -42,6 +42,9 @@ iconvlist()
   Elements which cannot be converted (perhaps because they are invalid
   or because they cannot be represented in the target encoding)
   will be returned as \code{NA}.
+
+  Some versions of \code{iconv} will allow transliteration by appending
+  \code{//TRANSLIT} to the \code{to} encoding: see the examples.
 }
 \value{
   A character vector of the same length and the same attributes as \code{x}.
@@ -61,7 +64,7 @@ iconvlist()
 \examples{\dontrun{
 iconvlist()
 
-## convert from Latin-2 to UTF-8: two of the GNU iconv variants.
+## convert from Latin-2 to UTF-8: two of the glibc iconv variants.
 iconv(x, "ISO_8859-2", "UTF-8")  # 8859-2 on Solaris
 iconv(x, "LATIN2", "UTF-8")
 
@@ -72,6 +75,11 @@ iconv(x, "latin1", "ASCII")          #   NA
 iconv(x, "latin1", "ASCII", "?")     # "fa?ile"
 iconv(x, "latin1", "ASCII", "")      # "faile"
 iconv(x, "latin1", "ASCII", "byte")  # "fa<e7>ile"
+
+# Extracts from R help files
+(x <- c("Ekstr\xf8m", "J\xf6reskog", "bi\xdfchen Z\xfcrcher"))
+iconv(x, "latin1", "ASCII//TRANSLIT")
+iconv(x, "latin1", "ASCII", sub="byte")
 }}
 \keyword{ character }
 \keyword{ utilities }
