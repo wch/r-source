@@ -75,6 +75,10 @@ Date: Fri, 7 Dec 2001 11:07:52 +0100 (CET)
 Subject: bug in survival package basehaz function
 From: Nicholas Lewin-Koh <kohnicho@comp.nus.edu.sg>
 Date: Wed, 16 Jan 2002 14:15:21 +0800 (GMT-8)
+* PR# 1295 *
+Subject:  typo and user-proofing in odesolve() 
+From: Ben Bolker <bolker@zoo.ufl.edu>
+Date: Fri, 1 Feb 2002 12:42:25 -0500
 
 Directory:  Analyses
 
@@ -396,6 +400,15 @@ Date: Thu, 17 Jan 2002 15:14:33 -0500
 Subject: compile problem with bessel_i.c on IRIX64 flexor 6.5 10100655 IP35 (uname -a)
 From: Walter Tautz <wtautz@math.uwaterloo.ca>
 Date: Tue, 22 Jan 2002 10:05:20 -0500 (EST)
+* PR# 1289 *
+Subject: R 1.4.0 build fails on AIX
+From: lio@hpss1.ccs.ornl.gov
+Date: Wed, 30 Jan 2002 14:10:30 +0100 (MET)
+* PR# 1291 *
+Subject: Installation problem : SunOS
+From: brendan_mcmahon@prusec.com
+Date: Thu, 31 Jan 2002 18:00:55 +0100 (MET)
+--looks like gcc compiled under different OS version.
 
 Directory:  TooMuchAtOnce
 
@@ -421,19 +434,15 @@ Date: Fri, 25 Jan 2002 14:36:52 -0500
 Subject: make check fails when R_HOME env var set
 From: "Warnes, Gregory R" <gregory_r_warnes@groton.pfizer.com>
 Date: Fri, 25 Jan 2002 15:08:33 -0500
-* PR# 1288 *
-Subject: dimnames usage in ts
-From: tkeitt@ms.cc.sunysb.edu
-Date: Tue, 29 Jan 2002 21:11:08 +0100 (MET)
-* PR# 1289 *
-Subject: R 1.4.0 build fails on AIX
-From: lio@hpss1.ccs.ornl.gov
-Date: Wed, 30 Jan 2002 14:10:30 +0100 (MET)
-* PR# 1290 *
-Subject: Maritime Newsletter (Week 5)
-From: "MarineDigital Inc."<newsletter@marinedigital.com>
-Date: Thu, 31 Jan 2002 16:30:20 +0900
-* PR# 1291 *
-Subject: Installation problem : SunOS
-From: brendan_mcmahon@prusec.com
-Date: Thu, 31 Jan 2002 18:00:55 +0100 (MET)
+* PR# 1294 *
+Subject: documentation for abline and terms.object
+From: Paulo Justiniano Ribeiro Jr <p.ribeiro@lancaster.ac.uk>
+Date: Fri, 1 Feb 2002 16:30:14 +0000 (GMT)
+* PR# 1297 *
+Subject: comment.char in read.fwf
+From: jlongmat@coh.org
+Date: Fri, 1 Feb 2002 23:54:08 +0100 (MET)
+* PR# 1298 *
+Subject: comment.char in read.fwf
+From: jlongmat@coh.org
+Date: Fri, 1 Feb 2002 23:54:34 +0100 (MET)
