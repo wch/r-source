@@ -1,6 +1,7 @@
 /*
- *  R : A Computer Langage for Statistical Data Analysis
+ *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
+ *  Copyright (C) 1998, The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -29,7 +30,7 @@ void PrintGreeting(void)
 	Rprintf("You are welcome to redistribute it under certain conditions.\n");
 	Rprintf("Type\t\"?license\" or \"?licence\" for distribution details.\n\n");
 	Rprintf("R is a collaborative project with many contributors.\n"
-		"Type\t?contributors\" for a list.\n\n");
+		"Type\t\"?contributors\" for a list.\n\n");
 
 	Rprintf("Type\t\"demo()\" for some demos,"
 		" \"help()\" for on-line help, or\n\t\"help.start()\""
