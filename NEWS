@@ -64,6 +64,11 @@ BUG FIXES
     o   Building on Alpha OSF/1 no longer forces the C flag -std1,
 	which appears to be no longer needed.  (PR#7257)
 
+    o   Importing from another namespace was broken for versioned
+	installs, incorrectly reporting something like 
+	"package 'imported_from' does not have a name space".
+
+
 
 
         *********************************************************
