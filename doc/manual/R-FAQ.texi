@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2004
-@set FAQ-VERSION 1.8-43, @value{FAQ-YEAR}-02-20
+@set FAQ-VERSION 1.8-44, @value{FAQ-YEAR}-02-21
 @set REL-VERSION 1.8.1
 @set FAQ-ISBN 3-900051-01-1
 @documentlanguage en
@@ -2307,6 +2307,8 @@ Periodic Autoregression Analysis.
 Functions intended to facilitate certain basic analyses of DNA array
 data, especially with regard to comparing expression levels between two
 types of tissue.
+@item pgam
+Poisson-Gamma Additive Models.
 @item pheno
 Some easy-to-use functions for time series analyses of (plant-)
 phenological data sets.

@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.8-43, 2004-02-20
+Version 1.8-44, 2004-02-21
 ISBN 3-900051-01-1
 Kurt Hornik
 
@@ -2215,6 +2215,9 @@ distributions of R.)
      Functions intended to facilitate certain basic analyses of DNA array
      data, especially with regard to comparing expression levels between two
      types of tissue.
+
+*pgam*
+     Poisson-Gamma Additive Models.
 
 *pheno*
      Some easy-to-use functions for time series analyses of (plant-)
