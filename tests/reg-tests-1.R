@@ -967,6 +967,11 @@ stopifnot(length(at) == 2,
 try( get("print.ts")(1) )# -> Error
 ## seg.faulted till 1.5.1
 
+## cbind/rbind should work with NULL only args
+stopifnot(is.null(cbind(NULL)), is.null(cbind(NULL,NULL)),
+          is.null(rbind(NULL)), is.null(rbind(NULL,NULL)))
+## gave error from 0.63 till 1.5.1
+
 ## keep at end, as package `methods' has had persistent side effects
 library(methods)
 stopifnot(all.equal(3:3, 3.), all.equal(1., 1:1))
