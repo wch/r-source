@@ -198,4 +198,10 @@ glm.fit.null <-
 		prior.weights = weights, df.residual = resdf,
 		df.null = nulldf, y = y, converged = conv, boundary = FALSE))
 }
+
+print.atomic <- function(x, quote = TRUE, ...)
+{
+    .Deprecated("print.default")
+    print.default(x, quote=quote)
+}
 ## </entry>

@@ -13,6 +13,7 @@
 \alias{lm.fit.null}
 \alias{lm.wfit.null}
 \alias{glm.fit.null}
+\alias{print.atomic}
 %------ PLEASE: put \alias{.} here for EACH !
 \description{
   These functions are provided for compatibility with older versions of
@@ -41,6 +42,7 @@ glm.fit.null(x, y, weights = rep(1, nobs), start = NULL,
              etastart = NULL, mustart = NULL, offset = rep(0, nobs),
              family = gaussian(), control = glm.control(),
              intercept = FALSE)
+print.atomic(x, quote = TRUE, \dots)
 % </Deprecated 1.8.0>
 }
 \details{
@@ -69,6 +71,9 @@ glm.fit.null(x, y, weights = rep(1, nobs), start = NULL,
   \code{lm.fit.null} and \code{lm.wfit.null} are superseded by
   \code{lm.fit} and \code{lm.wfit} which handle null models now.
   Similarly, \code{glm.fit.null} is superseded by \code{glm.fit}.
+
+  \code{print.atomic} differs from \code{print.default} only in its
+  argument sequence.  It is not a method for \code{print}.
 }
 \seealso{
   \code{\link{Defunct}},

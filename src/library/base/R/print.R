@@ -10,9 +10,6 @@ print.default <- function(x, digits = NULL, quote = TRUE, na.print = NULL,
                             noOpt))
 }
 
-
-print.atomic <- function(x, quote = TRUE, ...) print.default(x, quote=quote)
-
 print.matrix <- print.default  ## back-compatibility
 
 prmatrix <-

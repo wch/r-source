@@ -301,6 +301,8 @@ DEPRECATED & DEFUNCT
 
     o	Method weights.lm(), a copy of weights.default(), has been removed.
 
+    o	print.atomic() is now deprecated.
+
 
 INSTALLATION CHANGES
 
