@@ -189,7 +189,7 @@ require(package, quietly = FALSE, warn.conflicts = TRUE,
 #endif
 #ifdef windows
   The library search path is initialized at startup from the environment
-  variable \code{R\_LIBS} (which should be a semicolon-separated list of
+  variable \env{R\_LIBS} (which should be a semicolon-separated list of
   directories at which \R library trees are rooted) by calling
   \code{.libPaths} with the directories specified in \env{R\_LIBS}.
 #endif
