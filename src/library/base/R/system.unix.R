@@ -30,8 +30,8 @@ function(..., list = character(0), package =c(.packages(),.Autoloaded),
     found <- FALSE
     if (files != "") {
       for (file in files) {
-        if(trace)
-          cat("name=",name,":\t file= .../",sub(".*/","",file),"::\t",sep="")
+	if(trace)
+	  cat("name=",name,":\t file= .../",sub(".*/","",file),"::\t",sep="")
 	if (found) break
 	found <- TRUE
 	switch(sub(".*\\.", "", file),
@@ -45,7 +45,7 @@ function(..., list = character(0), package =c(.packages(),.Autoloaded),
 		      env = .GlobalEnv),
 	       ## otherwise
 	       found <- FALSE)
-        if(trace) cat(if(!found) "*NOT* ", "found\n")
+	if(trace) cat(if(!found) "*NOT* ", "found\n")
       }
     }
     if (!found)
@@ -98,7 +98,7 @@ function(topic, package = c(.packages(),.Autoloaded), lib.loc =.lib.loc) {
       file <- system.file(paste("data", "/", topic, ".doc", sep = ""),
 			  package, lib.loc)
     }
-    if (length(file) && file != "") {
+    if (.Options$trace && length(file) && file != "") {
       cat ("\t\t\t\t\t\tHelp file name '", sub(".*/","",file),".Rd'\n",sep="")
       system(paste("${RHOME}/cmd/pager", file))
     } else
