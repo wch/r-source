@@ -156,6 +156,7 @@ function(x, ...)
                            sep = ""))
         }
         else if(type == "latex") {
+            ok <- FALSE
             zfile <- zip.file.extract(file, "Rhelp.zip")
             if(zfile != file) on.exit(unlink(zfile))
             if(file.exists(zfile)) {
