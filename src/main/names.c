@@ -462,6 +462,7 @@ FUNTAB R_FunTab[] =
 {"toupper",	do_toupper,	1,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"chartr",	do_chartr,	1,	11,	3,	{PP_FUNCALL, PREC_FN,	0}},
 {"sprintf",	do_sprintf,	1,	11,	-1,	{PP_FUNCALL, PREC_FN,	0}},
+{"make.unique",	do_makeunique,	0,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
 
 
 /* Type Checking (typically implemented in ./coerce.c ) */

@@ -904,3 +904,47 @@ SEXP Rrowsum_df(SEXP x, SEXP ncol, SEXP g, SEXP uniqueg)
     UNPROTECT(1); /*ans*/
     return ans;
 }
+
+SEXP do_makeunique(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    SEXP names, sep, ans, dup, newx;
+    int i, n, cnt;
+    HashData data;
+    char *csep, buf[512];
+    
+    checkArity(op, args);
+    names = CAR(args);
+    if(!isString(names)) errorcall(call, "names must be a character vector");
+    n = LENGTH(names);
+    sep = CADR(args);
+    if(!isString(sep) || LENGTH(sep) != 1)
+	errorcall(call, "sep must be a character string");
+    csep = CHAR(STRING_ELT(sep, 0));
+    PROTECT(ans = allocVector(STRSXP, n));
+    for(i = 0; i < n; i++)
+	SET_STRING_ELT(ans, i, STRING_ELT(names, i));
+    if(n > 1) {
+	HashTableSetup(names, &data);
+	data.nomatch = 0;
+	PROTECT(data.HashTable);
+	PROTECT(dup = duplicated(names));
+	PROTECT(newx = allocVector(STRSXP, 1));
+	for(i = 1; i < n; i++) { /* first cannot be a duplicate */
+	    if(!LOGICAL(dup)[i]) continue;
+	    /* Try appending 1,2,3, ..., n-1 until it is not already in use */
+	    for(cnt = 1; cnt < n; cnt++) {
+		sprintf(buf, "%s%s%d", CHAR(STRING_ELT(names, i)), csep, cnt);
+		SET_STRING_ELT(newx, 0, mkChar(buf));
+		PrintValue(newx);
+		if(Lookup(names, newx, 0, &data) == data.nomatch) break;
+	    }
+	    /* insert it */
+	    PrintValue(newx);
+	    (void) isDuplicated(newx, 0, &data);
+	    SET_STRING_ELT(ans, i, STRING_ELT(newx, 0));
+	}
+	UNPROTECT(3);
+    }
+    UNPROTECT(1);
+    return ans;
+}

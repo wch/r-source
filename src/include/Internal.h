@@ -248,6 +248,7 @@ SEXP do_ls(SEXP, SEXP, SEXP, SEXP);
 SEXP do_machine(SEXP, SEXP, SEXP, SEXP);
 SEXP do_makelist(SEXP, SEXP, SEXP, SEXP);
 SEXP do_makenames(SEXP, SEXP, SEXP, SEXP);
+SEXP do_makeunique(SEXP, SEXP, SEXP, SEXP);
 SEXP do_makevector(SEXP, SEXP, SEXP, SEXP);
 SEXP do_match(SEXP, SEXP, SEXP, SEXP);
 SEXP do_matchcall(SEXP, SEXP, SEXP, SEXP);
