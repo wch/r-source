@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 1.1-30, 2000-11-25
+Version 1.1-31, 2000-11-28
 Kurt Hornik
 
 
@@ -1373,10 +1373,6 @@ these a try, of course.  This area of CRAN currently contains
 *HTML*
      Functions for exporting R objects as HTML tables.
 
-*Java*
-     An interface from R to Java to create and call Java objects and
-     methods.
-
 *RMySQL*
      An interface between R and the MySQL database system.
 
@@ -1425,15 +1421,20 @@ these a try, of course.  This area of CRAN currently contains
 *npConfRatio*
      Nonparametric confidence intervals for the ratios of medians.
 
-*syskern*
-     Functions for writing code that is OS and R/S independent.
-
-*tframe*
-     Functions for writing code that is independent of the representation of
-     time.
-
 *timeslab*
      Time series routines.
+
+   Directory `src/contrib/Omegahat' contains yet unreleased packages from
+the Omegahat Project for Statistical Computing (http://www.omegahat.org).
+Currently, there are
+
+*Java*
+     An interface from R to Java to create and call Java objects and
+     methods.
+
+*RSPerl*
+     An interface from R to an embedded, persistent Perl interpreter,
+     allowing one to call arbitrary Perl subroutines, classes and methods.
 
    Jim Lindsey <jlindsey@luc.ac.be> has written a collection of R packages
 for nonlinear regression and repeated measurements, consisting of *event*
