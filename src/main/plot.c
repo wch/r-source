@@ -1270,7 +1270,7 @@ SEXP do_plot_xy(SEXP call, SEXP op, SEXP args, SEXP env)
     else							\
 	errorcall(call, "invalid plotting structure");		\
     if (LENGTH(sx) != LENGTH(sy))				\
-	error("x and y lengths differ in" subname "().");	\
+	error("x and y lengths differ in " subname "().");	\
     n = LENGTH(sx);						\
     args = CDR(args)
 

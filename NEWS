@@ -178,7 +178,8 @@ BUG FIXES
 
     o	tcltk back-compatibility fix for tcl8.0  <<Peter fixme>>
 
-    o	hist.POSIXct(*, breaks) now works for `breaks = #{breaks}'
+    o	hist.POSIXct(*, breaks) now works for `breaks = #{breaks}' and
+	when `x' has NAs; the latter applies to cut.POSIXct() as well.
 
     o	The internal download.file() methods were setting the proxy
 	port to 0 unless it was specified.
@@ -188,6 +189,8 @@ BUG FIXES
     o	cut.default() was not handling infinite values with infinite
 	breaks.  (PR#1694)
 
+    o	ks.test() could fail due to integer overflow if n.x and n.y
+	were both large.
 
 
 

@@ -89,7 +89,7 @@ plclust(tree, hang = 0.1, unit = FALSE, level = FALSE, hmin = 0,
 
   There is a \code{\link{print}} and a \code{\link{plot}} method for
   \code{hclust} objects.
-  The \code{plclust()} function is basically the same the plot method,
+  The \code{plclust()} function is basically the same as the plot method,
   \code{plot.hclust}, primarily for back compatibility with S-plus. Its
   extra arguments are not yet implemented.
 }

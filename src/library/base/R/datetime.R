@@ -536,30 +536,31 @@ cut.POSIXt <-
     x <- as.POSIXct(x)
 
     if (inherits(breaks, "POSIXt")) {
-        breaks <- as.POSIXlt(breaks)
+	breaks <- as.POSIXlt(breaks)
     } else if(is.numeric(breaks) && length(breaks) == 1) {
-        ## specified number of breaks
+	## specified number of breaks
     } else if(is.character(breaks) && length(breaks) == 1) {
-        valid <-
-            pmatch(breaks,
-                   c("secs", "mins", "hours", "days", "weeks",
-                     "months", "years"))
-        if(is.na(valid)) stop("invalid specification of `breaks'")
-        start <- as.POSIXlt(min(x))
-        incr <- 1
-        if(valid > 1) { start$sec <- 0; incr <- 59.99 }
-        if(valid > 2) { start$min <- 0; incr <- 3600 - 1 }
-        if(valid > 3) { start$hour <- 0; incr <- 86400 - 1 }
-        if(valid == 5) {
-            start$mday <- start$mday - start$wday
-            if(start.on.monday)
-                start$mday <- start$mday + ifelse(start$wday > 0, 1, -6)
-            incr <- 7*86400
-        }
-        if(valid == 6) { start$mday <- 1; incr <- 31*86400 }
-        if(valid == 7) { start$mon <- 0; incr <- 366*86400 }
-        breaks <- seq(start, max(x) + incr, breaks)
-        breaks <- breaks[1:(1+max(which(breaks < max(x))))]
+	valid <-
+	    pmatch(breaks,
+		   c("secs", "mins", "hours", "days", "weeks",
+		     "months", "years"))
+	if(is.na(valid)) stop("invalid specification of `breaks'")
+	start <- as.POSIXlt(min(x, na.rm=TRUE))
+	incr <- 1
+	if(valid > 1) { start$sec <- 0; incr <- 59.99 }
+	if(valid > 2) { start$min <- 0; incr <- 3600 - 1 }
+	if(valid > 3) { start$hour <- 0; incr <- 86400 - 1 }
+	if(valid == 5) {
+	    start$mday <- start$mday - start$wday
+	    if(start.on.monday)
+		start$mday <- start$mday + ifelse(start$wday > 0, 1, -6)
+	    incr <- 7*86400
+	}
+	if(valid == 6) { start$mday <- 1; incr <- 31*86400 }
+	if(valid == 7) { start$mon <- 0; incr <- 366*86400 }
+	maxx <- max(x, na.rm = TRUE)
+	breaks <- seq(start, maxx + incr, breaks)
+	breaks <- breaks[1:(1+max(which(breaks < maxx)))]
     } else stop("invalid specification of `breaks'")
     res <- cut(unclass(x), unclass(breaks), labels = labels, right = FALSE)
     if(is.null(labels)) levels(res) <- as.character(breaks[-length(breaks)])
@@ -664,8 +665,6 @@ hist.POSIXt <- function(x, breaks, ..., xlab = deparse(substitute(x)),
         if(d > 86400*366) incr <- 86400*366
         num.br <- FALSE
     } else {
-        start <- as.POSIXlt(min(x, na.rm = TRUE))
-        maxx <- max(x, na.rm = TRUE)
         num.br <- is.numeric(breaks) && length(breaks) == 1
         if(num.br) {
         ## specified number of breaks
@@ -675,6 +674,7 @@ hist.POSIXt <- function(x, breaks, ..., xlab = deparse(substitute(x)),
                        c("secs", "mins", "hours", "days", "weeks",
                          "months", "years"))
             if(is.na(valid)) stop("invalid specification of `breaks'")
+            start <- as.POSIXlt(min(x, na.rm = TRUE))
             incr <- 1
             if(valid > 1) { start$sec <- 0; incr <- 59.99 }
             if(valid > 2) { start$min <- 0; incr <- 3600 - 1 }
@@ -688,6 +688,7 @@ hist.POSIXt <- function(x, breaks, ..., xlab = deparse(substitute(x)),
             }
             if(valid == 6) { start$mday <- 1; incr <- 31*86400 }
             if(valid == 7) { start$mon <- 0; incr <- 366*86400 }
+            maxx <- max(x, na.rm = TRUE)
             breaks <- seq(start, maxx + incr, breaks)
             breaks <- breaks[1:(1+max(which(breaks < maxx)))]
         }
