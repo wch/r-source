@@ -14,6 +14,8 @@ NEW FEATURES
 	besselI(), besselK(), besselJ(), besselY() are the I(), K(),
 	J(), and Y() Bessel functions.
 
+    o	New conflicts() function from B.D.Ripley
+
     o	uniroot has a new `maxiter' argument and returns #{iter} and
 	precision.
 
@@ -100,6 +102,11 @@ NEW FEATURES
 	and is subject to internal and interface changes.
 
 BUG FIXES
+
+    o	substring("", NULL) no longer segfaults.
+
+    o	formatC(.) now takes default "width = 1" when both width and digits
+	are unspecified.
 
     o	several fixes in internal axis and tickmarks setup for
 	"extreme" ranges and values, especially for "log" scaling.
