@@ -188,8 +188,8 @@ NEW FEATURES
 	logical (not integer).
 
     o	new as.symbol(), identical to as.name().
-	is.symbol & is.name() are now identical too, by definition;
-	before, they were identical by implementation.
+	is.symbol & is.name() are now identical by definition;
+	before, they were equivalent by implementation.
 
     o	coplot() has new option subscripts=TRUE to pass the indices
 	to the panel function.
