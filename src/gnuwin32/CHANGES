@@ -8,14 +8,13 @@ rw1090
 ======
 
 
-R's internal malloc is now remapped to Rm_malloc and only used in
-allocating memory for R objects.
+R's internal malloc etc are now remapped to Rm_malloc etc and only
+used in allocating memory for R objects.
 
 Improved malloc routines from the current version of Doug Lea's malloc
 (as suggested by David Teller) should enable large memory areas to be
 used more effectively, in particular those over 2Gb where OS support
-has been enabled.  [NB: temporarily the memory limit set by
---max-mem-size is not implemented.]
+has been enabled.
 
 
 
