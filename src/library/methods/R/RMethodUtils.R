@@ -172,7 +172,7 @@ generic.skeleton <-
       body(fdefault) <- substitute(stop(MESSAGE), list(MESSAGE=
           paste("Invalid call in method dispatch to \"",name, "\" (no default method)",
                 sep="")))
-      environment(fdefault) <- .BaseEnv
+      environment(fdefault) <- baseenv()
     }
     skeleton[[1]] <- fdefault
     as.call(skeleton)
@@ -1044,7 +1044,7 @@ metaNameUndo <- function(strings, prefix = "M", searchForm = FALSE) {
     ev <- as.environment(ev)
     value <- list(ev)
     while(!isNamespace(ev)) {
-        if(identical(ev, .BaseEnv)) {
+        if(identical(ev, baseenv())) {
             value[[length(value)]] <- .BaseNamespaceEnv
             break
         } else if(identical(ev, .EmptyEnv)) {

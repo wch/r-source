@@ -308,7 +308,8 @@ lazyload:
             (if test -s $(SPKG0)/R_PROFILE.R; then cat $(SPKG0)/R_PROFILE.R; fi; \
 	      $(ECHO) "invisible(.libPaths(c(.Library,\"$(RLIB)\", .libPaths()))); .getRequiredPackages(\"$(SPKG0)/DESCRIPTION\",useImports=TRUE); Sys.putenv('R_CROSS_BUILD'='$(R_X_BUILD)'); tools:::makeLazyLoading(\"$(PKG)\", lib.loc=\"$(RLIB)\")") | \
 	      R_DEFAULT_PACKAGES=$(R_START_PACKAGES) \
-	      LC_COLLATE=C R_OSTYPE=windows $(REXE) > /dev/null || exit 1; \
+# temp delete	      LC_COLLATE=C R_OSTYPE=windows $(REXE) > /dev/null || exit 1; \
+	       LC_COLLATE=C R_OSTYPE=windows $(REXE) || exit 1; \
 	    rm -f $(DPKG)/R/all.rda ; \
 	    if test -r install.R ; then \
 	      cat install.R >> $(DPKG)/R/$(PKG) ; \

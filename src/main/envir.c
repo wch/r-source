@@ -2329,11 +2329,6 @@ SEXP do_env2list(SEXP call, SEXP op, SEXP args, SEXP rho)
     if( !isEnvironment(env) )
         error(_("argument must be an environment"));
 
-/* FIXME - this shouldn't skip the base env should it */
-
-    if( env == R_BaseEnv )
-      return(R_NilValue);
-
     all = asLogical(CADR(args));
     if (all == NA_LOGICAL)
       all = 0;
@@ -2380,11 +2375,6 @@ SEXP do_eapply(SEXP call, SEXP op, SEXP args, SEXP rho)
     env = eval(CAR(args), rho);
     if( !isEnvironment(env) )
         error(_("argument must be an environment"));
-
-/* FIXME - this shouldn't skip the base env should it */
-
-    if( env == R_BaseEnv )
-      return(R_NilValue);
 
     FUN = CADR(args);
     if (!isSymbol(FUN))
@@ -2607,8 +2597,8 @@ SEXP do_as_environment(SEXP call, SEXP op, SEXP args, SEXP rho)
 	return do_pos2env(call, op, args, rho);
     default:
 	errorcall(call, _("invalid object for as.environment"));
-		  return R_NilValue;	/* -Wall */
-  }
+	return R_NilValue;	/* -Wall */
+    }
 }
 
 void R_LockEnvironment(SEXP env, Rboolean bindings)

@@ -1,14 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995-1998	Robert Gentleman and Ross Ihaka.
- *  Copyright (C) 2000-2004	The R Development Core Team.
- *
- *  This program is free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; either version 2 of the License, or
- *  (at your option) any later version.
- *
- *  This program is distributed in the hope that it will be useful,
+ *  Copyright (C) 2000-2004	The R Development Core Team.RR_
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
@@ -524,6 +517,10 @@ static void PrintEnvir(SEXP rho)
 {
     if (rho == R_GlobalEnv)
 	Rprintf("<environment: R_GlobalEnv>\n");
+    else if (rho == R_BaseEnv)
+    	Rprintf("<environment: base>\n");	
+    else if (rho == R_EmptyEnv)
+    	Rprintf("<environment: R_EmptyEnv>\n");
     else if (R_IsPackageEnv(rho))
 	Rprintf("<environment: %s>\n",
 		CHAR(STRING_ELT(R_PackageEnvName(rho), 0)));
@@ -794,7 +791,7 @@ void PrintValueEnv(SEXP s, SEXP env)
 
 void PrintValue(SEXP s)
 {
-    PrintValueEnv(s, R_NilValue);
+    PrintValueEnv(s, R_BaseEnv);
 }
 
 
@@ -802,7 +799,7 @@ void PrintValue(SEXP s)
 
 void R_PV(SEXP s)
 {
-    if(isObject(s)) PrintValueEnv(s, R_NilValue);
+    if(isObject(s)) PrintValueEnv(s, R_BaseEnv);
 }
 
 
