@@ -113,7 +113,7 @@ install.packages <- function(pkgs, lib, repos = CRAN,
 
 download.packages <- function(pkgs, destdir, available = NULL,
                               repos = CRAN,
-                              contriburl = contrib.url(repos),
+                              contriburl = contrib.url(repos, type),
                               CRAN = getOption("CRAN"),
                               method, type)
 {
