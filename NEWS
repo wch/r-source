@@ -38,6 +38,8 @@ NEW FEATURES
 
 BUG FIXES
 
+    o   HTML indices get only built when installing a package to RHOME
+
     o	subscripting with a length zero logical no longer bombs.
 
     o	as.ordered(NULL) now returns an "ordered" object.
