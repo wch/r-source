@@ -41,4 +41,8 @@
 \references{
     McNeil, D. R. (1977).  Interactive Data Analysis.  Wiley.
 }
+\examples{
+data(OrchardSprays)
+pairs(OrchardSprays, main = "OrchardSprays data")
+}
 \keyword{datasets}
