@@ -24,7 +24,7 @@
 #include "Defn.h"
 #include "R_ext/Rdynpriv.h"
 
-#include "../unix/Runix.h"
+#include "Runix.h"
 #include <sys/types.h>
 #include <sys/stat.h>
 
