@@ -472,7 +472,7 @@ SEXP do_subset(SEXP call, SEXP op, SEXP args, SEXP rho)
     /* to the generic code below.  Note that evaluation */
     /* retains any missing argument indicators. */
 
-    if(DispatchOrEval(call, "[", args, rho, &ans, 0, 0))
+    if(DispatchOrEval(call, op, "[", args, rho, &ans, 0, 0))
 	return(ans);
 
     /* Method dispatch has failed, we now */
@@ -582,7 +582,7 @@ SEXP do_subset2(SEXP call, SEXP op, SEXP args, SEXP rho)
     /* through to the generic code below.  Note that */
     /* evaluation retains any missing argument indicators. */
 
-    if(DispatchOrEval(call, "[[", args, rho, &ans, 0, 0))
+    if(DispatchOrEval(call, op, "[[", args, rho, &ans, 0, 0))
 	return(ans);
 
     /* Method dispatch has failed. */
@@ -765,7 +765,7 @@ SEXP do_subset3(SEXP call, SEXP op, SEXP args, SEXP env)
     /* through to the generic code below.  Note that */
     /* evaluation retains any missing argument indicators. */
 
-    if(DispatchOrEval(call, "$", args, env, &ans, 0, 0)) {
+    if(DispatchOrEval(call, op, "$", args, env, &ans, 0, 0)) {
 	UNPROTECT(1);
 	return(ans);
     }

@@ -6,13 +6,21 @@
 .makeBasicFunsList<- function(where)
 {
     env <- new.env()
-    .BasicFunsList <- get(".BasicFunsList", envir=where)
+    funs <- get(".BasicFunsList", envir=where)
+    ## First, set up the existing functions in the list as valid generics.
+    curNames <- names(funs)
+    for(i in seq(along=funs)) {
+      val <- funs[[i]]
+      if(is.function(val))
+        funs <- .addBasicGeneric(funs, curNames[[i]], val, "", env)
+    }
+      
     ## the Math group.
 
     for(f in c("log", "sqrt", "log10", "cumprod", "abs", "acos", "acosh", "asin", "asinh",
                "atan", "atanh", "ceiling", "cos", "cosh", "cumsum", "exp", "floor",
                "gamma", "lgamma", "sin", "sinh", "tan", "tanh", "trunc"))
-        .BasicFunsList <- .addBasicGeneric(.BasicFunsList, f, function(x)standardGeneric(""),"Math", env)
+        funs <- .addBasicGeneric(funs, f, function(x)standardGeneric(""),"Math", env)
 
 
     invisible(setGeneric(where=where,"Math", function(x)stop("Don't call this generic directly")))
@@ -20,9 +28,9 @@
     ## The Math2 group (too late now, but it would probably have been better to put "trunc" in
     ## here and call this something like the "Truncation" group)
 
-    .BasicFunsList <- .addBasicGeneric(.BasicFunsList, "round",
+    funs <- .addBasicGeneric(funs, "round",
                                        function (x, digits = 0)  standardGeneric(""), "Math2", env)
-    .BasicFunsList <- .addBasicGeneric(.BasicFunsList, "signif",
+    funs <- .addBasicGeneric(funs, "signif",
                                        function (x, digits = 6)  standardGeneric(""), "Math2", env)
 
     invisible(setGeneric(where=where,"Math2", function(x, digits)stop("Don't call this generic directly"),
@@ -32,7 +40,7 @@
     ## The Arith group
 
     for(f in c("+", "-", "*", "^", "%%", "%/%", "/"))
-        .BasicFunsList <- .addBasicGeneric(.BasicFunsList, f, function(e1, e2) standardGeneric(""),
+        funs <- .addBasicGeneric(funs, f, function(e1, e2) standardGeneric(""),
                                            "Arith", env)
 
     invisible(setGeneric(where=where,"Arith", function(e1, e2)stop("Don't call this generic directly"),
@@ -41,7 +49,7 @@
     ## the Compare group
 
     for(f in c("==", ">", "<", "!=", "<=", ">="))
-        .BasicFunsList <- .addBasicGeneric(.BasicFunsList, f, function(e1, e2) standardGeneric(""),
+        funs <- .addBasicGeneric(funs, f, function(e1, e2) standardGeneric(""),
                                            "Compare", env)
 
     invisible(setGeneric(where=where,"Compare", function(e1, e2)stop("Don't call this generic directly"),
@@ -63,7 +71,7 @@
     ## anomalies, such as !identical(max(x,y), max(y,x))
 
     for(f in c("max", "min", "range", "prod", "sum", "any", "all"))
-        .BasicFunsList <- .addBasicGeneric(.BasicFunsList, f, function (x, ..., na.rm = FALSE) standardGeneric(""),
+        funs <- .addBasicGeneric(funs, f, function (x, ..., na.rm = FALSE) standardGeneric(""),
                                            "Summary", env)
 
     invisible(setGeneric(where=where,"Summary", function (x, ..., na.rm = FALSE)stop("Don't call this generic directly"),
@@ -78,13 +86,13 @@
     ## Math group).
 
     for(f in c("Arg", "Conj", "Im", "Mod", "Re"))
-        .BasicFunsList <- .addBasicGeneric(.BasicFunsList, f, function(z) standardGeneric(""),
+        funs <- .addBasicGeneric(funs, f, function(z) standardGeneric(""),
                                            "Complex", env)
 
     invisible(setGeneric(where=where,"Complex", function(z)stop("Don't call this generic directly"),
                          group = "Ops"))
 
-    assign(".BasicFunsList", .BasicFunsList, envir=where)
+    assign(".BasicFunsList", funs, envir=where)
     rm(.addBasicGeneric, envir=where)
 }
 

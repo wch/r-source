@@ -460,10 +460,14 @@ extern int	R_ShowErrorMessages INI_as(1);	/* show error messages? */
 
 extern char*	R_GUIType	INI_as("unknown");
 
-/* Pointer for the dispatch utilitiy in package methods  */
+/* Pointer  type and utilities for dispatch in the methods package */
 typedef SEXP (*R_stdGen_ptr_t)(SEXP, SEXP); /* typedef */
 R_stdGen_ptr_t R_get_standardGeneric_ptr(); /* get method */
 R_stdGen_ptr_t R_set_standardGeneric_ptr(R_stdGen_ptr_t new); /* set method */
+SEXP R_deferred_default_method();
+SEXP R_set_prim_method(SEXP fname, SEXP op, SEXP code_vec, SEXP fundef, SEXP mlist);
+SEXP do_set_prim_method(SEXP op, char *code_string, SEXP fundef, SEXP mlist);
+void R_set_quick_method_check(R_stdGen_ptr_t); 
 
 #ifdef __MAIN__
 #undef extern
@@ -600,7 +604,7 @@ void DataFrameClass(SEXP);
 SEXP ddfindVar(SEXP, SEXP);
 SEXP deparse1(SEXP,Rboolean);
 SEXP deparse1line(SEXP,Rboolean);
-int DispatchOrEval(SEXP, char*, SEXP, SEXP, SEXP*, int, int);
+int DispatchOrEval(SEXP, SEXP, char*, SEXP, SEXP, SEXP*, int, int);
 int DispatchGroup(char*, SEXP,SEXP,SEXP,SEXP,SEXP*);
 SEXP duplicated(SEXP);
 SEXP dynamicfindVar(SEXP, RCNTXT*);
@@ -623,7 +627,9 @@ void InitConnections(void);
 void InitEd(void);
 void InitFunctionHashing(void);
 void InitGlobalEnv(void);
+int R_has_methods(SEXP);
 void R_InitialData(void);
+SEXP R_possible_dispatch(SEXP, SEXP, SEXP, SEXP, SEXP);
 void InitMemory(void);
 void InitNames(void);
 void InitOptions(void);

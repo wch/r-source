@@ -1436,7 +1436,7 @@ SEXP EvalArgs(SEXP el, SEXP rho, int dropmissing)
  * To call this an ugly hack would be to insult all existing ugly hacks
  * at large in the world.
  */
-int DispatchOrEval(SEXP call, char *generic, SEXP args, SEXP rho,
+int DispatchOrEval(SEXP call, SEXP op, char *generic, SEXP args, SEXP rho,
 		   SEXP *ans, int dropmissing, int argsevald)
 {
 #define AVOID_PROMISES_IN_DISPATCH_OR_EVAL
@@ -1484,6 +1484,39 @@ int DispatchOrEval(SEXP call, char *generic, SEXP args, SEXP rho,
 	/* try to dispatch on the object */
     if( isObject(x)) {
 	char *pt;
+      /* try for formal method */
+      if(R_has_methods(op)) {
+	SEXP value, argValue;
+	/* evaluate all the arguments. Eventually, a more subtle
+	   strategy may be possible, avoiding any chance of evaluating
+	   the arg. twice.  See objects.c */
+	if(!argsevald) {
+	  if (dots)
+	    argValue = EvalArgs(args, rho, dropmissing);
+	  else {
+	    argValue = CONS(x, EvalArgs(CDR(args), rho, dropmissing));
+	    SET_TAG(argValue, CreateTag(TAG(args)));
+	  }
+	}
+	else
+	  argValue = args;
+	PROTECT(argValue);
+	value = R_possible_dispatch(call, op, argValue, rho, x);
+	UNPROTECT(1);
+	if(value) {
+	  *ans = value;
+	  UNPROTECT(1);
+	  return 1;
+	}
+	else {
+	  /* go on, with the evaluated args.  Not guaranteed to have
+	     the same semantics as if the arguments were not
+	     evaluated, in special cases (e.g., arg values that are LANGSXP)
+	  */
+	  args = argValue;
+	  argsevald = 1;
+	}
+      }
 	if (TYPEOF(CAR(call)) == SYMSXP)
 	    pt = strrchr(CHAR(PRINTNAME(CAR(call))), '.');
 	else
@@ -1496,10 +1529,11 @@ int DispatchOrEval(SEXP call, char *generic, SEXP args, SEXP rho,
 	    SET_PRVALUE(CAR(pargs), x);
 	    begincontext(&cntxt, CTXT_RETURN, call, rho, rho, pargs);
 #ifdef EXPERIMENTAL_NAMESPACES
-	    if(usemethod(generic, x, call, pargs, rho, rho, R_NilValue, ans)) {
+	    if(usemethod(generic, x, call, pargs, rho, rho, R_NilValue, ans))
 #else
-	    if(usemethod(generic, x, call, pargs, rho, ans)) {
+	    if(usemethod(generic, x, call, pargs, rho, ans))
 #endif
+	    {
 		endcontext(&cntxt);
 		UNPROTECT(2);
 		return 1;
@@ -1508,7 +1542,7 @@ int DispatchOrEval(SEXP call, char *generic, SEXP args, SEXP rho,
 	    UNPROTECT(1);
 	}
     }
-
+    if(!argsevald) {
     if (dots)
 	/* The first call argument was ... and may contain more than the
 	   object, so it needs to be evaluated here.  The object should be
@@ -1518,6 +1552,8 @@ int DispatchOrEval(SEXP call, char *generic, SEXP args, SEXP rho,
 	*ans = CONS(x, EvalArgs(CDR(args), rho, dropmissing));
 	SET_TAG(*ans, CreateTag(TAG(args)));
     }
+    }
+    else *ans = args;
     UNPROTECT(1);
 #else
     SEXP x;

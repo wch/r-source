@@ -297,6 +297,13 @@ NEW FEATURES
 	that missingness can be propagated more easily.  The default
 	corresponds to all currently known libraries as before.
 
+    o   The methods package now uses C-level code (from within
+        DispatchOrEval) to dispatch any methods defined for primitive
+        functions.  As with S3-style methods, methods can only be
+        defined if the first argument satisfies is.object(x) (not
+        strictly required for formal methods, but imposed for now for
+        simplicity and efficiency).
+
 
 
 BUG FIXES

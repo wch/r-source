@@ -236,8 +236,21 @@ getGeneric <-
   ##
   ## If there is no definition in the current search list, throws an error or returns
   ## NULL according to the value of mustFind.
-  function(f, mustFind = FALSE)
-    .Call("R_getGeneric", f, mustFind, PACKAGE = "methods")
+  function(f, mustFind = FALSE) {
+    value <- .Call("R_getGeneric", f, FALSE, PACKAGE = "methods")
+    if(is.null(value) && exists(f, "package:base")) {
+      ## check for primitives
+      baseDef <- get(f, "package:base")
+      if(is.primitive(baseDef))
+        value <- elNamed(.BasicFunsList, f)
+    }
+    if(is.function(value))
+      value
+    else if(mustFind)
+      stop(paste("No generic function defined for \"",f,"\"", sep=""))
+    else
+      NULL
+  }
 
 getGroup <-
   ## return the groups to which this generic belongs.  If `recursive=TRUE', also all the
@@ -246,8 +259,11 @@ getGroup <-
 {
     if(is.character(fdef))
         fdef <- getGeneric(fdef)
-    if(is.function(fdef))
+    if(is.function(fdef)) {
         group <- get(".Group", envir = environment(fdef))
+        ## compatibility w. S-Plus allows "" for empty group
+        group <- group[nchar(group)>0]
+      }
     else
         group <- character()
     if(recursive && length(group) > 0) {
@@ -271,8 +287,11 @@ getMethodsMetaData <-
 
 assignMethodsMetaData <-
   ## assign value to be the methods metadata for generic f on database where.
-  function(f, value, where)
-  assign(mlistMetaName(f), value, where)
+  ## Also updates cached information about this generic.
+  function(f, value, where) {
+    assign(mlistMetaName(f), value, where)
+    cacheGenericsMetaData(f, TRUE)
+  }
 
 mlistMetaName <-
   ## name mangling to simulate metadata for a methods definition.
@@ -284,6 +303,7 @@ getGenerics <-
     pattern <- mlistMetaName("")
     n <- nchar(pattern)
     value <- character()
+    if(is.environment(where)) where <- list(where)
     for(i in where) {
       these <- objects(i, all=TRUE)
       ## string match the pattern (NOT by a regexp in grep)
@@ -292,3 +312,58 @@ getGenerics <-
     }
     substring(unique(value), n+1)
   }
+
+is.primitive <-
+  function(fdef)
+    switch(typeof(fdef),
+           "special" = , "builtin" = TRUE,
+           FALSE)
+    
+cacheMetaData <-
+  function(envir, attach) {
+    ## a collection of actions performed on attach or detach
+    ## to update class and method information.
+    generics <- getGenerics(envir)
+    if(length(generics)>0)
+      cacheGenericsMetaData(generics, attach)
+  }
+
+cacheGenericsMetaData <-
+  function(generics, attach = TRUE) {
+    for(f in generics) {
+      ## find the function.  It may be a generic, but will be a primitive
+      ## if the internal C code is being used to dispatch methods for primitives.
+      ## It may also be NULL, if no function is found (when detaching the only
+      ## package defining this function, for example).
+      if(!is.null(getFromMethodMetaData(f)))
+        removeFromMethodMetaData(f)
+      fdef <- getFunction(f, mustFind = FALSE)
+      if(is.primitive(fdef)) {
+        if(attach) code <- "reset"
+        else {
+          code <- "clear"
+          for(i in search()) {
+            envi <- as.environment(i)
+            if(!identical(envi, env) &&
+               !is.null(getMethodsMetaData(f, envi)))
+              code <- "reset"
+          }
+        }
+        switch(code,
+               reset = {
+      ## in the current version of this function,
+      ## primitives are pre-cached in the method metadata (because
+      ## they are not visible as generic functions from the C code).
+                 generic <- getAllMethods(f)
+                 assignToMethodMetaData(f, generic)
+                 setPrimitiveMethods(f, fdef, code, generic)
+                 },
+               clear = setPrimitiveMethods(f, fdef, code, NULL))
+      }
+    }
+  }
+
+setPrimitiveMethods <-
+  function(f, fdef, code, generic)
+    .Call("R_M_setPrimitiveMethods", f, fdef, code, generic, PACKAGE="methods")
+

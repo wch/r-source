@@ -16,6 +16,7 @@
 \alias{assignToMethodMetaData}
 \alias{getFromMethodMetaData}
 \alias{removeFromMethodMetaData}
+\alias{is.primitive}
 \alias{.saveImage}
 %% Not for the user to know about!
 \alias{.ShortPrimitiveSkeletons} %% used from C code
@@ -52,6 +53,7 @@ assignToMethodMetaData(name, value)
 
 removeFromMethodMetaData(name)
 
+is.primitive(fdef)
 
 }
 \description{
@@ -118,6 +120,12 @@ not having either formal arguments nor a function body).
 If there is no definition in the current search list, throws an error or returns
 NULL according to the value of mustFind.
 
+Primitive functions are dealt with specially, since there is never a
+formal generic definition for them.  The value returned is the formal
+definition used for assigning methods to this primitive.  Not all
+primitives can have methods; if this one can't, then \code{getGeneric}
+returns \code{NULL} or throws an error.
+
   
   }
 \item{\code{getGroup}:}{ 
@@ -149,6 +157,10 @@ NULL according to the value of mustFind.
       removeFromMethodMetaData}}{
       Functions to manage the session metadata for methods.  Don't
       call these directly.}
+    
+    \item{\code{is.primitive}}{
+      Is this object a primitive function (either a builtin or special)?
+      }
 
 \item{\code{.saveImage}}{Flag, used in dynamically initializing the
     methods package from \code{.First.lib}}

@@ -48,7 +48,23 @@ introduction and for more details.
   
 \describe{
   \item{\code{isGeneric}:}{ 
-  Is there a function named \code{f}, and if so, is it a generic?  
+    Is there a function named \code{f}, and if so, is it a generic?
+
+    The \code{getName} argument allows a function to find the name from
+    a function definition.  If it is \code{TRUE} then the name of the
+    generic is returned, or \code{FALSE} if this is not a generic
+    function definition.
+
+    The behavior of \code{isGeneric} and \code{\link{getGeneric}} for
+    primitive functions is slightly different.  These functions don't
+    exist as formal function objects (for efficiency and historical
+    reasons), regardless of whether methods have been defined for them.
+    A call to \code{isGeneric} tells you whether methods have been
+    defined for this primitive function, either on database \code{where}
+    or anywhere in the current search list.  In contrast, a call to
+    \code{\link{getGeneric}} will return what the generic for that
+    function would be, even if no methods have been currently defined
+    for it.
   
 }
   \item{\code{removeGeneric}:}{ 

@@ -344,8 +344,7 @@ newClassEnvironment <-
 newBasic <-
   ## the implementation of the function `new' for basic classes that don't have
   ## a formal definition.  Any of these could have a formal definition, except for
-  ## Class="NULL" (disallowed because NULL can't have attributes).  For all cases except
-  ## "NULL", the class of the result will be set to Class.
+  ## Class="NULL" (disallowed because NULL can't have attributes).
   ##
   ## See `new' for the interpretation of the arguments.
   function(Class, ..., .Force = FALSE) {
@@ -378,7 +377,7 @@ newBasic <-
                     stop(paste("Calling new() on an undefined and non-basic class (\"",
                                Class, "\")", sep=""))
                   )
-  class(value) <- Class
+## not needed ??  class(value) <- Class
   value
 }
 

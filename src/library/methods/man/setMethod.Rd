@@ -74,12 +74,10 @@ for further details and examples.
 }
 \examples{
 \testonly{  library(modreg)
- if(!isClass("track")) {
   setClass("track",
     representation(x="numeric", y = "numeric"))
   setSClass("trackCurve", extends = "track",
     properties = list(smooth = "numeric"))
- }
 }
 ## A function like plot, but with explicit x, y arguments:
 plotData <- function(x, y, ...) {
@@ -104,7 +102,7 @@ setMethod("plotData", "track",
 )
 t1 <- new("track", x=1:30, y=sort(rnorm(30)))
 tc1 <- new("trackCurve", t1)
-slot(tc1, "smooth") <- smooth.spline(slot(tc1, "x"), slot(tc1, "y"))$y
+slot(tc1, "smooth") <- smooth.spline(slot(tc1, "x"), slot(tc1, "y"))$y #$
 plotData(t1)
 plotData(qnorm(ppoints(30)), t1)
 ## An example of inherited methods.
@@ -121,11 +119,8 @@ plotData(tc1)
 plotData(qnorm(ppoints(30)), tc1)
 
 ## defining methods for a special function.
-## Although "[" is not a standard kind of function,
-## it can be made a generic function, and methods
-## can be defined for it.
-setGeneric("[")
-args("[") ## to check the arguments, now that it's really a function
+## Although "[" and "length" are not ordinary functions
+## methods can be defined for them.
 setMethod("[", "track",
   function(x, i, j, ..., drop) {
     x@x <- x@x[i]; x@y <- x@y[i]
@@ -133,7 +128,16 @@ setMethod("[", "track",
   })
 plotData(t1[1:15])
 
+setMethod("length", "track", function(x)length(x@y))
+length(t1)
+
 \testonly{
+## for the primitives
+## inherited methods
+
+length(tc1)
+tc1[-1]
+
 ## make sure old-style methods still work.
 t11 <- t1[1:15]
 identical(t1@y[1:15], t11@y)

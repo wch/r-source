@@ -6,7 +6,7 @@
  then be defined.
 }
 \usage{
-setGeneric(name, def, group=NULL, valueClass=NULL, where=1)
+setGeneric(name, def, group=NULL, valueClass=NULL, where=1, doAssign)
 }
 \arguments{
   \item{name}{ The character string name of the generic function.  In
@@ -33,19 +33,23 @@ setGeneric(name, def, group=NULL, valueClass=NULL, where=1)
     (At the moment, the assertion supplied in this argument is not
     enforced or checked.)
    }
-  \item{where}{ Where to store the resulting generic function; by
+  \item{where}{ Where to store the resulting initial methods definition,
+    and possibly the generic function; by
     default, stored into the global environment.
   }
-  \item{useAsDefault}{ Optional instructions as to the default method.
-    Useful values include: \code{TRUE}, forcing argument \code{def} to be
-    used as the default method; \code{NULL}, forcing the new generic to
-    have no default method (calls that don't match a defined method
-    generate an error in this case); or a function object, which then
-    becomes the default method.
+  \item{doAssign}{ Should a new generic version of the function be
+    assigned?  The default action depends on whether a generic version
+    currently exists.  If not, one will be assigned to \code{where},
+    except that primitive functions in the base package are never turned
+    into explicit generic functions (they are dispatched from the
+    internal code in the evaluator).
 
-    See the Details section for more information on how generic
-    functions are set up, and on the rules for picking the default
-    method.
+    You can supply \code{doAssign} as \code{TRUE} to force assigning a
+    generic function even if one already exists, or as \code{FALSE} to
+    prevent assigning the generic in any case (for example, because you
+    know one exists on another package).  But the rule of not assigning
+    generics for primitives cannot be overriden by setting
+    \code{doAssign} to \code{TRUE}.
   }
 }
 \details{

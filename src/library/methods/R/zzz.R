@@ -31,6 +31,11 @@
         .setCoerceGeneric(where)
         assign(".saveImage", TRUE, envir = where)
     }
+    ## cache metadata for all environments in search path.  The assumption is that
+    ## this has not been done, since cacheMetaData is in this package.  library, attach,
+    ## and detach functions look for cacheMetaData and call it if it's found.
+    for(i in rev(seq(along = search())))
+      cacheMetaData(as.environment(i), TRUE)
 }
 
 ### The following code is only executed when dumping

@@ -501,6 +501,7 @@ LibExtern SEXP	R_BlankString;	    /* "" as a CHARSXP */
 #define isObject		Rf_isObject
 #define isOrdered		Rf_isOrdered
 #define isPairList		Rf_isPairList
+#define isPrimitive		Rf_isPrimitive
 #define isReal			Rf_isReal
 #define isString		Rf_isString
 #define isSymbol		Rf_isSymbol
@@ -684,6 +685,7 @@ Rboolean isNumeric(SEXP);
 Rboolean isObject(SEXP);
 Rboolean isOrdered(SEXP);
 Rboolean isPairList(SEXP);
+Rboolean isPrimitive(SEXP);
 Rboolean isReal(SEXP);
 Rboolean isString(SEXP);
 Rboolean isSymbol(SEXP);

@@ -54,11 +54,11 @@ list("!" = function(e1)
 {
     standardGeneric("[<-")
 }
-, "[[" = function(x, i = NULL, j = NULL, ...)
+, "[[" = function(x, i = NULL, ...)
 {
     standardGeneric("[[")
 }
-, "[[<-" = function(x, i = NULL, j = NULL, ..., value)
+, "[[<-" = function(x, i = NULL, ..., value)
 {
     standardGeneric("[[<-")
 }
@@ -78,11 +78,11 @@ list("!" = function(e1)
 {
     standardGeneric("browser")
 }
-, "c" = function(..., recursive = FALSE)
+, "c" = function(x, ..., recursive = FALSE)
 {
     standardGeneric("c")
 }
-, "call" = function(...)
+, "call" = function(x, ...)
 {
     standardGeneric("call")
 }
@@ -98,7 +98,7 @@ list("!" = function(e1)
 {
     standardGeneric("dimnames<-")
 }
-, "expression" = function(...)
+, "expression" = function(x, ...)
 {
     standardGeneric("expression")
 }
@@ -110,7 +110,7 @@ list("!" = function(e1)
 {
     standardGeneric("length<-")
 }
-, "list" = function(...)
+, "list" = function(x, ...)
 {
     standardGeneric("list")
 }
@@ -342,26 +342,9 @@ list("!" = function(e1)
 ## functions.
 
 .addBasicGeneric <-
-    function(funslist, f, fdef, group, env)
+    function(funslist, f, fdef, group = "", env)
 {
-    basePos <- match("package:base", search())
-    if(exists(f, basePos))
-        fdefault <- get(f, basePos)
-    else {
-        warning(paste("Can't find \"",f,"\" in base (!)--skipping this generic in .BasicFunsList",
-                      sep=""))
-        return(funslist)
-    }
-    if(typeof(fdefault) == "closure")
-        fdef <- fdefault
-    else ## create the default method so setGeneric doesn't (avoids misleading message)
-      assign(paste(f, "default", sep="."), fdefault, envir = env)
-    body(fdef) <- substitute(standardGeneric(NAME), list(NAME=f))
-    setGeneric(f,
-               fdef,
-               group = group, where = env)
-    setMethod(f,"ANY", fdefault, where = env)
-    elNamed(funslist, f) <- get(f, envir=env)
+    elNamed(funslist, f) <- makeGeneric(f, fdef, keepMethods = FALSE, group = group)
     ## rm(list = f, pos = 1)
     funslist
 }
