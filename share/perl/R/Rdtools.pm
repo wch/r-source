@@ -32,7 +32,7 @@ sub get_section {
 
 sub get_usages {
 
-    my ($text) = @_;
+    my ($text, $mode) = @_;
     
     ## remove comments
     $text =~ s/([^\\])%.*\n/$1\n/g;
@@ -64,8 +64,9 @@ sub get_usages {
 	}
 	## </FIXME>
     }
-    ## Use \synopsis in case there is one, but warn about doing so.
-    @text = split(/\\synopsis/, $text);
+    ## In `codoc' mode, use \synopsis in case there is one, but warn
+    ## about doing so.
+    @text = split(/\\synopsis/, $text) if ($mode eq "codoc");
     if($#text > 0) {
 	print "Using synopsis in \`$name'\n";	    
     } else {
