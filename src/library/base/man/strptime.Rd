@@ -42,8 +42,8 @@ ISOdate(year, month, day, hour = 12, min = 0, sec = 0, tz = "GMT")
 }
 \details{
   \code{strftime} is an alias for \code{format.POSIXlt}, and
-  \code{format.POSIXct} first converts to class \code{"POSIXct"} by
-  calling \code{\link{as.POSIXct}}. Note that only that conversion
+  \code{format.POSIXct} first converts to class \code{"POSIXlt"} by
+  calling \code{\link{as.POSIXlt}}. Note that only that conversion
   depends on the time zone.
 
   The usual vector re-cycling rules are applied to \code{x} and

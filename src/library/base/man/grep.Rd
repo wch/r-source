@@ -43,7 +43,7 @@ regexpr(pattern, text, extended = TRUE, perl = FALSE, fixed = FALSE,
     \code{TRUE}, a vector containing the matching elements themselves is
     returned.}
   \item{fixed}{logical.  If \code{TRUE}, \code{pattern} is a string to be
-    matched as is.  Overrides all other arguments.}
+    matched as is.  Overrides all conflicting arguments.}
   \item{useBytes}{logical.  If \code{TRUE} the matching is done
     byte-by-byte rather than character-by-character.  See Details.}
   \item{replacement}{a replacement for matched pattern in \code{sub} and
@@ -103,9 +103,9 @@ regexpr(pattern, text, extended = TRUE, perl = FALSE, fixed = FALSE,
   \code{perl = TRUE} seems much faster and more reliable for such
   usages.
 
-  The standard versions of \code{sub} and \code{gsub} do not substitute
-  zero-length matches at the beginning of a search (of the string, or
-  from the current point).  Use \code{perl = TRUE} for such matches.
+  The standard version of \code{gsub} does not substitute correctly
+  repeated word-boundaries (e.g. \code{pattern = "\\b"}).
+  Use \code{perl = TRUE} for such matches.
 
   The \code{perl = TRUE} option is only implemented for single-byte and
   UTF-8 encodings, and will warn if used in a non-UTF-8 multi-byte
