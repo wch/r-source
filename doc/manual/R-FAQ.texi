@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2003
-@set FAQ-VERSION 1.6-39, 2003-03-16
+@set FAQ-VERSION 1.6-40, 2003-03-19
 @set REL-VERSION 1.6.2
 @set FAQ-ISBN 3-901167-51-X
 @documentlanguage en
@@ -1353,6 +1353,9 @@ From R version 1.3.0, @code{data.frame} strips @code{I()} when creating
 In R, the string @code{"NA"} is not treated as a missing value in a
 character variable.  Use @code{as.character(NA)} to create a missing
 character value.
+
+@item
+R disallows repeated formal arguments in function calls.
 
 @end itemize
 

@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.6-39, 2003-03-16
+Version 1.6-40, 2003-03-19
 ISBN 3-901167-51-X
 Kurt Hornik
 
@@ -1054,6 +1054,8 @@ the same time being as compatible as possible with S.
    * In R, the string `"NA"' is not treated as a missing value in a
      character variable.  Use `as.character(NA)' to create a missing
      character value.
+
+   * R disallows repeated formal arguments in function calls.
 
 
    There are also differences which are not intentional, and result from
