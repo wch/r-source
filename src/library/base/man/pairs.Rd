@@ -24,6 +24,9 @@ pairs.default(x, labels = dimnames(x)[[2]], panel = points, \dots)
   The graphical parameters \code{pch} and \code{col} can be used to
   specify a vector of plotting symbols and colors to be used in the
   plots.
+
+  The graphical parameter \code{oma} will be set by \code{pairs.default}
+  unless supplied as an argument.
 }
 \examples{
 data(USJudgeRatings)

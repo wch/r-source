@@ -2,7 +2,7 @@ pairs <- function(x, ...) UseMethod("pairs")
 
 pairs.default <- function(x, labels, panel=points, main = NULL,
 			  font.main=par("font.main"),
-			  cex.main=par("cex.main"), ...)
+			  cex.main=par("cex.main"),  oma=NULL, ...)
 {
     if(!is.matrix(x)) x <- data.matrix(x)
     if(!is.numeric(x)) stop("non-numeric argument to pairs")
@@ -13,9 +13,10 @@ pairs.default <- function(x, labels, panel=points, main = NULL,
 	if (is.null(labels))
 	    labels <- paste("var", 1:nc)
     }
-    oma <- c(4, 4, 4, 4)
-    if (!is.null(main))
-	oma[3] <- 6
+    if(is.null(oma)) {
+        oma <- c(4, 4, 4, 4)
+        if (!is.null(main)) oma[3] <- 6
+    }
     opar <- par(mfrow = c(nc, nc), mar = rep(0.5, 4), oma = oma)
     on.exit(par(opar))
     for (i in 1:nc) for (j in 1:nc) {
