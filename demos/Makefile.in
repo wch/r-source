@@ -31,7 +31,7 @@ docs:
 
 install: installdirs
 	@echo "installing demos ..."
-	@(cd dynload && $(MAKE) $@)
+	@(cd dynload && $(MAKE) rhome=$(rhome) $@)
 	@for d in graphics language models nlm; do \
 	  for f in $(srcdir)/$${d}/*.R; do \
 	    $(INSTALL_DATA) $${f} $(rhome)/demos/$${d}; \
