@@ -2,7 +2,7 @@
 #
 # ${R_HOME}/bin/build
 
-revision='$Revision: 1.6 $'
+revision='$Revision: 1.7 $'
 version=`set - ${revision}; echo ${2}`
 version="R package builder ${version}
 
@@ -168,7 +168,7 @@ buildpkg () {
     if test -f TITLE; then
       if ${force}; then
         echo "writing \`TITLE' file as \`--force' was given"
-        awk "BEGIN{printf(\"%-23s %s\n\", \"$package\", \"$title\");}" \
+        awk "BEGIN{printf(\"%-15s %s\n\", \"$package\", \"$title\");}" \
           > TITLE
       else 
         checking "if TITLE agrees with DESCRIPTION"
@@ -187,7 +187,7 @@ buildpkg () {
       fi
     else
       echo "writing \`TITLE' file"
-      awk "BEGIN{printf(\"%-23s %s\n\", \"$package\", \"$title\");}" \
+      awk "BEGIN{printf(\"%-15s %s\n\", \"$package\", \"$title\");}" \
         > TITLE
     fi
   fi
