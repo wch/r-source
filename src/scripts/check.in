@@ -41,7 +41,7 @@ use Text::Wrap;
 ## don't buffer output
 $| = 1;
 
-my $revision = ' $Revision: 1.100 $ ';
+my $revision = ' $Revision: 1.101 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -186,16 +186,6 @@ foreach my $pkg (@ARGV) {
     }
 
     if(!$is_base_pkg) {
-	if($opt_install) {
-	    print("\n");
-	    if(system("${R::Vars::R_CMD} INSTALL -l $library $pkgdir")) {
-		$log->error();
-		$log->print("Installation failed.\n");
-		exit(1);
-	    }
-	    print("\n");
-	}
-
 	$log->checking(join("",
 			    ("for file '",
 			     &file_path($pkgname, "DESCRIPTION"),
@@ -208,6 +198,27 @@ foreach my $pkg (@ARGV) {
 	else {
 	    $log->result("NO");
 	    exit(1);
+	}
+	## This check should be adequate, but would not
+	## catch a manually installed package, nor one installed
+	## prior to 1.4.0.
+	$log->checking("this is a source package");
+	if(!defined $description->{"Built"}) {
+	    $log->result("OK")
+	} else {
+	    $log->result("NO");
+	    $log->print("*** R CMD check is for use with source packages only. ***\n");
+	    $log->error();
+	    exit(1);
+	}
+	if($opt_install) {
+	    print("\n");
+	    if(system("${R::Vars::R_CMD} INSTALL -l $library $pkgdir")) {
+		$log->error();
+		$log->print("Installation failed.\n");
+		exit(1);
+	    }
+	    print("\n");
 	}
     }
 

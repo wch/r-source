@@ -171,7 +171,7 @@ as.data.frame.matrix <- function(x, row.names = NULL, optional = FALSE)
     if(any(empty <- nchar(collabs)==0))
 	collabs[empty] <- paste("V", ic, sep = "")[empty]
     value <- vector("list", ncols)
-    if(mode(x) == "character" || mode(x) == "logical") {
+    if(mode(x) == "character") {
 	for(i in ic)
 	    value[[i]] <- as.factor(x[,i])
     } else {
@@ -419,7 +419,7 @@ function(..., row.names = NULL, check.rows = FALSE, check.names = TRUE) {
 	  if(is.matrix(i))
 	  as.matrix(x)[[i]]
  	  else .subset2(x,i))(x, ...)
-    else 
+    else
         .subset2(.subset2(x,..1),..2)
 }
 

@@ -74,6 +74,9 @@ NEW FEATURES
 
     o	[dpqr]gamma() check for shape parameter > 0.
 
+    o	as.data.frame() now coerces a logical matrix to a data frame
+	with logical (rather than factor) columns.
+
 
 DEPRECATED & DEFUNCT
 
@@ -95,6 +98,11 @@ INSTALLATION CHANGES
 
     o	R CMD INSTALL is now guaranteed to sort the R source files in
 	ASCII order.
+
+
+UTILITIES
+
+    o	R CMD check now tests for mis-use on an installed or binary package.
 
 
 BUG FIXES
