@@ -2,7 +2,7 @@
 #### ------------------------------------------------------------
 #### M.Maechler, May, 1998.
 ####
-#### ==> ../doc/manual/Primitive-funs.tex
+#### ==> ../doc/manual/primitive-funs.tex
 ####     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 bpos <- match("package:base",search())
@@ -62,7 +62,7 @@ Real.primitives <-
       c("environment<-",
         "length",	"length<-",
         "class",  	"class<-",
-        ## "attr",
+        ## "attr", not anymore [Summer '98]
                   	"attr<-",
         "attributes", 	"attributes<-",
         "dim",    	"dim<-",
