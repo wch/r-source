@@ -431,6 +431,7 @@ TXNMargins      txnMargins;
            
 static	pascal	void	OtherEventLoops( EventLoopTimerRef inTimer, void *inUserData );
 static	pascal	void	ReadStdoutTimer( EventLoopTimerRef inTimer, void *inUserData );
+static	pascal	void	FlushConsoleTimer( EventLoopTimerRef inTimer, void *inUserData );
 
 void SetUpRAquaMenu(void);
 OSStatus InstallAppHandlers(void);
@@ -574,8 +575,10 @@ void Raqua_StartConsole(Rboolean OpenConsole)
     if( pipe(RAquaStdoutPipefd) < 0)
      goto noconsole;
      
-    dup2(RAquaStdoutPipefd[1], STDOUT_FILENO);
-    write(RAquaStdoutPipefd[1], " ", 1);
+    
+    /* dup2(RAquaStdoutPipefd[1], STDOUT_FILENO); */
+    dup2(RAquaStdoutPipefd[1], STDERR_FILENO);
+
 
      GetRPrefs();
      
@@ -612,7 +615,8 @@ void Raqua_StartConsole(Rboolean OpenConsole)
     }   
         
     InstallEventLoopTimer(GetCurrentEventLoop(), 0, 1, NewEventLoopTimerUPP(OtherEventLoops), NULL, NULL);
-    InstallEventLoopTimer(GetCurrentEventLoop(), 0, kEventDurationSecond / 5, NewEventLoopTimerUPP(ReadStdoutTimer), NULL, NULL);
+    InstallEventLoopTimer(GetCurrentEventLoop(), 0, kEventDurationSecond /5, NewEventLoopTimerUPP(ReadStdoutTimer), NULL, NULL);
+    InstallEventLoopTimer(GetCurrentEventLoop(), 0, kEventDurationSecond *5, NewEventLoopTimerUPP(FlushConsoleTimer), NULL, NULL);
 
     RAqua2Front();
 
@@ -699,6 +703,10 @@ void SetUpRAquaMenu(void){
 }
 
 
+static	pascal	void	FlushConsoleTimer( EventLoopTimerRef inTimer, void *inUserData )
+{
+         Aqua_FlushBuffer();
+}
 
 static	pascal	void	OtherEventLoops( EventLoopTimerRef inTimer, void *inUserData )
 {
@@ -944,6 +952,7 @@ void Raqua_ResetConsole ()
 /* Stdio support to ensure the console file buffer is flushed */
 void Raqua_FlushConsole ()
 {
+    Aqua_FlushBuffer();
 }
 
 
@@ -3257,20 +3266,41 @@ void Raqua_doIdle(void){
 
 }
 
+int isready(int fd);
+
+int isready(int fd)
+{
+    int rc;
+    fd_set fds;
+    struct timeval tv;
+
+    FD_ZERO(&fds);
+    FD_SET(fd,&fds);
+    tv.tv_sec = tv.tv_usec = 0;
+
+    rc = select(fd+1, &fds, NULL, NULL, &tv);
+    if (rc < 0)
+      return -1;
+
+    return FD_ISSET(fd,&fds) ? 1 : 0;
+}
+
 
 static	pascal	void	ReadStdoutTimer( EventLoopTimerRef inTimer, void *inUserData )
 {
     int r;
     char c[32001];
+    
+    if(isready(RAquaStdoutPipefd[0]) != 1)
+        return;
 
-    if( (r = read(RAquaStdoutPipefd[0],c,32000)) >0){
+
+    if( (r = read(RAquaStdoutPipefd[0],c,sizeof(c)-1)) >0){
         c[r] = '\0';
-        if(r>1){
             Raqua_WriteConsole(c,r);
             Aqua_FlushBuffer();
-        }
-    }
-    write(RAquaStdoutPipefd[1], " ", 1) ;
+    } 
+
 }   
 
 #endif /* HAVE_AQUA */
