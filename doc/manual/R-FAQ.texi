@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2002
-@set FAQ-VERSION 1.5-6, 2002-05-21
+@set FAQ-VERSION 1.5-7, 2002-05-24
 @set REL-VERSION 1.5.0
 @set FAQ-ISBN 3-901167-51-X
 @c %**end of header
@@ -1634,6 +1634,9 @@ data.
 @item deldir
 Calculates the  Delaunay triangulation and the Dirichlet or Voronoi
 tesselation (with respect to the entire plane) of a planar point set.
+@item dichromat
+Color schemes for dichromats: collapse red-green distinctions to
+simulate the effects of colour-blindness.
 @item diamonds
 Functions for illustrating aperture-4 diamond partitions in the plane,
 or on the surface of an octahedron or icosahedron, for use as analysis
