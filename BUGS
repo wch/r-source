@@ -426,3 +426,7 @@ Date: Mon, 29 Oct 2001 13:55:49 +0100 (MET)
 Subject: Typo in refman-Logistic
 From: Jan_Svatos@eurotel.cz
 Date: Mon, 29 Oct 2001 13:56:15 +0100 (MET)
+* PR# 1154 *
+Subject: mistake in approx() documentation
+From: htang@hpl.hp.com
+Date: Tue, 30 Oct 2001 19:42:05 +0100 (MET)
