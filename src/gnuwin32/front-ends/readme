@@ -53,5 +53,5 @@ use with his automation server StatConnectorSrv.exe.
 The interface can evaluate commands and transfer simple R objects (e.g.
 vectors and matrices).
 
-Look on CRAN under `platform-specific extension packages' for the
+Look on CRAN under Software->Other->Non-standard packages for the
 automation server.
