@@ -136,7 +136,7 @@ sapply(sw, class)
 
 ## DON'T do this
 \dontrun{
-sw$new4 <- 1:3  ## will run but result in an unprintable object
+sw$new4 <- 1:3  ## will run but result in a corrupt data frame
 }
 
 ## matrices in a data frame

@@ -102,9 +102,18 @@ as.data.frame.data.frame <- function(x, row.names = NULL, optional = FALSE)
     x
 }
 
+## prior to 1.8.0 this coerced names - PR#3280
 as.data.frame.list <- function(x, row.names = NULL, optional = FALSE)
 {
+    ## need to protect names in x.
+    cn <- names(x)
+    m <- match(c("row.names", "check.rows", "check.names"), cn, 0)
+    if(any(m > 0)) {
+        cn[m] <- paste("..adfl.", cn[m], sep="")
+        names(x) <- cn
+    }
     x <- eval(as.call(c(expression(data.frame), x, check.names = !optional)))
+    if(any(m > 0)) names(x) <- sub("^..adfl.", "", names(x))
     if(!is.null(row.names)) {
 	row.names <- as.character(row.names)
 	if(length(row.names) != dim(x)[[1]]) stop(paste(
@@ -361,8 +370,8 @@ data.frame <-
 	y <- NextMethod("[")
         nm <- names(y)
 	if(any(is.na(nm))) stop("undefined columns selected")
-        if(any(duplicated(nm)))
-            names(y) <- make.unique(nm)
+        ## added in 1.8.0
+        if(any(duplicated(nm))) names(y) <- make.unique(nm)
 	return(structure(y, class = oldClass(x), row.names = row.names(x)))
     }
 
@@ -393,6 +402,7 @@ data.frame <-
 	}
 	for(j in seq(along = x)) {
 	    xj <- x[[j]]
+            ## had drop = drop prior to 1.8.0
 	    x[[j]] <- if(length(dim(xj)) != 2) xj[i] else xj[i, , drop = FALSE]
 	}
     }
@@ -420,9 +430,8 @@ data.frame <-
         ## row names might have NAs, which make.names eliminates.
 	if(any(is.na(rows) | duplicated(rows)))
 	    rows <- make.names(rows, unique = TRUE)
-        ## might have duplicate columns
-        if(any(duplicated(nm <- names(x))))
-            names(x) <- make.unique(nm)
+        ## new in 1.8.0  -- might have duplicate columns
+        if(any(duplicated(nm <- names(x)))) names(x) <- make.unique(nm)
 	attr(x, "row.names") <- rows
 	class(x) <- cl
     }
@@ -562,8 +571,7 @@ data.frame <-
     if(any(duplicated(jseq)))
         stop("duplicate subscripts for columns")
     n <- length(iseq)
-    if(n == 0)
-	n <- nrows
+    if(n == 0) n <- nrows
     p <- length(jseq)
     m <- length(value)
     if(!is.list(value)) {
@@ -601,18 +609,17 @@ data.frame <-
 	    jj <- jseq[jjj]
 	    vjj <- value[[jvseq[[jjj]] ]]
 	    xj <- x[[jj]]
-	    if(length(dim(xj)) != 2)
-		xj[iseq] <- vjj
-	    else xj[iseq,  ] <- vjj
-	    x[[jj]] <- xj  # maybe x[[jj]][] <- xj if jj exists?
+	    if(length(dim(xj)) != 2) xj[iseq] <- vjj else xj[iseq, ] <- vjj
+            ## if a column exists, preserve its attributes
+            if(jj <= nvars) x[[jj]][] <- xj else x[[jj]] <- xj
 	}
     else for(jjj in 1:p) {
 	jj <- jseq[jjj]
 	x[[jj]] <- value[[ jvseq[[jjj]] ]]
     }
     if(length(new.cols) > 0) {
-        if(any(duplicated(new.cols)))
-            new.cols <- make.unique(new.cols)
+        ## added in 1.8.0
+        if(any(duplicated(new.cols))) new.cols <- make.unique(new.cols)
 	names(x) <- new.cols
     }
     class(x) <- cl
@@ -629,6 +636,7 @@ data.frame <-
     nrows <- length(rows)
     if(nargs() < 4) {
 	## really ambiguous, but follow common use as if list
+        nc <- length(x)
 	if(!is.null(value)) {
             N <- NROW(value)
             if(N > nrows)
@@ -640,6 +648,12 @@ data.frame <-
                     stop(paste("replacement has", N, "rows, data has", nrows))
 	}
 	x[[i]] <- value
+        ## added in 1.8.0 -- make sure there is a name
+        if(length(x) > nc) {
+            nc <- length(x)
+            if(names(x)[nc] == "") names(x)[nc] <- paste("V", nc, sep="")
+            names(x) <- make.unique(names(x))
+        }
 	class(x) <- cl
 	return(x)
     }

@@ -1,4 +1,4 @@
-### Regression tests for which the printed output is the issue
+## Regression tests for which the printed output is the issue
 ### _and_ must work (no Recommended packages, please)
 
 postscript("reg-tests-2.ps")
@@ -946,3 +946,29 @@ women["height", drop = TRUE]   # ditto
 women[,"height", drop = FALSE] # no warning
 women[,"height", drop = TRUE]  # a vector
 ## second and third were interpreted as women["height", , drop] in 1.7.x
+
+
+## printing corrupt data frames
+data(swiss)
+sw <- swiss[1:5, 1:4]  # select a manageable subset
+sw$new4 <- 1:3  ## will run but result in a corrupt data frame
+sw
+## gave error prior to 1.8.0, now a warning
+
+
+## make.names
+make.names("")
+make.names(".aa")
+## was "X.aa" in 1.7.1
+
+## strange names in data frames
+as.data.frame(list(row.names=17))  # 0 rows in 1.7.1
+aa <- data.frame(aa=1:3)
+aa[["row.names"]] <- 4:6
+aa # fine in 1.7.1
+A <- matrix(4:9, 3, 2)
+colnames(A) <- letters[1:2]
+aa[["row.names"]] <- A
+aa
+## wrong printed names in 1.7.1
+

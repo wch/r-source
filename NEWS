@@ -99,10 +99,6 @@ NEW FEATURES
 
     o	When coercion of a list fails, a meaningful error message is given.
 
-    o	Subscripting data-frames with a single argument now ignores any
-	`drop' argument (with a warning).  Previously using `drop'
-	inhibited list-like subscripting.
-
     o	Setting dimnames to a factor now coerces to character, as S
 	does.  (Earlier versions of R used the internal codes.)
 
@@ -114,6 +110,34 @@ NEW FEATURES
 
     o	hist.POSIXt() can now pass arguments to hist.default()
 
+    o	Subscripting for data.frames has been rationalized:
+
+	- Using a single argument now ignores any `drop' argument
+	  (with a warning).  Previously using `drop' inhibited list-like 
+	  subscripting.
+
+	- adf[j] <- value and adf[[j]] <- value did not convert
+	  character vectors to factors, but adf[,j] <- value did.
+	  Now none do,
+
+	- Where replicating the replacment value a whole number of
+          times will produce the right number of values, this is
+          always done (rather than some times but not others).
+
+	- Subsetting a data frame can no longer produce duplicate
+          column names.
+
+	- Subsetting with drop=TRUE no longer sometimes drops
+          dimensions on matrix or data frame columns of the data frame.
+
+	- Attributes are no longer stripped when replacing part of a column.
+
+	- Columns added in replacement operations will always be named.
+
+	- as.data.frame.list() did not cope with list names such as
+          `check.rows',  and formatting/printing data frames with such
+          names did not cope if the column was a matrix or data frame.
+
     o	A triple colon operator can be used to access values of internal
 	variables in a name space (i.e. a:::b is the value of the internal
 	variable b in name space a).
@@ -123,6 +147,11 @@ NEW FEATURES
 
     o   make.names() has improvements, and there is a new auxiliary
 	function make.unique().  (Contributed by Tom Minka.)
+	In particular make.names() now recognises that names beginning
+	with a dot are valid and that reserved words are not.
+
+    o   format() and hence print() makes an effort to handle corrupt
+	data frames, with a warning.
 
 
 DEPRECATED & DEFUNCT
