@@ -454,8 +454,13 @@ function (x, y = NULL, type = "l", xlim = NULL, ylim = NULL,
             ylab <- xlabel
     }
     xy <- xy.coords(x,y,log=log)# using this mainly because of the log
+    ## but it doesn't work correctly if x is a matrix!
     if(is.null(xlim)) xlim <- range(xy$x)
-    if(is.null(ylim)) ylim <- range(xy$y[is.finite(xy$y)])
+#    if(is.null(ylim)) ylim <- range(xy$y[is.finite(xy$y)])
+    if(is.null(ylim)) {
+        yvals <- as.vector(x)
+        ylim <- range(yvals[is.finite(yvals)])
+    }
     plot.new()
     plot.window(xlim, ylim, log, ...)
     if(is.matrix(x)) {

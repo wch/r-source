@@ -30,6 +30,9 @@ BUG FIXES
 
     o	data.matrix(data.frame(a=0[0])) now works.
 
+    o	plot(multiple time series, plot.type = "single") was computing
+	`ylim' from the first series only.
+
 
 
 		CHANGES IN R VERSION 1.4.0
