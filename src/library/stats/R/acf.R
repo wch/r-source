@@ -113,6 +113,10 @@ plot.acf <-
 
     with.ci <- ci > 0 && x$type != "covariance"
     with.ci.ma <- with.ci && ci.type == "ma" && x$type == "correlation"
+    if(with.ci.ma && x$lag[1,1,1] != 0) {
+        warning("can use ci.type=\"ma\" only if first lag is 0")
+        with.ci.ma <- FALSE
+    }
     clim0 <- if (with.ci) qnorm((1 + ci)/2)/sqrt(x$n.used) else c(0, 0)
 
     Npgs <- 1 ## we will do [ Npgs x Npgs ] pages !
@@ -155,8 +159,8 @@ plot.acf <-
                 clim <- if (with.ci.ma && i == j)
                     clim0 * sqrt(cumsum(c(1, 2*x$acf[-1, i, j]^2))) else clim0
                 if (is.null(ylim)) {
-                    ymin <- min(c(x$acf[, i, j], -clim))
-                    ymax <- max(c(x$acf[, i, j], clim))
+                    ymin <- min(c(x$acf[, i, j], -clim), na.rm = TRUE)
+                    ymax <- max(c(x$acf[, i, j], clim), na.rm = TRUE)
                     ylim <- c(ymin, ymax)
                 }
                 plot(x$lag[, i, j], x$acf[, i, j], type = type, xlab = xlab,
@@ -196,7 +200,38 @@ ccf <- function(x, y, lag.max = NULL,
     acf.out$lag <- array(lag, dim=c(length(y),1,1))
     acf.out$snames <- paste(acf.out$snames, collapse = " & ")
     if (plot) {
-        plot.acf(acf.out, ...)
+        plot(acf.out, ...)
         return(invisible(acf.out))
     } else return(acf.out)
+}
+
+"[.acf" <- function(x, i, j=1:nser)
+{
+    nser <- ncol(x$lag)
+    ii <- match(i, x$lag[,1,1], nomatch=NA)
+    x$acf <- x$acf[ii,j,j, drop=FALSE]
+    x$lag <- x$lag[ii,j,j, drop=FALSE]
+    x
+}
+
+print.acf <- function(x, digits=3, ...)
+{
+    type <- match(x$type, c("correlation", "covariance", "partial"))
+    msg <- c("Autocorrelations", "Autocovariances", "Partial autocorrelations")
+    cat("\n", msg[type]," of series ", sQuote(x$series), ", by lag\n\n",
+        sep="")
+    nser <- ncol(x$lag)
+    if(type != 2) x$acf <- round(x$acf, digits)
+    if(nser == 1) {
+        acfs <- drop(x$acf)
+        names(acfs) <- format(drop(x$lag), digits=3)
+        print(acfs, digits = digits, ...)
+    } else {
+        acfs <- format(x$acf, ...)
+        lags <- format(x$lag, digits=3)
+        acfs <- array(paste(acfs, " (", lags, ")", sep=""), dim=dim(x$acf))
+        dimnames(acfs)  <- list(rep("", nrow(x$lag)), x$snames, x$snames)
+        print(acfs, quote=FALSE, ...)
+    }
+    invisible(x)
 }

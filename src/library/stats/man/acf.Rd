@@ -3,6 +3,7 @@
 \alias{ccf}
 \alias{pacf}
 \alias{pacf.default}
+\alias{[.acf}
 \title{Auto- and Cross- Covariance and -Correlation Function Estimation}
 \description{
   The function \code{acf} computes (and by default plots) estimates of
@@ -23,6 +24,8 @@ pacf(x, lag.max, plot, na.action, \dots)
 
 ccf(x, y, lag.max = NULL, type = c("correlation", "covariance"),
     plot = TRUE, na.action = na.fail, \dots)
+
+acf.obj[i, j]
 }
 \arguments{
   \item{x, y}{a univariate or multivariate (not \code{ccf}) numeric time
@@ -40,6 +43,11 @@ ccf(x, y, lag.max = NULL, type = c("correlation", "covariance"),
   \item{demean}{logical.  Should the covariances be about the sample
     means?}
   \item{\dots}{further arguments to be passed to \code{plot.acf}.}
+
+  \item{acf.obj}{an object of class \code{"acf"} resulting from a call
+    to \code{acf}.}
+  \item{i}{a set of lags to retain.}
+  \item{j}{a set of series to retain.}
 }
 \value{
   An object of class \code{"acf"}, which is a list with the following
@@ -77,6 +85,9 @@ ccf(x, y, lag.max = NULL, type = c("correlation", "covariance"),
 
   The lag is returned and plotted in units of time, and not numbers of
   observations.
+
+  There are \code{print} and subsetting methods for objects of class
+  \code{"acf"}.
 }
 \author{
   Original: Paul Gilbert, Martyn Plummer.

@@ -171,6 +171,10 @@ NEW FEATURES
 
     o	as.data.frame() now has a method for arrays.
 
+    o	There are now print() and [ methods for "acf" objects.
+
+    o	split.screen() now works for multiple devices at once.
+
 
 UTILITIES
 

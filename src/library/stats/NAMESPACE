@@ -68,6 +68,7 @@ importFrom(utils, str)
 
 ## register all the methods for generics elsewhere in case namespace is
 ## loaded but not currently attached.
+S3method("[", acf)
 S3method("[", formula)
 S3method("[", terms)
 S3method("[", ts)
@@ -157,6 +158,7 @@ S3method(predict, glm)
 S3method(predict, lm)
 S3method(predict, mlm)
 S3method(predict, poly)
+S3method(print, acf)
 S3method(print, anova)
 S3method(print, aov)
 S3method(print, aovlist)
