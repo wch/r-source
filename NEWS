@@ -22,14 +22,13 @@ USER-VISIBLE CHANGES
     o	The meaning of 'encoding' for a connection has changed: See the
 	internationalization section below.
 
-    o	There has been some rationalization of the format of error
-	messages, to make them easier to translate.
+    o	There has been some rationalization of the format of 
+	warning/error messages, to make them easier to translate.
+	Generally names of functions and arguments are single-quoted,
+	and classes double-quoted.
 
 
 NEW FEATURES
-
-    o   do.call() now takes a function or a character string as its
-        first argument. The supplied arguments can be optionally quoted.
 
     o	Faster algorithm in summaryRprof().
 
@@ -189,7 +188,7 @@ NEW FEATURES
     o	New function RSiteSearch() to query R-related resources
 	on-line (contributed by Jonathan Baron and Andy Liaw).
 
-    o	The limits on the grid size in layout are now documented, and
+    o	The limits on the grid size in layout() are now documented, and
 	have been raised somewhat by using more efficient internal
 	structures.
 
@@ -259,8 +258,8 @@ NEW FEATURES
 
     o	The cov() function in the non-Pearson cases now ranks data after
         removal of missing values, not before.  The pairwise-complete
-        method should now be consistent with cor.test.  Code
-        contributed by Shigenobu Aoki.
+        method should now be consistent with cor.test.  (Code
+        contributed by Shigenobu Aoki.)
 
     o	mahalanobis() now has a '...' argument which is passed to solve()
         for computing the inverse of the covariance matrix, this replaces
@@ -272,7 +271,8 @@ NEW FEATURES
     o	New function message() for generating "simple" diagnostic
 	messages.
 
-    o	New function normalizePath() to find canonical paths.
+    o	New function normalizePath() to find canonical paths (and on
+	Windows, canonical names of components).
 
     o	Functions flush.console() and select.list() are now available
 	on all platforms.  There is a Tcl/Tk-based version of
@@ -288,6 +288,12 @@ NEW FEATURES
 	Unix-alikes with an active X11 display.  (It has long worked
 	for reading and writing under Windows.)  The secondary
 	selection can also be read: see ?file.
+
+    o	do.call() now takes a function or a character string as its
+        first argument.  The supplied arguments can optionally be quoted.
+
+    o	For readline-based history, the saved file size is re-read from
+	R_HISTSIZE immediately before saving.
 
 
 INTERNATIONALIZATION
@@ -730,13 +736,13 @@ BUG FIXES
     o	x <- 2^(0:1000);    plot(x, x^.9, type="l", log="xy")# and
 	x <- 2^-(1070:170); plot(x, x^.9, type="l", log="xy")# now both work
 
-    o	summary.lm asked for a report on a reasonable occurrence, but
+    o	summary.lm() asked for a report on a reasonable occurrence, but
 	the check failed to take account of NAs.
 
-    o   lm was miscalculating df.residual for empty models with matrix
-        response 
+    o   lm() was miscalculating 'df.residual' for empty models with a
+	matrix response.
 
-    o   summary.lm now behaves more sensibly for empty models
+    o   summary.lm() now behaves more sensibly for empty models.
 
 
 
