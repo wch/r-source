@@ -452,7 +452,7 @@ AC_DEFUN(R_FUNC_FINITE,
 	#include "confdefs.h"
 	int main () {
 	#ifdef HAVE_FINITE
-	  return(finite(1./0.));
+	  return(finite(1./0.) | finite(0./0.) | finite(-1./0.));
 	#else
 	  return(0);
 	#endif
