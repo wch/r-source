@@ -28,11 +28,19 @@
 /* General String Comparison */
 #undef HAVE_STRCOLL
 
+/* Inverse Hypobolics */
+#undef HAVE_ASINH
+#undef HAVE_ACOSH
+#undef HAVE_ATANH
+
 /* IEEE Rounding */
 #undef HAVE_RINT
 
 /* HPUX rint is broken */
 #undef USE_BUILTIN_RINT
+
+/* POSIX Regular Expressions Available */
+#undef HAVE_REGCOMP
 
 /* Compatibility for "memmove" on older BSD platforms */
 #undef HAVE_MEMMOVE

@@ -4,7 +4,6 @@ build:
 		cd graphics; make
 		cd math; make
 		cd appl; make
-		cd regex; make
 		cd unix; make
 		cd main; make
 
@@ -20,7 +19,6 @@ clean:
 		@cd main; make clean
 		@cd math; make clean
 		@cd appl; make clean
-		@cd regex; make clean
 		@cd unix; make clean
 		@-rm -f lib/*.a
 
@@ -31,7 +29,6 @@ realclean:
 		@cd main; make realclean
 		@cd math; make realclean
 		@cd appl; make realclean
-		@cd regex; make realclean
 		@cd unix; make realclean
 		@-rm -f include/FFDecl.h include/FFTab.h include/Platform.h
 		@-rm -f lib/*.a
