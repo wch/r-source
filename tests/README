@@ -14,6 +14,6 @@ minutes, depending on your environment).
 
 The "fast" part of the tests is `test-Specific'
 which runs the *.R files in this (./tests) directory (tolerantly) compares
-the result *.Rout file with the prespecified *.Rout.safe.
+the result *.Rout file with the prespecified *.Rout.save (if that exists).
 
 Martin Maechler for the R Core Team.
