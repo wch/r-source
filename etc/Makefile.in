@@ -63,7 +63,8 @@ uninstall:
 	@if test -d $(rhome)/etc -a \
 	  "`cd $(rhome); pwd`" != "`cd $(top_builddir); pwd`"; then \
 	  (cd $(rhome)/etc && \
-	    rm -f *.pl Makeconf $(EXPORTFILE) $(GNOME_IF_FILES)); \
+	    rm -f *.pl Makeconf Makeconf-tests \
+	          $(EXPORTFILE) $(GNOME_IF_FILES)); \
 	  rmdir $(rhome)/etc 2> /dev/null \
 	    || echo "  subdir etc not removed"; \
 	fi
@@ -75,7 +76,7 @@ clean:
 	fi
 	@rm -f $(EXPORTFILE)
 distclean: clean
-	@rm -f Makeconf Makefile
+	@rm -f Makeconf Makeconf-tests Makefile
 maintainer-clean: distclean
 
 distdir: $(DISTFILES)
