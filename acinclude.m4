@@ -1237,7 +1237,7 @@ AC_DEFUN([R_FUNC_ISFINITE],
 #include <math.h>
 #include "confdefs.h"
 int main () {
-#ifdef HAVE_ISFINITE
+#ifdef HAVE_DECL_ISFINITE
   exit(isfinite(1./0.) | isfinite(0./0.) | isfinite(-1./0.));
 #else
   exit(1);

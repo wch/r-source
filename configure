@@ -29187,10 +29187,8 @@ fi
 
 
 
-
-
 for ac_func in access chdir expm1 fcntl finite ftruncate getcwd \
-  getgrgid getpwuid getuid hypot isascii isfinite isnan log1p matherr mkfifo \
+  getgrgid getpwuid getuid hypot isascii log1p matherr mkfifo \
   popen putenv rint setenv strcoll stat strptime symlink \
   system times unsetenv
 do
@@ -29300,6 +29298,167 @@ _ACEOF
 
 fi
 done
+
+## isfinite and isnan are in math.h but might be macros
+echo "$as_me:$LINENO: checking whether isfinite is declared" >&5
+echo $ECHO_N "checking whether isfinite is declared... $ECHO_C" >&6
+if test "${ac_cv_have_decl_isfinite+set}" = set; then
+  echo $ECHO_N "(cached) $ECHO_C" >&6
+else
+  cat >conftest.$ac_ext <<_ACEOF
+/* confdefs.h.  */
+_ACEOF
+cat confdefs.h >>conftest.$ac_ext
+cat >>conftest.$ac_ext <<_ACEOF
+/* end confdefs.h.  */
+#include <math.h>
+
+#ifdef F77_DUMMY_MAIN
+
+#  ifdef __cplusplus
+     extern "C"
+#  endif
+   int F77_DUMMY_MAIN() { return 1; }
+
+#endif
+int
+main ()
+{
+#ifndef isfinite
+  char *p = (char *) isfinite;
+#endif
+
+  ;
+  return 0;
+}
+_ACEOF
+rm -f conftest.$ac_objext
+if { (eval echo "$as_me:$LINENO: \"$ac_compile\"") >&5
+  (eval $ac_compile) 2>conftest.er1
+  ac_status=$?
+  grep -v '^ *+' conftest.er1 >conftest.err
+  rm -f conftest.er1
+  cat conftest.err >&5
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); } &&
+	 { ac_try='test -z "$ac_c_werror_flag"
+			 || test ! -s conftest.err'
+  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
+  (eval $ac_try) 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); }; } &&
+	 { ac_try='test -s conftest.$ac_objext'
+  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
+  (eval $ac_try) 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); }; }; then
+  ac_cv_have_decl_isfinite=yes
+else
+  echo "$as_me: failed program was:" >&5
+sed 's/^/| /' conftest.$ac_ext >&5
+
+ac_cv_have_decl_isfinite=no
+fi
+rm -f conftest.err conftest.$ac_objext conftest.$ac_ext
+fi
+echo "$as_me:$LINENO: result: $ac_cv_have_decl_isfinite" >&5
+echo "${ECHO_T}$ac_cv_have_decl_isfinite" >&6
+if test $ac_cv_have_decl_isfinite = yes; then
+
+cat >>confdefs.h <<_ACEOF
+#define HAVE_DECL_ISFINITE 1
+_ACEOF
+
+
+else
+  cat >>confdefs.h <<_ACEOF
+#define HAVE_DECL_ISFINITE 0
+_ACEOF
+
+
+fi
+echo "$as_me:$LINENO: checking whether isnan is declared" >&5
+echo $ECHO_N "checking whether isnan is declared... $ECHO_C" >&6
+if test "${ac_cv_have_decl_isnan+set}" = set; then
+  echo $ECHO_N "(cached) $ECHO_C" >&6
+else
+  cat >conftest.$ac_ext <<_ACEOF
+/* confdefs.h.  */
+_ACEOF
+cat confdefs.h >>conftest.$ac_ext
+cat >>conftest.$ac_ext <<_ACEOF
+/* end confdefs.h.  */
+#include <math.h>
+
+#ifdef F77_DUMMY_MAIN
+
+#  ifdef __cplusplus
+     extern "C"
+#  endif
+   int F77_DUMMY_MAIN() { return 1; }
+
+#endif
+int
+main ()
+{
+#ifndef isnan
+  char *p = (char *) isnan;
+#endif
+
+  ;
+  return 0;
+}
+_ACEOF
+rm -f conftest.$ac_objext
+if { (eval echo "$as_me:$LINENO: \"$ac_compile\"") >&5
+  (eval $ac_compile) 2>conftest.er1
+  ac_status=$?
+  grep -v '^ *+' conftest.er1 >conftest.err
+  rm -f conftest.er1
+  cat conftest.err >&5
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); } &&
+	 { ac_try='test -z "$ac_c_werror_flag"
+			 || test ! -s conftest.err'
+  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
+  (eval $ac_try) 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); }; } &&
+	 { ac_try='test -s conftest.$ac_objext'
+  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
+  (eval $ac_try) 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); }; }; then
+  ac_cv_have_decl_isnan=yes
+else
+  echo "$as_me: failed program was:" >&5
+sed 's/^/| /' conftest.$ac_ext >&5
+
+ac_cv_have_decl_isnan=no
+fi
+rm -f conftest.err conftest.$ac_objext conftest.$ac_ext
+fi
+echo "$as_me:$LINENO: result: $ac_cv_have_decl_isnan" >&5
+echo "${ECHO_T}$ac_cv_have_decl_isnan" >&6
+if test $ac_cv_have_decl_isnan = yes; then
+
+cat >>confdefs.h <<_ACEOF
+#define HAVE_DECL_ISNAN 1
+_ACEOF
+
+
+else
+  cat >>confdefs.h <<_ACEOF
+#define HAVE_DECL_ISNAN 0
+_ACEOF
+
+
+fi
+
 
 ## <NOTE>
 ## No need checking for bcopy bzero memcpy mempcpy even though ifnames
@@ -30856,7 +31015,7 @@ _ACEOF
 fi
 
 fi
-if test "${ac_cv_func_infinite}" = "yes"; then
+if test "${ac_cv_have_decl_isfinite}" = "yes"; then
 echo "$as_me:$LINENO: checking for working isfinite" >&5
 echo $ECHO_N "checking for working isfinite... $ECHO_C" >&6
 if test "${r_cv_func_isfinite_works+set}" = set; then
@@ -30875,7 +31034,7 @@ cat >>conftest.$ac_ext <<_ACEOF
 #include <math.h>
 #include "confdefs.h"
 int main () {
-#ifdef HAVE_ISFINITE
+#ifdef HAVE_DECL_ISFINITE
   exit(isfinite(1./0.) | isfinite(0./0.) | isfinite(-1./0.));
 #else
   exit(1);
