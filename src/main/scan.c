@@ -1765,7 +1765,7 @@ SEXP do_writetable(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    if(inherits(xj, "factor")) {
 		levels[j] = getAttrib(xj, R_LevelsSymbol);
 	    } else levels[j] = R_NilValue;
-	    }
+	}
 
 	for(i = 0; i < nr; i++) {
 	    if(!isNull(rnames))
