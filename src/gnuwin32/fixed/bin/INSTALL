@@ -177,7 +177,7 @@ foreach $pkg (@ARGV){
     $lazyload = 1 if $opt_lazy;
     $lazyload = 0 if $opt_no_lazy;
     my $tmp = $description->{"LazyLoad"};
-    if(!undef $tmp) {
+    if($tmp ne "") {
 	$tmp = lc $tmp;
 	if($tmp eq "yes") {$lazyload = 1;} else {$lazyload = 0;} 
     }
@@ -187,7 +187,7 @@ foreach $pkg (@ARGV){
     $lazydata = 1 if $opt_lazy_data;
     $lazydata = 0 if $opt_no_lazy_data;
     my $tmp = $description->{"LazyData"};
-    if(!undef $tmp) {
+    if($tmp ne "") {
 	$tmp = lc $tmp;
 	if($tmp eq "yes") {$lazydata = 1;} else {$lazydata = 0;}
     }
