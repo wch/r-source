@@ -1198,53 +1198,68 @@ void CleanUpWindow(WindowPtr window)
 /* GraphicCopy makes a copy of the current device window into
    the clipboard. This is a very quick and clean routine
    completely rewritten wrt the original one.
-   Jago, April 2001, Stefano M. Iacus
+   Bug fixed: text characters are now copied into the
+   clipbooard.
+   Jago, November 2001, Stefano M. Iacus
 */   
 
 void GraphicCopy(WindowPtr window)
 {
-    Size dataLength;
-    SInt32 errorCode;
-    SInt16 WinIndex;
-    DevDesc *dd;
-    PicHandle WPicHandle=NULL;
-    CGrafPtr savePort, tempPort;
-    Rect portRect;
-    ScrapRef scrap;
-    
-    WinIndex = isGraphicWindow(window);
-    dd = (DevDesc*)gGReference[WinIndex].devdesc;
+    Size 		dataLength;
+    SInt32 		errorCode;
+    SInt16 		WinIndex;
+    DevDesc 	*dd;
+    PicHandle 	picHandle=nil;
+    ScrapRef 	scrap;
+ 	Rect		tempRect1;
+	Rect		resizeRect;
+    CGrafPtr    savePort, tempPort;
+    RGBColor	oldColor, newColor;
+   
+   
     GetPort(&savePort);
-    
-    GetWindowPortBounds(window,&portRect);
+ 
+    GetPortBounds(GetWindowPort(window), &tempRect1);
+	 	
+	SetPortWindowPort(window);
+
+	GetForeColor(&oldColor);
+	GetCPixel (tempRect1.right-16,tempRect1.bottom-16,&newColor);
+	
 	tempPort = CreateNewPort();
     
-    WPicHandle = OpenPicture(&portRect);
-    ClipRect(&portRect);
- 	 
- 	gGReference[WinIndex].activePort = tempPort;
- 	WeArePasting = true;
- 	playDisplayList(dd);
- 	WeArePasting = false;
+    SetPort(tempPort);
+    
+		
+	picHandle = OpenPicture(&tempRect1);
+	
+	CopyBits(GetPortBitMapForCopyBits(GetWindowPort(window)), GetPortBitMapForCopyBits(tempPort),  &tempRect1, 
+	   &tempRect1, srcCopy, 0L);
+	
+	SetRect(&resizeRect, tempRect1.right-15, tempRect1.bottom-15, tempRect1.right,tempRect1.bottom);
+	
+    RGBForeColor(&newColor);
+	PaintRect(&resizeRect);
+	RGBForeColor(&oldColor);
  		
 	ClosePicture();
 
     DisposePort(tempPort);
     
     if (ClearCurrentScrap() == noErr) {
-	dataLength = GetHandleSize((Handle) WPicHandle);
-	HLock((Handle)WPicHandle);
+	dataLength = GetHandleSize((Handle) picHandle);
+	HLock((Handle)picHandle);
     errorCode = GetCurrentScrap(&scrap);
     errorCode = PutScrapFlavor (scrap, 'PICT', 0, 
-    GetHandleSize((Handle) WPicHandle), *WPicHandle);
-	HUnlock((Handle)WPicHandle);
+    GetHandleSize((Handle) picHandle), *picHandle);
+	HUnlock((Handle)picHandle);
     }
     
-    KillPicture(WPicHandle);
+    KillPicture(picHandle);
+    
+       SetPort(savePort);
 
-    SetPort(savePort);
 }
-
 
 /* If you call this routine, the default value about TextSize and
    TextFace of  the corresponding Mac Devices will be used
