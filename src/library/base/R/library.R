@@ -79,8 +79,19 @@ library <- function (name, help, lib.loc = .lib.loc, character.only = FALSE,
 		       help, "'", sep = ""))
 	else
 	    .Platform$ show.file(file)
-    } else {
-	.Platform$ show.libraries(lib.loc, fsep = fsep)
+    } else { ## library():
+        for (lib in lib.loc) {
+            cat(paste("\nPackages in library `", lib,"':\n\n", sep = ""))
+            a <- .packages(all.available = TRUE, lib.loc=lib)
+            for (i in a) {
+                title <- system.file("TITLE",i,lib)
+                if (title != "") 
+	            .Platform$ show.file(title)
+                else
+	            cat(i,"\n")
+            }
+        }
+        return(invisible(a))
     }
     if (logical.return)
 	TRUE
@@ -96,9 +107,10 @@ library.dynam <-
     if(missing(chname) || (LEN <- nchar(chname)) == 0)
 	return(.Dyn.libs)
     fsep <- .Platform$file.sep
-    if (substr(chname, LEN - 2, LEN) == file.ext) {
-	chname <- substr(chname, 1, LEN - 3)
-    }
+    nc.ext <- nchar(file.ext)
+    if (substr(chname, LEN - nc.ext+1, LEN) == file.ext)
+	chname <- substr(chname, 1, LEN - nc.ext)
+
     if (is.na(match(chname, .Dyn.libs))) {
 	file <- system.file(paste("libs", fsep, chname, file.ext, sep = ""),
 			    package, lib.loc)
@@ -143,7 +155,18 @@ provide <- function(name) {
     }
 }
 
-.packages <- function() {
+.packages <- function(all.available = FALSE, lib.loc = .lib.loc) {
+    if(all.available) {
+        fsep <- .Platform$ file.sep
+        a <- strsplit(system.file("*","",lib.loc), fsep)
+        ans <- character(0)
+        for (i in a) {
+            name <- i[length(i)]
+            pkg <- system.file(paste("R",name, sep=fsep), name, lib.loc) 
+            if (pkg != "") ans <- c(ans,name)
+        }
+        return(ans)
+    } ## else
     s <- search()
     return(invisible(substring(s[substr(s, 1, 8) == "package:"], 9)))
 }

@@ -176,6 +176,56 @@ void ssort(SEXP *x, int n)
     } while (h != 1);
 }
 
+void revsort(double *a, int *ib, int n)
+{
+/* Sort a[] into descending order by "heapsort";
+ * sort ib[] alongside;
+ * if initially, ib[] = 1...n, it will contain the permutation finally
+ */
+
+    int l, j, ir, i;
+    double ra;
+    int ii;
+
+    a--; ib--;
+
+    l = (n >> 1) + 1;
+    ir = n;
+
+    for (;;) {
+        if (l > 1) {
+	    l = l - 1;
+	    ra = a[l];
+	    ii = ib[l];
+        }
+        else {
+	    ra = a[ir];
+	    ii = ib[ir];
+	    a[ir] = a[1];
+	    ib[ir] = ib[1];
+	    if (--ir == 1) {
+		a[1] = ra;
+		ib[1] = ii;
+		return;
+	    }
+        }
+        i = l;
+        j = l << 1;
+        while (j <= ir) {
+	    if (j < ir && a[j] > a[j + 1]) ++j;
+	    if (ra > a[j]) {
+		a[i] = a[j];
+		ib[i] = ib[j];
+		j += (i = j);
+	    }
+	    else
+		j = ir + 1;
+        }
+        a[i] = ra;
+        ib[i] = ii;
+    }
+}
+
 void sortVector(SEXP s)
 {
     int n;

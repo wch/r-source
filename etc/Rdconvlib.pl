@@ -24,7 +24,7 @@
 
 ## New: \verbatim{}: like \examples{}, but can appear 0-n times [MM].
 ## ---	===========
-## Original idead:  Can have *SEVERAL* verbatim	 codeblocks which should
+## Original idea:  Can have *SEVERAL* verbatim	 codeblocks which should
 ## appear  (almost) WHERE they were initially !!
 ## BUT, this is not really possible:
 ##	we collect the block into a hash array and don't even remember
@@ -127,9 +127,16 @@ sub Rdconv { # Rdconv(foobar.Rd, type, debug, filename)
 
 	get_blocks($complete_text);
 
-	get_sections($complete_text)
-	  if $type =~ /html/i || $type =~ /nroff/i ||
-	    $type =~ /Sd/    || $type =~ /tex/i;
+	if($type =~ /html/i || $type =~ /nroff/i ||
+	   $type =~ /Sd/    || $type =~ /tex/i) {
+
+	    get_sections($complete_text);
+
+	} elsif($type =~ /example/i ) {
+	    ;
+	} else {
+	    warn "\n** Rdconv --type '..' : no valid type specified\n";
+	}
 
 	rdoc2html($htmlfile)	if $type =~ /html/i;
 	rdoc2nroff($nrofffile)	if $type =~ /nroff/i;
@@ -783,9 +790,9 @@ sub rdoc2nroff { # (filename); 0 for STDOUT
 }
 
 
-# Convert a Rdoc text string to nroff
-#   $_[0]: text to be converted
-#   $_[1]: (optional) indentation of paragraphs. default = $INDENT
+### Convert a Rdoc text string to nroff
+###   $_[0]: text to be converted
+###   $_[1]: (optional) indentation of paragraphs. default = $INDENT
 
 sub text2nroff {
 
@@ -798,6 +805,9 @@ sub text2nroff {
     }
 
     $text =~ s/^\.|([\n\(])\./$1\\\&./g;
+
+    ## TABs are just whitespace
+    $text =~ s/\t/ /g;
 
     ## tables are pre-processed by the tbl(1) command, so this has to
     ## be done first
@@ -1220,13 +1230,14 @@ sub Sd_print_sections {
 
 sub rdoc2ex { # (filename)
 
+    local($tit = $blocks{"title"});
+
     if($_[0]!= -1) {
       if($_[0]) { open Exout, "> $_[0]"; } else { open Exout, "| cat"; }
     }
-    ##--- Here, I should also put everything which belongs to
-    ##--- ./massage-Examples ---- depending on 'name' !!!
+    $tit =~ s/\s+/ /g;
     print Exout "###--- >>> `"; print Exout $blocks{"name"};
-    print Exout "' <<<----- "; print Exout $blocks{"title"};
+    print Exout "' <<<----- "; print Exout $tit;
     print Exout "\n\n";
     if(@aliases) {
 	foreach (@aliases) {

@@ -20,9 +20,11 @@ This function provides an interface to the EISPACK routines
 \value{
 The spectral decomposition of \code{x} is returned
 as components of a list.
-\item{values}{a vector containing the eigenvalues of \code{x}, sorted
+\item{values}{a vector containing the \eqn{p} eigenvalues of \code{x}, sorted
   \emph{decreasingly}, according to \code{Mod(values)} if they are complex.}
-\item{vectors}{a matrix whose columns contain the eigenvectors of \code{x}.}
+\item{vectors}{a \eqn{p\times p}{p * p} matrix whose columns contain the
+    eigenvectors of \code{x}, or \code{NULL} if \code{only.values} is
+    \code{TRUE}.} 
 }
 \references{
 Smith, B. T, J. M. Boyle, J. J. Dongarra, B. S. Garbow, Y. Ikebe,

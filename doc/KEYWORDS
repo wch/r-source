@@ -2,72 +2,74 @@ GROUPED Keywords
 ----------------
 
 Graphics
-       aplot		&	Add to Existing Plot / internal plot.
-       dplot		&	Computations Related to Plotting
-       hplot		&	High-Level Plots
-       iplot		&	Interacting with Plots
-       color		&	Color, Palettes etc.
-       dynamic		&	Dynamic Graphics
-       device		&	Graphical Devices			7
+	aplot		&	Add to Existing Plot / internal plot.
+	dplot		&	Computations Related to Plotting
+	hplot		&	High-Level Plots
+	iplot		&	Interacting with Plots
+	color		&	Color, Palettes etc.
+	dynamic		&	Dynamic Graphics
+	device		&	Graphical Devices			7
 
 Basics
-       sysdata		&	Basic System Variables		[!= S]
-       datasets		&	Datasets available by data(.)	[!= S]
-       data		&	Environments, Scoping, Packages [~= S]
-       manip		&	Data Manipulation
-       attribute	&	Data Attributes
-       classes		&	Data Types (not OO)
-	   & character	&	Character Data Operations
-	   & complex	&	Complex Numbers
-	   & category   &	Categorical Data
-	   & NA		&	Missing Values			[!= S]
-       list		&	Lists					11
+	sysdata		&	Basic System Variables		[!= S]
+	datasets	&	Datasets available by data(.)	[!= S]
+	data		&	Environments, Scoping, Packages [~= S]
+	manip		&	Data Manipulation
+	attribute	&	Data Attributes
+	classes		&	Data Types (not OO)
+	    & character	&	Character Data Operations
+	    & complex	&	Complex Numbers
+	    & category  &	Categorical Data
+	    & NA		&	Missing Values			[!= S]
+	list		&	Lists					11
 
 Mathematics
-       array		&	Matrices and Arrays
+	array		&	Matrices and Arrays
 	      & algebra &	Linear Algebra
-       arith		&	Basic Arithmetic and Sorting	[!= S]
-       math		&	Mathematical Calculus etc.	[!= S]
-       logic		&	Logical Operators
-       optimize		&	Optimization				6
+	arith		&	Basic Arithmetic and Sorting	[!= S]
+	math		&	Mathematical Calculus etc.	[!= S]
+	logic		&	Logical Operators
+	optimize	&	Optimization				6
+	symbolmath	&	"Symbolic Math", as polynomials, fractions
+	
 
 Programming, Input/Ouput, and Miscellaneous
 
-       programming	&	Programming
-	    & interface	&	Interfaces to Other Languages
-       iteration	&	Looping and Iteration
-       methods		&	Methods and Generic Functions
-       print		&	Printing
-       file		&	Input/Output--Files
-       error		&	Error Handling				7
+	programming	&	Programming
+	     & interface&	Interfaces to Other Languages
+	iteration	&	Looping and Iteration
+	methods		&	Methods and Generic Functions
+	print		&	Printing
+	file		&	Input/Output--Files
+	error		&	Error Handling				7
 
-       environment	&	Session Environment
-       utilities	&	Utilities
-       misc		&	Miscellaneous
-       documentation	&	Documentation				4
+	environment	&	Session Environment
+	utilities	&	Utilities
+	misc		&	Miscellaneous
+	documentation	&	Documentation				4
 
 Statistics
 
-       distribution 	&	Probability Distributions and Random Numbers
-       univar		&	simple univariate statistics  [!= S]
-       htest		&	Statistical Inference
-       models		&	Statistical Models
-	   & regression	&	Regression
-           & & nonlinear&	Non-linear Regression (only?)
-       robust		&	Robust/Resistant Techniques
-       design		&	Designed Experiments
-       multivariate	&	Multivariate Techniques
-       ts		&	Time Series
-       survival		&	Survival Analysis		       11
+	distribution 	&	Probability Distributions and Random Numbers
+	univar		&	simple univariate statistics  [!= S]
+	htest		&	Statistical Inference
+	models		&	Statistical Models
+	    & regression&	Regression
+	    & &nonlinear&	Non-linear Regression (only?)
+	robust		&	Robust/Resistant Techniques
+	design		&	Designed Experiments
+	multivariate	&	Multivariate Techniques
+	ts		&	Time Series
+	survival	&	Survival Analysis		       11
 
-				[actually, `survival4' rather than `survival',
-				 but do we want 'survival5' later ?]
+				 [actually, `survival4' rather than `survival',
+				  but do we want 'survival5' later ?]
 
-       nonparametric	&	Nonparametric Statistics [w/o 'smooth']
-       smooth		&	Curve (and Surface) Smoothing
-       cluster		&	Clustering
-       loess		&	Loess Objects
-       tree		&	Regression and Classification Trees	5
+	nonparametric	&	Nonparametric Statistics [w/o 'smooth']
+	smooth		&	Curve (and Surface) Smoothing
+	cluster		&	Clustering
+	loess		&	Loess Objects
+	tree		&	Regression and Classification Trees	5
 								     ----
 								       51
 

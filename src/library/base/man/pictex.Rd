@@ -31,7 +31,7 @@ pictex(file = "Rplots.tex", width = 5, height = 4, debug = FALSE,
   Reading, MA: Addison-Wesley.
 }
 \author{
-  This driver was provided by Valerio Aimalea
+  This driver was provided by Valerio Aimale
   \email{valerio@svpop.com.dist.unige.it}
   of the Department of Internal Medicine, University of Genoa, Italy.
 }

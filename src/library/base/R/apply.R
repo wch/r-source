@@ -1,5 +1,4 @@
-apply <-
-    function(X, MARGIN, FUN, ...)
+apply <- function(X, MARGIN, FUN, ...)
 {
     ## Ensure that FUN is a function
 
@@ -16,9 +15,9 @@ apply <-
 
     d <- dim(X)
     dl <- length(d)
-    ds <- 1:dl
     if(dl == 0)
 	stop("dim(X) must have a positive length")
+    ds <- 1:dl
     if(length(class(X)) > 0)
 	X <- if(dl == 2) as.matrix(X) else as.array(X)
     dn <- dimnames(X)
@@ -26,10 +25,10 @@ apply <-
     ## Extract the margins and associated dimnames
 
     s.call <- ds[-MARGIN]
-    s.ans <- ds[MARGIN]
+    s.ans  <- ds[MARGIN]
     d.call <- d[-MARGIN]
-    d.ans <- d[MARGIN]
-    dn.call <- dn[-MARGIN]
+    d.ans  <- d[MARGIN]
+    dn.call<- dn[-MARGIN]
     dn.ans <- dn[MARGIN]
     ## dimnames(X) <- NULL
 
@@ -49,21 +48,16 @@ apply <-
     ans.length <- length(ans[[1]])
     if(!ans.list)
 	ans.list <- any(unlist(lapply(ans, length)) != ans.length)
-    if(!ans.list)
-	ans <- unlist(ans, recursive = FALSE)
-    if(length(MARGIN) == 1 && length(ans) == d2) {
-	if(length(dn.ans[[1]]) > 0)
-	    names(ans) <- dn.ans[[1]]
-	else names(ans) <- NULL
+    len.a <- if(ans.list) d2 else length(ans <- unlist(ans, recursive = FALSE))
+    if(length(MARGIN) == 1 && len.a == d2) {
+	names(ans) <- if(length(dn.ans[[1]]) > 0) dn.ans[[1]] # else NULL
 	return(ans)
     }
-    else if(length(ans) == d2)
+    if(len.a == d2)
 	return(array(ans, d.ans, dn.ans))
-    else if(length(ans) > 0 && length(ans) %% d2 == 0) {
-	if(is.null(dn.ans))
-	    return(array(ans, c(length(ans)/d2, d[MARGIN])))
-	else return(array(ans, c(length(ans)/d2, d.ans),
-			  c(list(ans.names), dn.ans)))
-    }
-    else return(ans)
+    if(len.a > 0 && len.a %% d2 == 0)
+	return(array(ans, c(len.a %/% d2, d.ans),
+		     dimnames = if(is.null(dn.ans)) list(ans.names,NULL)
+		     else c(list(ans.names), dn.ans)))
+    return(ans)
 }

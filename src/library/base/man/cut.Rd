@@ -11,8 +11,10 @@ cut.default(x, breaks, labels = NULL,
 \item{x}{a numeric vector which is to be converted to a factor by cutting.}
 \item{break}{either a vector of cut points or number
   giving the number of intervals which \code{x} is to be cut into.}
-\item{labels}{labels for the levels of the resulting category. By default
-  labels are constructed using \code{"(a,b]"} interval notation.}.
+\item{labels}{labels for the levels of the resulting category.  By default,
+    labels are constructed using \code{"(a,b]"} interval notation. If
+    \code{labels = FALSE}, simple integer codes are returned instead of
+    a factor.}.
 \item{include.lowest}{logical, indicating if an `x[i]' equal to the
   lowest (or highest, for \code{right = FALSE}) `breaks' value should be
   included.}
@@ -21,13 +23,18 @@ cut.default(x, breaks, labels = NULL,
 \item{dig.lab}{integer which is used when labels are not given. It
   determines the number of digits used in formatting the break numbers.}
 }
-\value{
+\description{
 \code{cut} divides the range of \code{x} into intervals
 and codes the values in \code{x} according to which
 interval they fall.
 The leftmost interval corresponds to level one,
 the next leftmost to level two and so on.
-
+}
+\value{
+A \code{\link{factor}} is returned, unless \code{labels = FALSE} which
+results in the mere integer level codes.
+}
+\details{
 If a \code{labels} parameter is specified, its values are used
 to name the factor levels. If none is specified, the factor
 level labels are constructed as \code{"(b1, b2]"}, \code{"(b2, b3]"}
@@ -36,11 +43,20 @@ etc. for \code{right=TRUE} and as \code{"[b1, b2)"}, \ldots if
 In this case, \code{dig.lab} indicates how many digits should be used in
 formatting the numbers \code{b1}, \code{b2}, \ldots.
 }
+\note{
+Instead of \code{table(cut(x, br))}, \code{hist(x, br, plot = FALSE)} is
+more efficient and less memory hungry.
+}
 \seealso{
 \code{\link{split}} for splitting a variable according to a group factor;
 \code{\link{factor}}, \code{\link{tabulate}}, \code{\link{table}}.
 }
 \examples{
+Z <- rnorm(10000)
+table(cut(Z, br = -6:6))
+system.time(print(sum(table(cut(Z, br = -6:6, labels=FALSE)))))
+system.time(print(sum(   hist  (Z, br = -6:6, plot=FALSE)$counts)))
+
 cut(rep(1,5),4)#-- dummy
 tx0 <- c(9, 4, 6, 5, 3, 10, 5, 3, 5)
 x <- rep(0:8, tx0)
@@ -55,6 +71,7 @@ table(cx  <- cut(x, br = 2*(0:4)))
 table(cxl <- cut(x, br = 2*(0:4), right = F))
 which(is.na(cx));  x[is.na(cx)]  #-- the first 9  values  0
 which(is.na(cxl)); x[is.na(cxl)] #-- the last  5  values  8
+
 
 ## Label construction:
 y <- rnorm(100)

@@ -1,4 +1,4 @@
-xy.coords <- function(x, y, xlab=NULL, ylab=NULL, log = NULL)
+xy.coords <- function(x, y, xlab=NULL, ylab=NULL, log=NULL, recycle = FALSE)
 {
     if(is.null(y)) {
 	ylab <- xlab
@@ -57,7 +57,16 @@ xy.coords <- function(x, y, xlab=NULL, ylab=NULL, log = NULL)
 	}
     }
 
-    if(length(x) != length(y)) stop("x and y lengths differ")
+    if(length(x) != length(y)) {
+	if(recycle) {
+	    if((nx <- length(x)) < (ny <- length(y)))
+		x <- rep(x, length= ny)
+	    else
+		y <- rep(y, length= nx)
+	}
+	else
+	    stop("x and y lengths differ")
+    }
 
     if(length(log) && log != "") {
 	log <- strsplit(log, NULL)[[1]]

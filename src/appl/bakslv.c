@@ -37,14 +37,13 @@ void bakslv(double *t, int *ldt, int *n,
  * or
  *		     t' * x = b		[ t' := transpose(t) ]
 
- * where t is a triangular matrix of order n. here trans(t)
- * denotes the transpose of the matrix t.  the subroutine
- * handles the multiple right-hand side case.  it is really
- * just a wrapper for the linpack subroutine dtrsl.
+ * where t is a triangular matrix of order n.
+ * The subroutine handles the multiple right-hand side case.
+ * It is really just a wrapper for the linpack subroutine dtrsl.
 
  * on entry
 
- *	t      double (ldt,n).
+ *	t      double (ldt,n'). n' >= n (below)
  *	       t[] contains the coefficient matrix of the system
  *	       to be solved.  only the elements above or below
  *	       the diagonal are referenced.
@@ -53,7 +52,7 @@ void bakslv(double *t, int *ldt, int *n,
  *	n      int;	n is the order of the system.  n <= min(ldt,ldb)
 
 
- *	b      double (ldb,nb)
+ *	b      double (ldb,nb').  nb' >= nb (below)
  *	       b[] contains the right hand side(s) of the system.
 
  *	ldb    int;	ldb is the leading dimension of the array b.

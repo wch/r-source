@@ -27,7 +27,6 @@
  */
 
 #include "Mathlib.h"
-#include "Error.h"
 
 double qsignrank(double x, double n)
 {
@@ -47,7 +46,7 @@ double qsignrank(double x, double n)
 	ML_ERROR(ME_DOMAIN);
 	return ML_NAN;
     } else if (n >= SIGNRANK_NMAX) {
-	warning("n should be less than %d\n", SIGNRANK_NMAX);
+	MATHLIB_WARNING("n should be less than %d\n", SIGNRANK_NMAX);
 	return ML_NAN;
     }
 

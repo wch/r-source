@@ -1,5 +1,6 @@
 \name{Bessel}
 \title{Bessel Functions}
+\alias{bessel}
 \alias{besselI}
 \alias{besselJ}
 \alias{besselK}
@@ -14,14 +15,16 @@ gammaCody(x)
 }
 \description{Bessel Functions of integer and fractional order, of first
     and second kind, \eqn{J_{\nu}}{J(nu)} and \eqn{Y_{\nu}}{Y(nu)}, and
-    Modified Bessel functions \eqn{I_{\nu}}{I(nu)} and \eqn{K_{\nu}}{K(nu)}.
+    Modified Bessel functions (of first and third kind),
+    \eqn{I_{\nu}}{I(nu)} and \eqn{K_{\nu}}{K(nu)}. 
 
     \code{gammaCody} is the \eqn{(\Gamma)} Function as from the Specfun
     package and originally used in the Bessel code.
 }
 \arguments{
     \item{x}{numeric, \eqn{\ge 0}{>= 0}.}
-    \item{nu}{numeric, \eqn{\ge 0}{>= 0}.  The \emph{order} of the
+    \item{nu}{numeric; \eqn{\ge 0}{>= 0} unless in \code{besselK} which
+	is symmetric in \code{nu}.  The \emph{order} of the
       corresponding Bessel function.}
     \item{expon.scaled}{logical; if \code{TRUE}, the results are
       exponentially scaled in order to avoid overflow
@@ -29,7 +32,8 @@ gammaCody(x)
       respectively.}
 }
 \value{
-
+    numeric of the same length of \code{x} with the (scaled, if
+    \code{expon.scale=T}) values of the corresponding Bessel function.
 }
 \details{
     The underlying code for these functions stem from \emph{Netlib},

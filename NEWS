@@ -1,3 +1,89 @@
+		CHANGES IN R VERSION 0.63.1
+
+NEW FEATURES
+
+    o   new function mosaicplot().
+
+    o	xy.coords(.) has a  "recycle = FALSE" argument,	 used in text().
+
+    o	RNGtype() allows to choose different Random Number Generators.
+		__EXPERIMENTAL__
+
+    o	print.default(.) now also works with a `right = TRUE' argument.
+	{{ print.matrix(.) is bound to become deprecated... }}
+
+    o	new help page `Memory' on the usage of command line options
+	--vsize and --nsize. Error message if R runs out of memory
+	points to help(Memory).
+
+    o	rowsum() and improved na.omit() added from survival4
+    
+    o	backsolve(.) has new arguments "upper.tri = TRUE,  transpose = FALSE"
+
+    o	hist() has new "right = TRUE" argument;	 
+	"right = FALSE" gives  [a,b) intervals
+
+    o	help() has "htmlhelp" argument, allowing to suppress htmlhelp after
+	help.start().  This is desired for ESS.
+
+    o   quantile(.) has an "names = TRUE" argument for speed.
+	It is much better documented now.
+
+
+BUG FIXES
+
+    o	build-help --dosnames should now also work for text help,
+	latex and examples.
+
+    o	seq() should work better now (fuzz-factor 1e-7 inserted)
+
+    o	multiple arguments to return caused value to be a pairlist
+
+    o	data.frame choked on long names from deparse()
+
+    o	data.edit now works (dataedit doesn't need pairlist()s anymore)
+
+    o	as.pairlist(NULL) is ok
+
+    o	ts(1:5, start=2, end=4) now work.  Further plot(ts(..), ts(..))
+
+    o	eigen() returns $vectors in any case [S compat].
+
+    o	apply(cbind(1,1:9, 2, quantile) doesn't drop quantile names anymore
+
+    o	array(1, dim=(1:3)[c(F,F,F)]) is now valid == array(1,NULL) == c(1);
+	the same for array(a,d, list())
+
+    o	fix problem with step() and offsets
+
+    o	drop attributes on matrix subsetting
+
+    o	kappa(.) now works [dtrco now in load table (ROUTINES)].
+
+    o	pmin() and pmax() now preserve attributes.
+
+    o	handle null models arising in drop1(), step, etc.
+
+    o	partial matching problem with $ indexing
+
+    o	matplot(.) works with lwd (vectors)
+
+    o	par("cex.axis") now has the desired effect...
+
+    o	which(.) now omits NAs in its argument.
+
+    o	rbind.data.frame caused character-to-factor coercion a bit too often
+
+    o	couple of messups in dotplot
+
+    o	z[[1]] <- ~x probl fixed as suggested by J.Lindsey 
+
+    o   do_modelframe could lose contrast attributes
+
+    o	"make check" needed standardisation of locale
+
+    o	unlist(...,recursive=F) got names wrong
+
 		CHANGES IN R VERSION 0.63
 
 NEW FEATURES
@@ -8,7 +94,7 @@ NEW FEATURES
     o	new  .Platform	variable  for better modularizing
 	platform dependence. __This_is_"beta"_and_bound_to_be_changed___
 
-    o	new arguments to colnames(..) and 
+    o	new arguments to colnames(..) and
 	rownames(x, do.NULL = TRUE, prefix = "row").
 			   _
     o	par(bty = "]") for _| box(.) in plots.
@@ -111,12 +197,12 @@ NEW FEATURES
 	and is subject to internal and interface changes.
 
     o	gctorture() for torturing the garbage collector to reveal
-	memory protection bugs. (Call GC on every memory allocation). 
+	memory protection bugs. (Call GC on every memory allocation).
 
-    o	B. Ripley's aov code (and more) has been added. This includes: 
+    o	B. Ripley's aov code (and more) has been added. This includes:
 
 	- aov() now handles models with Error terms, multiple
-	  responses. 
+	  responses.
 
 	- proj(), model.tables(), se.contrast(), replications(),
 	  eff.aovlist() are implemented for aov fits, and where
@@ -129,7 +215,7 @@ NEW FEATURES
 
 	- summary() and deviance() -- mlm methods.
 
-	- kappa()  for estimating condition numbers) 
+	- kappa()  for estimating condition numbers)
 
 	- labels() to find a suitable set of labels from an object
 
@@ -137,12 +223,12 @@ NEW FEATURES
 
 	- anova(), plot(), summary() and deviance() methods for mlm fits
 
-    o	eval() semantics changed when envir= is a list. A 3rd argument is 
+    o	eval() semantics changed when envir= is a list. A 3rd argument is
 	now allowed, specifying the enclosure (i.e. where R looks for
-	variables *not* found in envir=) it defaults to the calling 
+	variables *not* found in envir=) it defaults to the calling
 	environment (was .GlobalEnv). Note that when used inside a function,
-	it is often desirable to set the enclosure to the parent 
-	environment instead. [ eval(e, data, sys.frame(sys.parent())) ] 
+	it is often desirable to set the enclosure to the parent
+	environment instead. [ eval(e, data, sys.frame(sys.parent())) ]
 
 
 BUG FIXES

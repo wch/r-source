@@ -9,10 +9,12 @@ unix.time(expr)
 \arguments{
   \item{expr}{Valid \R expression to be ``timed''}
 }
-\description{
+\description{Return CPU (and other) times that \code{expr} used.
+}    
+\details{
   \code{system.time} calls the builtin \code{\link{proc.time}},
-  evaluates \code{expr}, and the calls \code{proc.time} once more,
-  returning the difference to between the \code{proc.time} calls.
+  evaluates \code{expr}, and then calls \code{proc.time} once more,
+  returning the difference between the two \code{proc.time} calls.
 
   The values returned by the \code{proc.time} are (currently) those
   returned by the C library function \code{times}(3v).

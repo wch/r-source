@@ -30,8 +30,7 @@ Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 
 test-Examples: $(Ex_Rout)
 
-$(Ex_Rout): %-Ex.Rout: %-Ex.R $(top_builddir)/stamp-R \
-	  $(top_builddir)/src/library/stamp-help
+$(Ex_Rout): %-Ex.Rout: %-Ex.R ../stamp-R $(top_builddir)/src/library/stamp-help
 	@if [ -f $@.bak ]; then mv $@.bak $@.bakk ; fi
 	@if [ -f $@ ]; then mv $@ $@.bak ; fi
 	@echo "Running all help() examples ..."
@@ -41,17 +40,17 @@ base-Ex.R: $(top_builddir)/library/base/R-ex/*.R
 	@if [ -f $@.bak ]; then mv $@.bak $@.bakk ; fi
 	@if [ -f $@ ]; then mv $@ $@.bak ; fi
 	@echo "Massaging examples into $@ ..."
-	-@$(top_builddir)/bin/massage-Examples $* \
+	@$(top_builddir)/bin/massage-Examples $* \
 	  $(top_builddir)/library/base/R-ex/*.R > $@
 %-Ex.R: $(top_builddir)/library/%/R-ex/*.R
 	@if [ -f $@.bak ]; then mv $@.bak $@.bakk ; fi
 	@if [ -f $@ ]; then mv $@ $@.bak ; fi
 	@echo "Massaging examples into $@ ..."
-	-@$(top_builddir)/bin/massage-Examples $* \
+	@$(top_builddir)/bin/massage-Examples $* \
 	  $(top_builddir)/library/$*/R-ex/*.R > $@
 
-$(top_builddir)/stamp-R:
-	-(cd $(top_builddir) && $(MAKE) R)
+../stamp-R:
+	(cd .. && $(MAKE) stamp-R)
 $(top_builddir)/src/library/stamp-help:
 	(cd $(top_builddir)/src/library \
 	  && $(MAKE) PKGS="$(Pkgs)" stamp-help)

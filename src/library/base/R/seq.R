@@ -31,14 +31,7 @@ seq.default <- function(from = 1, to = 1, by = ((to - from)/(length.out - 1)),
 	    dd <- abs(del)/max(abs(to), abs(from))
 	    if (dd < sqrt(.Machine$double.eps))
 		return(from)
-	    eps <- .Machine$double.eps * max(1, 1/dd)
-	    n <- as.integer(n * (1 + eps))
-	    if(eps*2*n >= 1)
-		warning(paste("seq.default(f,t,by): n=",n,
-			      ": possibly imprecise intervals"))
-	    if(by>0)	while(from+ n*by > to) n <- n - 1
-	    else	while(from+ n*by < to) n <- n - 1
-
+	    n <- as.integer(n + 1e-7)
 	    from + (0:n) * by
 	}
     else if(length.out < 0)

@@ -24,7 +24,6 @@
  *	------------------------------=#----	Martin Maechler, ETH Zurich
  */
 #include "Mathlib.h"
-#include "Error.h"
 
 static double exparg = 709.;/* maximal x for UNscaled answer, see below */
 
@@ -42,12 +41,13 @@ double bessel_i(double x, double alpha, double expo)
     bi = (double *) calloc(nb, sizeof(double));
     I_bessel(&x, &alpha, &nb, &ize, bi, &ncalc);
     if(ncalc != nb) {/* error input */
-      if(ncalc < 0)
-	warning("bessel_i(%g): ncalc (=%d) != nb (=%d); alpha=%g.%s\n",
-		x, ncalc, nb, alpha," Arg. out of range?");
-      else
-	warning("bessel_i(%g,nu=%g): precision lost in result\n",
-		x, alpha+nb-1);
+	if(ncalc < 0)
+	    MATHLIB_WARNING4("bessel_i(%g): ncalc (=%d) != nb (=%d); alpha=%g."
+			     " Arg. out of range?\n",
+			     x, ncalc, nb, alpha);
+	else
+	    MATHLIB_WARNING2("bessel_i(%g,nu=%g): precision lost in result\n",
+			     x, alpha+nb-1);
     }
     x = bi[nb-1];
     free(bi);

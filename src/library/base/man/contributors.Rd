@@ -32,7 +32,7 @@
   In addition, a large group of individuals has contributed to \R by
   donating code, bug reports and documentation, notably
 
-  Valerio Aimalea,
+  Valerio Aimale,
   Ben Bolker,
   Goran Brostrom,
   Paul Gilbert,
@@ -47,6 +47,7 @@
   Martyn Plummer,
   Brian Ripley,
   Bill Simpson,
+  Terry Therneau,
   Bill Venables, and
   Andreas Weingessel.
 

@@ -4,7 +4,7 @@ f1=$1
 f2=$2
 #$perlne="'print if /^Version|^Number of.*:/'"
 #perl -ne "$perlne" $f1 ....
-egrepv='(^Version|^Number of.*:'
+egrepv='(^Version|^Number of.*:|^Type'
 if test -n "`grep primitive-funs $f1`"
  then egrepv=$egrepv'|^\[1\] [19][0-9][0-9])'
  else egrepv=$egrepv')'
