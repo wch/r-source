@@ -22,6 +22,9 @@ following platforms.
 	hppa	HPUX 10.20
 
 0.64.1	i386	Linux Slackware 3.4
+		Linux Redhat 5.2 6.0
+
+	sparc	Sun Solaris 2.5.1, 2.6, 2.7
 
 See below for more details and contact information.
 
@@ -178,30 +181,30 @@ MAKE		GNU make
 
 NAME            Brian Ripley
 EMAIL           ripley@stats.ox.ac.uk
-VERSION         0.64
+VERSION         0.64.1
 PLATFORM        sun-sparc-solaris2.6
-SYSTEM          
+SYSTEM          Sun Ultra 1/170
 CC		gcc 2.8.1
 FC		f77 SC4.2
-MAKE		Sun make
+MAKE		Sun make (not making in separate directory)
 
 NAME            Brian Ripley
 EMAIL           ripley@stats.ox.ac.uk
-VERSION         0.64
+VERSION         0.64.1
 PLATFORM        sun-sparc-solaris2.6
-SYSTEM          
+SYSTEM          Sun Ultra 1/170
 CC		cc SC4.2
 FC		f77 SC4.2
 MAKE		Sun make
 
 NAME            Brian Ripley
 EMAIL           ripley@stats.ox.ac.uk
-VERSION         0.64
+VERSION         0.64.1
 PLATFORM        sun-sparc-solaris2.6
-SYSTEM          
-CC		egcs 1.1 gcc
-FC		egcs 1.1 g77
-MAKE		GNU make
+SYSTEM          Sun Ultra 1/170
+CC		egcs 1.1.2 gcc
+FC		egcs 1.1.2 g77
+MAKE		GNU make 3.77 (patched)
 
 NAME		Osman Buyukisik
 EMAIL		osman@cinternet.net
@@ -220,6 +223,15 @@ SYSTEM		Slackware 3.4
 CC		gcc 2.7.2.3
 FC		g77 GNU Fortran 0.5.21
 MAKE		GNU make 3.76.1
+
+NAME		Brian Ripley
+EMAIL		ripley@stats.ox.ac.uk
+VERSION         0.64.1
+PLATFORM        i686-unknown-linux
+SYSTEM          RedHat 6.0
+CC		egcs-1.1.2 (as shipped)
+FC		egcs 1.1.2 (egcs-g77 rpm)
+MAKE		GNU make (as shipped)
 
 NAME		
 EMAIL		
