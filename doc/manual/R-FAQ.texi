@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2004
-@set FAQ-VERSION 1.9-42 @value{FAQ-YEAR}-08-09
+@set FAQ-VERSION 1.9-43 @value{FAQ-YEAR}-08-12
 @set REL-VERSION 1.9.1
 @set REL-YEAR 2004
 @set FAQ-ISBN 3-900051-01-1
@@ -3516,10 +3516,10 @@ of the documentation can be found at @uref{http://stat.ethz.ch/ESS/}.
 @acronym{ESS} comes with detailed installation instructions.
 
 For help with @acronym{ESS}, send email to
-@email{ESS-help@@stat.ethz.ch}.
+@email{ESS-help@@stat.math.ethz.ch}.
 
 Please send bug reports and suggestions on @acronym{ESS} to
-@email{ESS-bugs@@stat.ethz.ch}.  The easiest way to do this from is
+@email{ESS-bugs@@stat.math.ethz.ch}.  The easiest way to do this from is
 within Emacs by typing @kbd{M-x ess-submit-bug-report} or using the
 [ESS] or [iESS] pulldown menus.
 
