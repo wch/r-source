@@ -18,7 +18,7 @@ codocData(package, lib.loc = NULL)
   Find inconsistencies between actual and documented \dQuote{structure}
   of \R objects in a package.  \code{codoc} compares names and
   optionally also corresponding positions and default values of the
-  arguments of functions.  \code{codocClasses} and \codoc{codocData}
+  arguments of functions.  \code{codocClasses} and \code{codocData}
   compare slot names of S4 classes and variable names of data sets,
   respectively.
 }
