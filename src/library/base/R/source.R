@@ -1,7 +1,7 @@
 source <-
 function(file, local = FALSE, echo = verbose, print.eval = echo,
          verbose = getOption("verbose"),
-         prompt.echo = getOption("prompt"), 
+         prompt.echo = getOption("prompt"),
          max.deparse.length = 150, chdir = FALSE)
 {
 ##-     if(!(is.character(file) && file.exists(file)))
@@ -147,7 +147,7 @@ function(topic, device = getOption("device"),
         class(y) <- "packageIQR"
         return(y)
     }
-            
+
     if(!character.only)
         topic <- as.character(substitute(topic))
     available <- character(0)
@@ -182,14 +182,14 @@ function(topic, device = getOption("device"),
     }
     source(available, echo = TRUE, max.deparse.length = 250)
 }
-                
+
 example <-
 function(topic, package = .packages(), lib.loc = NULL,
          echo = TRUE, verbose = getOption("verbose"),
          prompt.echo = paste(abbreviate(topic, 6), "> ", sep = ""))
 {
     sQuote <- function(s) paste("`", s, "'", sep = "")
-    
+
     topic <- substitute(topic)
     if(!is.character(topic))
 	topic <- deparse(topic)[1]
@@ -211,7 +211,7 @@ function(topic, package = .packages(), lib.loc = NULL,
     ## end of experimental code
     if(!file.exists(zfile)) {
 	warning(paste(sQuote(topic),
-                      "has a help file but no examples file",))
+                      "has a help file but no examples file"))
 	return(invisible())
     }
     if(pkg != "base")
