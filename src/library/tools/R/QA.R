@@ -76,8 +76,7 @@ function(package, dir, lib.loc = NULL)
     dataObjs <- character(0)
     dataDir <- file.path(dir, "data")
     if(.fileTest("-d", dataDir)) {
-        dataExts <- .makeFileExts("data")
-        files <- .listFilesWithExts(dataDir, dataExts)
+        files <- .listFilesWithType(dataDir, "data")
         files <- files[!duplicated(sub("\\.[A-Za-z]*$", "", files))]
         dataEnv <- new.env()
         if(any(i <- grep("\\.\(R\|r\)$", files))) {

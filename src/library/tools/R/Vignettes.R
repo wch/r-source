@@ -109,9 +109,8 @@ pkgVignettes <- function(package, dir, lib.loc = NULL)
     
     if(!.fileTest("-d", docdir)) return(NULL)
 
-    exts <- .makeFileExts("vignette")
-    docs <- .listFilesWithExts(docdir, exts)
-    
+    docs <- .listFilesWithType(docdir, "vignette")
+
     z <- list(docs=docs, dir=docdir)
     class(z) <- "pkgVignettes"
     z
