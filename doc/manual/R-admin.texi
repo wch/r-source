@@ -757,9 +757,8 @@ From a running @R{} process they can be removed by
 Finally, in most installations one can just remove the package directory
 from the library.
 
-@strong{Note}: whereas it is currently possible to install package
-@emph{bundles}, one cannot remove these as such---the packages contained
-in the bundle have to removed individually.
+@strong{Note}: only @code{remove.packages} can remove package
+@emph{bundles}.
 
 @node Essential and useful other programs, Configuration on Unix, Add-on packages, Top
 @appendix Essential and useful other programs
