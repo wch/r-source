@@ -27,10 +27,13 @@ pkgsrcs = $(R_PKGS:=-pkg.tex)
 .SUFFIXES:
 .SUFFIXES: .dvi .info .texi .pdf
 
-all: pkg2tex.pl pdf
+all: pdf
 
 pkg2tex.pl: $(top_srcdir)/tools/pkg2tex.in
-	sed -e 1d  $^ > $@
+	@sed -e 1d  $^ > $@
+
+Rdnewer.pl: $(top_srcdir)/tools/Rdnewer.in
+	@sed -e 1d  $^ > $@
 
 .texi.pdf:
 	$(PDFTEX) $<
@@ -38,7 +41,7 @@ pkg2tex.pl: $(top_srcdir)/tools/pkg2tex.in
 
 pdf: refman.pdf $(OBJECTS_PDF)
 
-refman.tex: pkg2tex.pl refman.top $(srcdir)/refman.bot
+refman.tex: refman.top $(srcdir)/refman.bot
 	@echo "creating $@"
 	@(opt="$${R_PAPERSIZE:-$(R_PAPERSIZE)}paper"; \
 	  echo "\\documentclass[$${opt}]{book}"; \
@@ -56,10 +59,13 @@ version.tex: ../../bin/rterm.exe $(top_srcdir)/VERSION
 	  d=`cut -d/ -f3 < $(top_srcdir)/date-stamp`; \
 	  echo "$${v} ($${m} $${d}, $${y})") > $@
 
-%-pkg.tex: FORCE
-	@echo "Collecting components of $@ ..."
-	cd ../../src/gnuwin32/help && $(MAKE) RHOME=$(RHOME) latex-$*
-	perl pkg2tex.pl $*
+%-pkg.tex: FORCE Rdnewer.pl pkg2tex.pl
+	@if perl Rdnewer.pl \
+	    "$(top_srcdir)/src/library/$*" "$@"; then \
+	  echo "collecting LaTeX docs for package \`$*' ..."; \
+	  (cd ../../src/gnuwin32/help && $(MAKE) RHOME=$(RHOME) latex-$*); \
+	  perl pkg2tex.pl $*; \
+	fi
 FORCE:
 
 refman.pdf: refman.tex version.tex $(pkgsrcs) $(srcdir)/Rd.sty
@@ -74,10 +80,12 @@ R-exts.pdf: R-exts.texi version.texi
 	$(PDFTEX) R-exts.texi
 	$(TEXINDEX) R-exts.cp R-exts.fn R-exts.vr
 	$(PDFTEX) R-exts.texi
+	$(PDFTEX) R-exts.texi
 
 R-intro.pdf: R-intro.texi version.texi 
 	$(PDFTEX) R-intro.texi
 	$(TEXINDEX) R-intro.cp R-intro.fn R-intro.vr
+	$(PDFTEX) R-intro.texi
 	$(PDFTEX) R-intro.texi
 
 version.texi: $(top_srcdir)/VERSION
@@ -94,6 +102,6 @@ clean:
 	  *.out *.pg *.pgs *.tmp *.tp *.vr *.vrs \
 	  version.tex version.texi refman.tex *-pkg.tex 
 distclean: clean
-	@-rm -f pkg2tex.pl *.pdf
+	@-rm -f pkg2tex.pl Rdnewer.pl *.pdf
 maintainer-clean: distclean
 
