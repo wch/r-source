@@ -31,6 +31,11 @@
 /* Global Variables:  For convenience, all interpeter global symbols
  * ================   are declared in Defn.h as extern -- and defined here.
  *
+ * NOTE: This is done by using some preprocessor trickery.  If __MAIN__
+ * is defined as above, there is a sneaky
+ *     #define extern /**/
+ * so that the same code produces both declarations and definitions.
+ *
  * This does not include user interface symbols which are included
  * in separate platform dependent modules. 
  */
