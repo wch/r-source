@@ -7,7 +7,8 @@ UNZIPDIR=unzip
 .PHONY: GA UZ
 
 all: R.ico GA UZ rwinst.exe
-CFLAGS=-I../graphapp -I../../include -I$(UNZIPDIR)/windll -Wall -O1 -DRVER=$(PREFIX)
+CFLAGS=-I../graphapp -I../../include -I$(UNZIPDIR)/windll -Wall -O1 \
+        -DRVER=\"$(PREFIX)\"
 
 GA:
 	$(MAKE) -C ../graphapp
