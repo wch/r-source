@@ -437,7 +437,7 @@ static double ** Lmatrix(int n)
 in J.C. Nash, `Compact Numerical Methods for Computers', 2nd edition,
 converted by p2c then re-crafted by B.D. Ripley */
 
-static void
+void
 vmmin(int n0, double *b, double *Fmin, optimfn fminfn, optimgr fmingr, 
       int maxit, int trace, int *mask,
       double abstol, double reltol, int nREPORT, void *ex,
@@ -583,7 +583,6 @@ vmmin(int n0, double *b, double *Fmin, optimfn fminfn, optimgr fmingr,
 
 
 /* Nelder-Mead */
-static
 void nmmin(int n, double *Bvec, double *X, double *Fmin, optimfn fminfn,
 	   int *fail, double abstol, double intol, void *ex,
 	   double alpha, double beta, double gamm, int trace,
@@ -776,7 +775,6 @@ void nmmin(int n, double *Bvec, double *X, double *Fmin, optimfn fminfn,
     *fncount = funcount;
 }
 
-static
 void cgmin(int n, double *Bvec, double *X, double *Fmin, 
 	   optimfn fminfn, optimgr fmingr, int *fail,
 	   double abstol, double intol, void *ex, int type, int trace,
@@ -940,7 +938,6 @@ void cgmin(int n, double *Bvec, double *X, double *Fmin,
     *grcount = gradcount;
 }
 
-static
 void lbfgsb(int n, int m, double *x, double *l, double *u, int *nbd,
 	    double *Fmin, optimfn fminfn, optimgr fmingr, int *fail, 
 	    void *ex, double factr, double pgtol,
@@ -1012,8 +1009,8 @@ void lbfgsb(int n, int m, double *x, double *l, double *u, int *nbd,
 #define E1 1.7182818  /* exp(1.0)-1.0 */
 #define STEPS 100
 
-static void samin(int n, double *pb, double *yb, optimfn fminfn, int maxit,
-		  int tmax, double ti, int trace, void *ex)
+void samin(int n, double *pb, double *yb, optimfn fminfn, int maxit,
+	   int tmax, double ti, int trace, void *ex)
 
 /* Given a starting point pb[0..n-1], simulated annealing minimization
    is performed on the function fminfn. The starting temperature
