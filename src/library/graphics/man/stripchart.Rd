@@ -26,8 +26,8 @@ stripchart(x, method = "overplot", jitter = 0.1, offset = 1/3,
     overplotted, but it is also possible to specify \code{"jitter"} to
     jitter the points, or \code{"stack"} have coincident points
     stacked.  The last method only makes sense for very granular data.}
-  \item{jitter}{when jittering is used, \code{jitter} gives the amount
-    of jittering applied.}
+  \item{jitter}{when \code{method="jitter"} is used, \code{jitter}
+    gives the amount of jittering applied.}
   \item{offset}{when stacking is used, points are stacked this many
     line-heights (symbol widths) apart.}
   \item{vertical}{when vertical is \code{TRUE} the plots are drawn
