@@ -60,13 +60,16 @@ ts <- function(data = NA, start = 1, end = numeric(0), frequency = 1,
 
 tsp <- function(x) attr(x, "tsp")
 
-"tsp<-" <- function(x, value) {
+"tsp<-" <- function(x, value, ts.eps = .Options$ts.eps) {
     cl <- class(x)
+    fr.x <- value[3]
+    if(fr.x > 1 && abs(fr.x - round(fr.x)) < ts.eps)
+	value[3] <- round(fr.x)
     attr(x,"tsp") <- value
     if (!inherits(x, "ts"))
-        class(x) <- c("ts", cl)
+	class(x) <- c("ts", cl)
     else if (is.null(value))
-        class(x) <- cl["ts" != cl]
+	class(x) <- cl["ts" != cl]
     x
 }
 
@@ -74,10 +77,8 @@ is.ts <-function (x) inherits(x, "ts")
 
 as.ts <-function (x) if (is.ts(x)) x else ts(x)
 
-start.ts <- function(x)
+start.ts <- function(x, ts.eps = .Options$ts.eps)
 {
-    ts.eps <- .Options$ts.eps
-    ##if(is.null(ts.eps)) ts.eps <- 1.e-5
     tsp <- attr(as.ts(x), "tsp")
     is <- tsp[1]*tsp[3]
     if(abs(is-round(is)) < ts.eps) {
@@ -88,9 +89,7 @@ start.ts <- function(x)
     else tsp[1]
 }
 
-end.ts <- function(x) {
-    ts.eps <- .Options$ts.eps
-    ## if(is.null(ts.eps)) ts.eps <- 1.e-5
+end.ts <- function(x, ts.eps = .Options$ts.eps) {
     tsp <- attr(as.ts(x), "tsp")
     is <- tsp[2]*tsp[3]
     if(abs(is-round(is)) < ts.eps) {
@@ -152,10 +151,10 @@ print.ts <- function(x, calendar, ...) {
 
 plot.ts <-
 function (x, y = NULL, type = "l", xlim = NULL, ylim = NULL, xlab =
-          "Time", ylab, log = "", col = par("col"), bg = NA, pch =
-          par("pch"), cex = par("cex"), lty = par("lty"), lwd =
-          par("lwd"), axes = TRUE, frame.plot = axes, ann = par("ann"),
-          main = NULL, ...)
+	  "Time", ylab, log = "", col = par("col"), bg = NA, pch =
+	  par("pch"), cex = par("cex"), lty = par("lty"), lwd =
+	  par("lwd"), axes = TRUE, frame.plot = axes, ann = par("ann"),
+	  main = NULL, ...)
 {
     xlabel <- if (!missing(x)) deparse(substitute(x)) else NULL
     ylabel <- if (!missing(y)) deparse(substitute(y)) else NULL
@@ -169,12 +168,12 @@ function (x, y = NULL, type = "l", xlim = NULL, ylim = NULL, xlab =
 	xlim <- if (is.null(xlim)) range(xy$x[is.finite(xy$x)]) else xlim
 	ylim <- if (is.null(ylim)) range(xy$y[is.finite(xy$y)]) else ylim
 	plot.default(xy, type = "n", xlab = xlab, ylab = ylab, xlim =
-                     xlim, ylim = ylim, log = log, col = col, bg = bg,
-                     pch = pch, axes = axes, frame.plot = frame.plot,
-                     ann = ann, main = main, ...)
+		     xlim, ylim = ylim, log = log, col = col, bg = bg,
+		     pch = pch, axes = axes, frame.plot = frame.plot,
+		     ann = ann, main = main, ...)
 	text(xy, labels = 
-             if(all(tsp(x)==tsp(y))) formatC(time(x),wid = 1)
-             else seq(along = x),
+	     if(all(tsp(x)==tsp(y))) formatC(time(x),wid = 1)
+	     else seq(along = x),
 	     col = col, cex = cex)
 	lines(xy, col = col, lty = lty, lwd = lwd)
 	return(invisible())
@@ -191,13 +190,13 @@ function (x, y = NULL, type = "l", xlim = NULL, ylim = NULL, xlab =
 			  col = col[(i-1) %% length(col) + 1],
 			  lty = lty[(i-1) %% length(lty) + 1],
 			  lwd = lwd[(i-1) %% length(lwd) + 1],
-			  bg  =  bg[(i-1) %% length(bg)  + 1],
+			  bg  =	 bg[(i-1) %% length(bg)	 + 1],
 			  pch = pch[(i-1) %% length(pch) + 1],
 			  type = type)
     }
     else {
 	lines.default(time.x, x, col = col[1], bg = bg, lty = lty[1],
-                      lwd = lwd[1], pch = pch[1], type = type)
+		      lwd = lwd[1], pch = pch[1], type = type)
     }
     if (ann)
 	title(main = main, xlab = xlab, ylab = ylab, ...)
@@ -247,7 +246,7 @@ window.ts <- function(x, start, end) {
 	end <- xtime[(xtime < end) & ((end - 1/freq) < xtime)]
     }
     i <- trunc((start - xtsp[1]) * freq + 1.5):
-	trunc(( end  - xtsp[1]) * freq + 1.5)
+	 trunc(( end  - xtsp[1]) * freq + 1.5)
     x <- if(is.matrix(x)) x[i, , drop = FALSE] else x[i]
     tsp(x) <- c(start, end, freq)
     x
