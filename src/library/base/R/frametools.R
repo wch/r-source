@@ -89,7 +89,7 @@ unstack.data.frame <- function(x, form = formula(x), ...)
 {
     form <- as.formula(form)
     if (length(form) < 3)
-        stop("form must be a two-sided formula")
+        stop("'form' must be a two-sided formula")
     res <- c(tapply(eval(form[[2]], x), eval(form[[3]], x), as.vector))
     if (length(res) < 2 || any(diff(unlist(lapply(res, length))) != 0))
         return(res)

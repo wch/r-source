@@ -16,7 +16,7 @@ function(y, groups, blocks, ...)
         DNAME <- paste(DNAME, ", ", deparse(substitute(groups)),
                        " and ", deparse(substitute(blocks)), sep = "")
         if (any(table(groups, blocks) != 1))
-            stop("Not an unreplicated complete block design")
+            stop("not an unreplicated complete block design")
         groups <- factor(groups)
         blocks <- factor(blocks)
     }
@@ -57,7 +57,7 @@ function(formula, data, subset, na.action, ...)
        || (formula[[3]][[1]] != as.name("|"))
        || (length(formula[[3]][[2]]) != 1)
        || (length(formula[[3]][[3]]) != 1))
-        stop("incorrect specification for ", sQuote("formula"))
+        stop("incorrect specification for 'formula'")
     formula[[3]][[1]] <- as.name("+")
     ## </FIXME>
     m <- match.call(expand.dots = FALSE)

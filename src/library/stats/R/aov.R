@@ -541,7 +541,7 @@ se.contrast.aov <-
             sapply(contrast.obj, function(x)
                {
                    if(!is.logical(x))
-                       stop("Each element of ", substitute(contrasts.list),
+                       stop("each element of ", substitute(contrasts.list),
                             " must be logical")
                    x/sum(x)
                })
@@ -573,7 +573,7 @@ se.contrast.aovlist <-
     {
         e.qr <- attr(object, "error.qr")
         if(!is.qr(e.qr))
-            stop("Argument does not include an error qr component")
+            stop("argument does not include an error 'qr' component")
         c.qr <- qr.qty(e.qr, contrast)
         e.assign <- attr(e.qr$qr, "assign")
         n.object <- length(object)

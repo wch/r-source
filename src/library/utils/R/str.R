@@ -192,7 +192,7 @@ str.default <-
 	} else if (is.factor(object)) {
 	    nl <- length(lev.att <- levels(object))
 	    if(!is.character(lev.att)) {# should not happen..
-		warning(sQuote("object"), " does not have valid levels()")
+		warning("'object' does not have valid levels()")
 		nl <- 0
 	    } else lev.att <- encodeString(lev.att, na = FALSE, quote = '"')
 	    ord <- is.ordered(object)

@@ -51,8 +51,8 @@ loglin <- function(table, margin, start = rep(1, length(table)), fit =
            stop("this should not happen"),
            stop("this should not happen"),
            warning("algorithm did not converge"),
-           stop("incorrect specification of ", sQuote("table"),
-                " or ", sQuote("start")))
+           stop("incorrect specification of 'table' or 'start'")
+           )
 
     if (print)
         cat(z$nlast, "iterations: deviation", z$dev[z$nlast], "\n")

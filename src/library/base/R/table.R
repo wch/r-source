@@ -97,7 +97,7 @@ function (x, digits = getOption("digits"), quote = FALSE, na.print = "",
 summary.table <- function(object, ...)
 {
     if(!inherits(object, "table"))
-	stop("object must inherit from class table")
+	stop("object must inherit from class \"table\"")
     n.cases <- sum(object)
     n.vars <- length(dim(object))
     y <- list(n.vars = n.vars,

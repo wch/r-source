@@ -138,7 +138,7 @@ personList <- function(...)
 {
     z = list(...)
     if(any(sapply(z, function(x) class(x) != "person")))
-        stop("all arguments must be of class", sQuote("person"))
+        stop("all arguments must be of class \"person\"")
 
     class(z) <- "personList"
     z

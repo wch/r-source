@@ -16,9 +16,9 @@ function(x, y = NULL, workspace = 200000, hybrid = FALSE,
             xo <- x
             x <- round(x)
             if(any(x > .Machine$integer.max))
-                stop(sQuote("x")," has entries too large to be integer")
+                stop("'x' has entries too large to be integer")
             if(!identical(TRUE, (ax <- all.equal(xo, x))))
-                warning(sQuote("x")," has been rounded to integer: ", ax)
+                warning("'x' has been rounded to integer: ", ax)
             storage.mode(x) <- "integer"
         }
     }

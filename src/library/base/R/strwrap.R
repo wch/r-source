@@ -103,17 +103,17 @@ function(x, y, style = c("table", "list"),
             y <- x[[2]]; x <- x[[1]]
         }
         else
-            stop("incorrect value for x")
+            stop("incorrect value for 'x'")
     }
     else if(is.matrix(x)) {
         if(NCOL(x) == 2) {
             y <- x[, 2]; x <- x[, 1]
         }
         else
-            stop("incorrect value for x")
+            stop("incorrect value for 'x'")
     }
     else if(length(x) != length(y))
-        stop("x and y must have the same length")
+        stop("'x' and 'y' must have the same length")
     x <- as.character(x)
     if(length(x) == 0) return(x)
     y <- as.character(y)
@@ -123,7 +123,7 @@ function(x, y, style = c("table", "list"),
     if(is.null(indent))
         indent <- switch(style, table = width / 3, list = width / 9)
     if(indent > 0.5 * width)
-        stop("incorrect values of indent and width")
+        stop("incorrect values of i'ndent' and 'width'")
 
     indentString <- paste(rep.int(" ", indent), collapse = "")
 

@@ -150,7 +150,7 @@ summary.POSIXlt <- function(object, digits = 15, ...)
     if (nargs() == 1) return(e1)
     # only valid if one of e1 and e2 is a scalar.
     if(inherits(e1, "POSIXt") && inherits(e2, "POSIXt"))
-        stop("binary + is not defined for POSIXt objects")
+        stop("binary + is not defined for \"POSIXt\" objects")
     if(inherits(e1, "POSIXlt")) e1 <- as.POSIXct(e1)
     if(inherits(e2, "POSIXlt")) e2 <- as.POSIXct(e2)
     if (inherits(e1, "difftime")) e1 <- coerceTimeUnit(e1)
@@ -168,7 +168,7 @@ summary.POSIXlt <- function(object, digits = 15, ...)
     }
     if(!inherits(e1, "POSIXt"))
         stop("Can only subtract from POSIXt objects")
-    if (nargs() == 1) stop("unary - is not defined for POSIXt objects")
+    if (nargs() == 1) stop("unary - is not defined for \"POSIXt\" objects")
     if(inherits(e2, "POSIXt")) return(difftime(e1, e2))
     if (inherits(e2, "difftime")) e2 <- unclass(coerceTimeUnit(e2))
     if(!is.null(attr(e2, "class")))
@@ -179,10 +179,10 @@ summary.POSIXlt <- function(object, digits = 15, ...)
 Ops.POSIXt <- function(e1, e2)
 {
     if (nargs() == 1)
-        stop("unary", .Generic, " not defined for POSIXt objects")
+        stop("unary", .Generic, " not defined for \"POSIXt\" objects")
     boolean <- switch(.Generic, "<" = , ">" = , "==" = ,
                       "!=" = , "<=" = , ">=" = TRUE, FALSE)
-    if (!boolean) stop(.Generic, " not defined for POSIXt objects")
+    if (!boolean) stop(.Generic, " not defined for \"POSIXt\" objects")
     if(inherits(e1, "POSIXlt")) e1 <- as.POSIXct(e1)
     if(inherits(e2, "POSIXlt")) e2 <- as.POSIXct(e2)
     NextMethod(.Generic)
@@ -196,7 +196,7 @@ Math.POSIXt <- function (x, ...)
 Summary.POSIXct <- function (x, ...)
 {
     ok <- switch(.Generic, max = , min = , range = TRUE, FALSE)
-    if (!ok) stop(.Generic, " not defined for POSIXct objects")
+    if (!ok) stop(.Generic, " not defined for \"POSIXct\" objects")
     val <- NextMethod(.Generic)
     class(val) <- oldClass(x)
     val
@@ -205,7 +205,7 @@ Summary.POSIXct <- function (x, ...)
 Summary.POSIXlt <- function (x, ...)
 {
     ok <- switch(.Generic, max = , min = , range = TRUE, FALSE)
-    if (!ok) stop(.Generic, " not defined for POSIXlt objects")
+    if (!ok) stop(.Generic, " not defined for \"POSIXlt\" objects")
     x <- as.POSIXct(x)
     val <- NextMethod(.Generic)
     as.POSIXlt(structure(val, class = c("POSIXt", "POSIXct")))
@@ -368,7 +368,7 @@ Ops.difftime <- function(e1, e2)
                days = 60*60*24*x, weeks = 60*60*24*7*x)
     }
     if (nargs() == 1)
-        stop("unary", .Generic, " not defined for difftime objects")
+        stop("unary", .Generic, " not defined for \"difftime\" objects")
     boolean <- switch(.Generic, "<" = , ">" = , "==" = ,
                       "!=" = , "<=" = , ">=" = TRUE, FALSE)
     if (boolean) {
@@ -395,7 +395,7 @@ Ops.difftime <- function(e1, e2)
         }
     } else {
         ## '*' is covered by a specific method
-        stop(.Generic, "not defined for difftime objects")
+        stop(.Generic, "not defined for \"difftime\" objects")
     }
 }
 
@@ -403,7 +403,7 @@ Ops.difftime <- function(e1, e2)
 {
     ## need one scalar, one difftime.
     if(inherits(e1, "difftime") && inherits(e2, "difftime"))
-        stop("both arguments of * cannot be difftime objects")
+        stop("both arguments of * cannot be \"difftime\" objects")
     if(inherits(e2, "difftime")) {tmp <- e1; e1 <- e2; e2 <- tmp}
     structure(e2 * unclass(e1), units = attr(e1, "units"),
               class = "difftime")
@@ -413,14 +413,14 @@ Ops.difftime <- function(e1, e2)
 {
     ## need one scalar, one difftime.
     if(inherits(e2, "difftime"))
-        stop("second argument of / cannot be a difftime object")
+        stop("second argument of / cannot be a \"difftime\" object")
     structure(unclass(e1) / e2, units = attr(e1, "units"),
               class = "difftime")
 }
 
 Math.difftime <- function (x, ...)
 {
-    stop(.Generic, "not defined for difftime objects")
+    stop(.Generic, "not defined for \"difftime\" objects")
 }
 
 mean.difftime <- function (x, ..., na.rm = FALSE)
@@ -449,7 +449,7 @@ Summary.difftime <- function (x, ..., na.rm = FALSE)
                          days = 60*60*24*x, weeks = 60*60*24*7*x))
     }
     ok <- switch(.Generic, max = , min = , range = TRUE, FALSE)
-    if (!ok) stop(.Generic, " not defined for difftime objects")
+    if (!ok) stop(.Generic, " not defined for \"difftime\" objects")
     args <- c(lapply(list(x, ...), coerceTimeUnit), na.rm = na.rm)
     structure(do.call(.Generic, args), units="secs", class="difftime")
 }

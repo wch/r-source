@@ -123,7 +123,7 @@ Ops.factor <- function(e1, e2)
     }
     if (all(nchar(.Method)) && (length(l1) != length(l2) ||
 				!all(sort(l2) == sort(l1))))
-	stop("Level sets of factors are different")
+	stop("level sets of factors are different")
     value <- NextMethod(.Generic)
     value[nas] <- NA
     value
@@ -173,7 +173,7 @@ function (e1, e2)
 		 "<" = , ">" = , "<=" = , ">=" = ,"=="=, "!=" =TRUE,
 		 FALSE)
     if(!ok) {
-	warning('"',.Generic,'"', " not meaningful for ordered factors")
+	warning(sQuote(.Generic), " not meaningful for ordered factors")
 	return(rep.int(NA, max(length(e1), if(!missing(e2))length(e2))))
     }
     if (.Generic %in% c("==", "!="))

@@ -6,9 +6,9 @@ findInterval <- function(x, vec, rightmost.closed = FALSE, all.inside = FALSE)
     ## Author: Martin Maechler, Date:  4 Jan 2002, 10:16
 
     if(any(is.na(vec)))
-	stop(sQuote("vec")," contains NAs")
+	stop("'vec' contains NAs")
     if(is.unsorted(vec))
-	stop(sQuote("vec")," must be sorted non-decreasingly")
+	stop("'vec' must be sorted non-decreasingly")
     ## deal with NA's in x:
     if(has.na <- any(ix <- is.na(x)))
 	x <- x[!ix]

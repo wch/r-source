@@ -122,7 +122,7 @@ reshape <-
         ## varying and times must have the same order
         times <- unique(data[,timevar])
         if (any(is.na(times)))
-            warning("There are records with missing times, which will be dropped.")
+            warning("there are records with missing times, which will be dropped.")
         undoInfo$times<-times
 
         if (is.null(v.names))
@@ -147,7 +147,7 @@ reshape <-
                                   function(a) all(tapply(a, tmp,
                                                          function(b) length(unique(b)) == 1))))
                 if (!all(really.constant))
-                    warning("Some constant variables (",
+                    warning("some constant variables (",
                             paste(names(rval)[!really.constant],collapse = ","),
                             ") are really varying")
             }

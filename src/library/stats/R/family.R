@@ -144,7 +144,7 @@ poisson <- function (link = "log")
 	-2*sum(dpois(y, mu, log=TRUE)*wt)
     initialize <- expression({
 	if (any(y < 0))
-	    stop("Negative values not allowed for the Poisson family")
+	    stop("negative values not allowed for the Poisson family")
 	n <- rep.int(1, nobs)
 	mustart <- y + 0.1
     })
@@ -183,7 +183,7 @@ quasipoisson <- function (link = "log")
     aic <- function(y, n, mu, wt, dev) NA
     initialize <- expression({
 	if (any(y < 0))
-	    stop("Negative values not allowed for the quasiPoisson family")
+	    stop("negative values not allowed for the quasiPoisson family")
 	n <- rep.int(1, nobs)
 	mustart <- y + 0.1
     })
@@ -278,7 +278,7 @@ binomial <- function (link = "logit")
 	    weights <- weights * n
             mustart <- (n * y + 0.5)/(n + 1)
 	}
-	else stop("For the binomial family, y must be a vector of 0 and 1\'s\n",
+	else stop("for the binomial family, y must be a vector of 0 and 1\'s\n",
                   "or a 2 column matrix where col 1 is no. successes and col 2 is no. failures")
     })
     structure(list(family = "binomial",
@@ -329,7 +329,7 @@ quasibinomial <- function (link = "logit")
 	    weights <- weights * n
             mustart <- (n * y + 0.5)/(n + 1)
 	}
-	else stop("For the quasibinomial family, y must be a vector of 0 and 1\'s\n",
+	else stop("for the quasibinomial family, y must be a vector of 0 and 1\'s\n",
                   "or a 2 column matrix where col 1 is no. successes and col 2 is no. failures")
     })
     structure(list(family = "quasibinomial",
@@ -373,7 +373,7 @@ Gamma <- function (link = "inverse")
     }
     initialize <- expression({
 	if (any(y <= 0))
-	    stop("Non-positive values not allowed for the gamma family")
+	    stop("non-positive values not allowed for the gamma family")
 	n <- rep.int(1, nobs)
 	mustart <- y
     })

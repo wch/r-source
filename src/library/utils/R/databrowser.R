@@ -172,7 +172,7 @@ wsbrowser <- function(IDS, IsRoot, IsContainer, ItemsPerContainer,
 		      main = "R Workspace", properties = list(),
 		      browser = getOption("browser"))
 {
-    if(kind != "HTML") stop("kind `",kind,"'  not yet implemented")
+    if(kind != "HTML") stop("kind ", sQuote(kind) ," not yet implemented")
 
     Pst <- function(...) paste(..., sep="")
 

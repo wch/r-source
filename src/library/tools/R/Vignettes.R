@@ -15,7 +15,7 @@ function(package, dir, lib.loc = NULL,
     wd <- getwd()
     if(workdir=="tmp"){
         tmpd <- tempfile("Sweave")
-        if (!dir.create(tmpd)) stop("Unable to create temp directory ",tmpd)
+        if (!dir.create(tmpd)) stop("unable to create temp directory ",tmpd)
         setwd(tmpd)
     }
     else{
@@ -309,9 +309,9 @@ function(x, ...)
 vignetteDepends <- function(vignette, recursive=TRUE, reduce=TRUE,
                             local=TRUE, lib.loc=NULL) {
     if (length(vignette) != 1)
-        stop("Argument 'vignette' must be of length 1")
+        stop("argument 'vignette' must be of length 1")
     if (!file.exists(vignette))
-        stop("File: ", vignette, " not found.")
+        stop("file: ", sQuote(vignette), " not found.")
 
     vigDeps <- vignetteInfo(vignette)$depends
 

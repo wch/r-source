@@ -36,7 +36,7 @@ function(height, width = 1, space = NULL, names.arg = NULL,
                             length = nrow(height)) ^ (1/2.2))
     }
     else
-	stop(sQuote("height"), " must be a vector or a matrix")
+	stop("'height' must be a vector or a matrix")
 
     if(is.logical(legend.text))
 	legend.text <-

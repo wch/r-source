@@ -618,7 +618,7 @@ anova.nls <- function(object, ...)
 {
     if(length(list(object, ...)) > 1)
 	return(anovalist.nls(object, ...))
-    stop("Anova is only defined for sequences of nls objects")
+    stop("anova is only defined for sequences of \"nls\" objects")
 }
 
 anovalist.nls <- function (object, ..., test = NULL)

@@ -44,8 +44,7 @@ function(package, dir, lib.loc = NULL)
     }
     else {
         if(missing(dir))
-            stop(paste("you must specify", sQuote("package"),
-                       "or", sQuote("dir")))
+            stop("you must specify 'package' or 'dir'")
         ## Using sources from directory @code{dir} ...
         if(!file_test("-d", dir))
             stop(paste("directory", sQuote(dir), "does not exist"))
@@ -372,8 +371,7 @@ function(package, dir, lib.loc = NULL,
     }
     else {
         if(missing(dir))
-            stop(paste("you must specify", sQuote("package"),
-                       "or", sQuote("dir")))
+            stop("you must specify 'package' or 'dir'")
         ## Using sources from directory @code{dir} ...
         if(!file_test("-d", dir))
             stop(paste("directory", sQuote(dir), "does not exist"))
@@ -1116,8 +1114,7 @@ function(package, dir, lib.loc = NULL)
     }
     else {
         if(missing(dir))
-            stop(paste("you must specify", sQuote("package"),
-                       "or", sQuote("dir")))
+            stop("you must specify 'package' or 'dir'")
         ## Using sources from directory @code{dir} ...
         if(!file_test("-d", dir))
             stop(paste("directory", sQuote(dir), "does not exist"))
@@ -1336,7 +1333,7 @@ function(x, ...)
         writeLines(paste("Bad \\usage lines found:\n"))
         print(bad_lines)
     }
-    
+
     invisible(x)
 }
 
@@ -1382,8 +1379,7 @@ function(package, dir, lib.loc = NULL)
     }
     else {
         if(missing(dir))
-            stop(paste("you must specify", sQuote("package"),
-                       "or", sQuote("dir")))
+            stop("you must specify 'package' or 'dir'")
         ## Using sources from directory @code{dir} ...
         if(!file_test("-d", dir))
             stop(paste("directory", sQuote(dir), "does not exist"))
@@ -1622,8 +1618,7 @@ function(package, dir, file, lib.loc = NULL,
             stop("unable to write code files")
     }
     else if(missing(file)) {
-        stop(paste("you must specify ", sQuote("package"), ", ",
-                   sQuote("dir"), " or ", sQuote("file"), sep = ""))
+        stop("you must specify 'package', 'dir' or 'file'")
     }
 
     if(missing(package) && !file_test("-f", file))
@@ -1764,8 +1759,7 @@ function(package, dir, lib.loc = NULL)
     }
     else {
         if(missing(dir))
-            stop(paste("you must specify", sQuote("package"),
-                       "or", sQuote("dir")))
+            stop("you must specify 'package' or 'dir'")
         ## Using sources from directory @code{dir} ...
         if(!file_test("-d", dir))
             stop(paste("directory", sQuote(dir), "does not exist"))
@@ -2039,8 +2033,7 @@ function(package, dir, lib.loc = NULL)
 
     else {
         if(missing(dir))
-            stop(paste("you must specify", sQuote("package"),
-                       "or", sQuote("dir")))
+            stop("you must specify 'package' or 'dir'")
         ## Using sources from directory @code{dir} ...
         if(!file_test("-d", dir))
             stop(paste("directory", sQuote(dir), "does not exist"))
@@ -2239,7 +2232,7 @@ function(package, dir, file, lib.loc = NULL)
     }
     for(file in docs_files) {
         txt <-
-            paste(.Rd_iconv_if_necessary(Rd_pp(.read_Rd_lines_quietly(file))), 
+            paste(.Rd_iconv_if_necessary(Rd_pp(.read_Rd_lines_quietly(file))),
                   collapse = "\n")
         txt <- .get_Rd_example_code(txt)
         exprs <- find_TnF_in_code(file, txt)

@@ -28,7 +28,7 @@ function(x, method="overplot", jitter=0.1, offset=1/3, vertical=FALSE,
     if(is.null(at))
 	at <- 1:n
     else if(length(at) != n)
-	stop("`at' must have length = no{groups}, i.e. ",n)
+	stop("'at' must have length = no{groups}, i.e. ",n)
     if(!add) {
 	dlim <- c(NA, NA)
 	for(i in groups)

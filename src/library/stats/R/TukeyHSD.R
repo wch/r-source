@@ -36,10 +36,9 @@ TukeyHSD.aov <-
     nn <- mm$n[names(tabs)]
     nn_na <- is.na(nn)
     if(all(nn_na))
-        stop(sQuote("which"), " specified no factors")
+        stop("'which' specified no factors")
     if(any(nn_na)) {
-        warning(sQuote("which"),
-                " specified some non-factors which will be dropped")
+        warning("'which' specified some non-factors which will be dropped")
         tabs <- tabs[!nn_na]
         nn <- nn[!nn_na]
     }

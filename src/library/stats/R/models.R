@@ -410,7 +410,7 @@ model.matrix.default <- function(object, data = environment(object),
                 stop("invalid contrasts argument")
             for (nn in namC) {
                 if (is.na(ni <- match(nn, namD)))
-                    warning("Variable ", nn, " is absent, contrast ignored")
+                    warning("variable ", nn, " is absent, contrast ignored")
                 else {
                     ca <- contrasts.arg[[nn]]
                     if(is.matrix(ca)) contrasts(data[[ni]], ncol(ca)) <- ca

@@ -24,7 +24,7 @@ lm <- function (formula, data, subset, weights, na.action,
     w <- model.weights(mf)
     offset <- model.offset(mf)
     if(!is.null(offset) && length(offset) != NROW(y))
-	stop("Number of offsets is ", length(offset),
+	stop("number of offsets is ", length(offset),
              ", should equal ", NROW(y), " (number of observations)")
 
     if (is.empty.model(mt)) {
@@ -80,7 +80,7 @@ lm.fit <- function (x, y, offset = NULL, method = "qr", tol = 1e-07,
     if(method != "qr")
 	warning("method = ",method, " is not supported. Using \"qr\".")
     if(length(list(...)))
-	warning("Extra arguments ", paste(names(list(...)), sep=", "),
+	warning("extra arguments ", paste(names(list(...)), sep=", "),
                 " are just disregarded.")
     storage.mode(x) <- "double"
     storage.mode(y) <- "double"
@@ -139,7 +139,7 @@ lm.wfit <- function (x, y, w, offset = NULL, method = "qr", tol = 1e-7,
     if(method != "qr")
 	warning("method = ",method, " is not supported. Using \"qr\".")
     if(length(list(...)))
-	warning("Extra arguments ", paste(names(list(...)), sep=", "),
+	warning("extra arguments ", paste(names(list(...)), sep=", "),
                 " are just disregarded.")
     x.asgn <- attr(x, "assign")# save
     zero.weights <- any(w == 0)
@@ -511,7 +511,7 @@ anova.lmlist <- function (object, ..., scale = 0, test = "F")
     sameresp <- responses == responses[1]
     if (!all(sameresp)) {
 	objects <- objects[sameresp]
-	warning("Models with response ",
+	warning("models with response ",
                 deparse(responses[!sameresp]),
                 " removed because response differs from ", "model 1")
     }

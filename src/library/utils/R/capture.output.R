@@ -1,6 +1,6 @@
 "capture.output" <-
-  function(...,file=NULL,append=FALSE){
-
+  function(..., file=NULL, append=FALSE)
+{
     args<-substitute(list(...))[-1]
 
     if (is.null(file)){
@@ -12,9 +12,9 @@
 	if (!isOpen(file)){
 	  open(file,ifelse(append,"a","w"))
 	  sink(file)
-	  on.exit({sink();close(file)})  
+	  on.exit({sink();close(file)})
 	} else{
-	   sink(file) 
+	   sink(file)
 	   on.exit(sink())
 	}
     } else {
@@ -22,8 +22,8 @@
       rval <- invisible(NULL)
       sink(file)
       on.exit({sink();close(file)})
-    } 
-    
+    }
+
     pf<-parent.frame()
     evalVis<-function(expr)
       .Internal(eval.with.vis(expr, pf, NULL))
@@ -36,8 +36,8 @@
         tmp<-list(evalVis(expr))
       else if (mode(expr)=="name")
           tmp<-list(evalVis(expr))
-      else stop("Bad argument")
-    
+      else stop("bad argument")
+
       for(item in tmp){
         if (item$visible)
           print(item$value)

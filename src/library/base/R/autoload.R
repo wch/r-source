@@ -30,5 +30,5 @@ autoloader <- function (name, package, ...)
     if (exists(name, where = where, inherits = FALSE))
 	eval(as.name(name), as.environment(where))
     else
-	stop("autoloader didn't find ", sQuote(name), " in ", sQuote(package))
+	stop("autoloader did not find ", sQuote(name), " in ", sQuote(package))
 }

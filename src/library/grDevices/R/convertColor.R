@@ -36,7 +36,7 @@ make.rgb<-function( red, green, blue, name=NULL,
         ungamma<-function(x) ifelse(x<=0.0031308,
                                     12.92*x,
                                     1.055*x%^%(1/2.4)-0.055)
-    } else stop("gamma must be a scalar or 'sRGB'")
+    } else stop("'gamma' must be a scalar or 'sRGB'")
 
     toXYZ<-function(rgb,...){
         dogamma(rgb)%*%M

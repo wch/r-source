@@ -152,7 +152,7 @@ function(x, main = deparse(substitute(x)), sub = NULL, xlab = NULL,
         x <- data.matrix(x)
     dimd <- length(dx <- dim(x))
     if(dimd == 0 || any(dx == 0))
-        stop(sQuote("x"), " must not have 0 dimensionality")
+        stop("'x' must not have 0 dimensionality")
     if(length(list(...)))
         warning("extra argument(s) ",
                 paste(sQuote(names(list(...))), collapse = ", "),
@@ -229,7 +229,7 @@ function(x, main = deparse(substitute(x)), sub = NULL, xlab = NULL,
     }
     if (!is.null(sort)) {
         if(length(sort) != dimd)
-            stop("length(sort) doesn't conform to dim(x)")
+            stop("length(sort) does not conform to dim(x)")
         ## Sort columns.
         Ind[,1:dimd] <- Ind[,sort]
         off <- off[sort]

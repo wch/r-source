@@ -1,7 +1,7 @@
 print.socket <- function(x, ...)
 {
     if(length(as.integer(x$socket)) != 1)
-	stop("invalid `socket' argument")
+	stop("invalid 'socket' argument")
     cat("Socket connection #", x$socket, "to", x$host,
 	"on port", x$port, "\n")
     invisible(x)

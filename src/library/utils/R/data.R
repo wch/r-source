@@ -12,11 +12,9 @@ function(..., list = character(0), package = NULL, lib.loc = NULL,
         if(!is.character(package))
             stop(sQuote(package), " must be a character string or NULL")
         if(any(package %in% "base"))
-            warning("datasets have been moved from package ",
-                    sQuote("base"), " to package ", sQuote("datasets"))
+            warning("datasets have been moved from package 'base' to package 'datasets'")
         if(any(package %in% "stats"))
-           warning("datasets have been moved from package ",
-                    sQuote("stats"), " to package ", sQuote("datasets"))
+           warning("datasets have been moved from package 'stats' to package 'datasets'")
         package[package %in% c("base", "stats")] <- "datasets"
     }
     paths <- .find.package(package, lib.loc, verbose = verbose)
@@ -107,8 +105,7 @@ function(..., list = character(0), package = NULL, lib.loc = NULL,
                                     fp <- file.path(p, "filelist")))
                     files <- file.path(p, scan(fp, what="", quiet = TRUE))
                 else {
-                    warning(sQuote("filelist"), " is missing for dir ",
-                            sQuote(p))
+                    warning("file 'filelist' is missing for dir ", sQuote(p))
                     next
                 }
             } else {
@@ -162,7 +159,7 @@ function(..., list = character(0), package = NULL, lib.loc = NULL,
         }
 
         if(!found)
-            warning("Data set ", sQuote(name), " not found")
+            warning("data set ", sQuote(name), " not found")
     }
     invisible(names)
 }

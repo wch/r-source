@@ -173,7 +173,7 @@ getS3method <-  function(f, class, optional = FALSE)
         if(nchar(truegf)) f <- truegf
         else {
             if(optional) return(NULL)
-            else stop("no function '", f, "' could be found")
+            else stop("no function ", sQuote(f), " could be found")
         }
     }
     method <- paste(f, class, sep=".")

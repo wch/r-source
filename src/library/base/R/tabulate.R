@@ -1,7 +1,7 @@
 tabulate <- function(bin, nbins = max(1,bin))
 {
     if(!is.numeric(bin) && !is.factor(bin))
-	stop("tabulate: bin must be numeric or a factor")
+	stop("'bin' must be numeric or a factor")
     .C("R_tabulate",
        as.integer(bin),
        as.integer(length(bin)),

@@ -16,13 +16,12 @@ function(file, local = FALSE, echo = verbose, print.eval = echo,
 	if (!is.logical(echo))
 	    stop("echo must be logical")
 	if (!echo && verbose) {
-	    warning("verbose is TRUE, echo not; ... coercing ",
-                    sQuote("echo <- TRUE"))
+	    warning("verbose is TRUE, echo not; ... coercing echo <- TRUE")
 	    echo <- TRUE
 	}
     }
     if (verbose) {
-	cat(sQuote("envir"), "chosen:")
+	cat("'envir' chosen:")
 	print(envir)
     }
     if(is.character(file)) {

@@ -44,7 +44,7 @@ as.Date.default <- function(x, ...)
     if(is.logical(x) && all(is.na(x)))
         return(structure(as.numeric(x), class = "Date"))
     stop("Don't know how to convert ", sQuote(deparse(substitute(x))),
-	       " to class \"Date\"",)
+	       " to class \"Date\"")
 }
 
 ## convert from package date

@@ -44,13 +44,13 @@ topicName <- function(type, topic)
         f <- as.character(f)
     if(!.isMethodsDispatchOn() || !isGeneric(f, where = where)) {
         if(!is.character(f) || length(f) != 1)
-            stop("The object of class \"", class(f),
-                 "\" in the function call \"", deparse(expr),
-                 "\"could not be used as a documentation topic")
+            stop("The object of class ", dQuote(class(f)),
+                 " in the function call ", dQuote(deparse(expr)),
+                 " could not be used as a documentation topic")
         h <- .tryHelp(f)
         if(inherits(h, "try-error"))
-            stop("No methods for \"", f,
-                 "\" and no documentation for it as a function")
+            stop("No methods for ", sQuote(f),
+                 " and no documentation for it as a function")
     }
     else {
         ## allow generic function objects or names
@@ -80,8 +80,8 @@ topicName <- function(type, topic)
                 if(doEval || !simple) {
                     argVal <- try(eval(argExpr, envir))
                     if(is(argVal, "try-error"))
-                        stop("Error in trying to evaluate the expression for argument \"",
-                             arg, "\" (", deparse(argExpr), ")")
+                        stop("Error in trying to evaluate the expression for argument ",
+                             sQuote(arg), " (", deparse(argExpr), ")")
                     elNamed(sigClasses, arg) <- class(argVal)
                 }
                 else
@@ -92,15 +92,17 @@ topicName <- function(type, topic)
         if(is(method, "MethodDefinition"))
             sigClasses <- method@defined
         else
-            warning("No method defined for function \"", f,
-                    "\" and signature ",
-                    paste(sigNames, " = \"", sigClasses, "\"", sep = "", collapse = ", "))
+            warning("No method defined for function \"", sQuote(f),
+                    " and signature ",
+                    paste(sigNames, " = ", dQuote(sigClasses), sep = "",
+                          collapse = ", "))
         topic <- topicName("method", c(f,sigClasses))
         h <- .tryHelp(topic)
         if(is(h, "try-error"))
-            stop("No documentation for function \"", f,
-                 "\" and signature ",
-                 paste(sigNames, " = \"", sigClasses, "\"", sep = "", collapse = ", "))
+            stop("No documentation for function ", sQuote(f),
+                 " and signature ",
+                 paste(sigNames, " = ", dQuote(sigClasses), sep = "",
+                       collapse = ", "))
     }
 }
 

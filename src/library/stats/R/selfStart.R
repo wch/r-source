@@ -42,7 +42,8 @@ selfStart.formula <-
     if (is.null(template)) {		# create a template if not given
         nm <- all.vars(model)
         if (any(msng <- is.na(match(parameters, nm)))) {
-            stop("Parameter(s) ", parameters[msng],
+            stop("parameter(s) ",
+                 paste(sQuote(parameters[msng]), collapse=", "),
                  " do not occur in the model formula")
         }
         template <- function() {}
@@ -113,7 +114,7 @@ getInitial.default <-
                    "  \"help(selfStart)\"\n",
                    "for the new form of the \"initial\" attribute.", sep="" ))
     }
-    stop("No 'getInitial' method found for ", sQuote(data.class(object)),
+    stop("no 'getInitial' method found for ", sQuote(data.class(object)),
          " objects")
 }
 

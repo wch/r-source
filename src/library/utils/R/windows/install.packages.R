@@ -19,7 +19,7 @@ install.packages <- function(pkgs, lib, repos = CRAN,
     if(missing(lib) || is.null(lib)) {
         lib <- .libPaths()[1]
         if(length(.libPaths()) > 1)
-            warning("argument ", sQuote("lib"), " is missing: using ", lib)
+            warning("argument 'lib' is missing: using ", lib)
     }
 
     if(is.null(repos) & missing(contriburl)) {
@@ -189,7 +189,7 @@ install.packages <- function(pkgs, lib, repos = CRAN,
             } else {
                 ## !! Can't revert to old 'zip.unpack' as it would
                 ## !! potentially leave cruft from a bundle in there
-                stop("Can not remove prior installation of package ",
+                stop("cannot remove prior installation of package ",
                      sQuote(curPkg), call. = FALSE)
             }
         }
@@ -201,8 +201,8 @@ install.packages <- function(pkgs, lib, repos = CRAN,
     if(missing(lib) || is.null(lib)) {
         lib <- .libPaths()[1]
         if(length(.libPaths()) > 1)
-            warning(paste("argument", sQuote("lib"),
-                          "is missing: using", lib), immediate. = TRUE)
+            warning("argument 'lib' is missing: using ", lib,
+                    immediate. = TRUE)
     }
     oneLib <- length(lib) == 1
 

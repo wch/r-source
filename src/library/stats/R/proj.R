@@ -3,9 +3,9 @@ proj <- function(object, ...) UseMethod("proj")
 proj.default <- function(object, onedf = TRUE, ...)
 {
     if(!is.qr(object$qr))
-	stop("Argument does not include a qr component")
+	stop("argument does not include a 'qr' component")
     if(is.null(object$effects))
-	stop("Argument does not include an effects component")
+	stop("argument does not include an 'effects' component")
     RB <- c(object$effects[seq(object$rank)],
 	    rep.int(0, nrow(object$qr$qr) - object$rank))
     prj <- as.matrix(qr.Q(object$qr, Dvec = RB))

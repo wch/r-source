@@ -7,7 +7,7 @@ power.t.test <-
 	stop("exactly one of n, delta, sd, power, and sig.level must be NULL")
     if(!is.null(sig.level) && !is.numeric(sig.level) ||
        any(0 > sig.level | sig.level > 1))
-	stop(sQuote("sig.level")," must be numeric in [0, 1]")
+	stop("'sig.level' must be numeric in [0, 1]")
 
     type <- match.arg(type)
     alternative <- match.arg(alternative)

@@ -24,14 +24,13 @@ printCoefmat <-
     if(is.null(P.values)) {
         scp <- getOption("show.coef.Pvalues")
         if(!is.logical(scp) || is.na(scp)) {
-            warning("option ", sQuote("show.coef.Pvalues"),
-                    " is invalid: assuming TRUE")
+            warning("option \"show.coef.Pvalues\" is invalid: assuming TRUE")
             scp <- TRUE
         }
 	P.values <- has.Pvalue && scp
     }
     else if(P.values && !has.Pvalue)
-	stop("'P.values is TRUE, but has.Pvalue is not")
+	stop("'P.values' is TRUE, but 'has.Pvalue' is not")
 
     if(has.Pvalue && !P.values) {# P values are there, but not wanted
 	d <- dim(xm <- data.matrix(x[,-nc , drop = FALSE]))
@@ -69,8 +68,7 @@ printCoefmat <-
     if(any(ina)) Cf[ina] <- na.print
     if(P.values) {
         if(!is.logical(signif.stars) || is.na(signif.stars)) {
-            warning("option ", sQuote("show.signif.stars"),
-                    " is invalid: assuming TRUE")
+            warning("option \"show.signif.stars\" is invalid: assuming TRUE")
             signif.stars <- TRUE
         }
 	pv <- xm[, nc]

@@ -48,7 +48,7 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
             }
         }
         else
-            stop("Package ", sQuote(pkgname),
+            stop("package ", sQuote(pkgname),
                  " has not been installed properly\n",
                  "See the Note in ?library", call. = FALSE)
     }
@@ -151,31 +151,29 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
                           "stepfun", "ts")) {
             have.stats <- "package:stats" %in% search()
             if(!have.stats) require("stats")
-            warning("package ", sQuote(package), " has been merged into ",
-                    sQuote("stats"), call. = FALSE)
+            warning("package ", sQuote(package),
+                    " has been merged into 'stats'", call. = FALSE)
             return(if (logical.return) TRUE else invisible(.packages()))
         }
         if(package  == "mle") {
             have.stats4 <- "package:stats4" %in% search()
             if(!have.stats4) require("stats4")
-            warning("package ", sQuote(package), " has been merged into ",
-                    sQuote("stats4"), call. = FALSE)
+            warning("package ", sQuote(package),
+                    " has been merged into 'stats4'", call. = FALSE)
             return(if (logical.return) TRUE else invisible(.packages()))
         }
         if(package == "lqs") {
-            warning("package ", sQuote("lqs"),
-                " has been moved back to package ", sQuote("MASS"),
+            warning("package 'lqs' has been moved back to package 'MASS'",
                     call. = FALSE, immediate. = TRUE)
             have.VR <- "package:MASS" %in% search()
             if(!have.VR) {
                 if(require("MASS", quietly=TRUE))
-                    cat("Package", sQuote("MASS"),
-                        "has now been loaded\n")
+                    warning("package 'MASS' has now been loaded",
+                            call. = FALSE, immediate. = TRUE)
                 else {
                     if(logical.return) return(FALSE)
                     else
-                        stop("Package ", sQuote("MASS"),
-                             " seems to be missing from this R installation")
+                        stop("package 'MASS' seems to be missing from this R installation")
                 }
             }
             return(if (logical.return) TRUE else invisible(.packages()))
@@ -204,7 +202,7 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
         ## NB from this point on `package' is either the original name or
         ## something like ash_1.0-8
         if(length(package) != 1)
-            stop(sQuote("package"), " must be of length 1")
+            stop("'package' must be of length 1")
 	pkgname <- paste("package", package, sep = ":")
 	newpackage <- is.na(match(pkgname, search()))
 	if(newpackage) {
@@ -242,8 +240,7 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
                 npos <- match(pos, search())
                 if(is.na(npos)) {
                     warning(sQuote(pos),
-                            " not found on search path, using ",
-                            sQuote("pos=2"))
+                            " not found on search path, using pos = 2")
                     pos <- 2
                 } else pos <- npos
             }
@@ -295,11 +292,11 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
                 res <- try(sys.source(codeFile, loadenv,
                                      keep.source = keep.source))
                 if(inherits(res, "try-error"))
-                    stop("Unable to load R code in package ",
+                    stop("unable to load R code in package ",
                          sQuote(libraryPkgName(package)),
                          call. = FALSE)
             } else if(verbose)
-                warning("Package ", sQuote(libraryPkgName(package)),
+                warning("package ", sQuote(libraryPkgName(package)),
                         " contains no R code")
             ## lazy-load data sets if required
             dbbase <- file.path(which.lib.loc, package, "data", "Rdata")
@@ -333,7 +330,7 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
                 tt<- try(firstlib(which.lib.loc, package))
                 if(inherits(tt, "try-error"))
                     if (logical.return) return(FALSE)
-                    else stop(".First.lib failed",
+                    else stop(".First.lib failed for ",
                               sQuote(libraryPkgName(package)))
             }
             nogenerics <- checkNoGenerics(env, package)
@@ -348,7 +345,7 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
             on.exit()
 	}
 	if (verbose && !newpackage)
-            warning("Package ", sQuote(libraryPkgName(package)),
+            warning("package ", sQuote(libraryPkgName(package)),
                     " already present in search()")
     }
     else if(!missing(help)) {
@@ -362,7 +359,7 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
                        file.path(pkgPath, "Meta", "vignette.rds")))
             docFiles <- c(docFiles, vignetteIndexRDS)
         pkgInfo <- vector(length = 4, mode = "list")
-        pkgInfo[[1]] <- paste("\n\t\tInformation on Package",
+        pkgInfo[[1]] <- paste("\n\t\tInformation on package",
                               sQuote(pkgName))
         readDocFile <- function(f) {
             if(basename(f) %in% "package.rds") {
@@ -866,8 +863,8 @@ manglePackageName <- function(pkgName, pkgVersion)
                 if (!quietly) cat("Loading required package:", pkg, "\n")
                 library(pkg, character.only = TRUE, logical = TRUE,
                         lib.loc = lib.loc) ||
-                stop("package '", pkg, "' could not be loaded", call. = FALSE)
-
+                stop("package ", sQuote(pkg), " could not be loaded",
+                     call. = FALSE)
             } else {
                 ## check the required version number, if any
                 if (length(z) > 1) {

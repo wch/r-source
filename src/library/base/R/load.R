@@ -51,7 +51,7 @@ save <- function(..., list = character(0),
         invisible(.Internal(save(list, file, ascii, version, envir)))
     else {
         if (is.character(file)) {
-            if (file == "") stop("`file' must be non-empty string")
+            if (file == "") stop("'file' must be non-empty string")
             if (compress) con <- gzfile(file, "wb")
             else con <- file(file, "wb")
             on.exit(close(con))

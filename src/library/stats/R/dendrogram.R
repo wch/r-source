@@ -418,7 +418,7 @@ cut.dendrogram <- function(x, h, ...)
     assignNodes <- function(subtree, h) {
 	if(!is.leaf(subtree)) {
 	    if(!(K <- length(subtree)))
-		stop("non leaf ", sQuote("subtree"), " of length 0 !!")
+		stop("non-leaf subtree of length 0")
 	    new.mem <- 0:0
 	    for(k in 1:K) {
                 sub <- subtree[[k]]

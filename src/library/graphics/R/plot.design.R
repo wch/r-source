@@ -48,7 +48,7 @@ plot.design <-
     fname <- deparse(substitute(fun))
     fun <- match.fun(fun)
     if (!(is.data.frame(x) | inherits(x,"formula")))
-	stop("x must be a dataframe or a formula!")
+	stop("x must be a dataframe or a formula")
 
     ## case 'switch' :
     if(is.data.frame(x)) {

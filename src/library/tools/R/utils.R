@@ -176,7 +176,7 @@ function(file, pdf = FALSE, clean = FALSE,
     yy <- system(paste(shQuote(texi2dvi),
                        quiet, pdf, clean,
                        shQuote(file)))
-    if(yy > 0) stop(paste("running texi2dvi on", file, "failed"))
+    if(yy > 0) stop(paste("running texi2dvi on", sQuote(file), "failed"))
 }
 
 
@@ -310,7 +310,7 @@ function(x)
     ## Determine whether the strings in a character vector are ASCII or
     ## not.
     sapply(x, function(txt) all(charToRaw(txt) <= as.raw("0x7f")))
-}    
+}
 
 ### ** .is_primitive
 

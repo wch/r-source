@@ -75,7 +75,7 @@ boxplot.stats <- function(x, coef = 1.5, do.conf=TRUE, do.out=TRUE)
     n <- sum(nna)                       # including +/- Inf
     stats <- stats::fivenum(x, na.rm = TRUE)
     iqr <- diff(stats[c(2, 4)])
-    if(coef < 0) stop(sQuote("coef"), " must not be negative")
+    if(coef < 0) stop("'coef' must not be negative")
     if(coef == 0)
 	do.out <- FALSE
     else {                              # coef > 0
@@ -161,8 +161,7 @@ bxp <- function(z, notch=FALSE, width=NULL, varwidth=FALSE, outline = TRUE,
     if(is.null(at))
 	at <- 1:n
     else if(length(at) != n)
-	stop(sQuote("at"), " must have same length as ",
-             sQuote("z $ n"), ", i.e. ", n)
+	stop("'at' must have same length as 'z$n', i.e. ", n)
     ## just for compatibility with S
     if(is.null(z$out))
 	z$out <- numeric()

@@ -26,21 +26,16 @@ optim <- function(par, fn, gr = NULL,
 
     con[(namc <- names(control))] <- control
     if(con$trace < 0)
-        warning("read the documentation for ", sQuote("trace"),
-                " more carefully")
+        warning("read the documentation for 'trace' more carefully")
     if (method == "L-BFGS-B" &&
         any(!is.na(match(c("reltol","abstol"), namc))))
-        warning("Method L-BFGS-B uses ", sQuote("factr"),
-                "(& ", sQuote("pgtol"), ")",
-                " instead of ", sQuote("reltol"),
-                " and ", sQuote("abstol"))
+        warning("method L-BFGS-B uses 'fact' (and 'pgtol') instead of 'reltol' and 'abstol'")
     npar <- length(par)
     if(npar == 1 && method == "Nelder-Mead")
         warning("one-diml optimization by Nelder-Mead is unreliable: use optimize")
     lower <- as.double(rep(lower, , npar))
     upper <- as.double(rep(upper, , npar))
-    res <- .Internal(optim(par, fn1, gr1,
-                           method, con, lower, upper))
+    res <- .Internal(optim(par, fn1, gr1, method, con, lower, upper))
     names(res) <- c("par", "value", "counts", "convergence", "message")
     nm <- names(par)
     if(!is.null(nm)) names(res$par) <- nm

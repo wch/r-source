@@ -25,7 +25,7 @@ available.packages <-
                                    cacheOK = FALSE, quiet = TRUE),
                        silent = TRUE)
             if(inherits(z, "try-error")) {
-                warning("Unable to access index for repository ", repos,
+                warning("unable to access index for repository ", repos,
                         call. = FALSE, immediate. = TRUE)
                 next
             }
@@ -237,7 +237,7 @@ installed.packages <- function(lib.loc = NULL, priority = NULL)
                  "Suggests", "Imports", "Built")
     if(!is.null(priority)) {
         if(!is.character(priority))
-            stop("`priority' must be character or NULL")
+            stop("'priority' must be character or NULL")
         if(any(b <- priority %in% "high"))
             priority <- c(priority[!b], "recommended","base")
     }
@@ -289,8 +289,7 @@ remove.packages <- function(pkgs, lib, version) {
     hv <- !missing(version)
     if(missing(lib) || is.null(lib)) {
         lib <- .libPaths()[1]
-        warning(paste("argument", sQuote("lib"),
-                      "is missing: using", lib), immediate. = TRUE)
+        warning("argument 'lib' is missing: using ", lib, immediate. = TRUE)
     }
     have <- installed.packages(lib.loc=lib)
     is_bundle <- pkgs %in% have[, "Bundle"]
