@@ -246,23 +246,84 @@ char* _tk_eval(char *cmd)
 
 
 
-/* --------------  Temporary stubs  -------------- */
+/* --------------  Input handler interface  -------------- */
+
+/* These actually came out much more similar to the standard ones than
+   anticipated. They really only differ by the Tcl_*FileHandler
+   calls. Perhaps this should be done with an if() construct in the
+   standard code instead. */
 
 InputHandler *
 tcltk_addInputHandler(InputHandler *handlers, int fd, InputHandlerProc handler, 
 		int activity)
 {
-    return NULL;
+    InputHandler *input, *tmp;
+    input = (InputHandler*) calloc(1, sizeof(InputHandler));
+
+    input->activity = activity;
+    input->fileDescriptor = fd;
+    input->handler = handler;
+
+    Tcl_CreateFileHandler (fd, TCL_READABLE, handler, 0);
+
+    tmp = handlers;
+
+    if(handlers == NULL) {
+	R_InputHandlers = input;
+	return(input);
+    }
+
+    /* Go to the end of the list to append the new one.  */
+    while(tmp->next != NULL) {
+	tmp = tmp->next;
+    }
+    tmp->next = input;
+
+    return(handlers);
+
 }
 
 int
 tcltk_removeInputHandler(InputHandler **handlers, InputHandler *it)
 {
-    return 0;
+    InputHandler *tmp;
+
+
+    Tcl_DeleteFileHandler(it->fileDescriptor);
+    /* If the handler is the first one in the list, move the list to point
+       to the second element. That's why we use the address of the first 
+       element as the first argument.
+    */
+    if(*handlers == it) {
+	*handlers = (*handlers)->next;
+	return(1);
+    }
+
+    tmp = *handlers;
+
+    while(tmp) {
+	if(tmp->next == it) {
+	    tmp->next = it->next;
+	    return(1);
+	}
+    }
+
+    return(0);
+
 }
 
 InputHandler *
 tcltk_getInputHandler(InputHandler *handlers, int fd)
 {
-    return NULL;
+    InputHandler *tmp;
+    tmp = handlers;
+
+    while(tmp != NULL) {
+	if(tmp->fileDescriptor == fd)
+	    return(tmp);
+	tmp = tmp->next;
+    }
+
+    return(tmp);
+
 }

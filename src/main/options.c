@@ -168,7 +168,9 @@ int R_SetOptionWarn(int w)
 void InitOptions(void)
 {
     SEXP t, val, v;
-    PROTECT(v = val = allocList(11));
+    char *p;
+    
+    PROTECT(v = val = allocList(13));
 
     TAG(v) = install("prompt");
     CAR(v) = mkString("> ");
@@ -219,14 +221,22 @@ void InitOptions(void)
     LOGICAL(CAR(v))[0] = 0;	/* no checking */
     v = CDR(v);
 
+    p = getenv("R_KEEP_PKG_SOURCE");
+    R_KeepSource = (p && (strcmp(p, "yes") == 0)) ? 1 : 0;
+
     TAG(v) = install("keep.source");
     CAR(v) = allocVector(LGLSXP, 1);
-    LOGICAL(CAR(v))[0] = 0;	/* no storage of function source */
-                                /* turned on after load of base  */
+    LOGICAL(CAR(v))[0] = R_KeepSource;
+    v = CDR(v);
+
+    TAG(v) = install("keep.source.pkgs");
+    CAR(v) = allocVector(LGLSXP, 1);
+    LOGICAL(CAR(v))[0] = R_KeepSource;
+    v = CDR(v);
+
     TAG(v) = install("error.messages");
     CAR(v) = allocVector(LGLSXP, 1);
     LOGICAL(CAR(v))[0] = 1;
-    v = CDR(v);
 
     SYMVALUE(install(".Options")) = val;
     UNPROTECT(2);
@@ -349,6 +359,13 @@ SEXP do_options(SEXP call, SEXP op, SEXP args, SEXP rho)
 		    errorcall(call, "expressions parameter invalid");
 		R_Expressions = k;
 		VECTOR(value)[i] = SetOption(tag, ScalarInteger(k));
+	    }
+	    else if (streql(CHAR(namei), "keep.source")) {
+		if (TYPEOF(argi) != LGLSXP || LENGTH(argi) != 1)
+		    errorcall(call, "keep.source parameter invalid");
+		k = asInteger(argi);
+		R_KeepSource = k;
+		VECTOR(value)[i] = SetOption(tag, ScalarLogical(k));
 	    }
 	    else if (streql(CHAR(namei), "editor")) {
 		s = asChar(argi);

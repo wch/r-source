@@ -453,3 +453,21 @@ void Rwin_fpset()
     _controlfp(_MCW_EM, _MCW_EM);    
 }
 
+#include "console.h"  /* for savehistory */
+#include "getline/getline.h"  /* for gl_savehistory */
+SEXP do_savehistory(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    SEXP sfile;
+    
+    checkArity(op, args);
+    sfile = CAR(args);
+    if (!isString(sfile) || LENGTH(sfile) < 1)
+	errorcall(call, "invalid file argument");
+    if (CharacterMode == RGui)    
+	savehistory(RConsole, CHAR(STRING(sfile)[0]));
+    else if (CharacterMode == RTerm)
+	gl_savehistory(CHAR(STRING(sfile)[0]));
+    else
+	errorcall(call, "savehistory can only be used in Rgui and Rterm");
+    return R_NilValue;
+}

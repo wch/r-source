@@ -73,6 +73,7 @@ SEXP do_windialog(SEXP, SEXP, SEXP, SEXP);
 SEXP do_windialogstring(SEXP, SEXP, SEXP, SEXP);
 SEXP do_winmenuadd(SEXP, SEXP, SEXP, SEXP);
 SEXP do_winmenudel(SEXP, SEXP, SEXP, SEXP);
+SEXP do_savehistory(SEXP, SEXP, SEXP, SEXP);
 #endif
 
 SEXP do_abbrev(SEXP, SEXP, SEXP, SEXP);
@@ -222,7 +223,6 @@ SEXP do_logic3(SEXP, SEXP, SEXP, SEXP);
 SEXP do_ls(SEXP, SEXP, SEXP, SEXP);
 SEXP do_Machine(SEXP, SEXP, SEXP, SEXP);
 SEXP do_machine(SEXP, SEXP, SEXP, SEXP);
-SEXP do_Macintosh(SEXP, SEXP, SEXP, SEXP);
 SEXP do_makelist(SEXP, SEXP, SEXP, SEXP);
 SEXP do_makenames(SEXP, SEXP, SEXP, SEXP);
 SEXP do_makevector(SEXP, SEXP, SEXP, SEXP);

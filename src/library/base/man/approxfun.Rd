@@ -8,9 +8,9 @@
 }
 \usage{
 approx   (x, y, xout, method="linear", n=50,
-          yleft, yright, rule=1, f=0)
+          yleft, yright, rule=1, f=0,ties=mean)
 approxfun(x, y,       method="linear",
-          yleft, yright, rule=1, f=0)
+          yleft, yright, rule=1, f=0,ties=mean)
 }
 \arguments{
   \item{x,y}{vectors giving the coordinates of the points to be
@@ -40,6 +40,9 @@ approxfun(x, y,       method="linear",
     values to the left and right of the point then the value is
     \code{y0*f+y1*(1-f)} so that \code{f=0} is right-continuous and
     \code{f=1} is left-continuous.}
+  \item{ties}{Handling of tied \code{x} values. Either a function
+    with a single vector argument returning a single number result or
+    the string \code{"ordered"}}
 }
 \value{
   \code{approx} returns a list with components \code{x} and \code{y},
@@ -53,7 +56,14 @@ approxfun(x, y,       method="linear",
 }
 \details{
   The inputs can contain missing values which are deleted, so at least
-  two complete \code{(x, y)} pairs are required.
+  two complete \code{(x, y)} pairs are required. If there are duplicated
+  (tied) \code{x} values and \code{ties} is a function it is applied
+  to the \code{y} values for each distinct \code{x} value. Useful
+  functions in this context include
+  \code{\link{mean}},\code{\link{min}}, and \code{\link{max}}. If
+  \code{ties="ordered"} the \code{x} values are assumed to be already
+  ordered. The first \code{y} value will be used for interpolation to
+  the left and the last one for interpolation to the right.
 }
 \seealso{
   \code{\link{spline}} and \code{\link{splinefun}} for spline

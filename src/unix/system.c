@@ -210,10 +210,10 @@ int main(int ac, char **av)
 #endif
     if (usetcltk) {
 #ifndef HAVE_TCLTK
-	R_Suicide("Tcl/Tk GUI is not available in this version");
+	R_Suicide("X11/Tk GUI is not available in this version");
 #endif
 	R_load_tcltk_shlib();
-	R_GUIType="Tcl/Tk";
+	R_GUIType="X11/Tk";
 	tcltk_init();
     }
 

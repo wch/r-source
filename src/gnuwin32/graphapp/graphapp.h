@@ -135,6 +135,7 @@ typedef void (*scrollfn)(scrollbar s, int position);
 #define LeftButton  	0x0001
 #define MiddleButton	0x0002
 #define RightButton 	0x0004
+#define DblClick  	0x0010
 
 /*
  *  ANSI character codes.

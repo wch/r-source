@@ -53,8 +53,9 @@ install-perl:
 	done
 install-gnome:
 	@if test -n "$(GNOME_IF_FILES)"; then \
+	  $(MKINSTALLDIRS) $(rhome)/gnome ;\
 	  for f in "$(GNOME_IF_FILES)"; do \
-	    $(INSTALL_DATA) $(srcdir)/$${f} $(rhome)/etc; \
+	    $(INSTALL_DATA) $(srcdir)/$${f} $(rhome)/gnome; \
 	  done; \
 	fi
 install-strip: install

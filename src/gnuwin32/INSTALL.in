@@ -30,7 +30,11 @@ nor is the make dated 18-Jan-2000 in the Cygwin 1.1.0 net release.
 
 It is also possible to use the compilers from the cygwin 1.1 release
 with the -mno-cygwin flag.  (You will need the cygwin*, gcc* and
-binutils* bundles.)  We have also successfully used the variant of
+binutils* bundles.)   As of R 1.1.0 it is no longer possible to build
+R with the cygwin-b20.1 release, but you will probably be able to use
+that to build packages.
+
+We have also successfully used the variant of
 mingw32 that uses the MSVCRT run-time system.  Be aware that many
 Windows 95 machines do not have MSVCRT.DLL installed.
 
@@ -128,7 +132,7 @@ set of tools at
 
     http://www.stats.ox.ac.uk/pub/bdr/RWin/i386cross.tar.bz2
 
-(Just unpack this somewhere are put its bin directory in your path.)
+(Just unpack this somewhere and put its bin directory in your path.)
 
 You will need Perl, zip and unzip installed.
 

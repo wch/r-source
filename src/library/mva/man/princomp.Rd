@@ -12,9 +12,9 @@ princomp(x, cor = FALSE, scores = TRUE, covmat = NULL,
          subset = rep(TRUE, nrow(as.matrix(x))))
 loadings(x)
 plot(x, npcs = min(10, length(x$sdev)),
-          type = c("barplot", "lines"), \dots) 
+          type = c("barplot", "lines"), \dots)
 screeplot(x, npcs = min(10, length(x$sdev)),
-          type = c("barplot", "lines"), \dots) 
+          type = c("barplot", "lines"), \dots)
 
 print(x, \dots)  summary(object)  predict(object, \dots)
 }
@@ -31,7 +31,7 @@ print(x, \dots)  summary(object)  predict(object, \dots)
     \code{x}.}
   \item{subset}{a vector used to select rows (observations) of the
     data matrix \code{x}.}
-      
+
   \item{x, object}{an object of class \code{"princomp"}, as
     from \code{princomp()}.}
   \item{npcs}{the number of principal components to be plotted.}
@@ -41,7 +41,7 @@ print(x, \dots)  summary(object)  predict(object, \dots)
 \description{
   \code{princomp} performs a principal components analysis on the given
   data matrix and returns the results as an object of class
-  \code{princomp}.  
+  \code{princomp}.
 
   \code{loadings} extracts the loadings.
 
@@ -69,7 +69,7 @@ print(x, \dots)  summary(object)  predict(object, \dots)
 
   Note that the default calculation uses divisor \code{N} for the
   covariance matrix.
-  
+
   The \code{\link{print}} method for the these objects prints the
   results in a nice format and the \code{\link{plot}} method produces
   a scree plot.
@@ -86,11 +86,12 @@ print(x, \dots)  summary(object)  predict(object, \dots)
   \code{\link{eigen}}.
 }
 \examples{
-## the variances of the variables in the
+## The variances of the variables in the
 ## USArrests data vary by orders of magnitude
 data(USArrests)
 (pc.cr <- princomp(USArrests))
-princomp(USArrests, cor = TRUE)
+princomp(USArrests, cor = TRUE) # =^= prcomp(USArrests, scale=TRUE)
+## Similar, but different:
 princomp(scale(USArrests, scale = TRUE, center = TRUE), cor = FALSE)
 
 summary(pc.cr <- princomp(USArrests))

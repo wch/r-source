@@ -432,24 +432,12 @@ static SEXP XdrLoad(FILE *fp)
 
 /* ----- L o w l e v e l -- B i n a r y -- I / O ----- */
 
-static void BinaryOutInteger(FILE *fp, int i)
-{
-    if (fwrite(&i, sizeof(int), 1, fp) != 1)
-	error("a write error occured");
-}
-
 static int BinaryInInteger(FILE * fp)
 {
     int i;
     if (fread(&i, sizeof(int), 1, fp) != 1)
 	error("a read error occured");
     return i;
-}
-
-static void BinaryOutReal(FILE *fp, double x)
-{
-    if (fwrite(&x, sizeof(double), 1, fp) != 1)
-	error("a write error occured");
 }
 
 static double BinaryInReal(FILE * fp)
@@ -460,25 +448,12 @@ static double BinaryInReal(FILE * fp)
     return x;
 }
 
-static void BinaryOutComplex(FILE *fp, Rcomplex x)
-{
-	if (fwrite(&x, sizeof(Rcomplex), 1, fp) != 1)
-		error("a write error occured");
-}
-
 static Rcomplex BinaryInComplex(FILE * fp)
 {
     Rcomplex x;
     if (fread(&x, sizeof(Rcomplex), 1, fp) != 1)
 	error("a read error occured");
     return x;
-}
-
-static void BinaryOutString(FILE *fp, char *s)
-{
-    int n = strlen(s) + 1;	/* NULL too */
-    if (fwrite(s, sizeof(char), n, fp) != n)
-	error("a write error occured");
 }
 
 static char *BinaryInString(FILE *fp)
@@ -489,19 +464,6 @@ static char *BinaryInString(FILE *fp)
     }
     while (*bufp++);
     return buf;
-}
-
-static void BinarySave(SEXP s, FILE *fp)
-{
-    OutInit = DummyInit;
-    OutInteger = BinaryOutInteger;
-    OutReal = BinaryOutReal;
-    OutComplex = BinaryOutComplex;
-    OutString = BinaryOutString;
-    OutSpace = DummyOutSpace;
-    OutNewline = DummyOutNewline;
-    OutTerm = DummyTerm;
-    DataSave(s, fp);
 }
 
 static SEXP BinaryLoad(FILE *fp)
@@ -527,6 +489,47 @@ static SEXP BinaryLoadOld(FILE *fp, int version)
     InTerm = DummyTerm;
     return DataLoad(fp);
 }
+
+#ifndef HAVE_RPC_XDR_H
+static void BinaryOutInteger(FILE *fp, int i)
+{
+    if (fwrite(&i, sizeof(int), 1, fp) != 1)
+	error("a write error occured");
+}
+
+static void BinaryOutReal(FILE *fp, double x)
+{
+    if (fwrite(&x, sizeof(double), 1, fp) != 1)
+	error("a write error occured");
+}
+
+static void BinaryOutComplex(FILE *fp, Rcomplex x)
+{
+	if (fwrite(&x, sizeof(Rcomplex), 1, fp) != 1)
+		error("a write error occured");
+}
+
+static void BinaryOutString(FILE *fp, char *s)
+{
+    int n = strlen(s) + 1;	/* NULL too */
+    if (fwrite(s, sizeof(char), n, fp) != n)
+	error("a write error occured");
+}
+
+static void BinarySave(SEXP s, FILE *fp)
+{
+    OutInit = DummyInit;
+    OutInteger = BinaryOutInteger;
+    OutReal = BinaryOutReal;
+    OutComplex = BinaryOutComplex;
+    OutString = BinaryOutString;
+    OutSpace = DummyOutSpace;
+    OutNewline = DummyOutNewline;
+    OutTerm = DummyTerm;
+    DataSave(s, fp);
+}
+#endif /* HAVE_RPC_XDR_H */
+
 
 static void ReallocVector(SEXP s, int length)
 {
@@ -1713,26 +1716,12 @@ static SEXP NewAsciiLoad(FILE *fp)
 
 /* ----- L o w l e v e l -- B i n a r y -- I / O ----- */
 
-static void OutIntegerBinary(FILE *fp, int i)
-{
-    if (fwrite(&i, sizeof(int), 1, fp) != 1)
-	error("a binary write error occured");
-}
-
 static int InIntegerBinary(FILE * fp)
 {
     int i;
     if (fread(&i, sizeof(int), 1, fp) != 1)
 	error("a binary read error occured");
     return i;
-}
-
-static void OutStringBinary(FILE *fp, char *s)
-{
-    int n = strlen(s);
-    OutIntegerBinary(fp, n);
-    if (fwrite(s, sizeof(char), n, fp) != n)
-	error("a binary string write error occured");
 }
 
 static char *InStringBinary(FILE *fp)
@@ -1753,12 +1742,6 @@ static char *InStringBinary(FILE *fp)
     return buf;
 }
 
-static void OutRealBinary(FILE *fp, double x)
-{
-    if (fwrite(&x, sizeof(double), 1, fp) != 1)
-	error("a write error occured");
-}
-
 static double InRealBinary(FILE * fp)
 {
     double x;
@@ -1767,31 +1750,12 @@ static double InRealBinary(FILE * fp)
     return x;
 }
 
-static void OutComplexBinary(FILE *fp, Rcomplex x)
-{
-	if (fwrite(&x, sizeof(Rcomplex), 1, fp) != 1)
-		error("a write error occured");
-}
-
 static Rcomplex InComplexBinary(FILE * fp)
 {
     Rcomplex x;
     if (fread(&x, sizeof(Rcomplex), 1, fp) != 1)
 	error("a read error occured");
     return x;
-}
-
-static void NewBinarySave(SEXP s, FILE *fp)
-{
-    OutInit = DummyInit;
-    OutInteger = OutIntegerBinary;
-    OutReal = OutRealBinary;
-    OutComplex = OutComplexBinary;
-    OutString = OutStringBinary;
-    OutSpace = DummyOutSpace;
-    OutNewline = DummyOutNewline;
-    OutTerm = DummyTerm;
-    NewDataSave(s, fp);
 }
 
 static SEXP NewBinaryLoad(FILE *fp)
@@ -1806,7 +1770,50 @@ static SEXP NewBinaryLoad(FILE *fp)
     return NewDataLoad(fp);
 }
 
+#ifndef HAVE_RPC_XDR_H
+static void OutIntegerBinary(FILE *fp, int i)
+{
+    if (fwrite(&i, sizeof(int), 1, fp) != 1)
+	error("a binary write error occured");
+}
+
+static void OutStringBinary(FILE *fp, char *s)
+{
+    int n = strlen(s);
+    OutIntegerBinary(fp, n);
+    if (fwrite(s, sizeof(char), n, fp) != n)
+	error("a binary string write error occured");
+}
+
+static void OutRealBinary(FILE *fp, double x)
+{
+    if (fwrite(&x, sizeof(double), 1, fp) != 1)
+	error("a write error occured");
+}
+
+static void OutComplexBinary(FILE *fp, Rcomplex x)
+{
+	if (fwrite(&x, sizeof(Rcomplex), 1, fp) != 1)
+		error("a write error occured");
+}
+
+static void NewBinarySave(SEXP s, FILE *fp)
+{
+    OutInit = DummyInit;
+    OutInteger = OutIntegerBinary;
+    OutReal = OutRealBinary;
+    OutComplex = OutComplexBinary;
+    OutString = OutStringBinary;
+    OutSpace = DummyOutSpace;
+    OutNewline = DummyOutNewline;
+    OutTerm = DummyTerm;
+    NewDataSave(s, fp);
+}
+#endif /* not HAVE_RPC_XDR_H */
+
 /* ----- L o w l e v e l -- X D R -- I / O ----- */
+
+#ifdef HAVE_RPC_XDR_H
 
 static void InInitXdr(FILE *fp)
 {
@@ -1935,7 +1942,9 @@ static SEXP NewXdrLoad(FILE *fp)
     InTerm = InTermXdr;
     return NewDataLoad(fp);
 }
-#endif
+#endif /* HAVE_RPC_XDR_H */
+#endif /* USE_NEW_SAVE_FORMAT */
+
 
 /* ----- F i l e -- M a g i c -- N u m b e r s ----- */
 

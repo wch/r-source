@@ -177,6 +177,17 @@ void redraw(control obj)
 	draw(obj);
 }
 
+void getscreenrect(control obj, rect *r)
+{
+    RECT W;
+    GetWindowRect(obj->handle, &W);
+    r->x = W.left;
+    r->y = W.top;
+    r->width = W.right - W.left;
+    r->height = W.bottom - W.top;
+}
+
+
 /* The original here used GetWindowRect (which used screen coordinates)
    and MoveWindow (which uses client coordinates) so got the positioning
    hopelessly wrong.  This version works for WindowObjects, but I would be

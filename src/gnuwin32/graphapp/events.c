@@ -60,6 +60,8 @@ static void handle_mouse(object obj, HWND hwnd, UINT message,
         menu m;
         POINT wp;
         HWND hw;
+	int dble = 1;
+	
 	xy.x = x;
 	xy.y = y;
 	buttons = 0;
@@ -90,11 +92,13 @@ static void handle_mouse(object obj, HWND hwnd, UINT message,
 	case WM_LBUTTONDOWN:
 	case WM_RBUTTONDOWN:
 	case WM_MBUTTONDOWN:
+	        dble = 0;
 		setmousetimer(mouse_msec); /* restart timer */
 		/* fall through to next case */
 	case WM_LBUTTONDBLCLK:
 	case WM_RBUTTONDBLCLK:
 	case WM_MBUTTONDBLCLK:
+	        if (dble) buttons |= DblClick;
 		if ((obj->flags & ChildWindow) &&  (obj->kind != LabelObject))
 			SetFocus(hwnd);
 		if (obj->flags & TrackMouse)

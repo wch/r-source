@@ -44,7 +44,7 @@ int   MDIset = 0;
 static window RFrame;
 extern int ConsoleAcceptCmd;
 static menubar RMenuBar;
-static menuitem msource, mdisplay, mload, msave, mpaste, mcopy, 
+static menuitem msource, mdisplay, mload, msave, msavehistory, mpaste, mcopy, 
     mcopypaste, mlazy, mconfig,
     mls, mrm, msearch, mhelp, mmanintro, mmanref, 
     mmanext, mapropos, mhelpstart;
@@ -124,12 +124,26 @@ static void menusaveimage(control m)
 
     if (!ConsoleAcceptCmd) return;
     setuserfilter("R images (*.RData)\0*.RData\0All files (*.*)\0*.*\0\0");
-    fn = askfilesave("Save image in", "");
+    fn = askfilesave("Save image in", ".RData");
     show(RConsole);
     if (fn) {
 	fixslash(fn);
 	sprintf(cmd, "save.image(\"%s\")", fn);
 	consolecmd(RConsole, cmd);
+    }
+}
+
+static void menusavehistory(control m)
+{
+    char *fn;
+
+    if (!ConsoleAcceptCmd) return;
+    setuserfilter("All files (*.*)\0*.*\0\0");
+    fn = askfilesave("Save history in", ".Rhistory");
+    show(RConsole);
+    if (fn) {
+	fixslash(fn);
+	savehistory(RConsole, fn);
     }
 }
 
@@ -447,22 +461,30 @@ static void readconsolecfg()
 		done = 1;
 	    }
 	    if (!strcmp(opt[0], "background")) {
-		consolebg = nametorgb(opt[1]);
+		if (!strcmpi(opt[1], "Windows")) 
+		    consolebg = myGetSysColor(COLOR_WINDOW);
+		else consolebg = nametorgb(opt[1]);
 		if (consolebg != Transparent)
 		    done = 1;
 	    }
 	    if (!strcmp(opt[0], "normaltext")) {
-		consolefg = nametorgb(opt[1]);
+		if (!strcmpi(opt[1], "Windows")) 
+		    consolefg = myGetSysColor(COLOR_WINDOWTEXT);
+		else consolefg = nametorgb(opt[1]);
 		if (consolefg != Transparent)
 		    done = 1;
 	    }
 	    if (!strcmp(opt[0], "usertext")) {
-		consoleuser = nametorgb(opt[1]);
+		if (!strcmpi(opt[1], "Windows")) 
+		    consoleuser = myGetSysColor(COLOR_ACTIVECAPTION);
+		else consoleuser = nametorgb(opt[1]);
 		if (consoleuser != Transparent)
 		    done = 1;
 	    }
 	    if (!strcmp(opt[0], "highlight")) {
-		highlight = nametorgb(opt[1]);
+		if (!strcmpi(opt[1], "Windows")) 
+		    highlight = myGetSysColor(COLOR_ACTIVECAPTION);
+		else highlight = nametorgb(opt[1]);
 		if (highlight != Transparent)
 		    done = 1;
 	    }
@@ -496,10 +518,12 @@ static void closeconsole(control m)
     R_CleanUp(SA_DEFAULT, 0, 1);
 }
 
+#include "getline/getline.h"
 void setup_term_ui()
 {
     initapp(0, 0);
     readconsolecfg();
+    gl_loadhistory(".Rhistory");
 }
 
 static MenuItem ConsolePopup[] = {
@@ -610,6 +634,7 @@ int setupui()
     MCHECK(newmenuitem("-", 0, NULL));
     MCHECK(mload = newmenuitem("Load Image", 0, menuloadimage));
     MCHECK(msave = newmenuitem("Save Image", 0, menusaveimage));
+    MCHECK(msavehistory = newmenuitem("Save History", 0, menusavehistory));
     MCHECK(newmenuitem("-", 0, NULL));
     MCHECK(newmenuitem("Change dir", 0, menuchangedir));
     MCHECK(newmenuitem("-", 0, NULL));

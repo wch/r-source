@@ -25,7 +25,7 @@ R.version.string <- local({
 options(na.action = "na.omit")
 options(show.signif.stars = TRUE)
 options(show.coef.Pvalues = TRUE)
-options(keep.source = TRUE)
+options(keep.source = interactive())# was "TRUE" in 1.0.x
 options(warn = 0)
 options(CRAN = "http://cran.r-project.org")
 

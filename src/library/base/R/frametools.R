@@ -75,7 +75,7 @@ stack.default <-
     function(x, ...)
 {
     x <- as.list(x)
-    x <- x[, unlist(lapply(x, is.vector)), drop = FALSE]
+    x <- x[unlist(lapply(x, is.vector))]
     data.frame(values = unlist(unname(x)),
                ind = factor(rep(names(x), lapply(x, length))))
 }

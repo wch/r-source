@@ -164,6 +164,8 @@ typedef struct {
 	short BBox[4];
     } CharInfo[256];
     KP *KernPairs;
+    short KPstart[256];
+    short KPend[256];
     short nKP;
 } FontMetricInfo;
 
@@ -332,8 +334,6 @@ static int GetCharInfo(char *buf, FontMetricInfo *metrics)
     return 1;
 }
 
-/* FIXME use more structure here to speed up the search */
-
 static int GetKPX(char *buf, int nkp, FontMetricInfo *metrics)
 {
     char *p = buf, c1[50], c2[50];
@@ -422,6 +422,23 @@ int PostScriptLoadFontMetrics(char *fontname, FontMetricInfo *metrics)
     }
     metrics->nKP = i;
     fclose(fp);
+    /* Make an index for kern-pair searches: relies on having contiguous
+       blocks by first char for efficiency, but works in all cases. */
+    {
+	int j;
+	short ind, tmp;
+	for (j = 0; j < 256; j++) {
+	    metrics->KPstart[j] = i;
+	    metrics->KPend[j] = 0;
+	}
+	for (j = 0; j < i; j++) {
+	    ind = metrics->KernPairs[j].c1;
+	    tmp = metrics->KPstart[ind];
+	    if(j < tmp) metrics->KPstart[ind] = j;
+	    tmp = metrics->KPend[ind];
+	    if(j > tmp) metrics->KPend[ind] = j;
+	}
+    }
     return 1;
  error:
     fclose(fp);
@@ -438,11 +455,11 @@ double PostScriptStringWidth(unsigned char *p, FontMetricInfo *metrics)
 	else
 	    sum += metrics->CharInfo[*p].WX;
 	/* check for kerning adjustment */
-	/* FIXME Do something better that a linear search */
 	p1 = p[0]; p2 = p[1];
-	for (i = 0; i < metrics->nKP; i++)
-	    if(metrics->KernPairs[i].c1 == p1 && 
-	       metrics->KernPairs[i].c2 == p2) {
+	for (i =  metrics->KPstart[p1]; i < metrics->KPend[p1]; i++)
+	/* second test is a safety check: should all start with p1  */
+	    if(metrics->KernPairs[i].c2 == p2 && 
+	       metrics->KernPairs[i].c1 == p1) {
 		sum += metrics->KernPairs[i].kern;
 		break;
 	    }

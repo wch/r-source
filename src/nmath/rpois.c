@@ -19,7 +19,7 @@
  *
  *  SYNOPSIS
  *
- *    #include "Mathlib.h"
+ *    #include "R_ext/Mathlib.h"
  *    double rpois(double lambda)
  *
  *  DESCRIPTION
@@ -34,19 +34,10 @@
  *    ACM Trans. Math. Software 8, 163-179.
  */
 
-/* Factorial Table */
+/* Factorial Table (0:9)! */
 static double fact[10] =
 {
-    1.0,
-    1.0,
-    2.0,
-    6.0,
-    24.0,
-    120.0,
-    720.0,
-    5040.0,
-    40320.0,
-    362880.0
+    1., 1., 2., 6., 24., 120., 720., 5040., 40320., 362880.
 };
 
 #define a0	-0.5
@@ -58,79 +49,84 @@ static double fact[10] =
 #define a6	-0.1384794
 #define a7	 0.1250060
 
+#define one_7	0.1428571428571428571
+#define one_12	0.0833333333333333333
+#define one_24	0.0416666666666666667
+
 #define repeat for(;;)
 
 #include "nmath.h"
 
 double rpois(double mu)
 {
-    static double /* a0, a1, a2, a3, a4, a5, a6, a7, */ b1, b2;
-    static double c, c0, c1, c2, c3, d, del, difmuk, e;
-    static double fk, fx, fy, g, omega;
-    static double p, p0, px, py, q, s, t, u, v, x, xx;
-    static double pp[36];
-    static int j, k, kflag, l, big_l, m;
-    static int ipois;
-    static double muprev = 0.0;
-    static double muold = 0.0;
+    /* These are static --- persistent between calls for same mu : */
+    static double b1, b2, c, c0, c1, c2, c3;
+    static double s, d, omega, pp[36], p0, p, q;
 
-    if (mu<=0.0) 
-	return(0.0);
+    static double big_l;/* integer "w/o overflow" */
+    static int l, m;
+    static double muprev = 0.;/*, muold	 = 0.*/
 
+    /* Local Vars  [initialize some for -Wall]: */
+    double del, difmuk= 0., E= 0., fk= 0., fx, fy, g, px, py, t, u= 0., v, x;
+    double pois = -1.;
+    int k, kflag, big_mu, new_big_mu;
 
-    if (mu != muprev) {
-	if (mu >= 10.0) {
-	    /* case a. (recalculation of s,d,l */
-	    /* if mu has changed)  */
-	    /* the poisson probabilities pk */
-	    /* exceed the discrete normal */
-	    /* probabilities fk whenever k >= m(mu). */
-	    /* l=ifix(mu-1.1484) is an upper bound */
-	    /* to m(mu) for all mu >= 10. */
+    if (mu <= 0.)
+	return 0.;
+
+    big_mu = mu >= 10.;
+    if(big_mu)
+	new_big_mu = LFALSE;
+
+    if (!(big_mu && mu == muprev)) {/* maybe compute new persistent par.s */
+
+	if (big_mu) {
+	    new_big_mu = LTRUE;
+	    /* Case A. (recalculation of s,d,l	because mu has changed):
+	     * The poisson probabilities pk exceed the discrete normal
+	     * probabilities fk whenever k >= m(mu).
+	     */
 	    muprev = mu;
 	    s = sqrt(mu);
-	    d = 6.0 * mu * mu;
-	    big_l = mu - 1.1484;
-	} else {
-	    /* Case B. (start new table and */
-	    /* calculate p0 if necessary) */
-	    muprev = 0.0;
-	    if (mu != muold) {
-		muold = mu;
+	    d = 6. * mu * mu;
+	    big_l = floor(mu - 1.1484);
+	    /* = an upper bound to m(mu) for all mu >= 10.*/
+	}
+	else { /* Small mu ( < 10) -- not using normal approx. */
+
+	    /* Case B. (start new table and calculate p0 if necessary) */
+
+	    /*muprev = 0.;-* such that next time, mu != muprev ..*/
+	    if (mu != muprev) {
+		muprev = mu;
 		m = imax2(1, (int) mu);
-		l = 0;
-		p = exp(-mu);
-		q = p;
-		p0 = p;
+		l = 0; /* pp[] is already ok up to pp[l] */
+		q = p0 = p = exp(-mu);
 	    }
+
 	    repeat {
-				/* Step U. uniform sample */
-				/* for inversion method */
+		/* Step U. uniform sample for inversion method */
 		u = unif_rand();
-		ipois = 0;
 		if (u <= p0)
-		    return (double)ipois;
-				/* Step T. table comparison until */
-				/* the end pp(l) of the pp-table of */
-				/* cumulative poisson probabilities */
-				/* (0.458=pp(9) for mu=10) */
+		    return 0.;
+
+		/* Step T. table comparison until the end pp[l] of the
+		   pp-table of cumulative poisson probabilities
+		   (0.458 > ~= pp[9](= 0.45792971447) for mu=10 ) */
 		if (l != 0) {
-		    j = 1;
-		    if (u > 0.458)
-			j = imin2(l, m);
-		    for (k = j; k <= l; k++)
+		    for (k = (u <= 0.458) ? 1 : imin2(l, m);  k <= l; k++)
 			if (u <= pp[k])
 			    return (double)k;
-		    if (l == 35)
+		    if (l == 35) /* u > pp[35] */
 			continue;
 		}
-				/* Step C. creation of new poisson */
-				/* probabilities p and their cumulatives */
-				/* q=pp[k] */
-		l = l + 1;
+		/* Step C. creation of new poisson
+		   probabilities p[l..] and their cumulatives q =: pp[k] */
+		l++;
 		for (k = l; k <= 35; k++) {
-		    p = p * mu / k;
-		    q = q + p;
+		    p *= mu / k;
+		    q += p;
 		    pp[k] = q;
 		    if (u <= q) {
 			l = k;
@@ -138,102 +134,103 @@ double rpois(double mu)
 		    }
 		}
 		l = 35;
-	    }
-	}
-    }
+	    } /* end(repeat) */
+	}/* mu < 10 */
+
+    } /* end {initialize persistent vars} */
+
+/* Only if mu >= 10 : ----------------------- */
+
     /* Step N. normal sample */
-    /* norm_rand() for standard normal deviate */
-    g = mu + s * norm_rand();
-    if (g >= 0.0) {
-	ipois = g;
-	/* Step I. immediate acceptance */
-	/* if ipois is large enough */
-	if (ipois >= big_l)
-	    return (double)ipois;
+    g = mu + s * norm_rand();/* norm_rand() ~ N(0,1), standard normal */
+
+    if (g >= 0.) {
+	pois = floor(g);
+	/* Step I. immediate acceptance if pois is large enough */
+	if (pois >= big_l)
+	    return pois;
 	/* Step S. squeeze acceptance */
-	/* unif_rand() for (0,1)-sample u */
-	fk = ipois;
+	fk = pois;
 	difmuk = mu - fk;
-	u = unif_rand();
+	u = unif_rand(); /* ~ U(0,1) - sample */
 	if (d * u >= difmuk * difmuk * difmuk)
-	    return (double)ipois;
+	    return pois;
     }
-    /* Step P. preparations for steps Q and H. */
-    /* (recalculations of parameters if necessary) */
-    /* 0.3989423=(2*pi)**(-0.5) */
-    /* 0.416667e-1=1./24. */
-    /* 0.1428571=1./7. */
-    /* The quantities b1, b2, c3, c2, c1, c0 are for the Hermite */
-    /* approximations to the discrete normal probabilities fk. */
-    /* c=.1069/mu guarantees majorization by the 'hat'-function. */
-    if (mu != muold) {
-	muold = mu;
-	omega = 0.3989423 / s;
-	b1 = 0.4166667e-1 / mu;
+
+    /* Step P. preparations for steps Q and H.
+       (recalculations of parameters if necessary) */
+
+    if (new_big_mu) {
+	omega = M_1_SQRT_2PI / s;
+	/* The quantities b1, b2, c3, c2, c1, c0 are for the Hermite
+	 * approximations to the discrete normal probabilities fk. */
+
+	b1 = one_24 / mu;
 	b2 = 0.3 * b1 * b1;
-	c3 = 0.1428571 * b1 * b2;
+	c3 = one_7 * b1 * b2;
 	c2 = b2 - 15. * c3;
 	c1 = b1 - 6. * b2 + 45. * c3;
 	c0 = 1. - b1 + 3. * b2 - 15. * c3;
-	c = 0.1069 / mu;
+	c = 0.1069 / mu; /* guarantees majorization by the 'hat'-function. */
     }
-    if (g >= 0.0) {
+
+    if (g >= 0.) {
 	/* 'Subroutine' F is called (kflag=0 for correct return) */
 	kflag = 0;
-	goto L20;
+	goto Step_F;
     }
+
+
     repeat {
 	/* Step E. Exponential Sample */
-	/* exp_rand() for standard exponential deviate */
-	/* e and sample t from the laplace 'hat' */
-	/* (if t <= -0.6744 then pk < fk for all mu >= 10.) */
-	e = exp_rand();
-	u = unif_rand();
-	u = u + u - 1.0;
-	t = 1.8 + fsign(e, u);
+
+	E = exp_rand();	/* ~ Exp(1) (standard exponential) */
+
+	/*  sample t from the laplace 'hat'
+	    (if t <= -0.6744 then pk < fk for all mu >= 10.) */
+	u = 2 * unif_rand() - 1.;
+	t = 1.8 + fsign(E, u);
 	if (t > -0.6744) {
-	    ipois = mu + s * t;
-	    fk = ipois;
+	    pois = floor(mu + s * t);
+	    fk = pois;
 	    difmuk = mu - fk;
-	    /* 'subroutine' f is called */
-	    /* (kflag=1 for correct return) */
+
+	    /* 'subroutine' F is called (kflag=1 for correct return) */
 	    kflag = 1;
-	    /* Step f. 'subroutine' f. */
-	    /* calculation of px,py,fx,fy. */
-	    /* case ignpoi < 10 uses */
-	    /* factorials from table fact */
-	  L20:if (ipois < 10) {
-	      px = -mu;
-	      py = pow(mu, (double) ipois) / fact[ipois];
-	  } else {
-				/* Case ipois >= 10 uses polynomial */
-				/* approximation a0-a7 for accuracy */
-				/* when advisable */
-				/* 0.8333333e-1=1./12.0 */
-				/* 0.3989423=(2*pi)**(-0.5) */
-	      del = 0.8333333e-1 / fk;
-	      del = del - 4.8 * del * del * del;
-	      v = difmuk / fk;
-	      if (fabs(v) <= 0.25)
-		  px = fk * v * v * (((((((a7 * v + a6) * v + a5) * v + a4) * v + a3) * v + a2) * v + a1) * v + a0) - del;
-	      else
-		  px = fk * log(1.0 + v) - difmuk - del;
-	      py = 0.3989423 / sqrt(fk);
-	  }
+
+	  Step_F: /* 'subroutine' F : calculation of px,py,fx,fy. */
+
+	    if (pois < 10) { /* use factorials from table fact[] */
+		px = -mu;
+		py = pow(mu, pois) / fact[(int)pois];
+	    }
+	    else {
+		/* Case pois >= 10 uses polynomial approximation
+		   a0-a7 for accuracy when advisable */
+		del = one_12 / fk;
+		del = del * (1. - 4.8 * del * del);
+		v = difmuk / fk;
+		if (fabs(v) <= 0.25)
+		    px = fk * v * v * (((((((a7 * v + a6) * v + a5) * v + a4) *
+					  v + a3) * v + a2) * v + a1) * v + a0)
+			- del;
+		else /* |v| > 1/4 */
+		    px = fk * log(1. + v) - difmuk - del;
+		py = M_1_SQRT_2PI / sqrt(fk);
+	    }
 	    x = (0.5 - difmuk) / s;
-	    xx = x * x;
-	    fx = -0.5 * xx;
-	    fy = omega * (((c3 * xx + c2) * xx + c1) * xx + c0);
+	    x *= x;/* x^2 */
+	    fx = -0.5 * x;
+	    fy = omega * (((c3 * x + c2) * x + c1) * x + c0);
 	    if (kflag > 0) {
-				/* Step H. hat acceptance */
-				/* (e is repeated on rejection) */
-		if (c * fabs(u) <= py * exp(px + e) - fy * exp(fx + e))
+		/* Step H. Hat acceptance (E is repeated on rejection) */
+		if (c * fabs(u) <= py * exp(px + E) - fy * exp(fx + E))
 		    break;
 	    } else
-				/* step q. quotient acceptance (rare case) */
+		/* Step Q. Quotient acceptance (rare case) */
 		if (fy - u * fy <= py * exp(px - fx))
 		    break;
-	}
+	}/* t > -.67.. */
     }
-    return (double)ipois;
+    return pois;
 }

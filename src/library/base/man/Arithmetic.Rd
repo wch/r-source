@@ -42,7 +42,7 @@ unless \code{y == 0} where the result is \code{\link{NA}} or
     way provided they are conformable.
 }
 \seealso{
-\code{\link{Math}} for miscellaneous and \code{\link{Special}} for special
+\code{\link{sqrt}} for miscellaneous and \code{\link{Special}} for special
 mathematical functions.
 }
 \examples{

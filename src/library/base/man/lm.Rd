@@ -2,7 +2,7 @@
 \title{Fitting Linear Models}
 \usage{
 lm(formula, data, subset, weights, na.action,
-   method = "qr", model = TRUE, x = FALSE, y = FALSE, qr = TRUE, 
+   method = "qr", model = TRUE, x = FALSE, y = FALSE, qr = TRUE,
    singular.ok = TRUE contrasts = NULL, offset = NULL, \dots)
 
 lm.fit (x, y,    offset = NULL, method = "qr", tol = 1e-7, \dots)
@@ -93,7 +93,11 @@ lm.wfit.null(x, y, w, method = "qr", tol = 1e-7, \dots)
   the ANOVA table. \code{\link{aov}} for a different interface.
 
   The generic functions \code{\link{coefficients}}, \code{\link{effects}},
-  \code{\link{residuals}}, \code{\link{fitted.values}};
+  \code{\link{residuals}}, \code{\link{fitted.values}}.
+
+  \code{\link{predict.lm}} (via \code{predict(..)}) for prediction,
+  including confidence and prediction intervals.
+
   \code{\link{lm.influence}} for regression diagnostics, and
   \code{\link{glm}} for \bold{generalized} linear models.
 }

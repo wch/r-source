@@ -89,7 +89,7 @@ function(x, y, weights=rep(1,n), ww=rep(1,q), nterms, max.terms=nterms,
     smod <- smod[c(1:(q+6+p*mu), q+6+p*ml + 1:(q*mu),
 		   jf + 1:(mu*n), jf+ml*n + 1:(mu*n))]
     smod[1] <- mu
-    structure(list(call=call, ml=max.terms, p=p, q=q,
+    structure(list(call=call, mu=mu, ml=ml, p=p, q=q,
 		   gof=gof, gofn=gofn,
 		   df=df, edf=Z$edf[1:mu],
 		   xnames=xnames, ynames=ynames,
@@ -106,7 +106,7 @@ print.ppr <- function(x, ...)
 	cat("Call:\n")
 	dput(cl)
     }
-    mu <- x$call$nterms; ml <- x$ml
+    mu <- x$mu; ml <- x$ml
     cat("\nGoodness of fit:\n")
     gof <- x$gofn; names(gof) <- paste(1:ml, "terms")
     print(format(gof[mu:ml], ...), quote=FALSE)
@@ -122,7 +122,7 @@ summary.ppr <- function(object, ...)
 print.summary.ppr <- function(x, ...)
 {
     print.ppr(x, ...)
-    mu <- x$call$nterms
+    mu <- x$mu
     cat("\nProjection direction vectors:\n")
     print(format(x$alpha, ...), quote=FALSE)
     cat("\nCoefficients of ridge terms:\n")
@@ -155,7 +155,7 @@ plot.ppr <- function(fit, ask, type="o", ...)
 	on.exit(par(oldpar))
 	par(ask = ask)
     }
-    for(i in 1:fit$call$nterms) {
+    for(i in 1:fit$mu) {
 	ord <- order(obj$x[ ,i])
 	plot(obj$x[ord, i], obj$y[ord, i], type = type,
 	     xlab = paste("term", i), ylab = "", ...)

@@ -71,6 +71,8 @@ fixfiles:
 fixed/fixdesc:
 	sh fixed/GETDESC $(PACKAGES)
 
+dllversion.o: ../include/Rversion.h
+
 R.dll: R.a $(MAINLIBS) $(EXTRALIBS) dllversion.o
 
 ../../bin/R.dll: fixfiles rlibs R.dll

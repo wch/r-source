@@ -412,6 +412,12 @@ SEXP do_Tkcallback(SEXP call, SEXP op, SEXP args, SEXP env)
 
     sprintf(buf, "{ R_call %lx", (unsigned long) closure);
 
+    /* FIXME: we really should do something to ensure that "closure"
+       is protected from later GCs. Otherwise we'll have buttons that
+       make R go Boom... We need register_callback(closure) or
+       something to that effect + a run through registered callbacks
+       in the MarkPhase of GC */
+
     while ( formals != R_NilValue )
     {
 	sprintf(tmp, " %%%s", CHAR(PRINTNAME(TAG(formals))));

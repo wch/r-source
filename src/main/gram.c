@@ -122,7 +122,6 @@ static unsigned char FunctionSource[MAXFUNSIZE];
 static unsigned char SourceLine[MAXLINESIZE];
 static unsigned char *FunctionStart[MAXNEST], *SourcePtr;
 static int FunctionLevel = 0;
-static int KeepSource;
  
 /* Soon to be defunct entry points */
 
@@ -1894,7 +1893,7 @@ static SEXP xxdefun(SEXP fname, SEXP formals, SEXP body)
     SEXP source;
 
     if (GenerateCode) {
-	if (!KeepSource) 
+	if (!R_KeepSource) 
 	    PROTECT(source = R_NilValue);
 	else {
 	    unsigned char *p, *p0, *end;
@@ -2198,7 +2197,6 @@ static void ParseInit()
     FunctionLevel=0;
     SourcePtr = FunctionSource;
     xxcharcount = 0;
-    KeepSource = *LOGICAL(GetOption(install("keep.source"), R_NilValue));
 }
 
 static SEXP R_Parse1(int *status)
