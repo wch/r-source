@@ -10,9 +10,9 @@
 \alias{unsplit}
 \description{
   \code{split} divides the data in the vector \code{x} into the groups
-  defined by \code{f}. The assignment forms replace values
-  corresponding to such a division. Unsplit reverses the efffect of
-  \code{split} 
+  defined by \code{f}.  The assignment forms replace values
+  corresponding to such a division.  Unsplit reverses the effect of
+  \code{split}.
 }
 \usage{
 split(x, f)
@@ -31,22 +31,22 @@ unsplit(value, f)
   \item{value}{a list of vectors or data frames compatible with a
     splitting of \code{x}}
 }
-\details{ 
+\details{
   \code{f} is recycled as necessary and if the length of \code{x} is not
   a multiple of the length of \code{f} a warning is printed.
   \code{unsplit} works only with  lists of vectors. The data frame
   method can also be used to split a matrix into a list of matrices,
   and the assignment form likewise, provided they are invoked
-  explicitly. 
+  explicitly.
 }
 \value{
   The value returned from \code{split} is a list of vectors containing
-  the values for the  
+  the values for the
   groups.  The components of the list are named by the factor levels
   given be \code{f}.  If \code{f} is longer than \code{x} some of these
-  will be of zero length. The assignment forms return their right hand side. 
+  will be of zero length. The assignment forms return their right hand side.
   \code{unsplit} returns a vector for which \code{split(x, f)} equals
-  \code{value} 
+  \code{value}
 }
 \seealso{\code{\link{cut}}}
 \examples{
