@@ -1,4 +1,4 @@
-# Subroutines for converting R documentation into text, HTML, LaTeX, Nroff
+# Subroutines for converting R documentation into text, HTML, LaTeX
 # and R (Examples) format
 
 # Copyright (C) 1997-2000 R Development Core Team
@@ -63,14 +63,13 @@ sub Rdconv { # Rdconv(foobar.Rd, type, debug, filename, pkgname)
 	## Trivial (R 0.62 case): Only 1 $type at a time ==> one filename is ok.
 	## filename = 0	  <==>	STDOUT
 	## filename = -1  <==>	do NOT open and close files!
-	$htmlfile= $nrofffile= $txtfile= $Sdfile= $latexfile= 
+	$htmlfile= $txtfile= $Sdfile= $latexfile= 
 	    $Exfile = $chmfile = $_[3];
     } else { # have "," in $type: Multiple types with multiple output files
 	$dirname = $_[3]; # The super-directory , such as  <Rlib>/library/<pkg>
 	die "Rdconv(): '$dirname' is NOT a valid directory:$!\n"
 	  unless -d $dirname;
 	$htmlfile = $dirname ."/html/" .$Rdname.".html" if $type =~ /html/i;
-	$nrofffile= $dirname ."/help/" . $Rdname	if $type =~ /nroff/i;
 	$txtfile= $dirname ."/help/" . $Rdname	        if $type =~ /txt/i;
 	die "Rdconv(): type 'Sd' must not be used with other types (',')\n"
 	  if $type =~ /Sd/i;
@@ -132,7 +131,7 @@ sub Rdconv { # Rdconv(foobar.Rd, type, debug, filename, pkgname)
 
 	get_blocks($complete_text);
  
-	if($type =~ /html/i || $type =~ /nroff/i || $type =~ /txt/i ||
+	if($type =~ /html/i || $type =~ /txt/i ||
 	   $type =~ /Sd/    || $type =~ /tex/i || $type =~ /chm/i ) {
 
 	    get_sections($complete_text);
@@ -144,7 +143,6 @@ sub Rdconv { # Rdconv(foobar.Rd, type, debug, filename, pkgname)
 	}
 
 	rdoc2html($htmlfile)	if $type =~ /html/i;
-	rdoc2nroff($nrofffile)	if $type =~ /nroff/i;
 	rdoc2txt($txtfile)	if $type =~ /txt/i;
 	rdoc2Sd($Sdfile)	if $type =~ /Sd/i;
 	rdoc2latex($latexfile)	if $type =~ /tex/i;
@@ -868,388 +866,6 @@ sub html_tables {
 }
 
 
-
-#==************************** nroff ******************************
-
-
-sub rdoc2nroff { # (filename); 0 for STDOUT
-
-    if($_[0]!= -1) {
-      if($_[0]) { open nroffout, "> $_[0]"; } else { open nroffout, "| cat"; }
-    }
-
-    $INDENT = "0.5i";
-    $TAGOFF = "1i";
-
-    print nroffout ".ND\n";
-    print nroffout ".pl 100i\n";
-    print nroffout ".po 3\n";
-    print nroffout ".na\n";
-    if ($pkgname) {
-	print nroffout ".lt 65\n";
-	print nroffout ".tl '", $blocks{"name"}, "'package:",
-	    $pkgname, "'R Documentation'\n\n";
-    }
-    print nroffout ".SH\n";
-    print nroffout striptitle($blocks{"title"}), "\n";
-    nroff_print_block("description", "Description");
-    nroff_print_codeblock("usage", "Usage");
-    nroff_print_argblock("arguments", "Arguments");
-    nroff_print_block("format", "Format");
-    nroff_print_block("details", "Details");
-    nroff_print_argblock("value", "Value");
-
-    nroff_print_sections();
-
-    nroff_print_block("note", "Note");
-    nroff_print_block("author", "Author(s)");
-    nroff_print_block("source", "Source");
-    nroff_print_block("references", "References");
-    nroff_print_block("seealso", "See Also");
-    nroff_print_codeblock("examples", "Examples");
-
-    close nroffout;
-}
-
-
-### Convert a Rdoc text string to nroff
-###   $_[0]: text to be converted
-###   $_[1]: (optional) indentation of paragraphs. default = $INDENT
-
-sub text2nroff {
-
-    my $text = $_[0];
-    if($_[1]){
-	my $indent = $_[1];
-    }
-    else{
-	my $indent = $INDENT;
-    }
-
-    $text =~ s/^\.|([\n\(])\./$1\\\&./g;
-
-    ## TABs are just whitespace
-    $text =~ s/\t/ /g;
-
-    ## tables are pre-processed by the tbl(1) command, so this has to
-    ## be done first
-    $text = nroff_tables($text);
-    $text =~ s/\\cr\n?/\n.br\n/sgo;
-
-    $text =~ s/\n\s*\n/\n.IP \"\" $indent\n/sgo;
-    $text =~ s/\\dots/\\&.../go;
-    $text =~ s/\\ldots/\\&.../go;
-    $text =~ s/\\le/<=/go;
-    $text =~ s/\\ge/>=/go;
-    $text =~ s/\\%/%/sgo;
-    $text =~ s/\\\$/\$/sgo;
-
-
-    $text =~ s/\\Gamma/Gamma/go;
-    $text =~ s/\\alpha/alpha/go;
-    $text =~ s/\\Alpha/Alpha/go;
-    $text =~ s/\\pi/pi/go;
-    $text =~ s/\\mu/mu/go;
-    $text =~ s/\\sigma/sigma/go;
-    $text =~ s/\\Sigma/Sigma/go;
-    $text =~ s/\\lambda/lambda/go;
-    $text =~ s/\\beta/beta/go;
-    $text =~ s/\\epsilon/epsilon/go;
-    $text =~ s/\\left\(/\(/go;
-    $text =~ s/\\right\)/\)/go;
-    $text =~ s/\\R/R/go;
-# these are troff, not nroff
-#    $text =~ s/---/\\(em/go;
-#    $text =~ s/--/\\(en/go;
-    $text =~ s/---/--/go;
-    $text =~ s/--/-/go;
-    $text =~ s/$EOB/\{/go;
-    $text =~ s/$ECB/\}/go;
-
-    $text = undefine_command($text, "link");
-    $text = undefine_command($text, "emph");
-    $text = undefine_command($text, "bold");
-    $text = undefine_command($text, "textbf");
-    $text = undefine_command($text, "mathbf");
-    $text = undefine_command($text, "email");
-    $text = replace_command($text, "file", "`", "'");
-    $text = replace_command($text, "url", "<URL: ", ">");
-
-
-    # handle equations:
-    my $loopcount = 0;
-    while(checkloop($loopcount++, $text, "\\eqn")
-	  &&  $text =~ /\\eqn/){
-	my ($id, $eqn, $ascii) = get_arguments("eqn", $text, 2);
-	$eqn = $ascii if $ascii;
-	$eqn =~ s/\\([^&])/$1/go;
-	$text =~ s/\\eqn(.*)$id/$eqn/s;
-    }
-
-    $loopcount = 0;
-    while(checkloop($loopcount++, $text, "\\deqn") &&  $text =~ /\\deqn/){
-	my ($id, $eqn, $ascii) = get_arguments("deqn", $text, 2);
-	$eqn = $ascii if $ascii;
-	$eqn =~ s/\\([^&])/$1/go;
-	$text =~ s/\\deqn(.*)$id/\n.DS B\n$eqn\n.DE\n/s;
-    }
-
-    $list_depth=0;
-
-    $text = replace_command($text,
-			    "itemize",
-			    "\n.in +$INDENT\n",
-			    "\n.in -$INDENT\n");
-
-    $text = replace_command($text,
-			    "enumerate",
-			    "\n.in +$INDENT\n",
-			    "\n.in -$INDENT\n");
-
-    $text =~ s/\\item\s+/\n.ti -\\w\@*\\ \@u\n* /go;
-
-    # handle "\describe"
-    $text = replace_command($text,
-			    "describe",
-			    "\n.in +$INDENT\n",
-			    "\n.in -$INDENT\n");
-    while(checkloop($loopcount++, $text, "\\item") && $text =~ /\\itemnormal/s)
-    {
-	my ($id, $arg, $desc)  = get_arguments("item", $text, 2);
-	$arg = text2nroff($arg);
-	$descitem = ".IP \"\" $TAGOFF\n".
-	    ".ti -\\w\@" . $arg . 
-	    "\\ \@u\n" . $arg . "\\ " . text2nroff($desc);
-	$descitem =~ s/\\&\././go;
-	$text =~ s/\\itemnormal.*$id/$descitem/s;
-    }
-    $text = nroff_unescape_codes($text);
-    unmark_brackets($text);
-}
-
-sub nroff_parse_lists {
-
-    my $text = $_[0];
-
-    my $loopcount = 0;
-    while(checkloop($loopcount++, $text, "\\itemize|\\enumerate") &&
-	  $text =~ /\\itemize|\\enumerate/){
-	my ($id, $innertext) = get_arguments("deqn", $text, 1);
-	if($innertext =~ /\\itemize/){
-	    my $tmptext = html_parse_lists($innertext);
-	    $text = s/\\itemize$id(.*)$id/\\itemize$id$tmptext$id/s;
-	}
-	elsif($innertext =~ /\\enumerate/){
-	    my $tmptext = html_parse_lists($innertext);
-	    $text = s/\\enumerate$id(.*)$id/\\enumerate$id$tmptext$id/s;
-	}
-	else{
-	    if($text =~ /\\itemize|\\enumerate/){
-		$text = replace_command($text, "itemize", "<UL>", "</UL>");
-		$text = replace_command($text, "enumerate", "<OL>", "</OL>");
-		$text =~ s/\\item\s+/<li>/go;
-	    }
-	}
-    }
-
-    $text;
-}
-
-sub code2nroff {
-
-    my $text = $_[0];
-
-    $text =~ s/^\.|([\n\(])\./$1\\&./g;
-    $text =~ s/\\%/%/go;
-    $text =~ s/\\ldots/.../go;
-    $text =~ s/\\dots/.../go;
-    $text =~ s/\\n/\\\\n/g;
-
-    $text = undefine_command($text, "link");
-    $text = undefine_command($text, "dontrun");
-    $text = drop_full_command($text, "testonly");
-
-    unmark_brackets($text);
-}
-
-# Print a standard block
-sub nroff_print_block {
-
-    my ($block,$title) = @_;
-
-    if(defined $blocks{$block}){
-	print nroffout "\n";
-	print nroffout ".SH\n";
-	print nroffout "$title:\n";
-#	print nroffout ".LP\n";
-#	print nroffout ".in +$INDENT\n";
-	print nroffout ".IP \"\" $INDENT\n";
-	print nroffout text2nroff($blocks{$block}), "\n";
-	print nroffout ".in -$INDENT\n";
-    }
-}
-
-# Print a code block (preformatted)
-sub nroff_print_codeblock {
-
-    my ($block,$title) = @_;
-
-    if(defined $blocks{$block}){
-	print nroffout "\n";
-	print nroffout ".SH\n" if $title;
-	print nroffout "$title:\n" if $title;
-	print nroffout ".LP\n";
-	print nroffout ".nf\n";
-	print nroffout ".in +$INDENT\n";
-	print nroffout code2nroff($blocks{$block}), "\n";
-	print nroffout ".in -$INDENT\n";
-	print nroffout ".fi\n";
-    }
-}
-
-
-# Print the value or arguments block
-sub nroff_print_argblock {
-
-    my ($block,$title) = @_;
-
-    if(defined $blocks{$block}){
-
-	print nroffout "\n";
-	print nroffout ".SH\n" if $title;
-	print nroffout "$title:\n" if $title;
-#	print nroffout ".LP\n";
-#	print nroffout ".in +$INDENT\n";
-	print nroffout ".IP \"\" $INDENT\n";
-
-	my $text = $blocks{$block};
-
-	if($text =~ /\\item/s){
-	    $text =~ /^(.*)(\\item.*)*/s;
-	    my ($begin, $rest) = split(/\\item/, $text, 2);
-	    if($begin){
-		print nroffout text2nroff($begin);
-		$text =~ s/^$begin//s;
-	    }
-	    my $loopcount = 0;
-	    while(checkloop($loopcount++, $text, "\\item") &&
-		  $text =~ /\\item/s){
-		my ($id, $arg, $desc)  = get_arguments("item", $text, 2);
-		$arg = text2nroff($arg);
-		$desc = text2nroff($desc);
-		print nroffout "\n";
-		print nroffout ".IP \"\" $TAGOFF\n";
-		print nroffout ".ti -\\w\@$arg:\\ \@u\n";
-		print nroffout "$arg:\\ $desc\n";
-		$text =~ s/.*$id//s;
-	    }
-	    print nroffout text2nroff($text, $TAGOFF), "\n";
-	}
-	else{
-	    print nroffout text2nroff($text), "\n";
-	}
-#	print nroffout ".in -$INDENT\n";
-    }
-}
-
-# Print sections
-sub nroff_print_sections {
-
-    my $section;
-
-    for($section=0; $section<$max_section; $section++){
-	print nroffout "\n";
-	print nroffout ".SH\n";
-	print nroffout $section_title[$section], ":\n";
-#	print nroffout ".LP\n";
-#	print nroffout ".in +$INDENT\n";
-	print nroffout ".IP \"\" $INDENT\n";
-	print nroffout text2nroff($section_body[$section]), "\n";
-#	print nroffout ".in -$INDENT\n";
-    }
-}
-
-
-sub nroff_unescape_codes {
-
-    my $text = $_[0];
-
-    my $loopcount = 0;
-    while(checkloop($loopcount++, $text, "escaped code")
-	  && $text =~ /$ECODE($ID)/){
-	my $id = $1;
-	my $ec = code2nroff($ecodes{$id});
-	$text =~ s/$ECODE$id/\`$ec\'/;
-    }
-    $text;
-}
-
-
-sub nroff_tables {
-
-    my $text = $_[0];
-
-    my $loopcount = 0;
-    while(checkloop($loopcount++, $text, "\\tabular")
-	  &&  $text =~ /\\tabular/){
-
-	my ($id, $format, $arg)	 =
-	    get_arguments("tabular", $text, 2);
-
-	$arg =~ s/\n/ /sgo;
-
-	# remove trailing \cr (otherwise we get an empty last line)
-	$arg =~ s/\\cr\s*$//go;
-
-	# parse the format of the tabular environment
-	my $ncols = length($format);
-	my @colformat = ();
-	for($k=0; $k<$ncols; $k++){
-	    my $cf = substr($format, $k, 1);
-
-	    if($cf =~ /l/o){
-		$colformat[$k] = "l";
-	    }
-	    elsif($cf =~ /r/o){
-		$colformat[$k] = "r";
-	    }
-	    elsif($cf =~ /c/o){
-		$colformat[$k] = "c";
-	    }
-	    else{
-		die("Error: unknown identifier \{$cf\} in" .
-		    " tabular format \{$format\}\n");
-	    }
-	}
-
-	my $table = ".TS\n";
-	for($l=0; $l<$#colformat; $l++){
-	    $table .= "$colformat[$l] ";
-	}
-	$table .= "$colformat[$#colformat].\n";
-
-
-	# now do the real work: split into lines and columns
-	my @rows = split(/\\cr/, $arg);
-	for($k=0; $k<=$#rows;$k++){
-	    my @cols = split(/\\tab/, $rows[$k]);
-	    die("Error:\n  $rows[$k]\\cr\n" .
-		"does not fit tabular format \{$format\}\n")
-		if ($#cols != $#colformat);
-	    for($l=0; $l<$#cols; $l++){
-		$cols[$l] =~ s/^\s*(.*)\s*$/$1/;
-		$table .= "$cols[$l]\t";
-	    }
-	    $cols[$#cols] =~ s/^\s*(.*)\s*$/$1/;
-	    $table .= "$cols[$#cols]\n";
-	}
-	$table .= ".TE\n";
-
-	$text =~ s/\\tabular.*$id/$table/s;
-    }
-
-    $text;
-}
 #==************************** txt ******************************
 
 use Text::Wrap;
@@ -1430,7 +1046,6 @@ sub code2txt {
     $text =~ s/\\%/%/go;
     $text =~ s/\\ldots/.../go;
     $text =~ s/\\dots/.../go;
-#    $text =~ s/\\n/\\\\n/g;
 
     $text = undefine_command($text, "link");
     $text = undefine_command($text, "dontrun");
@@ -1488,7 +1103,6 @@ sub txt_fill { # pre1, base, "text to be formatted"
     foreach $para (@paras) {
 	# strip leading white space
 	$para  =~ s/^\s+//;
-#	print "$para\n\n";
 	my $para0 = $para;
 	$para0 =~ s/\n\s*/ /go;
 	# check for a item in itemize etc

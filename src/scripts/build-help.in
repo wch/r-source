@@ -24,7 +24,7 @@ use File::Basename;
 use Cwd;
 use Getopt::Long;
 
-my $revision = ' $Revision: 1.22 $ ';
+my $revision = ' $Revision: 1.23 $ ';
 my $version;
 my $name;
 
@@ -32,7 +32,7 @@ $revision =~ / ([\d\.]*) /;
 $version = $1;
 ($name = $0) =~ s|.*/||;
 
-@knownoptions = ("rhome:s", "html", "nroff", "latex", "example", "debug|d",
+@knownoptions = ("rhome:s", "html", "txt", "latex", "example", "debug|d",
 		 "dosnames", "htmllists", "help|h", "version|v");
 GetOptions (@knownoptions) || usage();
 
@@ -62,9 +62,6 @@ print STDERR "Current directory (cwd): `$cwd'\n" if $opt_debug;
 require "$R_HOME/etc/Rdconvlib.pl";
 require "$R_HOME/etc/buildlib.pl";
 
-#$NROFF="@NROFF@" unless $NROFF=$ENV{"NROFF"};
-#$TBL="@TBL@" unless $TBL=$ENV{"TBL"};
-
 # if option --htmllists is set we only rebuild some list files and
 # exit
 
@@ -80,9 +77,9 @@ if($opt_htmllists){
 }
 
 # default is to build all documentation formats
-if(!$opt_html && !$opt_nroff && !$opt_latex && !$opt_example){
+if(!$opt_html && !$opt_txt && !$opt_latex && !$opt_example){
     $opt_html = 1;
-    $opt_nroff = 1;
+    $opt_txt = 1;
     $opt_latex = 1;
     $opt_example = 1;
 }
@@ -103,7 +100,7 @@ if ($opt_example) {
 
 print " >>> Building/Updating help pages for package `$pkg'\n";
 print "     Formats: ";
-print "text " if $opt_nroff;
+print "text " if $opt_txt;
 print "html " if $opt_html;
 print "latex " if $opt_latex;
 print "example " if $opt_example;
@@ -138,15 +135,12 @@ foreach $manfile (@mandir) {
 
 	$textflag = $htmlflag = $latexflag = $exampleflag = "";
 
-	if($opt_nroff){
+	if($opt_txt){
 	    my $targetfile = $filenm{$manfilebase};
 	    $destfile = "$dest/help/$targetfile";
 	    if(fileolder($destfile, $manage)) {
 		$textflag = "text";
 		Rdconv($manfile, "txt", "", "$destfile", $pkg);
-#		open(nroffout, "| $TBL | $NROFF -ms 2> /dev/null | " .
-#		     " ${R_HOME}/bin/help.pretty > '$destfile'");
-#		Rdconv($manfile, "nroff", "", -1, $pkg);
 	    }
 	}
 
@@ -185,7 +179,7 @@ foreach $manfile (@mandir) {
 }
 
 # remove files not in source directory
-if($opt_nroff){
+if($opt_txt){
     my @destdir;
     opendir dest,  "$dest/help";
     @destdir = sort(readdir(dest));
@@ -257,7 +251,7 @@ Options:
   -d, --debug           print debugging information
   --rhome               R home directory, defaults to environment R_HOME
   --html                build HTML files    (default is all)
-  --nroff               build text files    (default is all)
+  --txt                 build text files    (default is all)
   --latex               build LaTeX files   (default is all)
   --example             build example files (default is all)
   --htmllists           build HTML function and package lists
