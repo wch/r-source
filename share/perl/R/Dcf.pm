@@ -2,7 +2,9 @@ package R::Dcf;
 
 =head1 NAME
     
-  R::Dcf - parse files in dcf format
+  R::Dcf - parse files in dcf format (currently handles only files
+    with ONE record, if more than one record is contained in the file,
+    only the first one is read).
     
 =head1 SYNOPSIS
 
@@ -27,7 +29,8 @@ sub new {
     my $fh = new FileHandle "< $file" or croak "open($file): $!\n";
     my $self = {};
     my $field = "";
-    while(<$fh>){
+    LINE: while(<$fh>){
+	last LINE if($field && /^\s*$/);
 	s/\r/ /g;
 	s/\s*$//g;
 	if(/^\s+/){
@@ -40,9 +43,10 @@ sub new {
 	    }
 	}
 	else{
-	    if(/^(\S+):\s*(.*\S)\s*$/){
+	    if(/^(\S+):(.*)/){
 		$field=$1;
 		$self->{ $field } .= $2;
+		$self->{ $field } =~ s/^\s*(.*)\s*$/$1/;
 	    }
 	    else{
 		die "Malformed DCF file (line $.)\n";
