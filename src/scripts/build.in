@@ -33,7 +33,7 @@ use R::Rd;
 ## don't buffer output
 $|=1;
 
-my $revision = ' $Revision: 1.19.2.1 $ ';
+my $revision = ' $Revision: 1.19.2.2 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -175,19 +175,20 @@ foreach $pkg (@ARGV){
 	    die "Cannot write to \`$exclude'\n";
 	@excludepatterns = ("^.Rbuildignore\$", "^GNUMakefile\$",
 			    "^CVS\$", "\~\$");
-	find(\&findExcludeFiles, $pkg);
 	if(-f "$pkg/.Rbuildignore") {
 	    open(RBUILDIGNORE, "$pkg/.Rbuildignore");
 	    while(<RBUILDIGNORE>) {
-		print exclude "$_";
+		chop;
+		push(@excludepatterns, $_);
 	    }
 	    close(RBUILDIGNORE);
 	}
+	chdir("$pkg/..");
+	find(\&findExcludeFiles, "$pkgname");
 	close exclude;
 	
 	my $filename = "${pkgname}_" . $description->{"Version"} . ".tar";
 	$log->message("building \`$filename.gz'");
-	chdir("$pkg/..");
 	my $filepath = "$startdir/$filename";
 	if($WINDOWS) {
 	    ## workaround for paths in Cygwin tar
@@ -211,12 +212,13 @@ sub deleteJunkFiles {
 }
 
 sub findExcludeFiles {
-
-    print exclude "$File::Find::name\n" if (-d $_ && /^check$/);
-    print exclude "$File::Find::name\n" if (-d $_ && /^chm$/);
-    print exclude "$File::Find::name\n" if (-d $_ && /[Oo]ld$/);
+    print exclude "$File::Find::name\n" if(-d $_ && /^check$/);
+    print exclude "$File::Find::name\n" if(-d $_ && /^chm$/);
+    print exclude "$File::Find::name\n" if(-d $_ && /[Oo]ld$/);
+    my $filename = $File::Find::name;
+    $filename =~ s/^[^\/]*\///;
     foreach $p (@excludepatterns) {
-	print exclude "$File::Find::name\n" if /$p/;
+	print exclude "$File::Find::name\n" if($filename =~ /$p/);
     }
 }
 
