@@ -131,6 +131,13 @@ as.data.frame.vector <- function(x, row.names = NULL, optional = FALSE)
   value
 }
 
+as.data.frame.ts <- 
+function(x, row.names=NULL, optional=F)
+{
+  if(is.matrix(x)) as.data.frame.matrix(x, row.names, optional)
+  else as.data.frame.vector(x, row.names, optional)
+}
+
 as.data.frame.numeric <- .Alias(as.data.frame.vector)
 as.data.frame.complex <- .Alias(as.data.frame.vector)
 as.data.frame.integer <- .Alias(as.data.frame.vector)
@@ -385,7 +392,6 @@ data.frame <- function(..., row.names = NULL, check.rows = FALSE, check.names = 
     ## really ambiguous, but follow common use as if list
     if(is.matrix(i))
       stop("Matrix-subscripts not allowed in replacement")
-    value <- j
     j <- i
     i <- NULL
     has.i <- FALSE
