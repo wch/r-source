@@ -45,6 +45,8 @@ if(-d $ARGV[0]) {
 
 ### * Header
 print <<_EOF_;
+### * <HEADER>
+###
 attach(NULL, name = "CheckExEnv")
 assign(".CheckExEnv", as.environment(2), pos = length(search())) # base
 ## This plot.new() patch has no effect yet for persp();
@@ -85,9 +87,9 @@ options(contrasts = c(unordered = "contr.treatment", ordered = "contr.poly"))
 _EOF_
 
 if($PKG eq "tcltk") {
-    print "require('tcltk') || q()\n";
+    print "require('tcltk') || q()\n\n";
 } elsif($PKG ne "base") {
-    print "library('$PKG')\n";
+    print "library('$PKG')\n\n";
 }
 
 ### * Loop over all R files, and edit a few of them ...
@@ -97,7 +99,11 @@ foreach my $file (@Rfiles) {
     my $have_contrasts = 0;
     my $nm;
 
+    $nm = basename $file, (".R");
+    $nm =~ s/[^- .a-zA-Z0-9]/./g;
+
     open(FILE, "< $file") or die "file $file cannot be opened";
+    print "### * $nm\n\n";
     while (<FILE>) {
 	$have_examples = 1 if /_ Examples _/o;
 	$have_par = 1 if (/[^a-zA-Z0-9.]par\(/o || /^par\(/o);
@@ -105,8 +111,6 @@ foreach my $file (@Rfiles) {
     }
     close(FILE);
     if ($have_examples) {
-	$nm = basename $file, (".R");
-	$nm =~ s/[^- .a-zA-Z0-9]/./g;
 	print "cleanEx(); ..nameEx <- \"$nm\"\n";
     }
 
@@ -127,6 +131,14 @@ foreach my $file (@Rfiles) {
 
 ### * Footer
 print <<_EOF_;
+### * <FOOTER>
+###
 cat("Time elapsed: ", proc.time() - get("ptime", env = .CheckExEnv),"\\n")
-dev.off(); quit('no')
+dev.off()
+###
+### Local variables: ***
+### mode: outline-minor ***
+### outline-regexp: "\\\\(> \\\\)?### [*]+" ***
+### End: ***
+quit('no')
 _EOF_
