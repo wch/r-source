@@ -1446,9 +1446,23 @@ static void XFconvert(double *x, double *y, XFigDesc *pd)
 }
 
 
-static int XF_SetLty(XFigDesc *pd)
+static int XF_SetLty(int lty)
 {
-    return 0;
+    switch(lty) {
+    case LTY_SOLID:
+    case 1: /* "solid" */
+	return 0;
+    case LTY_DASHED:
+	return 1;
+    case LTY_DOTTED:
+	return 2;
+    case LTY_DOTDASH:
+	return 3;
+    default:
+	warning("unimplemented line texture %u: using Dash-double-dotted", 
+		lty);
+	return 4;
+    }
 }
 
 /* Device Driver Actions */
@@ -1789,7 +1803,7 @@ static void XFig_Rect(double x0, double y0, double x1, double y1, int coords,
     FILE *fp = pd->tmpfp;
     int ix0, iy0, ix1, iy1;
     int cbg = XF_SetColor(bg, pd), cfg = XF_SetColor(fg, pd), cpen, 
-	dofill, lty = XF_SetLty(pd), lwd = dd->gp.lwd*0.833 + 0.5;
+	dofill, lty = XF_SetLty(dd->gp.lty), lwd = dd->gp.lwd*0.833 + 0.5;
 
     cpen = (fg != NA_INTEGER)? cfg: -1;
     dofill = (bg != NA_INTEGER)? 20: -1;
@@ -1817,7 +1831,7 @@ static void XFig_Circle(double x, double y, int coords, double r,
     FILE *fp = pd->tmpfp;
     int ix, iy, ir;
     int cbg = XF_SetColor(bg, pd), cfg = XF_SetColor(fg, pd), cpen, 
-	dofill, lty = XF_SetLty(pd), lwd = dd->gp.lwd*0.833 + 0.5;
+	dofill, lty = XF_SetLty(dd->gp.lty), lwd = dd->gp.lwd*0.833 + 0.5;
 
     cpen = (fg != NA_INTEGER)? cfg: -1;
     dofill = (bg != NA_INTEGER)? 20: -1;
@@ -1839,7 +1853,7 @@ static void XFig_Line(double x1, double y1, double x2, double y2,
 {
     XFigDesc *pd = (XFigDesc *) dd->deviceSpecific;
     FILE *fp = pd->tmpfp;
-    int lty = 0, lwd = dd->gp.lwd*0.833 + 0.5;
+    int lty = XF_SetLty(dd->gp.lty), lwd = dd->gp.lwd*0.833 + 0.5;
     
     GConvert(&x1, &y1, coords, DEVICE, dd); XFconvert(&x1, &y1, pd);
     GConvert(&x2, &y2, coords, DEVICE, dd); XFconvert(&x2, &y2, pd);
@@ -1861,7 +1875,7 @@ static void XFig_Polygon(int n, double *x, double *y, int coords,
     double xx, yy;
     int i;
     int cbg = XF_SetColor(bg, pd), cfg = XF_SetColor(fg, pd), cpen, 
-	dofill, lty = XF_SetLty(pd), lwd = dd->gp.lwd*0.833 + 0.5;
+	dofill, lty = XF_SetLty(dd->gp.lty), lwd = dd->gp.lwd*0.833 + 0.5;
 
 
     cpen = (fg != NA_INTEGER)? cfg: -1;
@@ -1887,7 +1901,7 @@ static void XFig_Polyline(int n, double *x, double *y, int coords,
     XFigDesc *pd = (XFigDesc*) dd->deviceSpecific;
     FILE *fp = pd->tmpfp;
     double xx, yy;
-    int i, lty = XF_SetLty(pd), lwd = dd->gp.lwd*0.833 + 0.5;
+    int i, lty = XF_SetLty(dd->gp.lty), lwd = dd->gp.lwd*0.833 + 0.5;
 
     fprintf(fp, "2 2 "); /* Polyline */
     fprintf(fp, "%d %d ", lty, lwd>0?lwd:1); /* style, thickness */

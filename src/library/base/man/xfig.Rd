@@ -52,9 +52,10 @@ xfig(file = "Rplots.fig", \dots)
   \code{onefile=FALSE} is the default.
 }
 \note{
-  Currently line textures (\code{lty > 1}) are ignored. Eventually this
+  One some line textures (\code{0 <= lty > 4}) are used. Eventually this
   will be partially remedied, but the XFig file format does not allow as
-  general line textures as the \R model.
+  general line textures as the \R model.  Unimplemented line textures
+  are displayed as \emph{dash-double-dotted}.
 
   There is a limit of 512 colours (plus white and black) per file.
 }
