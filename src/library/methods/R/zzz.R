@@ -2,12 +2,12 @@
 
 .First.lib  <-
   ## Initialize the methods library:  the session table of method
-  ## definitions. 
+  ## definitions.
   ##
   ## run the initial computations for the methods package, if this
   ## wasn't done at INSTALL time:
   ##  - define the basic classes (vector, the informal classes that
-  ##  extend vector) 
+  ##  extend vector)
   ##  - define the classes needed to represent methods
   function(libname, pkgname, where)
 {
@@ -52,4 +52,5 @@ assign(".saveImage", FALSE, .GlobalEnv)
 dyn.load(file.path(.Library, "methods", "libs",
                    paste("methods", .Platform$dynlib.ext, sep="")))
 .First.lib("methods", "methods", .GlobalEnv)
-save.image(file=file.path(.Library, "methods", "R", "all.rda"))
+save.image(file = file.path(.Library, "methods", "R", "all.rda"),
+           compress = TRUE)

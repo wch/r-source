@@ -30,7 +30,8 @@ sys.save.image(name)
   \item{envir}{environment to search for objects to be saved.}
   \item{compress}{logical specifying whether saving to a named file is to
     use compression. Ignored when \code{file} is a connection and for
-    workspace format version 1.}
+    workspace format version 1, or if \code{\link{gzfile}} is not
+    supported on this platform.}
   \item{safe}{logical.  If TRUE, a temporary file is used for creating
     the saved workspace.  The temporary file is renamed to \code{file}
     if the save succeeds.  This preserves an existing workspace

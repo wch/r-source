@@ -36,7 +36,7 @@ save <- function(..., list = character(0), file = "", ascii = FALSE,
     else {
         if (is.character(file)) {
             if (file == "") stop("`file' must be non-empty string")
-            if (compress) con <- gzfile(file, "wb")
+            if (compress && capabilities("libz")) con <- gzfile(file, "wb")
             else con <- file(file, "wb")
             on.exit(close(con))
         }
@@ -60,7 +60,7 @@ save.image <- function (file = ".RData", version = NULL, ascii = FALSE,
     if (missing(ascii) && ! is.null(opts$ascii))
         ascii <- opts$ascii
     if (missing(version)) version <- opts$version
-	
+
     if (safe) {
         # find a temporary file name in the same directory so we can
         # rename it to the final output file on success
