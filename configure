@@ -23012,7 +23012,8 @@ echo "${ECHO_T}no" >&6
 fi
 
 papersize=`${PAPERCONF}`
-: ${R_PAPERSIZE="${papersize-a4}"}
+test -z "${papersize}" && papersize=a4
+: ${R_PAPERSIZE="${papersize}"}
 
 
 ## Saving.
