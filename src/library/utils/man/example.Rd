@@ -80,7 +80,7 @@ example("smooth", package="stats", lib.loc=.Library)
 r1 <- example(quantile, setRNG = TRUE)
 x1 <- rnorm(1)
 u <- runif(1)
-## identical randum numbers
+## identical random numbers
 r2 <- example(quantile, setRNG = TRUE)
 x2 <- rnorm(1)
 stopifnot(identical(r1, r2))
