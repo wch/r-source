@@ -300,3 +300,10 @@ Date: Tue, 1 Feb 2000 12:12:41 +0000 (GMT)
 Subject: Bugs and comments.
 From: Patrick Lindsey <plindsey@alpha.luc.ac.be>
 Date: Wed, 2 Feb 2000 13:41:50 +0100 (MET)
+* PR# 411 *
+Subject: constrained optimiser doesn't obey constraints 
+Subject: constrained optimiser doesn't obey constraints
+From: Thomas Lumley <thomas@biostat.washington.edu>
+From: Thomas Lumley <thomas@biostat.washington.edu>
+Date: Fri, 4 Feb 2000 16:45:52 +0000 (GMT)
+Date: Fri, 4 Feb 2000 01:58:44 +0000 (GMT)
