@@ -2768,3 +2768,9 @@ writeChar("", zz, nchars=10000000)
 close(zz)
 unlink(tf)
 ## segfaults in 1.8.0
+
+
+## PR#4710 round (and signif) dropped attributes
+x <- round(matrix(0, 0, 3))
+stopifnot(identical(dim(x), as.integer(c(0, 3))))
+## numeric(0) in 1.8.0
