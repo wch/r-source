@@ -1,4 +1,4 @@
-LIBRARY tk83.dll
+LIBRARY tk@VER@.dll
 EXPORTS
   Tk_Init
   Tk_SafeInit

@@ -1,4 +1,4 @@
-LIBRARY tcl83.dll
+LIBRARY tcl@VER@.dll
 EXPORTS
  Tcl_CreateCommand
  Tcl_CreateInterp
