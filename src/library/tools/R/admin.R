@@ -53,9 +53,9 @@ function(dir, outDir)
     invisible()
 }
 
-### * .linstall_package_descriptions_as_RDS
+### * .vinstall_package_descriptions_as_RDS
 
-.linstall_package_descriptions_as_RDS <-
+.vinstall_package_descriptions_as_RDS <-
 function(dir, packages)
 {
     ## For the given packages installed in @file{dir}, install their
@@ -353,9 +353,9 @@ function(dir, outDir)
     invisible()
 }
 
-### * .linstall_package_indices
+### * .vinstall_package_indices
 
-.linstall_package_indices <-
+.vinstall_package_indices <-
 function(src_dir, out_dir, packages)
 {
     ## For the given packages with sources rooted at @file{src_dir} and
@@ -486,9 +486,9 @@ function(dir, outDir)
     invisible()
 }
 
-### * .linstall_package_namespaces_as_RDS
+### * .vinstall_package_namespaces_as_RDS
 
-.linstall_package_namespaces_as_RDS <-
+.vinstall_package_namespaces_as_RDS <-
 function(dir, packages)
 {
     ## For the given packages installed in @file{dir} which have a
