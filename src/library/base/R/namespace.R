@@ -143,7 +143,7 @@ loadNamespace <- function (package, lib.loc = NULL,
     if (! is.null(ns))
         ns
     else {
-        runHook <- function(hookname, package, env, ...) {
+        runHook <- function(hookname, pkgname, env, ...) {
             if (exists(hookname, envir = env, inherits = FALSE)) {
                 fun <- get(hookname, envir = env, inherits = FALSE)
                 if (! is.null(try({ fun(...); NULL})))
