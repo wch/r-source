@@ -6,7 +6,7 @@ OBJ=	\
 	mlutils.o \
 	d1mach.o i1mach.o \
 	fmax2.o fmin2.o fmod.o fprec.o fround.o ftrunc.o \
-	fsign.o fsquare.o fcube.o \
+	sign.o fsign.o fsquare.o fcube.o \
 	imax2.o imin2.o \
 	chebyshev.o logrelerr.o lgammacor.o gammalims.o \
 	gamma.o lgamma.o beta.o lbeta.o polygamma.o \
