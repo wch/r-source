@@ -2,6 +2,7 @@
  *  R : A Computer Language for Statistical Data Analysis
  *  file console.h
  *  Copyright (C) 1998--2003  Guido Masarotto and Brian Ripley
+ *  Copyright (C) 2004	      The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -37,6 +38,7 @@ int  consolecancopy(console c);
 int  consolecanpaste(console c);
 void consolecopy(console c);
 void consolepaste(console c);
+void consolepastecmds(console c);
 void consoleselectall(console c);
 void consolecmd(console c, char *cmd);
 void consolehelp();

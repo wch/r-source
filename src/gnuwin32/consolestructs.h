@@ -1,3 +1,23 @@
+/*
+ *  R : A Computer Language for Statistical Data Analysis
+ *  file consolestructs.h
+ *  Copyright (C) 2004	      The R Foundation
+ *
+ *  This program is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 2 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program; if not, write to the Free Software
+ *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ */
+
 /* xbuf */
 
 typedef unsigned int xint;
@@ -43,7 +63,7 @@ struct structConsoleData {
     char  chbrk, modbrk;	/* hook for user's break */
     void  (*fbrk) ();
 
-    menuitem mcopy, mpaste, mpopcopy, mpoppaste;
+    menuitem mcopy, mpaste, mpastecmds, mpopcopy, mpoppaste, mpoppastecmds;
 };
 
 typedef struct structConsoleData *ConsoleData;
@@ -90,7 +110,7 @@ typedef struct structConsoleData *ConsoleData;
 
 #define RSHOW(r) {gbitblt(c, p->bm, topleft(r), r);}
 
-ConsoleData newconsoledata(font f, int rows, int cols, 
+ConsoleData newconsoledata(font f, int rows, int cols,
     int bufbytes, int buflines,
     rgb fg, rgb ufg, rgb bg, int kind);
 
@@ -121,6 +141,6 @@ xbuf newxbuf(xlong dim, xint ms, xint shift);
 void xbufgrow(xbuf p, xlong dim, xint ms);
 void xbufdel(xbuf p);
 void xbufaddc(xbuf p, char c);
-    
+
 
 

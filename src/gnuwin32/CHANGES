@@ -38,6 +38,10 @@ All of R, R CMD and Rcmd now accept --help.
 
 Rcmd Rd2dvi can now be specified as such rather than as Rcmd Rd2dvi.sh.
 
+Added "Paste commands only" to edit and popup menus in the Rgui console.
+This allows copying of a block of output, but pasting only the commands
+back to the console for re-execution.  (Code contributed by Tony Plate.)
+
 
 Installation
 ------------

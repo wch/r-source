@@ -2,6 +2,7 @@
  *  R : A Computer Language for Statistical Data Analysis
  *  file console.c
  *  Copyright (C) 1998--2003  Guido Masarotto and Brian Ripley
+ *  Copyright (C) 2004	      The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -570,7 +571,55 @@ FBEGIN
     }
 FVOIDEND
 
-/* the following three routines are  system dependent */
+static int CleanTranscript(char *tscpt, char *cmds)
+{
+    /*
+     * Filter R commands out of a string that contains
+     * prompts, commands, and output.
+     * Uses a simple algorithm that just looks for '>'
+     * prompts and '+' continuation -- won't work when
+     * other prompts are used (e.g., as in a debugging
+     * session.)
+     * Always return the length of the string required
+     * to hold the filtered commands.
+     * If cmds is a non-null pointer, write the commands
+     * to cmds & terminate with null.
+     */
+    int incommand = 0, startofline = 1, len = 0;
+    while (*tscpt) {
+	if (startofline) {
+	    while (*tscpt==' ' || *tscpt=='\t')
+		tscpt++;
+	    if (*tscpt=='>' || (incommand && *tscpt=='+')) {
+		tscpt++;
+		if (*tscpt==' ' || *tscpt=='\t') tscpt++;
+		incommand = 1;
+	    } else {
+		incommand = 0;
+	    }
+	    startofline = 0;
+	} else {
+	    if (incommand) {
+		if (cmds)
+		    *(cmds++) = *tscpt;
+		len++;
+	    }
+	    if (*tscpt=='\n')
+		startofline = 1;
+	    tscpt++;
+	}
+    }
+    if (cmds) {
+	/* seem to have to terminate with two nulls, otherwise
+	   pasting empty commands doesn't work correctly (e.g.,
+	   when clipboard contains 'XXX') */
+	*cmds = '\0';
+	*(cmds+1) = '\0';
+    }
+    return(len+2);
+}
+
+/* the following four routines are system dependent */
 void consolepaste(control c)
 FBEGIN
     HGLOBAL hglb;
@@ -600,6 +649,43 @@ FBEGIN
         }
         else {
            R_ShowMessage("Not enough memory");
+        }
+        GlobalUnlock(hglb);
+    }
+    CloseClipboard();
+FVOIDEND
+
+void consolepastecmds(control c)
+FBEGIN
+    HGLOBAL hglb;
+    char *pc, *new = NULL;
+    if (p->sel) {
+	p->sel = 0;
+	p->needredraw = 1;
+	REDRAW;
+     }
+    if (p->kind == PAGER) FVOIDRETURN;
+    if ( OpenClipboard(NULL) &&
+         (hglb = GetClipboardData(CF_TEXT)) &&
+         (pc = (char *)GlobalLock(hglb)))
+    {
+        if (p->clp) {
+	    new = realloc((void *)p->clp, strlen(p->clp) + CleanTranscript(pc, 0));
+        }
+        else {
+	    new = malloc(CleanTranscript(pc, 0)) ;
+	    if (new) new[0] = '\0';
+	    p->already = p->numkeys;
+	    p->pclp = 0;
+        }
+        if (new) {
+            p->clp = new;
+	    /* copy just the commands from the clipboard */
+	    for (; *new; ++new); /* append to the end of 'new' */
+	    CleanTranscript(pc, new);
+        }
+        else {
+	    R_ShowMessage("Not enough memory");
         }
         GlobalUnlock(hglb);
     }
@@ -1186,7 +1272,7 @@ int consolebufb = DIMLBUF, consolebufl = MLBUF;
 
 void
 setconsoleoptions(char *fnname,int fnsty, int fnpoints,
-                  int rows, int cols, int consx, int consy, 
+                  int rows, int cols, int consx, int consy,
 		  rgb nfg, rgb nufg, rgb nbg, rgb high,
 		  int pgr, int pgc, int multiplewindows, int widthonresize,
 		  int bufbytes, int buflines)
