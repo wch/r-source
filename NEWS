@@ -252,10 +252,6 @@ NEW FEATURES
     o   min/max of integer(0) (or NULL) is now Inf/-Inf, not an
 	extreme integer.
 
-    o   range() gave c(1, 1).
-
-    o	range(numeric(0)) is now c(Inf, -Inf), as it was documented to be.
-
 
 DEPRECATED & DEFUNCT
 
@@ -544,6 +540,13 @@ BUG FIXES
 	col=NULL if this was transparent. (PR#1419)
 
     o	min/max(complex(0)) was returning a random value.
+
+    o   range() gave c(1, 1).
+
+    o	range(numeric(0)) is now c(Inf, -Inf), as it was documented to be.
+
+    o   print.ts was occasionally making rounding errors in the labels
+	for multiple calendar time series.
 
 
 	**************************************************

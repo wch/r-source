@@ -372,7 +372,7 @@ print.ts <- function(x, calendar, ...)
     } else { # multi-column matrix
 	if(calendar && fr.x > 1) {
 	    tm <- time(x)
-	    t2 <- 1 + round(fr.x*(tm %%1))# round() was floor()
+	    t2 <- 1 + round(fr.x*((tm+0.001) %%1))
 	    p1 <- format(floor(tm))# yr
 	    rownames(x) <-
 		if(fr.x == 12)

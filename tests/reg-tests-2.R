@@ -419,3 +419,11 @@ format(x)
 format(x, justify = "right")
 format(x, justify = "none")
 ## not ideal.
+
+
+## print.ts problems  ggrothendieck@yifan.net on R-help, 2002-04-01
+x <- 1:20
+tt1 <- ts(x,start=c(1960,2), freq=12)
+tt2 <- ts(10+x,start=c(1960,2), freq=12)
+cbind(tt1, tt2)
+## 1.4.1 had `Jan 1961' as `NA 1961'
