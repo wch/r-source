@@ -1,7 +1,4 @@
 #include <stdio.h>
-/*
-#include <math.h>
-*/
 #include <fp.h> /* Jago */
 #include <Quickdraw.h>
 #include "Defn.h"
@@ -10,12 +7,12 @@
 
 OSErr  doWritePictData(WindowPtr windowPtr,SInt16 tempFileRefNum);
 OSErr  doCopyAppNameResource(WindowPtr windowPtr);
-OSErr  doCopyGraResource(ResType ,SInt16 ,SInt16 ,SInt16 );
+OSErr  doCopyGraResource(ResType, SInt16, SInt16, SInt16);
 OSErr  doWriteFile(WindowPtr windowPtr);
 extern pascal	OSErr	FSpGetFullPath (const FSSpec*, short*, Handle*);
 
-extern Graphic_Ref        gGReference[MAX_NUM_G_WIN + 1];
-extern SInt16      gAppResFileRefNum;
+extern Graphic_Ref gGReference[MAX_NUM_G_WIN + 1];
+extern SInt16 gAppResFileRefNum;
 SInt16  ConsolefileRefNum;
 FSSpec  ConsolefileFSSpec;
 char    InitFile[256];
@@ -23,28 +20,28 @@ char    InitFile[256];
 
 
 
-OSErr  doRSave(Boolean *haveCancel){
-  FILE *fp ;
-  OSErr err;
+OSErr  doRSave(Boolean *haveCancel)
+{
+    FILE *fp ;
+    OSErr err;
 
-  if (strlen(InitFile) == 0){
-     err = doRSaveAs(haveCancel);
-  }else{
-     *haveCancel = false;
-     err = noErr;
+    if (strlen(InitFile) == 0) {
+	err = doRSaveAs(haveCancel);
+    } else {
+	*haveCancel = false;
+	err = noErr;
 
+	fp = fopen(InitFile, "wb"); /* binary file */
+	if (!fp)
+	    error("can't save data -- unable to open ./%s\n", InitFile);
+	if (HASHTAB(R_GlobalEnv) != R_NilValue)
+	    R_SaveToFile(HASHTAB(R_GlobalEnv), fp, 0);
+	else
+	    R_SaveToFile(FRAME(R_GlobalEnv), fp, 0);
+	fclose(fp);
 
-  fp = fopen(InitFile, "wb"); /* binary file */
-    if (!fp)
-	error("can't save data -- unable to open ./%s\n", InitFile);
-    if (HASHTAB(R_GlobalEnv) != R_NilValue)
-	R_SaveToFile(HASHTAB(R_GlobalEnv), fp, 0);
-    else
-	R_SaveToFile(FRAME(R_GlobalEnv), fp, 0);
-    fclose(fp);
-
-  }
-  return err;
+    }
+    return err;
 }
 
 /*
@@ -52,275 +49,270 @@ OSErr  doRSave(Boolean *haveCancel){
    Now handles correctly XDR. Jago Nov 2000 (Stefano M. Iacus)
 */
 
-OSErr  doRSaveAs(Boolean *haveCancel){
-	  StandardFileReply	fileReply;
-	  OSType						fileType;
-	  OSErr					    osError = 0;
+OSErr  doRSaveAs(Boolean *haveCancel) {
+    StandardFileReply fileReply;
+    OSType fileType;
+    OSErrosError = 0;
     FILE *fp ;
-    SInt16          pathLen;
-    Handle          pathName;
-    char path[FILENAME_MAX],cur_path[FILENAME_MAX];
+    SInt16 pathLen;
+    Handle pathName;
+    char path[FILENAME_MAX], cur_path[FILENAME_MAX];
     
-   	StandardPutFile("\pSave as:","\p.RData",&fileReply);
+    StandardPutFile("\pSave as:","\p.RData", &fileReply);
     *haveCancel = !(fileReply.sfGood);
-	if(fileReply.sfGood)
-	{
-		if(!(fileReply.sfReplacing))
-		{
-      fileType = 'ROBJ';
-
-			osError = FSpCreate(&fileReply.sfFile, R_ID,fileType,smSystemScript);
-			if(osError != noErr)
-				return(osError);
-		}
+    if(fileReply.sfGood) {
+	if(!(fileReply.sfReplacing)) {
+	    fileType = 'ROBJ';
+	    osError = FSpCreate(&fileReply.sfFile, R_ID, fileType,
+				smSystemScript);
+	    if(osError != noErr)
+		return(osError);
+	}
 
 	
-    FSpGetFullPath(&fileReply.sfFile, &pathLen, &pathName);
-    HLock((Handle) pathName);
-    strncpy(InitFile, *pathName, pathLen);
-    InitFile[pathLen] = '\0';
-    HUnlock((Handle) pathName);
+	FSpGetFullPath(&fileReply.sfFile, &pathLen, &pathName);
+	HLock((Handle) pathName);
+	strncpy(InitFile, *pathName, pathLen);
+	InitFile[pathLen] = '\0';
+	HUnlock((Handle) pathName);
 
 
-  fp = fopen(InitFile, "wb"); /* binary file */
-    if (!fp)
-	error("can't save data -- unable to open ./%s\n", InitFile);
-    if (HASHTAB(R_GlobalEnv) != R_NilValue)
-	R_SaveToFile(HASHTAB(R_GlobalEnv), fp, 0);
-    else
-	R_SaveToFile(FRAME(R_GlobalEnv), fp, 0);
-    fclose(fp);
- }
+	fp = fopen(InitFile, "wb"); /* binary file */
+	if (!fp)
+	    error("can't save data -- unable to open ./%s\n", InitFile);
+	if (HASHTAB(R_GlobalEnv) != R_NilValue)
+	    R_SaveToFile(HASHTAB(R_GlobalEnv), fp, 0);
+	else
+	    R_SaveToFile(FRAME(R_GlobalEnv), fp, 0);
+	fclose(fp);
+    }
  
-	return(osError);
+    return(osError);
 }
 
-
-
-/* ×××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××× doSaveCommand
+/* ××××××××××××××××××××× doSaveCommand
 */
 OSErr  doSaveGraCommand(void)
 {
-	WindowPtr				windowPtr;
-  SInt16          WinIndex;
-	OSErr						osError = 0;
+    WindowPtr windowPtr;
+    SInt16 WinIndex;
+    OSErr osError = 0;
 	
-	windowPtr = FrontWindow();
-  WinIndex = isGraphicWindow(windowPtr);
+    windowPtr = FrontWindow();
+    WinIndex = isGraphicWindow(windowPtr);
 
-	if(gGReference[WinIndex].fileRefNum)
-		osError = doWriteFile(windowPtr);
-	else
-		osError = doSaveAsGraCommand();
+    if(gGReference[WinIndex].fileRefNum)
+	osError = doWriteFile(windowPtr);
+    else
+	osError = doSaveAsGraCommand();
 
-	return(osError);
+    return(osError);
 }
 
-/* ×××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××× doSaveAsCommand
+/* ××××××××××××××××××× doSaveAsCommand
 */
 OSErr  doSaveAsGraCommand(void)
 {
-	WindowPtr					windowPtr;
-  SInt16            WinIndex;
-	StandardFileReply	fileReply;
-	OSType						fileType;
-	SInt16						fileRefNum;
-	OSErr							osError = 0;
+    WindowPtr windowPtr;
+    SInt16 WinIndex;
+    StandardFileReply fileReply;
+    OSType fileType;
+    SInt16 fileRefNum;
+    OSErr osError = 0;
 
-	windowPtr = FrontWindow();
-	WinIndex = isGraphicWindow(windowPtr);
+    windowPtr = FrontWindow();
+    WinIndex = isGraphicWindow(windowPtr);
 
-	StandardPutFile("\pSave as:","\pR Picture",&fileReply);
+    StandardPutFile("\pSave as:","\pR Picture",&fileReply);
 
-	if(fileReply.sfGood)
-	{
-		if(!(fileReply.sfReplacing))
-		{
-		  fileType = 'PICT';
-			osError = FSpCreate(&fileReply.sfFile,'ABFF',fileType,smSystemScript);
-			if(osError != noErr)
-				return(osError);
-		}
-
-		gGReference[WinIndex].fileFSSpec = fileReply.sfFile;
-
-		if(gGReference[WinIndex].fileRefNum != 0)
-		{
-			osError = FSClose(gGReference[WinIndex].fileRefNum);
-			gGReference[WinIndex].fileRefNum = 0;
-		}
-
-		if(osError == noErr)
-			osError = FSpOpenDF(&gGReference[WinIndex].fileFSSpec,fsRdWrPerm,&fileRefNum);
-
-		if(osError == noErr)
-		{
-			gGReference[WinIndex].fileRefNum = fileRefNum;
-			osError = doWriteFile(windowPtr);
-		}
+    if(fileReply.sfGood) {
+	if(!(fileReply.sfReplacing)) {
+	    fileType = 'PICT';
+	    osError = FSpCreate(&fileReply.sfFile, 'ABFF', fileType,
+				smSystemScript);
+	    if(osError != noErr)
+		return(osError);
 	}
 
-	return(osError);
+	gGReference[WinIndex].fileFSSpec = fileReply.sfFile;
+
+	if(gGReference[WinIndex].fileRefNum != 0) {
+	    osError = FSClose(gGReference[WinIndex].fileRefNum);
+	    gGReference[WinIndex].fileRefNum = 0;
+	}
+
+	if(osError == noErr)
+	    osError = FSpOpenDF(&gGReference[WinIndex].fileFSSpec,fsRdWrPerm,&fileRefNum);
+
+	if(osError == noErr) {
+	    gGReference[WinIndex].fileRefNum = fileRefNum;
+	    osError = doWriteFile(windowPtr);
+	}
+    }
+
+    return(osError);
 }
 
-/* ×××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××× doWritePictData
+/* ××××××××××××××××××××××× doWritePictData
 */
 OSErr  doWritePictData(WindowPtr windowPtr,SInt16 tempFileRefNum)
 {
-	PicHandle				pictureHdl;
-	SInt32					numberOfBytes, dummyData;
-	SInt16					volRefNum, WinIndex;
-	OSErr						osError;
-  DevDesc             *dd;
-  GrafPtr         picPort;
+    PicHandle pictureHdl;
+    SInt32 numberOfBytes, dummyData;
+    SInt16 volRefNum, WinIndex;
+    OSErr osError;
+    DevDesc *dd;
+    GrafPtr picPort;
 
-  WinIndex = isGraphicWindow(windowPtr);
-  SetPort(windowPtr);
-  HLock((Handle) pictureHdl);
-  dd = (DevDesc*)gGReference[WinIndex].devdesc;
-  pictureHdl = OpenPicture(&(windowPtr->portRect));
-  GetPort(&picPort);
-  playDisplayList(dd);
-  SetPort(picPort);
-  ClosePicture();
-  HUnlock((Handle) pictureHdl);
+    WinIndex = isGraphicWindow(windowPtr);
+    SetPort(windowPtr);
+    HLock((Handle) pictureHdl);
+    dd = (DevDesc*)gGReference[WinIndex].devdesc;
+    pictureHdl = OpenPicture(&(windowPtr->portRect));
+    GetPort(&picPort);
+    playDisplayList(dd);
+    SetPort(picPort);
+    ClosePicture();
+    HUnlock((Handle) pictureHdl);
 
-	numberOfBytes = 512;
-	dummyData = 0;
+    numberOfBytes = 512;
+    dummyData = 0;
 
-	osError = SetFPos(tempFileRefNum,fsFromStart,0);
+    osError = SetFPos(tempFileRefNum,fsFromStart,0);
 
-	if(osError == noErr)
-		osError = FSWrite(tempFileRefNum,&numberOfBytes,&dummyData);
+    if(osError == noErr)
+	osError = FSWrite(tempFileRefNum,&numberOfBytes,&dummyData);
 
-	numberOfBytes = GetHandleSize((Handle)pictureHdl);
+    numberOfBytes = GetHandleSize((Handle)pictureHdl);
 
-	if(osError == noErr)
-	{
-		HLock((Handle)pictureHdl);
-		osError = FSWrite(tempFileRefNum,&numberOfBytes,*pictureHdl);
-		HUnlock((Handle)pictureHdl);
-	}
+    if(osError == noErr) {
+	HLock((Handle)pictureHdl);
+	osError = FSWrite(tempFileRefNum,&numberOfBytes,*pictureHdl);
+	HUnlock((Handle)pictureHdl);
+    }
 
-	if(osError == noErr)
-		osError = SetEOF(tempFileRefNum,512 + numberOfBytes);
-	if(osError == noErr)
-		osError = GetVRefNum(tempFileRefNum,&volRefNum);
-	if(osError == noErr)
-		osError = FlushVol(NULL,volRefNum);
+    if(osError == noErr)
+	osError = SetEOF(tempFileRefNum,512 + numberOfBytes);
+    if(osError == noErr)
+	osError = GetVRefNum(tempFileRefNum,&volRefNum);
+    if(osError == noErr)
+	osError = FlushVol(NULL,volRefNum);
 
 
-	return(osError);
+    return(osError);
 }
 
-/* ×××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××× doCopyAppNameResource
+/* ×××××××××××××××× doCopyAppNameResource
 */
 OSErr  doCopyAppNameResource(WindowPtr windowPtr)
 {
 
-	OSType					fileType;
-	OSErr						osError;
-	SInt16					fileRefNum, WinIndex;
+    OSType fileType;
+    OSErr osError;
+    SInt16 fileRefNum, WinIndex;
 
 
-  WinIndex = isGraphicWindow(windowPtr);
-	fileType = 'PICT';
+    WinIndex = isGraphicWindow(windowPtr);
+    fileType = 'PICT';
 
-	FSpCreateResFile(&(gGReference[WinIndex].fileFSSpec),'ABFF',fileType,smSystemScript);
+    FSpCreateResFile(&(gGReference[WinIndex].fileFSSpec),'ABFF',fileType,smSystemScript);
 
+    osError = ResError();
+    if(osError == noErr)
+	fileRefNum = FSpOpenResFile(&gGReference[WinIndex].fileFSSpec,
+				    fsRdWrPerm);
+
+    if(fileRefNum > 0)
+	osError = doCopyGraResource('STR ', -16396, gAppResFileRefNum, 
+				    fileRefNum);
+    else
 	osError = ResError();
-	if(osError == noErr)
-		fileRefNum = FSpOpenResFile(&gGReference[WinIndex].fileFSSpec,fsRdWrPerm);
 
-	if(fileRefNum > 0)
-		osError = doCopyGraResource('STR ',-16396,gAppResFileRefNum,fileRefNum);
-	else
-		osError = ResError();
+    if(osError == noErr)
+	CloseResFile(fileRefNum); 
 
-	if(osError == noErr)
-		CloseResFile(fileRefNum); 
-
-	osError = ResError();
-	return(osError);
+    osError = ResError();
+    return(osError);
 }
 
-/* ××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××× doCopyGraResource
+/* ××××××××××××××××××××× doCopyGraResource
 */
-OSErr  doCopyGraResource(ResType resourceType,SInt16 resourceID,SInt16 sourceFileRefNum,
-											SInt16 destFileRefNum)
+OSErr  doCopyGraResource(ResType resourceType, SInt16 resourceID,
+ SInt16 sourceFileRefNum, SInt16 destFileRefNum)
 {
-	Handle	sourceResourceHdl;
-	Str255	sourceResourceName;
-	ResType	ignoredType;
-	SInt16	ignoredID;
+    Handle	sourceResourceHdl;
+    Str255	sourceResourceName;
+    ResType	ignoredType;
+    SInt16	ignoredID;
 
-	UseResFile(sourceFileRefNum);
+    UseResFile(sourceFileRefNum);
 
-	sourceResourceHdl = GetResource(resourceType,resourceID);
+    sourceResourceHdl = GetResource(resourceType,resourceID);
 
-	if(sourceResourceHdl != NULL)
-	{
-		GetResInfo(sourceResourceHdl,&ignoredID,&ignoredType,sourceResourceName);
-		DetachResource(sourceResourceHdl);
-		UseResFile(destFileRefNum);
-		AddResource(sourceResourceHdl,resourceType,resourceID,sourceResourceName);
-		if(ResError() == noErr)
-			UpdateResFile(destFileRefNum);
-	}
+    if(sourceResourceHdl != NULL) {
+	GetResInfo(sourceResourceHdl, &ignoredID, &ignoredType,
+		   sourceResourceName);
+	DetachResource(sourceResourceHdl);
+	UseResFile(destFileRefNum);
+	AddResource(sourceResourceHdl, resourceType, resourceID,
+		    sourceResourceName);
+	if(ResError() == noErr)
+	    UpdateResFile(destFileRefNum);
+    }
 
-	ReleaseResource(sourceResourceHdl);
+    ReleaseResource(sourceResourceHdl);
 
-	return(ResError());
+    return(ResError());
 }
 
-/* ×××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××× doWriteFile
+/* ××××××××××××××××××××××××× doWriteFile
 */
 OSErr  doWriteFile(WindowPtr windowPtr)
 {
 
-	FSSpec					fileSpecActual, fileSpecTemp;
-	UInt32					currentTime;
-	Str255					tempFileName;
-	SInt16					tempFileVolNum, tempFileRefNum, WinIndex;
-	SInt32					tempFileDirID;
-	OSErr						osError;
+    FSSpec fileSpecActual, fileSpecTemp;
+    UInt32 currentTime;
+    Str255 tempFileName;
+    SInt16 tempFileVolNum, tempFileRefNum, WinIndex;
+    SInt32 tempFileDirID;
+    OSErr osError;
 
-  WinIndex = isGraphicWindow(windowPtr);
-	fileSpecActual = gGReference[WinIndex].fileFSSpec;
+    WinIndex = isGraphicWindow(windowPtr);
+    fileSpecActual = gGReference[WinIndex].fileFSSpec;
 
-	GetDateTime(&currentTime);
-	NumToString((SInt32) currentTime,tempFileName);
+    GetDateTime(&currentTime);
+    NumToString((SInt32) currentTime,tempFileName);
 	
-	osError = FindFolder(fileSpecActual.vRefNum,kTemporaryFolderType,kCreateFolder,
-												&tempFileVolNum,&tempFileDirID);
-	if(osError == noErr)
-		osError = FSMakeFSSpec(tempFileVolNum,tempFileDirID,tempFileName,&fileSpecTemp);
-	if(osError == noErr || osError == fnfErr)
-		osError = FSpCreate(&fileSpecTemp,'trsh','trsh',smSystemScript);
-	if(osError == noErr)
-		osError = FSpOpenDF(&fileSpecTemp,fsRdWrPerm,&tempFileRefNum);
-	if(osError == noErr)
-	{
-	   osError = doWritePictData(windowPtr,tempFileRefNum);
-	}	
-	if(osError == noErr)
-		osError = FSClose(tempFileRefNum);
-	if(osError == noErr)
-		osError = FSClose(gGReference[WinIndex].fileRefNum);
-	if(osError == noErr)
-		osError = FSpExchangeFiles(&fileSpecTemp,&fileSpecActual);
-	if(osError == noErr)
-		osError = FSpDelete(&fileSpecTemp);
-	if(osError == noErr)
-		osError = FSpOpenDF(&fileSpecActual,fsRdWrPerm,&gGReference[WinIndex].fileRefNum);
+    osError = FindFolder(fileSpecActual.vRefNum, kTemporaryFolderType,
+			 kCreateFolder, &tempFileVolNum,&tempFileDirID);
+    if(osError == noErr)
+	osError = FSMakeFSSpec(tempFileVolNum, tempFileDirID, tempFileName,
+			       &fileSpecTemp);
+    if(osError == noErr || osError == fnfErr)
+	osError = FSpCreate(&fileSpecTemp,'trsh', 'trsh', smSystemScript);
+    if(osError == noErr)
+	osError = FSpOpenDF(&fileSpecTemp, fsRdWrPerm, &tempFileRefNum);
+    if(osError == noErr)
+	osError = doWritePictData(windowPtr,tempFileRefNum);
+    if(osError == noErr)
+	osError = FSClose(tempFileRefNum);
+    if(osError == noErr)
+	osError = FSClose(gGReference[WinIndex].fileRefNum);
+    if(osError == noErr)
+	osError = FSpExchangeFiles(&fileSpecTemp, &fileSpecActual);
+    if(osError == noErr)
+	osError = FSpDelete(&fileSpecTemp);
+    if(osError == noErr)
+	osError = FSpOpenDF(&fileSpecActual, fsRdWrPerm, 
+			    &gGReference[WinIndex].fileRefNum);
 
 /*	if(osError == noErr)
 	{
 
-		osError = doCopyAppNameResource(windowPtr);
+	osError = doCopyAppNameResource(windowPtr);
 	}
 */
-	return(osError);
+    return(osError);
 }
 
 
