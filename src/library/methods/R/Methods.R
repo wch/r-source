@@ -43,6 +43,9 @@ setGeneric <-
             package <- functionPackageName(name)[[1]]
     }
     else {
+        if(is.primitive(def) || !is(def, "function"))
+            stop("If the `def' argument is supplied, it must be a function that calls standardGeneric(\"",
+                 name, "\") to dispatch methods.")
         fdef <- def
         if(is.null(genericFunction) && .NonstandardGenericTest(body(fdef), name, stdGenericBody))
             genericFunction <- new("nonstandardGenericFunction")
