@@ -568,6 +568,10 @@ BUG FIXES
     o   persp.default() no longer crashes with non-character labels.
 	(PR#1431)
 
+    o   fft() failed to give correct answers for sizes 392, 588, 968, 980 ....
+	(PR#1429)
+
+
 	**************************************************
 	*						 *
 	*	       1.4 SERIES NEWS			 *
