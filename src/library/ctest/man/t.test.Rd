@@ -26,7 +26,7 @@
   \item{var.equal}{a logical variable indicating whether to treat the
     two variances as being equal. If \code{TRUE} then the pooled
     variance is used to estimate the variance otherwise the Welch
-    approximation to the degrees of freedom is used.}
+    (or Satterthwaite) approximation to the degrees of freedom is used.}
   \item{conf.level}{confidence level of the interval.}
   \item{formula}{a formula of the form \code{lhs ~ rhs} where \code{lhs}
     is a numeric variable giving the data values and \code{rhs} a factor
@@ -38,11 +38,11 @@
   \item{na.action}{a function which indicates what should happen when
     the data contain \code{NA}s.  Defaults to
     \code{getOption("na.action")}.}
-  \item{\dots}{further arguments to be passed to or from methods.}  
+  \item{\dots}{further arguments to be passed to or from methods.}
 }
 \details{
   The formula interface is only applicable for the 2-sample tests.
-  
+
   If \code{paired} is \code{TRUE} then both \code{x} and \code{y} must
   be specified and they must be the same length.  Missing values are
   removed (in pairs if \code{paired} is \code{TRUE}).  If
