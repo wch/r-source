@@ -2,8 +2,9 @@
 
 # ${R_HOME}/bin/check for checking installed add-on packages
 
+REVISION='$Revision: 1.9 $'
+VERSION=`set - ${REVISION}; echo ${2}`
 USAGE_MSG="Usage: R CMD check [options] [-l lib] pkg_1 ... pkg_n"
-VERSION="0.2-1"
 
 OPTS=
 PKGS=

@@ -6,6 +6,10 @@
 #  R CMD Rd2dvi `grep -l "\\keyword{distr" \
 #                  /path/to/Rsrc/src/library/base/man/*.Rd | sort | uniq`
 
+REVISION='$Revision: 1.12 $'
+VERSION=`set - ${REVISION}; echo ${2}`
+USAGE_MSG="Usage: R CMD Rd2dvi [options] files"
+
 START_DIR=`pwd`
 
 CLEAN=true
@@ -16,6 +20,10 @@ file_sed='s/[_$]/\\\\&/g'
 
 while test -n "${1}"; do
   case ${1} in
+    -h|--help|-\?)
+      echo "${USAGE_MSG}"; exit 0 ;;
+    -V|--version)
+      echo "${VERSION}"; exit 0 ;;
     --clean=[nN]*)
       CLEAN=false ;;
     --clean=[yY]*)

@@ -4,7 +4,8 @@
 
 # @configure_input@
 
-VERSION="0.1-2"
+REVISION='$Revision: 1.7 $'
+VERSION=`set - ${REVISION}; echo ${2}`
 USAGE_MSG="Usage:  R SHLIB [-o lib] obj_1 ... obj_n"
 
 lib=

@@ -6,7 +6,9 @@
 
 # @configure_input@
 
-USAGE_MSG="Usage:  R INSTALL [options] [-l lib] pkg_1 ... pkg_n"
+REVISION='$Revision: 1.20 $'
+VERSION=`set - ${REVISION}; echo ${2}`
+USAGE_MSG="Usage: R INSTALL [options] [-l lib] pkg_1 ... pkg_n"
 
 CLEAN=false
 DEBUG=false
@@ -64,6 +66,8 @@ while test -n "${1}"; do
   case ${1} in
     -h|--help|-\?)
       echo "${USAGE_MSG}"; exit 0 ;;
+    -V|--version)
+      echo "${VERSION}"; exit 0 ;;
     -c|--clean)
       CLEAN=true ;;
     --debug)
