@@ -12,7 +12,11 @@ head.default <- function(x, n=6)
 head.data.frame <- head.matrix <- function(x, n=6)
     x[seq(len=min(n, nrow(x))), , drop=FALSE]
 
-head.function <- function(x, n=6) head(deparse(x), n=n)
+head.function <- function(x, n=6) {
+    lines <- as.matrix(deparse(x))
+    dimnames(lines) <- list(seq(along=lines),"")
+    noquote(head(lines, n=n))
+}
 
 tail <- function(x, ...) UseMethod("tail")
 
@@ -30,4 +34,8 @@ tail.data.frame <- tail.matrix <- function(x, n=6)
     x[seq(to=nrx, length=min(n, nrx)), , drop=FALSE]
 }
 
-tail.function <- function(x, n=6) tail(deparse(x), n=n)
+tail.function <- function(x, n=6) {
+    lines <- as.matrix(deparse(x))
+    dimnames(lines) <- list(seq(along=lines),"")
+    noquote(tail(lines, n=n))
+}
