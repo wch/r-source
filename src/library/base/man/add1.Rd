@@ -1,22 +1,4 @@
 \name{add1}
-\title{Add or Drop All Possible Single Terms to a Model}
-\usage{
-add1(object, scope, \dots)
-add1.default(object, scope, scale = 0, test = c("none", "Chisq"),
-             k = 2, trace = FALSE, \dots)
-add1.lm(object, scope, scale = 0, test = c("none", "Chisq", "F"),
-        x = NULL, k = 2, \dots)
-add1.glm(object, scope, scale = 0, test = c("none", "Chisq", "F"),
-         x = NULL, k = 2, \dots)
-
-drop1(object, scope, \dots)
-drop1.default(object, scope, scale = 0, test = c("none", "Chisq"),
-              k = 2, trace = FALSE, \dots)
-drop1.lm(object, scope, scale = 0, all.cols = TRUE,
-         test=c("none", "Chisq", "F"),k = 2, \dots)
-drop1.glm(object, scope, scale = 0, test = c("none", "Chisq", "F"),
-          k = 2, \dots)
-}
 \alias{add1}
 \alias{add1.default}
 \alias{add1.lm}
@@ -27,6 +9,24 @@ drop1.glm(object, scope, scale = 0, test = c("none", "Chisq", "F"),
 \alias{drop1.lm}
 \alias{drop1.glm}
 \alias{drop1.mlm}
+\title{Add or Drop All Possible Single Terms to a Model}
+\usage{
+add1(object, scope, \dots)
+\method{add1}{default}(object, scope, scale = 0, test = c("none", "Chisq"),
+     k = 2, trace = FALSE, \dots)
+\method{add1}{lm}(object, scope, scale = 0, test = c("none", "Chisq", "F"),
+     x = NULL, k = 2, \dots)
+\method{add1}{glm}(object, scope, scale = 0, test = c("none", "Chisq", "F"),
+     x = NULL, k = 2, \dots)
+
+drop1(object, scope, \dots)
+\method{drop1}{default}(object, scope, scale = 0, test = c("none", "Chisq"),
+      k = 2, trace = FALSE, \dots)
+\method{drop1}{lm}(object, scope, scale = 0, all.cols = TRUE,
+      test=c("none", "Chisq", "F"),k = 2, \dots)
+\method{drop1}{glm}(object, scope, scale = 0, test = c("none", "Chisq", "F"),
+      k = 2, \dots)
+}
 \arguments{
   \item{object}{a fitted model object.}
   \item{scope}{a formula giving the terms to be considered for adding or
@@ -103,12 +103,14 @@ drop1.glm(object, scope, scale = 0, test = c("none", "Chisq", "F"),
   this may give biased results.  Only use
   these functions with data containing missing values with great care.
 }
-\seealso{\code{\link{step}}, \code{\link{aov}}, \code{\link{lm}},
-    \code{\link{extractAIC}}.}
+\seealso{
+  \code{\link{step}}, \code{\link{aov}}, \code{\link{lm}},
+  \code{\link{extractAIC}}, \code{\link{anova}}
+}
 \examples{
 example(step)#-> swiss
 add1(lm1, ~ I(Education^2) + .^2)
-drop1(lm1, test="F")
+drop1(lm1, test="F")  # So called 'type II' anova
 
 example(glm)
 drop1(glm.D93, test="Chisq")
