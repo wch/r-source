@@ -21,208 +21,313 @@
 
 #include <fp.h>
 #include "RIntf.h"
+#include <Fonts.h>
+#include <QuickDraw.h>
+
+#define R_RGB(r,g,b)	((r)|((g)<<8)|((b)<<16))
+#define R_RED(col)	(((col)	   )&255)
+#define R_GREEN(col)	(((col)>> 8)&255)
+#define R_BLUE(col)	(((col)>>16)&255)
+
+
+#include <ATSUnicode.h>
+#include <TextEncodingConverter.h>
 
 short mapHeight =0, mapLength = 0;
 
-void NewBitMap(BitMap *theBitMap);
-void DisposeBitMap(BitMap *theBitMap);
-static Rotate(BitMap*, BitMap*, int );
-void RasterTextRotation(char *str, int nstr, int just, int rot);
-Boolean inStrRange(int x, int y);
-int BackTranX(int x, int y, int rot);
-int BackTranY(int x, int y, int rot);
-int tranStrY(int y);
-int tranBitX(int x, int rot);
-int tranBitY(int y, int checkHeight, int rot);
-int gcon;
+  int gcon;
+
+ 
+ 
+ 
 
 
 
-/* Rotated Text Utilities */
-void NewBitMap(BitMap *theBitMap)
-{
+void CStrToUniCode(char *someText, UniCharArrayPtr *ucap, UniCharCount *ucc);
+void TryToSetFontTo(ATSUStyle theStyle, Str255 fontName);
+ATSUFontID GetFontIDFromMacFontName(Str255 fontName);
+OSStatus atsuSetIntAttribute( ATSUStyle iStyle, SInt32 iValue, ATSUAttributeTag iTag );
+long MyStrLen(char * str);
+OSErr NewRasterTextRotation(char *str, int face, int size, int color, int xx, int yy, double rot,  WindowPtr window);
+
+
+
+OSStatus atsuSetFixedLineControl( ATSUTextLayout iLayout, UniCharArrayOffset iLineStart, Fixed iValue, ATSUAttributeTag iTag );
+
+#define atsuSetFont( iStyle, iFontID )		atsuSetIntAttribute( iStyle, iFontID, kATSUFontTag )
+
+ 
+
+#ifndef IntToFixed
+#define IntToFixed(a)	   ((Fixed)(a) << 16)
+#endif
+
+#ifndef ff
+#define ff(a)			   IntToFixed(a)
+#endif
+
+
+void CStrToUniCode(char *someText, UniCharArrayPtr *ucap, UniCharCount *ucc)
+	{
+	TECObjectRef ec;
+	OSStatus status;
+	ByteCount ail, aol, iLen, oLen ;
+	Ptr buffer;
     int i;
-    theBitMap->rowBytes = ((theBitMap->bounds.right - theBitMap->bounds.left
-			    + 15)/16)*2;
-    theBitMap->baseAddr = NewPtr(theBitMap->rowBytes*(theBitMap->bounds.bottom-theBitMap->bounds.top));
-    if(MemError() != noErr) theBitMap->baseAddr = NULL;
-    else
-	for(i=0 ; i<theBitMap->rowBytes*(theBitMap->bounds.bottom-theBitMap->bounds.top); i++)
-	    theBitMap->baseAddr[i] = 0;
+        
+	status = TECCreateConverter(&ec, kTextEncodingMacRoman, kTextEncodingUnicodeDefault);
+	if (status != noErr) DebugStr("\p TECCreateConverter failed");
+	
+	iLen = MyStrLen(someText);
+	oLen = 2 * iLen;
+	buffer = NewPtr(oLen);
+	
+	status = TECConvertText(ec, (ConstTextPtr)someText, iLen, &ail, (TextPtr)buffer, oLen, &aol);
+	if (status != noErr) DebugStr("\p TECConvertText failed");
+	status = TECDisposeConverter(ec);
+	if (status != noErr) DebugStr("\p TECDisposeConverter failed");
+	*ucap = (UniCharArrayPtr)NewPtr(aol);
+	BlockMove(buffer, (*ucap), aol);
+	DisposePtr(buffer);
+	*ucc = aol / 2;
+	
 }
 
-void DisposeBitMap(BitMap *theBitMap)
-{
-    DisposePtr(theBitMap->baseAddr);
-}
 
-static Rotate(BitMap *sourceMap, BitMap *destMap, int rot)
-{
-    int i, j;
-    int height = sourceMap->bounds.bottom - sourceMap->bounds.top;
-    int width = sourceMap->bounds.right - sourceMap->bounds.left;
-    int checkHeight = destMap->bounds.bottom - destMap->bounds.top;
-    int diffHeight = checkHeight - height;
-    int checkWidth = destMap->bounds.right - destMap->bounds.left;
-    int sourceBits = 8 * sourceMap->rowBytes;
-    int destBits = 8 * destMap->rowBytes;
-
-    if (rot <=360){
-	for (i=0; i <checkHeight; i++){
-	    for (j=0; j<checkWidth; j++){
-		if (inStrRange(BackTranX(tranBitX(j, rot), tranBitY(i, checkHeight, rot), rot), BackTranY(tranBitX(j, rot), tranBitY(i, checkHeight, rot), rot)))
-		    if (BitTst(sourceMap->baseAddr, tranStrY(BackTranY(tranBitX(j, rot), tranBitY(i, checkHeight, rot), rot) )*sourceBits + BackTranX(tranBitX(j, rot), tranBitY(i, checkHeight, rot), rot))){
-			BitSet(destMap->baseAddr, i*destBits+j);
-		    }
-	    }
+long MyStrLen(char * str)
+	{
+	long result = 0;
+	char *p;
+	for (p=str; *p; p++, result++) {};
+	return result;
 	}
+
+
+
+extern  Str255		PostFont;
+extern  Str255		MacSymbolFont;
+extern  Boolean 	WeArePrinting, WeArePasting;
+
+extern	PMPageFormat	pageFormat;
+extern	PMPrintSettings	printSettings;
+extern	PMPrintSession	printSession;
+extern	Graphic_Ref		gGReference[MAX_NUM_G_WIN + 1];
+
+extern	SInt32			systemVersion;
+
+/* This routine writes a string of text using ATSUI technology when possibile.
+   It also takes care of the graphic port used: device, printer or Clipboard.
+   Jago April 2001, Stefano M. Iacus
+*/
+   
+OSErr NewRasterTextRotation(char *str, int face, int size, int color, int xx, int yy, double rot,  WindowPtr window)
+	{
+	OSStatus status = noErr;
+	Rect boundsRect = {50, 50, 200, 500};
+	ATSUStyle tempS;
+	ATSUTextLayout tempTL;
+	ItemCount numberOfRuns;
+	UniCharCount *runLengths;
+	ATSUStyle *styles;
+	UniCharArrayPtr theUnicodeText;			// the Text in Unicode
+	UniCharCount uTextLength;	
+	ATSUTextMeasurement xLocation;			// where it starts drawing at x
+	ATSUTextMeasurement yLocation;			//                        and y
+	ATSUTextMeasurement maxAscent;			// maximum ascent for the whole text
+	ATSUTextMeasurement maxDescent;			// maximum descent for the whole text
+	ATSUTextMeasurement lineHeight;			// its line height (maxAscent + maxDescent)
+	Rect thePortRect;
+	ATSUTextLayout textLayout;
+    ByteCount				theSize;
+	ATSUAttributeValuePtr	thePtr;
+	Fixed iAngle;
+	ATSUAttributeTag iTag; 
+	int realFace;
+    ATSUAttributeTag tags[] = {kATSUSizeTag, kATSUQDItalicTag, kATSUQDBoldfaceTag, kATSUColorTag, kATSUFontTag };
+ 	ByteCount sizes[] = {sizeof(Fixed), sizeof(Boolean), sizeof(Boolean), sizeof(RGBColor), sizeof(ATSUFontID)};
+    RGBColor fontColor = {0x0, 0x0, 0x0};
+    Boolean italic = false;
+	Boolean bold = false;
+    ATSUAttributeValuePtr values[5]; 
+    Fixed fontPointSize;
+    ATSUFontID fontID;
+    ATSUFontFeatureType feature;
+    ATSUFontFeatureSelector selector;
+    UniCharCount i;
+    CGrafPtr   port = nil;
+    FMFontFamily postFontId;
+
+
+    if(WeArePrinting  || WeArePasting )
+	 port = gGReference[isGraphicWindow(window)].activePort;
+    else
+     port = GetWindowPort(window);
+     
+    SetPort(port);
+
+    if(face==5){
+    
+    realFace = 0;	/* plain symbol */
+    postFontId = FMGetFontFamilyFromName(MacSymbolFont);
+ 
+    TextFont(postFontId);
+    TextFace(realFace);
+    TextSize(size);
+    
+    DrawText(str, 0, strlen(str));
+
     }
+    else{
+    
+    // let's use some text
+	CStrToUniCode(str, &theUnicodeText, &uTextLength);
+      
+  	// only 1 style thus only 1 run
+	numberOfRuns = 1;
+	runLengths = (UniCharCount *)NewPtr(numberOfRuns * sizeof(UniCharCount));
+	runLengths[0] = uTextLength;
+
+	// and it's the default style
+	styles = (ATSUStyle *)NewPtr(numberOfRuns * sizeof(ATSUStyle));
+	status = ATSUCreateStyle(&tempS);
+	if (status != noErr) DebugStr("\p ATSUCreateStyle failed");
+    styles[0] = tempS;
+
+	// and we create the text layout
+	status = ATSUCreateTextLayoutWithTextPtr(theUnicodeText, 0, uTextLength, uTextLength, 
+		numberOfRuns, runLengths, styles, &tempTL);
+	if (status != noErr) DebugStr("\p ATSUCreateTextLayoutWithTextPtr failed");
+	textLayout = tempTL;
+	
+	// to be drawn at
+	xLocation = ff(xx);
+	
+	     
+	//GetPortBounds(port, &thePortRect);
+	yLocation = ff(yy);
+	
+	iTag = kATSULineRotationTag;
+	iAngle = ff((int)rot);
+	theSize = sizeof( iAngle ); 
+	thePtr = &iAngle;
+
+    /* we rotate the text here */
+    
+    status = ATSUSetLineControls( textLayout, 0, 1, &iTag, &theSize, &thePtr );
+
+
+    realFace = 0;
+    if (face == 1) { 
+     realFace = 0;    /* normal */
+     bold = false;
+     italic = false;
+     }
+    if (face == 2) {
+     realFace = 1;    /* bold */
+     bold = true;
+     italic = false;
+     }
+    if (face == 3) {
+     realFace = 2;    /* italic */
+     italic = true;
+     bold = false;
+     }
+    if (face == 4) {
+     realFace = 3;    /* bold & italic */
+     bold = true;
+     italic = true;
+     }
+
+     fontID = GetFontIDFromMacFontName(PostFont);
+     
+    if (fontID == kATSUInvalidFontID) 
+     DebugStr("\p can't find this font");
+
+    fontPointSize = ff(size);
+	
+    fontColor.red = R_RED(color) * 255;
+	fontColor.green = R_GREEN(color) * 255;
+	fontColor.blue = R_BLUE(color) * 255;
+
+	values[0] = &fontPointSize;
+	values[1] = &italic;
+	values[2] = &bold;
+    values[3] = &fontColor;
+	values[4] = &fontID;
+    
+    status = ATSUSetAttributes(tempS, 5, tags, sizes, values);
+	if (status != noErr) DebugStr("\p ATSUSetAttributes failed");
+	
+    /* we finally draw the text */
+    
+	status = ATSUDrawText(textLayout, 0, uTextLength, xLocation, yLocation);
+				if (status != noErr) DebugStr("\p ATSUDrawText failed");
+	if(runLengths)
+	 DisposePtr(runLengths);			
+	if(styles)
+	 DisposePtr(styles);			
+	return status;
+	} /* if face==5  else */
 }
 
-void RasterTextRotation(char *str, int nstr, int just, int rot)
+ 
+
+OSStatus
+atsuSetIntAttribute( ATSUStyle iStyle, SInt32 iValue, ATSUAttributeTag iTag )
 {
-    FontInfo myFontInfo;
-    short strWidth, strHeight, xOffset, yOffset;
-    short newWidth, newHeight;
-    BitMap sourceMap, destMap;
-    Rect sourceRect, destRect;
-    Point cp;
-    GrafPtr origPort, offScrGrafPort;
-    /* Unrotated */
+	ByteCount				theSize = sizeof(iValue);
+	ATSUAttributeValuePtr	thePtr = &iValue;
 
-    if(rot <= 0 || rot >=360) {
-	DrawText(str, 0, nstr);
-	return;
-    }
-    GetPen(&cp);
-    GetFontInfo(&myFontInfo);
-    strWidth = TextWidth(str, 0, nstr);
-    strHeight = myFontInfo.ascent + myFontInfo.descent;
-    gcon = myFontInfo.descent;
-    /* Unrotated and Rotated BitMaps */
-    mapLength = ((strWidth -1) / 16 + 1) * 16;
-    mapHeight = strHeight;
-    SetRect(&sourceRect, 0, 0, mapLength, mapHeight);
-    sourceMap.bounds = sourceRect;
-    NewBitMap(&sourceMap);
-    if (rot<=90){
-	newWidth = mapLength*cos(toRadian(rot)) +
-	    mapHeight*sin(toRadian(rot));
-	newHeight = mapLength*sin(toRadian(rot)) +
-	    mapHeight*cos(toRadian(rot));
-	SetRect(&destRect, -mapHeight*sin(toRadian(rot)), -newHeight,
-		mapLength*cos(toRadian(rot)) + gcon, 0); //gcon at the end?
-    }else if (rot <= 180){
-	newWidth = mapLength*cos(toRadian(180-rot)) +
-	    mapHeight*sin(toRadian(180-rot));
-	newHeight = mapLength*sin(toRadian(180-rot)) +
-	    mapHeight*cos(toRadian(180-rot));
-	SetRect(&destRect, -newWidth, -mapLength*sin(toRadian(180-rot)) - gcon,
-		gcon, mapHeight*cos(toRadian(180-rot)));
-    }else if (rot <=270){
-	newWidth = mapLength*cos(toRadian(rot-180)) +
-	    mapHeight*sin(toRadian(rot-180));
-	newHeight = mapLength*sin(toRadian(rot-180)) +
-	    mapHeight*cos(toRadian(rot-180));
-	SetRect(&destRect, -mapLength*cos(toRadian(rot-180)) - gcon,
-		-gcon, mapHeight*sin(toRadian(rot-180)), newHeight);
-    }else if (rot <360){
-	newWidth = mapLength*cos(toRadian(360-rot)) +
-	    mapHeight*sin(toRadian(360-rot));
-	newHeight = mapLength*sin(toRadian(360-rot)) +
-	    mapHeight*cos(toRadian(360-rot));
-	SetRect(&destRect, -gcon, -mapHeight*cos(toRadian(360-rot)),
-		newWidth, mapLength*sin(toRadian(360-rot))+gcon);
-
-    }
-    destMap.bounds = destRect;
-    NewBitMap(&destMap);
-
-    GetPort(&origPort);
-    offScrGrafPort = (GrafPtr)NewPtr(sizeof(GrafPort));
-    OpenPort(offScrGrafPort);
-    offScrGrafPort->portRect = sourceMap.bounds;
-    SetPortBits(&sourceMap);
-    offScrGrafPort->txFont = origPort->txFont;
-    offScrGrafPort->txSize = origPort->txSize;
-    offScrGrafPort->txFace = origPort->txFace;
-    offScrGrafPort->txFace = origPort->txMode;
-    offScrGrafPort->txFace = origPort->spExtra;
-
-    GetFontInfo(&myFontInfo);
-
-    MoveTo(0,myFontInfo.ascent);
-
-    DrawText(str, 0, nstr);
-
-    SetPort(origPort);
-    Rotate(&sourceMap, &destMap, rot);
-    /* Adjust Origin for Rotation */
-
-    xOffset = cp.h;
-    yOffset = cp.v;
-    OffsetRect(&destRect,xOffset,yOffset);
-    //DRWrite(xOffset);
-    //DRWrite(yOffset);
-    CopyBits(&destMap,  &origPort->portBits, &destMap.bounds, &destRect,
-	     srcOr, NULL);
-
-    DisposeBitMap(&destMap);
-    DisposeBitMap(&sourceMap);
-    DisposePtr((char*)offScrGrafPort);
+	return ATSUSetAttributes( iStyle, 1, &iTag, &theSize, &thePtr );
 }
 
+ATSUFontID GetFontIDFromMacFontName(Str255 fontName)
+	{
+	ATSUFontID result = kATSUInvalidFontID, found;
+	short iFONDNumber;
+	OSStatus status;
+	GetFNum(fontName, &iFONDNumber);
+	if (!iFONDNumber) return kATSUInvalidFontID;	// GetFNum return 0 if not found.
+	status = ATSUFONDtoFontID(iFONDNumber, NULL, &found);
+	if (status == noErr) result = found;
+	return result;
+	}
 
-int tranStrY(int y)
+ 
+
+/* This function converts any C string to the equivalent Unicode version 
+   Jago: Mar 2001, Stefano M. Iacus
+*/
+void CStringToUnicode(char *someText, UniCharArrayPtr *ucap, UniCharCount *ucc)
 {
-    return (mapHeight - y)- gcon ;
+	TECObjectRef ec;
+	OSStatus status;
+	ByteCount ail, aol, iLen, oLen;
+	Ptr buffer;
+	
+	status = TECCreateConverter(&ec, kTextEncodingMacRoman, kTextEncodingUnicodeDefault);
+	if (status != noErr) R_ShowMessage("\p TECCreateConverter failed");
+	
+	iLen = strlen(someText);
+	oLen = 2 * iLen;
+	
+	buffer = NewPtr(oLen);
+	status = TECConvertText(ec, (ConstTextPtr)someText, iLen, &ail, (TextPtr)buffer, oLen, &aol);
+	if (status != noErr) R_ShowMessage("\p TECConvertText failed");
+	status = TECDisposeConverter(ec);
+	if (status != noErr) R_ShowMessage("\p TECDisposeConverter failed");
+	*ucap = (UniCharArrayPtr)NewPtr(aol);
+
+	 BlockMove(buffer, (*ucap), aol);
+	DisposePtr(buffer);
+	*ucc = aol / 2;
+
 }
 
-int tranBitY(int y, int checkHeight, int rot)
-{
-    if (rot <= 90)
-	return (checkHeight - y) ;
-    else if (rot <= 180)
-	return (checkHeight - y) - mapHeight*cos(toRadian(180-rot));
-    else if (rot <= 270)
-	return (checkHeight - y) - (mapLength*sin(toRadian(rot-180)) +
-				    mapHeight*cos(toRadian(rot-180)));
-    else if (rot < 360)
-	return (checkHeight - y) - mapLength*sin(toRadian(360-rot));
-}
-
-int tranBitX(int y, int rot)
-{
-    if (rot <= 90)
-	return y -mapHeight*sin(toRadian(rot));
-    else if (rot <=180)
-	return y - (mapLength*cos(toRadian(180-rot)) + 
-		    mapHeight*sin(toRadian(180-rot)));
-    else if (rot <= 270)
-	return y - mapLength*cos(toRadian(rot-180));
-    else if (rot < 360)
-	return y;
-    //return y;
-}
-
-Boolean inStrRange(int x, int y)
-{
-    if ((x <= 0) || (y <= - gcon) || (x >= mapLength) || 
-	(y >= mapHeight - gcon)) return false;
-    return true;
-}
+ 
 
 
-// Input rot in degree
-// x and y are in normal coordinates
-int BackTranX(int x, int y, int rot)
-{
-    return x*cos(toRadian(rot)) + y*sin(toRadian(rot));
-}
 
-// Input rot in degree
-// x and y are in normal coordinates
-int BackTranY(int x, int y, int rot)
-{
-    return - x*sin(toRadian(rot)) + y*cos(toRadian(rot));
-}
+  
+ 
+ 

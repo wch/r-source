@@ -35,6 +35,10 @@
 
 	C port by John C. Daub
 */
+#include <Carbon.h>
+
+#include <AppleEvents.h>
+
 
 #ifndef __AEOBJECTS__
 #include <AEObjects.h>
@@ -65,7 +69,7 @@ void InitDesc ( AEDesc * desc )
 OSStatus GetAEDescDataAsHandle ( const AEDesc * inDesc, Handle * outData )
 {
 	Size		dataSize ;
-	Handle		dataHandle ;
+	Handle		dataHandle =NULL;
 	OSStatus	err ;
 
 	* outData = nil ;
@@ -372,13 +376,13 @@ OSStatus InstallCoreHandlers(void)
 	OSStatus err;
 
 	if ((err = AEInstallEventHandler(kAECoreSuite, kAEGetData,
-			NewAEEventHandlerProc(HandleGetData), 0L, false)) != noErr)
+			NewAEEventHandlerUPP(HandleGetData), 0L, false)) != noErr)
 	{
 		return err;
 	}
 
 	if ((err = AEInstallEventHandler(kAECoreSuite, kAESetData,
-			NewAEEventHandlerProc(HandleSetData), 0L, false)) != noErr)
+			NewAEEventHandlerUPP(HandleSetData), 0L, false)) != noErr)
 	{
 		return err;
 	}
@@ -386,5 +390,356 @@ OSStatus InstallCoreHandlers(void)
 	return noErr;
 }
 
+OSStatus CreatePSNBasedAppleEvent
+	(
+		const ProcessSerialNumber *		inTargetPSN,
+		AEEventClass					inEventClass,
+		AEEventID						inEventID,
+		AppleEvent *					outAE
+	)
+{
+	AEAddressDesc	targetAddress ;
+	OSStatus		err ;
+
+	InitDesc ( outAE ) ;
+	InitDesc ( & targetAddress ) ;
+
+	//	create an address descriptor for the target application based on the PSN
+	if ( ( err = AECreateDesc ( typeProcessSerialNumber, inTargetPSN,
+		sizeof ( * inTargetPSN ), & targetAddress ) ) != noErr )
+	{
+		goto cleanup ;
+	}
+
+	//	create the Apple event
+	if ( ( err = AECreateAppleEvent ( inEventClass, inEventID, & targetAddress,
+		kAutoGenerateReturnID, kAnyTransactionID, outAE ) ) != noErr )
+	{
+		goto cleanup ;
+	}
+
+	//	clear result code
+	err = noErr ;
+
+cleanup :
+	AEDisposeDesc ( & targetAddress ) ;
+
+	//	return result code
+	return err ;
+}
+
+OSStatus CreateObjectSpecifier
+	(
+		const AEDesc *		inContainerDesc,
+		DescType			inDesiredClass,
+		AEKeyword			inKeyForm,
+		const AEDesc *		inKeyData,
+		AEDesc *			outObjectSpecifier
+	)
+{
+	AEDesc			recordDesc ;
+	OSStatus		err ;
+
+	InitDesc ( & recordDesc ) ;
+
+	//	create a record
+	if ( ( err = AECreateList ( nil, 0, true, & recordDesc ) ) != noErr )
+	{
+		goto cleanup ;
+	}
+
+	//	add container field
+	if ( ( err = AEPutParamDesc ( & recordDesc, keyAEContainer, inContainerDesc ) ) != noErr )
+	{
+		goto cleanup ;
+	}
+
+	//	add desired class field
+	if ( ( err = AEPutParamPtr ( & recordDesc, keyAEDesiredClass, typeType,
+		& inDesiredClass, sizeof ( inDesiredClass ) ) ) != noErr )
+	{
+		goto cleanup ;
+	}
+
+	//	add key form field
+	if ( ( err = AEPutParamPtr ( & recordDesc, keyAEKeyForm, typeEnumerated,
+		& inKeyForm, sizeof ( inKeyForm ) ) ) != noErr )
+	{
+		goto cleanup ;
+	}
+
+	//	add key data field
+	if ( ( err = AEPutParamDesc ( & recordDesc, keyAEKeyData, inKeyData ) ) != noErr )
+	{
+		goto cleanup ;
+	}
+
+	//	coerce the AE record to typeObjectSpecifier
+	if ( ( err = AECoerceDesc ( & recordDesc, typeObjectSpecifier, outObjectSpecifier ) ) != noErr )
+	{
+		goto cleanup ;
+	}
+
+	//	clear result code
+	err = noErr ;
+
+cleanup :
+	AEDisposeDesc ( & recordDesc ) ;
+
+	//	return result code
+	return err ;
+}
+
+OSStatus CreatePropertySpecifier
+	(
+		const AEDesc *		inContainerSpec,
+		AEKeyword			inPropertyTag,
+		AEDesc *			outPropertySpecifier
+	)
+{
+	AEDesc			propertyDesc ;
+	OSStatus		err ;
+
+	InitDesc ( & propertyDesc ) ;
+
+	//	create property descriptor
+	if ( ( err = AECreateDesc ( typeType, & inPropertyTag, sizeof ( inPropertyTag ), & propertyDesc ) ) != noErr )
+	{
+		goto cleanup ;
+	}
+
+	//	create object specifier
+	if ( ( err = CreateObjectSpecifier ( inContainerSpec, cProperty,
+		formPropertyID, & propertyDesc, outPropertySpecifier ) ) != noErr )
+	{
+		goto cleanup ;
+	}
+
+	//	clear result code
+	err = noErr ;
+
+cleanup :
+	AEDisposeDesc ( & propertyDesc ) ;
+
+	//	return result code
+	return err ;
+}
+
+OSStatus CreateFinderObjectSpecifier
+	(
+		const FSSpec *		inThing,
+		AEDesc *			outThingSpec
+	)
+{
+	Handle			alias = nil ;
+	AEDesc			nullDesc ;
+	AEDesc			aliasDesc ;
+	OSStatus		err ;
+
+	InitDesc ( outThingSpec ) ;
+	InitDesc ( & nullDesc ) ;
+	InitDesc ( & aliasDesc ) ;
+
+	// make an alias for the given Finder object
+	if ( ( err = NewAliasMinimal ( inThing, ( AliasHandle * ) & alias ) ) != noErr )
+	{
+		goto cleanup ;
+	}
+
+	//	create an alias descriptor
+	HLock ( alias ) ;
+	err = AECreateDesc ( typeAlias, * alias, GetHandleSize ( alias ), & aliasDesc ) ;
+	HUnlock ( alias ) ;
+	if ( err != noErr )
+	{
+		goto cleanup ;
+	}
+
+	//	make an object specifier for the thing
+	if ( ( err = CreateObjectSpecifier ( & nullDesc, typeWildCard, formAlias, & aliasDesc, outThingSpec ) ) != noErr )
+	{
+		goto cleanup ;
+	}
+
+	// clear result code
+	err = noErr ;
+
+cleanup :
+	ForgetHandle ( & alias ) ;
+	AEDisposeDesc ( & aliasDesc ) ;
+
+	return err ;
+}
+
+OSStatus SendGetDataEvent
+	(
+		const ProcessSerialNumber *		inTargetPSN,
+		const AEDesc *					inObjectSpec,
+		DescType						inRequestedType,
+		AEDesc *						outResult
+	)
+{
+	AppleEvent		ae ;		// the "get data" event
+	AppleEvent		reply ;		// the reply event
+	OSStatus		err ;
+
+	InitDesc ( & ae ) ;
+	InitDesc ( & reply ) ;
+
+	//	create a "get data" Apple event for the specified process
+	if ( ( err = CreatePSNBasedAppleEvent ( inTargetPSN, kAECoreSuite, kAEGetData, & ae ) ) != noErr )
+	{
+		goto cleanup ;
+	}
+
+	//	put the given specifier into the direct parameter of the event
+	if ( ( err = AEPutParamDesc ( & ae, keyDirectObject, inObjectSpec ) ) != noErr )
+	{
+		goto cleanup ;
+	}
+
+	//	add the optional keyAERequestedType parameter to the event (unless we don't care)
+	if ( inRequestedType != typeWildCard )
+	{
+		if ( ( err = AEPutParamPtr ( & ae, keyAERequestedType, typeType, & inRequestedType, sizeof ( inRequestedType ) ) ) != noErr )
+		{
+			goto cleanup ;
+		}
+	}
+
+	//	send the event and wait for the reply
+	if ( ( err = AESend ( & ae, & reply, kAEWaitReply + kAENeverInteract, kAENormalPriority, kAEDefaultTimeout, nil, nil ) ) != noErr )
+	{
+		goto cleanup ;
+	}
+
+	// extract direct parameter from the reply
+	if ( ( err = AEGetParamDesc ( & reply, keyDirectObject, inRequestedType, outResult ) ) != noErr )
+	{
+		goto cleanup ;
+	}
+
+	// clear result code
+	err = noErr ;
+
+cleanup:
+	AEDisposeDesc ( & ae ) ;
+	AEDisposeDesc ( & reply ) ;
+
+	return err ;
+}
+
+
+OSStatus GetFileRect
+	(
+		const FSSpec *	inThing,
+		Rect *			outFileRect
+	)
+{
+	ProcessSerialNumber		finderPSN ;			// the Finder's process serial number
+	AEDesc					thingSpec ;			// specifier for inThing
+	AEDesc					containerSpec ;		// specifier for "container of inThing"
+	AEDesc					windowSpec ;		// specifier for "window of container of inThing"
+	AEDesc					windowBoundsSpec ;	// specifier for "bounds of window of container of inThing"
+	AEDesc					iconBoundsSpec ;	// specifier for "bounds of inThing"
+	AEDesc					result ;
+	Rect					windowBounds ;
+	SInt16					deskVRefNum ;
+	SInt32					deskDirID ;
+	OSStatus				err ;
+
+	InitDesc ( & thingSpec ) ;
+	InitDesc ( & containerSpec ) ;
+	InitDesc ( & windowSpec ) ;
+	InitDesc ( & windowBoundsSpec ) ;
+	InitDesc ( & iconBoundsSpec )  ;
+	InitDesc ( & result ) ;
+
+	//	get the Finder's process serial number
+	if ( ( err = FindProcess ( FOUR_CHAR_CODE ( 'FNDR' ), FOUR_CHAR_CODE ( 'MACS' ), & finderPSN ) ) != noErr )
+	{
+	}
+
+	//	make an object specifier for the given Finder object
+	if ( ( err = CreateFinderObjectSpecifier ( inThing, & thingSpec ) ) != noErr )
+	{
+		goto cleanup ;
+	}
+
+	//	make an object specifier for "container of" object
+	if ( ( err = CreatePropertySpecifier ( & thingSpec, pContainer, & containerSpec ) ) != noErr )
+	{
+		goto cleanup ;
+	}
+
+	//	make an object specifier for "window of container of" object
+	if ( ( err = CreatePropertySpecifier ( & containerSpec, pWindow, & windowSpec ) ) != noErr )
+	{
+		goto cleanup ;
+	}
+
+	//	make an object specifier for "bounds of window of container of" object
+	if ( ( err = CreatePropertySpecifier ( & windowSpec, pBounds, & windowBoundsSpec ) ) != noErr )
+	{
+		goto cleanup ;
+	}
+
+	//	get bounds of object's enclosing window, in global coordinates
+	if ( ( err = SendGetDataEvent ( & finderPSN, & windowBoundsSpec, typeQDRectangle, & result ) ) != noErr )
+	{
+		goto cleanup ;
+	}
+	if ( ( err = AEGetDescData ( & result, & windowBounds, sizeof ( windowBounds ) ) ) != noErr )
+	{
+		goto cleanup ;
+	}
+	AEDisposeDesc ( & result ) ;
+
+	//	make an object specifier for "bounds of" object
+	if ( ( err = CreatePropertySpecifier ( & thingSpec, pBounds, & iconBoundsSpec ) ) != noErr )
+	{
+		goto cleanup ;
+	}
+
+	// get bounds of object, relative to the enclosing window
+	if ( ( err = SendGetDataEvent ( & finderPSN, & iconBoundsSpec, typeQDRectangle, & result ) ) != noErr )
+	{
+		goto cleanup ;
+	}
+	if ( ( err = AEGetDescData ( & result, outFileRect, sizeof ( * outFileRect ) ) ) != noErr )
+	{
+		goto cleanup ;
+	}
+	AEDisposeDesc ( & result ) ;
+
+	// calculate object's rectangle, in global coordinates
+	OffsetRect ( outFileRect, windowBounds . left, windowBounds . top ) ;
+
+	// SPECIAL CASE: check if the object is on the desktop
+	if ( ( err = FindFolder ( inThing -> vRefNum, kDesktopFolderType, kDontCreateFolder, & deskVRefNum, & deskDirID ) ) != noErr )
+	{
+		goto cleanup ;
+	}
+
+	// if the object is on the desktop, the rectangle returned by the Finder
+	// is 20 pixels below the actual icon
+	if ( inThing -> parID == deskDirID )
+	{
+		OffsetRect ( outFileRect, 0, -20 ) ;
+	}
+
+	// clear result code
+	err = noErr ;
+
+cleanup :
+	AEDisposeDesc ( & thingSpec ) ;
+	AEDisposeDesc ( & containerSpec ) ;
+	AEDisposeDesc ( & windowSpec ) ;
+	AEDisposeDesc ( & windowBoundsSpec ) ;
+	AEDisposeDesc ( & iconBoundsSpec ) ;
+	AEDisposeDesc ( & result ) ;
+
+	return err ;
+}
 
 

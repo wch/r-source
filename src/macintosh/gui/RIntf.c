@@ -45,39 +45,30 @@
 #include "RIntf.h"
 #endif
 
-Boolean		gHasColorQD = false;
+
 Boolean		gHasDragAndDrop = false;
 Boolean		gHasTextServices = false;
 Boolean		gExiting = false;
 
 
-DocumentHandle GetWindowDocument( WindowPtr window )
-{
-    /* make sure window is not nil and is one of our windows
-     */
-    if (( window == nil ) || ( GetWindowKind( window ) != userKind ))
-	return nil;
-
-    /* a handle to the document structure is kept in the window refCon
-     */
-    return (DocumentHandle) GetWRefCon( window );
-}
 
 void ErrorAlert( OSErr err )
 {
     Str255 errString;
-
+    Cursor arrow;
+    
     NumToString( err, errString );
     ParamText( errString, nil, nil, nil );
 
-    SetCursor( &qd.arrow );
+    //SetCursor( &qd.arrow );
+    SetCursor ( GetQDGlobalsArrow ( & arrow ) ) ;
 
     Alert( kAlertGenError, GetMyStandardDialogFilter( ) );
 }
 
 void ForgetHandle( Handle *h )
 {
-    Handle theHandle;
+    Handle theHandle=NULL;
 
     if ( ( theHandle = *h ) != nil )
     {
@@ -88,7 +79,7 @@ void ForgetHandle( Handle *h )
 
 void ForgetResource( Handle *h )
 {
-    Handle theHandle;
+    Handle theHandle=NULL;
 
     if ( ( theHandle = *h ) != nil )
     {

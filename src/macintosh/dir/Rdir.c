@@ -20,8 +20,12 @@
  */
  
 /* This file emulates dirent functions */
+/* Updated for Carbon compatibility    */
+/* March 2001, Stefano M.Iacus         */
 
 #include "RIntf.h"
+
+static unsigned char pathname[2048];
 
 void closedir(DIR *entry)
 {
@@ -33,15 +37,21 @@ void closedir(DIR *entry)
 
 DIR *opendir(char *path)
 {
-    char pathname[2048];
     CInfoPBRec search_info;
     DIR *entry;
     int error;
-
+    
     search_info.hFileInfo.ioNamePtr = 0;
+    pathname[0] = 0;
     if ((path != (char *) NULL) || (*path != '\0'))
-	if ((path[0] != '.') || (path[1] != '\0'))
+	if ((path[0] != '.') || (path[1] != '\0')){
+#if ! TARGET_API_MAC_CARBON	
 	    search_info.hFileInfo.ioNamePtr = c2pstr(strcpy(pathname, path));
+#else
+	   CopyCStringToPascal(path,pathname);
+	   search_info.hFileInfo.ioNamePtr = pathname;
+#endif	 
+    }
     search_info.hFileInfo.ioCompletion = 0;
     search_info.hFileInfo.ioVRefNum = 0;
     search_info.hFileInfo.ioFDirIndex = 0;
@@ -61,20 +71,20 @@ DIR *opendir(char *path)
     return(entry);
 }
 
-static unsigned char pathname[2048];
 
+/* Carbonized by Stefano M.Iacus */
 
 struct dirent *readdir(DIR *entry)
 {
     CInfoPBRec search_info;
     int error;
     static struct dirent dir_entry;
-
+    
     if (entry == (DIR *) NULL)
 	return((struct dirent *) NULL);
     search_info.hFileInfo.ioCompletion = 0;
     search_info.hFileInfo.ioNamePtr = pathname;
-    search_info.hFileInfo.ioVRefNum = 0;
+    search_info.hFileInfo.ioVRefNum = entry->ioVRefNum;
     search_info.hFileInfo.ioFDirIndex = entry->ioFDirIndex;
     search_info.hFileInfo.ioDirID = entry->ioDrDirID;
     error = PBGetCatInfoSync(&search_info);
@@ -84,8 +94,13 @@ struct dirent *readdir(DIR *entry)
 	return((struct dirent *) NULL);
     }
     entry->ioFDirIndex++;
+#if ! TARGET_API_MAC_CARBON
     (void) strcpy(dir_entry.d_name, p2cstr(search_info.hFileInfo.ioNamePtr));
+#else
+    CopyPascalStringToC(search_info.hFileInfo.ioNamePtr,dir_entry.d_name);
+#endif    
     dir_entry.d_namlen = strlen(dir_entry.d_name);
+  
     return(&dir_entry);
 }
 

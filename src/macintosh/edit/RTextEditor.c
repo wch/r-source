@@ -80,7 +80,7 @@ Boolean		                          GWgDone;
 extern Boolean		                  gInBackground;
 Ptr				          gPreAllocatedBlockPtr;
 SInt32		                          gUntitledWindowNumber  = 0;
-SInt32		                          gCurrentNumberOfWindows = 0;
+//SInt32		                          gCurrentNumberOfWindows = 0;
 WindowPtr	                          gWindowPtrArray[kMaxWindows + 2];
 
 // Extern Global Variables
@@ -128,6 +128,7 @@ void RWrite(char* buf)
     else
 	for ( i=0; i < buflen; i++)
 	    WEKey ( buf[i], NULL, GetWindowWE (Console_Window) ) ;
+
 }
 
 
@@ -235,110 +236,9 @@ void R_ReadConsole1(char *prompt,  char *buf, int buflen, int hist)
     // ********* Don't try to change the content of buf
     if (strlen((const char *)buf) > 1)
 	maintain_cmd_History(buf);
-    // Mac_Command(buf);
-
 
 }
 
-/* R_ReadConsole2 experimental code
-This is a platform dependent function.
-This function prints the given prompt at the console and then does a gets(3)- like operation,
-transferring up to buflen characters into the buffer buf. The last character is set to \0 to
-preserve sanity.
-*/
-
-void R_ReadConsole2(char *prompt,  char *buf, int buflen, int hist)
-{
-    WEReference we ;
-    EventRecord myEvent;
-    SInt32      i;
-    char        tempChar;
-    char buffo[1000];
-
-    we = GetWindowWE ( Console_Window ) ;
-
-
-    // let have something about hist
-    hist = hist + 1;
-    // Print the prompt to stanard output
-
-
-    RWrite(prompt);
-
-
-    gpmtLh = strlen(prompt);
-    gChangeAble = WEGetTextLength(we);
-
-    // The Prompt is in different color (black)
-    //>
-
-/*   Change_Color_Range(gChangeAble-gpmtLh, gChangeAble,
-     gComputerColour.red, gComputerColour.green, gComputerColour.blue, we);
-
-*/
-    //The Command is in different color (red)
-    //Change_Color(gTypeColour.red, gTypeColour.green, gTypeColour.blue, we);
-
-    // gbuf is a ptr, which is used to point to the receive buffer
-    gbuf = buf;
-    gbuflen = buflen;
-
-
-    // Call the Receive loop
-
-    if (HaveContent){
-	HLock( myHandle );
-	for ( i = curPaste+1 ; i <=finalPaste; i++){
-	    tempChar = (*myHandle)[i];
-	    if ((tempChar == '\r') || (i == finalPaste)){
-		RnWrite(*myHandle + (curPaste + 1), i - (curPaste + 1));
-		if (i != finalPaste){
-		    myEvent.message = 140301;
-		    DoKeyDown (&myEvent);
-		}
-		curPaste = i;
-		break;
-	    }
-	}
-
-	HUnlock( myHandle );
-	if (finalPaste > i){
-	    HaveContent = true;
-	}
-	if (finalPaste <= i){
-	    DisposeHandle(myHandle);
-	    HaveContent = ! HaveContent;
-	}
-    }
-    if (!HaveContent){
-	gfinishedInput = false;
-	while(!gfinishedInput)
-	{
-	    if (isTextWindow){
-
-		ProcessEvent ( );
-	    }
-	}
-    }
-/*
-  //It is green in color
-  Change_Color_Range(gChangeAble, WEGetTextLength(we),
-  gFinishedColour.red, gFinishedColour.green, gFinishedColour.blue, we);
-  // It is blue in color
-  Change_Color_Range(WEGetTextLength(we), WEGetTextLength(we),
-  gComputerColour.red, gComputerColour.green, gComputerColour.blue,  we);
-  // ********* Don't try to change the content of buf
-*/
-
-/*   ReadCharsFromConsole(buf,buflen);
- */
-
-    if (strlen((const char *)buf) > 1)
-	maintain_cmd_History(buf);
-    // Mac_Command(buf);
-
-
-}
 
 void DRWrite(long in)
 {
@@ -412,10 +312,10 @@ void mac_savehistory(char *file)
 
     fp = fopen(file, "w");
     if (!fp) {
-	char msg[256];
+    char msg[256];
 	sprintf(msg, "Unable to open history file \"%s\" for writing", file);
 	warning(msg);
-	return;
+ 	return;
     }
 
     if (g_start_Cmd < g_end_Cmd)
@@ -444,8 +344,8 @@ void mac_loadhistory(char *file)
     if (!file || *file==NULL) return;
     fp = fopen(file, "r");
     if (!fp) {
-    REprintf("\nUnable to open history file \"%s\" for reading\n", file);
-	return;
+ /* REprintf("\nUnable to open history file \"%s\" for reading\n", file);
+ */	return;
     }
 
     for(i = 0;; i++) {
@@ -614,7 +514,9 @@ void Change_Color_Range(SInt32 start, SInt32 end, long red, long green,
     WESetSelection(start, end, we);
     WESetStyle ( weDoColor, & ts, we );
 */
-
+    if(!we)
+     return;
+     
     color.red = red;
     color.blue = blue;
     color.green = green;
@@ -673,50 +575,6 @@ void  GWdoErrorAlert(SInt16 errorType)
 }
 
 // doNewWindow
-void  doNewWindow(void)
-{
-    WindowPtr windowPtr;
-    Str255 untitledString;
-    Str255 numberAsString;
-    MenuHandle windowsMenu = NULL;
-    if(gCurrentNumberOfWindows == kMaxWindows)
-    {
-	GWdoErrorAlert(eMaxWindows);
-	return;
-    }
-    if(!(windowPtr = GetNewCWindow(rNewWindow,gPreAllocatedBlockPtr,(WindowPtr)-1)))
-	GWdoErrorAlert(eFailWindow);
-
-    gPreAllocatedBlockPtr = NULL;
-    GetIndString(untitledString,rStringList,sUntitled);
-    NumToString(++gUntitledWindowNumber,numberAsString);
-    GWdoConcatPStrings(untitledString,numberAsString);
-    SetWTitle(windowPtr,untitledString);
-    doSetStandardState(windowPtr);
-    if(gUntitledWindowNumber <10)
-    {
-	GWdoConcatPStrings(untitledString,"\p/");
-	NumToString(gUntitledWindowNumber,numberAsString);
-	GWdoConcatPStrings(untitledString,numberAsString);
-    }
-    InsertMenuItem(windowsMenu,untitledString,CountMenuItems(windowsMenu));
-    SetWRefCon(windowPtr,gCurrentNumberOfWindows);
-    gCurrentNumberOfWindows ++;
-    gWindowPtrArray[gCurrentNumberOfWindows] = windowPtr;
-}
-
-// doSetStandardState
-void  doSetStandardState(WindowPtr windowPtr)
-{
-    WindowPeek windowRecPtr;
-    WStateData *winStateDataPtr;
-    Rect tempRect;
-    tempRect = qd.screenBits.bounds;
-    windowRecPtr = (WindowPeek) windowPtr;
-    winStateDataPtr = (WStateData *) *(windowRecPtr->dataHandle);
-    SetRect(&(winStateDataPtr->stdState),tempRect.left+40,tempRect.top+60,
-	    tempRect.right-40,tempRect.bottom-40);
-}
 
 /* do_Down_Array
 This procedure used to maintain the reponse when you click the down array key. (about display

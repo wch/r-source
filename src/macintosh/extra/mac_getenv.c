@@ -110,26 +110,26 @@ typedef struct _EnviromentPair {
 EnviromentPair *ParseLine(char *line)
 {
     char *tmpPtr;
-    static EnviromentPair *Env;
+    static EnviromentPair Env;
     unsigned short length = strlen(line);
 
-    Env->key   = "";
-    Env->value = "";
+   // Env->key   = "";
+   // Env->value = "";
 
     for (tmpPtr = line; *tmpPtr; tmpPtr++)
     {
 	if (*tmpPtr == '=')
         {
 	    *tmpPtr = 0;
-	    Env->key = line;
-	    if (strlen(Env->key) < length)
+	    Env.key = line;
+	    if (strlen(Env.key) < length)
             {
-		Env->value = ++tmpPtr;
+		Env.value = ++tmpPtr;
             }
-	    return Env;
+	    return &Env;
         }
     }
-    return Env;
+    return &Env;
 }
 
 
@@ -186,7 +186,7 @@ char *mac_getenv(const char *name)
 	return NULL;
 
     sprintf(temp_path,"%s:.Renviron",R_Home);
-
+    
     err = FSpLocationFromFullPath(strlen(temp_path),temp_path,&spec);
   
 /* try open the file in the folder R_HOME:etc */
