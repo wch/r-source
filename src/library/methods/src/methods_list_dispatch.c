@@ -203,12 +203,14 @@ SEXP R_set_el_named(SEXP object, SEXP what, SEXP value)
 {
     char * str;
     str = CHAR_STAR(what);
-    return R_insert_element(object, what, value);
+    return R_insert_element(object, str, value);
 }
 
 /*  */
+static int n_ov = 0;
+#ifdef UNUSED
 static SEXP ov_mlists[50], ov_methods[50];
-static int n_ov = 0, max_ov = 50;
+static int max_ov = 50;
 /* should make this flexible via malloc, realloc */
 static SEXP getOverride(SEXP mlist)
 {
@@ -251,6 +253,7 @@ static SEXP setOverride(SEXP mlist, SEXP value)
     n_ov++;
     return value;
 }
+#endif
 
 SEXP R_clear_method_selection()
 {
@@ -309,7 +312,7 @@ SEXP R_quick_method_check(SEXP args, SEXP mlist, SEXP fdef)
 }
 
 /* call some S language functions */
-
+#ifdef UNUSED
 static SEXP R_S_getAllMethods(SEXP fname, SEXP fdef)
 {
     SEXP e, val, call;
@@ -325,7 +328,7 @@ static SEXP R_S_getAllMethods(SEXP fname, SEXP fdef)
     UNPROTECT(1);
     return(val);
 }
-
+#endif
 
 static SEXP R_S_MethodsListSelect(SEXP fname, SEXP ev, SEXP mlist,
 				  SEXP f_env)
@@ -353,7 +356,7 @@ static SEXP R_S_MethodsListSelect(SEXP fname, SEXP ev, SEXP mlist,
     return val;
 }
 
-
+#ifdef UNUSED
 static SEXP R_S_syscall(int n, SEXP ev)
 {
     SEXP e, val, arg;
@@ -380,6 +383,7 @@ static SEXP R_S_sysfunction(int n, SEXP ev)
     UNPROTECT(3);
     return val;
 }
+#endif
 
 #if 0 /* -Wall warns and this confuses users */
 static SEXP R_get_function_env(SEXP obj, SEXP fname)
@@ -460,6 +464,7 @@ SEXP R_getGeneric(SEXP name, SEXP mustFind, SEXP env)
     return value;
 }
 
+#ifdef UNUSED
 static SEXP get_skeleton(SEXP symbol, SEXP generic)
 {
     SEXP vl = R_UnboundValue;
@@ -542,12 +547,12 @@ static SEXP nonstandard_primitive(primitive_type which, SEXP skeleton,
     UNPROTECT(2);
     return(val);
 }
-
+#endif
 
 /* C version of the standardGeneric R function. */
 SEXP R_standardGeneric(SEXP fname, SEXP ev, SEXP fdef)
 {
-    SEXP f_env=R_NilValue, mlist=R_NilValue, f, val, call, fsym; /* -Wall */
+    SEXP f_env=R_NilValue, mlist=R_NilValue, f, val=R_NilValue, fsym; /* -Wall */
     int nprotect = 0; Rboolean prim_case = FALSE;
 
     if(!initialized)
