@@ -969,7 +969,7 @@ AC_SUBST(LIBR_LDFLAGS)
 AC_FUNC_ALLOCA
 AC_FUNC_FORK
 AC_FUNC_VPRINTF
-AC_CHECK_FUNCS(access acosh asinh atanh bcopy bzero finite ftruncate \
+AC_CHECK_FUNCS(access bcopy bzero finite ftruncate \
   getcwd getgrgid getpwuid getuid hypot isascii isnan log1p matherr \
   memcpy memmove mempcpy mkfifo popen putenv rint setenv strcoll \
   stat strptime system times unsetenv)
@@ -982,7 +982,7 @@ else
 fi
 AC_SUBST(RMATH_HAVE_LOG1P)
 
-AC_REPLACE_FUNCS(snprintf strdup vsnprintf)
+AC_REPLACE_FUNCS(acosh asinh atanh snprintf strdup vsnprintf)
 AC_SEARCH_LIBS(connect, [socket])
 AC_SEARCH_LIBS(gethostbyname, [nsl socket])
 AC_SEARCH_LIBS(xdr_string, [nsl])
