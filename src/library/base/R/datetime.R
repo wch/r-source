@@ -244,7 +244,7 @@ as.data.frame.POSIXct <- .Alias(as.data.frame.vector)
 is.na.POSIXlt <- function(x) is.na(as.POSIXct(x))
 
 c.POSIXct <- function(...)
-    structure(.Primitive("c")(...), class="POSIXct")
+    structure(c(unlist(lapply(list(...), unclass))), class="POSIXct")
 
 ## force absolute comparisons
 all.equal.POSIXct <- function(..., scale=1)
