@@ -2772,25 +2772,9 @@ connections to ODBC databases (such as Access on Windows).
 
 One convenient use of @R{} is to provide a comprehensive set of
 statistical tables.  Functions are provided to evaluate the cumulative
-distribution function
-@iftex
-@tex
-$P(X \le x)$,
-@end tex
-@end iftex
-@ifnottex
-P(X <= x),
-@end ifnottex
+distribution function @eqn{P(X \le x), P(X <= x)},
 the probability density function and the quantile function (given
-@math{q}, the smallest @math{x} such that
-@iftex
-@tex
-$P(X \le x) > q$),
-@end tex
-@end iftex
-@ifnottex
-P(X <= x) > q),
-@end ifnottex
+@math{q}, the smallest @math{x} such that @eqn{P(X \le x) > q, P(X <= x) > q}),
 and to simulate from the distribution.
 
 @quotation
