@@ -350,3 +350,7 @@ Date: Mon, 15 Oct 2001 09:49:38 +0200 (MET DST)
 Subject: Problem with "describe" lists.
 From: Rolf Turner <rolf@localhost.localdomain>
 Date: Thu, 18 Oct 2001 16:41:03 +0800
+* PR# 1135 *
+Subject: Canceling close behaves incorrectly
+From: john_heumann@agilent.com
+Date: Sat, 20 Oct 2001 01:02:02 +0200 (MET DST)
