@@ -47,7 +47,7 @@ glm.fit.null(x, y, weights = rep(1, nobs), start = NULL,
   functions. The original help page for these functions is often
   available at \code{help("oldName-deprecated")} (note the quotes).
 
-  \code{tkfilefind} is a demo in package \code{tcltk} displaying a
+  \code{tkfilefind} is a demo in package \pkg{tcltk} displaying a
   widget for selecting files but the same functionality is available in
   a better form in the \code{tkgetOpenFile} and \code{tkgetSaveFile}
   functions. The demo is reported not even to work with recent versions

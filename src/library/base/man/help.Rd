@@ -89,10 +89,6 @@ type?topic
   \file{Rhelp.cfg} somewhere in your LaTeX search path.
 #endif
 
-  %% \code{topicName} computes the string used internally to find
-  %% documenation of the given type and topic.  Called by the \code{?}
-  %% operator and the special prompt functions in the methods package.
-  
 }
 \note{
   Unless \code{lib.loc} is specified explicitly, the loaded packages are
@@ -124,7 +120,8 @@ type?topic
   Wadsworth \& Brooks/Cole.
 }
 \seealso{
-  \code{\link{help.search}()} for finding help pages on a ``vague'' topic.
+  \code{\link{help.search}()} for finding help pages on a \dQuote{vague}
+  topic;
   \code{\link{help.start}()} which opens the HTML version of the \R
   help pages;
   \code{\link{library}()} for listing available packages and the
@@ -151,9 +148,9 @@ data()                  # list all available data sets
 ?women                  # information about data set "women"
 
 topi <- "women"
-\dontrun{help(topi) ##--> Error: No documentation for `topi'}
+\dontrun{help(topi) ##--> Error: No documentation for 'topi'}
 
 try(help("bs", try.all.packages=FALSE)) # reports not found (an error)
-help("bs", try.all.packages=TRUE) # reports can be found in package `splines'
+help("bs", try.all.packages=TRUE) # reports can be found in package 'splines'
 }
 \keyword{documentation}

@@ -25,8 +25,8 @@ png(filename ="Rplot\%03d.png", width = 480, height = 480, pointsize = 12,
  \item{width}{the width of the device in pixels.}
  \item{height}{the height of the device in pixels.}
  \item{pointsize}{the default pointsize of plotted text.}
- \item{quality}{the `quality' of the JPEG image, as a
-   percentage. Smaller values will give more compression but also more
+ \item{quality}{the \sQuote{quality} of the JPEG image, as a
+   percentage.  Smaller values will give more compression but also more
    degradation of the image.}
  \item{bg}{default background colour.}
  \item{\dots}{additional arguments to the \code{\link{X11}} device.}

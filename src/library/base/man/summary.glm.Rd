@@ -24,7 +24,7 @@
   \item{digits}{the number of significant digits to use when printing.}
   \item{symbolic.cor}{logical. If \code{TRUE}, print the correlations in
     a symbolic form (see \code{\link{symnum}}) rather than as numbers.}
-  \item{signif.stars}{logical. If \code{TRUE}, ``significance stars''
+  \item{signif.stars}{logical. If \code{TRUE}, \dQuote{significance stars}
     are printed for each coefficient.}
   \item{\dots}{further arguments passed to or from other methods.}
 }
@@ -35,7 +35,7 @@
 \details{
   \code{print.summary.glm} tries to be smart about formatting the
   coefficients, standard errors, etc. and additionally gives
-  ``significance stars'' if \code{signif.stars} is \code{TRUE}.
+  \dQuote{significance stars} if \code{signif.stars} is \code{TRUE}.
 
   Aliased coefficients are omitted in the returned object but (as from \R
   1.8.0) restored by the \code{print} method.
@@ -77,7 +77,7 @@
   \code{\link{glm}}, \code{\link{summary}}.
 }
 \examples{
-## --- Continuing the Example from  ``?glm'':%\code{\link{glm}}:
+## --- Continuing the Example from  '?glm':%\code{\link{glm}}:
 \testonly{example("glm", echo = FALSE)}
 summary(glm.D93)
 }

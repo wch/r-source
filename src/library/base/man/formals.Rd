@@ -28,7 +28,7 @@ formals(fun, envir = parent.frame()) <- value
   If it is not specified, the function calling \code{formals} is used.
 }
 \seealso{
-  \code{\link{args}} for a ``human-readable'' version,
+  \code{\link{args}} for a \dQuote{human-readable} version,
   \code{\link{alist}},
   \code{\link{body}},
   \code{\link{function}}.

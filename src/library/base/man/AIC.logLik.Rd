@@ -10,7 +10,7 @@
     resulting from applying a \code{logLik} method to a fitted model
     object.}
   \item{\dots}{further arguments to be passed to or from methods.}
-  \item{k}{numeric, the ``penalty'' per parameter to be used; the
+  \item{k}{numeric, the \dQuote{penalty} per parameter to be used; the
     default \code{k = 2} is the classical AIC.}
 }
 \description{

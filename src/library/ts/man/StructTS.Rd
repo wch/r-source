@@ -77,7 +77,7 @@ StructTS(x, type = c("level", "trend", "BSM"), init = NULL,
  }
  The boundary case \eqn{\sigma^2_\omega = 0}{sigma^2_w = 0} corresponds
  to a deterministic (but arbitrary) seasonal pattern.  (This is
- sometimes known as the `dummy variable' version of the BSM.)
+ sometimes known as the \sQuote{dummy variable} version of the BSM.)
 }
 \value{
   A list of class \code{"StructTS"} with components:

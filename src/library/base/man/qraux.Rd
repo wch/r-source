@@ -59,7 +59,7 @@ qr.R(qr, complete = FALSE)
 }
 \examples{
 data(LifeCycleSavings)
-p <- ncol(x <- LifeCycleSavings[,-1]) # not the `sr'
+p <- ncol(x <- LifeCycleSavings[,-1]) # not the 'sr'
 qrstr <- qr(x)   # dim(x) == c(n,p)
 qrstr $ rank # = 4 = p
 Q <- qr.Q(qrstr) # dim(Q) == dim(x)

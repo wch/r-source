@@ -14,7 +14,7 @@ max.col(m)
   length \code{nrow(m)}.
 }
 \details{
-  Ties are broken at random.  The determination of ``tie'' assumes that
+  Ties are broken at random.  The determination of \dQuote{tie} assumes that
   the entries are probabilities: there is a relative tolerance of
   \eqn{10^{-5}}{1e-5}, relative to the largest entry in the row.
 }

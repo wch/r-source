@@ -63,7 +63,7 @@ cov(x, y = NULL, use = "all.obs")
   Wadsworth \& Brooks/Cole.
 }
 \seealso{
-  \code{\link[ctest]{cor.test}} (pkg \code{ctest}) for confidence
+  \code{\link[ctest]{cor.test}} (package \pkg{ctest}) for confidence
   intervals (and tests).\cr
   \code{\link{cov.wt}} for \emph{weighted} covariance
   computation, \code{\link{sd}} for standard deviation (vectors).

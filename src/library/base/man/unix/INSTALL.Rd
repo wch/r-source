@@ -32,9 +32,9 @@
   package are in non-system directories.  In this case, one can use the
   configure variables \code{LIBS} and \code{CPPFLAGS} to specify these
   locations (and set these via \code{--configure-vars}), see section
-  `Configuration variables' in ``R Installation and Administration'' for
-  more information.  One can also bypass the configure mechanism using
-  the option \code{--no-configure}.
+  \dQuote{Configuration variables} in \dQuote{R Installation and
+    Administration} for more information.  One can also bypass the
+  configure mechanism using the option \code{--no-configure}.
   
   If \code{--no-docs} is given, no help files are built.  Options
   \code{--no-text}, \code{--no-html}, and \code{--no-latex} suppress
@@ -76,7 +76,8 @@
   \code{\link{REMOVE}},
   \code{\link{update.packages}} for automatic update of packages using
   the internet;
-  the chapter on ``Creating R packages'' in ``Writing \R Extensions''
-  (see the \file{doc/manual} subdirectory of the \R source tree).
+  the chapter on \dQuote{Creating R packages} in \dQuote{Writing \R
+    Extensions} (see the \file{doc/manual} subdirectory of the \R source
+  tree).
 }
 \keyword{utilities}

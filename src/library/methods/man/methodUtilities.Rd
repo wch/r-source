@@ -14,8 +14,8 @@
 \alias{initMethodDispatch}
 \title{Utility Functions for Methods and S-Plus Compatibility}
 \description{
-  These are utilities, currently in the methods package, that either
-  provide some functionality needed by the package (e.g., element
+  These are utilities, currently in the \pkg{methods} package, that
+  either provide some functionality needed by the package (e.g., element
   matching by name), or add compatibility with S-Plus, or both.
 }
 \usage{

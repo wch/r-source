@@ -40,7 +40,7 @@
 \value{
   A list with two components
   \item{t}{abscissa (x) values, including the two outermost ones.}
-  \item{y}{y values `in between' the \code{t[]}.}
+  \item{y}{y values \sQuote{in between} the \code{t[]}.}
 }
 \author{Martin Maechler \email{maechler@stat.math.ethz.ch}, 1990,
     1993; ported to \R, 1997.}
@@ -66,7 +66,7 @@ for(i in 1:3)
   lines(list(sfun0,sfun.2,stepfun(1:3,y0,f = 1))[[i]], col.h=i, col.v=i)
 legend(2.5, 1.9, paste("f =", c(0,0.2,1)), col=1:3, lty=1, y.inter=1); par(op)
 
-# Extend and/or restrict `viewport':
+# Extend and/or restrict 'viewport':
 plot(sfun0, xlim = c(0,5), ylim = c(0, 3.5),
      main = "plot(stepfun(*), xlim= . , ylim = .)")
 

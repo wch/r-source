@@ -10,7 +10,7 @@
 \title{Logical Vectors}
 \description{
   Create or test for objects of type \code{"logical"}, and the basic
-  logical ``constants''.
+  logical \dQuote{constants}.
 }
 \usage{
 TRUE

@@ -13,7 +13,7 @@ object@name
   \item{name}{The character-string name of the slot.}
 }
 \details{
-  These operators support the formal classes of package \code{methods}.
+  These operators support the formal classes of package \pkg{methods}.
   See \code{\link[methods]{slot}} for further details.
   Currently there is no checking that the object is an instance of a
   class.

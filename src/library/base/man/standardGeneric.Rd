@@ -2,7 +2,7 @@
 \alias{standardGeneric}
 \title{Formal Method System Placeholders}
 \description{
-  Routines which are primitives used with the \code{methods} package.
+  Routines which are primitives used with the \pkg{methods} package.
   They should not be used without it and do not need to be called
   directly in any case.
 }

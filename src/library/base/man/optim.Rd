@@ -216,7 +216,7 @@ fr <- function(x) {   ## Rosenbrock Banana function
     x2 <- x[2]
     100 * (x2 - x1 * x1)^2 + (1 - x1)^2
 }
-grr <- function(x) { ## Gradient of `fr'
+grr <- function(x) { ## Gradient of 'fr'
     x1 <- x[1]
     x2 <- x[2]
     c(-400 * x1 * (x2 - x1 * x1) - 2 * (1 - x1),
@@ -238,7 +238,7 @@ optim(rep(3, 25), flb, NULL, "L-BFGS-B",
 ## "wild" function , global minimum at about -15.81515
 fw <- function (x)
     10*sin(0.3*x)*sin(1.3*x^2) + 0.00001*x^4 + 0.2*x+80
-plot(fw, -50, 50, n=1000, main = "optim() minimising `wild function'")
+plot(fw, -50, 50, n=1000, main = "optim() minimising 'wild function'")
 
 res <- optim(50, fw, method="SANN",
              control=list(maxit=20000, temp=20, parscale=20))

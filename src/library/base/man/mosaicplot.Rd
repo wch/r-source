@@ -137,7 +137,7 @@ mosaicplot(HairEyeColor, shade = TRUE, margin = list(c(1,2), 3))
 ## Model of joint independence of sex from hair and eye color.  Males
 ## are underrepresented among people with brown hair and eyes, and are
 ## overrepresented among people with brown hair and blue eyes, but not
-## ``significantly''.
+## "significantly".
 
 ## Formula interface for raw data: visualize crosstabulation of numbers
 ## of gears and carburettors in Motor Trend car data.

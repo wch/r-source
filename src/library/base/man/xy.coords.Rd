@@ -48,8 +48,10 @@ xy.coords(x, y, xlab = NULL, ylab = NULL, log = NULL, recycle = FALSE)
   A list with the components
   \item{x}{numeric (i.e., \code{"double"}) vector of abscissa values.}
   \item{y}{numeric vector of the same length as \code{x}.}
-  \item{xlab}{\code{character(1)} or \code{NULL}, the `label' of \code{x}.}
-  \item{ylab}{\code{character(1)} or \code{NULL}, the `label' of \code{y}.}
+  \item{xlab}{\code{character(1)} or \code{NULL}, the \sQuote{label} of
+    \code{x}.}
+  \item{ylab}{\code{character(1)} or \code{NULL}, the \sQuote{label} of
+    \code{y}.}
 }
 \seealso{
   \code{\link{plot.default}}, \code{\link{lines}}, \code{\link{points}}

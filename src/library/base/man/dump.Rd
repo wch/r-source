@@ -38,10 +38,10 @@ dump(list, file = "dumpdata.R", append = FALSE, envir = parent.frame())
   search path for named objects to include the environment from which
   \code{dump} was called.
 
-  As \code{dump} is defined in the base namespace, the base package will
-  be searched \emph{before} the global environment unless \code{dump}
-  is called from the top level or the \code{envir} argument is given
-  explicitly.
+  As \code{dump} is defined in the base namespace, the \pkg{base}
+  package will be searched \emph{before} the global environment unless
+  \code{dump} is called from the top level or the \code{envir} argument
+  is given explicitly.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

@@ -116,7 +116,7 @@ plclust(tree, hang = 0.1, unit = FALSE, level = FALSE, hmin = 0,
   spherical clusters.  The \emph{complete linkage} method finds
   similar clusters. The \emph{single linkage} method
   (which is closely related to the minimal spanning tree)
-  adopts a `friends of friends' clustering strategy.
+  adopts a \sQuote{friends of friends} clustering strategy.
   The other methods can be regarded as aiming
   for clusters with characteristics somewhere between
   the single and complete link methods.
@@ -124,14 +124,15 @@ plclust(tree, hang = 0.1, unit = FALSE, level = FALSE, hmin = 0,
   If \code{members!=NULL}, then \code{d} is taken to be a
   dissimilarity matrix between clusters instead of dissimilarities
   between singletons and \code{members} gives the number of observations
-  per cluster. This way the hierarchical cluster algorithm can be ``started
-  in the middle of the dendrogram'', e.g., in order to reconstruct the
-  part of the tree above a cut (see examples). Dissimilarities between
-  clusters can be efficiently computed (i.e., without \code{hclust}
-  itself) only for a limited number of distance/linkage combinations,
-  the simplest one being squared Euclidean distance and centroid
-  linkage. In this case the dissimilarities between the clusters are
-  the squared Euclidean distances between cluster means.
+  per cluster.  This way the hierarchical cluster algorithm can be
+  \dQuote{started in the middle of the dendrogram}, e.g., in order to
+  reconstruct the part of the tree above a cut (see examples).
+  Dissimilarities between clusters can be efficiently computed (i.e.,
+  without \code{hclust} itself) only for a limited number of
+  distance/linkage combinations, the simplest one being squared
+  Euclidean distance and centroid linkage.  In this case the
+  dissimilarities between the clusters are the squared Euclidean
+  distances between cluster means.
 
   In hierarchical cluster displays, a decision is needed at each merge to
   specify which subtree should go on the left and which on the right.
@@ -172,7 +173,7 @@ plclust(tree, hang = 0.1, unit = FALSE, level = FALSE, hmin = 0,
   London: Chapman and Hall / CRC
 
   Murtagh, F. (1985).
-  ``Multidimensional Clustering Algorithms'', in
+  \dQuote{Multidimensional Clustering Algorithms}, in
   \emph{COMPSTAT Lectures 4}.
   Wuerzburg: Physica-Verlag
   (for algorithmic details of algorithms used).

@@ -1,11 +1,11 @@
 \name{match.fun}
 \alias{match.fun}
+\title{Function Verification for ``Function Variables''}
 \description{
   When called inside functions that take a function as argument, extract
   the desired function object while avoiding undesired matching to
   objects of other types.
 }
-\title{Function Verification for ``Function Variables''}
 \usage{
 match.fun(FUN, descend = TRUE)
 }

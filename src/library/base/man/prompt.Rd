@@ -46,7 +46,7 @@ prompt.data.frame(object, filename = NULL, name = NULL, \dots)
 \note{
   The documentation file produced by \code{prompt.data.frame} does not
   have the same format as many of the data frame documentation files in
-  the \code{base} library.  We are trying to settle on a preferred
+  the \pkg{base} package.  We are trying to settle on a preferred
   format for the documentation.
 }
 \section{Warning}{
@@ -57,8 +57,8 @@ prompt.data.frame(object, filename = NULL, name = NULL, \dots)
 }
 \seealso{
   \code{\link{promptData}}, \code{\link{help}} and the chapter on
-  ``Writing \R documentation'' in ``Writing \R Extensions'' (see the
-  \file{doc/manual} subdirectory of the \R source tree).
+  \dQuote{Writing \R documentation} in \dQuote{Writing \R Extensions}
+  (see the \file{doc/manual} subdirectory of the \R source tree).
 }
 \author{Douglas Bates for \code{prompt.data.frame}}
 \references{

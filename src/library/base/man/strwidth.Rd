@@ -44,11 +44,11 @@ mean(sw.i / strwidth(str.ex, "fig")) / par('fin')[1] # = 1: are the same
 
 ## See how letters fall in classes -- depending on graphics device and font!
 all.lett <- c(letters, LETTERS)
-shL <- strheight(all.lett, units = "inches") * 72 # `big points'
+shL <- strheight(all.lett, units = "inches") * 72 # 'big points'
 table(shL) # all have same heights ...
 mean(shL)/par("cin")[2] # around 0.6
 
-(swL <- strwidth(all.lett, units="inches") * 72) # `big points'
+(swL <- strwidth(all.lett, units="inches") * 72) # 'big points'
 split(all.lett, factor(round(swL, 2)))
 
 sumex <- expression(sum(x[i], i=1,n), e^{i * pi} == -1)

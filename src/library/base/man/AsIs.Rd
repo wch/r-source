@@ -6,7 +6,7 @@
 \title{Inhibit Interpretation/Conversion of Objects}
 \description{
   Change the class of an object to indicate that it should be treated
-  ``as is''.
+  \dQuote{as is}.
 }
 \usage{
 I(x)

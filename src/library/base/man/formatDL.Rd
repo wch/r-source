@@ -39,7 +39,7 @@ formatDL(x, y, style = c("table", "list"),
   displayed on a line of their own.
 }
 \examples{
-## Use R to create the `INDEX' for package `eda' from its `CONTENTS'
+## Use R to create the 'INDEX' for package 'eda' from its 'CONTENTS'
 x <- read.dcf(file = system.file("CONTENTS", package = "eda"),
                fields = c("Entry", "Description"))
 x <- as.data.frame(x)

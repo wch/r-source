@@ -2,7 +2,7 @@
 \docType{class}
 \alias{SClassExtension-class}
 \title{Class to Represent Inheritance (Extension) Relations }
-\description{  An object from this class represents a single ``is''
+\description{  An object from this class represents a single \dQuote{is}
   relationship; lists of these objects are used to represent all the
   extensions (superclasses) and subclasses for a given class.  The
   object contains information about how the relation is defined and

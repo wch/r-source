@@ -3,7 +3,7 @@
 \title{Star (Spider/Radar) Plots and Segment Diagrams}
 \description{
   Draw star plots or segment diagrams of a multivariate data set.
-  With one single location, also draws ``spider'' (or ``radar'') plots.
+  With one single location, also draws \dQuote{spider} (or \dQuote{radar}) plots.
 }
 \usage{
 stars(x, full = TRUE, scale = TRUE, radius = TRUE,
@@ -39,7 +39,7 @@ stars(x, full = TRUE, scale = TRUE, radius = TRUE,
     labels if \code{labels = NULL}.}
   \item{locations}{Either two column matrix with the x and y coordinates used
     to place each of the segment plots; or numeric of length 2 when all
-    plots should be superimposed (for a ``spider plot'').
+    plots should be superimposed (for a \dQuote{spider plot}).
     By default, \code{locations = NULL}, the segment plots will be
     placed in a rectangular grid.}
   \item{nrow, ncol}{integers giving the number of rows and columns to use when
@@ -115,7 +115,7 @@ stars(mtcars[, 1:7], key.loc = c(14, 2),
 stars(mtcars[, 1:7], key.loc = c(14, 1.5),
       main = "Motor Trend Cars : full stars()",flip.labels=FALSE)
 
-## `Spider' or `Radar' plot:
+## 'Spider' or 'Radar' plot:
 stars(mtcars[, 1:7], locations = c(0,0), radius = FALSE,
       key.loc=c(0,0), main="Motor Trend Cars", lty = 2)
 
@@ -142,13 +142,13 @@ loc <- stars(USJudge, labels = NULL, scale = FALSE,
              key.loc = c(13, 1.5), main = "Judge not ...", len = 1.2)
 text(loc, Snam, col = "blue", cex = 0.8, xpd = TRUE)
 
-## `Segments':
+## 'Segments':
 stars(USJudge, draw.segments = TRUE, scale = FALSE, key.loc = c(13,1.5))
 
-## `Spider':
+## 'Spider':
 stars(USJudgeRatings, locations=c(0,0), scale=FALSE,radius = FALSE,
       col.stars=1:10, key.loc = c(0,0), main="US Judges rated")
-## `Radar-Segments'
+## 'Radar-Segments'
 stars(USJudgeRatings[1:10,], locations = 0:1, scale=FALSE,
       draw.segments = TRUE, col.segments=0, col.stars=1:10,key.loc= 0:1,
        main="US Judges 1-10 ")

@@ -18,7 +18,7 @@ extractAIC(fit, scale,     k = 2, \dots)
  \item{scale}{optional numeric specifying the scale parameter of the
    model, see \code{scale} in \code{\link{step}}.
  }
- \item{k}{numeric specifying the ``weight'' of the
+ \item{k}{numeric specifying the \dQuote{weight} of the
    \emph{equivalent degrees of freedom} (\eqn{\equiv}{=:}\code{edf})
    part in the AIC formula.}
  \item{\dots}{further arguments (currently unused in base \R).}
@@ -57,7 +57,7 @@ extractAIC(fit, scale,     k = 2, \dots)
 \value{
   A numeric vector of length 2, giving
 
-  \item{edf}{the ``\bold{e}quivalent \bold{d}egrees of \bold{f}reedom''
+  \item{edf}{the \dQuote{\bold{e}quivalent \bold{d}egrees of \bold{f}reedom}
   of the fitted model \code{fit}.}
 
 \item{AIC}{the (generalized) Akaike Information Criterion for \code{fit}.}

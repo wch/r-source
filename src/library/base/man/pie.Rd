@@ -21,7 +21,7 @@ pie(x, labels = names(x), edges = 200, radius = 0.8,
     the slices are long it may be necessary to use a smaller radius.}
   \item{density}{the density of shading lines, in lines per inch.
     The default value of \code{NULL} means that no shading lines
-    are drawn. Non-positive values of `density' also inhibit the
+    are drawn. Non-positive values of \code{density} also inhibit the
     drawing of shading lines.}
   \item{angle}{the slope of shading lines, given as an angle in
     degrees (counter-clockwise).}
@@ -40,12 +40,12 @@ pie(x, labels = names(x), edges = 200, radius = 0.8,
   relative areas.  A bar chart or dot chart is a preferable way of
   displaying this type of data.
 
-  Cleveland (1985), p. 264: ``Data that can be shown by pie charts always
-  can be shown by a dot chart. This means that judgements of position
-  along a common scale can be made instead of the less accurate angle
-  judgements.''  This statement is based on the empirical investigations
-  of Cleveland and McGill as well as investigations by perceptual
-  psychologists.
+  Cleveland (1985), page 264: \dQuote{Data that can be shown by pie charts
+    always can be shown by a dot chart.  This means that judgements of
+    position along a common scale can be made instead of the less
+    accurate angle judgements.}
+  This statement is based on the empirical investigations of Cleveland
+  and McGill as well as investigations by perceptual psychologists.
   
   Prior to \R 1.5.0 this was known as \code{piechart}, which is the name
   of a Trellis function, so the name was changed to be compatible with S.

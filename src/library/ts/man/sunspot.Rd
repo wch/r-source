@@ -41,7 +41,7 @@ data(sunspot)
 data(sunspots, package = base)
 data(sunspot,  package = ts)
 plot (sunspot.month, main = "sunspot.month [ts]", col = 2)
-lines(sunspots)# ``very barely'' see something
+lines(sunspots) # "very barely" see something
 
 ## Now look at the difference :
 all(tsp(sunspots)     [c(1,3)] ==

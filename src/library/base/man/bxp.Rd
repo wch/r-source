@@ -37,7 +37,7 @@ bxp(z, notch = FALSE, width = NULL, varwidth = FALSE, outline = TRUE,
     multiple boxes}
   \item{log}{character, indicating if any axis should be drawn in
     logarithmic scale, as in \code{\link{plot.default}}.}
-  \item{frame.plot}{logical, indicating if a ``frame''
+  \item{frame.plot}{logical, indicating if a \dQuote{frame}
     (\code{\link{box}}) should be drawn; defaults to \code{TRUE}, unless
     \code{axes = FALSE} is specified.}
   \item{horizontal}{logical indicating if the  boxplots should be

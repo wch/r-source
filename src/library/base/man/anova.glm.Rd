@@ -57,7 +57,7 @@
   \code{\link{glm}}, \code{\link{anova}}.
 }
 \examples{
-## --- Continuing the Example from  ``?glm'':%\code{\link{glm}}:
+## --- Continuing the Example from  '?glm':%\code{\link{glm}}:
 \testonly{example("glm", echo = FALSE)}
 anova(glm.D93)
 anova(glm.D93, test = "Cp")

@@ -3,7 +3,7 @@
 \alias{ftable.default}
 \alias{print.ftable}
 \title{Flat Contingency Tables}
-\description{Create ``flat'' contingency tables.}
+\description{Create \dQuote{flat} contingency tables.}
 \usage{
 \method{ftable}{default}(\dots, exclude = c(NA, NaN), row.vars = NULL, col.vars = NULL)
 }
@@ -28,14 +28,14 @@
   stored as attributes \code{"row.vars"} and \code{"col.vars"}.
 }
 \details{
-  \code{ftable} creates ``flat'' contingency tables.  Similar to the
+  \code{ftable} creates \dQuote{flat} contingency tables.  Similar to the
   usual contingency tables, these contain the counts of each combination
   of the levels of the variables (factors) involved.  This information
   is then re-arranged as a matrix whose rows and columns correspond to
   unique combinations of the levels of the row and column variables (as
   specified by \code{row.vars} and \code{col.vars}, respectively).  The
   combinations are created by looping over the variables in reverse
-  order (so that the levels of the ``left-most'' variable vary the
+  order (so that the levels of the \dQuote{left-most} variable vary the
   slowest).  Displaying a contingency table in this flat matrix form
   (via \code{print.ftable}, the print method for objects of class
   \code{"ftable"}) is often preferable to showing it as a
@@ -65,7 +65,7 @@
   \code{data = .} argument);
   \code{\link{read.ftable}} for information on reading, writing and
   coercing flat contingency tables;
-  \code{\link{table}} for ``ordinary'' cross-tabulation;
+  \code{\link{table}} for \dQuote{ordinary} cross-tabulation;
   \code{\link{xtabs}} for formula-based cross-tabulation.
 }
 \examples{

@@ -7,7 +7,7 @@
 }
 \usage{
 \method{predict}{bs}(object, newx, \dots)
-%% the `ns' one now looks identical
+%% the 'ns' one now looks identical
 }
 % \synopsis{
 % predict.bs(object, newx, \dots)

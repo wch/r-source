@@ -18,8 +18,8 @@ savePlot(filename="Rplot",
   Saves the current plot on a \code{windows} device to a file.
 }
 \details{
-  This is equivalent to selecting the `Save as' menu item on the
-  `File' menu of a \code{\link{windows}} device.
+  This is equivalent to selecting the \sQuote{Save as} menu item on the
+  \sQuote{File} menu of a \code{\link{windows}} device.
 
   Using \code{filename} as \code{"clipboard"} or \code{""} with
   \code{type = "wmf"} will copy to the clipboard.

@@ -36,13 +36,13 @@ is.tskernel(k)
 %  \item{\dots}{arguments passed to or from other methods.}
 }
 \details{
-  \code{kernel} is used to construct a general kernel or
-  named specific kernels. The modified Daniell kernel
-  halves the end coefficients (as used by S-PLUS).
+  \code{kernel} is used to construct a general kernel or named specific
+  kernels.  The modified Daniell kernel halves the end coefficients (as
+  used by S-PLUS). 
   
-  \code{df.kernel} returns the ``equivalent degrees of freedom'' of a
-  smoothing kernel as defined in Brockwell and Davies (1991), page 362,
-  and \code{bandwidth.kernel} returns the equivalent bandwidth as
+  \code{df.kernel} returns the \dQuote{equivalent degrees of freedom} of
+  a smoothing kernel as defined in Brockwell and Davies (1991), page
+  362, and \code{bandwidth.kernel} returns the equivalent bandwidth as
   defined in Bloomfield (1991), p. 201, with a continuity correction.
 }
 \value{

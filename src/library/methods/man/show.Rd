@@ -7,7 +7,7 @@
   The function \code{show} exists to be specialized by methods; the
   default method calls \code{showDefault}.
 
-  With library \code{methods} attached, methods for \code{show} will
+  With package \pkg{methods} attached, methods for \code{show} will
   usually be invoked for automatic printing (see the details).
 
   The function \code{showDefault} allows redirection of output and
@@ -24,9 +24,8 @@ showDefault(object, oldMethods = TRUE)
   
   \item{oldMethods}{Should old-style print methods be used for this
     object?  \code{TRUE} by default if called directly, but \code{FALSE}
-    when called from the methods package for automatic printing (to
-    avoid potential recursion; see the
-    details below).
+    when called from the \pkg{methods} package for automatic printing (to
+    avoid potential recursion; see the details below).
   }
 }
 \value{
@@ -37,7 +36,7 @@ showDefault(object, oldMethods = TRUE)
   been printed.
 }
 \details{
-  The \code{methods} package overrides the base definition of
+  The \pkg{methods} package overrides the base definition of
   \code{print.default} to arrange for automatic printing to honor
   methods for the function \code{show}.  This does not quite manage to
   override old-style printing methods, since the automatic printing in

@@ -35,7 +35,7 @@ file.show(\dots, header, title="R Information",
   Most GUI systems will use a separate pager window for each file,
   and let the user leave it up while \R
   continues running.  The selection of such pagers could either be done
-  using ``magic'' pager names being intercepted by lower-level code
+  using \dQuote{magic} pager names being intercepted by lower-level code
   (such as \code{"internal"} and \code{"console"} on Windows), or
   by letting \code{pager} be an R function which will be called with the
   same arguments as \code{file.show} and take care of interfacing to the

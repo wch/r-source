@@ -166,9 +166,9 @@ tclRequire(package, warn = TRUE)
   \code{tclVar}  are  uniquely named and automatically unset by the 
   garbage collector when the representing object is no longer in use. 
 
-  It is possible to access Tcl's `dual-ported' objects directly, thus
-  avoiding parsing and deparsing of their string representation. This
-  works by using objects of class \code{tclObj}. The string
+  It is possible to access Tcl's \sQuote{dual-ported} objects directly,
+  thus avoiding parsing and deparsing of their string representation.
+  This works by using objects of class \code{tclObj}.  The string
   representation of such objects can be extracted (but not set) using
   \code{tclvalue} and conversion to vectors of mode \code{"character"},
   \code{"double"}, or \code{"integer"}. Conversely, such vectors can be

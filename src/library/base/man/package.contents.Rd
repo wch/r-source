@@ -39,6 +39,6 @@ package.contents("mva")[, c("Entry", "Description")]
 
 package.description("ts")
 package.description("ts")[c("Package", "Version")]
-## NOTE: No subscripting using `$' or abbreviated field tags!
+## NOTE: No subscripting using '$' or abbreviated field tags!
 }
 \keyword{utilities}

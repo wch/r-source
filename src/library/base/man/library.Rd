@@ -67,8 +67,8 @@ require(package, quietly = FALSE, warn.conflicts = TRUE,
   \item{warn.conflicts}{logical.  If \code{TRUE}, warnings are
     printed about \code{\link{conflicts}} from attaching the new
     package, unless that package contains an object \code{.conflicts.OK}.}
-  \item{keep.source}{logical.  If \code{TRUE}, functions ``keep their
-    source'' including comments, see argument \code{keep.source} to
+  \item{keep.source}{logical.  If \code{TRUE}, functions \dQuote{keep their
+    source} including comments, see argument \code{keep.source} to
     \code{\link{options}}.}
   \item{verbose}{a logical.  If \code{TRUE}, additional diagnostics are
     printed.}
@@ -119,7 +119,7 @@ require(package, quietly = FALSE, warn.conflicts = TRUE,
   order).  It is a good place to put calls to \code{\link{library.dynam}}
   which are needed when loading a package into this function (don't call
   \code{library.dynam} directly, as this will not work if the package
-  is not installed in a ``standard'' location).  \code{.First.lib}
+  is not installed in a \dQuote{standard} location).  \code{.First.lib}
   is invoked after the search path interrogated by \code{search()}
   has been updated, so
   \code{as.environment(match("package:name"), search())} will return the
@@ -129,7 +129,7 @@ require(package, quietly = FALSE, warn.conflicts = TRUE,
   option \code{".First.lib"} has a list element with the package's name,
   this element is called in the same manner as \code{.First.lib} when
   the package is loaded.  This mechanism allows the user to set package
-  ``load hooks'' in addition to startup code as provided by the package
+  \dQuote{load hooks} in addition to startup code as provided by the package
   maintainers.
 
   \code{.Last.lib} is called when a package is detached.  Beware
@@ -137,7 +137,7 @@ require(package, quietly = FALSE, warn.conflicts = TRUE,
   should be written defensively. (It is called within \code{\link{try}},
   so errors will not stop the package being detached.)
 
-  \code{.packages()} returns the ``base names'' of the currently attached
+  \code{.packages()} returns the \dQuote{base names} of the currently attached
   packages \emph{invisibly} whereas
   \code{.packages(all.available = TRUE)} gives (visibly) \emph{all}
   packages available in the library location path \code{lib.loc}.
@@ -159,7 +159,7 @@ require(package, quietly = FALSE, warn.conflicts = TRUE,
   function is not meant to be called by users, and its interface might
   change in future versions.
 
-  \code{.Autoloaded} contains the ``base names'' of the packages for
+  \code{.Autoloaded} contains the \dQuote{base names} of the packages for
   which autoloading has been promised.
 
   \code{.Library} is a character string giving the location of the
@@ -193,11 +193,11 @@ require(package, quietly = FALSE, warn.conflicts = TRUE,
   package is available.
 }
 \section{Formal methods}{
-  \code{library} takes some further actions when package \code{methods}
+  \code{library} takes some further actions when package \pkg{methods}
   is attached (as it is by default).  Packages may define formal generic
   functions as well as re-defining functions in other packages (notably
-  \code{base}) to be generic, and this information is cached whenever
-  such a package is loaded after \code{methods} and re-defined functions
+  \pkg{base}) to be generic, and this information is cached whenever
+  such a package is loaded after \pkg{methods} and re-defined functions
   are excluded from the list of conflicts.  This may take appreciable
   time and can be prevented by defining an object \code{.noGenerics}
   (with any value) in the package.
@@ -246,8 +246,8 @@ require(package, quietly = FALSE, warn.conflicts = TRUE,
 .packages(all = TRUE)       # return all available as character vector
 library()                   # list all available packages
 library(lib = .Library)     # list all packages in the default library
-library(help = eda)         # documentation on package `eda'
-library(eda)                # load package `eda'
+library(help = eda)         # documentation on package 'eda'
+library(eda)                # load package 'eda'
 require(eda)                # the same
 (.packages())		    # "eda", too
 detach("package:eda")
@@ -266,8 +266,8 @@ detach(pos = match(paste("package", pkg, sep=":"), search()))
 .libPaths()                 # all library trees R knows about
 
 require(nonexistent)        # FALSE
-\dontrun{## Suppose a package needs to call a shared library named `fooEXT',
-## where `EXT' is the system-specific extension.  Then you should use
+\dontrun{## Suppose a package needs to call a shared library named 'fooEXT',
+## where 'EXT' is the system-specific extension.  Then you should use
 .First.lib <- function(lib, pkg) {
   library.dynam("foo", pkg, lib)
 }

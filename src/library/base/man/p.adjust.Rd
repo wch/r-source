@@ -87,7 +87,7 @@ p.adjust.methods
 }
 
 \seealso{
-  \code{pairwise.*} functions in the \code{ctest} package, such
+  \code{pairwise.*} functions in the \pkg{ctest} package, such
   as \code{\link[ctest]{pairwise.t.test}}.
 }
 

@@ -22,7 +22,7 @@ n2mfrow(nr.plots)
 n2mfrow(8) # 3 x 3
 
 n <- 5 ; x <- seq(-2,2, len=51)
-## suppose now that `n' is not known {inside function}
+## suppose now that 'n' is not known {inside function}
 op <- par(mfrow = n2mfrow(n))
 for (j in 1:n)
    plot(x, x^j, main = substitute(x^ exp, list(exp = j)), type='l', col="blue")

@@ -37,7 +37,7 @@ lowess(x, y, f=2/3, iter=3, delta=.01*diff(range(x)))
   LOWESS: A program for smoothing scatterplots by robust locally weighted
   regression. \emph{The American Statistician}, \bold{35}, 54.
 }
-\seealso{\code{\link[modreg]{loess}} (in package \code{modreg}), a newer
+\seealso{\code{\link[modreg]{loess}} (in package \pkg{modreg}), a newer
   formula based version of \code{lowess} (with different defaults!).
 }
 \examples{

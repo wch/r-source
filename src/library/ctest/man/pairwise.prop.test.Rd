@@ -1,6 +1,5 @@
 \name{pairwise.prop.test}
 \alias{pairwise.prop.test}
-%- Also NEED an `\alias' for EACH other topic documented here.
 \title{ Pairwise comparisons of proportions}
 \description{
   Calculate pairwise comparisons between pairs of proportions with

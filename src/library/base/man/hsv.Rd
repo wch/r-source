@@ -10,12 +10,13 @@ hsv(h=1, s=1, v=1, gamma=1)
 }
 \arguments{
   \item{h,s,v}{numeric vectors of values in the range \code{[0,1]} for
-    ``hue'', ``saturation'' and ``value'' to be combined to form a
-    vector of colors.  Values in shorter arguments are recycled.}
-  \item{gamma}{a ``gamma correction''}
+    \dQuote{hue}, \dQuote{saturation} and \dQuote{value} to be combined
+    to form a vector of colors.  Values in shorter arguments are
+    recycled.}
+  \item{gamma}{a \dQuote{gamma correction}}
 }
 \value{
-  This function creates a vector of ``colors'' corresponding to the
+  This function creates a vector of \dQuote{colors} corresponding to the
   given values in HSV space.  The values returned by \code{hsv} can be
   used with a \code{col=} specification in graphics functions or in
   \code{par}.

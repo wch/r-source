@@ -284,7 +284,7 @@ callGeneric(\dots)
   }
 }
 \references{
-  The R package \code{methods} implements, with a few exceptions, the
+  The R package \pkg{methods} implements, with a few exceptions, the
   programming interface for classes
   and methods in the book \emph{Programming with Data} (John
   M. Chambers, Springer, 1998), in particular sections 1.6, 2.7, 2.8,

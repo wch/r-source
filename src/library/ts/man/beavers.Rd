@@ -45,7 +45,7 @@
 }
 \examples{
 data(beavers)
-%% consider converting times to POSIXct (using `yday' ?)
+%% consider converting times to POSIXct (using 'yday' ?)
 
 (yl <- range(beaver1$temp, beaver2$temp))
 

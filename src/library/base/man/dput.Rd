@@ -38,7 +38,7 @@ dget(file)
 \examples{
 ## Write an ASCII version of mean to the file "foo"
 dput(mean, "foo")
-## And read it back into `bar'
+## And read it back into 'bar'
 bar <- dget("foo")
 unlink("foo")
 }

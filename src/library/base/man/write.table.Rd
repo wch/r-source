@@ -49,13 +49,13 @@ write.table(x, file = "", append = FALSE, quote = TRUE, sep = " ",
   \code{write.table} can be slow for data frames with large numbers
   (hundreds or more) of columns: this is inevitable as each column could
   be of a different class and so must be handled separately.
-  Function \code{\link[MASS]{write.matrix}} in package \code{MASS}
+  Function \code{\link[MASS]{write.matrix}} in package \pkg{MASS}
   may be much more efficient if \code{x} is a matrix or can be
   represented in a numeric matrix.
 }
 
 \seealso{
-  The `R Data Import/Export' manual.
+  The \dQuote{R Data Import/Export} manual.
   
   \code{\link{read.table}}, \code{\link{write}}.
 

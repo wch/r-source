@@ -49,8 +49,8 @@ na.pass(object, \dots)
 }
 \seealso{
   \code{\link{na.action}};
-  \code{\link{options}} with argument \code{na.action} for setting ``NA
-  actions'';
+  \code{\link{options}} with argument \code{na.action} for setting
+  \dQuote{NA actions};
   and \code{\link{lm}} and \code{\link{glm}} for functions using these.
 }
 \examples{

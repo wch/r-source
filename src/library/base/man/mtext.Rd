@@ -32,7 +32,7 @@ mtext(text, side = 3, line = 0, outer = FALSE, at = NA,
   or one of the outer margins of the device region.
 }
 \details{
-  The ``user coordinates'' in the outer margins always range from zero to
+  The \dQuote{user coordinates} in the outer margins always range from zero to
   one, and are not affected by the user coordinates in the figure
   region(s) --- \R is differing here from other implementations of S.
 

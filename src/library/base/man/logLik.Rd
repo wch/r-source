@@ -24,8 +24,8 @@ logLik(object, \dots)
 \description{
   This function is generic; method functions can be written to handle
   specific classes of objects.  Classes which already have methods for
-  this function include: \code{lm}, \code{nls} in package \bold{nls},
-  and \code{gls}, \code{lme} and others in package \bold{nlme}.
+  this function include: \code{lm}, \code{nls} in package \pkg{nls},
+  and \code{gls}, \code{lme} and others in package \pkg{nlme}.
 %   \code{corStruct}, \code{lmList}, \code{lmeStruct}, \code{reStruct}, and
 %   \code{varFunc}.
 }

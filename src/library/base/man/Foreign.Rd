@@ -26,7 +26,7 @@
     \code{\link{NaN}} or \code{\link{Inf}} values in the arguments are
     passed on to the foreign function.  If \code{FALSE}, the presence of
     \code{NA} or \code{NaN} or \code{Inf} values is regarded as an error.}
-  \item{DUP}{if \code{TRUE} then arguments are ``duplicated'' before
+  \item{DUP}{if \code{TRUE} then arguments are \dQuote{duplicated} before
     their address is passed to C or Fortran.}
   \item{PACKAGE}{if supplied, confine the search for the \code{name} to
     the DLL given by this argument (plus the conventional extension,
@@ -65,8 +65,8 @@
   compatibility with S version 4.
 
   For details about how to write code to use with \code{.Call} and
-  \code{.External}, see the chapter on ``System and foreign language
-  interfaces'' in ``Writing \R Extensions'' in the \file{doc/manual}
+  \code{.External}, see the chapter on \dQuote{System and foreign language
+  interfaces} in \dQuote{Writing \R Extensions} in the \file{doc/manual}
   subdirectory of the \R source tree.
 
 #ifdef windows

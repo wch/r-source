@@ -2,8 +2,8 @@
 \alias{read.fwf}
 \title{Read Fixed Width Format Files}
 \description{
-  Read a ``table'' of \bold{f}ixed \bold{w}idth \bold{f}ormatted data
-  into a \code{\link{data.frame}}.
+  Read a \dQuote{table} of \bold{f}ixed \bold{w}idth \bold{f}ormatted
+  data into a \code{\link{data.frame}}.
 }
 \usage{
 read.fwf(file, widths, sep = "\t", as.is = FALSE,

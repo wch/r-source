@@ -8,7 +8,6 @@
 \usage{
 commandArgs()
 }
-%- maybe also `usage' for other objects documented here.
 \details{
   These arguments are captured before the standard \R command line
   processing takes place.  This means that they are the unmodified

@@ -52,7 +52,7 @@ glm.fit.null(x, y, weights = rep(1, nrow(x)),
   \item{na.action}{a function which indicates what should happen
     when the data contain \code{NA}s.  The default is set by
     the \code{na.action} setting of \code{\link{options}}, and is
-    \code{\link{na.fail}} if that is unset.  The ``factory-fresh''
+    \code{\link{na.fail}} if that is unset.  The \dQuote{factory-fresh}
     default is \code{\link{na.omit}}.}
 
   \item{start}{starting values for the parameters in the linear predictor.}
@@ -275,7 +275,7 @@ structure(list(Treat = structure(c(2, 2, 2, 2, 2, 2, 2, 2, 2,
 "72"))}
 %% "else" (not testonly)
 \dontrun{
-## Need the anorexia data from a recent version of the package MASS:
+## Need the anorexia data from a recent version of the package 'MASS':
 library(MASS)
 data(anorexia)
 }

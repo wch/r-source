@@ -7,7 +7,7 @@
 }
 \usage{builtins(internal = FALSE)}
 \arguments{
-  \item{internal}{a logical indicating whether only ``internal''
+  \item{internal}{a logical indicating whether only \dQuote{internal}
     functions (which can be called via \code{\link{.Internal}}) should
     be returned.}
 }

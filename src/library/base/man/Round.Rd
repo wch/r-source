@@ -26,7 +26,7 @@ zapsmall(x, digits= getOption("digits"))
   \code{round} rounds the values in its first argument to the specified
   number of decimal places (default 0).
   Note that for rounding off a 5, the IEEE standard is used,
-  \emph{``go to the even digit''}.
+  \dQuote{\emph{go to the even digit}}.
   Therefore \code{round(0.5)} is \code{0} and \code{round(-1.5)} is \code{-2}.
 
   \code{signif} rounds the values in its first argument to the specified
@@ -36,9 +36,9 @@ zapsmall(x, digits= getOption("digits"))
   numeric vector containing the integers by truncating the values in
   \code{x} toward \code{0}.
 
-  \code{zapsmall} determines a \code{digits} argument \code{dr} for calling
-  \code{round(x, digits = dr)} such that values ``close to zero'' values
-  are ``zapped'', i.e., treated as \code{0}.
+  \code{zapsmall} determines a \code{digits} argument \code{dr} for
+  calling \code{round(x, digits = dr)} such that values \dQuote{close to
+    zero} values are \dQuote{zapped}, i.e., treated as \code{0}.
 }
 \arguments{
   \item{x}{a numeric vector.}

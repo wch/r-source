@@ -77,9 +77,9 @@ plot(function(x)pnorm(x, log=TRUE), -50, 10, main = "log { Normal Cumulative }")
 curve(log(pnorm(x)), add=TRUE, col="red",lwd=2)
 mtext("pnorm(x, log=TRUE)", adj=0); mtext("log(pnorm(x))", col="red", adj=1)
 
-## if you want the so-called `error function'
+## if you want the so-called 'error function'
 erf <- function(x) 2 * pnorm(x * sqrt(2)) - 1
-## and the so-called `complementary error function'
+## and the so-called 'complementary error function'
 erfc <- function(x) 2 * pnorm(x * sqrt(2), lower=FALSE)
 }
 \keyword{distribution}

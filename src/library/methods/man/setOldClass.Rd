@@ -48,7 +48,7 @@ setOldClass(Classes, where = 1)
 \details{
   Each of the names will be defined as a virtual class, extending the
   remaining classes in \code{Classes}, and the class
-  \code{oldClass}, which is the ``root'' of all old-style classes.
+  \code{oldClass}, which is the \dQuote{root} of all old-style classes.
   See \link{Methods} for the details of method dispatch and inheritance.
 
    The list \code{.OldClassesList} contains the old-style classes that
@@ -56,7 +56,7 @@ setOldClass(Classes, where = 1)
   old-style list, with multiple character strings if inheritance is
   included.
   Each element of the list was passed to \code{setOldClass} when
-  creating the methods package; therefore, these classes can be used
+  creating the \pkg{methods} package; therefore, these classes can be used
   in \code{\link{setMethod}} calls, with the inheritance as implied by
   the list.
 }

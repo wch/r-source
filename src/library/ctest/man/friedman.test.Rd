@@ -65,8 +65,8 @@
 }
 \examples{
 ## Hollander & Wolfe (1973), p. 140ff.
-## Comparison of three methods (``round out'', ``narrow angle'', and
-##  ``wide angle'') for rounding first base.  For each of 18 players
+## Comparison of three methods ("round out", "narrow angle", and
+##  "wide angle") for rounding first base.  For each of 18 players
 ##  and the three method, the average time of two runs from a point on
 ##  the first base line 35ft from home plate to a point 15ft short of
 ##  second base is recorded.

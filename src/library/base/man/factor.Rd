@@ -79,8 +79,8 @@ a.factor[i, drop = FALSE]
   \code{j}.  If no match is found for \code{x[i]} in \code{levels},
   then the \code{i}-th element of the result is set to \code{\link{NA}}.
 
-  Normally the `levels' used as an attribute of the result are the
-  reduced set of levels after removing those in \code{exclude}, but
+  Normally the \sQuote{levels} used as an attribute of the result are
+  the reduced set of levels after removing those in \code{exclude}, but
   this can be altered by supplying \code{labels}. This should either
   be a set of new labels for the levels, or a character string, in
   which case the levels are that character string with a sequence
@@ -122,7 +122,7 @@ a.factor[i, drop = FALSE]
 \seealso{
   \code{\link{[.factor}} for subsetting of factors.
   
-  \code{\link{gl}} for construction of ``balanced'' factors and
+  \code{\link{gl}} for construction of \dQuote{balanced} factors and
   \code{\link{C}} for factors with specified contrasts.
   \code{\link{levels}} and \code{\link{nlevels}} for accessing the
   levels,  and \code{\link{codes}} to get integer codes.

@@ -95,7 +95,7 @@ rbind(\dots, deparse.level = 1)
   frame.
 }
 \examples{
-cbind(1, 1:7) # the `1' (= shorter vector) is recycled
+cbind(1, 1:7) # the '1' (= shorter vector) is recycled
 cbind(1:7, diag(3))# vector is subset -> warning
 
 cbind(0, rbind(1, 1:3))

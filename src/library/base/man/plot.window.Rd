@@ -37,7 +37,7 @@ plot.window(xlim, ylim, log = "", asp = NA, \dots)
   \code{\link{plot.default}}.
 }
 \examples{
-##--- An example for the use of  `asp' :
+##--- An example for the use of 'asp' :
 library(mva)  # normally loaded
 data(eurodist)
 loc <- cmdscale(eurodist)

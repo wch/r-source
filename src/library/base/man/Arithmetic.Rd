@@ -35,7 +35,7 @@ unless \code{y == 0} where the result is \code{\link{NA}} or
 }
 \details{
     \code{1 ^ y} and \code{y ^ 0} are \code{1}, \emph{always}.
-    \code{x ^ y} should also give the proper ``limit'' result when
+    \code{x ^ y} should also give the proper \dQuote{limit} result when
     either argument is infinite (i.e., \code{+- \link{Inf}}).
 
     Objects such as arrays or time-series can be operated on this

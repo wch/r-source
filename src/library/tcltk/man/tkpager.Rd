@@ -7,7 +7,6 @@
 \usage{
 tkpager(file, header, title, delete.file)
 }
-%- maybe also `usage' for other objects documented here.
 \arguments{
   \item{file}{character vector containing the names of the
           files to be displayed}
@@ -20,8 +19,7 @@ tkpager(file, header, title, delete.file)
   quietly removed. The font and background colour are currently
   hardcoded to Courier and gray90.
 }
-\seealso{\code{\link{file.show}}}
-
-\examples{
+\seealso{
+  \code{\link{file.show}}
 }
-\keyword{ misc }%-- one or more ...
+\keyword{misc}

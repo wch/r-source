@@ -37,7 +37,7 @@ strwrap(x, width = 0.9 * getOption("width"), indent = 0, exdent = 0,
   string.
 }
 \examples{
-## Read in file `THANKS'.
+## Read in file 'THANKS'.
 x <- paste(readLines(file.path(R.home(), "THANKS")), collapse = "\n")
 ## Split into paragraphs and remove the first three ones
 x <- unlist(strsplit(x, "\n[ \t\n]*\n"))[-(1:3)]

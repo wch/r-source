@@ -3,7 +3,8 @@
 \title{Time Series Lag Plots}
 \description{
   Plot time series against lagged versions of themselves.
-  Helps visualizing ``auto-dependence'' even when auto-correlations vanish.
+  Helps visualizing \dQuote{auto-dependence} even when auto-correlations
+  vanish. 
 }
 \usage{
 lag.plot(x, lags = 1, layout = NULL, set.lags = 1:lags,

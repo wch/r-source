@@ -38,12 +38,12 @@ heatmap(x, Rowv, Colv, distfun = dist, hclustfun = hclust, add.expr,
   \code{dd <- as.dendrogram(hclustfun(distfun(X)))} where \code{X} is
   either \code{x} or \code{t(x)}.\cr
 
-  If either is a vector (of ``weights'') then the appropriate dendrogram
-  is reordered according to the supplied values subject to the
-  constraints imposed by the dendrogram, by \code{\link{reorder}(dd, Rowv)},
-  in the row case.  If either is missing, as by default, then the
-  ordering of the corresponding dendrogram is by the mean value of the
-  rows/columns, i.e., in the case of rows,
+  If either is a vector (of \dQuote{weights}) then the appropriate
+  dendrogram is reordered according to the supplied values subject to
+  the constraints imposed by the dendrogram, by \code{\link{reorder}(dd,
+    Rowv)}, in the row case.  If either is missing, as by default, then
+  the ordering of the corresponding dendrogram is by the mean value of
+  the rows/columns, i.e., in the case of rows,
   \code{Rowv <- rowMeans(x, na.rm=na.rm)}.
 
   By default (\code{scale = "row"}) the rows are scaled to have mean

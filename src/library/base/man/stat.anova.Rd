@@ -29,7 +29,7 @@ stat.anova(table, test = c("Chisq", "F", "Cp"), scale, df.scale, n)
 }
 \seealso{\code{\link{anova.lm}}, \code{\link{anova.glm}}.}
 \examples{
-##-- Continued from  ``?glm'':
+##-- Continued from '?glm':
 \testonly{example("glm", echo = FALSE)}
 print(ag <- anova(glm.D93))
 stat.anova(ag$table, test = "Cp",

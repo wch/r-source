@@ -25,7 +25,7 @@ nls.control(maxiter=50, tol=1e-05, minFactor=1/1024)
   \item{maxiter}{}
   \item{tol}{}
   \item{minFactor}{}
-  with meanings as explained under `Arguments'.
+  with meanings as explained under \sQuote{Arguments}.
 }
 \references{
   Bates and Watts (1988),

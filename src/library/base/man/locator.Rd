@@ -25,13 +25,13 @@ locator(n = 512, type = "n", \dots)
   at most \code{n} positions are determined.
 
 #ifdef unix
-The identification process can be terminated by pressing any mouse button
-other than the first.
+  The identification process can be terminated by pressing any mouse
+  button other than the first.
 #endif
 #ifdef windows
-The identification process can be terminated by clicking the second button
-and selecting `Stop' from the menu, or from the `Stop' menu on the
-graphics window.
+  The identification process can be terminated by clicking the second
+  button and selecting \sQuote{Stop} from the menu, or from the
+  \sQuote{Stop} menu on the graphics window.
 #endif
 
   The current graphics parameters apply just as if \code{plot.default}

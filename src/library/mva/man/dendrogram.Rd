@@ -31,7 +31,7 @@ as.dendrogram(object, \dots)
 \method{print}{dendrogram}(x, digits, \dots)
 \method{str}{dendrogram}(x, \dots)% codoc warning; MM: hate to document
 % all arguments: user should rather look at ?str
-% Also: `object' has different meaning here
+% Also: 'object' has different meaning here
 }
 \synopsis{
 str.dendrogram(object, max.level = 0, vec.len = 4, digits.d= 3, nchar.max= 128,

@@ -40,7 +40,7 @@ lm.influence(model, do.coef = TRUE)
   Cases omitted in the fit are omitted unless a \code{\link{na.action}}
   method was used (such as \code{\link{na.exclude}}) which restores them.
   
-  \item{hat}{a vector containing the diagonal of the ``hat'' matrix.}
+  \item{hat}{a vector containing the diagonal of the \dQuote{hat} matrix.}
   \item{coefficients}{(unless \code{do.coef} is false) a matrix whose
     i-th row contains the change in the estimated coefficients which
     results when the i-th case is dropped from the regression.  Note
@@ -94,6 +94,6 @@ summary(lm.SR <- lm(sr ~ pop15 + pop75 + dpi + ddpi,
         corr = TRUE)
 str(lmI <- lm.influence(lm.SR))
 
-## For more `user level' examples, use example(influence.measures)
+## For more "user level" examples, use example(influence.measures)
 }
 \keyword{regression}

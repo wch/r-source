@@ -8,8 +8,8 @@
   Create a set of confidence intervals on the differences between the
   means of the levels of a factor with the specified family-wise
   probability of coverage.  The intervals are based on the Studentized
-  range statistic, Tukey's `Honest Significant Difference' method.
-  There is a \code{plot} method.
+  range statistic, Tukey's \sQuote{Honest Significant Difference}
+  method.  There is a \code{plot} method.
 }
 \usage{
 TukeyHSD(x, which = seq(along=tabs), ordered = FALSE, conf.level = 0.95, \dots)

@@ -8,7 +8,7 @@ boxplot.stats(x, coef = 1.5, do.conf=TRUE, do.out=TRUE)
   \item{x}{a numeric vector for which the boxplot will
     be constructed (\code{\link{NA}}s and \code{\link{NaN}}s are allowed
     and omitted).}
-  \item{coef}{this determines how far the plot ``whiskers'' extend out
+  \item{coef}{this determines how far the plot \dQuote{whiskers} extend out
     from the box.  If \code{coef} is positive, the whiskers extend to the
     most extreme data point which is no more than \code{coef} times
     the length of the box away from the box. A value of zero causes
@@ -25,10 +25,10 @@ boxplot.stats(x, coef = 1.5, do.conf=TRUE, do.out=TRUE)
 \value{
   List with named components as follows:
   \item{stats}{a vector of length 5, containing the extreme of the
-    lower whisker, the lower ``hinge'', the median, the upper ``hinge''
+    lower whisker, the lower \dQuote{hinge}, the median, the upper \dQuote{hinge}
     and the extreme of the upper whisker.}
   \item{n}{the number of of non-\code{NA} observations in the sample.}
-  \item{conf}{the lower and upper extremes of the ``notch'' (\code{if(do.conf)}).}
+  \item{conf}{the lower and upper extremes of the \dQuote{notch} (\code{if(do.conf)}).}
   \item{out}{the values of any data points which lie beyond the
     extremes of the whiskers (\code{if(do.out)}).}
 
@@ -37,7 +37,7 @@ boxplot.stats(x, coef = 1.5, do.conf=TRUE, do.out=TRUE)
   \code{+- Inf} values.
 }
 \details{
-  The two ``hinges'' are versions of the first and third quartile,
+  The two \dQuote{hinges} are versions of the first and third quartile,
   i.e., close to \code{\link{quantile}(x, c(1,3)/4)}.  The hinges equal
   the quartiles for odd \eqn{n} (where \code{n <- length(x)}) and
   differ for even \eqn{n}. Where the quartiles only equal observations

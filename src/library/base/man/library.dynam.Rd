@@ -83,6 +83,6 @@ library.dynam.unload(chname, libpath,
   Wadsworth \& Brooks/Cole.
 }
 \examples{
-library.dynam()# which packages have been ``dynamically loaded''
+library.dynam() # which packages have been "dynamically loaded"
 }
 \keyword{data}

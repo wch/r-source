@@ -63,7 +63,7 @@ example(topic, package = .packages(), lib.loc = NULL,
 \seealso{\code{\link{demo}}}
 \examples{
 example(InsectSprays)
-## force use of the standard package eda:
+## force use of the standard package 'eda':
 example("smooth", package="eda", lib.loc=.Library)
 }
 \keyword{documentation}

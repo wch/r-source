@@ -17,8 +17,8 @@ is.nan(x)
   length as \code{x}, indicating which elements are finite (not infinite
   and not missing).
 
-  \code{Inf} and \code{-Inf} are positive and negative `infinity' whereas
-  \code{NaN} means ``Not a Number''.
+  \code{Inf} and \code{-Inf} are positive and negative \dQuote{infinity}
+  whereas \code{NaN} means \dQuote{Not a Number}.
 }
 \arguments{
   \item{x}{(numerical) object to be tested.}
@@ -52,7 +52,7 @@ is.nan(x)
   really are statements with a proper mathematical \emph{limit}.
 }
 \seealso{
-  \code{\link{NA}}, \emph{`Not Available'} which is not a number
+  \code{\link{NA}}, \sQuote{\emph{Not Available}} which is not a number
   as well, however usually used for missing values and applies to many
   modes, not just numeric.
 }

@@ -36,7 +36,7 @@ as.data.frame.table(x, row.names = NULL, optional = FALSE, \dots)
 }
 \details{
   If the argument \code{dnn} is not supplied, the internal function
-  \code{list.names} is called to compute the `dimname names'.  If the
+  \code{list.names} is called to compute the \sQuote{dimname names}.  If the
   arguments in \code{\dots} are named, those names are used.  For the
   remaining arguments, \code{deparse.level = 0} gives an empty name,
   \code{deparse.level = 1} uses the supplied argument if it is a symbol,
@@ -48,7 +48,7 @@ as.data.frame.table(x, row.names = NULL, optional = FALSE, \dots)
   There is a \code{summary} method for contingency table objects created
   by \code{table} or \code{xtabs}, which gives basic information and
   performs a chi-squared test for independence of factors (note that the
-  function \code{\link[ctest]{chisq.test}} in package \bold{ctest}
+  function \code{\link[ctest]{chisq.test}} in package \pkg{ctest}
   currently only handles 2-d tables).
 
   \code{as.table} and \code{is.table} coerce to and test for contingency
@@ -89,7 +89,7 @@ table(a, sample(a), deparse.level = 2) # dnn is c("a", "sample(a)")
 data(UCBAdmissions) ## already a contingency table
 DF <- as.data.frame(UCBAdmissions)
 class(tab <- xtabs(Freq ~ ., DF))# xtabs & table
-## tab *is* ``the same'' as the original table:
+## tab *is* "the same" as the original table:
 all(tab == UCBAdmissions)
 all.equal(dimnames(tab), dimnames(UCBAdmissions))
 

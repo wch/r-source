@@ -25,7 +25,7 @@ cmdscale(d, k = 2, eig = FALSE, add = FALSE, x.ret = FALSE)
   set of points such that the distances between the points are
   approximately equal to the dissimilarities.
 
-  The functions \code{isoMDS} and \code{sammon} in package \bold{MASS}
+  The functions \code{isoMDS} and \code{sammon} in package \pkg{MASS}
   provide alternative ordination techniques.
 
   When \code{add = TRUE}, an additive constant \eqn{c*} is computed, and
@@ -89,7 +89,7 @@ cmdscale(d, k = 2, eig = FALSE, add = FALSE, x.ret = FALSE)
 \seealso{
   \code{\link{dist}}.
   Also \code{\link[MASS]{isoMDS}} and \code{\link[MASS]{sammon}}
-  in package \bold{MASS}.
+  in package \pkg{MASS}.
 }
 \examples{
 data(eurodist)

@@ -18,7 +18,7 @@ fisher.test(x, y = NULL, workspace = 200000, hybrid = FALSE,
   \item{hybrid}{a logical indicating whether the exact probabilities
     (default) or a hybrid approximation thereof should be computed.
     In the hybrid case, asymptotic chi-squared probabilities are only
-    used provided that the ``Cochran'' conditions are satisfied.}
+    used provided that the \dQuote{Cochran} conditions are satisfied.}
   \item{or}{the hypothesized odds ratio.  Only used in the 2 by 2 case.}
   \item{alternative}{indicates the alternative hypothesis and must be
     one of \code{"two.sided"}, \code{"greater"} or \code{"less"}.

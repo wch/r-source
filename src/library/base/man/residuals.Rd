@@ -26,7 +26,7 @@ resid(object, \dots)
 
   All object classes which are returned by model fitting functions
   should provide a \code{residuals} method.  (Note that the method is
-  `residuals' and not `resid'.)
+  \samp{residuals} and not \samp{resid}.)
 
   Methods can make use of \code{\link{naresid}} methods to compensate
   for the omission of missing values.  The default method does.

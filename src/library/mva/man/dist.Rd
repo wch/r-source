@@ -53,9 +53,10 @@ as.dist(m, diag = FALSE, upper = FALSE)
     }
 
     \item{\code{binary}:}{(aka \emph{asymmetric binary}): The vectors
-      are regarded as binary bits, so non-zero elements are `on' and zero
-      elements are `off'.  The distance is the \emph{proportion} of
-      bits in which only one is on amongst those in which at least one is on.}
+      are regarded as binary bits, so non-zero elements are \sQuote{on}
+      and zero elements are \sQuote{off}.  The distance is the
+      \emph{proportion} of bits in which only one is on amongst those in
+      which at least one is on.}
   }
 
   Missing values are allowed, and are excluded from all computations
@@ -104,7 +105,7 @@ as.dist(m, diag = FALSE, upper = FALSE)
   \emph{Multivariate Analysis.} London: Academic Press.
 }
 \seealso{
-  \code{\link[cluster]{daisy}} in the \file{cluster} package with more
+  \code{\link[cluster]{daisy}} in the \pkg{cluster} package with more
   possibilities in the case of \emph{mixed} (contiuous / categorical)
   variables.
   \code{\link{hclust}}.

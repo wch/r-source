@@ -21,7 +21,7 @@ symnum(x, cutpoints=c(0.3, 0.6, 0.8, 0.9, 0.95),
     below) are used for intervals.}
   \item{symbols}{character vector, one shorter than (the
     \emph{augmented}, see \code{corr} below) \code{cutpoints}.
-    \code{symbols[j]}\eqn{= s_j}{ == s[j]} are used as ``code'' for
+    \code{symbols[j]}\eqn{= s_j}{ == s[j]} are used as \dQuote{code} for
     the (half open) interval \eqn{(c_j,c_{j+1}]}{(c[j], c[j+1]]}.
 
     For \code{logical} argument \code{x}, the default is
@@ -60,7 +60,7 @@ symnum(x, cutpoints=c(0.3, 0.6, 0.8, 0.9, 0.95),
   it has an attribute \code{"legend"} containing a legend
   of the returned character codes, in the form
   \deqn{c_1 s_1 c_2 s_2 \dots s_n c_{n+1}}{% the dots are UGLY in LaTeX Math
-    c[1] `s[1]' c[2] `s[2]' \dots `s[n]' c_[n+1]}
+    c[1] \sQuote{s[1]} c[2] \sQuote{s[2]} \dots \sQuote{s[n]} c_[n+1]}
   where \eqn{c_j}{c[j]}\code{ = cutpoints[j]} and
   \eqn{s_j}{s[j]}\code{ = symbols[j]}.
 }

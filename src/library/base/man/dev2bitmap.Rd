@@ -27,7 +27,8 @@ dev2bitmap(file, type = "png256", height = 6, width = 6, res = 72,
   \code{dev2bitmap} works by copying the current device to a
   \code{\link{postscript}} device, and post-processing the output file
   using \code{ghostscript}.  \code{bitmap} works in the same way using a
-  \code{postscript} device and postprocessing the output as ``printing''.
+  \code{postscript} device and postprocessing the output as
+  \dQuote{printing}.
 
   You will need a recent version of \code{ghostscript} (5.10 and
   later have been tested): the full path to the executable can be set by

@@ -20,7 +20,7 @@
     given by the values in the vector.  If \code{height} is a matrix
     and \code{beside} is \code{FALSE} then each bar of the plot
     corresponds to a column of \code{height}, with the values in the
-    column giving the heights of stacked ``sub-bars'' making up the
+    column giving the heights of stacked \dQuote{sub-bars} making up the
     bar.  If \code{height} is a matrix and \code{beside} is
     \code{TRUE}, then the values in each column are juxtaposed
     rather than stacked.}
@@ -118,7 +118,7 @@
 \examples{
 tN <- table(Ni <- rpois(100, lambda=5))
 r <- barplot(tN, col='gray')
-#- type = "h" plotting *is* `bar'plot
+#- type = "h" plotting *is* 'bar'plot
 lines(r, tN, type='h', col='red', lwd=2)
 
 barplot(tN, space = 1.5, axisnames=FALSE,

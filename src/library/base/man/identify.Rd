@@ -1,12 +1,12 @@
 \name{identify}
+\alias{identify}
+\alias{identify.default}
 \title{Identify Points in a Scatter Plot}
 \usage{
 identify(x, \dots)
 identify.default(x, y = NULL, labels = seq(along = x), pos = FALSE,
                  n = length(x), plot = TRUE, offset = 0.5, \dots)
 }
-\alias{identify}
-\alias{identify.default}
 \arguments{
   \item{x,y}{coordinates of points in a scatter plot.  Alternatively, any
     object which defines coordinates (a plotting structure, time
@@ -38,13 +38,13 @@ identify.default(x, y = NULL, labels = seq(along = x), pos = FALSE,
   of the identified point, depending on where the cursor was.
 
 #ifdef unix
-The identification process is terminated by pressing any mouse button
-other than the first.
+  The identification process is terminated by pressing any mouse button
+  other than the first.
 #endif
 #ifdef windows
-The identification process is terminated by clicking the second button
-and selecting `Stop' from the menu, or from the `Stop' menu on the
-graphics window.
+  The identification process is terminated by clicking the second button
+  and selecting \sQuote{Stop} from the menu, or from the \sQuote{Stop}
+  menu on the graphics window.
 #endif
  
   On most devices which support \code{locator}, successful selection of

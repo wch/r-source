@@ -25,11 +25,11 @@
   }
 }
 \details{
-  Data on the ``velocity'' of an enzymatic reaction were obtained by
-  Treloar (1974).  The number of counts per minute of radioactive
+  Data on the \dQuote{velocity} of an enzymatic reaction were obtained
+  by Treloar (1974).  The number of counts per minute of radioactive
   product from the reaction was measured as a function of substrate
   concentration in parts per million (ppm) and from these counts the
-  initial rate, or ``velocity,'' of the reaction was calculated
+  initial rate, or \dQuote{velocity,} of the reaction was calculated
   (counts/min/min).  The experiment was conducted once with the enzyme
   treated with Puromycin, and once with the enzyme untreated.
 }

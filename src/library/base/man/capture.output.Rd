@@ -1,6 +1,5 @@
 \name{capture.output}
 \alias{capture.output}
-%- Also NEED an `\alias' for EACH other topic documented here.
 \title{Send output to a character string or file}
 \description{
   Evaluates its arguments with the output being returned as a character

@@ -30,7 +30,7 @@ match.arg(arg, choices)
   \code{\link{match.call}}.
 }
 \examples{
-## Extends the example for `switch'
+## Extends the example for 'switch'
 center <- function(x, type = c("mean", "median", "trimmed")) {
   type <- match.arg(type)
   switch(type,

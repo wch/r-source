@@ -19,7 +19,7 @@ as.hclust.twins(x, \dots)
 \details{
   Currently there is only support for converting objects of
   class \code{"twins"} as produced by the functions \code{diana} and
-  \code{agnes} from the package \file{cluster}.
+  \code{agnes} from the package \pkg{cluster}.
 }
 \value{
   An object of class \code{"hclust"}.

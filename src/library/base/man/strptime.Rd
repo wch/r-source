@@ -157,7 +157,7 @@ format(Sys.time(), "\%a \%b \%d \%X \%Y")
 ## format(Sys.time(), "\%a \%b \%d \%X \%Y \%Z")
 ## but this crashes some Linux systems
 
-## read in date info in format `ddmmmyyyy'
+## read in date info in format 'ddmmmyyyy'
 ## This will give NA(s) in some locales; setting the C locale
 ## as in the commented lines will overcome this on most systems.
 ## lct <- Sys.getlocale("LC_TIME"); Sys.setlocale("LC_TIME", "C")
@@ -166,7 +166,7 @@ z <- strptime(x, "\%d\%b\%Y")
 ## Sys.setlocale("LC_TIME", lct)
 z
 
-## read in date/time info in format `m/d/y h:m:s'
+## read in date/time info in format 'm/d/y h:m:s'
 dates <- c("02/27/92", "02/27/92", "01/14/92",
            "02/28/92", "02/01/92")
 times <- c("23:03:20", "22:29:56", "01:03:30",

@@ -35,7 +35,7 @@ xtabs(formula = ~., data = parent.frame(), subset, na.action,
   There is a \code{summary} method for contingency table objects created
   by \code{table} or \code{xtabs}, which gives basic information and
   performs a chi-squared test for independence of factors (note that the
-  function \code{\link[ctest]{chisq.test}} in package \bold{ctest}
+  function \code{\link[ctest]{chisq.test}} in package \pkg{ctest}
   currently only handles 2-d tables).
 
   If a left hand side is given in \code{formula}, its entries are simply
@@ -47,14 +47,14 @@ xtabs(formula = ~., data = parent.frame(), subset, na.action,
     "table")}, with a \code{"call"} attribute storing the matched call.
 }
 \seealso{
-  \code{\link{table}} for ``traditional'' cross-tabulation, and
+  \code{\link{table}} for \dQuote{traditional} cross-tabulation, and
   \code{\link{as.data.frame.table}} which is the inverse operation of
   \code{xtabs} (see the \code{DF} example below).
 }
 \examples{
 data(esoph)
-## `esoph' has the frequencies of cases and controls for all levels of
-## the variables `agegp', `alcgp', and `tobgp'.
+## 'esoph' has the frequencies of cases and controls for all levels of
+## the variables 'agegp', 'alcgp', and 'tobgp'.
 xtabs(cbind(ncases, ncontrols) ~ ., data = esoph)
 ## Output is not really helpful ... flat tables are better:
 ftable(xtabs(cbind(ncases, ncontrols) ~ ., data = esoph))
@@ -64,8 +64,8 @@ ftable(xtabs(cbind(ncases, ncontrols) ~ agegp, data = esoph))
 data(UCBAdmissions)
 ## This is already a contingency table in array form.
 DF <- as.data.frame(UCBAdmissions)
-## Now `DF' is a data frame with a grid of the factors and the counts
-## in variable `Freq'.
+## Now 'DF' is a data frame with a grid of the factors and the counts
+## in variable 'Freq'.
 DF
 ## Nice for taking margins ...
 xtabs(Freq ~ Gender + Admit, DF)

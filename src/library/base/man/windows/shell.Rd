@@ -11,7 +11,7 @@ shell(cmd, shell, flag="/c", intern=FALSE, wait=TRUE,
   \item{cmd}{the system command to be invoked, as a string.}
   \item{shell}{a string giving the name of the shell to be used, or
     \code{NULL} (no shell). If missing, a suitable shell is chosen:
-    see `details'}
+    see \sQuote{Details}.}
   \item{flag}{the switch to run a command under the shell. If the
     shell is \code{bash} or \code{tcsh} the default is changed to
     \code{"-c"}.}

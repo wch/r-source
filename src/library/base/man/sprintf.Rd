@@ -85,7 +85,7 @@ sprintf(fmt, \dots)
 }
 
 \examples{
-% Escape all the `%' here !
+% Escape all the '%' here !
 ## be careful with the format: most things in R are floats
 
 sprintf("\%s is \%f feet tall\n", "Sven", 7) # OK
@@ -119,7 +119,7 @@ sprintf("\%1.f",101)
 ## More sophisticated:
 
 lapply(c("a", "ABC", "and an even longer one"),
-       function(ch) sprintf("10-string `\%10s'", ch))
+       function(ch) sprintf("10-string '\%10s'", ch))
 
 sapply(1:18, function(n)
        sprintf(paste("e with \%2d digits = \%.",n,"g",sep=""),

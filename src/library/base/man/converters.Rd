@@ -34,7 +34,7 @@ removeCConverter(id)
  The internal list of converters is potentially used when converting
 individual arguments in a \code{\link{.C}} call.  If an argument has a
 non-trivial class attribute, we iterate over the list of converters
-looking for the first that ``matches''. If we find a matching
+looking for the first that \dQuote{matches}.  If we find a matching
 converter, we have it create the C-level pointer corresponding to the
 R object.  When the call to the C routine is complete, we use the same
 converter for that argument to reverse the conversion and create an R

@@ -31,9 +31,9 @@ monthplot(x, labels = NULL, times, phase, base, choice, \ldots)
 }
 \arguments{
   \item{x}{Time series or related object.}
-  \item{labels}{Labels to use for each ``season''.}
+  \item{labels}{Labels to use for each \dQuote{season}.}
   \item{times}{Time of each observation.}
-  \item{phase}{Indicator for each ``season''.}
+  \item{phase}{Indicator for each \dQuote{season}.}
   \item{base}{Function to use for reference line for subseries.}
   \item{choice}{Which series of an \code{stl} or \code{StructTS} object?}
   \item{\dots}{Graphical parameters.}

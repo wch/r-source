@@ -51,13 +51,13 @@ rm(lm)
 
 \dontrun{apropos(".", mode="list") # a long list}
 
-# need a DOUBLE backslash `\\\\' (in case you don't see it anymore)
+# need a DOUBLE backslash '\\\\' (in case you don't see it anymore)
 apropos("\\\\[")
 
 \dontrun{# everything % not diff-able
 length(apropos("."))
 
-# those starting with `pr'
+# those starting with 'pr'
 apropos("^pr")
 
 # the 1-letter things

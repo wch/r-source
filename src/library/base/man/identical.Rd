@@ -30,7 +30,7 @@ identical(x, y)
 
   The function \code{all.equal} is also sometimes used to test equality
   this way, but it was intended for something different.  First, it
-  tries to allow for ``reasonable'' differences in numeric results.
+  tries to allow for \dQuote{reasonable} differences in numeric results.
   Second, it returns a descriptive character vector instead of
   \code{FALSE} when the objects do not match.  Therefore, it is not the
   right function to use for reliable testing either.  (If you \emph{do} want

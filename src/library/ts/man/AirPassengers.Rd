@@ -19,7 +19,7 @@
 \dontrun{## These are quite slow and so not run by example(AirPassengers)
 
 data(AirPassengers)
-## The classic `airline model', by full ML
+## The classic 'airline model', by full ML
 (fit <- arima(log10(AirPassengers), c(0, 1, 1),
               seasonal = list(order=c(0, 1 ,1), period=12)))
 update(fit, method = "CSS")

@@ -16,7 +16,7 @@ points.default(x, y=NULL, type="p", pch=par("pch"), col=par("col"),
   \item{x, y}{coordinate vectors of points to plot.}
   \item{type}{character indicating the type of plotting; actually any of
     the \code{type}s as in \code{\link{plot}}.}
-  \item{pch}{plotting ``character'', i.e., symbol to use.  \code{pch} can
+  \item{pch}{plotting \dQuote{character}, i.e., symbol to use.  \code{pch} can
     either be a \code{\link{character}} or an integer code for a set of
     graphics symbols.  The full set of S symbols is available with
     \code{pch=0:18}, see the last picture from \code{example(points)},
@@ -39,7 +39,7 @@ points.default(x, y=NULL, type="p", pch=par("pch"), col=par("col"),
     give the text symbol in the encoding in use (see \code{\link{postscript}}).
   }
   \item{col}{color code or name, see \code{\link{par}}.}
-  \item{bg}{background (``fill'') color for open plot symbols}
+  \item{bg}{background (\dQuote{fill}) color for open plot symbols}
   \item{cex}{character expansion: a numerical vector.}
   \item{\dots}{Further graphical parameters (see \code{\link{plot.xy}}
     and \code{\link{par}}) may also be supplied as arguments.}
@@ -64,7 +64,7 @@ points.default(x, y=NULL, type="p", pch=par("pch"), col=par("col"),
 }
 \seealso{
   \code{\link{plot}}, \code{\link{lines}}, and the underlying
-  ``primitive'' \code{\link{plot.xy}}.
+  \dQuote{primitive} \code{\link{plot.xy}}.
 }
 \examples{
 plot(-4:4, -4:4, type = "n")# setting up coord. system
@@ -73,7 +73,7 @@ points(rnorm(100)/2, rnorm(100)/2, col = "blue", cex = 1.5)
 
 op <- par(bg = "light blue")
 x <- seq(0,2*pi, len=51)
-## something ``between type="b" and type="o" '' :
+## something "between type='b' and type='o'":
 plot(x, sin(x), type="o", pch=21, bg=par("bg"), col = "blue", cex=.6,
  main='plot(..., type="o", pch=21, bg=par("bg"))')
 par(op)

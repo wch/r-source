@@ -22,7 +22,7 @@
   site file is the one pointed to by the environment variable
   \code{R\_ENVIRON}; if this is unset or empty,
   \file{\$R\_HOME/etc/Renviron.site} is used (if it exists, which it
-  does not in a ``factory-fresh'' installation).
+  does not in a \dQuote{factory-fresh} installation).
   The user files searched for are \file{.Renviron} in the
   current or in the user's home directory (in that order).
   See \bold{Details} for how the files are read.
@@ -32,8 +32,8 @@
   taken from the value of the \code{R\_PROFILE} environment variable.
   If this variable is unset, the default is
   \file{\$R\_HOME/etc/Rprofile.site}, which is used if it exists
-  (which it does not in a ``factory-fresh'' installation).
-  This code is loaded into package \code{base}.  Users need to be
+  (which it does not in a \dQuote{factory-fresh} installation).
+  This code is loaded into package \pkg{base}.  Users need to be
   careful not to unintentionally overwrite objects in base, and it
   is normally advisable to use \code{\link{local}} if code needs to be
   executed: see the examples.
@@ -49,7 +49,7 @@
 
   Next, if a function \code{.First} is found on the search path,
   it is executed as \code{.First()}.
-  Finally, function \code{.First.sys()} in the base package is run.
+  Finally, function \code{.First.sys()} in the \pkg{base} package is run.
   This calls \code{\link{require}} to attach the default packages
   specified by \code{\link{options}("defaultPackages")}.
 

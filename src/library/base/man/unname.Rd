@@ -9,7 +9,7 @@
 unname(obj, force = FALSE)
 }
 \arguments{
- \item{obj}{the \R object which is wanted ``nameless''.}
+ \item{obj}{the \R object which is wanted \dQuote{nameless}.}
  \item{force}{logical; if true, the \code{dimnames} are even removed
    from \code{\link{data.frame}}s.
    \emph{This argument is currently \bold{experimental} and hence

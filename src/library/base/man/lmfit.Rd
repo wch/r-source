@@ -64,7 +64,7 @@ str(lmw <- lm.wfit(x=X, y=y, w=w))
 
 str(lm. <- lm.fit (x=X, y=y))
 
-%% do an example which sets `tol' and gives a difference!
+%% do an example which sets 'tol' and gives a difference!
 }
 \keyword{regression}
 \keyword{array}

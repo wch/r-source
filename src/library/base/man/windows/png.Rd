@@ -23,7 +23,7 @@ png(filename = "Rplot\%03d.png", width = 480, height = 480, pointsize = 12,
    72 dpi, so one point is approximately one pixel.}
  \item{bg}{the initial background colour: can be overridden by setting
    par("bg").} 
- \item{quality}{the `quality' of the JPEG image, as a
+ \item{quality}{the \sQuote{quality} of the JPEG image, as a
    percentage. Smaller values will give more compression but also more
    degradation of the image.}
 }
@@ -35,7 +35,7 @@ png(filename = "Rplot\%03d.png", width = 480, height = 480, pointsize = 12,
   but may be useful for image plots, for example. The BMP format is
   standard on Windows, and supported elsewhere.
 
-  \code{png} supports transparent backgrounds on 16-bit (`High Color') or
+  \code{png} supports transparent backgrounds on 16-bit (\sQuote{High Color}) or
   better screens: use \code{bg = "transparent"}.
   Not all PNG viewers render files with transparency correctly.
 }

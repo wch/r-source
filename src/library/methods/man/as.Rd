@@ -117,7 +117,7 @@ setAs(from, to, def, replace, where = 1)
   As a first step in conversion, the \code{as} function determines
   whether \code{is(object, Class)} is \code{TRUE}.  This can be the case
   either because the class definition of \code{object} includes
-  \code{Class} as a ``super class'' (directly or indirectly), or because
+  \code{Class} as a \dQuote{super class} (directly or indirectly), or because
   a call to \code{\link{setIs}} established the relationship.
 
   Either way, the inheritance relation defines a method to coerce
@@ -177,8 +177,8 @@ setAs(from, to, def, replace, where = 1)
 \section{The Function `as' Used in Replacements}{
   %% </FIXME>    
   When \code{as} appears on the left of an assignment, the intuitive
-  meaning is ``Replace the part of \code{object} that was inherited from
-  \code{Class} by the \code{value} on the right of the assignment.''
+  meaning is \dQuote{Replace the part of \code{object} that was inherited from
+  \code{Class} by the \code{value} on the right of the assignment.}
 
   This usually has a straightforward interpretation, but you can control
   explicitly what happens, and sometimes you should to avoid possible
@@ -219,15 +219,15 @@ setAs(from, to, def, replace, where = 1)
   }
 
 \references{
-  The R package \code{methods} implements, with a few exceptions, the
+  The R package \pkg{methods} implements, with a few exceptions, the
   programming interface for classes
   and methods in the book \emph{Programming with Data} (John
   M. Chambers, Springer, 1998), in particular sections 1.6, 2.7, 2.8,
   and chapters 7 and 8.
 
-  While the programming interface for the methods package follows the reference,
-  the R software is an original implementation, so details in
-  the reference that reflect the S4 implementation may appear
+  While the programming interface for the \pkg{methods} package follows
+  the reference, the R software is an original implementation, so
+  details in the reference that reflect the S4 implementation may appear
   differently in R.  Also, there are extensions to the programming
   interface developed more recently than the reference.  For a
   discussion of details and ongoing development, see the web page 

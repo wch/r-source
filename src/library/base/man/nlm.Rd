@@ -62,7 +62,7 @@ nlm(f, p, hessian = FALSE, typsize=rep(1, length(p)), fscale=1,
   gradient is present and passes the sanity checks.
 
   From the three methods available in the original source, we always use
-  method ``1'' which is line search.
+  method \dQuote{1} which is line search.
 }
 \value{
   A list containing the following components:
@@ -105,7 +105,7 @@ nlm(f, p, hessian = FALSE, typsize=rep(1, length(p)), fscale=1,
   \code{\link{deriv}} to calculate analytical derivatives.
 
   For nonlinear regression, \code{\link[nls]{nls}} (in package
-  \code{nls}), may be of better use.
+  \pkg{nls}), may be of better use.
 }
 \examples{
 f <- function(x) sum((x-1:length(x))^2)

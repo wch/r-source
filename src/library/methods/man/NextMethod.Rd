@@ -26,7 +26,7 @@ Calling with no arguments is often the natural way to use
     }
 }
 \details{
-  The ``next'' method (i.e., the first inherited method) is defined to
+  The \dQuote{next} method (i.e., the first inherited method) is defined to
     be that method
   which \emph{would} have been called if the current method did not
   exist.
@@ -52,7 +52,7 @@ Calling with no arguments is often the natural way to use
   call are still missing (remember that \code{"missing"} is a valid
   class in a method signature).  For a formal argument, say \code{x}, that
   appears in the original call, there is a corresponding argument in the
-  next method call equivalent to ``\code{x = x}''.  In effect, this
+  next method call equivalent to \dQuote{\code{x = x}}.  In effect, this
   means that the next method sees the same actual arguments, but
   arguments are evaluated only once.
 }
@@ -60,16 +60,16 @@ Calling with no arguments is often the natural way to use
   The value returned by the selected method.
 }
 \references{
-  The R package \code{methods} implements, with a few exceptions, the
+  The R package \pkg{methods} implements, with a few exceptions, the
   programming interface for classes
   and methods in the book \emph{Programming with Data} (John
   M. Chambers, Springer, 1998), in particular sections 1.6, 2.7, 2.8,
   and chapters 7 and 8.
 
-  While the programming interface for the methods package follows the reference,
-  the R software is an original implementation, so details in
-  the reference that reflect the S4 implementation may appear
-  differently in R.  Also, there are extensions to the programming
+  While the programming interface for the \pkg{methods} package follows
+  the reference, the R software is an original implementation, so
+  details in the reference that reflect the S4 implementation may appear
+  differently in R.  Also, there are extensions to the programming 
   interface developed more recently than the reference.  For a
   discussion of details and ongoing development, see the web page 
   \url{http://developer.r-project.org/methodsPackage.html} and the

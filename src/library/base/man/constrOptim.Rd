@@ -74,7 +74,7 @@ fr <- function(x) {   ## Rosenbrock Banana function
     x2 <- x[2]
     100 * (x2 - x1 * x1)^2 + (1 - x1)^2
 }
-grr <- function(x) { ## Gradient of `fr'
+grr <- function(x) { ## Gradient of 'fr'
     x1 <- x[1]
     x2 <- x[2]
     c(-400 * x1 * (x2 - x1 * x1) - 2 * (1 - x1),
@@ -91,7 +91,7 @@ constrOptim(c(.5,0), fr, grr, ui=rbind(c(-1,0),c(1,-1)), ci=c(-0.9,0.1))
 ## Solves linear and quadratic programming problems
 ## but needs a feasible starting value
 #
-# from example(solve.QP) in `quadprog'
+# from example(solve.QP) in 'quadprog'
 # no derivative
 fQP <- function(b) {-sum(c(0,5,0)*b)+0.5*sum(b*b)}
 Amat       <- matrix(c(-4,-3,0,2,1,0,0,-2,1),3,3)

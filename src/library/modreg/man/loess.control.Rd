@@ -31,7 +31,7 @@ loess.control(surface = c("interpolate", "direct"),
   \item{trace.hat}{}
   \item{cell}{}
   \item{iterations}{}
-  with meanings as explained under `Arguments'.
+  with meanings as explained under \sQuote{Arguments}.
 }
 \seealso{\code{\link{loess}}}
 \keyword{smooth}

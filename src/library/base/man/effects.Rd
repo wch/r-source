@@ -39,8 +39,8 @@ effects.lm(object, set.sign=FALSE, \dots)
 
   The first \eqn{r} rows are labelled by the corresponding coefficients,
   and the remaining rows are unlabelled.  Note that in rank-deficient
-  models the ``corresponding''
-  coefficients will be in a different order if pivoting occurred.
+  models the \dQuote{corresponding} coefficients will be in a different
+  order if pivoting occurred.
 }
 \references{
   Chambers, J. M. and Hastie, T. J. (1992)

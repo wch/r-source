@@ -51,11 +51,12 @@ setValidity(Class, method, where = 1 )
     \code{validObject}.
 }
 \details{
-  Validity testing takes place ``bottom up'':  first the validity of the
-  object's slots, if any, is tested.  Then for each of the classes that
-  this class extends (the ``superclasses''), the explicit validity
-  method of that class is called, if one exists.  Finally, the validity
-  method of \code{object}'s class is called, if there is one.
+  Validity testing takes place \dQuote{bottom up}:  first the validity
+  of the object's slots, if any, is tested.  Then for each of the
+  classes that this class extends (the \dQuote{superclasses}), the
+  explicit validity method of that class is called, if one exists.
+  Finally, the validity method of \code{object}'s class is called, if
+  there is one.
 
   Testing generally stops at the first stage of finding an error, except
   that all the slots will be examined even if a slot has failed its
@@ -68,15 +69,14 @@ setValidity(Class, method, where = 1 )
   with the corresponding strings in the error message.
 }
 \references{
-  The R package \code{methods} implements, with a few exceptions, the
-  programming interface for classes
-  and methods in the book \emph{Programming with Data} (John
-  M. Chambers, Springer, 1998), in particular sections 1.6, 2.7, 2.8,
-  and chapters 7 and 8.
+  The R package \pkg{methods} implements, with a few exceptions, the
+  programming interface for classes and methods in the book
+  \emph{Programming with Data} (John M. Chambers, Springer, 1998), in
+  particular sections 1.6, 2.7, 2.8, and chapters 7 and 8.
 
-  While the programming interface for the methods package follows the reference,
-  the R software is an original implementation, so details in
-  the reference that reflect the S4 implementation may appear
+  While the programming interface for the \pkg{methods} package follows
+  the reference, the R software is an original implementation, so
+  details in the reference that reflect the S4 implementation may appear
   differently in R.  Also, there are extensions to the programming
   interface developed more recently than the reference.  For a
   discussion of details and ongoing development, see the web page 

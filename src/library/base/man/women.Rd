@@ -19,8 +19,8 @@
   Actuaries \emph{Build and Blood Pressure Study} for some (unknown to
   us) earlier year.
     
-  The World Almanac notes: ``The figures represent weights in ordinary
-  indoor clothing and shoes, and heights with shoes.
+  The World Almanac notes: \dQuote{The figures represent weights in
+    ordinary indoor clothing and shoes, and heights with shoes}.
 }
 \references{
   McNeil, D. R. (1977)

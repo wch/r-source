@@ -13,7 +13,8 @@ dimnames(x) <- value
 }
 \arguments{
   \item{x}{an \R object, for example a matrix, array or data frame.}
-  \item{value}{a possible value for \code{dimnames(x)}: see ``Value''.}
+  \item{value}{a possible value for \code{dimnames(x)}: see
+    \dQuote{Value}.}
 }
 \details{
   The functions \code{dimnames} and \code{dimnames<-} are generic.

@@ -39,7 +39,7 @@ be most complete on Windows NT/2000/XP systems.
   built on: they may well be different.
 }
 \note{
-  The meaning of OS ``release'' and ``version'' is highly
+  The meaning of OS \dQuote{release} and \dQuote{version} is highly
   system-dependent and there is no guarantee that the node or
   login or user names will be what you might reasonably expect.
   (In particular on some Linux distributions the login name is unknown

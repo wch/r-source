@@ -19,7 +19,7 @@ plot.xy(xy, type, pch=1, lty="solid", col=par("fg"), bg=NA, cex=1, \dots)
   \item{lty}{line type code, see \code{\link{lines}}.}
   \item{col}{color code or name, see \code{\link{colors}},
     \code{\link{palette}}.}
-  \item{bg}{background (``fill'') color for open plot symbols.}
+  \item{bg}{background (\dQuote{fill}) color for open plot symbols.}
   \item{cex}{character expansion.}
   \item{\dots}{further graphical parameters.}
 }

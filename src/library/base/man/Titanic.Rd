@@ -4,7 +4,7 @@
 \title{Survival of passengers on the Titanic}
 \description{
   This data set provides information on the fate of passengers on the
-  fatal maiden voyage of the ocean liner `Titanic', summarized according
+  fatal maiden voyage of the ocean liner \sQuote{Titanic}, summarized according
   to economic status (class), sex, age and survival.
 }
 \usage{data(Titanic)}
@@ -24,17 +24,18 @@
 \details{
   The sinking of the Titanic is a famous event, and new books are still
   being published about it.  Many well-known facts---from the
-  proportions of first-class passengers to the ``women and children
-  first'' policy, and the fact that that policy was not entirely
-  successful in saving the women and children in the third class---are
-  reflected in the survival rates for various classes of passenger.
+  proportions of first-class passengers to the \dQuote{women and
+    children first} policy, and the fact that that policy was not
+  entirely successful in saving the women and children in the third
+  class---are reflected in the survival rates for various classes of
+  passenger.
 
   These data were originally collected by the British Board of Trade in
   their investigation of the sinking.  Note that there is not complete
   agreement among primary sources as to the exact numbers on board,
   rescued, or lost.
 
-  Due in particular to the very successful film `Titanic', the last
+  Due in particular to the very successful film \sQuote{Titanic}, the last
   years saw a rise in public interest in the Titanic.  Very detailed
   data about the passengers is now available on the Internet, at sites
   such as \emph{Encyclopedia Titanica}
@@ -42,7 +43,7 @@
 }
 \source{
   Dawson, Robert J. MacG. (1995),
-  The `Unusual Episode' Data Revisited.
+  The \sQuote{Unusual Episode} Data Revisited.
   \emph{Journal of Statistics Education}, \bold{3}.
   \url{http://www.amstat.org/publications/jse/v3n3/datasets.dawson.html}
 
@@ -51,7 +52,7 @@
   originally collected by the British Board of Trade and reprinted in:
 
   British Board of Trade (1990),
-  \emph{Report on the Loss of the `Titanic' (S.S.)}.
+  \emph{Report on the Loss of the \sQuote{Titanic} (S.S.)}.
   British Board of Trade Inquiry Report (reprint).
   Gloucester, UK: Allan Sutton Publishing.
 }
@@ -62,6 +63,6 @@ mosaicplot(Titanic, main = "Survival on the Titanic")
 apply(Titanic, c(3, 4), sum)
 ## Higher survival rates in females?
 apply(Titanic, c(2, 4), sum)
-## Use loglm() in package `MASS' for further analysis ...
+## Use loglm() in package 'MASS' for further analysis ...
 }
 \keyword{datasets}

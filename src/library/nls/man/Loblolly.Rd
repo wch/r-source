@@ -23,12 +23,13 @@
   }
 }
 \source{
-  Kung, F. H. (1986), ``Fitting logistic growth curve with predetermined
-  carrying capacity'', \emph{Proceedings of the Statistical Computing
-    Section, American Statistical Association}, 340--343.
+  Kung, F. H. (1986),
+  \dQuote{Fitting logistic growth curve with predetermined carrying
+    capacity}, \emph{Proceedings of the Statistical Computing Section,
+    American Statistical Association}, 340--343.
 
-  Pinheiro, J. C. and Bates, D. M. (2000) \emph{Mixed-effects Models
-    in S and S-PLUS}, Springer.
+  Pinheiro, J. C. and Bates, D. M. (2000)
+  \emph{Mixed-effects Models in S and S-PLUS}, Springer.
 }
 \examples{
 data(Loblolly)

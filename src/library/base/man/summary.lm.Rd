@@ -22,7 +22,7 @@
   \item{digits}{the number of significant digits to use when printing.}
   \item{symbolic.cor}{logical. If \code{TRUE}, print the correlations in
     a symbolic form (see \code{\link{symnum}}) rather than as numbers.}
-  \item{signif.stars}{logical. If \code{TRUE}, ``significance stars''
+  \item{signif.stars}{logical. If \code{TRUE}, \dQuote{significance stars}
     are printed for each coefficient.}
   \item{\dots}{further arguments passed to or from other methods.}
 }
@@ -32,7 +32,7 @@
 \details{
   \code{print.summary.lm} tries to be smart about formatting the
   coefficients, standard errors, etc. and additionally gives
-  ``significance stars'' if \code{signif.stars} is \code{TRUE}.
+  \dQuote{significance stars} if \code{signif.stars} is \code{TRUE}.
 
   Correlations are printed to two decimal places (or symbolically): to
   see the actual correlations print \code{summary(object)$correlation}
@@ -61,14 +61,14 @@
   \item{fstatistic}{(for models including non-intercept terms)
     a 3-vector with the value of the F-statistic with
     its numerator and denominator degrees of freedom.}
-  \item{r.squared}{\eqn{R^2}, the ``fraction of variance explained by
-    the model'',
+  \item{r.squared}{\eqn{R^2}, the \dQuote{fraction of variance explained by
+    the model},
     \deqn{R^2 = 1 - \frac{\sum_i{R_i^2}}{\sum_i(y_i- y^*)^2},}{%
       R^2 = 1 - Sum(R[i]^2) / Sum((y[i]- y*)^2),}
     where \eqn{y^*}{y*} is the mean of \eqn{y_i}{y[i]} if there is an
     intercept and zero otherwise.}
   \item{adj.r.squared}{the above \eqn{R^2} statistic
-    \emph{``adjusted''}, penalizing for higher \eqn{p}.}
+    \dQuote{\emph{adjusted}}, penalizing for higher \eqn{p}.}
   \item{cov.unscaled}{a \eqn{p \times p}{p x p} matrix of (unscaled)
     covariances of the \eqn{\hat\beta_j}{coef[j]}, \eqn{j=1, \dots, p}.}
   \item{correlation}{the correlation matrix corresponding to the above

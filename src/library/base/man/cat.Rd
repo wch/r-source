@@ -64,7 +64,7 @@ cat(\dots , file = "", sep = " ", fill = FALSE, labels = NULL,
 ## print an informative message
 cat("iteration = ", iter <- iter + 1, "\n")
 
-## `fill' and label lines:
+## 'fill' and label lines:
 cat(paste(letters, 100* 1:26), fill = TRUE,
     labels = paste("{",1:10,"}:",sep=""))
 }

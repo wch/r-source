@@ -17,8 +17,8 @@ chull(x, y=NULL)
   \code{\link{xy.coords}} is used to interpret the specification of the
   points. The algorithm is that given by Eddy (1977).
 
-  `Peeling' as used in the S function \code{chull} can be implemented
-  by calling \code{chull} recursively.
+  \sQuote{Peeling} as used in the S function \code{chull} can be
+  implemented by calling \code{chull} recursively.
 }
 \value{
   An integer vector giving the indices of the points lying on the

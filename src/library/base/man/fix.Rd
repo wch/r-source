@@ -22,7 +22,7 @@ fix(x, \dots)
 }
 \examples{
 \dontrun{
- ## Assume  `my.fun' is a user defined function :
+ ## Assume 'my.fun' is a user defined function :
  fix(my.fun)
  ## now my.fun is changed
  ## Also,

@@ -56,7 +56,7 @@ quote(expr)
   Wadsworth \& Brooks/Cole.
 }
 \seealso{
-  \code{\link{missing}} for argument ``missingness''.
+  \code{\link{missing}} for argument \dQuote{missingness}.
 }
 \examples{
 (s.e <- substitute(expression(a + b), list(a = 1)))  #> expression(1 + b)

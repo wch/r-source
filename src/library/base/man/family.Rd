@@ -60,7 +60,7 @@ quasipoisson(link = "log")
 \details{
   The \code{quasibinomial} and \code{quasipoisson} families differ from
   the \code{binomial} and \code{poisson} families only in that the
-  dispersion parameter is not fixed at one, so they can ``model''
+  dispersion parameter is not fixed at one, so they can \dQuote{model}
   over-dispersion.  For the binomial case see McCullagh and Nelder
   (1989, pp. 124--8).  Although they show that there is (under some
   restrictions) a model with

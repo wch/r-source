@@ -19,7 +19,8 @@ comment(x) <- value
   printed (by \code{\link{print}} or \code{\link{print.default}}).
 }
 \seealso{
-  \code{\link{attributes}} and \code{\link{attr}} for ``normal'' attributes.
+  \code{\link{attributes}} and \code{\link{attr}} for \dQuote{normal}
+  attributes.
 }
 \examples{
 x <- matrix(1:12, 3,4)

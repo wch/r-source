@@ -32,7 +32,7 @@ args(name)
   \code{\link{help}}.
 }
 \examples{
-args(c)            # -> NULL (c is a `primitive' function)
+args(c)            # -> NULL (c is a 'primitive' function)
 args(plot.default)
 }
 \keyword{documentation}

@@ -68,7 +68,7 @@ ltsreg(\ldots)
   \item{control}{additional control items: see \code{Details}.}
   \item{k0}{the cutoff / tuning constant used for \eqn{\chi()}{chi()}
     and \eqn{\psi()}{psi()} functions when \code{method = "S"}, currently
-    corresponding to Tukey's ``biweight''.}
+    corresponding to Tukey's \dQuote{biweight}.}
   \item{seed}{
     the seed to be used for random sampling: see \code{.Random.seed}. The
     current value of \code{.Random.seed} will be preserved if it is set..

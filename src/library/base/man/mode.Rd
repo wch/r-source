@@ -44,7 +44,7 @@ storage.mode(x) <- "<mode>"
   Wadsworth \& Brooks/Cole.
 }
 \seealso{
-  \code{\link{typeof}} for the R-internal ``mode'',
+  \code{\link{typeof}} for the R-internal \dQuote{mode},
   \code{\link{attributes}}.
 }
 \examples{
@@ -58,7 +58,7 @@ mex3 <- t(sapply(lex3, function(x) c(typeof(x), storage.mode(x), mode(x))))
 dimnames(mex3) <- list(cex3, c("typeof(.)","storage.mode(.)","mode(.)"))
 mex3
 
-## This also makes a local copy of  `pi':
+## This also makes a local copy of 'pi':
 storage.mode(pi) <- "complex"
 storage.mode(pi)
 rm(pi)

@@ -46,14 +46,14 @@
   separate pages, or as a subtitle in the outer margin (if any) when
   there are multiple plots per page.
 
-  The ``Scale-Location'' plot, also called ``Spread-Location'' or
-  ``S-L'' plot, takes the square root of the absolute residuals in
+  The \dQuote{Scale-Location} plot, also called \dQuote{Spread-Location} or
+  \dQuote{S-L} plot, takes the square root of the absolute residuals in
   order to diminish skewness (\eqn{\sqrt{| E |}} is much less skewed
   than \eqn{| E |} for Gaussian zero-mean \eqn{E}).
 
-  This `S-L' and the Q-Q plot use \emph{standardized} residuals which
-  have identical variance (under the hypothesis).  They are given as
-  \eqn{R_i / (s \times \sqrt{1 - h_{ii}})}{R[i] / (s*sqrt(1 - h.ii))}
+  This \sQuote{S-L} and the Q-Q plot use \emph{standardized} residuals
+  which have identical variance (under the hypothesis).  They are given
+  as \eqn{R_i / (s \times \sqrt{1 - h_{ii}})}{R[i] / (s*sqrt(1 - h.ii))}
   where \eqn{h_{ii}}{h.ii} are the diagonal entries of the hat matrix,
 % bug in Rdconv: "$" and \link inside \code fails; '\$' doesn't help :
   \code{\link{influence}()}\code{$hat}, see also \code{\link{hat}}.

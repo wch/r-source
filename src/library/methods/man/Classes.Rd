@@ -65,7 +65,7 @@
       its slots.  But that need not be the case:  the definition of the
       class can specify any valid object for any of the slots.
 
-      There are a number of ``basic'' classes, corresponding to the
+      There are a number of \dQuote{basic} classes, corresponding to the
       ordinary kinds of data occurring in R.  For example,
       \code{"numeric"} is a class corresponding to numeric vectors.
       These classes are predefined and can then be used as slots or as

@@ -76,7 +76,7 @@ aggregate.ts(x, nfrequency = 1, FUN = sum, ndeltat = 1,
 \examples{
 data(state)
 
-## Compute the averages for the variables in `state.x77', grouped
+## Compute the averages for the variables in 'state.x77', grouped
 ## according to the region (Northeast, South, North Central, West) that
 ## each state belongs to.
 aggregate(state.x77, list(Region = state.region), mean)
@@ -87,7 +87,7 @@ aggregate(state.x77,
           list(Region = state.region,
                Cold = state.x77[,"Frost"] > 130),
           mean)
-## (Note that no state in `South' is THAT cold.)
+## (Note that no state in 'South' is THAT cold.)
 
 data(presidents)
 ## Compute the average annual approval ratings for American presidents.

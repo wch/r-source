@@ -36,6 +36,6 @@ kernapply(k1, k2)
   \code{\link{spectrum}}
 }
 \examples{
-## see `kernel' for examples
+## see 'kernel' for examples
 }
 \keyword{ts}

@@ -23,7 +23,7 @@ cancor(x, y, xcenter = TRUE, ycenter = TRUE)
   The canonical correlation analysis seeks linear combinations of the
   \code{y} variables which are well explained by linear combinations
   of the \code{x} variables. The relationship is symmetric as
-  `well explained' is measured by correlations.
+  \sQuote{well explained} is measured by correlations.
 }
 \value{
   A list containing the following components:

@@ -19,7 +19,7 @@
     }
     \item{circumference}{
       a numeric vector of trunk circumferences (mm).  This is probably
-      ``circumference at breast height'', a standard measurement in
+      \dQuote{circumference at breast height}, a standard measurement in
       forestry.
     }
   }

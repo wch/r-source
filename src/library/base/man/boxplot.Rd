@@ -122,7 +122,7 @@ par(las=1)# all axis labels horizontal
 boxplot(data.frame(mat), main = "boxplot(*, horizontal = TRUE)",
         horizontal = TRUE)
 
-## Using `at = ' and adding boxplots -- example idea by Roger Bivand :
+## Using 'at = ' and adding boxplots -- example idea by Roger Bivand :
 
 data(ToothGrowth)
 boxplot(len ~ dose, data = ToothGrowth,

@@ -47,7 +47,7 @@ convolve(x, y, conj = TRUE, type = c("circular", "open", "filter"))
   San Francisco: Holden-Day.
 }
 \seealso{\code{\link{fft}}, \code{\link{nextn}}, and particularly
-  \code{\link[ts]{filter}} (from the \file{ts} package) which may be
+  \code{\link[ts]{filter}} (from the \pkg{ts} package) which may be
   more appropriate.
 }
 \examples{

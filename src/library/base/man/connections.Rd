@@ -64,7 +64,7 @@ isIncomplete(con)
   \item{server}{logical.  Should the socket be a client or a server?}
   \item{open}{character.  A description of how to open the connection
     (if at all). See Details for possible values.}
-  \item{blocking}{logical.  See `Blocking' section below.}
+  \item{blocking}{logical.  See \sQuote{Blocking} section below.}
   \item{encoding}{An integer vector of length 256.}
   \item{compression}{integer in 0--9.  The amount of compression to be
     applied when writing, from none to maximal.  The default is a good

@@ -32,10 +32,11 @@
   New York: Wiley. pp. 491--500.
 }
 \details{
-  ``Obtained from 21 days of operation of a plant for the oxidation
-  of ammonia (NH\eqn{_3}{3}) to nitric acid (HNO\eqn{_3}{3}).
-  The nitric oxides produced are absorbed in a countercurrent absorption
-  tower.''  (Brownlee, cited by Dodge, slightly reformatted by MM.)
+  \dQuote{Obtained from 21 days of operation of a plant for the
+    oxidation of ammonia (NH\eqn{_3}{3}) to nitric acid
+    (HNO\eqn{_3}{3}).  The nitric oxides produced are absorbed in a
+    countercurrent absorption tower}.
+  (Brownlee, cited by Dodge, slightly reformatted by MM.)
 
   \code{Air Flow} represents the rate of operation of the plant.
   \code{Water Temp} is the temperature of cooling water circulated

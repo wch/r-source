@@ -23,18 +23,19 @@ will make the function run faster if sufficient memory is available.
 }
 \value{
   A list with components
-  \item{by.self}{Timings sorted by `self' time}
-  \item{by.total}{Timings sorted by `total' time}
+  \item{by.self}{Timings sorted by \sQuote{self} time}
+  \item{by.total}{Timings sorted by \sQuote{total} time}
   \item{sampling.time}{Total length of profiling run}
 }
 
 
-\seealso{The chapter on ``Tidying and profiling R code'' in ``Writing \R
-  Extensions'' (see the \file{doc/manual} subdirectory of the \R source
-  tree).
+\seealso{
+  The chapter on \dQuote{Tidying and profiling R code} in
+  \dQuote{Writing \R Extensions} (see the \file{doc/manual} subdirectory
+  of the \R source tree).
 
-\code{\link{Rprof}}}
-
+  \code{\link{Rprof}}
+}
 \examples{
 \dontrun{
 ## Rprof() is not available on all platforms

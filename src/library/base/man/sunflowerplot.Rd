@@ -2,8 +2,8 @@
 \alias{sunflowerplot}
 \title{Produce a Sunflower Scatter Plot}
 \description{
-  Multiple points are plotted as ``sunflowers'' with multiple leaves
-  (``petals'') such that overplotting is visualized instead of accidental and
+  Multiple points are plotted as \dQuote{sunflowers} with multiple leaves
+  (\dQuote{petals}) such that overplotting is visualized instead of accidental and
   invisible.
 }
 \usage{
@@ -53,7 +53,7 @@ sunflowerplot(x, y = NULL, number, log = "", digits = 6,
   For \code{number[i]==1}, a (slightly enlarged) usual plotting symbol
   (\code{pch}) is drawn.
   For \code{number[i] > 1}, a small plotting symbol is drawn and
-  \code{number[i]} equi-angular ``rays'' emanate from it.
+  \code{number[i]} equi-angular \dQuote{rays} emanate from it.
 
   If \code{rotate=TRUE} and \code{number[i] >= 2}, a random direction
   is chosen (instead of the y-axis) for the first ray.  The goal is to
@@ -61,7 +61,7 @@ sunflowerplot(x, y = NULL, number, log = "", digits = 6,
   artefactual visual impressions.
 }
 \section{Side Effects}{
-  A scatter plot is drawn with ``sunflowers'' as symbols.
+  A scatter plot is drawn with \dQuote{sunflowers} as symbols.
 }
 \value{
   A list with three components of same length,
@@ -85,7 +85,7 @@ sunflowerplot(x, y = NULL, number, log = "", digits = 6,
 \seealso{\code{\link{density}}}
 \examples{
 data(iris)
-## `number' is computed automatically:
+## 'number' is computed automatically:
 sunflowerplot(iris[, 3:4])
 ## Imitating  Chambers et al., p.109, closely:
 sunflowerplot(iris[, 3:4],cex=.2, cex.f=1, size=.035, seg.lwd=.8)
@@ -93,7 +93,7 @@ sunflowerplot(iris[, 3:4],cex=.2, cex.f=1, size=.035, seg.lwd=.8)
 sunflowerplot(x=sort(2*round(rnorm(100))), y= round(rnorm(100),0),
              main = "Sunflower Plot of Rounded N(0,1)")
 
-## A `point process' {explicit `number' argument}:
+## A 'point process' {explicit 'number' argument}:
 sunflowerplot(rnorm(100),rnorm(100), number=rpois(n=100,lambda=2),
                         rotate=TRUE, main="Sunflower plot")
 }

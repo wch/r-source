@@ -25,12 +25,12 @@ system.file(\dots, package = "base", lib.loc = NULL)
   separator.
 
   As a special case, \code{system.file()} gives the root of the
-  \code{base} package only.
+  \pkg{base} package only.
 }
 \seealso{\code{\link{list.files}}}
 \examples{
-system.file()                # The root of the `base' package
-system.file(package = "lqs") # The root of package `lqs'
+system.file()                # The root of the 'base' package
+system.file(package = "lqs") # The root of package 'lqs'
 system.file("INDEX")
 system.file("help", "AnIndex", package = "stepfun")
 }

@@ -33,7 +33,7 @@ napredict(omit, x, \dots)
   \code{\link{resid}} methods for modelling functions to compensate for
   the removal of \code{NA}s in the fitting process.  There are used by
   the default, \code{"lm"} and \code{"glm"} methods, and by further
-  methods in packages \code{MASS}, \code{rpart} and \code{survival}.
+  methods in packages \pkg{MASS}, \pkg{rpart} and \pkg{survival}.
 
   The default methods do nothing.  The method for the \code{na.exclude}
   action to pad the object with \code{NA}s in the correct positions to

@@ -20,9 +20,9 @@ unsplit(value, f)
 }
 \arguments{
   \item{x}{vector or data frame containing values to be divided into groups.}
-  \item{f}{a ``factor'' such that \code{factor(f)} defines the grouping,
-    or a list of such factors in which case their interaction is used
-    for the grouping.}
+  \item{f}{a \dQuote{factor} such that \code{factor(f)} defines the
+    grouping, or a list of such factors in which case their interaction
+    is used for the grouping.}
   \item{value}{a list of vectors or data frames compatible with a
     splitting of \code{x}}
 }

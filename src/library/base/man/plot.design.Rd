@@ -24,13 +24,13 @@ plot.design(x, y = NULL, fun = mean, data = NULL, \dots,
   \item{\dots}{graphical arguments such as \code{col}, see \code{\link{par}}.}
   \item{ylim}{range of y values, as in \code{\link{plot.default}}.}
   \item{xlab}{x axis label, see \code{\link{title}}.}
-  \item{ylab}{y axis label with a ``smart'' default.}
+  \item{ylab}{y axis label with a \dQuote{smart} default.}
   \item{main}{main title, see \code{\link{title}}.}
   \item{ask}{logical indicating if the user should be asked before a new
     page is started -- in the case of multiple y's.}
   \item{xaxt}{character giving the type of x axis.}
   \item{axes}{logical indicating if axes should be drawn.}
-  \item{xtick}{logical indicating if ``ticks'' (one per factor) should
+  \item{xtick}{logical indicating if \dQuote{ticks} (one per factor) should
     be drawn on the x axis.}
 }
 \details{
@@ -59,7 +59,7 @@ plot.design(x, y = NULL, fun = mean, data = NULL, \dots,
   version.  However, \code{col} (and \code{fg}) specification has
   different effects.
 }
-\seealso{\code{\link{interaction.plot}} for a ``standard graphic''
+\seealso{\code{\link{interaction.plot}} for a \dQuote{standard graphic}
   of designed experiments.}
 \examples{
 data(warpbreaks)

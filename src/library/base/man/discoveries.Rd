@@ -3,7 +3,7 @@
 \alias{discoveries}
 \title{Yearly Numbers of Important Discoveries}
 \description{
-  The numbers of ``great'' inventions and scientific
+  The numbers of \dQuote{great} inventions and scientific
   discoveries in each year from 1860 to 1959.
 }
 \usage{data(discoveries)}

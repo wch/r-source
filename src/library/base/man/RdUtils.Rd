@@ -58,7 +58,8 @@ Rcmd Sd2Rd [options] file
   They are intended as a starting point for hand-tuning.
 }
 \seealso{
-  The chapter ``Processing Rd format'' in ``Writing \R Extensions''
+  The chapter \dQuote{Processing Rd format} in \dQuote{Writing \R
+    Extensions}
 #ifdef unix
   (see the \file{doc/manual} subdirectory of the \R source tree).
 #endif

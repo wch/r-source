@@ -17,7 +17,7 @@ proc.time()
   them to be recorded to of the order of 1/100 second, and elapsed
   time is rounded to the nearest 1/100.
 
-  It is most useful for ``timing'' the evaluation of \R expressions,
+  It is most useful for \dQuote{timing} the evaluation of \R expressions,
   which can be done conveniently with \code{\link{system.time}}.
 }
 \note{

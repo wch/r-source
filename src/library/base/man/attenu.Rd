@@ -35,9 +35,9 @@
   \emph{Bull. Seism. Soc. Am.}, \bold{72}, 2307--2321.
 
   Bolt B. A. and Abrahamson, N. A. (1983)
-  Reply to W. B. Joyner & D. M. Boore's ``Comments on: New attenuation
-  relations for peak and expected accelerations for peak and expected
-  accelerations of strong ground motion'',
+  Reply to W. B. Joyner & D. M. Boore's \dQuote{Comments on: New
+    attenuation relations for peak and expected accelerations for peak
+    and expected accelerations of strong ground motion},
   \emph{Bull. Seism. Soc. Am.}, \bold{73}, 1481--1483. 
 
   Brillinger, D. R. and Preisler, H. K. (1984)

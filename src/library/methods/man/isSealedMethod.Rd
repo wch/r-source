@@ -4,7 +4,8 @@
 \title{ Check for a Sealed Method or Class }
 \description{
   These functions check for either a method or a class that has been
-  ``sealed'' when it was defined, and which therefore cannot be re-defined.
+  \dQuote{sealed} when it was defined, and which therefore cannot be
+  re-defined.
 }
 \usage{
 isSealedMethod(f, signature, fdef)
@@ -38,17 +39,16 @@ isSealedClass(Class)
   The functions return \code{FALSE} if the method or class is not
   sealed (including the case that it is not defined); \code{TRUE} if
   it is.
-  }
+}
 \references{
-  The R package \code{methods} implements, with a few exceptions, the
-  programming interface for classes
-  and methods in the book \emph{Programming with Data} (John
-  M. Chambers, Springer, 1998), in particular sections 1.6, 2.7, 2.8,
-  and chapters 7 and 8.
+  The R package \pkg{methods} implements, with a few exceptions, the
+  programming interface for classes and methods in the book
+  \emph{Programming with Data} (John M. Chambers, Springer, 1998), in
+  particular sections 1.6, 2.7, 2.8, and chapters 7 and 8.
 
-  While the programming interface for the methods package follows the reference,
-  the R software is an original implementation, so details in
-  the reference that reflect the S4 implementation may appear
+  While the programming interface for the \pkg{methods} package follows
+  the reference, the R software is an original implementation, so
+  details in the reference that reflect the S4 implementation may appear
   differently in R.  Also, there are extensions to the programming
   interface developed more recently than the reference.  For a
   discussion of details and ongoing development, see the web page 

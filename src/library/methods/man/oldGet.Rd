@@ -14,7 +14,7 @@ Expect these functions to become deprecated in the near future.
 
  They do nothing but access a slot in a class definition, and don't
  even do this consistently  with the right name (they date back to the
- early implementation of the methods package).
+ early implementation of the \pkg{methods} package).
  Higher-level functions for the useful operations (e.g.,
  \code{\link{extends}} for \code{getExtends}) should be used instead.
 

@@ -8,7 +8,7 @@
   \item{infile}{the name of a file with \R code to be executed.}
   \item{options}{a list of \R command line options, e.g., for setting the
     amount of memory available and controlling the load/save process.
-    If \code{infile} starts with a `-', use \code{--} as the final 
+    If \code{infile} starts with a \samp{-}, use \code{--} as the final 
     option.  The default options are \code{--restore --save}.}
   \item{outfile}{the name of a file to which to write output.  If not given,
     the name used is the one of \code{infile}, with a possible \file{.R}

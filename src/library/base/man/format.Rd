@@ -73,8 +73,8 @@ prettyNum(x, big.mark = "",   big.interval = 3,
   \code{format.pval} is mainly an auxiliary function for
   \code{\link{print.summary.lm}} etc., and does separate formatting for
   fixed, floating point and very small values; those less than
-  \code{eps} are formatted as \code{"< [eps]"} (where ``[eps]'' stands
-  for \code{format(eps, digits)}.
+  \code{eps} are formatted as \code{"< [eps]"} (where \dQuote{[eps]}
+  stands for \code{format(eps, digits)}.
 
   The function \code{\link{formatC}} provides a rather more flexible
   formatting facility for numbers, but does \emph{not} provide a common

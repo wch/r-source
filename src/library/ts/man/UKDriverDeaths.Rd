@@ -26,7 +26,8 @@ data(Seatbelts)
     \item{\code{rear}}{rear-seat passengers killed or seriously injured.}
     \item{\code{kms}}{distance driven.}
     \item{\code{PetrolPrice}}{petrol price.}
-    \item{\code{VanKilled}}{number of van (`light goods vehicle') drivers.}
+    \item{\code{VanKilled}}{number of van (\sQuote{light goods vehicle})
+      drivers.}
     \item{\code{law}}{0/1: was the law in effect that month?}
   }
 }

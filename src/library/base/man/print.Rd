@@ -53,7 +53,7 @@ print.factor(x, quote = FALSE, max.levels = NULL,
   \code{\link{cat}}, \code{\link{format}} or also \code{\link{write}}.
 }
 \examples{
-ts(1:20)#-- print  is the ``Default function'' --> print.ts(.) is called
+ts(1:20)#-- print is the "Default function" --> print.ts(.) is called
 rr <- for(i in 1:3) print(1:i)
 rr
 

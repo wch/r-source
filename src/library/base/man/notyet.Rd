@@ -28,11 +28,11 @@
 \seealso{the contrary, \code{\link{Deprecated}} and
   \code{\link{Defunct}} for outdated code.}
 \examples{
-plot.mlm         # to see how the ``NotYetImplemented''
+plot.mlm         # to see how the "NotYetImplemented"
                  # reference is made automagically
 try(plot.mlm())
 
-barplot(1:5, inside = TRUE) # `inside' is not yet used
+barplot(1:5, inside = TRUE) # 'inside' is not yet used
 }
 \keyword{documentation}
 \keyword{utilities}

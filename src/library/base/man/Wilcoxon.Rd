@@ -65,7 +65,7 @@ layout(1)# set back
 N <- 200
 hist(U <- rwilcox(N, m=4,n=6), breaks=0:25 - 1/2, border="red", col="pink",
      sub = paste("N =",N))
-mtext("N * f(x),  f() = true ``density''", side=3, col="blue")
+mtext("N * f(x),  f() = true \"density\"", side=3, col="blue")
  lines(x, N*fx, type='h', col='blue', lwd=2)
 points(x, N*fx, cex=2)
 

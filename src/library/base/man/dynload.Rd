@@ -54,9 +54,9 @@ symbol.For(name)
 \details{
   See
 #ifdef windows
- file \file{readme.packages},
+  file \file{readme.packages},
 #endif
-  `See Also' and the \emph{Writing R Extensions} manual for how to
+  \sQuote{See Also} and the \emph{Writing R Extensions} manual for how to
   create a suitable shared library.  Note that unlike some versions of
   S-PLUS, \code{dyn.load} does not load an object (\code{.o}) file but a
   shared library or DLL.
@@ -76,13 +76,13 @@ symbol.For(name)
   The \code{local} argument allows one to control whether the symbols in
   the DLL being attached are visible to other DLLs.  While maintaining
   the symbols in their own namespace is good practice, the ability to
-  share symbols across related ``chapters'' is useful in many
+  share symbols across related \dQuote{chapters} is useful in many
   cases.  Additionally, on certain platforms and versions of an
   operating system, certain libraries must have their symbols loaded
   globally to successfully resolve all symbols.
 
   One should be careful of the potential side-effect of using lazy
-  loading via the `now' argument as \code{FALSE}.  If a routine is
+  loading via the \code{now} argument as \code{FALSE}.  If a routine is
   called that has a missing symbol, the process will terminate
   immediately and unsaved session variables will be lost.  The intended
   use is for library developers to call specify a value \code{TRUE} to

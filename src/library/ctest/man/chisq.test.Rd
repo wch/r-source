@@ -90,7 +90,7 @@ chisq.test(x)
 chisq.test(as.table(x))		# the same
 ## Case B. Raw data
 x <- trunc(5 * runif(100))
-chisq.test(table(x))            # NOT `chisq.test(x)'!
+chisq.test(table(x))            # NOT 'chisq.test(x)'!
 }
 \keyword{htest}
 \keyword{distribution}

@@ -3,7 +3,7 @@
 \title{Obtain a description of a native (C/Fortran) symbol}
 \description{
   This finds and returns as comprehensive a description of a
-  dynamically loaded or ``exported'' built-in native
+  dynamically loaded or \dQuote{exported} built-in native
   symbol. It returns information about the
   name of the symbol, the library in which it is located
   and, if available, the number of arguments it expects
@@ -69,7 +69,7 @@ getNativeSymbolInfo(name, PACKAGE)
 }
 \references{
   For information about registering native routines,
-  see ``In Search of {C/C++} \& {FORTRAN} Routines'',
+  see \dQuote{In Search of {C/C++} \& {FORTRAN} Routines},
   R News, volume 1, number 3, 2001, p20--23
   (\url{http://CRAN.R-project.org/doc/Rnews/}).  
 }
@@ -77,7 +77,7 @@ getNativeSymbolInfo(name, PACKAGE)
 \note{
   One motivation for accessing this reflectance information
   is to be able to pass native routines to 
-  C routines as ``function pointers'' in C.
+  C routines as \dQuote{function pointers} in C.
   This allows us to treat native routines and R functions
   in a similar manner, such as when passing an R function
   to C code that makes callbacks to that function

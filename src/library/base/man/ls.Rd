@@ -21,7 +21,7 @@ objects(name, pos= -1, envir = as.environment(pos),
     environment evaluation environment. Mostly there for back compatibility.}
   \item{all.names}{a logical value.  If \code{TRUE}, all
     object names are returned.  If \code{FALSE}, names which begin with a
-    ``.'' are omitted.}
+    \samp{.} are omitted.}
   \item{pattern}{an optional regular expression, see \code{\link{grep}}.
     Only names matching \code{pattern} are returned.}}
 \details{
@@ -52,8 +52,10 @@ objects(name, pos= -1, envir = as.environment(pos),
 }
 \seealso{
   \code{\link{apropos}} (or \code{\link{find}}) for finding objects in the
-  whole search path; \code{\link{grep}} for more details on ``regular
-  expressions''; \code{\link[base]{class}}, \code{\link{methods}}, etc. for
+  whole search path;
+  \code{\link{grep}} for more details on \dQuote{regular expressions};
+  \code{\link[base]{class}},
+  \code{\link{methods}}, etc., for
   object-oriented programming.
 }
 \examples{

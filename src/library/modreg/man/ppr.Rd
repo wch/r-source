@@ -142,8 +142,9 @@ method functions.
 
   The algorithm first adds up to \code{max.terms} ridge terms one at a
   time; it will use less if it is unable to find a term to add that makes
-  sufficient difference.  It then removes the least ``\emph{important}''
-  term at each step until \code{nterm} terms are left.
+  sufficient difference.  It then removes the least
+  \dQuote{\emph{important}} term at each step until \code{nterm} terms
+  are left.
 
   The levels of optimization (argument \code{optlevel})
   differ in how thoroughly the models are refitted during this process.

@@ -57,12 +57,12 @@ spline(x, y = NULL, n = 3*length(x), method = "fmm",
   \code{\link{approx}} and \code{\link{approxfun}} for constant and
   linear interpolation.
 
-  Package \code{splines}, especially \code{\link[splines]{interpSpline}} and
-  \code{\link[splines]{periodicSpline}} for interpolation splines.
+  Package \pkg{splines}, especially \code{\link[splines]{interpSpline}}
+  and \code{\link[splines]{periodicSpline}} for interpolation splines.
   That package also generates spline bases that can be used for
   regression splines.
 
-  \code{\link[modreg]{smooth.spline}} in package \code{modreg} for
+  \code{\link[modreg]{smooth.spline}} in package \pkg{modreg} for
   smoothing splines.
 }
 \examples{

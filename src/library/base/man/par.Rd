@@ -4,7 +4,7 @@
 \alias{.Pars.readonly}
 \title{Set or Query Graphical Parameters}
 
-%% The `real documentation' is the code	in ../../../main/par.c
+%% The 'real documentation' is the code	in ../../../main/par.c
 %% AND (defined AND commented)		in ../../../include/Graphics.h
 %% Default initialization by GInit()	in ../../../main/graphics.c
 
@@ -117,7 +117,7 @@ par(\dots, no.readonly = FALSE)
     \item{\code{col.main}}{The color to be used for plot main titles.}
     \item{\code{col.sub}}{The color to be used for plot sub-titles.}
     \item{\code{cra}}{\emph{\bold{R.O.}}; size of default character
-      \code{(width,height)} in ``rasters'' (pixels).}
+      \code{(width,height)} in \dQuote{rasters} (pixels).}
     \item{\code{crt}}{A numerical value specifying (in degrees) how
       single characters should be rotated.  It is unwise to expect
       values other than multiples of 90 to work.  Compare with
@@ -175,12 +175,12 @@ par(\dots, no.readonly = FALSE)
       as one of the character strings \code{"blank"}, \code{"solid"},
       \code{"dashed"}, \code{"dotted"}, \code{"dotdash"},
       \code{"longdash"}, or \code{"twodash"}, where \code{"blank"} uses
-      `invisible lines' (i.e., doesn't draw them).
+      \sQuote{invisible lines} (i.e., doesn't draw them).
 
       Alternatively, a string of up to 8 characters (from \code{c(0:9,
 	"A":"F")}) may be given, giving the length of line segments
-      which are alternatively drawn and skipped.  See section `Line Type
-      Specification' below.}
+      which are alternatively drawn and skipped.  See section
+      \sQuote{Line Type Specification} below.}
     \item{\code{lwd}}{The line width, a \emph{positive} number,
       defaulting to \code{1}.}
     \item{\code{mai}}{A numerical vector of the form \code{c(bottom,
@@ -222,7 +222,7 @@ par(\dots, no.readonly = FALSE)
     \item{\code{new}}{logical, defaulting to \code{FALSE}.  If set to
       \code{TRUE}, the next high-level plotting command (actually
       \code{\link{plot.new}}) should \emph{not clean} the frame before
-      drawing ``as if it was on a \bold{\emph{new}} device''.}
+      drawing \dQuote{as if it was on a \bold{\emph{new}} device}.}
     \item{\code{oma}}{A vector of the form \code{c(bottom, left, top,
 	right)} giving the size of the outer margins in lines of text.}
     \item{\code{omd}}{A vector of the form \code{c(x1, x2, y1, y2)}
@@ -347,8 +347,8 @@ par(\dots, no.readonly = FALSE)
   in the string.  For example, the string \code{"33"} specifies three
   units on followed by three off and \code{"3313"} specifies three units
   on followed by three off followed by one on and finally three off.
-  The `units' here are (on most devices) proportional to \code{lwd}, and
-  with \code{lwd = 1} are in pixels or points.
+  The \sQuote{units} here are (on most devices) proportional to
+  \code{lwd}, and with \code{lwd = 1} are in pixels or points.
 }
 
 \note{
@@ -393,7 +393,7 @@ par("ylog") # FALSE
 plot(1 : 12, log = "y")
 par("ylog") # TRUE
 
-plot(1:2, xaxs = "i") # `inner axis' w/o extra space
+plot(1:2, xaxs = "i") # 'inner axis' w/o extra space
 stopifnot(par("xaxp")[1:2] == 1:2 &&
           par("usr") [1:2] == 1:2)
 
@@ -405,8 +405,8 @@ par(las = 3)
 barplot(rbind(nr.prof)) # R 0.63.2: shows alignment problem
 par(las = 0)# reset to default
 
-## `fg' use:
-plot(1:12, type = "b", main="`fg' : axes, ticks and box in gray",
+## 'fg' use:
+plot(1:12, type = "b", main="'fg' : axes, ticks and box in gray",
      fg = gray(0.7), bty="7" , sub=R.version.string)
 
 ex <- function() {

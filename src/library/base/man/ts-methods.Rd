@@ -20,8 +20,8 @@
 }
 \details{
   The \code{na.omit} method omits initial and final segments with
-  missing values in one or more of the series.  `Internal' missing
-  values will lead to failure.
+  missing values in one or more of the series.  \sQuote{Internal}
+  missing values will lead to failure.
 }
 \value{
   For the \code{na.omit} method, a time series without missing values.

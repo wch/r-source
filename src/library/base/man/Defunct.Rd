@@ -167,7 +167,7 @@ plot.mts(x, plot.type = c("multiple", "single"), panel = lines,
   a way that cannot be replaced with \code{try()} then ask for help
   on \code{r-devel}.
 
-  \code{printNoClass} was in package \code{methods} and calls directly the
+  \code{printNoClass} was in package \pkg{methods} and calls directly the
   internal function \code{print.default}.
 
   \code{plot.mts} has been removed, as \code{\link{plot.ts}} now has the

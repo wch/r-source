@@ -28,7 +28,7 @@ palette(value)
   unless the argument is omitted.
 }
 \seealso{
-  \code{\link{colors}} for the vector of built-in ``named'' colors;
+  \code{\link{colors}} for the vector of built-in \dQuote{named} colors;
   \code{\link{hsv}}, \code{\link{gray}}, \code{\link{rainbow}},
   \code{\link{terrain.colors}},\dots to construct colors;
   

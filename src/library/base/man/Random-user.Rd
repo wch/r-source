@@ -17,7 +17,7 @@
   which is called with an \code{unsigned int} argument when
   \code{\link{RNGkind}} (or \code{set.seed}) is called, and is intended
   to be used to initialize the user's RNG code. The argument is intended
-  to be used to set the ``seeds''; it is the \code{seed} argument to
+  to be used to set the \dQuote{seeds}; it is the \code{seed} argument to
   \code{set.seed} or an essentially random seed if \code{\link{RNGkind}}
   is called.
 
@@ -25,7 +25,8 @@
   generator's state is recorded in \code{.Random.seed}. Optionally,
   functions \code{user_unif_nseed} and \code{user_unif_seedloc} can be
   supplied which are called with no arguments and should return pointers
-  to the number of ``seeds'' and to an integer array of ``seeds''. Calls
+  to the number of \dQuote{seeds} and to an integer array of
+  \dQuote{seeds}.  Calls 
   to \code{GetRNGstate} and \code{PutRNGstate} will then copy this array
   to and from \code{.Random.seed}.
 

@@ -21,7 +21,7 @@ grey(level)
   \code{grey} is an alias for \code{gray}.
 }
 \value{
-  A vector of ``colors'' of the same length as \code{level}.
+  A vector of \dQuote{colors} of the same length as \code{level}.
 }
 \seealso{
   \code{\link{rainbow}},

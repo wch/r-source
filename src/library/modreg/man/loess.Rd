@@ -56,15 +56,16 @@ loess(formula, data, weights, subset, na.action, model = FALSE,
 \details{
   Fitting is done locally.  That is, for the fit at point \eqn{x}, the
   fit is made using points in a neighbourhood of \eqn{x}, weighted by
-  their distance from \eqn{x} (with differences in `parametric' variables
-  being ignored when computing the distance). The size of the
+  their distance from \eqn{x} (with differences in \sQuote{parametric}
+  variables being ignored when computing the distance). The size of the
   neighbourhood is controlled by \eqn{\alpha} (set by \code{span} or
   \code{enp.target}).  For \eqn{\alpha < 1}, the neighbourhood includes
   proportion \eqn{\alpha} of the points, and these have tricubic weighting
   (proportional to \eqn{(1 - \mathrm{(dist/maxdist)}^3)^3}{(1 -
     (dist/maxdist)^3)^3}. For \eqn{\alpha > 1}, all points are used, with
-  the `maximum distance' assumed to be \eqn{\alpha^{1/p}}{alpha^1/p} times
-  the actual maximum distance for \eqn{p} explanatory variables.
+  the \sQuote{maximum distance} assumed to be
+  \eqn{\alpha^{1/p}}{alpha^1/p} times the actual maximum distance for
+  \eqn{p} explanatory variables.
 
   For the default family, fitting is by (weighted) least squares. For
   \code{family="symmetric"} a few iterations of an M-estimation

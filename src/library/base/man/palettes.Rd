@@ -6,7 +6,7 @@
 \alias{cm.colors}
 \title{Color Palettes}
 \description{
-  Create a vector of \code{n} ``contiguous'' colors.
+  Create a vector of \code{n} \dQuote{contiguous} colors.
 }
 \usage{
 rainbow(n, s = 1, v = 1, start = 0, end = max(1,n - 1)/n, gamma = 1)
@@ -18,7 +18,7 @@ cm.colors(n)
 \arguments{
   \item{n}{the number of colors (\eqn{\ge 1}{>= 1}) to be in the
     palette.}
-  \item{s,v}{the ``saturation'' and ``value'' to be used to complete the
+  \item{s,v}{the \dQuote{saturation} and \dQuote{value} to be used to complete the
     HSV color descriptions.}
   \item{start}{the (corrected) hue in [0,1] at which the rainbow
     begins.}
@@ -35,7 +35,7 @@ cm.colors(n)
   the red, green and blue primaries.
 
   Some applications such as contouring require a palette
-  of colors which do not ``wrap around'' to give a final
+  of colors which do not \dQuote{wrap around} to give a final
   color close to the starting one.
 
   With \code{rainbow}, the parameters \code{start} and \code{end} can be used

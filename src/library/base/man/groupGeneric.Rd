@@ -26,7 +26,7 @@
   A method defined for an individual member of the group takes
   precedence over a method defined for the group as a whole.
 
-  When package \code{methods} is attached there are objects visible with
+  When package \pkg{methods} is attached there are objects visible with
   the names of the group generics: these functions should never be
   called directly (a suitable error message will result if they are).
 }
@@ -144,7 +144,7 @@ Complex(z)
   others were not.)
 }
 \section{S4 Group Dispatching}{
-  When package \code{methods} is attached, formal (S4) methods can be
+  When package \pkg{methods} is attached, formal (S4) methods can be
   defined for groups.
   
   The functions belonging to the various groups are as follows:
@@ -167,7 +167,7 @@ Complex(z)
     \item{\code{Complex}}{\code{"Arg"}, \code{"Conj"}, \code{"Im"},
       \code{"Mod"}, \code{"Re"}}
   }
-  Functions with the group names exist in the \code{methods} package but
+  Functions with the group names exist in the \pkg{methods} package but
   should not be called directly.
 
   All the functions in these groups (other than the group generics

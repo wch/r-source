@@ -38,8 +38,8 @@ arima0(x, order = c(0, 0, 0),
     \code{FALSE} for differenced ones (where a mean would not affect
     the fit nor predictions).}
 
-  \item{delta}{A value to indicate at which point `fast recursions'
-    should be used. See the Details section.}
+  \item{delta}{A value to indicate at which point \sQuote{fast
+      recursions} should be used.  See the Details section.}
 
   \item{transform.pars}{Logical.  If true, the AR parameters are
     transformed to ensure that they remain in the region of
@@ -103,8 +103,8 @@ arima0(x, order = c(0, 0, 0),
   The exact likelihood is computed via a state-space representation of
   the ARMA process, and the innovations and their variance found by a
   Kalman filter based on Gardner \emph{et al.} (1980).  This has
-  the option to switch to `fast recursions' (assume
-  an effectively infinite past) if the innovations variance is close
+  the option to switch to \sQuote{fast recursions} (assume an
+  effectively infinite past) if the innovations variance is close
   enough to its asymptotic bound. The argument \code{delta} sets the
   tolerance: at its default value the approximation is normally
   negligible and the speed-up considerable.  Exact computations can be
@@ -134,9 +134,9 @@ arima0(x, order = c(0, 0, 0),
   \code{n.cond} on, (where \code{n.cond} is at least the maximum lag of
   an AR term), treating all earlier innovations to be zero.  Argument
   \code{n.cond} can be used to allow comparability between different
-  fits.  The ``part log-likelihood'' is the first term, half the log of the
-  estimated mean square.  Missing values are allowed, but will cause
-  many of the innovations to be missing.
+  fits.  The \dQuote{part log-likelihood} is the first term, half the
+  log of the estimated mean square.  Missing values are allowed, but
+  will cause many of the innovations to be missing.
 
   When regressors are specified, they are orthogonalized prior to
   fitting unless any of the coefficients is fixed.  It can be helpful to

@@ -42,12 +42,13 @@ stl(x, s.window, s.degree = 0,
     low-pass filter.  Must be 0 or 1.}
   \item{s.jump, t.jump, l.jump}{integers at least one to increase speed of
     the respective smoother.  Linear interpolation happens between every
-  \code{*.jump}th value.}
-  \item{robust}{logical indicating if robust fitting be used in the \code{loess}
-    procedure.}
-  \item{inner}{integer; the number of `inner' (backfitting) iterations;
-    usually very few (2) iterations suffice.}
-  \item{outer}{integer; the number of `outer' robustness iterations.}
+    \code{*.jump}th value.}
+  \item{robust}{logical indicating if robust fitting be used in the
+    \code{loess} procedure.}
+  \item{inner}{integer; the number of \sQuote{inner} (backfitting)
+    iterations; usually very few (2) iterations suffice.}
+  \item{outer}{integer; the number of \sQuote{outer} robustness
+    iterations.}
   \item{na.action}{action on missing values.}
 }
 \details{
@@ -74,8 +75,8 @@ stl(x, s.window, s.degree = 0,
     \code{"t"}, and \code{"l"} smoothers.}
   \item{deg}{integer (length 3) vector with the polynomial degrees for
     these smoothers.}
-  \item{jump}{integer (length 3) vector with the ``jumps'' (skips) used
-    for these smoothers.}
+  \item{jump}{integer (length 3) vector with the \dQuote{jumps} (skips)
+    used for these smoothers.}
   \item{ni}{number of \bold{i}nner iterations}
   \item{no}{number of \bold{o}uter robustness iterations}
 }
@@ -91,8 +92,9 @@ stl(x, s.window, s.degree = 0,
   S-PLUS. The \code{remainder} component given by S-PLUS is the sum of
   the \code{trend} and \code{remainder} series from this function.}
 
-\seealso{\code{\link{plot.stl}} for \code{stl} methods;
-  \code{\link{loess}} in package \file{modreg} (which is not actually
+\seealso{
+  \code{\link{plot.stl}} for \code{stl} methods;
+  \code{\link{loess}} in package \pkg{modreg} (which is not actually
   used in \code{stl}).
 } 
 \examples{
@@ -114,7 +116,7 @@ op <- par(mar = c(0, 4, 0, 3), oma = c(5, 0, 4, 0), mfcol = c(4, 2))
 plot(stmd, set.pars=NULL, labels = NULL,
      main = "stl(mdeaths, s.w = \"per\",  robust = FALSE / TRUE )")
 plot(stmR, set.pars=NULL)
-# mark the `outliers' :    
+# mark the 'outliers' :    
 (iO <- which(stmR $ weights  < 1e-8)) # 10 were considered outliers
 sts <- stmR$time.series
 points(time(sts)[iO], .8* sts[,"remainder"][iO], pch = 4, col = "red")

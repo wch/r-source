@@ -51,16 +51,17 @@ checkReplaceFuns(package, dir, lib.loc = NULL)
   with a call to \code{UseMethod} are recognized as (S3) generics;
   internal method dispatch (see section \dQuote{Simple Dispatching} in
   \link[base]{zMethods}) are not taken into account.  The generics are
-  sought first in the given package and then in the base package.  The
-  rules when \code{\dots} is involved are subtle: see the source code.
+  sought first in the given package and then in the \pkg{base} package.
+  The rules when \code{\dots} is involved are subtle: see the source
+  code.
 
   \code{checkReplaceFuns} checks whether replacement functions in the
   package R code have their final argument named \code{value}.
   
   If using an installed package, the checks needing access to all R
-  objects of the package will load the package (unless it is the base
-  package), after possibly detaching an already loaded version of the
-  package.
+  objects of the package will load the package (unless it is the
+  \pkg{base} package), after possibly detaching an already loaded
+  version of the package.
 }
 \value{
   The functions return objects of class the same as the respective

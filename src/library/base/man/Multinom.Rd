@@ -5,7 +5,7 @@
 \title{The Multinomial Distribution}
 \description{
   Generate multinomially distributed random number vectors and
-  compute multinomial ``density'' probabilities.
+  compute multinomial \dQuote{density} probabilities.
 }
 \usage{
 rmultinom(n, size, prob)
@@ -31,7 +31,7 @@ dmultinom(x, size = NULL, prob, log = FALSE)
   the probability
   \deqn{P(X_1=x_1,\ldots,X_K=x_k) = C \times \prod_{j=1}^K \pi_j^{x_j}}{%
     P(X[1]=x[1],\ldots,X[K]=x[k]) = C * prod(j=1,..,K) p[j]^x[j]}
-  where \eqn{C} is the ``multinomial coefficient''
+  where \eqn{C} is the \dQuote{multinomial coefficient}
   \eqn{C = N! / (x_1! \cdots x_K!)}{C = N! / (x[1]! * \dots * x[K]!)}
   and \eqn{N = \sum_{j=1}^K x_j}{N = sum(j=1,..,K) x[j]}.
   \cr

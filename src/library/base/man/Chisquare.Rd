@@ -57,10 +57,6 @@ rchisq(n, df, ncp=0)
   non-integer, and for non-centrality \eqn{\lambda > 0}, even \eqn{n = 0};
   see the reference, chapter 29.
 
-% This was before the `stop-gap fix' in 1.7.1:
-%  Warning: The code for \code{pchisq} and
-%  \code{qchisq} is unreliable for
-%  values of \code{ncp} above approximately 290.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

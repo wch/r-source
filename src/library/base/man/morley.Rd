@@ -5,8 +5,8 @@
 \description{
   The classical data of Michaelson and Morley on the speed of light.
   The data consists of five experiments, each consisting of 20
-  consecutive `runs'.  The response is the speed of light measurement,
-  suitably coded.
+  consecutive \sQuote{runs}.  The response is the speed of light
+  measurement, suitably coded.
 }
 \usage{data(morley)}
 \format{
@@ -19,9 +19,10 @@
 }
 \details{
   The data is here viewed as a randomized block experiment with
-  `experiment' and `run' as the factors.  `run' may also be considered a
-  quantitative variate to account for linear (or polynomial) changes in
-  the measurement over the course of a single experiment.
+  \sQuote{experiment} and \sQuote{run} as the factors.  \sQuote{run} may
+  also be considered a quantitative variate to account for linear (or
+  polynomial) changes in the measurement over the course of a single
+  experiment.
 }
 \source{
   A. J. Weekes (1986)

@@ -2,7 +2,7 @@
 \alias{col2rgb}
 \title{Color to RGB Conversion}
 \description{
-  ``Any \R color'' to RGB (red/green/blue) conversion.
+  \dQuote{Any \R color} to RGB (red/green/blue) conversion.
 }
 \usage{
 col2rgb(col)
@@ -15,7 +15,7 @@ col2rgb(col)
 }
 \details{
   For integer colors, \code{0} is shorthand for the current
-  \code{par("bg")}, and \code{\link{NA}} means ``nothing'' which
+  \code{par("bg")}, and \code{\link{NA}} means \dQuote{nothing} which
   effectively does not draw the corresponding item.
 
   For character colors, \code{"NA"} is equivalent to \code{NA} above.
@@ -41,8 +41,8 @@ col2rgb(c(red="red", palette= 1:3, hex="#abcdef"))
 ##-- NON-INTRODUCTORY examples --
 
 grC <- col2rgb(paste("gray",0:100,sep=""))
-table(print(diff(grC["red",])))# `2' or `3': almost equidistant
-## The `named' grays are in between {"slate gray" is not gray, strictly}
+table(print(diff(grC["red",])))# '2' or '3': almost equidistant
+## The 'named' grays are in between {"slate gray" is not gray, strictly}
 col2rgb(c(g66="gray66", darkg= "dark gray", g67="gray67",
           g74="gray74", gray =      "gray", g75="gray75",
           g82="gray82", light="light gray", g83="gray83"))
@@ -52,7 +52,7 @@ colnames(crgb) <- cc
 t(crgb)## The whole table
 
 ccodes <- c(256^(2:0) \%*\% crgb)## = internal codes
-## How many names are `aliases' of each other:
+## How many names are 'aliases' of each other:
 table(tcc <- table(ccodes))
 length(uc <- unique(sort(ccodes))) # 502
 ## All the multiply named colors:

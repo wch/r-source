@@ -16,8 +16,8 @@ deparse(expr, width.cutoff = 60,
     enclosed in backticks if they don't follow the standard syntax.}
 }
 \details{
-  This function turns unevaluated expressions (where ``expression'' is
-  taken in a wider sense than the strict concept of a vector of mode
+  This function turns unevaluated expressions (where \dQuote{expression}
+  is taken in a wider sense than the strict concept of a vector of mode
   \code{"expression"} used in \code{\link{expression}}) into character
   strings (a kind of inverse \code{\link{parse}}).
 

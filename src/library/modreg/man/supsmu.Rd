@@ -2,7 +2,7 @@
 \alias{supsmu}
 \title{Friedman's SuperSmoother}
 \description{
-  Smooth the (x, y) values by Friedman's ``super smoother''.
+  Smooth the (x, y) values by Friedman's \dQuote{super smoother}.
 }
 \usage{
 supsmu(x, y, wt = rep(1, length(y)), span = "cv", periodic = FALSE,
@@ -32,10 +32,10 @@ supsmu(x, y, wt = rep(1, length(y)), span = "cv", periodic = FALSE,
   prediction. The best spans are then smoothed by a running lines
   smoother and the final prediction chosen by linear interpolation. 
  
-  The FORTRAN code says: ``For small samples (\code{n < 40}) or if there
-  are substantial serial correlations between observations close in x -
-  value, then a prespecified fixed span smoother (\code{span > 0})
-  should be used.  Reasonable span values are 0.2 to 0.4.''
+  The FORTRAN code says: \dQuote{For small samples (\code{n < 40}) or if
+    there are substantial serial correlations between observations close
+    in x-value, then a prespecified fixed span smoother (\code{span >
+      0}) should be used.  Reasonable span values are 0.2 to 0.4.}
 }
 \value{
   A list with components

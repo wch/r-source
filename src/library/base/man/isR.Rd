@@ -27,7 +27,7 @@ is.R()
 \seealso{\code{\link{R.version}}, \code{\link{system}}.}
 \examples{
 x <- runif(20); small <- x < 0.4
-# `which()' only exists in R:
+## 'which()' only exists in R:
 if(is.R()) which(small) else seq(along=small)[small]
 }
 \keyword{environment}

@@ -4,7 +4,7 @@
 \alias{getOption}
 \title{Options Settings}
 \description{
-  Allow the user to set and examine a variety of global ``options''
+  Allow the user to set and examine a variety of global \dQuote{options}
   which affect the way in which \R computes and displays its results.
 }
 \usage{
@@ -17,7 +17,7 @@ getOption(x)
 \arguments{
   \item{\dots}{any options can be defined, using \code{name = value}.
 
-    However, only the ones below are used in ``base \R''.
+    However, only the ones below are used in \dQuote{base \R}.
 
     Further, \code{options('name') == options()['name']}, see the example.
   }
@@ -31,7 +31,7 @@ getOption(x)
   \code{options("width")} which is a \emph{list} of length one.
 
   \code{.Options} also always contains the \code{options()} list, for
-  S compatibility.  You must use it ``read only'' however.
+  S compatibility.  You must use it \dQuote{read only} however.
 }
 \value{
   For \code{options}, a list (in any case) with the previous values of
@@ -180,8 +180,8 @@ getOption(x)
 #endif	  
 
     \item{\code{check.bounds}:}{logical, defaulting to \code{FALSE}.  If
-      true, a \link{warning} is produced whenever a ``generalized
-      vector'' (atomic or \code{\link{list}}) is extended, by something
+      true, a \link{warning} is produced whenever a \dQuote{generalized
+      vector} (atomic or \code{\link{list}}) is extended, by something
       like \code{x <- 1:3; x[5] <- 6}.}
 
     \item{\code{echo}:}{logical.  Only used in non-interactive mode,

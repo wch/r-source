@@ -51,7 +51,7 @@ taskCallbackManager(handlers = list(), registered = FALSE, verbose = FALSE)
     C-level dispatch mechanism if necessary.}
   \item{remove}{remove an element from the manager's collection
     of callbacks, either by name or position/index.}
-  \item{evaluate}{the `real' callback function that is registered
+  \item{evaluate}{the \sQuote{real} callback function that is registered
     with the C-level dispatch mechanism and which invokes each of the
     R-leve callbacks within this manager's control.}
   \item{suspend}{a function to set the suspend state

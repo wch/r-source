@@ -31,7 +31,8 @@
     for the case of two plots.}
   \item{grid}{logical indicating if grid lines should be drawn.  If
     true, \code{\link{grid}()} is used for the first plot, where as
-    vertical lines are drawn at ``touching'' points for the cumulative plot.}
+    vertical lines are drawn at \dQuote{touching} points for the
+    cumulative plot.}
   \item{\dots}{further arguments passed to and from methods.}
 %  \item{digits}{integer indicating number of digits to use for printing.}
 }
@@ -39,7 +40,7 @@
 \examples{
 example(isoreg) # for the examples there
 
-## `same' plot as above, "proving" that only ranks of `x' are important
+## 'same' plot as above, "proving" that only ranks of 'x' are important
 plot(isoreg(2^(1:9), c(1,0,4,3,3,5,4,2,0)), plot.t = "row", log = "x")
 
 plot(ir3, plot.type = "row", ylab = "y3")

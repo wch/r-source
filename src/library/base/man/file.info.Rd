@@ -12,8 +12,8 @@ file.info(\dots)
   \item{\dots}{character vectors containing file names.}
 }
 \details{
-  What is meant by ``file access'' and hence the last access time is
-  system-dependent.
+  What is meant by \dQuote{file access} and hence the last access time
+  is system-dependent.
 
 #ifdef unix
   On most systems symbolic links are followed, so information is given

@@ -9,7 +9,7 @@
 }
 \usage{data(freeny)}
 \format{
-  There are three `freeny' data sets.
+  There are three \sQuote{freeny} data sets.
 
   \code{freeny.y} is a time series with 39 observations on quarterly
   revenue from (1962,2Q) to (1971,4Q).

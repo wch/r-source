@@ -27,7 +27,7 @@ cpgram(ts, taper=0.1, main=
 }
 \author{B.D. Ripley}
 \note{
-  From package \file{MASS}.
+  From package \pkg{MASS}.
 }
 \examples{
 par(pty = "s", mfrow = c(1,2))

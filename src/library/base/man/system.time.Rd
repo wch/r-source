@@ -7,7 +7,7 @@ unix.time(expr)
 \alias{system.time}
 \alias{unix.time}
 \arguments{
-  \item{expr}{Valid \R expression to be ``timed''}
+  \item{expr}{Valid \R expression to be \dQuote{timed}}
 }
 \description{Return CPU (and other) times that \code{expr} used.
 }    

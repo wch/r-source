@@ -30,7 +30,7 @@ detach(name, pos = 2, version)
   \code{\link{data.frame}} or as \code{\link{list}}.
 }
 \note{
-  You cannot detach either the workspace (position 1) or the \code{base}
+  You cannot detach either the workspace (position 1) or the \pkg{base}
   package (the last item in the search list).
 }
 \references{
@@ -52,8 +52,8 @@ library(eda)
 pkg <- "package:eda"
 detach(pos = match(pkg, search()))
 
-## careful: do not do this unless `lqs' is not already loaded.
+## careful: do not do this unless 'lqs' is not already loaded.
 library(lqs)
-detach(2)# `pos' used for `name'
+detach(2)# 'pos' used for 'name'
 }
 \keyword{data}

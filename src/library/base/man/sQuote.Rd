@@ -37,7 +37,7 @@ dQuote(x)
   ASCII quotation style, but may be enhanced in the future.
 }
 \references{
-  Markus Kuhn, ``ASCII and Unicode quotation marks''.
+  Markus Kuhn, \dQuote{ASCII and Unicode quotation marks}.
   \url{http://www.cl.cam.ac.uk/~mgk25/ucs/quotes.html}
 }
 \examples{

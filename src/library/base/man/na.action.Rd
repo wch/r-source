@@ -15,7 +15,7 @@ na.action.default(object, \dots)
   default method.
 }
 \value{
-  The ``NA action'' which should be applied to \code{object} whenever
+  The \dQuote{NA action} which should be applied to \code{object} whenever
   \code{\link{NA}}s are not desired.
 }
 \references{

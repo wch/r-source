@@ -18,10 +18,10 @@ rowMeans(x, na.rm = FALSE, dims = 1)
     complex, integer or logical values, or a numeric data frame.}
   \item{na.rm}{logical. Should missing values (including \code{NaN})
     be omitted from the calculations?}
-  \item{dims}{Which dimensions are regarded as ``rows'' or ``columns''
-    to sum over.  For \code{col*}, the sum or mean is over dimensions
-    \code{dims+1, \dots}; for \code{row*} it is over dimensions
-    \code{1:dims}.}
+  \item{dims}{Which dimensions are regarded as \dQuote{rows} or
+    \dQuote{columns} to sum over.  For \code{col*}, the sum or mean is
+    over dimensions \code{dims+1, \dots}; for \code{row*} it is over
+    dimensions \code{1:dims}.}
 }
 \details{
   These functions are equivalent to use of \code{\link{apply}} with

@@ -28,9 +28,9 @@ oldClass(x) <- value
 
 \details{
   Many \R objects have a \code{class} attribute, a character vector
-  giving the names of the classes which the object ``inherits'' from.
-  If the object does not have a class attribute, it has an implicit
-  class, \code{"matrix"}, \code{"array"} or the result of
+  giving the names of the classes which the object \dQuote{inherits}
+  from.  If the object does not have a class attribute, it has an
+  implicit class, \code{"matrix"}, \code{"array"} or the result of
   \code{\link{mode}(x)}.  (Functions \code{oldClass} and
   \code{oldClass<-} get and set the attribute, which can also be done
   directly.)
@@ -71,7 +71,7 @@ oldClass(x) <- value
 
 \section{Formal classes}{
   An additional mechanism of \emph{formal} classes has been available in
-  packages \code{methods} since \R 1.4.0, and as from \R 1.7.0 this
+  packages \pkg{methods} since \R 1.4.0, and as from \R 1.7.0 this
   is attached by default.  For objects which have a formal class, its name
   is returned by \code{class} as a character vector of length one.
 

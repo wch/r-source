@@ -28,19 +28,19 @@ hist.default(x, breaks = "Sturges", freq = NULL, probability = !freq,
   \item{freq}{logical; if \code{TRUE}, the histogram graphic is a
     representation of frequencies, the \code{counts} component of
     the result; if \code{FALSE}, \emph{relative} frequencies
-    (``probabilities''), component \code{density},
+    (\dQuote{probabilities}), component \code{density},
     are plotted.   Defaults to \code{TRUE} \emph{iff} \code{breaks} are
     equidistant (and \code{probability} is not specified).}
   \item{probability}{an \emph{alias} for \code{!freq}, for S compatibility.}
-  \item{include.lowest}{logical; if \code{TRUE},
-    an `x[i]' equal to the `breaks' value will be included in the first
-    (or last, for \code{right = FALSE}) bar.  This will be ignored (with
-    a warning) unless \code{breaks} is a vector.}
+  \item{include.lowest}{logical; if \code{TRUE}, an \code{x[i]} equal to
+    the \code{breaks} value will be included in the first (or last, for
+    \code{right = FALSE}) bar.  This will be ignored (with a warning)
+    unless \code{breaks} is a vector.}
   \item{right}{logical; if \code{TRUE}, the histograms cells are
     right-closed (left open) intervals.}
   \item{density}{the density of shading lines, in lines per inch.
     The default value of \code{NULL} means that no shading lines
-    are drawn. Non-positive values of `density' also inhibit the
+    are drawn. Non-positive values of \code{density} also inhibit the
     drawing of shading lines.}
   \item{angle}{the slope of shading lines, given as an angle in
     degrees (counter-clockwise).}
@@ -69,7 +69,7 @@ hist.default(x, breaks = "Sturges", freq = NULL, probability = !freq,
   \code{\link{plot.histogram}}, before it is returned.
 }
 \details{
-  The definition of ``histogram'' differs by source (with
+  The definition of \dQuote{histogram} differs by source (with
   country-specific biases).  \R's default with equi-spaced breaks (also
   the default) is to plot the counts in the cells defined by
   \code{breaks}. Thus the height of a rectangle is proportional to
@@ -87,7 +87,7 @@ hist.default(x, breaks = "Sturges", freq = NULL, probability = !freq,
 
   For \code{right = FALSE}, the intervals are of the form \code{[a, b)},
   and \code{include.lowest} really has the meaning of
-  ``\emph{include highest}''.
+  \dQuote{\emph{include highest}}.
 
   A numerical tolerance of \eqn{10^{-7}}{1e-7} times the range of the
   breaks is applied when counting entries on the edges of bins. 

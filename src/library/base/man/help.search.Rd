@@ -96,7 +96,7 @@ help.search("linear models")    # In case you forgot how to fit linear
 help.search("non-existent topic")
 \dontrun{
 help.search("print")            # All help pages with topics or title
-                                # matching `print'
+                                # matching 'print'
 help.search(apropos = "print")  # The same
 
 help.search(keyword = "hplot")  # All help pages documenting high-level

@@ -13,9 +13,9 @@
   America.}
 \usage{data(state)}
 \details{
-  \R currently contains the following ``state'' data sets.  Note that
-  all data are arranged according to alphabetical order of the state
-  names.
+  \R currently contains the following \dQuote{state} data sets.  Note
+  that all data are arranged according to alphabetical order of the
+  state names.
   \describe{
     \item{\code{state.abb}:}{character vector of 2-letter abbreviations
       for the state names.}

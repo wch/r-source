@@ -28,9 +28,10 @@ all(\dots, na.rm = FALSE)
   \emph{The New S Language}.
   Wadsworth \& Brooks/Cole.
 }
-\seealso{\code{\link{any}}, the ``complement'' of \code{all}, and
+\seealso{
+  \code{\link{any}}, the \dQuote{complement} of \code{all}, and
   \code{\link{stopifnot}(*)} which is an \code{all(*)}
-  ``insurance''.
+  \dQuote{insurance}.
 }
 \examples{
 range(x <- sort(round(rnorm(10) - 1.2,1)))

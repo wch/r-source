@@ -25,8 +25,8 @@ is.name(y)
   \item{x, y}{objects to be coerced or tested.} 
 }
 \note{
-  The term ``symbol'' is from the LISP background of \R, whereas
-  ``name'' has been the standard S term for this.
+  The term \dQuote{symbol} is from the LISP background of \R, whereas
+  \dQuote{name} has been the standard S term for this.
 }
 \details{
   \code{is.symbol} is generic: you can write methods to handle

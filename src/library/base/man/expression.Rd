@@ -19,7 +19,7 @@ as.expression(x, \dots)
 }
 \value{
   \code{expression} returns a vector of mode \code{"expression"}
-  containing its arguments as unevaluated ``\link{call}s''.
+  containing its arguments as unevaluated \dQuote{\link{call}s}.
 
   \code{is.expression} returns \code{TRUE} if \code{expr} is an
   expression object and \code{FALSE} otherwise.

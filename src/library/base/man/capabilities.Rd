@@ -16,7 +16,7 @@ capabilities(what = NULL)
   A named logical vector. Current components are
     \item{jpeg}{Is the \code{\link{jpeg}} function operational?}
     \item{png}{Is the \code{\link{png}} function operational?}
-    \item{tcltk}{Is the \code{tcltk} package operational?}
+    \item{tcltk}{Is the \pkg{tcltk} package operational?}
     \item{X11}{(Unix)  Are \code{X11} and the data editor available?}
     \item{GNOME}{(Unix)  Is the GNOME GUI in use and are \code{GTK} and
       \code{GNOME} graphics devices available?}
@@ -52,6 +52,6 @@ capabilities()
 if(!capabilities("http/ftp"))
    warning("internal download.file() is not available")
 
-## See also the examples for `connections'.
+## See also the examples for 'connections'.
 }
 \keyword{utilities}

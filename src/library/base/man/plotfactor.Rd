@@ -12,7 +12,7 @@
         \code{\link{par}}.}
 }
 \description{
-  This functions implements a ``scatterplot'' method for
+  This functions implements a \dQuote{scatterplot} method for
   \code{\link{factor}} arguments of the \emph{generic}
   \code{\link{plot}} function.
   Actually, \code{\link{boxplot}} or \code{\link{barplot}} are used when

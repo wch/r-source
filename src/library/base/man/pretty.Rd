@@ -15,16 +15,16 @@ pretty(x, n = 5, min.n = n \%/\% 3,  shrink.sml = 0.75,
     single value.}
 \item{shrink.sml}{positive numeric
   by a which a default scale is shrunk in the case when
-  \code{range(x)} is ``very small'' (usually 0).}
+  \code{range(x)} is \dQuote{very small} (usually 0).}
 \item{high.u.bias}{non-negative numeric, typically \eqn{> 1}.
     The interval unit is determined as \{1,2,5,10\} times \code{b}, a
     power of 10.  Larger \code{high.u.bias} values favor larger units.
 }
 \item{u5.bias}{non-negative numeric
-    multiplier favoring factor 5 over 2.  Default and ``optimal'':
+    multiplier favoring factor 5 over 2.  Default and \dQuote{optimal}:
     \code{u5.bias = .5 + 1.5*high.u.bias}.}
 \item{eps.correct}{integer code, one of \{0,1,2\}. If non-0, an
-    \emph{``epsilon correction''} is made at the boundaries such that
+    \dQuote{\emph{epsilon correction}} is made at the boundaries such that
     the result boundaries will be outside \code{range(x)}; in the
     \emph{small} case, the correction is only done if \code{eps.correct >=2}.}
 }
@@ -43,7 +43,7 @@ pretty(x, n = 5, min.n = n \%/\% 3,  shrink.sml = 0.75,
 
     Now determine the basic \emph{unit} \eqn{u} as one of
     \eqn{\{1,2,5,10\} b}, depending on \eqn{c/b \in [1,10)} and the two
-    \emph{``bias''} coefficients, \eqn{h =}\code{high.u.bias} and
+    \dQuote{\emph{bias}} coefficients, \eqn{h =}\code{high.u.bias} and
     \eqn{f =}\code{u5.bias}.
 
     \dots\dots\dots

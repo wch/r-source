@@ -21,9 +21,9 @@ NextMethod(generic = NULL, object = NULL, \dots)
   \item{\dots}{further arguments to be passed to the method.}
 }
 \details{
-  An \R ``object'' is a data object which has a \code{class} attribute.
+  An \R \dQuote{object} is a data object which has a \code{class} attribute.
   A class attribute is a character vector giving the names of
-  the classes which the object ``inherits'' from.
+  the classes which the object \dQuote{inherits} from.
   If the object does not have a class attribute, it has an implicit
   class, \code{"matrix"}, \code{"array"} or the result of
   \code{\link{mode}(x)}.
@@ -41,7 +41,7 @@ NextMethod(generic = NULL, object = NULL, \dots)
 
   Now for some obscure details that need to appear somewhere.  These
   comments will be slightly different than those in Appendix A of the
-  White S Book. \code{UseMethod} creates a ``new'' function call with
+  White S Book. \code{UseMethod} creates a \dQuote{new} function call with
   arguments matched as they came in to the generic.  Any local variables
   defined before the call to \code{UseMethod} are retained (unlike S).  Any
   statements after the call to \code{UseMethod} will not be evaluated as
@@ -72,7 +72,7 @@ NextMethod(generic = NULL, object = NULL, \dots)
 \note{
   This scheme is called \emph{S3} (S version 3).  For new projects,
   it is recommended to use the more flexible and robust \emph{S4} scheme
-  provided in the \code{methods} package. 
+  provided in the \pkg{methods} package. 
 
   The function \code{.isMethodsDispatchOn()} returns \code{TRUE} if the
   new S4 methods are available but is meant for \R internal use only.

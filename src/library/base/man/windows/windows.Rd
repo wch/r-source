@@ -100,10 +100,10 @@ win.print(width = 7, height = 7, pointsize = 12, printer = "")
   original units, but only approximately as they are derived from the
   metrics of the rescaled fonts (which are in integer sizes)
 
-  The displayed region may be bigger than the `paper' size, and areas
-  outside the `paper' are coloured in the Windows application background
-  colour.  Graphics parameters such
-  as \code{"din"} refer to the scaled plot if rescaling is in effect.
+  The displayed region may be bigger than the \sQuote{paper} size, and
+  areas outside the \sQuote{paper} are coloured in the Windows
+  application background colour.  Graphics parameters such as
+  \code{"din"} refer to the scaled plot if rescaling is in effect.
 
   The different colours need to be distinguished carefully. The area
   outside the device region is coloured in the Windows application background
@@ -118,7 +118,7 @@ win.print(width = 7, height = 7, pointsize = 12, printer = "")
   \code{print} method, and a subset method.  As the individual plots are
   of class \code{"recordedplot"} they can be replayed by printing them:
   see \code{\link{recordPlot}}.  The active plot history is stored in
-  variable \code{.SavedPlots} in package \code{base}.
+  variable \code{.SavedPlots} in package \pkg{base}.
 }
 
 \value{

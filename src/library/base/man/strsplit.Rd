@@ -9,7 +9,7 @@
 \arguments{
   \item{x}{character vector, to be split.}
   \item{split}{character vector containing a regular expression to use
-    as ``split''.  If empty matches occur, in particular if \code{split}
+    as \dQuote{split}.  If empty matches occur, in particular if \code{split}
     has length 0, \code{x} is split into single characters.  If
     \code{split} has length greater than 1, it is re-cycled along \code{x}.}
   \item{extended}{if \code{TRUE}, extended regular expression matching
@@ -33,8 +33,8 @@ strsplit(x,"e")
 
 unlist(strsplit("a.b.c", "."))
 ## [1] "" "" "" "" ""
-## Note that `split' is a regexp!
-## If you really want to split on `.', use
+## Note that 'split' is a regexp!
+## If you really want to split on '.', use
 unlist(strsplit("a.b.c", "\\\\."))
 ## [1] "a" "b" "c"
 

@@ -29,7 +29,7 @@ Filters
   zero files are returned, whereas \code{\link{file.choose}} would
   signal an error.
 
-  Windows file dialog boxes include a list of ``filters'', which allow
+  Windows file dialog boxes include a list of \dQuote{filters}, which allow
   the file selection to be limited to files of specific types.
   The \code{filters} argument to \code{choose.files} allows the list
   of filters to be set.  It should be an \code{n} by \code{2} character
@@ -48,7 +48,7 @@ Filters
   give a fully qualified file mask (e.g., \code{'c:\\\\*.*'})
   in the \code{default} argument.  If a directory is not given, the
   dialog will start in the current directory the first time, and
-  ``remember'' the last directory on subsequent invocations.
+  \dQuote{remember} the last directory on subsequent invocations.
 }
 \seealso{
   \code{\link{file.choose}}

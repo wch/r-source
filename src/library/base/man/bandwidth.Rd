@@ -37,7 +37,7 @@ bw.SJ(x, nb=1000, lower, upper, method=c("ste", "dpi"))
   It defaults to 0.9 times the
   minimum of the standard deviation and the interquartile range divided by
   1.34 times the sample size to the negative one-fifth power
-  (= Silverman's ``rule of thumb'', Silverman(1986, page 48, eqn (3.31))
+  (= Silverman's \dQuote{rule of thumb}, Silverman (1986, page 48, eqn (3.31))
   \emph{unless} the quartiles coincide when a positive result
   will be guaranteed.
 
@@ -59,26 +59,28 @@ bw.SJ(x, nb=1000, lower, upper, method=c("ste", "dpi"))
 
   \code{\link[MASS]{bandwith.nrd}}, \code{\link[MASS]{ucv}},
   \code{\link[MASS]{bcv}} and \code{\link[MASS]{width.SJ}} in
-  \code{MASS}, which are all scaled to the \code{width} argument of
-  \code{density} and so give answers four times as large.
+  package \pkg{MASS}, which are all scaled to the \code{width} argument
+  of \code{density} and so give answers four times as large.
 }
 \references{
-Scott, D. W. (1992)
-\emph{Multivariate Density Estimation: Theory, Practice, and  Visualization.}
-Wiley.
+  Scott, D. W. (1992)
+  \emph{Multivariate Density Estimation: Theory, Practice, and
+    Visualization.}
+  Wiley.
 
-Sheather, S. J. and Jones, M. C. (1991) A reliable data-based bandwidth
-selection method for kernel density estimation.
-\emph{Journal of the Royal Statistical Society series B}
-\bold{53}, 683--690.
+  Sheather, S. J. and Jones, M. C. (1991)
+  A reliable data-based bandwidth selection method for kernel density
+  estimation.
+  \emph{Journal of the Royal Statistical Society series B},
+  \bold{53}, 683--690.
 
-Silverman, B. W. (1986)
-\emph{Density Estimation}.
-London: Chapman and Hall.
+  Silverman, B. W. (1986)
+  \emph{Density Estimation}.
+  London: Chapman and Hall.
 
-Venables, W. N. and Ripley, B. D. (2002)
-\emph{Modern Applied Statistics with S.}
-Springer.
+  Venables, W. N. and Ripley, B. D. (2002)
+  \emph{Modern Applied Statistics with S}.
+  Springer.
 }
 \examples{
 data(precip)

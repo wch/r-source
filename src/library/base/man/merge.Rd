@@ -5,7 +5,7 @@
 \title{Merge Two Data Frames}
 \description{
   Merge two data frames by common columns or row names, or do other
-  versions of database ``join'' operations.
+  versions of database \dQuote{join} operations.
 }
 \usage{
 merge(x, y, by, by.x, by.y, all = FALSE, all.x = all, all.y = all,
@@ -45,7 +45,7 @@ merge.data.frame(x, y, by = intersect(names(x), names(y)),
   together.  If there is more than one match, all possible matches
   contribute one row each.\cr
   If the \code{by.*} vector are of length 0, the result, \code{r}, is the
-  ``Cartesian product'' of \code{x} and \code{y}, i.e.,
+  \dQuote{Cartesian product} of \code{x} and \code{y}, i.e.,
   \code{dim(r) = c(nrow(x)*nrow, ncol(x) + ncol(y))}.
 
   If \code{all.x} is true, all the non matching cases of \code{x} are

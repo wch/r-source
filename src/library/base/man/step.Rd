@@ -125,7 +125,7 @@ step(object, scope, scale = 0,
 }
 \author{
   B. D. Ripley: \code{step} is a slightly simplified version of
-  \code{\link[MASS]{stepAIC}} in package \code{MASS} (Venables \&
+  \code{\link[MASS]{stepAIC}} in package \pkg{MASS} (Venables \&
   Ripley, 2002 and earlier editions).
 
   The idea of a \code{step} function follows that described in Hastie \&

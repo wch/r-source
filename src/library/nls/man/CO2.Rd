@@ -44,12 +44,12 @@
 }
 \source{
   Potvin, C., Lechowicz, M. J. and Tardif, S. (1990)
-  ``The statistical analysis of ecophysiological response curves
-  obtained from experiments involving repeated measures'', \emph{Ecology},
+  \dQuote{The statistical analysis of ecophysiological response curves
+  obtained from experiments involving repeated measures}, \emph{Ecology},
   \bold{71}, 1389--1400.
 
-  Pinheiro, J. C. and Bates, D. M. (2000) \emph{Mixed-effects Models in
-      S and S-PLUS}, Springer.
+  Pinheiro, J. C. and Bates, D. M. (2000)
+  \emph{Mixed-effects Models in S and S-PLUS}, Springer.
 }
 \examples{
 data(CO2)

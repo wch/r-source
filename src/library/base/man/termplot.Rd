@@ -30,10 +30,10 @@ termplot(model, data=NULL, envir=environment(formula(model)),
   \item{main}{logical, or vector of main titles;  if \code{TRUE}, the
     model's call is taken as main title, \code{NULL} or \code{FALSE} mean
     no titles.}
-  \item{col.term, lwd.term}{color and line width for the ``term curve'',
+  \item{col.term, lwd.term}{color and line width for the \dQuote{term curve},
     see \code{\link{lines}}.}
   \item{col.se, lty.se, lwd.se}{color, line type and line width for the
-    ``twice-standard-error curve'' when \code{se = TRUE}.}
+    \dQuote{twice-standard-error curve} when \code{se = TRUE}.}
   \item{col.res, cex, pch}{color, plotting character expansion and type
     for partial residuals, when \code{partial.resid = TRUE}, see
     \code{\link{points}}.}
@@ -45,9 +45,9 @@ termplot(model, data=NULL, envir=environment(formula(model)),
 }
 \details{
   The model object must have a \code{predict} method that accepts
-  \code{type=terms}, eg \code{\link{glm}} in the base package,
-  \code{\link[survival]{coxph}} and \code{\link[survival]{survreg}} in the
-  \code{survival} package.
+  \code{type=terms}, eg \code{\link{glm}} in the\pkg{base} package,
+  \code{\link[survival]{coxph}} and \code{\link[survival]{survreg}} in
+  the \pkg{survival} package.
 
   For the \code{partial.resid=TRUE} option it must have a
   \code{\link{residuals}} method that accepts \code{type="partial"},

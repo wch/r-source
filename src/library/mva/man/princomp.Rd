@@ -23,7 +23,7 @@
   \item{na.action}{a function which indicates what should happen
     when the data contain \code{NA}s.  The default is set by
     the \code{na.action} setting of \code{\link{options}}, and is
-    \code{\link{na.fail}} if that is unset. The ``factory-fresh''
+    \code{\link{na.fail}} if that is unset. The \dQuote{factory-fresh}
     default is \code{\link{na.omit}}.}
   \item{cor}{a logical value indicating whether the calculation should
     use the correlation matrix or the covariance matrix.}

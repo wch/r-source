@@ -57,7 +57,8 @@ bug.report(subject = "", ccaddress = Sys.getenv("USER"),
 \section{When is there a bug?}{
   If \R executes an illegal instruction, or dies with an operating
   system error message that indicates a problem in the program (as
-  opposed to something like ``disk full''), then it is certainly a bug.
+  opposed to something like \dQuote{disk full}), then it is certainly a
+  bug.
 
   Taking forever to complete a command can be a bug, but you must make
   certain that it was really \R's fault.  Some commands simply take a
@@ -98,9 +99,9 @@ bug.report(subject = "", ccaddress = Sys.getenv("USER"),
   to report it in a way which is useful.  What is most useful is an
   exact description of what commands you type, from when you start \R
   until the problem happens.  Always include the version of \R, machine,
-  and operating system that you are using; type `version' in \R to print
-  this. To help us keep track of which bugs have been fixed and which
-  are still open please send a separate report for each bug.
+  and operating system that you are using; type \kbd{version} in \R to
+  print this.  To help us keep track of which bugs have been fixed and
+  which are still open please send a separate report for each bug.
 
   The most important principle in reporting a bug is to report FACTS,
   not hypotheses or categorizations.  It is always easier to report the

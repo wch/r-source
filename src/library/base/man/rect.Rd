@@ -22,7 +22,7 @@ rect(xleft, ybottom, xright, ytop, density = NULL, angle = 45,
   \item{border}{color for rectangle border(s).}
   \item{lty}{line type for borders; defaults to \code{"solid"}.}
   \item{lwd}{width for borders.}
-  \item{xpd}{logical (``e\bold{xp}an\bold{d}''); defaults to
+  \item{xpd}{logical (\dQuote{e\bold{xp}an\bold{d}}); defaults to
     \code{par("xpd")}.  See \code{\link{par}(xpd= )}.}
   \item{\dots}{other graphical parameters can be given as arguments.}
 }
@@ -40,7 +40,7 @@ rect(xleft, ybottom, xright, ytop, density = NULL, angle = 45,
   \code{\link{barplot}}, \code{\link{legend}}, etc.
 }
 \seealso{
-  \code{\link{box}} for the ``standard'' box around the plot;
+  \code{\link{box}} for the \dQuote{standard} box around the plot;
   \code{\link{polygon}} and \code{\link{segments}} for flexible line
   drawing.
 
@@ -50,7 +50,7 @@ rect(xleft, ybottom, xright, ytop, density = NULL, angle = 45,
 ## set up the plot region:
 op <- par(bg = "thistle")
 plot(c(100, 250), c(300, 450), type = "n", xlab="",
-     main = "2 x 11 rectangles; `rect(100+i,300+i,  150+i,380+i)'")
+     main = "2 x 11 rectangles; 'rect(100+i,300+i,  150+i,380+i)'")
 i <- 4*(0:10)
 ## draw rectangles with bottom left (100, 300)+i and top right (150, 380)+i
 rect(100+i, 300+i, 150+i, 380+i, col=rainbow(11, start=.7,end=.1))

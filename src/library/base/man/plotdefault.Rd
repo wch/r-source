@@ -2,7 +2,7 @@
 \alias{plot.default}
 \title{The Default Scatterplot Function}
 \description{
-  Draw a scatter plot with ``decorations'' such as axes and titles
+  Draw a scatter plot with \dQuote{decorations} such as axes and titles
   in the active graphics window.
 }
 \usage{

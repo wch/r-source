@@ -47,7 +47,7 @@ legend(x, y = NULL, legend, fill, col = "black", lty, lwd, pch,
   \item{text.width}{the width of the legend text in x (\code{"user"})
     coordinates.
     Defaults to the proper value computed by \code{\link{strwidth}(legend)}.}
-  \item{merge}{logical; if \code{TRUE}, ``merge'' points and lines but
+  \item{merge}{logical; if \code{TRUE}, \dQuote{merge} points and lines but
     not filled boxes.  Defaults to \code{TRUE} if there are points and lines.}
   \item{trace}{logical; if \code{TRUE}, shows how \code{legend} does all
     its magical computations.}
@@ -73,7 +73,7 @@ legend(x, y = NULL, legend, fill, col = "black", lty, lwd, pch,
   opposite corners of the rectangle (either pair of corners, in any
   order).
   
- ``Attribute'' arguments such as \code{col}, \code{pch}, \code{lty},
+  \dQuote{Attribute} arguments such as \code{col}, \code{pch}, \code{lty},
   etc, are recycled if necessary.  \code{merge} is not.
 
   Points are drawn \emph{after} lines in order that they can cover the
@@ -109,7 +109,7 @@ legend(x, y = NULL, legend, fill, col = "black", lty, lwd, pch,
   \code{\link{text}} for more examples of math expressions.
 }
 \examples{
-## Run the example in `?matplot' or the following:
+## Run the example in '?matplot' or the following:
 leg.txt <- c("Setosa     Petals", "Setosa     Sepals",
              "Versicolor Petals", "Versicolor Sepals")
 y.leg <- c(4.5, 3, 2.1, 1.4, .7)
@@ -121,7 +121,7 @@ for (i in seq(cexv)) {
   legend(3, y.leg[i], leg.txt, pch = "sSvV", col = c(1, 3), cex = cexv[i])
 }
 
-## `merge = TRUE' for merging lines & points:
+## 'merge = TRUE' for merging lines & points:
 x <- seq(-pi, pi, len = 65)
 plot(x, sin(x), type = "l", ylim = c(-1.2, 1.8), col = 3, lty = 2)
 points(x, cos(x), pch = 3, col = 4)
@@ -175,12 +175,12 @@ ex12 <- expression(bar(x) == sum(over(x[i], n), i==1, n),
                    hat(x) == median(x[i], i==1,n))
 str(legend(4.1, 30, ex12, col = 2:3, lty=2:3, lwd=2))
 
-## `Filled' boxes -- for more, see example(plotfactor)
+## 'Filled' boxes -- for more, see example(plotfactor)
 data(PlantGrowth)
 plot(cut(weight, 3) ~ group, data = PlantGrowth,
      col = NULL, density = 16*(1:3))
 
-## Using `ncol' :
+## Using 'ncol' :
 x <- 0:64/64
 matplot(x, outer(x, 1:7, function(x, k) sin(k * pi * x)),
         type = "o", col = 1:7, ylim = c(-1, 1.5), pch = "*")

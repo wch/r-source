@@ -131,7 +131,7 @@ tracingState(on)
   but they disappear when the browser exits.  This may be relevant in
   that the S-Plus version allows you to experiment with code changes
   interactively, but the \R version does not.  (A future revision may
-  include a ``destructive'' browser for \R.)
+  include a \dQuote{destructive} browser for \R.)
 }
 \note{  The version of function tracing that includes any of the
   arguments except for the function name requires the methods package
@@ -139,10 +139,10 @@ tracingState(on)
   versions of the traced functions).
 
   In rare cases, this may change some behavior.  In particular, although
-  the methods package
-  generally supports older styles of classes and methods, it is
-  stricter in treating class attributes.  Just occasionally, older code may stop
-  on an error with the methods package attached, but not otherwise.
+  the \pkg{methods} package generally supports older styles of classes
+  and methods, it is stricter in treating class attributes.  Just
+  occasionally, older code may stop on an error with the \pkg{methods}
+  package attached, but not otherwise. 
   }
 \value{
   The traced function(s) name(s).  The relevant consequence is the

@@ -44,7 +44,7 @@ seq(along)
   interpreted as a \code{length} argument.
 
   If \code{from} and \code{to} are factors of the same length, then
-  \code{from : to} returns the ``cross'' of the two.
+  \code{from : to} returns the \dQuote{cross} of the two.
 
   Very small sequences (with \code{from - to} of the order of 1e-14
   times the larger of the ends) will return \code{from}.
@@ -82,6 +82,6 @@ for (x in list(NULL, letters[1:6], list(1,pi)))
 
 f1 <- gl(2,3); f1
 f2 <- gl(3,2); f2
-f1:f2 # a factor, the ``cross''  f1 x f2
+f1:f2 # a factor, the "cross"  f1 x f2
 }
 \keyword{manip}

@@ -18,9 +18,9 @@ sys.source(file, envir = NULL, chdir = FALSE,
     typically supply an explicit \code{envir} argument.}
   \item{chdir}{logical; if \code{TRUE}, the \R working directory is
     changed to the directory containing \code{file} for evaluating.}
-  \item{keep.source}{logical.  If \code{TRUE}, functions ``keep their
-    source'' including comments, see \code{\link{options}(keep.source = *)}
-    for more details.}
+  \item{keep.source}{logical.  If \code{TRUE}, functions \dQuote{keep
+      their source} including comments, see
+    \code{\link{options}(keep.source = *)} for more details.}
 }
 \details{
   For large files, \code{keep.source = FALSE} may save quite a bit of

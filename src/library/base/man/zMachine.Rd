@@ -10,8 +10,8 @@
   double or integer and the machine's precision.
 }
 \value{
-  A list with components (for simplicity, the
-  prefix ``double'' is omitted in the explanations)
+  A list with components (for simplicity, the prefix \dQuote{double} is
+  omitted in the explanations)
   \item{double.eps}{the smallest positive floating-point number
     \code{x} such that \code{1 + x != 1}.  It equals
     \code{base^ulp.digits} if either \code{base} is 2 or \code{rounding}

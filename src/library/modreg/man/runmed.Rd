@@ -1,26 +1,29 @@
 \name{runmed}
 \title{Running Medians -- Robust Scatter Plot Smoothing}
 \alias{runmed}
-\description{Compute running medians of odd span.  This is the ``most
-  robust'' scatter plot smoothing possible.
-  For efficiency (and historical reason), you can use one of two
-  different algorithms giving identical results.
+\description{
+  Compute running medians of odd span.  This is the \dQuote{most robust}
+  scatter plot smoothing possible.  For efficiency (and historical
+  reason), you can use one of two different algorithms giving identical
+  results.
 }
 \usage{
 runmed(x, k, endrule = c("median","keep","constant"),
        algorithm = NULL, print.level = 0)
 }
 \arguments{
-  \item{x}{numeric vector, the ``dependent'' variable to be smoothed.}
-  \item{k}{integer width of median window; must be odd.  Turlach had a default
-    of \code{k <- 1 + 2 * min((n-1)\%/\% 2, ceiling(0.1*n))}.  Use
-    \code{k = 3} for ``minimal'' robust smoothing eliminating isolated
-    outliers.}
+  \item{x}{numeric vector, the \dQuote{dependent} variable to be
+    smoothed.}
+  \item{k}{integer width of median window; must be odd.  Turlach had a
+    default of \code{k <- 1 + 2 * min((n-1)\%/\% 2, ceiling(0.1*n))}.
+    Use \code{k = 3} for \dQuote{minimal} robust smoothing eliminating
+    isolated outliers.}
   \item{endrule}{character string indicating how the values at the
     beginning and the end (of the data) should be treated.
     \describe{
-      \item{\code{"keep"}}{keeps the first and last \eqn{k_2}{k2} values at both
-	ends, where \eqn{k_2}{k2} is the half-bandwidth \code{k2 = k \%/\% 2},
+      \item{\code{"keep"}}{keeps the first and last \eqn{k_2}{k2} values
+	at both ends, where \eqn{k_2}{k2} is the half-bandwidth \code{k2
+	  = k \%/\% 2},
 	i.e., \code{y[j] = x[j]} for \eqn{j \in \{1,\ldots,k_2;
 	  n-k_2+1,\ldots,n\}}{j = 1,..,k2 and (n-k2+1),..,n};}
       \item{\code{"constant"}}{copies \code{median(y[1:k2])} to the first
@@ -40,7 +43,8 @@ runmed(x, k, endrule = c("median","keep","constant"),
     should rarely be changed by average users.}
 }
 \value{vector of smoothed values of the same length as \code{x} with an
-  \code{\link{attr}}ibute \code{k} containing (the `oddified') \code{k}.
+  \code{\link{attr}}ibute \code{k} containing (the \sQuote{oddified})
+  \code{k}.
 }
 \details{
   Apart from the end values, the result \code{y = runmed(x, k)} simply has
@@ -81,7 +85,7 @@ runmed(x, k, endrule = c("median","keep","constant"),
 \seealso{
   \code{\link{smoothEnds}} which implements Tukey's end point rule and
   is called by default from \code{runmed(*, endrule = "median")}.
-  \code{\link[eda]{smooth}} (from \code{eda} package) uses running
+  \code{\link[eda]{smooth}} (from \pkg{eda} package) uses running
   medians of 3 for its compound smoothers.
 }
 \examples{

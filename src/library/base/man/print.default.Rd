@@ -52,7 +52,7 @@ print.atomic(x, quote = TRUE, \dots)
   using the values of \code{digits} to \code{print.default}, but using the
   default values (for the methods called) of the other arguments.
 
-  When the \code{methods} package is attached, \code{print} will call
+  When the \pkg{methods} package is attached, \code{print} will call
   \code{\link[methods]{show}} for methods with formal classes if called
   with no optional arguments.
 }

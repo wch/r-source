@@ -15,13 +15,13 @@ loglin(table, margin, start = rep(1, length(table)), fit = FALSE,
   \item{margin}{a list of vectors with the marginal totals to be fit.
 
     (Hierarchical) log-linear models can be specified in term of these
-    marginal totals which give the ``maximal'' factor subsets contained
+    marginal totals which give the \dQuote{maximal} factor subsets contained
     in the model.  For example, in a three-factor model,
     \code{list(c(1, 2), c(1, 3))} specifies a model which contains
     parameters for the grand mean, each factor, and the 1-2 and 1-3
     interactions, respectively (but no 2-3 or 1-2-3 interaction), i.e.,
     a model where factors 2 and 3 are independent conditional on factor
-    1 (sometimes represented as `[12][13]').
+    1 (sometimes represented as \sQuote{[12][13]}).
      
     The names of factors (i.e., \code{names(dimnames(table))}) may be
     used rather than numeric indices.
@@ -53,7 +53,7 @@ loglin(table, margin, start = rep(1, length(table)), fit = FALSE,
   \item{fit}{An array like \code{table} containing the fitted values.
     Only returned if \code{fit} is \code{TRUE}.}
   \item{param}{A list containing the estimated parameters of the
-    model.  The ``standard'' constraints of zero marginal sums
+    model.  The \dQuote{standard} constraints of zero marginal sums
     (e.g., zero row and column sums for a two factor parameter) are
     employed.  Only returned if \code{param} is \code{TRUE}.}
 }
@@ -70,7 +70,7 @@ loglin(table, margin, start = rep(1, length(table)), fit = FALSE,
   Ratio Test and Pearson test statistics have an asymptotic chi-squared
   distribution with \code{df} degrees of freedom.
     
-  Package `MASS' contains \code{loglm}, a front-end to \code{loglin}
+  Package \pkg{MASS} contains \code{loglm}, a front-end to \code{loglin}
   which allows the log-linear model to be specified and fitted in a
   formula-based manner similar to that of other fitting functions such
   as \code{lm} or \code{glm}.

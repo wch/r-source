@@ -3,7 +3,7 @@
 \alias{write.ftable}
 \alias{as.table.ftable}
 \title{Manipulate Flat Contingency Tables}
-\description{Read, write and coerce ``flat'' contingency tables.}
+\description{Read, write and coerce \dQuote{flat} contingency tables.}
 \usage{
 read.ftable(file, sep = "", quote = "\"",
             row.var.names, col.vars, skip = 0)
@@ -45,14 +45,14 @@ write.ftable(x, file = "", quote = TRUE, digits = getOption("digits"))
   of the column variable using \code{row.var.names} and \code{col.vars},
   respectively.  See the examples below.
 
-  Note that flat tables are characterized by their ``ragged'' display of
-  row (and maybe also column) labels.  If the full grid of levels of the
-  row variables is given, one should instead use \code{read.table} to
-  read in the data, and create the contingency table from this using
-  \code{\link{xtabs}}.
+  Note that flat tables are characterized by their \dQuote{ragged}
+  display of row (and maybe also column) labels.  If the full grid of
+  levels of the row variables is given, one should instead use
+  \code{read.table} to read in the data, and create the contingency
+  table from this using \code{\link{xtabs}}.
 
   \code{write.ftable} writes a flat table to a file, which is useful for
-  generating ``pretty'' ASCII representations of contingency tables.
+  generating \dQuote{pretty} ASCII representations of contingency tables.
 
   \code{as.table.ftable} converts a contingency table in flat matrix
   form to one in standard array form.  This is a method for the generic

@@ -46,8 +46,8 @@ deriv3(expr, namevec, function.arg, tag = ".expr", hessian = TRUE)
   \code{deriv} is a \emph{generic} function with a default and a
   \code{\link{formula}} method.  It returns a \code{\link{call}} for
   computing the \code{expr} and its (partial) derivatives,
-  simultaneously.  It uses so-called \emph{``algorithmic
-    derivatives''}.  If \code{function.arg} is a function,
+  simultaneously.  It uses so-called \dQuote{\emph{algorithmic
+      derivatives}}.  If \code{function.arg} is a function,
   its arguments can have default values, see the \code{fx} example below.
 
   Currently, \code{deriv.formula} just calls \code{deriv.default} after
@@ -84,7 +84,7 @@ deriv3(expr, namevec, function.arg, tag = ".expr", hessian = TRUE)
 \seealso{
   \code{\link{nlm}} and \code{\link{optim}} for numeric minimization
   which could make use of derivatives,
-  \code{\link[nls]{nls}} in package \code{nls}.
+  \code{\link[nls]{nls}} in package \pkg{nls}.
 }
 \examples{
 ## formula argument :
@@ -100,7 +100,7 @@ mode(dx2x)
 x <- -1:2
 eval(dx2x)
 
-## Something `tougher':
+## Something 'tougher':
 trig.exp <- expression(sin(cos(x + y^2)))
 ( D.sc <- D(trig.exp, "x") )
 all.equal(D(trig.exp[[1]], "x"), D.sc)
@@ -124,7 +124,7 @@ deriv3(y ~ b0 + b1 * 2^(-x/th), c("b0", "b1", "th"),
 
 ## Higher derivatives:
 DD <- function(expr,name, order = 1) {
-   if(order < 1) stop("`order' must be >= 1")
+   if(order < 1) stop("'order' must be >= 1")
    if(order == 1) D(expr,name)
    else DD(D(expr, name), name, order - 1)
 }

@@ -7,8 +7,8 @@ rug(x, ticksize=0.03, side=1, lwd=0.5, col,
 }
 \arguments{
  \item{x}{A numeric vector}
- \item{ticksize}{The length of the ticks making up the `rug'. Positive
-   lengths give inwards ticks.}
+ \item{ticksize}{The length of the ticks making up the \sQuote{rug}.
+   Positive lengths give inwards ticks.}
  \item{side}{On which side of the plot box the rug will be
    plotted. Normally 1 (bottom) or 3 (top).}
  \item{lwd}{The line width of the ticks.}

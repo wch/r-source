@@ -28,13 +28,13 @@
   A closer look at \code{faithful$eruptions} reveals that these are
   heavily rounded times originally in seconds, where multiples of 5 are
   more frequent than expected under non-human measurement.  For a
-  ``better'' version of the eruptions times, see the example below.
+  \dQuote{better} version of the eruptions times, see the example below.
 
   There are many versions of this dataset around: Azzalini and Bowman
   (1990) use a more complete version.
 }
 \seealso{
-  \code{geyser} in package \code{MASS} for the Azzalini-Bowman version.
+  \code{geyser} in package \pkg{MASS} for the Azzalini-Bowman version.
 }
 \examples{
 data(faithful)

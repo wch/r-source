@@ -117,9 +117,9 @@ weighted.MM <- function(resp, conc, Vm, K)
 {
     ## Purpose: exactly as white book p.451 -- RHS for nls()
     ##  Weighted version of Michaelis-Menten model
-    ## -------------------------------------------------------------------------
-    ## Arguments: `y', `x' and the two parameters (see book)
-    ## -------------------------------------------------------------------------
+    ## ------------------------------------------------------------
+    ## Arguments: 'y', 'x' and the two parameters (see book)
+    ## ------------------------------------------------------------
     ## Author: Martin Maechler, Date: 23 Mar 2001, 18:48
 
     pred <- (Vm * conc)/(K + conc)

@@ -29,7 +29,7 @@ Methods for
   \item{na.action}{how \code{NA}s are treated. The default is first,
     any \code{na.action} attribute of \code{data}, second
     a \code{na.action} setting of \code{\link{options}}, and third
-    \code{\link{na.fail}} if that is unset.  The ``factory-fresh''
+    \code{\link{na.fail}} if that is unset.  The \dQuote{factory-fresh}
     default is \code{\link{na.omit}}.}
 
   \item{drop.unused.levels}{should factors have unused levels dropped?
@@ -64,7 +64,7 @@ Methods for
   A \code{\link{data.frame}} containing the variables used in
   \code{formula} plus those specified \code{\dots}.
 }
-\seealso{\code{\link{model.matrix}} for the ``design matrix'',
+\seealso{\code{\link{model.matrix}} for the \dQuote{design matrix},
   \code{\link{formula}} for formulas  and
   \code{\link{expand.model.frame}} for model.frame manipulation.
 }

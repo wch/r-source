@@ -16,7 +16,7 @@ t(x)
 }
 \details{
   A data frame is first coerced to a matrix: see \code{\link{as.matrix}}.
-  When \code{x} is a vector, it is treated as ``column'', i.e., the
+  When \code{x} is a vector, it is treated as \dQuote{column}, i.e., the
   result is a 1-row matrix.
 }
 \references{

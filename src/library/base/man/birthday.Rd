@@ -3,7 +3,7 @@
 \alias{pbirthday}
 \title{Probability of coincidences}
 \description{
-  Computes approximate answers to a generalised ``birthday paradox''
+  Computes approximate answers to a generalised \dQuote{birthday paradox}
   problem. \code{pbirthday} computes the probability of a coincidence
   and \code{qbirthday} computes the number of observations needed to
   have a specified probability of coincidence.
@@ -38,7 +38,7 @@ pbirthday(n, classes = 365, coincident = 2)
  preferable. 
 }
 \references{
-  Diaconis P, Mosteller F., ``Methods for studying coincidences''.
+  Diaconis P, Mosteller F., \dQuote{Methods for studying coincidences}.
   JASA 84:853-861}
 \examples{
  ## the standard version

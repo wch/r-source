@@ -21,9 +21,9 @@ plot(x, y, xlim=range(x), ylim=range(y), type="p",
       \item \code{"l"} for \bold{l}ines,
       \item \code{"b"} for \bold{b}oth,
       \item \code{"c"} for the lines part alone of \code{"b"},
-      \item \code{"o"} for both ``\bold{o}verplotted'',
-      \item \code{"h"} for ``\bold{h}istogram'' like (or
-      ``high-density'') vertical lines,
+      \item \code{"o"} for both \dQuote{\bold{o}verplotted},
+      \item \code{"h"} for \dQuote{\bold{h}istogram} like (or
+      \dQuote{high-density}) vertical lines,
       \item \code{"s"} for stair \bold{s}teps,
       \item \code{"S"} for other \bold{s}teps, see \emph{Details} below,
       \item \code{"n"} for no plotting.

@@ -28,7 +28,8 @@ any(\dots, na.rm = FALSE)
   \emph{The New S Language}.
   Wadsworth \& Brooks/Cole.
 }
-\seealso{\code{\link{all}}, the ``complement'' of \code{any}.
+\seealso{
+  \code{\link{all}}, the \dQuote{complement} of \code{any}.
 }
 \examples{
 range(x <- sort(round(rnorm(10) - 1.2,1)))

@@ -61,8 +61,8 @@ ks.test(x, y, \dots, alternative = c("two.sided", "less", "greater"),
   Conover, W. J. (1971),
   \emph{Practical nonparametric statistics}.
   New York: John Wiley & Sons.
-  Pages 295--301 (one-sample ``Kolmogorov'' test),
-  309--314 (two-sample ``Smirnov'' test).
+  Pages 295--301 (one-sample \dQuote{Kolmogorov} test),
+  309--314 (two-sample \dQuote{Smirnov} test).
 }
 \seealso{
   \code{\link{shapiro.test}} which performs the Shapiro-Wilk test for

@@ -16,7 +16,7 @@
   character strings, supplemented with \code{method} and \code{note}
   elements.  The \code{method} is displayed as a title, the \code{note}
   as a footnote, and the remaining elements are given in an aligned
-  `name = value' format.
+  \sQuote{name = value} format.
 }
 \value{
   none
