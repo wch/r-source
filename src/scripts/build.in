@@ -32,6 +32,7 @@ use File::Find;
 use File::Path;
 use File::Copy;
 use Getopt::Long;
+use IO::File;
 use R::Dcf;
 use R::Logfile;
 use R::Rd;
@@ -43,7 +44,7 @@ use Text::Wrap;
 ## don't buffer output
 $| = 1;
 
-my $revision = ' $Revision: 1.69 $ ';
+my $revision = ' $Revision: 1.70 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -310,6 +311,12 @@ foreach my $pkg (@ARGV) {
 	    }
 	}
 	find(\&fix_permissions, "${pkgname}") if(!$WINDOWS);
+	## Add build stamp to the DESCRIPTION file.
+	my $fh = new IO::File(&file_path($pkgname, "DESCRIPTION"), "a");
+	$fh->print("Packaged: ",
+		   scalar(localtime()), "; ",
+		   (getpwuid($<))[0], "\n");
+	$fh->close();
 	## Finalize.
 	system("$tar chf $filepath $pkgname");
 	chdir($startdir);
