@@ -669,6 +669,7 @@ do_install_source () {
       done \
         > "${R_PACKAGE_DIR}/man/${pkg_name}.Rd"
       chmod 644 "${R_PACKAGE_DIR}/man/${pkg_name}.Rd"
+      gzip -9 "${R_PACKAGE_DIR}/man/${pkg_name}.Rd"
     fi
     ## Maybe build preformatted help pages ...
     if ${build_help}; then

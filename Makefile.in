@@ -20,8 +20,6 @@ DISTFILES = $(INSTFILES) \
 SUBDIRS = m4 tools afm doc etc share src tests
 SUBDIRS_WITH_NO_BUILD = debian
 
-GZIP = --best
-
 all: Makefile Makeconf R docs recommended
 recommended: @USE_RECOMMENDED_PACKAGES_TRUE@ stamp-recommended
 

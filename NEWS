@@ -510,6 +510,10 @@ INSTALLATION CHANGES
 	reference manual -- see the 'R Administration and Installation
 	Manual' section 2.2.
 
+    o   The concatenated Rd files in the installed 'man' directory are 
+	now compressed and the R CMD check routines can read the compressed
+	files.
+
 
 PACKAGE INSTALLATION CHANGES
 
