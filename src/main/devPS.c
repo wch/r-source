@@ -2179,7 +2179,7 @@ static void XFig_MetricInfo(int c, double *ascent, double *descent,
 ************************************************************************/
 
 /* TODO
-   Bezier curves for large circles
+   Flate encoding?
    clipping?
 */
 
@@ -2370,10 +2370,11 @@ static void PDF_Invalidate(DevDesc *dd)
 
     pd->current.fontsize = -1;
     pd->current.fontstyle = -1;
-    pd->current.lwd = -1;
+    pd->current.lwd = 1;
     pd->current.lty = -1;
-    pd->current.col = 0xffffffff;
-    pd->current.fill = 0xffffffff;
+    /* page starts with black as the default fill and stroke colours */
+    pd->current.col = 0;
+    pd->current.fill = 0;
     pd->current.bg = 0xffffffff;
 }
 
@@ -2480,13 +2481,13 @@ static void PDF_startfile(PDFDesc *pd)
     fprintf(pd->pdffp, "%%PDF-1.1\n%%âãÏÓ\r\n");
     pd->pos[++pd->nobjs] = (int) ftell(pd->pdffp);
 
-    /* Object 1 is Info node. Date format is in the PDF manual */
+    /* Object 1 is Info node. Date format is from the PDF manual */
 
     ct = time(NULL);
     ltm = localtime(&ct);
     fprintf(pd->pdffp, 
 	    "1 0 obj\n<<\n/CreationDate (D:%04d%02d%02d%02d%02d%02d)\n",
-	    1900+ltm->tm_year, ltm->tm_mon+1, ltm->tm_mday, 
+	    1900 + ltm->tm_year, ltm->tm_mon+1, ltm->tm_mday, 
 	    ltm->tm_hour, ltm->tm_min, ltm->tm_sec);
     fprintf(pd->pdffp, "/Producer (R Graphics)\n>>\nendobj\n");
 
@@ -2504,7 +2505,7 @@ static void PDF_startfile(PDFDesc *pd)
     fprintf(pd->pdffp, 
 	    "4 0 obj\n<<\n/ProcSet [/PDF /Text]\n/Font << %s %s %s %s %s %s >>\n>>\nendobj\n",
 	    "/F1 6 0 R","/F2 7 0 R","/F3 8 0 R","/F4 9 0 R","/F5 10 0 R",
-	    "/F6 12 0 R");
+	    "/F6 11 0 R");
 
     /* Object 5 is the encoding for text fonts */
 
@@ -2513,8 +2514,7 @@ static void PDF_startfile(PDFDesc *pd)
 
     /* Objects 6, 7, 8, 9 are the fonts for the text family */
     /* Object 10 is the Symbol font */
-    /* Object 11 is the null encoding for Symbol and Dingbats */
-    /* Object 12 is Dingbat, used for (small) circles */
+    /* Object 11 is Dingbats, used for (small) circles */
 
     for (i = 0; i < 4; i++) {
 	pd->pos[++pd->nobjs] = (int) ftell(pd->pdffp);
@@ -2522,11 +2522,9 @@ static void PDF_startfile(PDFDesc *pd)
 		i+6, i+1, familyname[i]);
     }
     pd->pos[++pd->nobjs] = (int) ftell(pd->pdffp);
-    fprintf(pd->pdffp, "10 0 obj\n<<\n/Type /Font\n/Subtype /Type1\n/Name /F5\n/BaseFont /Symbol\n/Encoding 11 0 R\n>>\nendobj\n");
+    fprintf(pd->pdffp, "10 0 obj\n<<\n/Type /Font\n/Subtype /Type1\n/Name /F5\n/BaseFont /Symbol\n>>\nendobj\n");
     pd->pos[++pd->nobjs] = (int) ftell(pd->pdffp);
-    fprintf(pd->pdffp, "11 0 obj\n<<\n/Type /Encoding\n%s\n>>\nendobj\n", "/Differences []");
-    pd->pos[++pd->nobjs] = (int) ftell(pd->pdffp);
-    fprintf(pd->pdffp, "12 0 obj\n<<\n/Type /Font\n/Subtype /Type1\n/Name /F6\n/BaseFont /ZapfDingbats\n/Encoding 11 0 R\n>>\nendobj\n");
+    fprintf(pd->pdffp, "11 0 obj\n<<\n/Type /Font\n/Subtype /Type1\n/Name /F6\n/BaseFont /ZapfDingbats\n>>\nendobj\n");
 }
 
 static void PDF_endfile(PDFDesc *pd)
@@ -2650,7 +2648,7 @@ static void PDF_NewPage(DevDesc *dd)
     fprintf(pd->pdffp, "%d 0 obj\n<<\n/Length %d 0 R\n>>\nstream\r\n", 
 	    pd->nobjs, pd->nobjs + 1);
     pd->startstream = (int) ftell(pd->pdffp);
-    fprintf(pd->pdffp, "0 0 0 RG\n1 J 1 j 10 M q\n");
+    fprintf(pd->pdffp, "1 J 1 j 10 M q\n");
     PDF_Invalidate(dd);
 
     if(dd->gp.bg != R_RGB(255,255,255)) {
@@ -2699,13 +2697,12 @@ static void PDF_Rect(double x0, double y0, double x1, double y1, int coords,
     }
 }
 
-#include <Rmath.h>
 /* r is in device coords */
 static void PDF_Circle(double x, double y, int coords, double r,
 		      int bg, int fg, DevDesc *dd)
 {
     PDFDesc *pd = (PDFDesc *) dd->deviceSpecific;
-    int i, code, n = 20, tr;
+    int code, tr;
     double xx, yy, a;
 
     GConvert(&x, &y, coords, DEVICE, dd);
@@ -2719,19 +2716,19 @@ static void PDF_Circle(double x, double y, int coords, double r,
 	    PDF_SetLineColor(fg, dd);
 	    PDF_SetLineStyle(dd->gp.lty, dd->gp.lwd, dd);
 	}
-	if(r > 10) {
+	if(r > 10) { /* somewhat arbitrary, use font up to 20pt */
+            /* Use four Bezier curves, hand-fitted to quadrants */
+	    double s = 0.55 * r;
 	    if(pd->inText) textoff(pd);
-            /* Could use Bezier curves to improve this */
-	    xx = x + r;
-	    yy = y;
-	    GConvert(&xx, &yy, coords, DEVICE, dd);
-	    fprintf(pd->pdffp, "  %.2f %.2f m\n", xx, yy);
-	    for(i = 1 ; i <= n ; i++) {
-		xx = x + r * cos(2*M_PI * i/n);
-		yy = y + r * sin(2*M_PI * i/n);
-		GConvert(&xx, &yy, coords, DEVICE, dd);
-		fprintf(pd->pdffp, "  %.2f %.2f l\n", xx, yy);
-	    }
+	    fprintf(pd->pdffp, "  %.2f %.2f m\n", x - r, y);
+	    fprintf(pd->pdffp, "  %.2f %.2f %.2f %.2f %.2f %.2f c\n", 
+		   x - r, y + s, x - s, y + r, x, y + r);
+	    fprintf(pd->pdffp, "  %.2f %.2f %.2f %.2f %.2f %.2f c\n", 
+		   x + s, y + r, x + r, y + s, x + r, y);
+	    fprintf(pd->pdffp, "  %.2f %.2f %.2f %.2f %.2f %.2f c\n", 
+		   x + r, y - s, x + s, y - r, x, y - r);
+	    fprintf(pd->pdffp, "  %.2f %.2f %.2f %.2f %.2f %.2f c\n", 
+		   x - s, y - r, x - r, y - s, x - r, y);
 	    switch(code){
 	    case 1: fprintf(pd->pdffp, "S\n"); break;
 	    case 2: fprintf(pd->pdffp, "f\n"); break;
@@ -2741,7 +2738,7 @@ static void PDF_Circle(double x, double y, int coords, double r,
 	    /* Use char 108 in Dingbats, which is a solid disc
 	       afm is C 108 ; WX 791 ; N a71 ; B 35 -14 757 708 ;
 	       so diameter = 0.722 * size
-	       centre = (0.396, 0.347)*size
+	       centre = (0.396, 0.347) * size
 	    */
 	    a = 2./0.722 * r;
 	    xx = x - 0.396*a;
