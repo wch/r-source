@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 1.1-36, 2000-12-11
+Version 1.2-1, 2000-12-12
 Kurt Hornik
 
 
@@ -1184,6 +1184,10 @@ works, was published in the Journal of Statistical Software
 *fdim*
      Functions for calculating fractal dimension.
 
+*foreign*
+     Functions for reading data stored by statistical software like Minitab,
+     SAS, SPSS, etc.
+
 *fracdiff*
      Maximum likelihood estimation of the parameters of a fractionally
      differenced ARIMA(p,d,q) model (Haslett and Raftery, Applied
@@ -1355,6 +1359,9 @@ works, was published in the Journal of Statistical Software
 *xgobi*
      Interface to the XGobi and XGvis programs for graphical data analysis.
 
+*xtable*
+     Export data to LaTeX and HTML tables.
+
 *zmatrix*
      Matrices with numeric indices starting at zero rather than one.
 
@@ -1397,10 +1404,6 @@ these a try, of course.  This area of CRAN currently contains
 *exactDistr*
      Exact distributions for rank tests by means of an implementation of the
      Streitberg/Roehmel shift algorithm.
-
-*foreign*
-     Functions for reading data stored by statistical software like Minitab,
-     SAS, SPSS, etc.
 
 *funfits*
      An integrated set of functions for fitting curves and surfaces
