@@ -17,6 +17,7 @@ poly(x, degree = 1, coefs = NULL)
  \item{degree}{the degree of the polynomial}
  \item{coefs}{for prediction, coefficients from a previous fit.}
  \item{object}{an object inheriting from class \code{"poly"}.}
+ \item{\dots}{arguments to be passed to or from other methods.}
 }
 \value{
   A matrix with rows corresponding to points in \code{x} and columns
