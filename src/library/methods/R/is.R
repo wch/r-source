@@ -70,24 +70,24 @@ setIs <-
   ## more elaborate one.  If the `replace' argument is supplied as an S replacement
   ## function, this function will be used to implement `as(obj, class2) <- value'.
   function(class1, class2, test = NULL, coerce = NULL,
-           replace = NULL, by = character(), where = 1)
+           replace = NULL, by = character(), where = 1, complete = TRUE)
 {
-    ## Technical detail:  we only use the class definition for the class name & the
-    ## package, and call getClassDef  (don't  complete the def'n), because setIs is called
+    ## Technical detail:  optionally call getClassDef  (don't  complete the def'n),
+    ## because setIs is called
     ## during the setClass computations to record simple contained classes &
     ## completeClassDefinition may get into a loop then.
-    classDef1 <- getClassDef(class1)
+    localGetClass <- if(complete) getClass else getClassDef
+    classDef1 <- localGetClass(class1)
     ## But, we want at least a minimal definition to allow for relations with old-style
     ## classes: so,
     if(!is(classDef1, "classRepresentation"))
         classDef1 <- getClass(class1, TRUE)
-    classDef2 <- getClassDef(class2)
+    classDef2 <- localGetClass(class2)
     if(!is(classDef2, "classRepresentation"))
         classDef2 <- getClass(class2, TRUE)
-    if((is.null(classDef1) || is.null(classDef2)) &&
-       !(isVirtualClass(class1) && isVirtualClass(class2)))
-        stop(paste("Both \"", class1, "\" nor \"", class2,
-             "\" must be defined to create an is relation between them", sep=""))
+    ## check some requirements
+    .validExtends(class1, class2, classDef1,  classDef2, complete && is.null(coerce))
+    
     obj <- makeExtends(class1, class2, coerce, test, replace, by,
                        classDef1 = classDef1, classDef2 = classDef2)
     setExtendsMetaData(classDef1, classDef2, obj, where = where)
@@ -103,3 +103,33 @@ setIs <-
     invisible(obj)
 }
 
+.validExtends <- function(class1, class2, classDef1,  classDef2, slotTests) {
+    .msg <- function(class1, class2) paste("Class \"", class1, "\" cannot extend class \"", class2,
+                                           "\": ", sep="")
+    if((is.null(classDef1) || is.null(classDef2)) &&
+       !(isVirtualClass(class1) && isVirtualClass(class2)))
+        stop(.msg(class2, class2), "Both classes must be defined.")
+    if(slotTests) {
+        slots2 <- classDef2@slots
+        if(length(slots2) > 0) {
+            n2 <- names(slots2)
+            slots1 <- classDef1@slots
+            n1 <- names(slots1)
+            if(any(is.na(match(n2, n1))))
+                stop(.msg(class2, class2),
+                     "Class \"", class1, "\" is missing slots from class \"", class2,
+                     "\" (", paste(n2[is.na(match(n2, n1))], collapse = ", "),
+                     "), and no coerce method was supplied")
+            bad <- character()
+            for(what in n2)
+                if(!extends(elNamed(slots1, what), elNamed(slots2, what)))
+                    bad <- c(bad, what)
+            if(length(bad)>0)
+                stop(.msg(class1, class2), "Slots in class \"", class1, "\" must extend corresponding slots in class \"",
+                     class2, "\": fails for ", paste(bad, collapse = ", "))
+        }
+    }
+    TRUE
+}
+
+    
