@@ -25,25 +25,3 @@ deltat <- function(x, ...) UseMethod("deltat")
 deltat.default <- function(x) 1/tsp(as.ts(x))[3]
 
 
-na.omit.ts <- function(frame)
-{
-     if(is.matrix(frame))
-         good <- which(apply(!is.na(frame), 1, all))
-     else  good <- which(!is.na(frame))
-     if(!length(good)) stop("all times contain an NA")
-     omit <- integer(0)
-     n <- NROW(frame)
-     st <- min(good)
-     if(st > 1) omit <- c(omit, 1:(st-1))
-     en <- max(good)
-     if(en < n) omit <- c(omit, (en+1):n)
-     if(length(omit)) {
-         frame <- if(is.matrix(frame)) frame[st:en,] else frame[st:en]
-        temp <- seq(omit)[omit]
-        names(temp) <- time(frame)[omit]
-        attr(temp, "class") <- "omit"
-        attr(frame, "na.action") <- temp
-     }
-     if(any(is.na(frame))) stop("time series contains internal NAs")
-     frame
-}

@@ -4,7 +4,8 @@ ar <-
               na.action = na.fail)
 {
     switch(match.arg(method),
-        "yule-walker" = ar.yw(x, aic=aic, order.max=order.max),
+        "yule-walker" = ar.yw(x, aic=aic, order.max=order.max,
+                              na.action = na.action),
 	"burg" = stop("burg method for ar not yet implemented.")
     )
 }
@@ -28,7 +29,7 @@ ar.yw <- function (x, aic = TRUE, order.max = NULL, na.action = na.fail)
     if (order.max < 1) stop("order.max must be >= 1")
     xacf <- acf(x, type = "covariance", lag.max = order.max, plot=FALSE)$acf
     if(nser > 1) {
-        ## multiivariate case
+        ## multivariate case
         A <- B <- array(0, dim = c(order.max + 1, nser, nser))
         A[1, , ] <- B[1, , ] <- diag(nser)
         EA <- EB <- xacf[1, , , drop = TRUE]

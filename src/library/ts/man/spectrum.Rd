@@ -66,7 +66,7 @@ of coherency and phase of the cross-spectra.
   \item{method}{The method used to calculate the spectrum.}
 }
 \details{
-    The spectrum here is defined with divisor 2*\pi*frequency(x),
+    The spectrum here is defined with scaling 1/frequency(x),
     following S-PLUS. This makes the spectral density a density over the
     range \code{(-frequency(x)/2, +frequency(x)/2]}, whereas a more
     common scaling is 2*\pi and range (-0.5, 0.5]

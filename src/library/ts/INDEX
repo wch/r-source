@@ -39,6 +39,7 @@ filter		Linear filtering on a time series
 kernel          Smoothing kernel objects (and Daniell, Fejer and 
                    (modified) Dirichlet kernels)
 lag		Compute lagged version of time series
+na.contiguous	Find longest contiguous stretch of non-NAs
 na.omit.ts	na.omit method for time series
 pacf		Partial autocorrelation function
 plot.acf        Plot autocorrelation function

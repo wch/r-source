@@ -1,0 +1,47 @@
+na.omit.ts <- function(frame)
+{
+    ## drop initial and final NAs
+    if(is.matrix(frame))
+        good <- which(apply(!is.na(frame), 1, all))
+    else  good <- which(!is.na(frame))
+    if(!length(good)) stop("all times contain an NA")
+    omit <- integer(0)
+    n <- NROW(frame)
+    st <- min(good)
+    if(st > 1) omit <- c(omit, 1:(st-1))
+    en <- max(good)
+    if(en < n) omit <- c(omit, (en+1):n)
+    if(length(omit)) {
+        frame <- if(is.matrix(frame)) frame[st:en,] else frame[st:en]
+        attr(omit, "class") <- "omit"
+        attr(frame, "na.action") <- omit
+    }
+    if(any(is.na(frame))) stop("time series contains internal NAs")
+    frame
+}
+
+na.contiguous <- function(frame)
+{
+    ## use (first) maximal contiguous length of non-NAs
+    if(is.matrix(frame))
+        good <- apply(!is.na(frame), 1, all)
+    else  good <- !is.na(frame)
+    if(!sum(good)) stop("all times contain an NA")
+    tt <- cumsum(!good)
+    ln <- sapply(0:max(tt), function(i) sum(tt==i))
+    seg <- (seq(along=ln)[ln==max(ln)])[1] - 1
+    keep <- (tt == seg)
+    st <- min(which(keep))
+    if(!good[st]) st <- st + 1
+    en <- max(which(keep))
+    omit <- integer(0)
+    n <- NROW(frame)
+    if(st > 1) omit <- c(omit, 1:(st-1))
+    if(en < n) omit <- c(omit, (en+1):n)
+    if(length(omit)) {
+        frame <- if(is.matrix(frame)) frame[st:en,] else frame[st:en]
+        attr(omit, "class") <- "omit"
+        attr(frame, "na.action") <- omit
+    }
+    frame
+}

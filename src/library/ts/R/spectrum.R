@@ -1,4 +1,4 @@
-## based on code by Martyn Plummer
+## based on code by Martyn Plummer, plus kernel code by Adrian Trapletti
 spectrum <- function (..., method = c("pgram", "ar"))
 {
     switch(match.arg(method),
@@ -59,9 +59,9 @@ spec.ar <- function(x, n.freq, order = NULL, plot = TRUE,
         if(order > 1) {
             cs <- outer(freq, 1:order, function(x, y) cos(2*pi*x*y)) %*% x$ar
             sn <- outer(freq, 1:order, function(x, y) sin(2*pi*x*y)) %*% x$ar
-            spec <- x$var.pred/(2*pi*xfreq*((1 - cs)^2 + sn^2))
+            spec <- x$var.pred/(xfreq*((1 - cs)^2 + sn^2))
         } else
-            spec <- rep(x$var.pred/(2*pi*xfreq), length(freq))
+            spec <- rep(x$var.pred/(xfreq), length(freq))
     } else .NotYetImplemented()
     spg.out <- list(freq = freq, spec = spec, coh = coh, phase = phase,
                     n.used = nrow(x), series = series,
@@ -119,7 +119,7 @@ spec.pgram <-
     pgram <- array(NA, dim = c(N, ncol(x), ncol(x)))
     for (i in 1:ncol(x)) {
         for (j in 1:ncol(x)) {
-            pgram[, i, j] <- xfft[, i] * Conj(xfft[, j])/(N*2*pi*xfreq)
+            pgram[, i, j] <- xfft[, i] * Conj(xfft[, j])/(N*xfreq)
         }
     }
     ## value at zero is invalid as mean has been removed, so interpolate
@@ -161,7 +161,7 @@ spec.pgram <-
         df <- 2/(u4/u2^2)
         bandwidth <- sqrt(1/12) * xfreq/N
     }
-    pgram <- pgram[1:Nspec,,, drop=FALSE]
+    pgram <- pgram[1+(1:Nspec),,, drop=FALSE]
     spec <- matrix(NA, nrow = Nspec, ncol = nser)
     for (i in 1:nser) spec[, i] <- Re(pgram[1:Nspec, i, i])
     if (nser == 1) {
@@ -171,8 +171,8 @@ spec.pgram <-
         for (i in 1:(nser - 1)) {
             for (j in (i + 1):nser) {
                 coh[, i + (j - 1) * (j - 2)/2] <-
-                    Mod(pgram[1:Nspec, i, j])^2/(spec[, i] * spec[, j])
-                phase[, i + (j - 1) * (j - 2)/2] <- Arg(pgram[1:Nspec, i, j])
+                    Mod(pgram[, i, j])^2/(spec[, i] * spec[, j])
+                phase[, i + (j - 1) * (j - 2)/2] <- Arg(pgram[, i, j])
             }
         }
     }
@@ -263,7 +263,7 @@ plot.spec.coherency <-
                       "Squared Coherency", sep = " --  ")
     if(nser == 2) {
         plot(x$freq, x$coh, type=type, xlab=xlab, ylab=ylab, ylim=ylim, ...)
-        coh <- sqrt(x$coh)
+        coh <- pmin(0.99999, sqrt(x$coh))
         lines(x$freq, (tanh(atanh(coh) + z*se))^2, lty=ci.lty, col=ci.col)
         lines(x$freq, (pmax(0, tanh(atanh(coh) - z*se)))^2,
               lty=ci.lty, col=ci.col)
@@ -278,7 +278,7 @@ plot.spec.coherency <-
             ind <- i + (j - 1) * (j - 2)/2
             plot(x$freq, x$coh[, ind], type=type, ylim=ylim, axes=FALSE,
                  xlab="", ylab="", ...)
-            coh <- sqrt(x$coh[, ind])
+            coh <- pmin(0.99999, sqrt(x$coh[, ind]))
             lines(x$freq, (tanh(atanh(coh) + z*se))^2, lty=ci.lty, col=ci.col)
             lines(x$freq, (pmax(0, tanh(atanh(coh) - z*se)))^2,
                   lty=ci.lty, col=ci.col)

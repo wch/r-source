@@ -102,5 +102,11 @@ finance.spc <- spectrum(finance, kernel=daniell.kernel(c(30,50)), plot=FALSE)
 plot(finance.spc)
 plot.spec.coherency(finance.spc)
 plot.spec.phase(finance.spc)
+
+data(sales)
+sales.spc <- spectrum(ts.union(sales, sales.lead),
+                      kernel=modified.daniell.kernel(c(5,7)))
+plot.spec.coherency(sales.spc)
+plot.spec.phase(sales.spc)
 }
 \keyword{ts}
