@@ -349,3 +349,11 @@ Date: 06 Sep 1999 00:03:29 +0200
 Subject: matplot(... panel.first=..) fails  <==> dealing with "..."
 From: Martin Maechler <maechler@stat.math.ethz.ch>
 Date: Mon, 6 Sep 1999 11:04:03 +0200
+* PR# 268 *
+Subject: Re: Compiling R under Caldera Open Linux 2.2
+From: "Jack N." <jnf@pcisys.net>
+Date: Mon, 06 Sep 1999 08:03:02 -0600
+* PR# 269 *
+Subject: sys.on.exit appears non-functional
+From: Prof Brian D Ripley <ripley@stats.ox.ac.uk>
+Date: Tue, 7 Sep 1999 17:41:28 +0100 (BST)
