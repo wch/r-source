@@ -25,6 +25,8 @@ NEW FEATURES
 
 BUG FIXES
 
+    o   biplot[.default]() was redundant in "base" package; now only in "mva".
+
     o	unix(..) now helps the user to find  system(..) instead.
 
     o   apropos("[") and methods("[") now both work (even though "[" is not
@@ -33,7 +35,7 @@ BUG FIXES
     o   row.names<-.default now exists. Converts object to data
         frame and then adds row names
 
-    o	codes() now distinguishes between ordered and unordered factors 
+    o	codes() now distinguishes between ordered and unordered factors
 
     o	codes() had *opposite* semantics of Splus. Now it's the same.
 
