@@ -105,7 +105,8 @@ prettyNum(x, big.mark = "",   big.interval = 3,
 
 \seealso{
   \code{\link{format.info}} indicates how something would be formatted;
-  \code{\link{formatC}}, \code{\link{paste}}, \code{\link{as.character}}.
+  \code{\link{formatC}}, \code{\link{paste}}, \code{\link{as.character}},
+  \code{\link{sprintf}}.
 }
 \examples{
 format(1:10)

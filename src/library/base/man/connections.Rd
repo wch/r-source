@@ -215,6 +215,7 @@ isIncomplete(con)
 
 \seealso{
   \code{\link{textConnection}}, \code{\link{seek}}, \code{\link{readLines}},
+  \code{\link{readBin}}, \code{\link{writeLines}}, \code{\link{writeBin}},
   \code{\link{showConnections}}, \code{\link{pushBack}}.
 
   \code{\link{capabilities}} to see if \code{gzfile}, \code{url},

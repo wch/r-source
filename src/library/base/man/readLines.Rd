@@ -34,7 +34,7 @@ readLines(con = stdin(), n = -1, ok = TRUE)
   A character vector of length the number of lines read.
 }
 \seealso{
-  \code{\link{connections}}, \code{\link{writeLines}},
+  \code{\link{connections}}, \code{\link{writeLines}}, \code{\link{readBin}},
   \code{\link{scan}}}
 
 \examples{

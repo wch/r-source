@@ -30,7 +30,7 @@ writeLines(text, con = stdout(), sep = "\n")
   use \code{\link{writeChar}} on a binary connection.
 }
 \seealso{
-  \code{\link{connections}}, \code{\link{writeChar}},
+  \code{\link{connections}}, \code{\link{writeChar}}, \code{\link{writeBin}},
   \code{\link{readLines}}, \code{\link{cat}}
 }
 
