@@ -77,19 +77,20 @@ all.equal(pchisq(x, df=2), pexp(x, 1/2))
 Z0 <- rchisq(100, df = 0, ncp = 2.)
 stem(Z0)
 
-## visual testing
+\dontrun{## visual testing
+## do P-P plots for 1000 points at various degrees of freedom
 L <- 1.2; n <- 1000; pp <- ppoints(n)
 op <- par(mfrow = c(3,3), mar= c(3,3,1,1)+.1, mgp= c(1.5,.6,0),
           oma = c(0,0,3,0))
 for(df in 2^(4*rnorm(9))) {
   plot(pp, sort(pchisq(rr <- rchisq(n,df=df, ncp=L), df=df, ncp=L)),
-       ylab="pchisq(rchisq(.),.)")
+       ylab="pchisq(rchisq(.),.)", pch=".")
   mtext(paste("df = ",formatC(df, digits = 4)), line= -2, adj=0.05)
   abline(0,1,col=2)
 }
 mtext(expression("P-P plots : Noncentral  "*
                  chi^2 *"(n=1000, df=X, ncp= 1.2)"),
       cex = 1.5, font = 2, outer=TRUE)
-par(op)
+par(op)}
 }
 \keyword{distribution}
