@@ -26,7 +26,7 @@ use R::Dcf;
 use R::Utils;
 
 
-my $revision = ' $Revision: 1.17.4.1 $ ';
+my $revision = ' $Revision: 1.17.4.2 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -57,13 +57,13 @@ if($opt_library){
 
 my $helpflags = "HELP=YES WINHELP=CHM";
 if($opt_docs) {
-    if $opt_docs eq "none" {
+    if ($opt_docs eq "none") {
 	$helpflags = "HELP=NO";
-    } elsif $opt_docs eq "normal" {
+    } elsif ($opt_docs eq "normal") {
 	$helpflags = "HELP=YES WINHELP=NO";
-    } elsif $opt_docs eq "chm" {
+    } elsif ($opt_docs eq "chm") {
 	$helpflags = "HELP=YES WINHELP=CHM";
-    } elsif ($opt_docs eq "winhlp") || ($opt_docs eq "all") {
+    } elsif (($opt_docs eq "winhlp") || ($opt_docs eq "all")) {
 	$helpflags = "HELP=YES WINHELP=BOTH";
     } else {
 	die "ERROR: invalid --docs value `$opt_docs'\n";
