@@ -341,6 +341,10 @@ BUG FIXES
     o	print.default(*, gap = <n>) now in principle accepts all
         non-negative values <n>.
 
+    o	write.table() handles zero-row and zero-column inputs correctly.
+
+    o   debug() works on trivial functions instead of crashing (PR#6804)
+
 
 
 

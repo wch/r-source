@@ -516,18 +516,21 @@ SEXP applyClosure(SEXP call, SEXP op, SEXP arglist, SEXP rho, SEXP suppliedenv)
     if (DEBUG(op)) {
 	Rprintf("debugging in: ");
 	PrintValueRec(call,rho);
-	/* Find out if the body is function with only one statement. */
-	if (isSymbol(CAR(body)))
-	    tmp = findFun(CAR(body), rho);
-	else
-	    tmp = eval(CAR(body), rho);
-	if((TYPEOF(tmp) == BUILTINSXP || TYPEOF(tmp) == SPECIALSXP)
-	   && !strcmp( PRIMNAME(tmp), "for")
-	   && !strcmp( PRIMNAME(tmp), "{")
-	   && !strcmp( PRIMNAME(tmp), "repeat")
-	   && !strcmp( PRIMNAME(tmp), "while")
-	   )
-	    goto regdb;
+	/* Is the body a bare symbol (PR#6804) */
+	if (!isSymbol(body) & !isVectorAtomic(body)){
+		/* Find out if the body is function with only one statement. */
+		if (isSymbol(CAR(body)))
+			tmp = findFun(CAR(body), rho);
+		else
+			tmp = eval(CAR(body), rho);
+		if((TYPEOF(tmp) == BUILTINSXP || TYPEOF(tmp) == SPECIALSXP)
+		   && !strcmp( PRIMNAME(tmp), "for")
+		   && !strcmp( PRIMNAME(tmp), "{")
+		   && !strcmp( PRIMNAME(tmp), "repeat")
+		   && !strcmp( PRIMNAME(tmp), "while")
+			)
+			goto regdb;
+	}
 	Rprintf("debug: ");
 	PrintValue(body);
 	do_browser(call,op,arglist,newrho);
