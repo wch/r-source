@@ -90,6 +90,8 @@ NEW FEATURES
 
 BUG FIXES
 
+    o	poly() rescales x to increase accuracy
+
     o	apply() preserves names in yet another case [-> new example].
 
     o	phyper() now works for larger arguments than before.
