@@ -262,6 +262,8 @@ AC_SUBST(LIBTOOL_DEPS)
 ## Make
 : ${MAKE=make}
 AC_SUBST(MAKE)
+## Pager
+R_PROG_PAGER
 ## Perl
 R_PROG_PERL
 ## Tar
@@ -770,7 +772,7 @@ if test -z "${CPICFLAGS}"; then
     alpha*osf*)
       ;;
     *)
-      AC_MSG_WARN([Could not determine CPICFLAGS.])
+      AC_MSG_WARN([I could not determine CPICFLAGS.])
       AC_MSG_ERROR([See the file INSTALL for more information.])
       ;;
   esac
@@ -800,7 +802,7 @@ if test -z "${SHLIB_LD-${SHLIBLD}}"; then
   fi
 fi
 if test -z "${SHLIB_LDFLAGS}"; then
-  AC_MSG_WARN([Could not determine SHLIB_LDFLAGS.])
+  AC_MSG_WARN([I could not determine SHLIB_LDFLAGS.])
   AC_MSG_ERROR([See the file INSTALL for more information.])
 fi
 
@@ -1099,6 +1101,9 @@ if test -n "${warn_info}"; then
 fi
 if test -n "${warn_pdf}"; then
   AC_MSG_WARN(${warn_pdf})
+fi
+if test -n "${warn_pager}"; then
+  AC_MSG_WARN(${warn_pager})
 fi
 
 dnl Local Variables: ***
