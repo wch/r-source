@@ -6327,17 +6327,21 @@ trap 'rm -fr `echo "Makeconf
   src/library/profile/Makefile
   src/library/eda/Makefile
   src/library/eda/src/Makefile
+  src/library/lqs/DESCRIPTION
   src/library/lqs/Makefile
   src/library/lqs/src/Makefile
+  src/library/modreg/DESCRIPTION
   src/library/modreg/Makefile
   src/library/modreg/src/Makefile
   src/library/mva/Makefile
   src/library/mva/src/Makefile
+  src/library/nls/DESCRIPTION
   src/library/nls/Makefile
   src/library/nls/src/Makefile
   src/library/stepfun/Makefile
   src/library/splines/Makefile
   src/library/splines/src/Makefile
+  src/library/ts/DESCRIPTION
   src/library/ts/Makefile
   src/library/ts/src/Makefile
   src/main/Makefile
@@ -6535,17 +6539,21 @@ CONFIG_FILES=\${CONFIG_FILES-"Makeconf
   src/library/profile/Makefile
   src/library/eda/Makefile
   src/library/eda/src/Makefile
+  src/library/lqs/DESCRIPTION
   src/library/lqs/Makefile
   src/library/lqs/src/Makefile
+  src/library/modreg/DESCRIPTION
   src/library/modreg/Makefile
   src/library/modreg/src/Makefile
   src/library/mva/Makefile
   src/library/mva/src/Makefile
+  src/library/nls/DESCRIPTION
   src/library/nls/Makefile
   src/library/nls/src/Makefile
   src/library/stepfun/Makefile
   src/library/splines/Makefile
   src/library/splines/src/Makefile
+  src/library/ts/DESCRIPTION
   src/library/ts/Makefile
   src/library/ts/src/Makefile
   src/main/Makefile
