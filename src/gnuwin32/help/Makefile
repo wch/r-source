@@ -19,14 +19,14 @@ pkg-%:
 	$(PERL) build.help ${DOS} -nroff -html -example -latex ../../library/$*
 
 ziphelp-%:
-	$(MAKE) -C ../../../library/$* -f ../../src/gnuwin32/help/makefile ZIPFLAGS=jqX  PKG=$* zipit
+	$(MAKE) -C ../../../library/$* -f ../../src/gnuwin32/help/Makefile ZIPFLAGS=jqX  PKG=$* zipit
 
 ziponlyhelp-%:
-	$(MAKE) -C ../../../library/$* -f ../../src/gnuwin32/help/makefile ZIPFLAGS=jqmX PKG=$* zipit
+	$(MAKE) -C ../../../library/$* -f ../../src/gnuwin32/help/Makefile ZIPFLAGS=jqmX PKG=$* zipit
 
 
 winhelp-%:
-	$(MAKE) -C ../../library/$* -f ../../gnuwin32/help/makefile PKG=$* win
+	$(MAKE) -C ../../library/$* -f ../../gnuwin32/help/Makefile PKG=$* win
 
 clean:
 	$(RM) -fr *~
@@ -50,9 +50,9 @@ win: $(PKG).rtf
 zipit: help/Rhelp.zip
 
 help/Rhelp.zip: ../../src/library/$(PKG)/man/*.Rd
-	-$(MAKE) -C help  -f ../../../src/gnuwin32/help/makefile uz-Rhelp
-	-$(MAKE) -C R-ex  -f ../../../src/gnuwin32/help/makefile uz-Rex
-	-$(MAKE) -C latex -f ../../../src/gnuwin32/help/makefile uz-Rhelp
+	-$(MAKE) -C help  -f ../../../src/gnuwin32/help/Makefile uz-Rhelp
+	-$(MAKE) -C R-ex  -f ../../../src/gnuwin32/help/Makefile uz-Rex
+	-$(MAKE) -C latex -f ../../../src/gnuwin32/help/Makefile uz-Rhelp
 	-$(MAKE) -C ../../src/gnuwin32/help help-$(PKG)
 	zip -${ZIPFLAGS} help/Rhelp help/* -x help/00Titles help/AnIndex
 	zip -${ZIPFLAGS} R-ex/Rex R-ex/*.R
