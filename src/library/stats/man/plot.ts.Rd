@@ -34,11 +34,12 @@
 
   \item{nc}{the number of columns to use when \code{type="multiple"}.
     Defaults to 1 for up to 4 series, otherwise to 2.}
-  \item{mar.multi, oma.multi}{the (default) \code{\link{par}} settings
-    for \code{plot.type="multiple"}.  Modify with care!}
   \item{yax.flip}{logical indicating if the y-axis (ticks and numbering)
     should flip from side 2 (left) to 4 (right) from series to series
     when \code{type="multiple"}.}
+  \item{mar.multi, oma.multi}{the (default) \code{\link{par}} settings
+    for \code{plot.type="multiple"}.  Modify with care!}
+  \item{axes}{logical indicating if x- and y- axes should be drawn.}
   \item{\dots}{additional graphical arguments, see \code{\link{plot}},
     \code{\link{plot.default}} and \code{\link{par}}.}
 }
