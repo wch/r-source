@@ -72,8 +72,8 @@ _EOF_
 if(!defined($ENV{'R_CHECK_WITH_T_N_F_AS_NULL'})
    || $ENV{'R_CHECK_WITH_T_N_F_AS_NULL'} ne "") {
     print <<_EOF_;
-	   assign("T", NULL, pos = 1);
-	   assign("F", NULL, pos = 1);
+	   assign("T", delay(stop("T used instead of TRUE")), pos = 1);
+	   assign("F", delay(stop("F used instead of FALSE")), pos = 1);
 _EOF_
 }
 print <<_EOF_;
