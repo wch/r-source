@@ -37,6 +37,7 @@ strings, windows, xredef}.c, {graphapp, internal}.h are
 
 	Copyright (C) 1993-1998 Lachlan Patrick
 
+
 src/gnuwin32/psignal.[ch]
 
 Based on files which are
@@ -44,8 +45,18 @@ Based on files which are
 	Copyright 1994-1999 The Downhill Project
 	http://www.ede.com/free/u2nt
 
+
 src/gnuwin32/front-ends/SC_proxy.h, bdx.[ch], rp*.[ch]
 
 	Copyright (C) 1999-2001 Thomas Baier
 
 distributed under the LGPL.
+
+
+R_HOME/Tcl:
+
+Files compiled and installed from Tcl 8.4.1 and Tk 8.4.1.
+see R_HOME/Tcl/license.terms for the license.
+
+    This software is copyrighted by the Regents of the University of
+    California, Sun Microsystems, Inc., and other parties. [...]
