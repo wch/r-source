@@ -441,6 +441,7 @@ distclean veryclean: clean clean-recommended
 		cran/md5sum.txt cran/*.$(RPREFIX) cran/mini
 	$(RM) -r .vignettes # it gets left behind sometimes
 	$(RM) ../../FAQ ../../RESOURCES ../../doc/html/resources.html # not in SVN sources
+	$(RM) -r ../../share/locale
 	$(RM) XINSTALL # from cross-building
 	$(RM) Rpwd.exe # do this last of all
 
@@ -456,6 +457,7 @@ cleanwin:
 	$(MAKE) -C ../extra/pcre -f Makefile.win distclean
 	$(MAKE) -C ../extra/bzip2 -f Makefile.win clean
 	$(MAKE) -C ../extra/zlib -f Makefile.win distclean
+	$(MAKE) -C ../extra/intl -f Makefile.win clean
 	$(MAKE) -C bitmap clean
 	-$(MAKE) -C installer clean
 
