@@ -30,7 +30,7 @@
 
 extern void cmdlineoptions(int, char **);
 extern void setup_term_ui(void);
-extern void mainloop(void);
+extern void Rf_mainloop(void);
 extern UImode CharacterMode;
 extern int UserBreak;
 
@@ -65,7 +65,7 @@ int AppMain (int argc, char **argv)
     mainThreadId = GetCurrentThreadId() ;
     signal(SIGBREAK, my_onintr);
     setup_term_ui();
-    mainloop();
+    Rf_mainloop();
     /* NOTREACHED */
     return 0;
 }

@@ -14,7 +14,7 @@ else
   DEBUGFLAG=-Wall
 endif
 
-CFLAGS=-I$(RHOME)/src/include -include $(RHOME)/src/include/globalvar.h $(DEBUGFLAG) -O2
+CFLAGS=-I$(RHOME)/src/include -I$(RHOME)/src/include/R_ext -include $(RHOME)/src/include/globalvar.h $(DEBUGFLAG) -O2
 FFLAGS=-O2 $(DEBUGFLAG)
 DLLLIBS=-L$(RHOME)/src/gnuwin32  $(FLIBS) -lR 
 

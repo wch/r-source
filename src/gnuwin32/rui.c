@@ -23,6 +23,7 @@
 
 /* R user interface based on GraphApp */
 #include "Defn.h"
+#undef append /* defined by graphapp/internal.h */
 #include <stdio.h>
 /* the user menu code looks at the internal structure */
 #include "graphapp/internal.h"
@@ -682,7 +683,10 @@ static int nmenus=0, nitems=0;
 static void menuuser(control m)
 {
     int item = m->max;
-    Rconsolecmd(umitems[item]->action);
+    char *p = umitems[item]->action;
+
+    if (strcmp(p, "none") == 0) return;
+    Rconsolecmd(p);
 }
 
 

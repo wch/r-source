@@ -4,7 +4,7 @@
 include MkRules
 
 HELP=YES
-WINHELP=NO # Ue one of NO, CHM, BOTH (chm and winhelp)
+WINHELP=NO # Use one of NO, CHM, BOTH (chm and winhelp)
 
 RHOME=$(shell cd ../..; pwd)# must be absolute path
 RLIB=$(RHOME)/library
@@ -18,8 +18,8 @@ else
  OPTFLAGS=-O2 -Wall
  DLLFLAGS=-s 
 endif
-CFLAGS=$(OPTFLAGS) -I../include
-FFLAGS=$(OPTFLAGS)
+#CFLAGS=$(OPTFLAGS) -I../include -I../include/R_ext
+#FFLAGS=$(OPTFLAGS)
 
 libR.a:  R.exp
 	$(DLLTOOL) $(DLLTOOLFLAGS) $(R-DLLTOOLFLAGS) --dllname R.dll --def R.exp --output-lib libR.a

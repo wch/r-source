@@ -26,7 +26,7 @@
 
 extern void cmdlineoptions(int, char **);
 extern int setupui(void);
-extern void mainloop(void);
+extern void Rf_mainloop(void);
 extern UImode CharacterMode;
 
 extern char *getDLLVersion();
@@ -48,7 +48,7 @@ int AppMain (int argc, char **argv)
     }
     cmdlineoptions(argc, argv);
     setupui();
-    mainloop();
+    Rf_mainloop();
     /* NOTREACHED */
     return 0;
 }
