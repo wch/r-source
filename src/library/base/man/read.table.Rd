@@ -103,7 +103,7 @@ read.delim2(file, header = TRUE, sep = "\t", quote="\"", dec=",",
     named, unspecified values are taken to be \code{NA}.
 
     Possible values are \code{NA} (when \code{\link{type.convert}} is
-    used), \code{NULL} (when the column is skipped), one of the atomic
+    used), \code{"NULL"} (when the column is skipped), one of the atomic
     vector classes (logical, integer, numeric, complex, character, raw),
     or \code{"factor"}, \code{"Date"} or \code{"POSIXct"}.  Otherwise
     there needs to be an \code{as} method (from package \pkg{methods})
