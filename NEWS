@@ -35,7 +35,8 @@ NEW FEATURES
 
     o	Generalised "birthday paradox" functions [pq]birthday.
 
-    o	dist() can now handle missing values.
+    o	dist() can now handle missing values, and zeroes in the
+	Canberaa distance.
 
     o	New function difftime() and corresponding class for date/time 
 	differences.

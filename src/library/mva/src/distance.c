@@ -26,7 +26,7 @@
 #include <float.h>
 #include "R_ext/Arith.h"
 #include "R_ext/Error.h"
-#include "R_ext/Applic.h"
+#include "R_ext/Applic.h" /* machar */
 
 double R_euclidean(double *x, int nr, int nc, int i1, int i2)
 {
@@ -90,17 +90,30 @@ double R_manhattan(double *x, int nr, int nc, int i1, int i2)
     return dist;
 }
 
+static double xmin = 0.0;
+
 double R_canberra(double *x, int nr, int nc, int i1, int i2)
 {
-    double dist;
+    double dist, sum, diff;
     int count, j;
+
+    if(xmin == 0.0) {
+	int ibeta, it, irnd, ngrd, machep, negep, iexp, minexp, maxexp;
+	double eps, epsneg,  xmax;
+	machar(&ibeta, &it, &irnd, &ngrd, &machep, &negep, &iexp,
+	       &minexp, &maxexp, &eps, &epsneg, &xmin, &xmax);
+    }
 
     count = 0;
     dist = 0;
     for(j = 0 ; j < nc ; j++) {
 	if(R_FINITE(x[i1]) && R_FINITE(x[i2])) {
-	    dist += fabs(x[i1] - x[i2])/fabs(x[i1] + x[i2]);
-	    count++;
+	    sum = fabs(x[i1] + x[i2]);
+	    diff = fabs(x[i1] - x[i2]);
+	    if (sum > xmin || diff > xmin) {
+		dist += diff/sum;
+		count++;
+	    }
 	}
 	i1 += nr;
 	i2 += nr;
@@ -119,13 +132,11 @@ double R_dist_binary(double *x, int nr, int nc, int i1, int i2)
     count = 0;
     dist = 0;
 
-    for(j=0 ; j<nc ; j++) {
+    for(j = 0 ; j < nc ; j++) {
 	if(R_FINITE(x[i1]) && R_FINITE(x[i2])) {
 	    if(x[i1] || x[i2]){
 		count++;
-		if( ! (x[i1] && x[i2]) ){
-		    dist++;
-		}
+		if( ! (x[i1] && x[i2]) ) dist++;
 	    }
 	    total++;
 	}
