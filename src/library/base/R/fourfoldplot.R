@@ -34,8 +34,12 @@ fourfoldplot <- function(x, color = c("red", "blue"), conf.level = 0.95,
     
     if(!is.array(x))
         stop("x must be an array")
-    if(length(dim(x)) == 2)
-        x <- array(x, dim = c(dim(x), 1))
+    if(length(dim(x)) == 2) {
+        x <- if(is.null(dimnames(x)))
+            array(x, c(dim(x), 1))
+        else
+            array(x, c(dim(x), 1), c(dimnames(x), list(NULL)))
+    }
     if(length(dim(x)) != 3)
         stop("x must be 2- or 3-dimensional")        
     if(any(dim(x)[1:2] != 2))
