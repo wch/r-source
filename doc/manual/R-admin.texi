@@ -176,10 +176,9 @@ rs6000-ibm-aix, hppa-hp-hpux, and sparc-sun-solaris.
 @cindex Linux
 @cindex MacOS X
 In addition, binary distributions are available for most common Linux
-distributions, Compaq Alpha systems running OSF/Tru64, and for MacOS X
-(Darwin) with X11.  See the @acronym{FAQ} for current details.  These
-are installed in platform-specific ways.  So for the rest of this
-chapter we consider only building from the sources.
+distributions, and for MacOS X (Darwin) with X11.  See the @acronym{FAQ}
+for current details.  These are installed in platform-specific ways.  So
+for the rest of this chapter we consider only building from the sources.
 
 @menu
 * Simple compilation::          
