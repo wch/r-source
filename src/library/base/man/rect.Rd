@@ -27,9 +27,10 @@ rect(xleft, ybottom, xright, ytop, \dots)
 }
 \examples{
 ## set up the plot region:
-plot(c(100, 200), c(300, 400), type = "n",
-     main = "11 rectangles using `rect(150+i,320+i,  177+i,380+i)'")
-## draw rectangles with bottom left (150, 320)+i  and top right (177, 380)+i
-rect(150+0:10, 320+0:10, 177+0:10, 380+0:10, col=rainbow(11, start=.7,end=.1))
+plot(c(100, 250), c(300, 450), type = "n",
+     main = "11 rectangles using `rect(120+i,300+i,  177+i,380+i)'")
+i <- 4*(0:10)
+## draw rectangles with bottom left (120, 300)+i  and top right (177, 380)+i
+rect(120+i, 300+i, 177+i, 380+i, col=rainbow(11, start=.7,end=.1))
 }
 \keyword{aplot}

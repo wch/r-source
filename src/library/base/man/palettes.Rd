@@ -51,7 +51,7 @@ piechart(rep(1,12), col=rainbow(12))
 n <- if(.Device == "postscript") 64 else 16
 ## For screen, larger n may give color allocation problem
 i <- 1:n
-d <- n/20; dy <- 2*d; j <- n%/%4
+d <- n/20; dy <- 2*d; j <- n\%/\%4
 plot(i,i+d, type='n', main=paste("color palettes;  n=",n))
 rect(i-.5,     dy, i+.4,   j, col=rainbow(n, start=.7, end=.1))
 text(2*j,    j+dy/4, "rainbow(n, start= .7, end= .1)")
