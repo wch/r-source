@@ -1,6 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996, 1997 Robert Gentleman and Ross Ihaka
+ *  Copyright (C) 1998-1999	The R Core Team
  *
  *  This source code module:
  *  Copyright (C) 1997, 1998 Paul Murrell and Ross Ihaka
@@ -36,11 +37,11 @@ static int MetricUnit = INCHES;
 /* Font Definitions */
 
 typedef enum {
-    PlainFont      = 1,
-    BoldFont       = 2,
-    ItalicFont     = 3,
+    PlainFont	   = 1,
+    BoldFont	   = 2,
+    ItalicFont	   = 3,
     BoldItalicFont = 4,
-    SymbolFont     = 5,
+    SymbolFont	   = 5,
 } FontType;
 
 /*
@@ -155,7 +156,7 @@ static double DescDepth()
     return depth;
 }
 
-#ifdef NOT_used_currently/*-- out 'def'  (-Wall) --*/
+#ifdef NOT_used_currently/*-- out 'def'	 (-Wall) --*/
 static double AscHeight()
 {
     double height, depth, width, save;
@@ -217,13 +218,13 @@ static double MuSpace()
  */
 
 typedef enum {
-    sigma2,  sigma5,  sigma6,  sigma8,  sigma9,  sigma10, sigma11,
+    sigma2,  sigma5,  sigma6,  sigma8,	sigma9,	 sigma10, sigma11,
     sigma12, sigma13, sigma14, sigma15, sigma16, sigma17, sigma18,
     sigma19, sigma20, sigma21, sigma22, xi8, xi9, xi10, xi11, xi12, xi13
 }
 TEXPAR;
 
-#define SUBS           0.7
+#define SUBS	       0.7
 
 static double TeX(TEXPAR which)
 {
@@ -238,26 +239,26 @@ static double TeX(TEXPAR which)
     case sigma8:  /* num1 */
 	return AxisHeight()
 	    + 3.51 * RuleThickness()
-	    + 0.15 * XHeight()          /* 54/36 * 0.1 */
+	    + 0.15 * XHeight()		/* 54/36 * 0.1 */
 	    + SUBS * DescDepth();
     case sigma9:  /* num2 */
 	return AxisHeight()
 	    + 1.51 * RuleThickness()
-	    + 0.08333333 * XHeight();   /* 30/36 * 0.1 */
+	    + 0.08333333 * XHeight();	/* 30/36 * 0.1 */
     case sigma10: /* num3 */
 	return AxisHeight()
 	    + 1.51 * RuleThickness()
-	    + 0.1333333 * XHeight();    /* 48/36 * 0.1 */
+	    + 0.1333333 * XHeight();	/* 48/36 * 0.1 */
     case sigma11: /* denom1 */
-	return  - AxisHeight()
+	return	- AxisHeight()
 	    + 3.51 * RuleThickness()
 	    + SUBS * FigHeight()
-	    + 0.344444 * XHeight();     /* 124/36 * 0.1 */
+	    + 0.344444 * XHeight();	/* 124/36 * 0.1 */
     case sigma12: /* denom2 */
-	return  - AxisHeight()
+	return	- AxisHeight()
 	    + 1.51 * RuleThickness()
 	    + SUBS * FigHeight()
-	    + 0.08333333 * XHeight();   /* 30/36 * 0.1 */
+	    + 0.08333333 * XHeight();	/* 30/36 * 0.1 */
 
     case sigma13: /* sup1 */
 	return 0.95 * xHeight();
@@ -285,14 +286,14 @@ static double TeX(TEXPAR which)
     case sigma22: /* axis_height */
 	return AxisHeight();
 
-    case xi8:     /* default_rule_thickness */
+    case xi8:	  /* default_rule_thickness */
 	return RuleThickness();
 
-    case xi9:     /* big_op_spacing1 */
-    case xi10:    /* big_op_spacing2 */
-    case xi11:    /* big_op_spacing3 */
-    case xi12:    /* big_op_spacing4 */
-    case xi13:    /* big_op_spacing5 */
+    case xi9:	  /* big_op_spacing1 */
+    case xi10:	  /* big_op_spacing2 */
+    case xi11:	  /* big_op_spacing3 */
+    case xi12:	  /* big_op_spacing4 */
+    case xi13:	  /* big_op_spacing5 */
 	return 0.15 * XHeight();
     default:/* never happens (enum type) */
 	error("invalid `which' in TeX()!\n"); return 0;/*-Wall*/
@@ -557,7 +558,7 @@ static double CenterShift(BBOX bbox)
     return 0.5 * (bboxHeight(bbox) - bboxDepth(bbox));
 }
 
-#ifdef NOT_used_currently/*-- out 'def'  (-Wall) --*/
+#ifdef NOT_used_currently/*-- out 'def'	 (-Wall) --*/
 static BBOX DrawBBox(BBOX bbox, double xoffset, double yoffset)
 {
     double xsaved = CurrentX;
@@ -604,36 +605,36 @@ static int StringMatch(SEXP expr, char *aString)
 /* Code to determine the ascii code corresponding */
 /* to an element of a mathematical expression. */
 
-#define A_HAT             94
-#define A_TILDE          126
+#define A_HAT		  94
+#define A_TILDE		 126
 
-#define S_SPACE           32
-#define S_PARENLEFT       40
-#define S_PARENRIGHT      41
-#define S_ASTERISKMATH    42
-#define S_COMMA           44
-#define S_SLASH           47
-#define S_RADICALEX       96
-#define S_FRACTION       164
-#define S_ELLIPSIS       188
-#define S_INTERSECTION   199
-#define S_UNION          200
-#define S_PRODUCT        213
-#define S_RADICAL        214
-#define S_SUM            229
-#define S_INTEGRAL       242
-#define S_BRACKETLEFTTP  233
-#define S_BRACKETLEFTBT  235
+#define S_SPACE		  32
+#define S_PARENLEFT	  40
+#define S_PARENRIGHT	  41
+#define S_ASTERISKMATH	  42
+#define S_COMMA		  44
+#define S_SLASH		  47
+#define S_RADICALEX	  96
+#define S_FRACTION	 164
+#define S_ELLIPSIS	 188
+#define S_INTERSECTION	 199
+#define S_UNION		 200
+#define S_PRODUCT	 213
+#define S_RADICAL	 214
+#define S_SUM		 229
+#define S_INTEGRAL	 242
+#define S_BRACKETLEFTTP	 233
+#define S_BRACKETLEFTBT	 235
 #define S_BRACKETRIGHTTP 249
 #define S_BRACKETRIGHTBT 251
 
-#define N_LIM           1001
-#define N_LIMINF        1002
-#define N_LIMSUP        1003
-#define N_INF           1004
-#define N_SUP           1005
-#define N_MIN           1006
-#define N_MAX           1007
+#define N_LIM		1001
+#define N_LIMINF	1002
+#define N_LIMSUP	1003
+#define N_INF		1004
+#define N_SUP		1005
+#define N_MIN		1006
+#define N_MAX		1007
 
 
 /* The Full Adobe Symbol Font */
@@ -643,66 +644,66 @@ static struct {
     int code;
 }
 SymbolTable[] = {
-    "space",          32,
-    "exclam",         33,
+    "space",	      32,
+    "exclam",	      33,
     "universal",      34,
     "numbersign",     35,
     "existential",    36,
-    "percent",        37,
+    "percent",	      37,
     "ampersand",      38,
-    "suchthat",       39,
+    "suchthat",	      39,
     "parenleft",      40,
     "parenright",     41,
     "asteriskmath",   42,
-    "plus",           43,
-    "comma",          44,
-    "minus",          45,
-    "period",         46,
-    "slash",          47,
-    "0",              48,
-    "1",              49,
-    "2",              50,
-    "3",              51,
-    "4",              52,
-    "5",              53,
-    "6",              54,
-    "7",              55,
-    "8",              56,
-    "9",              57,
-    "colon",          58,
+    "plus",	      43,
+    "comma",	      44,
+    "minus",	      45,
+    "period",	      46,
+    "slash",	      47,
+    "0",	      48,
+    "1",	      49,
+    "2",	      50,
+    "3",	      51,
+    "4",	      52,
+    "5",	      53,
+    "6",	      54,
+    "7",	      55,
+    "8",	      56,
+    "9",	      57,
+    "colon",	      58,
     "semicolon",      59,
-    "less",           60,
-    "equal",          61,
-    "greater",        62,
-    "question",       63,
+    "less",	      60,
+    "equal",	      61,
+    "greater",	      62,
+    "question",	      63,
     "congruent",      64,
 
-    "Alpha",          65,    /* Upper Case Greek Characters */
-    "Beta",           66,
-    "Chi",            67,
-    "Delta",          68,
-    "Epsilon",        69,
-    "Phi",            70,
-    "Gamma",          71,
-    "Eta",            72,
-    "Iota",           73,
-    "theta1",         74,
-    "Kappa",          75,
-    "Lambda",         76,
-    "Mu",             77,
-    "Nu",             78,
-    "Omicron",        79,
-    "Pi",             80,
-    "Theta",          81,
-    "Rho",            82,
-    "Sigma",          83,
-    "Tau",            84,
-    "Upsilon",        85,
-    "sigma1",         86,
-    "Omega",          87,
-    "Xi",             88,
-    "Psi",            89,
-    "Zeta",           90,
+    "Alpha",	      65,    /* Upper Case Greek Characters */
+    "Beta",	      66,
+    "Chi",	      67,
+    "Delta",	      68,
+    "Epsilon",	      69,
+    "Phi",	      70,
+    "Gamma",	      71,
+    "Eta",	      72,
+    "Iota",	      73,
+    "theta1",	      74,
+    "Kappa",	      75,
+    "Lambda",	      76,
+    "Mu",	      77,
+    "Nu",	      78,
+    "Omicron",	      79,
+    "Pi",	      80,
+    "Theta",	      81,
+    "Rho",	      82,
+    "Sigma",	      83,
+    "Tau",	      84,
+    "Upsilon",	      85,
+    "sigma1",	      86,
+    "Omega",	      87,
+    "Xi",	      88,
+    "Psi",	      89,
+    "Zeta",	      90,
 
     "bracketleft",    91,    /* Miscellaneous Special Characters */
     "therefore",      92,
@@ -711,93 +712,93 @@ SymbolTable[] = {
     "underscore",     95,
     "radicalex",      96,
 
-    "alpha",          97,    /* Lower Case Greek Characters */
-    "beta",           98,
-    "chi",            99,
-    "delta",         100,
-    "epsilon",       101,
-    "phi",           102,
-    "gamma",         103,
-    "eta",           104,
-    "iota",          105,
-    "phi1",          106,
-    "kappa",         107,
-    "lambda",        108,
-    "mu",            109,
-    "nu",            110,
-    "omicron",       111,
-    "pi",            112,
-    "theta",         113,
-    "rho",           114,
-    "sigma",         115,
-    "tau",           116,
-    "upsilon",       117,
-    "omega1",        118,
-    "omega",         119,
-    "xi",            120,
-    "psi",           121,
-    "zeta",          122,
+    "alpha",	      97,    /* Lower Case Greek Characters */
+    "beta",	      98,
+    "chi",	      99,
+    "delta",	     100,
+    "epsilon",	     101,
+    "phi",	     102,
+    "gamma",	     103,
+    "eta",	     104,
+    "iota",	     105,
+    "phi1",	     106,
+    "kappa",	     107,
+    "lambda",	     108,
+    "mu",	     109,
+    "nu",	     110,
+    "omicron",	     111,
+    "pi",	     112,
+    "theta",	     113,
+    "rho",	     114,
+    "sigma",	     115,
+    "tau",	     116,
+    "upsilon",	     117,
+    "omega1",	     118,
+    "omega",	     119,
+    "xi",	     120,
+    "psi",	     121,
+    "zeta",	     122,
 
     "braceleft",     123,    /* Miscellaneous Special Characters */
-    "bar",           124,
+    "bar",	     124,
     "braceright",    125,
-    "similar",       126,
+    "similar",	     126,
 
-    "Upsilon1",      161,    /* Lone Greek */
-    "minute",        162,
+    "Upsilon1",	     161,    /* Lone Greek */
+    "minute",	     162,
     "lessequal",     163,
-    "fraction",      164,
-    "infinity",      165,
-    "florin",        166,
-    "club",          167,
-    "diamond",       168,
-    "heart",         169,
-    "spade",         170,
+    "fraction",	     164,
+    "infinity",	     165,
+    "florin",	     166,
+    "club",	     167,
+    "diamond",	     168,
+    "heart",	     169,
+    "spade",	     170,
     "arrowboth",     171,
     "arrowleft",     172,
-    "arrowup",       173,
+    "arrowup",	     173,
     "arrowright",    174,
     "arrowdown",     175,
-    "degree",        176,
+    "degree",	     176,
     "plusminus",     177,
-    "second",        178,
+    "second",	     178,
     "greaterequal",  179,
-    "multiply",      180,
+    "multiply",	     180,
     "proportional",  181,
     "partialdiff",   182,
-    "bullet",        183,
-    "divide",        184,
-    "notequal",      185,
+    "bullet",	     183,
+    "divide",	     184,
+    "notequal",	     185,
     "equivalence",   186,
     "approxequal",   187,
-    "ellipsis",      188,
+    "ellipsis",	     188,
     "arrowvertex",   189,
     "arrowhorizex",  190,
     "carriagereturn",191,
-    "aleph",         192,
-    "Ifraktur",      193,
-    "Rfraktur",      194,
+    "aleph",	     192,
+    "Ifraktur",	     193,
+    "Rfraktur",	     194,
     "weierstrass",   195,
     "circlemultiply",196,
     "circleplus",    197,
-    "emptyset",      198,
+    "emptyset",	     198,
     "intersection",  199,
-    "union",         200,
+    "union",	     200,
     "propersuperset",201,
     "reflexsuperset",202,
     "notsubset",     203,
     "propersubset",  204,
     "reflexsubset",  205,
-    "element",       206,
+    "element",	     206,
     "notelement",    207,
-    "angle",         208,
-    "gradient",      209,
+    "angle",	     208,
+    "gradient",	     209,
     "registerserif", 210,
     "copyrightserif",211,
     "trademarkserif",212,
-    "product",       213,
-    "radical",       214,
-    "dotmath",       215,
+    "product",	     213,
+    "radical",	     214,
+    "dotmath",	     215,
     "logicaland",    217,
     "logicalor",     218,
     "arrowdblboth",  219,
@@ -805,7 +806,7 @@ SymbolTable[] = {
     "arrowdblup",    221,
     "arrowdblright", 222,
     "arrowdbldown",  223,
-    "lozenge",       224,
+    "lozenge",	     224,
     "angleleft",     225,
     "registersans",  226,
     "copyrightsans", 227,
@@ -820,9 +821,9 @@ SymbolTable[] = {
     "bracelefttp",   236,
     "braceleftmid",  237,
     "braceleftbt",   238,
-    "braceex",       239,
+    "braceex",	     239,
     "angleright",    241,
-    "integral",      242,
+    "integral",	     242,
     "integraltp",    243,
     "integralex",    244,
     "integralbt",    245,
@@ -836,7 +837,7 @@ SymbolTable[] = {
     "bracerightmid", 253,
     "bracerightbt",  254,
 
-    NULL,              0,
+    NULL,	       0,
 };
 
 static int SymbolCode(SEXP expr)
@@ -851,13 +852,13 @@ static int SymbolCode(SEXP expr)
 static int TranslatedSymbol(SEXP expr)
 {
     int code = SymbolCode(expr);
-    if ((0101 <= code && code <= 0132)  ||   /* Greek */
-	(0141 <= code && code <= 0172)  ||   /* Greek */
-	code == 0241                    ||   /* Greek */
-	code == 0242                    ||   /* minute */
-	code == 0245                    ||   /* infinity */
-	code == 0260                    ||   /* degree */
-	code == 0262                    ||   /* second */
+    if ((0101 <= code && code <= 0132)	||   /* Greek */
+	(0141 <= code && code <= 0172)	||   /* Greek */
+	code == 0241			||   /* Greek */
+	code == 0242			||   /* minute */
+	code == 0245			||   /* infinity */
+	code == 0260			||   /* degree */
+	code == 0262			||   /* second */
 	0)
 	return code;
     else
@@ -888,7 +889,7 @@ static int StringAtom(SEXP expr)
     return (TYPEOF(expr) == STRSXP);
 }
 
-#ifdef NOT_used_currently/*-- out 'def'  (-Wall) --*/
+#ifdef NOT_used_currently/*-- out 'def'	 (-Wall) --*/
 static int symbolAtom(SEXP expr)
 {
     int i;
@@ -903,7 +904,7 @@ static int symbolAtom(SEXP expr)
 /* Code to determine a font from the */
 /* nature of the expression */
 
-#ifdef NOT_used_currently/*-- out 'def'  (-Wall) --*/
+#ifdef NOT_used_currently/*-- out 'def'	 (-Wall) --*/
 static FontType CurrentFont = 3;
 #endif
 static FontType GetFont()
@@ -943,7 +944,7 @@ static BBOX RenderExpression(SEXP, int);
 static BBOX RenderSymbolChar(int, int);
 
 
-/*  Code to Generate Bounding Boxes and Draw Formulae.  */
+/*  Code to Generate Bounding Boxes and Draw Formulae.	*/
 
 static BBOX RenderItalicCorr(BBOX bbox, int draw)
 {
@@ -1121,9 +1122,9 @@ static BBOX RenderString(SEXP expr, int draw)
 static int DotsAtom(SEXP expr)
 {
     if (NameMatch(expr, "cdots") ||
-	NameMatch(expr, "...")   ||
+	NameMatch(expr, "...")	 ||
 	NameMatch(expr, "ldots"))
-            return 1;
+	    return 1;
     return 0;
 }
 
@@ -1206,17 +1207,17 @@ static BBOX RenderSpace(SEXP expr, int draw)
 }
 
 static SymTab BinTable[] = {
-    "*",                052,    /* Binary Operators */
-    "+",                053,
-    "-",                055,
-    "/",                057,
-    ":",                072,
-    "%+-%",            0261,
-    "%*%",             0264,
-    "%/%",             0270,
+    "*",		052,	/* Binary Operators */
+    "+",		053,
+    "-",		055,
+    "/",		057,
+    ":",		072,
+    "%+-%",	       0261,
+    "%*%",	       0264,
+    "%/%",	       0270,
     "%intersection%",  0307,
-    "%union%",         0310,
-    NULL,                 0
+    "%union%",	       0310,
+    NULL,		  0
 };
 
 static int BinAtom(SEXP expr)
@@ -1466,8 +1467,8 @@ static BBOX RenderSup(SEXP expr, int draw)
 #define ACCENT_GAP  0.2
 #define HAT_HEIGHT  0.3
 
-#define NTILDE      8
-#define DELTA       0.05
+#define NTILDE	    8
+#define DELTA	    0.05
 
 static int WideTildeAtom(SEXP expr)
 {
@@ -1584,10 +1585,10 @@ static struct {
     int code;
 }
 AccentTable[] = {
-    "hat",            94,
-    "ring",          176,
-    "tilde",         126,
-    NULL,              0,
+    "hat",	      94,
+    "ring",	     176,
+    "tilde",	     126,
+    NULL,	       0,
 };
 
 static int AccentCode(SEXP expr)
@@ -1751,7 +1752,7 @@ static BBOX RenderFraction(SEXP expr, int rule, int draw)
 static int OverAtom(SEXP expr)
 {
     return NameAtom(expr) &&
-        (NameMatch(expr, "over") || NameMatch(expr, "frac"));
+	(NameMatch(expr, "over") || NameMatch(expr, "frac"));
 }
 
 static BBOX RenderOver(SEXP expr, int draw)
@@ -1989,9 +1990,9 @@ static BBOX RenderBGroup(SEXP expr, int draw)
     bbox = RenderElement(CADDR(expr), 0);
     dist = max(bboxHeight(bbox) - axisHeight, bboxDepth(bbox) + axisHeight);
     bbox = RenderDelim(delim1, dist + extra, draw);
-    bbox = CombineBBoxes(bbox,  RenderElement(CADDR(expr), draw));
+    bbox = CombineBBoxes(bbox,	RenderElement(CADDR(expr), draw));
     bbox = RenderItalicCorr(bbox, draw);
-    bbox = CombineBBoxes(bbox,  RenderDelim(delim2, dist + extra, draw));
+    bbox = CombineBBoxes(bbox,	RenderDelim(delim2, dist + extra, draw));
     return bbox;
 }
 
@@ -2107,18 +2108,18 @@ static BBOX RenderInt(SEXP expr, int draw)
 #define OperatorSymbolMag  1.25
 
 static SymTab OpTable[] = {
-    "prod",          S_PRODUCT,
-    "sum",           S_SUM,
-    "union",         S_UNION,
+    "prod",	     S_PRODUCT,
+    "sum",	     S_SUM,
+    "union",	     S_UNION,
     "intersect",     S_INTERSECTION,
-    "lim",           N_LIM,
-    "liminf",        N_LIMINF,
-    "limsup",        N_LIMINF,
-    "inf",           N_INF,
-    "sup",           N_SUP,
-    "min",           N_MIN,
-    "max",           N_MAX,
-    NULL,            0
+    "lim",	     N_LIM,
+    "liminf",	     N_LIMINF,
+    "limsup",	     N_LIMINF,
+    "inf",	     N_INF,
+    "sup",	     N_SUP,
+    "min",	     N_MIN,
+    "max",	     N_MAX,
+    NULL,	     0
 };
 
 static int OpAtom(SEXP expr)
@@ -2227,7 +2228,7 @@ static BBOX RenderOp(SEXP expr, int draw)
  *
  *  Tunable parameteters :
  *
- *  RADICAL_GAP    The gap between the nucleus and the radical extension.
+ *  RADICAL_GAP	   The gap between the nucleus and the radical extension.
  *  RADICAL_SPACE  Extra space to the left and right of the nucleus.
  *
  */
@@ -2399,39 +2400,39 @@ static BBOX RenderCurly(SEXP expr, int draw)
  *
  */
 
-                                /* Binary Relationships */
+				/* Binary Relationships */
 
 SymTab RelTable[] = {
-    "<",                 60,    /* less */
-    "==",                61,    /* equal */
-    ">",                 62,    /* greater */
-    "%=~%",              64,    /* congruent */
-    "!=",               185,    /* not equal */
-    "<=",               163,    /* less or equal */
-    ">=",               179,    /* greater or equal */
-    "%==%",             186,    /* equivalence */
-    "%~~%",             187,    /* approxequal */
+    "<",		 60,	/* less */
+    "==",		 61,	/* equal */
+    ">",		 62,	/* greater */
+    "%=~%",		 64,	/* congruent */
+    "!=",		185,	/* not equal */
+    "<=",		163,	/* less or equal */
+    ">=",		179,	/* greater or equal */
+    "%==%",		186,	/* equivalence */
+    "%~~%",		187,	/* approxequal */
 
-    "%<->%",            171,    /* Arrows */
-    "%<-%",             172,
-    "%up%",             173,
-    "%->%",             174,
-    "%down%",           175,
-    "%<=>%",            219,
-    "%<=%",             220,
-    "%dblup%",          221,
-    "%=>%",             222,
-    "%dbldown%",        223,
+    "%<->%",		171,	/* Arrows */
+    "%<-%",		172,
+    "%up%",		173,
+    "%->%",		174,
+    "%down%",		175,
+    "%<=>%",		219,
+    "%<=%",		220,
+    "%dblup%",		221,
+    "%=>%",		222,
+    "%dbldown%",	223,
 
-    "%supset%",         201,    /* Sets (TeX Names) */
-    "%supseteq%",       202,
-    "%notsubset%",      203,
-    "%subset%",         204,
-    "%subseteq%",       205,
-    "%in%",             206,
-    "%notin%",          207,
+    "%supset%",		201,	/* Sets (TeX Names) */
+    "%supseteq%",	202,
+    "%notsubset%",	203,
+    "%subset%",		204,
+    "%subseteq%",	205,
+    "%in%",		206,
+    "%notin%",		207,
 
-    NULL,                0,
+    NULL,		 0,
 };
 
 static int RelAtom(SEXP expr)
@@ -2739,7 +2740,7 @@ static BBOX RenderFormula(SEXP expr, int draw)
     else if (GroupAtom(head))
 	return RenderGroup(expr, draw);
     else if (IntAtom(head))
-       	return RenderInt(expr, draw);
+	return RenderInt(expr, draw);
     else if (OpAtom(head))
 	return RenderOp(expr, draw);
     else if (RadicalAtom(head))
@@ -2931,7 +2932,7 @@ void GMMathText(SEXP str, int side, double line, int outer,
     else {
 	switch (side) {
 	case 1:
-	    if (las == 2) {
+	    if (las == 2 || las == 3) {/* perpendicular */
 		at = at - GConvertXUnits(dd->gp.yLineBias,
 					 LINES, USER, dd);
 		line = line + dd->gp.yLineBias;
@@ -2965,7 +2966,7 @@ void GMMathText(SEXP str, int side, double line, int outer,
 	    coords = MAR2;
 	    break;
 	case 3:
-	    if (las == 2) {
+	    if (las == 2 || las == 3) {/* perpendicular */
 		at = at - GConvertXUnits(dd->gp.yLineBias,
 					 LINES, USER, dd);
 		line = line + dd->gp.yLineBias;

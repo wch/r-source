@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--1998  Robert Gentleman, Ross Ihaka and the R Core Team
+ *  Copyright (C) 1997--1999  Robert Gentleman, Ross Ihaka and the R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -3260,7 +3260,7 @@ void GMtext(char *str, int side, double line, int outer, double at, int las,
     else {
 	switch(side) {
 	case 1:
-	    if(las == 2) {
+	    if(las == 2 || las == 3) {
 		at = at + GConvertXUnits(dd->gp.yLineBias, LINES, USER, dd);
 		line = line - dd->gp.yLineBias;
 		angle = 90;
@@ -3288,7 +3288,7 @@ void GMtext(char *str, int side, double line, int outer, double at, int las,
 	    coords = MAR2;
 	    break;
 	case 3:
-	    if(las == 2) {
+	    if(las == 2 || las == 3) {
 		at = at - GConvertXUnits(dd->gp.yLineBias, LINES, USER, dd);
 		line = line + dd->gp.yLineBias;
 		angle = 90;

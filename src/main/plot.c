@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--1998  Robert Gentleman, Ross Ihaka and the R core team.
+ *  Copyright (C) 1997--1999  Robert Gentleman, Ross Ihaka and the R core team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -42,7 +42,7 @@ SEXP do_devcontrol(SEXP call, SEXP op, SEXP args, SEXP env)
     checkArity(op, args);
     inhibitDisplayList(CurrentDevice());
     return R_NilValue;
-}
+
 
 SEXP do_devcopy(SEXP call, SEXP op, SEXP args, SEXP env)
 {
@@ -701,7 +701,7 @@ SEXP do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
     /* retrieve relevant "par" values */
 
     switch(side) {
-    case 1:
+    case 1: 
     case 3:
 	axp[0] = dd->dp.xaxp[0];
 	axp[1] = dd->dp.xaxp[1];
@@ -779,7 +779,7 @@ SEXP do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
     /* Draw the axis */
     GMode(dd, 1);
     switch (side) {
-    case 1:
+    case 1: /*--- x-axis -- horizontal --- */
     case 3:
 	GetAxisLimits(dd->gp.usr[0], dd->gp.usr[1], &low, &high);
 	if (side == 3) {
@@ -849,8 +849,9 @@ SEXP do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
 		else {
 		    labw = GStrWidth(CHAR(STRING(lab)[i]), NFC, dd);
 		    tnew = tempx - 0.5 * labw;
-		    /* Check that there is room for labels */
-		    if (dd->gp.las == 2 || tnew - tlast >= gap) {
+		    /* Check room for  perpendicular labels: */
+		    if (dd->gp.las == 2 || dd->gp.las == 3 || 
+			tnew - tlast >= gap) {
 			GMtext(CHAR(STRING(lab)[i]), side,
 			       dd->gp.mgp[1], 0, x,
 			       dd->gp.las, dd);
@@ -860,7 +861,8 @@ SEXP do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
 	    }
 	}
 	break;
-    case 2:
+
+    case 2: /*--- y-axis -- vertical --- */
     case 4:
 	GetAxisLimits(dd->gp.usr[2], dd->gp.usr[3], &low, &high);
 	if (side == 4) {
@@ -927,11 +929,12 @@ SEXP do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
 			       dd->gp.mgp[1], 0, y, dd->gp.las, dd);
 		}
 		else {
-		    labw = GStrWidth(CHAR(STRING(lab)[i]),
-				     INCHES, dd);
+		    labw = GStrWidth(CHAR(STRING(lab)[i]), INCHES, dd);
 		    labw = GConvertYUnits(labw, INCHES, NFC, dd);
 		    tnew = tempy - 0.5 * labw;
-		    if (dd->gp.las > 0 || tnew - tlast >= gap) {
+		    /* Check room for  perpendicular labels: */
+		    if (dd->gp.las == 1 || dd->gp.las == 2 || 
+			tnew - tlast >= gap) {
 			GMtext(CHAR(STRING(lab)[i]), side,
 			       dd->gp.mgp[1], 0, y,
 			       dd->gp.las, dd);
@@ -1681,35 +1684,31 @@ SEXP do_mtext(SEXP call, SEXP op, SEXP args, SEXP env)
     /* If there was no "adj=" , choose a default based on "las". */
 
     if (!FINITE(adj)) {
-      switch(dd->gp.las) {
-      case 0:
-	adj = 0.5;
-	break;
-      case 1:
-	switch(side) {
-	case 1:
-	case 3:
-	  adj = 0.5;
-	  break;
-	case 2:
-	  adj = 1.0;
-	  break;
-	case 4:
-	  adj = 0.0;
-	  break;
+	switch(dd->gp.las) {
+	case 0:/* parallel to axis */
+	    adj = 0.5; break;
+	case 1:/* horizontal */
+	    switch(side) {
+	    case 1:
+	    case 3: adj = 0.5; break;
+	    case 2: adj = 1.0; break;
+	    case 4: adj = 0.0; break;
+	    }
+	case 2:/* perpendicular to axis */
+	    switch(side) {
+	    case 1:
+	    case 2: adj = 1.0; break;
+	    case 3:
+	    case 4: adj = 0.0; break;
+	    }
+	case 3:/* vertical */
+	    switch(side) {
+	    case 1: adj = 1.0; break;
+	    case 3: adj = 0.0; break;
+	    case 2:
+	    case 4: adj = 0.5; break;
+	    }
 	}
-      case 2:
-	switch(side) {
-	case 1:
-	case 2:
-	  adj = 1.0;
-	  break;
-	case 3:
-	case 4:
-	  adj = 0.0;
-	  break;
-	}
-      }
     }
     dd->gp.adj = adj;
 

@@ -7,6 +7,18 @@
 	**************************************************
 
 
+		CHANGES IN R VERSION 0.63.3
+
+NEW FEATURES
+
+    o	par(las = 3) is a new option.
+
+    o   new function jitter()  [slightly more useful than S's].
+
+BUG FIXES
+
+    o
+
 		CHANGES IN R VERSION 0.63.2
 
 NEW FEATURES
@@ -28,9 +40,6 @@ NEW FEATURES
 	and time series.
 
     o   data set `euro' with Euro conversion rates.
-
-    o   new function jitter()  [slightly wmore useful than S's].
-
 
 BUG FIXES
 

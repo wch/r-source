@@ -254,9 +254,15 @@ par(op)
 
 
 par("ylog")# FALSE
-par(las=2)
 plot(1:12,log="y")
 par("ylog")# TRUE
+
+( nr.prof <-
+  c(prof.pilots=16,lawyers=11,farmers=10,salesmen=9,physicians=9,
+    mechanics=6,policemen=6,managers=6,engineers=5,teachers=4,
+    housewives=3,students=3,armed.forces=1))
+par(las=3)
+barplot(rbind(nr.prof)) # R 0.63.2: shows alignment problem
 par(las=0)# reset to default
 
 ex <- function() {
