@@ -235,7 +235,7 @@ getGeneric <-
   ## If there is no definition in the current search list, throws an error or returns
   ## NULL according to the value of mustFind.
   function(f, mustFind = FALSE)
-    .Call("R_getGeneric", f, mustFind)
+    .Call("R_getGeneric", f, mustFind, PACKAGE = "methods")
 
 getGroup <-
   ## return the groups to which this generic belongs.  If `recursive=TRUE', also all the

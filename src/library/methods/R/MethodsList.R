@@ -1,18 +1,19 @@
 MethodsList <-
   ## Create a MethodsList object out of the arguments.
   ##
-  ## Conceptually, this object is a named collection of methods to be dispatched
-  ## when the (first) argument in a function call matches the class corresponding to
-  ## one of the names.  A final, unnamed element (i.e., with name `""') corresponds
-  ## to the default method.
+  ## Conceptually, this object is a named collection of methods to be
+  ## dispatched when the (first) argument in a function call matches the
+  ## class corresponding to one of the names.  A final, unnamed element
+  ## (i.e., with name `""') corresponds to the default method.
   ##
-  ## The elements can be either a function, or another MethodsList.  In the second case,
-  ## this list implies dispatching on the second argument to the function using that
-  ## list, given a selection of this element on the first argument.  Thus, method dispatching
-  ## on an arbitrary number of arguments is defined.
+  ## The elements can be either a function, or another MethodsList.  In
+  ## the second case, this list implies dispatching on the second
+  ## argument to the function using that list, given a selection of this
+  ## element on the first argument.  Thus, method dispatching on an
+  ## arbitrary number of arguments is defined.
   ##
-  ## MethodsList objects are used primarily to dispatch OOP-style methods and, in R,
-  ## to emulate S4-style methods.
+  ## MethodsList objects are used primarily to dispatch OOP-style
+  ## methods and, in R, to emulate S4-style methods.
   function(.ArgName, ...)
 {
     value <- makeMethodsList(list(...))
@@ -141,7 +142,7 @@ MethodsListSelect <-
         else
             stop(paste("\"", fname, "\" is not a valid generic function", sep=""))
     }
-    on.exit(.Call("R_clear_method_selection"))## in case of error
+    on.exit(.Call("R_clear_method_selection", PACKAGE = "methods"))## in case of error
     ## in calls from the C method selection code,  arg and thisClass are already known.
     if(missing(arg)) {
         missingThisArg <-
@@ -210,7 +211,8 @@ MethodsListDispatch <-
   ## either the S language version:
   ## MethodsListSelect(fname, ev, mustFind)
   ## or the C version:
-    .Call("R_methods_list_dispatch", fname, ev, mustFind)
+    .Call("R_methods_list_dispatch", fname, ev, mustFind,
+          PACKAGE = "methods")
 
 
 

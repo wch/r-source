@@ -111,12 +111,12 @@ standardGeneric <-
   function(fname)
 {
     ev <- sys.frame(-1)
-    .Call("R_standardGeneric",fname, ev)
+    .Call("R_standardGeneric",fname, ev, PACKAGE = "methods")
 }
 
 evalSelectedMethod <-
     function(f, ev, fname)
-    .Call("R_eval_selected_method", f, ev, fname)
+    .Call("R_eval_selected_method", f, ev, fname, PACKAGE = "methods")
 
 
 OldEvalSelectedMethod <-
