@@ -62,7 +62,8 @@ extern Rboolean UsingReadline;
 
 void Rstd_Suicide(char *s)
 {
-    REprintf(_("Fatal error: %s\n"), s);
+    REprintf("Fatal error: %s\n", s); 
+    /* Might be called before translation is running */
     R_CleanUp(SA_SUICIDE, 2, 0);
 }
 

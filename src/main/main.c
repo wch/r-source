@@ -451,9 +451,13 @@ void setup_Rmainloop(void)
     setlocale(LC_COLLATE, "");/*- alphabetically sorting */
     setlocale(LC_TIME, "");/*- names and defaults for date-time formats */
     setlocale(LC_MONETARY, "");/*- currency units */
+#ifdef ENABLE_NLS
+    setlocale(LC_MESSAGES,""); /* language for messages */
+#endif
+    /* NB: we do not set LC_NUMERIC */
 #endif
 #ifdef ENABLE_NLS
-    setlocale(LC_MESSAGES,"");
+    /* This ought to have been done earlier, but be sure */
     textdomain(PACKAGE);
     strcpy(localedir, R_Home); strcat(localedir, "/share/locale");
     bindtextdomain(PACKAGE, localedir);

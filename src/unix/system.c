@@ -110,6 +110,9 @@ int Rf_initialize_R(int ac, char **av)
     Rboolean useX11 = TRUE, useTk = FALSE;
     char *p, msg[1024], **avv;
     structRstart rstart;
+#ifdef ENABLE_NLS
+    char localedir[MAX_PATH];
+#endif
     Rstart Rp = &rstart;
 
     ptr_R_Suicide = Rstd_Suicide;
@@ -132,7 +135,13 @@ int Rf_initialize_R(int ac, char **av)
     R_GlobalContext = NULL; /* Make R_Suicide less messy... */
 
     if((R_Home = R_HomeDir()) == NULL)
-	R_Suicide(_("R home directory is not defined"));
+	R_Suicide("R home directory is not defined");
+#ifdef ENABLE_NLS
+    setlocale(LC_MESSAGES,"");
+    textdomain(PACKAGE);
+    strcpy(localedir, R_Home); strcat(localedir, "/share/locale");
+    bindtextdomain(PACKAGE, localedir);
+#endif
 
     process_system_Renviron();
 
@@ -154,7 +163,8 @@ int Rf_initialize_R(int ac, char **av)
 		if(i+1 < ac) {
 		    avv++; p = *avv; ioff++;
 		} else {
-		    sprintf(msg, "WARNING: --gui or -g without value ignored");
+		    sprintf(msg,
+			    _("WARNING: --gui or -g without value ignored"));
 		    R_ShowMessage(msg);
 		    p = "X11";
 		}
@@ -176,10 +186,10 @@ int Rf_initialize_R(int ac, char **av)
 	    else {
 #ifdef HAVE_X11
 		snprintf(msg, 1024,
-			 "WARNING: unknown gui `%s', using X11\n", p);
+			 _("WARNING: unknown gui `%s', using X11\n"), p);
 #else
 		snprintf(msg, 1024,
-			 "WARNING: unknown gui `%s', using none\n", p);
+			 _("WARNING: unknown gui `%s', using none\n"), p);
 #endif
 		R_ShowMessage(msg);
 	    }
@@ -217,11 +227,11 @@ int Rf_initialize_R(int ac, char **av)
 		    break; 
 		else
 #endif
-		snprintf(msg, 1024, "WARNING: unknown option %s\n", *av);
+		snprintf(msg, 1024, _("WARNING: unknown option %s\n"), *av);
 		R_ShowMessage(msg);
 	    }
 	} else {
-	    snprintf(msg, 1024, "ARGUMENT '%s' __ignored__\n", *av);
+	    snprintf(msg, 1024, _("ARGUMENT '%s' __ignored__\n"), *av);
 	    R_ShowMessage(msg);
 	}
     }
@@ -297,7 +307,7 @@ int R_EditFiles(int nfile, char **file, char **title, char *editor)
 
     if (nfile > 0) {
 	if (nfile > 1)
-	    R_ShowMessage("WARNING: Only editing the first in the list of files");
+	    R_ShowMessage(_("WARNING: Only editing the first in the list of files"));
 
 #if defined(HAVE_AQUA)
 	if (ptr_R_EditFile)

@@ -616,7 +616,7 @@ void R_setStartTime();
 void R_SetWin32(Rstart Rp)
 {
     R_Home = Rp->rhome;
-    if(strlen(R_Home) >= MAX_PATH) R_Suicide(_("Invalid R_HOME"));
+    if(strlen(R_Home) >= MAX_PATH) R_Suicide("Invalid R_HOME");
     sprintf(RHome, "R_HOME=%s", R_Home);
     putenv(RHome);
     strcpy(UserRHome, "R_USER=");
@@ -715,7 +715,9 @@ int cmdlineoptions(int ac, char **av)
     R_size_t value;
     char *p;
     char  s[1024];
+#ifdef ENABLE_NLS
     char localedir[PATH_MAX+20];
+#endif
     structRstart rstart;
     Rstart Rp = &rstart;
     MEMORYSTATUS ms;
@@ -727,8 +729,11 @@ int cmdlineoptions(int ac, char **av)
     InitFunctionHashing();
     sprintf(RHome, "R_HOME=%s", R_Home);
     putenv(RHome);
+#ifdef ENABLE_NLS
     strcpy(localedir, R_Home); strcat(localedir, "/share/locale");
     bindtextdomain("RGui", localedir);
+    bindtextdomain(PACKAGE, localedir);
+#endif
 
 #ifdef _R_HAVE_TIMING_
     R_setStartTime();
