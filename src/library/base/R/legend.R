@@ -5,7 +5,7 @@ legend <-
               text.width = NULL, merge = do.lines && has.pch, trace = FALSE)
 {
     if(is.list(x)) {
-        if(!missing(y)) {               # the 2nd arg maybe really is `legend'
+	if(!missing(y)) {	# the 2nd arg may really be `legend'
             if(!missing(legend))
                 stop("`y' and `legend' when `x' is list (need no `y')")
             legend <- y
@@ -150,5 +150,6 @@ legend <-
     xt <- xt + x.intersp * xchar
     text2(xt, yt, labels= legend, adj= adj, cex= cex)
 
-    invisible(list(w=w,h=h,xt=xt,yt=yt))
+    invisible(list(rect = list(w=w, h=h, left=left, top=top),
+                   text = list(x = xt, y = yt)))
 }
