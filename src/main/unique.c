@@ -49,40 +49,40 @@ static int scatter(unsigned int key)
     return 3141592653U * key >> (32 - K);
 }
 
-static int lhash(SEXP x, int index)
+static int lhash(SEXP x, int indx)
 {
-    if (LOGICAL(x)[index] == NA_LOGICAL)
+    if (LOGICAL(x)[indx] == NA_LOGICAL)
 	return 2;
-    return LOGICAL(x)[index];
+    return LOGICAL(x)[indx];
 }
 
-static int ihash(SEXP x, int index)
+static int ihash(SEXP x, int indx)
 {
-    if (INTEGER(x)[index] == NA_INTEGER)
+    if (INTEGER(x)[indx] == NA_INTEGER)
 	return 0;
-    return scatter((unsigned int) (INTEGER(x)[index]));
+    return scatter((unsigned int) (INTEGER(x)[indx]));
 }
 
-static int rhash(SEXP x, int index)
+static int rhash(SEXP x, int indx)
 {
     /* There is a problem with signed 0s under IEEE */
-    double tmp = (REAL(x)[index] == 0.0) ? 0.0 : REAL(x)[index];
+    double tmp = (REAL(x)[indx] == 0.0) ? 0.0 : REAL(x)[indx];
     return scatter(*((unsigned int *) (&tmp)));
 }
 
-static int chash(SEXP x, int index)
+static int chash(SEXP x, int indx)
 {
     Rcomplex tmp;
-    tmp.r = (COMPLEX(x)[index].r == 0.0) ? 0.0 : COMPLEX(x)[index].r;
-    tmp.i = (COMPLEX(x)[index].i == 0.0) ? 0.0 : COMPLEX(x)[index].i;
+    tmp.r = (COMPLEX(x)[indx].r == 0.0) ? 0.0 : COMPLEX(x)[indx].r;
+    tmp.i = (COMPLEX(x)[indx].i == 0.0) ? 0.0 : COMPLEX(x)[indx].i;
     return scatter((*((unsigned int *)(&tmp.r)) |
 		    (*((unsigned int *)(&tmp.r)))));
 }
 
-static int shash(SEXP x, int index)
+static int shash(SEXP x, int indx)
 {
     unsigned int k;
-    char *p = CHAR(STRING_ELT(x, index));
+    char *p = CHAR(STRING_ELT(x, indx));
     k = 0;
     while (*p++)
 	k = 8 * k + *p;
@@ -173,18 +173,18 @@ static void HashTableSetup(SEXP x)
 /* Collision resolution is by linear probing */
 /* The table is guaranteed large so this is sufficient */
 
-static int isDuplicated(SEXP x, int index)
+static int isDuplicated(SEXP x, int indx)
 {
     int i, *h;
 
     h = INTEGER(HashTable);
-    i = hash(x, index);
+    i = hash(x, indx);
     while (h[i] != NIL) {
-	if (equal(x, h[i], x, index))
+	if (equal(x, h[i], x, indx))
 	    return 1;
 	i = (i + 1) % M;
     }
-    h[i] = index;
+    h[i] = indx;
     return 0;
 }
 
@@ -291,14 +291,14 @@ static void DoHashing(SEXP table)
 	(void) isDuplicated(table, i);
 }
 
-static int Lookup(SEXP table, SEXP x, int index)
+static int Lookup(SEXP table, SEXP x, int indx)
 {
     int i, *h;
 
     h = INTEGER(HashTable);
-    i = hash(x, index);
+    i = hash(x, indx);
     while (h[i] != NIL) {
-	if (equal(table, h[i], x, index))
+	if (equal(table, h[i], x, indx))
 	    return h[i] + 1;
 	i = (i + 1) % M;
     }
@@ -406,7 +406,7 @@ SEXP do_pmatch(SEXP call, SEXP op, SEXP args, SEXP env)
     for (j = 0; j < n_target; j++) used[j] = 0;
     ans = allocVector(INTSXP, n_input);
     for (i = 0; i < n_input; i++) INTEGER(ans)[i] = 0;
- 
+
     /* First pass, exact matching */
     for (i = 0; i < n_input; i++) {
 	temp = strlen(CHAR(STRING_ELT(input, i)));
@@ -422,7 +422,7 @@ SEXP do_pmatch(SEXP call, SEXP op, SEXP args, SEXP env)
 	    }
 	}
     }
-    /* Second pass, partial matching */   
+    /* Second pass, partial matching */
     for (i = 0; i < n_input; i++) {
 	if (INTEGER(ans)[i]) continue;
 	temp = strlen(CHAR(STRING_ELT(input, i)));
@@ -481,7 +481,9 @@ SEXP do_pmatch(SEXP call, SEXP op, SEXP args, SEXP env)
 SEXP do_charmatch(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP ans, input, target;
-    int i, j, k, match, n_input, n_target, perfect, temp;
+    Rboolean perfect;
+    int i, j, k, imatch, n_input, n_target, temp;
+
     checkArity(op, args);
 
     input = CAR(args);
@@ -496,29 +498,29 @@ SEXP do_charmatch(SEXP call, SEXP op, SEXP args, SEXP env)
 
     for (i = 0; i < n_input; i++) {
 	temp = strlen(CHAR(STRING_ELT(input, i)));
-	match = NA_INTEGER;
-	perfect = 0;
+	imatch = NA_INTEGER;
+	perfect = FALSE;
 	for (j = 0; j < n_target; j++) {
 	    k = strncmp(CHAR(STRING_ELT(input, i)),
 			CHAR(STRING_ELT(target, j)), temp);
 	    if (k == 0) {
 		if (strlen(CHAR(STRING_ELT(target, j))) == temp) {
-		    if (perfect == 1)
-			match = 0;
+		    if (perfect)
+			imatch = 0;
 		    else {
-			perfect = 1;
-			match = j + 1;
+			perfect = TRUE;
+			imatch = j + 1;
 		    }
 		}
-		else if (perfect == 0) {
-		    if (match == NA_INTEGER)
-			match = j + 1;
+		else if (!perfect) {
+		    if (imatch == NA_INTEGER)
+			imatch = j + 1;
 		    else
-			match = 0;
+			imatch = 0;
 		}
 	    }
 	}
-	INTEGER(ans)[i] = match;
+	INTEGER(ans)[i] = imatch;
     }
     return ans;
 }
