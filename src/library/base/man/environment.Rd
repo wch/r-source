@@ -82,7 +82,7 @@ parent.env(env) <- value
   If one follows the \code{parent.env()} chain of enclosures back far
   enough from any environment, eventually one reaches \code{NULL}.
   This means that arithmetic operators and the base package functions
-  will be always be found by \code{\link{eval()}} or \code{\link{get}(...,
+  will be always be found by \code{\link{eval}()} or \code{\link{get}(...,
   inherits = TRUE)}.
 
   The replacement function \code{parent.env<-} is extremely dangerous as
