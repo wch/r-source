@@ -41,6 +41,7 @@ in the error handling.
 */
 static int inError = 0;
 static int inWarning = 0;
+static int inPrintWarnings = 0;
 
 /* Interface / Calling Hierarchy :
 
@@ -271,11 +272,12 @@ void warningcall(SEXP call, const char *format, ...)
 
 static void cleanup_PrintWarnings(void *data)
 {
-    if (R_Warnings != R_NilValue)
+    if (R_CollectWarnings) {
+	R_CollectWarnings = 0;
+	R_Warnings = R_NilValue;
 	REprintf("Lost warning messages\n");
-    inWarning = 0;
-    R_CollectWarnings = 0;
-    R_Warnings = R_NilValue;
+    }
+    inPrintWarnings = 0;
 }
 
 void PrintWarnings(void)
@@ -284,12 +286,24 @@ void PrintWarnings(void)
     SEXP names, s, t;
     RCNTXT cntxt;
 
-    /* set up a context which will restore inWarning if there is an exit */
+    if (R_CollectWarnings == 0)
+	return;
+    else if (inPrintWarnings) {
+	if (R_CollectWarnings) {
+	    R_CollectWarnings = 0;
+	    R_Warnings = R_NilValue;
+	    REprintf("Lost warning messages\n");
+	}
+	return;
+    }
+
+    /* set up a context which will restore inPrintWarnings if there is
+       an exit */
     begincontext(&cntxt, CTXT_CCODE, R_NilValue, R_NilValue, R_NilValue,
 		 R_NilValue, R_NilValue);
     cntxt.cend = &cleanup_PrintWarnings;
 
-    inWarning = 1;
+    inPrintWarnings = 1;
     if( R_CollectWarnings == 1 ) {
 	REprintf("Warning message: \n");
 	names = CAR(ATTRIB(R_Warnings));
@@ -331,7 +345,7 @@ void PrintWarnings(void)
 
     endcontext(&cntxt);
 
-    inWarning = 0;
+    inPrintWarnings = 0;
     R_CollectWarnings = 0;
     R_Warnings = R_NilValue;
     return;
@@ -367,6 +381,7 @@ void errorcall(SEXP call, const char *format,...)
     }
 
     if (inError) {
+	/* fail-safe handler for recursive errors */
 	if(inError == 3) {
 	     /* Can REprintf generate an error? If so we should guard for it */
 	    REprintf("Error during wrapup: ");
@@ -376,6 +391,11 @@ void errorcall(SEXP call, const char *format,...)
 	    Rvsnprintf(errbuf, sizeof(errbuf), format, ap);
 	    va_end(ap);
 	    REprintf("%s\n", errbuf);
+	}
+	if (R_Warnings != R_NilValue) {
+	    R_CollectWarnings = 0;
+	    R_Warnings = R_NilValue;
+	    REprintf("Lost warning messages\n");
 	}
 	jump_to_toplevel();
     }
