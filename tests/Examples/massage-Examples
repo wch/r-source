@@ -29,6 +29,11 @@ do
  if [ -n "`grep '_ Examples _' $file`" ]
  then
     echo '.Random.seed <- rep(7654,3)'
+ else
+    if [ "$USER" = local -o "$USER" = maechler ];then
+	## Remind certain people to upgrade the online help
+	echo "'$bf' has no Examples.." >& 2
+    fi
  fi
  #Dbg: echo $bf >&2
  if   [ $bf = 'on.exit' ];	then sed -e '$s/$/par(opar)/' $file

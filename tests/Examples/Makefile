@@ -51,7 +51,7 @@ All-Ex.R: $(R_src)
 	@if [ -f $@.bak ]; then mv $@.bak $@.bakk ; fi
 	@if [ -f $@ ]; then mv $@ $@.bak ; fi
 	@echo "massaging single Examples into $@ ..."
-	@./massage-Examples $(R_src) > $@
+	@-./massage-Examples $(R_src) > $@
 
 All-Ex.Rout: All-Ex.R $(Rbinary) $(Rbase)
 	@if [ -f $@.bak ]; then mv $@.bak $@.bakk ; fi
