@@ -1,5 +1,13 @@
 \name{nls}
 \alias{nls}
+\alias{coef.nls}
+\alias{fitted.nls}
+\alias{logLik.nls}
+\alias{print.nls}
+\alias{residuals.nls}
+\alias{summary.nls}
+\alias{print.summary.nls}
+\alias{weights.nls}
 %- Also NEED an `\alias' for EACH other topic documented here.
 \title{Nonlinear least squares}
 \usage{
