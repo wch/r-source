@@ -1,0 +1,1334 @@
+
+R : Copyright 1999, The R Development Core Team
+Version 0.65.0 Patched (unreleased) (September 23, 1999)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type	"?license" or "?licence" for distribution details.
+
+R is a collaborative project with many contributors.
+Type	"?contributors" for a list.
+
+Type	"demo()" for some demos, "help()" for on-line help, or
+    	"help.start()" for a HTML browser interface to help.
+Type	"q()" to quit R.
+
+> options(error.halt = FALSE) # don't stop on error in batch
+> ##~~~~~~~~~~~~~~
+> ### Package base
+> ###         ~~~~
+> 
+> ##  !  :
+> f <- get("!", pos = 3)
+> f()
+Error: binary operations require two arguments
+> f(NULL)
+Error in f(NULL) : invalid argument type
+> f(NULL,NULL)
+Error in f(NULL, NULL) : operations are possible only for numeric or logical types
+> f(list())
+Error in f(list()) : invalid argument type
+> f(logical(0))
+logical(0)
+> f(character(0))
+Error in f(character(0)) : invalid argument type
+> f(FALSE)
+[1] TRUE
+> 
+> ##  !=  :
+> f <- get("!=", pos = 3)
+> f()
+Error in f() : comparison (2) is possible only for vector types
+> f(NULL)
+Error in f(NULL) : comparison (2) is possible only for vector types
+> f(NULL,NULL)
+Error in f(NULL, NULL) : comparison (2) is possible only for vector types
+> f(list())
+Error in f(list()) : comparison (2) is possible only for vector types
+> f(logical(0))
+Error in f(logical(0)) : comparison (2) is possible only for vector types
+> f(character(0))
+Error in f(character(0)) : comparison (2) is possible only for vector types
+> f(FALSE)
+Error in f(FALSE) : comparison (2) is possible only for vector types
+> 
+> ##  $  :
+> f <- get("$", pos = 3)
+> f()
+Error: 0 arguments passed to "$" which requires 2.
+> f(NULL)
+Error: 1 argument passed to "$" which requires 2.
+> f(NULL,NULL)
+Error in f(NULL, NULL) : invalid subscript type
+> f(list())
+Error: 1 argument passed to "$" which requires 2.
+> f(logical(0))
+Error: 1 argument passed to "$" which requires 2.
+> f(character(0))
+Error: 1 argument passed to "$" which requires 2.
+> f(FALSE)
+Error: 1 argument passed to "$" which requires 2.
+> 
+> ##  $<-  :
+> f <- get("$<-", pos = 3)
+> f()
+Error: 0 arguments passed to "$<-" which requires 3.
+> f(NULL)
+Error: 1 argument passed to "$<-" which requires 3.
+> f(NULL,NULL)
+Error: 2 arguments passed to "$<-" which requires 3.
+> f(list())
+Error: 1 argument passed to "$<-" which requires 3.
+> f(logical(0))
+Error: 1 argument passed to "$<-" which requires 3.
+> f(character(0))
+Error: 1 argument passed to "$<-" which requires 3.
+> f(FALSE)
+Error: 1 argument passed to "$<-" which requires 3.
+> 
+> ##  %%  :
+> f <- get("%%", pos = 3)
+> f()
+Error: operator with more than two arguments
+> f(NULL)
+Error in f(NULL) : Invalid argument to unary operator
+> f(NULL,NULL)
+numeric(0)
+> f(list())
+Error in f(list()) : Invalid argument to unary operator
+> f(logical(0))
+Error: illegal unary operator
+> f(character(0))
+Error in f(character(0)) : Invalid argument to unary operator
+> f(FALSE)
+Error: illegal unary operator
+> 
+> ##  %*%  :
+> f <- get("%*%", pos = 3)
+> f()
+Error: %*% requires numeric matrix/vector arguments
+> f(NULL)
+Error: %*% requires numeric matrix/vector arguments
+> f(NULL,NULL)
+Error: %*% requires numeric matrix/vector arguments
+> f(list())
+Error: %*% requires numeric matrix/vector arguments
+> f(logical(0))
+Error: %*% requires numeric matrix/vector arguments
+> f(character(0))
+Error: %*% requires numeric matrix/vector arguments
+> f(FALSE)
+Error: %*% requires numeric matrix/vector arguments
+> 
+> ##  %/%  :
+> f <- get("%/%", pos = 3)
+> f()
+Error: operator with more than two arguments
+> f(NULL)
+Error in f(NULL) : Invalid argument to unary operator
+> f(NULL,NULL)
+numeric(0)
+> f(list())
+Error in f(list()) : Invalid argument to unary operator
+> f(logical(0))
+Error: illegal unary operator
+> f(character(0))
+Error in f(character(0)) : Invalid argument to unary operator
+> f(FALSE)
+Error: illegal unary operator
+> 
+> ##  %in%  :
+> f <- get("%in%", pos = 3)
+> f()
+Error: Argument "x" is missing, with no default
+> f(NULL)
+Error: Argument "y" is missing, with no default
+> f(NULL,NULL)
+logical(0)
+> f(list())
+Error: Argument "y" is missing, with no default
+> f(logical(0))
+Error: Argument "y" is missing, with no default
+> f(character(0))
+Error: Argument "y" is missing, with no default
+> f(FALSE)
+Error: Argument "y" is missing, with no default
+> 
+> ##  %o%  :
+> f <- get("%o%", pos = 3)
+> f()
+Error: Argument "X" is missing, with no default
+> f(NULL)
+Error: attempt to set an attribute on NULL
+> f(NULL,NULL)
+Error: attempt to set an attribute on NULL
+> f(list())
+Error: Argument "Y" is missing, with no default
+> f(logical(0))
+Error: Argument "Y" is missing, with no default
+> f(character(0))
+Error: Argument "Y" is missing, with no default
+> f(FALSE)
+Error: Argument "Y" is missing, with no default
+> 
+> ##  %x%  :
+> f <- get("%x%", pos = 3)
+> f()
+Error: Argument "X" is missing, with no default
+> f(NULL)
+Error: attempt to set an attribute on NULL
+> f(NULL,NULL)
+Error: attempt to set an attribute on NULL
+> f(list())
+Error: Argument "Y" is missing, with no default
+> f(logical(0))
+Error: Argument "Y" is missing, with no default
+> f(character(0))
+Error: Argument "Y" is missing, with no default
+> f(FALSE)
+Error: Argument "Y" is missing, with no default
+> 
+> ##  &  :
+> f <- get("&", pos = 3)
+> f()
+Error: binary operations require two arguments
+> f(NULL)
+Error in f(NULL) : invalid argument type
+> f(NULL,NULL)
+Error in f(NULL, NULL) : operations are possible only for numeric or logical types
+> f(list())
+Error in f(list()) : invalid argument type
+> f(logical(0))
+logical(0)
+> f(character(0))
+Error in f(character(0)) : invalid argument type
+> f(FALSE)
+[1] TRUE
+> 
+> ##  &&  :
+> f <- get("&&", pos = 3)
+> f()
+Error: binary &&/|| requires 2 arguments
+> f(NULL)
+Error: binary &&/|| requires 2 arguments
+> f(NULL,NULL)
+Error: binary operator applied to invalid types
+> f(list())
+Error: binary &&/|| requires 2 arguments
+> f(logical(0))
+Error: binary &&/|| requires 2 arguments
+> f(character(0))
+Error: binary &&/|| requires 2 arguments
+> f(FALSE)
+Error: binary &&/|| requires 2 arguments
+> 
+> ##  (  :
+> f <- get("(", pos = 3)
+> f()
+Error: 0 arguments passed to "(" which requires 1.
+> f(NULL)
+NULL
+> f(NULL,NULL)
+Error: 2 arguments passed to "(" which requires 1.
+> f(list())
+list()
+> f(logical(0))
+logical(0)
+> f(character(0))
+character(0)
+> f(FALSE)
+[1] FALSE
+> 
+> ##  *  :
+> f <- get("*", pos = 3)
+> f()
+Error: operator with more than two arguments
+> f(NULL)
+Error in f(NULL) : Invalid argument to unary operator
+> f(NULL,NULL)
+numeric(0)
+> f(list())
+Error in f(list()) : Invalid argument to unary operator
+> f(logical(0))
+Error: illegal unary operator
+> f(character(0))
+Error in f(character(0)) : Invalid argument to unary operator
+> f(FALSE)
+Error: illegal unary operator
+> 
+> ##  +  :
+> f <- get("+", pos = 3)
+> f()
+Error: operator with more than two arguments
+> f(NULL)
+Error in f(NULL) : Invalid argument to unary operator
+> f(NULL,NULL)
+numeric(0)
+> f(list())
+Error in f(list()) : Invalid argument to unary operator
+> f(logical(0))
+logical(0)
+> f(character(0))
+Error in f(character(0)) : Invalid argument to unary operator
+> f(FALSE)
+[1] FALSE
+> 
+> ##  -  :
+> f <- get("-", pos = 3)
+> f()
+Error: operator with more than two arguments
+> f(NULL)
+Error in f(NULL) : Invalid argument to unary operator
+> f(NULL,NULL)
+numeric(0)
+> f(list())
+Error in f(list()) : Invalid argument to unary operator
+> f(logical(0))
+logical(0)
+> f(character(0))
+Error in f(character(0)) : Invalid argument to unary operator
+> f(FALSE)
+[1] FALSE
+> 
+> ##  .Alias  :
+> f <- get(".Alias", pos = 3)
+> f()
+Error: 0 arguments passed to ".Alias" which requires 1.
+> f(NULL)
+NULL
+> f(NULL,NULL)
+Error: 2 arguments passed to ".Alias" which requires 1.
+> f(list())
+list()
+> f(logical(0))
+logical(0)
+> f(character(0))
+character(0)
+> f(FALSE)
+[1] FALSE
+> 
+> ##  .C  :
+> f <- get(".C", pos = 3)
+> f()
+Error in f() : function name must be a string (of length 1)
+> f(NULL)
+Error in f(NULL) : function name must be a string (of length 1)
+> f(NULL,NULL)
+Error in f(NULL, NULL) : function name must be a string (of length 1)
+> f(list())
+Error in f(list()) : function name must be a string (of length 1)
+> f(logical(0))
+Error in f(logical(0)) : function name must be a string (of length 1)
+> f(character(0))
+Error in f(character(0)) : function name must be a string (of length 1)
+> f(FALSE)
+Error in f(FALSE) : function name must be a string (of length 1)
+> 
+> ##  .Call  :
+> f <- get(".Call", pos = 3)
+> f()
+Error in f() : function name must be a string (of length 1)
+> f(NULL)
+Error in f(NULL) : function name must be a string (of length 1)
+> f(NULL,NULL)
+Error in f(NULL, NULL) : function name must be a string (of length 1)
+> f(list())
+Error in f(list()) : function name must be a string (of length 1)
+> f(logical(0))
+Error in f(logical(0)) : function name must be a string (of length 1)
+> f(character(0))
+Error in f(character(0)) : function name must be a string (of length 1)
+> f(FALSE)
+Error in f(FALSE) : function name must be a string (of length 1)
+> 
+> ##  .Defunct  :
+> f <- get(".Defunct", pos = 3)
+> f()
+Error: `f' is defunct.
+See ?Defunct.
+> f(NULL)
+Error in f(NULL) : unused argument to function
+> f(NULL,NULL)
+Error in f(NULL, NULL) : unused argument to function
+> f(list())
+Error in f(list()) : unused argument to function
+> f(logical(0))
+Error in f(logical(0)) : unused argument to function
+> f(character(0))
+Error in f(character(0)) : unused argument to function
+> f(FALSE)
+Error in f(FALSE) : unused argument to function
+> 
+> ##  .Deprecated  :
+> f <- get(".Deprecated", pos = 3)
+> f()
+Warning message: 
+`f' is deprecated.
+See ?Deprecated. in: f() 
+> f(NULL)
+Warning message: 
+`f' is deprecated.
+Use `' instead.
+See ?Deprecated. in: f(NULL) 
+> f(NULL,NULL)
+Error in f(NULL, NULL) : unused argument to function
+> f(list())
+Warning message: 
+`f' is deprecated.
+Use `' instead.
+See ?Deprecated. in: f(list()) 
+> f(logical(0))
+Warning message: 
+`f' is deprecated.
+Use `' instead.
+See ?Deprecated. in: f(logical(0)) 
+> f(character(0))
+Warning message: 
+`f' is deprecated.
+Use `' instead.
+See ?Deprecated. in: f(character(0)) 
+> f(FALSE)
+Warning message: 
+`f' is deprecated.
+Use `FALSE' instead.
+See ?Deprecated. in: f(FALSE) 
+> 
+> ##  .External  :
+> f <- get(".External", pos = 3)
+> f()
+Error in f() : function name must be a string (of length 1)
+> f(NULL)
+Error in f(NULL) : function name must be a string (of length 1)
+> f(NULL,NULL)
+Error in f(NULL, NULL) : function name must be a string (of length 1)
+> f(list())
+Error in f(list()) : function name must be a string (of length 1)
+> f(logical(0))
+Error in f(logical(0)) : function name must be a string (of length 1)
+> f(character(0))
+Error in f(character(0)) : function name must be a string (of length 1)
+> f(FALSE)
+Error in f(FALSE) : function name must be a string (of length 1)
+> 
+> ##  .Fortran  :
+> f <- get(".Fortran", pos = 3)
+> f()
+Error in f() : function name must be a string (of length 1)
+> f(NULL)
+Error in f(NULL) : function name must be a string (of length 1)
+> f(NULL,NULL)
+Error in f(NULL, NULL) : function name must be a string (of length 1)
+> f(list())
+Error in f(list()) : function name must be a string (of length 1)
+> f(logical(0))
+Error in f(logical(0)) : function name must be a string (of length 1)
+> f(character(0))
+Error in f(character(0)) : function name must be a string (of length 1)
+> f(FALSE)
+Error in f(FALSE) : function name must be a string (of length 1)
+> 
+> ##  .Internal  :
+> f <- get(".Internal", pos = 3)
+> f()
+Error: 0 arguments passed to ".Internal" which requires 1.
+> f(NULL)
+Error in f(NULL) : invalid internal function
+> f(NULL,NULL)
+Error: 2 arguments passed to ".Internal" which requires 1.
+> f(list())
+Error in f(list()) : no internal function "list"
+> f(logical(0))
+Error in f(logical(0)) : no internal function "logical"
+> f(character(0))
+Error in f(character(0)) : no internal function "character"
+> f(FALSE)
+Error in f(FALSE) : invalid .Internal() argument
+> 
+> ##  .NotYetImplemented  :
+> f <- get(".NotYetImplemented", pos = 3)
+> f()
+Error: `f' is not implemented yet
+> f(NULL)
+Error in f(NULL) : unused argument to function
+> f(NULL,NULL)
+Error in f(NULL, NULL) : unused argument to function
+> f(list())
+Error in f(list()) : unused argument to function
+> f(logical(0))
+Error in f(logical(0)) : unused argument to function
+> f(character(0))
+Error in f(character(0)) : unused argument to function
+> f(FALSE)
+Error in f(FALSE) : unused argument to function
+> 
+> ##  .NotYetUsed  :
+> f <- get(".NotYetUsed", pos = 3)
+> f()
+Error: Argument "x" is missing, with no default
+> f(NULL)
+Warning message: 
+argument `' is not used (yet) in: f(NULL) 
+> f(NULL,NULL)
+Error in f(NULL, NULL) : unused argument to function
+> f(list())
+Warning message: 
+argument `' is not used (yet) in: f(list()) 
+> f(logical(0))
+Warning message: 
+argument `' is not used (yet) in: f(logical(0)) 
+> f(character(0))
+Warning message: 
+argument `' is not used (yet) in: f(character(0)) 
+> f(FALSE)
+Warning message: 
+argument `FALSE' is not used (yet) in: f(FALSE) 
+> 
+> ##  .Primitive  :
+> f <- get(".Primitive", pos = 3)
+> f()
+Error: 0 arguments passed to ".Primitive" which requires 1.
+> f(NULL)
+Error in f(NULL) : string argument required
+> f(NULL,NULL)
+Error: 2 arguments passed to ".Primitive" which requires 1.
+> f(list())
+Error in f(list()) : string argument required
+> f(logical(0))
+Error in f(logical(0)) : string argument required
+> f(character(0))
+Error in f(character(0)) : string argument required
+> f(FALSE)
+Error in f(FALSE) : string argument required
+> 
+> ##  .packages  :
+> f <- get(".packages", pos = 3)
+> f()
+> f(NULL)
+Error in if (all.available) { : missing value where logical needed
+> f(NULL,NULL)
+Error in if (all.available) { : missing value where logical needed
+> f(list())
+Error in if (all.available) { : missing value where logical needed
+> f(logical(0))
+Error in if (all.available) { : missing value where logical needed
+> f(character(0))
+Error in if (all.available) { : missing value where logical needed
+> f(FALSE)
+> 
+> ##  /  :
+> f <- get("/", pos = 3)
+> f()
+Error: operator with more than two arguments
+> f(NULL)
+Error in f(NULL) : Invalid argument to unary operator
+> f(NULL,NULL)
+numeric(0)
+> f(list())
+Error in f(list()) : Invalid argument to unary operator
+> f(logical(0))
+Error: illegal unary operator
+> f(character(0))
+Error in f(character(0)) : Invalid argument to unary operator
+> f(FALSE)
+Error: illegal unary operator
+> 
+> ##  :  :
+> f <- get(":", pos = 3)
+> f()
+Error: 0 arguments passed to ":" which requires 2.
+> f(NULL)
+Error: 1 argument passed to ":" which requires 2.
+> f(NULL,NULL)
+Error in f(NULL, NULL) : NA/NaN argument
+> f(list())
+Error: 1 argument passed to ":" which requires 2.
+> f(logical(0))
+Error: 1 argument passed to ":" which requires 2.
+> f(character(0))
+Error: 1 argument passed to ":" which requires 2.
+> f(FALSE)
+Error: 1 argument passed to ":" which requires 2.
+> 
+> ##  <  :
+> f <- get("<", pos = 3)
+> f()
+Error in f() : comparison (3) is possible only for vector types
+> f(NULL)
+Error in f(NULL) : comparison (3) is possible only for vector types
+> f(NULL,NULL)
+Error in f(NULL, NULL) : comparison (3) is possible only for vector types
+> f(list())
+Error in f(list()) : comparison (3) is possible only for vector types
+> f(logical(0))
+Error in f(logical(0)) : comparison (3) is possible only for vector types
+> f(character(0))
+Error in f(character(0)) : comparison (3) is possible only for vector types
+> f(FALSE)
+Error in f(FALSE) : comparison (3) is possible only for vector types
+> 
+> ##  <-  :
+> f <- get("<-", pos = 3)
+> f()
+Error: incorrect number of arguments to "<-"
+> f(NULL)
+Error: incorrect number of arguments to "<-"
+> f(NULL,NULL)
+Error: invalid (NULL) left side of assignment
+> f(list())
+Error: incorrect number of arguments to "<-"
+> f(logical(0))
+Error: incorrect number of arguments to "<-"
+> f(character(0))
+Error: incorrect number of arguments to "<-"
+> f(FALSE)
+Error: incorrect number of arguments to "<-"
+> 
+> ##  <<-  :
+> f <- get("<<-", pos = 3)
+> f()
+Error: incorrect number of arguments to "<<-"
+> f(NULL)
+Error: incorrect number of arguments to "<<-"
+> f(NULL,NULL)
+Error: invalid (NULL) left side of assignment
+> f(list())
+Error: incorrect number of arguments to "<<-"
+> f(logical(0))
+Error: incorrect number of arguments to "<<-"
+> f(character(0))
+Error: incorrect number of arguments to "<<-"
+> f(FALSE)
+Error: incorrect number of arguments to "<<-"
+> 
+> ##  <=  :
+> f <- get("<=", pos = 3)
+> f()
+Error in f() : comparison (4) is possible only for vector types
+> f(NULL)
+Error in f(NULL) : comparison (4) is possible only for vector types
+> f(NULL,NULL)
+Error in f(NULL, NULL) : comparison (4) is possible only for vector types
+> f(list())
+Error in f(list()) : comparison (4) is possible only for vector types
+> f(logical(0))
+Error in f(logical(0)) : comparison (4) is possible only for vector types
+> f(character(0))
+Error in f(character(0)) : comparison (4) is possible only for vector types
+> f(FALSE)
+Error in f(FALSE) : comparison (4) is possible only for vector types
+> 
+> ##  ==  :
+> f <- get("==", pos = 3)
+> f()
+Error in f() : comparison (1) is possible only for vector types
+> f(NULL)
+Error in f(NULL) : comparison (1) is possible only for vector types
+> f(NULL,NULL)
+Error in f(NULL, NULL) : comparison (1) is possible only for vector types
+> f(list())
+Error in f(list()) : comparison (1) is possible only for vector types
+> f(logical(0))
+Error in f(logical(0)) : comparison (1) is possible only for vector types
+> f(character(0))
+Error in f(character(0)) : comparison (1) is possible only for vector types
+> f(FALSE)
+Error in f(FALSE) : comparison (1) is possible only for vector types
+> 
+> ##  >  :
+> f <- get(">", pos = 3)
+> f()
+Error in f() : comparison (6) is possible only for vector types
+> f(NULL)
+Error in f(NULL) : comparison (6) is possible only for vector types
+> f(NULL,NULL)
+Error in f(NULL, NULL) : comparison (6) is possible only for vector types
+> f(list())
+Error in f(list()) : comparison (6) is possible only for vector types
+> f(logical(0))
+Error in f(logical(0)) : comparison (6) is possible only for vector types
+> f(character(0))
+Error in f(character(0)) : comparison (6) is possible only for vector types
+> f(FALSE)
+Error in f(FALSE) : comparison (6) is possible only for vector types
+> 
+> ##  >=  :
+> f <- get(">=", pos = 3)
+> f()
+Error in f() : comparison (5) is possible only for vector types
+> f(NULL)
+Error in f(NULL) : comparison (5) is possible only for vector types
+> f(NULL,NULL)
+Error in f(NULL, NULL) : comparison (5) is possible only for vector types
+> f(list())
+Error in f(list()) : comparison (5) is possible only for vector types
+> f(logical(0))
+Error in f(logical(0)) : comparison (5) is possible only for vector types
+> f(character(0))
+Error in f(character(0)) : comparison (5) is possible only for vector types
+> f(FALSE)
+Error in f(FALSE) : comparison (5) is possible only for vector types
+> 
+> ##  Arg  :
+> f <- get("Arg", pos = 3)
+> f()
+Error: 0 arguments passed to "Arg" which requires 1.
+> f(NULL)
+Error in f(NULL) : non-numeric argument to function
+> f(NULL,NULL)
+Error: 2 arguments passed to "Arg" which requires 1.
+> f(list())
+Error in f(list()) : non-numeric argument to function
+> f(logical(0))
+numeric(0)
+> f(character(0))
+Error in f(character(0)) : non-numeric argument to function
+> f(FALSE)
+[1] 0
+> 
+> ##  C  :
+> f <- get("C", pos = 3)
+> f()
+Error: Argument "object" is missing, with no default
+> f(NULL)
+Error: object not interpretable as a factor
+> f(NULL,NULL)
+Error: object not interpretable as a factor
+> f(list())
+Error: object not interpretable as a factor
+> f(logical(0))
+Error: object not interpretable as a factor
+> f(character(0))
+Error: object not interpretable as a factor
+> f(FALSE)
+Error: object not interpretable as a factor
+> 
+> ##  CRAN.packages  :
+> f <- get("CRAN.packages", pos = 3)
+> f()
+Error: "scan" can't open file
+> f(NULL)
+Error: "scan" can't open file
+> f(NULL,NULL)
+Error in arg == choices : comparison (1) is possible only for vector types
+> f(list())
+Error: "scan" can't open file
+> f(logical(0))
+Error: "scan" can't open file
+> f(character(0))
+Error: "scan" can't open file
+> f(FALSE)
+Error: "scan" can't open file
+> 
+> ##  Conj  :
+> f <- get("Conj", pos = 3)
+> f()
+Error: 0 arguments passed to "Conj" which requires 1.
+> f(NULL)
+Error in f(NULL) : non-numeric argument to function
+> f(NULL,NULL)
+Error: 2 arguments passed to "Conj" which requires 1.
+> f(list())
+Error in f(list()) : non-numeric argument to function
+> f(logical(0))
+numeric(0)
+> f(character(0))
+Error in f(character(0)) : non-numeric argument to function
+> f(FALSE)
+[1] 0
+> 
+> ##  D  :
+> f <- get("D", pos = 3)
+> f()
+Error: Argument "expr" is missing, with no default
+> f(NULL)
+Error: Argument "namevec" is missing, with no default
+> f(NULL,NULL)
+Error in D(expr, namevec) : variable must be a character string
+> f(list())
+Error: Argument "namevec" is missing, with no default
+> f(logical(0))
+Error: Argument "namevec" is missing, with no default
+> f(character(0))
+Error: Argument "namevec" is missing, with no default
+> f(FALSE)
+Error: Argument "namevec" is missing, with no default
+> 
+> ##  GNOME  :
+> f <- get("GNOME", pos = 3)
+> f()
+Error in Gnome(display, width, height, pointsize) : unable to start device Gnome
+> f(NULL)
+Error in Gnome(display, width, height, pointsize) : invalid string argument
+> f(NULL,NULL)
+Error in Gnome(display, width, height, pointsize) : invalid string argument
+> f(list())
+Error in Gnome(display, width, height, pointsize) : invalid string argument
+> f(logical(0))
+Error in Gnome(display, width, height, pointsize) : invalid string argument
+> f(character(0))
+Error in Gnome(display, width, height, pointsize) : invalid string argument
+> f(FALSE)
+Error in Gnome(display, width, height, pointsize) : invalid string argument
+> 
+> ##  Gamma  :
+> f <- get("Gamma", pos = 3)
+> f()
+
+Family: Gamma 
+Link function: inverse 
+
+> f(NULL)
+Error: NULL link not available for gamma family, available links are "inverse",  "log" and "identity"
+> f(NULL,NULL)
+Error in f(NULL, NULL) : unused argument to function
+> f(list())
+Error: list() link not available for gamma family, available links are "inverse",  "log" and "identity"
+> f(logical(0))
+Error: logical(0) link not available for gamma family, available links are "inverse",  "log" and "identity"
+> f(character(0))
+Error: character(0) link not available for gamma family, available links are "inverse",  "log" and "identity"
+> f(FALSE)
+Error: FALSE link not available for gamma family, available links are "inverse",  "log" and "identity"
+> 
+> ##  I  :
+> f <- get("I", pos = 3)
+> f()
+Error: Argument "x" is missing, with no default
+> f(NULL)
+list()
+attr(,"class")
+[1] "AsIs"
+> f(NULL,NULL)
+Error in f(NULL, NULL) : unused argument to function
+> f(list())
+list()
+attr(,"class")
+[1] "AsIs"
+> f(logical(0))
+logical(0)
+attr(,"class")
+[1] "AsIs"
+> f(character(0))
+character(0)
+attr(,"class")
+[1] "AsIs"
+> f(FALSE)
+[1] FALSE
+attr(,"class")
+[1] "AsIs"
+> 
+> ##  IQR  :
+> f <- get("IQR", pos = 3)
+> f()
+Error: Argument "x" is missing, with no default
+> f(NULL)
+[1] NA
+> f(NULL,NULL)
+Error in if (na.rm) x <- x[!is.na(x)] else if (any(is.na(x))) stop("Missing values and NaN's not allowed if `na.rm' is FALSE") : missing value where logical needed
+> f(list())
+Error: (list) object cannot be coerced to vector type 14
+> f(logical(0))
+[1] NA
+> f(character(0))
+[1] NA
+> f(FALSE)
+[1] 0
+> 
+> ##  Im  :
+> f <- get("Im", pos = 3)
+> f()
+Error: 0 arguments passed to "Im" which requires 1.
+> f(NULL)
+Error in f(NULL) : non-numeric argument to function
+> f(NULL,NULL)
+Error: 2 arguments passed to "Im" which requires 1.
+> f(list())
+Error in f(list()) : non-numeric argument to function
+> f(logical(0))
+numeric(0)
+> f(character(0))
+Error in f(character(0)) : non-numeric argument to function
+> f(FALSE)
+[1] 0
+> 
+> ##  Machine  :
+> f <- get("Machine", pos = 3)
+> f()
+$double.eps
+[1] 2.220446e-16
+
+$double.neg.eps
+[1] 1.110223e-16
+
+$double.xmin
+[1] 2.225074e-308
+
+$double.xmax
+[1] 1.797693e+308
+
+$double.base
+[1] 2
+
+$double.digits
+[1] 53
+
+$double.rounding
+[1] 5
+
+$double.guard
+[1] 0
+
+$double.ulp.digits
+[1] -52
+
+$double.neg.ulp.digits
+[1] -53
+
+$double.exponent
+[1] 11
+
+$double.min.exp
+[1] -1022
+
+$double.max.exp
+[1] 1024
+
+$integer.max
+[1] 2147483647
+
+> f(NULL)
+Error in f(NULL) : unused argument to function
+> f(NULL,NULL)
+Error in f(NULL, NULL) : unused argument to function
+> f(list())
+Error in f(list()) : unused argument to function
+> f(logical(0))
+Error in f(logical(0)) : unused argument to function
+> f(character(0))
+Error in f(character(0)) : unused argument to function
+> f(FALSE)
+Error in f(FALSE) : unused argument to function
+> 
+> ##  Math.data.frame  :
+> f <- get("Math.data.frame", pos = 3)
+> f()
+Error: Object ".Generic" not found
+> f(NULL)
+Error: Object ".Generic" not found
+> f(NULL,NULL)
+Error: Object ".Generic" not found
+> f(list())
+Error: Object ".Generic" not found
+> f(logical(0))
+Error: Object ".Generic" not found
+> f(character(0))
+Error: Object ".Generic" not found
+> f(FALSE)
+Error: Object ".Generic" not found
+> 
+> ##  Math.factor  :
+> f <- get("Math.factor", pos = 3)
+> f()
+Error: Object ".Generic" not found
+> f(NULL)
+Error: Object ".Generic" not found
+> f(NULL,NULL)
+Error: Object ".Generic" not found
+> f(list())
+Error: Object ".Generic" not found
+> f(logical(0))
+Error: Object ".Generic" not found
+> f(character(0))
+Error: Object ".Generic" not found
+> f(FALSE)
+Error: Object ".Generic" not found
+> 
+> ##  Mod  :
+> f <- get("Mod", pos = 3)
+> f()
+Error: 0 arguments passed to "Mod" which requires 1.
+> f(NULL)
+Error in f(NULL) : non-numeric argument to function
+> f(NULL,NULL)
+Error: 2 arguments passed to "Mod" which requires 1.
+> f(list())
+Error in f(list()) : non-numeric argument to function
+> f(logical(0))
+numeric(0)
+> f(character(0))
+Error in f(character(0)) : non-numeric argument to function
+> f(FALSE)
+[1] 0
+> 
+> ##  NCOL  :
+> f <- get("NCOL", pos = 3)
+> f()
+Error: Argument "x" is missing, with no default
+> f(NULL)
+[1] 1
+> f(NULL,NULL)
+Error in f(NULL, NULL) : unused argument to function
+> f(list())
+[1] 1
+> f(logical(0))
+[1] 1
+> f(character(0))
+[1] 1
+> f(FALSE)
+[1] 1
+> 
+> ##  NROW  :
+> f <- get("NROW", pos = 3)
+> f()
+Error: Argument "x" is missing, with no default
+> f(NULL)
+[1] 0
+> f(NULL,NULL)
+Error in f(NULL, NULL) : unused argument to function
+> f(list())
+[1] 0
+> f(logical(0))
+[1] 0
+> f(character(0))
+[1] 0
+> f(FALSE)
+[1] 1
+> 
+> ##  NextMethod  :
+> f <- get("NextMethod", pos = 3)
+> f()
+Error: NextMethod called from outside a closure
+> f(NULL)
+Error: NextMethod called from outside a closure
+> f(NULL,NULL)
+Error: NextMethod called from outside a closure
+> f(list())
+Error: NextMethod called from outside a closure
+> f(logical(0))
+Error: NextMethod called from outside a closure
+> f(character(0))
+Error: NextMethod called from outside a closure
+> f(FALSE)
+Error: NextMethod called from outside a closure
+> 
+> ##  Ops.data.frame  :
+> f <- get("Ops.data.frame", pos = 3)
+> f()
+Error: Object ".Method" not found
+> f(NULL)
+Error: Object ".Method" not found
+> f(NULL,NULL)
+Error: Object ".Method" not found
+> f(list())
+Error: Object ".Method" not found
+> f(logical(0))
+Error: Object ".Method" not found
+> f(character(0))
+Error: Object ".Method" not found
+> f(FALSE)
+Error: Object ".Method" not found
+> 
+> ##  Ops.factor  :
+> f <- get("Ops.factor", pos = 3)
+> f()
+Error: Object ".Generic" not found
+> f(NULL)
+Error: Object ".Generic" not found
+> f(NULL,NULL)
+Error: Object ".Generic" not found
+> f(list())
+Error: Object ".Generic" not found
+> f(logical(0))
+Error: Object ".Generic" not found
+> f(character(0))
+Error: Object ".Generic" not found
+> f(FALSE)
+Error: Object ".Generic" not found
+> 
+> ##  Ops.ordered  :
+> f <- get("Ops.ordered", pos = 3)
+> f()
+Error: Object ".Generic" not found
+> f(NULL)
+Error: Object ".Generic" not found
+> f(NULL,NULL)
+Error: Object ".Generic" not found
+> f(list())
+Error: Object ".Generic" not found
+> f(logical(0))
+Error: Object ".Generic" not found
+> f(character(0))
+Error: Object ".Generic" not found
+> f(FALSE)
+Error: Object ".Generic" not found
+> 
+> ##  Platform  :
+> f <- get("Platform", pos = 3)
+> f()
+$OS.type
+[1] "Unix"
+
+$file.sep
+[1] "/"
+
+$dynlib.ext
+[1] ".so"
+
+> f(NULL)
+Error in f(NULL) : unused argument to function
+> f(NULL,NULL)
+Error in f(NULL, NULL) : unused argument to function
+> f(list())
+Error in f(list()) : unused argument to function
+> f(logical(0))
+Error in f(logical(0)) : unused argument to function
+> f(character(0))
+Error in f(character(0)) : unused argument to function
+> f(FALSE)
+Error in f(FALSE) : unused argument to function
+> 
+> ##  R.Version  :
+> f <- get("R.Version", pos = 3)
+> f()
+$platform
+[1] "sparc-sun-solaris2.5.1"
+
+$arch
+[1] "sparc"
+
+$os
+[1] "solaris2.5.1"
+
+$system
+[1] "sparc, solaris2.5.1"
+
+$status
+[1] "Patched (unreleased)"
+
+$major
+[1] "0"
+
+$minor
+[1] "65.0"
+
+$year
+[1] "1999"
+
+$month
+[1] "September"
+
+$day
+[1] "23"
+
+$language
+[1] "R"
+
+> f(NULL)
+Error in f(NULL) : unused argument to function
+> f(NULL,NULL)
+Error in f(NULL, NULL) : unused argument to function
+> f(list())
+Error in f(list()) : unused argument to function
+> f(logical(0))
+Error in f(logical(0)) : unused argument to function
+> f(character(0))
+Error in f(character(0)) : unused argument to function
+> f(FALSE)
+Error in f(FALSE) : unused argument to function
+> 
+> ##  R.home  :
+> f <- get("R.home", pos = 3)
+> f()
+[1] "/users/u1/staff/maechler/R/r-release/Installed"
+> f(NULL)
+Error in f(NULL) : unused argument to function
+> f(NULL,NULL)
+Error in f(NULL, NULL) : unused argument to function
+> f(list())
+Error in f(list()) : unused argument to function
+> f(logical(0))
+Error in f(logical(0)) : unused argument to function
+> f(character(0))
+Error in f(character(0)) : unused argument to function
+> f(FALSE)
+Error in f(FALSE) : unused argument to function
+> 
+> ##  RNGkind  :
+> f <- get("RNGkind", pos = 3)
+> f()
+[1] "Wichmann-Hill"
+> f(NULL)
+[1] "Wichmann-Hill"
+> f(NULL,NULL)
+Error in f(NULL, NULL) : unused argument to function
+> f(list())
+[1] "Wichmann-Hill"
+> f(logical(0))
+[1] "Wichmann-Hill"
+> f(character(0))
+[1] "Wichmann-Hill"
+> f(FALSE)
+Error: 'kind' must be a character of length 1 (RNG to be used).
+> 
+> ##  Re  :
+> f <- get("Re", pos = 3)
+> f()
+Error: 0 arguments passed to "Re" which requires 1.
+> f(NULL)
+Error in f(NULL) : non-numeric argument to function
+> f(NULL,NULL)
+Error: 2 arguments passed to "Re" which requires 1.
+> f(list())
+Error in f(list()) : non-numeric argument to function
+> f(logical(0))
+numeric(0)
+> f(character(0))
+Error in f(character(0)) : non-numeric argument to function
+> f(FALSE)
+[1] 0
+> 
+> ##  Recall  :
+> f <- get("Recall", pos = 3)
+> f()
+Error: Recall called from outside a closure
+> f(NULL)
+Error: Recall called from outside a closure
+> f(NULL,NULL)
+Error: Recall called from outside a closure
+> f(list())
+Error: Recall called from outside a closure
+> f(logical(0))
+Error: Recall called from outside a closure
+> f(character(0))
+Error: Recall called from outside a closure
+> f(FALSE)
+Error: Recall called from outside a closure
+> 
+> ##  Summary.data.frame  :
+> f <- get("Summary.data.frame", pos = 3)
+> f()
+Error: Argument "x" is missing, with no default
+> f(NULL)
+Error: attempt to set an attribute on NULL
+> f(NULL,NULL)
+Error: attempt to set an attribute on NULL
+> f(list())
+Error: only defined on a data frame with all numeric or complex variables
+> f(logical(0))
+Error: only defined on a data frame with all numeric or complex variables
+> f(character(0))
+Error: only defined on a data frame with all numeric or complex variables
+> f(FALSE)
+Error: only defined on a data frame with all numeric or complex variables
+> 
+> ##  Summary.factor  :
+> f <- get("Summary.factor", pos = 3)
+> f()
+Error: Object ".Generic" not found
+> f(NULL)
+Error: Object ".Generic" not found
+> f(NULL,NULL)
+Error: Object ".Generic" not found
+> f(list())
+Error: Object ".Generic" not found
+> f(logical(0))
+Error: Object ".Generic" not found
+> f(character(0))
+Error: Object ".Generic" not found
+> f(FALSE)
+Error: Object ".Generic" not found
+> 
+> ##  UseMethod  :
+> f <- get("UseMethod", pos = 3)
+> f()
+Error: UseMethod called from outside a closure
+> f(NULL)
+Error: UseMethod called from outside a closure
+> f(NULL,NULL)
+Error in f(NULL, NULL) : first argument must be a method name
+> f(list())
+Error: UseMethod called from outside a closure
+> f(logical(0))
+Error: UseMethod called from outside a closure
+> f(character(0))
+Error: UseMethod called from outside a closure
+> f(FALSE)
+Error: UseMethod called from outside a closure
+> 
+> ##  Version  :
+> f <- get("Version", pos = 3)
+> f()
+$platform
+[1] "sparc-sun-solaris2.5.1"
+
+$arch
+[1] "sparc"
+
+$os
+[1] "solaris2.5.1"
+
+$system
+[1] "sparc, solaris2.5.1"
+
+$status
+[1] "Patched (unreleased)"
+
+$major
+[1] "0"
+
+$minor
+[1] "65.0"
+
+$year
+[1] "1999"
+
+$month
+[1] "September"
+
+$day
+[1] "23"
+
+$language
+[1] "R"
+
+Warning message: 
+`f' is deprecated.
+Use `R.Version' instead.
+See ?Deprecated. in: .Deprecated("R.Version") 
+> f(NULL)
+Error in f(NULL) : unused argument to function
+> f(NULL,NULL)
+Error in f(NULL, NULL) : unused argument to function
+> f(list())
+Error in f(list()) : unused argument to function
+> f(logical(0))
+Error in f(logical(0)) : unused argument to function
+> f(character(0))
+Error in f(character(0)) : unused argument to function
+> f(FALSE)
+Error in f(FALSE) : unused argument to function
+> 
+> ##  X11  :
+> f <- get("X11", pos = 3)
+> f()
+> f(NULL)
+Error in X11(display, width, height, pointsize, gamma, colortype, maxcubesize) : invalid string argument
+> f(NULL,NULL)
+Error in X11(display, width, height, pointsize, gamma, colortype, maxcubesize) : invalid string argument
+> f(list())
+Error in X11(display, width, height, pointsize, gamma, colortype, maxcubesize) : invalid string argument
+> f(logical(0))
+Error in X11(display, width, height, pointsize, gamma, colortype, maxcubesize) : invalid string argument
+> f(character(0))
+Error in X11(display, width, height, pointsize, gamma, colortype, maxcubesize) : invalid string argument
+> f(FALSE)
+Error in X11(display, width, height, pointsize, gamma, colortype, maxcubesize) : invalid string argument
+> 
+> ##  [  :
+> f <- get("[", pos = 3)
+> f()
+NULL
+> f(NULL)
+NULL
+> f(NULL,NULL)
+NULL

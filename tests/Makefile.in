@@ -27,7 +27,8 @@ TESTsrc-strict-auto = \
 	isas-tests.R
 TESTsrc-sloppy-1 = \
 	print-tests.R
-TESTsrc-sloppy-auto =
+TESTsrc-sloppy-auto = \
+	no-segfault.R
 
 TESTsrc-strict = $(TESTsrc-strict-1) $(TESTsrc-strict-auto)
 TESTsrc-sloppy = $(TESTsrc-sloppy-1) $(TESTsrc-sloppy-auto)

@@ -1,0 +1,37 @@
+###--- This "make-<name>" script is only used to create the real script <name> :
+
+sink("no-segfault.R")
+
+cat("options(error.halt = FALSE)",
+    "# don't stop on error in batch\n##~~~~~~~~~~~~~~\n")
+
+core.pkgs <- .packages(all=TRUE,lib.loc = .lib.loc[length(.lib.loc)])
+for (pkg in core.pkgs) {
+  cat("### Package ", pkg, "\n",
+      "###         ", rep("~",nchar(pkg)), "\n", collapse="", sep="")
+  if(pkg == "base")
+      this.pos <- length(search())
+  else {
+      library(pkg, character = TRUE)
+      cat("library(",pkg,", character = TRUE)\n")
+      this.pos <- 2
+  }
+
+  for(nm in ls(pos = this.pos)){
+    if(is.function(f <- get(nm,pos = this.pos))) {
+        cat("\n## ", nm, " :\n")
+        cat("f <- get(\"",nm,"\", pos = ", this.pos, ")\n", sep="")
+        cat("f()\nf(NULL)\nf(NULL,NULL)\n",
+            "f(list())\nf(logical(0))\nf(character(0))\n",
+            "f(FALSE)\n",
+            sep="")
+    }
+  }
+  if(pkg != "base") {
+      detach(pos=this.pos)
+      cat("detach(pos=",this.pos,")\n")
+  }
+
+  cat("\n##__________\n\n")
+}
+
