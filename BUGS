@@ -347,3 +347,7 @@ Date: Fri, 11 Feb 2000 19:58:01 +0800
 Subject: Something strange in "?assign"?
 From: Jonathan Rougier <J.C.Rougier@durham.ac.uk>
 Date: Fri, 11 Feb 2000 12:22:12 +0000 (GMT)
+* PR# 434 *
+Subject: Compilation Failure on Linux/Intel
+From: h089@mth.uea.ac.uk
+Date: Sat, 12 Feb 2000 00:14:31 +0100 (MET)
