@@ -21,7 +21,7 @@ an intuitive usage and returning a logical vector of length \code{length(x)}.
 }
 \seealso{
 \code{\link{pmatch}} and \code{\link{charmatch}} for (\emph{partial})
-string matching.
+string matching, \code{\link{match.arg}}, etc for function argument matching.
 }
 \examples{
 ## The intersection of two sets :
