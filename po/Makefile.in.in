@@ -239,15 +239,15 @@ check: all
 info dvi ps pdf html tags TAGS ctags CTAGS ID:
 
 mostlyclean:
-	rm -f remove-potcdate.sed
-	rm -f stamp-poT
-	rm -f core core.* $(DOMAIN).po $(DOMAIN).1po $(DOMAIN).2po *.new.po
-	rm -fr *.o
+	@rm -f remove-potcdate.sed
+	@rm -f stamp-poT
+	@rm -f core core.* $(DOMAIN).po $(DOMAIN).1po $(DOMAIN).2po *.new.po
+	@rm -fr *.o
 
 clean: mostlyclean
 
 distclean: clean
-	rm -f Makefile Makefile.in POTFILES *.mo
+	@rm -f Makefile Makefile.in POTFILES *.mo
 
 maintainer-clean: distclean
 	@echo "This command is intended for maintainers to use;"
