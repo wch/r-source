@@ -316,6 +316,14 @@ Date: Tue, 10 Apr 2001 17:50:44 +0200 (MET DST)
 
 Directory:  incoming
 
+* PR# 956 *
+Subject: unbelievable parser bug
+From: Martin Maechler <maechler@stat.math.ethz.ch>
+Date: Tue, 29 May 2001 14:25:00 +0200
+* PR# 955 *
+Subject: argument names in generic print functions
+From: Richard Beare <Richard.Beare@cmis.csiro.au>
+Date: Tue, 29 May 2001 09:49:06 +1000
 * PR# 953 *
 Subject: bugs in deriv(*, *, function.arg = ) 
 Subject: PROTECT() bugs in deriv(*, *, function.arg = ) 
