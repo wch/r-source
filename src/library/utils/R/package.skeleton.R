@@ -40,6 +40,7 @@ function(name = "anRpackage", list, environment = .GlobalEnv,
     cat("Creating DESCRIPTION ...\n")
     description <- file(file.path(path, name, "DESCRIPTION"), "wt")
     cat("Package: the_name_of_the_package\n",
+        "Type: Package\n",
         "Title: What the package does\n",
         "Version: 1.0\n",
         "Author: Who wrote it\n",
