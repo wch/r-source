@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.8-50 2004-03-11
+Version 1.8-51 2004-03-14
 ISBN 3-900051-01-1
 Kurt Hornik
 
@@ -1363,6 +1363,9 @@ distributions of R.)
      Data sets for "Introductory Statistics with R" by Peter Dalgaard,
      2002, Springer.
 
+*Icens*
+     Functions for computing the NPMLE for censored and truncated data.
+
 *KMsurv*
      Data sets and functions for "Survival Analysis, Techniques for Censored
      and Truncated Data" by Klein and Moeschberger, 1997, Springer.
@@ -1856,6 +1859,10 @@ distributions of R.)
 *gpclib*
      General polygon clipping routines for R based on Alan Murta's C
      library.
+
+*gpls*
+     Classification using generalized partial least squares for two-group
+     and multi-group (more than 2 group) classification.
 
 *grasper*
      Generalized Regression Analysis and Spatial Predictions for R.

@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2004
-@set FAQ-VERSION 1.8-50 @value{FAQ-YEAR}-03-11
+@set FAQ-VERSION 1.8-51 @value{FAQ-YEAR}-03-14
 @set REL-VERSION 1.8.1
 @set FAQ-ISBN 3-900051-01-1
 @documentlanguage en
@@ -1658,6 +1658,8 @@ the hyperbolic distribution to data.
 @item ISwR
 Data sets for ``Introductory Statistics with R'' by Peter Dalgaard,
 2002, Springer.
+@item Icens
+Functions for computing the NPMLE for censored and truncated data.
 @item KMsurv
 Data sets and functions for ``Survival Analysis, Techniques for Censored
 and Truncated Data'' by Klein and Moeschberger, 1997, Springer.
@@ -2035,6 +2037,9 @@ intercept.
 @item gpclib
 General polygon clipping routines for R based on Alan Murta's C
 library.
+@item gpls
+Classification using generalized partial least squares for two-group and
+multi-group (more than 2 group) classification.
 @item grasper
 Generalized Regression Analysis and Spatial Predictions for R.
 @item gregmisc
