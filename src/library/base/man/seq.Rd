@@ -40,6 +40,7 @@ seq(0,1, length=11)
 seq(1,9, by = 2) # match
 seq(1,9, by = pi)# stay below
 seq(1,6, by = 3)
+seq(1.575, 5.125, by=0.05)
 
 for (x in list(NULL, letters[1:6], list(1,pi)))
   cat("x=",deparse(x),";  seq(along = x):",seq(along = x),"\n")
