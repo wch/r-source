@@ -7,11 +7,12 @@ includes making bitmap and Tcl/Tk support and the manuals).
 It's worthwhile testing it too!
 
 Go to the parent of this directory and make the distribution zip
-files by
+files and the recommended packages by
 
 make distribution
+make recommended
 
-Then edit ISDIR and PKGS in ../MkRules and then run
+Then edit ISDIR in ../MkRules and run
 
 make
 make clean

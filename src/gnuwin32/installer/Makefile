@@ -4,10 +4,7 @@ include ../MkRules
 include ../RWVERSION
 
 all: SetupR.exe miniR.exe
-clean: ISclean
-distclean: ISdistclean
 
-# section for JR software installer.
 
 R.iss: JRins.pl ../$(RPREFIX)b.zip ../$(RPREFIX)h.zip \
 ../$(RPREFIX)ch.zip ../$(RPREFIX)d1.zip ../$(RPREFIX)d2.zip \
@@ -68,8 +65,12 @@ Rsmall.iss: JRsmall.pl ../$(RPREFIX)b.zip \
 miniR.exe: Rsmall.iss
 	"$(ISDIR)/iscc" Rsmall.iss > miniR.log
 
-ISclean:
+clean:
 	rm -rf R.iss Rsmall.iss *.log $(RPREFIX)*
 
-ISdistclean: ISclean
+distclean: clean
 	rm -f SetupR.exe miniR*
+
+# for historical reasons
+ISclean: clean
+ISdistclean: distclean

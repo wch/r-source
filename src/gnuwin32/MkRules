@@ -32,8 +32,6 @@ TCL_VERSION = 83
 
 # location where Inno Setup was installed
 ISDIR=C:/packages/Inno
-# location where zip files of binary packages are kept
-PKGS=C:/R/Rdist/libs
 
 ## =================== cross-compiler settings  =================
 

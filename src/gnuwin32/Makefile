@@ -1,6 +1,8 @@
 include MkRules
 include RWVERSION
 
+## This is done so Rpwd.exe gets built first under a native build,
+## but it is not used in Makefile under a cross-build.
 ifneq ($(strip $(BUILD)),CROSS)
 ifneq ($(strip $(wildcard Rpwd.exe)),)
 all: Rpwd.exe rbuild rpackage rdocs
@@ -81,7 +83,8 @@ rpackage: fixed/fixdesc ../../library/R.css
 	$(MAKE) $(PKGS)
 
 rinstaller:
-	$(MAKE) -C installer RPREFIX=$(RPREFIX)
+	$(MAKE) -C installer
+	$(MAKE) -C installer clean
 
 rlibs:
 # need pcre.h built before main is built
@@ -321,7 +324,7 @@ distclean veryclean: clean
 	../../etc/rgb.txt ../../share/make/wintests.mk \
 	../include/Platform.h ../../tests/*.Rout ../../tests/*.Rout.fail
 	$(MAKE) -C fixed distclean
-	-$(MAKE) -C installer ISdistclean
+	-$(MAKE) -C installer distclean
 	@for pkg in $(ALLPACKAGES); do \
 	  $(RM) ../library/$${pkg}/DESCRIPTION; \
 	done
@@ -339,7 +342,7 @@ cleanwin:
 	$(MAKE) -C ../extra/pcre -f Makefile.win distclean
 	$(MAKE) -C ../extra/bzip2 -f Makefile.win clean
 	$(MAKE) -C bitmap clean
-	-$(MAKE) -C installer clean ISclean
+	-$(MAKE) -C installer clean
 
 
 #                          ===== testing ======
