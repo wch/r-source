@@ -46,7 +46,8 @@ endif
 OFILES0=$(wildcard $(SPKG)/*)
 OFILES1= DESCRIPTION INDEX TITLE
 OFILES-NO= R r chm data man src src-c Makefile.in inst check orig \
-	DESCRIPTION DESCRIPTION.in INDEX TITLE index title
+	DESCRIPTION DESCRIPTION.in INDEX TITLE index title \
+	configure configure.in
 OFILES3=$(foreach i, $(OFILES1), $(SPKG)/$i)
 OFILES2=$(foreach i, $(OFILES-NO), $(SPKG)/$i)
 OFILES=$(filter-out $(OFILES2),$(OFILES0))
@@ -59,7 +60,7 @@ include $(RHOME)/src//gnuwin32/MkRules
 
 clean:
 	$(RM) $(SSPKG)/$(DLLNAME).dll $(LOBJS)  $(SSPKG)/$(DLLNAME).a  $(SSPKG)/$(DLLNAME).def
-	$(RM) -rf $(SPKG)/chm
+	$(RM) -rf $(SPKG)/chm -rf $(SPKG)/check
 
 SEDP='/^[	 ]*$$/d;s/$(DLLNAME).so/$(DLLNAME).dll/'
 
