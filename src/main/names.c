@@ -32,27 +32,52 @@ SEXP do_getenv(SEXP, SEXP, SEXP, SEXP);
 #endif
 
 
-/*
- *	printname  c-entry  offset  eval  arity	 pp-info  mark
+/* Table of  .Internal(.) and .Primitive(.)  R functions
+ * =====     =========	      ==========
  *
- *	Note: [New Apr 9/96, before only had "YZ"]
- *		We now consider  'eval'  to be made up of three digits XYZ :
- *              X=1 says that we should switch R_Visible off
+ * Each entry is a line with
+ *
+ * printname	c-entry		offset	eval	arity	pp-info		mark
+ * ---------	-------		------	----	-----	-------		----
+ *
+ * printname:	The function name in R
+ *
+ * c-entry:	The name of the corresponding C function,
+ *		actually declared in names.h.
+ *		Convention:
+ *		 - all start with "do_",
+ *		 - all return SEXP.
+ *		 - all have argument list
+ *			 (SEXP call, SEXP op, SEXP args, SEXP env)
+ *
+ * offset:	the 'op' (offset pointer) above; used for C functions
+ *		which deal with more than one R function...
+ *
+ * eval:	[New Apr 9/96, before only had "YZ"]
+ *		We now consider	 'eval'	 to be made up of three digits XYZ :
+ *		X=1 says that we should switch R_Visible off
  *		    (the least common situation).
  *		Y=1 says that this is an internal function which must
- *		    be accessed with a  .Internal(.) call, any other value is
+ *		    be accessed with a	.Internal(.) call, any other value is
  *		    accessable directly.
  *		Z=1 says evaluate arguments before calling and
  *		Z=0 says don't evaluate.
  *
- * E.g:		SEXP do_cat(SEXP, SEXP, SEXP, SEXP);
+ * arity:	How many arguments are required/allowed;  "-1"	meaning ``any''
+ *
+ * pp-info:	Deparsing Info (-> names.h )
+ *
+ * mark:	?? always = 0, i.e. completely superfluous (?). [MM]
  *
  */
 
 FUNTAB R_FunTab[] =
 {
+
 /* Language Related Constructs */
 
+/* printname	c-entry		offset	eval	arity	pp-info		mark
+ * ---------	-------		------	----	-----	-------		---- */
 {"if",		do_if,		0,	0,	-1,	PP_IF,		0},
 {"while",	do_while,	0,	0,	-1,	PP_WHILE,	0},
 {"for",		do_for,		0,	0,	-1,	PP_FOR,		0},
@@ -120,6 +145,8 @@ FUNTAB R_FunTab[] =
 
 /* Vectors, Matrices and Arrays */
 
+/* printname	c-entry		offset	eval	arity	pp-info		mark
+ * ---------	-------		------	----	-----	-------		---- */
 {"vector",	do_makevector,	0,	11,	2,	PP_FUNCALL,	0},
 {"complex",	do_complex,	0,	11,	3,	PP_FUNCALL,	0},
 {"matrix",	do_matrix,	0,	11,	4,	PP_FUNCALL,	0},
@@ -206,9 +233,6 @@ FUNTAB R_FunTab[] =
 /* Mathematical Functions of Two Variables */
 
 {"atan2",	do_math2,	0,	11,	2,	PP_FUNCALL,	0},
-/* KH
-   {"signif",	do_math2,	1,	1,	2,	PP_FUNCALL,	0},
-   */
 
 {"lbeta",	do_math2,	2,	11,	2,	PP_FUNCALL,	0},
 {"beta",	do_math2,	3,	11,	2,	PP_FUNCALL,	0},
@@ -435,8 +459,8 @@ FUNTAB R_FunTab[] =
 {"getenv",	do_getenv,	0,	11,	1,	PP_FUNCALL,	0},
 #endif
 {"parse",	do_parse,	0,	11,	4,	PP_FUNCALL,	0},
-{"save",	do_save,	0,	111,	 3,	 PP_FUNCALL,	 0},
-{"load",	do_load,	0,	111,	 1,	 PP_FUNCALL,	 0},
+{"save",	do_save,	0,	111,	3,	PP_FUNCALL,	0},
+{"load",	do_load,	0,	111,	1,	PP_FUNCALL,	0},
 {"deparse",	do_deparse,	0,	1,	2,	PP_FUNCALL,	0},
 {"dput",	do_dput,	0,	111,	2,	PP_FUNCALL,	0},
 {"dump",	do_dump,	0,	111,	2,	PP_FUNCALL,	0},
@@ -512,8 +536,8 @@ FUNTAB R_FunTab[] =
 
 /* Graphics */
 
-{"dev.control",	do_devcontrol,	0,	111,	0, 	PP_FUNCALL,	0},
-{"dev.copy",	do_devcopy,	0,	111,	1, 	PP_FUNCALL,	0},
+{"dev.control",	do_devcontrol,	0,	111,	0,	PP_FUNCALL,	0},
+{"dev.copy",	do_devcopy,	0,	111,	1,	PP_FUNCALL,	0},
 {"dev.cur",	do_devcur,	0,	111,	0,	PP_FUNCALL,	0},
 /*
 {"device",	do_device,	0,	111,	3,	PP_FUNCALL,	0},
@@ -541,16 +565,16 @@ FUNTAB R_FunTab[] =
 {"par",		do_par,		0,	11,	1,	PP_FUNCALL,	0},
 {"segments",	do_segments,	0,	111,	6,	PP_FUNCALL,	0},
 {"arrows",	do_arrows,	0,	111,	9,	PP_FUNCALL,	0},
-{"layout", 	do_layout,	0, 	111,	10, 	PP_FUNCALL,	0},
+{"layout",	do_layout,	0,	111,	10,	PP_FUNCALL,	0},
 {"locator",	do_locator,	0,	11,	1,	PP_FUNCALL,	0},
 {"identify",	do_identify,	0,	11,	3,	PP_FUNCALL,	0},
-{"strheight",   do_strheight,   0,      11,     3, 	PP_FUNCALL, 	0},
+{"strheight",	do_strheight,	0,	11,	3,	PP_FUNCALL,	0},
 {"strwidth",	do_strwidth,	0,	11,	3,	PP_FUNCALL,	0},
 {"contour",	do_contour,	0,	11,	6,	PP_FUNCALL,	0},
 {"image",	do_image,	0,	11,	5,	PP_FUNCALL,	0},
 {"dend",	do_dend,	0,	111,	6,	PP_FUNCALL,	0},
 {"dend.window",	do_dendwindow,	0,	111,	6,	PP_FUNCALL,	0},
-{"replay", 	do_replay,	0,	111,	0,	PP_FUNCALL, 	0},
+{"replay",	do_replay,	0,	111,	0,	PP_FUNCALL,	0},
 {"erase",	do_erase,	0,	111,	1,	PP_FUNCALL,	0},
 
 /* Objects */
