@@ -75,6 +75,8 @@ BUG FIXES
 
     o	smooth.spline() allows zero weights again.
 
+    o	aperm() fix for list arg; aperm(*, resize=FALSE) now works with
+	dimnames (by dropping them), 
 
 
 		CHANGES IN R VERSION 1.2.1

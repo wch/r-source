@@ -57,3 +57,7 @@ try(scan("test.dat", what=list(,,,)))
 unlink("test.dat")
 ## Comments: segfaulted in 1.2.0
 
+## Jonathan Rougier, 2001-01-30  [bug in 1.2.1 and earlier]
+tmp <- array(list(3), c(2, 3))
+tmp[[2, 3]] <- "fred"
+all.equal(t(tmp), aperm(tmp))
