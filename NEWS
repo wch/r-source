@@ -276,7 +276,7 @@ NEW FEATURES
 	improved.  toString was added as a new function.
 
     o	format() has a new argument `justify' controlling the
-        justification of character strings (and factors).
+	justification of character strings (and factors).
 
     o	scan() and read.table() have a new argument blank.lines.skip
 	to allow blank lines to be read.
@@ -306,8 +306,11 @@ NEW FEATURES
 	print(, quote=FALSE) and cat() consistent.
 
     o	help() has an additional `pager' argument which may be passed to
-	file.show().
+	file.show()  {useful for ESS fans}.
 
+    o	n2mfrow() utility.
+
+    o	lag.plot() {ts package}.
 
 
 BUG FIXES
@@ -496,6 +499,8 @@ BUG FIXES
 
     o	t.test() allows an input vector of length 2.
 
+    o	stars() fix (for 0/NA columns) PR#739.
+	
 
 
 	**************************************************
