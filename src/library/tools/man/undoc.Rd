@@ -38,6 +38,6 @@ undoc(package, dir, lib.loc = NULL)
   contained in such objects.
 }
 \examples{
-undoc("eda")                   # Undocumented objects in 'eda'
+undoc("tools")                  # Undocumented objects in 'tools'
 }
 \keyword{documentation}
