@@ -16,17 +16,17 @@ heatmap(x, Rowv=NULL, Colv=if(symm)"Rowv" else NULL,
 	margins = c(5, 5), ColSideColors, RowSideColors,
 	cexRow = 0.2 + 1/log10(nr), cexCol = 0.2 + 1/log10(nc),
 	labRow = NULL, labCol = NULL, main = NULL, xlab = NULL, ylab = NULL,
-	\dots)
+        verbose = getOption("verbose"), \dots)
 }
 \arguments{
   \item{x}{numeric matrix of the values to be plotted. }
   \item{Rowv}{determines if and how the \emph{row} dendrogram should be
-    reordered.	Either a \code{\link{dendrogram}} or a vector of values
-    used to reorder the row dendrogram or \code{\link{FALSE}} to
-    suppress reordering or by default, \code{\link{NULL}}, see
-    \emph{Details} below.}
+    computed and reordered.  Either a \code{\link{dendrogram}} or a
+    vector of values used to reorder the row dendrogram or
+    \code{\link{NA}} to suppress any row dendrogram (and reordering) or
+    by default, \code{\link{NULL}}, see \emph{Details} below.}
   \item{Colv}{determines if and how the \emph{column} dendrogram should be
-    reordered.	Has the options as the \code{Rowv} argument above and
+    reordered.	Has the same options as the \code{Rowv} argument above and
     \emph{additionally} when \code{x} is a square matrix, \code{Colv =
       "Rowv"} means that columns should be treated identically to the rows.}
   \item{distfun}{function used to compute the distance (dissimilarity)
@@ -61,6 +61,7 @@ heatmap(x, Rowv=NULL, Colv=if(symm)"Rowv" else NULL,
     use; these default to \code{rownames(x)} or \code{colnames(x)},
     respectively.}
   \item{main, xlab, ylab}{main, x- and y-axis titles; defaults to none.}
+  \item{verbose}{logical indicating if information should be printed.}
   \item{\dots}{additional arguments passed on to \code{\link{image}},
     e.g., \code{col} specifying the colors.} %
 }
@@ -68,7 +69,7 @@ heatmap(x, Rowv=NULL, Colv=if(symm)"Rowv" else NULL,
   If either \code{Rowv} or \code{Colv} are dendrograms they are honored
   (and not reordered).	Otherwise, dendrograms are computed as
   \code{dd <- as.dendrogram(hclustfun(distfun(X)))} where \code{X} is
-  either \code{x} or \code{t(x)}.\cr
+  either \code{x} or \code{t(x)}.
 
   If either is a vector (of \dQuote{weights}) then the appropriate
   dendrogram is reordered according to the supplied values subject to
@@ -91,10 +92,11 @@ heatmap(x, Rowv=NULL, Colv=if(symm)"Rowv" else NULL,
   \url{http://cran.r-project.org/src/contrib/PACKAGES.html#RColorBrewer}.
 }
 \note{
-  The original rows and columns are reordered \emph{in any case} to
-  match the dendrogram, e.g., the rows by
-  \code{\link{order.dendrogram}(Rowv)} where \code{Rowv} is the
-  (possibly \code{\link{reorder}()}ed) row dendrogram.
+  Unless \code{Rowv = NA} (or \code{Colw = NA}), the original rows and
+  columns are reordered \emph{in any case} to match the dendrogram,
+  e.g., the rows by \code{\link{order.dendrogram}(Rowv)} where
+  \code{Rowv} is the (possibly \code{\link{reorder}()}ed) row
+  dendrogram.
 
   \code{heatmap()} uses \code{\link{layout}} and draws the
   \code{\link{image}} in the lower right corner of a 2x2 layout.
@@ -123,7 +125,21 @@ heatmap(x, Rowv=NULL, Colv=if(symm)"Rowv" else NULL,
 	       main = "heatmap(<Mtcars data>, ..., scale = \"column\")")
  str(hv) # the two re-ordering index vectors
 
-%% want example using the `add.exp' argument!
+ ## no column dendrogram (nor reordering) at all:
+ heatmap(x, Colv = NA, col = cm.colors(256), scale="column",
+	 RowSideColors = rc, margin=c(5,10),
+         xlab = "specification variables", ylab= "Car Models",
+	 main = "heatmap(<Mtcars data>, ..., scale = \"column\")")
+\testonly{
+ ## no row dendrogram (nor reordering) at all:
+ heatmap(x, Rowv = NA, col = cm.colors(256), scale="column",
+	 ColSideColors = cc, margin=c(5,10),
+         xlab = "xlab", ylab= "ylab")# no main
+}
+ ## "no nothing"
+ heatmap(x, Rowv = NA, Colv = NA, scale="column",
+         main = "heatmap(*, NA, NA) ~= image(t(x))")
+%% also want example using the `add.exp' argument!
 
  data(attitude)
  round(Ca <- cor(attitude), 2)

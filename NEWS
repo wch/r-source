@@ -17,26 +17,29 @@ NEW FEATURES
     o	help("regex") now gives a description of the regular expressions
 	used in R.
 
-    o   The startup message now shows the R Foundation as copyright
-        holder, and includes the R ISBN number and a pointer to the new
-        citation() function.
+    o	The startup message now shows the R Foundation as copyright
+	holder, and includes the R ISBN number and a pointer to the new
+	citation() function.
 
     o	The solve() function now uses the `tol' argument for all
-        non-complex cases.  The default tolerance for LINPACK is 1e-7,
-        as before.  For LAPACK it currently is .Machine$double.eps but
+	non-complex cases.  The default tolerance for LINPACK is 1e-7,
+	as before.  For LAPACK it currently is .Machine$double.eps but
 	may be changed in later versions of R.
 
-    o   help.search() now defaults to agrep = FALSE when keyword= is
+    o	help.search() now defaults to agrep = FALSE when keyword= is
 	specified, since no one wants fuzzy matching of categories.
 
-    o   Function texi2dvi() in package tools can be used to compile
-        latex files from within R.
+    o	Function texi2dvi() in package tools can be used to compile
+	latex files from within R.
 
     o	Objects with formal S4 classes saved in pre-1.8 versions and
-        loaded into the current version have incompatible class
-        attributes (no package information).  A new function,
-        fixPre1.8() in package methods, will fix the class attributes.
-        See the help for this function.
+	loaded into the current version have incompatible class
+	attributes (no package information).  A new function,
+	fixPre1.8() in package methods, will fix the class attributes.
+	See the help for this function.
+
+    o	heatmap() allows Rowv/Colv = NA, suppressing the corresponding
+	dendrogram.
 
 
 BUG FIXES
@@ -108,7 +111,7 @@ BUG FIXES
 	function texi2dvi() which also works on Windows.
 
     o   Build errors with Tcl version 8.0 has been corrected.  (Note that
-        some features are simply not implemented for this ancient version, 
+        some features are simply not implemented for this ancient version,
         so upgrade if you can.)
 
     o   hclust() was sometimes not finding the correct inter-cluster
@@ -116,7 +119,7 @@ BUG FIXES
 
     o   plot.hclust() now tolerates mode changes on dumped objects. (PR#4361)
 
-    o   prompt() no longer insists files are in the current directory. 
+    o   prompt() no longer insists files are in the current directory.
 	(PR#4978)
 
     o   filter() did not use init in reverse order as documented. (PR#5017)
