@@ -11,9 +11,11 @@ function (x, file = "", append = FALSE, quote = TRUE, sep = " ",
 	quote <- which(unlist(lapply(x, function(x)
                                      is.character(x) || is.factor(x))))
     if(dec != ".") {
-    	num <- which(unlist(lapply(x, is.numeric)))
-	x[num] <- lapply(x[num],
-                         function(z) gsub("\\.", ",", as.character(z)))
+        ## only need to consider numeric non-integer columns
+    	num <- which(unlist(lapply(x, is.double)))
+	if(length(num))
+           x[num] <- lapply(x[num],
+                            function(z) gsub("\\.", ",", as.character(z)))
     }
     i <- is.na(x)
     x <- as.matrix(x)

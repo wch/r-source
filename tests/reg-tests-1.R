@@ -2371,6 +2371,15 @@ try(x[[c("c", "d")]] <- NA)
 ## both segfaulted in 1.7.1
 
 
+## empty indexing of data frames  (PR#3532)
+x <- data.frame(x = "1.5")
+num <- numeric(0)
+x[num] <- list()
+x[, num] <- list()
+## x[[num]] is rightly an error
+## x[num] etc failed in 1.7.x.
+
+
 
 ## keep at end, as package `methods' has had persistent side effects
 library(methods)

@@ -152,6 +152,8 @@ NEW FEATURES
 	- Row names in extraction are still made unique, but without
           forcing them to be syntactic names.
 
+	- adf[x] <- list() failed if x was of length zero.
+
     o	A triple colon operator can be used to access values of internal
 	variables in a name space (i.e. a:::b is the value of the internal
 	variable b in name space a).
@@ -385,6 +387,9 @@ BUG FIXES
 	enforce the limit of 512 chars(!) on the filename.  (PR#3466)
 
     o   step() adds a fuzz for reduction in AIC for 0-df terms.  (PR#3491)
+
+    o   Using write.table() setting the dec argument and with no
+	numeric columns failed.  (PR#3532)
 
 
 

@@ -504,6 +504,9 @@ data.frame <-
     else {
 	stop("Need 0, 1, or 2 subscripts")
     }
+    ## no columns specified
+    if(has.j && length(j) ==0) return(x)
+
     cl <- oldClass(x)
     ## delete class: Version 3 idiom
     ## to avoid any special methods for [[, etc
@@ -624,7 +627,7 @@ data.frame <-
 	warning(paste("replacement data has", nrowv, "rows to replace",
 		      n, "rows"))
     ncolv <- dimv[2]
-    jvseq <- 1:p
+    jvseq <- seq(len=p)
     if(ncolv < p) jvseq <- rep(1:ncolv, length = p)
     else if(ncolv > p)
 	warning(paste("provided", ncolv, "variables to replace", p,
@@ -638,7 +641,7 @@ data.frame <-
         attr(x, "row.names") <- rows
     }
     if(has.i)
-	for(jjj in 1:p) {
+	for(jjj in seq(len=p)) {
 	    jj <- jseq[jjj]
 	    vjj <- value[[ jvseq[[jjj]] ]]
 	    xj <- x[[jj]]
@@ -646,7 +649,7 @@ data.frame <-
             ## if a column exists, preserve its attributes
             if(jj <= nvars) x[[jj]][] <- xj else x[[jj]] <- xj
 	}
-    else for(jjj in p:1) { # we might delete columns with NULL
+    else if(p > 0) for(jjj in p:1) { # we might delete columns with NULL
 	jj <- jseq[jjj]
 	x[[jj]] <- value[[ jvseq[[jjj]] ]]
     }
