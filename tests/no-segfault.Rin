@@ -35,7 +35,7 @@ inet.list <- c(apropos("download\."),
                      "packages",sep="."))
 socket.fun <- apropos("socket")
 ## "Interactive" ones:
-dev.int <- c("X11", "x11", "windows", "postscript",
+dev.int <- c("X11", "x11", "pdf", "postscript",
              "xfig", "jpeg", "png", "pictex", "quartz")
 misc.2 <- c("help.start", "browseEnv",
             "gctorture", "q", "quit", "restart", "try",
