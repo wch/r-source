@@ -156,6 +156,22 @@ AC_ARG_WITH(gnome,
     fi],
   want_gnome=no)
 
+AC_ARG_WITH(tcltk,
+  [  --with-tcltk            use Tcl/Tk, or specify its library dir],
+  [ if test "${withval}" = no; then
+      want_tcltk=no
+    elif test "${withval}" = yes; then
+      want_tcltk=yes
+    else
+      want_tcltk=yes
+      LIBS="${LIBS} -L${withval}"
+      tcltk_prefix=${withval}
+    fi],
+  want_tcltk=yes)
+
+R_TCLTK
+AC_SUBST(use_tcltk)
+
 ### Programs.
 
 AC_PROG_AWK
@@ -815,6 +831,9 @@ AC_OUTPUT(Makeconf
   src/library/splines/DESCRIPTION
   src/library/splines/Makefile
   src/library/splines/src/Makefile
+  src/library/tcltk/DESCRIPTION
+  src/library/tcltk/Makefile
+  src/library/tcltk/src/Makefile
   src/library/ts/DESCRIPTION
   src/library/ts/Makefile
   src/library/ts/src/Makefile
@@ -874,6 +893,7 @@ R is now configured for ${host}
   FORTRAN compiler:         ${FORT}
   X11 support:              ${use_X11}
   Gnome support:            ${use_gnome}
+  Tcl/Tk support:           ${use_tcltk}
 ])
 
 dnl Local Variables: ***

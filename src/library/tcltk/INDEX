@@ -1,0 +1,22 @@
+tkcmd		Generic tk command interface with R syntax
+tkwidget	Generic tk widget creation
+.Tcl		Low-level interface to Tcl (execute  command string)
+.Tcl.callback   Create Tcl callback from R function
+.Tcl.args       Convert R argument list to Tcl options
+tk.start        Init Tcl interpreter and start Tk event handling
+tk.stop         Stop Tk event handling
+
+--- Widget creation ---
+tkbutton        Create button widget
+<etc>
+
+--- Widget commands ---
+tkconfigure     Widget configuration
+<etc>
+
+--- Other commands ---
+tkbind          Event binding
+
+tkpack          Geometry manager
+
+[There's a huge number of commands. Use Tk documentation for details.]

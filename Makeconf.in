@@ -36,7 +36,8 @@ MAINLDFLAGS = @MAINLDFLAGS@
 MAKEINDEX = @MAKEINDEX@
 MKINSTALLDIRS = $(top_srcdir)/tools/mkinstalldirs
 R_GUIS = @R_GUIS@
-R_PKGS = base ctest eda lqs modreg mva nls splines stepfun ts
+# fixme: tcltk needs to be optional
+R_PKGS = base ctest eda lqs modreg mva nls splines stepfun ts tcltk
 R_XTRA_CFLAGS = @R_XTRA_CFLAGS@
 R_XTRA_CPPFLAGS = -I. -I$(top_builddir)/src/include -I$(top_srcdir)/src/include -I$(top_srcdir)/src/include/R_ext
 R_XTRA_FFLAGS = @R_XTRA_FFLAGS@

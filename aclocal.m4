@@ -803,6 +803,60 @@ echo "using libraries \`${BITMAP_LIBS}' for bitmap functions"
 AC_SUBST(BITMAP_LIBS)
 ])
 
+dnl
+dnl R_TCLTK
+dnl
+AC_DEFUN(R_TCLTK,
+  [ have_tcltk=no
+    TCLTK_LIBS=
+    if test "${want_tcltk}" = yes; then
+      AC_CHECK_LIB(tcl, Tcl_CreateInterp, [ TCLTK_LIBS="-ltcl"])
+      if test -n "${TCLTKLIBS}"; then
+        AC_CHECK_LIB(tk, Tk_Init,
+          [ TCLTK_LIBS="-ltcl -ltk" have_tcltk=yes ],, ${TCLTKLIBS})
+        if test "${have_tcltk}" = no; then
+        ## Try X11 libs
+          echo "checking with X11 libraries:"
+	  unset ac_cv_lib_tk_Tk_Init
+            AC_CHECK_LIB(tk, Tk_Init,
+              [ TCLTK_LIBS="-ltcl -ltk ${X_LIBS}"
+	        have_tcltk=yes ], , [-ltcl ${X_LIBS}])
+        fi
+      fi
+##      echo "have_tcltk now is ${have_tcltk}"
+      if test "${have_tcltk}" = no; then
+	## Try finding {tcl,tk}Config.sh
+	libpath="${tcltk_prefix}:${LD_LIBRARY_PATH}"
+	libpath="${libpath}:/opt/lib:/usr/local/lib:/usr/lib:/lib"
+	TCL_CONFIG=
+	AC_PATH_PROG(TCL_CONFIG, tclConfig.sh, , ${libpath})
+	if test -n "${TCL_CONFIG}"; then
+	  . ${TCL_CONFIG}	# get TCL_VERSION
+	  AC_CHECK_LIB(tcl${TCL_VERSION}, Tcl_CreateInterp,
+	    [ TCLTK_LIBS="-ltcl${TCL_VERSION}" ],
+	    [ want_tcltk=no ])
+	  if test "${want_tcltk}" = yes; then
+	    TK_CONFIG=
+	    AC_PATH_PROG(TK_CONFIG, tkConfig.sh, , ${libpath})
+	    if test -n "${TK_CONFIG}"; then
+	      . ${TK_CONFIG}	# get TK_VERSION
+	      AC_CHECK_LIB(tk${TK_VERSION}, Tk_Init,
+	        [ TCLTK_LIBS="${TCLTK_LIBS} -ltk${TK_VERSION}  ${TK_XLIBSW}"
+		  have_tcltk=yes ], , [${TCLTK_LIBS} ${TK_XLIBSW}] )
+	    fi
+	  fi
+	fi
+      fi
+    fi
+    if test "${have_tcltk}" = yes; then
+      AC_DEFINE(HAVE_TCLTK)
+      use_tcltk=yes
+    else
+      use_tcltk=no
+    fi
+    AC_SUBST(TCLTK_LIBS)
+  ])
+
 dnl Local Variables: ***
 dnl mode: sh ***
 dnl sh-indentation: 2 ***
