@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 2.0.2004-11-09
+Version 2.0.2004-11-11
 ISBN 3-900051-08-9
 Kurt Hornik
 
@@ -2352,6 +2352,10 @@ distributions of R.)
 
 *mvnormtest*
      Generalization of the Shapiro-Wilk test for multivariate variables.
+
+*mvoutlier*
+     Multivariate outlier detection based on robust estimates of location
+     and covariance structure.
 
 *mvpart*
      Multivariate partitioning.
