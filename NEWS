@@ -11,7 +11,7 @@
 NEW FEATURES
 
     o	The ``Introduction to R'' manual, in doc/manual.
-    	The ``Writing R Extensions'' manual is much enhanced for
+	The ``Writing R Extensions'' manual is much enhanced for
 	this release.
 
     o	The format for save/load has been changed. Workspaces and
@@ -153,7 +153,7 @@ NEW FEATURES
 
     o	prop.table() and margin.table() functions (these are *really* trivial).
 
-    o   R INSTALL checks the Depends field of DESCRIPTION if the
+    o	R INSTALL checks the Depends field of DESCRIPTION if the
 	currently running version of R meets an R
 	dependency. old.packages() reports only packages conforming
 	to the current version of R. New function
@@ -167,17 +167,17 @@ NEW FEATURES
 	was 250k).  This reflects the added base code and packages,
 	and increases memory usage by about 2Mb (on a 32-bit machine).
 
-    o   Some simple multiple comparison procedures: p.adjust() for
-        generic adjustment of a set of p values by variants of the
-        Bonferroni method; pairwise.t.test, pairwise.wilcox.test,
-        pairwise.prop.test for pairwise comparisons of grouped data
-        and proportions.
+    o	Some simple multiple comparison procedures: p.adjust() for
+	generic adjustment of a set of p values by variants of the
+	Bonferroni method; pairwise.t.test, pairwise.wilcox.test,
+	pairwise.prop.test for pairwise comparisons of grouped data
+	and proportions.
 
     o	Error / warning calls with a long description of the call are
 	split into two lines. (This helps avoid scrolling in the
 	Windows GUI.)
 
-    o   lapply() is now internal and substantially faster (7% overall
+    o	lapply() is now internal and substantially faster (7% overall
 	speed-up on the tests for the base package).
 
     o	apply() no longer names the output dimensions unless FUN returns
@@ -187,14 +187,14 @@ NEW FEATURES
 
     o	persp() labels its axes.
 
-    o   scan() and read.table() now have a dec= argument to set the
-        decimal point character. If sep= is set, quoting of strings is
-        now possible and follows the conventions for comma-separated
-        files. This should make it easier to read the "continental
-        CSV" format (fields separated by semicolon and using comma as
-        decimal point).  The set of quoting characters has also been
-        made optional. Variants of read.table(), read.csv() and
-        read.csv2() have been defined
+    o	scan() and read.table() now have a dec= argument to set the
+	decimal point character. If sep= is set, quoting of strings is
+	now possible and follows the conventions for comma-separated
+	files. This should make it easier to read the "continental
+	CSV" format (fields separated by semicolon and using comma as
+	decimal point).	 The set of quoting characters has also been
+	made optional. Variants of read.table(), read.csv() and
+	read.csv2() have been defined
 
     o	HDF5 support is gone from the R distribution, and provided by an
 	add-on package available from CRAN.
@@ -202,9 +202,9 @@ NEW FEATURES
     o	New function getOption() for retrieving the value of a single
 	option.
 
-    o   read.table.url() and related functions now use download.file,
+    o	read.table.url() and related functions now use download.file,
 	which has an extra "socket" method for direct HTTP socket
-        connection. download.file has new option ``quiet''.
+	connection. download.file has new option ``quiet''.
 
     o	pairs.default() has an oma argument to allow users to override
 	the internal setting of that graphics parameter.
@@ -215,13 +215,22 @@ NEW FEATURES
 
 BUG FIXES
 
-    o   Overflow of the pointer protection stack is handled correctly
+    o	arma0f(NULL), cancor(F,F) and prcomp(F[F]) no longer segfault.
+
+    o	loess.smooth(F[F],F[F]) and supsmu(F[F],F[F]) no longer segfault.
+
+    o	Overflow of the pointer protection stack is handled correctly
 
     o	save(1, file = ""[F])  no longer segfaults.
 
-    o	read.fwf(character(0),..) no longer starts gobbling standard input.
+    o	stop(list()) and warning(list()) no longer segfault.
 
-    o   predict.glm(, type="link", se.fit=T) works
+    o	system(""[F]) and save(1, file = ""[F])	 no longer segfault.
+
+    o	read.fwf(character(0),..) and source("")
+	no longer start gobbling standard input.
+
+    o	predict.glm(, type="link", se.fit=T) works
 
     o	str() now works with Surv(.) objects from library(survival5).
 
