@@ -86,7 +86,7 @@ format.char(x, width = NULL, flag = "-")
 }
 \examples{
 xx  <- pi * 10^(-5:4)
-options(digits = 4)   # only for format
+dd <- options(digits = 4)   # only for format
 cbind(format(xx), formatC(xx))
 cbind(formatC(xx, wid = 9, flag = "-"))
 cbind(formatC(xx, dig = 5, wid = 8, format = "f", flag = "0"))
@@ -100,6 +100,7 @@ xx <- c(1e-12,-3.98765e-10,1.45645e-69,1e-70,pi*1e37,3.44e4)
 formatC(xx)
 formatC(xx, format="fg")       # special "fixed" format.
 formatC(xx, format="f", dig=80)#>> also long strings
+options(dd) # reset
 }
 \keyword{character}
 \keyword{print}
