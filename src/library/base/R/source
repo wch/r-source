@@ -1,14 +1,38 @@
-source <- function (file, local=FALSE) {
-	if(local) envir <- sys.frame(sys.parent())
-	else if(!local) envir <- .GlobalEnv
-	exprs <- parse(n = -1, file = file)
-	if (length(exprs) == 0) return(invisible())
-	for (i in exprs) {
-		yy <- eval(i, envir)
+source <-
+function(file, local=FALSE, echo = debug, print.eval=echo, debug=FALSE,
+	 max.deparse.length=150)
+{
+ envir <- if (local) sys.frame(sys.parent()) else .GlobalEnv
+ if(debug) { cat("'envir' chosen:"); print(envir) }
+ exprs <- parse(n = -1, file = file)
+ if(debug)
+	cat("--> parsed", length(exprs), "expressions; now eval(.)ing them:\n")
+ if (length(exprs) == 0)    return(invisible())
+ ass1 <- expression(y <- x)[[1]][[1]] #-- ass1 :  the  '<-' symbol/name
+ for (i in exprs) {
+	if(echo) {
+		dep <- paste(deparse(i), collapse="\n")
+		if(nchar(dep) > max.deparse.length)
+			dep <- paste(substr(dep, 1, max.deparse.length),
+				     " .... [TRUNCATED] ")
+		cat("\n> ", dep, "\n", sep="")
 	}
-	invisible(yy)
+	yy <- eval(i, envir)
+	i.symbol <- mode(i) == "symbol"
+	if(!i.symbol) {
+		curr.fun <- i[[1]][[1]]## i[[1]] : the function "<-" or other
+		if(debug) { cat('curr.fun:'); str(curr.fun) }
+	}
+	if(print.eval &&
+	   (i.symbol || all(paste(curr.fun) != c("<-","cat", "str", "print"))))
+		print(yy)
+	if(debug) cat(" .. after", deparse(i), ":\n")
+ }
+ invisible(yy)
 }
-sys.source <- function (file) {
+
+sys.source <- function (file)
+{
 	exprs <- parse(n = -1, file = file)
 	if (length(exprs) == 0) return(invisible())
 	for (i in exprs) {
@@ -16,3 +40,38 @@ sys.source <- function (file) {
 	}
 	invisible(yy)
 }
+
+demo <- function(topic, device = x11)
+{
+ Topics <-cbind(graphics = c("graphics/graphics",       "G"),
+                image    = c("graphics/image",          "G"),
+                lm.glm   = c("models/lm+glm",           "G"),
+                glm.vr   = c("models/glm-v+r",          ""),
+                nlm      = c("nlm/valley",              ""),
+                recursion= c("language/recursion",      "G"),
+                scoping  = c("language/scoping",        "")
+                )
+ topic.names <- dimnames(Topics)[[2]]
+ demo.help <- function() {
+	cat("Choices for argument `topic' are:\n")
+	cbind(topics = topic.names)
+ }
+ if(missing(topic)) return(demo.help())
+ topic <- substitute(topic)
+ if (!is.character(topic)) topic <- deparse(topic)[1]
+ i.top <- pmatch(topic, topic.names)
+ if (is.na(i.top) || i.top == 0) {
+	cat("unimplemented `topic' in demo.\n")
+	print(demo.help())
+	stop()
+ } else {
+	topic <- topic.names[i.top]
+	cat("\n\n\tdemo(",topic,")\n\t---- ",rep("~",nchar(topic)),
+	    "\n\nType  <Return>  to start : ",sep="")
+	readline()
+	if((!exists(".Device") || is.null(.Device)) && Topics[2,i.top] == "G")
+		device()
+	source(system.file("demos", Topics[1, i.top]), echo = TRUE)
+ }
+}
+
