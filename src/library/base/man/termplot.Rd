@@ -53,12 +53,10 @@ termplot(model, data=NULL, envir=environment(formula(model)),
   \code{\link{residuals}} method that accepts \code{type="partial"},
   which \code{\link{lm}} and \code{\link{glm}} do.
 
-  The \code{data} argument should rarely be needed. One exception is
-  that models with missing data using \code{na.action=na.omit} will need
-  to specify a \code{data} argument. A work-around is to use
-  \code{na.action=na.exclude} instead.
+  The \code{data} argument should rarely be needed, but in some cases
+  \code{termplot} may be unable to reconstruct the original data frame.
 
-  Nothing sensible happens for interaction terms. 
+  Nothing sensible happens for interaction terms.
 }
 \seealso{For (generalized) linear models, \code{\link{plot.lm}} and
   \code{\link{predict.glm}}.}

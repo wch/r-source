@@ -20,7 +20,8 @@ termplot <- function(model, data=NULL,envir=environment(formula(model)),
         data<-eval(model$call$data,envir)
     if (is.null(data))
         data<-mf
-
+    if (NROW(tms)<NROW(data))
+        data <- data[ dimnames( tms)[[1]], ]
     nmt <- colnames(tms)
     cn <- parse(text=nmt)
     ## Defaults:

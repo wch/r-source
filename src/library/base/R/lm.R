@@ -698,19 +698,20 @@ predict.lm <-
 	    upr <- predictor - w
 	}
     }
+    if(se.fit) se<-sqrt(ip)
     if(missing(newdata) && !is.null(na.act <- object$na.action)) {
 	predictor <- napredict(na.act, predictor)
-	if(se.fit) se.fit <- napredict(na.act, sqrt(ip))
+	if(se.fit) se <- napredict(na.act, se)
     }
     if(type == "terms" && interval != "none") {
 	if(missing(newdata) && !is.null(na.act)) {
 	    lwr <- napredict(na.act, lwr)
 	    upr <- napredict(na.act, upr)
 	}
-	list(fit = predictor, se.fit = sqrt(ip), lwr = lwr, upr = upr,
+	list(fit = predictor, se.fit = se, lwr = lwr, upr = upr,
 	     df = df, residual.scale = sqrt(res.var))
     } else if (se.fit)
-	list(fit = predictor, se.fit = sqrt(ip),
+	list(fit = predictor, se.fit = se,
 	     df = df, residual.scale = sqrt(res.var))
     else predictor
 }
