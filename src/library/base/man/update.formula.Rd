@@ -1,10 +1,9 @@
 \name{update.formula}
+\alias{update.formula}
 \title{Model Updating}
 \usage{
 update.formula(old, new)
 }
-\alias{update}
-\alias{update.formula}
 \arguments{
 \item{old}{a model formula to be updated.}
 \item{new}{a formula giving a template which specifies how to update.}
