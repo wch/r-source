@@ -264,9 +264,6 @@ INSTALLATION CHANGES
 
 BUG FIXES
 
-    o   summaryRprof was ignoring functions whose name begins with ., eg 
-	.C, .Call, .Fortran (PR#7137)
-
     o   Complex superassignments were wrong when a variable with the same
     	 name existed locally, and were not documented in R-lang.
 
@@ -355,6 +352,9 @@ BUG FIXES
     o	gsub(perl=TRUE) code got the R length of return strings wrong
 	in some circumstances (when the string was shortened).  
 	(Fixed also PR#7108)
+
+    o   summaryRprof was ignoring functions whose name begins with dot, 
+	e.g. .C, .Call, .Fortran. (PR#7137)
 
 
 
