@@ -34,7 +34,7 @@
   display of categorical data, such as the general-purpose mosaic plot
   or the ``fourfold display'' for 2-by-2-by-\eqn{k} tables.  See the
   home page of Michael Friendly
-  (\url{http://hotspur.psych.yorku.ca/SCS/friendly.html}) for further
+  (\url{http://www.math.yorku.ca/SCS/friendly.html}) for further
   information.
 }
 \references{

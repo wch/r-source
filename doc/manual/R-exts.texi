@@ -489,9 +489,15 @@ Archive, one can simply do
 @group
 F77=`$@{R_HOME@}/bin/R CMD config F77`
 AC_PROG_F77
+FLIBS=`$@{R_HOME@}/bin/R CMD config FLIBS`
 ACX_BLAS([], AC_MSG_ERROR([could not find your BLAS library], 1))
 @end group
 @end smallexample
+
+Note that @code{FLIBS} as determined by R must be used to ensure that
+FORTRAN 77 code works on all R platforms.  Calls to the Autoconf macro
+@code{AC_F77_LIBRARY_LDFLAGS}, which would overwrite @code{FLIBS}, must
+not be used (and hence e.g.@: removed from @code{ACX_BLAS}).
 
 You should bear in mind that the configure script may well not work on
 Windows systems (this seems normally to be the case for those generated

@@ -430,7 +430,7 @@ else
 fi
 for arg in ${FLIBS}; do
   case "${arg}" in
-    -lcrt?.o)
+    -lcrt*.o)
       ;;
     -l:*)
       flibs="${flibs} ${linker_option}${arg}"
@@ -440,15 +440,10 @@ for arg in ${FLIBS}; do
       ;;
   esac
 done
-case "${host_os}" in
-  darwin*)
-    flibs=`echo "${flibs}" | sed 's/\(.*\)-lcrtbegin.o\(.*\)/\1\2/'`
-    ;;
-esac
 FLIBS="${flibs}"
 if test "${G77}" = yes; then
   r_save_LIBS="${LIBS}"
-  flibs=`echo "${ac_cv_flibs}" | sed 's/-lg2c/-lg2c-pic/'`
+  flibs=`echo "${FLIBS}" | sed 's/-lg2c/-lg2c-pic/'`
   LIBS="${LIBS} ${flibs}"
   AC_LANG_PUSH(C)
   AC_TRY_LINK([], [], [FLIBS="${flibs}"])

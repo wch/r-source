@@ -28,6 +28,26 @@ NEW FEATURES
 	**************************************************
 
 
+		CHANGES IN R VERSION 1.6.1
+
+
+BUG FIXES
+
+    o	hist(<datetime>, cex.axis = f)	now works for x-axis too.
+
+    o	prompt() gave wrong \usage{.} for long argument default expressions.
+
+    o	summary(x) gives more when `x' is a logical (or a data frame with a
+	logical column which is now quite customary).
+
+    o	seq.POSIXt(from, to, length.out= . ) could give too long results
+
+    o   summaryRprof was counting nested calls to the same function
+        twice
+
+    o   printing of objects of mode "expression" did strange things if
+        there were "%" characters in the deparsed expression (PR# 2120).
+
 		CHANGES IN R VERSION 1.6.0
 
 

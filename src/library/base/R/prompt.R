@@ -47,7 +47,7 @@ prompt.default <-
 	for(i in s) { # i-th argument :
 	    call <- paste0(call, arg.names[i],
 			   if(!is.missing.arg(argls[[i]]))
-			   paste0(" = ",deparse(argls[[i]])))
+			   paste0(" = ",deparse(argls[[i]], width.cutoff= 500)))
 	    if(i != n) call <- paste0(call, ", ")
 	}
 	file <- c(file, "\\usage{", paste0(call, ")"), "}",

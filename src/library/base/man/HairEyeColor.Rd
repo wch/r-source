@@ -31,13 +31,13 @@
   Graphical methods for categorical data.
   \emph{SAS User Group International Conference Proceedings}, \bold{17},
   190--200.
-  \url{http://hotspur.psych.yorku.ca/SCS/sugi/sugi17-paper.html}
+  \url{http://www.math.yorku.ca/SCS/sugi/sugi17-paper.html}
 
   Friendly, M. (1992),
   Mosaic displays for loglinear models.
   \emph{Proceedings of the Statistical Graphics Section},
   American Statistical Association, pp. 61--68.
-  \url{http://hotspur.psych.yorku.ca/SCS/Papers/asa92.html}
+  \url{http://www.math.yorku.ca/SCS/Papers/asa92.html}
 }
 \seealso{
   \code{\link[ctest]{chisq.test}},
