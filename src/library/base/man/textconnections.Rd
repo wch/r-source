@@ -9,7 +9,7 @@ textConnection(object, open = "r")
 }
 \arguments{
   \item{object}{character.  A description of the connection. 
-    For an input is an \R character vector object, and for an output
+    For an input this is an \R character vector object, and for an output
     connection the name for the \R character vector to receive the
     output.
   }
