@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2004
-@set FAQ-VERSION 2.0.@value{FAQ-YEAR}-12-03
+@set FAQ-VERSION 2.0.@value{FAQ-YEAR}-12-04
 @set REL-VERSION 2.0.1
 @set REL-YEAR 2004
 @c <COMMENT>
@@ -2659,6 +2659,8 @@ Multivariate regression by PLS and PCR.
 Routines for the polynomial spline fitting routines hazard regression,
 hazard estimation with flexible tails, logspline, lspec, polyclass, and
 polymars, by C. Kooperberg and co-authors.
+@item polycor
+Polychoric and polyserial correlations.
 @item polynom
 A collection of functions to implement a class for univariate polynomial
 manipulations.
