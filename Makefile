@@ -3,5 +3,5 @@
 all R docs help html latex dvi tests test-Examples install\
  clean realclean acclean distclean :: config.status Makeconf
 	$(MAKE) -f Makefile.2nd $@
-Makeconf config.status:: configure config.site 
+Makeconf config.status:: configure config.site date-stamp
 	-./configure
