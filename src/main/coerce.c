@@ -1,6 +1,6 @@
 /*
- *  R : A Computer Langage for Statistical Data Analysis
- *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
+ *  R : A Computer Language for Statistical Data Analysis
+ *  Copyright (C) 1995-1998  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -146,11 +146,13 @@ SEXP do_asvector(SEXP call, SEXP op, SEXP args, SEXP rho)
 	SEXP ans;
 	int type;
 
-        if(DispatchOrEval(call, op, args, rho, &ans, 1))
-                return(ans);
-                                                                                                /* Method dispatch has failed, we now just */                                   /* run the generic internal code */
-                                                                                        PROTECT(args = ans);
+	if(DispatchOrEval(call, op, args, rho, &ans, 1))
+		return(ans);
 
+	/* Method dispatch has failed, we now just */
+	/* run the generic internal code */
+
+	PROTECT(args = ans);
 	checkArity(op, args);
 
 	if (!isString(CADR(args)) || LENGTH(CADR(args)) < 1)
@@ -332,10 +334,10 @@ SEXP do_is(SEXP call, SEXP op, SEXP args, SEXP rho)
 	return (ans);
 }
 
-/* What should is.vector do ? */
-/* In S, if an object has no attributes it is a vector */
-/* otherwise it is.  It seems to make more sense to check */
-/* for a dim attribute. */
+/* What should is.vector do ?
+ * In S, if an object has no attributes it is a vector, otherwise it isn't.
+ * It seems to make more sense to check for a dim attribute.
+ */
 
 SEXP do_isvector(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
@@ -351,7 +353,8 @@ SEXP do_isvector(SEXP call, SEXP op, SEXP args, SEXP rho)
 	if (streql(CHAR(STRING(CADR(args))[0]), "any")) {
 		LOGICAL(ans)[0] = isVector(CAR(args));
 	}
-	else if (streql(CHAR(STRING(CADR(args))[0]), CHAR(type2str(TYPEOF(CAR(args)))))) {
+	else if (streql(CHAR(STRING(CADR(args))[0]),
+			CHAR(type2str(TYPEOF(CAR(args)))))) {
 		LOGICAL(ans)[0] = 1;
 	}
 	else
@@ -515,7 +518,7 @@ SEXP do_isnan(SEXP call, SEXP op, SEXP args, SEXP rho)
 					break;
 				case REALSXP:
 #ifdef IEEE_754
-				        LOGICAL(ans)[i] = R_IsNaN(REAL(CAR(x))[0]);
+					LOGICAL(ans)[i] = R_IsNaN(REAL(CAR(x))[0]);
 #else
 					LOGICAL(ans)[i] = 0;
 #endif
@@ -856,7 +859,7 @@ static SEXP coerceToInteger(SEXP v)
 		}
 		break;
 	case STRSXP:
-		/*  Jeez!  Why was this again?  I've forgotten!
+		/*  Jeez!  Why was this again?	I've forgotten!
 		 *  for reasons best known to ourselves we implement this by
 		 *  first converting to real and then from real to integer  */
 		for (i = 0; i < n; i++) {
@@ -1187,9 +1190,9 @@ SEXP do_docall(SEXP call, SEXP op, SEXP args, SEXP rho)
  * values as found in the environment. There is no inheritance so only the
  * supplied environment is searched. If no environment is specified the
  * environment in which substitute was called is used. If the specified
- * environment is R_NilValue then R_GlobalEnv is used. Arguments to
- * do_substitute should not be evaluated.
+ * environment is R_NilValue then R_GlobalEnv is used.
  *
+ * Arguments to do_substitute should not be evaluated.
  */
 
 SEXP substituteList(SEXP, SEXP);
@@ -1287,8 +1290,8 @@ SEXP do_substitute(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 	if (TYPEOF(env) == LISTSXP){
 		PROTECT(s = duplicate(env));
-                PROTECT(env = allocSExp(ENVSXP));
-                FRAME(env) = s;
+		PROTECT(env = allocSExp(ENVSXP));
+		FRAME(env) = s;
 		UNPROTECT(2);
 	}
 
