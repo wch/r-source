@@ -1,8 +1,9 @@
 "barplot" <-
-function(height, width = 1, space, names.arg, legend.text,
-	 beside = FALSE, horiz = FALSE, col = NULL, border = par("fg"),
-	 main = NULL, xlab = NULL, ylab = NULL, xlim, ylim, axes = TRUE,
-	 ...)
+function(height, width = 1, space = NULL, names.arg = NULL,
+	 legend.text = NULL, beside = FALSE, horiz = FALSE,
+	 col = NULL, border = par("fg"), main = NULL,
+	 xlab = NULL, ylab = NULL, xlim = NULL, ylim = NULL,
+	 axes = TRUE, ...)
 {
   if (horiz) {
     opar <- par(xaxs = "i", xpd = TRUE)
