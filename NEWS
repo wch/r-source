@@ -168,6 +168,11 @@ BUG FIXES
         some features are simply not implemented for this ancient version, 
         so upgrade if you can.)
 
+    o   hclust() was sometimes not finding the correct inter-cluster
+	distances with non-monotone methods.  (PR#4195)
+
+    o   plot.hclust() now tolerates mode changes on dumped objects. (PR#4361)
+
 
 
 		CHANGES IN R VERSION 1.8.0
