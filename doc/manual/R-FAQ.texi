@@ -4,9 +4,9 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2003
-@set FAQ-VERSION 1.8-9, @value{FAQ-YEAR}-10-23
+@set FAQ-VERSION 1.8-10, @value{FAQ-YEAR}-10-24
 @set REL-VERSION 1.8.0
-@set FAQ-ISBN 3-901167-51-X
+@set FAQ-ISBN 3-900051-01-1
 @documentlanguage en
 @documentencoding ISO-8859-1
 @c %**end of header
@@ -204,6 +204,7 @@ let me know.
 * What mailing lists exist for R?::  
 * What is CRAN?::               
 * Can I use R for commercial purposes?::  
+* Why is R named R?::           
 @end menu
 
 @node What is R?, What machines does R run on?, R Basics, R Basics
@@ -606,7 +607,6 @@ implementing R is described in Ihaka & Gentleman (1996), ``R: A Language
 for Data Analysis and Graphics'',
 @uref{http://www.amstat.org/publications/jcgs/, , @emph{Journal of
 Computational and Graphical Statistics}}, @strong{5}, 299--314.
-@xref{Citing R}.
 
 An annotated bibliography (Bib@TeX{} format) of R-related publications
 which includes most of the above references can be found at
@@ -622,14 +622,15 @@ To cite R in publications, use
 
 @example
 @group
-@@article@{,
-  author =    @{Ross Ihaka and Robert Gentleman@},
-  title =     @{R: A Language for Data Analysis and Graphics@},
-  journal =   @{Journal of Computational and Graphical Statistics@},
-  year =      1996,
-  volume =    5,
-  number =    3,
-  pages =     @{299--314@}
+@@Manual@{,
+  title        = @{R: A language and environment for statistical
+                  computing@},
+  author       = @{@{R Development Core Team@}@},
+  organization = @{R Foundation for Statistical Computing@},
+  address      = @{Vienna, Austria@},
+  year         = 2003,
+  note         = @{ISBN 3-900051-00-3@},
+  url          = @{http://www.R-project.org@}
 @}
 @end group
 @end example
@@ -737,7 +738,7 @@ and is currently being mirrored daily at
 @item @uref{http://cran.dk.R-project.org/}
 @tab (SunSITE, Denmark)
 @item @uref{http://cran.es.R-project.org/}
-Spanish National Research Network, Madrid, Spain
+@tab (Spanish National Research Network, Madrid, Spain)
 @item @uref{http://cran.hu.R-project.org/}
 @tab (Semmelweis U, Hungary)
 @c @item @uref{http://cran.it.R-project.org/}
@@ -775,7 +776,7 @@ in your submission.
 Please always use the @acronym{URL} of the master site when referring to
 @CRAN{}.
 
-@node Can I use R for commercial purposes?,  , What is CRAN?, R Basics
+@node Can I use R for commercial purposes?, Why is R named R?, What is CRAN?, R Basics
 @section Can I use R for commercial purposes?
 
 R is released under the @uref{http://www.gnu.org/copyleft/gpl.html,, GNU
@@ -815,6 +816,16 @@ these may be used or seek the advice of your legal counsel.
 
 None of the discussion in this section constitutes legal advice.  The R
 Core Team does not provide legal advice under any circumstances.
+
+@node Why is R named R?,  , Can I use R for commercial purposes?, R Basics
+@section Why is R named R?
+
+The name is partly based on the (first) names of the first two R authors
+(Robert Gentleman and Ross Ihaka), and partly a play on the name of the
+Bell Labs language `S' (@pxref{What is S?}).
+
+@c At the time the name was coined no one expected that the software would
+@c get used outside of Auckland, so it seemed ok to make a joke of it.
 
 @node R and S, R Web Interfaces, R Basics, Top
 @chapter R and S
@@ -2134,6 +2145,8 @@ A collection of utilities for normal of order @math{p} distributions
 One-dimensional normal mixture models classes, for, e.g., density
 estimation or clustering algorithms research and teaching; providing the
 widely used Marron-Wand densities.
+@item nortest
+Five omnibus tests for the composite hypothesis of normality.
 @item noverlap
 Functions to perform the regression depth method (RDM) to binary
 regression to approximate the amount of overlap, i.e., the minimal

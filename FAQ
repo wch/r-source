@@ -4,8 +4,8 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.8-9, 2003-10-23
-ISBN 3-901167-51-X
+Version 1.8-10, 2003-10-24
+ISBN 3-900051-01-1
 Kurt Hornik
 
 
@@ -37,6 +37,7 @@ R FAQ
   2.9 What mailing lists exist for R?
   2.10 What is CRAN?
   2.11 Can I use R for commercial purposes?
+  2.12 Why is R named R?
 
 3 R and S
   3.1 What is S?
@@ -158,7 +159,7 @@ site (*note What is CRAN?::).
 ========================
 
 In publications, please refer to this FAQ as Hornik (2003), "The R FAQ",
-and give the above, _official_ URL and the ISBN 3-901167-51-X.
+and give the above, _official_ URL and the ISBN 3-900051-01-1.
 
 1.4 Notation
 ============
@@ -503,7 +504,7 @@ data.  More information can be found at
    Last, but not least, Ross' and Robert's experience in designing and
 implementing R is described in Ihaka & Gentleman (1996), "R: A Language for
 Data Analysis and Graphics", _Journal of Computational and Graphical
-Statistics_, *5*, 299-314.  *Note Citing R::.
+Statistics_, *5*, 299-314.
 
    An annotated bibliography (BibTeX format) of R-related publications
 which includes most of the above references can be found at
@@ -515,14 +516,15 @@ which includes most of the above references can be found at
 
 To cite R in publications, use
 
-     @article{,
-       author =    {Ross Ihaka and Robert Gentleman},
-       title =     {R: A Language for Data Analysis and Graphics},
-       journal =   {Journal of Computational and Graphical Statistics},
-       year =      1996,
-       volume =    5,
-       number =    3,
-       pages =     {299--314}
+     @Manual{,
+       title        = {R: A language and environment for statistical
+                       computing},
+       author       = {{R Development Core Team}},
+       organization = {R Foundation for Statistical Computing},
+       address      = {Vienna, Austria},
+       year         = 2003,
+       note         = {ISBN 3-900051-00-3},
+       url          = {http://www.R-project.org}
      }
 
 2.9 What mailing lists exist for R?
@@ -609,9 +611,8 @@ and is currently being mirrored daily at
      `http://cran.ch.R-project.org/'  (ETH Zürich, Switzerland)
      `http://cran.de.R-project.org/'  (APP, Germany)
      `http://cran.dk.R-project.org/'  (SunSITE, Denmark)
-     `http://cran.es.R-project.org/'  
-     Spanish National Research        
-     Network, Madrid, Spain           
+     `http://cran.es.R-project.org/'  (Spanish National Research
+                                      Network, Madrid, Spain)
      `http://cran.hu.R-project.org/'  (Semmelweis U, Hungary)
      `http://cran.uk.R-project.org/'  (U of Bristol, United
                                       Kingdom)
@@ -671,6 +672,13 @@ these may be used or seek the advice of your legal counsel.
 
    None of the discussion in this section constitutes legal advice.  The R
 Core Team does not provide legal advice under any circumstances.
+
+2.12 Why is R named R?
+======================
+
+The name is partly based on the (first) names of the first two R authors
+(Robert Gentleman and Ross Ihaka), and partly a play on the name of the
+Bell Labs language `S' (*note What is S?::).
 
 3 R and S
 *********
@@ -2002,6 +2010,9 @@ distributions of R.)
      One-dimensional normal mixture models classes, for, e.g., density
      estimation or clustering algorithms research and teaching; providing
      the widely used Marron-Wand densities.
+
+*nortest*
+     Five omnibus tests for the composite hypothesis of normality.
 
 *noverlap*
      Functions to perform the regression depth method (RDM) to binary

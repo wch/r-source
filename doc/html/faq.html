@@ -28,8 +28,8 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#dir">(dir)</a>
 <h2 class="unnumbered">R FAQ</h2>
 
 <h2>Frequently Asked Questions on R</h2>
-<h2>Version 1.8-9, 2003-10-23</h2>
-<h2>ISBN 3-901167-51-X</h2>
+<h2>Version 1.8-10, 2003-10-24</h2>
+<h2>ISBN 3-900051-01-1</h2>
 <address>Kurt Hornik</address>
 <p><p><hr><p>
 
@@ -142,7 +142,7 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#Introduction">Introduction</a>
 
 <p>In publications, please refer to this <small>FAQ</small> as Hornik
 (2003), "The R <small>FAQ</small>", and give the above,
-<em>official</em> <small>URL</small> and the ISBN 3-901167-51-X.
+<em>official</em> <small>URL</small> and the ISBN 3-900051-01-1.
 
 <div class="node">
 <p><hr>
@@ -200,6 +200,7 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#Top">Top</a>
 <li><a accesskey="9" href="#What%20mailing%20lists%20exist%20for%20R%3f">What mailing lists exist for R?</a>: 
 <li><a href="#What%20is%20CRAN%3f">What is CRAN?</a>: 
 <li><a href="#Can%20I%20use%20R%20for%20commercial%20purposes%3f">Can I use R for commercial purposes?</a>: 
+<li><a href="#Why%20is%20R%20named%20R%3f">Why is R named R?</a>: 
 </ul>
 
 <div class="node">
@@ -630,8 +631,7 @@ the data.  More information can be found at
    <p>Last, but not least, Ross' and Robert's experience in designing and
 implementing R is described in Ihaka &amp; Gentleman (1996), "R: A Language
 for Data Analysis and Graphics",
-<a href="http://www.amstat.org/publications/jcgs/"><em>Journal of Computational and Graphical Statistics</em></a>, <strong>5</strong>, 299-314. 
-See <a href="#Citing%20R">Citing R</a>.
+<a href="http://www.amstat.org/publications/jcgs/"><em>Journal of Computational and Graphical Statistics</em></a>, <strong>5</strong>, 299-314.
 
    <p>An annotated bibliography (BibTeX format) of R-related publications
 which includes most of the above references can be found at
@@ -652,14 +652,15 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#R%20Basics">R Basics</a>
 
 <p>To cite R in publications, use
 
-<pre class="example">     @article{,
-       author =    {Ross Ihaka and Robert Gentleman},
-       title =     {R: A Language for Data Analysis and Graphics},
-       journal =   {Journal of Computational and Graphical Statistics},
-       year =      1996,
-       volume =    5,
-       number =    3,
-       pages =     {299--314}
+<pre class="example">     @Manual{,
+       title        = {R: A language and environment for statistical
+                       computing},
+       author       = {{R Development Core Team}},
+       organization = {R Foundation for Statistical Computing},
+       address      = {Vienna, Austria},
+       year         = 2003,
+       note         = {ISBN 3-900051-00-3},
+       url          = {http://www.R-project.org}
      }
      </pre>
 
@@ -774,7 +775,7 @@ binaries.
 <br></td></tr><tr align="left"><td valign="top"><a href="http://cran.dk.R-project.org/">http://cran.dk.R-project.org/</a>
 </td><td valign="top">(SunSITE, Denmark)
 <br></td></tr><tr align="left"><td valign="top"><a href="http://cran.es.R-project.org/">http://cran.es.R-project.org/</a>
-Spanish National Research Network, Madrid, Spain
+</td><td valign="top">(Spanish National Research Network, Madrid, Spain)
 <br></td></tr><tr align="left"><td valign="top"><a href="http://cran.hu.R-project.org/">http://cran.hu.R-project.org/</a>
 </td><td valign="top">(Semmelweis U, Hungary)
 <br></td></tr><tr align="left"><td valign="top"><a href="http://cran.uk.R-project.org/">http://cran.uk.R-project.org/</a>
@@ -812,6 +813,7 @@ in your submission.
 <div class="node">
 <p><hr>
 Node:&nbsp;<a name="Can%20I%20use%20R%20for%20commercial%20purposes%3f">Can I use R for commercial purposes?</a>,
+Next:&nbsp;<a rel="next" accesskey="n" href="#Why%20is%20R%20named%20R%3f">Why is R named R?</a>,
 Previous:&nbsp;<a rel="previous" accesskey="p" href="#What%20is%20CRAN%3f">What is CRAN?</a>,
 Up:&nbsp;<a rel="up" accesskey="u" href="#R%20Basics">R Basics</a>
 <br>
@@ -853,6 +855,20 @@ these may be used or seek the advice of your legal counsel.
 
    <p>None of the discussion in this section constitutes legal advice.  The R
 Core Team does not provide legal advice under any circumstances.
+
+<div class="node">
+<p><hr>
+Node:&nbsp;<a name="Why%20is%20R%20named%20R%3f">Why is R named R?</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#Can%20I%20use%20R%20for%20commercial%20purposes%3f">Can I use R for commercial purposes?</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#R%20Basics">R Basics</a>
+<br>
+</div>
+
+<h3 class="section">2.12 Why is R named R?</h3>
+
+<p>The name is partly based on the (first) names of the first two R authors
+(Robert Gentleman and Ross Ihaka), and partly a play on the name of the
+Bell Labs language `S' (see <a href="#What%20is%20S%3f">What is S?</a>).
 
 <div class="node">
 <p><hr>
@@ -2158,6 +2174,8 @@ networks"), and for multinomial log-linear models.  Contained in the
      <dd>One-dimensional normal mixture models classes, for, e.g., density
 estimation or clustering algorithms research and teaching; providing the
 widely used Marron-Wand densities. 
+<br><dt><strong>nortest</strong>
+     <dd>Five omnibus tests for the composite hypothesis of normality. 
 <br><dt><strong>noverlap</strong>
      <dd>Functions to perform the regression depth method (RDM) to binary
 regression to approximate the amount of overlap, i.e., the minimal
