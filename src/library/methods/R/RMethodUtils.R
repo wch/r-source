@@ -146,8 +146,8 @@ makeStandardGeneric <-
         fgen <- function(x, ...) {}
       }
       else {
-        message("Making a generic for special function \"", f, "\"")
-        setPrimitiveMethods(f, fdef, "reset", fgen, NULL)
+          .message("Making a generic for special function \"", f, "\"")
+          setPrimitiveMethods(f, fdef, "reset", fgen, NULL)
       }
       ## Note that the body of the function comes from the list.  In a few cases ("$"),
       ## this body is not just a call to standardGeneric
@@ -343,8 +343,8 @@ conformMethod <-
              ")")
     }
     else if(!all(signature[omitted] == "missing")) {
-        message(label, "Expanding the signature to include omitted arguments in definition: ",
-            paste(fnames[omitted], "= \"missing\"",collapse = ", "))
+        .message(label, "Expanding the signature to include omitted arguments in definition: ",
+                 paste(fnames[omitted], "= \"missing\"",collapse = ", "))
         signature[omitted] <- "missing"
     }
     ## remove trailing "ANY"'s

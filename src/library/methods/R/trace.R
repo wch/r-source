@@ -136,7 +136,7 @@
         }
         else paste("\" as seen from package \"", fromPackage, "\"", sep="")
         object <- if(is.null(signature)) " function \"" else " specified method for function \""
-        message(action, object, what, location)
+        .message(action, object, what, location)
     }
     what
 }
@@ -256,7 +256,7 @@
     if(!isGeneric("show", envir))
         setGeneric("show", where = envir)
     setMethod("show", "traceable", function(object) {
-        message("Object of class \"", class(object), "\"")
+        .message("Object of class \"", class(object), "\"")
         show(object@original)
         cat("\n## (to see the tracing code, look at body(object))\n")
     }, where = envir)
@@ -290,7 +290,7 @@ trySilent <- function(expr) {
 .assignOverBinding <- function(what, value, where, verbose = TRUE) {
     pname <- getPackageName(where)
     if(verbose)
-        message("Assigning over the binding of symbol \"", what,
+        .message("Assigning over the binding of symbol \"", what,
                 "\" in environment/package \"", pname, "\"")
     warnOpt <- options(warn= -1) # kill the obsolete warning from R_LockBinding
     on.exit(options(warnOpt))

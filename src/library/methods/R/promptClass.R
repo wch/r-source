@@ -241,7 +241,7 @@ function (clName, filename = NULL, type = "class",
                       sQuote(summary(filename)$description))
     else
         what <- ""                      # what, indeed?
-    message("A shell of class documentation has been written",what,".\n")
+    .message("A shell of class documentation has been written",what,".\n")
     invisible(filename)
 }
 

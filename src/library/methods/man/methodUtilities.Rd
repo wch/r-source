@@ -10,7 +10,6 @@
 \alias{elNamed<-}
 \alias{formalArgs}
 \alias{Quote}
-\alias{message}
 \alias{showDefault}
 \alias{initMethodDispatch}
 \title{Utility Functions for Methods and S-Plus Compatibility}
@@ -34,8 +33,6 @@ formalArgs(def)
 
 Quote()
 
-message(...)
-
 showDefault(object, oldMethods = TRUE)
 
 initMethodDispatch()
@@ -49,7 +46,6 @@ initMethodDispatch()
     \item{\code{getFunction}:}{ 
       find the object as a function.
     }
-  
     \item{\code{elNamed}:}{ 
       get the element of the vector corresponding to name.  Unlike the
       \code{[}, \code{[[}, and \code{$} operators, this function %$
@@ -59,39 +55,31 @@ initMethodDispatch()
     \item{\code{formalArgs}:}{ 
       Returns the names of the formal arguments of this function.
     }
-  
     \item{\code{existsFunction}:}{ 
       Is there a function of this name?  If \code{generic} is
       \code{FALSE}, generic functions are not counted. 
     }
-  
     \item{\code{findFunction}:}{ 
       return all the indices of the search list on which a function
       definition for \code{name} exists.  
 
       If \code{generic} is \code{FALSE}, ignore generic functions.
     }
-    \item{\code{message}:}{ 
-      Output all the arguments, pasted together with no intervening
-      spaces.
-    }
     \item{\code{showDefault}:}{ 
       Utility, used to enable \code{show} methods to be called by the
       automatic printing (via \code{print.default}).
  
-  { Argument \code{oldMethods} controls whether old-style print
-    methods are used for this
-    object.  It is  \code{TRUE} by default if called directly, but \code{FALSE}
-    when called from the \pkg{methods} package for automatic printing (to
-    avoid potential recursion).
+      Argument \code{oldMethods} controls whether old-style print
+      methods are used for this object.  It is \code{TRUE} by default
+      if called directly, but \code{FALSE} when called from the
+      \pkg{methods} package for automatic printing (to avoid potential
+      recursion).
     }
     \item{\code{initMethodDispatch}:}{
-        Turn on the internal method dispatch code.  Called on
-        attaching the package.  Also, if dispatch has been turned off
-        (by calling \code{.isMethodsDispatchOn(FALSE)}---a very gutsy
-        thing to do), calling this function should turn dispatch back
-        on again.
-      }
+      Turn on the internal method dispatch code.  Called on attaching
+      the package.  Also, if dispatch has been turned off (by calling
+      \code{.isMethodsDispatchOn(FALSE)}---a very gutsy thing to do),
+      calling this function should turn dispatch back on again.
     }
   }
 }

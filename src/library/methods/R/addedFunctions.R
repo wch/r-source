@@ -111,7 +111,7 @@ existsFunction <- function(f, generic=TRUE, where = topenv(parent.frame()))
 Quote <- get("quote" , mode = "function")
 
 
-message <-
+.message <-
   ## output all the arguments, pasted together with no intervening spaces.
   function(...) {
       ## the junk below is just til cat honors fill=TRUE on a single string.
