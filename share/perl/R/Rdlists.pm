@@ -241,7 +241,7 @@ sub build_htmlpkglist {
     print htmlfile html_pagehead("Package Index", ".",
 				 "index.$HTML", "Top",
 				 "", "",
-				 "function.$HTML", "Functions");
+				 "", "");
 
     print htmlfile "<table align=\"center\" summary=\"R Package list\">\n";
 

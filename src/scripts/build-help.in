@@ -25,7 +25,7 @@ use R::Rdconv;
 use R::Rdlists;
 use R::Utils;
 
-my $revision = ' $Revision: 1.27 $ ';
+my $revision = ' $Revision: 1.28 $ ';
 my $version;
 my $name;
 
@@ -70,7 +70,7 @@ if($opt_htmllists){
     %anindex = read_anindex("$R_HOME/library");
     %htmlindex = read_htmlindex("$R_HOME/library");
 
-    build_htmlfctlist("$R_HOME/library");
+    # build_htmlfctlist("$R_HOME/library");
 
     exit 0;
 }
@@ -118,7 +118,7 @@ if($opt_html){
 	}
 	%htmlindex = %basehtmlindex;
     }
-#    build_htmlfctlist($lib);
+    # build_htmlfctlist($lib);
 }
 
 format STDOUT =
