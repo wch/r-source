@@ -1,7 +1,8 @@
 \name{agrep}
+\alias{agrep}
 \title{Approximate String Matching (Fuzzy Matching)}
 \description{
-  Searches for approximate matches to code{pattern} (the first argument)
+  Searches for approximate matches to \code{pattern} (the first argument)
   within the string \code{x} (the second argument) using the Levenshtein
   edit distance.
 }
@@ -9,7 +10,7 @@
 agrep(pattern, x, ignore.case = FALSE, value = FALSE, max.distance = 0.1)
 }
 \arguments{
-  \item{pattern}{character string to be matched (\emph{no} regular
+  \item{pattern}{character string to be matched (\emph{not} a regular
     expression!)}
   \item{x}{character vector where matches are sought.}
   \item{ignore.case}{if \code{FALSE}, the pattern matching is \emph{case
@@ -59,5 +60,3 @@ agrep("laysy", c("1 lazy", "1", "1 LAZY"), max = 2, value = TRUE)
 agrep("laysy", c("1 lazy", "1", "1 LAZY"), max = 3, ignore.case = TRUE)
 }
 \keyword{character}
-
-
