@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2004
-@set FAQ-VERSION 1.9-6 @value{FAQ-YEAR}-04-22
+@set FAQ-VERSION 1.9-7 @value{FAQ-YEAR}-04-27
 @set REL-VERSION 1.9.0
 @set REL-YEAR 2004
 @set FAQ-ISBN 3-900051-01-1
@@ -2546,6 +2546,9 @@ files and sound samples.
 Functions for kriging and point pattern analysis from ``Modern Applied
 Statistics with S'' by W. Venables and B. Ripley.  Contained in the
 @file{VR} bundle.  @emph{Recommended}.
+@item spatialCovariance
+Computation of spatial covariance matrices for data on rectangles using
+one dimensional numerical integration and analytic results.
 @item spatstat
 Data analysis and modelling of two-dimensional point patterns, including
 multitype points and spatial covariates.

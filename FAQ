@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.9-6 2004-04-22
+Version 1.9-7 2004-04-27
 ISBN 3-900051-01-1
 Kurt Hornik
 
@@ -2506,6 +2506,10 @@ distributions of R.)
      Functions for kriging and point pattern analysis from "Modern Applied
      Statistics with S" by W. Venables and B. Ripley.  Contained in the
      `VR' bundle.  _Recommended_.
+
+*spatialCovariance*
+     Computation of spatial covariance matrices for data on rectangles using
+     one dimensional numerical integration and analytic results.
 
 *spatstat*
      Data analysis and modelling of two-dimensional point patterns,
