@@ -1,10 +1,9 @@
-\def\R{R} % needed for pdftex processing of hyperlinks
 \input texinfo @c -*-texinfo-*-
 @c %**start of header
 @setfilename external.info
 @settitle Guide to using .Call and .External in R
 @set VERSION 1.0
-@set CVS-version $Id: R-external.texi,v 1.2 1999/11/13 15:12:32 ripley Exp $
+@set CVS-version $Id: R-external.texi,v 1.3 1999/11/14 15:02:48 ripley Exp $
 @setchapternewpage on
 @c %**end of header
 
@@ -260,7 +259,7 @@ if the memory cannot be allocated.
 
 
 
-@section Details of @R{} types
+@section Details of R types
 
 Users of the @file{Rinternals.h} macros will need to know how the
 @R{} types are known internally: this is more or less completely hidden if
@@ -555,8 +554,9 @@ The constants @code{R_NaN}, @code{R_PosInf}, @code{R_NegInf} and
 
 
 @node Handling R Objects in C, Evaluating R Expressions from C, Interface Functions .Call and .External, Top
-@chapter Handling @R{} Objects in C
-@cindex Handling @R{} Objects in C
+
+@chapter Handling R Objects in C
+@cindex Handling R Objects in C
 
 So far we have only seen how to create and coerce @R{} objects from C code,
 and how to extract the numeric data from numeric @R{} vectors. These can
@@ -774,8 +774,8 @@ inherits=TRUE)} respectively.
 
 
 @node    Evaluating R Expressions from C,  , Handling R Objects in C, Top
-@chapter Evaluating @R{} Expressions from C
-@cindex Evaluating @R{} Expressions from C
+@chapter Evaluating R Expressions from C
+@cindex Evaluating R Expressions from C
 
 We noted in the introduction that the @code{call_R} interface could be
 used to evaluate @R{} expressions from C code, but the current interfaces
