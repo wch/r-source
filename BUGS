@@ -173,6 +173,10 @@ Subject: prop.test  confidence intervals
 From: rbaer@kcom.edu
 Date: Fri, 18 Apr 2003 19:01:03 +0200 (MET DST)
 ..prop.test should say how it computes confidence intervals.
+* PR# 2886 *
+Subject: [ENH] Clarify rsync flavors
+From: Ross Boylan <ross@biostat.ucsf.edu>
+Date: Wed, 30 Apr 2003 11:15:02 -0700
 
 Directory:  Graphics
 
@@ -602,6 +606,18 @@ Date: Thu, 24 Apr 2003 11:40:35 -0600 (MDT)
 Subject: R-1.7.0 build feedback: NetBSD 1.6
 From: "Nelson H. F. Beebe" <beebe@math.utah.edu>
 Date: Thu, 24 Apr 2003 11:45:20 -0600 (MDT)
+* PR# 2887 *
+Subject: tools/ldAIX4 Assumes AIX nm
+From: rgrubbfink@cox.net
+Date: Wed, 30 Apr 2003 22:24:34 +0200 (MET DST)
+* PR# 2888 *
+Subject: AIX 4.3.3 nm will not read all of dounzip.o
+From: rgrubbfink@cox.net
+Date: Wed, 30 Apr 2003 22:33:24 +0200 (MET DST)
+* PR# 2893 *
+Subject: ldAIX4 does not generate Rlapack.exp
+From: rgrubbfink@cox.net
+Date: Thu, 1 May 2003 21:20:40 +0200 (MET DST)
 
 Directory:  TooMuchAtOnce
 
@@ -686,26 +702,10 @@ Date: Tue, 29 Apr 2003 13:02:25 -0700 (PDT)
 Subject: Problem with R CMD INSTALL and package versions
 From: rpeng@stat.ucla.edu
 Date: Wed, 30 Apr 2003 08:23:12 +0200 (MET DST)
-* PR# 2879 *
-Subject: Try the Gold yl gjl imgiyaoxzlr
-From: "Corina Inman" <96qpqb9r8@mindspring.com>
-Date: Wed, 30 Apr 03 12:32:05 GMT
 * PR# 2880 *
 Subject: return(1, ) results in subsequent segfault
 From: Uwe Ligges <ligges@statistik.uni-dortmund.de>
 Date: Wed, 30 Apr 2003 15:52:35 +0200
-* PR# 2881 *
-Subject: Add 3 1nches fr,ee!!               dccoib chsa s civuhk mtcgohu ns qy g gutaatbe
-From: "" <posterior@aperfectisp.com>
-Date: Thu, 01 May 03 05:21:52 GMT
-* PR# 2882 *
-Subject: R-BUGSjarmlHow to build you'r own business websitejarml
-From: <mthsq@localaccess.com>
-Date: Tue, 29 Apr 2003 15:04:22
-* PR# 2883 *
-Subject: pnorm conditional
-From: Dan Pemstein <dbpemste@artsci.wustl.edu>
-Date: 30 Apr 2003 12:20:58 -0500
 * PR# 2884 *
 Subject: make check failures
 From: Ross Boylan <ross@biostat.ucsf.edu>
@@ -714,35 +714,11 @@ Date: Wed, 30 Apr 2003 11:05:37 -0700
 Subject: Wrong date on FAQ
 From: Ross Boylan <ross@biostat.ucsf.edu>
 Date: Wed, 30 Apr 2003 11:07:57 -0700
-* PR# 2886 *
-Subject: [ENH] Clarify rsync flavors
-From: Ross Boylan <ross@biostat.ucsf.edu>
-Date: Wed, 30 Apr 2003 11:15:02 -0700
-* PR# 2887 *
-Subject: tools/ldAIX4 Assumes AIX nm
-From: rgrubbfink@cox.net
-Date: Wed, 30 Apr 2003 22:24:34 +0200 (MET DST)
-* PR# 2888 *
-Subject: AIX 4.3.3 nm will not read all of dounzip.o
-From: rgrubbfink@cox.net
-Date: Wed, 30 Apr 2003 22:33:24 +0200 (MET DST)
-* PR# 2889 *
-Subject: I need an urgent reply
-From: "Abdul Musa" <abdulmusadrc5@kukamail.com>
-Date: Wed, 30 Apr 2003 21:50:32 -0000
-* PR# 2891 *
-Subject: Want some generic viagra? g p
-From: "" <hotgirls32412@yahoo.com>
-Date: Thu, 01 May 03 16:05:09 GMT
-* PR# 2892 *
-Subject: Fast Distribution Worldwide jqdcaw gi  ppd
-From: "Johnathan Worley" <51t1pt4j@hotmail.com>
-Date: Thu, 01 May 03 15:04:18 GMT
-* PR# 2893 *
-Subject: ldAIX4 does not generate Rlapack.exp
-From: rgrubbfink@cox.net
-Date: Thu, 1 May 2003 21:20:40 +0200 (MET DST)
 * PR# 2894 *
 Subject: qbeta hang
 From: terra@gnome.org
 Date: Thu, 1 May 2003 22:43:59 +0200 (MET DST)
+* PR# 2903 *
+Subject: ***Last Chance...15.6 MILLION OPT-IN EMAIL ADDRESSES!
+From: "Yboreviel"<IncreaseSalesNo050103@excite.com>
+Date: Fri, 2 May 2003 20:30:23 GMT
