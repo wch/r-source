@@ -145,7 +145,7 @@ function(file)
               gettext("See chapter 'Writing R documentation' in manual 'Writing R Extensions'."))
         stop(paste(msg, collapse = "\n"), domain = NA)
     }
-        
+
     Rd_title <- .get_Rd_title(txt)
     if(!length(Rd_title)) {
         msg <-
@@ -371,8 +371,7 @@ function(package, dir, lib.loc = NULL)
         ## Using package installed in @code{dir} ...
         docsDir <- file.path(dir, "man")
         if(!file_test("-d", docsDir))
-            stop(gettextf("directory '%s' does not contain Rd objects",
-                          dir),
+            stop(gettextf("directory '%s' does not contain Rd objects", dir),
                  domain = NA)
         docsFiles <- list_files_with_type(docsDir, "docs")
         db <- list()
@@ -403,13 +402,12 @@ function(package, dir, lib.loc = NULL)
         ## Using sources from directory @code{dir} ...
         if(!file_test("-d", dir))
             stop(gettextf("directory '%s' does not exist", dir),
-                 domain = NA) 
+                 domain = NA)
         else
             dir <- file_path_as_absolute(dir)
         docsDir <- file.path(dir, "man")
         if(!file_test("-d", docsDir))
-            stop(gettextf("directory '%s' does not contain Rd sources",
-                          dir),
+            stop(gettextf("directory '%s' does not contain Rd sources", dir),
                  domain = NA)
         docsFiles <- list_files_with_type(docsDir, "docs")
         db <- lapply(docsFiles, .read_Rd_lines_quietly)
@@ -503,8 +501,7 @@ function(file, text = NULL)
                      domain = NA)
             pos <- delimMatch(txt)
             if(pos == -1)
-                stop(gettextf("unterminated section 'section{%s}'",
-                              tmp),
+                stop(gettextf("unterminated section 'section{%s}'", tmp),
                      domain = NA)
             tag <- c(tag, tmp)
         }
@@ -598,7 +595,7 @@ function(txt)
         txt <- substring(txt, pos + attr(pos, "match.length") - 1)
         if((pos <- delimMatch(txt)) == -1)
             stop(gettextf("unmatched \\item name in '\\item{%s'",
-                                sub("\n.*$", "", txt)),
+                          sub("\n.*$", "", txt)),
                  domain = NA,
                  call. = FALSE)
         out <- c(out,
@@ -726,14 +723,14 @@ function(db, FUN, ...)
     db <- lapply(db, function(t) try(FUN(t, ...), silent = TRUE))
     idx <- as.logical(sapply(db, inherits, "try-error"))
     if(any(idx)) {
-        msg <- gettext("Rd syntax errors found")
-        for(i in which(idx))
-            msg <-
-                c(msg,
-                  paste(gettextf("Syntax error in documentation object '%s':"),
-                        names(db)[i]),
-                  db[[i]])
-        stop(paste(msg, collapse = "\n"), call. = FALSE, domain = NA)
+	msg <- gettext("Rd syntax errors found")
+	for(i in which(idx))
+	    msg <-
+		c(msg,
+		  gettextf("Syntax error in documentation object '%s':",
+			   names(db)[i]),
+		  db[[i]])
+	stop(paste(msg, collapse = "\n"), call. = FALSE, domain = NA)
     }
     db
 }
