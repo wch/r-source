@@ -1,298 +1,3 @@
-Entry: .Alias
-Keywords: .Alias programming
-Description: Create ``Alias'' (Pointer) to \R Object
-URL: ../../../library/base/html/.Alias.html
-
-Entry: Arithmetic
-Keywords: + - * / ^ %% %/% Arithmetic arith
-Description: Arithmetic Operators
-URL: ../../../library/base/html/Arithmetic.html
-
-Entry: BATCH
-Keywords: BATCH
-Description: Batch Exectution of R
-URL: ../../../library/base/html/BATCH.html
-
-Entry: Bessel
-Keywords: bessel Bessel besselI besselJ besselK besselY gammaCody math
-Description: Bessel Functions
-URL: ../../../library/base/html/Bessel.html
-
-Entry: Beta
-Keywords: dbeta pbeta qbeta rbeta distribution
-Description: The Beta Distribution
-URL: ../../../library/base/html/Beta.html
-
-Entry: Binomial
-Keywords: dbinom pbinom qbinom rbinom distribution
-Description: The Binomial Distribution
-URL: ../../../library/base/html/Binomial.html
-
-Entry: C
-Keywords: C models
-Description: Sets Contrasts for a Factor
-URL: ../../../library/base/html/C.html
-
-Entry: COMPILE
-Keywords: COMPILE
-Description: Compile Files for Use with R
-URL: ../../../library/base/html/COMPILE.html
-
-Entry: Cauchy
-Keywords: dcauchy pcauchy qcauchy rcauchy distribution
-Description: The Cauchy Distribution
-URL: ../../../library/base/html/Cauchy.html
-
-Entry: Chisquare
-Keywords: dchisq pchisq qchisq rchisq distribution
-Description: The (non-central) Chi-Square Distribution
-URL: ../../../library/base/html/Chisquare.html
-
-Entry: Comparison
-Keywords: < <= == != >= > Comparison logic
-Description: Relational Operators
-URL: ../../../library/base/html/Comparison.html
-
-Entry: Constants
-Keywords: LETTERS letters month.abb month.name pi sysdata
-Description: Built-in Constants
-URL: ../../../library/base/html/Constants.html
-
-Entry: Control
-Keywords: if else for while repeat break next programming iteration logic
-Description: Control Flow
-URL: ../../../library/base/html/Control.html
-
-Entry: Defunct
-Keywords: Defunct .Defunct . ... documentation utilities
-Description: Defunct Functions
-URL: ../../../library/base/html/Defunct.html
-
-Entry: Deprecated
-Keywords: Deprecated .Deprecated . dnchisq pnchisq qnchisq print.anova.lm print.anova.glm print.tabular print.plot save.plot documentation utilities
-Description: Deprecated Functions
-URL: ../../../library/base/html/Deprecated.html
-
-Entry: Devices
-Keywords: Devices device windows device
-Description: List of Graphical Devices
-URL: ../../../library/base/html/Devices.html
-
-Entry: Exponential
-Keywords: dexp pexp qexp rexp distribution
-Description: The Exponential Distribution
-URL: ../../../library/base/html/Exponential.html
-
-Entry: Extract
-Keywords: Extract Subscript [ [[ $ [<- [[<- $<- [.data.frame [[.data.frame [<-.data.frame [[<-.data.frame [.factor [.formula [.ts [<-.factor array list
-Description: Extract or Replace Parts of an Object
-URL: ../../../library/base/html/Extract.html
-
-Entry: Extremes
-Keywords: max min pmax pmin univar arith
-Description: Maxima and Minima
-URL: ../../../library/base/html/Extremes.html
-
-Entry: FDist
-Keywords: df pf qf rf distribution
-Description: The F Distribution
-URL: ../../../library/base/html/FDist.html
-
-Entry: Foreign
-Keywords: .C .Fortran .External programming
-Description: Foreign Function Interface
-URL: ../../../library/base/html/Foreign.html
-
-Entry: GammaDist
-Keywords: dgamma pgamma qgamma rgamma distribution
-Description: The Gamma Distribution
-URL: ../../../library/base/html/GammaDist.html
-
-Entry: Geometric
-Keywords: dgeom pgeom qgeom rgeom distribution
-Description: The Geometric Distribution
-URL: ../../../library/base/html/Geometric.html
-
-Entry: Hyperbolic
-Keywords: cosh sinh tanh acosh asinh atanh math
-Description: Hyperbolic Functions
-URL: ../../../library/base/html/Hyperbolic.html
-
-Entry: Hypergeometric
-Keywords: dhyper phyper qhyper rhyper distribution
-Description: The Hypergeometric Distribution
-URL: ../../../library/base/html/Hypergeometric.html
-
-Entry: INSTALL
-Keywords: INSTALL
-Description: Install Add-on Packages
-URL: ../../../library/base/html/INSTALL.html
-
-Entry: IQR
-Keywords: IQR univar robust distribution
-Description: The Interquartile Range
-URL: ../../../library/base/html/IQR.html
-
-Entry: Internal
-Keywords: .Internal interface
-Description: Call an Internal Function
-URL: ../../../library/base/html/Internal.html
-
-Entry: Log
-Keywords: log log10 log2 exp math
-Description: Logarithms and Exponentials
-URL: ../../../library/base/html/Log.html
-
-Entry: Logic
-Keywords: ! & && | || xor Logic logic
-Description: Logical Operators
-URL: ../../../library/base/html/Logic.html
-
-Entry: Logistic
-Keywords: dlogis plogis qlogis rlogis distribution
-Description: The Logistic Distribution
-URL: ../../../library/base/html/Logistic.html
-
-Entry: Lognormal
-Keywords: dlnorm plnorm qlnorm rlnorm distribution
-Description: The Log Normal Distribution
-URL: ../../../library/base/html/Lognormal.html
-
-Entry: Machine
-Keywords: Machine .Machine sysdata programming math
-Description: Machine Characteristics
-URL: ../../../library/base/html/Machine.html
-
-Entry: Math
-Keywords: abs sqrt math
-Description: Miscellaneous Mathematical Functions
-URL: ../../../library/base/html/Math.html
-
-Entry: Memory
-Keywords: 
-Description: Memory Available for Data Storage
-URL: ../../../library/base/html/Memory.html
-
-Entry: Methods
-Keywords: .Method .Generic .Group .Class Math.data.frame Math.factor Ops.data.frame Ops.factor Ops.ordered Summary.data.frame Summary.factor methods
-Description: Internal and Group Methods and Generic Functions
-URL: ../../../library/base/html/Methods.html
-
-Entry: NA
-Keywords: NA is.na is.na.data.frame NA logic manip
-Description: Not Available / ``Missing'' Values
-URL: ../../../library/base/html/NA.html
-
-Entry: NChisquare
-Keywords: dnchisq pnchisq qnchisq rnchisq distribution
-Description: The Non-Central Chi-Square Distribution
-URL: ../../../library/base/html/NChisquare.html
-
-Entry: NULL
-Keywords: NULL as.null as.null.default is.null attribute manip list sysdata
-Description: The Null Object
-URL: ../../../library/base/html/NULL.html
-
-Entry: NegBinomial
-Keywords: dnbinom pnbinom qnbinom rnbinom distribution
-Description: The Negative Binomial Distribution
-URL: ../../../library/base/html/NegBinomial.html
-
-Entry: Normal
-Keywords: dnorm pnorm qnorm rnorm distribution
-Description: The Normal Distribution
-URL: ../../../library/base/html/Normal.html
-
-Entry: Poisson
-Keywords: dpois ppois qpois rpois distribution
-Description: The Poisson Distribution
-URL: ../../../library/base/html/Poisson.html
-
-Entry: Primitive
-Keywords: .Primitive interface
-Description: Call a ``Primitive'' Internal Function
-URL: ../../../library/base/html/Primitive.html
-
-Entry: REMOVE
-Keywords: REMOVE
-Description: Remove Add-on Packages
-URL: ../../../library/base/html/REMOVE.html
-
-Entry: RHOME
-Keywords: RHOME
-Description: R Home Directory
-URL: ../../../library/base/html/RHOME.html
-
-Entry: Random
-Keywords: .Random.seed RNG RNGkind distribution sysdata
-Description: Random Number Generation
-URL: ../../../library/base/html/Random.html
-
-Entry: Recall
-Keywords: Recall programming
-Description: Recursive Calling of Itself
-URL: ../../../library/base/html/Recall.html
-
-Entry: Round
-Keywords: ceiling floor round signif trunc trunc.default zapsmall arith
-Description: Rounding of Numbers
-URL: ../../../library/base/html/Round.html
-
-Entry: SHLIB
-Keywords: SHLIB
-Description: Build Shared Library for Dynamic Loading
-URL: ../../../library/base/html/SHLIB.html
-
-Entry: SignRank
-Keywords: dsignrank psignrank qsignrank rsignrank distribution
-Description: Distribution of the Wilcoxon Signed Rank Statistic
-URL: ../../../library/base/html/SignRank.html
-
-Entry: Special
-Keywords: beta lbeta gamma lgamma digamma trigamma tetragamma pentagamma choose lchoose math
-Description: Special Functions of Mathematics
-URL: ../../../library/base/html/Special.html
-
-Entry: Startup
-Keywords: Startup RProfile .First environment
-Description: Intialization at Start of an R Session
-URL: ../../../library/base/html/Startup.html
-
-Entry: TDist
-Keywords: dt pt qt rt distribution
-Description: The Student t Distribution
-URL: ../../../library/base/html/TDist.html
-
-Entry: Trig
-Keywords: cos sin tan acos asin atan atan2 math
-Description: Trigonometric Functions
-URL: ../../../library/base/html/Trig.html
-
-Entry: Tukey
-Keywords: ptukey qtukey distribution
-Description: The Studentized Range Distribution
-URL: ../../../library/base/html/Tukey.html
-
-Entry: Uniform
-Keywords: dunif punif qunif runif distribution
-Description: The Uniform Distribution
-URL: ../../../library/base/html/Uniform.html
-
-Entry: Version
-Keywords: Version version environment sysdata programming
-Description: Version Information
-URL: ../../../library/base/html/Version.html
-
-Entry: Weibull
-Keywords: dweibull pweibull qweibull rweibull distribution
-Description: The Weibull Distribution
-URL: ../../../library/base/html/Weibull.html
-
-Entry: Wilcoxon
-Keywords: dwilcox pwilcox qwilcox rwilcox distribution
-Description: Distribution of the Wilcoxon Rank Sum Statistic
-URL: ../../../library/base/html/Wilcoxon.html
-
 Entry: abbreviate
 Keywords: abbreviate character
 Description: Abbreviate Strings
@@ -328,20 +33,25 @@ Keywords: airquality datasets
 Description: New York Air Quality Measurements
 URL: ../../../library/base/html/airquality.html
 
+Entry: .Alias
+Keywords: .Alias programming
+Description: Create ``Alias'' (Pointer) to \R Object
+URL: ../../../library/base/html/.Alias.html
+
 Entry: alias
 Keywords: alias alias.formula alias.lm print.mtable models
 Description: Find Aliases (Dependencies) in a Model 
 URL: ../../../library/base/html/alias.html
 
-Entry: All
-Keywords: any all logic
-Description: Are All / Any Values True?
-URL: ../../../library/base/html/All.html
-
 Entry: all.names
 Keywords: all.names all.vars programming
 Description: Find All Names in an Expression
 URL: ../../../library/base/html/all.names.html
+
+Entry: All
+Keywords: any all logic
+Description: Are All / Any Values True?
+URL: ../../../library/base/html/All.html
 
 Entry: anova
 Keywords: anova anova.mlm print.anova regression models
@@ -388,6 +98,11 @@ Keywords: args documentation
 Description: Argument List of a Function
 URL: ../../../library/base/html/args.html
 
+Entry: Arithmetic
+Keywords: + - * / ^ %% %/% Arithmetic arith
+Description: Arithmetic Operators
+URL: ../../../library/base/html/Arithmetic.html
+
 Entry: array
 Keywords: array as.array is.array array
 Description: Multi-way Arrays
@@ -418,15 +133,15 @@ Keywords: attenu datasets
 Description: The Joyner-Boore Attenuation Data
 URL: ../../../library/base/html/attenu.html
 
-Entry: attr
-Keywords: attr attr<- attribute
-Description: Object Attributes
-URL: ../../../library/base/html/attr.html
-
 Entry: attributes
 Keywords: attributes attributes<- attribute
 Description: Object Attribute Lists
 URL: ../../../library/base/html/attributes.html
+
+Entry: attr
+Keywords: attr attr<- attribute
+Description: Object Attributes
+URL: ../../../library/base/html/attr.html
 
 Entry: autoload
 Keywords: autoload autoloader .AutoloadEnv data programming
@@ -453,20 +168,35 @@ Keywords: barplot hplot
 Description: Bar Plots
 URL: ../../../library/base/html/barplot.html
 
+Entry: BATCH
+Keywords: BATCH
+Description: Batch Exectution of R
+URL: ../../../library/base/html/BATCH.html
+
 Entry: bees
 Keywords: bees datasets
 Description: Potency of Orchard Sprays
 URL: ../../../library/base/html/bees.html
 
+Entry: Bessel
+Keywords: bessel Bessel besselI besselJ besselK besselY gammaCody math
+Description: Bessel Functions
+URL: ../../../library/base/html/Bessel.html
+
+Entry: Beta
+Keywords: dbeta pbeta qbeta rbeta distribution
+Description: The Beta Distribution
+URL: ../../../library/base/html/Beta.html
+
+Entry: Binomial
+Keywords: dbinom pbinom qbinom rbinom distribution
+Description: The Binomial Distribution
+URL: ../../../library/base/html/Binomial.html
+
 Entry: body
 Keywords: body body<- programming
 Description: Access to and Manipulation of the Body of a Function
 URL: ../../../library/base/html/body.html
-
-Entry: box
-Keywords: box aplot
-Description: Draw a Box around a Plot
-URL: ../../../library/base/html/box.html
 
 Entry: boxplot
 Keywords: boxplot hplot
@@ -477,6 +207,11 @@ Entry: boxplot.stats
 Keywords: boxplot.stats dplot
 Description: Box Plot Statistics
 URL: ../../../library/base/html/boxplot.stats.html
+
+Entry: box
+Keywords: box aplot
+Description: Draw a Box around a Plot
+URL: ../../../library/base/html/box.html
 
 Entry: browser
 Keywords: browser programming environment
@@ -492,11 +227,6 @@ Entry: bxp
 Keywords: bxp aplot
 Description: Box Plots from Summaries
 URL: ../../../library/base/html/bxp.html
-
-Entry: c
-Keywords: c manip
-Description: Combine Values into a Vector or List
-URL: ../../../library/base/html/c.html
 
 Entry: call
 Keywords: call is.call as.call programming attribute
@@ -517,6 +247,11 @@ Entry: cat
 Keywords: cat print file
 Description: Concatenate and Print
 URL: ../../../library/base/html/cat.html
+
+Entry: Cauchy
+Keywords: dcauchy pcauchy qcauchy rcauchy distribution
+Description: The Cauchy Distribution
+URL: ../../../library/base/html/Cauchy.html
 
 Entry: cbind
 Keywords: cbind rbind cbind.data.frame rbind.data.frame array manip
@@ -548,15 +283,20 @@ Keywords: chisq.test htest distribution
 Description: Pearson's Chi-square Test for Count Data
 URL: ../../../library/base/html/chisq.test.html
 
-Entry: chol
-Keywords: chol algebra array
-Description: The Choleski Decomposition
-URL: ../../../library/base/html/chol.html
+Entry: Chisquare
+Keywords: dchisq pchisq qchisq rchisq distribution
+Description: The (non-central) Chi-Square Distribution
+URL: ../../../library/base/html/Chisquare.html
 
 Entry: chol2inv
 Keywords: chol2inv algebra array
 Description: Inverse from Choleski Decomposition
 URL: ../../../library/base/html/chol2inv.html
+
+Entry: chol
+Keywords: chol algebra array
+Description: The Choleski Decomposition
+URL: ../../../library/base/html/chol.html
 
 Entry: class
 Keywords: class class<- unclass inherits methods classes
@@ -578,11 +318,6 @@ Keywords: coef coefficients coef.default coef.lm coef.glm coef.aov coef.listof r
 Description: Extract Model Coefficents
 URL: ../../../library/base/html/coefficients.html
 
-Entry: col
-Keywords: col array
-Description: Column Indexes
-URL: ../../../library/base/html/col.html
-
 Entry: row/colnames
 Keywords: rownames rownames<- colnames colnames<- array manip
 Description: Row and Columnn Names
@@ -593,10 +328,25 @@ Keywords: colors colours color dplot sysdata
 Description: Color Names
 URL: ../../../library/base/html/colors.html
 
+Entry: col
+Keywords: col array
+Description: Column Indexes
+URL: ../../../library/base/html/col.html
+
 Entry: comment
 Keywords: comment comment<- attribute
 Description: ~~function to do ... ~~
 URL: ../../../library/base/html/comment.html
+
+Entry: Comparison
+Keywords: < <= == != >= > Comparison logic
+Description: Relational Operators
+URL: ../../../library/base/html/Comparison.html
+
+Entry: COMPILE
+Keywords: COMPILE
+Description: Compile Files for Use with R
+URL: ../../../library/base/html/COMPILE.html
 
 Entry: complete.cases
 Keywords: complete.cases NA logic
@@ -612,6 +362,11 @@ Entry: conflicts
 Keywords: conflicts utilities
 Description: Search for Masked Objects on the Search Path
 URL: ../../../library/base/html/conflicts.html
+
+Entry: Constants
+Keywords: LETTERS letters month.abb month.name pi sysdata
+Description: Built-in Constants
+URL: ../../../library/base/html/Constants.html
 
 Entry: consume
 Keywords: consume datasets
@@ -638,6 +393,11 @@ Keywords: contributors misc
 Description: R Project Contributors
 URL: ../../../library/base/html/contributors.html
 
+Entry: Control
+Keywords: if else for while repeat break next programming iteration logic
+Description: Control Flow
+URL: ../../../library/base/html/Control.html
+
 Entry: convolve
 Keywords: convolve math dplot
 Description: Fast Convolution
@@ -662,6 +422,16 @@ Entry: cov.wt
 Keywords: cov.wt multivariate
 Description: Weighted Covariance Matrices
 URL: ../../../library/base/html/cov.wt.html
+
+Entry: C
+Keywords: C models
+Description: Sets Contrasts for a Factor
+URL: ../../../library/base/html/C.html
+
+Entry: c
+Keywords: c manip
+Description: Combine Values into a Vector or List
+URL: ../../../library/base/html/c.html
 
 Entry: crimes
 Keywords: crimes datasets
@@ -688,15 +458,15 @@ Keywords: cut cut.default category
 Description: Convert Numeric to Factor
 URL: ../../../library/base/html/cut.html
 
-Entry: data
-Keywords: data documentation datasets
-Description: Data Sets
-URL: ../../../library/base/html/data.html
-
 Entry: data.class
 Keywords: data.class classes methods
 Description: Object Classes 
 URL: ../../../library/base/html/data.class.html
+
+Entry: dataentry
+Keywords: data.entry dataentry de de.ncols de.restore de.setup utilities file
+Description: Spreadsheet Interface for Entering Data
+URL: ../../../library/base/html/dataentry.html
 
 Entry: data.frame
 Keywords: data.frame as.data.frame is.data.frame row.names row.names<- print.data.frame plot.data.frame as.data.frame.AsIs as.data.frame.character as.data.frame.complex as.data.frame.data.frame as.data.frame.default as.data.frame.factor as.data.frame.integer as.data.frame.list as.data.frame.logical as.data.frame.matrix as.data.frame.model.matrix as.data.frame.numeric as.data.frame.ordered as.data.frame.ts as.data.frame.vector xpdrows.data.frame classes methods
@@ -708,10 +478,10 @@ Keywords: data.matrix array
 Description: Data Frame to Numeric Matrix
 URL: ../../../library/base/html/data.matrix.html
 
-Entry: dataentry
-Keywords: data.entry dataentry de de.ncols de.restore de.setup utilities file
-Description: Spreadsheet Interface for Entering Data
-URL: ../../../library/base/html/dataentry.html
+Entry: data
+Keywords: data documentation datasets
+Description: Data Sets
+URL: ../../../library/base/html/data.html
 
 Entry: date
 Keywords: date utilities
@@ -727,6 +497,11 @@ Entry: debug
 Keywords: debug undebug programming environment
 Description: Debug a function
 URL: ../../../library/base/html/debug.html
+
+Entry: Defunct
+Keywords: Defunct .Defunct . ... documentation utilities
+Description: Defunct Functions
+URL: ../../../library/base/html/Defunct.html
 
 Entry: delay
 Keywords: delay programming data
@@ -753,6 +528,11 @@ Keywords: deparse programming manip data
 Description: Expression Deparsing
 URL: ../../../library/base/html/deparse.html
 
+Entry: Deprecated
+Keywords: Deprecated .Deprecated . dnchisq pnchisq qnchisq print.anova.lm print.anova.glm print.tabular print.plot save.plot documentation utilities
+Description: Deprecated Functions
+URL: ../../../library/base/html/Deprecated.html
+
 Entry: deriv
 Keywords: D deriv deriv.default deriv.formula math nonlinear
 Description: Symbolic and Algorithmic Derivatives of Simple Expressions
@@ -763,11 +543,6 @@ Keywords: detach data
 Description: Detach \R objects from search path
 URL: ../../../library/base/html/detach.html
 
-Entry: dev.xxx
-Keywords: dev.cur dev.list dev.next dev.prev dev.off dev.set .Device .Devices graphics.off device iplot
-Description: Control Multiple Devices
-URL: ../../../library/base/html/dev.xxx.html
-
 Entry: dev2
 Keywords: dev.copy dev.print dev.control device
 Description: Copy Graphics Between Multiple Devices
@@ -777,6 +552,16 @@ Entry: deviance
 Keywords: deviance deviance.default deviance.lm deviance.glm deviance.mlm models
 Description: Model Deviance
 URL: ../../../library/base/html/deviance.html
+
+Entry: Devices
+Keywords: Devices device windows device
+Description: List of Graphical Devices
+URL: ../../../library/base/html/Devices.html
+
+Entry: dev.xxx
+Keywords: dev.cur dev.list dev.next dev.prev dev.off dev.set .Device .Devices graphics.off device iplot
+Description: Control Multiple Devices
+URL: ../../../library/base/html/dev.xxx.html
 
 Entry: df.residual
 Keywords: df.residual models regression
@@ -793,15 +578,15 @@ Keywords: diff diff.default ts arith
 Description: Lagged Differences
 URL: ../../../library/base/html/diff.html
 
-Entry: dim
-Keywords: dim dim.data.frame dim<- array
-Description: Dimensions of an Object
-URL: ../../../library/base/html/dim.html
-
 Entry: dimnames
 Keywords: dimnames dimnames<- dimnames.data.frame dimnames<-.data.frame array manip
 Description: Dimnames of an Object
 URL: ../../../library/base/html/dimnames.html
+
+Entry: dim
+Keywords: dim dim.data.frame dim<- array
+Description: Dimensions of an Object
+URL: ../../../library/base/html/dim.html
 
 Entry: discoveries
 Keywords: discoveries datasets
@@ -883,15 +668,15 @@ Keywords: esoph datasets
 Description: Smoking, Alcohol and (O)esophageal Cancer
 URL: ../../../library/base/html/esoph.html
 
-Entry: euro
-Keywords: euro euro.cross datasets
-Description: Euro conversion rates
-URL: ../../../library/base/html/euro.html
-
 Entry: eurodist
 Keywords: eurodist datasets
 Description: Distances Between Cities in Europe
 URL: ../../../library/base/html/eurodist.html
+
+Entry: euro
+Keywords: euro euro.cross datasets
+Description: Euro conversion rates
+URL: ../../../library/base/html/euro.html
 
 Entry: eval
 Keywords: eval evalq data programming
@@ -913,6 +698,11 @@ Keywords: expand.grid models
 Description: Create a Data Frame from All Combinations of Factors
 URL: ../../../library/base/html/expand.grid.html
 
+Entry: Exponential
+Keywords: dexp pexp qexp rexp distribution
+Description: The Exponential Distribution
+URL: ../../../library/base/html/Exponential.html
+
 Entry: expression
 Keywords: expression is.expression as.expression as.expression.default programming dplot
 Description: Unevaluated Expressions
@@ -922,6 +712,16 @@ Entry: extractAIC
 Keywords: extractAIC.aov extractAIC.lm extractAIC.glm extractAIC.coxph extractAIC.negbin extractAIC.survreg models
 Description: Extract AIC from a Fitted Model
 URL: ../../../library/base/html/extractAIC.html
+
+Entry: Extract
+Keywords: Extract Subscript [ [[ $ [<- [[<- $<- [.data.frame [[.data.frame [<-.data.frame [[<-.data.frame [.factor [.formula [.ts [<-.factor array list
+Description: Extract or Replace Parts of an Object
+URL: ../../../library/base/html/Extract.html
+
+Entry: Extremes
+Keywords: max min pmax pmin univar arith
+Description: Maxima and Minima
+URL: ../../../library/base/html/Extremes.html
 
 Entry: factor
 Keywords: factor ordered is.factor is.ordered as.factor as.ordered category NA
@@ -942,6 +742,11 @@ Entry: family
 Keywords: family family.lm binomial gaussian Gamma inverse.gaussian poisson quasi print.family models
 Description: Family Objects for Models
 URL: ../../../library/base/html/family.html
+
+Entry: FDist
+Keywords: df pf qf rf distribution
+Description: The F Distribution
+URL: ../../../library/base/html/FDist.html
 
 Entry: fft
 Keywords: fft mvfft math dplot
@@ -978,25 +783,30 @@ Keywords: fix utilities
 Description: Fix an Object
 URL: ../../../library/base/html/fix.html
 
+Entry: Foreign
+Keywords: .C .Fortran .External programming
+Description: Foreign Function Interface
+URL: ../../../library/base/html/Foreign.html
+
 Entry: formals
 Keywords: formals formals<- programming
 Description: Access to and Manipulation of the Formal Arguments
 URL: ../../../library/base/html/formals.html
 
-Entry: format
-Keywords: format format.default format.pval character print
-Description: Encode in a Common Format
-URL: ../../../library/base/html/format.html
+Entry: formatC
+Keywords: formatC format.char character print
+Description: Flexible Formatting
+URL: ../../../library/base/html/formatC.html
 
 Entry: format.info
 Keywords: format.info character print programming
 Description: format(.) Information
 URL: ../../../library/base/html/format.info.html
 
-Entry: formatC
-Keywords: formatC format.char character print
-Description: Flexible Formatting
-URL: ../../../library/base/html/formatC.html
+Entry: format
+Keywords: format format.default format.pval character print
+Description: Encode in a Common Format
+URL: ../../../library/base/html/format.html
 
 Entry: formula
 Keywords: ~ formula formula.default formula.formula formula.terms formula.data.frame as.formula print.formula models
@@ -1018,6 +828,11 @@ Keywords: function return programming
 Description: Function Definition
 URL: ../../../library/base/html/function.html
 
+Entry: GammaDist
+Keywords: dgamma pgamma qgamma rgamma distribution
+Description: The Gamma Distribution
+URL: ../../../library/base/html/GammaDist.html
+
 Entry: gc
 Keywords: gc gcinfo environment
 Description: Garbage Collection
@@ -1028,20 +843,20 @@ Keywords: gctorture environment
 Description: Torture garbage collector
 URL: ../../../library/base/html/gctorture.html
 
-Entry: get
-Keywords: get data
-Description: Return a Variable's Value
-URL: ../../../library/base/html/get.html
+Entry: Geometric
+Keywords: dgeom pgeom qgeom rgeom distribution
+Description: The Geometric Distribution
+URL: ../../../library/base/html/Geometric.html
 
 Entry: getenv
 Keywords: getenv environment utilities
 Description: Get Environment Variables
 URL: ../../../library/base/html/getenv.html
 
-Entry: gl
-Keywords: gl category arith
-Description: Generate Factor Levels
-URL: ../../../library/base/html/gl.html
+Entry: get
+Keywords: get data
+Description: Return a Variable's Value
+URL: ../../../library/base/html/get.html
 
 Entry: glm
 Keywords: glm glm.control glm.fit glm.fit.null models regression
@@ -1052,6 +867,11 @@ Entry: glm.summaries
 Keywords: summary.glm summary.glm.null anova.glm anova.glmlist anova.glm.null coefficients.glm df.residual.glm family.glm fitted.values.glm residuals.glm print.glm print.glm.null print.anova.glm print.summary.glm print.summary.glm.null models regression
 Description: Accessing Generalized Linear Model Fits
 URL: ../../../library/base/html/glm.summaries.html
+
+Entry: gl
+Keywords: gl category arith
+Description: Generate Factor Levels
+URL: ../../../library/base/html/gl.html
 
 Entry: gray
 Keywords: gray color
@@ -1093,6 +913,16 @@ Keywords: hsv color dplot
 Description: HSV Color Specification
 URL: ../../../library/base/html/hsv.html
 
+Entry: Hyperbolic
+Keywords: cosh sinh tanh acosh asinh atanh math
+Description: Hyperbolic Functions
+URL: ../../../library/base/html/Hyperbolic.html
+
+Entry: Hypergeometric
+Keywords: dhyper phyper qhyper rhyper distribution
+Description: The Hypergeometric Distribution
+URL: ../../../library/base/html/Hypergeometric.html
+
 Entry: identify
 Keywords: identify identify.default iplot
 Description: Identify Points in a Scatter Plot
@@ -1123,6 +953,11 @@ Keywords: insects datasets
 Description: Effectiveness of Insect Sprays
 URL: ../../../library/base/html/insects.html
 
+Entry: INSTALL
+Keywords: INSTALL
+Description: Install Add-on Packages
+URL: ../../../library/base/html/INSTALL.html
+
 Entry: integer
 Keywords: integer as.integer as.integer.default is.integer classes
 Description: Integer Vectors
@@ -1138,10 +973,20 @@ Keywords: interactive environment programming
 Description: Is \R running interactively ?
 URL: ../../../library/base/html/interactive.html
 
+Entry: Internal
+Keywords: .Internal interface
+Description: Call an Internal Function
+URL: ../../../library/base/html/Internal.html
+
 Entry: invisible
 Keywords: invisible programming
 Description: Change the Print Mode to Invisible
 URL: ../../../library/base/html/invisible.html
+
+Entry: IQR
+Keywords: IQR univar robust distribution
+Description: The Interquartile Range
+URL: ../../../library/base/html/IQR.html
 
 Entry: iris
 Keywords: iris iris3 datasets
@@ -1158,6 +1003,11 @@ Keywords: is.function programming
 Description: Is an Object of Type Function?
 URL: ../../../library/base/html/is.function.html
 
+Entry: islands
+Keywords: islands datasets
+Description: Areas of the World's Major Landmasses
+URL: ../../../library/base/html/islands.html
+
 Entry: is.language
 Keywords: is.language programming
 Description: Is an Object a Language Object?
@@ -1168,20 +1018,15 @@ Keywords: is.atomic is.recursive programming classes
 Description: Is an Object Atomic or Recursive?
 URL: ../../../library/base/html/is.recursive.html
 
-Entry: is.single
-Keywords: is.single classes
-Description: Is an Object of Single Precision Type?
-URL: ../../../library/base/html/is.single.html
-
 Entry: is.R
 Keywords: is.R environment utilities
 Description: Are we using \R, rather than S?
 URL: ../../../library/base/html/is.R.html
 
-Entry: islands
-Keywords: islands datasets
-Description: Areas of the World's Major Landmasses
-URL: ../../../library/base/html/islands.html
+Entry: is.single
+Keywords: is.single classes
+Description: Is an Object of Single Precision Type?
+URL: ../../../library/base/html/is.single.html
 
 Entry: jitter
 Keywords: jitter dplot utilities
@@ -1229,24 +1074,24 @@ Description: Length of a Vector or List
 URL: ../../../library/base/html/length.html
 
 Entry: levels
-Keywords: levels levels<- category
-Description: Levels Attributes
-URL: ../../../library/base/html/levels.html
-
-Entry: levels
 Keywords: levels<-.factor category
 Description: Factor Levels
 URL: ../../../library/base/html/levels.html
 
-Entry: library
-Keywords: library provide require RLIBS .Autoloaded .First.lib .Library .Provided .packages .lib.loc data
-Description: Loading and Listing of Packages
-URL: ../../../library/base/html/library.html
+Entry: levels
+Keywords: levels levels<- category
+Description: Levels Attributes
+URL: ../../../library/base/html/levels.html
 
 Entry: library.dynam
 Keywords: library.dynam .Dyn.libs data
 Description: Loading Shared Libraries
 URL: ../../../library/base/html/library.dynam.html
+
+Entry: library
+Keywords: library provide require RLIBS .Autoloaded .First.lib .Library .Provided .packages .lib.loc data
+Description: Loading and Listing of Packages
+URL: ../../../library/base/html/library.html
 
 Entry: license
 Keywords: license licence misc
@@ -1258,25 +1103,25 @@ Keywords: lines lines.default aplot
 Description: Add Connected Line Segments to a Plot
 URL: ../../../library/base/html/lines.html
 
-Entry: list
-Keywords: list pairlist alist as.list as.list.default as.list.data.frame as.pairlist is.list is.pairlist list manip
-Description: Lists -- Generic and Dotted Pairs
-URL: ../../../library/base/html/list.html
-
 Entry: list.files
 Keywords: list.files dir file
 Description: List the Files in a Directory/Folder
 URL: ../../../library/base/html/list.files.html
 
-Entry: lm
-Keywords: lm lm.fit lm.wfit lm.fit.null lm.wfit.null regression
-Description: Fitting Linear Models
-URL: ../../../library/base/html/lm.html
+Entry: list
+Keywords: list pairlist alist as.list as.list.default as.list.data.frame as.pairlist is.list is.pairlist list manip
+Description: Lists -- Generic and Dotted Pairs
+URL: ../../../library/base/html/list.html
 
 Entry: lm.influence
 Keywords: lm.influence regression
 Description: Regression Diagnostics
 URL: ../../../library/base/html/lm.influence.html
+
+Entry: lm
+Keywords: lm lm.fit lm.wfit lm.fit.null lm.wfit.null regression
+Description: Fitting Linear Models
+URL: ../../../library/base/html/lm.html
 
 Entry: lm.summaries
 Keywords: anova.lm anova.lm.null anova.mlm anovalist.lm summary.lm summary.lm.null summary.mlm coefficients.lm df.residual.lm family.lm formula.lm fitted.values.lm residuals.lm weights weights.lm plot.lm plot.mlm print.lm print.lm.null print.summary.lm print.summary.lm.null regression
@@ -1298,10 +1143,30 @@ Keywords: logical as.logical as.logical.default is.logical TRUE FALSE T F classe
 Description: Logical Vectors
 URL: ../../../library/base/html/logical.html
 
+Entry: Logic
+Keywords: ! & && | || xor Logic logic
+Description: Logical Operators
+URL: ../../../library/base/html/Logic.html
+
+Entry: Logistic
+Keywords: dlogis plogis qlogis rlogis distribution
+Description: The Logistic Distribution
+URL: ../../../library/base/html/Logistic.html
+
 Entry: loglin
 Keywords: loglin category models
 Description: Fitting Log-Linear Models
 URL: ../../../library/base/html/loglin.html
+
+Entry: Lognormal
+Keywords: dlnorm plnorm qlnorm rlnorm distribution
+Description: The Log Normal Distribution
+URL: ../../../library/base/html/Lognormal.html
+
+Entry: Log
+Keywords: log log10 log2 exp math
+Description: Logarithms and Exponentials
+URL: ../../../library/base/html/Log.html
 
 Entry: longley
 Keywords: longley datasets
@@ -1318,25 +1183,30 @@ Keywords: lowess smooth
 Description: Scatter Plot Smoothing
 URL: ../../../library/base/html/lowess.html
 
-Entry: ls
-Keywords: ls objects environment
-Description: List Objects
-URL: ../../../library/base/html/ls.html
-
 Entry: ls.diag
 Keywords: ls.diag regression
 Description: Compute Diagnostics for `lsfit' Regression Results
 URL: ../../../library/base/html/ls.diag.html
+
+Entry: lsfit
+Keywords: lsfit regression
+Description: Find the Least Squares Fit
+URL: ../../../library/base/html/lsfit.html
 
 Entry: ls.print
 Keywords: ls.print regression
 Description: Print `lsfit' Regression Results
 URL: ../../../library/base/html/ls.print.html
 
-Entry: lsfit
-Keywords: lsfit regression
-Description: Find the Least Squares Fit
-URL: ../../../library/base/html/lsfit.html
+Entry: ls
+Keywords: ls objects environment
+Description: List Objects
+URL: ../../../library/base/html/ls.html
+
+Entry: Machine
+Keywords: Machine .Machine sysdata programming math
+Description: Machine Characteristics
+URL: ../../../library/base/html/Machine.html
 
 Entry: machine
 Keywords: machine environment programming
@@ -1378,16 +1248,6 @@ Keywords: make.tables.aovproj make.tables.aovprojlist models
 Description: Create model.tables
 URL: ../../../library/base/html/make.tables.html
 
-Entry: mat.or.vec
-Keywords: mat.or.vec array
-Description: Create a Matrix or a Vector
-URL: ../../../library/base/html/mat.or.vec.html
-
-Entry: match
-Keywords: match %in% manip logic
-Description: Value Matching
-URL: ../../../library/base/html/match.html
-
 Entry: match.arg
 Keywords: match.arg programming
 Description: Argument Verification Using Partial Matching
@@ -1403,10 +1263,25 @@ Keywords: match.fun programming
 Description: Function Verification for ``Function Variables''
 URL: ../../../library/base/html/match.fun.html
 
+Entry: match
+Keywords: match %in% manip logic
+Description: Value Matching
+URL: ../../../library/base/html/match.html
+
+Entry: Math
+Keywords: abs sqrt math
+Description: Miscellaneous Mathematical Functions
+URL: ../../../library/base/html/Math.html
+
 Entry: \%*\%
 Keywords: %*% matmult array arith
 Description: Matrix Multiplication
 URL: ../../../library/base/html/\%*\%.html
+
+Entry: mat.or.vec
+Keywords: mat.or.vec array
+Description: Create a Matrix or a Vector
+URL: ../../../library/base/html/mat.or.vec.html
 
 Entry: matplot
 Keywords: matplot matpoints matlines hplot aplot array
@@ -1428,10 +1303,20 @@ Keywords: median univar robust
 Description: Median Value
 URL: ../../../library/base/html/median.html
 
+Entry: Memory
+Keywords: 
+Description: Memory Available for Data Storage
+URL: ../../../library/base/html/Memory.html
+
 Entry: menu
 Keywords: menu utilities programming
 Description: Menu Interaction Function
 URL: ../../../library/base/html/menu.html
+
+Entry: Methods
+Keywords: .Method .Generic .Group .Class Math.data.frame Math.factor Ops.data.frame Ops.factor Ops.ordered Summary.data.frame Summary.factor methods
+Description: Internal and Group Methods and Generic Functions
+URL: ../../../library/base/html/Methods.html
 
 Entry: methods
 Keywords: UseMethod NextMethod methods methods
@@ -1442,11 +1327,6 @@ Entry: missing
 Keywords: missing programming
 Description: Does a Formal Argument have a Value?
 URL: ../../../library/base/html/missing.html
-
-Entry: mode
-Keywords: mode mode<- storage.mode storage.mode<- attribute
-Description: The (Storage) Mode of an Object
-URL: ../../../library/base/html/mode.html
 
 Entry: model.extract
 Keywords: model.extract model.offset model.response manip programming models
@@ -1467,6 +1347,11 @@ Entry: model.tables
 Keywords: model.tables model.tables.aov model.tables.aovlist print.tables.aov models
 Description: Compute Tables of Results from an Aov Model Fit.
 URL: ../../../library/base/html/model.tables.html
+
+Entry: mode
+Keywords: mode mode<- storage.mode storage.mode<- attribute
+Description: The (Storage) Mode of an Object
+URL: ../../../library/base/html/mode.html
 
 Entry: mosaicplot
 Keywords: mosaicplot
@@ -1498,6 +1383,11 @@ Keywords: names names.default names<- names<-.default attribute
 Description: The Names Attribute of an Object
 URL: ../../../library/base/html/names.html
 
+Entry: NA
+Keywords: NA is.na is.na.data.frame NA logic manip
+Description: Not Available / ``Missing'' Values
+URL: ../../../library/base/html/NA.html
+
 Entry: nargs
 Keywords: nargs programming
 Description: The Number of Arguments to a Function
@@ -1507,6 +1397,16 @@ Entry: nchar
 Keywords: nchar character
 Description: Count the Number of Characters
 URL: ../../../library/base/html/nchar.html
+
+Entry: NChisquare
+Keywords: dnchisq pnchisq qnchisq rnchisq distribution
+Description: The Non-Central Chi-Square Distribution
+URL: ../../../library/base/html/NChisquare.html
+
+Entry: NegBinomial
+Keywords: dnbinom pnbinom qnbinom rnbinom distribution
+Description: The Negative Binomial Distribution
+URL: ../../../library/base/html/NegBinomial.html
 
 Entry: nextn
 Keywords: nextn math
@@ -1533,6 +1433,11 @@ Keywords: noquote [.noquote print.noquote as.matrix.noquote print methods utilit
 Description: Class for ``no quote'' Printing of Strings
 URL: ../../../library/base/html/noquote.html
 
+Entry: Normal
+Keywords: dnorm pnorm qnorm rnorm distribution
+Description: The Normal Distribution
+URL: ../../../library/base/html/Normal.html
+
 Entry: NotYet
 Keywords: NotYetImplemented .NotYetImplemented NotYetUsed .NotYetUsed . symbols plot.lm documentation utilities
 Description: Not Yet Implemented Functions and Unused Arguments
@@ -1542,6 +1447,11 @@ Entry: nrow
 Keywords: nrow NROW ncol NCOL array
 Description: The Number of Rows/Columns of an Array
 URL: ../../../library/base/html/nrow.html
+
+Entry: NULL
+Keywords: NULL as.null as.null.default is.null attribute manip list sysdata
+Description: The Null Object
+URL: ../../../library/base/html/NULL.html
 
 Entry: numeric
 Keywords: numeric as.numeric is.numeric classes attribute
@@ -1583,15 +1493,15 @@ Keywords: page utilities
 Description: Invoke a Pager on an R Object
 URL: ../../../library/base/html/edit.html
 
-Entry: pairs
-Keywords: pairs pairs.default hplot
-Description: Scatterplot Matrices
-URL: ../../../library/base/html/pairs.html
-
 Entry: pairs.formula
 Keywords: pairs.formula hplot
 Description: Formula Notation for Scatterplot Matrices
 URL: ../../../library/base/html/pairs.formula.html
+
+Entry: pairs
+Keywords: pairs pairs.default hplot
+Description: Scatterplot Matrices
+URL: ../../../library/base/html/pairs.html
 
 Entry: palette
 Keywords: palette color sysdata
@@ -1648,21 +1558,6 @@ Keywords: pigs datasets
 Description: The Effect of Vitamin C on Tooth Growth in Guinea Pigs
 URL: ../../../library/base/html/pigs.html
 
-Entry: plot
-Keywords: plot hplot
-Description: Generic X-Y Plotting
-URL: ../../../library/base/html/plot.html
-
-Entry: plot.window
-Keywords: plot.window aplot
-Description: Set up World Coordinates for Graphics Window
-URL: ../../../library/base/html/plot.window.html
-
-Entry: plot.xy
-Keywords: plot.xy aplot
-Description: Basic Internal Plot Function
-URL: ../../../library/base/html/plot.xy.html
-
 Entry: plot.default
 Keywords: plot.default hplot
 Description: The Default Scatterplot Function
@@ -1678,6 +1573,21 @@ Keywords: plot.formula hplot
 Description: Formula Notation for Scatterplots
 URL: ../../../library/base/html/plot.formula.html
 
+Entry: plot
+Keywords: plot hplot
+Description: Generic X-Y Plotting
+URL: ../../../library/base/html/plot.html
+
+Entry: plot.window
+Keywords: plot.window aplot
+Description: Set up World Coordinates for Graphics Window
+URL: ../../../library/base/html/plot.window.html
+
+Entry: plot.xy
+Keywords: plot.xy aplot
+Description: Basic Internal Plot Function
+URL: ../../../library/base/html/plot.xy.html
+
 Entry: pmatch
 Keywords: pmatch character
 Description: Partial String Matching
@@ -1688,15 +1598,20 @@ Keywords: points points.default aplot
 Description: Add Points to a Plot
 URL: ../../../library/base/html/points.html
 
-Entry: poly
-Keywords: poly math
-Description: Compute Orthogonal Polynomials
-URL: ../../../library/base/html/poly.html
+Entry: Poisson
+Keywords: dpois ppois qpois rpois distribution
+Description: The Poisson Distribution
+URL: ../../../library/base/html/Poisson.html
 
 Entry: polygon
 Keywords: polygon aplot
 Description: Polygon Drawing
 URL: ../../../library/base/html/polygon.html
+
+Entry: poly
+Keywords: poly math
+Description: Compute Orthogonal Polynomials
+URL: ../../../library/base/html/poly.html
 
 Entry: polyroot
 Keywords: polyroot math
@@ -1718,11 +1633,6 @@ Keywords: precip datasets
 Description: Annual Precipitation in US Cities
 URL: ../../../library/base/html/precip.html
 
-Entry: predict
-Keywords: predict methods
-Description: Model Predictions
-URL: ../../../library/base/html/predict.html
-
 Entry: predict.glm
 Keywords: predict.glm models regression
 Description: Predict Method for GLM Fits
@@ -1732,6 +1642,11 @@ Entry: predict.lm
 Keywords: predict.lm predict.mlm regression
 Description: Predicting from Linear Model Fits
 URL: ../../../library/base/html/predict.lm.html
+
+Entry: predict
+Keywords: predict methods
+Description: Model Predictions
+URL: ../../../library/base/html/predict.html
 
 Entry: presidents
 Keywords: presidents datasets
@@ -1743,10 +1658,10 @@ Keywords: pretty dplot
 Description: Pretty Breakpoints
 URL: ../../../library/base/html/pretty.html
 
-Entry: print
-Keywords: print print.factor print.ordered print.htest print.listof print.simple.list print.table print
-Description: Print Values
-URL: ../../../library/base/html/print.html
+Entry: Primitive
+Keywords: .Primitive interface
+Description: Call a ``Primitive'' Internal Function
+URL: ../../../library/base/html/Primitive.html
 
 Entry: print.coefmat
 Keywords: print.coefmat print
@@ -1762,6 +1677,11 @@ Entry: print.matrix
 Keywords: print.matrix prmatrix print
 Description: Print matrices
 URL: ../../../library/base/html/print.matrix.html
+
+Entry: print
+Keywords: print print.factor print.ordered print.htest print.listof print.simple.list print.table print
+Description: Print Values
+URL: ../../../library/base/html/print.html
 
 Entry: proc.time
 Keywords: proc.time utilities
@@ -1793,15 +1713,15 @@ Keywords: qqnorm qqplot qqline hplot distribution
 Description: Quantile-Quantile Plots
 URL: ../../../library/base/html/qqnorm.html
 
-Entry: qr
-Keywords: qr qr.coef qr.qy qr.qty qr.resid qr.fitted qr.solve is.qr as.qr algebra array regression
-Description: The QR Decomposition of a Matrix
-URL: ../../../library/base/html/qr.html
-
 Entry: QR.Auxiliaries
 Keywords: qr.X qr.Q qr.R algebra
 Description: Reconstruct the Q, R, or X Matrices from a QR Object
 URL: ../../../library/base/html/QR.Auxiliaries.html
+
+Entry: qr
+Keywords: qr qr.coef qr.qy qr.qty qr.resid qr.fitted qr.solve is.qr as.qr algebra array regression
+Description: The QR Decomposition of a Matrix
+URL: ../../../library/base/html/qr.html
 
 Entry: quakes
 Keywords: quakes datasets
@@ -1818,6 +1738,11 @@ Keywords: quit q .Last environment
 Description: Terminate an R Session
 URL: ../../../library/base/html/quit.html
 
+Entry: Random
+Keywords: .Random.seed RNG RNGkind distribution sysdata
+Description: Random Number Generation
+URL: ../../../library/base/html/Random.html
+
 Entry: range
 Keywords: range univar arith
 Description: Range of Values
@@ -1833,6 +1758,11 @@ Keywords: read.fwf file
 Description: Read Fixed Width Format Files
 URL: ../../../library/base/html/read.fwf.html
 
+Entry: readline
+Keywords: readline utilities
+Description: Read a Line from the Terminal
+URL: ../../../library/base/html/readline.html
+
 Entry: read.socket
 Keywords: read.socket write.socket ~keyword 
 Description: Read from or write to a socket
@@ -1843,30 +1773,30 @@ Keywords: read.table file
 Description: data input
 URL: ../../../library/base/html/read.table.html
 
-Entry: readline
-Keywords: readline utilities
-Description: Read a Line from the Terminal
-URL: ../../../library/base/html/readline.html
-
 Entry: real
 Keywords: real as.real is.real classes
 Description: Real Vectors
 URL: ../../../library/base/html/real.html
+
+Entry: Recall
+Keywords: Recall programming
+Description: Recursive Calling of Itself
+URL: ../../../library/base/html/Recall.html
 
 Entry: rect
 Keywords: rect aplot
 Description: Draw a Rectangle
 URL: ../../../library/base/html/rect.html
 
+Entry: REMOVE
+Keywords: REMOVE
+Description: Remove Add-on Packages
+URL: ../../../library/base/html/REMOVE.html
+
 Entry: remove
 Keywords: rm remove environment
 Description: Remove Objects from a Specified Environment
 URL: ../../../library/base/html/remove.html
-
-Entry: rep
-Keywords: rep manip
-Description: Replicate Elements
-URL: ../../../library/base/html/rep.html
 
 Entry: replace
 Keywords: replace manip
@@ -1877,6 +1807,11 @@ Entry: replications
 Keywords: replications models
 Description: Number of Replications of Terms
 URL: ../../../library/base/html/replications.html
+
+Entry: rep
+Keywords: rep manip
+Description: Replicate Elements
+URL: ../../../library/base/html/rep.html
 
 Entry: residuals
 Keywords: residuals resid residuals.default models regression
@@ -1893,6 +1828,11 @@ Keywords: rgb color
 Description: RGB Color Specification
 URL: ../../../library/base/html/rgb.html
 
+Entry: RHOME
+Keywords: RHOME
+Description: R Home Directory
+URL: ../../../library/base/html/RHOME.html
+
 Entry: rivers
 Keywords: rivers datasets
 Description: Lengths of Major North American Rivers
@@ -1902,6 +1842,11 @@ Entry: rle
 Keywords: rle manip
 Description: Run Length Encoding
 URL: ../../../library/base/html/rle.html
+
+Entry: Round
+Keywords: ceiling floor round signif trunc trunc.default zapsmall arith
+Description: Rounding of Numbers
+URL: ../../../library/base/html/Round.html
 
 Entry: row
 Keywords: row array
@@ -1953,15 +1898,15 @@ Keywords: sd univar
 Description: Standard Deviation
 URL: ../../../library/base/html/sd.html
 
-Entry: se.contrast
-Keywords: se.contrast se.contrast.aov se.contrast.aovlist models
-Description: Standard Errors for Contrasts in Model Terms
-URL: ../../../library/base/html/se.contrast.html
-
 Entry: search
 Keywords: search data
 Description: Give ``Search Path'' for \R Objects
 URL: ../../../library/base/html/search.html
+
+Entry: se.contrast
+Keywords: se.contrast se.contrast.aov se.contrast.aovlist models
+Description: Standard Errors for Contrasts in Model Terms
+URL: ../../../library/base/html/se.contrast.html
 
 Entry: seq
 Keywords: seq seq.default : manip
@@ -1972,6 +1917,16 @@ Entry: sequence
 Keywords: sequence manip
 Description: Create A Vector of Sequences
 URL: ../../../library/base/html/sequence.html
+
+Entry: SHLIB
+Keywords: SHLIB
+Description: Build Shared Library for Dynamic Loading
+URL: ../../../library/base/html/SHLIB.html
+
+Entry: SignRank
+Keywords: dsignrank psignrank qsignrank rsignrank distribution
+Description: Distribution of the Wilcoxon Signed Rank Statistic
+URL: ../../../library/base/html/SignRank.html
 
 Entry: sign
 Keywords: sign arith
@@ -1998,6 +1953,11 @@ Keywords: source file programming
 Description: Redirect Input
 URL: ../../../library/base/html/source.html
 
+Entry: Special
+Keywords: beta lbeta gamma lgamma digamma trigamma tetragamma pentagamma choose lchoose math
+Description: Special Functions of Mathematics
+URL: ../../../library/base/html/Special.html
+
 Entry: spline[fun]
 Keywords: splinefun spline math dplot
 Description: Interpolating Splines
@@ -2012,6 +1972,11 @@ Entry: stackloss
 Keywords: stackloss datasets
 Description: Brownlee's Stack Loss Plant Data
 URL: ../../../library/base/html/stackloss.html
+
+Entry: Startup
+Keywords: Startup RProfile .First environment
+Description: Intialization at Start of an R Session
+URL: ../../../library/base/html/Startup.html
 
 Entry: stat.anova
 Keywords: stat.anova regression models
@@ -2038,15 +2003,15 @@ Keywords: stop environment programming
 Description: Stop Function Execution
 URL: ../../../library/base/html/stop.html
 
-Entry: str
-Keywords: str str.default str.data.frame ls.str lsf.str print documentation utilities
-Description: Compactly Display the Structure of an Arbitrary \R Object
-URL: ../../../library/base/html/str.html
-
 Entry: stripplot
 Keywords: stripplot hplot
 Description: 1-D Scatter Plots
 URL: ../../../library/base/html/stripplot.html
+
+Entry: str
+Keywords: str str.default str.data.frame ls.str lsf.str print documentation utilities
+Description: Compactly Display the Structure of an Arbitrary \R Object
+URL: ../../../library/base/html/str.html
 
 Entry: strsplit
 Keywords: strsplit character
@@ -2078,15 +2043,15 @@ Keywords: substr substring character
 Description: Extract Substrings from a Character Vector
 URL: ../../../library/base/html/substr.html
 
-Entry: sum
-Keywords: sum arith
-Description: Sum of Vector Elements
-URL: ../../../library/base/html/sum.html
-
 Entry: summary
 Keywords: summary summary.default summary.data.frame summary.factor summary.matrix methods
 Description: Object Summaries
 URL: ../../../library/base/html/summary.html
+
+Entry: sum
+Keywords: sum arith
+Description: Sum of Vector Elements
+URL: ../../../library/base/html/sum.html
 
 Entry: svd
 Keywords: svd algebra array
@@ -2118,30 +2083,20 @@ Keywords: sys.parent sys.call sys.calls sys.frame sys.frames sys.nframe sys.func
 Description: Functions to access the function call stack.
 URL: ../../../library/base/html/sys.parent.html
 
-Entry: system
-Keywords: system .Platform unix interface file utilities
-Description: Invoke a System Command
-URL: ../../../library/base/html/system.html
-
 Entry: system.file
 Keywords: system.file file utilities
 Description: Find Names of R System Files
 URL: ../../../library/base/html/system.file.html
 
+Entry: system
+Keywords: system .Platform unix interface file utilities
+Description: Invoke a System Command
+URL: ../../../library/base/html/system.html
+
 Entry: system.time
 Keywords: system.time unix.time utilities
 Description: CPU Time Used
 URL: ../../../library/base/html/system.time.html
-
-Entry: t
-Keywords: t t.default t.data.frame array
-Description: Matrix Transpose
-URL: ../../../library/base/html/t.html
-
-Entry: t.test
-Keywords: t.test htest
-Description: Student's t-Test
-URL: ../../../library/base/html/t.test.html
 
 Entry: table
 Keywords: table category
@@ -2157,6 +2112,11 @@ Entry: tapply
 Keywords: tapply iteration category
 Description: Apply a Function Over a ``Ragged'' Array
 URL: ../../../library/base/html/tapply.html
+
+Entry: TDist
+Keywords: dt pt qt rt distribution
+Description: The Student t Distribution
+URL: ../../../library/base/html/TDist.html
 
 Entry: tempfile
 Keywords: tempfile file
@@ -2183,35 +2143,60 @@ Keywords: title aplot
 Description: Plot Annotation
 URL: ../../../library/base/html/title.html
 
-Entry: trace
-Keywords: trace untrace programming
-Description: Trace all calls to a function.
-URL: ../../../library/base/html/trace.html
-
 Entry: traceback
 Keywords: traceback .Traceback programming
 Description: Print Call Stack of Last Error
 URL: ../../../library/base/html/traceback.html
+
+Entry: trace
+Keywords: trace untrace programming
+Description: Trace all calls to a function.
+URL: ../../../library/base/html/trace.html
 
 Entry: transform
 Keywords: transform transform.default transform.data.frame manip
 Description: Transform an object, e.g. a dataframe
 URL: ../../../library/base/html/transform.html
 
+Entry: t
+Keywords: t t.default t.data.frame array
+Description: Matrix Transpose
+URL: ../../../library/base/html/t.html
+
 Entry: trees
 Keywords: trees datasets
 Description: Girth, Height and Volume for Black Cherry Trees
 URL: ../../../library/base/html/trees.html
+
+Entry: Trig
+Keywords: cos sin tan acos asin atan atan2 math
+Description: Trigonometric Functions
+URL: ../../../library/base/html/Trig.html
 
 Entry: ts
 Keywords: ts as.ts is.ts print.ts plot.ts ts
 Description: Time-Series Objects
 URL: ../../../library/base/html/ts.html
 
+Entry: t.test
+Keywords: t.test htest
+Description: Student's t-Test
+URL: ../../../library/base/html/t.test.html
+
+Entry: Tukey
+Keywords: ptukey qtukey distribution
+Description: The Studentized Range Distribution
+URL: ../../../library/base/html/Tukey.html
+
 Entry: typeof
 Keywords: typeof attribute
 Description: The Type of an Object
 URL: ../../../library/base/html/typeof.html
+
+Entry: Uniform
+Keywords: dunif punif qunif runif distribution
+Description: The Uniform Distribution
+URL: ../../../library/base/html/Uniform.html
 
 Entry: unique
 Keywords: unique manip logic
@@ -2238,11 +2223,6 @@ Keywords: unlist list manip
 Description: Flatten Lists
 URL: ../../../library/base/html/unlist.html
 
-Entry: update
-Keywords: update update.default models
-Description: Update and Re-fit a Model Call
-URL: ../../../library/base/html/update.html
-
 Entry: update.formula
 Keywords: update.formula models
 Description: Model Updating
@@ -2252,6 +2232,11 @@ Entry: update.lm
 Keywords: update.lm update.glm models
 Description: Update a [G]LM Model
 URL: ../../../library/base/html/update.lm.html
+
+Entry: update
+Keywords: update update.default models
+Description: Update and Re-fit a Model Call
+URL: ../../../library/base/html/update.html
 
 Entry: uspop
 Keywords: uspop datasets
@@ -2268,6 +2253,11 @@ Keywords: vector as.vector as.vector.factor is.vector classes
 Description: Vectors
 URL: ../../../library/base/html/vector.html
 
+Entry: Version
+Keywords: Version version environment sysdata programming
+Description: Version Information
+URL: ../../../library/base/html/Version.html
+
 Entry: volcano
 Keywords: volcano datasets
 Description: Topographic Information for the Maunga Whau Volcano
@@ -2283,6 +2273,11 @@ Keywords: warpbreaks datasets
 Description: The Number of Breaks in Yarn during Weaving
 URL: ../../../library/base/html/warpbreaks.html
 
+Entry: Weibull
+Keywords: dweibull pweibull qweibull rweibull distribution
+Description: The Weibull Distribution
+URL: ../../../library/base/html/Weibull.html
+
 Entry: weighted.mean
 Keywords: weighted.mean univar
 Description: Weighted Arithmetic Mean
@@ -2292,6 +2287,11 @@ Entry: which
 Keywords: which logic attribute
 Description: Which indices are TRUE ?
 URL: ../../../library/base/html/which.html
+
+Entry: Wilcoxon
+Keywords: dwilcox pwilcox qwilcox rwilcox distribution
+Description: Distribution of the Wilcoxon Rank Sum Statistic
+URL: ../../../library/base/html/Wilcoxon.html
 
 Entry: window
 Keywords: window window.default window.ts ts
@@ -2358,15 +2358,15 @@ Keywords: ksmooth smooth
 Description: Kernel Regression Smoother
 URL: ../../../library/modreg/html/ksmooth.html
 
-Entry: loess
-Keywords: loess smooth
-Description: Local Polynomial Regression Fitting
-URL: ../../../library/modreg/html/loess.html
-
 Entry: loess.control
 Keywords: loess.control smooth
 Description: Set Parameters for Loess
 URL: ../../../library/modreg/html/loess.control.html
+
+Entry: loess
+Keywords: loess smooth
+Description: Local Polynomial Regression Fitting
+URL: ../../../library/modreg/html/loess.html
 
 Entry: plot.ppr
 Keywords: plot.ppr hplot
@@ -2408,15 +2408,15 @@ Keywords: supsmu smooth
 Description: Friedmans's SuperSmoother
 URL: ../../../library/modreg/html/supsmu.html
 
-Entry: biplot
-Keywords: biplot biplot.default hplot multivariate
-Description: Biplot of Multivariate Data
-URL: ../../../library/mva/html/biplot.html
-
 Entry: biplot.princomp
 Keywords: biplot.princomp multivariate hplot
 Description: Biplot for Principal Components 
 URL: ../../../library/mva/html/biplot.princomp.html
+
+Entry: biplot
+Keywords: biplot biplot.default hplot multivariate
+Description: Biplot of Multivariate Data
+URL: ../../../library/mva/html/biplot.html
 
 Entry: cancor
 Keywords: cancor multivariate
