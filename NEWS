@@ -84,6 +84,9 @@ NEW FEATURES
     o   help.search() now defaults to agrep = FALSE when keyword= is
 	specified, since no one wants fuzzy matching of categories.
 
+    o   Function texi2dvi() in package tools can be used to compile
+        latex files from within R.
+
 
 BUG FIXES
 
@@ -146,7 +149,12 @@ BUG FIXES
 
     o	terms() sometimes removed offset() terms incorrectly, since it
 	counted by variables and not terms.  Its "offset" attribute
-	was incorrectly documented as referring to terms not variables.
+	was incorrectly documented as referring to terms not
+	variables.
+
+    o   buildVignettes() and pkgVignettes() in package tools are now
+        documented, the call to texi2dvi is wrapped in the new
+        function texi2dvi() which also works on Windows.
 
 
 
