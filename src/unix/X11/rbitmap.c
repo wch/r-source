@@ -231,6 +231,7 @@ int R_SaveAsPng(void  *d, int width, int height,
 #ifdef HAVE_JPEG
 
 #include <jpeglib.h>
+#include <setjmp.h>
 
 /* Here's the extended error handler struct */
 
