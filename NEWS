@@ -84,11 +84,6 @@ BUG FIXES
 	longer included in the search (as they searched whole packages,
 	not just the autoloaded objects).
 
-    o	The search semantics of data() and example() have changed
-	(see the help pages). In particular, they will normally
-	look in the package which was loaded, even if it is not in
-	one of the libraries given in .lib.loc.
-
     o	The documentation for .Rd files said & must be entered as \&
 	but only the unescaped form was processed correctly. Now both
 	are accepted but & is preferred.
