@@ -1,8 +1,6 @@
 	**************************************************
 	*						 *
 	*	       0.64 SERIES NEWS			 *
-	*    (This label is really only here to keep	 *
-	*     CVS from getting confused...)		 *
 	*						 *
 	**************************************************
 
@@ -42,7 +40,8 @@ NEW FEATURES
 	almost non-existent) manual and a reference index.
 	Manual: new section on loading C++ code.
 
-    o	Gnome support added.
+    o	[EXPERIMENTAL] Gnome support added. Use ./configure --with-gnome
+	to try it, but don't expect too much yet.
 
     o	The X11 graphics driver can now use a variety of strategies
 	for handing color.  This means that it is now possible to
@@ -71,6 +70,10 @@ NEW FEATURES
 	the "example" and "demo" functions no longer print invisible
 	values when the example script is run.
 
+    o	Function chull() for planar convex hulls
+
+    o	pairs.formula() allows formula notations for scatter plot matrix.
+
 BUG FIXES
 
     o	rbind(x1,x2) doesn't lose dimnames anymore, when xi are 
@@ -84,27 +87,6 @@ BUG FIXES
     o	Resizing an inactive graphics window to an invalid size left
 	that window active and produced a spurious prompt and newline
 	in the console window.	This no longer happens.
-
-
-	**************************************************
-	*						 *
-	*	       0.63 SERIES NEWS			 *
-	*    (This label is really only here to keep	 *
-	*     CVS from getting confused...)		 *
-	*						 *
-	**************************************************
-
-
-		CHANGES IN R VERSION 0.63.4
-
-NEW FEATURES
-
-    o	Function chull() for planar convex hulls
-
-    o	pairs.formula() allows formula notations for scatter plot matrix.
-
-
-BUG FIXES
 
     o	poly() rescales x to increase accuracy
 
@@ -131,6 +113,12 @@ BUG FIXES
     o	curve() [and plot.function()] now use proper `x' values with log="x";
 	`type = "."' now works with curve() and plot.function()
 
+
+	**************************************************
+	*						 *
+	*	       0.63 SERIES NEWS			 *
+	*						 *
+	**************************************************
 
 
 		CHANGES IN R VERSION 0.63.3
