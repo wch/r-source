@@ -101,7 +101,7 @@ tclvar$name <- value
 \dontrun{
 ## These cannot be run by example() but should be OK when pasted
 ## into an interactive R session with the tcltk package loaded
-.Tcl("format \"%s\\n\" \"Hello, World!\"")
+.Tcl("format \"\%s\\n\" \"Hello, World!\"")
 f <- function()"HI!"
 .Tcl.callback(f)
 .Tcl.args(text="Push!", command=f) # NB: Different address
