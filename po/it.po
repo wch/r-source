@@ -4242,31 +4242,31 @@ msgstr "la funzione non può essere calcalata per i parametri iniziali"
 
 #: src/main/optim.c:869
 msgid "unknown 'type' in CG method of optim"
-msgstr ""
+msgstr "'type' sconosciuto per il metodo CG di optim"
 
 #: src/main/optim.c:882
 msgid "Function cannot be evaluated at initial parameters"
-msgstr ""
+msgstr "La funzione non può essere calcolata per i parametri iniziali"
 
 #: src/main/optim.c:937
 msgid "unknown type in CG method of optim"
-msgstr ""
+msgstr "tipo sconosciuto nel metodo CG di optim"
 
 #: src/main/optim.c:1022
 msgid "REPORT must be > 0 (method = \"L-BFGS-B\")"
-msgstr ""
+msgstr "REPORT deve essere > 0 (method = \"L-BFGS-B\")"
 
 #: src/main/optim.c:1046
 msgid "L-BFGS-B needs finite values of 'fn'"
-msgstr ""
+msgstr "L-BFGS-B necessita valori finiti di 'fn'"
 
 #: src/main/optimize.c:53 src/main/optimize.c:137 src/main/optimize.c:353
 msgid "NA replaced by maximum positive value"
-msgstr ""
+msgstr "NA sostituito da valore massimo positivo"
 
 #: src/main/optimize.c:61 src/main/optimize.c:145 src/main/optimize.c:361
 msgid "NA/Inf replaced by maximum positive value"
-msgstr ""
+msgstr "NA/Inf sostituito da valore massimo positivo"
 
 #: src/main/optimize.c:70
 msgid "invalid function value in 'optimize'"
@@ -4274,7 +4274,7 @@ msgstr "valore non valido in 'optimize'"
 
 #: src/main/optimize.c:88 src/main/optimize.c:174 src/main/optimize.c:555
 msgid "attempt to minimize non-function"
-msgstr ""
+msgstr "tentativo di minimizzare una non-funzione"
 
 #: src/main/optimize.c:95 src/main/optimize.c:181
 msgid "invalid 'xmin' value"
@@ -4286,7 +4286,7 @@ msgstr "valore 'xmax' non valido"
 
 #: src/main/optimize.c:104 src/main/optimize.c:190
 msgid "'xmin' not less than 'xmax'"
-msgstr ""
+msgstr "'xmin' non è minore di 'xmax'"
 
 #: src/main/optimize.c:111 src/main/optimize.c:197
 msgid "invalid 'tol' value"
@@ -4298,15 +4298,15 @@ msgstr "valore funzione non valido in 'zeroin'"
 
 #: src/main/optimize.c:203
 msgid "'maxiter' must be positive"
-msgstr ""
+msgstr "'maxiter' deve essere positivo"
 
 #: src/main/optimize.c:345
 msgid "non-finite value supplied by 'nlm'"
-msgstr ""
+msgstr "valore non finito fornito da 'nlm'"
 
 #: src/main/optimize.c:379
 msgid "invalid function value in 'nlm' optimizer"
-msgstr ""
+msgstr "valore della funzione non valido nell'ottimizzatore 'nlm'"
 
 #: src/main/optimize.c:390 src/main/optimize.c:405
 msgid "function value caching for optimization is seriously confused"
@@ -4318,7 +4318,7 @@ msgstr "richiesto parametro numeric"
 
 #: src/main/optimize.c:424
 msgid "conflicting parameter lengths"
-msgstr ""
+msgstr "parametri di lunghezze non concordi"
 
 #: src/main/optimize.c:428
 msgid "invalid parameter length"
@@ -4326,7 +4326,7 @@ msgstr "lunghezza parametro non valida"
 
 #: src/main/optimize.c:438 src/main/optimize.c:445
 msgid "missing value in parameter"
-msgstr ""
+msgstr "valori missing nei parametri"
 
 #: src/main/optimize.c:450
 msgid "invalid parameter type"
@@ -4338,15 +4338,15 @@ msgstr "valori di NA non valido per il parametro"
 
 #: src/main/optimize.c:468
 msgid "non-positive number of parameters in nlm"
-msgstr ""
+msgstr "numero non positivo di parametri in nlm"
 
 #: src/main/optimize.c:470
 msgid "nlm is inefficient for 1-d problems"
-msgstr ""
+msgstr "nlm non è efficiente per problemi 1-d"
 
 #: src/main/optimize.c:472
 msgid "invalid gradient tolerance in nlm"
-msgstr ""
+msgstr "tolleranza gradiente non valida in nlm"
 
 #: src/main/optimize.c:474
 msgid "invalid iteration limit in nlm"
@@ -4354,23 +4354,23 @@ msgstr "limite iterazione non valida in nlm"
 
 #: src/main/optimize.c:476
 msgid "minimization function has no good digits in nlm"
-msgstr ""
+msgstr "la funzione di minimizzazione non ha cifre buone in nlm"
 
 #: src/main/optimize.c:478
 msgid "no analytic gradient to check in nlm!"
-msgstr ""
+msgstr "nessun gradiente analitico da controllare in nlm!"
 
 #: src/main/optimize.c:480
 msgid "no analytic Hessian to check in nlm!"
-msgstr ""
+msgstr "nessun Hessiano analitico da controllare in nlm!"
 
 #: src/main/optimize.c:482
 msgid "probable coding error in analytic gradient"
-msgstr ""
+msgstr "probabile errore di scrittura codice nel gradiente analitico"
 
 #: src/main/optimize.c:484
 msgid "probable coding error in analytic Hessian"
-msgstr ""
+msgstr "probabile errore di scrittura codice nell'Hessiano analitico"
 
 #: src/main/optimize.c:486
 #, c-format
@@ -4378,22 +4378,25 @@ msgid ""
 "*** unknown error message (msg = %d) in nlm()\n"
 "*** should not happen!"
 msgstr ""
+"*** messaggio di errore sconosciuto (msg = %d) in nlm()\n"
+"*** non dovrebbe accadere!"
 
 #: src/main/optimize.c:497
 msgid "Relative gradient close to zero.\n"
-msgstr ""
+msgstr "Gradiente relativo vicino a zero.\n"
 
 #: src/main/optimize.c:498 src/main/optimize.c:502
 msgid "Current iterate is probably solution.\n"
-msgstr ""
+msgstr "L'iterazione corrente è probabilmente una soluzione.\n"
 
 #: src/main/optimize.c:501
 msgid "Successive iterates within tolerance.\n"
-msgstr ""
+msgstr "Iterazioni successive entro i limiti di tolleranza.\n"
 
 #: src/main/optimize.c:505
 msgid "Last global step failed to locate a point lower than x.\n"
-msgstr ""
+msgstr "L'ultimo passaggio globale non è riuscito a determinare un "
+"punto più piccolo di x.\n"
 
 #: src/main/optimize.c:506
 msgid ""
@@ -4401,10 +4404,13 @@ msgid ""
 "the function is too non-linear for this algorithm,\n"
 "or steptol is too large.\n"
 msgstr ""
+"O x è un minimo locale approssimato della funzione,\n"
+"o la funzione è 'troppo' non lineare per questo algoritmo,\n"
+"o steptol è troppo grande.\n"
 
 #: src/main/optimize.c:511
 msgid "Iteration limit exceeded.  Algorithm failed.\n"
-msgstr ""
+msgstr "Raggiunto numero di iterazioni massimo. L'algoritmo non converge.\n"
 
 #: src/main/optimize.c:514
 msgid ""
@@ -4414,77 +4420,82 @@ msgid ""
 "from above in some direction,\n"
 "or stepmx is too small.\n"
 msgstr ""
+"Superato passo massimo 5 volte consecutive.\n"
+"O la funzione è illimitata da sotto,\n"
+"è asintotica per valori finiti\n"
+"da sopra in qualche direzione,\n"
+"o stepmx è troppo piccol.\n"
 
 #: src/main/optimize.c:635
 msgid "hessian supplied is of the wrong length or mode, so ignored"
-msgstr ""
+msgstr "l'hessiano fornito è della lunghezza o modalità sbagliata, viene ignorato"
 
 #: src/main/optimize.c:639
 msgid "gradient supplied is of the wrong length or mode, so ignored"
-msgstr ""
+msgstr "il gradiente fornito è della lunghezza o modalità sbagliata, viene ignorato"
 
 #: src/main/par.c:65
 #, c-format
 msgid "invalid value specified for graphics parameter \"%s\""
-msgstr ""
+msgstr "valore non valido specificato per il parametro grafico \"%s\""
 
 #: src/main/par.c:72
 #, c-format
 msgid "parameter \"%s\" has the wrong length"
-msgstr ""
+msgstr "il parametro \"%s\" ha la lunghezza sbagliata"
 
 #: src/main/par.c:367
 msgid "parameter \"mfg\" has the wrong length"
-msgstr ""
+msgstr "il parametro \"mfg\" ha la lunghezza sbagliata"
 
 #: src/main/par.c:375
 msgid "parameter \"i\" in \"mfg\" is out of range"
-msgstr ""
+msgstr "parametro \"i\" in \"mfg\" fuori range"
 
 #: src/main/par.c:377
 msgid "parameter \"j\" in \"mfg\" is out of range"
-msgstr ""
+msgstr "parametro \"j\" in \"mfg\" fuori range"
 
 #: src/main/par.c:382
 msgid "value of nr in \"mfg\" is wrong and will be ignored"
-msgstr ""
+msgstr "il valore di nr in \"mfg\" è sbagliato e verrà ignorato"
 
 #: src/main/par.c:384
 msgid "value of nc in \"mfg\" is wrong and will be ignored"
-msgstr ""
+msgstr "il valore di nc in \"mfg\" è sbagliato e verrà ignorato"
 
 #: src/main/par.c:422
 msgid "calling par(new=) with no plot"
-msgstr ""
+msgstr "stai chiamando par(new=) senza plot"
 
 #: src/main/par.c:572
 #, c-format
 msgid "parameter \"%s\" cannot be set"
-msgstr ""
+msgstr "il parametro \"%s\" non può essere impostato"
 
 #: src/main/par.c:619
 #, c-format
 msgid "parameter \"%s\" could not be set in high-level plot() function"
-msgstr ""
+msgstr "il parametro \"%s\" non può essere impostato nella funzione plot() di alto livello"
 
 #: src/main/par.c:1078
 msgid "invalid parameter passed to par()"
-msgstr ""
+msgstr "parametro non valido passato a par()"
 
 #: src/main/par.c:1148
 #, c-format
 msgid "too many rows in layout, limit %d"
-msgstr ""
+msgstr "troppe righe nel layout, limite %d"
 
 #: src/main/par.c:1154
 #, c-format
 msgid "too many columns in layout, limit %d"
-msgstr ""
+msgstr "troppe colonne nel layout, limite %d"
 
 #: src/main/par.c:1156
 #, c-format
 msgid "too many cells in layout, limit %d"
-msgstr ""
+msgstr "troppe celle nel layout, limite %d"
 
 #: src/main/paste.c:63
 msgid "invalid separator"
@@ -4496,7 +4507,7 @@ msgstr "argomento 'collapse' non valido"
 
 #: src/main/paste.c:79
 msgid "non-string argument to Internal paste"
-msgstr ""
+msgstr "argomento non-stringa per 'incolla' interna"
 
 #: src/main/paste.c:162
 msgid "invalid 'nsmall' argument"
@@ -4508,15 +4519,15 @@ msgstr "argomento 'trim' non valido"
 
 #: src/main/paste.c:170
 msgid "incorrect number of arguments"
-msgstr ""
+msgstr "numero di argomenti non valido"
 
 #: src/main/paste.c:174
 msgid "first argument must be atomic"
-msgstr ""
+msgstr "il primo argomento deve essere atomico"
 
 #: src/main/paste.c:239
 msgid "Impossible mode ( x )"
-msgstr ""
+msgstr "modalità ( x ) impossbile"
 
 #: src/main/paste.c:296
 msgid "vector arguments only"
@@ -4524,7 +4535,7 @@ msgstr "solo argomenti vettoriali"
 
 #: src/main/platform.c:219 src/main/platform.c:277
 msgid "invalid filename specification"
-msgstr ""
+msgstr "specificazione filename non valida"
 
 #: src/main/platform.c:221
 msgid "invalid 'headers'"
@@ -4544,7 +4555,7 @@ msgstr "specificazione di 'editor' non valida"
 
 #: src/main/platform.c:344 src/main/platform.c:390
 msgid "write error during file append"
-msgstr ""
+msgstr "errore di scrittura durante file append"
 
 #: src/main/platform.c:358 src/main/platform.c:442 src/main/platform.c:471
 msgid "invalid first filename"
@@ -4556,11 +4567,11 @@ msgstr "nome secondo file non valido"
 
 #: src/main/platform.c:362
 msgid "nothing to append to"
-msgstr ""
+msgstr "niente da accodare"
 
 #: src/main/platform.c:364
 msgid "'outFile' must be a single file"
-msgstr ""
+msgstr "'outFile' deve essere un file singolo"
 
 #: src/main/platform.c:419 src/main/platform.c:569
 msgid "invalid filename argument"
@@ -4568,11 +4579,11 @@ msgstr "argomento 'filename' non valido"
 
 #: src/main/platform.c:475
 msgid "nothing to link"
-msgstr ""
+msgstr "niente da collegare"
 
 #: src/main/platform.c:504
 msgid "symlinks are not supported on this platform"
-msgstr ""
+msgstr "symlink non supportati su questa piattaforma"
 
 #: src/main/platform.c:519
 msgid "'source' must be a single string"
@@ -4580,7 +4591,7 @@ msgstr "'source' deve essere una stringa character"
 
 #: src/main/platform.c:522
 msgid "expanded source name too long"
-msgstr ""
+msgstr "nome sorgente esteso troppo lungo"
 
 #: src/main/platform.c:526
 msgid "'destination' must be a single string"
@@ -4588,7 +4599,7 @@ msgstr "'destination' deve essere un singola stringa"
 
 #: src/main/platform.c:529
 msgid "expanded destination name too long"
-msgstr ""
+msgstr "nome destinazione esteso troppo lungo"
 
 #: src/main/platform.c:644
 msgid "file.info() is not implemented on this system"
@@ -4596,7 +4607,7 @@ msgstr "file.info() non è implementata su questo sistema"
 
 #: src/main/platform.c:708
 msgid "directory/folder path name too long"
-msgstr ""
+msgstr "nome directory/cartella tropo lungo"
 
 #: src/main/platform.c:710
 #, c-format
@@ -4613,15 +4624,15 @@ msgstr "argomento 'pattern' non valido"
 
 #: src/main/platform.c:805
 msgid "'recursive = TRUE' is not supported on this platform"
-msgstr ""
+msgstr "'recursive = TRUE' non è supportato su questa piattaforma"
 
 #: src/main/platform.c:811
 msgid "invalid 'pattern' regular expression"
-msgstr ""
+msgstr "espressione regolare 'pattern' non valida"
 
 #: src/main/platform.c:840
 msgid "unable to determine R home location"
-msgstr ""
+msgstr "impossibile determinare posizione R home"
 
 #: src/main/platform.c:893
 msgid "invalid 'indexname' argument"
@@ -4633,11 +4644,11 @@ msgstr "argomento 'type' non valido"
 
 #: src/main/platform.c:957
 msgid "file choice cancelled"
-msgstr ""
+msgstr "scelta file annullata"
 
 #: src/main/platform.c:959
 msgid "file name too long"
-msgstr ""
+msgstr "nome file troppo lungo"
 
 #: src/main/platform.c:977
 msgid "invalid 'names' argument"
@@ -4661,7 +4672,7 @@ msgstr "argomento 'locale' non valido"
 
 #: src/main/platform.c:1063
 msgid "OS reports request cannot be honored"
-msgstr ""
+msgstr "Il sistema operativo segnala che la richiesta non può essere esaudita"
 
 #: src/main/platform.c:1320
 msgid "'hostname' must be a character vector of length 1"
@@ -4670,28 +4681,28 @@ msgstr "'hostname' deve essere una stringa character"
 #: src/main/platform.c:1326
 #, c-format
 msgid "nsl() was unable to resolve host '%s'"
-msgstr ""
+msgstr "nls() non riesce a identificare l'host '%s'"
 
 #: src/main/platform.c:1333
 msgid "unknown format returned by gethostbyname"
-msgstr ""
+msgstr "formato sconosciuto resituito da gethostbyname"
 
 #: src/main/platform.c:1344
 msgid "nsl() is not supported on this platform"
-msgstr ""
+msgstr "nls() non è supportato in questa piattaforma"
 
 #: src/main/platform.c:1388 src/main/platform.c:1425
 #, c-format
 msgid "'%s' already exists"
-msgstr ""
+msgstr "'%s' già esistente"
 
 #: src/main/plot.c:59
 msgid "Hit <Return> to see next plot: "
-msgstr ""
+msgstr "Premi <Invio> per vedere il prossimo grafico: "
 
 #: src/main/plot.c:68
 msgid "argument must have positive length"
-msgstr ""
+msgstr "l'argomento deve avere lunghezza positiva"
 
 #: src/main/plot.c:216
 msgid "invalid multibyte char in pch=\"c\""
@@ -4699,15 +4710,15 @@ msgstr "carattere multibyte non valido in pch=\"c\""
 
 #: src/main/plot.c:228
 msgid "only NA allowed in logical plotting symbol"
-msgstr ""
+msgstr "sono ammessi solo gli NA come simboli grafici di tipo logico"
 
 #: src/main/plot.c:230
 msgid "invalid plotting symbol"
-msgstr ""
+msgstr "simbolo grafico non valido"
 
 #: src/main/plot.c:314 src/modules/X11/devX11.c:1291
 msgid "invalid font specification"
-msgstr ""
+msgstr "specificazione font non valida"
 
 #: src/main/plot.c:385
 msgid "invalid 'vfont' value"
@@ -4727,7 +4738,7 @@ msgstr "parametro grafico non valido"
 
 #: src/main/plot.c:581
 msgid "at least 3 arguments required"
-msgstr ""
+msgstr "necessari almeno 3 argomenti"
 
 #: src/main/plot.c:585
 msgid "invalid 'xlim'"
@@ -4739,16 +4750,16 @@ msgstr "'ylim' non valido"
 
 #: src/main/plot.c:596
 msgid "\"log=\" specification must be character"
-msgstr ""
+msgstr "specificazione \"log=\" deve essere di tipo character"
 
 #: src/main/plot.c:607
 #, c-format
 msgid "invalid \"log=%s\" specification"
-msgstr ""
+msgstr "specificazione  \"log=%s\" non valida"
 
 #: src/main/plot.c:621
 msgid "NAs not allowed in 'xlim'"
-msgstr ""
+msgstr "NA non permessi in 'xlim'"
 
 #: src/main/plot.c:627
 msgid "need finite 'xlim' values"
@@ -4756,7 +4767,7 @@ msgstr "i valori 'xlim' devono essere finiti"
 
 #: src/main/plot.c:633
 msgid "NAs not allowed in 'ylim'"
-msgstr ""
+msgstr "NA non ammessi in 'ylim'"
 
 #: src/main/plot.c:639
 msgid "need finite 'ylim' values"
@@ -4764,11 +4775,11 @@ msgstr "i valori di 'ylim' devono essere finiti"
 
 #: src/main/plot.c:645
 msgid "Logarithmic axis must have positive limits"
-msgstr ""
+msgstr "Gli assi logaritmici devono avere limiti positivi"
 
 #: src/main/plot.c:758
 msgid "invalid type for axis labels"
-msgstr ""
+msgstr "tipo non valido come etichette dell'asse"
 
 #: src/main/plot.c:962
 #, c-format
@@ -4777,30 +4788,30 @@ msgstr "numero asse %d non valido"
 
 #: src/main/plot.c:1059 src/main/plot.c:2446
 msgid "zero length 'padj' specified"
-msgstr ""
+msgstr "specificato 'padj' di lunghezza zero"
 
 #: src/main/plot.c:1110
 #, c-format
 msgid "'at' and 'label' lengths differ, %d != %d"
-msgstr ""
+msgstr "le lunghezza di 'at' e 'label' differiscono, %d != %d"
 
 #: src/main/plot.c:1128
 msgid "no locations are finite"
-msgstr ""
+msgstr "nessuna posizione finita"
 
 #: src/main/plot.c:1465
 msgid "invalid plotting structure"
-msgstr ""
+msgstr "struttura disegno non valida"
 
 #: src/main/plot.c:1467
 #, c-format
 msgid "'x' and 'y' lengths differ in %s()"
-msgstr ""
+msgstr "lunghezza di 'x' e 'y' differenti in %s()"
 
 #: src/main/plot.c:1479
 #, c-format
 msgid "plot type '%s' will be truncated to first character"
-msgstr ""
+msgstr "tipo lpot '%s' verrà troncato al primo carattere"
 
 #: src/main/plot.c:1483 src/main/plot.c:3096
 msgid "invalid plot type"
@@ -4813,35 +4824,35 @@ msgstr "tipo grafico '%c' non valido"
 
 #: src/main/plot.c:1700
 msgid "first argument invalid"
-msgstr ""
+msgstr "primo argomento non valido"
 
 #: src/main/plot.c:1706
 msgid "second argument invalid"
-msgstr ""
+msgstr "secondo argomenton non valido"
 
 #: src/main/plot.c:1712
 msgid "third argument invalid"
-msgstr ""
+msgstr "terzo argomento non valido"
 
 #: src/main/plot.c:1718
 msgid "fourth argument invalid"
-msgstr ""
+msgstr "quarto argomento non valido"
 
 #: src/main/plot.c:1900
 msgid "invalid arrow head length"
-msgstr ""
+msgstr "lunghezza punta della freccia non valida"
 
 #: src/main/plot.c:1905
 msgid "invalid arrow head angle"
-msgstr ""
+msgstr "angolazione punta freccia non valida"
 
 #: src/main/plot.c:1910
 msgid "invalid arrow head specification"
-msgstr ""
+msgstr "specificazione punta freccia non valida"
 
 #: src/main/plot.c:1930
 msgid "'lwd' must be numeric of length >=1"
-msgstr ""
+msgstr "'lwd' deve essere numeric di lunghezza >=1"
 
 #: src/main/plot.c:2115
 msgid "zero length 'labels'"
@@ -4857,23 +4868,23 @@ msgstr "valore 'pos' non valido"
 
 #: src/main/plot.c:2193
 msgid "no coordinates were supplied"
-msgstr ""
+msgstr "non sono state fornite coordinate"
 
 #: src/main/plot.c:2404
 msgid "zero length 'text' specified"
-msgstr ""
+msgstr "specificato 'text' di lunghezza zero"
 
 #: src/main/plot.c:2410
 msgid "zero length 'side' specified"
-msgstr ""
+msgstr "specificato 'side' di lunghezza zero"
 
 #: src/main/plot.c:2417
 msgid "zero length 'line' specified"
-msgstr ""
+msgstr "specificato 'line' di lunghezza zero"
 
 #: src/main/plot.c:2425
 msgid "zero length 'outer' specified"
-msgstr ""
+msgstr "specificato 'outer' di lunghezza zero"
 
 #: src/main/plot.c:2432
 msgid "zero length 'at' specified"
@@ -4881,35 +4892,36 @@ msgstr "specificato un 'at' di lunghezza zero"
 
 #: src/main/plot.c:2439
 msgid "zero length 'adj' specified"
-msgstr ""
+msgstr "specificato 'adj' di lunghezza zero"
 
 #: src/main/plot.c:2453
 msgid "zero length 'cex' specified"
-msgstr ""
+msgstr "specificato 'cex' di lunghezza zero"
 
 #: src/main/plot.c:2461
 msgid "zero length 'col' specified"
-msgstr ""
+msgstr "specificato 'col' di lunghezza zero"
 
 #: src/main/plot.c:2468
 msgid "zero length 'font' specified"
-msgstr ""
+msgstr "specificato 'font' di lunghezza zero"
+
 
 #: src/main/plot.c:2541
 msgid "Hershey fonts not yet implemented for mtext()"
-msgstr ""
+msgstr "font Hershey non ancora implementati in mtext()"
 
 #: src/main/plot.c:2877
 msgid "invalid a=, b= specification"
-msgstr ""
+msgstr "specificazione a=, b= non valida"
 
 #: src/main/plot.c:2886
 msgid "'a' and 'b' must be finite"
-msgstr ""
+msgstr "'a' e 'b' devono essere finiti"
 
 #: src/main/plot.c:3018
 msgid "invalid 'which' specification"
-msgstr ""
+msgstr "specificazione 'which' non valida"
 
 #: src/main/plot.c:3091
 msgid "invalid number of points in locator()"
@@ -4930,15 +4942,15 @@ msgstr "argomenti di lunghezza diversa"
 #: src/main/plot.c:3251
 #, c-format
 msgid "warning: no point with %.2f inches\n"
-msgstr ""
+msgstr "attenzione: nessun punto nell'intorno di %.2f pollici\n"
 
 #: src/main/plot.c:3256
 msgid "warning: nearest point already identified\n"
-msgstr ""
+msgstr "attenzione: il punto più vicino è già stato identificato\n"
 
 #: src/main/plot.c:3331
 msgid "invalid units"
-msgstr ""
+msgstr "unità non valide"
 
 #: src/main/plot.c:3337
 msgid "invalid 'cex' value"
