@@ -242,9 +242,8 @@ int isUserBinop(SEXP s)
 
 int isNull(SEXP s)
 {
-    return (s == R_NilValue || ((TYPEOF(s) == VECSXP ||
-				 TYPEOF(s) == EXPRSXP)
-				&& LENGTH(s) == 0));
+    return (s == R_NilValue ||
+	    (TYPEOF(s) == EXPRSXP && LENGTH(s) == 0));
 }
 
 
