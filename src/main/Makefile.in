@@ -58,7 +58,7 @@ DISTFILES = Makefile.in Makefile.win \
 	gram.y
 
 ## FIXME:
-## Names in here should use $(top_builddir) instead ...
+## Names in here should use `$(top_builddir)' instead ...
 RLIBS = ../unix/libunix.a ../appl/libappl.a ../nmath/libnmath.a
 ## </FIXME>
 
@@ -76,7 +76,12 @@ R_bin_LDADD = @LIBOBJS@ @ALLOCA@ $(RLIBS) $(BLAS_LIBS) $(FLIBS) $(R_XTRA_LIBS)
 R_bin_DEPENDENCIES = @LIBOBJS@ @ALLOCA@ $(RLIBS) @EXPORTFILE@
 ## </NOTE>
 
-Rexeclib_LTLIBRARIES = libR.la
+## FIXME:
+## Change to `libR.la' when using libtool for shlibs.
+## Remove when using automake ... also fix install then.
+libR_la = libR.$(SHLIB_EXT)
+## </FIXME>
+Rexeclib_LTLIBRARIES = $(libR_la)
 libR_la_SOURCES = $(SOURCES)
 libR_la_LDFLAGS = 
 libR_la_OBJECTS = $(OBJECTS:.o=.lo)
@@ -106,7 +111,7 @@ Makedeps: Makefile $(DEPENDS)
 R: Makefile
 	@$(MAKE) Makedeps
 	@$(MAKE) $(Rexecbin_PROGRAMS)
-	@@WANT_R_SHLIBS_TRUE@$(MAKE) libR.la
+	@@WANT_R_SHLIBS_TRUE@$(MAKE) $(Rexeclib_LTLIBRARIES)
 	@(cd ../unix && $(MAKE) DLLs)
 
 ../include/config.h ../include/Rversion.h:
@@ -124,7 +129,7 @@ $(top_builddir)/etc/R.exp: $(OBJECTS) $(RLIBS)
 $(RLIBS):
 	(cd $(@D); $(MAKE) $(@F))
 
-libR.la: $(libR_la_OBJECTS) $(libR_la_DEPENDENCIES)
+$(libR_la): $(libR_la_OBJECTS) $(libR_la_DEPENDENCIES)
 	$(SHLIB_LINK) -o $@ $(libR_la_LDFLAGS) $(libR_la_OBJECTS) `ls ../appl/*.lo ../nmath/*.lo ../unix/*.lo` $(libR_la_LIBADD) $(LIBS)
 ## FIXME: Not sure if we want to do this ...
 	@$(MAKE) rhome=`cd $(top_builddir); pwd` install-lib
@@ -139,12 +144,12 @@ gram.c: $(srcdir)/gram.y
 
 install: installdirs
 	@$(MAKE) install-bin
-	@if test -f libR.la; then $(MAKE) install-lib; fi
+	@if test -f $(libR_la); then $(MAKE) install-lib; fi
 install-bin:
 	@$(top_srcdir)/tools/copy-if-change R.bin $(Rexecbindir)/R.bin
 install-lib:
-@USE_LIBTOOL_FALSE@	@$(top_srcdir)/tools/copy-if-change libR.la $(Rexeclibdir)/libR.$(SHLIB_EXT)
-@USE_LIBTOOL_TRUE@	@$(LIBTOOL) --mode=install $(INSTALL) libR.la $(Rexeclibdir)
+@USE_LIBTOOL_FALSE@	@$(top_srcdir)/tools/copy-if-change $(libR_la) $(Rexeclibdir)/libR.$(SHLIB_EXT)
+@USE_LIBTOOL_TRUE@	@$(LIBTOOL) --mode=install $(INSTALL) $(libR_la) $(Rexeclibdir)
 installdirs:
 	@$(MKINSTALLDIRS) $(Rexecbindir)
 	@$(MKINSTALLDIRS) $(Rexeclibdir)
@@ -152,7 +157,7 @@ installdirs:
 mostlyclean: clean
 clean:
 	@-rm -rf .libs _libs
-	@-rm -f *core Makedeps *.d *.o *.lo *.la
+	@-rm -f *core Makedeps *.d *.o *.lo *.la *.$(SHLIB_EXT)
 distclean: clean
 	@-rm -f Makefile
 maintainer-clean: distclean
