@@ -587,10 +587,15 @@ dlltool --export-all-symbols --output-def X.def X_main.o
 dllwrap -o X.dll --def X.def X.o X_main.o -lstdc++
 </pre>
 
-<p>or (VC++)
+<p>or (VC++, which requires extension <code>.cpp</code>)
 
 <pre>cl /MT /c X.cpp X_main.cpp
-link /dll /out:XX.dll /export:X_main X.obj X_main.obj
+link /dll /out:X.dll /export:X_main X.obj X_main.obj
+</pre>
+
+<p>or (Borland C++)
+
+<pre>bcc32 -u- -WDE X.cpp X_main.cpp
 </pre>
 
 <p>and call the entry point(s) in <code>X_R</code>, such as <code>X_main</code>. 
@@ -620,7 +625,7 @@ documented in the <em>`Writing R Extensions'</em> manual.
 
 <p><hr WIDTH="100%">
 <address>
-Last edited 2000 May 10 by Brian Ripley
+Last edited 2000 May 12 by Brian Ripley
 <code><a href="mailto:ripley@stats.ox.ac.uk">ripley@stats.ox.ac.uk</a></code>
 </address>
 

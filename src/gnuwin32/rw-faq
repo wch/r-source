@@ -503,10 +503,14 @@ the example in `Writing R Extensions'. Then build the DLL by
      dlltool --export-all-symbols --output-def X.def X_main.o
      dllwrap -o X.dll --def X.def X.o X_main.o -lstdc++
 
-or (VC++)
+or (VC++, which requires extension `.cpp')
 
      cl /MT /c X.cpp X_main.cpp
-     link /dll /out:XX.dll /export:X_main X.obj X_main.obj
+     link /dll /out:X.dll /export:X_main X.obj X_main.obj
+
+or (Borland C++)
+
+     bcc32 -u- -WDE X.cpp X_main.cpp
 
 and call the entry point(s) in `X_R', such as `X_main'.  Construction
 of static variables will occur when the DLL is loaded, and destruction
@@ -532,5 +536,5 @@ the _`Writing R Extensions'_ manual.
 
 
 
-Last edited 2000 May 10 by Brian Ripley <ripley@stats.ox.ac.uk>
+Last edited 2000 May 12 by Brian Ripley <ripley@stats.ox.ac.uk>
 
