@@ -17,9 +17,10 @@ leftmost subscript moving fastest.  If there are too few elements
 in \code{x} to fill the array, then the elements in \code{x} are
 recycled.
 
-\code{as.array} coerces its argument to be an array by attaching a
-\code{dim} attribute to it.  The sole purpose of this is to make it
-possible to access the \code{dim} attribute at a later time.
+\code{as.array()} coerces its argument to be an array by attaching a
+\code{\link{dim}} attribute to it.  It also attaches \code{\link{dimnames}} if
+\code{x} has \code{\link{names}}}. The sole purpose of this is to make it
+possible to access the \code{dim}[names] attribute at a later time.
 
 \code{is.array} returns \code{TRUE} or \code{FALSE} depending on
 whether its argument is an array (i.e. has a \code{dim} attribute)
