@@ -39,16 +39,16 @@ if($opt_dosnames){ $HTML=".htm"; } else { $HTML=".html"; }
 my $current = cwd();
 if($opt_rhome){
     $R_HOME=$opt_rhome;
-    print STDERR "R_HOME from --rhome: `$R_HOME'\n" if $opt_debug;
+    print STDERR "R_HOME from --rhome: '$R_HOME'\n" if $opt_debug;
 } else{
     chdir(dirname($0) . "/../..");
     $R_HOME=cwd();
-    print STDERR "R_HOME: `$R_HOME'\n" if $opt_debug;
+    print STDERR "R_HOME: '$R_HOME'\n" if $opt_debug;
 }
 $R_HOME =~ s+\\+/+g; # Unix-style path
 
 chdir($current);
-print STDERR "Current directory (cwd): `$current'\n" if $opt_debug;
+print STDERR "Current directory (cwd): '$current'\n" if $opt_debug;
 
 my $mainlib = file_path($R_HOME, "library");
 
@@ -75,7 +75,7 @@ if(!$opt_html && !$opt_txt && !$opt_latex && !$opt_example && !$opt_chm){
 
 ($pkg, $lib, @mandir) = buildinit();
 $dest = file_path($lib, $pkg);
-print STDERR "Destination `dest'= `$dest'\n" if $opt_debug;
+print STDERR "Destination dest = '$dest'\n" if $opt_debug;
 
 if($opt_chm) {
     $chmdir = "../chm";
@@ -104,7 +104,7 @@ if ($opt_example) {
     }
 }
 
-print " >>> Building/Updating help pages for package `$pkg'\n";
+print " >>> Building/Updating help pages for package '$pkg'\n";
 print "     Formats: ";
 print "text " if $opt_txt;
 print "html " if $opt_html;

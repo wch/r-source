@@ -4,7 +4,7 @@
 
 # @configure_input@
 
-revision='$Revision: 1.25 $'
+revision='$Revision: 1.26 $'
 version=`set - ${revision}; echo ${2}`
 version="R shared library builder ${version}
 
@@ -16,7 +16,7 @@ usage="Usage: R CMD SHLIB [options] files
 
 Build a shared library for dynamic loading from the specified source or
 object files (which are automagically made from their sources).  If not
-given via \`--output', the name for the library is determined from the
+given via '--output', the name for the library is determined from the
 first file.
 
 Options:

@@ -22,7 +22,7 @@
 ## Usage: perl massage-Examples.pl pkgname files
 
 ## Given a list of files of the form .../.../<name>.R, produce one large
-## file, i.e. write to stdout, `cat'ting the files together with
+## file, i.e., write to stdout, concatenating the files together with
 ## 1) Putting a HEADER in front
 ## 2) Wrapping every file in order to be more order independent
 ## 3) appending a FOOTER ...

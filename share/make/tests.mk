@@ -16,12 +16,12 @@ USE_GCT = 0
 .SUFFIXES: .R .Rin .Rout
 
 .Rin.R:
-	@echo "Creating \`$@'"
+	@echo "Creating '$@'"
 	@$(R) < $< > /dev/null
 
 .R.Rout:
 	@rm -f $@ $@.fail
-	@echo "  Running \`$<'"
+	@echo "  Running '$<'"
 ## <FIXME>
 ## Eventually make setting T and F to NULL unconditional ...
 	@(if test "$(USE_GCT)" != 0; then echo "gctorture(TRUE)"; fi; \
@@ -32,7 +32,7 @@ USE_GCT = 0
 ## </FIXME>
 	@if test -f $(srcdir)/$@.save; then \
 	  mv $@ $@.fail; \
-	  echo $(ECHO_N) "  Comparing \`$@' to \`$@.save' ...$(ECHO_C)"; \
+	  echo $(ECHO_N) "  Comparing '$@' to '$@.save' ...$(ECHO_C)"; \
 	  $(RDIFF) $@.fail $(srcdir)/$@.save 0 || exit 1; \
 	  mv $@.fail $@; \
 	  echo "$(ECHO_T) OK"; \

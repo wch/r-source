@@ -155,7 +155,7 @@ sub R_system
     my $tmpf = R_tempfile();
     if($R::Vars::OSTYPE eq "windows") {
 	open(tmpf, "> $tmpf")
-	  or die "Error: cannot write to \`$tmpf'\n";
+	  or die "Error: cannot write to '$tmpf'\n";
 	print tmpf "$cmd\n";
 	close tmpf;
 	$res = system("sh $tmpf");
@@ -174,7 +174,7 @@ sub R_runR
     my $Rout = R_tempfile("Rout");
 
     R::Vars::error("R_EXE");
-    open RIN, "> $Rin" or die "Error: cannot write to \`$Rin'\n";
+    open RIN, "> $Rin" or die "Error: cannot write to '$Rin'\n";
     print RIN "$cmd\n";
     close RIN;
     R_system("${R::Vars::R_EXE} ${Ropts} < ${Rin} > ${Rout}");

@@ -7,7 +7,7 @@
 ##  R CMD Rd2dvi `grep -l "\\keyword{distr" \
 ##                  /path/to/Rsrc/src/library/base/man/*.Rd | sort | uniq`
 
-revision='$Revision: 1.36 $'
+revision='$Revision: 1.37 $'
 version=`set - ${revision}; echo ${2}`
 version="Rd2dvi ${version}
 
@@ -21,9 +21,9 @@ Generate DVI (or PDF) output from the Rd sources specified by files, by
 either giving the paths to the files, or the path to a directory with
 the sources of a package.
 
-Unless specified via option \`--output', the basename of the output file
-equals the basename of argument \`files' if this specifies a package
-(bundle) or a single file, and \`Rd2' otherwise.
+Unless specified via option '--output', the basename of the output file
+equals the basename of argument 'files' if this specifies a package
+(bundle) or a single file, and 'Rd2' otherwise.
 
 Options:
   -h, --help		print short help message and exit
@@ -31,8 +31,8 @@ Options:
       --debug		turn on shell debugging (set -x)
       --no-clean	do not remove created temporary files
       --no-preview	do not preview generated output file
-      --os=NAME		use OS subdir \`NAME' (unix, mac or windows)
-      --OS=NAME		the same as \`--os'
+      --os=NAME		use OS subdir 'NAME' (unix, mac or windows)
+      --OS=NAME		the same as '--os'
   -o, --output=FILE	write output to FILE
       --pdf		generate PDF output
       --title=NAME	use NAME as the title of the document
@@ -80,7 +80,7 @@ while test -n "${1}"; do
       if test -n "`echo ${2} | sed 's/^-.*//'`"; then      
 	output="${2}"; shift
       else
-	${echo} "ERROR: option \`${1}' requires an argument"
+	${echo} "ERROR: option '${1}' requires an argument"
 	exit 1
       fi
       ;;
@@ -205,7 +205,7 @@ if test -z "${output}"; then
   output="Rd2.${out_ext}"
 fi
 if test -f ${output}; then
-  ${echo} "file \`${output}' exists; please remove first"
+  ${echo} "file '${output}' exists; please remove first"
   exit 1
 fi
 build_dir=.Rd2dvi${$}
@@ -272,7 +272,7 @@ else
 \\pagenumbering{arabic}
 EOF
   for p in ${bundle_pkgs}; do
-    ${echo} "Bundle package: \`${p}'"
+    ${echo} "Bundle package: '${p}'"
     ${echo} "\\chapter{Package \`${p}'}" >> ${build_dir}/Rd2.tex
     if test -f ${1}/${p}/DESCRIPTION.in; then
       Rd_DESCRIPTION_to_LaTeX ${1}/${p}/DESCRIPTION.in \
@@ -299,14 +299,14 @@ if test "${out_ext}" = pdf; then
   ${R_LATEXCMD-latex} Rd2
 fi
 cd ${start_dir}
-${echo} "Saving output to \`${output}' ..."
+${echo} "Saving output to '${output}' ..."
 cp ${build_dir}/Rd2.${out_ext} ${output}
 echo "Done"
 
 if ${clean}; then
   rm -rf ${build_dir}
 else
-  ${echo} "You may want to clean up by \`rm -rf ${build_dir}'"
+  ${echo} "You may want to clean up by 'rm -rf ${build_dir}'"
 fi
 ${preview} ${output}
 exit 0

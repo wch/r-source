@@ -4,27 +4,27 @@
 
 # @configure_input@
 
-revision='$Revision: 1.13 $'
+revision='$Revision: 1.14 $'
 version=`set - ${revision}; echo ${2}`
 version="R compilation front end ${version}
 
 Copyright (C) 2000 The R Core Development Team.
-This is free software; see the GNU General Public Licence version 2
-or later for copying conditions.  There is NO warranty."
+This is free software; see the GNU General Public Licence version 2 or
+later for copying conditions.  There is NO warranty."
 
 usage="Usage: R CMD COMPILE [options] files
 
 Compile the specified files for subsequent collection into a shared
-library using \`R CMD SHLIB'.  Currently, C, C++, and FORTRAN files
-(with extensions \`.c', \`.cc' or \`.cpp' or \`.C', and \`.f',
-respectively, are supported.
+library using 'R CMD SHLIB'.  Currently, C, C++, and FORTRAN files
+(with extensions '.c', '.cc' or '.cpp' or '.C', and '.f', respectively),
+are supported.
 
 Options:
   -h, --help		print short help message and exit
   -v, --version		print version info and exit
 
-Other options of the form \`-DMACRO' or \`VAR=VALUE' are passed on to
-the compilation.
+Other options of the form '-DMACRO' or 'VAR=VALUE' are passed on to the
+compilation.
 
 Report bugs to <r-bugs@r-project.org>."
 
@@ -52,7 +52,7 @@ while test -n "${1}"; do
       MAKEFLAGS="${MAKEFLAGS} ${argn}=\"${argv}\""
       ;;
     *)
-      echo "ERROR: don't know how to compile \`${1}'"
+      echo "ERROR: don't know how to compile '${1}'"
       exit 1
       ;;
   esac

@@ -24,7 +24,7 @@ use R::Rdconv;
 use R::Rdlists;
 use R::Utils;
 
-my $revision = ' $Revision: 1.8 $ ';
+my $revision = ' $Revision: 1.9 $ ';
 my $version;
 my $name;
 
@@ -48,18 +48,18 @@ if($opt_dosnames){ $HTML=".htm"; } else { $HTML=".html"; }
 my $current = cwd();
 if($opt_rhome){
     $R_HOME=$opt_rhome;
-    print STDERR "R_HOME from --rhome: `$R_HOME'\n" if $opt_debug;
+    print STDERR "R_HOME from --rhome: '$R_HOME'\n" if $opt_debug;
 }
 elsif($ENV{"R_HOME"}){
     $R_HOME=$ENV{"R_HOME"};
-    print STDERR "R_HOME from ENV: `$R_HOME'\n" if $opt_debug;
+    print STDERR "R_HOME from ENV: '$R_HOME'\n" if $opt_debug;
 }
 else{
     chdir(dirname($0) . "/..");
     $R_HOME = cwd();
 }
 chdir($current);
-print STDERR "Current directory (cwd): `$current'\n" if $opt_debug;
+print STDERR "Current directory (cwd): '$current'\n" if $opt_debug;
 
 my $mainlib = file_path($R_HOME, "library");
 
@@ -85,7 +85,7 @@ if(!$opt_html && !$opt_txt && !$opt_latex && !$opt_example){
 
 ($pkg, $lib, @mandir) = buildinit();
 $dest = file_path($lib, $pkg);
-print STDERR "Destination `dest'= `$dest'\n" if $opt_debug;
+print STDERR "Destination dest = '$dest'\n" if $opt_debug;
 
 build_index($lib, $dest, "");
 if ($opt_latex) {
@@ -101,7 +101,7 @@ if ($opt_example) {
     }
 }
 
-print " >>> Building/Updating help pages for package `$pkg'\n";
+print " >>> Building/Updating help pages for package '$pkg'\n";
 print "     Formats: ";
 print "text " if $opt_txt;
 print "html " if $opt_html;

@@ -2,7 +2,7 @@
 #
 # ${R_HOME}/bin/BATCH
 
-revision='$Revision: 1.11 $'
+revision='$Revision: 1.12 $'
 version=`set - ${revision}; echo ${2}`
 version="R batch front end ${version}
 
@@ -14,17 +14,17 @@ usage="Usage: R CMD BATCH [options] infile [outfile]
 
 Run R non-interactively with input from infile and place output (stdout
 and stderr) to another file.  If not given, the name of the output file
-is the one of the input file, with a possible \`.R' extension stripped,
-and \`.Rout' appended.
+is the one of the input file, with a possible '.R' extension stripped,
+and '.Rout' appended.
 
 Options:
   -h, --help		print short help message and exit
   -v, --version		print version info and exit
   --			end processing of options
 
-Further arguments starting with a \`-' are considered as options as long
-as \`--' was not encountered, and are passed on to the R process, which
-by default is started with \`--restore --save --no-readline'.
+Further arguments starting with a '-' are considered as options as long
+as '--' was not encountered, and are passed on to the R process, which
+by default is started with '--restore --save --no-readline'.
 
 Report bugs to <r-bugs@r-project.org>."
 

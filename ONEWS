@@ -429,7 +429,7 @@ NEW FEATURES
     o	New command line option `--gui' to specify the graphical user
 	interface under Unix.  Currently, possible values are `X11' (the
 	(default) and `GNOME', provided that GNOME support is available.
-	Command line options \`-g' and `--gnome' are defunct.
+	Command line options `-g' and `--gnome' are defunct.
 
     o	power.t.test() and power.prop.test() functions added for power and
 	sample size calculations.

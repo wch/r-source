@@ -24,7 +24,7 @@ Usage: R [options] [< infile] [> outfile]
    or: R CMD command [arguments]
 
 Start R, a system for statistical computation and graphics, with the
-specified options, or invoke an R tool via the \`R CMD' interface.
+specified options, or invoke an R tool via the 'R CMD' interface.
 
 Options:
   -h, --help            Print short help message and exit
@@ -42,7 +42,7 @@ Options:
   --vanilla		Combine --no-save, --no-restore, --no-site-file,
 			--no-init-file and --no-environ
   --no-readline         Don't use readline for command-line editing
-  --min-vsize=N         Set vector heap min to N bytes; \`4M' = 4 MegaB
+  --min-vsize=N         Set vector heap min to N bytes; '4M' = 4 MegaB
   --max-vsize=N         Set vector heap max to N bytes;
   --min-nsize=N         Set min number of cons cells to N
   --max-nsize=N         Set max number of cons cells to N
@@ -51,8 +51,8 @@ Options:
   --slave               Make R run as quietly as possible
   --verbose             Print more information about progress
   -d, --debugger=NAME   Run R through debugger NAME
-  -g, --gui=TYPE	Use TYPE as GUI; possible values are \`X11'
-			(default), \`none' and \`gnome'
+  -g, --gui=TYPE	Use TYPE as GUI; possible values are 'X11'
+			(default), 'none' and 'gnome'
 
 Commands:
   BATCH			Run R in batch mode
@@ -72,10 +72,10 @@ Commands:
   config                Obtain configuration information about R
 
 The first five tools (i.e., BATCH, COMPILE, SHLIB, INSTALL, and REMOVE)
-can also be invoked without the \`CMD' option.
+can also be invoked without the 'CMD' option.
 
-Please use \`R CMD command --help' to obtain further information about
-the usage of \`command'.
+Please use 'R CMD command --help' to obtain further information about
+the usage of 'command'.
 
 Report bugs to <r-bugs@r-project.org>."
 
@@ -100,14 +100,14 @@ while test -n "${1}"; do
       shift;
       exec sh "${R_HOME}/bin/Rcmd" "${@}" ;;
     --gnome)
-      echo "option \`${1}' is defunct, use \`--gui=gnome'"
+      echo "option '${1}' is defunct, use '--gui=gnome'"
       exit 1
       ;;
     -d|--debugger)
       if test -n "`echo ${2} | sed 's/^-.*//'`"; then      
 	debugger="${2}"; shift
       else
-	echo "ERROR: option \`${1}' requires an argument"
+	echo "ERROR: option '${1}' requires an argument"
 	exit 1
       fi
       ;;
@@ -128,7 +128,7 @@ done
 if test -x ${R_HOME}; then
   :
 else
-  echo "R_HOME (\`${R_HOME}') not found"
+  echo "R_HOME ('${R_HOME}') not found"
   exit 1
 fi
 
@@ -138,8 +138,8 @@ if test -z "${debugger}"; then
   exec ${R_HOME}/bin/${R_binary} @R_BATCHSAVE@ ${args}
 else
   if test -n "${args}"; then
-    echo "*** Further command line arguments (\`${args}') disregarded"
-    echo "*** (maybe use \`run ${args}' from *inside* ${debugger})"
+    echo "*** Further command line arguments ('${args}') disregarded"
+    echo "*** (maybe use 'run ${args}' from *inside* ${debugger})"
     echo ""
   fi
   exec ${debugger} ${R_HOME}/bin/${R_binary}
