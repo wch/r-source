@@ -3658,19 +3658,28 @@ information).  On the other hand, building @R{} in a separate directory
 (not containing the sources) should work provided that @command{make}
 supports the @code{VPATH} mechanism.
 
+Windows-specific makefiles can assume GNU @command{make} 3.75 or later,
+as no other @command{make} is viable on that platform.
+
 @item
 A Bourne shell and the ``traditional'' Unix programming tools, including
 @command{grep}, @command{sed}, and @command{awk}.
 
 There are POSIX standards for these tools, but these may not fully be
-supported, and are typically hard to access anyway.  Baseline features
-could be determined from a book such as @cite{The UNIX Programming
-Environment} by Brian W. Kernighan & Rob Pike.  Note in particular that
-@samp{|} in a regexp is an extended regexp, and is not supported by all
-versions of @command{grep} or @command{sed}.
+supported, and the precise standards are typically hard to access.
+Baseline features could be determined from a book such as @cite{The UNIX
+Programming Environment} by Brian W. Kernighan & Rob Pike.  Note in
+particular that @samp{|} in a regexp is an extended regexp, and is not
+supported by all versions of @command{grep} or @command{sed}.
 
-Under Windows, these tools can be assumed because they could be provided
-along with @R{} if necessary, but redirection cannot be assumed safely.
+Under Windows, these tools can be assumed because versions
+(specifically, of @command{cat}, @command{cp}, @command{cut},
+@command{diff}, @command{echo}, @command{egrep}, @command{expr},
+@command{gawk}, @command{grep}, @command{ls}, @command{mkdir},
+@command{mv}, @command{rm} and @command{sed}) are provided at
+CRAN. However, redirection cannot be assumed to be available via
+@command{system} as this does not use a standard shell (let alone
+a Bourne shell).
 @end itemize
 
 In addition, the following tools are needed for certain tasks.
@@ -3688,7 +3697,7 @@ not a clear one.  Without Perl, installing an add-on package leaves it
 without documentation, and thus in fact mostly useless.  (Note that CRAN
 no longer provides pre-built documentation.  This decision was partially
 motivated by the fact that Perl is needed anyway for updating the HTML
-index.)
+index.)  Also the R function @code{read.fwf} requires Perl.
 
 The @R{} Core Team is currently investigating the following possible
 scenarios.  Either declare Perl 5 as ``generally safe'' (also at
@@ -3737,8 +3746,9 @@ files.
 @end smallexample
 
 @noindent
-(The `GNU' C and R styles use a basic indentation of 2, which has been
-determined not to display the structure clearly enough.)
+(The `GNU' styles for Emacs' C and R modes use a basic indentation of 2,
+which has been determined not to display the structure clearly enough
+when using narrow fonts.)
 
 
 @node Function and variable index, Concept index, R coding standards, Top
