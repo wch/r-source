@@ -109,14 +109,14 @@ enum
    kConsTextSize                = 21,  // Jago
    kInterrupt                   = 24,
    kOnOpenSource                = 25,
-   kOkButton                    = 1,       // 1 is default button.
+   kApplyButton                 =  1,  // 1 is default button.
    kCancelButton                = 10,
-   kApplyButton					= 23,   
+   kSavePrefsButton				= 23,   
    kEditRect                    = 27,
    kConsoleFont					= 28,
    kGraphFont					= 27,
    kScreenRes                   = 19,
-   kMemoryRect                  = 30   
+   kDefaultsButton              = 30   
    
 } ;
 
@@ -164,6 +164,24 @@ extern Str255							   UserFont;
 void RPrefs(void);
 int GetTextSize(void);
 int GetScreenRes(void);
+void ReSetDialogPrefs(DialogPtr PreferenceBox);
+void changeFontAndSize(WindowPtr window);
+void ReSetDialogPrefs(DialogPtr PreferenceBox);
+
+#define DefgtabSize 	    5
+#define DefgScreenRes 	   72
+#define DefgTextSize 	   12
+#define DefstoreHistory   512
+#define DefInterrupt  	false
+#define DefOnOpenSource false
+RGBColor DefgTypeColour 	= {0xffff, 0x0000, 0x0000}; /* RED   */
+RGBColor DefgFinishedColour = {0x0000, 0x0000, 0xffff}; /* BLUE  */
+RGBColor DefgComputerColour = {0x0000, 0x0000, 0x0000}; /* BLACK */
+#define	DefUserFont "\pmonaco"
+#define	DefPostFont "\phelvetica"
+
+
+const short	kStartHierMenuID = 160;
 
 
 /* ************************************************************************************************ */
@@ -214,6 +232,10 @@ void setDefaultPrefs(void);
 #define kPrefsNameStrID 132         /* name of prefs file */
 #define kStrType 'STR '
 
+Boolean Interrupt =false;
+Boolean OnOpenSource = false;
+
+extern char *mac_getenv(const char *name);
 
 void GetOrGeneratePrefs(appPrefs * thePrefsTypePtr, long minVers);
 short OpenPrefsResFile(SignedByte prefsPerm, Boolean createFlag);
@@ -233,33 +255,26 @@ unsigned char* StrToPStr(char* buf, SInt8 size){
 }
 
 
-extern char *mac_getenv(const char *name);
-Boolean Interrupt =false;
-Boolean OnOpenSource = false;
+
 
 
 void setDefaultPrefs(void)
 {
-     gTextSize = 12;
-	 gScreenRes = 72;
-	 gtabSize = 5;
-	 storeHistory = 512;
+     gTextSize    = DefgTextSize;
+	 gScreenRes   = DefgScreenRes;
+	 gtabSize     = DefgtabSize;
+	 storeHistory = DefstoreHistory;
 	 
-	 Interrupt = false;
-     OnOpenSource = false;
+	 Interrupt    = DefInterrupt;
+     OnOpenSource = DefOnOpenSource;
 	 
-     gTypeColour.red =  0xffff;
-     gTypeColour.green =  0x0000;
-     gTypeColour.blue =  0x0000;
-     gFinishedColour.red = 0x0000;
-     gFinishedColour.green = 0x0000;
-     gFinishedColour.blue = 0xffff;
-     gComputerColour.red = 0x0000;
-     gComputerColour.green = 0x0000;
-     gComputerColour.blue = 0x0000;
+     gTypeColour     = DefgTypeColour;
+	 gFinishedColour = DefgFinishedColour;
+	 gComputerColour = DefgComputerColour;
 	 
-	 doCopyPString("\pmonaco", UserFont);
-	 doCopyPString("\phelvetica", PostFont); 
+	 
+	 doCopyPString(DefUserFont, UserFont);
+	 doCopyPString(DefPostFont, PostFont); 
 
 }
 
@@ -665,8 +680,6 @@ void SetTextSize(Boolean newsize){
 
 }
 
-void changeFontAndSize(WindowPtr window);
-
 void changeFontAndSize(WindowPtr window)
 {
 
@@ -740,27 +753,28 @@ void SetTextFontAndSize(void){
 
 
 
-
 void RPrefs ( void )
 {
    //****
-   DialogPtr          PreferenceBox = nil ;
-   WEReference        we = nil ;
-   GrafPtr            savePort ;
-   short              type; 
-   Rect               itemRect;
-   Str255             buf;
-   char               tempSpace[10];
-   StandardFileReply  folder;
-   Point			  where = {-1, -1}; 
-   SInt16             itemHit = 0;
-   Handle              itemHandle;
-   Boolean            ChangeDir= false;
-   RGBColor           outColor;
-   SInt16              fileLen;
-   Handle              fileName;
+   DialogPtr          	PreferenceBox = nil ;
+   WEReference        	we = nil ;
+   GrafPtr            	savePort ;
+   short              	type; 
+   Rect               	itemRect;
+   Str255             	buf;
+   char               	tempSpace[10];
+   Point			  	where = {-1, -1}; 
+   SInt16             	itemHit = 0;
+   Handle              	itemHandle;
+   Boolean            	ChangeDir= false;
+   RGBColor           	outColor;
    Boolean				tempInterrupt = Interrupt;
    Boolean				tempOnOpenSource = OnOpenSource;
+   OSStatus 			status = noErr;   
+   int 					tempval;
+   FMFontFamily 		postFontId;
+
+
 
    PreferenceBox = GetNewDialog ( kPreferences, nil, ( WindowPtr ) -1L ) ;
    if ( PreferenceBox == nil )
@@ -818,7 +832,6 @@ void RPrefs ( void )
 
    
    while(true){
-      // wait for a click in the picture
       ModalDialog ( GetMyStandardDialogFilter ( ), & itemHit ) ;
    
       if (itemHit == kActiveTextButton){
@@ -852,52 +865,97 @@ void RPrefs ( void )
 
       }
 
+      if (itemHit == kDefaultsButton){
+         ReSetDialogPrefs(PreferenceBox);		 
+         // When you click Defaults button, we reset all parameters
+        }
+	
 	
 
-      if ( itemHit == kOkButton )
+      if ( itemHit == kApplyButton )
       { 
          //Handle Tab Size
          GetDialogItem(PreferenceBox, kTabSize, &type, &itemHandle, &itemRect);
          GetDialogItemText(itemHandle, buf);
-         // Didn't allow you to use a tab with size bigger than 99
-         if (buf[0] > 2){
-            GWdoErrorAlert(eTabSize);
-            break;
+         CopyPascalStringToC(buf,tempSpace);
+         tempval = atoi(tempSpace);
+         if(tempval<1 || tempval>99){
+		  R_ShowMessage("TabSize out of limits\r 1 <= TabSize <= 99");
+          sprintf(tempSpace, "%d", gtabSize);
+          SetDialogItemText(itemHandle, StrToPStr(tempSpace, strlen(tempSpace)));
+          continue;
          }
          
          // Handle History Length
          GetDialogItem(PreferenceBox, kHistoryLength, &type, &itemHandle, &itemRect);
          GetDialogItemText(itemHandle, buf);
-         // Didn't allow you to use a tab with size bigger than 999
-         if (buf[0] > 3){
-            GWdoErrorAlert(eHistorySize);
-            break;
+         CopyPascalStringToC(buf,tempSpace);
+         tempval = atoi(tempSpace);
+         if(tempval<10 || tempval>512){
+		  R_ShowMessage("HistSize out of limits\r 10 <= HistSize <= 512");
+          sprintf(tempSpace, "%d", storeHistory);
+          SetDialogItemText(itemHandle, StrToPStr(tempSpace, strlen(tempSpace)));
+          continue;
          }
          
          //Handle Global Text Size
          GetDialogItem(PreferenceBox, kConsTextSize, &type, &itemHandle, &itemRect);
          GetDialogItemText(itemHandle, buf);
-         // Didn't allow you to use a tab with size bigger than 99
-         if (buf[0] > 2){
-            GWdoErrorAlert(eTextSize);
-            break;
-         }         
-         
+         CopyPascalStringToC(buf,tempSpace);
+         tempval = atoi(tempSpace);
+         if(tempval<8 || tempval>40){
+		  R_ShowMessage("TextSize out of limits\r 8 <= TextSize <= 40");
+          sprintf(tempSpace, "%d", gTextSize);
+          SetDialogItemText(itemHandle, StrToPStr(tempSpace, strlen(tempSpace)));
+          continue;
+	     }       
 		 
          //Handle ScreenRes
          GetDialogItem(PreferenceBox, kScreenRes, &type, &itemHandle, &itemRect);
          GetDialogItemText(itemHandle, buf);
-         buf[buf[0] + 1] = '\0';
-         if ((atoi((char *)&buf[1]) > 144) || (atoi((char *)&buf[1]) < 36)){
-            GWdoErrorAlert(eScreenRes);  //???
-            break;
-         }            
-         
+         CopyPascalStringToC(buf,tempSpace);
+         tempval = atoi(tempSpace);
+         if(tempval<72 || tempval>600){
+		  R_ShowMessage("ScreenRes out of limits\r 72 <= ScreenRes <= 600");
+          sprintf(tempSpace, "%d", gScreenRes);
+          SetDialogItemText(itemHandle, StrToPStr(tempSpace, strlen(tempSpace)));
+          continue;
+	     }   
+		 
+		 
+		  GetDialogItem(PreferenceBox, kConsoleFont, &type, &itemHandle, &itemRect);
+          GetDialogItemText(itemHandle, buf);
+          if(systemVersion > kMinSystemVersion){
+           if( FMGetFontFamilyFromName(buf) == kInvalidFontFamily){
+             R_ShowMessage("Invalid Font Name");
+			 SetDialogItemText(itemHandle, UserFont);
+			 continue;
+ 	        }
+           }
+          else {
+           GetFNum(buf, &postFontId);
+            if( postFontId == kInvalidFontFamily){
+             R_ShowMessage("Invalid Font Name");
+			 SetDialogItemText(itemHandle, UserFont);
+			 continue;
+ 	  	    }
+          }
+
+
+         GetDialogItem(PreferenceBox, kGraphFont, &type, &itemHandle, &itemRect);
+         GetDialogItemText(itemHandle, buf);
+         if(GetFontIDFromMacFontName(buf) == kATSUInvalidFontID){
+		   R_ShowMessage("Invalid Font Name");
+		   SetDialogItemText(itemHandle, PostFont);
+		   continue;
+		 }
+
+
+       
          gTypeColour = tempTypeColour;
          gComputerColour = tempComputerColour;
          gFinishedColour = tempFinishedColour;
-         GetDialogPrefs(PreferenceBox,true);
-
+         GetDialogPrefs(PreferenceBox,false);
          break;
   
       }
@@ -911,11 +969,12 @@ void RPrefs ( void )
       }
       
       
-      if (itemHit == kApplyButton){
-         GetDialogPrefs(PreferenceBox,false);
-         // When you click Cancel button, no action followed
+      if (itemHit == kSavePrefsButton){
+         GetDialogPrefs(PreferenceBox,true);
+         // When you click Apply button, we accept values
          break;
       }
+      
       
       
    }
@@ -937,6 +996,79 @@ cleanup :
    
    
 }
+
+
+
+
+void ReSetDialogPrefs(DialogPtr PreferenceBox)
+{
+  GrafPtr            savePort ;
+  char               tempSpace[10];
+  Handle             itemHandle;
+  short              type; 
+  Rect               itemRect;
+  Boolean			 tempInterrupt;
+  Boolean			 tempOnOpenSource;
+ 
+	 
+   tempTypeColour =  DefgTypeColour;
+   tempFinishedColour = DefgFinishedColour;
+   tempComputerColour = DefgComputerColour;
+
+  	 
+	 
+   GetPort ( & savePort ) ;
+   SetPort ( GetDialogPort(PreferenceBox) ) ;
+   TextSize(12);
+   // Set the Dialog Title
+   SetWTitle ( GetDialogWindow(PreferenceBox), "\pR Preferences" ) ;
+   DrawBox(PreferenceBox);
+
+   // Handle tab size
+   GetDialogItem(PreferenceBox, kTabSize, &type, &itemHandle, &itemRect);
+   sprintf(tempSpace, "%d", DefgtabSize);
+   SetDialogItemText(itemHandle, StrToPStr(tempSpace, strlen(tempSpace)));
+  
+   GetDialogItem(PreferenceBox, kConsoleFont, &type, &itemHandle, &itemRect);
+   SetDialogItemText(itemHandle, DefUserFont);
+   
+   GetDialogItem(PreferenceBox, kGraphFont, &type, &itemHandle, &itemRect);
+   SetDialogItemText(itemHandle, DefPostFont);
+    
+   // Handle History size
+   GetDialogItem(PreferenceBox, kHistoryLength, &type, &itemHandle, &itemRect);
+   sprintf(tempSpace, "%d", DefstoreHistory);   
+   SetDialogItemText(itemHandle, StrToPStr(tempSpace, strlen(tempSpace)));
+   
+   //Handle Text Size
+   GetDialogItem(PreferenceBox, kConsTextSize, &type, &itemHandle, &itemRect);
+   sprintf(tempSpace, "%d", DefgTextSize);
+   SetDialogItemText(itemHandle, StrToPStr(tempSpace, strlen(tempSpace)));
+ 
+   
+   //Handle Screen Resolution
+   GetDialogItem(PreferenceBox, kScreenRes, &type, &itemHandle, &itemRect);
+   sprintf(tempSpace, "%d", (DefgScreenRes));
+   SetDialogItemText(itemHandle, StrToPStr(tempSpace, strlen(tempSpace)));
+   //show the dialog
+   
+   
+    GetDialogItem(PreferenceBox, kInterrupt, &type, &itemHandle, &itemRect);
+    tempInterrupt = DefInterrupt;
+    SetControlValue((ControlHandle) itemHandle, (tempInterrupt ? 1 : 0));
+
+    GetDialogItem(PreferenceBox, kOnOpenSource, &type, &itemHandle, &itemRect);
+    tempOnOpenSource = DefOnOpenSource;
+    SetControlValue((ControlHandle) itemHandle, (tempOnOpenSource ? 1 : 0));
+ 
+    ShowWindow ( GetDialogWindow(PreferenceBox) ) ;
+	
+	
+
+}
+
+
+
 
 
 
@@ -1195,3 +1327,6 @@ short OpenPrefsResFile(SignedByte prefsPerm, Boolean createFlag)
 	return prefsResRefNum;
 }
 
+ 
+ 
+   
