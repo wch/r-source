@@ -733,7 +733,7 @@ function(package = NULL, lib.loc = NULL, quiet = FALSE,
                                      c("Package", "Version"))[1, ],
                             silent = TRUE)
                 if(inherits(info, "try-error"))
-                    c(NA, NA)
+                    c(Package=NA, Version=NA) # need dimnames below
                 else
                     info
             })
