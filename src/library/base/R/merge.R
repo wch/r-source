@@ -58,6 +58,8 @@ merge.data.frame <-
                                                              drop=FALSE])), nx)
             by <- matrix(as.character(as.matrix.data.frame(y[, by.y,
                                                              drop=FALSE])), ny)
+#            bx <- do.call("paste", c(bx, sep="\r"))
+#            by <- do.call("paste", c(by, sep="\r"))
             bx <- drop(apply(bx, 1, function(x) paste(x, collapse="\r")))
             by <- drop(apply(by, 1, function(x) paste(x, collapse="\r")))
         }
