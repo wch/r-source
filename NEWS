@@ -73,6 +73,8 @@ BUG FIXES
 
     o   ts.union(, dframe=T) had a long-standing typo, now works.
 
+    o	save(,ascii=TRUE) had problem with octal escapes in strings
+        when there was a digit following, should work now  
 
 
 	*********************************************************

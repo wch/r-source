@@ -1575,7 +1575,7 @@ static void OutStringAscii(FILE *fp, char *x)
             case '\?': fprintf(fp, "\\?");  break;
             case '\'': fprintf(fp, "\\'");  break;
             case '\"': fprintf(fp, "\\\""); break;
-            default  : fprintf(fp, "\\%o", x[i]); break;
+            default  : fprintf(fp, "\\%03o", x[i]); break;
             }
         }
         else fputc(x[i], fp);
