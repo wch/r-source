@@ -38,7 +38,7 @@
   information.
 }
 \references{
-  Bickel, P. J., Hammel, E. A., & O'Connell, J. W. (1975)
+  Bickel, P. J., Hammel, E. A., and O'Connell, J. W. (1975)
   Sex bias in graduate admissions: Data from Berkeley.
   \emph{Science}, \bold{187}, 398--403.
 }

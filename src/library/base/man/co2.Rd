@@ -16,7 +16,7 @@
   and May of 1964.
 }
 \source{
-Keeling, C. D. & T. P. Whorf,
+Keeling, C. D. and  Whorf, T. P.,
 Scripps Institution of Oceanography (SIO),
 University of California,
 La Jolla, California USA 92093-0220.
