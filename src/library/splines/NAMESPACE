@@ -1,5 +1,3 @@
-useDynLib(splines)
-
 export(as.polySpline, asVector, backSpline, bs, interpSpline, ns,
        periodicSpline, polySpline, spline.des, splineDesign,
        splineKnots, splineOrder, xyVector)
