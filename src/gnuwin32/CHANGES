@@ -4,6 +4,25 @@
 See the file NEWS for changes that affect all versions of R.
 
 
+rw1030
+======
+
+New menu `Packages' with items to load packages, and to install
+packages from CRAN or from local zip files.
+
+help.start() now lists all packages in all libraries, but the
+functions list and search index are still confined to the system library.
+
+Profiling is now available.
+
+Support for earlier compilers has been dropped: you must use a
+compiler system that supports --shared and an in-memory dlltool.
+
+Under the default compilation options, Internet Explorer 4.0 or later
+is required.
+
+
+
 rw1023
 ======
 
