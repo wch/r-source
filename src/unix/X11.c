@@ -34,16 +34,22 @@
 # endif
 #endif
 
-#ifdef HAVE_DLFCN_H
-# include <dlfcn.h>
-#else
+/* HP-UX 11.0 has dlfcn.h, but according to libtool as of Dec 2001
+   this support is broken. So we force use of shlib even when dlfcn.h
+   is available */
+#ifdef __hpux
 # ifdef HAVE_DL_H
 #  include "hpdlfcn.h"
-# define HAVE_DLFCN_H
+#  define HAVE_DYNAMIC_LOADING
+# endif
+#else
+# ifdef HAVE_DLFCN_H
+#  include <dlfcn.h>
+#  define HAVE_DYNAMIC_LOADING
 # endif
 #endif
 
-#if defined(HAVE_X11) && defined(HAVE_DLFCN_H)
+#if defined(HAVE_X11) && defined(HAVE_DYNAMIC_LOADING)
 
 #include "R_ext/RX11.h" /* typedefs for the module routine types */
 

@@ -86,10 +86,16 @@
 
 #include <Rdynpriv.h>
 
-/* for HP-UX */
-#ifndef HAVE_DLFCN_H
+/* HP-UX 11.0 has dlfcn.h, but according to libtool as of Dec 2001
+   this support is broken. So we force use of shlib even when dlfcn.h
+   is available */
+#ifdef __hpux
 # ifdef HAVE_DL_H
-#  define HAVE_DLFCN_H 1
+#  define HAVE_DYNAMIC_LOADING
+# endif
+#else
+# ifdef HAVE_DLFCN_H
+#  define HAVE_DYNAMIC_LOADING
 # endif
 #endif
 
@@ -111,14 +117,7 @@
    relevant defines are set up by autoconf. */
 
 
-#ifdef HAVE_DLFCN_H
-#ifndef RTLD_LAZY
-#define RTLD_LAZY 1
-#endif
-#ifndef RTLD_NOW
-#define RTLD_NOW  2
-#endif
-
+#ifdef HAVE_DYNAMIC_LOADING
 
 #ifdef CACHE_DLL_SYM
 /* keep a record of symbols that have been found */

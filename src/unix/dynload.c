@@ -35,12 +35,18 @@
 #include <Defn.h>
 #include <Rdynpriv.h>
 
-#ifdef HAVE_DLFCN_H
-# include <dlfcn.h>
-#else
+/* HP-UX 11.0 has dlfcn.h, but according to libtool as of Dec 2001
+   this support is broken. So we force use of shlib even when dlfcn.h
+   is available */
+#ifdef __hpux
 # ifdef HAVE_DL_H
 #  include "hpdlfcn.c"
-# define HAVE_DLFCN_H
+#  define HAVE_DYNAMIC_LOADING
+# endif
+#else
+# ifdef HAVE_DLFCN_H
+#  include <dlfcn.h>
+#  define HAVE_DYNAMIC_LOADING
 # endif
 #endif
 
@@ -52,7 +58,7 @@ static CFunTabEntry CFunTab[] =
     {NULL, NULL}
 };
 
-#ifdef HAVE_DLFCN_H
+#ifdef HAVE_DYNAMIC_LOADING
 
 static void *loadLibrary(const char *path, int asLocal, int now);
 static void closeLibrary(void *handle);
@@ -273,4 +279,4 @@ static void getFullDLLPath(SEXP call, char *buf, char *path)
 #endif
 }
 
-#endif /* end of `ifdef HAVE_DLFCN_H' */
+#endif /* end of `ifdef HAVE_DYNAMIC_LOADING' */
