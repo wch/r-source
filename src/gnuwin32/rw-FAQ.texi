@@ -119,10 +119,10 @@ Go to any CRAN site (see @uref{http://cran.r-project.org/mirrors.html}
 for a list), navigate to the @code{bin/windows/base} directory and
 collect the files you need.  There are two versions of the distribution.
 
-1) @code{@RWVER@.exe} is about 21Mb.  This contains all the components
+1) @code{@RWVER@.exe} is about 22Mb.  This contains all the components
 and allows as complete as installation as you choose.
 
-2) Directory @code{miniR} contains @code{miniR.exe} and eight files
+2) Directory @code{miniR} contains @code{miniR.exe} and nine files
 @code{miniR-?.bin}.  You can put @code{miniR.exe} and @code{miniR-1.bin}
 on one floppy and the remaining @code{miniR-?.bin} on a floppy each.
 This is a small installation, containing the text and compiled HTML
@@ -155,7 +155,7 @@ Properties... and change the `Start in' field to your working directory.
 
 You may also want to add command-line arguments at the end of the Target
 field (@emph{after} any final double quote), for example @code{--sdi
---max-mem-size=200M}.  You can also set environment variables at the end
+--max-mem-size=1Gb}.  You can also set environment variables at the end
 of the Target field, for example @code{R_LIBS=p:/myRlib}.
 
 @node Can I customize the installation?, How do I run it?, How do I install R for Windows?, Installation and Usage
