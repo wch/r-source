@@ -1,6 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
+ *  Copyright (C) 1998-1999	The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -38,14 +39,8 @@ void isintrpt(){}
 extern void ProcessEvents();
 #endif
 
-/* NEEDED: A fixup is needed in browser, because it */
-/* can trap errors, and currently does not reset the */
-/* limit to the right value. */
-
-
-/* These are not ifdef'ed to keep main etc happy. */
-extern int R_EvalDepth;
-extern int R_EvalCount;
+/* NEEDED: A fixup is needed in browser, because it can trap errors,
+ *	and currently does not reset the limit to the right value. */
 
 
 /* Return value of "e" evaluated in "rho". */
@@ -69,15 +64,15 @@ SEXP eval(SEXP e, SEXP rho)
 	isintrpt();
     }
 #endif
-#ifdef Win32  
+#ifdef Win32
     if ((R_EvalCount++ % 100) == 0) {
 	ProcessEvents();
-/* Is this safe? R_EvalCount is not used in other part and 
+/* Is this safe? R_EvalCount is not used in other part and
  * don't want to overflow it
 */
-        R_EvalCount = 0 ;
+	R_EvalCount = 0 ;
     }
-#endif   
+#endif
 
     tmp = R_NilValue;		/* -Wall */
 
@@ -291,10 +286,10 @@ SEXP applyClosure(SEXP call, SEXP op, SEXP arglist, SEXP rho, SEXP suppliedenv)
 	    tmp = findFun(CAR(body), rho);
 	else
 	    tmp = eval(CAR(body), rho);
-	if((TYPEOF(tmp) == BUILTINSXP || TYPEOF(tmp) == SPECIALSXP) 
-	    && !strcmp( PRIMNAME(tmp), "for" ) && !strcmp( PRIMNAME(tmp), 
-	    "{" ) && !strcmp( PRIMNAME(tmp),"repeat" ) && 
-	    !strcmp( PRIMNAME(tmp), "while" )) 
+	if((TYPEOF(tmp) == BUILTINSXP || TYPEOF(tmp) == SPECIALSXP)
+	    && !strcmp( PRIMNAME(tmp), "for" ) && !strcmp( PRIMNAME(tmp),
+	    "{" ) && !strcmp( PRIMNAME(tmp),"repeat" ) &&
+	    !strcmp( PRIMNAME(tmp), "while" ))
 	    goto regdb;
 	Rprintf("debug: ");
 	PrintValue(body);
@@ -304,7 +299,7 @@ regdb:
     /* Set a longjmp target which will catch any */
     /* explicit returns from the function body. */
 
-    if (i =SETJMP(cntxt.cjmpbuf)) {
+    if ( (i= SETJMP(cntxt.cjmpbuf))) {
 	if(R_ReturnedValue == R_DollarSymbol) {
 	    cntxt.callflag = CTXT_RETURN; /* turn restart off */
 	    R_GlobalContext = &cntxt;  /* put the context back */
@@ -839,14 +834,14 @@ SEXP evalList(SEXP el, SEXP rho)
 
     while (el != R_NilValue) {
 
-	/* If we have a ... symbol, we look to see what it is */
-	/* bound to.  If its binding is Null (i.e. zero length) */
-	/* we just ignore it and return the cdr with all its */
-	/* expressions evaluated; if it is bound to a ... list */
-	/* of promises, we force all the promises and then splice */
-	/* the list of resulting values into the return value.	*/
-	/* Anything else bound to a ... symbol is an error */
-
+	/* If we have a ... symbol, we look to see what it is bound to.
+	 * If its binding is Null (i.e. zero length)
+	 *	we just ignore it and return the cdr with all its expressions evaluated;
+	 * if it is bound to a ... list of promises,
+	 *	we force all the promises and then splice
+	 *	the list of resulting values into the return value.
+	 * Anything else bound to a ... symbol is an error
+	*/
 	if (CAR(el) == R_DotsSymbol) {
 	    h = findVar(CAR(el), rho);
 	    if (TYPEOF(h) == DOTSXP || h == R_NilValue) {
@@ -869,7 +864,7 @@ SEXP evalList(SEXP el, SEXP rho)
     }
     UNPROTECT(1);
     return CDR(ans);
-}
+}/* evalList() */
 
 
 /* A slight variation of evaluating each expression in "el" in "rho". */
@@ -885,14 +880,14 @@ SEXP evalListKeepMissing(SEXP el, SEXP rho)
 
     while (el != R_NilValue) {
 
-	/* If we have a ... symbol, we look to see what it is */
-	/* bound to.  If its binding is Null (i.e. zero length) */
-	/* we just ignore it and return the cdr with all its */
-	/* expressions evaluated; if it is bound to a ... list */
-	/* of promises, we force all the promises and then splice */
-	/* the list of resulting values into the return value.	*/
-	/* Anything else bound to a ... symbol is an error */
-
+	/* If we have a ... symbol, we look to see what it is bound to.
+	 * If its binding is Null (i.e. zero length)
+	 *	we just ignore it and return the cdr with all its expressions evaluated;
+	 * if it is bound to a ... list of promises,
+	 *	we force all the promises and then splice
+	 *	the list of resulting values into the return value.
+	 * Anything else bound to a ... symbol is an error
+	*/
 	if (CAR(el) == R_DotsSymbol) {
 	    h = findVar(CAR(el), rho);
 	    if (TYPEOF(h) == DOTSXP || h == R_NilValue) {
@@ -939,13 +934,14 @@ SEXP promiseArgs(SEXP el, SEXP rho)
 
     while(el != R_NilValue) {
 
-	/* If we have a ... symbol, we look to see what it */
-	/* is bound to.	 If its binding is Null (i.e. zero length) */
-	/* we just ignore it and return the cdr with all its */
-	/* expressions promised; if it is bound to a ... list */
-	/* of promises, we repromise all the promises and then splice */
-	/* the list of resulting values into the return value. */
-	/* Anything else bound to a ... symbol is an error */
+	/* If we have a ... symbol, we look to see what it is bound to.
+	 * If its binding is Null (i.e. zero length)
+	 * we just ignore it and return the cdr with all its
+	 * expressions promised; if it is bound to a ... list
+	 * of promises, we repromise all the promises and then splice
+	 * the list of resulting values into the return value.
+	 * Anything else bound to a ... symbol is an error
+	 */
 
 	/* Is this double promise mechanism really needed? */
 
@@ -1037,7 +1033,7 @@ SEXP do_eval(SEXP call, SEXP op, SEXP args, SEXP rho)
     if(isLanguage(expr) || isSymbol(expr)) {
 	PROTECT(expr);
 	begincontext(&cntxt, CTXT_RETURN, call, env, rho, args);
-        if (!SETJMP(cntxt.cjmpbuf))
+	if (!SETJMP(cntxt.cjmpbuf))
 	    expr = eval(expr, env);
 	endcontext(&cntxt);
 	UNPROTECT(1);
@@ -1048,24 +1044,24 @@ SEXP do_eval(SEXP call, SEXP op, SEXP args, SEXP rho)
 	n = LENGTH(expr);
 	tmp = R_NilValue;
 	begincontext(&cntxt, CTXT_RETURN, call, env, rho, args);
-        if (!SETJMP(cntxt.cjmpbuf))
+	if (!SETJMP(cntxt.cjmpbuf))
 	    for(i=0 ; i<n ; i++)
-	        tmp = eval(VECTOR(expr)[i], env);
+		tmp = eval(VECTOR(expr)[i], env);
 	endcontext(&cntxt);
 	UNPROTECT(1);
 	expr = tmp;
     }
     if (PRIMVAL(op)) {
 	PROTECT(expr);
-        PROTECT(env = allocVector(VECSXP, 2));
-        PROTECT(encl = allocVector(STRSXP, 2));
+	PROTECT(env = allocVector(VECSXP, 2));
+	PROTECT(encl = allocVector(STRSXP, 2));
 	STRING(encl)[0] = mkChar("value");
 	STRING(encl)[1] = mkChar("visible");
-        VECTOR(env)[0] = expr;
-        VECTOR(env)[1] = ScalarLogical(R_Visible);
-        setAttrib(env, R_NamesSymbol, encl);
-        expr = env;
-        UNPROTECT(3);
+	VECTOR(env)[0] = expr;
+	VECTOR(env)[1] = ScalarLogical(R_Visible);
+	setAttrib(env, R_NamesSymbol, encl);
+	expr = env;
+	UNPROTECT(3);
     }
     UNPROTECT(1);
     return expr;
@@ -1094,9 +1090,9 @@ SEXP do_recall(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (cptr == NULL)
 	error("Recall called from outside a closure\n");
     if( TYPEOF(CAR(cptr->call)) == SYMSXP)
-        PROTECT(s = findFun(CAR(cptr->call), cptr->sysparent));
+	PROTECT(s = findFun(CAR(cptr->call), cptr->sysparent));
     else
-        PROTECT(s = eval(CAR(cptr->call), cptr->sysparent));
+	PROTECT(s = eval(CAR(cptr->call), cptr->sysparent));
     ans = applyClosure(cptr->call, s, args, cptr->sysparent, R_NilValue);
     UNPROTECT(1);
     return ans;
@@ -1110,14 +1106,14 @@ SEXP EvalArgs(SEXP el, SEXP rho, int dropmissing)
 }
 
 
-/* DispatchOrEval is used in internal functions which dispatch to 
- * object methods (e.g. "[" or "[[").  The code either builds promises 
- * and dispatches to the appropriate method, or it evaluates the 
- * (unevaluated) arguments it comes in with and returns them so that 
- * the generic built-in C code can continue. 
+/* DispatchOrEval is used in internal functions which dispatch to
+ * object methods (e.g. "[" or "[[").  The code either builds promises
+ * and dispatches to the appropriate method, or it evaluates the
+ * (unevaluated) arguments it comes in with and returns them so that
+ * the generic built-in C code can continue.
 
  * To call this an ugly hack would be to insult all existing ugly hacks
- * at large in the world. 
+ * at large in the world.
  */
 int DispatchOrEval(SEXP call, SEXP op, SEXP args, SEXP rho,
 		   SEXP *ans, int dropmissing)
