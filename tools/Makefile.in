@@ -33,10 +33,10 @@ DISTFILES = README \
 	pkg2tex.pl \
 	rsync-recommended
 
-all: Makefile R
+CLEANFILES =
+DISTCLEANFILES = Makefile
 
-.SUFFIXES:
-.SUFFIXES: .in
+all: Makefile R
 
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
@@ -45,8 +45,9 @@ R: Makefile
 
 mostlyclean: clean
 clean:
+	-@test -z "$(CLEANFILES)" || rm -f $(CLEANFILES)
 distclean: clean
-	-@rm -f Makefile
+	-@test -z "$(DISTCLEANFILES)" || rm -f $(DISTCLEANFILES)
 maintainer-clean: distclean
 
 install install-strip uninstall TAGS info dvi check:
