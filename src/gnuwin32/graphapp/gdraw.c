@@ -24,8 +24,20 @@
 
 #include "internal.h"
 
-#define GETHDC(a) (((a->kind==PrinterObject)||(a->kind==MetafileObject))?\
-                        ((HDC)a->handle):get_context(a))
+
+static HDC GETHDC(drawing d) 
+{
+  if ( (d->kind == PrinterObject)|| (d->kind == MetafileObject))
+  {
+     HDC dc = (HDC) d->handle ;
+     SelectObject(dc, GetStockObject(NULL_PEN));
+     SelectObject(dc, GetStockObject(NULL_BRUSH));
+     return dc ;
+  }
+  else
+     return get_context(d);
+}
+
 
 /*
  *  Some clipping functions.
@@ -363,7 +375,7 @@ void gfillpolygon(drawing d,rgb fill,point *p, int n)
    HDC dc = GETHDC(d);
    HBRUSH br = CreateSolidBrush(getwinrgb(d,fill));
    fix_brush(dc, d, br);
-   SelectObject(dc, br);	   
+   SelectObject(dc, br);
    Polygon(dc, (POINT FAR *) p, n);
    SelectObject(dc, GetStockObject(NULL_BRUSH));
    DeleteObject(br);
