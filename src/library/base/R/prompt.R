@@ -21,7 +21,7 @@ function(object, filename = NULL, name = NULL,
                     name <- eval(name)
                 as.character(name)
             }
-    if(missing(filename))
+    if(is.null(filename))
         filename <- paste0(name, ".Rd")
 
     ## Better than get(); works when called in fun :
@@ -87,9 +87,8 @@ function(object, filename = NULL, name = NULL,
              note = c("\\note{ ~~further notes~~ }",
              "",
              paste(" ~Make other sections like Warning with",
-                   "\\section{Warning }{....} ~",
-                   ""),
-             ),
+                   "\\section{Warning }{....} ~"),
+             ""),
              seealso = paste("\\seealso{ ~~objects to See Also as",
              "\\code{\\link{~~fun~~}}, ~~~ }"),
              examples = c("\\examples{",
@@ -122,7 +121,7 @@ function(object, filename = NULL, name = NULL,
                         "directory."))),
         sep = "\n")
 
-    invisible(file)
+    invisible(filename)
 }
 
 prompt.data.frame <-
@@ -140,7 +139,7 @@ function(object, filename = NULL, name = NULL, ...)
                     name <- eval(name)
                 as.character(name)
             }
-    if(missing(filename))
+    if(is.null(filename))
         filename <- paste0(name, ".Rd")
 
     x <- get(name, envir = parent.frame())
@@ -166,7 +165,7 @@ function(object, filename = NULL, name = NULL)
                     name <- eval(name)
                 as.character(name)
             }
-    if(missing(filename))
+    if(is.null(filename))
         filename <- paste0(name, ".Rd")
     
     ## Better than get(); works when called in fun :
@@ -255,5 +254,5 @@ function(object, filename = NULL, name = NULL)
                         "directory."))),
         sep = "\n")
     
-    invisible(file)
+    invisible(filename)
 }
