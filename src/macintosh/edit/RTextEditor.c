@@ -124,11 +124,13 @@ void RWrite(char* buf)
 
     buflen = strlen(buf);
 
+#ifndef __MRC__
     if(fileno(stdout)>1){
 	fputs(buf, stdout);
 	fflush(stdout);
     }
     else
+#endif
 	for ( i=0; i < buflen; i++)
 	    WEKey ( buf[i], NULL, GetWindowWE (Console_Window) ) ;
 
@@ -141,6 +143,7 @@ void RnWrite(char* buf, SInt16 len)
     char *buf2=NULL; 
     
     
+#ifndef __MRC__
     if(fileno(stdout)>1){
     buf2 = malloc(len+2);
      if(buf2){
@@ -151,6 +154,7 @@ void RnWrite(char* buf, SInt16 len)
      }
     }
     else
+#endif
 	for ( i=0; i < len; i++)
 	    WEKey ( buf[i], NULL, GetWindowWE (Console_Window) ) ;
     

@@ -219,6 +219,7 @@ void DoPaste(WindowPtr window);
 extern void DoUpdate (WindowPtr window);
 extern void DoActivate (Boolean isActivating, WindowPtr window);
 extern void Do_About();
+extern SInt32	systemVersion ;
 
 void DoTools(SInt16 menuItem);
 SavingOption DoWeSaveIt(WindowPtr window);
@@ -1821,11 +1822,10 @@ OSErr InitializeMenus(void)
     Handle		menuBar = nil ;
 	MenuRef		menu ;
 	OSErr 		err = noErr;
-#if TARGET_API_MAC_CARBON
 	ItemCount	submenuCount ;
 	ItemCount	itemCount ;
 	SInt32		gestaltResponse ;
-#endif
+
 
  	//	get the 'MBAR' resource
 	menuBar = GetNewMBar ( kMenuBarID ) ;
@@ -1873,7 +1873,7 @@ OSErr InitializeMenus(void)
 
 
 
-#if TARGET_API_MAC_CARBON
+
 	if ( ( Gestalt ( gestaltMenuMgrAttr, & gestaltResponse ) == noErr ) &&
 		 ( gestaltResponse & gestaltMenuMgrAquaLayoutMask ) )
 	{
@@ -1888,14 +1888,7 @@ OSErr InitializeMenus(void)
 			}
 		}
 	}
-#else
-	//	set up the Apple menu (this is not required under Carbon)
-	if ( ( menu = GetMenuHandle ( kMenuApple ) ) != nil )
-	{
-		AppendResMenu ( menu, kTypeDeskAccessory ) ;
-	}
 
-#endif
 
 
  
@@ -1910,15 +1903,16 @@ cleanup :
 
 
 
-
+/* This function assumes that systemVersion is already
+   defined by calling GetSysVersion()
+*/   
 Boolean RunningOnCarbonX(void)
 {
     UInt32 response;
     
-    return (Gestalt(gestaltSystemVersion, 
-                    (SInt32 *) &response) == noErr)
-                && (response >= 0x01000);
-}
+    return( systemVersion >= 0x10008000 );
+ }
+
 /* do_Print
 
   This routine has been completely rewritten.
