@@ -81,6 +81,16 @@ DOCS:
 	cat $(top_builddir)/library/*/CONTENTS \
 	  > $(top_builddir)/doc/html/search/index.txt
 
+vignettes:
+	@for pkg in $(R_PKGS_BASE); do \
+	  if test -d "$(srcdir)/$${pkg}/inst/doc"; then \
+	    echo "building/updating vignettes for package '$${pkg}' ..."; \
+	    (echo "tools:::.installPackageVignettes(\"$(srcdir)/$${pkg}\", \"$(top_builddir)/library/$${pkg}\")") | \
+	        R_DEFAULT_PACKAGES="utils,tools" \
+		  $(R_EXE) --slave > /dev/null; \
+	  fi; \
+	done
+
 install: installdirs
 	@echo "installing packages ..."
 	@cp -r $(top_builddir)/library $(rhome) || \
@@ -101,6 +111,7 @@ mostlyclean: clean
 clean:
 	@(for d in $(SUBDIRS); do rsd="$${d} $${rsd}"; done; \
 	  for d in $${rsd}; do (cd $${d} && $(MAKE) $@); done)
+	-@rm -rf .vignettes
 	-@rm -f stamp-*
 distclean:
 	@(for d in $(SUBDIRS); do rsd="$${d} $${rsd}"; done; \

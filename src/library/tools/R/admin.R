@@ -26,7 +26,10 @@ function(dir, outDir)
     }
     ## </FIXME>
     OS <- Sys.getenv("R_OSTYPE")
-    OStype <- if(nchar(OS) && OS == "windows") "i386-pc-mingw32" else R.version$platform
+    OStype <- if(nchar(OS) && OS == "windows")
+        "i386-pc-mingw32"
+    else
+        R.version$platform
     writeLines(c(formatDL(names(db), db, style = "list"),
                  paste("Built: R ",
                        paste(R.version[c("major", "minor")],
@@ -279,6 +282,77 @@ function(dir, outDir)
     ## </FIXME>
     invisible()
 }
+
+### * .installPackageVignettes
+
+.installPackageVignettes <-
+function(dir, outDir)
+{
+    dir <- filePathAsAbsolute(dir)
+    vignetteDir <- file.path(dir, "inst", "doc")
+    if(!fileTest("-d", vignetteDir))
+        return(invisible())
+    vignetteFiles <- listFilesWithType(vignetteDir, "vignette")
+    if(!length(vignetteFiles))
+        return(invisible())
+
+    outDir <- filePathAsAbsolute(outDir)
+    outVignetteDir <- file.path(outDir, "doc")
+    if(!fileTest("-d", outVignetteDir)) dir.create(outVignetteDir)
+    ## For the time being, assume that no PDFs are available in
+    ## vignetteDir.
+    vignettePDFs <-
+        file.path(outVignetteDir,
+                  sub("$", ".pdf",
+                      basename(filePathSansExt(vignetteFiles))))
+    upToDate <- fileTest("-nt", vignettePDFs, vignetteFiles)
+    if(all(upToDate))
+        return(invisible())
+    
+    ## For the time being, the primary use of this function is to
+    ## install (and build) vignettes in base packages.  Hence, we build
+    ## in a subdir of the current directory rather than a temp dir: this
+    ## allows inspection of problems and automatic cleanup via Make.
+    cwd <- getwd()    
+    buildDir <- file.path(cwd, ".vignettes")
+    if(!fileTest("-d", buildDir) && !dir.create(buildDir))
+        stop(paste("cannot create directory", sQuote(buildDir)))
+    on.exit(setwd(cwd))
+    setwd(buildDir)
+
+    ## Argh.  We need to ensure that vignetteDir is in TEXINPUTS and
+    ## BIBINPUTS.
+    envSep <- if(.Platform$OS.type == "windows") ";" else ":"
+    ## (Yes, it would be nice to have envPath() similar to file.path().)
+    texinputs <- Sys.getenv("TEXINPUTS")
+    bibinputs <- Sys.getenv("BIBINPUTS")
+    on.exit(Sys.putenv(TEXINPUTS = texinputs, BIBINPUTS = bibinputs),
+            add = TRUE)
+    Sys.putenv(TEXINPUTS = paste(vignetteDir, Sys.getenv("TEXINPUTS"),
+               sep = envSep),
+               BIBINPUTS = paste(vignetteDir, Sys.getenv("BIBINPUTS"),
+               sep = envSep))
+    
+    for(srcfile in vignetteFiles[!upToDate]) {
+        texfile <-
+            paste(basename(filePathSansExt(srcfile)), ".tex", sep = "")
+        yy <- try(Sweave(srcfile, pdf = TRUE, eps = FALSE, quiet =
+                         TRUE))
+        if(inherits(yy, "try-error"))
+            stop(yy)
+        ## In case of an error, do not clean up: should we point to
+        ## buildDir for possible inspection of results/problems?
+        texi2dvi(texfile, pdf = TRUE, quiet = TRUE)
+        pdffile <-
+            paste(basename(filePathSansExt(srcfile)), ".pdf", sep = "")
+        if(!file.copy(pdffile, outVignetteDir, overwrite = TRUE))
+            stop(paste("cannot copy", sQuote(pdffile), "to",
+                       sQuote(outVignetteDir)))
+    }
+    unlink(buildDir, recursive = TRUE)
+    invisible()
+}
+
 
 ### * .installPackageDemoIndex
 
