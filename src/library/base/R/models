@@ -205,11 +205,10 @@ model.response <- function(data, type="numeric")
 		if(is.list(data) | is.data.frame(data)) {
 			v <- data[[1]]
 			if(type == "numeric" | type == "double") {
-				if(is.factor(v)) {
+				if(is.factor(v))
+					v <- codes(v) - 1
+				else
 					storage.mode(v) <- "double"
-					v <- v - 1
-				}
-				else storage.mode(v) <- "double"
 			}
 			else stop("invalid response type")
 			if(is.matrix(v) && ncol(v) == 1)
