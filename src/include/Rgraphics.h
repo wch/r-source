@@ -18,8 +18,8 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#ifndef R_EXT_GRAPHICS_H_
-#define R_EXT_GRAPHICS_H_
+#ifndef RGRAPHICS_H_
+#define RGRAPHICS_H_
 
 #ifdef  __cplusplus
 extern "C" {
@@ -549,4 +549,4 @@ void GVText (double, double, int, char *, int, int,
 }
 #endif
 
-#endif /* R_EXT_GRAPHICS_H_ */
+#endif /* RGRAPHICS_H_ */

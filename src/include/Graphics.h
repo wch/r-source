@@ -23,7 +23,7 @@
 
 #define R_GRAPHICS_INTERNAL 1
 
-#include "R_ext/Boolean.h"
+#include <R_ext/Boolean.h>
 
 #define R_MaxDevices 64
 
@@ -339,7 +339,7 @@ typedef struct {
  * ../unix/gnome/devGNOME.c	Gnome
  */
 
-#include "R_ext/Graphics.h"
+#include <Rgraphics.h>
 
 /* Default the settings for general graphical parameters
  * (i.e., defaults that do not depend on the device type: */
