@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2003
-@set FAQ-VERSION 1.7-3, 2004-04-16
+@set FAQ-VERSION 1.7-4, 2004-04-22
 @set REL-VERSION 1.7.0
 @set FAQ-ISBN 3-901167-51-X
 @documentlanguage en
@@ -434,25 +434,30 @@ available by @email{deleeuw@@stat.ucla.edu, Jan de Leeuw} in the
 
 @c Linux binaries as of 2003-01-15:
 @c
-@c debian   woody i386  1.6.2  Dirk Eddelbuettel <edd@debian.org>
-@c          sarge i386  1.6.2  Dirk Eddelbuettel <edd@debian.org>
-@c mandrake 8.*   i386  1.6.2  Michele Alzetta <mikalzet@libero.it>
-@c          9.0   i386  1.6.2  Michele Alzetta <mikalzet@libero.it>
-@c redhat   7.x   alpha 1.6.0  Naoki Takebayashi <ntakebay@bio.indiana.edu>
-@c                i386  1.6.2  Martyn Plummer <plummer@iarc.fr>
-@c          8.x   i386  1.6.2  Martyn Plummer <plummer@iarc.fr>
-@c suse     7.3   i386  1.6.2  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
-@c          8.0   i386  1.6.2  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
-@c          8.1   i386  1.6.2  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
+@c debian    woody i386  1.7.0  Dirk Eddelbuettel <edd@debian.org>
+@c           sarge i386  1.7.0  Dirk Eddelbuettel <edd@debian.org>
+@c mandrake  8.0   i386  1.6.2  Michele Alzetta <mikalzet@libero.it>
+@c           8.1   i386  1.6.2  Michele Alzetta <mikalzet@libero.it>
+@c           8.2   i386  1.7.0  Michele Alzetta <mikalzet@libero.it>
+@c           9.0   i386  1.7.0  Michele Alzetta <mikalzet@libero.it>
+@c           9.1   i386  1.7.0  Michele Alzetta <mikalzet@libero.it>
+@c redhat    7.x   alpha 1.6.0  Naoki Takebayashi <ntakebay@bio.indiana.edu>
+@c                 i386  1.7.0  Martyn Plummer <plummer@iarc.fr>
+@c           8.x   i386  1.7.0  Martyn Plummer <plummer@iarc.fr>
+@c           9     i386  1.7.0  Martyn Plummer <plummer@iarc.fr>
+@c suse      7.3   i386  1.6.2  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
+@c           8.0   i386  1.6.2  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
+@c           8.1   i386  1.6.2  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
+@c vinelinux 2.6   i386  1.6.2  Susunu Tanimura <stanimura-ngs@umin.ac.jp>
 
 The @file{bin/linux} directory of a @acronym{CRAN} site contains Debian
 stable/testing packages for the i386 platform (now part of the Debian
-distribution and maintained by Dirk Eddelbuettel), Red Hat 6.x i386,
-7.x/8.x i386 and 7.x alpha packages (maintained by Stephen Eglen, Martyn
-Plummer and Naoki Takebayashi, respectively), SuSE 7.3/8.0/8.1 i386
-packages by Detlef Steuer, and Mandrake 8.1/8.2/9.0 i386 packages by
-Michele Alzetta.
-
+distribution and maintained by Dirk Eddelbuettel), Mandrake
+8.0/8.1/8.2/9.0/9.1 i386 packages by Michele Alzetta, Red Hat 7.x/8.x/9
+i386 and 7.x alpha packages (maintained by Martyn Plummer and Naoki
+Takebayashi, respectively), SuSE 7.3/8.0/8.1 i386 packages by Detlef
+Steuer, and VineLinux 2.6 i386 packages by Susunu Tanimura.
+ 
 The Debian packages can be accessed through APT, the Debian package
 maintenance tool.  Simply add the line
 
