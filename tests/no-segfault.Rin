@@ -7,13 +7,12 @@
 core.pkgs <-
 {x <- installed.packages(file.path(R.home(), "library"));
     x[x[,"Priority"] %in% "base", "Package"]}
-## skip stats4 for now because strange things happen with the S3
-## generic overrides
 core.pkgs <-
     core.pkgs[- match(c("ctest", "eda", "lqs", "mle", "modreg", "mva", "methods",
                         "nls", "stepfun", "tcltk", "ts", "stats4"), core.pkgs)]
 ## move methods to the end because it has side effects (overrides primitives)
-core.pkgs <- c(core.pkgs, "methods")
+## stats4 requires methods
+core.pkgs <- c(core.pkgs, "methods", "stats4")
 
 stop.list <- vector("list", length(core.pkgs))
 names(stop.list) <- core.pkgs
