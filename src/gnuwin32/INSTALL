@@ -136,14 +136,15 @@ Building Tcl/Tk support
 -----------------------
 
 The TclTk support package is not built automatically.  To use this you
-need to download and install either ActiveTcl 8.3.3 from
-http://aspn.activestate.com/ASPN/Downloads/ActiveTcl/ or tcl832.exe
-from dev.scriptics.com, and set TCL_HOME in MkRules to where you
-installed it (perhaps c:/Program Files/Tcl).  Then
+need to download and install ActiveTcl 8.3 from
+http://aspn.activestate.com/ASPN/Downloads/ActiveTcl/ and set TCL_HOME
+in MkRules to where you installed it (perhaps c:/Program Files/Tcl).
+Then
 
 	make tcl
 
-will make the library.
+will make the package.
+The TclTk support package is not built automatically.  To use this you
 
 
 
@@ -246,7 +247,7 @@ Edit MkRules to set BUILD=CROSS and the appropriate paths (including
 HEADER) as needed.
 
 Edit MkRules to set the type(s) of help that you want built. (You
-will not be able to cross-build .chm or .hlp files, nor Rchtml.dll,
+will not be able to cross-build .chm or .hlp files,
 so WINHELP is automatically set NO.)
 
 Packages can be made in the same way as natively: see the file
