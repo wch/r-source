@@ -13,8 +13,8 @@ setequal(x, y)
 is.element(el, set)
 }
 \arguments{
-  \item{x, y, el, set}{vectors (of the same mode) containing a sequence of items
-    (conceptually) with no duplicated values.}
+  \item{x, y, el, set}{vectors (of the same mode) containing a sequence
+    of items (conceptually) with no duplicated values.}
 }
 \description{
   Performs \bold{set} union, intersection, (asymmetric!) difference,
@@ -24,17 +24,17 @@ is.element(el, set)
   Each of \code{union}, \code{intersect} and \code{setdiff} will remove
   any duplicated values in the arguments.
 
-  \code{is.element(x,y)} is identical to \code{x \%in\% y}.
-  %% BUG in Rdconvlib:                   \code{x \link{\%in\%} y}
-  %% gives	"ERROR: found `HYPERLINK(' in $code: 'x HYPERLINK(%in%) y'"
+  \code{is.element(x, y)} is identical to \code{x \%in\% y}.
 }
 \value{
   A vector of the same \code{\link{mode}} as \code{x} or \code{y} for
   \code{setdiff} and \code{intersect}, respectively, and
-  of a common mode for \code{union}.  A \code{\link{logical}} scalar for
-  \code{setequal} and a logical of the same length as \code{x} for
-  \code{is.element}.
+  of a common mode for \code{union}.
+
+  A logical scalar for \code{setequal} and a logical of the same
+  length as \code{x} for \code{is.element}.
 }
+\seealso{\code{\link{\%in\%}}}
 \author{B. D. Ripley}
 
 \examples{
