@@ -15,6 +15,10 @@ NEW FEATURES
 
     o   New faster rowsum, also works on data frames
 
+    o   grep(), (g)sub() and regexpr() have a new argument `perl'
+	which if TRUE uses Perl-style regexps from PCRE (if installed).
+
+
 C-LEVEL FACILITIES
 
     o	Rversion.h is no longer automatically included by R.h.

@@ -1094,6 +1094,9 @@ R_ZLIB
 ## bzlib headers and libraries.
 R_BZLIB
 
+## PCRE headers and libraries.
+R_PCRE
+
 ## POSIX times.
 R_SYS_POSIX_LEAPSECONDS
 

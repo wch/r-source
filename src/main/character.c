@@ -484,14 +484,13 @@ SEXP do_grep(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP pat, vec, ind, ans;
     regex_t reg;
     int i, j, n, nmatches;
-    int igcase_opt, extended_opt, perl_opt, value_opt, eflags;
+    int igcase_opt, extended_opt, value_opt, eflags;
 
     checkArity(op, args);
     pat = CAR(args); args = CDR(args);
     vec = CAR(args); args = CDR(args);
     igcase_opt = asLogical(CAR(args)); args = CDR(args);
     extended_opt = asLogical(CAR(args)); args = CDR(args);
-    perl_opt = asLogical(CAR(args)); args = CDR(args);
     value_opt = asLogical(CAR(args)); args = CDR(args);
     if (igcase_opt == NA_INTEGER) igcase_opt = 0;
     if (extended_opt == NA_INTEGER) extended_opt = 1;
@@ -605,7 +604,7 @@ SEXP do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
     regex_t reg;
     regmatch_t regmatch[10];
     int i, j, n, ns, nmatch, offset;
-    int global, igcase_opt, extended_opt, perl_opt, eflags;
+    int global, igcase_opt, extended_opt, eflags;
     char *s, *t, *u;
 
     checkArity(op, args);
@@ -617,7 +616,6 @@ SEXP do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
     vec = CAR(args); args = CDR(args);
     igcase_opt = asLogical(CAR(args)); args = CDR(args);
     extended_opt = asLogical(CAR(args)); args = CDR(args);
-    perl_opt = asLogical(CAR(args)); args = CDR(args);
     if (igcase_opt == NA_INTEGER) igcase_opt = 0;
     if (extended_opt == NA_INTEGER) extended_opt = 1;
 
@@ -693,14 +691,13 @@ SEXP do_regexpr(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP pat, text, ans, matchlen;
     regex_t reg;
     regmatch_t regmatch[10];
-    int i, n, st, extended_opt, perl_opt, eflags;
+    int i, n, st, extended_opt, eflags;
 
     checkArity(op, args);
     pat = CAR(args); args = CDR(args);
     text = CAR(args); args = CDR(args);
     extended_opt = asLogical(CAR(args));
     if (extended_opt == NA_INTEGER) extended_opt = 1;
-    perl_opt = asLogical(CAR(args)); args = CDR(args);
 
     if (!isString(pat) || length(pat) < 1 ||
 	!isString(text) || length(text) < 1 )

@@ -881,8 +881,8 @@ SEXP do_capabilities(SEXP call, SEXP op, SEXP args, SEXP rho)
 #endif
     
     checkArity(op, args);
-    PROTECT(ans = allocVector(LGLSXP, 13));
-    PROTECT(ansnames = allocVector(STRSXP, 13));
+    PROTECT(ans = allocVector(LGLSXP, 14));
+    PROTECT(ansnames = allocVector(STRSXP, 14));
 
     SET_STRING_ELT(ansnames, i, mkChar("jpeg"));
 #ifdef HAVE_JPEG
@@ -987,6 +987,13 @@ SEXP do_capabilities(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     SET_STRING_ELT(ansnames, i, mkChar("bzip2"));
 #if defined(HAVE_BZLIB)
+    LOGICAL(ans)[i++] = TRUE;
+#else
+    LOGICAL(ans)[i++] = FALSE;
+#endif
+
+    SET_STRING_ELT(ansnames, i, mkChar("PCRE"));
+#if defined(HAVE_PCRE)
     LOGICAL(ans)[i++] = TRUE;
 #else
     LOGICAL(ans)[i++] = FALSE;

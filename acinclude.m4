@@ -1888,6 +1888,33 @@ caddr_t hello() {
 ])# _R_ZLIB_MMAP
 
 
+## R_PCRE
+## ------
+## Try finding pcreposix library and headers.
+## pcreposix library depends on libpcre.
+AC_DEFUN([R_PCRE],
+[AC_CHECK_LIB(pcre, pcre_fullinfo, [have_pcre=yes], [have_pcre=no])
+if test "${have_pcre}" = yes; then
+  AC_CHECK_LIB(pcreposix, regcomp, [have_pcre=yes], [have_pcre=no], -lpcre)
+fi
+if test "${have_pcre}" = yes; then
+  AC_CHECK_HEADER(pcreposix.h, [have_pcre=yes], [have_pcre=no])
+  if test "${have_pcre}" = no; then
+    AC_CHECK_HEADER(pcre/pcreposix.h, [have_pcre=yes], [have_pcre=no])
+    if test "${have_pcre}" = yes; then
+      AC_DEFINE(HAVE_PCRE_IN_PCRE, 1,
+            [Define if you have the PCRE headers in pcre/.])
+    fi
+  fi
+fi
+if test "${have_pcre}" = yes; then
+  AC_DEFINE(HAVE_PCRE, 1,
+            [Define if you have the PCRE headers and libraries.])
+  LIBS="-lpcreposix -lpcre ${LIBS}"
+fi
+])# R_PCRE
+
+
 ## R_BZLIB
 ## ------
 ## Try finding bzlib library and headers.
