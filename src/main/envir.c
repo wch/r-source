@@ -1048,7 +1048,23 @@ SEXP findVar1(SEXP symbol, SEXP rho, SEXPTYPE mode, int inherits)
 	else
 	    return (R_UnboundValue);
     }
-    return SYMBOL_BINDING_VALUE(symbol);
+
+    /* env is now R_NilValue, the base environment */
+    vl = SYMBOL_BINDING_VALUE(symbol);
+    if (vl != R_UnboundValue) {
+	if (mode == ANYSXP) return vl;
+	if (TYPEOF(vl) == PROMSXP) {
+	    PROTECT(vl);
+	    vl = eval(vl, rho);
+	    UNPROTECT(1);
+	}
+	if (TYPEOF(vl) == mode) return vl;
+	if (mode == FUNSXP && (TYPEOF(vl) == CLOSXP ||
+			       TYPEOF(vl) == BUILTINSXP ||
+			       TYPEOF(vl) == SPECIALSXP))
+	    return (vl);
+    }
+    return (R_UnboundValue);
 }
 
 /*
@@ -1083,7 +1099,23 @@ SEXP findVar1mode(SEXP symbol, SEXP rho, SEXPTYPE mode, int inherits, Rboolean d
 	else
 	    return (R_UnboundValue);
     }
-    return SYMBOL_BINDING_VALUE(symbol);
+
+    /* env is now R_NilValue, the base environment */
+    vl = SYMBOL_BINDING_VALUE(symbol);
+    if (vl != R_UnboundValue) {
+	if (mode == ANYSXP) return vl;
+	if (TYPEOF(vl) == PROMSXP) {
+	    PROTECT(vl);
+	    vl = eval(vl, rho);
+	    UNPROTECT(1);
+	}
+	tl = TYPEOF(vl);
+	if (tl == INTSXP) tl = REALSXP;
+	if (tl == FUNSXP || tl ==  BUILTINSXP || tl == SPECIALSXP)
+	    tl = CLOSXP;
+	if (tl == mode) return vl;
+    }
+    return (R_UnboundValue);
 }
 
 
@@ -1646,13 +1678,22 @@ SEXP do_get(SEXP call, SEXP op, SEXP args, SEXP rho)
     rval = findVar1mode(t1, genv, gmode, ginherits, PRIMVAL(op));
 
     if (PRIMVAL(op)) { /* have get(.) */
-	if (rval == R_UnboundValue)
-	    errorcall(call,"variable \"%s\" was not found",
-		      CHAR(PRINTNAME(t1)));
+	if (rval == R_UnboundValue) {
+	    if (gmode == ANYSXP)
+		errorcall(call,"variable \"%s\" was not found",
+			  CHAR(PRINTNAME(t1)));
+	    else
+		errorcall(call,"variable \"%s\" of mode \"%s\" was not found",
+			  CHAR(PRINTNAME(t1)),
+			  CHAR(STRING_ELT(CAR(CDDR(args)), 0)));
+	}
+
 	/* We need to evaluate if it is a promise */
 	if (TYPEOF(rval) == PROMSXP)
 	    rval = eval(rval, genv);
-	SET_NAMED(rval, 1);
+
+	if (!isNull(rval) && NAMED(rval) == 0)
+	    SET_NAMED(rval, 1);
 	return rval;
     }
     else { /* exists(.) */

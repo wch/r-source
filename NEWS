@@ -26,6 +26,10 @@ BUG FIXES
 
     o	methods("$") and methods("$<-") were failing to find methods.
 
+    o	get and exists were ignoring mode argument for variables in base.
+	The error message for get now mentions the mode requested if
+	not "any".  A bug in setting the NAMED field in do_get was fixed.
+
 
 
 		CHANGES IN R VERSION 1.7.1
