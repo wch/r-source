@@ -72,7 +72,7 @@ double R_Zero_Hack = 0.0;	/* Silence the Sun compiler */
 #  include <ieeefp.h>		/* others [Solaris 2.5.x], .. */
 # endif
 #endif
-#if defined(Win32) && defined( _MSC_VER)
+#if defined(Win32) && defined(_MSC_VER)
 #include <float.h>
 #endif 
 
@@ -155,6 +155,12 @@ int R_finite(double x)
 int R_IsNA(double x)
 {
     return (x == R_NaReal);
+}
+
+/* NaN but not NA: never true */
+int R_IsNaN(double x)
+{
+    return 0;
 }
 
 int R_IsNaNorNA(double x)

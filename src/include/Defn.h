@@ -77,7 +77,12 @@
 #ifdef IEEE_754
 # define MATH_CHECK(call)	(call)
 #else
-# define MATH_CHECK(call)	(errno=0,R_tmp=call,(errno==0)?R_tmp:R_NaN)
+# ifdef __MAIN__
+    double R_tmp;
+# else
+    extern double R_tmp;
+# endif
+#  define MATH_CHECK(call)	(errno=0,R_tmp=call,(errno==0)?R_tmp:R_NaN)
 #endif
 
 

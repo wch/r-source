@@ -18,10 +18,10 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#ifndef LINPACK_H_
-#define LINPACK_H_
+#ifndef R_EXT_LINPACK_H_
+#define R_EXT_LINPACK_H_
 
-#include "Rconfig.h"		/* for F77_SYMBOL */
+#include "R_ext/F77.h"		/* for F77_SYMBOL */
 #include "R_ext/Blas.h"
 
 	/* Double Precision Linpack */

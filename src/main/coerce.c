@@ -1376,10 +1376,6 @@ SEXP do_isna(SEXP call, SEXP op, SEXP args, SEXP rho)
     return ans;
 }
 
-/* Convenience for using LIST_VEC_NAN macro later */
-#ifndef IEEE_754
-# define R_IsNaN(x) (0)
-#endif
 SEXP do_isnan(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP ans, dims, names, x;
@@ -1479,9 +1475,6 @@ SEXP do_isnan(SEXP call, SEXP op, SEXP args, SEXP rho)
     UNPROTECT(1);
     return ans;
 }
-#ifndef IEEE_754
-# undef R_isNaN
-#endif
 
 SEXP do_isfinite(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
@@ -1535,8 +1528,11 @@ SEXP do_isfinite(SEXP call, SEXP op, SEXP args, SEXP rho)
 SEXP do_isinfinite(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP ans, x, names, dims;
+#ifdef IEEE_754
     double xr, xi;
+#endif
     int i, n;
+
     checkArity(op, args);
 #ifdef stringent_is
     if (!isList(CAR(args)) && !isVector(CAR(args)))

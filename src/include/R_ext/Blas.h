@@ -22,9 +22,10 @@
  *  Some minor fixups and formatting has been done.
  */
 
-#ifndef BLAS_H
-#define BLAS_H
-#include "R_ext/Complex.h"
+#ifndef R_EXT_BLAS_H
+#define R_EXT_BLAS_H
+
+#include "R_ext/F77.h"		/* for F77_SYMBOL */
 
 	/* Double Precision Blas */
 
@@ -42,7 +43,8 @@ extern int    F77_SYMBOL(idamax)(int*, double*, int*);
 
 
 	/* Double Precision Complex Blas */
-
+#ifdef COMPLEX_BLAS
+#include "R_ext/Complex.h"
 extern double F77_SYMBOL(dznrm2)(int*, Rcomplex *x, int*);
 extern int    F77_SYMBOL(izamax)(int*, Rcomplex *zx, int*);
 extern int    F77_SYMBOL(zaxpy)(int*, Rcomplex *za, Rcomplex *zx, int*, Rcomplex *zy, int*);
@@ -53,5 +55,6 @@ extern int    F77_SYMBOL(zdscal)(int*, double*, Rcomplex *zx, int*);
 extern int    F77_SYMBOL(zrotg)(Rcomplex *ca, Rcomplex *cb, double*, Rcomplex *s);
 extern int    F77_SYMBOL(zscal)(int*, Rcomplex *za, Rcomplex *zx, int*);
 extern int    F77_SYMBOL(zswap)(int*, Rcomplex *zx, int*, Rcomplex *zy, int*);
+#endif
 
 #endif
