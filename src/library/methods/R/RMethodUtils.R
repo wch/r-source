@@ -1157,21 +1157,10 @@ getGroupMembers <- function(group, recursive = FALSE, character = TRUE) {
 }
 
 deletePrimMethods <- function(f, env) {
-    fdef <- genericForPrimitive(f)
-    mlist <- getMethods(f)
-    allM <- getAllMethods(f, fdef, .GlobalEnv)
     toDelete <- getMethodsMetaData(f, env)
     if(!is.null(toDelete)) {
-        toDelete <- linearizeMlist(toDelete)
-        sigs  <- toDelete@classes
-        args <- toDelete@arguments
-        for(i in seq(along=sigs)) {
-            sig <- sigs[[i]]; arg <- args[[i]]
-            def <- getMethod(f, sig, optional=TRUE, mlist = allM)
-            ## def is either the now-visible method or NULL (=> delete the method)
-            mlist <- insertMethod(mlist, sig, arg, def)
-        }
+        fdef <- genericForPrimitive(f)
+        mlist <- getAllMethods(f, fdef, .GlobalEnv)
         .genericAssign(f, fdef, mlist, .GlobalEnv, get(f))
     }
-    mlist
 }
