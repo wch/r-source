@@ -29,7 +29,7 @@ SOURCES_C = \
 	zeroin.c
 SOURCES_F = \
 	ch2inv.f chol.f \
-	dpbfa.f dpbsl.f dpoco.f dpodi.f dpofa.f dposl.f dqrdc.f \
+	dchdc.f dpbfa.f dpbsl.f dpoco.f dpodi.f dpofa.f dposl.f dqrdc.f \
 	dqrdc2.f dqrls.f dqrsl.f dqrutl.f dsvdc.f dtrco.f dtrsl.f \
 	eigen.f \
 	lminfl.f

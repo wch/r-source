@@ -93,6 +93,8 @@ NEW FEATURES
 
    o    The tcltk package now works with the gnome user interface.
 
+   o    chol() allows pivoting via new argument `pivot'.
+
 
 DEPRECATED & DEFUNCT
 

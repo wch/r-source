@@ -6,39 +6,93 @@
   positive definite square matrix.
 }
 \usage{
-chol(x)
+chol(x, pivot = FALSE)
 }
 \arguments{
-  \item{x}{a symmetric, positive definite matrix.}
+  \item{x}{a symmetric, positive definite matrix}
+  \item{pivot}{Should pivoting be used?}
 }
 \value{
   The upper triangular factor of the Choleski decomposition, i.e., the
   matrix \eqn{R} such that \eqn{R'R = x} (see example).
+
+  If pivoting is used, then two additional attributes
+  \code{"pivot"} and \code{"rank"} are also returned.
 }
 \details{
-  Note that only the upper triangular part of \code{x} is
-  used such that the above only holds when \code{x} \emph{is} symmetric.
+  Note that only the upper triangular part of \code{x} is used, so
+  that \eqn{R'R = x} when \code{x} is symmetric.
 
-  If the matrix is not positive-definite an error is generated.
-  A non-negative definite but not strictly positive-definite matrix
-  may or may not give an error depending on the numerical errors.
+  If \code{pivot = FALSE} and \code{x} is not non-negative definite an
+  error occurs.  If \code{x} is positive semi-definite (i.e. some zero
+  eigenvalues) an error may or may not occur, depending on
+  finite precision numerical errors.
+
+  If \code{pivot = TRUE}, then the Choleski decomposition of a positive
+  semi-definite \code{x} can be computed.  The rank of \code{x} is
+  returned as \code{attr(Q, "rank")}, subject to numerical errors.
+  The pivot is returned as \code{attr(Q, "pivot")}.  It is no longer
+  the case that \code{t(Q) \%*\% Q} equals \code{x}.  However, setting
+  \code{pivot <- attr(Q, "pivot")} and \code{oo <- order(pivot)}, it
+  is true that \code{t(Q[, oo]) \%*\% Q[, oo]} equals \code{x},
+  or, alternatively, \code{t(Q) \%*\% Q} equals \code{x[pivot,
+  pivot]}.  See the examples.
 }
+
+\section{Warning}{
+  The code does not check for symmetry or for non-negative
+  definiteness.  If \code{pivot = TRUE} and \code{x} is not non-negative
+  definite then there will be no error message but a meaningless
+  result will occur.  So only use \code{pivot = TRUE} when \code{x} is
+  non-negative definite by construction.
+}
+
 \references{
   Dongarra, J. J., Bunch, J. R., Moler, C. B. and Stewart, G. W. (1978)
   \emph{LINPACK Users Guide.}  Philadelphia: SIAM Publications.
 }
+
 \seealso{
-  \code{\link{chol2inv}} for its \emph{inverse},
+  \code{\link{chol2inv}} for its \emph{inverse} (without pivoting),
   \code{\link{backsolve}} for solving linear systems with upper
   triangular left sides.
 
   \code{\link{qr}}, \code{\link{svd}} for related matrix factorizations.
 }
+
 \examples{
 ( m <- matrix(c(5,1,1,3),2,2) )
 ( cm <- chol(m) )
 t(cm) \%*\% cm  #-- = 'm'
 all(abs(m  -  t(cm) \%*\% cm) < 100* .Machine$double.eps) # TRUE
+\testonly{# check with pivoting
+( cm <- chol(m, TRUE) )
+t(cm) \%*\% cm  #-- = 'm'
+all(abs(m  -  t(cm) \%*\% cm) < 100* .Machine$double.eps) # TRUE}
+
+x <- matrix(c(1:5, (1:5)^2), 5, 2)
+m <- crossprod(x)
+Q <- chol(m)
+all.equal(t(Q) \%*\% Q, m) # TRUE
+
+Q <- chol(m, pivot = TRUE)
+pivot <- attr(Q, "pivot")
+oo <- order(pivot)
+all.equal(t(Q[, oo]) \%*\% Q[, oo], m) # TRUE
+all.equal(t(Q) \%*\% Q, m[pivot, pivot]) # TRUE
+
+# now for something postitive semi-definite
+x <- cbind(x, x[, 1]+3*x[, 2])
+m <- crossprod(x)
+qr(m)$rank # is 2, as it should be
+
+test <- try(Q <- chol(m))
+
+(Q <- chol(m, pivot = TRUE)) # NB wrong rank here ... you have been warned!
+pivot <- attr(Q, "pivot")
+oo <- order(pivot)
+all.equal(t(Q[, oo]) \%*\% Q[, oo], m) # TRUE
+all.equal(t(Q) \%*\% Q, m[pivot, pivot]) # TRUE
 }
 \keyword{algebra}
 \keyword{array}
