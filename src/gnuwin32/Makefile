@@ -1,10 +1,10 @@
 include MkRules
 
 HELP=YES
-WINHELP=BOTH # NO, CHM, BOTH
+WINHELP=CHM # NO, CHM, BOTH
 
 PACKAGES=base eda lqs modreg mva nls splines stepfun ts
-RPREFIX=rw0901
+RPREFIX=rw0990
 
 RHOME=$(shell cd ../..; pwd)# must be absolute path
 RLIB=$(RHOME)/library
@@ -257,17 +257,18 @@ GW32_HEADERS = globalvar.h psignal.h
 
 packagedist:
 	$(RM) -r $(RPREFIX)sp.zip $(RPREFIX)
-	$(MKDIR) $(RPREFIX) $(RPREFIX)/src $(RPREFIX)/src/include 
-	$(MKDIR) $(RPREFIX)/src/library $(RPREFIX)/src/gnuwin32 
+	$(MKDIR) $(RPREFIX) $(RPREFIX)/etc $(RPREFIX)/src \
+	  $(RPREFIX)/src/include $(RPREFIX)/src/library \
+	  $(RPREFIX)/src/gnuwin32 $(RPREFIX)/src/gnuwin32/fixed
 	$(CP) -p ../../COPYING exported-vars R.exp MkRules MakePkg MakeDll $(RPREFIX)/src/gnuwin32
 	$(CP) -p Makefile.packages $(RPREFIX)/src/gnuwin32/Makefile
-	$(MKDIR) $(RPREFIX)/src/gnuwin32/fixed
 	$(CP) fixed/dobundle.pl $(RPREFIX)/src/gnuwin32/fixed
 	$(CP) -pr help check $(RPREFIX)/src/gnuwin32
 	$(RM) $(RPREFIX)/src/gnuwin32/help/*.c
 	$(MAKE) -C $(RPREFIX)/src/gnuwin32/help clean
 	$(CP) -p $(foreach i,$(SRC_HEADERS) $(OBJ_HEADERS) $(GW32_HEADERS),../include/$i) $(RPREFIX)/src/include
 	$(CP) readme.packages $(RPREFIX)
+	$(CP) ../../etc/Rdconvlib.pl ../../etc/html-layout.pl $(RPREFIX)/etc
 	zip -rX $(RPREFIX)sp.zip $(RPREFIX)
 	$(RM) -r $(RPREFIX)
 

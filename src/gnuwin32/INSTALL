@@ -1,7 +1,7 @@
-R 0.90.1 for Windows 9x and NT
+R 0.99.0 for Windows 9x and NT
 ==============================
 
-This distribution contains a binary distribution of R-0.90.1 to run on
+This distribution contains a binary distribution of R-0.99.0 to run on
 Windows 95, 98 and NT4 on Intel/clone chips. See README for fuller
 details, including how to install the binary versions.
 
@@ -33,9 +33,10 @@ successfully used the variant of mingw32 that uses the MSVCRT run-time
 system (under gcc-2.95.x but not earlier versions).
 Be aware that not all Windows machines have MSVCRT.DLL installed.
 
-(If you want to use cygwin, we suggest you upgrade to gcc-2.95.2 by
-installing the files gcc-2.95.2-cygb20.tar.gz and gcc-2.95.2-mingw-extra.tar.gz
-from ftp://ftp.xraylith.wisc.edu/pub/khan/gnu-win32/cygwin32.)
+(If you want to use cygwin, you will need to upgrade to gcc-2.95.2 by
+installing the files gcc-2.95.2-cygb20.tar.gz and
+gcc-2.95.2-mingw-extra.tar.gz from
+ftp://ftp.xraylith.wisc.edu/pub/khan/gnu-win32/cygwin32.)
 
 perl5, available via http://www.perl.com/CPAN/ports.
 
