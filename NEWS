@@ -1,6 +1,8 @@
 		CHANGES IN R VERSION 0.63
 
 NEW FEATURES
+
+    o	new  COLNAMES, ROWNAMES function
 			   _
     o	par(bty = "]") for _| box(.) in plots.
 
