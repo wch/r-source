@@ -10,31 +10,33 @@ subdir = etc
 
 include $(top_builddir)/Makeconf
 
+SOURCES = Makeconf.in Makeconf-tests.in Renviron.in
+OBJECTS = $(SOURCES:.in=)
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = Rdconvlib.pl buildlib.pl html-layout.pl \
-	Makeconf.in Makeconf-tests.in Makefile.in \
+	Makefile.in $(SOURCES) \
 	colors.big colors.small test-things.Rd \
 	gnome-interface.glade
 
 EXPORTFILE = @EXPORTFILE@
 GNOME_IF_FILES = @GNOME_IF_FILES@
 
-all: Makefile Makeconf Makeconf-tests R
+all: Makefile R
+
+.SUFFIXES:
+.SUFFIXES: .in
+
+.in:
+	@cd $(top_builddir) && \
+	  CONFIG_FILES=$(subdir)/$@ CONFIG_HEADERS= \
+	  $(SHELL) ./config.status
 
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@cd $(top_builddir) && \
 	  CONFIG_FILES=$(subdir)/$@ CONFIG_HEADERS= \
 	  $(SHELL) ./config.status
-Makeconf: $(srcdir)/Makeconf.in $(top_builddir)/config.status
-	@cd $(top_builddir) && \
-	  CONFIG_FILES=$(subdir)/$@ CONFIG_HEADERS= \
-	  $(SHELL) ./config.status
-Makeconf-tests: $(srcdir)/Makeconf-tests.in $(top_builddir)/config.status
-	@cd $(top_builddir) && \
-	  CONFIG_FILES=$(subdir)/$@ CONFIG_HEADERS= \
-	  $(SHELL) ./config.status
 
-R: Makeconf Makeconf-tests
+R: $(OBJECTS)
 	@if [ "$(srcdir)" != "." ]; then \
 	  $(MAKE) rhome=$(top_builddir) install-perl; \
 	fi
@@ -44,9 +46,11 @@ R: Makeconf Makeconf-tests
 ## In this case, only do `install-gnome' if not building in srcdir.
 	@$(MAKE) rhome=$(top_builddir) install-gnome
 
+$(OBJECTS): $(top_builddir)/config.status
+
 install: installdirs install-perl install-gnome
 	@echo "installing etc ..."
-	@for f in Makeconf Makeconf-tests $(EXPORTFILE); do \
+	@for f in $(OBJECTS) $(EXPORTFILE); do \
 	  $(INSTALL_DATA) $${f} $(rhome)/etc; \
 	done
 installdirs:
@@ -68,8 +72,7 @@ uninstall:
 	@if test -d $(rhome)/etc -a \
 	  "`cd $(rhome); pwd`" != "`cd $(top_builddir); pwd`"; then \
 	  (cd $(rhome)/etc && \
-	    rm -f *.pl Makeconf Makeconf-tests \
-	          $(EXPORTFILE) $(GNOME_IF_FILES)); \
+	    rm -f *.pl $(OBJECTS) $(EXPORTFILE) $(GNOME_IF_FILES)); \
 	  rmdir $(rhome)/etc 2> /dev/null \
 	    || echo "  subdir etc not removed"; \
 	fi
@@ -81,7 +84,7 @@ clean:
 	fi
 	@rm -f $(EXPORTFILE)
 distclean: clean
-	@rm -f Makeconf Makeconf-tests Makefile
+	@rm -f $(OBJECTS) Makefile
 maintainer-clean: distclean
 
 distdir: $(DISTFILES)

@@ -979,7 +979,8 @@ AC_OUTPUT(Makeconf
   doc/manual/Makefile
   etc/Makefile
   etc/Makeconf
-  etc/Makeconf-tests  
+  etc/Makeconf-tests
+  etc/Renviron
   share/Makefile
   src/Makefile
   src/appl/Makefile
