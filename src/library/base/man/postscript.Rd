@@ -1,12 +1,12 @@
 \name{postscript}
 \title{PostScript Graphics}
 \synopsis{
-postscript(file = ifelse(onefile, "Rplots.ps", "Rplot%03d.ps"),
+postscript(file = ifelse(onefile, "Rplots.ps", "Rplot\%03d.ps"),
            onefile = TRUE, \dots)
 ps.options(\dots, reset = FALSE, override.check = FALSE)
 }
 \usage{
-postscript(file = ifelse(onefile, "Rplots.ps", "Rplot%03d.ps"),
+postscript(file = ifelse(onefile, "Rplots.ps", "Rplot\%03d.ps"),
            onefile = TRUE,
            paper, family, bg, fg, width, height, horizontal, pointsize,
            pagecentre, print.it, command))
