@@ -1,4 +1,5 @@
 #include <math.h>
+#include "mva.h"
 
 	/* Double Centering for Multidimensional Scaling */
 

@@ -1,5 +1,5 @@
 /*
- *  $Id: nls.c,v 1.11 2001/05/10 15:19:26 maechler Exp $
+ *  $Id: nls.c,v 1.12 2001/05/13 17:05:46 ripley Exp $
  *
  *  Routines used in calculating least squares solutions in a
  *  nonlinear model in nls library for R.
@@ -246,3 +246,18 @@ numeric_deriv(SEXP expr, SEXP theta, SEXP rho)
     UNPROTECT(3);
     return ans;
 }
+
+#include "R_ext/Rdynload.h"
+
+static R_CallMethodDef R_CallDef[] = {
+   {"numeric_deriv", (DL_FUNC)&numeric_deriv, 3},
+   {"nls_iter", (DL_FUNC)&nls_iter, 3},
+   {NULL, NULL, 0},
+};
+
+void
+R_init_nls(DllInfo *info)
+{
+    R_registerRoutines(info, NULL, R_CallDef, NULL);
+}
+

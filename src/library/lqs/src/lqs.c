@@ -420,8 +420,8 @@ mve_fitlots(double *x, int *n, int *p, int *qn, int *mcd,
 #include "R_ext/Rdynload.h"
 
 static R_CMethodDef R_CDef[] = {
-   {"lqs_fitlots", &lqs_fitlots, 17},
-   {"mve_fitlots", &mve_fitlots, 11},
+   {"lqs_fitlots", (DL_FUNC)&lqs_fitlots, 17},
+   {"mve_fitlots", (DL_FUNC)&mve_fitlots, 11},
    {NULL, NULL, 0},
 };
 

@@ -11,7 +11,7 @@ top_builddir = ../../../..
 subdir = src/library/$(pkg)/src
 R_HOME = $(top_builddir)
 
-OBJS = line.o smooth.o
+OBJS = init.o line.o smooth.o
 SHLIB = $(pkg).@SHLIB_EXT@
 
 all: Makefile $(SHLIB)

@@ -1,5 +1,6 @@
 #include <Rmath.h>
 #include <Rinternals.h>
+#include "mva.h"
 
 SEXP R_cutree(SEXP merge, SEXP which)
 {

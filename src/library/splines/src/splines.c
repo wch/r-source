@@ -219,3 +219,18 @@ spline_basis(SEXP knots, SEXP order, SEXP xvals, SEXP derivs)
     UNPROTECT(6);
     return val;
 }
+
+#include "R_ext/Rdynload.h"
+
+
+static R_CallMethodDef R_CallDef[] = {
+   {"spline_basis", (DL_FUNC)&spline_basis, 4},
+   {"spline_value", (DL_FUNC)&spline_value, 5},
+   {NULL, NULL, 0},
+};
+
+void
+R_init_splines(DllInfo *info)
+{
+    R_registerRoutines(info, NULL, R_CallDef, NULL);
+}
