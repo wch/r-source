@@ -1,6 +1,7 @@
 /*
  *  Mathlib : A C Library of Special Functions
  *  Copyright (C) 1998 Ross Ihaka
+ *  Copyright (C) 2000 The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -37,12 +38,13 @@
 
 double logrelerr(double x)
 {
-    /* series for alnr on the interval -3.75000e-01 to	3.75000e-01 */
-    /*				     with weighted error   6.35e-32 */
-    /*				      log weighted error  31.20	    */
-    /*			    significant figures required  30.93	    */
-    /*				 decimal places required  32.01	    */
-    static /* const */ double alnrcs[43] = {
+    /* series for logrelerr on the interval -.375 to .375
+     *				     with weighted error   6.35e-32
+     *				      log weighted error  31.20
+     *			    significant figures required  30.93
+     *				 decimal places required  32.01
+     */
+     static /* const */ double alnrcs[43] = {
 	+.10378693562743769800686267719098e+1,
 	-.13364301504908918098766041553133e+0,
 	+.19408249135520563357926199374750e-1,
@@ -89,11 +91,16 @@ double logrelerr(double x)
     };
     const double xmin = -1 + sqrt(1/DBL_EPSILON);/*was sqrt(d1mach(4)); */
 
+#ifdef NOMORE_FOR_THREADS
     static int nlnrel = 0;
 
     if (nlnrel == 0) {/* initialize chebychev coefficients */
 	nlnrel = chebyshev_init(alnrcs, 43, DBL_EPSILON/20);/*was .1*d1mach(3)*/
     }
+#else
+# define nlnrel 22
+/* 22: for IEEE double precision where DBL_EPSILON =  2.22044604925031e-16 */
+#endif
 
     if (x == 0.) return 0.;/* speed */
     if (x <= -1) {
@@ -109,5 +116,5 @@ double logrelerr(double x)
     if (fabs(x) <= .375)
 	return x * (1 - x * chebyshev_eval(x / .375, alnrcs, nlnrel));
     else
-	return log(x + 1);
+	return log(1 + x);
 }

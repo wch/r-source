@@ -1,6 +1,7 @@
 /*
  *  Mathlib : A C Library of Special Functions
  *  Copyright (C) 1998 Ross Ihaka
+ *  Copyright (C) 2000 The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -47,17 +48,10 @@ double pbeta_raw(double x, double pin, double qin)
     double ans, c, finsum, p, ps, p1, q, term, xb, xi, y;
     int n, i, ib;
 
-    static double eps = 0;
-    static double alneps = 0;
-    static double sml = 0;
-    static double alnsml = 0;
-
-    if (eps == 0) {/* initialize machine constants ONCE */
-	eps = d1mach(3);
-	alneps = log(eps);
-	sml = d1mach(1);
-	alnsml = log(sml);
-    }
+    const double eps = .5*DBL_EPSILON;
+    const double sml = DBL_MIN;
+    const double alneps = log(eps);
+    const double alnsml = log(sml);
 
     y = x;
     p = pin;
