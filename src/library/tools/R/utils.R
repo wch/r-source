@@ -93,7 +93,7 @@ function(dir, type, all.files = FALSE, full.names = TRUE)
         if(file_test("-d", OSdir)) {
             OSfiles <-
                 list_files_with_exts(OSdir, exts, all.files = all.files,
-                                  full.names = FALSE)
+                                     full.names = FALSE)
             OSfiles <-
                 file.path(if(full.names) OSdir else .OStype(),
                           OSfiles)
@@ -164,6 +164,20 @@ function()
 {
     OS <- Sys.getenv("R_OSTYPE")
     if(nchar(OS)) OS else .Platform$OS.type
+}
+
+### ** .capture_output_from_print
+
+.capture_output_from_print <-
+function(x, ...)
+{
+    ## Better to provide a simple variant of utils::capture.output()
+    ## ourselves (so that bootstrapping R only needs base and tools).
+    file <- textConnection("out", "w", local = TRUE)
+    sink(file)
+    on.exit({ sink(); close(file) })
+    print(x, ...)
+    out
 }
 
 ### ** .get_internal_S3_generics
@@ -456,6 +470,17 @@ function(file, envir)
             eval(e, envir)
     }
     invisible()
+}
+
+### ** .strip_whitespace
+
+.strip_whitespace <-
+function(x)
+{
+    ## Strip leading and trailing whitespace.
+    x <- sub("^[[:space:]]*", "", x)
+    x <- sub("[[:space:]]*$", "", x)
+    x
 }
 
 ### ** .try_quietly
