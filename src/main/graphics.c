@@ -1950,7 +1950,8 @@ void GScale(double min, double max, int axis, DevDesc *dd)
     if(fabs(max - min) < (temp = fmax2(fabs(max), fabs(min)))*
        EPS_FAC_2 * DBL_EPSILON) {
 	/* Treat this case somewhat similar to the (min ~= max) case above */
-	warning("relative range of values = %5g * EPS, is small (axis %d)."
+	/* Too much accuracy here just shows machine differences */
+	warning("relative range of values =%4.0f * EPS, is small (axis %d)."
 		/*"to compute accurately"*/,
 		fabs(max - min) / (temp*DBL_EPSILON), axis);
 

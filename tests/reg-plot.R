@@ -48,6 +48,7 @@ for(j.fac in 1e-12* c(10, 1, .7, .3, .2, .1, .05, .03, .01)) {
 }
 ## The warnings from inside GScale() will differ in their  relrange() ...
 ## >> do sloppy testing
+## 2003-02-03 hopefully no more.  BDR
 
 par(mfrow = c(1,1))
 
@@ -56,10 +57,14 @@ par(mfrow = c(1,1))
 ### font metrics unknown for character `?'
 
 par(pty="s")
-plot(c(0,15), c(0,15), type="n", xlab="", ylab="")
+plot(c(-1,16), c(-1,16), type="n", xlab="", ylab="", xaxs="i", yaxs="i")
 title("Centred chars in default char set (ISO Latin1)")
-grid(15, 15, lty=1)
-for(i in c(32:126, 144:152, 154, 155, 157:255)) {
+grid(17, 17, lty=1)
+known <- if(.Platform$OS.type == "windows") {
+c(32:126, 144:152, 154, 155, 157:255)
+} else c(32:126, 145:152, 154, 155, 158:255)
+
+for(i in known) {
     x <- i %% 16
     y <- i %/% 16
     points(x, y, pch=i)
