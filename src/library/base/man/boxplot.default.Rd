@@ -3,7 +3,7 @@
 \title{Box Plots}
 \usage{
 boxplot.default(x, \dots, range = 1.5, width = NULL, varwidth = FALSE,
-        notch = FALSE, names.x, data = sys.frame(sys.parent()),
+        notch = FALSE, names, data = sys.frame(sys.parent()),
         plot = TRUE, border = par("fg"), col = NULL, log = "",
         pars = NULL)
 }
