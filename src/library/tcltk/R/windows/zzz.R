@@ -14,14 +14,14 @@
     if(is.loaded(symbol.C("tcltk_end"))) {
         .C("tcltk_end", PACKAGE="tcltk")
         dyn.unload(file.path(libpath, "libs", "tcltk.dll"))
-        ## <FIXME>
+        ## <NOTE>
         ## Versions of R prior to 1.4.0 had .Dyn.libs in .AutoloadEnv
         ## (and did not always ensure getting it from there).
         ## We now consistently use the base environment.
+        ## </NOTE>
         num <- match("tcltk", get(".Dyn.libs", envir = NULL))
         assign(".Dyn.libs",
                get(".Dyn.libs", envir = NULL)[-num],
                envir = NULL)
-        ## </FIXME>
     }
 }
