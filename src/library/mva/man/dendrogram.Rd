@@ -22,46 +22,49 @@ plotNode(x1, x2, subtree, type, center)
 plotNodeLimit(x1, x2, subtree, center)
 }
 \arguments{
-\item{dobj}{Object of class \code{"dendrogram"}.}
-\item{type}{Type of plot.}
-\item{center}{If \code{TRUE}, nodes are plotted centered with respect to
-the leaves in the branch. Default is to plot them in the middle of all
-direct child nodes.}
-\item{h}{Height at which the tree is cutted.}
+  \item{dobj}{Object of class \code{"dendrogram"}.}
+  \item{type}{Type of plot.}
+  \item{center}{If \code{TRUE}, nodes are plotted centered with respect to
+    the leaves in the branch. Default is to plot them in the middle of all
+    direct child nodes.}
+  \item{h}{Height at which the tree is cutted.}
 }
 \details{
-Warning: This documentation is preliminary.
+  Warning: This documentation is preliminary.
 
-The dendrogram is directly represented as a nested list, where each list
-component corresponds to a branch of the tree. Hence, the first branch
-of tree \code{z} is \code{z[[1]]}, the second branch of the
-corresponding subtree is \code{z[[1]][[2]]} etc.. Each node of the tree
-carries some information needed for efficient plotting or cutting as
-attributes:
-\describe{
-\item{\code{members}}{number of leaves in the branch}
-\item{\code{height}}{Height at which the node is plotted}
-\item{\code{midpoint}}{Horizontal distance of the node from the left
-border of the branch}
-\item{\code{text}}{Text label of the node}
-\item{edgetext}{Text label for the edge leading to the node}
-}
-Terminal nodes (leaves of the tree) can have arbitrary value but must
-not be a list.
+  The dendrogram is directly represented as a nested list, where each list
+  component corresponds to a branch of the tree. Hence, the first branch
+  of tree \code{z} is \code{z[[1]]}, the second branch of the
+  corresponding subtree is \code{z[[1]][[2]]} etc.. Each node of the tree
+  carries some information needed for efficient plotting or cutting as
+  attributes:
+  \describe{
+    \item{\code{members}}{number of leaves in the branch}
+    \item{\code{height}}{Height at which the node is plotted}
+    \item{\code{midpoint}}{Horizontal distance of the node from the left
+      border of the branch}
+    \item{\code{text}}{Text label of the node}
+    \item{edgetext}{Text label for the edge leading to the node}
+  }
+  Terminal nodes (leaves of the tree) can have arbitrary value but must
+  not be a list.
 
-\code{cut.dendrogram()} returns a list with components \code{$upper} and
-\code{$lower}, the first is a truncated version of the original tree,
-the latter a list with the branches obtained from cutting the tree.
+  \code{cut.dendrogram()} returns a list with components \code{$upper} and
+  \code{$lower}, the first is a truncated version of the original tree,
+  the latter a list with the branches obtained from cutting the tree.
 
-\code{plotNode()} and \code{plotNodeLimit()} are helper functions.
+  \code{plotNode()} and \code{plotNodeLimit()} are helper functions.
 }
 \examples{
 library(mva)
 data(USArrests)
 hc <- hclust(dist(USArrests), "ave")
-dend1 <- as.dendrogram(hc)
-plot(dend)
+str(dend1 <- as.dendrogram(hc))
+plot(dend1)
 dend2 <- cut(dend1, h=70)
 plot(dend2$upper)
 plot(dend2$lower[[3]])
 }
+%FIXME !! -- proper Keyword !!
+\keyword{multivariate}
+
