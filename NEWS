@@ -197,6 +197,10 @@ NEW FEATURES
 
     o	new AIC.default() and logLik.glm(), also fixing AIC(<glm obj>)
 
+    o   smooth.spline() has a new argument `tol.spar' argument and returns
+        `lambda' besides `spar'.  The range of `spar'/`lambda' now allow
+	to go more closely towards interpolation (lambda -> 0) than before.
+
 
 BUG FIXES
 
