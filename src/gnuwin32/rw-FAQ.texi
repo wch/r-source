@@ -1009,8 +1009,9 @@ You will need a suitable version of @code{gdb}: we normally use that
 from the Cygwin distribution.  Debugging under Windows is often a
 fraught process, and sometimes does not work at all.  If all you need is
 a @emph{just-in-time} debugger to catch crashes, consider
-@code{Dr. Mingw} from
-@uref{http://jrfonseca.dyndns.org/projects/gnu-win32/software/drmingw/}.
+@code{Dr. Mingw} from the @code{mingw-utils} bundle on
+@uref{http://www.mingw.org} (see also
+@uref{http://jrfonseca.dyndns.org/projects/gnu-win32/software/drmingw/}).
 That will be able to pinpoint the error, most effectively if you build a
 version of R with debugging information as described below.
 
