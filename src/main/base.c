@@ -2,6 +2,10 @@
  * separate from an R graphics engine (separate from R devices)
  */
 
+#ifdef HAVE_CONFIG_H
+#include <config.h>
+#endif
+
 #include <Defn.h>
 #include <Graphics.h>
 #include <Rdevices.h>
