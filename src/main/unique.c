@@ -281,7 +281,7 @@ SEXP do_duplicated(SEXP call, SEXP op, SEXP args, SEXP env)
 	return(allocVector(PRIMVAL(op) == 0 ? LGLSXP : TYPEOF(x), 0));
 
     if (!(isVectorAtomic(x)))
-	error("%s() applies only to vectors",
+	error("%s() applies only to atomic vectors",
 	      (PRIMVAL(op) == 0 ? "duplicated" : "unique"));
 
     dup = duplicated(x);
