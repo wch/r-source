@@ -116,6 +116,9 @@ NEW FEATURES
     o	Perl scripts now use Cwd::cwd() in place of Cwd::getcwd(), as
 	cwd() can be much faster.
 
+    o	New function capabilities() to report optional capabilities
+	such as jpeg. png, tcltk, gzfile and url support.
+
 
 
 BUG FIXES

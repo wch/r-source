@@ -166,4 +166,6 @@ unique <- function(x, incomparables = FALSE) {
     z
 }
 
-memory.profile <- function().Internal(memory.profile())
+memory.profile <- function() .Internal(memory.profile())
+
+capabilities <- function() .Internal(capabilities())

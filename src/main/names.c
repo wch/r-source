@@ -596,6 +596,7 @@ FUNTAB R_FunTab[] =
 {"object.size",	do_objectsize,	0,	11,	1,	PP_FUNCALL},
 {"mem.limits",	do_memlimits,	0,	11,	2,	PP_FUNCALL},
 {"merge",	do_merge,	0,	11,	2,	PP_FUNCALL},
+{"capabilities",do_capabilities,0,	11,	0,	PP_FUNCALL},
 #if 0
 {"visibleflag", do_visibleflag,	0,	1,	0,	PP_FUNCALL},
 #endif

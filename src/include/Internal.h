@@ -101,6 +101,7 @@ SEXP do_builtins(SEXP, SEXP, SEXP, SEXP);
 SEXP do_c(SEXP, SEXP, SEXP, SEXP);
 SEXP do_c_dflt(SEXP, SEXP, SEXP, SEXP);
 SEXP do_call(SEXP, SEXP, SEXP, SEXP);
+SEXP do_capabilities(SEXP, SEXP, SEXP, SEXP);
 SEXP do_cat(SEXP, SEXP, SEXP, SEXP);
 SEXP do_charmatch(SEXP, SEXP, SEXP, SEXP);
 SEXP do_chartr(SEXP, SEXP, SEXP, SEXP);

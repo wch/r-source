@@ -824,3 +824,59 @@ SEXP do_pathexpand(SEXP call, SEXP op, SEXP args, SEXP rho)
     UNPROTECT(1);
     return ans;
 }
+
+SEXP do_capabilities(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    SEXP ans, ansnames;
+    int i = 0;
+    
+    checkArity(op, args);
+    PROTECT(ans = allocVector(LGLSXP, 6));
+    PROTECT(ansnames = allocVector(STRSXP, 6));
+
+    SET_STRING_ELT(ansnames, i, mkChar("jpeg"));
+#ifdef HAVE_JPEG
+    INTEGER(ans)[i++] = 1;
+#else
+    INTEGER(ans)[i++] = 0;
+#endif
+
+    SET_STRING_ELT(ansnames, i, mkChar("png"));
+#ifdef HAVE_PNG
+    INTEGER(ans)[i++] = 1;
+#else
+    INTEGER(ans)[i++] = 0;
+#endif
+
+    SET_STRING_ELT(ansnames, i, mkChar("tcltk"));
+#ifdef HAVE_TCLTK
+    INTEGER(ans)[i++] = 1;
+#else
+    INTEGER(ans)[i++] = 0;
+#endif
+
+    SET_STRING_ELT(ansnames, i, mkChar("X11"));
+#ifdef HAVE_X11
+    INTEGER(ans)[i++] = 1;
+#else
+    INTEGER(ans)[i++] = 0;
+#endif
+
+    SET_STRING_ELT(ansnames, i, mkChar("libz"));
+#ifdef HAVE_LIBZ
+    INTEGER(ans)[i++] = 1;
+#else
+    INTEGER(ans)[i++] = 0;
+#endif
+
+    SET_STRING_ELT(ansnames, i, mkChar("libxml"));
+#ifdef HAVE_LIBXML
+    INTEGER(ans)[i++] = 1;
+#else
+    INTEGER(ans)[i++] = 0;
+#endif
+
+    setAttrib(ans, R_NamesSymbol, ansnames);
+    UNPROTECT(2);
+    return ans;
+}
