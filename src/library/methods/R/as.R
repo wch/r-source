@@ -138,8 +138,12 @@ setAs <-
       ## if the class is a basic class and there exists an as.<class> function,
       ## use it as the coerce method.
       method  <- eval(function(from, to, strict)NULL, .GlobalEnv)
-      body(method) <- substitute(AS(from),
-                              list(AS = as.name(paste("as.", what, sep=""))))
+      body(method) <- substitute({
+          value <- AS(from)
+          if(strict)
+              attributes(value) <- NULL
+          value
+          }, list(AS = as.name(paste("as.", what, sep=""))))
       setMethod("coerce", c("ANY", what), method, where = where)
   }
   ## and some hand-coded ones
