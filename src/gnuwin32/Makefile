@@ -237,15 +237,6 @@ test-Specific:
 PKGS-CHK = $(foreach i, $(PACKAGES), pkgcheck-$i)
 pkgtests: $(PKGS-CHK)
 
-pkgcheck-base:
-	@$(ECHO) -------- Testing package base --------
-	@(cd ../../library/base/R-ex; unzip -oq Rex)
-	-@mkdir -p ../library/base/check
-	-@$(MAKE) -C ../library/base/check \
-	  PKG=base RHOME=$(RHOME) RLIB=$(RLIB) \
-	  -f ../../../gnuwin32/check/PkgCheck
-	@(cd ../../library/base/R-ex; rm -f *.R)
-
 
 #                          ===== documentation ======
 

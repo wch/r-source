@@ -11,7 +11,7 @@ This version has been compiled against msvcrt.dll not crtdll.dll.
 This gives small speed increases and generally more accurate results.
 Packages compiled against crtdll.dll will still work (as far as we are
 aware), but for best results should be re-compiled.  (A few packages
-need to be re-compiled for 1.2.0 on all systems, and any that used
+need to be re-compiled for 1.2.0 on all platforms, and any that used
 malloc directly need to be recompiled on this one.)
 
 
@@ -193,6 +193,8 @@ environment, then from the PATH (it looks for ...\rw1020\bin).
 
 The GUI console copes much better with receiving output (e.g. from
 tcltk interactive functions) during input.
+
+make pkgcheck-foo will unzip zipped example files if needed.
 
 
 
