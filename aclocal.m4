@@ -79,11 +79,13 @@ dnl
 AC_DEFUN(R_PROG_TEXMF,
  [AC_REQUIRE([R_PROG_PERL])
   AC_PATH_PROGS(DVIPS, [${DVIPS} dvips], false)
+  AC_PATH_PROGS(TEX, [${TEX} tex], false)
   AC_PATH_PROGS(LATEX, [${LATEX} latex], false)
   if test "{ac_cv_path_LATEX}" = false; then
     AC_MSG_WARN([you cannot build DVI versions of the R manuals])
   fi
   AC_PATH_PROGS(MAKEINDEX, [${MAKEINDEX} makeindex], false)
+  AC_PATH_PROGS(PDFTEX, [${PDFTEX} pdftex], false)
   AC_PATH_PROGS(PDFLATEX, [${PDFLATEX} pdflatex], false)
   if test "{ac_cv_path_PDFLATEX}" = false; then
     AC_MSG_WARN([you cannot build PDF versions of the R manuals])
