@@ -671,6 +671,7 @@ SEXP do_strptime(SEXP call, SEXP op, SEXP args, SEXP env)
 	invalid = STRING_ELT(x, i%n) == NA_STRING ||
 	    !strptime(CHAR(STRING_ELT(x, i%n)),
 		      CHAR(STRING_ELT(sformat, i%m)), &tm);
+	/* it seems glibc cannot valid at all consistently */
 	if(!invalid) {
 	    /* Solaris sets missing fields to 0 */
 	    if(tm.tm_mday == 0) tm.tm_mday = NA_INTEGER;
@@ -680,6 +681,7 @@ SEXP do_strptime(SEXP call, SEXP op, SEXP args, SEXP env)
 	    tm.tm_isdst = -1;
 	    mktime0(&tm, 1); /* set wday, yday, isdst */
 	}
+	invalid = invalid || validate_tm(&tm) != 0;
 	makelt(&tm, ans, i, !invalid);
     }
     setAttrib(ans, R_NamesSymbol, ansnames);

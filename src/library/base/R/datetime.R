@@ -340,8 +340,8 @@ plot.POSIXlt <- function(x, y, xlab = "",  axes = TRUE, frame.plot = axes,
 
 ISOdatetime <- function(year, month, day, hour, min, sec, tz="")
 {
-    x <- paste(year, month, day, hour, min, sec)
-    as.POSIXct(strptime(x, "%Y %m %d %H %M %S"), tz=tz)
+    x <- paste(year, month, day, hour, min, sec, sep="-")
+    as.POSIXct(strptime(x, "%Y-%m-%d-%H-%M-%S"), tz=tz)
 }
 
 ISOdate <- function(year, month, day, hour=12, min=0, sec=0, tz="GMT")

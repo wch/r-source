@@ -70,7 +70,11 @@ NEW FEATURES
 	variables in formulae.
 
     o	ppr() now fully supports categorical explanatory variables,
-	even for prediction.
+
+    o   On some OSes (including Windows and those using glibc)
+	strptime() does not validate dates correctly, so we have added
+	extra code to do so.  However, this cannot correct scanning
+	errors in the OS's strptime.
 
 
 UTILITIES

@@ -2813,3 +2813,15 @@ func <- function()
 }
 func()
 ##
+
+
+## broken strptime in glibc (and code used on Windows)
+stopifnot(!is.na(strptime("2003-02-30", format="%Y-%m-%d")))
+stopifnot(is.na(strptime("2003-02-35", format="%Y-%m-%d")))
+# this one is still wrong in glibc
+# stopifnot(is.na(strptime("2003-02-40", format="%Y-%m-%d")))
+stopifnot(is.na(strptime("2003-22-20", format="%Y-%m-%d")))
+# and so is this one
+# stopifnot(is.na(strptime("2003 22 20", format="%Y %m %d")))
+stopifnot(is.na(ISOdate(year=2003, month=22, day=20)))
+## several after the first gave non-NA values in 1.8.1 on some broken OSes
