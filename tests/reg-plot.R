@@ -81,3 +81,16 @@ t1 <- ts(0:100)
 plot(t1, log = "y")
 plot(cbind(t1, 10*t1, t1 - 4), log="y", plot.type = "single")
 stopifnot(par("usr")[4] > 3) # log10: ylim[2] = 1000
+
+
+## This one needs to be looked at.
+## lty = "blank" killed the fill colour too.
+plot(1:10, type="n")
+polygon(c(1, 3, 3, 1), c(1, 1, 3, 3), col="yellow", border="red", lty="blank")
+rect(6, 6, 10, 10,  col="blue", border="red", lty="blank")
+## in 1.5.0 all omit the fill colours.
+data(trees)
+with(trees, symbols(Height, Volume, circles=Girth/24, inches=FALSE,
+                    lty="blank", bg="blue"))
+## in 1.5.0 ignored the lty.
+
