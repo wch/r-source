@@ -262,6 +262,7 @@ function(package)
              "rep.int",
              "split.screen",
              "update.packages"),
+             Hmisc = "t.test.cluster",
              XML = "text.SAX",
              quadprog = c("solve.QP", "solve.QP.compact"),
              sm = "print.graph",
