@@ -1,5 +1,5 @@
-"factor" <- function (x, levels = sort(unique(x), na.last = TRUE),
-		      labels=levels, exclude = NA, ordered = is.ordered(x))
+factor <- function (x, levels = sort(unique(x), na.last = TRUE),
+		    labels=levels, exclude = NA, ordered = is.ordered(x))
 {
     if (length(x) == 0)
 	return(character(0))
@@ -17,8 +17,8 @@
     f
 }
 
-
-"is.factor" <- function(x) inherits(x, "factor")
+is.factor <- function(x) inherits(x, "factor")
+as.factor <- function (x) if (is.factor(x)) x else factor(x)
 
 levels <- function(x) attr(x, "levels")
 nlevels <- function(x) length(levels(x))
@@ -55,11 +55,9 @@ codes.ordered <- .Alias(as.integer)
     value
 }
 
-"as.factor" <- function (x) if (is.factor(x)) x else factor(x)
-
-"as.vector.factor" <- function(x, type="any")
+as.vector.factor <- function(x, type="any")
 {
-    if (type== "any" || type== "character" || type == "logical" || type == "list")
+    if(type== "any" || type== "character" || type== "logical" || type== "list")
 	as.vector(levels(x)[x], type)
     else
 	as.vector(unclass(x), type)
@@ -73,6 +71,7 @@ print.factor <- function (x, quote=FALSE)
     else
 	print(levels(x)[x], quote=quote)
     cat("Levels: ",paste(levels(x), collapse=" "), "\n")
+    invisible(x)
 }
 
 
@@ -85,7 +84,8 @@ Summary.factor <- function(x, ...)
 Ops.factor <- function(e1, e2)
 {
     ok <- switch(.Generic, "=="=, "!="=TRUE, FALSE)
-    if (!ok) stop(paste('"',.Generic,'"', " not meaningful for factors", sep=""))
+    if(!ok)
+	stop(paste('"',.Generic,'"', " not meaningful for factors", sep=""))
     nas <- is.na(e1) | is.na(e2)
     if (nchar(.Method[1])) {
 	l1 <- levels(e1)
@@ -127,13 +127,12 @@ Ops.factor <- function(e1, e2)
     class(x) <- cx
     x
 }
-
-
+
 ## ordered factors ...
 
 ordered <-
-    function (x, levels = sort(unique(x), na.last = TRUE), labels = levels,
-	      exclude = NA, ordered = TRUE)
+    function(x, levels = sort(unique(x), na.last = TRUE), labels = levels,
+	     exclude = NA, ordered = TRUE)
 {
     if (length(x) == 0)
 	return(character(0))
@@ -152,20 +151,20 @@ ordered <-
     f
 }
 
-"is.ordered" <- function(x) inherits(x, "ordered")
+is.ordered <- function(x) inherits(x, "ordered")
+as.ordered <- function(x) if (is.ordered(x)) x else ordered(x)
 
-"as.ordered" <- function(x) if (is.ordered(x)) x else ordered(x)
+print.ordered <- function (x, quote=FALSE)
+{
+    if(length(x) <= 0)
+	cat("ordered(0)\n")
+    else
+	print(levels(x)[x], quote=quote)
+    cat("Levels: ",paste(levels(x), collapse=" < "), "\n")
+    invisible(x)
+}
 
-"print.ordered" <-
-    function (x, quote=FALSE) {
-	if(length(x) <= 0)
-	    cat("ordered(0)\n")
-	else
-	    print(levels(x)[x], quote=quote)
-	cat("Levels: ",paste(levels(x), collapse=" < "), "\n")
-    }
-
-"Ops.ordered" <- function(e1, e2)
+Ops.ordered <- function(e1, e2)
 {
     nas <- is.na(e1) | is.na(e2)
     if (nchar(.Method[1])) {
