@@ -365,7 +365,7 @@ update-pkg-trs: update-pkg-pot
 	  test "$(srcdir)" = . && cdcmd="../src/library/$${pkg}/po" || cdcmd="cd $(top_srcdir)/src/library/$${pkg}/po && "; \
 	  tmpdir=`pwd`; \
 	  trs=`$${cdcmd} && ls *.po 2> /dev/null`; \
-	  trs=`echo $${trs} | sed -e 's/R-[^.]*\.po//' -e s/en@quot.po//`; \
+	  trs=`echo $${trs} | sed -e 's/R-[^.]*\.po//g' -e s/en@quot.po//`; \
 	  if test -n "$${trs}"; then \
 	    for tr in $${trs}; do \
 	      lang=`echo $${tr} | sed -e 's/^R-//' -e 's/.po$$//'`; \
