@@ -24,12 +24,16 @@
 
 AC_PREREQ(2.57)
 
+AC_REVISION($Revision: 1.81 $)
+
 ## We want to get the version number from file 'VERSION' (rather than
 ## specifying the version info in 'configure.ac'.  Hence, we need a bit
 ## of M4 magic.  Note that M4 esyscmd has a trailing newline because the
 ## shell command output has one, hence the patsubst() trick.
 m4_define([R_VERSION],
-          patsubst(m4_esyscmd([cat VERSION]), [\([0-9.]*\)\(\w\|\W\)*], [\1]))
+          m4_bpatsubst(m4_esyscmd([cat VERSION]),
+                       [\([0-9.]*\)\(\w\|\W\)*],
+                       [\1]))
 AC_INIT([R], R_VERSION, [r-bugs@R-project.org], [R])
 AC_CONFIG_SRCDIR([src/include/Defn.h])
 AC_CONFIG_AUX_DIR([tools])
@@ -360,6 +364,7 @@ AC_MSG_RESULT([${BUILDDIR_IS_SRCDIR}])
 ### * Checks for programs.
 
 AC_PROG_AWK
+AC_PROG_EGREP
 AC_PROG_LN_S
 AC_PROG_RANLIB
 AC_PROG_YACC
