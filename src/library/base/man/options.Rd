@@ -35,6 +35,8 @@ options(\dots)
 \item{printcmd}{the command used for graphics printing; currently
   \bold{read-only}, set by environment variable R\_PRINTCMD, or in
   \file{config.site}.}
+\item{show.signif.stars, show.coef.Pvalues}{logical, affecting P value
+    printing, see \code{\link{print.coefmat}}.}
 \item{ts.eps}{the relative tolerance for certain time series
   (\code{\link{ts}}) computations.}
 }
@@ -42,10 +44,15 @@ options(\dots)
   \code{options} allows the user to set and examine a variety of global
   ``options'' which affect the way in which \R computes and displays
   its results.
-
+}
+\details{
   Invoking \code{options()} with no arguments returns a list with the
   current values of the options.
   \code{.Options} is another way to access this list \bold{``read only''}.
+
+  Accessing current options, usually will work with \code{.Options$width}
+  (e.g.), rather than \code{options("width")} which is a \emph{list} of
+  length one.
 }
 \value{
   A list (in any case) with the previous values of the options changed,
