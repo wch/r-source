@@ -8,6 +8,13 @@
 
 		CHANGES IN R VERSION 1.2.1
 
+
+NEW FEATURES
+
+    o	prompt() now also works with a character argument (useful
+	for producing many *.Rd files in a loop).
+
+
 BUG FIXES
     
     o	as.POSIXlt (and *ct) dropped the time part in some cases.

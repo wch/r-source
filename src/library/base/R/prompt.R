@@ -6,9 +6,14 @@ prompt.default <-
     paste0 <- function(...) paste(..., sep = "")
     is.missing.arg <- function(arg)
         typeof(arg) == "symbol" && deparse(arg) == ""
-    name <- substitute(object)
-    if(is.language(name) && !is.name(name)) name <- eval(name)
-    name <- as.character(name)
+    name <-
+        if(is.character(object))
+            object
+        else {
+            name <- substitute(object)
+            if(is.language(name) && !is.name(name)) name <- eval(name)
+            as.character(name)
+        }
     fn <- get(name)
     ## `file' [character(NN)] will contain the lines to be put in the
     ## Rdoc file
