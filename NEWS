@@ -119,11 +119,13 @@ BUG FIXES
 
     o   R-lang manual had precedence of %% wrong (PR#879)
 
-    o   Try() constructs lost protection of R_alloc'ed memory (PR#877)
+    o   try() constructs lost protection of R_alloc'ed memory (PR#877)
 
-  
     o   Documented that as.numeric() dispatches to as.double.foo methods
 	(PR#918.1)
+
+    o   httpclient() (and the "socket" method of download.file) skipped ^V
+	rather than ^Z in input (if drop.ctrl.z = TRUE, the default).
 
 
 

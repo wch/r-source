@@ -44,7 +44,7 @@
                       sep = "")
     }
     if (drop.ctrl.z)
-        data <- gsub("\026", "", data, extended = FALSE)
+        data <- gsub("\032", "", data, extended = FALSE)
     cat(data, file = file)
     return(file)
 }
