@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.8-30, 2004-01-07
+Version 1.8-32, 2004-01-14
 ISBN 3-900051-01-1
 Kurt Hornik
 
@@ -1742,12 +1742,19 @@ distributions of R.)
 *gafit*
      Genetic algorithm for curve fitting.
 
+*gap*
+     Genetic analysis package for both population and family data.
+
 *gbm*
      Generalized Boosted Regression Models: implements extensions to Freund
      and Schapire's AdaBoost algorithm and J. Friedman's gradient boosting
      machine.  Includes regression methods for least squares, absolute loss,
      logistic, Poisson, Cox proportional hazards partial likelihood, and
      AdaBoost exponential loss.
+
+*gclus*
+     Clustering Graphics.  Orders panels in scatterplot matrices and
+     parallel coordinate displays by some merit index.
 
 *gee*
      An implementation of the Liang/Zeger generalized estimating equation
