@@ -132,7 +132,9 @@ NEW FEATURES
 	copied device if just one of `width' and `height' is specified.
 
     o	Function mantelhaen.test() in package ctest now can deal with
-	general I x J x K tables.
+	general I x J x K tables.  In addition, in the 2 x 2 x K case,
+	it can also perform an exact conditional test of independence,
+	and gives confidence intervals for the common odds ratio.
 
     o	New function manova() and summary method.
 
