@@ -163,14 +163,18 @@ install-dvi: dvi installdirs install-images-eps
 	done
 install-images-eps:
 	@$(MKINSTALLDIRS) $(rhome)/doc/manual/images
-	@for f in $(srcdir)/images/*.eps; do \
-	  $(INSTALL_DATA) $${f} $(rhome)/doc/manual/images; \
-	done
+	@if [$(rhome)/doc/manual != $(srcdir)]; then
+	  @for f in $(srcdir)/images/*.eps; do \
+	    $(INSTALL_DATA) $${f} $(rhome)/doc/manual/images; \
+	  done
+	fi
 install-images-pdf:
 	@$(MKINSTALLDIRS) $(rhome)/doc/manual/images
-	@for f in $(srcdir)/images/*.pdf; do \
-	  $(INSTALL_DATA) $${f} $(rhome)/doc/manual/images; \
-	done
+	@if [$(rhome)/doc/manual != $(srcdir)]; then
+	  @for f in $(srcdir)/images/*.pdf; do \
+	    $(INSTALL_DATA) $${f} $(rhome)/doc/manual/images; \
+	  done
+	fi
 install-info: info $(infodir)/dir
 	@for f in $(OBJECTS_INFO:.info=.info*); do \
 	  $(INSTALL_DATA) $${f} $(infodir); \
