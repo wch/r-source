@@ -35,7 +35,7 @@ hat(x, intercept = TRUE)
   \item{res}{(possibly weighted) residuals, with proper default.}
   \item{sd}{standard deviation to use, see default.}
 
-  \item{x}{the `X' or design matrix.}
+  \item{x}{the \eqn{X} or design matrix.}
   \item{intercept}{should an intercept column be pre-prended to \code{x}?}
 }
 \description{
@@ -65,6 +65,8 @@ hat(x, intercept = TRUE)
 
   Note that cases with \code{weights == 0} are \emph{dropped} from all
   these functions.
+
+  The function \code{hat()} exists mainly for S (version 2) compatibility.
 }
 \references{
   Belsley, D. A., Kuh, E. and Welsch, R. E. (1980)
