@@ -88,9 +88,9 @@ files you need.  There are three possibilities.
 
 1) `SetupR.exe', is about 15Mb and gives a complete installation.
 
-2) Directory `miniR' contains `miniR.exe' and six files `miniR-?.bin'.
-You can put  `miniR.exe' and `miniR-1.bin' on one floppy and the
-remaining `miniR-?.bin' on a floppy each.
+2) Directory `miniR' contains `miniR.exe' and seven files
+`miniR-?.bin'.  You can put  `miniR.exe' and `miniR-1.bin' on one
+floppy and the remaining `miniR-?.bin' on a floppy each.
 
 3) Via zip files in directory `zip'.  You will need at least the files
            rw1040b1.zip rw1040b2.zip
@@ -104,8 +104,8 @@ or `rw1040d?.zip' (the draft manuals, in PDF).
 ===================================
 
 First, you need Windows 95/98/ME/NT4/2000: Windows 3.11+win32s will not
-work.  Your file system must allow long file names (as is likely except
-perhaps for some network-mounted systems).
+work. (Windows XP probably will.)  Your file system must allow long file
+names (as is likely except perhaps for some network-mounted systems).
 
 The simplest way is to use `SetupR.exe' or `miniR.exe'.  Just
 double-click on the icon and follow the instructions.  If you installed
@@ -736,6 +736,6 @@ more robust in this respect: it _may_ help to upgrade your Perl version
 
 
 
-Last edited 2001 June 21 by Professor B. D. Ripley
+Last edited 2001 August 30 by Professor B. D. Ripley
 <ripley@stats.ox.ac.uk>
 
