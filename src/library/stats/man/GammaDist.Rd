@@ -49,7 +49,8 @@ rgamma(n, shape, rate = 1, scale = 1/rate)
   \eqn{E(X) = \alpha\sigma}{E(X) = a*s} and
   \eqn{Var(X) = \alpha\sigma^2}{Var(X) = a*s^2}.
 
-  \code{pgamma()} uses algorithm AS 239, see the references.
+  \code{pgamma()} uses a new algorithm (mainly by Morten Welinder) which
+  should be uniformly better or equal to AS 239, see the references.
 }
 \note{
   The S parametrization is via \code{shape} and \code{rate}: S has no

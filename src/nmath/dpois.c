@@ -37,14 +37,14 @@
 
 double dpois_raw(double x, double lambda, int give_log)
 {
-    /*       x >= 0 "integer",
+    /*       x >= 0 ; integer for dpois(), but not e.g. for pgamma()!
         lambda >= 0
     */
     if (lambda == 0) return( (x == 0) ? R_D__1 : R_D__0 );
     if (!R_finite(lambda)) return R_D__0;
-    if (x == 0) return( R_D_exp(-lambda) );
-    if (x < 0)  return( R_D__0 );
-
+    if (x < 0) return( R_D__0 );
+    if (x < lambda * DBL_MIN) return(R_D_exp(-lambda) );
+    if (lambda < x * DBL_MIN) return(R_D_exp(-lambda + x*log(lambda) -lgammafn(x+1)));
     return(R_D_fexp( M_2PI*x, -stirlerr(x)-bd0(x,lambda) ));
 }
 

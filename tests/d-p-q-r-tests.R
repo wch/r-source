@@ -155,8 +155,17 @@ for(sh in round(rlnorm(30),2)) {
     }
 }
 pgamma(1,Inf,scale=Inf) == 0
-all(is.nan(c(pgamma(Inf,1,scale=Inf), pgamma(Inf,Inf,scale=1), pgamma(Inf,Inf,scale=Inf))))
-pgamma(Inf,1,scale=xMax) == 1 && pgamma(xMax,1,scale=Inf) == 0
+all(is.nan(c(pgamma(Inf,  1,scale=Inf),
+             pgamma(Inf,Inf,scale=1),
+             pgamma(Inf,Inf,scale=Inf))))
+scLrg <- c(2,100, 1e300*c(.1, 1,10,100), 1e307, xMax, Inf)
+stopifnot(pgamma(Inf, 1, scale=xMax) == 1,
+          pgamma(xMax,1, scale=Inf) == 0,
+          all.equal(pgamma(1e300, 2, scale= scLrg, log=TRUE),
+                    c(0, 0, -0.000499523968713701, -1.33089326820406,
+                      -5.36470502873211, -9.91015144019122,
+                      -32.9293385491433, -38.707517174609, -Inf), tol=2e-15)
+          )
 
 p <- 7e-4; df <- 0.9
 abs(1-c(pchisq(qchisq(p, df),df)/p, # was 2.31e-8 for R <= 1.8.1
@@ -445,5 +454,23 @@ stopifnot(all.equal(pr^ 12, pbinom(11, 12, prob= pr,lower=FALSE),
 pp <- 1e-17 ## PR#6792
 stopifnot(all.equal(2*pp, pgeom(1, pp), scale= 1e-20))
 ## pgeom(.) gave 0 in R 1.9.0
+
+x <- 10^(100:295)
+sapply(c(1e-250, 1e-25, 0.9, 1.1, 101, 1e10, 1e100),
+       function(shape)
+       All.eq(-x, pgamma(x, shape=shape, lower=FALSE, log=TRUE)))
+x <- 2^(-1022:-900)
+## where all completely off in R 2.0.1
+all.equal(pgamma(x, 10, log = TRUE) - 10*log(x),
+          rep(-15.104412573076, length(x)), tol = 1e-12)# 3.984e-14 (i386)
+all.equal(pgamma(x, 0.1, log = TRUE) - 0.1*log(x),
+          rep(0.0498724412598364, length(x)), tol = 1e-13)# 7e-16 (i386)
+
+All.eq(dpois(  10, 2e-308, log=TRUE), -7100.13502718914)
+All.eq(dpois(  20, 3e-308, log=TRUE), -14204.2875435307)
+All.eq(dpois(1e20, 1e-290, log=TRUE), -7.12801378828154e+22)
+## all gave -Inf in R 2.0.1
+
+
 
 cat("Time elapsed: ", proc.time() - .ptime,"\n")

@@ -242,7 +242,7 @@ NEW FEATURES
 
     o	The functions xinch(), yinch(), and xyinch() have been moved
 	from package 'grDevices' into package 'graphics'.
-        
+
     o	Replacement in a non-existent column of a data frame tries
 	harder to create a column of the correct length and so avoid a
 	corrupt data frame.
@@ -275,7 +275,7 @@ NEW FEATURES
 	on all platforms.  There is a Tcl/Tk-based version of
 	select.list() called tk_select.list() in package tcltk.
 
-    o	menu() uses a multi-column layout if possible for more than 
+    o	menu() uses a multi-column layout if possible for more than
 	10 choices.
 
 	menu(graphics = TRUE) is implemented on most platforms via
@@ -690,7 +690,7 @@ BUG FIXES
     o	str(<S4.object>) was misleading for the case of a single slot.
 
     o   par(omd) is now of the form c(x1, x2, y1, y2) to match the
-	documentation and for S-PLUS compatibility.  
+	documentation and for S-PLUS compatibility.
 
 	[Previously, par(omd) was of the form c(bottom, left, top, right)
 	 like par(oma) and par(omi)]
@@ -709,6 +709,12 @@ BUG FIXES
     o	The "aovlist" method for se.contrast() failed in some very
 	simple cases that were effectively not multistratum designs,
 	e.g. only one treatment occurring in only one stratum.
+
+    o	pgamma() uses completely re-written algorithms, and should now work
+	for all (even very extreme) arguments; this is based on Morten
+	Welinder's contribution related to PR#7307.
+
+    o	dpois(10, 2e-308, log=TRUE) and similar cases gave -Inf.
 
 
 

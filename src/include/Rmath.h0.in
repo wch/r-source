@@ -178,6 +178,7 @@ double  Rlog1p(double);
 #define M_LN_SQRT_PId2	0.225791352644727432363097614947	/* log(sqrt(pi/2)) */
 #endif
 
+
 #ifdef MATHLIB_STANDALONE
  #undef FALSE
  #undef TRUE
@@ -185,7 +186,6 @@ double  Rlog1p(double);
 #else
 # include <R_ext/Boolean.h>
 #endif
-
 
 
 #ifndef MATHLIB_STANDALONE
@@ -233,6 +233,11 @@ double  Rlog1p(double);
 #define lbeta		Rf_lbeta
 #define lchoose		Rf_lchoose
 #define lgammafn	Rf_lgammafn
+/* FIXME: Add the next 4 (from ../nmath/pgamma.c) to the API */
+#define lgamma1p	Rf_lgamma1p
+#define log1pmx		Rf_log1pmx
+#define logspace_add	Rf_logspace_add
+#define logspace_sub	Rf_logspace_sub
 #define pbeta		Rf_pbeta
 #define pbeta_raw	Rf_pbeta_raw
 #define pbinom		Rf_pbinom
@@ -366,6 +371,11 @@ double	dgamma(double, double, double, int);
 double	pgamma(double, double, double, int, int);
 double	qgamma(double, double, double, int, int);
 double	rgamma(double, double);
+
+double  log1pmx(double);
+double  lgamma1p(double);
+double  logspace_add(double, double);
+double  logspace_sub(double, double);
 
 	/* Beta Distribution */
 
