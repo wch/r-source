@@ -445,7 +445,6 @@ void R_common_command_line(int *pac, char **argv, Rstart Rp)
 	    }
 	    else {
 		argv[newac++] = *av;
-		break;
 	    }
 	}
 	else {
