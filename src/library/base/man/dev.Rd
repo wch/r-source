@@ -1,11 +1,11 @@
-\name{}
+\name{dev.xxx}
 \title{Control Multiple Devices}
 \usage{
-dev.cur() 
-dev.list() 
-dev.next(which = dev.cur()) 
-dev.prev(which = dev.cur()) 
-dev.off(which = dev.cur()) 
+dev.cur()
+dev.list()
+dev.next(which = dev.cur())
+dev.prev(which = dev.cur())
+dev.off(which = dev.cur())
 dev.set(which = dev.next())
 }
 \alias{dev.cur}
@@ -18,24 +18,23 @@ dev.set(which = dev.next())
 \alias{.Devices}
 
 \arguments{
-\item{which}{An integer specifying a device number}
+  \item{which}{An integer specifying a device number}
 }
-
 \description{
-These functions provide control over multiple graphics devices.  
+  These functions provide control over multiple graphics devices.
 
-Only one device is the \emph{active} device.  This is the device in
-which all graphics operations occur.  
+  Only one device is the \emph{active} device.  This is the device in
+  which all graphics operations occur.
 
-Devices are associated with a name (e.g., "X11"  or "postscript") and a
-number;  the "null device" is always device 1.
+  Devices are associated with a name (e.g., "X11"  or "postscript") and a
+  number;  the "null device" is always device 1.
 
-\code{dev.off} shuts down the specified device.
+  \code{dev.off} shuts down the specified device.
 
-\code{dev.set} makes the specified device the active device.
+  \code{dev.set} makes the specified device the active device.
 
-A list of device names is stored in \code{.Devices}.
-The name of the active device is stored in \code{.Device}.
+  A list of device names is stored in \code{.Devices}.
+  The name of the active device is stored in \code{.Device}.
 }
 \value{
 \code{dev.cur} returns the number and name of the active device.
@@ -43,7 +42,7 @@ The name of the active device is stored in \code{.Device}.
 \code{dev.list} returns the numbers and names of all devices.
 
 \code{dev.next} returns the number and name of the next device in the
-list of devices.  
+list of devices.
 
 \code{dev.prev} returns the number and name of the previous device in
 the list of devices.
@@ -53,22 +52,21 @@ the list of devices.
 
 \code{dev.set} returns the name and number of the new active device.
 }
-
 \seealso{
-\code{\link{devices}}, \code{\link{x11}}, \code{\link{postscript}},
-\code{\link{pictex}}, \code{\link{windows}}, \code{\link{macintosh}}
+\code{\link{Devices}}, such as \code{\link{postscript}}, etc;
+\code{\link{graphic.off}()} for closing all devices.
 }
-
 \examples{
-if (interactive()) { # will mess up "make test-Examples" otherwise!
-	x11()
-	plot(1:10)
-	x11()
-	plot(rnorm(10))
-	dev.set(dev.prev())
-	abline(0,1)
-	dev.set(dev.next())
-	abline(h=0)
+( dl <- dev.list() ) # the currently open devices..
+x11()
+plot(1:10)
+x11()
+plot(rnorm(10))
+dev.set(dev.prev())
+abline(0,1)# through the 1:10 points
+dev.set(dev.next())
+abline(h=0, col="gray")# for the residual plot
+dev.off(); dev.off()#- close the two X devices
+all(dl == dev.list())# The device list as it was...
 }
-}
-\keyword{device}%-- one or more ...
+\keyword{device}

@@ -20,5 +20,9 @@ The default value for \code{factors} ensures this.
 \seealso{
 \code{\link{convolve}}, \code{\link{fft}}.
 }
+\examples{
+nextn(1001) # 1024
+table(sapply(599:630, nextn))
+}
 \keyword{math}
 
