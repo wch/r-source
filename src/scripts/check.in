@@ -37,7 +37,7 @@ use Text::Wrap;
 ## don't buffer output
 $| = 1;
 
-my $revision = ' $Revision: 1.128 $ ';
+my $revision = ' $Revision: 1.129 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -745,7 +745,7 @@ sub check_pkg {
 	$log->checking("generic/method consistency");
 
 	my $Rcmd = "library(tools)\n";
-	if($opt_install && ($R::Vars::OSTYPE eq "unix")) {
+	if($opt_install) {
 	    $Rcmd .= "checkMethods(package = \"${pkgname}\")\n";
 	}
         else {
@@ -770,7 +770,7 @@ sub check_pkg {
 	$log->checking("for assignment functions with final arg not " .
 		       "named 'value'");
 	my $Rcmd = "library(tools)\n";
-	if($opt_install && ($R::Vars::OSTYPE eq "unix")) {
+	if($opt_install) {
 	    $Rcmd .= "checkAssignFuns(package = \"${pkgname}\")\n";
 	}
 	else {
@@ -799,7 +799,7 @@ sub check_pkg {
 	$log->checking("foreign function calls");
 
 	my $Rcmd = "library(tools)\n";
-	if($opt_install && ($R::Vars::OSTYPE eq "unix")) {
+	if($opt_install) {
 	    $Rcmd .= "checkFF(package = \"${pkgname}\")\n";
 	}
         else {
@@ -1029,7 +1029,7 @@ sub check_pkg {
 	$log->checking("for undocumented objects");
 
 	my $Rcmd = "library(tools)\n";
-	if($opt_install && ($R::Vars::OSTYPE eq "unix")) {
+	if($opt_install) {
 	    $Rcmd .= "undoc(package = \"${pkgname}\")\n";
 	}
 	else {
@@ -1061,7 +1061,7 @@ sub check_pkg {
 	$log->checking("for code/documentation mismatches");
 
 	my $Rcmd = "library(tools)\n";
-	if($opt_install && ($R::Vars::OSTYPE eq "unix")) {
+	if($opt_install) {
 	    $Rcmd .= "codoc(package = \"${pkgname}\")\n";
 	}
 	else {
@@ -1091,7 +1091,7 @@ sub check_pkg {
 	$log->checking("for undocumented arguments in \\usage");
 
 	my $Rcmd = "library(tools)\n";
-	if($opt_install && ($R::Vars::OSTYPE eq "unix")) {
+	if($opt_install) {
 	    $Rcmd .= "checkDocArgs(package = \"${pkgname}\")\n";
 	}
 	else {
@@ -1306,7 +1306,7 @@ sub check_pkg {
 	## Can we run the code in the vignettes?
 	if($opt_vignettes) {
 	    my $Rcmd = "library(tools)\n";
-	    if($opt_install && ($R::Vars::OSTYPE eq "unix")) {
+	    if($opt_install) {
 		$Rcmd .= "checkVignettes(package=\"${pkgname}\", " .
 		         "lib.loc = \"$pkgoutdir\", " .
 		         "workdir=\"src\")\n";
