@@ -1072,11 +1072,10 @@ function(package, dir, file, lib.loc = NULL,
             ## call is from inside a function (e.g., InitMethods()).
             for(f in getGenerics(codeEnv)) {
                 ## <FIXME>
-                ## The get(f) should not be necessary, but without it,
-                ## current versions of SparseM fail on "%x%"() ... otoh,
-                ## we cannot use get on "%*%"() ...
-                if(is(gf <- get(f, codeEnv), "genericFunction"))
-                    f <- gf
+                ## The getGeneric(f) should not be necessary, but
+                ## without it, current versions of SparseM fail on
+                ## "%x%"().
+                f <- getGeneric(f, where = codeEnv)
                 meths <- linearizeMlist(getMethods(f, codeEnv))
                 ## </FIXME>
                 exprs <- c(exprs, lapply(meths@methods, body))
