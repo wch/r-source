@@ -67,22 +67,20 @@
 
   When methods list are merged, they can come from two sources:
   \enumerate{
-    \item {Methods list objects for the same function anywhere on the
-        current search list.  These are merged so that methods in
-      an environment earlier in the search list override methods for the
-      same function later in the search list. A method overrides only
-      another method for the same signature.  See the comments on class
-      \code{"ANY"} in the section on \bold{Inheritance}.
-    }
-    \item {Methods list objects corresponding the group generic functions, if any, for this
-      function.  Any generic function can be defined to belong to a
-      group generic.  The methods for the group generic are available as
-      methods for this function.  The group generic can itself be
-      defined as belong to a group; as a result there is a list of group
-      generic functions.  A method defined for a function and a
-      particular signature overrides a method for the same signature for
-      that function's group generic.
-    }
+    \item Methods list objects for the same function anywhere on the
+    current search list.  These are merged so that methods in an
+    environment earlier in the search list override methods for the same
+    function later in the search list.  A method overrides only 
+    another method for the same signature.  See the comments on class
+    \code{"ANY"} in the section on \bold{Inheritance}.
+    \item Methods list objects corresponding the group generic
+    functions, if any, for this function.  Any generic function can be
+    defined to belong to a group generic.  The methods for the group
+    generic are available as methods for this function.  The group
+    generic can itself be defined as belong to a group; as a result
+    there is a list of group generic functions.  A method defined for a
+    function and a particular signature overrides a method for the same
+    signature for that function's group generic.
   }
   Merging is done first on all methods for a particular function, and
   then over the generic and its group generics.
@@ -164,7 +162,7 @@ superclasses, then the superclasses of these classes.
       \code{is.null(attr(x, "class"))}.
     }
 
-    \item{Printing}{
+    \item{Printing:}{
       To provide appropriate printing automatically for objects with
       formal class definitions, the methods package overrides
       \code{print.default}, to look for methods for the generic function

@@ -119,15 +119,16 @@ findNextMethod(method, f, mlist, optional = FALSE, envir)
    
     \item{\code{makeGeneric}:}{ 
       Makes a generic function object corresponding to the given
-      function name, optional definition and optional default method.  Other arguments supply optional
-      elements for the slots of \code{\link{genericFunction-class}}.
+      function name, optional definition and optional default method.
+      Other arguments supply optional elements for the slots of
+      \code{\link{genericFunction-class}}.
     }
 
     \item{\code{makeStandardGeneric}:}{ 
       a utility function that makes a valid function calling
-      standardGeneric for name f.  Works (more or less) even if the
-      actual definition, fdef, is not a proper function, that is, it's a
-      primitive or internal.
+      \code{standardGeneric} for name \code{f}.  Works (more or less)
+      even if the actual definition, \code{fdef}, is not a proper
+      function, that is, it's a primitive or internal.
     }
     
     \item{\code{conformMethod}:}{
@@ -135,7 +136,8 @@ findNextMethod(method, f, mlist, optional = FALSE, envir)
       formal arguments to the function, \code{fnames},
       \code{conformMethod} determines whether the signature and the two
       sets of arguments conform, and returns the signature, possibly
-      extended.  The function name, \code{f} is supplied for error messages.
+      extended.  The function name, \code{f} is supplied for error
+      messages.
 
       The method assignment conforms if either method and function have
       identical formal argument lists.  It can also conform if the
@@ -175,9 +177,9 @@ findNextMethod(method, f, mlist, optional = FALSE, envir)
       for the same signature on packages later on in the list of
       packages being searched.
 
-      The slot "allMethods" of the merged methods list is set to a copy
-      of the methods slot; this is the slot where inherited methods are
-      stored.
+      The slot \code{"allMethods"} of the merged methods list is set to
+      a copy of the methods slot; this is the slot where inherited
+      methods are stored.
     }
     
     \item{\code{doPrimitiveMethod}:}{ 
@@ -191,10 +193,11 @@ findNextMethod(method, f, mlist, optional = FALSE, envir)
     }
 
     \item{\code{getGeneric}:}{ 
-      return the definition of the function named f as a generic.
+      return the definition of the function named \code{f} as a generic.
 
       If there is no definition in the current search list, throws an
-      error or returns NULL according to the value of mustFind.
+      error or returns \code{NULL} according to the value of
+      \code{mustFind}.
 
       Primitive functions are dealt with specially, since there is never
       a formal generic definition for them.  The value returned is the
@@ -209,32 +212,38 @@ findNextMethod(method, f, mlist, optional = FALSE, envir)
       If \code{recursive=TRUE}, also all the group(s) of these groups.
     }
 
-    \item{\code{matchSignature}}{
+    \item{\code{matchSignature}:}{
       Matches the signature object (a partially or completely named
       subset of the signature arguments of the generic function object
-      \code{fun}), and return a vector of all
-      the classes in the order specified by \code{fun@signature}.  The classes
-      not specified by `signature' will be \code{"ANY"} in the value,
-      but extra trailing \code{"ANY"}'s are removed.  When the input
-      signature is empty, the returned signature is a single
-      \code{"ANY"} matching the first formal argument (so the returned
-      value is always non-empty).
+      \code{fun}), and return a vector of all the classes in the order
+      specified by \code{fun@signature}.  The classes not specified by
+      \code{signature} will be \code{"ANY"} in the value, but extra
+      trailing \code{"ANY"}'s are removed.  When the input signature is
+      empty, the returned signature is a single \code{"ANY"} matching
+      the first formal argument (so the returned value is always
+      non-empty).
   
       Generates an error if any of the supplied signature names are
-      not legal; that is, not in the signature slot of the generic function.
+      not legal; that is, not in the signature slot of the generic
+      function.
     }
 
-    \item{\code{getMethodsMetaData}, \code{assignMethodsMetaData}, \code{mlistMetaName}:}{
-      utilities to manage methods list objects in a particular environment.
+    \item{\code{getMethodsMetaData},
+      \code{assignMethodsMetaData},
+      \code{mlistMetaName}:}{ 
+      utilities to manage methods list objects in a particular
+      environment.
       Not to be called directly.
     }
     
-    \item{\code{getFromMethodMetaData}, \code{assignToMethodMetaData}, \code{removeFromMethodMetaData}}{
+    \item{\code{getFromMethodMetaData},
+      \code{assignToMethodMetaData},
+      \code{removeFromMethodMetaData}:}{
       Functions to manage the session metadata for methods.  Don't
       call these directly.
     }
     
-    \item{\code{MethodAddCoerce}}{
+    \item{\code{MethodAddCoerce}:}{
       Possibly modify one or more methods to explicitly coerce this
       argument to \code{methodClass}, the class for which the method is
       explicitly defined.  Only modifies the method if an explicit
@@ -242,7 +251,7 @@ findNextMethod(method, f, mlist, optional = FALSE, envir)
       \code{methodClass}.
     }
     
-    \item{\code{is.primitive}}{
+    \item{\code{is.primitive}:}{
       Is this object a primitive function (either a builtin or special)?
     }
     
@@ -257,15 +266,17 @@ findNextMethod(method, f, mlist, optional = FALSE, envir)
       searched for.
 
       If \code{doFind} is supplied, it's the version of \code{find} used
-      to do the search (e.g., \code{findFunction}.
+      to do the search (e.g., \code{findFunction}).
     }
   
-    \item{\code{cacheMetaData}, \code{cacheGenericsMetaData}, \code{setPrimitiveMethods}:}{
+    \item{\code{cacheMetaData},
+      \code{cacheGenericsMetaData},
+      \code{setPrimitiveMethods}:}{
       Utilities for ensuring that the session-scope information about
       class and method definitions is up to date.  Should normally be
       called automatically whenever needed (for example, when a method
       or class definition changes, or when a package is attached or
-      detached.
+      detached).
 
       The \code{environment} must be one of the environments on the
       current search list; note in particular that even on detaching
@@ -277,7 +288,7 @@ findNextMethod(method, f, mlist, optional = FALSE, envir)
       directly.
     }
 
-    \item{\code{missingArg}: }{
+    \item{\code{missingArg}:}{
       Returns \code{TRUE} if the symbol supplied is missing \emph{from
         the call} corresponding to the environment supplied (by default,
       environment of the call to \code{missingArg}).  If \code{eval} is
@@ -290,7 +301,7 @@ findNextMethod(method, f, mlist, optional = FALSE, envir)
       at the begining of the call.)
     }
 
-    \item{\code{balanceMethodsList}: }{
+    \item{\code{balanceMethodsList}:}{
       Called from \code{\link{setMethod}} to ensure that all nodes in
       the list have the same depth (i.e., the same number of levels of
       arguments).  Balance is needed to ensure that all necessary
@@ -304,7 +315,7 @@ findNextMethod(method, f, mlist, optional = FALSE, envir)
       \code{setGeneric} call converting the ordinary function.
     }
 
-    \item{\code{sigToEnv}: }{
+    \item{\code{sigToEnv}:}{
       Turn the signature (a named vector of classes) into an environment
       with the classes assigned to the names.  The environment is then
       suitable for calling \code{\link{MethodsListSelect}}, with
@@ -313,28 +324,35 @@ findNextMethod(method, f, mlist, optional = FALSE, envir)
       \code{\link{selectMethod}}.
     }
       
-}
-\item{\code{.saveImage}:}{Flag, used in dynamically initializing the
-    methods package from \code{.First.lib}}
-}
-\item{\code{rematchDefinition}, \code{unRematchDefinition}:}{
-  If the specified method in a call to \code{\link{setMethod}}
-  specializes the argument list (by replacing \dots), then
-  \code{rematchDefinition} constructs the actual method stored.
-  Using knowledge of how \code{rematchDefinition} works,
-  \code{unRematchDefinition}
- reverses the procedure; if given a function or method definition that
- does not correspond to this form, it just returns its argument.
-}
-  \item{\code{asMethodDefinition}:}{ Turn a function definition into a
+    \item{\code{.saveImage}:}{
+      Flag, used in dynamically initializing the methods package from
+      \code{.First.lib}
+    }
+
+    \item{\code{rematchDefinition},
+      \code{unRematchDefinition}:}{
+      If the specified method in a call to \code{\link{setMethod}}
+      specializes the argument list (by replacing \dots), then
+      \code{rematchDefinition} constructs the actual method stored.
+      Using knowledge of how \code{rematchDefinition} works,
+      \code{unRematchDefinition} reverses the procedure; if given a
+      function or method definition that does not correspond to this
+      form, it just returns its argument.
+    }
+
+    \item{\code{asMethodDefinition}:}{
+      Turn a function definition into a
       \code{\link{MethodDefiniton-class}} object, corresponding to the
       given \code{signature} (by default generates a default method
       with empty signature).
-      }
-  \item{\code{findNextMethod}:}{ A generic function that finds the
-      next method in \code{mlist} corresponding the method definition
-      \code{method}. It uses methods defined suitably for ordinary
-      methods and for methods with calls to \code{\link{callNextMethod}}.
-      }
+    }
+
+    \item{\code{findNextMethod}:}{
+      A generic function that finds the next method in \code{mlist}
+      corresponding the method definition \code{method}.  It uses
+      methods defined suitably for ordinary methods and for methods with
+      calls to \code{\link{callNextMethod}}.
+    }
+  }
 }
 \keyword{internal}
