@@ -681,7 +681,7 @@ void *dlopen(const char *path, int mode)
 	return reference(loadModule(fullPath, sbuf, mode), mode);
 }
 
-#define FINK_BUILD 1
+/* #define FINK_BUILD 1 */
 
 #if FINK_BUILD
 void *dlsym_prepend_underscore(void *handle, const char *symbol)

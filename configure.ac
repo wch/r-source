@@ -491,8 +491,14 @@ AC_SUBST(LIBM)
 ## the following as well.
 AC_CHECK_LIB(m, sin)
 case "${host_os}" in
-  darwin*)
+  darwin[[123456]].*)
+    ## MacOS <= 10.2 doesn't have dlcompat
     AM_CONDITIONAL(BUILD_DLFCN_DARWIN, true)
+    AC_CHECK_LIB(cc_dynamic, main)
+    ;;
+  darwin*)
+    ## MacOS 10.3 and 10.4 do
+    AM_CONDITIONAL(BUILD_DLFCN_DARWIN, false)
     ## SI says we want '-lcc_dynamic' on Darwin, although currently
     ## http://developer.apple.com /documentation/MacOSX/ has nothing
     ## official.
@@ -698,6 +704,9 @@ case "${host_os}" in
     AC_DEFINE(HAVE_NO_SYMBOL_UNDERSCORE)
     ;;
   darwin*)
+    ## This is needed for Apple's dlsym included in >= 10.3 
+    ## and so we've changed dlfcn-darwin.c for 2.1.0
+    AC_DEFINE(HAVE_NO_SYMBOL_UNDERSCORE)
     ## Need '-no-cpp-precomp' say J de Leeuw <deleeuw@stat.ucla.edu> and
     ## http://fink.sourceforge.net/doc/porting/basics.php.
     R_SH_VAR_ADD(R_XTRA_CPPFLAGS, [-no-cpp-precomp])

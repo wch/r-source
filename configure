@@ -21292,10 +21292,91 @@ _ACEOF
 fi
 
 case "${host_os}" in
-  darwin*)
+  darwin[123456].*)
+    ## MacOS <= 10.2 doesn't have dlcompat
 
 
 if true; then
+  BUILD_DLFCN_DARWIN_TRUE=
+  BUILD_DLFCN_DARWIN_FALSE='#'
+else
+  BUILD_DLFCN_DARWIN_TRUE='#'
+  BUILD_DLFCN_DARWIN_FALSE=
+fi
+
+echo "$as_me:$LINENO: checking for main in -lcc_dynamic" >&5
+echo $ECHO_N "checking for main in -lcc_dynamic... $ECHO_C" >&6
+if test "${ac_cv_lib_cc_dynamic_main+set}" = set; then
+  echo $ECHO_N "(cached) $ECHO_C" >&6
+else
+  ac_check_lib_save_LIBS=$LIBS
+LIBS="-lcc_dynamic  $LIBS"
+cat >conftest.$ac_ext <<_ACEOF
+/* confdefs.h.  */
+_ACEOF
+cat confdefs.h >>conftest.$ac_ext
+cat >>conftest.$ac_ext <<_ACEOF
+/* end confdefs.h.  */
+
+
+int
+main ()
+{
+main ();
+  ;
+  return 0;
+}
+_ACEOF
+rm -f conftest.$ac_objext conftest$ac_exeext
+if { (eval echo "$as_me:$LINENO: \"$ac_link\"") >&5
+  (eval $ac_link) 2>conftest.er1
+  ac_status=$?
+  grep -v '^ *+' conftest.er1 >conftest.err
+  rm -f conftest.er1
+  cat conftest.err >&5
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); } &&
+	 { ac_try='test -z "$ac_c_werror_flag"
+			 || test ! -s conftest.err'
+  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
+  (eval $ac_try) 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); }; } &&
+	 { ac_try='test -s conftest$ac_exeext'
+  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
+  (eval $ac_try) 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); }; }; then
+  ac_cv_lib_cc_dynamic_main=yes
+else
+  echo "$as_me: failed program was:" >&5
+sed 's/^/| /' conftest.$ac_ext >&5
+
+ac_cv_lib_cc_dynamic_main=no
+fi
+rm -f conftest.err conftest.$ac_objext \
+      conftest$ac_exeext conftest.$ac_ext
+LIBS=$ac_check_lib_save_LIBS
+fi
+echo "$as_me:$LINENO: result: $ac_cv_lib_cc_dynamic_main" >&5
+echo "${ECHO_T}$ac_cv_lib_cc_dynamic_main" >&6
+if test $ac_cv_lib_cc_dynamic_main = yes; then
+  cat >>confdefs.h <<_ACEOF
+#define HAVE_LIBCC_DYNAMIC 1
+_ACEOF
+
+  LIBS="-lcc_dynamic $LIBS"
+
+fi
+
+    ;;
+  darwin*)
+    ## MacOS 10.3 and 10.4 do
+
+
+if false; then
   BUILD_DLFCN_DARWIN_TRUE=
   BUILD_DLFCN_DARWIN_FALSE='#'
 else
@@ -25836,7 +25917,7 @@ _ACEOF
 # flags.
 ac_save_FFLAGS=$FFLAGS
 FFLAGS="$FFLAGS $ac_verb"
-(eval echo $as_me:25839: \"$ac_link\") >&5
+(eval echo $as_me:25920: \"$ac_link\") >&5
 ac_f77_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$ac_f77_v_output" >&5
 FFLAGS=$ac_save_FFLAGS
@@ -25914,7 +25995,7 @@ _ACEOF
 # flags.
 ac_save_FFLAGS=$FFLAGS
 FFLAGS="$FFLAGS $ac_cv_prog_f77_v"
-(eval echo $as_me:25917: \"$ac_link\") >&5
+(eval echo $as_me:25998: \"$ac_link\") >&5
 ac_f77_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$ac_f77_v_output" >&5
 FFLAGS=$ac_save_FFLAGS
@@ -26160,7 +26241,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_verb"
-(eval echo $as_me:26163: \"$ac_link\") >&5
+(eval echo $as_me:26244: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
@@ -26242,7 +26323,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_cv_prog_c_v"
-(eval echo $as_me:26245: \"$ac_link\") >&5
+(eval echo $as_me:26326: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
@@ -28518,6 +28599,12 @@ _ACEOF
 
     ;;
   darwin*)
+    ## This is needed for Apple's dlsym included in >= 10.3
+    ## and so we've changed dlfcn-darwin.c for 2.1.0
+    cat >>confdefs.h <<\_ACEOF
+#define HAVE_NO_SYMBOL_UNDERSCORE 1
+_ACEOF
+
     ## Need '-no-cpp-precomp' say J de Leeuw <deleeuw@stat.ucla.edu> and
     ## http://fink.sourceforge.net/doc/porting/basics.php.
     separator=""
