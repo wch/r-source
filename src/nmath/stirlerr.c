@@ -36,7 +36,12 @@
 
 #include "nmath.h"
 
-/* stirlerr(n) = log(n!) - log( sqrt(2*pi*n)*(n/e)^n ) */
+/* stirlerr(n) = log(n!) - log( sqrt(2*pi*n)*(n/e)^n )
+ *             = log Gamma(n+1) - 1/2 * [log(2*pi) + log(n)] - n*[log(n) - 1]
+ *             = log Gamma(n+1) - (n + 1/2) * log(n) + n - log(2*pi)/2
+ *
+ * see also lgammacor() in ./lgammacor.c  which computes almost the same!
+ */
 
 double stirlerr(double n)
 {
@@ -85,7 +90,7 @@ double stirlerr(double n)
     };
     double nn;
 
-    if (n <= 15.0) { 
+    if (n <= 15.0) {
 	nn = n + n;
 	if (nn == (int)nn) return(sferr_halves[(int)nn]);
 	return(lgammafn(n + 1.) - (n + 0.5)*log(n) + n - M_LN_SQRT_2PI);
