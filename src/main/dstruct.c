@@ -75,7 +75,11 @@ SEXP mkCLOSXP(SEXP formals, SEXP body, SEXP rho)
     SET_FORMALS(c, formals);
 #endif
     if(isList(body) || isLanguage(body) || isSymbol(body)
-       || isExpression(body) || isVector(body))
+       || isExpression(body) || isVector(body)
+#ifdef BYTECODE
+       || isByteCode(body)
+#endif
+       )
 	SET_BODY(c, body);
     else
         error("invalid body argument for \"function\"\n"
