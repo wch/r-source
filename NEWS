@@ -377,6 +377,11 @@ NEW FEATURES
 	library trees R knows about.  This is still stored in .lib.loc,
 	which however should no longer be accessed directly.
 
+    o	R_tryEval() added for evaluating expressions from C code with
+	errors handled but guaranteed to return to the calling C
+	routine. This is used in embedding R in other applications and
+	languages.
+
 
 DOCUMENTATION CHANGES
 

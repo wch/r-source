@@ -567,3 +567,58 @@ Rboolean R_ToplevelExec(void (*fun)(void *), void *data)
 
     return result;
 }
+
+
+
+/*
+  This is a simple interface for evaluating R expressions
+  from C with a guarantee that one will return to the 
+  point in the code from which the call was made.
+  This uses R_TopleveExec to do this.  It is important
+  in applications that embed R or wish to make general 
+  callbacks to R with error handling.
+
+  It is currently hidden with a data structure definition
+  and C routine visible only here. The R_tryEval() is the
+  only visible aspect. This can be lifted into the header
+  files if necessary. (DTL)
+ */
+typedef struct {
+    SEXP expression;
+    SEXP val;
+    SEXP env;
+} ProtectedEvalData;
+
+static void
+protectedEval(void *d)
+{
+    ProtectedEvalData *data = (ProtectedEvalData *)d;
+    SEXP env = R_GlobalEnv;
+    if(data->env) {
+	env = data->env;
+    }
+    data->val = eval(data->expression, env); 
+    PROTECT(data->val);
+}
+
+SEXP
+R_tryEval(SEXP e, SEXP env, int *ErrorOccurred)
+{
+ Rboolean ok;
+ ProtectedEvalData data;
+
+ data.expression = e;
+ data.val = NULL;
+ data.env = env;
+
+ ok = R_ToplevelExec(protectedEval, &data);
+ if(ErrorOccurred) {
+     *ErrorOccurred = (ok == FALSE);
+ }
+ if(ok == FALSE)
+     data.val = NULL;
+ else
+     UNPROTECT(1);
+
+ return(data.val);
+}

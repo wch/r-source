@@ -646,6 +646,7 @@ SEXP duplicate(SEXP);
 SEXP elt(SEXP, int);
 SEXP emptyEnv(void);
 SEXP eval(SEXP, SEXP);
+SEXP R_tryEval(SEXP e, SEXP env, int *ErrorOccurred);
 SEXP EvalArgs(SEXP, SEXP, int);
 SEXP evalList(SEXP, SEXP);
 SEXP evalListKeepMissing(SEXP, SEXP);
