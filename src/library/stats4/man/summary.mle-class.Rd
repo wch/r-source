@@ -22,6 +22,8 @@ They contain values meant for printing by \code{show}.
   \describe{
     \item{show}{\code{signature(object = "summary.mle")}: Pretty-prints
       \code{object}  }
+    \item{coef}{\code{signature(object = "summary.mle")}: Extracts the
+    contents of the \code{coef} slot}
   }
 }
 \seealso{
