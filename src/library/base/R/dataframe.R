@@ -1,26 +1,14 @@
-### Useful Generics
+row.names <- function(x) attr(x,"row.names")
 
-"row.names<-" <- function(x, value) UseMethod("row.names<-")
-"row.names"   <- function(x)  UseMethod("row.names")
-
-### Dataframe specific code
-
-row.names.default <- function(x) attr(x,"row.names")
-
-"row.names<-.data.frame" <- function(x, value)
-{
-  if( !is.data.frame(x) )
-    return(data.frame(x, row.names=value))
-  else {
-    old <- attr(x,"row.names")
-    if(!is.null(old) && length(value) != length(old))
-      stop("invalid row.names length")
-    attr(x,"row.names") <- as.character(value)
-  }
-  x
+"row.names<-" <- function(x, value) {
+    if (!is.data.frame(x))
+        x <- as.data.frame(x)
+    old <- attr(x, "row.names")
+    if (!is.null(old) && length(value) != length(old))
+        stop("invalid row.names length")
+    attr(x, "row.names") <- as.character(value)
+    x
 }
-"row.names<-.default" <- function(x, value)
-    "row.names<-.data.frame"(as.data.frame(x),value)
 
 "is.na.data.frame" <- function (x)
 {
@@ -56,7 +44,6 @@ t.data.frame <- function(x)
 }
 
 dim.data.frame <- function(x) c(length(attr(x,"row.names")), length(x))
-
 
 dimnames.data.frame <- function(x) list(attr(x,"row.names"), names(x))
 
