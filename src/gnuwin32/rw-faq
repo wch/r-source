@@ -363,13 +363,14 @@ package was compiled too long ago.
 
 For package `tcltk' to work (try `demo(tkdensity)' or `demo(tkttest)'
 after `library(tcltk)') you need to have Tcl installed.  Download
-`tcl832.exe' (or use `tcl831.exe' if you already have it) from
-`dev.scriptics.com' and install it. (That will put the `bin' directory
-containing the Tcl and Tk DLLs in your path).  You then need to set the
-environment variable `TCL_LIBRARY', to something like `c:/Program
-Files/Tcl/lib/tcl8.3'.  (The startup code for the package will warn you
-if this is unset, and Q3.2 explains how to set them.  NB: do not quote
-the path, even if as here it contains spaces.)
+either ActiveTcl 8.3.3 from
+`http://aspn.activestate.com/ASPN/Downloads/ActiveTcl/' or `tcl832.exe'
+from `dev.scriptics.com' and install it. (That will put the `bin'
+directory containing the Tcl and Tk DLLs in your path).  You then need
+to set the environment variable `TCL_LIBRARY', to something like
+`c:/Program Files/Tcl/lib/tcl8.3'.  (The startup code for the package
+will warn you if this is unset, and Q3.2 explains how to set them.  NB:
+do not quote the path, even if as here it contains spaces.)
 
 3.7 Hyperlinks in Compiled HTML sometimes do not work.
 ======================================================
