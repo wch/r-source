@@ -20,8 +20,8 @@
   \item{\dots}{further arguments passed to or from other methods.}
 }
 \details{
-  At present, this only works on simple data frames containing numeric or
-  character vectors and factors. Factors are represented in the
+  At present, this only works on simple data frames containing numeric, 
+  logical or character vectors and factors. Factors are represented in the
   spreadsheet as either numeric vectors (which is more suitable for data
   entry) or character vectors (better for browsing). After editing,
   vectors are padded with \code{NA} to have the same length and

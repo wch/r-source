@@ -28,7 +28,7 @@ edit.data.frame <-
     {
         ## Would as.character be a better default?  BDR 2000/5/3
         if (is.character(x)) x
-        else if (is.factor(x) && factor.mode == "character") as.character(x)
+        else if (is.logical(x) || (is.factor(x) && factor.mode == "character")) as.character(x)
         else as.numeric(x)
     }
 
@@ -38,6 +38,11 @@ edit.data.frame <-
         which(sapply(name, is.factor))
     else
         numeric(0)
+        
+    logicals <- if (length(name) > 0)
+    	which(sapply(name, is.logical))
+    else
+    	numeric(0)
 
     modes <- lapply(datalist, mode)
     if (edit.row.names) {
@@ -79,6 +84,8 @@ edit.data.frame <-
         }
         out[[i]] <- o
     }
+    for (i in logicals) out[[i]] <- as.logical(out[[i]])
+    
     out <- as.data.frame(out) # will convert cols switched to char into factors
     if (edit.row.names) {
         if(any(duplicated(rn)))
@@ -95,9 +102,11 @@ edit.matrix <-
         if(.Platform$GUI == "unknown" || Sys.getenv("DISPLAY")=="" )
             return (edit.default(name, ...))
     if(!is.matrix(name) ||
-       !(mode(name) == "numeric" || mode(name) == "character")
+       !(mode(name) == "numeric" || mode(name) == "character" || mode(name) == "logical")
        || any(dim(name) < 1))
         stop("invalid input matrix")
+    logicals <- is.logical(name)
+    if (logicals) mode(name) <- "character"
     dn <- dimnames(name)
     if(is.null(dn[[1]])) edit.row.names <- FALSE
     datalist <- split(name, col(name))
@@ -123,6 +132,7 @@ edit.matrix <-
     if (edit.row.names) rownames(out) <- rn
     else if(!is.null(dn[[1]]))  rownames(out) <- dn[[1]]
     if(!is.null(dn[[2]]))  colnames(out) <- dn[[2]]
+    if (logicals) mode(out) <- "logical"
     out
 }
 
