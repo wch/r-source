@@ -37,7 +37,7 @@ file.show(\dots, header, title="R Information",
 }
 \author{Ross Ihaka, Brian Ripley.}
 \seealso{
-\code{\link{file}},
+\code{\link{files}},
 \code{\link{list.files}},
 \code{\link{help}}.
 }

@@ -31,7 +31,7 @@ dev.control(displaylist)
   produce and print a postscript copy.
 
   \code{dev.copy2eps} is similar to \code{dev.print} but produces an
-  EPSF output file.
+  EPSF output file, in portrait orientation (\code{horizontal = FALSE})
 
   \code{dev.control} allows the user to control the recording of
   graphics operations in a device.  If \code{displaylist} is "inhibit"

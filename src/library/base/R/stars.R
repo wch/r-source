@@ -34,7 +34,6 @@ function(x, full = TRUE, scale = TRUE, radius = TRUE,
 	loc <- .Alias(locations)
     }
 
-
     if ( n.loc != nrow(loc) )
 	stop("number of rows of locations and x must be equal.")
 
@@ -54,8 +53,11 @@ function(x, full = TRUE, scale = TRUE, radius = TRUE,
     ## Missing values are treated as 0
     x[is.na(x)] <- 0
 
-    if (scale)
+    if (scale) {
 	x <- sweep(x,2,apply(x,2,max),FUN="/")
+	## Columns of 0s will put NAs in x, next line gets rid of them
+	x[is.na(x)] <- 0
+    }
 
     x <- x * len
 

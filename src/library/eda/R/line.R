@@ -1,5 +1,4 @@
-line <-
-    function(x, y=NULL)
+line <- function(x, y=NULL)
 {
     xy <- xy.coords(x, y)
     ok <- complete.cases(xy$x,xy$y)
@@ -13,12 +12,12 @@ line <-
 	    n,
 	    double(2),
 	    DUP=FALSE, PACKAGE="eda")
-    value <- list(call=sys.call(), coefficients=z[[6]], residuals=z[[3]],
-		  fitted.values=xy$y-z[[3]])
+    value <- list(call=sys.call(), coefficients = z[[6]],
+                  residuals = z[[3]], fitted.values = z[[4]])
     class(value) <- "tukeyline"
     value
 }
-coef.tukeyline <- coef.lm
-residuals.tukeyline <- residuals.lm
-fitted.tukeyline <- fitted.lm
-print.tukeyline <- print.lm
+coef.tukeyline <- .Alias(coef.lm)
+residuals.tukeyline <- .Alias(residuals.lm)
+fitted.tukeyline <- .Alias(fitted.lm)
+print.tukeyline <- .Alias(print.lm)

@@ -41,7 +41,7 @@ mantelhaen.test(x, y = NULL, z = NULL,
     classical case of a 2 by 2 by \eqn{K} table (i.e., of dichotomous
     underlying variables), the Mantel-Haenszel chi-squared statistic;
     otherwise, the generalized Cochran-Mantel-Haenszel statistic.}
-  \item{parameter}{the degrees of freedom of the approximate chi-square
+  \item{parameter}{the degrees of freedom of the approximate chi-squared
     distribution of the test statistic (\eqn{1} in the classical case).
     Only present if no exact test is performed.}
   \item{p.value}{the p-value of the test.}

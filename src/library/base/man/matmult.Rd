@@ -1,7 +1,7 @@
 \name{matmult}
 \title{Matrix Multiplication}
 \usage{
-a\%*\%b
+a \%*\% b
 }
 \alias{\%*\%}
 \alias{matmult}
@@ -12,19 +12,24 @@ a\%*\%b
   If both are vectors it will return the inner product.
 }
 \value{
-  The matrix product.  Use \code{\link{drop}} to get rid of
+  The matrix product.  Use \code{\link{drop}} to get rid of dimensions
+  which have only one level.
 }
-\seealso{\code{\link{matrix}}, \code{\link{Arithmetic}}, \code{\link{diag}}.}
+\seealso{
+  \code{\link{matrix}},
+  \code{\link{Arithmetic}},
+  \code{\link{diag}}.
+}
 \examples{
 x <- 1:4
-x\%*\%x # scalar ("inner") product (1 x 1 matrix)
-drop(.Last.value)# as scalar
+x \%*\% x              # scalar ("inner") product (1 x 1 matrix)
+drop(.Last.value)    # as scalar
 
 y <- diag(x)
-z <- matrix(1:12,ncol=3,nrow=4)
-y\%*\%z
-y\%*\%x
-x\%*\%z
+z <- matrix(1:12, ncol = 3, nrow = 4)
+y \%*\% z
+y \%*\% x
+x \%*\% z
 }
 \keyword{array}
 \keyword{arith}

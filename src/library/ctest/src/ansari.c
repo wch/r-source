@@ -3,7 +3,7 @@
    */
 
 #include <R.h>
-#include <R_ext/Mathlib.h>
+#include <Rmath.h> /* uses choose() */
 
 static double ***w;
 

@@ -1,12 +1,13 @@
 write.table <-
-function (x, file = "", append = FALSE, quote = TRUE, sep = " ", 
+function (x, file = "", append = FALSE, quote = TRUE, sep = " ",
     eol = "\n", na = "NA", dec = ".", row.names = TRUE,
-    col.names = TRUE) 
+    col.names = TRUE, qmethod = c("escape", "double"))
 {
+    qmethod <- match.arg(qmethod)
     if (!is.data.frame(x))
 	x <- data.frame(x)
     else if (is.logical(quote) && quote)
-	quote <- which(unlist(lapply(x, is.character)))
+	quote <- which(unlist(lapply(x, function(x) is.character(x) || is.factor(x))))
     if(dec != ".") {
     	num <- which(unlist(lapply(x, is.numeric)))
 	x[num] <- lapply(x[num],
@@ -62,8 +63,13 @@ function (x, file = "", append = FALSE, quote = TRUE, sep = " ",
 	append <- TRUE
     }
 
+    qstring <-                          # quoted embedded quote string
+        switch(qmethod,
+               "escape" = '\\\\"',
+               "double" = '""')
     for (i in quote)
-	x[, i] <- paste("\"", x[, i], "\"", sep = "")
+	x[, i] <- paste('"', gsub('"', qstring, x[, i]), '"', sep = "")
+
 
     cat(t(x), file = file, sep = c(rep(sep, ncol(x) - 1), eol),
 	append = append)

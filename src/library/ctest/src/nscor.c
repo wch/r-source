@@ -2,7 +2,7 @@
  * ------- and produced by f2c-clean,v 1.8 --- and hand polished: M.Maechler
  */
 
-#include "R_ext/Mathlib.h"
+#include <Rmath.h>
 
 #define nstep 721	/* = nrow(work) */
 

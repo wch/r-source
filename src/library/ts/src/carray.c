@@ -26,7 +26,7 @@
 */
 
 #include "carray.h"
-#include "R.h" /* for error, vmaxset/get */
+#include <R.h>			/* for error, vmaxset/get */
 #include <stdio.h>
 
 

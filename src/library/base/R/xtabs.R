@@ -91,6 +91,6 @@ print.summary.xtabs <- function(x, digits = max(1, getOption("digits") - 3))
 	", p-value = ",	format.pval(x$p.value, digits, eps = 0),
 	"\n", sep = "")
     if(!x$approx.ok)
-	cat("\tChi-square approximation may be incorrect\n")
+	cat("\tChi-squared approximation may be incorrect\n")
     invisible(x)
 }

@@ -5,7 +5,7 @@ licence <- license <- function() {
     cat("this software.\n")
     cat("\n")
     cat("If you have not received a copy of this file, you can obtain one\n")
-    cat("by writing to:\n")
+    cat("via WWW at http://www.gnu.org/copyleft/gpl.html, or by writing to:\n")
     cat("\n")
     cat("   The Free Software Foundation, Inc.,\n")
     cat("   59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.\n")

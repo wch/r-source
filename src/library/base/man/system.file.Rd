@@ -17,20 +17,20 @@ system.file(\dots, pkg = .packages(), lib = .lib.loc)
     Finds the full file names of files in packages etc.
 }
 \value{
-    A character vector of positive length,
-    containing the file names that matched \code{\dots}, or the empty
-    string, \code{""}, if none matched. If matching the root of a
-    package, there is no trailing separator.
+    A character vector of positive length, containing the file names
+    that matched \code{\dots}, or the empty string, \code{""}, if none
+    matched.  If matching the root of a package, there is no trailing
+    separator.
 
     As a special case, \code{system.file()} gives the root of the
     \code{base} package only.
 }
 \seealso{\code{\link{list.files}}}
 \examples{
-system.file()            # The root of the `base' package
-system.file(pkg="lqs")   # The root of package `lqs'
+system.file()              # The root of the `base' package
+system.file(pkg = "lqs")   # The root of package `lqs'
 system.file("INDEX")
-system.file("help/AnIndex", pkg = c("stepfun", "mva"))
+system.file("help", "AnIndex", pkg = c("stepfun", "mva"))
 }
 \keyword{file}
 \keyword{utilities}

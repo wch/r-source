@@ -29,7 +29,7 @@
 #include <math.h>
 #include <limits.h> */
 
-#include "R.h"
+#include <R.h>
 #include "R_ext/Applic.h"	/* for the QR	  routines */
 #include "R_ext/Utils.h"	/* for the *sort() routines */
 #define BIG DBL_MAX

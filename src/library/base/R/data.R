@@ -2,7 +2,7 @@
 ## .Platform$show.data() idea.
 data <-
 function (..., list = character(0),
-#          package = c(.packages(), .Autoloaded),
+          ## package = c(.packages(), .Autoloaded),
           package = .packages(),
           lib.loc = .lib.loc, verbose = getOption("verbose"))
 {
@@ -80,18 +80,19 @@ function (..., list = character(0),
 }
 
 show.data <-
-  function (package = .packages(), lib.loc = .lib.loc)
+function(package = .packages(), lib.loc = .lib.loc)
 {
     ## give `index' of all possible data sets
     file <- tempfile("R.")
+    on.exit(file.remove(file))
     file.create(file)
     first <- TRUE
     nodata <- noindex <- character(0)
     paths <- system.file(pkg = package, lib = lib.loc)
     if(missing(lib.loc))
-        paths <- c(.path.package(package, TRUE), getwd(), paths)
+        paths <- unique(c(.path.package(package, TRUE), getwd(), paths))
     for (path in paths) {
-        pkg <- sub(".*/([^/]*)$", "\\1", path) # may not work on Mac
+        pkg <- basename(path)
         if(!file.exists(path)) next
         if(!file.exists(file.path(path, "data"))) {
             nodata <- c(nodata, pkg)
@@ -100,7 +101,7 @@ show.data <-
         INDEX <- file.path(path, "data", "00Index")
         if(INDEX == "")
             INDEX <- file.path(path, "data", "index.doc")
-        if (INDEX != "") {
+        if(INDEX != "") {
             cat(paste(ifelse(first, "", "\n"), "Data sets in package `",
                       pkg, "':\n\n", sep = ""), file = file, append = TRUE)
             file.append(file, INDEX)
@@ -112,7 +113,6 @@ show.data <-
         }
     }
     if (first) {
-        unlink(file)
         warning("no data listings found")
     } else file.show(file, delete.file = TRUE, title = "R data sets")
     if(!missing(package)) {

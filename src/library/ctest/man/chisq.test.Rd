@@ -36,20 +36,21 @@ chisq.test(x, y = NULL, correct = TRUE,
     chi-squared test of the null that the joint distribution of the cell
     counts in a 2-dimensional contingency table is the product of the row
     and column marginals is performed.  If \code{simulate.p.value} is
-    \code{FALSE}, the p-value is computed from the asymptotic chi-square
-    distribution of the test statistic; continuity correction is only
-    used in the 2-by-2 case if \code{correct} is \code{TRUE}.
-    Otherwise, if \code{simulate.p.value} is \code{TRUE}, the p-value is
-    computed by Monte Carlo simulation with \code{B} replicates.  This
-    is done by random sampling from the set of all contingency tables
-    with given marginals, and works only if the marginals are positive.
+    \code{FALSE}, the p-value is computed from the asymptotic
+    chi-squared distribution of the test statistic; continuity
+    correction is only used in the 2-by-2 case if \code{correct} is
+    \code{TRUE}.  Otherwise, if \code{simulate.p.value} is \code{TRUE},
+    the p-value is computed by Monte Carlo simulation with \code{B}
+    replicates.  This is done by random sampling from the set of all
+    contingency tables with given marginals, and works only if the
+    marginals are positive.
 }
 \value{
     A list with class \code{"htest"} containing the following
     components:
     \item{statistic}{the value the chi-squared test statistic.}
     \item{parameter}{the degrees of freedom of the approximate
-	chi-square distribution of the test statistic, \code{NA} if the
+	chi-squared distribution of the test statistic, \code{NA} if the
 	p-value is computed by Monte Carlo simulation.}
     \item{p.value}{the p-value for the test.}
     \item{method}{a character string indicating the type of test

@@ -3,10 +3,10 @@
 \alias{pchisq}
 \alias{qchisq}
 \alias{rchisq}
-\title{The (non-central) Chi-Square Distribution}
+\title{The (non-central) Chi-Squared Distribution}
 \description{
   Density, distribution function, quantile function and random
-  generation for the chi-square (\eqn{\chi^2}{chi^2}) distribution with
+  generation for the chi-squared (\eqn{\chi^2}{chi^2}) distribution with
   \code{df} degrees of freedom and optional non-centrality parameter
   \code{ncp}.
 }
@@ -32,13 +32,13 @@ rchisq(n, df)
   generates random deviates.
 }
 \details{
-  The chi-square distribution with \code{df}\eqn{= n} degrees of freedom
-  has density
+  The chi-squared distribution with \code{df}\eqn{= n} degrees of
+  freedom has density
   \deqn{f_n(x) = \frac{1}{{2}^{n/2} \Gamma (n/2)} {x}^{n/2-1} {e}^{-x/2}}{%
     f_n(x) = 1 / (2^(n/2) Gamma(n/2))  x^(n/2-1) e^(-x/2)}
   for \eqn{x > 0}. Mean and variance are \eqn{n} and \eqn{2n}, respectively.
 
-  The non-central chi-square distribution with \code{df}\eqn{= n}
+  The non-central chi-squared distribution with \code{df}\eqn{= n}
   degrees of freedom and non-centrality parameter \code{ncp} \eqn{=
     \lambda} has density
   \deqn{
@@ -49,9 +49,9 @@ rchisq(n, df)
   for \eqn{x \ge 0}.
 }
 \seealso{
-  %DEPRECATED: \code{\link{dnchisq}} for the non-central chi-square distribution,
+  %DEPRECATED: \code{\link{dnchisq}} for the non-central chi-squared distribution,
   \code{\link{dgamma}} for the Gamma distribution which generalizes the
-  chi-square one.
+  chi-squared one.
 }
 \examples{
 dchisq(1, df=1:3)
@@ -59,7 +59,7 @@ pchisq(1, df= 3)
 pchisq(1, df= 3, ncp = 0:4)# includes the above
 
 x <- 1:10
-## Chisquare( df = 2) is a special exponential distribution
+## Chi-squared(df = 2) is a special exponential distribution
 all.equal(dchisq(x, df=2), dexp(x, 1/2))
 all.equal(pchisq(x, df=2), pexp(x, 1/2))
 }

@@ -387,7 +387,9 @@ model.frame.lm <- function(formula, data, na.action, ...) {
         fcall <- formula$call
         fcall$method <- "model.frame"
         fcall[[1]] <- as.name("lm")
-        eval(fcall, parent.frame())
+	env<-environment(fcall$formula)
+	if (is.null(env)) env<-parent.frame()
+        eval(fcall, env)
     }
     else formula$model
 }

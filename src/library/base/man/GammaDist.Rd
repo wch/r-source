@@ -49,7 +49,7 @@ rgamma(n, shape, scale=1)
 }
 \seealso{
   \code{\link{gamma}} for the Gamma function, \code{\link{dbeta}} for
-  the Beta distribution and \code{\link{dchisq}} for the chi-square
+  the Beta distribution and \code{\link{dchisq}} for the chi-squared
   distribution which is a special case of the Gamma distribution.
 }
 \examples{

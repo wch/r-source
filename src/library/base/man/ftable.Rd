@@ -77,15 +77,15 @@ write.ftable(x, file = "", quote = TRUE)
   If the first argument is of class \code{"table"}, it represents a
   contingency table and is used as is; if it is a flat table of class
   \code{"ftable"}, the information it contains is converted to the usual
-  array representation using \code{ftable2table}.  Otherwise, the
-  arguments should be \R objects which can be interpreted as factors
-  (including character strings), or a list (or data frame) whose
-  components can be so interpreted, which are cross-tabulated using
-  \code{\link{table}}.  Then, the arguments \code{row.vars} and
-  \code{col.vars} are used to collapse the contingency table into flat
-  form.  If neither of these two is given, the last variable is used for
-  the columns.  If both are given and their union is a proper subset of
-  all variables involved, the other variables are summed out.
+  array representation using \code{as.ftable}.  Otherwise, the arguments
+  should be \R objects which can be interpreted as factors (including
+  character strings), or a list (or data frame) whose components can be
+  so interpreted, which are cross-tabulated using \code{\link{table}}.
+  Then, the arguments \code{row.vars} and \code{col.vars} are used to
+  collapse the contingency table into flat form.  If neither of these
+  two is given, the last variable is used for the columns.  If both are
+  given and their union is a proper subset of all variables involved,
+  the other variables are summed out.
 
   Function \code{\link{ftable.formula}} provides a formula method for
   creating flat contingency tables.

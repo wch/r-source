@@ -1,7 +1,7 @@
 /* swilk.f -- translated by f2c (version 19980913).
  * ------- and produced by f2c-clean,v 1.8 --- and hand polished: M.Maechler
  */
-#include "R_ext/Mathlib.h"
+#include <Rmath.h>
 
 #ifndef min
 # define min(a, b)		((a) > (b) ? (b) : (a))
@@ -9,10 +9,11 @@
 
 static double poly(float *, int, float);
 
-void swilk(int *init,/* logical: is a[] already initialized ? */
-	   float *x, int *n, int *n1, int *n2,
-	   float *a,/* coefficients a[] */
-	   double *w, double *pw, int *ifault)
+void
+swilk(int *init,/* logical: is a[] already initialized ? */
+      float *x, int *n, int *n1, int *n2,
+      float *a,/* coefficients a[] */
+      double *w, double *pw, int *ifault)
 {
 
 /*	ALGORITHM AS R94 APPL. STATIST. (1995) vol.44, no.4, 547-551.

@@ -11,11 +11,10 @@
 princomp(x, cor = FALSE, scores = TRUE, covmat = NULL,
          subset = rep(TRUE, nrow(as.matrix(x))))
 loadings(x)
-plot(x, npcs = min(10, length(x$sdev)),
-     type = c("barplot", "lines"), \dots)
-screeplot(x, npcs = min(10, length(x$sdev)),
-          type = c("barplot", "lines"), \dots)
 
+screeplot(x, npcs = min(10, length(x$sdev)),
+          type = c("barplot", "lines"), main = deparse(substitute(x)), \dots)
+plot(x, \dots)
 print(x, \dots)  summary(object)  predict(object, \dots)
 }
 \arguments{

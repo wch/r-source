@@ -113,7 +113,7 @@ function(x, n, p = NULL, alternative = c("two.sided", "less", "greater"),
     x <- cbind(x, n - x)
     E <- cbind(n * p, n * (1 - p))
     if (any(E < 5))
-	warning("Chi-square approximation may be incorrect")
+	warning("Chi-squared approximation may be incorrect")
     STATISTIC <- sum((abs(x - E) - YATES)^2 / E)
     names(STATISTIC) <- "X-squared"
 

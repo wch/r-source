@@ -36,7 +36,7 @@
 \value{
   A list of class \code{"htest"} containing the following components:
   \item{statistic}{the Fligner-Killeen:med \eqn{X^2} test statistic.}
-  \item{parameter}{the degrees of freedom of the approximate chi-square
+  \item{parameter}{the degrees of freedom of the approximate chi-squared
     distribution of the test statistic.}
   \item{p.value}{the p-value of the test.}
   \item{method}{the string

@@ -1,5 +1,11 @@
+## till R 1.1.1:
 match <- function(x, table, nomatch=NA)
     .Internal(match(as.character(x), as.character(table), nomatch))
+## New:
+match <- function(x, table, nomatch=NA)
+  .Internal(match(if(is.factor(x)) as.character(x) else x,
+                  if(is.factor(table)) as.character(table) else table,
+                  nomatch))
 
 match.call <-
     function(definition=NULL, call=sys.call(sys.parent()), expand.dots=TRUE)

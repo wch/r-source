@@ -56,22 +56,23 @@ loess(formula, data, weights, subset, na.action, model = FALSE,
   predictors, using local fitting.
 }
 \details{
-  Fitting is done locally.  That is, for the fit at point x, the fit is
-  made using points in a neighbourhood of x, weighted by their distance
-  from x (with differences in `parametric' variables being ignored when
-  computing the distance). The size of the neighbourhood is controlled
-  by \eqn{\alpha} (set by \code{span} or \code{enp.target}).  For
-  \eqn{\alpha < 1}, the neighbourhood includes proportion \eqn{\alpha}
-  of the points, and these have tricubic weighting (proportional to
-  \eqn{(1 - \mathrm{(dist/maxdist)}^3)^3}{(1 - (dist/maxdist)^3)^3}.
-  For \eqn{\alpha > 1}, all points are used, with the `maximum distance'
-  assumed to be \eqn{\alpha} times the actual maximum distance.
+  Fitting is done locally.  That is, for the fit at point \eqn{x}, the
+  fit is made using points in a neighbourhood of \eqn{x}, weighted by
+  their distance from \eqn{x} (with differences in `parametric' variables
+  being ignored when computing the distance). The size of the
+  neighbourhood is controlled by \eqn{\alpha} (set by \code{span} or
+  \code{enp.target}).  For \eqn{\alpha < 1}, the neighbourhood includes
+  proportion \eqn{\alpha} of the points, and these have tricubic weighting
+  (proportional to \eqn{(1 - \mathrm{(dist/maxdist)}^3)^3}{(1 -
+    (dist/maxdist)^3)^3}. For \eqn{\alpha > 1}, all points are used, with
+  the `maximum distance' assumed to be \eqn{\alpha^{1/p}}{alpha^1/p} times
+  the actual maximum distance for \eqn{p} explanatory variables.
 
   For the default family, fitting is by (weighted) least squares. For
   \code{family="symmetric"} a few iterations of an M-estimation
   procedure with Tukey's biweight are used. Be aware that as the initial
   value is the least-squares fit, this need not be a very resistant fit.
-  
+
   It can be important to tune the control list to achieve acceptable
   speed. See \link{loess.control} for details.
 }
@@ -88,7 +89,7 @@ loess(formula, data, weights, subset, na.action, model = FALSE,
 \note{As this is based on the \code{cloess} package available at
   \code{netlib}, it is similar to but not identical to the \code{loess}
   function of S. In particular, conditioning is not implemented.
-  
+
   The memory usage of this implementation of \code{loess} is roughly
   quadratic in the number of points, with 1000 points taking about 10Mb.
 }
@@ -99,10 +100,10 @@ loess(formula, data, weights, subset, na.action, model = FALSE,
 \examples{
 data(cars)
 cars.lo <- loess(dist ~ speed, cars)
-predict(cars.lo, data.frame(speed=seq(5, 30, 1)), se=TRUE)
-# to get extrapolation
+predict(cars.lo, data.frame(speed = seq(5, 30, 1)), se = TRUE)
+# to allow extrapolation
 cars.lo2 <- loess(dist ~ speed, cars,
-  control=loess.control(surface="direct"))
-predict(cars.lo2, data.frame(speed=seq(5, 30, 1)), se=TRUE)
+  control = loess.control(surface = "direct"))
+predict(cars.lo2, data.frame(speed = seq(5, 30, 1)), se = TRUE)
 }
 \keyword{smooth}

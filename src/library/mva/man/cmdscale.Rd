@@ -22,7 +22,7 @@ cmdscale(d, k = 2, eig = FALSE)
   \file{MASS} provide alternative ordination techniques.
 }
 \value{
-  If \code{eig = FALSE}, a a matrix with \code{k} columns whose rows give the
+  If \code{eig = FALSE}, a matrix with \code{k} columns whose rows give the
   coordinates of the points chosen to represent the dissimilarities.
 
   Otherwise, a list containing the following components.

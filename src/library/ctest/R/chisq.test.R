@@ -27,7 +27,7 @@ function(x, y = NULL, correct = TRUE, p = rep(1 / length(x), length(x)),
         stop("at least one entry of x must be positive")
 
     if (is.matrix(x)) {
-	METHOD <- "Pearson's Chi-square test"
+	METHOD <- "Pearson's Chi-squared test"
         nr <- nrow(x)
         nc <- ncol(x)
         sr <- apply(x, 1, sum)
@@ -75,7 +75,7 @@ function(x, y = NULL, correct = TRUE, p = rep(1 / length(x), length(x)),
 	    stop("x must at least have 2 elements")
 	if (length(x) != length(p))
 	    stop("x and p must have the same number of elements")
-	METHOD <- "Chi-square test for given probabilities"
+	METHOD <- "Chi-squared test for given probabilities"
 	E <- n * p
 	names(E) <- names(x)
 	STATISTIC <- sum((x - E) ^ 2 / E)
@@ -86,7 +86,7 @@ function(x, y = NULL, correct = TRUE, p = rep(1 / length(x), length(x)),
     names(STATISTIC) <- "X-squared"
     names(PARAMETER) <- "df"
     if (any(E < 5) && is.finite(PARAMETER))
-	warning("Chi-square approximation may be incorrect")
+	warning("Chi-squared approximation may be incorrect")
 
     structure(list(statistic = STATISTIC,
 		   parameter = PARAMETER,

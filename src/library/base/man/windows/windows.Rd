@@ -5,17 +5,21 @@
 \alias{win.print}
 \alias{x11}
 \alias{X11}
+\alias{bringToTop}
 
 \title{Windows graphics devices}
 
 \usage{
 windows(width = 7, height = 7, pointsize = 12,
-        record = getOption("graphics.record"))
+        record = getOption("graphics.record"),
+        rescale = c("R", "fit", "fixed"))
 win.graph(width = 7, height = 7, pointsize = 12)
 x11(width = 7, height = 7, pointsize = 12)
 X11(width = 7, height = 7, pointsize = 12)
 win.metafile(filename = "", width = 7, height = 7, pointsize = 12)
 win.print(width = 7, height = 7, pointsize = 12)
+
+bringToTop(which = dev.cur())
 }
 
 \arguments{
@@ -25,7 +29,10 @@ win.print(width = 7, height = 7, pointsize = 12)
   \item{width}{the (nominal) width of the plotting window in inches.}
   \item{height}{the (nominal) height of the plotting window in inches.}
   \item{pointsize}{the default pointsize of plotted text.}
-  \item{record}{sets the initial state of the flag for recording plots.}
+  \item{record}{logical: sets the initial state of the flag for
+    recording plots.}
+  \item{resize}{controls the action for resizing plots.}
+  \item{which}{a device number.}
 }
 
 \description{
@@ -34,6 +41,9 @@ win.print(width = 7, height = 7, pointsize = 12)
   Windows display: the multiple names are for compatibility with other
   systems. \code{win.metafile} prints to a file and \code{win.print} to
   the Windows print system.
+
+  \code{bringToTop} brings the specified screen device's window to the
+  front of the window stack (and gives it focus).
 }
 
 \details{
@@ -50,6 +60,15 @@ win.print(width = 7, height = 7, pointsize = 12)
   If the \code{filename} is omitted for a \code{win.metafile} device, the
   output is copied to the clipboard when the device is closed. A
   \code{win.metafile} device can only be used for a single page.
+
+  If a screen device is re-sized, the default behaviour is to redraw the
+  plot as if the new size had been specified originally.  Using
+  \code{"fit"} will rescale the existing plot to fit the new device
+  region, preserving the aspect ratio.  Using \code{"fixed"} will leave
+  the plot size unchanged, adding scrollbars if part of the
+  plot is obscured.
+  This setting also affects the initial re-scaling if the specified
+  window size is too big.
 }
 
 \value{

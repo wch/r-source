@@ -52,8 +52,8 @@ help <- function(topic, offline = FALSE, package = .packages(),
                                    pos=base.pos, mode="logical")) {
                         ## we need to use the version in ~/.R if we can.
                             lnkfile <-
-                                file.path(getenv("HOME"), ".R", "library",
-                                          package, "html",
+                                file.path(Sys.getenv("HOME"), ".R",
+                                          "library", package, "html",
                                           paste(topic, "html", sep="."))
                             if (file.exists(lnkfile)) file <- lnkfile
                         }

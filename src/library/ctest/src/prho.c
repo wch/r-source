@@ -18,7 +18,8 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  */
-#include "R_ext/Mathlib.h"
+
+#include <Rmath.h>
 
 /* Was
 	double precision function prho(n, is, ifault)
@@ -32,7 +33,8 @@
  - use pnorm() instead of less precise alnorm().
  - new argument lower_tail --> potentially increased precision in extreme cases.
 */
-void prho(int *n, int *is, double *pv, int *ifault, int *lower_tail)
+void
+prho(int *n, int *is, double *pv, int *ifault, int *lower_tail)
 {
 /*	Algorithm AS 89	  Appl. Statist. (1975) Vol.24, No. 3, P377.
 

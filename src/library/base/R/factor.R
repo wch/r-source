@@ -21,7 +21,7 @@ factor <- function (x, levels = sort(unique(x), na.last = TRUE),
 }
 
 is.factor <- function(x) inherits(x, "factor")
-as.factor <- function (x) if (is.factor(x)) x else factor(x)
+as.factor <- function(x) if (is.factor(x)) x else factor(x)
 
 ## Help old S users:
 category <- function(...) .Defunct()

@@ -9,7 +9,10 @@
 \usage{
 hclust(d, method = "complete", members=NULL)
 
-plot.hclust(tree, labels, hang = 0.1, \dots)
+plot.hclust(tree, labels = NULL, hang = 0.1,
+            axes = TRUE, frame.plot = FALSE, ann = TRUE,
+            main = "Cluster Dendrogram",
+            sub = NULL, xlab = NULL, ylab = "Height", \dots)
 }
 \arguments{
   \item{d}{a dissimilarity structure as produced by \code{dist}.}
@@ -31,6 +34,12 @@ plot.hclust(tree, labels, hang = 0.1, \dots)
   \item{labels}{A character vector of labels for the leaves of the
     tree. By default the row names or row numbers of the original data are
     used. If \code{labels=FALSE} no labels at all are plotted.}
+
+  \item{axes, frame.plot, ann}{logical flags as in \code{\link{plot.default}}.}
+  \item{main, sub, xlab, ylab}{character strings for
+    \code{\link{title}}.  \code{sub} and \code{xlab} have a non-NULL
+    default when there's a \code{tree$call}.}
+  \item{\dots}{Further graphical arguments.}
 }
 \value{
   An object of class \bold{hclust} which describes the
@@ -153,8 +162,8 @@ plot.hclust(tree, labels, hang = 0.1, \dots)
 library(mva)
 data(USArrests)
 hc <- hclust(dist(USArrests), "ave")
-plot(hc, hang=-1)
 plot(hc)
+plot(hc, hang=-1)
 
 ## Do the same with centroid clustering and squared Euclidean distance,
 ## cut the tree into ten clusters and reconstruct the upper part of the
@@ -167,10 +176,8 @@ for(k in 1:10){
 }
 hc1 <- hclust(dist(cent)^2, method="cen", members=table(memb))
 opar <- par(mfrow=c(1,2))
-plot(hc, labels=FALSE, hang=-1)
-title(main="Original Tree")
-plot(hc1, labels=FALSE, hang=-1)
-title("Re-start from 10 clusters")
+plot(hc,  labels=FALSE, hang=-1, main= "Original Tree")
+plot(hc1, labels=FALSE, hang=-1, main= "Re-start from 10 clusters")
 par(opar)
 }
 \keyword{multivariate}

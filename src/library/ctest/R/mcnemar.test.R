@@ -26,7 +26,7 @@ mcnemar.test <- function(x, y = NULL, correct = TRUE)
 
     PARAMETER <- r * (r-1) / 2
     names(PARAMETER) <- "df"
-    METHOD <- "McNemar's Chi-square test"
+    METHOD <- "McNemar's Chi-squared test"
 
     if (correct && (r == 2) && any(x - t(x))) {
         y <- (abs(x - t(x)) - 1)
@@ -37,7 +37,7 @@ mcnemar.test <- function(x, y = NULL, correct = TRUE)
     x <- x + t(x)
     
     STATISTIC <- sum(y[upper.tri(x)]^2 / x[upper.tri(x)])
-    names(STATISTIC) <- "McNemar's chi-square"
+    names(STATISTIC) <- "McNemar's chi-squared"
     PVAL <- pchisq(STATISTIC, PARAMETER, lower = FALSE)  
     
     RVAL <- list(statistic = STATISTIC,

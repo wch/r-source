@@ -52,7 +52,7 @@ may not be supplied on a non-POSIX Unix system.
 \author{B. D. Ripley}
 
 \seealso{
-  \code{\link{file}}, \code{\link{file.access}},
+  \code{\link{files}}, \code{\link{file.access}},
   \code{\link{list.files}},
   and \code{\link{DateTimeClasses}} for the date formats.
 }

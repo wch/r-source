@@ -4,15 +4,15 @@
 \alias{cbind.ts}
 \title{Bind Two or More Time Series}
 \usage{
-ts.intersect(..., dframe = FALSE)
-ts.union(..., dframe = FALSE)
-cbind.ts(..., dframe = FALSE, union = TRUE)
+ts.intersect(\dots, dframe = FALSE)
+ts.union(\dots, dframe = FALSE, union = TRUE)
+cbind.ts(\dots, dframe = FALSE, union = TRUE)
 }
 \arguments{
- \item{\dots}{Two or more univariate or multivariate time series, or
+ \item{\dots}{two or more univariate or multivariate time series, or
    objects which can coerced to time series.}
- \item{dframe}{If \code{TRUE} return the result as a data frame.}
- \item{union}{Act as \code{ts.union} or \code{ts.intersect}.}
+ \item{dframe}{logical; if {true return the result as a data frame.}
+ \item{union}{logical; if true, act as \code{ts.union} or \code{ts.intersect}.}
 }
 \description{
   Bind time series which have a common frequency. \code{ts.union} pads with
