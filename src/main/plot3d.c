@@ -1262,8 +1262,8 @@ static int LimitCheck(double *lim, double *c, double *s)
 /* obscured before the surface, and those which will not be */
 /* obscured after the surface. */
 
-/* The verices of the box */
-static char Vertex[8][3] = {
+/* The vertices of the box */
+static short int Vertex[8][3] = {
     {0, 0, 0},
     {0, 0, 1},
     {0, 1, 0},
@@ -1275,7 +1275,7 @@ static char Vertex[8][3] = {
 };
 
 /* The vertices visited when tracing a face */
-static char Face[6][4] = {
+static short int Face[6][4] = {
     {0, 1, 5, 4},
     {2, 6, 7, 3},
     {0, 2, 3, 1},
@@ -1285,7 +1285,7 @@ static char Face[6][4] = {
 };
 
 /* The edges drawn when tracing a face */
-static int Edge[6][4] = {
+static short int Edge[6][4] = {
     { 0, 1, 2, 3},
     { 4, 5, 6, 7},
     { 8, 7, 9, 0},

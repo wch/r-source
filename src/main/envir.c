@@ -226,7 +226,7 @@ void R_HashDelete(int hashcode, SEXP symbol, SEXP table)
 
   Hash table resizing function Increase the size of the hash table by
   the growth_rate of the table.  The vector is reallocated, however
-  the lists with in the hash table have there poiters shuffled around
+  the lists with in the hash table have their pointers shuffled around
   so that they are not reallocated.
 
 */
@@ -234,7 +234,7 @@ void R_HashDelete(int hashcode, SEXP symbol, SEXP table)
 SEXP R_HashResize(SEXP table)
 {
     SEXP new_table, chain, new_chain, tmp_chain;
-    int hash_grow, counter, new_hashcode;
+    int /*hash_grow,*/ counter, new_hashcode;
 
     /* Do some checking */
     if (TYPEOF(table) != VECSXP) {
