@@ -239,8 +239,8 @@ EOF
     cat << \EOF > ${cc_o_lo_rules_frag}
 .c.lo:
 	@test -d .libs || mkdir .libs
-	$(CC) $(ALL_CPPFLAGS) $(ALL_CFLAGS_LO) -c $< -o .libs/$*.o
-	mv .libs/$*.o $*.lo
+	$(CC) $(ALL_CPPFLAGS) $(ALL_CFLAGS_LO) -c $< -o .libs/$[*].o
+	mv .libs/$[*].o $[*].lo
 EOF
   fi
   AC_SUBST_FILE(cc_o_lo_rules_frag)
