@@ -5,6 +5,7 @@ colnames(x)
 colnames(x) <- namevector
 }
 \alias{colnames}
+\alias{colnames<-}
 \value{
 This function can be used to retrieve or set the
 column labels of a matrix.

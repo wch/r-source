@@ -5,6 +5,7 @@ diag(x, nrow, ncol)
 diag(x) <- value
 }
 \alias{diag}
+\alias{diag<-}
 \value{
 If \code{x} is a matrix then \code{diag(x)} returns the diagonal of
 \code{x}.  If \code{x} is a vector then \code{x} returns a diagonal
@@ -22,5 +23,6 @@ given value(s).
 \examples{
 dim(diag(3))
 diag(10,3,4) # guess what?
+all(diag(1:3) == {m <- matrix(0,3,3); diag(m) <- 1:3; m})
 }
 \keyword{array}

@@ -19,7 +19,8 @@ its new length with \code{\link{NA}}s.
 }
 \examples{
 length(diag(4))# = 16 (4 x 4)
-length(options())# 13 or more..
+length(options())# 12 or more..
+length(y ~ x1 + x2 + x3)# 3
 length(expression(x, {y <- x^2; y+2}, x^y)) # 3
 }
 \keyword{attribute}
