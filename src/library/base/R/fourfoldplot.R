@@ -8,7 +8,7 @@ function(x, color = c("#99CCFF", "#6699CC"), conf.level = 0.95,
     ##   Friendly, M. (1994).
     ##   A fourfold display for 2 by 2 by \eqn{k} tables.
     ##   Technical Report 217, York University, Psychology Department.
-    ##   http://hotspur.psych.yorku.ca/ftp/sas/catdata/4fold.ps.gz
+    ##   http://www.math.yorku.ca/SCS/Papers/4fold/4fold.ps.gz
     ##
     ## Implementation notes:
     ##
@@ -266,7 +266,7 @@ function(x, color = c("#99CCFF", "#6699CC"), conf.level = 0.95,
             for(j in 1 : 4)
                 drawPie(r[j], angle.f[j], angle.t[j])
             ## upper
-            theta <- or * exp(qnorm(1 - (1 - conf.level) / 2) * se)
+            theta <- or * exp(qnorm((1 + conf.level) / 2) * se)
             tau <- findTableWithOAM(theta, tab)
             r <- sqrt(c(stdize(tau, std, x)))
             for(j in 1 : 4)
