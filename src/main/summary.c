@@ -553,8 +553,10 @@ SEXP do_summary(SEXP call, SEXP op, SEXP args, SEXP env)
 
     /*-------------------------------------------------------*/
     if(empty && (iop == 2 || iop == 3)) {
-	warningcall(call, 
-		    "no finite arguments to min/max; returning extreme.");
+	if(iop == 2)
+	    warning("no finite arguments to min; returning Inf");
+	else 
+	    warning("no finite arguments to max; returning -Inf");
 	ans_type = REALSXP;
     }
 
