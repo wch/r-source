@@ -321,32 +321,84 @@ update-pkg-R-trs: update-pkg-pot
 	@for pkg in $(R_PKGS_PO); do \
 	  echo "updating translations of R-$${pkg}.pot"; \
 	  test "$(srcdir)" = . && cdcmd="../src/library/$${pkg}/po" || cdcmd="cd $(top_srcdir)/src/library/$${pkg}/po && "; \
+	  tmpdir=`pwd`; \
 	  trs=`$${cdcmd} && ls R-*.po 2> /dev/null`; \
+	  trs=`echo $${trs} | sed -e s/R-en@quot.po//`; \
 	  if test -n "$${trs}"; then \
 	    for tr in $${trs}; do \
 	      lang=`echo $${tr} | sed -e 's/^R-//' -e 's/.po$$//'`; \
 	      echo $(ECHO_N) "$$lang:$(ECHO_C)"; \
-	      $${cdcmd} && $(MSGMERGE_UPDATE) $${tr} R-$${pkg}.pot; \
+	      ($${cdcmd} && $(MSGMERGE_UPDATE) $${tr} R-$${pkg}.pot); \
 	      mkdir -p $(srcdir)/../src/library/$${pkg}/inst/po/$$lang/LC_MESSAGES; \
-	      $${cdcmd} && $(MSGFMT) -c -o ../inst/po/$$lang/LC_MESSAGES/R-$${pkg}.mo $${tr} ; \
+	      ($${cdcmd} && $(MSGFMT) -c -o ../inst/po/$$lang/LC_MESSAGES/R-$${pkg}.mo $${tr}) ; \
 	    done; \
 	  fi ; \
+	  lang=en@quot; \
+	  echo $(ECHO_N) "$$lang:$(ECHO_C)"; \
+	  psrc=$(top_srcdir)/src/library/$${pkg}/po; \
+	  LC_ALL=C; export LC_ALL; \
+	  cd $(srcdir); \
+	  if $(MSGINIT) -i $${psrc}/R-$${pkg}.pot --no-translator -l en -o - 2>/dev/null | sed -f $$tmpdir/$$lang.insert-header | sed -e s/PACKAGE/R/ -e s/VERSION/$(VERSION)/ | $(MSGCONV) -t UTF-8 | $(MSGFILTER) sed -f $(srcdir)/quot.sed 2>/dev/null > $$tmpdir/R-$$lang.new.po; then \
+	    if cmp $${psrc}/R-$$lang.po $$tmpdir/R-$$lang.new.po >/dev/null 2>&1; then \
+	      rm -f $$tmpdir/R-$$lang.new.po; \
+	    else \
+	      if mv -f $$tmpdir/R-$$lang.new.po $${psrc}/R-$$lang.po; then \
+		:; \
+	      else \
+		echo "creation of R-$$lang.po failed: cannot move $$tmpdir/R-$$lang.new.po to R-$$lang.po" 1>&2; \
+		exit 1; \
+	      fi; \
+	    fi; \
+	    mkdir -p $(srcdir)/../src/library/$${pkg}/inst/po/$$lang/LC_MESSAGES; \
+	    ($${cdcmd} && $(MSGFMT) -c -o ../inst/po/$$lang/LC_MESSAGES/R-$${pkg}.mo R-$$lang.po) ; \
+	    echo " done."; \
+	  else \
+	    echo "creation of R-$$lang.po failed!" 1>&2; \
+	    rm -f $$tmpdir/R-$$lang.new.po; \
+	  fi ; \
+	  cd $$tmpdir; \
 	done
+
 update-pkg-trs: update-pkg-pot
 	@for pkg in $(R_PKGS_SRC_PO); do \
 	  echo "updating translations of $${pkg}.pot"; \
 	  test "$(srcdir)" = . && cdcmd="../src/library/$${pkg}/po" || cdcmd="cd $(top_srcdir)/src/library/$${pkg}/po && "; \
+	  tmpdir=`pwd`; \
 	  trs=`$${cdcmd} && ls *.po 2> /dev/null`; \
-	  trs=`echo $${trs} | sed -e 's/R-[^.]*\.po//'`; \
+	  trs=`echo $${trs} | sed -e 's/R-[^.]*\.po//' -e s/en@quot.po//`; \
 	  if test -n "$${trs}"; then \
 	    for tr in $${trs}; do \
 	      lang=`echo $${tr} | sed -e 's/^R-//' -e 's/.po$$//'`; \
 	      echo $(ECHO_N) "$$lang:$(ECHO_C)"; \
-	      $${cdcmd} && $(MSGMERGE_UPDATE) $${tr} $${pkg}.pot; \
+	      ($${cdcmd} && $(MSGMERGE_UPDATE) $${tr} $${pkg}.pot); \
 	      mkdir -p $(srcdir)/../src/library/$${pkg}/inst/po/$$lang/LC_MESSAGES; \
-	      $${cdcmd} && $(MSGFMT) -c -o ../inst/po/$$lang/LC_MESSAGES/$${pkg}.mo $${tr} ; \
+	      ($${cdcmd} && $(MSGFMT) -c -o ../inst/po/$$lang/LC_MESSAGES/$${pkg}.mo $${tr}) ; \
 	    done; \
 	  fi ; \
+	  lang=en@quot; \
+	  echo $(ECHO_N) "$$lang:$(ECHO_C)"; \
+	  psrc=$(top_srcdir)/src/library/$${pkg}/po; \
+	  LC_ALL=C; export LC_ALL; \
+	  cd $(srcdir); \
+	  if $(MSGINIT) -i $${psrc}/$${pkg}.pot --no-translator -l en -o - 2>/dev/null | sed -f $$tmpdir/$$lang.insert-header | sed -e s/PACKAGE/R/ -e s/VERSION/$(VERSION)/ | $(MSGCONV) -t UTF-8 | $(MSGFILTER) sed -f $(srcdir)/quot.sed 2>/dev/null > $$tmpdir/$$lang.new.po; then \
+	    if cmp $${psrc}/$$lang.po $$tmpdir/$$lang.new.po >/dev/null 2>&1; then \
+	      rm -f $$tmpdir/$$lang.new.po; \
+	    else \
+	      if mv -f $$tmpdir/$$lang.new.po $${psrc}/$$lang.po; then \
+		:; \
+	      else \
+		echo "creation of $$lang.po failed: cannot move $$tmpdir/$$lang.new.po to $$lang.po" 1>&2; \
+		exit 1; \
+	      fi; \
+	    fi; \
+	    mkdir -p $(srcdir)/../src/library/$${pkg}/inst/po/$$lang/LC_MESSAGES; \
+	    ($${cdcmd} && $(MSGFMT) -c -o ../inst/po/$$lang/LC_MESSAGES/$${pkg}.mo $$lang.po) ; \
+	    echo " done."; \
+	  else \
+	    echo "creation of $$lang.po failed!" 1>&2; \
+	    rm -f $$tmpdir/$$lang.new.po; \
+	  fi ; \
+	  cd $$tmpdir; \
 	done
 
 update-pkg-pot: remove-potcdate.sed

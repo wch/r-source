@@ -1,0 +1,205 @@
+# English translations for R package.
+# Copyright (C) 2005 The R Foundation
+# This file is distributed under the same license as the R package.
+# Automatically generated, 2005.
+#
+# All this catalog "translates" are quotation characters.
+# The msgids must be ASCII and therefore cannot contain real quotation
+# characters, only substitutes like grave accent (0x60), apostrophe (0x27)
+# and double quote (0x22). These substitutes look strange; see
+# http://www.cl.cam.ac.uk/~mgk25/ucs/quotes.html
+#
+# This catalog translates grave accent (0x60) and apostrophe (0x27) to
+# left single quotation mark (U+2018) and right single quotation mark (U+2019).
+# It also translates pairs of apostrophe (0x27) to
+# left single quotation mark (U+2018) and right single quotation mark (U+2019)
+# and pairs of quotation mark (0x22) to
+# left double quotation mark (U+201C) and right double quotation mark (U+201D).
+#
+# When output to an UTF-8 terminal, the quotation characters appear perfectly.
+# When output to an ISO-8859-1 terminal, the single quotation marks are
+# transliterated to apostrophes (by iconv in glibc 2.2 or newer) or to
+# grave/acute accent (by libiconv), and the double quotation marks are
+# transliterated to 0x22.
+# When output to an ASCII terminal, the single quotation marks are
+# transliterated to apostrophes, and the double quotation marks are
+# transliterated to 0x22.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: R 2.1.0\n"
+"Report-Msgid-Bugs-To: bugs@R-project.org\n"
+"POT-Creation-Date: 2005-02-16 08:34+0000\n"
+"PO-Revision-Date: 2005-02-16 08:34+0000\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: Srunmed.c:60
+msgid "bandwidth/span of running medians is larger than n"
+msgstr "bandwidth/span of running medians is larger than n"
+
+#: ansari.c:129
+msgid "probabilities outside [0,1] in qansari()"
+msgstr "probabilities outside [0,1] in qansari()"
+
+#: arima.c:60 arima.c:153 arima.c:329
+msgid "invalid argument type"
+msgstr "invalid argument type"
+
+#: arima.c:383 arima.c:471 pacf.c:302 pacf.c:342
+msgid "can only transform 100 pars in arima0"
+msgstr "can only transform 100 pars in arima0"
+
+#: distance.c:145
+msgid "dist(.,\"binary\"): treating non-finite values as NA"
+msgstr "dist(.,“binary”): treating non-finite values as NA"
+
+#: distance.c:214
+msgid "distance(): invalid p"
+msgstr "distance(): invalid p"
+
+#: distance.c:217
+msgid "distance(): invalid distance"
+msgstr "distance(): invalid distance"
+
+#: ksmooth.c:66
+msgid "only 2500 rows are allowed for sm.method=\"spline\""
+msgstr "only 2500 rows are allowed for sm.method=“spline”"
+
+#: loessc.c:226
+msgid "span is too small"
+msgstr "span is too small"
+
+#: mburg.c:197
+msgid "Invalid vmethod"
+msgstr "Invalid vmethod"
+
+#: mburg.c:333
+msgid "Burg's algorithm failed to find partial correlation"
+msgstr "Burg's algorithm failed to find partial correlation"
+
+#: nls.c:75
+msgid "control must be a list"
+msgstr "control must be a list"
+
+#: nls.c:77
+msgid "m must be a list"
+msgstr "m must be a list"
+
+#: nls.c:83
+msgid "control$maxiter absent"
+msgstr "control$maxiter absent"
+
+#: nls.c:88
+msgid "control$tol absent"
+msgstr "control$tol absent"
+
+#: nls.c:93
+msgid "control$minFactor absent"
+msgstr "control$minFactor absent"
+
+#: nls.c:102
+msgid "m$conv() absent"
+msgstr "m$conv() absent"
+
+#: nls.c:107
+msgid "m$incr() absent"
+msgstr "m$incr() absent"
+
+#: nls.c:112
+msgid "m$deviance() absent"
+msgstr "m$deviance() absent"
+
+#: nls.c:117
+msgid "m$trace() absent"
+msgstr "m$trace() absent"
+
+#: nls.c:122
+msgid "m$setPars() absent"
+msgstr "m$setPars() absent"
+
+#: nls.c:127
+msgid "m$getPars() absent"
+msgstr "m$getPars() absent"
+
+#: nls.c:154
+msgid "singular gradient"
+msgstr "singular gradient"
+
+#: nls.c:173
+#, c-format
+msgid "step factor %g reduced below 'minFactor' of %g"
+msgstr "step factor %g reduced below ‘minFactor’ of %g"
+
+#: nls.c:181
+#, c-format
+msgid "number of iterations exceeded maximum of %d"
+msgstr "number of iterations exceeded maximum of %d"
+
+#: nls.c:202
+msgid "theta should be of type character"
+msgstr "theta should be of type character"
+
+#: nls.c:204
+msgid "rho should be an environment"
+msgstr "rho should be an environment"
+
+#: nls.c:221 nls.c:243
+msgid "Missing value or an infinity produced when evaluating the model"
+msgstr "Missing value or an infinity produced when evaluating the model"
+
+#: pacf.c:72
+msgid "bad Starma struct"
+msgstr "bad Starma struct"
+
+#: pacf.c:218
+#, c-format
+msgid "starma error code %d"
+msgstr "starma error code %d"
+
+#: pacf.c:281
+#, c-format
+msgid "forkal error code %d"
+msgstr "forkal error code %d"
+
+#: pacf.c:445
+msgid "invalid value of lag.max"
+msgstr "invalid value of lag.max"
+
+#: qr.c:30
+msgid "assert failed in src/library/ts/src/carray.c"
+msgstr "assert failed in src/library/ts/src/carray.c"
+
+#: qr.c:68
+msgid "Singular matrix in qr_solve"
+msgstr "Singular matrix in qr_solve"
+
+#: qr.c:111
+msgid "Singular matrix in ldet"
+msgstr "Singular matrix in ldet"
+
+#: smooth.c:79
+#, c-format
+msgid "invalid end-rule for running median of 3: %d"
+msgstr "invalid end-rule for running median of 3: %d"
+
+#: smooth.c:231
+msgid "allocation error in smooth(*, '3RSR')."
+msgstr "allocation error in smooth(*, '3RSR')."
+
+#: smooth.c:242 smooth.c:252
+msgid "allocation error in smooth(*, '3RSS')."
+msgstr "allocation error in smooth(*, '3RSS')."
+
+#: smooth.c:262
+msgid "allocation error in smooth(*, '3R')."
+msgstr "allocation error in smooth(*, '3R')."
+
+#: starma.c:361
+#, c-format
+msgid "missing value in last %d observations"
+msgstr "missing value in last %d observations"

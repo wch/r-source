@@ -1438,7 +1438,10 @@ translation, the less specific catalogues are consulted.  For example,
 Translations in the right language but the wrong charset can generally
 be made use of by on-the-fly re-encoding.  The @code{LANGUAGE} variable
 (only) can be a colon-separated list, for example @code{se:de}, giving a
-set of languages in decreasing order of preference.
+set of languages in decreasing order of preference.  One special value
+is @code{en@@quot}, which can be used in a UTF-8 locale to have
+English/American error messages with pairs of quotes translated to
+Unicode directional quotes.
 
 If no suitable translation catalogue is found or a particular message is
 not translated in any suitable catalogue, English is used.

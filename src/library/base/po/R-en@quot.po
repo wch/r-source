@@ -1,0 +1,1284 @@
+# All this catalog "translates" are quotation characters.
+# The msgids must be ASCII and therefore cannot contain real quotation
+# characters, only substitutes like grave accent (0x60), apostrophe (0x27)
+# and double quote (0x22). These substitutes look strange; see
+# http://www.cl.cam.ac.uk/~mgk25/ucs/quotes.html
+#
+# This catalog translates grave accent (0x60) and apostrophe (0x27) to
+# left single quotation mark (U+2018) and right single quotation mark (U+2019).
+# It also translates pairs of apostrophe (0x27) to
+# left single quotation mark (U+2018) and right single quotation mark (U+2019)
+# and pairs of quotation mark (0x22) to
+# left double quotation mark (U+201C) and right double quotation mark (U+201D).
+#
+# When output to an UTF-8 terminal, the quotation characters appear perfectly.
+# When output to an ISO-8859-1 terminal, the single quotation marks are
+# transliterated to apostrophes (by iconv in glibc 2.2 or newer) or to
+# grave/acute accent (by libiconv), and the double quotation marks are
+# transliterated to 0x22.
+# When output to an ASCII terminal, the single quotation marks are
+# transliterated to apostrophes, and the double quotation marks are
+# transliterated to 0x22.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: R 2.1.0\n"
+"Report-Msgid-Bugs-To: bugs@r-project.org\n"
+"POT-Creation-Date: 2005-03-03 12:56\n"
+"PO-Revision-Date: 2005-03-03 12:56\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "'%s' is defunct."
+msgstr "‘%s’ is defunct."
+
+msgid "Use '%s' instead."
+msgstr "Use ‘%s’ instead."
+
+msgid "See help(\"Defunct\") and help(\"%s-defunct\")."
+msgstr "See help(“Defunct”) and help(“%s-defunct”)."
+
+msgid "See help(\"Defunct\")"
+msgstr "See help(“Defunct”)"
+
+msgid "'%s' is deprecated."
+msgstr "‘%s’ is deprecated."
+
+msgid "See help(\"Deprecated\") and help(\"%s-deprecated\")."
+msgstr "See help(“Deprecated”) and help(“%s-deprecated”)."
+
+msgid "See help(\"Deprecated\")"
+msgstr "See help(“Deprecated”)"
+
+msgid "argument to 'La.svd' must be numeric or complex"
+msgstr "argument to ‘La.svd’ must be numeric or complex"
+
+msgid "infinite or missing values in 'x'"
+msgstr "infinite or missing values in ‘x’"
+
+msgid "0 extent dimensions"
+msgstr "0 extent dimensions"
+
+msgid "'nu' must be 0, nrow(x) or ncol(x)"
+msgstr "‘nu’ must be 0, nrow(x) or ncol(x)"
+
+msgid "'nv' must be 0, nrow(x) or ncol(x)"
+msgstr "‘nv’ must be 0, nrow(x) or ncol(x)"
+
+msgid "all can not be used with other deparse options"
+msgstr "all can not be used with other deparse options"
+
+msgid "second argument must be a list"
+msgstr "second argument must be a list"
+
+msgid "'kind' must be a character string of length 1 (RNG to be used)."
+msgstr "‘kind’ must be a character string of length 1 (RNG to be used)."
+
+msgid "'%s' is not a valid abbreviation of an RNG"
+msgstr "‘%s’ is not a valid abbreviation of an RNG"
+
+msgid "'normal.kind' must be a character string of length 1."
+msgstr "‘normal.kind’ must be a character string of length 1."
+
+msgid "Buggy version of Kinderman-Ramage generator used."
+msgstr "Buggy version of Kinderman-Ramage generator used."
+
+msgid "'%s' is not a valid choice"
+msgstr "‘%s’ is not a valid choice"
+
+msgid "malformed version string"
+msgstr "malformed version string"
+
+msgid "dim(X) must have a positive length"
+msgstr "dim(X) must have a positive length"
+
+msgid "'dim' specifies too large an array"
+msgstr "‘dim’ specifies too large an array"
+
+msgid "incorrect value for 'MARGIN'"
+msgstr "incorrect value for ‘MARGIN’"
+
+msgid "you cannot be serious"
+msgstr "you cannot be serious"
+
+msgid "*** 'pos=1' is not possible; setting 'pos=2' for now."
+msgstr "*** ‘pos=1’ is not possible; setting ‘pos=2’ for now."
+
+msgid "*** Note that 'pos=1' will give an error in the future"
+msgstr "*** Note that ‘pos=1’ will give an error in the future"
+
+msgid "file '%s' not found"
+msgstr "file ‘%s’ not found"
+
+msgid "invalid name"
+msgstr "invalid name"
+
+msgid "is required by"
+msgstr "is required by"
+
+msgid "(still attached)"
+msgstr "(still attached)"
+
+msgid "replaced regular expression pattern '[' by  '\\\\['"
+msgstr "replaced regular expression pattern ‘[’ by  ‘\\\\[’"
+
+msgid "replaced '[<-' by '\\\\[<-' in regular expression pattern"
+msgstr "replaced ‘[<-’ by ‘\\\\[<-’ in regular expression pattern"
+
+msgid "RHS must be list"
+msgstr "RHS must be list"
+
+msgid "an object with that name already exists"
+msgstr "an object with that name already exists"
+
+msgid "autoloader did not find '%s' in '%s'"
+msgstr "autoloader did not find ‘%s’ in ‘%s’"
+
+msgid "invalid argument values in 'backsolve'"
+msgstr "invalid argument values in ‘backsolve’"
+
+msgid "singular matrix in 'backsolve'. First zero in diagonal [%d]"
+msgstr "singular matrix in 'backsolve'. First zero in diagonal [%d]"
+
+msgid "complex matrices not permitted at present"
+msgstr "complex matrices not permitted at present"
+
+msgid "non-numeric argument to 'chol'"
+msgstr "non-numeric argument to ‘chol’"
+
+msgid "non-square matrix in 'chol'"
+msgstr "non-square matrix in ‘chol’"
+
+msgid "non-matrix argument to 'chol'"
+msgstr "non-matrix argument to ‘chol’"
+
+msgid "matrix not positive definite"
+msgstr "matrix not positive definite"
+
+msgid "non-positive definite matrix in 'chol'"
+msgstr "non-positive definite matrix in ‘chol’"
+
+msgid "non-numeric argument to 'chol2inv'"
+msgstr "non-numeric argument to ‘chol2inv’"
+
+msgid "invalid 'size' argument in 'chol2inv'"
+msgstr "invalid ‘size’ argument in ‘chol2inv’"
+
+msgid "singular matrix in 'chol2inv'"
+msgstr "singular matrix in ‘chol2inv’"
+
+msgid "'x' must be an array of at least two dimensions"
+msgstr "‘x’ must be an array of at least two dimensions"
+
+msgid "invalid 'dims'"
+msgstr "invalid ‘dims’"
+
+msgid "bad handler specification"
+msgstr "bad handler specification"
+
+msgid "no 'restart' '%s' found"
+msgstr "no ‘restart’ '%s' found"
+
+msgid "not an interactive session"
+msgstr "not an interactive session"
+
+msgid "not a valid restart specification"
+msgstr "not a valid restart specification"
+
+msgid "argument where of length 0"
+msgstr "argument where of length 0"
+
+msgid "'origin' must be one of 'start', 'current' or 'end'"
+msgstr "‘origin’ must be one of 'start', ‘current’ or ‘end’"
+
+msgid "can only truncate an open connection"
+msgstr "can only truncate an open connection"
+
+msgid "can only write vector objects"
+msgstr "can only write vector objects"
+
+msgid "can only write character objects"
+msgstr "can only write character objects"
+
+msgid "supplied timeout must be NULL or a non-negative number"
+msgstr "supplied timeout must be NULL or a non-negative number"
+
+msgid "'x' must be numeric"
+msgstr "‘x’ must be numeric"
+
+msgid "invalid number of intervals"
+msgstr "invalid number of intervals"
+
+msgid "'breaks' are not unique"
+msgstr "‘breaks’ are not unique"
+
+msgid "labels/breaks length conflict"
+msgstr "labels/breaks length conflict"
+
+msgid "non-numeric data type in frame"
+msgstr "non-numeric data type in frame"
+
+msgid "class information lost from one or more columns"
+msgstr "class information lost from one or more columns"
+
+msgid "invalid 'row.names' length"
+msgstr "invalid ‘row.names’ length"
+
+msgid "duplicate 'row.names' are not allowed"
+msgstr "duplicate ‘row.names’ are not allowed"
+
+msgid "missing 'row.names' are not allowed"
+msgstr "missing ‘row.names’ are not allowed"
+
+msgid "invalid 'dimnames' given for data frame"
+msgstr "invalid ‘dimnames’ given for data frame"
+
+msgid "cannot coerce class \"%s\" into a data.frame"
+msgstr "cannot coerce class “%s” into a data.frame"
+
+msgid "invalid 'row.names', length %d for a data frame with %d rows"
+msgstr "invalid 'row.names', length %d for a data frame with %d rows"
+
+msgid "supplied %d row names for %d rows"
+msgstr "supplied %d row names for %d rows"
+
+msgid "mismatch of row names in arguments of 'data.frame', item %d"
+msgstr "mismatch of row names in arguments of 'data.frame', item %d"
+
+msgid "some row.names duplicated:"
+msgstr "some row.names duplicated:"
+
+msgid ","
+msgstr ","
+
+msgid "--> row.names NOT used"
+msgstr "--> row.names NOT used"
+
+msgid "arguments imply differing number of rows:"
+msgstr "arguments imply differing number of rows:"
+
+msgid "row.names should specify one of the variables"
+msgstr "row.names should specify one of the variables"
+
+msgid "row names supplied are of the wrong length"
+msgstr "row names supplied are of the wrong length"
+
+msgid "row names were found from a short variable and have been discarded"
+msgstr "row names were found from a short variable and have been discarded"
+
+msgid "row names contain missing values"
+msgstr "row names contain missing values"
+
+msgid "duplicate row.names:"
+msgstr "duplicate row.names:"
+
+msgid "drop argument will be ignored"
+msgstr "drop argument will be ignored"
+
+msgid "undefined columns selected"
+msgstr "undefined columns selected"
+
+msgid "rhs is the wrong length for indexing by a logical matrix"
+msgstr "rhs is the wrong length for indexing by a logical matrix"
+
+msgid "only logical matrix subscripts are allowed in replacement"
+msgstr "only logical matrix subscripts are allowed in replacement"
+
+msgid "need 0, 1, or 2 subscripts"
+msgstr "need 0, 1, or 2 subscripts"
+
+msgid ""
+"missing values are not allowed in subscripted assignments of data frames"
+msgstr ""
+"missing values are not allowed in subscripted assignments of data frames"
+
+msgid "non-existent rows not allowed"
+msgstr "non-existent rows not allowed"
+
+msgid "new columns would leave holes after existing columns"
+msgstr "new columns would leave holes after existing columns"
+
+msgid "duplicate subscripts for columns"
+msgstr "duplicate subscripts for columns"
+
+msgid "replacement has %d rows, data has %d"
+msgstr "replacement has %d rows, data has %d"
+
+msgid "replacement has %d items, need %d"
+msgstr "replacement has %d items, need %d"
+
+msgid "replacement element %d is a matrix/data frame of %d rows, need %d"
+msgstr "replacement element %d is a matrix/data frame of %d rows, need %d"
+
+msgid "replacement element %d has %d rows, need %d"
+msgstr "replacement element %d has %d rows, need %d"
+
+msgid "replacement element %d has %d rows to replace %d rows"
+msgstr "replacement element %d has %d rows to replace %d rows"
+
+msgid "%d rows in value to replace %d rows"
+msgstr "%d rows in value to replace %d rows"
+
+msgid "replacement data has %d rows to replace %d rows"
+msgstr "replacement data has %d rows to replace %d rows"
+
+msgid "provided %d variables to replace %d variables"
+msgstr "provided %d variables to replace %d variables"
+
+msgid "only valid calls are x[[j]] <- value or x[[i,j]] <- value"
+msgstr "only valid calls are x[[j]] <- value or x[[i,j]] <- value"
+
+msgid "replacing element in non-existent column:"
+msgstr "replacing element in non-existent column:"
+
+msgid "only a single element should be replaced"
+msgstr "only a single element should be replaced"
+
+msgid "names don't match previous names:"
+msgstr "names don't match previous names:"
+
+msgid "invalid list argument: all variables should have the same length"
+msgstr "invalid list argument: all variables should have the same length"
+
+msgid "non-numeric variable in data frame:"
+msgstr "non-numeric variable in data frame:"
+
+msgid "only defined for equally-sized data frames"
+msgstr "only defined for equally-sized data frames"
+
+msgid "list of length %d not meaningful"
+msgstr "list of length %d not meaningful"
+
+msgid "only defined on a data frame with all numeric or complex variables"
+msgstr "only defined on a data frame with all numeric or complex variables"
+
+msgid "character string is not in a standard unambiguous format"
+msgstr "character string is not in a standard unambiguous format"
+
+msgid "do not know how to convert '%s' to class \"Date\""
+msgstr "do not know how to convert ‘%s’ to class “Date”"
+
+msgid "'%s' is not a \"date\" object"
+msgstr "‘%s’ is not a “date” object"
+
+msgid "'%s' is not a \"dates\" object"
+msgstr "‘%s’ is not a “dates” object"
+
+msgid "binary + is not defined for Date objects"
+msgstr "binary + is not defined for Date objects"
+
+msgid "Can only subtract from Date objects"
+msgstr "Can only subtract from Date objects"
+
+msgid "unary - is not defined for Date objects"
+msgstr "unary - is not defined for Date objects"
+
+msgid "can only subtract numbers from Date objects"
+msgstr "can only subtract numbers from Date objects"
+
+msgid "unary"
+msgstr "unary"
+
+msgid "not defined for Date objects"
+msgstr "not defined for Date objects"
+
+msgid "'from' must be specified"
+msgstr "‘from’ must be specified"
+
+msgid "'from' must be a Date object"
+msgstr "‘from’ must be a Date object"
+
+msgid "'from' must be of length 1"
+msgstr "‘from’ must be of length 1"
+
+msgid "'to' must be a Date object"
+msgstr "‘to’ must be a Date object"
+
+msgid "'to' must be of length 1"
+msgstr "‘to’ must be of length 1"
+
+msgid "'length.out' must be of length 1"
+msgstr "‘length.out’ must be of length 1"
+
+msgid ""
+"exactly two of 'to', 'by' and 'length.out' / 'along.with' must be specified"
+msgstr ""
+"exactly two of 'to', ‘by’ and ‘length.out’ / ‘along.with’ must be specified"
+
+msgid "'by' must be of length 1"
+msgstr "‘by’ must be of length 1"
+
+msgid "invalid 'by' string"
+msgstr "invalid ‘by’ string"
+
+msgid "invalid string for 'by'"
+msgstr "invalid string for ‘by’"
+
+msgid "invalid mode for 'by'"
+msgstr "invalid mode for ‘by’"
+
+msgid "'by' is NA"
+msgstr "‘by’ is NA"
+
+msgid "'x' must be a date-time object"
+msgstr "‘x’ must be a date-time object"
+
+msgid "invalid specification of 'breaks'"
+msgstr "invalid specification of ‘breaks’"
+
+msgid "'origin' must be of length one"
+msgstr "‘origin’ must be of length one"
+
+msgid "'lag' and 'differences' must be integers >= 1"
+msgstr "‘lag’ and ‘differences’ must be integers >= 1"
+
+msgid "do not know how to convert '%s' to class \"POSIXlt\""
+msgstr "do not know how to convert ‘%s’ to class “POSIXlt”"
+
+msgid "wrong class"
+msgstr "wrong class"
+
+msgid "binary + is not defined for \"POSIXt\" objects"
+msgstr "binary + is not defined for “POSIXt” objects"
+
+msgid "Can only subtract from POSIXt objects"
+msgstr "Can only subtract from POSIXt objects"
+
+msgid "unary - is not defined for \"POSIXt\" objects"
+msgstr "unary - is not defined for “POSIXt” objects"
+
+msgid "can only subtract numbers from POSIXt objects"
+msgstr "can only subtract numbers from POSIXt objects"
+
+msgid "not defined for \"POSIXt\" objects"
+msgstr "not defined for “POSIXt” objects"
+
+msgid "not defined for POSIXt objects"
+msgstr "not defined for POSIXt objects"
+
+msgid "not defined for \"POSIXct\" objects"
+msgstr "not defined for “POSIXct” objects"
+
+msgid "not defined for \"POSIXlt\" objects"
+msgstr "not defined for “POSIXlt” objects"
+
+msgid "not defined for \"difftime\" objects"
+msgstr "not defined for “difftime” objects"
+
+msgid "both arguments of * cannot be \"difftime\" objects"
+msgstr "both arguments of * cannot be “difftime” objects"
+
+msgid "second argument of / cannot be a \"difftime\" object"
+msgstr "second argument of / cannot be a “difftime” object"
+
+msgid "'from' must be a POSIXt object"
+msgstr "‘from’ must be a POSIXt object"
+
+msgid "'to' must be a POSIXt object"
+msgstr "‘to’ must be a POSIXt object"
+
+msgid "'file' must be a character string or connection"
+msgstr "‘file’ must be a character string or connection"
+
+msgid "x must be a square matrix"
+msgstr "x must be a square matrix"
+
+msgid "determinant not currently defined for complex matrices"
+msgstr "determinant not currently defined for complex matrices"
+
+msgid "first argument is array, but not matrix."
+msgstr "first argument is array, but not matrix."
+
+msgid "only matrix diagonals can be replaced"
+msgstr "only matrix diagonals can be replaced"
+
+msgid "replacement diagonal has wrong length"
+msgstr "replacement diagonal has wrong length"
+
+msgid "MARGIN ="
+msgstr "MARGIN ="
+
+msgid "is invalid for dim ="
+msgstr "is invalid for dim ="
+
+msgid "must pass a package name, DLLInfo or DllInfoReference object"
+msgstr "must pass a package name, DLLInfo or DllInfoReference object"
+
+msgid "No DLL currently loaded with name or path"
+msgstr "No DLL currently loaded with name or path"
+
+msgid "multiple DLLs match '%s'. Using '%s'"
+msgstr "multiple DLLs match '%s'. Using ‘%s’"
+
+msgid "must specify DLL via a DLLInfo object. See getLoadedDLLs()"
+msgstr "must specify DLL via a DLLInfo object. See getLoadedDLLs()"
+
+msgid "function is not in a namespace, so cannot locate associated DLL"
+msgstr "function is not in a namespace, so cannot locate associated DLL"
+
+msgid ""
+"looking for DLL for native routine call, but no DLLs in namespace of call"
+msgstr ""
+"looking for DLL for native routine call, but no DLLs in namespace of call"
+
+msgid "0 x 0 matrix"
+msgstr "0 x 0 matrix"
+
+msgid "non-square matrix in 'eigen'"
+msgstr "non-square matrix in ‘eigen’"
+
+msgid "numeric or complex values required in 'eigen'"
+msgstr "numeric or complex values required in ‘eigen’"
+
+msgid "'ch' returned code %d in 'eigen'"
+msgstr "‘ch’ returned code %d in ‘eigen’"
+
+msgid "'rs' returned code %d in 'eigen'"
+msgstr "‘rs’ returned code %d in ‘eigen’"
+
+msgid "'cg' returned code %d in 'eigen'"
+msgstr "‘cg’ returned code %d in ‘eigen’"
+
+msgid "'rg' returned code %d in 'eigen'"
+msgstr "‘rg’ returned code %d in ‘eigen’"
+
+msgid "invalid labels; length %d should be 1 or %d"
+msgstr "invalid labels; length %d should be 1 or %d"
+
+msgid "number of levels differs"
+msgstr "number of levels differs"
+
+msgid "not meaningful for factors"
+msgstr "not meaningful for factors"
+
+msgid "level sets of factors are different"
+msgstr "level sets of factors are different"
+
+msgid "invalid factor level, NAs generated"
+msgstr "invalid factor level, NAs generated"
+
+msgid "'%s' is not meaningful for ordered factors"
+msgstr "‘%s’ is not meaningful for ordered factors"
+
+msgid "no files to copy from"
+msgstr "no files to copy from"
+
+msgid "no files to copy to"
+msgstr "no files to copy to"
+
+msgid "more 'from' files than 'to' files"
+msgstr "more ‘from’ files than ‘to’ files"
+
+msgid "file can not be copied both 'from' and 'to'"
+msgstr "file can not be copied both ‘from’ and ‘to’"
+
+msgid "no files to link from"
+msgstr "no files to link from"
+
+msgid "no files/directory to link to"
+msgstr "no files/directory to link to"
+
+msgid "calling wrong method"
+msgstr "calling wrong method"
+
+msgid "'package' must be of length 1"
+msgstr "‘package’ must be of length 1"
+
+msgid "'vec' contains NAs"
+msgstr "‘vec’ contains NAs"
+
+msgid "'vec' must be sorted non-decreasingly"
+msgstr "‘vec’ must be sorted non-decreasingly"
+
+msgid "format.char: coercing 'x' to 'character'"
+msgstr "format.char: coercing ‘x’ to ‘character’"
+
+msgid "'mode' must be \"double\" (\"real\") or \"integer\""
+msgstr "‘mode’ must be “double” (“real”) or “integer”"
+
+msgid "coercing argument to \"character\" for format=\"s\""
+msgstr "coercing argument to “character” for format=“s”"
+
+msgid "'format' must be one of {\"f\",\"e\",\"E\",\"g\",\"G\", \"fg\", \"s\"}"
+msgstr "‘format’ must be one of {“f”,“e”,“E”,“g”,“G”, “fg”, “s”}"
+
+msgid "'flag' can contain only '0+- #'"
+msgstr "‘flag’ can contain only ‘0+- #’"
+
+msgid "corrupt data frame: columns will be truncated or padded with NAs"
+msgstr "corrupt data frame: columns will be truncated or padded with NAs"
+
+msgid "'subset' must evaluate to logical"
+msgstr "‘subset’ must evaluate to logical"
+
+msgid "'subset' must be logical"
+msgstr "‘subset’ must be logical"
+
+msgid "'form' must be a two-sided formula"
+msgstr "‘form’ must be a two-sided formula"
+
+msgid "value for '"
+msgstr "value for '"
+
+msgid "' not found"
+msgstr "' not found"
+
+msgid "'pattern' must be a non-empty character string"
+msgstr "‘pattern’ must be a non-empty character string"
+
+msgid "'max.distance' must be non-negative"
+msgstr "‘max.distance’ must be non-negative"
+
+msgid "unknown match distance components ignored"
+msgstr "unknown match distance components ignored"
+
+msgid "'max.distance' components must be non-negative"
+msgstr "‘max.distance’ components must be non-negative"
+
+msgid "matrix should be square"
+msgstr "matrix should be square"
+
+msgid "This is R %s, package '%s' needs %s %s"
+msgstr "This is R %s, package ‘%s’ needs %s %s"
+
+msgid "package '%s' was built before R 2.0.0: please re-install it"
+msgstr "package ‘%s’ was built before R 2.0.0: please re-install it"
+
+msgid "package '%s' was built under R version %s"
+msgstr "package ‘%s’ was built under R version %s"
+
+msgid "package '%s' was built for %s"
+msgstr "package ‘%s’ was built for %s"
+
+msgid "package '%s' has not been installed properly"
+msgstr "package ‘%s’ has not been installed properly"
+
+msgid "See the Note in ?library"
+msgstr "See the Note in ?library"
+
+msgid "Attaching package: '%s'"
+msgstr "Attaching package: ‘%s’"
+
+msgid "package '%s' has been merged into '%s'"
+msgstr "package ‘%s’ has been merged into ‘%s’"
+
+msgid "package 'lqs' has been moved back to package 'MASS'"
+msgstr "package ‘lqs’ has been moved back to package ‘MASS’"
+
+msgid "package 'MASS' has now been loaded"
+msgstr "package ‘MASS’ has now been loaded"
+
+msgid "package 'MASS' seems to be missing from this R installation"
+msgstr "package ‘MASS’ seems to be missing from this R installation"
+
+msgid "there is no package called '%s', version %s"
+msgstr "there is no package called '%s', version %s"
+
+msgid "there is no package called '%s'"
+msgstr "there is no package called ‘%s’"
+
+msgid "'%s' is not a valid package -- installed < 2.0.0?"
+msgstr "‘%s’ is not a valid package -- installed < 2.0.0?"
+
+msgid "'%s' not found on search path, using pos = 2"
+msgstr "‘%s’ not found on search path, using pos = 2"
+
+msgid "package/namespace load failed for '%s'"
+msgstr "package/namespace load failed for ‘%s’"
+
+msgid "unable to load R code in package '%s'"
+msgstr "unable to load R code in package ‘%s’"
+
+msgid "package '%s' contains no R code"
+msgstr "package ‘%s’ contains no R code"
+
+msgid ".First.lib failed for '%s'"
+msgstr ".First.lib failed for ‘%s’"
+
+msgid "package '%s' already present in search()"
+msgstr "package ‘%s’ already present in search()"
+
+msgid "shared library '%s' not found"
+msgstr "shared library ‘%s’ not found"
+
+msgid "shared library '%s' already loaded"
+msgstr "shared library ‘%s’ already loaded"
+
+msgid "now dyn.load(\"%s\") ..."
+msgstr "now dyn.load(“%s”) ..."
+
+msgid "no shared library was specified"
+msgstr "no shared library was specified"
+
+msgid "shared library '%s' was not loaded"
+msgstr "shared library ‘%s’ was not loaded"
+
+msgid "now dyn.unload(\"%s\") ..."
+msgstr "now dyn.unload(“%s”) ..."
+
+msgid "Loading required package: %s"
+msgstr "Loading required package: %s"
+
+msgid "none of the packages are loaded"
+msgstr "none of the packages are loaded"
+
+msgid ""
+"package '%s' found more than once,\n"
+"using the one found in '%s'"
+msgstr ""
+"package ‘%s’ found more than once,\n"
+"using the one found in ‘%s’"
+
+msgid "none of the packages were found"
+msgstr "none of the packages were found"
+
+msgid "package '%s' required by '%s' could not be found"
+msgstr "package ‘%s’ required by ‘%s’ could not be found"
+
+msgid "package '%s' could not be loaded"
+msgstr "package ‘%s’ could not be loaded"
+
+msgid "bad file argument"
+msgstr "bad file argument"
+
+msgid "no input is available"
+msgstr "no input is available"
+
+msgid "input has been corrupted, with LF replaced by CR"
+msgstr "input has been corrupted, with LF replaced by CR"
+
+msgid ""
+"the input does not start with a magic number compatible with loading from a "
+"connection"
+msgstr ""
+"the input does not start with a magic number compatible with loading from a "
+"connection"
+
+msgid "'file' must be specified"
+msgstr "‘file’ must be specified"
+
+msgid "'file' must be non-empty string"
+msgstr "‘file’ must be non-empty string"
+
+msgid "can only save to a binary connection"
+msgstr "can only save to a binary connection"
+
+msgid "`file' must be non-empty string"
+msgstr "‘file’ must be non-empty string"
+
+msgid "image could not be renamed and is left in"
+msgstr "image could not be renamed and is left in"
+
+msgid "[Previously saved workspace restored]"
+msgstr "[Previously saved workspace restored]"
+
+msgid "invalid 'category' argument"
+msgstr "invalid ‘category’ argument"
+
+msgid "'arg' should be one of"
+msgstr "‘arg’ should be one of"
+
+msgid "there is more than one match in match.arg"
+msgstr "there is more than one match in match.arg"
+
+msgid "no match"
+msgstr "no match"
+
+msgid "'input' must have length 1"
+msgstr "‘input’ must have length 1"
+
+msgid "'input' and 'target' must be character vectors"
+msgstr "‘input’ and ‘target’ must be character vectors"
+
+msgid "'%s' is not a function, character or symbol"
+msgstr "‘%s’ is not a function, character or symbol"
+
+msgid "found non-function '%s'"
+msgstr "found non-function ‘%s’"
+
+msgid "attempt to set rownames on object with no dimensions"
+msgstr "attempt to set rownames on object with no dimensions"
+
+msgid "attempt to set colnames on object with less than two dimensions"
+msgstr "attempt to set colnames on object with less than two dimensions"
+
+msgid "argument is not numeric or logical: returning NA"
+msgstr "argument is not numeric or logical: returning NA"
+
+msgid "trimmed means are not defined for complex data"
+msgstr "trimmed means are not defined for complex data"
+
+msgid "'by' must match numbers of columns"
+msgstr "‘by’ must match numbers of columns"
+
+msgid "'by' must match number of columns"
+msgstr "‘by’ must match number of columns"
+
+msgid "'by' must specify column(s)"
+msgstr "‘by’ must specify column(s)"
+
+msgid "'by' must specify valid column(s)"
+msgstr "‘by’ must specify valid column(s)"
+
+msgid "no rows to match"
+msgstr "no rows to match"
+
+msgid "'by.x' and 'by.y' specify different numbers of columns"
+msgstr "‘by.x’ and ‘by.y’ specify different numbers of columns"
+
+msgid ""
+"Tracing functions requires the methods package, but unable to load methods "
+"namespace"
+msgstr ""
+"Tracing functions requires the methods package, but unable to load methods "
+"namespace"
+
+msgid "'%s' is not an exported object from 'namespace:%s'"
+msgstr "‘%s’ is not an exported object from ‘namespace:%s’"
+
+msgid "%s failed in 'attachNamespace'"
+msgstr "%s failed in ‘attachNamespace’"
+
+msgid "name space is already attached"
+msgstr "name space is already attached"
+
+msgid "%s not found"
+msgstr "%s not found"
+
+msgid "cyclic name space dependencies are not supported"
+msgstr "cyclic name space dependencies are not supported"
+
+msgid "%s failed in 'loadNamespace' for '%s'"
+msgstr "%s failed in ‘loadNamespace’ for ‘%s’"
+
+msgid "namespace '%s' is already sealed in loadNamespace"
+msgstr "namespace ‘%s’ is already sealed in loadNamespace"
+
+msgid "package '%s' does not have a name space"
+msgstr "package ‘%s’ does not have a name space"
+
+msgid "in '%s' classes for export not defined: %s"
+msgstr "in ‘%s’ classes for export not defined: %s"
+
+msgid "in '%s' methods for export not found: %s"
+msgstr "in ‘%s’ methods for export not found: %s"
+
+msgid "in '%s' methods specified for export, but none defined: %s"
+msgstr "in ‘%s’ methods specified for export, but none defined: %s"
+
+msgid "not found"
+msgstr "not found"
+
+msgid "not loading a name space"
+msgstr "not loading a name space"
+
+msgid "name space '%s' is loaded"
+msgstr "name space ‘%s’ is loaded"
+
+msgid "%s failed in unloadNamespace(%s)"
+msgstr "%s failed in unloadNamespace(%s)"
+
+msgid "name space '%s' is still used by:"
+msgstr "name space ‘%s’ is still used by:"
+
+msgid "imperative name space directives are disabled"
+msgstr "imperative name space directives are disabled"
+
+msgid "all objects in base name space are currently exported."
+msgstr "all objects in base name space are currently exported."
+
+msgid "can only export from a name space"
+msgstr "can only export from a name space"
+
+msgid "not a name space"
+msgstr "not a name space"
+
+msgid "operation not allowed on base name space"
+msgstr "operation not allowed on base name space"
+
+msgid "duplicate import names"
+msgstr "duplicate import names"
+
+msgid "cannot import into a sealed name space"
+msgstr "cannot import into a sealed name space"
+
+msgid "invalid import target"
+msgstr "invalid import target"
+
+msgid "requested 'methods' objects not found in environment/package '%s': %s"
+msgstr "requested ‘methods’ objects not found in environment/package '%s': %s"
+
+msgid "cannot add to exports of a sealed name space"
+msgstr "cannot add to exports of a sealed name space"
+
+msgid "undefined exports :"
+msgstr "undefined exports :"
+
+msgid "package '%s' has no NAMESPACE file"
+msgstr "package ‘%s’ has no NAMESPACE file"
+
+msgid "bad 'S3method' directive: %s"
+msgstr "bad ‘S3method’ directive: %s"
+
+msgid "too many 'S3method' directives"
+msgstr "too many ‘S3method’ directives"
+
+msgid "unknown namespace directive: %s"
+msgstr "unknown namespace directive: %s"
+
+msgid "S3 method '%s' was declared in NAMESPACE but not found"
+msgstr "S3 method ‘%s’ was declared in NAMESPACE but not found"
+
+msgid "bad method"
+msgstr "bad method"
+
+msgid "object '%s' not found whilst loading namespace '%s'"
+msgstr "object ‘%s’ not found whilst loading namespace ‘%s’"
+
+msgid "found an S4 version of '%s' so it has not been imported correctly"
+msgstr "found an S4 version of ‘%s’ so it has not been imported correctly"
+
+msgid "'%s' is not implemented yet"
+msgstr "‘%s’ is not implemented yet"
+
+msgid "argument '%s' is not used (yet)"
+msgstr "argument ‘%s’ is not used (yet)"
+
+msgid "invalid version specification"
+msgstr "invalid version specification"
+
+msgid "wrong argument"
+msgstr "wrong argument"
+
+msgid "not defined for package_version objects"
+msgstr "not defined for package_version objects"
+
+msgid "x must be numeric"
+msgstr "x must be numeric"
+
+msgid "invalid n value"
+msgstr "invalid n value"
+
+msgid "'shrink.sml' must be numeric > 0"
+msgstr "‘shrink.sml’ must be numeric > 0"
+
+msgid "'min.n' must be non-negative integer <= n"
+msgstr "‘min.n’ must be non-negative integer <= n"
+
+msgid "'high.u.bias' must be non-negative numeric"
+msgstr "‘high.u.bias’ must be non-negative numeric"
+
+msgid "'u5.bias' must be non-negative numeric"
+msgstr "‘u5.bias’ must be non-negative numeric"
+
+msgid "'eps.correct' must be 0, 1, or 2"
+msgstr "‘eps.correct’ must be 0, 1, or 2"
+
+msgid "first argument must be a QR decomposition"
+msgstr "first argument must be a QR decomposition"
+
+msgid "'qr' and 'y' must have the same number of rows"
+msgstr "‘qr’ and ‘y’ must have the same number of rows"
+
+msgid "exact singularity in 'qr.coef'"
+msgstr "exact singularity in ‘qr.coef’"
+
+msgid "argument is not a QR decomposition"
+msgstr "argument is not a QR decomposition"
+
+msgid "not implemented for complex 'qr'"
+msgstr "not implemented for complex ‘qr’"
+
+msgid "not supported for LAPACK QR"
+msgstr "not supported for LAPACK QR"
+
+msgid "'k' is too large"
+msgstr "‘k’ is too large"
+
+msgid "need larger value of 'ncol' as pivoting occurred"
+msgstr "need larger value of ‘ncol’ as pivoting occurred"
+
+msgid "file' must be a character string or connection"
+msgstr "file' must be a character string or connection"
+
+msgid "no lines available in input"
+msgstr "no lines available in input"
+
+msgid "empty beginning of file"
+msgstr "empty beginning of file"
+
+msgid "header and 'col.names' are of different lengths"
+msgstr "header and ‘col.names’ are of different lengths"
+
+msgid "more columns than column names"
+msgstr "more columns than column names"
+
+msgid "more column names than columns"
+msgstr "more column names than columns"
+
+msgid "first five rows are empty: giving up"
+msgstr "first five rows are empty: giving up"
+
+msgid "not all columns named in 'colClasses' exist"
+msgstr "not all columns named in ‘colClasses’ exist"
+
+msgid "invalid numeric 'as.is' expression"
+msgstr "invalid numeric ‘as.is’ expression"
+
+msgid "not all columns named in 'as.is' exist"
+msgstr "not all columns named in ‘as.is’ exist"
+
+msgid "'as.is' has the wrong length %d  != cols = %d"
+msgstr "‘as.is’ has the wrong length %d  != cols = %d"
+
+msgid "invalid 'row.names' specification"
+msgstr "invalid ‘row.names’ specification"
+
+msgid "x must be a vector"
+msgstr "x must be a vector"
+
+msgid "invalid 'rle' structure"
+msgstr "invalid ‘rle’ structure"
+
+msgid "incorrect length for 'group'"
+msgstr "incorrect length for ‘group’"
+
+msgid "missing values for 'group'"
+msgstr "missing values for ‘group’"
+
+msgid "not a data frame"
+msgstr "not a data frame"
+
+msgid "length of 'center' must equal the number of columns of 'x'"
+msgstr "length of ‘center’ must equal the number of columns of ‘x’"
+
+msgid "length of 'scale' must equal the number of columns of 'x'"
+msgstr "length of ‘scale’ must equal the number of columns of ‘x’"
+
+msgid "either specify 'nmax' or 'n', but not both."
+msgstr "either specify ‘nmax’ or 'n', but not both."
+
+msgid "invalid (to - from)/by in seq(.)"
+msgstr "invalid (to - from)/by in seq(.)"
+
+msgid "wrong sign in 'by' argument"
+msgstr "wrong sign in ‘by’ argument"
+
+msgid "'by' argument is much too small"
+msgstr "‘by’ argument is much too small"
+
+msgid "length must be non-negative number"
+msgstr "length must be non-negative number"
+
+msgid "too many arguments"
+msgstr "too many arguments"
+
+msgid "bad 'file' argument"
+msgstr "bad ‘file’ argument"
+
+msgid "'connection' must be a connection"
+msgstr "‘connection’ must be a connection"
+
+msgid "'file' must be NULL or an already open connection"
+msgstr "‘file’ must be NULL or an already open connection"
+
+msgid "cannot split the message connection"
+msgstr "cannot split the message connection"
+
+msgid "'file' must be NULL, a connection or a character string"
+msgstr "‘file’ must be NULL, a connection or a character string"
+
+msgid "this is the \"qr\" method for the generic function solve()"
+msgstr "this is the “qr” method for the generic function solve()"
+
+msgid "singular matrix 'a' in 'solve'"
+msgstr "singular matrix ‘a’ in ‘solve’"
+
+msgid "only square matrices can be inverted"
+msgstr "only square matrices can be inverted"
+
+msgid "solve.default called with a \"qr\" object: use 'qr.solve'"
+msgstr "solve.default called with a “qr” object: use ‘qr.solve’"
+
+msgid "singular matrix 'a' in solve"
+msgstr "singular matrix ‘a’ in solve"
+
+msgid "'index.return' only for non-factors"
+msgstr "‘index.return’ only for non-factors"
+
+msgid "'x' must be atomic"
+msgstr "‘x’ must be atomic"
+
+msgid "'index.return' only for 'na.last = NA'"
+msgstr "‘index.return’ only for ‘na.last = NA’"
+
+msgid "unsupported options for partial sorting"
+msgstr "unsupported options for partial sorting"
+
+msgid "non-finite 'partial'"
+msgstr "non-finite ‘partial’"
+
+msgid "argument lengths differ"
+msgstr "argument lengths differ"
+
+msgid "method=\"quick\" is only for numeric 'x'"
+msgstr "method=“quick” is only for numeric ‘x’"
+
+msgid "method=\"radix\" is only for integer 'x'"
+msgstr "method=“radix” is only for integer ‘x’"
+
+msgid "'echo' must be logical"
+msgstr "‘echo’ must be logical"
+
+msgid "'verbose' is TRUE, 'echo' not; ... coercing 'echo <- TRUE'"
+msgstr "‘verbose’ is TRUE, ‘echo’ not; ... coercing ‘echo <- TRUE’"
+
+msgid "unable to find a plausible encoding"
+msgstr "unable to find a plausible encoding"
+
+msgid "'%s' is not an existing file"
+msgstr "‘%s’ is not an existing file"
+
+msgid "is not TRUE"
+msgstr "is not TRUE"
+
+msgid "incorrect value for 'x'"
+msgstr "incorrect value for ‘x’"
+
+msgid "'x' and 'y' must have the same length"
+msgstr "‘x’ and ‘y’ must have the same length"
+
+msgid "incorrect values of 'indent' and 'width'"
+msgstr "incorrect values of ‘indent’ and ‘width’"
+
+msgid "argument to 'svd' must be numeric"
+msgstr "argument to ‘svd’ must be numeric"
+
+msgid "'nv' must be 0 or ncol(x)"
+msgstr "‘nv’ must be 0 or ncol(x)"
+
+msgid "error %d in 'dsvdc'"
+msgstr "error %d in ‘dsvdc’"
+
+msgid "nothing to tabulate"
+msgstr "nothing to tabulate"
+
+msgid "all arguments must have the same length"
+msgstr "all arguments must have the same length"
+
+msgid "'object' must inherit from class \"table\""
+msgstr "‘object’ must inherit from class “table”"
+
+msgid "'x' must inherit from class \"summary.table\""
+msgstr "‘x’ must inherit from class “summary.table”"
+
+msgid "cannot coerce into a table"
+msgstr "cannot coerce into a table"
+
+msgid "'x' is not an array"
+msgstr "‘x’ is not an array"
+
+msgid "invalid argument 'n'"
+msgstr "invalid argument ‘n’"
+
+msgid "invalid argument 'r'"
+msgstr "invalid argument ‘r’"
+
+msgid "invalid argument 'c'"
+msgstr "invalid argument ‘c’"
+
+msgid "arguments 'r' and 'c' must have the same sums"
+msgstr "arguments ‘r’ and ‘c’ must have the same sums"
+
+msgid "'bin' must be numeric or a factor"
+msgstr "‘bin’ must be numeric or a factor"
+
+msgid "arguments must have same length"
+msgstr "arguments must have same length"
+
+msgid "handler must be a function"
+msgstr "handler must be a function"
+
+msgid "no such element '%s'"
+msgstr "no such element ‘%s’"
+
+msgid "Removing"
+msgstr "Removing"
+
+msgid "Registering evaluate as low-level callback"
+msgstr "Registering evaluate as low-level callback"
+
+msgid "'width' must be positive"
+msgstr "‘width’ must be positive"
+
+msgid "No traceback available"
+msgstr "No traceback available"
+
+msgid "argument to 'which' is not logical"
+msgstr "argument to ‘which’ is not logical"
+
+msgid "invalid numbers in 'quote'"
+msgstr "invalid numbers in ‘quote’"
+
+msgid "invalid 'quote' specification"
+msgstr "invalid ‘quote’ specification"
+
+msgid "invalid 'col.names' specification"
+msgstr "invalid ‘col.names’ specification"
+
+msgid "appending column names to file"
+msgstr "appending column names to file"
+
+msgid "invalid 'row.names 'specification"
+msgstr "invalid 'row.names 'specification"
+
+msgid "invalid 'digits'"
+msgstr "invalid ‘digits’"
+
+msgid "argument must be character"
+msgstr "argument must be character"
+
+msgid "'cmd' could not be run"
+msgstr "‘cmd’ could not be run"
+
+msgid "'cmd' execution failed with error code %d"
+msgstr "‘cmd’ execution failed with error code %d"
+
+msgid "deparse option %s is not recognized"
+msgid_plural "deparse options %s are not recognized"
+msgstr[0] "deparse option %s is not recognized"
+msgstr[1] "deparse options %s are not recognized"
+
+msgid "library %s contains no packages"
+msgid_plural "libraries %s contain no packages"
+msgstr[0] "library %s contains no packages"
+msgstr[1] "libraries %s contain no packages"
+
+msgid "package %s is not loaded"
+msgid_plural "packages %s are not loaded"
+msgstr[0] "package %s is not loaded"
+msgstr[1] "packages %s are not loaded"
+
+msgid "object %s is not exported by 'namespace:%s'"
+msgid_plural "objects %s are not exported by 'namespace:%s'"
+msgstr[0] "object %s is not exported by ‘namespace:%s’"
+msgstr[1] "objects %s are not exported by ‘namespace:%s’"
+
+msgid "previous export %s is being replaced"
+msgid_plural "previous exports %s are being replaced"
+msgstr[0] "previous export %s is being replaced"
+msgstr[1] "previous exports %s are being replaced"
+
+msgid "S3 method %s was declared in NAMESPACE but not found"
+msgid_plural "S3 methods %s were declared in NAMESPACE but not found"
+msgstr[0] "S3 method %s was declared in NAMESPACE but not found"
+msgstr[1] "S3 methods %s were declared in NAMESPACE but not found"
+
+msgid "Warning message:\n"
+msgid_plural "Warning messages:\n"
+msgstr[0] "Warning message:\n"
+msgstr[1] "Warning messages:\n"
