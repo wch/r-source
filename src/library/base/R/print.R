@@ -114,9 +114,12 @@ printCoefmat <-
     ok <- !(ina <- is.na(xm))
     if(length(cs.ind)>0) {
 	acs <- abs(coef.se <- xm[, cs.ind, drop=FALSE])# = abs(coef. , stderr)
-	## #{digits} BEFORE decimal point -- for min/max. value:
-	digmin <- 1+floor(log10(range(acs[acs != 0], na.rm= TRUE)))
-	Cf[,cs.ind] <- format(round(coef.se,max(1,digits-digmin)),digits=digits)
+        if(any(is.finite(acs))) {
+            ## #{digits} BEFORE decimal point -- for min/max. value:
+            digmin <- 1+floor(log10(range(acs[acs != 0], na.rm= TRUE)))
+            Cf[,cs.ind] <- format(round(coef.se, max(1,digits-digmin)),
+                                  digits=digits)
+        }
     }
     if(length(tst.ind)>0)
 	Cf[, tst.ind]<- format(round(xm[, tst.ind], dig=dig.tst), digits=digits)

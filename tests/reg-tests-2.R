@@ -966,3 +966,38 @@ a <- NULL
 a[["a"]] <- 1:3
 a
 ## Last was an error in 1.7.1
+
+
+## examples of 0-rank models, some empty, some rank-deficient
+y <- rnorm(10)
+x <- rep(0, 10)
+(fit <- lm(y ~ 0))
+summary(fit)
+anova(fit)
+predict(fit)
+predict(fit, data.frame(x=x), se=TRUE)
+predict(fit, type="terms", se=TRUE)
+variable.names(fit) #should be empty
+
+(fit <- lm(y ~ x + 0))
+summary(fit)
+anova(fit)
+predict(fit)
+predict(fit, data.frame(x=x), se=TRUE)
+predict(fit, type="terms", se=TRUE)
+variable.names(fit) #should be empty
+
+(fit <- glm(y ~ 0))
+summary(fit)
+anova(fit)
+predict(fit)
+predict(fit, data.frame(x=x), se=TRUE)
+predict(fit, type="terms", se=TRUE)
+
+(fit <- glm(y ~ x + 0))
+summary(fit)
+anova(fit)
+predict(fit)
+predict(fit, data.frame(x=x), se=TRUE)
+predict(fit, type="terms", se=TRUE)
+## Lots of problems in 1.7.x

@@ -100,16 +100,18 @@ lm.fit <- function (x, y, offset = NULL, method = "qr", tol = 1e-07, ...)
                   PACKAGE="base")
     coef <- z$coefficients
     pivot <- z$pivot
+    ## careful here: the rank might be 0
     r1 <- seq(len=z$rank)
     dn <- colnames(x); if(is.null(dn)) dn <- paste("x", 1:p, sep="")
     nmeffects <- c(dn[pivot[r1]], rep.int("", n - z$rank))
+    r2 <- if(z$rank < p) (z$rank+1):p else integer(0)
     if (is.matrix(y)) {
-	coef[-r1, ] <- NA
+	coef[r2, ] <- NA
 	coef[pivot, ] <- coef
 	dimnames(coef) <- list(dn, colnames(y))
-	dimnames(z$effects) <- list(nmeffects,colnames(y))
+	dimnames(z$effects) <- list(nmeffects, colnames(y))
     } else {
-	coef[-r1] <- NA
+	coef[r2] <- NA
 	coef[pivot] <- coef
 	names(coef) <- dn
 	names(z$effects) <- nmeffects
@@ -181,13 +183,14 @@ lm.wfit <- function (x, y, w, offset = NULL, method = "qr", tol = 1e-7, ...)
     r1 <- seq(len=z$rank)
     dn <- colnames(x); if(is.null(dn)) dn <- paste("x", 1:p, sep="")
     nmeffects <- c(dn[pivot[r1]], rep.int("", n - z$rank))
+    r2 <- if(z$rank < p) (z$rank+1):p else integer(0)
     if (is.matrix(y)) {
-	coef[-r1, ] <- NA
+	coef[r2, ] <- NA
 	coef[pivot, ] <- coef
 	dimnames(coef) <- list(dn, colnames(y))
 	dimnames(z$effects) <- list(nmeffects,colnames(y))
     } else {
-	coef[-r1] <- NA
+	coef[r2] <- NA
 	coef[pivot] <- coef
 	names(coef) <- dn
 	names(z$effects) <- nmeffects
@@ -243,7 +246,7 @@ summary.lm <- function (object, correlation = FALSE, symbolic.cor = FALSE, ...)
     z <- object
     p <- z$rank
     if (p == 0) {
-        r <- z$resid
+        r <- z$residuals
         n <- length(r)
         w <- z$weights
         if (is.null(w)) {
@@ -255,9 +258,12 @@ summary.lm <- function (object, correlation = FALSE, symbolic.cor = FALSE, ...)
         resvar <- rss/(n - p)
         ans <- z[c("call", "terms")]
         class(ans) <- "summary.lm"
+        ans$aliased <- is.na(coef(object))  # used in print method
         ans$residuals <- r
-        ans$df <- c(p, n, 0)
-        ans$coefficients <- matrix(, 0, 4)
+        ans$df <- c(0, n, length(ans$aliased))
+        ans$coefficients <- matrix(NA, 0, 4)
+        dimnames(ans$coefficients)<-
+            list(NULL, c("Estimate", "Std. Error", "t value", "Pr(>|t|)"))
         ans$sigma <- sqrt(resvar)
         ans$r.squared <- ans$adj.r.squared <- 0
         return(ans)
@@ -271,7 +277,7 @@ summary.lm <- function (object, correlation = FALSE, symbolic.cor = FALSE, ...)
         warning("inconsistent residual degrees of freedom. -- please report!")
     p1 <- 1:p
     ## do not want missing values substituted here
-    r <- z$resid
+    r <- z$residuals
     f <- z$fitted
     w <- z$weights
     if (is.null(w)) {
@@ -344,7 +350,7 @@ print.summary.lm <-
     } else { # rdf == 0 : perfect fit!
 	cat("ALL", df[1], "residuals are 0: no residual degrees of freedom!\n")
     }
-    if (nrow(x$coefficients) == 0) {
+    if (length(x$aliased) == 0) {
         cat("\nNo Coefficients\n")
     } else {
         if (nsingular <- df[3] - df[1])
@@ -454,7 +460,8 @@ model.frame.lm <- function(formula, data, na.action, ...) {
 variable.names.lm <- function(object, full=FALSE, ...)
 {
     if(full)	dimnames(object$qr$qr)[[2]]
-    else	dimnames(object$qr$qr)[[2]][1:object$rank]
+    else if(object$rank) dimnames(object$qr$qr)[[2]][seq(len=object$rank)]
+    else character(0)
 }
 
 case.names.lm <- function(object, full=FALSE, ...)
@@ -577,9 +584,9 @@ predict.lm <-
 	    eval(object$call$offset, newdata)
 	mmDone <- FALSE
     }
-    n <- NROW(object$qr$qr)
+    n <- length(object$residuals) # NROW(object$qr$qr)
     p <- object$rank
-    p1 <- 1:p
+    p1 <- seq(len=p)
     piv <- object$qr$pivot[p1]
     if(p < ncol(X) && !(missing(newdata) || is.null(newdata)))
 	warning("prediction from a rank-deficient fit may be misleading")
@@ -593,7 +600,7 @@ predict.lm <-
     if(se.fit || interval != "none") {
 	res.var <-
 	    if (is.null(scale)) {
-		r <- object$resid
+		r <- object$residuals
 		f <- object$fitted
 		w <- object$weights
 		rss <- sum(if(is.null(w)) r^2 else r^2 * w)
@@ -601,17 +608,19 @@ predict.lm <-
 		rss/df
 	    } else scale^2
 	if(type != "terms") {
-	    XRinv <-
-		if(missing(newdata) && is.null(w))
-		    qr.Q(object$qr)[, p1, drop = FALSE]
-		else
-		    X[, piv] %*% qr.solve(qr.R(object$qr)[p1, p1])
+            if(p > 0) {
+                XRinv <-
+                    if(missing(newdata) && is.null(w))
+                        qr.Q(object$qr)[, p1, drop = FALSE]
+                    else
+                        X[, piv] %*% qr.solve(qr.R(object$qr)[p1, p1])
 #	NB:
 #	 qr.Q(object$qr)[, p1, drop = FALSE] / sqrt(w)
 #	looks faster than the above, but it's slower, and doesn't handle zero
 #	weights properly
 #
-	    ip <- drop(XRinv^2 %*% rep(res.var, p))
+                ip <- drop(XRinv^2 %*% rep(res.var, p))
+            } else ip <- rep(0, n)
 	}
     }
 
@@ -633,41 +642,44 @@ predict.lm <-
 	    termsconst <- sum(avx[piv] * beta[piv])
 	}
 	nterms <- length(asgn)
-	predictor <- matrix(ncol = nterms, nrow = NROW(X))
-	dimnames(predictor) <- list(rownames(X), names(asgn))
+        if(nterms > 0) {
+            predictor <- matrix(ncol = nterms, nrow = NROW(X))
+            dimnames(predictor) <- list(rownames(X), names(asgn))
 
-	if (se.fit || interval != "none") {
-	    ip <- matrix(ncol = nterms, nrow = NROW(X))
-	    dimnames(ip) <- list(rownames(X), names(asgn))
-	    Rinv <- qr.solve(qr.R(object$qr)[p1, p1])
-	}
-	if(hasintercept)
-	    X <- sweep(X, 2, avx)
-	unpiv <- rep.int(0, NCOL(X))
-	unpiv[piv] <- p1
-	## Predicted values will be set to 0 for any term that
-	## corresponds to columns of the X-matrix that are
-	## completely aliased with earlier columns.
-	for (i in seq(1, nterms, length = nterms)) {
-	    iipiv <- asgn[[i]]		# Columns of X, ith term
-	    ii <- unpiv[iipiv]		# Corresponding rows of Rinv
-	    iipiv[ii == 0] <- 0
-	    predictor[, i] <-
-		if(any(iipiv) > 0) X[, iipiv, drop = FALSE] %*% beta[iipiv]
-		else 0
-	    if (se.fit || interval != "none")
-		ip[, i] <-
-		    if(any(iipiv) > 0)
-			as.matrix(X[, iipiv, drop = FALSE] %*%
-				  Rinv[ii, , drop = FALSE])^2 %*% rep.int(res.var, p)
-		    else 0
-	}
-
-	if (!is.null(terms)) {
-	    predictor <- predictor[, terms, drop = FALSE]
-	    if (se.fit)
-		ip <- ip[, terms, drop = FALSE]
-	}
+            if (se.fit || interval != "none") {
+                ip <- matrix(ncol = nterms, nrow = NROW(X))
+                dimnames(ip) <- list(rownames(X), names(asgn))
+                Rinv <- qr.solve(qr.R(object$qr)[p1, p1])
+            }
+            if(hasintercept)
+                X <- sweep(X, 2, avx)
+            unpiv <- rep.int(0, NCOL(X))
+            unpiv[piv] <- p1
+            ## Predicted values will be set to 0 for any term that
+            ## corresponds to columns of the X-matrix that are
+            ## completely aliased with earlier columns.
+            for (i in seq(1, nterms, length = nterms)) {
+                iipiv <- asgn[[i]]      # Columns of X, ith term
+                ii <- unpiv[iipiv]      # Corresponding rows of Rinv
+                iipiv[ii == 0] <- 0
+                predictor[, i] <-
+                    if(any(iipiv) > 0) X[, iipiv, drop = FALSE] %*% beta[iipiv]
+                    else 0
+                if (se.fit || interval != "none")
+                    ip[, i] <-
+                        if(any(iipiv) > 0)
+                            as.matrix(X[, iipiv, drop = FALSE] %*%
+                                      Rinv[ii, , drop = FALSE])^2 %*% rep.int(res.var, p)
+                        else 0
+            }
+            if (!is.null(terms)) {
+                predictor <- predictor[, terms, drop = FALSE]
+                if (se.fit)
+                    ip <- ip[, terms, drop = FALSE]
+            }
+        } else { # no terms
+            predictor <- ip <- matrix(0, n,0)
+        }
 	attr(predictor, 'constant') <- if (hasintercept) termsconst else 0
     }
 
@@ -728,7 +740,7 @@ model.matrix.lm <- function(object, ...)
 {
     if(n <- match("x", names(object), 0)) object[[n]]
     else {
-        if(object$rank == 0) {
+        if(length(object$coefficients) == 0) {
             rval <- matrix(ncol=0, nrow=length(object$residuals))
             attr(rval,"assign") <- integer(0)
             rval
@@ -762,7 +774,7 @@ predict.mlm <-
 	else if (!is.null(object$offset))
 	    eval(object$call$offset, newdata)
     }
-    piv <- object$qr$pivot[1:object$rank]
+    piv <- object$qr$pivot[seq(object$rank)]
     pred <- X[, piv, drop = FALSE] %*% object$coefficients[piv,]
     if ( !is.null(offset) ) pred <- pred + offset
     if(inherits(object, "mlm")) pred else pred[, 1]

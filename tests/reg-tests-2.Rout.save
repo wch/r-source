@@ -2605,3 +2605,355 @@ $a
 
 > ## Last was an error in 1.7.1
 > 
+> 
+> ## examples of 0-rank models, some empty, some rank-deficient
+> y <- rnorm(10)
+> x <- rep(0, 10)
+> (fit <- lm(y ~ 0))
+
+Call:
+lm(formula = y ~ 0)
+
+No coefficients
+
+> summary(fit)
+
+Call:
+lm(formula = y ~ 0)
+
+Residuals:
+      Min        1Q    Median        3Q       Max 
+-1.369192 -0.210726  0.008405  0.084366  0.552922 
+
+No Coefficients
+
+Residual standard error: 0.5235 on 10 degrees of freedom
+
+> anova(fit)
+Analysis of Variance Table
+
+Response: y
+          Df  Sum Sq Mean Sq F value Pr(>F)
+Residuals 10 2.74036 0.27404               
+> predict(fit)
+ [1] 0 0 0 0 0 0 0 0 0 0
+> predict(fit, data.frame(x=x), se=TRUE)
+$fit
+ [1] 0 0 0 0 0 0 0 0 0 0
+
+$se.fit
+ [1] 0 0 0 0 0 0 0 0 0 0
+
+$df
+[1] 10
+
+$residual.scale
+[1] 0.5234843
+
+> predict(fit, type="terms", se=TRUE)
+$fit
+
+ [1,]
+ [2,]
+ [3,]
+ [4,]
+ [5,]
+ [6,]
+ [7,]
+ [8,]
+ [9,]
+[10,]
+attr(,"constant")
+[1] 0
+
+$se.fit
+
+ [1,]
+ [2,]
+ [3,]
+ [4,]
+ [5,]
+ [6,]
+ [7,]
+ [8,]
+ [9,]
+[10,]
+
+$df
+[1] 10
+
+$residual.scale
+[1] 0.5234843
+
+> variable.names(fit) #should be empty
+character(0)
+> 
+> (fit <- lm(y ~ x + 0))
+
+Call:
+lm(formula = y ~ x + 0)
+
+Coefficients:
+ x  
+NA  
+
+> summary(fit)
+
+Call:
+lm(formula = y ~ x + 0)
+
+Residuals:
+      Min        1Q    Median        3Q       Max 
+-1.369192 -0.210726  0.008405  0.084366  0.552922 
+
+Coefficients: (1 not defined because of singularities)
+  Estimate Std. Error t value Pr(>|t|)
+x       NA         NA      NA       NA
+
+Residual standard error: 0.5235 on 10 degrees of freedom
+
+> anova(fit)
+Analysis of Variance Table
+
+Response: y
+          Df  Sum Sq Mean Sq F value Pr(>F)
+Residuals 10 2.74036 0.27404               
+> predict(fit)
+ 1  2  3  4  5  6  7  8  9 10 
+ 0  0  0  0  0  0  0  0  0  0 
+> predict(fit, data.frame(x=x), se=TRUE)
+$fit
+ 1  2  3  4  5  6  7  8  9 10 
+ 0  0  0  0  0  0  0  0  0  0 
+
+$se.fit
+ [1] 0 0 0 0 0 0 0 0 0 0
+
+$df
+[1] 10
+
+$residual.scale
+[1] 0.5234843
+
+Warning message: 
+prediction from a rank-deficient fit may be misleading in: predict.lm(fit, data.frame(x = x), se = TRUE) 
+> predict(fit, type="terms", se=TRUE)
+$fit
+   x
+1  0
+2  0
+3  0
+4  0
+5  0
+6  0
+7  0
+8  0
+9  0
+10 0
+attr(,"constant")
+[1] 0
+
+$se.fit
+   x
+1  0
+2  0
+3  0
+4  0
+5  0
+6  0
+7  0
+8  0
+9  0
+10 0
+
+$df
+[1] 10
+
+$residual.scale
+[1] 0.5234843
+
+> variable.names(fit) #should be empty
+character(0)
+> 
+> (fit <- glm(y ~ 0))
+
+Call:  glm(formula = y ~ 0) 
+
+No coefficients
+
+
+Degrees of Freedom: 10 Total (i.e. Null);  10 Residual
+Null Deviance:	    2.74 
+Residual Deviance: 2.74 	AIC: 17.43 
+> summary(fit)
+
+Call:
+glm(formula = y ~ 0)
+
+Deviance Residuals: 
+      Min         1Q     Median         3Q        Max  
+-1.369192  -0.210726   0.008405   0.084366   0.552922  
+
+No Coefficients
+
+(Dispersion parameter for gaussian family taken to be 0.2740358)
+
+    Null deviance: 2.7404  on 10  degrees of freedom
+Residual deviance: 2.7404  on 10  degrees of freedom
+AIC: 17.434
+
+Number of Fisher Scoring iterations: 0
+
+> anova(fit)
+Analysis of Deviance Table
+
+Model: gaussian, link: identity
+
+Response: y
+
+Terms added sequentially (first to last)
+
+
+     Df Deviance Resid. Df Resid. Dev
+NULL                    10     2.7404
+> predict(fit)
+ 1  2  3  4  5  6  7  8  9 10 
+ 0  0  0  0  0  0  0  0  0  0 
+> predict(fit, data.frame(x=x), se=TRUE)
+$fit
+ [1] 0 0 0 0 0 0 0 0 0 0
+
+$se.fit
+ [1] 0 0 0 0 0 0 0 0 0 0
+
+$residual.scale
+[1] 0.5234843
+
+> predict(fit, type="terms", se=TRUE)
+$fit
+
+ [1,]
+ [2,]
+ [3,]
+ [4,]
+ [5,]
+ [6,]
+ [7,]
+ [8,]
+ [9,]
+[10,]
+attr(,"constant")
+[1] 0
+
+$se.fit
+
+ [1,]
+ [2,]
+ [3,]
+ [4,]
+ [5,]
+ [6,]
+ [7,]
+ [8,]
+ [9,]
+[10,]
+
+$residual.scale
+[1] 0.5234843
+
+> 
+> (fit <- glm(y ~ x + 0))
+
+Call:  glm(formula = y ~ x + 0) 
+
+Coefficients:
+ x  
+NA  
+
+Degrees of Freedom: 10 Total (i.e. Null);  10 Residual
+Null Deviance:	    2.74 
+Residual Deviance: 2.74 	AIC: 17.43 
+> summary(fit)
+
+Call:
+glm(formula = y ~ x + 0)
+
+Deviance Residuals: 
+      Min         1Q     Median         3Q        Max  
+-1.369192  -0.210726   0.008405   0.084366   0.552922  
+
+Coefficients: (1 not defined because of singularities)
+  Estimate Std. Error t value Pr(>|t|)
+x       NA         NA      NA       NA
+
+(Dispersion parameter for gaussian family taken to be 0.2740358)
+
+    Null deviance: 2.7404  on 10  degrees of freedom
+Residual deviance: 2.7404  on 10  degrees of freedom
+AIC: 17.434
+
+Number of Fisher Scoring iterations: 2
+
+> anova(fit)
+Analysis of Deviance Table
+
+Model: gaussian, link: identity
+
+Response: y
+
+Terms added sequentially (first to last)
+
+
+     Df Deviance Resid. Df Resid. Dev
+NULL                    10     2.7404
+x     0   0.0000        10     2.7404
+> predict(fit)
+ 1  2  3  4  5  6  7  8  9 10 
+ 0  0  0  0  0  0  0  0  0  0 
+> predict(fit, data.frame(x=x), se=TRUE)
+$fit
+ 1  2  3  4  5  6  7  8  9 10 
+ 0  0  0  0  0  0  0  0  0  0 
+
+$se.fit
+ [1] 0 0 0 0 0 0 0 0 0 0
+
+$residual.scale
+[1] 0.5234843
+
+Warning message: 
+prediction from a rank-deficient fit may be misleading in: predict.lm(object, newdata, se.fit, scale = residual.scale, type = ifelse(type ==  
+> predict(fit, type="terms", se=TRUE)
+$fit
+   x
+1  0
+2  0
+3  0
+4  0
+5  0
+6  0
+7  0
+8  0
+9  0
+10 0
+attr(,"constant")
+[1] 0
+
+$se.fit
+   x
+1  0
+2  0
+3  0
+4  0
+5  0
+6  0
+7  0
+8  0
+9  0
+10 0
+
+$residual.scale
+[1] 0.5234843
+
+> ## Lots of problems in 1.7.x
+> 

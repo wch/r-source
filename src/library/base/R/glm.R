@@ -314,7 +314,7 @@ glm.fit <-
     names(y) <- ynames
     if(!EMPTY)
         names(fit$effects) <-
-            c(xxnames[seq(fit$rank)], rep.int("", sum(good) - fit$rank))
+            c(xxnames[seq(len=fit$rank)], rep.int("", sum(good) - fit$rank))
     ## calculate null deviance -- corrected in glm() if offset and intercept
     wtdmu <-
 	if (intercept) sum(weights * y)/sum(weights) else linkinv(offset)
@@ -420,8 +420,9 @@ anova.glm <- function(object, ..., dispersion=NULL, test=NULL)
 
     table <- data.frame(c(NA, -diff(resdf)),
 			c(NA, pmax(0, -diff(resdev))), resdf, resdev)
-    if (nvars == 0) table <- table[1,,drop=FALSE] # kludge for null model
-    dimnames(table) <- list(c("NULL", attr(object$terms, "term.labels")),
+    tl <- attr(object$terms, "term.labels")
+    if (length(tl) == 0) table <- table[1,,drop=FALSE] # kludge for null model
+    dimnames(table) <- list(c("NULL", tl),
 			    c("Df", "Deviance", "Resid. Df", "Resid. Dev"))
     title <- paste("Analysis of Deviance Table", "\n\nModel: ",
 		   object$family$family, ", link: ", object$family$link,
@@ -576,9 +577,11 @@ summary.glm <- function(object, dispersion = NULL,
         df.f <- NCOL(Qr$qr)
     } else {
         coef.table <- matrix(, 0, 4)
+        dimnames(coef.table) <-
+            list(NULL, c("Estimate", "Std. Error", "t value", "Pr(>|t|)"))
         covmat.unscaled <- covmat <- matrix(, 0, 0)
-        aliased <- logical(0)
-        df.f <- 0
+        aliased <- is.na(coef(object))
+        df.f <- length(aliased)
     }
     ## return answer
 
@@ -617,7 +620,7 @@ print.summary.glm <-
     }
     print.default(x$deviance.resid, digits=digits, na = "", print.gap = 2)
 
-    if(nrow(x$coefficients) == 0) {
+    if(length(x$aliased) == 0) {
         cat("\nNo Coefficients\n")
     } else {
         ## df component added in 1.8.0
