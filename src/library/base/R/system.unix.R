@@ -134,16 +134,21 @@ function (name, help, lib.loc = .lib.loc, character.only = FALSE,
     }
     pkgname <- paste("package", name, sep = ":")
     if (is.na(match(pkgname, search()))) {
-      packagedir<-system.file("",name,lib.loc)
-      which.lib.loc<-lib.loc[match(packagedir,paste(lib.loc,name,"",sep="/"))]
+      packagedir <- system.file("", name, lib.loc)
       if (packagedir == "") {
-	txt <- paste("There is no package called `",
-		     name, "'", sep = "")
+	txt <- paste("There is no package called `", name, "'", sep = "")
 	if (logical.return) {
 	  warning(txt)
 	  return(FALSE)
 	}
 	else stop(txt)
+      }
+      which.lib.loc <-
+        lib.loc[match(packagedir[1], paste(lib.loc, name, "", sep = "/"))]
+      if (length(packagedir) > 1) {
+        warning(paste("Package `", name, "' found more than once,\n  ",
+                      "using the one found in `", which.lib.loc, "'",
+                      sep = ""))
       }
       file <- system.file(paste("R", name, sep = "/"), name, lib.loc)
       env <- attach(NULL, name = pkgname)
