@@ -629,6 +629,34 @@ static void env_command_line(int *pac, char **argv)
     *pac = newac;
 }
 
+char *PrintUsage(void)
+{
+    static char msg[5000];
+    char msg0[] =
+"Start R, a system for statistical computation and graphics, with the\nspecified options\n\nEnVars: Environmental variables can be set by NAME=value strings\n\nOptions:\n  -h, --help            Print usage message and exit\n  --version             Print version info and exit\n  --save                Do save data sets at the end of the session\n  --no-save             Don't save them\n", 
+	msg1[] = 
+"  --no-environ          Don't read the site and user environment files\n  --no-site-file        Don't read the site-wide Rprofile\n  --no-init-file        Don't read the .Rprofile or ~/.Rprofile files\n  --restore             Do restore previously saved data sets at startup\n  --no-restore-data     Don't restore previously saved data sets\n  --no-restore-history  Don't restore the R history file\n  --no-restore          Don't restore anything\n",
+	msg2[] = 
+"  --vanilla             Combine --no-save, --no-restore, --no-site-file,\n                          --no-init-file and --no-environ\n  --min-vsize=N         Set vector heap min to N bytes; '4M' = 4 MegaB\n  --max-vsize=N         Set vector heap max to N bytes;\n  --min-nsize=N         Set min number of cons cells to N\n  --max-nsize=N         Set max number of cons cells to N\n",
+	msg2b[] =
+"  --max-mem-size=N      Set limit for memory to be used by R\n  --max-ppsize=N        Set max size of protect stack to N\n",
+	msg3[] =
+"  -q, --quiet           Don't print startup message\n  --silent              Same as --quiet\n  --slave               Make R run as quietly as possible\n  --verbose             Print more information about progress\n  --args                Skip the rest of the command line\n", 
+	msg4[] = 
+"  --ess                 Don't use getline for command-line editing\n                          and assert interactive use";
+    if(CharacterMode == RTerm) 
+	strcpy(msg, "Usage: Rterm [options] [< infile] [> outfile] [EnvVars]\n\n");
+    else strcpy(msg, "Usage: Rgui [options] [EnvVars]\n\n");
+    strcat(msg, msg0);
+    strcat(msg, msg1);
+    strcat(msg, msg2);
+    strcat(msg, msg2b);
+    strcat(msg, msg3);
+    if(CharacterMode == RTerm) strcat(msg, msg4);
+    return msg;
+}
+
+
 #include <winbase.h>
 
 int cmdlineoptions(int ac, char **av)
@@ -730,7 +758,10 @@ int cmdlineoptions(int ac, char **av)
 
     while (--ac) {
 	if (processing && **++av == '-') {
-	    if (!strcmp(*av, "--no-environ")) {
+	    if (!strcmp(*av, "--help")) {
+		R_ShowMessage(PrintUsage());
+		exit(0);
+	    }else if (!strcmp(*av, "--no-environ")) {
 		Rp->NoRenviron = TRUE;
 	    } else if (!strcmp(*av, "--ess")) {
 /* Assert that we are interactive even if input is from a file */

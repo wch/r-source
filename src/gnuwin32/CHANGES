@@ -20,6 +20,9 @@ has been enabled.  The initially requested memory is no longer
 reserved, but as this malloc is able to work with non-contiguous
 memory chunks that should not matter.
 
+Both Rterm and Rgui now give usage information via the --help
+command-line flag.
+
 
 
 rw1081
