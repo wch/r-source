@@ -170,6 +170,9 @@ NEW FEATURES
 	need to be escaped where before they did not (but could have
 	been).
 
+    o	abbreviate() now warns if used with non-ASCII chars, as the 
+	algorithm is designed for English words.
+
 
 UTILITIES
 

@@ -19,11 +19,11 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-/* <UTF8-FIXME> 
+/* <UTF8> 
    abbreviate needs to be fixed, if possible.
-   chartr/tolower/toupper work at byte not char level.
 
    Changes already made:
+   abbreviate needs to be fixed, if possible, but warns for now.
    Regex code should be OK, substitution does ASCII comparisons only.
    charToRaw/rawToChar should work at byte level, so is OK.
    agrep needed to test for non-ASCII input.
@@ -31,7 +31,8 @@
    substr() should work at char not byte level.
    Semantics of nchar() have been fixed.
    regexpr returns match length in bytes not chars.
-   tolower/toupper added warnings.
+   tolower/toupper added wchar versions
+   chartr works at char not byte level.
  */
 
 #ifdef HAVE_CONFIG_H
@@ -69,6 +70,32 @@
 # define MAX(a, b) ((a) > (b) ? (a) : (b))
 #endif
 
+static char *buff = NULL;	/* Buffer for character strings */
+
+static void AllocBuffer(int len)
+{
+    static int bufsize = 0;
+
+    if(len >= 0 ) {
+	if(len*sizeof(char) < bufsize) return;
+	len = (len+1)*sizeof(char);
+	if(len < MAXELTSIZE) len = MAXELTSIZE;
+	/* Protect against broken realloc */
+	if(buff) buff = (char *) realloc(buff, len);
+	else buff = (char *) malloc(len);
+	bufsize = len;
+	if(!buff) {
+	    bufsize = 0;
+	    error("Could not allocate memory for substr / strsplit");
+	}
+    } else {
+	if(bufsize == MAXELTSIZE) return;
+	free(buff);
+	buff = (char *) malloc(MAXELTSIZE);
+	bufsize = MAXELTSIZE;
+    }
+}
+
 /* Functions to perform analogues of the standard C string library. */
 /* Most are vectorized */
 
@@ -77,6 +104,11 @@ SEXP do_nchar(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP d, s, x, stype;
     int i, len;
     char *type;
+#if defined(SUPPORT_UTF8) && defined(HAVE_WCSWIDTH)
+    char *xi;
+    int nc;
+    wchar_t * wc;
+#endif
 
     checkArity(op, args);
     PROTECT(x = coerceVector(CAR(args), STRSXP));
@@ -109,15 +141,22 @@ SEXP do_nchar(SEXP call, SEXP op, SEXP args, SEXP env)
 	    if(STRING_ELT(x, i) == NA_STRING) {
 		INTEGER(s)[i] = NA_INTEGER;
 	    } else {
-#if defined SUPPORT_UTF8 && defined HAVE_WCSWIDTH
-		/* FIXME: need to convert to wide first */
-		INTEGER(s)[i] = wcswidth(CHAR(STRING_ELT(x, i)), 2147483647);
+#if defined(SUPPORT_UTF8) && defined(HAVE_WCSWIDTH)
+		xi = CHAR(STRING_ELT(x, i));
+		nc = mbstowcs(NULL, xi, 0);
+		AllocBuffer((nc+1)*sizeof(wchar_t));
+		wc = (wchar_t *) buff;
+		mbstowcs(wc, xi, nc + 1);
+		INTEGER(s)[i] = wcswidth(wc, 2147483647);
 #else
 		INTEGER(s)[i] = NA_INTEGER;
 #endif
 	    }
 	}
     }
+#if defined(SUPPORT_UTF8) && defined(HAVE_WCSWIDTH)
+    AllocBuffer(-1);
+#endif
     if ((d = getAttrib(x, R_DimSymbol)) != R_NilValue)
 	setAttrib(s, R_DimSymbol, d);
     if ((d = getAttrib(x, R_DimNamesSymbol)) != R_NilValue)
@@ -125,33 +164,6 @@ SEXP do_nchar(SEXP call, SEXP op, SEXP args, SEXP env)
     UNPROTECT(2);
     return s;
 }
-
-static char *buff=NULL;		/* Buffer for character strings */
-
-static void AllocBuffer(int len)
-{
-    static int bufsize = 0;
-
-    if(len >= 0 ) {
-	if(len*sizeof(char) < bufsize) return;
-	len = (len+1)*sizeof(char);
-	if(len < MAXELTSIZE) len = MAXELTSIZE;
-	/* Protect against broken realloc */
-	if(buff) buff = (char *) realloc(buff, len);
-	else buff = (char *) malloc(len);
-	bufsize = len;
-	if(!buff) {
-	    bufsize = 0;
-	    error("Could not allocate memory for substr / strsplit");
-	}
-    } else {
-	if(bufsize == MAXELTSIZE) return;
-	free(buff);
-	buff = (char *) malloc(MAXELTSIZE);
-	bufsize = MAXELTSIZE;
-    }
-}
-
 
 static void substr(char *buf, char *str, int sa, int so)
 {
@@ -646,6 +658,7 @@ SEXP do_abbrev(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP ans;
     int i, len, minlen, uclass;
+    Rboolean warn = FALSE;
 
     checkArity(op,args);
 
@@ -657,12 +670,15 @@ SEXP do_abbrev(SEXP call, SEXP op, SEXP args, SEXP env)
     minlen = asInteger(CADR(args));
     uclass = asLogical(CAR(CDDR(args)));
     for (i = 0 ; i < len ; i++) {
-	if (STRING_ELT(CAR(args),i)==NA_STRING)
-	    SET_STRING_ELT(ans,i,NA_STRING);
-	else
-	    SET_STRING_ELT(ans, i, stripchars(STRING_ELT(CAR(args), i), minlen));
+	if (STRING_ELT(CAR(args),i) == NA_STRING)
+	    SET_STRING_ELT(ans, i, NA_STRING);
+	else {
+	    warn = warn | !utf8strIsASCII(CHAR(STRING_ELT(CAR(args), i)));
+	    SET_STRING_ELT(ans, i, 
+			   stripchars(STRING_ELT(CAR(args), i), minlen));
+	}
     }
-
+    if(warn) warningcall(call, "abbreviate used with non-ASCII chars");
     UNPROTECT(1);
     return(ans);
 }
@@ -1099,86 +1115,149 @@ SEXP do_regexpr(SEXP call, SEXP op, SEXP args, SEXP env)
     return ans;
 }
 
-/* <UTF8-FIXME>  There does not seem to be a portable way to do this
-   in wchar.  Both Tcl/Tk and Perl use the UnicodeData table. */
-
 SEXP
 do_tolower(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP x, y;
-    int i, n;
+    int i, n, ul;
     char *p, *xi;
-#ifdef SUPPORT_UTF8
-    Rboolean warn = FALSE;
-#endif
 
     checkArity(op, args);
+    ul = PRIMVAL(op); /* 0 = tolower, 1 = toupper */
+
     x = CAR(args);
     if(!isString(x))
 	errorcall(call, "non-character argument to tolower()");
     n = LENGTH(x);
     PROTECT(y = allocVector(STRSXP, n));
-    for(i = 0; i < n; i++) {
-	xi = CHAR(STRING_ELT(x, i));
 #ifdef SUPPORT_UTF8
-	if(utf8locale && !utf8strIsASCII(xi)) warn = TRUE;
+    if(utf8locale) {
+	int nb, nc, j;
+	wctrans_t tr = wctrans(ul ? "upper" : "lower");
+	wchar_t * wc;
+	/* the translated string need not even be the same length in bytes */
+	for(i = 0; i < n; i++) {
+	    if (STRING_ELT(x, i) == NA_STRING) 
+		SET_STRING_ELT(y, i, NA_STRING);
+	    else {
+		xi = CHAR(STRING_ELT(x, i));
+		nc = mbstowcs(NULL, xi, 0);
+		AllocBuffer((nc+1)*sizeof(wchar_t));
+		wc = (wchar_t *) buff;
+		mbstowcs(wc, xi, nc + 1);
+		for(j = 0; j < nc; j++) wc[j] = towctrans(wc[j], tr);
+		nb = wcstombs(NULL, wc, 0);
+		SET_STRING_ELT(y, i, allocString(nb));
+		wcstombs(CHAR(STRING_ELT(y, i)), wc, nb + 1);
+	    }
+	}
+	AllocBuffer(-1);
+    } else
 #endif
-	SET_STRING_ELT(y, i, allocString(strlen(xi)));
-	strcpy(CHAR(STRING_ELT(y, i)), xi);
+    {
+	for(i = 0; i < n; i++) {
+	    if (STRING_ELT(x, i) == NA_STRING) 
+		SET_STRING_ELT(y, i, NA_STRING);
+	    else {
+		xi = CHAR(STRING_ELT(x, i));
+		SET_STRING_ELT(y, i, allocString(strlen(xi)));
+		strcpy(CHAR(STRING_ELT(y, i)), xi);
+		for(p = CHAR(STRING_ELT(y, i)); *p != '\0'; p++) 
+		    *p = ul ? toupper(*p) : tolower(*p);
+	    }
+	}
     }
-
-    for(i = 0; i < n; i++) {
-	if (STRING_ELT(x, i) == NA_STRING) SET_STRING_ELT(y, i, NA_STRING);
-	else
-	    for(p = CHAR(STRING_ELT(y, i)); *p != '\0'; p++) *p = tolower(*p);
-    }
-#ifdef SUPPORT_UTF8
-    if(utf8locale && warn)
-	warningcall(call, "tolower operates byte-wise even in a UTF-8 locale");
-#endif
     UNPROTECT(1);
     return(y);
 }
 
-SEXP
-do_toupper(SEXP call, SEXP op, SEXP args, SEXP env)
-{
-    SEXP x, y;
-    int i, n;
-    char *p, *xi;
-#ifdef SUPPORT_UTF8
-    Rboolean warn = FALSE;
-#endif
 
-    checkArity(op, args);
-    x = CAR(args);
-    if(!isString(x))
-	errorcall(call, "non-character argument to toupper()");
-    n = LENGTH(x);
-    PROTECT(y = allocVector(STRSXP, n));
-    for(i = 0; i < n; i++) {
-	xi = CHAR(STRING_ELT(x, i));
 #ifdef SUPPORT_UTF8
-	if(utf8locale && !utf8strIsASCII(xi)) warn = TRUE;
-#endif
-	SET_STRING_ELT(y, i, allocString(strlen(xi)));
-	strcpy(CHAR(STRING_ELT(y, i)), xi);
-    }
+struct wtr_spec {
+    enum { WTR_INIT, WTR_CHAR, WTR_RANGE } type;
+    struct wtr_spec *next;
+    union {
+	wchar_t c;
+	struct {
+	    wchar_t first;
+	    wchar_t last;
+	} r;
+    } u;
+};
 
-    for(i = 0; i < n; i++) {
-	if (STRING_ELT(x,i) == NA_STRING) SET_STRING_ELT(y, i, NA_STRING);
-	else
-	    for(p = CHAR(STRING_ELT(y, i)); *p != '\0'; p++) *p = toupper(*p);
+static void
+wtr_build_spec(const wchar_t *s, struct wtr_spec *trs) {
+    int i, len = wcslen(s);
+    struct wtr_spec *this, *new;
+
+    this = trs;
+    for(i = 0; i < len - 2; ) {
+	new = Calloc(1, struct wtr_spec);
+	new->next = NULL;
+	if(s[i + 1] == L'-') {
+	    new->type = WTR_RANGE;
+	    if(s[i] > s[i + 2])
+		error("decreasing range specification (`%lc-%lc')",
+		      s[i], s[i + 2]);
+	    new->u.r.first = s[i];
+	    new->u.r.last = s[i + 2];
+	    i = i + 3;
+	} else {
+	    new->type = WTR_CHAR;
+	    new->u.c = s[i];
+	    i++;
+	}
+	this = this->next = new;
     }
-#ifdef SUPPORT_UTF8
-    if(utf8locale && warn)
-	warningcall(call, "toupper operates byte-wise even in a UTF-8 locale");
-#endif
-    UNPROTECT(1);
-    return(y);
+    for( ; i < len; i++) {
+	new = Calloc(1, struct wtr_spec);
+	new->next = NULL;
+	new->type = WTR_CHAR;
+	new->u.c = s[i];
+	this = this->next = new;
+    }
 }
 
-/* <UTF8-FIXME> We could use a wchar version to do chars not bytes */
+static void
+wtr_free_spec(struct wtr_spec *trs) {
+    struct wtr_spec *this, *next;
+    this = trs;
+    while(this) {
+	next = this->next;
+	Free(this);
+	this = next;
+    }
+}
+
+static wchar_t
+wtr_get_next_char_from_spec(struct wtr_spec **p) {
+    wchar_t c;
+    struct wtr_spec *this;
+
+    this = *p;
+    if(!this)
+	return('\0');
+    switch(this->type) {
+	/* Note: this code does not deal with the WTR_INIT case. */
+    case WTR_CHAR:
+	c = this->u.c;
+	*p = this->next;
+	break;
+    case WTR_RANGE:
+	c = this->u.r.first;
+	if(c == this->u.r.last) {
+	    *p = this->next;
+	} else {
+	    (this->u.r.first)++;
+	}
+	break;
+    default:
+	c = L'\0';
+	break;
+    }
+    return(c);
+}
+#endif
 
 struct tr_spec {
     enum { TR_INIT, TR_CHAR, TR_RANGE } type;
@@ -1192,12 +1271,6 @@ struct tr_spec {
     } u;
 };
 
-/*
-  FIXME:
-  We should really check all subsequent malloc()'s for their return
-  value.
-  */
-
 static void
 tr_build_spec(const char *s, struct tr_spec *trs) {
     int i, len = strlen(s);
@@ -1205,7 +1278,7 @@ tr_build_spec(const char *s, struct tr_spec *trs) {
 
     this = trs;
     for(i = 0; i < len - 2; ) {
-	new = (struct tr_spec *) malloc(sizeof(struct tr_spec));
+	new = Calloc(1, struct tr_spec);
 	new->next = NULL;
 	if(s[i + 1] == '-') {
 	    new->type = TR_RANGE;
@@ -1223,7 +1296,7 @@ tr_build_spec(const char *s, struct tr_spec *trs) {
 	this = this->next = new;
     }
     for( ; i < len; i++) {
-	new = (struct tr_spec *) malloc(sizeof(struct tr_spec));
+	new = Calloc(1, struct tr_spec);
 	new->next = NULL;
 	new->type = TR_CHAR;
 	new->u.c = s[i];
@@ -1237,7 +1310,7 @@ tr_free_spec(struct tr_spec *trs) {
     this = trs;
     while(this) {
 	next = this->next;
-	free(this);
+	Free(this);
 	this = next;
     }
 }
@@ -1275,9 +1348,6 @@ SEXP
 do_chartr(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP old, new, x, y;
-    unsigned char xtable[UCHAR_MAX + 1], *p, c_old, c_new;
-    struct tr_spec *trs_old, **trs_old_ptr;
-    struct tr_spec *trs_new, **trs_new_ptr;
     int i, n;
 
     checkArity(op, args);
@@ -1290,59 +1360,131 @@ do_chartr(SEXP call, SEXP op, SEXP args, SEXP env)
 	errorcall(call, R_MSG_IA);
 
     if (STRING_ELT(old,0) == NA_STRING ||
-	STRING_ELT(new,0) == NA_STRING){
+	STRING_ELT(new,0) == NA_STRING) {
 	errorcall(call, "invalid (NA) arguments.");
     }
 
-    for(i = 0; i <= UCHAR_MAX; i++)
-	xtable[i] = i;
+#ifdef SUPPORT_UTF8
+    if(utf8locale) {
+	int j, nb, nc;
+	wchar_t xtable[65536 + 1], c_old, c_new, *wc;
+	char *xi;
+	struct wtr_spec *trs_old, **trs_old_ptr;
+	struct wtr_spec *trs_new, **trs_new_ptr;
 
-    /* Initialize the old and new tr_spec lists. */
-    trs_old = (struct tr_spec *) malloc(sizeof(struct tr_spec));
-    trs_old->type = TR_INIT;
-    trs_old->next = NULL;
-    trs_new = (struct tr_spec *) malloc(sizeof(struct tr_spec));
-    trs_new->type = TR_INIT;
-    trs_new->next = NULL;
-    /* Build the old and new tr_spec lists. */
-    tr_build_spec(CHAR(STRING_ELT(old, 0)), trs_old);
-    tr_build_spec(CHAR(STRING_ELT(new, 0)), trs_new);
-    /* Initialize the pointers for walking through the old and new
-       tr_spec lists and retrieving the next chars from the lists.
-       */
-    trs_old_ptr = (struct tr_spec **) malloc(sizeof(struct tr_spec *));
-    *trs_old_ptr = trs_old->next;
-    trs_new_ptr = (struct tr_spec **) malloc(sizeof(struct tr_spec *));
-    *trs_new_ptr = trs_new->next;
-    for(;;) {
-	c_old = tr_get_next_char_from_spec(trs_old_ptr);
-	c_new = tr_get_next_char_from_spec(trs_new_ptr);
-	if(c_old == '\0')
-	    break;
-	else if(c_new == '\0')
-	    errorcall(call, "old is longer than new");
-	else
-	    xtable[c_old] = c_new;
-    }
-    /* Free the memory occupied by the tr_spec lists. */
-    tr_free_spec(trs_old);
-    tr_free_spec(trs_new);
-    free(trs_old_ptr); free(trs_new_ptr);
+	for(i = 0; i <= UCHAR_MAX; i++) xtable[i] = i;
 
-    n = LENGTH(x);
-    PROTECT(y = allocVector(STRSXP, n));
-    for(i = 0; i < n; i++) {
-	SET_STRING_ELT(y, i, allocString(strlen(CHAR(STRING_ELT(x, i)))));
-	strcpy(CHAR(STRING_ELT(y, i)), CHAR(STRING_ELT(x, i)));
-    }
+	/* Initialize the old and new wtr_spec lists. */
+	trs_old = Calloc(1, struct wtr_spec);
+	trs_old->type = WTR_INIT;
+	trs_old->next = NULL;
+	trs_new = Calloc(1, struct wtr_spec);
+	trs_new->type = WTR_INIT;
+	trs_new->next = NULL;
+	/* Build the old and new wtr_spec lists. */
+	nc = mbstowcs(NULL, CHAR(STRING_ELT(old, 0)), 0);
+	AllocBuffer((nc+1)*sizeof(wchar_t));
+	wc = (wchar_t *) buff;
+	mbstowcs(wc, CHAR(STRING_ELT(old, 0)), nc + 1);
+	wtr_build_spec(wc, trs_old);
 
-    for(i = 0; i < length(y); i++) {
-	if (STRING_ELT(x,i) == NA_STRING)
-	    SET_STRING_ELT(y, i, NA_STRING);
-	else
-	    for(p = (unsigned char *)CHAR(STRING_ELT(y, i)); *p != '\0'; p++) {
-	        *p = xtable[*p];
+	nc = mbstowcs(NULL, CHAR(STRING_ELT(new, 0)), 0);
+	AllocBuffer((nc+1)*sizeof(wchar_t));
+	wc = (wchar_t *) buff;
+	mbstowcs(wc, CHAR(STRING_ELT(new, 0)), nc + 1);
+	wtr_build_spec(wc, trs_new);
+
+	/* Initialize the pointers for walking through the old and new
+	   wtr_spec lists and retrieving the next chars from the lists.
+	*/
+	trs_old_ptr = Calloc(1, struct wtr_spec *);
+	*trs_old_ptr = trs_old->next;
+	trs_new_ptr = Calloc(1, struct wtr_spec *);
+	*trs_new_ptr = trs_new->next;
+	for(;;) {
+	    c_old = wtr_get_next_char_from_spec(trs_old_ptr);
+	    c_new = wtr_get_next_char_from_spec(trs_new_ptr);
+	    if(c_old == '\0')
+		break;
+	    else if(c_new == '\0')
+		errorcall(call, "old is longer than new");
+	    else
+		xtable[c_old] = c_new;
+	}
+	/* Free the memory occupied by the wtr_spec lists. */
+	wtr_free_spec(trs_old);
+	wtr_free_spec(trs_new);
+	Free(trs_old_ptr); Free(trs_new_ptr);
+
+	n = LENGTH(x);
+	PROTECT(y = allocVector(STRSXP, n));
+	for(i = 0; i < n; i++) {
+	    if (STRING_ELT(x,i) == NA_STRING) SET_STRING_ELT(y, i, NA_STRING);
+	    else {
+		xi = CHAR(STRING_ELT(x, i));
+		nc = mbstowcs(NULL, xi, 0);
+		AllocBuffer((nc+1)*sizeof(wchar_t));
+		wc = (wchar_t *) buff;
+		mbstowcs(wc, xi, nc + 1);
+		for(j = 0; j < nc; j++) wc[j] = xtable[wc[j]];
+		nb = wcstombs(NULL, wc, 0);
+		SET_STRING_ELT(y, i, allocString(nb));
+		wcstombs(CHAR(STRING_ELT(y, i)), wc, nb + 1);
 	    }
+	}
+	AllocBuffer(-1);
+    } else
+#endif 
+    {
+	unsigned char xtable[UCHAR_MAX + 1], *p, c_old, c_new;
+	struct tr_spec *trs_old, **trs_old_ptr;
+	struct tr_spec *trs_new, **trs_new_ptr;
+
+	for(i = 0; i <= UCHAR_MAX; i++) xtable[i] = i;
+
+	/* Initialize the old and new tr_spec lists. */
+	trs_old = Calloc(1, struct tr_spec);
+	trs_old->type = TR_INIT;
+	trs_old->next = NULL;
+	trs_new = Calloc(1, struct tr_spec);
+	trs_new->type = TR_INIT;
+	trs_new->next = NULL;
+	/* Build the old and new tr_spec lists. */
+	tr_build_spec(CHAR(STRING_ELT(old, 0)), trs_old);
+	tr_build_spec(CHAR(STRING_ELT(new, 0)), trs_new);
+	/* Initialize the pointers for walking through the old and new
+	   tr_spec lists and retrieving the next chars from the lists.
+	*/
+	trs_old_ptr = Calloc(1, struct tr_spec *);
+	*trs_old_ptr = trs_old->next;
+	trs_new_ptr = Calloc(1, struct tr_spec *);
+	*trs_new_ptr = trs_new->next;
+	for(;;) {
+	    c_old = tr_get_next_char_from_spec(trs_old_ptr);
+	    c_new = tr_get_next_char_from_spec(trs_new_ptr);
+	    if(c_old == '\0')
+		break;
+	    else if(c_new == '\0')
+		errorcall(call, "old is longer than new");
+	    else
+		xtable[c_old] = c_new;
+	}
+	/* Free the memory occupied by the tr_spec lists. */
+	tr_free_spec(trs_old);
+	tr_free_spec(trs_new);
+	Free(trs_old_ptr); Free(trs_new_ptr);
+
+	n = LENGTH(x);
+	PROTECT(y = allocVector(STRSXP, n));
+	for(i = 0; i < n; i++) {
+	    if (STRING_ELT(x,i) == NA_STRING) SET_STRING_ELT(y, i, NA_STRING);
+	    else {
+	    SET_STRING_ELT(y, i, allocString(strlen(CHAR(STRING_ELT(x, i)))));
+	    strcpy(CHAR(STRING_ELT(y, i)), CHAR(STRING_ELT(x, i)));
+		for(p = (unsigned char *) CHAR(STRING_ELT(y, i)); 
+		    *p != '\0'; p++) *p = xtable[*p];
+	    }
+	}
     }
 
     UNPROTECT(1);

@@ -47,6 +47,11 @@ abbreviate(names.arg, minlength = 4, use.classes = TRUE,
   The character version of \code{names.arg} is attached to the returned
   value as a names argument.
 }
+\section{Warning}{
+  This is really only suitable for English, and does not work correctly with
+  non-ASCII characters in UTF-8 locales.  It will warns if used with
+  non-ASCII characters.
+}
 \seealso{
   \code{\link{substr}}.
 }
