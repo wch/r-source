@@ -54,7 +54,7 @@ function(package, help, lib.loc = NULL, character.only = FALSE,
             ## package.
             ## Only if it is _already_ here do we do cacheMetaData.
             ## The methods package caches all other libs when it is
-            ## attached. 
+            ## attached.
             ## Note for detail: this does _not_ test whether dispatch is
             ## currently on, but rather whether the package is attached
             ## (cf .isMethodsDispachOn).
@@ -123,6 +123,16 @@ function(package, help, lib.loc = NULL, character.only = FALSE,
                                ".Last.value", ".Random.seed")
 		lib.pos <- match(pkgname, search())
 		ob <- objects(lib.pos)
+                ##ignore generics not defined for the package
+                if(!is.na(match("package:methods", search()))) {
+                    ob <- ob[sapply(ob, function(f) {
+                        f<- get(f, pos=lib.pos)
+                        fAttr <- attributes(f)[c("class", "package")]
+                        (length(fAttr) == 2
+                         && fAttr[1] == "genericFunction"
+                         && fAttr[2] != package)
+                    } == FALSE)]
+                }
 		fst <- TRUE
 		ipos <- seq(along = sp <- search())[-c(lib.pos,
 			    match("Autoloads", sp))]
@@ -262,9 +272,10 @@ function(chname, package = .packages(), lib.loc = NULL, verbose =
 
 require <-
 function(package, quietly = FALSE, warn.conflicts = TRUE,
-         keep.source = getOption("keep.source.pkgs"))
+         keep.source = getOption("keep.source.pkgs"), character.only=FALSE)
 {
-    package <- as.character(substitute(package)) # allowing "require(eda)"
+    if( !character.only )
+        package <- as.character(substitute(package)) # allowing "require(eda)"
     if (is.na(match(paste("package", package, sep = ":"), search()))) {
 	if (!quietly) cat("Loading required package:", package, "\n")
 	library(package, char = TRUE, logical = TRUE,

@@ -29,7 +29,7 @@ library(package, help, lib.loc = NULL, character.only = FALSE,
         keep.source = getOption("keep.source.pkgs"),
         verbose = getOption("verbose"))
 require(package, quietly = FALSE, warn.conflicts = TRUE,
-        keep.source = getOption("keep.source.pkgs"))
+        keep.source = getOption("keep.source.pkgs"), character.only=FALSE)
 
 .First.lib(libname, pkgname)
 .Last.lib(libpath)
@@ -208,6 +208,9 @@ detach("package:eda")
 # if the package name is in a character vector, use
 pkg <- "eda"
 library(pkg, character.only = TRUE)
+detach(pos = match(paste("package", pkg, sep=":"), search()))
+
+require(pkg, character.only = TRUE)
 detach(pos = match(paste("package", pkg, sep=":"), search()))
 
 .path.package()
