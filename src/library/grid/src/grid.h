@@ -239,7 +239,7 @@ SEXP L_segments(SEXP x0, SEXP y0, SEXP x1, SEXP y1);
 SEXP L_arrows(SEXP x1, SEXP x2, SEXP xnm1, SEXP xn, 
 	      SEXP y1, SEXP y2, SEXP ynm1, SEXP yn, 
 	      SEXP angle, SEXP length, SEXP ends, SEXP type);
-SEXP L_polygon(SEXP x, SEXP y);
+SEXP L_polygon(SEXP x, SEXP y, SEXP index);
 SEXP L_circle(SEXP x, SEXP y, SEXP r);
 SEXP L_rect(SEXP x, SEXP y, SEXP w, SEXP h, SEXP just); 
 SEXP L_text(SEXP label, SEXP x, SEXP y, SEXP just, 

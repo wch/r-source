@@ -1285,9 +1285,9 @@ SEXP L_arrows(SEXP x1, SEXP x2, SEXP xnm1, SEXP xn,
     return R_NilValue;
 }
 
-SEXP L_polygon(SEXP x, SEXP y)
+SEXP L_polygon(SEXP x, SEXP y, SEXP index)
 {
-    int i, nx;
+    int i, j, nx, np;
     double *xx, *yy;
     double vpWidthCM, vpHeightCM;
     double rotationAngle;
@@ -1303,31 +1303,47 @@ SEXP L_polygon(SEXP x, SEXP y)
 			 &vpWidthCM, &vpHeightCM, 
 			 transform, &rotationAngle);
     getViewportContext(currentvp, &vpc);
-    nx = unitLength(x); 
-    /* Convert the x and y values to CM locations */
-    xx = (double *) R_alloc(nx + 1, sizeof(double));
-    yy = (double *) R_alloc(nx + 1, sizeof(double));
-    for (i=0; i<nx; i++) {
-	transformLocn(x, y, i, vpc, 
-		      gpFontFamily(currentgp, i),
-		      gpFont(currentgp, 0),
-		      gpFontSize(currentgp, 0), gpLineHeight(currentgp, 0),
-		      vpWidthCM, vpHeightCM,
-		      dd,
-		      transform,
-		      &(xx[i]), &(yy[i]));
-	/* The graphics engine only takes device coordinates
-	 */
-	xx[i] = toDeviceX(xx[i], GE_INCHES, dd);
-	yy[i] = toDeviceY(yy[i], GE_INCHES, dd);
-    }
-    /* FIXME:  Need to check for NaN's and NA's
-     */
     GEMode(1, dd);
-    GEPolygon(nx, xx, yy, 
-	      gpCol(currentgp, 0), gpFill(currentgp, 0), gpGamma(currentgp, 0),
-	      gpLineType(currentgp, 0), gpLineWidth(currentgp, 0),
-	      dd);
+    /* 
+     * Number of polygons 
+     */
+    np = LENGTH(index);
+    for (i=0; i<np; i++) {
+	char *vmax;
+	SEXP indices = VECTOR_ELT(index, i);
+	/* 
+	 * Number of vertices
+	 *
+	 * Check in R code that x and y same length
+	 */
+	nx = LENGTH(indices); 
+	/* Convert the x and y values to CM locations */
+	vmax = vmaxget();
+	xx = (double *) R_alloc(nx + 1, sizeof(double));
+	yy = (double *) R_alloc(nx + 1, sizeof(double));
+	for (j=0; j<nx; j++) {
+	    transformLocn(x, y, INTEGER(indices)[j] - 1, vpc, 
+			  gpFontFamily(currentgp, i),
+			  gpFont(currentgp, i),
+			  gpFontSize(currentgp, i), gpLineHeight(currentgp, i),
+			  vpWidthCM, vpHeightCM,
+			  dd,
+			  transform,
+			  &(xx[j]), &(yy[j]));
+	    /* The graphics engine only takes device coordinates
+	     */
+	    xx[j] = toDeviceX(xx[j], GE_INCHES, dd);
+	    yy[j] = toDeviceY(yy[j], GE_INCHES, dd);
+	}
+	/* FIXME:  Need to check for NaN's and NA's
+	 */
+	GEPolygon(nx, xx, yy, 
+		  gpCol(currentgp, i), gpFill(currentgp, i), 
+		  gpGamma(currentgp, i),
+		  gpLineType(currentgp, i), gpLineWidth(currentgp, i),
+		  dd);
+	vmaxset(vmax);
+    }
     GEMode(0, dd);
     return R_NilValue;
 }
