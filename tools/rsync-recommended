@@ -8,7 +8,7 @@
 TOOLS_DIR=`echo ${0} | sed 's%/[^/][^/]*$%%'`
 (cd "${TOOLS_DIR}"/..
   version=`cut -f1 -d' ' VERSION`
-  PKGS=`grep '^R_PKGS_RE' Makeconf.in | sed 's/.*=//'`
+  PKGS=`grep '^R_PKGS_RECOMMENDED=' Makeconf.in | sed 's/.*=//'`
   cd src/library/Recommended
 
   ## The purpose of the rsync options is to get the timestamps on the
