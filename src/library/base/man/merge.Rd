@@ -19,7 +19,7 @@ merge.date.frame(x, y, by = intersect(names(x), names(y)), by.x= by, by.y= by,
 }
 \arguments{
   \item{x, y}{data frames, or objects to be coerced to one}
-  \item{by, by.x, by.y}{specifcations of the common columns. See Details.}
+  \item{by, by.x, by.y}{specifications of the common columns. See Details.}
   \item{all}{logical; \code{all=L} is shorthand for \code{all.x=L} and
     \code{all.y=L}.}
   \item{all.x}{logical; if \code{TRUE}, then extra rows will be added to
@@ -44,7 +44,7 @@ merge.date.frame(x, y, by = intersect(names(x), names(y)), by.x= by, by.y= by,
   together.  If there is more than one match, all possible matches
   contribute one row each.\cr
   If the \code{by.*} vector are of length 0, the result, \code{r}, is the
-  ``cartesian product'' of \code{x} and \code{y}, i.e.,
+  ``Cartesian product'' of \code{x} and \code{y}, i.e.,
   \code{dim(r) = c(nrow(x)*nrow, ncol(x) + ncol(y))}.
 
   If \code{all.x} is true, all the non matching cases of \code{x} are
