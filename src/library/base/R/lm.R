@@ -382,11 +382,10 @@ anova.lm <- function(object, ...)
     table[length(p),4:5] <- NA
     dimnames(table) <- list(c(attr(object$terms,"term.labels"), "Residual"),
 			    c("Df","Sum Sq", "Mean Sq", "F", "Pr(>F)"))
-    result <- list(table=table,
-		   title=paste("Analysis of Variance Table\nResponse:",
-		   formula(object)[[2]]))
-    class(result) <- "tabular"
-    result
+
+    structure(table, heading = c("Analysis of Variance Table\n",
+                     paste("Response:", formula(object)[[2]])),
+              class= "anova")# was "tabular"
 }
 
 anovalist.lm <- function (object, ..., test = NULL)
@@ -430,16 +429,15 @@ anovalist.lm <- function (object, ..., test = NULL)
 					 "Sum-Sq", "F", "Pr(>F)"))
 
     ## construct table and title
-    title <- "Analysis of Variance Table"
+    title <- "Analysis of Variance Table\n"
     topnote <- paste("Model ", format(1:nmodels),": ",
 		     models, sep="", collapse="\n")
 
     ## calculate test statistic if needed
-    output <- list(table = table, title = title, topnote=topnote)
-    class(output) <- "tabular"
-    return(output)
+    structure(table, heading = c(title, topnote), class= "anova")# was "tabular"
 }
 
+## Unused (0.63, Sept.25 1998) --- print.anova()  now in ./print.R
 print.anova.lm <- function(x, digits = max(3, .Options$digits - 3), ...)
 {
     cat("\nAnalysis of Variance:\n\n")

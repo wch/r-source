@@ -28,10 +28,12 @@
  * ``standard error'' and is useful for error messages and warnings.
  * It is not redirected by sink().
  *
- *== see ./format.c  for the  format_FOO_  functions which provide
- *	 ~~~~~~~~~~  the  length, width, etc.. that are used here.
+ *  See ./format.c  for the  format_FOO_  functions which provide
+ *	~~~~~~~~~~  the	 length, width, etc.. that are used here.
+ *  See ./print.c  for do_printdefault, do_printmatrix, etc.
  *
- * Following UTILITIES:
+ *
+ * Here, the following UTILITIES are provided:
  *
  * The utilities EncodeLogical, EncodeFactor, EncodeInteger, EncodeReal
  * and EncodeString can be used to convert R objects to a form suitable

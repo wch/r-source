@@ -5,12 +5,12 @@
 ### R is free software; you can redistribute it and/or modify it under
 ### the terms of the GNU General Public License as published by the Free
 ### Software Foundation; either version 2 of the License, or (at your
-### option) any later version. 
+### option) any later version.
 ###
 ### R is distributed in the hope that it will be useful, but WITHOUT ANY
 ### WARRANTY; without even the implied warranty of MERCHANTABILITY or
 ### FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public
-### License for more details. 
+### License for more details.
 ###
 ### You should have received a copy of the GNU General Public License
 ### along with R; if not, you can obtain it via the World Wide Web at
@@ -24,7 +24,7 @@
 
 # The command used to spool PostScript files to the printer.
 # If unspecified, the system will look for either "lpr" or "lp"
-# R_PRINTCMD=
+R_PRINTCMD=prt-
 
 # The paper size for the local (PostScript) printer.
 # It must either be left blank or set to one of "a4" or "letter".
@@ -39,14 +39,14 @@
 # The command which runs the C compiler.
 # If unspecified, a search is made for gcc and cc (in that order).
 # To override this choice, specify the name of the command which runs
-# the compiler here, for example `c89'. 
+# the compiler here, for example `c89'.
 # CC=
 
 # Debugging and optimization options for the C compiler.
 # Use this to specify CFLAGS for the version of the C compiler specified
 # above.  If unspecified, defaults to "-g -O2" for gcc, and "-g" in all
 # other cases.
-# CFLAGS=
+CFLAGS="-g -O2 -Wall"
 
 # Header file search directory (`-IDIR') and any other miscellaneous
 # options for the C preprocessor and compiler.
@@ -90,5 +90,5 @@
 # FPICFLAGS=
 
 # Any special flags which are required by "ld" when creating shared
-# libraries.  This is usually automatically detected by configure. 
+# libraries.  This is usually automatically detected by configure.
 # SHLIBLDFLAGS=
