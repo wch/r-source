@@ -79,7 +79,7 @@ La.svd <- function(x, nu = min(n, p), nv = min(n, p),
         else
             stop("nv must be 0, nrow(x) or ncol(x)")
     } else {
-        if(nu > 0 || nu > 0) {
+        if(nu > 0 || nv > 0) {
             jobu <- 'A'
             u <- matrix(0, n, n)
             v <- matrix(0, p, p)
