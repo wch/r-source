@@ -95,6 +95,7 @@ test-out = $(test-src:.R=.Rout) $(test-out-gct) \
 .SUFFIXES: .R .Rin .Rout .Rout-gct
 
 all check: Makefile test-all-basics
+fullcheck: check test-Recommended-Examples
 
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
@@ -147,6 +148,8 @@ test-all-basics: Makefile
 	  $(MAKE) test-$${name} || exit 1; \
 	done
 test-Examples:
+	@(cd Examples && $(MAKE) $@)
+test-Recommended-Examples:
 	@(cd Examples && $(MAKE) $@)
 test-Specific-strict: $(test-out-strict)
 test-Specific-sloppy: $(test-out-sloppy)

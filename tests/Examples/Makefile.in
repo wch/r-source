@@ -18,10 +18,13 @@ R = $(top_builddir)/bin/R --vanilla
 EX_IN = $(R_PKGS_BASE:=-Ex.R)
 EX_OUT = $(EX_IN:.R=.Rout)
 
+RECOMMENDED_EX_IN = $(R_PKGS_RECOMMENDED_EXPANDED:=-Ex.R)
+RECOMMENDED_EX_OUT = $(RECOMMENDED_EX_IN:.R=.Rout)
+
 .SUFFIXES:
 .SUFFIXES: .R .Rout
 
-all: Makefile Makedeps test-Examples
+all: Makefile Makedeps test-Examples 
 
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
@@ -37,10 +40,14 @@ Makedeps: Makefile
 	    echo $${dep}; \
 	  done) >> Makefile
 	@touch $@
-
-test-Examples: Makefile
+test-Examples: test-Base-Examples
+test-Base-Examples: Makefile
 	@$(MAKE) Makedeps
 	@$(MAKE) $(EX_OUT)
+
+test-Recommended-Examples: test-Base-Examples
+	@$(MAKE) $(RECOMMENDED_EX_OUT)
+
 
 R:
 	@cd $(top_builddir) && $(MAKE) R
@@ -71,9 +78,29 @@ $(EX_IN): FORCE
 	  $(top_srcdir)/tools/move-if-change $${f} $@; \
 	  touch $@; \
 	fi)
+$(RECOMMENDED_EX_IN): FORCE
+	@(pkg=`basename $@ -Ex.R`; \
+	if [ $(top_builddir)/library/$${pkg} -nt "$@" ]; then \
+	  if test -f $@ ; then \
+	    if test -n "`tail -6 $@ | grep '^Time elapsed'`" ; then \
+	      if test -f $@.bak ; then mv $@.bak $@.bakk ; fi; \
+	      cp -p $@ $@.bak; \
+	    fi; \
+	  fi; \
+	  echo "collecting examples for package '$${pkg}' ..."; \
+	  f=$${TMPDIR-/tmp}/R$$$$; \
+	  $(PERL) $(top_srcdir)/share/perl/massage-Examples.pl $${pkg} \
+	    $(top_builddir)/library/$${pkg}/R-ex > $${f}; \
+	  $(top_srcdir)/tools/move-if-change $${f} $@; \
+	  touch $@; \
+	fi)
 FORCE:
 
 $(EX_OUT): Makefile \
+  $(top_builddir)/bin/R.bin \
+  $(top_builddir)/library/base/R/base \
+  $(top_builddir)/modules/lapack$(SHLIB_EXT)
+$(RECOMMENDED_EX_OUT): Makefile \
   $(top_builddir)/bin/R.bin \
   $(top_builddir)/library/base/R/base \
   $(top_builddir)/modules/lapack$(SHLIB_EXT)

@@ -153,10 +153,10 @@ install-dvi install-info install-pdf:
 uninstall-dvi uninstall-info uninstall-pdf:
 	-@(cd doc/manual && $(MAKE) $@)
 
-check:
+check fullcheck:
 	@(cd tests && $(MAKE) $@)
 
 reset-recommended:
-	@(cd src/library/Recommended && rm -f Timestamp && $(MAKE) Timestamp)
+	@(cd src/library/Recommended && $(MAKE) clean)
 
 TAGS:
