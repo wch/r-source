@@ -156,14 +156,14 @@ $(DYNLIB): $(SSPKG)/$(DLLNAME).dll
 	@$(CP) $^ $@
 
 $(SSPKG)/$(DLLNAME).dll: FORCE
-	@echo "  making DLL"
+	@echo "  making DLL ..."
 ifeq ($(strip $(SRCMAKE)),)
 	@$(MAKE) --no-print-directory -C $(SSPKG) RHOME=$(RHOME) \
 	  -f $(RHOME)/src/gnuwin32/MakeDll DLLNAME=$(DLLNAME)
 else
 	@$(MAKE) --no-print-directory -C $(SSPKG) RHOME=$(RHOME) -f Makefile.win
 endif
-	@echo "  DLL made"
+	@echo "  ... DLL made"
 	@echo
 
 FORCE:
