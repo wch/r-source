@@ -618,7 +618,8 @@ static void GTK_NewPage(int fill, NewDevDesc *dd)
     g_return_if_fail(gtkd->drawing != NULL);
     g_return_if_fail(GTK_IS_DRAWING_AREA(gtkd->drawing));
 
-    if(gtkd->fill != fill) {
+    if(gtkd->fill != fill && R_OPAQUE(fill)) {
+      printf("Setting bg color to %d in GTK_NewPage\n", fill);
 	SetColor(&gtkd->gcol_bg, fill);
 	gtkd->fill = fill;
 	gdk_window_set_background(gtkd->drawing->window, &gtkd->gcol_bg);
@@ -692,9 +693,6 @@ static void GTK_Rect(double x0, double y0, double x1, double y1,
     gtkDesc *gtkd = (gtkDesc *) dd->deviceSpecific;
     GdkColor gcol_fill, gcol_outline;
 
-    //GConvert(&x0, &y0, coords, DEVICE, dd);
-    //GConvert(&x1, &y1, coords, DEVICE, dd);
-
     if(x0 > x1) {
 	tmp = x0;
 	x0 = x1;
@@ -751,8 +749,6 @@ static void GTK_Circle(double x, double y, double r,
     gint ix, iy, ir;
     gtkDesc *gtkd = (gtkDesc *) dd->deviceSpecific;
 
-    //GConvert(&x, &y, coords, DEVICE, dd);
-
     ix = x - r;
     iy = y - r;
     ir = 2 * floor(r + 0.5);
@@ -795,9 +791,6 @@ static void GTK_Line(double x1, double y1, double x2, double y2,
     GdkColor gcol_fill;
     gint ix1, iy1, ix2, iy2;
 
-    //GConvert(&x1, &y1, coords, DEVICE, dd);
-    //GConvert(&x2, &y2, coords, DEVICE, dd);
-
     ix1 = (gint) x1;  iy1 = (gint) y1;
     ix2 = (gint) x2;  iy2 = (gint) y2;
 
@@ -821,16 +814,13 @@ static void GTK_Polyline(int n, double *x, double *y,
     gtkDesc *gtkd = (gtkDesc *) dd->deviceSpecific;
     GdkColor gcol_fill;
     GdkPoint *points;
-    double devx, devy;
     int i;
 
     points = g_new0(GdkPoint, n);
 
     for(i = 0; i < n; i++) {
-	devx = x[i]; devy = y[i];
-	//GConvert(&devx, &devy, coords, DEVICE, dd);
-	points[i].x = (gint16) devx;
-	points[i].y = (gint16) devy;
+	points[i].x = (gint16) x[i];
+	points[i].y = (gint16) y[i];
     }
 
     if (R_OPAQUE(col)) {
@@ -855,16 +845,13 @@ static void GTK_Polygon(int n, double *x, double *y,
     gtkDesc *gtkd = (gtkDesc *) dd->deviceSpecific;
     GdkColor gcol_fill, gcol_outline;
     GdkPoint *points;
-    double devx, devy;
     int i;
 
     points = g_new0(GdkPoint, n + 1);
 
     for(i = 0; i < n; i++) {
-	devx = x[i]; devy = y[i];
-	//GConvert(&devx, &devy, coords, DEVICE, dd);
-	points[i].x = (gint16) devx;
-	points[i].y = (gint16) devy;
+	points[i].x = (gint16) x[i];
+	points[i].y = (gint16) y[i];
     }
 
     if (R_OPAQUE(fill)) {
@@ -900,8 +887,6 @@ static void GTK_Text(double x, double y, char *str,
     GdkColor gcol_fill;
     gint size;
     double rrot = DEG2RAD * rot;
-
-    //GConvert(&x, &y, coords, DEVICE, dd);
 
     size = cex * ps + 0.5;
     SetFont(dd, font, size);
@@ -1012,7 +997,7 @@ GTKDeviceDriver(DevDesc *odd, char *display, double width,
     double max_rbearing, min_lbearing;
     gtkDesc *gtkd;
 
-    dd = (NewDevDesc*) odd;  //How safe is this?
+    dd = (NewDevDesc*) odd;
 
     if(!(gtkd = (gtkDesc *) malloc(sizeof(gtkDesc))))
 	return FALSE;
