@@ -4,12 +4,7 @@ include ../gnuwin32/MkRules
 CFLAGS=$(OPTFLAGS) -I../include -DHAVE_CONFIG_H -DR_DLL_BUILD
 FFLAGS=$(OPTFLAGS)
 CSOURCES=$(wildcard *.c)
-FSOURCES=$(wildcard *.f)
-ifeq ($(strip $(USE_ATLAS)),YES)
-FSOURCES1=$(filter-out blas.f, $(FSOURCES))
-else
-FSOURCES1=$(FSOURCES)
-endif
+FSOURCES1=$(filter-out blas.f, $(wildcard *.f))
 OBJS=$(CSOURCES:.c=.o) $(FSOURCES1:.f=.o)
 
 all: makeMakedeps ../gnuwin32/libappl.a

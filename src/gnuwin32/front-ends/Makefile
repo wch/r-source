@@ -38,8 +38,8 @@ rgui-CFLAGS=-DWin32
 rterm-CFLAGS=-DWin32
 Rgui-LINKFLAGS=-mwindows
 
-Rterm-LIBS=-luser32 -L.. -lRm
-Rgui-LIBS=-L.. -lRm
+Rterm-LIBS=-luser32 -L.. -lR
+Rgui-LIBS=-L.. -lR
 
 Rgui.exe: graphappmain.o  rgui.o rgico.o
 

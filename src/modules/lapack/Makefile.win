@@ -15,16 +15,9 @@ OBJS=$(CSOURCES:.c=.o) $(FSOURCES:.f=.o) dllversion.o
 	$(MKDIR) -p ../../../modules
 	$(CP) $< $@
 
-DLLLIBS=-L../../gnuwin32 -lRm -lg2c
-ifeq ($(strip $(USE_ATLAS)),YES)
-DLLLIBS+=-L$(ATLAS_PATH) -lcblas -lf77blas -latlas
-else
-FSOURCES += blas2.f cmplxblas.f
-endif
+DLLLIBS=-L../../gnuwin32 -lRm -lR -lRblas -lg2c
 
 $(MODULE).dll: $(OBJS)
-
-dllversion.o: ../../include/Rversion.h
 
 clean:
 	@$(RM) Makedeps *.d *.o $(MODULE).def $(MODULE).dll
