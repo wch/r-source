@@ -113,8 +113,6 @@
 #endif
 #endif
 
-#include <unistd.h>
-
 static int UsingReadline = 1;
 static int DefaultSaveAction = 0;
 static int DefaultRestoreAction = 1;
