@@ -85,8 +85,6 @@ FILE *R_OpenInitFile(void)
 
 
 #ifdef HAVE_LIBREADLINE
-char *tilde_expand(char*);
-
 char *R_ExpandFileName(char *s)
 {
     return( tilde_expand(s) );
