@@ -7,7 +7,7 @@
  *     degree-of-freedom effects can be computed in a natural way.
  *
  *     i am very nervous about modifying linpack code in this way.
- *     if you are a computational linear algebra guru and you floatly
+ *     if you are a computational linear algebra guru and you really
  *     understand how to solve this problem please feel free to
  *     suggest improvements to this code.
  *

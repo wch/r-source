@@ -6,6 +6,7 @@ build:
 		cd appl; make
 		cd unix; make
 		cd main; make
+		cd include; make
 
 install:	build
 		@cd main; make install
@@ -20,7 +21,6 @@ clean:
 		@cd math; make $@
 		@cd appl; make $@
 		@cd unix; make $@
-		@cd regex; make $@
 		@-rm -f lib/*.a
 
 realclean:
@@ -31,5 +31,6 @@ realclean:
 		@cd math; make $@
 		@cd appl; make $@
 		@cd unix; make $@
+		@cd include; make $@
 		@-rm -f include/FFDecl.h include/FFTab.h include/Platform.h
 		@-rm -f lib/*.a
