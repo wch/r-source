@@ -75,7 +75,7 @@ extern int _finite(double);
 #define HAVE_RPC_XDR_H 1
 
 /* HDF5 Library Available */
-#undef HAVE_HDF5_H
+#undef HAVE_HDF5
 
 /* General String Comparison */
 #undef HAVE_STRCOLL
@@ -176,20 +176,20 @@ double atanh(double);
 
 /* for platform.c to put in .Platform */
 #ifdef Unix
-#define OSTYPE      "Unix"
+#define OSTYPE      "unix"
 #define FILESEP     "/"
 #define SHLIBEXT    ""
 #define DYNLOADEXT  "." ## SHLIBEXT
 #endif
 
 #ifdef Macintosh
-#define OSTYPE      "Macintosh"
+#define OSTYPE      "mac"
 #define FILESEP     ":"
 #define DYNLOADEXT  ".dll"
 #endif
 
 #ifdef Win32
-#define OSTYPE      "Windows"
+#define OSTYPE      "windows"
 #define FILESEP     "/"
 #define DYNLOADEXT  ".dll"
 #endif
