@@ -15,7 +15,7 @@ If \code{x} is a matrix then \code{diag(x)} returns the diagonal of
 \code{x}.  The resulting vector will have \code{\link{names}} if the
 matrix \code{x} has matching column and row names.
 
-If \code{x} is a vector then \code{diag(x)} returns a diagonal
+If \code{x} is a vector (or a 1-d array) then \code{diag(x)} returns a diagonal
 matrix whose diagonal is \code{x}.  If \code{x} is an integer then
 \code{diag(x)} returns an identity matrix of order \code{x}.
 The dimension of the returned matrix can be specified by
@@ -37,11 +37,13 @@ rownames(M) <- c(colnames(M),rep("",3));
 M; diag(M) #  named as well
 
 \testonly{
+diag(array(1:4, dim=5))
 ## test behaviour with 0 rows or columns
 diag(0)
 z <- matrix(0, 0, 4)
 diag(z)
 diag(z) <- numeric(0)
 z
-}}
+}
+}
 \keyword{array}

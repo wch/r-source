@@ -53,9 +53,13 @@ NEW FEATURES
 
 BUG FIXES
 
+    o	expand.grid(x) now also works for vector arguments x.
+
+    o	diag(x) now works (as pre 0.65.1) for 1-d arrays.
+
     o   na.omit.ts and na.contiguous preserve classes
 
-    o   ts.union, cbind.ts, arithmetic on ts objects now allow 
+    o   ts.union, cbind.ts, arithmetic on ts objects now allow
 	non-integer frequencies.
 
     o   Math text in outer margins didn't work

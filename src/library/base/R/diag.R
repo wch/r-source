@@ -11,7 +11,7 @@ diag <- function(x = 1, nrow, ncol = n)
             names(y) <- nm
         return(y)
     }
-    if( is.array(x) && length(x) != 1 )
+    if(is.array(x) && length(dim(x)) != 1)
         stop("first argument is array, but not matrix.")
 
     if(missing(x))
