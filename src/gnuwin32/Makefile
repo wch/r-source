@@ -341,7 +341,7 @@ clean: cleanwin $(PKGCLEAN)
 	-$(MAKE) --no-print-directory -C ../nmath/standalone -f Makefile.win distclean
 	-$(MAKE) --no-print-directory -C ../modules -f Makefile.win clean
 	-$(MAKE) --no-print-directory -C ../../tests -f Makefile.win clean
-	$(RM) -f ../library/methods/R/methods
+	$(RM) -f ../library/methods/all.R
 	for p in $(R_PKGS_RECOMMENDED); do \
 	  $(RM) -rf ../library/$$p; \
 	done
