@@ -407,6 +407,10 @@ SEXP do_plot_window(SEXP call, SEXP op, SEXP args, SEXP env)
 	ymin = REAL(ylim)[0];
 	ymax = REAL(ylim)[1];
     }
+    if((dd->dp.xlog && (xmin < 0 || xmax < 0)) ||
+       (dd->dp.ylog && (ymin < 0 || ymax < 0)))
+	    errorcall(call, "Logarithmic axis must have positive limits\n");
+
     if (FINITE(asp) && asp > 0) {
 	double pin1, pin2, scale, xdelta, ydelta, xscale, yscale, xadd, yadd;
 	pin1 = GConvertXUnits(1.0, NPC, INCHES, dd);
@@ -420,7 +424,6 @@ SEXP do_plot_window(SEXP call, SEXP op, SEXP args, SEXP env)
 	yadd = .5 * (pin2 / scale - ydelta);
 	GScale(xmin - xadd, xmax + xadd, 1, dd);
 	GScale(ymin - yadd, ymax + yadd, 2, dd);
-
     }
     else {
 	GScale(xmin, xmax, 1, dd);
@@ -566,7 +569,7 @@ static SEXP CreateAtVector(double *axp, double *usr, int nint, int log)
 	    if(ne < 1)
 		error("log - axis(), 'at' creation, _LARGE_ range: "
 		      "ne = %d <= 0 !!\n"
-		      "\t axp[0:1]=(%g,%g) ==> i = %d;  nint = %d\n",
+		      "\t axp[0:1]=(%g,%g) ==> i = %d;	nint = %d\n",
 		      ne, axp[0],axp[1], i, nint);
 	    rng = pow(10., (double)ne);/* >= 10 */
 	    n = 0;
@@ -992,11 +995,14 @@ SEXP do_plot_xy(SEXP call, SEXP op, SEXP args, SEXP env)
     }
     args = CDR(args);
 
-    PROTECT(pch = FixupPch(CAR(args), dd));	args = CDR(args); npch = length(pch);
+    PROTECT(pch = FixupPch(CAR(args), dd));	args = CDR(args);
+    npch = length(pch);
 
-    PROTECT(lty = FixupLty(CAR(args), dd));	args = CDR(args); nlty = length(lty);
+    PROTECT(lty = FixupLty(CAR(args), dd));	args = CDR(args);
+    nlty = length(lty);
 
-    PROTECT(col = FixupCol(CAR(args), dd));	args = CDR(args); ncol = LENGTH(col);
+    PROTECT(col = FixupCol(CAR(args), dd));	args = CDR(args);
+    ncol = LENGTH(col);
 
     PROTECT(bg = FixupCol(CAR(args), dd));	args = CDR(args);
     nbg = LENGTH(bg);
