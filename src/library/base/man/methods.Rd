@@ -1,8 +1,8 @@
 \name{methods}
 \title{Class Methods}
 \usage{
-UseMethod(generic, object )
-NextMethod(generic, object, \dots)
+UseMethod(generic, object)
+NextMethod(generic = NULL, object = NULL, \dots)
 methods(generic.function, class)
 }
 \alias{UseMethod}
@@ -13,6 +13,16 @@ methods(generic.function, class)
   an object-oriented style of programming.  Method despatch takes place
   based on the class of the first argument to the generic function or on 
   the object supplied as an argument to \code{UseMethod} or \code{NextMethod}.
+}
+\arguments{
+  \item{generic}{a character string naming a function.}
+  \item{object}{an object whose class will determine the method to be
+    dispatched.  Defaults to the first argument of the enclosing function.}
+  \item{\dots}{further arguments to be passed to the method.}
+  \item{generic.function}{a generic function, or a character string naming a
+    generic function.}
+  \item{class}{a symbol or character string naming a class: only used if
+    \code{generic.function} is not supplied.}
 }
 \details{
   An \R ``object'' is a data object which has a \code{class} attribute.
@@ -61,6 +71,6 @@ methods(print)
 
 methods(class = data.frame)
 
-methods("[")#- does not list the C-internal ones...
+methods("[")  ##- does not list the C-internal ones...
 }
 \keyword{methods}

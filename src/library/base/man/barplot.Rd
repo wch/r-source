@@ -61,6 +61,8 @@
   \item{axisnames}{logical.  If \code{TRUE}, and if there are
     \code{names.arg} (see above), the
     other axis is drawn (with \code{lty=0}) and labeled.}
+  \item{inside}{logical.  If \code{TRUE}, the lines which  divide
+    adjacent bars will be drawn.}
   \item{plot}{logical.  If \code{FALSE}, nothing is plotted.}
   \item{\dots}{further graphical parameters (\code{\link{par}}) are
     passed to \code{\link{plot.window}()} and \code{\link{title}()}.}

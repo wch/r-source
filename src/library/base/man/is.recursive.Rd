@@ -13,6 +13,9 @@ does not have a list structure and \code{FALSE} otherwise.
 \code{is.recursive} returns \code{TRUE} if \code{x} has a recursive
 (list-like) structure and \code{FALSE} otherwise.
 }
+\arguments{
+  \item{x}{object to be tested.}
+}
 \seealso{\code{\link{is.list}}, \code{\link{is.language}}, etc, and the
   \code{demo("is.things")}.}
 \examples{

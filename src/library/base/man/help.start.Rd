@@ -2,7 +2,7 @@
 \title{Hypertext Documentation}
 \usage{
 #ifdef unix  
-help.start(gui = "irrelevant", browser = "netscape", remote = NULL)
+help.start(gui = "irrelevant", browser = getOption("browser"), remote = NULL)
 #endif
 #ifdef windows  
 help.start(gui = "irrelevant", browser = "irrelevant")

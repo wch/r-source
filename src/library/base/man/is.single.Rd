@@ -6,4 +6,7 @@
 \code{is.single} reports an error. There are no single precision
 values in R.
 }
+\arguments{
+  \item{x}{object to be tested.}
+}
 \keyword{classes}

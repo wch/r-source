@@ -27,6 +27,7 @@ unstack.data.frame(x, form = formula(x), \dots)
     vector to be unstacked and whose right side evaluates to the
     indicator of the groups to create.  Defaults to \code{formula(x)}
     in \code{unstack.data.frame}.}
+  \item{\dots}{further arguments passed to or from other methods.}
 }
 \details{
   The \code{stack} function is used to transform data available as

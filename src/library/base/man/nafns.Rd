@@ -23,6 +23,7 @@ napredict(omit, x, \dots)
     A vector, data frame, or matrix to be adjusted based upon the
     missing value information.
   }
+  \item{\dots}{further arguments passed to or from other methods.}
 }
 \value{
   These return a similar object to \code{x}.

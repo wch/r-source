@@ -15,6 +15,11 @@ colnames(x) <- namevector
   Retrieve or set the row or column names of an object (the first or
   second component of its \code{\link{dimnames}}).
 }
+\arguments{
+  \item{x}{}
+  \item{do.NULL}{logical. Should this create names if they are \code{NULL}?}
+  \item{prefix}{for created names.}
+}
 \details{
   If \code{do.NULL} is \code{FALSE}, a character vector (of length
   \code{\link{NROW}(x)} or \code{\link{NCOL}(x)} is returned in any

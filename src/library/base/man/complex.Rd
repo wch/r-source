@@ -31,7 +31,8 @@ Conj(x)
   \item{imaginary}{numeric vector.}
   \item{modulus}{numeric vector.}
   \item{argument}{numeric vector.}
- \item{x}{an object, probably of mode \code{complex}.}
+  \item{x}{an object, probably of mode \code{complex}.}
+  \item{\dots}{further arguments passed to or from other methods.}
 }
 \details{
   Complex vectors can be created with \code{complex}.  The vector can be

@@ -22,6 +22,7 @@ isSeekable(con)
     partial matches allowed.}
   \item{origin}{character.  One of \code{"start"}, \code{"current"},
     \code{"end"}.}
+  \item{\dots}{further arguments passed to or from other methods.}
 }
 \details{
   \code{seek} with \code{where = NA} returns the current byte offset

@@ -13,6 +13,11 @@ character(length = 0)
 as.character(x, \dots)
 is.character(x)
 }
+\arguments{
+  \item{length}{desired length.}
+  \item{x}{object to be coerced or tested.}
+  \item{\dots}{further arguments passed to or from other methods.}
+}
 \value{
   \code{character} creates a character vector of the specified length.
   The elements of the vector are all equal to \code{""}.

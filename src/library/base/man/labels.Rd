@@ -15,6 +15,7 @@ labels.lm(object, \dots)
 \alias{labels.lm}
 \arguments{
   \item{object}{Any \R object: the function is generic.}
+  \item{\dots}{further arguments passed to or from other methods.}
 }
 \description{
   Find a suitable set of labels from an object for use in printing or

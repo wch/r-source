@@ -1,9 +1,12 @@
 \name{rev}
+\alias{rev}
 \title{Reverse a Vector's Elements}
 \usage{
 rev(x)
 }
-\alias{rev}
+\arguments{
+  \item{x}{a vector.}
+}
 \description{
   \code{rev}
   provides a reversed version of its argument.

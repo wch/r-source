@@ -19,6 +19,9 @@ length as \code{x}, indicating which elements are finite or not.
 \code{Inf} and \code{-Inf} are positive and negative `infinity' whereas
 \code{NaN} means ``Not a Number''.
 }
+\arguments{
+  \item{x}{(numerical) object to be tested.}
+}
 \details{
 \code{is.finite} returns a vector of the same length as \code{x}
 the jth element of which is \code{TRUE} if \code{x[j]} is

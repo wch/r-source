@@ -6,17 +6,18 @@
   Use data editor on data frame or matrix contents.
 }
 \usage{
-edit.data.frame(name, factor.mode = c("numeric", "character"),
+\method{edit}{data.frame}(name, factor.mode = c("character", "numeric"),
                 edit.row.names = any(row.names(name) != 1:nrow(name)),
                 \dots)
-edit.matrix(name, edit.row.names = any(rownames(name != 1:nrow(name))), \dots)
+\method{edit}{matrix}(name, edit.row.names = any(rownames(name) != 1:nrow(name))), \dots)
 }
 \arguments{
   \item{name}{A data frame or matrix.}
   \item{factor.mode}{How to handle factors (as integers or using
-    character levels).}
+    character levels) in a data frame.}
   \item{edit.row.names}{logical. Show the row names be displayed as
     a separate editable column?}
+  \item{\dots}{further arguments passed to or from other methods.}
 }
 \details{
   At present, this only works on simple data frames containing numeric or

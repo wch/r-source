@@ -14,6 +14,9 @@ mostattributes(obj) <- list
   The assignment forms make the list on the right-hand
   side of the assignment the object's attribute list (if appropriate).
 }
+\arguments{
+  \item{obj}{an object}
+}
 \details{
   The \code{mostattributes} assignment takes special care for the
   \code{\link{dim}}, \code{\link{names}} and \code{\link{dimnames}}

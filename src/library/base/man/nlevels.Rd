@@ -7,6 +7,9 @@ nlevels(x)
 \description{
   Return the number of levels which its argument has.
 }
+\arguments{
+  \item{x}{an object, usually a factor.} 
+}
 \details{
   If the argument is not a \code{\link{factor}}, \code{NA} is returned.
 

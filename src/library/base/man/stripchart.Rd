@@ -33,7 +33,7 @@ stripchart(x, method="overplot", jitter=0.1, offset=1/3,
     vertically rather than the default horizontal.}
   \item{group.names}{group labels which will be printed alongside
     (or underneath) each plot.}
-  \item{\dots}{Graphical parameters can also be specified as arguments.}
+  \item{xlim, ylim, main, ylab, xlab, pch, col, cex}{Graphical parameters.}
 }
 \details{
   Extensive examples of the use of this kind of plot can be found in

@@ -10,6 +10,9 @@ dim(x) <- values
 \description{
   Retrieve or set the dimension of an object.
 }
+\arguments{
+  \item{x}{an \R object, for example a matrix, array or data frame.}
+}
 \details{
   The functions \code{dim} and \code{dim<-} are generic.
 

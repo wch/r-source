@@ -12,6 +12,10 @@
 codes(x, \dots)
 codes(x) <- value
 }
+\arguments{
+  \item{x}{an object from which to extract or set the codes.}
+  \item{\dots}{further arguments passed to or from other methods.}
+}
 \value{
   For an ordered factor, it returns the internal coding (1 for the
   lowest group, 2 for the second lowest, etc.).

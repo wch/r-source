@@ -16,9 +16,10 @@ kappa.tri    (z, exact = FALSE, \dots)
 \alias{kappa.qr}
 \alias{kappa.tri}
 \arguments{
- \item{z}{A matrix or a the result of \code{\link{qr}} or a fit from a class
-   inheriting from \code{"lm"}.}
- \item{exact}{Should the result be exact?}
+  \item{z}{A matrix or a the result of \code{\link{qr}} or a fit from a class
+    inheriting from \code{"lm"}.}
+  \item{exact}{logical. Should the result be exact?}
+  \item{\dots}{further arguments passed to or from other methods.}
 }
 \description{
  An estimate of the condition number of a matrix or of the \eqn{R} matrix of a

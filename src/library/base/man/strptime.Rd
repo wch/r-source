@@ -35,7 +35,6 @@ ISOdate(year, month, day, hour = 12, min = 0, sec = 0, tz = "GMT")
     component which is not midnight, and \code{"\%Y-\%m-\%d"}
     otherwise.}
   \item{\dots}{Further arguments to be passed from or to other methods.}
-  \item{tz}{A timezone: see \code{\link{as.POSIXct}}.}
   \item{usetz}{logical.  Should the timezone be appended to the output?
     This is used in printing time, and as a workaround for problems with
     using \code{"\%Z"} on most Linux systems.}

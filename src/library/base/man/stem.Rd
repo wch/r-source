@@ -10,6 +10,12 @@ stem(x, scale = 1, width = 80, atom = 1e-08)
   plot.  A value of \code{scale=2} will cause the plot to be roughly
   twice as long as the default.
 }
+\arguments{
+  \item{x}{a numeric vector.}
+  \item{scale}{This controls the plot length.}
+  \item{width}{The desired width of plot.}
+  \item{atom}{a tolerance.}
+}
 \examples{
 data(islands)
 stem(islands)

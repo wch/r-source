@@ -25,8 +25,12 @@ alist(\dots)
 \description{
   Functions to construct, coerce and check for all kinds of \R lists.
 }
+\arguments{
+  \item{\dots}{objects.}
+  \item{x}{object to be coerced or tested.}
+}
 \details{
-  Since version 0.63, most lists in \R internally are \emph{Generic
+  Most lists in \R internally are \emph{Generic
     Vectors}, whereas traditional \emph{dotted pair} lists (as in LISP)
   are still available.
 

@@ -10,12 +10,20 @@ abline(a = NULL, b = NULL, h = NULL, v = NULL, reg = NULL,
        lty = par("lty"), lwd = NULL, ...)
 }
 \usage{
-abline(a, b, \dots)
-abline(h=, \dots)
-abline(v=, \dots)
-abline(untf=, \dots)
-abline(coef=, \dots)
-abline(reg=, \dots)
+abline(a, b, untf = FALSE,\ dots)
+abline(h=, untf = FALSE, \dots)
+abline(v=, untf = FALSE, \dots)
+abline(coef=, untf = FALSE, \dots)
+abline(reg=, untf = FALSE, \dots)
+}
+\arguments{
+  \item{a,b}{the intercept and slope.}
+  \item{untf}{logical.  See Details.}
+  \item{h}{the y-value for a horizontal line.}
+  \item{v}{the x-value for a vertical line.}
+  \item{coef}{a vector of length two giving the intercept and slope.}
+  \item{reg}{an object with a \code{coef} component. See Details.}
+  \item{\dots}{graphical parameters.}
 }
 \details{
   The first form specifies the line in intercept/slope form

@@ -12,6 +12,11 @@ depending on whether the element of \code{test}
 is \code{TRUE} or \code{FALSE}.
 If \code{yes} or \code{no} are too short, their elements are recycled.
 }
+\arguments{
+  \item{test}{a logical vector}
+  \item{yes}{return values for true elements of \code{test}.}
+  \item{no}{return values for false elements of \code{test}.}
+}
 \seealso{
 \code{\link{if}}.
 }

@@ -36,6 +36,8 @@ hist.default(x, breaks, freq = NULL, probability = !freq,
   \item{main, xlab, ylab}{these arguments to \code{title} have useful
     defaults here.}
   \item{xlim, ylim}{the range of x and y values with sensible defaults.}
+  \item{axes}{logical.  If \code{TRUE} (default), axes are draw if the
+    plot is drawn.}
   \item{plot}{logical.  If \code{TRUE} (default), a histogram is
     plotted, otherwise a list of breaks and counts is returned.}
   \item{labels}{logical or character.  Additionally draw labels on top of bars,
