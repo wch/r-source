@@ -40,3 +40,8 @@ void F77_NAME(dsyev)(const char* jobz, const char* uplo,
 		     double* w, double* work, const int* lwork,
 		     int* info);
 
+/* ZGESV computes the solution to a complex system of linear equations */
+void F77_NAME(zgesv)(const int *n, const int *nrhs, Rcomplex *a,
+		     const int *lda, int *ipiv, Rcomplex *b, 
+		     const int *ldb, int *info);
+

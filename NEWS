@@ -250,6 +250,7 @@ NEW FEATURES
 	and this may lead to sign reversals in some of the output of
 	those functions.
 
+    o	solve.default() now handles complex arguments, based on LAPACK.
 
 
 BUG FIXES

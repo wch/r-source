@@ -62,26 +62,17 @@ SEXP La_rs(SEXP x, SEXP only_values)
     double *work, *rx = REAL(x), *rvalues, tmp;
 
     uplo[0] = 'L';
-    if (!(isMatrix(x) && isNumeric(x))) {
+    if (!(isMatrix(x) && isNumeric(x)))
 	error("x must be a numeric matrix");
-	return R_NilValue;
-    }
     xdims = INTEGER(coerceVector(getAttrib(x, R_DimSymbol), INTSXP));
     n = xdims[0];
-    if (n != xdims[1]) {
+    if (n != xdims[1])
 	error("x must be a square numeric matrix");
-	return R_NilValue;
-    }
-    if (LENGTH(only_values) < 1) {
+    if (LENGTH(only_values) < 1)
 	error("only.values cannot be of length 0");
-	return R_NilValue;
-    }
-    if (LOGICAL(coerceVector(only_values, LGLSXP))[0]) {
-	jobv[0] = 'N';
-    }
-    else {
-	jobv[0] = 'V';
-    }
+    if (LOGICAL(coerceVector(only_values, LGLSXP))[0]) jobv[0] = 'N';
+    else jobv[0] = 'V';
+
     values = allocVector(REALSXP, n);
     rvalues = REAL(values);
     /* ask for optimal size of work array */
@@ -166,10 +157,8 @@ SEXP La_rg(SEXP x, SEXP only_values)
     }
     xvals = Calloc((size_t) (n * n), double); /* work on a copy of x */
     Memcpy(xvals, REAL(x), (size_t) (n * n));
-    if (LENGTH(only_values) < 1) {
+    if (LENGTH(only_values) < 1)
 	error("only.values cannot be of length 0");
-	return R_NilValue;
-    }
     jobVL[0] = jobVR[0] = 'N';
     left = right = (double *) 0;
     vectors = 0;
@@ -196,7 +185,6 @@ SEXP La_rg(SEXP x, SEXP only_values)
 	    Free(right);
 	}
 	error("error code %d from Lapack routine dgeev", info);
-	return R_NilValue;
     }
     complexValues = 0;
     for (i = 0; i < n; i++) {
@@ -234,4 +222,40 @@ SEXP La_rg(SEXP x, SEXP only_values)
     }
     UNPROTECT(2);
     return ret;
+}
+
+/* FIXME: until configure test is in place */
+#define HAVE_DOUBLE_COMPLEX
+SEXP La_zgesv(SEXP A, SEXP B)
+{
+#ifdef HAVE_DOUBLE_COMPLEX
+    int n, p, info, *ipiv, *Adims, *Bdims;
+
+    if (!(isMatrix(A) && isComplex(A))) {
+	error("A must be a complex matrix");
+    }
+    if (!(isMatrix(B) && isComplex(B))) {
+	error("A must be a complex matrix");
+	}
+    Adims = INTEGER(coerceVector(getAttrib(A, R_DimSymbol), INTSXP));
+    Bdims = INTEGER(coerceVector(getAttrib(B, R_DimSymbol), INTSXP));
+    n = Adims[0];
+    if(n == 0) error("A is 0-diml");
+    p = Bdims[1];
+    if(p == 0) error("no rhs in B");
+    if(Adims[1] != n)
+	error("A (%d x %d) must be square", n, Adims[1]);
+    if(Bdims[0] != n)
+	error("B (%d x %d) must be square", Bdims[0], p);
+    ipiv = (int *) R_alloc(n, sizeof(int));
+
+    F77_CALL(zgesv)(&n, &p, COMPLEX(A), &n, ipiv, COMPLEX(B), &n, &info);
+    if (info != 0) {
+	error("error code %d from Lapack routine zgesv", info);
+    }
+    return B;
+#else
+    error("Fortran complex functions are not available on this platform");
+    return R_NilValue; /* -Wall */
+#endif
 }
