@@ -19,7 +19,6 @@
 
 #include "Defn.h"
 #include "Graphics.h"
-#include "psx11.h"
 #include <stdio.h>
 #include <X11/X.h>
 #include <X11/Xlib.h>
