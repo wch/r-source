@@ -44,6 +44,7 @@ all: Makefile DESCRIPTION
 	  rm -f $(top_builddir)/library/$(pkg)/data/Rdata.*; \
 	  echo "tools:::data2LazyLoadDB(\"$(pkg)\")" | \
 	    R_DEFAULT_PACKAGES=NULL LC_COLLATE=C $(R_EXE) > /dev/null; \
+	  $(INSTALL_DATA) $(srcdir)/data/morley.tab $(top_builddir)/library/$(pkg)/data;\
 	fi
 	@if test -d $(srcdir)/man; then \
 	  $(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/man; \

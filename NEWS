@@ -480,6 +480,9 @@ BUG FIXES
 
     o	write.table() assumed dec = "," if it was not ".".
 
+    o   morley.tab used by R-intro was not installed on Unix since 2.0.0
+	(it was on Windows).
+
 
 
 		CHANGES IN R VERSION 2.0.1
