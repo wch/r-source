@@ -39,11 +39,6 @@ From: abroman@jhu.edu
 Date: Fri, 15 Jun 2001 00:25:54 +0200 (MET DST)
 --confirmed on Windows and Solaris.
 --Seems that file is not in the expected format
-* PR# 496 *
-From: bonneau@epi.roazhon.inra.fr (en148)
-Date: Tue, 21 Mar 2000 10:57:13 +0100 (MET)
---base R has no est.variogram function.
---This appears to be a bug report on sgeostat.
 * PR# 948 *
 Subject:  xyplot,grid.text segfault 
 From: Peter Malewski <p.malewski@tu-bs.de>
@@ -167,11 +162,7 @@ none
 
 Directory:  Installation
 
-* PR# 923 *
-Subject: bug when compiling using --with-f2c option
-From: wang@rjka.com
-Date: Thu, 26 Apr 2001 19:56:59 +0200 (MET DST)
---too little information
+none
 
 Directory:  Language
 
@@ -203,12 +194,6 @@ Directory:  Low-level
 Subject: "[.data.frame" allows un-named 3rd subscript
 From: "Charles C. Berry" <cberry@tajo.ucsd.edu>
 Date: Mon, 18 Jun 2001 13:13:46 -0700 (PDT)
-* PR# 956 *
-Subject: unbelievable parser bug
-From: Martin Maechler <maechler@stat.math.ethz.ch>
-Date: Tue, 29 May 2001 14:25:00 +0200
---Parser does not accept space + meta (e.g. Alt, AltGr).  Should it?
---Not really a bug.
 
 Directory:  Misc
 
@@ -228,20 +213,7 @@ Directory:  System-specific
 Subject: R-1.2.3 OSF precompiled binary doesn't run under DU4.0D
 From: paul@gromit.dlib.vt.edu
 Date: Fri, 1 Jun 2001 17:47:10 +0200 (MET DST)
-* PR# 935 *
-Subject:  help.start() fails 
-From: "Wilhelm B. Kloke" <wb@vestein.arb-phys.uni-dortmund.de>
-Date: Wed, 9 May 2001 13:43:49 +0200 (MET DST)
---Report on 1.2.1: on other systems the file is installed with 644.
-* PR# 851 *
-Subject: Comments on R-1.2.1 builds
-From: "Nelson H. F. Beebe" <beebe@math.utah.edu>
-Date: Fri, 16 Feb 2001 17:44:17 -0700 (MST)
---These are only warnings: some have been eliminated for 1.2.2.
---Some are about constructs needed to satisfy other compilers.
---
---Also: configure problem with g77 on SGI.
---(Should be taken care of for 1.2.3).
+--Builder needs to avoid -ldnet in distributed binaries..
 * PR# 848 *
 Subject: X11 device doesn't handle destroy events correcly
 From: Thomas Vogels <tov@ece.cmu.edu>
@@ -249,57 +221,15 @@ Date: 13 Feb 2001 17:40:46 -0500
 
 Directory:  TooMuchAtOnce
 
-* PR# 918 *
-Subject: several bugs
-From: Rich Heiberger <rmh@surfer.sbm.temple.edu>
-Date: Sun, 22 Apr 2001 23:13:38 -0400 (EDT)
---1. as.numeric -> use as.double.FOO for methods -- doc.fixed for 1.2.3
---2. cannot set attribute on NULL -- no bug
---3. rep(list() ... ) :  a wish  fulfilled for 1.3.x
---4. %*% is not a generic in R (but is fast!) but in S+  -- not a bug
---5. S-plus (S4) compatibility  -- a wish but not for now
---6. list()s with dim() attribute -- an ongoing `research topic'  :-)
-* PR# 811 *
-Subject: problem with strptime example (and mention of bug.report)
-From: Stephen Eglen <stephen@anc.ed.ac.uk>
-Date: Thu, 11 Jan 2001 19:18:39 GMT
---1) On OSF4, strptime is deficient. Nothing we can do.
---
---2) On Windows NT, the strptime problems are (i) German locale, English dates,
---(ii) Windows system errors with unknown DST (it move times to DST).
---(i) now has another warning in the help file (there already was one).
---(ii) was already worked around for 1.2.1.
---
---3) bug.report() uses a mailer option that does not exist on OSF4.
+none
 
 Directory:  Windows
 
-* PR# 927 *
-Subject: Rgui 1.2.3 for Windows crashes reading huge CSV file
-From: znmeb@aracnet.com
-Date: Mon, 30 Apr 2001 07:14:50 +0200 (MET DST)
---Not clear this is to do with Windows.
-* PR# 926 *
-Subject: Rgui crash
-From: bellis@hsph.harvard.edu
-Date: Sun, 29 Apr 2001 20:45:15 +0200 (MET DST)
---Unable to reproduce even on a Win2k machine
-* PR# 912 *
-Subject: Rgui.exe crash on Windows 2000
-From: gilg.seeber@uibk.ac.at
-Date: Thu, 12 Apr 2001 15:07:52 +0200 (MET DST)
---seems to be specific to the submitter's system.
---Cannot reproduce.
-* PR# 906 *
-Subject: Win98 wheelmouse graphics lock problem
-From: cpaul@ucla.edu
-Date: Tue, 10 Apr 2001 17:50:44 +0200 (MET DST)
---Cannot reproduce without more information
---In particular, does not happen with Microsoft Intellimouse on W2K
+none
 
 Directory:  incoming
 
-* PR# 990 *
-Subject: core dump on 64-bit Solaris
-From: Thomas Lumley <tlumley@u.washington.edu>
-Date: Tue, 19 Jun 2001 16:18:43 -0700 (PDT)
+* PR# 992 *
+Subject: BUGS.R-PROJECT.ORG
+From: "Christine Hall" <return@trafficmagnet.net>
+Date: Fri, 22 Jun 2001 03:26:13 +0800
