@@ -125,7 +125,7 @@ stamp-refman-dvi: $(refman_TEXINPUTS)
 	@touch $@
 
 ## <NOTE> This assumes none of the latex dirs are zipped </NOTE>
-$(texinputs_BASE): FORCE $(top_srcdir)/share/perl/build-help.pl
+$(texinputs_BASE): FORCE $(top_builddir)/share/perl/build-help.pl
 	@(pkg=`basename $@ -pkg.tex`; \
 	if $(PERL) $(top_srcdir)/tools/Rdnewer.pl \
 	    "$(top_srcdir)/src/library/$${pkg}" "$@"; then \
