@@ -58,6 +58,8 @@ NEW FEATURES
             split(x, g) <- lapply(split(x, g), mean)
         now work
 
+    o   Added colorRamp() and colorRampPalette() for color interpolation.
+
 
 UTILITIES
 
