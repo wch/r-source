@@ -1,7 +1,7 @@
 include MkRules
 
 HELP = YES
-WINHELP = BITH # NO, CHM, BOTH
+WINHELP = BOTH # NO, CHM, BOTH
 
 PACKAGES = base ctest eda lqs modreg mva nls splines stepfun ts
 ALLPACKAGES = $(PACKAGES) tcltk
@@ -228,7 +228,7 @@ bundle-%:
 
 docs manuals:
 	@$(MAKE) -C $(RHOME)/doc/manual -f Makefile.win clean
-	@$(MAKE) -C $(RHOME)/doc/manual -f Makefile.win R_PKGS='$(PACKAGES)'
+	@$(MAKE) -C $(RHOME)/doc/manual -f Makefile.win R_PKGS='$(ALLPACKAGES)'
 	@$(MAKE) ziponly-base
 
 
