@@ -141,10 +141,10 @@ summary.POSIXlt <- function(object, digits = 15, ...)
 Ops.POSIXt <- function(e1, e2)
 {
     if (nargs() == 1)
-        stop(paste("unary", .Generic, "not defined for POSIXct objects"))
+        stop(paste("unary", .Generic, "not defined for POSIXt objects"))
     boolean <- switch(.Generic, "<" = , ">" = , "==" = ,
-                 "!=" = , "<=" = , ">=" = TRUE, FALSE)
-    if (!boolean) stop(paste(.Generic, "not defined for POSIXct objects"))
+                      "!=" = , "<=" = , ">=" = TRUE, FALSE)
+    if (!boolean) stop(paste(.Generic, "not defined for POSIXt objects"))
     if(inherits(e1, "POSIXlt")) e1 <- as.POSIXct(e1)
     if(inherits(e2, "POSIXlt")) e2 <- as.POSIXct(e2)
     NextMethod(.Generic)
@@ -152,7 +152,7 @@ Ops.POSIXt <- function(e1, e2)
 
 Math.POSIXt <- function (x, ...)
 {
-    stop(paste(.Generic, "not defined for POSIXct objects"))
+    stop(paste(.Generic, "not defined for POSIXt objects"))
 }
 
 Summary.POSIXct <- function (x, ...)
@@ -351,7 +351,7 @@ round.difftime <- function (x, digits = 0)
    structure(NextMethod(), units=units, class="difftime")
 }
 
-## for back-compatibility
+## for back-compatibility only: POSIXt versions are used as from 1.3.0
 
 "-.POSIXct" <- function(e1, e2)
 {
@@ -369,4 +369,26 @@ round.difftime <- function (x, digits = 0)
     if(inherits(e1, "POSIXlt")) e1 <- as.POSIXct(e1)
     if(inherits(e2, "POSIXlt")) e2 <- as.POSIXct(e2)
     e1 - e2
+}
+
+Ops.POSIXct <- function(e1, e2)
+{
+    if (nargs() == 1)
+        stop(paste("unary", .Generic, "not defined for POSIXct objects"))
+    boolean <- switch(.Generic, "<" = , ">" = , "==" = ,
+                      "!=" = , "<=" = , ">=" = TRUE, FALSE)
+    if (!boolean) stop(paste(.Generic, "not defined for POSIXct objects"))
+    NextMethod(.Generic)
+}
+
+Ops.POSIXlt <- function(e1, e2)
+{
+    if (nargs() == 1)
+        stop(paste("unary", .Generic, "not defined for POSIXlt objects"))
+    boolean <- switch(.Generic, "<" = , ">" = , "==" = ,
+                      "!=" = , "<=" = , ">=" = TRUE, FALSE)
+    if (!boolean) stop(paste(.Generic, "not defined for POSIXlt objects"))
+    e1 <- as.POSIXct(e1)
+    e2 <- as.POSIXct(e2)
+    NextMethod(.Generic)
 }

@@ -5,14 +5,11 @@
 \alias{print.POSIXlt}
 \alias{summary.POSIXct}
 \alias{summary.POSIXlt}
-\alias{+.POSIXct}
-\alias{-.POSIXct}
-\alias{Ops.POSIXct}
-\alias{Math.POSIXct}
+\alias{+.POSIXt}
+\alias{-.POSIXt}
+\alias{Ops.POSIXt}
+\alias{Math.POSIXt}
 \alias{Summary.POSIXct}
-\alias{+.POSIXlt}
-\alias{-.POSIXlt}
-\alias{Ops.POSIXlt}
 \alias{Math.POSIXlt}
 \alias{Summary.POSIXlt}
 \alias{[.POSIXct}
@@ -30,6 +27,13 @@
 \alias{difftime}
 \alias{print.difftime}
 \alias{round.difftime}
+
+% back-compatibility functions
+\alias{-.POSIXct}
+\alias{-.POSIXlt}
+\alias{Ops.POSIXct}
+\alias{Ops.POSIXlt}
+
 \title{Date-Time Classes}
 \description{
   Description of the classes \code{"POSIXlt"} and \code{"POSIXct"}
