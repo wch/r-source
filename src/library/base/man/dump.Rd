@@ -21,11 +21,11 @@ dump(list, file = "dumpdata.R", append = FALSE, forDisplay = FALSE,
     \code{file}; otherwise, it will overwrite the contents of
     \code{file}.}
     
-  \item{forDisplay}{logical indicating whether to make the representation 
-                    more readable}
+  \item{forDisplay}{logical indicating whether to make the
+    representation more readable.}
 
   \item{useSource}{logical indicating whether to use the saved source
-  		   when dumping a function}
+    when dumping a function.}
 
   \item{envir}{the environment to search for objects.}
 }
@@ -59,8 +59,8 @@ dump(list, file = "dumpdata.R", append = FALSE, forDisplay = FALSE,
 }
 \note{
   The \code{envir} argument was added at version 1.7.0, and changed the
-  default search path for named objects to include the environment from which
-  \code{dump} was called.
+  default search path for named objects to include the environment from
+  which \code{dump} was called.
 
   As \code{dump} is defined in the base namespace, the \pkg{base}
   package will be searched \emph{before} the global environment unless
