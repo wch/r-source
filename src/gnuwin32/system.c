@@ -225,6 +225,7 @@ ThreadedReadConsole(char *prompt, char *buf, int len, int addtohistory)
     WaitMessage();
     if (lineavailable) break;
     doevent();
+    if(R_tcldo) R_tcldo();
   }
   lineavailable = 0;
   /* restore handler  */
