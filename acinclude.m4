@@ -2356,8 +2356,8 @@ AC_DEFUN([R_RECOMMENDED_PACKAGES],
 [AC_CACHE_CHECK([for recommended packages],
                 [r_cv_misc_recommended_packages],
 [r_cv_misc_recommended_packages=yes
-recommended_pkgs=`grep '^R_PKGS_RECOMMENDED *=' ${srcdir}/Makeconf.in | \
-  sed 's/.*=//'`
+recommended_pkgs=`grep '^R_PKGS_RECOMMENDED_SOURCES *=' \
+  ${srcdir}/share/make/vars.mk | sed 's/.*=//'`
 for pkg in ${recommended_pkgs}; do
   n_pkg=`ls ${srcdir}/src/library/Recommended/${pkg}_*.tar.gz | wc -l`
   if test ${n_pkg} -ne 1; then
