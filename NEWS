@@ -341,7 +341,8 @@ NEW FEATURES
 BUG FIXES
 
 
-    o   Fixed Pearson residuals for glms with non-canonical link.(PR#1123)
+    o   Fixed Pearson residuals for glms with non-canonical
+	link.(PR#1123). Fixed them again for weights (PR#1175).
 
     o	Fixed an inconsistency in the evaluation context for on.exit
 	expressions between explicit calls to `return' and falling off

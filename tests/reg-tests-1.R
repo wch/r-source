@@ -375,6 +375,31 @@ image(x2, 1, as.matrix(z))
 ## Comments: failed under R 1.3.1.
 
 
+##PR 1175 and 1123##
+## We can't seem to get Pearson residuals right ##
+x_1:4 # regressor variable
+y_c(2,6,7,8) # response binomial counts
+n_rep(10,4) # number of binomial trials
+ym_cbind(y,n-y) # response variable as a matrix
+glm1_glm(ym~x,binomial) # fit a generalized linear model
+f_fitted(glm1)
+rp1_(y-n*f)/sqrt(n*f*(1-f)) # direct calculation of pearson residuals
+rp2_residuals(glm1,type="pearson") # should be pearson residuals
+stopifnot(all.equal(rp1,rp2))
+# sign should be same as response residuals
+x<-1:10
+y<-rgamma(10,2)/x
+glm2<-glm(y~x,family=Gamma)
+stopifnot(all.equal(sign(resid(glm2,"response")),sign(resid(glm2,"pearson"))))
+# shouldn't depend on link for a saturated model
+x<-rep(0:1,10)
+y<-rep(c(0,1,1,0,1),4)
+glm3<-glm(y~x,family=binomial(),control=glm.control(eps=1e-8))
+glm4<-glm(y~x,family=binomial("log"),control=glm.control(eps=1e-8))
+stopifnot(all.equal(resid(glm3,"pearson"),resid(glm4,"pearson")))
+
+
+    
 ## This example last ##
 
 ## PR 902 segfaults when warning string is too long, Ben Bolker 2001-04-09
