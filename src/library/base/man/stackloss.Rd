@@ -38,5 +38,8 @@
   Intensive Methods; In Honor of Peter Huber's 60th Birthday, 1996,
   Lecture Notes in Statistics 109, Springer-Verlag, New York.
 }
-
+\examples{
+data(stackloss)
+summary(lm.stack <- lm(stack.loss ~ stack.x))
+}
 \keyword{datasets}
