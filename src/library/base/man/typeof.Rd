@@ -5,13 +5,11 @@ typeof(x)
 }
 \alias{typeof}
 \description{
-\code{typeof} provides a means of determining the
-type or storage mode of an object.
-\code{typeof} returns a character string giving the type
-of the object.
+  \code{typeof} determines the (\R internal)
+  type or storage mode of any object \code{x}.  It returns a character string.
 }
 \seealso{
-\code{\link{mode}}, \code{\link{storage.mode}}.
+  \code{\link{mode}}, \code{\link{storage.mode}}.
 }
 \examples{
 typeof(2)
