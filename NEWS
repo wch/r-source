@@ -249,7 +249,9 @@ BUG FIXES
 
     o	Improved logic in the re-scaling of plots in dev.print.
 
-    o	all(NULL == NULL) is TRUE now.
+    o	NULL == ... now gives logical(0) instead of an error.
+	This fixes a bug with e.g. apply(X,2,median, na.rm = TRUE) and
+	all(NULL == NULL) is now TRUE.
 
 
 	**************************************************
