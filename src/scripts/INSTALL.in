@@ -4,7 +4,7 @@
 
 # @configure_input@
 
-revision='$Revision: 1.102 $'
+revision='$Revision: 1.103 $'
 version=`set - ${revision}; echo ${2}`
 version="R add-on package installer ${version}
 
@@ -105,7 +105,7 @@ stars="*"
 get_packages () {
   ## get the full path names to all packages contained in $1.
   ## NOTE: modifies pkgs!
-  if grep -s "^Contains:" "${1}/DESCRIPTION"; then
+  if grep "^Contains:" "${1}/DESCRIPTION" >/dev/null; then
     bundlepkg=`get_dcf_field Contains "${1}/DESCRIPTION"`
     for p in ${bundlepkg}; do
       pkgs="${pkgs} \"`cd "${1}/${p}" && ${GETWD}`\""
