@@ -1,4 +1,5 @@
 #! @PERL@
+#-*- perl -*-
 # Convert fixed width format to R/S "table"
 # By KH <Kurt.Hornik@ci.tuwien.ac.at>, based on a script by Doug Bates
 # Usage: fwf2table -f FORMAT [-s SEP] FILE,
@@ -7,7 +8,6 @@
 # to be interpreted as an ASCII character string with trailing white
 # space suppressed, and SEP is the record separator to be inserted in
 # the output (default is a space).
-#require "getopts.pl";
 
 require 5.000;
 use Getopt::Std;
