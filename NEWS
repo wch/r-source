@@ -165,7 +165,7 @@ NEW FEATURES
 
 BUG FIXES
 
-    o   Method dispatching now forces evaluation of promises, so
+    o	Method dispatching now forces evaluation of promises, so
 	autoloading works with methods.
 
     o	Postscript driver no longer uses the initclip operator, which
@@ -213,6 +213,9 @@ BUG FIXES
     o	pairs() now obeys an "cex = " argument, and so does panel.smooth().
 
     o	prompt(fn) uses fn's "source" attribute if it has one.
+
+    o	ff[i] <- r  now works for formula (and potentially other
+	non-standard) objects ff.
 
 
 	**************************************************
