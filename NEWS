@@ -114,6 +114,9 @@ NEW FEATURES
     o	strwidth/strheight() now coerce their first argument in exactly
 	the same way text() does, so a wider range of inputs is allowed.
 
+    o	prompt()'s default and data.frame methods have a new 3rd argument
+	`name' allowing to use them more easily in scripts and loops.
+
 
 DEPRECATED & DEFUNCT
 
@@ -184,7 +187,7 @@ BUG FIXES
     o   Using Q to exit a browser invoked at the top-level could lead to
 	the browser being invoked on all future top-level loops (PR#1721)
 
-    o   step(fit, direction="both") now uses both directions even if 
+    o   step(fit, direction="both") now uses both directions even if
 	no scope is supplied.
 
     o	strwidth(), strheight() now give 0 on NA strings (as they
@@ -236,6 +239,9 @@ BUG FIXES
 	and did not check for duplicated names.
 
     o	ls.str(envir = environment(F)) now works (when F is a function).
+
+    o	pie() now has a `border' (and 'lty') argument which allows empty
+        slice borders and makes pie() useable for hundreds of slices.
 
 
 

@@ -6,14 +6,14 @@
 }
 \usage{
 pie(x, labels = names(x), edges = 200, radius = 0.8,
-    density = NULL, angle = 45, col = NULL,
+    density = NULL, angle = 45, col = NULL, border = NULL, lty = NULL,
     main = NULL, \dots)
 }
 \arguments{
   \item{x}{a vector of positive quantities.
     The values in \code{x} are displayed as the areas of pie slices.}
   \item{labels}{a vector of character strings giving names for the
-    slices.}
+    slices.  For empty or NA labels, no pointing line is drawn either.}
   \item{edges}{the circular outline of the pie is approximated by a
     polygon with this many edges.}
   \item{radius}{the pie is drawn centered in a square box whose sides
@@ -28,6 +28,8 @@ pie(x, labels = names(x), edges = 200, radius = 0.8,
   \item{col}{a vector of colors to be used in filling or shading
     the slices. If missing a set of 6 pastel colours is used,
     unless \code{density} is specified when \code{par("fg")} is used.}
+  \item{border, lty}{(possibly vectors) arguments passed to
+    \code{\link{polygon}} which draws each slice.}
   \item{main}{an overall title for the plot.}
   \item{\dots}{graphical parameters can be given as arguments to
     \code{pie}.}
@@ -57,5 +59,9 @@ pie(pie.sales,
     col = c("purple", "violetred1", "green3", "cornsilk", "cyan", "white"))
 pie(pie.sales, col = gray(seq(0.4,1.0,length=6)))
 pie(pie.sales, density = 10, angle = 15 + 10 * 1:6)
+
+n <- 200
+pie(rep(1,n), labels="", col=rainbow(n), border=NA,
+    main = "pie(*, labels=\"\", col=rainbow(n), border=NA,..")
 }
 \keyword{hplot}
