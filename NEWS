@@ -327,10 +327,11 @@ INTERNATIONALIZATION
     o	New function localeToCharset() to find/guess encoding(s) from
 	the locale name.
 
-    o	nchar() returns the true number of bytes stored
-	(including any embedded nuls), this being 2 for missing
-	values.	 It has options "chars" and "width" to give the number
-	of characters or the display width in columns.
+    o	nchar() returns the true number of bytes stored (including any
+	embedded nuls), this being 2 for missing values.  It has an
+	optional argument 'type' with possible non-default values
+	"chars" and "width" to give the number of characters or the
+	display width in columns.
 
     o	Characters can be entered in hexadecimal as e.g. \x9c, and in
 	UTF-8 and other multibyte locales as \uxxxx, \u{xxxx},
@@ -365,8 +366,8 @@ INTERNATIONALIZATION
 	sets: in such a locale a glyph can either be specified as a
 	multi-byte single character or as a number, the Unicode point.
 
-    o	Function l10n_info() reports on aspects of the locale/charset
-	currently in use.
+    o	New function l10n_info() reports on aspects of the
+	locale/charset currently in use.
 
     o	scan() is now aware of double-byte locales such as Shift-JIS
 	in which ASCII characters can occur as the second ('trail')
@@ -380,12 +381,12 @@ INTERNATIONALIZATION
 	Language Support.  This has been used for the startup message
 	in English and to translate Americanisms such as 'color' into
 	English: translations to several other languages are under
-	way, and early partial versions for German, Italian and
-	Simplified Chinese are included.
+	way, and some are included.
 
 	See 'Writing R Extensions' for how to make use of this in a
-	package: all the standard packages have been marked and
-	splines is set up to do translation.
+	package: all the standard packages have been set up to do
+	translation, and the 'language' 'en@quot' is implemented to
+	allow Unicode directional quotes in a UTF-8 locale.
 
     o	R-level stop() and warning() messages can be translated, as can
 	other messages via the new function gettext().	Tools
@@ -466,8 +467,7 @@ C-LEVEL FACILITIES
     o	Added an onExit() function to graphics devices, to be executed
 	upon user break if non-NULL.
 
-    o	ISNAN now works even in C++ code that undefines the
-	isnan macro.
+    o	ISNAN now works even in C++ code that undefines the 'isnan' macro.
 
 
 DEPRECATED & DEFUNCT
@@ -484,8 +484,9 @@ DEPRECATED & DEFUNCT
 
     o	The 'CRAN' argument to update.packages(), old.packages(),
 	new.packages(), download.packages() and install.packages() is
-	deprecated in favour of 'repos', which is the new first
-	argument (so this is only relevant for calls with named args).
+	deprecated in favour of 'repos', which replaces it as a
+	positional argument (so this is only relevant for calls with
+	named args).
 
     o	The S3 methods for getting and setting names of "dist" objects
 	have been removed (as they provided names with a different
@@ -499,7 +500,7 @@ DEPRECATED & DEFUNCT
 INSTALLATION CHANGES
 
     o	New configure option --enable-utf8 to enable support for
-	UTF-8 locales.
+	UTF-8 locales, on by default.
 
     o	R_XTRA_[CF]FLAGS are now used during the configuration tests,
 	and [CF]PICFLAGS if --enable-R-shlib was specified.  This
@@ -509,7 +510,7 @@ INSTALLATION CHANGES
     o	Files FAQ, RESOURCES, doc/html/resources.html are no longer in
 	the SVN sources but are made by 'make dist'.
 
-    o	The GNOME GUI is unbundled as a package on CRAN.
+    o	The GNOME GUI is unbundled, now provided as a package on CRAN.
 
     o	Configuring without having the recommended packages is now an
 	error unless --with-recommended-packages=no (or equivalent) is used.

@@ -2436,10 +2436,20 @@ CXXFLAGS='-O -qstrict'
 @end example
 
 @noindent
-and the @code{X11()} device worked.  His system required the
+and the @code{X11()} device worked.  [His system required the
 @file{Makeconf} file to be edited to replace @file{/lib/crt0.o} by
-@file{/lib/crt0_64.o} in @code{R_XTRA_LIBS}, and @command{configure} now
-tries to detect this.
+@file{/lib/crt0_64.o} in @code{R_XTRA_LIBS}, but @command{configure} now
+tries to detect this.]  
+
+Paul Boutros reported success building @R{} 2.0.1 under AIX 5.2 with
+@code{gcc 3.3.2} using
+@example
+OBJECT_MODE=64
+MAIN_LDFLAGS=-Wl,-brtl
+SHLIB_LDFLAGS=-Wl,-G
+@end example
+@noindent
+(note it is @code{Wl} (W ell) not @code{W1} (W one)).
 
 We understand that @option{--enable-R-shlib} does not work under AIX.
 
@@ -2459,12 +2469,11 @@ The @code{gtk()} graphics device is a port of the @code{x11()} device to
 with the console than the @code{x11()} device.  The @code{gnome()}
 device used the @acronym{GNOME} canvas, and is not currently available.
 
-The sources for the @acronym{GNOME} console for @R{} are currently
-available by
+The sources for the @acronym{GNOME} console for @R{} are now available
+as package @pkg{gnomeGUI} on @acronym{CRAN} and @emph{via} Subversion by
 @example
 svn co https://svn.r-project.org/R-packages/trunk/gnomeGUI
 @end example
-and they will constitute the package @pkg{gnomeGUI} on @acronym{CRAN}.
 
 You need to have built @R{} first with the @option{--enable-R-shlib}
 option, and installed @R{} to where you are going to use it from.
@@ -2499,9 +2508,8 @@ packages in order to compile the R-GNOME console.
 It is possible to install the front-end in the same way as an @R{}
 package, via @code{R CMD INSTALL} or @code{install.packages}.
 
-The console is a separate front-end program that can be configured and
-built independently of @R{}.  Create a build directory, and from there
-run
+For greater control, it can be configured and built independently of
+@R{}.  Create a build directory, and from there run
 
 @example
 /path/to/gnomeGUI/configure R_HOME=/path/to/R/installation
@@ -2527,6 +2535,7 @@ specify location of @acronym{GNOME} libs
 @item --with-libglade-config=@var{LIBGLADE_CONFIG}
 specify location of @command{libglade-config}
 @end table
+
 
 @node Enabling search in HTML help, The Windows toolset, Building the GNOME console, Top
 @appendix Enabling search in @HTML{} help
