@@ -55,6 +55,8 @@ NEW FEATURES
     o	R CMD build now ignores all files specified (via Perl regexps)
 	in file `.Rbuildignore' in the top-level source	directory of a
 	package.
+
+    o	Horizontal boxplots are possible with  horizontal = TRUE.
     
 
 BUG FIXES
