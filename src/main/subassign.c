@@ -143,7 +143,7 @@ static SEXP EnlargeVector(SEXP x, R_len_t newlen)
 	    RAW(newx)[i] = (Rbyte) 0;
 	break;
     default:
-	UNIMPLEMENTED("EnlargeVector");
+	UNIMPLEMENTED_TYPE("EnlargeVector", x);
     }
 
     /* Adjust the attribute list. */

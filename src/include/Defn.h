@@ -862,6 +862,10 @@ int	Rstrlen(SEXP, int);
 char *EncodeRaw(Rbyte);
 char *EncodeString(SEXP, int, int, int);
 
+/* main/util.c */
+void UNIMPLEMENTED_TYPE(char *s, SEXP x);
+void UNIMPLEMENTED_TYPEt(char *s, SEXPTYPE t);
+
 /* Macros for suspending interrupts */
 #define BEGIN_SUSPEND_INTERRUPTS do { \
     Rboolean __oldsusp__ = R_interrupts_suspended; \

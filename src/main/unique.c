@@ -220,7 +220,7 @@ static void HashTableSetup(SEXP x, HashData *d)
 	MKsetup(256, d);
 	break;
     default:
-	UNIMPLEMENTED("HashTableSetup");
+	UNIMPLEMENTED_TYPE("HashTableSetup", x);
     }
     d->HashTable = allocVector(INTSXP, d->M);
 }
@@ -335,7 +335,7 @@ SEXP do_duplicated(SEXP call, SEXP op, SEXP args, SEXP env)
 		RAW(ans)[k++] = RAW(x)[i];
 	break;
     default:
-	UNIMPLEMENTED("do_duplicated");
+	UNIMPLEMENTED_TYPE("do_duplicated", x);
     }
     return ans;
 }

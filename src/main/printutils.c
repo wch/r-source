@@ -357,7 +357,7 @@ char *EncodeElement(SEXP x, int indx, int quote)
 	EncodeRaw(RAW(x)[indx]);
 	break;
     default:
-	UNIMPLEMENTED("EncodeElement");
+	UNIMPLEMENTED_TYPE("EncodeElement", x);
     }
     return buffer->data;
 }

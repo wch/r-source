@@ -646,9 +646,9 @@ void PrintValueRec(SEXP s,SEXP env)
 	Rprintf("<weak reference>\n");
 	break;
     default:
-	UNIMPLEMENTED("PrintValueRec");
+	UNIMPLEMENTED_TYPE("PrintValueRec", s);
     }
-    printAttributes(s,env, FALSE);
+    printAttributes(s, env, FALSE);
 }
 
 /* 2000-12-30 PR#715: remove list tags from tagbuf here
