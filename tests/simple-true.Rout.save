@@ -1,6 +1,6 @@
 
 R : Copyright 2002, The R Development Core Team
-Version 1.4.0 Patched (2002-01-15)
+Version 1.6.0 Under development (unstable) (2002-08-13)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -143,6 +143,35 @@ Type `q()' to quit R.
 > all(dim(x30) == dim( data.matrix(x30)))
 [1] TRUE
 > all(dim(x00) == dim( data.matrix(x00)))
+[1] TRUE
+> 
+> m0 <- matrix(pi, 0,3)
+> a302 <- array("", dim=c(3,0,2))
+> identical(apply(m0, 1, dim), NULL)
+[1] TRUE
+> identical(apply(m0, 2, dim), NULL)
+[1] TRUE
+> identical(apply(m0, 1,length),  integer(0))
+[1] TRUE
+> identical(apply(m0, 2,length),  integer(3))
+[1] TRUE
+> identical(apply(a302, 1, mode), rep("character",3))
+[1] TRUE
+> ## NO (maybe later?):
+> ## identical(apply(a302, 2, mode), rep("character",0))
+> is.character(aa <- apply(a302, 2, mode)) && length(aa) == 0
+[1] TRUE
+> identical(apply(a302, 3, mode), rep("character",2))
+[1] TRUE
+> identical(apply(a302, 3, length),integer(2))
+[1] TRUE
+> identical(apply(a302, 3, dim), matrix(as.integer(c(3,0)), 2 ,2))
+[1] TRUE
+> identical(apply(a302, 1, dim), matrix(as.integer(c(0,2)), 2 ,3))
+[1] TRUE
+> identical(apply(array(dim=3), 1,length), rep(1:1, 3))
+[1] TRUE
+> identical(apply(array(dim=0), 1,length), rep(1:1, 0))# = integer(0)
 [1] TRUE
 > 
 > 

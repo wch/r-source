@@ -90,6 +90,23 @@ all(dim(x)   == dim(cbind(x, x30)))
 all(dim(x30) == dim( data.matrix(x30)))
 all(dim(x00) == dim( data.matrix(x00)))
 
+m0 <- matrix(pi, 0,3)
+a302 <- array("", dim=c(3,0,2))
+identical(apply(m0, 1, dim), NULL)
+identical(apply(m0, 2, dim), NULL)
+identical(apply(m0, 1,length),  integer(0))
+identical(apply(m0, 2,length),  integer(3))
+identical(apply(a302, 1, mode), rep("character",3))
+## NO (maybe later?):
+## identical(apply(a302, 2, mode), rep("character",0))
+is.character(aa <- apply(a302, 2, mode)) && length(aa) == 0
+identical(apply(a302, 3, mode), rep("character",2))
+identical(apply(a302, 3, length),integer(2))
+identical(apply(a302, 3, dim), matrix(as.integer(c(3,0)), 2 ,2))
+identical(apply(a302, 1, dim), matrix(as.integer(c(0,2)), 2 ,3))
+identical(apply(array(dim=3), 1,length), rep(1:1, 3))
+identical(apply(array(dim=0), 1,length), rep(1:1, 0))# = integer(0)
+
 
 ### Subsetting
 
