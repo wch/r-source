@@ -1777,7 +1777,7 @@ SEXP do_title(SEXP call, SEXP op, SEXP args, SEXP env)
 	    GMMathText(VECTOR(sub)[0], 1, dd->gp.mgp[0]+1.0, 0,
 		       xNPCtoUsr(adj, dd), 0, dd);
 	else {
-	    n = length(xlab);
+	    n = length(sub);
 	    for(i=0 ; i<n ; i++)
 		GMtext(CHAR(STRING(sub)[i]), 1, dd->gp.mgp[0]+1.0, 0,
 		   xNPCtoUsr(adj, dd), 0, dd);
