@@ -1,8 +1,9 @@
 r-base (1.6.2-0.cvs.20021230) unstable; urgency=low
 
   * Upgraded to release candidate dated 2002-12-30 of R 1.6.2
-
- -- Douglas Bates <bates@stat.wisc.edu>  Mon, 30 Dec 2002 11:33:16 -0600
+  * Added Douglas Bates as an Uploader following email discussion with Dirk
+  
+ -- Douglas Bates <bates@stat.wisc.edu>  Mon, 30 Dec 2002 20:43:24 -0600
 
 r-base (1.6.1-3) unstable; urgency=low
 

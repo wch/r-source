@@ -2,6 +2,7 @@ Source: r-base
 Section: math
 Priority: optional
 Maintainer: Dirk Eddelbuettel <edd@debian.org>
+Uploaders: Douglas Bates <bates@stat.wisc.edu>
 Standards-Version: 3.5.7
 Build-Depends: blas-dev (>= 1.0-9), libgnome-dev, libzvt-dev, libgtkxmhtml-dev, tcl8.4-dev, tk8.4-dev, libglade-gnome0-dev, bison, g77 [!ia64], g77-3.0 [ia64], gcc-3.0 [ia64], g++-3.0 [ia64], groff-base, libncurses5-dev, libreadline4-dev, tetex-bin, tetex-extra, debhelper (>= 3.0.0), texi2html, texinfo (>= 4.1-2), libbz2-dev, libpcre3-dev, libpaperg-dev
 
