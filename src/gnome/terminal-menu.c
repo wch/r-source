@@ -236,21 +236,6 @@ static void generic_cb(GtkWidget *widget, gpointer data)
   g_message("Menu item selected");
 }
 
-static GnomeUIInfo file_ws_menu[] =
-{
-  { GNOME_APP_UI_ITEM, "_Open...", "Open a saved workspace image", R_gtk_terminal_file_open, NULL, NULL, GNOME_APP_PIXMAP_STOCK, GNOME_STOCK_MENU_OPEN, GNOME_KEY_NAME_OPEN, GNOME_KEY_MOD_NEW, NULL },
-  { GNOME_APP_UI_ITEM, "Save _As...", "Save the workspace image to a file", R_gtk_terminal_file_saveas, NULL, NULL, GNOME_APP_PIXMAP_STOCK, GNOME_STOCK_MENU_SAVE_AS, GNOME_KEY_NAME_SAVE, GNOME_KEY_MOD_SAVE, NULL },
-  GNOMEUIINFO_END
-};
-
-static GnomeUIInfo file_data_menu[] =
-{
-  GNOMEUIINFO_ITEM_NONE("Edit Object...", "Use an editor to edit an R object", generic_cb),
-  GNOMEUIINFO_ITEM_NONE("Edit Vector...", "Use a spreadsheet to edit an R object", generic_cb),
-  GNOMEUIINFO_ITEM_NONE("Reload Files", "Reload objects being edited", generic_cb),
-  GNOMEUIINFO_END
-};
-
 static GnomeUIInfo file_menu[] =
 {
   { GNOME_APP_UI_ITEM, "_Open...", "Open a saved workspace image", R_gtk_terminal_file_open, NULL, NULL, GNOME_APP_PIXMAP_STOCK, GNOME_STOCK_MENU_OPEN, GNOME_KEY_NAME_OPEN, GNOME_KEY_MOD_NEW, NULL },

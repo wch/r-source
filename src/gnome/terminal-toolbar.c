@@ -26,16 +26,6 @@ static void toolbar_interrupt(GtkWidget *widget, gpointer data)
   R_gtk_terminal_interrupt();
 }
 
-static void toolbar_help(GtkWidget *widget, gpointer data)
-{
-  R_gtk_terminal_run("help.start()\n");
-}
-
-static void toolbar_quit(GtkWidget *widget, gpointer data)
-{
-  R_gtk_terminal_quit();
-}
-
 static GnomeUIInfo main_toolbar[] =
 {
   GNOMEUIINFO_ITEM_STOCK("Print", "Print console text", toolbar_generic, GNOME_STOCK_PIXMAP_PRINT),

@@ -1,4 +1,5 @@
 #include "terminal.h"
+#include "terminal-find.h"
 #include "terminal-functions.h"
 #include "terminal-toolbar.h"
 #include "terminal-menu.h"
@@ -20,7 +21,6 @@ static gint delete_event(GtkWidget *widget, GdkEvent *event, gpointer data)
 void R_gtk_terminal_new()
 {
   GtkWidget *table;
-  GtkWidget *frame;
   GtkWidget *vscrollbar;
 
   GtkStyle *textstyle;

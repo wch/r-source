@@ -344,8 +344,8 @@ GtkWidget *gnome_find_dialog_new (const gchar *title,
 
 gchar *gnome_find_dialog_get_find_text(GnomeFindDialog *dialog)
 {
-  g_return_if_fail(dialog != NULL);
-  g_return_if_fail(GNOME_IS_FIND_DIALOG(dialog));
+  g_return_val_if_fail(dialog != NULL, NULL);
+  g_return_val_if_fail(GNOME_IS_FIND_DIALOG(dialog), NULL);
 
   return gtk_editable_get_chars(GTK_EDITABLE(dialog->find_entry), 0, -1);
 }

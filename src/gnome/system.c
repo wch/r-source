@@ -115,7 +115,6 @@ void R_dot_Last(void);		/* in main.c */
 void R_CleanUp(int saveact)
 {
     GtkWidget *dialog;
-    gchar buf[128];
     gint which; /* yes = 0, no = 1, cancel = 2 || -1 */
 
     GList *curfile = R_gtk_editfiles;

@@ -186,7 +186,7 @@ GtkWidget *prefs_workspace_frame(void)
   GtkWidget *frame, *table;
   GtkWidget *ask;
   GtkWidget *save;
-  GtkWidget *savetofile, *dummy, *nameentry, *namebutton;
+  GtkWidget *savetofile, *dummy, *nameentry;
   GtkWidget *dontsave;
 
   frame = gtk_frame_new("Workspace");

@@ -9,7 +9,7 @@
 gboolean R_ChooseFile_result;
 gboolean R_ChooseFile_closing;
 
-R_ChooseFile_ok(GtkWidget *widget, gpointer data)
+void R_ChooseFile_ok(GtkWidget *widget, gpointer data)
 {
   R_ChooseFile_result = TRUE;
   R_ChooseFile_closing = TRUE;
@@ -17,14 +17,14 @@ R_ChooseFile_ok(GtkWidget *widget, gpointer data)
   gtk_main_quit();
 }
 
-R_ChooseFile_cancel(GtkWidget *widget, gpointer data)
+void R_ChooseFile_cancel(GtkWidget *widget, gpointer data)
 {
   R_ChooseFile_closing = TRUE;
 
   gtk_main_quit();
 }
 
-R_ChooseFile_destroy(GtkWidget *widget, gpointer data)
+void R_ChooseFile_destroy(GtkWidget *widget, gpointer data)
 {
   if(!R_ChooseFile_closing)
     gtk_main_quit();
