@@ -1513,20 +1513,21 @@ enabling the Java search engine.
 
 @menu
 * Java Virtual Machines on Linux ::  
+* Java Virtual Machines on Unix::  
 * Java Virtual Machines on Windows ::  
 @end menu
 
-@node Java Virtual Machines on Linux , Java Virtual Machines on Windows , Enabling search in HTML help, Enabling search in HTML help
+@node Java Virtual Machines on Linux , Java Virtual Machines on Unix, Enabling search in HTML help, Enabling search in HTML help
 @section Java Virtual Machines on Linux
 
 We are aware of problems with certain Java installations.  In
-particular, Sun's Java Run-time Environment @code{j2re 1.4.2_02} and
-later do not work under Linux.  Current browsers of the Mozilla family
-(including Mozilla >= 1.4, Netscape 7.1 and FireFox) are compiled under
-@code{gcc 3.x} and @emph{require} the @code{ns610-gcc32} version of the
-Java plugin that was introduced with @code{j2re 1.4.2}, so the only Java
+particular, Sun's Java Run-time Environment @code{j2re 1.4.2_02} does
+not work under Linux.  Current browsers of the Mozilla family (including
+Mozilla >= 1.4, Netscape 7.1 and FireFox) are compiled under @code{gcc
+3.x} and @emph{require} the @code{ns610-gcc32} version of the Java
+plugin that was introduced with @code{j2re 1.4.2}, so the only Java
 version that we know to work is @code{j2re 1.4.2_01}.  Marc Schwartz has
-kindly made Solaris and Linux @code{i586} distributions available: see
+kindly made Linux @code{i586} distributions available: see
 
 @smallexample
 http://www.MedAnalytics.com/INSTALL
@@ -1544,10 +1545,23 @@ for Konqueror @uref{http://www.konqueror.org/javahowto/}, for Opera
 for Debian GNU/Linux
 @uref{http://www.debian.org/doc/manuals/debian-java-faq/}.
 
-It is likely that similar issues apply to Unix Java platforms, and Sun's
-@code{j2re 1.4.x} is said not to work with Mozilla 1.6 under MacOS X.
 
-@node Java Virtual Machines on Windows ,  , Java Virtual Machines on Linux , Enabling search in HTML help
+@node Java Virtual Machines on Unix, Java Virtual Machines on Windows , Java Virtual Machines on Linux , Enabling search in HTML help
+@section Java Virtual Machines on Unix
+
+We have much less experience, but we do know that Sun's Run-time
+Environment @code{j2re 1.4.2_03} does not work under Solaris, whereas
+@code{j2re 1.4.2_01} and earlier do.  Marc Schwartz kindly made Solaris
+distributions of @code{j2re 1.4.2_01} available: see
+
+@smallexample
+http://www.MedAnalytics.com/INSTALL
+@end smallexample
+
+Sun's @code{j2re 1.4.x} is said not to work with Mozilla 1.6 under MacOS
+X.
+
+@node Java Virtual Machines on Windows ,  , Java Virtual Machines on Unix, Enabling search in HTML help
 @section Java Virtual Machines on Windows
 
 We have not seen any problems on Windows provided a Java Virtual Machine

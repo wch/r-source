@@ -22,7 +22,7 @@
 
 <p>This is a guide to installation and administration for R.
 
-   <p>The current version of this document is 1.9.0 (2004-03-07).
+   <p>The current version of this document is 1.9.0 (2004-03-15).
 
    ISBN 3-900051-02-X
 
@@ -64,26 +64,55 @@ users, set <code>umask</code> before unpacking so that the files will be
 readable by the target group (e.g., <code>umask 022</code> to be usable by all
 users).
 
+<a name="Getting%20patched%20and%20development%20versions"></a>
+
+<h3 class="section">1.2 Getting patched and development versions</h3>
+
+<p>A patched version of the current release, <code>r-patched</code> and the
+current development version, <code>r-devel</code>, are available as daily
+tarballs and via rsync.  The development version is also available by
+anonymous CVS from <a href="http://anoncvs.r-project.org/">http://anoncvs.r-project.org/</a>.
+
+   <p>The tarballs are available from
+<a href="ftp://ftp.stat.math.ethz.ch/pub/Software/R/">ftp://ftp.stat.math.ethz.ch/pub/Software/R/</a>.  Download either
+<code>R-patched.tar.gz</code> or <code>R-devel.tar.gz</code> (or the
+<code>.tar.bz2</code> versions) and unpack as described in the previous
+section.
+
+   <p>These versions do not contain the current sources for the recommended
+packages, which can be obtained by rsync (see the next section) or from
+CRAN.  Do ensure that you have the correct versions of the recommended
+packages: if the number in the file <code>VERSION</code> is
+<code></code><var>x</var><code>.</code><var>y</var><code>.</code><var>z</var><code></code> you need to download the contents of
+<code>http://cran.r-project.org/src/contrib/</code><var>x</var><code>.</code><var>y</var><code>.</code><var>z</var><code>/Recommended</code>
+to directory <code>src/library/Recommended</code> in the sources you have
+unpacked.  Normally <code>R-patched.tar.gz</code> will have the number of the
+last released version, and <code>R-devel.tar.gz</code> that of the next minor
+(<code></code><var>x</var><code>.</code><var>y</var><code>.0</code>) release.
+
 <a name="Using%20rsync"></a>
 
-<h3 class="section">1.2 Using rsync</h3>
+<h3 class="section">1.3 Using rsync</h3>
 
 <p>Sources are also available via anonymous rsync.  Use
 
-<pre class="smallexample">     rsync -rC rsync.r-project.org::<var>module</var> R
+<pre class="smallexample">     rsync -rC --delete rsync.r-project.org::<var>module</var> R
      </pre>
 
 <p>to create a copy of the source tree specified by <var>module</var> in the
-subdirectory <code>R</code> of the current directory, where <var>module</var>
-specifies one of the four existing flavors of the R sources, and can be
-one of <code>r-release</code> (current released version), <code>r-patched</code>
+subdirectory <code>R</code> of the current directory, where <var>module</var> can
+be one of <code>r-release</code> (current released version), <code>r-patched</code>
 (patched released version), and <code>r-devel</code> (development version). 
-(These flavors are described in the R FAQ,
-<a href="http://www.ci.tuwien.ac.at/~hornik/R/">http://www.ci.tuwien.ac.at/~hornik/R/</a>.)  The rsync trees are
-created directly from the master CVS archive and are updated hourly. 
-The <code>-C</code> option in the <code>rsync</code> command is to cause it to
-skip the CVS directories.  Further information on <code>rsync</code> is
-available at <a href="http://rsync.samba.org/rsync/">http://rsync.samba.org/rsync/</a>.
+The rsync trees are created directly from the master CVS archive and are
+updated hourly.  The <code>-C</code> option in the <code>rsync</code> command
+is to cause it to skip the CVS directories.  Further information on
+<code>rsync</code> is available at <a href="http://rsync.samba.org/rsync/">http://rsync.samba.org/rsync/</a>.
+
+   <p>Note that the sources available via rsync do not include the recommended
+packages, whereas these are included in the tarballs of released
+versions.  To install the appropriate sources for the recommended
+packages, run <code>./tools/rsync-recommended</code> from the top-level of
+the R sources.
 
 <a name="Installing%20R%20under%20Unix"></a>
 
@@ -107,7 +136,8 @@ for the rest of this chapter we consider only building from the sources.
 
 <p>First review the essential and useful tools and libraries in
 <a href="#Essential%20and%20useful%20other%20programs">Essential and useful other programs</a>, and install those you want or
-need.
+need.  Ensure that the environment variable <code>TMPDIR</code> is either
+unset or points to a valid temporary directory.
 
    <p>Choose a place to install the R tree (R is not just a binary, but
 has additional data sets, help files, font metrics etc).  Let us call
@@ -284,7 +314,7 @@ the sources and throughout the build process.
 <p>The <code>bin/windows</code> directory of a <small>CRAN</small> site contains
 binaries for a base distribution and a large number of add-on packages
 from <small>CRAN</small> to run on Windows 95, 98, NT4, 2000, ME and XP (at
-least) on Intel and clones (but not on other platforms).
+least) on Intel x86 and clones (but not on other platforms).
 
    <p>You do need one of those Windows versions: Windows 3.11+win32s will not
 work.
@@ -292,7 +322,7 @@ work.
    <p>Your file system must allow long file names (as is likely except
 perhaps for some network-mounted systems).
 
-   <p>The simplest way is to use <code>rw1090dev.exe</code> or
+   <p>The simplest way is to use <code>rw1090alpha.exe</code> or
 <code>miniR.exe</code>.  Just double-click on the icon and follow the
 instructions.  If you installed R this way you can uninstall it from the
 Control Panel.
@@ -1217,9 +1247,95 @@ success building R 1.7.0 under AIX 5.1 with
 <p>but was unable to use the X libraries or the native BLAS (ESSL) and so
 used <code>--without-x --without-blas</code>.
 
+<a name="Enabling%20search%20in%20HTML%20help"></a>
+
+<h2 class="chapter">3 Enabling search in HTML help</h2>
+
+<p>There is a search engine available from the front page of the
+<small>HTML</small> help system, the page that is displayed by
+<code>help.start()</code>.  The search engine is written in Java and invoked
+by Javascript code, so the first thing to do is to ensure that both are
+enabled in your favourite browser.  Then try it and see: with most
+browsers you should see
+
+<pre class="smallexample">     Applet SearchEngine started
+     </pre>
+
+<p>displayed in the status bar.  (Internet Explorer shows <code>Applet
+started</code>.) Then click on one of the keywords and after a short delay
+(several seconds) you should see a page of search results.
+
+   <p>If this fails you should double-check that Java is enabled in your
+browser by visiting a page such as
+<a href="http://www.java.com/en/download/help/testvm.jsp">http://www.java.com/en/download/help/testvm.jsp</a> (although that
+will fail for earlier versions of Java such as the Microsoft JVM which
+do work with R).  You can check which version of Java is in use at
+<a href="http://java.sun.com/docs/books/tutorial/applet/practical/properties.html">http://java.sun.com/docs/books/tutorial/applet/practical/properties.html</a>. 
+Java 1.1 is sufficent.
+
+   <p>Many thanks to Marc Schwartz in tracking down many of these issues with
+enabling the Java search engine.
+
+<a name="Java%20Virtual%20Machines%20on%20Linux"></a>
+
+<h3 class="section">C.1 Java Virtual Machines on Linux</h3>
+
+<p>We are aware of problems with certain Java installations.  In
+particular, Sun's Java Run-time Environment <code>j2re 1.4.2_02</code> does
+not work under Linux.  Current browsers of the Mozilla family (including
+Mozilla &gt;= 1.4, Netscape 7.1 and FireFox) are compiled under <code>gcc
+3.x</code> and <em>require</em> the <code>ns610-gcc32</code> version of the Java
+plugin that was introduced with <code>j2re 1.4.2</code>, so the only Java
+version that we know to work is <code>j2re 1.4.2_01</code>.  Marc Schwartz has
+kindly made Linux <code>i586</code> distributions available: see
+
+<pre class="smallexample">     http://www.MedAnalytics.com/INSTALL
+     </pre>
+
+<p>Other Java installations, for example those from Blackdown and IBM, have
+been used.
+
+   <p>Other useful links are for Mozilla,
+<a href="http://plugindoc.mozdev.org/faqs/java.html">http://plugindoc.mozdev.org/faqs/java.html</a> and
+<a href="http://www.mozilla.org/releases/mozilla1.6/installation-extras.html">http://www.mozilla.org/releases/mozilla1.6/installation-extras.html</a>,
+for Konqueror <a href="http://www.konqueror.org/javahowto/">http://www.konqueror.org/javahowto/</a>, for Opera
+<a href="http://www.opera.com/support/search/supsearch.dml?index=459">http://www.opera.com/support/search/supsearch.dml?index=459</a> and
+for Debian GNU/Linux
+<a href="http://www.debian.org/doc/manuals/debian-java-faq/">http://www.debian.org/doc/manuals/debian-java-faq/</a>.
+
+<a name="Java%20Virtual%20Machines%20on%20Unix"></a>
+
+<h3 class="section">C.2 Java Virtual Machines on Unix</h3>
+
+<p>We have much less experience, but we do know that Sun's Run-time
+Environment <code>j2re 1.4.2_03</code> does not work under Solaris, whereas
+<code>j2re 1.4.2_01</code> and earlier do.  Marc Schwartz kindly made Solaris
+distributions of <code>j2re 1.4.2_01</code> available: see
+
+<pre class="smallexample">     http://www.MedAnalytics.com/INSTALL
+     </pre>
+
+   <p>Sun's <code>j2re 1.4.x</code> is said not to work with Mozilla 1.6 under MacOS
+X.
+
+<a name="Java%20Virtual%20Machines%20on%20Windows"></a>
+
+<h3 class="section">C.3 Java Virtual Machines on Windows</h3>
+
+<p>We have not seen any problems on Windows provided a Java Virtual Machine
+has been installed and is operational: Sun's current <code>j2re
+1.4.2_03</code> works in Netscape 7.1 and Mozilla FireFox 0.8 on Windows XP. 
+Note that a recent Windows system may not have Java installed at all. 
+For Netscape/Mozilla/FireFox visit
+<a href="http://java.sun.com/getjava/manual.html">http://java.sun.com/getjava/manual.html</a> to install a Sun JVM. 
+Which (if any) JVM is enabled can be set in `Set Program Access and
+Defaults' in Windows XP (SP1 or later), and which JVM is used by browser
+plugins may also be controlled by the Sun Java applet in the Control
+Panel.
+
 <a name="New%20platforms"></a>
 
-<h2 class="appendix">Appendix C New platforms</h2>
+<h2 class="appendix">Appendix D New platforms</h2>
 
 <p>There are a number of sources of problems when installing R on a new
 hardware/OS platform.  These include

@@ -2254,7 +2254,7 @@ AM_CONDITIONAL(BUILD_XDR, [test "x${r_cv_xdr}" = xno])
 ## R_ZLIB
 ## ------
 ## Try finding zlib library and headers.
-## We check that both are installed, and that the header >= 1.1.4
+## We check that both are installed, and that the header >= 1.2.1
 ## and that gzeof is in the library (which suggests the library
 ## is also recent enough).
 AC_DEFUN([R_ZLIB],
@@ -2288,14 +2288,14 @@ AM_CONDITIONAL(USE_MMAP_ZLIB,
 ## Set shell variable r_cv_header_zlib_h to 'yes' if a recent enough
 ## zlib.h is found, and to 'no' otherwise.
 AC_DEFUN([_R_HEADER_ZLIB],
-[AC_CACHE_CHECK([if zlib version >= 1.1.4],
+[AC_CACHE_CHECK([if zlib version >= 1.2.1],
                 [r_cv_header_zlib_h],
 [AC_RUN_IFELSE([AC_LANG_SOURCE([[
 #include <string.h>
 #include <zlib.h>
 int main() {
 #ifdef ZLIB_VERSION
-  exit(strcmp(ZLIB_VERSION, "1.1.4") < 0);
+  exit(strcmp(ZLIB_VERSION, "1.2.1") < 0);
 #else
   exit(1);
 #endif
