@@ -8,7 +8,8 @@ NEW FEATURES
     o	new  .Platform	variable  for better modularizing
 	platform dependence. __This_is_"beta"_and_bound_to_be_changed___
 
-    o	new  COLNAMES, ROWNAMES functions.
+    o	new arguments to colnames(..) and 
+	rownames(x, do.NULL = TRUE, prefix = "row").
 			   _
     o	par(bty = "]") for _| box(.) in plots.
 
