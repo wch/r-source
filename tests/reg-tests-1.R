@@ -847,7 +847,7 @@ stopifnot(all.equal(xx1, xx2))
 library(splines)
 xx3 <- predict(interpSpline(x, y), 0:12)
 stopifnot(all.equal(xx1, xx3$y))
-detach("package:splines")
+unloadNamespace("splines")
 ## Comments: all three differed in 1.2.1.
 
 
@@ -1465,7 +1465,7 @@ for(der in 0:3)	 # deriv=3 failed
     print(formatC(try(predict(isB, xo, deriv = der)$y), wid=7,format="f"),
 	  quote = FALSE)
 options(op)
-detach("package:splines")
+unloadNamespace("splines")
 
 
 ## PR 902 segfaults when warning string is too long, Ben Bolker 2001-04-09
