@@ -1,6 +1,6 @@
 
-R : Copyright 2002, The R Development Core Team
-Version 1.7.0 Under development (unstable) (2002-11-05)
+R : Copyright 2003, The R Development Core Team
+Version 1.7.0 Under development (unstable) (2003-01-17)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -226,7 +226,7 @@ Error in unique.default(x) : unique() applies only to vectors
 [11] "Component 1: target is numeric, current is data.frame"                         
 > f <- as.data.frame.data.frame( x );  all.equal(f, as.data.frame.data.frame( f ), tol=0)
 Error in if (i > 1) class(x) <- cl[-(1:(i - 1))] : 
-	missing value where logical needed
+	missing value where TRUE/FALSE needed
 > f <- as.data.frame.default( x );  all.equal(f, as.data.frame.default( f ), tol=0)
 Error in as.data.frame.default(x) : can't coerce numeric into a data.frame
 > f <- as.data.frame.factor( x );  all.equal(f, as.data.frame.factor( f ), tol=0)
@@ -615,7 +615,7 @@ Error in sort(unique.default(x), na.last = TRUE) :
 [11] "Component 1: target is NULL, current is data.frame"                            
 > f <- as.data.frame.data.frame( x );  all.equal(f, as.data.frame.data.frame( f ), tol=0)
 Error in if (i > 1) class(x) <- cl[-(1:(i - 1))] : 
-	missing value where logical needed
+	missing value where TRUE/FALSE needed
 > f <- as.data.frame.default( x );  all.equal(f, as.data.frame.default( f ), tol=0)
 Error in as.data.frame.default(x) : can't coerce NULL into a data.frame
 > f <- as.data.frame.factor( x );  all.equal(f, as.data.frame.factor( f ), tol=0)
@@ -1003,7 +1003,7 @@ Error in sort(unique.default(x), na.last = TRUE) :
 [10] "Component 1: Length mismatch: comparison on first 0 components"                
 > f <- as.data.frame.data.frame( x );  all.equal(f, as.data.frame.data.frame( f ), tol=0)
 Error in if (i > 1) class(x) <- cl[-(1:(i - 1))] : 
-	missing value where logical needed
+	missing value where TRUE/FALSE needed
 > f <- as.data.frame.default( x );  all.equal(f, as.data.frame.default( f ), tol=0)
 Error in as.data.frame.default(x) : can't coerce list into a data.frame
 > f <- as.data.frame.factor( x );  all.equal(f, as.data.frame.factor( f ), tol=0)
@@ -1377,7 +1377,7 @@ Error in unique.default(x) : unique() applies only to vectors
 [9] "Component 1: target is numeric, current is data.frame"            
 > f <- as.data.frame.data.frame( x );  all.equal(f, as.data.frame.data.frame( f ), tol=0)
 Error in if (i > 1) class(x) <- cl[-(1:(i - 1))] : 
-	missing value where logical needed
+	missing value where TRUE/FALSE needed
 > f <- as.data.frame.default( x );  all.equal(f, as.data.frame.default( f ), tol=0)
 Error in as.data.frame.default(x) : can't coerce numeric into a data.frame
 > f <- as.data.frame.factor( x );  all.equal(f, as.data.frame.factor( f ), tol=0)
@@ -1740,7 +1740,7 @@ Error in unique.default(x) : unique() applies only to vectors
 [9] "Component 1: target is numeric, current is data.frame"            
 > f <- as.data.frame.data.frame( x );  all.equal(f, as.data.frame.data.frame( f ), tol=0)
 Error in if (i > 1) class(x) <- cl[-(1:(i - 1))] : 
-	missing value where logical needed
+	missing value where TRUE/FALSE needed
 > f <- as.data.frame.default( x );  all.equal(f, as.data.frame.default( f ), tol=0)
 Error in as.data.frame.default(x) : can't coerce numeric into a data.frame
 > f <- as.data.frame.factor( x );  all.equal(f, as.data.frame.factor( f ), tol=0)
@@ -2103,7 +2103,7 @@ Error in unique.default(x) : unique() applies only to vectors
 [9] "Component 1: target is character, current is data.frame"          
 > f <- as.data.frame.data.frame( x );  all.equal(f, as.data.frame.data.frame( f ), tol=0)
 Error in if (i > 1) class(x) <- cl[-(1:(i - 1))] : 
-	missing value where logical needed
+	missing value where TRUE/FALSE needed
 > f <- as.data.frame.default( x );  all.equal(f, as.data.frame.default( f ), tol=0)
 Error in as.data.frame.default(x) : can't coerce character into a data.frame
 > f <- as.data.frame.factor( x );  all.equal(f, as.data.frame.factor( f ), tol=0)
@@ -2468,7 +2468,7 @@ Error in unique.default(x) : unique() applies only to vectors
 [9] "Component 1: Component 1: target is numeric, current is list"                  
 > f <- as.data.frame.data.frame( x );  all.equal(f, as.data.frame.data.frame( f ), tol=0)
 Error in if (i > 1) class(x) <- cl[-(1:(i - 1))] : 
-	missing value where logical needed
+	missing value where TRUE/FALSE needed
 > f <- as.data.frame.default( x );  all.equal(f, as.data.frame.default( f ), tol=0)
 Error in as.data.frame.default(x) : can't coerce list into a data.frame
 > f <- as.data.frame.factor( x );  all.equal(f, as.data.frame.factor( f ), tol=0)
@@ -2966,6 +2966,6 @@ Error in ts(x) : ts object must have one or more observations
 > f <- as.vector.factor( x );  all.equal(f, as.vector.factor( f ), tol=0)
 [1] TRUE
 > cat('Time elapsed: ', proc.time() - .proctime00,'\n')
-Time elapsed:  1.33 0.03 1.36 0 0 
+Time elapsed:  1.26 0.11 1.35 0 0 
 > 
 > 
