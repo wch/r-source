@@ -56,6 +56,7 @@ Copyright @copyright{} 1999, 2000 R Development Core Team
 * System and foreign language interfaces::  
 * The R API::                   
 * R (internal) programming miscellania::  
+* R coding standards::          
 * Function and variable index::  
 * Concept index::               
 @end menu
@@ -3251,7 +3252,7 @@ There are a few other numerical utilities available as entry points.
 @c double	beta(double, double);
 @c double	lbeta(double, double);
 
-@ftable @code
+@table @code
 @findex R_pow
 @findex R_pow_di
 @item double R_pow(double @var{x}, double @var{y});
@@ -3316,7 +3317,7 @@ This is the function used by @R{}'s @code{signif()}.
 @c double	fsquare(double);
 @c double	fcube(double);
 
-@end ftable
+@end table
 
 @node Mathematical Constants, Utility functions, Mathematical Utilities, The R API
 @section Mathematical Constants
@@ -3441,7 +3442,7 @@ header file @file{Rversion.h} for their format.  Note that the minor
 version includes the patchlevel (as in @code{99.0}).
 
 
-@node R (internal) programming miscellania, Function and variable index, The R API, Top
+@node R (internal) programming miscellania, R coding standards, The R API, Top
 @appendix R (internal) programming miscellania
 
 @menu
@@ -3617,8 +3618,130 @@ computer).  If the new function, for example, accesses the internet, or
 requires GUI interaction, please add its name to the ``stop list'' in
 @file{tests/make-no-segfault.R}.
 
+@node R coding standards, Function and variable index, R (internal) programming miscellania, Top
+@appendix R coding standards
 
-@node Function and variable index, Concept index, R (internal) programming miscellania, Top
+@R{} is meant to run on a wide variety of platforms, including Linux and
+most variants of Unix as well as 32-bit Windows versions and eventually
+(again) on the Power Mac.  Therefore, when extending @R{} by either
+adding to the @R{} base distribution or by providing an add-on package,
+one should not rely on features specific to only a few supported
+platforms, if this can be avoided.  In particular, although most @R{}
+developers use GNU tools, they should not employ the GNU extensions to
+standard tools.  Whereas some other software packages explicitly rely on
+e.g.@: GNU make or the GNU C++ compiler, @R{} does not.  Nevertheless,
+@R{} is a GNU project, and the spirit of the @cite{GNU Coding Standards}
+should be followed if possible.
+
+The following tools can ``safely be assumed'' for @R{} extensions.
+
+@itemize @bullet
+@item
+An ANSI C compiler.  If you do not have access to the ANSI standard,
+refer to the 2nd edition of Brian W. Kernighan & Dennis M. Ritchie,
+@cite{The C Programming Language}.  Any extensions, such as POSIX, must
+be tested for, typically using Autoconf (@pxref{Configure and cleanup}).
+
+@item
+A FORTRAN 77 compiler or @command{f2c}, the FORTRAN-to-C converter.
+
+@item
+A simple @command{make}, considering the features of @command{make} in
+4.2 BSD systems as a baseline.
+
+GNU or other extensions, including pattern rules using @samp{%}, the
+automatic variable @samp{$^}, the @samp{+=} syntax to append to the
+value of a variable, the (``safe'') inclusion of makefiles with no
+error, conditional execution, and many more, must not be used (see
+Chapter ``Features'' in the @cite{GNU Make Manual} for more
+information).  On the other hand, building @R{} in a separate directory
+(not containing the sources) should work provided that @command{make}
+supports the @code{VPATH} mechanism.
+
+@item
+A Bourne shell and the ``traditional'' Unix programming tools, including
+@command{grep}, @command{sed}, and @command{awk}.
+
+There are POSIX standards for these tools, but these may not fully be
+supported, and are typically hard to access anyway.  Baseline features
+could be determined from a book such as @cite{The UNIX Programming
+Environment} by Brian W. Kernighan & Rob Pike.  Note in particular that
+@samp{|} in a regexp is an extended regexp, and is not supported by all
+versions of @command{grep} or @command{sed}.
+
+Under Windows, these tools can be assumed because they could be provided
+along with @R{} if necessary, but redirection cannot be assumed safely.
+@end itemize
+
+In addition, the following tools are needed for certain tasks.
+
+@itemize @bullet
+@item
+Perl version 5 is needed for converting documentation written in Rd
+format to plain text, HTML, La@TeX{}, and to extract the examples.  In
+addition, several other tools, in particular @command{check} and
+@command{build} (@pxref{Checking and building packages}), require Perl.
+
+In a nutshell, the current view is that Perl (version 5) is required for
+@R{} developers, but not for @R{} users.  However, this distinction is
+not a clear one.  Without Perl, installing an add-on package leaves it
+without documentation, and thus in fact mostly useless.  (Note that CRAN
+no longer provides pre-built documentation.  This decision was partially
+motivated by the fact that Perl is needed anyway for updating the HTML
+index.)
+
+The @R{} Core Team is currently investigating the following possible
+scenarios.  Either declare Perl 5 as ``generally safe'' (also at
+run-time), or have the add-on packages contain all pre-built
+documentation files and rewrite the tools for updating the indices so
+that they no longer use Perl (e.g., by using @R{} itself instead).
+
+@item
+Makeinfo version 4 is needed to build the Info files for the @R{}
+manuals written in the GNU Texinfo system.  (Future distributions of
+@R{} will contain the Info files.)
+@end itemize
+
+It is also important that code is written in a way that allows others to
+understand it.  This is particularly helpful for fixing problems, and
+includes using self-descriptive variable names, commenting the code, and
+also formatting it properly.  The @R{} Core Team recommends to use a
+basic indentation of 4 for @R{} and C (and most likely also Perl) code,
+and 2 for documentation in Rd format.  Emacs users can implement this
+indentation style by putting the following in one of their startup
+files.
+
+@smallexample
+;;; C
+(add-hook 'c-mode-hook
+          (lambda () (c-set-style "bsd")))
+;;; ESS
+(add-hook 'ess-mode-hook
+          (lambda ()
+            (ess-set-style 'C++)
+            ;; Because
+            ;;                                 DEF GNU BSD K&R C++
+            ;; ess-indent-level                  2   2   8   5   4
+            ;; ess-continued-statement-offset    2   2   8   5   4
+            ;; ess-brace-offset                  0   0  -8  -5  -4
+            ;; ess-arg-function-offset           2   4   0   0   0
+            ;; ess-expression-offset             4   2   8   5   4
+            ;; ess-else-offset                   0   0   0   0   0
+            ;; ess-close-brace-offset            0   0   0   0   0
+            (add-hook 'local-write-file-hooks
+                      '(lambda ()
+                        (nuke-trailing-whitespace)))))
+;;; Perl
+(add-hook 'perl-mode-hook
+          '(lambda () (setq perl-indent-level 4)))
+@end smallexample
+
+@noindent
+(The `GNU' C and R styles use a basic indentation of 2, which has been
+determined not to display the structure clearly enough.)
+
+
+@node Function and variable index, Concept index, R coding standards, Top
 @unnumbered Function and variable index
 
 @printindex vr
