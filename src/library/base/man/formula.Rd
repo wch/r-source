@@ -1,11 +1,9 @@
 \name{formula}
 \title{Model Formulae}
 \usage{
-y ~ model
 formula(x, \dots)
 as.formula(object, env = parent.frame())
 }
-\alias{~}
 \alias{formula}
 \alias{formula.default}
 \alias{formula.formula}
@@ -24,7 +22,6 @@ as.formula(object, env = parent.frame())
   used only when the formula would otherwise lack an environment.
 }
 \arguments{
-  \item{y, model}{symbolic expressions.}
   \item{x, object}{\R object.}
   \item{\dots}{further arguments passed to or from other methods.}
   \item{env}{the environment to associate with the result.}
