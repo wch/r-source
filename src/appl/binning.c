@@ -18,6 +18,7 @@
  */
 
 #include "Arith.h"
+#include "Errormsg.h"
 /* instead of #include "Defn.h" : */
 #define NA_INTEGER	R_NaInt
 

@@ -193,7 +193,7 @@ static double pixelHeight(void)
 	return ((double)heightMM / (double)height) / MM_PER_INCH;
 }
 
-static handleEvent(XEvent event)
+static void handleEvent(XEvent event)
 {
 	caddr_t temp;
 	DevDesc *dd;
@@ -779,7 +779,6 @@ static void X11_Clip(double x0, double x1, double y0, double y1, DevDesc *dd)
 
 static void X11_Resize(DevDesc *dd)
 {
-	int i;
 	x11Desc *xd = (x11Desc *) dd->deviceSpecific;
 
 	if (xd->resize) {
@@ -1078,7 +1077,7 @@ static void X11_Polygon(int n, double *x, double *y, int coords,
 			int bg, int fg, DevDesc *dd)
 {
 	XPoint *points;
-	char *vmax, *vmaxget();
+	char *vmaxget();
 	double devx, devy;
 	int i;
 	x11Desc *xd = (x11Desc *) dd->deviceSpecific;
@@ -1238,7 +1237,7 @@ static void X11_Hold(DevDesc *dd)
 	/* have already been initialised by GInit (although you	*/
 	/* should know what you are doing if you do this)	*/
 	/* (5) it must attach the device-specific parameters	*/
-	/* structure to the device description structure	*
+        /* structure to the device description structure	*/
 	/* e.g., dd->deviceSpecfic = (void *) xd;		*/
 	/* (6) it must FREE the overall device description if 	*/
 	/* it wants to bail out to the top-level		*/
