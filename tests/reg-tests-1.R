@@ -1,4 +1,4 @@
-## PR 640 (diff.default computes an incorrect starting time)
+# PR 640 (diff.default computes an incorrect starting time)
 ## By: Laimonis Kavalieris <lkavalieris@maths.otago.ac.nz>
 library(ts)
 y <- ts(rnorm(24), freq=12)
@@ -1008,6 +1008,11 @@ dimnames(A) <- list(LETTERS[1:5], letters[1:5])
 (ev <- eigen(A)$vectors)
 stopifnot(is.null(colnames(ev)))
 ## had colnames in 1.6.0
+
+## pretty was not pretty {because seq() isn't} (PR#1032 and D.Brahm)
+stopifnot(pretty(c(-.1, 1))[2] == 0, ## [2] was -2.775558e-17
+          pretty(c(-.4,.8))[3] == 0, ## [3] was 5.551115e-17
+          pretty(100+ c(0, pi*1e-10))[4] > 100)# < not too much rounding!
 
 
 ## keep at end, as package `methods' has had persistent side effects
