@@ -59,9 +59,9 @@ while test -n "${1}"; do
       $0 --version
       cat <<_EOF_
 
-Usage:  R [OPTIONS] [< INFILE] [> OUTFILE]
-   or   R command      [arguments]
-   or   R CMD Rcommand [arguments]
+Usage: R [OPTIONS] [< INFILE] [> OUTFILE]
+   or  R command      [arguments]
+   or  R CMD Rcommand [arguments]
 
 Options:
   --gnome                   Run the gnome binary.

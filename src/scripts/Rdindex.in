@@ -1,7 +1,7 @@
 #! @PERL@
 
 # Extract R object INDEX information from Rd files.
-# Usage:  Rdindex [-l x] [-r y] file_1 ... file_n
+# Usage: Rdindex [-l x] [-r y] file_1 ... file_n
 # The titles are nicely formatted between the columns x and y (defaults
 # are 25 and 72, respectively).
 

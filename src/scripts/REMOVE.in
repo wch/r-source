@@ -1,10 +1,8 @@
 #! /bin/sh
-# ${R_HOME}/bin/REMOVE for removing add-on packages
 #
-# Usage:
-#	R REMOVE [options] [-l lib] pkg_1 ... pkg_n
+# ${R_HOME}/bin/REMOVE for removing add-on packages
 
-REVISION='$Revision: 1.6 $'
+REVISION='$Revision: 1.7 $'
 VERSION=`set - ${REVISION}; echo ${2}`
 USAGE_MSG="Usage:  R REMOVE [options] [-l lib] pkg_1 ... pkg_n"
 PKGS=

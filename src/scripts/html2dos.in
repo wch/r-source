@@ -94,8 +94,8 @@ foreach $d (@ARGV) {
 
 sub usage {
 
-    print "Usage:  html2dos [--keep] dir1 [dir2 ...]\n\n" .
-	  "        --keep:  Don't remove original files (long names)\n\n";
+    print "Usage: html2dos [--keep] dir1 [dir2 ...]\n\n" .
+	  "       --keep:  Don't remove original files (long names)\n\n";
 
     exit 0;
 }

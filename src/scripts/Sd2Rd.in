@@ -1,7 +1,7 @@
 #! @PERL@
 
 # Convert S documentation to R documentation format
-# Usage:  Sd2Rd [-n] [-x] file
+# Usage: Sd2Rd [-n] [-x] file
 # The option `-x' makes the program greedily interpret all single-quoted
 # names intended as code names.
 # The option `-n' renders examples non-executable by wrapping them into

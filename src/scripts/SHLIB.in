@@ -4,9 +4,9 @@
 
 # @configure_input@
 
-REVISION='$Revision: 1.8 $'
+REVISION='$Revision: 1.9 $'
 VERSION=`set - ${REVISION}; echo ${2}`
-USAGE_MSG="Usage:  R SHLIB [-o lib] obj_1 ... obj_n"
+USAGE_MSG="Usage: R SHLIB [options] [-o lib] obj_1 ... obj_n"
 
 lib=
 OBJS=

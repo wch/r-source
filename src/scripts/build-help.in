@@ -2,7 +2,7 @@
 #-*- mode: perl; perl-indent-level: 4; cperl-indent-level: 4 -*-
 #
 # ${R_HOME}/bin/build-help
-# Usage:  build-help [options]  [pkg] [lib]
+# Usage: build-help [options] [pkg] [lib]
 # Install all help files for package pkg to library lib
 # (defaults are `${R_HOME}/src/library/base' and the default library,
 #  `${R_HOME}/library', respectively).
@@ -159,7 +159,7 @@ foreach $manfile (@mandir) {
 
 sub usage {
 
-    print "Usage:  build-help [--rhome dir] [--html] [--nroff] [--latex]\n" .
+    print "Usage: build-help [--rhome dir] [--html] [--nroff] [--latex]\n" .
       "                   [--example] [--dosnames] [--htmllists] [--debug]\n" .
       "                   [pkg] [lib]\n";
 

@@ -1,12 +1,10 @@
 #! /bin/sh
-
+#
 # ${R_HOME}/bin/INSTALL for installing add-on packages
-# Usage:
-#	R INSTALL [options] [-l lib] pkg_1 ... pkg_n
 
 # @configure_input@
 
-REVISION='$Revision: 1.21 $'
+REVISION='$Revision: 1.22 $'
 VERSION=`set - ${REVISION}; echo ${2}`
 USAGE_MSG="Usage: R INSTALL [options] [-l lib] pkg_1 ... pkg_n"
 
