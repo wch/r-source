@@ -3600,84 +3600,12 @@ void GPretty(double *lo, double *up, int *ndiv)
  *
  *	Pre:	   x1 = lo < up = x2
  *	Post: x1 <= y1 := lo < up =: y2 <= x2;	ndiv >= 1
- *
- * ==>	../appl/pretty.c  is VERY similar
- *	~~~~~~~~~~~~~~~~ */
-
+ */
+    double unit, ns, nu;
+    double high_u_fact[2] = { .8, 1.7 };
 #ifdef DEBUG_PLOT
     double x1,x2;
 #endif
-
-#ifdef OLD
-    double dx, cell, unit, base, U;
-    int ns, nu, nd0;
-    short i_small;
-    if(*ndiv <= 0)
-	error("invalid axis extents [GPretty(.,.,n=%d)", *ndiv);
-    if(*lo == R_PosInf || *up == R_PosInf ||
-       *lo == R_NegInf || *up == R_NegInf ||
-       !R_FINITE(dx = *up - *lo)) {
-	error("Infinite axis extents [GPretty(%g,%g,%d)]", *lo, *up, *ndiv);
-	return;/*-Wall*/
-    }
-
-    /* cell := "scale"	here */
-    if(dx == 0 && *up == 0) { /*	up == lo == 0  */
-	cell = i_small = 1;
-    } else {
-	cell = fmax2(fabs(*lo),fabs(*up));
-	i_small = dx < cell * 10/(double)INT_MAX;
-    }
-
-    /*OLD: cell = FLT_EPSILON+ dx / *ndiv; FLT_EPSILON = 1.192e-07 */
-    if(i_small)
-	cell *= .25; /* shrink_sml in  pretty(.) */
-    else
-	cell = dx;
-    cell /= *ndiv;
-
-    base = pow(10., floor(log10(cell))); /* base <= cell < 10*base */
-
-    /* unit :=	arg min _u { |u - cell| ;	 u = c(1,2,5,10) * base } */
-    unit = base;
-    if(fabs((U = 2*base)-cell) < fabs(unit-cell)) unit = U;
-    if(fabs((U = 5*base)-cell) < fabs(unit-cell)) unit = U;
-    if(fabs((U =10*base)-cell) < fabs(unit-cell)) unit = U;
-
-    ns = floor(*lo/unit);
-    nu = ceil (*up/unit);
-#ifdef DEBUG_PLOT
-    REprintf("GPretty(%g,%g,%d): cell= %g, base= %g, unit= %g; (ns,nu)=(%d,%d)",
-	     *lo, *up, *ndiv, cell, base, unit, ns,nu);
-#endif
-
-    while(ns*unit >= *lo *(1- DBL_EPSILON)) ns--;    ns++;
-    while(nu*unit <= *up *(1+ DBL_EPSILON)) nu++;    nu--;
-#ifdef DEBUG_PLOT
-    REprintf(" -> new = (%d,%d)\n", ns,nu);
-#endif
-
-    nd0 = nu - ns;
-    if(nd0 > 0)
-	*ndiv = nd0;
-    else {
-	warning("Imprecision in axis setup.\t GPretty(%g,%g,%d):\n"
-		"cell=%g, ndiv= %d <=0; (ns,nu)=(%d,%d); "
-		"dx=%g, unit=%g, ismall=%d.",
-		*lo,*up, *ndiv, cell, nd0, ns, nu, dx, unit, (int)i_small);
-	if(nd0 == 0)
-	    nu = ns + 1;
-	else {/* ns > nu: swap*/ nd0 = nu; nu = ns; ns = nd0; }
-	*ndiv = nu - ns;
-    }
-#ifdef DEBUG_PLOT
-    x1 = *lo; x2 = *up;
-#endif
-
-#else/* not OLD -------------------------------------------------------------*/
-
-    double unit, ns, nu;
-    double high_u_fact[2] = { .8, 1.7 };
 
     if(*ndiv <= 0)
 	error("invalid axis extents [GPretty(.,.,n=%d)", *ndiv);
@@ -3697,13 +3625,12 @@ void GPretty(double *lo, double *up, int *ndiv)
 		     high_u_fact,
 		     2, /* do eps_correction in any case */
 		     0 /* return (ns,nu) in  (lo,up) */);
+    /* ==> ../appl/pretty.c */
     if(nu >= ns + 1) {
 	if(ns * unit < *lo) ns++;
 	if(nu > ns + 1 && nu * unit > *up) nu--;
 	*ndiv = nu - ns;
     }
-#endif/* else not OLD ---------------------------------------------------*/
-
     *lo = ns * unit;
     *up = nu * unit;
 
