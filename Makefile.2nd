@@ -61,6 +61,11 @@ install: all
 	$(INSTALL) -d $(rhome)/include 
 	$(INSTALL) -d $(rhome)/library
 	$(INSTALL_DATA) R.1 $(mandir)/man1
+	$(INSTALL_DATA) Rdconv.1 $(mandir)/man1
+	(cd $(mandir)/man1; \
+		for f in Rd2txt.1 Rdindex.1 Sd2Rd.1; \
+			do rm -f $$f; $(LN_S) Rdconv.1 $$f; \
+		done)
 	for f in COPYING COPYRIGHTS MIRROR-SITES RESOURCES; \
 		do $(INSTALL_DATA) $$f $(rhome); done
 	cd afm; $(MAKE) $@
