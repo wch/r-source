@@ -20,7 +20,9 @@ function(..., list = character(0),
     }
     paths <- .find.package(package, lib.loc, verbose = verbose)
     if(is.null(lib.loc))
-        paths <- c(.path.package(package, TRUE), getwd(), paths)
+        paths <- c(.path.package(package, TRUE),
+                   if(is.null(packages)) getwd(),
+                   paths)
     paths <- unique(paths[file.exists(paths)])
 
     ## Find the directories with a 'data' subdirectory.

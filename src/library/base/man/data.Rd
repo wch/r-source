@@ -13,14 +13,16 @@ data(\dots, list = character(0), package = NULL,
 \arguments{
   \item{\dots}{a sequence of names or literal character strings.}
   \item{list}{a character vector.}
-  \item{package}{a character vector giving the packages to look
-    in for data sets, or \code{NULL}.  By default, all packages in the
-    search path are used, then the \file{data} subdirectory (if present)
-    of the current working directory.}
+  \item{package}{a character vector giving the package(s) to look
+    in for data sets, or \code{NULL}.
+
+    By default, all packages in the search path are used, \emph{after}
+    the \file{data} subdirectory (if present) of the current working
+    directory.
+  }
   \item{lib.loc}{a character vector of directory names of \R libraries,
     or \code{NULL}.  The default value of \code{NULL} corresponds to all
-    libraries currently known.  If the default is used, the loaded
-    packages are searched before the libraries.}
+    libraries currently known.}
   \item{verbose}{a logical.  If \code{TRUE}, additional diagnostics are
     printed.}
   \item{envir}{the \link{environment} where the data should be loaded.}
@@ -70,19 +72,25 @@ data(\dots, list = character(0), package = NULL,
   files for loading are computed and included in the listing, and a
   warning is given: such packages are incomplete.  The information about
   available data sets is returned in an object of class
-  \code{"packageIQR"}.  The structure of this class is experimental.  In
-  earlier versions of R, an empty character vector was returned along
-  with listing available data sets.
+  \code{"packageIQR"}.  The structure of this class is experimental.
 
-  If \code{lib.loc} is not specified, the data sets are searched for
-  amongst those packages already loaded, followed by the \file{data}
-  directory (if any) of the current working directory and then packages
-  in the specified libraries.  If \code{lib.loc} \emph{is} specified,
-  packages are searched for in the specified libraries, even if they are
+  If \code{lib.loc} and \code{package} are both \code{NULL} (the
+  default), the data sets are searched for in the \file{data} directory
+  (if any) of the current working directory followed by those packages
+  currently loaded.
+
+  If \code{lib.loc = NULL} but \code{package} is specified as a
+  character vector, the specified package(s) are searched for first
+  amongst loaded packages and then in the default library/ies
+  (see \code{\link{.libPaths}}).
+
+  If \code{lib.loc} \emph{is} specified (and not \code{NULL}), packages
+  are searched for in the specified library/ies, even if they are
   already loaded from another library.
 
   To just look in the \file{data} directory of the current working
-  directory, set \code{package = NULL}.
+  directory, set \code{package = character(0)} (and \code{lib.loc =
+    NULL}, the default).
 }
 \note{
   The data files can be many small files.  On some file systems it is
@@ -107,7 +115,7 @@ data(\dots, list = character(0), package = NULL,
 \examples{
 require(utils)
 data()                      # list all available data sets
-data(package = "datasets")  # list the data sets in the datasets package
+data(package = "rpart")     # list the data sets in the rpart package
 data(USArrests, "VADeaths") # load the data sets 'USArrests' and 'VADeaths'
 help(USArrests)             # give information on data set 'USArrests'
 }
