@@ -1271,6 +1271,7 @@ static int  initwin()
     setcellwidths();
     gchangescrollbar(de, HWINSB, 0, xmaxused, nwide, 0);    
     show(de);
+    BringToTop(de);
     R_de_up = 1;
     return 0;
 }
