@@ -303,3 +303,11 @@ Date: Thu, 21 Oct 1999 08:36:35 -0700 (PDT)
 Subject: source(,echo=T) doesn't echo comments
 From: Thomas Lumley <thomas@biostat.washington.edu>
 Date: Thu, 21 Oct 1999 08:59:22 -0700 (PDT)
+* PR# 297 *
+Subject: explicit weights=NULL fails in glm,lm
+From: Thomas Lumley <thomas@biostat.washington.edu>
+Date: Mon, 25 Oct 1999 10:34:28 -0700 (PDT)
+* PR# 298 *
+Subject: dodgy list operation
+From: Jonathan Rougier <J.C.Rougier@durham.ac.uk>
+Date: Tue, 26 Oct 1999 14:46:11 +0100 (BST)
