@@ -73,7 +73,7 @@ hist.default(x, breaks, freq= NULL, probability = !freq,
   \item{mids}{the \eqn{n} cell midpoints.}
   \item{xname}{a character string with the actual \code{x} argument name.}
   \item{equidist}{logical, indicating if the distances between
-    \cdoe{breaks} are all the same.}
+    \code{breaks} are all the same.}
 }
 \note{
   The resulting value does \emph{not} depend on the values of
