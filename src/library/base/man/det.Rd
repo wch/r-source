@@ -4,9 +4,10 @@
 det(x, method = c("qr","eigenvalues"))
 }
 \description{
-  \code{det} calculates the determinant of a matrix either by \code{\link{qr}}
-  decomposition or from the \code{\link{eigen}}values.
-}
+  \code{det} calculates the determinant of a matrix either by QR
+  decomposition or from the eigenvalues, see \code{\link{qr}} and
+  \code{\link{eigen}}.
+  }
 \arguments{
   \item{z}{numeric matrix.}
   \item{method}{\code{"qr"} (default) or \code{"eigenvalues"}}
