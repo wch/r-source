@@ -20,25 +20,18 @@ The files are as follows.
 	naming scheme.  These test for `features' such as GNOME, zlib,
 	etc., are named R_$FEATURE, and typically define HAVE_$FEATURE.
 
+  clibs.m4
+	versions of the autoconf macros to find the Fortran libraries
+	amended to find the C libraries (for comparison with the Fortran
+	ones).
+
   codeset.m4
         is from GNU gettext and checks whether nl_langinfo(CODESET)
         is available in langinfo.h.
 
-  gnome-gnorba-check.m4
-  gnome-orbit-check.m4
-  gnome.m4
-  libglade.m4
-	are from the GNOME project and used for the GNOME configuration.
-	Changes made in gnome.m4:
-	* Replace AC_ARG_WITH(gnome) by our version in configure.ac
-	  because we need want_gnome=no by default and use LIBS and
-	  CPPFLAGS rather than LDFLAGS and CFLAGS.
-	* In AC_ARG_WITH(gnome-includes), standardize doc strings and
-	  use CPPFLAGS rather than CFLAGS.
-	* In AC_ARG_WITH(gnome-libs), standardize doc strings and use
-	  LIBS rather than LDFLAGS.
-	Changes made in libglade.m4:
-	* In AC_ARG_WITH(libglade-config), standardize doc strings.
+  gettext.m4
+	a concatenation of all the required files from gettext 0.14.1
+	except codeset.m4.
 
   libtool.m4
 	is from libtool 1.5.6.

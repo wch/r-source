@@ -90,7 +90,7 @@ R_bin_OBJECTS = Rmain.o @WANT_R_SHLIB_FALSE@ $(OBJECTS)
 ## -export-symbols SYMFILE.
 @USE_LIBTOOL_TRUE@R_bin_LDFLAGS = -export-dynamic
 ## </FIXME>
-R_bin_LDADD = @LIBOBJS@ @ALLOCA@ $(RLIBS) $(BLAS_LIBS) $(FLIBS) $(R_XTRA_LIBS) $(R_ZLIBS) $(R_BZLIBS) $(R_PCRE)
+R_bin_LDADD = @LIBOBJS@ @ALLOCA@ $(RLIBS) $(BLAS_LIBS) $(FLIBS) $(R_XTRA_LIBS) $(R_ZLIBS) $(R_BZLIBS) $(R_PCRE) @LIBINTL@
 ## <NOTE>
 ## Automake would figure this out itself.
 R_bin_DEPENDENCIES = @WANT_R_SHLIB_FALSE@ @LIBOBJS@ @ALLOCA@ $(RLIBS) @USE_EXPORTFILES_TRUE@ $(top_builddir)/etc/R.exp
@@ -109,7 +109,7 @@ libR_la_OBJECTS = Rembedded.lo $(OBJECTS:.o=.lo)
 ## This should also have `ls ../appl/*.lo ../nmath/*.lo ../unix/*.lo`, but
 ## of course this will not work when the files do not exist yet :-)
 libR_la_LIBADD = @LTLIBOBJS@ $(BLAS_LIBS) $(FLIBS) $(R_XTRA_LIBS) \
-  $(R_ZLIBS) $(R_BZLIBS) $(R_PCRE) $(R_XDR)
+  $(R_ZLIBS) $(R_BZLIBS) $(R_PCRE) $(R_XDR) @LIBINTL@
 libR_la_DEPENDENCIES = @LTLIBOBJS@ ../appl/stamp-lo ../nmath/stamp-lo ../unix/stamp-lo @USE_EXPORTFILES_TRUE@ $(top_builddir)/etc/R.exp
 ## </FIXME>
 @USE_LIBTOOL_TRUE@libR_la_LDFLAGS = -avoid-version -rpath "$(Rexeclibdir)"

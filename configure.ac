@@ -1439,7 +1439,7 @@ AM_CONDITIONAL(USE_RECOMMENDED_PACKAGES,
 # i18n support.  To update to a new version of gettext, run:
 # gettextize -f -c --intl
 AM_GNU_GETTEXT_VERSION(0.14.1)
-AM_GNU_GETTEXT([external])
+AM_GNU_GETTEXT(, , [../extra/intl])
 
 
 ### * Win32 overrides
@@ -1479,6 +1479,7 @@ AC_CONFIG_FILES(
   src/appl/Makefile
   src/extra/Makefile
   src/extra/bzip2/Makefile
+  src/extra/intl/Makefile
   src/extra/pcre/Makefile
   src/extra/xdr/Makefile
   src/extra/zlib/Makefile

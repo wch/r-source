@@ -13,14 +13,15 @@ include $(top_builddir)/Makeconf
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = Makefile.in
 
-SUBDIRS = bzip2 pcre xdr zlib
-SUBDIRS_WITH_NO_BUILD = intl
+SUBDIRS = bzip2 pcre xdr zlib intl
+SUBDIRS_WITH_NO_BUILD =
 
 LIBBZ2 = @BUILD_BZLIB_TRUE@ bzip2
 LIBPCRE = @BUILD_PCRE_TRUE@ pcre
 LIBZ = @BUILD_ZLIB_TRUE@ zlib
 LIBXDR = @BUILD_XDR_TRUE@ xdr
-EXTRA_LIBS = $(LIBBZ2) $(LIBPCRE) $(LIBZ) $(LIBXDR)
+LIBINTL = intl
+EXTRA_LIBS = $(LIBBZ2) $(LIBPCRE) $(LIBZ) $(LIBXDR) $(LIBINTL)
 
 all: Makefile R
 

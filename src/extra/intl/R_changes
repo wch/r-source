@@ -1,0 +1,210 @@
+The problems we found were with the use of iconv
+
+1) On Solaris this finds iconv, but as it does not use the same charset
+names as glibc/libiconv's iconv, it does not work.
+
+2) On Windows we have a load-on-demand iconv, and no shipped iconv.h.
+
+So we modified the iconv references to use our extra test and to use Riconv.
+
+Since we do not use relocation (and it was not easy to get to compile on
+Windows) we have removed it, as well as OS/2 compatibility.
+
+Since the packages will need libintl.h, we need to install it.  We also
+need to ensure that we get our version and not, e.g. the Solaris version.
+
+BDR
+
+
+diff -u /users/ripley/src-new/texinfo-4.8/intl/dcigettext.c ./dcigettext.c
+--- /users/ripley/src-new/texinfo-4.8/intl/dcigettext.c	2003-12-24 15:12:48.000000000 +0000
++++ ./dcigettext.c	2005-01-27 20:05:32.226296000 +0000
+@@ -837,13 +837,11 @@
+     }
+ 
+   if (
+-# ifdef _LIBC
+-      domain->conv != (__gconv_t) -1
+-# else
+-#  if HAVE_ICONV
+-      domain->conv != (iconv_t) -1
+-#  endif
+-# endif
++#if defined(HAVE_ICONV) && defined(ICONV_LATIN1)
++      domain->conv != (void *) -1
++#else
++      0
++#endif
+       )
+     {
+       /* We are supposed to do a conversion.  First allocate an
+@@ -895,31 +893,7 @@
+ 	  while (1)
+ 	    {
+ 	      transmem_block_t *newmem;
+-# ifdef _LIBC
+-	      size_t non_reversible;
+-	      int res;
+-
+-	      if (freemem_size < sizeof (size_t))
+-		goto resize_freemem;
+-
+-	      res = __gconv (domain->conv,
+-			     &inbuf, inbuf + resultlen,
+-			     &outbuf,
+-			     outbuf + freemem_size - sizeof (size_t),
+-			     &non_reversible);
+-
+-	      if (res == __GCONV_OK || res == __GCONV_EMPTY_INPUT)
+-		break;
+-
+-	      if (res != __GCONV_FULL_OUTPUT)
+-		{
+-		  __libc_lock_unlock (lock);
+-		  goto converted;
+-		}
+-
+-	      inbuf = result;
+-# else
+-#  if HAVE_ICONV
++#if defined(HAVE_ICONV) && defined(ICONV_LATIN1)
+ 	      const char *inptr = (const char *) inbuf;
+ 	      size_t inleft = resultlen;
+ 	      char *outptr = (char *) outbuf;
+@@ -929,8 +903,8 @@
+ 		goto resize_freemem;
+ 
+ 	      outleft = freemem_size - sizeof (size_t);
+-	      if (iconv (domain->conv,
+-			 (ICONV_CONST char **) &inptr, &inleft,
++	      if (Riconv (domain->conv,
++			 (char **) &inptr, &inleft,
+ 			 &outptr, &outleft)
+ 		  != (size_t) (-1))
+ 		{
+@@ -942,8 +916,7 @@
+ 		  __libc_lock_unlock (lock);
+ 		  goto converted;
+ 		}
+-#  endif
+-# endif
++#endif
+ 
+ 	    resize_freemem:
+ 	      /* We must allocate a new buffer or resize the old one.  */
+Only in .: diffs
+diff -u /users/ripley/src-new/texinfo-4.8/intl/gettextP.h ./gettextP.h
+--- /users/ripley/src-new/texinfo-4.8/intl/gettextP.h	2003-12-24 15:12:48.000000000 +0000
++++ ./gettextP.h	2005-01-27 15:11:54.015988000 +0000
+@@ -22,12 +22,8 @@
+ 
+ #include <stddef.h>		/* Get size_t.  */
+ 
+-#ifdef _LIBC
+-# include "../iconv/gconv_int.h"
+-#else
+-# if HAVE_ICONV
+-#  include <iconv.h>
+-# endif
++#if HAVE_ICONV
++# include <R_ext/Riconv.h>
+ #endif
+ 
+ #include "loadinfo.h"
+@@ -113,13 +109,9 @@
+   int must_swap_hash_tab;
+ 
+   int codeset_cntr;
+-#ifdef _LIBC
+-  __gconv_t conv;
+-#else
+ # if HAVE_ICONV
+-  iconv_t conv;
++  void * conv;
+ # endif
+-#endif
+   char **conv_tab;
+ 
+   struct expression *plural;
+diff -u /users/ripley/src-new/texinfo-4.8/intl/loadmsgcat.c ./loadmsgcat.c
+--- /users/ripley/src-new/texinfo-4.8/intl/loadmsgcat.c	2004-04-11 18:56:46.000000000 +0100
++++ ./loadmsgcat.c	2005-01-27 20:05:36.336287000 +0000
+@@ -783,12 +783,8 @@
+   /* Preinitialize fields, to avoid recursion during _nl_find_msg.  */
+   domain->codeset_cntr =
+     (domainbinding != NULL ? domainbinding->codeset_cntr : 0);
+-#ifdef _LIBC
+-  domain->conv = (__gconv_t) -1;
+-#else
+-# if HAVE_ICONV
+-  domain->conv = (iconv_t) -1;
+-# endif
++#if defined(HAVE_ICONV) && defined(ICONV_LATIN1)
++  domain->conv = (void *) -1;
+ #endif
+   domain->conv_tab = NULL;
+ 
+@@ -833,7 +829,7 @@
+ # ifdef _LIBC
+ 		  outcharset = _NL_CURRENT (LC_CTYPE, CODESET);
+ # else
+-#  if HAVE_ICONV
++#  if defined(HAVE_ICONV) && defined(ICONV_LATIN1)
+ 		  extern const char *locale_charset (void);
+ 		  outcharset = locale_charset ();
+ #  endif
+@@ -841,16 +837,7 @@
+ 		}
+ 	    }
+ 
+-# ifdef _LIBC
+-	  /* We always want to use transliteration.  */
+-	  outcharset = norm_add_slashes (outcharset, "TRANSLIT");
+-	  charset = norm_add_slashes (charset, NULL);
+-	  if (__gconv_open (outcharset, charset, &domain->conv,
+-			    GCONV_AVOID_NOCONV)
+-	      != __GCONV_OK)
+-	    domain->conv = (__gconv_t) -1;
+-# else
+-#  if HAVE_ICONV
++#  if defined(HAVE_ICONV) && defined(ICONV_LATIN1)
+ 	  /* When using GNU libc >= 2.2 or GNU libiconv >= 1.5,
+ 	     we want to use transliteration.  */
+ #   if (__GLIBC__ == 2 && __GLIBC_MINOR__ >= 2) || __GLIBC__ > 2 \
+@@ -865,15 +852,14 @@
+ 	      memcpy (tmp + len, "//TRANSLIT", 10 + 1);
+ 	      outcharset = tmp;
+ 
+-	      domain->conv = iconv_open (outcharset, charset);
++	      domain->conv = Riconv_open ((char *)outcharset, charset);
+ 
+ 	      freea (outcharset);
+ 	    }
+ 	  else
+ #   endif
+-	    domain->conv = iconv_open (outcharset, charset);
++	    domain->conv = Riconv_open ((char *)outcharset, charset);
+ #  endif
+-# endif
+ 
+ 	  freea (charset);
+ 	}
+@@ -891,15 +877,10 @@
+   if (domain->conv_tab != NULL && domain->conv_tab != (char **) -1)
+     free (domain->conv_tab);
+ 
+-#ifdef _LIBC
+-  if (domain->conv != (__gconv_t) -1)
+-    __gconv_close (domain->conv);
+-#else
+-# if HAVE_ICONV
+-  if (domain->conv != (iconv_t) -1)
+-    iconv_close (domain->conv);
++#if defined(HAVE_ICONV) && defined(ICONV_LATIN1)
++  if (domain->conv != (void *) -1)
++    Riconv_close (domain->conv);
+ # endif
+-#endif
+ }
+ 
+ /* Load the message catalogs specified by FILENAME.  If it is no valid

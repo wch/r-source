@@ -15,6 +15,7 @@ DISTFILES = Makefile.in README \
 	R.m4 \
 	clibs.m4 \
 	codeset.m4 \
+	gettext.m4 \
 	libtool.m4
 
 all: Makefile R

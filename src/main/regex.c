@@ -26,6 +26,8 @@
 #ifdef HAVE_CONFIG_H
 #include "config.h"
 #endif
+/* for declaration of mempcpy */
+#define _GNU_SOURCE 1
 
 #ifndef USE_SYSTEM_REGEX
 #include <R_ext/Error.h>
@@ -131,6 +133,7 @@
 # define __wctype wctype
 # define __iswctype iswctype
 # define __btowc btowc
+#undef __mempcpy
 # define __mempcpy mempcpy
 # define __wcrtomb wcrtomb
 # define attribute_hidden

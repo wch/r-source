@@ -29,7 +29,7 @@ SUBDIRS_WITH_NO_BUILD = Rmodules
 
 TIMESTAMPS = $(SRC_HEADERS:.h=.ts) $(OBJ_HEADERS:.h=.ts)
 
-CLEANFILES = $(OBJ_HEADERS) stamp-R $(TIMESTAMPS)
+CLEANFILES = $(OBJ_HEADERS) stamp-R $(TIMESTAMPS) libintl.h
 DISTCLEANFILES = Makefile Rmath.h0 config.h stamp-h
 
 .SUFFIXES:
@@ -77,7 +77,7 @@ Rmath.h: Rmath.h0
 Rmath.h0: $(srcdir)/Rmath.h0.in $(top_builddir)/config.status
 	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
 
-install: installdirs
+install: installdirs install-@USE_INCLUDED_LIBINTL@
 	@for d in $(SUBDIRS); do \
 	  (cd $${d} && $(MAKE) $@) || exit 1; \
 	done
@@ -89,6 +89,10 @@ install: installdirs
 	done
 installdirs:
 	@$(MKINSTALLDIRS) "$(rhome)/include"
+install-intl-yes:
+	@$(INSTALL_DATA) libintl.h "$(rhome)/include"
+install-intl-no:
+
 install-strip:
 	$(MAKE) INSTALL_PROGRAM="${INSTALL_PROGRAM} -s" install
 uninstall:

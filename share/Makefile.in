@@ -81,6 +81,7 @@ uninstall:
 ## we cannot remove make/vars.mk until distclean as etc/Makeconf includes it.
 mostlyclean:
 clean:
+	@rm -rf locale
 
 distclean:
 	@if test "$(BUILDDIR_IS_SRCDIR)" = no ; then \
