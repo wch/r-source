@@ -462,7 +462,7 @@
 #define SIZEOF_LONG_LONG 8
 
 /* Type for socket lengths: socklen_t, sock_t, int? */
-#define SOCKLEN_T size_t
+#define SOCKLEN_T int
 
 /* If using the C implementation of alloca, define if you know the
    direction of stack growth for your system; otherwise it will be
