@@ -13,7 +13,7 @@ undoc <- function(pkg, dir)
                 character(0)
         files
     }
-        
+
     if(!missing(pkg)) {
         pkgDir <- system.file(pkg = pkg)
         if(length(pkgDir) > 1) {
@@ -25,7 +25,7 @@ undoc <- function(pkg, dir)
         objsdocs <- sort(scan(file = file.path(pkgDir, "help",
                               "AnIndex"),
                               what = list("", ""),
-                              quiet = TRUE)[[1]])
+                              quiet = TRUE, sep="\t")[[1]])
         codeFile <- file.path(pkgDir, "R", pkg)
         dataDir <- file.path(pkgDir, "data")
     }
@@ -69,7 +69,7 @@ undoc <- function(pkg, dir)
         else
             codeFile <- ""
 
-        dataDir <- file.path(dir, "data")        
+        dataDir <- file.path(dir, "data")
     }
 
     if(file.exists(codeFile)) {
@@ -86,7 +86,7 @@ undoc <- function(pkg, dir)
         dataObjs <- listFilesWithExts(dataDir, dataExts, path = FALSE)
         allObjs <- c(allObjs, sub("\\.[A-Za-z]*$", "", dataObjs))
     }
-        
+
     ## Undocumented objects?
     if(is.null(allObjs))
         warning("Neither code nor data objects found")
