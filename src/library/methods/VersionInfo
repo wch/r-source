@@ -1,9 +1,0 @@
- # The version info for the package.  Run ./confDESCRIPTION to make DESCRIPTION
-MAJOR_VERSION=0
-MINOR_VERSION=4
-PATCH_LEVEL=2
-PKG_NAME=RSMethods
-
-TAR_FILE=${PKG_NAME}_${MAJOR_VERSION}.${MINOR_VERSION}-${PATCH_LEVEL}.tar.gz
-
-## touch this file to change the date in the DESCRIPTION file generated

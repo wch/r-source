@@ -1,0 +1,18 @@
+R: $(DPKG)/R $(DPKG)/R/$(PKG) $(DPKG)/R/all.rda
+
+$(DPKG)/R:
+	@echo "  installing R files"
+	@$(MKDIR) -p $(DPKG)/R
+
+$(DPKG)/R/$(PKG): R/firstlib
+	@$(CP) -p $< $@
+
+$(DPKG)/R/all.rda: R/${PKG}
+	@echo "  dumping R code in package \`$(PKG)'"
+	$(RHOME)/bin/rterm  --vanilla --slave < $<
+
+R/$(PKG): $(PKGRFILES)
+	@echo "  collecting R files"
+	@$(MKDIR) -p $(DPKG)/R
+	@$(CAT) $(PKGRFILES)   > $@
+

@@ -17,10 +17,10 @@ pkg = methods
 all: Makefile DESCRIPTION
 	@echo "building package \`$(pkg)'"
 	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/R
-	@(f=$${TMPDIR:-/tmp}/R$$$$; \
-	  cat `ls $(srcdir)/R/*.R` > $${f}; \
-	  $(top_srcdir)/tools/move-if-change $${f} \
-	    $(top_builddir)/library/$(pkg)/R/$(pkg))
+# 	@(f=$${TMPDIR:-/tmp}/R$$$$; \
+# 	  cat `ls $(srcdir)/R/*.R` > $${f}; \
+# 	  $(top_srcdir)/tools/move-if-change $${f} \
+# 	    $(top_builddir)/library/$(pkg)/R/$(pkg))
 	@for f in COPYRIGHTS INDEX TITLE; do \
 	if test -f $(srcdir)/$${f}; then \
 	  $(INSTALL_DATA) $(srcdir)/$${f} \
@@ -40,6 +40,23 @@ all: Makefile DESCRIPTION
 	@if test -d src; then \
 	  (cd src && $(MAKE)) || exit 1; \
 	fi
+	@$(MAKE) Rfiles
+
+Rfiles: $(top_builddir)/library/$(pkg)/R/$(pkg) \
+  $(top_builddir)/library/$(pkg)/R/all.rda
+
+$(top_builddir)/library/$(pkg)/R/$(pkg): $(srcdir)/R/firstlib
+	cp $< $@
+
+$(top_builddir)/library/$(pkg)/R/all.rda: $(top_builddir)/$(subdir)/R/$(pkg)
+	@echo "dumping R code in package \`$(pkg)'"
+	$(top_builddir)/bin/R --vanilla --slave < $<
+
+$(top_builddir)/$(subdir)/R/$(pkg):
+	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/R
+	@(f=$${TMPDIR:-/tmp}/R$$$$; \
+	  cat `ls $(srcdir)/R/*.R` > $${f}; \
+	  $(top_srcdir)/tools/move-if-change $${f} $@)
 
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@cd $(top_builddir) && \
@@ -52,6 +69,7 @@ DESCRIPTION: $(srcdir)/DESCRIPTION.in $(top_builddir)/config.status
 
 mostlyclean: clean
 clean:
+	@rm -f R/${pkg}
 	@if test -d src; then (cd src && $(MAKE) $@); fi
 distclean:
 	@if test -d src; then (cd src && $(MAKE) $@); fi

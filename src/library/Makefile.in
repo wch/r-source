@@ -13,7 +13,7 @@ include $(top_builddir)/Makeconf
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = Makefile.in BuildAll.mac
 
-SUBDIRS = $(R_PKGS) profile
+SUBDIRS = profile $(R_PKGS)
 
 PKGS = $(R_PKGS)
 

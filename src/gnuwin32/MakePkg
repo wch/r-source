@@ -62,8 +62,8 @@ INSTFILES=$(wildcard $(SPKG)/inst/*)
 # src Makefile?
 SRCMAKE=$(wildcard $(SSPKG)/Makefile.win)
 
-all:  $(DPKG)/zzzz $(DYNLIB) $(DPKG)/R/$(PKG) $(DPKG)/demo $(DATA)
-bare: $(DPKG)/zzzz $(DPKG)/R/$(PKG) $(DPKG)/demo
+all:  $(DPKG)/zzzz $(DYNLIB) R $(DPKG)/demo $(DATA)
+bare: $(DPKG)/zzzz R $(DPKG)/demo
 
 include $(RHOME)/src/gnuwin32/MkRules
 
@@ -142,3 +142,9 @@ endif
 
 FORCE:
 
+AA=$(wildcard R/Makefile.win)
+ifeq ($(AA),)
+ R: $(DPKG)/R/$(PKG)
+else
+ include R/Makefile.win
+endif

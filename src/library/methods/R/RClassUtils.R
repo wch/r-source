@@ -9,20 +9,21 @@ testVirtual <-
   ## Can be forced to be virtual by extending "VIRTUAL".  Otherwise, a class is
   ## virtual only if it has no slots, extends no non-virtual classes, and has a
   ## NULL Prototype
-  function(properties, extends, prototype) {
+  function(properties, extends, prototype)
+{
     if(length(extends)) {
-      en <- names(extends)
-      if(!is.na(match("VIRTUAL", en)))
-        return(TRUE)
-      ## we assume the superclass may not be defined yet or may be a basic class, in which case
-      ## the testing class has to declare itself VIRTUAL explicitly.
-      for(what in en)
-        if(!isClass(what) || !isVirtualClass(what))
-          return(FALSE)
+        en <- names(extends)
+        if(!is.na(match("VIRTUAL", en)))
+            return(TRUE)
+        ## we assume the superclass may not be defined yet or may be a basic class, in which case
+        ## the testing class has to declare itself VIRTUAL explicitly.
+        for(what in en)
+            if(!isClass(what) || !isVirtualClass(what))
+                return(FALSE)
     }
     (length(properties)==0 && is.null(prototype))
-  }
-    
+}
+
 makePrototypeFromClassDef <-
   ## Makes the prototype implied by
   ## the class definition.
@@ -40,55 +41,56 @@ makePrototypeFromClassDef <-
   ## then its prototype is used.
   ##
   ## If all three of the above fail, the prototype is `NULL'.
-  function(properties, prototype, extends) {
+  function(properties, prototype, extends)
+{
     if(length(properties) == 0) {
-      if(!is.null(prototype))
-        return(prototype)
-      ## try for a single superclass that is not virtual
-      supers <- names(extends)
-      for(i in seq(along=extends)) {
-        if(!is.logical(el(extends, i)))
-          next
-        what <- el(supers, i)
-        if(isClass(what) && !isVirtualClass(what)) {
-          if(is.null(prototype))
-            prototype <- getPrototype(getClass(what))
-          else {
-            ## two super classes => prototype not defined?
-            prototype <- NULL
-            break
-          }
+        if(!is.null(prototype))
+            return(prototype)
+        ## try for a single superclass that is not virtual
+        supers <- names(extends)
+        for(i in seq(along=extends)) {
+            if(!is.logical(el(extends, i)))
+                next
+            what <- el(supers, i)
+            if(isClass(what) && !isVirtualClass(what)) {
+                if(is.null(prototype))
+                    prototype <- getPrototype(getClass(what))
+                else {
+                    ## two super classes => prototype not defined?
+                    prototype <- NULL
+                    break
+                }
+            }
         }
-      }
-      return(prototype)
+        return(prototype)
     }
     ## make the prototype into a named list if it is
     ## currently a structure with attributes.
     pattrs <- attributes(prototype)
     if(length(pattrs)>0) {
-      pattrs$class <- NULL
-      pattrs$names <- NULL
+        pattrs$class <- NULL
+        pattrs$names <- NULL
     }
     if(length(pattrs) > 0 || length(names(prototype)) == 0)
-      prototype <- pattrs
+        prototype <- pattrs
     pnames <- names(prototype)
     snames <- names(properties)
     value <- newEmptyObject()
     for(j in seq(along = properties)) {
-      name <- el(snames, j)
-      el(snames, j) <- "" ## for check later
-      i <- match(name, pnames)
-      if(is.na(i))
-        slot(value, name, check=F) <- tryNew(el(properties, j))
-      else
-        slot(value, name, check=F) <- el(prototype, i)
+        name <- el(snames, j)
+        el(snames, j) <- ""             ## for check later
+        i <- match(name, pnames)
+        if(is.na(i))
+            slot(value, name, check=F) <- tryNew(el(properties, j))
+        else
+            slot(value, name, check=F) <- el(prototype, i)
     }
     snames <- snames[nchar(snames)>0]
     if(length(snames)>0)
-      warning(paste("Slots ignored in prototype and not in class:",
-                    paste(snames, collapse=", ")))
+        warning(paste("Slots ignored in prototype and not in class:",
+                      paste(snames, collapse=", ")))
     value
-  }
+}
 
 newEmptyObject <-
   ## Utility function to create an empty object into which slots can be
@@ -96,11 +98,12 @@ newEmptyObject <-
   ##
   ## Later version should create a special object reference that marks an
   ## object currently with no slots and no data.
-  function() {
+  function()
+{
     value <- list()
     value
-  }
-      
+}
+
 
 completeClassDefinition <-
   ## Completes the definition of Class, relative to the current session.
@@ -108,76 +111,78 @@ completeClassDefinition <-
   ## The completed definition is stored in the session's class metadata,
   ## to be retrieved the next time that getClass is called on this class,
   ## and is returned as the value of the call.
-  function(Class) {
+  function(Class)
+{
     value <- NULL
     if(isClass(Class)) {
-      ClassDef <- getClassDef(Class)
-      ## an initial assignment prevents recursive looping should this class's
-      ## definition be needed during the computations (such loops are usually but
-      ## not quite always an error).
-      environment(ClassDef) <- copyEnvironment(ClassDef)
-      ## copy the environment so the completion will not be saved beyond the
-      ## session.
-      assignClassDef(Class, ClassDef, 0)
-      on.exit(if(is.null(value)) removeClassDef(Class), add=T)
-      ev <- environment(ClassDef)
-      properties <- getProperties(ClassDef)
-      immediate <- getExtends(ClassDef)
-      ext <- getAllSuperClasses(ClassDef) ## all the direct and indirect superClasses
-      if(length(ext) > 0) {
-        superProps <- list()
-        for(eClass in rev(ext)) {
-          classProps <- getProperties(getClass(eClass))
-          superProps[names(classProps)] <- classProps
+        ClassDef <- getClassDef(Class)
+        ## an initial assignment prevents recursive looping should this class's
+        ## definition be needed during the computations (such loops are usually but
+        ## not quite always an error).
+        environment(ClassDef) <- copyEnvironment(ClassDef)
+        ## copy the environment so the completion will not be saved beyond the
+        ## session.
+        assignClassDef(Class, ClassDef, 0)
+        on.exit(if(is.null(value)) removeClassDef(Class), add=TRUE)
+        ev <- environment(ClassDef)
+        properties <- getProperties(ClassDef)
+        immediate <- getExtends(ClassDef)
+        ext <- getAllSuperClasses(ClassDef)## all the direct and indirect superClasses
+        if(length(ext) > 0) {
+            superProps <- list()
+            for(eClass in rev(ext)) {
+                classProps <- getProperties(getClass(eClass))
+                superProps[names(classProps)] <- classProps
+            }
+            superProps[names(properties)] <- properties
+            properties <- superProps
         }
-        superProps[names(properties)] <- properties
-        properties <- superProps
-      }
-      prototype <- makePrototypeFromClassDef(properties, getPrototype(ClassDef), immediate)
-      virtual <- getVirtual(ClassDef)
-      if(is.na(virtual))
-        ## compute it from the immediate extensions, but all the properties
-        virtual <- testVirtual(properties, immediate, prototype)
-      newEv <- newClassEnvironment(Class, properties,
-                                   completeExtends(ClassDef),
-                                   prototype,
-                                   getSubclasses(ClassDef),
-                                   virtual)
-      environment(ClassDef) <- newEv
-      assignClassDef(Class, ClassDef, 0)
-      value <- ClassDef
+        prototype <- makePrototypeFromClassDef(properties, getPrototype(ClassDef), immediate)
+        virtual <- getVirtual(ClassDef)
+        if(is.na(virtual))
+            ## compute it from the immediate extensions, but all the properties
+            virtual <- testVirtual(properties, immediate, prototype)
+        newEv <- newClassEnvironment(Class, properties,
+                                     completeExtends(ClassDef),
+                                     prototype,
+                                     getSubclasses(ClassDef),
+                                     virtual)
+        environment(ClassDef) <- newEv
+        assignClassDef(Class, ClassDef, 0)
+        value <- ClassDef
     }
     else {
-      ## create a class definition, possibly an empty virtual class
-      prototype <- newBasic(Class, .Force=T)
-      ## newBasic never exactly returns NULL, but testVirtual uses NULL prototype
-      ## as a requirement for a virtual class -- based on a problem with NULL in R,
-      ## so may change.  See documentation for `new'
-      if(is(prototype, "NULL"))
-        prototype <- NULL
-      setClass(Class, prototype = prototype, where = 0)
-      value <- getClass(Class)
+        ## create a class definition, possibly an empty virtual class
+        prototype <- newBasic(Class, .Force=T)
+        ## newBasic never exactly returns NULL, but testVirtual uses NULL prototype
+        ## as a requirement for a virtual class -- based on a problem with NULL in R,
+        ## so may change.  See documentation for `new'
+        if(is(prototype, "NULL"))
+            prototype <- NULL
+        setClass(Class, prototype = prototype, where = 0)
+        value <- getClass(Class)
     }
     value
-  }
+}
 
 getFromClassDef <-
   ## Extracts one of the intrinsically defined class definition properties
   ## (".Poperties", etc.)  Strictly a utility function
   function(ClassDef, what)
-  get(what, envir = environment(ClassDef))
+    get(what, envir = environment(ClassDef))
 
 setInClassDef <-
   ## Set Property in Class Definition
   ## set one of the intrinsically defined class definition properties
   ## (".Poperties", etc.)  Strictly a utility function
-  function(ClassDef, what, value, synchronize = T) {
+  function(ClassDef, what, value, synchronize = TRUE)
+{
     assign(what, value, envir = environment(ClassDef))
     assign(".Synchronized", FALSE, envir = environment(ClassDef))
     if(synchronize)
-      synchronizeClassDef(ClassDef)
+        synchronizeClassDef(ClassDef)
     what
-  }
+}
 
 synchronizeClassDef <-
   ## Does whatever is needed to synchronize information in the class definition.
@@ -211,7 +216,7 @@ getExtends <-
   ## information as well.
   function(ClassDef)
     getFromClassDef(ClassDef, ".Extends")
-      
+
 
 getAllSuperClasses <-
   ## Get the names of all the classes that this class definition extends.
@@ -244,8 +249,8 @@ getPrototype <-
   ## extract the class's Prototype information from the class representation (only, not from
   ## the name of the class)
   function(ClassDef)
-  getFromClassDef(ClassDef, ".Prototype") 
-  
+  getFromClassDef(ClassDef, ".Prototype")
+
 setPrototype <-
   ## set the class's Prototype information given the class representation (only, not from
   ## the name of the class)
@@ -267,7 +272,7 @@ isVirtualClass <-
     else
       TRUE
   }
-  
+
 setVirtual <-
   ## set the class's Virtual information given the class representation (only, not from
   ## the name of the class)
@@ -278,8 +283,8 @@ getSubclasses <-
   ## extract the class's Subclasses information from the class representation (only, not from
   ## the name of the class)
   function(ClassDef)
-  getFromClassDef(ClassDef, ".Subclasses") 
-  
+  getFromClassDef(ClassDef, ".Subclasses")
+
 setSubclasses <-
   ## set the class's Subclasses information given the class representation (only, not from
   ## the name of the class)
@@ -316,7 +321,7 @@ newClassEnvironment <-
     assign(".Virtual", virtual, ev)
     return(ev)
   }
-    
+
 
 newBasic <-
   ## the implementation of the function `new' for basic classes that don't have
@@ -386,7 +391,7 @@ makeExtends <-
     }
     else stop(paste("extends argument must be a list or a vector of class names", sep=""))
   }
-       
+
 reconcilePropertiesAndPrototype <-
   ## makes a list or a structure look like a prototype for the given class.
   ##
@@ -531,8 +536,8 @@ showExtends <-
     }
   }
 
-    
-    
+
+
 print.classRepEnvironment <-
   function(x, ...)
   showClass(x, prop="Slots")
@@ -578,7 +583,7 @@ unsetClass <-
     if(!is.null(getFromClassMetaData(Class)))
       removeFromClassMetaData(Class)
   }
-  
+
 
 extendsCoerce <-
   ## the function to perform coercion based on the is relation
@@ -749,61 +754,17 @@ metaName <-
   paste(".", prefix, name, sep="__")
 
 
-.First.lib  <-
-  ## Initialize the methods library:  the session table of method definitions.
-  ##
-  ## run the initial computations for the methods package, if this wasn't done
-  ## at INSTALL time:
-  ##  - define the basic classes (vector, the informal classes that extend vector)
-  ##  - define the classes needed to represent methods
-  function(libname, pkgname, where) {
-    library.dynam(pkgname, pkgname)
-    .C("R_initMethodDispatch") ## C-level initialization
-    if(missing(where)) {
-      where <- match(paste("package:", pkgname, sep=""), search())
-      if(is.na(where)) {
-        warning(paste("Not a package name: ",pkgname))
-        return()
-      }
-      where <- pos.to.env(where)
-    }
-    ## assign a pointer to the environment in the environment!
-    ## (Fortunately, environments are references, not true objects)
-    ## Note:  this is only used currently for turning method search on and off,
-    ## and that use should disappear when standardGeneric is implemented in C
-    assign(".methodsEnv", where, envir=where)
-    assign(".MethodsDispatchOn", TRUE, envir = where)
-    ## Temporary kludge because the new version of exists can't be used until
-    ## the dynamic loading is done.
-    if(exists(".hide.exists", envir = where)) {
-      for(what in c("exists", "get", "assign", "objects", "ls", "rm", "remove")) {
-        assign(what, get(paste(".hide.", what,sep=""), envir = where), envir=where)
-      }
-      ##cat("Moved in the new definitions of exists, get, assign, objects, rm\n")
-    }
-    ## initialize the environment used as the session table to store methods definitions
-    table <- new.env()
-    assign("__MethodMetaData", table, envir = where)
-    .Call("R_initialize_methods_metadata", table)
-    if(!get(".saveImage", envir = where)) {
-      cat("Initializing class and method definitions now\n")
-      .InitBasicClasses(where)
-      .InitMethodsListClass(where)
-      .makeBasicFunsList(where)
-      assign(".saveImage", TRUE, envir = where)
-    }
-  }
 
 as.data.frame <-
-function (x, row.names = NULL, optional = FALSE) 
+function (x, row.names = NULL, optional = FALSE)
 {
-    if (is.null(x)) 
+    if (is.null(x))
         return(as.data.frame(list()))
-    if (is.null(attr(x, "class"))) 
+    if (is.null(attr(x, "class")))
         attr(x, "class") <- data.class(x)
     UseMethod("as.data.frame", x, row.names, optional)
 }
-  
+
 nullSymbol <-
   ## Returns the special name which is the symbol used to represent NULL slots as (non-NULL)
   ## attributes.
