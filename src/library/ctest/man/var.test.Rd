@@ -6,7 +6,7 @@
   populations.
 }
 \usage{
-var.test(x, y, ratio = 1, alternative = "two.sided", 
+var.test(x, y, ratio = 1, alternative = c("two.sided", "less", "greater"),
          conf.level = 0.95)
 }
 \arguments{
@@ -14,11 +14,10 @@ var.test(x, y, ratio = 1, alternative = "two.sided",
     objects (inheriting from class \code{"lm"}).}
   \item{ratio}{the hypothesized ratio of the population variances of
     \code{x} and \code{y}.}
-  \item{alternative}{indicates the alternative hypothesis and must be
-    one of \code{"two.sided"}, \code{"greater"} or \code{"less"}.  You
+  \item{alternative}{the alternative hypothesis; must be one of
+    \code{"two.sided"} (default), \code{"greater"} or \code{"less"}.  You
     can specify just the initial letter.}
-  \item{conf.level}{confidence level for the returned confidence
-    interval.}
+  \item{conf.level}{confidence level for the returned confidence interval.}
 }
 \details{
   The null hypothesis is that the ratio of the variances of the

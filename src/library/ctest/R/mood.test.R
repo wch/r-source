@@ -1,8 +1,6 @@
-mood.test <- function(x, y, alternative = "two.sided") {
-    CHOICES <- c("two.sided", "less", "greater")
-    alternative <- CHOICES[pmatch(alternative, CHOICES)]
-    if (length(alternative) > 1 || is.na(alternative)) 
-        stop("alternative must be \"two.sided\", \"less\" or \"greater\"")
+mood.test <- function(x, y, alternative = c("two.sided", "less", "greater"))
+{
+    alternative <- match.arg(alternative)
     DNAME <- paste(deparse(substitute(x)), "and", deparse(substitute(y)))
 
     x <- x[is.finite(x)]
@@ -19,7 +17,7 @@ mood.test <- function(x, y, alternative = "two.sided") {
                    "less" = p,
                    "greater" = 1 - p,
                    "two.sided" = 2 * min(p, 1 - p))
-    
+
     structure(list(statistic = structure(z, names = "Z"),
                    p.value = PVAL,
                    alternative = alternative,

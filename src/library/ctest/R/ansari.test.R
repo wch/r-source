@@ -1,10 +1,8 @@
-ansari.test <- function(x, y, alternative = "two.sided", exact = NULL) {
-
-    CHOICES <- c("two.sided", "less", "greater")
-    alternative <- CHOICES[pmatch(alternative, CHOICES)]
-    if (length(alternative) > 1 || is.na(alternative)) 
-        stop("alternative must be \"two.sided\", \"less\" or \"greater\"")
-
+ansari.test <- function(x, y,
+                        alternative = c("two.sided", "less", "greater"),
+                        exact = NULL)
+{
+    alternative <- match.arg(alternative)
     DNAME <- paste(deparse(substitute(x)), "and", deparse(substitute(y)))
 
     x <- x[complete.cases(x)]

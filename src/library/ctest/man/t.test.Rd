@@ -2,37 +2,36 @@
 \alias{t.test}
 \title{Student's t-Test}
 \usage{
-t.test(x, y = NULL, alternative = "two.sided", mu = 0, paired = FALSE,
-       var.equal = FALSE, conf.level = 0.95)
+t.test(x, y = NULL, alternative = c("two.sided", "less", "greater"),
+       mu = 0, paired = FALSE, var.equal = FALSE, conf.level = 0.95)
 }
 \arguments{
-    \item{x}{a numeric vector of data values.}
-    \item{y}{an optional numeric vector data values.}
-    \item{alternative}{must be one of \code{"two.sided"},
-	\code{"greater"} or \code{"less"}.  You can specify just the
-	initial letter.  This parameter indicates the alternative
-	hypothesis.}
-    \item{mu}{a number indicating the true value of the mean (or
-	difference in means if you are performing a two sample test).}
-    \item{paired}{a logical indicating whether you want a paired
-	t-test.}
-    \item{var.equal}{a logical variable indicating whether to treat the
-	two variances as being equal. If \code{TRUE} then the pooled
-	variance is used to estimate the variance otherwise the Welch
-	approximation to the degrees of freedom is used.}
-    \item{conf.level}{confidence level of the interval.}
+  \item{x}{a numeric vector of data values.}
+  \item{y}{an optional numeric vector data values.}
+  \item{alternative}{character specifying the alternative hypothesis,
+    must be one of \code{"two.sided"} (default), \code{"greater"} or
+    \code{"less"}.  You can specify just the initial letter.}
+  \item{mu}{a number indicating the true value of the mean (or
+    difference in means if you are performing a two sample test).}
+  \item{paired}{a logical indicating whether you want a paired
+    t-test.}
+  \item{var.equal}{a logical variable indicating whether to treat the
+    two variances as being equal. If \code{TRUE} then the pooled
+    variance is used to estimate the variance otherwise the Welch
+    approximation to the degrees of freedom is used.}
+  \item{conf.level}{confidence level of the interval.}
 }
 \description{
-    t.test performs one and two sample t-tests on vectors of data.
+  t.test performs one and two sample t-tests on vectors of data.
 }
 \details{
-    If \code{paired} is \code{TRUE} then both \code{x} and \code{y} must
-    be specified and they must be the same length.  Missing values are
-    removed (in pairs if \code{paired} is \code{TRUE}).  If
-    \code{var.equal} is \code{TRUE} then the pooled estimate of the
-    variance is used. If \code{var.equal} is \code{FALSE} then the
-    variance is estimated separately for both groups and the Welch
-    modification to the degrees of freedom is used.
+  If \code{paired} is \code{TRUE} then both \code{x} and \code{y} must
+  be specified and they must be the same length.  Missing values are
+  removed (in pairs if \code{paired} is \code{TRUE}).  If
+  \code{var.equal} is \code{TRUE} then the pooled estimate of the
+  variance is used.  By default, if \code{var.equal} is \code{FALSE}
+  then the variance is estimated separately for both groups and the
+  Welch modification to the degrees of freedom is used.
 }
 \value{
     A list with class \code{"htest"} containing the following

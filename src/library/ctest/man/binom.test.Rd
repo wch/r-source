@@ -7,7 +7,7 @@
   number \code{x} of successes observed.
 }
 \usage{
-binom.test(x, n, p = 0.5, alternative = "two.sided",
+binom.test(x, n, p = 0.5, alternative = c("two.sided", "less", "greater"),
            conf.level = 0.95)
 }
 \arguments{
@@ -39,7 +39,7 @@ binom.test(x, n, p = 0.5, alternative = "two.sided",
   \emph{Practical nonparametric statistics}.
   New York: John Wiley & Sons.
   Pages 97--104.
-  
+
   Myles Hollander & Douglas A. Wolfe (1973),
   \emph{Nonparametric statistical inference}.
   New York: John Wiley & Sons.

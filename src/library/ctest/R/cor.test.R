@@ -1,19 +1,12 @@
-cor.test <- function(x, y, alternative = "two.sided", method = "pearson",
-                     exact = NULL) 
+cor.test <- function(x, y,
+                     alternative = c("two.sided", "less", "greater"),
+                     method = c("pearson", "kendall", "spearman"),
+                     exact = NULL)
 {
-    CHOICES <- c("two.sided", "less", "greater")
-    alternative <- CHOICES[pmatch(alternative, CHOICES)]
-    if(length(alternative) > 1 || is.na(alternative)) 
-        stop("alternative must be \"two.sided\", \"less\" or \"greater\"")
+    alternative <- match.arg(alternative)
+    method <- match.arg(method)
+    DNAME <- paste(deparse(substitute(x)), "and", deparse(substitute(y)))
 
-    CHOICES <- c("pearson", "kendall", "spearman")
-    method <- CHOICES[pmatch(method, CHOICES)]
-    if(length(method) > 1 || is.na(method)) 
-        stop("method must be \"pearson\", \"kendall\" or \"spearman\"")
-
-    DNAME <- paste(deparse(substitute(x)), "and",
-                   deparse(substitute(y)))
-    
     if(length(x) != length(y))
         stop("x and y must have the same length")
     OK <- complete.cases(x, y)
@@ -76,11 +69,10 @@ cor.test <- function(x, y, alternative = "two.sided", method = "pearson",
                                },
                                "greater" = 1 - pkendall(q - 1, n),
                                "less" = pkendall(q, n))
-                STATISTIC <- structure(q, names = "T")
+                STATISTIC <- c(T = q)
             } else {
-                STATISTIC <- ESTIMATE /
-                    sqrt((4 * n + 10) / (9 * n * (n-1)))
-                names(STATISTIC) <- "z"
+                STATISTIC <- c(z = ESTIMATE /
+                               sqrt((4 * n + 10) / (9 * n * (n-1))))
                 p <- pnorm(STATISTIC)
                 if(exact && TIES)
                     warning("Cannot compute exact p-value with ties")
@@ -88,33 +80,32 @@ cor.test <- function(x, y, alternative = "two.sided", method = "pearson",
         } else {
             method <- "Spearman's rank correlation rho"
             names(NVAL) <- "rho"
-            ESTIMATE <- cor(rank(x), rank(y))
-            names(ESTIMATE) <- "rho"
+            ESTIMATE <- c(rho = cor(rank(x), rank(y)))
             ## Use the test statistic S = sum(rank(x) - rank(y))^2 and
             ## AS 89 for obtaining better p-values than via the normal
             ## approximation of S by N((n^3-n)/6, 1/sqrt(n-1)).  In the
             ## case of no ties, S = (1-rho) * (n^3-n)/6.  Note that AS
             ## 89 gives Prob(S >= s).
-            pspearman <- function(q, n) {
-                1 - .Fortran("prho",
-                             as.integer(n),
-                             as.integer(q + 1),
-                             p = double(1),
-                             integer(1),
-                             PACKAGE = "ctest")$p
+            Ipspearman <- function(q, n) {
+                .Fortran("prho",
+                         as.integer(n),
+                         as.integer(q + 1),
+                         p = double(1),
+                         integer(1),
+                         PACKAGE = "ctest")$p
             }
             q <- as.integer((n^3 - n) * (1 - ESTIMATE) / 6)
-            STATISTIC <- structure(q, names = "S")
+            STATISTIC <- c(S = q)
             PVAL <- switch(alternative,
                            "two.sided" = {
                                p <- if(q > (n^3 - n) / 6)
-                                   1 - pspearman(q - 1, n)
+                                   Ipspearman(q - 1, n)
                                else
-                                   pspearman(q, n)
+                                   1 - Ipspearman(q, n)
                                min(2 * p, 1)
                            },
-                           "greater" = pspearman(q, n),
-                           "less" = 1 - pspearman(q - 1, n))
+                           "greater" = 1 - Ipspearman(q, n),
+                           "less" = Ipspearman(q - 1, n))
             if(TIES)
                 warning("p-values may be incorrect due to ties")
         }

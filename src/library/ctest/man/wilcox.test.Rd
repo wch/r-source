@@ -5,15 +5,15 @@
   Performs one and two sample Wilcoxon tests on vectors of data.
 }
 \usage{
-wilcox.test(x, y = NULL, alternative = "two.sided", mu = 0, 
-            paired = FALSE, exact = NULL, correct = TRUE)
+wilcox.test(x, y = NULL, alternative = c("two.sided", "less", "greater"),
+            mu = 0, paired = FALSE, exact = NULL, correct = TRUE)
 }
 \arguments{
   \item{x}{numeric vector of data values.}
   \item{y}{an optional numeric vector of data values.}
-  \item{alternative}{indicates the alternative hypothesis and must be
-    one of \code{"two.sided"}, \code{"greater"} or \code{"less"}.  You
-    can specify just the initial letter.}
+  \item{alternative}{the alternative hypothesis must be
+    one of \code{"two.sided"} (default), \code{"greater"} or
+    \code{"less"}.  You can specify just the initial letter.}
   \item{mu}{a number specifying an optional location parameter.}
   \item{paired}{a logical indicating whether you want a paired test.}
   \item{exact}{a logical indicating whether an exact p-value should be
@@ -86,7 +86,7 @@ wilcox.test(y - x, alternative = "less",
 ##  of the human chorioamnion for the term pregnancy.
 x <- c(0.80, 0.83, 1.89, 1.04, 1.45, 1.38, 1.91, 1.64, 0.73, 1.46)
 y <- c(1.15, 0.88, 0.90, 0.74, 1.21)
-wilcox.test(x, y, alternative = "greater")
+wilcox.test(x, y, alternative = "g")# greater
 wilcox.test(x, y, alternative = "greater",
             exact = FALSE, correct = FALSE) # H&W large sample
                                             # approximation

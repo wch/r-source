@@ -1,11 +1,7 @@
-ks.test <- function(x, y, ..., alternative = "two.sided")
+ks.test <- function(x, y, ..., alternative = c("two.sided", "less", "greater"))
 {
-    CHOICES <- c("two.sided", "less", "greater")
-    alternative <- CHOICES[pmatch(alternative, CHOICES)]
-    if (length(alternative) > 1 || is.na(alternative)) 
-        stop("alternative must be \"two.sided\", \"less\" or \"greater\"")
-
-    DNAME <- deparse(substitute(x))      
+    alternative <- match.arg(alternative)
+    DNAME <- deparse(substitute(x))
     x <- x[!is.na(x)]
     n <- length(x)
     if (n < 1)
@@ -72,7 +68,7 @@ ks.test <- function(x, y, ..., alternative = "two.sided")
     PVAL <- ifelse(alternative == "two.sided",
                    1 - pkstwo(sqrt(n) * STATISTIC),
                    exp(- 2 * n * STATISTIC^2))
-    
+
     RVAL <- list(statistic = STATISTIC,
                  p.value = PVAL,
                  alternative = alternative,

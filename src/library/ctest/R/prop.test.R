@@ -1,5 +1,6 @@
-prop.test <- function(x, n, p = NULL, alternative = "two.sided",
-		      conf.level = 0.95, correct = TRUE)
+prop.test <-
+function(x, n, p = NULL, alternative = c("two.sided", "less", "greater"),
+         conf.level = 0.95, correct = TRUE)
 {
     DNAME <- deparse(substitute(x))
 
@@ -41,11 +42,8 @@ prop.test <- function(x, n, p = NULL, alternative = "two.sided",
 	    stop("Elements of p must be in (0,1)")
     }
 
-    CHOICES <- c("two.sided", "less", "greater")
-    alternative <- CHOICES[pmatch(alternative, CHOICES)]
-    if (length(alternative) > 1 || is.na(alternative))
-	stop("alternative must be \"two.sided\", \"less\" or \"greater\"")
-    if ((k > 2) || (k == 2) && !is.null(p))
+    alternative <- match.arg(alternative)
+    if (k > 2 || (k == 2) && !is.null(p))
 	alternative <- "two.sided"
 
     if ((length(conf.level) != 1) || is.na(conf.level) ||

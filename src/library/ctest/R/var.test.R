@@ -1,13 +1,11 @@
-var.test <- function(x, y, ratio = 1, alternative = "two.sided",
-		     conf.level = 0.95)  
+var.test <-
+function(x, y, ratio = 1, alternative = c("two.sided", "less", "greater"),
+         conf.level = 0.95)
 {
     if (!((length(ratio) == 1) && is.finite(ratio) && (ratio > 0)))
         stop("ratio must be a single positive number")
-  
-    alternative <- char.expand(alternative,
-                               c("two.sided", "less", "greater"))
-    if ((length(alternative) > 1) || is.na(alternative)) 
-        stop("alternative must be \"two.sided\", \"less\" or \"greater\"")
+
+    alternative <- match.arg(alternative)
 
     if (!((length(conf.level) == 1) && is.finite(conf.level) &&
           (conf.level > 0) && (conf.level < 1)))
@@ -18,16 +16,16 @@ var.test <- function(x, y, ratio = 1, alternative = "two.sided",
     if (inherits(x, "lm") && inherits(y, "lm")) {
         DF.x <- x$df.resid
         DF.y <- y$df.resid
-        V.x <- sum(x$residuals^2) / DF.x      
+        V.x <- sum(x$residuals^2) / DF.x
         V.y <- sum(y$residuals^2) / DF.y
     } else {
         x <- x[is.finite(x)]
         DF.x <- length(x) - 1
-        if (DF.x < 1) 
+        if (DF.x < 1)
             stop("not enough x observations")
         y <- y[is.finite(y)]
         DF.y <- length(y) - 1
-        if (DF.y < 1) 
+        if (DF.y < 1)
             stop("not enough y observations")
         V.x <- var(x)
         V.y <- var(y)
@@ -35,7 +33,7 @@ var.test <- function(x, y, ratio = 1, alternative = "two.sided",
     ESTIMATE <- V.x / V.y
     STATISTIC <- ESTIMATE / ratio
     PARAMETER <- c(DF.x, DF.y)
-    
+
     PVAL <- pf(STATISTIC, DF.x, DF.y)
     if (alternative == "two.sided") {
         PVAL <- 2 * min(PVAL, 1 - PVAL)

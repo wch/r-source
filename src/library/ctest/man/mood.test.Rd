@@ -5,13 +5,13 @@
   Performs Mood's two-sample test for a difference in scale parameters.
 }
 \usage{
-mood.test(x, y, alternative = "two.sided")
+mood.test(x, y, alternative = c("two.sided", "less", "greater"))
 }
 \arguments{
   \item{x, y}{numeric vectors of data values.}
   \item{alternative}{indicates the alternative hypothesis and must be
-    one of \code{"two.sided"}, \code{"greater"} or \code{"less"}.  You
-    can specify just the initial letter.}
+    one of \code{"two.sided"} (default), \code{"greater"} or
+    \code{"less"} all of which can be abbreviated.}
 }
 \details{
   The underlying model is that the two samples are drawn from

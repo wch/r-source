@@ -5,7 +5,7 @@
   Performs one or two sample Kolmogorov-Smirnov tests.
 }
 \usage{
-ks.test(x, y, \dots, alternative = "two.sided")
+ks.test(x, y, \dots, alternative = c("two.sided", "less", "greater"))
 }
 \arguments{
   \item{x}{a numeric vector of data values.}
@@ -13,7 +13,7 @@ ks.test(x, y, \dots, alternative = "two.sided")
     naming a distribution function.}
   \item{\dots}{parameters of the distribution specified by \code{y}.}
   \item{alternative}{indicates the alternative hypothesis and must be
-    one of \code{"two.sided"}, \code{"greater"} or \code{"less"}.
+    one of \code{"two.sided"} (default), \code{"greater"} or \code{"less"}.
     You can specify just the initial letter.}
 }
 \details{
@@ -33,9 +33,9 @@ ks.test(x, y, \dots, alternative = "two.sided")
   \item{statistic}{the value of the test statistic.}
   \item{p.value}{the p-value of the test.}
   \item{alternative}{a character string describing the alternative
-    hypothesis.} 
+    hypothesis.}
   \item{method}{a character string indicating what type of test was
-    performed.} 
+    performed.}
   \item{data.name}{a character string giving the name(s) of the data.}
 }
 \references{
@@ -54,7 +54,8 @@ x <- rnorm(50)
 y <- runif(30)
 # Do x and y come from the same distribution?
 ks.test(x, y)
-# Does x come from a gamma distribution with shape 3 and scale 2?
-ks.test(x, "pgamma", 3, 2)
+# Does x come from a shifted gamma distribution with shape 3 and scale 2?
+ks.test(x+2, "pgamma", 3, 2) # two-sided
+ks.test(x+2, "pgamma", 3, 2, alternative = "gr")
 }
 \keyword{htest}

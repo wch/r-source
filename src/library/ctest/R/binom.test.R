@@ -1,5 +1,7 @@
-binom.test <- function(x, n, p = 0.5, alternative = "two.sided",
-                       conf.level = 0.95) {
+binom.test <-
+function(x, n, p = 0.5, alternative = c("two.sided", "less", "greater"),
+         conf.level = 0.95)
+{
     if((length(n) > 1) || is.na(n) || (n < 1) || (n != round(n)))
         stop("n must be a positive integer")
     if((length(x) > 1) || is.na(x) ||
@@ -7,12 +9,7 @@ binom.test <- function(x, n, p = 0.5, alternative = "two.sided",
         stop("x must be an integer between 0 and n")
     if(!missing(p) && (length(p) > 1 || is.na(p) || p < 0 || p > 1))
         stop ("p must be a single number between 0 and 1")
-
-    alternative <- char.expand(alternative,
-                               c("two.sided", "less", "greater"))
-    if(length(alternative) > 1 || is.na(alternative))
-        stop(paste("alternative must be \"two.sided\",",
-                   "\"less\" or \"greater\""))
+    alternative <- match.arg(alternative)
 
     if(!((length(conf.level) == 1) && is.finite(conf.level) &&
          (conf.level > 0) && (conf.level < 1)))
@@ -71,13 +68,13 @@ binom.test <- function(x, n, p = 0.5, alternative = "two.sided",
                        c(p.L(x, alpha), p.U(x, alpha))
                    })
     attr(CINT, "conf.level") <- conf.level
-  
-    names(x) <- "number of successes"	# or simply "x" ??
-    names(n) <- "number of trials"	# or simply "n" ??
-    names(p) <- "probability of success"# or simply "p" ??
 
     ESTIMATE <- x / n
-    names(ESTIMATE) <- names(p)
+
+    names(x) <- "number of successes"	# or simply "x" ??
+    names(n) <- "number of trials"	# or simply "n" ??
+    names(ESTIMATE) <-
+    names(p) <- "probability of success"# or simply "p" ??
 
     structure(list(statistic = x,
                    parameter = n,
@@ -90,3 +87,6 @@ binom.test <- function(x, n, p = 0.5, alternative = "two.sided",
                    data.name = DNAME),
               class = "htest")
 }
+
+
+

@@ -7,8 +7,9 @@
   Kendall's tau, or Spearman's rho.
 }
 \usage{
-cor.test(x, y, alternative = "two.sided", method = "pearson",
-         exact = NULL)
+cor.test(x, y,
+         alternative = c("two.sided", "less", "greater"),
+         method = c("pearson", "kendall", "spearman"), exact = NULL)
 }
 \arguments{
   \item{x, y}{numeric vectors of data values.  \code{x} and \code{y}
@@ -17,9 +18,8 @@ cor.test(x, y, alternative = "two.sided", method = "pearson",
     one of \code{"two.sided"}, \code{"greater"} or \code{"less"}.  You
     can specify just the initial letter.}
   \item{method}{a string indicating which correlation coefficient is
-    used for the test.  Must be one of \code{"pearson"},
-    \code{"kendall"}, or \code{"spearman"}.  Only the first character is
-    necessary.}
+    used for the test.  One of \code{"pearson"},
+    \code{"kendall"}, or \code{"spearman"}, can be abbreviated.}
   \item{exact}{a logical indicating whether an exact p-value should be
     computed.}
 }
@@ -79,12 +79,12 @@ x <- c(44.4, 45.9, 41.9, 53.3, 44.7, 44.1, 50.7, 45.2, 60.1)
 y <- c( 2.6,  3.1,  2.5,  5.0,  3.6,  4.0,  5.2,  2.8,  3.8)
 cor.test(x, y, method = "kendall", alternative = "greater")
 ## => p=0.05972
-## 
+##
 cor.test(x, y, method = "kendall", alternative = "greater",
          exact = FALSE) # using large sample approximation
 ## => p=0.04765
 ## Compare this to
-cor.test(x, y, method = "spearman", alternative = "greater")
-cor.test(x, y,                      alternative = "greater")
+cor.test(x, y, method = "spearm", alternative = "g")
+cor.test(x, y,                    alternative = "g")
 }
 \keyword{htest}
