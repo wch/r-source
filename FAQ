@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.7-28, 2003-07-18
+Version 1.7-29, 2003-07-21
 ISBN 3-901167-51-X
 Kurt Hornik
 
@@ -1663,7 +1663,8 @@ distributions of R.)
 
 *grid*
      The Grid graphics package, a rewrite of the graphics layout
-     capabilities, plus some support for interaction.  _Recommended_.
+     capabilities, plus some support for interaction.  _Recommended_ (will
+     become a integrated into the R distribution for version 1.8.0).
 
 *gss*
      A comprehensive package for structural multivariate function estimation
@@ -1716,6 +1717,9 @@ distributions of R.)
      Springer.  The functions may be divided into the following groups;
      maxima/minima, order statistics, peaks over thresholds and point
      processes.
+
+*its*
+     An S4 class for handling irregular time series.
 
 *knnTree*
      Construct or predict with k-nearest-neighbor classifiers, using
