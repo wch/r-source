@@ -105,7 +105,7 @@ sub buildinit {
 	opendir man, $main::AQUAdir;
 	foreach $file (readdir(man)) {
 	    delete $Rds{$file};
-	    $RdsOS{$file} = file_path($main::OSdir, $file);
+	    $RdsOS{$file} = file_path($main::AQUAdir, $file);
 	}
 	@mandir = sort(values %Rds);
 	push @mandir, sort(values %RdsOS);
