@@ -54,12 +54,24 @@
     setIs("double", "numeric", where = envir)
     setIs("integer", "numeric", where = envir)
 
-    setIs("structure", "vector", coerce = function(object) as.vector(object), where = envir)
+    setIs("structure", "vector", coerce = .gblEnv(function(object) as.vector(object)),
+          replace = .gblEnv(function(object, Class, value) {
+              attributes(value) <- attributes(object)
+              value
+          }),
+          where = envir)
     
     for(.class in stClasses)
         setIs(.class, "structure", where = envir)
     setIs("matrix", "array", where = envir)
-    setIs("array", "matrix", test = function(object) length(dim(object)) == 2, where = envir)
+    setIs("array", "matrix", test = .gblEnv(function(object) length(dim(object)) == 2),
+          replace = .gblEnv(function(object, Class, value) {
+              if(is(value, "matrix"))
+                  value
+              else
+                  stop("Replacement value is not a matrix")
+          }),
+          where = envir)
 
     ## Some class definitions extending "language", delayed to here so
     ## setIs will work.

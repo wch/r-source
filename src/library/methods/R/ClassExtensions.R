@@ -73,10 +73,34 @@ makeExtends <- function(Class, to,
                     substituteDirect(bdy, list(THISCLASS = dataPartClass))
             }
         }
-        else if(simple)
+        else if(simple) {
             replace <- .simpleExtReplace
+            if(isVirtualClass(to)) {  # a simple is to a virtual class => a union
+                body(replace, envir = environment(replace)) <-
+                    substitute({
+                        if(!is(value, FROM))
+                            stop("as(object,\"", TO,
+                                 "\") <- ... is valid for an object of class",
+                                 FROM, "\" only if the new value is also of this class (got calss \"",
+                                 class(value), "\")")
+                        value
+                    }, list(FROM = Class, TO = to))
+            }
+            else {
+                toSlots <- getSlots(classDef2)
+                if(length(toSlots) == length(slots))
+                    body(replace, envir = environment(replace)) <-
+                        substitute(as(value, FROM), list(FROM = Class))
+                else if(length(toSlots) == 0) # seems replacement not defined in this case?
+                    replace <- .ErrorReplace
+            }
+        }
         else
             replace <- .ErrorReplace
+        if(identical(replace, .ErrorReplace))
+            warning("There is no automatic definition for as(object, \"", to,
+                    "\") <- value when object has class \"", Class,
+                    "\" and no replace= argument was supplied; replacement will be an error")
     }
     new("SClassExtension", superClass = to, package = package, coerce = coerce,
                test = test, replace = replace, simple = simple, by = by, dataPart = dataPart)

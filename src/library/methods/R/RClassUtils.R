@@ -1068,11 +1068,11 @@ setDataPart <- function(object, value) {
         ## argument.
         f <- toExt@coerce
         fR <- toExt@replace
-        ## if both are simple extensions, so is the composition
-        if(byExt@simple && toExt@simple) {
             toExpr <- body(f)
             fBy <- byExt@coerce
             byExpr <- body(fBy)
+        ## if both are simple extensions, so is the composition
+        if(byExt@simple && toExt@simple) {
             expr <- (if(byExt@dataPart)
                      substitute({from <- from@.Data; EXPR},
                                 list(EXPR = toExpr))
@@ -1087,38 +1087,28 @@ setDataPart <- function(object, value) {
                      )
             body(f, envir = environment(f)) <- expr
         }
-        else if(byExt@simple) {
-            body(f, envir = environment(f)) <-
-                substitute( as(if(strict) as(from, BY) else from, TO, strict=strict),
-                           list(BY = by, TO = to))
-        }
-        else if(toExt@simple) {
-            ## in this case, coercing to `by' and testing for `by' are
-            ## sufficient, since the further step to the target is a simple extension.
-            body(f, envir = environment(f)) <-
-                substitute({ from <- as(from, BY, strict = strict);
-                             if(strict) as(from, TO) else from},
-                           list(BY = by, TO = to))
-            toExt@test <- byExt@test
-        }
-        else {
-            ## we could improve the efficiency by checking for special cases
-            ## (e.g., simple test's).  But a composite of two non-simple extensions
-            ## seems pretty weird.  So we'll wait for examples to show up.
-            body(f, envir = environment(f)) <-
-                substitute(as(as(from, BY), TO),
-                           list(BY = by, TO = to))
-            ff <- byExt@test
-            body(ff, envir = environment(ff)) <-
-                substitute((is(object, BY) && is(as(object, BY), TO)),
-                          list(BY = by, TO = to))
-            toExt@test <- ff
-        }
+        else   if(!identical(byExpr, quote(from)))
+                body(f, envir = environment(f)) <-
+                    substitute( {from <- as(from, BY, strict = strict); TO},
+                               list(BY = by, TO = toExpr))
         toExt@coerce <- f
+        f <- toExt@test
+        toExpr <- body(f)
+        byExpr <- body(byExt@test)
+        ## process the test code
+        if(!identical(byExpr, TRUE)) {
+            if(!identical(toExpr, TRUE))
+                body(f, envir = environment(f)) <- substitute((BY) && (TO),
+                              list(BY = byExpr, TO = toExpr))
+            else
+                body(f, envir = environment(f)) <- byExpr
+        }
+        toExt@test <- f
         f <- byExt@replace
-        expr <- body(f)
-        expr <- .insertExpr(expr,
-                            substitute(value <- as(value, TO), list(TO=to)))
+        byExpr <- body(f)
+        ## Is there a danger of infinite loop below?
+        expr <- substitute({.value <- as(from, BY); as(.value, TO) <- value; value <- .value; BYEXPR},
+                           list(BY=by, TO = to, BYEXPR = byExpr))
         body(f, envir = environment(f)) <- expr
         toExt@replace <- f
         moreExts[[i]] <- toExt
@@ -1273,4 +1263,10 @@ substituteFunctionArgs <- function(def, newArgs, args = formalArgs(def), silent 
     for(i in seq(along = slots))
         slot(ClassDef, slotNames[[i]]) <- slots[[i]]
     ClassDef
+}
+
+### fix the annoying habit of R giving function definitions the local environment by default
+.gblEnv <- function(f) {
+    environment(f) <- .GlobalEnv
+    f
 }
