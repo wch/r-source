@@ -16,6 +16,8 @@ NEW FEATURES
 
 BUG FIXES
 
+    o	`type = "."' now works with curve() and plot.function()
+
     o	phyper() now works for larger arguments than before.
 
     o	Missing values didn't work in log plot
@@ -30,11 +32,11 @@ BUG FIXES
 
     o	pt() now works better for extreme `df'.
 
-    o   fixed some glitches with formatC() and its doc.
+    o	fixed some glitches with formatC() and its doc.
 
-    o   several fixes in *.c code to make -Wall happy
+    o	several fixes in *.c code to make -Wall happy
 
-    o   curve() [and plot.function()] now use proper `x' values with log="x"
+    o	curve() [and plot.function()] now use proper `x' values with log="x"
 
 
 		CHANGES IN R VERSION 0.63.3
