@@ -1,6 +1,5 @@
 \name{unit}
 \alias{unit}
-\alias{is.unit}
 \title{Function to Create a Unit Object}
 \description{
   This function creates a unit object --- a vector of unit values.
@@ -9,7 +8,6 @@
 }
 \usage{
 unit(x, units, data=NULL)
-is.unit(unit)
 }
 \arguments{
   \item{x}{A numeric vector.}
@@ -17,7 +15,6 @@ is.unit(unit)
     corresponding numeric values.}
   \item{data}{This argument is used to supply extra information
     for special \code{unit} types.}
-  \item{unit}{Any object.}
 }
 \details{
   Unit objects allow the user to specify locations and dimensions
@@ -84,9 +81,6 @@ is.unit(unit)
   and to specify the minimum or maximum of a list
   of unit objects (e.g., \code{min(unit(0.5, "npc"), unit(1,
     "inches"))}).
-
-  The \code{is.unit()} function returns a boolean value indicating
-  whether the supplied argument is of class \code{"unit"}.
 }
 \section{WARNING}{
   A special function \code{unit.length} is provided for
@@ -105,8 +99,7 @@ is.unit(unit)
 }
 \author{Paul Murrell}
 \seealso{
-  \code{\link{unit.c}}, \code{\link{unit.rep}},
-  \code{\link{unit.pmin}}, \code{\link{unit.pmax}}, and
+  \code{\link{unit.c}} and
   \code{\link{unit.length}}
 }
 

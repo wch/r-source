@@ -1,5 +1,5 @@
-\name{current.viewport}
-\alias{current.viewport}
+\name{grid.current.viewport}
+\alias{grid.current.viewport}
 \title{Get the Default Grid Viewport}
 \description{
   Returns the viewport that Grid is going to draw into.
@@ -11,11 +11,14 @@ current.viewport(vp=NULL)
   \item{vp}{A Grid viewport object.}
 }
 \details{
-  This function should only be used without the \code{vp}
-  argument (i.e., only to return the current viewport).
-
-  The \code{vp} argument only exists for historical reasons.
-  It will be removed in future versions.
+  This function has two modes:
+  \enumerate{
+    \item If \code{vp} is not specified, this function
+    returns the default Grid viewport;  this is the
+    viewport last set by \code{grid.set.viewport}.  
+    \item If a value is specified for \code{vp}, this function
+    returns that value if it is a valid viewport.  Otherwise it
+    returns the default Grid viewport.}
 }
 \value{
   A Grid viewport object.

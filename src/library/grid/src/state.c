@@ -39,7 +39,7 @@ int gridRegisterIndex;
 
 SEXP createGridSystemState()
 {
-    return allocVector(VECSXP, 11);
+    return allocVector(VECSXP, 10);
 }
 
 void initDL(GEDevDesc *dd)

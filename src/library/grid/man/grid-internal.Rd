@@ -1,5 +1,11 @@
 \name{grid-internal}
 %% <FIXME>
+%% This was documented as internal here but shown in the \usage of
+%% grid.current.viewport.Rd which only had alias grid.current.viewport.
+\alias{current.viewport}
+%% </FIXME>
+
+%% <FIXME>
 %% These had aliases but no corresponding code object:
 %% <LIST>
 %% \alias{.unit}
@@ -189,6 +195,7 @@
 \alias{grid.strip}
 \alias{height.post.details}
 \alias{height.pre.details}
+\alias{is.unit}
 \alias{layoutRegion}
 \alias{viewport.layout}
 \alias{viewport.transform}

@@ -328,10 +328,9 @@ int pureNullUnitArithmetic(SEXP unit, int index) {
  */
 
 /* NOTE:  this code calls back to R code to perform 
- * set.gpar operations, which will impact on grid global variables
- * BUT that's ok(ish) because it subsequently calls back to R code to perform
- * corresponding unset.gpar operations which will
- * undo the changes to the grid globals
+ * set.gpar operations, which will impact on grid state variables
+ * BUT that's ok(ish) because we save and restore the relevant state
+ * variables in here so that the overall effect is NULL.
  */
 
 double evaluateGrobWidthUnit(SEXP grob, char* vpfontfamily, int vpfont,
@@ -340,14 +339,17 @@ double evaluateGrobWidthUnit(SEXP grob, char* vpfontfamily, int vpfont,
 			     GEDevDesc *dd) 
 {
     SEXP widthPreFn, widthFn, widthPostFn, R_fcall1, R_fcall2, R_fcall3;
-    SEXP getGParFn, R_getgparcall, gparname;
+    SEXP savedgpar, newgpar;
     SEXP width, fontfamily, font, fontsize, lineheight;
     LViewportContext vpc;
     double resultINCHES, result;
+    /* 
+     * Save the current gpar state and restore it at the end
+     */
+    savedgpar = gridStateElement(dd, GSS_GPAR);
     PROTECT(widthPreFn = findFun(install("width.pre"), R_gridEvalEnv));
     PROTECT(widthFn = findFun(install("width"), R_gridEvalEnv));
     PROTECT(widthPostFn = findFun(install("width.post"), R_gridEvalEnv));
-    PROTECT(getGParFn = findFun(install("get.gpar"), R_gridEvalEnv));
     /* Call width.pre(grob) 
      */
     PROTECT(R_fcall1 = lang2(widthPreFn, grob));
@@ -357,21 +359,14 @@ double evaluateGrobWidthUnit(SEXP grob, char* vpfontfamily, int vpfont,
      */
     PROTECT(R_fcall2 = lang2(widthFn, grob));
     PROTECT(width = eval(R_fcall2, R_gridEvalEnv));
-    /* Call get.gpar() to get the current fontsize and lineheight settings
+    /*
+     * Get the new gpar settings of relevance
      */
-    PROTECT(gparname = allocVector(STRSXP, 1));
-    SET_STRING_ELT(gparname, 0, mkChar("fontfamily"));
-    PROTECT(R_getgparcall = lang2(getGParFn, gparname));
-    PROTECT(fontfamily = eval(R_getgparcall, R_gridEvalEnv));
-    SET_STRING_ELT(gparname, 0, mkChar("font"));
-    R_getgparcall = lang2(getGParFn, gparname);
-    PROTECT(font = eval(R_getgparcall, R_gridEvalEnv));
-    SET_STRING_ELT(gparname, 0, mkChar("fontsize"));
-    R_getgparcall = lang2(getGParFn, gparname);
-    PROTECT(fontsize = eval(R_getgparcall, R_gridEvalEnv));
-    SET_STRING_ELT(gparname, 0, mkChar("lineheight"));
-    R_getgparcall = lang2(getGParFn, gparname);
-    PROTECT(lineheight = eval(R_getgparcall, R_gridEvalEnv));
+    newgpar = gridStateElement(dd, GSS_GPAR);
+    fontfamily = gpFontFamilySXP(newgpar);
+    font = gpFontSXP(newgpar);
+    fontsize = gpFontSizeSXP(newgpar);
+    lineheight = gpLineHeightSXP(newgpar);
     /* Transform the width
      * NOTE:  the width.pre function should NOT have done any 
      * viewport pushing so the viewport context and sizeCM 
@@ -421,7 +416,11 @@ double evaluateGrobWidthUnit(SEXP grob, char* vpfontfamily, int vpfont,
      */
     PROTECT(R_fcall3 = lang2(widthPostFn, grob));
     eval(R_fcall3, R_gridEvalEnv);
-    UNPROTECT(14);
+    /* 
+     * Restore the saved gpar state 
+     */
+    setGridStateElement(dd, GSS_GPAR, savedgpar);
+    UNPROTECT(7);
     /* Return the transformed width
      */
     return result;
@@ -439,14 +438,17 @@ double evaluateGrobHeightUnit(SEXP grob, char *vpfontfamily, int vpfont,
      * Ditto in three eval()s below.
      */
     SEXP heightPreFn, heightFn, heightPostFn, R_fcall1, R_fcall2, R_fcall3;
-    SEXP getGParFn, R_getgparcall, gparname;
+    SEXP savedgpar, newgpar;
     SEXP height, fontfamily, font, fontsize, lineheight;
     LViewportContext vpc;
     double resultINCHES, result;
+    /* 
+     * Save the current gpar state and restore it at the end
+     */
+    savedgpar = gridStateElement(dd, GSS_GPAR);
     PROTECT(heightPreFn = findFun(install("height.pre"), R_gridEvalEnv));
     PROTECT(heightFn = findFun(install("height"), R_gridEvalEnv));
     PROTECT(heightPostFn = findFun(install("height.post"), R_gridEvalEnv));
-    PROTECT(getGParFn = findFun(install("get.gpar"), R_gridEvalEnv));
     /* Call height.pre(grob) 
      */
     PROTECT(R_fcall1 = lang2(heightPreFn, grob));
@@ -456,21 +458,14 @@ double evaluateGrobHeightUnit(SEXP grob, char *vpfontfamily, int vpfont,
      */
     PROTECT(R_fcall2 = lang2(heightFn, grob));
     PROTECT(height = eval(R_fcall2, R_gridEvalEnv));
-    /* Call get.gpar() to get the current fontsize and lineheight settings
+    /*
+     * Get the new gpar settings of relevance
      */
-    PROTECT(gparname = allocVector(STRSXP, 1));
-    SET_STRING_ELT(gparname, 0, mkChar("fontfamily"));
-    PROTECT(R_getgparcall = lang2(getGParFn, gparname));
-    PROTECT(fontfamily = eval(R_getgparcall, R_gridEvalEnv));
-    SET_STRING_ELT(gparname, 0, mkChar("font"));
-    R_getgparcall = lang2(getGParFn, gparname);
-    PROTECT(font = eval(R_getgparcall, R_gridEvalEnv));
-    SET_STRING_ELT(gparname, 0, mkChar("fontsize"));
-    R_getgparcall = lang2(getGParFn, gparname);
-    PROTECT(fontsize = eval(R_getgparcall, R_gridEvalEnv));
-    SET_STRING_ELT(gparname, 0, mkChar("lineheight"));
-    R_getgparcall = lang2(getGParFn, gparname);
-    PROTECT(lineheight = eval(R_getgparcall, R_gridEvalEnv));
+    newgpar = gridStateElement(dd, GSS_GPAR);
+    fontfamily = gpFontFamilySXP(newgpar);
+    font = gpFontSXP(newgpar);
+    fontsize = gpFontSizeSXP(newgpar);
+    lineheight = gpLineHeightSXP(newgpar);
     /* Transform the height
      * NOTE:  the height.pre function should NOT have done any 
      * viewport pushing so the viewport context and sizeCM 
@@ -500,7 +495,11 @@ double evaluateGrobHeightUnit(SEXP grob, char *vpfontfamily, int vpfont,
      */
     PROTECT(R_fcall3 = lang2(heightPostFn, grob));
     eval(R_fcall3, R_gridEvalEnv);
-    UNPROTECT(14);
+    /* 
+     * Restore the saved gpar state 
+     */
+    setGridStateElement(dd, GSS_GPAR, savedgpar);
+    UNPROTECT(7);
     /* Return the transformed height
      */
     return result;

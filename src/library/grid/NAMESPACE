@@ -1,7 +1,8 @@
 ## useDynLib("grid") # done in .onLoad
 
 export("absolute.size", "convertNative", "current.viewport",
-       "dataViewport", "gpar", "grid.arrows", "grid.circle",
+       "dataViewport", "down.viewport",
+       "gpar", "grid.arrows", "grid.circle",
        "grid.collection", "grid.convert", "grid.convertHeight",
        "grid.convertWidth", "grid.convertX", "grid.convertY",
        "grid.copy", "grid.display.list", "grid.draw", "grid.edit",
@@ -12,8 +13,10 @@ export("absolute.size", "convertNative", "current.viewport",
        "grid.pretty", "grid.rect", "grid.segments", "grid.set",
        "grid.show.layout", "grid.show.viewport", "grid.text",
        "grid.xaxis", "grid.yaxis", "height.details", "is.unit",
-       "plotViewport", "pop.viewport", "push.viewport", "unit",
+       "plotViewport", "pop.viewport", "push.viewport", 
+       "seek.viewport", "unit",
        "unit.c", "unit.length", "unit.pmax", "unit.pmin", "unit.rep",
+       "up.viewport",
        "viewport", "width.details")
 
 ## Documented as internal but in Paul's first attempt at a sensible

@@ -43,20 +43,23 @@ void getDeviceSize(GEDevDesc *dd, double *devWidthCM, double *devHeightCM)
 }
 
 Rboolean deviceChanged(double devWidthCM, double devHeightCM, 
-		       GEDevDesc* dd)
+		       SEXP currentvp)
 {
     Rboolean result = FALSE;
-    SEXP devsize;
-    PROTECT(devsize = gridStateElement(dd, GSS_DEVSIZE));
-    if (fabs(REAL(devsize)[0] - devWidthCM) > DBL_EPSILON) {
+    SEXP pvpDevWidthCM, pvpDevHeightCM;
+    PROTECT(pvpDevWidthCM = VECTOR_ELT(currentvp, PVP_DEVWIDTHCM));
+    PROTECT(pvpDevHeightCM = VECTOR_ELT(currentvp, PVP_DEVHEIGHTCM));
+    if (fabs(REAL(pvpDevWidthCM)[0] - devWidthCM) > DBL_EPSILON) {
 	result = TRUE;
-	REAL(devsize)[0] = devWidthCM;
+	REAL(pvpDevWidthCM)[0] = devWidthCM;
+	SET_VECTOR_ELT(currentvp, PVP_DEVWIDTHCM, pvpDevWidthCM);
     }
-    if (fabs(REAL(devsize)[1] - devHeightCM) > DBL_EPSILON) {
+    if (fabs(REAL(pvpDevHeightCM)[0] - devHeightCM) > DBL_EPSILON) {
 	result = TRUE;
-	REAL(devsize)[1] = devHeightCM;
+	REAL(pvpDevHeightCM)[0] = devHeightCM;
+	SET_VECTOR_ELT(currentvp, PVP_DEVHEIGHTCM, pvpDevHeightCM);
     }
-    UNPROTECT(1);
+    UNPROTECT(2);
     return result;
 }
 
@@ -172,21 +175,44 @@ SEXP L_currentViewport()
     return gridStateElement(dd, GSS_VP);
 }
 
-SEXP doSetViewport(SEXP vp, SEXP hasParent, GEDevDesc *dd)
+SEXP doSetViewport(SEXP vp, 
+		   /* 
+		    * Are we setting the top-level viewport?
+		    */
+		   Rboolean topLevelVP,
+		   /* 
+		    * Are we pushing a new viewport?
+		    * (or just revisiting an already-pushed viewport?)
+		    */
+		   Rboolean pushing,
+		   GEDevDesc *dd)
 {
     int i, j;
     double devWidthCM, devHeightCM;
     double xx1, yy1, xx2, yy2;
-    SEXP currentClip;
+    SEXP currentClip, widthCM, heightCM;
     /* Get the current device size 
      */
     getDeviceSize((dd), &devWidthCM, &devHeightCM);
-    if (hasParent != R_NilValue)
+    if (!topLevelVP && pushing) {
+	SEXP parent = gridStateElement(dd, GSS_VP);
 	/* Set the viewport's parent
 	 * Need to do this in here so that redrawing via R BASE display
 	 * list works 
 	 */
-	setListElement(vp, "parent", gridStateElement(dd, GSS_VP));
+	SET_VECTOR_ELT(vp, PVP_PARENT, parent);
+	/*
+	 * Make this viewport a child of its parent
+	 * This involves assigning a value in the parent's
+	 * children slot (which is an environment), using
+	 * the viewport's name as the symbol name.
+	 * NOTE that we are deliberately using defineVar to
+	 * assign the vp SEXP itself, NOT a copy.
+	 */
+	defineVar(install(CHAR(STRING_ELT(VECTOR_ELT(vp, VP_NAME), 0))),
+		  vp, 
+		  VECTOR_ELT(parent, PVP_CHILDREN));
+    }
     /* Calculate the transformation for the viewport.
      * This will hopefully only involve updating the transformation
      * from the previous viewport.
@@ -196,13 +222,14 @@ SEXP doSetViewport(SEXP vp, SEXP hasParent, GEDevDesc *dd)
      * NEVER incremental for top-level viewport
      */
     calcViewportTransform(vp, viewportParent(vp), 
-			  hasParent != R_NilValue &&
-			  !deviceChanged(devWidthCM, devHeightCM, dd), dd);
+			  !topLevelVP &&
+			  !deviceChanged(devWidthCM, devHeightCM, 
+					 viewportParent(vp)), dd);
     /* If we are supposed to clip to this viewport ...
      * NOTE that we will only clip if there is no rotation
      */
     if (viewportClip(vp)) {
-	double rotationAngle = REAL(viewportCurrentRotation(vp))[0];
+	double rotationAngle = REAL(viewportRotation(vp))[0];
 	if (rotationAngle != 0)
 	    warning("Cannot clip to rotated viewport");
 	else {
@@ -210,14 +237,19 @@ SEXP doSetViewport(SEXP vp, SEXP hasParent, GEDevDesc *dd)
 	     */
 	    SEXP x1, y1, x2, y2;
 	    LViewportContext vpc;
-	    double vpWidthCM = REAL(viewportCurrentWidthCM(vp))[0];
-	    double vpHeightCM = REAL(viewportCurrentHeightCM(vp))[0];
+	    double vpWidthCM = REAL(viewportWidthCM(vp))[0];
+	    double vpHeightCM = REAL(viewportHeightCM(vp))[0];
 	    LTransform transform;
 	    for (i=0; i<3; i++)
 		for (j=0; j<3; j++)
 		    transform[i][j] = 
-			REAL(viewportCurrentTransform(vp))[i + 3*j];
-	    if (hasParent == R_NilValue) {
+			REAL(viewportTransform(vp))[i + 3*j];
+	    if (!topLevelVP) {
+		PROTECT(x1 = unit(0, L_NPC));
+		PROTECT(y1 = unit(0, L_NPC));
+		PROTECT(x2 = unit(1, L_NPC));
+		PROTECT(y2 = unit(1, L_NPC));
+	    } else {
 		/* Special case for top-level viewport.
 		 * Set clipping region outside device boundaries.
 		 * This means that we have set the clipping region to
@@ -229,11 +261,6 @@ SEXP doSetViewport(SEXP vp, SEXP hasParent, GEDevDesc *dd)
 		PROTECT(y1 = unit(-.5, L_NPC));
 		PROTECT(x2 = unit(1.5, L_NPC));
 		PROTECT(y2 = unit(1.5, L_NPC));
-	    } else {
-		PROTECT(x1 = unit(0, L_NPC));
-		PROTECT(y1 = unit(0, L_NPC));
-		PROTECT(x2 = unit(1, L_NPC));
-		PROTECT(y2 = unit(1, L_NPC));
 	    }
 	    getViewportContext(vp, &vpc);
 	    transformLocn(x1, y1, 0, vpc,  
@@ -272,7 +299,7 @@ SEXP doSetViewport(SEXP vp, SEXP hasParent, GEDevDesc *dd)
 	 * for the top-level viewport, else *BOOM*!
 	 */
 	SEXP parentClip;
-	PROTECT(parentClip = viewportCurClip(viewportParent(vp)));
+	PROTECT(parentClip = viewportClipRect(viewportParent(vp)));
 	xx1 = REAL(parentClip)[0];
 	yy1 = REAL(parentClip)[1];
 	xx2 = REAL(parentClip)[2];
@@ -284,8 +311,17 @@ SEXP doSetViewport(SEXP vp, SEXP hasParent, GEDevDesc *dd)
     REAL(currentClip)[1] = yy1;
     REAL(currentClip)[2] = xx2;
     REAL(currentClip)[3] = yy2;
-    setListElement(vp, "cur.clip", currentClip);
-    UNPROTECT(1);
+    SET_VECTOR_ELT(vp, PVP_CLIPRECT, currentClip);
+    /*
+     * Save the current device size
+     */
+    PROTECT(widthCM = allocVector(REALSXP, 1));
+    REAL(widthCM)[0] = devWidthCM;
+    SET_VECTOR_ELT(vp, PVP_DEVWIDTHCM, widthCM);
+    PROTECT(heightCM = allocVector(REALSXP, 1));
+    REAL(heightCM)[0] = devHeightCM;
+    SET_VECTOR_ELT(vp, PVP_DEVHEIGHTCM, heightCM);
+    UNPROTECT(3);
     return vp;
 }
 
@@ -294,7 +330,7 @@ SEXP L_setviewport(SEXP vp, SEXP hasParent)
     /* Get the current device 
      */
     GEDevDesc *dd = getDevice();
-    vp = doSetViewport(vp, hasParent, dd);
+    vp = doSetViewport(vp, !LOGICAL(hasParent)[0], TRUE, dd);
     /* Set the value of the current viewport for the current device
      * Need to do this in here so that redrawing via R BASE display
      * list works 
@@ -303,10 +339,107 @@ SEXP L_setviewport(SEXP vp, SEXP hasParent)
     return R_NilValue;
 }
 
-/* This is similar to L_setviewport, except that it will do 
- * NOTHING if the device has not changed size
+SEXP L_downviewport(SEXP vp) 
+{
+    /* Get the current device 
+     */
+    GEDevDesc *dd = getDevice();
+    vp = doSetViewport(vp, TRUE, FALSE, dd);
+    /* Set the value of the current viewport for the current device
+     * Need to do this in here so that redrawing via R BASE display
+     * list works 
+     */
+    setGridStateElement(dd, GSS_VP, vp);
+    return R_NilValue;    
+}
+
+/* This is similar to L_setviewport, except that it will NOT 
+ * recalculate the viewport transform if the device has not changed size
  */
 SEXP L_unsetviewport(SEXP last)
+{
+    double xx1, yy1, xx2, yy2;
+    SEXP parentClip;
+    SEXP newvp;
+    /* Get the current device 
+     */
+    GEDevDesc *dd = getDevice();
+    /* Get the value of the current viewport for the current device
+     * Need to do this in here so that redrawing via R BASE display
+     * list works 
+     */    
+    SEXP gvp = gridStateElement(dd, GSS_VP);
+    /* NOTE that the R code has already checked that .grid.viewport$parent
+     * is non-NULL
+     */
+    PROTECT(newvp = getListElement(gvp, "parent"));
+    /* 
+     * Remove the child (gvp) from the parent's (newvp) "list" of
+     * children
+     */
+    /* 
+     * This has to be done via a call to R-level ...
+     *   remove(gvp$name, envir=newvp$children, inherits=FALSE)
+     * ... because RemoveVariable in envir.c is not exported (why not?)
+     *
+     * I tried to model this on the example in the section 
+     * "System and foreign language interfaces ... Evaluating R expressions"
+     * in the "Writing R Extensions" manual, but the compiler didn't
+     * like CAR(t) as an lvalue.
+     */
+    {
+	SEXP fcall, false, t;
+	PROTECT(false = allocVector(LGLSXP, 1));
+	LOGICAL(false)[0] = FALSE;
+	PROTECT(fcall = lang4(install("remove"), 
+			      VECTOR_ELT(gvp, VP_NAME),
+			      VECTOR_ELT(newvp, PVP_CHILDREN),
+			      false));
+	t = fcall;
+	t = CDR(CDR(t));
+	SET_TAG(t, install("envir")); 
+	t = CDR(t);
+	SET_TAG(t, install("inherits")); 
+	eval(fcall, R_gridEvalEnv); 
+	UNPROTECT(2);
+    }
+    if (LOGICAL(last)[0]) {
+	double devWidthCM, devHeightCM;
+	/* Get the current device size 
+	 */
+	getDeviceSize(dd, &devWidthCM, &devHeightCM);
+	if (deviceChanged(devWidthCM, devHeightCM, newvp))
+	    calcViewportTransform(newvp, viewportParent(newvp), 1, dd);
+    }
+    /* Set the clipping region to the parent's cur.clip
+     */
+    parentClip = viewportClipRect(newvp);
+    xx1 = REAL(parentClip)[0];
+    yy1 = REAL(parentClip)[1];
+    xx2 = REAL(parentClip)[2];
+    yy2 = REAL(parentClip)[3];
+    GESetClip(xx1, yy1, xx2, yy2, dd);
+	    /* This is a VERY short term fix to avoid mucking
+	     * with the core graphics during feature freeze
+	     * It should be removed post R 1.4 release
+	     */
+	    dd->dev->clipLeft = fmin2(xx1, xx2);
+	    dd->dev->clipRight = fmax2(xx1, xx2);
+	    dd->dev->clipTop = fmax2(yy1, yy2);
+	    dd->dev->clipBottom = fmin2(yy1, yy2); 
+    /* Set the value of the current viewport for the current device
+     * Need to do this in here so that redrawing via R BASE display
+     * list works 
+     */
+    setGridStateElement(dd, GSS_VP, newvp);
+    UNPROTECT(1);
+    return R_NilValue;
+}
+
+/* This is similar to L_unsetviewport, except that it will NOT 
+ * modify parent-child relations 
+ */
+SEXP L_upviewport(SEXP last)
 {
     double xx1, yy1, xx2, yy2;
     SEXP parentClip;
@@ -328,12 +461,12 @@ SEXP L_unsetviewport(SEXP last)
 	/* Get the current device size 
 	 */
 	getDeviceSize(dd, &devWidthCM, &devHeightCM);
-	if (deviceChanged(devWidthCM, devHeightCM, dd))
+	if (deviceChanged(devWidthCM, devHeightCM, newvp))
 	    calcViewportTransform(newvp, viewportParent(newvp), 1, dd);
     }
     /* Set the clipping region to the parent's cur.clip
      */
-    parentClip = viewportCurClip(newvp);
+    parentClip = viewportClipRect(newvp);
     xx1 = REAL(parentClip)[0];
     yy1 = REAL(parentClip)[1];
     xx2 = REAL(parentClip)[2];
@@ -485,7 +618,7 @@ void getViewportTransform(SEXP currentvp,
     int i, j;
     double devWidthCM, devHeightCM;
     getDeviceSize((dd), &devWidthCM, &devHeightCM) ;
-    if (deviceChanged(devWidthCM, devHeightCM, dd)) {
+    if (deviceChanged(devWidthCM, devHeightCM, currentvp)) {
 	/* IF the device has changed, recalculate the viewport transform
 	 */
 	calcViewportTransform(currentvp, viewportParent(currentvp), 1, dd); 
@@ -493,10 +626,10 @@ void getViewportTransform(SEXP currentvp,
     for (i=0; i<3; i++)
 	for (j=0; j<3; j++)
 	    transform[i][j] = 
-		REAL(viewportCurrentTransform(currentvp))[i + 3*j];
-    *rotationAngle = REAL(viewportCurrentRotation(currentvp))[0];
-    *vpWidthCM = REAL(viewportCurrentWidthCM(currentvp))[0];
-    *vpHeightCM = REAL(viewportCurrentHeightCM(currentvp))[0];
+		REAL(viewportTransform(currentvp))[i + 3*j];
+    *rotationAngle = REAL(viewportRotation(currentvp))[0];
+    *vpWidthCM = REAL(viewportWidthCM(currentvp))[0];
+    *vpHeightCM = REAL(viewportHeightCM(currentvp))[0];
 }
 
 

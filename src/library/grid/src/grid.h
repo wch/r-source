@@ -47,6 +47,42 @@
 #define GSS_GRIDDEVICE 9
 #define GSS_PREVLOC 10
 
+/*
+ * Structure of a viewport
+ */
+#define VP_X 0
+#define VP_Y 1
+#define VP_WIDTH 2
+#define VP_HEIGHT 3
+#define VP_JUST 4
+#define VP_GP 5
+#define VP_CLIP 6
+#define VP_XSCALE 7
+#define VP_YSCALE 8
+#define VP_ANGLE 9
+#define VP_LAYOUT 10
+#define VP_LPOSROW 11
+#define VP_LPOSCOL 12
+#define VP_VALIDJUST 13
+#define VP_VALIDLPOSROW 14
+#define VP_VALIDLPOSCOL 15
+#define VP_NAME 16
+/* 
+ * Additional structure of a pushedvp
+ */
+#define PVP_GPAR 17
+#define PVP_TRANS 18
+#define PVP_WIDTHS 19
+#define PVP_HEIGHTS 20
+#define PVP_WIDTHCM 21
+#define PVP_HEIGHTCM 22
+#define PVP_ROTATION 23
+#define PVP_CLIPRECT 24
+#define PVP_PARENT 25
+#define PVP_CHILDREN 26
+#define PVP_DEVWIDTHCM 27
+#define PVP_DEVHEIGHTCM 28
+
 #define GP_FILL 0
 #define GP_COL 1
 #define GP_GAMMA 2
@@ -179,7 +215,9 @@ SEXP L_killGrid();
 SEXP L_gridDirty();
 SEXP L_currentViewport(); 
 SEXP L_setviewport(SEXP vp, SEXP hasParent);
+SEXP L_downviewport(SEXP vp);
 SEXP L_unsetviewport(SEXP last);
+SEXP L_upviewport(SEXP last);
 SEXP L_getDisplayList(); 
 SEXP L_setDisplayList(SEXP dl); 
 SEXP L_setDLelt(SEXP value);
@@ -378,6 +416,14 @@ int gpFont(SEXP gp, int i);
 
 char* gpFontFamily(SEXP gp, int i);
 
+SEXP gpFontSXP(SEXP gp);
+
+SEXP gpFontFamilySXP(SEXP gp);
+
+SEXP gpFontSizeSXP(SEXP gp);
+
+SEXP gpLineHeightSXP(SEXP gp);
+
 void initGPar(GEDevDesc *dd);
 
 /* From viewport.c */
@@ -399,7 +445,7 @@ double viewportLineHeight(SEXP vp);
 
 Rboolean viewportClip(SEXP vp);
 
-SEXP viewportCurClip(SEXP vp);
+SEXP viewportClipRect(SEXP vp);
 
 double viewportXScaleMin(SEXP vp);
 
@@ -417,17 +463,25 @@ SEXP viewportLayout(SEXP vp);
 
 SEXP viewportParent(SEXP vp);
 
-SEXP viewportCurrentTransform(SEXP vp);
+SEXP viewportTransform(SEXP vp);
 
-SEXP viewportCurrentLayoutWidths(SEXP vp);
+SEXP viewportLayoutWidths(SEXP vp);
 
-SEXP viewportCurrentLayoutHeights(SEXP vp);
+SEXP viewportLayoutHeights(SEXP vp);
 
-SEXP viewportCurrentWidthCM(SEXP vp);
+SEXP viewportWidthCM(SEXP vp);
 
-SEXP viewportCurrentHeightCM(SEXP vp);
+SEXP viewportHeightCM(SEXP vp);
 
-SEXP viewportCurrentRotation(SEXP vp);
+SEXP viewportRotation(SEXP vp);
+
+SEXP viewportParent(SEXP vp);
+
+SEXP viewportChildren(SEXP vp);
+
+SEXP viewportDevWidthCM(SEXP vp);
+
+SEXP viewportDevHeightCM(SEXP vp);
 
 void fillViewportContextFromViewport(SEXP vp, LViewportContext *vpc);
 
@@ -460,7 +514,10 @@ void setGridStateElement(GEDevDesc *dd, int elementIndex, SEXP value);
 SEXP gridCallback(GEevent task, GEDevDesc *dd, SEXP data);
 
 /* From grid.c */
-SEXP doSetViewport(SEXP vp, SEXP hasParent, GEDevDesc *dd);
+SEXP doSetViewport(SEXP vp, 
+		   Rboolean topLevelVP,
+		   Rboolean pushing,
+		   GEDevDesc *dd);
 
 void getDeviceSize(GEDevDesc *dd, double *devWidthCM, double *devHeightCM); 
 

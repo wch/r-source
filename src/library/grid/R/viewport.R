@@ -1,7 +1,22 @@
+
+initvpAutoName <- function() {
+  index <- 0
+  function() {
+    index <<- index + 1
+    paste("GRIDVP", index, sep="")
+  }
+}
+
+vpAutoName <- initvpAutoName()
+
+# NOTE: The order of the elements in viewports and pushedvps are
+# VERY IMPORTANT because the C code accesses them using constant
+# indices (i.e., if you change the order here the world will end!
 valid.viewport <- function(x, y, width, height, just, 
                            gp, clip,
                            xscale, yscale, angle,
-                           layout, layout.pos.row, layout.pos.col) {
+                           layout, layout.pos.row, layout.pos.col,
+                           name) {
   if (unit.length(x) > 1 || unit.length(y) > 1 ||
       unit.length(width) > 1 || unit.length(height) > 1)
     stop("`x', `y', `width', and `height' must all be units of length 1")
@@ -18,52 +33,68 @@ valid.viewport <- function(x, y, width, height, just,
     layout.pos.row <- as.integer(rep(range(layout.pos.row), length.out=2))
   if (!is.null(layout.pos.col))
     layout.pos.col <- as.integer(rep(range(layout.pos.col), length.out=2))
+  # If name is NULL then we give it a default
+  # Otherwise it should be a valid R name
+  if (is.null(name))
+    name <- vpAutoName()
+  else
+    name <- make.names(name)
   # Put all the valid things first so that are found quicker
   vp <- list(x = x, y = y, width = width, height = height,
-             valid.just = valid.just(just),
-             layout = layout,
-             valid.pos.row = layout.pos.row,
-             valid.pos.col = layout.pos.col,
+             justification = just,
              gp = gp,
              clip = clip,
-             # A viewport may have a specification of fontsize
-             # and lineheight in the gpar, BUT it does not have to
-             # If it does not, then that means it will just use
-             # whatever is the "current" setting of fontsize
-             # and lineheight.
-             # "current" means at drawing time, which means when
-             # L_setviewport is called.
-             # We record here the "current" value so that we can
-             # reset the value when a child viewport is popped.
-             # Ditto font.
-             cur.fontfamily = NULL,
-             cur.font = NULL,
-             cur.fontsize = NULL,
-             cur.lineheight = NULL,
-             # When L_setviewport is called, we also record
-             # the transformation and layout for the viewport
-             # so that we don't have to recalculate it every
-             # time (until the device changes size)
-             cur.trans = NULL,
-             cur.widths = NULL,
-             cur.heights = NULL,
-             cur.width.cm = NULL,
-             cur.height.cm = NULL,
-             cur.rotation = NULL,
-             cur.clip = NULL,
              xscale = xscale,
              yscale = yscale,
              angle = angle,
-             parent = NULL,
-             justification = just,
+             layout = layout,
              layout.pos.row = layout.pos.row,
-             layout.pos.col = layout.pos.col)
+             layout.pos.col = layout.pos.col,
+             valid.just = valid.just(just),
+             valid.pos.row = layout.pos.row,
+             valid.pos.col = layout.pos.col,
+             name=name)
   class(vp) <- "viewport"
   vp
 }
 
+# When a viewport is pushed, an internal copy is stored along
+# with plenty of additional information relevant to the state
+# at the time of being pushed (this is all used to return to this
+# viewport without having to repush it)
+pushedvp <- function(vp) {
+  pvp <- c(vp, list(gpar = NULL,
+                    trans = NULL,
+                    widths = NULL,
+                    heights = NULL,
+                    width.cm = NULL,
+                    height.cm = NULL,
+                    rotation = NULL,
+                    cliprect = NULL,
+                    parent = NULL,
+                    # Children of this pushedvp will be stored
+                    # in an environment
+                    children = new.env(hash=TRUE, parent=NULL),
+                    # Initial value of 0 means that the viewport will
+                    # be pushed "properly" the first time, calculating
+                    # transformations, etc ...
+                    devwidthcm = 0,
+                    devheightcm = 0))
+  class(pvp) <- c("pushedvp", class(vp))
+  pvp
+}
+
+vpFromPushedvp <- function(pvp) {
+  pvp[c("x", "y", "width", "height",
+        "justification", "gp", "clip",
+        "xscale", "yscale", "angle",
+        "layout", "layout.pos.row", "layout.pos.col",
+        "valid.just", "valid.pos.row", "valid.pos.col",
+        "name")]
+}
+
 print.viewport <- function(x, ...) {
-  print(class(x))
+  cat(paste("viewport[", x$name, "]\n", sep=""))
 }
 
 width.details.viewport <- function(x) {
@@ -83,7 +114,7 @@ viewport.layout <- function(vp) {
 }
 
 viewport.transform <- function(vp) {
-  vp$cur.trans
+  .Deprecated("current.transform")
 }
 
 ####################
@@ -105,7 +136,10 @@ viewport <- function(x = unit(0.5, "npc"),
                      layout = NULL,
                      # Position of this viewport in parent's layout
                      layout.pos.row = NULL,
-                     layout.pos.col = NULL) {
+                     layout.pos.col = NULL,
+                     # This is down here to avoid breaking
+                     # existing code
+                     name=NULL) {
   if (!is.unit(x))
     x <- unit(x, default.units)
   if (!is.unit(y))
@@ -116,7 +150,7 @@ viewport <- function(x = unit(0.5, "npc"),
     height <- unit(height, default.units)
   valid.viewport(x, y, width, height, just, 
                  gp, clip, xscale, yscale, angle,
-                 layout, layout.pos.row, layout.pos.col)
+                 layout, layout.pos.row, layout.pos.col, name)
 }
 
 is.viewport <- function(vp) {

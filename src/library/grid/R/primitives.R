@@ -94,10 +94,6 @@ draw.details.arrows <- function(x, x.wrapped, recording=TRUE) {
 #    cl <- class(list.struct)
     # This could be done via method dispatch, but that really
     # seemed like overkill
-    # OTOH, this is NOT user-extensible
-    # AND the code for, e.g., "lines" is not located with
-    # the other grid.lines code so changes there are unlikely
-    # to propagate to here (e.g., add an id arg to grid.lines?
     if (inherits(list.struct, "line.to")) {
       x1 <- NULL
       x2 <- list.struct$x
@@ -108,21 +104,18 @@ draw.details.arrows <- function(x, x.wrapped, recording=TRUE) {
       ynm1 <- NULL
       yn <- list.struct$y
     } else if (inherits(list.struct, "lines")) {
-      # x or y may be recycled
-      n <- max(unit.length(list.struct$x),
-               unit.length(list.struct$y))
       xx <- unit.rep(list.struct$x, length=2)
       x1 <- xx[1]
       x2 <- xx[2]
-      xx <- unit.rep(list.struct$x, length=n)
-      xnm1 <- xx[n - 1]
-      xn <- xx[n]
+      n <- unit.length(list.struct$x)
+      xnm1 <- list.struct$x[n - 1]
+      xn <- list.struct$x[n]
       yy <- unit.rep(list.struct$y, length=2)
       y1 <- yy[1]
       y2 <- yy[2]
-      yy <- unit.rep(list.struct$y, length=n)
-      ynm1 <- yy[n - 1]
-      yn <- yy[n]
+      n <- unit.length(list.struct$y)
+      ynm1 <- list.struct$y[n - 1]
+      yn <- list.struct$y[n]
     } else { # inherits(list.struct, "segments")
       x1 <- list.struct$x0
       x2 <- list.struct$x1
@@ -134,20 +127,18 @@ draw.details.arrows <- function(x, x.wrapped, recording=TRUE) {
       yn <- list.struct$y1
     }
   } else {
-    # x or y may be recycled
-    n <- max(unit.length(x$x), unit.length(x$y))
     xx <- unit.rep(x$x, length=2)
     x1 <- xx[1]
     x2 <- xx[2]
-    xx <- unit.rep(x$x, length=n)
-    xnm1 <- xx[n - 1]
-    xn <- xx[n]
+    n <- unit.length(x$x)
+    xnm1 <- x$x[n - 1]
+    xn <- x$x[n]
     yy <- unit.rep(x$y, length=2)
     y1 <- yy[1]
     y2 <- yy[2]
-    yy <- unit.rep(x$y, length=n)
-    ynm1 <- yy[n - 1]
-    yn <- yy[n]
+    n <- unit.length(x$y)
+    ynm1 <- x$y[n - 1]
+    yn <- x$y[n]
     grid.Call.graphics("L_lines", x$x, x$y)
   }
   grid.Call.graphics("L_arrows", x1, x2, xnm1, xn, y1, y2, ynm1, yn,
