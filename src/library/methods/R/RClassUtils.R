@@ -146,17 +146,22 @@ completeClassDefinition <-
         virtual <- getVirtual(ClassDef)
         validity <- getValidity(ClassDef)
         access <- getAccess(ClassDef)
+        subClasses <- getSubclasses(ClassDef)
         if(is.na(virtual))
             ## compute it from the immediate extensions, but all the properties
             virtual <- testVirtual(properties, immediate, prototype)
         newEv <- newClassEnvironment(Class, properties,
                                      completeExtends(ClassDef),
                                      prototype,
-                                     getSubclasses(ClassDef),
+                                     subClasses,
                                      virtual,
                                      validity,
                                      access)
         environment(ClassDef) <- newEv
+        ## now process the subclasses to add extends information
+        subClassNames <- names(subClasses)
+        for(i in seq(along = subClasses))
+            completeSubClass(Class, subClassNames[[i]], subClasses[[i]])
     }
     else {
         ## create a class definition of an empty virtual class
@@ -166,6 +171,27 @@ completeClassDefinition <-
     }
     ClassDef
 }
+
+completeSubClass <- function(fromClass, subClass, extendsHow = NULL, byClass = NULL) {
+    if(!isClass(subClass))
+        return(FALSE)
+    classDef <- getClass(subClass)
+    extds <- getExtends(classDef)
+    if(is.null(elNamed(extds, fromClass))) {
+        if(is.null(byClass))
+            how <- extendsHow
+        else
+            how <- list(by = byClass)
+        elNamed(extds, fromClass) <- how
+        setExtends(classDef, extds)
+    }
+    ## now add extensions to all this class's subclasses
+    subsubs <- names(getSubclasses(classDef))
+    for(what in subsubs)
+        completeSubClass(fromClass, what, byClass = subClass)
+    return(TRUE)
+}
+    
 
 getFromClassDef <-
   ## Extracts one of the intrinsically defined class definition properties
@@ -269,7 +295,13 @@ superClassDepth <-
     super <- list(label=immediate, depth = rep(1, length(immediate)))
     for(what in immediate) {
         if(isClass(what)) {
-            more <- Recall(getClassDef(what), soFar)
+            superClass <- getClassDef(what)
+            if(is.null(superClass)) {
+                warning("class \"", getClassName(ClassDef), "\" extends an undefined class,\"",
+                        what, "\"")
+                next
+            }
+            more <- Recall(superClass, soFar)
             whatMore <- more$label
             if(!all(is.na(match(whatMore, soFar)))) {
                 ## elminate classes reachable by more than one path
@@ -486,6 +518,49 @@ reconcilePropertiesAndPrototype <-
                   paste(superClasses[undefined], collapse = ", "), ")")
       }
       undefined <- any(undefined) ## used as  a test later.
+      # a .Data specified in this class silently overrides all inherited data parts
+      dataPartClass <- elNamed(properties, ".Data")
+      if((!is.null(dataPartClass) || length(superClasses) > 0)
+         && is.na(match("VIRTUAL", superClasses))) {
+          ## Look for a data part in the super classes
+          for(cl in superClasses)
+              if(extends(cl, "vector")) {
+                  if(is.null(dataPartClass))
+                      dataPartClass <- cl
+                  else if(!identical(dataPartClass, cl))
+                      warning("More than one possible class for the data part:  using \"",
+                              dataPartClass, "\" rather than \"",
+                              cl, "\"")
+              }
+          if(length(dataPartClass) > 0) {
+              if(is.na(match(".Data", slots))) {
+                  properties <- c(list(".Data"= dataPartClass), properties)
+                  slots <- names(properties)
+              }
+              else if(!extends(elNamed(properties, ".Data"), dataPartClass))
+                  stop(paste("Conflicting definition of data part: .Data = \"",
+                             elNamed(properties, ".Data"),"\", super class implies \"",
+                             dataPartClass, "\"", sep=""))
+              if(is.null(prototype)) {
+                  if(isVirtualClass(dataPartClass))
+                      ## the equivalent of new("vector")
+                      prototype <- newBasic("logical")
+                  else
+                      prototype <- new(dataPartClass)
+              }
+              else if(!is(prototype, dataPartClass))
+                  stop(paste("Class of supplied prototype (\"",
+                             class(prototype), "\") conflicts with the class of ",
+                             " the data part (\"", dataPartClass, "\")",sep=""))
+          }
+          else if(any(!is.na(match(superClasses, c("vector", "structure")))))
+              prototype <- newBasic("logical")
+          if(is.null(prototype)) { ## non-vector (may extend NULL)
+              prototype <- StandardPrototype
+          }
+          if(!is.na(match(".Data", allSlots)))
+              allSlots <- allSlots[allSlots != ".Data"]
+      }
       ## check for conflicts in the slot names
       if(any(duplicated(allSlots))) {
           warning("The inherited slots contain duplicates (",
@@ -500,37 +575,18 @@ reconcilePropertiesAndPrototype <-
                   ")")
           allSlots <- unique(slots, allSlots)
       }
-      ## A rule is needed to decide whether the environment should be hashed.
-      ## decide on a prototype, if one was not provided
-      if(is.null(prototype) && is.na(match("VIRTUAL", superClasses))) {
-          bWhich <- match(superClasses, .BasicClasses)
-          bWhich <- bWhich[!is.na(bWhich)]
-          basicSuperClasses <- .BasicClasses[bWhich]
-          if(length(basicSuperClasses) > 0) {
-              if(length(basicSuperClasses) > 1) {
-                  warning("Class \"",name,"\" extends more than one basic class (",
-                          paste(basicSuperClasses, collapse = ", "), "), using ",
-                          basicSuperClasses[1])
-                  basicSuperClasses <- basicSuperClasses[1]
-              }
-              prototype <- newBasic(basicSuperClasses)
+      if(is.null(dataPartClass)) {
+          if(is.list(prototype) && length(names(prototype)) > 0) {
+              ## the prototype as a named list is allowed, mostly for S-Plus compatibility
+              pnames <- names(prototype)
+              realP <- StandardPrototype
+              for(i in seq(along=pnames))
+                  slot(realP, pnames[[i]], FALSE) <- elNamed(prototype, pnames[i])
+              prototype <- realP
           }
-          else if(any(!is.na(match(superClasses, c("vector", "structure")))))
-              prototype <- newBasic("logical")
-          if(is.null(prototype)) { ## non-vector (may extend NULL)
+          if(is.null(prototype))
               prototype <- StandardPrototype
-          }
       }
-      else if(is.list(prototype) && length(names(prototype)) > 0) {
-          ## the prototype as a named list is allowed, mostly for S-Plus compatibility
-          pnames <- names(prototype)
-          realP <- StandardPrototype
-          for(i in seq(along=pnames))
-              slot(realP, pnames[[i]], FALSE) <- elNamed(prototype, pnames[i])
-          prototype <- realP
-      }
-      if(is.null(prototype))
-          prototype <- StandardPrototype
       ## pnames will be the names explicitly defined in the prototype
       pnames <- allNames(attributes(prototype))
       ## now set the slots not yet in the prototype object.
@@ -542,11 +598,11 @@ reconcilePropertiesAndPrototype <-
       what <- slots[what]
       for(i in seq(along=what)) {
           propName <- el(what, i)
-          if(is.null(attr(prototype, propName))) {
+          if(!identical(propName, ".Data") &&
+             is.null(attr(prototype, propName)))
               slot(prototype, propName, FALSE) <- tryNew(el(props, i))
-          }
       }
-      prototype
+      list(properties = properties, prototype = prototype)
   }
 
 tryNew <-
@@ -606,8 +662,15 @@ showClass <-
         n <- length(x)
         cat(file = con, "\n",propertiesAreCalled, ":\n", sep="")
         text <- format(c(names(x), as.character(x)), justify="right")
-        cat(file = con, paste(c("Name: ", text[seq(length=n)]), collapse=" "), "\n")
-        cat(file = con, paste(c("Class:", text[seq(n+1, length=n)]), collapse=" "), "\n")
+        if(identical(con, stdout())) {
+            text <- matrix(text, nrow =2, ncol = n, byrow = TRUE)
+            dimnames(text) <- list(c("Name:", "Class:"), rep("", n))
+            print(text, quote = FALSE)
+        }
+        else { ## not so nice if large no. of slots, but can be redirected
+            cat(file = con, paste(c("Name: ", text[seq(length=n)]), collapse=" "), "\n")
+            cat(file = con, paste(c("Class:", text[seq(n+1, length=n)]), collapse=" "), "\n")
+        }
     }
     else
       cat(file = con, "\nNo ", propertiesAreCalled, ", prototype of class \"",
@@ -910,7 +973,7 @@ completeExtends <-
         valueEl <- ext[i]               ## note: an extra level of list, to be unlisted later
         if(isClass(by))
         {
-            more <- Recall(getClass(by), c(soFar, what))
+            more <- completeExtends(getClass(by), c(soFar, what))
             whatMore <- names(more)
             for(j in seq(along=more)) {
                 cl <- el(whatMore, j)
@@ -1043,4 +1106,30 @@ validSlotNames <- function(names) {
         names
     else
         stop("\"class\" is a reserved slot name and cannot be redefined")
+}
+
+getDataPart <- function(object) {
+    if(is.na(match(".Data", slotNames(class(object)))))
+        stop(paste("class \"", class(object),
+                   "\" does not have a data part (a .Data slot) defined",
+                   sep=""))
+    ## following should be extended to allow matrix, etc.
+    ## by exempting some attributes from deletion
+    attributes(object) <- NULL
+    object
+}
+
+setDataPart <- function(object, check = TRUE, value) {
+    if(check) {
+        dataClass <- elNamed(getSlots(class(object)), ".Data")
+        if(is.null(dataClass))
+            stop(paste("class \"", class(object),
+                       "\" does not have a data part (a .Data slot) defined",
+                       sep=""))
+        value <- as(value, dataClass)
+    }
+    ## following should be extended to allow matrix, etc.
+    ## by retaining relevant attributes of value
+    attributes(value) <- attributes(object)
+    value
 }

@@ -50,7 +50,9 @@ setSClass <-
     subclasses <- makeExtends(subclasses)
     if(!is.null(prototype) || length(properties)>0) {
         ## make the prototype look like a "legal" element of the class
-        prototype <- reconcilePropertiesAndPrototype(name, properties, prototype, extends)
+        pp <- reconcilePropertiesAndPrototype(name, properties, prototype, extends)
+        properties <- pp$properties
+        prototype <- pp$prototype
     }
     ev <- newClassEnvironment(name, properties, extends, prototype, subclasses,
                               virtual, validity, access)
@@ -80,11 +82,22 @@ getClassDef <-
   ## known, such as the complete list of superclasses, use `getClass(Class)'.
   function(Class, where = -1)
 {
-    cName <- classMetaName(Class)
+    cname <- classMetaName(Class)
     if(identical(where, 0))
-        getFromClassMetaData(cName)
+        getFromClassMetaData(cname)
+    ## much messing around below because of two problems with get/exists in R:
+    ## 1. the inherits argument (TRUE by default, but FALSE & where = -1 don't mix
+    ## 2. no way to say "get or return NULL"
+    else if(identical(where, -1)) {
+        if(exists(cname))
+            get(cname)
+        else
+            NULL
+    }        
+    else if(exists(cname, where,inherits = FALSE))
+        get(cname, where)
     else
-        get(cName, where)
+        NULL
 }
 
 getClass <-
@@ -229,13 +242,22 @@ new <-
         supers <- args[!which]
         thisExtends <- names(getExtends(ClassDef))
         if(length(supers) > 0) {
+            dataPartClass <- elNamed(getSlots(ClassDef), ".Data")
             for(i in seq(along = supers)) {
                 obj <- el(supers, i)
                 Classi <- data.class(obj)
-                if(identical(Classi, Class))
+                if(!is.null(dataPartClass)) {
+                    ## try this as the data part
+                    if(is(obj, dataPartClass)) {
+                        value@.Data <- obj
+                        ## don't allow a second occurrence
+                        dataPartClass <- NULL
+                    }
+                }
+                else if(identical(Classi, Class))
                     value <- obj
                 else if(extends(Classi, Class))
-                    ## principally the identical case:
+                    ## typically, throw away extra slots.
                     value <- as(obj, Class)
                 else if(extends(Class, Classi))
                     as(value, Classi) <- obj

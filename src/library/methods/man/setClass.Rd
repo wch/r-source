@@ -214,37 +214,29 @@ stopifnot(identical(new("xNum")@x, xxx))
 ## Used to result in a recursive loop through as()
 ## (in S-Plus 6.0, new() doesn't work right with this class)
 
-##   the following example is commented out until the information stored
-##   the methods package for "numeric" and "integer" is made into
-##   extends metadata in the global environment (interacts with the make
-##   check problem noted below).
-## * ## setClass("maybeNumber")
-## * ## setIs("numeric", "maybeNumber")
-## * ## setIs("logical", "maybeNumber")
-## * ## setClass("withId", representation("maybeNumber", id = "character"))
-## * ## 
-## * ## ## TODO:  make the following example work:
-## * ## ## www <- new("withId", 1:10, id = "test 1")
-## * ## ## (Two bugs as of 2002/02/01:  loop in as(1:10, "maybeNumber"); needs
-## * ## ## resetClass("integer")
-## * ## 
-## * ## ttt <- rnorm(10)
-## * ## www <- new("withId", ttt, id = "test 1")
-## * ## 
-## * ## ## The following test should use identical(), but then the two
-## * ## ## expressions differ by having the object bit on and off resp.
-## * ## stopifnot(all(as(www, "maybeNumber") == ttt))
-## * ## 
-## * ## ## The following should not be needed.  But make check removes all files
-## * ## ## between example files, in a crude way that does not cause the class
-## * ## ## information to be reset.  There seems no way to detect this, so we
-## * ## ## have to remove classes ourselves
-## * ## 
-## * ## removeClass("withId")
-## * ## removeClass("maybeNumber")
-## * ## resetClass("integer")
-## * ## resetClass("numeric")
-## * ## resetClass("logical")
+setClass("maybeNumber")
+setIs("maybeNumber", "vector") # required to be a data part
+setIs("numeric", "maybeNumber")
+setIs("logical", "maybeNumber")
+setClass("withId", representation("maybeNumber", id = "character"))
+
+ttt <- 1:10 ## relevant that this is class integer, to test indirect extensions
+www <- new("withId", ttt, id = "test 1")
+
+## The following test should use identical(), but then the two
+## expressions differ by having the object bit on and off resp.
+stopifnot(all(as(www, "maybeNumber") == ttt))
+
+## The following should not be needed.  But make check removes all files
+## between example files, in a crude way that does not cause the class
+## information to be reset.  There seems no way to detect this, so we
+## have to remove classes ourselves
+
+removeClass("withId")
+removeClass("maybeNumber")
+resetClass("integer")
+resetClass("numeric")
+resetClass("logical")
 
 }
 
