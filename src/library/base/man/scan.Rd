@@ -99,8 +99,11 @@ scan(file = "", what = double(0), nmax = -1, n = -1, sep = "",
   The value of \code{what} can be a list of types, in which case
   \code{scan} returns a list of vectors with the types given by the
   types of the elements in \code{what}.  This provides a way of reading
-  columnar data.  If any of the type is \code{NULL}, the corresponding
+  columnar data.  If any of the types is \code{NULL}, the corresponding
   field is skipped (but a \code{NULL} component appears in the result).
+
+  The type of \code{what} or its components can be one of the five
+  atomic types or \code{NULL},
 
   Empty numeric fields are always regarded as missing values.
   Empty character fields are scanned as empty character vectors, unless

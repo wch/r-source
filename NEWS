@@ -125,6 +125,10 @@ NEW FEATURES
     o   stop() accepts multiple arguments (which are concatenated)
 	just as warning() does.
 
+    o   scan() now throws an error with incorrect logical input (which
+	was previously taken as FALSE).
+
+
 
 DEPRECATED & DEFUNCT
 
