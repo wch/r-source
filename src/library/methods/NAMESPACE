@@ -5,6 +5,7 @@ S3method(print, MethodsList)
 S3method(print, classRepresentation)
 
 
+export(.Last.lib)
 export(.BasicClasses)
 export(.BasicFunsList)
 export(.TraceWithMethods)

@@ -15,7 +15,7 @@ dget(file)
   \item{file}{either a character string naming a file or a
     connection. \code{""} indicates output to the console.}
   \item{control}{character vector indicating deparsing options.
-    See \code{\link{deparse}} for their description.}
+    See \code{\link{.deparseOpts}} for their description.}
 }
 \details{
   \code{dput} opens \code{file} and deparses the object \code{x} into

@@ -104,6 +104,7 @@
 .Last.lib <- function(libpath) {
     methods:::.onUnload(libpath)
 }
+.Last.lib <- function(libpath) .isMethodsDispatchOn(FALSE)
 
 .saveImage <- FALSE
 message("Saving namespace image ...")

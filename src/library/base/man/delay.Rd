@@ -5,6 +5,7 @@ delay(x, env=.GlobalEnv)
 }
 \alias{delay}
 \concept{promise}
+\concept{promises}
 \arguments{
   \item{x}{an expression.}
   \item{env}{an evaluation environment}

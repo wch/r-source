@@ -706,6 +706,7 @@ void R_SetVarLocValue(R_varloc_t, SEXP);
 #define SHOWATTRIBUTES 		4
 #define USESOURCE 		8
 #define WARNINCOMPLETE 		16
+#define DELAYPROMISES 		32
 /* common combinations of the above */
 #define SIMPLEDEPARSE		0
 #define FORSOURCING		31

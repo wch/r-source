@@ -71,7 +71,7 @@ rbind <- function(..., deparse.level=1) {
 
 .deparseOpts <- function(control) {
     opts <- pmatch(as.character(control), c("keepInteger", "quoteExpressions",
-                   "showAttributes", "useSource", "warnIncomplete", "all"))
+      "showAttributes", "useSource", "warnIncomplete", "all", "delayPromises"))
     if (any(is.na(opts))) stop(paste("deparse options ",
                                paste('"',control[is.na(opts)],'"', sep=""),
      			       collapse=" "), " not recognized", call. = FALSE)

@@ -114,9 +114,11 @@ NEW FEATURES
 	extents of the diamond more correctly.
 
     o	deparse(), dput() and dump() have a new 'control' argument to
-	control the level of detail when deparsing. dump() defaults to
-	the most detail, the others default to less.  See ?deparse
+	control the level of detail when deparsing.  dump() defaults to
+	the most detail, the others default to less.  See ?.deparseOpts
 	for the details.
+
+	They now evaluate promises by default: see ?dump for details.
 
     o	dir.create() now expands '~' in filenames.
 
@@ -124,7 +126,7 @@ NEW FEATURES
 	length of the file is known -- it uses 50 equals signs.
 
     o	dyn.load() and library.dynam() return an object describing the
-	DLL that was loaded. For packages with namespaces, the DLL
+	DLL that was loaded.  For packages with namespaces, the DLL
 	objects are stored in a list within the namespace.
 
     o	New function eapply() - apply for environments.	 The supplied

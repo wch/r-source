@@ -2,7 +2,7 @@
 \title{Text Representations of R Objects}
 \usage{
 dump(list, file = "dumpdata.R", append = FALSE, 
-     control = "all", envir = parent.frame())
+     control = "all", envir = parent.frame(), evaluate = TRUE)
 }
 \alias{dump}
 \description{
@@ -22,17 +22,17 @@ dump(list, file = "dumpdata.R", append = FALSE,
     \code{file}.}
     
   \item{control}{character vector indicating deparsing options.
-  See \code{\link{deparse}} for their description.}
+    See \code{\link{.deparseOpts}} for their description.}
 
   \item{envir}{the environment to search for objects.}
+
+  \item{evaluate}{logical.  Should promises be evaluated?}
 }
 \details{
-    
   At present \code{source}ing may not produce an identical copy of
   \code{dump}ed objects. A warning is issued if it is likely that
-  problems will arise, for example when dumping uncommon objects such
-  as \link[base:delay]{promises}, \link[base:environment]{environments}, 
-  external pointers, etc.
+  problems will arise, for example when dumping exotic objects such
+  as \link[environment]{environments} and external pointers.
 
   \code{dump} will also warn if fewer characters were written to a file
   than expected, which may indicate a full or corrupt file system.
@@ -51,8 +51,12 @@ dump(list, file = "dumpdata.R", append = FALSE,
   the saved source, use \code{control = c("keepInteger", "quoteExpressions", 
   "showAttributes", "warnIncomplete")}.  This will lose all
   formatting and comments, but may be useful in those cases where
-  the saved source is no longer correct.  
- 
+  the saved source is no longer correct.
+
+  Promises will normally only be encountered by users as a result of
+  lazy-loading (when the default \code{evaluate = TRUE} is essential)
+  and after the use of \code{\link{delay}}, when \code{evaluate = FALSE}
+  might be intended.
 }
 \note{
   The \code{envir} argument was added at version 1.7.0, and changed the

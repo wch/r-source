@@ -327,7 +327,7 @@ SEXP do_dump(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP file, names, o, objs, tval, source;
     int i, j, nobjs, res;
-    Rboolean wasopen, havewarned = FALSE;
+    Rboolean wasopen, havewarned = FALSE, evaluate;
     Rconnection con;
     int opts;
     char *obj_name;
@@ -347,6 +347,8 @@ SEXP do_dump(SEXP call, SEXP op, SEXP args, SEXP rho)
     opts = FORSOURCING;
     if (!isNull(CADDDR(args)))
     	opts = asInteger(CADDDR(args));
+    evaluate = asLogical(CAD4R(args));
+    if (!evaluate) opts |= DELAYPROMISES;
 
     PROTECT(o = objs = allocList(nobjs));
 
@@ -641,8 +643,24 @@ static void deparse2buff(SEXP s, LocalParseData *d)
 	print2buff(tpb, d);
 	break;
     case PROMSXP:
-        d->sourceable = FALSE;
-	deparse2buff(PREXPR(s), d);
+	if(d->opts & DELAYPROMISES) {
+	    print2buff("delay(", d);
+	    d->opts &= ~QUOTEEXPRESSIONS; /* don't want delay(quote()) */
+	    deparse2buff(PREXPR(s), d);
+	    d->opts = localOpts;
+	    if(PRENV(s) == R_GlobalEnv) { /* default env for delay */
+	    } else if (PRENV(s) == R_NilValue) {
+		print2buff(", NULL", d);
+	    } else {
+		d->sourceable = FALSE;
+		print2buff(", <environment>", d);
+	    }
+	    print2buff(")", d);
+	} else {
+	    PROTECT(s = eval(s, NULL)); /* eval uses env of promise */
+	    deparse2buff(s, d);
+	    UNPROTECT(1);
+	}
 	break;
     case CLOSXP:
         if (localOpts & SHOWATTRIBUTES) attr1(s, d);
