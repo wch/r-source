@@ -160,7 +160,23 @@ Date: Thu, 28 Dec 2000 17:54:47 +0100
 
 Directory:  incoming
 
+* PR# 809 *
+Subject: changing dimnames of a matrix with rownames/colnames causes
+From: David Meyer <David.Meyer@ci.tuwien.ac.at>
+Date: Wed, 10 Jan 2001 13:20:44 +0100
+* PR# 806 *
+Subject: configure error on alpha
+From: Richard Beare <Richard.Beare@cmis.CSIRO.AU>
+Date: Wed, 10 Jan 2001 16:52:58 +1100
 * PR# 805 *
 Subject:  Inconsistent behaviour in solve 
 From: J.C.Rougier@durham.ac.uk
 Date: Tue, 9 Jan 2001 17:25:55 GMT
+* PR# 808 *
+Subject: Time zone
+From: Herve Morin <morin@mat.ulaval.ca>
+Date: Wed, 10 Jan 2001 07:24:07 -0500
+* PR# 807 *
+Subject: par(par()) corrupts devices
+From: =?iso-8859-1?Q?=22Dr=2E_Jens_Oehlschl=E4gel=22?=
+Date: Wed, 10 Jan 2001 13:09:28 +0100
