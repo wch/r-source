@@ -103,7 +103,7 @@ OSErr  doRSaveAs(Boolean *haveCancel) {
     FILE 				*fp ;
     SInt16 				pathLen;
     Handle 				pathName=NULL;
-    char 				path[FILENAME_MAX], cur_path[FILENAME_MAX];
+    char 				path[MAC_FILE_SIZE], cur_path[MAC_FILE_SIZE];
 	OSErr               anErr = noErr;
     NavReplyRecord      reply;
     NavDialogOptions    dialogOptions;
@@ -354,7 +354,7 @@ OSErr DoSelectDirectory( void )
 	NavEventUPP			eventUPP = nil; 
 	SInt16 				pathLen;
     Handle 				pathName=NULL;
-    char 				path[FILENAME_MAX];
+    char 				path[MAC_FILE_SIZE];
 	OSErr               anErr = noErr;
 	theErr = NavGetDefaultDialogOptions( &dialogOptions );
 	

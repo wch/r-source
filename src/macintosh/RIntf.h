@@ -49,6 +49,9 @@
 /*	make sure TARGET_API_MAC_CARBON is #defined
 */
 
+#include "Defn.h"
+
+#define MAC_FILE_SIZE 255
 
 #ifndef TARGET_API_MAC_CARBON
 #define TARGET_API_MAC_CARBON	0

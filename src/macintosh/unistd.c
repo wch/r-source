@@ -117,7 +117,6 @@ char *getcwd(char * buf, int size)
     SInt32 			dirID;
     Handle			fullPath = NULL;
 	short			fullPathLength;
-	
 	error = -1;
 
 	if (size > 0 && buf) {
@@ -135,7 +134,6 @@ char *getcwd(char * buf, int size)
     strncpy(buf,*fullPath,min(size,fullPathLength));
 	
 	buf[min(size,fullPathLength)] = '\0';
-	
     HUnlock((Handle) fullPath);
 
 

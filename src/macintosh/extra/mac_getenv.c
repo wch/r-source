@@ -100,6 +100,7 @@
 #endif
 #include "Defn.h"
 #include "Fileio.h"
+#include "Rintf.h"
 
 extern char*	R_Home;	
 
@@ -174,7 +175,7 @@ FILE * FSp_fopen(ConstFSSpecPtr spec, const char * open_mode){
     FILE *fp;
     SInt16 				pathLen;
     Handle 				pathName=NULL;
-    char				filetoopen[FILENAME_MAX];
+    char				filetoopen[MAC_FILE_SIZE];
     
     FSpGetFullPath(spec, &pathLen, &pathName);
     HLock((Handle) pathName);

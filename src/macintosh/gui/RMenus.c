@@ -777,8 +777,8 @@ OSErr DoSource(void)
 OSErr SourceFile(FSSpec  	*myfss)
 {
  	OSErr		err = noErr;
-    char 		sourcefile[FILENAME_MAX];
-    char 		cmd[FILENAME_MAX+25];
+    char 		sourcefile[MAC_FILE_SIZE];
+    char 		cmd[MAC_FILE_SIZE+25];
     SInt16		pathLen;
     Handle		pathName=NULL;
 

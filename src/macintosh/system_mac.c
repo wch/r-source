@@ -299,15 +299,12 @@ FILE *R_OpenLibraryFile(char *file)
     FILE *fp;
     sprintf(buf, "%s:library:base:R:%s", R_Home, file);
 	fp = R_fopen(buf, "r");
-
     return fp;
 }
 
 
-#define MAC_FILE_SIZE FILENAME_MAX
-
 static char R_HomeLocation[MAC_FILE_SIZE];
-static char R_DefHistFile[FILENAME_MAX];
+static char R_DefHistFile[MAC_FILE_SIZE];
 
 void GetHomeLocation(void);
 
@@ -798,7 +795,6 @@ SEXP do_system(SEXP call, SEXP op, SEXP args, SEXP rho)
 	Jago April 2001, Stefano M. Iacus
 */
    
-#define MAC_SIZE FILENAME_MAX
 #define MAC_READ_OR_WRITE	0x0 /* fake a UNIX mode */
    
 
@@ -806,7 +802,7 @@ SEXP do_system(SEXP call, SEXP op, SEXP args, SEXP rho)
 char *Rmac_tmpnam(char * prefix)
 {
     char *tmp, tm[PATH_MAX], tmp1[PATH_MAX], *res;
-    char curFolder[MAC_SIZE], newFolder[MAC_SIZE];
+    char curFolder[MAC_FILE_SIZE], newFolder[MAC_FILE_SIZE];
     unsigned int n, done = 0, pid;
     short 	foundVRefNum,plen;
     long	foundDirID;

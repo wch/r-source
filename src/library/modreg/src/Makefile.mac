@@ -51,7 +51,7 @@ SrcFiles        =  	bsplvd.c ¶
 					sinerp.c ¶
 					sslvrg.c ¶
 					stxwx.c ¶
-					xxxsbart_com.c ¶
+# 					xxxsbart_com.c ¶
 					::::main:xxxpr.c
 
 ### Object Files ###
@@ -70,8 +70,8 @@ ObjFiles-PPC    =   bsplvd.o ¶
 					sinerp.o ¶
 					sslvrg.o ¶
 					stxwx.o ¶
-                    ::::main:xxxpr.o ¶
-                    xxxsbart_com.o
+#					xxxsbart_com.o ¶
+                    ::::main:xxxpr.o
 
 
 FortFiles		=	bsplvd.f ¶
@@ -146,7 +146,7 @@ sgram.c  Ä sgram.f
 sinerp.c Ä sinerp.f
 sslvrg.c Ä sslvrg.f
 stxwx.c  Ä stxwx.f
-xxxsbart_com.c Ä sbart.f
+#xxxsbart_com.c Ä sbart.f
 ::::main:xxxpr.c Ä ::::main:xxxpr.f
  
 init.o Ä init.c
@@ -163,7 +163,7 @@ sgram.o  Ä sgram.c
 sinerp.o Ä sinerp.c
 sslvrg.o Ä sslvrg.c
 stxwx.o  Ä stxwx.c
-xxxsbart_com.o Ä xxxsbart_com.c
+#xxxsbart_com.o Ä xxxsbart_com.c
 ::::main:xxxpr.o Ä ::::main:xxxpr.c
 
 ### Optional Dependencies ###
