@@ -30,7 +30,7 @@ R: Platform.h FFDecl.h FFTab.h
 	done
 
 Platform.h: $(top_srcdir)/date-stamp
-	$(top_srcdir)/configure --srcdir $(top_srcdir)
+	(cd $(top_srcdir); ./configure --srcdir .)
 
 FFDecl.h FFTab.h:: $(top_srcdir)/src/appl/ROUTINES
 	$(top_srcdir)/aux/GETSYMBOLS
