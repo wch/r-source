@@ -27,12 +27,6 @@
 #include <Rmath.h>
 #include <Rdefines.h>
 
-/* FIXME: originally in include/Defn.h but moved here
-           because it causes darwin build problems.
-	   See include/Defn.h for details. SI
-*/
-extern SEXP R_MethodsNamespace;
-
 static void checkNames(SEXP, SEXP);
 static SEXP installAttrib(SEXP, SEXP, SEXP);
 static SEXP removeAttrib(SEXP, SEXP);

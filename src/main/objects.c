@@ -859,7 +859,6 @@ R_stdGen_ptr_t R_get_standardGeneric_ptr()
     return R_standardGeneric_ptr;
 }
 
-SEXP R_MethodsNamespace;
 R_stdGen_ptr_t R_set_standardGeneric_ptr(R_stdGen_ptr_t val, SEXP envir)
 {
     R_stdGen_ptr_t old = R_standardGeneric_ptr;
