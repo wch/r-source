@@ -3058,25 +3058,6 @@ are themselves calls, consider
 x + y + 2
 @end smallexample
 
-One thing to note is that @R{}'s deparser does not parenthesize
-expressions.  If you for instance do
-
-@smallexample
-> e1 <- quote(4 - 2)
-> e1[[3]] <- quote(2 - 2) # @r{replacing the `2'}
-> e1
-4 - 2 - 2
-@end smallexample
-
-@noindent
-then @code{e1} is really @math{4 - (2 - 2)} and not @math{(4 - 2) - 2}
-as the left-associative rule would suggest.  This reveals itself when
-you evaluate the call using
-
-@smallexample
-> eval(e1)
-[1] 4
-@end smallexample
 
 All grouping parentheses in input are preserved in parsed expressions.
 They are represented as a function call with one argument, so that
@@ -3106,8 +3087,8 @@ deparser, as the following examples show
 @end smallexample
 
 @noindent
-The parser/deparser system does, however, make a fairly good job on
-basic expressions.
+Deparsed expressions should, however, evaluate to an equivalent value 
+to the original expression (up to rounding error).
 
 ...internal storage of flow control constructs...note Splus
 incompatibility...
