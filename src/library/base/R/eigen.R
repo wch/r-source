@@ -7,10 +7,18 @@ eigen <- function(x, symmetric, only.values = FALSE, EISPACK = FALSE)
         stop("0 x 0 matrix")
     if (n != ncol(x))
 	stop("non-square matrix in eigen")
-    if (any(is.na(x)))
-        return(list(values = rep(NA, n),
-                    vectors = if (!only.values) matrix(NA, n,n)))
+
     complex.x <- is.complex(x)
+
+    if (any(is.na(x))){
+        if (complex.x)
+            return(list(values = as.complex(rep(NA, n)),
+                    vectors = if (!only.values) as.complex(matrix(NA, n,n))))
+        else
+            return(list(values = as.numeric(rep(NA, n)),
+                    vectors = if (!only.values) as.numeric(matrix(NA, n,n))))
+    }
+
     if(complex.x) {
 	if(missing(symmetric)) {
             test <- all.equal.numeric(x, Conj(t(x)), 100*.Machine$double.eps)
