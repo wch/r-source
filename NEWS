@@ -544,6 +544,8 @@ BUG FIXES
 
     o	Help aliases "(" and "{" now work, apart from as PDF hyperlinks.
 
+    o   NA || x , NA && y (etc) do not give errors anymore, but work as
+        the "|" and "&" operators and as documented (PR#749).
 
 
 	**************************************************

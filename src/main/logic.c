@@ -1,6 +1,7 @@
 /*
- *  R : A Computer Langage for Statistical Data Analysis
+ *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
+ *  Copyright (C) 1999-2000   The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -48,6 +49,7 @@ SEXP do_logic(SEXP call, SEXP op, SEXP args, SEXP env)
 
 static SEXP lbinary(SEXP call, SEXP op, SEXP args)
 {
+/* logical binary : "&" or "|" */ 
     SEXP x, y, dims, tsp, class, xnames, ynames;
     int mismatch, nx, ny, xarray, yarray, xts, yts;
     mismatch = 0;
@@ -175,56 +177,56 @@ static SEXP lunary(SEXP call, SEXP op, SEXP arg)
 
 SEXP do_logic2(SEXP call, SEXP op, SEXP args, SEXP env)
 {
+/*  &&	and  ||	 */
     SEXP s1, s2;
-    float x1, x2;
+    int x1, x2;
     SEXP ans;
 
     if (length(args) != 2)
-	error("binary &&/|| requires 2 arguments");
+	error("`%s' operator requires 2 arguments",
+	      PRIMVAL(op) == 1 ? "&&" : "||");
 
     s1 = CAR(args);
     s2 = CADR(args);
     PROTECT(ans = allocVector(LGLSXP, 1));
+    s1 = eval(s1, env);
+    if (!isNumeric(s1))
+	errorcall(call, "invalid `x' type in `x %s y'",
+		  PRIMVAL(op) == 1 ? "&&" : "||"); 
+    x1 = asLogical(s1);
+
+#define get_2nd							\
+	s2 = eval(s2, env);					\
+	if (!isNumeric(s2))					\
+	    errorcall(call, "invalid `y' type in `x %s y'",	\
+		      PRIMVAL(op) == 1 ? "&&" : "||");		\
+	x2 = asLogical(s2);
 
     switch (PRIMVAL(op)) {
-    case 1:
-	s1 = eval(s1, env);
-	if (!isNumeric(s1))
-	    error("binary operator applied to invalid types");
-	if ((x1 = asLogical(s1)) == NA_LOGICAL)
-	    error("missing value where logical needed");
-	if (x1) {
-	    s2 = eval(s2, env);
-	    if (!isNumeric(s2))
-		error("binary operator applied to invalid types");
-	    if ((x2 = asLogical(s2)) == NA_LOGICAL)
-		error("missing value where logical needed");
-	    LOGICAL(ans)[0] = x2;
+    case 1: /* && */
+	if (x1 == FALSE)
+	    LOGICAL(ans)[0] = FALSE;
+	else {
+	    get_2nd;
+	    if (x1 == NA_LOGICAL) 
+		LOGICAL(ans)[0] = (x2 == NA_LOGICAL || x2) ? NA_LOGICAL : x2;
+	    else /* x1 == TRUE */
+		LOGICAL(ans)[0] = x2;
 	}
-	else
-	    LOGICAL(ans)[0] = x1;
-	UNPROTECT(1);
-	return ans;
-    case 2:
-	s1 = eval(s1, env);
-	if (!isNumeric(s1))
-	    error("binary operator applied to invalid types");
-	if ((x1 = asLogical(s1)) == NA_LOGICAL)
-	    error("missing value where logical needed");
-	if (!x1) {
-	    s2 = eval(s2, env);
-	    if (!isNumeric(s2))
-		error("binary operator applied to invalid types");
-	    if ((x2 = asLogical(s2)) == NA_LOGICAL)
-		error("missing value where logical needed");
-	    LOGICAL(ans)[0] = x2;
+	break;
+    case 2: /* || */
+	if (x1 == TRUE)
+	    LOGICAL(ans)[0] = TRUE;
+	else {
+	    get_2nd;
+	    if (x1 == NA_LOGICAL)
+		LOGICAL(ans)[0] = (x2 == NA_LOGICAL || !x2) ? NA_LOGICAL : x2;
+	    else /* x1 == FALSE */
+		LOGICAL(ans)[0] = x2;
 	}
-	else
-	    LOGICAL(ans)[0] = x1;
-	UNPROTECT(1);
-	return ans;
     }
-    return R_NilValue;/*NOTREACHED*/
+    UNPROTECT(1);
+    return ans;
 }
 
 static SEXP binaryLogic(int code, SEXP s1, SEXP s2)
@@ -236,14 +238,14 @@ static SEXP binaryLogic(int code, SEXP s1, SEXP s2)
     n1 = LENGTH(s1);
     n2 = LENGTH(s2);
     n = (n1 > n2) ? n1 : n2;
-    if ( n1 == 0 || n2 == 0 ) {
+    if (n1 == 0 || n2 == 0) {
 	ans = allocVector(LGLSXP, 0);
 	return ans;
     }
     ans = allocVector(LGLSXP, n);
 
     switch (code) {
-    case 1:		/* AND */
+    case 1:		/* & : AND */
 	for (i = 0; i < n; i++) {
 	    x1 = LOGICAL(s1)[i % n1];
 	    x2 = LOGICAL(s2)[i % n2];
@@ -255,7 +257,7 @@ static SEXP binaryLogic(int code, SEXP s1, SEXP s2)
 		LOGICAL(ans)[i] = 1;
 	}
 	break;
-    case 2:		/* OR */
+    case 2:		/* | : OR */
 	for (i = 0; i < n; i++) {
 	    x1 = LOGICAL(s1)[i % n1];
 	    x2 = LOGICAL(s2)[i % n2];
@@ -272,9 +274,9 @@ static SEXP binaryLogic(int code, SEXP s1, SEXP s2)
 }
 
 static void checkValues(int *, int);
-static int haveTrue;
-static int haveFalse;
-static int haveNA;
+static Rboolean haveTrue;
+static Rboolean haveFalse;
+static Rboolean haveNA;
 
 SEXP do_logic3(SEXP call, SEXP op, SEXP args, SEXP env)
 {
@@ -286,9 +288,9 @@ SEXP do_logic3(SEXP call, SEXP op, SEXP args, SEXP env)
 
     ans = matchArg(R_NaRmSymbol, &args);
     narm = asLogical(ans);
-    haveTrue = 0;
-    haveFalse = 0;
-    haveNA = 0;
+    haveTrue = FALSE;
+    haveFalse = FALSE;
+    haveNA = FALSE;
 
     for (s = args; s != R_NilValue; s = CDR(s)) {
 	t = CAR(s);
@@ -302,7 +304,7 @@ SEXP do_logic3(SEXP call, SEXP op, SEXP args, SEXP env)
 	    errorcall(call, "incorrect argument type");
     }
     if (narm)
-	haveNA = 0;
+	haveNA = FALSE;
 
     s = allocVector(LGLSXP, 1L);
     if (PRIMVAL(op) == 1) {	/* ALL */
@@ -318,10 +320,10 @@ static void checkValues(int * x, int n)
     int i;
     for (i = 0; i < n; i++) {
 	if (x[i] == NA_LOGICAL)
-	    haveNA = 1;
+	    haveNA = TRUE;
 	else if (x[i])
-	    haveTrue = 1;
+	    haveTrue = TRUE;
 	else
-	    haveFalse = 1;
+	    haveFalse = TRUE;
     }
 }

@@ -1,6 +1,6 @@
 
 R : Copyright 2000, The R Development Core Team
-Version 1.2.0 Under development (unstable) (2000-11-21)
+Version 1.2.0 Under development (unstable) (2000-11-29)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -270,8 +270,17 @@ NaNs produced in: gamma(x)
 > is.na(match(c(1,pi,pi0), pi)[3])
 [1] TRUE
 >     
+> ## PR#749:
+> all(is.na(c(NA && TRUE, TRUE  && NA, NA && NA,
++             NA || FALSE,FALSE || NA, NA || NA)))
+[1] TRUE
+> 
+> all((c(NA || TRUE,  TRUE || NA,
++     !c(NA && FALSE,FALSE && NA))))
+[1] TRUE
+> 
 > 
 > ## Last Line:
 > cat('Time elapsed: ', proc.time() - .proctime00,'\n')
-Time elapsed:  4.28 0.19 4.95 0 0 
+Time elapsed:  4.07 0.18 4.26 0 0 
 > 

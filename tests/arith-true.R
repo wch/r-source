@@ -180,6 +180,13 @@ for(i in 1:n) {
 pi != (pi0 <- pi + 2*.Machine$double.eps)
 is.na(match(c(1,pi,pi0), pi)[3])
     
+## PR#749:
+all(is.na(c(NA && TRUE, TRUE  && NA, NA && NA,
+            NA || FALSE,FALSE || NA, NA || NA)))
+
+all((c(NA || TRUE,  TRUE || NA,
+    !c(NA && FALSE,FALSE && NA))))
+
 
 ## Last Line:
 cat('Time elapsed: ', proc.time() - .proctime00,'\n')
