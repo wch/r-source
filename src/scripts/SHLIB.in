@@ -4,7 +4,7 @@
 
 # @configure_input@
 
-revision='$Revision: 1.20 $'
+revision='$Revision: 1.21 $'
 version=`set - ${revision}; echo ${2}`
 version="R shared library builder ${version}
 
@@ -29,7 +29,7 @@ Report bugs to <r-bugs@r-project.org>."
 objs=
 shlib=
 MAKE=${MAKE-@MAKE@}
-makefiles="-f ${R_HOME}/etc/Makeconf"
+makefiles="-f ${R_HOME}/share/make/shlib.mk"
 with_cxx=false
 with_f77=false
 

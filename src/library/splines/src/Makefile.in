@@ -25,7 +25,7 @@ Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	  CONFIG_FILES=$(subdir)/$@ CONFIG_HEADERS= \
 	  $(SHELL) ./config.status
 
-include $(top_builddir)/etc/Makeconf
+include $(top_builddir)/share/make/shlib.mk
 
 mostlyclean: clean
 clean:
