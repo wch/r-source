@@ -39,6 +39,12 @@ is.vector(x, mode = "any")
   elements to \code{0}, character vector elements to \code{""}, raw
   vector elements to \code{nul} bytes and list elements to \code{NULL}.
 }
+\note{
+  \code{as.vector} and \code{is.vector} are quite distinct from the
+  meaning of the formal class \code{"vector"} in the \pkg{methods}
+  package, and hence \code{\link{as}(x, "vector")} and
+  \code{\link{is}(x, "vector")}.
+}
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.
