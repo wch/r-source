@@ -1,17 +1,17 @@
 legend <-
 function(x, y = NULL, legend, fill=NULL, col = "black", lty, lwd, pch,
 	 angle = 45, density = NULL, bty = "o", bg = par("bg"),
-         pt.bg = NA, cex = 1, pt.cex = cex, pt.lwd = lwd,
+	 pt.bg = NA, cex = 1, pt.cex = cex, pt.lwd = lwd,
 	 xjust = 0, yjust = 1, x.intersp = 1, y.intersp = 1, adj = c(0, 0.5),
 	 text.width = NULL, text.col = par("col"),
-         merge = do.lines && has.pch, trace = FALSE,
+	 merge = do.lines && has.pch, trace = FALSE,
 	 plot = TRUE, ncol = 1, horiz = FALSE)
 {
     ## the 2nd arg may really be `legend'
     if(missing(legend) && !missing(y) &&
        (is.character(y) || is.expression(y))) {
-        legend <- y
-        y <- NULL
+	legend <- y
+	y <- NULL
     }
     mfill <- !missing(fill) || !missing(density)
 
@@ -136,24 +136,24 @@ function(x, y = NULL, legend, fill=NULL, col = "black", lty, lwd, pch,
     }
     ## (xt[],yt[]) := `current' vectors of (x/y) legend text
     xt <- left + xchar + (w0 * rep.int(0:(ncol-1),
-                                       rep.int(n.legpercol,ncol)))[1:n.leg]
+				       rep.int(n.legpercol,ncol)))[1:n.leg]
     yt <- top - (rep.int(1:n.legpercol,ncol)[1:n.leg]-1) * ychar -
-        0.5 * yextra - ymax
+	0.5 * yextra - ymax
 
     if (mfill) {		#- draw filled boxes -------------
 	if(plot) {
 	    fill <- rep(fill, length.out = n.leg)
 	    rect2(left = xt, top=yt+ybox/2, dx = xbox, dy = ybox,
 		  col = fill,
-                  density = density, angle = angle, border = "black")
+		  density = density, angle = angle, border = "black")
 	}
 	xt <- xt + dx.fill
     }
     if(plot && (has.pch || do.lines))
 	col <- rep(col, length.out = n.leg)
 
-    if(missing(lwd)) lwd <- par("lwd")
-    force(pt.lwd)
+    if(missing(lwd))
+	lwd <- par("lwd") # = default for pt.lwd
     if (do.lines) {			#- draw lines ---------------------
 	seg.len <- 2 # length of drawn segment, in xchar units
 	if(missing(lty)) lty <- 1
@@ -173,6 +173,7 @@ function(x, y = NULL, legend, fill=NULL, col = "black", lty, lwd, pch,
 	pch   <- rep(pch, length.out = n.leg)
 	pt.bg <- rep(pt.bg, length.out = n.leg)
 	pt.cex<- rep(pt.cex, length.out = n.leg)
+	pt.lwd<- rep(pt.lwd, length.out = n.leg)
 	ok <- !is.na(pch) & (is.character(pch) | pch >= 0)
 	x1 <- (if(merge) xt-(seg.len/2)*xchar else xt)[ok]
 	y1 <- yt[ok]
@@ -180,7 +181,7 @@ function(x, y = NULL, legend, fill=NULL, col = "black", lty, lwd, pch,
 	    catn("  points2(", x1,",", y1,", pch=", pch[ok],", ...)")
 	if(plot)
 	    points2(x1, y1, pch = pch[ok], col = col[ok],
-                    cex = pt.cex[ok], bg = pt.bg[ok], lwd = pt.lwd)
+		    cex = pt.cex[ok], bg = pt.bg[ok], lwd = pt.lwd[ok])
 	if (!merge) xt <- xt + dx.pch
     }
 
