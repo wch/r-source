@@ -52,6 +52,9 @@ mainfiles Ä fixdesc
 	  if  `Exists ::library:{pkg}:DESCRIPTION`
 	  Duplicate -y ::library:{pkg}:DESCRIPTION {RHOME}library:{pkg}
 	  end
+	  if  `Exists ::library:{pkg}:DESCRIPTION.in`
+	  Duplicate -y ::library:{pkg}:DESCRIPTION.in {RHOME}library:{pkg}:DESCRIPTION
+	  end
 	  if  `Exists ::library:{pkg}:INDEX`
 	   Duplicate -y ::library:{pkg}:INDEX {RHOME}library:{pkg}
 	  end 
@@ -97,6 +100,8 @@ Libfiles Ä $OutOfDate
 	   if ! `Exists -d {RHOME}library:{pkg}:libs`
 	    NewFolder {RHOME}library:{pkg}:libs
 	   end
+	   SetFile -c 'ttxt' -t 'TEXT' :makefiles:{pkg}.mac
+	   translate ¶0x0a ¶0x0d <:makefiles:{pkg}.mac >::library:{pkg}:src:Makefile.mac
 	   Directory ::library:{pkg}:src
 	   Make -f Makefile.mac >build
 	   build
@@ -154,6 +159,8 @@ modules Ä $OutOfDate
 	   if ! `Exists -d {RHOME}modules`
 	    NewFolder {RHOME}modules
 	   end
+	   SetFile -c 'ttxt' -t 'TEXT' :makefiles:{modl}.mac
+	   translate ¶0x0a ¶0x0d <:makefiles:{modl}.mac >::modules:{modl}:Makefile.mac
 	   Directory ::modules:{modl}
 	   Make -f Makefile.mac >build
 	   build

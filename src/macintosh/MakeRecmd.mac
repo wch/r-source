@@ -73,7 +73,9 @@ Libfiles Ä $OutOfDate
 	   if ! `Exists -d {RHOME}library:{pkg}:libs`
 	    NewFolder {RHOME}library:{pkg}:libs
 	   end
-	   Duplicate -y :makefiles:{pkg}.mac  ::library:{pkg}:src:Makefile.mac
+##	   Duplicate -y :makefiles:{pkg}.mac  ::library:{pkg}:src:Makefile.mac
+       SetFile -c 'ttxt' -t 'TEXT' :makefiles:{pkg}.mac
+	   translate ¶0x0a ¶0x0d <:makefiles:{pkg}.mac >::library:{pkg}:src:Makefile.mac
 	   Directory ::library:{pkg}:src
 	   Make -f Makefile.mac >build
 	   build
