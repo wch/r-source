@@ -267,7 +267,7 @@ install.binaries <- function(pkgs, lib, CRAN=getOption("CRAN"),
             ok <- (available[,"Package"] == p) | (available[,"Bundle"] == p)
             ok <- ok & !is.na(ok)
             if(!any(ok))
-              warning(paste("No package \"", p, "\" on CRAN.", sep=""))
+              warning("no package ", sQuote(p), " on CRAN")
             else{
               fn <- paste(p, "_", available[ok, "Version"], ".tgz", sep="")
               ##fn<-paste(p,".tgz",sep="")
@@ -282,7 +282,7 @@ install.binaries <- function(pkgs, lib, CRAN=getOption("CRAN"),
                 if(download.file(url, destfile, method, mode="wb") == 0)
                   retval <- rbind(retval, c(p, destfile))
                 else
-                  warning(paste("Download of package", p, "failed"))
+                  warning("Download of package", sQuote(p), "failed")
               }
                 }
           }
@@ -346,10 +346,9 @@ install.binaries <- function(pkgs, lib, CRAN=getOption("CRAN"),
 
     if(!length(pkgs)) return(invisible())
     if(missing(lib) || is.null(lib)) {
-      lib <- .libPaths()[1]
-      if(length(.libPaths()) > 1)
-        warning(paste("argument", sQuote("lib"),
-                      "is missing: using", lib))
+        lib <- .libPaths()[1]
+        if(length(.libPaths()) > 1)
+            warning("argument 'lib' is missing: using ", lib)
     }
     pkgnames <- basename(pkgs)
     pkgnames <- sub("\\.tgz$", "", pkgnames)
