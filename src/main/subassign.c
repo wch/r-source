@@ -62,6 +62,10 @@
  *  "ifelse" requires assignment into a logical object.
  */
 
+/*
+ *  2000/02/17  Altered to allow closures/primitives in lists (VECSXPs) BDR
+ */
+
 #ifdef HAVE_CONFIG_H
 #include <config.h>
 #endif
@@ -211,6 +215,7 @@ static void SubassignTypeFix(SEXP *x, SEXP *y,
     case 1914:  /* vector     <- real       */
     case 1915:  /* vector     <- complex    */
     case 1916:  /* vector     <- character  */
+    case 1903: case 1907: case 1908: case 1999: /* functions */
 
 	if (level == 1) {
 	    /* Coerce the RHS into a list */
@@ -1405,6 +1410,7 @@ SEXP do_subassign2(SEXP call, SEXP op, SEXP args, SEXP rho)
 	case 1914:      /* vector     <- real       */
 	case 1915:      /* vector     <- complex    */
 	case 1916:      /* vector     <- character  */
+	case 1903: case 1907: case 1908: case 1999: /* functions */
 
 	    VECTOR(x)[offset] = VECTOR(y)[0];
 	    break;
