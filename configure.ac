@@ -70,8 +70,8 @@ case "${host_os}" in
   cat >>confdefs.h <<\EOF
 #define snprintf  _snprintf
 #define vsnprintf  _vsnprintf
-#define isnan(a) _isnan((a))
-#define finite(a) _finite((a))
+#define isnan _isnan
+#define finite _finite
 EOF
     ;;
   *)
@@ -1152,6 +1152,7 @@ case "${host_os}" in
   AC_DEFINE(HAVE_JPEG, 1)
   AC_DEFINE(SUPPORT_LIBXML, 1)
   AC_DEFINE(HAVE_PNG, 1)
+  AC_DEFINE(HAVE_POSIX_SETJMP, 1)
   AC_DEFINE(HAVE_SOCKETS, 1)
   AC_DEFINE(HAVE_TCLTK, 1)
   AC_DEFINE(HAVE_TIMES, 1)

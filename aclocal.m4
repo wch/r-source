@@ -907,21 +907,23 @@ fi
 ])# R_HEADER_GLIBC2
 
 AC_DEFUN([R_TYPE_SOCKLEN],
-[AC_CHECK_HEADER(sys/socket.h)
-AC_MSG_CHECKING([for type of socket length])
-if test "${ac_cv_header_sys_socket_h}" = yes; then
-  AC_CACHE_VAL([r_cv_type_socklen],
-    [for t in socklen_t size_t int; do
-      AC_TRY_COMPILE(
+[AC_MSG_CHECKING([for type of socket length])
+AC_CACHE_VAL([r_cv_type_socklen],
+  [for t in socklen_t size_t int; do
+    AC_TRY_COMPILE(
 [#include <stddef.h>
 #include <sys/types.h>
+#ifdef HAVE_SYS_SOCKET_H
 #include <sys/socket.h>
+#endif
+#ifdef Win32
+#include <winsock.h>
+#endif
 ], 
-                     [(void)getsockopt (1, 1, 1, NULL, (${t} *)NULL)],
-	             [r_cv_type_socklen=${t}; break],
-	             [r_cv_type_socklen=])
-    done])
-fi
+                   [(void)getsockopt (1, 1, 1, NULL, (${t} *)NULL)],
+                   [r_cv_type_socklen=${t}; break],
+	           [r_cv_type_socklen=])
+  done])
 if test "x${r_cv_type_socklen}" = x; then
   warn_type_socklen="could not determine type of socket length"
   AC_MSG_WARN([${warn_type_socklen}])
