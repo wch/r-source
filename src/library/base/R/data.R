@@ -83,9 +83,8 @@ show.data <-
 function(package = .packages(), lib.loc = .lib.loc)
 {
     ## give `index' of all possible data sets
-    file <- tempfile("R.")
-    on.exit(file.remove(file))
-    file.create(file)
+    outFile <- tempfile("R.")
+    outConn <- file(outFile, open = "w")
     first <- TRUE
     nodata <- noindex <- character(0)
     paths <- system.file(pkg = package, lib = lib.loc)
@@ -99,12 +98,14 @@ function(package = .packages(), lib.loc = .lib.loc)
             next
         }
         INDEX <- file.path(path, "data", "00Index")
-        if(INDEX == "")
+        if(!file.exists(INDEX))
             INDEX <- file.path(path, "data", "index.doc")
-        if(INDEX != "") {
-            cat(paste(ifelse(first, "", "\n"), "Data sets in package `",
-                      pkg, "':\n\n", sep = ""), file = file, append = TRUE)
-            file.append(file, INDEX)
+        if(file.exists(INDEX)) {
+            writeLines(paste(ifelse(first, "", "\n"),
+                             "Data sets in package `",
+                             pkg, "':\n\n", sep = ""),
+                       outConn)
+            writeLines(readLines(INDEX), outConn)
             first <- FALSE
         } else {
             ## no index: check for datasets -- won't work if zipped
@@ -112,9 +113,12 @@ function(package = .packages(), lib.loc = .lib.loc)
             if(length(files) > 0) noindex <- c(noindex, pkg)
         }
     }
+    close(outConn)
     if (first) {
         warning("no data listings found")
-    } else file.show(file, delete.file = TRUE, title = "R data sets")
+    }
+    else
+        file.show(outFile, delete.file = TRUE, title = "R data sets")
     if(!missing(package)) {
         if(length(nodata) > 1)
             warning(paste("packages `", paste(nodata, collapse=", "),

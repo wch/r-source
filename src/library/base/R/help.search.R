@@ -110,15 +110,18 @@ help.search <- function(pattern, fields = c("alias", "title"),
     ## Output
     fields <- paste(fields, collapse = " or ")
     if (NROW(db) > 0) {
-        FILE <- tempfile()
-        cat("Help files with ", fields, " matching `", pattern, "':\n",
-            "Type `?FOO' to inspect entry `FOO(PKG) TITLE'.\n\n",
-            sep = "", file = FILE)
+        outFile <- tempfile()
+        outConn <- file(outFile, open = "w")
+        writeLines(paste("Help files with ", fields, " matching `",
+                         pattern, "':\n", "Type `?FOO' to inspect ",
+                         "entry `FOO(PKG) TITLE'.\n\n", sep = ""),
+                   outConn)
         dbnam <- paste(db[ , "name"], "(", db[, "pkg"], ")", sep = "")
         dbtit <- paste(db[ , "title"], sep = "")
-        cat(paste(format(dbnam), dbtit, sep = "   "),
-            sep = "\n", file = FILE, append = TRUE)
-        file.show(FILE, delete.file = TRUE)
+        writeLines(paste(format(dbnam), dbtit, sep = "   "),
+                   outConn)
+        close(outConn)
+        file.show(outFile, delete.file = TRUE)
     } else {
         cat(paste("No help files found with ", fields, " matching `",
                   pattern, "'\n", sep = ""))
