@@ -14,7 +14,7 @@ R.version.string
     \R running. \cr
     \code{R.version} is a variable (a \code{\link{list}}) holding this
     information (and \code{version} is a copy of it for
-    S compatibility), whereas \code{R.version.string} is simple
+    S compatibility), whereas \code{R.version.string} is a simple
     \code{\link{character}} string, useful for plotting, etc.
 }
 \value{

@@ -34,6 +34,11 @@ The information is obtained from Windows system calls.  It is likely to
 be most complete on Windows NT/2000/XP systems.
 #endif
 }
+\details{
+  \code{Sys.info()} returns details of the platform \R is running on,
+  whereas \code{\link{R.version}} gives details of the platform \R was
+  built on: they may well be different.
+}
 \note{
   The meaning of OS ``release'' and ``version'' is highly
   system-dependent and there is no guarantee that the node or
@@ -43,7 +48,9 @@ be most complete on Windows NT/2000/XP systems.
 }
 \author{B. D. Ripley}
 
-\seealso{\code{\link{.Platform}}}
+\seealso{
+  \code{\link{.Platform}}, and \code{\link{R.version}}.
+}
 
 \examples{
 Sys.info()

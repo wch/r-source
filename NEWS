@@ -79,7 +79,8 @@ NEW FEATURES
     o	as.POSIX[cl]t can now convert logical NAs.
 
     o	All installed packages (even those shipped with R) are
-	given a `Built' field in the DESCRIPTION file.
+	given a `Built' field in the DESCRIPTION file (except on
+	classic MacOS).
 
     o	as.data.frame() now coerces logical matrices into logical
 	columns (rather than factors).
@@ -98,10 +99,6 @@ NEW FEATURES
     o	print.factor() has new arguments `max.levels' (with a smart default)
 	and `width'.  print.ordered() is no longer needed.
 
-    o	.Platform$canonical.name gives the canonical name
-	(cpu-vendor-os) of the platform in use.
-	(Same as R.version$platform.)
-
     o	RNGkind() has an additional option for normal random generators:
 	"Inversion".
 
@@ -113,6 +110,8 @@ DEPRECATED & DEFUNCT
 
     o	The print.ordered() method is no longer needed, since handled by
         print.factor() and hence deprecated.
+
+    o	machine() is deprecated in favour of .Platform$OS.type.
 
     o	arima0.diag() (package ts) is defunct.
 
