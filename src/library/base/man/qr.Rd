@@ -52,7 +52,7 @@ as.qr(x)
   return the coefficients, residuals and fitted values obtained when
   fitting \code{y} to the matrix with QR decomposition \code{qr}.
   \code{qr.qy} and \code{qr.qty} return \code{Q \%*\% y} and
-  \code{t(Q) \%*\% y}, where \code{Q} is the \eqn{\bold{Q}} matrix.
+  \code{t(Q) \%*\% y}, where \code{Q} is the (complete) \eqn{\bold{Q}} matrix.
 
   All the above functions keep \code{dimnames} (and \code{names}) of
   \code{x} and \code{y} if there are.
