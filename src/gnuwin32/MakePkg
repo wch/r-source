@@ -105,10 +105,10 @@ ifneq ($(strip $(PKGRFILES)),)
 	@$(ECHO) "  installing R files"
 	@$(MKDIR) -p $(DPKG)/R
 ifeq ($(strip $(BUILD)),CROSS)
-	@$(ECHO) ".installPackageCodeFiles('"$(SPKG)"', '"$(DPKG)"')" \
+	@$(ECHO) "tools:::.installPackageCodeFiles('"$(SPKG)"', '"$(DPKG)"')" \
 	  | R_DEFAULT_PACKAGES=tools R_OSTYPE=windows LC_COLLATE=C $(R_EXE) --vanilla --slave > /dev/null
 else
-	@$(ECHO) ".installPackageCodeFiles('"$(SPKG)"', '"$(DPKG)"')" \
+	@$(ECHO) "tools:::.installPackageCodeFiles('"$(SPKG)"', '"$(DPKG)"')" \
 	  | $(RHOME)/bin/rterm.exe --vanilla --slave \
 	    R_DEFAULT_PACKAGES=tools LC_COLLATE=C > /dev/null
 endif
@@ -200,7 +200,7 @@ ifeq ($(strip $(BUILD)),CROSS)
 	    $(CP) ${SPKG}/NAMESPACE $(DPKG)/NAMESPACE; \
           fi ; \
 	  $(ECHO) " and metadata"; \
-	  $(ECHO) ".installPackageNamespaceInfo('$(DPKG)', '$(DPKG)')" | \
+	  $(ECHO) "tools:::.installPackageNamespaceInfo('$(DPKG)', '$(DPKG)')" | \
 	    R_DEFAULT_PACKAGES=tools R_OSTYPE=windows $(R_EXE) --vanilla --slave > /dev/null; \
 	fi
 else
@@ -212,7 +212,7 @@ else
 	    $(CP) ${SPKG}/NAMESPACE $(DPKG)/NAMESPACE; \
           fi ; \
 	  $(ECHO) " and metadata"; \
-	  $(ECHO) ".installPackageNamespaceInfo('$(DPKG)', '$(DPKG)')" | \
+	  $(ECHO) "tools:::.installPackageNamespaceInfo('$(DPKG)', '$(DPKG)')" | \
 	    $(RHOME)/bin/rterm.exe R_DEFAULT_PACKAGES=tools --vanilla --slave > /dev/null; \
 	fi
 endif
@@ -286,10 +286,10 @@ endif
 indices:
 	@$(ECHO) "  installing indices"
 ifeq ($(strip $(BUILD)),CROSS)
-	@$(ECHO) ".installPackageIndices('.', '"$(DPKG)"')" | \
+	@$(ECHO) "tools:::.installPackageIndices('.', '"$(DPKG)"')" | \
 	  R_DEFAULT_PACKAGES=tools LC_COLLATE=C R_OSTYPE=windows $(R_EXE) --vanilla --slave > /dev/null
 else
-	@$(ECHO) ".installPackageIndices('.', '"$(DPKG)"')" | \
+	@$(ECHO) "tools:::.installPackageIndices('.', '"$(DPKG)"')" | \
 	  $(RHOME)/bin/rterm.exe --vanilla --slave R_DEFAULT_PACKAGES=tools LC_COLLATE=C > /dev/null
 endif
 # need not have HTML installed when building packages
