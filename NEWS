@@ -15,6 +15,9 @@ USER-VISIBLE CHANGES
         substring, abbreviate and strsplit now handle missing values
         differently from "NA".
 
+    o	Saving data containing name space references no longer warns
+	about name spaces possibly being unavailable on load.
+
 
 NEW FEATURES
 
