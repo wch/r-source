@@ -17,4 +17,11 @@ The years are: 1951, 1956, 1957, 1958, 1959, 1960, 1961.
 }
 \references{McNeil, D. R. (1977).  Interactive Data Analysis.  New York: Wiley.
 }
+\examples{
+data(phones)
+matplot(rownames(phones), phones, type = "b", log = "y",
+        xlab = "Year", ylab = "Number of telephones (1000's)")
+legend(1951.5, 80000, colnames(phones), col = 1:7, lty = 1:7, pch = rep(21, 7))
+title(main = "phones data: log scale for response")
+}
 \keyword{datasets}

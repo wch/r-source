@@ -10,22 +10,16 @@
     [,4] \tab dist     \tab numeric  \tab Station-hypocenter distance (km)\cr
     [,5] \tab accel    \tab numeric  \tab Peak acceleration (g)\cr
   }
-
-
 }
 \source{Joyner, W.B., D.M. Boore and R.D. Porcella (1981).  Peak horizontal
 acceleration and velocity from strong-motion records including
 records from the 1979 Imperial Valley, California earthquake.  USGS
 Open File report 81-365. Menlo Park, Ca.
-
-
 }
 \description{This data gives peak accelerations measured at various observation
 stations for 23 earthquakes in California. The data have been used
 by various workers to estimate the attenuating affect of distance
 on ground acceleration.
-
-
 }
 \references{Boore, D.M. and W.B. Joyner (1982).  The empirical prediction of
 ground motion, Bull. Seism. Soc. Am. 72, S269-S268.
@@ -46,5 +40,15 @@ of the Joyner-Boore attenuation data, Bull. Seism. Soc. Am. 74,
 Brillinger, D.R. and H.K. Preisler (1984).  Further analysis of
 the Joyner-Boore attenuation data, Manuscript.
 
+}
+\examples{
+data(attenu)
+## check the data class of the variables
+sapply(attenu, data.class)
+summary(attenu)
+pairs(attenu, main = "attenu data")
+coplot(accel ~ dist | as.factor(event), data = attenu, show = FALSE)
+coplot(log(accel) ~ log(dist) | as.factor(event),
+       data = attenu, panel = panel.smooth, show.given = FALSE)
 }
 \keyword{datasets}

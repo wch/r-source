@@ -25,4 +25,10 @@ La Jolla, California USA 92093-0220.
   \emph{Visualizing Data}.
   New Jersey: Summit Press.
 }
+\examples{
+data(co2)
+plot(co2, ylab = expression("Atmospheric concentration of CO"[2]),
+     las = 1)
+title(main = "co2 data set")
+}
 \keyword{datasets}

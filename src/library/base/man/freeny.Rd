@@ -12,4 +12,13 @@
 \source{A. E. Freeny (1977). A Portable Linear Regression Package with Test Programs.
 Bell Laboratories memorandum.
 }
+\examples{
+data(freeny)
+summary(freeny)
+pairs(freeny, main = "freeny data")
+summary(fm1 <- lm(y ~ ., data = freeny))
+opar <- par(mfrow = c(2, 2), oma = c(0, 0, 1.1, 0),
+            mar = c(4.1, 4.1, 2.1, 1.1))
+plot(fm1)
+par(opar)
 \keyword{datasets}

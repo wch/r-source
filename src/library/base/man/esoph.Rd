@@ -41,5 +41,13 @@ anova(model1)
 model2 <- glm(cbind(ncases, ncontrols) ~ agegp + codes(tobgp) + codes(alcgp),
               data = esoph, family = binomial())
 summary(model2)
+## Re-arrange data for a mosaic plot
+ttt <- table(esoph$agegp, esoph$alcgp, esoph$tobgp)
+ttt[ttt == 1] <- esoph$ncases
+tt1 <- table(esoph$agegp, esoph$alcgp, esoph$tobgp)
+tt1[tt1 == 1] <- esoph$ncontrols
+tt <- array(c(ttt, tt1), c(dim(ttt),2),
+            c(dimnames(ttt), list(c("Cancer", "control"))))
+mosaicplot(tt, main = "esoph data set", color = TRUE)
 }
 \keyword{datasets}

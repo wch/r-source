@@ -29,4 +29,10 @@
     Building multiple regression models interactively.
     \emph{Biometrics}, \bold{37}, 391--411.
 }
+\examples{
+data(mtcars)
+pairs(mtcars, main = "mtcars data")
+coplot(mpg ~ disp | as.factor(cyl), data = mtcars,
+       panel = panel.smooth, rows = 1)
+}
 \keyword{datasets}

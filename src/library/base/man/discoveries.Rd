@@ -11,6 +11,12 @@
 }
 \references{McNeil, D. R. (1977).  Interactive Data Analysis.  Wiley.
 }
+\examples{
+data(discoveries)
+plot(discoveries, ylab = "Number of important discoveries",
+     las = 1)
+title(main = "discoveries data set")
+}
 \keyword{datasets}
 
 
