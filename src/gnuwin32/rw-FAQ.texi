@@ -464,9 +464,9 @@ versions of an example (a real one, but from a machine that is only
 available locally) of a command-line in a short cut:
 
 @smallexample
-/R/rw1070/bin/RGui.exe http_proxy=http://user:pass@@gannet:80/
+/R/@RWVER@/bin/RGui.exe http_proxy=http://user:pass@@gannet:80/
 
-/R/rw1070/bin/RGui.exe http_proxy=http://gannet/ http_proxy_user=ask
+/R/@RWVER@/bin/RGui.exe http_proxy=http://gannet/ http_proxy_user=ask
 @end smallexample
 
 @noindent
