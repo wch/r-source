@@ -454,7 +454,8 @@ static void deparse2buff(SEXP s)
 	print2buff("<environment>");
 	break;
     case VECSXP:
-	if(length(s) <= 0) print2buff("NULL");
+	if(length(s) <= 0)
+	    print2buff("list()");
 	else {
 	    attr1(s);
 	    print2buff("list(");
@@ -464,7 +465,8 @@ static void deparse2buff(SEXP s)
 	}
 	break;
     case EXPRSXP:
-	if(length(s) <= 0) print2buff("expression()");
+	if(length(s) <= 0)
+	    print2buff("expression()");
 	else {
 	    print2buff("expression(");
 	    vec2buff(s);
