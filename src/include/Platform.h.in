@@ -131,7 +131,8 @@
 #ifdef Unix
 #define OSTYPE      "Unix"
 #define FILESEP     "/"
-#define DYNLOADEXT  ""
+#define SHLIBEXT    ""
+#define DYNLOADEXT  "." ## SHLIBEXT
 #endif
 
 #ifdef Macintosh

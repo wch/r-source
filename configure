@@ -3648,7 +3648,7 @@ esac
 
 
 cat >> confdefs.h <<EOF
-#define DYNLOADEXT "${SHLIBEXT}"
+#define SHLIBEXT "${SHLIBEXT}"
 EOF
 
 
