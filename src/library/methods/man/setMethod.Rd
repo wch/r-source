@@ -187,8 +187,6 @@ ISOdate(1990, 12, 1)- ISOdate(1980, 12, 1)
 setMethod("Arith", c("track", "numeric"), function(e1, e2){e1@y <-
   callGeneric(e1@y , e2); e1})
 
-setGroupGeneric("Arith")
-
 
 t1  - 100.
 
@@ -197,6 +195,19 @@ t1/2
 
 ## check it hasn't screwed up S3 methods
 ISOdate(1990, 12, 1)- ISOdate(1980, 12, 1)
+
+## test the .Generic mechanism
+
+setMethod("Compare", signature("track", "track"),
+  function(e1,e2) {
+  switch(.Generic,
+   "==" = e1@y == e2@y,
+  NA)
+ })
+
+#stopifnot(all(t1==t1))
+#stopifnot(identical(t1<t1, NA))
+
 
 ## A test of nested calls to "[" with matrix-style arguments
 ## applied to data.frames (S3 methods)
@@ -236,10 +247,26 @@ stopifnot(identical(tMC[1:10, 1:10]@y, yy[1:10, 1:10]))
 
 removeMethods("-")
 removeMethods("length")
+removeMethods("Arith")
+removeMethods("Compare")
 
 ## repeat the test one more time on the primitives
 
 length(ISOdate(1990, 12, 1)- ISOdate(1980, 12, 1))
+
+## methods for %*%, which isn't done by the same C code as other ops
+
+setClass("foo", representation(m="matrix"))
+m1 <- matrix(1:12,3,4)
+f1 = new("foo", m=m1)
+f2 = new("foo", m=t(m1))
+
+setMethod("\%*\%", c("foo", "foo"),
+ function(x,y)callGeneric(x@m, y@m))
+
+stopifnot(identical(f1\%*\%f2, m1\%*\% t(m1)))
+
+removeMethods("\%*\%")
 
 removeMethods("plot")
 

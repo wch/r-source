@@ -234,7 +234,7 @@ setMethod <-
                mnames <- formalArgs(definition)
                if(!identical(mnames, fnames)) {
                    ## omitted classes in method => "missing"
-                   fullSig <- conformMethod(signature, mnames, fnames)
+                   fullSig <- conformMethod(signature, mnames, fnames, f)
                    if(!identical(fullSig, signature)) {
                        formals(definition, envir = environment(definition)) <- formals(fdef)
                        signature <- fullSig
@@ -351,7 +351,7 @@ selectMethod <-
     else if(length(names(signature)) == length(signature))
         env <- sigToEnv(signature)
     else if(is.character(signature)) {
-        argNames <-  formalArgs(getFunction(f))
+        argNames <-  formalArgs(fdef)
         length(argNames) <- length(signature)
         argNames <- argNames[is.na(match(argNames, "..."))]
         names(signature) <- argNames

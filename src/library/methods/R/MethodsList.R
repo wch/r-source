@@ -367,11 +367,15 @@ inheritedSubMethodLists <-
     else {
       for(which in seq(along = classes)) {
         tryClass <- el(classes, which)
-        if(isClass(tryClass) &&
-           !is.na(match(thisClass, names(getSubclasses(getClass(tryClass))))))
-          elNamed(value, tryClass) <- el(methods, which)
-      }
+        if(isClass(tryClass)) {
+            tryClassDef <- getClass(tryClass) 
+            if(is(tryClassDef, "classRepresentation")) {
+              if(!is.na(match(thisClass, names(getSubclasses(tryClassDef)))))
+                elNamed(value, tryClass) <- el(methods, which)
+          }
+        }
     }
+  }
   }
   if(!is.null(defaultMethod))
       elNamed(value, "ANY") <- defaultMethod

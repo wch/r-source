@@ -191,6 +191,7 @@ getAllMethods <-
       }
       else
         return(NULL) # or error?
+      primCase <- is.primitive(deflt)
     groups <- getGroup(fdef, TRUE)
     ## when this function is called from methodsListDispatch (via C code),
     ## a skeleton version is assigned to prevent recursive loops:  remove this
@@ -202,12 +203,14 @@ getAllMethods <-
       if(!is.null(methods))  # it better be a genericFunction object
           methods <- methods@default
     funs <- c(fdef, groups)
-    for(fun in rev(funs))
-      for(where in rev(libs)) {
-        mw <- getMethodsMetaData(fun, where)
-        if(!is.null(mw))
-          methods <- mergeMethods(methods, mw)
-      }
+    for(fun in rev(funs)) {
+        genericLabel <- if(primCase && !identical(fun, fdef)) f else character()
+        for(where in rev(libs)) {
+            mw <- getMethodsMetaData(fun, where)
+            if(!is.null(mw))
+                methods <- mergeMethods(methods, mw, genericLabel)
+        }
+    }
     ev <- environment(fdef)
     if(is.null(methods)) ## after removeMethods, e.g.
         methods <- fdef@default
@@ -217,7 +220,7 @@ getAllMethods <-
     }
     ## primitives are pre-cached in the method metadata (because
     ## they are not visible as generic functions from the C code).
-    if(is.primitive(deflt))
+    if(primCase)
       setPrimitiveMethods(f, deflt, "set", fdef)
     ## cancel the error cleanup
     on.exit()
@@ -228,7 +231,9 @@ getAllMethods <-
 mergeMethods <-
   ## merge the methods in the second MethodsList object into the first,
   ## and return the merged result.
-  function(m1, m2) {
+  function(m1, m2, genericLabel = character()) {
+      if(length(genericLabel) > 0 && is(m2, "MethodsList"))
+          m2 <- .GenericInPrimitiveMethods(m2, genericLabel)
     if(is.null(m1) || is(m1, "EmptyMethodsList"))
       return(m2)
     tmp <- listFromMlist(m2)
@@ -289,28 +294,28 @@ doPrimitiveMethod <-
 }
 
 conformMethod <-
-  function(signature, mnames, fnames)
+  function(signature, mnames, fnames, f = "<unspecified>")
 {
-    ## TO DO:  arrange for "missing" to be a valid for "..." in a signature
-    ## until then, allow an omitted "..." w/o checking
+    ## Desirable, but hard:  arrange for "missing" to be valid for "..." in a signature
+    ## (needs a change to low-level dispatch code).
+    ## Until then, allow an omitted "..." w/o checking
     if(is.na(match("...", mnames)) && !is.na(match("...", fnames)))
         fnames <- fnames[-match("...", fnames)]
     omitted <- is.na(match(fnames, mnames))
     if(!any(omitted))
         return(signature)
+    label <- paste("In method for function \"", f,"\": ", sep="")
     if(!all(diff(seq(along=fnames)[!omitted]) > 0))
-        stop("Formal arguments in method and function don't appear in the same order")
-    specified <- omitted[seq(length=length(signature))]
-    if(any(specified) &&
-       any(is.na(match(signature[specified], c("ANY", "missing")))))
-        stop(paste("Formal arguments omitted in the method definition cannot be in the signature:",
-                   paste(fnames[is.na(match(signature[omitted], c("ANY", "missing")))], collapse = ", ")))
-    message("Expanding the signature to include omitted arguments in definition: ",
+        stop(label, "Formal arguments in method and function don't appear in the same order")
+    signature <- c(signature, rep("ANY", length(fnames)-length(signature)))
+    if(any(is.na(match(signature[omitted], c("ANY", "missing")))))
+        stop(label, "Formal arguments omitted in the method definition cannot be in the signature:",
+                   paste(fnames[is.na(match(signature[omitted], c("ANY", "missing")))], collapse = ", "))
+    else if(!all(signature[omitted] == "missing")) {
+        message(label, "Expanding the signature to include omitted arguments in definition: ",
             paste(fnames[omitted], "= \"missing\"",collapse = ", "))
-    signature[omitted] <- "missing"
-    ## there may have been some unspecified args; they go to "ANY"
-    ## (R now inserts character NA's if signature was expanded)
-    signature[is.na(signature) | (nchar(signature) == 0) ] <- "ANY"
+        signature[omitted] <- "missing"
+    }
     ## remove trailing "ANY"'s
     n <- length(signature)
     while(identical(signature[[n]], "ANY"))
@@ -553,8 +558,11 @@ cacheGenericsMetaData <- function(generics, attach = TRUE, where, package) {
                     if(is.numeric(where))
                         where <- search()[where]
                     ## are there other methods for f still left?
-                    if((is.environment(where) && length(dbs)>1) ||
-                       (any(is.na(match(dbs, where)))))
+                    if(is.environment(where)){
+                        if(length(dbs)>1)
+                            code <- "reset"
+                    }
+                    else if(any(is.na(match(dbs, where))))
                         code <- "reset"
                 }
             }
@@ -820,3 +828,22 @@ metaNameUndo <- function(strings, prefix = "M", searchForm = FALSE) {
     }
 }
     
+.GenericInPrimitiveMethods <- function(mlist, f) {
+    methods <- mlist@methods
+    for(i in seq(along = methods)) {
+        mi <- methods[[i]]
+        if(is(mi, "function")) {
+            body(mi, envir = environment(mi)) <-
+                substitute({.Generic <- FF; BODY},
+                  list(FF = f,BODY = body(mi)))
+        }
+        else if(is(mi, "MethodsList"))
+            mi <- Recall(mi, f)
+        else
+            stop("Internal error: Bad methods list object in fixing methods for prmitive function \"",
+                 f, "\"")
+        methods[[i]] <- mi
+    }
+    mlist@methods <- methods
+    mlist
+}
