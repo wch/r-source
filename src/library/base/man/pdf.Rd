@@ -60,9 +60,6 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
   At present the PDF is fairly simple, with each page being represented
   as a single stream.  The \R graphics model does not distinguish
   graphics objects at the level of the driver interface.
-
-  There is an internal limit of 500 pages per PDF file, which should
-  be ample.
 }
 \note{
   Acrobat Reader does not use the fonts specified but rather emulates

@@ -417,6 +417,9 @@ BUG FIXES
 	that a character value could not be longer than the existing 
 	levels.
 
+    o   The pdf() device was running out of objects before the
+	documented 500 page limit.  Now there is no limit.
+
 
 
 	**************************************************

@@ -2568,8 +2568,9 @@ typedef struct {
     } current;
 
     int nobjs;  /* number of objects */
-    int pos[1100]; /* object positions */
-    int pageobj[500]; /* page object numbers */
+    int *pos; /* object positions */
+    int *pageobj; /* page object numbers */
+    int pagemax;
     int startstream; /* position of start of current stream */
     Rboolean inText;
 }
@@ -2638,16 +2639,28 @@ innerPDFDeviceDriver(NewDevDesc* dd, char *file, char *family, char *encoding,
     /* allocate new PDF device description */
     if (!(pd = (PDFDesc *) malloc(sizeof(PDFDesc))))
 	return 0;
-
     /* from here on, if need to bail out with "error", must also */
     /* free(pd) */
+
+    pd->pos = (int *) calloc(350, sizeof(int));
+    if(!pd->pos) {
+	free(pd); free(dd);
+	error("cannot allocate pd->pos");
+    }
+    pd->pageobj = (int *) calloc(100, sizeof(int));
+    if(!pd->pageobj) {
+	free(pd->pos);free(pd); free(dd);
+	error("cannot allocate pd->pageobj");
+    }
+    pd->pagemax = 100;
+
 
     /* initialize PDF device description */
     strcpy(pd->filename, file);
     pd->fontfamily = MatchFamily(family);
     if(strlen(encoding) > PATH_MAX - 1) {
 	free(dd);
-	free(pd);
+	free(pd->pos); free(pd->pageobj); free(pd);
 	error("encoding path is too long");
     }
     strcpy(pd->encpath, encoding);
@@ -2659,7 +2672,7 @@ innerPDFDeviceDriver(NewDevDesc* dd, char *file, char *family, char *encoding,
     pointsize = floor(ps);
     if(setbg == NA_INTEGER && setfg  == NA_INTEGER) {
 	free(dd);
-	free(pd);
+	free(pd->pos); free(pd->pageobj); free(pd);
 	error("invalid foreground/background color (pdf)");
     }
 
@@ -2716,7 +2729,7 @@ innerPDFDeviceDriver(NewDevDesc* dd, char *file, char *family, char *encoding,
     /*	Start the driver */
 
     if(!PDF_Open(dd, pd)) {
-	free(pd);
+	free(pd->pos); free(pd->pageobj); free(pd);
 	return 0;
     }
 
@@ -3025,8 +3038,16 @@ static void PDF_NewPage(int fill, double gamma, NewDevDesc *dd)
     PDFDesc *pd = (PDFDesc *) dd->deviceSpecific;
     char buf[512];
 
-    if(pd->pageno > 499 || pd->nobjs > 1099)
-	error("limit on pages or objects exceeded:please shut down the PDFdevice");
+    if(pd->pageno >= pd->pagemax || pd->nobjs >= 3*pd->pagemax) {
+	pd->pageobj = (int *) 
+	    realloc(pd->pageobj, 2*pd->pagemax * sizeof(int));
+	pd->pos = (int *) realloc(pd->pos, 
+				  (6*pd->pagemax + 50) * sizeof(int));
+	if(!pd->pos || !pd->pageobj)
+	    error("unable to increase page limit: please shutdown the pdf device");
+	pd->pagemax *= 2;
+    }
+    
 
     if(pd->pageno > 0) {
 	PDF_endpage(pd);
@@ -3065,7 +3086,7 @@ static void PDF_Close(NewDevDesc *dd)
 
     if(pd->pageno > 0) PDF_endpage(pd);
     PDF_endfile(pd);
-    free(pd);
+    free(pd->pos); free(pd->pageobj); free(pd);
 }
 
 static void PDF_Activate(NewDevDesc *dd) {}
