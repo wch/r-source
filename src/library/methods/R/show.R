@@ -5,7 +5,7 @@ showDefault <-
         .Internal(print.default(x, NULL, TRUE, NULL, NULL, FALSE, FALSE))
 
     cl <- .class1(object)
-    if(isClass(cl) && is.na(match(cl, .BasicClasses))) {
+    if(isClass(cl) && is.na(match(cl, .BasicClasses)) && !extends(cl, "oldClass")) {
         cat("An object of class \"", cl, "\"\n", sep="")
         slots <- slotNames(cl)
         if(!is.na(match(".Data", slots))) {
@@ -25,8 +25,9 @@ showDefault <-
     }
     else {
         printFun <- printNoClass
-        # Try to honor old-style methods for basic classes & undefined classes.
-        if(oldMethods) {
+        ## Try to honor old-style methods for declared S3 classes &  (if oldMethods is TRUE)
+        ## for undefined classes.
+        if(oldMethods || extends(cl, "oldClass")) {
             oldMethod <- paste("print", cl, sep=".")
             if(existsFunction(oldMethod))
                 printFun <- getFunction(oldMethod, generic = FALSE)
