@@ -612,3 +612,7 @@ Date: Wed, 15 May 2002 08:30:50 +0200 (MET DST)
 Subject: Mean and var inconsistency
 From: Kevin.Wright@pioneer.com
 Date: Wed, 2 Oct 2002 16:19:27 +0200 (MET DST)
+* PR# 2345 *
+Subject: difftime arithmetic
+From: B.Rowlingson@lancaster.ac.uk
+Date: Wed, 4 Dec 2002 17:58:49 +0100 (MET)
