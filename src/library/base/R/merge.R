@@ -36,7 +36,7 @@ merge.data.frame <-
         ## was: stop("no columns to match on")
         ## return the cartesian product of x and y :
         ij <- expand.grid(1:nx, 1:ny)
-        res <- cbind(x[ij[,1],], y[ij[,2],])
+        res <- cbind(x[ij[,1], , drop = FALSE], y[ij[,2], , drop = FALSE])
     }
     else {
         if(any(by.x == 0)) {

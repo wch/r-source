@@ -47,6 +47,9 @@ BUG FIXES
     o	cor(<matrix>, use = "pairwise") gave wrong result in 1.8.0 (only).
 	(PR#4646)
 
+    o   merge.data.frame could give incorrect names when one of the
+	arguments had only one column.  (PR#4299)
+
 
 
 		CHANGES IN R VERSION 1.8.0

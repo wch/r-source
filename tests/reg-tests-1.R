@@ -2715,6 +2715,14 @@ stopifnot(women[2, 1] == 77)
 ## was reversed from May 2002 to Oct 2003
 
 
+## merge.data.frame with a single-column df (PR#4299)
+x <- data.frame(x = 1:5, y = letters[1:5])
+y <- data.frame(z = 1:2)
+z <- merge(x, y)
+stopifnot(identical(names(z), c("x", "y", "z")))
+## third name was wrong in 1.8.0
+
+
 ## cor(mat, use = "pair") was plainly wrong
 data(longley) # has no NA's -- hence all "use = " should give the same!
 X <- longley
