@@ -1311,7 +1311,7 @@ zlib                   use --without-zlib
 @noindent
 and @code{bzip2} and @code{pcre} are problematic when building
 @file{libR.so}, only.  These can be avoided by @option{--without-bzlib}
-and @option{--without-pcre} respectively.
+and @option{--without-pcre} respectively, but these are the defaults.
 
 Some versions of @command{gcc} may contain what appears to be a bug at
 the @option{-O2} optimization level that causes
