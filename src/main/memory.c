@@ -1032,6 +1032,7 @@ static void RunGenCollect(int size_needed)
     FORWARD_NODE(NA_STRING);
     FORWARD_NODE(R_BlankString);
     FORWARD_NODE(R_UnboundValue);
+    FORWARD_NODE(R_RestartToken);
     FORWARD_NODE(R_MissingArg);
     FORWARD_NODE(R_CommentSxp);
 
