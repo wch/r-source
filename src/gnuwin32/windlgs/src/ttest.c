@@ -19,6 +19,7 @@ static char *v[2];
 
 static char *alts[] = {"two.sided", "greater", "less", NULL};
 
+/* keyboard shortcuts: CR or A/a accepts, ESC or C/c cancels */
 static void hit_key(window w, int key)
 {
     if(key == '\n' || tolower(key) == 'a') {
@@ -68,6 +69,9 @@ static void cancel(button b)
     done = 2;
 }
 
+/* just retrieve values from the dialog box and assemble call in
+   interpreted code
+*/
 void menu_ttest(char **vars, int ints[], double level[])
 {
     done = 0;
@@ -99,6 +103,7 @@ static void cancel2(button b)
     done = 2;
 }
 
+/* assemble call as string in C code */
 void menu_ttest2()
 {
     char cmd[256];
@@ -124,13 +129,19 @@ void menu_ttest2()
     delobj(win);
 }
 
+
+/* assemble and evaluate call in C code */
 #include <Rinternals.h>
-#include <Rdefines.h>
+
+/* From Parse.h, which is not public */
+#define PARSE_OK  1
+SEXP R_ParseVector(SEXP, int, int *);
 
 SEXP menu_ttest3()
 {
     char cmd[256];
-    SEXP cmdSexp;
+    SEXP cmdSexp, cmdexpr, ans = R_NilValue;
+    int i, status;
     
     done = 0;
     create_dialog();
@@ -151,7 +162,15 @@ SEXP menu_ttest3()
     delobj(bApply);
     delobj(win);
     PROTECT(cmdSexp = allocVector(STRSXP, 1));
-    STRING(cmdSexp)[0] = COPY_TO_USER_STRING(cmd);
-    UNPROTECT(1);
-    return cmdSexp;
+    STRING(cmdSexp)[0] = mkChar(cmd);
+    cmdexpr = PROTECT(R_ParseVector(cmdSexp, -1, &status));
+    if (status != PARSE_OK) {
+	UNPROTECT(2);
+	error("invalid call %s", cmd);
+    }
+    /* Loop is needed here as EXPSEXP will be of length > 1 */
+    for(i = 0; i < length(cmdexpr); i++)
+	ans = eval(VECTOR(cmdexpr)[i], R_GlobalEnv);
+    UNPROTECT(2);
+    return ans;
 }

@@ -1,6 +1,8 @@
 #t.test(x, y = NULL, alternative = c("two.sided", "less", "greater"),
 #    mu = 0, paired = FALSE, var.equal = FALSE, conf.level = 0.95)
 
+## just retrieve values from the dialog box and assemble call in
+## interpreted code
 menu.ttest <- function()
 {
     z <- .C("menu_ttest", vars=character(2), ints=integer(4), level=double(1))
@@ -15,12 +17,15 @@ menu.ttest <- function()
     eval(oc)
 }
 
+## assemble call as string in C code
 menu.ttest2 <- function()
 {
     .C("menu_ttest2")
     return(invisible())
 }
-menu.ttest3 <- function() eval(parse(text=.Call("menu_ttest3")))
+
+## assemble and evaluate call in C code
+menu.ttest3 <- function() .Call("menu_ttest3")
 
 
 del.ttest <- function() winMenuDel("Statistics")

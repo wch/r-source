@@ -21,12 +21,12 @@ menu.ttest3()
   the way they return the information. \code{menu.ttest} returns the
   values of the fields etc for assembly in \R code. \code{menu.ttest2}
   submits a string directly to the console.  \code{menu.ttest3}
-  returns the expression to be evaluated as an \R string.
+  returns the parsed and evaluated expression as an R object.
 }
 
 \examples{
-## The function is currently defined as
-function () 
+## The functions are currently defined as
+menu.ttest <- function () 
 {
     z <- .C("menu_ttest", vars = character(2), ints = integer(4), 
             level = double(1))
@@ -38,6 +38,14 @@ function ()
                paired = z$ints[2] != 0, var.equal = z$ints[3] != 0, 
                conf.level = z$level)
     eval(oc)
-  }
+}
+
+menu.ttest2 <- function()
+{
+    .C("menu_ttest2")
+    return(invisible())
+}
+
+menu.ttest3 <- function() .Call("menu_ttest3")
 }
 \keyword{misc}
