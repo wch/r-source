@@ -21,7 +21,7 @@ try(expr, first = TRUE)
 \value{
   The value of the expression if \code{expr} is evaluated without error,
   but an invisible object of class \code{"try-error"} containing the
-  error message if it if fails. The normal error handling will print the
+  error message if it fails. The normal error handling will print the
   same message unless \code{options("show.error.messages")} is false.
 }
 \seealso{
