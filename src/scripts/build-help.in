@@ -11,6 +11,8 @@ use File::Basename;
 use Cwd;
 use Getopt::Long;
 
+$OSdir ="unix";
+
 @knownoptions = ("rhome:s", "html", "nroff", "latex", "example", "debug",
 		 "dosnames", "htmllists");
 GetOptions (@knownoptions) || usage();
