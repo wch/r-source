@@ -13,6 +13,7 @@
 \alias{print.summary.nls}
 \alias{weights.nls}
 \alias{AIC.nls}
+\alias{vcov.nls}
 \title{Nonlinear Least Squares}
 \synopsis{
 nls(formula, data = parent.frame(), start, control,
@@ -69,8 +70,9 @@ nls(formula, data = parent.frame(), start, control = nls.control(),
   in the example below.
   
   An \code{nls} object is a type of fitted model object.  It has methods
-  for the generic functions \code{coef}, \code{formula}, \code{resid},
-  \code{print}, \code{summary}, \code{AIC}, and \code{fitted}.
+  for the generic functions \code{\link{coef}}, \code{\link{formula}},
+  \code{\link{resid}}, \code{\link{print}}, \code{\link{summary}},
+  \code{\link{AIC}}, \code{\link{fitted}} and \code{\link{vcov}}.
 }
 \value{
   A list of

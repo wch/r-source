@@ -2,7 +2,6 @@
 \alias{vcov}
 \alias{vcov.lm}
 \alias{vcov.glm}
-\alias{vcov.nls}
 \alias{vcov.lme}
 \alias{vcov.gls}
 \alias{vcov.coxph}
