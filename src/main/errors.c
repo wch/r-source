@@ -30,6 +30,8 @@ extern void R_ProcessEvents(void);
 /* -> Errormsg.h */
 #include <Startup.h> /* rather cleanup ..*/
 #include <Rconnections.h>
+#include <R_ext/GraphicsDevice.h>
+#include <R_ext/GraphicsEngine.h> /* for GEonExit */
 
 #ifndef min
 #define min(a, b) (a<b?a:b)
@@ -617,6 +619,11 @@ static void jump_to_top_ex(Rboolean traceback,
 	R_ClearerrConsole();
 	R_ParseError = 0;
     }
+
+    /*
+     * Reset graphics state
+     */
+    GEonExit();
 
     /* WARNING: If oldInError > 0 ABSOLUTELY NO ALLOCATION can be
        triggered after this point except whatever happens in writing

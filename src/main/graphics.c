@@ -1743,6 +1743,11 @@ static void invalidError(char* message, DevDesc *dd)
     error(message);
 }
 
+Rboolean GRecording(SEXP call, DevDesc *dd)
+{  
+    return GErecording(call, (GEDevDesc *) dd);
+}
+
 /*  GNewPlot -- Begin a new plot (advance to new frame if needed)  */
 DevDesc *GNewPlot(Rboolean recording)
 {
@@ -4766,15 +4771,7 @@ void initDisplayList(DevDesc *dd)
 
 void recordGraphicOperation(SEXP op, SEXP args, DevDesc *dd)
 {
-    SEXP lastOperation = lastElt(((GEDevDesc*) dd)->dev->displayList);
-    if (((GEDevDesc*) dd)->dev->displayListOn) {
-	SEXP newOperation = CONS(op, args);
-	if (lastOperation == R_NilValue)
-	    ((GEDevDesc*) dd)->dev->displayList = CONS(newOperation,
-						       R_NilValue);
-	else
-	    SETCDR(lastOperation, CONS(newOperation, R_NilValue));
-    }
+    GErecordGraphicOperation(op, args, ((GEDevDesc*) dd));
 }
 
 /* NOTE this is not declared static because it is also used in

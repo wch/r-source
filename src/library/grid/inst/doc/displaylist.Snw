@@ -1,6 +1,7 @@
 \documentclass[a4paper]{article}
 %\VignetteIndexEntry{Display Lists in grid}
 %\VignettePackage{grid}
+%\VignetteDepends{graphics}
 %\VignetteDepends{gridBase}
 \newcommand{\grid}{{\tt grid}}
 \newcommand{\gridBase}{{\tt gridBase}}
@@ -102,48 +103,18 @@ After the {\tt grid.edit}, the rectangle has been redrawn, but the
 base plot has not.
 \end{enumerate}
 
-\section*{Avoiding the graphics engine display list}
+\section*{Saving calculations on the graphics engine display list\\
+and saving base graphics on the \grid{} display list}
 
-The problems described above can all be avoided if \grid{} is able 
-to control all redrawing of output.  There are several parts to this 
-solution:
-\begin{itemize}
-\item It must be possible to avoid using the graphics engine 
-display list.  This facility is now provided by the 
-{\tt engine.display.list()} function.  The following code
-will stop \grid{} output from being recorded on the 
-graphics engine display list:
-
-<<results=hide>>=
-engine.display.list(FALSE)
-
-@
-\item \grid{} must be alerted whenever a device has been resized or
-output is being
-copied between devices.  This is handled in C code;  if the 
-graphics engine display list is not being used then \grid{}
-automatically redraws its own display list whenever a resize
-or copy occurs.
-
-\item Calculations must be recorded on \grid{}'s display list.
-If graphics output is based on calculations which will not be consistent
-when the device is resized (e.g., a call to {\tt convertUnit()},
-or calls to the \gridBase{} functions),
-then a device resize will produce inconsistent output unless
-the calculations are recorded somehow on \grid{}'s display list.
-This appears to be exactly the same problem as we had with
-the graphics engine display list; the difference is that there {\it is}
-a way to record calculations on \grid{}'s display list.
-
-When a \grid{} grob is drawn the {\tt drawDetails} method
-for that grob will be called;  if calculations are put within
+Both of the problems described in the previous section can be
+avoided by using a {\tt drawDetails()} method in \grid{}.
+When a \grid{} grob is drawn, the {\tt drawDetails} method
+for that grob is called;  if calculations are put within
 a {\tt drawDetails} method, then the calculations will be
 performed every time the grob is drawn.
-\end{itemize}
 
-All of 
-this means that it is possible, for example, to use {\tt convertUnit()}
-and have the result consistent across device resizese or 
+This means that it is possible, for example, to use {\tt convertUnit()}
+and have the result consistent across device resizes or 
 copies\footnote{In 
 each of the examples that follow, you should execute the example
 code, resize the device to see any inconsistency, then close the
@@ -158,17 +129,7 @@ will no longer correspond to 1''.
 grid.rect(width=convertWidth(unit(1, "inches"), "npc"))
 
 @
-This second piece of code demonstrates that it is not enough simply
-to use \grid{}'s display list;  the calculations are still not being
-recorded so the inconsistency will still occur.
-
-<<results=hide>>=
-engine.display.list(FALSE)
-grid.rect(width=convertWidth(unit(1, "inches"), "npc"))
-
-@
-Finally, the next piece of code demonstrates that, if we only
-use \grid{}'s display list {\em and} we
+The next piece of code demonstrates that, if we 
 place the calculations within a {\tt drawDetails} method, then
 the output remains consistent across device resizes and 
 copies\footnote{In order to avoid drawing the rectangle 
@@ -177,8 +138,7 @@ multiple times, we have draw the rectangle
 the {\tt "myrect"} grob is recorded on the display list).}.
 
 <<results=hide>>=
-engine.display.list(FALSE)
-drawDetails.myrect <- function(x, x.wrapped, recording) {
+drawDetails.myrect <- function(x, recording) {
   gr <- rectGrob(width=convertWidth(unit(1, "inches"), "npc"))
   grid.draw(gr, recording=FALSE)
 }
@@ -186,8 +146,10 @@ grid.draw(grob(cl="myrect"))
  
 
 @
-A more impressive use of this facility can be obtained from an example
-using 
+We will now show that a {\tt drawDetails()} method can also be used
+to save base graphics output on the \grid{} display list.
+This  example
+uses 
 \gridBase{} to combine base and \grid{} graphics output.
 Here I replicate the last example from the ``gridBase'' vignette --
 a set of base pie charts within \grid{} viewports within a base plot.
@@ -226,21 +188,20 @@ every time the grob is drawn {\em and} the calls to the base graphics
 functions are in here too so that they are called for every redraw.
 
 <<results=hide>>=
-drawDetails.pieplot <- function(grob, grob.wrapped, recording) {
-  plot(x, y, xlim=c(-0.2, 1.2), ylim=c(-0.2, 1.2), type="n")
+drawDetails.pieplot <- function(x, recording) {
+  plot(x$x, x$y, xlim=c(-0.2, 1.2), ylim=c(-0.2, 1.2), type="n")
   vps <- baseViewports()
-  par(new=TRUE)
   pushViewport(vps$inner, vps$figure, vps$plot, recording=FALSE)
-  grid.draw(grob$gs, recording=FALSE)
+  grid.draw(x$gs, recording=FALSE)
   for (i in 1:4) { 
-    pushViewport(viewport(x=unit(x[i], "native"),
-                           y=unit(y[i], "native"),
-                           width=sizemult[i]*maxpiesize,
-                           height=sizemult[i]*maxpiesize),
+    pushViewport(viewport(x=unit(x$x[i], "native"),
+                           y=unit(x$y[i], "native"),
+                           width=x$sizemult[i]*x$maxpiesize,
+                           height=x$sizemult[i]*x$maxpiesize),
                  recording=FALSE)
-    grid.draw(grob$gr, recording=FALSE)
+    grid.draw(x$gr, recording=FALSE)
     par(plt=gridPLT(), new=TRUE)
-    pie(z[i,], radius=1, labels=rep("", 2))
+    pie(x$z[i,], radius=1, labels=rep("", 2))
     popViewport(recording=FALSE)
   }
   popViewport(3, recording=FALSE)
@@ -250,20 +211,16 @@ drawDetails.pieplot <- function(grob, grob.wrapped, recording) {
 The ``pieplot'' is created by assembling the component grobs
 into a collective grob of the appropriate class; the {\tt drawDetails}
 method takes care of actually producing the output.
-An important additional step here is that I turn off the graphics engine
-display list for the base graphics also (otherwise I would
-get multiple copies of the base graphics output).  
 
 % produce figure, but don't include 
 % (to avoid par setting contamination between code segments)
 
 <<results=hide, fig=TRUE, width=6, height=6, include=FALSE>>=
 if ("gridBase" %in% .packages()) {
-engine.display.list(FALSE)
-dev.control(displaylist="inhibit")
-
-grid.draw(grob(gs=gs, gr=gr, cl="pieplot"))
-}
+grid.draw(grob(x=x, y=y, z=z, 
+               maxpiesize=maxpiesize, sizemult=sizemult,
+               gs=gs, gr=gr, cl="pieplot"))
+}		    
 
 @
 
@@ -283,33 +240,15 @@ resized without the legend going crazy.
 % (to avoid par setting contamination between code segments)
 
 <<results=hide, fig=TRUE, include=FALSE>>=
-drawDetails.mylegend <- function(grob, grob.wrapped, recording) {
+drawDetails.mylegend <- function(x, recording) {
    x <- 0:64/64
    y <- sin(3*pi*x)
    plot(x, y, type="l", col="blue", main = "points with bg \& legend(*, pt.bg)")
    points(x, y, pch=21, bg="white")
    legend(.4,1, "sin(c x)", pch=21, pt.bg="white", lty=1, col = "blue")
 }
-engine.display.list(FALSE)
-dev.control(displaylist="inhibit")
 grid.draw(grob(cl="mylegend"))
 
-
-@
-
-\section*{Disadvantages to using \grid{} for all redraws}
-
-The main problem here is that redrawing \grid{}'s display list
-is slower than redrawing the graphics engine display list.
-This is just the price that must be paid in order to obtain the
-advantages of using \grid{}'s display list.
-
-% Turn engine display list back on 
-% in case other code is run in same session as this vignette
-
-<<echo=FALSE, results=hide>>=
-engine.display.list(TRUE)
-dev.control(displaylist="enable")
 
 @
 

@@ -3,7 +3,8 @@ export(Hershey, check.options, col2rgb, colors, colours, cm,
        dev.interactive, dev.list, dev.next, dev.off, dev.prev,
        dev.print, dev.set, graphics.off, gray, grey, heat.colors, hsv,
        palette, pdf, pictex, postscript, postscriptFont,
-       postscriptFonts, ps.options, rainbow, recordPlot, replayPlot,
+       postscriptFonts, ps.options, rainbow, recordGraphics,
+       recordPlot, replayPlot,
        rgb, rgb2hsv, terrain.colors, topo.colors, xfig, xinch,
        xyinch, yinch)
 

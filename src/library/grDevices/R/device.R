@@ -177,6 +177,10 @@ dev.control <- function(displaylist = c("inhibit", "enable"))
     invisible()
 }
 
+recordGraphics <- function(expr, list, env) {
+  .Internal(recordGraphics(substitute(expr), list, env))
+}
+
 graphics.off <- function ()
 {
     while ((which <- dev.cur()) != 1)

@@ -59,7 +59,7 @@ push.vp.vpTree <- function(vp, recording) {
   # Special case if user has saved the entire vpTree
   # parent will be the ROOT viewport, which we don't want to
   # push (grid ensures it is ALWAYS there)
-  if (!(vp$paren$name %in% "ROOT"))
+  if (!(vp$parent$name %in% "ROOT"))
     push.vp(vp$parent, recording)
   push.vp(vp$children, recording)
 }
@@ -386,31 +386,12 @@ grid.Call.graphics <- function(fnname, ...) {
   # list if the engineDLon flag is set
   engineDLon <- grid.Call("L_getEngineDLon")
   if (engineDLon) {
-    # Avoid recording graphics operations on the engine's display list
-    # when we are already recording!
-    engineRecording <- grid.Call("L_getEngineRecording")
-    if (engineRecording) {
-      .Call("L_gridDirty", PACKAGE="grid")
-      result <- .Call(fnname, ..., PACKAGE="grid")
-    } else {
-      # NOTE: we MUST record the fact that we are already recording
-      # otherwise when we replay the engine display list, we will
-      # not know that at this point we were recording (my brain hurts)
-      # NOTE that it is ok to .Call.graphics("L_gridDirty")
-      # before .Call.graphics("L_setEngineRecording") because we
-      # know that .Call.graphics("L_gridDirty") does not make
-      # a further .Call.graphics() call itself
-      # It is also appropriate that the first grid operation on
-      # the graphics engine display list is a gridDirty call.
-      # NOTE that we need a .Call.graphics("L_gridDirty") so that
-      # the the first thing on the engine display list is a dirty
-      # operation;  this is necessary in case the display list is
-      # played on another device (e.g., via replayPlot() or dev.copy())
-      .Call.graphics("L_gridDirty", PACKAGE="grid")
-      .Call.graphics("L_setEngineRecording", TRUE, PACKAGE="grid")
-      result <- .Call.graphics(fnname, ..., PACKAGE="grid")
-      .Call.graphics("L_setEngineRecording", FALSE, PACKAGE="grid")
-    }
+    # NOTE that we need a .Call.graphics("L_gridDirty") so that
+    # the the first thing on the engine display list is a dirty
+    # operation;  this is necessary in case the display list is
+    # played on another device (e.g., via replayPlot() or dev.copy())
+    .Call.graphics("L_gridDirty", PACKAGE="grid")
+    result <- .Call.graphics(fnname, ..., PACKAGE="grid")
   } else {
     .Call("L_gridDirty", PACKAGE="grid")
     result <- .Call(fnname, ..., PACKAGE="grid")

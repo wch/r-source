@@ -1306,9 +1306,17 @@ SEXP do_dotcall(SEXP call, SEXP op, SEXP args, SEXP env)
 SEXP do_Externalgr(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP retval;
+    GEDevDesc *dd = GEcurrentDevice();
+    Rboolean record = dd->recordGraphics;
+    dd->recordGraphics = FALSE;
     PROTECT(retval = do_External(call, op, args, env));
-    if (call != R_NilValue) {
-        GEDevDesc *dd = GEcurrentDevice();
+    /*
+     * If there is an error or user-interrupt in the above
+     * evaluation, dd->recordGraphics is set to TRUE 
+     * on all graphics devices (see GEonExit(); called in errors.c)
+     */
+    dd->recordGraphics = record;
+    if (GErecording(call, dd)) {
 	if (!GEcheckState(dd))
 	    error("Invalid graphics state");
 	GErecordGraphicOperation(op, args, dd);
@@ -1320,9 +1328,17 @@ SEXP do_Externalgr(SEXP call, SEXP op, SEXP args, SEXP env)
 SEXP do_dotcallgr(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP retval;
+    GEDevDesc *dd = GEcurrentDevice();
+    Rboolean record = dd->recordGraphics;
+    dd->recordGraphics = FALSE;
     PROTECT(retval = do_dotcall(call, op, args, env));
-    if (call != R_NilValue) {
-        GEDevDesc *dd = GEcurrentDevice();
+    /*
+     * If there is an error or user-interrupt in the above
+     * evaluation, dd->recordGraphics is set to TRUE 
+     * on all graphics devices (see GEonExit(); called in errors.c)
+     */
+    dd->recordGraphics = record;
+    if (GErecording(call, dd)) {
 	if (!GEcheckState(dd))
 	    error("Invalid graphics state");
 	GErecordGraphicOperation(op, args, dd);
@@ -1330,8 +1346,6 @@ SEXP do_dotcallgr(SEXP call, SEXP op, SEXP args, SEXP env)
     UNPROTECT(1);
     return retval;
 }
-
-
 
 static SEXP
 Rf_getCallingDLL()

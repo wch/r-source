@@ -37,10 +37,6 @@
 #define MAX_LAYOUT_ROWS 15
 #define MAX_LAYOUT_COLS 15
 
-/* NOTE: during replays, call == R_NilValue;
-   ----  the following adds readability: */
-#define GRecording(call)  (call != R_NilValue)
-
 typedef unsigned int rcolor;
 
 typedef struct {
@@ -377,6 +373,10 @@ typedef struct {
 #define str2col			Rf_str2col
 #define StrMatch		Rf_StrMatch
 #define isNAcol                 Rf_isNAcol
+
+/* NOTE: during replays, call == R_NilValue;
+   ----  the following adds readability: */
+Rboolean GRecording(SEXP, DevDesc*);
 
 /* Default the settings for general graphical parameters
  * (i.e., defaults that do not depend on the device type: */

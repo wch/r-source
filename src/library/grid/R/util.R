@@ -69,14 +69,14 @@ grid.grab <- function(...) {
           tempvp <- dlElt$vp
           if (!is.null(tempvp))
             tempdepth <- depth(tempvp)
-          grid.draw(tempvp)
+          grid.draw(tempvp, recording=FALSE)
           dlElt$vp <- NULL
         }
         grid.draw(dlElt, recording=FALSE)
         if (is.grob(dlElt)) {
           dlElt$vp <- current.vpPath()
           if (!is.null(tempvp))
-            upViewport(tempdepth)
+            upViewport(tempdepth, recording=FALSE)
           gList <- addToGList(dlElt, gList)
         }
       }

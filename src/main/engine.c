@@ -71,6 +71,7 @@ GEDevDesc* GEcreateDevDesc(NewDevDesc* dev)
     dd->newDevStruct = 1;
     dd->dev = dev;
     dd->dirty = FALSE;
+    dd->recordGraphics = TRUE;
     return dd;
 }
 
@@ -2263,6 +2264,16 @@ Rboolean GEcheckState(GEDevDesc *dd)
 }
 
 /****************************************************************
+ * GErecording
+ ****************************************************************
+ */
+
+Rboolean GErecording(SEXP call, GEDevDesc *dd) 
+{
+    return (call != R_NilValue && dd->recordGraphics);
+}
+
+/****************************************************************
  * GErecordGraphicOperation
  ****************************************************************
  */
@@ -2271,7 +2282,7 @@ void GErecordGraphicOperation(SEXP op, SEXP args, GEDevDesc *dd)
 {
     SEXP lastOperation = dd->dev->DLlastElt;
     if (dd->dev->displayListOn) {
-	SEXP newOperation = CONS(op, args);
+	SEXP newOperation = list2(op, args);
 	if (lastOperation == R_NilValue) {
 	    dd->dev->displayList = CONS(newOperation,
 						       R_NilValue);
@@ -2329,7 +2340,7 @@ void GEplayDisplayList(GEDevDesc *dd)
 	while (theList != R_NilValue && plotok) {
 	    SEXP theOperation = CAR(theList);
 	    SEXP op = CAR(theOperation);
-	    SEXP args = CDR(theOperation);
+	    SEXP args = CADR(theOperation);
 	    PRIMFUN(op) (R_NilValue, op, args, R_NilValue);
 	    /* Check with each graphics system that the plotting went ok
 	     */
@@ -2476,3 +2487,100 @@ void GEplaySnapshot(SEXP snapshot, GEDevDesc* dd)
 	GEinitDisplayList(dd);
 }
 
+/****************************************************************
+ * do_recordGraphics
+ * 
+ * A ".Primitive" R function
+ * 
+ ****************************************************************
+ */
+
+SEXP do_recordGraphics(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    SEXP x, xptr, evalenv, retval;
+    GEDevDesc *dd = GEcurrentDevice();
+    Rboolean record = dd->recordGraphics;
+    /*
+     * This function can be run under three conditions:
+     *  
+     *   (i) a top-level call to do_recordGraphics.
+     *       In this case, call != R_NilValue and 
+     *       dd->recordGraphics = TRUE 
+     *       [so GErecording() returns TRUE]
+     *
+     *   (ii) a nested call to do_recordGraphics.
+     *        In this case, call != R_NilValue but
+     *        dd->recordGraphics = FALSE 
+     *        [so GErecording() returns FALSE]
+     *
+     *   (iii) a replay of the display list
+     *         In this case, call == R_NilValue and
+     *         dd->recordGraphics = FALSE 
+     *         [so GErecording() returns FALSE]
+     */
+    /*
+     * First arg is an expression, second arg is a list, third arg is an env
+     */
+    SEXP code = CAR(args);
+    SEXP list = CADR(args);
+    SEXP parentenv = CADDR(args);
+    if (!isLanguage(code))
+      errorcall(call, "expr argument must be an expression");
+    if (TYPEOF(list) != VECSXP)
+      errorcall(call, "list argument must be a list");
+    if (!isEnvironment(parentenv))
+      errorcall(call, "env argument must be an environment");
+    /*
+     * This conversion of list to env taken from do_eval
+     */
+    PROTECT(x = VectorToPairList(list));
+    for (xptr = x ; xptr != R_NilValue ; xptr = CDR(xptr))
+	SET_NAMED(CAR(xptr) , 2);
+    /*
+     * The environment passed in as the third arg is used as
+     * the parent of the new evaluation environment.
+     */
+    PROTECT(evalenv = NewEnvironment(R_NilValue, x, parentenv));
+    dd->recordGraphics = FALSE;
+    PROTECT(retval = eval(code, evalenv));
+    /*
+     * If there is an error or user-interrupt in the above
+     * evaluation, dd->recordGraphics is set to TRUE 
+     * on all graphics devices (see GEonExit(); called in errors.c)
+     */
+    dd->recordGraphics = record;
+    if (GErecording(call, dd)) {
+	if (!GEcheckState(dd))
+	    error("Invalid graphics state");
+	GErecordGraphicOperation(op, args, dd);
+    }
+    UNPROTECT(3);
+    return retval;
+}
+
+/****************************************************************
+ * GEonExit
+ *
+ * Reset some important graphics state on an error/interrupt
+ ****************************************************************
+ */
+
+void GEonExit() 
+{
+  /*
+   * Run through all devices and turn graphics recording back on
+   * in case an error occurred in the middle of a do_recordGraphics
+   * call.
+   * Awkward cos device code still in graphics.c
+   * Can be cleaned up when device code moved here.
+   */
+    int i, devNum;
+    i = 1;
+    if (!NoDevices()) {
+	devNum = curDevice();
+	while (i++ < NumDevices()) {
+  	    ((GEDevDesc*) GetDevice(devNum))->recordGraphics = TRUE;
+	    devNum = nextDevice(devNum);
+	}
+    }
+}

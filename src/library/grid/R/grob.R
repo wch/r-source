@@ -1671,39 +1671,66 @@ postDraw.grob <- function(x) {
     popgrobvp(x$vp)
 }
 
-# FIXME:  should be on.exit(set.gpar(tempgpar)) ??
-grid.draw.grob <- function(x, recording=TRUE) {
+drawGrob <- function(x) {
   tempgpar <- grid.Call("L_getGPar")
   preDraw(x)
   # Do any class-specific drawing
-  drawDetails(x, recording)
+  drawDetails(x, recording=FALSE)
   postDraw(x)
   # Do not call set.gpar because set.gpar accumulates cex
   grid.Call.graphics("L_setGPar", tempgpar)
+}
+
+# FIXME:  should be on.exit(set.gpar(tempgpar)) ??
+grid.draw.grob <- function(x, recording=TRUE) {
+  engineDLon <- grid.Call("L_getEngineDLon")
+  if (engineDLon)   
+    recordGraphics(drawGrob(x),
+                   list(x=x),
+                   getNamespace("grid"))
+  else
+    drawGrob(x)
   if (recording)
     record(x)
   invisible()
 }
 
 grid.draw.gList <- function(x, recording=TRUE) {
-  lapply(x, grid.draw, recording=recording)
+  engineDLon <- grid.Call("L_getEngineDLon")
+  if (engineDLon) 
+    recordGraphics(lapply(x, grid.draw, recording=FALSE),
+                   list(x=x),
+                   getNamespace("grid"))
+  else    
+    lapply(x, grid.draw, recording=FALSE)
   invisible()
 }
 
-# FIXME:  should be on.exit(set.gpar(tempgpar)) ??
-grid.draw.gTree <- function(x, recording=TRUE) {
+drawGTree <- function(x) {
   tempgrob <- grid.Call("L_getCurrentGrob")
   tempgpar <- grid.Call("L_getGPar")
   preDraw(x)
   # Do any class-specific drawing
-  drawDetails(x, recording)
+  drawDetails(x, recording=FALSE)
   # Draw all children
   grid.draw(x$children, recording=FALSE)
   postDraw(x)
   # Do not call set.gpar because set.gpar accumulates cex
   grid.Call.graphics("L_setGPar", tempgpar)
-  # Do this as a .Call.graphics to get it onto the base display list
+  # Do this as a .Call.graphics to get it onto the
+  # base display list
   grid.Call.graphics("L_setCurrentGrob", tempgrob)
+}
+
+# FIXME:  should be on.exit(set.gpar(tempgpar)) ??
+grid.draw.gTree <- function(x, recording=TRUE) {
+  engineDLon <- grid.Call("L_getEngineDLon")
+  if (engineDLon) 
+    recordGraphics(drawGTree(x),
+                   list(x=x),
+                   getNamespace("grid"))
+  else 
+    drawGTree(x)
   if (recording)
     record(x)
   invisible()

@@ -1075,7 +1075,7 @@ SEXP do_par(SEXP call, SEXP op, SEXP args, SEXP env)
 	return R_NilValue/* -Wall */;
     }
     /* should really only do this if specifying new pars ?  yes! [MM] */
-    if (new_spec && call != R_NilValue)
+    if (new_spec && GRecording(call, dd))
 	recordGraphicOperation(op, originalArgs, dd);
     return value;
 }
@@ -1215,7 +1215,7 @@ SEXP do_layout(SEXP call, SEXP op, SEXP args, SEXP env)
 
     GReset(dd);
 
-    if (call != R_NilValue)
+    if (GRecording(call, dd))
 	recordGraphicOperation(op, originalArgs, dd);
     return R_NilValue;
 }
