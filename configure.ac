@@ -1056,7 +1056,7 @@ case "${host_os}" in
     PACKAGE_VERSION_MAJOR=`echo "${PACKAGE_VERSION}" | \
       sed -e "s/\.//" -e "s/\..*$//"`
     PACKAGE_VERSION_MINOR=`echo "${PACKAGE_VERSION}" | \
-      sed -e "s/.*\.\([^.][^.]*$\)/\1/"`
+      sed -e "s/.*\.\([[^.]][[^.]]*$\)/\1/"`
     DYLIB_EXT=".so.${PACKAGE_VERSION_MAJOR}.${PACKAGE_VERSION_MINOR}"
     ;;
 esac
