@@ -144,7 +144,9 @@ static SEXP SetOption(SEXP tag, SEXP value)
     if (opt == R_NilValue) {
 	while (CDR(t) != R_NilValue)
 	    t = CDR(t);
+	PROTECT(value);
 	CDR(t) = allocList(1);
+	UNPROTECT(1);
 	opt = CDR(t);
 	TAG(opt) = tag;
     }

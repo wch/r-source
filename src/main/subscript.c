@@ -330,7 +330,7 @@ static SEXP stringSubscript(SEXP s, int ns, int nx, SEXP names, int *stretch)
 SEXP arraySubscript(int dim, SEXP s, SEXP x)
 {
     int nd, ns, stretch = 0;
-    SEXP dims, dnames;
+    SEXP dims, dnames, tmp;
     ns = length(s);
     dims = getAttrib(x, R_DimSymbol);
     nd = INTEGER(dims)[dim];
@@ -343,7 +343,10 @@ SEXP arraySubscript(int dim, SEXP s, SEXP x)
     case INTSXP:
 	return integerSubscript(s, ns, nd, &stretch);
     case REALSXP:
-	return integerSubscript(coerceVector(s, INTSXP), ns, nd, &stretch);
+    	PROTECT(tmp = coerceVector(s, INTSXP));
+	tmp = integerSubscript(tmp, ns, nd, &stretch);
+    	UNPROTECT(1);
+	return tmp;
     case STRSXP:
 	dnames = getAttrib(x, R_DimNamesSymbol);
 	if (dnames == R_NilValue)
