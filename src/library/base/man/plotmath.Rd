@@ -21,99 +21,104 @@
   show sample \R expressions, and the columns of black text show the
   resulting output.  
 
-  The available features are also described in the table below:
+  The available features are also described in the tables below:
 
   \tabular{ll}{
     \bold{Syntax} \tab \bold{Meaning} \cr
-    x +	y	  \tab x plus y	  \cr
-    x - y	  \tab x minus y \cr
-    x*y		  \tab juxtapose x and y \cr
-    x/y		  \tab x forwardslash y \cr
-    x \%+-\% y	  \tab x plus or minus y \cr
-    x \%/\% y	  \tab x divided by y \cr
-    x \%*\% y	  \tab x times y \cr
-    x[i]	  \tab x subscript i \cr
-    x^2		  \tab x superscript 2 \cr
-    paste(x, y, z) \tab juxtapose x, y, and z \cr
-    sqrt(x)	  \tab square root of x \cr
-    sqrt(x, y)	  \tab yth root of x \cr
-    x == y	  \tab x equals y \cr
-    x != y	  \tab x is not equal to y \cr
-    x < y	  \tab x is less than y \cr
-    x <= y	  \tab x is less than or equal to y \cr
-    x > y	  \tab x is greater than y \cr
-    x >= y	  \tab x is greater than or equal to y \cr
-    x \%~~\% y	  \tab x is approximately equal to y \cr
-    x \%=~\% y	  \tab x and y are congruent \cr
-    x \%==\% y	  \tab x is defined as y \cr
-    x \%prop\% y  \tab x is proportional to y \cr
-    plain(x)	  \tab draw x in normal font \cr
-    bold(x)	  \tab draw x in bold font \cr
-    italic(x)	  \tab draw x in italic font \cr
-    bolditalic(x) \tab draw x in bolditalic font \cr
-    list(x, y, z) \tab comma-separated list \cr
-    ...		  \tab ellipsis (height varies) \cr
-    cdots	  \tab ellipsis (vertically centred) \cr
-    ldots	  \tab ellipsis (at baseline) \cr
-    x \%subset\% y \tab x is a proper subset of y \cr
-    x \%subseteq\% y \tab x is a subset of y \cr
-    x \%notsubset\% \tab x is not a subset of y \cr
-    x \%supset\% y \tab x is a proper superset of y \cr
-    x \%supseteq\% y \tab x is a superset of y \cr
-    x \%in\% y	  \tab x is an element of y \cr
-    x \%notin\% y \tab x is not an element of y \cr
-    hat(x)	  \tab x with a circumflex \cr
-    tilde(x)	  \tab x with a tilde \cr
-    ring(x)	  \tab x with a ring \cr
-    bar(xy)	  \tab xy with bar \cr
-    widehat(xy)	  \tab xy with a wide circumflex \cr
-    widetilde(xy) \tab xy with a wide tilde \cr
-    x \%<->\% y	  \tab x double-arrow y \cr
-    x \%->\% y	  \tab x right-arrow y \cr
-    x \%<-\% y	  \tab x left-arrow y \cr
-    x \%up\% y	  \tab x up-arrow y \cr
-    x \%down\% y  \tab x down-arrow y \cr
-    x \%<=>\% y	  \tab x is equivalent to y \cr
-    x \%=>\% y	  \tab x implies y \cr
-    x \%<=\% y	  \tab y implies x \cr
-    x \%dblup\% y	  \tab x double-up-arrow y \cr
-    x \%dbldown\% y \tab x double-down-arrow y \cr
-    alpha - omega \tab greek symbols \cr
-    Alpha - Omega \tab uppercase greek symbols \cr
-    infinity	  \tab infinity symbol \cr
-    32*degree	  \tab 32 degrees \cr
-    60*minute	  \tab 60 minutes of angle \cr
-    30*second	  \tab 30 seconds of angle \cr
-    displaystyle(x) \tab draw x in normal size (extra spacing) \cr
-    textstyle(x)  \tab draw x in normal size \cr
-    scriptstyle(x) \tab draw x in small size \cr
-    scriptscriptstyle(x) \tab draw x in very small size \cr
-    x ~~ y        \tab put extra space between x and y \cr
-    x + phantom(0) + y \tab leave gap for "0", but don't draw it \cr
-    x + over(1, phantom(0)) \tab leave vertical gap for "0" (don't draw) \cr
-    frac(x, y)	  \tab x over y \cr
-    over(x, y)	  \tab x over y \cr
-    atop(x, y)	  \tab x over y (no horizontal bar) \cr
-    sum(x[i], i==1, n) \tab sum x[i] for i equals 1 to n \cr
-    prod(plain(P)(X==x), x) \tab product of P(X=x) for all values of x \cr
-    integral(f(x)*dx, a, b) \tab definite integral of f(x) wrt x \cr
-    union(A[i], i==1, n) \tab union of A[i] for i equals 1 to n \cr
-    intersect(A[i], i==1, n) \tab intersection of A[i] \cr
-    lim(f(x), x \%->\% 0) \tab limit of f(x) as x tends to 0 \cr
-    min(g(x), x > 0) \tab minimum of g(x) for x greater than 0 \cr
-    inf(S)        \tab infimum of S \cr
-    sup(S)	  \tab supremum of S \cr
-    x^y + z	  \tab normal operator precedence \cr
-    x^(y + z)	  \tab visible grouping of operands \cr
-    x^{y + z}	  \tab invisible grouping of operands \cr
-    group("(",list(a, b),"]") \tab specify left and right delimeters \cr
-    bgroup("(",atop(x,y),")") \tab use scalable delimiters \cr
-    group(lceil, x, rceil) \tab special delimiters \cr
+    \code{x + y}   \tab x plus y   \cr
+    \code{x - y}   \tab x minus y \cr
+    \code{x*y}    \tab juxtapose x and y \cr
+    \code{x/y}    \tab x forwardslash y \cr
+    \code{x \%+-\% y}   \tab x plus or minus y \cr
+    \code{x \%/\% y}   \tab x divided by y \cr
+    \code{x \%*\% y}   \tab x times y \cr
+    \code{x[i]}   \tab x subscript i \cr
+    \code{x^2}    \tab x superscript 2 \cr
+    \code{paste(x, y, z}) \tab juxtapose x, y, and z \cr
+    \code{sqrt(x})   \tab square root of x \cr
+    \code{sqrt(x, y)}   \tab yth root of x \cr
+    \code{x == y}   \tab x equals y \cr
+    \code{x != y}   \tab x is not equal to y \cr
+    \code{x < y}   \tab x is less than y \cr
+    \code{x <= y}   \tab x is less than or equal to y \cr
+    \code{x > y}   \tab x is greater than y \cr
+    \code{x >= }y   \tab x is greater than or equal to y \cr
+    \code{x \%~~\% y}   \tab x is approximately equal to y \cr
+    \code{x \%=~\% y}   \tab x and y are congruent \cr
+    \code{x \%==\% y}   \tab x is defined as y \cr
+    \code{x \%prop\% y}  \tab x is proportional to y \cr
+    \code{plain(x)}   \tab draw x in normal font \cr
+    \code{bold(x)}   \tab draw x in bold font \cr
+    \code{italic(x)}   \tab draw x in italic font \cr
+    \code{bolditalic(x)} \tab draw x in bolditalic font \cr
+    \code{list(x, y, z}) \tab comma-separated list \cr
+    \code{...}    \tab ellipsis (height varies) \cr
+    \code{cdots}   \tab ellipsis (vertically centred) \cr
+    \code{ldots}   \tab ellipsis (at baseline) \cr
+    \code{x \%subset\% y} \tab x is a proper subset of y \cr
+    \code{x \%subseteq\% y} \tab x is a subset of y \cr
+    \code{x \%notsubset\%} \tab x is not a subset of y \cr
+    \code{x \%supset\% y} \tab x is a proper superset of y \cr
+    \code{x \%supseteq\% y} \tab x is a superset of y \cr
+    \code{x \%in\% y}   \tab x is an element of y \cr
+    \code{x \%notin\% y} \tab x is not an element of y \cr
+    \code{hat(x)}   \tab x with a circumflex \cr
+    \code{tilde(x})   \tab x with a tilde \cr
+    \code{ring(x)}   \tab x with a ring \cr
+    \code{bar(xy})   \tab xy with bar \cr
+    \code{widehat(xy})   \tab xy with a wide circumflex \cr
+    \code{widetilde(xy}) \tab xy with a wide tilde \cr
+    \code{x \%<->\% y}   \tab x double-arrow y \cr
+    \code{x \%->\% y}   \tab x right-arrow y \cr
+    \code{x \%<-\% y}   \tab x left-arrow y \cr
+    \code{x \%up\% y}   \tab x up-arrow y \cr
+    \code{x \%down\% y}  \tab x down-arrow y \cr
+    \code{x \%<=>\% y}   \tab x is equivalent to y \cr
+    \code{x \%=>\% y}   \tab x implies y \cr
+    \code{x \%<=\% y}   \tab y implies x \cr
+    \code{x \%dblup\% y}   \tab x double-up-arrow y \cr
+    \code{x \%dbldown\% y} \tab x double-down-arrow y \cr
+  }
+  \tabular{ll}{
+%    \bold{Syntax} \tab \bold{Meaning} \cr
+    \code{alpha} -- \code{omega} \tab greek symbols \cr
+    \code{Alpha} -- \code{Omega} \tab uppercase greek symbols \cr
+    \code{infinity}   \tab infinity symbol \cr
+    \code{32*degree}   \tab 32 degrees \cr
+    \code{60*minute}   \tab 60 minutes of angle \cr
+    \code{30*second}   \tab 30 seconds of angle \cr
+    \code{displaystyle(x)} \tab draw x in normal size (extra spacing) \cr
+    \code{textstyle(x})  \tab draw x in normal size \cr
+    \code{scriptstyle(x)} \tab draw x in small size \cr
+    \code{scriptscriptstyle(x}) \tab draw x in very small size \cr
+    \code{x ~~ y}        \tab put extra space between x and y \cr
+    \code{x + phantom(0) + y} \tab leave gap for "0", but don't draw it \cr
+    \code{x + over(1, phantom(0))} \tab leave vertical gap for "0" (don't draw) \cr
+    \code{frac(x, y)}   \tab x over y \cr
+    \code{over(x, y)}   \tab x over y \cr
+    \code{atop(x, y)}   \tab x over y (no horizontal bar) \cr
+    \code{sum(x[i], i==1, n)} \tab sum x[i] for i equals 1 to n \cr
+    \code{prod(plain(P)(X==x), x)} \tab product of P(X=x) for all values of x \cr
+    \code{integral(f(x)*dx, a, b}) \tab definite integral of f(x) wrt x \cr
+    \code{union(A[i], i==1, n)} \tab union of A[i] for i equals 1 to n \cr
+    \code{intersect(A[i], i==1, n)} \tab intersection of A[i] \cr
+    \code{lim(f(x), x \%->\% 0)} \tab limit of f(x) as x tends to 0 \cr
+    \code{min(g(x), x > 0}) \tab minimum of g(x) for x greater than 0 \cr
+    \code{inf(S)}        \tab infimum of S \cr
+    \code{sup(S)}   \tab supremum of S \cr
+    \code{x^y + z}   \tab normal operator precedence \cr
+    \code{x^(y + z)}    \tab visible grouping of operands \cr
+    \code{x^{y + z}}  \tab invisible grouping of operands \cr
+    \code{group("(",list(a, b),"]")} \tab specify left and right delimeters \cr
+    \code{bgroup("(",atop(x,y),")")} \tab use scalable delimiters \cr
+    \code{group(lceil, x, rceil)} \tab special delimiters \cr
   }
 }
-\references{Murrell, P. and Ihaka, R. \emph{An approach to providing
-  mathematical annotation in plots}, Journal of Computational and Graphical
-  Statistics (In Press).}
+\references{
+  Murrell, P. and Ihaka, R. (2000) An approach to providing
+  mathematical annotation in plots. \emph{Journal of Computational
+    and Graphical Statistics} (In press).
+}
 \seealso{
   \code{\link{axis}},
   \code{\link{mtext}},
@@ -173,7 +178,7 @@ draw.plotmath.cell <- function(expr, i, nr, string = NULL) {
     c <- get.c(i, nr)
     if (is.null(string)) {
         string <- deparse(expr)
-	string <- substr(string, 12, nchar(string) - 1)
+        string <- substr(string, 12, nchar(string) - 1)
     }
     text((2*(c - 1) + 1), -r, string, col="grey")
     text((2*c), -r, expr, adj=c(.5,.5))
