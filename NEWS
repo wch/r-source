@@ -588,6 +588,7 @@ BUG FIXES
 	as.POSIXlt() was corrupted when trying to guess the DST offset
 	at dates the OS was unable to handle.
 
+    o	legend(x,y, leg) doesn't triple `leg' anymore when it is a call.
 
 
 

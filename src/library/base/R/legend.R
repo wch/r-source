@@ -71,7 +71,7 @@ function(x, y = NULL, legend, fill=NULL, col = "black", lty, lwd, pch,
     }
     do.lines <- (!missing(lty) && (is.character(lty) || any(lty > 0))
 		 ) || !missing(lwd)
-    n.leg <- length(legend)
+    n.leg <- if(is.call(legend)) 1 else length(legend)
 
     ## legends per column:
     n.legpercol <-

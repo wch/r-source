@@ -78,3 +78,8 @@ plot(UCBAdmissions, xlab = "x label", ylab = "YY")# wrong in 1.5.1
 plot(tt <- table(c(rep(0,7), rep(1,4), rep(5, 3))), axes = FALSE)
 plot(tt, xaxt = "n")
 ## wrong till (incl.) 1.6.x
+
+## legend with call
+lo <- legend(2,2, substitute(hat(theta) == that, list(that= pi)))
+stopifnot(length(lo$text$x) == 1)
+## length() was 3 till 1.7.x
