@@ -20,14 +20,14 @@
 void F77_SUB(sbart)
     (double *penalt, double *dofoff,
      double *xs, double *ys, double *ws, double *ssw,
-     long *n, double *knot, long *nk, double *coef,
-     double *sz, double *lev, double *crit, long *icrit,
-     double *spar, long *ispar, long *iter, double *lspar,
-     double *uspar, double *tol, double *eps, long *isetup,
+     int *n, double *knot, int *nk, double *coef,
+     double *sz, double *lev, double *crit, int *icrit,
+     double *spar, int *ispar, int *iter, double *lspar,
+     double *uspar, double *tol, double *eps, int *isetup,
      double *xwy, double *hs0, double *hs1, double *hs2,
      double *hs3, double *sg0, double *sg1, double *sg2,
      double *sg3, double *abd, double *p1ip, double *p2ip,
-     long *ld4, long *ldnk, long *ier)
+     int *ld4, int *ldnk, int *ier)
 {
 
 /* A Cubic B-spline Smoothing routine.
