@@ -24,6 +24,11 @@ BUG FIXES
     o	rbeta(), rf(), and rt() now support infinite parameter values; 
 	other distributions return NaN instead of NA for such.
 
+    o   redefining a class is now safer if the new definition
+        generates an error (previously some invalid metadata could be
+        left behind);  more errors are now caught by setClass(); e.g.,
+        class definition now correctly prohibits recursive inheritance.
+
 
 
 		CHANGES IN R VERSION 1.7.0

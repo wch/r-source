@@ -796,8 +796,13 @@ metaNameUndo <- function(strings, prefix = "M", searchForm = FALSE) {
     matched <- substr(strings, 1, n) == pattern
     value <- substring(strings[matched], n+1)
     pkg <- sub("^[^:]*", "", value) # will be "" if no : in the name
-    if(searchForm)
-        pkg <- paste("package", pkg, sep="")
+    if(searchForm) {
+        global <- grep(".GlobalEnv", value)
+        if(length(global)) {
+            pkg[-global] <- paste("package", pkg[-global], sep="")
+            pkg[global] <- substring(pkg[global],2)
+        }
+    }
     else
         pkg <- substring(pkg, 2)
     value <- sub(":.*","", value)
