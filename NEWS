@@ -1,3 +1,11 @@
+		CHANGES IN R VERSION 0.63.1
+
+BUG FIXES
+
+    o   build-help --dosnames should now also work for text help,
+        latex and examples.
+
+
 		CHANGES IN R VERSION 0.63
 
 NEW FEATURES
