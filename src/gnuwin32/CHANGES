@@ -16,7 +16,7 @@ Rcmd INSTALL (PR#6768).
 choose.files(multi=FALSE) was liable to give incorrect results (PR#6818).
 
 Workaround for bug in Microsoft critical update KB835732:  if HOMEPATH
-environment variable is not set properly, R would not start.
+environment variable is not set properly, R would not start (PR#6802).
 
 
 
