@@ -1,56 +1,58 @@
 density <-
-function (x, bw, adjust=1, kernel="gaussian", n=512, width, from,
-	to, cut = 3, plot.graph = FALSE)
+function(x, bw, adjust = 1, kernel="gaussian", window = kernel,
+	 n = 512, width, from, to, cut = 3, na.rm = FALSE)
 {
 	if (!is.numeric(x))
 		stop("argument must be numeric")
 	name <- deparse(substitute(x))
-	N <- length(x <- x[!is.na(x)])
+        x.na <- is.na(x)
+	if(na.rm) x <- x[!x.na]
+        has.na <- !na.rm && any(x.na)
+	N <- length(x)
 	k.list <- c("gaussian", "rectangular", "triangular", "cosine")
 	method <- pmatch(kernel, k.list)
 	if(is.na(method))
-	  stop(paste("kernel must be a 'pmatch' of",
-		     paste(k.list,collapse=', ')))
+		stop(paste("kernel must be a 'pmatch' of",
+                           paste(k.list,collapse=', ')))
+	##if(! method %in% 1:4) stop("unknown density estimation kernel")
 	if(n > 512) n <- 2^ceiling(log2(n)) #- to be fast with FFT
 
 	if (missing(bw))
 	 bw <-
 	  if(missing(width))
-		adjust * 1.06 * min(sd(x), IQR(x)/1.34) * N^-0.2
+		adjust * 1.06 * min(sd (x, na.rm=has.na),
+                                    IQR(x, na.rm=has.na)/1.34) * N^-0.2
 	  else 0.25 * width
 	if (missing(from))
-		from <- min(x) - cut * bw
+		from <- min(x, na.rm = has.na) - cut * bw
 	if (missing(to))
-		to <- max(x) + cut * bw
+		to   <- max(x, na.rm = has.na) + cut * bw
 	y <- .C("massdist",
 		x = as.double(x),
 		nx= N,
 		xlo = as.double(from),
 		xhi = as.double(to),
 		y = double(2 * n),
-		ny= as.integer(n)) $ y
+		ny= as.integer(n),
+                NAOK = has.na) $ y
 	xords <- seq(from, by = (to - from)/(n - 1), length = 2 * n)
 	kords <- xords - from
 	kords[(n + 2):(2 * n)] <- -kords[n:2]
-	kords <-
-	 if (method == 1) {
-		dnorm(kords, sd = bw)
-	 } else if (method == 2) {
-		a <- bw/0.2886751
-		ifelse(abs(kords) < 0.5 * a, 1/a, 0)
-	 } else if (method == 3) {
-		a <- bw/0.4082483
-		ifelse(abs(kords) < a, (1 - abs(kords)/a)/a, 0)
-	 } else if (method == 4) {
-		a <- bw/1.135724
-		ifelse(abs(kords) < a * pi, (1 + cos(kords/a))/(2*pi*a), 0)
-	 }
-	 else stop("unknown density estimation kernel")
+	kords <- switch(method,
+                        dnorm(kords, sd = bw),# 1
+                        { a <- bw/0.2886751
+                          ifelse(abs(kords) < 0.5 * a, 1/a, 0) },# 2
+                        { a <- bw/0.4082483
+                          ifelse(abs(kords) < a, (1 - abs(kords)/a)/a, 0) },# 3
+                        { a <- bw/1.135724
+                          ifelse(abs(kords) < a*pi,
+                                 (1+cos(kords/a))/(2*pi*a), 0)}# 4
+                        )
 	kords <- convolve(y, kords)[1:n]
 	xords <- seq(from, by = (to - from)/(n - 1), length = n)
 	structure(list(x = xords, y = kords, bw = bw, n = N,
-		call=match.call(), data.name=name),
-		class="density")
+                       call=match.call(), data.name=name, has.na = has.na),
+                  class="density")
 }
 
 plot.density <-
