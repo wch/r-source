@@ -99,6 +99,12 @@ smooth.spline(x, y, w = rep(1, length(x)), df = 5, spar = NULL,
   \eqn{\lambda}).  In \R's (\eqn{\log \lambda}) scale, it makes more
   sense to vary \code{spar} linearly.
 
+  Note however that currently the results may be come very unreliable
+  for \code{spar} values smaller than about -1 or -2.  The same may
+  happen for values larger than 2 or so. Don't think of setting
+  \code{spar} or the controls \code{low} and \code{high} outside such a
+  safe range, unless you know what you are doing!
+
   The ``generalized'' cross-validation method will work correctly when
   there are duplicated points in \code{x}.  However, it is ambiguous what
   leave-one-out cross-validation means with duplicated points, and the
@@ -159,19 +165,18 @@ lines(s2, col = "gray"); lines(predict(s2, xx), col = 2)
 lines(predict(s02, xx), col = 3); mtext(deparse(s02$call), col = 3)
 
 ## The following shows the problematic behavior of `spar' searching:
-(s2  <- smooth.spline(y18,          con=list(trace=TRUE,tol=1e-6, low= -2)))
-(s2m <- smooth.spline(y18, cv=TRUE, con=list(trace=TRUE,tol=1e-6, low= -2)))
+(s2  <- smooth.spline(y18,          con=list(trace=TRUE,tol=1e-6, low= -1.5)))
+(s2m <- smooth.spline(y18, cv=TRUE, con=list(trace=TRUE,tol=1e-6, low= -1.5)))
 ## both above do quite similarly (Df = 8.5 +- 0.2)
 
-try({ ## have seen problems here:
- s2. <- smooth.spline(y18, cv=TRUE, con=list(trace=TRUE,tol=1e-6, low= -3))
- s2. ## Linux: Df=18: interpolating -- much smaller PRESS
-     ## {Solaris may end quite differently!}
- lines(predict(s2., xx), col = 4)
- mtext(deparse(s2.$call,200), side= 1, line= -1, cex= 0.8, col= 4)
-})
-
 \testonly{
+% not for the user
+  s2. <- smooth.spline(y18, cv=TRUE,con=list(trace=TRUE, tol=1e-6,low= -3,maxit=20))
+  s2. ## Intel-Linux: Df ~= (even! > ) 18 : interpolating -- much smaller PRESS
+     ## {others, e.g. may end quite differently!}
+  lines(predict(s2., xx), col = 4)
+  mtext(deparse(s2.$call,200), side= 1, line= -1, cex= 0.8, col= 4)
+
   sdf8 <- smooth.spline(y18, df = 8, con=list(trace=TRUE))
   sdf8 ; sdf8$df - 8
 
