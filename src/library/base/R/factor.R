@@ -2,24 +2,20 @@ factor <- function (x, levels = sort(unique(x), na.last = TRUE),
 		    labels=levels, exclude = NA, ordered = is.ordered(x))
 {
     if(is.null(x))
-        x <- list()
-##-     if (length(x)) {
-	exclude <- as.vector(exclude, typeof(x))
-	levels <- levels[is.na(match(levels, exclude))]
-	f <- match(x, levels)
-	names(f) <- names(x)
-	nl <- length(labels)
-	attr(f, "levels") <-
-	    if (nl == length(levels))
-		as.character(labels)
-	    else if(nl == 1)
-		paste(labels, seq(along = levels), sep = "")
-	    else
-		stop(paste("invalid labels; length", nl,
-			   "should be 1 or",length(levels)))
-##-     }
-##-     else
-##- 	f <- numeric(0)
+	x <- list()
+    exclude <- as.vector(exclude, typeof(x))
+    levels <- levels[is.na(match(levels, exclude))]
+    f <- match(x, levels)
+    names(f) <- names(x)
+    nl <- length(labels)
+    attr(f, "levels") <-
+	if (nl == length(levels))
+	    as.character(labels)
+	else if(nl == 1)
+	    paste(labels, seq(along = levels), sep = "")
+	else
+	    stop(paste("invalid labels; length", nl,
+		       "should be 1 or",length(levels)))
     class(f) <- c(if(ordered)"ordered", "factor")
     f
 }
