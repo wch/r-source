@@ -2284,9 +2284,10 @@ SEXP do_download(SEXP call, SEXP op, SEXP args, SEXP env)
 	char *buf[65536];
 	size_t n;
 	
-	in = R_fopen(R_ExpandFileName(url+7), "r");
+	/* Use binary transfers */
+	in = R_fopen(R_ExpandFileName(url+7), "rb");
 	if(!in) error("cannot open URL `%s'", url);
-	out = R_fopen(R_ExpandFileName(file), "w");
+	out = R_fopen(R_ExpandFileName(file), "wb");
 	if(!out) error("cannot open destfile `%s'", file);
 	while((n = fread(buf, 1, 65536, in)) > 0)
 	    fwrite(buf, 1, n, out);

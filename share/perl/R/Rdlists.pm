@@ -45,7 +45,7 @@ sub buildinit {
     my $pkg = $ARGV[0];
     my $lib = $ARGV[1];
 
-    my $currentdir = getcwd();
+    my $currentdir = cwd();
 
     if($pkg){
 	die("Package $pkg does not exist\n") unless (-d $pkg);
@@ -59,7 +59,7 @@ sub buildinit {
     if($lib){
         mkdir "$lib", $dir_mod || die "Could not create $lib: $!\n";
 	chdir $lib;
-	$lib=getcwd();
+	$lib=cwd();
 	chdir $currentdir;
     }
     else{
@@ -69,12 +69,12 @@ sub buildinit {
     chdir $currentdir;
 
     chdir($pkg) or die("Cannot change to $pkg\n");
-    $tmp = getcwd();
+    $tmp = cwd();
     if($main::OSdir eq "windows") {
 	$tmp =~ s+\\+/+g; # need Unix-style path here
     }
     $pkg = basename($tmp);
-#    $pkg = basename(getcwd());
+#    $pkg = basename(cwd());
 
     chdir "man" or die("There are no man pages in $pkg\n");
     opendir man, '.';

@@ -113,6 +113,10 @@ NEW FEATURES
 
     o	demo() has new arguments, mainly to be run in "make check".
 
+    o	Perl scripts now use Cwd::cwd() in place of Cwd:getcwd(), as
+	cwd() can be much faster.
+
+
 
 BUG FIXES
 
@@ -125,6 +129,7 @@ BUG FIXES
     o	plot(1:2, xaxs = "i") now gives both "1.0" and "2.0" x-axis labels.
 
     o	symnum(x) behaves more reasonably for zero length or non-numeric x.
+
 
 
 
