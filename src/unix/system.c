@@ -27,7 +27,7 @@
 
 #include "Defn.h"
 #include "Fileio.h"
-#include "Graphics.h"		/* KillAllDevices() [nothing else?] */
+#include "Devices.h"		/* KillAllDevices() [nothing else?] */
 
 #define __SYSTEM__
 #include "devUI.h"

@@ -28,7 +28,7 @@
 
 #include "Defn.h"
 #include "Graphics.h"
-#include "Error.h"
+#include "R_ext/Error.h"
 #include "Fileio.h"
 
 #define PS_minus_default 45
@@ -38,107 +38,92 @@
 */
 static char PS_minus = PS_minus_default;/*-> TODO: make this a ps.option() !*/
 
+#define USERAFM 999
+
 /* Part 0.  AFM File Names */
 
 /* This structure gives the set of font names for each type face. */
-/* They also give the official Adobe abbreviated name which is used */
-/* for files such as those which contain the font metrics. */
+/* They also give the afm file names. */
 
 static struct {
     char *family;
-    struct {
-	char *name;
-	char *abbr;
-    } font[5];
+    char *afmfile[4];
 }
 Family[] = {
 
     { "AvantGarde",
-      {{ "AvantGarde-Book",			"agw_____" },
-       { "AvantGarde-Demi",			"agd_____" },
-       { "AvantGarde-BookOblique",		"agwo____" },
-       { "AvantGarde-DemiOblique",		"agdo____" },
-       { "Symbol",				"sy______" }}
+      {"agw_____.lt1", "agd_____.lt1", "agwo____.lt1", "agdo____.lt1" }
     },
 
     { "Bookman",
-      {{ "Bookman-Light",			"bkl_____" },
-       { "Bookman-Demi",			"bkd_____" },
-       { "Bookman-LightItalic",			"bkli____" },
-       { "Bookman-DemiItalic",			"bkdi____" },
-       { "Symbol",				"sy______" }}
+      {"bkl_____.lt1", "bkd_____.lt1", "bkli____.lt1", "bkdi____.lt1"}
     },
 
     { "Courier",
-      {{ "Courier",				"com_____" },
-       { "Courier-Bold",			"cob_____" },
-       { "Courier-Oblique",			"coo_____" },
-       { "Courier-BoldOblique",			"cobo____" },
-       { "Symbol",				"sy______" }}
+      {"com_____.lt1", "cob_____.lt1", "coo_____.lt1", "cobo____.lt1"}
     },
 
     { "Helvetica",
-      {{ "Helvetica",				"hv______" },
-       { "Helvetica-Bold",			"hvb_____" },
-       { "Helvetica-Oblique",			"hvo_____" },
-       { "Helvetica-BoldOblique",		"hvbo____" },
-       { "Symbol",				"sy______" }}
+      {"hv______.lt1", "hvb_____.lt1", "hvo_____.lt1", "hvbo____.lt1"}
     },
-
-#ifdef NOTYET
-    { "Helvetica-Condensed",
-      {{ "Helvetica-Condensed",			"hvc_____" },
-       { "Helvetica-Condensed-Bold",		"hvcb____" },
-       { "Helvetica-Condensed-Oblique",		"hvcdo___" },
-       { "Helvetica-Condensed-BoldObl",		"hvnbo___" },
-       { "Symbol",				"sy______" }}
-    },
-#endif
 
     { "Helvetica-Narrow",
-      {{ "Helvetica-Narrow",			"hvn_____" },
-       { "Helvetica-Narrow-Bold",		"hvnb____" },
-       { "Helvetica-Narrow-Oblique",		"hvno____" },
-       { "Helvetica-Narrow-BoldOblique",	"hvnbo___" },
-       { "Symbol",				"sy______" }}
+      {"hvn_____.lt1", "hvnb____.lt1", "hvno____.lt1", "hvnbo___.lt1"}
     },
 
     { "NewCenturySchoolbook",
-      {{ "NewCenturySchlbk-Roman",		"ncr_____" },
-       { "NewCenturySchlbk-Bold",		"ncb_____" },
-       { "NewCenturySchlbk-Italic",		"nci_____" },
-       { "NewCenturySchlbk-BoldItalic",		"ncbi____" },
-      { "Symbol",				"sy______" }}
+      {"ncr_____.lt1", "ncb_____.lt1", "nci_____.lt1", "ncbi____.lt1"}
     },
 
     { "Palatino",
-      {{ "Palatino-Roman",			"por_____" },
-       { "Palatino-Bold",			"pob_____" },
-       { "Palatino-Italic",			"poi_____" },
-       { "Palatino-BoldItalic",			"pobi____" },
-       { "Symbol",				"sy______" }}
+      {"por_____.lt1", "pob_____.lt1", "poi_____.lt1", "pobi____.lt1"}
     },
 
     { "Times",
-      {{ "Times-Roman",				"tir_____" },
-       { "Times-Bold",				"tib_____" },
-       { "Times-Italic",			"tii_____" },
-       { "Times-BoldItalic",			"tibi____" },
-       { "Symbol",				"sy______" }}
+      {"tir_____.lt1", "tib_____.lt1", "tii_____.lt1", "tibi____.lt1"}
     },
 
     { NULL }
 };
 
-/* These are the file extensions used on metrics files. */
-
-static char *Extension[] = {
-    "afm",			/* AdobeStandardEncoding (Unused) */
-    "lt1",			/* ISOLatin1Encoding */
-    "lt2",			/* ISOLatin2Encoding */
-    0
+static char *ISOLatin1Encoding[] =
+{
+"space", "exclam", "quotedbl", "numbersign", "dollar", "percent",
+"ampersand", "quoteright", "parenleft", "parenright", "asterisk",
+"plus", "comma", "minus", "period", "slash", "zero", "one", "two",
+"three", "four", "five", "six", "seven", "eight", "nine", "colon",
+"semicolon", "less", "equal", "greater", "question", "at",
+"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N",
+"O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z",
+"bracketleft", "backslash", "bracketright", "asciicircum", "underscore",
+"quoteleft",
+"a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n",
+"o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z",
+"braceleft", "bar", "braceright", "asciitilde", ".notdef", ".notdef",
+".notdef", ".notdef", ".notdef", ".notdef", ".notdef", ".notdef",
+".notdef", ".notdef", ".notdef", ".notdef", ".notdef", ".notdef",
+".notdef", ".notdef", ".notdef", "dotlessi", "grave", "acute",
+"circumflex", "tilde", "macron", "breve", "dotaccent", "dieresis",
+".notdef", "ring", "cedilla", ".notdef", "hungarumlaut", "ogonek",
+"caron", "space", "exclamdown", "cent", "sterling", "currency",
+"yen", "brokenbar", "section", "dieresis", "copyright", "ordfeminine",
+"guillemotleft", "logicalnot", "hyphen", "registered", "macron", 
+"degree", "plusminus", "twosuperior", "threesuperior", "acute", "mu",
+"paragraph", "periodcentered", "cedilla", "onesuperior", "ordmasculine",
+"guillemotright", "onequarter", "onehalf", "threequarters", "questiondown",
+"Agrave", "Aacute", "Acircumflex", "Atilde", "Adieresis", "Aring", "AE",
+"Ccedilla", "Egrave", "Eacute", "Ecircumflex", "Edieresis", "Igrave",
+"Iacute", "Icircumflex", "Idieresis", "Eth", "Ntilde", "Ograve", "Oacute",
+"Ocircumflex", "Otilde", "Odieresis", "multiply", "Oslash", "Ugrave",
+"Uacute", "Ucircumflex", "Udieresis", "Yacute", "Thorn", "germandbls",
+"agrave", "aacute", "acircumflex", "atilde", "adieresis", "aring", "ae",
+"ccedilla", "egrave", "eacute", "ecircumflex", "edieresis", "igrave",
+"iacute", "icircumflex", "idieresis", "eth", "ntilde", "ograve", "oacute",
+"ocircumflex", "otilde", "odieresis", "divide", "oslash", "ugrave", "uacute",
+"ucircumflex", "udieresis", "yacute", "thorn", "ydieresis"
 };
 
+static char familyname[5][50];
 
 
 /* Part 1.  AFM File Parsing.  */
@@ -294,10 +279,12 @@ static int GetFontBBox(char *buf, FontMetricInfo *metrics)
 
 static char charnames[256][25];
 
-static int GetCharInfo(char *buf, FontMetricInfo *metrics)
+/* If ISOLatin1 > 0, remap to ISOLatin1 encoding */
+static int GetCharInfo(char *buf, FontMetricInfo *metrics, int ISOLatin1)
 {
-    char *p = buf;
-    int nchar;
+    char *p = buf, charname[25];
+    int nchar, i;
+    short WX;
 
     if (!MatchKey(buf, "C ")) return 0;
     p = SkipToNextItem(p);
@@ -307,12 +294,24 @@ static int GetCharInfo(char *buf, FontMetricInfo *metrics)
 
     if (!MatchKey(p, "WX")) return 0;
     p = SkipToNextItem(p);
-    sscanf(p, "%hd", &(metrics->CharInfo[nchar].WX));
+    sscanf(p, "%hd", &WX);
     p = SkipToNextKey(p);
 
     if (!MatchKey(p, "N ")) return 0;
     p = SkipToNextItem(p);
-    sscanf(p, "%s", charnames[nchar]);
+    if(ISOLatin1) {
+	sscanf(p, "%s", charname);
+	for (i = 32; i < 256; i++)
+	    if(!strcmp(charname, ISOLatin1Encoding[i-32])) {
+		nchar = i;
+		strcpy(charnames[i], charname);
+		break;
+	    }
+	if (i > 255) return 1;
+    } else {
+	sscanf(p, "%s", charnames[nchar]);
+    }
+    metrics->CharInfo[nchar].WX = WX;
     p = SkipToNextKey(p);
 
     if (!MatchKey(p, "B ")) return 0;
@@ -358,15 +357,23 @@ static int GetKPX(char *buf, int nkp, FontMetricInfo *metrics)
 }
 
 
-/* Load Fontmetrics from a File */
+/* Load Fontmetrics from a file: defaults to the R_HOME/afm directory */
 
-static int PostScriptLoadFontMetrics(char *fontname, FontMetricInfo *metrics)
+static int
+PostScriptLoadFontMetrics(char *fontpath, FontMetricInfo *metrics,
+			  char *fontname, int ISOLatin1)
 {
     char buf[BUFSIZE], *p;
     int mode, i = 0, ii, nKPX=0;
     FILE *fp;
 
-    if (!(fp = R_fopen(fontname, "r"))) return 0;
+    if(strchr(fontpath, FILESEP[0])) strcpy(buf, fontpath);
+    else sprintf(buf, "%s%safm%s%s", R_Home, FILESEP, FILESEP, fontpath);
+#ifdef DEBUG_PS
+    Rprintf("afmpath is %s\n", buf);
+#endif
+    
+    if (!(fp = R_fopen(buf, "r"))) return 0;
 
     mode = 0;
     for (ii = 0; ii < 256; ii++) {
@@ -390,7 +397,7 @@ static int PostScriptLoadFontMetrics(char *fontname, FontMetricInfo *metrics)
 
 	case C:
 	    if (mode != StartFontMetrics) goto error;
-	    if (!GetCharInfo(buf, metrics)) goto error;
+	    if (!GetCharInfo(buf, metrics, ISOLatin1)) goto error;
 	    break;
 
 	case StartKernData:
@@ -399,7 +406,7 @@ static int PostScriptLoadFontMetrics(char *fontname, FontMetricInfo *metrics)
 
 	case StartKernPairs:
 	    if(mode != StartKernData) goto error;
-	    p = SkipToNextItem(p=buf);
+	    p = SkipToNextItem(buf);
 	    sscanf(p, "%d", &nKPX);
 	    metrics->KernPairs = (KP *) malloc(nKPX * sizeof(KP));
 	    if (!metrics->KernPairs) goto error;
@@ -415,9 +422,14 @@ static int PostScriptLoadFontMetrics(char *fontname, FontMetricInfo *metrics)
 	    break;
 
 	case Unknown:
-	    printf("Warning: unknown AFM entity encountered");
+	    warning("unknown AFM entity encountered");
 	    break;
 
+	case FontName:
+	    p = SkipToNextItem(buf);
+	    sscanf(p, "%s", fontname);
+	    break;
+	    
 	case Empty:
 	default:
 	    break;
@@ -479,7 +491,6 @@ PostScriptMetricInfo(int c, double *ascent, double *descent,
 	*ascent = 0.001 * metrics->FontBBox[3];
 	*descent = -0.001 * metrics->FontBBox[1];
 	*width = 0.001 * (metrics->FontBBox[2] - metrics->FontBBox[0]);
-
     }
     else {
 	*ascent = 0.001 * metrics->CharInfo[c].BBox[3];
@@ -493,11 +504,11 @@ PostScriptMetricInfo(int c, double *ascent, double *descent,
 
 static char *TypeFaceDef[] = { "R", "B", "I", "BI", "S" };
 
-static void PSEncodeFont(FILE *fp, int index, int encoding)
+static void PSEncodeFont(FILE *fp, int encoding)
 {
     int i;
     for (i = 0; i < 4 ; i++) {
-	fprintf(fp, "/%s findfont\n", Family[index].font[i].name);
+	fprintf(fp, "/%s findfont\n", familyname[i]);
 	fprintf(fp, "dup length dict begin\n");
 	fprintf(fp, "  {1 index /FID ne {def} {pop pop} ifelse} forall\n");
 	if (encoding) fprintf(fp, "  /Encoding ISOLatin1Encoding def\n");
@@ -517,19 +528,21 @@ static void PSEncodeFont(FILE *fp, int index, int encoding)
 /* of the (unrotated) printer page in points whereas the graphics */
 /* region box is for the rotated page. */
 
-static void PSFileHeader(FILE *fp, int font, int encoding, char *papername,
+static void PSFileHeader(FILE *fp, int encoding, char *papername,
 			 double paperwidth, double paperheight, int landscape,
 			 int EPSFheader,
 			 double left, double bottom, double right, double top)
 {
+    int i;
+    SEXP prolog;
+
     if(EPSFheader)
 	fprintf(fp, "%%!PS-Adobe-3.0 EPSF-3.0\n");
     else
 	fprintf(fp, "%%!PS-Adobe-3.0\n");
-    fprintf(fp, "%%%%DocumentNeededResources: font %s %s %s\n%%%%+ font %s %s\n",
-	    Family[font].font[0].name, Family[font].font[1].name,
-	    Family[font].font[2].name, Family[font].font[3].name,
-	    Family[font].font[4].name);
+    fprintf(fp, "%%%%DocumentNeededResources: font Symbol\n");
+    for (i = 0; i < 4; i++)
+	fprintf(fp, "%%%%+ font %s\n", familyname[i]);
     if(!EPSFheader)
 	fprintf(fp, "%%%%DocumentMedia: %s %.0f %.0f 0 () ()\n",
 		papername, paperwidth, paperheight);
@@ -546,41 +559,18 @@ static void PSFileHeader(FILE *fp, int font, int encoding, char *papername,
 	    left, bottom, right, top);
     fprintf(fp, "%%%%EndComments\n");
     fprintf(fp, "%%%%BeginProlog\n");
-    fprintf(fp, "/gs  { gsave } def\n");
-    fprintf(fp, "/gr  { grestore } def\n");
     if (landscape)
 	fprintf(fp, "/bp  { gs %.2f 0 translate 90 rotate gs } def\n", paperwidth);
     else
 	fprintf(fp, "/bp  { gs gs } def\n");
-    fprintf(fp, "/ep  { showpage gr gr } def\n");
-    fprintf(fp, "/m   { moveto } def\n");
-    fprintf(fp, "/l   { lineto } def\n");
-    fprintf(fp, "/np  { newpath } def\n");
-    fprintf(fp, "/cp  { closepath } def\n");
-    fprintf(fp, "/f   { fill } def\n");
-    fprintf(fp, "/o   { stroke } def\n");
-    fprintf(fp, "/c   { newpath 0 360 arc } def\n");
-    fprintf(fp, "/r   { 3 index 3 index moveto 1 index 4 -1 roll\n");
-    fprintf(fp, "	lineto exch 1 index lineto lineto closepath } def\n");
-    fprintf(fp, "/p1  { stroke } def\n");
-    fprintf(fp, "/p2  { gsave bg setrgbcolor fill grestore newpath } def\n");
-    fprintf(fp, "/p3  { gsave bg setrgbcolor fill grestore stroke } def\n");
-    fprintf(fp, "/t   { 6 -2 roll moveto gsave rotate\n");
-    fprintf(fp, "       ps mul neg 0 2 1 roll rmoveto\n");
-    fprintf(fp, "       1 index stringwidth pop\n");
-    fprintf(fp, "       mul neg 0 rmoveto show grestore } def\n");
-    fprintf(fp, "/cl  { grestore gsave newpath 3 index 3 index moveto 1 index\n");
-    fprintf(fp, "       4 -1 roll lineto  exch 1 index lineto lineto\n");
-    fprintf(fp, "       closepath clip newpath } def\n");
-    fprintf(fp, "/rgb { setrgbcolor } def\n");
-    fprintf(fp, "/s   { scalefont setfont } def\n");
-    fprintf(fp, "/R   { /Font1 findfont } def\n");
-    fprintf(fp, "/B   { /Font2 findfont } def\n");
-    fprintf(fp, "/I   { /Font3 findfont } def\n");
-    fprintf(fp, "/BI  { /Font4 findfont } def\n");
-    fprintf(fp, "/S   { /Font5 findfont } def\n");
-    PSEncodeFont(fp, font, encoding);
-    fprintf(fp, "1 setlinecap 1 setlinejoin\n");
+    prolog = findVar(install(".ps.prolog"), R_GlobalEnv);
+    if(!isString(prolog))
+	error("Object .ps.profile is not a character vector");
+    fprintf(fp, "%% begin .ps.prolog\n");
+    for (i = 0; i < length(prolog); i++)
+	fprintf(fp, "%s\n", CHAR(STRING_ELT(prolog, i)));
+    fprintf(fp, "%% end   .ps.prolog\n");
+    PSEncodeFont(fp, encoding);
     fprintf(fp, "%%%%EndProlog\n");
 }
 
@@ -715,6 +705,7 @@ typedef struct {
 
     int fontfamily;	 /* font family */
     int encoding;	 /* font encoding */
+    char **afmpaths;	 /* for user-specified family */
     int maxpointsize;
 
     double width;	 /* plot width in inches */
@@ -794,13 +785,14 @@ static int  MatchFamily(char *name);
 
 
 int PSDeviceDriver(DevDesc *dd, char *file, char *paper, char *family,
+		   char **afmpaths,
 		   char *bg, char *fg,
 		   double width, double height,
 		   double horizontal, double ps,
 		   int onefile, int pagecentre, int printit, char*cmd)
 {
-    /* If we need to bail out with some sort of "error" */
-    /* then we must free(dd) */
+    /* If we need to bail out with some sort of "error"
+       then we must free(dd) */
 
     double xoff, yoff, pointsize;
     rcolor setbg, setfg, setfill;
@@ -824,8 +816,9 @@ int PSDeviceDriver(DevDesc *dd, char *file, char *paper, char *family,
     /* initialise postscript device description */
     strcpy(pd->filename, file);
     strcpy(pd->papername, paper);
-    pd->fontfamily = MatchFamily(family);
+    pd->fontfamily = strcmp(family, "User") ? MatchFamily(family) : USERAFM;
     pd->encoding = 1;
+    pd->afmpaths = afmpaths;
 
     setbg = str2col(bg);
     setfg = str2col(fg);
@@ -1066,19 +1059,22 @@ static void SetFont(int style, int size, DevDesc *dd)
 
 static int PS_Open(DevDesc *dd, PostScriptDesc *pd)
 {
-    char buf[512];
+    char buf[512], *p;
     int i;
 
-    for(i = 0; i < 5 ; i++) {
-	sprintf(buf, "%s%safm%s%s.%s", R_Home,
-		FILESEP,
-		FILESEP,
-		Family[pd->fontfamily].font[i].abbr,
-		(i == 4) ? "afm" : Extension[pd->encoding]);
-	if(!PostScriptLoadFontMetrics(buf, &(pd->metrics[i]))) {
+    for(i = 0; i < 4 ; i++) {
+	if(pd->fontfamily == USERAFM) p = pd->afmpaths[i];
+	else p = Family[pd->fontfamily].afmfile[i];
+	if(!PostScriptLoadFontMetrics(p, &(pd->metrics[i]), 
+				      familyname[i], 1)) {
 	    warning("cannot read afm file %s", buf);
 	    return 0;
 	}
+    }
+    if(!PostScriptLoadFontMetrics("sy______.afm", &(pd->metrics[4]), 
+				  familyname[4], 0)) {
+	warning("cannot read afm file %s", buf);
+	return 0;
     }
 
     if (strlen(pd->filename) == 0) {
@@ -1114,7 +1110,6 @@ static int PS_Open(DevDesc *dd, PostScriptDesc *pd)
 
     if(pd->landscape)
 	PSFileHeader(pd->psfp,
-		     pd->fontfamily,
 		     pd->encoding,
 		     pd->papername,
 		     pd->paperwidth,
@@ -1127,7 +1122,6 @@ static int PS_Open(DevDesc *dd, PostScriptDesc *pd)
 		     dd->dp.right);
     else
 	PSFileHeader(pd->psfp,
-		     pd->fontfamily,
 		     pd->encoding,
 		     pd->papername,
 		     pd->paperwidth,
@@ -1813,17 +1807,20 @@ char * Rwin32_tmpnam(char * prefix);
 
 static int XFig_Open(DevDesc *dd, XFigDesc *pd)
 {
-    char buf[512];
+    char buf[512], name[50];
     int i;
 
-    for(i = 0; i < 5 ; i++) {
-	sprintf(buf, "%s%safm%s%s.%s", R_Home,
-		FILESEP,
-		FILESEP,
-		Family[pd->fontfamily].font[i].abbr,
-		(i == 4) ? "afm" : Extension[pd->encoding]);
-	if(!PostScriptLoadFontMetrics(buf, &(pd->metrics[i])))
+    for(i = 0; i < 4 ; i++) {
+	if(!PostScriptLoadFontMetrics(Family[pd->fontfamily].afmfile[i], 
+				      &(pd->metrics[i]), name, 1)) {
+	    warning("cannot read afm file %s", buf);
 	    return 0;
+	}
+    }
+    if(!PostScriptLoadFontMetrics("sy______.afm", 
+				  &(pd->metrics[4]), name, 0)) {
+	warning("cannot read afm file %s", buf);
+	return 0;
     }
 
     if (strlen(pd->filename) == 0) {

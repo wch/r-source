@@ -23,7 +23,7 @@
 #endif
 
 #include "Defn.h"/*-- Maybe modularize into own Coerce.h ..*/
-#include "Mathlib.h"
+#include "R_ext/Mathlib.h"
 #include "Print.h"
 
 

@@ -24,9 +24,9 @@
 #endif
 
 #include <float.h>
-#include "Arith.h"
-#include "Error.h"
-#include "Applic.h"
+#include "R_ext/Arith.h"
+#include "R_ext/Error.h"
+#include "R_ext/Applic.h"
 
 double R_euclidean(double *x, int nr, int nc, int i1, int i2)
 {

@@ -24,7 +24,7 @@
 #endif
 
 #include "Defn.h"
-#include "Mathlib.h"
+#include "R_ext/Mathlib.h"
 
 #define R_INT_MIN	(1+INT_MIN)
 	/* since INT_MIN is the NA_INTEGER value ! */

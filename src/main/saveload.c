@@ -26,7 +26,7 @@
 #endif
 
 #include "Defn.h"
-#include "Mathlib.h"
+#include "R_ext/Mathlib.h"
 #include "Fileio.h"
 
 #define R_MAGIC_ASCII_V1   1001

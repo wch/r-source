@@ -23,8 +23,8 @@
 #include <config.h>
 #endif
 
-#include "Mathlib.h" /* fmax2, imin2, imax2, fsquare, fcube */
-#include "Applic.h"  /* prototypes for lowess and clowess */
+#include "R_ext/Mathlib.h" /* fmax2, imin2, imax2, fsquare, fcube */
+#include "R_ext/Applic.h"  /* prototypes for lowess and clowess */
 
 static void sort(double *x, int n)
 {

@@ -23,7 +23,7 @@
 #endif
 
 #include "Defn.h"
-#include "Mathlib.h"
+#include "R_ext/Mathlib.h"
 
 /* "GetRowNames" and "GetColNames" are utility routines which */
 /* locate and return the row names and column names from the */

@@ -23,8 +23,9 @@
 #endif
 
 #include "Defn.h"
-#include "Mathlib.h"
+#include "R_ext/Mathlib.h"
 #include "Graphics.h"
+#include "Devices.h"
 
 /* Return a non-relocatable copy of a string */
 
@@ -60,14 +61,28 @@ SEXP do_PS(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     DevDesc *dd;
     char *vmax;
-    char *file, *paper, *face, *bg, *fg, *cmd;
-    int horizontal, onefile, pagecentre, printit;
+    char *file, *paper, *family=NULL, *bg, *fg, *cmd;
+    char *afms[4];
+    int i, horizontal, onefile, pagecentre, printit;
     double height, width, ps;
+    SEXP fam;
+
     gcall = call;
     vmax = vmaxget();
     file = SaveString(CAR(args), 0);  args = CDR(args);
     paper = SaveString(CAR(args), 0); args = CDR(args);
-    face = SaveString(CAR(args), 0);  args = CDR(args);
+
+    /* `family' can be either one string or a 4-vector of afmpaths. */
+    fam = CAR(args); args = CDR(args);
+    if(length(fam) == 1) 
+	family = SaveString(fam, 0);
+    else if(length(fam) == 4) {
+	if(!isString(fam)) errorcall(call, "invalid `family' parameter");
+	family = "User";
+	for(i = 0; i < 4; i++) afms[i] = SaveString(fam, i);
+    } else 
+	errorcall(call, "invalid `family' parameter");
+    
     bg = SaveString(CAR(args), 0);    args = CDR(args);
     fg = SaveString(CAR(args), 0);    args = CDR(args);
     width = asReal(CAR(args));	      args = CDR(args);
@@ -86,7 +101,7 @@ SEXP do_PS(SEXP call, SEXP op, SEXP args, SEXP env)
     /* Do this for early redraw attempts */
     dd->displayList = R_NilValue;
     GInit(&dd->dp);
-    if(!PSDeviceDriver(dd, file, paper, face, bg, fg, width, height,
+    if(!PSDeviceDriver(dd, file, paper, family, afms, bg, fg, width, height,
 		       (double)horizontal, ps, onefile, pagecentre,
 		       printit, cmd)) {
 	free(dd);

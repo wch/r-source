@@ -23,7 +23,7 @@
 #endif
 
 #include "Defn.h"
-#include "Mathlib.h"
+#include "R_ext/Mathlib.h"
 
 #define COV_PAIRWISE_BODY					\
 	    xx = &x[i * n];					\

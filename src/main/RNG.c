@@ -24,7 +24,7 @@
 #endif
 
 #include "Defn.h"
-#include "Random.h"
+#include "R_ext/Random.h"
 
 #define RNG_DEFAULT MARSAGLIA_MULTICARRY
 #define N01_DEFAULT KINDERMAN_RAMAGE

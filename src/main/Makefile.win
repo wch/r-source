@@ -3,7 +3,7 @@ include ../gnuwin32/MkRules
 
 all: makeMakedeps ../gnuwin32/libmain.a
 
-CFLAGS=$(OPTFLAGS) -I../include -I../include/R_ext -DHAVE_CONFIG_H
+CFLAGS=$(OPTFLAGS) -I../include -DHAVE_CONFIG_H
 FFLAGS=$(OPTFLAGS)
 SOURCES=$(filter-out strdup.c, $(wildcard *.c *.f))
 OBJS=$(foreach i, $(SOURCES), $(basename $i).o)

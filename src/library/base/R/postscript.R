@@ -14,8 +14,8 @@
 
 check.options <-
     function(new, name.opt, reset = FALSE, assign.opt = FALSE,
-	     envir=.GlobalEnv, check.attributes = c("mode", "length"),
-	     override.check= FALSE)
+	     envir = .GlobalEnv, check.attributes = c("mode", "length"),
+	     override.check = FALSE)
 {
     lnew <- length(new)
     if(lnew != length(newnames <- names(new)))
@@ -93,7 +93,7 @@ ps.options <- function(..., reset=FALSE, override.check= FALSE)
 }
 
 postscript <- function (file = ifelse(onefile,"Rplots.ps", "Rplot%03d.ps"),
-                  onefile=TRUE, ...)
+                  onefile=TRUE, family, ...)
 {
     new <- list(onefile=onefile,...)# eval
     old <- check.options(new = new, name.opt = ".PostScript.Options",
@@ -101,10 +101,13 @@ postscript <- function (file = ifelse(onefile,"Rplots.ps", "Rplot%03d.ps"),
 
     if(is.null(old$command) || old$command == "default")
         old$command <- if(!is.null(cmd <- getOption("printcmd"))) cmd else ""
+    ## handle family separately as length can be 1 or 4
+    if(!missing(family)) old$family <- family
     .Internal(PS(file, old$paper, old$family, old$bg, old$fg,
 		 old$width, old$height, old$horizontal, old$pointsize,
                  old$onefile, old$pagecentre, old$print.it, old$command))
 }
+
 ##--> source in ../../../main/devices.c	 and ../../../main/devPS.c
 xfig <- function (file = ifelse(onefile,"Rplots.fig", "Rplot%03d.fig"),
                   onefile=FALSE, ...)
@@ -117,3 +120,35 @@ xfig <- function (file = ifelse(onefile,"Rplots.fig", "Rplot%03d.fig"),
 		 old$width, old$height, old$horizontal, old$pointsize,
                  old$onefile, old$pagecentre))
 }
+
+.ps.prolog <- c(
+"/gs  { gsave } def",
+"/gr  { grestore } def",
+"/ep  { showpage gr gr } def",
+"/m   { moveto } def",
+"/l   { lineto } def",
+"/np  { newpath } def",
+"/cp  { closepath } def",
+"/f   { fill } def",
+"/o   { stroke } def",
+"/c   { newpath 0 360 arc } def",
+"/r   { 3 index 3 index moveto 1 index 4 -1 roll",
+"       lineto exch 1 index lineto lineto closepath } def",
+"/p1  { stroke } def",
+"/p2  { gsave bg setrgbcolor fill grestore newpath } def",
+"/p3  { gsave bg setrgbcolor fill grestore stroke } def",
+"/t   { 6 -2 roll moveto gsave rotate",
+"       ps mul neg 0 2 1 roll rmoveto",
+"       1 index stringwidth pop",
+"       mul neg 0 rmoveto show grestore } def",
+"/cl  { grestore gsave newpath 3 index 3 index moveto 1 index",
+"       4 -1 roll lineto  exch 1 index lineto lineto",
+"       closepath clip newpath } def",
+"/rgb { setrgbcolor } def",
+"/s   { scalefont setfont } def",
+"/R   { /Font1 findfont } def",
+"/B   { /Font2 findfont } def",
+"/I   { /Font3 findfont } def",
+"/BI  { /Font4 findfont } def",
+"/S   { /Font5 findfont } def",
+"1 setlinecap 1 setlinejoin")

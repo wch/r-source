@@ -48,7 +48,7 @@
 #define GETBLUE(col)   (((col) >> BSHIFT) & 0xFFUL)
 
 void R_ShowMessage(char *msg);
-#include "Error.h"
+#include "R_ext/Error.h"
 
 #ifdef HAVE_PNG
 

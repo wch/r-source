@@ -43,8 +43,8 @@
 #include <config.h>
 #endif
 
-#include "Arith.h"
-#include "Applic.h"
+#include "R_ext/Arith.h"
+#include "R_ext/Applic.h"
 #include <stdio.h>
 #include <errno.h>
 

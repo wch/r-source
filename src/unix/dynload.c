@@ -66,7 +66,7 @@
 #endif
 
 #include "Defn.h"
-#include "Mathlib.h"
+#include "R_ext/Mathlib.h"
 
 #ifndef HAVE_NO_SYMBOL_UNDERSCORE
 # ifdef HAVE_ELF_H

@@ -21,9 +21,9 @@
 #include <config.h>
 #endif
 
-#include "Error.h"
-#include "Arith.h"
-#include "Applic.h"
+#include "R_ext/Error.h"
+#include "R_ext/Arith.h"
+#include "R_ext/Applic.h"
 
 /* bincode  cuts up the data using half open intervals defined as [a,b)
    bincode2 cuts up the data using half open intervals defined as (a,b]

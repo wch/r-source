@@ -38,7 +38,7 @@ all: rbuild rdemo rpackage
 # separate as Tcl/Rk headers are needed.
 tcl: pkg-tcltk
 
-CFLAGS = $(OPTFLAGS) -I../include -I../include/R_ext -I. -DHAVE_CONFIG_H
+CFLAGS = $(OPTFLAGS) -I../include -I. -DHAVE_CONFIG_H
 FFLAGS = $(OPTFLAGS)
 
 rbuild: fixfiles makeMakedeps rlibs ../../bin/R.dll libR.a CHTML \

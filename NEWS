@@ -11,6 +11,21 @@
 
 NEW FEATURES
 
+    o	There is a new memory management system using a generational
+	garbage collector.  This improves performance, sometimes
+	marginally but sometimes by double or more.  The workspace is
+	no longer statically sized and both the vector heap and the
+	number of nodes can grow as needed.  (They can shrink again,
+	but never below the initially allocated sizes.)
+
+    o	Formula objects now have an environment and code manipulating
+	them needs to take care to preserve it or set an appropriate
+	environment.
+
+    o	terms() creates objects which no inherit from class "formula",
+	so as.formula(terms.object) needs to replaced by 
+	formula(terms.object).
+
     o	hclust() takes new argument `members' allowing dissimilarity
 	matrices both for singletons (as until now) and clusters.
 
@@ -37,7 +52,7 @@ NEW FEATURES
 	place in $R_HOME/share. Migration of existing files might take
 	a while, though.
 
-    o	--nsize up to 50M (2Gb on 64-bit Solaris) allowed.
+    o	values of --nsize up to 50M (2Gb on 64-bit Solaris) are allowed.
 
     o	The commands history can be loaded with loadhistory(), saved
 	with savehistory() and displayed with history(), under Windows
@@ -126,9 +141,10 @@ NEW FEATURES
 	for tree-like structures (plotting, cutting, ...).
 
     o	New argument `recursive' to unlink(). The default behaviour on
-	Unix is now that of rm -f, not rm -rf.
+	Unix is now that of rm -f, not rm -rf.  unlink() is now
+	compatible across platforms.
 
-    o	dev.copy2eps and dev2bitmap preserve the aspect ratio of the
+    o	dev.copy2eps() and dev2bitmap() preserve the aspect ratio of the
 	copied device if just one of `width' and `height' is specified.
 
     o	Function mantelhaen.test() in package ctest now can deal with
@@ -156,22 +172,22 @@ NEW FEATURES
 
     o	Date-time support functions with classes "POSIXct" and
 	"POSIXlt" to represent dates/times (resolution 1 second) in
-	the POSIX formats.  Functions include Sys.time, as.POSIXct,
-	strftime, strptime,  and methods for format, plot, ....
+	the POSIX formats.  Functions include Sys.time(), as.POSIXct(),
+	strftime(), strptime(),  and methods for format, plot, c, ....
 	There are conversion functions for objects from packages
 	`date' and `chron'; unlike those packages these support
-	functions know about time zones.
+	functions know about time zones (if the OS does).
 
     o	legend() has a new argument pt.bg.
 
     o	autoload() accepts lib.loc and other arguments to library()
 
-    o	bxp() has new argument "frame.plot", as plot.default().
+    o	bxp() has new argument `frame.plot', as plot.default().
 
-    o	contour() now has axes and frame.plot args.
+    o	contour() now has `axes' and `frame.plot' args.
 
-    o	dump() has new argument append, argument "fileout" has been
-	renamed to "file" (for consistency with all other functions).
+    o	dump() has new argument append, argument `fileout' has been
+	renamed to `file' (for consistency with all other functions).
 
     o	The set of valid R names is now described (at last) in R-intro.
 
@@ -181,6 +197,17 @@ NEW FEATURES
     o	The L-BFGS-B method of optim() now support tracing, at several
 	levels of detail.
 
+    o	The R Language Manual (R-lang.texi) is now included and built
+	in the same way as the other manuals..
+
+    o	The postscript() driver now allows a user-specified family so,
+	for example, one can use the same fonts in diagrams as in 
+	running text.
+
+    o	The postscript() driver allows its prolog to be changed (by an
+	expert) via object .ps.prolog.
+
+    o	save(, oldstyle=TRUE) has been withdrawn.
 
 
 BUG FIXES
@@ -197,7 +224,7 @@ BUG FIXES
 	or track device status.
 
     o	In some cases, emitted postscript violated the PS Document
-	Structuring Conventions since some settings were carried from
+	Structuring Conventions since some settings were carried over from
 	one page to the next. (Caused breakage when turning
 	antialiasing on/off in "gv" for instance.)
 
@@ -293,6 +320,12 @@ BUG FIXES
     o	The DocumentMedia comment in postscript() output was wrong,
 	and the font DSC comments have been changed to the preferred
 	style for DSC 3.0.
+
+    o	Method dispatch in primitive functions such as `c' only
+	occurred if they were called by that name, and in particular
+	not if used in lapply or called as .Primitive("c").  It now
+	always occurs.
+
 
 
 	**************************************************

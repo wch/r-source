@@ -23,7 +23,7 @@
 #endif
 
 #include "Defn.h"
-#include "Mathlib.h"
+#include "R_ext/Mathlib.h"
 
 static SEXP integer_relop(RELOP_TYPE code, SEXP s1, SEXP s2);
 static SEXP real_relop(RELOP_TYPE code, SEXP s1, SEXP s2);

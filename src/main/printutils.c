@@ -55,7 +55,7 @@
 #endif
 
 #include "Defn.h"
-#include "Mathlib.h"
+#include "R_ext/Mathlib.h"
 #include "Print.h"
 
 #define BUFSIZE 8192  /* used by Rprintf etc */

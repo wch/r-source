@@ -27,8 +27,8 @@
 #include <config.h>
 #endif
 
-#include "Linpack.h"
-#include "Applic.h"
+#include "R_ext/Linpack.h"
+#include "R_ext/Applic.h"
 
 void bakslv(double *t, int *ldt, int *n,
 	    double *b, int *ldb, int *nb,

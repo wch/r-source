@@ -46,7 +46,7 @@
 #include "Fileio.h" /* R_fopen */
 #include "rotated.h"/* 'Public' routines from here */
 
-#include "eventloop.h" /* For the input handlers of the event loop mechanism. */
+#include "R_ext/eventloop.h" /* For the input handlers of the event loop mechanism. */
 
 /* routines from here */
 int X11DeviceDriver(DevDesc*, char*, double, double, double, double, int, int);

@@ -22,7 +22,7 @@
 #include <config.h>
 #endif
 
-#include "Applic.h"
+#include "R_ext/Applic.h"
 
 void R_cumsum(double *x, int *n, double *na_value, double *ans)
 {

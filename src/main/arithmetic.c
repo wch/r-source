@@ -23,8 +23,8 @@
 #endif
 
 #include "Defn.h"		/*-> Arith.h */
-#include "Mathlib.h"
-#include "Applic.h"		/* machar */
+#include "R_ext/Mathlib.h"
+#include "R_ext/Applic.h"		/* machar */
 #include "arithmetic.h"
 
 /* Error Handling for Floating Point Errors */

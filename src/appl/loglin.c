@@ -10,9 +10,9 @@
 #endif
 
 #include <math.h>
-#include "R.h"
-
-#include "Applic.h"
+#include <stdio.h>
+#include "R_ext/RS.h"
+#include "R_ext/Applic.h"
 
 #undef max
 #undef min

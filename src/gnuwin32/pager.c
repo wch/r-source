@@ -26,7 +26,7 @@
 #define USE_MDI 1
 #endif
 
-#include "Error.h"  /* for warning() */
+#include "R_ext/Error.h"  /* for warning() */
 #include <windows.h>
 #include "graphapp/ga.h"
 #ifdef USE_MDI

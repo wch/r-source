@@ -30,7 +30,7 @@
  */
 
 #include "nmath.h"
-#include "Random.h"
+#include "R_ext/Random.h"
 
 #define repeat for(;;)
 

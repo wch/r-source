@@ -40,7 +40,7 @@ ps.options(paper, horizontal, width, height, family, pointsize, bg, fg,
 #endif
 
     For use with \code{onefile=FALSE} give a
-    \code{printf} format such as \code{"Rplot\%d.fig"} (the default in that
+    \code{printf} format such as \code{"Rplot\%d.ps"} (the default in that
     case).
   }
   \item{\dots}{further options for \code{postscript()} :}
@@ -55,12 +55,14 @@ ps.options(paper, horizontal, width, height, family, pointsize, bg, fg,
   \item{horizontal}{the orientation of the printed image, a
     logical. Defaults to true, that is landscape orientation.}
   \item{width, height}{the width and height of the graphics region in inches.
-    The default is to use the entire page less a 0.25 inch border.}
-  \item{family}{the font family to be used.
-    This must be one of \code{"AvantGarde"},
+    The default is to use the entire page less a 0.25 inch border on
+    each side.}
+  \item{family}{the font family to be used. EITHER a single character string
+    which must be one of \code{"AvantGarde"},
     \code{"Bookman"}, \code{"Courier"}, \code{"Helvetica"},
     \code{"Helvetica-Narrow"}, \code{"NewCenturySchoolbook"},
-    \code{"Palatino"} or \code{"Times"}.}
+    \code{"Palatino"} or \code{"Times"}, OR a character vector of length
+    four. }
   \item{pointsize}{the default point size to be used.}
   \item{bg}{the default background color to be used.}
   \item{fg}{the default foreground color to be used.}
@@ -106,7 +108,29 @@ ps.options(paper, horizontal, width, height, family, pointsize, bg, fg,
   The postscript produced by \R is EPS (\emph{Encapsulated PostScript})
   compatible, and can be included into other documents, e.g. into LaTeX,
   using \code{\includegraphics{<filename>}}. For use in this way you will
-  probably want to set \code{horizontal=FALSE, onefile=FALSE, paper="special"}.
+  probably want to set \code{horizontal=FALSE, onefile=FALSE,
+    paper="special"}.
+
+  Most of the PostScript prologue used is taken from the \R character
+  vector \code{.ps.profile}.  This is marked in the output, and can be
+  changed by changing that vector.  (This is only advisable for
+  PostScript experts.)
+
+  If the second form of argument \code{"family"} is used, it should be a
+  set of four paths to Adobe Font Metric files for the regular, bold,
+  italic and bold italic fonts to be used.  If these paths do not
+  contain the file separator, they are taken to refer to files in the
+  \R directory \file{R\_HOME/afm}.  Thus the default Helvetica family
+  can be specified by \code{family = c("hv______.lt1",
+    "hvb_____.lt1", "hvo_____.lt1", "hvbo____.lt1")}.
+
+  It is the user's responsibility to check that suitable fonts are made
+  available, and that they contain the needed characters when re-encoded
+  to the ISOLatin1 encoding.  The fontnames used are taken from the
+  \code{FontName} fields of the \code{afm} files.  The software
+  including the PostScript plot file should either embed the font
+  outlines (usually from \code{.pfb} or \code{.pfa} files) or
+  use DSC comments to instruct the print spooler to do so.
 }
 \seealso{
     \code{\link{Devices}},
@@ -141,9 +165,16 @@ stopifnot(unlist(ps.options()) == unlist(.PostScript.Options))
 ps.options(bg = "pink")
 str(ps.options(reset = TRUE))
 
-### --- error checking of arguments: ----
+### ---- error checking of arguments: ----
 ps.options(width=0:12, onefile=0, bg=pi)
 # override the check for 'onefile', but not the others:
 str(ps.options(width=0:12, onefile=1, bg=pi, override.check = c(F,T,F)))
-}
+
+\dontrun{###  ---- Use TeX's Computer Modern fonts --- 
+## Only use alphanumeric chars here.
+postscript(family=paste("/myfonts/afm/",
+   c("cmr10", "cmbx10", "cmsl10", "cmbxsl10"), ".afm", sep=""))
+## The resultant postscript file can be used by dvips provided
+## font subsetting is disabled (by flag -j0)
+}}
 \keyword{device}

@@ -5,8 +5,8 @@
    */
 
 #include <math.h>
-#include "Random.h"
-#include "Applic.h"
+#include "R_ext/Random.h"
+#include "R_ext/Applic.h"
 
 static void
 rcont2(int *nrow, int *ncol, int *nrowt, int *ncolt, int *ntotal,

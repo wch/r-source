@@ -23,7 +23,7 @@
 #endif
 
 #include "Defn.h"
-#include "Mathlib.h"
+#include "R_ext/Mathlib.h"
 #include "Graphics.h"
 
 /* Return a non-relocatable copy of a string */

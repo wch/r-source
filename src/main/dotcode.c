@@ -26,7 +26,7 @@
 #include <stdlib.h>
 
 #include "Defn.h"
-#include "Mathlib.h"
+#include "R_ext/Mathlib.h"
 
 #ifndef max
 #define max(a, b) ((a > b)?(a):(b))

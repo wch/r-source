@@ -27,7 +27,7 @@
 #endif
 
 #include "Defn.h"
-#include "Mathlib.h"
+#include "R_ext/Mathlib.h"
 
 static SEXP
 cross(SEXP s, SEXP t)

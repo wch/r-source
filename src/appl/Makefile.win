@@ -1,7 +1,7 @@
 #-*- Makefile -*-
 include ../gnuwin32/MkRules
 
-CFLAGS=$(OPTFLAGS) -I../include -I../include/R_ext -DHAVE_CONFIG_H
+CFLAGS=$(OPTFLAGS) -I../include -DHAVE_CONFIG_H
 FFLAGS=$(OPTFLAGS)
 CSOURCES=$(wildcard *.c)
 FSOURCES=$(filter-out $(wildcard z*.f), $(wildcard *.f))

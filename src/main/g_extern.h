@@ -41,6 +41,7 @@
 /* PAUL MURRELL
    Added the following (to allow R declarations and definitions)
 */
+#include "Defn.h"
 #include "Graphics.h"
 
 /* PAUL MURRELL

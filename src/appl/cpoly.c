@@ -58,9 +58,9 @@
 #endif
 
 #include <float.h>
-#include "Mathlib.h" /* for R_pow_di */
-#include "Arith.h"
-#include "Applic.h"
+#include "R_ext/Mathlib.h" /* for R_pow_di */
+#include "R_ext/Arith.h"
+#include "R_ext/Applic.h"
 
 #ifndef HAVE_HYPOT
 # define hypot pythag

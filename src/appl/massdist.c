@@ -18,7 +18,7 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#include "Arith.h"
+#include "R_ext/Arith.h"
 
 void massdist(double *x, int *nx, double *xlow, double *xhigh,
 	      double *y, int *ny)

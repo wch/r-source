@@ -22,9 +22,9 @@
 #include <config.h>
 #endif
 
-#include "Arith.h"
-#include "Error.h"
-#include "Applic.h"
+#include "R_ext/Arith.h"
+#include "R_ext/Error.h"
+#include "R_ext/Applic.h"
 
 /* Linear and Step Function Interpolation */
 /* Assumes that ordinates are in ascending order */

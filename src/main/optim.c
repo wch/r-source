@@ -21,9 +21,9 @@
 
 #include "Defn.h"
 #include "Rdefines.h" /* for CREATE_STRING_VECTOR */
-#include "Random.h"  /* for the random number generation in samin() */
+#include "R_ext/Random.h"  /* for the random number generation in samin() */
 
-#include "Applic.h"  /* setulb() */
+#include "R_ext/Applic.h"  /* setulb() */
 
 static SEXP getListElement(SEXP list, char *str)
 {

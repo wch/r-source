@@ -23,7 +23,7 @@
 #endif
 
 #include "Defn.h"/* => Utils.h with the protos from here */
-#include "Mathlib.h"
+#include "R_ext/Mathlib.h"
 			/*--- Part I: Comparison Utilities ---*/
 
 static int icmp(int x, int y)

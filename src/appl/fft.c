@@ -22,8 +22,8 @@
 #include <config.h>
 #endif
 
-#include "Mathlib.h"/* for imax2(.),..*/
-#include "Applic.h"
+#include "R_ext/Mathlib.h"/* for imax2(.),..*/
+#include "R_ext/Applic.h"
 
 /*  Fast Fourier Transform
  *

@@ -22,6 +22,7 @@
 #include <config.h>
 #endif
 
+#include "Defn.h"
 #include "Graphics.h"
 #include "Fileio.h"
 

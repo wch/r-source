@@ -23,8 +23,8 @@
 #endif
 
 #include "Defn.h"
-#include "Mathlib.h"
 #include "Graphics.h"
+#include "R_ext/Mathlib.h"
 
 unsigned int char2col(char *s)
 {

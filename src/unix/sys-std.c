@@ -27,7 +27,7 @@
 
 #include "Defn.h"
 #include "Fileio.h"
-#include "Graphics.h"		/* for KillAllDevices */
+#include "Devices.h"		/* for KillAllDevices */
 #include "Runix.h"
 
 extern int SaveAction;

@@ -23,8 +23,8 @@
 #endif
 
 #include "Defn.h"	/* -> ../include/R_ext/Complex.h */
-#include "Mathlib.h"
-#include "Applic.h"		/* R_cpoly */
+#include "R_ext/Mathlib.h"
+#include "R_ext/Applic.h"		/* R_cpoly */
 
 #include "arithmetic.h"		/* complex_*  */
 
