@@ -1,6 +1,6 @@
 
 R : Copyright 2001, The R Development Core Team
-Version 1.4.0 Under development (unstable) (2001-11-04)
+Version 1.4.0 Under development (unstable) (2001-12-12)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -256,6 +256,8 @@ Error in as.data.frame.default(x) : can't coerce numeric into a data.frame
 [11] "Component 1: target is numeric, current is data.frame"                         
 > f <- as.data.frame.list( x );  all.equal(f, as.data.frame.list( f ), tol=0)
 [1] TRUE
+> f <- as.data.frame.logLik( x );  all.equal(f, as.data.frame.logLik( f ), tol=0)
+[1] "Names: 1 string mismatches"
 > f <- as.data.frame.logical( x );  all.equal(f, as.data.frame.logical( f ), tol=0)
  [1] "Names: 1 string mismatches"                                                    
  [2] "Attributes: < Component 2: Lengths: 0, 1 >"                                    
@@ -634,6 +636,8 @@ Error in as.data.frame.default(x) : can't coerce NULL into a data.frame
 [11] "Component 1: target is NULL, current is data.frame"                            
 > f <- as.data.frame.list( x );  all.equal(f, as.data.frame.list( f ), tol=0)
 [1] TRUE
+> f <- as.data.frame.logLik( x );  all.equal(f, as.data.frame.logLik( f ), tol=0)
+[1] TRUE
 > f <- as.data.frame.logical( x );  all.equal(f, as.data.frame.logical( f ), tol=0)
  [1] "Names: 1 string mismatches"                                                    
  [2] "Attributes: < Component 2: Lengths: 0, 1 >"                                    
@@ -1007,6 +1011,8 @@ Error in as.data.frame.default(x) : can't coerce list into a data.frame
 [10] "Component 1: Length mismatch: comparison on first 0 components"                
 > f <- as.data.frame.list( x );  all.equal(f, as.data.frame.list( f ), tol=0)
 [1] TRUE
+> f <- as.data.frame.logLik( x );  all.equal(f, as.data.frame.logLik( f ), tol=0)
+[1] TRUE
 > f <- as.data.frame.logical( x );  all.equal(f, as.data.frame.logical( f ), tol=0)
  [1] "Names: 1 string mismatches"                                                    
  [2] "Attributes: < Component 2: Lengths: 0, 1 >"                                    
@@ -1373,6 +1379,8 @@ Error in as.data.frame.default(x) : can't coerce numeric into a data.frame
 [9] "Component 1: target is numeric, current is data.frame"            
 > f <- as.data.frame.list( x );  all.equal(f, as.data.frame.list( f ), tol=0)
 [1] TRUE
+> f <- as.data.frame.logLik( x );  all.equal(f, as.data.frame.logLik( f ), tol=0)
+[1] "Names: 1 string mismatches"
 > f <- as.data.frame.logical( x );  all.equal(f, as.data.frame.logical( f ), tol=0)
 [1] "Names: 1 string mismatches"                                       
 [2] "Attributes: < Component 2: 1 string mismatches >"                 
@@ -1732,6 +1740,8 @@ Error in as.data.frame.default(x) : can't coerce numeric into a data.frame
 [9] "Component 1: target is numeric, current is data.frame"            
 > f <- as.data.frame.list( x );  all.equal(f, as.data.frame.list( f ), tol=0)
 [1] TRUE
+> f <- as.data.frame.logLik( x );  all.equal(f, as.data.frame.logLik( f ), tol=0)
+[1] "Names: 1 string mismatches"
 > f <- as.data.frame.logical( x );  all.equal(f, as.data.frame.logical( f ), tol=0)
 [1] "Names: 1 string mismatches"                                       
 [2] "Attributes: < Component 2: 1 string mismatches >"                 
@@ -2091,6 +2101,8 @@ Error in as.data.frame.default(x) : can't coerce character into a data.frame
 [9] "Component 1: target is character, current is data.frame"          
 > f <- as.data.frame.list( x );  all.equal(f, as.data.frame.list( f ), tol=0)
 [1] TRUE
+> f <- as.data.frame.logLik( x );  all.equal(f, as.data.frame.logLik( f ), tol=0)
+[1] "Names: 1 string mismatches"
 > f <- as.data.frame.logical( x );  all.equal(f, as.data.frame.logical( f ), tol=0)
 [1] "Names: 1 string mismatches"                                       
 [2] "Attributes: < Component 2: 1 string mismatches >"                 
@@ -2448,6 +2460,8 @@ Error in as.data.frame.default(x) : can't coerce list into a data.frame
 [9] "Component 1: Component 1: target is numeric, current is list"                  
 > f <- as.data.frame.list( x );  all.equal(f, as.data.frame.list( f ), tol=0)
 [1] TRUE
+> f <- as.data.frame.logLik( x );  all.equal(f, as.data.frame.logLik( f ), tol=0)
+[1] TRUE
 > f <- as.data.frame.logical( x );  all.equal(f, as.data.frame.logical( f ), tol=0)
 [1] "Names: 1 string mismatches"                                                    
 [2] "Attributes: < Component 2: 1 string mismatches >"                              
@@ -2792,6 +2806,8 @@ Error in as.data.frame.default(x) : can't coerce data.frame into a data.frame
 [6] "Component 1: Component 1: `current' is not a factor"                                        
 > f <- as.data.frame.list( x );  all.equal(f, as.data.frame.list( f ), tol=0)
 [1] TRUE
+> f <- as.data.frame.logLik( x );  all.equal(f, as.data.frame.logLik( f ), tol=0)
+[1] TRUE
 > f <- as.data.frame.logical( x );  all.equal(f, as.data.frame.logical( f ), tol=0)
 [1] "Names: 1 string mismatches"                                                                 
 [2] "Attributes: < Component 2: 1 string mismatches >"                                           
@@ -2912,6 +2928,6 @@ Error in ts(x) : ts object must have one or more observations
 > f <- as.vector.factor( x );  all.equal(f, as.vector.factor( f ), tol=0)
 [1] TRUE
 > cat('Time elapsed: ', proc.time() - .proctime00,'\n')
-Time elapsed:  1.26 0.06 1.33 0 0 
+Time elapsed:  1.6 0.15 3.79 0 0 
 > 
 > 
