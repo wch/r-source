@@ -362,6 +362,17 @@ and @code{make latex}).  Note that you need Perl version 5: if this is
 not available on your system, you can obtain PDF versions of the
 documentation files via @acronym{CRAN}.
 
+For those obtaining @R{} @emph{via} Subversion, one additional step is
+necessary:
+
+@smallexample
+make vignettes
+@end smallexample
+
+@noindent
+which makes the @samp{grid} vignettes (which are contained in the tarballs): 
+it takes several minutes.
+
 Now @code{rehash} if necessary, type @kbd{R}, and read the @R{} manuals
 and the @R{} @acronym{FAQ} (files @file{FAQ} or
 @file{doc/html/faq.html}, or

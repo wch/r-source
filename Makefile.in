@@ -22,7 +22,7 @@ SUBDIRS_WITH_NO_BUILD = debian
 
 GZIP = --best
 
-all: Makefile Makeconf R docs recommended vignettes
+all: Makefile Makeconf R docs recommended
 recommended: @USE_RECOMMENDED_PACKAGES_TRUE@ stamp-recommended
 
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
@@ -141,7 +141,7 @@ dist-unix: distdir
 	GZIP=$(GZIP) $(TAR) czf $(distdir).tar.gz $(distdir)
 	rm -rf $(distdir)
 dist-win:
-distdir: $(DISTFILES)
+distdir: $(DISTFILES) vignettes
 	@rm -rf $(distdir)
 	@mkdir $(distdir)
 	@-chmod 755 $(distdir)
@@ -163,6 +163,7 @@ distdir: $(DISTFILES)
 	      | (cd $(distdir); $(TAR) -x -f -)) \
 	    || exit 1; \
 	done
+	(cp library/grid/doc/*.pdf $(distdir)/src/library/grid/inst/doc)
 
 dvi info pdf:
 	-@(cd doc && $(MAKE) $@)
