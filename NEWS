@@ -51,6 +51,9 @@ INSTALLATION CHANGES
 
 BUG FIXES
 
+    o	pnorm(x, 1,0) does not give NaN anymore;
+	also, pnorm(x,m, s=Inf) == lim{s -> Inf} pnorm(x,m,s)
+
 
 
 	**************************************************
