@@ -32,6 +32,10 @@ next
   around your statements, e.g. after \code{if(..)} or \code{for(....)}.
   For that reason, one (somewhat extreme) attitude of defensive programming
   uses braces always, e.g. for \code{if} clauses.
+
+  The index \code{seq} in a \code{for} loop is evaluated at the start of
+  the loop; changing it subsequently does not affect the loop.
+  
 }
 \seealso{
   \code{\link{Syntax}} for the basic \R syntax and operators,

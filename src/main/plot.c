@@ -379,8 +379,19 @@ GetTextArg(SEXP call, SEXP spec, SEXP *ptxt,
 	}
 	else {
 	    nms = getAttrib(spec, R_NamesSymbol);
-	    n = length(nms);
-	    for (i = 0; i < n; i++) {
+	    if (nms==R_NilValue){ /* PR#1939 */
+	       txt = VECTOR_ELT(spec, 0);
+	       if (TYPEOF(txt) == LANGSXP ||TYPEOF(txt) == SYMSXP ) {
+		    UNPROTECT(1);
+		    PROTECT(txt = coerceVector(txt, EXPRSXP));
+	       }
+	       else if (!isExpression(txt)) {
+		    UNPROTECT(1);
+		    PROTECT(txt = coerceVector(txt, STRSXP));
+	       } 
+	    } else {
+	       n = length(nms);
+	       for (i = 0; i < n; i++) {
 		if (!strcmp(CHAR(STRING_ELT(nms, i)), "cex")) {
 		    cex = asReal(VECTOR_ELT(spec, i));
 		}
@@ -405,6 +416,7 @@ GetTextArg(SEXP call, SEXP spec, SEXP *ptxt,
 		    }
 		}
 		else errorcall(call, "invalid graphics parameter");
+	       }
 	    }
 	}
 	break;
