@@ -190,6 +190,18 @@ system versions are in the @file{etc} folder); in the latter you can
 replace @code{Arial} by @code{Arial Unicode MS}, and we tried
 @code{FixedSys} and @code{MS Mincho} in @file{Rconsole}.
 
+You do need to ensure that R is running is a suitable locale: use
+@code{Sys.getlocale()} to find out, and @code{Sys.setlocale(,
+"langname")} to set it if necessary.  (CJK users may be used to their
+language characters always being available, which is that case for
+so-called `Unicode' Windows applications.  However, R has to run on
+Windows 9x and is not therefore `Unicode'.)  You can find suitable
+locale names from
+@uref{http://msdn.microsoft.com/library/default.asp?url=/library/en-us/vccore98/html/_crt_language_and_country_strings.asp}:
+beware that @code{"Chinese"} is Traditional Chinese (code page 950,
+Big5) and @code{"chs"} is needed for Simplified Chinese (code page 936,
+GB2312).
+
 @node How do I check an installation?, Can I customize the installation?, I want to run R in Chinese/Japanese/Korean, Installation and Usage
 @section How do I check an installation is not corrupt?
 
