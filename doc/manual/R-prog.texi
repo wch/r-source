@@ -35,21 +35,24 @@
 
 @menu
 * Introduction::                
-* Interfacing C++ code::        
 * R (internal) programming miscellania::  
 * Creating R packages::         
 * Writing R documentation::     
 * Function and variable index::  
 @end menu
 
-@node Introduction, Interfacing C++ code, Top, Top
+@node Introduction, R (internal) programming miscellania, Top, Top
 @chapter Introduction
 
 @menu
 * Legalese::                    
+* Operating system access::     
+* .C/.Fortran::                 
+* dyn.load/dyn.unload::         
+* .Call/.External::             
 @end menu
 
-@node Legalese,  , Introduction, Introduction
+@node Legalese, Operating system access, Introduction, Introduction
 @section Legalese
 
 This document is @copyright{} 1999 by the R Core Team.
@@ -74,8 +77,182 @@ A copy of the GNU General Public License is available via WWW at
 You can also obtain it by writing to the Free Software Foundation, Inc.,
 675 Mass Ave, Cambridge, MA 02139, USA.
 
-@node Interfacing C++ code, R (internal) programming miscellania, Introduction, Top
-@chapter Interfacing C++ code
+@chapter     System and foreign language interfaces
+
+
+@menu
+* Operating system access::
+* .C/.Fortran::
+* dyn.load/dyn.unload::
+* .Internal::
+* .Call/.External::
+* .Primitive::
+@end menu
+
+@node  Operating system access, .C/.Fortran, Legalese, Introduction
+@section  Operating system access
+
+Access to operating system functions is via the @R{} function
+@code{system}. The details will differ by platform (see the on-line
+help), and about all that can safely be assumed is that the first argument
+will be a string @code{command} that will be passed for execution
+(not necessarily by a shell) and the second argument will be
+@code{internal} which if true will collect the output of the command
+into an @R{} character vector.
+
+The function @code{unix.time} is available for timing (even on non-Unix
+platforms, although the information available may be limited there).
+
+
+@node .C/.Fortran, dyn.load/dyn.unload, Operating system access, Introduction
+@section         .C/.Fortran
+
+These two functions provide a standard interface to compiled code that
+has been linked into @R{}, either at build time or via @code{dyn.load}
+(q.v.).  They are primarily intended for compiled C and Fortran code
+respectively, but the @code{.C} function can be used with other
+languages which can generate C interfaces, for example C++.
+
+The first argument to each function is a character string given the
+symbol name as known to C or Fortran, that is the function or subroutine
+name. (The mapping to the symbol name in the load table is given by the
+functions @code{symbol.C} and @code{symbol.For}; that the symbol is
+loaded can be tested by, for example,
+@code{is.loaded(symbol.C("loglin"))}.)
+
+There can be up to 65 further arguments giving @R{} objects to be passed
+to compiled code. Normally these are copied before being passed in, and
+copied again to an @R{} list object when the compiled code returns.
+If the arguments are given names, these are used as names for the
+components in the returned list object.
+
+The following table gives the mapping between the modes of @R{} vectors
+and the types of arguments to a C function or Fortran subroutine.
+
+@multitable {storage.mode} {RRR storage.mode} {RRR storage.mode} {DOUBLE PRECISION}
+@item	@tab @R{} storage mode @tab  C type  @tab   Fortran type
+@item	@tab @code{logical}   @tab @code{int *}     @tab @code{INTEGER}
+@item	@tab @code{integer}   @tab @code{int *}     @tab @code{INTEGER}
+@item	@tab @code{double}    @tab @code{double *}  @tab @code{DOUBLE PRECISION}
+@item	@tab @code{complex}   @tab @code{Rcomplex *} @tab @code{DOUBLE COMPLEX}
+@item	@tab @code{character} @tab @code{char **}   @tab @code{CHARACTER*255}
+@end multitable
+C type @code{Rcomplex} is a structure with @code{double} members
+@code{r} and @code{i} defined in the header file @code{Complex.h}.  Only
+a single character string can be passed to or from Fortran, and the
+success of this is compiler-dependent.  Other @R{} objects can be passed
+to @code{.C}, but it is better to use one of the other interfaces. An
+exception is passing an @R{} function for use with @code{call_R}, when
+the object can be handled as @code{void *} en route to @code{call_R}.
+
+It is possible to pass numeric vectors of storage mode @code{double} to
+C as @code{float *} or Fortran as @code{REAL} by setting the attribute
+@code{Csingle}, most conveniently by using the @R{} functions
+@code{as.single}, @code{single} or @code{storage.mode}.  This is
+intended only to be used to aid interfacing to existing C or Fortran
+code.
+
+Unless formal argument @code{NAOK} is true, all the other arguments are
+checked for missing values @code{NA} and for the IEEE special values
+@code{NaN}, @code{Inf} and @code{-Inf}, and the presence of any of these
+generates an error. If it is true, these values are passed unchecked.
+
+Argument @code{DUP} can be used to suppress copying. It is dangerous:
+see the on-line help for arguments against its use.
+
+Finally, argument @code{PACKAGE} confines the search for the symbol name
+to a specific shared library (or use @code{"base"} for code compiled
+into @R). Its use is highly desirable, as there is no way to avoid two
+package writers using the same symbol name, and such name clashes are
+normally sufficient to cause @R{} to crash.
+
+Note that the compiled code should not return anything except through
+its arguments: C functions should be of type @code{void} and Fortran
+subprograms should be subroutines.
+
+
+@node dyn.load/dyn.unload, .Call/.External, .C/.Fortran, Introduction
+@section         dyn.load/dyn.unload
+
+Compiled code to be used with @R{} is loaded as a shared library (Unix)
+or DLL (Windows). The library / DLL is loaded by @code{dyn.load} and
+unloaded by @code{dyn.unload}. Unloading is not normally necessary, but
+it is needed to allow the DLL to be re-built on some platforms, including
+Windows.
+
+The first argument to both functions is a character string giving the
+path to library. Programmers should not assume a specific file extension for
+the library (such as @code{.so}) but use a construction like
+@example
+file.path(path1, path2, paste("mylib", .Platform$dynlib.ext, sep=""))
+@end example
+@noindent for platform independence. On some Unix systems the path
+supplied to @code{dyn.load} should contain a @code{/} as the standard
+search path for shared libraries does not contain the current directory.
+
+Loading is most often done via a call to @code{library.dynam} in the
+@code{.First.lib} function of a package.
+
+Under some Unix systems there is a choice of how the symbols are
+resolved when the library is loaded, governed by the arguments
+@code{local} and @code{now}. Only use these if really necessary: in
+particular using @code{now=FALSE} and then calling an unresolved symbol
+will terminate @R{} unceremoniously.
+
+If a library / DLL is loaded more than once the most recent version is
+used.  More generally, if the same symbol name appears in several
+libraries, the most recently loaded occurrence is used.
+
+
+@node .Call/.External,  , dyn.load/dyn.unload, Introduction
+@section         .Call/.External
+
+These two interfaces have almost the same functionality. @code{.Call} is
+based on the interface of the same name in S version 4, and
+@code{.External} is based on @code{.Internal}.  @code{.External} is more
+complex but allows a variable number of arguments.
+
+A call to @code{.Call} is very similar to @code{.C}, for example
+@example
+.Call("convolve", a, b)
+@end example
+@noindent
+The first argument should be a character string giving a C symbol name
+of code that has already been loaded into @R{}.  Up to 65 @R{} objects
+can passed as arguments.  The C side of the interface is
+@example
+#include <S.h>
+
+SEXP convolveE(SEXP a, SEXP b)
+ ...
+@end example
+
+
+A call to @code{.External} is almost identical
+@example
+.External("convolveE", a, b)
+@end example
+@noindent
+but the C side of the interface is different, having only one argument
+@example
+#include <Rinternals.h>
+
+SEXP convolveE(SEXP args)
+ ...
+@end example
+@noindent
+Here @code{args} is a @code{LISTSXP}, a Lisp-style list from which the
+arguments can be extracted.
+
+In each case the @R{} objects are available for manipulation via a set
+of functions and macros defined in the header file @file{Rinternals.h}
+or some higher-level macros defined in @file{Rdefines.h} (included by
+@code{S.h}). Details are give in the R-external manual.
+@c [FIXME: How do we refer to this?]
+
+
+
+@section Interfacing C++ code
 
 (Contributed by @emph{Adrian Trapletti}.)
 
@@ -120,7 +297,7 @@ Y::~Y() @{ cout << "destructor Y" << endl; @}
 
 @noindent implementing the 2 classes @code{X} and @code{Y}.  The only
 thing we have to do is writing a wrapper function and ensuring that the
-function is bracketed by
+function is enclosed in
 
 @smallexample
 extern "C" @{
@@ -147,7 +324,8 @@ void X_main ()
 @end cartouche
 @end smallexample
 
-Compiling and linking should be done with the C++ compiler-linker
+Compiling and linking should be done with the C++ compiler-linker. For
+example, under Linux we might use
 
 @smallexample
 g++ -c X.cc
@@ -155,8 +333,9 @@ g++ -c X_main.cc
 g++ -shared -o X.so X_main.o X.o
 @end smallexample
 
-Otherwise (i.e., linking, e.g., with GNU ld) @code{__main()} and hence,
-the constructor of the static variable @code{Y} are not called.
+Otherwise (i.e., linking, e.g., with GNU ld) the C++ initialization code
+(and hence the constructor of the static variable @code{Y}) are not
+called.
 
 Now starting R yields
 
@@ -176,7 +355,7 @@ Save workspace image? [y/n/c]: y
 destructor Y
 @end smallexample
 
-@node R (internal) programming miscellania, Creating R packages, Interfacing C++ code, Top
+@node R (internal) programming miscellania, Creating R packages, Introduction, Top
 @chapter R (internal) programming miscellania
 
 @menu
@@ -310,6 +489,7 @@ UseMethod  invisible
 @node Creating R packages, Writing R documentation, R (internal) programming miscellania, Top
 @chapter Creating R packages
 
+
 Packages provide a mechanism for loading optional code and attached
 documentation as needed.  The @R{} distribution provides several
 packages, such as @strong{eda}, @strong{mva}, and @strong{stepfun}.
@@ -338,7 +518,7 @@ License: GPL version 2 or later
 Continuation lines (e.g., for descriptions longer than one line) start
 with a whitespace character.  The license field should contain an
 explicit statement or a well-known abbreviation (such as @samp{GPL},
-@samp{LGPL}, @samp{BSD}, or @samp{Artistic}), maybe followed by a
+@samp{LGPL}, @samp{BSD}, or @samp{Artistic}), perhaps followed by a
 reference to the actual license file.  It is very important that you
 include this information!  Otherwise, it may not even be legally correct
 for others to distribute copies of the package.
@@ -367,7 +547,10 @@ the objects in the package.  The documentation files to be installed
 must also start with a (lower- or uppercase) letter and have the
 extension @file{.Rd} (the default) or @file{.rd}.
 
-C or FORTRAN source and optionally a @file{Makefile} for the compiled
+The @file{R} and @file{man} subdirectories may contain OS-specific
+subdirectories named @code{unix}, @code{windows} or @code{mac}.
+
+The C or FORTRAN source and optionally a @file{Makefile} for the compiled
 code is in @file{src}.  Note that the @file{Makefile} most likely is not
 needed.
 
@@ -384,7 +567,47 @@ to the installation directory.
 
 Finally, @file{exec} could contain additional executables the package
 needs, typically Shell or Perl scripts.  This mechanism is currently not
-used by any package, and still experimental.
+used by any Unix package, and still experimental.
+
+@menu
+* Package bundles::             
+@end menu
+
+@node  Package bundles,  , Creating R packages, Creating R packages
+@section Package bundles
+
+Sometimes it is convenient to distribute several packages as a
+@emph{bundle}. (The main current example is @code{VR} which contains
+four packages.)  The installation scripts on both Unix and Windows can
+handle package bundles as from @R{} 0.90.1.
+
+The @file{DESCRIPTION} file of a bundle has an extra @code{Bundle:}
+field, as in
+
+@smallexample
+Bundle: VR
+Contains: MASS class nnet spatial
+Version: 6.1-6 (1999/11/26)
+Author: S original by Venables & Ripley.
+  R port by Brian Ripley <ripley@@stats.ox.ac.uk>, following earlier
+  work by Kurt Hornik and Albrecht Gebhardt.
+BundleDescription: Various functions from the libraries of Venables and
+  Ripley, `Modern Applied Statistics with S-PLUS' (3rd edition).
+License: GPL (version 2 or later)
+@end smallexample
+
+The @code{Contains:} field lists the packages, which should be contained
+in separate subdirectories with the names given. These are standard
+packages in all respects except that the @file{DESCRIPTION} file is
+replaced by a @file{DESCRIPTION.in} file which just contains fields
+additional to the @file{DESCRIPTION} file of the bundle, for example
+
+@smallexample
+Package: spatial
+Description: Functions for kriging and point pattern analysis.
+@end smallexample
+
+
 
 @node Writing R documentation, Function and variable index, Creating R packages, Top
 @chapter Writing R documentation
@@ -396,6 +619,7 @@ used by any package, and still experimental.
 * Marking text::                
 * Mathematics::                 
 * Miscellaneous::               
+* Platform-specific sections::  
 @end menu
 
 @node The documentation source tree, Documentation format, Writing R documentation, Writing R documentation
@@ -404,7 +628,7 @@ used by any package, and still experimental.
 The help files containing detailed documentation for (potentially) all
 @R{} objects are in the @file{src/library/*/man} subdirectories of the
 @R{} source tree, where @samp{*} stands for @strong{base} where all the
-standard objects are, and for ``proper'' libraries such as @strong{eda}
+standard objects are, and for ``standard'' packages such as @strong{eda}
 and @strong{mva}.  The @file{doc/manual} subdirectory contains code for
 running the translated help files through La@TeX{} and further documents
 pertaining to @R{}.
@@ -442,6 +666,11 @@ file.
 @item \title@{@var{Title}@}
 @findex \title
 
+@item \description@{@dots{}@}
+@findex \description
+A short description of what the function(s) do(es) (one paragraph, a few
+lines only).
+
 @item \usage@{myfun(@var{arg1}, @var{arg2}, @dots{})@}
 @findex \usage
 One or more lines showing the synopsis of the function(s) and variables
@@ -459,10 +688,6 @@ Description of the function's arguments, in the following form:
 @var{Some optional text @emph{after} the list.}
 @end display
 
-@item \description@{@dots{}@}
-@findex \description
-A short description of what the function(s) do(es) (one paragraph, a few
-lines only).
 
 @item \details@{@dots{}@}
 @findex \details
@@ -596,8 +821,8 @@ Finally, @code{\link@{@var{foo}@}} (usually in the combination
 @code{\code@{\link@{@var{foo}@}@}}) produces a hyperlink to the help
 page for object @var{foo}.  One main usage of @code{\link} is in the
 @code{\seealso} section of the help page, @pxref{Documentation format},
-above.  (Currently, this only affects the creation of the @HTML{} pages
-used, e.g., by @code{help.start()}.)
+above.  (This only affects the creation of hyperlinks, for example in
+the @HTML{} pages used by @code{help.start()}.)
 
 @node Mathematics, Miscellaneous, Marking text, Writing R documentation
 @section Mathematics
@@ -663,7 +888,7 @@ For historic reasons mostly, the @TeX{}/La@TeX{} commands @code{\alpha},
 @findex \left(
 @findex \right)
 
-@node Miscellaneous,  , Mathematics, Writing R documentation
+@node Miscellaneous, Platform-specific sections, Mathematics, Writing R documentation
 @section Miscellaneous
 
 @findex \R
@@ -691,6 +916,26 @@ currently must escape all La@TeX{} special characters, i.e., besides
 @samp{~} by @code{\eqn@{\tilde@{@}@}@{~@}}.  Also, @samp{<}, @samp{>},
 and @samp{|} must only be used in math mode, i.e., within @code{\eqn} or
 @code{\deqn}.
+
+@node  Platform-specific sections,  , Miscellaneous, Writing R documentation
+@section Platform-specific documentation
+
+Sometimes the documentation needs to differ by platform. Currently
+three OS-specific options are available, @code{unix}, @code{windows} and
+@code{mac}, and lines in the help source file can be enclosed in
+
+@smallexample
+#ifdef OS
+   ...
+#endif
+@end smallexample
+or
+@smallexample
+#ifndef OS
+   ...
+#endif
+@end smallexample
+for OS-specific inclusion or exclusion.
 
 @node Function and variable index,  , Writing R documentation, Top
 @unnumbered Function and variable index
