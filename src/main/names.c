@@ -509,6 +509,7 @@ FUNTAB R_FunTab[] =
 {"winMenuDel",	do_winmenudel,	0,	11,	2,	PP_FUNCALL},
 {"memory.size",	do_memsize,	0,	11,	1,	PP_FUNCALL},
 {"DLL.version",	do_dllversion,	0,	11,	1,	PP_FUNCALL},
+{"bringToTop",	do_bringtotop,	0,	11,	1,	PP_FUNCALL},
 #endif
 {"parse",	do_parse,	0,	11,	4,	PP_FUNCALL},
 {"save",	do_save,	0,	111,	3,	PP_FUNCALL},
