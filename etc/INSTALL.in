@@ -92,6 +92,12 @@ fi
 for pkg in ${PKGS}; do
   cd ${pkg}
   pkg=`basename ${pkg}`
+
+  if test -d ${lib}/${pkg} -a -w ${lib}/${pkg}; then
+    echo "Removing old package \`${pkg}' ..."
+    ${RHOME}/etc/REMOVE -l ${lib} ${pkg}
+  fi
+    
   ${INSTALL} -d ${lib}/${pkg} || exit 3
   echo "Installing package \`${pkg}' ..."
 
