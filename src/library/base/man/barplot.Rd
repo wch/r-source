@@ -3,7 +3,7 @@
 \alias{barplot.default}
 \title{Bar Plots}
 \usage{
-barplot(height, width = 1, space = NULL, names.arg = NULL,
+\method{barplot}{default}(height, width = 1, space = NULL, names.arg = NULL,
         legend.text = NULL, beside = FALSE, horiz = FALSE,
         col = heat.colors(NR), border = par("fg"),
         main = NULL, sub = NULL, xlab = NULL, ylab = NULL,

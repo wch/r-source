@@ -1,7 +1,7 @@
 \name{solve}
 \title{Solve a System of Equations}
 \usage{
-solve(a, b, tol = 1e-7)
+\method{solve}{default}(a, b, tol = 1e-7)
 }
 \alias{solve}
 \alias{solve.default}
