@@ -28,8 +28,8 @@
 
 static double ylow;
 static double yhigh;
-double f1;
-double f2;
+static double f1;
+static double f2;
 
 static double approx1(double v, double *x, double *y, int n, int method)
 {
