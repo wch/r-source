@@ -6,10 +6,10 @@
 \alias{print.summary.lm.null}
 \title{Summarizing Linear Model Fits}
 \usage{
-\method{summary}{lm}(object, correlation = FALSE, \dots)
+\method{summary}{lm}(object, correlation = FALSE, symbolic.cor = FALSE, \dots)
 
 \method{print}{summary.lm}(x, digits = max(3, getOption("digits") - 3),
-      symbolic.cor = FALSE,
+      symbolic.cor = x$symbolic.cor,
       signif.stars = getOption("show.signif.stars"), \dots)
 }
 \arguments{
@@ -70,6 +70,8 @@
     covariances of the \eqn{\hat\beta_j}{coef[j]}, \eqn{j=1, \dots, p}.}
   \item{correlation}{the correlation matrix corresponding to the above
     \code{cov.unscaled}, if \code{correlation = TRUE} is specified.}
+  \item{symbolic.cor}{(only if \code{correlation} is true.)  The value
+    of the argument \code{symbolic.cor}.}
 }
 \seealso{
   The model fitting function \code{\link{lm}}, \code{\link{summary}}.
