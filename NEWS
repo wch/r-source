@@ -129,6 +129,8 @@ BUG FIXES
     o   backslashes in examples in help files are now converted 
 	correctly to latex.
 
+    o   qchisq with non-centrality parameter now does something.
+
 
 	**************************************************
 	*						 *
