@@ -159,7 +159,7 @@ BUG FIXES
 
     o   Old (pre-0.63.1) .Random.seed would cause problems if used.
 
-
+    o   Rare memory overrun in rpois fixed.
 
 	**************************************************
 	*						 *

@@ -69,13 +69,14 @@ double rpois(double mu)
     static double fk, fx, fy, g, omega;
     static double p, p0, px, py, q, s, t, u, v, x, xx;
     static double pp[36];
-    static int j, k, kflag, l, m;
+    static int j, k, kflag, l, big_l, m;
     static int ipois;
     static double muprev = 0.0;
     static double muold = 0.0;
 
     if (mu<=0.0) 
 	return(0.0);
+
 
     if (mu != muprev) {
 	if (mu >= 10.0) {
@@ -89,7 +90,7 @@ double rpois(double mu)
 	    muprev = mu;
 	    s = sqrt(mu);
 	    d = 6.0 * mu * mu;
-	    l = mu - 1.1484;
+	    big_l = mu - 1.1484;
 	} else {
 	    /* Case B. (start new table and */
 	    /* calculate p0 if necessary) */
@@ -147,7 +148,7 @@ double rpois(double mu)
 	ipois = g;
 	/* Step I. immediate acceptance */
 	/* if ipois is large enough */
-	if (ipois >= l)
+	if (ipois >= big_l)
 	    return (double)ipois;
 	/* Step S. squeeze acceptance */
 	/* unif_rand() for (0,1)-sample u */
