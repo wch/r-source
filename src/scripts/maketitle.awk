@@ -1,6 +1,3 @@
-#!/bin/sh
-
-awk '
 BEGIN { active = 0; n = 0; }
 {
   if ($0 ~ /^Package:/) {
@@ -53,4 +50,4 @@ END {
     s = old
   }
   print s
-}' ${1-DESCRIPTION}
+}
