@@ -94,9 +94,14 @@ stopifnot(
  1 +     Meps != 1,
  1 + .5* Meps == 1,
  log2(.Machine$double.xmax) == .Machine$double.max.exp,
- log2(.Machine$double.xmin) == .Machine$double.min.exp,
- is.infinite(.Machine$double.base ^ .Machine$double.max.exp)
+ log2(.Machine$double.xmin) == .Machine$double.min.exp
 )
+}
+% This test fails on HP-UX since pow(2,1024) returns DBL_MAX and sets
+% errno = ERANGE.  Most other systems return Inf and set errno
+\testonly{
+  if (Sys.info()["sysname"] != "HP-UX")
+    stopifnot(is.infinite(.Machine$double.base ^ .Machine$double.max.exp))
 }
 \keyword{sysdata}
 \keyword{programming}
