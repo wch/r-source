@@ -4,8 +4,9 @@
 qqnorm(y, \dots)
 \method{qqnorm}{default}(y, ylim, main = "Normal Q-Q Plot",
        xlab = "Theoretical Quantiles",
-       ylab = "Sample Quantiles", plot.it = TRUE, \dots)
-qqline(y, \dots)
+       ylab = "Sample Quantiles", plot.it = TRUE, datax = FALSE,
+       \dots)
+qqline(y, datax = FALSE, \dots)
 qqplot(x, y, plot.it = TRUE, xlab = deparse(substitute(x)),
        ylab = deparse(substitute(y)), \dots)
 }
@@ -19,6 +20,7 @@ qqplot(x, y, plot.it = TRUE, xlab = deparse(substitute(x)),
   \item{y}{The second or only data sample.}
   \item{xlab, ylab, main}{plot labels.}
   \item{plot.it}{logical. Should the result be plotted?}
+  \item{datax}{logical. Should data values be on the x-axis?}
   \item{ylim, \dots}{graphical parameters.}
 }
 \description{
