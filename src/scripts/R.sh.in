@@ -46,6 +46,7 @@ Options:
   --max-vsize=N         Set vector heap max to N bytes;
   --min-nsize=N         Set min number of cons cells to N
   --max-nsize=N         Set max number of cons cells to N
+  --max-ppsize=N        Set max size of protect stack to N
   -q, --quiet           Don't print startup message
   --silent              Same as --quiet
   --slave               Make R run as quietly as possible

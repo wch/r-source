@@ -6582,6 +6582,12 @@ number of ``cons cells'' to @var{N}.  See the previous option for
 details on @var{N}.  A cons cell takes 28 bytes on a 32-bit machine, and
 usually 56 bytes on a 64-bit machine.
 
+@item --max-ppsize=@var{N}
+Specify the maximum size of the pointer protection stack as @var{N}
+locations.  This defaults to 10000, but can be increased to allow 
+large and complicated calculations to be done.  Currently the maximum
+value accepted in 100000.
+
 @item --quiet
 @itemx --silent
 @itemx -q
@@ -6810,6 +6816,11 @@ Specify a limit for the amount of memory to be used both for @R{}
 objects and working areas (`@code{malloc}-ed' memory).  This is set by
 default to the smaller of 256Mb and the amount of physical RAM in the machine.
 
+@item --max-ppsize=@var{N}
+Specify the maximum size of the pointer protection stack as @var{N}
+locations.  This defaults to 10000, but can be increased to allow 
+large and complicated calculations to be done.  Currently the maximum
+value accepted in 100000.
 
 @item --quiet
 @itemx --silent

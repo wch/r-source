@@ -31,6 +31,10 @@ NEW FEATURES
 
     o	read.table() now allows embedded newlines in quoted fields. (PR#4555)
 
+    o	New command-line argument --max-ppsize allows the size of the
+	pointer protection stack to be set higher than the previous
+	limit of 10000.
+
 
 UTILITIES
 
@@ -55,6 +59,10 @@ DEPRECATED & DEFUNCT
     o	glm.fit.null(), lm.fit.null() and lm.wfit.null() are defunct.
 
     o	print.atomic() is defunct.
+
+    o	The command-line arguments --nsize and --vsize are no longer
+	recognized as synonyms for --min-nsize and --min-vsize (which
+	replaced them in 1.2.0).
 
 
 INSTALLATION CHANGES
