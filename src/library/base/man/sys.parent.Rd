@@ -61,7 +61,8 @@ parent.frame(n = 1)
   \code{sys.parents} gives the indices of the parent frames of each
   of the frames.
   
-  Notice that even though the \code{sys.}\emph{xxx} functions are
+  Notice that even though the \code{sys.}\emph{xxx} functions (except
+  \code{sys.status}) are
   interpreted, their contexts are not counted nor are they reported.
   There is no access to them.
 
