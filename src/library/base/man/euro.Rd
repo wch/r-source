@@ -1,12 +1,14 @@
 \name{euro}
+\docType{data}
 \alias{euro}
 \alias{euro.cross}
 \title{Euro Conversion Rates}
-\usage{data(euro)}
 \description{Conversion rates between the various Euro currencies.}
+\usage{data(euro)}
 \format{
   \code{euro} is a named vector of length 11, \code{euro.cross} a named
-  matrix of size 11 by 11.}
+  matrix of size 11 by 11.
+}
 \details{
   The data set \code{euro} contains the value of 1 Euro in all
   currencies participating in the European monetary union (Austrian

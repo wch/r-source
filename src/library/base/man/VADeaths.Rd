@@ -1,11 +1,12 @@
 \name{VADeaths}
-\title{Death Rate Data}
-\usage{data(VADeaths)}
+\docType{data}
 \alias{VADeaths}
-\format{A matrix with 5 rows and 5 columns.}
+\title{Death Rate Data}
 \description{
   Death rates per 100 in Virginia in 1940.
 }
+\usage{data(VADeaths)}
+\format{A matrix with 5 rows and 5 columns.}
 \details{
   The death rates are cross-classified by age group (rows) and
   population group (columns).  The age groups are: 50--54, 55--59,
@@ -21,7 +22,9 @@
   \emph{American Sociological Review}, \bold{12}, 525--535.
 }
 \references{
-  McNeil, D. R. (1977) \emph{Interactive Data Analysis.}  Wiley.
+  McNeil, D. R. (1977)
+  \emph{Interactive Data Analysis}.
+  Wiley.
 }
 \examples{
 data(VADeaths)

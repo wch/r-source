@@ -1,4 +1,5 @@
 \name{warpbreaks}
+\docType{data}
 \alias{warpbreaks}
 \title{The Number of Breaks in Yarn during Weaving}
 \description{

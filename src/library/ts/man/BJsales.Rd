@@ -1,4 +1,5 @@
 \name{BJsales}
+\docType{data}
 \alias{BJsales}
 \alias{BJsales.lead}
 \title{

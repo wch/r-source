@@ -1,6 +1,11 @@
 \name{faithful}
+\docType{data}
 \alias{faithful}
 \title{Old Faithful Geyser Data}
+\description{
+  Waiting time between eruptions and the duration of the eruption for
+  the Old Faithful geyser in Yellowstone National Park, Wyoming, USA.
+}
 \usage{data(faithful)}
 \format{A data frame with 272 observations on 2 variables.
   \tabular{rlll}{
@@ -10,11 +15,6 @@
   }
 }
 \source{W. Härdle.}
-\description{
-  The `faithful' data frame has 272 rows and 2 columns; the waiting
-  time between eruptions and the duration of the eruption for the Old
-  Faithful geyser in Yellowstone National Park, Wyoming, USA.
-}
 \references{
   Härdle, W. (1991)
   \emph{Smoothing Techniques with Implementation in S}.

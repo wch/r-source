@@ -1,12 +1,13 @@
 \name{sunspots}
+\docType{data}
 \alias{sunspots}
 \title{Monthly Sunspot Numbers, 1749--1983}
-\usage{data(sunspots)}
 \description{
-  Monthly mean relative sunspot numbers from 1749 to 1983.  Collected at Swiss
-  Federal Observatory, Zurich until 1960, then Tokyo Astronomical
+  Monthly mean relative sunspot numbers from 1749 to 1983.  Collected at
+  Swiss Federal Observatory, Zurich until 1960, then Tokyo Astronomical
   Observatory.
 }
+\usage{data(sunspots)}
 \format{
   A time series of monthly data from 1749 to 1983.
 }

@@ -1,29 +1,30 @@
 \name{randu}
+\docType{data}
 \alias{randu}
 \title{Random Numbers from Congruential Generator}
-\usage{data(randu)}
 \description{
-    400 triples of successive random numbers were taken from the VAX
-    FORTRAN function RANDU running under VMS 1.5.
+  400 triples of successive random numbers were taken from the VAX
+  FORTRAN function RANDU running under VMS 1.5.
 }
+\usage{data(randu)}
 \details{
-    In three dimensional displays it is evident that the triples fall on
-    15 parallel planes in 3-space. This can be shown theoretically to be
-    true for all triples from the RANDU generator.
+  In three dimensional displays it is evident that the triples fall on
+  15 parallel planes in 3-space. This can be shown theoretically to be
+  true for all triples from the RANDU generator.
 
-    These particular 400 triples start 5 apart in the sequence, that is
-    they are ((U[5i+1], U[5i+2], U[5i+3]), i= 0, \dots, 399), and they
-    are rounded to 6 decimal places.
+  These particular 400 triples start 5 apart in the sequence, that is
+  they are ((U[5i+1], U[5i+2], U[5i+3]), i= 0, \dots, 399), and they
+  are rounded to 6 decimal places.
 
-    Under VMS versions 2.0 and higher, this problem has been fixed.
+  Under VMS versions 2.0 and higher, this problem has been fixed.
 }
 \format{
-    A data frame with 400 observations on 3 variables named \code{x},
-    \code{y} and \code{z} which give the first, second and third random
-    number in the triple.
+  A data frame with 400 observations on 3 variables named \code{x},
+  \code{y} and \code{z} which give the first, second and third random
+  number in the triple.
 }
 \source{
-    David Donoho
+  David Donoho
 }
 \examples{
 \dontrun{## We could re-generate the dataset by the following R code

@@ -1,13 +1,15 @@
 \name{swiss}
-\title{Swiss Fertility and Socioeconomic Indicators (1888) Data}
-\usage{data(swiss)}
+\docType{data}
 \alias{swiss}
+\title{Swiss Fertility and Socioeconomic Indicators (1888) Data}
 \description{
   Standardized fertility measure and socio-economic indicators for each
   of 47 French-speaking provinces of Switzerland at about 1888.
 }
-\format{A data frame with 47 observations on 6 variables, \emph{each} of
-  which is in percent, i.e., in \eqn{[0,100]}.
+\usage{data(swiss)}
+\format{
+  A data frame with 47 observations on 6 variables, \emph{each} of which
+  is in percent, i.e., in \eqn{[0,100]}.
 
   \tabular{rll}{
     [,1] \tab Fertility \tab \eqn{I_g}{Ig}, ``common standardized
@@ -42,7 +44,7 @@
   Project ``16P5'', pages 549--551 in
 
   Mosteller, F. and Tukey, J. W. (1977)
-  \emph{Data Analysis and Regression: A Second Course in Statistics.}
+  \emph{Data Analysis and Regression: A Second Course in Statistics}.
   Addison-Wesley, Reading Mass.
 
   indicating their source as

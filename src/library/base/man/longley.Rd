@@ -1,4 +1,5 @@
 \name{longley}
+\docType{data}
 \alias{longley}
 \title{Longley's Regression Data}
 \description{

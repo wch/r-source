@@ -1,7 +1,12 @@
 \name{phones}
-\title{The World's Telephones}
-\usage{data(phones)}
+\docType{data}
 \alias{phones}
+\title{The World's Telephones}
+\description{
+  The number of telephones in various regions of the world (in
+  thousands).
+}
+\usage{data(phones)}
 \format{
   A matrix with 7 rows and 8 columns.  The columns of the matrix give
   the figures for a given region, and the rows the figures for a year.
@@ -12,11 +17,7 @@
   The years are: 1951, 1956, 1957, 1958, 1959, 1960, 1961.
 }
 \source{
-  AT&T (1961)  \emph{The World's Telephones}.
-}
-\description{
-  The number of telephones in various regions of the world (in
-  thousands).
+  AT&T (1961) \emph{The World's Telephones}.
 }
 \references{
   McNeil, D. R. (1977)

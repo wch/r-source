@@ -1,4 +1,5 @@
 \name{rivers}
+\docType{data}
 \alias{rivers}
 \title{Lengths of Major North American Rivers}
 \description{

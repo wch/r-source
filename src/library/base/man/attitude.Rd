@@ -1,16 +1,18 @@
 \name{attitude}
+\docType{data}
 \alias{attitude}
 \title{Attitudes Toward Supervisors}
+\description{
+  From a survey of the clerical employees of a large financial
+  organization, the data are aggregated from the questionnaires of the
+  approximately 35 employees for each of 30 (randomly selected)
+  departments.  The numbers give the percent proportion of favourable
+  responses to seven questions in each department.}
 \usage{data(attitude)}
-\description{From a survey of the clerical employees
-  of a large financial organization, the data are aggregated from the
-  questionnaires of the approximately 35 employees for each of
-  30 (randomly selected) departments.  The numbers give the percent
-  proportion of favourable responses to seven questions in each department.}
 \format{
-  A dataframe with 30 observations on 7 variables. The first column are the
-  short names from the reference, the second one the variable names in
-  the data frame:
+  A dataframe with 30 observations on 7 variables. The first column are
+  the short names from the reference, the second one the variable names
+  in the data frame:
   \tabular{rlll}{
      Y   \tab rating    \tab numeric  \tab Overall rating \cr
     X[1] \tab complaints\tab numeric \tab Handling of employee complaints \cr
@@ -22,10 +24,9 @@
 }
 \source{
   Chatterjee, S. and Price, B. (1977)
-  \emph{Regression Analysis by Example.}
-  New York: Wiley.\cr
+  \emph{Regression Analysis by Example}.
+  New York: Wiley.
   (Section 3.7, p.68ff of 2nd ed.(1991).)
-
 }
 \examples{
 data(attitude)

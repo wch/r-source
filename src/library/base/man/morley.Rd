@@ -1,4 +1,5 @@
 \name{morley}
+\docType{data}
 \alias{morley}
 \title{Michaelson-Morley Speed of Light Data}
 \description{

@@ -1,11 +1,12 @@
 \name{women}
+\docType{data}
 \alias{women}
 \title{Average Heights and Weights for American Women}
-\usage{data(women)}
 \description{
   This data set gives the average heights and weights for American women
   aged 30--39.
 }
+\usage{data(women)}
 \format{A data frame with 15 observations on 2 variables.
   \tabular{rlll}{
     \code{[,1]}  \tab \code{height}  \tab numeric  \tab Height (in)\cr
@@ -22,7 +23,9 @@
   indoor clothing and shoes, and heights with shoes.
 }
 \references{
-  McNeil, D. R. (1977) \emph{Interactive Data Analysis.}  Wiley.
+  McNeil, D. R. (1977)
+  \emph{Interactive Data Analysis}.
+  Wiley.
 }
 \examples{
 data(women)

@@ -1,8 +1,13 @@
 \name{airquality}
-\title{New York Air Quality Measurements}
-\usage{data(airquality)}
+\docType{data}
 \alias{airquality}
-\format{A data frame with 154 observations on 6 variables.
+\title{New York Air Quality Measurements}
+\description{
+  Daily air quality measurements in New York, May to September 1973.
+}
+\usage{data(airquality)}
+\format{
+  A data frame with 154 observations on 6 variables.
 
   \tabular{rlll}{
     \code{[,1]} \tab \code{Ozone}   \tab numeric \tab Ozone (ppb)\cr
@@ -12,9 +17,6 @@
     \code{[,5]} \tab \code{Month}   \tab numeric \tab Month (1--12)\cr
     \code{[,6]} \tab \code{Day}     \tab numeric \tab Day of month (1--31)
   }
-}
-\description{
-  Daily air quality measurements in New York, May to September 1973.
 }
 \details{
   Daily readings of the following air quality values for May 1, 1973 (a
@@ -39,7 +41,7 @@
 }
 \references{
   Chambers, J. M., Cleveland, W. S., Kleiner, B. and Tukey, P. A. (1983)
-  \emph{Graphical Methods for Data Analysis.}
+  \emph{Graphical Methods for Data Analysis}.
   Belmont, CA: Wadsworth.
 }
 \examples{

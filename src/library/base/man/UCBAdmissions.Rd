@@ -1,12 +1,14 @@
 \name{UCBAdmissions}
+\docType{data}
 \alias{UCBAdmissions}
 \title{Student Admissions at UC Berkeley}
-\usage{data(UCBAdmissions)}
 \description{
   Aggregate data on applicants to graduate school at Berkeley for the
   six largest departments in 1973 classified by admission and sex.
 }
-\format{A 3-dimensional array resulting from cross-tabulating 4526
+\usage{data(UCBAdmissions)}
+\format{
+  A 3-dimensional array resulting from cross-tabulating 4526
   observations on 3 variables.  The variables and their levels are as
   follows:
 

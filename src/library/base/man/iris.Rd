@@ -1,17 +1,18 @@
 \name{iris}
+\docType{data}
 \alias{iris}
 \alias{iris3}
 \title{Edgar Anderson's Iris Data}
-\usage{
-data(iris)
-data(iris3)
-}
 \description{
   This famous (Fisher's or Anderson's) iris data set gives the
   measurements in centimeters of the variables sepal length and width
   and petal length and width, respectively, for 50 flowers from each
   of 3 species of iris.  The species are \emph{Iris setosa},
   \emph{versicolor}, and \emph{virginica}.
+}
+\usage{
+data(iris)
+data(iris3)
 }
 \format{
   \code{iris} is a data frame with 150 cases (rows) and 5 variables
@@ -27,13 +28,13 @@ data(iris3)
 \source{
   Fisher, R. A. (1936)
   The use of multiple measurements in taxonomic problems.
-  \emph{Annals of Eugenics,}
+  \emph{Annals of Eugenics},
   \bold{7}, Part II, 179--188.
 
   The data were collected by
   Anderson, Edgar (1935).
   The irises of the Gaspe Peninsula,
-  \emph{Bulletin of the American Iris Society,}
+  \emph{Bulletin of the American Iris Society},
   \bold{59}, 2--5.
 }
 \seealso{\code{\link{matplot}} some examples of which use \code{iris}.}

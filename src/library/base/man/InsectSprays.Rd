@@ -1,12 +1,14 @@
 \name{InsectSprays}
-\title{Effectiveness of Insect Sprays}
-\usage{data(InsectSprays)}
+\docType{data}
 \alias{InsectSprays}
+\title{Effectiveness of Insect Sprays}
 \description{
   The counts of insects in agricultural experimental units treated with
   different insecticides.
 }
-\format{A data frame with 72 observations on 2 variables.
+\usage{data(InsectSprays)}
+\format{
+  A data frame with 72 observations on 2 variables.
   \tabular{rlll}{
     [,1]  \tab count  \tab numeric  \tab Insect count\cr
     [,2]  \tab spray  \tab factor   \tab The type of spray
@@ -18,7 +20,7 @@
   \emph{Biometrika}, \bold{29}, 243--262.
 }
 \references{
-  McNeil, D. (1977) \emph{Interactive Data Analysis.}
+  McNeil, D. (1977) \emph{Interactive Data Analysis}.
   New York: Wiley.
 }
 \examples{

@@ -1,8 +1,13 @@
 \name{LifeCycleSavings}
-\title{Intercountry Life-Cycle Savings Data}
-\usage{data(LifeCycleSavings)}
+\docType{data}
 \alias{LifeCycleSavings}
-\format{A data frame with 50 observations on 5 variables.
+\title{Intercountry Life-Cycle Savings Data}
+\description{
+  Data on the savings ratio 1960--1970.
+}
+\usage{data(LifeCycleSavings)}
+\format{
+  A data frame with 50 observations on 5 variables.
   \tabular{rlll}{
     [,1]  \tab sr    \tab numeric  \tab aggregate personal savings \cr
     [,2]  \tab pop15 \tab numeric  \tab \% of population under 15 \cr
@@ -15,9 +20,6 @@
 \source{
   The data were obtained from Belsley, Kuh and Welsch (1980).
   They in turn obtained the data from Sterling (1977).
-}
-\description{
-  Data on the savings ratio 1960--1970.
 }
 \details{
   Under the life-cycle savings hypothesis as developed by Franco
@@ -33,8 +35,9 @@
   Sterling, Arnie (1977) Unpublished BS Thesis.
   Massachusetts Institute of Technology.
 
-  Belsley, D. A., E. Kuh. E. and  Welsch, R. E. (1980)
-  \emph{Regression Diagnostics.} New York: Wiley.
+  Belsley, D. A., Kuh. E. and Welsch, R. E. (1980)
+  \emph{Regression Diagnostics}.
+  New York: Wiley.
 }
 \examples{
 data(LifeCycleSavings)

@@ -1,8 +1,16 @@
 \name{trees}
-\title{Girth, Height and Volume for Black Cherry Trees}
-\usage{data(trees)}
+\docType{data}
 \alias{trees}
-\format{A data frame with 31 observations on 3 variables.
+\title{Girth, Height and Volume for Black Cherry Trees}
+\description{
+  This data set provides measurements of the girth, height and volume
+  of timber in 31 felled black cherry trees.  Note that girth is the
+  diameter of the tree (in inches) measured at 4 ft 6 in above the
+  ground.
+}
+\usage{data(trees)}
+\format{
+  A data frame with 31 observations on 3 variables.
   \tabular{rlll}{
     \code{[,1]} \tab \code{Girth} \tab numeric
     \tab Tree diameter in inches\cr
@@ -16,13 +24,9 @@
   \emph{The Minitab Student Handbook}.
   Duxbury Press.
 }
-\description{
-  This data set provides measurements of the girth, height and volume
-  of timber in 31 felled black cherry trees.  Note that girth is the
-  diameter of the tree (in inches) measured at 4 ft 6 in above the ground.
-}
 \references{
-  Atkinson, A. C. (1985)  \emph{Plots, Transformations and Regression.}
+  Atkinson, A. C. (1985)
+  \emph{Plots, Transformations and Regression}.
   Oxford University Press.
 }
 \examples{

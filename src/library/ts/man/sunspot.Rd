@@ -1,4 +1,5 @@
 \name{sunspot}
+\docType{data}
 \alias{sunspot}
 \alias{sunspot.month}
 \alias{sunspot.year}

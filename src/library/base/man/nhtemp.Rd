@@ -1,18 +1,21 @@
 \name{nhtemp}
+\docType{data}
 \alias{nhtemp}
 \title{Average Yearly Temperatures in New Haven}
-\usage{data(nhtemp)}
-\format{A time series of 60 observations.}
-\source{
-  Vaux, J. E. and Brinker, N. B. (1972)  \emph{Cycles}, \bold{1972}, 117--121.
-}
 \description{
   The mean annual temperature in degrees Fahrenheit in New Haven,
   Connecticut, from 1912 to 1971.
 }
+\usage{data(nhtemp)}
+\format{A time series of 60 observations.}
+\source{
+  Vaux, J. E. and Brinker, N. B. (1972)
+  \emph{Cycles}, \bold{1972}, 117--121.
+}
 \references{
-  McNeil, D. R. (1977) \emph{Interactive Data Analysis.}  New York:
-  Wiley.
+  McNeil, D. R. (1977)
+  \emph{Interactive Data Analysis}.
+  New York: Wiley.
 }
 \examples{
 data(nhtemp)

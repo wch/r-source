@@ -1,11 +1,12 @@
 \name{infert}
-\title{Infertility after Spontaneous and Induced Abortion}
-\usage{data(infert)}
+\docType{data}
 \alias{infert}
+\title{Infertility after Spontaneous and Induced Abortion}
 \description{
   This is a matched case-control study dating from before the
   availability of conditional logistic regression.
 }
+\usage{data(infert)}
 \format{
   \tabular{rll}{
     1.  \tab Education  \tab 0 = 0-5  years \cr

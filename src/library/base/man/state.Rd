@@ -1,4 +1,5 @@
 \name{state}
+\docType{data}
 \alias{state}
 \alias{state.abb}
 \alias{state.area}
@@ -8,12 +9,13 @@
 \alias{state.region}
 \alias{state.x77}
 \title{States of the U.S.A.}
-\usage{data(state)}
 \description{Data sets related to the 50 states of the United States of
   America.}
-\details{\R currently contains the following ``state'' data sets.
-  Note that all data are arranged according to alphabetical order of the
-  state names.
+\usage{data(state)}
+\details{
+  \R currently contains the following ``state'' data sets.  Note that
+  all data are arranged according to alphabetical order of the state
+  names.
   \describe{
     \item{\code{state.abb}:}{character vector of 2-letter abbreviations
       for the state names.}

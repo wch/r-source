@@ -1,20 +1,25 @@
 \name{Formaldehyde}
-\title{Determination of Formaldehyde}
-\usage{data(Formaldehyde)}
+\docType{data}
 \alias{Formaldehyde}
-\format{A data frame with 6 observations on 2 variables.
+\title{Determination of Formaldehyde}
+\description{
+  These data are from a chemical experiment to prepare a standard curve
+  for the determination of formaldehyde by the addition of chromatropic
+  acid and concentrated sulpuric acid and the reading of the resulting
+  purple color on a spectophotometer.
+}
+\usage{data(Formaldehyde)}
+\format{
+  A data frame with 6 observations on 2 variables.
   \tabular{rlll}{
     [,1] \tab carb\tab numeric \tab Carbohydrate (ml) \cr
     [,2] \tab optden \tab numeric \tab Optical Density
   }
 }
-\source{Bennett, N. A. and N. L. Franklin (1954)  \emph{Statistical
-    Analysis in Chemistry and the Chemical Industry.}  New York: Wiley.
-}
-\description{These data are from a chemical experiment to prepare a
-  standard curve for the determination of formaldehyde by the addition
-  of chromatropic acid and concentrated sulpuric acid and the reading of
-  the resulting purple color on a spectophotometer.
+\source{
+  Bennett, N. A. and N. L. Franklin (1954)
+  \emph{Statistical Analysis in Chemistry and the Chemical Industry}.
+  New York: Wiley.
 }
 \references{
   McNeil, D. R. (1977) \emph{Interactive Data Analysis.}

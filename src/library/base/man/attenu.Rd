@@ -1,8 +1,16 @@
 \name{attenu}
-\title{The Joyner-Boore Attenuation Data}
-\usage{data(attenu)}
+\docType{data}
 \alias{attenu}
-\format{A dataframe with 182 observations on 5 variables.
+\title{The Joyner-Boore Attenuation Data}
+\description{
+  This data gives peak accelerations measured at various observation
+  stations for 23 earthquakes in California.  The data have been used
+  by various workers to estimate the attenuating affect of distance
+  on ground acceleration.
+}
+\usage{data(attenu)}
+\format{
+  A dataframe with 182 observations on 5 variables.
   \tabular{rlll}{
     [,1] \tab event    \tab numeric  \tab Event Number\cr
     [,2] \tab mag      \tab numeric  \tab Moment Magnitude\cr
@@ -16,31 +24,29 @@
   records from the 1979 Imperial Valley, California earthquake.  USGS
   Open File report 81-365. Menlo Park, Ca.
 }
-\description{
-  This data gives peak accelerations measured at various observation
-  stations for 23 earthquakes in California.  The data have been used
-  by various workers to estimate the attenuating affect of distance
-  on ground acceleration.
-}
 \references{
-  Boore, D. M. and Joyner, W.B.(1982)  The empirical prediction of
-  ground motion, \emph{Bull. Seism. Soc. Am.}, \bold{72}, S269--S268.
+  Boore, D. M. and Joyner, W.B.(1982)
+  The empirical prediction of ground motion,
+  \emph{Bull. Seism. Soc. Am.}, \bold{72}, S269--S268.
 
-  Bolt, B. A. and Abrahamson, N. A. (1982)  New attenuation relations for
-  peak and expected accelerations of strong ground motion, \emph{Bull.
-    Seism. Soc. Am.}, \bold{72}, 2307--2321.
+  Bolt, B. A. and Abrahamson, N. A. (1982)
+  New attenuation relations for peak and expected accelerations of
+  strong ground motion,
+  \emph{Bull. Seism. Soc. Am.}, \bold{72}, 2307--2321.
 
-  Bolt B. A. and Abrahamson, N. A. (1983)  Reply to W. B. Joyner &
-  D. M. Boore's ``Comments on: New attenuation relations for peak and
-  expected accelerations for peak and expected accelerations of strong
-  ground motion'', \emph{Bull. Seism. Soc. Am.}, \bold{73}, 1481--1483. 
+  Bolt B. A. and Abrahamson, N. A. (1983)
+  Reply to W. B. Joyner & D. M. Boore's ``Comments on: New attenuation
+  relations for peak and expected accelerations for peak and expected
+  accelerations of strong ground motion'',
+  \emph{Bull. Seism. Soc. Am.}, \bold{73}, 1481--1483. 
 
-  Brillinger, D. R. and Preisler, H. K. (1984)  An exploratory analysis of
-  the Joyner-Boore attenuation data, \emph{Bull. Seism. Soc. Am.}
-  \bold{74}, 1441--1449.
+  Brillinger, D. R. and Preisler, H. K. (1984)
+  An exploratory analysis of the Joyner-Boore attenuation data,
+  \emph{Bull. Seism. Soc. Am.}, \bold{74}, 1441--1449.
 
-  Brillinger, D. R. and Preisler, H. K. (1984) \emph{Further analysis of
-    the Joyner-Boore attenuation data}.  Manuscript.
+  Brillinger, D. R. and Preisler, H. K. (1984)
+  \emph{Further analysis of the Joyner-Boore attenuation data}.
+  Manuscript.
 }
 \examples{
 data(attenu)

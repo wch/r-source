@@ -1,4 +1,5 @@
 \name{LakeHuron}
+\docType{data}
 \alias{LakeHuron}
 \title{Level of Lake Huron 1875--1972}
 \description{

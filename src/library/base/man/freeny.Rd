@@ -1,12 +1,13 @@
 \name{freeny}
+\docType{data}
 \alias{freeny}
 \alias{freeny.x}
 \alias{freeny.y}
 \title{Freeny's Revenue Data}
-\usage{data(freeny)}
 \description{
   Freeny's data on quarterly revenue and explanatory variables.
 }
+\usage{data(freeny)}
 \format{
   There are three `freeny' data sets.
 
@@ -23,7 +24,7 @@
 }
 \source{
   A. E. Freeny (1977)
-  \emph{A Portable Linear Regression Package with Test Programs.}
+  \emph{A Portable Linear Regression Package with Test Programs}.
   Bell Laboratories memorandum.
 }
 \examples{

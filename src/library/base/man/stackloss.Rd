@@ -1,13 +1,16 @@
 \name{stackloss}
+\docType{data}
 \alias{stackloss}
 \alias{stack.loss}
 \alias{stack.x}
 \title{Brownlee's Stack Loss Plant Data}
+\description{
+  Operational data of a plant for the oxidation of ammonia to nitric
+  acid.
+}
 \usage{data(stackloss)}
-\description{Operational data of a plant for the oxidation of ammonia to
-  nitric acid.}
-\format{\code{stackloss} is a data frame with 21 observations on 4
-  variables.
+\format{
+  \code{stackloss} is a data frame with 21 observations on 4 variables.
 
   \tabular{rll}{
     [,1] \tab \code{Air Flow}   \tab Flow of cooling air\cr
@@ -25,7 +28,7 @@
 }
 \source{
   Brownlee, K. A. (1960, 2nd ed. 1965)
-  \emph{Statistical Theory and Methodology in Science and Engineering.}
+  \emph{Statistical Theory and Methodology in Science and Engineering}.
   New York: Wiley. pp. 491--500.
 }
 \details{

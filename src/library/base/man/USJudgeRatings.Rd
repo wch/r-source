@@ -1,6 +1,10 @@
 \name{USJudgeRatings}
+\docType{data}
 \alias{USJudgeRatings}
 \title{Lawyers' Ratings of State Judges in the US Superior Court}
+\description{
+  Lawyers' ratings of state judges in the US Superior Court.
+}
 \usage{data(USJudgeRatings)}
 \format{
   A data frame containing 43 observations on 12 numeric variables.
@@ -19,9 +23,6 @@
     [,11] \tab PHYS \tab Physical ability.\cr
     [,12] \tab RTEN \tab Worthy of retention.
   }
-}
-\description{
-  Lawyers' ratings of state judges in the US Superior Court
 }
 \source{
   New Haven Register, 14 January, 1977 (from John Hartigan).

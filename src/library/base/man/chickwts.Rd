@@ -1,28 +1,32 @@
 \name{chickwts}
-\title{Chicken Weights by Feed Type}
-\usage{data(chickwts)}
+\docType{data}
 \alias{chickwts}
-\format{A data frame with 71 observations on 2 variables.
+\title{Chicken Weights by Feed Type}
+\description{
+  An experiment was conducted to measure and compare the effectiveness
+  of various feed supplements on the growth rate of chickens.
+}
+\usage{data(chickwts)}
+\format{
+  A data frame with 71 observations on 2 variables.
   \describe{
     \item{weight}{a numeric variable giving the chick weight.}
     \item{feed}{a factor giving the feed type.}
   }
 }
 \source{
-  Anonymous (1948) \emph{Biometrika}, \bold{35}, p.214.
+  Anonymous (1948)
+  \emph{Biometrika}, \bold{35}, 214.
 } 
-\description{
-  An experiment was conducted to measure and compare the effectiveness
-  of various feed supplements on the growth rate of chickens.
-}
 \details{
   Newly hatched chicks were randomly allocated into six groups, and each
   group was given a different feed supplement.  Their weights in grams
   after six weeks are given along with feed types.
 }
 \references{
-  McNeil, D. R. (1977) \emph{Interactive Data Analysis.}  New York:
-  Wiley.
+  McNeil, D. R. (1977)
+  \emph{Interactive Data Analysis}.
+  New York: Wiley.
 }
 \examples{
 data(chickwts)

@@ -2,6 +2,7 @@
 % copyright (C) 1994-9 W. N. Venables and B. D. Ripley
 %
 \name{lh}
+\docType{data}
 \alias{lh}
 \title{
   Luteinizing Hormone in Blood Samples

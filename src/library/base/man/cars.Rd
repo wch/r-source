@@ -1,22 +1,28 @@
 \name{cars}
-\title{Stopping Distances of Cars}
-\usage{data(cars)}
+\docType{data}
 \alias{cars}
-\format{A data frame with 50 observations on 2 variables.
+\title{Stopping Distances of Cars}
+\description{
+  The data give the speed of cars and the distances taken to stop.
+  Note that the data were recorded in the 1920s.
+}
+\usage{data(cars)}
+\format{
+  A data frame with 50 observations on 2 variables.
   \tabular{rlll}{
     [,1]  \tab speed  \tab numeric  \tab Speed (mph)\cr
     [,2]  \tab dist   \tab numeric  \tab Stopping distance (ft)
   }
 }
 \source{
-  Ezekiel, M. (1930) \emph{Methods of Correlation Analysis}.  Wiley.
-}
-\description{
-  The data give the speed of cars and the distances taken to stop.
-  Note that the data were recorded in the 1920s.
+  Ezekiel, M. (1930)
+  \emph{Methods of Correlation Analysis}.
+  Wiley.
 }
 \references{
-  McNeil, D. R. (1977) \emph{Interactive Data Analysis}.  Wiley.
+  McNeil, D. R. (1977)
+  \emph{Interactive Data Analysis}.
+  Wiley.
 }
 \examples{
 data(cars)

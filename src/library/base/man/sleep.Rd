@@ -1,11 +1,12 @@
 \name{sleep}
+\docType{data}
 \alias{sleep}
 \title{Students' Sleep Data}
-\usage{data(sleep)}
 \description{
   Data which show the effect of two soporific drugs (increase in hours
   of sleep) on groups consisting of 10 patients each.
 }
+\usage{data(sleep)}
 \format{
   A data frame with 20 observations on 2 variables.
   \tabular{rlll}{
@@ -20,7 +21,7 @@
 }
 \references{
   Scheffé, Henry (1959)
-  \emph{The Analysis of Variance.}
+  \emph{The Analysis of Variance}.
   New York, NY: Wiley.
 }
 \examples{

@@ -1,8 +1,15 @@
 \name{USArrests}
-\title{Violent Crime Rates by US State}
-\usage{data(USArrests)}
+\docType{data}
 \alias{USArrests}
-\format{A data frame with 50 observations on 5 variables.
+\title{Violent Crime Rates by US State}
+\description{
+  This data set contains statistics, in arrests per 100,000 residents
+  for assault, murder, and rape in each of the 50 US states in 1973.
+  Also given is the percent of the population living in urban areas.
+}
+\usage{data(USArrests)}
+\format{
+  A data frame with 50 observations on 5 variables.
 
   \tabular{rlll}{
     [,1]  \tab Murder    \tab numeric
@@ -20,14 +27,10 @@
 
   Statistical Abstracts of the United States 1975.  (Urban rates).
 }
-\description{
-  This data set contains statistics, in arrests per 100,000 residents
-  for assault, murder, and rape in each of the 50 US states in 1973.
-  Also given is the percent of the population living in urban areas.
-}
 \seealso{The \code{\link{state}} data sets.}
 \references{
-  McNeil, D. R. (1977) \emph{Interactive Data Analysis.}
+  McNeil, D. R. (1977)
+  \emph{Interactive Data Analysis}.
   New York: Wiley.
 }
 \examples{
