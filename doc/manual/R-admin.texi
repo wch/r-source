@@ -2568,6 +2568,10 @@ browser by visiting a page such as
 will fail for earlier versions of Java such as the Microsoft JVM which
 do work with R).  Java 1.1 is sufficent.
 
+On Mozilla-based browsers the links on the results page will
+become inactive if you return to it: to work around this you can open
+a link in a new tab or window.
+
 Many thanks to Marc Schwartz in tracking down many of these issues with
 enabling the Java search engine.
 
@@ -2583,9 +2587,11 @@ enabling the Java search engine.
 
 We are aware of problems with certain Java installations.  In
 particular, Sun's Java Run-time Environment @code{j2re 1.4.2_02} to
-@code{_05} do not work under Linux.  Both @code{jre 1.5.0} and
-@code{j2re 1.4.2_01} do work: the latter can be found in Sun's archive
-at @url{http://java.sun.com/products/archive/}.
+@code{_05} do not work under Linux.  Version @code{jre 1.5.0} is
+strongly recommended for Mozilla-based browsers.
+
+This and @code{j2re 1.4.2_01} do work: the latter can be found in Sun's
+archive at @url{http://java.sun.com/products/archive/}.
 
 @noindent
 Other Java installations, for example those from Blackdown and IBM, have
@@ -2623,6 +2629,9 @@ Which (if any) JVM is enabled can be set in `Set Program Access and
 Defaults' in Windows XP (SP1 or later), and which JVM is used by browser
 plugins may also be controlled by the Sun Java applet in the Control
 Panel.
+
+Recent versions of Internet Explorer may block the use of Java applets
+and need the block removed @emph{via} the @emph{information bar}.
 
 @node Java Virtual Machines on Mac OS X,  , Java Virtual Machines on Windows, Enabling search in HTML help
 @section Java Virtual Machines on Mac OS X
