@@ -27,6 +27,9 @@ re-built under this version.
 
 help(, winhelp=TRUE) will now find alias topics as well as main items.
 
+Hitting the total mempry allocation limit set by --max-mem-size will
+if possible give a warning (and will usually lead to an error).
+
 
 rw1020
 ======

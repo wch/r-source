@@ -328,6 +328,10 @@ static void R_LoadProfile(FILE *fp, SEXP env)
     }
 }
 
+/* Use this to allow e.g. Win32 malloc to call warning.
+   Don't use R-specific type, e.g. Rboolean */
+int R_Is_Running = 0;
+
 void setup_Rmainloop(void)
 {
     SEXP cmd;
@@ -374,7 +378,8 @@ void setup_Rmainloop(void)
     InitColors();
     InitGraphics();
     Init_C_alloc();
-
+    R_Is_Running = 1;
+    
     /* gc_inhibit_torture = 0; */
 
     /* Initialize the global context for error handling. */
