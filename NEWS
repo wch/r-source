@@ -37,6 +37,9 @@ NEW FEATURES
     o	factanal() now returns the test statistic and P-value formerly
 	computed in the print method.
 
+    o	contr.poly() has a new `scores' argument to use as the base set
+	for the polynomials.
+
 
 DEPRECATED & DEFUNCT
 

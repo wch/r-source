@@ -1,8 +1,8 @@
-contr.poly <- function (n, contrasts = TRUE)
+contr.poly <- function (n, scores = 1:n, contrasts = TRUE)
 {
-    make.poly <- function(n)
+    make.poly <- function(n, scores)
     {
-	y <- seq(length=n) - n %/% 2 - 1
+	y <- scores - mean(scores)
 	X <- outer(y, seq(length=n) - 1, "^")
 	QR <- qr(X)
 	z <- QR$qr
@@ -12,6 +12,7 @@ contr.poly <- function (n, contrasts = TRUE)
 	colnames(Z) <- paste("^", 1:n - 1, sep="")
 	Z
     }
+
     if (is.numeric(n) && length(n) == 1) levs <- 1:n
     else {
 	levs <- n
@@ -21,7 +22,11 @@ contr.poly <- function (n, contrasts = TRUE)
 	stop(paste("Contrasts not defined for", n - 1, "degrees of freedom"))
     if (n > 95)
         stop(paste("Orthogonal polynomials cannot be represented accurately enough for", n - 1, "degrees of freedom"))
-    contr <- make.poly(n)
+    if (length(scores) != n)
+        stop("scores argument is of the wrong length")
+    if (!is.numeric(scores()) || any(duplicated(scores)))
+        stop("scores must all the different numbers")
+    contr <- make.poly(n, scores)
     if (contrasts) {
 	dn <- colnames(contr)
 	dn[2:min(4,n)] <- c(".L", ".Q", ".C")[1:min(3, n-1)]

@@ -9,7 +9,7 @@
 }
 \usage{
 contr.helmert(n, contrasts = TRUE)
-contr.poly(n, contrasts = TRUE)
+contr.poly(n, scores = 1:n, contrasts = TRUE)
 contr.sum(n, contrasts = TRUE)
 contr.treatment(n, base = 1, contrasts = TRUE)
 }
@@ -17,6 +17,8 @@ contr.treatment(n, base = 1, contrasts = TRUE)
   \item{n}{a vector of levels for a factor, or the number of levels.}
   \item{contrasts}{a logical indicating whether contrasts should be
     computed.}
+  \item{scores}{the set of values over which orthogonal polynomials are
+    to be computed.}
   \item{base}{an integer specifying which group is considered the
     baseline group. Ignored if \code{contrasts} is \code{FALSE}.}
 }
