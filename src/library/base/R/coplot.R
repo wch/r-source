@@ -194,7 +194,7 @@ coplot <-
     mar <- if(have.b) rep(0, 4) else c(0.5, 0, 0.5, 0)
     oma <- c(5, 6, 5, 4)
     if(have.b) { oma[2] <- 5 ; if(!b.is.fac) oma[4] <- 5 }
-    if(a.is.fac) oma[2] <- oma[2] - 1
+    if(a.is.fac && show.given[1]) oma[3] <- oma[3] - 1
 
     ## Start Plotting only now
 
