@@ -1,7 +1,7 @@
-lm <- function (formula, data = list(), subset, weights, na.action,
+lm <- function (formula, data, subset, weights, na.action,
 		method = "qr", model = TRUE, x = FALSE, y = FALSE,
 		qr = TRUE, singular.ok = TRUE, contrasts = NULL,
-		offset = NULL, ...)
+		offset, ...)
 {
     ret.x <- x
     ret.y <- y
@@ -413,7 +413,7 @@ residuals.lm <-
 #fitted.lm <- function(object, ...)
 #    napredict(object$na.action, object$fitted.values)
 
-coef.lm <- function(object, ...) object$coefficients
+# coef.lm <- function(object, ...) object$coefficients
 
 ## need this for results of lm.fit() in drop1():
 weights.default <- function(object, ...)

@@ -7,8 +7,8 @@ coefficients(object, \dots)
 \alias{coef}
 \alias{coefficients}
 \alias{coef.default}
-\alias{coef.lm}
-\alias{coef.glm}
+%\alias{coef.lm}
+%\alias{coef.glm}
 \alias{coef.aov}
 \alias{coef.listof}
 \arguments{

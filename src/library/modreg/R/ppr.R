@@ -5,7 +5,7 @@
 ppr <- function(x, ...) UseMethod("ppr")
 
 ppr.formula <-
-function(formula, data=sys.parent(), weights, subset,
+function(formula, data, weights, subset,
 	 na.action, contrasts = NULL, ..., model = FALSE)
 {
     call <- match.call()

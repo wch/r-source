@@ -21,7 +21,7 @@ lqs(x, \dots)
 
 \method{lqs}{formula}(formula, data, \dots,
     method = c("lts", "lqs", "lms", "S", "model.frame"),
-    subset, na.action = na.fail, model = TRUE,
+    subset, na.action, model = TRUE,
     x.ret = FALSE, y.ret = FALSE, contrasts = NULL)
 
 \method{lqs}{default}(x, y, intercept = TRUE, method = c("lts", "lqs", "lms", "S"),

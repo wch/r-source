@@ -1,7 +1,7 @@
 princomp <- function(x, ...) UseMethod("princomp")
 
 ## use formula to allow update() to be used.
-princomp.formula <- function(formula, data = NULL, subset, na.action, ...)
+princomp.formula <- function(formula, data, subset, na.action, ...)
 {
     mt <- terms(formula, data = data)
     if(attr(mt, "response") > 0) stop("response not allowed in formula")
@@ -10,7 +10,7 @@ princomp.formula <- function(formula, data = NULL, subset, na.action, ...)
     mf <- match.call(expand.dots = FALSE)
     mf$... <- NULL
     mf[[1]] <- as.name("model.frame")
-    mf <- eval(mf, parent.frame())
+    mf <- eval.parent(mf)
     na.act <- attr(mf, "na.action")
     x <- model.matrix(mt, mf)
     res <- princomp.default(x, ...)

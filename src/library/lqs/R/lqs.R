@@ -6,14 +6,14 @@ lqs <- function(x, ...) UseMethod("lqs")
 lqs.formula <-
     function(formula, data, ...,
 	     method = c("lts" ,"lqs", "lms", "S", "model.frame"),
-	     subset, na.action = na.fail,
+	     subset, na.action,
 	     model = TRUE, x.ret = FALSE, y.ret = FALSE, contrasts = NULL)
 {
     method <- match.arg(method)
     mf <- match.call(expand.dots = FALSE)
     mf$method <- mf$contrasts <- mf$model <- mf$x.ret <- mf$y.ret <- mf$... <- NULL
     mf[[1]] <- as.name("model.frame")
-    mf <- eval(mf, parent.frame())
+    mf <- eval.parent(mf)
     if (method == "model.frame") return(mf)
     mt <- attr(mf, "terms")
     y <- model.extract(mf, "response")

@@ -17,8 +17,8 @@
 \usage{
 ppr(x, \dots)
 
-\method{ppr}{formula}(formula, data = sys.parent(), weights,
-    subset, na.action, contrasts = NULL, \dots, model = FALSE)
+\method{ppr}{formula}(formula, data, weights, subset, na.action,
+    contrasts = NULL, \dots, model = FALSE)
 
 \method{ppr}{default}(x, y, weights = rep(1,n),
     ww = rep(1,q), nterms, max.terms = nterms, optlevel = 2,

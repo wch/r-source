@@ -3,18 +3,17 @@
 ### Written by Simon Davies, Dec 1995
 ### glm.fit modified by Thomas Lumley, Apr 1997, and then others..
 
-glm <- function(formula, family=gaussian, data=list(), weights=NULL,
-		subset=NULL, na.action=na.fail,
-		start=NULL, etastart=NULL, mustart=NULL,
-		offset=NULL,
-		control=glm.control(...), model=TRUE, method="glm.fit",
-		x=FALSE, y=TRUE, contrasts = NULL, ...)
+glm <- function(formula, family = gaussian, data, weights,
+		subset, na.action, start = NULL,
+		etastart, mustart, offset,
+		control = glm.control(...), model = TRUE,
+                method = "glm.fit", x = FALSE, y = TRUE,
+                contrasts = NULL, ...)
 {
     call <- match.call()
-
     ## family
     if(is.character(family))
-        family <- get(family, mode="function", envir=parent.frame())
+        family <- get(family, mode = "function", envir = parent.frame())
     if(is.function(family)) family <- family()
     if(is.null(family$family)) {
 	print(family)
@@ -22,7 +21,7 @@ glm <- function(formula, family=gaussian, data=list(), weights=NULL,
     }
 
     ## extract x, y, etc from the model formula and frame
-#    mt <- terms(formula, data=data)
+#    mt <- terms(formula, data = data)
     if(missing(data)) data <- environment(formula)
     mf <- match.call(expand.dots = FALSE)
 #     mf$family <- mf$start <- mf$control <- mf$maxit <- NULL
@@ -36,8 +35,8 @@ glm <- function(formula, family=gaussian, data=list(), weights=NULL,
     mf <- eval(mf, parent.frame())
     switch(method,
 	   "model.frame" = return(mf),
-	   "glm.fit"= 1,
-	   "glm.fit.null"= 1,
+	   "glm.fit" = 1,
+	   "glm.fit.null" = 1,
 	   ## else
 	   stop("invalid `method': ", method))
     mt <- attr(mf, "terms") # allow model.frame to update it
@@ -58,25 +57,25 @@ glm <- function(formula, family=gaussian, data=list(), weights=NULL,
     etastart <- model.extract(mf, "etastart")
 
     ## fit model via iterative reweighted least squares
-    fit <- glm.fit(x=X, y=Y, weights=weights, start=start,
-                   etastart=etastart, mustart=mustart,
-                   offset=offset, family=family, control=control,
-                   intercept=attr(mt, "intercept") > 0)
+    fit <- glm.fit(x = X, y = Y, weights = weights, start = start,
+                   etastart = etastart, mustart = mustart,
+                   offset = offset, family = family, control = control,
+                   intercept = attr(mt, "intercept") > 0)
 
     ## empty models don't have an intercept!
     if(any(offset) && attr(mt, "intercept") > 0) {
 	fit$null.deviance <-
-	    glm.fit(x=X[,"(Intercept)",drop=FALSE], y=Y, weights=weights,
-                    offset=offset, family=family,
-                    control=control, intercept=TRUE)$deviance
+	    glm.fit(x = X[,"(Intercept)",drop=FALSE], y = Y, weights = weights,
+                    offset = offset, family = family,
+                    control = control, intercept = TRUE)$deviance
     }
     if(model) fit$model <- mf
     fit$na.action <- attr(mf, "na.action")
     if(x) fit$x <- X
     if(!y) fit$y <- NULL
-    fit <- c(fit, list(call=call, formula=formula,
-		       terms=mt, data=data,
-		       offset=offset, control=control, method=method,
+    fit <- c(fit, list(call = call, formula = formula,
+		       terms = mt, data = data,
+		       offset = offset, control = control, method = method,
 		       contrasts = attr(X, "contrasts"),
                        xlevels = .getXlevels(mt, mf)))
     class(fit) <- c("glm", "lm")
@@ -679,15 +678,9 @@ print.summary.glm <-
 
 ## GLM Methods for Generic Functions :
 
-coef.glm <- function(object, ...) object$coefficients
+## needed to avoid deviance.lm
 deviance.glm <- function(object, ...) object$deviance
 effects.glm <- function(object, ...) object$effects
-fitted.glm <- function(object, ...)
-{
-    if(is.null(object$na.action)) object$fitted.values
-    else napredict(object$na.action, object$fitted.values)
-}
-
 family.glm <- function(object, ...) object$family
 
 residuals.glm <-

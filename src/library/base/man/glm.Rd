@@ -14,9 +14,9 @@
   description of the error distribution.
 }
 \usage{
-glm(formula, family = gaussian, data, weights = NULL, subset = NULL,
-    na.action, start = NULL, etastart = NULL, mustart = NULL,
-    offset = NULL, control = glm.control(\dots), model = TRUE,
+glm(formula, family = gaussian, data, weights, subset,
+    na.action, start = NULL, etastart, mustart,
+    offset, control = glm.control(\dots), model = TRUE,
     method = "glm.fit", x = FALSE, y = TRUE, contrasts = NULL, \dots)
 
 glm.fit(x, y, weights = rep(1, nobs),

@@ -9,7 +9,7 @@ fitted.values(object, \dots)
 %%- methods:
 \alias{fitted.default}
 %\alias{fitted.lm}
-\alias{fitted.glm}
+%\alias{fitted.glm}
 \arguments{
   \item{object}{an object for which the extraction of model fitted values is
     meaningful.}
