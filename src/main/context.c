@@ -72,7 +72,7 @@ restores the previous context (i.e. it adjusts the R_GlobalContext pointer).
 
 The non-local jump to a given context takes place in a call to
 
-	void findcontext(int mask, SEXP val)
+	void findcontext(int mask, SEXP env, SEXP val)
 
 This causes "val" to be stuffed into a globally accessable place and
 then a search to take place back through the context list for an
@@ -120,7 +120,7 @@ void endcontext(RCNTXT * cptr)
 }
 
 /* findcontext - find the correct context */
-void findcontext(int mask, SEXP val)
+void findcontext(int mask, SEXP env, SEXP val)
 {
 	RCNTXT *cptr;
 
@@ -135,7 +135,7 @@ void findcontext(int mask, SEXP val)
 	}
 	else {				/* return; or browser */
 		for (cptr = R_GlobalContext; cptr; cptr = cptr->nextcontext)
-			if (cptr->callflag == mask)
+			if (cptr->callflag == mask && cptr->cloenv == env)
 				jumpfun(cptr, mask, val);
 		error("No function to return from, jumping to top level\n");
 	}

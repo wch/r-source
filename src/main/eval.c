@@ -201,7 +201,7 @@ SEXP applyClosure(SEXP call, SEXP op, SEXP arglist, SEXP rho, SEXP suppliedenv)
 	/*set up a context with the call in it so error has access to it */
 	begincontext(&cntxt, CTXT_RETURN, call, newrho, rho, arglist);
 
-	actuals = matchArgs(formals,arglist);
+	actuals = matchArgs(formals, arglist);
 
 	PROTECT(newrho = extendEnv(savedrho, formals, actuals));
 	/* Use default code for unbound formals */
@@ -216,7 +216,8 @@ SEXP applyClosure(SEXP call, SEXP op, SEXP arglist, SEXP rho, SEXP suppliedenv)
 		a = CDR(a);
 	}
 
-	/* fix up any extras that were supplied by usemethod */
+	/* Fix up any extras that were supplied by usemethod. */
+
 	if( suppliedenv != R_NilValue ) {
 		for( tmp=FRAME(suppliedenv); tmp!=R_NilValue ; tmp=CDR(tmp) ){
 			for( a=actuals; a!=R_NilValue; a=CDR(a) )
@@ -230,28 +231,36 @@ SEXP applyClosure(SEXP call, SEXP op, SEXP arglist, SEXP rho, SEXP suppliedenv)
 	}
 	NARGS(newrho) = nargs;
 
-	/*end the previous context and start up a new one with the correct env*/
+	/* Terminate the previous context and start */
+	/* a new one with the correct environment. */
 
 	endcontext(&cntxt);
-	/*
-	   if we have a generic function we need to use the sysparent of the
-	   generic as the sysparent of the method because the method is a
-	   straight substitution of the generic
-	*/
+
+	/* If we have a generic function we need to use the */
+	/* sysparent of the generic as the sysparent of the */
+	/* method because the method is a straight substitution */
+	/* of the generic. */
+
 	if( R_GlobalContext->callflag == CTXT_GENERIC )
-	begincontext(&cntxt, CTXT_RETURN, call, newrho, R_GlobalContext->sysparent, arglist);
+		begincontext(&cntxt, CTXT_RETURN, call,
+			newrho, R_GlobalContext->sysparent, arglist);
 	else
 		begincontext(&cntxt, CTXT_RETURN, call, newrho, rho, arglist);
 
-	/* Default value */
+	/* The default return value */
+
 	tmp = R_NilValue;
 
-	/* debugging */
+	/* Debugging */
+
 	DEBUG(newrho) = DEBUG(op);
 	if( DEBUG(op) ) {
 		Rprintf("debugging in: ");
 		PrintValueRec(call,rho);
 	}
+
+	/* Set a longjmp target which will catch any */
+	/* explicit returns from the function body. */
 
 	if (setjmp(cntxt.cjmpbuf)) {
 		tmp = R_ReturnedValue;
@@ -259,6 +268,7 @@ SEXP applyClosure(SEXP call, SEXP op, SEXP arglist, SEXP rho, SEXP suppliedenv)
 	else {
 		tmp = eval(body, newrho);
 	}
+
 	endcontext(&cntxt);
 	if( DEBUG(op) ) {
 		Rprintf("exiting from: ");
@@ -522,8 +532,8 @@ SEXP do_repeat(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 SEXP do_break(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-	findcontext(PRIMVAL(op), R_NilValue);
-	return R_NilValue;/*NOTREACHED*/
+	findcontext(PRIMVAL(op), rho, R_NilValue);
+	return R_NilValue;
 }
 
 
@@ -591,9 +601,9 @@ SEXP do_return(SEXP call, SEXP op, SEXP args, SEXP rho)
 		break;
 	}
 	if( R_BrowseLevel )
-		findcontext(CTXT_BROWSER, v);
+		findcontext(CTXT_BROWSER, rho, v);
 	else
-		findcontext(CTXT_RETURN, v);
+		findcontext(CTXT_RETURN, rho, v);
 	return R_NilValue;/*NOTREACHED*/
 }
 
