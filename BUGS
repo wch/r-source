@@ -557,3 +557,27 @@ Date: Thu, 25 Jul 2002 11:54:30 -0400
 Subject: src/nmath/pgeom.c
 From: terra@diku.dk
 Date: Thu, 25 Jul 2002 20:55:34 +0200 (MET DST)
+* PR# 1835 *
+Subject: ??°ú?? ????(??????´?´?)
+From: ?????µ <godfingers@lycos.co.kr>
+Date: Fri, 26 Jul 2002 09:34:48 +0900
+* PR# 1836 *
+Subject: ?????????? ???? ??´? ??´?´?.[±¤°?]
+From: ?¤???ñ <jsi1017@dreamwiz.com>
+Date: Fri, 26 Jul 2002 16:28:56 +0900
+* PR# 1837 *
+Subject: R 1.5.1 (Windows) crashes on plotting density(rnorm(1000))
+From: "Mike Prager" <Mike.Prager@noaa.gov>
+Date: Fri, 26 Jul 2002 10:15:45 -0400
+* PR# 1838 *
+Subject: Hello,your password
+From: gkato <gkato@roadbikereview.com>
+Date: Fri, 26 Jul 2002 16:30:24 +0200 (MEST)
+* PR# 1839 *
+Subject: LANGUAGE
+From: r-core <r-core@hypatia.math.ethz.ch>
+Date: Fri, 26 Jul 2002 10:52:32 -0500
+* PR# 1840 *
+Subject: predict() still not yet "safe"..
+From: Martin Maechler <maechler@stat.math.ethz.ch>
+Date: Fri, 26 Jul 2002 20:11:26 +0200
