@@ -258,14 +258,7 @@ double R_pow(double x, double y) /* = x ^ y */
 }
 #endif
 
-/* Base 2 and General Base Logarithms */
-
-#ifdef OLD
-double log2(double x)
-{
-    return R_log(x) / M_LN_2;
-}
-#endif
+/* General Base Logarithms */
 
 double logbase(double x, double base)
 {
