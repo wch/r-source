@@ -811,6 +811,10 @@ do_getwd(SEXP call, SEXP op, SEXP args, SEXP rho) {
     return(rval);
 }
 
+#if defined(Win32) && defined(_MSC_VER)
+#include <direct.h> /* for chdir */
+#endif
+
 SEXP
 do_setwd(SEXP call, SEXP op, SEXP args, SEXP rho) {
     SEXP s = R_NilValue;	/* -Wall */
