@@ -502,9 +502,6 @@ void jump_now()
     LONGJMP(R_Dispatcher->cjmpbuf, 0);
 }
 
-static void Rf_resetStack() {
-}
-
 #ifdef OLD_Macintosh
 
 #include <signal.h>

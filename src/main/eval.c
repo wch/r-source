@@ -1100,9 +1100,9 @@ SEXP do_for(SEXP call, SEXP op, SEXP args, SEXP rho)
     case CTXT_NEXT: R_ReturnedValue = R_NilValue; goto for_next;
     }
     for (i = 0; i < n; i++) {
-	SEXP v;
 	DO_LOOP_DEBUG(call, op, args, rho, bgn);
-	val = set_for_loop_var(val, i, sym, call, rho); /* only changes for {LIST,LANG}SXP */
+	/* val only changes for {LIST,LANG}SXP */
+	val = set_for_loop_var(val, i, sym, call, rho);
 	REPROTECT(ans = eval(body, rho), api);
     for_next:
 	; /* needed for strict ISO C compilance, according to gcc 2.95.2 */
@@ -1254,8 +1254,6 @@ DECLARE_CONTINUATION(do_for_body_cont, do_for_body_cont_fun);
    evaluates the sequence expression. */
 R_code_t do_for_nr(SEXP call, SEXP op, SEXP args, SEXP rho, R_code_t code)
 {
-    SEXP ivals, callinfo;
-
     checkArity(op, args);
 
     if (! isSymbol(FOR_LOOP_CALL_SYMBOL(call)))

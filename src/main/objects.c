@@ -427,7 +427,7 @@ static void findNextMethod(SEXP call, SEXP args, SEXP env, SEXP *pnewcall,
 			   SEXP *pmethod, SEXP *pmatchedarg, SEXP *pnewrho)
 {
     char buf[128], b[512], tbuf[10];
-    SEXP ans, s, t, class, method, matchedarg, generic, nextfun;
+    SEXP s, t, class, method, matchedarg, generic, nextfun;
     SEXP sysp, m, formals, actuals, tmp, newcall;
     SEXP a, group, basename;
     RCNTXT *cptr;

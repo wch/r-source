@@ -151,7 +151,7 @@ SEXP do_envirgets(SEXP call, SEXP op, SEXP args, SEXP rho)
 SEXP do_newenv(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP s;
-    int hash, local;
+    int hash;
 
     checkArity(op, args);
 

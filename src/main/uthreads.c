@@ -97,6 +97,7 @@ R_code_t R_ResumeThread(R_thread_context_t thread)
 
 static double current_time(void)
 {
+    void R_getProcTime(double *data);
     double times[5];
     R_getProcTime(times);
     return times[2];
@@ -239,7 +240,6 @@ static Rboolean thread_is_ready(R_thread_context_t tc, double *pnow)
 R_thread_context_t R_FindNextRunnableThread(R_thread_context_t first)
 {
     double now = -1.0;
-    Rboolean iowaiting = FALSE;
     R_thread_context_t tc;
 
     for (tc = first; tc != NULL; tc = tc->next_context)
@@ -362,6 +362,7 @@ R_code_t R_JoinThread(SEXP thread, R_code_t cont)
     }
 }
 
+#ifdef UNUSED
 static void count_threads(char *where)
 {
     R_thread_context_t threads;
@@ -374,6 +375,7 @@ static void count_threads(char *where)
 
     REprintf("number of active threads %s: %d\n", where, n);
 }
+#endif
 	
 DECLARE_CONTINUATION(start_thread_cont, start_thread_cont_fun);
 DECLARE_CONTINUATION(thread_top_cont, thread_top_cont_fun);
@@ -921,17 +923,13 @@ SEXP do_activethreads(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 SEXP do_currentthread(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    R_thread_context_t tc;
-    SEXP val;
-    int i, n;
-
     checkArity(op, args);
     return R_ThreadContext->ref;
 }
 
 #define CHECK_THREAD(s) do { \
     SEXP __s__ = (s); \
-    if (TYPEOF(s) != EXTPTRSXP || EXTPTR_TAG(s) != R_ThreadTag) \
+    if (TYPEOF(__s__) != EXTPTRSXP || EXTPTR_TAG(__s__) != R_ThreadTag) \
         error("bad thread object"); \
 } while (0)
 
@@ -1020,13 +1018,13 @@ SEXP  do_preemptsched(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 #define CHECK_MUTEX(s) do { \
     SEXP __s__ = (s); \
-    if (TYPEOF(s) != EXTPTRSXP || EXTPTR_TAG(s) != R_MutexTag) \
+    if (TYPEOF(__s__) != EXTPTRSXP || EXTPTR_TAG(__s__) != R_MutexTag) \
         error("bad mutex object"); \
 } while (0)
 
 #define CHECK_CONDVAR(s) do { \
     SEXP __s__ = (s); \
-    if (TYPEOF(s) != EXTPTRSXP || EXTPTR_TAG(s) != R_CondvarTag) \
+    if (TYPEOF(__s__) != EXTPTRSXP || EXTPTR_TAG(__s__) != R_CondvarTag) \
         error("bad condition variable object"); \
 } while (0)
 
@@ -1044,7 +1042,7 @@ static SEXP check_name(SEXP name)
 
 SEXP do_newmutex(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    SEXP data, mx, name;
+    SEXP data, mx;
 
     checkArity(op, args);
 
@@ -1058,7 +1056,7 @@ SEXP do_newmutex(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 SEXP do_newcondvar(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    SEXP data, cv, name;
+    SEXP data, cv;
 
     checkArity(op, args);
 
