@@ -13,6 +13,7 @@ rm130
 * file.choose() works correctly now
 * Now R takes track of file names associated to each window
 * Fixed a bug with printer dialog
+* Now R can handle "user breaks" in evaluation and printing loops
 
 
 rm123
