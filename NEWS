@@ -804,17 +804,27 @@ BUG FIXES
     o   If malloc() fails when allocating a large object the allocator now
         does a gc and tries the malloc() again.
 
-    o	packageSlot() and getGroupMembers() are now exported from methods
-	as they should from documentation and the green book.
+    o	packageSlot() and getGroupMembers() are now exported from the
+	'methods' package as they should from documentation and the
+	Green Book.
 
     o   rhyper() was giving numbers slightly too small, due to a bug in the
         original algorithm.  (PR#7314)
 
-    o   [g]sub(perl = TRUE) was giving random results for a 0-length
-	initial match.  Now such matches (and internal 0-length
-	matches such as those at word boundaries) are handled
-	correctly, as are those for sub(perl = FALSE).  
-	(Parts of PR#7742.)
+    o	gsub() was sometimes incorrectly matching ^ inside a string,
+	e.g.  gsub("^12", "x", "1212") was "xx".  [The non-perl
+	version still mismatches "\\b", e.g. gsub("\\b12", "x",
+	"1212") is also "xx".]
+
+    o	[g]sub(perl = TRUE) was giving random results for a 0-length
+	initial match.  (PR#7742)
+
+    o	[g]sub was ignoring most 0-length matches, including all initial
+	ones.  Note that substitutions such as gsub("[[:space:]]*", "
+	", ...) now work as they do in 'sed' (whereas the effect was
+	previously the same as gsub("[[:space:]]+", " ", ...)).
+	(In part PR#7742)
+
 
 
 
