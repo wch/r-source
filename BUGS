@@ -157,27 +157,31 @@ none
 
 Directory:  Language
 
-* PR# 869 *
-Subject:  inconsistent results when calling functions with other func
-From: "White, Paul" <Paul.White@dsto.defence.gov.au>
-Date: Thu, 8 Mar 2001 18:26:35 +1100 
-* PR# 412 *
-Subject: anomalies with call objects
-From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
-Date: 06 Feb 2000 01:18:50 +0100
+* PR# 879 *
+From: Duncan Murdoch <murdoch@stats.uwo.ca>
+Date: Sun, 18 Mar 2001 07:45:13 -0500 (EST)
+--precedence of %% appears to be not as documented
 * PR# 408 *
 Subject: convolution bug
 From: wsimpson@gcal.ac.uk
 Date: Fri, 28 Jan 2000 11:17:36 +0100 (MET)
-* PR# 813 *
-Subject: match.call problem
-From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
-Date: 12 Jan 2001 17:46:15 +0100
 * PR# 669 *
 Subject: Bug(s) w/ rbind.data.frame(); fix also read.table(*, as.is = TRUE) ?
 From: Martin Maechler <maechler@stat.math.ethz.ch>
 Date: Mon, 25 Sep 2000 10:17:15 +0200
 --status of AsIs columns
+* PR# 412 *
+Subject: anomalies with call objects
+From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
+Date: 06 Feb 2000 01:18:50 +0100
+* PR# 869 *
+Subject:  inconsistent results when calling functions with other func
+From: "White, Paul" <Paul.White@dsto.defence.gov.au>
+Date: Thu, 8 Mar 2001 18:26:35 +1100 
+* PR# 813 *
+Subject: match.call problem
+From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
+Date: 12 Jan 2001 17:46:15 +0100
 
 Directory:  Low-level
 
@@ -257,14 +261,3 @@ Date: Mon, 19 Mar 2001 16:45:59 -0500
 Subject: segmentation fault of unknown cause
 From: Martin Schlather <Martin.Schlather@uni-bayreuth.de>
 Date: Wed, 14 Mar 2001 17:45:25 +0100
-* PR# 876 *
-Subject: 
-From: Ian Wilson <I.Wilson@maths.abdn.ac.uk>
-Date: Tue, 13 Mar 2001 13:09:03 +0000
-* PR# 879 *
-From: Duncan Murdoch <murdoch@stats.uwo.ca>
-Date: Sun, 18 Mar 2001 07:45:13 -0500 (EST)
-* PR# 878 *
-Subject: sorry
-From: "Ian Stewart" <ians@connexus.net.au>
-Date: Sat, 17 Mar 2001 07:03:50 +1100
