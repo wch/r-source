@@ -3298,5 +3298,12 @@ ym <- cbind(y, 10-y)
 fit2 <- glm(ym ~ x, binomial)
 stopifnot(identical(names(resid(fit2)), names(y)))
 ## Note: fit <- glm(y/10 ~ x, binomial, weights=rep(10, 10))
-## Does not preserve names in R, but does in S.
+## Does not preserve names in R < 2.0.1, but does in S.
+fit <- glm(y/10 ~ x, binomial, weights=rep(10, 10))
+stopifnot(identical(names(resid(fit)), names(y)))
 ## The problem was glm.fit assumed a vector response.
+
+
+## dlogis(-2000) was NaN in <= 2.0.0.
+stopifnot(identical(dlogis(-2000), 0.0))
+##
