@@ -1,35 +1,32 @@
-\name{arrows}
-\title{Add Arrows to a Plot}
+\name{segments}
+\title{Add Line Segments to a Plot}
 \usage{
-arrows(x0, y0, x1, y1, length = 0.25, angle = 30, code = 2,
-       col = par("fg"), lty = NULL, xpd = FALSE)
+segments(x0, y0, x1, y1,
+       col = par("fg"), lty = par("lty"), xpd = FALSE)
 }
-\alias{arrows}
+\alias{segments}
 \arguments{
   \item{x0,y0}{coordinates of points \bold{from} which to draw.}
   \item{x1,y1}{coordinates of points \bold{to} which to draw.}
   \item{length}{length of the edges of the arrow head (in inches).}
   \item{angle}{angle from the shaft of the arrow to the edge of the arrow head.}
-  \item{code}{integer code, determining \emph{kind} of arrows to be drawn.}
   \item{col, lty, xpd}{usual graphical parameters as in \code{\link{par}}.}
 }
 \description{
-  Draw arrows between pairs of points.
+  Draw line segments between pairs of points.
 }
 \details{
-  For each \code{i}, an arrow is drawn between the point \code{(x0[i],
+  For each \code{i}, a line segment is drawn between the point \code{(x0[i],
     y0[i])} and the point \code{(x1[i],y1[i])}.
 
-  If \code{code=2} an arrowhead is drawn at \code{(x0[i],y0[i])} and if
-  \code{code=1} an arrowhead is drawn at \code{(x1[i],y1[i])}.  If
-  \code{code=3} a head is drawn at both ends of the arrow.
-
   The graphical parameters \code{col} and \code{lty} can be used
-  to specify a color and line texture for the line segments which
-  make up the arrows (\code{col} may be a vector).
+  to specify a color and line texture for the line segments (\code{col}
+  may be a vector).
 }
 \seealso{
-  \code{\link{segments}} to draw segments.
+  \code{\link{arrows}}, 
+  \code{\link{polygon}} for slightly easier and less flexible line drawing and
+  \code{\link{lines}} for the usual polygons.
 }
 \examples{
 x <- runif(12); y <- rnorm(12)
