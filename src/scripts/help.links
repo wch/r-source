@@ -19,7 +19,7 @@ cp ${RHOME}/doc/html/packages-head.html ${PKGLIST}
 for lib in $*; do
     echo "<P><h3>Packages in ${lib}</h3>" >> ${PKGLIST}
     echo "<P><TABLE width=100%>" >> ${PKGLIST}
-    for pkg in ${lib}/*; do
+    for pkg in `ls -d ${lib}/* | sed '/CVS$/d; /profile$/d'`; do
 	if test -d ${pkg}; then
 	    ln -sf ${pkg} ${URHOME}/library
 	    pkgname=`basename ${pkg}`
