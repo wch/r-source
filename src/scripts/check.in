@@ -34,10 +34,10 @@ use R::Vars;
 use Text::DelimMatch;
 use Text::Wrap;
 
-## don't buffer output
+## Don't buffer output.
 $| = 1;
 
-my $revision = ' $Revision: 1.170 $ ';
+my $revision = ' $Revision: 1.171 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -118,7 +118,7 @@ if($opt_latex) {
     $log->checking("for working latex");
     open(TEXFILE,
 	 "> " . &file_path(${R::Vars::TMPDIR}, "Rtextest$$.tex"))
-      or die "Error: cannot write to Rtextest$$.tex\n";
+      or die "Error: cannot open file 'Rtextest$$.tex' for writing\n";
     print TEXFILE "\\documentclass\{article\}\\begin\{document\}" .
 	"test\\end\{document\}\n";
     close(TEXFILE);
@@ -139,7 +139,7 @@ if($opt_latex) {
 my %standard_keywords = ();
 open(KEYWORDS,
      "< " . &file_path(${R::Vars::R_HOME}, "doc", "KEYWORDS.db"))
-  or die "Error: cannot open 'doc/KEYWORDS.db'\n";
+  or die "Error: cannot open file 'doc/KEYWORDS.db' for reading\n";
 while(<KEYWORDS>) {
     if(/^.*\|([^:]*):.*/) {
 	$standard_keywords{$1} = 1;
@@ -152,7 +152,7 @@ my @R_pkgs_base = ();
 my @R_pkgs_recommended = ();
 open(MAKEVARS,
      "< " . &file_path(${R::Vars::R_HOME}, "share", "make", "vars.mk"))
-  or die "Error: cannot open 'share/make/vars.mk'\n";
+  or die "Error: cannot open file 'share/make/vars.mk' for reading\n";
 while(<MAKEVARS>) {
     @R_pkgs_base =
 	split(/ +/, $2) if(/^(R_PKGS_BASE *=)(.*)/);
@@ -175,7 +175,7 @@ $ENV{'R_CHECK_WITH_T_N_F_AS_NULL'} = "yes";
 ## </FIXME>
 
 ## This is the main loop over all packages to be checked.
-($#ARGV >= 0) or die "Error: no packages were specified\n";
+(scalar(@ARGV) > 0) or die "Error: no packages were specified\n";
 foreach my $pkg (@ARGV) {
     ## $pkg should be the path to the package (bundle) root source
     ## directory, either absolute or relative to $startdir.
@@ -479,7 +479,7 @@ sub check_pkg {
 	}
     }
     find(\&find_wrong_names, ".");
-    if($#bad_files >= 0) {
+    if(scalar(@bad_files) > 0) {
 	$log->error();
 	$log->print("Found the following files with " .
 		    "non-portable file names:\n");
@@ -528,7 +528,7 @@ sub check_pkg {
 	    }
 	}
         find(\&find_wrong_perms_A, ".");
-        if($#bad_files >= 0) {
+        if(scalar(@bad_files) > 0) {
 	    $log->error();
 	    $log->print("Found the following files with " .
 			"insufficient permissions:\n");
@@ -560,7 +560,7 @@ sub check_pkg {
 		push(@bad_files, $filename);
 	    }
 	}
-	if($#bad_files >= 0) {
+	if(scalar(@bad_files) > 0) {
 	    $log->warning();
 	    $log->print(wrap("", "",
 			     "The following files should most likely",
@@ -762,7 +762,7 @@ sub check_pkg {
 	    push(@required_packages, $dep);
 	}
 
-	if($#required_packages >= 0) {
+	if(scalar(@required_packages) > 0) {
 	    my $Rcmd = "requiredPackages <- c(\"";
 	    $Rcmd .= join("\", \"", @required_packages);
 	    $Rcmd .= "\")\n";
@@ -770,7 +770,7 @@ sub check_pkg {
 	    $Rcmd .= "installed.packages()[ , \"Package\"]])\n";
 	    my @out = R_runR($Rcmd, "${R_opts} --quiet");
 	    @out = grep(!/^\>/, @out);
-	    if($#out >= 0) {
+	    if(scalar(@out) > 0) {
 		$log->error();
 		$log->print("Packages required but not available:\n");
 		$log->print(wrap("  ", "  ", @out) . "\n");
@@ -798,7 +798,7 @@ sub check_pkg {
 	    my @out = R_runR($cmd, "${R_opts} --quiet",
 			     "R_DEFAULT_PACKAGES=tools");
 	    @out = grep(!/^\>/, @out);
-	    if($#out >= 0) {
+	    if(scalar(@out) > 0) {
 		$any++;
 		$log->warning();
 		$log->print("Vignette dependencies not required:\n");
@@ -838,7 +838,7 @@ sub check_pkg {
 	    my @out = R_runR($cmd, "${R_opts} --quiet",
 			     "R_DEFAULT_PACKAGES=tools");
 	    @out = grep(!/^\>/, @out);
-	    if($#out >= 0) {
+	    if(scalar(@out) > 0) {
 		$log->warning() unless($any);
 		$any++;
 		$log->print(join("\n", @out) . "\n");
@@ -853,7 +853,7 @@ sub check_pkg {
 	my @out = R_runR($cmd, "${R_opts} --quiet",
 			 "R_DEFAULT_PACKAGES=tools");
 	@out = grep(!/^\>/, @out);
-	if($#out >= 0) {
+	if(scalar(@out) > 0) {
 	    $log->warning() unless($any);
 	    $any++;
 	    $log->print(join("\n", @out) . "\n");
@@ -924,7 +924,7 @@ sub check_pkg {
 		  if((-d &file_path("inst", $dir))
 		     && &list_files(file_path("inst", $dir)));
 	    }
-	    if($#bad_dirs >= 0) {
+	    if(scalar(@bad_dirs) > 0) {
 		$log->warning() unless $any;
 		$any++;
 		$log->print(wrap("", "",
@@ -955,7 +955,7 @@ sub check_pkg {
 	$Rcmd .= "if(inherits(try(parse(f)), \"try-error\")) stop(f)\n";
         my @out = R_runR($Rcmd, "${R_opts} --quiet");
 	@out = grep(/^Error:/, @out);
-	if($#out >= 0) {
+	if(scalar(@out) > 0) {
 	    my $Rfile = $out[0];
 	    $Rfile =~ s/^Error: *//;
 	    $log->error();
@@ -1033,7 +1033,7 @@ sub check_pkg {
         my @out = R_runR($Rcmd, "${R_opts} --quiet",
 			 "R_DEFAULT_PACKAGES='utils,graphics,stats,tools'");
 	@out = grep(!/^\>/, @out);
-	if($#out >= 0) {
+	if(scalar(@out) > 0) {
 	    $log->warning();
 	    $log->print(join("\n", @out) . "\n");
 	}
@@ -1059,7 +1059,7 @@ sub check_pkg {
         my @out = R_runR($Rcmd, "${R_opts} --quiet",
 			 "R_DEFAULT_PACKAGES='utils,graphics,stats,tools'");
         @out = grep(!/^\>/, @out);
-	if($#out >= 0) {
+	if(scalar(@out) > 0) {
 	    ## <NOTE>
 	    ## We really want to stop if we find offending replacement
 	    ## functions.  But we cannot use error() because output may
@@ -1089,7 +1089,7 @@ sub check_pkg {
         my @out = R_runR($Rcmd, "${R_opts} --quiet",
 			 "R_DEFAULT_PACKAGES='utils,graphics,stats,tools'");
 	@out = grep(!/^\>/, @out);
-	if($#out >= 0) {
+	if(scalar(@out) > 0) {
 	    $log->warning();
 	    $log->print(join("\n", @out) . "\n");
 	}
@@ -1213,7 +1213,7 @@ sub check_pkg {
 
 	my $any = 0;
 
-	if($#bad_braces >= 0) {
+	if(scalar(@bad_braces) > 0) {
 	    $log->error();
 	    $log->print("Rd files with unbalanced braces:\n");
 	    $log->print("  " . join("\n  ", @bad_braces) . "\n");
@@ -1224,7 +1224,7 @@ sub check_pkg {
 	    exit(1);
 	}
 
-	if($#bad_names >= 0) {
+	if(scalar(@bad_names) > 0) {
 	    $log->error();
 	    $log->print("Rd files with missing or empty ".
 			"or invalid '\\name':\n");
@@ -1232,7 +1232,7 @@ sub check_pkg {
 	    $log->print(wrap("", "", @msg_writing_Rd));
 	    exit(1);
 	}
-	if($#bad_titles >= 0) {
+	if(scalar(@bad_titles) > 0) {
 	    $log->error();
 	    $log->print("Rd files with missing or empty '\\title':\n");
 	    $log->print("  " . join("\n  ", @bad_titles) . "\n");
@@ -1313,27 +1313,25 @@ sub check_pkg {
                          "R_DEFAULT_PACKAGES='utils,graphics,stats,tools'");
 	my @err = grep(/^Error/, @out);
 	@out = grep(!/^\>/, @out);
-	if($#err < 0) {
-	    if($#out >= 0) {
-		$log->warning();
-                $log->print(join("\n", @out) . "\n");
-		my $details;
-		$details = " (including S4 classes and methods)"
-		  if(grep(/^Undocumented S4/, @out));
-		$log->print(wrap("", "",
-				 ("All user-level objects",
-				  "in a package${details} should",
-				  "have documentation entries.\n")));
-		$log->print(wrap("", "", @msg_writing_Rd));
-	    }
-	    else {
-		$log->result("OK");
-	    }
-	}
-	else {
+	if(scalar(@err) > 0) {
 	    $log->error();
 	    $log->print(join("\n", @err) . "\n");
 	    exit(1);
+	}
+	elsif(scalar(@out) > 0) {
+	    $log->warning();
+	    $log->print(join("\n", @out) . "\n");
+	    my $details;
+	    $details = " (including S4 classes and methods)"
+	      if(grep(/^Undocumented S4/, @out));
+	    $log->print(wrap("", "",
+			     ("All user-level objects",
+			      "in a package${details} should",
+			      "have documentation entries.\n")));
+	    $log->print(wrap("", "", @msg_writing_Rd));
+	}
+	else {
+	    $log->result("OK");
 	}
     }
 
@@ -1361,7 +1359,7 @@ sub check_pkg {
 	    ## we know what must be valid R code, similar to the above
 	    ## for undoc().
 	    @out = grep(!/^\>/, @out);
-	    if($#out >= 0) {
+	    if(scalar(@out) > 0) {
 		$any++;
 		$log->warning();
 		$log->print(join("\n", @out) . "\n");
@@ -1375,7 +1373,7 @@ sub check_pkg {
 	    my @out = R_runR($Rcmd, "${R_opts} --quiet",
 			     "R_DEFAULT_PACKAGES='utils,graphics,stats,tools'");
 	    @out = grep(!/^\>/, @out);
-	    if($#out >= 0) {
+	    if(scalar(@out) > 0) {
 		$log->warning() unless($any);
 		$any++;
 		$log->print(join("\n", @out) . "\n");
@@ -1388,7 +1386,7 @@ sub check_pkg {
 	    my @out = R_runR($Rcmd, "${R_opts} --quiet",
 			     "R_DEFAULT_PACKAGES='utils,graphics,stats,tools'");
 	    @out = grep(!/^\>/, @out);
-	    if($#out >= 0) {
+	    if(scalar(@out) > 0) {
 		$log->warning() unless($any);
 		$any++;
 		$log->print(join("\n", @out) . "\n");
@@ -1417,7 +1415,7 @@ sub check_pkg {
         my @out = R_runR($Rcmd, "${R_opts} --quiet",
 			 "R_DEFAULT_PACKAGES='utils,graphics,stats,tools'");
 	@out = grep(!/^\>/, @out);
-	if($#out >= 0) {
+	if(scalar(@out) > 0) {
 	    $log->warning();
 	    $log->print(join("\n", @out) . "\n");
 	}
@@ -1452,7 +1450,7 @@ sub check_pkg {
 	    }
 	    close(FILE);
 	}
-	if($#bad_files >= 0) {
+	if(scalar(@bad_files) > 0) {
 	    $log->warning();
 	    $log->print("Found the following C sources/headers with " .
 			"CRLF line endings:\n");
@@ -1535,7 +1533,7 @@ sub check_pkg {
 	    ## massage-Examples.pl.  Should perhaps also be more
 	    ## defensive about the prompt ...
 	    my @chunks = split(/(> \#\#\# \* [^\n]+\n> \n> flush)/, $txt);
-	    if($#chunks > 1) {
+	    if(scalar(@chunks) > 2) {
 		$log->print("The error most likely occurred in:\n\n");
 		$log->print($chunks[$#chunks - 1]);
 		$log->print($chunks[$#chunks] . "\n");
@@ -1551,7 +1549,7 @@ sub check_pkg {
 	#my @lines = <FILE>;
 	#close(FILE);
 	@lines = grep(/^Warning: .*is deprecated.$/, @lines);
-	if($#lines >= 0) {
+	if(scalar(@lines) > 0) {
 	    $log->warning();
 	    $log->print("Found the following significant warnings:\n");
 	    $log->print("  " . join("\n  ", @lines) . "\n");
@@ -1651,7 +1649,7 @@ sub check_pkg {
 	    $pdf_file =~ s/\.[[:alpha:]]+$/.pdf/;
 	    push(@bad_vignettes, $file) unless(-f $pdf_file);
 	}
-	if($#bad_vignettes >= 0) {
+	if(scalar(@bad_vignettes) > 0) {
 	    $log->warning();
 	    $any++;
 	    $log->print("Package vignettes without corresponding PDF:\n");
@@ -1676,7 +1674,7 @@ sub check_pkg {
 	    ## </FIXME>
 	    ## Vignette could redefine the prompt, e.g. to 'R>' ...
 	    @out = grep(!/^[[:alnum:]]*\>/, @out);
-	    if($#out >= 0) {
+	    if(scalar(@out) > 0) {
 		$log->warning() unless($any);
 		$any++;
 		$log->print(join("\n", @out) . "\n");
