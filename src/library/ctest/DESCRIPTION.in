@@ -1,6 +1,7 @@
 Package: ctest
 Version: @VERSION@
 Priority: base
+Title: Classical Tests
 Author: Kurt Hornik <Kurt.Hornik@ci.tuwien.ac.at>
 Description: A collection of classical tests, including the Bartlett,
   Fisher, Kruskal-Wallis, Kolmogorov-Smirnov, and Wilcoxon tests.

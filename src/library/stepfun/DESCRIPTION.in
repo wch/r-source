@@ -1,6 +1,7 @@
 Package: stepfun
 Version: @VERSION@
 Priority: base
+Title: Step Functions, including Empirical Distributions
 Author: R Development Core Team
 Description: Step Functions, including empirical distributions
 License: GPL Version 2 or later.

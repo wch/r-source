@@ -1,6 +1,7 @@
 Package: splines
 Version: @VERSION@
 Priority: base
+Title: Regression Spline Functions and Classes
 Author: Douglas M. Bates <bates@stat.wisc.edu> and
 	William N. Venables <Bill.Venables@cmis.csiro.au>
 Description: Regression Spline Functions and Classes

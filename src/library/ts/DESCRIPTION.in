@@ -1,6 +1,7 @@
 Package: ts
 Version: @VERSION@
 Priority: base
+Title: Time series functions
 Author: Collected by Brian Ripley. See SOURCES.
 Description: Time series functions.
 License: GPL Version 2 or later.

@@ -1,6 +1,7 @@
 Package: base
 Version: @VERSION@
 Priority: base
+Title: The R base package
 Author: R Development Core Team and contributors worldwide
 Description: Base R functions and datasets
 License: GPL Version 2 or later.

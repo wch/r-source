@@ -1,6 +1,7 @@
 Package: nls
 Version: @VERSION@
 Priority: base
+Title: Nonlinear regression
 Authors: Saikat DebRoy <saikat@stat.wisc.edu>,
          Douglas M. Bates <bates@stat.wisc.edu>, and
          Jose C. Pinheiro <jcp@research.bell-labs.com>

@@ -1,6 +1,7 @@
 Package: eda
 Version: @VERSION@
 Priority: base
+Title: Exploratory Data Analysis
 Author: R Development Core Team
 Description: Exploratory Data Analysis, in the Tukey sense
 License: GPL Version 2 or later.
