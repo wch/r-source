@@ -40,6 +40,9 @@ seq(along)
 
   If \code{from} and \code{to} are factors of the same length, then
   \code{from : to} returns the ``cross'' of the two.
+
+  Very small sequences (with \code{from - to} of the order of 1e-14
+  times the larger of the ends) will return \code{from}.
 }
 \value{
   The result is of \code{mode} \code{"integer"} if \code{from} is

@@ -486,7 +486,8 @@ seq.POSIXt <-
             res <- seq.default(from, by=by, length.out=length.out)
         else {
             to <- unclass(as.POSIXct(to))
-            res <- seq.default(from, to, by)
+            ## defeat test in seq.default
+            res <- seq.default(0, to - from, by) + from
         }
         return(structure(res, class=c("POSIXt", "POSIXct")))
     } else {  # months or years or Days

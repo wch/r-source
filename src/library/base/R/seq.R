@@ -33,8 +33,7 @@ seq.default <-
 		stop("'by' argument is much too small")
 
 	    dd <- abs(del)/max(abs(to), abs(from))
-	    if (dd < sqrt(.Machine$double.eps))
-		return(from)
+	    if (dd < 100*.Machine$double.eps) return(from)
 	    n <- as.integer(n + 1e-7)
 	    from + (0:n) * by
 	}
