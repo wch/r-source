@@ -30,7 +30,9 @@ help.search(pattern, fields = c("alias", "concept", "title"),
   \item{apropos}{a character string to be matched in the help page
     topics and title.}
   \item{keyword}{a character string to be matched in the help page
-    keywords.}
+    \sQuote{keywords}. \sQuote{Keywords} are really categories: the
+    standard categories are listed in file \file{RHOME/doc/KEYWORDS} and
+    some package writers have defined their own.}
   \item{whatis}{a character string to be matched in the help page
     topics.}
   \item{ignore.case}{a logical.  If \code{TRUE}, case is ignored during
