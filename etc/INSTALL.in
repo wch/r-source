@@ -51,13 +51,18 @@ cd ${pkg}
 pkg=`basename ${pkg}`
 test -d ${lib}/${pkg} || mkdir ${lib}/${pkg} || exit 1;
 echo "Installing package \`${pkg}' ..."
-##DEBUG me: set -x -v
 
 if test -d src; then
   echo "libs"
-  (cd src; make -f ${RHOME}/etc/Makeconf -f Makefile)
   test -d ${lib}/${pkg}/libs || mkdir ${lib}/${pkg}/libs
-  cp src/*.so ${lib}/${pkg}/libs
+  if test -f src/Makefile; then
+    (cd src;
+      make -f ${RHOME}/etc/Makeconf -f Makefile;
+      cp *.so ${lib}/${pkg}/libs)
+  else
+    (cd src;
+      sh ${RHOME}/etc/SHLIB -o ${lib}/${pkg}/libs/${pkg}.so *.[cfr])
+  fi
 fi
 
 if test -d R; then dir=R; elif test -d funs; then dir=funs; fi
@@ -145,3 +150,8 @@ fi
 ${RHOME}/etc/build-help ${BUILDHELPOPTS} ../${pkg} ${lib}
 
 echo "DONE (INSTALL)"
+
+### Local Variables: ***
+### mode: sh ***
+### sh-indent: 2 ***
+### End: ***
