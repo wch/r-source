@@ -107,6 +107,7 @@ AC_PROG_RANLIB
 AC_PROG_YACC
 
 AC_CHECK_PROG(AR, ar, ar)
+AC_CHECK_PROG(RATFOR, ratfor, ratfor)
 
 ## Perl.
 
@@ -328,6 +329,9 @@ AC_C_CONST
 
 ##  DLL linking.
 
+SHLIBLD=ld
+SHLIBEXT=so
+
 #  We create a fake Imakefile and then run xmkmf so that we can
 #  determine PICFLAGS and SHLIBLDFLAGS.  The only platform I know
 #  of which uses DLLFLAGS is linux-elf which requires -rdynamic.
@@ -400,6 +404,7 @@ case "${host}" in
     esac
     DLLFLAGS="-Wl,-E"
     SHLIBLDFLAGS=-b
+    SHLIBEXT=sl
     LIBS="${LIBS} -ldld"
     ;;
   *solaris*)
@@ -412,6 +417,8 @@ AC_SUBST(DLLFLAGS)
 AC_SUBST(CPICFLAGS)
 AC_SUBST(FPICFLAGS)
 AC_SUBST(SHLIBLDFLAGS)
+AC_SUBST(SHLIBEXT)
+AC_SUBST(SHLIBLD)
 
 ### System services.
 
