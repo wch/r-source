@@ -32,7 +32,7 @@ clean:
 
 
 # Rlapack.* section
-Rlapack.dll: dlapack0.o dlapack1.o dlapack2.o dlapack3.o cmplx.o Rlapackrc.o
+Rlapack.dll: dlamc.o dlapack0.o dlapack1.o dlapack2.o dlapack3.o cmplx.o Rlapackrc.o
 	@$(ECHO) LIBRARY Rlapack > Rlapack.def
 	@$(ECHO) EXPORTS >> Rlapack.def
 	@$(NM) $^ > Defs
