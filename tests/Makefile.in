@@ -167,7 +167,8 @@ stamp-R: $(top_builddir)/bin/R.bin $(top_builddir)/library/base/R/base
 mostlyclean: clean
 clean:
 	@-(cd Examples; $(MAKE) $@)
-	@rm -f stamp-R Makedeps Rplot* Rprof.out *.Rd data dumpdata.R
+	@rm -f stamp-R Makedeps Rplot* Rprof.out *.Rd data dumpdata.R \
+	  reg-plot.ps
 distclean: clean
 	@-(cd Examples; $(MAKE) $@)
 	@rm -f Makefile $(test-out) $(test-src-auto) .RData
