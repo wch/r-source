@@ -1,5 +1,6 @@
 base:
 	@echo Building R base library
+	@mkdir -p ../../../library/base/R
 	@cat `ls R/[a-z]* | sed '/CVS/d; /~$$/d; /\.orig$$/d; \
 		/\.bak$$/d; /system.*/d'` R/system.unix | \
 	 sed '/^[ 	]*$$/d'  > ../../../library/base/R/base
