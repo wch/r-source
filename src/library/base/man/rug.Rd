@@ -2,7 +2,8 @@
 \title{Add a Rug to a Plot}
 \alias{rug}
 \usage{
-rug(x, ticksize=0.03, side=1, lwd=0.5, col)
+rug(x, ticksize=0.03, side=1, lwd=0.5, col,
+    quiet = getOption("warn") < 0)
 }
 \arguments{
  \item{x}{A numeric vector}
@@ -12,6 +13,8 @@ rug(x, ticksize=0.03, side=1, lwd=0.5, col)
    plotted. Normally 1 (bottom) or 3 (top).}
  \item{lwd}{The line width of the ticks.}
  \item{col}{The colour the ticks are plotted in, default is black.}
+ \item{quiet}{logical indicating if there should be a warning about
+   clipped values.}
 }
 \description{
   Adds a \emph{rug} representation (1-d plot) of the data to the plot.
