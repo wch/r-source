@@ -2220,6 +2220,7 @@ sub latex_code_trans {
     $c =~ /HYPERLINK\(([^)]*)\)/;
     my $link = latex_link_trans($1);
     $c =~ s/HYPERLINK\([^)]*\)/\\Link{$link}/go;
+    $c =~ s/,,/,{},/g; # ,, is a ligature in the ae font.
     $c;
 }
 
@@ -2227,7 +2228,7 @@ sub latex_link_trans {
     my $c = $_[0];
     $c =~ s/<-\./<\\Rdash\./go;
     $c =~ s/<-$/<\\Rdash/go;
-    $c
+    $c;
 }
 
 sub latex_code_cmd {
