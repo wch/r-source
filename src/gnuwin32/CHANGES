@@ -7,9 +7,6 @@ See the file NEWS for changes that affect all versions of R.
 rw1070
 ======
 
-The installers have new options under `Additional tasks' which allow
-the creation of Registry entries to be de-selected by the user.
-
 There is a new option to use file("clipboard") to read from or write
 to the clipboard.  As most input/output functions in R use file(),
 this makes it possible to read data from or write data to the
@@ -20,14 +17,38 @@ user/password combination can be set to prompt the user with a
 username/password dialog box, and this will be presented on proxy
 authentication failure.
 
-Removed some calls to reset the size of the console, so it will 
-stay maximized throughout window operations.
+New function choose.files() for interactive multiple file selection. 
 
 The output from formatC() uses e+/-0n not e+/-00n for compatibility with
 other platforms and with format().
 
 A site-wide environment file R_HOME/etc/Renviron.site (or as set by
 the `R_ENVIRON' environment variable) is now implemented on Windows.
+
+The variable .SavedPlots in which plots are stored has been moved from
+package:base to the user's workspace.
+
+Added (temporarily?) a warning to the internal dyn.load() 
+whenever the loaded DLL changes the floating point control word.
+If changed, it will be changed back to the R default.  NB:  if 
+the warning says "DLL attempted to change FPU control word from 
+XXXXX to 8001f", that's a sign of an internal bug somewhere else:
+8001f is the R default value.
+
+Installation changes
+--------------------
+
+The installers have new options under `Additional tasks' which allow
+the creation of Registry entries to be de-selected by the user.
+
+Rcmd.exe and Rprof have been moved to the main distribution (although
+to use them you will need perl installed).
+
+The default version of Tcl/Tk (and hence that used in the binary
+distribution) is 8.4.x.
+
+HTML help changes
+-----------------
 
 The format of packages.html has changed, with packages listed by
 library tree (as happens on Unix) when there is more than one tree.
@@ -42,33 +63,32 @@ stamp `fixedHTMLlinks' is placed in the package directory, and
 correction will only be done again if the R installation directory
 is changed.
 
-The variable .SavedPlots in which plots are stored has been moved from
-base to the user's workspace.
+RGui changes
+------------
 
-Rcmd.exe and Rprof have been moved to the main distribution (although
-to use them you will need perl installed).
+The `Display file' menu item is now `Display file(s)' and allows
+multiple file selection.
 
-The default version of Tcl/Tk (and hence that used in the binary
-distribution) is 8.4.x.
+`Install packages from local zip files' from the `Packages' menu can
+now install several files at once (by selecting multiple files in the
+file selector).
+
+Removed some calls to reset the size of the console, so it will 
+stay maximized throughout window operations.
+
+Installing packages
+-------------------
 
 Files in the top-level directory of a source package are no longer
 installed automatically: files to be installed must be put in an `inst'
 sub-directory (as has long been recommended).  (The `demo' and `exec'
 directories are also installed, as before.)
 
-Added (temporarily?) a warning to the internal dyn.load() 
-whenever the loaded DLL changes the floating point control word.
-If changed, it will be changed back to the R default.  NB:  if 
-the warning says "DLL attempted to change FPU control word from 
-XXXXX to 8001f", that's a sign of an internal bug somewhere else:
-8001f is the R default value.
-
 The BLAS library Rblas.dll is no longer automatically linked against
 when building a package: as on Unix PKG_LIBS=$(BLAS_LIBS) is required
 in Makevars(.win).
 
-Added choose.files() function for interactive multiple file selection; 
-modified local zip file installer to use it.
+
 
 rw1062
 ======

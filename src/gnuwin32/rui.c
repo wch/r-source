@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Langage for Statistical Data Analysis
- *  Copyright (C) 1998--2001  Guido Masarotto and Brian Ripley
+ *  Copyright (C) 1998--2003  Guido Masarotto and Brian Ripley
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -101,15 +101,34 @@ static void menusource(control m)
 
 static void menudisplay(control m)
 {
-    char *fn;
+    SEXP pager = GetOption(install("pager"), R_NilValue);
+    int count, i;
+    char **files, *p, *path, list[32016];
+    char *vmax = vmaxget();
 
-    setuserfilter("All files (*.*)\0*.*\0\0");
-    fn = askfilename("Select file to show", "");
+    askfilenames("Select files to show", "", list, 32000);
     Rwin_fpset();
-/*    show(RConsole); */
-    if (fn) {
-	fixslash(fn);
-	internal_ShowFile(fn, fn);
+    count = countFilenames(list);
+    if (count == 1) {
+	/* fixslash(list); seems unneeded */
+	internal_ShowFile(list, list);
+    } else if (count > 1) {
+	count--;
+	files = (char **) R_alloc(count, sizeof(char *));
+	p = path = list;
+	p += strlen(path) + 1;
+	for (i = 0; i < count; i++) {
+	    if(strchr(p, ':') || strchr(p, '/') || strchr(p, '\\')) {
+		files[i] = p;
+	    } else {
+		files[i] = R_alloc(strlen(path)+strlen(p)+2, sizeof(char *));
+		sprintf(files[i], "%s\\%s", path, p);
+	    }
+	    p += strlen(p) + 1;
+	}
+	R_ShowFiles(count, files, files, "File", 0, 
+		    CHAR(STRING_ELT(pager, 0)));
+	vmaxset(vmax);
     }
 }
 
@@ -321,7 +340,10 @@ static void menupkginstallcran(control m)
 
 static void menupkginstalllocal(control m)
 {
-	consolecmd(RConsole,"install.packages(choose.files('*.zip'), .libPaths()[1], CRAN = NULL)");
+    if (!ConsoleAcceptCmd) return;
+    setuserfilter("zip files (*.zip)\0*.zip\0\0All files (*.*)\0*.*\0\0");
+    consolecmd(RConsole,"install.packages(choose.files(''), .libPaths()[1], CRAN = NULL)");
+    setuserfilter("All files (*.*)\0*.*\0\0"); /* reset */
 }
 
 static void menuconsolehelp(control m)
@@ -784,7 +806,7 @@ int setupui()
     MCHECK(RMenuBar = newmenubar(menuact));
     MCHECK(newmenu("File"));
     MCHECK(msource = newmenuitem("Source R code...", 0, menusource));
-    MCHECK(mdisplay = newmenuitem("Display file...", 0, menudisplay));
+    MCHECK(mdisplay = newmenuitem("Display file(s)...", 0, menudisplay));
     MCHECK(newmenuitem("-", 0, NULL));
     MCHECK(mload = newmenuitem("Load Workspace...", 0, menuloadimage));
     MCHECK(msave = newmenuitem("Save Workspace...", 0, menusaveimage));
@@ -822,10 +844,10 @@ int setupui()
     MCHECK(newmenu("Packages"));
     MCHECK(mpkgl = newmenuitem("Load package...", 0, menupkgload));
     MCHECK(newmenuitem("-", 0, NULL));
-    MCHECK(mpkgi = newmenuitem("Install package from CRAN...", 0,
+    MCHECK(mpkgi = newmenuitem("Install package(s) from CRAN...", 0,
 			       menupkginstallcran));
-    MCHECK(mpkgil = newmenuitem("Install packages from local zip files...", 0,
-				menupkginstalllocal));
+    MCHECK(mpkgil = newmenuitem("Install package(s) from local zip files...",
+				0, menupkginstalllocal));
     MCHECK(newmenuitem("-", 0, NULL));
     MCHECK(mpkgu = newmenuitem("Update packages from CRAN", 0,
 			       menupkgupdate));
