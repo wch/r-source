@@ -105,3 +105,10 @@ for i in  `ls $RHOME/library/base/help`
 do
   sed 's/.//g' library/base/help/$i > Macintosh/library/base/help/$i
 done
+
+# (6) Demos
+
+echo "Demo scripts"
+
+mkdir Macintosh/demos
+cp -R demos/[a-z]* Macintosh/demos
