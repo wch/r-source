@@ -780,7 +780,7 @@ fi
 
 ### Programs.
 
-for ac_prog in mawk gawk nawk awk
+for ac_prog in gawk mawk nawk awk
 do
 # Extract the first word of "$ac_prog", so it can be a program name with args.
 set dummy $ac_prog; ac_word=$2
@@ -4019,7 +4019,7 @@ else
 #include "confdefs.h"
 #include <alloca.h>
 int main() {
-void *p = alloca(2 * sizeof(int));
+char *p = alloca(2 * sizeof(int));
 ; return 0; }
 EOF
 if { (eval echo configure:4026: \"$ac_link\") 1>&5; (eval $ac_link) 2>&5; } && test -s conftest${ac_exeext}; then
@@ -5754,7 +5754,7 @@ else
 int main() {
 
 /* Ultrix mips cc rejects this.  */
-typedef int charset[2]; const charset x = {0,0};
+typedef int charset[2]; const charset x;
 /* SunOS 4.1.1 cc rejects this.  */
 char const *const *ccp;
 char **p;
@@ -7425,13 +7425,18 @@ fi
 if test -z "${no_x}"; then
   X_LIBS="${X_LIBS} -lX11"
   NO_X=""
+  RX11DIR="X11"
+  use_X11="yes"
   cat >> confdefs.h <<\EOF
 #define HAVE_X11 1
 EOF
 
 else
   NO_X="#"
+  RX11DIR=""
+  use_X11="no"
 fi
+
 
 
 ### Miscellaneous.
@@ -7447,7 +7452,7 @@ do
 # Extract the first word of "$ac_prog", so it can be a program name with args.
 set dummy $ac_prog; ac_word=$2
 echo $ac_n "checking for $ac_word""... $ac_c" 1>&6
-echo "configure:7451: checking for $ac_word" >&5
+echo "configure:7456: checking for $ac_word" >&5
 if eval "test \"`echo '$''{'ac_cv_prog_R_PRINTCMD'+set}'`\" = set"; then
   echo $ac_n "(cached) $ac_c" 1>&6
 else
@@ -7485,7 +7490,7 @@ EOF
 # Extract the first word of "paperconf", so it can be a program name with args.
 set dummy paperconf; ac_word=$2
 echo $ac_n "checking for $ac_word""... $ac_c" 1>&6
-echo "configure:7489: checking for $ac_word" >&5
+echo "configure:7494: checking for $ac_word" >&5
 if eval "test \"`echo '$''{'ac_cv_path_PAPERCONF'+set}'`\" = set"; then
   echo $ac_n "(cached) $ac_c" 1>&6
 else
@@ -7645,7 +7650,6 @@ trap 'rm -fr `echo "Makeconf
   etc/Makeconf-tests  
   src/Makefile
   src/appl/Makefile
-  src/gnome/Makefile
   src/include/Makefile
   src/library/Makefile
   src/library/base/DESCRIPTION
@@ -7696,6 +7700,7 @@ trap 'rm -fr `echo "Makeconf
   src/scripts/help.pretty
   src/unix/Makefile
   src/unix/X11/Makefile
+  src/unix/gnome/Makefile
   tests/Makefile
   tests/Examples/Makefile
   tools/Makefile
@@ -7830,6 +7835,7 @@ s%@X_PRE_LIBS@%$X_PRE_LIBS%g
 s%@X_LIBS@%$X_LIBS%g
 s%@X_EXTRA_LIBS@%$X_EXTRA_LIBS%g
 s%@NO_X@%$NO_X%g
+s%@RX11DIR@%$RX11DIR%g
 s%@R_PRINTCMD@%$R_PRINTCMD%g
 s%@PAPERCONF@%$PAPERCONF%g
 s%@R_PAPERSIZE@%$R_PAPERSIZE%g
@@ -7887,7 +7893,6 @@ CONFIG_FILES=\${CONFIG_FILES-"Makeconf
   etc/Makeconf-tests  
   src/Makefile
   src/appl/Makefile
-  src/gnome/Makefile
   src/include/Makefile
   src/library/Makefile
   src/library/base/DESCRIPTION
@@ -7938,6 +7943,7 @@ CONFIG_FILES=\${CONFIG_FILES-"Makeconf
   src/scripts/help.pretty
   src/unix/Makefile
   src/unix/X11/Makefile
+  src/unix/gnome/Makefile
   tests/Makefile
   tests/Examples/Makefile
   tools/Makefile
@@ -8142,6 +8148,7 @@ R is now configured for ${host}
   Installation directory:   ${prefix}
   C compiler:               ${CC} ${R_XTRA_CFLAGS} ${CFLAGS}
   FORTRAN compiler:         ${FORT}
+  X11 support:              ${use_X11}
   Gnome support:            ${use_gnome}
 " 1>&6
 

@@ -74,7 +74,11 @@ NEW FEATURES
 	and data.entry() will not be available).  R BATCH sets --gui=none.
 
     o	Configuring without X (e.g. --without-x) does work (at last).
+	configure will report if X11 support has been included.
 	If R has been built without X11 the default GUI is "none".
+
+    o	GNOME support files have moved from src/gnome to src/unix/gnome:
+	x11() is currently unavailable under --gui=GNOME.
 
     o	New device xfig() to produce XFig files.
 

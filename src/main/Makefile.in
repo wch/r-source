@@ -108,7 +108,7 @@ DISTFILES = Makefile.in Makefile.win \
 	gram.y
 
 RLIBS = ../unix/libunix.a ../appl/libappl.a ../nmath/libmath.a
-RGNOMELIBS = ../gnome/libRgnome.a ../appl/libappl.a ../nmath/libmath.a
+RGNOMELIBS = ../unix/gnome/libRgnome.a ../appl/libappl.a ../nmath/libmath.a
 
 ALL_LIBS = $(RLIBS) $(FLIBS) $(R_XTRA_LIBS) $(LIBS)
 ALL_GNOME_LIBS = $(RGNOMELIBS) $(FLIBS) $(R_XTRA_LIBS) $(LIBS) $(GNOME_LIBDIR) $(GNOMEUI_LIBS) $(LIBGLADE_LIBS)

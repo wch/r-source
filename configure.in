@@ -721,11 +721,16 @@ AC_PATH_XTRA
 if test -z "${no_x}"; then
   X_LIBS="${X_LIBS} -lX11"
   NO_X=""
+  RX11DIR="X11"
+  use_X11="yes"
   AC_DEFINE(HAVE_X11, 1)
 else
   NO_X="#"
+  RX11DIR=""
+  use_X11="no"
 fi
 AC_SUBST(NO_X)
+AC_SUBST(RX11DIR)
 
 ### Miscellaneous.
 
@@ -766,7 +771,6 @@ AC_OUTPUT(Makeconf
   etc/Makeconf-tests  
   src/Makefile
   src/appl/Makefile
-  src/gnome/Makefile
   src/include/Makefile
   src/library/Makefile
   src/library/base/DESCRIPTION
@@ -817,6 +821,7 @@ AC_OUTPUT(Makeconf
   src/scripts/help.pretty
   src/unix/Makefile
   src/unix/X11/Makefile
+  src/unix/gnome/Makefile
   tests/Makefile
   tests/Examples/Makefile
   tools/Makefile
@@ -853,6 +858,7 @@ R is now configured for ${host}
   Installation directory:   ${prefix}
   C compiler:               ${CC} ${R_XTRA_CFLAGS} ${CFLAGS}
   FORTRAN compiler:         ${FORT}
+  X11 support:              ${use_X11}
   Gnome support:            ${use_gnome}
 ])
 

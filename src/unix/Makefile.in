@@ -22,6 +22,8 @@ DISTFILES = \
 	Makefile.in PSPAPER $(SOURCES) $(HEADERS) \
 	hpdlfcn.c system.txt
 
+SUBDIRS = @RX11DIR@ @RGNOMEDIR@
+
 LIB = libunix.a
 
 all: Makefile Makedeps R
@@ -43,7 +45,9 @@ Makedeps: Makefile $(DEPENDS)
 R: Makefile
 	@$(MAKE) Makedeps
 	@$(MAKE) $(LIB)
-@NO_X@	@(cd X11 && $(MAKE))
+@NO_X@	@for d in  $(SUBDIRS); do \
+@NO_X@	  (cd $${d} && $(MAKE) all) || exit 1; \
+@NO_X@	done
 
 ../include/Rversion.h:
 	(cd ../include; $(MAKE) $(@F))
@@ -58,10 +62,14 @@ mostlyclean: clean
 clean:
 	@echo "cleaning in $(subdir)"
 	@-rm -f Makedeps *.d *.o *.a
-	@(cd X11 && $(MAKE) clean)
+@NO_X@	@for d in  $(SUBDIRS); do \
+@NO_X@	  (cd $${d} && $(MAKE) clean) || exit 1; \
+@NO_X@	done
 distclean: clean
 	@-rm -f Makefile
-	@(cd X11 && $(MAKE) distclean)
+@NO_X@	@for d in  $(SUBDIRS); do \
+@NO_X@	  (cd $${d} && $(MAKE) distclean) || exit 1; \
+@NO_X@	done
 maintainer-clean: distclean
 
 distdir: $(DISTFILES)

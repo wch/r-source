@@ -31,6 +31,8 @@
 #include "Rversion.h"
 
 #include "devGNOME.h"
+int (*X11DeviceDriver)(DevDesc*, char*, double, double, double, double, int, int);
+int stub_X11DeviceDriver(DevDesc*, char*, double, double, double, double, int, int);
 
 #include "Startup.h"
 
@@ -343,6 +345,8 @@ int main(int ac, char **av)
     gtk_console_restore_history(GTK_CONSOLE(R_gtk_terminal_text), R_HistoryFile, R_HistorySize, NULL);
 
     fpu_setup(1);
+
+    X11DeviceDriver = stub_X11DeviceDriver;
 
     /* start main loop */
     mainloop();
