@@ -31,6 +31,10 @@
  *  FIXME: named-dimname printing implemented for integer arrays only
  */
 
+#ifdef HAVE_CONFIG_H
+#include <Rconfig.h>
+#endif
+
 #include "Defn.h"
 #include "Print.h"
 

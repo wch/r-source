@@ -49,6 +49,10 @@
  * a single R-vector element.  This is mainly used in gizmos like deparse.
  */
 
+#ifdef HAVE_CONFIG_H
+#include <Rconfig.h>
+#endif
+
 #include "Defn.h"
 #include "Mathlib.h"
 #include "Print.h"

@@ -5,6 +5,10 @@
 /* it seems closely related to cget(), which appears below.  But now it */
 /* doesn't. */
 
+#ifdef HAVE_CONFIG_H
+#include <Rconfig.h>
+#endif
+
 #include "Defn.h"
 
 int R_fgetc(FILE *fp)

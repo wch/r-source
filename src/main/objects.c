@@ -20,6 +20,10 @@
 /*  This module contains support for S-style generic */
 /*  functions and "class" support.  Gag, barf ...  */
 
+#ifdef HAVE_CONFIG_H
+#include <Rconfig.h>
+#endif
+
 #include "Defn.h"
 
 static SEXP GetObject(RCNTXT *cptr)

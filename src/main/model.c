@@ -25,6 +25,10 @@
  *  I knew you could. -- Mr Ro(ss)gers
  */
 
+#ifdef HAVE_CONFIG_H
+#include <Rconfig.h>
+#endif
+
 #include "Defn.h"
 
 #define WORDSIZE (8*sizeof(int))

@@ -26,6 +26,10 @@
  *  See ./format.c	 for the formatXXXX functions used below.
  */
 
+#ifdef HAVE_CONFIG_H
+#include <Rconfig.h>
+#endif
+
 #include "Print.h"
 
 static void printLogicalVector(int *x, int n, int index)

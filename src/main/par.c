@@ -37,9 +37,13 @@
  *	Query(.)	[ par(what) ]
  */
 
+#ifdef HAVE_CONFIG_H
+#include <Rconfig.h>
+#endif
+
 #include "Defn.h"
 #include "Mathlib.h"
-#include "Graphics.h" /* "GPar" structure + COMMENTS */
+#include "Graphics.h"		/* "GPar" structure + COMMENTS */
 
 
 /* par(.)'s call */

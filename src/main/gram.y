@@ -18,12 +18,17 @@
  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
-#include "IOStuff.h"/*-> Defn.h */
-#include "Fileio.h"
-#include "Parse.h"
+#ifdef HAVE_CONFIG_H
+#include <Rconfig.h>
+#endif
+
 #ifdef HAVE_ALLOCA_H
 #include <alloca.h>
 #endif
+    
+#include "IOStuff.h"		/*-> Defn.h */
+#include "Fileio.h"
+#include "Parse.h"
 
     /* Useful defines so editors don't get confused ... */
 

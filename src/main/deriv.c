@@ -23,8 +23,11 @@
  *  Maybe it is time for us to introduce mode "expression".
  */
 
-#include "Defn.h"
+#ifdef HAVE_CONFIG_H
+#include <Rconfig.h>
+#endif
 
+#include "Defn.h"
 
 static SEXP ParenSymbol;
 static SEXP PlusSymbol;

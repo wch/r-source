@@ -74,6 +74,9 @@
 /* I wonder why I didn't just do this? -- it would have been quicker than */
 /* writing this note.  I guess it needs a bit more thought ... */
 
+#ifdef HAVE_CONFIG_H
+#include <Rconfig.h>
+#endif
 
 #include "Defn.h"
 #include "Print.h"

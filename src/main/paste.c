@@ -23,6 +23,10 @@
  *  See ./format.c	 for the  format_Foo_  functions.
  */
 
+#ifdef HAVE_CONFIG_H
+#include <Rconfig.h>
+#endif
+
 #include "Defn.h"
 #include "Print.h"
 

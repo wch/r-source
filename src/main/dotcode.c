@@ -18,13 +18,17 @@
  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
-#include "Defn.h"
-#include "Mathlib.h"
+#ifdef HAVE_CONFIG_H
+#include <Rconfig.h>
+#endif
+
 #include <string.h>
 #include <stdlib.h>
 
-typedef int (*DL_FUNC)();
+#include "Defn.h"
+#include "Mathlib.h"
 
+typedef int (*DL_FUNC)();
 
 /* These are set during each call to do_dotCode() below. */
 

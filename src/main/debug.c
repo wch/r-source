@@ -16,9 +16,11 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
+#ifdef HAVE_CONFIG_H
+#include <Rconfig.h>
+#endif
 
 #include "Defn.h"
-
 
 SEXP do_debug(SEXP call, SEXP op, SEXP args, SEXP rho)
 {

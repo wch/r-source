@@ -25,6 +25,10 @@
  *
  */
 
+#ifdef HAVE_CONFIG_H
+#include <Rconfig.h>
+#endif
+
 #include "Graphics.h"
 #include "Defn.h"
 #include "Mathlib.h"		/* eg. fmax2() */

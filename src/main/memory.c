@@ -47,6 +47,10 @@
  *	setvmax.
  */
 
+#ifdef HAVE_CONFIG_H
+#include <Rconfig.h>
+#endif
+
 #include "Memory.h"
 #include "Defn.h"
 #include "Graphics.h"

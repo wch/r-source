@@ -19,13 +19,17 @@
  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
+#ifdef HAVE_CONFIG_H
+#include <Rconfig.h>
+#endif
+
+#include <stdio.h>
+#include <ctype.h>
+
 #include "Defn.h"
 #include "Graphics.h"
 #include "Error.h"
 #include "Fileio.h"
-
-#include <stdio.h>
-#include <ctype.h>
 
 #define PS_minus_default 45
 /* wrongly was 177 (plusminus);

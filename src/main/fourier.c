@@ -18,8 +18,13 @@
  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
+#ifdef HAVE_CONFIG_H
+#include <Rconfig.h>
+#endif
+
 #include "Defn.h"
 #include "FFDecl.h"
+
 /* These are the  R interface routines to the
  * plain FFT code  in ../appl/fft.c
  * NOTE: That one     ~~~~~~~~~~~~~  (and hence the code here) uses

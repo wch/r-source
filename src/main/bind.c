@@ -21,6 +21,10 @@
 
 /* Code to handle list / vector switch */
 
+#ifdef HAVE_CONFIG_H
+#include <Rconfig.h>
+#endif
+
 #include "Defn.h"
 #include "Mathlib.h"/* imax2 */
 
