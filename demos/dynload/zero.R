@@ -14,9 +14,11 @@
 ##    Correspondingly, the underlying C code does not need to extract
 ##    the function from the passed "list".
 
+file.show(file.path(R.home(), "demos", "dynload", "README"))
+file.show(file.path(R.home(), "demos", "dynload", "zero.c"))
+
 dyn.load(file.path(R.home(), "demos", "dynload",
                    paste("zero", .Platform$dynlib.ext, sep="")))
-##-- you might need to change this
 
 zero <- function(f, guesses, tol = 1e-7) {
     f.check <- function(x) {
