@@ -33,7 +33,10 @@ getGroup(fdef, recursive=FALSE)
 
 }
 \description{
-  
+ These are utility functions to support the definition and use of
+ formal methods.  Most of them will not normally be called directly by
+ the user.
+ 
 \describe{
 \item{\code{makeGeneric}:}{ 
   Makes a generic function object corresponding to the given function name.

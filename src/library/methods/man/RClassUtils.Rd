@@ -1,5 +1,6 @@
 \name{ClassUtils}
 \alias{testVirtual}
+\alias{SessionClassMetaData}
 \alias{makePrototypeFromClassDef}
 \alias{newEmptyObject}
 \alias{completeClassDefinition}
@@ -128,10 +129,13 @@ as.data.frame(x, row.names=NULL, optional=FALSE)
 
 nullSymbol()
 
-requireMethods(functions, signature, message=paste("No method defined for signature", paste(signature, collapse = ", ")))
+requireMethods(functions, signature, message)
 
 }
 \description{
+
+These are various functions to support the definition and use of
+formal classes.  Most of them are rarely suitable to be called directly.
   
 \describe{
 \item{\code{testVirtual}:}{ 
@@ -437,6 +441,8 @@ be called, resulting in less helpful error messages or (worse still) silently in
 results.
 
 }
+\item{SessionClassMetaData:}{ Contains the name of the special table in which
+    class information is cached during the session.}
 }
 }
 \keyword{programming}
