@@ -164,14 +164,6 @@ Date: Tue, 8 Feb 2000 10:03:44 +0000 (GMT)
 Subject: Compilation problems on Digital Unix 4.0c with gcc
 From: PETER_HOPFGARTNER@memc.it
 Date: Tue, 8 Feb 2000 11:07:22 +0100
-* PR# 419 *
-Subject: configure doesn't accept f77 on alpha
-From: albrecht.gebhardt@uni-klu.ac.at
-Date: Tue, 8 Feb 2000 11:08:23 +0100 (MET)
-* PR# 420 *
-Subject: extra flags for cc and f77 on alpha
-From: albrecht.gebhardt@uni-klu.ac.at
-Date: Tue, 8 Feb 2000 11:21:36 +0100 (MET)
 
 Directory:  Language
 
