@@ -57,7 +57,7 @@ w_free(int n)
     if(!w) return;
     n = imax2(n, SIGNRANK_MAX);
     for (i = n; i >= 0; i--)
-	if(w[i]) {free((void *) w[i]); w[i] = 0;}
+	if(w[i]) free((void *) w[i]);
     free((void *) w);
     w = 0;
     allocated_n = 0;
