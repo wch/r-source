@@ -19,6 +19,10 @@ NEW FEATURES
 	LGPL rather than GPL to allow dynamically loaded code to be
 	distributed under licences other than GPL.
 
+    o	postscript() and xfig() devices now make use of genuine Adobe
+	afm files, and warn if characters are used in string width or
+	height calculations that are not in the afm files.
+
     o	Configure now uses a much expanded search list for finding a
 	FORTRAN 77 compiler, and no longer disallows wrapper scripts for
 	this compiler.
@@ -42,10 +46,6 @@ BUG FIXES
 
     o	readBin() and writeBin() were not always making good use of
 	long types (such as long double) when available.
-
-    o	postscript() and xfig() devices now make use of genuine Adobe
-	afm files, and warn if characters are used in string width or
-	height calculations that are not in afm files.
 
     o	The C function fprec was not handling very small denormalized
 	numbers correctly.  This affected the way they were printed on
@@ -127,7 +127,10 @@ BUG FIXES
     o   spline(method="natural") was extrapolating incorrectly (both
 	to the left and to the right, for different reasons).  (PR#653)
 
-    o   Line clipping was incorrect for log-plots (PR#839)
+    o   Line clipping was incorrect for log-plots. (PR#839)
+
+    o   Add explicit test for rank-deficient residuals to summary.manova().
+
 
 
 		CHANGES IN R VERSION 1.2.1
