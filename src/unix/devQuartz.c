@@ -1,7 +1,7 @@
  /*
  *  R : A Computer Language for Statistical Data Analysis
  *  file devQuartz.c
- *  Copyright (C) 2002  Stefano M. Iacus and the R core team
+ *  Copyright (C) 2002-2003  Stefano M. Iacus and the R core team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -29,39 +29,17 @@
 #include <Graphics.h>
 #include <Rdevices.h>
 
-#if (defined(Macintosh) || defined(__APPLE_CC__))
-
-
-#ifdef Macintosh
-#define DEBUG 0
-#include <RCarbon.h>
-#include "RIntf.h"
-#endif
-
 #ifdef __APPLE_CC__
+
 #include <Carbon/Carbon.h>
 #include <CoreFoundation/CoreFoundation.h>
 #include <ApplicationServices/ApplicationServices.h>
-#endif
-
-
-
-#ifdef Macintosh
-#include <CFBundle.h>
-#include <Quickdraw.h>
-#endif
 
 
 #define R_RED(col)	(((col)	   )&255)
 #define R_GREEN(col)	(((col)>> 8)&255)
 #define R_BLUE(col)	(((col)>>16)&255)
 
-#ifdef Macintosh
-extern WindowPtr	Console_Window;
-extern Boolean RunningOnCarbonX(void);
-
-Boolean IsCoreGraphLoaded = false;
-#endif
 
 
    /***************************************************************************/
@@ -153,267 +131,6 @@ static void Quartz_SetLineWidth(double lwd,  NewDevDesc *dd);
 static void Quartz_SetFont(int font,  double cex, double ps,  NewDevDesc *dd);
 
 
-#ifdef Macintosh
-typedef int (*QuartzAddLinesFuncPtr)(CGContextRef c, const CGPoint points[], size_t count);
-QuartzAddLinesFuncPtr QuartzAddLines;
-
-typedef int (*QuartzBeginPathFuncPtr)(CGContextRef c);
-QuartzBeginPathFuncPtr QuartzBeginPath;
-
-typedef int (*QuartzScaleCTMFuncPtr)(CGContextRef c, float sx, float sy);
-QuartzScaleCTMFuncPtr QuartzScaleCTM;
-
-typedef int (*QuartzTranslateCTMFuncPtr)(CGContextRef c, float tx, float ty);
-QuartzTranslateCTMFuncPtr QuartzTranslateCTM;
-
-typedef int (*QuartzContextForPortFuncPtr)(CGrafPtr inPort,  CGContextRef   *outContext);
-QuartzContextForPortFuncPtr QuartzContextForPort;
-
-typedef int (*QuartzSetLineWidthFuncPtr)(CGContextRef c, float width);
-QuartzSetLineWidthFuncPtr QuartzSetLineWidth;
-
-typedef int (*QuartzSetLineCapFuncPtr)(CGContextRef c, CGLineCap cap);
-QuartzSetLineCapFuncPtr QuartzSetLineCap;
-
-typedef int (*QuartzSetLineJoinFuncPtr)(CGContextRef c, CGLineJoin join);
-QuartzSetLineJoinFuncPtr QuartzSetLineJoin;
-
-typedef int (*QuartzSetRGBFillFuncPtr)(CGContextRef c,  float r, float g, float b, float alpha);
-QuartzSetRGBFillFuncPtr QuartzSetRGBFill;
-
-typedef int (*QuartzSetRGBStrokeFuncPtr)(CGContextRef ctx, float r, float g, float b, float alpha);
-QuartzSetRGBStrokeFuncPtr QuartzSetRGBStroke;
-
-typedef int (*QuartzStrokePathFuncPtr)(CGContextRef c);
-QuartzStrokePathFuncPtr QuartzStrokePath;
-
-typedef int (*QuartzFlushFuncPtr)(CGContextRef c);
-QuartzFlushFuncPtr QuartzFlush;
-
-typedef int (*QuartzReleaseFuncPtr)(CGContextRef c);
-QuartzReleaseFuncPtr QuartzRelease;
-
-typedef int (*QuartzFillRectFuncPtr)(CGContextRef ctx, CGRect rect);
-QuartzFillRectFuncPtr QuartzFillRect;
-
-typedef int (*QuartzFillPathFuncPtr)(CGContextRef ctx);
-QuartzFillPathFuncPtr QuartzFillPath;
-
-typedef int (*QuartzSyncFuncPtr)(CGContextRef ctx);
-QuartzSyncFuncPtr QuartzSync;
-
-typedef int (*QuartzAddArcFuncPtr)(CGContextRef ctx, float x, float y,  float radius, float startAngle, float endAngle, int clockwise);
-QuartzAddArcFuncPtr QuartzAddArc;
-
-typedef int (*QuartzClosePathFuncPtr)(CGContextRef ctx);
-QuartzClosePathFuncPtr QuartzClosePath;
-
-typedef int (*QuartzSetLineDashFuncPtr)(CGContextRef ctx, float phase, const float lengths[], size_t count);
-QuartzSetLineDashFuncPtr QuartzSetLineDash;
-
-typedef int (*QuartzShowTextAtPointFuncPtr)(CGContextRef c, float x, float y, const char *string, size_t length);
-QuartzShowTextAtPointFuncPtr QuartzShowTextAtPoint;
-
-typedef int (*QuartzSelectFontFuncPtr)(CGContextRef c, const char *name, float size, CGTextEncoding textEncoding);
-QuartzSelectFontFuncPtr QuartzSelectFont;
-
-typedef int (*QuartzSetTextDrawingModeFuncPtr)(CGContextRef c, CGTextDrawingMode mode);
-QuartzSetTextDrawingModeFuncPtr QuartzSetTextDrawingMode;
-
-typedef int (*QuartzSaveGStateFuncPtr)(CGContextRef ctx);
-QuartzSaveGStateFuncPtr QuartzSaveGState;
-
-typedef int (*QuartzRestoreGStateFuncPtr)(CGContextRef ctx);
-QuartzRestoreGStateFuncPtr QuartzRestoreGState;
-
-typedef int (*QuartzRotateCTMFuncPtr)(CGContextRef c, float angle);
-QuartzRotateCTMFuncPtr QuartzRotateCTM;
-
-typedef CGPoint (*QuartzGetTextPositionFuncPtr)(CGContextRef c);
-QuartzGetTextPositionFuncPtr QuartzGetTextPosition;
-
-typedef void (*QuartzAntialiasFuncPtr)(CGContextRef c, int shouldAntialias);
-QuartzAntialiasFuncPtr QuartzAntialias;
-
-typedef void (*QuartzStrokeRectFuncPtr)(CGContextRef ctx, CGRect rect);
-QuartzStrokeRectFuncPtr QuartzStrokeRect;
-
-
-
-
-
-extern OSStatus LoadFrameworkBundle(CFStringRef framework, CFBundleRef *bundlePtr);
-
-Boolean CanInitCoreGraphics(void);
-
-Boolean CanInitCoreGraphics(void)
-{
-	CFBundleRef 		sysBundle;
-	OSStatus 			err;
-		
-	if ( ! RunningOnCarbonX() )
-		return(false);
-	
-	err = LoadFrameworkBundle( CFSTR("ApplicationServices.framework"), &sysBundle );
-	if (err != noErr) return(false);
-	
-	/*	Load the Mach-O function pointers for the routines we will be using.	
-	*/
-	
-   if(IsCoreGraphLoaded)
-    return(true);
-
-    QuartzBeginPath = (QuartzBeginPathFuncPtr)
-     CFBundleGetFunctionPointerForName(sysBundle, CFSTR("CGContextBeginPath"));
-
-    QuartzAddLines = (QuartzAddLinesFuncPtr)
-     CFBundleGetFunctionPointerForName(sysBundle, CFSTR("CGContextAddLines"));
-
-
-    QuartzScaleCTM = (QuartzScaleCTMFuncPtr)
-     CFBundleGetFunctionPointerForName(sysBundle, CFSTR("CGContextScaleCTM"));
-
-
-    QuartzTranslateCTM = (QuartzTranslateCTMFuncPtr)
-     CFBundleGetFunctionPointerForName(sysBundle, CFSTR("CGContextTranslateCTM"));
-
-
-    QuartzContextForPort = (QuartzContextForPortFuncPtr)
-     CFBundleGetFunctionPointerForName(sysBundle, CFSTR("CreateCGContextForPort"));
-
-
-    QuartzSetLineWidth = (QuartzSetLineWidthFuncPtr)
-     CFBundleGetFunctionPointerForName(sysBundle, CFSTR("CGContextSetLineWidth"));
-
-    QuartzSetLineCap = (QuartzSetLineCapFuncPtr)
-     CFBundleGetFunctionPointerForName(sysBundle, CFSTR("CGContextSetLineCap"));
-
-    QuartzSetLineJoin = (QuartzSetLineJoinFuncPtr)
-     CFBundleGetFunctionPointerForName(sysBundle, CFSTR("CGContextSetLineJoin"));
-
-    QuartzSetRGBFill = (QuartzSetRGBFillFuncPtr)
-     CFBundleGetFunctionPointerForName(sysBundle, CFSTR("CGContextSetRGBFillColor"));
-
-    QuartzSetRGBStroke = (QuartzSetRGBStrokeFuncPtr)
-     CFBundleGetFunctionPointerForName(sysBundle, CFSTR("CGContextSetRGBStrokeColor"));
-
-    QuartzStrokePath = (QuartzStrokePathFuncPtr)
-     CFBundleGetFunctionPointerForName(sysBundle, CFSTR("CGContextStrokePath"));
-
-    QuartzFlush = (QuartzFlushFuncPtr)
-     CFBundleGetFunctionPointerForName(sysBundle, CFSTR("CGContextFlush"));
-
-    QuartzRelease = (QuartzReleaseFuncPtr)
-     CFBundleGetFunctionPointerForName(sysBundle, CFSTR("CGContextRelease"));
-
-    QuartzFillRect = (QuartzFillRectFuncPtr)
-     CFBundleGetFunctionPointerForName(sysBundle, CFSTR("CGContextFillRect"));
-
-    QuartzFillPath = (QuartzFillPathFuncPtr)
-     CFBundleGetFunctionPointerForName(sysBundle, CFSTR("CGContextFillPath"));
-
-    QuartzSync = (QuartzSyncFuncPtr)
-     CFBundleGetFunctionPointerForName(sysBundle, CFSTR("CGContextSynchronize"));
-     
-    QuartzAddArc = (QuartzAddArcFuncPtr)
-     CFBundleGetFunctionPointerForName(sysBundle, CFSTR("CGContextAddArc"));
-    
-    QuartzClosePath = (QuartzClosePathFuncPtr)
-     CFBundleGetFunctionPointerForName(sysBundle, CFSTR("CGContextClosePath"));
-
-    QuartzSetLineDash = (QuartzSetLineDashFuncPtr)
-     CFBundleGetFunctionPointerForName(sysBundle, CFSTR("CGContextSetLineDash"));
-
-
-    QuartzShowTextAtPoint = (QuartzShowTextAtPointFuncPtr)
-     CFBundleGetFunctionPointerForName(sysBundle, CFSTR("CGContextShowTextAtPoint"));
-
-
-    QuartzSelectFont = (QuartzSelectFontFuncPtr)
-     CFBundleGetFunctionPointerForName(sysBundle, CFSTR("CGContextSelectFont"));
-
-    QuartzSetTextDrawingMode = (QuartzSetTextDrawingModeFuncPtr)
-     CFBundleGetFunctionPointerForName(sysBundle, CFSTR("CGContextSetTextDrawingMode"));
-
-
-    QuartzSaveGState = (QuartzSaveGStateFuncPtr)
-     CFBundleGetFunctionPointerForName(sysBundle, CFSTR("CGContextSaveGState"));
-
-
-    QuartzRestoreGState = (QuartzRestoreGStateFuncPtr)
-     CFBundleGetFunctionPointerForName(sysBundle, CFSTR("CGContextRestoreGState"));
-
-
-    QuartzRotateCTM = (QuartzRotateCTMFuncPtr)
-     CFBundleGetFunctionPointerForName(sysBundle, CFSTR("CGContextRotateCTM"));
-
-
-   QuartzGetTextPosition = (QuartzGetTextPositionFuncPtr)
-     CFBundleGetFunctionPointerForName(sysBundle, CFSTR("CGContextGetTextPosition"));
-     
-     
-   QuartzAntialias = (QuartzAntialiasFuncPtr)
-     CFBundleGetFunctionPointerForName(sysBundle, CFSTR("CGContextSetShouldAntialias"));
-     
-   QuartzStrokeRect = (QuartzStrokeRectFuncPtr)
-     CFBundleGetFunctionPointerForName(sysBundle, CFSTR("CGContextStrokeRect"));
-     
-     
-
-	if ( (QuartzAddLines == nil) || (QuartzBeginPath == nil) || (QuartzScaleCTM == nil) || (QuartzTranslateCTM == nil) || 
-	 (QuartzContextForPort == nil) || (QuartzSetLineWidth == nil) || (QuartzSetLineCap == nil) || (QuartzSetLineJoin == nil) || 
-	 (QuartzSetRGBFill == nil) || (QuartzSetRGBStroke == nil) || (QuartzStrokePath == nil) || (QuartzFlush == nil) || (QuartzRelease == nil) ||
-	 (QuartzFillRect == nil) ||  (QuartzFillPath == nil) ||  (QuartzSync == nil) ||  (QuartzAddArc == nil) ||  (QuartzClosePath == nil) ||
-	   (QuartzSetLineDash == nil) || (QuartzShowTextAtPoint == nil)  || (QuartzSelectFont == nil)  || (QuartzSetTextDrawingMode == nil) 
-	   || (QuartzSaveGState == nil) || (QuartzRestoreGState == nil) || (QuartzRotateCTM == nil) || (QuartzGetTextPosition == nil) 
-	   || (QuartzAntialias == nil)    || (QuartzStrokeRect == nil))
-		return(false);
-	
-	IsCoreGraphLoaded = true;
-
-
-	return(IsCoreGraphLoaded);	
-}
-#endif /* Macintosh */
-
-#ifdef __APPLE_CC__ /* We directly pcik from Quartz's API*/
-
-/* These is from CoreGraphics/CGContext.h */
-void	(*QuartzBeginPath)(CGContextRef) = CGContextBeginPath;
-void	(*QuartzAddLines)(CGContextRef c, const CGPoint points[], size_t count) = CGContextAddLines;
-void	(*QuartzScaleCTM)(CGContextRef c, float sx, float sy) = CGContextScaleCTM;
-void	(*QuartzTranslateCTM)(CGContextRef c, float tx, float ty) = CGContextTranslateCTM;
-void	(*QuartzSetLineWidth)(CGContextRef c, float width) = CGContextSetLineWidth;
-void	(*QuartzSetLineCap)(CGContextRef c, CGLineCap cap) = CGContextSetLineCap;
-void	(*QuartzSetLineJoin)(CGContextRef c, CGLineJoin join) = CGContextSetLineJoin;
-void	(*QuartzSetRGBFill)(CGContextRef c, float red, float green, float blue, float alpha) = CGContextSetRGBFillColor;
-void	(*QuartzSetRGBStroke)(CGContextRef c, float red, float green, float blue, float alpha) = CGContextSetRGBStrokeColor;
-void	(*QuartzStrokePath)(CGContextRef c) = CGContextStrokePath;
-void	(*QuartzFlush)(CGContextRef c) = CGContextFlush;
-void	(*QuartzRelease)(CGContextRef c) = CGContextRelease;
-void	(*QuartzFillRect)(CGContextRef c, CGRect rect) = CGContextFillRect;
-void	(*QuartzFillPath)(CGContextRef c) = CGContextFillPath;
-void	(*QuartzSync)(CGContextRef c) = CGContextSynchronize;
-void	(*QuartzAddArc)(CGContextRef c, float x, float y, float radius, float startAngle, float endAngle, int clockwise) = CGContextAddArc;
-void	(*QuartzClosePath)(CGContextRef c) = CGContextClosePath;
-void	(*QuartzSetLineDash)(CGContextRef c, float phase, const float lengths[], size_t count) = CGContextSetLineDash;
-void	(*QuartzShowTextAtPoint)(CGContextRef c, float x, float y, const char *string, size_t length) = CGContextShowTextAtPoint;
-void	(*QuartzSelectFont)(CGContextRef c, const char *name, float size, CGTextEncoding textEncoding) = CGContextSelectFont;
-void	(*QuartzSetTextDrawingMode)(CGContextRef c, CGTextDrawingMode mode) = CGContextSetTextDrawingMode;
-void	(*QuartzSaveGState)(CGContextRef c) = CGContextSaveGState;
-void	(*QuartzRestoreGState)(CGContextRef c) = CGContextRestoreGState;
-void	(*QuartzRotateCTM)(CGContextRef c, float angle) = CGContextRotateCTM;
-CGPoint	(*QuartzGetTextPosition)(CGContextRef c) = CGContextGetTextPosition;
-void	(*QuartzAntialias)(CGContextRef c, int shouldAntialias) = CGContextSetShouldAntialias;
-void	(*QuartzStrokeRect)(CGContextRef ctx, CGRect rect) = CGContextStrokeRect;
-
-
-
-/* This is from ApplicationServices/ApplicationServices.h */
-OSStatus (*QuartzContextForPort)( CGrafPtr inPort, CGContextRef *outContext) = CreateCGContextForPort;
-
-#endif /* __APPLE_CC__ */
-
 
 static SEXP gcall;
 static char *SaveString(SEXP sxp, int offset)
@@ -433,7 +150,7 @@ void HaveFlush(CGContextRef c, Rboolean flush);
 void HaveFlush(CGContextRef c, Rboolean flush){
 
   if(flush)
-   QuartzFlush(c);
+   CGContextFlush(c);
 
 /*  Flushing graphics at every graphic call
     is really slow. It should be something
@@ -441,7 +158,7 @@ void HaveFlush(CGContextRef c, Rboolean flush){
     better way to do that!
     
   if ((QuartzCount++ % 10) == 0) {
-    QuartzFlush(c);
+    CGContextFlush(c);
 	QuartzCount = 1 ;
     }
 */
@@ -609,21 +326,21 @@ Rboolean innerQuartzDeviceDriver(NewDevDesc *dd, char *display,
     else
      xd->family = NULL;
     
-    err = QuartzContextForPort(GetWindowPort(xd->window), &xd->context);
+    err = CreateCGContextForPort(GetWindowPort(xd->window), &xd->context);
  
     /*  Translate to QuickDraw coordinate system */
     GetPortBounds(GetWindowPort(xd->window), &rect);
-    QuartzTranslateCTM(xd->context,0, (float)(rect.bottom - rect.top));
+    CGContextTranslateCTM(xd->context,0, (float)(rect.bottom - rect.top));
     
     
 
 /* Be aware that by performing a negative scale in the following line of
    code, your text will also be flipped
 */
-    QuartzScaleCTM(xd->context, 1, -1);
+    CGContextScaleCTM(xd->context, 1, -1);
 
   /* We apply here Antialiasing if necessary */
-    QuartzAntialias(xd->context, xd->Antialias);
+    CGContextSetShouldAntialias(xd->context, xd->Antialias);
  
 /* This scale factor is needed in MetricInfo */
     xd->xscale = width/72.0;
@@ -632,11 +349,6 @@ Rboolean innerQuartzDeviceDriver(NewDevDesc *dd, char *display,
     dd->deviceSpecific = (void *) xd;
     dd->displayListOn = TRUE;
 
-
-
-#ifdef Macintosh
-    SelectWindow (Console_Window);
-#endif
     return 1;
 }
 
@@ -652,13 +364,6 @@ static Rboolean	Quartz_Open(NewDevDesc *dd, QuartzDesc *xd, char *dsp,
     Str255		Title;
 	char		buffer[250];
 	int 		devnum = devNumber((DevDesc *)dd);
-
-#ifdef Macintosh
-    if(!CanInitCoreGraphics()){
-     Rprintf("\nCoreGraphics not available\n");
-     return(FALSE);
-     }
-#endif
     
     xd->windowWidth = wid*72;
     xd->windowHeight = hgt*72;
@@ -701,7 +406,7 @@ static void 	Quartz_Close(NewDevDesc *dd)
   if(xd->family)
    free(xd->family);
  
-  QuartzRelease(xd->context);
+  CGContextRelease(xd->context);
      
   free(xd);
 }
@@ -757,7 +462,7 @@ static void 	Quartz_NewPage(int fill, double gamma, NewDevDesc *dd)
     
     Quartz_SetFill(fill, gamma, dd);
    
-    QuartzFillRect(xd->context, area);
+    CGContextFillRect(xd->context, area);
 
     HaveFlush( xd->context, xd->Autorefresh );
 }
@@ -774,22 +479,22 @@ static double 	Quartz_StrWidth(char *str, int font,
     QuartzDesc *xd = (QuartzDesc*)dd->deviceSpecific;
     CGPoint position;
 
-    QuartzSaveGState( xd->context );
-    QuartzTranslateCTM( xd->context, 0, 0 );
+    CGContextSaveGState( xd->context );
+    CGContextTranslateCTM( xd->context, 0, 0 );
 
-    QuartzScaleCTM( xd->context, -1, 1);
+    CGContextScaleCTM( xd->context, -1, 1);
   
-    QuartzRotateCTM( xd->context, -1.0 * 3.1416);
+    CGContextRotateCTM( xd->context, -1.0 * 3.1416);
   
-    QuartzSetTextDrawingMode( xd->context, kCGTextInvisible );
+    CGContextSetTextDrawingMode( xd->context, kCGTextInvisible );
     
     Quartz_SetFont(font, cex,  ps, dd);
 
-    QuartzShowTextAtPoint( xd->context, 0, 0, str, strlen(str) );
+    CGContextShowTextAtPoint( xd->context, 0, 0, str, strlen(str) );
       	        
-    position = QuartzGetTextPosition(xd->context);    	        
+    position = CGContextGetTextPosition(xd->context);    	        
     
-    QuartzRestoreGState( xd->context );
+    CGContextRestoreGState( xd->context );
     
     return(position.x); 
 }
@@ -803,14 +508,14 @@ static void Quartz_SetFont(int font,  double cex, double ps, NewDevDesc *dd)
 	switch(font){
     
      case 5:
-      QuartzSelectFont( xd->context, "Symbol", size, kCGEncodingMacRoman);
+      CGContextSelectFont( xd->context, "Symbol", size, kCGEncodingMacRoman);
      break;
      
      default:
       if(xd->family)
-       QuartzSelectFont( xd->context, xd->family, size, kCGEncodingMacRoman);
+       CGContextSelectFont( xd->context, xd->family, size, kCGEncodingMacRoman);
       else
-       QuartzSelectFont( xd->context, "Helvetica", size, kCGEncodingMacRoman); 
+       CGContextSelectFont( xd->context, "Helvetica", size, kCGEncodingMacRoman); 
      break;
     }
 
@@ -823,24 +528,24 @@ static void 	Quartz_Text(double x, double y, char *str,
  
     QuartzDesc *xd = (QuartzDesc*)dd->deviceSpecific;   
 
-    QuartzSaveGState( xd->context );
-    QuartzTranslateCTM( xd->context, x, y );
+    CGContextSaveGState( xd->context );
+    CGContextTranslateCTM( xd->context, x, y );
 
-    QuartzScaleCTM(xd->context, -1, 1);
+    CGContextScaleCTM(xd->context, -1, 1);
   
-    QuartzRotateCTM( xd->context, (-1.0  + 2*rot/360)  * 3.1416);
+    CGContextRotateCTM( xd->context, (-1.0  + 2*rot/360)  * 3.1416);
 
     Quartz_SetStroke( col, gamma, dd);
 
-    QuartzSetTextDrawingMode( xd->context, kCGTextFill );
+    CGContextSetTextDrawingMode( xd->context, kCGTextFill );
     Quartz_SetFill(col, gamma, dd);
     Quartz_SetFont(font, cex,  ps, dd);
     
-    QuartzShowTextAtPoint( xd->context, 0, 0, str, strlen(str) );
+    CGContextShowTextAtPoint( xd->context, 0, 0, str, strlen(str) );
       	           
     HaveFlush( xd->context, xd->Autorefresh );
 
-    QuartzRestoreGState( xd->context );
+    CGContextRestoreGState( xd->context );
 }
 
 
@@ -862,20 +567,20 @@ static void 	Quartz_Rect(double x0, double y0, double x1, double y1,
     rect.size = size;
     rect.origin = origin;
 
-    QuartzSaveGState( xd->context );
+    CGContextSaveGState( xd->context );
 
    	Quartz_SetLineWidth(lwd, dd);
     Quartz_SetLineDash(lty, dd);
     
     Quartz_SetFill( fill, gamma, dd);
-    QuartzFillRect(xd->context, rect);  
+    CGContextFillRect(xd->context, rect);  
 	
 	Quartz_SetStroke( col, gamma, dd);
-    QuartzStrokeRect(xd->context, rect);  
+    CGContextStrokeRect(xd->context, rect);  
 
     
     HaveFlush( xd->context, xd->Autorefresh );
-    QuartzRestoreGState( xd->context );
+    CGContextRestoreGState( xd->context );
 
 
 }
@@ -885,26 +590,26 @@ static void 	Quartz_Circle(double x, double y, double r, int col,
 {
     QuartzDesc *xd = (QuartzDesc*)dd->deviceSpecific;
   
-    QuartzSaveGState( xd->context );
+    CGContextSaveGState( xd->context );
   
   
-    QuartzBeginPath( xd->context );
+    CGContextBeginPath( xd->context );
     
     Quartz_SetLineWidth(lwd, dd);
     Quartz_SetLineDash(lty, dd);
     
-	QuartzAddArc( xd->context, (float)x , (float)y, (float)r, 3.141592654 * 2.0, 0.0, 0);
+	CGContextAddArc( xd->context, (float)x , (float)y, (float)r, 3.141592654 * 2.0, 0.0, 0);
  	Quartz_SetFill( fill, gamma, dd);
-	QuartzFillPath( xd->context );
+	CGContextFillPath( xd->context );
     
     Quartz_SetStroke( col, gamma, dd);
-	QuartzAddArc( xd->context, (float)x , (float)y, (float)r, 3.141592654 * 2.0, 0.0, 0);
-    QuartzStrokePath( xd->context );
+	CGContextAddArc( xd->context, (float)x , (float)y, (float)r, 3.141592654 * 2.0, 0.0, 0);
+    CGContextStrokePath( xd->context );
     
     
     HaveFlush( xd->context, xd->Autorefresh );
 
-    QuartzRestoreGState( xd->context );
+    CGContextRestoreGState( xd->context );
 
 }
 
@@ -916,10 +621,10 @@ static void 	Quartz_Line(double x1, double y1, double x2, double y2,
     CGPoint lines[ 2 ];
     Rect rect;
 
-    QuartzSaveGState( xd->context );
+    CGContextSaveGState( xd->context );
     
     
-    QuartzBeginPath( xd->context );
+    CGContextBeginPath( xd->context );
      
     lines[0].x = (float)x1;
     lines[0].y = (float)y1;
@@ -930,15 +635,15 @@ static void 	Quartz_Line(double x1, double y1, double x2, double y2,
  	Quartz_SetLineWidth(lwd,  dd);
     Quartz_SetLineDash(lty, dd);
 
- 	QuartzAddLines( xd->context, &lines[0], 2 );
+ 	CGContextAddLines( xd->context, &lines[0], 2 );
  
  	Quartz_SetStroke( col, gamma,  dd);
   
-    QuartzStrokePath( xd->context);
+    CGContextStrokePath( xd->context);
         
     HaveFlush( xd->context, xd->Autorefresh );
     
-    QuartzRestoreGState( xd->context );
+    CGContextRestoreGState( xd->context );
 
 }
 
@@ -962,18 +667,18 @@ static void 	Quartz_Polyline(int n, double *x, double *y, int col,
 	 }
 
 
-     QuartzSaveGState( xd->context );
+     CGContextSaveGState( xd->context );
 
   	 Quartz_SetLineWidth(lwd,  dd);
      Quartz_SetLineDash(lty,  dd);
 
-	 QuartzBeginPath( xd->context );
-	 QuartzAddLines( xd->context, &lines[0], n );
+	 CGContextBeginPath( xd->context );
+	 CGContextAddLines( xd->context, &lines[0], n );
 	 Quartz_SetStroke( col, gamma, dd);
-     QuartzStrokePath( xd->context );
+     CGContextStrokePath( xd->context );
 
      HaveFlush( xd->context, xd->Autorefresh );
-     QuartzRestoreGState( xd->context );
+     CGContextRestoreGState( xd->context );
 
 }
 
@@ -1008,7 +713,7 @@ static void Quartz_SetLineDash(int lty, NewDevDesc *dd)
 	if(lty <2)
 	 return;
 	 
-    QuartzSetLineDash(xd->context, 0, dash[lty-1], dashn[lty-1] );
+    CGContextSetLineDash(xd->context, 0, dash[lty-1], dashn[lty-1] );
     
 }
 
@@ -1022,7 +727,7 @@ static void Quartz_SetLineWidth(double lwd, NewDevDesc *dd)
  	xd->lineWidth = lwd;
 
 	 	
-    QuartzSetLineWidth( xd->context, lwd );
+    CGContextSetLineWidth( xd->context, lwd );
 
 }
 
@@ -1038,7 +743,7 @@ static void Quartz_SetStroke(int color, double gamma, NewDevDesc *dd)
 	if(color == NA_INTEGER)
 	 alpha = 0.0;
 	 
-    QuartzSetRGBStroke(xd->context, (float)R_RED(color)/255.0, (float)R_GREEN(color)/255.0, (float)R_BLUE(color)/255.0, alpha);
+    CGContextSetRGBStrokeColor(xd->context, (float)R_RED(color)/255.0, (float)R_GREEN(color)/255.0, (float)R_BLUE(color)/255.0, alpha);
     
 }
 
@@ -1052,7 +757,7 @@ static void Quartz_SetFill(int fill, double gamma, NewDevDesc *dd)
  	if(fill == NA_INTEGER)
  	 alpha = 0.0;
  	 
-    QuartzSetRGBFill( xd->context, (float)R_RED(fill)/255.0, (float)R_GREEN(fill)/255.0, (float)R_BLUE(fill)/255.0, alpha);
+    CGContextSetRGBFillColor( xd->context, (float)R_RED(fill)/255.0, (float)R_GREEN(fill)/255.0, (float)R_BLUE(fill)/255.0, alpha);
 
 }
 
@@ -1064,10 +769,10 @@ static void 	Quartz_Polygon(int n, double *x, double *y, int col, int fill,
    CGPoint *lines;
 
 
-   QuartzSaveGState( xd->context );
+   CGContextSaveGState( xd->context );
    
    
-   QuartzBeginPath( xd->context );
+   CGContextBeginPath( xd->context );
    Quartz_SetLineWidth(lwd, dd);
    Quartz_SetLineDash(lty,  dd);
 
@@ -1084,17 +789,17 @@ static void 	Quartz_Polygon(int n, double *x, double *y, int col, int fill,
 	lines[n].x = (float)x[0];
 	lines[n].y = (float)y[0];
 
-  	QuartzAddLines( xd->context, &lines[0], n+1 );
+  	CGContextAddLines( xd->context, &lines[0], n+1 );
  	Quartz_SetFill( fill, gamma, dd);
-	QuartzFillPath( xd->context );
+	CGContextFillPath( xd->context );
 
-	QuartzAddLines( xd->context, &lines[0], n+1 );
+	CGContextAddLines( xd->context, &lines[0], n+1 );
     Quartz_SetStroke( col, gamma,  dd);
-    QuartzStrokePath( xd->context);
+    CGContextStrokePath( xd->context);
     
     HaveFlush( xd->context, xd->Autorefresh );
     
-    QuartzRestoreGState( xd->context );
+    CGContextRestoreGState( xd->context );
 
 }
 
@@ -1151,6 +856,6 @@ SEXP do_Quartz(SEXP call, SEXP op, SEXP args, SEXP env)
 	warning("Quartz device not available on this platform\n");    
     return R_NilValue;
 }
-#endif  /* !(defined(Macintosh) && !defined(__APPLE_CC__)) */
+#endif  /* __APPLE_CC__ */
 
 #endif /* __QUARTZ_DEVICE__ */
