@@ -80,6 +80,10 @@ none
 
 Directory:  Graphics
 
+* PR# 726 *
+Subject: par(las=.)  gives wrong "adj" for mtext()
+From: Martin Maechler <maechler@stat.math.ethz.ch>
+Date: Tue, 7 Nov 2000 13:03:58 +0100
 * PR# 693 *
 Subject:  Bug report
 From: "Amaratunga, Rohith" <Rohith.Amaratunga@dsto.defence.gov.au>
@@ -121,10 +125,15 @@ Date: Fri, 7 Jul 2000 12:23:44 +0200 (MET DST)
 
 Directory:  Language
 
-* PR# 698 *
-Subject:  print problem with data frames 
-From: J.C.Rougier@durham.ac.uk
-Date: Mon, 16 Oct 2000 14:01:43 +0100 (BST)
+* PR# 731 *
+Subject: substitute(x$y)) corrupts 'y' component
+From: "Charles C. Berry" <cberry@tajo.ucsd.edu>
+Date: Wed, 08 Nov 2000 11:01:48 -0800
+* PR# 587 *
+Subject: dim(a <- ...) sets invisible flag erronously
+From: Martin Maechler <maechler@stat.math.ethz.ch>
+Date: Fri, 30 Jun 2000 20:15:59 +0200 (MET DST)
+--Not specific to dim: R differs from S for most functions here.
 * PR# 412 *
 Subject: anomalies with call objects
 From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
@@ -133,16 +142,6 @@ Date: 06 Feb 2000 01:18:50 +0100
 Subject: convolution bug
 From: wsimpson@gcal.ac.uk
 Date: Fri, 28 Jan 2000 11:17:36 +0100 (MET)
-* PR# 642 *
-Subject:  Method dispatch fails for autoloaded methods 
-From: maechler@stat.math.ethz.ch
-Date: Thu, 24 Aug 2000 17:09:09 +0200
---fixed for next (1.2) R version
-* PR# 587 *
-Subject: dim(a <- ...) sets invisible flag erronously
-From: Martin Maechler <maechler@stat.math.ethz.ch>
-Date: Fri, 30 Jun 2000 20:15:59 +0200 (MET DST)
---Not specific to dim: R differs from S for most functions here.
 * PR# 669 *
 Subject: Bug(s) w/ rbind.data.frame(); fix also read.table(*, as.is = TRUE) ?
 From: Martin Maechler <maechler@stat.math.ethz.ch>
@@ -152,6 +151,11 @@ Date: Mon, 25 Sep 2000 10:17:15 +0200
 Subject: unlisting a list with names components
 From: Peter Perkins <pperkins@ucsd.edu>
 Date: Fri, 25 Aug 2000 23:07:47 -0700
+* PR# 642 *
+Subject:  Method dispatch fails for autoloaded methods 
+From: maechler@stat.math.ethz.ch
+Date: Thu, 24 Aug 2000 17:09:09 +0200
+--fixed for next (1.2) R version
 * PR# 694 *
 Subject:  syntax confusion with function/non-function objects 
 From: J.C.Rougier@durham.ac.uk
@@ -160,6 +164,14 @@ Date: Fri, 13 Oct 2000 12:07:41 +0100 (BST)
 Subject: all.equal.list() sometimes fails with unnamed and named components
 From: "Charles C. Berry" <cberry@tajo.ucsd.edu>
 Date: Fri, 29 Sep 2000 14:20:47 -0700 (PDT)
+* PR# 715 *
+Subject: Printing list elements w/attributes
+From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
+Date: 31 Oct 2000 12:15:09 +0100
+* PR# 698 *
+Subject:  print problem with data frames 
+From: J.C.Rougier@durham.ac.uk
+Date: Mon, 16 Oct 2000 14:01:43 +0100 (BST)
 
 Directory:  Low-level
 
@@ -211,11 +223,10 @@ Date: Tue, 14 Mar 2000 10:32:43 +0100 (MET)
 
 Directory:  System-specific
 
-* PR# 672 *
-Subject: R 1.1.0: scan
-From: Peter Kleiweg <kleiweg@let.rug.nl>
-Date: Wed, 27 Sep 2000 11:45:34 +0200 (CEST)
---HP-UX specific bug
+* PR# 732 *
+Subject: R with redhat 7
+From: hyu@stats.uwo.ca
+Date: Wed, 8 Nov 2000 22:32:48 +0100 (MET)
 * PR# 521 *
 Subject: akima core dumps on loading
 From: santini@dsi.unimi.it
@@ -236,11 +247,6 @@ Subject: acepack, akima and tripack will not load
 From: mallen@tntech.edu
 Date: Thu, 4 May 2000 19:18:59 +0200 (MET DST)
 --related to PR#521: probably compiler-specific
-* PR# 592 *
-Subject: tseries bug
-From: przemat@itti.com.pl
-Date: Tue, 4 Jul 2000 14:52:17 +0200 (MET DST)
---Still broken?
 * PR# 547 *
 Subject: system(.., ignore.stderr = TRUE)  problem on Solaris
 From: Martin Maechler <maechler@stat.math.ethz.ch>
@@ -252,6 +258,16 @@ Subject: eigen broken on AIX with R-devel?
 From: Thomas J Vogels <tov@ece.cmu.edu>
 Date: 08 May 2000 12:01:04 -0400
 --AIX, probably compiler-specific
+* PR# 672 *
+Subject: R 1.1.0: scan
+From: Peter Kleiweg <kleiweg@let.rug.nl>
+Date: Wed, 27 Sep 2000 11:45:34 +0200 (CEST)
+--HP-UX specific bug
+* PR# 592 *
+Subject: tseries bug
+From: przemat@itti.com.pl
+Date: Tue, 4 Jul 2000 14:52:17 +0200 (MET DST)
+--Still broken?
 
 Directory:  TooMuchAtOnce
 
@@ -263,85 +279,4 @@ none
 
 Directory:  incoming
 
-* PR# 732 *
-Subject: R with redhat 7
-From: hyu@stats.uwo.ca
-Date: Wed, 8 Nov 2000 22:32:48 +0100 (MET)
-* PR# 715 *
-Subject: Printing list elements w/attributes
-From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
-Date: 31 Oct 2000 12:15:09 +0100
-* PR# 714 *
-Subject: prop.test and x = 0
-From: charlie@stat.umn.edu
-Date: Sun, 29 Oct 2000 16:29:56 +0100 (MET)
-* PR# 713 *
-Subject: median(c(NA,NA),na.rm=T) fails
-From: gnw3@acm.org
-Date: Sun, 29 Oct 2000 14:48:09 +0100 (MET)
-* PR# 717 *
-Subject: Pl. provide and Input for var.test
-From: Shalabh Gandhi <shalabhgandhi@usa.net>
-Date:  1 Nov 00 22:41:32 MST
-* PR# 716 *
-Subject: Pl. provide and Input for var.test
-From: Shalabh Gandhi <shalabhgandhi@usa.net>
-Date:  1 Nov 00 22:41:27 MST
-* PR# 720 *
-Subject: Pl. provide and Input for var.test
-From: Shalabh Gandhi <shalabhgandhi@usa.net>
-Date:  1 Nov 00 22:41:27 MST
-* PR# 719 *
-Subject: Pl. provide and Input for var.test
-From: Shalabh Gandhi <shalabhgandhi@usa.net>
-Date:  1 Nov 00 22:41:32 MST
-* PR# 718 *
-Subject: Pl. provide and Input for var.test
-From: Shalabh Gandhi <shalabhgandhi@usa.net>
-Date:  1 Nov 00 22:41:27 MST
-* PR# 722 *
-Subject: Pl. provide and Input for var.test
-From: Shalabh Gandhi <shalabhgandhi@usa.net>
-Date:  1 Nov 00 22:41:31 MST
-* PR# 721 *
-Subject: Pl. provide and Input for var.test
-From: Shalabh Gandhi <shalabhgandhi@usa.net>
-Date:  1 Nov 00 22:41:26 MST
-* PR# 725 *
-Subject: nls() function is not found
-From: montero@kingkong.me.berkeley.edu
-Date: Fri, 3 Nov 2000 21:48:05 +0100 (MET)
-* PR# 724 *
-Subject: t.test and n = 2
-From: charlie@stat.umn.edu
-Date: Thu, 2 Nov 2000 14:53:26 +0100 (MET)
-* PR# 723 *
-Subject: Pl. provide and Input for var.test
-From: Shalabh Gandhi <shalabhgandhi@usa.net>
-Date:  1 Nov 00 22:41:27 MST
-* PR# 727 *
-Subject: arrows() doesn't like zero-length arrows
-From: Stephen Eglen <stephen@cogsci.ed.ac.uk>
-Date: Tue, 7 Nov 2000 20:12:50 +0000 (GMT)
-* PR# 726 *
-Subject: par(las=.)  gives wrong "adj" for mtext()
-From: Martin Maechler <maechler@stat.math.ethz.ch>
-Date: Tue, 7 Nov 2000 13:03:58 +0100
-* PR# 729 *
-Subject: Re: [R] Strange means of numbers drawn from rpois
-From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
-Date: 08 Nov 2000 17:10:12 +0100
-* PR# 728 *
-Subject: installing R on solaris
-From: Patrick Brown <p.e.brown@lancaster.ac.uk>
-From: Kev Buckley <k.buckley@lancaster.ac.uk>
-From: Kev Buckley <k.buckley@lancaster.ac.uk>
-Date: Wed, 8 Nov 2000 10:57:04 +0000 (GMT)
-* PR# 731 *
-Subject: substitute(x$y)) corrupts 'y' component
-From: "Charles C. Berry" <cberry@tajo.ucsd.edu>
-Date: Wed, 08 Nov 2000 11:01:48 -0800
-* PR# 730 *
-Subject: Re: [R] Strange means of numbers drawn from rpois
-From: Kjetil Kjernsmo <kjetil.kjernsmo@astro.uio.no>
-Date: Wed, 8 Nov 2000 17:23:22 +0100 (MET)
+none
