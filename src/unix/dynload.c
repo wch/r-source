@@ -279,9 +279,6 @@ computeDLOpenFlag(int asLocal, int now)
  int openFlag = 0; /* Default value so no-ops for undefined flags should do nothing
                       in the resulting dlopen(). */
 
-
-#undef RTLD_LOCAL
-
 if(asLocal != 0) {
 #ifndef RTLD_LOCAL
   DL_WARN(0)
