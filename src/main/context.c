@@ -55,6 +55,13 @@
  *	CTXT_RETURN	target for "return" (i.e. a closure)
  *	CTXT_BROWSER    target for "return" to exit from browser
  *	CTXT_CCODE	other functions that need clean up if an error occurs
+ *      CTXT_RESTART    a function call to restart was made inside the 
+ *                      closure.
+ *
+ *      Code (such as the sys.xxx) that looks for CTXT_RETURN must also
+ *      look for a CTXT_RESTART. The mechanism used by restart is to change
+ *      the context type; error/errorcall then looks for a RESTART and does
+ *      a long jump there if it finds one.
  *
  *  A context is created with a call to
  *
@@ -181,7 +188,7 @@ SEXP R_sysframe(int n, RCNTXT *cptr)
 		  "not that many enclosing environments");
 
     while (cptr->nextcontext != NULL) {
-	if (cptr->callflag == CTXT_RETURN) {
+	if (cptr->callflag == CTXT_RETURN || cptr->callflag == CTXT_RESTART) {
 	    if (n == 0) {  /* we need to detach the enclosing env */
 		return cptr->cloenv;
 	    }
@@ -212,19 +219,20 @@ int R_sysparent(int n, RCNTXT *cptr)
 	errorcall( R_ToplevelContext->call,
 		   "only positive arguments are allowed");
     while (cptr->nextcontext != NULL && n > 1) {
-	if (cptr->callflag == CTXT_RETURN)
+	if (cptr->callflag == CTXT_RETURN || cptr->callflag == CTXT_RESTART)
 	    n--;
 	cptr = cptr->nextcontext;
     }
     /* make sure we're looking at a return context */
-    while (cptr->nextcontext != NULL && cptr->callflag != CTXT_RETURN )
+    while (cptr->nextcontext != NULL && cptr->callflag != CTXT_RETURN 
+	&&  cptr->callflag != CTXT_RESTART)
 	cptr = cptr->nextcontext;
     s = cptr->sysparent;
     if(s == R_GlobalEnv)
 	return 0;
     j = 0;
     while (cptr != NULL ) {
-	if (cptr->callflag == CTXT_RETURN) {
+	if (cptr->callflag == CTXT_RETURN || cptr->callflag == CTXT_RESTART) {
 	    j++;
 	    if( cptr->cloenv == s )
 		n=j;
@@ -243,7 +251,7 @@ int framedepth(RCNTXT *cptr)
 {
     int nframe = 0;
     while (cptr->nextcontext != NULL) {
-	if (cptr->callflag == CTXT_RETURN)
+	if (cptr->callflag == CTXT_RETURN || cptr->callflag == CTXT_RESTART)
 	    nframe++;
 	cptr = cptr->nextcontext;
     }
@@ -261,7 +269,7 @@ SEXP R_syscall(int n, RCNTXT *cptr)
     if(n < 0 )
 	errorcall(R_GlobalContext->call, "illegal frame number");
     while (cptr->nextcontext != NULL) {
-	if (cptr->callflag == CTXT_RETURN) {
+	if (cptr->callflag == CTXT_RETURN || cptr->callflag == CTXT_RESTART) {
 	    if (n == 0)
 		return (duplicate(cptr->call));
 	    else
@@ -285,7 +293,7 @@ SEXP R_sysfunction(int n, RCNTXT *cptr)
     if (n < 0 )
 	errorcall(R_GlobalContext->call, "illegal frame number");
     while (cptr->nextcontext != NULL) {
-	if (cptr->callflag == CTXT_RETURN) {
+	if (cptr->callflag == CTXT_RETURN || cptr->callflag == CTXT_RESTART) {
 	    if (n == 0) {
 		s = CAR(cptr->call);
 		if (isSymbol(s))
@@ -307,7 +315,7 @@ SEXP R_sysfunction(int n, RCNTXT *cptr)
     return R_NilValue;  /* just for -Wall */
 }
 
-/*some real insantiy to keep Duncan sane*/
+/*some real insanity: to keep Duncan sane*/
 
 SEXP do_restart(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
@@ -315,8 +323,13 @@ SEXP do_restart(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     checkArity(op, args);
     
-    if( !asLogical(CAR(args)) )
-	return(R_NilValue);
+    if( !isLogical(CAR(args)) )
+	errorcall(call, "argument to restart must be a logical");
+
+    if( !asLogical(CAR(args)) ) /* FALSE */
+	return(R_NilValue); 
+
+    /* else TRUE */
     for(cptr = R_GlobalContext->nextcontext; cptr!= R_ToplevelContext; 
 	    cptr = cptr->nextcontext) {
 	if (cptr->callflag == CTXT_RETURN) {
@@ -324,7 +337,7 @@ SEXP do_restart(SEXP call, SEXP op, SEXP args, SEXP rho)
 		break;
 	}
     }
-    if( cptr == R_ToplevelContext )
+    if( cptr == R_ToplevelContext ) /* didn't find a closure to restart */
 	errorcall(call, "no function to restart");
     return(R_NilValue);
 }
@@ -344,7 +357,7 @@ SEXP do_sys(SEXP call, SEXP op, SEXP args, SEXP rho)
     cptr = R_GlobalContext;
     t = cptr->sysparent;
     while (cptr != R_ToplevelContext) {
-	if (cptr->callflag == CTXT_RETURN)
+	if (cptr->callflag == CTXT_RETURN || cptr->callflag == CTXT_RESTART)
 	    if (cptr->cloenv == t)
 		break;
 	cptr = cptr->nextcontext;

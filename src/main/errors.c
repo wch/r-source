@@ -252,7 +252,8 @@ void jump_to_toplevel()
 	    nback++;
 	if (c->callflag == CTXT_RESTART) {
 		inError=0;
-		findcontext(CTXT_RESTART, c->cloenv, R_DollarSymbol);
+		c->callflag = CTXT_RETURN; /* reset to a closure */
+		findcontext(CTXT_RETURN, c->cloenv, R_DollarSymbol);
 	}
     }
     if (R_Sinkfile) R_Outputfile = R_Sinkfile;
