@@ -36,6 +36,10 @@ NEW FEATURES
 
 BUG FIXES
 
+    o	Fixed an inconsistency in the evaluation context for on.exit
+	expressions between explicit calls to `return' and falling off
+	the end returns.
+
 
 
 

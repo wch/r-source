@@ -204,16 +204,15 @@ void begincontext(RCNTXT * cptr, int flags,
 
 void endcontext(RCNTXT * cptr)
 {
-    int savevis = R_Visible;
     if (cptr->cloenv != R_NilValue && cptr->conexit != R_NilValue ) {
-	/* Reset global context so onexit gets esexuted in parent
-	   context.  Not sure this is really the right thing to do,
-	   but it preserves consistency with the way jumpfun used to
-	   work.  LT */
-	R_GlobalContext = cptr->nextcontext;
-	eval(cptr->conexit, cptr->cloenv);
+	SEXP s = cptr->conexit;
+	int savevis = R_Visible;
+	cptr->conexit = R_NilValue; /* prevent recursion */
+	PROTECT(s);
+	eval(s, cptr->cloenv);
+	UNPROTECT(1);
+	R_Visible = savevis;
     }
-    R_Visible = savevis;
     R_GlobalContext = cptr->nextcontext;
 }
 
