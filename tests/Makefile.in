@@ -154,7 +154,7 @@ test-codoc:
 	@for p in $(R_PKGS); do \
 	  echo "code/documentation mismatches in package \`$${p}':"; \
 	  echo "codoc(\"$(top_srcdir)/src/library/$${p}\")" | \
-	    $(R) -q | egrep -e "^($$|\\$$| *\\[)"; \
+	    $(R) -q | egrep -e "^($$|\\$$| *\\[|Error)"; \
 	  echo; \
 	done
 
