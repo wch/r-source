@@ -1574,7 +1574,7 @@ static char *EncodeElement2(SEXP x, int indx, Rboolean quote,
 SEXP do_writetable(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP x, sep, rnames, eol, na, dec, quote, xj;
-    int nr, nc, i, j, qmethod;
+    int nr, nc, i, j, qmethod, savedigits;
     Rboolean wasopen, quote_rn = FALSE, *quote_col;
     Rconnection con;
     char *csep, *ceol, *cna, cdec, *tmp;
@@ -1629,15 +1629,21 @@ SEXP do_writetable(SEXP call, SEXP op, SEXP args, SEXP rho)
 	if(this >  0) quote_col[this - 1] = TRUE;
     }
     R_AllocStringBuffer(0, &strBuf);
+    PrintDefaults(R_NilValue);
+    savedigits = R_print.digits; R_print.digits = DBL_DIG;/* MAX precision */
 
     if(isVectorList(x)) { /* A data frame */
 
-	/* handle factors internally */
+	/* handle factors internally, check integrity */
 	levels = (SEXP *) R_alloc(nc, sizeof(SEXP));
-	for(j = 0; j < nc; j++)
-	    if(inherits(VECTOR_ELT(x, j), "factor")) {
-		levels[j] = getAttrib(VECTOR_ELT(x, j), R_LevelsSymbol);
+	for(j = 0; j < nc; j++) {
+	    xj = VECTOR_ELT(x, j);
+	    if(LENGTH(xj) != nr)
+		errorcall(call, "corrupt data frame -- length of column %d does not not match nrows", j+1);
+	    if(inherits(xj, "factor")) {
+		levels[j] = getAttrib(xj, R_LevelsSymbol);
 	    } else levels[j] = R_NilValue;
+	    }  
 
 	for(i = 0; i < nr; i++) {
 	    if(!isNull(rnames))
@@ -1668,6 +1674,9 @@ SEXP do_writetable(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 	if(!isVectorAtomic(x))
 	    UNIMPLEMENTED_TYPE("write.table, matrix method", x);
+	/* quick integrity check */
+	if(LENGTH(x) != nr * nc)
+	    errorcall(call, "corrupt matrix -- dims not not match length");
 
 	for(i = 0; i < nr; i++) {
 	    if(!isNull(rnames))
@@ -1690,5 +1699,6 @@ SEXP do_writetable(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
     if(!wasopen) con->close(con);
     R_FreeStringBuffer(&strBuf);
+    R_print.digits = savedigits;
     return R_NilValue;
 }

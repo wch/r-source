@@ -1,6 +1,6 @@
 
 R : Copyright 2004, The R Foundation for Statistical Computing
-Version 2.0.1 Patched (2004-12-25), ISBN 3-900051-07-0
+Version 2.1.0 Under development (unstable) (2004-12-26), ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -4393,13 +4393,78 @@ Levels: "a" "a \" test" "b" NA
 > ## write.table in marginal cases
 > x <- matrix(, 3, 0)
 > write.table(x) # 3 rows
-1
-2
-3
+"1" 
+"2" 
+"3" 
 > write.table(x, row.names=FALSE)
 
 
 
 > # note: scan and read.table won't read this as they take empty fields as NA
 > ## was 1 row in 2.0.1
+> 
+> 
+> ## More tests of write.table
+> x <- list(a=1, b=1:2, c=3:4, d=5)
+> dim(x) <- c(2,2)
+> x
+     [,1]      [,2]     
+[1,] 1         Integer,2
+[2,] Integer,2 5        
+> write.table(x)
+"V1" "V2"
+"1" 1 c(3, 4)
+"2" c(1, 2) 5
+> 
+> x1 <- data.frame(a=1:2, b=I(matrix(LETTERS[1:4], 2, 2)), c = c("(i)", "(ii)"))
+> x1
+  a b.1 b.2    c
+1 1   A   C  (i)
+2 2   B   D (ii)
+> write.table(x1) # In 2.0.1 had 3 headers, 4 cols
+"a" "b.1" "b.2" "c"
+"1" 1 A C "(i)"
+"2" 2 B D "(ii)"
+> write.table(x1, quote=c(2,3,4))
+"a" "b.1" "b.2" "c"
+"1" 1 "A" "C" "(i)"
+"2" 2 "B" "D" "(ii)"
+> 
+> x2 <- data.frame(a=1:2, b=I(list(a=1, b=2)))
+> x2
+  a b
+a 1 1
+b 2 2
+> write.table(x2)
+"a" "b"
+"a" 1 1
+"b" 2 2
+> 
+> x3 <- seq(as.Date("2005-01-01"), len=6, by="day")
+> x4 <- data.frame(x=1:6, y=x3)
+> dim(x3) <- c(2,3)
+> x3
+[1] "2005-01-01" "2005-01-02" "2005-01-03" "2005-01-04" "2005-01-05"
+[6] "2005-01-06"
+> write.table(x3) # matrix, so loses class
+"V1" "V2" "V3"
+"1" 12784 12786 12788
+"2" 12785 12787 12789
+> x4
+  x          y
+1 1 2005-01-01
+2 2 2005-01-02
+3 3 2005-01-03
+4 4 2005-01-04
+5 5 2005-01-05
+6 6 2005-01-06
+> write.table(x4) # preserves class, does not quote
+"x" "y"
+"1" 1 2005-01-01
+"2" 2 2005-01-02
+"3" 3 2005-01-03
+"4" 4 2005-01-04
+"5" 5 2005-01-05
+"6" 6 2005-01-06
+> ##
 > 

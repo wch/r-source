@@ -1460,3 +1460,28 @@ write.table(x) # 3 rows
 write.table(x, row.names=FALSE)
 # note: scan and read.table won't read this as they take empty fields as NA
 ## was 1 row in 2.0.1
+
+
+## More tests of write.table
+x <- list(a=1, b=1:2, c=3:4, d=5)
+dim(x) <- c(2,2)
+x
+write.table(x)
+
+x1 <- data.frame(a=1:2, b=I(matrix(LETTERS[1:4], 2, 2)), c = c("(i)", "(ii)"))
+x1
+write.table(x1) # In 2.0.1 had 3 headers, 4 cols
+write.table(x1, quote=c(2,3,4))
+
+x2 <- data.frame(a=1:2, b=I(list(a=1, b=2)))
+x2
+write.table(x2)
+
+x3 <- seq(as.Date("2005-01-01"), len=6, by="day")
+x4 <- data.frame(x=1:6, y=x3)
+dim(x3) <- c(2,3)
+x3
+write.table(x3) # matrix, so loses class
+x4
+write.table(x4) # preserves class, does not quote
+##

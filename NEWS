@@ -144,7 +144,7 @@ NEW FEATURES
     o	A new function getGraphicsEvent() has been added which will allow
 	mouse or keyboard input from a graphics device. (NB: currently
 	only the Windows screen device supports this function.	This
-	should improve before the 2.1.0 release..)
+	should improve before the 2.1.0 release.)
 
     o	%% now warns if its accuracy is likely to be affected by lack
 	of precision (as in 1e18 %% 11, the unrealistic expectation of
@@ -182,15 +182,14 @@ NEW FEATURES
 	levels.  For a million items this halved the time and reduced
 	storage by a factor of 20.
 
-    o   write.table() no longer coerces a matrix to a data frame and
-	then back to a matrix.
+    o   There is a new version for write.table() which is implemented in C.  
+	For simple matrices and data frames this is several times
+	faster than before, and uses negligible memory compared to the 
+	object size.
 
-	There is a new version currently called write.table2() which
-	is implemented in C and will eventually replace write.table.
-	Currently it is limited to matrices of atomic type, and data
-	frames whose columns are atomic vectors or factors.  This is
-	about 6x faster than write.table(), and uses negligible memory
-	compared to the object size.
+	The old version (which no longer coerces a matrix to a data
+	frame and then back to a matrix) is available for now as
+	write.table0().
 
 
 UTILITIES
@@ -354,6 +353,11 @@ BUG FIXES
 	ambiguity when the levels contained spaces or quotes.
 
     o	R CMD check was confused by a trailing / on a package name.
+
+    o	write.table() was writing incorrect column names if the data
+	frame contained matrix-like columns.
+
+    o	write.table() was not quoting row names for a 0-column x.
 
 
 

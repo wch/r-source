@@ -1,4 +1,4 @@
-write.table <-
+write.table0 <-
 function (x, file = "", append = FALSE, quote = TRUE, sep = " ",
           eol = "\n", na = "NA", dec = ".", row.names = TRUE,
           col.names = TRUE, qmethod = c("escape", "double"))
@@ -7,16 +7,9 @@ function (x, file = "", append = FALSE, quote = TRUE, sep = " ",
 
     if(!is.data.frame(x) && !is.matrix(x)) x <- data.frame(x)
 
-    nocols <- NCOL(x)==0
-    if (nocols) quote <- FALSE
-
-    p <- ncol(x)
-    d <- dimnames(x)
-
     if(is.data.frame(x)) {
         if(is.logical(quote) && quote)
-            quote <- which(unlist(lapply(x, function(x)
-                                         is.character(x) || is.factor(x))))
+            quote <- if(length(x)) which(unlist(lapply(x, function(x) is.character(x) || is.factor(x)))) else numeric(0)
         if(dec != ".") {
             ## only need to consider numeric non-integer columns
             num <- which(unlist(lapply(x, function(x) is.double(x)
@@ -30,17 +23,25 @@ function (x, file = "", append = FALSE, quote = TRUE, sep = " ",
         if(length(cmplx) && any(cmplx) && !all(cmplx))
             x[cmplx] <- lapply(x[cmplx], as.character)
         x <- as.matrix(x)
+        ## we may have gained some columns here, as embedded matrices/dfs
+        ## are split up into columns.
+        d <- dimnames(x)
     } else { # a matrix
         if(is.logical(quote) && quote)
             quote <- if(is.character(x)) seq(length=p) else numeric(0)
         if(dec != "." && typeof(x) %in% c("double", "complex"))
             x[] <- gsub("\\.", dec, as.character(x))
         ## fix up dimnames as as.data.frame would
+        p <- ncol(x)
+        d <- dimnames(x)
         if(is.null(d)) d <- list(NULL, NULL)
         if(is.null(d[[1]])) d[[1]] <- seq(length=nrow(x))
         if(is.null(d[[2]]) && p > 0) d[[2]] <-  paste("V", 1:p, sep="")
     }
+    ## from this point on we have a matrix, possibly even a matrix list.
 
+    p <- ncol(x)
+    nocols <- NCOL(x)==0
     if (!nocols){
         i <- is.na(x)
         if(any(i))
@@ -115,7 +116,7 @@ function (x, file = "", append = FALSE, quote = TRUE, sep = " ",
                file, sep = "")
 }
 
-write.table2 <-
+write.table <-
 function (x, file = "", append = FALSE, quote = TRUE, sep = " ",
           eol = "\n", na = "NA", dec = ".", row.names = TRUE,
           col.names = TRUE, qmethod = c("escape", "double"))
@@ -123,26 +124,37 @@ function (x, file = "", append = FALSE, quote = TRUE, sep = " ",
     qmethod <- match.arg(qmethod)
 
     if(!is.data.frame(x) && !is.matrix(x)) x <- data.frame(x)
-    p <- ncol(x)
 
-    nocols <- p==0
-    if (nocols) quote <- FALSE
-
-    p <- ncol(x)
-    d <- dimnames(x)
     if(is.matrix(x)) {
         ## fix up dimnames as as.data.frame would
+        p <- ncol(x)
+        d <- dimnames(x)
         if(is.null(d)) d <- list(NULL, NULL)
         if(is.null(d[[1]])) d[[1]] <- seq(length=nrow(x))
         if(is.null(d[[2]]) && p > 0) d[[2]] <-  paste("V", 1:p, sep="")
+        if(is.logical(quote) && quote)
+            quote <- if(is.character(x)) seq(length=p) else numeric(0)
+    } else {
+        qset <- FALSE
+        if(is.logical(quote) && quote) {
+            quote <- if(length(x)) which(unlist(lapply(x, function(x) is.character(x) || is.factor(x)))) else numeric(0)
+            qset <- TRUE
+        }
+        ## fix up embedded matrix columns into separate cols
+        ismat <- sapply(x, function(z) length(dim(z)) == 2 &&  dim(z)[2] > 1)
+        if(any(ismat)) {
+            c1 <- names(x)
+            x <- as.matrix(x)
+            if(qset) {
+                c2 <- colnames(x)
+                ord <- match(c1, c2, 0)
+                quote <- ord[quote]; quote <- quote[quote > 0]
+            }
+        }
+        d <- dimnames(x)
+        p <- ncol(x)
     }
-
-    if(is.logical(quote) && quote) {
-        quote <- if(is.data.frame(x))
-            which(unlist(lapply(x, function(x)
-                                is.character(x) || is.factor(x))))
-        else (if(is.character(x)) seq(length=p) else numeric(0))
-    }
+    nocols <- p==0
 
     if(is.logical(quote)) # must be false
 	quote <- NULL
@@ -199,6 +211,15 @@ function (x, file = "", append = FALSE, quote = TRUE, sep = " ",
 
     if (nrow(x) == 0) return(invisible())
     if (nocols && !rn) return(cat(rep.int(eol, NROW(x)), file=file, sep=""))
+
+    ## convert list matrices to character - maybe not much use?
+    if(is.matrix(x) && !is.atomic(x)) mode(x) <- "character"
+    if(is.data.frame(x)) {
+        ## convert columns we can't handle in C code
+        x[] <- lapply(x, function(z) {
+            if(is.object(z) && !is.factor(z)) as.character(z) else z
+        })
+    }
 
     .Internal(write.table(x, file, nrow(x), p, rnames, sep, eol, na, dec,
                           as.integer(quote), qmethod != "double"))

@@ -1,6 +1,6 @@
 \name{write.table}
 \alias{write.table}
-\alias{write.table2}
+\alias{write.table0}
 \title{Data Output}
 \description{
   \code{write.table} prints its required argument \code{x} (after
@@ -23,7 +23,7 @@ write.table(x, file = "", append = FALSE, quote = TRUE, sep = " ",
     character or factor columns will be surrounded by double quotes.  If
     a numeric vector, its elements are taken as the indices of the
     columns to quote.  In both cases, row and column names
-    are quoted if they are written. If \code{FALSE}, nothing is quoted.}
+    are quoted if they are written.  If \code{FALSE}, nothing is quoted.}
   \item{sep}{the field separator string.  Values within each row of
     \code{x} are separated by this string.}
   \item{eol}{the character(s) to print at the end of each line (row).}
@@ -55,6 +55,15 @@ write.table(x, file = "", append = FALSE, quote = TRUE, sep = " ",
 
   If the table has no columns the rownames will be written if
   \code{row.names=TRUE}, and \emph{vice versa}.
+
+  Real and complex numbers are written to the maximal possible precision.
+}
+\note{
+  If a data frame has matrix-like columns these will be converted to
+  multiple columns in the result (\emph{via} \code{\link{as.matrix}})
+  and so a character \code{col.names} or a numeric \code{quote} should
+  refer to the columns in the result, not the input.  Such matrix-like
+  columns are unquoted by default.
 }
 
 \seealso{
