@@ -1,4 +1,4 @@
-### $Id: nls.R,v 1.4 2004/06/10 10:40:21 ripley Exp $
+### $Id: nls.R,v 1.5 2004/06/10 11:25:28 ripley Exp $
 ###
 ###            Nonlinear least squares for R
 ###
@@ -418,9 +418,9 @@ nls <-
                        }, data, length(eval(formula[[2]], data)))
 
     mf$formula <-                         # replace RHS by linear model formula
-      parse( text = paste("~", paste( varNames[varIndex], collapse = "+")))[[1]]
+        as.formula(paste("~", paste( varNames[varIndex], collapse = "+")),
+                   env = environment(formula))
 
-    environment(mf$formula) <- environment(formula)
     mf$start <- mf$control <- mf$algorithm <- mf$trace <- NULL
     mf[[1]] <- as.name("model.frame")
     mf <- as.list(eval(mf, parent.frame()))
