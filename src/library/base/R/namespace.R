@@ -554,7 +554,7 @@ namespaceImportFrom <- function(self, ns, vars) {
         if(!.isMethodsDispatchOn())
             return(numeric())
         mm <- ".__M__" # methods:::mlistMetaName() is slow
-        seq(along = impvars)[substr(impvars, 1, nchar(mm)) == mm]
+        seq(along = impvars)[substr(impvars, 1, nchar(mm, type="c")) == mm]
     }
     if (is.character(self))
         self <- getNamespace(self)
@@ -695,7 +695,7 @@ namespaceExport <- function(ns, vars) {
 .mergeExportMethods <- function(new, ns) {
 #    if(!.isMethodsDispatchOn()) return(FALSE)
     mm <- methods:::mlistMetaName()
-    newMethods <- new[substr(new, 1, nchar(mm)) == mm]
+    newMethods <- new[substr(new, 1, nchar(mm, type="c")) == mm]
     nsimports <- parent.env(ns)
     for(what in newMethods) {
         if(exists(what, envir = nsimports, inherits = FALSE)) {

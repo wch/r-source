@@ -60,7 +60,7 @@ simplifyRepos <- function(repos, type)
 {
     tail <- substring(contrib.url("---", type), 4)
     ind <- regexpr(tail, repos, fixed=TRUE)
-    ind <- ifelse(ind > 0, ind-1, nchar(repos))
+    ind <- ifelse(ind > 0, ind-1, nchar(repos, type="c"))
     substr(repos, 1, ind)
 }
 
@@ -73,7 +73,7 @@ update.packages <- function(lib.loc = NULL, repos = CRAN,
                             checkBuilt = FALSE, type)
 {
     ## passing missingness sometimes fails.
-    if(missing(type)) 
+    if(missing(type))
         type <- if(.Platform$OS.type == "windows") "binary" else "source"
     if(is.null(lib.loc))
         lib.loc <- .libPaths()

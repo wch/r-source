@@ -42,6 +42,11 @@ substring(text, first, last = 1000000) <- value
 \note{
   The S4 version of \code{substring<-} ignores \code{last}; this version
   does not.
+
+  These functions are often used with \code{\link{nchar}} to truncate a
+  display.  That does not really work (you want to limit the width, not
+  the number of characters), but at least make sure you use
+  \code{nchar(type="c")}.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

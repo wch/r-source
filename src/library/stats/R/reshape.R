@@ -10,8 +10,8 @@ reshape <-
         if (drop)
             nn <- do.call("rbind",strsplit(nms,re))
         else
-            nn <- cbind(substr(nms,1,regexpr(re,nms)),
-                        substr(nms,regexpr(re,nms)+1,nchar(nms)))
+            nn <- cbind(substr(nms, 1, regexpr(re,nms)),
+                        substr(nms, regexpr(re,nms)+1, 10000))
         v.names <- tapply(nms,nn[,1],c)
         varying <- unique(nn[,1])
         times <- sort(unique(nn[,2]))
@@ -90,8 +90,8 @@ reshape <-
 
         ## if we created a temporary id variable, drop it
         if (drop.idvar)
-            rval[,idvar]<-NULL 
-        
+            rval[,idvar]<-NULL
+
         attr(rval,"reshapeLong") <- undoInfo
         return(rval)
     } ## re..Long()
@@ -117,14 +117,14 @@ reshape <-
             idvar<-tempidname
             drop.idvar<-TRUE
         } else drop.idvar<-FALSE
-        
+
         ## times <- sort(unique(data[,timevar]))
         ## varying and times must have the same order
         times <- unique(data[,timevar])
         if (any(is.na(times)))
             warning("There are records with missing times, which will be dropped.")
         undoInfo$times<-times
-        
+
         if (is.null(v.names))
             v.names <- names(data)[!(names(data) %in% c(timevar,idvar,orig.idvar))]
 
@@ -135,7 +135,7 @@ reshape <-
 
         undoInfo$varying<-varying
 
-        
+
         CHECK <- TRUE
         if (CHECK) {
             keep <- !(names(data) %in% c(timevar,v.names,idvar,orig.idvar))

@@ -38,7 +38,7 @@ function(x, full = TRUE, scale = TRUE, radius = TRUE,
         locations <- expand.grid(ff * 1:ncol, ff * nrow:1)[1:n.loc, ]
         if(!is.null(labels) && (missing(flip.labels) ||
                                 !is.logical(flip.labels)))
-            flip.labels <- ncol * mean(nchar(labels)) > 30
+            flip.labels <- ncol * mean(nchar(labels, type="c")) > 30
     }
     else {
         if (is.numeric(locations) && length(locations) == 2) {

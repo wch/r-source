@@ -66,7 +66,7 @@ function(pattern, fields = c("alias", "concept", "title"),
 
     if(!missing(help.db))
         warning(.wrong_args("help.db", "is deprecated"))
-        
+
 
     ### Set up the hsearch db.
     db <- eval(.hsearch_db())
@@ -234,7 +234,7 @@ function(pattern, fields = c("alias", "concept", "title"),
 	    sep = "")
     if(!is.null(package)) {
 	## Argument 'package' was given but we built a larger hsearch db
-        ## to save for future invocations.  Need to check that all given 
+        ## to save for future invocations.  Need to check that all given
 	## packages exist, and only search the given ones.
 	pos_in_hsearch_db <-
 	    match(package, unique(db$Base[, "Package"]), nomatch = 0)
@@ -263,7 +263,7 @@ function(pattern, fields = c("alias", "concept", "title"),
     if(is.null(agrep) || is.na(agrep))
 	agrep <-
 	    ((regexpr("^([[:alnum:]]|[[:space:]]|-)+$", pattern) > 0)
-             && (nchar(pattern) > 4))
+             && (nchar(pattern, type="c") > 4))
     if(is.logical(agrep)) {
 	if(agrep)
 	    max.distance <- 0.1

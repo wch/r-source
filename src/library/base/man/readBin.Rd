@@ -13,7 +13,7 @@ readBin(con, what, n = 1, size = NA, signed = TRUE,
 writeBin(object, con, size = NA, endian = .Platform$endian)
 
 readChar(con, nchars)
-writeChar(object, con, nchars = nchar(object), eos = "")
+writeChar(object, con, nchars = nchar(object, type="bytes"), eos = "")
 }
 \arguments{
   \item{con}{A connection object or a character string.}

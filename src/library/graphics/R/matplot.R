@@ -16,7 +16,9 @@ matplot <- function(x, y, type = "p",
 {
     paste.ch <- function(chv) paste('"',chv,'"', sep="", collapse=" ")
     str2vec <- function(string) {
-	if(nchar(string)[1] > 1) strsplit(string[1], NULL)[[1]] else string
+	if(nchar(string, type="c")[1] > 1)
+            strsplit(string[1], NULL)[[1]]
+        else string
     }
     ## These from plot.default :
     xlabel <- if (!missing(x)) deparse(substitute(x))# else NULL

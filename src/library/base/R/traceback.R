@@ -10,7 +10,8 @@ traceback <- function()
         for(i in 1:n) {
             label <- paste(n-i+1, ": ", sep="")
             if((m <- length(.Traceback[[i]])) > 1)
-                label <- c(label, rep(substr("          ", 1, nchar(label)),
+                label <- c(label, rep(substr("          ", 1,
+                                             nchar(label, type="w")),
                                       m - 1))
             cat(paste(label, .Traceback[[i]], sep=""), sep="\n")
         }

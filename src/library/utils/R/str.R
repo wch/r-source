@@ -42,10 +42,12 @@ str.default <-
     oo <- options(digits = digits.d); on.exit(options(oo))
     le <- length(object)
     P0 <- function(...) paste(..., sep="")
-    maybe_truncate <- function(x, e.x= x, Sep = "\"", ch="| __truncated__")
+    maybe_truncate <- function(x, e.x = x, Sep = "\"", ch = "| __truncated__")
     {
-        if(any((ii <- nchar(e.x) > nchar.max)))
-            x[ii] <- P0(substr(e.x[ii], 1, nchar.max), Sep, ch)
+        trimmed <- strtrim(e.x, nchar.max)
+        ii <- trimmed != e.x
+        ii[is.na(ii)] <- FALSE
+        if(any(ii)) x[ii] <- P0(trimmed[ii], Sep, ch)
         x
     }
 
@@ -105,7 +107,7 @@ str.default <-
 	    if (is.na(max.level) || nest.lev < max.level) {
 		nam.ob <-
 		    if(is.null(nam.ob <- names(object))) rep.int("", le)
-		    else { max.ncnam <- max(nchar(nam.ob))
+		    else { max.ncnam <- max(nchar(nam.ob, type="w"))
 			   format.char(nam.ob, width = max.ncnam, flag = '-')
 		       }
 		for(i in 1:le) {
@@ -198,7 +200,7 @@ str.default <-
 	    object <- unclass(object)
 	    if(nl) {
                 ## as from 2.1.0, quotes are included ==> '-2':
-		lenl <- cumsum(3 + (nchar(lev.att) - 2))# level space
+		lenl <- cumsum(3 + (nchar(lev.att, type="w") - 2))# level space
 		ml <- if(nl <= 1 || lenl[nl] <= 13)
 		    nl else which(lenl > 13)[1]
                 lev.att <- maybe_truncate(lev.att[1:ml])
@@ -338,8 +340,8 @@ str.default <-
             en_object <- encodeString(object)
 	    v.len <-
 		if(missing(vec.len))
-		    max(1,sum(cumsum(3 + if(le>0) nchar(en_object) else 0) <
-			      wid - (4 + 5*nest.lev + nchar(str1))))
+		    max(1,sum(cumsum(3 + if(le>0) nchar(en_object, type="w") else 0) <
+			      wid - (4 + 5*nest.lev + nchar(str1, type="w"))))
 	    ## `5*ne..' above is fudge factor
 		else round(v.len)
 	    ile <- min(le, v.len)

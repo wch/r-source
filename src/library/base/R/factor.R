@@ -84,8 +84,9 @@ print.factor <- function (x, quote = FALSE, max.levels = NULL,
         T0 <- "Levels: "
         if(is.logical(maxl))
             maxl <- { ## smart default
-                width <- width - (nchar(T0) + 3 + 1 + 3)# 3='...', 3=#lev, 1=extra
-                lenl <- cumsum(nchar(lev) + nchar(colsep))# + ifelse(quote,2,0))
+                width <- width - (nchar(T0, type="w") + 3 + 1 + 3)
+                                        # 3='...', 3=#lev, 1=extra
+                lenl <- cumsum(nchar(lev, type="w") + nchar(colsep, type="w"))
                 if(n <= 1 || lenl[n] <= width) n
                 else max(1, which(lenl > width)[1] - 1)
             }

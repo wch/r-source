@@ -409,6 +409,7 @@ SEXP do_standardGeneric(SEXP, SEXP, SEXP, SEXP);
 SEXP do_stop(SEXP, SEXP, SEXP, SEXP);
 SEXP do_strsplit(SEXP,SEXP,SEXP,SEXP);
 SEXP do_strptime(SEXP,SEXP,SEXP,SEXP);
+SEXP do_strtrim(SEXP,SEXP,SEXP,SEXP);
 SEXP do_sysinfo(SEXP,SEXP,SEXP,SEXP);
 SEXP do_syssleep(SEXP,SEXP,SEXP,SEXP);
 SEXP do_subassign(SEXP, SEXP, SEXP, SEXP);

@@ -51,11 +51,7 @@ limitedLabels <- function(value, maxwidth = options()$width)
     value <- as.character(value)
     if(is.null(maxwidth) || maxwidth < 40)
         maxwidth <- 40
-    if(any(nchar(value) > maxwidth)) {
-        trim <- nchar(value) > maxwidth
-        value[trim] <- substr(value[trim], 1, maxwidth)
-    }
-    value
+    strtrim(value, maxwidth)
 }
 
 recover <-

@@ -49,12 +49,13 @@ function(file, local = FALSE, echo = verbose, print.eval = echo,
 	ei <- exprs[i]
 	if (echo) {
 	    # drop "expression("
-	    dep <- substr(paste(deparse(ei, control = c("showAttributes","useSource")), 
+	    dep <- substr(paste(deparse(ei, control = c("showAttributes","useSource")),
 	    		  collapse = "\n"), 12, 1e+06)
 	    # -1: drop ")"
-	    nd <- nchar(dep) - 1
+            ## <FIXME> want widths here, not #chars.
+	    nd <- nchar(dep, type="w") - 1
 	    do.trunc <- nd > max.deparse.length
-	    dep <- substr(dep, 1, if (do.trunc) max.deparse.length else nd)
+	    dep <- strtrim(dep, if (do.trunc) max.deparse.length else nd)
 	    cat("\n", prompt.echo, dep, if (do.trunc)
 		paste(if (length(grep(sd, dep)) && length(grep(oddsd, dep)))
 		      " ...\" ..."
@@ -77,7 +78,7 @@ function(file, local = FALSE, echo = verbose, print.eval = echo,
 	if (print.eval && yy$visible)
 	    print(yy$value)
 	if (verbose)
-	    cat(" .. after ", sQuote(deparse(ei, 
+	    cat(" .. after ", sQuote(deparse(ei,
 	    	control = c("showAttributes","useSource"))), "\n", sep = "")
     }
     invisible(yy)

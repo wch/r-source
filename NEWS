@@ -135,8 +135,10 @@ NEW FEATURES
     o	plot.data.frame() tries harder to produce sensible plots for
 	non-numeric data frames with one or two columns.
 
-    o	nchar() returns the true number of characters stored
-	(including any embedded nuls), this being 2 for missing values.
+    o	nchar() returns the true number of bytes stored
+	(including any embedded nuls), this being 2 for missing
+	values.  It has options "chars" and "width" to give the number
+	of character or the display width instead.
 
     o	all/any() now attempt to coerce their arguments to logical, as
 	documented in the Blue Book.  This means e.g. any(list()) works.
@@ -192,6 +194,10 @@ NEW FEATURES
     o	The limits on the grid size in layout are now documented, and
 	have been raised somewhat by using more efficient internal
 	structures.
+
+    o	New function strtrim() to trim character vectors to a display
+	width, allowing for double-width characters in multi-byte
+	character sets.
 
 
 UTILITIES

@@ -27,9 +27,10 @@ cut.default <- function (x, breaks, labels=NULL, include.lowest = FALSE,
 	    else paste("Range", 1:(nb - 1),sep="_")
         if (ok && include.lowest) {
             if (right)
-                substr(labels[1], 1,1) <- "["
+                substr(labels[1], 1, 1) <- "[" # was "("
             else
-                substring(labels[nb-1], nchar(labels[nb-1])) <- "]"
+                substring(labels[nb-1],
+                          nchar(labels[nb-1], type="char")) <- "]" # was ")"
         }
     } else if (is.logical(labels) && !labels)
         codes.only <- TRUE

@@ -16,18 +16,22 @@ nchar(x, type = c("bytes", "chars", "width"))
 }
 \details{
   The \sQuote{size} of a character string can be measured in one of
-  three ways.
+  three ways
   \describe{
-    \item{\code{chars}}{The number of human-readable characters.}
     \item{\code{bytes}}{The number of bytes needed to store the string
       (plus in C a final terminator which is not counted).}
+    \item{\code{chars}}{The number of human-readable characters.}
     \item{\code{width}}{The number of columns \code{cat} will use to
-      print the string in a monospaced font.}
+      print the string in a monospaced font.  The same as \code{chars}
+      if this cannot be calculated (which is currently common).}
   }
   These will often be the same (but backspace \code{\b} and \code{\t}
   can affect the width).  There will be differences between the first
-  two with multibyte character sequences, notably in UTF-8 locales, or
-  if the byte stream contains embedded \code{nul} bytes.
+  two with multibyte character sequences, e.g. in UTF-8 locales.
+  If the byte stream contains embedded \code{nul} bytes,
+  \code{type = "bytes"} looks at all the bytes whereas the other two
+  types look only at the string as printed by \code{cat}, up to the
+  first \code{nul} byte.
   
   The internal equivalent of the default method of
   \code{\link{as.character}} is performed on \code{x}.  If you want to
@@ -36,7 +40,7 @@ nchar(x, type = c("bytes", "chars", "width"))
 }
 \value{
   An integer vector giving the size of each string,
-  \code{2} for missing values (for \code{NA}).
+  currently always \code{2} for missing values (for \code{NA}).
 
   Not all platforms will return a non-missing value for \code{type="width"}.
 }

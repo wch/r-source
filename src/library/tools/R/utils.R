@@ -144,7 +144,7 @@ function(x, delim = c("\{", "\}"), syntax = "Rd")
     if(!is.character(x))
         stop(.wrong_args("x", "must be a character vector"))
     if((length(delim) != 2) || any(nchar(delim) != 1))
-        stop(.wrong_args("delim", "must specify two single characters"))
+        stop(.wrong_args("delim", "must specify two single-byte characters"))
     if(syntax != "Rd")
         stop("only Rd syntax is currently supported")
 

@@ -100,10 +100,11 @@ function(x, y = NULL, legend, fill=NULL, col = "black", lty, lwd, pch,
 	} else ceiling(n.leg / ncol)
 
     if(has.pch <- !missing(pch) && length(pch) > 0) {
-	if(is.character(pch) && !is.na(pch[1]) && nchar(pch[1]) > 1) {
+	if(is.character(pch) && !is.na(pch[1]) &&
+           nchar(pch[1], type="c") > 1) {
 	    if(length(pch) > 1)
 		warning("Not using pch[2..] since pch[1] has multiple chars")
-	    np <- nchar(pch[1])
+	    np <- nchar(pch[1], type="c")
 	    pch <- substr(rep.int(pch[1], np), 1:np, 1:np)
 	}
 	if(!merge) dx.pch <- x.intersp/2 * xchar

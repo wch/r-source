@@ -46,6 +46,7 @@
 
 
 #ifdef SUPPORT_UTF8
+#define __USE_XOPEN 1 /* glibc needs this for wcwidth/wcswidth */
 # include <wchar.h>
 # include <wctype.h>
 #endif
@@ -130,7 +131,7 @@ SEXP do_nchar(SEXP call, SEXP op, SEXP args, SEXP env)
 	    INTEGER(s)[i] = length(STRING_ELT(x, i));
 	} else if(strcmp(type, "chars") == 0) {
 	    if(STRING_ELT(x, i) == NA_STRING) {
-		INTEGER(s)[i] = NA_INTEGER;
+		INTEGER(s)[i] = 2 /* NA_INTEGER */;
 	    } else {
 #ifdef SUPPORT_UTF8
 		INTEGER(s)[i] = mbstowcs(NULL, CHAR(STRING_ELT(x, i)), 0);
@@ -140,17 +141,19 @@ SEXP do_nchar(SEXP call, SEXP op, SEXP args, SEXP env)
 	    }
 	} else {
 	    if(STRING_ELT(x, i) == NA_STRING) {
-		INTEGER(s)[i] = NA_INTEGER;
+		INTEGER(s)[i] = 2 /* NA_INTEGER */;
 	    } else {
-#if defined(SUPPORT_UTF8) && defined(HAVE_WCSWIDTH)
+#ifdef SUPPORT_UTF8
+#ifdef HAVE_WCSWIDTH
 		xi = CHAR(STRING_ELT(x, i));
 		nc = mbstowcs(NULL, xi, 0);
 		AllocBuffer((nc+1)*sizeof(wchar_t));
 		wc = (wchar_t *) buff;
 		mbstowcs(wc, xi, nc + 1);
 		INTEGER(s)[i] = wcswidth(wc, 2147483647);
+#endif
 #else
-		INTEGER(s)[i] = NA_INTEGER;
+		INTEGER(s)[i] = strlen(CHAR(STRING_ELT(x, i)));
 #endif
 	    }
 	}
@@ -1791,4 +1794,67 @@ SEXP do_packBits(SEXP call, SEXP op, SEXP args, SEXP env)
 	}
     UNPROTECT(1);
     return ans;    
+}
+
+SEXP do_strtrim(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    SEXP s, x, width;
+    int i, len, nw, w, nc;
+    char *this;
+#if defined(SUPPORT_UTF8) && defined(HAVE_WCWIDTH)
+    char *p, *q;
+    int w0, wsum, k, nb;
+    wchar_t wc;
+#endif
+
+    checkArity(op, args);
+    PROTECT(x = coerceVector(CAR(args), STRSXP));
+    if (!isString(x))
+	errorcall(call, "strtrim() requires a character vector");
+    len = LENGTH(x);
+    PROTECT(width = coerceVector(CADR(args), INTSXP));
+    nw = LENGTH(width);
+    if(!nw || (nw < len && len % nw))
+	errorcall(call, "invalid 'width' argument");
+    for(i = 0; i < nw; i++)
+	if(INTEGER(width)[i] == NA_INTEGER || 
+	   INTEGER(width)[i] < 0)
+	    errorcall(call, "invalid 'width' argument"); 
+    PROTECT(s = allocVector(STRSXP, len));
+    for (i = 0; i < len; i++) {
+	if(STRING_ELT(x, i) == NA_STRING) {
+	    SET_STRING_ELT(s, i, STRING_ELT(x, i));
+	    continue;
+	}
+	w = INTEGER(width)[i % nw];
+	this = CHAR(STRING_ELT(x, i));
+	nc = strlen(this);
+	AllocBuffer(nc);
+#if defined(SUPPORT_UTF8) && defined(HAVE_WCWIDTH)
+	wsum = 0;
+	for(p = this, w0 = 0, q = buff; *p ;) {
+	    nb =  mbrtowc(&wc, p, MB_CUR_MAX, NULL);
+	    w0 = wcwidth(wc);
+	    if(w0 < 0) { p += nb; continue; }/* skip non-printable chars */
+	    wsum += w0;
+	    if(wsum <= w) {
+		for(k = 0; k < nb; k++) *q++ = *p++;
+	    } else break;
+	}
+	*q = '\0';
+#else
+	/* <FIXME> what about non-printing chars? */
+	if(w >= nc) {
+	    SET_STRING_ELT(s, i, STRING_ELT(x, i));
+	    continue;
+	}
+	strncpy(buff, this, w);
+	buff[w] = '\0';
+#endif
+	SET_STRING_ELT(s, i, mkChar(buff));
+    }
+    if(len > 0) AllocBuffer(-1);
+    copyMostAttrib(CAR(args), s);
+    UNPROTECT(3);
+    return s;
 }

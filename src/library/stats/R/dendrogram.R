@@ -142,9 +142,7 @@ function (object, max.level = 0, digits.d = 3, give.attr = FALSE,
 	paste(paste(names(fl), fl, sep=sep), collapse = ", ")
     }
 
-    nind <- nchar(istr <- indent.str)
-    if(substr(istr, nind,nind) == " ")
-       substr(istr, nind,nind) <- "`"
+    istr <- sub(" $", "`", indent.str)
     cat(istr, stem, sep="")
 
     at <- attributes(object)

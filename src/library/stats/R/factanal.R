@@ -216,7 +216,7 @@ print.loadings <- function(x, digits = 3, cutoff = 0.1, sort = FALSE, ...)
     cat("\nLoadings:\n")
     fx <- format(round(Lambda, digits))
     names(fx) <- NULL
-    nc <- nchar(fx[1])
+    nc <- nchar(fx[1], type="c")
     fx[abs(Lambda) < cutoff] <- paste(rep(" ", nc), collapse = "")
     print(fx, quote = FALSE, ...)
     vx <- colSums(x^2)

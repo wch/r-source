@@ -488,6 +488,7 @@ FUNTAB R_FunTab[] =
 {"packBits",	do_packBits,	1,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
 {"encodeString",do_encodeString,1,	11,	5,	{PP_FUNCALL, PREC_FN,	0}},
 {"iconv",	do_iconv,	0,	11,	3,	{PP_FUNCALL, PREC_FN,	0}},
+{"strtrim",	do_strtrim,	0,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
 
 /* Type Checking (typically implemented in ./coerce.c ) */
 
