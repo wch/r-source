@@ -1,4 +1,4 @@
-                                Dear Emacs, please make this -*-Text-*- mode!
+				Dear Emacs, please make this -*-Text-*- mode!
 	**************************************************
 	*						 *
 	*	       0.90 SERIES NEWS			 *
@@ -8,9 +8,9 @@
 
 NEW FEATURES
 
-    o   packages splines (for regression smoothing splines or
-        interpolating splines) and nls (nonlinear least squares) are
-        part of the base distribution.
+    o	packages splines (for regression smoothing splines or
+	interpolating splines) and nls (nonlinear least squares) are
+	part of the base distribution.
 
     o	New error handling using
 	options ( error = expression(..) ,  warning.expr = ... ).
@@ -20,7 +20,7 @@ NEW FEATURES
 	are printed after the error message (unless the error makes
 	this impossible).
 
-    o   A couple of substantial graphics changes, esp. in the X11
+    o	A couple of substantial graphics changes, esp. in the X11
 	driver. The scaling of symbols is now linear in cex=, rather
 	than being tied to the available font's size. The fonts on an
 	X11 device also scale linearly with cex= insofar as your X
@@ -40,42 +40,42 @@ NEW FEATURES
     o	barplot.default() has new `axisnames' (and `sub') arguments, easily
 	allowing suppression of bar labeling.
 
-    o   cbind() and rbind() now actually do what deparse.level=1 implies:
+    o	cbind() and rbind() now actually do what deparse.level=1 implies:
 	add column/row names based on the deparsed argument, provided it
 	is a simple symbol. The behaviour is still hardcoded, though.
 
-    o  	gc() now reports the total sizes in Mb as well as numbers.
+    o	gc() now reports the total sizes in Mb as well as numbers.
 
-    o   New function help.search() for searching the names, titles,
+    o	New function help.search() for searching the names, titles,
 	aliases, or keywords in the help system.
 
-    o   image() allows x and y to specify either the boundaries or the 
+    o	image() allows x and y to specify either the boundaries or the
 	midpoints of the cells. If the latter, the whole cells are
 	drawn, rather than the outer cells being half-sized as previously.
 
-    o   NULL extra arguments to model.frame() are now treated as missing
+    o	NULL extra arguments to model.frame() are now treated as missing
 	(instead of an error).
 
-    o   optimization with nlm() can use analytic gradients and Hessians
-        if they are supplied.
+    o	optimization with nlm() can use analytic gradients and Hessians
+	if they are supplied.
 
     o	on.exit() allows add=TRUE.
 
-    o   function parse.dcf() for parsing files in debian control file format
-        (DESCRIPTION, CONTENTS, ...)
+    o	function parse.dcf() for parsing files in debian control file format
+	(DESCRIPTION, CONTENTS, ...)
 
     o	predict.{g}lm has a type="terms" option, and residual.glm has
 	type="partial" as a step towards plot.gam().
 
-    o   New arguments to q() and quit() allow the exit status to be set
+    o	New arguments to q() and quit() allow the exit status to be set
 	and the execution of .Last() to be skipped.
 
-    o   New function regexpr(), similar to grep but returns the position
+    o	New function regexpr(), similar to grep but returns the position
 	of the match in each string. (For S-PLUS compatibility.)
 
-    o   scan() now supports complex numbers.
+    o	scan() now supports complex numbers.
 
-    o   New function sort.list, for S compatibility. (This has argument
+    o	New function sort.list, for S compatibility. (This has argument
 	partial, but always sorts completely.)
 
     o	storage.mode<- can be used to set "single", and if setting
@@ -83,26 +83,26 @@ NEW FEATURES
 
     o	new function sunflowerplot().
 
-    o   New function undoc() for listing undocumented objects.
+    o	New function undoc() for listing undocumented objects.
 
 
-    o   User's .Rprofile now executes in global environment
+    o	User's .Rprofile now executes in global environment
 
-    o   All HTML pages now use the new style sheet doc/html/R.css
+    o	All HTML pages now use the new style sheet doc/html/R.css
 
-    o   html and text files have now a header line giving the name of
-        the help file and the package. The description section now
-        comes first.
+    o	html and text files have now a header line giving the name of
+	the help file and the package. The description section now
+	comes first.
 
-    o   All the standard packages have DESCRIPTION files with
-        "Priority: base", so installed.packages and
-        package.description will work with them.  
+    o	All the standard packages have DESCRIPTION files with
+	"Priority: base", so installed.packages and
+	package.description will work with them.
 
-    o   The R-external manual which describes programming for the
+    o	The R-external manual which describes programming for the
 	.Call and .External interfaces is in the doc/manual directory.
 
 
-    o  	S.h now contains (via Rdefines.h) a MESSAGE macro, and
+    o	S.h now contains (via Rdefines.h) a MESSAGE macro, and
 	Free NULLs the pointer, for compatibility with S3 (but not S4).
 
     o	New subroutine REALPR callable from Fortran (like DBLEPR but
@@ -122,17 +122,17 @@ BUG FIXES
 
     o	ar(..., demean=F) works more consistently across methods.
 
-    o   barplot() had lower limits set at -0.01, causing trouble with
-        small heights. Switch to relative scale. (Thanks to Matt Wiener)  
+    o	barplot() had lower limits set at -0.01, causing trouble with
+	small heights. Switch to relative scale. (Thanks to Matt Wiener)
 
     o	density() should work better with NAs and infinite values. See
 	?density for the current definitions of how these are handled.
 
     o	diag(x) now works (as pre 0.65.1) for 1-d arrays.
 
-    o   Stored-source was dropped by dump().
+    o	Stored-source was dropped by dump().
 
-    o   expand.grid returns a data frame even for one arg.
+    o	expand.grid returns a data frame even for one arg.
 
     o	expand.grid(x) now also works for vector arguments x.
 
@@ -141,28 +141,31 @@ BUG FIXES
 	ordered does NOT allow an `ordered' argument anymore
 	and is now defined as trivial call to factor.
 
-    o   help page for gc gives correct size of cons cells (20 bytes
+    o	help page for gc gives correct size of cons cells (20 bytes
 	for 32-bit systems, 36 or more for 64-bit systems).
 
-    o   gcinfo reports correct percentages of heap even for vsize > 200M.
+    o	gcinfo reports correct percentages of heap even for vsize > 200M.
 
     o	gl(6,3,12) and gl(6,3,2) now both work.
 
-    o   Empty lists now deparse correctly.
+    o	Empty lists now deparse correctly.
 
     o	na.omit.ts and na.contiguous preserve classes.
 
     o	plot.factor {plot(<factor>)} now obeys axes=FALSE and xaxt="n".
 
-    o   read.table(as.is = TRUE) would leave everything as character.
+    o	read.table(as.is = TRUE) would leave everything as character.
 	Now it correctly tries to convert to numeric.
 
     o	require() now has the warn.conflicts argument of library().
 
-    o   Fix problems in scan(flush = TRUE).
+    o	Fix problems in scan(flush = TRUE).
 
     o	split(x,f) now works even when f is a factor with unused levels
 	(PR#294).
+
+    o	mosaicplot() has a formula interface and
+	NULL instead of NA default args.
 
     o	stars() has "NULL" instead of "NA" defaults.
 
@@ -179,7 +182,7 @@ BUG FIXES
 	for multiple (conflicting) \alias{.} or \name{.}s.
 
 
-    o   Protect R_fopen against NULL filename in Unix.
+    o	Protect R_fopen against NULL filename in Unix.
 
     o	Math text in outer margins didn't work.
 
@@ -196,7 +199,7 @@ BUG FIXES
 
     o	R CMD check had a typo which made the final message fail.
 
-    o   R_EOF redefined as -1, was causing trouble with isxxxx contructions.
+    o	R_EOF redefined as -1, was causing trouble with isxxxx contructions.
 
 
 	**************************************************
