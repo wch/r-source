@@ -22,7 +22,8 @@ OBJ_HEADERS = Rconfig.h Rversion.h # config.h
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 ## FIXME: get this right when restructuring is done!
 DISTFILES = Makefile.in README \
-	Defn.h Fileio.h Graphics.h IOStuff.h Parse.h Print.h Startup.h \
+	Defn.h Errormsg.h Fileio.h Fortran.h Graphics.h IOStuff.h \
+	Parse.h Print.h Startup.h \
 	$(SRC_HEADERS) \
 	config.h.in
 SUBDIRS = R_ext
