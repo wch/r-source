@@ -118,8 +118,7 @@ static int stem_leaf(double *x, int n, double scale, int width, double atom)
 
 int stemleaf(double *x, int *n, double *scale, int *width, double *atom)
 {
-    stem_leaf(x, *n, *scale, *width, *atom);
-    return 0;
+    return stem_leaf(x, *n, *scale, *width, *atom);
 }
 
 
