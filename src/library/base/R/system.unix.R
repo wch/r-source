@@ -169,7 +169,8 @@ library.dynam <-
 function(chname, package = .packages(), lib.loc = .lib.loc) {
   if (!exists(".Dyn.libs"))
     assign(".Dyn.libs", character(0), envir = .AutoloadEnv)
-  LEN <- nchar(chname)
+  if(missing(chname) || (LEN <- nchar(chname)) == 0)
+    return(.Dyn.libs)
   if (substr(chname, LEN - 2, LEN) == ".so") {
     chname <- substr(chname, 1, LEN - 3)
   }

@@ -1,5 +1,5 @@
 data <- function(..., list = character(0), package = .packages(),
-                 lib.loc = .lib.loc) {
+		 lib.loc = .lib.loc) {
   # FIXME add support for package and lib.loc args
   names <- c(as.character(substitute(list(...))[-1]), list)
   if (length(names) == 0) {
@@ -30,27 +30,28 @@ library <- function(name, help, lib.loc = .lib.loc,
   .not.yet.implemented()
 }
 
-library.dynam <- function(name, package = .packages(), lib.loc = .lib.loc) {
-  # FIXME
+library.dynam <- function(chname, package = .packages(), lib.loc = .lib.loc) {
+  # FIXME (this is == Unix  with changes 1) .dll instead of .so	 2) "\\" for "/"
   if (!exists(".Dyn.libs"))
     assign(".Dyn.libs", character(0), envir = .AutoloadEnv)
-  LEN <- nchar(name)
-  if (substr(name, LEN - 2, LEN) == ".so") {
-    name <- substr(name, 1, LEN - 3)
+  if(missing(chname) || (LEN <- nchar(chname)) == 0)
+    return(.Dyn.libs)
+  if (substr(chname, LEN - 3, LEN) == ".dll") {
+    chname <- substr(chname, 1, LEN - 4)
   }
-  if (is.na(match(name, .Dyn.libs))) {
-    file <- system.file(paste("libs", "\\", name, ".", "dll", sep = ""),
+  if (is.na(match(chname, .Dyn.libs))) {
+    file <- system.file(paste("libs", "\\", chname, ".", "dll", sep = ""),
 			package, lib.loc)
     if (file == "") {
-      stop(paste("dynamic library `", name, "' not found", sep = ""))
+      stop(paste("dynamic library `", chname, "' not found", sep = ""))
     }
     .Internal(dyn.load(file))
-    assign(".Dyn.libs", c(.Dyn.libs, name), envir = .AutoloadEnv)
+    assign(".Dyn.libs", c(.Dyn.libs, chname), envir = .AutoloadEnv)
   }
   invisible(.Dyn.libs)
 }
-    
-system <- function(call, intern = FALSE) 
+
+system <- function(call, intern = FALSE)
   .Internal(system(call, intern))
 
 system.date <- function() {
