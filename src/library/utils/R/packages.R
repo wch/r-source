@@ -138,7 +138,7 @@ installed.packages <- function(lib.loc = NULL, priority = NULL)
     if(!is.null(priority)) {
         if(!is.character(priority))
             stop("`priority' must be character or NULL")
-        if(any(b <- priority == "high"))
+        if(any(b <- priority %in% "high"))
             priority <- c(priority[!b], "recommended","base")
     }
     retval <- character()
