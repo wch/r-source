@@ -38,8 +38,17 @@ AC_CONFIG_AUX_DIR([tools])
 
 ### * Information on the package.
 
-## Automake initialization.
-AM_INIT_AUTOMAKE(AC_PACKAGE_NAME, AC_PACKAGE_VERSION)
+dnl ## Automake initialization.
+dnl Not needed, and possibly resulting in non-portable configure scripts
+dnl with hard-wired Automake API numbers (aclocal-1.x) ...
+dnl AM_INIT_AUTOMAKE(AC_PACKAGE_NAME, AC_PACKAGE_VERSION)
+dnl Nevertheless, we need to provide PACKAGE and VERSION ...
+PACKAGE=[${PACKAGE_NAME}]
+AC_DEFINE_UNQUOTED(PACKAGE, "${PACKAGE}", [Name of package])
+AC_SUBST(PACKAGE)
+VERSION=[${PACKAGE_VERSION}]
+AC_DEFINE_UNQUOTED(VERSION, "${VERSION}", [Version number of package])
+AC_SUBST(VERSION)
 
 ## Autoheader initialization.
 AH_TOP([#ifndef _CONFIG_H
@@ -393,6 +402,11 @@ AC_MSG_RESULT([${BUILDDIR_IS_SRCDIR}])
 
 ### * Checks for programs.
 
+R_MISSING_PROG(ACLOCAL, aclocal)
+R_MISSING_PROG(AUTOCONF, autoconf)
+R_MISSING_PROG(AUTOMAKE, automake)
+R_MISSING_PROG(AUTOHEADER, autoheader)
+R_MISSING_PROG(MAKEINFO, makeinfo)
 AC_PROG_AWK
 AC_PROG_EGREP
 AC_PROG_LN_S

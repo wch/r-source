@@ -49,6 +49,25 @@ else
   $1="${[$1]}${separator}$2"
 fi])# R_SH_VAR_ADD
 
+## R_MISSING_PROG(NAME, PROGRAM)
+## -----------------------------
+## Simplified variant of AM_MISSING_PROG.
+## Set NAME to PROGRAM if this is found and works (in the sense of
+## properly implementing --version, or to an appropriate invocation
+## if the missing script otherwise.
+AC_DEFUN([R_MISSING_PROG],
+[AC_MSG_CHECKING([for working $2])
+if ($2 --version) < /dev/null > /dev/null 2>&1; then
+  $1=$2
+  AC_MSG_RESULT([found])
+else
+  $1="\$(SHELL) \$(top_srcdir)/tools/missing $2"
+  AC_MSG_RESULT([missing])
+fi
+AC_SUBST($1)
+])# R_MISSING_PROG
+
+
 ### * Programs
 
 ## R_PROG_AR
