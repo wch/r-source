@@ -664,7 +664,7 @@ static SEXP R_GetGlobalCache(SEXP symbol)
   case LISTSXP:
     return BINDING_VALUE(vl);
   default:
-    error(_("illegal cached value in R_GetGlobalCache"));
+    error(_("invalid cached value in R_GetGlobalCache"));
     return R_NilValue;
   }
 }
@@ -1831,7 +1831,7 @@ SEXP do_missing(SEXP call, SEXP op, SEXP args, SEXP rho)
     if( isString(sym) && length(sym)==1 )
         s = sym = install(CHAR(STRING_ELT(CAR(args), 0)));
     if (!isSymbol(sym))
-	error(_("\"missing\" illegal use of missing"));
+	errorcall(call, _("invalid use of missing"));
 
     if (DDVAL(sym)) {
         ddv = ddVal(sym);
@@ -1856,7 +1856,7 @@ SEXP do_missing(SEXP call, SEXP op, SEXP args, SEXP rho)
 	else goto havebinding;
     }
     else  /* it wasn't an argument to the function */
-	error(_("\"missing\" illegal use of missing"));
+	errorcall(call, _("missing can only be used for arguments"));
 
  havebinding:
 

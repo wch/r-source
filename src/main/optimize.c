@@ -469,9 +469,9 @@ static void opterror(int nerr)
     case -2:
 	error(_("nlm is inefficient for 1-d problems"));
     case -3:
-	error(_("illegal gradient tolerance in nlm"));
+	error(_("invalid gradient tolerance in nlm"));
     case -4:
-	error(_("illegal iteration limit in nlm"));
+	error(_("invalid iteration limit in nlm"));
     case -5:
 	error(_("minimization function has no good digits in nlm"));
     case -6:

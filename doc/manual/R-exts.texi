@@ -6284,7 +6284,7 @@ number of characters converted, or @code{(size_t)-1} (beware:
 @code{size_t} is usually an unsigned type).  It should be safe to assume
 that an error condition sets @code{errno} to one of @code{E2BIG} (the
 output buffer is full), @code{EILSEQ} (the input cannot be converted,
-and might be illegal in the encoding specified) or @code{EINVAl} (the
+and might be invalid in the encoding specified) or @code{EINVAL} (the
 input does not end with a complete multi-byte character).
 
 @deftypefun int Riconv_close (void * @var{cd})

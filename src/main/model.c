@@ -1548,7 +1548,7 @@ SEXP do_modelmatrix(SEXP call, SEXP op, SEXP args, SEXP rho)
     PROTECT(factors = duplicate(getAttrib(terms, install("factors"))));
     if (length(factors) == 0) {
 	/* if (intrcept == 0)
-	   errorcall(call, "illegal model (zero parameters).");*/
+	   errorcall(call, "invalid model (zero parameters).");*/
 	nVar = 1;
 	nterms = 0;
     }

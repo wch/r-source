@@ -386,7 +386,7 @@ SEXP R_syscall(int n, RCNTXT *cptr)
     else
 	n = - n;
     if(n < 0 )
-	errorcall(R_GlobalContext->call, _("illegal frame number"));
+	errorcall(R_GlobalContext->call, _("invalid frame number"));
     while (cptr->nextcontext != NULL) {
 	if (cptr->callflag & CTXT_FUNCTION ) {
 	    if (n == 0)
@@ -409,7 +409,7 @@ SEXP R_sysfunction(int n, RCNTXT *cptr)
     else
 	n = - n;
     if (n < 0 )
-	errorcall(R_GlobalContext->call, _("illegal frame number"));
+	errorcall(R_GlobalContext->call, _("invalid frame number"));
     while (cptr->nextcontext != NULL) {
 	if (cptr->callflag & CTXT_FUNCTION ) {
 	    if (n == 0)

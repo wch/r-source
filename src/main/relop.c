@@ -392,7 +392,7 @@ static SEXP complex_relop(RELOP_TYPE code, SEXP s1, SEXP s2, SEXP call)
     SEXP ans;
 
     if (code != EQOP && code != NEOP) {
-	errorcall(call, _("illegal comparison with complex values"));
+	errorcall(call, _("invalid comparison with complex values"));
     }
 
     n1 = LENGTH(s1);

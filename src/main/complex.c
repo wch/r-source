@@ -52,7 +52,7 @@ SEXP complex_unary(ARITHOP_TYPE code, SEXP s1)
 	}
 	return ans;
     default:
-	error_return(_("illegal complex unary operator"));
+	error_return(_("invalid complex unary operator"));
     }
 }
 

@@ -121,7 +121,7 @@ glm.fit <-
     linkinv <- family$linkinv
     mu.eta <- family$mu.eta
     if (!is.function(variance) || !is.function(linkinv) )
-	stop("illegal 'family' argument")
+	stop("'family' argument seems not to be a valid family object")
     valideta <- family$valideta
     if (is.null(valideta))
 	valideta <- function(eta) TRUE
