@@ -494,6 +494,24 @@ AC_DEFUN(R_FUNC_LOG,
     fi
   ])
 dnl
+dnl R_HEADER_SETJMP
+dnl
+AC_DEFUN(R_HEADER_SETJMP,
+ [AC_CACHE_CHECK([whether setjmp.h is POSIX.1 compatible], 
+    r_cv_header_setjmp_posix,
+    [AC_EGREP_HEADER(sigjmp_buf, setjmp.h, 
+       r_cv_header_setjmp_posix=yes,
+       r_cv_header_setjmp_posix=no)
+     if test "${r_cv_header_setjmp_posix}" = yes; then
+       AC_EGREP_HEADER(siglongjmp, setjmp.h, , r_cv_header_setjmp_posix=no)
+     fi
+     if test "${r_cv_header_setjmp_posix}" = yes; then
+       AC_EGREP_HEADER(sigsetjmp, setjmp.h, , r_cv_header_setjmp_posix=no)
+     fi])
+  if test "${r_cv_header_setjmp_posix}" = yes; then
+    AC_DEFINE(HAVE_POSIX_SETJMP)
+  fi])
+dnl
 dnl R_C_OPTIEEE
 dnl
 AC_DEFUN(R_C_OPTIEEE,
