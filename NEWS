@@ -530,8 +530,12 @@ BUG FIXES
 
     o	seq.default() was returning only one element for a relative
 	range of less than about 1e-8, which was excessively conservative.
+	(PR#1416)
 
     o	tsp(x) <- NULL  now also works after library(methods).
+
+    o	persp(shade=) was not working correctly with the default
+	col=NULL if this was transparent. (PR#1419)
 
 
 	**************************************************

@@ -1573,7 +1573,7 @@ static void MakeVector (double x, double y, double z, Vector3d v)
 /* Set up the light source */
 static double Light[4];
 static double Shade;
-static int DoLighting;
+static Rboolean DoLighting;
 
 static void SetUpLight(double theta, double phi)
 {
@@ -2242,9 +2242,9 @@ SEXP do_persp(SEXP call, SEXP op, SEXP args, SEXP env)
 
     if (R_FINITE(Shade) && Shade <= 0) Shade = 1;
     if (R_FINITE(ltheta) && R_FINITE(lphi) && R_FINITE(Shade))
-	DoLighting = 1;
+	DoLighting = TRUE;
     else
-	DoLighting = 0;
+	DoLighting = FALSE;
 
     if (!scale) {
 	double s;
@@ -2273,6 +2273,7 @@ SEXP do_persp(SEXP call, SEXP op, SEXP args, SEXP env)
     PROTECT(col = FixupCol(col, Rf_gpptr(dd)->bg));
     ncol = LENGTH(col);
     if (ncol < 1) errorcall(call, "invalid col specification");
+    if(!R_OPAQUE(INTEGER(col)[0])) DoLighting = FALSE;
     PROTECT(border = FixupCol(border, Rf_gpptr(dd)->fg));
     if (length(border) < 1) errorcall(call, "invalid border specification");
 
