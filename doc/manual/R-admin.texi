@@ -1695,7 +1695,7 @@ plugins may also be controlled by the Sun Java applet in the Control
 Panel.
 
 @node Java Virtual Machines on Mac OS X , , Java Virtual Machines on Windows , Enabling search in HTML help
-@section Java Virtual Machines on Windows
+@section Java Virtual Machines on Mac OS X
 
 The HTML search engine does not work with Safari under Mac OS X, and
 Sun's @code{j2re 1.4.x} is said not to work with Mozilla 1.6.
