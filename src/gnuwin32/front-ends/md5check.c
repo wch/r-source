@@ -23,23 +23,108 @@
 #include <stdio.h>
 #include <strings.h>
 
+static char nameList[3500][80];
+static int nnames = 0;
+
+
+void read_unist_file(char* fname)
+{
+    FILE *fp;
+    int Version, NumRecs, EndOffset, size, res, i;
+    unsigned short Typ;
+    char *buf, *p, *q, name[1000], root[256];
+    int haveRoot = 0;
+
+    fp = fopen(fname, "rb");
+    if(!fp) {
+	fprintf(stderr, "Cannot open file %s\n", fname);
+	exit(2);
+    }
+    fseek(fp, 320, SEEK_SET);
+    fread(&Version, 4, 1, fp);
+    fread(&NumRecs, 4, 1, fp);
+    fread(&EndOffset, 4, 1, fp);
+    buf = malloc(EndOffset); p = buf;
+    fseek(fp, 4*29, SEEK_CUR);
+    /* now have periodic CRCs */
+    while(1) {
+	fread(&size, 4, 1, fp);
+	if(!size) break;
+	fseek(fp, 8, SEEK_CUR); /* skip CRC? */
+	res = fread(p, 1, size, fp);
+	if(res < size) break;
+	p += size;
+    }
+    p = buf;
+    for(i = 0; i < NumRecs; i++) {
+	unsigned char X;
+	unsigned short X2;
+	unsigned int X4;
+	int found = 0;
+	memcpy(&Typ, p, 2); p += 2;
+	p += 8;
+	while(++found) {
+	    X = *p++;
+	    if(X < 253) X4 = X;
+	    else if(X == 253) {
+		memcpy(&X2, p, 2); p += 2;
+		X4 = X2;
+	    } else if(X == 254) {
+		memcpy(&X4, p, 4); p += 4;
+	    } else break;
+	    if(Typ == 129 && !haveRoot) {
+		haveRoot = 1;
+		strncpy(root, p, X4);
+		*(root + X4) = '\0';
+	    }
+	    if(Typ == 130 && found == 1) {
+		strncpy(name, p, X4);
+		*(name + X4) = '\0';
+		strcpy(nameList[nnames], name+strlen(root) + 1);
+		for(q = nameList[nnames]; *q; q++)
+		    if(*q == '\\') *q ='/';
+		/* printf("%s\n", nameList[nnames]); */
+		nnames++;
+	    }
+	    p += X4;
+	}
+    }
+    fclose(fp);
+    free(buf);
+}
+
+#include <direct.h> /* for chdir */
+
+char *dirname(const char *fname)
+{
+    static char buf[500];
+    int i;
+    
+    strcpy(buf, fname);
+    for(i = strlen(buf) - 1; i >= 0; i--)
+	if(buf[i] == '/' || buf[i] == '\\') { buf[i] = '\0'; return buf; }
+    return(".");
+}
+
+
 int main (int argc, char **argv)
 {
     FILE *fp, *fp2;
-    int j, wrong = 0, res;
-    char *p, line[500]; /* < MAX_PATH + 32+ some */
+    int j, wrong = 0, miss = 0, res;
+    char *p, fname[500], line[500]; /* < MAX_PATH + 32+ some */
     char onfile[33], out[33];
     unsigned char resblock[16];
 
-    if(argc != 2) {
-	fprintf(stderr, "Usage: md5check /path/to/MD5/file\n");
-	exit(1);
-    }
-    fp = fopen(argv[1], "r");
+    if(argc < 2) strcpy(fname, "../MD5"); else strcpy(fname, argv[1]);
+    fp = fopen(fname, "r");
     if(!fp) {
-	fprintf(stderr, "Cannot open file %s\n", argv[1]);
+	fprintf(stderr, "Cannot open file %s\n", fname);
 	exit(2);
     }
+    chdir(dirname(fname));
+
+    if(access("unins000.dat", 4) == 0) read_unist_file("unins000.dat");
+
     onfile[32] = '\0';
     while(fgets(line, 500, fp)) {
 	p = line + (strlen(line) - 1);
@@ -47,11 +132,26 @@ int main (int argc, char **argv)
 #ifdef DEBUG
 	printf("%s: ", line+34);
 #endif
-	fp2 = fopen(line+34, "rb");
+	if(line[33] == '*')
+	    fp2 = fopen(line+34, "rb");
+	else
+	    fp2 = fopen(line+34, "r");
 	if(!fp2) {
+	    int i, found = 0;
+	    for(i = 0; i < nnames; i++) {
+		if(strcmp(line+34, nameList[i]) == 0) {
+		    found = 1;
+		    break;
+		}
+	    }
+	    
 #ifdef DEBUG
 	    printf("missing\n");
 #endif
+	    if(found) {
+		fprintf(stderr, "file %s: missing\n", line+34);
+		miss++;
+	    }
 	    continue;
 	}
 	strncpy(onfile, line, 32);
@@ -72,17 +172,21 @@ int main (int argc, char **argv)
 		printf("changed\n");
 		printf("  %s vs %s\n", onfile, out);
 #endif
-		fprintf(stderr, "%s: changed", line+34);
+		fprintf(stderr, "file %s: changed\n", line+34);
 		wrong++;
 	    }
 	}
 	fclose(fp2);
     }
     fclose(fp);
-    if(wrong) {
-	fprintf(stderr, "WARNING: %d files have been changed\n", wrong);
+    if(miss) fprintf(stderr, "WARNING: %d files missing\n", miss);
+    if(wrong) fprintf(stderr, "WARNING: %d files changed\n", wrong);
+    if(wrong || miss) {
+	fprintf(stderr, "Press ENTER to finish");
+	getc(stdin);
 	exit(10);
     }
+
     fprintf(stderr, "No errors detected\n");
     exit(0);
 }

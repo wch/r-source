@@ -61,15 +61,17 @@ Cross-building of packages is now done by the XINSTALL script.
 bringToTop() in MDI mode now brings the whole MDI frame to the top
 before raising the chosen window within it.
 
-There is a new utility to check that the installation.  Open a Command
-Prompt/MS-DOS window, cd to the top of the installation (where the
-READMEs are) and run
+There is a new utility to check the installation (not miniR.exe).
+Open a Command Prompt/MS-DOS window, cd to the top of the installation
+(where the READMEs are) and run
 
 	bin\md5check MD5
 
-Any changed files will be reported (but not any missing ones).
+Any changed or missing files will be reported.  You can also
+double-click to run the file -- it will open a window which will stay
+open if there are any errors.
 
-The `Manuals' menu item is renamed to `Manuals (in PDF)', and now
+The `Manuals' menu item is renamed to `Manuals (in PDF)', and is now
 greyed out if no manuals are present (which GraphApp was not doing
 correctly).
 
