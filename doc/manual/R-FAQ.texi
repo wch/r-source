@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2000
-@set FAQ-VERSION 1.0-1, 2000/02/28
+@set FAQ-VERSION 1.0-3, 2000/04/01
 @set REL-VERSION 1.0.0
 @set DEV-VERSION 1.1.0
 @c %**end of header
@@ -386,18 +386,18 @@ distribution is available.  We hope that this will change soon.
 @node Are there Unix binaries for R?, What documentation exists for R?, How can R be installed?, R Basics
 @section Are there Unix binaries for R?
 
-@c Linux binaries as of 2000/02/12:
+@c Linux binaries as of 2000/03/05:
 @c
-@c debian   2.1 i386  0.99.0 Doug Bates
-@c          2.2 i386  0.99.0 Doug Bates
-@c linuxppc 5.0 ppc   0.99.0 Alex Buerkle <buerkle@hawaii.edu>
-@c redhat   6.x alpha 0.99.0 Naoki Takebayashi <ntakebay@bio.indiana.edu>
-@c              i386  0.99.0 Martyn Plummer <plummer@iarc.fr>
-@c              sparc 0.99.0 Vin Everett <vin.everett@mrc-bsu.cam.ac.uk>
+@c debian   2.1 i386  1.0.0  Doug Bates
+@c          2.2 i386  1.0.0  Doug Bates
+@c linuxppc 5.0 ppc   1.0.0  Alex Buerkle <buerkle@hawaii.edu>
+@c redhat   6.x alpha 1.0.0  Naoki Takebayashi <ntakebay@bio.indiana.edu>
+@c              i386  1.0.0  Martyn Plummer <plummer@iarc.fr>
+@c              sparc 1.0.0  Vin Everett <vin.everett@mrc-bsu.cam.ac.uk>
 @c suse     5.3 i386  0.90.1 Albrecht Gebhardt <albrecht.gebhardt@uni-klu.ac.at>
 @c          6.0 i386  0.90.1 Albrecht Gebhardt <albrecht.gebhardt@uni-klu.ac.at>
-@c          6.2 i386  0.90.1 Albrecht Gebhardt <albrecht.gebhardt@uni-klu.ac.at>
-@c          6.3 i386  0.99.0 Albrecht Gebhardt <albrecht.gebhardt@uni-klu.ac.at>
+@c          6.2 i386  1.0.0  Albrecht Gebhardt <albrecht.gebhardt@uni-klu.ac.at>
+@c          6.3 i386  1.0.0  Albrecht Gebhardt <albrecht.gebhardt@uni-klu.ac.at>
 
 The @file{bin/linux} directory of a CRAN site contains Debian 2.1 and
 2.2 packages for the i386 platform (now part of the Debian distribution
@@ -1291,6 +1291,8 @@ any mixture of these.
 Miscellaneous functions used at the Department of Statistics at TU Wien
 (E1071), including moments, short-time Fourier transforms, Independent
 Component Analysis, and simulation of a Wiener process.
+@item fdim
+Functions for calculating fractal dimension.
 @item fracdiff
 Maximum likelihood estimation of the parameters of a fractionally
 differenced ARIMA(@math{p,d,q}) model (Haslett and Raftery, Applied
@@ -1440,15 +1442,18 @@ Interface to Visual Tcl.
 
 @email{jlindsey@@luc.ac.be, Jim Lindsey} has written a collection of R
 packages for nonlinear regression and repeated measurements, consisting
-of @strong{event} (procedures for event history analysis), @strong{gnlm}
-(generalized nonlinear regression models), @strong{growth} (normal
-theory repeated measurements models), @strong{repeated} (models for
-non-normal repeated measurements.), @strong{rmutil} (tools for repeated
+of @strong{event} (event history procedures and models), @strong{gnlm}
+(generalized nonlinear regression models), @strong{growth} (multivariate
+normal and elliptically-contoured repeated measurements models),
+@strong{repeated} (non-normal repeated measurements models),
+@strong{rmutil} (utilities for nonlinear regression and repeated
 measurements), and @strong{stable} (probability functions and
-generalized regression models for stable distributions).  Jim's packages
-were used for all analyses in the new edition of his book ``Models for
-Repeated Measurements'' (1999, Oxford University Press), and can be
-obtained from @uref{http://www.luc.ac.be/~jlindsey/rcode.html}.
+generalized regression models for stable distributions).  All analyses
+in the new edition of his book ``Models for Repeated Measurements''
+(1999, Oxford University Press) were carried out using these packages.
+Jim has also started @strong{dna}, a package with procedures for the
+analysis of DNA sequences.  Jim's packages can be obtained from
+@uref{http://www.luc.ac.be/~jlindsey/rcode.html}.
 
 @email{pgilbert@@bank-banque-canada.ca, Paul Gilbert} has written the
 Dynamic Systems Estimation (DSE) Library, a multivariate time series
@@ -1787,6 +1792,7 @@ dir /opt/R/src/unix
 * Why does plotting give a color allocation error?::  
 * Is R Y2K-compliant?::         
 * How do I convert factors to numeric?::  
+* Are Trellis displays implemented in R?::  
 @end menu
 
 @node Why does R run out of memory?, Why does sourcing a correct file fail?, R Miscellania, R Miscellania
@@ -2064,7 +2070,7 @@ whatsoever}.
 R, like any other programming language, can be used to write programs
 and manipulate data in ways that are not Y2K compliant.
 
-@node How do I convert factors to numeric?,  , Is R Y2K-compliant?, R Miscellania
+@node How do I convert factors to numeric?, Are Trellis displays implemented in R?, Is R Y2K-compliant?, R Miscellania
 @section How do I convert factors to numeric?
 
 It may happen that when reading numeric data into R (usually, when
@@ -2083,6 +2089,19 @@ as.numeric(levels(f))[as.integer(f)]
 @end example
 
 In any case, do not call @code{as.numeric} or their likes directly.
+
+@node Are Trellis displays implemented in R?,  , How do I convert factors to numeric?, R Miscellania
+@section Are Trellis displays implemented in R?
+
+Not yet.  Meanwhile, you could look at @code{coplot()} and
+@code{dotplot()} which might do at least some of what you want.  Note
+also that the R version of @code{pairs()} is fairly general and provides
+most of the functionality of @code{splom()}, and that R's default plot
+method has an argument @code{asp} allowing to specify (and fix against
+device resizing) the aspect ratio of the plot.
+
+(By the way, ``Trellis'' is a trademark which cannot be used in R;
+instead, the term ``lattice'' has been proposed for the R equivalent.)
 
 @node R Programming, R Bugs, R Miscellania, Top
 @chapter R Programming

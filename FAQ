@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 1.0-1, 2000/02/28
+Version 1.0-3, 2000/04/01
 Kurt Hornik
 
 
@@ -68,6 +68,7 @@ Table of Contents
   7.11 Why does plotting give a color allocation error?
   7.12 Is R Y2K-compliant?
   7.13 How do I convert factors to numeric?
+  7.14 Are Trellis displays implemented in R?
 
 8 R Programming
   8.1 How should I write summary methods?
@@ -1046,6 +1047,9 @@ works, was published in the Journal of Statistical Software
      (E1071), including moments, short-time Fourier transforms, Independent
      Component Analysis, and simulation of a Wiener process.
 
+*fdim*
+     Functions for calculating fractal dimension.
+
 *fracdiff*
      Maximum likelihood estimation of the parameters of a fractionally
      differenced ARIMA(p,d,q) model (Haslett and Raftery, Applied
@@ -1224,14 +1228,17 @@ these a try, of course.  This area of CRAN currently contains
 
    Jim Lindsey <jlindsey@luc.ac.be> has written a collection of R packages
 for nonlinear regression and repeated measurements, consisting of *event*
-(procedures for event history analysis), *gnlm* (generalized nonlinear
-regression models), *growth* (normal theory repeated measurements models),
-*repeated* (models for non-normal repeated measurements.), *rmutil* (tools
-for repeated measurements), and *stable* (probability functions and
-generalized regression models for stable distributions).  Jim's packages
-were used for all analyses in the new edition of his book "Models for
-Repeated Measurements" (1999, Oxford University Press), and can be obtained
-from `http://www.luc.ac.be/~jlindsey/rcode.html'.
+(event history procedures and models), *gnlm* (generalized nonlinear
+regression models), *growth* (multivariate normal and
+elliptically-contoured repeated measurements models), *repeated*
+(non-normal repeated measurements models), *rmutil* (utilities for
+nonlinear regression and repeated measurements), and *stable* (probability
+functions and generalized regression models for stable distributions).  All
+analyses in the new edition of his book "Models for Repeated Measurements"
+(1999, Oxford University Press) were carried out using these packages.  Jim
+has also started *dna*, a package with procedures for the analysis of DNA
+sequences.  Jim's packages can be obtained from
+`http://www.luc.ac.be/~jlindsey/rcode.html'.
 
    Paul Gilbert <pgilbert@bank-banque-canada.ca> has written the Dynamic
 Systems Estimation (DSE) Library, a multivariate time series package which
@@ -1754,6 +1761,18 @@ to get the numbers back.  More efficient, but harder to remember, is
      as.numeric(levels(f))[as.integer(f)]
 
    In any case, do not call `as.numeric' or their likes directly.
+
+7.14 Are Trellis displays implemented in R?
+===========================================
+
+   Not yet.  Meanwhile, you could look at `coplot()' and `dotplot()' which
+might do at least some of what you want.  Note also that the R version of
+`pairs()' is fairly general and provides most of the functionality of
+`splom()', and that R's default plot method has an argument `asp' allowing
+to specify (and fix against device resizing) the aspect ratio of the plot.
+
+   (By the way, "Trellis" is a trademark which cannot be used in R;
+instead, the term "lattice" has been proposed for the R equivalent.)
 
 8 R Programming
 ***************

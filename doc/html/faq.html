@@ -14,7 +14,7 @@
 <body>
 <h1>R FAQ</h1>
 <h2>Frequently Asked Questions on R</h2>
-<h2>Version 1.0-1, 2000/02/28</h2>
+<h2>Version 1.0-3, 2000/04/01</h2>
 <address>Kurt Hornik</address>
 <p><p><hr><p>
 
@@ -90,6 +90,7 @@
 <li><a href="#Why%20does%20plotting%20give%20a%20color%20allocation%20error%3f">7.11 Why does plotting give a color allocation error?</a>
 <li><a href="#Is%20R%20Y2K-compliant%3f">7.12 Is R Y2K-compliant?</a>
 <li><a href="#How%20do%20I%20convert%20factors%20to%20numeric%3f">7.13 How do I convert factors to numeric?</a>
+<li><a href="#Are%20Trellis%20displays%20implemented%20in%20R%3f">7.14 Are Trellis displays implemented in R?</a>
 </ul>
 <li><a href="#R%20Programming">8 R Programming</a>
 <ul>
@@ -1354,6 +1355,8 @@ any mixture of these.
 <dd>Miscellaneous functions used at the Department of Statistics at TU Wien
 (E1071), including moments, short-time Fourier transforms, Independent
 Component Analysis, and simulation of a Wiener process. 
+<br><dt><strong>fdim</strong>
+<dd>Functions for calculating fractal dimension. 
 <br><dt><strong>fracdiff</strong>
 <dd>Maximum likelihood estimation of the parameters of a fractionally
 differenced ARIMA(p,d,q) model (Haslett and Raftery, Applied
@@ -1491,15 +1494,18 @@ statistics.
 
 <a href="mailto:jlindsey@luc.ac.be">Jim Lindsey</a> has written a collection of R
 packages for nonlinear regression and repeated measurements, consisting
-of <strong>event</strong> (procedures for event history analysis), <strong>gnlm</strong>
-(generalized nonlinear regression models), <strong>growth</strong> (normal
-theory repeated measurements models), <strong>repeated</strong> (models for
-non-normal repeated measurements.), <strong>rmutil</strong> (tools for repeated
+of <strong>event</strong> (event history procedures and models), <strong>gnlm</strong>
+(generalized nonlinear regression models), <strong>growth</strong> (multivariate
+normal and elliptically-contoured repeated measurements models),
+<strong>repeated</strong> (non-normal repeated measurements models),
+<strong>rmutil</strong> (utilities for nonlinear regression and repeated
 measurements), and <strong>stable</strong> (probability functions and
-generalized regression models for stable distributions).  Jim's packages
-were used for all analyses in the new edition of his book "Models for
-Repeated Measurements" (1999, Oxford University Press), and can be
-obtained from <a href="http://www.luc.ac.be/~jlindsey/rcode.html">http://www.luc.ac.be/~jlindsey/rcode.html</a>.
+generalized regression models for stable distributions).  All analyses
+in the new edition of his book "Models for Repeated Measurements"
+(1999, Oxford University Press) were carried out using these packages. 
+Jim has also started <strong>dna</strong>, a package with procedures for the
+analysis of DNA sequences.  Jim's packages can be obtained from
+<a href="http://www.luc.ac.be/~jlindsey/rcode.html">http://www.luc.ac.be/~jlindsey/rcode.html</a>.
 
 <a href="mailto:pgilbert@bank-banque-canada.ca">Paul Gilbert</a> has written the
 Dynamic Systems Estimation (DSE) Library, a multivariate time series
@@ -1867,6 +1873,7 @@ Up:<a rel=up href="#Top">Top</a>
 <li><a href="#Why%20does%20plotting%20give%20a%20color%20allocation%20error%3f">Why does plotting give a color allocation error?</a>: 
 <li><a href="#Is%20R%20Y2K-compliant%3f">Is R Y2K-compliant?</a>: 
 <li><a href="#How%20do%20I%20convert%20factors%20to%20numeric%3f">How do I convert factors to numeric?</a>: 
+<li><a href="#Are%20Trellis%20displays%20implemented%20in%20R%3f">Are Trellis displays implemented in R?</a>: 
 </ul>
 
 <p><hr>
@@ -2201,6 +2208,7 @@ and manipulate data in ways that are not Y2K compliant.
 
 <p><hr>
 Node:<a name="How%20do%20I%20convert%20factors%20to%20numeric%3f">How do I convert factors to numeric?</a>,
+Next:<a rel=next href="#Are%20Trellis%20displays%20implemented%20in%20R%3f">Are Trellis displays implemented in R?</a>,
 Previous:<a rel=previous href="#Is%20R%20Y2K-compliant%3f">Is R Y2K-compliant?</a>,
 Up:<a rel=up href="#R%20Miscellania">R Miscellania</a>
 <br>
@@ -2220,6 +2228,24 @@ factor object, you can use
 </pre>
 
 <p>In any case, do not call <code>as.numeric</code> or their likes directly.
+
+<p><hr>
+Node:<a name="Are%20Trellis%20displays%20implemented%20in%20R%3f">Are Trellis displays implemented in R?</a>,
+Previous:<a rel=previous href="#How%20do%20I%20convert%20factors%20to%20numeric%3f">How do I convert factors to numeric?</a>,
+Up:<a rel=up href="#R%20Miscellania">R Miscellania</a>
+<br>
+
+<h2>7.14 Are Trellis displays implemented in R?</h2>
+
+<p>Not yet.  Meanwhile, you could look at <code>coplot()</code> and
+<code>dotplot()</code> which might do at least some of what you want.  Note
+also that the R version of <code>pairs()</code> is fairly general and provides
+most of the functionality of <code>splom()</code>, and that R's default plot
+method has an argument <code>asp</code> allowing to specify (and fix against
+device resizing) the aspect ratio of the plot.
+
+<p>(By the way, "Trellis" is a trademark which cannot be used in R;
+instead, the term "lattice" has been proposed for the R equivalent.)
 
 <p><hr>
 Node:<a name="R%20Programming">R Programming</a>,
