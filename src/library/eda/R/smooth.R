@@ -7,12 +7,11 @@ smooth <- function(x)
     n <- length(x)
     smo <- .C("tukeysmooth",
 	      as.double(x),
-	      double(n),
+	      y = double(n),
 	      double(n),
 	      double(n),
 	      n,
-	      double(1),
-	      DUP=FALSE, PACKAGE="eda")[[2]]
+	      DUP=FALSE, PACKAGE="eda") $ y
     if(is.ts(x))
 	smo <- ts(smo, start=start(x), freq=frequency(x))
     smo
