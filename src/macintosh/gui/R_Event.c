@@ -670,7 +670,7 @@ void DoWindowEvent( const EventRecord *event )
 
 
 /* ProcessEvent routine :
-   Desciption :
+   Description :
 
    It is used in the Event  loop, when you call Process Event, it will
    capture  the next  event that  available,  and dispatch  it to  the
