@@ -19,6 +19,7 @@
 
 #ifndef R_TS_H
 #define R_TS_H
+#include <Rinternals.h>
 
 void acf(double *x, int *n, int *nser, int *nlag, int *correlation,
 	 double *acf);
@@ -32,14 +33,6 @@ void multi_burg(int *pn, double *x, int *pomax, int *pnser, double *coef,
 void multi_yw(double *acf, int *pn, int *pomax, int *pnser, double *coef,
 	      double *pacf, double *var, double *aic, int *porder,
 	      int *puseaic);
-void setup_starma(int *na, double *x, int *pn, double *xreg, int *pm,
-                  double *dt, int *ptrans);
-void Dotrans(double *x, double *y);
-void get_s2(double *res);
-void get_resid(double *res);
-void arma0fa(double *inparams, double *res);
-void arma0_kfore(int *pd, int *psd, int *n_ahead, double *x, double *var);
-void free_starma(void);
 void R_intgrt_vec (double *x, double *y, int *lag, int *n);
 void filter1(double *x, int *n, double *filter, int *nfilt, int *sides,
 	     int *circular, double *out);
@@ -58,22 +51,41 @@ F77_SUB(stl)(double *y, int *n, int *np, int *ns,
 	     int *no, double *rw, double *season, double *trend,
 	     double *work);
 
-void starma(int ip, int iq, int ir, int np, double *phi,
+typedef struct
+{
+    int p, q, r, np, nrbar, n, m, trans;
+    int mp, mq, msp, msq, ns;
+    double delta, s2;
+    double *params, *phi, *theta, *a, *P, *V;
+    double *thetab, *xnext, *xrow, *rbar, *w, *wkeep, *resid, *reg;
+} starma_struct, *Starma;
+
+void starma(int p, int q, int r, int np, double *phi,
 	    double *theta, double *a,
-	    double *p, double *v, double *thetab, double *xnext,
+	    double *P, double *V, double *thetab, double *xnext,
 	    double *xrow, double *rbar, int nrbar, int *ifault);
 
-void karma(int ip, int iq, int ir, int np, double *phi,
-	   double *theta, double *a, double *p,
-	   double *v, int n, double * w, double *resid,
+void karma(int p, int q, int r, int np, double *phi,
+	   double *theta, double *a, double *P,
+	   double *V, int n, double *w, double *resid,
 	   double *sumlog, double *ssq, int iupd,
 	   double delta, int *nit);
 
-void forkal(int ip, int iq, int ir, int np, int ird, 
-	    int irz, int id, int il, int n, int nrbar, 
+void forkal(int p, int q, int r, int np, int ird, 
+	    int il, int n, int nrbar, 
 	    double *phi, double *theta, double *delta, 
-	    double *w, double *y, double *amse, double *a, 
-	    double *p, double *v, double *resid,
+	    double *w, double *y, double *amse,
+	    double *V, double *resid,
 	    double *xnext, double *xrow, double *rbar, 
-	    double *thetab, double *store, int *ifault);
+	    double *thetab, int *ifault);
+
+SEXP setup_starma(SEXP na, SEXP x, SEXP pn, SEXP xreg, SEXP pm, 
+		  SEXP dt, SEXP ptrans);
+SEXP free_starma(void);
+SEXP set_trans(SEXP ptrans);
+SEXP arma0fa(SEXP inparams);
+SEXP get_s2(void);
+SEXP get_resid(void);
+SEXP Dotrans(SEXP x);
+SEXP arma0_kfore(SEXP pd, SEXP psd, SEXP n_ahead);
 #endif

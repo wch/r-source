@@ -290,13 +290,15 @@ karma(int p, int q, int r, int np, double *phi, double *theta,
 
 /*  start of as 182 */
 void
-forkal(int ip, int iq, int ir, int np, int ird, int irz, int id, int il, 
+forkal(int ip, int iq, int ir, int np, int id, int il, 
        int n, int nrbar, double *phi, double *theta, double *delta,
-       double *w, double *y, double *amse, double *a, 
-       double *p, double *v, double *resid, double *xnext, 
-       double *xrow, double *rbar, double *thetab, double *store, 
+       double *w, double *y, double *amse, double *v, double *resid, 
+       double *xnext, double *xrow, double *rbar, double *thetab,
        int *ifault)
 {
+    double *a, *p, *store;
+    int ird = ir + id, irz = ird*(ird + 1)/2;
+    
     /* Local variables */
     int id2r1, iddr, id2r2;
     double phii, phij;
@@ -325,9 +327,6 @@ forkal(int ip, int iq, int ir, int np, int ird, int irz, int id, int il,
     /* Parameter adjustments */
     --phi;
     --v;
-    --store;
-    --a;
-    --p;
     --delta;
     --amse;
     --y;
@@ -340,6 +339,13 @@ forkal(int ip, int iq, int ir, int np, int ird, int irz, int id, int il,
 
 /*     check for input faults. */
 
+    a = (double *) R_alloc(ird, sizeof(double));
+    p = (double *) R_alloc(irz, sizeof(double));
+    store = (double *) R_alloc(ird, sizeof(double));
+    --store;
+    --a;
+    --p;
+    
     *ifault = 0;
     if (ip < 0) *ifault = 1;
     if (iq < 0) *ifault += 2;

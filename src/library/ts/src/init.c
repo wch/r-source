@@ -28,20 +28,22 @@ R_CMethodDef CEntries[] = {
     {"burg", (DL_FUNC) &burg, 6},  
     {"multi_burg", (DL_FUNC) &multi_burg, 11},  
     {"multi_yw", (DL_FUNC) &multi_yw, 10},  
-    {"setup_starma", (DL_FUNC) &setup_starma, 7},  
-    {"Dotrans", (DL_FUNC) &Dotrans, 2},  
-    {"get_s2", (DL_FUNC) &get_s2, 1},  
-    {"get_resid", (DL_FUNC) &get_resid, 1},  
-    {"arma0fa", (DL_FUNC) &arma0fa, 2},  
-    {"arma0_kfore", (DL_FUNC) &arma0_kfore, 5},  
-    {"free_starma", (DL_FUNC) &free_starma, 0},  
     {"R_intgrt_vec", (DL_FUNC) &R_intgrt_vec, 4},  
-/*
- Called with NAOK in filter()
     {"filter1", (DL_FUNC) &filter1, 7},  
-    {"filter2", (DL_FUNC) &filter2, 5},  
-*/
+    {"filter2", (DL_FUNC) &filter2, 5},
     {"R_pp_sum", (DL_FUNC) &R_pp_sum, 4},  
+    {NULL, NULL, 0}
+};
+
+R_CallMethodDef CallEntries[] = {
+    {"setup_starma", (DL_FUNC) &setup_starma, 7},  
+    {"free_starma", (DL_FUNC) &free_starma, 0},  
+    {"set_trans", (DL_FUNC) &set_trans, 1},  
+    {"arma0fa", (DL_FUNC) &arma0fa, 1},  
+    {"get_s2", (DL_FUNC) &get_s2, 0},  
+    {"get_resid", (DL_FUNC) &get_resid, 0},  
+    {"Dotrans", (DL_FUNC) &Dotrans, 1},  
+    {"arma0_kfore", (DL_FUNC) &arma0_kfore, 3},  
     {NULL, NULL, 0}
 };
 

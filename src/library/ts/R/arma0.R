@@ -7,10 +7,9 @@ arima0 <- function(x, order = c(0, 0, 0),
     {
         par <- as.double(fixed)
         par[mask] <- p
-        .C("arma0fa", par, res = double(1), PACKAGE = "ts")$res
+        .Call("arma0fa", par, PACKAGE = "ts")
     }
 
-    on.exit(.C("free_starma", PACKAGE = "ts"))
     series <- deparse(substitute(x))
     if(NCOL(x) > 1)
         stop("only implemented for univariate time series")
@@ -47,10 +46,10 @@ arima0 <- function(x, order = c(0, 0, 0),
         xreg <- as.matrix(xreg)
         if(qr(na.omit(xreg))$rank < ncol(xreg)) stop("xreg is collinear")
     }
-    .C("setup_starma",
-       as.integer(arma), as.double(x), as.integer(n.used),
-       as.double(xreg), as.integer(ncxreg), as.double(delta),
-       as.integer(transform.pars > 0), NAOK = TRUE, PACKAGE = "ts")
+    storage.mode(x) <- storage.mode(xreg) <- "double"
+    .Call("setup_starma", as.integer(arma), x, n.used, xreg, ncxreg, delta,
+          transform.pars > 0, PACKAGE = "ts")
+    on.exit(.Call("free_starma", PACKAGE = "ts"))
     init <- rep(0, sum(arma[1:4]))
     if(ncxreg > 0)
         init <- c(init, coef(lm(x ~ xreg+0)))
@@ -65,18 +64,14 @@ arima0 <- function(x, order = c(0, 0, 0),
     coef <- res$par
 
     if(transform.pars)
-        coef <- .C("Dotrans", coef, new = coef, PACKAGE = "ts")$new
+        coef <- .Call("Dotrans", as.double(coef), PACKAGE = "ts")
     if(transform.pars == 2) {
-        .C("free_starma", PACKAGE = "ts")
-        .C("setup_starma",
-           as.integer(arma), as.double(x), as.integer(n.used),
-           as.double(xreg), as.integer(ncxreg), as.double(delta),
-           as.integer(0), NAOK = TRUE, PACKAGE = "ts")
+        .Call("set_trans", 0)
         res <- optim(coef, arma0f, method = "BFGS", hessian = TRUE)
         coef <- res$par
     }
-    sigma2 <- .C("get_s2", res = double(1), PACKAGE = "ts")$res
-    resid <- .C("get_resid", res = double(n.used), PACKAGE = "ts")$res
+    sigma2 <- .Call("get_s2", PACKAGE = "ts")
+    resid <- .Call("get_resid", PACKAGE = "ts")
     tsp(resid) <- xtsp
     class(resid) <- "ts"
     nm <- NULL
@@ -165,19 +160,15 @@ predict.arima0 <-
         if(any(Mod(polyroot(c(1, ma)))) < 1)
             warning("seasonal ma part of model is not invertible")
     }
-    .C("setup_starma",
-       as.integer(arma), as.double(data),
-       as.integer(n),
-       as.double(rep(0, n)), as.integer(0), as.double(-1), as.integer(0),
-       PACKAGE = "ts")
-    .C("arma0fa", as.double(coefs), double(1), PACKAGE = "ts")
-    z <- .C("arma0_kfore", as.integer(arma[6]), as.integer(arma[7]),
-            as.integer(n.ahead), x = double(n.ahead), var = double(n.ahead),
-            PACKAGE = "ts")
-    .C("free_starma", PACKAGE = "ts")
-    pred <- ts(z$x + xm, start = xtsp[2] + deltat(data), frequency = xtsp[3])
+    .Call("setup_starma", as.integer(arma), data, n, rep(0, n), 0, -1, 0,
+          PACKAGE = "ts")
+    on.exit(.Call("free_starma", PACKAGE = "ts"))
+    .Call("arma0fa", as.double(coefs), PACKAGE = "ts")
+    z <- .Call("arma0_kfore", arma[6], arma[7], n.ahead, PACKAGE = "ts")
+    pred <- ts(z[[1]] + xm, start = xtsp[2] + deltat(data),
+               frequency = xtsp[3])
     if(se.fit) {
-        se <- ts(sqrt(z$var),
+        se <- ts(sqrt(z[[2]]),
                  start = xtsp[2] + deltat(data), frequency = xtsp[3])
         return(pred, se)
     } else return(pred)
