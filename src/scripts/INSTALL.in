@@ -4,7 +4,7 @@
 
 # @configure_input@
 
-revision='$Revision: 1.38 $'
+revision='$Revision: 1.39 $'
 version=`set - ${revision}; echo ${2}`
 version="R add-on package installer ${version}"
 
@@ -21,7 +21,9 @@ Options:
   -h, --help		print short help message and exit
   -l, --library=LIB	install packages to library tree LIB
       --no-docs		do not build and install documentation
-      --use-zip		collect help and examples into zip archives
+      --use-zip-date	collect data files in zip archive
+      --use-zip-help	collect help and examples into zip archives
+      --use-zip		combine \`--use-zip-data' and \`--use-zip-help'
   -v, --version		print version info and exit
 
 Report bugs to <R-bugs@lists.r-project.org>."
@@ -77,7 +79,8 @@ build_latex=true
 build_example=true
 build_help=true
 build_help_opts=
-use_zip=
+use_zip_data=
+use_zip_help=
 
 while test -n "${1}"; do
   case ${1} in
@@ -103,7 +106,12 @@ while test -n "${1}"; do
     --no-example)
       build_example=false ;;
     --use-zip)
-      use_zip=true ;;
+      use_zip_data=true
+      use_zip_help=true ;;
+    --use-zip-data)
+      use_zip_data=true ;;
+    --use-zip-help)
+      use_zip_help=true ;;
     -l|--library)
       lib=${2}; shift ;;
     --library=*)
@@ -234,7 +242,7 @@ do_install () {
     mkdir -p ${lib}/${pkg}/data
     cp data/* ${lib}/${pkg}/data
     chmod 644 ${lib}/${pkg}/data/*
-    if test -n "${use_zip}" \
+    if test -n "${use_zip_data}" \
         -a -n "${R_UNZIPCMD}" \
         -a -n "${R_ZIPCMD}"; then
       (cd ${lib}/${pkg}/data;
@@ -283,7 +291,7 @@ do_install () {
 	    > ${R_HOME}/doc/html/search/index.txt
 	fi	
       fi
-      if test -n "${use_zip}" \
+      if test -n "${use_zip_help}" \
 	  -a -n "${R_UNZIPCMD}" \
 	  -a -n "${R_ZIPCMD}"; then
 	cd ${lib}/${pkg}
