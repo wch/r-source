@@ -45,7 +45,7 @@ src/gnuwin32/MkRules.
 R can now be built with support for multibyte and variable-width
 character sets, e.g. for Japanese. See README.rw????.
 
-select.list() now looks up the the current font size and chooses its
+select.list() now looks up the current font size and chooses its
 window size based on that.
 
 The instructions for compiling packages from source and for
