@@ -390,7 +390,7 @@ int main(int ac, char **av)
   while(--ac) {
     if(**++av == '-') {
       if (!strcmp(*av, "-V") || !strcmp(*av, "--version")) {
-	fprintf(stderr, "Version %s.%s %s (%s %s, %s)\n",
+	Rprintf("Version %s.%s %s (%s %s, %s)\n",
 		R_MAJOR, R_MINOR, R_STATUS, R_MONTH, R_DAY, R_YEAR);
 	exit(0);
       }
