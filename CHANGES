@@ -1,14 +1,12 @@
 		CHANGES IN R VERSION 0.62
 
 NEW FEATURES
-     o  An experimental directory etc/Rdoc has been added with a perl5
-	module to parse R documentation files.  Sample perl programs
-	to use this module are also included.
 
      o	All internal mechanisms to support factors and data.frames
 	have been removed.  These are now entirely supported by
-	interpreted code!  Thanks to John Chambers for allowing
-	the distribution of his StatLib code.
+	interpreted code! `is.unordered' has been eliminated.
+	Thanks to John Chambers for allowing the distribution of his
+	StatLib code.
 
      o	"pmatch" is now completely S compatible and is not just another
 	name for "charmatch".
@@ -21,6 +19,8 @@ NEW FEATURES
 
     o   Many functions changed from <primitive> to .Internal(..).
 	Currently, new .Internal(.)s in ..library/base/R/New-Internal.R
+
+    o   [dpqr]hyper(.) now also work with some 0 arguments.
 
     o   C-code: Many "-Wall" fixes (MM & DB).
 
