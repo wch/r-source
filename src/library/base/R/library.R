@@ -79,7 +79,8 @@ library <-
             if (any(obj.same > 0)) {
                 same <- ob[obj.same]
                 same <- same[!(same %in% dont.mind)]
-                same <- same[-grep("^\.__", same)]
+                Classobjs <- grep("^\.__", same)
+                if(length(Classobjs)) same <- same[-Classobjs]
                 if(length(same)) {
                     if (fst) {
                         fst <- FALSE
