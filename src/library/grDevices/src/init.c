@@ -48,6 +48,6 @@ static R_ExternalMethodDef ExtEntries[] = {
 
 void R_init_grDevices(DllInfo *dll)
 {
-    R_useDynamicSymbols(dll, FALSE);
     R_registerRoutines(dll, NULL, CallEntries, NULL, ExtEntries);
+    R_useDynamicSymbols(dll, FALSE);
 }
