@@ -241,7 +241,11 @@ int PSDeviceDriver(DevDesc *dd, char *file, char *paper, char *family,
 	dd->dp.canChangeFont = 1;
 	dd->dp.canRotateText = 1;
 	dd->dp.canResizeText = 1;
+#ifdef OLD
 	dd->dp.canClip = 1;
+#else
+	dd->dp.canClip = 0;
+#endif
 
 		/*  Start the driver */
 
@@ -588,6 +592,7 @@ static void PS_Line(double x1, double y1, double x2, double y2,
 
 	GConvert(&x1, &y1, coords, DEVICE, dd);
 	GConvert(&x2, &y2, coords, DEVICE, dd);
+	/* FIXME : clip to the device extents here */
 	SetColor(dd->gp.col, dd);
 	SetLinetype(dd->gp.lty, dd);
 	SetLinewidth(dd);

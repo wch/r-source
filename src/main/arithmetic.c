@@ -831,7 +831,7 @@ SEXP do_math1(SEXP call, SEXP op, SEXP args, SEXP env)
     case 45: return math1(op, CAR(args), pentagamma);
 
     default:
-	errorcall(lcall, "unimplemented real function\n");
+	errorcall(call, "unimplemented real function\n");
     }
     return s;/* never used; to keep -Wall happy */
 }
@@ -939,7 +939,7 @@ SEXP do_math2(SEXP call, SEXP op, SEXP args, SEXP env)
     case 20: return math2(op, CAR(args), CADR(args), qt);
 
     default:
-	errorcall(lcall, "unimplemented real function\n");
+	errorcall(call, "unimplemented real function\n");
     }
     return op;/* never used; to keep -Wall happy */
 }
@@ -1196,7 +1196,7 @@ SEXP do_math3(SEXP call, SEXP op, SEXP args, SEXP env)
     case 42:  return math3(op, CAR(args), CADR(args), CADDR(args), qwilcox);
 
     default:
-	errorcall(lcall, "unimplemented real function\n");
+	errorcall(call, "unimplemented real function\n");
     }
     return op;/* never used; to keep -Wall happy */
 }
@@ -1315,7 +1315,7 @@ SEXP do_math4(SEXP call, SEXP op, SEXP args, SEXP env)
     case 11: return math4(op, CAR(args), CADR(args), CADDR(args), CADDDR(args), ptukey);
     case 12: return math4(op, CAR(args), CADR(args), CADDR(args), CADDDR(args), qtukey);
     default:
-	errorcall(lcall, "unimplemented real function\n");
+	errorcall(call, "unimplemented real function\n");
     }
     return op;/* never used; to keep -Wall happy */
 }
