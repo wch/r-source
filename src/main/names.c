@@ -529,7 +529,9 @@ FUNTAB R_FunTab[] =
 #endif
 {"parse",	do_parse,	0,	11,	4,	PP_FUNCALL},
 {"save",	do_save,	0,	111,	5,	PP_FUNCALL},
+{"saveToConn",	do_saveToConn,	0,	111,	5,	PP_FUNCALL},
 {"load",	do_load,	0,	111,	2,	PP_FUNCALL},
+{"loadFromConn",do_loadFromConn,0,	111,	2,	PP_FUNCALL},
 {"deparse",	do_deparse,	0,	11,	2,	PP_FUNCALL},
 {"dput",	do_dput,	0,	111,	2,	PP_FUNCALL},
 {"dump",	do_dump,	0,	111,	2,	PP_FUNCALL},

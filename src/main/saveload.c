@@ -23,6 +23,7 @@
 #include <config.h>
 #endif
 
+#define NEED_CONNECTION_PSTREAMS
 #include <Defn.h>
 #include <Rmath.h>
 #include <Fileio.h>
@@ -1970,18 +1971,15 @@ SEXP do_save(SEXP call, SEXP op, SEXP args, SEXP env)
     return R_NilValue;
 }
 
-static void R_LoadSavedData(FILE *fp, SEXP aenv)
+static void RestoreToEnv(SEXP ans, SEXP aenv)
 {
-    SEXP a, ans;
-    ans = R_LoadFromFile(fp, 0);
+    SEXP a;
+    /* Store the components of the list in aenv.  We either replace
+     * the existing objects in aenv or establish new bindings for
+     * them.  Note that we try to convert old "pairlist" objects
+     * to new "pairlist" objects. */
 
-    /* Store the components of the list in the Global Env */
-    /* We either replace the existing objects in the Global */
-    /* Environment or establish new bindings for them. */
-    /* Note that we try to convert old "pairlist" objects */
-    /* to new "pairlist" objects. */
-
-    /* allow read value to be a vector-style list */
+    /* allow ans to be a vector-style list */
     if (TYPEOF(ans) == VECSXP) {
 	int i;
 	SEXP names;
@@ -2006,6 +2004,11 @@ static void R_LoadSavedData(FILE *fp, SEXP aenv)
         a = CDR(a);
     }
     UNPROTECT(1);
+}
+    
+static void R_LoadSavedData(FILE *fp, SEXP aenv)
+{
+    RestoreToEnv(R_LoadFromFile(fp, 0), aenv);
 }
 
 SEXP do_load(SEXP call, SEXP op, SEXP args, SEXP env)
@@ -2120,7 +2123,7 @@ int R_XDRDecodeInteger(void *buf)
 
 void R_SaveGlobalEnvToFile(const char *name)
 {
-    SEXP sym = install("sys.save.image");
+    SEXP sym = install("Sys.save.image");
     if (findVar(sym, R_GlobalEnv) == R_UnboundValue) { /* not a perfect test */
 	FILE *fp = R_fopen(name, "wb"); /* binary file */
 	if (!fp)
@@ -2139,7 +2142,7 @@ void R_SaveGlobalEnvToFile(const char *name)
 
 void R_RestoreGlobalEnvFromFile(const char *name, Rboolean quiet)
 {
-    SEXP sym = install("sys.load.image");
+    SEXP sym = install("Sys.load.image");
     if (findVar(sym, R_GlobalEnv) == R_UnboundValue) { /* not a perfect test */
 	FILE *fp = R_fopen(name, "rb"); /* binary file */
 	if(fp != NULL) { 
@@ -2158,4 +2161,121 @@ void R_RestoreGlobalEnvFromFile(const char *name, Rboolean quiet)
 	eval(call, R_GlobalEnv);
 	UNPROTECT(2);
     }
+}
+
+
+#include <Rconnections.h>
+
+/* Ideally it should be possible to do this entirely in R code with
+   something like
+
+        magic <- if (ascii) "RDA2\n" else
+        writeChar(magic, con, eos = NULL)
+        val <- lapply(list, get, envir = envir)
+	names(val) <- list
+        invisible(serialize(val, con, ascii = ascii))
+
+   Unfortunately, this will result in too much duplication in the lapply
+   (and any other way of doing this).  Hence we need an internal version. */
+
+SEXP do_saveToConn(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    /* saveToConn(list, conn, ascii, version, environment) */
+
+    SEXP s, t, source, list;
+    Rboolean ascii;
+    int len, j, version;
+    Rconnection con;
+    struct R_outpstream_st out;
+    R_pstream_format_t type;
+    char *magic;
+
+    checkArity(op, args);
+
+    if (TYPEOF(CAR(args)) != STRSXP)
+	errorcall(call, "first argument must be a character vector");
+    list = CAR(args);
+
+    con = getConnection(asInteger(CADR(args)));
+
+    if (TYPEOF(CADDR(args)) != LGLSXP)
+	errorcall(call, "`ascii' must be logical");
+    ascii = INTEGER(CADDR(args))[0];
+
+    if (CADDDR(args) == R_NilValue)
+	version = R_DefaultSaveFormatVersion;
+    else
+	version = asInteger(CADDDR(args));
+    if (version == NA_INTEGER || version <= 0)
+	error("bad version value");
+    if (version < 2)
+	error("cannott save to connections in version %d format", version);
+
+    source = CAR(nthcdr(args,4));
+    if (source != R_NilValue && TYPEOF(source) != ENVSXP)
+	error("bad environment");
+
+    if (ascii) {
+	magic = "RDA2\n";
+	type = R_pstream_ascii_format;
+    }
+    else {
+#ifdef HAVE_XDR
+	magic = "RDX2\n";
+	type = R_pstream_xdr_format;
+#else
+	warning("portable binary format is not available; using ascii");
+	magic = "RDA2\n";
+	type = R_pstream_ascii_format;
+#endif
+    }
+	
+    if (con->text)
+	Rconn_printf(con, "%s", magic);
+    else {
+	int len = strlen(magic);
+	if (len != con->write(magic, 1, len, con))
+	    error("error writing to connection");
+    }
+
+    R_InitConnOutPStream(&out, con, type, version, NULL, NULL);
+
+    len = length(list);
+    PROTECT(s = allocList(len));
+
+    t = s;
+    for (j = 0; j < len; j++, t = CDR(t)) {
+	SET_TAG(t, install(CHAR(STRING_ELT(list, j))));
+	SETCAR(t, findVar(TAG(t), source));
+	if (CAR(t) == R_UnboundValue)
+	    error("Object \"%s\" not found", CHAR(PRINTNAME(TAG(t))));
+    }
+
+    R_Serialize(s, &out);
+
+    UNPROTECT(1);
+    return R_NilValue;
+}
+
+/* This assumes the magic number has already been read, and its format
+   specification (A or X) is ignored.  For saved images with many
+   variables and the values saved in a pair list this internal version
+   will be faster than a version in R */
+
+SEXP do_loadFromConn(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    struct R_inpstream_st in;
+    Rconnection con;
+    SEXP aenv;
+
+    checkArity(op, args);
+
+    con = getConnection(asInteger(CADR(args)));
+    aenv = CADR(args);
+    if (TYPEOF(aenv) != ENVSXP && aenv != R_NilValue)
+	error("invalid envir argument");
+
+    R_InitConnInPStream(&in, con, R_pstream_any_format, NULL, NULL);
+    RestoreToEnv(R_Unserialize(&in), aenv);
+    return R_NilValue;
 }
