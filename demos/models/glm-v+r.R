@@ -1,7 +1,7 @@
 #### -*- R -*-
 Fr <- c(68,42,42,30, 37,52,24,43,
-        66,50,33,23, 47,55,23,47,
-        63,53,29,27, 57,49,19,29)
+	66,50,33,23, 47,55,23,47,
+	63,53,29,27, 57,49,19,29)
 
 Temp <- gl(2, 2, 24, labels=c("Low", "High"))
 Soft <- gl(3, 8, 24, labels=c("Hard","Medium","Soft"))
@@ -14,7 +14,7 @@ summary(detg.m0)
 
 detg.mod <- glm(terms(Fr~M.user*Temp*Soft+Brand*M.user*Temp,keep.order=TRUE),
 		family=poisson, data=detg)
-summary(detg.mod, correlation=FALSE)# corr.=F:  now (0.62) default
+summary(detg.mod, correlation=FALSE)# corr.=F:	now (0.62) default
 symnum(summary(detg.mod, correlation=TRUE)$corr)
 
 anova(detg.m0, detg.mod)
