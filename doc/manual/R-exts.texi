@@ -727,7 +727,7 @@ SEXP out(SEXP x, SEXP y)
   SEXP ans, dim, dimnames;
 
   nx = length(x); ny = length(y);
-  PROTECT(ans = allocVector(nx*ny, REALSXP));
+  PROTECT(ans = allocVector(REALSXP, nx*ny));
   for(i = 0; i < nx; i++) @{
     tmp = REAL(x)[i];
     for(j = 0; j < ny; j++)
@@ -999,7 +999,7 @@ SEXP convolve2(SEXP a, SEXP b)
   PROTECT(a = coerceVector(a, REALSXP));
   PROTECT(b = coerceVector(b, REALSXP));
   na = length(a); nb = length(b); nab = na + nb - 1;
-  PROTECT(ab = allocVector(nab, REALSXP));
+  PROTECT(ab = allocVector(REALSXP, nab));
   xa = REAL(a); xb = REAL(b);
   xab = REAL(ab);
   for(i = 0; i < nab; i++) xab[i] = 0.0;
