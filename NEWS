@@ -109,7 +109,7 @@ NEW FEATURES
      o	Output text connections no longer have a line-length limit.
 
      o	On platforms where vsnprintf does not return the needed buffer
-	size the output line-length limit for fifo(), gzfile() and 
+	size the output line-length limit for fifo(), gzfile() and
 	bzfile() has been raised from 10k to 100k chars.
 
      o	help.search() can now reliably match individual aliases and
@@ -119,6 +119,11 @@ NEW FEATURES
      o	dump() has a new argument `envir'.  The search for named
 	objects now starts by default in the environment from which
 	dump() is called.
+
+     o	interaction.plot() has several new arguments, and the legend
+	is not clipped anymore by default.  It internally uses axis(1,*)
+	instead of mtext().
+	This also addresses "bugs" PR#820, PR#1305, PR#1899.
 
 
 INSTALLATION CHANGES
@@ -160,19 +165,19 @@ INSTALLATION CHANGES
     o	Configure provides a more comprehensive summary of its results.
 
     o	Index generation now happens when installing source packages
-	using R code in package tools.  An existing 'INDEX' file is used
+	using R code in package tools.	An existing 'INDEX' file is used
 	as is; otherwise, it is automatically generated from the \name
 	and \title entries in the Rd files.  Data, demo and vignette
 	indices are computed from all available files of the respective
 	kind, and the corresponding index information (in the Rd files,
 	the 'demo/00Index' file, and the \VignetteIndexEntry{} entries,
-	respectively).  These index files, as well as the package Rd
+	respectively).	These index files, as well as the package Rd
 	contents data base, are serialized as R objects, allowing for
 	faster and more reliable index-based computations (e.g., in
 	help.search()).
 
     o	The Rd contents data base is now computed when installing source
-	packages using R code in package tools.  The information is
+	packages using R code in package tools.	 The information is
 	represented as a data frame without collapsing the aliases and
 	keywords, and serialized as an R object.  (The 'CONTENTS' file
 	in Debian Control Format is still written, as it is used by the
@@ -283,11 +288,11 @@ BUG FIXES
     o	c() was converting NA names to "NA": now proper NA strings are
 	used wherever possible. (PR#2358)
 
-    o   Checks in the C code prevent possible memory faults when
-        standardGeneric is called invalidly.
+    o	Checks in the C code prevent possible memory faults when
+	standardGeneric is called invalidly.
 
-    o   Macros NEW_OBJECT (aka NEW) and MAKE_CLASS added; required by
-        the .Call interface to generate arbitrary objects.
+    o	Macros NEW_OBJECT (aka NEW) and MAKE_CLASS added; required by
+	the .Call interface to generate arbitrary objects.
 
     o	A typo was causing segfaults when using data.entry under SuSE.
 
@@ -298,32 +303,32 @@ BUG FIXES
     o	The pdf() device now initialises graphical parameters
 	properly.  (PR#2281)
 
-    o   Checks in the C code prevent possible memory faults when
-        standardGeneric is called invalidly.
+    o	Checks in the C code prevent possible memory faults when
+	standardGeneric is called invalidly.
 
-    o   Macros NEW_OBJECT (aka NEW) and MAKE_CLASS added; required by
-        the .Call interface to generate arbitrary objects.
+    o	Macros NEW_OBJECT (aka NEW) and MAKE_CLASS added; required by
+	the .Call interface to generate arbitrary objects.
 
     o	Problem that prevented package tcltk from working with Tcl/Tk
-        8.4 (crash on initialization) resolved.  (Notice that binaries
-        may still require an older Tcl/Tk, for example on Windows).
+	8.4 (crash on initialization) resolved.	 (Notice that binaries
+	may still require an older Tcl/Tk, for example on Windows).
 
-    o   type.convert() was not getting the levels right if passed a
+    o	type.convert() was not getting the levels right if passed a
 	character vector containing <NA>s, and `na.strings' did not
 	contain "NA".  This affected read.table().
 
-    o   Internal match function did not check for nor handle 0-length
-	vectors.  (The R function match() did.)  This could cause
+    o	Internal match function did not check for nor handle 0-length
+	vectors.  (The R function match() did.)	 This could cause
 	type.convert() to segfault.
 
-    o   The line length limit in output text connections has been
+    o	The line length limit in output text connections has been
 	raised to 8095 chars.
 
-    o   Sweave now uses anonymous file rather than text connections
+    o	Sweave now uses anonymous file rather than text connections
 	to avoid the limits of the latter (see previous item).
 
-    o   parsing did not work on connections when pushback was used (as
-	it had never been implemented).  (PR#2396)
+    o	parsing did not work on connections when pushback was used (as
+	it had never been implemented).	 (PR#2396)
 
 
 		CHANGES IN R VERSION 1.6.1
