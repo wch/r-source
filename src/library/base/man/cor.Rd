@@ -12,7 +12,7 @@ cov(x, y = NULL, use = "all.obs")
   \code{var}, \code{cov} and \code{cor} compute the variance of \code{x}
   and the covariance or correlation of \code{x} and \code{y} if these
   are vectors.  If \code{x} and \code{y} are matrices then the
-  covariance (correlation) between the columns of \code{x} and the
+  covariances (or correlations) between the columns of \code{x} and the
   columns of \code{y} are computed.
 }
 \arguments{
@@ -26,7 +26,10 @@ cov(x, y = NULL, use = "all.obs")
     \code{"all.obs"}, \code{"complete.obs"} or \code{"pairwise.complete.obs"}.}
 }
 \details{
-  \code{var} is just another interface to \code{cov}, where
+  For \code{cov} and \code{cor} one must \emph{either} give a matrix or data
+  frame for \code{x} \emph{or} give both \code{x} and \code{y}.
+
+  \code{var} just another interface to \code{cov}, where
   \code{na.rm} is used to determine the default for \code{use} when that
   is unspecified.  If \code{na.rm} is \code{TRUE} then the complete
   observations (rows) are used (\code{use = "complete"}) to compute the
@@ -45,7 +48,8 @@ cov(x, y = NULL, use = "all.obs")
 
   The denominator \eqn{n - 1} is used which gives an unbiased estimator
   of the (co)variance for i.i.d. observations.
-  These functions return \code{\link{NA}} when there is only one observation.
+  These functions return \code{\link{NA}} when there is only one
+  observation, and from \R 1.2.3 fail if \code{x} has length zero.
 }
 \seealso{\code{\link{cov.wt}} for \emph{weighted} covariance
   computation, \code{\link{sd}} for standard deviation (vectors).
@@ -58,8 +62,6 @@ var(1:5,1:5)# 2.5
 ## Two simple vectors
 cor(1:10,2:11)# == 1
 
-## var() & cov() are "really the same":
-stopifnot(var(1:5,0:4) == cov(1:5))
 \testonly{
  stopifnot(is.na(var(1)) && !is.nan(var(1)))
 }

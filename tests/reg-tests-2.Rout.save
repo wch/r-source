@@ -1,6 +1,6 @@
 
 R : Copyright 2001, The R Development Core Team
-Version 1.2.2 Patched (2001-03-20)
+Version 1.2.2 Patched (2001-04-07)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -363,4 +363,15 @@ coef[ 13] = 0.0051948
 coef[ 14] = 0.0025974
 coef[ 15] = 0.0008658
 > ## fixed by patch from Adrian Trapletti 2001-03-08
+> 
+> 
+> ## PR 883 (cor(x,y) when is.null(y))
+> try(cov(rnorm(10), NULL))
+Error in cov(rnorm(10), NULL) : `y' is NULL
+> try(cor(rnorm(10), NULL))
+Error in cor(rnorm(10), NULL) : `y' is NULL
+> ## both gave silly answers in 1.2.2.
+> try(var(NULL))
+Error in cov(x, y, use = use) : `x' is NULL
+> ## gave NA in 1.2.2
 > 

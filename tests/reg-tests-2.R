@@ -144,3 +144,12 @@ kernel("daniell", m=5)
 kernel("modified.daniell", m=5)
 kernel("daniell", m=c(3,5,7))
 ## fixed by patch from Adrian Trapletti 2001-03-08
+
+
+## PR 883 (cor(x,y) when is.null(y))
+try(cov(rnorm(10), NULL))
+try(cor(rnorm(10), NULL))
+## gave the variance and 1 respectively in 1.2.2.
+try(var(NULL))
+try(var(numeric(0)))
+## gave NA in 1.2.2
