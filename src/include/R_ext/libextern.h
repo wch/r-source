@@ -17,7 +17,9 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#undef libextern
+/* don't disallow including this one for than once */
+
+#undef LibExtern
 #undef LibImport
 #undef LibExport
 
