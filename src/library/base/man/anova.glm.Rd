@@ -37,7 +37,7 @@
   For models with known dispersion (e.g. binomial and Poisson fits)
   the chi-squared test is most appropriate, and for those with
   dispersion estimated by moments (e.g. \code{gaussian},
-  \code{pseudobinomial} and \code{pseudopoisson} fits) the F test is
+  \code{quasibinomial} and \code{quasipoisson} fits) the F test is
   most appropriate.  Mallows' \eqn{C_p}{Cp} statistic is the residual
   deviance plus twice the estimate of \eqn{\sigma^2}{sigma^2} times
   the residual degrees of freedom, which is closely related to AIC (and
