@@ -39,6 +39,8 @@ BUG FIXES
 
     o	handle null models arising in drop1(), step, etc.
 
+    o   partial matching problem with $ indexing
+
 
 		CHANGES IN R VERSION 0.63
 
