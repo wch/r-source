@@ -15,6 +15,7 @@ I(x)
 \alias{formula.data.frame}
 \alias{as.formula}
 \alias{print.formula}
+\alias{print.AsIs}
 \description{
   The generic function \code{formula} and its specific methods provide a
   way of extracting formulae which have been included in other objects.
