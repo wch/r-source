@@ -308,7 +308,7 @@ static size_t null_write(const void *ptr, size_t size, size_t nitems,
     return 0; /* -Wall */
 }
 
-static long null_seek(Rconnection con, int where, int origin, int rw)
+static long null_seek(Rconnection con, double where, int origin, int rw)
 {
     error("seek not enabled for this connection");
     return 0; /* -Wall */

@@ -1184,8 +1184,9 @@ AC_SUBST(LAPACK_LDFLAGS)
 
 ### * Checks for library functions.
 
+AC_CHECK_TYPES([off_t])
 AC_FUNC_ALLOCA
-AC_CHECK_FUNCS(access chdir expm1 fcntl finite ftruncate getcwd \
+AC_CHECK_FUNCS(access chdir expm1 fcntl finite fseeko ftello ftruncate getcwd \
   getgrgid getpwuid getuid hypot isascii log1p matherr mkfifo \
   popen putenv rint setenv strcoll stat strptime symlink \
   system times unsetenv)
@@ -1195,6 +1196,11 @@ AC_CHECK_DECLS([isfinite, isnan], , , [#include <math.h>])
 ## No need checking for bcopy bzero memcpy mempcpy even though ifnames
 ## might report corresponding HAVE_FOO conditionals.
 ## </NOTE>
+
+if test $ac_cv_type_off_t=yes -a $ac_cv_func_fseeko=yes -a $ac_cv_func_ftello=yes; then
+   AC_DEFINE(HAVE_OFF_T, 1,
+            [Define if you have off_t, fseeko and ftello.]) 
+fi
 
 ## IEEE 754. We rely on this in e.g. the working log test.
 R_IEEE_754

@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2000-2003   The R Development Core Team.
+ *  Copyright (C) 2000-2004   The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -38,7 +38,7 @@ struct Rconn {
     int (*vfprintf)(struct Rconn *, const char *, va_list);
     int (*fgetc)(struct Rconn *);
 /*    int (*ungetc)(int c, struct Rconn *); */
-    long (*seek)(struct Rconn *, int, int, int);
+    long (*seek)(struct Rconn *, double, int, int);
     void (*truncate)(struct Rconn *);
     int (*fflush)(struct Rconn *);
     size_t (*read)(void *, size_t, size_t, struct Rconn *);
@@ -53,7 +53,11 @@ struct Rconn {
 
 typedef struct fileconn {
     FILE *fp;
+#if defined(HAVE_OFF_T) && defined(__USE_LARGEFILE)
+    off_t rpos, wpos;
+#else
     long rpos, wpos;
+#endif
     Rboolean last_was_write;
 } *Rfileconn;
 

@@ -98,7 +98,7 @@ seek.connection <- function(con, where = NA, origin = "start", rw = "", ...)
     rw <- pmatch(rw, c("read", "write"), 0)
     if(is.na(origin))
         stop("`origin' must be one of `start', `current` or `end'")
-    .Internal(seek(con, as.integer(where), origin, rw))
+    .Internal(seek(con, as.double(where), origin, rw))
 }
 
 truncate <- function(con, ...)

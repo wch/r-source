@@ -330,6 +330,10 @@ NEW FEATURES
 
     o	save() now checks that a binary connection is used.
 
+    o	seek() on connections now accepts and returns a double for the
+	file position.  This allows >2Gb files to be handled on a 
+	64-bit platform.
+
     o	source() with 'echo = TRUE' uses the function source attribute
 	when displaying commands as they are parsed.
 
@@ -637,6 +641,9 @@ INSTALLATION CHANGES
     o	The concatenated Rd files in the installed 'man' directory are
 	now compressed and the R CMD check routines can read the
 	compressed files.
+
+    o	There is a new configure option --enable-lfs that will build
+	R with support for > 2Gb files on suitable 32-bit Linux systems.
 
 
 PACKAGE INSTALLATION CHANGES

@@ -138,6 +138,12 @@
 /* Define to 1 if you have the <fpu_control.h> header file. */
 #undef HAVE_FPU_CONTROL_H
 
+/* Define to 1 if you have the `fseeko' function. */
+#undef HAVE_FSEEKO
+
+/* Define to 1 if you have the `ftello' function. */
+#undef HAVE_FTELLO
+
 /* Define to 1 if you have the `ftruncate' function. */
 #undef HAVE_FTRUNCATE
 
@@ -251,6 +257,9 @@
 /* Define if module-loading does not need an underscore to be prepended to
    external names. */
 #undef HAVE_NO_SYMBOL_UNDERSCORE
+
+/* Define if you have off_t, fseeko and ftello. */
+#undef HAVE_OFF_T
 
 /* Define to 1 if you have the <pcre.h> header file. */
 #undef HAVE_PCRE_H

@@ -189,7 +189,7 @@ static int null_fgetc(Rconnection con)
     return 0;			/* -Wall */
 }
 
-static long null_seek(Rconnection con, int where, int origin, int rw)
+static long null_seek(Rconnection con, double where, int origin, int rw)
 {
     error("seek not enabled for this connection");
     return 0;			/* -Wall */
@@ -245,6 +245,14 @@ void init_con(Rconnection new, char *description, char *mode)
 
 /* ------------------- file connections --------------------- */
 
+#if defined(HAVE_OFF_T) && defined(__USE_LARGEFILE)
+#define f_seek fseeko
+#define f_tell ftello
+#else
+#define f_seek fseek
+#define f_tell ftell
+#endif
+
 static Rboolean file_open(Rconnection con)
 {
     char *name;
@@ -277,7 +285,7 @@ static Rboolean file_open(Rconnection con)
 	con->canread = con->canwrite = TRUE;
     this->last_was_write = !con->canread;
     this->rpos = 0;
-    if(con->canwrite) this->wpos = ftell(fp);
+    if(con->canwrite) this->wpos = f_tell(fp);
     if(mlen >= 2 && con->mode[mlen-1] == 'b') con->text = FALSE;
     else con->text = TRUE;
     con->save = -1000;
@@ -304,9 +312,9 @@ static int file_vfprintf(Rconnection con, const char *format, va_list ap)
     Rfileconn this = con->private;
 
     if(!this->last_was_write) {
-	this->rpos = ftell(this->fp);
+	this->rpos = f_tell(this->fp);
 	this->last_was_write = TRUE;
-	fseek(this->fp, this->wpos, SEEK_SET);
+	f_seek(this->fp, this->wpos, SEEK_SET);
     }
     return vfprintf(this->fp, format, ap);
 }
@@ -318,19 +326,19 @@ static int file_fgetc(Rconnection con)
     int c;
 
     if(this->last_was_write) {
-	this->wpos = ftell(this->fp);
+	this->wpos = f_tell(this->fp);
 	this->last_was_write = FALSE;
-	fseek(this->fp, this->rpos, SEEK_SET);
+	f_seek(this->fp, this->rpos, SEEK_SET);
     }
     c = fgetc(fp);
     return feof(fp) ? R_EOF : con->encoding[c];
 }
 
-static long file_seek(Rconnection con, int where, int origin, int rw)
+static long file_seek(Rconnection con, double where, int origin, int rw)
 {
     Rfileconn this = con->private;
     FILE *fp = this->fp;
-    long pos = ftell(fp);
+    long pos = f_tell(fp);
     int whence = SEEK_SET;
 
     /* make sure both positions are set */
@@ -345,16 +353,16 @@ static long file_seek(Rconnection con, int where, int origin, int rw)
 	pos = this->wpos;
 	this->last_was_write = TRUE;
     }
-    if(where == NA_INTEGER) return pos;
+    if(where == NA_REAL) return pos;
 
     switch(origin) {
     case 2: whence = SEEK_CUR; break;
     case 3: whence = SEEK_END; break;
     default: whence = SEEK_SET;
     }
-    fseek(fp, where, whence);
-    if(this->last_was_write) this->wpos = ftell(this->fp);
-    else this->rpos = ftell(this->fp);
+    f_seek(fp, (long) where, whence);
+    if(this->last_was_write) this->wpos = f_tell(this->fp);
+    else this->rpos = f_tell(this->fp);
     return pos;
 }
 
@@ -368,7 +376,7 @@ static void file_truncate(Rconnection con)
     if(!con->isopen || !con->canwrite)
 	error("can only truncate connections open for writing");
 
-    if(!this->last_was_write) this->rpos = ftell(this->fp);
+    if(!this->last_was_write) this->rpos = f_tell(this->fp);
 #ifdef HAVE_FTRUNCATE
     if(ftruncate(fd, size))
 	error("file truncation failed");
@@ -379,7 +387,7 @@ static void file_truncate(Rconnection con)
     error("Unavailable on this platform");
 #endif
     this->last_was_write = TRUE;
-    this->wpos = ftell(this->fp);
+    this->wpos = f_tell(this->fp);
 }
 
 static int file_fflush(Rconnection con)
@@ -396,9 +404,9 @@ static size_t file_read(void *ptr, size_t size, size_t nitems,
     FILE *fp = this->fp;
 
     if(this->last_was_write) {
-	this->wpos = ftell(this->fp);
+	this->wpos = f_tell(this->fp);
 	this->last_was_write = FALSE;
-	fseek(this->fp, this->rpos, SEEK_SET);
+	f_seek(this->fp, this->rpos, SEEK_SET);
     }
     return fread(ptr, size, nitems, fp);
 }
@@ -410,9 +418,9 @@ static size_t file_write(const void *ptr, size_t size, size_t nitems,
     FILE *fp = this->fp;
 
     if(!this->last_was_write) {
-	this->rpos = ftell(this->fp);
+	this->rpos = f_tell(this->fp);
 	this->last_was_write = TRUE;
-	fseek(this->fp, this->wpos, SEEK_SET);
+	f_seek(this->fp, this->wpos, SEEK_SET);
     }
     return fwrite(ptr, size, nitems, fp);
 }
@@ -825,7 +833,7 @@ static int gzfile_fgetc(Rconnection con)
 	return con->encoding[c];
 }
 
-static long gzfile_seek(Rconnection con, int where, int origin, int rw)
+static long gzfile_seek(Rconnection con, double where, int origin, int rw)
 {
     gzFile  fp = ((Rgzfileconn)(con->private))->fp;
     long pos = gztell(fp);
@@ -836,7 +844,7 @@ static long gzfile_seek(Rconnection con, int where, int origin, int rw)
     case 3: whence = SEEK_END;
     default: whence = SEEK_SET;
     }
-    if(where >= 0) gzseek(fp, where, whence);
+    if(where >= 0) gzseek(fp, (int)where, whence);
     return pos;
 }
 
@@ -1236,16 +1244,16 @@ static int clp_fgetc(Rconnection con)
     return con->encoding[c];
 }
 
-static long clp_seek(Rconnection con, int where, int origin, int rw)
+static long clp_seek(Rconnection con, double where, int origin, int rw)
 {
     Rclpconn this = con->private;
     int newpos, oldpos = this->pos;
 
-    if(where == NA_INTEGER) return oldpos;
+    if(where == NA_REAL) return oldpos;
 
     switch(origin) {
-    case 2: newpos = this->pos + where; break;
-    case 3: newpos = this->last + where; break;
+    case 2: newpos = this->pos + (int)where; break;
+    case 3: newpos = this->last + (int)where; break;
     default: newpos = where;
     }
     if(newpos < 0 || newpos >= this->last)
@@ -1532,7 +1540,7 @@ static int text_fgetc(Rconnection con)
     else return (int) (this->data[this->cur++]);
 }
 
-static long text_seek(Rconnection con, int where, int origin, int rw)
+static long text_seek(Rconnection con, double where, int origin, int rw)
 {
     if(where >= 0) error("seek is not relevant for text connection");
     return 0; /* if just asking, always at the beginning */
@@ -2040,20 +2048,21 @@ SEXP do_close(SEXP call, SEXP op, SEXP args, SEXP env)
 /* seek(con, where = numeric(), origin = "start", rw = "") */
 SEXP do_seek(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    int where, origin, rw;
+    int origin, rw;
     SEXP ans;
     Rconnection con = NULL;
+    double where;
 
     checkArity(op, args);
     if(!inherits(CAR(args), "connection"))
 	errorcall(call, "`con' is not a connection");
     con = getConnection(asInteger(CAR(args)));
     if(!con->isopen) error("connection is not open");
-    where = asInteger(CADR(args));
+    where = asReal(CADR(args));
     origin = asInteger(CADDR(args));
     rw = asInteger(CADDDR(args));
-    PROTECT(ans = allocVector(INTSXP, 1));
-    INTEGER(ans)[0] = con->seek(con, where, origin, rw);
+    PROTECT(ans = allocVector(REALSXP, 1));
+    REAL(ans)[0] = (double)con->seek(con, where, origin, rw);
     UNPROTECT(1);
     return ans;
 }
