@@ -151,7 +151,7 @@ hist(x, \dots)
 data(islands)
 op <- par(mfrow=c(2, 2))
 hist(islands)
-str(hist(islands, col="gray", labels = TRUE))
+utils::str(hist(islands, col="gray", labels = TRUE))
 
 hist(sqrt(islands), br = 12, col="lightblue", border="pink")
 ##-- For non-equidistant breaks, counts should NOT be graphed unscaled:
@@ -162,11 +162,11 @@ sum(r$density * diff(r$breaks)) # == 1
 lines(r, lty = 3, border = "purple") # -> lines.histogram(*)
 par(op)
 
-str(hist(islands, plot= FALSE))        #-> 5  breaks
-str(hist(islands, br=12, plot= FALSE)) #-> 10 (~= 12) breaks
-str(hist(islands, br=c(12,20,36,80,200,1000,17000), plot = FALSE))
-    hist(islands, br=c(12,20,36,80,200,1000,17000), freq = TRUE,
-         main = "WRONG histogram") # and warning
+utils::str(hist(islands, br=12, plot= FALSE)) #-> 10 (~= 12) breaks
+utils::str(hist(islands, br=c(12,20,36,80,200,1000,17000), plot = FALSE))
+
+hist(islands, br=c(12,20,36,80,200,1000,17000), freq = TRUE,
+     main = "WRONG histogram") # and warning
 }
 \keyword{dplot}
 \keyword{hplot}

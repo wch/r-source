@@ -281,12 +281,12 @@ plot(xx,yy)                     # produce the desired graph(s)
 }
 
 ps.options(bg = "pink")
-str(ps.options(reset = TRUE))
+utils::str(ps.options(reset = TRUE))
 
 ### ---- error checking of arguments: ----
 ps.options(width=0:12, onefile=0, bg=pi)
 # override the check for 'onefile', but not the others:
-str(ps.options(width=0:12, onefile=1, bg=pi,
-               override.check = c(FALSE,TRUE,FALSE)))
+utils::str(ps.options(width=0:12, onefile=1, bg=pi,
+                      override.check = c(FALSE,TRUE,FALSE)))
 }
 \keyword{device}

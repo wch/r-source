@@ -171,8 +171,8 @@ plot(x, sin(x), type="l", col = 2,xlab=expression(phi),ylab=expression(f(phi)))
 abline(h=-1:1, v=pi/2*(-6:6), col="gray90")
 lines(x, cos(x), col = 3, lty = 2)
 ex.cs1 <- expression(plain(sin) * phi,  paste("cos", phi))# 2 ways
-str(legend(-3, .9, ex.cs1, lty=1:2, plot=FALSE, adj = c(0, .6)))# adj y !
-    legend(-3, .9, ex.cs1, lty=1:2, col=2:3,    adj = c(0, .6))
+utils::str(legend(-3, .9, ex.cs1, lty=1:2, plot=FALSE, adj = c(0, .6)))# adj y !
+legend(-3, .9, ex.cs1, lty=1:2, col=2:3,    adj = c(0, .6))
 
 x <- rexp(100, rate = .5)
 hist(x, main = "Mean and Median of a Skewed Distribution")
@@ -180,13 +180,13 @@ abline(v = mean(x),   col=2, lty=2, lwd=2)
 abline(v = median(x), col=3, lty=3, lwd=2)
 ex12 <- expression(bar(x) == sum(over(x[i], n), i==1, n),
                    hat(x) == median(x[i], i==1,n))
-str(legend(4.1, 30, ex12, col = 2:3, lty=2:3, lwd=2))
+utils::str(legend(4.1, 30, ex12, col = 2:3, lty=2:3, lwd=2))
 
 ## 'Filled' boxes -- for more, see example(plotfactor)
 op <- par(bg="white") # to get an opaque box for the legend
 data(PlantGrowth)
-plot(cut(weight, 3) ~ group, data = PlantGrowth,
-     col = NULL, density = 16*(1:3))
+plot(cut(weight, 3) ~ group, data = PlantGrowth, col = NULL,
+     density = 16*(1:3))
 par(op)
 
 ## Using 'ncol' :

@@ -60,7 +60,7 @@ mult <- uc[tcc >= 2]
 cl <- lapply(mult, function(m) cc[ccodes == m])
 names(cl) <- apply(col2rgb(sapply(cl, function(x)x[1])),
                    2, function(n)paste(n, collapse=","))
-str(cl)
+utils::str(cl)
 \dontrun{
  if(require(xgobi)) { ## Look at the color cube dynamically :
    tc <- t(crgb[, !duplicated(ccodes)])

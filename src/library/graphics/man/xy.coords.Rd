@@ -61,12 +61,11 @@ xy.coords(x, y, xlab = NULL, ylab = NULL, log = NULL, recycle = FALSE)
 }
 \examples{
 xy.coords(fft(c(1:10)), NULL)
-data(cars) ; attach(cars)
-xy.coords(dist ~ speed, NULL)$xlab # = "speed"
+data(cars)
+with(cars, xy.coords(dist ~ speed, NULL)$xlab ) # = "speed"
 
-str(xy.coords(1:3, 1:2, recycle=TRUE))
-str(xy.coords(-2:10,NULL, log="y"))
+xy.coords(1:3, 1:2, recycle=TRUE)
+xy.coords(-2:10,NULL, log="y")
 ##> warning: 3 y values <=0 omitted ..
-detach()
 }
 \keyword{dplot}

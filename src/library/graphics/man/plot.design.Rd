@@ -71,7 +71,7 @@ plot.design(       Form, data = warpbreaks, col = 2)# same as above
 
 ## More than one y :
 data(esoph)
-str(esoph)
+utils::str(esoph)
 plot.design(esoph) ## two plots; if interactive you are "ask"ed
 
 ## or rather, compare mean and median:

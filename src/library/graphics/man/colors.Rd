@@ -30,7 +30,8 @@ colors()
   examples.
 }
 \examples{
-str(colors())
+cl <- colors()
+length(cl); cl[1:20]
 }
 \keyword{color}
 \keyword{dplot}

@@ -71,7 +71,7 @@ bxp(z, notch = FALSE, width = NULL, varwidth = FALSE, outline = TRUE,
 }
 \examples{
 set.seed(753)
-str(bx.p <- boxplot(split(rt(100, 4), gl(5,20))))
+(bx.p <- boxplot(split(rt(100, 4), gl(5,20))))
 op <- par(mfrow= c(2,2))
 bxp(bx.p, xaxt = "n")
 bxp(bx.p, notch = TRUE, axes = FALSE, pch = 4)

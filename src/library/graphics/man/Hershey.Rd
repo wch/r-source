@@ -173,7 +173,7 @@ Hershey
   \code{\link{Japanese}} for the Japanese characters in the Hershey fonts.
 }
 \examples{
-str(Hershey)
+Hershey
 
 ## for tables of examples, see demo(Hershey)
 }

@@ -65,15 +65,15 @@ boxplot.stats(x, coef = 1.5, do.conf=TRUE, do.out=TRUE)
 }
 \examples{
 x <- c(1:100, 1000)
-str(b1 <- boxplot.stats(x))
-str(b2 <- boxplot.stats(x, do.conf=FALSE, do.out=FALSE))
+(b1 <- boxplot.stats(x))
+(b2 <- boxplot.stats(x, do.conf=FALSE, do.out=FALSE))
 stopifnot(b1 $ stats == b2 $ stats) # do.out=F is still robust
-str(boxplot.stats(x, coef = 3, do.conf=FALSE))
+boxplot.stats(x, coef = 3, do.conf=FALSE)
 ## no outlier treatment:
-str(boxplot.stats(x, coef = 0))
+boxplot.stats(x, coef = 0)
 
-str(boxplot.stats(c(x, NA))) # slight change : n + 1
-str(r <- boxplot.stats(c(x, -1:1/0)))
+boxplot.stats(c(x, NA)) # slight change : n is 101
+(r <- boxplot.stats(c(x, -1:1/0)))
 stopifnot(r$out == c(1000, -Inf, Inf))
 
 %% extended example (for the NG of Rdoc):
