@@ -45,7 +45,7 @@ extern void R_DefParams(Rstart);
 extern void R_SetParams(Rstart);
 extern void setup_term_ui(void);
 extern void ProcessEvents(void);
-extern void end_Rmainloop(void), R_ReplDLLinit(void), R_CleanUp(int, int, int);
+extern void end_Rmainloop(void), R_ReplDLLinit(void);
 extern int R_ReplDLLdo1();
 extern void run_Rmainloop(void);
 
