@@ -127,6 +127,7 @@ SEXP do_random1(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    RAND1(2, rgeom);
 	    RAND1(3, rpois);
 	    RAND1(4, rt);
+	    RAND1(5, rsignrank);
 	default:
 	    error("internal error in do_random1\n");
 	}
