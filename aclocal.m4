@@ -1431,6 +1431,13 @@ if test -z "${TCLTK_CPPFLAGS}"; then
     fi
   fi
 fi
+if test "${have_tcltk}" = yes; then
+  if test -n "${TK_XINCLUDES}"; then
+    TCLTK_CPPFLAGS="${TCLTK_CPPFLAGS} ${TK_XINCLUDES}"
+  else
+    TCLTK_CPPFLAGS="${TCLTK_CPPFLAGS} ${X_CFLAGS}"
+  fi
+fi
 ])# _R_TCLTK_CPPFLAGS
 
 AC_DEFUN([_R_TCLTK_LIBS],
@@ -1494,15 +1501,45 @@ if test -z "${TCLTK_LIBS}"; then
       done
       ;;
   esac
+  ## Force evaluation ('-ltcl8.3${TCL_DBGX}' and friends ...).
+  eval "TCLTK_LIBS=\"${TCLTK_LIBS}\""
 fi
 ])# _R_TCLTK_LIBS
+
+AC_DEFUN([_R_TCLTK_WORKS],
+[AC_CACHE_CHECK([whether compiling/linking Tcl/Tk code works],
+                [r_cv_tcltk_works],
+[AC_LANG_PUSH(C)
+r_save_CPPFLAGS="${CPPFLAGS}"
+r_save_LIBS="${LIBS}"
+CPPFLAGS="${CPPFLAGS} ${TCLTK_CPPFLAGS}"
+LIBS="${LIBS} ${TCLTK_LIBS}"
+AC_LINK_IFELSE([AC_LANG_PROGRAM(
+[[#include <tcl.h>
+#include <tk.h>
+]],
+[[static char * p1 = (char *) Tcl_Init;
+static char * p2 = (char *) Tk_Init;
+]])],
+r_cv_tcltk_works=yes,
+r_cv_tcltk_works=no)
+CPPFLAGS="${r_save_CPPFLAGS}"
+LIBS="${r_save_LIBS}"
+AC_LANG_POP(C)])
+])# _R_TCLTK_WORKS
 
 AC_DEFUN([R_TCLTK],
 [if test "${want_tcltk}" = yes; then
   have_tcltk=yes
+  ## (Note that the subsequent 3 macros assume that have_tcltk has been
+  ## set appropriately.)
   _R_TCLTK_CONFIG
   _R_TCLTK_CPPFLAGS  
   _R_TCLTK_LIBS
+  if test "${have_tcltk}" = yes; then
+    _R_TCLTK_WORKS
+    have_tcltk=${r_cv_tcltk_works}
+  fi
 else
   have_tcltk=no
   ## Just making sure.
@@ -1514,11 +1551,6 @@ if test "${have_tcltk}" = yes; then
             [Define if you have the Tcl/Tk headers and libraries and
 	     want Tcl/Tk support to be built.])
   use_tcltk=yes
-  if test -n "${TK_XINCLUDES}"; then
-    TCLTK_CPPFLAGS="${TCLTK_CPPFLAGS} ${TK_XINCLUDES}"
-  else
-    TCLTK_CPPFLAGS="${TCLTK_CPPFLAGS} ${X_CFLAGS}"
-  fi
 else
   use_tcltk=no
 fi
