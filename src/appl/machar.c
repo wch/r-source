@@ -83,12 +83,13 @@
  */
 
 #include <math.h>
+#include "Applic.h"
 
 void machar(int *ibeta, int *it, int *irnd, int *ngrd, int *machep, int *negep,
 	int *iexp, int *minexp, int *maxexp, double *eps,
 	double *epsneg, double *xmin, double *xmax)
 {
-	volatile double a, b, beta, betain, betah, one, 
+	volatile double a, b, beta, betain, betah, one,
 		t, temp, tempa, temp1, two, y, z, zero;
 	int i, itemp, iz, j, k, mx, nxres;
 

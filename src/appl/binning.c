@@ -17,7 +17,6 @@
  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
-/*#include "Mathlib.h"*/
 #include "Error.h"
 #include "Arith.h"
 #include "Applic.h"
@@ -56,7 +55,7 @@ void bincode(double *x, int *pn, double *breaks, int *pnb, int *code,
 		code[i] = lo+1;
 	    }
 	} else if (! *naok)
-	    error("NA's in .C(\"bincode\",... NAOK=FALSE)");
+	    error("NA's in .C(\"bincode\",... NAOK=FALSE)\n");
 }
 
 void bincode2(double *x, int *pn, double *breaks, int *pnb, int *code,
@@ -86,7 +85,7 @@ void bincode2(double *x, int *pn, double *breaks, int *pnb, int *code,
 		code[i] = lo+1;
 	    }
 	} else if (! *naok)
-	    error("NA's in .C(\"bincode\",... NAOK=FALSE)");
+	    error("NA's in .C(\"bincode\",... NAOK=FALSE)\n");
 }
 
 
@@ -94,9 +93,8 @@ void bincode2(double *x, int *pn, double *breaks, int *pnb, int *code,
  *
  * bincount *counts* like bincode2, i.e. half open intervals defined as (a,b]
  */
-int
-bincount(double *x, int *pn, double *breaks, int *pnb, int *count,
-	 int *include_border, int *naok)
+void bincount(double *x, int *pn, double *breaks, int *pnb, int *count,
+	      int *include_border, int *naok)
 {
     int i, lo, hi;
     int n, nb1, new;
@@ -124,5 +122,5 @@ bincount(double *x, int *pn, double *breaks, int *pnb, int *count,
 		count[lo] += 1;
 	    }
 	} else if (! *naok)
-	    error("NA's in .C(\"bincode\",... NAOK=FALSE)");
+	    error("NA's in .C(\"bincode\",... NAOK=FALSE)\n");
 }
