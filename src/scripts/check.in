@@ -37,7 +37,7 @@ use Text::Wrap;
 ## don't buffer output
 $| = 1;
 
-my $revision = ' $Revision: 1.115 $ ';
+my $revision = ' $Revision: 1.116 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -1202,14 +1202,19 @@ sub check_pkg {
 	    if($HAVE_LATEX) {
 		$log->checking("${pkgname}-manual.tex");
 		## <NOTE>
-		## We suppress all output from running LaTeX.
-		## We could also write stdout to a tempfile and replay
-		## this in case of problems.  But does this really help?
-		my $cmd = "${R::Vars::LATEX} ${pkgname}-manual >/dev/null";
+		## We use \nonstopmode{} so that LaTeX really gives an
+	        ## error (and returns) if something is wrong, and all
+	        ## info goes to ${pkgname}-manual.log.
+		## We also suppress all output from running LaTeX.
+                ## We could also write stdout to a tempfile and replay
+                ## this in case of problems.  But does this really help?
+		my $cmd = "${R::Vars::LATEX}";
+		$cmd .= " '\\nonstopmode{}\\input{${pkgname}-manual.tex}'";
+		$cmd .= " >/dev/null";
 		$cmd .= " 2>&1" if($R::Vars::OSTYPE eq "unix");
 		## </NOTE>
 		if(R_system($cmd)) {
-		    $log-error();
+		    $log->error();
 		    $log->print("Could not create DVI version.\n");
 		    $log->print("This typically indicates Rd problems.\n");
 		    exit(1);
@@ -1220,8 +1225,8 @@ sub check_pkg {
 	else {
 	    if($HAVE_LATEX) {
 		$log->checking("DVI version of manual");
-		my $cmd = "${R::Vars::R_CMD} Rd2dvi --no-preview " .
-		  "-o ${pkgname}-manual.dvi >/dev/null";
+		my $cmd = "${R::Vars::R_CMD} Rd2dvi --batch " .
+		  "--no-preview -o ${pkgname}-manual.dvi >/dev/null";
 		$cmd .= " 2>&1" if($R::Vars::OSTYPE eq "unix");
 		$cmd .= " $pkgdir";
 		if(R_system($cmd)) {
