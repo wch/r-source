@@ -1,24 +1,24 @@
 #! /bin/sh
 
-U_R_HOME="${HOME}/.R"
-PKGLIST="${U_R_HOME}/doc/html/packages.html"
-SEARCHINDEX="${U_R_HOME}/doc/html/search/index.txt"
-rm -rf ${U_R_HOME}
+USER_R_HOME="${HOME}/.R"
+PKGLIST="${USER_R_HOME}/doc/html/packages.html"
+SEARCHINDEX="${USER_R_HOME}/doc/html/search/index.txt"
+rm -rf ${USER_R_HOME}
 
-dirs="${U_R_HOME} ${U_R_HOME}/doc ${U_R_HOME}/doc/html ${U_R_HOME}/doc/html/search ${U_R_HOME}/library"
+dirs="${USER_R_HOME} ${USER_R_HOME}/doc ${USER_R_HOME}/doc/html ${USER_R_HOME}/doc/html/search ${USER_R_HOME}/library"
 for d in ${dirs}; do
     mkdir -p ${d}
 done
 
 for f in ${R_HOME}/doc/html/*; do
     if test -f $f; then
-	ln -s ${f} ${U_R_HOME}/doc/html
+	ln -s ${f} ${USER_R_HOME}/doc/html
     fi
 done
 
 for f in ${R_HOME}/doc/html/search/*; do
     if test -f $f; then
-	ln -s ${f} ${U_R_HOME}/doc/html/search
+	ln -s ${f} ${USER_R_HOME}/doc/html/search
     fi
 done
 
@@ -31,8 +31,8 @@ for lib in $*; do
     if test -d ${lib}; then
       for pkg in `ls -d ${lib}/* | sed '/CVS$/d; /profile$/d'`; do
 	if test -d ${pkg}; then
-	    rm -f ${U_R_HOME}/library/${pkg}
-	    ln -s ${pkg} ${U_R_HOME}/library
+	    rm -f ${USER_R_HOME}/library/${pkg}
+	    ln -s ${pkg} ${USER_R_HOME}/library
 	    pkgname=`basename ${pkg}`
 	    if test -r ${pkg}/TITLE; then
 		pkgtitle=`cat ${pkg}/TITLE | sed "s/^${pkgname}//"`
@@ -53,5 +53,5 @@ done
 cat ${R_HOME}/doc/html/packages-foot.html >> ${PKGLIST}
 
 rm -f ${SEARCHINDEX}
-cat ${U_R_HOME}/library/*/CONTENTS > ${SEARCHINDEX}
+cat ${USER_R_HOME}/library/*/CONTENTS > ${SEARCHINDEX}
 
