@@ -1,6 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
+ *  Copyright (C) 1997--1998  Robert Gentleman, Ross Ihaka and the R Core team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -469,8 +470,8 @@ FUNTAB R_FunTab[] =
 {"parse",	do_parse,	0,	11,	4,	PP_FUNCALL},
 {"save",	do_save,	0,	111,	3,	PP_FUNCALL},
 {"load",	do_load,	0,	111,	1,	PP_FUNCALL},
-{"hdf5save",    do_hdf5save,    0,      0,     -1,      PP_FUNCALL},
-{"hdf5load",    do_hdf5load,    0,      1,      2,      PP_FUNCALL},
+{"hdf5save",	do_hdf5save,	0,	10,	-1,	PP_FUNCALL},
+{"hdf5load",	do_hdf5load,	0,	11,	 2,	PP_FUNCALL},
 {"deparse",	do_deparse,	0,	11,	2,	PP_FUNCALL},
 {"dput",	do_dput,	0,	111,	2,	PP_FUNCALL},
 {"dump",	do_dump,	0,	111,	2,	PP_FUNCALL},
