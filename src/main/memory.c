@@ -743,7 +743,7 @@ static void AgeNodeAndChildren(SEXP s, int gen)
     SEXP forwarded_nodes = NULL;
     AGE_NODE(s, gen);
     while (forwarded_nodes != NULL) {
-	SEXP s = forwarded_nodes;
+	s = forwarded_nodes;
 	forwarded_nodes = NEXT_NODE(forwarded_nodes);
 	if (NODE_GENERATION(s) != gen)
 	    REprintf("****snapping into wrong generation\n");
@@ -1176,16 +1176,15 @@ SEXP do_gc(SEXP call, SEXP op, SEXP args, SEXP rho)
     INTEGER(value)[1] = R_VSize - VHEAP_FREE();
     INTEGER(value)[4] = R_NSize;
     INTEGER(value)[5] = R_VSize;
-    /* next four are in 0.1Mb, rounded up */
-    INTEGER(value)[2] = 10.0 * (onsize - R_Collected)/1048576.0 *
-	sizeof(SEXPREC) + 0.999;
-    INTEGER(value)[3] = 10.0 * (R_VSize - VHEAP_FREE())/131072.0 + 0.999;
-    INTEGER(value)[6] = 10.0 * R_NSize/1048576.0 * sizeof(SEXPREC) + 0.999;
-    INTEGER(value)[7] = 10.0 * R_VSize/131072.0 + 0.999;
+    /* next four are in 0.1Mb, rounded up; Mega = 1048576.; Mega/8 = 131072. */
+    INTEGER(value)[2] = 10. * (onsize - R_Collected)/Mega * sizeof(SEXPREC) + 0.999;
+    INTEGER(value)[3] = 10. * (R_VSize - VHEAP_FREE())/131072. + 0.999;
+    INTEGER(value)[6] = 10. * R_NSize/Mega * sizeof(SEXPREC) + 0.999;
+    INTEGER(value)[7] = 10. * R_VSize/131072. + 0.999;
     INTEGER(value)[8] = (R_MaxNSize < INT_MAX) ? 
-	(10.0 * R_MaxNSize/1048576.0 * sizeof(SEXPREC) + 0.999) : NA_INTEGER;
+	(10. * R_MaxNSize/Mega * sizeof(SEXPREC) + 0.999) : NA_INTEGER;
     INTEGER(value)[9] = (R_MaxVSize < INT_MAX) ? 
-	(10.0 * R_MaxVSize/131072.0 + 0.999) : NA_INTEGER;
+	(10. * R_MaxVSize/131072. + 0.999) : NA_INTEGER;
     UNPROTECT(1);
     return value;
 }
