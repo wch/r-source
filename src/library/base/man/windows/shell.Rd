@@ -37,7 +37,7 @@ shell(cmd, shell, flag="/c", intern=FALSE, wait=TRUE,
   command, one line per character string, or an error message if the
   command could not be run.
 
-  If \code{intern=FALSE}, the return value is a error code, given the
+  If \code{intern=FALSE}, the return value is an error code, given the
   invisible attribute (so needs to be printed explicitly). If the
   command could not be run for any reason, the value is \code{-1} and
   an \R warning is generated. Otherwise if \code{wait=FALSE} the value
