@@ -154,7 +154,7 @@
 
 #ifdef MATHLIB_IN_R/* Mathlib in R */
 
-#include "Error.h"
+#include "R_ext/Error.h"
 # define MATHLIB_ERROR(fmt,x)		error(fmt,x);
 # define MATHLIB_WARNING(fmt,x)		warning(fmt,x)
 # define MATHLIB_WARNING2(fmt,x,x2)	warning(fmt,x,x2)

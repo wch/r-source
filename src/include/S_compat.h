@@ -26,7 +26,7 @@
 #define S_COMPAT_H_
 
 #include "S.h"
-#include "Fortran.h"
+/*#include "R_ext/Fortran.h"*/
 #include "R_ext/Linpack.h"/*-> Blas.h */
 
 extern void

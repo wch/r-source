@@ -36,6 +36,7 @@ extern "C" {
 #include <stdlib.h>
 #include <stdio.h>
 #include <limits.h>
+#include <malloc.h>
 #include <float.h>
 #ifdef Macintosh
 #include <fp.h>

@@ -24,6 +24,7 @@
 
 #ifndef BLAS_H
 #define BLAS_H
+#include "R_ext/Complex.h"
 
 	/* Double Precision Blas */
 
