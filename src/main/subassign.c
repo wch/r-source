@@ -175,18 +175,18 @@ static void SubassignTypeFix(SEXP *x, SEXP *y, int which, int stretch)
 {
 	switch(which) {
 
-	case 1010:	/* logical   <- logical	  */
-	case 1310:	/* integer   <- logical	  */
-	case 1410:	/* real	     <- logical	  */
-	case 1510:	/* complex   <- logical	  */
-	case 1313:	/* integer   <- integer	  */
-	case 1413:	/* real	     <- integer	  */
-	case 1513:	/* complex   <- integer	  */
-	case 1414:	/* real	     <- real	  */
-	case 1514:	/* complex   <- real	  */
-	case 1515:	/* complex   <- complex	  */
-	case 1616:	/* character <- character */
-	case 2020:	/* character <- character */
+	case 1010:	/* logical    <- logical    */
+	case 1310:	/* integer    <- logical    */
+	case 1410:	/* real	      <- logical    */
+	case 1510:	/* complex    <- logical    */
+	case 1313:	/* integer    <- integer    */
+	case 1413:	/* real	      <- integer    */
+	case 1513:	/* complex    <- integer    */
+	case 1414:	/* real	      <- real	    */
+	case 1514:	/* complex    <- real	    */
+	case 1515:	/* complex    <- complex    */
+	case 1616:	/* character  <- character  */
+	case 2020:	/* expression <- expression */
 
 		break;
 
@@ -232,7 +232,8 @@ static void SubassignTypeFix(SEXP *x, SEXP *y, int which, int stretch)
 	case 2015:	/* expression <- complex   */
 	case 2016:	/* expression <- character */
 
-		*y = coerceVector(*y, EXPRSXP);
+		/* Note : no coercion is needed here, */
+		/* we just insert the rhs into the lhs. */
 		break;
 
 	default:
@@ -1248,12 +1249,16 @@ SEXP do_subassign2(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 		case 2001:	/* expression <- symbol	    */
 		case 2006:	/* expression <- language   */
-		case 2020:	/* expression <- expression */
 		case 2010:	/* expression <- logical    */
 		case 2013:	/* expression <- integer    */
 		case 2014:	/* expression <- real	    */
 		case 2015:	/* expression <- complex    */
 		case 2016:	/* expression <- character  */
+
+			VECTOR(x)[offset] = y;
+			break;
+
+		case 2020:	/* expression <- expression */
 
 			VECTOR(x)[offset] = VECTOR(y)[0];
 			break;
