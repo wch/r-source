@@ -19,7 +19,7 @@
  *
  *  SYNOPSIS
  *
- *    #include "Mathlib.h"
+ *    #include "Rmath.h"
  *    void gammalims(double *xmin, double *xmax);
  *
  *  DESCRIPTION
@@ -38,7 +38,7 @@
 
 void gammalims(double *xmin, double *xmax)
 {
-/* FIXME: Even better: If IEEE, #define these in ../include/R_ext/Mathlib.h
+/* FIXME: Even better: If IEEE, #define these in nmath.h
 	  and don't call gammalims() at all
 */
 #ifdef IEEE_754

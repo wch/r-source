@@ -19,11 +19,10 @@
  */
 
 #define MATHLIB_STANDALONE 1
-#include "R_ext/Mathlib.h"
+#include <Rmath.h>
 
-
-
-int main()
+int
+main()
 {
 /* something to force the library to be included */
     qnorm(0.7, 0.0, 1.0, 0, 0); 

@@ -18,7 +18,7 @@
  *
  *  SYNOPSIS
  *
- *    #include "Mathlib.h"
+ *    #include "Rnorm.h"
  *    void dpsifn(double x, int n, int kode, int m,
  *		  double *ans, int *nz, int *ierr)
  *    double digamma(double x);
@@ -167,6 +167,7 @@ static double bvalues[] = {
 static double *b = (double *)&bvalues -1;
 static int nmax = 100;
 
+static
 void dpsifn(double x, int n, int kode, int m, double *ans, int *nz, int *ierr)
 {
     int i, j, k, mm, mx, nn, np, nx, fn;

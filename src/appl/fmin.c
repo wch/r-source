@@ -43,8 +43,10 @@
 */
 
 #include <math.h>
-#include "R_ext/Mathlib.h" /* for dimach */
-#include "R_ext/Applic.h"
+#define MATHLIB_PRIVATE
+#include <Rmath.h> /* for dimach */
+#undef MATHLIB_PRIVATE
+#include <R_ext/Applic.h>
 
 double Brent_fmin(double ax, double bx, double (*f)(double, void *),
 		  void *info, double tol)

@@ -18,7 +18,7 @@
  *
  *  SYNOPSIS
  *
- *    #include "Mathlib.h"
+ *    #include "Rmath.h"
  *    double rgamma(double a, double scale);
  *
  *  DESCRIPTION

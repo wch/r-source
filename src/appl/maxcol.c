@@ -6,7 +6,7 @@
  */
 
 #include "R_ext/Arith.h" /* NA handling */
-#include "R_ext/Mathlib.h" /* fmax2, fabs */
+#include <Rmath.h> /* fmax2 */
 #include "R_ext/Random.h" /* ..RNGstate */
 
 #include "R_ext/Applic.h" /* NA handling */

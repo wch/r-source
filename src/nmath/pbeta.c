@@ -19,7 +19,7 @@
  *
  *  SYNOPSIS
  *
- * #include "Mathlib.h"
+ * #include "Rmath.h"
  *
  * double pbeta_raw(double x, double pin, double qin, int lower_tail)
  * double pbeta	   (double x, double pin, double qin, int lower_tail, int log_p)

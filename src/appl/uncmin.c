@@ -15,7 +15,8 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307
+ *  USA
  */
 
 /* ../appl/uncmin.f
@@ -24,11 +25,13 @@
    */
 
 #include <math.h>
-#include "R.h"
-#include "R_ext/Applic.h"
-#include "R_ext/Linpack.h" /* ddot, dnrm2, dtrsl, dscal */
-#include "R_ext/Mathlib.h" /* d1mach i1mach */
-#include "R_ext/PrtUtil.h" /* Rprintf and printRealVector */
+#include <R.h>
+#include <R_ext/Applic.h>
+#include <R_ext/PrtUtil.h> /* printRealVector */
+#include <R_ext/Linpack.h> /* ddot, dnrm2, dtrsl, dscal */
+#define MATHLIB_PRIVATE
+#include <Rmath.h> /* for dimach */
+#undef MATHLIB_PRIVATE
 
 /* CC	 subroutines  mvmlt[lsu] should be REPLACED by BLAS ones!
  * CC

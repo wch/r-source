@@ -46,11 +46,11 @@
 #include <config.h>
 #endif
 
-#include "R_ext/Applic.h"
-#include "R_ext/Mathlib.h"
-#include "R_ext/Error.h"
+#include <R_ext/Applic.h>
+#include <Rmath.h>
+#include <R_ext/Error.h>
 #ifdef DEBUGpr
-# include "R_ext/PrtUtil.h"
+# include <R_ext/Print.h>
 #endif
 
 double R_pretty0(double *lo, double *up, int *ndiv, int min_n,

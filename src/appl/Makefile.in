@@ -16,7 +16,6 @@ include $(top_builddir)/Makeconf
 
 SOURCES_C = \
 	Rsock.c \
-	S_compat.c \
 	approx.c \
 	bakslv.c binning.c \
 	chisqsim.c chull.c cpoly.c cumsum.c \
@@ -76,7 +75,7 @@ Makedeps: Makefile $(DEPENDS)
 R: Makefile
 	@$(MAKE) Makedeps
 	@$(MAKE) $(noinst_LIBRARIES) 
-	@@WANT_R_SHLIBS_TRUE@$(MAKE) stamp-lo
+	@@WANT_R_SHLIB_TRUE@$(MAKE) stamp-lo
 
 libappl.a: $(libappl_a_OBJECTS)
 	$(AR) cr $@ $(libappl_a_OBJECTS)

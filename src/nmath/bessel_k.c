@@ -24,6 +24,8 @@
  *	------------------------------=#----	Martin Maechler, ETH Zurich
  */
 #include "nmath.h"
+static void K_bessel(double *x, double *alpha, long *nb,
+		     long *ize, double *bk, long *ncalc);
 
 static double xmax = 705.342;/* maximal x for UNscaled answer, see below */
 
@@ -53,8 +55,8 @@ double bessel_k(double x, double alpha, double expo)
     return x;
 }
 
-void K_bessel(double *x, double *alpha, long *nb,
-	      long *ize, double *bk, long *ncalc)
+static void K_bessel(double *x, double *alpha, long *nb,
+		     long *ize, double *bk, long *ncalc)
 {
 /*-------------------------------------------------------------------
 

@@ -19,7 +19,7 @@
  *
  *  SYNOPSIS
  *
- *    #include "Mathlib.h"
+ *    #include "Rmath.h"
  *    double dnbinom(double x, double n, double p);
  *
  *  DESCRIPTION

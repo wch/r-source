@@ -19,7 +19,7 @@
  *
  *  SYNOPSIS
  *
- *    #include "R_ext/Mathlib.h"
+ *    #include "Rmath.h"
  *    double rpois(double lambda)
  *
  *  DESCRIPTION

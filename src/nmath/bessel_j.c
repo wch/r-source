@@ -24,6 +24,9 @@
  *	------------------------------=#----	Martin Maechler, ETH Zurich
  */
 #include "nmath.h"
+static void J_bessel(double *x, double *alpha, long *nb,
+		     double *b, long *ncalc);
+
 
 double bessel_j(double x, double alpha)
 {
@@ -54,8 +57,8 @@ double bessel_j(double x, double alpha)
     return x;
 }
 
-void J_bessel(double *x, double *alpha, long *nb,
-	      double *b, long *ncalc)
+static void J_bessel(double *x, double *alpha, long *nb,
+		     double *b, long *ncalc)
 {
 
 /* ---------------------------------------------------------------------

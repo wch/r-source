@@ -1,8 +1,6 @@
 Under Unix, making in this directory will make standalone libraries
-libRmath.a and libRmath.so.  `make archive' and `make shared' make
+libRmath.a and libRmath.so.  `make static' and `make shared' make
 just one of them.
-
-You may find you need GNU make for full support of VPATH.
 
 Under Windows, use make -f Makefile.win. This makes Rmath.dll with
 import library libRmath.a.
@@ -11,10 +9,12 @@ import library libRmath.a.
 To use the routines in your own C or C++ programs, include
 
 #define MATHLIB_STANDALONE
-#include "R_ext/Mathlib.h"
+#include <Rmath.h>
 
-and link against -lRmath.  The example test.c does nothing useful,
-but is provided to test the process.
+and link against -lRmath.  The example file test.c does nothing
+useful, but is provided to test the process.  Note that you will
+probably not be able to run it unless you add the directory containing
+libRmath.so to the LD_LIBRARY_PATH.
 
 
 A little care is needed to use the random-number routines. You will

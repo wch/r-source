@@ -20,7 +20,7 @@
  *
  *  SYNOPSIS
  *
- *	#include "Mathlib.h"
+ *	#include "Rmath.h"
  *	double pgamma(double x, double alph, double scale,
  *		      int lower_tail, int log_p)
  *

@@ -19,7 +19,7 @@
  *
  *  SYNOPSIS
  *
- *   #include "Mathlib.h"
+ *   #include "Rmath.h"
  *
  *   double pnorm5(double x, double mu, double sigma, int lower_tail,int log_p);
  *	   {pnorm (..) is synonymous and preferred inside R}
@@ -131,7 +131,10 @@ void pnorm_both(double x, double *cum, double *ccum, int i_tail, int log_p)
 	7.29751555083966205e-5
     };
 
-    double xden, xnum, temp, del, min, eps, xsq, y;
+    double xden, xnum, temp, del, eps, xsq, y;
+#ifdef NO_DENORMS
+    double min = DBL_MIN;
+#endif
     int i, lower, upper;
 
 #ifdef IEEE_754
@@ -140,14 +143,13 @@ void pnorm_both(double x, double *cum, double *ccum, int i_tail, int log_p)
 
     /* Consider changing these : */
     eps = DBL_EPSILON * 0.5;
-    min = DBL_MIN;
 
-    /* i_tail in {0,1,2} means: "lower","upper","both" */
+    /* i_tail in {0,1,2} =^= {lower, upper, both} */
     lower = i_tail != 1;
     upper = i_tail != 0;
 
     y = fabs(x);
-    if (y <= 0.66291) {
+    if (y <= 0.67448975) { /* qnorm(3/4) = .6744.... -- earlier had 0.66291 */
 	if (y > eps) {
 	    xsq = x * x;
 	    xnum = a[4] * xsq;
@@ -168,7 +170,7 @@ void pnorm_both(double x, double *cum, double *ccum, int i_tail, int log_p)
     }
     else if (y <= M_SQRT_32) {
 
-	/* Evaluate pnorm for 0.66291 < |x| <= sqrt(32) ~= 5.657 */
+	/* Evaluate pnorm for 0.674.. = qnorm(3/4) < |x| <= sqrt(32) ~= 5.657 */
 
 	xnum = c[8] * y;
 	xden = y;
@@ -176,18 +178,19 @@ void pnorm_both(double x, double *cum, double *ccum, int i_tail, int log_p)
 	    xnum = (xnum + c[i]) * y;
 	    xden = (xden + d[i]) * y;
 	}
-	*cum = (xnum + c[7]) / (xden + d[7]);
+	temp = (xnum + c[7]) / (xden + d[7]);
 
 #define do_del(X)							\
-	xsq = floor(X * SIXTEN) / SIXTEN;				\
+	xsq = trunc(X * SIXTEN) / SIXTEN;				\
 	del = (X - xsq) * (X + xsq);					\
 	if(log_p) {							\
-	    *cum = (-xsq * xsq * 0.5) + (-del * 0.5) + log(*cum);	\
+	    *cum = (-xsq * xsq * 0.5) + (-del * 0.5) + log(temp);	\
 	    if((lower && x > 0.) || (upper && x <= 0.))			\
-		*ccum = log1p( - exp(*cum));				\
+		  *ccum = log1p(-exp(-xsq * xsq * 0.5) * 		\
+				exp(-del * 0.5) * temp);		\
 	}								\
 	else {								\
-	    *cum = exp(-xsq * xsq * 0.5) * exp(-del * 0.5) * *cum;	\
+	    *cum = exp(-xsq * xsq * 0.5) * exp(-del * 0.5) * temp;	\
 	    *ccum = 1.0 - *cum;						\
 	}
 
@@ -199,9 +202,9 @@ void pnorm_both(double x, double *cum, double *ccum, int i_tail, int log_p)
 	do_del(y);
 	swap_tail;
     }
-    else if(y < 50) {
+    else if((-37.5193 < x) || (x < 8.2924)) { /* originally had y < 50 */
 
-	/* Evaluate pnorm for  5.657 ~= sqrt(32) < |x| < 50 */
+	/* Evaluate pnorm for x in (-37.5, -5.657) union (5.657, 8.29) */
 
 	xsq = 1.0 / (x * x);
 	xnum = p[5] * xsq;
@@ -210,13 +213,13 @@ void pnorm_both(double x, double *cum, double *ccum, int i_tail, int log_p)
 	    xnum = (xnum + p[i]) * xsq;
 	    xden = (xden + q[i]) * xsq;
 	}
-	*cum = xsq * (xnum + p[4]) / (xden + q[4]);
-	*cum = (M_1_SQRT_2PI - *cum) / y;
+	temp = xsq * (xnum + p[4]) / (xden + q[4]);
+	temp = (M_1_SQRT_2PI - temp) / y;
 
 	do_del(x);
 	swap_tail;
     }
-    else { /* |x| >= 50 */
+    else { /* x < -37.5193  OR	8.2924 < x */
 	if(log_p) {/* be better than to just return log(0) or log(1) */
 	    xsq = x*x;
 	    if(xsq * DBL_EPSILON < 1.)
@@ -224,7 +227,7 @@ void pnorm_both(double x, double *cum, double *ccum, int i_tail, int log_p)
 	    else
 		del = 0.;
 	    *cum = -.5*xsq - M_LN_SQRT_2PI - log(y) + log1p(del);
-	    *ccum = 0.;/*log(1)*/
+	    *ccum = -0.;/*log(1)*/
 	    swap_tail;
 
 	} else {
@@ -233,9 +236,15 @@ void pnorm_both(double x, double *cum, double *ccum, int i_tail, int log_p)
 	}
     }
 
-    if(!log_p) { /* do not return "denormalized" -- needed ?? */
-	if(*cum < min)	*cum = 0.;
+#ifdef NO_DENORMS
+    /* do not return "denormalized" -- needed ?? */
+    if(log_p) {
+	if(*cum > -min)	 *cum = -0.;
+	if(*ccum > -min)*ccum = -0.;
+    else {
+	if(*cum < min)	 *cum = 0.;
 	if(*ccum < min)	*ccum = 0.;
     }
+#endif
     return;
 }
