@@ -702,7 +702,9 @@ SEXP do_strptime(SEXP call, SEXP op, SEXP args, SEXP env)
 	/* for glibc's sake. That only sets some unspecified fields,
 	   sometimes. */
 	tm.tm_sec = tm.tm_min = tm.tm_hour = 0;
-	tm.tm_year = tm.tm_mon = tm.tm_mday = tm.tm_yday = NA_INTEGER;
+	tm.tm_year = tm.tm_mon = tm.tm_mday = tm.tm_yday = 
+	    tm.tm_wday = NA_INTEGER;
+	tm.tm_isdst = -1;
 	invalid = STRING_ELT(x, i%n) == NA_STRING ||
 	    !strptime(CHAR(STRING_ELT(x, i%n)),
 		      CHAR(STRING_ELT(sformat, i%m)), &tm);
