@@ -136,6 +136,26 @@
 #undef R_GETCWD
 #endif
 
+/* Maximal length of an entire file name */
+#undef HAVE_LIMITS_H
+#undef HAVE_SYS_PARAM_H
+
+#if defined(HAVE_LIMITS_H)
+#  include <limits.h>
+#endif
+#if !defined(PATH_MAX)
+#  if defined(HAVE_SYS_PARAM_H)
+#    include <sys/param.h>
+#  endif
+#  if defined(MAXPATHLEN) && !defined(PATH_MAX)
+#    define PATH_MAX MAXPATHLEN
+#  elif defined(Win32)
+#    define PATH_MAX 260
+#  else
+#    define PATH_MAX 255
+#  endif
+#endif
+
 /* for platform.c to put in .Platform */
 #ifdef Unix
 #define OSTYPE      "Unix"
