@@ -52,6 +52,9 @@ BUG FIXES
 	does not contain C-style charcter strings, warnings (usually
 	many) are now given.
 
+    o	Building libR.so with the zlib in the R sources was not
+	finding the local zlib headers.
+
 
 
 		CHANGES IN R VERSION 1.6.1
