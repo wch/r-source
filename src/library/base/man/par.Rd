@@ -218,7 +218,8 @@ par(\dots, no.readonly = FALSE)
   components with a string of the form \code{"#RRGGBB"} where each of
   the pairs \code{RR}, \code{GG}, \code{BB} consist of two hexidecimal
   digits giving a value in the range \code{00} to \code{FF}.  Colors can
-  also be specified by giving an index into a small table of colors.
+  also be specified by giving an index into a small table of colors
+  (which can be specified using \code{\link{palette}}).
   This provides compatibility with S.
 
   The functions \code{rgb}, \code{hsv}, \code{gray} and \code{rainbow}
