@@ -439,7 +439,15 @@ AC_CHECK_LIB(m, sin)
 AC_CHECK_LIB(ncurses, main, [],
              AC_CHECK_LIB(termcap, main, [],
                           AC_CHECK_LIB(termlib, main)))
-AC_CHECK_LIB(dl, dlopen)
+case "${host_os}" in
+  darwin*)
+    AM_CONDITIONAL(BUILD_DLFCN_DARWIN, 1)
+    ;;
+  *)
+    AM_CONDITIONAL(BUILD_DLFCN_DARWIN, 0)
+    AC_CHECK_LIB(dl, dlopen)
+    ;;
+esac
 
 ## Readline.
 if test "${use_readline}" = yes; then
