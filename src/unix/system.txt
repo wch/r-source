@@ -140,7 +140,7 @@
  *
  *    FILE *R_fopen(const char *filename, const char *mode);
  *
- *  This is a (probably unnecessary) wrapper function for ``fopen''.
+ *  This is a wrapper function for ``fopen''.  It is necessary for MacOS
  *
  *
  *  6) SYSTEM INFORMATION
