@@ -39,7 +39,7 @@
  */
 
 #include "Mathlib.h"
-#include "Errormsg.h"
+#include "Error.h"
 
 int signgam;
 

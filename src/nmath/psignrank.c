@@ -27,7 +27,7 @@
  */
 
 #include "Mathlib.h"
-#include "Errormsg.h"
+#include "Error.h"
 
 double psignrank(double x, double n) {
     int i;

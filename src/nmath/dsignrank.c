@@ -27,7 +27,7 @@
  */
 
 #include "Mathlib.h"
-#include "Errormsg.h"
+#include "Error.h"
 
 static double *w[SIGNRANK_NMAX];
 

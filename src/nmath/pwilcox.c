@@ -27,7 +27,7 @@
  */
 
 #include "Mathlib.h"
-#include "Errormsg.h"/* for warning() */
+#include "Error.h"
 
 double pwilcox(double x, double m, double n) {
   int i;

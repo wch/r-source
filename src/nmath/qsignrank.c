@@ -27,12 +27,12 @@
  */
 
 #include "Mathlib.h"
-#include "Errormsg.h"
+#include "Error.h"
 
 double qsignrank(double x, double n)
 {
     double p, q;
-  
+
 #ifdef IEEE_754
     if (ISNAN(x) || ISNAN(n))
 	return x + n;
