@@ -209,6 +209,11 @@ none
 
 Directory:  System-specific
 
+* PR# 996 *
+Subject: Double inclusion of  "int R_OutputCon" from src/include/Rconnections.h 
+From: Thomas Hoffmann <thoffman@zappa.sax.de>
+Date: Wed, 27 Jun 2001 01:47:50 +0100
+--os2_emx-only problem.
 * PR# 964 *
 Subject: R-1.2.3 OSF precompiled binary doesn't run under DU4.0D
 From: paul@gromit.dlib.vt.edu
@@ -229,15 +234,19 @@ none
 
 Directory:  incoming
 
-* PR# 995 *
-Subject: Typo in R Data Import/Export 1.3.0
-From: "David Kane  <David Kane" <a296180@mica.fmr.com>
-Date: Tue, 26 Jun 2001 17:30:26 -0400
-* PR# 994 *
-Subject: Dokumentation bug in src/include/Graphics.h (R-1.3.0)
-From: Thomas Hoffmann <thoffman@zappa.sax.de>
-Date: Tue, 26 Jun 2001 01:23:51 +0100
-* PR# 993 *
-Subject: ??????´?´?
-From: "?????µ" <ausqkf6@lycos.co.kr>
-Date: Sat, 23 Jun 2001 11:30:49 +0900 (KST)
+* PR# 999 *
+Subject: History via arrow keys broken
+From: wbkiii@citrus.ucr.edu
+Date: Wed, 27 Jun 2001 19:56:23 +0200 (MET DST)
+* PR# 998 *
+Subject: install.packages
+From: "Thomas Stockton" <stockton@neptuneandco.com>
+Date: Wed, 27 Jun 2001 09:29:28 -0600
+* PR# 997 *
+Subject:  las=1 with log axis 
+From: Peter Dalgaard BSA <pd@pubhealth.ku.dk>
+Date: Wed, 27 Jun 2001 11:54:06 +0200
+* PR# 1000 *
+Subject: FREE Advertising at Mall.com
+From: "mall.com"<free@mall.com>
+Date: Wed, 27 Jun 2001 16:22:46 -0500 (CDT)
