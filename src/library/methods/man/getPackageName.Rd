@@ -21,8 +21,6 @@ functionPackageName(name)
       Note that if there are multiple instances of the function,
       \emph{all} the corresponding names are returned.
       }
-  \item{pkg}{ The name to be assigned to the package internally.
-      }
 }
 \details{
   Package names are normally installed during loading of the package,

@@ -53,7 +53,6 @@ resetClass(Class, resetSubclasses = TRUE)
   (and usually) the package where the class definition is assigned
   will be used.
     }
-  \item{x}{an arbitrary object.}
   \item{formal}{ Should a formal definition be required? }
   \item{object}{ any R object. }
 
