@@ -497,8 +497,9 @@ AC_CHECK_FUNCS(acosh asinh atanh bcopy finite getcwd isfinite isnan\
 ### Header files
 
 AC_HEADER_STDC
-AC_CHECK_HEADERS(dl.h dlfcn.h elf.h locale.h readline/history.h \
-  rpc/xdr.h sys/times.h time.h ieeefp.h ieee754.h unistd.h hdf5.h)
+AC_CHECK_HEADERS(dl.h dlfcn.h elf.h ieee754.h ieeefp.h hdf5.h limits.h \
+  locale.h readline/history.h rpc/xdr.h sys/param.h sys/times.h time.h \
+  unistd.h)
 case ${host} in
   *sunos4*)
     AC_DEFINE(SunOS4) ;;
