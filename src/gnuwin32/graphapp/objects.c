@@ -469,6 +469,8 @@ object tree_search(object top, HANDLE handle, int id, int key)
 		{	/* back at first object in sibling list */
 			/* climb the tree */
 			obj = obj->parent;
+			if (obj == top)
+				break;
 			if (obj->parent) {
 				first_object = obj->parent->child;
 				obj = obj->next;
