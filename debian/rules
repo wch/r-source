@@ -33,9 +33,9 @@ binary-arch: build
 	dh_clean -k
 	dh_installdirs
 	make install prefix=`pwd`/debian/tmp/usr
-	sed -e '/{R_HOME=.*/s::{R_HOME=/usr/lib/R:' \
+	sed -e '/{R_HOME=.*/s::{R_HOME=/usr/lib/R}:' \
 	  < bin/R > debian/tmp/usr/bin/R
-	sed -e '/{R_HOME=.*/s::{R_HOME=/usr/lib/R:' \
+	sed -e '/{R_HOME=.*/s::{R_HOME=/usr/lib/R}:' \
 	  < bin/R > debian/tmp/usr/lib/R/bin/R
 	dh_installdocs
 	(cd debian/tmp/usr/doc/r-base/doc && ln -s ../../../lib/R/doc/html .)

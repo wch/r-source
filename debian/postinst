@@ -12,7 +12,7 @@ case "$1" in
 	if [ -x /usr/bin/paperconf ]
 	then
 	    perl -pi -e \
-	    '$P=`/usr/bin/paperconf`,chop $P,s:a4:$P: if /^R_PAPERSIZE/' /usr/bin/R
+	    '$P=`/usr/bin/paperconf`,chop $P,s:a4:$P: if /{R_PAPERSIZE/' /usr/bin/R
 	fi
     ;;
     abort-upgrade|abort-remove|abort-deconfigure)
