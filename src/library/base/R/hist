@@ -6,6 +6,9 @@ function (x, breaks, freq = TRUE, col = NULL, border = par("fg"),
 {
 	if (!is.numeric(x)) 
 		stop("hist: x must be numeric")
+	eval(main)
+	eval(xlab)
+	x<-x[!is.na(x)]
 	if (missing(breaks)) {
 		breaks <- range(x)
 		breaks <- pretty(breaks + c(0, diff(breaks)/1000),
