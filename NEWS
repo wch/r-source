@@ -53,6 +53,10 @@ NEW FEATURES
 
 BUG FIXES
 
+    o   is.numeric() of a factor is now FALSE
+
+    o   prevent a segfault in plotmath
+
     o	f <- get("function"); f(,); f(F,F)  now "ok" (PR#361).
 
     o	blank-line reject code in parse.dcf was wrong (Martyn Plummer)

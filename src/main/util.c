@@ -503,6 +503,8 @@ int nlevels(SEXP f)
 
 int isNumeric(SEXP s)
 {
+    if (inherits(s,"factor")) return 0;
+
     switch(TYPEOF(s)) {
     case LGLSXP:
     case INTSXP:
