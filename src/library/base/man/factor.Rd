@@ -45,8 +45,9 @@ as.ordered(x)
 \value{
   \code{factor} returns an object of class \code{"factor"} which has a
   set of numeric codes the length of \code{x} with a \code{"levels"}
-  attribute. If \code{ordered} is true (or \code{ordered} is used) the
-  result has class \code{c("ordered", "factor")}.
+  attribute of mode \code{\link{character}}.  If \code{ordered} is true
+  (or \code{ordered} is used) the result has class
+  \code{c("ordered", "factor")}.
 
   \code{is.factor} returns \code{TRUE} or \code{FALSE} depending on
   whether its argument is of type factor or not.  Correspondingly,
