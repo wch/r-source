@@ -35,6 +35,8 @@ pmin(\dots, na.rm=FALSE)
   \code{na.rm} is \code{FALSE}, \code{NA} values in the input vectors
   will produce \code{NA} values in the output.  If \code{na.rm} is
   \code{TRUE}, \code{NA} values are ignored.
+  \code{\link{attributes}} (such as \code{\link{names}} or
+  \code{\link{dim}}) are transferred from the first argument (if applicable).
 }
 \seealso{
   \code{\link{range}}.
@@ -43,6 +45,8 @@ pmin(\dots, na.rm=FALSE)
 min(5:1,pi)
 pmin(5:1, pi)
 x <- sort(rnorm(100));  cH <- 1.35
+pmin(cH, quantile(x)) # no names
+pmin(quantile(x), cH) # has names
 plot(x, pmin(cH, pmax(-cH, x)), type='b', main= "Huber's function")
 }
 \keyword{univar}

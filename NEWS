@@ -109,6 +109,9 @@ NEW FEATURES
 	step to a non-finite value: nlm at least would go into an
 	infinite loop.
 
+    o	"mostattributes(obj) <- value" utility useful for careful
+        attributes' inheritance; e.g. for fixing pmax/pmin (see below).
+
 
 BUG FIXES
 
@@ -279,6 +282,9 @@ BUG FIXES
     o	C functions fprec() and fround() [= R's signif() and round()],
 	now use R_pow_di(10., n) which is clean and more efficient.
 	This changes some results in the least significant bits.
+
+    o	pmin(c(a=1), 2:3) now works {and pmax(.) too}.
+
 
 
 	**************************************************

@@ -133,3 +133,18 @@ for(n in 2:10)
     print(all.equal(n*(n-1)*var(diag(n)),
 		    matrix(c(rep(c(n-1,rep(-1,n)),n-1), n-1), nr=n, nc=n),
 		    tol = 20*Meps))# use tol=0	to see rel.error
+
+## pmin() & pmax() -- "attributes" !
+v1 <- c(a=2)
+m1 <- cbind(  2:4,3)
+m2 <- cbind(a=2:4,2)
+
+all( pmax(v1, 1:3) == pmax(1:3, v1) & pmax(1:3, v1) == c(2,2,3))
+all( pmin(v1, 1:3) == pmin(1:3, v1) & pmin(1:3, v1) == c(1,2,2))
+
+oo <- options(warn = -1)# These four lines each would give 3-4 warnings :
+ all( pmax(m1, 1:7) == pmax(1:7, m1) & pmax(1:7, m1) == c(2:4,4:7))
+ all( pmin(m1, 1:7) == pmin(1:7, m1) & pmin(1:7, m1) == c(1:3,3,3,3,2))
+ all( pmax(m2, 1:7) == pmax(1:7, m2) & pmax(1:7, m2) == pmax(1:7, m1))
+ all( pmin(m2, 1:7) == pmin(1:7, m2) & pmin(1:7, m2) == c(1:3,2,2,2,2))
+options(oo)
