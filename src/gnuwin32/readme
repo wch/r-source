@@ -308,7 +308,7 @@ on Windows.
 Building From Source
 ====================
 
-See the file @RVER@\src\gnuwin32\INSTALL in the source distribution
+See the file @RWVER@\src\gnuwin32\INSTALL in the source distribution
 and the rw-FAQ.
 
 
