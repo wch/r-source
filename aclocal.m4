@@ -46,7 +46,7 @@ dnl
 dnl R_PROG_AR
 dnl
 AC_DEFUN(R_PROG_AR,
- [AC_CHECK_PROGS(AR, [${AR} ar], ar)
+ [AC_CHECK_PROGS(AR, [${AR} ar])
   : ${ARFLAGS="rc"}
   AC_SUBST(ARFLAGS)])
 dnl
@@ -844,7 +844,7 @@ dnl R_BITMAPS
 dnl
 AC_DEFUN(R_BITMAPS, [
   BITMAP_LIBS=
-  AC_CHECK_HEADER(jpeglib.h, [
+  AC_EGREP_HEADER(jpeg_error_mgr, jpeglib.h, [
     AC_CHECK_LIB(jpeg, jpeg_destroy_compress, [
       BITMAP_LIBS=-ljpeg
       AC_DEFINE(HAVE_JPEG)
