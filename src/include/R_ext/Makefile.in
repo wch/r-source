@@ -18,8 +18,8 @@ R_EXT_HEADERS = \
   Applic.h Arith.h BLAS.h Boolean.h Callbacks.h Complex.h Constants.h \
   Error.h GetX11Image.h \
   GraphicsDevice.h GraphicsEngine.h GraphicsBase.h \
-  Lapack.h Linpack.h Mathlib.h \
-  Memory.h Print.h PrtUtil.h R-ftp-http.h RS.h Random.h RConverters.h \
+  Lapack.h Linpack.h Mathlib.h Memory.h \
+  Parse.h Print.h PrtUtil.h R-ftp-http.h RS.h Random.h RConverters.h \
   Rdynload.h Utils.h eventloop.h libextern.h
 
 ## <FIXME>

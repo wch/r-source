@@ -81,7 +81,8 @@ void CleanEd()
 
 SEXP do_edit(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    int   i, rc, status;
+    int   i, rc;
+    ParseStatus status;
     SEXP  x, fn, envir, ed, t;
     char *filename, *editcmd, *vmaxsave, *cmd;
     FILE *fp;

@@ -2437,11 +2437,11 @@ static SEXP NextArg(SEXP l, SEXP s, SEXP tag)
  *  The following routines parse a single expression:
  *
  *
- *	SEXP R_Parse1File(FILE *fp, int gencode, int *status)
+ *	SEXP R_Parse1File(FILE *fp, int gencode, ParseStatus *status)
  *
- *	SEXP R_Parse1Vector(TextBuffer *text, int gencode, int *status)
+ *	SEXP R_Parse1Vector(TextBuffer *text, int gencode, ParseStatus *status)
  *
- *	SEXP R_Parse1Buffer(IOBuffer *buffer, int gencode, int *status)
+ *	SEXP R_Parse1Buffer(IOBuffer *buffer, int gencode, ParseStatus *status)
  *
  *
  *  The success of the parse is indicated as folllows:
@@ -2457,11 +2457,11 @@ static SEXP NextArg(SEXP l, SEXP s, SEXP tag)
  *  The following routines parse several expressions and return
  *  their values in a single expression vector.
  *
- *	SEXP R_ParseFile(FILE *fp, int n, int *status)
+ *	SEXP R_ParseFile(FILE *fp, int n, ParseStatus *status)
  *
- *	SEXP R_ParseVector(TextBuffer *text, int n, int *status)
+ *	SEXP R_ParseVector(TextBuffer *text, int n, ParseStatus *status)
  *
- *	SEXP R_ParseBuffer(IOBuffer *buffer, int n, int *status)
+ *	SEXP R_ParseBuffer(IOBuffer *buffer, int n, ParseStatus *status)
  *
  *  Here, status is 1 for a successful parse and 0 if parsing failed
  *  for some reason.
@@ -2485,7 +2485,7 @@ static void ParseInit()
     KeepSource = *LOGICAL(GetOption(install("keep.source"), R_NilValue));
 }
 
-static SEXP R_Parse1(int *status)
+static SEXP R_Parse1(ParseStatus *status)
 {
     switch(yyparse()) {
     case 0:                     /* End of file */
@@ -2519,7 +2519,7 @@ static int file_ungetc(int c)
     return ungetc(c, fp_parse);
 }
 
-SEXP R_Parse1File(FILE *fp, int gencode, int *status)
+SEXP R_Parse1File(FILE *fp, int gencode, ParseStatus *status)
 {
     ParseInit();
     GenerateCode = gencode;
@@ -2542,7 +2542,7 @@ static int buffer_ungetc(int c)
     return R_IoBufferUngetc(c, iob);
 }
 
-SEXP R_Parse1Buffer(IoBuffer *buffer, int gencode, int *status)
+SEXP R_Parse1Buffer(IoBuffer *buffer, int gencode, ParseStatus *status)
 {
     ParseInit();
     GenerateCode = gencode;
@@ -2565,7 +2565,7 @@ static int text_ungetc(int c)
     return R_TextBufferUngetc(c, txtb);
 }
 
-SEXP R_Parse1Vector(TextBuffer *textb, int gencode, int *status)
+SEXP R_Parse1Vector(TextBuffer *textb, int gencode, ParseStatus *status)
 {
     ParseInit();
     GenerateCode = gencode;
@@ -2580,7 +2580,7 @@ SEXP R_Parse1Vector(TextBuffer *textb, int gencode, int *status)
 #ifdef GENERAL
 
 SEXP R_Parse1General(int (*g_getc)(), int (*g_ungetc)(),
-		     int gencode, int *status)
+		     int gencode, ParseStatus *status)
 {
     ParseInit();
     GenerateCode = gencode;
@@ -2591,7 +2591,7 @@ SEXP R_Parse1General(int (*g_getc)(), int (*g_ungetc)(),
 }
 #endif
 
-SEXP R_Parse(int n, int *status)
+SEXP R_Parse(int n, ParseStatus *status)
 {
     int i;
     SEXP t, rval;
@@ -2650,7 +2650,7 @@ SEXP R_Parse(int n, int *status)
     }
 }
 
-SEXP R_ParseFile(FILE *fp, int n, int *status)
+SEXP R_ParseFile(FILE *fp, int n, ParseStatus *status)
 {
     GenerateCode = 1;
     R_ParseError = 1;
@@ -2679,7 +2679,7 @@ static int con_ungetc(int c)
     return Rconn_ungetc(c, con_parse);
 }
 
-SEXP R_ParseConn(Rconnection con, int n, int *status)
+SEXP R_ParseConn(Rconnection con, int n, ParseStatus *status)
 {
     GenerateCode = 1;
     R_ParseError = 1;
@@ -2689,7 +2689,7 @@ SEXP R_ParseConn(Rconnection con, int n, int *status)
     return R_Parse(n, status);
 }
 
-SEXP R_ParseVector(SEXP text, int n, int *status)
+SEXP R_ParseVector(SEXP text, int n, ParseStatus *status)
 {
     SEXP rval;
     TextBuffer textb;
@@ -2705,7 +2705,8 @@ SEXP R_ParseVector(SEXP text, int n, int *status)
 }
 
 #ifdef GENERAL
-SEXP R_ParseGeneral(int (*ggetc)(), int (*gungetc)(), int n, int *status)
+SEXP R_ParseGeneral(int (*ggetc)(), int (*gungetc)(), int n,
+		    ParseStatus *status)
 {
     GenerateCode = 1;
     R_ParseError = 1;
@@ -2731,7 +2732,7 @@ static char *Prompt(SEXP prompt, int type)
     }
 }
 
-SEXP R_ParseBuffer(IoBuffer *buffer, int n, int *status, SEXP prompt)
+SEXP R_ParseBuffer(IoBuffer *buffer, int n, ParseStatus *status, SEXP prompt)
 {
     SEXP rval, t;
     char *bufp, buf[1024];

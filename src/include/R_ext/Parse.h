@@ -17,25 +17,30 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#include <R_ext/Parse.h>
+/* NOTE:
+   This file exports a part of the current internal parse interface.
+   It is subject to change at any major version of R.
+ */
 
-	/* Parse A Single Expression */
+#ifndef R_EXT_PARSE_H_
+#define R_EXT_PARSE_H_
 
-SEXP R_Parse1File(FILE*, int, ParseStatus *);
-SEXP R_Parse1Buffer(IoBuffer*, int, ParseStatus *);
-SEXP R_Parse1Vector(TextBuffer*, int, ParseStatus *);
-SEXP R_Parse1General(int (*)(), int (*)(), int, ParseStatus *);
+/*
+#define PARSE_NULL		0
+#define PARSE_OK		1
+#define PARSE_INCOMPLETE	2
+#define PARSE_ERROR		3
+#define PARSE_EOF		4
+*/
 
-	/* Parse Several Expressions */
+typedef enum {
+    PARSE_NULL,
+    PARSE_OK,
+    PARSE_INCOMPLETE,
+    PARSE_ERROR,
+    PARSE_EOF
+} ParseStatus;
 
-SEXP R_ParseFile(FILE*, int, ParseStatus *);
-SEXP R_ParseBuffer(IoBuffer*, int, ParseStatus *, SEXP);
-/* SEXP R_ParseVector(SEXP, int, ParseStatus *); in R_ext/Parse.h */
-SEXP R_ParseGeneral(int (*)(), int (*)(), int, ParseStatus *);
+SEXP R_ParseVector(SEXP, int, ParseStatus *);
 
-
-#ifndef HAVE_RCONNECTION_TYPEDEF
-typedef struct Rconn  *Rconnection;
-#define HAVE_RCONNECTION_TYPEDEF
 #endif
-SEXP R_ParseConn(Rconnection con, int n, ParseStatus *status);

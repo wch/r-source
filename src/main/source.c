@@ -43,7 +43,8 @@ SEXP do_parse(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP text, prompt, s;
     Rconnection con;
     Rboolean wasopen;
-    int ifile, num, status;
+    int ifile, num;
+    ParseStatus status;
 
     checkArity(op, args);
     R_ParseError = 0;

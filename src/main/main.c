@@ -66,7 +66,8 @@ extern void InitDynload();
 
 static void R_ReplFile(FILE *fp, SEXP rho, int savestack, int browselevel)
 {
-    int status, count=0;
+    ParseStatus status;
+    int count=0;
 
     for(;;) {
 	R_PPStackTop = savestack;
@@ -92,6 +93,9 @@ static void R_ReplFile(FILE *fp, SEXP rho, int savestack, int browselevel)
 	    break;
 	case PARSE_EOF:
 	    return;
+	    break;
+	case PARSE_INCOMPLETE:
+	    /* can't happen: just here to quieten -Wall */
 	    break;
 	}
     }
@@ -152,7 +156,7 @@ char *R_PromptString(int browselevel, int type)
   and so put it into one of the public R header files.
  */
 typedef struct {
-  int            status;
+  ParseStatus    status;
   int            prompt_type;
   int            browselevel;
   unsigned char  buf[1025];
@@ -305,7 +309,8 @@ void R_ReplDLLinit()
 
 int R_ReplDLLdo1()
 {
-    int c, status;
+    int c;
+    ParseStatus status;
     SEXP rho = R_GlobalEnv;
 
     if(!*DLLbufp) {

@@ -17,6 +17,8 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+#ifndef R_CONNECTIONS_H_
+#define R_CONNECTIONS_H_
 #include <R_ext/Boolean.h>
 
 /* until we make connections more public this allows the opaque
@@ -130,7 +132,6 @@ int Rconn_printf(Rconnection con, const char *format, ...);
 Rconnection getConnection(int n);
 Rconnection getConnection_no_err(int n);
 Rboolean switch_stdout(int icon, int closeOnExit);
-SEXP R_ParseConn(Rconnection con, int n, int *status);
 void con_close(int i);
 void Rconn_setEncoding(Rconnection con, SEXP enc);
 void init_con(Rconnection new, char *description, char *mode);
@@ -139,3 +140,6 @@ Rconnection R_newsock(char *host, int port, int server, char *mode);
 Rconnection in_R_newsock(char *host, int port, int server, char *mode);
 Rconnection R_newunz(char *description, char *mode);
 int dummy_vfprintf(Rconnection con, const char *format, va_list ap);
+
+#endif
+

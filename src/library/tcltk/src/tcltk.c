@@ -18,14 +18,7 @@
 #include <R_ext/eventloop.h>
 #endif
 
-/* From Parse.h -- must find better solution: */
-#define PARSE_NULL              0
-#define PARSE_OK                1
-#define PARSE_INCOMPLETE        2
-#define PARSE_ERROR             3
-#define PARSE_EOF               4
-
-SEXP R_ParseVector(SEXP, int, int *);
+#include <R_ext/Parse.h>
 
 #include "tcltk.h" /* declarations of our `public' interface */
 extern int (*R_timeout_handler)();
@@ -62,7 +55,8 @@ static int R_eval(ClientData clientData,
 		  int argc,
 		  CONST84 char *argv[])
 {
-    int status, i;
+    ParseStatus status;
+    int i;
     SEXP text, expr, ans=R_NilValue /* -Wall */;
 
     text = PROTECT(allocVector(STRSXP, argc - 1));
