@@ -46,6 +46,7 @@
 #define EALREADY                WSAEALREADY
 #define _WINSOCKAPI_
 extern void R_ProcessEvents(void);
+extern void R_FlushConsole(void);
 #endif
 
 #include <R_ext/R-ftp-http.h>
@@ -1240,10 +1241,11 @@ RxmlNanoHTTPMethod(const char *URL, const char *method, const char *input,
        authentication failure */
     if(proxy && !nAuthenticate && ctxt->returnValue == 407) {
 	char *env;
+	Rprintf("%s\n%s\n", "Proxy authentication failed:",
+		"\tplease re-enter the credentials or hit Cancel");
+	R_FlushConsole(); R_ProcessEvents();
 	env = askUserPass("Proxy Authentication");
 	if(strlen(env)) {
-	    Rprintf("%s\n%s\n", "Proxy authentication failed:",
-		    "please re-enter the credentials or hit Cancel");
 	    if (proxyUser != NULL) {xmlFree(proxyUser); proxyUser = NULL;}
 	    proxyUser = xmlMemStrdup(env);
 	    nAuthenticate++;
