@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.5-19, 2002-08-22
+Version 1.5-20, 2002-08-31
 ISBN 3-901167-51-X
 Kurt Hornik
 
@@ -1327,6 +1327,16 @@ requirement for the user is a JavaScript capable browser.  See
 *akima*
      Linear or cubic spline interpolation for irregularly gridded data.
 
+*ape*
+     Analyses of Phylogenetics and Evolution, providing functions for
+     reading and plotting phylogenetic trees in parenthetic format
+     (standard Newick format), analyses of comparative data in a
+     phylogenetic framework, analyses of diversification and
+     macroevolution, computing distances from allelic and nucleotide data,
+     reading nucleotide sequences from GenBank via internet, and several
+     tools such as Mantel's test, computation of minimum spanning tree, or
+     the population parameter theta based on various approaches.
+
 *ash*
      David Scott's ASH routines for 1D and 2D density estimation.
 
@@ -1770,6 +1780,10 @@ requirement for the user is a JavaScript capable browser.  See
      graph-level indices, structural distance and covariance methods,
      structural equivalence detection, p* modeling, and network
      visualization.
+
+*sound*
+     A sound interface for R: Basic functions for dealing with `.wav' files
+     and sound samples.
 
 *spatial*
      Functions for kriging and point pattern analysis from "Modern Applied
