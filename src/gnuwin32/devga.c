@@ -40,6 +40,16 @@
 extern console RConsole;
 extern Rboolean AllDevicesKilled;
 
+/* these really are globals: per machine, not per window */
+static double user_xpinch = 0.0, user_ypinch = 0.0;
+
+void GAsetunits(double xpinch, double ypinch)
+{
+    user_xpinch = xpinch;
+    user_ypinch = ypinch;
+}
+
+
 
 	/********************************************************/
 	/* This device driver has been documented so that it be	*/
@@ -1087,8 +1097,14 @@ setupScreenDevice(DevDesc *dd, gadesc *xd, double w, double h,
     double dw, dw0, dh, d;
 
     xd->kind = SCREEN;
-    dw = dw0 = (int) (w / pixelWidth(NULL));
-    dh = (int) (h / pixelHeight(NULL));
+    if (R_finite(user_xpinch) && user_xpinch > 0.0)
+	dw = dw0 = (int) (w * user_xpinch);
+    else
+	dw = dw0 = (int) (w / pixelWidth(NULL));
+    if (R_finite(user_ypinch) && user_ypinch > 0.0)
+	dh = (int) (w * user_ypinch);
+    else
+	dh = (int) (h / pixelHeight(NULL));
     if (resize != 3) {
 	if ((dw / devicewidth(NULL)) > 0.85) {
 	    d = dh / dw;
