@@ -89,7 +89,7 @@ NEW FEATURES
    o	zip.file.extract() is no longer provisional and has an
 	"internal" method available on Unix-alikes and Windows.
 
-   o	New read-only connections to zip files via unz().
+   o	New read-only connections to files in zip files via unz().
 
    o    The tcltk package now works with the gnome user interface.
 
@@ -159,6 +159,10 @@ BUG FIXES
         names for the dump that don't inadvertently blow the limit on
         symbol length.  (TODO:  either fix dump.frames accordingly or
         remove the limit--say by truncating very long symbols?)
+
+    o	se.contrasts works more reliably with multistratum models,
+	and its help page has an example.
+
 
 
 

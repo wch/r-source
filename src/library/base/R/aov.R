@@ -569,27 +569,28 @@ se.contrast.aovlist <-
         c.qr <- qr.qty(e.qr, contrast)
         e.assign <- attr(e.qr$qr, "assign")
         n.object <- length(object)
-        if(length(e.assign) < n.object)
-            e.assign[[names(object)[n.object]]] <-
-                attr(e.qr$qr, "assign.residual")
+        e.assign <- c(e.assign,
+                      rep(n.object - 1, nrow(c.qr) - length(e.assign)))
         res <- vector(length = n.object, mode = "list")
         names(res) <- names(object)
-        for(strata.nm in names(object)) {
-            strata <- object[[strata.nm]]
+        for(j in seq(along=names(object))) {
+            strata <- object[[j]]
             if(is.qr(strata$qr)) {
-                scontrast <- c.qr[e.assign[[strata.nm]], , drop = FALSE]
+                scontrast <- c.qr[e.assign == (j - 1), , drop = FALSE]
                 effects <- as.matrix(qr.qty(strata$qr, scontrast))
-                asgn <- strata$assign
                 asgn <- strata$assign[strata$qr$pivot[1:strata$rank]]
                 uasgn <- unique(asgn)
-                res.i <- matrix(0, nrow = length(asgn), ncol = ncol(effects),
-                                dimnames= list(names(asgn), colnames(contrast)))
+                browser()
+                nm <- c("(Intercept)", attr(strata$terms, "term.labels"))
+                res.i <-
+                    matrix(0, length(asgn), ncol(effects),
+                           dimnames = list(nm[1 + uasgn], colnames(contrast)))
                 for(i in seq(along = asgn)) {
                     select <- (asgn == uasgn[i])
-                    res.i[i, ] <- rep(1, length(select)) %*%
-                        effect[select, , drop = FALSE]^2
+                    res.i[i, ] <- rep(1, sum(select)) %*%
+                        effects[seq(along=asgn)[select], , drop = FALSE]^2
                 }
-                res[[strata.nm]] <- res.i
+                res[[j]] <- res.i
             }
         }
         res
@@ -658,5 +659,5 @@ se.contrast.aovlist <-
         wgt[i, ] <- weights[[strata.nms[i]]][var.nms[i], , drop = FALSE]
     rse <- rse.list[strata.nms]
     eff <- effic[eff.used]
-    sqrt((rse/eff^2) %*% wgt)
+    drop(sqrt((rse/eff^2) %*% wgt))
 }
