@@ -16,7 +16,7 @@ Next:<a rel=next href="#Introduction">Introduction</a>
 <h1>R FAQ</h1>
 
 <h2>Frequently Asked Questions on R</h2>
-<h2>Version 1.4-4, 2002-01-09</h2>
+<h2>Version 1.4-5, 2002-01-12</h2>
 <address>Kurt Hornik</address>
 <p><p><hr><p>
 
@@ -447,7 +447,7 @@ maintenance tool.  Simply add the line
 <pre>deb http://cran.r-project.org/bin/linux/debian <var>distribution</var> main
 </pre>
 
-<p>(where <var>distribution</var> is either <code>stable</code> or <code>unstable</code>;
+<p>(where <var>distribution</var> is either <code>stable</code> or <code>testing</code>;
 feel free to use a <small>CRAN</small> mirror instead of the master) to the
 file <code>/etc/apt/sources.list</code>.  Once you have added that line the
 programs <code>apt-get</code>, <code>apt-cache</code>, and <code>dselect</code>
@@ -1413,6 +1413,8 @@ distribution functions.
 <dt><strong>AnalyzeFMRI</strong>
 <dd>Functions for I/O, visualisation and analysis of functional Magnetic
 Resonance Imaging (fMRI) datasets stored in the ANALYZE format. 
+<br><dt><strong>Bhat</strong>
+<dd>Functions for general likelihood exploration (MLE, MCMC, CIs). 
 <br><dt><strong>CoCoAn</strong>
 <dd>Constrained Correspondence Analysis. 
 <br><dt><strong>Devore5</strong>
@@ -1610,6 +1612,8 @@ capabilities, plus some support for interaction.
 <br><dt><strong>gss</strong>
 <dd>A comprehensive package for structural multivariate function estimation
 using smoothing splines. 
+<br><dt><strong>hdf5</strong>
+<dd>Interface to the <small>NCSA</small> HDF5 library. 
 <br><dt><strong>ineq</strong>
 <dd>Inequality, concentration and poverty measures, and Lorenz curves
 (empirical and theoretic). 
@@ -1803,9 +1807,7 @@ invited to give these a try, of course.  This area of <small>CRAN</small>
 currently contains
 
 <dl>
-<dt><strong>Bhat</strong>
-<dd>Functions for general likelihood exploration (MLE, MCMC, CIs). 
-<br><dt><strong>DBI</strong>
+<dt><strong>DBI</strong>
 <dd>A common database interface (DBI) class and method definitions.  All
 classes in this package are virtual and need to be extended by the
 various DBMS implementations. 
@@ -1833,8 +1835,6 @@ functions to match the interface metadata structures.
 time series package.  Contains PADI, juice and monitoring extensions. 
 <br><dt><strong>ensemble</strong>
 <dd>Ensembles of tree classifiers. 
-<br><dt><strong>hdf5</strong>
-<dd>Interface to the <small>NCSA</small> HDF5 library. 
 <br><dt><strong>hpower</strong>
 <dd>A suite of functions to compute power and sample size for tests of the
 general linear hypothesis. 

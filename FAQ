@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 1.4-4, 2002-01-09
+Version 1.4-5, 2002-01-12
 Kurt Hornik
 
 
@@ -374,7 +374,7 @@ maintenance tool.  Simply add the line
 
      deb http://cran.r-project.org/bin/linux/debian DISTRIBUTION main
 
-(where DISTRIBUTION is either `stable' or `unstable'; feel free to use a
+(where DISTRIBUTION is either `stable' or `testing'; feel free to use a
 CRAN mirror instead of the master) to the file `/etc/apt/sources.list'.
 Once you have added that line the programs `apt-get', `apt-cache', and
 `dselect' (using the apt access method) will automatically detect and
@@ -1156,6 +1156,9 @@ works, was published in the Journal of Statistical Software
      Functions for I/O, visualisation and analysis of functional Magnetic
      Resonance Imaging (fMRI) datasets stored in the ANALYZE format.
 
+*Bhat*
+     Functions for general likelihood exploration (MLE, MCMC, CIs).
+
 *CoCoAn*
      Constrained Correspondence Analysis.
 
@@ -1416,6 +1419,9 @@ works, was published in the Journal of Statistical Software
      A comprehensive package for structural multivariate function estimation
      using smoothing splines.
 
+*hdf5*
+     Interface to the NCSA HDF5 library.
+
 *ineq*
      Inequality, concentration and poverty measures, and Lorenz curves
      (empirical and theoretic).
@@ -1673,9 +1679,6 @@ packages still "under development" or depending on features only present in
 the current development versions of R.  Volunteers are invited to give
 these a try, of course.  This area of CRAN currently contains
 
-*Bhat*
-     Functions for general likelihood exploration (MLE, MCMC, CIs).
-
 *DBI*
      A common database interface (DBI) class and method definitions.  All
      classes in this package are virtual and need to be extended by the
@@ -1714,9 +1717,6 @@ these a try, of course.  This area of CRAN currently contains
 
 *ensemble*
      Ensembles of tree classifiers.
-
-*hdf5*
-     Interface to the NCSA HDF5 library.
 
 *hpower*
      A suite of functions to compute power and sample size for tests of the

@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2002
-@set FAQ-VERSION 1.4-4, 2002-01-09
+@set FAQ-VERSION 1.4-5, 2002-01-12
 @set REL-VERSION 1.4.0
 @c %**end of header
 
@@ -443,7 +443,7 @@ deb http://cran.r-project.org/bin/linux/debian @var{distribution} main
 @end smallexample
 
 @noindent
-(where @var{distribution} is either @samp{stable} or @samp{unstable};
+(where @var{distribution} is either @samp{stable} or @samp{testing};
 feel free to use a @acronym{CRAN} mirror instead of the master) to the
 file @file{/etc/apt/sources.list}.  Once you have added that line the
 programs @command{apt-get}, @command{apt-cache}, and @command{dselect}
@@ -1446,6 +1446,8 @@ The following packages are available from the @acronym{CRAN}
 @item AnalyzeFMRI
 Functions for I/O, visualisation and analysis of functional Magnetic
 Resonance Imaging (fMRI) datasets stored in the ANALYZE format.
+@item Bhat
+Functions for general likelihood exploration (MLE, MCMC, CIs).
 @item CoCoAn
 Constrained Correspondence Analysis.
 @item Devore5
@@ -1650,6 +1652,8 @@ capabilities, plus some support for interaction.
 @item gss
 A comprehensive package for structural multivariate function estimation
 using smoothing splines.
+@item hdf5
+Interface to the @acronym{NCSA} HDF5 library.
 @item ineq
 Inequality, concentration and poverty measures, and Lorenz curves
 (empirical and theoretic).
@@ -1860,8 +1864,6 @@ invited to give these a try, of course.  This area of @acronym{CRAN}
 currently contains
 
 @table @strong
-@item Bhat
-Functions for general likelihood exploration (MLE, MCMC, CIs).
 @item DBI
 A common database interface (DBI) class and method definitions.  All
 classes in this package are virtual and need to be extended by the
@@ -1894,8 +1896,6 @@ Extensions to @strong{dse}, the Dynamic Systems Estimation multivariate
 time series package.  Contains PADI, juice and monitoring extensions.
 @item ensemble
 Ensembles of tree classifiers.
-@item hdf5
-Interface to the @acronym{NCSA} HDF5 library.
 @item hpower
 A suite of functions to compute power and sample size for tests of the
 general linear hypothesis.
