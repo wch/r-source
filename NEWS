@@ -33,6 +33,11 @@ NEW FEATURES
     o   help.search() creates a database for faster searching later in
 	the R session.
 
+    o	density() allows for more kernels and has a new argument
+        `give.Rkern' to access the relevant kernel property.
+
+
+
 BUG FIXES
 
     o	made filled.contour independent on pointsize. Make plot key
@@ -64,6 +69,10 @@ BUG FIXES
         restore" is turned into a warning, allowing the rest of the
         workspace to be restored, but the variable contains an empty
         environment on reload.
+
+    o  density(x) now works also when IQR(x) == 0.
+       density(x, window=...) now works [S compatibility].
+
 
 
 		CHANGES IN R VERSION 0.90.0
