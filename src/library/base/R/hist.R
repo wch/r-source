@@ -29,7 +29,7 @@ hist.default <-
 	nB <- length(breaks)
 	if(nB == 1) {##	 search anew for breaks; dx is (always ?) 0.
 	    breaks <-
-		if(breaks != 0) breaks * c(.8, 1.2) else c(-.2,.2)
+		if(abs(breaks) > 1e-20) sort(breaks * c(.8, 1.2)) else c(-.2,.2)
 	    nB <- length(breaks)
 	}
     }
