@@ -1263,7 +1263,7 @@ void InitAboutWindow(void){
     controlStyle.just = teCenter;
     CFRelease(text);
     
-    text = CFSTR("RAqua GUI by Stefano M. Iacus and Thomas Lumley (2003).\rPlease send feedback to stefano.iacus@unimi.it");
+    text = CFSTR("Aqua GUI by Stefano M. Iacus and Thomas Lumley (2003).\rPlease send feedback to stefano.iacus@unimi.it");
     GetControlByID(RAboutWindow, &AuthorsID, &versionControl);
     SetControlData(versionControl, kControlLabelPart, kControlStaticTextCFStringTag, sizeof(CFStringRef), &text);
     controlStyle.flags = kControlUseJustMask;
