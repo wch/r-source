@@ -28,14 +28,14 @@ DISTCLEANFILES = Makefile
 .SUFFIXES:
 .SUFFIXES: _tgz .ts
 
-_tgz.ts:
-	$(R) CMD INSTALL $<
-	@touch $@
-
 all: Makefile R @USE_RECOMMENDED_PACKAGES_TRUE@ $(OBJECTS)
 
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
+
+_tgz.ts:
+	$(R) CMD INSTALL $<
+	@touch $@
 
 ## survival needs to be installed before boot
 boot.ts: survival.ts boot_tgz
