@@ -13,7 +13,7 @@ LEA_MALLOC=YES
 USE_ATLAS=NO
 ATLAS_PATH=/R/ATLAS/lib/WinNT_PII
 
-PACKAGES = base ctest eda lqs methods modreg mva nls splines stepfun ts
+PACKAGES = base ctest eda lqs methods modreg mva nls splines stepfun tools ts
 ALLPACKAGES = $(PACKAGES) tcltk
 
 RHOME = $(shell perl pwd.pl ../..)# must be absolute path
