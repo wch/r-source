@@ -32,13 +32,8 @@ list.files <- function(path=".", pattern=NULL,all.files=FALSE,full.names=FALSE)
 
 dir <- list.files
 
-file.path <-function (..., fsep = .Platform$file.sep,absolute=FALSE, root="",disksep=.Platform$disk.sep) {
-    rval<-paste(..., sep = fsep)
-    if (absolute){
-        rval<-paste(root,rval,sep=disksep)
-    }
-    rval
-}
+file.path <- function(..., fsep=.Platform$file.sep)
+paste(..., sep=fsep)
 
 file.exists <- function(...)
 .Internal(file.exists(c(...)))
