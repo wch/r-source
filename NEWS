@@ -167,6 +167,8 @@ NEW FEATURES
 	same way as print.summary.lm(), and both show them as NAs in
 	the table of coefficients.
 
+    o	rank(x, na.last = "keep") now preserves NAs in `x'.
+
     o	read.table()'s 'as.is' argument can be character, naming columns
 	not to be converted.
 
@@ -290,6 +292,9 @@ STANDARD PACKAGES
 
 	- prcomp() now accepts complex matrices, and there is biplot()
 	  method for its output (in the real case).
+
+	- dendrograms are slightly better documented, methods working with
+	  "label", not "text" attribute.
 
     o	Changes in package 'tcltk':
 

@@ -119,25 +119,28 @@ nchar <- function(x).Internal(nchar(x))
 plot.window <- function(xlim, ylim, log = "", asp = NA, ...)
     .Internal(plot.window(xlim, ylim, log, asp, ...))
 polyroot <- function(z).Internal(polyroot(z))
+
 rank <- function(x, na.last = TRUE) {
     nas <- is.na(x)
     y <- .Internal(rank(x[!nas]))
     if(!is.na(na.last) && any(nas)) {
-        x <- numeric(length(x))
-        if(na.last) {
-            ## NOTE that the internal code gets NAs reversed
-            x[!nas] <- y
-            x[nas] <- (length(y) + 1:1):length(x)
-        }
-        else {
-            len <- sum(nas)
-            x[!nas] <- y + len
-            x[nas] <- 1 : len
-        }
-        y <- x
+	## the internal code has ranks in [1, length(y)]
+	storage.mode(x) <- "double"
+	NAkeep <- (na.last == "keep")
+	if(NAkeep || na.last) {
+	    x[!nas] <- y
+	    if(!NAkeep) x[nas] <- (length(y) + 1:1):length(x)
+	}
+	else {
+	    len <- sum(nas)
+	    x[!nas] <- y + len
+	    x[nas] <- 1 : len
+	}
+	y <- x
     }
     y
 }
+
 readline <- function(prompt="").Internal(readline(prompt))
 search <- function().Internal(search())
 searchpaths <- function()

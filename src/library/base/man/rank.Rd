@@ -3,16 +3,17 @@
 \title{Sample Ranks}
 \description{
   Returns the sample ranks of the values in a numeric vector.
-  Ties result in ranks being averaged.
+  Ties, i.e., equal values, result in ranks being averaged.
 }
 \usage{
 rank(x, na.last = TRUE)
 }
 \arguments{
   \item{x}{a numeric vector.}
-  \item{na.last}{for controlling the treatment of \code{NA}s.
+  \item{na.last}{for controlling the treatment of \code{\link{NA}}s.
     If \code{TRUE}, missing values in the data are put last; if
-    \code{FALSE}, they are put first; if \code{NA}, they are removed.}
+    \code{FALSE}, they are put first; if \code{NA}, they are removed; if
+    \code{"keep"} they are kept.}
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
