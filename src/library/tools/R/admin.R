@@ -40,7 +40,7 @@ function(dir, outDir)
                        ##   format(Sys.time(), "%a %b %d %X %Y")
                        Sys.time(),
                        "; ",
-                       .Platform$OS.type,
+                       .OStype(),
                        sep = "")),
                file.path(outDir, "DESCRIPTION"))
     invisible()
@@ -83,7 +83,7 @@ function(dir, outDir)
     codeFiles <- listFilesWithType(codeDir, "code", full.names = FALSE)
 
     collationField <-
-        c(paste("Collate", .Platform$OS.type, sep = "."), "Collate")
+        c(paste("Collate", .OStype(), sep = "."), "Collate")
     if(any(i <- collationField %in% names(db))) {
         ## We have a Collate specification in the DESCRIPTION file:
         ## currently, file paths relative to codeDir, separated by

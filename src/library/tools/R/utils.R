@@ -89,18 +89,26 @@ function(dir, type, all.files = FALSE, full.names = TRUE)
                           full.names = full.names)
 
     if(type %in% c("code", "docs")) {
-        OSdir <- file.path(dir, .Platform$OS)
+        OSdir <- file.path(dir, .OStype())
         if(fileTest("-d", OSdir)) {
             OSfiles <-
                 listFilesWithExts(OSdir, exts, all.files = all.files,
                                   full.names = FALSE)
             OSfiles <-
-                file.path(if(full.names) OSdir else .Platform$OS,
+                file.path(if(full.names) OSdir else .OStype(),
                           OSfiles)
             files <- c(files, OSfiles)
         }
     }
     files
+}
+
+### ** OSType
+
+.OStype <- function()
+{
+    OS <- Sys.getenv("R_OSTYPE")
+    if(nchar(OS)) OS else .Platform$OS.type
 }
 
 ### * Text utilities.

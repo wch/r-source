@@ -12,7 +12,9 @@ esac
 export R_SAVE_IMAGE
 
 if test "x${BUILD}" = "xCROSS"; then
-R_EXE="R_DEFAULT_PACKAGES=NULL ${RX_EXE} --slave --no-site-file --no-init-file"
+R_DEFAULT_PACKAGES=NULL
+export R_DEFAULT_PACKAGES
+R_EXE="${RX_EXE} --slave --no-site-file --no-init-file"
 else
 R_EXE="${R_HOME}/bin/Rterm --slave --no-site-file --no-init-file R_DEFAULT_PACKAGES=NULL"
 fi

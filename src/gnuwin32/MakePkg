@@ -100,14 +100,14 @@ ifneq ($(strip $(PKGRFILES)),)
 	@$(MKDIR) -p $(DPKG)/R
 ifeq ($(strip $(BUILD)),CROSS)
 	@$(ECHO) ".installPackageCodeFiles('"$(SPKG)"', '"$(DPKG)"')" \
-	  | R_DEFAULT_PACKAGES=tools $(R_EXE) --vanilla --slave > /dev/null
+	  | R_DEFAULT_PACKAGES=tools R_OSTYPE=windows $(R_EXE) --vanilla --slave > /dev/null
 else
 	@$(ECHO) ".installPackageCodeFiles('"$(SPKG)"', '"$(DPKG)"')" \
 	  | $(RHOME)/bin/rterm.exe --vanilla --slave \
 	    R_DEFAULT_PACKAGES=tools > /dev/null
 endif
 ## install halts here if collater failed
-	@sh $(RHOME)/src/gnuwin32/install-save.sh $(SAVE) $(RLIB) $(PKG) $(RHOME) $(BUILD) $(R_EXE)
+	@sh $(RHOME)/src/gnuwin32/install-save.sh $(SAVE) $(RLIB) $(PKG) $(RHOME) $(BUILD)  R_OSTYPE=windows $(R_EXE)
 else
 	@$(ECHO) "  no R files in this package"
 endif
@@ -194,7 +194,7 @@ ifeq ($(strip $(BUILD)),CROSS)
           fi ; \
 	  $(ECHO) " and metadata"; \
 	  $(ECHO) ".installPackageNamespaceInfo('$(DPKG)', '$(DPKG)')" | \
-	    R_DEFAULT_PACKAGES=tools $(R_EXE) --vanilla --slave > /dev/null; \
+	    R_DEFAULT_PACKAGES=tools R_OSTYPE=windows $(R_EXE) --vanilla --slave > /dev/null; \
 	fi
 else
 	@if test -f ${SPKG}/NAMESPACE; then \
@@ -282,7 +282,7 @@ indices:
 	@$(ECHO) "  installing indices"
 ifeq ($(strip $(BUILD)),CROSS)
 	@$(ECHO) ".installPackageIndices('.', '"$(DPKG)"')" | \
-	  R_DEFAULT_PACKAGES=tools $(R_EXE) --vanilla --slave > /dev/null
+	  R_DEFAULT_PACKAGES=tools R_OSTYPE=windows $(R_EXE) --vanilla --slave > /dev/null
 else
 	@$(ECHO) ".installPackageIndices('.', '"$(DPKG)"')" | \
 	  $(RHOME)/bin/rterm.exe --vanilla --slave R_DEFAULT_PACKAGES=tools > /dev/null
@@ -298,7 +298,7 @@ ifneq ($(strip $(PKG)),base)
 	@$(ECHO) "  adding MD5 sums"
 ifeq ($(strip $(BUILD)),CROSS)
 	@$(ECHO) ".installMD5sums('"$(DPKG)"')" | \
-	  R_DEFAULT_PACKAGES=tools $(R_EXE) --vanilla --slave > /dev/null
+	  R_DEFAULT_PACKAGES=tools R_OSTYPE=windows $(R_EXE) --vanilla --slave > /dev/null
 else
 	@$(ECHO) ".installMD5sums('"$(DPKG)"')" | \
 	  $(RHOME)/bin/rterm.exe --vanilla --slave R_DEFAULT_PACKAGES=tools > /dev/null
