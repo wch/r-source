@@ -6,10 +6,12 @@ while(<$ARGV[0]/man/*.Rd>){
 
     $ARGV[0] =~ /([^\/]*)$/;
     my $pkg =$1;
-    
+    my $file = $_;
+
     open(rdfile, "<$_");
     undef $text;
-    
+    $file =~ s+.*/man/(.*)\.Rd+$1+o;
+
     while(<rdfile>){
 	$text .= $_;
     }
@@ -23,7 +25,7 @@ while(<$ARGV[0]/man/*.Rd>){
     my $rdtitle = $1;
     $rdtitle =~ s/\n/ /sg;
 
-    undef @aliases;    
+    undef @aliases;
     while($text =~ s/\\alias\{\s*(.*)\s*\}//){
 	$alias = $1;
 	$alias =~ s/\\%/%/g;
@@ -42,6 +44,6 @@ while(<$ARGV[0]/man/*.Rd>){
     print "Aliases: @aliases\n";
     print "Keywords: @keywords\n";
     print "Description: $rdtitle\n";
-    print "URL: ../../../library/$pkg/html/$rdname.html\n\n";
+    print "URL: ../../../library/$pkg/html/$file.html\n\n";
 }
 

@@ -189,6 +189,9 @@ BUG FIXES
     o   Calling rbinom() repeatedly with the same p but different n
 	gave incorrect results.
 
+    o   Rd2contents assumed the \name field was the file name, so
+	searches could lead to non-existent links.
+
 
 	**************************************************
 	*						 *
