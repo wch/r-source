@@ -611,6 +611,9 @@ BUG FIXES
     o	abbreviate(*, dot = TRUE) now only adds a "." where abbreviations
 	did happen.
 
+    o	Changing timezones in the POSIXt functions was not working on
+	some Linux systems, and this has been corrected.
+
 
 
 	**************************************************
