@@ -2141,9 +2141,8 @@ msgid "not that many frames on the stack"
 msgstr ""
 
 #: src/main/context.c:343
-#, fuzzy
 msgid "only positive values of 'n' are allowed"
-msgstr "sono permessi solo argomenti positivi"
+msgstr "sono permessi valori di 'n' positivi"
 
 #: src/main/context.c:453
 msgid "no function to restart"
@@ -6485,7 +6484,7 @@ msgid ""
 "\n"
 msgstr ""
 "Scrivi 'demo()' per una dimostrazione, 'help()' per l'aiuto on-line, o\n"
-"'help.start()' per l'help navigabile on browser HTML.\n"
+"'help.start()' per l'help navigabile con browser HTML.\n"
 "Scrivi 'q()' per uscire da R.\n"
 "\n"
 
