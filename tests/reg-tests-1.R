@@ -41,3 +41,10 @@ a2
 stopifnot(a1 == a2)
 ## Comments:
 # both should be 236.9645
+
+## Follow up: example from Lindsey, purportedly of inaccuracy in aic
+y <- matrix(c(2, 0, 7, 3, 0, 9), ncol=2)
+x <- gl(3, 1)
+a <- glm(y ~ x, family=binomial)$aic
+stopifnot(is.finite(a))
+## Comments: gave NaN prior to 1.2.1
