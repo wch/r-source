@@ -49,9 +49,9 @@ function(x, y, ..., alternative = c("two.sided", "less", "greater"),
         n <- length(x)
         x <- y(sort(x), ...) - (0 : (n-1)) / n
         STATISTIC <- switch(alternative,
-                            "two.sided" = max(abs(c(x, x-1/n))),
-                            "greater" = max(c(x, x-1/n)),
-                            "less" = - min(c(x, x-1/n)))
+                            "two.sided" = max(c(x, 1/n - x)),
+                            "greater" = max(1/n - x),
+                            "less" = max(x))
     }
 
     names(STATISTIC) <- switch(alternative,
