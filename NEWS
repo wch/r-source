@@ -2,26 +2,27 @@
 
 BUG FIXES
 
-    o   build-help --dosnames should now also work for text help,
-        latex and examples.
+    o	build-help --dosnames should now also work for text help,
+	latex and examples.
 
     o	seq() should work better now (fuzz-factor 1e-7 inserted)
 
     o	multiple arguments to return caused value to be a pairlist
 
-    o   data.frame choked on long names from deparse()
+    o	data.frame choked on long names from deparse()
 
-    o   data.edit now works (dataedit doesn't need pairlist()s anymore)
+    o	data.edit now works (dataedit doesn't need pairlist()s anymore)
 
-    o   as.pairlist(NULL) is ok
+    o	as.pairlist(NULL) is ok
 
     o	ts(1:5, start=2, end=4) now work.  Further plot(ts(..), ts(..))
 
     o	eigen() returns $vectors in any case [S compat].
 
-    o   apply(cbind(1,1:9, 2, quantile) doesn't drop quantile names anymore
+    o	apply(cbind(1,1:9, 2, quantile) doesn't drop quantile names anymore
 
-    o   array(1, dim=(1:3)[c(F,F,F)]) is now valid == array(1,NULL) == c(1)
+    o	array(1, dim=(1:3)[c(F,F,F)]) is now valid == array(1,NULL) == c(1);
+	the same for array(a,d, list())
 
     o	fix problem with step() and offsets
 

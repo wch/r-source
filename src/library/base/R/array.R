@@ -10,7 +10,7 @@ array <- function(data = NA, dim = length(data), dimnames = NULL)
     }
     if(length(dim))
 	dim(data) <- dim
-    if(is.list(dimnames))
+    if(is.list(dimnames) && length(dimnames))
 	dimnames(data) <- dimnames
     data
 }
