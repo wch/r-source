@@ -292,27 +292,35 @@ none
 
 Directory:  incoming
 
-* PR# 770 *
-Subject: two minor 1.2.0 install problems
-From: pperkins@ucsd.edu
-Date: Sat, 16 Dec 2000 20:03:08 +0100 (MET)
-* PR# 765 *
-Subject: cannot allocate vector of size in merge
-From: viktorm@pdf.com
-Date: Fri, 15 Dec 2000 00:06:56 +0100 (MET)
-* PR# 767 *
-Subject: R install doesn't set permissions
-From: B.Rowlingson@lancaster.ac.uk
-Date: Fri, 15 Dec 2000 17:54:50 +0100 (MET)
+* PR# 775 *
+Subject: R 1.2.0 : logspline does not install from install.packages(). Missing #include | library ?
+From: charpent@bacbuc.dyndns.org
+Date: Mon, 18 Dec 2000 20:48:42 +0100 (MET)
 * PR# 766 *
 Subject: R1.2.0
 From: Jim Lindsey <james.lindsey@luc.ac.be>
 Date: Fri, 15 Dec 2000 16:12:12 +0100 (MET)
-* PR# 769 *
-Subject: fourfoldplot
-From: Thomas Lumley <thomas@biostat.washington.edu>
-Date: Fri, 15 Dec 2000 10:50:18 -0800 (PST)
+* PR# 765 *
+Subject: cannot allocate vector of size in merge
+From: viktorm@pdf.com
+Date: Fri, 15 Dec 2000 00:06:56 +0100 (MET)
+* PR# 771 *
+Subject: problems with glm
+From: Jim Lindsey <james.lindsey@luc.ac.be>
+Date: Mon, 18 Dec 2000 09:28:01 +0100 (MET)
 * PR# 768 *
 Subject: R on Redhat 7 / glibc problem
 From: B.Rowlingson@lancaster.ac.uk
 Date: Fri, 15 Dec 2000 19:12:29 +0100 (MET)
+* PR# 774 *
+Subject: \item{x}<cr>{description of x}
+From: Paul Gilbert <pgilbert@bank-banque-canada.ca>
+Date: Mon, 18 Dec 2000 11:05:39 -0500
+* PR# 773 *
+Subject: INSTALL should have info on make check
+From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
+Date: 18 Dec 2000 16:13:59 +0100
+* PR# 772 *
+Subject: demo(is.things) fails
+From: B.Rowlingson@lancaster.ac.uk
+Date: Mon, 18 Dec 2000 13:46:02 +0100 (MET)
