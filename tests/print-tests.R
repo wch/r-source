@@ -194,7 +194,6 @@ format(zz)
 # " (font-locking: closing the string above)
 
 # test format.data.frame on former AsIs's.
-RNGversion("1.6.2")
 set.seed(321)
 dd <- data.frame(x = 1:5, y = rnorm(5), z = c(1, 2, NA, 4, 5))
 model <- glm(y ~ x, data = dd, subset = 1:4, na.action = na.omit)
