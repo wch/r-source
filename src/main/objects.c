@@ -1011,16 +1011,37 @@ SEXP do_set_prim_method(SEXP op, char *code_string, SEXP fundef, SEXP mlist)
     prim_mlist[offset] = 0;
   }
   else if(fundef && !isNull(fundef) && !prim_generics[offset]) {
-    R_PreserveObject(fundef);
     if(TYPEOF(fundef) != CLOSXP)
       error("The formal definition of a primitive generic must be a function object (got type %s)",
 	    type2str(TYPEOF(fundef)));
+    R_PreserveObject(fundef);
     prim_generics[offset] = fundef;
   }
-  if(mlist && !isNull(mlist))
-    prim_mlist[offset] = mlist;
+  if(code==HAS_METHODS) {
+      if(!mlist  || isNull(mlist))
+	  error("Call tried to set primitive function methods with a null methods list");
+      if(prim_mlist[offset])
+	  R_ReleaseObject(prim_mlist[offset]);
+      R_PreserveObject(mlist);
+      prim_mlist[offset] = mlist;
+  }
   return value;
 }
+
+static SEXP get_primitive_methods(SEXP op, SEXP rho)
+{
+    SEXP f, e;
+    int nprotect = 0;
+    f = PROTECT(allocVector(STRSXP, 1));  nprotect++;
+    SET_STRING_ELT(f, 0, mkChar(PRIMNAME(op)));
+    PROTECT(e = allocVector(LANGSXP, 2)); nprotect++;
+    SETCAR(e, install("getMethods"));
+    SETCAR(CDR(e), f);
+    e = eval(e, rho);
+    UNPROTECT(nprotect);
+    return e;
+}
+    
 
 /* Could there be methods for this op?  Checks
    only whether methods are currently being dispatched and, if so,
@@ -1068,9 +1089,11 @@ SEXP R_possible_dispatch(SEXP call, SEXP op, SEXP args,
   current = prim_methods[offset];
   if(current == NO_METHODS || current == SUPPRESSED)
     return(NULL);
-  /* check that the methods for this function have been collected (by
-     getAllMethods), and that method check pointer has been set by
-     library(methods) */
+  /* check that the methods for this function have been set */
+  if(current == NEEDS_RESET) {
+      mlist = get_primitive_methods(op, rho);
+      do_set_prim_method(op, "set", R_NilValue, mlist);
+  }
   mlist = prim_mlist[offset];
   if(mlist && !isNull(mlist)
      && quick_method_check_ptr) {

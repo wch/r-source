@@ -574,7 +574,7 @@ SEXP R_standardGeneric(SEXP fname, SEXP ev)
 		PROTECT(value = R_S_MethodsListSelect(fname, ev, mlist, f_env)); nprotect++;
 		if(firstCall) {
 		    if(prim_case) {
-			do_set_prim_method(op, "reset", prev_fun, value);
+			do_set_prim_method(op, "set", prev_fun, value);
 		    }
 		    else {
 			R_assign_to_method_metadata(fsym, fdef);
