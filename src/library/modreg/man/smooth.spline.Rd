@@ -8,6 +8,8 @@ smooth.spline(x, y, w=rep(1, length(x)), df=5, spar=0, cv=FALSE,
               all.knots=FALSE, df.offset=0, penalty=1)
 }
 \alias{smooth.spline}
+\alias{predict.smooth.spline.fit}
+\alias{print.smooth.spline}
 \arguments{
  \item{x}{a vector giving the values of the predictor variable, or  a
    list or a two-column matrix specifying x and y. }

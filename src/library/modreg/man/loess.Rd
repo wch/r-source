@@ -12,6 +12,10 @@ loess(formula, data, weights, subset, na.action, model=FALSE,
       control=loess.control(...), ...)
 }
 \alias{loess}
+\alias{anova.loess}
+\alias{print.loess}
+\alias{summary.loess}
+\alias{print.summary.loess}
 \arguments{
  \item{formula}{a formula specifying the response and one or more
    numeric predictors (best specified via an interaction, but can also

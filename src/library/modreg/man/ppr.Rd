@@ -3,13 +3,18 @@
 %
 \name{ppr}
 \alias{ppr}
+\alias{ppr.default}
+\alias{ppr.formula}
+\alias{predict.ppr}
+\alias{print.ppr}
+\alias{summary.ppr}
+\alias{print.summary.ppr}
 \title{
 Projection Pursuit Regression
 }
 \usage{
 ppr(formula, data=sys.parent(), weights,
     subset, na.action, contrasts=NULL,
-
     ww=rep(1,q), nterms, max.terms=nterms, optlevel=2, 
     sm.method=c("supsmu", "spline", "gcvspline"),
     bass=0, span=0, df=5, gcvpen=1)

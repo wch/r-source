@@ -12,6 +12,8 @@ print(tukeyline.obj)
 \alias{residuals.tukeyline}
 \alias{fitted.values.tukeyline}
 \alias{print.tukeyline}
+\alias{coef.tukeyline}
+\alias{fitted.tukeyline}
 \arguments{
   \item{x,y}{the arguments can be any way of specifying x-y pairs.}
 }
