@@ -32,10 +32,16 @@
 \alias{.installPackageIndices}
 \alias{.installPackageRdIndices}
 \alias{.installPackageVignetteIndex}
+\alias{.installPackageDemoIndex}
 \alias{.writeContentsRDA}
 \alias{.writeContentsDCF}
 \alias{.buildRdIndex}
 \alias{.buildVignetteIndex}
+\alias{.buildDemoIndex}
+\alias{.checkVignetteIndex}
+\alias{print.checkVignetteIndex}
+\alias{.checkDemoIndex}
+\alias{print.checkDemoIndex}
 \description{
   Internal tools functions.
 }
@@ -60,10 +66,14 @@ Rd2contents(dir, outFile = "")
 .writeContentsDCF(contents, packageName, outFile)
 .buildRdIndex(contents, type = NULL)
 .buildVignetteIndex(vignetteFiles)
+.buildDemoIndex(demoDir)
 .installPackageDescription(dir, outDir)
 .installPackageIndices(dir, outDir)
 .installPackageRdIndices(dir, outDir)
 .installPackageVignetteIndex(dir, outDir)
+.installPackageDemoIndex(dir, outDir)
+.checkVignetteIndex(vignetteDir)
+.checkDemoIndex(demoDir)
 }
 \details{
   These are not to be called by the user.
