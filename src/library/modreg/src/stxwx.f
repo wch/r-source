@@ -2,7 +2,7 @@
       implicit double precision(a-h,o-z)
       integer k,n,j,i,ilo,ileft,mflag
       double precision z(k),w(k),x(k),xknot(n+4),y(n),hs0(n),hs1(n),hs2(
-&     n),hs3(n),eps,vnikx(4,1),work(16)
+     &n),hs3(n),eps,vnikx(4,1),work(16)
       lenxk=n+4
       do 23000 i=1,n 
       y(i)=0e0 
