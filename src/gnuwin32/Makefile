@@ -428,7 +428,7 @@ packagedist:
 	  $(RPREFIX)/src/gnuwin32/fixed
 	$(CP) ../../doc/html/logo.jpg $(RPREFIX)/doc/html
 	$(CP) ../../doc/KEYWORDS* $(RPREFIX)/doc
-	$(CP) -p exported-vars R.exp MkRules MakePkg MakeDll \
+	$(CP) -p exported-vars R.exp Rblas.def MkRules MakePkg MakeDll \
 	  Rpwd.exe pwd.pl makeDllRes.pl install-save.sh $(RPREFIX)/src/gnuwin32
 	$(CP) -p Makefile.packages $(RPREFIX)/src/gnuwin32/Makefile
 	$(CP) fixed/dobundle.pl $(RPREFIX)/src/gnuwin32/fixed

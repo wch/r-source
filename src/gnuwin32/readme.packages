@@ -76,7 +76,7 @@ As from R 1.5.0 it may work, but we don't recommend it.
 Then
 
 	cd R_HOME\src\gnuwin32
-	make libR.a
+	make libR.a libRblas.a
 
 which might take up to a minute.  This only needs to be done once for
 each R release, and will be done automatically when needed if
