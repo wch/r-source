@@ -101,6 +101,8 @@ function(x, y, ...)
 	else NextMethod("plot")
 }
 
+plot.formula <- function(x, data, ...) .not.yet.implemented()
+
 plot.xy <-
 function(xy, type, pch=1, lty="solid", col=par("fg"), bg=NA, cex=1, ...)
 	.Internal(plot.xy(xy, type, pch, lty, col, bg=bg, cex=cex, ...))
