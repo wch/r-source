@@ -29,6 +29,8 @@ optim <- function(par, fn, gr = NULL,
         any(!is.na(match(c("reltol","abstol"), namc))))
         warning("Method L-BFGS-B uses `factr' (& `pgtol') instead of `reltol' and `abstol'")
     npar <- length(par)
+    if(npar == 1 && method == "Nelder-Mead")
+        warning("one-diml optimization by Nelder-Mead is unreliable: use optimize")
     lower <- as.double(rep(lower, , npar))
     upper <- as.double(rep(upper, , npar))
     res <- .Internal(optim(par, fn1, gr1,

@@ -184,6 +184,10 @@ optim(par, fn, gr = NULL,
   Springer.
 }
 \note{
+  \code{optim} will work with one-dimensional \code{par}s, but the
+  default method does not work well (and will warn).  Use
+  \code{\link{optimize}} instead.
+  
   The code for methods \code{"Nelder-Mead"}, \code{"BFGS"} and
   \code{"CG"} was based originally on Pascal code in Nash (1990) that was
   translated by \code{p2c} and then hand-optimized.  Dr Nash has agreed
