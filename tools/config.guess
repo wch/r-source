@@ -3,7 +3,7 @@
 #   Copyright (C) 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999, 2000
 #   Free Software Foundation, Inc.
 
-timestamp='2000-12-06'
+timestamp='2000-12-20'
 
 # This file is free software; you can redistribute it and/or modify it
 # under the terms of the GNU General Public License as published by
@@ -50,11 +50,17 @@ Operation modes:
   -t, --time-stamp   print date of last modification, then exit
   -v, --version      print version number, then exit
 
-Report bugs and patches to <config-patches@gnu.org>.
+Report bugs and patches to <config-patches@gnu.org>."
 
-Written by Per Bothner.
+version="\
+GNU config.guess ($timestamp)
+
+Originally written by Per Bothner.
 Copyright (C) 1992, 93, 94, 95, 96, 97, 98, 99, 2000
-Free Software Foundation, Inc.  See the source for copying conditions."
+Free Software Foundation, Inc.
+
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE."
 
 help="
 Try \`$me --help' for more information."
@@ -65,7 +71,7 @@ while test $# -gt 0 ; do
     --time-stamp | --time* | -t )
        echo "$timestamp" ; exit 0 ;;
     --version | -v )
-       echo "GNU config.guess (last modified $timestamp)" ; exit 0 ;;
+       echo "$version" ; exit 0 ;;
     --help | --h* | -h )
        echo "$usage"; exit 0 ;;
     -- )     # Stop option processing
@@ -496,6 +502,19 @@ EOF
 	fi
 	echo ${IBM_ARCH}-ibm-aix${IBM_REV}
 	exit 0 ;;
+    *:AIX:*:5)
+	case "`lsattr -El proc0 -a type -F value`" in
+	    PowerPC*) IBM_ARCH=powerpc
+		      IBM_MANUF=ibm ;;
+	    Itanium)  IBM_ARCH=ia64
+		      IBM_MANUF=unknown ;;
+	    POWER*)   IBM_ARCH=power
+		      IBM_MANUF=ibm ;;
+	    *)        IBM_ARCH=powerpc
+		      IBM_MANUF=ibm ;;
+	esac
+	echo ${IBM_ARCH}-${IBM_MANUF}-aix${UNAME_VERSION}.${UNAME_RELEASE}
+	exit 0 ;;
     *:AIX:*:*)
 	echo rs6000-ibm-aix
 	exit 0 ;;
@@ -682,14 +701,12 @@ EOF
     CRAY-2:*:*:*)
 	echo cray2-cray-unicos
         exit 0 ;;
-    F300:UNIX_System_V:*:*)
+    F30[01]:UNIX_System_V:*:* | F700:UNIX_System_V:*:*)
+	FUJITSU_PROC=`uname -m | tr 'ABCDEFGHIJKLMNOPQRSTUVWXYZ' 'abcdefghijklmnopqrstuvwxyz'`
         FUJITSU_SYS=`uname -p | tr 'ABCDEFGHIJKLMNOPQRSTUVWXYZ' 'abcdefghijklmnopqrstuvwxyz' | sed -e 's/\///'`
         FUJITSU_REL=`echo ${UNAME_RELEASE} | sed -e 's/ /_/'`
-        echo "f300-fujitsu-${FUJITSU_SYS}${FUJITSU_REL}"
+        echo "${FUJITSU_PROC}-fujitsu-${FUJITSU_SYS}${FUJITSU_REL}"
         exit 0 ;;
-    F301:UNIX_System_V:*:*)
-       echo f301-fujitsu-uxpv`echo $UNAME_RELEASE | sed 's/ .*//'`
-       exit 0 ;;
     hp300:OpenBSD:*:*)
 	echo m68k-unknown-openbsd${UNAME_RELEASE}
 	exit 0 ;;

@@ -10,7 +10,7 @@ redistribute it.
 Some of the code contains different copyright statements.  It is used
 here in accordance with the copyright conditions in that code.
 
-afm/*
+afm/*.afm
 
 	Copyright (c) 1984 to 1992 Adobe Systems Incorporated.
 

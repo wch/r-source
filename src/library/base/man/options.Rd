@@ -169,6 +169,9 @@ getOption(x)
   option, one should use \code{getOption("width")}, e.g., rather than
   \code{options("width")} which is a \emph{list} of length one.
 
+  \code{.Options} also always contains the \code{options()} list, for
+  S compatibility.  You must use it ``read only'' however.
+
   The default settings of some of these options are
   \tabular{llll}{
     \code{prompt} \tab \code{"> "} \tab

@@ -65,6 +65,10 @@ pairs.default(x, labels = colnames(x), panel = points, \dots,
   Oehlschlaegel-Akiyoshi and R-core members.
 }
 \examples{
+data(iris)
+pairs(iris[1:4], main = "Anderson's Iris Data -- 3 species", 
+      pch = 21, bg = c("red", "green3", "blue")[codes(iris$Species)])
+
 data(USJudgeRatings)
 pairs(USJudgeRatings)
 

@@ -16,18 +16,16 @@ find(what, mode = "any", numeric. = FALSE, simple.words = TRUE)
     only searched as whole only word.}
 }
 \description{
-  \code{apropos} returns a vector of character strings giving the names of
+  \code{apropos} returns a character vector giving the names of
   all objects in the search list matching \code{what}.
 
   \code{find} is a different user interface to the same task as \code{apropos}.
 }
 \details{
-  \code{apropos} returns a vector of character strings giving the names of
-  all objects in the search list matching \code{what}.
   If \code{mode != "any"} only those objects which are of mode \code{mode}
   are considered.
-  If \code{where} is \code{TRUE}, their position in the search list is
-  returned as their names attribute.
+  If \code{where} is \code{TRUE}, the positions in the search list are
+  returned as the names attribute.
 
   \code{find} is a different user interface to the same task as \code{apropos}.
   However, by default (\code{simple.words == TRUE}), only full words are

@@ -35,6 +35,12 @@ source(file, local = FALSE, echo = verbose, print.eval = echo,
   expressions in, they are then evaluated sequentially in the chosen
   environment.
 }
+\details{
+  All versions of \R accept input  from a connection with end of line
+  marked by LF (as used on Unix), CRLF (as used on DOS/Windows)
+  or CR (as used on Mac).  The final line can be incomplete, that
+  is missing the final EOL marker. 
+}
 \seealso{
   \code{\link{demo}} which uses \code{source};
   \code{\link{eval}}, \code{\link{parse}} and \code{\link{scan}}; \code{\link{options}("keep.source")}.

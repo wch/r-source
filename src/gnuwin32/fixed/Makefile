@@ -25,9 +25,12 @@ SED4='s/C_FUNCTION(\(.*\))/{ "\1",	\1 },/'
 
 
 fixh: h/config.h ../FFDecl.h ../FFTab.h \
-  ../../include/Rconfig.h ../../include/Rversion.h
+  ../../include/Rconfig.h ../../include/Rversion.h ../maketitle.awk
 	$(CP) -p ./h/config.h ./h/psignal.h ../../include
 	$(ECHO) done > fixh
+
+../maketitle.awk: ../../scripts/maketitle.awk
+	$(CP) $< $@
 
 ../../include/Rconfig.h: h/config.h
 	$(SED) -e 1d ../../../tools/GETCONFIG > GC

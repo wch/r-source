@@ -1,4 +1,4 @@
-% $Id: getInitial.Rd,v 1.4 2000/08/28 12:09:26 hornik Exp $
+% $Id: getInitial.Rd,v 1.4.4.1 2001/01/24 12:20:54 ripley Exp $
 \name{getInitial}
 \title{Get Initial Parameter Estimates}
 \alias{getInitial}
@@ -42,4 +42,4 @@ getInitial( rate ~ SSmicmen( conc, Vm, K ), PurTrt )
 }
 \keyword{models}
 \keyword{nonlinear}
-\keyword{data}
+\keyword{manip}

@@ -1204,7 +1204,9 @@ static void OutStringAscii(FILE *fp, char *x)
             case '\?': fprintf(fp, "\\?");  break;
             case '\'': fprintf(fp, "\\'");  break;
             case '\"': fprintf(fp, "\\\""); break;
-            default  : fprintf(fp, "\\%03o", x[i]); break;
+		/* cannot print char in octal mode -> cast to unsigned
+		   char first */
+            default  : fprintf(fp, "\\%03o", (unsigned char) x[i]); break;
             }
         }
         else fputc(x[i], fp);
@@ -1476,7 +1478,7 @@ static int InIntegerXdr(FILE *fp)
 
 static void OutStringXdr(FILE *fp, char *s)
 {
-    int n = strlen(s);
+    unsigned int n = strlen(s);
     OutIntegerXdr(fp, n);
     if (!xdr_bytes(&xdrs, &s, &n, n)) {
 	xdr_destroy(&xdrs);
@@ -1488,7 +1490,7 @@ static char *InStringXdr(FILE *fp)
 {
     static char *buf = NULL;
     static int buflen = 0;
-    int nbytes = InIntegerXdr(fp);
+    unsigned int nbytes = InIntegerXdr(fp);
     if (nbytes >= buflen) {
 	char *newbuf = realloc(buf, nbytes + 1);
 	if (newbuf == NULL)
@@ -1574,13 +1576,13 @@ static void R_WriteMagic(FILE *fp, int number)
     number = abs(number);
     switch (number) {
     case R_MAGIC_ASCII_V1:   /* Version 1 - R Data, ASCII Format */
-	strcpy(buf, "RDA1");
+	strcpy((char*)buf, "RDA1");
 	break;
     case R_MAGIC_BINARY_V1:  /* Version 1 - R Data, Binary Format */
-	strcpy(buf, "RDB1");
+	strcpy((char*)buf, "RDB1");
 	break;
     case R_MAGIC_XDR_V1:     /* Version 1 - R Data, XDR Binary Format */
-	strcpy(buf, "RDX1");
+	strcpy((char*)buf, "RDX1");
 	break;
     default:
 	buf[0] = (number/1000) % 10 + '0';
@@ -1597,13 +1599,13 @@ static int R_ReadMagic(FILE *fp)
     unsigned char buf[6];
     int d1, d2, d3, d4, d1234;
     fread((char*)buf, sizeof(char), 5, fp);
-    if (strncmp(buf, "RDA1\n", 5) == 0) {
+    if (strncmp((char*)buf, "RDA1\n", 5) == 0) {
 	return R_MAGIC_ASCII_V1;
     }
-    else if (strncmp(buf, "RDB1\n", 5) == 0) {
+    else if (strncmp((char*)buf, "RDB1\n", 5) == 0) {
 	return R_MAGIC_BINARY_V1;
     }
-    else if (strncmp(buf, "RDX1\n", 5) == 0) {
+    else if (strncmp((char*)buf, "RDX1\n", 5) == 0) {
 	return R_MAGIC_XDR_V1;
     }
     /* Intel gcc seems to screw up a single expression here */

@@ -1,15 +1,7 @@
 \name{match}
-\title{Value Matching}
-\usage{
-match(x, table, nomatch=NA)
-x \%in\% table
-}
 \alias{match}
 \alias{\%in\%}
-\arguments{
-\item{x}{the values to be matched.}
-\item{table}{the values to be matched against.}
-\item{nomatch}{the value to be returned in the case when no match is found.}}
+\title{Value Matching}
 \description{
   \code{match}: If \code{x[i]} is found to equal \code{table[j]}
   then the value returned in the \code{i}-th position of the return value is
@@ -17,8 +9,22 @@ x \%in\% table
   
   \code{\%in\%}: A utility function, currently defined as \cr
   \code{"\%in\%" <- function(x, table) match(x, table, nomatch = 0) > 0}
-  allowing
-  an intuitive usage and returning a logical vector of length \code{length(x)}.
+  allowing an intuitive usage and returning a logical vector of length
+  \code{length(x)}.
+}
+\usage{
+match(x, table, nomatch = NA, incomparables = FALSE)
+x \%in\% table
+}
+\arguments{
+  \item{x}{the values to be matched.}
+  \item{table}{the values to be matched against.}
+  \item{nomatch}{the value to be returned in the case when no match is
+    found.}
+  \item{incomparables}{a vector of values that cannot be matched.  Any
+    value in \code{x} matching a value in this vector is assigned the
+    \code{nomatch} value.  Currently, \code{FALSE} is the only possible
+    value, meaning that all values can be matched.}
 }
 \seealso{
 \code{\link{pmatch}} and \code{\link{charmatch}} for (\emph{partial})

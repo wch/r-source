@@ -55,7 +55,10 @@ help <- function(topic, offline = FALSE, package = .packages(),
                                 file.path(Sys.getenv("HOME"), ".R",
                                           "library", package, "html",
                                           paste(topic, "html", sep="."))
-                            if (file.exists(lnkfile)) file <- lnkfile
+                            if (any(ex <- file.exists(lnkfile))) {
+                                lnkfile <- lnkfile[ex]
+                                file <- lnkfile[1] # could be more than one
+                            }
                         }
                         if (file == ofile) {
                             warning("Using non-linked HTML file: style sheet and hyperlinks may be incorrect")

@@ -1,6 +1,6 @@
 
 R : Copyright 2000, The R Development Core Team
-Version 1.2.0 Under development (unstable) (2000-12-09)
+Version 1.2.0 Patched (2000-12-28)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -13,7 +13,6 @@ Type `demo()' for some demos, `help()' for on-line help, or
 `help.start()' for a HTML browser interface to help.
 Type `q()' to quit R.
 
-Loading required package: ctest 
 > .proctime00 <- proc.time()
 > 
 > isall.equal <- function(x,y)
@@ -186,45 +185,69 @@ Error in as.character.octmode(x) : calling wrong method
 > f <- as.data.frame( x );  all.equal(f, as.data.frame( f ), tol=0)
 [1] TRUE
 > f <- as.data.frame.AsIs( x );  all.equal(f, as.data.frame.AsIs( f ), tol=0)
-[1] "Component x: Modes: numeric, list"                                
-[2] "Component x: Lengths: 0, 1"                                       
-[3] "Component x: names for current but not for target"                
-[4] "Component x: Attributes: < Modes: NULL, list >"                   
-[5] "Component x: Attributes: < Lengths: 0, 2 >"                       
-[6] "Component x: Attributes: < names for current but not for target >"
-[7] "Component x: Attributes: < target is NULL, current is list >"     
-[8] "Component x: target is numeric, current is data.frame"            
+[1] "Component 1: Modes: numeric, list"                                
+[2] "Component 1: Lengths: 0, 1"                                       
+[3] "Component 1: names for current but not for target"                
+[4] "Component 1: Attributes: < Modes: NULL, list >"                   
+[5] "Component 1: Attributes: < Lengths: 0, 2 >"                       
+[6] "Component 1: Attributes: < names for current but not for target >"
+[7] "Component 1: Attributes: < target is NULL, current is list >"     
+[8] "Component 1: target is numeric, current is data.frame"            
 > f <- as.data.frame.POSIXct( x );  all.equal(f, as.data.frame.POSIXct( f ), tol=0)
-[1] "Names: 1 string mismatches"                                                            
-[2] "Attributes: < Component row.names: Lengths: 0, 1 >"                                    
-[3] "Attributes: < Component row.names: Lengths (0, 1) differ (string compare on first 0) >"
-[4] "Components not in target: f"                                                           
-[5] "Components not in current: x"                                                          
+ [1] "Names: 1 string mismatches"                                                    
+ [2] "Attributes: < Component 2: Lengths: 0, 1 >"                                    
+ [3] "Attributes: < Component 2: Lengths (0, 1) differ (string compare on first 0) >"
+ [4] "Component 1: Modes: numeric, list"                                             
+ [5] "Component 1: Lengths: 0, 1"                                                    
+ [6] "Component 1: names for current but not for target"                             
+ [7] "Component 1: Attributes: < Modes: NULL, list >"                                
+ [8] "Component 1: Attributes: < Lengths: 0, 2 >"                                    
+ [9] "Component 1: Attributes: < names for current but not for target >"             
+[10] "Component 1: Attributes: < target is NULL, current is list >"                  
+[11] "Component 1: target is numeric, current is data.frame"                         
 > f <- as.data.frame.character( x );  all.equal(f, as.data.frame.character( f ), tol=0)
 Error in unique(x) : unique() applies only to vectors
 > f <- as.data.frame.complex( x );  all.equal(f, as.data.frame.complex( f ), tol=0)
-[1] "Names: 1 string mismatches"                                                            
-[2] "Attributes: < Component row.names: Lengths: 0, 1 >"                                    
-[3] "Attributes: < Component row.names: Lengths (0, 1) differ (string compare on first 0) >"
-[4] "Components not in target: f"                                                           
-[5] "Components not in current: x"                                                          
+ [1] "Names: 1 string mismatches"                                                    
+ [2] "Attributes: < Component 2: Lengths: 0, 1 >"                                    
+ [3] "Attributes: < Component 2: Lengths (0, 1) differ (string compare on first 0) >"
+ [4] "Component 1: Modes: numeric, list"                                             
+ [5] "Component 1: Lengths: 0, 1"                                                    
+ [6] "Component 1: names for current but not for target"                             
+ [7] "Component 1: Attributes: < Modes: NULL, list >"                                
+ [8] "Component 1: Attributes: < Lengths: 0, 2 >"                                    
+ [9] "Component 1: Attributes: < names for current but not for target >"             
+[10] "Component 1: Attributes: < target is NULL, current is list >"                  
+[11] "Component 1: target is numeric, current is data.frame"                         
 > f <- as.data.frame.data.frame( x );  all.equal(f, as.data.frame.data.frame( f ), tol=0)
 Error in if (i > 1) class(x) <- cl[-(1:(i - 1))] : 
 	missing value where logical needed
 > f <- as.data.frame.default( x );  all.equal(f, as.data.frame.default( f ), tol=0)
 Error in as.data.frame.default(x) : can't coerce numeric into a data.frame
 > f <- as.data.frame.factor( x );  all.equal(f, as.data.frame.factor( f ), tol=0)
-[1] "Names: 1 string mismatches"                                                            
-[2] "Attributes: < Component row.names: Lengths: 0, 1 >"                                    
-[3] "Attributes: < Component row.names: Lengths (0, 1) differ (string compare on first 0) >"
-[4] "Components not in target: f"                                                           
-[5] "Components not in current: x"                                                          
+ [1] "Names: 1 string mismatches"                                                    
+ [2] "Attributes: < Component 2: Lengths: 0, 1 >"                                    
+ [3] "Attributes: < Component 2: Lengths (0, 1) differ (string compare on first 0) >"
+ [4] "Component 1: Modes: numeric, list"                                             
+ [5] "Component 1: Lengths: 0, 1"                                                    
+ [6] "Component 1: names for current but not for target"                             
+ [7] "Component 1: Attributes: < Modes: NULL, list >"                                
+ [8] "Component 1: Attributes: < Lengths: 0, 2 >"                                    
+ [9] "Component 1: Attributes: < names for current but not for target >"             
+[10] "Component 1: Attributes: < target is NULL, current is list >"                  
+[11] "Component 1: target is numeric, current is data.frame"                         
 > f <- as.data.frame.integer( x );  all.equal(f, as.data.frame.integer( f ), tol=0)
-[1] "Names: 1 string mismatches"                                                            
-[2] "Attributes: < Component row.names: Lengths: 0, 1 >"                                    
-[3] "Attributes: < Component row.names: Lengths (0, 1) differ (string compare on first 0) >"
-[4] "Components not in target: f"                                                           
-[5] "Components not in current: x"                                                          
+ [1] "Names: 1 string mismatches"                                                    
+ [2] "Attributes: < Component 2: Lengths: 0, 1 >"                                    
+ [3] "Attributes: < Component 2: Lengths (0, 1) differ (string compare on first 0) >"
+ [4] "Component 1: Modes: numeric, list"                                             
+ [5] "Component 1: Lengths: 0, 1"                                                    
+ [6] "Component 1: names for current but not for target"                             
+ [7] "Component 1: Attributes: < Modes: NULL, list >"                                
+ [8] "Component 1: Attributes: < Lengths: 0, 2 >"                                    
+ [9] "Component 1: Attributes: < names for current but not for target >"             
+[10] "Component 1: Attributes: < target is NULL, current is list >"                  
+[11] "Component 1: target is numeric, current is data.frame"                         
 > f <- as.data.frame.list( x );  all.equal(f, as.data.frame.list( f ), tol=0)
 [1] TRUE
 > f <- as.data.frame.logical( x );  all.equal(f, as.data.frame.logical( f ), tol=0)
@@ -234,36 +257,54 @@ Error in vector("list", ncols) : negative length vectors are not allowed
 > f <- as.data.frame.model.matrix( x );  all.equal(f, as.data.frame.model.matrix( f ), tol=0)
 Error in 1:nrows : NA/NaN argument
 > f <- as.data.frame.numeric( x );  all.equal(f, as.data.frame.numeric( f ), tol=0)
-[1] "Names: 1 string mismatches"                                                            
-[2] "Attributes: < Component row.names: Lengths: 0, 1 >"                                    
-[3] "Attributes: < Component row.names: Lengths (0, 1) differ (string compare on first 0) >"
-[4] "Components not in target: f"                                                           
-[5] "Components not in current: x"                                                          
+ [1] "Names: 1 string mismatches"                                                    
+ [2] "Attributes: < Component 2: Lengths: 0, 1 >"                                    
+ [3] "Attributes: < Component 2: Lengths (0, 1) differ (string compare on first 0) >"
+ [4] "Component 1: Modes: numeric, list"                                             
+ [5] "Component 1: Lengths: 0, 1"                                                    
+ [6] "Component 1: names for current but not for target"                             
+ [7] "Component 1: Attributes: < Modes: NULL, list >"                                
+ [8] "Component 1: Attributes: < Lengths: 0, 2 >"                                    
+ [9] "Component 1: Attributes: < names for current but not for target >"             
+[10] "Component 1: Attributes: < target is NULL, current is list >"                  
+[11] "Component 1: target is numeric, current is data.frame"                         
 > f <- as.data.frame.ordered( x );  all.equal(f, as.data.frame.ordered( f ), tol=0)
-[1] "Names: 1 string mismatches"                                                            
-[2] "Attributes: < Component row.names: Lengths: 0, 1 >"                                    
-[3] "Attributes: < Component row.names: Lengths (0, 1) differ (string compare on first 0) >"
-[4] "Components not in target: f"                                                           
-[5] "Components not in current: x"                                                          
+ [1] "Names: 1 string mismatches"                                                    
+ [2] "Attributes: < Component 2: Lengths: 0, 1 >"                                    
+ [3] "Attributes: < Component 2: Lengths (0, 1) differ (string compare on first 0) >"
+ [4] "Component 1: Modes: numeric, list"                                             
+ [5] "Component 1: Lengths: 0, 1"                                                    
+ [6] "Component 1: names for current but not for target"                             
+ [7] "Component 1: Attributes: < Modes: NULL, list >"                                
+ [8] "Component 1: Attributes: < Lengths: 0, 2 >"                                    
+ [9] "Component 1: Attributes: < names for current but not for target >"             
+[10] "Component 1: Attributes: < target is NULL, current is list >"                  
+[11] "Component 1: target is numeric, current is data.frame"                         
 > f <- as.data.frame.table( x );  all.equal(f, as.data.frame.table( f ), tol=0)
 Error in as.table.default(x) : cannot coerce into a table
 > f <- as.data.frame.ts( x );  all.equal(f, as.data.frame.ts( f ), tol=0)
- [1] "Attributes: < Component row.names: Lengths: 0, 1 >"                                    
- [2] "Attributes: < Component row.names: Lengths (0, 1) differ (string compare on first 0) >"
- [3] "Component x: Modes: numeric, list"                                                     
- [4] "Component x: Lengths: 0, 1"                                                            
- [5] "Component x: names for current but not for target"                                     
- [6] "Component x: Attributes: < Modes: NULL, list >"                                        
- [7] "Component x: Attributes: < Lengths: 0, 2 >"                                            
- [8] "Component x: Attributes: < names for current but not for target >"                     
- [9] "Component x: Attributes: < target is NULL, current is list >"                          
-[10] "Component x: target is numeric, current is data.frame"                                 
+ [1] "Attributes: < Component 2: Lengths: 0, 1 >"                                    
+ [2] "Attributes: < Component 2: Lengths (0, 1) differ (string compare on first 0) >"
+ [3] "Component 1: Modes: numeric, list"                                             
+ [4] "Component 1: Lengths: 0, 1"                                                    
+ [5] "Component 1: names for current but not for target"                             
+ [6] "Component 1: Attributes: < Modes: NULL, list >"                                
+ [7] "Component 1: Attributes: < Lengths: 0, 2 >"                                    
+ [8] "Component 1: Attributes: < names for current but not for target >"             
+ [9] "Component 1: Attributes: < target is NULL, current is list >"                  
+[10] "Component 1: target is numeric, current is data.frame"                         
 > f <- as.data.frame.vector( x );  all.equal(f, as.data.frame.vector( f ), tol=0)
-[1] "Names: 1 string mismatches"                                                            
-[2] "Attributes: < Component row.names: Lengths: 0, 1 >"                                    
-[3] "Attributes: < Component row.names: Lengths (0, 1) differ (string compare on first 0) >"
-[4] "Components not in target: f"                                                           
-[5] "Components not in current: x"                                                          
+ [1] "Names: 1 string mismatches"                                                    
+ [2] "Attributes: < Component 2: Lengths: 0, 1 >"                                    
+ [3] "Attributes: < Component 2: Lengths (0, 1) differ (string compare on first 0) >"
+ [4] "Component 1: Modes: numeric, list"                                             
+ [5] "Component 1: Lengths: 0, 1"                                                    
+ [6] "Component 1: names for current but not for target"                             
+ [7] "Component 1: Attributes: < Modes: NULL, list >"                                
+ [8] "Component 1: Attributes: < Lengths: 0, 2 >"                                    
+ [9] "Component 1: Attributes: < names for current but not for target >"             
+[10] "Component 1: Attributes: < target is NULL, current is list >"                  
+[11] "Component 1: target is numeric, current is data.frame"                         
 > f <- as.double( x );  all.equal(f, as.double( f ), tol=0)
 [1] TRUE
 > f <- as.double.default( x );  all.equal(f, as.double.default( f ), tol=0)
@@ -508,45 +549,69 @@ Error in as.character.octmode(x) : calling wrong method
 > f <- as.data.frame( x );  all.equal(f, as.data.frame( f ), tol=0)
 [1] TRUE
 > f <- as.data.frame.AsIs( x );  all.equal(f, as.data.frame.AsIs( f ), tol=0)
-[1] "Component x: Modes: NULL, list"                                   
-[2] "Component x: Lengths: 0, 1"                                       
-[3] "Component x: names for current but not for target"                
-[4] "Component x: Attributes: < Modes: NULL, list >"                   
-[5] "Component x: Attributes: < Lengths: 0, 2 >"                       
-[6] "Component x: Attributes: < names for current but not for target >"
-[7] "Component x: Attributes: < target is NULL, current is list >"     
-[8] "Component x: target is NULL, current is data.frame"               
+[1] "Component 1: Modes: NULL, list"                                   
+[2] "Component 1: Lengths: 0, 1"                                       
+[3] "Component 1: names for current but not for target"                
+[4] "Component 1: Attributes: < Modes: NULL, list >"                   
+[5] "Component 1: Attributes: < Lengths: 0, 2 >"                       
+[6] "Component 1: Attributes: < names for current but not for target >"
+[7] "Component 1: Attributes: < target is NULL, current is list >"     
+[8] "Component 1: target is NULL, current is data.frame"               
 > f <- as.data.frame.POSIXct( x );  all.equal(f, as.data.frame.POSIXct( f ), tol=0)
-[1] "Names: 1 string mismatches"                                                            
-[2] "Attributes: < Component row.names: Lengths: 0, 1 >"                                    
-[3] "Attributes: < Component row.names: Lengths (0, 1) differ (string compare on first 0) >"
-[4] "Components not in target: f"                                                           
-[5] "Components not in current: x"                                                          
+ [1] "Names: 1 string mismatches"                                                    
+ [2] "Attributes: < Component 2: Lengths: 0, 1 >"                                    
+ [3] "Attributes: < Component 2: Lengths (0, 1) differ (string compare on first 0) >"
+ [4] "Component 1: Modes: NULL, list"                                                
+ [5] "Component 1: Lengths: 0, 1"                                                    
+ [6] "Component 1: names for current but not for target"                             
+ [7] "Component 1: Attributes: < Modes: NULL, list >"                                
+ [8] "Component 1: Attributes: < Lengths: 0, 2 >"                                    
+ [9] "Component 1: Attributes: < names for current but not for target >"             
+[10] "Component 1: Attributes: < target is NULL, current is list >"                  
+[11] "Component 1: target is NULL, current is data.frame"                            
 > f <- as.data.frame.character( x );  all.equal(f, as.data.frame.character( f ), tol=0)
 Error in unique(x) : unique() applies only to vectors
 > f <- as.data.frame.complex( x );  all.equal(f, as.data.frame.complex( f ), tol=0)
-[1] "Names: 1 string mismatches"                                                            
-[2] "Attributes: < Component row.names: Lengths: 0, 1 >"                                    
-[3] "Attributes: < Component row.names: Lengths (0, 1) differ (string compare on first 0) >"
-[4] "Components not in target: f"                                                           
-[5] "Components not in current: x"                                                          
+ [1] "Names: 1 string mismatches"                                                    
+ [2] "Attributes: < Component 2: Lengths: 0, 1 >"                                    
+ [3] "Attributes: < Component 2: Lengths (0, 1) differ (string compare on first 0) >"
+ [4] "Component 1: Modes: NULL, list"                                                
+ [5] "Component 1: Lengths: 0, 1"                                                    
+ [6] "Component 1: names for current but not for target"                             
+ [7] "Component 1: Attributes: < Modes: NULL, list >"                                
+ [8] "Component 1: Attributes: < Lengths: 0, 2 >"                                    
+ [9] "Component 1: Attributes: < names for current but not for target >"             
+[10] "Component 1: Attributes: < target is NULL, current is list >"                  
+[11] "Component 1: target is NULL, current is data.frame"                            
 > f <- as.data.frame.data.frame( x );  all.equal(f, as.data.frame.data.frame( f ), tol=0)
 Error in if (i > 1) class(x) <- cl[-(1:(i - 1))] : 
 	missing value where logical needed
 > f <- as.data.frame.default( x );  all.equal(f, as.data.frame.default( f ), tol=0)
 Error in as.data.frame.default(x) : can't coerce NULL into a data.frame
 > f <- as.data.frame.factor( x );  all.equal(f, as.data.frame.factor( f ), tol=0)
-[1] "Names: 1 string mismatches"                                                            
-[2] "Attributes: < Component row.names: Lengths: 0, 1 >"                                    
-[3] "Attributes: < Component row.names: Lengths (0, 1) differ (string compare on first 0) >"
-[4] "Components not in target: f"                                                           
-[5] "Components not in current: x"                                                          
+ [1] "Names: 1 string mismatches"                                                    
+ [2] "Attributes: < Component 2: Lengths: 0, 1 >"                                    
+ [3] "Attributes: < Component 2: Lengths (0, 1) differ (string compare on first 0) >"
+ [4] "Component 1: Modes: NULL, list"                                                
+ [5] "Component 1: Lengths: 0, 1"                                                    
+ [6] "Component 1: names for current but not for target"                             
+ [7] "Component 1: Attributes: < Modes: NULL, list >"                                
+ [8] "Component 1: Attributes: < Lengths: 0, 2 >"                                    
+ [9] "Component 1: Attributes: < names for current but not for target >"             
+[10] "Component 1: Attributes: < target is NULL, current is list >"                  
+[11] "Component 1: target is NULL, current is data.frame"                            
 > f <- as.data.frame.integer( x );  all.equal(f, as.data.frame.integer( f ), tol=0)
-[1] "Names: 1 string mismatches"                                                            
-[2] "Attributes: < Component row.names: Lengths: 0, 1 >"                                    
-[3] "Attributes: < Component row.names: Lengths (0, 1) differ (string compare on first 0) >"
-[4] "Components not in target: f"                                                           
-[5] "Components not in current: x"                                                          
+ [1] "Names: 1 string mismatches"                                                    
+ [2] "Attributes: < Component 2: Lengths: 0, 1 >"                                    
+ [3] "Attributes: < Component 2: Lengths (0, 1) differ (string compare on first 0) >"
+ [4] "Component 1: Modes: NULL, list"                                                
+ [5] "Component 1: Lengths: 0, 1"                                                    
+ [6] "Component 1: names for current but not for target"                             
+ [7] "Component 1: Attributes: < Modes: NULL, list >"                                
+ [8] "Component 1: Attributes: < Lengths: 0, 2 >"                                    
+ [9] "Component 1: Attributes: < names for current but not for target >"             
+[10] "Component 1: Attributes: < target is NULL, current is list >"                  
+[11] "Component 1: target is NULL, current is data.frame"                            
 > f <- as.data.frame.list( x );  all.equal(f, as.data.frame.list( f ), tol=0)
 [1] TRUE
 > f <- as.data.frame.logical( x );  all.equal(f, as.data.frame.logical( f ), tol=0)
@@ -556,36 +621,54 @@ Error in vector("list", ncols) : negative length vectors are not allowed
 > f <- as.data.frame.model.matrix( x );  all.equal(f, as.data.frame.model.matrix( f ), tol=0)
 Error in 1:nrows : NA/NaN argument
 > f <- as.data.frame.numeric( x );  all.equal(f, as.data.frame.numeric( f ), tol=0)
-[1] "Names: 1 string mismatches"                                                            
-[2] "Attributes: < Component row.names: Lengths: 0, 1 >"                                    
-[3] "Attributes: < Component row.names: Lengths (0, 1) differ (string compare on first 0) >"
-[4] "Components not in target: f"                                                           
-[5] "Components not in current: x"                                                          
+ [1] "Names: 1 string mismatches"                                                    
+ [2] "Attributes: < Component 2: Lengths: 0, 1 >"                                    
+ [3] "Attributes: < Component 2: Lengths (0, 1) differ (string compare on first 0) >"
+ [4] "Component 1: Modes: NULL, list"                                                
+ [5] "Component 1: Lengths: 0, 1"                                                    
+ [6] "Component 1: names for current but not for target"                             
+ [7] "Component 1: Attributes: < Modes: NULL, list >"                                
+ [8] "Component 1: Attributes: < Lengths: 0, 2 >"                                    
+ [9] "Component 1: Attributes: < names for current but not for target >"             
+[10] "Component 1: Attributes: < target is NULL, current is list >"                  
+[11] "Component 1: target is NULL, current is data.frame"                            
 > f <- as.data.frame.ordered( x );  all.equal(f, as.data.frame.ordered( f ), tol=0)
-[1] "Names: 1 string mismatches"                                                            
-[2] "Attributes: < Component row.names: Lengths: 0, 1 >"                                    
-[3] "Attributes: < Component row.names: Lengths (0, 1) differ (string compare on first 0) >"
-[4] "Components not in target: f"                                                           
-[5] "Components not in current: x"                                                          
+ [1] "Names: 1 string mismatches"                                                    
+ [2] "Attributes: < Component 2: Lengths: 0, 1 >"                                    
+ [3] "Attributes: < Component 2: Lengths (0, 1) differ (string compare on first 0) >"
+ [4] "Component 1: Modes: NULL, list"                                                
+ [5] "Component 1: Lengths: 0, 1"                                                    
+ [6] "Component 1: names for current but not for target"                             
+ [7] "Component 1: Attributes: < Modes: NULL, list >"                                
+ [8] "Component 1: Attributes: < Lengths: 0, 2 >"                                    
+ [9] "Component 1: Attributes: < names for current but not for target >"             
+[10] "Component 1: Attributes: < target is NULL, current is list >"                  
+[11] "Component 1: target is NULL, current is data.frame"                            
 > f <- as.data.frame.table( x );  all.equal(f, as.data.frame.table( f ), tol=0)
 Error in as.table.default(x) : cannot coerce into a table
 > f <- as.data.frame.ts( x );  all.equal(f, as.data.frame.ts( f ), tol=0)
- [1] "Attributes: < Component row.names: Lengths: 0, 1 >"                                    
- [2] "Attributes: < Component row.names: Lengths (0, 1) differ (string compare on first 0) >"
- [3] "Component x: Modes: NULL, list"                                                        
- [4] "Component x: Lengths: 0, 1"                                                            
- [5] "Component x: names for current but not for target"                                     
- [6] "Component x: Attributes: < Modes: NULL, list >"                                        
- [7] "Component x: Attributes: < Lengths: 0, 2 >"                                            
- [8] "Component x: Attributes: < names for current but not for target >"                     
- [9] "Component x: Attributes: < target is NULL, current is list >"                          
-[10] "Component x: target is NULL, current is data.frame"                                    
+ [1] "Attributes: < Component 2: Lengths: 0, 1 >"                                    
+ [2] "Attributes: < Component 2: Lengths (0, 1) differ (string compare on first 0) >"
+ [3] "Component 1: Modes: NULL, list"                                                
+ [4] "Component 1: Lengths: 0, 1"                                                    
+ [5] "Component 1: names for current but not for target"                             
+ [6] "Component 1: Attributes: < Modes: NULL, list >"                                
+ [7] "Component 1: Attributes: < Lengths: 0, 2 >"                                    
+ [8] "Component 1: Attributes: < names for current but not for target >"             
+ [9] "Component 1: Attributes: < target is NULL, current is list >"                  
+[10] "Component 1: target is NULL, current is data.frame"                            
 > f <- as.data.frame.vector( x );  all.equal(f, as.data.frame.vector( f ), tol=0)
-[1] "Names: 1 string mismatches"                                                            
-[2] "Attributes: < Component row.names: Lengths: 0, 1 >"                                    
-[3] "Attributes: < Component row.names: Lengths (0, 1) differ (string compare on first 0) >"
-[4] "Components not in target: f"                                                           
-[5] "Components not in current: x"                                                          
+ [1] "Names: 1 string mismatches"                                                    
+ [2] "Attributes: < Component 2: Lengths: 0, 1 >"                                    
+ [3] "Attributes: < Component 2: Lengths (0, 1) differ (string compare on first 0) >"
+ [4] "Component 1: Modes: NULL, list"                                                
+ [5] "Component 1: Lengths: 0, 1"                                                    
+ [6] "Component 1: names for current but not for target"                             
+ [7] "Component 1: Attributes: < Modes: NULL, list >"                                
+ [8] "Component 1: Attributes: < Lengths: 0, 2 >"                                    
+ [9] "Component 1: Attributes: < names for current but not for target >"             
+[10] "Component 1: Attributes: < target is NULL, current is list >"                  
+[11] "Component 1: target is NULL, current is data.frame"                            
 > f <- as.double( x );  all.equal(f, as.double( f ), tol=0)
 [1] TRUE
 > f <- as.double.default( x );  all.equal(f, as.double.default( f ), tol=0)
@@ -829,44 +912,64 @@ Error in as.complex.default(x) : (list) object cannot be coerced to vector type 
 > f <- as.data.frame( x );  all.equal(f, as.data.frame( f ), tol=0)
 [1] TRUE
 > f <- as.data.frame.AsIs( x );  all.equal(f, as.data.frame.AsIs( f ), tol=0)
-[1] "Component x: Lengths: 0, 1"                                       
-[2] "Component x: names for current but not for target"                
-[3] "Component x: Attributes: < Modes: NULL, list >"                   
-[4] "Component x: Attributes: < Lengths: 0, 2 >"                       
-[5] "Component x: Attributes: < names for current but not for target >"
-[6] "Component x: Attributes: < target is NULL, current is list >"     
-[7] "Component x: Length mismatch: comparison on first 0 components"   
+[1] "Component 1: Lengths: 0, 1"                                       
+[2] "Component 1: names for current but not for target"                
+[3] "Component 1: Attributes: < Modes: NULL, list >"                   
+[4] "Component 1: Attributes: < Lengths: 0, 2 >"                       
+[5] "Component 1: Attributes: < names for current but not for target >"
+[6] "Component 1: Attributes: < target is NULL, current is list >"     
+[7] "Component 1: Length mismatch: comparison on first 0 components"   
 > f <- as.data.frame.POSIXct( x );  all.equal(f, as.data.frame.POSIXct( f ), tol=0)
-[1] "Names: 1 string mismatches"                                                            
-[2] "Attributes: < Component row.names: Lengths: 0, 1 >"                                    
-[3] "Attributes: < Component row.names: Lengths (0, 1) differ (string compare on first 0) >"
-[4] "Components not in target: f"                                                           
-[5] "Components not in current: x"                                                          
+ [1] "Names: 1 string mismatches"                                                    
+ [2] "Attributes: < Component 2: Lengths: 0, 1 >"                                    
+ [3] "Attributes: < Component 2: Lengths (0, 1) differ (string compare on first 0) >"
+ [4] "Component 1: Lengths: 0, 1"                                                    
+ [5] "Component 1: names for current but not for target"                             
+ [6] "Component 1: Attributes: < Modes: NULL, list >"                                
+ [7] "Component 1: Attributes: < Lengths: 0, 2 >"                                    
+ [8] "Component 1: Attributes: < names for current but not for target >"             
+ [9] "Component 1: Attributes: < target is NULL, current is list >"                  
+[10] "Component 1: Length mismatch: comparison on first 0 components"                
 > f <- as.data.frame.character( x );  all.equal(f, as.data.frame.character( f ), tol=0)
 Error in unique(x) : unique() applies only to vectors
 > f <- as.data.frame.complex( x );  all.equal(f, as.data.frame.complex( f ), tol=0)
-[1] "Names: 1 string mismatches"                                                            
-[2] "Attributes: < Component row.names: Lengths: 0, 1 >"                                    
-[3] "Attributes: < Component row.names: Lengths (0, 1) differ (string compare on first 0) >"
-[4] "Components not in target: f"                                                           
-[5] "Components not in current: x"                                                          
+ [1] "Names: 1 string mismatches"                                                    
+ [2] "Attributes: < Component 2: Lengths: 0, 1 >"                                    
+ [3] "Attributes: < Component 2: Lengths (0, 1) differ (string compare on first 0) >"
+ [4] "Component 1: Lengths: 0, 1"                                                    
+ [5] "Component 1: names for current but not for target"                             
+ [6] "Component 1: Attributes: < Modes: NULL, list >"                                
+ [7] "Component 1: Attributes: < Lengths: 0, 2 >"                                    
+ [8] "Component 1: Attributes: < names for current but not for target >"             
+ [9] "Component 1: Attributes: < target is NULL, current is list >"                  
+[10] "Component 1: Length mismatch: comparison on first 0 components"                
 > f <- as.data.frame.data.frame( x );  all.equal(f, as.data.frame.data.frame( f ), tol=0)
 Error in if (i > 1) class(x) <- cl[-(1:(i - 1))] : 
 	missing value where logical needed
 > f <- as.data.frame.default( x );  all.equal(f, as.data.frame.default( f ), tol=0)
 Error in as.data.frame.default(x) : can't coerce list into a data.frame
 > f <- as.data.frame.factor( x );  all.equal(f, as.data.frame.factor( f ), tol=0)
-[1] "Names: 1 string mismatches"                                                            
-[2] "Attributes: < Component row.names: Lengths: 0, 1 >"                                    
-[3] "Attributes: < Component row.names: Lengths (0, 1) differ (string compare on first 0) >"
-[4] "Components not in target: f"                                                           
-[5] "Components not in current: x"                                                          
+ [1] "Names: 1 string mismatches"                                                    
+ [2] "Attributes: < Component 2: Lengths: 0, 1 >"                                    
+ [3] "Attributes: < Component 2: Lengths (0, 1) differ (string compare on first 0) >"
+ [4] "Component 1: Lengths: 0, 1"                                                    
+ [5] "Component 1: names for current but not for target"                             
+ [6] "Component 1: Attributes: < Modes: NULL, list >"                                
+ [7] "Component 1: Attributes: < Lengths: 0, 2 >"                                    
+ [8] "Component 1: Attributes: < names for current but not for target >"             
+ [9] "Component 1: Attributes: < target is NULL, current is list >"                  
+[10] "Component 1: Length mismatch: comparison on first 0 components"                
 > f <- as.data.frame.integer( x );  all.equal(f, as.data.frame.integer( f ), tol=0)
-[1] "Names: 1 string mismatches"                                                            
-[2] "Attributes: < Component row.names: Lengths: 0, 1 >"                                    
-[3] "Attributes: < Component row.names: Lengths (0, 1) differ (string compare on first 0) >"
-[4] "Components not in target: f"                                                           
-[5] "Components not in current: x"                                                          
+ [1] "Names: 1 string mismatches"                                                    
+ [2] "Attributes: < Component 2: Lengths: 0, 1 >"                                    
+ [3] "Attributes: < Component 2: Lengths (0, 1) differ (string compare on first 0) >"
+ [4] "Component 1: Lengths: 0, 1"                                                    
+ [5] "Component 1: names for current but not for target"                             
+ [6] "Component 1: Attributes: < Modes: NULL, list >"                                
+ [7] "Component 1: Attributes: < Lengths: 0, 2 >"                                    
+ [8] "Component 1: Attributes: < names for current but not for target >"             
+ [9] "Component 1: Attributes: < target is NULL, current is list >"                  
+[10] "Component 1: Length mismatch: comparison on first 0 components"                
 > f <- as.data.frame.list( x );  all.equal(f, as.data.frame.list( f ), tol=0)
 [1] TRUE
 > f <- as.data.frame.logical( x );  all.equal(f, as.data.frame.logical( f ), tol=0)
@@ -876,35 +979,50 @@ Error in vector("list", ncols) : negative length vectors are not allowed
 > f <- as.data.frame.model.matrix( x );  all.equal(f, as.data.frame.model.matrix( f ), tol=0)
 Error in 1:nrows : NA/NaN argument
 > f <- as.data.frame.numeric( x );  all.equal(f, as.data.frame.numeric( f ), tol=0)
-[1] "Names: 1 string mismatches"                                                            
-[2] "Attributes: < Component row.names: Lengths: 0, 1 >"                                    
-[3] "Attributes: < Component row.names: Lengths (0, 1) differ (string compare on first 0) >"
-[4] "Components not in target: f"                                                           
-[5] "Components not in current: x"                                                          
+ [1] "Names: 1 string mismatches"                                                    
+ [2] "Attributes: < Component 2: Lengths: 0, 1 >"                                    
+ [3] "Attributes: < Component 2: Lengths (0, 1) differ (string compare on first 0) >"
+ [4] "Component 1: Lengths: 0, 1"                                                    
+ [5] "Component 1: names for current but not for target"                             
+ [6] "Component 1: Attributes: < Modes: NULL, list >"                                
+ [7] "Component 1: Attributes: < Lengths: 0, 2 >"                                    
+ [8] "Component 1: Attributes: < names for current but not for target >"             
+ [9] "Component 1: Attributes: < target is NULL, current is list >"                  
+[10] "Component 1: Length mismatch: comparison on first 0 components"                
 > f <- as.data.frame.ordered( x );  all.equal(f, as.data.frame.ordered( f ), tol=0)
-[1] "Names: 1 string mismatches"                                                            
-[2] "Attributes: < Component row.names: Lengths: 0, 1 >"                                    
-[3] "Attributes: < Component row.names: Lengths (0, 1) differ (string compare on first 0) >"
-[4] "Components not in target: f"                                                           
-[5] "Components not in current: x"                                                          
+ [1] "Names: 1 string mismatches"                                                    
+ [2] "Attributes: < Component 2: Lengths: 0, 1 >"                                    
+ [3] "Attributes: < Component 2: Lengths (0, 1) differ (string compare on first 0) >"
+ [4] "Component 1: Lengths: 0, 1"                                                    
+ [5] "Component 1: names for current but not for target"                             
+ [6] "Component 1: Attributes: < Modes: NULL, list >"                                
+ [7] "Component 1: Attributes: < Lengths: 0, 2 >"                                    
+ [8] "Component 1: Attributes: < names for current but not for target >"             
+ [9] "Component 1: Attributes: < target is NULL, current is list >"                  
+[10] "Component 1: Length mismatch: comparison on first 0 components"                
 > f <- as.data.frame.table( x );  all.equal(f, as.data.frame.table( f ), tol=0)
 Error in as.table.default(x) : cannot coerce into a table
 > f <- as.data.frame.ts( x );  all.equal(f, as.data.frame.ts( f ), tol=0)
-[1] "Attributes: < Component row.names: Lengths: 0, 1 >"                                    
-[2] "Attributes: < Component row.names: Lengths (0, 1) differ (string compare on first 0) >"
-[3] "Component x: Lengths: 0, 1"                                                            
-[4] "Component x: names for current but not for target"                                     
-[5] "Component x: Attributes: < Modes: NULL, list >"                                        
-[6] "Component x: Attributes: < Lengths: 0, 2 >"                                            
-[7] "Component x: Attributes: < names for current but not for target >"                     
-[8] "Component x: Attributes: < target is NULL, current is list >"                          
-[9] "Component x: Length mismatch: comparison on first 0 components"                        
+[1] "Attributes: < Component 2: Lengths: 0, 1 >"                                    
+[2] "Attributes: < Component 2: Lengths (0, 1) differ (string compare on first 0) >"
+[3] "Component 1: Lengths: 0, 1"                                                    
+[4] "Component 1: names for current but not for target"                             
+[5] "Component 1: Attributes: < Modes: NULL, list >"                                
+[6] "Component 1: Attributes: < Lengths: 0, 2 >"                                    
+[7] "Component 1: Attributes: < names for current but not for target >"             
+[8] "Component 1: Attributes: < target is NULL, current is list >"                  
+[9] "Component 1: Length mismatch: comparison on first 0 components"                
 > f <- as.data.frame.vector( x );  all.equal(f, as.data.frame.vector( f ), tol=0)
-[1] "Names: 1 string mismatches"                                                            
-[2] "Attributes: < Component row.names: Lengths: 0, 1 >"                                    
-[3] "Attributes: < Component row.names: Lengths (0, 1) differ (string compare on first 0) >"
-[4] "Components not in target: f"                                                           
-[5] "Components not in current: x"                                                          
+ [1] "Names: 1 string mismatches"                                                    
+ [2] "Attributes: < Component 2: Lengths: 0, 1 >"                                    
+ [3] "Attributes: < Component 2: Lengths (0, 1) differ (string compare on first 0) >"
+ [4] "Component 1: Lengths: 0, 1"                                                    
+ [5] "Component 1: names for current but not for target"                             
+ [6] "Component 1: Attributes: < Modes: NULL, list >"                                
+ [7] "Component 1: Attributes: < Lengths: 0, 2 >"                                    
+ [8] "Component 1: Attributes: < names for current but not for target >"             
+ [9] "Component 1: Attributes: < target is NULL, current is list >"                  
+[10] "Component 1: Length mismatch: comparison on first 0 components"                
 > f <- as.double( x );  all.equal(f, as.double( f ), tol=0)
 Error in as.double.default(x) : (list) object cannot be coerced to vector type 14
 > f <- as.double.default( x );  all.equal(f, as.double.default( f ), tol=0)
@@ -1148,40 +1266,60 @@ Error in as.character.octmode(x) : calling wrong method
 > f <- as.data.frame( x );  all.equal(f, as.data.frame( f ), tol=0)
 [1] TRUE
 > f <- as.data.frame.AsIs( x );  all.equal(f, as.data.frame.AsIs( f ), tol=0)
-[1] "Component x: Modes: numeric, list"                                
-[2] "Component x: names for current but not for target"                
-[3] "Component x: Attributes: < Modes: NULL, list >"                   
-[4] "Component x: Attributes: < Lengths: 0, 2 >"                       
-[5] "Component x: Attributes: < names for current but not for target >"
-[6] "Component x: Attributes: < target is NULL, current is list >"     
-[7] "Component x: target is numeric, current is data.frame"            
+[1] "Component 1: Modes: numeric, list"                                
+[2] "Component 1: names for current but not for target"                
+[3] "Component 1: Attributes: < Modes: NULL, list >"                   
+[4] "Component 1: Attributes: < Lengths: 0, 2 >"                       
+[5] "Component 1: Attributes: < names for current but not for target >"
+[6] "Component 1: Attributes: < target is NULL, current is list >"     
+[7] "Component 1: target is numeric, current is data.frame"            
 > f <- as.data.frame.POSIXct( x );  all.equal(f, as.data.frame.POSIXct( f ), tol=0)
-[1] "Names: 1 string mismatches"                              
-[2] "Attributes: < Component row.names: 1 string mismatches >"
-[3] "Components not in target: f"                             
-[4] "Components not in current: x"                            
+[1] "Names: 1 string mismatches"                                       
+[2] "Attributes: < Component 2: 1 string mismatches >"                 
+[3] "Component 1: Modes: numeric, list"                                
+[4] "Component 1: names for current but not for target"                
+[5] "Component 1: Attributes: < Modes: NULL, list >"                   
+[6] "Component 1: Attributes: < Lengths: 0, 2 >"                       
+[7] "Component 1: Attributes: < names for current but not for target >"
+[8] "Component 1: Attributes: < target is NULL, current is list >"     
+[9] "Component 1: target is numeric, current is data.frame"            
 > f <- as.data.frame.character( x );  all.equal(f, as.data.frame.character( f ), tol=0)
 Error in unique(x) : unique() applies only to vectors
 > f <- as.data.frame.complex( x );  all.equal(f, as.data.frame.complex( f ), tol=0)
-[1] "Names: 1 string mismatches"                              
-[2] "Attributes: < Component row.names: 1 string mismatches >"
-[3] "Components not in target: f"                             
-[4] "Components not in current: x"                            
+[1] "Names: 1 string mismatches"                                       
+[2] "Attributes: < Component 2: 1 string mismatches >"                 
+[3] "Component 1: Modes: numeric, list"                                
+[4] "Component 1: names for current but not for target"                
+[5] "Component 1: Attributes: < Modes: NULL, list >"                   
+[6] "Component 1: Attributes: < Lengths: 0, 2 >"                       
+[7] "Component 1: Attributes: < names for current but not for target >"
+[8] "Component 1: Attributes: < target is NULL, current is list >"     
+[9] "Component 1: target is numeric, current is data.frame"            
 > f <- as.data.frame.data.frame( x );  all.equal(f, as.data.frame.data.frame( f ), tol=0)
 Error in if (i > 1) class(x) <- cl[-(1:(i - 1))] : 
 	missing value where logical needed
 > f <- as.data.frame.default( x );  all.equal(f, as.data.frame.default( f ), tol=0)
 Error in as.data.frame.default(x) : can't coerce numeric into a data.frame
 > f <- as.data.frame.factor( x );  all.equal(f, as.data.frame.factor( f ), tol=0)
-[1] "Names: 1 string mismatches"                              
-[2] "Attributes: < Component row.names: 1 string mismatches >"
-[3] "Components not in target: f"                             
-[4] "Components not in current: x"                            
+[1] "Names: 1 string mismatches"                                       
+[2] "Attributes: < Component 2: 1 string mismatches >"                 
+[3] "Component 1: Modes: numeric, list"                                
+[4] "Component 1: names for current but not for target"                
+[5] "Component 1: Attributes: < Modes: NULL, list >"                   
+[6] "Component 1: Attributes: < Lengths: 0, 2 >"                       
+[7] "Component 1: Attributes: < names for current but not for target >"
+[8] "Component 1: Attributes: < target is NULL, current is list >"     
+[9] "Component 1: target is numeric, current is data.frame"            
 > f <- as.data.frame.integer( x );  all.equal(f, as.data.frame.integer( f ), tol=0)
-[1] "Names: 1 string mismatches"                              
-[2] "Attributes: < Component row.names: 1 string mismatches >"
-[3] "Components not in target: f"                             
-[4] "Components not in current: x"                            
+[1] "Names: 1 string mismatches"                                       
+[2] "Attributes: < Component 2: 1 string mismatches >"                 
+[3] "Component 1: Modes: numeric, list"                                
+[4] "Component 1: names for current but not for target"                
+[5] "Component 1: Attributes: < Modes: NULL, list >"                   
+[6] "Component 1: Attributes: < Lengths: 0, 2 >"                       
+[7] "Component 1: Attributes: < names for current but not for target >"
+[8] "Component 1: Attributes: < target is NULL, current is list >"     
+[9] "Component 1: target is numeric, current is data.frame"            
 > f <- as.data.frame.list( x );  all.equal(f, as.data.frame.list( f ), tol=0)
 [1] TRUE
 > f <- as.data.frame.logical( x );  all.equal(f, as.data.frame.logical( f ), tol=0)
@@ -1191,31 +1329,46 @@ Error in vector("list", ncols) : negative length vectors are not allowed
 > f <- as.data.frame.model.matrix( x );  all.equal(f, as.data.frame.model.matrix( f ), tol=0)
 Error in 1:nrows : NA/NaN argument
 > f <- as.data.frame.numeric( x );  all.equal(f, as.data.frame.numeric( f ), tol=0)
-[1] "Names: 1 string mismatches"                              
-[2] "Attributes: < Component row.names: 1 string mismatches >"
-[3] "Components not in target: f"                             
-[4] "Components not in current: x"                            
+[1] "Names: 1 string mismatches"                                       
+[2] "Attributes: < Component 2: 1 string mismatches >"                 
+[3] "Component 1: Modes: numeric, list"                                
+[4] "Component 1: names for current but not for target"                
+[5] "Component 1: Attributes: < Modes: NULL, list >"                   
+[6] "Component 1: Attributes: < Lengths: 0, 2 >"                       
+[7] "Component 1: Attributes: < names for current but not for target >"
+[8] "Component 1: Attributes: < target is NULL, current is list >"     
+[9] "Component 1: target is numeric, current is data.frame"            
 > f <- as.data.frame.ordered( x );  all.equal(f, as.data.frame.ordered( f ), tol=0)
-[1] "Names: 1 string mismatches"                              
-[2] "Attributes: < Component row.names: 1 string mismatches >"
-[3] "Components not in target: f"                             
-[4] "Components not in current: x"                            
+[1] "Names: 1 string mismatches"                                       
+[2] "Attributes: < Component 2: 1 string mismatches >"                 
+[3] "Component 1: Modes: numeric, list"                                
+[4] "Component 1: names for current but not for target"                
+[5] "Component 1: Attributes: < Modes: NULL, list >"                   
+[6] "Component 1: Attributes: < Lengths: 0, 2 >"                       
+[7] "Component 1: Attributes: < names for current but not for target >"
+[8] "Component 1: Attributes: < target is NULL, current is list >"     
+[9] "Component 1: target is numeric, current is data.frame"            
 > f <- as.data.frame.table( x );  all.equal(f, as.data.frame.table( f ), tol=0)
 Error in as.table.default(x) : cannot coerce into a table
 > f <- as.data.frame.ts( x );  all.equal(f, as.data.frame.ts( f ), tol=0)
-[1] "Attributes: < Component row.names: 1 string mismatches >"         
-[2] "Component x: Modes: numeric, list"                                
-[3] "Component x: names for current but not for target"                
-[4] "Component x: Attributes: < Modes: NULL, list >"                   
-[5] "Component x: Attributes: < Lengths: 0, 2 >"                       
-[6] "Component x: Attributes: < names for current but not for target >"
-[7] "Component x: Attributes: < target is NULL, current is list >"     
-[8] "Component x: target is numeric, current is data.frame"            
+[1] "Attributes: < Component 2: 1 string mismatches >"                 
+[2] "Component 1: Modes: numeric, list"                                
+[3] "Component 1: names for current but not for target"                
+[4] "Component 1: Attributes: < Modes: NULL, list >"                   
+[5] "Component 1: Attributes: < Lengths: 0, 2 >"                       
+[6] "Component 1: Attributes: < names for current but not for target >"
+[7] "Component 1: Attributes: < target is NULL, current is list >"     
+[8] "Component 1: target is numeric, current is data.frame"            
 > f <- as.data.frame.vector( x );  all.equal(f, as.data.frame.vector( f ), tol=0)
-[1] "Names: 1 string mismatches"                              
-[2] "Attributes: < Component row.names: 1 string mismatches >"
-[3] "Components not in target: f"                             
-[4] "Components not in current: x"                            
+[1] "Names: 1 string mismatches"                                       
+[2] "Attributes: < Component 2: 1 string mismatches >"                 
+[3] "Component 1: Modes: numeric, list"                                
+[4] "Component 1: names for current but not for target"                
+[5] "Component 1: Attributes: < Modes: NULL, list >"                   
+[6] "Component 1: Attributes: < Lengths: 0, 2 >"                       
+[7] "Component 1: Attributes: < names for current but not for target >"
+[8] "Component 1: Attributes: < target is NULL, current is list >"     
+[9] "Component 1: target is numeric, current is data.frame"            
 > f <- as.double( x );  all.equal(f, as.double( f ), tol=0)
 [1] TRUE
 > f <- as.double.default( x );  all.equal(f, as.double.default( f ), tol=0)
@@ -1457,40 +1610,60 @@ Error in as.character.octmode(x) : calling wrong method
 > f <- as.data.frame( x );  all.equal(f, as.data.frame( f ), tol=0)
 [1] TRUE
 > f <- as.data.frame.AsIs( x );  all.equal(f, as.data.frame.AsIs( f ), tol=0)
-[1] "Component x: Modes: numeric, list"                                
-[2] "Component x: names for current but not for target"                
-[3] "Component x: Attributes: < Modes: NULL, list >"                   
-[4] "Component x: Attributes: < Lengths: 0, 2 >"                       
-[5] "Component x: Attributes: < names for current but not for target >"
-[6] "Component x: Attributes: < target is NULL, current is list >"     
-[7] "Component x: target is numeric, current is data.frame"            
+[1] "Component 1: Modes: numeric, list"                                
+[2] "Component 1: names for current but not for target"                
+[3] "Component 1: Attributes: < Modes: NULL, list >"                   
+[4] "Component 1: Attributes: < Lengths: 0, 2 >"                       
+[5] "Component 1: Attributes: < names for current but not for target >"
+[6] "Component 1: Attributes: < target is NULL, current is list >"     
+[7] "Component 1: target is numeric, current is data.frame"            
 > f <- as.data.frame.POSIXct( x );  all.equal(f, as.data.frame.POSIXct( f ), tol=0)
-[1] "Names: 1 string mismatches"                              
-[2] "Attributes: < Component row.names: 1 string mismatches >"
-[3] "Components not in target: f"                             
-[4] "Components not in current: x"                            
+[1] "Names: 1 string mismatches"                                       
+[2] "Attributes: < Component 2: 1 string mismatches >"                 
+[3] "Component 1: Modes: numeric, list"                                
+[4] "Component 1: names for current but not for target"                
+[5] "Component 1: Attributes: < Modes: NULL, list >"                   
+[6] "Component 1: Attributes: < Lengths: 0, 2 >"                       
+[7] "Component 1: Attributes: < names for current but not for target >"
+[8] "Component 1: Attributes: < target is NULL, current is list >"     
+[9] "Component 1: target is numeric, current is data.frame"            
 > f <- as.data.frame.character( x );  all.equal(f, as.data.frame.character( f ), tol=0)
 Error in unique(x) : unique() applies only to vectors
 > f <- as.data.frame.complex( x );  all.equal(f, as.data.frame.complex( f ), tol=0)
-[1] "Names: 1 string mismatches"                              
-[2] "Attributes: < Component row.names: 1 string mismatches >"
-[3] "Components not in target: f"                             
-[4] "Components not in current: x"                            
+[1] "Names: 1 string mismatches"                                       
+[2] "Attributes: < Component 2: 1 string mismatches >"                 
+[3] "Component 1: Modes: numeric, list"                                
+[4] "Component 1: names for current but not for target"                
+[5] "Component 1: Attributes: < Modes: NULL, list >"                   
+[6] "Component 1: Attributes: < Lengths: 0, 2 >"                       
+[7] "Component 1: Attributes: < names for current but not for target >"
+[8] "Component 1: Attributes: < target is NULL, current is list >"     
+[9] "Component 1: target is numeric, current is data.frame"            
 > f <- as.data.frame.data.frame( x );  all.equal(f, as.data.frame.data.frame( f ), tol=0)
 Error in if (i > 1) class(x) <- cl[-(1:(i - 1))] : 
 	missing value where logical needed
 > f <- as.data.frame.default( x );  all.equal(f, as.data.frame.default( f ), tol=0)
 Error in as.data.frame.default(x) : can't coerce numeric into a data.frame
 > f <- as.data.frame.factor( x );  all.equal(f, as.data.frame.factor( f ), tol=0)
-[1] "Names: 1 string mismatches"                              
-[2] "Attributes: < Component row.names: 1 string mismatches >"
-[3] "Components not in target: f"                             
-[4] "Components not in current: x"                            
+[1] "Names: 1 string mismatches"                                       
+[2] "Attributes: < Component 2: 1 string mismatches >"                 
+[3] "Component 1: Modes: numeric, list"                                
+[4] "Component 1: names for current but not for target"                
+[5] "Component 1: Attributes: < Modes: NULL, list >"                   
+[6] "Component 1: Attributes: < Lengths: 0, 2 >"                       
+[7] "Component 1: Attributes: < names for current but not for target >"
+[8] "Component 1: Attributes: < target is NULL, current is list >"     
+[9] "Component 1: target is numeric, current is data.frame"            
 > f <- as.data.frame.integer( x );  all.equal(f, as.data.frame.integer( f ), tol=0)
-[1] "Names: 1 string mismatches"                              
-[2] "Attributes: < Component row.names: 1 string mismatches >"
-[3] "Components not in target: f"                             
-[4] "Components not in current: x"                            
+[1] "Names: 1 string mismatches"                                       
+[2] "Attributes: < Component 2: 1 string mismatches >"                 
+[3] "Component 1: Modes: numeric, list"                                
+[4] "Component 1: names for current but not for target"                
+[5] "Component 1: Attributes: < Modes: NULL, list >"                   
+[6] "Component 1: Attributes: < Lengths: 0, 2 >"                       
+[7] "Component 1: Attributes: < names for current but not for target >"
+[8] "Component 1: Attributes: < target is NULL, current is list >"     
+[9] "Component 1: target is numeric, current is data.frame"            
 > f <- as.data.frame.list( x );  all.equal(f, as.data.frame.list( f ), tol=0)
 [1] TRUE
 > f <- as.data.frame.logical( x );  all.equal(f, as.data.frame.logical( f ), tol=0)
@@ -1500,31 +1673,46 @@ Error in vector("list", ncols) : negative length vectors are not allowed
 > f <- as.data.frame.model.matrix( x );  all.equal(f, as.data.frame.model.matrix( f ), tol=0)
 Error in 1:nrows : NA/NaN argument
 > f <- as.data.frame.numeric( x );  all.equal(f, as.data.frame.numeric( f ), tol=0)
-[1] "Names: 1 string mismatches"                              
-[2] "Attributes: < Component row.names: 1 string mismatches >"
-[3] "Components not in target: f"                             
-[4] "Components not in current: x"                            
+[1] "Names: 1 string mismatches"                                       
+[2] "Attributes: < Component 2: 1 string mismatches >"                 
+[3] "Component 1: Modes: numeric, list"                                
+[4] "Component 1: names for current but not for target"                
+[5] "Component 1: Attributes: < Modes: NULL, list >"                   
+[6] "Component 1: Attributes: < Lengths: 0, 2 >"                       
+[7] "Component 1: Attributes: < names for current but not for target >"
+[8] "Component 1: Attributes: < target is NULL, current is list >"     
+[9] "Component 1: target is numeric, current is data.frame"            
 > f <- as.data.frame.ordered( x );  all.equal(f, as.data.frame.ordered( f ), tol=0)
-[1] "Names: 1 string mismatches"                              
-[2] "Attributes: < Component row.names: 1 string mismatches >"
-[3] "Components not in target: f"                             
-[4] "Components not in current: x"                            
+[1] "Names: 1 string mismatches"                                       
+[2] "Attributes: < Component 2: 1 string mismatches >"                 
+[3] "Component 1: Modes: numeric, list"                                
+[4] "Component 1: names for current but not for target"                
+[5] "Component 1: Attributes: < Modes: NULL, list >"                   
+[6] "Component 1: Attributes: < Lengths: 0, 2 >"                       
+[7] "Component 1: Attributes: < names for current but not for target >"
+[8] "Component 1: Attributes: < target is NULL, current is list >"     
+[9] "Component 1: target is numeric, current is data.frame"            
 > f <- as.data.frame.table( x );  all.equal(f, as.data.frame.table( f ), tol=0)
 Error in as.table.default(x) : cannot coerce into a table
 > f <- as.data.frame.ts( x );  all.equal(f, as.data.frame.ts( f ), tol=0)
-[1] "Attributes: < Component row.names: 1 string mismatches >"         
-[2] "Component x: Modes: numeric, list"                                
-[3] "Component x: names for current but not for target"                
-[4] "Component x: Attributes: < Modes: NULL, list >"                   
-[5] "Component x: Attributes: < Lengths: 0, 2 >"                       
-[6] "Component x: Attributes: < names for current but not for target >"
-[7] "Component x: Attributes: < target is NULL, current is list >"     
-[8] "Component x: target is numeric, current is data.frame"            
+[1] "Attributes: < Component 2: 1 string mismatches >"                 
+[2] "Component 1: Modes: numeric, list"                                
+[3] "Component 1: names for current but not for target"                
+[4] "Component 1: Attributes: < Modes: NULL, list >"                   
+[5] "Component 1: Attributes: < Lengths: 0, 2 >"                       
+[6] "Component 1: Attributes: < names for current but not for target >"
+[7] "Component 1: Attributes: < target is NULL, current is list >"     
+[8] "Component 1: target is numeric, current is data.frame"            
 > f <- as.data.frame.vector( x );  all.equal(f, as.data.frame.vector( f ), tol=0)
-[1] "Names: 1 string mismatches"                              
-[2] "Attributes: < Component row.names: 1 string mismatches >"
-[3] "Components not in target: f"                             
-[4] "Components not in current: x"                            
+[1] "Names: 1 string mismatches"                                       
+[2] "Attributes: < Component 2: 1 string mismatches >"                 
+[3] "Component 1: Modes: numeric, list"                                
+[4] "Component 1: names for current but not for target"                
+[5] "Component 1: Attributes: < Modes: NULL, list >"                   
+[6] "Component 1: Attributes: < Lengths: 0, 2 >"                       
+[7] "Component 1: Attributes: < names for current but not for target >"
+[8] "Component 1: Attributes: < target is NULL, current is list >"     
+[9] "Component 1: target is numeric, current is data.frame"            
 > f <- as.double( x );  all.equal(f, as.double( f ), tol=0)
 [1] TRUE
 > f <- as.double.default( x );  all.equal(f, as.double.default( f ), tol=0)
@@ -1766,40 +1954,60 @@ Error in as.character.octmode(x) : calling wrong method
 > f <- as.data.frame( x );  all.equal(f, as.data.frame( f ), tol=0)
 [1] TRUE
 > f <- as.data.frame.AsIs( x );  all.equal(f, as.data.frame.AsIs( f ), tol=0)
-[1] "Component x: Modes: character, list"                              
-[2] "Component x: names for current but not for target"                
-[3] "Component x: Attributes: < Modes: NULL, list >"                   
-[4] "Component x: Attributes: < Lengths: 0, 2 >"                       
-[5] "Component x: Attributes: < names for current but not for target >"
-[6] "Component x: Attributes: < target is NULL, current is list >"     
-[7] "Component x: target is character, current is data.frame"          
+[1] "Component 1: Modes: character, list"                              
+[2] "Component 1: names for current but not for target"                
+[3] "Component 1: Attributes: < Modes: NULL, list >"                   
+[4] "Component 1: Attributes: < Lengths: 0, 2 >"                       
+[5] "Component 1: Attributes: < names for current but not for target >"
+[6] "Component 1: Attributes: < target is NULL, current is list >"     
+[7] "Component 1: target is character, current is data.frame"          
 > f <- as.data.frame.POSIXct( x );  all.equal(f, as.data.frame.POSIXct( f ), tol=0)
-[1] "Names: 1 string mismatches"                              
-[2] "Attributes: < Component row.names: 1 string mismatches >"
-[3] "Components not in target: f"                             
-[4] "Components not in current: x"                            
+[1] "Names: 1 string mismatches"                                       
+[2] "Attributes: < Component 2: 1 string mismatches >"                 
+[3] "Component 1: Modes: character, list"                              
+[4] "Component 1: names for current but not for target"                
+[5] "Component 1: Attributes: < Modes: NULL, list >"                   
+[6] "Component 1: Attributes: < Lengths: 0, 2 >"                       
+[7] "Component 1: Attributes: < names for current but not for target >"
+[8] "Component 1: Attributes: < target is NULL, current is list >"     
+[9] "Component 1: target is character, current is data.frame"          
 > f <- as.data.frame.character( x );  all.equal(f, as.data.frame.character( f ), tol=0)
 Error in unique(x) : unique() applies only to vectors
 > f <- as.data.frame.complex( x );  all.equal(f, as.data.frame.complex( f ), tol=0)
-[1] "Names: 1 string mismatches"                              
-[2] "Attributes: < Component row.names: 1 string mismatches >"
-[3] "Components not in target: f"                             
-[4] "Components not in current: x"                            
+[1] "Names: 1 string mismatches"                                       
+[2] "Attributes: < Component 2: 1 string mismatches >"                 
+[3] "Component 1: Modes: character, list"                              
+[4] "Component 1: names for current but not for target"                
+[5] "Component 1: Attributes: < Modes: NULL, list >"                   
+[6] "Component 1: Attributes: < Lengths: 0, 2 >"                       
+[7] "Component 1: Attributes: < names for current but not for target >"
+[8] "Component 1: Attributes: < target is NULL, current is list >"     
+[9] "Component 1: target is character, current is data.frame"          
 > f <- as.data.frame.data.frame( x );  all.equal(f, as.data.frame.data.frame( f ), tol=0)
 Error in if (i > 1) class(x) <- cl[-(1:(i - 1))] : 
 	missing value where logical needed
 > f <- as.data.frame.default( x );  all.equal(f, as.data.frame.default( f ), tol=0)
 Error in as.data.frame.default(x) : can't coerce character into a data.frame
 > f <- as.data.frame.factor( x );  all.equal(f, as.data.frame.factor( f ), tol=0)
-[1] "Names: 1 string mismatches"                              
-[2] "Attributes: < Component row.names: 1 string mismatches >"
-[3] "Components not in target: f"                             
-[4] "Components not in current: x"                            
+[1] "Names: 1 string mismatches"                                       
+[2] "Attributes: < Component 2: 1 string mismatches >"                 
+[3] "Component 1: Modes: character, list"                              
+[4] "Component 1: names for current but not for target"                
+[5] "Component 1: Attributes: < Modes: NULL, list >"                   
+[6] "Component 1: Attributes: < Lengths: 0, 2 >"                       
+[7] "Component 1: Attributes: < names for current but not for target >"
+[8] "Component 1: Attributes: < target is NULL, current is list >"     
+[9] "Component 1: target is character, current is data.frame"          
 > f <- as.data.frame.integer( x );  all.equal(f, as.data.frame.integer( f ), tol=0)
-[1] "Names: 1 string mismatches"                              
-[2] "Attributes: < Component row.names: 1 string mismatches >"
-[3] "Components not in target: f"                             
-[4] "Components not in current: x"                            
+[1] "Names: 1 string mismatches"                                       
+[2] "Attributes: < Component 2: 1 string mismatches >"                 
+[3] "Component 1: Modes: character, list"                              
+[4] "Component 1: names for current but not for target"                
+[5] "Component 1: Attributes: < Modes: NULL, list >"                   
+[6] "Component 1: Attributes: < Lengths: 0, 2 >"                       
+[7] "Component 1: Attributes: < names for current but not for target >"
+[8] "Component 1: Attributes: < target is NULL, current is list >"     
+[9] "Component 1: target is character, current is data.frame"          
 > f <- as.data.frame.list( x );  all.equal(f, as.data.frame.list( f ), tol=0)
 [1] TRUE
 > f <- as.data.frame.logical( x );  all.equal(f, as.data.frame.logical( f ), tol=0)
@@ -1809,31 +2017,46 @@ Error in vector("list", ncols) : negative length vectors are not allowed
 > f <- as.data.frame.model.matrix( x );  all.equal(f, as.data.frame.model.matrix( f ), tol=0)
 Error in 1:nrows : NA/NaN argument
 > f <- as.data.frame.numeric( x );  all.equal(f, as.data.frame.numeric( f ), tol=0)
-[1] "Names: 1 string mismatches"                              
-[2] "Attributes: < Component row.names: 1 string mismatches >"
-[3] "Components not in target: f"                             
-[4] "Components not in current: x"                            
+[1] "Names: 1 string mismatches"                                       
+[2] "Attributes: < Component 2: 1 string mismatches >"                 
+[3] "Component 1: Modes: character, list"                              
+[4] "Component 1: names for current but not for target"                
+[5] "Component 1: Attributes: < Modes: NULL, list >"                   
+[6] "Component 1: Attributes: < Lengths: 0, 2 >"                       
+[7] "Component 1: Attributes: < names for current but not for target >"
+[8] "Component 1: Attributes: < target is NULL, current is list >"     
+[9] "Component 1: target is character, current is data.frame"          
 > f <- as.data.frame.ordered( x );  all.equal(f, as.data.frame.ordered( f ), tol=0)
-[1] "Names: 1 string mismatches"                              
-[2] "Attributes: < Component row.names: 1 string mismatches >"
-[3] "Components not in target: f"                             
-[4] "Components not in current: x"                            
+[1] "Names: 1 string mismatches"                                       
+[2] "Attributes: < Component 2: 1 string mismatches >"                 
+[3] "Component 1: Modes: character, list"                              
+[4] "Component 1: names for current but not for target"                
+[5] "Component 1: Attributes: < Modes: NULL, list >"                   
+[6] "Component 1: Attributes: < Lengths: 0, 2 >"                       
+[7] "Component 1: Attributes: < names for current but not for target >"
+[8] "Component 1: Attributes: < target is NULL, current is list >"     
+[9] "Component 1: target is character, current is data.frame"          
 > f <- as.data.frame.table( x );  all.equal(f, as.data.frame.table( f ), tol=0)
 Error in as.table.default(x) : cannot coerce into a table
 > f <- as.data.frame.ts( x );  all.equal(f, as.data.frame.ts( f ), tol=0)
-[1] "Attributes: < Component row.names: 1 string mismatches >"         
-[2] "Component x: Modes: character, list"                              
-[3] "Component x: names for current but not for target"                
-[4] "Component x: Attributes: < Modes: NULL, list >"                   
-[5] "Component x: Attributes: < Lengths: 0, 2 >"                       
-[6] "Component x: Attributes: < names for current but not for target >"
-[7] "Component x: Attributes: < target is NULL, current is list >"     
-[8] "Component x: target is character, current is data.frame"          
+[1] "Attributes: < Component 2: 1 string mismatches >"                 
+[2] "Component 1: Modes: character, list"                              
+[3] "Component 1: names for current but not for target"                
+[4] "Component 1: Attributes: < Modes: NULL, list >"                   
+[5] "Component 1: Attributes: < Lengths: 0, 2 >"                       
+[6] "Component 1: Attributes: < names for current but not for target >"
+[7] "Component 1: Attributes: < target is NULL, current is list >"     
+[8] "Component 1: target is character, current is data.frame"          
 > f <- as.data.frame.vector( x );  all.equal(f, as.data.frame.vector( f ), tol=0)
-[1] "Names: 1 string mismatches"                              
-[2] "Attributes: < Component row.names: 1 string mismatches >"
-[3] "Components not in target: f"                             
-[4] "Components not in current: x"                            
+[1] "Names: 1 string mismatches"                                       
+[2] "Attributes: < Component 2: 1 string mismatches >"                 
+[3] "Component 1: Modes: character, list"                              
+[4] "Component 1: names for current but not for target"                
+[5] "Component 1: Attributes: < Modes: NULL, list >"                   
+[6] "Component 1: Attributes: < Lengths: 0, 2 >"                       
+[7] "Component 1: Attributes: < names for current but not for target >"
+[8] "Component 1: Attributes: < target is NULL, current is list >"     
+[9] "Component 1: target is character, current is data.frame"          
 > f <- as.double( x );  all.equal(f, as.double( f ), tol=0)
 [1] TRUE
 > f <- as.double.default( x );  all.equal(f, as.double.default( f ), tol=0)
@@ -2075,39 +2298,60 @@ Error in as.character.octmode(x) : calling wrong method
 > f <- as.data.frame( x );  all.equal(f, as.data.frame( f ), tol=0)
 [1] TRUE
 > f <- as.data.frame.AsIs( x );  all.equal(f, as.data.frame.AsIs( f ), tol=0)
-[1] "Component x: Names: 1 string mismatches"                                       
-[2] "Component x: Attributes: < Lengths: 0, 2 >"                                    
-[3] "Component x: Attributes: < names for current but not for target >"             
-[4] "Component x: Attributes: < Length mismatch: comparison on first 0 components >"
-[5] "Component x: Components not in target: x"                                      
-[6] "Component x: Components not in current: a"                                     
+[1] "Component 1: Names: 1 string mismatches"                                       
+[2] "Component 1: Attributes: < Lengths: 0, 2 >"                                    
+[3] "Component 1: Attributes: < names for current but not for target >"             
+[4] "Component 1: Attributes: < Length mismatch: comparison on first 0 components >"
+[5] "Component 1: Component 1: Modes: numeric, list"                                
+[6] "Component 1: Component 1: names for current but not for target"                
+[7] "Component 1: Component 1: target is numeric, current is list"                  
 > f <- as.data.frame.POSIXct( x );  all.equal(f, as.data.frame.POSIXct( f ), tol=0)
-[1] "Names: 1 string mismatches"                              
-[2] "Attributes: < Component row.names: 1 string mismatches >"
-[3] "Components not in target: f"                             
-[4] "Components not in current: x"                            
+[1] "Names: 1 string mismatches"                                                    
+[2] "Attributes: < Component 2: 1 string mismatches >"                              
+[3] "Component 1: Names: 1 string mismatches"                                       
+[4] "Component 1: Attributes: < Lengths: 0, 2 >"                                    
+[5] "Component 1: Attributes: < names for current but not for target >"             
+[6] "Component 1: Attributes: < Length mismatch: comparison on first 0 components >"
+[7] "Component 1: Component 1: Modes: numeric, list"                                
+[8] "Component 1: Component 1: names for current but not for target"                
+[9] "Component 1: Component 1: target is numeric, current is list"                  
 > f <- as.data.frame.character( x );  all.equal(f, as.data.frame.character( f ), tol=0)
 Error in unique(x) : unique() applies only to vectors
 > f <- as.data.frame.complex( x );  all.equal(f, as.data.frame.complex( f ), tol=0)
-[1] "Names: 1 string mismatches"                              
-[2] "Attributes: < Component row.names: 1 string mismatches >"
-[3] "Components not in target: f"                             
-[4] "Components not in current: x"                            
+[1] "Names: 1 string mismatches"                                                    
+[2] "Attributes: < Component 2: 1 string mismatches >"                              
+[3] "Component 1: Names: 1 string mismatches"                                       
+[4] "Component 1: Attributes: < Lengths: 0, 2 >"                                    
+[5] "Component 1: Attributes: < names for current but not for target >"             
+[6] "Component 1: Attributes: < Length mismatch: comparison on first 0 components >"
+[7] "Component 1: Component 1: Modes: numeric, list"                                
+[8] "Component 1: Component 1: names for current but not for target"                
+[9] "Component 1: Component 1: target is numeric, current is list"                  
 > f <- as.data.frame.data.frame( x );  all.equal(f, as.data.frame.data.frame( f ), tol=0)
 Error in if (i > 1) class(x) <- cl[-(1:(i - 1))] : 
 	missing value where logical needed
 > f <- as.data.frame.default( x );  all.equal(f, as.data.frame.default( f ), tol=0)
 Error in as.data.frame.default(x) : can't coerce list into a data.frame
 > f <- as.data.frame.factor( x );  all.equal(f, as.data.frame.factor( f ), tol=0)
-[1] "Names: 1 string mismatches"                              
-[2] "Attributes: < Component row.names: 1 string mismatches >"
-[3] "Components not in target: f"                             
-[4] "Components not in current: x"                            
+[1] "Names: 1 string mismatches"                                                    
+[2] "Attributes: < Component 2: 1 string mismatches >"                              
+[3] "Component 1: Names: 1 string mismatches"                                       
+[4] "Component 1: Attributes: < Lengths: 0, 2 >"                                    
+[5] "Component 1: Attributes: < names for current but not for target >"             
+[6] "Component 1: Attributes: < Length mismatch: comparison on first 0 components >"
+[7] "Component 1: Component 1: Modes: numeric, list"                                
+[8] "Component 1: Component 1: names for current but not for target"                
+[9] "Component 1: Component 1: target is numeric, current is list"                  
 > f <- as.data.frame.integer( x );  all.equal(f, as.data.frame.integer( f ), tol=0)
-[1] "Names: 1 string mismatches"                              
-[2] "Attributes: < Component row.names: 1 string mismatches >"
-[3] "Components not in target: f"                             
-[4] "Components not in current: x"                            
+[1] "Names: 1 string mismatches"                                                    
+[2] "Attributes: < Component 2: 1 string mismatches >"                              
+[3] "Component 1: Names: 1 string mismatches"                                       
+[4] "Component 1: Attributes: < Lengths: 0, 2 >"                                    
+[5] "Component 1: Attributes: < names for current but not for target >"             
+[6] "Component 1: Attributes: < Length mismatch: comparison on first 0 components >"
+[7] "Component 1: Component 1: Modes: numeric, list"                                
+[8] "Component 1: Component 1: names for current but not for target"                
+[9] "Component 1: Component 1: target is numeric, current is list"                  
 > f <- as.data.frame.list( x );  all.equal(f, as.data.frame.list( f ), tol=0)
 [1] TRUE
 > f <- as.data.frame.logical( x );  all.equal(f, as.data.frame.logical( f ), tol=0)
@@ -2117,30 +2361,46 @@ Error in vector("list", ncols) : negative length vectors are not allowed
 > f <- as.data.frame.model.matrix( x );  all.equal(f, as.data.frame.model.matrix( f ), tol=0)
 Error in 1:nrows : NA/NaN argument
 > f <- as.data.frame.numeric( x );  all.equal(f, as.data.frame.numeric( f ), tol=0)
-[1] "Names: 1 string mismatches"                              
-[2] "Attributes: < Component row.names: 1 string mismatches >"
-[3] "Components not in target: f"                             
-[4] "Components not in current: x"                            
+[1] "Names: 1 string mismatches"                                                    
+[2] "Attributes: < Component 2: 1 string mismatches >"                              
+[3] "Component 1: Names: 1 string mismatches"                                       
+[4] "Component 1: Attributes: < Lengths: 0, 2 >"                                    
+[5] "Component 1: Attributes: < names for current but not for target >"             
+[6] "Component 1: Attributes: < Length mismatch: comparison on first 0 components >"
+[7] "Component 1: Component 1: Modes: numeric, list"                                
+[8] "Component 1: Component 1: names for current but not for target"                
+[9] "Component 1: Component 1: target is numeric, current is list"                  
 > f <- as.data.frame.ordered( x );  all.equal(f, as.data.frame.ordered( f ), tol=0)
-[1] "Names: 1 string mismatches"                              
-[2] "Attributes: < Component row.names: 1 string mismatches >"
-[3] "Components not in target: f"                             
-[4] "Components not in current: x"                            
+[1] "Names: 1 string mismatches"                                                    
+[2] "Attributes: < Component 2: 1 string mismatches >"                              
+[3] "Component 1: Names: 1 string mismatches"                                       
+[4] "Component 1: Attributes: < Lengths: 0, 2 >"                                    
+[5] "Component 1: Attributes: < names for current but not for target >"             
+[6] "Component 1: Attributes: < Length mismatch: comparison on first 0 components >"
+[7] "Component 1: Component 1: Modes: numeric, list"                                
+[8] "Component 1: Component 1: names for current but not for target"                
+[9] "Component 1: Component 1: target is numeric, current is list"                  
 > f <- as.data.frame.table( x );  all.equal(f, as.data.frame.table( f ), tol=0)
 Error in as.table.default(x) : cannot coerce into a table
 > f <- as.data.frame.ts( x );  all.equal(f, as.data.frame.ts( f ), tol=0)
-[1] "Attributes: < Component row.names: 1 string mismatches >"                      
-[2] "Component x: Names: 1 string mismatches"                                       
-[3] "Component x: Attributes: < Lengths: 0, 2 >"                                    
-[4] "Component x: Attributes: < names for current but not for target >"             
-[5] "Component x: Attributes: < Length mismatch: comparison on first 0 components >"
-[6] "Component x: Components not in target: x"                                      
-[7] "Component x: Components not in current: a"                                     
+[1] "Attributes: < Component 2: 1 string mismatches >"                              
+[2] "Component 1: Names: 1 string mismatches"                                       
+[3] "Component 1: Attributes: < Lengths: 0, 2 >"                                    
+[4] "Component 1: Attributes: < names for current but not for target >"             
+[5] "Component 1: Attributes: < Length mismatch: comparison on first 0 components >"
+[6] "Component 1: Component 1: Modes: numeric, list"                                
+[7] "Component 1: Component 1: names for current but not for target"                
+[8] "Component 1: Component 1: target is numeric, current is list"                  
 > f <- as.data.frame.vector( x );  all.equal(f, as.data.frame.vector( f ), tol=0)
-[1] "Names: 1 string mismatches"                              
-[2] "Attributes: < Component row.names: 1 string mismatches >"
-[3] "Components not in target: f"                             
-[4] "Components not in current: x"                            
+[1] "Names: 1 string mismatches"                                                    
+[2] "Attributes: < Component 2: 1 string mismatches >"                              
+[3] "Component 1: Names: 1 string mismatches"                                       
+[4] "Component 1: Attributes: < Lengths: 0, 2 >"                                    
+[5] "Component 1: Attributes: < names for current but not for target >"             
+[6] "Component 1: Attributes: < Length mismatch: comparison on first 0 components >"
+[7] "Component 1: Component 1: Modes: numeric, list"                                
+[8] "Component 1: Component 1: names for current but not for target"                
+[9] "Component 1: Component 1: target is numeric, current is list"                  
 > f <- as.double( x );  all.equal(f, as.double( f ), tol=0)
 [1] TRUE
 > f <- as.double.default( x );  all.equal(f, as.double.default( f ), tol=0)
@@ -2387,35 +2647,42 @@ Error in as.character.octmode(x) : calling wrong method
 > f <- as.data.frame( x );  all.equal(f, as.data.frame( f ), tol=0)
 [1] TRUE
 > f <- as.data.frame.AsIs( x );  all.equal(f, as.data.frame.AsIs( f ), tol=0)
-[1] "Component x: Names: 1 string mismatches"          
-[2] "Component x: Components not in target: x"         
-[3] "Component x: Components not in current: factor(x)"
+[1] "Component 1: Names: 1 string mismatches"            
+[2] "Component 1: Component 1: `current' is not a factor"
 > f <- as.data.frame.POSIXct( x );  all.equal(f, as.data.frame.POSIXct( f ), tol=0)
-[1] "Names: 1 string mismatches"                              
-[2] "Attributes: < Component row.names: 1 string mismatches >"
-[3] "Components not in target: f"                             
-[4] "Components not in current: x"                            
+[1] "Names: 1 string mismatches"                                                                 
+[2] "Attributes: < Component 2: 1 string mismatches >"                                           
+[3] "Component 1: Names: 1 string mismatches"                                                    
+[4] "Component 1: Attributes: < Component 2: Lengths: 0, 1 >"                                    
+[5] "Component 1: Attributes: < Component 2: Lengths (0, 1) differ (string compare on first 0) >"
+[6] "Component 1: Component 1: `current' is not a factor"                                        
 > f <- as.data.frame.character( x );  all.equal(f, as.data.frame.character( f ), tol=0)
 Error in unique(x) : unique() applies only to vectors
 > f <- as.data.frame.complex( x );  all.equal(f, as.data.frame.complex( f ), tol=0)
-[1] "Names: 1 string mismatches"                              
-[2] "Attributes: < Component row.names: 1 string mismatches >"
-[3] "Components not in target: f"                             
-[4] "Components not in current: x"                            
+[1] "Names: 1 string mismatches"                                                                 
+[2] "Attributes: < Component 2: 1 string mismatches >"                                           
+[3] "Component 1: Names: 1 string mismatches"                                                    
+[4] "Component 1: Attributes: < Component 2: Lengths: 0, 1 >"                                    
+[5] "Component 1: Attributes: < Component 2: Lengths (0, 1) differ (string compare on first 0) >"
+[6] "Component 1: Component 1: `current' is not a factor"                                        
 > f <- as.data.frame.data.frame( x );  all.equal(f, as.data.frame.data.frame( f ), tol=0)
 [1] TRUE
 > f <- as.data.frame.default( x );  all.equal(f, as.data.frame.default( f ), tol=0)
 Error in as.data.frame.default(x) : can't coerce data.frame into a data.frame
 > f <- as.data.frame.factor( x );  all.equal(f, as.data.frame.factor( f ), tol=0)
-[1] "Names: 1 string mismatches"                              
-[2] "Attributes: < Component row.names: 1 string mismatches >"
-[3] "Components not in target: f"                             
-[4] "Components not in current: x"                            
+[1] "Names: 1 string mismatches"                                                                 
+[2] "Attributes: < Component 2: 1 string mismatches >"                                           
+[3] "Component 1: Names: 1 string mismatches"                                                    
+[4] "Component 1: Attributes: < Component 2: Lengths: 0, 1 >"                                    
+[5] "Component 1: Attributes: < Component 2: Lengths (0, 1) differ (string compare on first 0) >"
+[6] "Component 1: Component 1: `current' is not a factor"                                        
 > f <- as.data.frame.integer( x );  all.equal(f, as.data.frame.integer( f ), tol=0)
-[1] "Names: 1 string mismatches"                              
-[2] "Attributes: < Component row.names: 1 string mismatches >"
-[3] "Components not in target: f"                             
-[4] "Components not in current: x"                            
+[1] "Names: 1 string mismatches"                                                                 
+[2] "Attributes: < Component 2: 1 string mismatches >"                                           
+[3] "Component 1: Names: 1 string mismatches"                                                    
+[4] "Component 1: Attributes: < Component 2: Lengths: 0, 1 >"                                    
+[5] "Component 1: Attributes: < Component 2: Lengths (0, 1) differ (string compare on first 0) >"
+[6] "Component 1: Component 1: `current' is not a factor"                                        
 > f <- as.data.frame.list( x );  all.equal(f, as.data.frame.list( f ), tol=0)
 [1] TRUE
 > f <- as.data.frame.logical( x );  all.equal(f, as.data.frame.logical( f ), tol=0)
@@ -2423,32 +2690,38 @@ Error in unique(x) : unique() applies only to vectors
 > f <- as.data.frame.matrix( x );  all.equal(f, as.data.frame.matrix( f ), tol=0)
 [1] TRUE
 > f <- as.data.frame.model.matrix( x );  all.equal(f, as.data.frame.model.matrix( f ), tol=0)
-[1] "Names: 1 string mismatches"   "Components not in target: f" 
-[3] "Components not in current: x"
+[1] "Names: 1 string mismatches"                         
+[2] "Component 1: Names: 1 string mismatches"            
+[3] "Component 1: Component 1: `current' is not a factor"
 > f <- as.data.frame.numeric( x );  all.equal(f, as.data.frame.numeric( f ), tol=0)
-[1] "Names: 1 string mismatches"                              
-[2] "Attributes: < Component row.names: 1 string mismatches >"
-[3] "Components not in target: f"                             
-[4] "Components not in current: x"                            
+[1] "Names: 1 string mismatches"                                                                 
+[2] "Attributes: < Component 2: 1 string mismatches >"                                           
+[3] "Component 1: Names: 1 string mismatches"                                                    
+[4] "Component 1: Attributes: < Component 2: Lengths: 0, 1 >"                                    
+[5] "Component 1: Attributes: < Component 2: Lengths (0, 1) differ (string compare on first 0) >"
+[6] "Component 1: Component 1: `current' is not a factor"                                        
 > f <- as.data.frame.ordered( x );  all.equal(f, as.data.frame.ordered( f ), tol=0)
-[1] "Names: 1 string mismatches"                              
-[2] "Attributes: < Component row.names: 1 string mismatches >"
-[3] "Components not in target: f"                             
-[4] "Components not in current: x"                            
+[1] "Names: 1 string mismatches"                                                                 
+[2] "Attributes: < Component 2: 1 string mismatches >"                                           
+[3] "Component 1: Names: 1 string mismatches"                                                    
+[4] "Component 1: Attributes: < Component 2: Lengths: 0, 1 >"                                    
+[5] "Component 1: Attributes: < Component 2: Lengths (0, 1) differ (string compare on first 0) >"
+[6] "Component 1: Component 1: `current' is not a factor"                                        
 > f <- as.data.frame.table( x );  all.equal(f, as.data.frame.table( f ), tol=0)
 Error in as.table.default(x) : cannot coerce into a table
 > f <- as.data.frame.ts( x );  all.equal(f, as.data.frame.ts( f ), tol=0)
-[1] "Attributes: < Component row.names: 1 string mismatches >"                                           
-[2] "Component x: Names: 1 string mismatches"                                                            
-[3] "Component x: Attributes: < Component row.names: Lengths: 0, 1 >"                                    
-[4] "Component x: Attributes: < Component row.names: Lengths (0, 1) differ (string compare on first 0) >"
-[5] "Component x: Components not in target: x"                                                           
-[6] "Component x: Components not in current: factor(x)"                                                  
+[1] "Attributes: < Component 2: 1 string mismatches >"                                           
+[2] "Component 1: Names: 1 string mismatches"                                                    
+[3] "Component 1: Attributes: < Component 2: Lengths: 0, 1 >"                                    
+[4] "Component 1: Attributes: < Component 2: Lengths (0, 1) differ (string compare on first 0) >"
+[5] "Component 1: Component 1: `current' is not a factor"                                        
 > f <- as.data.frame.vector( x );  all.equal(f, as.data.frame.vector( f ), tol=0)
-[1] "Names: 1 string mismatches"                              
-[2] "Attributes: < Component row.names: 1 string mismatches >"
-[3] "Components not in target: f"                             
-[4] "Components not in current: x"                            
+[1] "Names: 1 string mismatches"                                                                 
+[2] "Attributes: < Component 2: 1 string mismatches >"                                           
+[3] "Component 1: Names: 1 string mismatches"                                                    
+[4] "Component 1: Attributes: < Component 2: Lengths: 0, 1 >"                                    
+[5] "Component 1: Attributes: < Component 2: Lengths (0, 1) differ (string compare on first 0) >"
+[6] "Component 1: Component 1: `current' is not a factor"                                        
 > f <- as.double( x );  all.equal(f, as.double( f ), tol=0)
 [1] TRUE
 > f <- as.double.default( x );  all.equal(f, as.double.default( f ), tol=0)
@@ -2526,6 +2799,6 @@ Error in ts(x) : ts object must have one or more observations
 > f <- as.vector.factor( x );  all.equal(f, as.vector.factor( f ), tol=0)
 [1] TRUE
 > cat('Time elapsed: ', proc.time() - .proctime00,'\n')
-Time elapsed:  2 0.12 2.14 0 0 
+Time elapsed:  1.49 0.03 1.52 0 0 
 > 
 > 

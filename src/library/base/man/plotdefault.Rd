@@ -1,15 +1,19 @@
 \name{plot.default}
+\alias{plot.default}
 \title{The Default Scatterplot Function}
+\description{
+  Draw a scatter plot with ``decorations'' such as axes and titles
+  in the active graphics window.
+}
 \usage{
 plot.default(x, y = NULL, type = "p",  xlim = NULL, ylim = NULL,
              log = "", main = NULL, sub = NULL, xlab = NULL, ylab = NULL,
              ann = par("ann"), axes = TRUE, frame.plot = axes,
              panel.first = NULL, panel.last = NULL,
              col = par("fg"), bg = NA, pch = par("pch"),
-             cex = par("cex"), lty = par("lty"), lwd = par("lwd"),
-             asp = NA, \dots)
+             cex = par("cex"), lty = par("lty"), lab = par("lab"),
+             lwd = par("lwd"), asp = NA, \dots)
 }
-\alias{plot.default}
 \arguments{
   \item{x,y}{the \code{x} and \code{y} arguments provide the x and y
     coordinates for the plot.  Any reasonable way of defining the
@@ -57,14 +61,12 @@ plot.default(x, y = NULL, type = "p",  xlim = NULL, ylim = NULL,
   \item{cex}{a numerical value giving the amount by which plotting text
     and symbols should be scaled relative to the default}
   \item{lty}{the line type, see \code{\link{par}}.}
+  \item{lab}{the specification for the (approximate) numbers of tick
+    marks on the x and y axes.}
   \item{lwd}{the line width \bold{not yet supported for postscript}.}
   \item{asp}{the \eqn{y/x} aspect ratio, see \code{\link{plot.window}}.}
-  \item{\dots}{graphical parameters as in \code{\link{par}(\dots)} may
-    also be passed as arguments.}
-}
-\description{
-  Draw a scatter plot with ``decorations'' such as axes and titles
-  in the active graphics window.
+  \item{\dots}{graphical parameters as in \code{\link{par}} may also be
+    passed as arguments.}
 }
 \references{
   Cleveland, W. S. (1985)

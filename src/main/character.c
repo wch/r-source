@@ -190,12 +190,15 @@ SEXP do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 	    if(regcomp(&reg, split, eflags))
 		errorcall(call, "invalid split pattern");
 	    bufp = buff;
-	    while(regexec(&reg, bufp, 1, regmatch, eflags) == 0) {
-		/* Empty matches get the next char, so move by one. */
-		bufp += MAX(regmatch[0].rm_eo, 1);
-		ntok++;
-		if (*bufp == '\0')
-		    break;
+	    if(*bufp != '\0') {
+		while(regexec(&reg, bufp, 1, regmatch, eflags) == 0) {
+		    /* Empty matches get the next char, so move by
+		       one. */
+		    bufp += MAX(regmatch[0].rm_eo, 1);
+		    ntok++;
+		    if (*bufp == '\0')
+			break;
+		}
 	    }
 	    if(*bufp == '\0')
 		PROTECT(t = allocVector(STRSXP, ntok));
@@ -262,8 +265,8 @@ SEXP do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 */
 
 
-#define FIRSTCHAR(i) (isspace(buff1[i-1]))
-#define LASTCHAR(i) (!isspace(buff1[i-1]) && (!buff1[i+1] || isspace(buff1[i+1])))
+#define FIRSTCHAR(i) (isspace((int)buff1[i-1]))
+#define LASTCHAR(i) (!isspace((int)buff1[i-1]) && (!buff1[i+1] || isspace((int)buff1[i+1])))
 #define LOWVOW(i) (buff1[i] == 'a' || buff1[i] == 'e' || buff1[i] == 'i' || \
 		   buff1[i] == 'o' || buff1[i] == 'u')
 
@@ -280,7 +283,7 @@ static SEXP stripchars(SEXP inchar, int minlen)
     /* remove leading blanks */
     j = 0;
     for (i = 0 ; i < upper ; i++)
-	if (isspace(buff1[i]))
+	if (isspace((int)buff1[i]))
 	    j++;
 	else
 	    break;
@@ -292,7 +295,7 @@ static SEXP stripchars(SEXP inchar, int minlen)
 	goto donesc;
 
     for (i = upper, j = 1; i > 0; i--) {
-	if (isspace(buff1[i])) {
+	if (isspace((int)buff1[i])) {
 	    if (j)
 		buff1[i] = '\0' ;
 	    else
@@ -323,7 +326,7 @@ static SEXP stripchars(SEXP inchar, int minlen)
 
     upper = strlen(buff1) - 1;
     for (i = upper; i > 0; i--) {
-	if (islower(buff1[i]) && LASTCHAR(i))
+	if (islower((int)buff1[i]) && LASTCHAR(i))
 	    strcpy(&buff1[i], &buff1[i + 1]);
 	if (strlen(buff1) - nspace <= minlen)
 	    goto donesc;
@@ -331,7 +334,7 @@ static SEXP stripchars(SEXP inchar, int minlen)
 
     upper = strlen(buff1) -1;
     for (i = upper; i > 0; i--) {
-	if (islower(buff1[i]) && !FIRSTCHAR(i))
+	if (islower((int)buff1[i]) && !FIRSTCHAR(i))
 	    strcpy(&buff1[i], &buff1[i + 1]);
 	if (strlen(buff1) - nspace <= minlen)
 	    goto donesc;
@@ -341,7 +344,7 @@ static SEXP stripchars(SEXP inchar, int minlen)
 
     upper = strlen(buff1) - 1;
     for (i = upper; i > 0; i--) {
-	if (!FIRSTCHAR(i) && !isspace(buff1[i]))
+	if (!FIRSTCHAR(i) && !isspace((int)buff1[i]))
 	    strcpy(&buff1[i], &buff1[i + 1]);
 	if (strlen(buff1) - nspace <= minlen)
 	    goto donesc;
@@ -352,7 +355,7 @@ donesc:
     upper = strlen(buff1);
     if (upper > minlen)
 	for (i = upper - 1; i > 0; i--)
-	    if (isspace(buff1[i]))
+	    if (isspace((int)buff1[i]))
 		strcpy(&buff1[i], &buff1[i + 1]);
 
     return(mkChar(buff1));
@@ -395,7 +398,7 @@ SEXP do_makenames(SEXP call, SEXP op, SEXP args, SEXP env)
     PROTECT(ans = allocVector(STRSXP, n));
     for (i = 0 ; i < n ; i++) {
 	l = strlen(CHAR(STRING_ELT(arg, i)));
-	if (isalpha(CHAR(STRING_ELT(arg, i))[0])) {
+	if (isalpha((int)CHAR(STRING_ELT(arg, i))[0])) {
 	    SET_STRING_ELT(ans, i, allocString(l));
 	    strcpy(CHAR(STRING_ELT(ans, i)), CHAR(STRING_ELT(arg, i)));
 	}
@@ -406,7 +409,7 @@ SEXP do_makenames(SEXP call, SEXP op, SEXP args, SEXP env)
 	}
 	p = CHAR(STRING_ELT(ans, i));
 	while (*p) {
-	    if (!isalnum(*p) && *p != '.')
+	    if (!isalnum((int)*p) && *p != '.')
 		*p = '.';
 	    p++;
 	}

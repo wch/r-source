@@ -169,7 +169,8 @@ dev.copy2eps <- function(...)
     oc$device <- postscript
     oc$onefile <- FALSE
     oc$horizontal <- FALSE
-    oc$paper <- "special"
+    if(is.null(oc$paper))
+        oc$paper <- "special"
     din <- par("din"); w <- din[1]; h <- din[2]
     if(is.null(oc$width))
         oc$width <- if(!is.null(oc$height)) w/h * eval.parent(oc$height) else w

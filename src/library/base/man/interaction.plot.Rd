@@ -9,7 +9,8 @@
 interaction.plot(x.factor, trace.factor, response, fun = mean,
                  type = c("l", "p"), legend = TRUE,
                  trace.label = deparse(substitute(trace.factor)),
-                 fixed = FALSE, ...)
+                 fixed = FALSE, xlab, ylab, ylim, lty, col = 1,
+                 pch = c(1:9, 0, letters), \dots)
 }
 \arguments{
   \item{x.factor}{a factor whose levels will form the x axis.}
@@ -23,6 +24,13 @@ interaction.plot(x.factor, trace.factor, response, fun = mean,
   \item{fixed}{Should the legend be in the order of the levels of
     \code{trace.factor} or in the order of the traces at their
     right-hand ends?}
+  \item{xlab}{the x label of the plot.}  
+  \item{ylab}{the y label of the plot.}
+  \item{ylim}{numeric of length 2 giving the y limits for the plot.}
+  \item{lty}{line type for the lines drawn, with sensible default.}
+  \item{col}{the color to be used for plotting.}
+  \item{pch}{a vector of plotting symbols or characters, with sensible
+    default.}
   \item{\dots}{graphics parameters to be passed to the plotting routines.}
 }
 \details{

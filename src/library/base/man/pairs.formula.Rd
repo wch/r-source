@@ -28,7 +28,7 @@ pairs.formula(formula, data = NULL, subset, na.action, \dots)
 }
 \examples{
 data(swiss)
-pairs(~ Fertility + Education + Catholic,
-      data = swiss, subset = Education < 20)
+pairs(~ Fertility + Education + Catholic, data = swiss,
+      subset = Education < 20, main = "Swiss data, Education < 20")
 }
 \keyword{hplot}

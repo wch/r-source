@@ -17,6 +17,7 @@ DISTFILES = \
 	Makefile.in Makefile.win \
 	R-defs.texi dir texinfo.tex \
 	$(SOURCES_TEXI) \
+	resources.texi \
 	R-exts.R R-exts.c R-intro.R \
 	Rd.sty hyperref.cfg \
 	omsaer.fd omsaett.fd omscmtt.fd \
@@ -114,12 +115,12 @@ stamp-refman-dvi: $(pkgsrcs)
 	@touch $@
 $(pkgsrcs): FORCE $(top_builddir)/bin/build-help
 	@(pkg=`basename $@ -pkg.tex`; \
-	if $(top_builddir)/tools/Rdnewer \
+	if $(PERL) $(top_srcdir)/tools/Rdnewer.pl \
 	    "$(top_srcdir)/src/library/$${pkg}" "$@"; then \
 	  echo "collecting LaTeX docs for package \`$${pkg}' ..."; \
 	  (cd $(top_builddir)/src/library && \
 	    OPTS="--latex" $(MAKE) R_PKGS="$${pkg}" DOCS); \
-	  $(top_builddir)/tools/pkg2tex $${pkg}; \
+	  $(PERL) $(top_srcdir)/tools/pkg2tex.pl $${pkg}; \
 	fi)
 FORCE:
 $(top_builddir)/bin/build-help: $(top_srcdir)/src/scripts/build-help.in
@@ -246,6 +247,9 @@ $(infodir)/dir:
 	$(INSTALL_DATA) $(srcdir)/dir $(infodir)
 
 uninstall:
+	@if test -f $(infodir)/R-data.info; then \
+	  $(MAKE) uninstall-info; \
+	fi
 	@echo "uninstalling $(subdir) ..."
 	@rm -rf $(rhome)/$(subdir)
 uninstall-dvi:
@@ -268,7 +272,6 @@ uninstall-pdf:
 
 mostlyclean: clean
 clean:
-	@echo "cleaning in $(subdir)"
 	@if [ "$(srcdir)" != "." ]; then \
 	  rm -rf Rd.sty images; \
 	fi
@@ -283,20 +286,35 @@ distclean: clean
 maintainer-clean: distclean
 
 MAKEINFO_TEXT_OPTS = --number-sections --fill-column=76 --no-split --no-headers
-MAKEINFO_HTML_OPTS = --number-sections --html
-maintainer-build: $(top_srcdir)/FAQ $(top_srcdir)/doc/html/faq.html
+maintainer-build: \
+  $(top_srcdir)/FAQ \
+  $(top_srcdir)/RESOURCES \
+  $(top_srcdir)/doc/html/faq.html \
+  $(top_srcdir)/doc/html/resources.html
 $(top_srcdir)/FAQ: $(srcdir)/R-FAQ.texi
 	@if test "$(MAKEINFO)" = false; then \
 	  echo "ERROR: \`makeinfo' v4 needed but missing on your system."; \
 	  exit 1; \
 	fi
-	@$(MAKEINFO) $(MAKEINFO_TEXT_OPTS) $< -o $@
+	$(MAKEINFO) $(MAKEINFO_TEXT_OPTS) $< -o $@
 $(top_srcdir)/doc/html/faq.html: $(srcdir)/R-FAQ.texi
 	@if test "$(MAKEINFO)" = false; then \
 	  echo "ERROR: \`makeinfo' v4 needed but missing on your system."; \
 	  exit 1; \
 	fi
-	@$(MAKEINFO) $(MAKEINFO_HTML_OPTS) $< -o $@
+	$(MAKEINFO) --html --number-sections $< -o $@
+$(top_srcdir)/RESOURCES: $(srcdir)/resources.texi
+	@if test "$(MAKEINFO)" = false; then \
+	  echo "ERROR: \`makeinfo' v4 needed but missing on your system."; \
+	  exit 1; \
+	fi
+	$(MAKEINFO) $(MAKEINFO_TEXT_OPTS) $< -o $@
+$(top_srcdir)/doc/html/resources.html: $(srcdir)/resources.texi
+	@if test "$(MAKEINFO)" = false; then \
+	  echo "ERROR: \`makeinfo' v4 needed but missing on your system."; \
+	  exit 1; \
+	fi
+	$(MAKEINFO) --html --no-headers $< -o $@
 
 distdir: $(DISTFILES)
 	@for f in $(DISTFILES); do \

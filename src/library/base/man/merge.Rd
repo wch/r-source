@@ -49,7 +49,7 @@ merge.date.frame(x, y, by = intersect(names(x), names(y)), by.x = by,
 authors <- data.frame(
     surname = c("Tukey", "Venables", "Tierney", "Ripley", "McNeil"),
     nationality = c("US", "Australia", "US", "UK", "Australia"),
-    retired = c("yes", rep("no", 4)))
+    deceased = c("yes", rep("no", 4)))
 books <- data.frame(
     name = c("Tukey", "Venables", "Tierney", "Ripley", "Ripley", "McNeil"),
     title = c("Exploratory Data Analysis",
@@ -59,7 +59,7 @@ books <- data.frame(
                "Interactive Data Analysis"),
     other.author = c(NA, "Ripley", NA, NA, NA, NA))
 
-merge(authors, books, by.x="surname", by.y="name")
-merge(books, authors, by.x="name", by.y="surname")
+merge(authors, books, by.x = "surname", by.y = "name")
+merge(books, authors, by.x = "name", by.y = "surname")
 }
 \keyword{iteration}

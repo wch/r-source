@@ -1,12 +1,13 @@
-% $Id: profiler.nls.Rd,v 1.3 2000/01/17 16:23:10 ripley Exp $
+% $Id: profiler.nls.Rd,v 1.3.14.1 2001/01/08 22:26:34 bates Exp $
 \name{profiler.nls}
 \alias{profiler.nls}
 \title{ Constructor for Profiler Objects from nls Objects}
 \usage{
-profiler.nls(fitted)
+profiler.nls(fitted, ...)
 }
 \arguments{
  \item{fitted}{ the original fitted model object of class \code{\link{nls}}.}
+ \item{\dots}{  Additional parameters. None are used.}
 }
 \description{
     Create a profiler object for the model object \code{fitted} of class

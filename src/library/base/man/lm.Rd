@@ -1,5 +1,12 @@
 \name{lm}
 \title{Fitting Linear Models}
+\description{
+  \code{lm} is used to fit linear models.
+  It can be used to carry out regression,
+  single stratum analysis of variance and
+  analysis of covariance (although \code{\link{aov}} may provide a more
+  convenient interface for these).
+}
 \usage{
 lm(formula, data, subset, weights, na.action,
    method = "qr", model = TRUE, x = FALSE, y = FALSE, qr = TRUE,
@@ -47,25 +54,18 @@ lm(formula, data, subset, weights, na.action,
 
   \item{\dots}{currently disregarded.}
 }
-\description{
-  \code{lm} is used to fit linear models.
-  It can be used to carry out regression,
-  single stratum analysis of variance and
-  analysis of covariance (although \code{\link{aov}} may provide a more
-  convenient interface for these).
-}
 \details{
   Models for \code{lm} are specified symbolically.  A typical model has
   the form \code{response ~ terms} where \code{response} is the (numeric)
   response vector and \code{terms} is a series of terms which specifies a
   linear predictor for \code{response}.  A terms specification of the form
-  \code{first+second} indicates all the terms in \code{first} together
+  \code{first + second} indicates all the terms in \code{first} together
   with all the terms in \code{second} with duplicates removed.  A
   specification of the form \code{first:second} indicates the set of
   terms obtained by taking the interactions of all terms in \code{first}
   with all terms in \code{second}.  The specification \code{first*second}
   indicates the \emph{cross} of \code{first} and \code{second}.  This is
-  the same as \code{first+second+first:second}.
+  the same as \code{first + second + first:second}.
 
   \code{lm} calls the lower level functions
   \code{\link{lm.fit}}, etc, see below, for the actual numerical
@@ -82,6 +82,30 @@ lm(formula, data, subset, weights, na.action,
   The generic accessor functions \code{coefficients},
   \code{effects}, \code{fitted.values} and \code{residuals}
   extract various useful features of the value returned by \code{lm}.
+
+  An object of class \code{"glm"} is a list containing at least the
+  following components:
+
+  \item{coefficients}{a named vector of coefficients}
+  \item{residuals}{the residuals, that is response minus fitted values.}
+  \item{fitted.values}{the fitted mean values.}
+  \item{rank}{the numeric rank of the fitted linear model.}
+  \item{weights}{(only for weighted fits) the specified weights.}
+  \item{df.residual}{the residual degrees of freedom.}
+  \item{call}{the matched call.}
+  \item{formula}{the formula supplied.}
+  \item{terms}{the \code{\link{terms}} object used.}
+  \item{contrasts}{(only where relevant) the contrasts used.}
+  \item{xlevels}{(only where relevant) a record of the levels of the
+    factors used in fitting.}
+  \item{y}{if requested, the response used.}
+  \item{x}{if requested, the model matrix used.}
+  \item{model}{if requested (the default), the model frame used.}
+
+  In addition, non-null fits will have components \code{assign}, 
+  \code{effects} and (unless not requested) \code{qr} relating to the linear
+  fit, for use by extractor functions such as \code{summary} and
+  \code{\link{effects}}.
 }
 \seealso{
   \code{\link{summary.lm}} for summaries and \code{\link{anova.lm}} for

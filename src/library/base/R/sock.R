@@ -14,7 +14,10 @@ make.socket <- function(host = "localhost", port, fail = TRUE, server = FALSE)
     if(length(host <- as.character(host)) != 1)
 	stop("`host' must be character of length 1")
     if (!server){
-	tmp2 <- .C("Rsockconnect", port = port, host = host)
+	tmp2 <- .C("Rsockconnect",
+                   port = port,
+                   host = host,
+                   PACKAGE = "base")
     }
     else{
 	if (host != "localhost")

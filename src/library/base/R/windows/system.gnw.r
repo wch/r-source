@@ -65,5 +65,12 @@ dir.create <- function(path)
 
 memory.size <- function(max = FALSE) .Internal(memory.size(max))
 
+memory.limit <- function() .Internal(memory.size(NA))
+
 DLL.version <- function(path) .Internal(DLL.version(path))
 
+Sys.timezone <- function()
+{
+    z <- as.POSIXlt(Sys.time())
+    attr(z, "tzone")[2 + z$isdst]
+}

@@ -22,12 +22,12 @@ plot.prcomp <- function(x, main = deparse(substitute(x)), ...)
 
 print.prcomp <- function(x, print.x = FALSE, ...) {
     cat("Standard deviations:\n")
-    print(x$sdev)
+    print(x$sdev, ...)
     cat("\nRotation:\n")
-    print(x$rotation)
+    print(x$rotation, ...)
     if (print.x && length(x$x)) {
         cat("\nRotated variables:\n")
-        print(x$x)
+        print(x$x, ...)
     }
     invisible(x)
 }
@@ -44,8 +44,8 @@ summary.prcomp <- function(object) {
     object
 }
 
-print.summary.prcomp <- function(x, digits = min(3, getOption("digits")-3),
-                                 ...) {
+print.summary.prcomp <-
+function(x, digits = min(3, getOption("digits")-3), ...) {
     cat("Importance of components:\n")
     print(x$importance, digits = digits)
     invisible(x)

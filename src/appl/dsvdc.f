@@ -89,6 +89,9 @@ c     linpack. this version dated 08/14/78 .
 c              correction made to shift 2/84.
 c     g.w. stewart, university of maryland, argonne national lab.
 c
+c     Modified 2000-12-28 to use a relative convergence test,
+c     as this was infinite-looping on ix86.
+c
 c     dsvdc uses the following functions and subprograms.
 c
 c     external drot
@@ -105,7 +108,7 @@ c
      *        mm,mm1,mp1,nct,nctp1,ncu,nrt,nrtp1
       double precision ddot,t
       double precision b,c,cs,el,emm1,f,g,dnrm2,scale,shift,sl,sm,sn,
-     *                 smm1,t1,test,ztest
+     *                 smm1,t1,test,ztest,acc
       logical wantu,wantv
 c
 c     unnecessary initializations of l and ls to keep g77 -Wall happy
@@ -323,7 +326,9 @@ c        ...exit
             if (l .eq. 0) go to 400
             test = dabs(s(l)) + dabs(s(l+1))
             ztest = test + dabs(e(l))
-            if (ztest .ne. test) go to 380
+            acc = dabs(test - ztest)/(1.0d-100 + test)
+            if (acc .gt. 1.d-15) goto 380
+c            if (ztest .ne. test) go to 380
                e(l) = 0.0d0
 c        ......exit
                go to 400
@@ -344,7 +349,10 @@ c           ...exit
                if (ls .ne. m) test = test + dabs(e(ls))
                if (ls .ne. l + 1) test = test + dabs(e(ls-1))
                ztest = test + dabs(s(ls))
-               if (ztest .ne. test) go to 420
+c 1.0d-100 is to guard against a zero matrix, hence zero test
+               acc = dabs(test - ztest)/(1.0d-100 + test)
+               if (acc .gt. 1.d-15) goto 420
+c               if (ztest .ne. test) go to 420
                   s(ls) = 0.0d0
 c           ......exit
                   go to 440

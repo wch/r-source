@@ -15,7 +15,7 @@ INSTFILES = KEYWORDS KEYWORDS.db
 DISTFILES = Makefile.in $(INSTFILES) R.1 R.aux
 SUBDIRS = html manual
 
-HELP2MAN = $(top_builddir)/tools/help2man
+HELP2MAN = $(PERL) $(top_srcdir)/tools/help2man.pl
 
 all: Makefile R docs
 
@@ -50,10 +50,15 @@ install-strip: install
 
 uninstall:
 	@echo "uninstalling $(subdir) ..."
-	@if test -d $(rhome)/$(subdir) -a \
-	  "`cd $(rhome); pwd`" != "`cd $(top_builddir); pwd`"; then \
-	  (cd $(rhome)/$(subdir) && \
-	    rm -rf $(SUBDIRS) KEYWORDS*); \
+	@if test -d $(rhome)/$(subdir) \
+	  && test "`cd $(rhome); pwd`" != "`cd $(top_builddir); pwd`"; \
+	then \
+	  for d in $(SUBDIRS); do \
+	    (cd $${d} && $(MAKE) $@) || exit 1; \
+	  done; \
+	  for f in $(INSTFILES); do \
+	    rm -f $(rhome)/$(subdir)/$${f}; \
+	  done; \
 	  rmdir $(rhome)/$(subdir) 2>/dev/null \
 	    || echo "  subdir $(subdir) not removed"; \
 	fi
@@ -75,7 +80,7 @@ distclean: clean
 maintainer-clean: distclean
 	@echo "This command is intended for maintainers to use; it"
 	@echo "deletes files that may need special rules to rebuild"
-	@rm -f R.1
+	@rm -f $(srcdir)/R.1
 
 maintainer-build: $(srcdir)/R.1
 $(srcdir)/R.1: $(top_srcdir)/src/scripts/R.sh.in $(srcdir)/R.aux

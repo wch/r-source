@@ -109,7 +109,7 @@ Makedeps: Makefile $(DEPENDS)
 R: Makefile
 	@$(MAKE) Makedeps
 	@$(MAKE) $(Rexecbin_PROGRAMS)
-	@@WANT_R_SHLIB_TRUE@$(MAKE) $(Rexeclib_LTLIBRARIES)
+@WANT_R_SHLIB_TRUE@	@$(MAKE) $(Rexeclib_LTLIBRARIES)
 	@(cd ../unix && $(MAKE) DLLs)
 
 ../include/config.h ../include/Rversion.h:
@@ -163,7 +163,7 @@ distclean: clean
 maintainer-clean: distclean
 	@echo "This command is intended for maintainers to use; it"
 	@echo "deletes files that may need special rules to rebuild"
-	@rm -f gram.c
+	@rm -f $(srcdir)/gram.c
 
 tags: TAGS
 TAGS: $(SOURCES) $(EXTRA_SOURCES_C) $(HEADERS)

@@ -10,11 +10,12 @@ drop.terms(termobj, dropx = NULL, keep.response = FALSE)
 \alias{delete.response}
 \arguments{
   \item{termobj}{A \code{terms} object}
-  \item{termlabels}{vector of strings giving the right-hand side of a
-    model formula}
-  \item{response}{string giving the left-hand side of a model formula}
+  \item{termlabels}{character vector giving the right-hand side of a
+    model formula.}
+  \item{response}{character string giving the left-hand side of
+    a model formula.}
   \item{dropx}{vector of positions of variables to drop from the
-    right-hand side of the model}
+    right-hand side of the model.}
   \item{keep.response}{Keep the response in the resulting object?}
 }
 \description{
@@ -24,7 +25,7 @@ drop.terms(termobj, dropx = NULL, keep.response = FALSE)
   \code{drop.terms} removes variables from the right-hand side of the
   model.
 
-  \code{reformulate} creates a formula from a vector of strings.
+  \code{reformulate} creates a formula from a character vector.
 }
 \value{
   \code{delete.response} and \code{drop.terms} return a \code{terms}

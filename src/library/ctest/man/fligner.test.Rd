@@ -39,7 +39,7 @@
   \item{parameter}{the degrees of freedom of the approximate chi-squared
     distribution of the test statistic.}
   \item{p.value}{the p-value of the test.}
-  \item{method}{the string
+  \item{method}{the character string
     \code{"Fligner-Killeen test for homogeneity of variances"}.}
   \item{data.name}{a character string giving the names of the data.}
 }

@@ -40,7 +40,8 @@ fisher.test(x, y = NULL, workspace = 200000, hybrid = FALSE,
     Only present in the 2 by 2 case.}
   \item{alternative}{a character string describing the alternative
     hypothesis.}
-  \item{method}{the string \code{"Fisher's Exact Test for Count Data"}.}
+  \item{method}{the character string
+    \code{"Fisher's Exact Test for Count Data"}.}
   \item{data.name}{a character string giving the names of the data.}
 }
 \details{

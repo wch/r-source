@@ -43,9 +43,21 @@ This is the R language definition.
 @permission{}
 @end titlepage
 
+@ifnothtml
 @contents
+@end ifnothtml
 
+@ifnottex
 @node Top, Introduction, (dir), (dir)
+@top R Language Definition
+
+This is an introduction to the @R{} language, explaining evaluation,
+parsing, object oriented programming, computing on the language, and so
+forth.
+
+The current version of this document is @value{VERSION} @b{DRAFT}.
+@end ifnottex
+
 @menu
 * Introduction::                
 * Objects::                     
@@ -269,6 +281,10 @@ vector types are listed in the following table.
 @end multitable
 @end quotation
 
+Single numbers, such as @code{4.2}, and strings, such as @code{"four
+point two"} are still vectors, of length 1; there are no more basic
+types. Vectors with length zero are possible (and useful).
+
 String vectors have mode and storage mode @code{"character"}, which is
 somewhat confusing.
 
@@ -351,16 +367,17 @@ be accessed in the same way as the components of a list.
 @subsection Function objects
 
 In @R{} functions are objects and can be manipulated in much the same
-way as any other object.  Functions have three basic components, a
-formal argument list, a body and an environment.  The argument list is a
-comma-separated list of arguments.  An argument can be a symbol, or a
-@samp{@var{symbol} = @var{default}} construct, or the special argument
-@samp{...}.  The second form of argument is used to specify a default
-value for an argument.  This value will be used if the function is
-called without any value specified for that argument.  The @samp{...}
-argument is special and can contain any number of arguments.  It is
-generally used if the number of arguments is unknown or in cases where
-the arguments will be passed on to another function.
+way as any other object.  Functions (or more precisely, function
+closures) have three basic components, a formal argument list, a body
+and an environment.  The argument list is a comma-separated list of
+arguments.  An argument can be a symbol, or a @samp{@var{symbol} =
+@var{default}} construct, or the special argument @samp{...}.  The
+second form of argument is used to specify a default value for an
+argument.  This value will be used if the function is called without any
+value specified for that argument.  The @samp{...}  argument is special
+and can contain any number of arguments.  It is generally used if the
+number of arguments is unknown or in cases where the arguments will be
+passed on to another function.
 
 The body is a parsed @R{} statement.  It is usually a collection of
 statements in braces but it can be a single statement, a symbol or even
@@ -368,17 +385,21 @@ a constant.
 
 A function's environment is the environment that was active at the time
 that the function was created.  Any symbols bound in that environment
-are @emph{captured} and available to the function.
+are @emph{captured} and available to the function. This combination of
+the code of the function and the bindings in its environment is called a
+`function closure', a term from functional programming theory. In this
+document we generally use the term `function', but use `closure' to
+emphasize the importance of the attached environment.
 
 It is possible to extract and manipulate the three parts of a closure
-@c FIXME: Closure?  What is this?
 object using @code{formals}, @code{body}, and @code{environment}
 constructs (all three can also be used on the left hand side of
 assignments).
 @findex formals
 @findex body
 @findex environment
-The latter one is often used to remove unwanted environment capture.
+The last of these can be used to remove unwanted environment capture.
+
 There is also a facility for converting functions to and from list
 structures using @code{as.list} and @code{as.function}.
 @findex as.function
@@ -389,14 +410,15 @@ use is discouraged.
 @subsection NULL
 
 There is a special object called @code{NULL}.  It is used whenever there
-is a need to indicate or specify that an object is absent.  In most Lisp
-implementations @code{NULL} is simply the zero length list but this is
-not the case in @R{} despite its basis in Scheme.  However, a zero
-length @code{pairlist} is @code{NULL}.
+is a need to indicate or specify that an object is absent.  It should not be
+confused with a vector or list of zero length. 
+@findex NULL
 
 The @code{NULL} object has no type and no modifiable properties.  There
-is only one @code{NULL} object in @R{}, to which all instances refer.
-You cannot set attributes on @code{NULL}.
+is only one @code{NULL} object in @R{}, to which all instances refer. To
+test for @code{NULL} use @code{is.null}.  You cannot set attributes on
+@code{NULL}.
+
 
 @node Builtin objects and special forms, Promise objects, NULL object, Basic types
 @subsection Builtin objects and  special forms
@@ -434,14 +456,15 @@ whole point of lazy evaluation).  @code{substitute} will extract the
 content of the expression slot, and there is a @code{delay} function
 that will make a promise out of an expression.  There is no fail-safe
 way of checking whether an object is a promise or not.
+@c by 'fail-safe' do we mean non-destructive or always correct?
 
 @node Dot-dot-dot, Environment objects, Promise objects, Basic types
 @subsection Dot-dot-dot
 
 The @samp{...} object type is stored as a type of list.  The components
 of @samp{...} can be accessed in the usual list manner from C code, but
-is not easily accessed as an object within the @R{}.  However, the
-object can be captured as a list, so for example in @code{table} one sees
+is not easily accessed as an object in interpreted code.  The object can
+be captured as a list, so for example in @code{table} one sees
 
 @smallexample
     args <- list(...)
@@ -487,7 +510,9 @@ environment can lead to surprises.
 Pairlist objects are similar to Lisp's dotted-pair lists.  They are used
 extensively in the internals of @R{}, but are rarely visible in
 interpreted code, although they are returned by @code{formals}, and can
-be created by (e.g.) the @code{pairlist} function.
+be created by (e.g.) the @code{pairlist} function. A zero-length
+pairlist is @code{NULL}, as would be expected in Lisp but in contrast to
+a zero-length list.
 @findex pairlist
 Each such object has three slots, a CAR value, a CDR value and a TAG
 value.  The TAG value is a text string and CAR and CDR usually
@@ -520,21 +545,23 @@ coercion should not be done.
 @node Attributes, Special compound objects, Basic types, Objects
 @section Attributes
 
-All objects can have one or more attributes attached to them.
-Attributes are stored as a list where all elements are named.  The list
-of attributes can be obtained using @code{attributes} and set by
-@code{attributes<-},
+All objects except @code{NULL} can have one or more attributes attached
+to them.  Attributes are stored as a list where all elements are named.
+The list of attributes can be obtained using @code{attributes} and set
+by @code{attributes<-},
 @findex attributes
 @findex attributes<-
 individual components are accessed using @code{attr} and @code{attr<-}.
 @findex attr
 @findex attr<-
+@c Shouldn't we discuss assignment functions before this?
 
 Some attributes have special accessor functions (e.g.@: @code{levels<-}
-for factors) and these should be used when available because they
-generally perform additional operations.  @R{} attempts to intercept
-calls to @code{attr<-} and to @code{attributes<-} that involve the
-special attributes and to enforce the consistency checks.
+for factors) and these should be used when available. In addition to
+hiding details of implementation they may perform additional operations.
+@R{} attempts to intercept calls to @code{attr<-} and to
+@code{attributes<-} that involve the special attributes and to enforce
+the consistency checks.
 
 Matrices and arrays are simply vectors with the attribute @code{dim} and
 optionally @code{dimnames} attached to the vector.
@@ -555,7 +582,7 @@ in @ref{Object-oriented programming}.
 @node Names, Dimensions, Attributes, Attributes
 @subsection Names
 
-A @code{names} attribute when present labels the individual elements of
+A @code{names} attribute, when present, labels the individual elements of
 a vector or list.  When an object is printed the @code{names} attribute,
 when present, is used to label the elements.  The @code{names} attribute
 can also be used for indexing purposes, for example,
@@ -566,12 +593,11 @@ constructions.
 @findex names
 @findex names<-
 The latter will perform the necessary consistency checks to ensure that
-the names attribute has the proper type of length.
+the names attribute has the proper type and length.
 
-For pairlist objects, a virtual @code{names} attribute is used and the
-@code{names} attribute is really constructed from the tags of the list
-components.
-
+Pairlists and one-dimensional arrays are treated specially. For pairlist
+objects, a virtual @code{names} attribute is used; the @code{names}
+attribute is really constructed from the tags of the list components.
 For one-dimensional arrays the @code{names} attribute really accesses
 @code{dimnames[[1]]}.
 
@@ -582,11 +608,12 @@ The @code{dim} attribute is used to implement arrays.  The content of
 the array is stored in a vector in column-major order and the @code{dim}
 attribute is a vector of integers specifying the respective extents of
 the array.  @R{} ensures that the length of the vector is the product of
-the lengths of the dimensions.
+the lengths of the dimensions. The length of one or more dimensions may
+be zero.
 
 A vector is not the same as a one-dimensional array since the latter has
 a @code{dim} attribute of length one, whereas the former has no
-@code{dim} attribute.
+@code{dim} attribute. 
 
 @node Dimnames, Classes, Dimensions, Attributes
 @subsection Dimnames
@@ -629,7 +656,7 @@ series with periodic substructure such as monthly or quarterly data.
 @subsection Factors
 
 Factors are used to describe items that can have a finite number of
-values (gender, social class, etc.).  A factor has a @code{labels}
+values (gender, social class, etc.).  A factor has a @code{levels}
 attribute and class @code{"factor"}.  Optionally, it may also contain a
 @code{contrasts} attribute which controls the parametrisation used when
 the factor is used in a modeling functions.
@@ -638,7 +665,7 @@ A factor may be purely nominal or may have ordered categories.  In the
 latter case, it should be defined as such and have a @code{class} vector
 @code{c("ordered"," factor")}.
 
-Factors are usually implemented using an integer array to specify the
+Factors are currently implemented using an integer array to specify the
 actual levels and a second array of names that are mapped to the
 integers.  Rather unfortunately users often make use of the
 implementation in order to make some calculations easier.  This,
@@ -1021,8 +1048,8 @@ the statement@footnote{Evaluation always takes place in an environment.
 See @ref{Scope of variables} for more details.}  The value can
 always be assigned to a symbol.
 
-Both semi-colons and new lines can be used to separate statements.  A
-semi-colon always indicates the end of a statement while a new line
+Both semicolons and new lines can be used to separate statements.  A
+semicolon always indicates the end of a statement while a new line
 @emph{may} indicate the end of a statement.  If the current statement is
 not syntactically complete new lines are simply ignored by the
 evaluator.  If the session is interactive the prompt changes from
@@ -1320,6 +1347,44 @@ then check if dims fit, error if not)
 @node NA handling,  , Dimensional attributes, Elementary arithmetic operations
 @subsection NA handling
 
+Missing values in the statistical sense, that is, variables whose value
+is not known, have the value @code{NA}. This should not be confused with
+the @code{missing} property for a function argument that has not been
+supplied (see @ref{Arguments}).
+@findex missing
+@findex NA
+@findex NaN
+
+As the elements of a vector or matrix must be of the same type there are
+multiple types of @code{NA} values. There is one cases where this is
+particularly important to the user. The default type of @code{NA} is
+@code{logical}, unless coerced to some other type, so the appearance of
+a missing value may trigger logical rather than numeric indexing (see
+@ref{Indexing} for details).  
+
+Numeric and logical calculations with @code{NA} generally return
+@code{NA}. In cases where the result of the operation would be the same
+for all possible values the @code{NA} could take, the operation may
+return this value. In particular, @samp{FALSE & NA} is @code{FALSE},
+@samp{TRUE | NA} is @code{TRUE}.  @code{NA} is not equal to any other
+value or to itself; testing for @code{NA} is done using @code{is.na}.
+@findex is.na
+
+Numeric calculations whose result is undefined, such as @samp{0/0}
+produce (on most, if not all, platforms) the value @code{NaN}. This
+exists only in the @code{double} type.  The function @code{is.nan} is
+provided to check specifically for @code{NaN}, @code{is.na} also returns
+@code{TRUE} for @code{NaN}.  Coercing @code{NaN} to logical or integer
+type gives an @code{NA} of the appropriate type.
+@findex is.nan
+
+The @code{NA} of character type is currently the string @code{"NA"}, so
+this string cannot be used as a character value (eg as an abbreviation
+for "North America"). This may change in the future. Programmers who
+need to specify an explicit string @code{NA} should use
+@samp{as.character(NA)} rather than @code{"NA"}.
+
+
 @node Indexing, Scope of variables, Elementary arithmetic operations, Evaluation of expressions
 @section Indexing
 
@@ -1341,6 +1406,9 @@ x[[i, j]]
 x$a
 x$"a"
 @end example
+@findex [
+@findex [[
+@findex $
 
 For vectors and matrices the @code{[[} forms are rarely used, although
 it has some slight semantic differences from the @code{[} form, in that
@@ -1401,6 +1469,8 @@ length as @code{x}.  If it is shorter, then its elements will be
 recycled as discussed in @ref{Elementary arithmetic operations}.  If it
 is longer, then @code{x} is conceptually extended with @code{NA}s. The
 selected values of @code{x} are those for which @code{i} is @code{TRUE}.
+@c @findex TRUE
+@c @findex FALSE
 
 @item
 @strong{Character}.  The strings in @code{i} are matched against the
@@ -1419,10 +1489,11 @@ retained.
 
 @end itemize
 
-Indexing with a missing (i.e.@: @code{NA}) value gives you an @code{NA}
+Indexing with a missing (i.e.@: @code{NA}) value give  an @code{NA}
 result.  This rule applies also to the case of logical indexing,
 i.e.@: the elements of @code{x} that have an @code{NA} selector in
 @code{i} get included in the result, but their value will be @code{NA}.
+@findex NA
 
 Notice however, that there are different modes of @code{NA}---the
 literal constant is of mode @code{"logical"}, but it is frequently
@@ -1486,14 +1557,16 @@ add to the index count.  Hence the correct way of selecting the first
 row of a matrix as a @math{1} by @math{n} matrix is @code{m[1, , drop =
 FALSE]}.  Forgetting to disable the dropping feature is a common cause
 of failure in general subroutines where an index occasionally, but not
-usually has length one.
+usually has length one. This rule still applies to one-dimensional
+array, where any subsetting will give a vector result unless @samp{drop
+= FALSE} is used.
 
 Notice that vectors are distinct from one-dimensional arrays in that the
 latter have @code{dim} and @code{dimnames} attributes (both of length
-one).  These structures are not easily obtained from subsetting
+one).  One-dimensional arrays are not easily obtained from subsetting
 operations but they can be constructed explicitly.  This is sometimes
 useful because the elements of the @code{dimnames} list may themselves
-be named, which is not the case for the @code{names} attribute.
+be named, which is not the case for the @code{names} attribute. 
 
 Some operations such as @code{m[FALSE, ]} result in structures in which
 a dimension has zero extent.  @R{} generally tries to handle these
@@ -1510,10 +1583,10 @@ arguments of which the first is the structure being indexed and the rest
 are the indices.  In the case of @code{$}, the index argument is of mode
 @code{"symbol"} even when using the @code{x$"abc"} form.
 
-The most important example of user-defined indexing is that used for
-data frames.  It will not be described in detail here, but in broad
-terms, it creates matrix-like indexing of a structure that is basically
-a list of vectors of similar length.
+The most important example of a class method for @code{[} is that used
+for data frames.  It is not be described in detail here, but in broad
+terms, it creates matrix-like indexing for a structure that is basically
+a list of vectors of the same length.
 
 @node Subset assignment,  , Indexing other structures, Indexing
 @subsection Subset assignment
@@ -1630,19 +1703,20 @@ the enclosure, etc.
 @node Stacks, Search path, Lexical environment, Scope of variables
 @subsection The call stack
 
-Every time a function is invoked this causes a new evaluation frame to
-be created.  At any point in time during the computation there is
-programmatic access to the currently active environments through the
-@emph{call stack}.  Each time a function is invoked a special construct
-called a context is created internally and is placed on a list of
-contexts.  When a function has finished evaluating its context is
-removed from the call stack.
+Every time a function is invoked a new evaluation frame is created.  At
+any point in time during the computation the the currently active
+environments are accessible through the @emph{call stack}.  Each time a
+function is invoked a special construct called a context is created
+internally and is placed on a list of contexts.  When a function has
+finished evaluating its context is removed from the call stack.
 
-Accessing values for variables through the call stack is generally
-called dynamic scope.  Here the binding for a variable is determined by
-the most recent (in time) definition of the variable.  While the default
-scoping rules in @R{} are for lexical scope there are times when dynamic
-scope is essential.
+Making variables defined higher up the call stack available is called
+dynamic scope. The binding for a variable is then determined by the most
+recent (in time) definition of the variable.  This contradicts the
+default scoping rules in @R{}, which use the bindings in the environment
+in which the function was defined (lexical scope). Some functions,
+particularly those that use and manipulate model formulas, need to
+simulate dynamic scope by directly accessing the call stack.
 
 Access to the call stack is provided through a family of functions which
 have names that start with @samp{sys.}.  They are listed briefly below.
@@ -1783,8 +1857,9 @@ is a group of expressions contained in curly braces (@samp{@{} and
 
 Generally functions are assigned to symbols but they don't need to be.
 The value returned by the call to @code{function} is a function.  If
-this is not given a name it is usually referred to as an anonymous
-function.
+this is not given a name it is referred to as an anonymous
+function. Anonymous functions are most frequently used as arguments
+other functions such as the @code{apply} family or @code{outer}.
 
 Here is a simple function: @code{echo <- function(x) print(x)}.  So
 @code{echo} is a function that takes a single argument and when
@@ -1805,11 +1880,13 @@ expression will be associated with the corresponding symbol.  When a
 value is needed the @var{expression} is evaluated in the evaluation
 frame of the function.
 
-Default values can also be specified by using the function
-@code{missing}.  When @code{missing} is called with an argument name it
-returns @code{TRUE} if the user did not supply a value for that argument
-(even if there is a default) and it returns @code{FALSE} if the user did
-supply a value.  Calling @code{missing} does not evaluate the argument.
+Default behaviours can also be specified by using the function
+@code{missing}.  When @code{missing} is called with the name of a formal
+argument it returns @code{TRUE} if the formal argument was not matched
+with any actual argument and has not been subsequently modified in the
+body of the function.  A an argument that is @code{missing} will thus
+have its default value, if any. The @code{missing} function does not
+force evaluation of the argument.
 
 The special type of argument @samp{...} can contain any number of
 supplied arguments.  It is used for a variety of purposes.  It allows
@@ -1832,10 +1909,9 @@ names that appear in the body of the function.  Finally, the
 the function was created.  This environment is associated with the
 function for the life of the function (unless it purposely removed).
 
-Functions are first class objects in @R{}.  This basically means that
-they can be used anywhere that an @R{} object is required.  In
-particular they can be passed as arguments to functions and returned as
-values from functions.
+Functions are first class objects in @R{}.  They can be used anywhere
+that an @R{} object is required.  In particular they can be passed as
+arguments to functions and returned as values from functions.
 
 @node Evaluation, Closures, Functions as objects, Functions
 @section Evaluation
@@ -1925,12 +2001,12 @@ the calling frame.
 @R{} has a form of lazy evaluation of function arguments.  Arguments are
 not evaluated until needed.  It is important to realize that in some
 cases the argument will never be evaluated.  Thus, it is bad style to
-use arguments to functions to cause side-effects.  While in languages
-such as @C{} it is common to use the form, @code{foo(x = y)} to invoke
-@code{foo} with the value of @code{y} and simultaneously to assign the
-value of @code{y} to @code{x} this same style should not be used in @R{}
-because there is no guarantee that the argument will ever be evaluated
-and hence the assignment will not take place.
+use arguments to functions to cause side-effects.  While in @C{} it is
+common to use the form, @code{foo(x = y)} to invoke @code{foo} with the
+value of @code{y} and simultaneously to assign the value of @code{y} to
+@code{x} this same style should not be used in @R{}. There is no
+guarantee that the argument will ever be evaluated and hence the
+assignment may not take place.
 
 It is also worth noting that the effect of @code{foo(x <- y)} if the
 argument is evaluated is to change the value of @code{x} in the calling
@@ -1941,18 +2017,18 @@ the function.  The mechanism is implemented via promises.  A
 @emph{promise} is a data structure that is not available to the user in
 @R{}.  However, understanding how promises work should help to write
 better code.  When a function is being evaluated the actual expression
-used as an argument is stored in the promise and at the same time a
-pointer to the environment the function was called from.  When (if) the
-argument is evaluated the stored expression is evaluated in the
-environment that the function was called from.  Since only a pointer to
-the environment is used any changes made to that environment will be in
-effect during this evaluation.  The resulting value is then also stored
-in a separate spot in the promise.  Subsequent evaluations retrieve this
-stored value (a second evaluation is not carried out).  Access to the
-unevaluated expression is also available (in internal code).  Because
-@R{} is a very flexible program it is possible to encounter promises in
-the interpreted language, however, users are advised not to rely on them
-in their own programs.
+used as an argument is stored in the promise together with a pointer to
+the environment the function was called from.  When (if) the argument is
+evaluated the stored expression is evaluated in the environment that the
+function was called from.  Since only a pointer to the environment is
+used any changes made to that environment will be in effect during this
+evaluation.  The resulting value is then also stored in a separate spot
+in the promise.  Subsequent evaluations retrieve this stored value (a
+second evaluation is not carried out).  Access to the unevaluated
+expression is also available (in internal code).  Because @R{} is a very
+flexible program it is possible to encounter promises in the interpreted
+language, however, users are advised not to rely on them in their own
+programs.
 
 When a function is called, each formal argument is assigned a promise in
 the local environment of the call with the expression slot containing
@@ -2293,7 +2369,8 @@ existing systems since the user is only responsible for dealing with the
 new representation and not with any of the existing representations.
 
 The bulk of the uses of this methodology are to provided specialized
-printing for objects of different types; there are about 40.
+printing for objects of different types; there are about 40 methods for
+@code{print}.
 
 @node Inheritance, Method dispatching, Definition, Object-oriented programming
 @section Inheritance
@@ -2521,7 +2598,7 @@ all, any, max, min, prod, range, sum
 
 @item Ops
 @code{+}, @code{-}, @code{*}, @code{/}, @code{^}, @code{<} , @code{>},
-@code{<=}, @code{>=}, @code{!=}, @code{==}, @code{%%}, @code{%\%},
+@code{<=}, @code{>=}, @code{!=}, @code{==}, @code{%%}, @code{%/%},
 @code{&}, @code{|}, @code{!}
 @end table
 
@@ -2758,6 +2835,7 @@ expression like in the previous section.  More frequently, one wants to
 simply get at an expression in order to deparse it and use it for
 labeling plots, for instance.  An example of this is seen at the
 beginning of @code{plot.default}:
+@findex substitute
 
 @smallexample
 xlabel <- if (!missing(x))
@@ -2880,6 +2958,7 @@ It is also possible to specify the environment in which the evaluation
 is to take place, by default this is the evaluation frame from which
 @code{eval} is called, but quite frequently it needs to be set to
 something else.
+@findex eval
 
 Very often, the relevant evaluation frame is that of the parent of the
 current frame (cf.@: ???).  In particular, when the object to evaluate
@@ -3039,6 +3118,7 @@ using the @code{as.name("model.frame")} construction here or
 The @code{match.call} function has an @code{expand.dots} argument which
 is a switch which if set to @code{FALSE} lets all @samp{...} arguments
 be collected as a single argument with the tag @samp{...}.
+@findex match.call
 
 @smallexample
 > f <- function(x, y, ...) match.call(expand.dots = FALSE)
@@ -3111,6 +3191,7 @@ The function @code{do.call} is related, but evaluates the call immediate
 and takes the arguments from an object of mode @code{"list"} containing
 all the arguments.  A natural use of this is when one wants to apply a
 function like @code{cbind} to all elements of a list or data frame.
+@findex do.call
 
 @smallexample
 is.na.data.frame <- function (x) @{
@@ -3175,7 +3256,7 @@ set.
 @node Operating system access, Foreign language interfaces, System and foreign language interfaces, System and foreign language interfaces
 @section Operating system access
 
-Access to operating system functions is via the @R{} function
+Access to the operating system shell is via the @R{} function
 @code{system}.
 @findex system
 The details will differ by platform (see the on-line help), and about
@@ -3185,11 +3266,53 @@ by a shell) and the second argument will be @code{internal} which if
 true will collect the output of the command into an @R{} character
 vector.
 
-The function @code{system.time}
+The functions @code{system.time} 
 @findex system.time
-is available for timing (although the information available may be
+and @code{proc.time}
+@findex proc.time
+are available for timing (although the information available may be
 limited on non-Unix-like platforms).
 
+Information from the operating system environment can be accessed and manipulated with 
+@quotation
+@multitable @columnfractions 0.3 0.7
+@item @code{Sys.getenv} @tab OS environment variables @findex Sys.getenv 
+@item @code{Sys.putenv}                               @findex Sys.putenv 
+@item @code{Sys.getlocale} @tab System locale         @findex Sys.getlocale
+@item @code{Sys.putlocale}                            @findex Sys.putlocale
+@item @code{Sys.localeconv}                           @findex Sys.localeconv
+@item @code{Sys.time} @tab Current time               @findex Sys.time
+@item @code{Sys.timezone} @tab Time zone              @findex Sys.timezone
+@end multitable
+@end quotation
+
+
+A uniform set of file access functions is provided on all platforms:
+@quotation
+@multitable @columnfractions 0.3 0.7
+@item @code{file.access} @tab Ascertain File Accessibility @findex file.access
+@item @code{file.append} @tab Concatenate files            @findex file.append
+@item @code{file.choose} @tab Prompt user for file name    @findex file.choose   
+@item @code{file.copy}  @tab Copy files                    @findex file.copy
+@item @code{file.create} @tab Create or truncate a files   @findex file.create
+@item @code{file.exists} @tab Test for existence           @findex file.exists
+@item @code{file.info} @tab Miscellaneous file information @findex file.info
+@item @code{file.remove} @tab remove files                 @findex file.remove
+@item @code{file.show} @tab Display a text file            @findex file.show
+@item @code{unlink} @tab Remove files or directories.      @findex unlink
+@end multitable
+@end quotation
+
+There are also functions for manipulating file names and paths in a
+platform-independent way.
+@quotation
+@multitable @columnfractions 0.3 0.7
+@item @code{basename} @tab File name without directory     @findex basename
+@item @code{dirname} @tab Directory name                   @findex dirname  
+@item @code{file.path} @tab Construct path to file         @findex file.path  
+@item @code{path.expand} @tab Expand @code{~} in Unix path @findex path.expand
+@end multitable
+@end quotation
 
 @node Foreign language interfaces, .Internal and .Primitive, Operating system access, System and foreign language interfaces
 @section Foreign language interfaces
@@ -3345,7 +3468,7 @@ can be typed at the prompt.  The evaluation environment for the command
 is the currently active environment.  This allows you to examine the
 current state of any variables etc.
 
-There are four special commands that @R{} interprets differently.  They
+There are five special commands that @R{} interprets differently.  They
 are,
 
 @table @samp
@@ -3358,6 +3481,8 @@ Continue the execution.
 @item n
 Execute the next statement in the function.  This works from the browser
 as well.
+@item where 
+Show the call stack 
 @item Q
 Halt execution and jump to the top-level immediately.
 @end table
@@ -3367,10 +3492,11 @@ commands listed above then its value can be accessed by using
 @code{get}.  A call to @code{get} with the name in quotes will retrieve
 the value in the current environment.
 
-The debugger only provides access to interpreted expressions.  If a
+The debugger provides access only to interpreted expressions.  If a
 function calls a foreign language (such as @C{}) then no access to the
 statements in that language is provided.  Execution will halt on the
-next statement that is evaluated in @R{}.
+next statement that is evaluated in @R{}. A symbolic debugger such as
+@code{gdb} can be used to debug compiled code.
 
 @menu
 * browser::                     
@@ -3684,7 +3810,20 @@ by the @code{ls} function and that @samp{...} and @samp{..1},
 Notice also that objects can have names that are not identifiers.  These
 are generally accessed via @code{get} and @code{assign}, although they
 can also be represented by text strings in some limited circumstances
-when there is no ambiguity (e.g.@: @code{"x" <- 1}).
+when there is no ambiguity (e.g.@: @code{"x" <- 1}). As @code{get} and
+@code{assign} are not restricted to names that are identifiers they do
+not recognise subscripting operators or assigment functions. The
+following pairs are @emph{not} equivalent
+@findex get
+@findex assign
+
+@quotation
+@multitable {@code{names(x)<-nm}} {@code{assign("names(x)",nm)}}
+@item @code{x$a<-1} @tab @code{assign("x$a",1)}
+@item @code{x[[1]]} @tab @code{get("x[[1]]")}
+@item @code{names(x)<-nm} @tab @code{assign("names(x)",nm)}
+@end multitable
+@end quotation
 
 @node Reserved words, Special operators, Identifiers, Tokens
 @subsection Reserved words
@@ -3904,6 +4043,8 @@ similar although with somewhat different semantics:
 @var{object} [ @var{arg1}, ...... , @var{argn} ]
 @var{object} [[ @var{arg1}, ...... , @var{argn} ]]
 @end example
+@findex [
+@findex [[
 
 The @var{object} can formally be any valid expression, but it is
 understood to denote or evaluate to a subsetable object.  The arguments
@@ -3918,6 +4059,7 @@ The third index construction is
 @example
 @var{object} $ @var{tag}
 @end example
+@findex $
 
 Here, @var{object} is as above, whereas @var{tag} is an identifier or a
 text string.  Internally, it is stored as a function call with name
