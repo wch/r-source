@@ -2587,15 +2587,196 @@ void GMode(int mode, DevDesc *dd)
 void GPolygon(int n, double *x, double *y, int coords,
 	      int bg, int fg, DevDesc *dd)
 {
-#ifdef OLD
-    if(dd->dp.canClip)
-	GClip(dd);
-#else
-    GClip(dd);
-#endif
     dd->dp.polygon(n, x, y, coords, bg, fg, dd);
 }
 
+#include <stdio.h>
+
+typedef enum {
+    Left = 0,
+    Right = 1,
+    Bottom = 2,
+    Top = 3
+} Edge;
+
+/* Clipper State Variables */
+typedef struct {
+    int first;    /* true if we have seen the first point */
+    double fx;    /* x coord of the first point */
+    double fy;    /* y coord of the first point */
+    double sx;    /* x coord of the most recent point */
+    double sy;    /* y coord of the most recent point */
+}
+GClipState;
+
+/* The Clipping Rectangle */
+typedef struct {
+    double xmin;
+    double xmax;
+    double ymin;
+    double ymax;
+}
+GClipRect;
+
+int inside (Edge b, double px, double py, GClipRect *clip)
+{
+    switch (b) {
+    case Left:   if (px < clip->xmin) return 0; break;
+    case Right:  if (px > clip->xmax) return 0; break;
+    case Bottom: if (py < clip->ymin) return 0; break;
+    case Top:    if (py > clip->ymax) return 0; break;
+    }
+    return 1;
+}
+
+int cross (Edge b, double x1, double y1, double x2, double y2,
+	   GClipRect *clip)
+{
+    if (inside (b, x1, y1, clip) == inside (b, x2, y2, clip))
+	return 0;
+    else return 1;
+}
+
+void intersect (Edge b, double x1, double y1, double x2, double y2,
+		double *ix, double *iy, GClipRect *clip)
+{
+    double m;
+
+    if (x1 != x2) m = (y1 - y2) / (x1 - x2);
+    switch (b) {
+    case Left:
+	*ix = clip->xmin;
+	*iy = y2 + (clip->xmin - x2) * m;
+	break;
+    case Right:
+	*ix = clip->xmax;
+	*iy = y2 + (clip->xmax - x2) * m;
+	break;
+    case Bottom:
+	*iy = clip->ymin;
+	if (x1 != x2) *ix = x2 + (clip->ymin - y2) / m;
+	else *ix = x2;
+	break;
+    case Top:
+	*iy = clip->ymax;
+	if (x1 != x2) *ix = x2 + (clip->ymax - y2) / m;
+	else *ix = x2;
+	break;
+    }
+}
+
+void clipPoint (Edge b, double x, double y,
+		double *xout, double *yout, int *cnt, int store,
+		GClipRect *clip, GClipState *cs)
+{
+    double ix, iy;
+  
+    if (!cs[b].first) {
+	/* No previous point exists for this edge. */
+	/* Save this point. */
+	cs[b].first = 1;
+	cs[b].fx = x;
+	cs[b].fy = y;
+    }
+    else
+	/* A previous point exists.  */
+	/* If 'p' and previous point cross edge, find intersection.  */
+	/* Clip against next boundary, if any.  */
+	/* If no more edges, add intersection to output list. */
+	if (cross (b, x, y, cs[b].sx, cs[b].sy, clip)) {
+	    intersect (b, x, y, cs[b].sx, cs[b].sy, &ix, &iy, clip);
+	    if (b < Top)
+		clipPoint (b + 1, ix, iy, xout, yout, cnt, store,
+			   clip, cs);
+	    else {
+		if (store) {
+		    xout[*cnt] = ix;
+		    yout[*cnt] = iy;
+		}
+		(*cnt)++;
+	    }
+	}
+
+    /* Save as most recent point for this edge */
+    cs[b].sx = x;
+    cs[b].sy = y;
+
+    /* For all, if point is 'inside' */
+    /* proceed to next clip edge, if any */
+    if (inside (b, x, y, clip))
+	if (b < Top)
+	    clipPoint (b + 1, x, y, xout, yout, cnt, store, clip, cs);
+	else {
+	    if (store) {
+		xout[*cnt] = x;
+		yout[*cnt] = y;
+	    }
+	    (*cnt)++;
+	}
+}
+
+void closeClip (double *xout, double *yout, int *cnt, int store,
+		GClipRect *clip, GClipState *cs)
+{
+    double ix, iy;
+    Edge b;
+  
+    for (b = Left; b <= Top; b++) {
+	if (cross (b, cs[b].sx, cs[b].sy, cs[b].fx, cs[b].fy, clip)) {
+	    intersect (b, cs[b].sx, cs[b].sy,
+		       cs[b].fx, cs[b].fy, &ix, &iy, clip);
+	    if (b < Top)
+		clipPoint (b + 1, ix, iy, xout, yout, cnt, store, clip, cs);
+	    else {
+		if (store) {
+		    xout[*cnt] = ix;
+		    yout[*cnt] = iy;
+		}
+		(*cnt)++;
+	    }
+	}
+    }
+}
+
+int GClipPolygon(double *x, double *y, int n, int coords, int store,
+		 double *xout, double *yout, DevDesc *dd)
+{
+    int i, cnt = 0;
+    GClipState cs[4];
+    GClipRect clip;
+    for (i = 0; i < 4; i++)
+	cs[i].first = 0;
+    if (dd->gp.xpd) {
+	clip.xmin = GConvertXUnits(0.0, NFC, coords, dd);
+	clip.xmax = GConvertXUnits(1.0, NFC, coords, dd);
+	clip.ymin = GConvertYUnits(0.0, NFC, coords, dd);
+	clip.ymax = GConvertYUnits(1.0, NFC, coords, dd);
+    }
+    else {
+	clip.xmin = GConvertXUnits(dd->gp.usr[0], USER, coords, dd);
+	clip.xmax = GConvertXUnits(dd->gp.usr[1], USER, coords, dd);
+	clip.ymin = GConvertYUnits(dd->gp.usr[2], USER, coords, dd);
+	clip.ymax = GConvertYUnits(dd->gp.usr[3], USER, coords, dd);
+    }
+    if (clip.xmax < clip.xmin) {
+	double swap = clip.xmax;
+	clip.xmax = clip.xmin;
+	clip.xmin = swap;
+    }
+    if (clip.ymax < clip.ymin) {
+	double swap = clip.ymax;
+	clip.ymax = clip.ymin;
+	clip.ymin = swap;
+    }
+    /* We should set up the cliprect here for R. */
+    /* If xpd == 1, clip to the figure region. */
+    /* If xpd == 0, clip to the plot region. */
+    /* If neccessary, swap the clip region extremes */
+    for (i = 0; i < n; i++) 
+	clipPoint (Left, x[i], y[i], xout, yout, &cnt, store, &clip, cs);
+    closeClip (xout, yout, &cnt, store, &clip, cs);
+    return (cnt);
+}
 
 /* Draw a series of line segments. */
 void GPolyline(int n, double *x, double *y, int coords, DevDesc *dd)

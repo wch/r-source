@@ -1490,19 +1490,56 @@ SEXP do_polygon(SEXP call, SEXP op, SEXP args, SEXP env)
 	GConvert(&xx, &yy, USER, DEVICE, dd);
 	if ((FINITE(xx) && FINITE(yy)) &&
 	    !(FINITE(xold) && FINITE(yold)))
-	    start = i; /* first valid point of current segment */
+	    start = i; /* first point of current segment */
 	else if ((FINITE(xold) && FINITE(yold)) &&
 		 !(FINITE(xx) && FINITE(yy))) {
 	    if (i-start > 1) {
-		GPolygon(i-start, x+start, y+start, USER,
-			 INTEGER(col)[num%ncol], INTEGER(border)[0], dd);
+		if (dd->gp.xpd) {
+		    GPolygon(i-start, x+start, y+start, USER,
+			     INTEGER(col)[num%ncol], INTEGER(border)[0], dd);
+		}
+		else {
+		    char *vmax;
+		    double *xc, *yc;
+		    int npts = GClipPolygon(x + start, y + start, i - start,
+					USER, 0, xc, yc, dd);
+		    if (npts > 1) {
+			vmax = vmaxget();
+			xc = (double*)R_alloc(npts, sizeof(double));
+			yc = (double*)R_alloc(npts, sizeof(double));
+			npts  = GClipPolygon(x + start, y + start, i - start,
+					     USER, 1, xc, yc, dd);
+			GPolygon(npts, xc, yc, USER,
+				 INTEGER(col)[num%ncol],
+				 INTEGER(border)[0], dd);
+			vmaxset(vmax);
+		    }
+		}
 		num++;
 	    }
 	}
-	else if ((FINITE(xold) && FINITE(yold)) &&
-		 (i == nx-1)) { /* very last */
-	    GPolygon(nx-start, x+start, y+start, USER,
-		     INTEGER(col)[num%ncol], INTEGER(border)[0], dd);
+	else if ((FINITE(xold) && FINITE(yold)) && (i == nx-1)) { /* last */
+	    if (dd->gp.xpd) {
+	       GPolygon(nx-start, x+start, y+start, USER,
+			INTEGER(col)[num%ncol], INTEGER(border)[0], dd);
+	    }
+	    else {
+		char *vmax;
+		double *xc, *yc;
+		int npts = GClipPolygon(x + start, y + start, nx - start,
+					USER, 0, xc, yc, dd);
+		if (npts > 1) {
+		    vmax = vmaxget();
+		    xc = (double*)R_alloc(npts, sizeof(double));
+		    yc = (double*)R_alloc(npts, sizeof(double));
+		    npts  = GClipPolygon(x + start, y + start, nx - start,
+					 USER, 1, xc, yc, dd);
+		    GPolygon(npts, xc, yc, USER,
+			     INTEGER(col)[num%ncol],
+			     INTEGER(border)[0], dd);
+		    vmaxset(vmax);
+		}
+	    }
 	    num++;
 	}
 	xold = xx;

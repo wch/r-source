@@ -141,10 +141,6 @@
  *
  *  Get the R ``home directory'' as a string.
  *
- *    char *R_Date(void)
- *
- *  Get the current local time and date as a string.
- *
  *
  *  7) PLATFORM INDEPENDENT FUNCTIONS
  *
