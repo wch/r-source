@@ -61,13 +61,18 @@ TXNObject	RConsoleOutObject = NULL;
 TXNObject	RConsoleInObject = NULL;
 bool 		WeHaveConsole = false;
 bool 		InputFinished = false;
+TXNFrameID		OutframeID	= 0;
+TXNFrameID		InframeID	= 0;
 
 WindowRef	RAboutWindow;
 pascal void RAboutHandler(WindowRef window);
 #define kRAppSignature '????'
 
 static pascal OSStatus
-CommandHandler( EventHandlerCallRef inCallRef, EventRef inEvent, void* inUserData );
+RCmdHandler( EventHandlerCallRef inCallRef, EventRef inEvent, void* inUserData );
+static pascal OSStatus
+RWinHandler( EventHandlerCallRef inCallRef, EventRef inEvent, void* inUserData );
+void RescaleInOut(double prop);
 
 
 void 	Raqua_StartConsole(void);
@@ -100,17 +105,16 @@ WindowRef			ConsoleWindow=NULL;
 static const EventTypeSpec KeybEvents[] =  { kEventClassKeyboard, kEventRawKeyUp };
 
 
-static const EventTypeSpec kCommandEvents[] =
+static const EventTypeSpec	RCmdEvents[] =
 {
 	{ kEventClassCommand, kEventCommandProcess },
 	{ kEventClassCommand, kEventCommandUpdateStatus }
 };
 
-
-static const EventTypeSpec	RCmdEvents[] =
+static const EventTypeSpec	RWinEvents[] =
 {
-	{ kEventClassCommand, kEventCommandProcess },
-	{ kEventClassCommand, kEventCommandUpdateStatus }
+	{ kEventClassWindow, kEventWindowResizeCompleted },
+        { kEventClassMouse, kEventMouseDown }
 };
 
 void Raqua_StartConsole(void)
@@ -178,9 +182,7 @@ void Raqua_StartConsole(void)
 
 	if (ConsoleWindow != NULL) 
 	{
-		TXNFrameID		OutframeID	= 0;
-                TXNFrameID		InframeID	= 0;
-		TXNFrameOptions	frameOptions;
+			TXNFrameOptions	frameOptions;
 		Rect OutFrame, InFrame, WinFrame;
                 
                 GetWindowPortBounds (ConsoleWindow,&WinFrame);
@@ -221,14 +223,14 @@ void Raqua_StartConsole(void)
 			if ( (RConsoleOutObject != NULL) && (RConsoleInObject != NULL) ) 
 			{
 				/* sets the state of the scrollbars so they are drawn correctly */
-				err = TXNActivate(RConsoleOutObject, OutframeID, kScrollBarsSyncWithFocus);
-				err = TXNActivate(RConsoleInObject, InframeID, kScrollBarsSyncWithFocus);
+				err = TXNActivate(RConsoleOutObject, OutframeID, kScrollBarsAlwaysActive);
+				err = TXNActivate(RConsoleInObject, InframeID, kScrollBarsAlwaysActive);
 				if (err != noErr){ /* Check for availability of MLTE api */		
                                 goto fine;
 		        }
 			
-			//	err = SetWindowProperty(ConsoleWindow,'GRIT','tFrm',sizeof(TXNFrameID),&OutframeID);
-		//		err = SetWindowProperty(ConsoleWindow,'GRIT','tObj',sizeof(TXNObject),&RConsoleOutObject);
+				err = SetWindowProperty(ConsoleWindow,'GRIT','tFrm',sizeof(TXNFrameID),&OutframeID);
+				err = SetWindowProperty(ConsoleWindow,'GRIT','tObj',sizeof(TXNObject),&RConsoleOutObject);
 				err = SetWindowProperty(ConsoleWindow,'GRIT','tFrm',sizeof(TXNFrameID),&InframeID);
 				err = SetWindowProperty(ConsoleWindow,'GRIT','tObj',sizeof(TXNObject),&RConsoleInObject);
 		}
@@ -237,20 +239,24 @@ void Raqua_StartConsole(void)
 	
 	if(err == noErr){
 	 WeHaveConsole =true;
+         RescaleInOut(0.8);
 	 InstallStandardEventHandler(GetApplicationEventTarget());
          err = InstallApplicationEventHandler( KeybHandler,
              GetEventTypeCount( KeybEvents ), KeybEvents, 0, NULL);
-        err = InstallApplicationEventHandler( NewEventHandlerUPP( CommandHandler ),
+        err = InstallApplicationEventHandler( NewEventHandlerUPP( RCmdHandler ),
 									GetEventTypeCount( RCmdEvents ),
 									RCmdEvents,
 									0,
 									NULL );
 	    
-         err = AEInstallEventHandler( kCoreEventClass, kAEQuitApplication,
+        err = InstallApplicationEventHandler( NewEventHandlerUPP( RWinHandler ),
+									GetEventTypeCount( RWinEvents ),
+									RWinEvents,
+									0,
+									NULL );
+	  err = AEInstallEventHandler( kCoreEventClass, kAEQuitApplication,
                  NewAEEventHandlerUPP(QuitAppleEventHandler), 0, false );
-//         InstallEventHandler( GetWindowEventTarget( ConsoleWindow ), CommandHandler, GetEventTypeCount( kCommandEvents ),
-//			kCommandEvents, ConsolWindow, NULL );
-
+ 
   //      err = CreateWindowFromNib(nibRef,CFSTR("AboutWindow"),&RAboutWindow);
   //      fprintf(stderr,"\n AboutWin err=%d",err);
         
@@ -334,8 +340,6 @@ int Raqua_ReadConsole(char *prompt, unsigned char *buf, int len,
     
    if(InputFinished){
     TXNGetSelection (RConsoleInObject, &oStartOffset, &oEndOffset);
-  //  fprintf(stderr,"\n range = %d -%d=%d", oEndOffset, oStartOffset, 
-  //   oEndOffset-oStartOffset);
      err = TXNGetDataEncoded(RConsoleInObject, 0, oEndOffset, &DataHandle, kTXNTextData);
      lg = min(len,oEndOffset);
      HLock( DataHandle );
@@ -349,11 +353,9 @@ int Raqua_ReadConsole(char *prompt, unsigned char *buf, int len,
 	
      buf[lg-1] = '\n';
      buf[lg] = '\0';
-//   fprintf(stderr,"\n buf=%s",buf);
      InputFinished = false;
- /* copiare nella console out il comando dato */
-      TXNSetData(RConsoleInObject,kTXNTextData,NULL,0,kTXNStartOffset ,kTXNEndOffset );
-      Raqua_WriteConsole(buf,strlen(buf));
+     TXNSetData(RConsoleInObject,kTXNTextData,NULL,0,kTXNStartOffset ,kTXNEndOffset );
+     Raqua_WriteConsole(buf,strlen(buf));
    }
  
   
@@ -466,7 +468,7 @@ static pascal OSErr QuitAppleEventHandler (const AppleEvent *appleEvt,
   
 
 static pascal OSStatus
-CommandHandler( EventHandlerCallRef inCallRef, EventRef inEvent, void* inUserData )
+RCmdHandler( EventHandlerCallRef inCallRef, EventRef inEvent, void* inUserData )
 {
 	OSStatus 		err = eventNotHandledErr;
 	HICommand		command;
@@ -500,6 +502,59 @@ CommandHandler( EventHandlerCallRef inCallRef, EventRef inEvent, void* inUserDat
 	return err;
 }
 
+void RescaleInOut(double prop)
+{  
+  Rect 	WinBounds, InRect, OutRect;
+  GetWindowPortBounds(ConsoleWindow, &WinBounds);
+  /* SetRect(*Rect, left, top, right, bottom) */
+  SetRect(&OutRect,0,0,WinBounds.right,(int)( WinBounds.bottom*prop ));
+  SetRect(&InRect, 0, (int)( WinBounds.bottom*prop+1 ),WinBounds.right,WinBounds.bottom);           
+  TXNSetFrameBounds (RConsoleInObject, InRect.top, InRect.left,  InRect.bottom, InRect.right, InframeID);
+  TXNSetFrameBounds (RConsoleOutObject, OutRect.top, OutRect.left, OutRect.bottom, OutRect.right, OutframeID);
+  BeginUpdate(ConsoleWindow);
+  TXNForceUpdate(RConsoleOutObject);
+  TXNForceUpdate(RConsoleInObject);
+  TXNDraw(RConsoleOutObject, NULL);
+  TXNDraw(RConsoleInObject, NULL);
+  EndUpdate(ConsoleWindow); 				
+             
+}
+
+static pascal OSStatus
+RWinHandler( EventHandlerCallRef inCallRef, EventRef inEvent, void* inUserData )
+{
+	OSStatus 	err = eventNotHandledErr;
+	HICommand	command;
+	UInt32		eventKind = GetEventKind( inEvent );
+        Rect		ROutRect;
+        Point           MouseLoc;
+        RgnHandle       CursorRgn;
+ 
+	switch ( GetEventClass( inEvent ) )
+	{
+         case kEventClassWindow:
+            if ( eventKind == kEventWindowResizeCompleted ){
+              RescaleInOut( 0.8);
+         }
+         case kEventMouseDown:
+            CursorRgn = NewRgn();
+            GetEventParameter (inEvent, kEventParamMouseLocation, typeQDPoint,
+                                         NULL, sizeof(Point), NULL, &MouseLoc);
+        //    AdjustCursor(wheresMyMouse, CursorRgn);
+        fprintf(stderr,"\n v=%d, h=%d", MouseLoc.v, MouseLoc.h);
+        TXNGetViewRect (RConsoleOutObject, &ROutRect);
+        fprintf(stderr,"\n left=%d, rig=%d, top=%d, bot=%d",ROutRect.left, ROutRect.right, ROutRect.top , ROutRect.bottom);
+
+            DisposeRgn(CursorRgn);                 
+         break;
+            
+         default:
+         break;
+     
+        }    
+ 	   
+	return err;
+}
 
 
 #endif /* HAVE_AQUA */
