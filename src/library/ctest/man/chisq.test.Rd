@@ -76,6 +76,11 @@ chisq.test(x, simulate.p.value = TRUE, B = 10000)$p.value
                                 # around 0.29!
 
 ## Testing for population probabilities
+## Case A. Tabulated data
+x <- c(A = 20, B = 15, C = 25)
+chisq.test(x)
+chisq.test(as.table(x))		# the same
+## Case B. Raw data
 x <- trunc(5 * runif(100))
 chisq.test(table(x))            # NOT `chisq.test(x)'!
 }
