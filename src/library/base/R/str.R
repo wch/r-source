@@ -4,7 +4,7 @@ str <- function(object, ...) UseMethod("str")
 str.data.frame <- function(object, ...)
 {
     ## Method to 'str' for  'data.frame' objects
-    ## $Id: str.R,v 1.17 2000/09/05 03:40:12 rgentlem Exp $
+    ## $Id: str.R,v 1.18 2001/05/11 07:47:44 maechler Exp $
     if(! is.data.frame(object)) {
 	warning("str.data.frame(.) called with non-data.frame. Coercing one.")
 	object <- data.frame(object)
@@ -40,7 +40,7 @@ str.default <- function(object, max.level = 0, vec.len = 4, digits.d = 3,
     ## Author: Martin Maechler <maechler@stat.math.ethz.ch>	1990--1997
     ## ------ Please send Bug-reports, -fixes and improvements !
     ## ------------------------------------------------------------------------
-    ## $Id: str.R,v 1.17 2000/09/05 03:40:12 rgentlem Exp $
+    ## $Id: str.R,v 1.18 2001/05/11 07:47:44 maechler Exp $
 
     oo <- options(digits = digits.d); on.exit(options(oo))
     le <- length(object)
@@ -299,28 +299,22 @@ str.default <- function(object, max.level = 0, vec.len = 4, digits.d = 3,
 	    }
     }
     invisible()	 ## invisible(object)#-- is SLOOOOW on large objects
-} #-- end of function 'str.default' --
+}# end of `str.default()'
 
-ls.str <- function(..., mode = "any", max.level = 1, give.attr = FALSE)
+ls.str <- function(pos = 1, pattern, ...,
+                   mode = "any", max.level = 1, give.attr = FALSE)
 {
-    ##--- An extended "ls()" using  str(.) --
-    for(name in ls(..., envir = parent.frame()))
-	if(exists(name, mode = mode)) {
-	    cat(name, ": ")
-	    str(get(name, mode = mode), max.level = max.level,
-		give.attr = give.attr)
-	}
-    invisible()
-}
-lsf.str <- function(...)
-{
-    ##--- An extended "ls()" -- find ONLY functions -- using  str(.) --
+    ## An extended "ls()" using  str(.) 
     r <- character(0)
-    for(name in ls(..., envir = parent.frame()))
-	if(is.function(get(name))) {
-	    cat(name, ": ")
-	    r <- c(r,name)
-	    str(get(name))
+    for(nam in ls(pos = pos, ..., envir = pos.to.env(pos), pattern=pattern))
+	if(exists(nam, where = pos, mode = mode)) {
+	    cat(nam, ": ")
+	    r <- c(r,nam)
+	    str(get(nam, pos = pos, mode = mode), max.level = max.level,
+		give.attr = give.attr)
 	}
     invisible(r)
 }
+
+lsf.str <- function(pos = 1, pattern, ...)
+    ls.str(pos = pos, pattern = pattern, mode = "function", ...)

@@ -224,14 +224,13 @@ NEW FEATURES
     o	R CMD check now also checks the keyword entries against the list
 	of standard keywords.
 
-    o   Matrix multiplication functions %*% and crossprod now use a
-        level-3 BLAS routine dgemm.  When R is linked with the ATLAS
-        library this can be substantially faster than the previous
-        code.
+    o	Matrix multiplication functions %*% and crossprod now use a
+	level-3 BLAS routine dgemm.  When R is linked with the ATLAS
+	library this can be substantially faster than the previous
+	code.
 
     o	R CMD Rd2dvi has better support for producing reference manuals
 	for packages and package bundles.
-
 
 
 BUG FIXES
@@ -276,13 +275,14 @@ BUG FIXES
 	.Last.value is only set from top-level expressions (and was
 	incorrectly documented).
 
-    o   The algorithm for determining starting estimates in the SSfpl
-        self-starting model in the nls package was changed following a
-        suggestion by Phillipe Grosjean <phgrosje@ulb.ac.be>
+    o	The algorithm for determining starting estimates in the SSfpl
+	self-starting model in the nls package was changed following a
+	suggestion by Phillipe Grosjean <phgrosje@ulb.ac.be>
 
-    o   asInteger was ignoring integer overflow (PR#929 and others).
+    o	asInteger was ignoring integer overflow (PR#929 and others).
 
-
+    o	ls.str() and lsf.str() now work better with pos > 1, and are
+	correctly documented (PR#899).
 
 
 	**************************************************

@@ -8,14 +8,29 @@ str.default(object, max.level = 0, vec.len = 4, digits.d = 3,
     wid = getOption("width"), nest.lev = 0,
     indent.str = paste(rep(" ", max(0, nest.lev + 1)), collapse = ".."))
 
-ls.str(name, pattern, mode = "any", max.level = 1, give.attr = FALSE)
-lsf.str(\dots)
+ ls.str(pos = 1, pattern, \dots, mode = "any",
+        max.level = 1, give.attr = FALSE)
+lsf.str(pos = 1, pattern, \dots)
 }
 \alias{str}
 \alias{str.default}
 \alias{str.data.frame}
 \alias{ls.str}
 \alias{lsf.str}
+\description{
+  Compactly display the internal \bold{str}ucture of an \R object, a
+  ``diagnostic'' function and an alternative to \code{\link{summary}}
+  (and to some extent, \code{\link{dput}}).  Ideally, only one line for
+  each ``basic'' structure is displayed.  It is especially well suited
+  to compactly display the (abbreviated) contents of (possibly nested)
+  lists.  The idea is to give reasonable output for \bold{any} \R
+  object.  It calls \code{\link{args}} for (non-primitive) function objects.
+
+  \code{\link{ls.str}} and \code{\link{lsf.str}} are useful ``versions''
+  of \code{\link{ls}}, calling \code{str} on each object.  They are not
+  foolproof and should rather not be used for programming, but are
+  provided for their usefulness.
+}
 \arguments{
   \item{object}{any \R object about which you want to have some
     information.}
@@ -40,23 +55,12 @@ lsf.str(\dots)
     \code{str}.}
   \item{indent.str}{the indentation string to use.}
 }
-\description{
-  This is a ``diagnostic'' function, and an alternative to
-  \code{\link{summary}} (and to some extent, \code{\link{dput}}).  Ideally,
-  only one line for each ``basic'' structure is displayed.  It is especially
-  well suited to compactly display the (abbreviated) contents of
-  (possibly nested) lists.  The idea is to give reasonable output for
-  \bold{any} \R object.  It calls \code{\link{args}} for (non-primitive)
-  function objects.
-
-  \code{\link{ls.str}} and \code{\link{lsf.str}} are useful ``versions''
-  of \code{\link{ls}}, calling \code{str} on each object.  They are not
-  foolproof and should rather not be used for programming, but are
-  provided for their usefulness.
-}
 \value{
-  Nothing, for efficiency reasons.
+  \code{str} does not return anything, for efficiency reasons.
   The obvious side effect is output to the terminal.
+
+  \code{ls.str} and \code{lsf.str} invisibly return a character vector
+  of the matching names, similarly to \code{\link{ls}}.
 }
 \author{Martin Maechler \email{maechler@stat.math.ethz.ch} since 1990.
 }
@@ -84,6 +88,8 @@ str(longch, nchar.max = 52)
 
 lsf.str()#- how do the functions look like which I am using?
 ls.str(mode = "list")#- what are the structured objects I have defined?
+## which base functions have "file" in their name ?  
+lsf.str(pos = length(search()), pattern = "file")
 \testonly{
  ##-- Some "crazy" objects
  str(array(1:5, dim=20))
