@@ -1,18 +1,15 @@
 \name{graphics.off}
 \title{Turn Off All Graphics Devices}
 \usage{
-dev.off()
 graphics.off()
 }
-\alias{dev.off}
 \alias{graphics.off}
 \description{
-These two functions are symonyms and shutdown the current graphics device.
-
-In the future, with \emph{multiple} concurrent devices, things will change
-\ldots.
+\code{graphics.off()} shuts down all open graphics devices.
+Use \code{\link{dev.off}()} to only close the current one.
 }
 \seealso{
+\code{\link{dev.off}} and the other \code{dev.xxx} functions;
 \code{\link{Devices}}.
 }
 \keyword{device}
