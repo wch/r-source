@@ -12,7 +12,7 @@ include $(top_builddir)/Makeconf
 distdir = $(PACKAGE)-$(VERSION)
 INSTFILES = AUTHORS COPYING COPYING.LIB COPYRIGHTS FAQ NEWS RESOURCES THANKS
 DISTFILES = $(INSTFILES) \
-	BUGS ChangeLog INSTALL ONEWS README VERSION Y2K \
+	ChangeLog INSTALL ONEWS README VERSION Y2K \
 	Makeconf.in Makefile.in \
 	acinclude.m4 aclocal.m4 \
 	config.site configure configure.ac \
