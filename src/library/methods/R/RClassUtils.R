@@ -1542,7 +1542,7 @@ substituteFunctionArgs <- function(def, newArgs, args = formalArgs(def), silent 
                 }
             }
             if(is.null(def))
-                NULL
+                baseenv()
             else
                 value
         }
