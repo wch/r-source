@@ -1,6 +1,4 @@
-is.qr <- function(x) !is.null(x$qr) && !is.null(x$rank) && !is.null(x$qraux)
-
-iq.qr <- function(x) inherits(x, "qr")
+is.qr <- function(x) inherits(x, "qr")
 
 qr <- function(x, tol = 1e-07, LAPACK = FALSE)
 {
