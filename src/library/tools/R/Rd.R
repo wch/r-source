@@ -106,19 +106,21 @@ function(file)
     
     txt <- paste(lines, collapse = "\n")
 
-    val <- regexpr("\\\\name{[[:space:]]*([^\}]+)[[:space:]]*}", txt)
-    if(val == -1)
+    start <- regexpr("\\\\name{[[:space:]]*([^\}]+)[[:space:]]*}", txt)
+    if(start == -1)
        stop("missing/empty \\name field")
-    RdName <-
-        gsub("[[:space:]]*", " ",
-             substr(txt, val + 6, val + attr(val, "match.length") - 2))
+    RdName <- gsub("[[:space:]]*", " ",
+                   substr(txt,
+                          start + 6,
+                          start + attr(start, "match.length") - 2))
 
-    val <- regexpr("\\\\title{[[:space:]]*([^\}]+)[[:space:]]*}", txt)
-    if(val == -1)
+    start <- regexpr("\\\\title{[[:space:]]*([^\}]+)[[:space:]]*}", txt)
+    if(start == -1)
         stop("missing/empty \\title field")
-    RdTitle <-
-        gsub("[[:space:]]*", " ",
-             substr(txt, val + 7, val + attr(val, "match.length") - 2))
+    RdTitle <- gsub("[[:space:]]*", " ",
+                    substr(txt,
+                           start + 7,
+                           start + attr(start, "match.length") - 2))
     
     list(name = RdName, type = RdType, title = RdTitle,
          aliases = aliases, keywords = keywords)
