@@ -6,6 +6,11 @@
 
 NEW FEATURES
 
+    o  	gc() now reports the total sizes in Mb as well as numbers.
+
+    o   NULL extra arguments to model.frame() are now treated as missing
+	(instead of an error).
+
     o   New arguments to q() and quit() allow the exit status to be set
 	and the execution of .Last() to be skipped.
 
@@ -59,6 +64,13 @@ NEW FEATURES
 
 
 BUG FIXES
+
+    o   help page for gc gives correct size of cons cells (20 bytes
+	for 32-bit systems, 36 or more for 64-bit systems)
+
+    o   gcinfo reports correct percentages of heap even for vsize > 200M
+
+    o   expand.grid returns a data frame even for one arg
 
     o   Protect R_fopen against NULL filename in Unix
 
