@@ -188,6 +188,8 @@ UTILITIES
         DESCRIPTION metadata, using new code from package tools which is
         also used by R CMD check.
 
+    o   list_files_with_exts (package tools) now handles zipped directories.
+
 
 C-LEVEL FACILITIES
 

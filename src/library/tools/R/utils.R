@@ -64,7 +64,16 @@ function(dir, exts, all.files = FALSE, full.names = TRUE)
 {
     ## Return the paths or names of the files in @code{dir} with
     ## extension in @code{exts}.
-    files <- list.files(dir, all.files = all.files)
+    ## Might be in a zipped dir on Windows
+    if(file.exists(file.path(dir, "filelist")) &&
+       any(file.exists(file.path(dir, c("Rdata.zip", "Rex.zip", "Rhelp.zip")))))
+    {
+        files <- readLines(file.path(dir, "filelist"))
+        if(!all.files)
+            files <- grep("^[^.]", files, value = TRUE)
+    } else {
+        files <- list.files(dir, all.files = all.files)
+    }
     files <- files[sub(".*\\.", "", files) %in% exts]
     if(full.names)
         files <- if(length(files) > 0)
@@ -236,7 +245,7 @@ function(nsInfo)
         paste(S3_methods_list[idx, 1],
               S3_methods_list[idx, 2],
               sep = ".")
-    S3_methods_list    
+    S3_methods_list
 }
 
 ### ** .get_S3_group_generics
@@ -268,7 +277,7 @@ function()
         tolower(sub("^R_PKGS_([[:upper:]]+) *=.*", "\\1", lines))
     out
 }
-    
+
 ### ** .is_primitive
 
 .is_primitive <-
@@ -409,7 +418,7 @@ function(package)
              stats = c("anova.lmlist", "fitted.values", "lag.plot",
              "influence.measures", "t.test"),
              utils = c("close.socket", "flush.console",
-             "update.packages") 
+             "update.packages")
              )
     if(is.null(package)) return(unlist(stopList))
     thisPkg <- stopList[[package]]
@@ -465,7 +474,7 @@ function(x)
     sQuote(x)
     ## </FIXME>
 }
-    
+
 ### ** .source_assignments
 
 .source_assignments <-
