@@ -64,8 +64,7 @@ codoc <- function(dir, use.values = FALSE, use.positions = TRUE,
         system(paste("Rcmd extract-usage", docsList, docsFile),
                invisible = TRUE)
     else
-        system(paste(file.path(R.home(), "bin", "R"),
-                     "CMD extract-usage", docsList, docsFile))
+        .Script("perl", "extract-usage.pl", paste(docsList, docsFile))
 
     lib.source <- function(file, env) {
         oop <- options(keep.source = FALSE)

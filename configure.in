@@ -1024,7 +1024,6 @@ AC_OUTPUT(Makeconf
   src/scripts/build
   src/scripts/build-help
   src/scripts/check
-  src/scripts/extract-usage
   src/unix/Makefile
   tests/Makefile
   tests/Examples/Makefile
