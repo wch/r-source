@@ -23,6 +23,7 @@
 % \alias{Rdinfo}
 % \alias{Rdcontents}
 % \alias{Rd2contents}
+\alias{.installPacakgeCodeFiles}
 \alias{.installPackageDescription}
 \alias{.installPackageIndices}
 % \alias{.installPackageRdIndices}
@@ -64,6 +65,7 @@ pkgVignettes(package, dir, lib.loc = NULL)
 % .buildDemoIndex(demoDir)
 % .buildRdIndex(contents, type = NULL)
 % .buildVignetteIndex(vignetteDir)
+.installPackageCodeFiles(dir, outDir)
 .installPackageDescription(dir, outDir)
 .installPackageIndices(dir, outDir)
 % .installPackageRdIndices(dir, outDir)

@@ -21,7 +21,7 @@ function(dir, outDir)
     ## Should also include the above, of course.
     requiredFields <- c("Package", "Title", "Description")
     if(any(i <- which(is.na(match(requiredFields, names(db)))))) {
-        stop(paste("Required fields missing from DESCRIPTION:",
+        stop(paste("required fields missing from DESCRIPTION:",
                    paste(requiredFields[i], collapse = " ")))
     }
     ## </FIXME>
@@ -43,6 +43,120 @@ function(dir, outDir)
                file.path(outDir, "DESCRIPTION"))
     invisible()
 }
+
+### * .installPackageCodeFiles
+
+.installPackageCodeFiles <-
+function(dir, outDir)
+{
+    if(!tools::fileTest("-d", dir))
+        stop(paste("directory", sQuote(dir), "does not exist"))
+    dir <- filePathAsAbsolute(dir)
+
+    ## Attempt to set the LC_COLLATE locale to 'C' to turn off locale
+    ## specific sorting.
+    curLocale <- Sys.getlocale("LC_COLLATE")
+    on.exit(Sys.setlocale("LC_COLLATE", curLocale), add = TRUE)
+    ## (Guaranteed to work as per the Sys,setlocale() docs.)
+    lccollate <- "C"
+    if(Sys.setlocale("LC_COLLATE", lccollate) != lccollate) {
+        ## <FIXME>
+        ## I don't think we can give an error here.
+        ## It may be the case that Sys.setlocale() fails because the "OS
+        ## reports request cannot be honored" (src/main/platform.c), in 
+        ## which case we should still proceed ...
+        warning("cannot turn off locale-specific sorting via LC_COLLATE")
+        ## </FIXME>
+    }
+
+    ## We definitely need a valid DESCRIPTION file.
+    db <- try(read.dcf(file.path(dir, "DESCRIPTION"))[1, ],
+              silent = TRUE)
+    if(inherits(db, "try-error"))
+        stop(paste("package directory", sQuote(dir),
+                   "has no valid DESCRIPTION file"))
+    ## <FIXME>
+    ## What should we do in case there is no R code?
+    ## The other .installXXX() functions simply return invisible() in
+    ## this case, collator() gives an error.
+    codeDir <- file.path(dir, "R")
+    if(!tools::fileTest("-d", codeDir)) return(invisible())
+    ## </FIXME>
+
+    codeFiles <- listFilesWithType(codeDir, "code", full.names = FALSE)
+
+    collationField <-
+        c(paste("Collate", .Platform$OS.type, sep = "."), "Collate")
+    if(any(i <- collationField %in% names(db))) {
+        ## We have a Collate specification in the DESCRIPTION file:
+        ## currently, file paths relative to codeDir, separated by
+        ## commas and maybe white space, possibly quoted.  Note that we
+        ## could have newlines in DCF entries but do not allow them in
+        ## file names, hence we gsub() them out.
+        collationField <- collationField[i][1]
+        codeFilesInCspec <-
+            scan(textConnection(gsub("\n", " ", db[collationField])),
+                 what = character(), sep = ",", strip.white = TRUE,
+                 quiet = TRUE)
+        ## Duplicated entries in the collaction spec?
+        badFiles <-
+            unique(codeFilesInCspec[duplicated(codeFilesInCspec)])
+        if(length(badFiles)) {
+            out <- paste("\nduplicated files in",
+                         sQuote(collationField),
+                         "field:")
+            out <- paste(out, 
+                         paste(" ", badFiles, collapse = "\n"),
+                         sep = "\n")
+            stop(out)
+        }
+        ## See which files are listed in the collation spec but don't
+        ## exist.
+        badFiles <- codeFilesInCspec[! codeFilesInCspec %in% codeFiles]
+        if(length(badFiles)) {
+            out <- paste("\nfiles in ", sQuote(collationField),
+                         " field missing from ", sQuote(codeDir),
+                         ":",
+                         sep = "")
+            out <- paste(out,
+                         paste(" ", badFiles, collapse = "\n"),
+                         sep = "\n")
+            stop(out)
+        }
+        ## See which files exist but are missing from the collation
+        ## spec.  Note that we do not want the collation spec to use
+        ## only a subset of the available code files.
+        badFiles <- codeFiles[! codeFiles %in% codeFilesInCspec]
+        if(length(badFiles)) {
+            out <- paste("\nfiles in", sQuote(codeDir),
+                         "missing from", sQuote(collationField),
+                         "field:")
+            out <- paste(out,
+                         paste(" ", badFiles, collapse = "\n"),
+                         sep = "\n")
+            stop(out)
+        }
+        ## Everything's groovy ...
+        codeFiles <- codeFilesInCspec
+    }
+
+    codeFiles <- file.path(codeDir, codeFiles)
+
+    if(!tools::fileTest("-d", outDir)) dir.create(outDir)
+    outCodeDir <- file.path(outDir, "R")
+    if(!tools::fileTest("-d", outCodeDir)) dir.create(outCodeDir)
+    outFile <- file.path(outCodeDir, db["Package"])
+    ## <FIXME>
+    ## It may be safer to do
+    ##   writeLines(sapply(codeFiles, readLines), outFile)
+    ## instead, but this would be much slower ...
+    file.create(outFile)
+    file.append(outFile, codeFiles)
+    ## </FIXME>
+
+    invisible()
+}
+
 
 ### * .installPackageIndices
 

@@ -4,7 +4,7 @@
 
 # @configure_input@
 
-revision='$Revision: 1.135 $'
+revision='$Revision: 1.136 $'
 version=`set - ${revision}; echo ${2}`
 version="R add-on package installer ${version}
 
@@ -377,6 +377,18 @@ do_install_source () {
     if test -f "${f}"; then cp "${f}" "${R_PACKAGE_DIR}"; fi
   done
 
+  ## Copy DESCRIPTION file, stamp with build information, and remove
+  ## blank lines.  (Need to add an empty line to deal with missing
+  ## trailing newlines at EOF.)
+  ## As from 1.7.0, packages without compiled code are not marked
+  ## as being from any platform.
+  echo ".installPackageDescription(\".\", \"${R_PACKAGE_DIR}\")" | \
+    R_DEFAULT_PACKAGES=tools ${R_EXE} --vanilla >/dev/null
+  if test ${?} -ne 0; then
+    echo "ERROR: installing package DESCRIPTION failed"
+    do_exit_on_error
+  fi
+
   if test -d src && test "${fake}" != "true"; then
     message "libs"
     if ${debug}; then set -x; fi
@@ -420,12 +432,13 @@ do_install_source () {
   if test -d R; then
     message "R"
       mkdir -p "${R_PACKAGE_DIR}/R"
-    echo "collater(\".\",pkg=\"${R_PACKAGE_NAME}\", destDir=\"${R_PACKAGE_DIR}/R\")" | \
-      R_DEFAULT_PACKAGES=tools ${R_EXE} --vanilla > /dev/null
-      if test ! -f "${R_PACKAGE_DIR}/R/${R_PACKAGE_NAME}"; then
-	echo "ERROR: Unable to collate files for package '${pkg_name}'"
-	do_exit_on_error
-     fi
+      rm -f "${R_PACKAGE_DIR}/R/"*
+      echo ".installPackageCodeFiles(\".\", \"${R_PACKAGE_DIR}\")" | \
+        R_DEFAULT_PACKAGES=tools ${R_EXE} --vanilla >/dev/null
+      if test ${?} -ne 0; then
+        echo "ERROR: unable to collate files for package '${pkg_name}'"
+        do_exit_on_error
+      fi
     if ${fake}; then
       if test -f NAMESPACE; then
         echo ".onLoad <- function(list, pkg) NULL" >> \
@@ -486,18 +499,6 @@ do_install_source () {
       R_SAVE_IMAGE=${save} ;;
   esac
   export R_SAVE_IMAGE
-
-  ## Copy DESCRIPTION file, stamp with build information, and remove
-  ## blank lines.  (Need to add an empty line to deal with missing
-  ## trailing newlines at EOF.)
-  ## As from 1.7.0, packages without compiled code are not marked
-  ## as being from any platform.
-  echo ".installPackageDescription(\".\", \"${R_PACKAGE_DIR}\")" | \
-    R_DEFAULT_PACKAGES=tools ${R_EXE} --vanilla >/dev/null
-  if test ${?} -ne 0; then
-    echo "ERROR: installing package DESCRIPTION failed"
-    do_exit_on_error
-  fi
 
   if ${R_SAVE_IMAGE}; then
     message "save image"

@@ -11,7 +11,8 @@ export(".installMD5sums", "Rdindex", "Rtangle", "RtangleSetup",
 
 ## <FIXME>
 ## Documented as internal but called from scripts
-export(".installPackageDescription",
+export(".installPackageCodeFiles",
+       ".installPackageDescription",
        ".installPackageIndices",
        ".checkDemoIndex",
        ".checkVignetteIndex",
