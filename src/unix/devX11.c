@@ -980,7 +980,9 @@ static void X11_Clip(double x0, double x1, double y0, double y1, DevDesc *dd)
 	xd->clip.height = (int)(y0 - y1);
     }
     XSetClipRectangles(display, xd->wgc, 0, 0, &(xd->clip), 1, Unsorted);
+#ifdef XSYNC
     XSync(display, 0);
+#endif
 }
 
 	/********************************************************/
@@ -1025,7 +1027,9 @@ static void X11_NewPage(DevDesc *dd)
 	XSetWindowBackground(display, xd->window, whitepixel);
     }
     XClearWindow(display, xd->window);
+#ifdef XSYNC
     XSync(display, 0);
+#endif
 }
 
 	/********************************************************/
@@ -1163,7 +1167,9 @@ static void X11_Rect(double x0, double y0, double x1, double y1,
 	XDrawRectangle(display, xd->window, xd->wgc, (int)x0, (int)y0,
 		       (int)x1 - (int)x0, (int)y1 - (int)y0);
     }
+#ifdef XSYNC
     XSync(display, 0);
+#endif
 }
 
 	/********************************************************/
@@ -1237,7 +1243,9 @@ static void X11_Line(double x1, double y1, double x2, double y2,
     SetColor(dd->gp.col, dd);
     SetLinetype(dd->gp.lty, dd->gp.lwd, dd);
     XDrawLine(display, xd->window, xd->wgc, xx1, yy1, xx2, yy2);
+#ifdef XSYNC
     XSync(display, 0);
+#endif
 }
 
 	/********************************************************/
@@ -1268,7 +1276,9 @@ static void X11_Polyline(int n, double *x, double *y, int coords, DevDesc *dd)
     SetColor(dd->gp.col, dd);
     SetLinetype(dd->gp.lty, dd->gp.lwd, dd);
     XDrawLines(display, xd->window, xd->wgc, points, n, CoordModeOrigin);
+#ifdef XSYNC
     XSync(display, 0);
+#endif
 
     C_free((char *) points);
 }
@@ -1309,13 +1319,17 @@ static void X11_Polygon(int n, double *x, double *y, int coords,
     if(bg != NA_INTEGER) {
 	SetColor(bg, dd);
 	XFillPolygon(display, xd->window, xd->wgc, points, n, Complex, CoordModeOrigin);
+#ifdef XSYNC
 	XSync(display, 0);
+#endif
     }
     if(fg != NA_INTEGER) {
 	SetColor(fg, dd);
 	SetLinetype(dd->gp.lty, dd->gp.lwd, dd);
 	XDrawLines(display, xd->window, xd->wgc, points, n+1, CoordModeOrigin);
+#ifdef XSYNC
 	XSync(display, 0);
+#endif
     }
 
     C_free((char *) points);
@@ -1357,7 +1371,9 @@ static void X11_Text(double x, double y, int coords,
     }
     XRotDrawString(display, xd->font, rot, xd->window, xd->wgc,
 		   (int)x, (int)y, str);
+#ifdef XSYNC
     XSync(display, 0);
+#endif
 }
 
 	/********************************************************/
@@ -1415,7 +1431,11 @@ static int X11_Locator(double *x, double *y, DevDesc *dd)
 /* Set Graphics mode - not needed for X11 */
 static void X11_Mode(int mode, DevDesc *dd)
 {
+#ifdef XSYNC
     if(mode == 0) XSync(display, 0);
+#else
+    XSync(display, 0);
+#endif
 }
 
 	/********************************************************/
