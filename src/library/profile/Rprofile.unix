@@ -62,4 +62,12 @@ if(.Platform$GUI == "AQUA") {
     if( !file.exists("~/Library/R/library") )
 	dir.create(path.expand("~/Library/R/library"))
     .libPaths(path.expand("~/Library/R/library"))
+
+    # the following lines are needed to pass R_LIBS var to the GUI
+    # on OS X, env var defined for the shell are not passed to
+    # GUI apps
+    rlibs <-  Sys.getenv("R_LIBS")
+    Sys.putenv("R_LIBS"=paste(.libPaths(),rlibs,collapse=":",sep=""))
+    rm(rlibs)
+
 }## end "Aqua"
