@@ -51,7 +51,7 @@ La.svd <- function(x, nu = min(n, p), nv = min(n, p),
     if(method == "dgesvd") {
         if(nu == 0) {
             jobu <- 'N'
-            u <- double(0)
+            u <- matrix(0, 1, 1)  # dim is checked
         }
         else if(nu == n) {
             jobu <- ifelse(n > p, 'A', 'S')
@@ -66,7 +66,7 @@ La.svd <- function(x, nu = min(n, p), nv = min(n, p),
 
         if (nv == 0) {
             jobv <- 'N'
-            v <- double(0)
+            v <- matrix(0, 1, 1) # dim is checked
         }
         else if (nv == n) {
             jobv <- ifelse(n > p, 'A', 'S')
