@@ -326,7 +326,9 @@ function(pattern, fields = c("alias", "title"),
     if(verbose) cat("matched", NROW(db), "objects.\n")
 
     ## Retval.
-    y <- list(pattern = pattern, fields = fields, matches = db)
+    y <- list(pattern = pattern, fields = fields,
+              type = if(agrep) "fuzzy" else "regexp",
+              matches = db)
     class(y) <- "hsearch"
     y
 }
@@ -336,26 +338,30 @@ function(x, ...)
 {
     sQuote <- function(s) paste("'", s, "'", sep = "")
     fields <- paste(x$fields, collapse = " or ")
+    type <- switch(x$type, fuzzy = "fuzzy", "regular expression")
     db <- x$matches
     if(NROW(db) > 0) {
 	outFile <- tempfile()
 	outConn <- file(outFile, open = "w")
-	writeLines(paste("Help files with ", fields, " matching ",
-			 sQuote(x$pattern), ",\n",
-			 "type 'help(FOO, package = PKG)' to inspect ",
-			 "entry 'FOO(PKG) TITLE':",
-			 "\n", sep = ""),
+	writeLines(c(strwrap(paste("Help files with", fields,
+                                   "matching", sQuote(x$pattern),
+                                   "using", type, "matching:")),
+                     "\n\n"),
 		   outConn)
 	dbnam <- paste(db[ , "topic"], "(",
 		       db[, "Package"], ")",
 		       sep = "")
 	dbtit <- paste(db[ , "title"], sep = "")
 	writeLines(formatDL(dbnam, dbtit), outConn)
+        writeLines(c("\n\n",
+                     strwrap(paste("Type 'help(FOO, package = PKG)' to",
+                                   "inspect entry 'FOO(PKG) TITLE'."))),
+                   outConn)
 	close(outConn)
 	file.show(outFile, delete.file = TRUE)
     } else {
-	cat(paste("No help files found with ", fields,
-		  " matching ", sQuote(x$pattern), "\n",
-		  sep = ""))
+	writeLines(strwrap(paste("No help files found with", fields,
+                                 "matching", sQuote(x$pattern),
+                                 "using", type, "matching.")))
     }
 }
