@@ -2147,7 +2147,7 @@ void DoTools(SInt16 menuItem)
     switch(menuItem) {
     
     case kItemBrowseWSpace:
-    	consolecmd("browse.wspace()");
+    	consolecmd("browseEnv()");
 	break;
 
     case kItemShowWSpace:
