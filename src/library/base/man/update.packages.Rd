@@ -8,16 +8,20 @@
 \title{Download packages from CRAN}}
 \usage{
 update.packages(lib.loc=.lib.loc, CRAN=options("CRAN"),
+                contriburl=paste(CRAN,"/src/contrib",sep=""),
                 method="auto", instlib=NULL)
 
 installed.packages(lib.loc = .lib.loc)
-CRAN.packages(CRAN=options("CRAN"), method="auto")
+CRAN.packages(CRAN=options("CRAN"), method="auto",
+              contriburl=paste(CRAN,"/src/contrib",sep=""))
 
 download.file(url, destfile, method="auto")
 download.packages(pkgs, destdir, available=NULL,
-                  CRAN=options("CRAN"), method="auto")
+                  CRAN=options("CRAN"), method="auto",
+                  contriburl=paste(CRAN,"/src/contrib",sep=""))
 install.packages(pkglist, lib, available=NULL,
-                  CRAN=options("CRAN"), method="auto")
+                  CRAN=options("CRAN"), method="auto",
+                  contriburl=paste(CRAN,"/src/contrib",sep=""))
 }
 \arguments{ 
  \item{lib.loc}{A character vector describing the location of R
@@ -25,6 +29,10 @@ install.packages(pkglist, lib, available=NULL,
  \item{CRAN}{Base URL of the CRAN mirror to use, i.e., URL of a CRAN
      root such as \code{"http://www.r-project.org"} (the default) or
      \code{"http://lib.stat.cmu.edu/R/CRAN"}.}
+ \item{contriburl}{URL of the contrib section of CRAN. Use this argument
+   only if you your CRAN mirror is
+   incomplete, e.g., because you burned only the contrib
+   section on a CD. Overrides argument \code{CRAN}.}
  \item{method}{Tool to be used for downloading files. Currently download
    methods \code{"auto"}, \code{"wget"}, \code{"lynx"} and \code{"cp"} are
    available.}
