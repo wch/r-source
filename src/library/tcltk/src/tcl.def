@@ -8,3 +8,16 @@ EXPORTS
  Tcl_SetResult
  Tcl_SetServiceMode
  Tcl_StaticPackage
+ Tcl_NewObj
+ TclFreeObj
+ Tcl_GetObjResult
+ Tcl_GetVar2Ex
+ Tcl_SetVar2Ex
+ Tcl_GetString
+ Tcl_ListObjGetElements
+ Tcl_ListObjAppendElement
+ Tcl_SetStringObj
+ Tcl_GetDoubleFromObj
+ Tcl_GetIntFromObj
+ Tcl_NewIntObj
+ Tcl_NewDoubleObj
