@@ -31,6 +31,14 @@
   creating the text, HTML, and LaTeX versions, respectively.  The
   default is to build help files in all three versions.
 
+  If the option \code{--save} is used, the installation procedure
+  creates a binary image of the package code, which is then loaded when
+  the library is attached, rather than evaluating the package source at
+  that time.  Having a file \code{INSTALL.R} in the package directory
+  (its contents don't matter) makes this the default behavior for the
+  package (option \code{--no-save} overrides.  You may need \code{--save}
+  if your package requires other packages to evaluate its own source.
+
   Use \code{R CMD INSTALL --help} for more usage information.
 }
 \seealso{
