@@ -234,8 +234,7 @@ test-Ts:
 	@$(MAKE) $(test-out-ts) RVAL_IF_DIFF=0
 test-Standalone:
 	@echo "testing building standalone Rmath"
-	@$(MAKE) -C $(top_builddir)/src/nmath/standalone all || exit 1
-	@$(MAKE) -C $(top_builddir)/src/nmath/standalone clean
+	@(cd $(top_builddir)/src/nmath/standalone; $(MAKE) check)
 
 test-DocArgs:
 	@echo "checking whether arguments from usage are documented"
