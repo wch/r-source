@@ -24,7 +24,7 @@
 
 AC_PREREQ(2.57)
 
-AC_REVISION($Revision: 1.84 $)
+AC_REVISION($Revision: 1.85 $)
 
 ## We want to get the version number from file 'VERSION' (rather than
 ## specifying the version info in 'configure.ac'.  Hence, we need a bit
@@ -986,10 +986,17 @@ fi
 ## for building R as a shared library to link against (the SHLIB_* vars
 ## just determined are really for loadable modules).  On ELF there is no
 ## difference, but e.g. on Mach-O for Darwin there is.
+##
+## Also need flags to build the Rlapack shared library on some platforms.
 LIBR_EXT="${SHLIB_EXT}"
 LIBR_LDFLAGS="${SHLIB_LDFLAGS}"
 RLAPACK_LDFLAGS="${SHLIB_LDFLAGS}"
 case "${host_os}" in
+  aix*)
+    ## Pure guesswork so far
+    RLAPACK_LDFLAGS="${SHLIB_LDFLAGS} ${wl}-bE:\$(top_builddir)/etc/Rlapack.exp"
+    LAPACK_LDFLAGS="${wl}-bI:\$(R_HOME)/etc/Rlapack.exp"
+    ;;
   darwin*)
     LIBR_EXT=".dylib"
     ## <FIXME>

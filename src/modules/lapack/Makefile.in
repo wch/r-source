@@ -12,7 +12,7 @@ R_HOME = $(top_builddir)
 include $(top_builddir)/Makeconf
 
 SOURCES_C = Lapack.c
-SOURCES_F = rgeev.f @USE_EXTERNAL_LAPACK_FALSE@ rsyev.f
+SOURCES_F = @USE_EXTERNAL_LAPACK_FALSE@ rgeev.f rsyev.f
 
 DEPENDS = $(SOURCES_C:.c=.d)
 SOURCES = $(SOURCES_C) $(SOURCES_F) @USE_EXTERNAL_BLAS_FALSE@ $(SOURCES_BLAS)
@@ -76,9 +76,13 @@ $(lapack_la): $(lapack_la_OBJECTS) $(lapack_la_DEPENDENCIES)
 ## <FIXME>
 ## This is not yet right.  Prefer not to include FLIBS, but MacOSX seems
 ## to require it.
+## AIX support is untested
 ## </FIXME>
-$(Rlapack_la): $(Rlapack_la_OBJECTS)
+$(Rlapack_la): $(Rlapack_la_OBJECTS) @USE_EXPORTFILE_TRUE@ $(top_builddir)/etc/Rlapack.exp
 	$(SHLIB_LD) @RLAPACK_LDFLAGS@ $(LDFLAGS) -o $@ $(Rlapack_la_OBJECTS) @BLAS_LIBS@ $(FLIBS)
+
+$(top_builddir)/etc/Rlapack.exp: $(Rlapack_la_OBJECTS)
+	@$(top_srcdir)/tools/ldAIX4 -o $@ $(Rlapack_la_OBJECTS)
 
 Rlapack_install: $(Rlapack_la) 
 	@$(top_srcdir)/tools/copy-if-change $(Rlapack_la) \
