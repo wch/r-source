@@ -84,6 +84,7 @@ show.data <-
 {
     ## give `index' of all possible data sets
     file <- tempfile("R.")
+    on.exit(file.remove(file))
     file.create(file)
     first <- TRUE
     nodata <- noindex <- character(0)
