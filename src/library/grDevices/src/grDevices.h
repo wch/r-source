@@ -25,4 +25,6 @@ SEXP XFig(SEXP);
 SEXP PDF(SEXP);
 SEXP Type1FontInUse(SEXP);
 
+SEXP Quartz(SEXP);
+
 SEXP L_nullDevice();

@@ -38,6 +38,7 @@ static R_ExternalMethodDef ExtEntries[] = {
     EXTDEF(PostScript),
     EXTDEF(XFig),
     EXTDEF(PDF),
+    EXTDEF(Quartz),
     {NULL, NULL, 0}
 };
 

@@ -719,7 +719,6 @@ FUNTAB R_FunTab[] =
 
 #ifdef Unix
 {"X11",		do_X11,		0,	111,	11,	{PP_FUNCALL, PREC_FN,	0}},
-{"Quartz",	do_Quartz,	0,	111,	7,	{PP_FUNCALL, PREC_FN,	0}},
 #endif
 
 /* Graphics */

@@ -444,7 +444,6 @@ static CGContextRef	GetContext(QuartzDesc *xd);
 
 
 
-static SEXP gcall;
 static char *SaveString(SEXP sxp, int offset)
 {
     char *s;
@@ -464,12 +463,12 @@ bool WeAreOnPanther = false;
  *  width	= width in inches
  *  height	= height in inches
  *  ps		= pointsize
- *  family  = Postscript fon family name
- *  Antialias = wheter to make antialiasing
+ *  family  = Postscript font family name
+ *  Antialias = whether to make antialiasing
  */
 
 
-SEXP do_Quartz(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP Quartz(SEXP arg)
 {
     NewDevDesc *dev = NULL;
     GEDevDesc *dd;
@@ -477,18 +476,19 @@ SEXP do_Quartz(SEXP call, SEXP op, SEXP args, SEXP env)
     char fontfamily[255];
     double height, width, ps;
     Rboolean  antialias, autorefresh;
-	SInt32 macVer;
-	int quartzpos = 1;
+    SInt32 macVer;
+    int quartzpos = 1;
+
     gcall = call;
     vmax = vmaxget();
-    display = SaveString(CAR(args), 0);
-    args = CDR(args);
+    args = CDR(args); /* skip entry point name */
+    display = CHAR(STRING_ELT(CAR(args), 0)); args = CDR(args);
     width = asReal(CAR(args));	args = CDR(args);
     height = asReal(CAR(args)); args = CDR(args);
     if (width <= 0 || height <= 0)
-	errorcall(call, "invalid width or height");
+	error("invalid width or height in quartz");
     ps = asReal(CAR(args));  args = CDR(args);
-    family = SaveString(CAR(args), 0);    args = CDR(args);
+    family = CHAR(STRING_ELT(CAR(args), 0));    args = CDR(args);
     antialias = asLogical(CAR(args));   args = CDR(args);
     autorefresh = asLogical(CAR(args));
 
@@ -513,13 +513,14 @@ SEXP do_Quartz(SEXP call, SEXP op, SEXP args, SEXP env)
     strcpy(fontfamily, family);
 #ifdef HAVE_AQUA
     if(useaqua)
-     GetQuartzParameters(&width, &height, &ps, fontfamily, &antialias, &autorefresh, &quartzpos);
+	GetQuartzParameters(&width, &height, &ps, fontfamily, &antialias, 
+			    &autorefresh, &quartzpos);
 #endif
 
     if (!QuartzDeviceDriver((DevDesc *)dev, display, width, height, ps,
        fontfamily, antialias, autorefresh, quartzpos, 0xffffffff)) {
 	 free(dev);
-	 errorcall(call, "unable to start device Quartz\n");
+	 error("unable to start device Quartz");
     }
     gsetVar(install(".Device"), mkString("quartz"), R_NilValue);
     dd = GEcreateDevDesc(dev);
@@ -536,16 +537,18 @@ SEXP do_Quartz(SEXP call, SEXP op, SEXP args, SEXP env)
 
 Rboolean QuartzDeviceDriver(DevDesc *dd, char *display,
 			 double width, double height, double pointsize,
-			 char *family, Rboolean antialias, Rboolean autorefresh, 
+			 char *family, Rboolean antialias, 
+			    Rboolean autorefresh, 
 			 int quartzpos, int bg)
 {
   if(useaqua)
-    return CocoaInnerQuartzDevice((NewDevDesc*)dd,display,width,height,
-				  pointsize,family,antialias,
-				  autorefresh,quartzpos,bg);
+      return CocoaInnerQuartzDevice((NewDevDesc*)dd,display,width,height,
+				    pointsize,family,antialias,
+				    autorefresh,quartzpos,bg);
   else
-	return innerQuartzDeviceDriver((NewDevDesc *)dd, display,
-			 width,  height,  pointsize, family, antialias, autorefresh, 
+      return innerQuartzDeviceDriver((NewDevDesc *)dd, display,
+			 width,  height,  pointsize, family, antialias, 
+				       autorefresh, 
 			 quartzpos, bg);
 
 }
@@ -1674,9 +1677,9 @@ OSStatus QuartzEventHandler( EventHandlerCallRef inCallRef, EventRef inEvent, vo
 }
 
 #else
-SEXP do_Quartz(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP Quartz(SEXP args)
 {
-	warning("Quartz device not available on this platform\n");
+    warning("Quartz device not available on this platform\n");
     return R_NilValue;
 }
 #endif  /* __APPLE_CC__  && HAVE_AQUA*/

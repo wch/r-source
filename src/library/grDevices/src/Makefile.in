@@ -11,14 +11,14 @@ top_builddir = ../../../..
 subdir = src/library/$(pkg)/src
 R_HOME = $(top_builddir)
 
-SOURCES_C = devNull.c devPicTeX.c devPS.c init.c
+SOURCES_C = devNull.c devPicTeX.c devPS.c devQuartz.c init.c
 
 DEPENDS = $(SOURCES_C:.c=.d)
 OBJECTS = $(SOURCES_C:.c=.o)
 
 SHLIB = $(pkg)@SHLIB_EXT@
 
-# need Defn.h etc
+# need Defn.h etc, and config.h
 PKG_CPPFLAGS =-I../../../include -I$(top_srcdir)/src/include -DHAVE_CONFIG_H
 
 all: Makefile Makedeps
