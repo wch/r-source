@@ -75,7 +75,10 @@ FORCE:
 
 $(EX_OUT): Makefile \
   $(top_builddir)/bin/R.bin \
-  $(top_builddir)/library/base/R/base
+  $(top_builddir)/library/base/R/base \
+  $(top_builddir)/modules/lapack.$(SHLIB_EXT)
+
+base-Ex.Rout: $(top_builddir)/modules/vfonts.$(SHLIB_EXT)
 
 mostlyclean: clean
 clean:
