@@ -339,6 +339,10 @@ BUG FIXES
     o	as.POSIXct("NA") (or ..lt) now work; hence, merge(*, all=TRUE) now
 	works with dataframes containing POSIXt date columns.
 
+    o	integer(2^30+1) and similar ones do not segfault anymore but duly
+	report allocation errors.
+
+
 
 	**************************************************
 	*						 *
