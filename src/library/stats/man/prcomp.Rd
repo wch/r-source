@@ -55,9 +55,6 @@ prcomp(x, retx = TRUE, center = TRUE, scale. = FALSE, tol = NULL)
   is generally the preferred method for numerical accuracy.  The
   \code{print} method for the these objects prints the results in a nice
   format and the \code{plot} method produces a scree plot.
-
-  If the input has more variables than units then \code{\link{La.svd}}
-  is used, and the results may differ in sign from versions prior to 1.7.0.
 }
 \note{
   The signs of the columns of the rotation matrix are arbitrary, and
@@ -76,6 +73,7 @@ prcomp(x, retx = TRUE, center = TRUE, scale. = FALSE, tol = NULL)
   \emph{Modern Applied Statistics with S-PLUS}, Springer-Verlag.
 }
 \seealso{
+  \code{\link{biplot.prcomp}},
   \code{\link{princomp}}, \code{\link{cor}}, \code{\link{cov}},
   \code{\link{svd}}, \code{\link{eigen}}.
 }
@@ -87,5 +85,6 @@ prcomp(USArrests)  # inappropriate
 prcomp(USArrests, scale = TRUE)
 plot(prcomp(USArrests))
 summary(prcomp(USArrests, scale = TRUE))
+biplot(prcomp(USArrests, scale = TRUE))
 }
 \keyword{multivariate}

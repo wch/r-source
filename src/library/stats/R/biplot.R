@@ -89,6 +89,6 @@ biplot.prcomp <- function(x, choices = 1:2, scale = 1, pc.biplot=FALSE, ...)
     if(scale != 0) lam <- lam^scale else lam <- 1
     if(pc.biplot) lam <- lam / sqrt(n)
     biplot.default(t(t(scores[, choices]) / lam),
-		   t(t(x$loadings[, choices]) * lam), ...)
+		   t(t(x$rotation[, choices]) * lam), ...)
     invisible()
 }

@@ -28,9 +28,9 @@ USER-VISIBLE CHANGES
 	datasets have been moved to package stats.  Sweave has been
 	moved to utils.
 
-	Package mle has been renamed as stats4 which will become the
+	Package mle has been moved to stats4 which will become the
 	central place for statistical S4 classes and methods
-	distributed with base R.
+	distributed with base R.  Package mle remains as a stub.
 
 	A few user-contributed packages have made assumptions about
 	where functions were and so will need updating.
@@ -46,12 +46,6 @@ USER-VISIBLE CHANGES
 
 
 NEW FEATURES
-
-    o   The Mac OS X version now produces an R framework for easier linking
-	of R into other programs. As a result, R.app is now relocatable.
-
-    o   Command-line Mac OS X doesn't attempt to guess whether you are
-	running an X server: the default graphical device is pdf()
 
     o	The perl=TRUE argument to grep/regexpr/(g)sub() now uses
 	character tables prepared for the locale currently in use each
@@ -179,6 +173,12 @@ NEW FEATURES
 
     o   Package stats4 exports generics for AIC and BIC.
 
+    o   The Mac OS X version now produces an R framework for easier linking
+	of R into other programs.  As a result, R.app is now relocatable.
+
+    o   Command-line Mac OS X doesn't attempt to guess whether you are
+	running an X server: the default graphical device is now pdf().
+
 
 UTILITIES
 
@@ -299,7 +299,8 @@ BUG FIXES
     o   par(mgp)[2] was being interpreted as relative to par(mgp)[3].
 	(PR#6045)
 
-    o   Versioned install was broken: no R code was loaded.
+    o   Versioned install was broken both with and without namespaces: 
+	no R code was loaded.
 
     o   methods(), getS3method() and the registration of S3 methods in
 	namespaces were broken if the S3 generic was converted into an
@@ -319,6 +320,9 @@ BUG FIXES
         because the option is not supported on some Solaris
         machines. For buildVignettes() this makes no difference as it
         uses an internal cleanup mechanism.
+
+    o   The biplot method for prcomp was not registered nor exported. 
+	(PR#6425)
 
 
 
