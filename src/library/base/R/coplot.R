@@ -127,7 +127,7 @@ coplot <-
 	    bad.givens()
 	a.intervals <- given.values[[1]]
 	if(is.factor(a)) {
-            if (is.character(a.intervals)) 
+            if (is.character(a.intervals))
                 a.intervals <- match(a.intervals, levels(a))
             a.intervals <- cbind(a.intervals - 0.5, a.intervals + 0.5)
             a.levels <- levels(a)
@@ -141,7 +141,7 @@ coplot <-
 	if(have.b) {
 	    b.intervals <- given.values[[2]]
 	    if(is.factor(b)) {
-                if (is.character(b.intervals)) 
+                if (is.character(b.intervals))
                     b.intervals <- match(b.intervals, levels(b))
                 b.intervals <- cbind(b.intervals - 0.5, b.intervals + 0.5)
                 b.levels <- levels(b)
@@ -164,10 +164,11 @@ coplot <-
 	columns <- nrow(a.intervals)
 	nplots <- rows * columns
         if(length(show.given) < 2) show.given <- rep(show.given, 2)
-    } else {
+    }
+    else {
 	nplots <- nrow(a.intervals)
 	if (missing(rows)) {
-	    if (missing(columns)) {
+	    if (missing(columns)) { ## default
 		rows <- ceiling(round(sqrt(nplots)))
 		columns <- ceiling(nplots/rows)
 	    }
@@ -293,7 +294,7 @@ coplot <-
 	    plot.window(0.5+c(0, nint),
 			range(b.intervals, finite=TRUE), log="")
             bg <-
-                if (is.null(b.levels)) 
+                if (is.null(b.levels))
                     gray(0.9)
                 else {
                     mid <- apply(b.intervals, 1, mean)
