@@ -3265,3 +3265,12 @@ History:
 */
 
 
+char * strdup (const char *str)
+{
+  char *newstr;
+
+  newstr = (char *) malloc (strlen (str) + 1);
+  if (newstr)
+    strcpy (newstr, str);
+  return newstr;
+}
