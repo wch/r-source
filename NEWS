@@ -311,6 +311,8 @@ NEW FEATURES
 
     o	slotNames() is better documented and there's new .slotNames() {for
 	rare use}.
+	
+    o	Added delayedAssign() function to (eventually) replace delay().
 
 
 INTERNATIONALIZATION

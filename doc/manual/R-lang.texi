@@ -539,7 +539,7 @@ access either the value or the expression associated with the promise.
 
 Within the @R{} language, promise objects are almost only seen
 implicitly.  Actual function arguments are of this type.
-There is also a @code{delay} function
+There is also a @code{delayedAssign} function
 that will make a promise out of an expression.  There is generally no 
 way in @R{} code to check whether an object is a promise or not, nor is there a
 way to use @R{} code to determine the environment of a promise.
@@ -3179,8 +3179,9 @@ value.  This is related to the
 @cindex evaluation, lazy
 lazy evaluation scheme of @R{}
 (@pxref{Promise objects}).  A formal argument is really a
-@emph{promise}, an object with two slots, one for the expression that
-defines it, and one for the value of that expression.  @code{substitute}
+@emph{promise}, an object with three slots, one for the expression that
+defines it, one for the environment in which to evaluate that expression,
+and one for the value of that expression once evaluated. @code{substitute}
 will recognize a promise variable and substitute the value of its
 expression slot.  If @code{substitute} is invoked inside a function, the
 local variables of the function are also subject to substitution.

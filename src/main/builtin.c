@@ -42,6 +42,32 @@ SEXP do_delay(SEXP call, SEXP op, SEXP args, SEXP rho)
     return mkPROMISE(expr, env);
 }
 
+SEXP do_delayed(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    SEXP name, expr, eenv, aenv;
+    checkArity(op, args);
+    
+    if (!isString(CAR(args)) || length(CAR(args)) == 0)
+    	errorcall(call, _("invalid first argument"));
+    else
+	name = install(CHAR(STRING_ELT(CAR(args), 0)));
+    args = CDR(args);
+    expr = CAR(args);
+    
+    args = CDR(args);
+    eenv = CAR(args);
+    if (!isEnvironment(eenv))
+	errorcall(call, R_MSG_IA);
+	
+    args = CDR(args);
+    aenv = CAR(args);
+    if (!isEnvironment(aenv))
+    	errorcall(call, R_MSG_IA);
+    	
+    defineVar(name, mkPROMISE(expr, eenv), aenv);
+    return R_NilValue;
+}
+
 SEXP do_onexit(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     RCNTXT *ctxt;
