@@ -574,7 +574,6 @@ SEXP applyClosure(SEXP call, SEXP op, SEXP arglist, SEXP rho, SEXP suppliedenv)
     if ((SETJMP(cntxt.cjmpbuf))) {
 	if (R_ReturnedValue == R_DollarSymbol) {
 	    cntxt.callflag = CTXT_RETURN;  /* turn restart off */
-	    R_GlobalContext = &cntxt;      /* put the context back */
 	    PROTECT(tmp = eval(body, newrho));
 	}
 	else
@@ -660,16 +659,26 @@ static SEXP assignCall(SEXP op, SEXP symbol, SEXP fun,
 }
 
 
+/* It might be a tad more efficient to make the non-error part of this
+   into a macro, especially for while loops. */
+static Rboolean asLogicalNoNA(SEXP s, SEXP call)
+{
+    Rboolean cond = asLogical(s);
+    if (cond == NA_LOGICAL) {
+	char *msg = isLogical(s) ?
+	    "missing value where logical needed" :
+	    "argument is not interpretable as logical";
+	errorcall(call, msg);
+    }
+    return cond;
+}
+    
+
 SEXP do_if(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP Cond = eval(CAR(args), rho);
-    int cond;
 
-    if ((cond = asLogical(Cond)) == NA_LOGICAL)
-	errorcall(call, isLogical(Cond)
-		  ? "missing value where logical needed"
-		  : "argument of if(*) is not interpretable as logical");
-    else if (cond)
+    if (asLogicalNoNA(Cond, call))
 	return (eval(CAR(CDR(args)), rho));
     else if (length(args) > 2)
 	return (eval(CAR(CDR(CDR(args))), rho));
@@ -678,13 +687,25 @@ SEXP do_if(SEXP call, SEXP op, SEXP args, SEXP rho)
 }
 
 
+#define BodyHasBraces(body) \
+    ((isLanguage(body) && CAR(body) == R_BraceSymbol) ? 1 : 0)
+
+#define DO_LOOP_DEBUG(call, op, args, rho, bgn) do { \
+    if (bgn && DEBUG(rho)) { \
+	Rprintf("debug: "); \
+	PrintValue(CAR(args)); \
+	do_browser(call,op,args,rho); \
+    } } while (0)
+
+
 SEXP do_for(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    int tmp, dbg;
+    int dbg;
     volatile int i, n, bgn;
     SEXP sym, body;
     volatile SEXP ans, v, val;
     RCNTXT cntxt;
+    PROTECT_INDEX vpi, api;
 
     sym = CAR(args);
     val = CADR(args);
@@ -698,78 +719,67 @@ SEXP do_for(SEXP call, SEXP op, SEXP args, SEXP rho)
     defineVar(sym, R_NilValue, rho);
     if (isList(val) || isNull(val)) {
 	n = length(val);
-	PROTECT(v = R_NilValue);
+	PROTECT_WITH_INDEX(v = R_NilValue, &vpi);
     }
     else {
 	n = LENGTH(val);
-	PROTECT(v = allocVector(TYPEOF(val), 1));
+	PROTECT_WITH_INDEX(v = allocVector(TYPEOF(val), 1), &vpi);
     }
     ans = R_NilValue;
 
     dbg = DEBUG(rho);
-    if (isLanguage(body) && isSymbol(CAR(body)) &&
-	strcmp(CHAR(PRINTNAME(CAR(body))),"{") )
-	bgn = 1;
-    else
-	bgn = 0;
+    bgn = BodyHasBraces(body);
 
-    for (i = 0; i < n; i++) {
-	if( DEBUG(rho) && bgn ) {
-	    Rprintf("debug: ");
-	    PrintValue(body);
-	    do_browser(call,op,args,rho);
-	}
-	begincontext(&cntxt, CTXT_LOOP, R_NilValue, rho,
-		     R_NilValue, R_NilValue);
-	if ((tmp = SETJMP(cntxt.cjmpbuf))) {
-	    if (tmp == CTXT_BREAK) break;	/* break */
-	    else   continue;                       /* next  */
-
-	} else {
-	    if (isVector(v)) {
-		UNPROTECT(1);
-		PROTECT(v = allocVector(TYPEOF(val), 1));
-	    }
-	    switch (TYPEOF(val)) {
-	    case LGLSXP:
-		LOGICAL(v)[0] = LOGICAL(val)[i];
-		setVar(sym, v, rho);
-		ans = eval(body, rho);
-		break;
-	    case INTSXP:
-		INTEGER(v)[0] = INTEGER(val)[i];
-		setVar(sym, v, rho);
-		ans = eval(body, rho);
-		break;
-	    case REALSXP:
-		REAL(v)[0] = REAL(val)[i];
-		setVar(sym, v, rho);
-		ans = eval(body, rho);
-		break;
-	    case CPLXSXP:
-		COMPLEX(v)[0] = COMPLEX(val)[i];
-		setVar(sym, v, rho);
-		ans = eval(body, rho);
-		break;
-	    case STRSXP:
-		SET_STRING_ELT(v, 0, STRING_ELT(val, i));
-		setVar(sym, v, rho);
-		ans = eval(body, rho);
-		break;
-	    case EXPRSXP:
-	    case VECSXP:
-		setVar(sym, VECTOR_ELT(val, i), rho);
-		ans = eval(body, rho);
-		break;
-	    case LISTSXP:
-		setVar(sym, CAR(val), rho);
-		ans = eval(body, rho);
-		val = CDR(val);
-	    }
-	    endcontext(&cntxt);
-	}
+    PROTECT_WITH_INDEX(ans, &api);
+    begincontext(&cntxt, CTXT_LOOP, R_NilValue, rho, R_NilValue, R_NilValue);
+    switch (SETJMP(cntxt.cjmpbuf)) {
+    case CTXT_BREAK: goto for_break;
+    case CTXT_NEXT: goto for_next;
     }
-    UNPROTECT(4);
+    for (i = 0; i < n; i++) {
+	DO_LOOP_DEBUG(call, op, args, rho, bgn);
+	switch (TYPEOF(val)) {
+	case LGLSXP:
+	    REPROTECT(v = allocVector(TYPEOF(val), 1), vpi);
+	    LOGICAL(v)[0] = LOGICAL(val)[i];
+	    setVar(sym, v, rho);
+	    break;
+	case INTSXP:
+	    REPROTECT(v = allocVector(TYPEOF(val), 1), vpi);
+	    INTEGER(v)[0] = INTEGER(val)[i];
+	    setVar(sym, v, rho);
+	    break;
+	case REALSXP:
+	    REPROTECT(v = allocVector(TYPEOF(val), 1), vpi);
+	    REAL(v)[0] = REAL(val)[i];
+	    setVar(sym, v, rho);
+	    break;
+	case CPLXSXP:
+	    REPROTECT(v = allocVector(TYPEOF(val), 1), vpi);
+	    COMPLEX(v)[0] = COMPLEX(val)[i];
+	    setVar(sym, v, rho);
+	    break;
+	case STRSXP:
+	    REPROTECT(v = allocVector(TYPEOF(val), 1), vpi);
+	    SET_STRING_ELT(v, 0, STRING_ELT(val, i));
+	    setVar(sym, v, rho);
+	    break;
+	case EXPRSXP:
+	case VECSXP:
+	    setVar(sym, VECTOR_ELT(val, i), rho);
+	    break;
+	case LISTSXP:
+	    setVar(sym, CAR(val), rho);
+	    val = CDR(val);
+	    break;
+	default: errorcall(call, "bad for loop sequence");
+	}
+	REPROTECT(ans = eval(body, rho), api);
+    for_next:
+    }
+ for_break:
+    endcontext(&cntxt);
+    UNPROTECT(5);
     R_Visible = 0;
     SET_DEBUG(rho, dbg);
     return ans;
@@ -778,42 +788,29 @@ SEXP do_for(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 SEXP do_while(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    int cond, dbg;
+    int dbg;
     volatile int bgn;
-    volatile SEXP s, t;
+    volatile SEXP t, body;
     RCNTXT cntxt;
+    PROTECT_INDEX tpi;
 
     checkArity(op, args);
-    s = eval(CAR(args), rho);	/* ??? */
 
     dbg = DEBUG(rho);
-    t = CAR(CADR(args));
-    if (isSymbol(t) && strcmp(CHAR(PRINTNAME(t)),"{"))
-	bgn = 1;
+    body = CADR(args);
+    bgn = BodyHasBraces(body);
+
     t = R_NilValue;
-    for (;;) {
-	if ((cond = asLogical(s)) == NA_LOGICAL)
-	    errorcall(call, "missing value where logical needed");
-	else if (!cond)
-	    break;
-	if (bgn && DEBUG(rho)) {
-	    Rprintf("debug: ");
-	    PrintValue(CAR(args));
-	    do_browser(call,op,args,rho);
-	}
-	begincontext(&cntxt, CTXT_LOOP, R_NilValue, rho,
-		     R_NilValue, R_NilValue);
-	if ((cond = SETJMP(cntxt.cjmpbuf))) {
-	    if (cond == CTXT_BREAK) break;	/* break */
-	    else continue;                      /* next  */
-	}
-	else {
-	    PROTECT(t = eval(CAR(CDR(args)), rho));
-	    s = eval(CAR(args), rho);
-	    UNPROTECT(1);
-	    endcontext(&cntxt);
+    PROTECT_WITH_INDEX(t, &tpi);
+    begincontext(&cntxt, CTXT_LOOP, R_NilValue, rho, R_NilValue, R_NilValue);
+    if (SETJMP(cntxt.cjmpbuf) != CTXT_BREAK) {
+	while (asLogicalNoNA(eval(CAR(args), rho), call)) {
+	    DO_LOOP_DEBUG(call, op, args, rho, bgn);
+	    REPROTECT(t = eval(body, rho), tpi);
 	}
     }
+    endcontext(&cntxt);
+    UNPROTECT(1);
     R_Visible = 0;
     SET_DEBUG(rho, dbg);
     return t;
@@ -822,35 +819,29 @@ SEXP do_while(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 SEXP do_repeat(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    int cond, dbg;
+    int dbg;
     volatile int bgn;
-    volatile SEXP t;
+    volatile SEXP t, body;
     RCNTXT cntxt;
+    PROTECT_INDEX tpi;
 
     checkArity(op, args);
 
     dbg = DEBUG(rho);
-    if (isSymbol(CAR(args)) && strcmp(CHAR(PRINTNAME(CAR(args))),"{"))
-	bgn = 1;
+    body = CAR(args);
+    bgn = BodyHasBraces(body);
 
     t = R_NilValue;
-    for (;;) {
-	if (DEBUG(rho) && bgn) {
-	    Rprintf("debug: ");
-	    PrintValue(CAR(args));
-	    do_browser(call, op, args, rho);
-	}
-	begincontext(&cntxt, CTXT_LOOP, R_NilValue, rho,
-		     R_NilValue, R_NilValue);
-	if ((cond = SETJMP(cntxt.cjmpbuf))) {
-	    if (cond == CTXT_BREAK) break;	/*break */
-	    else   continue;                    /* next  */
-	}
-	else {
-	    t = eval(CAR(args), rho);
-	    endcontext(&cntxt);
+    PROTECT_WITH_INDEX(t, &tpi);
+    begincontext(&cntxt, CTXT_LOOP, R_NilValue, rho, R_NilValue, R_NilValue);
+    if (SETJMP(cntxt.cjmpbuf) != CTXT_BREAK) {
+	for (;;) {
+	    DO_LOOP_DEBUG(call, op, args, rho, bgn);
+	    REPROTECT(t = eval(body, rho), tpi);
 	}
     }
+    endcontext(&cntxt);
+    UNPROTECT(1);
     R_Visible = 0;
     SET_DEBUG(rho, dbg);
     return t;
