@@ -4140,14 +4140,15 @@ available to users' C code.  These include the following.
 @deftypefunx void rsort_with_index (double* @var{x}, int* @var{index}, int @var{n})
 The first three sort integer, real (double) and complex data
 respectively.  (Complex numbers are sorted by the real part first then
-the imaginary part.)
+the imaginary part.)  @code{NA}s are sorted last.
 
 @code{rsort_with_index} sorts on @var{x}, and applies the same
-permutation to @var{index}.
+permutation to @var{index}.  @code{NA}s are sorted last.
 @end deftypefun
 
 @deftypefun void revsort (double* @var{x}, int* @var{index}, int @var{n})
-Is similar to @code{rsort_with_index} but sorts into decreasing order.
+Is similar to @code{rsort_with_index} but sorts into decreasing order,
+and @code{NA}s are not handled.
 @end deftypefun
 
 @deftypefun void iPsort (int* @var{x}, int @var{n}, int @var{k})
