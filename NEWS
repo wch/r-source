@@ -269,6 +269,9 @@ BUG FIXES
 
     o   Fix cases with lambda==0 in Poisson distribution
 
+    o   demo(is.things) had been broken by the introduction of is.element.
+
+
 	**************************************************
 	*						 *
 	*	       0.99 SERIES NEWS			 *

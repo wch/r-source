@@ -1,5 +1,5 @@
 
-ls.base <- ls(pos=length(search()))#- something more elegant ?
+ls.base <- ls("package:base")
 base.is.f <- sapply(ls.base, function(x) is.function(get(x)))
 bi <- ls.base[base.is.f]
 cat("\nNumber of base objects:\t\t", length(ls.base),
@@ -16,7 +16,7 @@ is.primitive <- function(obj)  is.function(obj) && is.null(args(obj))
 
 is.ALL <- function(obj, func.names = ls(pos=length(search())),
 		   not.using = c("is.single", "is.na.data.frame",
-		   "is.loaded", "is.empty.model"),
+		   "is.loaded", "is.empty.model", "is.element"),
 		   true.only = FALSE, debug = FALSE)
 {
     ## Purpose: show many 'attributes' of  R object __obj__
