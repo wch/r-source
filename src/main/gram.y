@@ -1521,6 +1521,37 @@ static int SpecialValue(int c)
     return SPECIAL;
 }
 
+extern int isValidName(char *name)
+{
+    char *p;
+    int c, i, j;
+
+    p = name;
+
+    c = *p++;
+
+    if( isdigit(c) )
+        return 0;
+
+    for (i = 0; keywords[i].name; i++)
+        if (strcmp(keywords[i].name, name) == 0)
+                return 0;
+
+    if (c == '.' ) {
+        while ( c = *p++ && isdigit(c) );
+        if( *p == '\0' )
+            return 0;
+        else
+            return 1;
+    }
+    while ( c = *p++ && (isalnum(c) || c=='.') );
+    if (*p == '\0')
+        return 1;
+    else
+        return 0;
+}
+
+
 static int SymbolValue(int c)
 {
     int kw;
