@@ -497,3 +497,23 @@ Date: Tue, 11 Jun 2002 2:18:50 +0800
 Subject: coplot behaviour
 From: "RenE J.V. Bertin" <rjvbertin@hotmail.com>
 Date: Mon, 10 Jun 2002 20:11:02 +0200
+* PR# 1654 *
+Subject: R 1.5.0: axis() does not honor the xaxp argument
+From: "Robert D. Merithew" <merithew@ccmr.cornell.edu>
+Date: Tue, 11 Jun 2002 09:29:39 -0400 (EDT)
+* PR# 1655 *
+Subject: ReadLines(con2)
+From: SGEIGER <SGEIGER@indiana.edu>
+Date: Tue, 11 Jun 2002 12:32:44 +0800 (CST)
+* PR# 1656 *
+Subject: command line editing does not work
+From: Petr.Savicky@cuni.cz
+Date: Tue, 11 Jun 2002 19:51:24 +0200
+* PR# 1657 *
+Subject: command line editing does not work (2)
+From: Petr.Savicky@cuni.cz
+Date: Tue, 11 Jun 2002 20:20:11 +0200
+* PR# 1658 *
+Subject: make install fails - index.html not found
+From: dhouston@bio.ri.ccf.org
+Date: Tue, 11 Jun 2002 22:14:07 +0200 (MET DST)
