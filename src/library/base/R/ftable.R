@@ -171,12 +171,19 @@ write.ftable <- function(x, file = "", quote = TRUE,
         }
         y
     }
+    makeNames <- function(x) {
+        nmx <- names(x)
+        if(is.null(nmx))
+            nmx <- rep("", length = length(x))
+        nmx
+    }
+
     xrv <- attr(x, "row.vars")
     xcv <- attr(x, "col.vars")
     LABS <- cbind(rbind(matrix("", nr = length(xcv), nc = length(xrv)),
-                        charQuote(names(xrv)),
+                        charQuote(makeNames(xrv)),
                         makeLabels(xrv)),
-                  c(charQuote(names(xcv)),
+                  c(charQuote(makeNames(xcv)),
                     rep("", times = nrow(x) + 1)))
     DATA <- rbind(t(makeLabels(xcv)),
                   rep("", times = ncol(x)),
