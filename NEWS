@@ -265,8 +265,10 @@ BUG FIXES
     o	Printing unquoted character vectors containing escape
 	characters was computing the wrong length and hence
 	misaligning names.  This was due to a bug in Rstrlen which
-	might had other effects.
+	might have had other effects.
 
+    o	if(logical(0)) and while(logical(0)) now report zero length,
+	not `missing value where logical is needed'.
 
 
 
