@@ -1231,7 +1231,8 @@ SEXP do_is(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     case 200:		/* is.atomic */
 	switch(TYPEOF(CAR(args))) {
-	case NILSXP:
+	case NILSXP: 
+	    /* NULL is atomic (S compatibly), but not in isVectorAtomic(.) */
 	case CHARSXP:
 	case LGLSXP:
 	case INTSXP:
