@@ -194,7 +194,7 @@ SEXP do_pgsub(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP pat, rep, vec, ans;
     int i, j, n, ns, nmatch, offset, re_nsub;
     int global, igcase_opt, options = 0, erroffset;
-    char *s, *t, *u;
+    char *s, *t, *u, *uu;
     const char *errorptr;
     pcre *re_pcre;
     pcre_extra *re_pe;
@@ -268,7 +268,7 @@ SEXP do_pgsub(SEXP call, SEXP op, SEXP args, SEXP env)
 	    nmatch = 0;
 	    s = CHAR(STRING_ELT(vec, i));
 	    t = CHAR(STRING_ELT(rep, 0));
-	    u = CHAR(STRING_ELT(ans, i));
+	    uu = u = CHAR(STRING_ELT(ans, i));
 	    ns = strlen(s);
 	    while (pcre_exec(re_pcre, NULL, s+offset, ns-offset, 0, 0, 
 			     ovector, 30) >= 0) {
@@ -287,6 +287,7 @@ SEXP do_pgsub(SEXP call, SEXP op, SEXP args, SEXP env)
 	    for (j = offset ; s[j] ; j++)
 		*u++ = s[j];
 	    *u = '\0';
+	    SETLENGTH(STRING_ELT(ans, i), strlen(uu));
 	}
     }
     (pcre_free)(re_pe);
