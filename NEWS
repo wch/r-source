@@ -14,6 +14,8 @@ USER-VISIBLE CHANGES
     o	The stub packages from 1.9.x have been removed: the library()
 	function selects the new home for their code.
 
+    o	The str() method for class "dendrogram" now has default 'max.level=2'
+
 
 NEW FEATURES
 
@@ -49,15 +51,15 @@ NEW FEATURES
 	When TRUE, some details (e.g. attributes, quoting) are omitted.
 	When FALSE, the result is usually parseable to reproduce the
 	object. dump() defaults to FALSE, the others default to TRUE.
-	
-    	deparse(), dput() and dump() have a new 'useSource' argument
+
+	deparse(), dput() and dump() have a new 'useSource' argument
 	that indicates they should used saved source for function
 	definitions (including comments and formatting) rather than
-	deparsing the internal representation.  dump() defaults to
+	deparsing the internal representation.	dump() defaults to
 	TRUE, the others default to FALSE.
-    	
+
     o	source() with 'echo = TRUE' uses 'useSource = TRUE' when
-	displaying commands as they are parsed.  
+	displaying commands as they are parsed.
 
     o	The screen devices x11(), windows() and quartz() have a new
 	argument 'bg' to set the default background colour.
@@ -81,6 +83,9 @@ NEW FEATURES
 	octal escape sequences.
 
     o	str(obj) now displays more reasonably the STRucture of S4 objects.
+	The method for class "dendrogram" has a new argument 'stem' and
+	indicates when it's not printing all levels (as by the new default,
+	'max.level = 2').
 
     o	fisher.test(*, conf.int=FALSE) allows the confidence interval
 	computation to be skipped.
@@ -88,12 +93,13 @@ NEW FEATURES
     o	formula() methods for classes "lm" and "glm" used the expanded
 	formula (with '.' expanded) from the terms component.
 
-    o	New function eapply() - apply for environments.  The supplied
-        function is applied to each element of the environment; the order
-        of application is not specified.
+    o	New function eapply() - apply for environments.	 The supplied
+	function is applied to each element of the environment; the order
+	of application is not specified.
 
-    o   system.time() has a new argument 'gcFirst' which, when TRUE,
-        forces a garbage collection before timing begins.
+    o	system.time() has a new argument 'gcFirst' which, when TRUE,
+	forces a garbage collection before timing begins.
+
 
 
 UTILITIES
@@ -196,6 +202,8 @@ NEW FEATURES
     o	legend() has a new argument 'pt.cex'.
 
     o	plot.ts() has more arguments, particularly 'yax.flip'.
+
+    o	heatmap() has a 'keep.dendro' argument.
 
 
 INSTALLATION ISSUES
@@ -313,7 +321,14 @@ BUG FIXES
 	always claimed.
 
     o	update.packages("mgcv") and old.packages(*) now give a better error
-        message; and installed.packages("mgcv") properly returns <empty>.
+	message; and installed.packages("mgcv") properly returns <empty>.
+
+    o	stats:::as.dendrogram.hclust() is documented and no longer re-sorts
+	the two children at each node.  This fixes as.dendrogram(hh) for
+	the case where hh is a "reordered" hclust object.
+
+    o	heatmap(*, labRow=., labCol=.) now also reorders the labels when
+	specified---not only when using default labels.
 
 
 
