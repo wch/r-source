@@ -18,8 +18,8 @@ local(expr, envir = new.env())
   \item{expr}{object of mode \code{\link{expression}} or \code{call} or
     an \dQuote{unevaluated expression}.}
   \item{envir}{the \code{\link{environment}} in which \code{expr} is to
-    be evaluated.  May also be a list, a data frame, or an integer as in
-    \code{sys.call}.}
+    be evaluated.  May also be, \code{NULL}, a list, a data frame,
+    or an integer as in \code{sys.call}.}
   \item{enclos}{Relevant when \code{envir} is a list or a data frame.
     Specifies the
     enclosure, i.e., where \R looks for objects not found in
@@ -47,6 +47,14 @@ local(expr, envir = new.env())
   changes any of the components named in the data frame/list, the changes
   are lost.
 
+  If \code{envir} is \code{NULL} it is treated as an empty list or data
+  frame: no values will be found in \code{envir}, so look-up goes
+  directly to \code{enclos}.
+
+  A value of \code{NULL} for \code{enclos} is interpreted as the
+  environment of the base package.
+  
+  
   \code{local} evaluates an expression in a local environment.  It is
   equivalent to \code{evalq} except the its default argument creates a
   new, empty environment.  This is useful to create anonymous recursive
