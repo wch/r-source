@@ -736,7 +736,6 @@ AC_OUTPUT(Makeconf
   src/scripts/Rd2txt
   src/scripts/Rdconv
   src/scripts/Rdindex
-  src/scripts/Rman2Rd
   src/scripts/SHLIB
   src/scripts/Sd2Rd
   src/scripts/build-help
