@@ -79,8 +79,8 @@ NEW FEATURES
     o   subset() now allows a `drop' argument to remove unused factor
         levels.  The default is still to keep them.
 
-    o	model.frame() methods, for example those for "lm" and "glm", pass
-	relevant parts of ... onto the default method.  (This has
+    o	model.frame() methods, for example those for "lm" and "glm",
+	pass relevant parts of ... onto the default method.  (This has
 	long been documented but not done.)  The default method is now
 	able to cope with model classes such as "lqs" and "ppr".
 
@@ -269,7 +269,7 @@ BUG FIXES
     o   qbinom() was returning NaN for prob = 0 or 1 or size = 0 even
 	though the result is well-defined.  (In part, PR#5900.)
 
-    o   par(mfg)[2] was being interpreted as relative to par(mfg)[3].
+    o   par(mgp)[2] was being interpreted as relative to par(mgp)[3].
 	(PR#6045)
 
     o   Versioned install was broken: no R code was loaded.
