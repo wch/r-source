@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.4-20, 2002-02-24
+Version 1.4-21, 2002-02-27
 Kurt Hornik
 
 
@@ -1232,6 +1232,12 @@ works, was published in the Journal of Statistical Software
 
 *RPgSQL*
      Provides methods for accessing data stored in PostgreSQL tables.
+
+*RQuantLib*
+     Provides access to (some) of the QuantLib functions from within R;
+     currently limited to some Option pricing and analysis functions.  The
+     QuantLib project aims to provide a comprehensive software framework for
+     quantitative finance.
 
 *RSQLite*
      Database Interface R driver for SQLite.  Embeds the SQLite database

@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2002
-@set FAQ-VERSION 1.4-20, 2002-02-24
+@set FAQ-VERSION 1.4-21, 2002-02-27
 @set REL-VERSION 1.4.1
 @c %**end of header
 
@@ -1499,6 +1499,11 @@ An @acronym{ODBC} database interface.
 Oracle Database Interface driver for R.  Uses the ProC/C++ embedded SQL.
 @item RPgSQL
 Provides methods for accessing data stored in PostgreSQL tables.
+@item RQuantLib
+Provides access to (some) of the QuantLib functions from within R;
+currently limited to some Option pricing and analysis functions.  The
+QuantLib project aims to provide a comprehensive software framework for
+quantitative finance.
 @item RSQLite
 Database Interface R driver for SQLite.  Embeds the SQLite database
 engine in R.
