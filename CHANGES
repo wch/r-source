@@ -55,6 +55,8 @@ NEW FEATURES
 
 BUG FIXES
 
+    o   Plotting of dendrograms is working again.
+
     o   data.frame(.) now uses "1:n" as default row.names.
 
     o   format(NULL) now works.
