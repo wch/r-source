@@ -15,7 +15,7 @@ save.plot
   The \code{*chisq()} functions now take an optional non-centrality
   argument, so the \code{*nchisq()} functions are no longer needed.
 
-  The new \code{dev.copy} and \code{dev.print()} functions should now be
-  used for saving plots to a file or printing them.
+  The new function \code{dev.print()} should now be used for saving
+  plots to a file or printing them.
 }
 \seealso{\code{\link{Defunct}}}
