@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.5-7, 2002-05-24
+Version 1.5-9, 2002-06-06
 ISBN 3-901167-51-X
 Kurt Hornik
 
@@ -1512,6 +1512,14 @@ works, was published in the Journal of Statistical Software
      in classification and regression as well as resampling based estimators
      of prediction error.
 
+*knn.in.leaf*
+     Construct or predict with k-nearest-neighbor classifiers, using
+     cross-validation to select k, choose variables (by forward or
+     backwards selection), and choose scaling (from among no scaling,
+     scaling each column by its SD, or scaling each column by its MAD).
+     The finished classifier will consist of a classification tree with one
+     such k-nn classifier in each leaf.
+
 *lasso2*
      Routines and documentation for solving regression problems while
      imposing an L1 constraint on the estimates, based on the algorithm of
@@ -1750,6 +1758,11 @@ works, was published in the Journal of Statistical Software
 
 *survival*
      Functions for survival analysis, including penalised likelihood.
+
+*systemfit*
+     Contains functions for fitting simultaneous systems of equations using
+     Ordinary Least Sqaures (OLS), Two-Stage Least Squares (2SLS), and
+     Three-Stage Least Squares (3SLS).
 
 *tensor*
      Tensor product of arrays.

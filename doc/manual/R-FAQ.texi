@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2002
-@set FAQ-VERSION 1.5-7, 2002-05-24
+@set FAQ-VERSION 1.5-9, 2002-06-06
 @set REL-VERSION 1.5.0
 @set FAQ-ISBN 3-901167-51-X
 @c %**end of header
@@ -1727,6 +1727,13 @@ Inequality, concentration and poverty measures, and Lorenz curves
 Improved predictive models by direct and indirect bootstrap aggregation
 in classification and regression as well as resampling based estimators
 of prediction error.
+@item knn.in.leaf
+Construct or predict with @math{k}-nearest-neighbor classifiers, using
+cross-validation to select @math{k}, choose variables (by forward or
+backwards selection), and choose scaling (from among no scaling, scaling
+each column by its SD, or scaling each column by its MAD).  The finished
+classifier will consist of a classification tree with one such
+@math{k}-nn classifier in each leaf.
 @item lasso2
 Routines and documentation for solving regression problems while
 imposing an L1 constraint on the estimates, based on the algorithm of
@@ -1946,6 +1953,10 @@ optimal under various criteria.
 @c @strong{splines}).
 @item survival
 Functions for survival analysis, including penalised likelihood.
+@item systemfit
+Contains functions for fitting simultaneous systems of equations using
+Ordinary Least Sqaures (OLS), Two-Stage Least Squares (2SLS), and
+Three-Stage Least Squares (3SLS).
 @item tensor
 Tensor product of arrays.
 @item tkrplot
