@@ -499,7 +499,7 @@ does not implement.
      the browser: use `options(htmlhelp=TRUE)' to turn this on.
 
    * The HTML help system can only access packages installed in the
-     standard place.
+     standard library.
 
    * Paths to files (e.g. in `source()') can be specified with either
      "/" or "\\".

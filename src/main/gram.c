@@ -1,5 +1,5 @@
 /* A Bison parser, made from ../../../R/src/main/gram.y
-   by GNU bison 1.32.  */
+   by GNU bison 1.35.  */
 
 #define YYBISON 1  /* Identify Bison output.  */
 
@@ -168,7 +168,8 @@ static int	xxvalue(SEXP, int);
 #define YYSTYPE		SEXP
 
 #ifndef YYSTYPE
-#define YYSTYPE int
+# define YYSTYPE int
+# define YYSTYPE_IS_TRIVIAL 1
 #endif
 #ifndef YYDEBUG
 # define YYDEBUG 0
@@ -293,7 +294,7 @@ static const char *const yytname[] =
   "'/'", "SPECIAL", "':'", "UMINUS", "UPLUS", "'^'", "'$'", "'@'", "'('", 
   "'['", "'\\n'", "';'", "'{'", "'}'", "')'", "'!'", "'%'", "']'", "','", 
   "prog", "expr_or_assign", "equal_assign", "expr", "cond", "ifcond", 
-  "forcond", "exprlist", "sublist", "sub", "formlist", "cr", NULL
+  "forcond", "exprlist", "sublist", "sub", "formlist", "cr", 0
 };
 #endif
 
@@ -525,7 +526,9 @@ static const short yycheck[] =
 #line 3 "/usr/share/bison/bison.simple"
 
 /* Skeleton output parser for bison,
-   Copyright (C) 1984, 1989, 1990, 2000, 2001 Free Software Foundation, Inc.
+
+   Copyright (C) 1984, 1989, 1990, 2000, 2001, 2002 Free Software
+   Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -559,24 +562,16 @@ static const short yycheck[] =
    define necessary library symbols; they are noted "INFRINGES ON
    USER NAME SPACE" below.  */
 
-#ifdef __cplusplus
-# define YYSTD(x) std::x
-#else
-# define YYSTD(x) x
-#endif
-
 #if ! defined (yyoverflow) || defined (YYERROR_VERBOSE)
 
 /* The parser invokes alloca or malloc; define the necessary symbols.  */
 
 # if YYSTACK_USE_ALLOCA
 #  define YYSTACK_ALLOC alloca
-#  define YYSIZE_T YYSTD (size_t)
 # else
 #  ifndef YYSTACK_USE_ALLOCA
 #   if defined (alloca) || defined (_ALLOCA_H)
 #    define YYSTACK_ALLOC alloca
-#    define YYSIZE_T YYSTD (size_t)
 #   else
 #    ifdef __GNUC__
 #     define YYSTACK_ALLOC __builtin_alloca
@@ -589,18 +584,19 @@ static const short yycheck[] =
    /* Pacify GCC's `empty if-body' warning. */
 #  define YYSTACK_FREE(Ptr) do { /* empty */; } while (0)
 # else
-#  ifdef __cplusplus
-#   include <cstdlib> /* INFRINGES ON USER NAME SPACE */
-#   define YYSIZE_T std::size_t
-#  else
-#   ifdef __STDC__
-#    include <stdlib.h> /* INFRINGES ON USER NAME SPACE */
-#    define YYSIZE_T size_t
-#   endif
+#  if defined (__STDC__) || defined (__cplusplus)
+#   include <stdlib.h> /* INFRINGES ON USER NAME SPACE */
+#   define YYSIZE_T size_t
 #  endif
-#  define YYSTACK_ALLOC YYSTD (malloc)
-#  define YYSTACK_FREE YYSTD (free)
+#  define YYSTACK_ALLOC malloc
+#  define YYSTACK_FREE free
 # endif
+#endif /* ! defined (yyoverflow) || defined (YYERROR_VERBOSE) */
+
+
+#if (! defined (yyoverflow) \
+     && (! defined (__cplusplus) \
+	 || (YYLTYPE_IS_TRIVIAL && YYSTYPE_IS_TRIVIAL)))
 
 /* A type that is properly aligned for any stack member.  */
 union yyalloc
@@ -627,24 +623,41 @@ union yyalloc
       + YYSTACK_GAP_MAX)
 # endif
 
-/* Relocate the TYPE STACK from its old location to the new one.  The
+/* Copy COUNT objects from FROM to TO.  The source and destination do
+   not overlap.  */
+# ifndef YYCOPY
+#  if 1 < __GNUC__
+#   define YYCOPY(To, From, Count) \
+      __builtin_memcpy (To, From, (Count) * sizeof (*(From)))
+#  else
+#   define YYCOPY(To, From, Count)		\
+      do					\
+	{					\
+	  register YYSIZE_T yyi;		\
+	  for (yyi = 0; yyi < (Count); yyi++)	\
+	    (To)[yyi] = (From)[yyi];		\
+	}					\
+      while (0)
+#  endif
+# endif
+
+/* Relocate STACK from its old location to the new one.  The
    local variables YYSIZE and YYSTACKSIZE give the old and new number of
    elements in the stack, and YYPTR gives the new location of the
    stack.  Advance YYPTR to a properly aligned location for the next
    stack.  */
-# define YYSTACK_RELOCATE(Type, Stack)					\
+# define YYSTACK_RELOCATE(Stack)					\
     do									\
       {									\
 	YYSIZE_T yynewbytes;						\
-	yymemcpy ((char *) yyptr, (char *) (Stack),			\
-		  yysize * (YYSIZE_T) sizeof (Type));			\
+	YYCOPY (&yyptr->Stack, Stack, yysize);				\
 	Stack = &yyptr->Stack;						\
-	yynewbytes = yystacksize * sizeof (Type) + YYSTACK_GAP_MAX;	\
+	yynewbytes = yystacksize * sizeof (*Stack) + YYSTACK_GAP_MAX;	\
 	yyptr += yynewbytes / sizeof (*yyptr);				\
       }									\
     while (0)
 
-#endif /* ! defined (yyoverflow) || defined (YYERROR_VERBOSE) */
+#endif
 
 
 #if ! defined (YYSIZE_T) && defined (__SIZE_TYPE__)
@@ -654,14 +667,9 @@ union yyalloc
 # define YYSIZE_T size_t
 #endif
 #if ! defined (YYSIZE_T)
-# ifdef __cplusplus
-#  include <cstddef> /* INFRINGES ON USER NAME SPACE */
-#  define YYSIZE_T std::size_t
-# else
-#  ifdef __STDC__
-#   include <stddef.h> /* INFRINGES ON USER NAME SPACE */
-#   define YYSIZE_T size_t
-#  endif
+# if defined (__STDC__) || defined (__cplusplus)
+#  include <stddef.h> /* INFRINGES ON USER NAME SPACE */
+#  define YYSIZE_T size_t
 # endif
 #endif
 #if ! defined (YYSIZE_T)
@@ -740,12 +748,8 @@ while (0)
 #if YYDEBUG
 
 # ifndef YYFPRINTF
-#  ifdef __cplusplus
-#   include <cstdio>  /* INFRINGES ON USER NAME SPACE */
-#  else
-#   include <stdio.h> /* INFRINGES ON USER NAME SPACE */
-#  endif
-#  define YYFPRINTF YYSTD (fprintf)
+#  include <stdio.h> /* INFRINGES ON USER NAME SPACE */
+#  define YYFPRINTF fprintf
 # endif
 
 # define YYDPRINTF(Args)			\
@@ -753,10 +757,8 @@ do {						\
   if (yydebug)					\
     YYFPRINTF Args;				\
 } while (0)
-/* Nonzero means print parse trace. [The following comment makes no
-   sense to me.  Could someone clarify it?  --akim] Since this is
-   uninitialized, it does not stop multiple parsers from coexisting.
-   */
+/* Nonzero means print parse trace.  It is left uninitialized so that
+   multiple parsers can coexist.  */
 int yydebug;
 #else /* !YYDEBUG */
 # define YYDPRINTF(Args)
@@ -782,33 +784,6 @@ int yydebug;
 # define YYMAXDEPTH 10000
 #endif
 
-#if ! defined (yyoverflow) && ! defined (yymemcpy)
-# if __GNUC__ > 1		/* GNU C and GNU C++ define this.  */
-#  define yymemcpy __builtin_memcpy
-# else				/* not GNU C or C++ */
-
-/* This is the most reliable way to avoid incompatibilities
-   in available built-in functions on various systems.  */
-static void
-#  if defined (__STDC__) || defined (__cplusplus)
-yymemcpy (char *yyto, const char *yyfrom, YYSIZE_T yycount)
-#  else
-yymemcpy (yyto, yyfrom, yycount)
-     char *yyto;
-     const char *yyfrom;
-     YYSIZE_T yycount;
-#  endif
-{
-  register const char *yyf = yyfrom;
-  register char *yyt = yyto;
-  register YYSIZE_T yyi = yycount;
-
-  while (yyi-- != 0)
-    *yyt++ = *yyf++;
-}
-# endif
-#endif
-
 #ifdef YYERROR_VERBOSE
 
 # ifndef yystrlen
@@ -861,7 +836,7 @@ yystpcpy (yydest, yysrc)
 # endif
 #endif
 
-#line 341 "/usr/share/bison/bison.simple"
+#line 315 "/usr/share/bison/bison.simple"
 
 
 /* The user can define YYPARSE_PARAM as the name of an argument to be passed
@@ -871,13 +846,13 @@ yystpcpy (yydest, yysrc)
    to the proper pointer type.  */
 
 #ifdef YYPARSE_PARAM
-# ifdef __cplusplus
+# if defined (__STDC__) || defined (__cplusplus)
 #  define YYPARSE_PARAM_ARG void *YYPARSE_PARAM
 #  define YYPARSE_PARAM_DECL
-# else /* !__cplusplus */
+# else
 #  define YYPARSE_PARAM_ARG YYPARSE_PARAM
 #  define YYPARSE_PARAM_DECL void *YYPARSE_PARAM;
-# endif /* !__cplusplus */
+# endif
 #else /* !YYPARSE_PARAM */
 # define YYPARSE_PARAM_ARG
 # define YYPARSE_PARAM_DECL
@@ -1051,6 +1026,9 @@ yyparse (YYPARSE_PARAM_ARG)
 	yyvs = yyvs1;
       }
 #else /* no yyoverflow */
+# ifndef YYSTACK_RELOCATE
+      goto yyoverflowlab;
+# else
       /* Extend the stack our own way.  */
       if (yystacksize >= YYMAXDEPTH)
 	goto yyoverflowlab;
@@ -1064,15 +1042,16 @@ yyparse (YYPARSE_PARAM_ARG)
 	  (union yyalloc *) YYSTACK_ALLOC (YYSTACK_BYTES (yystacksize));
 	if (! yyptr)
 	  goto yyoverflowlab;
-	YYSTACK_RELOCATE (short, yyss);
-	YYSTACK_RELOCATE (YYSTYPE, yyvs);
+	YYSTACK_RELOCATE (yyss);
+	YYSTACK_RELOCATE (yyvs);
 # if YYLSP_NEEDED
-	YYSTACK_RELOCATE (YYLTYPE, yyls);
+	YYSTACK_RELOCATE (yyls);
 # endif
 # undef YYSTACK_RELOCATE
 	if (yyss1 != yyssa)
 	  YYSTACK_FREE (yyss1);
       }
+# endif
 #endif /* no yyoverflow */
 
       yyssp = yyss + yysize - 1;
@@ -1568,7 +1547,7 @@ case 79:
     break;
 }
 
-#line 727 "/usr/share/bison/bison.simple"
+#line 705 "/usr/share/bison/bison.simple"
 
 
   yyvsp -= yylen;
