@@ -908,8 +908,8 @@ sub check_pkg {
 	## subdirectories?
 	if((-d "inst")) {
 	    my @R_system_subdirs =
-		("Meta", "R", "data", "demo", "exec", "man", "help",
-		 "html", "latex", "R-ex");
+		("Meta", "R", "data", "demo", "exec", "libs",
+		 "man", "help", "html", "latex", "R-ex");
 	    my @bad_dirs = ();
 	    foreach my $dir (@R_system_subdirs) {
 		push(@bad_dirs, $dir)
