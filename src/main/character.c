@@ -242,7 +242,7 @@ SEXP do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
     regmatch_t regmatch[1];
     pcre *re_pcre = NULL;
     pcre_extra *re_pe = NULL;
-    const unsigned char *tables;
+    const unsigned char *tables = NULL;
     int options = 0, erroffset, ovector[30];
     const char *errorptr;
     Rboolean usedRegex = FALSE, usedPCRE = FALSE;
