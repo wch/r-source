@@ -37,7 +37,7 @@
 #define R_MSG_A1_char _("first argument must be a character string")
 #define R_MSG_A1_list _("first argument must be a list")
 #define R_MSG_A2_char _("second argument must be a character string")
-#define R_MSG_A2_list _("secong argument must be a list")
+#define R_MSG_A2_list _("second argument must be a list")
 
 #define R_MSG_subs_o_b	_("subscript out of bounds")
 #define R_MSG_ob_nonsub	_("object is not subsettable")
