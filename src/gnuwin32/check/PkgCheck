@@ -1,0 +1,14 @@
+# to be run from RHOME/src/library/$(PKG)
+include ../../gnuwin32/MkRules
+
+run: check/$(PKG)-Ex.R
+	@$(ECHO) "Running examples in `$(PKG)-Ex.R' ..."
+	../../../bin/rterm --vsize 6M < check/$(PKG)-Ex.R > check/$(PKG)-Ex.Rout
+
+
+check/$(PKG)-Ex.R: ../../../library/$(PKG)/R-ex/*.R
+	mkdir -p check
+	@$(ECHO) "Massaging examples into `$(PKG)-Ex.R' ..."
+	@$(SED) s/@PKG@/$(PKG)/ ../../gnuwin32/check/makeRex.R > check/MakeRex.R
+	@../../../bin/rterm  --quiet --no-save < check/makeRex.R > nul
+	@$(RM) check/makeRex.R

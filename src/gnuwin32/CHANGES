@@ -1,0 +1,106 @@
+rw0641
+======
+
+There is a choice of interface for Rgui:
+
+o  SDI, single document interface. This is like the previous version,
+   with separate windows for the console, graphics and pager(s).
+
+o  MDI, multiple document interface.  There the console, graphics and
+   pagers are subwindows of one main `frame' window.
+
+You can set your preference (and details of the MDI) in the Rconsole
+file: this can also be overriden on the command line by --mdi or
+--sdi.
+
+If you use multiple files in the SDI pager, the (row) positions are
+remembered and re-used.
+
+For MDI pagers, the size is chosen by the system, and only multiple pagers
+are supported.
+
+When pagers are re-sized the strategy is now to keep the middle line
+in the middle.
+
+The option `setwidthonresize' in Rconsole automatically generates a
+call to options("width") if you resize the console width.  This is the
+default, but be aware that it pastes a command into the console so
+should not be used in the middle of R input.
+
+The file HOME/.Renviron is now read. This can contain environment
+variables in NAME=value form, one per line. This is useful for setting
+R_VSIZE, R_NSIZE, RLIBS and R_PAPERSIZE, amongst others.
+
+You can now paste in more to the console: the limit (which was 2048
+chars) is now that of the clipboard.
+
+The command make pkgcheck-pkgname will do the equivalent of `R CMD
+check', that is run all the examples in the help pages for that package.
+
+
+rw0640
+======
+
+R-0.64 uses platform-independent code for file handling. Files are
+displayed under a pager in a separate window rather than in the
+console. 
+
+Environment variables can be set as NAME=value on the command line,
+including in a short-cut.
+
+Content of the pager and of the Rgui's console can be printed
+using File | Print.
+
+The help, latex and example files can be stored in zip files to save
+space; this is used for the base package.
+
+The menus are enabled/disabled and check-marked correctly under NT.
+We hope to have solved the 'rw0633 font dimension problem'  shown
+under some NT versions.
+
+read.fwf works if you have Perl installed.
+
+help(, offline=TRUE) will work if you have latex installed and
+customize RHOME/bin/helpPRINT.bat
+
+The sockets code is compiled in, but we have not tested it.
+
+system() has new arguments `invisible' and `minimized'.
+
+
+rw0633
+======
+
+The beginnings of a FAQ (RHOME/rw-faq).
+
+Programs can be launched from all shells: the full path to the
+executable is not needed.
+
+Configurable fonts in the graphics devices by the file Rdevga.
+
+Workspaces are saved in XDR format, and so can be shared with most
+Unix implementations of R.
+
+Printer and metafile graphics devices (?win.print and ?win.metafile).
+
+Consistent handling of start directory for dialogs and the working
+directory across versions of Windows.
+
+An improved and enhanced system() function (?system and ?shell). 
+
+Windows-specific help files where necessary.
+
+Better support for ESS.
+
+Better support for the installation of pre-compiled packages
+(?link.html.help)
+
+
+rw0632
+======
+
+The NT copy to the clipboard bug has been fixed.
+
+Help files use latin1 encoding (but, to see the difference, 
+you must use a latin1 capable font; for this reason, now, as packed, 
+the R console uses "Courier New"; if you don't like it, edit etc/Rconsole). 
