@@ -161,13 +161,13 @@ function(x, y = NULL, alternative = c("two.sided", "less", "greater"),
                 ## As in the exact case, interchange quantiles.
                 cint <- switch(alternative, "two.sided" = {
                     u <- optimize(wdiff, c(mumin, mumax), tol=1e-4,
-                                  zq=qnorm(1-alpha/2))$minimum
+                                  zq=qnorm(alpha/2, lower=FALSE))$minimum
                     l <- optimize(wdiff, c(mumin, mumax), tol=1e-4,
                                   zq=qnorm(alpha/2))$minimum
                     c(u, l)
                 }, "greater"= {
                     u <- optimize(wdiff, c(mumin, mumax), tol=1e-4,
-                                  zq=qnorm(1-alpha))$minimum
+                                  zq=qnorm(alpha, lower=FALSE))$minimum
                     c(u, NA)
                 }, "less"= {
                     l <- optimize(wdiff, c(mumin, mumax), tol=1e-4,
@@ -301,7 +301,7 @@ function(x, y = NULL, alternative = c("two.sided", "less", "greater"),
                     u <- optimize(wdiff, c(mumin, mumax), tol=1e-4,
                                   zq=qnorm(alpha/2))$minimum
                     l <- optimize(wdiff, c(mumin, mumax), tol=1e-4,
-                                  zq=qnorm(1 - alpha/2))$minimum
+                                  zq=qnorm(alpha/2, lower=FALSE))$minimum
                     c(u, l)
                 }, "greater"= {
                     u <- optimize(wdiff, c(mumin, mumax), tol=1e-4,
@@ -309,7 +309,7 @@ function(x, y = NULL, alternative = c("two.sided", "less", "greater"),
                     c(u, NA)
                 }, "less"= {
                     l <- optimize(wdiff, c(mumin, mumax), tol=1e-4,
-                                  zq=qnorm(1 - alpha))$minimum
+                                  zq=qnorm(alpha, lower=FALSE))$minimum
                     c(NA, l)
                 })
                 attr(cint, "conf.level") <- conf.level    
