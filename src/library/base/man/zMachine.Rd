@@ -67,6 +67,12 @@ Machine()
   \item{double.max.exp}{
     the smallest positive power of \code{base} that overflows.}
   \item{integer.max}{the largest integer which can be represented.}
+  \item{sizeof.long}{the number of bytes in a C \code{long} type.}
+  \item{sizeof.longlong}{the number of bytes in a C \code{long long}
+    type. Will be zero if there is no such type.}
+  }
+  \item{sizeof.longdouble}{the number of bytes in a C \code{long double}
+    type. Will be zero if there is no such type.}
 }
 \details{
   The algorithm is based on Cody's (1988) subroutine MACHAR.

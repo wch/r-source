@@ -237,8 +237,8 @@ SEXP do_Machine(SEXP call, SEXP op, SEXP args, SEXP env)
     machar(&ibeta, &it, &irnd, &ngrd, &machep, &negep, &iexp,
 	   &minexp, &maxexp, &eps, &epsneg, &xmin, &xmax);
 
-    PROTECT(ans = allocVector(VECSXP, 14));
-    PROTECT(nms = allocVector(STRSXP, 14));
+    PROTECT(ans = allocVector(VECSXP, 17));
+    PROTECT(nms = allocVector(STRSXP, 17));
     SET_STRING_ELT(nms, 0, mkChar("double.eps"));
     SET_VECTOR_ELT(ans, 0, ScalarReal(eps));
 
@@ -280,6 +280,15 @@ SEXP do_Machine(SEXP call, SEXP op, SEXP args, SEXP env)
 
     SET_STRING_ELT(nms, 13, mkChar("integer.max"));
     SET_VECTOR_ELT(ans, 13, ScalarInteger(INT_MAX));
+
+    SET_STRING_ELT(nms, 14, mkChar("sizeof.long"));
+    SET_VECTOR_ELT(ans, 14, ScalarInteger(SIZEOF_LONG));
+
+    SET_STRING_ELT(nms, 15, mkChar("sizeof.longlong"));
+    SET_VECTOR_ELT(ans, 15, ScalarInteger(SIZEOF_LONG_LONG));
+
+    SET_STRING_ELT(nms, 16, mkChar("sizeof.longdouble"));
+    SET_VECTOR_ELT(ans, 16, ScalarInteger(SIZEOF_LONG_DOUBLE));
     setAttrib(ans, R_NamesSymbol, nms);
     UNPROTECT(2);
     return ans;

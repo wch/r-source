@@ -11,11 +11,19 @@
 
 NEW FEATURES
 
+     o	New components in .Machine give the sizes of long, long long
+	and long double types (or 0 if they do not exist).
+
+
 BUG FIXES
 
      o	postscript() and xfig() devices now make use of genuine Adobe
-	afm files, and warn if characters are used that are not in the
-	encoding in use.
+	afm files, and warn if characters are used in string width or
+	height calculations that are not in the encoding in use.
+
+     o	readBin() and writeBin() were not always correctly detecting
+	useful long types (such as long double).
+
 
 
 	**************************************************
