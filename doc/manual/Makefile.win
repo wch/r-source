@@ -41,18 +41,20 @@ pdf: Manual.pdf Reference.pdf R-external.pdf
 
 Manual.pdf: Manual.tex Version.tex $(mansrcs) $(srcdir)/Rd.sty
 	@echo "Making PDF LaTeX documentation ..."
-	@TEXINPUTS="ae;." \
+	@$(RM) -f *.aux Manual.toc
+	@TEXINPUTS="pdf;.;" \
 	  $(LATEX) '\nonstopmode\input{Manual.tex}'
 	@$(MAKEINDEX) Manual
-	@TEXINPUTS="ae;." \
+	@TEXINPUTS="pdf;.;" \
 	  $(LATEX) '\nonstopmode\input{Manual.tex}'
 
 Reference.pdf: Reference.tex Version.tex $(pkgsrcs) $(srcdir)/Rd.sty
 	@echo " PDF LaTeX documentation: Reference Index ..."
-	@TEXINPUTS="pdf;." \
+	@$(RM) -f *.aux Reference.toc Reference.ind
+	@TEXINPUTS="pdf;.;" \
 	$(LATEX) '\nonstopmode\input{Reference.tex}'
 	  @$(MAKEINDEX) Reference
-	@TEXINPUTS="pdf;." \
+	@TEXINPUTS="pdf;.;" \
 	  $(LATEX) '\nonstopmode\input{Reference.tex}'
 
 R-external.pdf: R-external.texi
