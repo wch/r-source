@@ -82,6 +82,31 @@ static GdkColor *gnome_config_get_color (char *key);
 
 
 /**
+ *  r_gnome_config_set_color fills in color with the parsed version
+ *  of the color string found in key.
+ **/
+static void r_gnome_config_set_color (char *key, GdkColor *color)
+{
+    char buf[PREFS_BUF_SIZE];
+
+    snprintf (buf, PREFS_BUF_SIZE, "rgb:%04x/%04x/%04x",
+	      color->red, color->green, color->blue);
+    buf[PREFS_BUF_SIZE - 1] = '\0';
+    gnome_config_set_string (key, buf);
+}
+
+/**
+ *  r_gnome_config_set_color fills in color with the parsed version
+ *  of the color string found in key.
+ **/
+static void r_gnome_config_get_color (char *key, GdkColor *color)
+{
+    char *retbuf;
+
+    retbuf = gnome_config_set_string (key);
+}
+
+/**
  *  r_load_initial_prefs loads the preferences relating to R startup,
  *  consisting of the save and restore workspace settings, and the use
  *  of readline.
@@ -140,8 +165,6 @@ void r_load_initial_prefs (Rstart Rp, int *UseReadline)
  **/
 void r_load_gui_prefs (void)
 {
-    char *retbuf;
-
     /** Console **/
     gnome_config_push_prefix ("/R/Console");
 
@@ -202,20 +225,6 @@ void r_load_gui_prefs (void)
     g_free (retbuf);
 
     gnome_config_pop_prefix ();
-}
-
-/**
- *  r_gnome_config_set_color fills sin color with the parsed version
- *  of the color string found in key.
- **/
-static void r_gnome_config_set_color (char *key, GdkColor *color)
-{
-    char buf[PREFS_BUF_SIZE];
-
-    snprintf (buf, PREFS_BUF_SIZE, "rgb:%04x/%04x/%04x",
-	      color->red, color->green, color->blue);
-    buf[PREFS_BUF_SIZE - 1] = '\0';
-    gnome_config_set_string (key, buf);
 }
 
 /**
@@ -280,6 +289,31 @@ static void set_widgets_from_prefs (GladeXML *prefs_xml)
     GtkWidget *widget;
 
     /** Console **/
+    widget = glade_xml_get_widget (prefs_xml,
+				   "console_font");
+    gnome_font_picker_set_font_name (GNOME_FONT_PICKER (widget),
+				     r_gnome_prefs.console_font_name);
+
+    widget = glade_xml_get_widget (prefs_xml,
+				   "console_bold_checkbutton");
+    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (widget),
+				  r_gnome_prefs.console_bold_user_input);
+
+    widget = glade_xml_get_widget (prefs_xml,
+				   "console_color_checkbutton");
+    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (widget),
+				  r_gnome_prefs.console_color_user_input);
+
+    widget = glade_xml_get_widget (prefs_xml,
+				   "console_text_color");
+    gnome_color_picker_set_i16 (GNOME_COLOR_PICKER (widget),
+				r_gnome_prefs.console_text_color.
+
+    widget = glade_xml_get_widget (prefs_xml,
+				   "console_input_color");
+
+    widget = glade_xml_get_widget (prefs_xml,
+				   "console_bg_color");
 
     /** Pager **/
 
@@ -302,14 +336,8 @@ static void set_widgets_from_prefs (GladeXML *prefs_xml)
     
     widget = glade_xml_get_widget (prefs_xml,
 				   "startup_readline_checkbutton");
-    if (r_gnome_prefs.startup_use_readline) {
-	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (widget),
-				      TRUE);
-    }
-    else {
-	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (widget),
-				      FALSE);
-    }
+    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (widget),
+				  r_gnome_prefs.startup_use_readline);
 
     /** Exit page **/
     switch (r_gnome_prefs.exit_save_workspace) {
