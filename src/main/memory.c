@@ -817,6 +817,35 @@ static void CheckFinalizers(void)
 	    s->sxpinfo.gp = 1;
 }
 
+/* C finalizers are stored in a CHARSXP.  It would be nice if we could
+   use EXTPTRSXP's but these only hold a void *, and function pointers
+   are not guaranteed to be compatible with a void *.  There should be
+   a cleaner way of doing this, but this will do until I get a chance
+   to redesign the finalization stuff to fit in with weak references.
+   I think the right thing to do is to implement the ideas in
+   "Stretching the storage manager: weak pointers and stable names in
+   Haskell" by Peyton Jones, Marlow, and Elliott (at
+   www.research.microsoft.com/Users/simonpj/papers/weak.ps.gz). --LT */
+static Rboolean isCFinalizer(SEXP fun)
+{
+    return TYPEOF(fun) == CHARSXP;
+    /*return TYPEOF(fun) == EXTPTRSXP;*/
+}
+
+static SEXP MakeCFinalizer(R_CFinalizer_t cfun)
+{
+    SEXP s = allocString(sizeof(R_CFinalizer_t));
+    *((R_CFinalizer_t *) CHAR(s)) = cfun;
+    return s;
+    /*return R_MakeExternalPtr((void *) cfun, R_NilValue, R_NilValue);*/
+}
+
+static R_CFinalizer_t GetCFinalizer(SEXP fun)
+{
+    return *((R_CFinalizer_t *) CHAR(fun));
+    /*return (R_CFinalizer_t) R_ExternalPtrAddr(fun);*/
+}
+
 static Rboolean RunFinalizers(void)
 {
     volatile SEXP s, last;
@@ -855,9 +884,9 @@ static Rboolean RunFinalizers(void)
 		PROTECT(s);
 		val = CAR(s);
 		fun = TAG(s);
-		if (TYPEOF(fun) == EXTPTRSXP) {
+		if (isCFinalizer(fun)) {
 		    /* Must be a C finalizer. */
-		    R_CFinalizer_t cfun = R_ExternalPtrAddr(fun);
+		    R_CFinalizer_t cfun = GetCFinalizer(fun);
 		    cfun(val);
 		}
 		else {
@@ -909,7 +938,7 @@ void R_RegisterCFinalizer(SEXP s, R_CFinalizer_t fun)
        registered as elligible for finalization. */
     PROTECT(s);
     R_fin_registered = CONS(s, R_fin_registered);
-    SET_TAG(R_fin_registered, R_MakeExternalPtr(fun, R_NilValue, R_NilValue));
+    SET_TAG(R_fin_registered, MakeCFinalizer(fun));
     R_fin_registered->sxpinfo.gp = 0;
     UNPROTECT(1);
 }
