@@ -79,12 +79,15 @@ principal authors of the packages mentioned are
 @item @pkg{e1071} @tab Friedrich Leisch
 @item @pkg{foreign} @tab Thomas Lumley, Saikat DebRoy and Douglas Bates 
 @item @pkg{hdf5} @tab Marcus Daniels
+@item @pkg{Java} @tab John Chambers and Duncan Temple Lang
 @item @pkg{netCDF} @tab Thomas Lumley
 @item @pkg{RmSQL} @tab  Torsten Hothorn
 @item @pkg{RMySQL} @tab David James and Saikat DebRoy
 @item @pkg{RODBC} @tab Michael Lapsley
 @item @pkg{RPgSQL} @tab Timothy Keitt
 @item @pkg{Rstreams} @tab Brian Ripley and Duncan Murdoch
+@item @pkg{RSPerl} @tab Duncan Temple Lang
+@item @pkg{RSPython} @tab Duncan Temple Lang
 @end multitable
 @end quotation
 
@@ -112,7 +115,13 @@ better than @R{} at this, and part of the thrust of this manual is to
 suggest that rather than duplicating functionality in @R{} we can make
 the other system do the work!  (For example Therneau & Grambsch (2000)
 comment that they prefer to do data manipulation in SAS and then use
-@pkg{survival5} in @Sl{} for the analysis.)
+@pkg{survival5} in @Sl{} for the analysis.) Several new packages allow
+functionality developed in languages such as @code{Java}, @code{perl}
+and @code{python} to be directly integrated with @R{} code, making the
+use of facilities in these languages even more appropriate. (See the
+@pkg{Java}, @pkg{RSPerl} and @pkg{RSPython} packages.)
+
+
 
 @cindex Unix tools
 @cindex AWK
@@ -132,6 +141,7 @@ available, including on Windows.
 @menu
 * Imports::                     
 * Export to text files::        
+* XML::        
 @end menu
 
 @node Imports, Export to text files, Introduction, Introduction
@@ -167,7 +177,7 @@ extraction operation can be done directly from an @R{} package:
 @xref{Relational databases}.  Importing data via network connections is
 discussed in @ref{Network interfaces}.
 
-@node Export to text files,  , Imports, Introduction
+@node Export to text files, XML, Imports, Introduction
 @section Export to text files
 @cindex Exporting to a text file
 
@@ -274,6 +284,43 @@ It is possible to use @code{sink} to divert the standard @R{} output to
 a file, and thereby capture the output of (possibly implicit)
 @code{print} statements.  This is not usually the most efficient route,
 and the @code{options(width)} setting may need to be increased.
+
+@node XML, , Export to text files, Introduction  
+@section XML
+@cindex XML
+
+When reading data from text files, it is the responsibility of the
+user to know and specify the conventions used to create that file,
+e.g. the comment character, whether a header line is present, the
+value separator, representation for missing values, etc. described in
+@ref{Export to text files}. A markup language which can be used to
+describe not only content, but also the structure of the content can
+make a file self-describing so that one need not provide these details
+to the software reading the data.
+ The eXtensible Markup Language -- more commonly know simply as
+@acronym{XML} -- can be used to provide such structure, not only for
+standard datasets but also, more complex data structures.
+@acronym{XML} is becoming extremely popular and is emerging as a
+standard for general data markup and exchange. It is being used by
+different communities to describe geographical data such as maps;
+graphical displays; mathematics; and so on.
+
+The @pkg{XML} package provides general facilities for reading and
+writing @acronym{XML} documents within both @R{} and S-PLUS in the hope
+that we can easily make use of this technology as it evolves.  Several
+people are exploring how we can use @acronym{XML} for, amongst other
+things, representing datasets to be shared across different
+applications; storing @R{} and S-PLUS objects so they can be shared by
+both systems; representing plots via @acronym{SVG} (Scalable Vector
+Graphics), a dialect of @acronym{XML}; representing function
+documentation; generating ``live'' analyses/reports that contain text,
+data and code.
+
+A reasonable description of the @pkg{XML} package are currently
+outside the scope of this document and are described on the package's
+@uref{http://www.omegahat.org/RSXML, Web page} along
+with different examples.
+
 
 @node Spreadsheet-like data, Importing from other statistical systems, Introduction, Top
 @chapter Spreadsheet-like data
