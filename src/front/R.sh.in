@@ -4,16 +4,16 @@
 RHOME=R_HOME_DIR
 export RHOME
 
-ARG=$1
-case ${ARG} in
+ARG="$1"
+case "${ARG}" in
     RHOME)
 	echo ${RHOME}; exit 0 ;;
     CMD)
-	shift; PATH=${PATH}:${RHOME}/cmd:${RHOME}/etc exec $* ;;
+	shift; PATH="${PATH}:${RHOME}/cmd:${RHOME}/etc" exec "$@" ;;
     BATCH|COMPILE|INSTALL|REMOVE|SHLIB)
-	shift; exec sh ${RHOME}/etc/${ARG} $* ;;
+	shift; exec sh "${RHOME}/etc/${ARG}" "$@" ;;
     -d|--debugger)
-	exec $2 ${RHOME}/bin/R.binary ;;
+	exec "$2" ${RHOME}/bin/R.binary ;;
     -h|--help|-\?)
         echo "Usage:  R [OPTIONS] [< INFILE] [> OUTFILE]"
         echo ""
@@ -56,4 +56,4 @@ LATEX=${LATEX-@LATEX@}
 DVIPS=${DVIPS-@DVIPS@}
 export LATEX DVIPS
 
-exec ${RHOME}/bin/R.binary @R_BATCHSAVE@ $*
+exec ${RHOME}/bin/R.binary @R_BATCHSAVE@ "$@"
