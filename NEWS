@@ -74,6 +74,8 @@ NEW FEATURES
 
     o	[dpqr]gamma() check for shape parameter > 0.
 
+    o	as.POSIX[cl]t can now convert logical NAs.
+
 
 DEPRECATED & DEFUNCT
 

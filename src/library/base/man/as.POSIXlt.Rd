@@ -37,6 +37,9 @@ as.POSIXlt(x, tz = "")
   \code{"14:52:03"}.  (Formats such as \code{"01/02/03"} are ambiguous
   but can be converted via a format specification by
   \code{\link{strptime}}.)
+
+  Logical \code{NA}s can be converted to either of the classes, but no
+  other logical vectors can be.
 }
 \value{
   \code{as.POSIXct} and \code{as.POSIXlt} return an object of the

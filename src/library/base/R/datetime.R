@@ -32,6 +32,7 @@ as.POSIXlt <- function(x, tz = "")
     if(inherits(x, "date") || inherits(x, "dates")) x <- as.POSIXct(x)
     if(is.character(x)) return(fromchar(x))
     if(is.factor(x))	return(fromchar(as.character(x)))
+    if(is.logical(x) && all(is.na(x))) x <- as.POSIXct.default(x)
     if(!inherits(x, "POSIXct"))
 	stop(paste("Don't know how to convert `", deparse(substitute(x)),
 		   "' to class \"POSIXlt\"", sep=""))
@@ -74,6 +75,8 @@ as.POSIXct.default <- function(x, tz = "")
     if(inherits(x, "POSIXct")) return(x)
     if(is.character(x) || is.factor(x))
 	return(as.POSIXct(as.POSIXlt(x), tz))
+    if(is.logical(x) && all(is.na(x)))
+        return(structure(as.numeric(x), class = c("POSIXt", "POSIXct")))
     stop(paste("Don't know how to convert `", deparse(substitute(x)),
 	       "' to class \"POSIXct\"", sep=""))
 }
