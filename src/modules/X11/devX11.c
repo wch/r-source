@@ -290,7 +290,7 @@ static void SetupGrayScale()
 	d--;
     if (!res) {
 	/* Can't find a sensible grayscale, so revert to monochrome */
-	warning("can't set grayscale: reverting to monochrome");
+	warning(_("can't set grayscale: reverting to monochrome"));
 	model = MONOCHROME;
 	SetupMonochrome();
     }
@@ -373,7 +373,7 @@ static void SetupPseudoColor()
 		break;
 	}
 	if (PaletteSize == 0) {
-	    warning("X11 driver unable to obtain color cube\n  reverting to monochrome");
+	    warning(_("X11 driver unable to obtain color cube\n  reverting to monochrome"));
 	    model = MONOCHROME;
 	    SetupMonochrome();
 	}
@@ -418,8 +418,8 @@ static unsigned int GetPseudoColor2Pixel(int r, int g, int b)
     XPalette[PaletteSize].blue	= pow(b / 255.0, BlueGamma) * 0xffff;
     if (PaletteSize == 256 ||
 	XAllocColor(display, colormap, &XPalette[PaletteSize]) == 0) {
-	error("Error: X11 cannot allocate additional graphics colors.\n"
-	      "Consider using X11 with colortype=\"pseudo.cube\" or \"gray\".");
+	error(_("Error: X11 cannot allocate additional graphics colors.\n\
+Consider using X11 with colortype=\"pseudo.cube\" or \"gray\"."));
     }
     RPalette[PaletteSize].red = r;
     RPalette[PaletteSize].green = g;
@@ -815,7 +815,7 @@ static void *RLoadFont(newX11Desc *xd, char* family, int face, int size)
 	    if (tmp)
 		return tmp;
 	    else
-		error("Could not find any X11 fonts\nCheck that the Font Path is correct.");
+		error(_("Could not find any X11 fonts\nCheck that the Font Path is correct."));
 	}
 
 	if ( pixelsize < 8 )
@@ -879,7 +879,7 @@ static void *RLoadFont(newX11Desc *xd, char* family, int face, int size)
 	f->size = size;
 	f->font = tmp;
 	if (fabs( (pixelsize - size)/(double)size ) > 0.1)
-	    warning("X11 used font size %d when %d was requested",
+	    warning(_("X11 used font size %d when %d was requested"),
 		    pixelsize, size);
     }
     if (nfonts == MAXFONTS) /* make room in the font cache */
@@ -938,7 +938,7 @@ static void SetFont(char* family, int face, int size, NewDevDesc *dd)
             /* if (xd->font == One_Font)
 	       XSetFont(display, xd->wgc, (xd->font->font)->fid);*/
 	} else
-	    error("X11 font at size %d could not be loaded", size);
+	    error(_("X11 font at size %d could not be loaded"), size);
     }
 }
 
@@ -966,7 +966,7 @@ static int gcToX11lend(R_GE_lineend lend) {
         newend = CapProjecting;
 	break;
     default:
-        error("Invalid line end");
+        error(_("Invalid line end"));
     }
     return newend;
 }
@@ -984,7 +984,7 @@ static int gcToX11ljoin(R_GE_linejoin ljoin) {
         newjoin = JoinBevel;
 	break;
     default:
-        error("Invalid line join");
+        error(_("Invalid line join"));
     }
     return newjoin;
 }
@@ -1053,7 +1053,7 @@ static int R_X11Err(Display *dsp, XErrorEvent *event)
 {
     char buff[1000];
     XGetErrorText(dsp, event->error_code, buff, 1000);
-    warning("X11 protocol error: %s", buff);
+    warning(_("X11 protocol error: %s"), buff);
     return 0;
 }
 
@@ -1070,7 +1070,7 @@ static int R_X11IOErr(Display *dsp)
     XCloseDisplay(display);
     displayOpen = FALSE;
     */
-    error("X11 fatal IO error: please save work and shut down R");
+    error(_("X11 fatal IO error: please save work and shut down R"));
     return 0; /* but should never get here */
 }
 
@@ -1093,22 +1093,23 @@ newX11_Open(NewDevDesc *dd, newX11Desc *xd, char *dsp, double w, double h,
 
 #ifdef USE_FONTSET
     if (!XSupportsLocale ())
-	warning("locale not supported by Xlib: some X ops will operate in C locale");
-    if (!XSetLocaleModifiers ("")) warning("X cannot set locale modifiers");
+	warning(_("locale not supported by Xlib: some X ops will operate in C locale"));
+    if (!XSetLocaleModifiers ("")) warning(_("X cannot set locale modifiers"));
 #endif
 
     if (!strncmp(dsp, "png::", 5)) {
 	char buf[PATH_MAX]; /* allow for pageno formats */
 	FILE *fp;
 #ifndef HAVE_PNG
-	warning("No png support in this version of R");
+	warning(_("No png support in this version of R"));
 	return FALSE;
 #else
-	if(strlen(dsp+5) >= PATH_MAX) error("filename too long in png() call");
+	if(strlen(dsp+5) >= PATH_MAX)
+	    error(_("filename too long in png() call"));
 	strcpy(xd->filename, dsp+5);
 	snprintf(buf, PATH_MAX, dsp+5, 1); /* page 1 to start */
 	if (!(fp = R_fopen(R_ExpandFileName(buf), "w"))) {
-	    warning("could not open PNG file `%s'", buf);
+	    warning(_("could not open PNG file '%s'"), buf);
 	    return FALSE;
 	}
 	xd->fp = fp;
@@ -1121,16 +1122,17 @@ newX11_Open(NewDevDesc *dd, newX11Desc *xd, char *dsp, double w, double h,
 	char buf[PATH_MAX]; /* allow for pageno formats */
 	FILE *fp;
 #ifndef HAVE_JPEG
-	warning("No jpeg support in this version of R");
+	warning(_("No jpeg support in this version of R"));
 	return FALSE;
 #else
 	p = strchr(dsp+6, ':'); *p='\0';
 	xd->quality = atoi(dsp+6);
-	if(strlen(p+1) >= PATH_MAX) error("filename too long in jpeg() call");
+	if(strlen(p+1) >= PATH_MAX)
+	    error(_("filename too long in jpeg() call"));
 	strcpy(xd->filename, p+1);
 	snprintf(buf, PATH_MAX, p+1, 1); /* page 1 to start */
 	if (!(fp = R_fopen(R_ExpandFileName(buf), "w"))) {
-	    warning("could not open JPEG file `%s'", buf);
+	    warning(_("could not open JPEG file '%s'"), buf);
 	    return FALSE;
 	}
 	xd->fp = fp;
@@ -1151,7 +1153,7 @@ newX11_Open(NewDevDesc *dd, newX11Desc *xd, char *dsp, double w, double h,
 
     if (!displayOpen) {
 	if ((display = XOpenDisplay(p)) == NULL) {
-	    warning("unable to open connection to X11 display`%s'", p);
+	    warning(_("unable to open connection to X11 display '%s'"), p);
 	    return FALSE;
 	}
 	DisplayOpened = TRUE;
@@ -1177,7 +1179,7 @@ newX11_Open(NewDevDesc *dd, newX11Desc *xd, char *dsp, double w, double h,
     xd->col = R_RGB(0, 0, 0);
     xd->canvas = canvascolor;
     if(type == JPEG && !R_OPAQUE(xd->canvas)) {
-	warning("jpeg() does not support transparency: using white bg");
+	warning(_("jpeg() does not support transparency: using white bg"));
 	xd->canvas = 0xffffff;
     }
     if(type > WINDOW) xd->fill = xd->canvas;
@@ -1208,7 +1210,7 @@ newX11_Open(NewDevDesc *dd, newX11Desc *xd, char *dsp, double w, double h,
 		DefaultVisual(display, screen),
 		CWEventMask | CWBackPixel | CWBorderPixel | CWBackingStore,
 		&attributes)) == 0) {
-		warning("unable to create X11 window");
+		warning(_("unable to create X11 window"));
 		return FALSE;
 	    }
 
@@ -1254,7 +1256,7 @@ newX11_Open(NewDevDesc *dd, newX11Desc *xd, char *dsp, double w, double h,
 	if ((xd->window = XCreatePixmap(
 	    display, rootwin,
 	    iw, ih, DefaultDepth(display, screen))) == 0) {
-	    warning("unable to create pixmap");
+	    warning(_("unable to create pixmap"));
 	    return FALSE;
 	}
 	/* Save the NewDevDesc* with the window for event dispatching */
@@ -1288,7 +1290,7 @@ static char *SaveFontSpec(SEXP sxp, int offset)
 {
     char *s;
     if(!isString(sxp) || length(sxp) <= offset)
-	error("Invalid font specification");
+	error(_("Invalid font specification"));
     s = R_alloc(strlen(CHAR(STRING_ELT(sxp, offset)))+1, sizeof(char));
     strcpy(s, CHAR(STRING_ELT(sxp, offset)));
     return s;
@@ -1327,7 +1329,7 @@ static char* translateFontFamily(char* family, newX11Desc* xd) {
 	    }
 	}
 	if (!found)
-	    warning("Font family not found in X11 font database");
+	    warning(_("Font family not found in X11 font database"));
     }
     UNPROTECT(4);
     return result;
@@ -1514,14 +1516,14 @@ static void newX11_NewPage(R_GE_gcontext *gc,
 		snprintf(buf, PATH_MAX, xd->filename, xd->npages);
 		xd->fp = R_fopen(R_ExpandFileName(buf), "w");
 		if (!xd->fp)
-		    error("could not open PNG file `%s'", buf);
+		    error(_("could not open PNG file '%s'"), buf);
 	    }
 	    if (xd->type == JPEG) {
 		char buf[PATH_MAX];
 		snprintf(buf, PATH_MAX, xd->filename, xd->npages);
 		xd->fp = R_fopen(R_ExpandFileName(buf), "w");
 		if (!xd->fp)
-		    error("could not open JPEG file `%s'", buf);
+		    error(_("could not open JPEG file '%s'"), buf);
 	    }
 	    /* error("attempt to draw second page on pixmap device");*/
 	}
@@ -1610,7 +1612,7 @@ static void X11_Close_bitmap(newX11Desc *xd)
 	unsigned int pngtrans = PNG_TRANS;
 	if(model == TRUECOLOR) {
 	    int i, r, g, b;
-	    /* some `truecolor' displays distort colours */
+	    /* some 'truecolor' displays distort colours */
 	    i = GetX11Pixel(R_RED(PNG_TRANS),
 			    R_GREEN(PNG_TRANS),
 			    R_BLUE(PNG_TRANS));
@@ -2241,7 +2243,7 @@ static char *SaveString(SEXP sxp, int offset)
 {
     char *s;
     if(!isString(sxp) || length(sxp) <= offset)
-	errorcall(gcall, "invalid string argument");
+	errorcall(gcall, _("invalid string argument"));
     s = R_alloc(strlen(CHAR(STRING_ELT(sxp, offset)))+1, sizeof(char));
     strcpy(s, CHAR(STRING_ELT(sxp, offset)));
     return s;
@@ -2275,7 +2277,7 @@ Rf_addX11Device(char *display, double width, double height, double ps,
 				ps, gamma, colormodel, maxcubesize,
 				bgcolor, canvascolor, sfonts, res)) {
 	    free(dev);
-	    errorcall(gcall, "unable to start device %s", devname);
+	    errorcall(gcall, _("unable to start device %s"), devname);
        	}
 	gsetVar(install(".Device"), mkString(devname), R_NilValue);
 	dd = GEcreateDevDesc(dev);
@@ -2302,14 +2304,14 @@ SEXP in_do_X11(SEXP call, SEXP op, SEXP args, SEXP env)
     width = asReal(CAR(args));	args = CDR(args);
     height = asReal(CAR(args)); args = CDR(args);
     if (width <= 0 || height <= 0)
-	errorcall(call, "invalid width or height");
+	errorcall(call, _("invalid width or height"));
     ps = asReal(CAR(args)); args = CDR(args);
     gamma = asReal(CAR(args)); args = CDR(args);
     if (gamma < 0 || gamma > 100)
-	errorcall(call, "invalid gamma value");
+	errorcall(call, _("invalid gamma value"));
 
     if (!isValidString(CAR(args)))
-	error("invalid colortype passed to X11 driver");
+	error(_("invalid colortype passed to X11 driver"));
     cname = CHAR(STRING_ELT(CAR(args), 0));
     if (strcmp(cname, "mono") == 0)
 	colormodel = 0;
@@ -2323,7 +2325,7 @@ SEXP in_do_X11(SEXP call, SEXP op, SEXP args, SEXP env)
 	colormodel = 4;
     else {
 	warningcall(call,
-		    "unknown X11 color/colour model -- using monochrome");
+		    _("unknown X11 color/colour model -- using monochrome"));
 	colormodel = 0;
     }
     args = CDR(args);
@@ -2333,17 +2335,17 @@ SEXP in_do_X11(SEXP call, SEXP op, SEXP args, SEXP env)
     args = CDR(args);
     sc = CAR(args);
     if (!isString(sc) && !isInteger(sc) && !isLogical(sc) && !isReal(sc))
-	errorcall(call, "invalid value of `bg'");
+	errorcall(call, _("invalid value of 'bg'"));
     bgcolor = RGBpar(sc, 0);
     args = CDR(args);
     sc = CAR(args);
     if (!isString(sc) && !isInteger(sc) && !isLogical(sc) && !isReal(sc))
-	errorcall(call, "invalid value of `canvas'");
+	errorcall(call, _("invalid value of 'canvas'"));
     canvascolor = RGBpar(sc, 0);
     args = CDR(args);
     sfonts = CAR(args);
     if (!isString(sfonts) || LENGTH(sfonts) != 2)
-	errorcall(call, "invalid value of `fonts'");
+	errorcall(call, _("invalid value of 'fonts'"));
     args = CDR(args);
     res = asInteger(CAR(args));
 
@@ -2380,7 +2382,7 @@ void R_init_R_X11(DllInfo *info)
     R_X11Routines *tmp;
     tmp = (R_X11Routines*) malloc(sizeof(R_X11Routines));
     if(!tmp) {
-	error("Cannot allocate memory for X11Routines structure");
+	error(_("Cannot allocate memory for X11Routines structure"));
 	return;
     }
     tmp->X11 = in_do_X11;
