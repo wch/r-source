@@ -20,6 +20,9 @@ a bug in HHW.
 The maximum allowed `pointsize' for a windows() device has been
 increased to 48: some people have much bigger screens these days.
 
+Rcmd BATCH in rw1070 incorrectly required the R::Utils Perl module.
+
+
 
 rw1070
 ======
