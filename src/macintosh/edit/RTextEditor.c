@@ -44,9 +44,10 @@
 #endif
 #include "Defn.h"
 
+# define min(a, b) (a > b)?(b):(a)
+
 void mac_savehistory(char *file);
 void mac_loadhistory(char *file);
-
 
 // Constant
 #define   kLineto                         1
@@ -132,17 +133,23 @@ void RWrite(char* buf)
 
 void RnWrite(char* buf, SInt16 len)
 {
-    SInt32 i;
-    char buf2[300];
-
+    SInt32 i,my_len;
+    char *buf2=NULL;
+    
+    
     if(fileno(stdout)>1){
-	strncpy(buf2,buf,len);
-	fputs(buf2, stdout);
-	fflush(stdout);
+    buf2 = malloc(len+2);
+     if(buf2){
+ 	 strncpy(buf2,buf,len);
+	 fputs(buf2, stdout);
+	 fflush(stdout);
+	 free(buf2);
+     }
     }
     else
 	for ( i=0; i < len; i++)
 	    WEKey ( buf[i], NULL, GetWindowWE (Console_Window) ) ;
+    
 }
 /* R_ReadConsole
 This is a platform dependent function.
@@ -157,8 +164,7 @@ void R_ReadConsole1(char *prompt,  char *buf, int buflen, int hist)
     EventRecord myEvent;
     SInt32      i;
     char        tempChar;
-    char buffo[1000];
-
+  
     we = GetWindowWE ( Console_Window ) ;
 
     // let have something about hist
@@ -503,17 +509,24 @@ void R_WriteConsole1(char *buf, SInt32 buflen)
     SInt32 outlen, lastLen;
     Boolean ended = false;
     WEReference we;
-    char stringona[1000];
+    char *stringona=NULL;
 
     outlen =   strlen(buf);
 
-    strncpy(stringona,buf,outlen);
+    stringona = malloc(outlen+2);
+    if(stringona){
+     strncpy(stringona,buf,outlen);
     for ( i=0; i < outlen; i++)
-	if (buf[i] == '\n') stringona[i]='\r';
-
+	 if (buf[i] == '\n') stringona[i]='\r';
+    
     we = GetWindowWE ( Console_Window );
 
-    WEPut(kCurrentSelection,kCurrentSelection, stringona, outlen,kTextEncodingMultiRun, 0,0,nil,nil,we );
+    if(we)
+     WEPut(kCurrentSelection,kCurrentSelection, stringona, outlen,kTextEncodingMultiRun, 0,0,nil,nil,we );
+     
+    if(stringona)
+     free(stringona);
+    }
 }
 
 // Updated for Waste 2.X  Jago
