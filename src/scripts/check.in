@@ -1021,6 +1021,7 @@ sub check_pkg {
 	   "of the 'Writing R Extensions' manual.\n");
 
 	my $Rcmd = "options(warn=1)\n";
+	$Rcmd .= "options(expressions=1000)\n";
 	if($opt_install) {
 	    $Rcmd .= "tools::checkS3methods(package = \"${pkgname}\")\n";
 	}
