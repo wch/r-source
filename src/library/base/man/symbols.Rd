@@ -43,13 +43,14 @@ symbols(x, y, circles, squares, rectangles, stars,
         inch in height.  If a number is given the symbols are scaled to
 	make largest symbol this height in inches.}
   \item{add}{if \code{add} is \code{TRUE}, the symbols are added to
-        an existing plot, otherwise a new plot is created. If a new plot
-	is created the axis labels default to \code{""}.}
+        an existing plot, otherwise a new plot is created.}
   \item{fg}{colors the symbols are to be drawn in (the default is
         the value of the \code{col} graphics parameter).}
   \item{bg}{if specified, the symbols are filled with this color.
     The default is to leave the symbols unfilled. }
-  \item{xlab}{the x label of the plot.}
+  \item{xlab}{the x label of the plot if \code{add} is not true; this
+    applies to the following arguments as well.  Defaults to the
+    \code{\link{deparse}}d expression used for \code{x}.}
   \item{ylab}{the y label of the plot.}
   \item{main}{a main title for the plot.}
   \item{xlim}{numeric of length 2 giving the x limits for the plot.}
