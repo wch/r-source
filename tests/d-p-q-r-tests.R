@@ -5,6 +5,18 @@
 ####
 ####	Functions for  ``d/p/q/r''
 
+###-- these are identical in ./arith-true.R ["fixme": use source(..)]
+opt.conformance <- 0
+Meps <- .Machine $ double.eps
+options(rErr.eps = 1e-30)
+rErr <- function(approx, true, eps = .Options$rErr.eps)
+{
+    if(is.null(eps)) { eps <- 1e-30; options(rErr.eps = eps) }
+    ifelse(Mod(true) >= eps,
+	   1 - approx / true, # relative error
+	   true - approx)     # absolute error (e.g. when true=0)
+}
+
 if(!interactive()) .Random.seed <- c(0,rep(7654, 3))
 
 ###--- Discrete Distributions: Simple Consistency Checks  pZZ = cumsum(dZZ)
@@ -29,9 +41,15 @@ n1 <- 20; n2 <- 16
 for(lambda in rexp(n1))
     for(k in rpois(n2, lambda)) {
 	tst <- all.equal(1 - pchisq(2*lambda, 2*(k+1)),
-			 sum(dpois(0:k, lambda=lambda)))
+			 pp <- sum(dpois(0:k, lambda=lambda)), tol = 100*Meps)
 	if(!(is.logical(tst) && tst))
 	    cat("lambda=", format(lambda),".  k =",k, " --> tst=", tst,"\n")
+	tst2 <- all.equal(pp, ppois(k, lambda=lambda), tol = 100*Meps)
+	if(!(is.logical(tst2) && tst2))
+	    cat("lambda=", format(lambda),".  k =",k, " --> tst2=", tst2,"\n")
+	tst3 <- all.equal(1 - pp, ppois(k, lambda=lambda, lower.tail=FALSE))
+	if(!(is.logical(tst3) && tst3))
+	    cat("lambda=", format(lambda),".  k =",k, " --> tst3=", tst3,"\n")
     }
 
 ##--- Cumulative Binomial '==' Cumulative F :
@@ -71,3 +89,16 @@ for(sh in round(rlnorm(30),2)) {
                 "\n  shape,scale=",formatC(c(sh, sig)),"\n")
     }
 }
+
+## 2 Examples from  Wichura (1988); AS 241 Applied Statistics -- would be better
+all.equal(qnorm(0.25),-0.6744897501960817, tol = 1e-14)
+all.equal(qnorm(0.001),-3.090232306168, tol = 1e-12)
+
+z <- rnorm(1000); all.equal(pnorm(z),  1 - pnorm(-z), tol= 1e-15)
+z <- rt(1000,3)
+for(df in 1:10) if(!is.logical(all.equal(pt(z, df), 1 - pt(-z,df), tol= 1e-15)))
+    cat("ERROR -- df = ", df, "\n")
+
+###==========  p <-> q  Inversion consistency =====================
+p <- pnorm(z); ok <- 1e-5 < p & p < 1 - 1e-5
+all.equal(z[ok], qnorm(p[ok]), tol= 1e-12)
