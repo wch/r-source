@@ -29,8 +29,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-02-08 12:23+0000\n"
-"PO-Revision-Date: 2005-02-08 12:23+0000\n"
+"POT-Creation-Date: 2005-02-08 15:22+0000\n"
+"PO-Revision-Date: 2005-02-08 15:22+0000\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -76,11 +76,11 @@ msgid ".C(..): Width cannot be zero"
 msgstr ".C(..): Width cannot be zero"
 
 #: src/appl/strsignif.c:123
-msgid ".C(..): `type' must be \"integer\" for  \"d\"-format"
+msgid ".C(..): 'type' must be \"integer\" for  \"d\"-format"
 msgstr ".C(..): ‘type’ must be “integer” for  “d”-format"
 
 #: src/appl/strsignif.c:215
-msgid ".C(..): `type' must be \"real\" for this format"
+msgid ".C(..): 'type' must be \"real\" for this format"
 msgstr ".C(..): ‘type’ must be “real” for this format"
 
 #: src/gnuwin32/dynload.c:101
@@ -307,8 +307,8 @@ msgid "Insufficient memory (expandcmd)"
 msgstr "Insufficient memory (expandcmd)"
 
 #: src/gnuwin32/run.c:50
-msgid "A \" is missing(expandcmd)"
-msgstr "A \" is missing(expandcmd)"
+msgid "A \" is missing (expandcmd)"
+msgstr "A \" is missing (expandcmd)"
 
 #: src/gnuwin32/run.c:88
 msgid " not found"
@@ -392,8 +392,8 @@ msgstr "WARNING: --max-mem-size value is invalid: ignored\n"
 
 #: src/gnuwin32/system.c:864
 #, c-format
-msgid "WARNING: --max-mem-size=%lu`%c': too large and ignored\n"
-msgstr "WARNING: --max-mem-size=%lu‘%c’: too large and ignored\n"
+msgid "WARNING: --max-mem-size=%lu'%c': too large and ignored\n"
+msgstr "WARNING: --max-mem-size=%lu'%c': too large and ignored\n"
 
 #: src/gnuwin32/system.c:869
 #, c-format
@@ -411,8 +411,8 @@ msgid "ARGUMENT '%s' __ignored__\n"
 msgstr "ARGUMENT ‘%s’ __ignored__\n"
 
 #: src/gnuwin32/system.c:922 src/unix/system.c:272
-msgid "you must specify `--save', `--no-save' or `--vanilla'"
-msgstr "you must specify ‘--save’, ‘--no-save’ or ‘--vanilla’"
+msgid "you must specify '--save', '--no-save' or '--vanilla'"
+msgstr "you must specify '--save', ‘--no-save’ or ‘--vanilla’"
 
 #: src/gnuwin32/system.c:927
 msgid ""
@@ -496,8 +496,8 @@ msgstr "WARNING: %s value is invalid: ignored\n"
 
 #: src/main/CommandLineArgs.c:209
 #, c-format
-msgid "WARNING: %s=%lu`%c': too large and ignored\n"
-msgstr "WARNING: %s=%lu‘%c’: too large and ignored\n"
+msgid "WARNING: %s=%lu'%c': too large and ignored\n"
+msgstr "WARNING: %s=%lu'%c': too large and ignored\n"
 
 #: src/main/CommandLineArgs.c:226
 msgid "WARNING: no value given for --max-ppsize given\n"
@@ -526,8 +526,8 @@ msgstr "WARNING: --vsize value is invalid: ignored\n"
 
 #: src/main/CommandLineArgs.c:255
 #, c-format
-msgid "WARNING: --vsize=%ld`%c': too large and ignored\n"
-msgstr "WARNING: --vsize=%ld‘%c’: too large and ignored\n"
+msgid "WARNING: --vsize=%ld'%c': too large and ignored\n"
+msgstr "WARNING: --vsize=%ld'%c': too large and ignored\n"
 
 #: src/main/CommandLineArgs.c:270
 msgid "WARNING: no nsize given\n"
@@ -540,8 +540,8 @@ msgstr "WARNING: --nsize value is invalid: ignored\n"
 
 #: src/main/CommandLineArgs.c:278
 #, c-format
-msgid "WARNING: --nsize=%lu`%c': too large and ignored\n"
-msgstr "WARNING: --nsize=%lu‘%c’: too large and ignored\n"
+msgid "WARNING: --nsize=%lu'%c': too large and ignored\n"
+msgstr "WARNING: --nsize=%lu'%c': too large and ignored\n"
 
 #: src/main/RNG.c:139
 #, c-format
@@ -624,8 +624,8 @@ msgid "Maximal number of DLLs reached..."
 msgstr "Maximal number of DLLs reached..."
 
 #: src/main/Rdynload.c:548
-msgid "Couldn't allocate space for 'path'"
-msgstr "Couldn't allocate space for ‘path’"
+msgid "could not allocate space for 'path'"
+msgstr "could not allocate space for ‘path’"
 
 #: src/main/Rdynload.c:561
 #, c-format
@@ -633,8 +633,8 @@ msgid "DLLname %s is too long"
 msgstr "DLLname %s is too long"
 
 #: src/main/Rdynload.c:582
-msgid "Couldn't allocate space for 'name'"
-msgstr "Couldn't allocate space for ‘name’"
+msgid "could not allocate space for 'name'"
+msgstr "could not allocate space for ‘name’"
 
 #: src/main/Rdynload.c:842 src/main/Rdynload.c:858 src/main/util.c:999
 msgid "character argument expected"
@@ -643,16 +643,16 @@ msgstr "character argument expected"
 #: src/main/Rdynload.c:847 src/main/Rdynload.c:876
 #, c-format
 msgid ""
-"unable to load shared library \"%s\":\n"
+"unable to load shared library '%s':\n"
 "  %s"
 msgstr ""
-"unable to load shared library “%s”:\n"
+"unable to load shared library '%s':\n"
 "  %s"
 
 #: src/main/Rdynload.c:861
 #, c-format
-msgid "dynamic/shared library \"%s\" was not loaded"
-msgstr "dynamic/shared library “%s” was not loaded"
+msgid "dynamic/shared library '%s' was not loaded"
+msgstr "dynamic/shared library ‘%s’ was not loaded"
 
 #: src/main/Rdynload.c:1007
 msgid "must pass package name or DllInfo reference"
@@ -721,46 +721,36 @@ msgid "Invalid argument to unary operator"
 msgstr "Invalid argument to unary operator"
 
 #: src/main/arithmetic.c:519 src/main/arithmetic.c:538
-msgid "illegal unary operator"
-msgstr "illegal unary operator"
+msgid "invalid unary operator"
+msgstr "invalid unary operator"
 
 #: src/main/arithmetic.c:585
 msgid "NAs produced by integer overflow"
 msgstr "NAs produced by integer overflow"
 
 #: src/main/arithmetic.c:902
-msgid "unimplemented real function (of 1 arg.)"
-msgstr "unimplemented real function (of 1 arg.)"
+msgid "unimplemented real function (of 1 argument)"
+msgstr "unimplemented real function (of 1 argument)"
 
-#: src/main/arithmetic.c:1091
-msgid "unimplemented real function of 2 numeric args"
-msgstr "unimplemented real function of 2 numeric args"
-
-#: src/main/arithmetic.c:1116
+#: src/main/arithmetic.c:1092 src/main/arithmetic.c:1370
+#: src/main/arithmetic.c:1564 src/main/arithmetic.c:1693
 #, c-format
-msgid "%d arguments passed to \"atan\" which requires 1 or 2"
-msgstr "%d arguments passed to “atan” which requires 1 or 2"
+msgid "unimplemented real function of %d numeric arguments"
+msgstr "unimplemented real function of %d numeric arguments"
 
-#: src/main/arithmetic.c:1131 src/main/arithmetic.c:1150
-msgid "illegal 2nd arg of length 0"
-msgstr "illegal 2nd arg of length 0"
-
-#: src/main/arithmetic.c:1156
+#: src/main/arithmetic.c:1117
 #, c-format
-msgid "%d arguments passed to \"log\" which requires 1 or 2"
-msgstr "%d arguments passed to “log” which requires 1 or 2"
+msgid "%d arguments passed to 'atan' which requires 1 or 2"
+msgstr "%d arguments passed to ‘atan’ which requires 1 or 2"
 
-#: src/main/arithmetic.c:1368
-msgid "unimplemented real function of 3 numeric args"
-msgstr "unimplemented real function of 3 numeric args"
+#: src/main/arithmetic.c:1132 src/main/arithmetic.c:1151
+msgid "invalid second argument of length 0"
+msgstr "invalid second argument of length 0"
 
-#: src/main/arithmetic.c:1561
-msgid "unimplemented real function of 4 numeric args"
-msgstr "unimplemented real function of 4 numeric args"
-
-#: src/main/arithmetic.c:1689
-msgid "unimplemented real function of 5 numeric args"
-msgstr "unimplemented real function of 5 numeric args"
+#: src/main/arithmetic.c:1157
+#, c-format
+msgid "%d arguments passed to 'log' which requires 1 or 2"
+msgstr "%d arguments passed to ‘log’ which requires 1 or 2"
 
 #: src/main/array.c:71
 msgid "matrix: invalid byrow value"
@@ -1131,8 +1121,8 @@ msgid "vector: cannot make a vector of mode \"%s\"."
 msgstr "vector: cannot make a vector of mode “%s”."
 
 #: src/main/builtin.c:524
-msgid "can not set length of non-vector"
-msgstr "can not set length of non-vector"
+msgid "cannot set length of non-vector"
+msgstr "cannot set length of non-vector"
 
 #: src/main/builtin.c:621
 msgid "length<- invalid first argument"
@@ -2685,16 +2675,16 @@ msgid "cannot add bindings to a locked environment"
 msgstr "cannot add bindings to a locked environment"
 
 #: src/main/envir.c:392
-msgid "1st arg (table) not of type VECSXP,  from R_HashResize"
-msgstr "1st arg (table) not of type VECSXP,  from R_HashResize"
+msgid "first arg (table) not of type VECSXP,  from R_HashResize"
+msgstr "first arg (table) not of type VECSXP,  from R_HashResize"
 
 #: src/main/envir.c:451
-msgid "1st arg (table) not of type VECSXP, R_HashSizeCheck"
-msgstr "1st arg (table) not of type VECSXP, R_HashSizeCheck"
+msgid "first arg (table) not of type VECSXP, R_HashSizeCheck"
+msgstr "first arg (table) not of type VECSXP, R_HashSizeCheck"
 
 #: src/main/envir.c:479
-msgid "1st arg (table) not of type ENVSXP, from R_HashVector2Hash"
-msgstr "1st arg (table) not of type ENVSXP, from R_HashVector2Hash"
+msgid "first arg (table) not of type ENVSXP, from R_HashVector2Hash"
+msgstr "first arg (table) not of type ENVSXP, from R_HashVector2Hash"
 
 #: src/main/envir.c:667
 msgid "illegal cached value in R_GetGlobalCache"
@@ -3776,12 +3766,12 @@ msgid "not a weak reference"
 msgstr "not a weak reference"
 
 #: src/main/memory.c:1092
-msgid "1st arg must be environment or external pointer"
-msgstr "1st arg must be environment or external pointer"
+msgid "first argument must be environment or external pointer"
+msgstr "first argument must be environment or external pointer"
 
 #: src/main/memory.c:1094
-msgid "2nd arg must be a function"
-msgstr "2nd arg must be a function"
+msgid "second argument must be a function"
+msgstr "second argument must be a function"
 
 #: src/main/memory.c:1418
 msgid "vector memory exhausted (limit reached?)"
@@ -3812,8 +3802,8 @@ msgid "cannot allocate vector of size %lu Kb"
 msgstr "cannot allocate vector of size %lu Kb"
 
 #: src/main/memory.c:1914
-msgid "gc.time is not implemented on this system"
-msgstr "gc.time is not implemented on this system"
+msgid "gc.time() is not implemented on this system"
+msgstr "gc.time() is not implemented on this system"
 
 #: src/main/memory.c:2100
 msgid "protect(): protection stack overflow"
@@ -3854,17 +3844,13 @@ msgstr "invalid term in model formula"
 msgid "invalid model formula"
 msgstr "invalid model formula"
 
-#: src/main/model.c:226
+#: src/main/model.c:226 src/main/model.c:467
 msgid "invalid power in formula"
 msgstr "invalid power in formula"
 
 #: src/main/model.c:262
 msgid "invalid model formula in ExtractVars"
 msgstr "invalid model formula in ExtractVars"
-
-#: src/main/model.c:467
-msgid "Invalid power in formula"
-msgstr "Invalid power in formula"
 
 #: src/main/model.c:589
 #, c-format
@@ -3933,8 +3919,8 @@ msgid "invalid model frame"
 msgstr "invalid model frame"
 
 #: src/main/model.c:1580
-msgid "don't know how many cases"
-msgstr "don't know how many cases"
+msgid "do not know how many cases"
+msgstr "do not know how many cases"
 
 #: src/main/model.c:1606 src/main/model.c:1613
 #, c-format
@@ -5430,12 +5416,12 @@ msgid "mismatch on types"
 msgstr "mismatch on types"
 
 #: src/main/saveload.c:674
-msgid "can't save file position while restoring data"
-msgstr "can't save file position while restoring data"
+msgid "cannot save file position while restoring data"
+msgstr "cannot save file position while restoring data"
 
 #: src/main/saveload.c:687
-msgid "can't restore file position while restoring data"
-msgstr "can't restore file position while restoring data"
+msgid "cannot restore file position while restoring data"
+msgstr "cannot restore file position while restoring data"
 
 #: src/main/saveload.c:918
 msgid "base namespace is not preserved in version 1 workspaces"
@@ -6486,17 +6472,13 @@ msgstr "invalid value for ‘justify’"
 msgid "invalid multibyte string"
 msgstr "invalid multibyte string"
 
-#: src/main/util.c:1181
-msgid "invalid text in mbcsToLatin1"
-msgstr "invalid text in mbcsToLatin1"
+#: src/main/util.c:1181 src/main/util.c:1189
+msgid "invalid input in mbcsToLatin1"
+msgstr "invalid input in mbcsToLatin1"
 
 #: src/main/util.c:1186
 msgid "allocation failure in mbcsToLatin1"
 msgstr "allocation failure in mbcsToLatin1"
-
-#: src/main/util.c:1189
-msgid "invalid input found in mbcsToLatin1"
-msgstr "invalid input found in mbcsToLatin1"
 
 #: src/main/util.c:1288
 msgid "error message truncated to 255 chars"
@@ -6869,8 +6851,8 @@ msgid "argument logarithm must be logical"
 msgstr "argument logarithm must be logical"
 
 #: src/modules/X11/devX11.c:293
-msgid "can't set grayscale: reverting to monochrome"
-msgstr "can't set grayscale: reverting to monochrome"
+msgid "cannot set grayscale: reverting to monochrome"
+msgstr "cannot set grayscale: reverting to monochrome"
 
 #: src/modules/X11/devX11.c:376
 msgid ""
@@ -7237,12 +7219,12 @@ msgid "intern=TRUE is not implemented on this platform"
 msgstr "intern=TRUE is not implemented on this platform"
 
 #: src/unix/sys-unix.c:272
-msgid "Can't mkdir R_TempDir"
-msgstr "Can't mkdir R_TempDir"
+msgid "cannot mkdir R_TempDir"
+msgstr "cannot mkdir R_TempDir"
 
 #: src/unix/sys-unix.c:284
-msgid "Can't allocate R_TempDir"
-msgstr "Can't allocate R_TempDir"
+msgid "cannot allocate R_TempDir"
+msgstr "cannot allocate R_TempDir"
 
 #: src/unix/sys-unix.c:366
 msgid "Sys.info() is not implemented on this system"
@@ -7255,13 +7237,13 @@ msgstr "WARNING: --gui or -g without value ignored"
 
 #: src/unix/system.c:189
 #, c-format
-msgid "WARNING: unknown gui `%s', using X11\n"
-msgstr "WARNING: unknown gui ‘%s’, using X11\n"
+msgid "WARNING: unknown gui '%s', using X11\n"
+msgstr "WARNING: unknown gui '%s', using X11\n"
 
 #: src/unix/system.c:192
 #, c-format
-msgid "WARNING: unknown gui `%s', using none\n"
-msgstr "WARNING: unknown gui ‘%s’, using none\n"
+msgid "WARNING: unknown gui '%s', using none\n"
+msgstr "WARNING: unknown gui '%s', using none\n"
 
 #: src/unix/system.c:310
 msgid "WARNING: Only editing the first in the list of files"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-02-08 12:43+0000\n"
+"POT-Creation-Date: 2005-02-08 15:15+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -400,7 +400,7 @@ msgstr ""
 msgid "Save script"
 msgstr ""
 
-#: editor.c:640 pager.c:434
+#: editor.c:640 pager.c:434 ../library/grDevices/src/devWindows.c:1506
 msgid "Return focus to Console"
 msgstr ""
 
@@ -957,10 +957,6 @@ msgstr ""
 
 #: ../library/grDevices/src/devWindows.c:1494
 msgid "Copy to the clipboard as a metafile"
-msgstr ""
-
-#: ../library/grDevices/src/devWindows.c:1506
-msgid "Return focus to console"
 msgstr ""
 
 #: ../library/grDevices/src/devWindows.c:1512
