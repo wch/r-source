@@ -1,6 +1,6 @@
 
 R : Copyright 1999, The R Development Core Team
-Version 0.65.0 Patched (unreleased) (September 22, 1999)
+Version 0.90.0 Under development (unstable) (October 9, 1999)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -35,7 +35,7 @@ Error in as.call(x) : invalid argument list
 > is.factor(as.factor( x ))
 [1] TRUE
 > is.function(as.function( x ))
-Error in as.function.default(l, envir) : list argument expected
+[1] TRUE
 > is.integer(as.integer( x ))
 [1] TRUE
 > is.list(as.list( x ))
@@ -189,7 +189,7 @@ Error in as.call(x) : invalid argument list
 > is.factor(as.factor( x ))
 [1] TRUE
 > is.function(as.function( x ))
-Error in as.function.default(l, envir) : list argument expected
+[1] TRUE
 > is.integer(as.integer( x ))
 [1] TRUE
 > is.list(as.list( x ))
@@ -267,7 +267,7 @@ Error in as.call(x) : invalid argument list
 > is.factor(as.factor( x ))
 [1] TRUE
 > is.function(as.function( x ))
-Error in as.function.default(l, envir) : list argument expected
+[1] TRUE
 > is.integer(as.integer( x ))
 [1] TRUE
 > is.list(as.list( x ))
