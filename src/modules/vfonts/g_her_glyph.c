@@ -1,7 +1,7 @@
 /* PAUL MURRELL
    This is verbatim from the GNU plotutils libplot-2.3 distribution
 */
-
+  
 /* This file defines the arrays _occidental_hershey_glyphs[] and
    _oriental_hershey_glyphs[].  The first array includes the standard
    (`occidental') Hershey glyphs digitized by Dr. Allen V. Hershey, some
@@ -510,7 +510,6 @@ const char * const _occidental_hershey_glyphs[NUM_OCCIDENTAL_HERSHEY_GLYPHS] =
 /* empty Kanji glyph (space) [4399] */
 "D_", 
 };
-
 #ifndef NO_KANJI
 const char * const _oriental_hershey_glyphs[NUM_ORIENTAL_HERSHEY_GLYPHS] =
 {
