@@ -11,6 +11,9 @@
 
 BUG FIXES
 
+    o   The pdf() device now initialises graphical parameters 
+	properly.  (PR#2281)
+
     o	plot.stepfun() now obeys a `ylim=.' specification.
 
     o	removeClass() does a better job of removing inheritance

@@ -2778,11 +2778,20 @@ static void PDF_Invalidate(NewDevDesc *dd)
 
     pd->current.fontsize = -1;
     pd->current.fontstyle = -1;
-    pd->current.lwd = 1;
+    /* 
+     * Paul:  make all these settings "invalid"
+     pd->current.lwd = 1;
+     */
+    pd->current.lwd = -1;
     pd->current.lty = -1;
     /* page starts with black as the default fill and stroke colours */
-    pd->current.col = 0;
-    pd->current.fill = 0;
+    /* 
+     * Paul:  make all these settings "invalid"
+     pd->current.col = 0;
+     pd->current.fill = 0; 
+     */
+    pd->current.col = INVALID_COL;
+    pd->current.fill = INVALID_COL;
     pd->current.bg = INVALID_COL;
 }
 
@@ -3078,7 +3087,6 @@ static void PDF_NewPage(int fill, double gamma, NewDevDesc *dd)
     pd->startstream = (int) ftell(pd->pdffp);
     fprintf(pd->pdffp, "1 J 1 j 10 M q\n");
     PDF_Invalidate(dd);
-
     if(R_ALPHA(fill) == 0) {
 	PDF_SetFill(fill, dd);
 	fprintf(pd->pdffp, "0 0 %.2f %.2f re f\n",
