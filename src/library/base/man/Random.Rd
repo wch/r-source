@@ -138,6 +138,10 @@ set.seed(seed, kind = NULL)
 
   As from \R 1.8.0, \code{.Random.seed} is only looked for in the user's
   workspace.
+
+  All the supplied uniform generators return 32-bit integer values that
+  are converted to doubles, so they take at most \eqn{2^{32}}{2^32}
+  distinct values and long runs will return duplicated values.
 }
 \value{
   \code{.Random.seed} is an \code{\link{integer}} vector whose first
@@ -252,6 +256,11 @@ RNGkind()
 
 ## Reset:
 RNGkind(ok[1])
+
+## ----
+sum(duplicated(runif(1e6))) # around 110
+## and we would expect about almost sure duplicates beyond about
+qbirthday(1-1e-6, classes=2e9) # 235,000
 }
 \keyword{distribution}
 \keyword{sysdata}
