@@ -1,6 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
+ *                2002  R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -42,25 +43,26 @@ void bincode(double *x, int *pn, double *breaks, int *pnb, int *code,
     nb1 = *pnb - 1;
     lft = !(*right);
 
-    for(i=0 ; i<n ; i++)
-	if(R_FINITE(x[i])) {
+    for(i = 0; i < n; i++) {
+	code[i] = NA_INTEGER;
+	if(!ISNAN(x[i])) {
 	    lo = 0;
 	    hi = nb1;
 	    if(x[i] <  breaks[lo] || breaks[hi] < x[i] ||
-	       (x[i] == breaks[lft?hi:lo] && ! *include_border))
-		code[i] = NA_INTEGER;
+	       (x[i] == breaks[lft ? hi : lo] && ! *include_border)) ;
 	    else {
-		while(hi-lo >= 2) {
-		    new = (hi+lo)/2;
+		while(hi - lo >= 2) {
+		    new = (hi + lo)/2;
 		    if(x[i] > breaks[new] || (lft && x[i] == breaks[new]))
 			lo = new;
 		    else
 			hi = new;
 		}
-		code[i] = lo+1;
+		code[i] = lo + 1;
 	    }
 	} else if (! *naok)
 	    error("NA's in .C(\"bincode\",... NAOK=FALSE)");
+    }
 }
 
 /* bincount is called by  hist(.)  [only]
@@ -132,5 +134,5 @@ void bincode2(double *x, int *pn, double *breaks, int *pnb, int *code,
 		code[i] = lo+1;
 	    }
 	} else if (! *naok)
-	    error("NA's in .C(\"bincode2\",... NAOK=FALSE)");
+	    error("NA's in .C(\"bincode2\",... naok=FALSE)");
 }

@@ -740,6 +740,21 @@ stopifnot(all(Mod(vector("complex", 7)) == 0))# contained garbage in 1.5.0
 hist(.leap.seconds, breaks = 5)
 ## error in 1.5.1
 
+##Jonathan Rougier 2002-06-18
+x <- matrix(runif(30), 10, 3)
+poly(x, degree=2)
+## failed in 1.5.1
+
+
+## PR#1694 cut with infinite values -> NA (Markus Jäntti)
+cut.off <- c(-Inf, 0, Inf)
+x <- c(-Inf, -10, 0, 10, Inf)
+(res <- cut(x, cut.off, include.lowest=TRUE))
+stopifnot(all(!is.na(res)))
+(res <- cut(x, cut.off, include.lowest=TRUE, right=FALSE))
+stopifnot(all(!is.na(res)))
+## outer values were NA in 1.5.1
+
 
 ## related to PR 1577/1608, conversions to character
 DF <- data.frame(b = LETTERS[1:3])
@@ -779,4 +794,5 @@ z <- merge(x, y, by = 0, all.x = TRUE)
 sapply(z, data.class)
 stopifnot(is.character(z$b))
 ## end of `related to PR 1577/1608'
+
 
