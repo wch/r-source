@@ -188,7 +188,12 @@ static void scientific(double *x, int *sgn, int *kpower, int *nsig, double eps)
 	    else
 		alpha = r * tbl[-kp + 1];
 	}
-	else alpha = r / pow(10.0, (double)kp);
+	/* on IEEE 1e-308 is not representable except by gradual underflow */
+	else if (kp < -307) {
+	    alpha = (r * 1e+300)/pow(10.0, (double)(kp+300));
+	} 
+	else 
+	    alpha = r / pow(10.0, (double)kp);
 
 	/* make sure that alpha is in [1,10) AFTER rounding */
 
