@@ -183,7 +183,8 @@ bindist:
 	$(CP) -pr ../../bin ../../afm ../../demos  ../../unzip $(RPREFIX)
 	$(MKDIR) $(RPREFIX)/library
 	$(CP) -pr $(LIBFILES) $(RPREFIX)/library
-	$(RM) $(RPREFIX)/demos/dynload/*.o
+	$(RM) $(RPREFIX)/demos/dynload/*.o $(RPREFIX)/demos/dynload/*.def
+	$(RM) $(RPREFIX)/*/Makefile.in
 	$(MKDIR) $(RPREFIX)/etc
 	$(CP) -p ../../etc/Rprofile $(RPREFIX)/etc/Rprofile
 	$(CP) -p ../../etc/Rconsole $(RPREFIX)/etc/Rconsole
@@ -195,25 +196,26 @@ bindist:
 	$(CP) -p ../../COPYING COPYRIGHTS ../../FAQ ../../NEWS \
 		../../Y2K $(RPREFIX)
 	$(CP) -p readme $(RPREFIX)/README
-	$(CP) -p rw-faq $(RPREFIX)/rw-faq
-	$(CP) -p Announce $(RPREFIX)/Announce
+	$(CP) -p rw-faq $(RPREFIX)/rw-FAQ
+#	$(CP) -p Announce $(RPREFIX)/Announce
 	$(CP) -p CHANGES $(RPREFIX)/CHANGES
-	zip -l docs.zip $(RPREFIX)/*
-	unzip -o docs.zip
+	zip docs.zip $(RPREFIX)/*
+	unzip -a -o docs.zip
 	$(RM) docs.zip
 	$(RM) -rf $(RPREFIX)b.zip $(RPREFIX)h.zip $(RPREFIX)w.zip $(RPREFIX)l.zip
 	$(RM) anindex.zip
 	zip -mrX anindex.zip $(RPREFIX)/library/*/help/AnIndex $(RPREFIX)/library/*/help/00Titles
-	zip -mrX $(RPREFIX)h.zip $(RPREFIX)/library/*/help \
-		$(RPREFIX)/library/*/R-ex
+	zip -mr9X $(RPREFIX)h.zip $(RPREFIX)/library/*/help 
 	unzip anindex.zip
 	$(RM) anindex.zip
-	zip -rmX $(RPREFIX)w.zip $(RPREFIX)/doc/html $(RPREFIX)/library/*/html
-	zip -rmX $(RPREFIX)ch.zip $(RPREFIX)/library/*/chtml  $(RPREFIX)/bin/Rchtml.dll
+	zip -rm9X $(RPREFIX)w.zip $(RPREFIX)/doc/html $(RPREFIX)/library/*/html
+	zip -rm9X $(RPREFIX)ch.zip $(RPREFIX)/library/*/chtml  $(RPREFIX)/bin/Rchtml.dll
 	$(RM)  $(RPREFIX)/library/*/winhlp/*.GID
-	zip -rmX $(RPREFIX)wh.zip $(RPREFIX)/library/*/winhlp
-	zip -rmX $(RPREFIX)l.zip $(RPREFIX)/library/*/latex $(RPREFIX)/doc/manual
-	zip -rX $(RPREFIX)b.zip $(RPREFIX)
+	zip -rm9X $(RPREFIX)wh.zip $(RPREFIX)/library/*/winhlp
+	zip -rm9X $(RPREFIX)l.zip $(RPREFIX)/library/*/latex $(RPREFIX)/doc/manual
+	$(RM) -r $(RPREFIX)/doc
+	zip -rm9X $(RPREFIX)b2.zip $(RPREFIX)/library
+	zip -r9X $(RPREFIX)b1.zip $(RPREFIX)
 	$(RM) -rf $(RPREFIX)
 
 
@@ -283,7 +285,7 @@ docsdist:
 	$(RM) -rf $(RPREFIX)
 	$(MKDIR) $(RPREFIX) $(RPREFIX)/doc $(RPREFIX)/doc/manuals 
 	$(CP) -pr ../../doc/manual/*.pdf $(RPREFIX)/doc/manuals
-	zip -rmX $(RPREFIX)d.zip $(RPREFIX)
+	zip -rm9X $(RPREFIX)d.zip $(RPREFIX)
 
 
 # Dependencies
