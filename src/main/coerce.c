@@ -44,6 +44,13 @@ static char *falsenames[] = {
     (char *) 0,
 };
 
+static int isblankstr(unsigned char *s)
+{
+    while (*s) 
+    	if (!isspace(*s++)) return 0; 
+    return 1;
+}
+
 #define WARN_NA	   1
 #define WARN_INACC 2
 #define WARN_IMAG  4
@@ -134,7 +141,7 @@ int IntegerFromString(SEXP x, int *warn)
     char *endp;
     if (x != R_NaString) {
 	xdouble = strtod(CHAR(x), &endp);
-	if (*endp == '\0') {
+	if (isblankstr(endp)) {
 	    if (xdouble > INT_MAX) {
 		*warn |= WARN_INACC;
 		return INT_MAX;
@@ -180,7 +187,7 @@ double RealFromString(SEXP x, int *warn)
     char *endp;
     if (x != R_NaString) {
 	xdouble = strtod(CHAR(x), &endp);
-	if (*endp == '\0')
+	if (isblankstr(endp))
 	    return xdouble;
 	else
 	    *warn |= WARN_NA;
@@ -238,13 +245,13 @@ complex ComplexFromString(SEXP x, int *warn)
     z.r = z.i = NA_REAL;
     if (x != R_NaString) {
 	xr = strtod(endp, &endp);
-	if (*endp == '\0') {
+	if (isblankstr(endp)) {
 	    z.r = xr;
 	    z.i = 0.0;
 	}
 	else if (*endp == '+' || *endp == '-') {
 	    xi = strtod(endp, &endp);
-	    if (endp[0] == 'i' && endp[1] == '\0') {
+	    if (*endp++ == 'i' && isblankstr(endp)) {
 		z.r = xr;
 		z.i = xi;
 	    }

@@ -24,6 +24,8 @@ NEW FEATURES
 
 BUG FIXES
 
+    o   allow trailing space in character->numeric coercion
+
     o	library() gave wrong "masked" warnings in some cases.
 
     o   par(xpd) semantics were not compatible with S.
