@@ -132,13 +132,17 @@ xgettext2pot <- function(dir, potFile)
     for(e in tmp)
         writeLines(con=con, c('', paste('msgid', e), 'msgstr ""'))
     tmp <- xngettext(dir)
+    un <- unique(unlist(tmp, recursive=TRUE))
     for(ee in tmp)
         for(e in ee)
-            writeLines(con=con, c('',
-                       paste('msgid       ',
-                             shQuote(encodeString(e[1]), type="cmd")),
-                       paste('msgid_plural',
-                             shQuote(encodeString(e[2]), type="cmd")),
-                       'msgstr[0]    ""', 'msgstr[1]    ""')
-                       )
+            if(e[1] %in% un) {
+                writeLines(con=con, c('',
+                           paste('msgid       ',
+                                 shQuote(encodeString(e[1]), type="cmd")),
+                           paste('msgid_plural',
+                                 shQuote(encodeString(e[2]), type="cmd")),
+                           'msgstr[0]    ""', 'msgstr[1]    ""')
+                           )
+                un <- un[-match(e, un)]
+            }
 }
