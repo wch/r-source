@@ -111,6 +111,10 @@ BUG FIXES
 
     o	mosaicplot(*, color = v) now recycles v[] if needed.
 
+    o	Calling dev.control("inhibit") with no graphics device open
+	crashed R. (PR#1605)
+
+
 
 		CHANGES IN R VERSION 1.5.0
 

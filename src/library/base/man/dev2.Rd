@@ -17,7 +17,8 @@ dev.control(displaylist)
     For \code{dev.print}, this includes \code{which} and by default any
     \code{\link{postscript}} arguments.}
   \item{which}{A device number specifying the device to copy to}
-  \item{displaylist}{A character string}
+  \item{displaylist}{A character string: the only valid value is
+    \code{"inhibit"}.}
 }
 \description{
   \code{dev.copy} copies the graphics contents of the current device
@@ -33,7 +34,7 @@ dev.control(displaylist)
   EPSF output file, in portrait orientation (\code{horizontal = FALSE})
 
   \code{dev.control} allows the user to control the recording of
-  graphics operations in a device.  If \code{displaylist} is "inhibit"
+  graphics operations in a device.  If \code{displaylist} is \code{"inhibit"}
   then recording is turned off.
 }
 \value{
