@@ -6,10 +6,10 @@
 .Defunct()
 
 %--- oldfun(.)
+Version()
 provide(package)
 % Removed in 1.2.0
 .Provided
-Version(.)
 category(\dots)
 dnchisq(.)
 pnchisq(.)
@@ -23,9 +23,9 @@ save.plot(.)
 system.test(.)
 }
 %------ PLEASE: put \alias{.} here for  EACH !
+\alias{Version}
 \alias{provide}
 \alias{.Provided}
-\alias{Version}
 \alias{category}
 \alias{dnchisq}
 \alias{pnchisq}
