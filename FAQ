@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 0.99-1, 2000/02/03
+Version 0.99-2, 2000/02/12
 Kurt Hornik
 
 
@@ -338,21 +338,19 @@ available for web browsing at `http://stat.ethz.ch/R/manual/'.
 
    * "An Introduction to R" (`R-intro') includes information on data types,
      programming elements, statistical modelling and graphics.  This
-     document is based on the "Notes on S-PLUS" by Bill Venables
-     <venables@stats.adelaide.edu.au> and David Smith
-     <D.M.Smith@lancaster.ac.uk>.
+     document is based on the "Notes on S-PLUS" by Bill Venables and David
+     Smith.
 
    * "R Language Definition" (`R-lang') is the "Kernighan & Ritchie of R",
      explaining evaluation, parsing, object oriented programming, computing
      on the language, and so forth.
 
    * "Writing R Extensions" (`R-exts') currently desribes the process of
-     creating R add-on packages, writing R documentation, and R's system
-     and foreign language interfaces, and will soon also contain
-     information on R's APIs.
+     creating R add-on packages, writing R documentation, R's system and
+     foreign language interfaces, and the R API.
 
-The "R Extension Writers Guide" already comes with R, the other two will be
-available for the 1.0 release.
+The "R Language Definition" will be available for the 1.0 release, the
+other two already come with R.
 
    In addition to material written specifically for R, documentation for
 S/S-PLUS (see *Note R and S::) can be used in combination with this FAQ
@@ -980,6 +978,11 @@ Journal of Statistical Software
      The data sets for the exercises in Rnotes (*note What documentation
      exists for R?::).
 
+*SASmixed*
+     Data sets and sample lme analyses corresponding to the examples in "SAS
+     System for Mixed Models" by Littel, Milliken, Stroup and Wolfinger,
+     1996, SAS Institute.
+
 *acepack*
      ace (Alternating Conditional Expectations) and avas (Additivity and
      VAriance Stabilization for regression) for selecting regression
@@ -1038,10 +1041,6 @@ Journal of Statistical Software
      Maximum likelihood estimation of the parameters of a fractionally
      differenced ARIMA(p,d,q) model (Haslett and Raftery, Applied
      Statistics, 1989).
-
-*funfits*
-     An integrated set of functions for fitting curves and surfaces
-     including thin plate splines, kriging and neural networks.
 
 *gee*
      An implementation of the Liang/Zeger generalized estimating equation
@@ -1181,6 +1180,9 @@ these a try, of course.  This area of CRAN currently contains
 *HTML*
      Functions for exporting R objects as HTML tables.
 
+*RMySQL*
+     An interface between R and the MySQL database system.
+
 *RPgSQL*
      An interface between R and the PostgreSQL database system.
 
@@ -1191,11 +1193,16 @@ these a try, of course.  This area of CRAN currently contains
      Functions for reading data stored by statistical software like Minitab,
      SAS, SPSS, etc.
 
+*funfits*
+     An integrated set of functions for fitting curves and surfaces
+     including thin plate splines, kriging and neural networks.
+
 *hdf5*
      Interface to the NCSA HDF5 library.
 
 *multidim*
-     Code for multivariate analysis.
+     Code for correspondence analysis and other multidimensional descriptive
+     statistics.
 
 *tcltk*
      Basic interface with Tcl/Tk.
@@ -1569,7 +1576,7 @@ ending with `M', `K', or `k' meaning `Mega' (2^20), (computer) `Kilo'
 (2^10), or regular `kilo' (1000).
 
    E.g., to read in a table of 5000 observations on 40 numeric variables,
-`R --vsize 6M' should do (which currently is the default).
+`R --vsize=6M' should do (which currently is the default).
 
    Note that the information on where to find vectors and strings on the
 heap is stored using cons cells.  Thus, it may also be necessary to

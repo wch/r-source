@@ -14,7 +14,7 @@
 <body>
 <h1>R FAQ</h1>
 <h2>Frequently Asked Questions on R</h2>
-<h2>Version 0.99-1, 2000/02/03</h2>
+<h2>Version 0.99-2, 2000/02/12</h2>
 <address>Kurt Hornik</address>
 <p><p><hr><p>
 
@@ -519,19 +519,18 @@ version is always available for web browsing at
 <li>"An Introduction to R" (<code>R-intro</code>)
 includes information on data types, programming elements, statistical
 modelling and graphics.  This document is based on the "Notes on
-<small>S-PLUS</small>" by <a href="mailto:venables@stats.adelaide.edu.au">Bill Venables</a> and
-<a href="mailto:D.M.Smith@lancaster.ac.uk">David Smith</a>. 
+<small>S-PLUS</small>" by Bill Venables and David Smith. 
 <li>"R Language Definition" (<code>R-lang</code>)
 is the "Kernighan &amp; Ritchie of R", explaining evaluation, parsing,
 object oriented programming, computing on the language, and so forth. 
 <li>"Writing R Extensions" (<code>R-exts</code>)
 currently desribes the process of creating R add-on packages, writing R
-documentation, and R's system and foreign language interfaces, and will
-soon also contain information on R's APIs. 
+documentation, R's system and foreign language interfaces, and the R
+API. 
 </ul>
 
-<p>The "R Extension Writers Guide" already comes with R, the other two
-will be available for the 1.0 release.
+<p>The "R Language Definition" will be available for the 1.0 release, the
+other two already come with R.
 
 <p>In addition to material written specifically for R, documentation for
 S/<small>S-PLUS</small> (see <a href="#R%20and%20S">R and S</a>) can be used in combination with this FAQ
@@ -1295,6 +1294,10 @@ U.S. National Institute for Standards and Technology.
 <dd>An interface between R and the mSQL database system. 
 <br><dt><strong>Rnotes</strong>
 <dd>The data sets for the exercises in Rnotes (see <a href="#What%20documentation%20exists%20for%20R%3f">What documentation exists for R?</a>). 
+<br><dt><strong>SASmixed</strong>
+<dd>Data sets and sample lme analyses corresponding to the examples in "SAS
+System for Mixed Models" by Littel, Milliken, Stroup and Wolfinger,
+1996, SAS Institute. 
 <br><dt><strong>acepack</strong>
 <dd>ace (Alternating Conditional Expectations) and avas (Additivity and
 VAriance Stabilization for regression) for selecting regression
@@ -1341,9 +1344,6 @@ Component Analysis, and simulation of a Wiener process.
 <dd>Maximum likelihood estimation of the parameters of a fractionally
 differenced ARIMA(p,d,q) model (Haslett and Raftery, Applied Statistics,
 1989). 
-<br><dt><strong>funfits</strong>
-<dd>An integrated set of functions for fitting curves and surfaces including
-thin plate splines, kriging and neural networks. 
 <br><dt><strong>gee</strong>
 <dd>An implementation of the Liang/Zeger generalized estimating equation
 approach to GLMs for dependent data. 
@@ -1450,6 +1450,8 @@ contains
 <dl>
 <dt><strong>HTML</strong>
 <dd>Functions for exporting R objects as <small>HTML</small> tables. 
+<br><dt><strong>RMySQL</strong>
+<dd>An interface between R and the MySQL database system. 
 <br><dt><strong>RPgSQL</strong>
 <dd>An interface between R and the PostgreSQL database system. 
 <br><dt><strong>dopt</strong>
@@ -1457,10 +1459,14 @@ contains
 <br><dt><strong>foreign</strong>
 <dd>Functions for reading data stored by statistical software like Minitab,
 SAS, SPSS, etc. 
+<br><dt><strong>funfits</strong>
+<dd>An integrated set of functions for fitting curves and surfaces including
+thin plate splines, kriging and neural networks. 
 <br><dt><strong>hdf5</strong>
 <dd>Interface to the NCSA HDF5 library. 
 <br><dt><strong>multidim</strong>
-<dd>Code for multivariate analysis. 
+<dd>Code for correspondence analysis and other multidimensional descriptive
+statistics. 
 <br><dt><strong>tcltk</strong>
 <dd>Basic interface with Tcl/Tk. 
 <br><dt><strong>timeslab</strong>
@@ -1943,7 +1949,7 @@ integers ending with <code>M</code>, <code>K</code>, or <code>k</code> meaning `
 (2^20), (computer) `Kilo' (2^10), or regular `kilo' (1000).
 
 <p>E.g., to read in a table of 5000 observations on 40 numeric variables,
-<code>R --vsize 6M</code> should do (which currently is the default).
+<code>R --vsize=6M</code> should do (which currently is the default).
 
 <p>Note that the information on where to find vectors and strings on the
 heap is stored using cons cells.  Thus, it may also be necessary to
