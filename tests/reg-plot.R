@@ -106,3 +106,8 @@ axis(1, pos = 0, at=-1:1, lty = lt, col=4)## col & lty work only from R 1.6
 par(op)
 axis(1, pos = 0, at=c(-2,2,3), lty = lt, col=4)
 mtext(side=1,"note the x-ticks on the other side of the bars")
+
+## explicit xlab and ylab for non-1D  plot.table():
+data(UCBAdmissions)
+plot(UCBAdmissions)# default x- and y-lab
+plot(UCBAdmissions, xlab = "x label", ylab = "YY")# wrong in 1.5.1
