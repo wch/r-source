@@ -653,16 +653,21 @@ static SEXP cmath2(SEXP op, SEXP sa, SEXP sb, void (*f)())
 
 SEXP complex_math2(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    switch (PRIMVAL(op)) {
-    case 10001: return cmath2(op, CAR(args), CADR(args), z_rround);
-    case 10002: return cmath2(op, CAR(args), CADR(args), z_atan2);
-    case 10003: return cmath2(op, CAR(args), CADR(args), z_logbase);
-    case 0: return cmath2(op, CAR(args), CADR(args), z_atan2);
-    case 1: return cmath2(op, CAR(args), CADR(args), z_prec);
-    default: errorcall(call, "unimplemented complex function\n");
-    }
+  switch (PRIMVAL(op)) {
+  case 10001:
+    return cmath2(op, CAR(args), CADR(args), z_rround);
+  case 10002:
+    return cmath2(op, CAR(args), CADR(args), z_atan2);
+  case 10003:
+    return cmath2(op, CAR(args), CADR(args), z_logbase);
+  case 10004:
+    return cmath2(op, CAR(args), CADR(args), z_prec);
+  case 0:
+    return cmath2(op, CAR(args), CADR(args), z_atan2);
+  default:
+    errorcall(call, "unimplemented complex function\n");
+  }
 }
-
 
 SEXP do_complex(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
