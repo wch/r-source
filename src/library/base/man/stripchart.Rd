@@ -3,14 +3,14 @@
 \alias{stripchart}
 \description{
   \code{stripchart} produces one dimensional scatter plots (or dot
-  plots) of the given data.  These plots are a good alternative to 
+  plots) of the given data.  These plots are a good alternative to
   \code{\link{boxplot}}s when sample sizes are small.
 }
 \usage{
 stripchart(x, method="overplot", jitter=0.1, offset=1/3,
-           vertical=FALSE, group.names,
+           vertical=FALSE, group.names, add = FALSE, at = NULL,
            xlim=NULL, ylim=NULL, main="", ylab="", xlab="",
-           pch=0, col=par("fg"), cex=par("cex"))
+           log="", pch=0, col=par("fg"), cex=par("cex"))
 }
 \arguments{
   \item{x}{the data from which the plots are to be produced.  The data
@@ -33,14 +33,36 @@ stripchart(x, method="overplot", jitter=0.1, offset=1/3,
     vertically rather than the default horizontal.}
   \item{group.names}{group labels which will be printed alongside
     (or underneath) each plot.}
-  \item{xlim, ylim, main, ylab, xlab, pch, col, cex}{Graphical parameters.}
+  \item{add}{logical, if true \emph{add} boxplot to current plot.}
+  \item{at}{numeric vector giving the locations where the boxplots should
+    be drawn, particularly when \code{add = TRUE};
+    defaults to \code{1:n} where \code{n} is the number of boxes.}
+  \item{xlim, ylim, main, ylab, xlab, log, pch, col, cex}{Graphical parameters.}
 }
 \details{
   Extensive examples of the use of this kind of plot can be found in
   Box, Hunter and Hunter or Seber and Wild.
 }
 \examples{
-x <- round(rnorm(50), 1)
-stripchart(x)
+x <- rnorm(50)
+xr<- round(x, 1)
+stripchart(x) ; m <- mean(par("usr")[1:2])
+text(m, 1.04, "stripchart(x, \"overplot\")")
+stripchart(xr, method = "stack", add = TRUE, at = 1.2)
+text(m, 1.35, "stripchart(round(x,1), \"stack\")")
+stripchart(xr, method = "jitter", add = TRUE, at = 0.7)
+text(m, 0.85, "stripchart(round(x,1), \"jitter\")")
+
+data(OrchardSprays)
+with(OrchardSprays,
+     stripchart(decrease ~ treatment,
+                main = "stripchart(Orchardsprays)", ylab = "decrease",
+                vertical = TRUE, log = "y"))
+% Fixme: ylab should have a non-""  default !
+
+with(OrchardSprays,
+     stripchart(decrease ~ treatment, at = c(1:8)^2,
+                main = "stripchart(Orchardsprays)", ylab = "decrease",
+                vertical = TRUE, log = "y"))
 }
 \keyword{hplot}

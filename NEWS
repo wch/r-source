@@ -23,6 +23,8 @@ NEW FEATURES
 	same way as print.summary.lm(), and both show them as NAs in
 	the table of coefficients.
 
+    o	stripchart() now has `log', `add' and `at' arguments.
+
 
 DEPRECATED & DEFUNCT
 

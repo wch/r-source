@@ -2,8 +2,9 @@
 
 stripchart <-
 function(x, method="overplot", jitter=0.1, offset=1/3, vertical=FALSE,
-         group.names, xlim=NULL, ylim=NULL, main="", ylab="", xlab="",
-         pch=0, col=par("fg"), cex=par("cex"))
+	 group.names, add = FALSE, at = NULL,
+	 xlim=NULL, ylim=NULL, main="", ylab="", xlab="",
+	 log="", pch=0, col=par("fg"), cex=par("cex"))
 {
     method <- pmatch(method, c("overplot", "jitter", "stack"))[1]
     if(is.na(method) || method==0)
@@ -24,46 +25,49 @@ function(x, method="overplot", jitter=0.1, offset=1/3, vertical=FALSE,
 	attr(groups, "names") <- group.names
     else if(is.null(attr(groups, "names")))
 	attr(groups, "names") <- 1:n
-    dlim <- rep.int(NA, 2)
-    for(i in groups)
-	dlim <- range(dlim, i[is.finite(i)], na.rm = TRUE)
-    glim <- c(1, n)
-    if(method == 2) { # jitter
-	glim <- glim +	jitter * if(n == 1) c(-5, 5) else c(-2, 2)
-    } else if(method == 3) { # stack
-	glim <- glim + if(n == 1) c(-1,1) else c(0, 0.5)
+    if(is.null(at))
+	at <- 1:n
+    else if(length(at) != n)
+	stop("`at' must have length = no{groups}, i.e. ",n)
+    if(!add) {
+	dlim <- c(NA, NA)
+	for(i in groups)
+	    dlim <- range(dlim, i[is.finite(i)], na.rm = TRUE)
+	glim <- c(1,n)# in any case, not range(at)
+	if(method == 2) { # jitter
+	    glim <- glim + jitter * if(n == 1) c(-5, 5) else c(-2, 2)
+	} else if(method == 3) { # stack
+	    glim <- glim + if(n == 1) c(-1,1) else c(0, 0.5)
+	}
+	if(is.null(xlim))
+	    xlim <- if(vertical) glim else dlim
+	if(is.null(ylim))
+	    ylim <- if(vertical) dlim else glim
+	plot(xlim, ylim, type="n", ann=FALSE, axes=FALSE, log=log)
+	box()
+	if(vertical) {
+	    if(n > 1) axis(1, at=at, lab=names(groups))
+	    axis(2)
+	}
+	else {
+	    axis(1)
+	    if(n > 1) axis(2, at=at, lab=names(groups))
+	}
     }
-    if(is.null(xlim)) {
-	xlim <- if(vertical) glim else dlim
-    }
-    if(is.null(ylim)) {
-	ylim <- if(vertical) dlim else glim
-    }
-    plot(xlim, ylim, type="n", ann=FALSE, axes=FALSE)
-    box()
-    if(vertical) {
-	if(n > 1) axis(1, at=1:n, lab=names(groups))
-	axis(2)
-    }
-    else {
-	axis(1)
-	if(n > 1) axis(2, at=1:n, lab=names(groups))
-    }
-
     csize <- cex*
 	if(vertical) xinch(par("cin")[1]) else yinch(par("cin")[2])
     f <- function(x) seq(length=length(x))
     for(i in 1:n) {
 	x <- groups[[i]]
-	y <- rep.int(i,length(x))
-	if(method == 2)
+	y <- rep.int(at[i], length(x))
+	if(method == 2) ## jitter
 	    y <- y + runif(length(y), -jitter, jitter)
-	else if(method == 3) {
+	else if(method == 3) { ## stack
 	    xg <- split(x, factor(x))
 	    xo <- lapply(xg, f)
 	    x <- unlist(xg, use.names=FALSE)
-	    y <- rep.int(i,length(x)) +
-                (unlist(xo, use.names=FALSE) - 1) * offset * csize
+	    y <- rep.int(at[i], length(x)) +
+		(unlist(xo, use.names=FALSE) - 1) * offset * csize
 	}
 	if(vertical) points(y, x, col=col[(i - 1)%%length(col) + 1],
 			    pch=pch[(i - 1)%%length(pch) + 1], cex=cex)
