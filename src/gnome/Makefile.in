@@ -97,7 +97,7 @@ terminal-toolbar.o: $(srcdir)/terminal-toolbar.c $(srcdir)/terminal.h $(srcdir)/
 
 mostlyclean: clean
 clean:
-	@echo Cleaning in src/unix
+	@echo Cleaning in src/gnome
 	@-rm -f *.o *.a
 distclean: clean
 	@-rm -f Makefile

@@ -266,7 +266,7 @@ static GnomeUIInfo graphics_toolbar[] =
   { GNOME_APP_UI_ITEM, "Print", "Print graphics", NULL, NULL, NULL, GNOME_APP_PIXMAP_STOCK, GNOME_STOCK_PIXMAP_PRINT, 0, (GdkModifierType) 0, NULL },
   GNOMEUIINFO_SEPARATOR,
   { GNOME_APP_UI_ITEM, "Close", "Close this graphics device", tb_close_cb, NULL, NULL, GNOME_APP_PIXMAP_STOCK, GNOME_STOCK_PIXMAP_CLOSE, 0, (GdkModifierType) 0, NULL },
-  NULL
+  GNOMEUIINFO_END
 };
 
 /* create window etc */
