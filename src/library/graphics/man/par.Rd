@@ -233,7 +233,9 @@ par(\dots, no.readonly = FALSE)
       start a new plot.}
     \item{\code{font}}{An integer which specifies which font to use for
       text.  If possible, device drivers arrange so that 1 corresponds
-      to plain text, 2 to bold face, 3 to italic and 4 to bold italic.}
+      to plain text, 2 to bold face, 3 to italic and 4 to bold
+      italic. Also, font 5 is expected to be the symbol font, in Adobe
+      symbol encoding.}
     \item{\code{font.axis}}{The font to be used for axis annotation.}
     \item{\code{font.lab}}{The font to be used for x and y labels.}
     \item{\code{font.main}}{The font to be used for plot main titles.}
