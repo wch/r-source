@@ -27,7 +27,15 @@ bug.report <- function(send=TRUE, method=.Options$mailer)
         cmd <- paste("mailx", "-s '", subject,
                      "' r-bugs@biostat.ku.dk < ", file)
         if(send){
-          system(cmd)
+          cat("Submit the bug report? ")
+          answer <- readline()
+          answer <- grep("y", answer, ignore.case=TRUE)
+          if(length(answer)>0){
+            cat("Sending email ...\n")
+            system(cmd)
+          }
+          else
+            cat("OK, not sending email, deleting report ...\n")
           unlink(file)
         }
         else
