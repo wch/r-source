@@ -54,6 +54,10 @@ $(Manparts): Man.dvi
 Man.ps:	Man.dvi
 	dvips -f $< -o $@
 
+Man-plotmath.ps: Man.dvi
+	dvips -f $< -pp5-6 -S 2   -i -o $@
+	b=`basename $@ .ps`; rm -f $$b.001; mv $$b.002 $@
+
 print2:	Man.ps
 	mpage -P -2 $< > Man.ps-2
 	lpr -s Man.ps-2
