@@ -648,6 +648,8 @@ BUG FIXES
     o	Printing `nls' objects misbehaved when `data' was a composite
 	expression.
 
+    o	.NotYetImplemented() gave "Error in .NotYet...(): .."
+
     o	numericDeriv() was failing if the first argument was a name
 	rather than a call.  (PR#3746)
 
