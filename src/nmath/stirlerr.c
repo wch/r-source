@@ -13,6 +13,7 @@
  *
  * Merge in to R:
  * Copyright (C) 2000, The R Core Development Team
+ * R has lgammafn, and lgamma is not part of ISO C
  */
 
 #include "nmath.h"
@@ -69,7 +70,7 @@ double stirlerr(double n)
     if (n <= 15.0) { 
 	nn = n + n;
 	if (nn == (int)nn) return(sferr_halves[(int)nn]);
-	return(lgamma(n + 1.) - (n + 0.5)*log(n) + n - M_LN_SQRT_2PI);
+	return(lgammafn(n + 1.) - (n + 0.5)*log(n) + n - M_LN_SQRT_2PI);
     }
 
     nn = n*n;
