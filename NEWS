@@ -45,6 +45,10 @@ NEW FEATURES
     o	str(.) has a new optional argument "nchar.max = 128" and truncates
 	strings longer than that.  Also eliminated a few minor glitches.
 
+    o   boxplot returns (and bxp accepts) a list containing the summary
+        statistics for the boxes (changed from a list of elements one for
+        each box).
+
 BUG FIXES
 
     o	The Mathlib functions now use exactly the same values for

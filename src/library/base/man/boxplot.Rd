@@ -77,15 +77,18 @@ boxplot.formula(formula, data = NULL, subset, na.action, \dots)
     (\code{boxplot.formula}).
 }
 \value{
-  List with one component corresponding to each plot.  The
-  components are themselves lists with named components as follows:
-  \item{stats}{a vector containing the extreme of the lower whisker,
+  List with the following components:
+  \item{stats}{a matrix, each column contains the extreme of the lower whisker,
     the lower hinge, the median, the upper hinge and the extreme of
-    the upper whisker.}
-  \item{n}{the number of observations in the sample.}
-  \item{conf}{the lower and upper extremes of the notch.}
+    the upper whisker for one group/plot.}
+  \item{n}{a vector with the number of observations in each group.}
+  \item{conf}{a matrix where each column contains the lower and upper
+    extremes of the notch.}
   \item{out}{the values of any data points which lie beyond the
     extremes of the whiskers.}
+  \item{group}{a vector of the same length as \code{out} whose elements
+    indicate which group the outlier belongs to}
+  \item{names}{a vector of names for the groups}
 }
 \seealso{
   \code{\link{boxplot.stats}} which does the computation,
