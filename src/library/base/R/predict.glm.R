@@ -2,14 +2,14 @@
 # copyright (C) 1998 W. N. Venables and B. D. Ripley
 #
 predict.glm <-
-function(object, newdata=NULL, type = c("link", "response"), se.fit = F,
-         dispersion = NULL, ...)
+function(object, newdata = NULL, type = c("link", "response"),
+         se.fit = FALSE, dispersion = NULL, ...)
 {
   ## 1998/06/23 KH:  predict.lm() now merged with the version in lm.R
 
   type <- match.arg(type)
   if(!se.fit) {
-    #No standard errors
+    ## No standard errors
     if(missing(newdata))
       pred <- switch(type,
                      link = object$linear.predictors,
@@ -21,7 +21,7 @@ function(object, newdata=NULL, type = c("link", "response"), se.fit = F,
              link = )
     }
   } else {
-    # summary.survreg has no ... argument.
+    ## summary.survreg has no ... argument.
     if(inherits(object, "survreg")) dispersion <- 1.
     if(is.null(dispersion) || dispersion == 0)
       dispersion <- summary(object, dispersion=dispersion)$dispersion

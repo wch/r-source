@@ -2,11 +2,11 @@
 # copyright (C) 1998 W. N. Venables and B. D. Ripley
 #
 update.default <-
-function (object, formula., ..., evaluate=T) 
+function (object, formula., ..., evaluate = TRUE) 
 {
   if (is.null(call <- object$call)) 
     stop("need an object with call component")
-  extras <- match.call(expand.dots=F)$...
+  extras <- match.call(expand.dots = FALSE)$...
   if (!missing(formula.)) 
     call$formula <- update.formula(formula(object), formula.)
   if(length(extras) > 0) {
