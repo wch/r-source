@@ -70,14 +70,19 @@ static const R_CallMethodDef callMethods[] = {
     {"L_locator", (DL_FUNC) &L_locator, 0},
     {"L_convert", (DL_FUNC) &L_convert, 4},
     {"L_layoutRegion", (DL_FUNC) &L_layoutRegion, 2},
+    {"validUnits", (DL_FUNC) &validUnits, 1},
+    {"L_getGPar", (DL_FUNC) &L_getGPar, 0},
+    {"L_setGPar", (DL_FUNC) &L_setGPar, 1},
+    {"L_rectBounds", (DL_FUNC) &L_rectBounds, 6},
+    {"L_textBounds", (DL_FUNC) &L_textBounds, 6},
     { NULL, NULL, 0 }
 };
 
 
 void R_init_grid(DllInfo *dll) 
 {
-    R_useDynamicSymbols(dll, FALSE);
     /* No .C, .Fortran, or .External routines => NULL
      */
     R_registerRoutines(dll, NULL, callMethods, NULL, NULL);
+    R_useDynamicSymbols(dll, FALSE);
 }

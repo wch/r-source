@@ -563,4 +563,15 @@ void getViewportTransform(SEXP currentvp,
 			  double *vpWidthCM, double *vpHeightCM,
 			  LTransform transform, double *rotationAngle);
 
+SEXP L_rectBounds(SEXP x, SEXP y, SEXP w, SEXP h, SEXP hjust, SEXP vjust);
 
+SEXP L_textBounds(SEXP label, SEXP x, SEXP y, 
+		  SEXP hjust, SEXP vjust, SEXP rot);
+
+/* From unit.c */
+SEXP validUnits(SEXP units);
+
+/* From gpar.c */
+SEXP L_getGPar(void);
+SEXP L_setGPar(SEXP gpars);
+    
