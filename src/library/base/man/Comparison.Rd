@@ -27,15 +27,25 @@ x != y
   provided they are conformable.
 }
 \note{
- Don't use \code{==} and \code{!=} for tests, such as in \code{if}
+  Don't use \code{==} and \code{!=} for tests, such as in \code{if}
   expressions, where you must get a single \code{TRUE} or
   \code{FALSE}.  Unless you are absolutely sure that nothing unusual
   can happen, you should use the \code{\link{identical}} function
   instead.
+
+  For numerical values, remember \code{==} and \code{!=} do not allow
+  for the finite representation of fractions, nor for rounding error.
+  Using \code{\link{all.equal}} with \code{identical} is almost
+  always preferable. See the examples.
 }
 \examples{
 x <- rnorm(20)
 x < 1
 x[x > 0]
+
+x1 <- 0.5 - 0.3
+x2 <- 0.3 - 0.1
+x1 == x2                           # FALSE on most machines
+identical(all.equal(x1, x2), TRUE) # TRUE everywhere
 }
 \keyword{logic}
