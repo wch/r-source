@@ -58,6 +58,9 @@ xor(x, y)
 \seealso{
   \code{\link{TRUE}} or \code{\link{logical}}.
 
+  \code{\link{any}} and \code{\link{all}} for OR and AND on many scalar
+  arguments.
+
   \code{\link{Syntax}} for operator precedence.
 }
 \examples{
