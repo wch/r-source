@@ -22,7 +22,7 @@
 
 <p>This is a guide to installation and administration for R.
 
-   <p>The current version of this document is 1.9.0 (2004-05-01).
+   <p>The current version of this document is 1.9.0 (2004-05-04).
 
    ISBN 3-900051-02-X
 
@@ -362,9 +362,9 @@ cross-compile, see <code>src/gnuwin32/INSTALL</code>.
 binaries for a base distribution and a large number of add-on packages
 from <small>CRAN</small> to run on Mac OS X version 10.2.0 or higher.
 
-   <p>The simplest way is to use <code>R.dmg.sit</code>.  Just double-click on the icon and the
-archive will be expanded as an image di file. Read the <code>ReadMe.txt</code> inside the
-disk image and follow the instructions.
+   <p>The simplest way is to use <code>R.dmg.sit</code>.  Just double-click on the
+icon and the archive will be expanded as an image di file. Read the
+<code>ReadMe.txt</code> inside the disk image and follow the instructions.
 
    <p>See the <a href="http://cran.r-project.org/bin/macosx/RMacOSX-FAQ.html">R for Mac OS X <small>FAQ</small></a> for more details.
 
@@ -373,9 +373,9 @@ disk image and follow the instructions.
 <h3 class="section">4.1 Building from source on Mac OS X</h3>
 
 <p>If you want to build this port from the sources, you can read the above
-mentioned <a href="http://cran.r-project.org/bin/macosx/RMacOSX-FAQ.html">R for Mac OS X <small>FAQ</small></a> for full details. You will need to collect and install some tools
-as explained in the document. Than you have to expand the R sources and
-configure R appropriately, for example
+mentioned <a href="http://cran.r-project.org/bin/macosx/RMacOSX-FAQ.html">R for Mac OS X <small>FAQ</small></a> for full details. You will need to collect
+and install some tools as explained in the document. Than you have to
+expand the R sources and configure R appropriately, for example
 
 <pre class="smallexample">     tar zxvf R-1.9.0.tgz
      cd R-1.9.0
@@ -386,9 +386,10 @@ configure R appropriately, for example
 <p>sit back and wait. The last option <code>--with-aqua</code> is needed only if you want a Console GUI. 
 The first two options are strongly recommended.
 
-   <p>R is by default configured and installed as a framework called <code>R.framework</code>. The
-default path for <code>R.framework</code> is <code>/Library/Frameworks</code> but this can be changed
-at configure time specifying the flag <code>--enable-R-framework[=DIR]</code> or at install
+   <p>R is by default configured and installed as a framework called
+<code>R.framework</code>. The default path for <code>R.framework</code> is
+<code>/Library/Frameworks</code> but this can be changed at configure time
+specifying the flag <code>--enable-R-framework[=DIR]</code> or at install
 time as
 <pre class="smallexample">     make prefix=/where/you/want/R.framework/to/go install
      </pre>
@@ -399,9 +400,7 @@ time as
 
 <h2 class="chapter">5 Add-on packages</h2>
 
-<p>This chapter applies to Unix-like and Windows versions of R.
-
-   <p>It is helpful to use the correct terminology.  A <em>package</em> is
+<p>It is helpful to use the correct terminology.  A <em>package</em> is
 loaded from a <em>library</em> by the function <code>library()</code>.  Thus a
 library is a directory containing installed packages; the main library
 is <code></code><var>R_HOME</var><code>/library</code>, but others can be used, for example by
@@ -794,7 +793,7 @@ Irix 6.5 and Alpha/OSF1 (aka Tru64).
 
    <p>To build in a separate directory you need a <code>make</code> that uses the
 <code>VPATH</code> variable, for example GNU <code>make</code>, or Sun
-<code>make</code> on Solaris 2.7/8 (but not earlier).
+<code>make</code> on Solaris 2.7/8/9 (but not earlier).
 
    <p>If you want to use a <code>make</code> by another name, for example if your
 GNU <code>make</code> is called <code>gmake</code>, you need to set the variable
@@ -1001,6 +1000,11 @@ Tcl/Tk libraries, <code>libpng</code>, <code>libjpeg</code> and <code>zlib</code
 might be linked against.  Fortunately these are normally built as shared
 libraries with the exception of the ATLAS BLAS libraries.
 
+   <p>It seems that <code>gcc 3.4.0</code> on <code>ix86</code> Linux defeats attempts by
+the LAPACK code to avoid computations entirely in extended-precision
+registers, so file <code>src/modules/lapack/dlamc.f</code> may need to
+compiled without optimization or with <code>-ffloat-store</code>.
+
 <a name="Mac%20OS%20X"></a>
 
 <h3 class="subsection">B.7.2 Mac OS X</h4>
@@ -1040,7 +1044,7 @@ the source tree, and perhaps even then.
 path.
 
    <p><code>gcc</code> 3.2.1 and 3.2.2 generate incorrect code on 32-bit Solaris
-builds with optimization, but versions 3.1, 3.2, 3.2.3  and 3.3.x work
+builds with optimization, but versions 3.1, 3.2, 3.2.3 and later work
 correctly.  At least files <code>src/main/engine.c</code>,
 <code>src/main/graphics.c</code> and <code>src/modules/devX11.c</code> are affected.
 
