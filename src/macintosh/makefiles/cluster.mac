@@ -1,7 +1,7 @@
 #   File:       Makefile.mac
 #   Target:     clusterLib
 #   Created:    Jago, Aug 2001, Stefano M. Iacus
-#   Updated:	Jago, Apr 2002
+#   Updated:	Jago, Sep 2002
 #
 #   This script assumes that R binary already exists in 
 #   the R root folder
@@ -47,13 +47,11 @@ SrcFiles        =  	clara.c ¶
 					twins.c 
 					
 
-FortFiles		= 	clara.f ¶
-					daisy.f ¶
+FortFiles		= 	daisy.f ¶
 					fanny.f ¶
 					meet.f ¶
 					mona.f ¶
 					pam.f ¶
-					spannel.f ¶
 					twins.f
 					
 
@@ -120,13 +118,11 @@ LibFiles-PPC    =  ¶
 ### Required Dependencies ###
  
 # f2c dependencies
-clara.c Ä clara.f
 daisy.c Ä daisy.f
 fanny.c Ä fanny.f
 meet.c Ä meet.f
 mona.c Ä mona.f
 pam.c Ä pam.f 
-spannel.c Ä spannel.f
 twins.c Ä twins.f
 
 # obj dependencies
