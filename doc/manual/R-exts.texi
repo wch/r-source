@@ -1759,6 +1759,7 @@ output files can be very large if long runs are profiled.
 * Operating system access::     
 * Interface functions .C and .Fortran::  
 * dyn.load and dyn.unload::     
+* Registering native routines::
 * Creating shared libraries::   
 * Interfacing C++ code::        
 * Handling R objects in C::     
@@ -2021,7 +2022,132 @@ libraries, the most recently loaded occurrence is used.  The
 @code{PACKAGE} argument provides a good way to avoid any ambiguity in
 which occurrence is meant.
 
-@node Creating shared libraries, Interfacing C++ code, dyn.load and dyn.unload, System and foreign language interfaces
+
+@node Registering native routines, Creating shared libraries, dyn.load and dyn.unload, System and foreign language interfaces
+@section Registering native routines
+@cindex Registering native routines
+
+In calls to @code{.C}, @code{.Call}, @code{.Fortran} and
+@code{.External}, R must locate the specified native routine by
+looking in the appropriate shared library/DLL.  By default, R uses the
+operating system-specific dynamic loader to lookup the symbol.
+Alternatively, the author of the DLL can explicitly register routines
+with R and use a single, platform-independent mechanism for finding
+the routines in the DLL.  One can use this registration mechanism to
+provide additional information about a routine, including the number
+and type of the arguments, and also make it available to S programmers
+under a different name. In the future, registration may be used to
+implement a form of ``secure'' or limited native access.
+
+To register routines with R, one calls the C routine
+@code{R_registerRoutines}.  This is typically done when the DLL is
+first loaded within the initialization routine @code{R_init_<dll
+name>} described in @ref{dyn.load and dyn.unload}.
+@code{R_registerRoutines} takes 5 arguments.  The first is the
+@code{DllInfo} object passed by R to the initialization routine. This
+is where R stores the information about the methods. The remaining 4
+arguments are arrays describing the routines for each of the 4
+different interfaces: @code{.C}, @code{.Call}, @code{.Fortran} and
+@code{.External}.  Each argument is a NULL-terminated array of the
+element types given in the following table:
+
+@quotation
+@multitable {RRRRRR Interface} {RRRRRRR Description type}
+
+@item @code{.C} @tab @code{R_CMethodDef}
+@item @code{.Call} @tab @code{R_CallMethodDef}
+@item @code{.Fortran} @tab @code{R_FortranMethodDef}
+@item @code{.External} @tab @code{R_ExternalMethodDef}
+
+@end multitable
+@end quotation
+
+Currently, the @code{R_ExternalMethodDef} is the same as
+@code{R_CallMethodDef} type and contains fields for the name of the
+routine by which it can be accessed in R, a pointer to the actual
+native symbol (i.e. the routine itself), and the number of arguments
+the routine expects.  For routines with a variable number of arguments
+invoked via the @code{.External} interface, one specifies -1 for the
+number of arguments which tells R not to check the actual number
+passed.
+For example, if we had a routine named @code{myCall}
+defined as 
+
+@smallexample
+SEXP myCall(SEXP a, SEXP b, SEXP c);
+@end smallexample
+
+we would describe this as 
+
+@smallexample
+ R_CallMethodDef callMethods[]  = @{
+   @{"myCall",  &myCall, 3@},
+   @{NULL, NULL, 0@}
+ @};
+@end smallexample
+
+along with any other routines for the @code{.Call} interface.
+
+Routines for use with the @code{.C} and @code{.Fortran} interfaces are
+described with similar data structures, but which have two additional
+fields for describing the type and ``style'' of each argument.  Each
+of these can be omitted. However, if specified, each should be an
+array with the same number of elements as the number of parameters
+for the routine.  The types array should contain the @code{SEXP} types
+describing the expected type of the argument.  The S types and
+corresponding type identifiers are provided in the following table:
+
+@quotation
+@multitable {Interface} {Description type}
+
+@item @code{numeric} @tab @code{REALSXP}
+@item @code{integer} @tab @code{INTSXP}
+@item @code{logical} @tab @code{LGLSXP}
+@item @code{single} @tab @code{SINGLESXP}
+@item @code{character} @tab @code{STRSXP}
+@item @code{list} @tab @code{VECSXP}
+
+@end multitable
+@end quotation
+
+Consider a C routine, @code{myC}, declared as 
+
+@smallexample
+void myC(double *x, int *n, char **names, int *status);
+@end smallexample
+
+We would register it as
+
+@smallexample
+R_CMethodDef cmethods[] = @{
+   @{"myC", &myC, 4, @{REALSXP, INTSXP, STRSXP, LGLSXP@}@},
+   @{NULL, NULL, 0@}
+@};
+@end smallexample
+
+One can also specify whether each argument is used simply as input, or
+as output, or as both input and output.  The style field in the
+description of a method is used for this.  The purpose is to allow R
+to more efficiently transfer values across the S-C/Fortran interface
+by avoiding copying values when it is not necessary. Typically, one
+omits this information in the registration data.
+
+
+Examples of registering routines can be found in the different
+packages in the R source tree (e.g. @pkg{mva}, @pkg{ctest},
+@pkg{lqs}).  Also, there is a brief, high-level introduction in R News
+(volume 1/3, September 2001, pages 20-23).
+
+
+Additionally, there are (experimental) tools that can be used to
+automate the generation of the code to register the routines for a
+collection of C files. See the @code{GccTranslationUnit} module on the
+Omegahat Web site at @uref{http://www.omegahat.org/GccTranslationUnit}
+for more information.
+
+
+
+@node Creating shared libraries, Interfacing C++ code, Registering native routines, System and foreign language interfaces
 @section Creating shared libraries
 @cindex Creating shared libraries
 @findex R CMD SHLIB
@@ -2500,8 +2626,8 @@ PROTECT(@var{newSexp} = AS_NUMERIC(@var{oldSexp}));
 
 @noindent
 Protection is needed as a new @emph{object} is created; the object
-formerly pointed to by the @code{SEXP} is re-used is still protected but
-now unused.
+formerly pointed to by the @code{SEXP} is still protected but now
+unused.
 
 All the coercion functions do their own error-checking, and generate
 @code{NA}s with a warning or stop with an error as appropriate.
