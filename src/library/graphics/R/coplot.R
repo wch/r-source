@@ -198,9 +198,8 @@ coplot <-
     if(a.is.fac && show.given[1]) oma[3] <- oma[3] - 1
 
     ## Start Plotting only now
-
     opar <- par(mfrow = c(total.rows, total.columns),
-		oma = oma, mar = mar, xaxs = "r", yaxs = "r", new = FALSE)
+		oma = oma, mar = mar, xaxs = "r", yaxs = "r")
     on.exit(par(opar))
     plot.new()
     ## as.numeric() allowing factors for x & y:
