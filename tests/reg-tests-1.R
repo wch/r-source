@@ -376,20 +376,21 @@ image(x2, 1, as.matrix(z))
 
 
 ##PR 1175 and 1123##
+set.seed(123)
 ## We can't seem to get Pearson residuals right ##
-x_1:4 # regressor variable
-y_c(2,6,7,8) # response binomial counts
-n_rep(10,4) # number of binomial trials
-ym_cbind(y,n-y) # response variable as a matrix
-glm1_glm(ym~x,binomial) # fit a generalized linear model
-f_fitted(glm1)
-rp1_(y-n*f)/sqrt(n*f*(1-f)) # direct calculation of pearson residuals
-rp2_residuals(glm1,type="pearson") # should be pearson residuals
+x <- 1:4 # regressor variable
+y <- c(2,6,7,8) # response binomial counts
+n <- rep(10,4) # number of binomial trials
+ym <- cbind(y,n-y) # response variable as a matrix
+glm1 <- glm(ym~x,binomial) # fit a generalized linear model
+f <- fitted(glm1)
+rp1 <- (y-n*f)/sqrt(n*f*(1-f)) # direct calculation of pearson residuals
+rp2 <- residuals(glm1,type="pearson") # should be pearson residuals
 stopifnot(all.equal(rp1,rp2))
 # sign should be same as response residuals
-x<-1:10
-y<-rgamma(10,2)/x
-glm2<-glm(y~x,family=Gamma)
+x <- 1:10
+y <- rgamma(10,2)/x
+glm2 <- glm(y~x,family=Gamma)
 stopifnot(all.equal(sign(resid(glm2,"response")),sign(resid(glm2,"pearson"))))
 # shouldn't depend on link for a saturated model
 x<-rep(0:1,10)
@@ -408,6 +409,13 @@ library(mva)
 cancor(matrix(rnorm(100),100,1), matrix(rnorm(300),100,3))
 detach("package:mva")
 ##  Comments: failed in R-devel.
+
+## PR#1201" incorrect values in qbeta
+x <- seq(0, 0.8, len=1000)
+xx <- pbeta(qbeta(x, 0.143891, 0.05), 0.143891, 0.05)
+stopifnot(max(abs(x - xx)) < 1e-6)
+##  Get a range of zeroes in 1.3.1
+
 
 ## This example last ##
 

@@ -94,26 +94,26 @@ double qbeta(double alpha, double p, double q, int lower_tail, int log_p)
     /* calculate the initial approximation */
 
     r = sqrt(-log(a * a));
-    y = r - (const1 + const2 * r) / (1 + (const3 + const4 * r) * r);
+    y = r - (const1 + const2 * r) / (1. + (const3 + const4 * r) * r);
     if (pp > 1 && qq > 1) {
-	r = (y * y - 3) / 6;
-	s = 1 / (pp + pp - 1);
-	t = 1 / (qq + qq - 1);
-	h = 2 / (s + t);
+	r = (y * y - 3.) / 6.;
+	s = 1. / (pp + pp - 1.);
+	t = 1. / (qq + qq - 1.);
+	h = 2. / (s + t);
 	w = y * sqrt(h + r) / h - (t - s) * (r + 5. / 6. - 2. / (3. * h));
 	xinbta = pp / (pp + qq * exp(w + w));
     } else {
 	r = qq + qq;
-	t = 1 / (9 * qq);
-	t = r * pow(1 - t + y * sqrt(t), 3);
+	t = 1. / (9. * qq);
+	t = r * pow(1. - t + y * sqrt(t), 3.0);
 	if (t <= 0.)
-	    xinbta = 1 - exp((log((1 - a) * qq) + logbeta) / qq);
+	    xinbta = 1. - exp((log((1. - a) * qq) + logbeta) / qq);
 	else {
-	    t = (4 * pp + r - 2) / t;
-	    if (t <= 1)
+	    t = (4. * pp + r - 2.) / t;
+	    if (t <= 1.)
 		xinbta = exp((log(a * pp) + logbeta) / pp);
 	    else
-		xinbta = 1 - 2 / (t + 1);
+		xinbta = 1. - 2. / (t + 1.);
 	}
     }
 
@@ -124,10 +124,11 @@ double qbeta(double alpha, double p, double q, int lower_tail, int log_p)
     t = 1 - qq;
     yprev = 0.;
     adj = 1;
+    /* Sometimes the approximation is negative! */
     if (xinbta < lower)
-	xinbta = lower;
+	xinbta = 0.5;
     else if (xinbta > upper)
-	xinbta = upper;
+	xinbta = 0.5;
 
     /* Desired accuracy should depend on  (a,p)
      * This is from Remark .. on AS 109, adapted.

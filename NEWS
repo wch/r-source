@@ -227,7 +227,7 @@ NEW FEATURES
 	equivalent to x[value] <- NA but may differ, e.g. for factors
 	where "NA" is a level.
 
-    o	is.xxx reached through do_is are now generic
+    o	is.xxx reached through do_is are now generic.
 
     o	La.eigen() and La.svd() have new default methods to use later
 	(and often much faster) LAPACK routines.  The difference
@@ -347,8 +347,8 @@ NEW FEATURES
 	  save.
 
     	- save.image() default arguments can be specified in the
-	  save.image.defaults option.  These specifications are used
-	  when save.image is called from q() or GUI analogs.
+	  `save.image.defaults' option.  These specifications are used
+	  when save.image() is called from q() or GUI analogs.
 
 
     o	scan() allows unlimited (by R) lengths of input lines, instead
@@ -570,9 +570,9 @@ BUG FIXES
     o	method "gnudoit" of bug.report() was incorrectly documented as
 	"gnuclient" (PR#1108)
 
-    o	saving with ascii=TRUE mangled backslashes (PR#1115)
+    o	saving with ascii=TRUE mangled backslashes. (PR#1115)
 
-    o	frac(,) {and others} now adds a gap appropriately (PR#1101)
+    o	frac(,) {and others} now adds a gap appropriately. (PR#1101)
 
     o	logLik.lm() now uses the correct "df" (nlme legacy code).
 
@@ -602,13 +602,13 @@ BUG FIXES
 	loaded by require() when sourcing package code are now visible
 	in the remaining source evaluations.
 
-    o	names(d) <- v  now works (again) for "dist" objects d (PR#1129).
+    o	names(d) <- v  now works (again) for "dist" objects d. (PR#1129)
 
     o	Workarounds for problems with incompletely specified date-times
 	in strptime() which were seen only on glibc-based systems
 	(PR#1155).
 
-    o	promax() was returning the wrong rotation matrix (PR#1146).
+    o	promax() was returning the wrong rotation matrix. (PR#1146)
 
     o	The [pqr]signrank and [pqr]wilcox functions failed to check that
 	memory has been allocated (PR#1149), and had (often large)
@@ -671,9 +671,11 @@ BUG FIXES
     o   pt(t, , ncp=0) was wrong if t was +/-Inf.
 
     o	Subsetting grouping factors gave incorrect degrees of freedom
-	for some tests in package ctests (PR#1124).
+	for some tests in package ctests. (PR#1124)
 
     o	writeBin() had a memory leak.
+
+    o	qbeta(0.25, 0.143891, 0.05) was (incorrectly) 3e-308. (PR#1201)
 
 
 
