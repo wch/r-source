@@ -1090,7 +1090,7 @@ static SEXP findConditionHandler(SEXP cond)
 
 SEXP do_signalCondition(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    SEXP list, cond, msg, ecall;
+    SEXP list, cond, msg, ecall, oldstack;
 
     checkArity(op, args);
 
@@ -1098,6 +1098,7 @@ SEXP do_signalCondition(SEXP call, SEXP op, SEXP args, SEXP rho)
     msg = CADR(args);
     ecall = CADDR(args);
 
+    PROTECT(oldstack = R_HandlerStack);
     while ((list = findConditionHandler(cond)) != R_NilValue) {
 	SEXP entry = CAR(list);
 	R_HandlerStack = CDR(list);
@@ -1119,6 +1120,8 @@ SEXP do_signalCondition(SEXP call, SEXP op, SEXP args, SEXP rho)
 	}
 	else gotoExitingHandler(cond, call, entry);
     }
+    R_HandlerStack = oldstack;
+    UNPROTECT(1);
     return R_NilValue;
 }
 
