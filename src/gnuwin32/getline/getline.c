@@ -1,6 +1,6 @@
 #ifndef lint
 static char     rcsid[] =
-"$Id: getline.c,v 1.1 1999/04/28 05:15:27 ripley Exp $";
+"$Id: getline.c,v 1.1.2.1 1999/04/28 10:03:47 ripley Exp $";
 static char    *copyright = "Copyright (C) 1991, 1992, 1993, Chris Thewalt";
 #endif
 
