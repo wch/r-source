@@ -4,14 +4,26 @@ format <- function(x, ...) UseMethod("format")
 ###----- FIXME ----- the digits handling should rather happen in
 ###	 -----	     in .Internal(format(...))	 in  ../../main/paste.c !
 ###--- also the 'names' should be kept INTERNALLY !
-format.default <- function(x, trim=FALSE, digits=NULL)
+format.default <- function(x, trim = FALSE, digits = NULL,
+                           justify = c("left", "right", "none"))
 {
+    f.char <- function(x, justify) {
+        if(length(x) <= 1) return(x)
+        nc <- nchar(x)
+        w <- max(nc)
+        all <- paste(rep(" ", w), collapse="")
+        if(justify == "left") paste(x, substring(all, 1, w-nc), sep="")
+        else paste(substring(all, 1, w-nc), x, sep="")
+    }
     if(!is.null(digits)) {
 	op <- options(digits=digits)
 	on.exit(options(op))
     }
+    justify <- match.arg(justify)
     switch(mode(x),
 	   NULL = "NULL",
+           character = switch(justify, none=x, left=f.char(x, "left"),
+                              right=f.char(x, "right")),
 	   list = sapply(lapply(x, function(x)
 				.Internal(format(unlist(x), trim=trim))),
 			 paste, collapse=", "),
@@ -178,16 +190,18 @@ formatC <- function (x, digits = NULL, width = NULL,
 format.factor <- function(x, ...)
     format(as.character(x), ...)
 
-format.data.frame <- function(x, ...)
+format.data.frame <- function(x, ..., justify = "none")
 {
-    dims<-dim(x)
+    dims <- dim(x)
     nc <- dims[2]
     rval <- vector("list", nc)
     for(i in 1:nc)
-        rval[[i]] <- format(x[[i]], ...)
-    dn <-dimnames(x)
+        rval[[i]] <- format(x[[i]], ..., justify = justify)
+    dn <- dimnames(x)
     names(rval) <- dn[[2]]
-    return(data.frame(rval, row.names= dn[[1]]) )
+    rval$check.names <- FALSE
+    rval$row.names <- dn[[1]]
+    do.call("data.frame", rval)
 }
 
 format.AsIs <- function(x, width = 12, ...)
@@ -195,7 +209,7 @@ format.AsIs <- function(x, width = 12, ...)
      n <- length(x)
      rvec <- rep(NA,n)
      for( i in 1:n )
-       rvec[i] <- toString(x[[i]], width, ...)
+         rvec[i] <- toString(x[[i]], width, ...)
      return(format.char(rvec, flag="+"))
 }
 

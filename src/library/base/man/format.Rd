@@ -3,8 +3,9 @@
 \usage{
 format(x, \dots)
 format.AsIs(x, width = 12, \dots)
-format.data.frame <- function(x, \dots) 
-format.default(x, trim = FALSE, digits = getOption("digits"))
+format.data.frame <- function(x, \dots, justify = "none") 
+format.default(x, trim = FALSE, digits = getOption("digits").
+               justify = c("left", "right", "none"))
 format.factor <- function(x, \dots)
 format.pval(pv, digits = max(1, getOption("digits") - 2),
             eps = .Machine$double.eps, na.form = "NA")
@@ -27,6 +28,9 @@ format.pval(pv, digits = max(1, getOption("digits") - 2),
     \code{\link{numeric} x}. This is a suggestion: enough decimal
     places will be used so that the smallest (in magnitude) number has
     this many significant digits.}
+  \item{justify}{should character vector be left-justified,
+    right-justified or left alone.  When justifying, the field width is
+    that of the longest string.}
   \item{pv}{a numeric vector.}
   \item{na.form}{character representation of \code{NA}s.}
   \item{width}{the returned vector has elements of at most \code{width}.}
@@ -49,6 +53,9 @@ format.pval(pv, digits = max(1, getOption("digits") - 2),
   formatting facility for numbers, but does \emph{not} provide a common
   format for several numbers.
 
+  \code{format.data.frame} formats the data frame column by column,
+  applying the appropriate method of \code{format} for each column.
+  The result is a data frame, so in most cases 
 }
 \note{
   Currently \code{format} drops trailing zeroes, so \code{format(6.001,
@@ -63,6 +70,14 @@ format.pval(pv, digits = max(1, getOption("digits") - 2),
 }
 \examples{
 format(1:10)
+
+zz <- data.frame("(row names)"= c("aaaaa", "b"), check.names=FALSE)
+format(zz)
+format(zz, justify="left")
+
+## handling of quotes
+zz <- data.frame(a=I("abc"), b=I("def\"gh"))
+format(zz)
 \testonly{for(i in c(1:5,10,15:17,20)) cat(i,":\t",format(pi,digits=i),"\n")
 }
 p <- c(47,13,2,.1,.023,.0045, 1e-100)/1000

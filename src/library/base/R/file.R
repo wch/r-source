@@ -72,7 +72,7 @@ file.access <- function(names, mode = 0)
     res
 }
 
-format.octmode <- function(x)
+format.octmode <- function(x, ...)
 {
     if(!inherits(x, "octmode")) stop("calling wrong method")
     isna <- is.na(x)

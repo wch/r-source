@@ -1,3 +1,3 @@
 traceback <-
-    function() unlist(.Traceback)
+    function() structure(unlist(.Traceback), class="noquote")
 

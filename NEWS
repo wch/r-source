@@ -275,7 +275,10 @@ NEW FEATURES
 	with C++ code.
 
     o	Formatting (and printing) of data.frames with complex objects is
-	improved. toString was added as a new function.
+	improved.  toString was added as a new function.
+
+    o	format() has a new argument `justify' controlling the
+        justification of character strings (and factors).
 
     o	scan() and read.table() have a new argument blank.lines.skip
 	to allow blank lines to be read.
@@ -293,6 +296,8 @@ NEW FEATURES
      
     o	optim() now checks the length of an analytical gradient at
 	each evaluation.
+
+    o	traceback() is now printed un-quoted.
 
 
 BUG FIXES

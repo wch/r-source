@@ -2,7 +2,7 @@
 toString <- function(x, ...)
     UseMethod("toString")
 
-toString.default <- function(x, width) {
+toString.default <- function(x, width, ...) {
   string <- paste(x, collapse=", ")
   if( missing(width) )
     return( string )
