@@ -28,15 +28,12 @@ identical(x, y)
   the result is also \code{NA}.  In either case, the expression
   \code{if(x == y)....} won't work as expected.
 
-  The function \code{all.equal} is also sometimes used to test equality
-  this way, but it was intended for something different.  First, it
-  tries to allow for \dQuote{reasonable} differences in numeric results.
-  Second, it returns a descriptive character vector instead of
-  \code{FALSE} when the objects do not match.  Therefore, it is not the
-  right function to use for reliable testing either.  (If you \emph{do} want
-  to allow for numeric fuzziness in comparing objects, you can combine
-  \code{all.equal} and \code{identical}, as shown in the examples
-  below.)
+  The functions \code{all.equal} and \code{\link{is.all.equal}} are also
+  sometimes used to test equality this way, but were intended for
+  something different:  They allow for \dQuote{reasonable}
+  differences in numeric results.  Note that \code{is.all.equal} is
+  currently using \code{identical} on \code{all.equal()}'s result, see
+  the examples below.)
 
   The computations in \code{identical} are also reliable and usually
   fast.  There should never be an error.  The only known way to kill
@@ -63,7 +60,7 @@ identical(x, y)
   Springer.
 }
 \seealso{
-  \code{\link{all.equal}} for descriptions of how two objects differ;
+  \code{\link{is.all.equal}} for descriptions of how two objects differ;
   \link{Comparison} for operators that generate elementwise comparisons.
 }
 \examples{
@@ -72,7 +69,8 @@ identical(1, 1.)   ## TRUE in R (both are stored as doubles)
 identical(1, as.integer(1)) ## FALSE, stored as different types
 
 x <- 1.0; y <- 0.99999999999
-## how to test for object equality allowing for numeric fuzz
+## how to test for object equality allowing for numeric fuzz :
+is.all.equal # (x,y)   which is simply defined to just use
 identical(all.equal(x, y), TRUE)
 ## If all.equal thinks the objects are different, it returns a
 ## character string, and this expression evaluates to FALSE

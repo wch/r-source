@@ -9,12 +9,18 @@
 \alias{all.equal.list}
 \alias{all.equal.language}
 \alias{attr.all.equal}
+\alias{is.all.equal}
+\concept{numerical equality}
+\concept{approximately equal}
+\concept{equality testing}
 \usage{
 all.equal(target, current, \dots)
 
 \method{all.equal}{numeric}(target, current,
           tolerance = .Machine$double.eps ^ 0.5,
           scale = NULL, \dots)
+
+is.all.equal(target, current, \dots)
 
 attr.all.equal(target, current, \dots)
 }
@@ -31,9 +37,10 @@ attr.all.equal(target, current, \dots)
     \code{all.equal(x,y)} is a utility to compare \R objects \code{x}
     and \code{y} testing \dQuote{near equality}.  If they are different,
     comparison is still made to some extent, and a report of the
-    differences is returned.  Don't use \code{all.equal} directly in
-    \code{if} expressions---either use \code{\link{identical}} or combine
-    the two, as shown in the documentation for \code{identical}.
+    differences is returned.  \code{is.all.equal} should be used for
+    programming, typically in \code{if} expressions.  It is a simple
+    wrapper using \code{\link{identical}} as shown in the documentation
+    there.
 }
 \details{
     There are several methods available, most of which are dispatched by
@@ -50,7 +57,7 @@ attr.all.equal(target, current, \dots)
     If \code{scale} is positive, absolute comparisons are after scaling
     (dividing) by \code{scale}.
 
-    For complex arguments, the modulus \code{\link{Mod}} of the difference 
+    For complex arguments, the modulus \code{\link{Mod}} of the difference
     is used: \code{all.numeric.numeric} is called so arguments
     \code{tolerance} and \code{scale} are available.
 
@@ -58,36 +65,37 @@ attr.all.equal(target, current, \dots)
     \code{\link{attributes}}, returning \code{NULL} or \code{character}.
 }
 \value{
-    Either \code{TRUE} or a vector of \code{\link{mode}}
-    \code{"character"} describing the differences between \code{target}
-    and \code{current}.
+  Either \code{TRUE} or a vector of \code{\link{mode}}
+  \code{"character"} describing the differences between \code{target}
+  and \code{current}.
 
-  Numerical differences are reported by relative error
+  Numerical differences are reported by \emph{relative} error.
 }
 \references{
   Chambers, J. M. (1998)
   \emph{Programming with Data. A Guide to the S Language}.
   Springer (for \code{=}).
 }
-\seealso{\code{\link{identical}}, \code{\link{==}}, and \code{\link{all}} 
-for exact equality testing.}
+\seealso{\code{\link{identical}}, \code{\link{==}}, and
+  \code{\link{all}} for exact equality testing.
+}
 \examples{
 all.equal(pi, 355/113) # not precise enough (default tol) > relative error
 
 d45 <- pi*(1/4 + 1:10)
 stopifnot(
-all.equal(tan(d45), rep(1,10))) # TRUE, but
-all      (tan(d45) == rep(1,10)) # FALSE, since not exactly
-all.equal(tan(d45), rep(1,10), tol=0) # to see difference
+all.equal(tan(d45), rep(1,10)))        # TRUE, but
+all      (tan(d45) == rep(1,10))       # FALSE, since not exactly
+all.equal(tan(d45), rep(1,10), tol=0)  # to see difference
 
-all.equal(options(), .Options)
-all.equal(options(), as.list(.Options))# TRUE
+all.equal(options(), .Options)           # no
+all.equal(options(), as.list(.Options))  # TRUE
 .Options $ myopt <- TRUE
-all.equal(options(), as.list(.Options))
+   all.equal(options(), as.list(.Options)) #-> "see" the difference
+is.all.equal(options(), as.list(.Options)) # FALSE
 rm(.Options)
 }
+\keyword{programming}% is.*
 \keyword{utilities}
 \keyword{logic}
 \keyword{arith}
-
-

@@ -89,6 +89,8 @@ NEW FEATURES
     o	kmeans() now returns an object of class "kmeans" which has a
 	print() method.
 
+    o	is.all.equal() convenience function to be used for programming.
+
 
 UTILITIES
 
