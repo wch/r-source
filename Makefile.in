@@ -89,7 +89,7 @@ install: installdirs
 	@echo "  building help index ..."
 	@(cd $(rhome)/library; cat */TITLE > LibIndex 2> /dev/null)
 	@echo "  building HTML index ..."
-	@$(rhome)/bin/build-help --rhome $(rhome) --htmllists
+	@$(rhome)/bin/R CMD build-help --rhome $(rhome) --htmllists
 installdirs:
 	@$(MKINSTALLDIRS) $(bindir)
 	@$(MKINSTALLDIRS) $(rhome)/bin
@@ -106,8 +106,8 @@ uninstall:
 	@(cd $(rhome)/library; \
 	  cat */TITLE > LibIndex 2> /dev/null || echo "" > LibIndex)
 	@echo "  rebuilding HTML index ..."
-	@if test -x $(rhome)/bin/build-help; then \
-	  $(rhome)/bin/build-help --rhome $(rhome) --htmllists; \
+	@if test -x $(rhome)/bin/R -a -f $(rhome)/bin/build-help; then \
+	  $(rhome)/bin/R CMD build-help --rhome $(rhome) --htmllists; \
 	fi
 	@echo "uninstalling headers ..."
 	@rm -rf $(rhome)/include
