@@ -125,78 +125,118 @@ typedef enum {
 #endif
 
 #ifdef USE_RINTERNALS
-typedef struct SEXPREC {
+/* Flags */
+struct sxpinfo_struct {
+    SEXPTYPE type      :  5;/* ==> (FUNSXP == 99) %% 2^5 == 3 == CLOSXP
+			     * -> warning: `type' is narrower than values
+			     *              of its type
+			     * when SEXPTYPE was an enum */
+    unsigned int obj   :  1;
+    unsigned int named :  2;
+    unsigned int gp    : 16;
+    unsigned int mark  :  1;
+    unsigned int debug :  1;
+    unsigned int trace :  1;
+    unsigned int fin   :  1;  /* has finalizer installed */
+    unsigned int gcgen :  1;  /* old generation number */
+    unsigned int gccls :  3;  /* node class */
+}; /*	Tot: 32 */
 
-    /* Flags */
-    struct {
-	SEXPTYPE type	   :  5;/* ==> (FUNSXP == 99) %% 2^5 == 3 == CLOSXP
-				 * -> warning: `type' is narrower than values
-				 *              of its type
-				 * when SEXPTYPE was an enum */
-	unsigned int obj   :  1;
-	unsigned int named :  2;
-	unsigned int gp	   : 16;
-	unsigned int mark  :  1;
-	unsigned int debug :  1;
-	unsigned int trace :  1;
-	unsigned int fin   :  1;  /* has finalizer installed */
-	unsigned int gcgen :  1;  /* old generation number */
-	unsigned int gccls :  3;  /* node class */
-    } sxpinfo; /*	Tot: 32 */
-
-    /* Attributes */
-    struct SEXPREC *attrib;
-
-    /* Data */
-    union {
-	struct {
-	    int	length;
+struct vecsxp_struct {
+    int	length;
 #ifndef USE_GENERATIONAL_GC
-	    union {
-		char		*c;
-		int		*i;
-		double		*f;
-		Rcomplex	*z;
-		struct SEXPREC	**s;
-	    } type;
+    union {
+	char		*c;
+	int		*i;
+	double		*f;
+	Rcomplex	*z;
+	struct SEXPREC	**s;
+    } type;
 #endif
-	    int	truelength;
-	} vecsxp;
-	struct {
-	    int		offset;
-	} primsxp;
-	struct {
-	    struct SEXPREC *pname;
-	    struct SEXPREC *value;
-	    struct SEXPREC *internal;
-	} symsxp;
-	struct {
-	    struct SEXPREC *carval;
-	    struct SEXPREC *cdrval;
-	    struct SEXPREC *tagval;
-	} listsxp;
-	struct {
-	    struct SEXPREC *frame;
-	    struct SEXPREC *enclos;
-	    struct SEXPREC *hashtab;
-	} envsxp;
-	struct {
-	    struct SEXPREC *formals;
-	    struct SEXPREC *body;
-	    struct SEXPREC *env;
-	} closxp;
-	struct {
-	    struct SEXPREC *value;
-	    struct SEXPREC *expr;
-	    struct SEXPREC *env;
-	} promsxp;
-    } u;
+    int	truelength;
+};
+
+struct primsxp_struct {
+    int offset;
+};
+
+struct symsxp_struct {
+    struct SEXPREC *pname;
+    struct SEXPREC *value;
+    struct SEXPREC *internal;
+};
+
+struct listsxp_struct {
+    struct SEXPREC *carval;
+    struct SEXPREC *cdrval;
+    struct SEXPREC *tagval;
+};
+
+struct envsxp_struct {
+    struct SEXPREC *frame;
+    struct SEXPREC *enclos;
+    struct SEXPREC *hashtab;
+};
+
+struct closxp_struct {
+    struct SEXPREC *formals;
+    struct SEXPREC *body;
+    struct SEXPREC *env;
+};
+
+struct promsxp_struct {
+    struct SEXPREC *value;
+    struct SEXPREC *expr;
+    struct SEXPREC *env;
+};
+
+/* Every node must start with a set of sxpinfo flags and an attribute
+   field. Under the generational collector these are followed by the
+   fields used to maintain the collector's linked list structures. */
 #ifdef USE_GENERATIONAL_GC
-  struct SEXPREC *gengc_next_node, *gengc_prev_node;
+#define SEXPREC_HEADER \
+    struct sxpinfo_struct sxpinfo; \
+    struct SEXPREC *attrib; \
+    struct SEXPREC *gengc_next_node, *gengc_prev_node
+#else
+#define SEXPREC_HEADER \
+    struct sxpinfo_struct sxpinfo; \
+    struct SEXPREC *attrib
 #endif
+
+/* The standard node structure consists of a header followed by the
+   node data. */
+typedef struct SEXPREC {
+    SEXPREC_HEADER;
+    union {
+#ifndef USE_GENERATIONAL_GC
+	struct vecsxp_struct vecsxp;
+#endif
+	struct primsxp_struct primsxp;
+	struct symsxp_struct symsxp;
+	struct listsxp_struct listsxp;
+	struct envsxp_struct envsxp;
+	struct closxp_struct closxp;
+	struct promsxp_struct promsxp;
+    } u;
 } SEXPREC, *SEXP;
 
-typedef union { SEXPREC s; double align; } SEXPREC_ALIGN;
+#ifdef USE_GENERATIONAL_GC
+/* The generational collector uses a reduced version of SEXPREC as a
+   header in vector nodes.  The layout MUST be kept consistent with
+   the SEXPREC definition.  The standard SEXPREC takes up 7 words on
+   most hardware; this reduced version should take up only 6 words.
+   In addition to slightly reducing memory use, this can lead to more
+   favorable data alignment on 32-bit architectures like the Intel
+   Pentium III where odd word alignment of doubles is allowed but much
+   less efficient than even word alignment. */
+typedef struct VECTOR_SEXPREC {
+    SEXPREC_HEADER;
+    struct vecsxp_struct vecsxp;
+} VECTOR_SEXPREC, *VECSEXP;
+
+typedef union { VECTOR_SEXPREC s; double align; } SEXPREC_ALIGN;
+#endif
 
 /* General Cons Cell Attributes */
 #define ATTRIB(x)	((x)->attrib)
@@ -210,10 +250,17 @@ typedef union { SEXPREC s; double align; } SEXPREC_ALIGN;
 
 
 /* Vector Access Macros */
+#ifdef USE_GENERATIONAL_GC
+#define LENGTH(x)	(((VECSEXP) (x))->vecsxp.length)
+#define TRUELENGTH(x)	(((VECSEXP) (x))->vecsxp.truelength)
+#define SETLENGTH(x,v)		((((VECSEXP) (x))->vecsxp.length)=(v))
+#define SET_TRUELENGTH(x,v)	((((VECSEXP) (x))->vecsxp.truelength)=(v))
+#else
 #define LENGTH(x)	((x)->u.vecsxp.length)
 #define TRUELENGTH(x)	((x)->u.vecsxp.truelength)
 #define SETLENGTH(x,v)		(((x)->u.vecsxp.length)=(v))
 #define SET_TRUELENGTH(x,v)	(((x)->u.vecsxp.truelength)=(v))
+#endif
 #define LEVELS(x)	((x)->sxpinfo.gp)
 #define SETLEVELS(x,v)	(((x)->sxpinfo.gp)=(v))
 

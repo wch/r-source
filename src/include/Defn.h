@@ -210,9 +210,9 @@ typedef struct {
 
 /* Hashing Macros */
 #define HASHASH(x)      ((x)->sxpinfo.gp)
-#define HASHVALUE(x)    ((x)->u.vecsxp.truelength)
+#define HASHVALUE(x)    TRUELENGTH(x)
 #define SET_HASHASH(x,v) (((x)->sxpinfo.gp)=(v))
-#define SET_HASHVALUE(x,v) (((x)->u.vecsxp.truelength)=(v))
+#define SET_HASHVALUE(x,v) SET_TRUELENGTH(x, v)
 
 /* Vector Heap Structure */
 typedef struct {
