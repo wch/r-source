@@ -79,33 +79,32 @@ as.dendrogram.hclust <- function (object, hang = -1, ...)
 .midDend <- function(x)
     if(is.null(mp <- attr(x, "midpoint"))) 0 else mp
 
-.remid.dendrogram <- function (x, type = "hclust")
+midcache.dendrogram <- function (x, type = "hclust")
 {
     ## Recompute the  "midpoint" attributes of a dendrogram, e.g. after reorder().
 
     type <- match.arg(type) ## currently only "hclust"
     if( !inherits(x, "dendrogram") )
         stop("we require a dendrogram")
-    remid <- function(x, type) {
+    setmid <- function(x, type) {
         if(isLeaf(x))# no "midpoint"
             return(x)
         k <- length(x)
         if(k < 1)
             stop("dendrogram node with non-positive #{branches}")
         if(type == "hclust" && k != 2)
-            stop("remid()ing of non-binary dendrograms not yet implemented")
+            warning("midcache()ing of non-binary dendrograms may be buggy")
         r <- x # incl. attributes!
 
         ## for(j in 1:k) {  r[[j]] <- remid(x[[j]]) .... }
-        r[[1]] <- remid(x[[1]], type); L1 <- isLeaf(x[[1]])
-        r[[2]] <- remid(x[[2]], type); L2 <- isLeaf(x[[2]])
+        r[[1]] <- setmid(x[[1]], type)
+        r[[2]] <- setmid(x[[2]], type)
 
         attr(r, "midpoint") <- (.memberDend(x[[1]]) +
                                 .midDend(x[[1]]) + .midDend(x[[2]])) / 2
         r
     }
-
-    remid(x, type=type)
+    setmid(x, type=type)
 }
 
 
@@ -468,7 +467,7 @@ reorder.dendrogram <- function(x, wts, ...)
         }
         x
     }
-    .remid.dendrogram( oV(x, wts) )
+    midcache.dendrogram( oV(x, wts) )
 }
 
 rev.dendrogram <- function(x) {
@@ -481,7 +480,7 @@ rev.dendrogram <- function(x) {
     r <- x # incl. attributes!
     for(j in 1:k) ## recurse
  	r[[j]] <- rev(x[[k+1-j]])
-    .remid.dendrogram( r )
+    midcache.dendrogram( r )
 }
 
 ## original Andy Liaw; modified RG, MM
