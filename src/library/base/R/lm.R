@@ -336,17 +336,19 @@ print.summary.lm <- function (x, digits = max(3, .Options$digits - 3),
 	invisible(x)
 }
 
-update.lm <- function(lm.obj, formula, data, weights, subset, na.action)
-{
-	call <- lm.obj$call
-	if(!missing(formula))
-		call$formula <- update.formula(call$formula, formula)
-	if(!missing(data))	call$data <- substitute(data)
-	if(!missing(subset))	call$subset <- substitute(subset)
-	if(!missing(na.action)) call$na.action <- substitute(na.action)
-	if (!missing(weights))	call$weights<-substitute(weights)
-	eval(call, sys.frame(sys.parent()))
-}
+## Commented by KH on 1998/07/10
+## update.default() should be more general now ...
+## update.lm <- function(lm.obj, formula, data, weights, subset, na.action)
+## {
+##	call <- lm.obj$call
+##	if(!missing(formula))
+##		call$formula <- update.formula(call$formula, formula)
+##	if(!missing(data))	call$data <- substitute(data)
+##	if(!missing(subset))	call$subset <- substitute(subset)
+##	if(!missing(na.action)) call$na.action <- substitute(na.action)
+##	if (!missing(weights))	call$weights<-substitute(weights)
+##	eval(call, sys.frame(sys.parent()))
+## }
 
 residuals.lm <- function(x) x$residuals
 fitted.lm <- function(x) x$fitted.values
