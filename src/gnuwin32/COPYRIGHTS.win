@@ -43,11 +43,11 @@ src/gnuwin32/unzip/*
 
 	See the file src/gnuwin32/unzip/LICENSE for usage conditions.
 
-src/gnuwin32/xdr/*
+src/extra/xdr/*
 
 	Copyright (undated) Sun Microsystems, Inc.
 
-	See the file src/gnuwin32/xdr/copyrght.txt
+	See the file src/extra/xdr/copyrght.txt
 
 src/gnuwin32/math/*
 

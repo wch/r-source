@@ -10,7 +10,7 @@ OBJS=$(foreach i, $(SOURCES), $(basename $i).o)
 
 gram.c: ;
 
-saveload-CFLAGS=-I../gnuwin32/xdr
+saveload-CFLAGS=-I../extra/xdr
 
 ../gnuwin32/libmain.a: $(OBJS)
 

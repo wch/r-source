@@ -64,7 +64,7 @@ rlibs:
 	$(MAKE) -C ../nmath OPTFLAGS='$(OPTFLAGS)' -f Makefile.win
 	$(MAKE) -C ./graphapp
 	$(MAKE) -C ./getline
-	$(MAKE) -C ./xdr
+	$(MAKE) -C ../extra/xdr
 	$(MAKE) -C ./math
 
 
@@ -214,7 +214,7 @@ cleanwin:
 	$(MAKE) -C getline clean
 	$(MAKE) -C help clean
 	$(MAKE) -C front-ends clean
-	$(MAKE) -C xdr clean
+	$(MAKE) -C ../extra/xdr clean
 	$(MAKE) -C math clean
 	$(MAKE) -C bitmap clean
 	-$(MAKE) -C installer clean
