@@ -9,11 +9,13 @@ as(object, Class, coerceFlag=TRUE)
 
 coerce(x, y)
 
+setAs(from, to, def, where = 1)
+
 }
 \description{
-  
-\description{
-  \item{\code{as}}: 
+
+\describe{
+  \item{\code{as}:} {
   Returns the version of this object coerced to be the given \code{Class}.  
   
   
@@ -32,14 +34,21 @@ contains the list of such pre-defined relations:
 
 Beyond these two sources of  methods, further methods are defined by
 calls to the \code{setAs} function.
+}
 
-
-  \item{\code{coerce}}: 
+  \item{\code{coerce}:} {
   Coerce \code{x} to be of the same class as \code{y}.  
 
   Not a function you should usually
 call explicitly.  The function \code{\link{setAs}} creates
 methods for \code{coerce} for the \code{as} function to use.
+}
+
+  \item{\code{setAs}:}{
+  The function supplied as the third argument is to be called to
+  implement \code{as(x, to)} when \code{x} has class \code{from}.
+  Need we add that the function should return a suitable object with
+  class \code{to}.
 }
 }
 \references{

@@ -9,6 +9,7 @@
 \alias{synchronizeClassDef}
 \alias{getProperties}
 \alias{setProperties}
+\alias{getSlots}
 \alias{getExtends}
 \alias{getAllSuperClasses}
 \alias{setExtends}
@@ -70,6 +71,8 @@ synchronizeClassDef(ClassDef)
 getProperties(ClassDef)
 
 setProperties(ClassDef, value)
+
+getSlots(x, complete = TRUE)
 
 getExtends(ClassDef)
 
@@ -232,8 +235,16 @@ the name of the class)
 
   
   }
-\item{\code{getExtends}:}{ 
-  extract the class's Extends information from the class representation (only, not from
+  \item{\code{getSlots}:}{
+    Returns a named character vector.  The names are the names of the
+    slots, the values are the classes of the corresponding slots.  If
+    \code{complete} is \code{TRUE}, all slots from all superclasses will
+    be included.  The argument \code{x} can either be the name of a
+    class or an object having that class.
+  }
+
+  \item{\code{getExtends}:}{ 
+  Extracts the class's Extends information from the class representation (only, not from
 the name of the class)
 
 Contrast with the \code{findExtends} and \code{is} functions, both of which use indirect
