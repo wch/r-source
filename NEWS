@@ -152,7 +152,10 @@ BUG FIXES
 
     o	X11() device was failing to re-initialize correctly after all
 	devices were shut down, so the colortype could not be changed
-	and some systems showed protocol errors.
+	and some systems showed protocol errors. (PR#1065)
+
+    o	as.character() and reading Inf and NaN values was wupported on
+	some platforms and not others: now is handled by R itself. (PR#1072)
 
 
 
