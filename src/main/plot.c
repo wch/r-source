@@ -2072,7 +2072,7 @@ static double ComputeAdjValue(double adj, int side, int las)
 static double ComputeAtValueFromAdj(double adj, int side, int outer, 
 				    DevDesc *dd) 
 {
-    double at;
+    double at = 0;		/* -Wall */
     switch(side % 2) {
     case 0:
 	at  = outer ? adj : yNPCtoUsr(adj, dd);
