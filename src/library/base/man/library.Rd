@@ -102,8 +102,9 @@ library.dynam(chname)
   documentation as needed.  The \R distribution provides the two example
   packages \code{eda} and \code{mva}.
 
-  A package consists of a subdirectory containing a \file{TITLE} and
-  \file{INDEX} file, and subdirectories \file{R}, \file{man} and
+  A package consists of a subdirectory containing a \file{TITLE},
+  \file{INDEX} and \file{DESCRIPTION} file, and subdirectories \file{R},
+  \file{man} and
   optionally \file{src}, \file{src-c}, \file{data}, and \file{exec}.
 
   The \file{TITLE} file contains a line giving the name of the package
@@ -111,6 +112,19 @@ library.dynam(chname)
   sufficiently interesting object in the package, giving its name and a
   description (functions such as print methods not usually called
   explicitly might not be included).
+
+  The \file{DESCRIPTION} file contains information about authors,
+  version, copyright, etc., and looks like\cr 
+  \cr
+  Package:\cr
+  Version:\cr
+  Author:\cr
+  Description:\cr
+  Depends:\cr
+  Copyright:
+
+  Continuation lines (e.g., for descriptions longer than one line) start
+  with a whitespace character.
 
   The \file{R} subdirectory contains \R code files with names beginning
   with lowercase letters.  One of these files should use
