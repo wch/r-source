@@ -90,8 +90,6 @@ LPSTR lpszCmdParam, int nCmdShow)
 {
         int i, nset=0, vset=0, mchange=0;
         char *exe, *ep, tmp[RBuffLen], tm1;
-        HINSTANCE hinstLib;
-        MYPROC ProcAdd;
         DWORD erno;
           
         if (! CheckSystem()) return(FALSE);
@@ -292,10 +290,10 @@ void R_SetMemory(int nsize, int vsize)
 }
 
 
-void suicide(char *s)
+void R_Suicide(char *s)
 {
         MessageBox(NULL, s, "R Aborting", MB_OK);
-        RCleanUp(2);    /* 2 means don't save anything and it's an unrecoverable abort */
+        R_CleanUp(2);    /* 2 means don't save anything and it's an unrecoverable abort */
         longjmp(R_Winjbuf, 1);
 }
 
@@ -320,7 +318,7 @@ SEXP do_quit(SEXP call, SEXP op, SEXP args, SEXP rho)
                 ask=3;
         else
                 errorcall(call,"unrecognized value of ask\n");
-        RCleanUp(ask);
+        R_CleanUp(ask);
         PostMessage(RFrame, WM_CLOSE, 0, 0);
         
         return(R_NilValue);
@@ -333,6 +331,11 @@ void R_StartUp(void)
 void R_Busy(int yes)
 {
         /* Placeholder */
+}
+
+char* R_ExpandFileName(char *s)
+{
+        return s;
 }
 
         /*--- I / O --S u p p o r t -- C o d e ---*/
@@ -350,13 +353,22 @@ SEXP do_machine(SEXP call, SEXP op, SEXP args, SEXP env)
 SEXP do_system(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
         errorcall(call, "\"system\" is only available on Unix");
+        return R_NilValue;
+}
+
+SEXP do_proctime(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+        errorcall(call, "\"proc.time\" is only available on Unix");
+        return R_NilValue;
 }
 
 /* this function should set up the file pointer and open the file
    on some systems it should check to make sure that there is room to
    store the image
 */
-
+void BinarySave(SEXP, FILE*);
+void R_WriteMagic(FILE*, int);
+int R_ReadMagic(FILE*);
 
 void dump_image(char* fname, int jump)
 {

@@ -45,7 +45,6 @@ extern HMENU RMenuEditWin, RMenuDEWin, RMenuGraphWin, RMenuConsWin, RMenuInitWin
 
 /* R Functions */
 
-extern void     (*DevHold)();
 extern void     dump_image(char* , int);
 extern BOOL FAR PASCAL  About(HWND, WORD, WPARAM, LPARAM);
 extern BOOL     RPrintGraph(HWND, HANDLE);

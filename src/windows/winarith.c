@@ -21,10 +21,10 @@
 
 int isnan(double x)
 {
-	int hx, lx;
-	hx = ((int*)&x)[1];
-	lx = ((int*)&x)[0];
-	hx &= 0x7fffffff;
+        int hx, lx;
+        hx = ((int*)&x)[1];
+        lx = ((int*)&x)[0];
+        hx &= 0x7fffffff;
         hx |= (unsigned)(lx|(-lx))>>31;
         hx = 0x7ff00000 - hx;
         return (int)((unsigned)(hx))>>31;
@@ -33,8 +33,8 @@ int isnan(double x)
 
 int finite(double x)
 {
-	int hx = ((int*)&x)[1];
-	return (int)((unsigned)((hx&0x7fffffff)-0x7ff00000)>>31);
+        int hx = ((int*)&x)[1];
+        return (int)((unsigned)((hx&0x7fffffff)-0x7ff00000)>>31);
 }
 
 
@@ -42,7 +42,7 @@ int finite(double x)
 
 double erf(double x)
 {
-	return(pnorm(x, 0, 1));
+        return(pnorm(x, 0, 1));
 }
 
 
@@ -51,5 +51,5 @@ double erf(double x)
 /* 1-erf(x); should be done better than this */
 double erfc(double x)
 {
-	return (pnorm(-x,0,1));
+        return (pnorm(-x,0,1));
 }

@@ -21,101 +21,108 @@
 #include "Graphics.h"
 #include <stdio.h>
 
+#include "wincons.h"
 #include "wingdi.h"
-#include "winuser.h
+#include "winuser.h"
 
 
-	/********************************************************/
-	/* This device driver has been documented so that it be	*/
-	/* used as a template for new drivers 			*/
-	/* This is the Windows hack based on the X11 driver     */
-	/********************************************************/
+        /********************************************************/
+        /* This device driver has been documented so that it be */
+        /* used as a template for new drivers                   */
+        /* This is the Windows hack based on the X11 driver     */
+        /********************************************************/
 
-#define MM_PER_INCH	25.4			/* mm -> inch conversion */
+#define MM_PER_INCH     25.4                    /* mm -> inch conversion */
 
-	/********************************************************/
-	/* Each driver can have its own device-specic graphical */
-	/* parameters and resources.  these should be wrapped	*/
-	/* in a structure (like the winDesc structure below)    */
-	/* and attached to the overall device description via 	*/
-	/* the dd->deviceSpecific pointer			*/
-	/* NOTE that there are generic graphical parameters	*/
-	/* which must be set by the device driver, but are	*/
-	/* common to all device types (see Graphics.h)		*/
-	/* so go in the GPar structure rather than this device- */
-	/* specific structure					*/
-	/********************************************************/
+#define G_PI          3.141592653589793238462643383276
 
-			/* R Graphics Parameters */
-			/* local device copy so that we can detect */
-			/* when parameter changes */
+        /********************************************************/
+        /* Each driver can have its own device-specic graphical */
+        /* parameters and resources.  these should be wrapped   */
+        /* in a structure (like the winDesc structure below)    */
+        /* and attached to the overall device description via   */
+        /* the dd->deviceSpecific pointer                       */
+        /* NOTE that there are generic graphical parameters     */
+        /* which must be set by the device driver, but are      */
+        /* common to all device types (see Graphics.h)          */
+        /* so go in the GPar structure rather than this device- */
+        /* specific structure                                   */
+        /********************************************************/
+
+                        /* R Graphics Parameters */
+                        /* local device copy so that we can detect */
+                        /* when parameter changes */
 typedef struct {
-	double cex;				/* Character expansion */
-	double srt;				/* String rotation */
-	int lty;				/* Line type */
-	double lwd;
-	int col;				/* Color */
-	int fg;					/* Foreground */
-	int bg;					/* Background */
-	int fontface;				/* Typeface */
-	int fontsize;				/* Size in points */
+        double cex;                             /* Character expansion */
+        double srt;                             /* String rotation */
+        int lty;                                /* Line type */
+        double lwd;
+        int col;                                /* Color */
+        int fg;                                 /* Foreground */
+        int bg;                                 /* Background */
+        int fontface;                           /* Typeface */
+        int fontsize;                           /* Size in points */
 
-			/* Windows Driver Specific */
-			/* parameters with copy per win device */
+                        /* Windows Driver Specific */
+                        /* parameters with copy per win device */
 
-	int resize;				/* Window resized */
-	HWND window;				/* Graphics Window */
-	COLORREF fgcolor;			/* Foreground color */
-	COLORREF bgcolor;			/* Background color */
-	RECT	clip;				/* The clipping rectangle */
-	RECT	graph;				/* graphics plotting area */
-	HPEN cpen;				/* The current pen */
-	HBRUSH cbrush;				/* The current brush */
-	int pcol;				/* Pen color */
-	int bcol;				/* Brush color */
-	int tcol;				/* Text color */
-
-	int usefixed;
+        int resize;                             /* Window resized */
+        HWND window;                            /* Graphics Window */
+        COLORREF fgcolor;                       /* Foreground color */
+        COLORREF bgcolor;                       /* Background color */
+        RECT    clip;                           /* The clipping rectangle */
+        RECT    graph;                          /* graphics plotting area */
+        HPEN cpen;                              /* The current pen */
+        HBRUSH cbrush;                          /* The current brush */
+        int pcol;                               /* Pen color */
+        int bcol;                               /* Brush color */
+        int tcol;                               /* Text color */
+        int fontindex;                          /* Which font */
+        int usefixed;
 } winDesc;
 
-	/********************************************************/
-	/* If there are resources that are shared by all devices*/
-	/* of this type, you may wish to make them globals	*/
-	/* rather than including them in the device-specific	*/
-	/* parameters structure (especially if they are large !)*/
-	/********************************************************/
+        /********************************************************/
+        /* If there are resources that are shared by all devices*/
+        /* of this type, you may wish to make them globals      */
+        /* rather than including them in the device-specific    */
+        /* parameters structure (especially if they are large !)*/
+        /********************************************************/
 
-			/* Windows Driver Specific */
-			/* parameters with only one copy for all win devices */
+                        /* Windows Driver Specific */
+                        /* parameters with only one copy for all win devices */
 
 static int numWinDevices = 0;
+static int LocatorDone = 0;
+static POINTS MousePoint;
+HMENU RMenuGraph, RMenuGraphWin;
 
 
-	/********************************************************/
-	/* There must be an entry point for the device driver	*/
-	/* which will create device-specific resources, 	*/
-	/* initialise the device-specific parameters structure 	*/
-	/* and return whether the setup succeeded		*/
-	/* This is called by the graphics engine when the user	*/
-	/* creates a new device of this type			*/
-	/********************************************************/
 
-	/* Device Driver Entry Point */
+        /********************************************************/
+        /* There must be an entry point for the device driver   */
+        /* which will create device-specific resources,         */
+        /* initialise the device-specific parameters structure  */
+        /* and return whether the setup succeeded               */
+        /* This is called by the graphics engine when the user  */
+        /* creates a new device of this type                    */
+        /********************************************************/
 
-int WinDeviceDriver(DevDesc*, SEXP, int, SEXP, int);
+        /* Device Driver Entry Point */
 
-	/********************************************************/
-	/* There are a number of actions that every device 	*/
-	/* driver is expected to perform (even if, in some	*/
-	/* cases it does nothing - just so long as it doesn't 	*/
-	/* crash !).  this is how the graphics engine interacts */
-	/* with each device. ecah action will be documented 	*/
-	/* individually. 					*/
-	/* hooks for these actions must be set up when the 	*/
-	/* device is first created				*/
-	/********************************************************/
-	
-	/* Device Driver Actions */
+int WinDeviceDriver(DevDesc*,  double, double, double);
+
+        /********************************************************/
+        /* There are a number of actions that every device      */
+        /* driver is expected to perform (even if, in some      */
+        /* cases it does nothing - just so long as it doesn't   */
+        /* crash !).  this is how the graphics engine interacts */
+        /* with each device. ecah action will be documented     */
+        /* individually.                                        */
+        /* hooks for these actions must be set up when the      */
+        /* device is first created                              */
+        /********************************************************/
+        
+        /* Device Driver Actions */
 
 static void   Win_Activate(DevDesc *);
 static void   Win_Circle(double, double, int, double, int, int, DevDesc*);
@@ -124,28 +131,28 @@ static void   Win_Close(DevDesc*);
 static void   Win_Deactivate(DevDesc *);
 static void   Win_Hold(DevDesc*);
 static void   Win_Line(double, double, double, double, int, DevDesc*);
-static int    Win_Locator(double*, double*);
+static int    Win_Locator(double*, double*, DevDesc*);
 static void   Win_Mode(int);
 static void   Win_NewPage(DevDesc*);
-static int    Win_Open(DevDesc*, winDesc*, char*, double, double);
+static int    Win_Open(DevDesc*, winDesc*, double, double);
 static void   Win_Polygon(int, double*, double*, int, int, int, DevDesc*);
 static void   Win_Polyline(int, double*, double*, int, DevDesc*);
 static void   Win_Rect(double, double, double, double, int, int, int, DevDesc*);
 static void   Win_Resize(DevDesc*);
 static double Win_StrWidth(char*, DevDesc*);
 static void   Win_Text(double, double, int, char*, double, double, double, 
-		       DevDesc*);
+                       DevDesc*);
 static void   Win_MetricInfo(int, double*, double*, double*, DevDesc*);
 
-	/********************************************************/
-	/* end of list of required device driver actions 	*/
-	/********************************************************/
+        /********************************************************/
+        /* end of list of required device driver actions        */
+        /********************************************************/
 
-	/* Support Routines */
+        /* Support Routines */
 
-static void SetColor(int, DevDesc*);
+static void SetColor(int, int, DevDesc*);
 static void Win_RGSetFont(int, int, double, DevDesc*);
-static void SetLinetype(int, double, DevDesc*);
+static void SetLineType(int, double, DevDesc*);
 
 static int fontindex = 2;
 static char *Rfontname[] = {"Courier New", "Times New", "Arial"};
@@ -171,7 +178,7 @@ static void Win_RGSetFont(int face, int size, double rot, DevDesc *dd)
         HANDLE  cFont, sFont;
         char    fname[30];
         double  trot;
-	winDesc *wd = (winDesc *) dd->deviceSpecific;
+        winDesc *wd = (winDesc *) dd->deviceSpecific;
 
 
         face--;
@@ -193,11 +200,11 @@ static void Win_RGSetFont(int face, int size, double rot, DevDesc *dd)
 
                 RGraphLF.lfHeight= -size*GetDeviceCaps(Ghdc,LOGPIXELSY)/72;
                 strcpy(RGraphLF.lfFaceName, fname);
-                cFont= CreateFontIndirect(RGraphLF);
+                cFont= CreateFontIndirect(&RGraphLF);
 
                 if( cFont == NULL )
                         warning("could not select the requested font");
-                sFont=SelectObject(Ghdc, cFont);
+                DeleteObject(SelectObject(Ghdc, cFont));
                 ReleaseDC(wd->window, Ghdc);
                 wd->fontsize = size;
                 wd->fontface = face+1;
@@ -207,30 +214,30 @@ static void Win_RGSetFont(int face, int size, double rot, DevDesc *dd)
 
 static void SetColor(unsigned col, int object, DevDesc *dd)
 {
-	HDC Ghdc;
-	COLORREF fcol, fixColor();
-	winDesc *wd = (winDesc *) dd->deviceSpecific;
+        HDC Ghdc;
+        COLORREF fcol, fixColor();
+        winDesc *wd = (winDesc *) dd->deviceSpecific;
 
-	fcol = RGB(R_RED(col),R_GREEN(col), R_BLUE(col));   
-	Ghdc = GetDC(wd->window);
+        fcol = RGB(R_RED(col),R_GREEN(col), R_BLUE(col));   
+        Ghdc = GetDC(wd->window);
 
-	switch(object) {
-		case 1:         /*pen */
-			if(fcol != RPenCol) {
+        switch(object) {
+                case 1:         /*pen */
+                        if(fcol != wd->pcol) {
                         wd->cpen = CreatePen(wd->lty, 1, fcol);
                         DeleteObject( SelectObject(Ghdc, wd->cpen));
                         wd->pcol = fcol;
-			}
-			break;
+                        }
+                        break;
         case 2:         /*brush */
-                if(fcol != RBrushCol ) {
+                if(fcol != wd->bcol ) {
                         wd->cbrush = CreateSolidBrush(fcol);
                         DeleteObject( SelectObject(Ghdc, wd->cbrush ));
                         wd->bcol = fcol;
                 }
                 break;
         case 3:         /* text */
-              if( fcol != RTextCol ) {
+              if( fcol != wd->tcol ) {
                 SetTextColor(Ghdc, fcol);
                 wd->tcol = fcol;
               }
@@ -242,105 +249,107 @@ static void SetColor(unsigned col, int object, DevDesc *dd)
 }
 
 /*
- *	Some Notes on Line Textures
+ *      Some Notes on Line Textures
  *
- *	Line textures are stored as an array of 4-bit integers within
- *	a single 32-bit word.  These integers contain the lengths of
- *	lines to be drawn with the pen alternately down and then up.
- *	The device should try to arrange that these values are measured
- *	in points if possible, although pixels is ok on most displays.
+ *      Line textures are stored as an array of 4-bit integers within
+ *      a single 32-bit word.  These integers contain the lengths of
+ *      lines to be drawn with the pen alternately down and then up.
+ *      The device should try to arrange that these values are measured
+ *      in points if possible, although pixels is ok on most displays.
  *
- *	If newlty contains a line texture description it is decoded
- *	as follows:
+ *      If newlty contains a line texture description it is decoded
+ *      as follows:
  *
- *		ndash = 0;
- *		for(i=0 ; i<8 && newlty&15 ; i++) {
- *			dashlist[ndash++] = newlty&15;
- *			newlty = newlty>>4;
- *		}
- *		dashlist[0] = length of pen-down segment
- *		dashlist[1] = length of pen-up segment
- *		etc
+ *              ndash = 0;
+ *              for(i=0 ; i<8 && newlty&15 ; i++) {
+ *                      dashlist[ndash++] = newlty&15;
+ *                      newlty = newlty>>4;
+ *              }
+ *              dashlist[0] = length of pen-down segment
+ *              dashlist[1] = length of pen-up segment
+ *              etc
  *
- *	An integer containing a zero terminates the pattern.  Hence
- *	ndash in this code fragment gives the length of the texture
- *	description.  If a description contains an odd number of
- *	elements it is replicated to create a pattern with an
- *	even number of elements.  (If this is a pain, do something
- *	different its not crucial).
+ *      An integer containing a zero terminates the pattern.  Hence
+ *      ndash in this code fragment gives the length of the texture
+ *      description.  If a description contains an odd number of
+ *      elements it is replicated to create a pattern with an
+ *      even number of elements.  (If this is a pain, do something
+ *      different its not crucial).
  */
  /*
-	Windows line types are a mess. Without performing significant
-	gyrations you cannot have line tipes with lines wider than 1
-	Petzold provides some examples of how this can be done for the
-	adventerous among you.
+        Windows line types are a mess. Without performing significant
+        gyrations you cannot have line tipes with lines wider than 1
+        Petzold provides some examples of how this can be done for the
+        adventerous among you.
 */
 
 static void SetLineType(int newlty, double nlwd, DevDesc *dd)
 {
-	HDC Ghdc;
-	winDesc *wd = (winDesc *) dd->deviceSpecific;
+        HDC Ghdc;
+        winDesc *wd = (winDesc *) dd->deviceSpecific;
 
-	if( (int) nlwd > 1 ) {
-		if (newlty != PS_SOLID && newlty != PS_NULL) ) { 
-			warning("can not have line types with wide pens\n");
-			newlty = 1;
-		}
-	}
+        if( (int) nlwd > 1 ) {
+                if (newlty != PS_SOLID && newlty != PS_NULL) { 
+                        warning("can not have line types with wide pens\n");
+                        newlty = 1;
+                }
+        }
 
-	if(newlty != wd->lty || nlwd != wd->lwd ) {
-		RCurrentPen = CreatePen(newlty, nlwd, RPenCol);
-	if( RCurrentPen == NULL )
-		warning("could not create requested line type\n");
-	else {
-		wd->lty = newlty;
-		wd->lwd = nlwd;
-		Ghdc = GetDC(wd->window);
-		DeleteObject( SelectObject(Ghdc, RCurrentPen) );
-		ReleaseDC(wd->window, Ghdc);
+        if(newlty != wd->lty || nlwd != wd->lwd ) {
+                wd->cpen = CreatePen(newlty, nlwd, wd->pcol);
+        if( wd->cpen == NULL )
+                warning("could not create requested line type\n");
+        else {
+                wd->lty = newlty;
+                wd->lwd = nlwd;
+                Ghdc = GetDC(wd->window);
+                DeleteObject( SelectObject(Ghdc, wd->cpen) );
+                ReleaseDC(wd->window, Ghdc);
           }
       }
 }
 
 
-	/********************************************************/
-	/* device_Open is not usually called directly by the 	*/
-	/* graphics engine;  it is usually only called from 	*/
-	/* the device-driver entry point.			*/
-	/* this function should set up all of the device-	*/
-	/* specific resources for a new device			*/
-	/* this function is given a new	structure for device-	*/
-	/* specific information AND it must FREE the structure 	*/
-	/* if anything goes seriously wrong			*/
-	/* NOTE that it is perfectly acceptable for this 	*/
-	/* function to set generic graphics parameters too	*/
-	/* (i.e., override the generic parameter settings	*/
-	/* which GInit sets up) all at the author's own risk	*/
-	/* of course :)						*/
-	/********************************************************/
+        /********************************************************/
+        /* device_Open is not usually called directly by the    */
+        /* graphics engine;  it is usually only called from     */
+        /* the device-driver entry point.                       */
+        /* this function should set up all of the device-       */
+        /* specific resources for a new device                  */
+        /* this function is given a new structure for device-   */
+        /* specific information AND it must FREE the structure  */
+        /* if anything goes seriously wrong                     */
+        /* NOTE that it is perfectly acceptable for this        */
+        /* function to set generic graphics parameters too      */
+        /* (i.e., override the generic parameter settings       */
+        /* which GInit sets up) all at the author's own risk    */
+        /* of course :)                                         */
+        /********************************************************/
 
 static int Win_Open(DevDesc *dd, winDesc *wd, double width, double height)
 {
-		/* if have to bail out with "error" then must */
-		/* free(dd) and free(xd) */
+                /* if have to bail out with "error" then must */
+                /* free(dd) and free(xd) */
 
         MDICREATESTRUCT mdicreate;
-        HDC Ghdc;
         RECT r;
+        HDC Chdc;
         int iw, ih;
 
-	wd->bg =  dd->dp.bg  = R_RGB(255,255,255);
-	wd->fg =  dd->dp.fg  = R_RGB(0,0,0);
-	wd->col = dd->dp.col = wd->fg;
+        wd->bg =  dd->dp.bg  = R_RGB(255,255,255);
+        wd->fg =  dd->dp.fg  = R_RGB(0,0,0);
+        wd->col = dd->dp.col = wd->fg;
 
         GetClientRect(RClient, (LPRECT) &r);
+        
+        Chdc = GetDC(RClient);
+        iw = ((int)width)*GetDeviceCaps(Chdc, LOGPIXELSX);
+        ih = ((int) height) * GetDeviceCaps(Chdc, LOGPIXELSY);
+        ReleaseDC(RClient, Chdc);
 
-	if( (int)width < (r.right-r.left) && (int)height < (r.bottom-r.top) ){
-		iw = (int) width;
-		ih = (int) height;
-	}
-	else
-        	iw = ih = min(r.right-r.left,r.bottom-r.top);
+        if( iw > (r.right-r.left) || ih > (r.bottom-r.top) )
+                iw = ih = min(r.right-r.left,r.bottom-r.top);
+                
         mdicreate.szClass = RGraphClass;
         mdicreate.szTitle = "R Graphics";
         mdicreate.hOwner =(HINSTANCE) RInst;
@@ -353,118 +362,116 @@ static int Win_Open(DevDesc *dd, winDesc *wd, double width, double height)
 
         wd->window = (HWND) (UINT) SendMessage(RClient, WM_MDICREATE,0,
                 (LONG) (LPMDICREATESTRUCT) &mdicreate);
-        if( RGraphWnd == NULL )
+        if( wd->window == NULL )
                 return 0;
 
-	SetWindowWord(wd->window, 0, dd);
-
-        pFont=NULL;
+        SetWindowLong((HWND) wd->window, GWL_USERDATA, (LONG) dd);
 
         /* initialize the Graphics Logfont */
         wd->fontindex = 2; /* Arial */
         wd->fontface = 1;  /* Normal Text */
 
         /* a magic incantation to make angles rotate the same on printers 
-		and the screen */
+                and the screen */
         RGraphLF.lfClipPrecision = CLIP_LH_ANGLES;
-	
+        
         Win_RGSetFont(wd->fontface, 8, -1, dd);
 
         ShowWindow(wd->window, SW_SHOW);
-	GetClientRect(wd->window, (LPRECT) wd.graph);
+        GetClientRect(wd->window, (LPRECT) &(wd->graph));
 
         SetFocus(RConsoleFrame);
-        DevInit = 1;
 
-	wd->lty = -1;
-	wd->lwd = -1;
+        wd->lty = -1;
+        wd->lwd = -1;
 
-	numWinDevices++;
+        numWinDevices++;
         return 1;
 }
 
 
-	/********************************************************/
-	/* device_StrWidth should return the width of the given */
-	/* string in DEVICE units (GStrWidth is responsible for */
-	/* converting from DEVICE to whatever units the user 	*/
-	/* asked for						*/
-	/********************************************************/
+        /********************************************************/
+        /* device_StrWidth should return the width of the given */
+        /* string in DEVICE units (GStrWidth is responsible for */
+        /* converting from DEVICE to whatever units the user    */
+        /* asked for                                            */
+        /********************************************************/
 
 static double Win_StrWidth(char *str, DevDesc *dd)
 {
-	HDC Ghdc;
-	SIZE ext;
-	int size;
-	winDesc *wd = (winDesc *) dd->deviceSpecific;
+        HDC Ghdc;
+        SIZE ext;
+        int size;
+        winDesc *wd = (winDesc *) dd->deviceSpecific;
 
-	size = dd->gp.cex * dd->gp.ps +0.5;
-	Win_RGSetFont(dd->gp.font, size, -1, dd);
-	Ghdc=GetDC(wd->window);
-	if( R_WinVersion >= 4.0 )
-		GetTextExtentPoint32(Ghdc, str, strlen(str), &ext);
-	else
-		GetTextExtentPoint(Ghdc, str, strlen(str), &ext);
-	ReleaseDC(wd->window, Ghdc);
-	return (double) ext.cx;
+        size = dd->gp.cex * dd->gp.ps +0.5;
+        Win_RGSetFont(dd->gp.font, size, -1, dd);
+        Ghdc=GetDC(wd->window);
+        if( R_WinVersion >= 4.0 )
+                GetTextExtentPoint32(Ghdc, str, strlen(str), &ext);
+        else
+                GetTextExtentPoint(Ghdc, str, strlen(str), &ext);
+        ReleaseDC(wd->window, Ghdc);
+        return (double) ext.cx;
 }
 
 
-	/********************************************************/
-	/* device_MetricInfo should return height, depth, and 	*/
-	/* width information for the given character in DEVICE	*/
-	/* units (GMetricInfo does the necessary conversions)	*/
-	/* This is used for formatting mathematical expressions	*/
-	/********************************************************/
-	
-	/* Character Metric Information */
-	/* Passing c == 0 gets font information */
+        /********************************************************/
+        /* device_MetricInfo should return height, depth, and   */
+        /* width information for the given character in DEVICE  */
+        /* units (GMetricInfo does the necessary conversions)   */
+        /* This is used for formatting mathematical expressions */
+        /********************************************************/
+        
+        /* Character Metric Information */
+        /* Passing c == 0 gets font information */
 
 static void Win_MetricInfo(int c, double* ascent, double* descent, 
-			   double* width, DevDesc *dd)
+                           double* width, DevDesc *dd)
 {
-	int first, last;
-	int size = dd->gp.cex * dd->gp.ps + 0.5;
-	winDesc *wd = (winDesc *) dd->deviceSpecific;
+        int first, last;
+        int size = dd->gp.cex * dd->gp.ps + 0.5;
+        winDesc *wd = (winDesc *) dd->deviceSpecific;
 
-	Win_RGSetFont(dd->gp.font, size, -1, dd);
-	first = wd->font->min_char_or_byte2;
-	last = wd->font->max_char_or_byte2;
+        Win_RGSetFont(dd->gp.font, size, -1, dd);
+#ifdef old
+        first = wd->font->min_char_or_byte2;
+        last = wd->font->max_char_or_byte2;
 
-	if(c == 0) {
-		*ascent = wd->font->ascent;
-		*descent = wd->font->descent;
-		*width = wd->font->max_bounds.width;
-	}
-	else if(first <= c && c <= last) {
-		*ascent = wd->font->per_char[c-first].ascent;
-		*descent = wd->font->per_char[c-first].descent;
-		*width = wd->font->per_char[c-first].width;
-	}
-	else {
-		*ascent = 0;
-		*descent = 0;
-		*width = 0;
-	}
+        if(c == 0) {
+                *ascent = wd->font->ascent;
+                *descent = wd->font->descent;
+                *width = wd->font->max_bounds.width;
+        }
+        else if(first <= c && c <= last) {
+                *ascent = wd->font->per_char[c-first].ascent;
+                *descent = wd->font->per_char[c-first].descent;
+                *width = wd->font->per_char[c-first].width;
+        }
+        else {
+                *ascent = 0;
+                *descent = 0;
+                *width = 0;
+        }
+#endif
 }
 
-	/********************************************************/
-	/* device_Clip is given the left, right, bottom, and 	*/
-	/* top of a rectangle (in DEVICE coordinates).  it 	*/
-	/* should have the side-effect that subsequent output	*/
-	/* is clipped to the given rectangle			*/
-	/********************************************************/
+        /********************************************************/
+        /* device_Clip is given the left, right, bottom, and    */
+        /* top of a rectangle (in DEVICE coordinates).  it      */
+        /* should have the side-effect that subsequent output   */
+        /* is clipped to the given rectangle                    */
+        /********************************************************/
 
 static void Win_Clip(double x0, double x1, double y0, double y1, DevDesc *dd)
 {
-	HDC Ghdc;
-	double Clipxl, Clipxr, Clipyb, Clipyt;
-	winDesc *wd = (winDesc *) dd->deviceSpecific;
+        HDC Ghdc;
+        winDesc *wd = (winDesc *) dd->deviceSpecific;
 
-	if(x0 < x1) {
-		wd->clip.left = (int) x0;
-		wd->clip.right = (int) x1;
-	}
+        if(x0 < x1) {
+                wd->clip.left = (int) x0;
+                wd->clip.right = (int) x1;
+        }
         else {
                 wd->clip.left = (int) x1;
                 wd->clip.right = (int) x0;
@@ -478,84 +485,86 @@ static void Win_Clip(double x0, double x1, double y0, double y1, DevDesc *dd)
                 wd->clip.top = (int) y0;
         }
 
-	Ghdc = GetDC(wd->window);
+        Ghdc = GetDC(wd->window);
 
-	SelectClipRgn(Ghdc, NULL);
-	IntersectClipRect(Ghdc, wd->clip.left, wd->clip.top, wd->clip.right,
-		wd->clip.bottom);
+        SelectClipRgn(Ghdc, NULL);
+        IntersectClipRect(Ghdc, wd->clip.left, wd->clip.top, wd->clip.right,
+                wd->clip.bottom);
 
-	ReleaseDC(wd->window,Ghdc);
+        ReleaseDC(wd->window,Ghdc);
 }
 
-	
-	/********************************************************/
-	/* device_Resize is called whenever the device is 	*/
-	/* resized.  the function must update the GPar 		*/
-	/* parameters (left, right, bottom, and top) for the 	*/
-	/* new device size					*/
-	/* this is not usually called directly by the graphics	*/
-	/* engine because the detection of device resizes	*/
-	/* (e.g., a window resize) are usually detected by	*/
-	/* device-specific code	(see ProcessEvents in this file)*/
-	/********************************************************/
+        
+        /********************************************************/
+        /* device_Resize is called whenever the device is       */
+        /* resized.  the function must update the GPar          */
+        /* parameters (left, right, bottom, and top) for the    */
+        /* new device size                                      */
+        /* this is not usually called directly by the graphics  */
+        /* engine because the detection of device resizes       */
+        /* (e.g., a window resize) are usually detected by      */
+        /* device-specific code (see ProcessEvents in this file)*/
+        /********************************************************/
 
 static void Win_Resize(DevDesc *dd)
 {
-	int i;
-	HDC Ghdc;
-	winDesc *wd = (winDesc *) dd->deviceSpecific;
+        int i;
+        HDC Ghdc;
+        winDesc *wd = (winDesc *) dd->deviceSpecific;
 
-	
-	if (wd->resize) {
-		dd->dp.left = dd->gp.left = 0.0;
-		dd->dp.right = dd->gp.right =  wd->graph.right;
-		dd->dp.bottom = dd->gp.bottom = wd->graph.bottom;
-		dd->dp.top = dd->gp.top = 0.0;
-		wd->resize = 0;
-		Ghdc = GetDC(wd->window);
-		SelectClipRgn(Ghdc, NULL);
-		FillRect(Ghdc, &(wd->graph), GetStockObject(WHITE_BRUSH));
-		ReleaseDC(wd->window, Ghdc);
-	}
+        
+        if (wd->resize) {
+                dd->dp.left = dd->gp.left = 0.0;
+                dd->dp.right = dd->gp.right =  wd->graph.right;
+                dd->dp.bottom = dd->gp.bottom = wd->graph.bottom;
+                dd->dp.top = dd->gp.top = 0.0;
+                wd->resize = 0;
+                Ghdc = GetDC(wd->window);
+                SelectClipRgn(Ghdc, NULL);
+                FillRect(Ghdc, &(wd->graph), GetStockObject(WHITE_BRUSH));
+                ReleaseDC(wd->window, Ghdc);
+                /*playDisplayList(dd);*/
+        }
 }
 
-	/********************************************************/
-	/* device_NewPage is called whenever a new plot requires*/
-	/* a new page.  a new page might mean just clearing the	*/
-	/* device (as in this case) or moving to a new page	*/
-	/* (e.g., postscript)					*/
-	/********************************************************/
-	
+        /********************************************************/
+        /* device_NewPage is called whenever a new plot requires*/
+        /* a new page.  a new page might mean just clearing the */
+        /* device (as in this case) or moving to a new page     */
+        /* (e.g., postscript)                                   */
+        /********************************************************/
+        
 static void Win_NewPage(DevDesc *dd)
 {
-	int result;
-	HDC Ghdc;
-	winDesc *wd = (winDesc *) dd->deviceSpecific;
+        HDC Ghdc;
+        winDesc *wd = (winDesc *) dd->deviceSpecific;
 
-	if(wd->bg != dd->dp.bg) {
-		wd->bg = dd->dp.bg;
-		wd->bgcolor.red   = R_RED(wd->bg)   * 257;
-		wd->bgcolor.green = R_GREEN(wd->bg) * 257;
-		wd->bgcolor.blue  = R_BLUE(wd->bg)  * 257;
-	}
-	Ghdc = GetDC(wd->window);
-	SelectClipRgn(Ghdc, NULL);
-	FillRect(Ghdc, wd->graphics, GetStockObject(WHITE_BRUSH));
-	ReleaseDC(wd->window, Ghdc);
+        if(wd->bg != dd->dp.bg) {
+                wd->bg = dd->dp.bg;
+/*
+                wd->bgcolor.red   = R_RED(wd->bg)   * 257;
+                wd->bgcolor.green = R_GREEN(wd->bg) * 257;
+                wd->bgcolor.blue  = R_BLUE(wd->bg)  * 257;
+*/
+        }
+        Ghdc = GetDC(wd->window);
+        SelectClipRgn(Ghdc, NULL);
+        FillRect(Ghdc, &(wd->graph), GetStockObject(WHITE_BRUSH));
+        ReleaseDC(wd->window, Ghdc);
 }
 
-	/********************************************************/
-	/* device_Close is called when the device is killed	*/
-	/* this function is responsible for destroying any 	*/
-	/* device-specific resources that were created in	*/
-	/* device_Open and for FREEing the device-specific	*/
-	/* parameters structure					*/
-	/********************************************************/
+        /********************************************************/
+        /* device_Close is called when the device is killed     */
+        /* this function is responsible for destroying any      */
+        /* device-specific resources that were created in       */
+        /* device_Open and for FREEing the device-specific      */
+        /* parameters structure                                 */
+        /********************************************************/
 
 static void Win_Close(DevDesc *dd)
 {
-	HDC Ghdc;
-	winDesc *wd = (winDesc *) dd->deviceSpecific;
+        HDC Ghdc;
+        winDesc *wd = (winDesc *) dd->deviceSpecific;
 
         Ghdc = GetDC(wd->window);
         DeleteObject( SelectObject(Ghdc, GetStockObject(BLACK_PEN)) );
@@ -563,69 +572,69 @@ static void Win_Close(DevDesc *dd)
         ReleaseDC(wd->window, Ghdc);
 
         SendMessage(RClient, WM_MDIDESTROY, (WPARAM) (HWND) wd->window, 0);
-	numWinDevices--;
+        numWinDevices--;
         SetFocus(RConsoleFrame);
 }
 
-	/********************************************************/
-	/* device_Activate is called when a device becomes the 	*/
-	/* active device.  In this case it is used to change the*/
-	/* title of a window to indicate the active status of 	*/
-	/* the device to the user.  Not all device types will 	*/
-	/* do anything						*/
-	/********************************************************/
+        /********************************************************/
+        /* device_Activate is called when a device becomes the  */
+        /* active device.  In this case it is used to change the*/
+        /* title of a window to indicate the active status of   */
+        /* the device to the user.  Not all device types will   */
+        /* do anything                                          */
+        /********************************************************/
 
 static unsigned char title[11] = "R Graphics";
 
 static void Win_Activate(DevDesc *dd)
 {
-	char t[50];
-	char num[3];
-	winDesc *wd = (winDesc *) dd->deviceSpecific;
+        char t[50];
+        char num[3];
+        winDesc *wd = (winDesc *) dd->deviceSpecific;
 
-	strcpy(t, title);
-	strcat(t, ": Device ");
-	sprintf(num, "%i", deviceNumber(dd)+1);
-	strcat(t, num);
-	strcat(t, "(ACTIVE)");
-	SetWindowText(wd->window, t);
+        strcpy(t, title);
+        strcat(t, ": Device ");
+        sprintf(num, "%i", deviceNumber(dd)+1);
+        strcat(t, num);
+        strcat(t, "(ACTIVE)");
+        SetWindowText(wd->window, t);
 }
 
-	/********************************************************/
-	/* device_Deactivate is called when a device becomes	*/
-	/* inactive.  in this case it is used to change the 	*/
-	/* title of a window to indicate the inactive status of */
-	/* the device to the user.  not all device types will	*/
-	/* do anything						*/
-	/********************************************************/
+        /********************************************************/
+        /* device_Deactivate is called when a device becomes    */
+        /* inactive.  in this case it is used to change the     */
+        /* title of a window to indicate the inactive status of */
+        /* the device to the user.  not all device types will   */
+        /* do anything                                          */
+        /********************************************************/
 
 static void Win_Deactivate(DevDesc *dd)
 {
-	char t[50];
-	char num[3];
-	winDesc *wd = (winDesc *) dd->deviceSpecific;
+        char t[50];
+        char num[3];
+        winDesc *wd = (winDesc *) dd->deviceSpecific;
 
-	strcpy(t, title);
-	strcat(t, ": Device ");
-	sprintf(num, "%i", deviceNumber(dd)+1);
-	strcat(t, num);
-	strcat(t, " (inactive)");
-	SetWindowText(wd->window, t);
+        strcpy(t, title);
+        strcat(t, ": Device ");
+        sprintf(num, "%i", deviceNumber(dd)+1);
+        strcat(t, num);
+        strcat(t, " (inactive)");
+        SetWindowText(wd->window, t);
 }
-	
-	/********************************************************/
-	/* device_Rect should have the side-effect that a 	*/
-	/* rectangle is drawn with the given locations for its 	*/
-	/* opposite corners.  the border of the rectangle	*/
-	/* should be in the given "fg" colour and the rectangle	*/
-	/* should be filled with the given "bg" colour		*/
-	/* if "fg" is NA_INTEGER then no border should be drawn */
-	/* if "bg" is NA_INTEGER then the rectangle should not 	*/
-	/* be filled						*/
-	/* the locations are in an arbitrary coordinate system	*/
-	/* and this function is responsible for converting the	*/
-	/* locations to DEVICE coordinates using GConvert	*/
-	/********************************************************/
+        
+        /********************************************************/
+        /* device_Rect should have the side-effect that a       */
+        /* rectangle is drawn with the given locations for its  */
+        /* opposite corners.  the border of the rectangle       */
+        /* should be in the given "fg" colour and the rectangle */
+        /* should be filled with the given "bg" colour          */
+        /* if "fg" is NA_INTEGER then no border should be drawn */
+        /* if "bg" is NA_INTEGER then the rectangle should not  */
+        /* be filled                                            */
+        /* the locations are in an arbitrary coordinate system  */
+        /* and this function is responsible for converting the  */
+        /* locations to DEVICE coordinates using GConvert       */
+        /********************************************************/
 
 static void Recthelper(HDC ihdc, int x0, int y0, int x1, int y1, int bg, int fg)
 {
@@ -648,14 +657,14 @@ static void Recthelper(HDC ihdc, int x0, int y0, int x1, int y1, int bg, int fg)
 
 /* Draw a Filled Rectangle */
 static void Win_Rect(double x0, double y0, double x1, double y1, 
-			int coords, int bg, int fg, DevDesc *dd)
+                        int coords, int bg, int fg, DevDesc *dd)
 {
         double tmp;
         HDC Ghdc;
-	winDesc *wd = (winDesc *) dd->deviceSpecific;
+        winDesc *wd = (winDesc *) dd->deviceSpecific;
 
-	GConvert(&x0, &y0, coords, DEVICE, dd);
-	GConvert(&x1, &y1, coords, DEVICE, dd);
+        GConvert(&x0, &y0, coords, DEVICE, dd);
+        GConvert(&x1, &y1, coords, DEVICE, dd);
 
         if( x0 > x1 ) {
                 tmp = x0;
@@ -676,27 +685,27 @@ static void Win_Rect(double x0, double y0, double x1, double y1,
         if( fg != NA_INTEGER )
                 SetColor(fg, 1, dd);
 
-        Ghdc = GetDC(dd->window);
+        Ghdc = GetDC(wd->window);
         Recthelper(Ghdc, (int) x0, (int) y0, (int) x1, (int) y1, bg, fg);
-        ReleaseDC(dd->window, Ghdc);
+        ReleaseDC(wd->window, Ghdc);
 
 }
 
 
-	/********************************************************/
-	/* device_Circle should have the side-effect that a	*/
-	/* circle is drawn, centred at the given location, with */
-	/* the given radius.  the border of the circle should be*/
-	/* drawn in the given "col", and the circle should be	*/
-	/* filled with the given "border" colour.		*/
-	/* if "col" is NA_INTEGER then no border should be drawn*/
-	/* if "border" is NA_INTEGER then the circle should not */
-	/* be filled						*/
-	/* the location is in arbitrary coordinates and the 	*/
-	/* function is responsible for converting this to	*/
-	/* DEVICE coordinates.  the radius is given in DEVICE	*/
-	/* coordinates						*/
-	/********************************************************/
+        /********************************************************/
+        /* device_Circle should have the side-effect that a     */
+        /* circle is drawn, centred at the given location, with */
+        /* the given radius.  the border of the circle should be*/
+        /* drawn in the given "col", and the circle should be   */
+        /* filled with the given "border" colour.               */
+        /* if "col" is NA_INTEGER then no border should be drawn*/
+        /* if "border" is NA_INTEGER then the circle should not */
+        /* be filled                                            */
+        /* the location is in arbitrary coordinates and the     */
+        /* function is responsible for converting this to       */
+        /* DEVICE coordinates.  the radius is given in DEVICE   */
+        /* coordinates                                          */
+        /********************************************************/
 
 static void RCirclehelper(HDC ihdc, int ix, int iy, int ir, int bg, int fg)
 {
@@ -720,7 +729,7 @@ static void RCirclehelper(HDC ihdc, int ix, int iy, int ir, int bg, int fg)
 
 
 static void Win_Circle(double x, double y, int coords,
-			double r, int col, int border, DevDesc *dd)
+                        double r, int col, int border, DevDesc *dd)
 {
     int ir, ix, iy;
     HDC Ghdc;
@@ -740,93 +749,92 @@ static void Win_Circle(double x, double y, int coords,
     }
 
     Ghdc=GetDC(wd->window);
-    RCirclehelper(Ghdc, ix, iy, ir, bg, fg);
+    RCirclehelper(Ghdc, ix, iy, ir, wd->bg, wd->fg);
     ReleaseDC(wd->window, Ghdc);
 
 }
 
-	/********************************************************/
-	/* device_Line should have the side-effect that a single*/
-	/* line is drawn (from x1,y1 to x2,y2)			*/
-	/* x1, y1, x2, and y2 are in arbitrary coordinates and	*/
-	/* the function is responsible for converting them to	*/
-	/* DEVICE coordinates using GConvert			*/
-	/********************************************************/
+        /********************************************************/
+        /* device_Line should have the side-effect that a single*/
+        /* line is drawn (from x1,y1 to x2,y2)                  */
+        /* x1, y1, x2, and y2 are in arbitrary coordinates and  */
+        /* the function is responsible for converting them to   */
+        /* DEVICE coordinates using GConvert                    */
+        /********************************************************/
 
 static void Win_Line(double x1, double y1, double x2, double y2,
-			int coords, DevDesc *dd)
+                        int coords, DevDesc *dd)
 {
-	int xx1, yy1, xx2, yy2;
+        int xx1, yy1, xx2, yy2;
         HDC Ghdc;
-	POINT lp;
-	winDesc *wd = (winDesc *) dd->deviceSpecific;
+        POINT lp;
+        winDesc *wd = (winDesc *) dd->deviceSpecific;
 
-	GConvert(&x1, &y1, coords, DEVICE, dd);
-	GConvert(&x2, &y2, coords, DEVICE, dd);
+        GConvert(&x1, &y1, coords, DEVICE, dd);
+        GConvert(&x2, &y2, coords, DEVICE, dd);
 
-	xx1 = (int) x1;
+        xx1 = (int) x1;
         yy1 = (int) y1;
         xx2 = (int) x2;
         yy2 = (int) y2;
 
         Ghdc=GetDC(wd->window);
 
-	MoveToEx(Ghdc, xx1, yy1, &lp);
+        MoveToEx(Ghdc, xx1, yy1, &lp);
 
         SetColor(dd->gp.col, 1, dd);
-	SetLinetype(dd->gp.lty, dd->gp.lwd, dd);
+        SetLineType(dd->gp.lty, dd->gp.lwd, dd);
 
         LineTo(Ghdc, xx2, yy2);
         ReleaseDC(wd->window, Ghdc);
 }
 
-	/********************************************************/
-	/* device_Polyline should have the side-effect that a	*/
-	/* series of line segments are drawn using the given x	*/
-	/* and y values						*/
-	/* the x and y values are in arbitrary coordinates and	*/
-	/* the function is responsible for converting them to	*/
-	/* DEVICE coordinates using GConvert			*/
-	/********************************************************/
+        /********************************************************/
+        /* device_Polyline should have the side-effect that a   */
+        /* series of line segments are drawn using the given x  */
+        /* and y values                                         */
+        /* the x and y values are in arbitrary coordinates and  */
+        /* the function is responsible for converting them to   */
+        /* DEVICE coordinates using GConvert                    */
+        /********************************************************/
 
 static void Win_Polyline(int n, double *x, double *y, int coords, DevDesc *dd)
 {
-	double devx, devy;
-	int i;
-	POINT lp;
-	HDC Ghdc;
-	winDesc *wd = (winDesc *) dd->deviceSpecific;
+        double devx, devy;
+        int i;
+        POINT lp;
+        HDC Ghdc;
+        winDesc *wd = (winDesc *) dd->deviceSpecific;
 
-	SetColor(dd->gp.col, 1, dd);
-	SetLinetype(dd->gp.lty, dd->gp.lwd, dd);
+        SetColor(dd->gp.col, 1, dd);
+        SetLineType(dd->gp.lty, dd->gp.lwd, dd);
 
-	Ghdc = GetDC( wd->window);
+        Ghdc = GetDC( wd->window);
 
-	devx = x[0];  devy = y[0];
-	GConvert(&devx, &devy, coords, DEVICE, dd);
-	MoveToEx(Ghdc, (int) devx, (int) devy, &lp);
+        devx = x[0];  devy = y[0];
+        GConvert(&devx, &devy, coords, DEVICE, dd);
+        MoveToEx(Ghdc, (int) devx, (int) devy, &lp);
 
-	for(i=1 ; i<n ; i++) {
-		devx = x[i];  devy = y[i];
-		GConvert(&devx, &devy, coords, DEVICE, dd);
-		LineTo(Ghdc, (int) devx, (int) devy);
-		MoveToEx(Ghdc, (int) devx, (int) devy, &lp);
-	}
-	ReleaseDC(wd->window, Ghdc);
-	C_free((char *) points);
+        for(i=1 ; i<n ; i++) {
+                devx = x[i];  devy = y[i];
+                GConvert(&devx, &devy, coords, DEVICE, dd);
+                LineTo(Ghdc, (int) devx, (int) devy);
+                MoveToEx(Ghdc, (int) devx, (int) devy, &lp);
+        }
+        ReleaseDC(wd->window, Ghdc);
 }
 
-	/********************************************************/
-	/* device_Polygon should have the side-effect that a 	*/
-	/* polygon is drawn using the given x and y values	*/
-	/* the polygon border should be drawn in the "fg" 	*/
-	/* colour and filled with the "bg" colour		*/
-	/* if "fg" is NA_INTEGER don't draw the border		*/
-	/* if "bg" is NA_INTEGER don't fill the polygon		*/
-	/* the x and y values are in arbitrary coordinates and 	*/
-	/* the function is responsible for converting them to 	*/
-	/* DEVICE coordinates using GConvert			*/
-	/********************************************************/
+        /********************************************************/
+        /* device_Polygon should have the side-effect that a    */
+        /* polygon is drawn using the given x and y values      */
+        /* the polygon border should be drawn in the "fg"       */
+        /* colour and filled with the "bg" colour               */
+        /* if "fg" is NA_INTEGER don't draw the border          */
+        /* if "bg" is NA_INTEGER don't fill the polygon         */
+        /* the x and y values are in arbitrary coordinates and  */
+        /* the function is responsible for converting them to   */
+        /* DEVICE coordinates using GConvert                    */
+        /********************************************************/
 static void RPolyhelper(HDC ihdc, POINT *pt, int n, int bg, int fg)
 {
     HBRUSH tBrush;
@@ -846,18 +854,21 @@ static void RPolyhelper(HDC ihdc, POINT *pt, int n, int bg, int fg)
     }
 }
 
-static void Win_Polygon(int n, double *x, double *y, int bg, int fg)
+static void Win_Polygon(int n, double *x, double *y, int coords, int bg, int fg, DevDesc *dd)
 {
         int i;
         POINT *pt;
+        double devx, devy;
         HDC Ghdc;
-	winDesc *wd = (winDesc *) dd->deviceSpecific;
+        winDesc *wd = (winDesc *) dd->deviceSpecific;
 
-        pt = (POINT*) C_alloc(n+1,sizeof(POINT));
+        pt = (POINT*) C_alloc(n,sizeof(POINT));
 
         for(i=0; i<n ; i++) {
-            pt[i].x = (int) (x[i]);
-            pt[i].y = (int) (y[i]);
+            devx = x[i]; devy = y[i];
+            GConvert(&devx, &devy, coords, DEVICE, dd);
+            pt[i].x = (int) (devx);
+            pt[i].y = (int) (devy);
         }
         if( fg != NA_INTEGER )
                 SetColor(fg, 1, dd);
@@ -870,23 +881,21 @@ static void Win_Polygon(int n, double *x, double *y, int bg, int fg)
         Ghdc = GetDC(wd->window);
         RPolyhelper(Ghdc, pt, n, bg, fg);
         ReleaseDC(wd->window, Ghdc);
-	
-	C_free((char *) points);
+        
+        C_free((char *) pt);
 }
 
 
-	/********************************************************/
-	/* device_Text should have the side-effect that the 	*/
-	/* given text is drawn at the given location		*/
-	/* the text should be justified according to "xc" and	*/
-	/* "yc" (0 = left, 0.5 = centre, 1 = right)		*/
-	/* and rotated according to rot (degrees)		*/
-	/* the location is in an arbitrary coordinate system	*/
-	/* and this function is responsible for converting the	*/
-	/* location to DEVICE coordinates using GConvert	*/
-	/********************************************************/
-
-static double deg2rad = 0.01745329251994329576;
+        /********************************************************/
+        /* device_Text should have the side-effect that the     */
+        /* given text is drawn at the given location            */
+        /* the text should be justified according to "xc" and   */
+        /* "yc" (0 = left, 0.5 = centre, 1 = right)             */
+        /* and rotated according to rot (degrees)               */
+        /* the location is in an arbitrary coordinate system    */
+        /* and this function is responsible for converting the  */
+        /* location to DEVICE coordinates using GConvert        */
+        /********************************************************/
 
 /* Rotated Text
    xc and yc indicate text justification
@@ -904,13 +913,13 @@ static double deg2rad = 0.01745329251994329576;
 */
 
 static void Win_Text(double x, double y, int coords, char *str, 
-			double xc, double yc, double rot, DevDesc *dd)
+                        double xc, double yc, double rot, DevDesc *dd)
 {
         HDC Ghdc;
         int fsize, nstr;
         double rotrad, xl, yl;
         SIZE lpSize;
-	winDesc *wd = (winDesc *) dd->deviceSpecific;
+        winDesc *wd = (winDesc *) dd->deviceSpecific;
 
 
         fsize = dd->gp.cex * dd->gp.ps +0.5;
@@ -918,7 +927,7 @@ static void Win_Text(double x, double y, int coords, char *str,
         SetColor(dd->gp.col, 3, dd);
         nstr = strlen(str);
 
-	GConvert(&x, &y, coords, DEVICE, dd);
+        GConvert(&x, &y, coords, DEVICE, dd);
 
         Ghdc=GetDC(wd->window);
         if( xc != 0 || yc != 1 ) {
@@ -938,17 +947,19 @@ static void Win_Text(double x, double y, int coords, char *str,
 }
 
 
-	/********************************************************/
-	/* device_Locator should return the location of the next*/
-	/* mouse click (in DEVICE coordinates;  GLocator is	*/
-	/* responsible for any conversions)			*/
-	/* not all devices will do anything (e.g., postscript)	*/
-	/********************************************************/
+        /********************************************************/
+        /* device_Locator should return the location of the next*/
+        /* mouse click (in DEVICE coordinates;  GLocator is     */
+        /* responsible for any conversions)                     */
+        /* not all devices will do anything (e.g., postscript)  */
+        /********************************************************/
 
-static int Win_Locator(double *x, double *y)
+static int Win_Locator(double *x, double *y, DevDesc *dd)
 {
+        winDesc *wd = (winDesc *) dd->deviceSpecific;
+        
         LocatorDone=0;
-        SendMessage(RClient, WM_MDIACTIVATE, (WPARAM)(HWND) RGraphWnd,0L);
+        SendMessage(RClient, WM_MDIACTIVATE, (WPARAM)(HWND) wd->window, 0L);
         while (LocatorDone == 0 )
                 EventLoop();
         if( LocatorDone == 1 ) {
@@ -964,174 +975,173 @@ static int Win_Locator(double *x, double *y)
 }
 
 
-	/********************************************************/
-	/* device_Mode is called whenever the graphics engine 	*/
-	/* starts drawing (mode=1) or stops drawing (mode=1)	*/
-	/* the device is not required to do anything		*/
-	/********************************************************/
+        /********************************************************/
+        /* device_Mode is called whenever the graphics engine   */
+        /* starts drawing (mode=1) or stops drawing (mode=1)    */
+        /* the device is not required to do anything            */
+        /********************************************************/
 
 /* Set Graphics mode - not needed for Windows */
 static void Win_Mode(int mode)
 {
-	return;
+        return;
 }
 
 
-	/********************************************************/
-	/* i don't know what this is for and i can't find it	*/
-	/* being used anywhere, but i'm loath to kill it in	*/
-	/* case i'm missing something important			*/
-	/********************************************************/
-	
+        /********************************************************/
+        /* i don't know what this is for and i can't find it    */
+        /* being used anywhere, but i'm loath to kill it in     */
+        /* case i'm missing something important                 */
+        /********************************************************/
+        
 /* Hold the Picture Onscreen - not needed for Windows */
 static void Win_Hold(DevDesc *dd)
 {
 }
 
-	/********************************************************/
-	/* the device-driver entry point is given a device 	*/
-	/* description structure that it must set up.  this 	*/
-	/* involves several important jobs ...			*/
-	/* (1) it must ALLOCATE a new device-specific parameters*/
-	/* structure and FREE that structure if anything goes	*/
-	/* wrong (i.e., it won't report a successful setup to	*/
-	/* the graphics engine (the graphics engine is NOT	*/
-	/* responsible for allocating or freeing device-specific*/
-	/* resources or parameters)				*/
-	/* (2) it must initialise the device-specific resources */
-	/* and parameters (mostly done by calling device_Open)	*/
-	/* (3) it must initialise the generic graphical 	*/
-	/* parameters that are not initialised by GInit (because*/
-	/* only the device knows what values they should have)	*/
-	/* see Graphics.h for the official list of these	*/
-	/* (4) it may reset generic graphics parameters that	*/
-	/* have already been initialised by GInit (although you	*/
-	/* should know what you are doing if you do this)	*/
-	/* (5) it must attach the device-specific parameters	*/
-	/* structure to the device description structure	*
-	/* e.g., dd->deviceSpecfic = (void *) xd;		*/
-	/* (6) it must FREE the overall device description if 	*/
-	/* it wants to bail out to the top-level		*/
-	/* the graphics engine is responsible for allocating 	*/
-	/* the device description and freeing it in most cases	*/
-	/* but if the device driver freaks out it needs to do 	*/
-	/* the clean-up itself					*/
-	/********************************************************/
-	
+        /********************************************************/
+        /* the device-driver entry point is given a device      */
+        /* description structure that it must set up.  this     */
+        /* involves several important jobs ...                  */
+        /* (1) it must ALLOCATE a new device-specific parameters*/
+        /* structure and FREE that structure if anything goes   */
+        /* wrong (i.e., it won't report a successful setup to   */
+        /* the graphics engine (the graphics engine is NOT      */
+        /* responsible for allocating or freeing device-specific*/
+        /* resources or parameters)                             */
+        /* (2) it must initialise the device-specific resources */
+        /* and parameters (mostly done by calling device_Open)  */
+        /* (3) it must initialise the generic graphical         */
+        /* parameters that are not initialised by GInit (because*/
+        /* only the device knows what values they should have)  */
+        /* see Graphics.h for the official list of these        */
+        /* (4) it may reset generic graphics parameters that    */
+        /* have already been initialised by GInit (although you */
+        /* should know what you are doing if you do this)       */
+        /* (5) it must attach the device-specific parameters    */
+        /* structure to the device description structure        *
+        /* e.g., dd->deviceSpecfic = (void *) xd;               */
+        /* (6) it must FREE the overall device description if   */
+        /* it wants to bail out to the top-level                */
+        /* the graphics engine is responsible for allocating    */
+        /* the device description and freeing it in most cases  */
+        /* but if the device driver freaks out it needs to do   */
+        /* the clean-up itself                                  */
+        /********************************************************/
+        
 
 int WinDeviceDriver(DevDesc *dd,double width, double height, double pointsize)
 {
-	/* if need to bail out with some sort of "error" then */
-	/* must free(dd) */
+        /* if need to bail out with some sort of "error" then */
+        /* must free(dd) */
 
-	HDC Ghdc;
-	TEXTMETRIC Itm;
-	int ps;
-	winDesc *wd;
+        HDC Ghdc;
+        TEXTMETRIC Itm;
+        int ps;
+        winDesc *wd;
 
-	/* allocate new device description */
-	if (!(wd = (winDesc *) malloc(sizeof(winDesc)))) 
-		return 0;
+        /* allocate new device description */
+        if (!(wd = (winDesc *) malloc(sizeof(winDesc)))) 
+                return 0;
 
-	/* from here on, if need to bail out with "error", must also */
-	/* free(wd) */
+        /* from here on, if need to bail out with "error", must also */
+        /* free(wd) */
 
-	/*  Font will load at first use  */
+        /*  Font will load at first use  */
 
-	ps = pointsize;
-	if(ps < 6 || ps > 24) ps = 12;
-	ps = 2*(ps/2);
+        ps = pointsize;
+        if(ps < 6 || ps > 24) ps = 12;
+        ps = 2*(ps/2);
 
-	wd->fontface = -1;
-	wd->fontsize = -1;
-	wd->pcol = 0;
-	wd->bcol = R_RGB(255,255,255);
-	wd->tcol = 0;
+        wd->fontface = -1;
+        wd->fontsize = -1;
+        wd->pcol = 0;
+        wd->bcol = R_RGB(255,255,255);
+        wd->tcol = 0;
 
-	dd->dp.font = 1;
-	dd->dp.ps = ps;
-
-	/*  Start the Device Driver and Hardcopy.  */
-
-	if (!Win_Open(dd, wd, width, height)) {
-		free(wd);
-		return 0;
-	}
+        dd->dp.font = 1;
+        dd->dp.ps = ps;
+        dd->deviceSpecific = (void *) wd;
 
 
-	/*  Set up Data Structures  */
+        /*  Start the Device Driver and Hardcopy.  */
 
-	dd->dp.open = Win_Open;
-	dd->dp.close = Win_Close;
-	dd->dp.activate = Win_Activate;
-	dd->dp.deactivate = Win_Deactivate;
-	dd->dp.resize = Win_Resize;
-	dd->dp.newPage = Win_NewPage;
-	dd->dp.clip = Win_Clip;
-	dd->dp.strWidth = Win_StrWidth;
-	dd->dp.text = Win_Text;
-	dd->dp.rect = Win_Rect;
-	dd->dp.circle = Win_Circle;
-	dd->dp.line = Win_Line;
-	dd->dp.polyline = Win_Polyline;
-	dd->dp.polygon = Win_Polygon;
-	dd->dp.locator = Win_Locator;
-	dd->dp.mode = Win_Mode;
-	dd->dp.hold = Win_Hold;
-	dd->dp.metricInfo = Win_MetricInfo;
+        if (!Win_Open(dd, wd, width, height)) {
+                free(wd);
+                return 0;
+        }
 
-	/* set graphics parameters that must be set by device driver */
-	/* Window Dimensions in Pixels */
+        /*  Set up Data Structures  */
 
-	dd->dp.left = 0;			/* left */
-	dd->dp.right = wd->grap.right;		/* right */
-	dd->dp.bottom = wd->graph.bottom;	/* bottom */
-	dd->dp.top = 0;				/* top */
+        dd->dp.open = Win_Open;
+        dd->dp.close = Win_Close;
+        dd->dp.activate = Win_Activate;
+        dd->dp.deactivate = Win_Deactivate;
+        dd->dp.resize = Win_Resize;
+        dd->dp.newPage = Win_NewPage;
+        dd->dp.clip = Win_Clip;
+        dd->dp.strWidth = Win_StrWidth;
+        dd->dp.text = Win_Text;
+        dd->dp.rect = Win_Rect;
+        dd->dp.circle = Win_Circle;
+        dd->dp.line = Win_Line;
+        dd->dp.polyline = Win_Polyline;
+        dd->dp.polygon = Win_Polygon;
+        dd->dp.locator = Win_Locator;
+        dd->dp.mode = Win_Mode;
+        dd->dp.hold = Win_Hold;
+        dd->dp.metricInfo = Win_MetricInfo;
 
-	Ghdc = GetDC(wd->window);
+        /* set graphics parameters that must be set by device driver */
+        /* Window Dimensions in Pixels */
 
-	GetTextMetrics(Ghdc, &Itm);
+        dd->dp.left = 0;                        /* left */
+        dd->dp.right = wd->graph.right;          /* right */
+        dd->dp.bottom = wd->graph.bottom;       /* bottom */
+        dd->dp.top = 0;                         /* top */
 
-	/* Nominal Character Sizes in Pixels */
+        Ghdc = GetDC(wd->window);
 
-	dd->dp.cra[0] = Itm.tmMaxCharWidth;
-	dd->dp.cra[1] = Itm.tmHeight;
+        GetTextMetrics(Ghdc, &Itm);
 
-	/* Character Addressing Offsets */
-	/* These are used to plot a single plotting character */
-	/* so that it is exactly over the plotting point */
+        /* Nominal Character Sizes in Pixels */
 
-	dd->dp.xCharOffset = 0.5;
-	dd->dp.yCharOffset = 0.5;
-	dd->dp.yLineBias = 0.1;
+        dd->dp.cra[0] = Itm.tmMaxCharWidth;
+        dd->dp.cra[1] = Itm.tmHeight;
 
-	/* Inches per raster unit */
+        /* Character Addressing Offsets */
+        /* These are used to plot a single plotting character */
+        /* so that it is exactly over the plotting point */
 
-	dd->dp.ipr[0] = 1/(double)GetDeviceCaps(DDhdc, LOGPIXELSX);
-	dd->dp.ipr[1] = 1/(double)GetDeviceCaps(DDhdc, LOGPIXELSY);
+        dd->dp.xCharOffset = 0.5;
+        dd->dp.yCharOffset = 0.5;
+        dd->dp.yLineBias = 0.1;
 
-	/* Device capabilities */
+        /* Inches per raster unit */
 
-	dd->dp.canResizePlot = 1;
-	dd->dp.canChangeFont = 1;
-	dd->dp.canRotateText = 1;
-	dd->dp.canResizeText = 1;
-	dd->dp.canClip = 1; 
+        dd->dp.ipr[0] = 1/(double)GetDeviceCaps(Ghdc, LOGPIXELSX);
+        dd->dp.ipr[1] = 1/(double)GetDeviceCaps(Ghdc, LOGPIXELSY);
 
-	/* initialise win device description (most of the work */
-	/* has been done in Win_Open) */
+        /* Device capabilities */
 
-	wd->cex = 1.0;
-	wd->srt = 0.0;
-	wd->lty = 0;
-	wd->resize = 0;
+        dd->dp.canResizePlot = 1;
+        dd->dp.canChangeFont = 1;
+        dd->dp.canRotateText = 1;
+        dd->dp.canResizeText = 1;
+        dd->dp.canClip = 1; 
 
-	dd->deviceSpecific = (void *) wd;
+        /* initialise win device description (most of the work */
+        /* has been done in Win_Open) */
 
-	dd->displayListOn = 1;
+        wd->cex = 1.0;
+        wd->srt = 0.0;
+        wd->lty = 0;
+        wd->resize = 0;
 
-	SetBkMode(Ghec, TRANSPARENT);
-	/* remove the stock objects from the display context */
+        dd->displayListOn = 1;
+
+        SetBkMode(Ghdc, TRANSPARENT);
+        /* remove the stock objects from the display context */
         wd->cpen = CreatePen(PS_SOLID, 1, 0);
         wd->cbrush = CreateSolidBrush(RGB(255,255,255));
         wd->lty = PS_SOLID;
@@ -1141,7 +1151,7 @@ int WinDeviceDriver(DevDesc *dd,double width, double height, double pointsize)
 
         ReleaseDC(wd->window, Ghdc);
 
-	return 1;
+        return 1;
 }
 
 /*
@@ -1153,21 +1163,25 @@ LRESULT FAR PASCAL GraphWndProc(HWND hWnd, UINT message, WPARAM wParam,
 {
         PAINTSTRUCT ps;
         HDC thdc;
-	DevDesc *dd;
+        DevDesc *dd;
+        winDesc *wd;
+
+        dd = (DevDesc *) GetWindowLong(hWnd, GWL_USERDATA);
 
         switch(message) {
              case WM_CREATE:
                  break;
              case WM_SIZE:
-                 if( wParam != SIZE_MINIMIZED  ) { 
-                         dd = GetWindowWord(hWnd, 0); 
-			 wd = (winDesc *) dd->deviceSpecific;
-                         if( HIWORD(lParam) != wd->graph.bottom
-                            || LOWORD(lParam) != wd->graph.right ) {
-                               wd->graph.bottom = HIWORD(lParam);
-                               wd->graph.right  = LOWORD(lParam);
-
-                               Win_Resize(dd);
+                 if( wParam != SIZE_MINIMIZED  ) {                         
+                         if( dd != NULL ) { 
+                                wd = (winDesc *) dd->deviceSpecific;
+                                if( HIWORD(lParam) != wd->graph.bottom
+                                     || LOWORD(lParam) != wd->graph.right ) {
+                                         wd->graph.bottom = HIWORD(lParam);
+                                         wd->graph.right  = LOWORD(lParam);
+                                         wd->resize = 1;
+                                         /*Win_Resize(dd);*/
+                                }
                          }
                  }
                  break;
@@ -1188,6 +1202,10 @@ LRESULT FAR PASCAL GraphWndProc(HWND hWnd, UINT message, WPARAM wParam,
                   doGraphicsMenu(hWnd, wParam, lParam);
                   break;
               case WM_PAINT:
+                   if ( dd != NULL ) {
+                        Win_Resize(dd);
+                        playDisplayList(dd);
+                   }
                    BeginPaint(hWnd, &ps);
                    SelectClipRgn(ps.hdc, NULL);
                    EndPaint(hWnd, &ps);
@@ -1195,7 +1213,7 @@ LRESULT FAR PASCAL GraphWndProc(HWND hWnd, UINT message, WPARAM wParam,
                    if ( RGBhdc != NULL ) {
                        thdc = GetDC(RGraphWnd);
                        BitBlt(thdc, 0, 0, graphicsRect.right,
-			graphicsRect.bottom, RGBhdc, 0, 0, SRCCOPY);
+                        graphicsRect.bottom, RGBhdc, 0, 0, SRCCOPY);
                        ReleaseDC(RGraphWnd, thdc);
                    }
 #endif
@@ -1208,13 +1226,14 @@ LRESULT FAR PASCAL GraphWndProc(HWND hWnd, UINT message, WPARAM wParam,
                        SendMessage(RClient, WM_MDISETMENU,
                              (WPARAM) RMenuGraph, (LPARAM) RMenuGraphWin);
                        DrawMenuBar(RFrame);
-                       InvalidateRect(hWnd,&graphicsRect, TRUE);
+                       InvalidateRect(hWnd,&(wd->graph), TRUE);
 
                    }
                    return(0);
               case WM_CLOSE:
                    ShowWindow(hWnd, SW_MINIMIZE);
-                   Win_Close();
+                   KillDevice(dd);
+                   Win_Close(dd);
                    return(0);
               case WM_DESTROY:
                    return(0);
@@ -1225,13 +1244,6 @@ LRESULT FAR PASCAL GraphWndProc(HWND hWnd, UINT message, WPARAM wParam,
 void doGraphicsMenu(HWND GWnd, WPARAM wParam, LPARAM lParam)
 {
         HDC hdc;
-        BITMAPINFOHEADER bi, *lpbi;
-        BITMAP bmp;
-        HANDLE hDIB;
-        int i;
-        WORD cClrBits;
-        LPBYTE lpBits;
-
 
         switch (wParam) {
                 case RRR_SETUP:
@@ -1300,7 +1312,7 @@ void doGraphicsMenu(HWND GWnd, WPARAM wParam, LPARAM lParam)
                             GlobalFree(hDIB);
                             GlobalFree(lpBits);
                         }
-#eindif
+#endif
                         break;
                 case RRR_COPY:
 #ifdef PRINTING 

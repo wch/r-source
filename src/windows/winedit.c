@@ -17,6 +17,9 @@
  */
 
 #include "wincons.h"
+#include "Fileio.h"
+#include "IOStuff.h"
+#include "Parse.h"
 
 char REdfilename[MAX_PATH];
 static int inFlag=1;
@@ -174,7 +177,7 @@ void InitEd()
 SEXP do_edit(SEXP call, SEXP op, SEXP args, SEXP env) 
 {
         SEXP x, fn, envir;
-        int i, l, n;
+        int i, l, n, status;
         char RTbuf[MAXELTSIZE];
         FILE *fp;
 
@@ -233,12 +236,13 @@ SEXP do_edit(SEXP call, SEXP op, SEXP args, SEXP env)
 
         fp=fopen(REdfilename, "rt");
         R_ParseCnt = 0;
-        PROTECT(x = parse(fp, 1));
-        fclose(fp);
-        if( R_ParseError)
+        PROTECT(x = R_ParseFile(fp, -1, &status));
+        if (status != PARSE_OK) 
             errorcall(call,"An error occurred on line %d\n use a command like\n x<-edit()\n to recover\n",R_ParseError);
-        ResetConsole();
-        x = eval(CAR(x), R_GlobalEnv);
+        else
+                fclose(fp);
+        R_ResetConsole();
+        x = eval(x, R_GlobalEnv);
         if( TYPEOF(x) == CLOSXP && envir != R_NilValue)
             CLOENV(x) = envir;
         UNPROTECT(2);
