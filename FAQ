@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 1.2-36, 2001-03-14
+Version 1.2-37, 2001-03-28
 Kurt Hornik
 
 
@@ -40,6 +40,7 @@ R FAQ
     3.3.2 Models
     3.3.3 Others
   3.4 Is there anything R can do that S-PLUS cannot?
+  3.5 What is R-plus?
 
 4 R Web Interfaces
 
@@ -197,9 +198,10 @@ and bug reports.
 
    Since mid-1997 there has been a core group (the "R Core Team") who can
 modify the R source code CVS archive.  The group currently consists of Doug
-Bates, John Chambers, Peter Dalgaard, Robert Gentleman, Kurt Hornik, Ross
-Ihaka, Friedrich Leisch, Thomas Lumley, Martin Maechler, Guido Masarotto,
-Paul Murrell, Brian Ripley, Duncan Temple Lang, and Luke Tierney.
+Bates, John Chambers, Peter Dalgaard, Robert Gentleman, Kurt Hornik,
+Stefano Iacus, Ross Ihaka, Friedrich Leisch, Thomas Lumley, Martin
+Maechler, Guido Masarotto, Paul Murrell, Brian Ripley, Duncan Temple Lang,
+and Luke Tierney.
 
    R has a home page at `http://www.r-project.org/'.  It is free software
 distributed under a GNU-style copyleft, and an official part of the GNU
@@ -999,6 +1001,11 @@ the help page for `plotmath', which features an impressive on-line example.
 More details can be found in Paul Murrell and Ross Ihaka (2000), "An
 Approach to Providing Mathematical Annotation in Plots", _Journal of
 Computational and Graphical Statistics_, *9*, 582-599.
+
+3.5 What is R-plus?
+===================
+
+   There is no such thing.
 
 4 R Web Interfaces
 ******************
