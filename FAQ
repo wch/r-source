@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.5-23, 2002-09-19
+Version 1.5-24, 2002-09-22
 ISBN 3-901167-51-X
 Kurt Hornik
 
@@ -438,29 +438,26 @@ available for web browsing at `http://stat.ethz.ch/R/manual/'.
      Publications, ISBN 0-761-92280-6 (softcover) or 0-761-92279-2
      (hardcover), `http://www.socsci.mcmaster.ca/jfox/Books/Companion/'.
 
-   In addition to material written specifically or explicitly for R,
-documentation for S/S-PLUS (see *Note R and S::) can be used in combination
-with this FAQ (*note What are the differences between R and S?::).  We
-recommend
+The book
 
-     W. N. Venables and B. D. Ripley (1999), "Modern Applied Statistics with
-     S-PLUS.  Third Edition".  Springer, ISBN 0-387-98825-4.
+     W. N. Venables and B. D. Ripley (2002), "Modern Applied Statistics with
+     S.  Fourth Edition".  Springer, ISBN 0-387-95457-0
 
-This has a home page at `http://www.stats.ox.ac.uk/pub/MASS3/' providing
-additional material, in particular "R Complements" which describe how to
-use the book with R.  These complements contain both descriptions of some
-of the differences between R and S-PLUS, and the modifications needed to
-run the examples in the book.  Its companion is
+has a home page at `http://www.stats.ox.ac.uk/pub/MASS4/' providing
+additional material.  Its companion is
 
      W. N. Venables and B. D. Ripley (2000), "S Programming".  Springer,
-     ISBN 0-387-98966-8.
+     ISBN 0-387-98966-8
 
-This provides an in-depth guide to writing software in the S language which
+and provides an in-depth guide to writing software in the S language which
 forms the basis of both the commercial S-PLUS and the Open Source R data
 analysis software systems.  See
 `http://www.stats.ox.ac.uk/pub/MASS3/Sprog/' for more information.
 
-   More introductory books are
+   In addition to material written specifically or explicitly for R,
+documentation for S/S-PLUS (see *Note R and S::) can be used in combination
+with this FAQ (*note What are the differences between R and S?::).
+Introductory books include
 
      P. Spector (1994), "An introduction to S and S-PLUS", Duxbury Press.
 
