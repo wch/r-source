@@ -82,6 +82,8 @@ BUG FIXES
     o   Subsetted assignments of the form A[i1, i2, i3] <- B failed as
 	soon as an NA was encountered in an index so subsequent non-NA
 	indices were ignored.
+	
+    o	Fixed bug in handling of lwd=NA in contour().
 
 
 
