@@ -1,6 +1,6 @@
 ###-*- R -*- Macintosh Specific ----
 
-.Library <- paste(R.home(), "library", sep=.Platform$sep)
+.Library <- paste(R.home(), "library", sep=.Platform$file.sep)
 .lib.loc <- .Library
 options(papersize = "a4")
 options(device = "macintosh")
