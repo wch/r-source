@@ -381,8 +381,8 @@ void ml_error(int n);
 #define R_DT_0	(lower_tail ? R_D__0 : R_D__1)		/* 0 */
 #define R_DT_1	(lower_tail ? R_D__1 : R_D__0)		/* 1 */
 
-#define R_D_Lval(p)	(lower_tail ? p	 : 1. - p)	/*  p  */
-#define R_D_Cval(p)	(lower_tail ? 1. - p : p )	/*  1 - p */
+#define R_D_Lval(p)	(lower_tail ? p	 : 1 - (p))	/*  p  */
+#define R_D_Cval(p)	(lower_tail ? 1 - (p) : p )	/*  1 - p */
 
 #define R_D_val(x)	(log_p	? log(x) : x)		/*  x  in pF(x,..) */
 #define R_D_qIv(p)	(log_p	? exp(p) : p)		/*  p  in qF(p,..) */
