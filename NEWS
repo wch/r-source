@@ -436,6 +436,9 @@ BUG FIXES
 
     o	qnorm(0) and qnorm(1) now give -/+ Inf (again!).
 
+    o	The math functions now (again!) return NaN when the warning
+	message says so (e.g. gamma(-1)).
+
 
 	**************************************************
 	*						 *

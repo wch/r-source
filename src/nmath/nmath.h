@@ -39,7 +39,7 @@
 #include "R_ext/Arith.h"
 #define ML_POSINF	R_PosInf
 #define ML_NEGINF	R_NegInf
-#define ML_NAN		R_NaReal
+#define ML_NAN		R_NaN
 
 #ifdef IEEE_754
 #define ML_ERROR(x)	/* nothing */

@@ -1,6 +1,6 @@
 
 R : Copyright 2000, The R Development Core Team
-Version 1.2.0 Under development (unstable) (2000-10-10)
+Version 1.2.0 Under development (unstable) (2000-11-06)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -131,6 +131,12 @@ NaNs produced in: log(x)
 > all(abs(1 - x / atan(tan(x))) <  2*Meps)
 [1] TRUE
 > 
+> is.nan(acos(1.1)) && is.nan(asin(-2))
+[1] TRUE
+Warning messages: 
+1: NaNs produced in: acos(1.1) 
+2: NaNs produced in: asin(-2) 
+> 
 > ## Complex Trig.:
 > abs(Im(cos(acos(1i))) -	 1) < 2*Meps
 [1] TRUE
@@ -178,6 +184,12 @@ NaNs produced in: log(x)
 [1] TRUE
 > n <- 10000;all(abs(rErr(lgamma(1:n),cumsum(log(c(1,1:(n-1)))))) < 100*Meps)
 [1] TRUE
+> 
+> all(is.nan(gamma(0:-4))) # + warn.
+[1] TRUE
+Warning message: 
+NaNs produced in: gamma(x) 
+> 
 > 
 > ## fft():
 > ok <- TRUE
@@ -258,5 +270,5 @@ NaNs produced in: log(x)
 > 
 > ## Last Line:
 > cat('Time elapsed: ', proc.time() - .proctime00,'\n')
-Time elapsed:  4.63 0.12 7.12 0 0 
+Time elapsed:  4.14 0.15 4.33 0 0 
 > 

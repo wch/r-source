@@ -116,6 +116,9 @@ sample(pab, 50)
 qnorm(0) == -Inf && qnorm(-Inf, log = TRUE) == -Inf
 qnorm(1) ==  Inf && qnorm(0, log = TRUE) == Inf
 
+is.nan(qnorm(1.1)) &&
+is.nan(qnorm(-.1)) # + warn
+
 ## 3 Test data from Wichura (1988) :
 all.equal(qnorm(c( 0.25,  .001,	 1e-20)),
 	  c(-0.6744897501960817, -3.090232306167814, -9.262340089798408),

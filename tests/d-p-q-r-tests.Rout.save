@@ -174,6 +174,13 @@ Warning messages:
 > qnorm(1) ==  Inf && qnorm(0, log = TRUE) == Inf
 [1] TRUE
 > 
+> is.nan(qnorm(1.1)) &&
++ is.nan(qnorm(-.1)) # + warn
+[1] TRUE
+Warning messages: 
+1: NaNs produced in: qnorm(p, mean, sd, lower.tail, log.p) 
+2: NaNs produced in: qnorm(p, mean, sd, lower.tail, log.p) 
+> 
 > ## 3 Test data from Wichura (1988) :
 > all.equal(qnorm(c( 0.25,  .001,	 1e-20)),
 + 	  c(-0.6744897501960817, -3.090232306167814, -9.262340089798408),
@@ -687,5 +694,5 @@ Warning messages:
 [1] TRUE
 > 
 > cat("Time elapsed: ", proc.time() - .ptime,"\n")
-Time elapsed:  7.46 0.22 7.69 0 0 
+Time elapsed:  7.59 0.11 7.79 0 0 
 > 

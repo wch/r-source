@@ -79,6 +79,8 @@ x <- 1:99/100
 all(abs(1 - x / asin(sin(x))) <= 2*Meps)# "== 2*" for HP-UX
 all(abs(1 - x / atan(tan(x))) <  2*Meps)
 
+is.nan(acos(1.1)) && is.nan(asin(-2))
+
 ## Complex Trig.:
 abs(Im(cos(acos(1i))) -	 1) < 2*Meps
 abs(Im(sin(asin(1i))) -	 1) < 2*Meps
@@ -111,6 +113,9 @@ n <-   10; all(		 gamma(1:n) == cumprod(c(1,1:(n-1))))
 n <-   20; all(abs(rErr( gamma(1:n), cumprod(c(1,1:(n-1))))) < 100*Meps)
 n <-  120; all(abs(rErr( gamma(1:n), cumprod(c(1,1:(n-1))))) < 1000*Meps)
 n <- 10000;all(abs(rErr(lgamma(1:n),cumsum(log(c(1,1:(n-1)))))) < 100*Meps)
+
+all(is.nan(gamma(0:-4))) # + warn.
+
 
 ## fft():
 ok <- TRUE
