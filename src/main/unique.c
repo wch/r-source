@@ -221,7 +221,7 @@ SEXP do_duplicated(SEXP call, SEXP op, SEXP args, SEXP env)
 
 	checkArity(op, args);
 	x = CAR(args);
-	if (!isVector(x))
+	if (!(isVector(x) || isNull(x)))
 		error("duplicated applies only to vectors\n");
 
 	/* handle zero length vectors */
