@@ -9,7 +9,7 @@ quote(expr)
 \description{
     \code{substitute} returns the parse tree for the (unevaluated)
     expression \code{expr}, substituting any variables bound in
-    \code{env}. \cr 
+    \code{env}. \cr
     \code{quote} simply returns the parse tree for the expression.
 }
 \arguments{
@@ -17,7 +17,6 @@ quote(expr)
     \item{env}{An environment or a list object. Defaults to the
 	current evaluation environment.}
 }
-\keyword{}
 \details{
     The typical use of \code{substitute} is to create informative labels
     for data sets and plots.
@@ -28,11 +27,11 @@ quote(expr)
 
     Substition takes place by examining each component of the parse tree
     as follows: If it is not a bound symbol in \code{env}, it is
-    unchanged. If it is a promise object, i.e. a formal argument to a 
-    function or explicitly created using \code{delay()}, the expression
+    unchanged. If it is a promise object, i.e. a formal argument to a
+    function or explicitly created using \code{\link{delay}()}, the expression
     slot of the promise replaces the symbol. If it is an ordinary
     variable, its value is substituted, unless \code{env} is
-    \code{.GlobalEnv} in which case the symbol is left unchanged.
+    \code{\link{.GlobalEnv}} in which case the symbol is left unchanged.
 }
 \value{
     The \code{\link{mode}} of the result is generally \code{"call"} but
@@ -43,7 +42,7 @@ quote(expr)
 \note{
     Substitute works on a purely lexical basis. There is no guarantee
     that the resulting expression makes any sense.
-    
+
     Substituting and quoting often causes confusion when the argument is
     \code{expression(...)}. The result is a call to the
     \code{\link{expression}} constructor function and needs to be evaluated
