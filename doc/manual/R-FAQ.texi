@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2003
-@set FAQ-VERSION 1.7-36, @value{FAQ-YEAR}-08-11
+@set FAQ-VERSION 1.7-37, @value{FAQ-YEAR}-08-19
 @set REL-VERSION 1.7.1
 @set FAQ-ISBN 3-901167-51-X
 @documentlanguage en
@@ -1400,16 +1400,6 @@ There is no such thing.
 @node R Web Interfaces, R Add-On Packages, R and S, Top
 @chapter R Web Interfaces
 
-@strong{Rcgi} is a CGI WWW interface to R by
-@email{mjr@@stats.mth.uea.ac.uk, Mark J. Ray}.  Recent versions have the
-ability to use ``embedded code'': you can mix user input and code,
-allowing the @HTML{} author to do anything from load in data sets to
-enter most of the commands for users without writing CGI scripts.
-Graphical output is possible in PostScript or GIF formats and the
-executed code is presented to the user for revision.
-
-See @uref{http://stats.mth.uea.ac.uk/Rcgi/} for more information.
-
 @strong{Rweb} is developed and maintained by
 @email{jeff@@math.montana.edu, Jeff Banfield}.  The
 @uref{http://www.math.montana.edu/Rweb/, Rweb Home Page} provides access
@@ -1432,6 +1422,27 @@ intends to make the first steps in statistical programming with R
 a local installation since the only requirement for the user is a
 JavaScript capable browser.  See @uref{http://osvisions.com/r-online/}
 for more information.
+
+@strong{CGIwithR} is an R add-on package by
+@email{david.firth@@nuffield.ox.ac.uk, David Firth} and has its home
+page at @uref{http://www.stats.ox.ac.uk/~firth/CGIwithR/index.html}.  It
+provides some simple extensions to R to facilitate running R scripts
+through the CGI interface to a web server.  It is easily installed using
+Apache under Linux and in principle should run on any platform that
+supports R and a web server provided that the installer has the
+necessary security permissions.
+
+@strong{Rcgi} is a CGI WWW interface to R by
+@email{mjr@@stats.mth.uea.ac.uk, Mark J. Ray}.  It had the ability to
+use ``embedded code'': you could mix user input and code, allowing the
+@HTML{} author to do anything from load in data sets to enter most of
+the commands for users without writing CGI scripts.  Graphical output
+was possible in PostScript or GIF formats and the executed code was
+presented to the user for revision.  However, it is not clear if the
+project is still active and recent attempts to contact the author or
+find the package have failed.
+@c URL no longer seems to work ...
+@c See @uref{http://stats.mth.uea.ac.uk/Rcgi/} for more information.
 
 @node R Add-On Packages, R and Emacs, R Web Interfaces, Top
 @chapter R Add-On Packages
@@ -1901,7 +1912,7 @@ The Grid graphics package, a rewrite of the graphics layout
 capabilities, plus some support for interaction.
 @c <FIXME 1.8.0>
 @emph{Recommended}
-(will become a integrated into the R distribution for version 1.8.0).
+(will be integrated into the R distribution for version 1.8.0).
 @c </FIXME>
 @item gss
 A comprehensive package for structural multivariate function estimation
