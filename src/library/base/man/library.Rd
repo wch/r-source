@@ -6,9 +6,7 @@ library(name, help = NULL, lib.loc = .lib.loc,
 require(name, quietly = FALSE)
 provide(name)
 
-library.dynam(chname)
-
-.First.lib(section,libname)
+.First.lib(libname, pkgname)
 
 .packages()
 .lib.loc
@@ -17,7 +15,6 @@ library.dynam(chname)
 .Autoloaded
 }
 \alias{library}
-\alias{library.dynam}
 \alias{provide}
 \alias{require}
 \alias{RLIBS}
@@ -28,19 +25,17 @@ library.dynam(chname)
 \alias{.packages}
 \alias{.lib.loc}
 \arguments{
- \item{name, help}{\code{name} or character string giving the name of a
-  package}
- \item{lib.loc}{a character vector describing the location of \R library
-  trees to search through.}
- \item{character.only}{a logical indicating whether \code{name} or
-  \code{help} can be assumed to be character strings}
- \item{quietly}{if \code{TRUE}, a warning will not be printed if the
-  package cannot be found.}
-\item{chname}{a character string naming a shared library to load}
-\item{section}{a character string giving the library directory where the
-  package was found}
-\item{section}{a character string giving the name of the subdirectory in
-  which the package was found. This is always \code{name}}
+  \item{name, help}{\code{name} or character string giving the name of a
+    package.}
+  \item{lib.loc}{a character vector describing the location of \R
+    library trees to search through.}
+  \item{character.only}{a logical indicating whether \code{name} or
+    \code{help} can be assumed to be character strings}
+  \item{quietly}{if \code{TRUE}, a warning will not be printed if the
+    package cannot be found.}
+  \item{libname}{a character string giving the library directory where
+    the package was found.}
+  \item{pkgname}{a character string giving the name of the package.}
 }
 \description{
   \code{library(name)} and \code{require(name)} both load the package
@@ -71,16 +66,16 @@ library.dynam(chname)
   level objects it contains.
 
   \code{.First.lib()} is called when a package is loaded by
-  \code{library()}. It is a good place to put calls to
-  \code{library.dynam()}. It is invoked after \code{\link{search()}} has
-  been updated, so \code{pos.to.env(match("package:name"),search())}
-  will return the environment in which the package is stored.
-
-  \code{library.dynam} loads the specified (shared) object file if it
-  has not been loaded already.	It is designed to be used inside a
-  package rather than at the command line.  The system-specific
-  extension for shared libraries (e.g., ``.so'' on Unix systems) should
-  not be added.
+  \code{library()}.  It is called with two arguments, the name of the
+  library tree where the package was found (i.e., the corresponding
+  element of \code{lib.loc}), and the name of the package (in that
+  order).  It is a good place to put calls to \code{library.dynam()}
+  which are needed when loading a package into this function (don't call
+  \code{library.dynam()} directly, as this will not work if the package
+  is not installed in a ``standard'' location).  \code{.First.lib()}
+  is invoked after \code{search()} has been updated, so
+  \code{pos.to.env(match("package:name"), search())} will return the
+  environment in which the package is stored.
 
   \code{.packages()} returns the ``base names'' of the currently attached
   packages \emph{invisibly}.
@@ -104,8 +99,8 @@ library.dynam(chname)
 
   A package consists of a subdirectory containing a \file{TITLE},
   \file{INDEX} and \file{DESCRIPTION} file, and subdirectories \file{R},
-  \file{man} and
-  optionally \file{src}, \file{src-c}, \file{data}, and \file{exec}.
+  \file{man} and optionally \file{src}, \file{src-c}, \file{data}, and
+  \file{exec}.
 
   The \file{TITLE} file contains a line giving the name of the package
   and a brief description.  \file{INDEX} contains a line for each
@@ -114,21 +109,22 @@ library.dynam(chname)
   explicitly might not be included).
 
   The \file{DESCRIPTION} file contains information about authors,
-  version, copyright, etc., and looks like\cr 
+  version, copyright, etc., and looks like
   \cr
   Package:\cr
   Version:\cr
   Author:\cr
   Description:\cr
   Depends:\cr
-  Copyright:
+  License:
 
   Continuation lines (e.g., for descriptions longer than one line) start
   with a whitespace character.
 
   The \file{R} subdirectory contains \R code files with names beginning
-  with lowercase letters.  One of these files should use
-  \code{library.dynam()} to load any necessary compiled code.
+  with lowercase letters.  To load any necessary compiled code, one of
+  these files should use \code{library.dynam()} \emph{inside}
+  \code{.First.lib()}.
 
   The \file{man} subdirectory should contain \R documentation files for
   the objects in the package.
@@ -167,7 +163,8 @@ library.dynam(chname)
 }
 \seealso{
   \code{\link{attach}}, \code{\link{detach}}, \code{\link{search}},
-  \code{\link{objects}}, \code{\link{autoload}}.
+  \code{\link{objects}}, \code{\link{autoload}},
+  \code{\link{library.dynam}}
 }
 \examples{
 print(.packages())	    # maybe just "base"
@@ -178,5 +175,10 @@ library(eda)		    # load package "eda"
 require(eda)		    # the same
 print(.packages())	    # "eda", too
 require(nonexistent)	    # FALSE
+}
+## Suppose the a package needs to call a shared library named "foo.EXT",
+## where "EXT" is the system-specific extension.  Then you should use
+.First.lib <- function(lib, pkg) {
+  library.dynam("foo", pkg, lib)
 }
 \keyword{data}
