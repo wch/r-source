@@ -3,24 +3,32 @@
 <title>R FAQ</title>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <meta name="description" content="R FAQ">
-<meta name="generator" content="makeinfo 4.3">
-<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+<meta name="generator" content="makeinfo 4.6">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<style type="text/css"><!--
+  pre.display { font-family:inherit }
+  pre.format  { font-family:inherit }
+  pre.smalldisplay { font-family:inherit; font-size:smaller }
+  pre.smallformat  { font-family:inherit; font-size:smaller }
+  pre.smallexample { font-size:smaller }
+  pre.smalllisp    { font-size:smaller }
+--></style>
 </head>
 <body>
 <h1 class="settitle">R FAQ</h1>
 <div class="node">
 <p><hr>
-Node:<a name="Top">Top</a>,
-Next:<a rel="next" accesskey="n" href="#Introduction">Introduction</a>,
-Previous:<a rel="previous" accesskey="p" href="#dir">(dir)</a>,
-Up:<a rel="up" accesskey="u" href="#dir">(dir)</a>
+Node:&nbsp;<a name="Top">Top</a>,
+Next:&nbsp;<a rel="next" accesskey="n" href="#Introduction">Introduction</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#dir">(dir)</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#dir">(dir)</a>
 <br>
 </div>
 
 <h2 class="unnumbered">R FAQ</h2>
 
-   <h2>Frequently Asked Questions on R</h2>
-<h2>Version 1.7-31, 2003-07-24</h2>
+<h2>Frequently Asked Questions on R</h2>
+<h2>Version 1.7-33, 2003-07-28</h2>
 <h2>ISBN 3-901167-51-X</h2>
 <address>Kurt Hornik</address>
 <p><p><hr><p>
@@ -40,16 +48,16 @@ Up:<a rel="up" accesskey="u" href="#dir">(dir)</a>
 
 <div class="node">
 <p><hr>
-Node:<a name="Introduction">Introduction</a>,
-Next:<a rel="next" accesskey="n" href="#R%20Basics">R Basics</a>,
-Previous:<a rel="previous" accesskey="p" href="#Top">Top</a>,
-Up:<a rel="up" accesskey="u" href="#Top">Top</a>
+Node:&nbsp;<a name="Introduction">Introduction</a>,
+Next:&nbsp;<a rel="next" accesskey="n" href="#R%20Basics">R Basics</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#Top">Top</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#Top">Top</a>
 <br>
 </div>
 
 <h2 class="chapter">1 Introduction</h2>
 
-   <p>This document contains answers to some of the most frequently asked
+<p>This document contains answers to some of the most frequently asked
 questions about R.
 
 <ul class="menu">
@@ -62,16 +70,16 @@ questions about R.
 
 <div class="node">
 <p><hr>
-Node:<a name="Legalese">Legalese</a>,
-Next:<a rel="next" accesskey="n" href="#Obtaining%20this%20document">Obtaining this document</a>,
-Previous:<a rel="previous" accesskey="p" href="#Introduction">Introduction</a>,
-Up:<a rel="up" accesskey="u" href="#Introduction">Introduction</a>
+Node:&nbsp;<a name="Legalese">Legalese</a>,
+Next:&nbsp;<a rel="next" accesskey="n" href="#Obtaining%20this%20document">Obtaining this document</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#Introduction">Introduction</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#Introduction">Introduction</a>
 <br>
 </div>
 
 <h3 class="section">1.1 Legalese</h3>
 
-   <p>This document is copyright &copy; 1998-2003 by Kurt
+<p>This document is copyright &copy; 1998-2003 by Kurt
 Hornik.
 
    <p>This document is free software; you can redistribute it and/or modify it
@@ -95,16 +103,16 @@ at
 
 <div class="node">
 <p><hr>
-Node:<a name="Obtaining%20this%20document">Obtaining this document</a>,
-Next:<a rel="next" accesskey="n" href="#Citing%20this%20document">Citing this document</a>,
-Previous:<a rel="previous" accesskey="p" href="#Legalese">Legalese</a>,
-Up:<a rel="up" accesskey="u" href="#Introduction">Introduction</a>
+Node:&nbsp;<a name="Obtaining%20this%20document">Obtaining this document</a>,
+Next:&nbsp;<a rel="next" accesskey="n" href="#Citing%20this%20document">Citing this document</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#Legalese">Legalese</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#Introduction">Introduction</a>
 <br>
 </div>
 
 <h3 class="section">1.2 Obtaining this document</h3>
 
-   <p>The latest version of this document is always available from
+<p>The latest version of this document is always available from
 
 <pre class="display">     <a href="http://www.ci.tuwien.ac.at/~hornik/R/">http://www.ci.tuwien.ac.at/~hornik/R/</a>
      </pre>
@@ -123,44 +131,44 @@ subdirectory of a <small>CRAN</small> site (see <a href="#What%20is%20CRAN%3f">W
 
 <div class="node">
 <p><hr>
-Node:<a name="Citing%20this%20document">Citing this document</a>,
-Next:<a rel="next" accesskey="n" href="#Notation">Notation</a>,
-Previous:<a rel="previous" accesskey="p" href="#Obtaining%20this%20document">Obtaining this document</a>,
-Up:<a rel="up" accesskey="u" href="#Introduction">Introduction</a>
+Node:&nbsp;<a name="Citing%20this%20document">Citing this document</a>,
+Next:&nbsp;<a rel="next" accesskey="n" href="#Notation">Notation</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#Obtaining%20this%20document">Obtaining this document</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#Introduction">Introduction</a>
 <br>
 </div>
 
 <h3 class="section">1.3 Citing this document</h3>
 
-   <p>In publications, please refer to this <small>FAQ</small> as Hornik
+<p>In publications, please refer to this <small>FAQ</small> as Hornik
 (2003), "The R <small>FAQ</small>", and give the above,
 <em>official</em> <small>URL</small> and the ISBN 3-901167-51-X.
 
 <div class="node">
 <p><hr>
-Node:<a name="Notation">Notation</a>,
-Next:<a rel="next" accesskey="n" href="#Feedback">Feedback</a>,
-Previous:<a rel="previous" accesskey="p" href="#Citing%20this%20document">Citing this document</a>,
-Up:<a rel="up" accesskey="u" href="#Introduction">Introduction</a>
+Node:&nbsp;<a name="Notation">Notation</a>,
+Next:&nbsp;<a rel="next" accesskey="n" href="#Feedback">Feedback</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#Citing%20this%20document">Citing this document</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#Introduction">Introduction</a>
 <br>
 </div>
 
 <h3 class="section">1.4 Notation</h3>
 
-   <p>Everything should be pretty standard.  <code>R&gt;</code> is used for the R
+<p>Everything should be pretty standard.  <code>R&gt;</code> is used for the R
 prompt, and a <code>$</code> for the shell prompt (where applicable).
 
 <div class="node">
 <p><hr>
-Node:<a name="Feedback">Feedback</a>,
-Previous:<a rel="previous" accesskey="p" href="#Notation">Notation</a>,
-Up:<a rel="up" accesskey="u" href="#Introduction">Introduction</a>
+Node:&nbsp;<a name="Feedback">Feedback</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#Notation">Notation</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#Introduction">Introduction</a>
 <br>
 </div>
 
 <h3 class="section">1.5 Feedback</h3>
 
-   <p>Feedback is of course most welcome.
+<p>Feedback is of course most welcome.
 
    <p>In particular, note that I do not have access to Windows or Mac systems. 
 Features specific to the Windows and Mac OS ports of R are described in
@@ -171,10 +179,10 @@ let me know.
 
 <div class="node">
 <p><hr>
-Node:<a name="R%20Basics">R Basics</a>,
-Next:<a rel="next" accesskey="n" href="#R%20and%20S">R and S</a>,
-Previous:<a rel="previous" accesskey="p" href="#Introduction">Introduction</a>,
-Up:<a rel="up" accesskey="u" href="#Top">Top</a>
+Node:&nbsp;<a name="R%20Basics">R Basics</a>,
+Next:&nbsp;<a rel="next" accesskey="n" href="#R%20and%20S">R and S</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#Introduction">Introduction</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#Top">Top</a>
 <br>
 </div>
 
@@ -196,16 +204,16 @@ Up:<a rel="up" accesskey="u" href="#Top">Top</a>
 
 <div class="node">
 <p><hr>
-Node:<a name="What%20is%20R%3f">What is R?</a>,
-Next:<a rel="next" accesskey="n" href="#What%20machines%20does%20R%20run%20on%3f">What machines does R run on?</a>,
-Previous:<a rel="previous" accesskey="p" href="#R%20Basics">R Basics</a>,
-Up:<a rel="up" accesskey="u" href="#R%20Basics">R Basics</a>
+Node:&nbsp;<a name="What%20is%20R%3f">What is R?</a>,
+Next:&nbsp;<a rel="next" accesskey="n" href="#What%20machines%20does%20R%20run%20on%3f">What machines does R run on?</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#R%20Basics">R Basics</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#R%20Basics">R Basics</a>
 <br>
 </div>
 
 <h3 class="section">2.1 What is R?</h3>
 
-   <p>R is a system for statistical computation and graphics.  It consists of
+<p>R is a system for statistical computation and graphics.  It consists of
 a language plus a run-time environment with graphics, a debugger, access
 to certain system functions, and the ability to run programs stored in
 script files.
@@ -249,16 +257,16 @@ official part of the <small>GNU</small> project ("<small>GNU</small> S").
 
 <div class="node">
 <p><hr>
-Node:<a name="What%20machines%20does%20R%20run%20on%3f">What machines does R run on?</a>,
-Next:<a rel="next" accesskey="n" href="#What%20is%20the%20current%20version%20of%20R%3f">What is the current version of R?</a>,
-Previous:<a rel="previous" accesskey="p" href="#What%20is%20R%3f">What is R?</a>,
-Up:<a rel="up" accesskey="u" href="#R%20Basics">R Basics</a>
+Node:&nbsp;<a name="What%20machines%20does%20R%20run%20on%3f">What machines does R run on?</a>,
+Next:&nbsp;<a rel="next" accesskey="n" href="#What%20is%20the%20current%20version%20of%20R%3f">What is the current version of R?</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#What%20is%20R%3f">What is R?</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#R%20Basics">R Basics</a>
 <br>
 </div>
 
 <h3 class="section">2.2 What machines does R run on?</h3>
 
-   <p>R is being developed for the Unix, Windows and Mac families of operating
+<p>R is being developed for the Unix, Windows and Mac families of operating
 systems.  Support for Mac OS Classic will end with the 1.7 series.
 
    <p>The current version of R will configure and build under a number of
@@ -272,16 +280,16 @@ rs6000-ibm-aix, hppa-hp-hpux, and sparc-sun-solaris.
 
 <div class="node">
 <p><hr>
-Node:<a name="What%20is%20the%20current%20version%20of%20R%3f">What is the current version of R?</a>,
-Next:<a rel="next" accesskey="n" href="#How%20can%20R%20be%20obtained%3f">How can R be obtained?</a>,
-Previous:<a rel="previous" accesskey="p" href="#What%20machines%20does%20R%20run%20on%3f">What machines does R run on?</a>,
-Up:<a rel="up" accesskey="u" href="#R%20Basics">R Basics</a>
+Node:&nbsp;<a name="What%20is%20the%20current%20version%20of%20R%3f">What is the current version of R?</a>,
+Next:&nbsp;<a rel="next" accesskey="n" href="#How%20can%20R%20be%20obtained%3f">How can R be obtained?</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#What%20machines%20does%20R%20run%20on%3f">What machines does R run on?</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#R%20Basics">R Basics</a>
 <br>
 </div>
 
 <h3 class="section">2.3 What is the current version of R?</h3>
 
-   <p>The current released version is 1.7.1.  Based on this
+<p>The current released version is 1.7.1.  Based on this
 `major.minor.patchlevel' numbering scheme, there are two development
 versions of R, working towards the next patch (`r-patched') and minor or
 eventually major (`r-devel') releases of R, respectively.  Version
@@ -290,16 +298,16 @@ introduced in r-devel.
 
 <div class="node">
 <p><hr>
-Node:<a name="How%20can%20R%20be%20obtained%3f">How can R be obtained?</a>,
-Next:<a rel="next" accesskey="n" href="#How%20can%20R%20be%20installed%3f">How can R be installed?</a>,
-Previous:<a rel="previous" accesskey="p" href="#What%20is%20the%20current%20version%20of%20R%3f">What is the current version of R?</a>,
-Up:<a rel="up" accesskey="u" href="#R%20Basics">R Basics</a>
+Node:&nbsp;<a name="How%20can%20R%20be%20obtained%3f">How can R be obtained?</a>,
+Next:&nbsp;<a rel="next" accesskey="n" href="#How%20can%20R%20be%20installed%3f">How can R be installed?</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#What%20is%20the%20current%20version%20of%20R%3f">What is the current version of R?</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#R%20Basics">R Basics</a>
 <br>
 </div>
 
 <h3 class="section">2.4 How can R be obtained?</h3>
 
-   <p>Sources, binaries and documentation for R can be obtained via <small>CRAN</small>,
+<p>Sources, binaries and documentation for R can be obtained via <small>CRAN</small>,
 the "Comprehensive R Archive Network" (see <a href="#What%20is%20CRAN%3f">What is CRAN?</a>).
 
    <p>Sources are also available via anonymous rsync.  Use
@@ -319,10 +327,10 @@ is to cause it to skip the CVS directories.  Further information on
 
 <div class="node">
 <p><hr>
-Node:<a name="How%20can%20R%20be%20installed%3f">How can R be installed?</a>,
-Next:<a rel="next" accesskey="n" href="#Are%20there%20Unix%20binaries%20for%20R%3f">Are there Unix binaries for R?</a>,
-Previous:<a rel="previous" accesskey="p" href="#How%20can%20R%20be%20obtained%3f">How can R be obtained?</a>,
-Up:<a rel="up" accesskey="u" href="#R%20Basics">R Basics</a>
+Node:&nbsp;<a name="How%20can%20R%20be%20installed%3f">How can R be installed?</a>,
+Next:&nbsp;<a rel="next" accesskey="n" href="#Are%20there%20Unix%20binaries%20for%20R%3f">Are there Unix binaries for R?</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#How%20can%20R%20be%20obtained%3f">How can R be obtained?</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#R%20Basics">R Basics</a>
 <br>
 </div>
 
@@ -336,16 +344,16 @@ Up:<a rel="up" accesskey="u" href="#R%20Basics">R Basics</a>
 
 <div class="node">
 <p><hr>
-Node:<a name="How%20can%20R%20be%20installed%20(Unix)">How can R be installed (Unix)</a>,
-Next:<a rel="next" accesskey="n" href="#How%20can%20R%20be%20installed%20(Windows)">How can R be installed (Windows)</a>,
-Previous:<a rel="previous" accesskey="p" href="#How%20can%20R%20be%20installed%3f">How can R be installed?</a>,
-Up:<a rel="up" accesskey="u" href="#How%20can%20R%20be%20installed%3f">How can R be installed?</a>
+Node:&nbsp;<a name="How%20can%20R%20be%20installed%20(Unix)">How can R be installed (Unix)</a>,
+Next:&nbsp;<a rel="next" accesskey="n" href="#How%20can%20R%20be%20installed%20(Windows)">How can R be installed (Windows)</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#How%20can%20R%20be%20installed%3f">How can R be installed?</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#How%20can%20R%20be%20installed%3f">How can R be installed?</a>
 <br>
 </div>
 
-<h4 class="subsection">2.5.1 How can R be installed (Unix)</h4>
+<h3 class="subsection">2.5.1 How can R be installed (Unix)</h4>
 
-   <p>If binaries are available for your platform (see <a href="#Are%20there%20Unix%20binaries%20for%20R%3f">Are there Unix binaries for R?</a>), you can use these, following the instructions that
+<p>If binaries are available for your platform (see <a href="#Are%20there%20Unix%20binaries%20for%20R%3f">Are there Unix binaries for R?</a>), you can use these, following the instructions that
 come with them.
 
    <p>Otherwise, you can compile and install R yourself, which can be done
@@ -417,16 +425,16 @@ respectively.
 
 <div class="node">
 <p><hr>
-Node:<a name="How%20can%20R%20be%20installed%20(Windows)">How can R be installed (Windows)</a>,
-Next:<a rel="next" accesskey="n" href="#How%20can%20R%20be%20installed%20(Macintosh)">How can R be installed (Macintosh)</a>,
-Previous:<a rel="previous" accesskey="p" href="#How%20can%20R%20be%20installed%20(Unix)">How can R be installed (Unix)</a>,
-Up:<a rel="up" accesskey="u" href="#How%20can%20R%20be%20installed%3f">How can R be installed?</a>
+Node:&nbsp;<a name="How%20can%20R%20be%20installed%20(Windows)">How can R be installed (Windows)</a>,
+Next:&nbsp;<a rel="next" accesskey="n" href="#How%20can%20R%20be%20installed%20(Macintosh)">How can R be installed (Macintosh)</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#How%20can%20R%20be%20installed%20(Unix)">How can R be installed (Unix)</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#How%20can%20R%20be%20installed%3f">How can R be installed?</a>
 <br>
 </div>
 
-<h4 class="subsection">2.5.2 How can R be installed (Windows)</h4>
+<h3 class="subsection">2.5.2 How can R be installed (Windows)</h4>
 
-   <p>The <code>bin/windows</code> directory of a <small>CRAN</small> site contains binaries for
+<p>The <code>bin/windows</code> directory of a <small>CRAN</small> site contains binaries for
 a base distribution and a large number of add-on packages from <small>CRAN</small>
 to run on Windows 95, 98, ME, NT4, 2000, and XP (at least) on Intel and
 clones (but not on other platforms).  The Windows version of R was
@@ -441,15 +449,15 @@ tool to use.
 
 <div class="node">
 <p><hr>
-Node:<a name="How%20can%20R%20be%20installed%20(Macintosh)">How can R be installed (Macintosh)</a>,
-Previous:<a rel="previous" accesskey="p" href="#How%20can%20R%20be%20installed%20(Windows)">How can R be installed (Windows)</a>,
-Up:<a rel="up" accesskey="u" href="#How%20can%20R%20be%20installed%3f">How can R be installed?</a>
+Node:&nbsp;<a name="How%20can%20R%20be%20installed%20(Macintosh)">How can R be installed (Macintosh)</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#How%20can%20R%20be%20installed%20(Windows)">How can R be installed (Windows)</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#How%20can%20R%20be%20installed%3f">How can R be installed?</a>
 <br>
 </div>
 
-<h4 class="subsection">2.5.3 How can R be installed (Macintosh)</h4>
+<h3 class="subsection">2.5.3 How can R be installed (Macintosh)</h4>
 
-   <p>The <code>bin/macos</code> directory of a <small>CRAN</small> site contains bin-hexed
+<p>The <code>bin/macos</code> directory of a <small>CRAN</small> site contains bin-hexed
 (<code>hqx</code>) and stuffit (<code>sit</code>) archives for a base distribution
 and a large number of add-on packages to run under MacOS 8.6 to MacOS
 9.1 or MacOS X natively.  The Mac version of R and the Mac binaries are
@@ -464,16 +472,16 @@ available by <a href="mailto:deleeuw@stat.ucla.edu">Jan de Leeuw</a> in the
 
 <div class="node">
 <p><hr>
-Node:<a name="Are%20there%20Unix%20binaries%20for%20R%3f">Are there Unix binaries for R?</a>,
-Next:<a rel="next" accesskey="n" href="#What%20documentation%20exists%20for%20R%3f">What documentation exists for R?</a>,
-Previous:<a rel="previous" accesskey="p" href="#How%20can%20R%20be%20installed%3f">How can R be installed?</a>,
-Up:<a rel="up" accesskey="u" href="#R%20Basics">R Basics</a>
+Node:&nbsp;<a name="Are%20there%20Unix%20binaries%20for%20R%3f">Are there Unix binaries for R?</a>,
+Next:&nbsp;<a rel="next" accesskey="n" href="#What%20documentation%20exists%20for%20R%3f">What documentation exists for R?</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#How%20can%20R%20be%20installed%3f">How can R be installed?</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#R%20Basics">R Basics</a>
 <br>
 </div>
 
 <h3 class="section">2.6 Are there Unix binaries for R?</h3>
 
-   <p>The <code>bin/linux</code> directory of a <small>CRAN</small> site contains Debian
+<p>The <code>bin/linux</code> directory of a <small>CRAN</small> site contains Debian
 stable/testing packages for the i386 platform (now part of the Debian
 distribution and maintained by Dirk Eddelbuettel), Mandrake
 8.0/8.1/8.2/9.0/9.1 i386 packages by Michele Alzetta, Red Hat 7.x/8.x/9
@@ -498,16 +506,16 @@ updates of the R packages.
 
 <div class="node">
 <p><hr>
-Node:<a name="What%20documentation%20exists%20for%20R%3f">What documentation exists for R?</a>,
-Next:<a rel="next" accesskey="n" href="#Citing%20R">Citing R</a>,
-Previous:<a rel="previous" accesskey="p" href="#Are%20there%20Unix%20binaries%20for%20R%3f">Are there Unix binaries for R?</a>,
-Up:<a rel="up" accesskey="u" href="#R%20Basics">R Basics</a>
+Node:&nbsp;<a name="What%20documentation%20exists%20for%20R%3f">What documentation exists for R?</a>,
+Next:&nbsp;<a rel="next" accesskey="n" href="#Citing%20R">Citing R</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#Are%20there%20Unix%20binaries%20for%20R%3f">Are there Unix binaries for R?</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#R%20Basics">R Basics</a>
 <br>
 </div>
 
 <h3 class="section">2.7 What documentation exists for R?</h3>
 
-   <p>Online documentation for most of the functions and variables in R
+<p>Online documentation for most of the functions and variables in R
 exists, and can be printed on-screen by typing <kbd>help(</kbd><var>name</var><kbd>)</kbd>
 (or <kbd>?</kbd><var>name</var><kbd></kbd>) at the R prompt, where <var>name</var> is the name of
 the topic help is sought for.  (In the case of unary and binary
@@ -621,16 +629,16 @@ which includes most of the above references can be found at
 
 <div class="node">
 <p><hr>
-Node:<a name="Citing%20R">Citing R</a>,
-Next:<a rel="next" accesskey="n" href="#What%20mailing%20lists%20exist%20for%20R%3f">What mailing lists exist for R?</a>,
-Previous:<a rel="previous" accesskey="p" href="#What%20documentation%20exists%20for%20R%3f">What documentation exists for R?</a>,
-Up:<a rel="up" accesskey="u" href="#R%20Basics">R Basics</a>
+Node:&nbsp;<a name="Citing%20R">Citing R</a>,
+Next:&nbsp;<a rel="next" accesskey="n" href="#What%20mailing%20lists%20exist%20for%20R%3f">What mailing lists exist for R?</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#What%20documentation%20exists%20for%20R%3f">What documentation exists for R?</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#R%20Basics">R Basics</a>
 <br>
 </div>
 
 <h3 class="section">2.8 Citing R</h3>
 
-   <p>To cite R in publications, use
+<p>To cite R in publications, use
 
 <pre class="smallexample">     @article{,
        author =    {Ross Ihaka and Robert Gentleman},
@@ -645,16 +653,16 @@ Up:<a rel="up" accesskey="u" href="#R%20Basics">R Basics</a>
 
 <div class="node">
 <p><hr>
-Node:<a name="What%20mailing%20lists%20exist%20for%20R%3f">What mailing lists exist for R?</a>,
-Next:<a rel="next" accesskey="n" href="#What%20is%20CRAN%3f">What is CRAN?</a>,
-Previous:<a rel="previous" accesskey="p" href="#Citing%20R">Citing R</a>,
-Up:<a rel="up" accesskey="u" href="#R%20Basics">R Basics</a>
+Node:&nbsp;<a name="What%20mailing%20lists%20exist%20for%20R%3f">What mailing lists exist for R?</a>,
+Next:&nbsp;<a rel="next" accesskey="n" href="#What%20is%20CRAN%3f">What is CRAN?</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#Citing%20R">Citing R</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#R%20Basics">R Basics</a>
 <br>
 </div>
 
 <h3 class="section">2.9 What mailing lists exist for R?</h3>
 
-   <p>Thanks to <a href="mailto:Martin.Maechler@r-project.org">Martin Maechler</a>, there
+<p>Thanks to <a href="mailto:Martin.Maechler@r-project.org">Martin Maechler</a>, there
 are three mailing lists devoted to R.
 
      <dl>
@@ -711,16 +719,16 @@ for comments and reports.
 
 <div class="node">
 <p><hr>
-Node:<a name="What%20is%20CRAN%3f">What is CRAN?</a>,
-Next:<a rel="next" accesskey="n" href="#Can%20I%20use%20R%20for%20commercial%20purposes%3f">Can I use R for commercial purposes?</a>,
-Previous:<a rel="previous" accesskey="p" href="#What%20mailing%20lists%20exist%20for%20R%3f">What mailing lists exist for R?</a>,
-Up:<a rel="up" accesskey="u" href="#R%20Basics">R Basics</a>
+Node:&nbsp;<a name="What%20is%20CRAN%3f">What is CRAN?</a>,
+Next:&nbsp;<a rel="next" accesskey="n" href="#Can%20I%20use%20R%20for%20commercial%20purposes%3f">Can I use R for commercial purposes?</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#What%20mailing%20lists%20exist%20for%20R%3f">What mailing lists exist for R?</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#R%20Basics">R Basics</a>
 <br>
 </div>
 
 <h3 class="section">2.10 What is <small>CRAN</small>?</h3>
 
-   <p>The "Comprehensive R Archive Network" (<small>CRAN</small>) is a collection of
+<p>The "Comprehensive R Archive Network" (<small>CRAN</small>) is a collection of
 sites which carry identical material, consisting of the R
 distribution(s), the contributed extensions, documentation for R, and
 binaries.
@@ -783,15 +791,15 @@ in your submission.
 
 <div class="node">
 <p><hr>
-Node:<a name="Can%20I%20use%20R%20for%20commercial%20purposes%3f">Can I use R for commercial purposes?</a>,
-Previous:<a rel="previous" accesskey="p" href="#What%20is%20CRAN%3f">What is CRAN?</a>,
-Up:<a rel="up" accesskey="u" href="#R%20Basics">R Basics</a>
+Node:&nbsp;<a name="Can%20I%20use%20R%20for%20commercial%20purposes%3f">Can I use R for commercial purposes?</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#What%20is%20CRAN%3f">What is CRAN?</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#R%20Basics">R Basics</a>
 <br>
 </div>
 
 <h3 class="section">2.11 Can I use R for commercial purposes?</h3>
 
-   <p>R is released under the <a href="http://www.gnu.org/copyleft/gpl.html">GNU General Public License (GPL)</a>.  If you have any questions regarding the
+<p>R is released under the <a href="http://www.gnu.org/copyleft/gpl.html">GNU General Public License (GPL)</a>.  If you have any questions regarding the
 legality of using R in any particular situation you should bring it up
 with your legal counsel.  We are in no position to offer legal advice.
 
@@ -828,10 +836,10 @@ Core Team does not provide legal advice under any circumstances.
 
 <div class="node">
 <p><hr>
-Node:<a name="R%20and%20S">R and S</a>,
-Next:<a rel="next" accesskey="n" href="#R%20Web%20Interfaces">R Web Interfaces</a>,
-Previous:<a rel="previous" accesskey="p" href="#R%20Basics">R Basics</a>,
-Up:<a rel="up" accesskey="u" href="#Top">Top</a>
+Node:&nbsp;<a name="R%20and%20S">R and S</a>,
+Next:&nbsp;<a rel="next" accesskey="n" href="#R%20Web%20Interfaces">R Web Interfaces</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#R%20Basics">R Basics</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#Top">Top</a>
 <br>
 </div>
 
@@ -847,16 +855,16 @@ Up:<a rel="up" accesskey="u" href="#Top">Top</a>
 
 <div class="node">
 <p><hr>
-Node:<a name="What%20is%20S%3f">What is S?</a>,
-Next:<a rel="next" accesskey="n" href="#What%20is%20S-PLUS%3f">What is S-PLUS?</a>,
-Previous:<a rel="previous" accesskey="p" href="#R%20and%20S">R and S</a>,
-Up:<a rel="up" accesskey="u" href="#R%20and%20S">R and S</a>
+Node:&nbsp;<a name="What%20is%20S%3f">What is S?</a>,
+Next:&nbsp;<a rel="next" accesskey="n" href="#What%20is%20S-PLUS%3f">What is S-PLUS?</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#R%20and%20S">R and S</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#R%20and%20S">R and S</a>
 <br>
 </div>
 
 <h3 class="section">3.1 What is S?</h3>
 
-   <p>S is a very high level language and an environment for data analysis and
+<p>S is a very high level language and an environment for data analysis and
 graphics.  In 1998, the Association for Computing Machinery
 (<small>ACM</small>) presented its Software System Award to John M. Chambers,
 the principal designer of S, for
@@ -910,16 +918,16 @@ for further information on "Stages in the Evolution of S".
 
 <div class="node">
 <p><hr>
-Node:<a name="What%20is%20S-PLUS%3f">What is S-PLUS?</a>,
-Next:<a rel="next" accesskey="n" href="#What%20are%20the%20differences%20between%20R%20and%20S%3f">What are the differences between R and S?</a>,
-Previous:<a rel="previous" accesskey="p" href="#What%20is%20S%3f">What is S?</a>,
-Up:<a rel="up" accesskey="u" href="#R%20and%20S">R and S</a>
+Node:&nbsp;<a name="What%20is%20S-PLUS%3f">What is S-PLUS?</a>,
+Next:&nbsp;<a rel="next" accesskey="n" href="#What%20are%20the%20differences%20between%20R%20and%20S%3f">What are the differences between R and S?</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#What%20is%20S%3f">What is S?</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#R%20and%20S">R and S</a>
 <br>
 </div>
 
 <h3 class="section">3.2 What is <small>S-PLUS</small>?</h3>
 
-   <p><small>S-PLUS</small> is a value-added version of S sold by Insightful Corporation. 
+<p><small>S-PLUS</small> is a value-added version of S sold by Insightful Corporation. 
 Based on the S language, <small>S-PLUS</small> provides functionality in a wide
 variety of areas, including robust regression, modern non-parametric
 regression, time series, survival analysis, multivariate analysis,
@@ -931,16 +939,16 @@ statistics, GARCH models, and design of experiments.
 
 <div class="node">
 <p><hr>
-Node:<a name="What%20are%20the%20differences%20between%20R%20and%20S%3f">What are the differences between R and S?</a>,
-Next:<a rel="next" accesskey="n" href="#Is%20there%20anything%20R%20can%20do%20that%20S-PLUS%20cannot%3f">Is there anything R can do that S-PLUS cannot?</a>,
-Previous:<a rel="previous" accesskey="p" href="#What%20is%20S-PLUS%3f">What is S-PLUS?</a>,
-Up:<a rel="up" accesskey="u" href="#R%20and%20S">R and S</a>
+Node:&nbsp;<a name="What%20are%20the%20differences%20between%20R%20and%20S%3f">What are the differences between R and S?</a>,
+Next:&nbsp;<a rel="next" accesskey="n" href="#Is%20there%20anything%20R%20can%20do%20that%20S-PLUS%20cannot%3f">Is there anything R can do that S-PLUS cannot?</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#What%20is%20S-PLUS%3f">What is S-PLUS?</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#R%20and%20S">R and S</a>
 <br>
 </div>
 
 <h3 class="section">3.3 What are the differences between R and S?</h3>
 
-   <p>We can regard S as a language with three current implementations or
+<p>We can regard S as a language with three current implementations or
 "engines", the "old S engine" (S version 3; <small>S-PLUS</small> 3.x and 4.x),
 the "new S engine" (S version 4; <small>S-PLUS</small> 5.x and above), and R. 
 Given this understanding, asking for "the differences between R and S"
@@ -958,16 +966,16 @@ the S language.
 
 <div class="node">
 <p><hr>
-Node:<a name="Lexical%20scoping">Lexical scoping</a>,
-Next:<a rel="next" accesskey="n" href="#Models">Models</a>,
-Previous:<a rel="previous" accesskey="p" href="#What%20are%20the%20differences%20between%20R%20and%20S%3f">What are the differences between R and S?</a>,
-Up:<a rel="up" accesskey="u" href="#What%20are%20the%20differences%20between%20R%20and%20S%3f">What are the differences between R and S?</a>
+Node:&nbsp;<a name="Lexical%20scoping">Lexical scoping</a>,
+Next:&nbsp;<a rel="next" accesskey="n" href="#Models">Models</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#What%20are%20the%20differences%20between%20R%20and%20S%3f">What are the differences between R and S?</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#What%20are%20the%20differences%20between%20R%20and%20S%3f">What are the differences between R and S?</a>
 <br>
 </div>
 
-<h4 class="subsection">3.3.1 Lexical scoping</h4>
+<h3 class="subsection">3.3.1 Lexical scoping</h4>
 
-   <p>Contrary to other implementations of the S language, R has adopted the
+<p>Contrary to other implementations of the S language, R has adopted the
 evaluation model of Scheme.
 
    <p>This difference becomes manifest when <em>free</em> variables occur in a
@@ -1157,16 +1165,16 @@ save source copies of all functions and data used.
 
 <div class="node">
 <p><hr>
-Node:<a name="Models">Models</a>,
-Next:<a rel="next" accesskey="n" href="#Others">Others</a>,
-Previous:<a rel="previous" accesskey="p" href="#Lexical%20scoping">Lexical scoping</a>,
-Up:<a rel="up" accesskey="u" href="#What%20are%20the%20differences%20between%20R%20and%20S%3f">What are the differences between R and S?</a>
+Node:&nbsp;<a name="Models">Models</a>,
+Next:&nbsp;<a rel="next" accesskey="n" href="#Others">Others</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#Lexical%20scoping">Lexical scoping</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#What%20are%20the%20differences%20between%20R%20and%20S%3f">What are the differences between R and S?</a>
 <br>
 </div>
 
-<h4 class="subsection">3.3.2 Models</h4>
+<h3 class="subsection">3.3.2 Models</h4>
 
-   <p>There are some differences in the modeling code, such as
+<p>There are some differences in the modeling code, such as
 
      <ul>
 <li>Whereas in S, you would use <code>lm(y ~ x^3)</code> to regress <code>y</code> on
@@ -1189,15 +1197,15 @@ can be specified by <code>y~0</code>.
 
 <div class="node">
 <p><hr>
-Node:<a name="Others">Others</a>,
-Previous:<a rel="previous" accesskey="p" href="#Models">Models</a>,
-Up:<a rel="up" accesskey="u" href="#What%20are%20the%20differences%20between%20R%20and%20S%3f">What are the differences between R and S?</a>
+Node:&nbsp;<a name="Others">Others</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#Models">Models</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#What%20are%20the%20differences%20between%20R%20and%20S%3f">What are the differences between R and S?</a>
 <br>
 </div>
 
-<h4 class="subsection">3.3.3 Others</h4>
+<h3 class="subsection">3.3.3 Others</h4>
 
-   <p>Apart from lexical scoping and its implications, R follows the S
+<p>Apart from lexical scoping and its implications, R follows the S
 language definition in the Blue and White Books as much as possible, and
 hence really is an "implementation" of S.  There are some intentional
 differences where the behavior of S is considered "not clean".  In
@@ -1345,16 +1353,16 @@ works.
 
 <div class="node">
 <p><hr>
-Node:<a name="Is%20there%20anything%20R%20can%20do%20that%20S-PLUS%20cannot%3f">Is there anything R can do that S-PLUS cannot?</a>,
-Next:<a rel="next" accesskey="n" href="#What%20is%20R-plus%3f">What is R-plus?</a>,
-Previous:<a rel="previous" accesskey="p" href="#What%20are%20the%20differences%20between%20R%20and%20S%3f">What are the differences between R and S?</a>,
-Up:<a rel="up" accesskey="u" href="#R%20and%20S">R and S</a>
+Node:&nbsp;<a name="Is%20there%20anything%20R%20can%20do%20that%20S-PLUS%20cannot%3f">Is there anything R can do that S-PLUS cannot?</a>,
+Next:&nbsp;<a rel="next" accesskey="n" href="#What%20is%20R-plus%3f">What is R-plus?</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#What%20are%20the%20differences%20between%20R%20and%20S%3f">What are the differences between R and S?</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#R%20and%20S">R and S</a>
 <br>
 </div>
 
 <h3 class="section">3.4 Is there anything R can do that <small>S-PLUS</small> cannot?</h3>
 
-   <p>Since almost anything you can do in R has source code that you could
+<p>Since almost anything you can do in R has source code that you could
 port to <small>S-PLUS</small> with little effort there will never be much you can do
 in R that you couldn't do in <small>S-PLUS</small> if you wanted to.  (Note that
 using lexical scoping may simplify matters considerably, though.)
@@ -1371,28 +1379,28 @@ Annotation in Plots", <a href="http://www.amstat.org/publications/jcgs/"><em>Jou
 
 <div class="node">
 <p><hr>
-Node:<a name="What%20is%20R-plus%3f">What is R-plus?</a>,
-Previous:<a rel="previous" accesskey="p" href="#Is%20there%20anything%20R%20can%20do%20that%20S-PLUS%20cannot%3f">Is there anything R can do that S-PLUS cannot?</a>,
-Up:<a rel="up" accesskey="u" href="#R%20and%20S">R and S</a>
+Node:&nbsp;<a name="What%20is%20R-plus%3f">What is R-plus?</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#Is%20there%20anything%20R%20can%20do%20that%20S-PLUS%20cannot%3f">Is there anything R can do that S-PLUS cannot?</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#R%20and%20S">R and S</a>
 <br>
 </div>
 
 <h3 class="section">3.5 What is R-plus?</h3>
 
-   <p>There is no such thing.
+<p>There is no such thing.
 
 <div class="node">
 <p><hr>
-Node:<a name="R%20Web%20Interfaces">R Web Interfaces</a>,
-Next:<a rel="next" accesskey="n" href="#R%20Add-On%20Packages">R Add-On Packages</a>,
-Previous:<a rel="previous" accesskey="p" href="#R%20and%20S">R and S</a>,
-Up:<a rel="up" accesskey="u" href="#Top">Top</a>
+Node:&nbsp;<a name="R%20Web%20Interfaces">R Web Interfaces</a>,
+Next:&nbsp;<a rel="next" accesskey="n" href="#R%20Add-On%20Packages">R Add-On Packages</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#R%20and%20S">R and S</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#Top">Top</a>
 <br>
 </div>
 
 <h2 class="chapter">4 R Web Interfaces</h2>
 
-   <p><strong>Rcgi</strong> is a CGI WWW interface to R by
+<p><strong>Rcgi</strong> is a CGI WWW interface to R by
 <a href="mailto:mjr@stats.mth.uea.ac.uk">Mark J. Ray</a>.  Recent versions have the
 ability to use "embedded code": you can mix user input and code,
 allowing the <small>HTML</small> author to do anything from load in data sets to
@@ -1427,10 +1435,10 @@ for more information.
 
 <div class="node">
 <p><hr>
-Node:<a name="R%20Add-On%20Packages">R Add-On Packages</a>,
-Next:<a rel="next" accesskey="n" href="#R%20and%20Emacs">R and Emacs</a>,
-Previous:<a rel="previous" accesskey="p" href="#R%20Web%20Interfaces">R Web Interfaces</a>,
-Up:<a rel="up" accesskey="u" href="#Top">Top</a>
+Node:&nbsp;<a name="R%20Add-On%20Packages">R Add-On Packages</a>,
+Next:&nbsp;<a rel="next" accesskey="n" href="#R%20and%20Emacs">R and Emacs</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#R%20Web%20Interfaces">R Web Interfaces</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#Top">Top</a>
 <br>
 </div>
 
@@ -1447,10 +1455,10 @@ Up:<a rel="up" accesskey="u" href="#Top">Top</a>
 
 <div class="node">
 <p><hr>
-Node:<a name="Which%20add-on%20packages%20exist%20for%20R%3f">Which add-on packages exist for R?</a>,
-Next:<a rel="next" accesskey="n" href="#How%20can%20add-on%20packages%20be%20installed%3f">How can add-on packages be installed?</a>,
-Previous:<a rel="previous" accesskey="p" href="#R%20Add-On%20Packages">R Add-On Packages</a>,
-Up:<a rel="up" accesskey="u" href="#R%20Add-On%20Packages">R Add-On Packages</a>
+Node:&nbsp;<a name="Which%20add-on%20packages%20exist%20for%20R%3f">Which add-on packages exist for R?</a>,
+Next:&nbsp;<a rel="next" accesskey="n" href="#How%20can%20add-on%20packages%20be%20installed%3f">How can add-on packages be installed?</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#R%20Add-On%20Packages">R Add-On Packages</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#R%20Add-On%20Packages">R Add-On Packages</a>
 <br>
 </div>
 
@@ -1466,16 +1474,16 @@ Up:<a rel="up" accesskey="u" href="#R%20Add-On%20Packages">R Add-On Packages</a>
 
 <div class="node">
 <p><hr>
-Node:<a name="Add-on%20packages%20in%20R">Add-on packages in R</a>,
-Next:<a rel="next" accesskey="n" href="#Add-on%20packages%20from%20CRAN">Add-on packages from CRAN</a>,
-Previous:<a rel="previous" accesskey="p" href="#Which%20add-on%20packages%20exist%20for%20R%3f">Which add-on packages exist for R?</a>,
-Up:<a rel="up" accesskey="u" href="#Which%20add-on%20packages%20exist%20for%20R%3f">Which add-on packages exist for R?</a>
+Node:&nbsp;<a name="Add-on%20packages%20in%20R">Add-on packages in R</a>,
+Next:&nbsp;<a rel="next" accesskey="n" href="#Add-on%20packages%20from%20CRAN">Add-on packages from CRAN</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#Which%20add-on%20packages%20exist%20for%20R%3f">Which add-on packages exist for R?</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#Which%20add-on%20packages%20exist%20for%20R%3f">Which add-on packages exist for R?</a>
 <br>
 </div>
 
-<h4 class="subsection">5.1.1 Add-on packages in R</h4>
+<h3 class="subsection">5.1.1 Add-on packages in R</h4>
 
-   <p>The R distribution comes with the following extra packages:
+<p>The R distribution comes with the following extra packages:
 
      <dl>
 <dt><strong>ctest</strong>
@@ -1513,16 +1521,16 @@ distribution functions.
 
 <div class="node">
 <p><hr>
-Node:<a name="Add-on%20packages%20from%20CRAN">Add-on packages from CRAN</a>,
-Next:<a rel="next" accesskey="n" href="#Add-on%20packages%20from%20Omegahat">Add-on packages from Omegahat</a>,
-Previous:<a rel="previous" accesskey="p" href="#Add-on%20packages%20in%20R">Add-on packages in R</a>,
-Up:<a rel="up" accesskey="u" href="#Which%20add-on%20packages%20exist%20for%20R%3f">Which add-on packages exist for R?</a>
+Node:&nbsp;<a name="Add-on%20packages%20from%20CRAN">Add-on packages from CRAN</a>,
+Next:&nbsp;<a rel="next" accesskey="n" href="#Add-on%20packages%20from%20Omegahat">Add-on packages from Omegahat</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#Add-on%20packages%20in%20R">Add-on packages in R</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#Which%20add-on%20packages%20exist%20for%20R%3f">Which add-on packages exist for R?</a>
 <br>
 </div>
 
-<h4 class="subsection">5.1.2 Add-on packages from <small>CRAN</small></h4>
+<h3 class="subsection">5.1.2 Add-on packages from <small>CRAN</small></h4>
 
-   <p>The following packages are available from the <small>CRAN</small> <code>src/contrib</code>
+<p>The following packages are available from the <small>CRAN</small> <code>src/contrib</code>
 area.  (Packages denoted as <em>Recommended</em> are to be included in all
 binary distributions of R.)
 
@@ -1549,6 +1557,9 @@ distribution.
 <br><dt><strong>Devore5</strong>
      <dd>Data sets and sample analyses from "Probability and Statistics for
 Engineering and the Sciences (5th ed)" by Jay L. Devore, 2000, Duxbury. 
+<br><dt><strong>Devore6</strong>
+     <dd>Data sets and sample analyses from "Probability and Statistics for
+Engineering and the Sciences (6th ed)" by Jay L. Devore, 2003, Duxbury. 
 <br><dt><strong>EMV</strong>
      <dd>Estimation of missing values in a matrix by a k-th nearest
 neighboors algorithm. 
@@ -1604,6 +1615,10 @@ Sons.
 U.S. National Institute for Standards and Technology. 
 <br><dt><strong>Oarray</strong>
      <dd>Arrays with arbitrary offsets. 
+<br><dt><strong>PHYLOGR</strong>
+     <dd>Manipulation and analysis of phylogenetically simulated data sets (as
+obtained from PDSIMUL in package PDAP) and phylogenetically-based
+analyses using GLS. 
 <br><dt><strong>PTAk</strong>
      <dd>A multiway method to decompose a tensor (array) of any order, as a
 generalisation of SVD also supporting non-identity metrics and
@@ -2283,11 +2298,6 @@ contains
 <dt><strong>Dopt</strong>
      <dd>Finding D-optimal experimental designs.
 
-     <br><dt><strong>PHYLOGR</strong>
-     <dd>Manipulation and analysis of phylogenetically simulated data sets (as
-obtained from PDSIMUL in package PDAP) and phylogenetically-based
-analyses using GLS.
-
      <br><dt><strong>RPgSQL</strong>
      <dd>Provides methods for accessing data stored in PostgreSQL tables.
 
@@ -2320,16 +2330,16 @@ matrix.
 
 <div class="node">
 <p><hr>
-Node:<a name="Add-on%20packages%20from%20Omegahat">Add-on packages from Omegahat</a>,
-Next:<a rel="next" accesskey="n" href="#Add-on%20packages%20from%20BioConductor">Add-on packages from BioConductor</a>,
-Previous:<a rel="previous" accesskey="p" href="#Add-on%20packages%20from%20CRAN">Add-on packages from CRAN</a>,
-Up:<a rel="up" accesskey="u" href="#Which%20add-on%20packages%20exist%20for%20R%3f">Which add-on packages exist for R?</a>
+Node:&nbsp;<a name="Add-on%20packages%20from%20Omegahat">Add-on packages from Omegahat</a>,
+Next:&nbsp;<a rel="next" accesskey="n" href="#Add-on%20packages%20from%20BioConductor">Add-on packages from BioConductor</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#Add-on%20packages%20from%20CRAN">Add-on packages from CRAN</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#Which%20add-on%20packages%20exist%20for%20R%3f">Which add-on packages exist for R?</a>
 <br>
 </div>
 
-<h4 class="subsection">5.1.3 Add-on packages from Omegahat</h4>
+<h3 class="subsection">5.1.3 Add-on packages from Omegahat</h4>
 
-   <p>The <code>src/contrib/Omegahat</code> Directory of a CRAN site contains yet
+<p>The <code>src/contrib/Omegahat</code> Directory of a CRAN site contains yet
 unreleased packages from the <a href="http://www.omegahat.org/">Omegahat Project for Statistical Computing</a>.  Currently, there are
 
      <dl>
@@ -2426,16 +2436,16 @@ that allows <small>XSL</small> functions to be implemented via R functions.
 
 <div class="node">
 <p><hr>
-Node:<a name="Add-on%20packages%20from%20BioConductor">Add-on packages from BioConductor</a>,
-Next:<a rel="next" accesskey="n" href="#Other%20add-on%20packages">Other add-on packages</a>,
-Previous:<a rel="previous" accesskey="p" href="#Add-on%20packages%20from%20Omegahat">Add-on packages from Omegahat</a>,
-Up:<a rel="up" accesskey="u" href="#Which%20add-on%20packages%20exist%20for%20R%3f">Which add-on packages exist for R?</a>
+Node:&nbsp;<a name="Add-on%20packages%20from%20BioConductor">Add-on packages from BioConductor</a>,
+Next:&nbsp;<a rel="next" accesskey="n" href="#Other%20add-on%20packages">Other add-on packages</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#Add-on%20packages%20from%20Omegahat">Add-on packages from Omegahat</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#Which%20add-on%20packages%20exist%20for%20R%3f">Which add-on packages exist for R?</a>
 <br>
 </div>
 
-<h4 class="subsection">5.1.4 Add-on packages from BioConductor</h4>
+<h3 class="subsection">5.1.4 Add-on packages from BioConductor</h4>
 
-   <p>The <a href="http://www.bioconductor.org">Bioconductor Project</a> produces an
+<p>The <a href="http://www.bioconductor.org">Bioconductor Project</a> produces an
 open source software framework that will assist biologists and
 statisticians working in bioinformatics, with primary emphasis on
 inference using DNA microarrays.  The following R packages are contained
@@ -2538,15 +2548,15 @@ as well.
 
 <div class="node">
 <p><hr>
-Node:<a name="Other%20add-on%20packages">Other add-on packages</a>,
-Previous:<a rel="previous" accesskey="p" href="#Add-on%20packages%20from%20BioConductor">Add-on packages from BioConductor</a>,
-Up:<a rel="up" accesskey="u" href="#Which%20add-on%20packages%20exist%20for%20R%3f">Which add-on packages exist for R?</a>
+Node:&nbsp;<a name="Other%20add-on%20packages">Other add-on packages</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#Add-on%20packages%20from%20BioConductor">Add-on packages from BioConductor</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#Which%20add-on%20packages%20exist%20for%20R%3f">Which add-on packages exist for R?</a>
 <br>
 </div>
 
-<h4 class="subsection">5.1.5 Other add-on packages</h4>
+<h3 class="subsection">5.1.5 Other add-on packages</h4>
 
-   <a href="mailto:jlindsey@luc.ac.be">Jim Lindsey</a> has written a collection of R
+<a href="mailto:jlindsey@luc.ac.be">Jim Lindsey</a> has written a collection of R
 packages for nonlinear regression and repeated measurements, consisting
 of <strong>event</strong> (event history procedures and models), <strong>gnlm</strong>
 (generalized nonlinear regression models), <strong>growth</strong> (multivariate
@@ -2570,16 +2580,16 @@ obtained from the mailing list archive.
 
 <div class="node">
 <p><hr>
-Node:<a name="How%20can%20add-on%20packages%20be%20installed%3f">How can add-on packages be installed?</a>,
-Next:<a rel="next" accesskey="n" href="#How%20can%20add-on%20packages%20be%20used%3f">How can add-on packages be used?</a>,
-Previous:<a rel="previous" accesskey="p" href="#Which%20add-on%20packages%20exist%20for%20R%3f">Which add-on packages exist for R?</a>,
-Up:<a rel="up" accesskey="u" href="#R%20Add-On%20Packages">R Add-On Packages</a>
+Node:&nbsp;<a name="How%20can%20add-on%20packages%20be%20installed%3f">How can add-on packages be installed?</a>,
+Next:&nbsp;<a rel="next" accesskey="n" href="#How%20can%20add-on%20packages%20be%20used%3f">How can add-on packages be used?</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#Which%20add-on%20packages%20exist%20for%20R%3f">Which add-on packages exist for R?</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#R%20Add-On%20Packages">R Add-On Packages</a>
 <br>
 </div>
 
 <h3 class="section">5.2 How can add-on packages be installed?</h3>
 
-   <p>(Unix only.)  The add-on packages on <small>CRAN</small> come as gzipped tar
+<p>(Unix only.)  The add-on packages on <small>CRAN</small> come as gzipped tar
 files named <code></code><var>pkg</var><code>_</code><var>version</var><code>.tar.gz</code>, which may in fact be
 "bundles" containing more than one package.  Provided that
 <code>tar</code> and <code>gzip</code> are available on your system, type
@@ -2625,16 +2635,16 @@ for more information.)
 
 <div class="node">
 <p><hr>
-Node:<a name="How%20can%20add-on%20packages%20be%20used%3f">How can add-on packages be used?</a>,
-Next:<a rel="next" accesskey="n" href="#How%20can%20add-on%20packages%20be%20removed%3f">How can add-on packages be removed?</a>,
-Previous:<a rel="previous" accesskey="p" href="#How%20can%20add-on%20packages%20be%20installed%3f">How can add-on packages be installed?</a>,
-Up:<a rel="up" accesskey="u" href="#R%20Add-On%20Packages">R Add-On Packages</a>
+Node:&nbsp;<a name="How%20can%20add-on%20packages%20be%20used%3f">How can add-on packages be used?</a>,
+Next:&nbsp;<a rel="next" accesskey="n" href="#How%20can%20add-on%20packages%20be%20removed%3f">How can add-on packages be removed?</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#How%20can%20add-on%20packages%20be%20installed%3f">How can add-on packages be installed?</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#R%20Add-On%20Packages">R Add-On Packages</a>
 <br>
 </div>
 
 <h3 class="section">5.3 How can add-on packages be used?</h3>
 
-   <p>To find out which additional packages are available on your system, type
+<p>To find out which additional packages are available on your system, type
 
 <pre class="smallexample">     library()
      </pre>
@@ -2696,16 +2706,16 @@ Up:<a rel="up" accesskey="u" href="#R%20Add-On%20Packages">R Add-On Packages</a>
 
 <div class="node">
 <p><hr>
-Node:<a name="How%20can%20add-on%20packages%20be%20removed%3f">How can add-on packages be removed?</a>,
-Next:<a rel="next" accesskey="n" href="#How%20can%20I%20create%20an%20R%20package%3f">How can I create an R package?</a>,
-Previous:<a rel="previous" accesskey="p" href="#How%20can%20add-on%20packages%20be%20used%3f">How can add-on packages be used?</a>,
-Up:<a rel="up" accesskey="u" href="#R%20Add-On%20Packages">R Add-On Packages</a>
+Node:&nbsp;<a name="How%20can%20add-on%20packages%20be%20removed%3f">How can add-on packages be removed?</a>,
+Next:&nbsp;<a rel="next" accesskey="n" href="#How%20can%20I%20create%20an%20R%20package%3f">How can I create an R package?</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#How%20can%20add-on%20packages%20be%20used%3f">How can add-on packages be used?</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#R%20Add-On%20Packages">R Add-On Packages</a>
 <br>
 </div>
 
 <h3 class="section">5.4 How can add-on packages be removed?</h3>
 
-   <p>Use
+<p>Use
 
 <pre class="smallexample">     $ R CMD REMOVE <var>pkg_1</var> ... <var>pkg_n</var>
      </pre>
@@ -2722,16 +2732,16 @@ of R prior to 1.3.0 removed from the default library by default.)
 
 <div class="node">
 <p><hr>
-Node:<a name="How%20can%20I%20create%20an%20R%20package%3f">How can I create an R package?</a>,
-Next:<a rel="next" accesskey="n" href="#How%20can%20I%20contribute%20to%20R%3f">How can I contribute to R?</a>,
-Previous:<a rel="previous" accesskey="p" href="#How%20can%20add-on%20packages%20be%20removed%3f">How can add-on packages be removed?</a>,
-Up:<a rel="up" accesskey="u" href="#R%20Add-On%20Packages">R Add-On Packages</a>
+Node:&nbsp;<a name="How%20can%20I%20create%20an%20R%20package%3f">How can I create an R package?</a>,
+Next:&nbsp;<a rel="next" accesskey="n" href="#How%20can%20I%20contribute%20to%20R%3f">How can I contribute to R?</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#How%20can%20add-on%20packages%20be%20removed%3f">How can add-on packages be removed?</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#R%20Add-On%20Packages">R Add-On Packages</a>
 <br>
 </div>
 
 <h3 class="section">5.5 How can I create an R package?</h3>
 
-   <p>A package consists of a subdirectory containing the files
+<p>A package consists of a subdirectory containing the files
 <code>DESCRIPTION</code> and <code>INDEX</code>, and the subdirectories <code>R</code>,
 <code>data</code>, <code>demo</code>, <code>exec</code>, <code>inst</code>, <code>man</code>,
 <code>src</code>, and <code>tests</code> (some of which can be missing).  Optionally
@@ -2752,15 +2762,15 @@ files for a set of R functions and datasets.
 
 <div class="node">
 <p><hr>
-Node:<a name="How%20can%20I%20contribute%20to%20R%3f">How can I contribute to R?</a>,
-Previous:<a rel="previous" accesskey="p" href="#How%20can%20I%20create%20an%20R%20package%3f">How can I create an R package?</a>,
-Up:<a rel="up" accesskey="u" href="#R%20Add-On%20Packages">R Add-On Packages</a>
+Node:&nbsp;<a name="How%20can%20I%20contribute%20to%20R%3f">How can I contribute to R?</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#How%20can%20I%20create%20an%20R%20package%3f">How can I create an R package?</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#R%20Add-On%20Packages">R Add-On Packages</a>
 <br>
 </div>
 
 <h3 class="section">5.6 How can I contribute to R?</h3>
 
-   <p>R is in active development and there is always a risk of bugs creeping
+<p>R is in active development and there is always a risk of bugs creeping
 in.  Also, the developers do not have access to all possible machines
 capable of running R.  So, simply using it and communicating problems is
 certainly of great value.
@@ -2783,10 +2793,10 @@ be worth porting to R.
 
 <div class="node">
 <p><hr>
-Node:<a name="R%20and%20Emacs">R and Emacs</a>,
-Next:<a rel="next" accesskey="n" href="#R%20Miscellanea">R Miscellanea</a>,
-Previous:<a rel="previous" accesskey="p" href="#R%20Add-On%20Packages">R Add-On Packages</a>,
-Up:<a rel="up" accesskey="u" href="#Top">Top</a>
+Node:&nbsp;<a name="R%20and%20Emacs">R and Emacs</a>,
+Next:&nbsp;<a rel="next" accesskey="n" href="#R%20Miscellanea">R Miscellanea</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#R%20Add-On%20Packages">R Add-On Packages</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#Top">Top</a>
 <br>
 </div>
 
@@ -2800,16 +2810,16 @@ Up:<a rel="up" accesskey="u" href="#Top">Top</a>
 
 <div class="node">
 <p><hr>
-Node:<a name="Is%20there%20Emacs%20support%20for%20R%3f">Is there Emacs support for R?</a>,
-Next:<a rel="next" accesskey="n" href="#Should%20I%20run%20R%20from%20within%20Emacs%3f">Should I run R from within Emacs?</a>,
-Previous:<a rel="previous" accesskey="p" href="#R%20and%20Emacs">R and Emacs</a>,
-Up:<a rel="up" accesskey="u" href="#R%20and%20Emacs">R and Emacs</a>
+Node:&nbsp;<a name="Is%20there%20Emacs%20support%20for%20R%3f">Is there Emacs support for R?</a>,
+Next:&nbsp;<a rel="next" accesskey="n" href="#Should%20I%20run%20R%20from%20within%20Emacs%3f">Should I run R from within Emacs?</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#R%20and%20Emacs">R and Emacs</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#R%20and%20Emacs">R and Emacs</a>
 <br>
 </div>
 
 <h3 class="section">6.1 Is there Emacs support for R?</h3>
 
-   <p>There is an Emacs package called <small>ESS</small> ("Emacs Speaks
+<p>There is an Emacs package called <small>ESS</small> ("Emacs Speaks
 Statistics") which provides a standard interface between statistical
 programs and statistical processes.  It is intended to provide
 assistance for interactive statistical programming and data analysis. 
@@ -2858,16 +2868,16 @@ within Emacs by typing <kbd>M-x ess-submit-bug-report</kbd> or using the
 
 <div class="node">
 <p><hr>
-Node:<a name="Should%20I%20run%20R%20from%20within%20Emacs%3f">Should I run R from within Emacs?</a>,
-Next:<a rel="next" accesskey="n" href="#Debugging%20R%20from%20within%20Emacs">Debugging R from within Emacs</a>,
-Previous:<a rel="previous" accesskey="p" href="#Is%20there%20Emacs%20support%20for%20R%3f">Is there Emacs support for R?</a>,
-Up:<a rel="up" accesskey="u" href="#R%20and%20Emacs">R and Emacs</a>
+Node:&nbsp;<a name="Should%20I%20run%20R%20from%20within%20Emacs%3f">Should I run R from within Emacs?</a>,
+Next:&nbsp;<a rel="next" accesskey="n" href="#Debugging%20R%20from%20within%20Emacs">Debugging R from within Emacs</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#Is%20there%20Emacs%20support%20for%20R%3f">Is there Emacs support for R?</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#R%20and%20Emacs">R and Emacs</a>
 <br>
 </div>
 
 <h3 class="section">6.2 Should I run R from within Emacs?</h3>
 
-   <p>Yes, <em>definitely</em>.  Inferior R mode provides a readline/history
+<p>Yes, <em>definitely</em>.  Inferior R mode provides a readline/history
 mechanism, object name completion, and syntax-based highlighting of the
 interaction buffer using Font Lock mode, as well as a very convenient
 interface to the R help system.
@@ -2888,15 +2898,15 @@ also be used for error recovery through the use of the transcript mode.
 
 <div class="node">
 <p><hr>
-Node:<a name="Debugging%20R%20from%20within%20Emacs">Debugging R from within Emacs</a>,
-Previous:<a rel="previous" accesskey="p" href="#Should%20I%20run%20R%20from%20within%20Emacs%3f">Should I run R from within Emacs?</a>,
-Up:<a rel="up" accesskey="u" href="#R%20and%20Emacs">R and Emacs</a>
+Node:&nbsp;<a name="Debugging%20R%20from%20within%20Emacs">Debugging R from within Emacs</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#Should%20I%20run%20R%20from%20within%20Emacs%3f">Should I run R from within Emacs?</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#R%20and%20Emacs">R and Emacs</a>
 <br>
 </div>
 
 <h3 class="section">6.3 Debugging R from within Emacs</h3>
 
-   <p>To debug R "from within Emacs", there are several possibilities.  To
+<p>To debug R "from within Emacs", there are several possibilities.  To
 use the Emacs GUD (Grand Unified Debugger) library with the recommended
 debugger GDB, type <kbd>M-x gdb</kbd> and give the path to the R
 <em>binary</em> as argument.  At the <code>gdb</code> prompt, set
@@ -2936,10 +2946,10 @@ the source, e.g. as follows:
 
 <div class="node">
 <p><hr>
-Node:<a name="R%20Miscellanea">R Miscellanea</a>,
-Next:<a rel="next" accesskey="n" href="#R%20Programming">R Programming</a>,
-Previous:<a rel="previous" accesskey="p" href="#R%20and%20Emacs">R and Emacs</a>,
-Up:<a rel="up" accesskey="u" href="#Top">Top</a>
+Node:&nbsp;<a name="R%20Miscellanea">R Miscellanea</a>,
+Next:&nbsp;<a rel="next" accesskey="n" href="#R%20Programming">R Programming</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#R%20and%20Emacs">R and Emacs</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#Top">Top</a>
 <br>
 </div>
 
@@ -2975,16 +2985,16 @@ Up:<a rel="up" accesskey="u" href="#Top">Top</a>
 
 <div class="node">
 <p><hr>
-Node:<a name="Why%20does%20R%20run%20out%20of%20memory%3f">Why does R run out of memory?</a>,
-Next:<a rel="next" accesskey="n" href="#Why%20does%20sourcing%20a%20correct%20file%20fail%3f">Why does sourcing a correct file fail?</a>,
-Previous:<a rel="previous" accesskey="p" href="#R%20Miscellanea">R Miscellanea</a>,
-Up:<a rel="up" accesskey="u" href="#R%20Miscellanea">R Miscellanea</a>
+Node:&nbsp;<a name="Why%20does%20R%20run%20out%20of%20memory%3f">Why does R run out of memory?</a>,
+Next:&nbsp;<a rel="next" accesskey="n" href="#Why%20does%20sourcing%20a%20correct%20file%20fail%3f">Why does sourcing a correct file fail?</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#R%20Miscellanea">R Miscellanea</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#R%20Miscellanea">R Miscellanea</a>
 <br>
 </div>
 
 <h3 class="section">7.1 Why does R run out of memory?</h3>
 
-   <p>Versions of R prior to 1.2.0 used a <em>static</em> memory model.  At
+<p>Versions of R prior to 1.2.0 used a <em>static</em> memory model.  At
 startup, R asked the operating system to reserve a fixed amount of
 memory for it.  The size of this chunk could not be changed
 subsequently.  Hence, it could happen that not enough memory was
@@ -3005,31 +3015,31 @@ for them.
 
 <div class="node">
 <p><hr>
-Node:<a name="Why%20does%20sourcing%20a%20correct%20file%20fail%3f">Why does sourcing a correct file fail?</a>,
-Next:<a rel="next" accesskey="n" href="#How%20can%20I%20set%20components%20of%20a%20list%20to%20NULL%3f">How can I set components of a list to NULL?</a>,
-Previous:<a rel="previous" accesskey="p" href="#Why%20does%20R%20run%20out%20of%20memory%3f">Why does R run out of memory?</a>,
-Up:<a rel="up" accesskey="u" href="#R%20Miscellanea">R Miscellanea</a>
+Node:&nbsp;<a name="Why%20does%20sourcing%20a%20correct%20file%20fail%3f">Why does sourcing a correct file fail?</a>,
+Next:&nbsp;<a rel="next" accesskey="n" href="#How%20can%20I%20set%20components%20of%20a%20list%20to%20NULL%3f">How can I set components of a list to NULL?</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#Why%20does%20R%20run%20out%20of%20memory%3f">Why does R run out of memory?</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#R%20Miscellanea">R Miscellanea</a>
 <br>
 </div>
 
 <h3 class="section">7.2 Why does sourcing a correct file fail?</h3>
 
-   <p>Versions of R prior to 1.2.1 may have had problems parsing files not
+<p>Versions of R prior to 1.2.1 may have had problems parsing files not
 ending in a newline.  Earlier R versions had a similar problem when
 reading in data files.  This should no longer happen.
 
 <div class="node">
 <p><hr>
-Node:<a name="How%20can%20I%20set%20components%20of%20a%20list%20to%20NULL%3f">How can I set components of a list to NULL?</a>,
-Next:<a rel="next" accesskey="n" href="#How%20can%20I%20save%20my%20workspace%3f">How can I save my workspace?</a>,
-Previous:<a rel="previous" accesskey="p" href="#Why%20does%20sourcing%20a%20correct%20file%20fail%3f">Why does sourcing a correct file fail?</a>,
-Up:<a rel="up" accesskey="u" href="#R%20Miscellanea">R Miscellanea</a>
+Node:&nbsp;<a name="How%20can%20I%20set%20components%20of%20a%20list%20to%20NULL%3f">How can I set components of a list to NULL?</a>,
+Next:&nbsp;<a rel="next" accesskey="n" href="#How%20can%20I%20save%20my%20workspace%3f">How can I save my workspace?</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#Why%20does%20sourcing%20a%20correct%20file%20fail%3f">Why does sourcing a correct file fail?</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#R%20Miscellanea">R Miscellanea</a>
 <br>
 </div>
 
 <h3 class="section">7.3 How can I set components of a list to NULL?</h3>
 
-   <p>You can use
+<p>You can use
 
 <pre class="smallexample">     x[i] &lt;- list(NULL)
      </pre>
@@ -3044,32 +3054,32 @@ the list.
 
 <div class="node">
 <p><hr>
-Node:<a name="How%20can%20I%20save%20my%20workspace%3f">How can I save my workspace?</a>,
-Next:<a rel="next" accesskey="n" href="#How%20can%20I%20clean%20up%20my%20workspace%3f">How can I clean up my workspace?</a>,
-Previous:<a rel="previous" accesskey="p" href="#How%20can%20I%20set%20components%20of%20a%20list%20to%20NULL%3f">How can I set components of a list to NULL?</a>,
-Up:<a rel="up" accesskey="u" href="#R%20Miscellanea">R Miscellanea</a>
+Node:&nbsp;<a name="How%20can%20I%20save%20my%20workspace%3f">How can I save my workspace?</a>,
+Next:&nbsp;<a rel="next" accesskey="n" href="#How%20can%20I%20clean%20up%20my%20workspace%3f">How can I clean up my workspace?</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#How%20can%20I%20set%20components%20of%20a%20list%20to%20NULL%3f">How can I set components of a list to NULL?</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#R%20Miscellanea">R Miscellanea</a>
 <br>
 </div>
 
 <h3 class="section">7.4 How can I save my workspace?</h3>
 
-   <p><code>save.image()</code> saves the objects in the user's <code>.GlobalEnv</code> to
+<p><code>save.image()</code> saves the objects in the user's <code>.GlobalEnv</code> to
 the file <code>.RData</code> in the R startup directory.  (This is also what
 happens after <kbd>q("yes")</kbd>.)  Using <code>save.image(</code><var>file</var><code>)</code> one
 can save the image under a different name.
 
 <div class="node">
 <p><hr>
-Node:<a name="How%20can%20I%20clean%20up%20my%20workspace%3f">How can I clean up my workspace?</a>,
-Next:<a rel="next" accesskey="n" href="#How%20can%20I%20get%20eval()%20and%20D()%20to%20work%3f">How can I get eval() and D() to work?</a>,
-Previous:<a rel="previous" accesskey="p" href="#How%20can%20I%20save%20my%20workspace%3f">How can I save my workspace?</a>,
-Up:<a rel="up" accesskey="u" href="#R%20Miscellanea">R Miscellanea</a>
+Node:&nbsp;<a name="How%20can%20I%20clean%20up%20my%20workspace%3f">How can I clean up my workspace?</a>,
+Next:&nbsp;<a rel="next" accesskey="n" href="#How%20can%20I%20get%20eval()%20and%20D()%20to%20work%3f">How can I get eval() and D() to work?</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#How%20can%20I%20save%20my%20workspace%3f">How can I save my workspace?</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#R%20Miscellanea">R Miscellanea</a>
 <br>
 </div>
 
 <h3 class="section">7.5 How can I clean up my workspace?</h3>
 
-   <p>To remove all objects in the currently active environment (typically
+<p>To remove all objects in the currently active environment (typically
 <code>.GlobalEnv</code>), you can do
 
 <pre class="smallexample">     rm(list = ls(all = TRUE))
@@ -3080,16 +3090,16 @@ with a <code>.</code> are removed.)
 
 <div class="node">
 <p><hr>
-Node:<a name="How%20can%20I%20get%20eval()%20and%20D()%20to%20work%3f">How can I get eval() and D() to work?</a>,
-Next:<a rel="next" accesskey="n" href="#Why%20do%20my%20matrices%20lose%20dimensions%3f">Why do my matrices lose dimensions?</a>,
-Previous:<a rel="previous" accesskey="p" href="#How%20can%20I%20clean%20up%20my%20workspace%3f">How can I clean up my workspace?</a>,
-Up:<a rel="up" accesskey="u" href="#R%20Miscellanea">R Miscellanea</a>
+Node:&nbsp;<a name="How%20can%20I%20get%20eval()%20and%20D()%20to%20work%3f">How can I get eval() and D() to work?</a>,
+Next:&nbsp;<a rel="next" accesskey="n" href="#Why%20do%20my%20matrices%20lose%20dimensions%3f">Why do my matrices lose dimensions?</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#How%20can%20I%20clean%20up%20my%20workspace%3f">How can I clean up my workspace?</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#R%20Miscellanea">R Miscellanea</a>
 <br>
 </div>
 
 <h3 class="section">7.6 How can I get eval() and D() to work?</h3>
 
-   <p>Strange things will happen if you use <code>eval(print(x), envir = e)</code>
+<p>Strange things will happen if you use <code>eval(print(x), envir = e)</code>
 or <code>D(x^2, "x")</code>.  The first one will either tell you that
 "<code>x</code>" is not found, or print the value of the wrong <code>x</code>. 
 The other one will likely return zero if <code>x</code> exists, and an error
@@ -3125,16 +3135,16 @@ function call.  Consider for instance the semantics in cases like
 
 <div class="node">
 <p><hr>
-Node:<a name="Why%20do%20my%20matrices%20lose%20dimensions%3f">Why do my matrices lose dimensions?</a>,
-Next:<a rel="next" accesskey="n" href="#How%20does%20autoloading%20work%3f">How does autoloading work?</a>,
-Previous:<a rel="previous" accesskey="p" href="#How%20can%20I%20get%20eval()%20and%20D()%20to%20work%3f">How can I get eval() and D() to work?</a>,
-Up:<a rel="up" accesskey="u" href="#R%20Miscellanea">R Miscellanea</a>
+Node:&nbsp;<a name="Why%20do%20my%20matrices%20lose%20dimensions%3f">Why do my matrices lose dimensions?</a>,
+Next:&nbsp;<a rel="next" accesskey="n" href="#How%20does%20autoloading%20work%3f">How does autoloading work?</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#How%20can%20I%20get%20eval()%20and%20D()%20to%20work%3f">How can I get eval() and D() to work?</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#R%20Miscellanea">R Miscellanea</a>
 <br>
 </div>
 
 <h3 class="section">7.7 Why do my matrices lose dimensions?</h3>
 
-   <p>When a matrix with a single row or column is created by a subscripting
+<p>When a matrix with a single row or column is created by a subscripting
 operation, e.g., <code>row &lt;- mat[2, ]</code>, it is by default turned into a
 vector.  In a similar way if an array with dimension, say, 2&nbsp;x&nbsp;3&nbsp;x&nbsp;1&nbsp;x&nbsp;4 is created by subscripting it will be coerced into a 2&nbsp;x&nbsp;3&nbsp;x&nbsp;4
 array, losing the unnecessary dimension.  After much discussion this has
@@ -3163,16 +3173,16 @@ rewritten as
 
 <div class="node">
 <p><hr>
-Node:<a name="How%20does%20autoloading%20work%3f">How does autoloading work?</a>,
-Next:<a rel="next" accesskey="n" href="#How%20should%20I%20set%20options%3f">How should I set options?</a>,
-Previous:<a rel="previous" accesskey="p" href="#Why%20do%20my%20matrices%20lose%20dimensions%3f">Why do my matrices lose dimensions?</a>,
-Up:<a rel="up" accesskey="u" href="#R%20Miscellanea">R Miscellanea</a>
+Node:&nbsp;<a name="How%20does%20autoloading%20work%3f">How does autoloading work?</a>,
+Next:&nbsp;<a rel="next" accesskey="n" href="#How%20should%20I%20set%20options%3f">How should I set options?</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#Why%20do%20my%20matrices%20lose%20dimensions%3f">Why do my matrices lose dimensions?</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#R%20Miscellanea">R Miscellanea</a>
 <br>
 </div>
 
 <h3 class="section">7.8 How does autoloading work?</h3>
 
-   <p>R has a special environment called <code>.AutoloadEnv</code>.  Using
+<p>R has a special environment called <code>.AutoloadEnv</code>.  Using
 <kbd>autoload(</kbd><var>name</var><kbd>, </kbd><var>pkg</var><kbd>)</kbd>, where <var>name</var> and
 <var>pkg</var> are strings giving the names of an object and the package
 containing it, stores some information in this environment.  When R
@@ -3187,16 +3197,16 @@ does not occupy memory (yet).
 
 <div class="node">
 <p><hr>
-Node:<a name="How%20should%20I%20set%20options%3f">How should I set options?</a>,
-Next:<a rel="next" accesskey="n" href="#How%20do%20file%20names%20work%20in%20Windows%3f">How do file names work in Windows?</a>,
-Previous:<a rel="previous" accesskey="p" href="#How%20does%20autoloading%20work%3f">How does autoloading work?</a>,
-Up:<a rel="up" accesskey="u" href="#R%20Miscellanea">R Miscellanea</a>
+Node:&nbsp;<a name="How%20should%20I%20set%20options%3f">How should I set options?</a>,
+Next:&nbsp;<a rel="next" accesskey="n" href="#How%20do%20file%20names%20work%20in%20Windows%3f">How do file names work in Windows?</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#How%20does%20autoloading%20work%3f">How does autoloading work?</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#R%20Miscellanea">R Miscellanea</a>
 <br>
 </div>
 
 <h3 class="section">7.9 How should I set options?</h3>
 
-   <p>The function <code>options()</code> allows setting and examining a variety of
+<p>The function <code>options()</code> allows setting and examining a variety of
 global "options" which affect the way in which R computes and displays
 its results.  The variable <code>.Options</code> holds the current values of
 these options, but should never directly be assigned to unless you want
@@ -3230,16 +3240,16 @@ environment (frame), are just silently disregarded.
 
 <div class="node">
 <p><hr>
-Node:<a name="How%20do%20file%20names%20work%20in%20Windows%3f">How do file names work in Windows?</a>,
-Next:<a rel="next" accesskey="n" href="#Why%20does%20plotting%20give%20a%20color%20allocation%20error%3f">Why does plotting give a color allocation error?</a>,
-Previous:<a rel="previous" accesskey="p" href="#How%20should%20I%20set%20options%3f">How should I set options?</a>,
-Up:<a rel="up" accesskey="u" href="#R%20Miscellanea">R Miscellanea</a>
+Node:&nbsp;<a name="How%20do%20file%20names%20work%20in%20Windows%3f">How do file names work in Windows?</a>,
+Next:&nbsp;<a rel="next" accesskey="n" href="#Why%20does%20plotting%20give%20a%20color%20allocation%20error%3f">Why does plotting give a color allocation error?</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#How%20should%20I%20set%20options%3f">How should I set options?</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#R%20Miscellanea">R Miscellanea</a>
 <br>
 </div>
 
 <h3 class="section">7.10 How do file names work in Windows?</h3>
 
-   <p>As R uses C-style string handling, <code>\</code> is treated as an escape
+<p>As R uses C-style string handling, <code>\</code> is treated as an escape
 character, so that for example one can enter a newline as <code>\n</code>. 
 When you really need a <code>\</code>, you have to escape it with another
 <code>\</code>.
@@ -3249,16 +3259,16 @@ can also replace <code>\</code> by <code>/</code> (<code>"c:/data/money.dat"</co
 
 <div class="node">
 <p><hr>
-Node:<a name="Why%20does%20plotting%20give%20a%20color%20allocation%20error%3f">Why does plotting give a color allocation error?</a>,
-Next:<a rel="next" accesskey="n" href="#How%20do%20I%20convert%20factors%20to%20numeric%3f">How do I convert factors to numeric?</a>,
-Previous:<a rel="previous" accesskey="p" href="#How%20do%20file%20names%20work%20in%20Windows%3f">How do file names work in Windows?</a>,
-Up:<a rel="up" accesskey="u" href="#R%20Miscellanea">R Miscellanea</a>
+Node:&nbsp;<a name="Why%20does%20plotting%20give%20a%20color%20allocation%20error%3f">Why does plotting give a color allocation error?</a>,
+Next:&nbsp;<a rel="next" accesskey="n" href="#How%20do%20I%20convert%20factors%20to%20numeric%3f">How do I convert factors to numeric?</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#How%20do%20file%20names%20work%20in%20Windows%3f">How do file names work in Windows?</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#R%20Miscellanea">R Miscellanea</a>
 <br>
 </div>
 
 <h3 class="section">7.11 Why does plotting give a color allocation error?</h3>
 
-   <p>Sometimes plotting, e.g., when running <code>demo("image")</code>, results in
+<p>Sometimes plotting, e.g., when running <code>demo("image")</code>, results in
 "Error: color allocation error".  This is an X problem, and only
 indirectly related to R.  It occurs when applications started prior to R
 have used all the available colors.  (How many colors are available
@@ -3275,16 +3285,16 @@ help page for <code>X11()</code> for more information.
 
 <div class="node">
 <p><hr>
-Node:<a name="How%20do%20I%20convert%20factors%20to%20numeric%3f">How do I convert factors to numeric?</a>,
-Next:<a rel="next" accesskey="n" href="#Are%20Trellis%20displays%20implemented%20in%20R%3f">Are Trellis displays implemented in R?</a>,
-Previous:<a rel="previous" accesskey="p" href="#Why%20does%20plotting%20give%20a%20color%20allocation%20error%3f">Why does plotting give a color allocation error?</a>,
-Up:<a rel="up" accesskey="u" href="#R%20Miscellanea">R Miscellanea</a>
+Node:&nbsp;<a name="How%20do%20I%20convert%20factors%20to%20numeric%3f">How do I convert factors to numeric?</a>,
+Next:&nbsp;<a rel="next" accesskey="n" href="#Are%20Trellis%20displays%20implemented%20in%20R%3f">Are Trellis displays implemented in R?</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#Why%20does%20plotting%20give%20a%20color%20allocation%20error%3f">Why does plotting give a color allocation error?</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#R%20Miscellanea">R Miscellanea</a>
 <br>
 </div>
 
 <h3 class="section">7.12 How do I convert factors to numeric?</h3>
 
-   <p>It may happen that when reading numeric data into R (usually, when
+<p>It may happen that when reading numeric data into R (usually, when
 reading in a file), they come in as factors.  If <code>f</code> is such a
 factor object, you can use
 
@@ -3300,16 +3310,16 @@ factor object, you can use
 
 <div class="node">
 <p><hr>
-Node:<a name="Are%20Trellis%20displays%20implemented%20in%20R%3f">Are Trellis displays implemented in R?</a>,
-Next:<a rel="next" accesskey="n" href="#What%20are%20the%20enclosing%20and%20parent%20environments%3f">What are the enclosing and parent environments?</a>,
-Previous:<a rel="previous" accesskey="p" href="#How%20do%20I%20convert%20factors%20to%20numeric%3f">How do I convert factors to numeric?</a>,
-Up:<a rel="up" accesskey="u" href="#R%20Miscellanea">R Miscellanea</a>
+Node:&nbsp;<a name="Are%20Trellis%20displays%20implemented%20in%20R%3f">Are Trellis displays implemented in R?</a>,
+Next:&nbsp;<a rel="next" accesskey="n" href="#What%20are%20the%20enclosing%20and%20parent%20environments%3f">What are the enclosing and parent environments?</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#How%20do%20I%20convert%20factors%20to%20numeric%3f">How do I convert factors to numeric?</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#R%20Miscellanea">R Miscellanea</a>
 <br>
 </div>
 
 <h3 class="section">7.13 Are Trellis displays implemented in R?</h3>
 
-   <p>The recommended package <strong>lattice</strong> (which is based on another
+<p>The recommended package <strong>lattice</strong> (which is based on another
 recommended package, <strong>grid</strong>) provides graphical functionality
 that is compatible with most Trellis commands.
 
@@ -3326,16 +3336,16 @@ equivalent.)
 
 <div class="node">
 <p><hr>
-Node:<a name="What%20are%20the%20enclosing%20and%20parent%20environments%3f">What are the enclosing and parent environments?</a>,
-Next:<a rel="next" accesskey="n" href="#How%20can%20I%20substitute%20into%20a%20plot%20label%3f">How can I substitute into a plot label?</a>,
-Previous:<a rel="previous" accesskey="p" href="#Are%20Trellis%20displays%20implemented%20in%20R%3f">Are Trellis displays implemented in R?</a>,
-Up:<a rel="up" accesskey="u" href="#R%20Miscellanea">R Miscellanea</a>
+Node:&nbsp;<a name="What%20are%20the%20enclosing%20and%20parent%20environments%3f">What are the enclosing and parent environments?</a>,
+Next:&nbsp;<a rel="next" accesskey="n" href="#How%20can%20I%20substitute%20into%20a%20plot%20label%3f">How can I substitute into a plot label?</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#Are%20Trellis%20displays%20implemented%20in%20R%3f">Are Trellis displays implemented in R?</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#R%20Miscellanea">R Miscellanea</a>
 <br>
 </div>
 
 <h3 class="section">7.14 What are the enclosing and parent environments?</h3>
 
-   <p>Inside a function you may want to access variables in two additional
+<p>Inside a function you may want to access variables in two additional
 environments: the one that the function was defined in ("enclosing"),
 and the one it was invoked in ("parent").
 
@@ -3382,16 +3392,16 @@ is wherever the function was created.
 
 <div class="node">
 <p><hr>
-Node:<a name="How%20can%20I%20substitute%20into%20a%20plot%20label%3f">How can I substitute into a plot label?</a>,
-Next:<a rel="next" accesskey="n" href="#What%20are%20valid%20names%3f">What are valid names?</a>,
-Previous:<a rel="previous" accesskey="p" href="#What%20are%20the%20enclosing%20and%20parent%20environments%3f">What are the enclosing and parent environments?</a>,
-Up:<a rel="up" accesskey="u" href="#R%20Miscellanea">R Miscellanea</a>
+Node:&nbsp;<a name="How%20can%20I%20substitute%20into%20a%20plot%20label%3f">How can I substitute into a plot label?</a>,
+Next:&nbsp;<a rel="next" accesskey="n" href="#What%20are%20valid%20names%3f">What are valid names?</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#What%20are%20the%20enclosing%20and%20parent%20environments%3f">What are the enclosing and parent environments?</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#R%20Miscellanea">R Miscellanea</a>
 <br>
 </div>
 
 <h3 class="section">7.15 How can I substitute into a plot label?</h3>
 
-   <p>Often, it is desired to use the value of an R object in a plot label,
+<p>Often, it is desired to use the value of an R object in a plot label,
 e.g., a title.  This is easily accomplished using <code>paste()</code> if the
 label is a simple character string, but not always obvious in case the
 label is an expression (for refined mathematical annotation).  In such a
@@ -3407,16 +3417,16 @@ examples in the mailing list achives.
 
 <div class="node">
 <p><hr>
-Node:<a name="What%20are%20valid%20names%3f">What are valid names?</a>,
-Next:<a rel="next" accesskey="n" href="#Are%20GAMs%20implemented%20in%20R%3f">Are GAMs implemented in R?</a>,
-Previous:<a rel="previous" accesskey="p" href="#How%20can%20I%20substitute%20into%20a%20plot%20label%3f">How can I substitute into a plot label?</a>,
-Up:<a rel="up" accesskey="u" href="#R%20Miscellanea">R Miscellanea</a>
+Node:&nbsp;<a name="What%20are%20valid%20names%3f">What are valid names?</a>,
+Next:&nbsp;<a rel="next" accesskey="n" href="#Are%20GAMs%20implemented%20in%20R%3f">Are GAMs implemented in R?</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#How%20can%20I%20substitute%20into%20a%20plot%20label%3f">How can I substitute into a plot label?</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#R%20Miscellanea">R Miscellanea</a>
 <br>
 </div>
 
 <h3 class="section">7.16 What are valid names?</h3>
 
-   <p>When creating data frames using <code>data.frame()</code> or
+<p>When creating data frames using <code>data.frame()</code> or
 <code>read.table()</code>, R by default ensures that the variable names are
 syntactically valid.  (The argument <code>check.names</code> to these
 functions controls whether variable names are checked and adjusted by
@@ -3458,16 +3468,16 @@ strings file "names".
 
 <div class="node">
 <p><hr>
-Node:<a name="Are%20GAMs%20implemented%20in%20R%3f">Are GAMs implemented in R?</a>,
-Next:<a rel="next" accesskey="n" href="#Why%20is%20the%20output%20not%20printed%20when%20I%20source()%20a%20file%3f">Why is the output not printed when I source() a file?</a>,
-Previous:<a rel="previous" accesskey="p" href="#What%20are%20valid%20names%3f">What are valid names?</a>,
-Up:<a rel="up" accesskey="u" href="#R%20Miscellanea">R Miscellanea</a>
+Node:&nbsp;<a name="Are%20GAMs%20implemented%20in%20R%3f">Are GAMs implemented in R?</a>,
+Next:&nbsp;<a rel="next" accesskey="n" href="#Why%20is%20the%20output%20not%20printed%20when%20I%20source()%20a%20file%3f">Why is the output not printed when I source() a file?</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#What%20are%20valid%20names%3f">What are valid names?</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#R%20Miscellanea">R Miscellanea</a>
 <br>
 </div>
 
 <h3 class="section">7.17 Are GAMs implemented in R?</h3>
 
-   <p>There is a <code>gam()</code> function for Generalized Additive Models in
+<p>There is a <code>gam()</code> function for Generalized Additive Models in
 package <strong>mgcv</strong>, but it is not an exact clone of what is described
 in the White Book (no <code>lo()</code> for example).  Package <strong>gss</strong>
 can fit spline-based GAMs too.  And if you can accept regression splines
@@ -3476,16 +3486,16 @@ from package <strong>mda</strong>.
 
 <div class="node">
 <p><hr>
-Node:<a name="Why%20is%20the%20output%20not%20printed%20when%20I%20source()%20a%20file%3f">Why is the output not printed when I source() a file?</a>,
-Next:<a rel="next" accesskey="n" href="#Why%20does%20outer()%20behave%20strangely%20with%20my%20function%3f">Why does outer() behave strangely with my function?</a>,
-Previous:<a rel="previous" accesskey="p" href="#Are%20GAMs%20implemented%20in%20R%3f">Are GAMs implemented in R?</a>,
-Up:<a rel="up" accesskey="u" href="#R%20Miscellanea">R Miscellanea</a>
+Node:&nbsp;<a name="Why%20is%20the%20output%20not%20printed%20when%20I%20source()%20a%20file%3f">Why is the output not printed when I source() a file?</a>,
+Next:&nbsp;<a rel="next" accesskey="n" href="#Why%20does%20outer()%20behave%20strangely%20with%20my%20function%3f">Why does outer() behave strangely with my function?</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#Are%20GAMs%20implemented%20in%20R%3f">Are GAMs implemented in R?</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#R%20Miscellanea">R Miscellanea</a>
 <br>
 </div>
 
 <h3 class="section">7.18 Why is the output not printed when I source() a file?</h3>
 
-   <p>Most R commands do not generate any output. The command
+<p>Most R commands do not generate any output. The command
 
 <pre class="smallexample">     1+1
      </pre>
@@ -3518,16 +3528,16 @@ specifically print it.
 
 <div class="node">
 <p><hr>
-Node:<a name="Why%20does%20outer()%20behave%20strangely%20with%20my%20function%3f">Why does outer() behave strangely with my function?</a>,
-Next:<a rel="next" accesskey="n" href="#Why%20does%20the%20output%20from%20anova()%20depend%20on%20the%20order%20of%20factors%20in%20the%20model%3f">Why does the output from anova() depend on the order of factors in the model?</a>,
-Previous:<a rel="previous" accesskey="p" href="#Why%20is%20the%20output%20not%20printed%20when%20I%20source()%20a%20file%3f">Why is the output not printed when I source() a file?</a>,
-Up:<a rel="up" accesskey="u" href="#R%20Miscellanea">R Miscellanea</a>
+Node:&nbsp;<a name="Why%20does%20outer()%20behave%20strangely%20with%20my%20function%3f">Why does outer() behave strangely with my function?</a>,
+Next:&nbsp;<a rel="next" accesskey="n" href="#Why%20does%20the%20output%20from%20anova()%20depend%20on%20the%20order%20of%20factors%20in%20the%20model%3f">Why does the output from anova() depend on the order of factors in the model?</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#Why%20is%20the%20output%20not%20printed%20when%20I%20source()%20a%20file%3f">Why is the output not printed when I source() a file?</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#R%20Miscellanea">R Miscellanea</a>
 <br>
 </div>
 
 <h3 class="section">7.19 Why does outer() behave strangely with my function?</h3>
 
-   <p>As the help for <code>outer()</code> indicates, it does not work on arbitrary
+<p>As the help for <code>outer()</code> indicates, it does not work on arbitrary
 functions the way the <code>apply()</code> family does.  It requires functions
 that are vectorized to work elementwise on arrays.  As you can see by
 looking at the code, <code>outer(x, y, FUN)</code> creates two large vectors
@@ -3560,16 +3570,16 @@ function is
 
 <div class="node">
 <p><hr>
-Node:<a name="Why%20does%20the%20output%20from%20anova()%20depend%20on%20the%20order%20of%20factors%20in%20the%20model%3f">Why does the output from anova() depend on the order of factors in the model?</a>,
-Next:<a rel="next" accesskey="n" href="#How%20do%20I%20produce%20PNG%20graphics%20in%20batch%20mode%3f">How do I produce PNG graphics in batch mode?</a>,
-Previous:<a rel="previous" accesskey="p" href="#Why%20does%20outer()%20behave%20strangely%20with%20my%20function%3f">Why does outer() behave strangely with my function?</a>,
-Up:<a rel="up" accesskey="u" href="#R%20Miscellanea">R Miscellanea</a>
+Node:&nbsp;<a name="Why%20does%20the%20output%20from%20anova()%20depend%20on%20the%20order%20of%20factors%20in%20the%20model%3f">Why does the output from anova() depend on the order of factors in the model?</a>,
+Next:&nbsp;<a rel="next" accesskey="n" href="#How%20do%20I%20produce%20PNG%20graphics%20in%20batch%20mode%3f">How do I produce PNG graphics in batch mode?</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#Why%20does%20outer()%20behave%20strangely%20with%20my%20function%3f">Why does outer() behave strangely with my function?</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#R%20Miscellanea">R Miscellanea</a>
 <br>
 </div>
 
 <h3 class="section">7.20 Why does the output from anova() depend on the order of factors in the model?</h3>
 
-   <p>In a model such as <code>~A+B+A:B</code>, R will report the difference in sums
+<p>In a model such as <code>~A+B+A:B</code>, R will report the difference in sums
 of squares between the models <code>~1</code>, <code>~A</code>, <code>~A+B</code> and
 <code>~A+B+A:B</code>.  If the model were <code>~B+A+A:B</code>, R would report
 differences between <code>~1</code>, <code>~B</code>, <code>~A+B</code>, and
@@ -3594,16 +3604,16 @@ squares resulting from dropping single terms.
 
 <div class="node">
 <p><hr>
-Node:<a name="How%20do%20I%20produce%20PNG%20graphics%20in%20batch%20mode%3f">How do I produce PNG graphics in batch mode?</a>,
-Next:<a rel="next" accesskey="n" href="#How%20can%20I%20get%20command%20line%20editing%20to%20work%3f">How can I get command line editing to work?</a>,
-Previous:<a rel="previous" accesskey="p" href="#Why%20does%20the%20output%20from%20anova()%20depend%20on%20the%20order%20of%20factors%20in%20the%20model%3f">Why does the output from anova() depend on the order of factors in the model?</a>,
-Up:<a rel="up" accesskey="u" href="#R%20Miscellanea">R Miscellanea</a>
+Node:&nbsp;<a name="How%20do%20I%20produce%20PNG%20graphics%20in%20batch%20mode%3f">How do I produce PNG graphics in batch mode?</a>,
+Next:&nbsp;<a rel="next" accesskey="n" href="#How%20can%20I%20get%20command%20line%20editing%20to%20work%3f">How can I get command line editing to work?</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#Why%20does%20the%20output%20from%20anova()%20depend%20on%20the%20order%20of%20factors%20in%20the%20model%3f">Why does the output from anova() depend on the order of factors in the model?</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#R%20Miscellanea">R Miscellanea</a>
 <br>
 </div>
 
 <h3 class="section">7.21 How do I produce PNG graphics in batch mode?</h3>
 
-   <p>Under Unix, the <code>png()</code> device uses the X11 driver, which is a
+<p>Under Unix, the <code>png()</code> device uses the X11 driver, which is a
 problem in batch mode or for remote operation.  If you have Ghostscript
 you can use <code>bitmap()</code>, which produces a PostScript file then
 converts it to any bitmap format supported by ghostscript.  On some
@@ -3613,16 +3623,16 @@ server with no display.
 
 <div class="node">
 <p><hr>
-Node:<a name="How%20can%20I%20get%20command%20line%20editing%20to%20work%3f">How can I get command line editing to work?</a>,
-Next:<a rel="next" accesskey="n" href="#How%20can%20I%20turn%20a%20string%20into%20a%20variable%3f">How can I turn a string into a variable?</a>,
-Previous:<a rel="previous" accesskey="p" href="#How%20do%20I%20produce%20PNG%20graphics%20in%20batch%20mode%3f">How do I produce PNG graphics in batch mode?</a>,
-Up:<a rel="up" accesskey="u" href="#R%20Miscellanea">R Miscellanea</a>
+Node:&nbsp;<a name="How%20can%20I%20get%20command%20line%20editing%20to%20work%3f">How can I get command line editing to work?</a>,
+Next:&nbsp;<a rel="next" accesskey="n" href="#How%20can%20I%20turn%20a%20string%20into%20a%20variable%3f">How can I turn a string into a variable?</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#How%20do%20I%20produce%20PNG%20graphics%20in%20batch%20mode%3f">How do I produce PNG graphics in batch mode?</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#R%20Miscellanea">R Miscellanea</a>
 <br>
 </div>
 
 <h3 class="section">7.22 How can I get command line editing to work?</h3>
 
-   <p>The Unix command-line interface to R can only provide the inbuilt
+<p>The Unix command-line interface to R can only provide the inbuilt
 command line editor which allows recall, editing and re-submission of
 prior commands provided that the <small>GNU</small> readline library is
 available at the time R is configured for compilation.  Note that the
@@ -3633,16 +3643,16 @@ packages such as <code>libreadline-dev</code> (Debian) or
 
 <div class="node">
 <p><hr>
-Node:<a name="How%20can%20I%20turn%20a%20string%20into%20a%20variable%3f">How can I turn a string into a variable?</a>,
-Next:<a rel="next" accesskey="n" href="#Why%20do%20lattice%2ftrellis%20graphics%20not%20work%3f">Why do lattice/trellis graphics not work?</a>,
-Previous:<a rel="previous" accesskey="p" href="#How%20can%20I%20get%20command%20line%20editing%20to%20work%3f">How can I get command line editing to work?</a>,
-Up:<a rel="up" accesskey="u" href="#R%20Miscellanea">R Miscellanea</a>
+Node:&nbsp;<a name="How%20can%20I%20turn%20a%20string%20into%20a%20variable%3f">How can I turn a string into a variable?</a>,
+Next:&nbsp;<a rel="next" accesskey="n" href="#Why%20do%20lattice%2ftrellis%20graphics%20not%20work%3f">Why do lattice/trellis graphics not work?</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#How%20can%20I%20get%20command%20line%20editing%20to%20work%3f">How can I get command line editing to work?</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#R%20Miscellanea">R Miscellanea</a>
 <br>
 </div>
 
 <h3 class="section">7.23 How can I turn a string into a variable?</h3>
 
-   <p>If you have
+<p>If you have
 
 <pre class="smallexample">     varname &lt;- c("a", "b", "d")
      </pre>
@@ -3689,16 +3699,16 @@ and then you can easily index it by name
 
 <div class="node">
 <p><hr>
-Node:<a name="Why%20do%20lattice%2ftrellis%20graphics%20not%20work%3f">Why do lattice/trellis graphics not work?</a>,
-Next:<a rel="next" accesskey="n" href="#How%20can%20I%20sort%20the%20rows%20of%20a%20data%20frame%3f">How can I sort the rows of a data frame?</a>,
-Previous:<a rel="previous" accesskey="p" href="#How%20can%20I%20turn%20a%20string%20into%20a%20variable%3f">How can I turn a string into a variable?</a>,
-Up:<a rel="up" accesskey="u" href="#R%20Miscellanea">R Miscellanea</a>
+Node:&nbsp;<a name="Why%20do%20lattice%2ftrellis%20graphics%20not%20work%3f">Why do lattice/trellis graphics not work?</a>,
+Next:&nbsp;<a rel="next" accesskey="n" href="#How%20can%20I%20sort%20the%20rows%20of%20a%20data%20frame%3f">How can I sort the rows of a data frame?</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#How%20can%20I%20turn%20a%20string%20into%20a%20variable%3f">How can I turn a string into a variable?</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#R%20Miscellanea">R Miscellanea</a>
 <br>
 </div>
 
 <h3 class="section">7.24 Why do lattice/trellis graphics not work?</h3>
 
-   <p>The most likely reason is that you forgot to tell R to display the
+<p>The most likely reason is that you forgot to tell R to display the
 graph.  Lattice functions such as <code>xyplot()</code> create a graph object,
 but do not display it (the same is true of Trellis graphics in
 <small>S-PLUS</small>).  The <code>print()</code> method for the graph object produces the
@@ -3709,23 +3719,23 @@ command line, the result is automatically printed, but in
 
 <div class="node">
 <p><hr>
-Node:<a name="How%20can%20I%20sort%20the%20rows%20of%20a%20data%20frame%3f">How can I sort the rows of a data frame?</a>,
-Previous:<a rel="previous" accesskey="p" href="#Why%20do%20lattice%2ftrellis%20graphics%20not%20work%3f">Why do lattice/trellis graphics not work?</a>,
-Up:<a rel="up" accesskey="u" href="#R%20Miscellanea">R Miscellanea</a>
+Node:&nbsp;<a name="How%20can%20I%20sort%20the%20rows%20of%20a%20data%20frame%3f">How can I sort the rows of a data frame?</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#Why%20do%20lattice%2ftrellis%20graphics%20not%20work%3f">Why do lattice/trellis graphics not work?</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#R%20Miscellanea">R Miscellanea</a>
 <br>
 </div>
 
 <h3 class="section">7.25 How can I sort the rows of a data frame?</h3>
 
-   <p>To sort the rows within a data frame, with respect to the values in one
+<p>To sort the rows within a data frame, with respect to the values in one
 or more of the columns, simply use <code>order()</code>.
 
 <div class="node">
 <p><hr>
-Node:<a name="R%20Programming">R Programming</a>,
-Next:<a rel="next" accesskey="n" href="#R%20Bugs">R Bugs</a>,
-Previous:<a rel="previous" accesskey="p" href="#R%20Miscellanea">R Miscellanea</a>,
-Up:<a rel="up" accesskey="u" href="#Top">Top</a>
+Node:&nbsp;<a name="R%20Programming">R Programming</a>,
+Next:&nbsp;<a rel="next" accesskey="n" href="#R%20Bugs">R Bugs</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#R%20Miscellanea">R Miscellanea</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#Top">Top</a>
 <br>
 </div>
 
@@ -3740,16 +3750,16 @@ Up:<a rel="up" accesskey="u" href="#Top">Top</a>
 
 <div class="node">
 <p><hr>
-Node:<a name="How%20should%20I%20write%20summary%20methods%3f">How should I write summary methods?</a>,
-Next:<a rel="next" accesskey="n" href="#How%20can%20I%20debug%20dynamically%20loaded%20code%3f">How can I debug dynamically loaded code?</a>,
-Previous:<a rel="previous" accesskey="p" href="#R%20Programming">R Programming</a>,
-Up:<a rel="up" accesskey="u" href="#R%20Programming">R Programming</a>
+Node:&nbsp;<a name="How%20should%20I%20write%20summary%20methods%3f">How should I write summary methods?</a>,
+Next:&nbsp;<a rel="next" accesskey="n" href="#How%20can%20I%20debug%20dynamically%20loaded%20code%3f">How can I debug dynamically loaded code?</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#R%20Programming">R Programming</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#R%20Programming">R Programming</a>
 <br>
 </div>
 
 <h3 class="section">8.1 How should I write summary methods?</h3>
 
-   <p>Suppose you want to provide a summary method for class <code>"foo"</code>. 
+<p>Suppose you want to provide a summary method for class <code>"foo"</code>. 
 Then <code>summary.foo()</code> should not print anything, but return an
 object of class <code>"summary.foo"</code>, <em>and</em> you should write a
 method <code>print.summary.foo()</code> which nicely prints the summary
@@ -3761,16 +3771,16 @@ cases you don't want anything printed.
 
 <div class="node">
 <p><hr>
-Node:<a name="How%20can%20I%20debug%20dynamically%20loaded%20code%3f">How can I debug dynamically loaded code?</a>,
-Next:<a rel="next" accesskey="n" href="#How%20can%20I%20inspect%20R%20objects%20when%20debugging%3f">How can I inspect R objects when debugging?</a>,
-Previous:<a rel="previous" accesskey="p" href="#How%20should%20I%20write%20summary%20methods%3f">How should I write summary methods?</a>,
-Up:<a rel="up" accesskey="u" href="#R%20Programming">R Programming</a>
+Node:&nbsp;<a name="How%20can%20I%20debug%20dynamically%20loaded%20code%3f">How can I debug dynamically loaded code?</a>,
+Next:&nbsp;<a rel="next" accesskey="n" href="#How%20can%20I%20inspect%20R%20objects%20when%20debugging%3f">How can I inspect R objects when debugging?</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#How%20should%20I%20write%20summary%20methods%3f">How should I write summary methods?</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#R%20Programming">R Programming</a>
 <br>
 </div>
 
 <h3 class="section">8.2 How can I debug dynamically loaded code?</h3>
 
-   <p>Roughly speaking, you need to start R inside the debugger, load the
+<p>Roughly speaking, you need to start R inside the debugger, load the
 code, send an interrupt, and then set the required breakpoints.
 
    <p>See section "Finding entry points in dynamically loaded code" in
@@ -3779,16 +3789,16 @@ This manual is included in the R distribution, see <a href="#What%20documentatio
 
 <div class="node">
 <p><hr>
-Node:<a name="How%20can%20I%20inspect%20R%20objects%20when%20debugging%3f">How can I inspect R objects when debugging?</a>,
-Next:<a rel="next" accesskey="n" href="#How%20can%20I%20change%20compilation%20flags%3f">How can I change compilation flags?</a>,
-Previous:<a rel="previous" accesskey="p" href="#How%20can%20I%20debug%20dynamically%20loaded%20code%3f">How can I debug dynamically loaded code?</a>,
-Up:<a rel="up" accesskey="u" href="#R%20Programming">R Programming</a>
+Node:&nbsp;<a name="How%20can%20I%20inspect%20R%20objects%20when%20debugging%3f">How can I inspect R objects when debugging?</a>,
+Next:&nbsp;<a rel="next" accesskey="n" href="#How%20can%20I%20change%20compilation%20flags%3f">How can I change compilation flags?</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#How%20can%20I%20debug%20dynamically%20loaded%20code%3f">How can I debug dynamically loaded code?</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#R%20Programming">R Programming</a>
 <br>
 </div>
 
 <h3 class="section">8.3 How can I inspect R objects when debugging?</h3>
 
-   <p>The most convenient way is to call <code>R_PV</code> from the symbolic
+<p>The most convenient way is to call <code>R_PV</code> from the symbolic
 debugger.
 
    <p>See section "Inspecting R objects when debugging" in <cite>Writing R
@@ -3796,15 +3806,15 @@ Extensions</cite>.
 
 <div class="node">
 <p><hr>
-Node:<a name="How%20can%20I%20change%20compilation%20flags%3f">How can I change compilation flags?</a>,
-Previous:<a rel="previous" accesskey="p" href="#How%20can%20I%20inspect%20R%20objects%20when%20debugging%3f">How can I inspect R objects when debugging?</a>,
-Up:<a rel="up" accesskey="u" href="#R%20Programming">R Programming</a>
+Node:&nbsp;<a name="How%20can%20I%20change%20compilation%20flags%3f">How can I change compilation flags?</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#How%20can%20I%20inspect%20R%20objects%20when%20debugging%3f">How can I inspect R objects when debugging?</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#R%20Programming">R Programming</a>
 <br>
 </div>
 
 <h3 class="section">8.4 How can I change compilation flags?</h3>
 
-   <p>Suppose you have C code file for dynloading into R, but you want to use
+<p>Suppose you have C code file for dynloading into R, but you want to use
 <code>R CMD SHLIB</code> with compilation flags other than the default ones
 (which were determined when R was built).  You could change the file
 <code>R_HOME/etc/Makeconf</code> to reflect your preferences.  If you
@@ -3817,10 +3827,10 @@ are a Bourne shell user, you can also pass the desired flags to Make
 
 <div class="node">
 <p><hr>
-Node:<a name="R%20Bugs">R Bugs</a>,
-Next:<a rel="next" accesskey="n" href="#Acknowledgments">Acknowledgments</a>,
-Previous:<a rel="previous" accesskey="p" href="#R%20Programming">R Programming</a>,
-Up:<a rel="up" accesskey="u" href="#Top">Top</a>
+Node:&nbsp;<a name="R%20Bugs">R Bugs</a>,
+Next:&nbsp;<a rel="next" accesskey="n" href="#Acknowledgments">Acknowledgments</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#R%20Programming">R Programming</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#Top">Top</a>
 <br>
 </div>
 
@@ -3833,16 +3843,16 @@ Up:<a rel="up" accesskey="u" href="#Top">Top</a>
 
 <div class="node">
 <p><hr>
-Node:<a name="What%20is%20a%20bug%3f">What is a bug?</a>,
-Next:<a rel="next" accesskey="n" href="#How%20to%20report%20a%20bug">How to report a bug</a>,
-Previous:<a rel="previous" accesskey="p" href="#R%20Bugs">R Bugs</a>,
-Up:<a rel="up" accesskey="u" href="#R%20Bugs">R Bugs</a>
+Node:&nbsp;<a name="What%20is%20a%20bug%3f">What is a bug?</a>,
+Next:&nbsp;<a rel="next" accesskey="n" href="#How%20to%20report%20a%20bug">How to report a bug</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#R%20Bugs">R Bugs</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#R%20Bugs">R Bugs</a>
 <br>
 </div>
 
 <h3 class="section">9.1 What is a bug?</h3>
 
-   <p>If R executes an illegal instruction, or dies with an operating system
+<p>If R executes an illegal instruction, or dies with an operating system
 error message that indicates a problem in the program (as opposed to
 something like "disk full"), then it is certainly a bug.  If you call
 <code>.C()</code>, <code>.Fortran()</code>, <code>.External()</code> or <code>.Call()</code> (or
@@ -3883,15 +3893,15 @@ of them must be wrong, so report the bug.
 
 <div class="node">
 <p><hr>
-Node:<a name="How%20to%20report%20a%20bug">How to report a bug</a>,
-Previous:<a rel="previous" accesskey="p" href="#What%20is%20a%20bug%3f">What is a bug?</a>,
-Up:<a rel="up" accesskey="u" href="#R%20Bugs">R Bugs</a>
+Node:&nbsp;<a name="How%20to%20report%20a%20bug">How to report a bug</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#What%20is%20a%20bug%3f">What is a bug?</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#R%20Bugs">R Bugs</a>
 <br>
 </div>
 
 <h3 class="section">9.2 How to report a bug</h3>
 
-   <p>When you decide that there is a bug, it is important to report it and to
+<p>When you decide that there is a bug, it is important to report it and to
 report it in a way which is useful.  What is most useful is an exact
 description of what commands you type, starting with the shell command
 to run R, until the problem happens.  Always include the version of R,
@@ -3950,15 +3960,15 @@ package maintainer rather than to r-bugs.
 
 <div class="node">
 <p><hr>
-Node:<a name="Acknowledgments">Acknowledgments</a>,
-Previous:<a rel="previous" accesskey="p" href="#R%20Bugs">R Bugs</a>,
-Up:<a rel="up" accesskey="u" href="#Top">Top</a>
+Node:&nbsp;<a name="Acknowledgments">Acknowledgments</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#R%20Bugs">R Bugs</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#Top">Top</a>
 <br>
 </div>
 
 <h2 class="chapter">10 Acknowledgments</h2>
 
-   <p>Of course, many many thanks to Robert and Ross for the R system, and to
+<p>Of course, many many thanks to Robert and Ross for the R system, and to
 the package writers and porters for adding to it.
 
    <p>Special thanks go to Doug Bates, Peter Dalgaard, Paul Gilbert, Stefano

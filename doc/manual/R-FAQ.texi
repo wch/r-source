@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2003
-@set FAQ-VERSION 1.7-31, @value{FAQ-YEAR}-07-24
+@set FAQ-VERSION 1.7-33, @value{FAQ-YEAR}-07-28
 @set REL-VERSION 1.7.1
 @set FAQ-ISBN 3-901167-51-X
 @documentlanguage en
@@ -1525,6 +1525,9 @@ distribution.
 @item Devore5
 Data sets and sample analyses from ``Probability and Statistics for
 Engineering and the Sciences (5th ed)'' by Jay L. Devore, 2000, Duxbury.
+@item Devore6
+Data sets and sample analyses from ``Probability and Statistics for
+Engineering and the Sciences (6th ed)'' by Jay L. Devore, 2003, Duxbury.
 @item EMV
 Estimation of missing values in a matrix by a @math{k}-th nearest
 neighboors algorithm.
@@ -1580,6 +1583,10 @@ A set of test nonlinear least squares examples from @acronym{NIST}, the
 U.S. National Institute for Standards and Technology.
 @item Oarray
 Arrays with arbitrary offsets.
+@item PHYLOGR
+Manipulation and analysis of phylogenetically simulated data sets (as
+obtained from PDSIMUL in package PDAP) and phylogenetically-based
+analyses using GLS.
 @item PTAk
 A multiway method to decompose a tensor (array) of any order, as a
 generalisation of SVD also supporting non-identity metrics and
@@ -2310,14 +2317,6 @@ contains
 @table @strong
 @item Dopt
 Finding D-optimal experimental designs.
-
-@c <NOTE>
-@c Moved to Devel for 1.6 as it fails R CMD check.
-@item PHYLOGR
-Manipulation and analysis of phylogenetically simulated data sets (as
-obtained from PDSIMUL in package PDAP) and phylogenetically-based
-analyses using GLS.
-@c </NOTE>
 
 @c <NOTE>
 @c Moved to Devel for 1.6 as it fails R CMD check.
