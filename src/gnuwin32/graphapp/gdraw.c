@@ -140,29 +140,34 @@ void gsetpixel(drawing d, point p, rgb c)
     DeleteObject(br);
 }
 
+typedef struct {
+    HDC dc;
+    int len2; /* squared length of current dash */
+    int curseg, on; /* current dash (0-7), on/off flag */
+    int style, width; 
+    int curx, cury; /* start of current dash */
+} DashStruct;
+
 static void CALLBACK  gLineHelper(int x, int y, LPARAM aa)
 {
-    int i, *a;
-    a = (int *)aa;
-    if (a[0]) {
-	for (i = 0; i < a[6]; i++)
-	    PatBlt((HDC)a[8], x + i*a[4], y + i*a[5], 1, 1, PATCOPY);
-    }
-    a[1] += 1;
-    if (a[1] >= a[2]) {
-	a[1] = 0;
-	a[2] = 0;
-	while (!a[2]) {
-	    double pd;
-	    a[3] = (a[3] + 4) % 32;
-	    pd = ((a[7] >> a[3]) & 15) * a[6];
-	    if (pd > 0) {
-		a[2] = (pd * GetDeviceCaps((HDC)a[8], LOGPIXELSX)) / 72.0 + 0.5;
-		if (a[2] < 1) a[2] = 1;
-	    }
-	    else
-		a[2] = 0;
-	    a[0] = a[0] ? 0 : 1;
+    DashStruct *a = (DashStruct *) aa;
+    int distx, disty;
+
+    distx = x-(a->curx);
+    disty = y-(a->cury);
+    if (distx*distx+disty*disty >= (a->len2)) {
+	if (a->on) 
+	    LineTo(a->dc,x,y);
+	else 
+	    MoveToEx(a->dc,x,y,NULL);
+	a->curx = x;
+	a->cury = y;
+	a->len2 = 0;
+	while (!a->len2) {
+	    a->curseg = (a->curseg + 4) % 32;
+	    a->len2 = (((a->style) >> (a->curseg)) & 15) * (a->width);
+	    a->len2 = (a->len2) * (a->len2);
+	    a->on = (a->on) ? 0 : 1;
 	}
     }
 }
@@ -178,17 +183,18 @@ void gdrawline(drawing d, int width, int style, rgb c, point p1, point p2)
 void gdrawpolyline(drawing d, int width, int style, rgb c,
                    point p[], int n, int closepath)
 {
-    int a[9];
+    int tmpx, tmpy, tmp;
     HDC dc = GETHDC(d);
     COLORREF winrgb = getwinrgb(d, c);
+    HPEN gpen;
     int i;
 
     if (n < 2) return;
     if (!style) {
-	HPEN gpen = CreatePen(PS_INSIDEFRAME, width, winrgb);
+	gpen = CreatePen(PS_INSIDEFRAME, width, winrgb);
 	SelectObject(dc, gpen);
 	SetROP2(dc, R2_COPYPEN);
-	MoveToEx(dc, p[0].x, p[0].y, NULL);
+        MoveToEx(dc, p[0].x, p[0].y, NULL);
         for (i = 1; i < n ; i++)
 	      LineTo(dc, p[i].x, p[i].y);
         if (closepath) LineTo(dc, p[0].x, p[0].y);
@@ -196,50 +202,49 @@ void gdrawpolyline(drawing d, int width, int style, rgb c,
 	DeleteObject(gpen);
     }
      else {
-	point pshift;
-	double pd;
-	HBRUSH br = CreateSolidBrush(getwinrgb(d,c));
-	fix_brush(dc, d, br);
-	SelectObject(dc, br);
-	a[0] = 1;
-	a[1] = 0;
-	pd =(style & 15)*width;
-	a[2] = (pd * GetDeviceCaps(dc,LOGPIXELSX)) / 72.0 + 0.5;
-	if (a[2] < 1) a[2] = 1;
-	a[3] = 0;
-	a[6] = width;
-	a[7] = style;
-	a[8] = (int) dc;
+	LOGBRUSH lb;
+	DashStruct a;   
+        lb.lbStyle = BS_SOLID;
+        lb.lbColor = winrgb;
+	lb.lbHatch = 0;
+	gpen = ExtCreatePen(PS_GEOMETRIC|PS_SOLID|PS_ENDCAP_FLAT|PS_JOIN_ROUND,
+			    width, &lb, 0, NULL);
+	SelectObject(dc, gpen);
+	SetROP2(dc, R2_COPYPEN);	
+	a.on = 1;
+	a.dc = dc;
+	a.len2 =(style & 15)*width;
+	a.len2 = (a.len2)*(a.len2); 
+	a.curseg = 0;
+	a.style = style;
+	a.width = width;
+	a.curx = p[0].x;
+	a.cury = p[0].y;
+	MoveToEx(dc, p[0].x, p[0].y, NULL);
+	BeginPath(dc);
         for ( i = 1; i < n; i++) {
-	  if (p[i-1].x != p[i].x) {
-	        a[4] = 0;
-	        a[5] = 1;
-	        pshift = pt(0, width/2);
+ 	  LineDDA(p[i-1].x, p[i-1].y, p[i].x, p[i].y, gLineHelper, 
+		  (LPARAM) &a);
+	  if ((p[i].x != a.curx) || (p[i].y != a.cury)) {
+	      if (a.on) LineTo(dc, p[i].x, p[i].y);
+	      else MoveToEx(dc, p[i].x, p[i].y, NULL);
+	      tmpx = (a.curx-p[i].x);
+	      tmpy = (a.cury-p[i].y);
+	      tmp = tmpx*tmpx + tmpy*tmpy;
+	      a.len2 = a.len2+tmp-2*sqrt((double)(tmp*a.len2));
+	      a.curx = p[i].x;
+	      a.cury = p[i].y;
 	  }
-	  else {
-	        a[4] = 1;
-	        a[5] = 0;
-	        pshift = pt(width/2,0);
-	  }
- 	  LineDDA(p[i-1].x, p[i-1].y, p[i].x, p[i].y, gLineHelper, (LPARAM) a);
         }
         if (closepath) {
-	  if (p[n-1].x != p[0].x) {
-
-
-	        a[4] = 0;
-	        a[5] = 1;
-	        pshift = pt(0, width/2);
-	  }
-	  else {
-	        a[4] = 1;
-	        a[5] = 0;
-	        pshift = pt(width/2,0);
-	  }
-          LineDDA(p[n-1].x, p[n-1].y, p[0].x, p[0].y, gLineHelper, (LPARAM) a);
+          LineDDA(p[n-1].x, p[n-1].y, p[0].x, p[0].y, gLineHelper, 
+		  (LPARAM) &a);
+	  if (a.on) LineTo(dc,p[0].x,p[0].y);
         }
-	SelectObject(dc, GetStockObject(NULL_BRUSH));
-	DeleteObject(br);
+	EndPath(dc);
+	StrokePath(dc);
+	SelectObject(dc, GetStockObject(NULL_PEN));
+	DeleteObject(gpen);
     }
 }
 
@@ -327,7 +332,6 @@ void gfillellipse(drawing d, rgb fill, rect r)
 	gfillrect(d, fill, r);
 	return;
     }
-
     dc = GETHDC(d);
     br = CreateSolidBrush(getwinrgb(d, fill));
     fix_brush(dc, d, br);
@@ -549,15 +553,11 @@ font gnewfont(drawing d, char *face, int style, int size, double rot)
     font obj;
     HFONT hf;
     LOGFONT lf;
-    double pixs;
 
-    pixs = size/72.0;
     if ((rot <= 45.0) || ((rot > 135) && (rot <= 225)) || (rot > 315))
-	pixs = pixs * devicepixelsy(d);
+	lf.lfHeight = -MulDiv(size, devicepixelsy(d), 72);
     else
-	pixs = pixs * devicepixelsx(d);
-
-    lf.lfHeight = (int) -(pixs + 0.5);
+	lf.lfHeight = -MulDiv(size, devicepixelsx(d), 72);
 
     lf.lfWidth = 0 ;
     lf.lfEscapement = lf.lfOrientation = (int) 10*rot;

@@ -217,7 +217,7 @@ ThreadedReadConsole(char *prompt, char *buf, int len, int addtohistory)
   tbuf = buf;
   tlen = len;
   thist = addtohistory;
-  PulseEvent(EhiWakeUp);
+  SetEvent(EhiWakeUp);
   while (1) {
     WaitMessage();
     if (lineavailable) break;

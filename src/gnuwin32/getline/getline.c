@@ -135,7 +135,7 @@ static void     gl_beep(void);          /* try to play a system beep sound */
 #ifdef Win32
 /* guido masarotto (3/12/98)*/
 #include <windows.h>
-static HANDLE Win32InputStream = NULL;
+static HANDLE Win32OutputStream, Win32InputStream = NULL;
 static DWORD OldWin32Mode, AltIsDown;
 #endif
 
@@ -238,8 +238,10 @@ gl_char_init()			/* turn off input echo */
 
 #ifdef Win32
 /* guido masarotto (3/12/98)*/   
-   if (!Win32InputStream)  
+   if (!Win32InputStream) {
        Win32InputStream = GetStdHandle(STD_INPUT_HANDLE);
+       Win32OutputStream = GetStdHandle(STD_OUTPUT_HANDLE);	
+   }
    GetConsoleMode(Win32InputStream,&OldWin32Mode);
    SetConsoleMode(Win32InputStream, 0);
    AltIsDown = 0;
@@ -354,9 +356,17 @@ gl_getc(void)
     INPUT_RECORD r;
     DWORD st;
     WORD vk;
+    CONSOLE_SCREEN_BUFFER_INFO csb;
     int bbb = 0, nAlt=0, n, d;
+
     c = 0; 
     while (!c) {
+      /* 
+	   Following two lines seem to be needed under Win2k 
+	   to reshow the cursor 
+      */
+      GetConsoleScreenBufferInfo(Win32OutputStream, &csb);
+      SetConsoleCursorPosition(Win32OutputStream, csb.dwCursorPosition);
       ReadConsoleInput(Win32InputStream, &r, 1, &a);
       if (!(r.EventType == KEY_EVENT)) break;
       st = r.Event.KeyEvent.dwControlKeyState;

@@ -144,6 +144,11 @@ The range of allowed text sizes in a window/win.print device has been
 increased, so smaller values of cex will work.  (The smallest allowed
 text size is 2pt not 8pt.)
 
+Interactive use of Rterm.exe on Windows 2000 systems is now possible (including
+under ESS).
+
+Better rendering of wide (lwd>1), dashed (lty != "solid") lines on the 
+screen device.
 
 rw1011
 ======

@@ -892,6 +892,7 @@ static void CHelpKeyIn(control w,int key)
     DevDesc *dd = (DevDesc *) getdata(w);
     gadesc *xd = (gadesc *) dd->deviceSpecific;
 
+    if (xd->replaying) return;
     switch (key) {
       case INS:
 	menuadd(xd->madd);
@@ -910,6 +911,7 @@ static void NHelpKeyIn(control w,int key)
     DevDesc *dd = (DevDesc *) getdata(w);
     gadesc *xd = (gadesc *) dd->deviceSpecific;
 
+    if (xd->replaying) return;
     if (ggetkeystate() != CtrlKey)
 	return;
     key = 'A' + key - 1;
@@ -929,7 +931,7 @@ static void mbarf(control m)
     gadesc *xd = (gadesc *) dd->deviceSpecific;
 
     GETDL;
-    if (pEXIST) {
+    if (pEXIST && !xd->replaying) {
 	enable(xd->mnext);
 	enable(xd->mprev);
 	if ((pCURRENTPOS >= 0) && (dd->displayList != R_NilValue))
@@ -945,7 +947,11 @@ static void mbarf(control m)
 	disable(xd->msvar);
 	disable(xd->mclear);
     }
-    if (dd->displayList != R_NilValue) {
+    if (!xd->replaying)
+	enable(xd->mgvar);
+    else
+	disable(xd->mgvar);
+    if ((dd->displayList != R_NilValue) && !xd->replaying) {
 	enable(xd->madd);
 	enable(xd->mprint);
 	enable(xd->mpng);
