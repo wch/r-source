@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2005
-@set FAQ-VERSION 2.0.@value{FAQ-YEAR}-01-25
+@set FAQ-VERSION 2.0.@value{FAQ-YEAR}-01-27
 @set REL-VERSION 2.0.1
 @set REL-YEAR 2004
 @c <COMMENT>
@@ -1750,6 +1750,8 @@ and Truncated Data'' by Klein and Moeschberger, 1997, Springer.
 Functions for kernel smoothing (and density estimation) corresponding to
 the book ``Kernel Smoothing'' by M. P. Wand and M. C. Jones, 1995.
 @emph{Recommended}.
+@item LogicReg
+Routines for Logic Regression.
 @item MASS
 Functions and datasets from the main package of Venables and Ripley,
 ``Modern Applied Statistics with S''.  Contained in the @file{VR}
@@ -2725,6 +2727,10 @@ Jaccard and Kulczynski distance measures, clustering of MDS scores, and
 nearest neighbor based noise detection.
 @item princurve
 Fits a principal curve to a matrix of points in arbitrary dimension.
+@c <FIXME 2.1.0>
+@c @item proto
+@c An object oriented system using prototype or object-based (rather than
+@c class-based) object oriented ideas.
 @item pspline
 Smoothing splines with penalties on order @math{m} derivatives.
 @item psy
