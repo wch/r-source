@@ -32,18 +32,13 @@
 
     /* Functions used in the parsing process */
 
-static void	AddComment(SEXP);
 static void	CheckFormalArgs(SEXP, SEXP);
 static SEXP	FirstArg(SEXP, SEXP);
 static SEXP	GrowList(SEXP, SEXP);
 static void	IfPush(void);
-/* NOT_used static int	IsComment(SEXP);*/
 static int	KeywordLookup(char*);
 static SEXP	NewList(void);
 static SEXP	NextArg(SEXP, SEXP, SEXP);
-static void	PopComment(void);
-static void	PushComment(void);
-static void	ResetComment(void);
 static SEXP	TagArg(SEXP, SEXP);
 
 
@@ -64,7 +59,18 @@ static int	GenerateCode = 0;
 static int	EndOfFile = 0;
 static int	xxgetc();
 static int	xxungetc();
+static int 	xxcharcount, xxcharsave;
 
+/* Handle function source */
+
+/* FIXME: This'll be a bit of a kludge - the arrays should be
+   dynamically extendable for a start... */
+
+static unsigned char FunctionSource[65536];
+static unsigned char SourceLine[1024];
+static unsigned char *FunctionStart[256], *SourcePtr;
+int FunctionLevel = 0;
+ 
 /* Soon to be defunct entry points */
 
 void		R_SetInput(int);
@@ -209,7 +215,7 @@ forcond :	'(' SYMBOL IN expr ')' 		{ $$ = xxforcond($2,$4); }
 exprlist:					{ $$ = xxexprlist0(); }
 	|	expr				{ $$ = xxexprlist1($1); }
 	|	exprlist ';' expr		{ $$ = xxexprlist2($1,$3); }
-	|	exprlist ';'			{ $$ = $1; AddComment(CAR($$));}
+	|	exprlist ';'			{ $$ = $1; }
 	|	exprlist '\n' expr		{ $$ = xxexprlist2($1,$3); }
 	|	exprlist '\n'			{ $$ = $1;}
 	;
@@ -251,14 +257,20 @@ static int xxgetc(void)
     if (c == EOF) {
         EndOfFile = 1;
         return R_EOF;
-    }  
+    }
     if (c == '\n') R_ParseError += 1;
+    if ( GenerateCode && FunctionLevel > 0 )
+	*SourcePtr++ = c;
+    xxcharcount++;
     return c;
 }
        
 static int xxungetc(int c)
-{      
+{
     if (c == '\n') R_ParseError -= 1;
+    if ( GenerateCode && FunctionLevel > 0 )
+	SourcePtr--;
+    xxcharcount--;
     return ptr_ungetc(c);
 }      
 
@@ -341,7 +353,6 @@ static SEXP xxexprlist0()
 static SEXP xxexprlist1(SEXP expr)
 {
     SEXP ans,tmp;
-    AddComment(expr);
     if (GenerateCode) {
 	PROTECT(tmp = NewList());
 	PROTECT(ans = GrowList(tmp, expr));
@@ -356,7 +367,6 @@ static SEXP xxexprlist1(SEXP expr)
 static SEXP xxexprlist2(SEXP exprlist, SEXP expr)
 {
     SEXP ans;
-    AddComment(expr);
     if (GenerateCode)
 	PROTECT(ans = GrowList(exprlist, expr));
     else
@@ -575,13 +585,41 @@ static SEXP xxfuncall(SEXP expr, SEXP args)
 
 static SEXP xxdefun(SEXP fname, SEXP formals, SEXP body)
 {
+
     SEXP ans;
-    AddComment(body);
-    if (GenerateCode)
-	PROTECT(ans = lang3(fname, CDR(formals), body));
+    SEXP source;
+
+    if (GenerateCode) {
+	{
+	    unsigned char *p, *p0, *end;
+	    int lines = 0, nc;
+	    
+	    end = SourcePtr - (xxcharcount - xxcharsave);
+
+	    for (p = FunctionStart[FunctionLevel]; p < end ; p++ )
+		if (*p == '\n') lines++;
+	    if ( *(end - 1) != '\n' ) lines++;
+	    PROTECT(source = allocVector(STRSXP, lines));
+	    p0 = FunctionStart[FunctionLevel];
+	    lines = 0;
+	    for (p = FunctionStart[FunctionLevel]; p < end ; p++ )
+		if ( *p == '\n' || p == end - 1 ) {
+		    nc = p - p0;
+		    if (*p != '\n') 
+			nc++; 
+		    strncpy(SourceLine, p0, nc);
+		    SourceLine[nc] = '\0';
+		    STRING(source)[lines++]  = mkChar(SourceLine);
+		    p0 = p + 1;
+		}
+	    /* PrintValue(source); */
+	}
+	FunctionLevel--;
+	PROTECT(ans = lang4(fname, CDR(formals), body, source));
+	UNPROTECT_PTR(source);
+    }
     else
 	PROTECT(ans = R_NilValue);
-    PopComment();
     UNPROTECT_PTR(body);
     UNPROTECT_PTR(formals);
     return ans;
@@ -693,62 +731,6 @@ static SEXP GrowList(SEXP l, SEXP s)
     return l;
 }
 
-/* Comment Handling :R_CommentSxp is of the same form as an expression */
-/* list, each time a new { is encountered a new element is placed in the */
-/* R_CommentSxp and when a } is encountered it is removed. */
-
-static void ResetComment(void)
-{
-    R_CommentSxp = CONS(R_NilValue, R_NilValue);
-}
-
-static void PushComment(void)
-{
-    if (GenerateCode)
-	R_CommentSxp = CONS(R_NilValue, R_CommentSxp);
-}
-
-static void PopComment(void)
-{
-    if (GenerateCode)
-	R_CommentSxp = CDR(R_CommentSxp);
-}
-
-#ifdef NOT_used
-int IsComment(SEXP l)
-{
-    if (isList(l) && isString(CAR(l))
-	&& !strncmp(CHAR(STRING(CAR(l))[0]), "#", 1))
-	return 1;
-    else
-	return 0;
-}
-#endif
-
-static void AddComment(SEXP l)
-{
-    SEXP tcmt, cmt;
-    int i, ncmt;
-
-    if(GenerateCode) {
-	tcmt = CAR(R_CommentSxp);
-	/* Return if there are no comments */
-	if (tcmt == R_NilValue || l == R_NilValue)
-	    return;
-	/* Attach the comments as a comment attribute */
-	ncmt = length(tcmt);
-	cmt = allocVector(STRSXP, ncmt);
-	for(i=0 ; i<ncmt ; i++) {
-	    STRING(cmt)[i] = CAR(tcmt);
-	    tcmt = CDR(tcmt);
-	}
-	PROTECT(cmt);
-	setAttrib(l, R_CommentSymbol, cmt);
-	UNPROTECT(1);
-	/* Reset the comment accumulator */
-	CAR(R_CommentSxp) = R_NilValue;
-    }
-}
 
 static SEXP FirstArg(SEXP s, SEXP tag)
 {
@@ -831,7 +813,8 @@ static void ParseInit()
     SavedLval = R_NilValue;
     EatLines = 0;
     EndOfFile = 0;
-    ResetComment();
+    SourcePtr = FunctionSource;
+    xxcharcount = 0;
 }
 
 static SEXP R_Parse1(int *status)
@@ -1373,11 +1356,6 @@ static int SkipComment(void)
     while ((c = xxgetc()) != '\n' && c != R_EOF)
 	*p++ = c;
     *p = '\0';
-    if (GenerateCode && R_CommentSxp != R_NilValue) {
-	f = mkChar(yytext);
-	f = CONS(f, R_NilValue);
-	CAR(R_CommentSxp) = listAppend(CAR(R_CommentSxp), f);
-    }
     if (c == R_EOF) EndOfFile = 2;
     return c;
 }
@@ -1547,7 +1525,13 @@ static int SymbolValue(int c)
     xxungetc(c);
     *p = '\0';
     if ((kw = KeywordLookup(yytext))) {
-	if(kw == FUNCTION) PushComment();
+	if ( kw == FUNCTION ) {
+	    if ( FunctionLevel++ == 0 ) {
+		strcpy(FunctionSource, "function");
+		SourcePtr = FunctionSource + 8;
+	    }
+	    FunctionStart[FunctionLevel] = SourcePtr - 8;
+	}
 	return kw;
     }
     PROTECT(yylval = install(yytext));
@@ -1567,6 +1551,8 @@ static int token()
 	SavedToken = 0;
 	return c;
     }
+    xxcharsave = xxcharcount; /* want to be able to go back up one token */
+
     c = SkipSpace();
     if (c == '#') c = SkipComment();
     if (c == R_EOF) return END_OF_INPUT;
@@ -1894,7 +1880,6 @@ int yylex(void)
     case LBRACE:
 	*++contextp = tok;
 	EatLines = 1;
-	PushComment();
 	break;
 
     case '(':
@@ -1911,8 +1896,6 @@ int yylex(void)
     case RBRACE:
 	while (*contextp == 'i')
 	    ifpop();
-	if(*contextp == LBRACE)
-	    PopComment();
 	*contextp-- = 0;
 	break;
 
