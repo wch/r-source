@@ -65,7 +65,7 @@ xgettext2pot <- function(dir, potFile)
                  '"Last-Translator: FULL NAME <EMAIL@ADDRESS>\\n"',
                  '"Language-Team: LANGUAGE <LL@li.org>\\n"',
                  '"MIME-Version: 1.0\\n"',
-                 '"Content-Type: text/plain; charset=ASCII\\n"',
+                 '"Content-Type: text/plain; charset=CHARSET\\n"',
                  '"Content-Transfer-Encoding: 8bit\\n"', ''))
     for(e in tmp)
         writeLines(con=con, c('', paste('msgid', e), 'msgstr ""'))
