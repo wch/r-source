@@ -655,13 +655,13 @@ The linear algebra routines in @R{} can make use of enhanced BLAS (Basic
 Linear Algebra Subprograms, @uref{http://www.netlib.org/blas/faq.html})
 routines.  Some are compiler-system-specific (@code{libsunperf} on Sun
 Sparc@footnote{Using the SunPro @command{cc} and @command{f95}
-compilers}, @code{libscs} and @code{libcomplib.sgimath} on SGI,
-@code{libessl} on IBM) but ATLAS (@uref{http://www.netlib.org/atlas/})
-is a `tuned' BLAS that runs on a wide range of platforms.  If no more
-specific library is found, a @code{libblas} library in the library path
-will be used.  You can specify a specific BLAS library by the
-configuration option @option{--with-blas} and not to use an external
-BLAS library by @option{--without-blas}.
+compilers}, @code{libessl} on IBM) but ATLAS
+(@uref{http://www.netlib.org/atlas/}) is a `tuned' BLAS that runs on a
+wide range of platforms.  If no more specific library is found, a
+@code{libblas} library in the library path will be used.  You can
+specify a specific BLAS library by the configuration option
+@option{--with-blas} and not to use an external BLAS library by
+@option{--without-blas}.
 
 Note that the BLAS library will be used for several add-on packages as
 well as for @R{} itself.  This means that it is better to use a shared
@@ -675,7 +675,7 @@ Optimized versions of LAPACK are available, but no provision is made for
 using them with @R{} as the likely performance gains are thought to be
 small.
 
-As with all libraries, you need to ensure that they are @R{} were
+As with all libraries, you need to ensure that they and @R{} were
 compiled with compatible compilers and flags.  For example, this means
 that on Sun Sparc using the native compilers the flag @option{-dalign} is
 needed so @code{libsunperf} can be used.
