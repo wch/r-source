@@ -26,7 +26,7 @@
 /* MEMCMP: a general, quicker (in principle) test for non-recursive
    vectors than comparing elements in a loop.
    Depends on the existence of memcmp (which is checked and set in
-   config.h by autoconf. 
+   config.h by autoconf.
 
    One detail is that using memcmp on double's implies that different
    NaN bit patterns (if they occur) are different.  The non-memcmp
@@ -140,10 +140,15 @@ static Rboolean compute_identical(SEXP x, SEXP y)
     {
 	long i, n = length(x);
 	if(n != length(y)) return FALSE;
-	for(i=0; i<n; i++)
+	for(i=0; i<n; i++) {
+	    Rboolean na1 = (STRING_ELT(x, i) == NA_STRING),
+		na2 = (STRING_ELT(y, i) == NA_STRING);
+	    if(na1 ^ na2) return FALSE;
+	    if(na1 && na2) continue;
 	    if(strcmp(CHAR(STRING_ELT(x, i)),
 		      CHAR(STRING_ELT(y, i))) != 0)
 		return FALSE;
+	}
 	return TRUE;
     }
     case VECSXP:
