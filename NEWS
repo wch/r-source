@@ -39,6 +39,8 @@ NEW FEATURES
 	can be specified by a new argument `fonts' defaulting to the
 	value of a new option "X11fonts".
 
+    o	strsplit() now has a `fixed' argument and split="" is optimized.
+
 
 UTILITIES
 
@@ -46,7 +48,7 @@ UTILITIES
 	(uniform & normal) and set.seed(1).
 	example(*, setRNG = TRUE) does the same.
 
-    o	undoc() in `tools' has a new default of	 `use.values = NULL'
+    o	undoc() in `tools' has a new default of `use.values = NULL'
 	which produces a warning whenever the default values of function
 	arguments differ between documentation and code.
 	Note that this affects "R CMD check" as well.
@@ -82,8 +84,8 @@ INSTALLATION CHANGES
 BUG FIXES
 
     o	contrasts() turns a logical variable into a factor.  This now
-	always has levels FALSE,TRUE even if only one (or none) of
-	these occur in the variable.
+	always has levels c("FALSE", "TRUE") even if only one (or
+	none) of these occur in the variable.
 
 
 

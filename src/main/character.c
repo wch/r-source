@@ -229,9 +229,9 @@ SEXP do_substrgets(SEXP call, SEXP op, SEXP args, SEXP env)
 SEXP do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP s, t, tok, x;
-    int i, j, len, tlen, ntok;
-    int extended_opt, eflags;
-    char *pt = NULL, *split = "", *bufp;
+    int i, j, len, tlen, ntok, slen;
+    int extended_opt, eflags, fixed;
+    char *buf, *pt = NULL, *split = "", *bufp, *laststart;
     regex_t reg;
     regmatch_t regmatch[1];
 
@@ -239,9 +239,10 @@ SEXP do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
     x = CAR(args);
     tok = CADR(args);
     extended_opt = asLogical(CADDR(args));
+    fixed = asLogical(CADDDR(args));
 
     if(!isString(x) || !isString(tok))
-	errorcall_return(call,"non-character argument in strsplit()");
+	errorcall_return(call, "non-character argument in strsplit()");
     if(extended_opt == NA_INTEGER) extended_opt = 1;
 
     eflags = 0;
@@ -249,22 +250,27 @@ SEXP do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 
     len = LENGTH(x);
     tlen = LENGTH(tok);
+    /* special case split="" for efficiency */
+    if(tlen == 1 && strlen(CHAR(STRING_ELT(tok, 0))) == 0) tlen = 0;
+
     PROTECT(s = allocVector(VECSXP, len));
     for(i = 0; i < len; i++) {
-	if (STRING_ELT(x,i)==NA_STRING){
-	    PROTECT(t=allocVector(STRSXP,1));
-	    SET_STRING_ELT(t,0,NA_STRING);
-	    SET_VECTOR_ELT(s,i,t);
+	if (STRING_ELT(x, i) == NA_STRING){
+	    PROTECT(t = allocVector(STRSXP, 1));
+	    SET_STRING_ELT(t, 0, NA_STRING);
+	    SET_VECTOR_ELT(s, i, t);
 	    UNPROTECT(1);
 	    continue;
 	}
-	AllocBuffer(strlen(CHAR(STRING_ELT(x, i))));
-	strcpy(buff, CHAR(STRING_ELT(x, i)));
+	/* buffer was only used for reading
+	   AllocBuffer(strlen(CHAR(STRING_ELT(x, i))));
+	   strcpy(buff, CHAR(STRING_ELT(x, i))); */
+	buf = CHAR(STRING_ELT(x, i));
 	if(tlen > 0) {
-	    /* NA token doesn't split*/
-	    if (STRING_ELT(tok,i % tlen)==NA_STRING){
-		    PROTECT(t=allocVector(STRSXP,1));
-		    bufp = buff;
+	    /* NA token doesn't split */
+	    if (STRING_ELT(tok,i % tlen) == NA_STRING){
+		    PROTECT(t = allocVector(STRSXP, 1));
+		    bufp = buf;
 		    SET_STRING_ELT(t, 0, mkChar(bufp));
 		    SET_VECTOR_ELT(s, i, t);
 		    UNPROTECT(1);
@@ -272,24 +278,37 @@ SEXP do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 	    }
 	    /* find out how many splits there will be */
 	    split = CHAR(STRING_ELT(tok, i % tlen));
+	    slen = strlen(split);
 	    ntok = 0;
-	    /* Careful: need to distinguish empty (rm_eo == 0) from
-	       non-empty (rm_eo > 0) matches.  In the former case, the
-	       token extracted is the next character.  Otherwise, it is
-	       everything before the start of the match, which may be
-	       the empty string (not a ``token'' in the strict sense).
-	       */
-	    if(regcomp(&reg, split, eflags))
-		errorcall(call, "invalid split pattern");
-	    bufp = buff;
-	    if(*bufp != '\0') {
-		while(regexec(&reg, bufp, 1, regmatch, eflags) == 0) {
-		    /* Empty matches get the next char, so move by
-		       one. */
-		    bufp += MAX(regmatch[0].rm_eo, 1);
+	    if(fixed) {
+		laststart = buf;
+		for(bufp = buf; bufp-buf < strlen(buf); bufp++) {
+		    if((slen == 1 && *bufp != *split) || 
+		       (slen > 1 && strncmp(bufp, split, slen))) continue;
 		    ntok++;
-		    if (*bufp == '\0')
-			break;
+		    bufp += MAX(slen - 1, 0);
+		    laststart = bufp+1;
+		}
+		bufp = laststart;
+	    } else {
+		/* Careful: need to distinguish empty (rm_eo == 0) from
+		   non-empty (rm_eo > 0) matches.  In the former case, the
+		   token extracted is the next character.  Otherwise, it is
+		   everything before the start of the match, which may be
+		   the empty string (not a ``token'' in the strict sense).
+		*/
+		if(regcomp(&reg, split, eflags))
+		    errorcall(call, "invalid split pattern");
+		bufp = buf;
+		if(*bufp != '\0') {
+		    while(regexec(&reg, bufp, 1, regmatch, eflags) == 0) {
+			/* Empty matches get the next char, so move by
+			   one. */
+			bufp += MAX(regmatch[0].rm_eo, 1);
+			ntok++;
+			if (*bufp == '\0')
+			    break;
+		    }
 		}
 	    }
 	    if(*bufp == '\0')
@@ -297,36 +316,53 @@ SEXP do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 	    else
 		PROTECT(t = allocVector(STRSXP, ntok + 1));
 	    /* and fill with the splits */
-	    bufp = buff;
-	    pt = (char *) realloc(pt, (strlen(buff)+1) * sizeof(char));
+	    laststart = bufp = buf;
+	    pt = (char *) realloc(pt, (strlen(buf)+1) * sizeof(char));
 	    for(j = 0; j < ntok; j++) {
-		regexec(&reg, bufp, 1, regmatch, eflags);
-		if(regmatch[0].rm_eo > 0) {
-		    /* Match was non-empty. */
-		    if(regmatch[0].rm_so > 0)
-			strncpy(pt, bufp, regmatch[0].rm_so);
-		    pt[regmatch[0].rm_so] = '\0';
-		    bufp += regmatch[0].rm_eo;
+		if(fixed) {
+		    for(; bufp - buf < strlen(buf); bufp++) {
+			if((slen == 1 && *bufp != *split) || 
+			   (slen > 1 && strncmp(bufp, split, slen))) continue;
+			if(slen) {
+			    strncpy(pt, laststart, bufp - laststart);
+			    pt[bufp - laststart] = '\0';
+			} else {
+			    pt[0] = *bufp; pt[1] ='\0';
+			}
+			bufp += MAX(slen-1, 0);
+			laststart = bufp+1;
+			SET_STRING_ELT(t, j, mkChar(pt));
+			break;
+		    }
+		    bufp = laststart;
+		} else {
+		    regexec(&reg, bufp, 1, regmatch, eflags);
+		    if(regmatch[0].rm_eo > 0) {
+			/* Match was non-empty. */
+			if(regmatch[0].rm_so > 0)
+			    strncpy(pt, bufp, regmatch[0].rm_so);
+			pt[regmatch[0].rm_so] = '\0';
+			bufp += regmatch[0].rm_eo;
+		    } else {
+			/* Match was empty. */
+			pt[0] = *bufp;
+			pt[1] = '\0';
+			bufp++;
+		    }
+		    SET_STRING_ELT(t, j, mkChar(pt));
 		}
-		else {
-		    /* Match was empty. */
-		    pt[0] = *bufp;
-		    pt[1] = '\0';
-		    bufp++;
-		}
-		SET_STRING_ELT(t, j, mkChar(pt));
 	    }
 	    if(*bufp != '\0')
 		SET_STRING_ELT(t, ntok, mkChar(bufp));
-	    regfree(&reg);
-	}
-	else {
+	    if(!fixed) regfree(&reg);
+	} else {
+	    /* split into individual characters */
 	    char bf[2];
-	    ntok = strlen(buff);
+	    ntok = strlen(buf);
 	    PROTECT(t = allocVector(STRSXP, ntok));
-	    bf[1]='\0';
+	    bf[1] = '\0';
 	    for (j = 0; j < ntok; j++) {
-		bf[0]=buff[j];
+		bf[0] = buf[j];
 		SET_STRING_ELT(t, j, mkChar(bf));
 	    }
 	}
@@ -337,7 +373,7 @@ SEXP do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
     if (getAttrib(x, R_NamesSymbol) != R_NilValue)
 	namesgets(s, getAttrib(x, R_NamesSymbol));
     UNPROTECT(1);
-    AllocBuffer(-1);
+    /* AllocBuffer(-1); */
     free(pt);
     return s;
 }
