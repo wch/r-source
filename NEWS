@@ -39,8 +39,10 @@ BUG FIXES
     o	ls.str(envir = environment(F)) now works (when F is a function).
 
     o	pie() now has a `border' (and 'lty') argument which allows empty
-        slice borders and makes pie() useable for hundreds of slices.
+	slice borders and makes pie() useable for hundreds of slices.
 
+    o	all.equal.character() now works correctly also when NAs dont'
+	match (PR#1767).
 
 
 		CHANGES IN R VERSION 1.5.1
