@@ -4,6 +4,11 @@
 \alias{functionWithTrace-class}
 \alias{MethodDefinitionWithTrace-class}
 \alias{MethodWithNextWithTrace-class}
+%% private
+\alias{.untracedFunction}
+\alias{.makeTracedFunction}
+\alias{.doTracePrint}
+\alias{.InitTraceFunctions}
 \title{Classes Used Internally to Control Tracing }
 \description{ The classes described  here are used by the R function
   \code{\link{trace}} to create versions of functions and methods
