@@ -4,7 +4,8 @@
 \usage{
 codoc(dir, use.values = FALSE, use.positions = TRUE,
       ignore.generic.functions = FALSE,
-      keep.tempfiles = FALSE)
+      keep.tempfiles = FALSE,
+      verbose = getOption("verbose"))
 }
 \description{
   Find inconsistencies between actual and documented usage of \R
@@ -25,6 +26,8 @@ codoc(dir, use.values = FALSE, use.positions = TRUE,
     which contains \code{"UseMethod"} are ignored.}
   \item{keep.tempfiles}{if \code{TRUE}, keep temporary code and docs
     files used for comparison.  This is useful for debugging.}
+  \item{verbose}{a logical.  If \code{TRUE}, additional diagnostics are
+    printed.}
 }
 \details{
   The purpose of this function is to check whether the documented usage
@@ -41,7 +44,7 @@ codoc(dir, use.values = FALSE, use.positions = TRUE,
   and docs environment, the formals are compared according to the values
   of the arguments \code{use.positions} and \code{use.values}.
 
-  Currently, synopsis sections are ignored, and multiple usage examples
+  Currently, synopsis sections are used, but multiple usage examples
   (such as in \code{\link{abline}}) are not combined when building the
   stubs.
 }
