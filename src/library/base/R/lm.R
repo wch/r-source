@@ -335,7 +335,7 @@ print.summary.lm <-
 	cat(",\tAdjusted R-squared:",formatC(x$adj.r.squared,d=digits),
 	    "\nF-statistic:", formatC(x$fstatistic[1], digits=digits),
 	    "on", x$fstatistic[2], "and",
-	    x$fstatistic[3], "degrees of freedom,\tp-value:",
+	    x$fstatistic[3], "DF,  p-value:",
 	    formatC(1 - pf(x$fstatistic[1], x$fstatistic[2],
 			   x$fstatistic[3]), dig=digits),
 	    "\n")
