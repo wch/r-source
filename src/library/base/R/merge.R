@@ -56,7 +56,7 @@ merge.data.frame <-
         } else {
             ## Do these together for consistency in as.character.
             ## Use same set of names.
-            bx <- x[, by.x]; by <- y[, by.y]
+            bx <- x[, by.x, drop=FALSE]; by <- y[, by.y, drop=FALSE]
             names(bx) <- names(by) <- paste("V", 1:ncol(bx), sep="")
             bz <- do.call("paste", c(rbind(bx, by), sep = "\r"))
             bx <- bz[1:nx]
