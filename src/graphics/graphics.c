@@ -1547,14 +1547,31 @@ static void mapFigureRegion(DevDesc *dd)
 	int mincol, maxcol, minrow, maxrow;
 	double x0, x1, y0, y1;
 	double widths[MAX_LAYOUT_COLS], heights[MAX_LAYOUT_ROWS];
-	layoutRegions(widths, heights, 
-		      GConvertXUnits(1.0, NIC, INCHES, dd)*2.54,
-		      GConvertYUnits(1.0, NIC, INCHES, dd)*2.54, dd);
-	figureExtent(&mincol, &maxcol, &minrow, &maxrow, 
-		     dd->gp.currentFigure, dd);
-	subRegion(&x0, &x1, &y0, &y1,
-		  mincol, maxcol, minrow, maxrow, 
-		  widths, heights, dd);
+	if (dd->gp.layout) {
+		layoutRegions(widths, heights, 
+			      GConvertXUnits(1.0, NIC, INCHES, dd)*2.54,
+			      GConvertYUnits(1.0, NIC, INCHES, dd)*2.54, dd);
+		figureExtent(&mincol, &maxcol, &minrow, &maxrow, 
+			     dd->gp.currentFigure, dd);
+		subRegion(&x0, &x1, &y0, &y1,
+			  mincol, maxcol, minrow, maxrow, 
+			  widths, heights, dd);
+	}
+	else {
+		int row, col;
+		if (dd->gp.mfind) {
+			col = (dd->gp.currentFigure-1) / dd->gp.numrows + 1;
+			row = dd->gp.currentFigure - (col-1)*dd->gp.numcols;
+		}
+		else {
+			row = (dd->gp.currentFigure-1) / dd->gp.numcols + 1;
+			col = dd->gp.currentFigure - (row-1)*dd->gp.numrows;
+		}
+		x0 = (double) (col-1) / dd->gp.numcols;
+		x1 = (double) col / dd->gp.numcols;
+		y0 = (double) (dd->gp.numrows - row) / dd->gp.numrows;
+		y1 = (double) (dd->gp.numrows - row + 1) / dd->gp.numrows;
+	}
 	dd->gp.fig[0] = dd->dp.fig[0] = x0;
 	dd->gp.fig[1] = dd->dp.fig[1] = x1;
 	dd->gp.fig[2] = dd->dp.fig[2] = y0;
@@ -1792,6 +1809,15 @@ int validFigureMargins(DevDesc *dd)
 
 void initDisplayList();
 
+static invalidError(char* message, DevDesc *dd)
+{
+	dd->dp.currentFigure -= 1;
+	if (dd->dp.currentFigure < 1)
+		dd->dp.currentFigure = dd->dp.lastFigure;
+	dd->gp.currentFigure = dd->dp.currentFigure;
+	error(message);
+}
+
 /*  GNewPlot -- Begin a new plot (advance to new frame if needed)  */
 
 void GNewPlot(DevDesc *dd, int recording)
@@ -1830,25 +1856,25 @@ void GNewPlot(DevDesc *dd, int recording)
 	dd->dp.valid = dd->gp.valid = 0;
 	if (!validOuterMargins(dd))
 		if (recording)
-			error("Outer margins too large\n");
+			invalidError("Outer margins too large\n", dd);
 		else
 			GText(0.5, 0.5, NFC, "Outer margins too large", 
 			      0.5, 0.5, 0, dd);
 	else if (!validFigureRegion(dd))
 		if (recording)
-			error("Figure region too large\n");
+			invalidError("Figure region too large\n", dd);
 		else
 			GText(0.5, 0.5, NFC, "Figure region too large", 
 			      0.5, 0.5, 0, dd);
 	else if (!validFigureMargins(dd))
 		if (recording)
-			error("Figure margins too large\n");
+			invalidError("Figure margins too large\n", dd);
 		else
 			GText(0.5, 0.5, NFC, "Figure margins too large", 
 			      0.5, 0.5, 0, dd);
 	else if (!validPlotRegion(dd))
 		if (recording)
-			error("Plot region too large\n");
+			invalidError("Plot region too large\n", dd);
 		else
 			GText(0.5, 0.5, NFC, "Plot region too large", 
 			      0.5, 0.5, 0, dd);
@@ -2107,6 +2133,7 @@ void GInit(GPar *gp)
 	gp->mUnits = LINES;	
 
 	/* Multi-figure parameters */
+	gp->layout = 0;
 	gp->mfind  = 0;
 
 	gp->numrows = 1;
@@ -4893,6 +4920,7 @@ void restoredpSaved(DevDesc *dd)
 			dd->dp.respect[i][j] = dd->dpSaved.respect[i][j];
 		}
 	dd->dp.rspct = dd->dpSaved.rspct;
+	dd->dp.layout = dd->dpSaved.layout;
 	dd->dp.mfind = dd->dpSaved.mfind;
 	dd->dp.new = dd->dpSaved.new;
 	dd->dp.oma[0] = dd->dpSaved.oma[0];
