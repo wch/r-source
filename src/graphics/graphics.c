@@ -37,8 +37,8 @@
 
 	/********************************************************/
 	/*							*/
-	/* 	TRANSFORMATIONS are concerned with converting 	*/
-	/*	locations between coordinate systems and 	*/
+	/*	TRANSFORMATIONS are concerned with converting	*/
+	/*	locations between coordinate systems and	*/
 	/*	dimensions between different units		*/
 	/*							*/
 	/********************************************************/
@@ -46,7 +46,7 @@
 
 int GMapUnits(int);
 		/* Convert an R unit (e.g., "user") into */
-		/* an internal unit (e.g., USER) 	 */
+		/* an internal unit (e.g., USER)	 */
 
 
 void GConvert(double*, double*, int, int, DevDesc*);
@@ -62,8 +62,8 @@ double GConvertYUnits(double, int, int, DevDesc*);
 
 void GReset(DevDesc*);
 		/* Set up the different regions on a device */
-		/* (i.e., inner region, figure region,      */
-		/* plot region) and transformations for     */
+		/* (i.e., inner region, figure region,	    */
+		/* plot region) and transformations for	    */
 		/* associated coordinate systems	    */
 		/* (called whenever anything that affects   */
 		/* the coordinate transformations changes)  */
@@ -97,18 +97,18 @@ void currentFigureLocation(int*, int*, DevDesc*);
 
 	/********************************************************/
 	/*							*/
-	/*	GPAR FUNCTIONS are concerned with operations 	*/
-	/*	on the entire set of graphics parameters for 	*/
-	/* 	a device (e.g., initialisation, saving, and	*/
-	/* 	restoring)					*/
+	/*	GPAR FUNCTIONS are concerned with operations	*/
+	/*	on the entire set of graphics parameters for	*/
+	/*	a device (e.g., initialisation, saving, and	*/
+	/*	restoring)					*/
 	/*							*/
 	/********************************************************/
 
 
 void GInit(GPar*);
-		/* Default the settings for general     */
+		/* Default the settings for general	*/
 		/* graphical parameters (i.e., defaults */
-		/* that do not depend on the device     */
+		/* that do not depend on the device	*/
 		/* type */
 
 
@@ -129,10 +129,10 @@ void GRestorePars(DevDesc*);
 
 	/********************************************************/
 	/*							*/
-	/* 	DEVICE STATE FUNCTIONS are concerned with 	*/
-	/* 	getting and setting the current state of 	*/
-	/* 	the device;  is it ready to be drawn into ?	*/
-	/* 	(i.e., has plot.new been called yet ?)		*/
+	/*	DEVICE STATE FUNCTIONS are concerned with	*/
+	/*	getting and setting the current state of	*/
+	/*	the device;  is it ready to be drawn into ?	*/
+	/*	(i.e., has plot.new been called yet ?)		*/
 	/*							*/
 	/********************************************************/
 
@@ -149,16 +149,16 @@ void GSetState(int, DevDesc*);
 
 	/********************************************************/
 	/*							*/
-	/* 	GRAPHICAL PRIMITIVES are the generic front-end	*/
-	/* 	for the functions that every device driver must */
-	/* 	provide						*/
-	/* 	NOTE that locations supplied to these functions */
+	/*	GRAPHICAL PRIMITIVES are the generic front-end	*/
+	/*	for the functions that every device driver must */
+	/*	provide						*/
+	/*	NOTE that locations supplied to these functions */
 	/*	may be in any of the valid coordinate systems	*/
-	/* 	(each function takes a "coords" parameter to 	*/
+	/*	(each function takes a "coords" parameter to	*/
 	/*	indicate the coordinate system);  the device-	*/
-	/* 	specific version of the function is responsible */
-	/* 	for calling GConvert to get the location into 	*/
-	/* 	device coordinates				*/
+	/*	specific version of the function is responsible */
+	/*	for calling GConvert to get the location into	*/
+	/*	device coordinates				*/
 	/*							*/
 	/********************************************************/
 
@@ -228,15 +228,15 @@ void GText(double, double, int, char*, double, double, double, DevDesc*);
 
 	/********************************************************/
 	/*							*/
-	/* 	GRAPHICAL UTILITIES are functions that produce	*/
-	/* 	graphical output using the graphical primitives */
-	/* 	(i.e., they are generic - NOT device-specific)	*/
+	/*	GRAPHICAL UTILITIES are functions that produce	*/
+	/*	graphical output using the graphical primitives */
+	/*	(i.e., they are generic - NOT device-specific)	*/
 	/*							*/
 	/********************************************************/
 
 
 void GArrow(double, double, double, double, int, double, double, int, DevDesc*);
-		/* draw a line from (x1,y1) to (x2,y2)  */
+		/* draw a line from (x1,y1) to (x2,y2)	*/
 		/* with an arrow head at either or both */
 		/* ends */
 
@@ -269,8 +269,8 @@ void GSymbol(double, double, int, int, DevDesc*);
 
 	/********************************************************/
 	/*							*/
-	/* 	COLOUR CODE is concerned with the internals of 	*/
-	/* 	R colour representation 			*/
+	/*	COLOUR CODE is concerned with the internals of	*/
+	/*	R colour representation				*/
 	/*							*/
 	/********************************************************/
 
@@ -282,7 +282,7 @@ unsigned RGBpar(SEXP, int, DevDesc*);
 
 	/********************************************************/
 	/*							*/
-	/* 	LINE TEXTURE CODE is concerned with the		*/
+	/*	LINE TEXTURE CODE is concerned with the		*/
 	/*	internals of R line texture representation	*/
 	/*							*/
 	/********************************************************/
@@ -292,7 +292,7 @@ unsigned int LTYpar(SEXP, int);
 
 	/********************************************************/
 	/*							*/
-	/* 	DEVICE FUNCTIONS are concerned with the		*/
+	/*	DEVICE FUNCTIONS are concerned with the		*/
 	/*	creation and destruction of devices		*/
 	/*							*/
 	/********************************************************/
@@ -335,8 +335,8 @@ int StartDevice(SEXP, SEXP, int, SEXP, int);
 
 	/********************************************************/
 	/*							*/
-	/* 	DEVICE UTILITIES are concerned with providing  	*/
-	/* 	information for R interpreted functions		*/
+	/*	DEVICE UTILITIES are concerned with providing	*/
+	/*	information for R interpreted functions		*/
 	/*							*/
 	/********************************************************/
 
@@ -375,7 +375,7 @@ void killDevice(int);
  *    the figure region, which defaults from the current
  *    layout (mfrow, mfcol, layout) unless the user specifies
  *    it directly (fig, fin);  the figure margins, which
- *    "stick" to the edges of the plot region;  and thed
+ *    "stick" to the edges of the plot region;	and thed
  *    plot region, which is the figure region less the figure
  *    margins by default unless the user specifies it directly
  *    (plt, pin)
@@ -401,8 +401,8 @@ void killDevice(int);
  *
  *    All of the above, except OMA1..4 and MAR1..4, plus ...
  *
- *      LINES = line coordinates (lines of margin;  based on mex)
- *      CHARS = char coordinates (lines of text;  based on cex)
+ *	LINES = line coordinates (lines of margin;  based on mex)
+ *	CHARS = char coordinates (lines of text;  based on cex)
  *
  *    The function Convert(value, from, to) is provided
  *    to transform between any pair of coordinate systems
@@ -423,12 +423,12 @@ void killDevice(int);
 
 double Log10(double x)
 {
-        return (FINITE(x) && x > 0.0) ? log10(x) : NA_REAL;
+	return (FINITE(x) && x > 0.0) ? log10(x) : NA_REAL;
 }
 
 
 /* In interpreted R, units are as follows:   */
-/* 	1 = "user"			     */
+/*	1 = "user"			     */
 /*	2 = "figure"			     */
 /*	3 = "inches"			     */
 /* the function GMapUnits provides a mapping */
@@ -691,7 +691,7 @@ double GConvertYUnits(double y, int fromUnits, int toUnits, DevDesc *dd)
 }
 
 	/* functions to convert locations from one coordinate system */
-	/* to another                                                */
+	/* to another						     */
 
 	/* forward declarations */
 
@@ -1679,7 +1679,7 @@ static void updateOuterMargins(DevDesc *dd)
 }
 
 /*  mapInner2Dev -- transformation from NIC to Dev  */
-/*  Use this coordinate system for setting up multiple figures  */
+/*  Use this coordinate system for setting up multiple figures	*/
 /*  This is also used when specifying the figure region directly  */
 /*  Note that this is incompatible with S which uses then entire  */
 /*  device surface for such a plot  */
@@ -1986,7 +1986,7 @@ DevDesc *GNewPlot(int recording, int ask)
   int asksave;
 
   /* If there are no active devices */
-  /* check the options for a "default device".  */
+  /* check the options for a "default device".	*/
   /* If there is one, start it up. */
 
   if (NoDevices()) {
@@ -2218,11 +2218,11 @@ void GSetupAxis(int axis, DevDesc *dd)
 
 void GInit(GPar *gp)
 {
-  /*  Set default graphics parameter values in  */
-  /*  a GPar This initialises the plot state,   */
-  /*  plus the other graphical parameters that  */
-  /*  are not the responsibility of the device  */
-  /*  initialisation                            */
+  /*  Set default graphics parameter values in	*/
+  /*  a GPar This initialises the plot state,	*/
+  /*  plus the other graphical parameters that	*/
+  /*  are not the responsibility of the device	*/
+  /*  initialisation				*/
 
   gp->state = 0;
 
@@ -2366,10 +2366,10 @@ void GRestore(DevDesc *dd)
 }
 
 
-	/*  Saving and restoring of "inline" graphical  */
-	/*  parameters.  These are the ones which can be  */
+	/*  Saving and restoring of "inline" graphical	*/
+	/*  parameters.	 These are the ones which can be  */
 	/*  specified as a arguments to high-level  */
-	/*  graphics functions.  */
+	/*  graphics functions.	 */
 
 static double	adjsave;	/* adj */
 static int	annsave;	/* ann */
@@ -2472,7 +2472,7 @@ void GSavePars(DevDesc *dd)
 
 void GRestorePars(DevDesc *dd)
 {
-  /*  Restore temorarily saved inline parameter values  */
+  /*  Restore temorarily saved inline parameter values	*/
 
   dd->gp.adj = adjsave;
   dd->gp.ann = annsave;
@@ -2540,7 +2540,7 @@ void GSetState(int newstate, DevDesc *dd)
 
 void GCheckState(DevDesc *dd)
 {
-  /*  Enquire whether GNewPlot has been called  */
+  /*  Enquire whether GNewPlot has been called	*/
 
   if(dd->gp.state == 0)
     error("plot.new has not been called yet\n");
@@ -2549,14 +2549,14 @@ void GCheckState(DevDesc *dd)
 }
 
 	/********************************************************/
-	/* GRAPHICAL PRIMITIVES 				*/
+	/* GRAPHICAL PRIMITIVES					*/
 	/********************************************************/
 
 
 void GCircle(double x, double y, int coords,
 	     double radius, int col, int border, DevDesc *dd)
 {
-  /*  Draw a circle (radius is given in inches)  */
+  /*  Draw a circle (radius is given in inches)	 */
 
   double ir;
 #ifdef POINTS
@@ -2805,7 +2805,7 @@ void GMode(DevDesc *dd, int mode)
   /*  mode = 0, graphics off */
   /*  mode = 1, graphics on */
   /*  mode = 2, graphical input on */
-  /*  (Ignored by most drivers)  */
+  /*  (Ignored by most drivers)	 */
 
   if (NoDevices())
     error("No graphics device is active\n");
@@ -2847,7 +2847,7 @@ void GPolyline(int n, double *x, double *y, int coords, DevDesc *dd)
 void GRect(double x0, double y0, double x1, double y1, int coords,
 	   int bg, int fg, DevDesc *dd)
 {
-  /*  Draw a rectangle  */
+  /*  Draw a rectangle	*/
   /*  Filled with color bg and outlined with color fg  */
   /*  These may both be NA_INTEGER  */
   /*  This should be adjusted so that rectangles are clipped */
@@ -3097,7 +3097,7 @@ void GLPretty(double *ul, double *uh, int *n)
 void GPretty(double *lo, double *up, int *ndiv)
 {
   /*  Set scale and ticks for linear scales.
-   *  Pre:         x1 = lo < up = x2
+   *  Pre:	   x1 = lo < up = x2
    *  Post: x1 <= y1 := lo < up =: y2 <= x2;  ndiv >= 1
    */
 
@@ -3113,7 +3113,7 @@ void GPretty(double *lo, double *up, int *ndiv)
   x1 = *lo; x2 = *up; nd0 = *ndiv;
   dx = *up - *lo;
   /* cell := "scale"  here */
-  if(dx == 0 && *up == 0) { /*  up == lo == 0  */
+  if(dx == 0 && *up == 0) { /*	up == lo == 0  */
     cell = i_small = 1;
   } else {
     cell = fmax2(fabs(*lo),fabs(*up));
@@ -3129,7 +3129,7 @@ void GPretty(double *lo, double *up, int *ndiv)
 
   base = pow(10, floor(log10(cell))); /* base <= cell < 10*base */
 
-  /* unit :=  arg min _u { |u - cell| ;  u = c(1,2,5,10) * base } */
+  /* unit :=  arg min _u { |u - cell| ;	 u = c(1,2,5,10) * base } */
   unit = base;
   if(fabs((U = 2*base)-cell) < fabs(unit-cell)) unit = U;
   if(fabs((U = 5*base)-cell) < fabs(unit-cell)) unit = U;
@@ -3156,8 +3156,8 @@ void GPretty(double *lo, double *up, int *ndiv)
   *ndiv = nu - ns;
 
   if(*ndiv <= 0)
-    printf("Gpretty(%g,%g,%d): cell=%g,  ndiv= %d <=0;\t\t(ns,nu)=(%d,%d);
-dx=%g, unit=%3e, ismall=%1d.\n",
+    printf("Gpretty(%g,%g,%d): cell=%g,	 ndiv= %d <=0;\t\t(ns,nu)=(%d,%d);"
+	   "dx=%g, unit=%3e, ismall=%1d.\n",
 	   x1,x2, nd0, cell, *ndiv, ns, nu, dx, unit, (int)i_small);
 }
 
@@ -3178,7 +3178,7 @@ dx=%g, unit=%3e, ismall=%1d.\n",
 
 void GSymbol(double x, double y, int coords, int pch, DevDesc *dd)
 {
-  /*  Draw one of the R special symbols  */
+  /*  Draw one of the R special symbols	 */
 
   double r, xc, yc;
   double xx[4], yy[4];
@@ -3408,9 +3408,9 @@ void GSymbol(double x, double y, int coords, int pch, DevDesc *dd)
     case 23: /* diamonds */
       xc = RADIUS * DMDC * GStrWidth("0", INCHES, dd);
       GConvert(&x, &y, coords, INCHES, dd);
-      xx[0] = x   ; yy[0] = y-xc;
+      xx[0] = x	  ; yy[0] = y-xc;
       xx[1] = x+xc; yy[1] = y;
-      xx[2] = x   ; yy[2] = y+xc;
+      xx[2] = x	  ; yy[2] = y+xc;
       xx[3] = x-xc; yy[3] = y;
       GPolygon(4, xx, yy, INCHES,
 	       dd->gp.bg, dd->gp.col, dd);
@@ -3450,7 +3450,7 @@ void GSymbol(double x, double y, int coords, int pch, DevDesc *dd)
 void GMtext(char *str, int side, double line, int outer, double at, int las,
 	    DevDesc *dd)
 {
-  /*  Draw text in plot margins  */
+  /*  Draw text in plot margins	 */
 
   double a, xadj, yadj;
   int coords;
@@ -3625,11 +3625,11 @@ void hsv2rgb(double h, double s, double v, double *r, double *g, double *b)
  *	Color Specification
  *
  *	Colors are stored internally in integers.  Each integer is
- *	broken into four bytes.  The three least significant bytes
+ *	broken into four bytes.	 The three least significant bytes
  *	are used to contain levels of red, green and blue.  These
  *	levels are integers in the range [0,255].
  *
- *      Externally, colors are specified either
+ *	Externally, colors are specified either
  *	a) by name, using a large table of color names,
  *	b) by RGB values using a string of the form "#rrggbb"
  *	   where rr, gg and bb are hex integers giving the level
@@ -3653,7 +3653,7 @@ char *DefaultPalette[] = {
 
 	/* The Table of Known Color Names */
 	/* Adapted from the X11 RGB database */
-        /* Note: the color "white" is moved */
+	/* Note: the color "white" is moved */
 	/* to the top of the database to avoid */
 	/* its being known as "gray100" */
 
@@ -3667,7 +3667,7 @@ ColorDataBaseEntry ColorDataBase[] = {
   {"antiquewhite2",	"#EEDFCC",	0},
   {"antiquewhite3",	"#CDC0B0",	0},
   {"antiquewhite4",	"#8B8378",	0},
-  {"aquamarine",       	"#7FFFD4",	0},
+  {"aquamarine",	"#7FFFD4",	0},
   {"aquamarine1",	"#7FFFD4",	0},
   {"aquamarine2",	"#76EEC6",	0},
   {"aquamarine3",	"#66CDAA",	0},
@@ -3697,25 +3697,25 @@ ColorDataBaseEntry ColorDataBase[] = {
   {"brown3",		"#CD3333",	0},
   {"brown4",		"#8B2323",	0},
   {"burlywood",		"#DEB887",	0},
-  {"burlywood1",       	"#FFD39B",	0},
-  {"burlywood2",       	"#EEC591",	0},
-  {"burlywood3",       	"#CDAA7D",	0},
-  {"burlywood4",       	"#8B7355",	0},
+  {"burlywood1",	"#FFD39B",	0},
+  {"burlywood2",	"#EEC591",	0},
+  {"burlywood3",	"#CDAA7D",	0},
+  {"burlywood4",	"#8B7355",	0},
   {"cadetblue",		"#5F9EA0",	0},
-  {"cadetblue1",       	"#98F5FF",	0},
-  {"cadetblue2",       	"#8EE5EE",	0},
-  {"cadetblue3",       	"#7AC5CD",	0},
-  {"cadetblue4",       	"#53868B",	0},
-  {"chartreuse",       	"#7FFF00",	0},
-  {"chartreuse1",      	"#7FFF00",	0},
-  {"chartreuse2",      	"#76EE00",	0},
-  {"chartreuse3",      	"#66CD00",	0},
-  {"chartreuse4",      	"#458B00",	0},
+  {"cadetblue1",	"#98F5FF",	0},
+  {"cadetblue2",	"#8EE5EE",	0},
+  {"cadetblue3",	"#7AC5CD",	0},
+  {"cadetblue4",	"#53868B",	0},
+  {"chartreuse",	"#7FFF00",	0},
+  {"chartreuse1",	"#7FFF00",	0},
+  {"chartreuse2",	"#76EE00",	0},
+  {"chartreuse3",	"#66CD00",	0},
+  {"chartreuse4",	"#458B00",	0},
   {"chocolate",		"#D2691E",	0},
-  {"chocolate1",       	"#FF7F24",	0},
-  {"chocolate2",       	"#EE7621",	0},
-  {"chocolate3",       	"#CD661D",	0},
-  {"chocolate4",       	"#8B4513",	0},
+  {"chocolate1",	"#FF7F24",	0},
+  {"chocolate2",	"#EE7621",	0},
+  {"chocolate3",	"#CD661D",	0},
+  {"chocolate4",	"#8B4513",	0},
   {"coral",		"#FF7F50",	0},
   {"coral1",		"#FF7256",	0},
   {"coral2",		"#EE6A50",	0},
@@ -3743,24 +3743,24 @@ ColorDataBaseEntry ColorDataBase[] = {
   {"darkgreen",		"#006400",	0},
   {"darkgrey",		"#A9A9A9",	0},
   {"darkkhaki",		"#BDB76B",	0},
-  {"darkmagenta",      	"#8B008B",	0},
+  {"darkmagenta",	"#8B008B",	0},
   {"darkolivegreen",	"#556B2F",	0},
   {"darkolivegreen1",	"#CAFF70",	0},
   {"darkolivegreen2",	"#BCEE68",	0},
   {"darkolivegreen3",	"#A2CD5A",	0},
   {"darkolivegreen4",	"#6E8B3D",	0},
-  {"darkorange",       	"#FF8C00",	0},
-  {"darkorange1",      	"#FF7F00",	0},
-  {"darkorange2",      	"#EE7600",	0},
-  {"darkorange3",      	"#CD6600",	0},
-  {"darkorange4",      	"#8B4500",	0},
-  {"darkorchid",       	"#9932CC",	0},
-  {"darkorchid1",      	"#BF3EFF",	0},
-  {"darkorchid2",      	"#B23AEE",	0},
-  {"darkorchid3",      	"#9A32CD",	0},
-  {"darkorchid4",      	"#68228B",	0},
+  {"darkorange",	"#FF8C00",	0},
+  {"darkorange1",	"#FF7F00",	0},
+  {"darkorange2",	"#EE7600",	0},
+  {"darkorange3",	"#CD6600",	0},
+  {"darkorange4",	"#8B4500",	0},
+  {"darkorchid",	"#9932CC",	0},
+  {"darkorchid1",	"#BF3EFF",	0},
+  {"darkorchid2",	"#B23AEE",	0},
+  {"darkorchid3",	"#9A32CD",	0},
+  {"darkorchid4",	"#68228B",	0},
   {"darkred",		"#8B0000",	0},
-  {"darksalmon",       	"#E9967A",	0},
+  {"darksalmon",	"#E9967A",	0},
   {"darkseagreen",	"#8FBC8F",	0},
   {"darkseagreen1",	"#C1FFC1",	0},
   {"darkseagreen2",	"#B4EEB4",	0},
@@ -3774,43 +3774,43 @@ ColorDataBaseEntry ColorDataBase[] = {
   {"darkslategray4",	"#528B8B",	0},
   {"darkslategrey",	"#2F4F4F",	0},
   {"darkturquoise",	"#00CED1",	0},
-  {"darkviolet",       	"#9400D3",	0},
+  {"darkviolet",	"#9400D3",	0},
   {"deeppink",		"#FF1493",	0},
   {"deeppink1",		"#FF1493",	0},
   {"deeppink2",		"#EE1289",	0},
   {"deeppink3",		"#CD1076",	0},
   {"deeppink4",		"#8B0A50",	0},
-  {"deepskyblue",      	"#00BFFF",	0},
+  {"deepskyblue",	"#00BFFF",	0},
   {"deepskyblue1",	"#00BFFF",	0},
   {"deepskyblue2",	"#00B2EE",	0},
   {"deepskyblue3",	"#009ACD",	0},
   {"deepskyblue4",	"#00688B",	0},
   {"dimgray",		"#696969",	0},
   {"dimgrey",		"#696969",	0},
-  {"dodgerblue",       	"#1E90FF",	0},
-  {"dodgerblue1",      	"#1E90FF",	0},
-  {"dodgerblue2",      	"#1C86EE",	0},
-  {"dodgerblue3",      	"#1874CD",	0},
-  {"dodgerblue4",      	"#104E8B",	0},
+  {"dodgerblue",	"#1E90FF",	0},
+  {"dodgerblue1",	"#1E90FF",	0},
+  {"dodgerblue2",	"#1C86EE",	0},
+  {"dodgerblue3",	"#1874CD",	0},
+  {"dodgerblue4",	"#104E8B",	0},
   {"firebrick",		"#B22222",	0},
-  {"firebrick1",       	"#FF3030",	0},
-  {"firebrick2",       	"#EE2C2C",	0},
-  {"firebrick3",       	"#CD2626",	0},
-  {"firebrick4",       	"#8B1A1A",	0},
-  {"floralwhite",      	"#FFFAF0",	0},
-  {"forestgreen",      	"#228B22",	0},
+  {"firebrick1",	"#FF3030",	0},
+  {"firebrick2",	"#EE2C2C",	0},
+  {"firebrick3",	"#CD2626",	0},
+  {"firebrick4",	"#8B1A1A",	0},
+  {"floralwhite",	"#FFFAF0",	0},
+  {"forestgreen",	"#228B22",	0},
   {"gainsboro",		"#DCDCDC",	0},
-  {"ghostwhite",       	"#F8F8FF",	0},
+  {"ghostwhite",	"#F8F8FF",	0},
   {"gold",		"#FFD700",	0},
   {"gold1",		"#FFD700",	0},
   {"gold2",		"#EEC900",	0},
   {"gold3",		"#CDAD00",	0},
   {"gold4",		"#8B7500",	0},
   {"goldenrod",		"#DAA520",	0},
-  {"goldenrod1",       	"#FFC125",	0},
-  {"goldenrod2",       	"#EEB422",	0},
-  {"goldenrod3",       	"#CD9B1D",	0},
-  {"goldenrod4",       	"#8B6914",	0},
+  {"goldenrod1",	"#FFC125",	0},
+  {"goldenrod2",	"#EEB422",	0},
+  {"goldenrod3",	"#CD9B1D",	0},
+  {"goldenrod4",	"#8B6914",	0},
   {"gray",		"#BEBEBE",	0},
   {"gray0",		"#000000",	0},
   {"gray1",		"#030303",	0},
@@ -3918,7 +3918,7 @@ ColorDataBaseEntry ColorDataBase[] = {
   {"green2",		"#00EE00",	0},
   {"green3",		"#00CD00",	0},
   {"green4",		"#008B00",	0},
-  {"greenyellow",      	"#ADFF2F",	0},
+  {"greenyellow",	"#ADFF2F",	0},
   {"grey",		"#BEBEBE",	0},
   {"grey0",		"#000000",	0},
   {"grey1",		"#030303",	0},
@@ -4032,10 +4032,10 @@ ColorDataBaseEntry ColorDataBase[] = {
   {"hotpink3",		"#CD6090",	0},
   {"hotpink4",		"#8B3A62",	0},
   {"indianred",		"#CD5C5C",	0},
-  {"indianred1",       	"#FF6A6A",	0},
-  {"indianred2",       	"#EE6363",	0},
-  {"indianred3",       	"#CD5555",	0},
-  {"indianred4",       	"#8B3A3A",	0},
+  {"indianred1",	"#FF6A6A",	0},
+  {"indianred2",	"#EE6363",	0},
+  {"indianred3",	"#CD5555",	0},
+  {"indianred4",	"#8B3A3A",	0},
   {"ivory",		"#FFFFF0",	0},
   {"ivory1",		"#FFFFF0",	0},
   {"ivory2",		"#EEEEE0",	0},
@@ -4059,16 +4059,16 @@ ColorDataBaseEntry ColorDataBase[] = {
   {"lemonchiffon3",	"#CDC9A5",	0},
   {"lemonchiffon4",	"#8B8970",	0},
   {"lightblue",		"#ADD8E6",	0},
-  {"lightblue1",       	"#BFEFFF",	0},
-  {"lightblue2",       	"#B2DFEE",	0},
-  {"lightblue3",       	"#9AC0CD",	0},
-  {"lightblue4",       	"#68838B",	0},
-  {"lightcoral",       	"#F08080",	0},
+  {"lightblue1",	"#BFEFFF",	0},
+  {"lightblue2",	"#B2DFEE",	0},
+  {"lightblue3",	"#9AC0CD",	0},
+  {"lightblue4",	"#68838B",	0},
+  {"lightcoral",	"#F08080",	0},
   {"lightcyan",		"#E0FFFF",	0},
-  {"lightcyan1",       	"#E0FFFF",	0},
-  {"lightcyan2",       	"#D1EEEE",	0},
-  {"lightcyan3",       	"#B4CDCD",	0},
-  {"lightcyan4",       	"#7A8B8B",	0},
+  {"lightcyan1",	"#E0FFFF",	0},
+  {"lightcyan2",	"#D1EEEE",	0},
+  {"lightcyan3",	"#B4CDCD",	0},
+  {"lightcyan4",	"#7A8B8B",	0},
   {"lightgoldenrod",	"#EEDD82",	0},
   {"lightgoldenrod1",	"#FFEC8B",	0},
   {"lightgoldenrod2",	"#EEDC82",	0},
@@ -4076,14 +4076,14 @@ ColorDataBaseEntry ColorDataBase[] = {
   {"lightgoldenrod4",	"#8B814C",	0},
   {"lightgoldenrodyellow","#FAFAD2",	0},
   {"lightgray",		"#D3D3D3",	0},
-  {"lightgreen",       	"#90EE90",	0},
+  {"lightgreen",	"#90EE90",	0},
   {"lightgrey",		"#D3D3D3",	0},
   {"lightpink",		"#FFB6C1",	0},
-  {"lightpink1",       	"#FFAEB9",	0},
-  {"lightpink2",       	"#EEA2AD",	0},
-  {"lightpink3",       	"#CD8C95",	0},
-  {"lightpink4",       	"#8B5F65",	0},
-  {"lightsalmon",      	"#FFA07A",	0},
+  {"lightpink1",	"#FFAEB9",	0},
+  {"lightpink2",	"#EEA2AD",	0},
+  {"lightpink3",	"#CD8C95",	0},
+  {"lightpink4",	"#8B5F65",	0},
+  {"lightsalmon",	"#FFA07A",	0},
   {"lightsalmon1",	"#FFA07A",	0},
   {"lightsalmon2",	"#EE9572",	0},
   {"lightsalmon3",	"#CD8162",	0},
@@ -4102,7 +4102,7 @@ ColorDataBaseEntry ColorDataBase[] = {
   {"lightsteelblue2",	"#BCD2EE",	0},
   {"lightsteelblue3",	"#A2B5CD",	0},
   {"lightsteelblue4",	"#6E7B8B",	0},
-  {"lightyellow",      	"#FFFFE0",	0},
+  {"lightyellow",	"#FFFFE0",	0},
   {"lightyellow1",	"#FFFFE0",	0},
   {"lightyellow2",	"#EEEED1",	0},
   {"lightyellow3",	"#CDCDB4",	0},
@@ -4120,7 +4120,7 @@ ColorDataBaseEntry ColorDataBase[] = {
   {"maroon3",		"#CD2990",	0},
   {"maroon4",		"#8B1C62",	0},
   {"mediumaquamarine",	"#66CDAA",	0},
-  {"mediumblue",       	"#0000CD",	0},
+  {"mediumblue",	"#0000CD",	0},
   {"mediumorchid",	"#BA55D3",	0},
   {"mediumorchid1",	"#E066FF",	0},
   {"mediumorchid2",	"#D15FEE",	0},
@@ -4139,12 +4139,12 @@ ColorDataBaseEntry ColorDataBase[] = {
   {"midnightblue",	"#191970",	0},
   {"mintcream",		"#F5FFFA",	0},
   {"mistyrose",		"#FFE4E1",	0},
-  {"mistyrose1",       	"#FFE4E1",	0},
-  {"mistyrose2",       	"#EED5D2",	0},
-  {"mistyrose3",      	"#CDB7B5",	0},
-  {"mistyrose4",       	"#8B7D7B",	0},
+  {"mistyrose1",	"#FFE4E1",	0},
+  {"mistyrose2",	"#EED5D2",	0},
+  {"mistyrose3",	"#CDB7B5",	0},
+  {"mistyrose4",	"#8B7D7B",	0},
   {"moccasin",		"#FFE4B5",	0},
-  {"navajowhite",      	"#FFDEAD",	0},
+  {"navajowhite",	"#FFDEAD",	0},
   {"navajowhite1",	"#FFDEAD",	0},
   {"navajowhite2",	"#EECFA1",	0},
   {"navajowhite3",	"#CDB38B",	0},
@@ -4153,20 +4153,20 @@ ColorDataBaseEntry ColorDataBase[] = {
   {"navyblue",		"#000080",	0},
   {"oldlace",		"#FDF5E6",	0},
   {"olivedrab",		"#6B8E23",	0},
-  {"olivedrab1",       	"#C0FF3E",	0},
-  {"olivedrab2",       	"#B3EE3A",	0},
-  {"olivedrab3",       	"#9ACD32",	0},
-  {"olivedrab4",       	"#698B22",	0},
+  {"olivedrab1",	"#C0FF3E",	0},
+  {"olivedrab2",	"#B3EE3A",	0},
+  {"olivedrab3",	"#9ACD32",	0},
+  {"olivedrab4",	"#698B22",	0},
   {"orange",		"#FFA500",	0},
   {"orange1",		"#FFA500",	0},
   {"orange2",		"#EE9A00",	0},
   {"orange3",		"#CD8500",	0},
   {"orange4",		"#8B5A00",	0},
   {"orangered",		"#FF4500",	0},
-  {"orangered1",       	"#FF4500",	0},
-  {"orangered2",       	"#EE4000",	0},
-  {"orangered3",       	"#CD3700",	0},
-  {"orangered4",       	"#8B2500",	0},
+  {"orangered1",	"#FF4500",	0},
+  {"orangered2",	"#EE4000",	0},
+  {"orangered3",	"#CD3700",	0},
+  {"orangered4",	"#8B2500",	0},
   {"orchid",		"#DA70D6",	0},
   {"orchid1",		"#FF83FA",	0},
   {"orchid2",		"#EE7AE9",	0},
@@ -4174,10 +4174,10 @@ ColorDataBaseEntry ColorDataBase[] = {
   {"orchid4",		"#8B4789",	0},
   {"palegoldenrod",	"#EEE8AA",	0},
   {"palegreen",		"#98FB98",	0},
-  {"palegreen1",       	"#9AFF9A",	0},
-  {"palegreen2",       	"#90EE90",	0},
-  {"palegreen3",       	"#7CCD7C",	0},
-  {"palegreen4",       	"#548B54",	0},
+  {"palegreen1",	"#9AFF9A",	0},
+  {"palegreen2",	"#90EE90",	0},
+  {"palegreen3",	"#7CCD7C",	0},
+  {"palegreen4",	"#548B54",	0},
   {"paleturquoise",	"#AFEEEE",	0},
   {"paleturquoise1",	"#BBFFFF",	0},
   {"paleturquoise2",	"#AEEEEE",	0},
@@ -4188,12 +4188,12 @@ ColorDataBaseEntry ColorDataBase[] = {
   {"palevioletred2",	"#EE799F",	0},
   {"palevioletred3",	"#CD6889",	0},
   {"palevioletred4",	"#8B475D",	0},
-  {"papayawhip",       	"#FFEFD5",	0},
+  {"papayawhip",	"#FFEFD5",	0},
   {"peachpuff",		"#FFDAB9",	0},
-  {"peachpuff1",       	"#FFDAB9",	0},
-  {"peachpuff2",       	"#EECBAD",	0},
-  {"peachpuff3",       	"#CDAF95",	0},
-  {"peachpuff4",       	"#8B7765",	0},
+  {"peachpuff1",	"#FFDAB9",	0},
+  {"peachpuff2",	"#EECBAD",	0},
+  {"peachpuff3",	"#CDAF95",	0},
+  {"peachpuff4",	"#8B7765",	0},
   {"peru",		"#CD853F",	0},
   {"pink",		"#FFC0CB",	0},
   {"pink1",		"#FFB5C5",	0},
@@ -4205,34 +4205,34 @@ ColorDataBaseEntry ColorDataBase[] = {
   {"plum2",		"#EEAEEE",	0},
   {"plum3",		"#CD96CD",	0},
   {"plum4",		"#8B668B",	0},
-  {"powderblue",       	"#B0E0E6",	0},
+  {"powderblue",	"#B0E0E6",	0},
   {"purple",		"#A020F0",	0},
   {"purple1",		"#9B30FF",	0},
   {"purple2",		"#912CEE",	0},
   {"purple3",		"#7D26CD",	0},
   {"purple4",		"#551A8B",	0},
-  {"red",	       	"#FF0000",	0},
+  {"red",		"#FF0000",	0},
   {"red1",		"#FF0000",	0},
   {"red2",		"#EE0000",	0},
   {"red3",		"#CD0000",	0},
   {"red4",		"#8B0000",	0},
   {"rosybrown",		"#BC8F8F",	0},
-  {"rosybrown1",       	"#FFC1C1",	0},
-  {"rosybrown2",       	"#EEB4B4",	0},
-  {"rosybrown3",       	"#CD9B9B",	0},
-  {"rosybrown4",       	"#8B6969",	0},
+  {"rosybrown1",	"#FFC1C1",	0},
+  {"rosybrown2",	"#EEB4B4",	0},
+  {"rosybrown3",	"#CD9B9B",	0},
+  {"rosybrown4",	"#8B6969",	0},
   {"royalblue",		"#4169E1",	0},
-  {"royalblue1",       	"#4876FF",	0},
-  {"royalblue2",       	"#436EEE",	0},
-  {"royalblue3",       	"#3A5FCD",	0},
-  {"royalblue4",       	"#27408B",	0},
-  {"saddlebrown",      	"#8B4513",	0},
+  {"royalblue1",	"#4876FF",	0},
+  {"royalblue2",	"#436EEE",	0},
+  {"royalblue3",	"#3A5FCD",	0},
+  {"royalblue4",	"#27408B",	0},
+  {"saddlebrown",	"#8B4513",	0},
   {"salmon",		"#FA8072",	0},
   {"salmon1",		"#FF8C69",	0},
   {"salmon2",		"#EE8262",	0},
   {"salmon3",		"#CD7054",	0},
   {"salmon4",		"#8B4C39",	0},
-  {"sandybrown",       	"#F4A460",	0},
+  {"sandybrown",	"#F4A460",	0},
   {"seagreen",		"#2E8B57",	0},
   {"seagreen1",		"#54FF9F",	0},
   {"seagreen2",		"#4EEE94",	0},
@@ -4254,32 +4254,32 @@ ColorDataBaseEntry ColorDataBase[] = {
   {"skyblue3",		"#6CA6CD",	0},
   {"skyblue4",		"#4A708B",	0},
   {"slateblue",		"#6A5ACD",	0},
-  {"slateblue1",       	"#836FFF",	0},
-  {"slateblue2",       	"#7A67EE",	0},
-  {"slateblue3",       	"#6959CD",	0},
-  {"slateblue4",       	"#473C8B",	0},
+  {"slateblue1",	"#836FFF",	0},
+  {"slateblue2",	"#7A67EE",	0},
+  {"slateblue3",	"#6959CD",	0},
+  {"slateblue4",	"#473C8B",	0},
   {"slategray",		"#708090",	0},
-  {"slategray1",       	"#C6E2FF",	0},
-  {"slategray2",       	"#B9D3EE",	0},
-  {"slategray3",       	"#9FB6CD",	0},
-  {"slategray4",       	"#6C7B8B",	0},
+  {"slategray1",	"#C6E2FF",	0},
+  {"slategray2",	"#B9D3EE",	0},
+  {"slategray3",	"#9FB6CD",	0},
+  {"slategray4",	"#6C7B8B",	0},
   {"slategrey",		"#708090",	0},
   {"snow",		"#FFFAFA",	0},
   {"snow1",		"#FFFAFA",	0},
   {"snow2",		"#EEE9E9",	0},
   {"snow3",		"#CDC9C9",	0},
   {"snow4",		"#8B8989",	0},
-  {"springgreen",      	"#00FF7F",	0},
+  {"springgreen",	"#00FF7F",	0},
   {"springgreen1",	"#00FF7F",	0},
   {"springgreen2",	"#00EE76",	0},
   {"springgreen3",	"#00CD66",	0},
   {"springgreen4",	"#008B45",	0},
   {"steelblue",		"#4682B4",	0},
-  {"steelblue1",       	"#63B8FF",	0},
-  {"steelblue2",       	"#5CACEE",	0},
-  {"steelblue3",       	"#4F94CD",	0},
-  {"steelblue4",       	"#36648B",	0},
-  {"tan",	       	"#D2B48C",	0},
+  {"steelblue1",	"#63B8FF",	0},
+  {"steelblue2",	"#5CACEE",	0},
+  {"steelblue3",	"#4F94CD",	0},
+  {"steelblue4",	"#36648B",	0},
+  {"tan",		"#D2B48C",	0},
   {"tan1",		"#FFA54F",	0},
   {"tan2",		"#EE9A49",	0},
   {"tan3",		"#CD853F",	0},
@@ -4295,29 +4295,29 @@ ColorDataBaseEntry ColorDataBase[] = {
   {"tomato3",		"#CD4F39",	0},
   {"tomato4",		"#8B3626",	0},
   {"turquoise",		"#40E0D0",	0},
-  {"turquoise1",       	"#00F5FF",	0},
-  {"turquoise2",       	"#00E5EE",	0},
-  {"turquoise3",       	"#00C5CD",	0},
-  {"turquoise4",       	"#00868B",	0},
+  {"turquoise1",	"#00F5FF",	0},
+  {"turquoise2",	"#00E5EE",	0},
+  {"turquoise3",	"#00C5CD",	0},
+  {"turquoise4",	"#00868B",	0},
   {"violet",		"#EE82EE",	0},
   {"violetred",		"#D02090",	0},
-  {"violetred1",       	"#FF3E96",	0},
-  {"violetred2",       	"#EE3A8C",	0},
-  {"violetred3",       	"#CD3278",	0},
-  {"violetred4",       	"#8B2252",	0},
+  {"violetred1",	"#FF3E96",	0},
+  {"violetred2",	"#EE3A8C",	0},
+  {"violetred3",	"#CD3278",	0},
+  {"violetred4",	"#8B2252",	0},
   {"wheat",		"#F5DEB3",	0},
   {"wheat1",		"#FFE7BA",	0},
   {"wheat2",		"#EED8AE",	0},
   {"wheat3",		"#CDBA96",	0},
   {"wheat4",		"#8B7E66",	0},
-  {"whitesmoke",       	"#F5F5F5",	0},
+  {"whitesmoke",	"#F5F5F5",	0},
   {"yellow",		"#FFFF00",	0},
   {"yellow1",		"#FFFF00",	0},
   {"yellow2",		"#EEEE00",	0},
   {"yellow3",		"#CDCD00",	0},
   {"yellow4",		"#8B8B00",	0},
-  {"yellowgreen",      	"#9ACD32",	0},
-  {NULL,	       	NULL,		0}
+  {"yellowgreen",	"#9ACD32",	0},
+  {NULL,		NULL,		0}
 };
 
 
@@ -4435,10 +4435,10 @@ char *col2name(unsigned int col)
       return ColorDataBase[i].name;
   }
   ColBuf[0] = '#';
-  ColBuf[1] = HexDigits[(col >>  4) & 15];
-  ColBuf[2] = HexDigits[(col      ) & 15];
+  ColBuf[1] = HexDigits[(col >>	 4) & 15];
+  ColBuf[2] = HexDigits[(col	  ) & 15];
   ColBuf[3] = HexDigits[(col >> 12) & 15];
-  ColBuf[4] = HexDigits[(col >>  8) & 15];
+  ColBuf[4] = HexDigits[(col >>	 8) & 15];
   ColBuf[5] = HexDigits[(col >> 20) & 15];
   ColBuf[6] = HexDigits[(col >> 16) & 15];
   ColBuf[7] = '\0';
