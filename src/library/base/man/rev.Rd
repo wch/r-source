@@ -1,5 +1,6 @@
 \name{rev}
 \alias{rev}
+\alias{rev.default}
 \title{Reverse Elements}
 \usage{
 rev(x)
