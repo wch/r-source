@@ -93,7 +93,7 @@ Rcode: fixed/fixdesc
 	  if ! test -f $(RHOME)/library/$${pkg}/DESCRIPTION ; then \
 	  $(ECHO) "  --" $$pkg; \
 	  $(MAKE) --no-print-directory -C $(PKGDIR)/$${pkg} PKG=$${pkg} \
-	    RHOME=$(RHOME) -f $(RHOME)/src/gnuwin32/MakePkg BUILD=$(BUILD) Rcode; \
+	    RHOME=$(RHOME) -f $(RHOME)/src/gnuwin32/MakePkg BUILD=$(BUILD) Rcode || exit 1; \
 	  fi; \
 	done
 	@$(ECHO) "  ... done"
@@ -101,7 +101,7 @@ Rcode: fixed/fixdesc
 
 rpackage: ../../library/R.css
 	@for pkg in $(PKGS); do \
-	  R_START_PACKAGES=NULL $(MAKE) --no-print-directory $${pkg}; \
+	  R_START_PACKAGES=NULL $(MAKE) --no-print-directory $${pkg} || exit 1; \
 	done
 	@$(MAKE) --no-print-directory vignettes
 
@@ -468,7 +468,7 @@ rsync-recommended:
 
 unpack-recommended:
 	@$(ECHO) "--- Unpacking recommended packages"
-	@for i in ${R_PKGS_RECOMMENDED_SOURCES} ; do $(MAKE) -s --no-print-directory ../library/$$i/DESCRIPTION ; done
+	@for i in ${R_PKGS_RECOMMENDED_SOURCES} ; do $(MAKE) -s --no-print-directory ../library/$$i/DESCRIPTION || exit 1; done
 
 clean-recommended:
 	@for i in ${R_PKGS_RECOMMENDED_SOURCES} ; do $(RM) -r ../library/$${i} ; done
@@ -477,7 +477,7 @@ recommended: unpack-recommended
 	@$(ECHO) "--- Making recommended packages"
 	@$(MAKE) --no-print-directory bundle-VR
 	@for p in $(filter-out VR, $(R_PKGS_RECOMMENDED_SOURCES)); do \
-	  $(MAKE) --no-print-directory pkg-$$p; \
+	  $(MAKE) --no-print-directory pkg-$$p || exit 1; \
 	done
 
 rinstaller:
