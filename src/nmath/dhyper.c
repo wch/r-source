@@ -40,7 +40,7 @@ double dhyper(double x, double NR, double NB, double n)
     NB = floor(NB + 0.5);
     N = NR + NB;
     n = floor(n + 0.5);
-    if (NR < 0 || NB < 0 || n <= 0 || n > N) {
+    if (NR < 0 || NB < 0 || n < 0 || n > N) {
 	ML_ERROR(ME_DOMAIN);
 	return ML_NAN;
     }
