@@ -71,6 +71,10 @@ BUG FIXES
 
     o	lm.influence failed when there were undetermined coefficients, PR#280.
 
+    o	problem with function()... inside saved functions because arg count
+	increased to accommodate stored source. (incorrect number of
+	arguments to "lambda") 
+
     o	improvements to generation of HTML help files: should work
 	better on viewers other than Netscape.
 

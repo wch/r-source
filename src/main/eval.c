@@ -691,7 +691,7 @@ SEXP do_function(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP rval;
 
-    if (length(args) < 3)
+    if (length(args) < 2)
 	WrongArgCount("lambda");
     CheckFormals(CAR(args));
     rval = mkCLOSXP(CAR(args), CADR(args), rho);
