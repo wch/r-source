@@ -41,7 +41,7 @@ else
  DLLFLAGS=-s
 endif
 
-R-DLLFLAGS = -mwindows
+R-DLLFLAGS = -mwindows -Wl,--allow-multiple-definition
 R-DLLLIBS =-L. $(FLIBS) -lRblas -lcomctl32 -lversion
 SOURCES = $(filter-out malloc.c blas00.c,$(wildcard *.c *.f))
 OBJS = $(SOURCES:.c=.o)
