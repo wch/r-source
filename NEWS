@@ -271,6 +271,9 @@ NEW FEATURES
 	for large matrices (using an optimized BLAS) but are less
 	flexible.
 
+    o	Generic function confint() and `lm' method (formerly in
+	package MASS).
+
 
 INSTALLATION CHANGES
 
