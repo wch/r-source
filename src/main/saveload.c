@@ -257,7 +257,7 @@ static SEXP AsciiLoadOld(FILE *fp, int version)
 #ifdef HAVE_XDR
 #ifndef INT_32_BITS
 /* The way XDR is used pretty much assumes that int is 32 bits and
-   maybe even 2's complement represantation--without that, NA_INTEGER
+   maybe even 2's complement representation--without that, NA_INTEGER
    is not likely to be preserved properly.  Since 32 bit ints (and 2's
    complement) are pretty much universal, we can worry about that when
    the need arises.  To be safe, we signal a compiler error if int is
@@ -268,7 +268,7 @@ static SEXP AsciiLoadOld(FILE *fp, int version)
 
 #include <rpc/rpc.h>
 
-XDR xdrs;
+static XDR xdrs;
 
 static void XdrInInit(FILE *fp)
 {

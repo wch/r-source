@@ -966,7 +966,7 @@ textbox newtextarea(char *text, rect r)
 	return obj;
 }
 
-SCROLLINFO si;
+static SCROLLINFO si;
 
 scrollbar newscrollbar(rect r, int max, int pagesize, scrollfn fn)
 {
@@ -1015,45 +1015,6 @@ void changescrollbar(scrollbar obj, int where, int max, int pagesize)
 	si.nPos = where;
 	SetScrollInfo(hwnd, SB_CTL, &si, 1);
 }
-
-#ifdef OLD
-scrollbar newscrollbar(rect r, int max, int pagesize, scrollfn fn)
-{
-	scrollbar obj;
-	HWND hwnd;
-
-	r = rcanon(r);
-
-	obj = newchildwin("scrollbar", NULL,
-			(r.width > r.height) ? SBS_HORZ : SBS_VERT,
-			r, NULL);
-	if (obj) {
-		obj->kind = ScrollbarObject;
-		obj->hit = fn;
-		obj->value = 0;
-		obj->max = max;
-		obj->size = pagesize;
-
-		hwnd = obj->handle;
-		SetScrollRange(hwnd, SB_CTL, 0, max, 0);
-		SetScrollPos(hwnd, SB_CTL, 0, 1);
-	}
-	return obj;
-}
-
-void changescrollbar(scrollbar obj, int where, int max, int pagesize)
-{
-	HWND hwnd;
-
-	if (! obj)
-		return;
-	hwnd = obj->handle;
-	obj->max = max;
-	obj->size = pagesize;
-	SetScrollRange(hwnd, SB_CTL, 0, max, 0);
-	SetScrollPos(hwnd, SB_CTL, where, 1);
-}
-#endif
 
 listbox newlistbox(char *list[], rect r, scrollfn fn)
 {
