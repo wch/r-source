@@ -76,6 +76,7 @@ void onintr()
 /* SIGUSR1: save and quit
    SIGUSR2: save and quit, don't run .Last or on.exit().
 */
+
 void onsigusr1()
 {
     RCNTXT *c;
@@ -96,24 +97,23 @@ void onsigusr1()
     R_FlushConsole();
     R_ClearerrConsole();
     R_ParseError = 0;
+
+    /* Bail out if there is a CTXT_RESTART on the stack--do we really
+       want this? */
     for (c = R_GlobalContext; c; c = c->nextcontext) {
-	void (*cend)() = c->cend;
-	if (cend != NULL) {
-	    c->cend = NULL; /* prevent recursion */
-	    cend();
-	}
-	if (c->cloenv != R_NilValue && c->conexit != R_NilValue) {
-	    SEXP s = c->conexit;
-	    c->conexit = R_NilValue; /* prevent recursion */
-	    PROTECT(s);
-	    eval(s, c->cloenv);
-	    UNPROTECT(1);
-	}
 	if (c->callflag == CTXT_RESTART) {
 	    inError=0;
 	    findcontext(CTXT_RESTART, c->cloenv, R_DollarSymbol);
 	}
     }
+
+    /* Run all onexit/cend code on the stack (without stopping at
+       intervening CTXT_TOPLEVEL's.  Since intervening CTXT_TOPLEVEL's
+       get used by what are conceptually concurrent computations, this
+       is a bit like telling all active threads to terminate and clean
+       up on the way out. */
+    R_run_onexits(NULL);
+
     R_CleanUp(SA_SAVE, 2, 1); /* quit, save,  .Last, status=2 */
 }
 
@@ -393,25 +393,16 @@ void jump_to_toplevel()
 	}
     }
 
+    /* reset some stuff--not sure (all) this belongs here */
     if (R_Inputfile != NULL)
 	fclose(R_Inputfile);
     R_ResetConsole();
     R_FlushConsole();
     R_ClearerrConsole();
     R_ParseError = 0;
+
+    /* find the jump target; do the jump if target is a CTXT_RESTART */
     for (c = R_GlobalContext; c; c = c->nextcontext) {
-	void (*cend)() = c->cend;
-	if (cend != NULL) {
-	    c->cend = NULL; /* prevent recursion */
-	    cend();
-	}
-	if (c->cloenv != R_NilValue && c->conexit != R_NilValue) {
-	    SEXP s = c->conexit;
-	    c->conexit = R_NilValue; /* prevent recursion */
-	    PROTECT(s);
-	    eval(s, c->cloenv);
-	    UNPROTECT(1);
-	}
 	if (c->callflag == CTXT_RETURN || c->callflag == CTXT_GENERIC )
 	    nback++;
 	if (c->callflag == CTXT_RESTART) {
@@ -421,11 +412,18 @@ void jump_to_toplevel()
 	if (c->callflag == CTXT_TOPLEVEL)
 	    break;
     }
+
+    /* run onexit/cend code for all contexts down to but not including
+       the jump target */
+    R_run_onexits(c);
+
     vmaxset(NULL);
     if ( !R_Interactive && !haveHandler && inError ) {
 	REprintf("Execution halted\n");
 	R_CleanUp(SA_NOSAVE, 1, 0); /* quit, no save, no .Last, status=1 */
     }
+
+    /* this is really dynamic state that should be managed as such */
     R_SinkReset();
 
     PROTECT(s = allocList(nback));

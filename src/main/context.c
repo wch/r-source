@@ -104,17 +104,23 @@
 
 #include "Defn.h"
 
-/* jumpfun - jump to the named context */
 
-static void jumpfun(RCNTXT * cptr, int mask, SEXP val)
+/* R_run_onexits - runs the conexit/cend code for all contexts from
+   R_GlobalContext down to but not including the argument context.
+   This routine does not stop at a CTXT_TOPLEVEL--the code that
+   determines the argument is responsible for making sure
+   CTXT_TOPLEVEL's are not crossed unless appropriate. */
+
+void R_run_onexits(RCNTXT *cptr)
 {
     RCNTXT *c;
-    int savevis = R_Visible;
 
-    PROTECT(val);
     for (c = R_GlobalContext; c != cptr; c = c->nextcontext) {
-	void (*cend)() = c->cend;
-	if (cend != NULL) {
+	if (c == NULL)
+	    error("bad target context--should NEVER happen;\n"
+		  "please bug.report() [R_run_onexits]");
+	if (c->cend != NULL) {
+	    void (*cend)() = c->cend;
 	    c->cend = NULL; /* prevent recursion */
 	    cend();
 	}
@@ -126,6 +132,19 @@ static void jumpfun(RCNTXT * cptr, int mask, SEXP val)
 	    UNPROTECT(1);
 	}
     }
+}
+
+
+/* jumpfun - jump to the named context */
+
+static void jumpfun(RCNTXT * cptr, int mask, SEXP val)
+{
+    int savevis = R_Visible;
+
+    /* run onexit/cend code for all contexts down to but not including
+       the jump target */
+    PROTECT(val);
+    R_run_onexits(cptr);
     UNPROTECT(1);
     R_Visible = savevis;
 
