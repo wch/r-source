@@ -21,7 +21,8 @@ update.packages <- function(lib.loc = NULL, CRAN = getOption("CRAN"),
                             contriburl = contrib.url(CRAN),
                             method, instlib = NULL, ask = TRUE,
                             available = NULL, destdir = NULL,
-			    installWithVers = FALSE)
+			    installWithVers = FALSE,
+                            checkBuilt = FALSE)
 {
     if(is.null(lib.loc))
         lib.loc <- .libPaths()
@@ -32,14 +33,16 @@ update.packages <- function(lib.loc = NULL, CRAN = getOption("CRAN"),
     old <- old.packages(lib.loc = lib.loc,
                         contriburl = contriburl,
                         method = method,
-                        available = available)
+                        available = available, checkBuilt = checkBuilt)
 
     update <- NULL
     if(ask & !is.null(old)){
         for(k in 1:nrow(old)){
             cat(old[k, "Package"], ":\n",
                 "Version", old[k, "Installed"],
-                "in", old[k, "LibPath"], "\n",
+                "in", old[k, "LibPath"],
+                if(checkBuilt) paste("built under", old[k, "Built"]),
+                "\n",
                 "Version", old[k, "CRAN"], "on CRAN")
             cat("\n")
             answer <- substr(readline("Update (y/N)?  "), 1, 1)
@@ -65,7 +68,7 @@ update.packages <- function(lib.loc = NULL, CRAN = getOption("CRAN"),
 
 old.packages <- function(lib.loc = NULL, CRAN = getOption("CRAN"),
                          contriburl = contrib.url(CRAN),
-                         method, available = NULL)
+                         method, available = NULL, checkBuilt = FALSE)
 {
     if(is.null(lib.loc))
         lib.loc <- .libPaths()
@@ -95,13 +98,16 @@ old.packages <- function(lib.loc = NULL, CRAN = getOption("CRAN"),
 
     update <- NULL
 
-    currentR <- getRversion()
+    currentR <- minorR <- getRversion()
+    minorR[[1]][3] <- 0 # set patchlevel to 0
     for(k in 1:nrow(instp)) {
         if (instp[k, "Priority"] %in% "base") next
         z <- match(instp[k, "Package"], available[,"Package"])
         if(is.na(z)) next
         onCran <- available[z, ]
-        if(package_version(onCran["Version"]) <=
+        ## OK if Built: is missing (it which should not be)
+        if(package_version(instp[k, "Built"]) >= minorR &&
+           package_version(onCran["Version"]) <=
            package_version(instp[k, "Version"])) next
         deps <- onCran["Depends"]
         if(!is.na(deps)) {
@@ -112,10 +118,10 @@ old.packages <- function(lib.loc = NULL, CRAN = getOption("CRAN"),
                 if(!res) next
             }
         }
-        update <- rbind(update, c(instp[k, 1:3], onCran["Version"]))
+        update <- rbind(update, c(instp[k, c(1:3,8)], onCran["Version"]))
     }
     if(!is.null(update))
-        colnames(update) <- c("Package", "LibPath", "Installed", "CRAN")
+        colnames(update) <- c("Package", "LibPath", "Installed", "Built", "CRAN")
     update
 }
 
@@ -123,7 +129,8 @@ installed.packages <- function(lib.loc = NULL, priority = NULL)
 {
     if(is.null(lib.loc))
         lib.loc <- .libPaths()
-    pkgFlds <- c("Version", "Priority", "Bundle", "Depends", "Suggests")
+    pkgFlds <- c("Version", "Priority", "Bundle", "Depends", "Suggests",
+                 "Built")
     if(!is.null(priority)) {
         if(!is.character(priority))
             stop("`priority' must be character or NULL")
@@ -132,11 +139,22 @@ installed.packages <- function(lib.loc = NULL, priority = NULL)
     }
     retval <- character()
     for(lib in lib.loc) {
+        # this excludes packages without DESCRIPTION files
         pkgs <- .packages(all.available = TRUE, lib.loc = lib)
         for(p in pkgs){
-            desc <- unlist(packageDescription(p, lib = lib, fields = pkgFlds))
-            if(!is.null(priority)) # skip if priority does not match
-                if(is.na(pmatch(desc["Priority"], priority))) next
+            desc <- packageDescription(p, lib = lib, fields = pkgFlds)
+            ## this gives NA if the package has no Version field
+            if (is.logical(desc)) {
+                desc <- rep(as.character(NA), length(pkgFlds))
+                names(desc) <- pkgFlds
+            } else {
+                desc <- unlist(desc)
+                if(!is.null(priority)) # skip if priority does not match
+                    if(is.na(pmatch(desc["Priority"], priority))) next
+                Rver <- strsplit(strsplit(desc["Built"], ";")[[1]][1],
+                                 "[ \t]+")[[1]][2]
+                desc["Built"] <- Rver
+            }
             retval <- rbind(retval, c(p, lib, desc))
         }
     }

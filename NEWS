@@ -13,6 +13,10 @@ NEW FEATURES
 
    o	Faster algorithm in summaryRprof().
 
+   o	update.packages() and old.packages() have a new option
+	'checkBuilt' to allow packages installed under earlier
+	versions of R to be updated.
+
 
 INSTALLATION CHANGES
 

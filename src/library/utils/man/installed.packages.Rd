@@ -27,7 +27,9 @@ installed.packages(lib.loc = NULL, priority = NULL)
 \value{
   A matrix with one row per package, row names the package names and
   column names \code{"Package"}, \code{"LibPath"}, \code{"Version"},
-  \code{"Priority"}, \code{"Bundle"}, \code{"Depends"} and \code{"Suggests"}.
+  \code{"Priority"}, \code{"Bundle"}, \code{"Depends"},
+  \code{"Suggests"} and \code{"Built"} (the \R version the package was
+  built under).
 }
 \seealso{
   \code{\link{update.packages}}

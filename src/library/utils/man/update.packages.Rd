@@ -16,14 +16,14 @@ update.packages(lib.loc = NULL, CRAN = getOption("CRAN"),
                 contriburl = contrib.url(CRAN),
                 method, instlib = NULL,
                 ask = TRUE, available = NULL, destdir = NULL,
-		installWithVers = FALSE)
+		installWithVers = FALSE, checkBuilt = FALSE)
 
 CRAN.packages(CRAN = getOption("CRAN"), method,
               contriburl = contrib.url(CRAN))
 
 old.packages(lib.loc = NULL, CRAN = getOption("CRAN"),
              contriburl = contrib.url(CRAN),
-             method, available = NULL)
+             method, available = NULL, checkBuilt = FALSE)
 
 download.packages(pkgs, destdir, available = NULL,
                   CRAN = getOption("CRAN"),
@@ -63,8 +63,10 @@ install.packages(pkgs, lib, CRAN = getOption("CRAN"),
     install the packages.  Recycled as needed.}
   \item{ask}{logical indicating to ask before packages are actually
     downloaded and installed.}
-  \item{installWithVers}{If \code{TRUE}, will invoke the install the
-    package such that it can be referenced by package version}
+  \item{installWithVers}{If \code{TRUE}, will invoke the install of the
+    package such that it can be referenced by package version.}
+  \item{CheckBuilt}{If \code{TRUE}, a package built under an earlier
+    minor version of \R is considered to be \sQuote{old}.}
   \item{instlib}{character string giving the library directory where to
     install the packages.}
   \item{dependencies}{logical indicating to also install uninstalled
@@ -84,7 +86,9 @@ install.packages(pkgs, lib, CRAN = getOption("CRAN"),
   
   \code{old.packages} compares the information from \code{CRAN.packages}
   with that from \code{\link{installed.packages}} and reports installed
-  packages/bundles that have newer versions on CRAN.
+  packages/bundles that have newer versions on CRAN or, if
+  \code{checkBuilt = TRUE}, that were built under an earlier minor
+  version of \R (for example under 2.0.x and running \R 2.1.1).
 
   \code{download.packages} takes a list of package/bundle names and a
   destination directory, downloads the newest versions of the package
