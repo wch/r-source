@@ -251,6 +251,9 @@ SEXP do_pause(SEXP, SEXP, SEXP, SEXP);
 SEXP do_persp(SEXP, SEXP, SEXP, SEXP);
 SEXP do_polyroot(SEXP, SEXP, SEXP, SEXP);
 SEXP do_pos2env(SEXP, SEXP, SEXP, SEXP);
+#ifdef HAVE_TIMES
+SEXP do_proctime(SEXP, SEXP, SEXP, SEXP);
+#endif
 SEXP do_abline(SEXP, SEXP, SEXP, SEXP);
 SEXP do_plot_xy(SEXP, SEXP, SEXP, SEXP);
 SEXP do_plot_new(SEXP, SEXP, SEXP, SEXP);
@@ -326,9 +329,8 @@ SEXP do_tempfile(SEXP, SEXP, SEXP, SEXP);
 SEXP do_termsform(SEXP, SEXP, SEXP, SEXP);
 SEXP do_text(SEXP, SEXP, SEXP, SEXP);
 SEXP do_tilde(SEXP, SEXP, SEXP, SEXP);
-#ifdef HAVE_TIMES
-SEXP do_proctime(SEXP, SEXP, SEXP, SEXP);
-#endif
+SEXP do_tolower(SEXP, SEXP, SEXP, SEXP);
+SEXP do_toupper(SEXP, SEXP, SEXP, SEXP);
 SEXP do_transpose(SEXP, SEXP, SEXP, SEXP);
 SEXP do_typecvt(SEXP, SEXP, SEXP, SEXP);
 SEXP do_typeof(SEXP, SEXP, SEXP, SEXP);

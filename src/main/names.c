@@ -439,6 +439,8 @@ FUNTAB R_FunTab[] =
 {"sub",		do_gsub,	0,	11,	5,	PP_FUNCALL},
 {"gsub",	do_gsub,	1,	11,	5,	PP_FUNCALL},
 {"regexpr",	do_regexpr,	1,	11,	3,	PP_FUNCALL},
+{"tolower",	do_tolower,	1,	11,	1,	PP_FUNCALL},
+{"toupper",	do_toupper,	1,	11,	1,	PP_FUNCALL},
 
 
 /* Type Checking */

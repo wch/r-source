@@ -647,3 +647,47 @@ SEXP do_regexpr(SEXP call, SEXP op, SEXP args, SEXP env)
     UNPROTECT(2);
     return ans;
 }
+
+SEXP
+do_tolower(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    SEXP x, y;
+    int i, n;
+    char *p;
+
+    checkArity(op, args);
+    x = CAR(args);
+    if(!isString(x))
+	errorcall(call, "non-character argument to tolower()");
+    y = duplicate(x);
+    n = LENGTH(y);
+    for(i = 0; i < n; i++) {
+	for(p = CHAR(STRING(y)[i]); *p != '\0'; p++) {
+	    *p = tolower(*p);
+	}
+	p = CHAR(STRING(y)[i]);
+    }
+    return(y);
+}
+
+SEXP
+do_toupper(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    SEXP x, y;
+    int i, n;
+    char *p;
+
+    checkArity(op, args);
+    x = CAR(args);
+    if(!isString(x))
+	errorcall(call, "non-character argument to toupper()");
+    y = duplicate(x);
+    n = LENGTH(y);
+    for(i = 0; i < n; i++) {
+	for(p = CHAR(STRING(y)[i]); *p != '\0'; p++) {
+	    *p = toupper(*p);
+	}
+	p = CHAR(STRING(y)[i]);
+    }
+    return(y);
+}
