@@ -12,7 +12,7 @@
 \method{cor.test}{default}(x, y,
          alternative = c("two.sided", "less", "greater"),
          method = c("pearson", "kendall", "spearman"),
-         exact = NULL, \dots)
+         conf.level = 0.95, exact = NULL, \dots)
 \method{cor.test}{formula}(formula, data, subset, na.action, \dots)
 }
 \arguments{
@@ -28,6 +28,10 @@
   \item{exact}{a logical indicating whether an exact p-value should be
     computed.  Only used for Kendall's \eqn{\tau}{tau}.
     See the Details for the meaning of \code{NULL} (the default).}
+  \item{conf.level}{confidence level for the returned confidence
+    interval.  Currently only used for the Pearson product moment
+    correlation coefficient if there are at least 4 complete pairs of
+    observations.}
   \item{formula}{a formula of the form \code{~ u + v}, where each of
     \code{u} and \code{v} are numeric variables giving the data values
     for one sample.  The samples must be of the same length.}
@@ -56,6 +60,9 @@
   \item{method}{a character string indicating how the association was
     measured.}
   \item{data.name}{a character string giving the names of the data.}
+  \item{conf.int}{a confidence interval for the measure of association.
+    Currently only given for Pearson's product moment correlation
+    coefficient in case of at least 4 complete pairs of observations.}
 }
 \details{
   The three methods each estimate the association between paired samples
@@ -68,7 +75,9 @@
   If \code{method} is \code{"pearson"}, the test statistic is based on
   Pearson's product moment correlation coefficient \code{cor(x, y)} and
   follows a t distribution with \code{length(x)-2} degrees of freedom
-  if the samples follow independent normal distributions.
+  if the samples follow independent normal distributions.  If there are
+  at least 4 complete pairs of observation, an asymptotic confidence
+  interval is given based on Fisher's Z transform.
 
   If \code{method} is \code{"kendall"} or \code{"spearman"}, Kendall's
   \eqn{\tau}{tau} or Spearman's \eqn{\rho}{rho} statistic is used to

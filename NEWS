@@ -143,6 +143,10 @@ NEW FEATURES
     o   df.residual() now has a default method, used for classes
 	"lm" and "glm".
 
+    o	cor.test() in package ctest now also gives an asymptotic
+	confidence interval for the Pearson product moment correlation
+	coefficient.
+
 
 
 BUG FIXES
