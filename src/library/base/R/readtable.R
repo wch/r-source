@@ -6,7 +6,7 @@ read.table <-
     function (file, header=FALSE, sep="", row.names, col.names, as.is=FALSE,
 	      na.strings="NA", skip=0)
 {
-    type.convert <-	function(x, na.strings="NA", as.is=FALSE)
+    type.convert <- function(x, na.strings="NA", as.is=FALSE)
 	.Internal(type.convert(x, na.strings, as.is))
 
     ##	basic column counting and header determination;
@@ -67,8 +67,7 @@ read.table <-
 	stop(paste("as.is has the wrong length",
 		   length(as.is),"!= cols =", cols))
     for (i in 1:cols)
-	if (!as.is[i])
-	    data[[i]] <- type.convert(data[[i]])
+        data[[i]] <- type.convert(data[[i]], as.is = as.is[i])
 
     ##	now determine row names
 
