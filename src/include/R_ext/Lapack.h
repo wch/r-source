@@ -1226,6 +1226,7 @@ F77_NAME(dsyevx)(const char* jobz, const char* range,
     		 int* m, double* w,
     		 double* z, const int* ldz,
     		 double* work, const int* lwork, int* iwork,
+		 int* ifail, int* info);
 /* DSYEVR - compute all eigenvalues and, optionally, eigenvectors   */
 /* of a real symmetric matrix A                                    */
 void F77_NAME(dsyevr)(const char *jobz, const char *range, const char *uplo,
@@ -1237,7 +1238,6 @@ void F77_NAME(dsyevr)(const char *jobz, const char *range, const char *uplo,
 		      double *work, const int *lwork,
 		      int *iwork, const int *liwork,
 		      int *info);
-    		 int* ifail, int* info);
 /* DSYGS2 - reduce a real symmetric-definite generalized */
 /* eigenproblem to standard form */
 void
