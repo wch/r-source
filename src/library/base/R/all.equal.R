@@ -8,18 +8,18 @@ all.equal.default <- function(target, current, ...)
     if(is.recursive(target))
 	return(all.equal.list(target, current, ...))
     msg <- c(attr.all.equal(target, current, ...),
-	     if(is.numeric(target) && is.numeric(current)) {
+	     if(is.numeric(target)) {
 		 all.equal.numeric(target, current, ...)
-	     } else if(data.class(target) != data.class(current)) {
-		 paste("target is ", data.class(target), ", current is ",
-		       data.class(current), sep = "")
 	     } else
 	     switch (mode(target),
 		     logical = ,
 		     complex = ,
 		     numeric = all.equal.numeric(target, current, ...),
 		     character = all.equal.character(target, current, ...),
-		     NULL))
+		      if(data.class(target) != data.class(current)) {
+		 paste("target is ", data.class(target), ", current is ",
+		       data.class(current), sep = "")
+	     } else NULL))
     if(is.null(msg)) TRUE else msg
 }
 
@@ -27,6 +27,9 @@ all.equal.numeric <-
 function(target, current, tolerance = .Machine$double.eps ^ .5,
          scale=NULL, ...)
 {
+    if(data.class(target) != data.class(current))
+        return(paste("target is ", data.class(target), ", current is ",
+		       data.class(current), sep = ""))
     lt <- length(target)
     lc <- length(current)
     cplx <- is.complex(target)
@@ -62,6 +65,9 @@ function(target, current, tolerance = .Machine$double.eps ^ .5,
 
 all.equal.character <- function(target, current, ...)
 {
+    if(data.class(target) != data.class(current))
+        return(paste("target is ", data.class(target), ", current is ",
+		       data.class(current), sep = ""))
     lt <- length(target)
     lc <- length(current)
     if(lt != lc) {
