@@ -368,6 +368,9 @@ BUG FIXES
 
     o	pointer protection in deriv() (PR#953)
 
+    o   expand.data.frame() didn't interpret its subset= argument in
+        the data frame. (PR#979 et al., fix from Greg Warnes)
+
     o	format() on character arrays was losing the dimensions.
 
     o	hist.default() was ignoring its `probability' argument for

@@ -1,9 +1,10 @@
-expand.model.frame <- function(model, extras,  enclos=parent.frame(),
+expand.model.frame <- function(model, extras,
+                               envir=environment(formula(model)),
                                na.expand=FALSE)
 {
     ## don't use model$call$formula -- it might be a variable name
     f <- formula(model)
-    data <- eval(model$call$data, enclos)
+    data <- eval(model$call$data, envir)
 
     # new formula (there must be a better way...)
     ff <- foo ~ bar + baz
@@ -18,10 +19,12 @@ expand.model.frame <- function(model, extras,  enclos=parent.frame(),
     if (!na.expand){
         naa <- model$call$na.action
         subset <- model$call$subset
-        rval <- model.frame(ff, data=data, subset=subset, na.action=naa)
+        rval <- eval(call("model.frame",ff, data = data, subset = subset, 
+                      na.action = naa),envir )
     } else {
         subset <- model$call$subset
-        rval <- model.frame(ff, data=data, subset=subset, na.action=I)
+        rval <- eval(call("model.frame",ff, data = data, subset = subset, 
+                          na.action = I), envir)
         oldmf <- model.frame(model)
         keep <- match(rownames(oldmf), rownames(rval))
         rval <- rval[keep, ]
