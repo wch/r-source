@@ -205,6 +205,8 @@ fi
 ## Building the R Texinfo manuals requires Makeinfo v4.7 or better.
 ## Set shell variable r_cv_prog_makeinfo_v4 to 'yes' if a recent
 ## enough Makeinfo is found, and to 'no' otherwise.
+## If you change the minimum version here, also change it in
+## doc/manual/Makefile.in and doc/manual/R-admin.texi.
 AC_DEFUN([_R_PROG_MAKEINFO_VERSION],
 [AC_CACHE_CHECK([whether makeinfo version is at least 4.7],
                 [r_cv_prog_makeinfo_v4],
