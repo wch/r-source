@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 1.9-49 2004-09-11
+Version 1.9-50 2004-09-14
 ISBN 3-900051-01-1
 Kurt Hornik
 
@@ -59,34 +59,33 @@ R FAQ
   6.2 Should I run R from within Emacs?
   6.3 Debugging R from within Emacs
 7 R Miscellanea
-  7.1 Why does R run out of memory?
-  7.2 Why does sourcing a correct file fail?
-  7.3 How can I set components of a list to NULL?
-  7.4 How can I save my workspace?
-  7.5 How can I clean up my workspace?
-  7.6 How can I get eval() and D() to work?
-  7.7 Why do my matrices lose dimensions?
-  7.8 How does autoloading work?
-  7.9 How should I set options?
-  7.10 How do file names work in Windows?
-  7.11 Why does plotting give a color allocation error?
-  7.12 How do I convert factors to numeric?
-  7.13 Are Trellis displays implemented in R?
-  7.14 What are the enclosing and parent environments?
-  7.15 How can I substitute into a plot label?
-  7.16 What are valid names?
-  7.17 Are GAMs implemented in R?
-  7.18 Why is the output not printed when I source() a file?
-  7.19 Why does outer() behave strangely with my function?
-  7.20 Why does the output from anova() depend on the order of factors in the model?
-  7.21 How do I produce PNG graphics in batch mode?
-  7.22 How can I get command line editing to work?
-  7.23 How can I turn a string into a variable?
-  7.24 Why do lattice/trellis graphics not work?
-  7.25 How can I sort the rows of a data frame?
-  7.26 Why does the help.start() search engine not work?
-  7.27 Why did my .Rprofile stop working when I updated R?
-  7.28 Where have all the methods gone?
+  7.1 How can I set components of a list to NULL?
+  7.2 How can I save my workspace?
+  7.3 How can I clean up my workspace?
+  7.4 How can I get eval() and D() to work?
+  7.5 Why do my matrices lose dimensions?
+  7.6 How does autoloading work?
+  7.7 How should I set options?
+  7.8 How do file names work in Windows?
+  7.9 Why does plotting give a color allocation error?
+  7.10 How do I convert factors to numeric?
+  7.11 Are Trellis displays implemented in R?
+  7.12 What are the enclosing and parent environments?
+  7.13 How can I substitute into a plot label?
+  7.14 What are valid names?
+  7.15 Are GAMs implemented in R?
+  7.16 Why is the output not printed when I source() a file?
+  7.17 Why does outer() behave strangely with my function?
+  7.18 Why does the output from anova() depend on the order of factors in the model?
+  7.19 How do I produce PNG graphics in batch mode?
+  7.20 How can I get command line editing to work?
+  7.21 How can I turn a string into a variable?
+  7.22 Why do lattice/trellis graphics not work?
+  7.23 How can I sort the rows of a data frame?
+  7.24 Why does the help.start() search engine not work?
+  7.25 Why did my .Rprofile stop working when I updated R?
+  7.26 Where have all the methods gone?
+  7.27 How can I create rotated axis labels?
 8 R Programming
   8.1 How should I write summary methods?
   8.2 How can I debug dynamically loaded code?
@@ -160,7 +159,7 @@ Everything should be pretty standard.  `R>' is used for the R prompt, and a
 1.5 Feedback
 ============
 
-Feedback is of course most welcome.
+Feedback via email to <Kurt.Hornik@R-project.org> is of course most welcome.
 
    In particular, note that I do not have access to Windows or Macintosh
 systems.  Features specific to the Windows and Mac OS X ports of R are
@@ -222,14 +221,14 @@ project ("GNU S").
 ================================
 
 R is being developed for the Unix, Windows and Mac families of operating
-systems.  Support for Mac OS Classic will end with the 1.7 series.
+systems.  Support for Mac OS Classic ended with R 1.7.1.
 
    The current version of R will configure and build under a number of
-common Unix platforms including i386-freebsd, CPU-linux-gnu for the i386,
-alpha, arm, hppa, ia64, m68k, powerpc, and sparc CPUs (see e.g.
-`http://buildd.debian.org/build.php?&pkg=r-base'), i386-sun-solaris,
-powerpc-apple-darwin, mips-sgi-irix, alpha-dec-osf4, rs6000-ibm-aix,
-hppa-hp-hpux, and sparc-sun-solaris.
+common Unix platforms including CPU-linux-gnu for the i386, alpha, arm,
+hppa, ia64, m68k, mips/mipsel, powerpc, s390, sparc (e.g.,
+`http://buildd.debian.org/build.php?&pkg=r-base'), and x86_64 CPUs,
+i386-freebsd, i386-sun-solaris, powerpc-apple-darwin, mips-sgi-irix,
+rs6000-ibm-aix, hppa-hp-hpux, and sparc-sun-solaris.
 
    If you know about other platforms, please drop us a note.
 
@@ -238,10 +237,10 @@ hppa-hp-hpux, and sparc-sun-solaris.
 
 The current released version is 1.9.1.  Based on this
 `major.minor.patchlevel' numbering scheme, there are two development
-versions of R, working towards the next patch (`r-patched') and minor or
-eventually major (`r-devel') releases of R, respectively.  Version
-r-patched is for bug fixes mostly.  New features are typically introduced
-in r-devel.
+versions of R, a patched version of the current release (`r-patched') and
+one working towards the next minor or eventually major (`r-devel') releases
+of R, respectively.  Version r-patched is for bug fixes mostly.  New
+features are typically introduced in r-devel.
 
 2.4 How can R be obtained?
 ==========================
@@ -250,7 +249,7 @@ Sources, binaries and documentation for R can be obtained via CRAN, the
 "Comprehensive R Archive Network" (see *Note What is CRAN?::).
 
    Sources are also available via `https://svn.r-project.org/R/', the R
-Subversion repository, but currently not via anonymous rsync (or CVS).
+Subversion repository, but currently not via anonymous rsync (nor CVS).
 
 2.5 How can R be installed?
 ===========================
@@ -258,7 +257,10 @@ Subversion repository, but currently not via anonymous rsync (or CVS).
 2.5.1 How can R be installed (Unix)
 -----------------------------------
 
-If binaries are available for your platform (see *Note Are there Unix
+If R is already installed, it can be started by typing `R' at the shell
+prompt (of course, provided that the executable is in your path).
+
+   If binaries are available for your platform (see *Note Are there Unix
 binaries for R?::), you can use these, following the instructions that come
 with them.
 
@@ -269,8 +271,8 @@ distribution contains a brief introduction, and the "R Installation and
 Administration" guide (*note What documentation exists for R?::) has full
 details.
 
-   Note that you need a FORTRAN compiler or `f2c' in addition to a C
-compiler to build R.  Also, you need Perl version 5 to build the R object
+   Note that you need a FORTRAN compiler or perhaps `f2c' in addition to a
+C compiler to build R.  Also, you need Perl version 5 to build the R object
 documentations.  (If this is not available on your system, you can obtain a
 PDF version of the object reference manual via CRAN.)
 
@@ -294,8 +296,8 @@ can be previewed and printed using standard programs such as `xdvi' and
 Format) version of the manuals, and view these using e.g. Acrobat.  Manuals
 written in the GNU Texinfo system can also be converted to info files
 suitable for reading online with Emacs or stand-alone GNU Info; use `make
-info' to create these versions (note that this requires `makeinfo' version
-4).
+info' to create these versions (note that this requires Makeinfo version
+4.5).
 
    Finally, use `make check' to find out whether your R system works
 correctly.
@@ -331,8 +333,9 @@ The `bin/windows' directory of a CRAN site contains binaries for a base
 distribution and a large number of add-on packages from CRAN to run on
 Windows 95, 98, ME, NT4, 2000, and XP (at least) on Intel and clones (but
 not on other platforms).  The Windows version of R was created by Robert
-Gentleman, and is now being developed and maintained by Duncan Murdoch
-<murdoch@stats.uwo.ca> and Brian D. Ripley <Brian.Ripley@R-project.org>.
+Gentleman and Guido Masarotto, and is now being developed and maintained by
+Duncan Murdoch <murdoch@stats.uwo.ca> and Brian D. Ripley
+<Brian.Ripley@R-project.org>.
 
    For most installations the Windows installer program will be the easiest
 tool to use.
@@ -511,9 +514,12 @@ To cite R in publications, use
        organization = {R Foundation for Statistical Computing},
        address      = {Vienna, Austria},
        year         = 2004,
-       note         = {ISBN 3-900051-00-3},
+       note         = {3-900051-00-3},
        url          = {http://www.R-project.org}
      }
+
+   Citation strings (or BibTeX entroes) for R and R packages can also be
+obtained by `citation()'.
 
 2.9 What mailing lists exist for R?
 ===================================
@@ -744,8 +750,7 @@ on the S language, S-PLUS provides functionality in a wide variety of
 areas, including robust regression, modern non-parametric regression, time
 series, survival analysis, multivariate analysis, classical statistical
 tests, quality control, and graphics drivers.  Add-on modules add
-additional capabilities for wavelet analysis, spatial statistics, GARCH
-models, and design of experiments.
+additional capabilities.
 
    See the Insightful S-PLUS page
 (http://www.insightful.com/products/splus/) for further information.
@@ -1186,13 +1191,13 @@ and one without) as well as the original code are available from
 The R distribution comes with the following packages:
 
 *base*
-     Base R functions (and datasets before R 2.0).
+     Base R functions (and datasets before R 2.0.0).
 
 *datasets*
-     Base R datasets (added in R 2.0).
+     Base R datasets (added in R 2.0.0).
 
 *grDevices*
-     Graphics devices for base and grid graphics (added in R 2.0).
+     Graphics devices for base and grid graphics (added in R 2.0.0).
 
 *graphics*
      R functions for base graphics.
@@ -1222,7 +1227,7 @@ The R distribution comes with the following packages:
 
 *utils*
      R utility functions.
-   These "base packages" were substantially reorganized in R 1.9.  The
+   These "base packages" were substantially reorganized in R 1.9.0.  The
 former *base* was split into the four packages *base*, *graphics*, *stats*,
 and *utils*.  Packages *ctest*, *eda*, *modreg*, *mva*, *nls*, *stepfun*
 and *ts* were merged into *stats*, package *lqs* returned to the
@@ -3350,36 +3355,38 @@ at the R prompt.
 
    This produces something like
 
-     Packages in `/home/me/lib/R':
+          Packages in `/home/me/lib/R':
 
-     mystuff       My own R functions, nicely packaged but not documented
+          mystuff       My own R functions, nicely packaged but not documented
 
-     Packages in `/usr/local/lib/R/library':
+          Packages in `/usr/local/lib/R/library':
 
-     KernSmooth    Functions for kernel smoothing for Wand & Jones (1995)
-     MASS          Main Package of Venables and Ripley's MASS
-     base          The R base package
-     boot          Bootstrap R (S-Plus) Functions (Canty)
-     class         Functions for Classification
-     cluster       Functions for clustering (by Rousseeuw et al.)
-     foreign       Read data stored by Minitab, S, SAS, SPSS, Stata, ...
-     graphics      The R Graphics Package
-     grid          The Grid Graphics Package
-     lattice       Lattice Graphics
-     methods       Formal Methods and Classes
-     mgcv          Multiple smoothing parameter estimation and GAMs by GCV
-     nlme          Linear and nonlinear mixed effects models
-     nnet          Feed-forward Neural Networks and Multinomial Log-Linear
-                   Models
-     rpart         Recursive partitioning
-     spatial       Functions for Kriging and Point Pattern Analysis
-     splines       Regression Spline Functions and Classes
-     stats         The R Stats Package
-     stats4        Statistical functions using S4 classes
-     survival      Survival analysis, including penalised likelihood
-     tcltk         Tcl/Tk Interface
-     tools         Tools for Package Development
-     utils         The R Utils Package
+          KernSmooth    Functions for kernel smoothing for Wand & Jones (1995)
+          MASS          Main Package of Venables and Ripley's MASS
+          base          The R Base package
+          boot          Bootstrap R (S-Plus) Functions (Canty)
+          class         Functions for Classification
+          cluster       Functions for clustering (by Rousseeuw et al.)
+          datasets      The R datasets Package
+          foreign       Read data stored by Minitab, S, SAS, SPSS, Stata, ...
+          grDevices     The R Graphics Devices and Support for Colours and Fonts
+          graphics      The R Graphics Package
+          grid          The Grid Graphics Package
+          lattice       Lattice Graphics
+          methods       Formal Methods and Classes
+          mgcv          GAMs with GCV smoothness estimation and GAMMs by REML/PQ
+          nlme          Linear and nonlinear mixed effects models
+          nnet          Feed-forward Neural Networks and Multinomial Log-Linear
+                        Models
+          rpart         Recursive partitioning
+          spatial       Functions for Kriging and Point Pattern Analysis
+          splines       Regression Spline Functions and Classes
+          stats         The R Stats Package
+          stats4        Statistical functions using S4 classes
+          survival      Survival analysis, including penalised likelihood
+          tcltk         Tcl/Tk Interface
+          tools         Tools for Package Development
+          utils         The R Utils Package
 
    You can "load" the installed package PKG by
 
@@ -3564,35 +3571,7 @@ as follows:
 7 R Miscellanea
 ***************
 
-7.1 Why does R run out of memory?
-=================================
-
-Versions of R prior to 1.2.0 used a _static_ memory model.  At startup, R
-asked the operating system to reserve a fixed amount of memory for it.  The
-size of this chunk could not be changed subsequently.  Hence, it could
-happen that not enough memory was allocated, e.g., when trying to read
-large data sets into R.  In such cases, it was necessary to restart R with
-more memory available, as controlled by the command line options `--nsize'
-and `--vsize'.
-
-   R version 1.2.0 introduces a new "generational" garbage collector, which
-will increase the memory available to R as needed.  Hence, user
-intervention is no longer necessary for ensuring that enough memory is
-available.
-
-   The new garbage collector does not move objects in memory, meaning that
-it is possible for the free memory to become fragmented so that large
-objects cannot be allocated even when there is apparently enough memory for
-them.
-
-7.2 Why does sourcing a correct file fail?
-==========================================
-
-Versions of R prior to 1.2.1 may have had problems parsing files not ending
-in a newline.  Earlier R versions had a similar problem when reading in
-data files.  This should no longer happen.
-
-7.3 How can I set components of a list to NULL?
+7.1 How can I set components of a list to NULL?
 ===============================================
 
 You can use
@@ -3606,7 +3585,7 @@ remove the corresponding component from the list.
    For dropping the row names of a matrix `x', it may be easier to use
 `rownames(x) <- NULL', similarly for column names.
 
-7.4 How can I save my workspace?
+7.2 How can I save my workspace?
 ================================
 
 `save.image()' saves the objects in the user's `.GlobalEnv' to the file
@@ -3614,7 +3593,7 @@ remove the corresponding component from the list.
 `q("yes")'.)  Using `save.image(FILE)' one can save the image under a
 different name.
 
-7.5 How can I clean up my workspace?
+7.3 How can I clean up my workspace?
 ====================================
 
 To remove all objects in the currently active environment (typically
@@ -3625,7 +3604,7 @@ To remove all objects in the currently active environment (typically
 (Without `all = TRUE', only the objects with names not starting with a `.'
 are removed.)
 
-7.6 How can I get eval() and D() to work?
+7.4 How can I get eval() and D() to work?
 =========================================
 
 Strange things will happen if you use `eval(print(x), envir = e)' or
@@ -3657,7 +3636,7 @@ or
 
    See the help page for `deriv()' for more examples.
 
-7.7 Why do my matrices lose dimensions?
+7.5 Why do my matrices lose dimensions?
 =======================================
 
 When a matrix with a single row or column is created by a subscripting
@@ -3684,7 +3663,7 @@ will return a vector rather than a matrix if `index' happens to have length
 
      somerows <- mat[index, , drop = FALSE]
 
-7.8 How does autoloading work?
+7.6 How does autoloading work?
 ==============================
 
 R has a special environment called `.AutoloadEnv'.  Using `autoload(NAME,
@@ -3698,7 +3677,7 @@ does not occupy memory (yet).
 
    See the help page for `autoload()' for a very nice example.
 
-7.9 How should I set options?
+7.7 How should I set options?
 =============================
 
 The function `options()' allows setting and examining a variety of global
@@ -3730,8 +3709,8 @@ we obtain:
 either in `.GlobalEnv' or in a function environment (frame), are just
 silently disregarded.
 
-7.10 How do file names work in Windows?
-=======================================
+7.8 How do file names work in Windows?
+======================================
 
 As R uses C-style string handling, `\' is treated as an escape character,
 so that for example one can enter a newline as `\n'.  When you really need
@@ -3740,14 +3719,14 @@ a `\', you have to escape it with another `\'.
    Thus, in filenames use something like `"c:\\data\\money.dat"'.  You can
 also replace `\' by `/' (`"c:/data/money.dat"').
 
-7.11 Why does plotting give a color allocation error?
-=====================================================
+7.9 Why does plotting give a color allocation error?
+====================================================
 
-Sometimes plotting, e.g., when running `demo("image")', results in "Error:
-color allocation error".  This is an X problem, and only indirectly related
-to R.  It occurs when applications started prior to R have used all the
-available colors.  (How many colors are available depends on the X
-configuration; sometimes only 256 colors can be used.)
+On an X11 device, plotting sometimes, e.g., when running `demo("image")',
+results in "Error: color allocation error".  This is an X problem, and only
+indirectly related to R.  It occurs when applications started prior to R
+have used all the available colors.  (How many colors are available depends
+on the X configuration; sometimes only 256 colors can be used.)
 
    One application which is notorious for "eating" colors is Netscape.  If
 the problem occurs when Netscape is running, try (re)starting it with
@@ -3758,7 +3737,7 @@ either the `-no-install' (to use the default colormap) or the `-install'
 than the default `"pseudo"'.  See the help page for `X11()' for more
 information.
 
-7.12 How do I convert factors to numeric?
+7.10 How do I convert factors to numeric?
 =========================================
 
 It may happen that when reading numeric data into R (usually, when reading
@@ -3774,7 +3753,7 @@ to get the numbers back.  More efficient, but harder to remember, is
    In any case, do not call `as.numeric()' or their likes directly for the
 task at hand (as `as.numeric()' or `unclass()' give the internal codes).
 
-7.13 Are Trellis displays implemented in R?
+7.11 Are Trellis displays implemented in R?
 ===========================================
 
 The recommended package *lattice* (which is based on another recommended
@@ -3790,7 +3769,7 @@ fix against device resizing) the aspect ratio of the plot.
    (Because the word "Trellis" has been claimed as a trademark we do not
 use it in R.  The name "lattice" has been chosen for the R equivalent.)
 
-7.14 What are the enclosing and parent environments?
+7.12 What are the enclosing and parent environments?
 ====================================================
 
 Inside a function you may want to access variables in two additional
@@ -3837,7 +3816,7 @@ and S is to say that in S the enclosing environment is _always_ the global
 workspace, but in R the enclosing environment is wherever the function was
 created.
 
-7.15 How can I substitute into a plot label?
+7.13 How can I substitute into a plot label?
 ============================================
 
 Often, it is desired to use the value of an R object in a plot label, e.g.,
@@ -3859,7 +3838,7 @@ where subexpressions enclosed in `.()' are replaced by their values.
 
    There are more worked examples in the mailing list achives.
 
-7.16 What are valid names?
+7.14 What are valid names?
 ==========================
 
 When creating data frames using `data.frame()' or `read.table()', R by
@@ -3901,7 +3880,7 @@ language:
      with names in the language, but it is traditional to call these
      strings file "names".
 
-7.17 Are GAMs implemented in R?
+7.15 Are GAMs implemented in R?
 ===============================
 
 Package *gam* from CRAN implements all the Generalized Additive Models
@@ -3913,7 +3892,7 @@ White Book (no `lo()' for example).  Package *gss* can fit spline-based
 GAMs too.  And if you can accept regression splines you can use `glm()'.
 For gaussian GAMs you can use `bruto()' from package *mda*.
 
-7.18 Why is the output not printed when I source() a file?
+7.16 Why is the output not printed when I source() a file?
 ==========================================================
 
 Most R commands do not generate any output. The command
@@ -3943,7 +3922,7 @@ or
 
 instead, or use `source(FILE, echo=TRUE)'.
 
-7.19 Why does outer() behave strangely with my function?
+7.17 Why does outer() behave strangely with my function?
 ========================================================
 
 As the help for `outer()' indicates, it does not work on arbitrary
@@ -3974,7 +3953,7 @@ then you can use `outer()' by writing, e.g.,
 
      outer(1:4, 1:2, FUN = wrapper, my.fun = foo, happy = 10)
 
-7.20 Why does the output from anova() depend on the order of factors in the model?
+7.18 Why does the output from anova() depend on the order of factors in the model?
 ==================================================================================
 
 In a model such as `~A+B+A:B', R will report the difference in sums of
@@ -3998,7 +3977,7 @@ easily.  Any two models can be compared with `anova(MODEL1, MODEL2)', and
 `drop1(MODEL1)' will show the sums of squares resulting from dropping
 single terms.
 
-7.21 How do I produce PNG graphics in batch mode?
+7.19 How do I produce PNG graphics in batch mode?
 =================================================
 
 Under Unix, the `png()' device uses the X11 driver, which is a problem in
@@ -4006,9 +3985,10 @@ batch mode or for remote operation.  If you have Ghostscript you can use
 `bitmap()', which produces a PostScript file then converts it to any bitmap
 format supported by ghostscript.  On some installations this produces ugly
 output, on others it is perfectly satisfactory.  In theory one could also
-use Xvfb, which provides an X server with no display.
+use Xvfb from X.Org (http://www.x.org/Downloads.html), which provides an X
+server with no display.
 
-7.22 How can I get command line editing to work?
+7.20 How can I get command line editing to work?
 ================================================
 
 The Unix command-line interface to R can only provide the inbuilt command
@@ -4019,7 +3999,7 @@ readline including the appropriate headers is needed: users of Linux binary
 distributions will need to install packages such as `libreadline-dev'
 (Debian) or `readline-devel' (Red Hat).
 
-7.23 How can I turn a string into a variable?
+7.21 How can I turn a string into a variable?
 =============================================
 
 If you have
@@ -4059,7 +4039,7 @@ and then you can easily index it by name
 
 without any of this messing about.
 
-7.24 Why do lattice/trellis graphics not work?
+7.22 Why do lattice/trellis graphics not work?
 ==============================================
 
 The most likely reason is that you forgot to tell R to display the graph.
@@ -4070,13 +4050,13 @@ these functions interactively at the command line, the result is
 automatically printed, but in `source()' or inside your own functions you
 will need an explicit `print()' statement.
 
-7.25 How can I sort the rows of a data frame?
+7.23 How can I sort the rows of a data frame?
 =============================================
 
 To sort the rows within a data frame, with respect to the values in one or
 more of the columns, simply use `order()'.
 
-7.26 Why does the help.start() search engine not work?
+7.24 Why does the help.start() search engine not work?
 ======================================================
 
 The browser-based search engine in `help.start()' utilizes a Java applet.
@@ -4090,7 +4070,7 @@ search in HTML help" in `R Installation and Administration'.  This manual is
 included in the R distribution, *note What documentation exists for R?::,
 and its HTML version is linked from the HTML search page.
 
-7.27 Why did my .Rprofile stop working when I updated R?
+7.25 Why did my .Rprofile stop working when I updated R?
 ========================================================
 
 Did you read the `NEWS' file?  For functions that are not in the *base*
@@ -4105,9 +4085,9 @@ needs to be
      graphics::ps.options(horizontal = FALSE)
      utils::help.start()
 
-(`grDevices::ps.options(horizontal = FALSE)' in R 2.0).
+(`grDevices::ps.options(horizontal = FALSE)' in R 2.0.0).
 
-7.28 Where have all the methods gone?
+7.26 Where have all the methods gone?
 =====================================
 
 Many functions, particularly S3 methods, are now hidden in namespaces.
@@ -4122,6 +4102,36 @@ To see the code for an unexported function `foo()' in the namespace of
 package `"bar"' use `bar:::foo'.  Don't use these constructions to call
 unexported functions in your own code--they are probably unexported for a
 reason and may change without warning.
+
+7.27 How can I create rotated axis labels?
+==========================================
+
+To rotate axis labels (using base graphics), you need to use `text()',
+rather than `mtext()', as the latter does not support `par("srt")'.
+
+     ## Increase bottom margin to make room for rotated labels
+     par(mar = c(7, 4, 4, 2) + 0.1)
+     ## Create plot with no x axis and no x axis label
+     plot(1 : 8, xaxt = "n",  xlab = "")
+     ## Set up x axis with tick marks alone
+     axis(1, labels = FALSE)
+     ## Create some text labels
+     labels <- paste("Label", 1:8, sep = " ")
+     ## Plot x axis labels at default tick marks
+     text(1:8, par("usr")[3] - 0.25, srt = 45, adj = 1,
+          labels = labels, xpd = TRUE)
+     ## Plot x axis label at line 6 (of 7)
+     mtext(1, text = "X Axis Label", line = 6)
+
+When plotting the x axis labels, we use `srt = 45' for text rotation angle,
+`adj = 1' to place the right end of text at the tick marks, and `xpd =
+TRUE' to allow for text outside the plot region.  You can adjust the value
+of the `0.25' offset as required to move the axis labels up or down
+relative to the x axis.  See `?par' for more information.
+
+   Also see Figure 1 and associated code in Paul Murrell (2003),
+"Integrating grid Graphics Output with Base Graphics Output", _RNews_,
+*3/2*, 7-12.
 
 8 R Programming
 ***************
@@ -4162,11 +4172,10 @@ Extensions'.
 Suppose you have C code file for dynloading into R, but you want to use `R
 CMD SHLIB' with compilation flags other than the default ones (which were
 determined when R was built).  You could change the file
-``R_HOME'/etc/Makeconf' to reflect your preferences.  If you are a Bourne
-shell user, you can also pass the desired flags to Make (which is used for
-controlling compilation) via the Make variable `MAKEFLAGS', as in
-
-     MAKEFLAGS="CFLAGS=-O3" R CMD SHLIB *.c
+``R_HOME'/etc/Makeconf' to reflect your preferences, or (at least for
+systems using GNU Make) override them by the environment variable
+`MAKEFLAGS'.  See section "Creating shared objects" in `Writing R
+Extensions'.
 
 8.5 How can I debug S4 methods?
 ===============================

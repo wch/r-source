@@ -31,7 +31,7 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#dir">(dir)</a>
 <h2 class="unnumbered">R FAQ</h2>
 
 <p><h2>Frequently Asked Questions on R</h2>
-<h2>Version 1.9-49 2004-09-11</h2>
+<h2>Version 1.9-50 2004-09-14</h2>
 <h2>ISBN 3-900051-01-1</h2>
 <address>Kurt Hornik</address>
 <p><p><hr><p>
@@ -163,7 +163,8 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#Introduction">Introduction</a>
 
 <h3 class="section">1.5 Feedback</h3>
 
-<p>Feedback is of course most welcome.
+<p>Feedback via email to <a href="mailto:Kurt.Hornik@R-project.org">Kurt.Hornik@R-project.org</a> is of course
+most welcome.
 
    <p>In particular, note that I do not have access to Windows or Macintosh
 systems.  Features specific to the Windows and Mac OS X ports of R are
@@ -265,13 +266,17 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#R-Basics">R Basics</a>
 <h3 class="section">2.2 What machines does R run on?</h3>
 
 <p>R is being developed for the Unix, Windows and Mac families of operating
-systems.  Support for Mac OS Classic will end with the 1.7 series.
+systems.  Support for Mac OS Classic ended with R 1.7.1.
 
    <p>The current version of R will configure and build under a number of
-common Unix platforms including i386-freebsd, <var>cpu</var>-linux-gnu for
-the i386, alpha, arm, hppa, ia64, m68k, powerpc, and sparc CPUs (see
-e.g. <a href="http://buildd.debian.org/build.php?&amp;pkg=r-base">http://buildd.debian.org/build.php?&amp;pkg=r-base</a>),
-i386-sun-solaris, powerpc-apple-darwin, mips-sgi-irix, alpha-dec-osf4,
+common Unix platforms including <var>cpu</var>-linux-gnu for the i386, alpha,
+arm, hppa, ia64, m68k, mips/mipsel, powerpc, s390, sparc (e.g.,
+<a href="http://buildd.debian.org/build.php?&amp;pkg=r-base">http://buildd.debian.org/build.php?&amp;pkg=r-base</a>), and x86_64 CPUs,
+i386-freebsd, i386-sun-solaris, powerpc-apple-darwin, mips-sgi-irix,
+<!-- <FIXME> -->
+<!-- Not sure anymore ... -->
+<!-- alpha-dec-osf4, -->
+<!-- </FIXME> -->
 rs6000-ibm-aix, hppa-hp-hpux, and sparc-sun-solaris.
 
 <!-- and according to @email{jlindsey@@luc.ac.be, Jim Lindsey} also on -->
@@ -290,10 +295,10 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#R-Basics">R Basics</a>
 
 <p>The current released version is 1.9.1.  Based on this
 `major.minor.patchlevel' numbering scheme, there are two development
-versions of R, working towards the next patch (`r-patched') and minor or
-eventually major (`r-devel') releases of R, respectively.  Version
-r-patched is for bug fixes mostly.  New features are typically
-introduced in r-devel.
+versions of R, a patched version of the current release (`r-patched')
+and one working towards the next minor or eventually major (`r-devel')
+releases of R, respectively.  Version r-patched is for bug fixes mostly. 
+New features are typically introduced in r-devel.
 
 <div class="node">
 <p><hr>
@@ -309,7 +314,8 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#R-Basics">R Basics</a>
 the &ldquo;Comprehensive R Archive Network&rdquo; (see <a href="#What-is-CRAN_003f">What is CRAN?</a>).
 
    <p>Sources are also available via <a href="https://svn.r-project.org/R/">https://svn.r-project.org/R/</a>, the
-R Subversion repository, but currently not via anonymous rsync (or CVS).
+R Subversion repository, but currently not via anonymous rsync (nor
+CVS).
 
 <!-- Sources are also available via anonymous rsync.  Use -->
 <!-- @example -->
@@ -361,7 +367,10 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#How-can-R-be-installed_003f">How can R
 
 <h4 class="subsection">2.5.1 How can R be installed (Unix)</h4>
 
-<p>If binaries are available for your platform (see <a href="#Are-there-Unix-binaries-for-R_003f">Are there Unix binaries for R?</a>), you can use these, following the instructions that
+<p>If R is already installed, it can be started by typing <kbd>R</kbd> at the
+shell prompt (of course, provided that the executable is in your path).
+
+   <p>If binaries are available for your platform (see <a href="#Are-there-Unix-binaries-for-R_003f">Are there Unix binaries for R?</a>), you can use these, following the instructions that
 come with them.
 
    <p>Otherwise, you can compile and install R yourself, which can be done
@@ -370,10 +379,11 @@ R distribution contains a brief introduction, and the &ldquo;R Installation
 and Administration&rdquo; guide (see <a href="#What-documentation-exists-for-R_003f">What documentation exists for R?</a>)
 has full details.
 
-   <p>Note that you need a FORTRAN compiler or <span class="command">f2c</span> in addition to
-a C compiler to build R.  Also, you need Perl version 5 to build the R
-object documentations.  (If this is not available on your system, you
-can obtain a PDF version of the object reference manual via <acronym>CRAN</acronym>.)
+   <p>Note that you need a FORTRAN compiler or perhaps <span class="command">f2c</span> in
+addition to a C compiler to build R.  Also, you need Perl version 5 to
+build the R object documentations.  (If this is not available on your
+system, you can obtain a PDF version of the object reference manual via
+<acronym>CRAN</acronym>.)
 
    <p>In the simplest case, untar the R source code, change to the directory
 thus created, and issue the following commands (at the shell prompt):
@@ -398,7 +408,7 @@ manuals, and view these using e.g. Acrobat.  Manuals written in the
 <acronym>GNU</acronym> Texinfo system can also be converted to info files
 suitable for reading online with Emacs or stand-alone <acronym>GNU</acronym>
 Info; use <kbd>make info</kbd> to create these versions (note that this
-requires <span class="command">makeinfo</span> version 4).
+requires Makeinfo version 4.5).
 
    <p>Finally, use <kbd>make check</kbd> to find out whether your R system works
 correctly.
@@ -440,9 +450,8 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#How-can-R-be-installed_003f">How can R
 a base distribution and a large number of add-on packages from <acronym>CRAN</acronym>
 to run on Windows 95, 98, ME, NT4, 2000, and XP (at least) on Intel and
 clones (but not on other platforms).  The Windows version of R was
-created by Robert Gentleman, and is now being developed and maintained
-by <a href="mailto:murdoch@stats.uwo.ca">Duncan Murdoch</a> and
-<a href="mailto:Brian.Ripley@R-project.org">Brian D. Ripley</a>.
+created by Robert Gentleman and Guido Masarotto, and is now being
+developed and maintained by <a href="mailto:murdoch@stats.uwo.ca">Duncan Murdoch</a> and <a href="mailto:Brian.Ripley@R-project.org">Brian D. Ripley</a>.
 
 <!-- Note that when uncompressing the zip files, the pkunzip program needs to -->
 <!-- be invoked with the @samp{-D} flag to create subdirectories.  Also, be -->
@@ -697,11 +706,14 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#R-Basics">R Basics</a>
        organization = {R Foundation for Statistical Computing},
        address      = {Vienna, Austria},
        year         = 2004,
-       note         = {ISBN 3-900051-00-3},
+       note         = {3-900051-00-3},
        url          = {http://www.R-project.org}
      }
 </pre>
-   <div class="node">
+   <p>Citation strings (or BibTeX entroes) for R and R packages can also be
+obtained by <code>citation()</code>.
+
+<div class="node">
 <p><hr>
 <a name="What-mailing-lists-exist-for-R_003f"></a>Next:&nbsp;<a rel="next" accesskey="n" href="#What-is-CRAN_003f">What is CRAN?</a>,
 Previous:&nbsp;<a rel="previous" accesskey="p" href="#Citing-R">Citing R</a>,
@@ -858,9 +870,10 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#R-Basics">R Basics</a>
 
 <h3 class="section">2.11 Can I use R for commercial purposes?</h3>
 
-<p>R is released under the <a href="http://www.gnu.org/copyleft/gpl.html">GNU General Public License (GPL)</a>.  If you have any questions regarding the
-legality of using R in any particular situation you should bring it up
-with your legal counsel.  We are in no position to offer legal advice.
+<p>R is released under the <a href="http://www.gnu.org/copyleft/gpl.html"><acronym>GNU</acronym> General Public License (GPL)</a>.  If you have any questions
+regarding the legality of using R in any particular situation you should
+bring it up with your legal counsel.  We are in no position to offer
+legal advice.
 
    <p>It is the opinion of the R Core Team that one can use R for commercial
 purposes (e.g., in business or in consulting).  The GPL, like all Open
@@ -1025,8 +1038,7 @@ Based on the S language, <span class="sc">S-Plus</span> provides functionality i
 variety of areas, including robust regression, modern non-parametric
 regression, time series, survival analysis, multivariate analysis,
 classical statistical tests, quality control, and graphics drivers. 
-Add-on modules add additional capabilities for wavelet analysis, spatial
-statistics, GARCH models, and design of experiments.
+Add-on modules add additional capabilities.
 
    <p>See the <a href="http://www.insightful.com/products/splus/">Insightful <span class="sc">S-Plus</span> page</a> for further information.
 
@@ -1608,10 +1620,10 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#Which-add_002don-packages-exist-for-R_
 
      <dl>
 <!-- <FIXME> -->
-<!-- 2.0 -->
-<dt><strong>base</strong><dd>Base R functions (and datasets before R 2.0). 
-<br><dt><strong>datasets</strong><dd>Base R datasets (added in R 2.0). 
-<br><dt><strong>grDevices</strong><dd>Graphics devices for base and grid graphics (added in R 2.0). 
+<!-- 2.0.0 -->
+<dt><strong>base</strong><dd>Base R functions (and datasets before R 2.0.0). 
+<br><dt><strong>datasets</strong><dd>Base R datasets (added in R 2.0.0). 
+<br><dt><strong>grDevices</strong><dd>Graphics devices for base and grid graphics (added in R 2.0.0). 
 <!-- </FIXME> -->
 <br><dt><strong>graphics</strong><dd>R functions for base graphics. 
 <br><dt><strong>grid</strong><dd>A rewrite of the graphics layout capabilities, plus some support for
@@ -1625,7 +1637,7 @@ programming tools, as described in the Green Book.
 <br><dt><strong>tools</strong><dd>Tools for package development and administration. 
 <br><dt><strong>utils</strong><dd>R utility functions. 
 </dl>
-   These &ldquo;base packages&rdquo; were substantially reorganized in R 1.9.  The
+   These &ldquo;base packages&rdquo; were substantially reorganized in R 1.9.0.  The
 former <strong>base</strong> was split into the four packages <strong>base</strong>,
 <strong>graphics</strong>, <strong>stats</strong>, and <strong>utils</strong>.  Packages
 <strong>ctest</strong>, <strong>eda</strong>, <strong>modreg</strong>, <strong>mva</strong>,
@@ -2914,37 +2926,44 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#R-Add_002dOn-Packages">R Add-On Packag
 
    <p>This produces something like
 
-<pre class="smallexample">     Packages in `/home/me/lib/R':
-     
-     mystuff       My own R functions, nicely packaged but not documented
-     
-     Packages in `/usr/local/lib/R/library':
-     
-     KernSmooth    Functions for kernel smoothing for Wand &amp; Jones (1995)
-     MASS          Main Package of Venables and Ripley's MASS
-     base          The R base package
-     boot          Bootstrap R (S-Plus) Functions (Canty)
-     class         Functions for Classification
-     cluster       Functions for clustering (by Rousseeuw et al.)
-     foreign       Read data stored by Minitab, S, SAS, SPSS, Stata, ...
-     graphics      The R Graphics Package
-     grid          The Grid Graphics Package
-     lattice       Lattice Graphics
-     methods       Formal Methods and Classes
-     mgcv          Multiple smoothing parameter estimation and GAMs by GCV
-     nlme          Linear and nonlinear mixed effects models
-     nnet          Feed-forward Neural Networks and Multinomial Log-Linear
-                   Models
-     rpart         Recursive partitioning
-     spatial       Functions for Kriging and Point Pattern Analysis
-     splines       Regression Spline Functions and Classes
-     stats         The R Stats Package
-     stats4        Statistical functions using S4 classes
-     survival      Survival analysis, including penalised likelihood
-     tcltk         Tcl/Tk Interface
-     tools         Tools for Package Development
-     utils         The R Utils Package
-</pre>
+   <blockquote>
+<p><table class="cartouche" summary="cartouche" border="1"><tr><td>
+     <pre class="smallexample">          Packages in `/home/me/lib/R':
+          
+          mystuff       My own R functions, nicely packaged but not documented
+          
+          Packages in `/usr/local/lib/R/library':
+          
+          KernSmooth    Functions for kernel smoothing for Wand &amp; Jones (1995)
+          MASS          Main Package of Venables and Ripley's MASS
+          base          The R Base package
+          boot          Bootstrap R (S-Plus) Functions (Canty)
+          class         Functions for Classification
+          cluster       Functions for clustering (by Rousseeuw et al.)
+          datasets      The R datasets Package
+          foreign       Read data stored by Minitab, S, SAS, SPSS, Stata, ...
+          grDevices     The R Graphics Devices and Support for Colours and Fonts
+          graphics      The R Graphics Package
+          grid          The Grid Graphics Package
+          lattice       Lattice Graphics
+          methods       Formal Methods and Classes
+          mgcv          GAMs with GCV smoothness estimation and GAMMs by REML/PQ
+          nlme          Linear and nonlinear mixed effects models
+          nnet          Feed-forward Neural Networks and Multinomial Log-Linear
+                        Models
+          rpart         Recursive partitioning
+          spatial       Functions for Kriging and Point Pattern Analysis
+          splines       Regression Spline Functions and Classes
+          stats         The R Stats Package
+          stats4        Statistical functions using S4 classes
+          survival      Survival analysis, including penalised likelihood
+          tcltk         Tcl/Tk Interface
+          tools         Tools for Package Development
+          utils         The R Utils Package
+     </pre>
+        </td></tr></table>
+   </blockquote>
+
    <p>You can &ldquo;load&rdquo; the installed package <var>pkg</var> by
 
 <pre class="example">     library(<var>pkg</var>)
@@ -3198,17 +3217,15 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#Top">Top</a>
 <h2 class="chapter">7 R Miscellanea</h2>
 
 <ul class="menu">
-<li><a accesskey="1" href="#Why-does-R-run-out-of-memory_003f">Why does R run out of memory?</a>
-<li><a accesskey="2" href="#Why-does-sourcing-a-correct-file-fail_003f">Why does sourcing a correct file fail?</a>
-<li><a accesskey="3" href="#How-can-I-set-components-of-a-list-to-NULL_003f">How can I set components of a list to NULL?</a>
-<li><a accesskey="4" href="#How-can-I-save-my-workspace_003f">How can I save my workspace?</a>
-<li><a accesskey="5" href="#How-can-I-clean-up-my-workspace_003f">How can I clean up my workspace?</a>
-<li><a accesskey="6" href="#How-can-I-get-eval_0028_0029-and-D_0028_0029-to-work_003f">How can I get eval() and D() to work?</a>
-<li><a accesskey="7" href="#Why-do-my-matrices-lose-dimensions_003f">Why do my matrices lose dimensions?</a>
-<li><a accesskey="8" href="#How-does-autoloading-work_003f">How does autoloading work?</a>
-<li><a accesskey="9" href="#How-should-I-set-options_003f">How should I set options?</a>
-<li><a href="#How-do-file-names-work-in-Windows_003f">How do file names work in Windows?</a>
-<li><a href="#Why-does-plotting-give-a-color-allocation-error_003f">Why does plotting give a color allocation error?</a>
+<li><a accesskey="1" href="#How-can-I-set-components-of-a-list-to-NULL_003f">How can I set components of a list to NULL?</a>
+<li><a accesskey="2" href="#How-can-I-save-my-workspace_003f">How can I save my workspace?</a>
+<li><a accesskey="3" href="#How-can-I-clean-up-my-workspace_003f">How can I clean up my workspace?</a>
+<li><a accesskey="4" href="#How-can-I-get-eval_0028_0029-and-D_0028_0029-to-work_003f">How can I get eval() and D() to work?</a>
+<li><a accesskey="5" href="#Why-do-my-matrices-lose-dimensions_003f">Why do my matrices lose dimensions?</a>
+<li><a accesskey="6" href="#How-does-autoloading-work_003f">How does autoloading work?</a>
+<li><a accesskey="7" href="#How-should-I-set-options_003f">How should I set options?</a>
+<li><a accesskey="8" href="#How-do-file-names-work-in-Windows_003f">How do file names work in Windows?</a>
+<li><a accesskey="9" href="#Why-does-plotting-give-a-color-allocation-error_003f">Why does plotting give a color allocation error?</a>
 <li><a href="#How-do-I-convert-factors-to-numeric_003f">How do I convert factors to numeric?</a>
 <li><a href="#Are-Trellis-displays-implemented-in-R_003f">Are Trellis displays implemented in R?</a>
 <li><a href="#What-are-the-enclosing-and-parent-environments_003f">What are the enclosing and parent environments?</a>
@@ -3226,111 +3243,41 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#Top">Top</a>
 <li><a href="#Why-does-the-help_002estart_0028_0029-search-engine-not-work_003f">Why does the help.start() search engine not work?</a>
 <li><a href="#Why-did-my-_002eRprofile-stop-working-when-I-updated-R_003f">Why did my .Rprofile stop working when I updated R?</a>
 <li><a href="#Where-have-all-the-methods-gone_003f">Where have all the methods gone?</a>
+<li><a href="#How-can-I-create-rotated-axis-labels_003f">How can I create rotated axis labels?</a>
 </ul>
 
+<!-- @node Why does R run out of memory?, Why does sourcing a correct file fail?, R Miscellanea, R Miscellanea -->
+<!-- @section Why does R run out of memory? -->
+<!-- Versions of R prior to 1.2.0 used a @emph{static} memory model.  At -->
+<!-- startup, R asked the operating system to reserve a fixed amount of -->
+<!-- memory for it.  The size of this chunk could not be changed -->
+<!-- subsequently.  Hence, it could happen that not enough memory was -->
+<!-- allocated, e.g., when trying to read large data sets into R.  In such -->
+<!-- cases, it was necessary to restart R with more memory available, as -->
+<!-- controlled by the command line options @option{-nsize} and -->
+<!-- @option{-vsize}. -->
+<!-- R version 1.2.0 introduces a new ``generational'' garbage collector, -->
+<!-- which will increase the memory available to R as needed.  Hence, user -->
+<!-- intervention is no longer necessary for ensuring that enough memory is -->
+<!-- available. -->
+<!-- The new garbage collector does not move objects in memory, meaning that -->
+<!-- it is possible for the free memory to become fragmented so that large -->
+<!-- objects cannot be allocated even when there is apparently enough memory -->
+<!-- for them. -->
+<!-- @node Why does sourcing a correct file fail?, How can I set components of a list to NULL?, Why does R run out of memory?, R Miscellanea -->
+<!-- @section Why does sourcing a correct file fail? -->
+<!-- Versions of R prior to 1.2.1 may have had problems parsing files not -->
+<!-- ending in a newline.  Earlier R versions had a similar problem when -->
+<!-- reading in data files.  This should no longer happen. -->
 <div class="node">
 <p><hr>
-<a name="Why-does-R-run-out-of-memory_003f"></a>Next:&nbsp;<a rel="next" accesskey="n" href="#Why-does-sourcing-a-correct-file-fail_003f">Why does sourcing a correct file fail?</a>,
+<a name="How-can-I-set-components-of-a-list-to-NULL_003f"></a>Next:&nbsp;<a rel="next" accesskey="n" href="#How-can-I-save-my-workspace_003f">How can I save my workspace?</a>,
 Previous:&nbsp;<a rel="previous" accesskey="p" href="#R-Miscellanea">R Miscellanea</a>,
 Up:&nbsp;<a rel="up" accesskey="u" href="#R-Miscellanea">R Miscellanea</a>
 <br>
 </div>
 
-<h3 class="section">7.1 Why does R run out of memory?</h3>
-
-<!-- R (currently) uses a @emph{static} memory model.  This means that when -->
-<!-- it starts up, it asks the operating system to reserve a fixed amount of -->
-<!-- memory for it.  The size of this chunk cannot be changed subsequently. -->
-<!-- Hence, it can happen that not enough memory was allocated, e.g., when -->
-<!-- trying to read large data sets into R. -->
-<!-- In these cases, you should restart R with more memory available, using -->
-<!-- the command line options @option{-nsize} and @option{-vsize}.  To -->
-<!-- understand these options, one needs to know that R maintains separate -->
-<!-- areas for fixed and variable sized objects.  The first of these is -->
-<!-- allocated as an array of ``cons cells'' (Lisp programmers will know what -->
-<!-- they are, others may think of them as the building blocks of the -->
-<!-- language itself, parse trees, etc.), and the second are thrown on a -->
-<!-- ``heap''.  The @option{-nsize} option can be used to specify the number -->
-<!-- of cons cells which R is to use (the default is 250000), and the -->
-<!-- @option{-vsize} option to specify the size of the vector heap in bytes -->
-<!-- (the default is @w{6 MB}).  Both options must either be integers or -->
-<!-- integers ending with @samp{M}, @samp{K}, or @samp{k} meaning `Mega' -->
-<!-- (2^20), (computer) `Kilo' (2^10), or regular `kilo' (1000). -->
-<!-- E.g., to read in a table of 5000 observations on 40 numeric variables, -->
-<!-- @samp{R -vsize=6M} should do (which currently is the default). -->
-<!-- Note that the information on where to find vectors and strings on the -->
-<!-- heap is stored using cons cells.  Thus, it may also be necessary to -->
-<!-- allocate more space for cons cells in order to perform computations with -->
-<!-- very ``large'' variable-size objects. -->
-<!-- You can find out the current memory consumption (the proportion of heap -->
-<!-- and cons cells used) by typing @kbd{gc()} at the R prompt.  This may -->
-<!-- help you in finding out whether to increase @option{-vsize} or -->
-<!-- @option{-nsize}.  Note that following @kbd{gcinfo(TRUE)}, automatic -->
-<!-- garbage collection always prints memory use statistics. -->
-<!-- As of version 0.62.3, R will tell you whether you ran out of cons or -->
-<!-- heap memory. -->
-<!-- The defaults for @option{-nsize} and @option{-vsize} can be changed by -->
-<!-- setting the environment variables @env{R_NSIZE} and @env{R_VSIZE} -->
-<!-- respectively, perhaps most conveniently on Unix in the R environment -->
-<!-- file (@file{~/.Renviron} by default). -->
-<!-- When using @code{read.table()}, the memory requirements are in fact -->
-<!-- higher than anticipated, because the file is first read in as one long -->
-<!-- string which is then split again.  Use @code{scan()} if possible in -->
-<!-- case you run out of memory when reading in a large table. -->
-<!-- R version 1.2.0 introduces a new ``generational'' garbage collector, -->
-<!-- which will increase the memory available to R as needed.  The interface -->
-<!-- for controlling the generational collector is still experimental and in -->
-<!-- flux.  Currently, the command line arguments and environment variables -->
-<!-- described above can be used to supply minimal values for the sizes of -->
-<!-- the node and vector heaps. -->
-<p>Versions of R prior to 1.2.0 used a <em>static</em> memory model.  At
-startup, R asked the operating system to reserve a fixed amount of
-memory for it.  The size of this chunk could not be changed
-subsequently.  Hence, it could happen that not enough memory was
-allocated, e.g., when trying to read large data sets into R.  In such
-cases, it was necessary to restart R with more memory available, as
-controlled by the command line options <span class="option">--nsize</span> and
-<span class="option">--vsize</span>.
-
-   <p>R version 1.2.0 introduces a new &ldquo;generational&rdquo; garbage collector,
-which will increase the memory available to R as needed.  Hence, user
-intervention is no longer necessary for ensuring that enough memory is
-available.
-
-   <p>The new garbage collector does not move objects in memory, meaning that
-it is possible for the free memory to become fragmented so that large
-objects cannot be allocated even when there is apparently enough memory
-for them.
-
-<div class="node">
-<p><hr>
-<a name="Why-does-sourcing-a-correct-file-fail_003f"></a>Next:&nbsp;<a rel="next" accesskey="n" href="#How-can-I-set-components-of-a-list-to-NULL_003f">How can I set components of a list to NULL?</a>,
-Previous:&nbsp;<a rel="previous" accesskey="p" href="#Why-does-R-run-out-of-memory_003f">Why does R run out of memory?</a>,
-Up:&nbsp;<a rel="up" accesskey="u" href="#R-Miscellanea">R Miscellanea</a>
-<br>
-</div>
-
-<h3 class="section">7.2 Why does sourcing a correct file fail?</h3>
-
-<p>Versions of R prior to 1.2.1 may have had problems parsing files not
-ending in a newline.  Earlier R versions had a similar problem when
-reading in data files.  This should no longer happen.
-
-<!-- This can happen for example when Emacs is used for editing the file and -->
-<!-- @code{next-line-add-newlines} is set to @code{nil}.  To avoid the -->
-<!-- problem, either set @code{require-final-newline} to a non-@code{nil} -->
-<!-- value in one of your Emacs startup files, or make sure R-mode (@pxref{Is -->
-<!-- there Emacs support for R?}) is used for editing R source files (which -->
-<!-- locally ensures this setting). -->
-<div class="node">
-<p><hr>
-<a name="How-can-I-set-components-of-a-list-to-NULL_003f"></a>Next:&nbsp;<a rel="next" accesskey="n" href="#How-can-I-save-my-workspace_003f">How can I save my workspace?</a>,
-Previous:&nbsp;<a rel="previous" accesskey="p" href="#Why-does-sourcing-a-correct-file-fail_003f">Why does sourcing a correct file fail?</a>,
-Up:&nbsp;<a rel="up" accesskey="u" href="#R-Miscellanea">R Miscellanea</a>
-<br>
-</div>
-
-<h3 class="section">7.3 How can I set components of a list to NULL?</h3>
+<h3 class="section">7.1 How can I set components of a list to NULL?</h3>
 
 <p>You can use
 
@@ -3352,7 +3299,7 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#R-Miscellanea">R Miscellanea</a>
 <br>
 </div>
 
-<h3 class="section">7.4 How can I save my workspace?</h3>
+<h3 class="section">7.2 How can I save my workspace?</h3>
 
 <p><code>save.image()</code> saves the objects in the user's <code>.GlobalEnv</code> to
 the file <span class="file">.RData</span> in the R startup directory.  (This is also what
@@ -3367,7 +3314,7 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#R-Miscellanea">R Miscellanea</a>
 <br>
 </div>
 
-<h3 class="section">7.5 How can I clean up my workspace?</h3>
+<h3 class="section">7.3 How can I clean up my workspace?</h3>
 
 <p>To remove all objects in the currently active environment (typically
 <code>.GlobalEnv</code>), you can do
@@ -3385,7 +3332,7 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#R-Miscellanea">R Miscellanea</a>
 <br>
 </div>
 
-<h3 class="section">7.6 How can I get eval() and D() to work?</h3>
+<h3 class="section">7.4 How can I get eval() and D() to work?</h3>
 
 <p>Strange things will happen if you use <code>eval(print(x), envir = e)</code>
 or <code>D(x^2, "x")</code>.  The first one will either tell you that
@@ -3426,7 +3373,7 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#R-Miscellanea">R Miscellanea</a>
 <br>
 </div>
 
-<h3 class="section">7.7 Why do my matrices lose dimensions?</h3>
+<h3 class="section">7.5 Why do my matrices lose dimensions?</h3>
 
 <p>When a matrix with a single row or column is created by a subscripting
 operation, e.g., <code>row &lt;- mat[2, ]</code>, it is by default turned into a
@@ -3460,7 +3407,7 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#R-Miscellanea">R Miscellanea</a>
 <br>
 </div>
 
-<h3 class="section">7.8 How does autoloading work?</h3>
+<h3 class="section">7.6 How does autoloading work?</h3>
 
 <p>R has a special environment called <code>.AutoloadEnv</code>.  Using
 <kbd>autoload(</kbd><var>name</var><kbd>, </kbd><var>pkg</var><kbd>)</kbd>, where <var>name</var> and
@@ -3483,7 +3430,7 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#R-Miscellanea">R Miscellanea</a>
 <br>
 </div>
 
-<h3 class="section">7.9 How should I set options?</h3>
+<h3 class="section">7.7 How should I set options?</h3>
 
 <p>The function <code>options()</code> allows setting and examining a variety of
 global &ldquo;options&rdquo; which affect the way in which R computes and displays
@@ -3523,7 +3470,7 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#R-Miscellanea">R Miscellanea</a>
 <br>
 </div>
 
-<h3 class="section">7.10 How do file names work in Windows?</h3>
+<h3 class="section">7.8 How do file names work in Windows?</h3>
 
 <p>As R uses C-style string handling, <span class="samp">\</span> is treated as an escape
 character, so that for example one can enter a newline as <span class="samp">\n</span>. 
@@ -3541,13 +3488,14 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#R-Miscellanea">R Miscellanea</a>
 <br>
 </div>
 
-<h3 class="section">7.11 Why does plotting give a color allocation error?</h3>
+<h3 class="section">7.9 Why does plotting give a color allocation error?</h3>
 
-<p>Sometimes plotting, e.g., when running <code>demo("image")</code>, results in
-&ldquo;Error: color allocation error&rdquo;.  This is an X problem, and only
-indirectly related to R.  It occurs when applications started prior to R
-have used all the available colors.  (How many colors are available
-depends on the X configuration; sometimes only 256 colors can be used.)
+<p>On an X11 device, plotting sometimes, e.g., when running
+<code>demo("image")</code>, results in &ldquo;Error: color allocation error&rdquo;. 
+This is an X problem, and only indirectly related to R.  It occurs when
+applications started prior to R have used all the available colors. 
+(How many colors are available depends on the X configuration; sometimes
+only 256 colors can be used.)
 
    <p>One application which is notorious for &ldquo;eating&rdquo; colors is Netscape. 
 If the problem occurs when Netscape is running, try (re)starting it with
@@ -3575,7 +3523,7 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#R-Miscellanea">R Miscellanea</a>
 <br>
 </div>
 
-<h3 class="section">7.12 How do I convert factors to numeric?</h3>
+<h3 class="section">7.10 How do I convert factors to numeric?</h3>
 
 <p>It may happen that when reading numeric data into R (usually, when
 reading in a file), they come in as factors.  If <code>f</code> is such a
@@ -3599,7 +3547,7 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#R-Miscellanea">R Miscellanea</a>
 <br>
 </div>
 
-<h3 class="section">7.13 Are Trellis displays implemented in R?</h3>
+<h3 class="section">7.11 Are Trellis displays implemented in R?</h3>
 
 <p>The recommended package <strong>lattice</strong> (which is based on another
 recommended package, <strong>grid</strong>) provides graphical functionality
@@ -3624,7 +3572,7 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#R-Miscellanea">R Miscellanea</a>
 <br>
 </div>
 
-<h3 class="section">7.14 What are the enclosing and parent environments?</h3>
+<h3 class="section">7.12 What are the enclosing and parent environments?</h3>
 
 <p>Inside a function you may want to access variables in two additional
 environments: the one that the function was defined in (&ldquo;enclosing&rdquo;),
@@ -3680,7 +3628,7 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#R-Miscellanea">R Miscellanea</a>
 <br>
 </div>
 
-<h3 class="section">7.15 How can I substitute into a plot label?</h3>
+<h3 class="section">7.13 How can I substitute into a plot label?</h3>
 
 <p>Often, it is desired to use the value of an R object in a plot label,
 e.g., a title.  This is easily accomplished using <code>paste()</code> if the
@@ -3710,7 +3658,7 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#R-Miscellanea">R Miscellanea</a>
 <br>
 </div>
 
-<h3 class="section">7.16 What are valid names?</h3>
+<h3 class="section">7.14 What are valid names?</h3>
 
 <p>When creating data frames using <code>data.frame()</code> or
 <code>read.table()</code>, R by default ensures that the variable names are
@@ -3761,7 +3709,7 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#R-Miscellanea">R Miscellanea</a>
 <br>
 </div>
 
-<h3 class="section">7.17 Are GAMs implemented in R?</h3>
+<h3 class="section">7.15 Are GAMs implemented in R?</h3>
 
 <p>Package <strong>gam</strong> from <acronym>CRAN</acronym> implements all the Generalized
 Additive Models (GAM) functionality as described in the GAM chapter of
@@ -3781,7 +3729,7 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#R-Miscellanea">R Miscellanea</a>
 <br>
 </div>
 
-<h3 class="section">7.18 Why is the output not printed when I source() a file?</h3>
+<h3 class="section">7.16 Why is the output not printed when I source() a file?</h3>
 
 <p>Most R commands do not generate any output. The command
 
@@ -3818,7 +3766,7 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#R-Miscellanea">R Miscellanea</a>
 <br>
 </div>
 
-<h3 class="section">7.19 Why does outer() behave strangely with my function?</h3>
+<h3 class="section">7.17 Why does outer() behave strangely with my function?</h3>
 
 <p>As the help for <code>outer()</code> indicates, it does not work on arbitrary
 functions the way the <code>apply()</code> family does.  It requires functions
@@ -3856,7 +3804,7 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#R-Miscellanea">R Miscellanea</a>
 <br>
 </div>
 
-<h3 class="section">7.20 Why does the output from anova() depend on the order of factors in the model?</h3>
+<h3 class="section">7.18 Why does the output from anova() depend on the order of factors in the model?</h3>
 
 <p>In a model such as <code>~A+B+A:B</code>, R will report the difference in sums
 of squares between the models <code>~1</code>, <code>~A</code>, <code>~A+B</code> and
@@ -3889,15 +3837,16 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#R-Miscellanea">R Miscellanea</a>
 <br>
 </div>
 
-<h3 class="section">7.21 How do I produce PNG graphics in batch mode?</h3>
+<h3 class="section">7.19 How do I produce PNG graphics in batch mode?</h3>
 
 <p>Under Unix, the <code>png()</code> device uses the X11 driver, which is a
 problem in batch mode or for remote operation.  If you have Ghostscript
 you can use <code>bitmap()</code>, which produces a PostScript file then
 converts it to any bitmap format supported by ghostscript.  On some
 installations this produces ugly output, on others it is perfectly
-satisfactory.  In theory one could also use Xvfb, which provides an X
-server with no display.
+satisfactory.  In theory one could also use Xvfb from
+<a href="http://www.x.org/Downloads.html">X.Org</a>, which provides an X server
+with no display.
 
 <div class="node">
 <p><hr>
@@ -3907,7 +3856,7 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#R-Miscellanea">R Miscellanea</a>
 <br>
 </div>
 
-<h3 class="section">7.22 How can I get command line editing to work?</h3>
+<h3 class="section">7.20 How can I get command line editing to work?</h3>
 
 <p>The Unix command-line interface to R can only provide the inbuilt
 command line editor which allows recall, editing and re-submission of
@@ -3926,7 +3875,7 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#R-Miscellanea">R Miscellanea</a>
 <br>
 </div>
 
-<h3 class="section">7.23 How can I turn a string into a variable?</h3>
+<h3 class="section">7.21 How can I turn a string into a variable?</h3>
 
 <p>If you have
 
@@ -3973,7 +3922,7 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#R-Miscellanea">R Miscellanea</a>
 <br>
 </div>
 
-<h3 class="section">7.24 Why do lattice/trellis graphics not work?</h3>
+<h3 class="section">7.22 Why do lattice/trellis graphics not work?</h3>
 
 <p>The most likely reason is that you forgot to tell R to display the
 graph.  Lattice functions such as <code>xyplot()</code> create a graph object,
@@ -3992,7 +3941,7 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#R-Miscellanea">R Miscellanea</a>
 <br>
 </div>
 
-<h3 class="section">7.25 How can I sort the rows of a data frame?</h3>
+<h3 class="section">7.23 How can I sort the rows of a data frame?</h3>
 
 <p>To sort the rows within a data frame, with respect to the values in one
 or more of the columns, simply use <code>order()</code>.
@@ -4005,7 +3954,7 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#R-Miscellanea">R Miscellanea</a>
 <br>
 </div>
 
-<h3 class="section">7.26 Why does the help.start() search engine not work?</h3>
+<h3 class="section">7.24 Why does the help.start() search engine not work?</h3>
 
 <p>The browser-based search engine in <code>help.start()</code> utilizes a Java
 applet.  In order for this to function properly, a compatible version of
@@ -4027,7 +3976,7 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#R-Miscellanea">R Miscellanea</a>
 <br>
 </div>
 
-<h3 class="section">7.27 Why did my .Rprofile stop working when I updated R?</h3>
+<h3 class="section">7.25 Why did my .Rprofile stop working when I updated R?</h3>
 
 <p>Did you read the <span class="file">NEWS</span> file?  For functions that are not in the
 <strong>base</strong> package you need to specify the correct package namespace,
@@ -4042,18 +3991,19 @@ since the code will be run <em>before</em> the packages are loaded.  E.g.,
      utils::help.start()
 </pre>
    <!-- <FIXME> -->
-<!-- 2.0 -->
-<p class="noindent">(<code>grDevices::ps.options(horizontal = FALSE)</code> in R 2.0). 
+<!-- 2.0.0 -->
+<p class="noindent">(<code>grDevices::ps.options(horizontal = FALSE)</code> in R 2.0.0). 
 <!-- </FIXME> -->
 
 <div class="node">
 <p><hr>
-<a name="Where-have-all-the-methods-gone_003f"></a>Previous:&nbsp;<a rel="previous" accesskey="p" href="#Why-did-my-_002eRprofile-stop-working-when-I-updated-R_003f">Why did my .Rprofile stop working when I updated R?</a>,
+<a name="Where-have-all-the-methods-gone_003f"></a>Next:&nbsp;<a rel="next" accesskey="n" href="#How-can-I-create-rotated-axis-labels_003f">How can I create rotated axis labels?</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#Why-did-my-_002eRprofile-stop-working-when-I-updated-R_003f">Why did my .Rprofile stop working when I updated R?</a>,
 Up:&nbsp;<a rel="up" accesskey="u" href="#R-Miscellanea">R Miscellanea</a>
 <br>
 </div>
 
-<h3 class="section">7.28 Where have all the methods gone?</h3>
+<h3 class="section">7.26 Where have all the methods gone?</h3>
 
 <p>Many functions, particularly S3 methods, are now hidden in namespaces. 
 This has the advantage that they cannot be called inadvertantly with
@@ -4067,6 +4017,44 @@ arguments of the wrong class, but it makes them harder to view.
 of package <code>"bar"</code> use <code>bar:::foo</code>.  Don't use these
 constructions to call unexported functions in your own code&mdash;they are
 probably unexported for a reason and may change without warning.
+
+<div class="node">
+<p><hr>
+<a name="How-can-I-create-rotated-axis-labels_003f"></a>Previous:&nbsp;<a rel="previous" accesskey="p" href="#Where-have-all-the-methods-gone_003f">Where have all the methods gone?</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#R-Miscellanea">R Miscellanea</a>
+<br>
+</div>
+
+<h3 class="section">7.27 How can I create rotated axis labels?</h3>
+
+<p>To rotate axis labels (using base graphics), you need to use
+<code>text()</code>, rather than <code>mtext()</code>, as the latter does not
+support <code>par("srt")</code>.
+
+<pre class="example">     ## <span class="roman">Increase bottom margin to make room for rotated labels</span>
+     par(mar = c(7, 4, 4, 2) + 0.1)
+     ## <span class="roman">Create plot with no x axis and no x axis label</span>
+     plot(1 : 8, xaxt = "n",  xlab = "")
+     ## <span class="roman">Set up x axis with tick marks alone</span>
+     axis(1, labels = FALSE)
+     ## <span class="roman">Create some text labels</span>
+     labels &lt;- paste("Label", 1:8, sep = " ")
+     ## <span class="roman">Plot x axis labels at default tick marks</span>
+     text(1:8, par("usr")[3] - 0.25, srt = 45, adj = 1,
+          labels = labels, xpd = TRUE)
+     ## <span class="roman">Plot x axis label at line 6 (of 7)</span>
+     mtext(1, text = "X Axis Label", line = 6)
+</pre>
+   <p class="noindent">When plotting the x axis labels, we use <code>srt = 45</code> for text
+rotation angle, <code>adj = 1</code> to place the right end of text at the
+tick marks, and <code>xpd = TRUE</code> to allow for text outside the plot
+region.  You can adjust the value of the <code>0.25</code> offset as required
+to move the axis labels up or down relative to the x axis.  See
+<code>?par</code> for more information.
+
+   <p>Also see Figure 1 and associated code in Paul Murrell (2003),
+&ldquo;Integrating grid Graphics Output with Base Graphics Output&rdquo;,
+<em>RNews</em>, <strong>3/2</strong>, 7&ndash;12.
 
 <div class="node">
 <p><hr>
@@ -4152,14 +4140,12 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#R-Programming">R Programming</a>
 <p>Suppose you have C code file for dynloading into R, but you want to use
 <code>R CMD SHLIB</code> with compilation flags other than the default ones
 (which were determined when R was built).  You could change the file
-<span class="file">R_HOME/etc/Makeconf</span> to reflect your preferences.  If you
-are a Bourne shell user, you can also pass the desired flags to Make
-(which is used for controlling compilation) via the Make variable
-<code>MAKEFLAGS</code>, as in
+<span class="file">R_HOME/etc/Makeconf</span> to reflect your preferences, or (at
+least for systems using <acronym>GNU</acronym> Make) override them by the
+environment variable <span class="env">MAKEFLAGS</span>. 
+See section &ldquo;Creating shared objects&rdquo; in <cite>Writing R Extensions</cite>.
 
-<pre class="example">     MAKEFLAGS="CFLAGS=-O3" R CMD SHLIB *.c
-</pre>
-   <div class="node">
+<div class="node">
 <p><hr>
 <a name="How-can-I-debug-S4-methods_003f"></a>Previous:&nbsp;<a rel="previous" accesskey="p" href="#How-can-I-change-compilation-flags_003f">How can I change compilation flags?</a>,
 Up:&nbsp;<a rel="up" accesskey="u" href="#R-Programming">R Programming</a>
