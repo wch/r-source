@@ -3996,6 +3996,7 @@ g(tag = value, , 5)
 The order of precedence (highest first) of the operators are
 
 @smallexample
+$ @@
 ^
 - +                @r{(unary)}
 :
@@ -4004,17 +4005,18 @@ The order of precedence (highest first) of the operators are
 + -                @r{(binary)}
 > >= < <= == !=
 !
-&
-|
+& &&
+| ||
 ~                  @r{(unary and binary)}
-->
-<-
+-> ->>
+=                  @r{(as assignment)}
+<- _ <<-
 @end smallexample
 
-The exponentiation operator @samp{^} and the left assignment operator
-@samp{<-} group right to left, all other operators group left to right.
-That is, @code{2 ^ 2 ^ 3} is @math{2 ^ 8}, not @math{4 ^ 3}, whereas
-@code{1 - 1 - 1} is @math{-1}, not 1.
+The exponentiation operator @samp{^} and the left assignment operators
+@samp{<- - = <<-} group right to left, all other operators group left to
+right.  That is, @code{2 ^ 2 ^ 3} is @math{2 ^ 8}, not @math{4 ^ 3},
+whereas @code{1 - 1 - 1} is @math{-1}, not 1.
 
 Notice that the operators @code{%%} and @code{%/%} for integer
 remainder and divide have higher precedence than multiply and divide.
