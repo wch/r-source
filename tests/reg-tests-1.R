@@ -2665,6 +2665,10 @@ stopifnot(crossprod(z) == cz,# the first has NULL dimnames
           identical(crossprod(z), crossprod(z,z0)))
 ## crossprod(z) segfaulted (or gave silly error message) before 1.8.0
 
+## PR#4431
+stopifnot(!is.na(rmultinom(12,100, c(3, 4, 2, 0,0))))
+## 3rd line was all NA before 1.8.0
+
 ## keep at end, as package `methods' has had persistent side effects
 library(methods)
 stopifnot(all.equal(3:3, 3.), all.equal(1., 1:1))

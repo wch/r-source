@@ -728,6 +728,8 @@ BUG FIXES
     o	reorder.dendrogram() now properly resets the "midpoint" attributes
 	such that reorder()ed dendrograms now plot properly.
 
+    o	rmultinom(1,100, c(3, 4, 2, 0,0))[3] was NA. (PR#4431)
+
     o	sapply() for matrix result does not return list(NULL,NULL) dimnames
 	anymore.
 
