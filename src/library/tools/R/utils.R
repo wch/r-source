@@ -312,30 +312,29 @@ function(package)
     ## using package=NULL returns all known examples
     stopList <-
         list(base = c("all.names", "all.vars", "anova.lmlist",
-             "boxplot.stats",
-             "close.screen", "close.socket",
              "fitted.values",
-             "flush.console",
              "format.char", "format.info", "format.pval",
-             "influence.measures",
              "kappa.tri",
              "max.col",
-             "plot.design", "plot.new", "plot.window", "plot.xy",
              "print.atomic", "print.coefmat",
-             "rep.int",
-             "split.screen",
-             "update.packages"),
+             "rep.int"),
              Hmisc = "t.test.cluster",
              HyperbolicDist = "log.hist",
              MASS = c("frequency.polygon", "gamma.dispersion", "gamma.shape",
              "hist.FD", "hist.scott"),
              XML = "text.SAX",
              ctest = "t.test",
+             graphics = c("boxplot.stats", "close.screen",
+             "plot.design", "plot.new",
+             "plot.window", "plot.xy", "split.screen"),
              hier.part = "all.regs",
              quadprog = c("solve.QP", "solve.QP.compact"),
              reposTools = "update.packages2",
              sm = "print.graph",
-             ts = "lag.plot")
+             stats = "influence.measures",
+             ts = "lag.plot",
+             utils = c("close.socket", "flush.console", "update.packages")
+             )
     if(is.null(package)) return(unlist(stopList))
     thisPkg <- stopList[[package]]
     if(!length(thisPkg)) character(0) else thisPkg

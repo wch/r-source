@@ -30,8 +30,6 @@ unix <- function(call, intern = FALSE)
 unlink <- function(x, recursive=FALSE)
     invisible(.Internal(unlink(x, recursive)))
 
-flush.console <- function() .Internal(flush.console())
-
 shell <- function(cmd, shell, flag="/c", intern=FALSE,
                   wait=TRUE, translate=FALSE, mustWork=FALSE, ...)
 {
@@ -61,25 +59,9 @@ shell.exec <- function(file) invisible(.Internal(shell.exec(file)))
 dir.create <- function(path)
     invisible(.Internal(dir.create(path)))
 
-memory.size <- function(max = FALSE) .Internal(memory.size(max))
-
-memory.limit <- function(size = NA) .Internal(memory.size(size))
-
-DLL.version <- function(path) .Internal(DLL.version(path))
-
 Sys.timezone <- function()
 {
     z <- as.POSIXlt(Sys.time())
     attr(z, "tzone")[2 + z$isdst]
 }
-
-select.list <- function(list, preselect=NULL, multiple=FALSE)
-    .Internal(select.list(list, preselect, multiple))
-
-readClipboard <- function()
-    strsplit(.Internal(readClipboard()), "\r\n")[[1]]
-
-
-writeClipboard <- function(str)
-    .Internal(writeClipboard(str))
 

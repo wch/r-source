@@ -1,3 +1,6 @@
 export("mle")
+importFrom(graphics, plot)
+importFrom(stats, profile)
+importFrom(stats, confint)
 exportClasses("mle", "profile.mle", "summary.mle")
 exportMethods("confint", "plot", "profile", "summary", "show")

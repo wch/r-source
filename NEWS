@@ -16,6 +16,21 @@ USER-VISIBLE CHANGES
 	that makes use of underscore for assignment may now give
 	confusing error messages.
 
+    o	Package 'base' has been split into packages 'base', 'graphics',
+	'stats' and 'utils'.  All four are loaded in a default
+	installation, but the separation allows a 'lean and mean'
+	version of R to be used for tasks such as building indices.
+	[Shortly packages ctest, eda, modreg, mva, nls and ts will be
+	merged into stats.]
+
+	A few packages made assumptions about where functions were and
+	will need updating.
+
+	Users may notice that code in .Rprofile is run only with the
+	new base loaded and so functions may now not be found.  For
+	example, ps.options(horizontal = TRUE) should be preceded by
+	library(graphics).
+
 
 NEW FEATURES
 

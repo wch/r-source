@@ -21,11 +21,11 @@ if ${R_SAVE_IMAGE}; then
     if test -f NAMESPACE; then
         code_cmd="echo saveNamespaceImage(\"${pkg}\", \"${rda_file}\", \"${lib}\")"
         loader_file=nsrdaload.R
-        R_SAVE_EXE="${R_HOME}/bin/Rterm --slave --no-site-file --no-init-file"
+        R_SAVE_EXE="${R_HOME}/bin/Rterm --slave --no-site-file --no-init-file R_DEFAULT_PACKAGES=NULL"
     else
         code_cmd="cat ${code_file}"
         loader_file=firstlib.R
-        R_SAVE_EXE="${R_HOME}/bin/Rterm --slave --save --no-site-file --no-init-file"
+        R_SAVE_EXE="${R_HOME}/bin/Rterm --slave --save --no-site-file --no-init-file R_DEFAULT_PACKAGES=NULL"
     fi
     (echo "options(save.image.defaults=${save_image_defaults})"; \
       if test -s R_PROFILE.R; then cat R_PROFILE.R; fi; \

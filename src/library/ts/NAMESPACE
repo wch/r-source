@@ -21,6 +21,13 @@ export(acf, acf2AR, ar, ar.burg, ar.mle, ar.ols, ar.yw, arima,
 #        tsdiag.Arima, tsdiag.arima0, tsdiag.StructTS,
 #        tsSmooth.StructTS)
 
+importFrom(graphics, plot)
+importFrom(stats, coef)
+importFrom(stats, logLik)
+importFrom(stats, predict)
+importFrom(stats, residuals)
+importFrom(stats, vcov)
+
 S3method("[", tskernel)
 S3method(ar.burg, default)
 S3method(ar.burg, mts)

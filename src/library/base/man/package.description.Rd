@@ -1,13 +1,10 @@
-\name{package.contents}
-\alias{package.contents}
+\name{package.description}
 \alias{package.description}
-\title{Package Contents and Description}
+\title{Package Description}
 \description{
-  Parses and returns the \file{CONTENTS} and \file{DESCRIPTION} file of
-  a package.
+  Parses and returns the \file{DESCRIPTION} file of a package.
 }
 \usage{
-package.contents(pkg, lib.loc = NULL)
 package.description(pkg, lib.loc = NULL, fields = NULL)
 }
 \arguments{
@@ -19,12 +16,6 @@ package.description(pkg, lib.loc = NULL, fields = NULL)
     (if other fields occur in the file they are ignored).}
 }
 \value{
-  \code{package.contents} returns \code{NA} if there is no
-  \file{CONTENTS} file for the given package; otherwise, a character
-  matrix with column names \code{c("Entry", "Keywords", "Description")}
-  and rows giving the corresponding entries in the CONTENTS data base
-  for each Rd file in the package.
-
   If a \file{DESCRIPTION} for the given package is found and can
   successfully be read, \code{package.description} returns a named
   character vector with the values of the (given) fields as elements and
@@ -32,11 +23,8 @@ package.description(pkg, lib.loc = NULL, fields = NULL)
   with the field tags as names if \code{fields} is not null, and
   \code{NA} otherwise.
 }
-\seealso{\code{\link{read.dcf}}}
+\seealso{\code{\link{read.dcf}}, \code{\link[utils]{package.contents}}}
 \examples{
-package.contents("mva")
-package.contents("mva")[, c("Entry", "Description")]
-
 package.description("ts")
 package.description("ts")[c("Package", "Version")]
 ## NOTE: No subscripting using '$' or abbreviated field tags!

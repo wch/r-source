@@ -39,20 +39,6 @@ print.AsIs <- function (x, ...)
     invisible(x)
 }
 
-plot.data.frame <- function (x, ...) {
-    if(!is.data.frame(x))
-	stop("plot.data.frame applied to non data frame")
-    x <- data.matrix(x)
-    if(ncol(x) == 1) {
-	stripchart(x, ...)
-    }
-    else if(ncol(x) == 2) {
-	plot(x, ...)
-    }
-    else {
-	pairs(x, ...)
-    }
-}
 
 t.data.frame <- function(x) {
     x <- as.matrix(x)

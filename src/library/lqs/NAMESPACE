@@ -7,6 +7,7 @@ export(predict.lqs)
 # needed to use update, as match.call returns this
 export(lqs.formula)
 
+importFrom(stats, predict)
 S3method(lqs, default)
 S3method(lqs, formula)
 S3method(predict, lqs)

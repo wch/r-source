@@ -214,7 +214,7 @@ function(package, dir, lib.loc = NULL)
         ## The bad ones:
         S4classes <-
             S4classes[!sapply(S4classes,
-                              function(u) topicName("class", u))
+                              function(u) utils::topicName("class", u))
                       %in% allDocTopics]
         undocThings <-
             c(undocThings, list("S4 classes" = unique(S4classes)))
@@ -254,7 +254,7 @@ function(package, dir, lib.loc = NULL)
         ## The bad ones:
         S4methods <-
             S4methods[!sapply(S4methods,
-                              function(u) topicName("method", u))
+                              function(u) utils::topicName("method", u))
                       %in% allDocTopics]
         undocThings <-
             c(undocThings,
@@ -472,7 +472,7 @@ function(package, dir, lib.loc = NULL,
     db <- lapply(db,
                  function(f) paste(Rdpp(f), collapse = "\n"))
     names(db) <- dbNames <- sapply(db, getRdSection, "name")
-    if(isBase) {
+    if(isBase || basename(dir) == "graphics") {
         ind <- dbNames %in% c("Defunct", "Devices")
         db <- db[!ind]
         dbNames <- dbNames[!ind]
@@ -849,7 +849,7 @@ function(package, lib.loc = NULL)
 
     S4classesChecked <- character()
     for(cl in S4classes) {
-        idx <- which(topicName("class", cl) == aliases)
+        idx <- which(utils::topicName("class", cl) == aliases)
         if(length(idx) == 1) {
             ## Add sanity checking later ...
             S4classesChecked <- c(S4classesChecked, cl)
@@ -1032,7 +1032,7 @@ function(package, lib.loc = NULL)
         if(!is.data.frame(al)) next
         ## Now we should be ready:
         dataFramesChecked <- c(dataFramesChecked, aliases[i])
-        varNamesInCode <- sort(variable.names(al))
+        varNamesInCode <- sort(names(al))
         if(!identical(varNamesInCode, varNamesInDocs))
             badRdObjects[[dbNames[i]]] <-
                 list(name = aliases[i],
@@ -1120,7 +1120,7 @@ function(package, dir, lib.loc = NULL)
     }
     ind <- sapply(dbKeywords,
                   function(x) any(grep("^ *internal *$", x)))
-    if(isBase)
+    if(isBase || basename(dir) == "graphics")
         ind <- ind | dbNames %in% c("Defunct", "Deprecated", "Devices")
     if(any(!ind)) {
         db <- db[!ind]
@@ -1906,7 +1906,16 @@ function(package, dir, lib.loc = NULL)
     ## package.
     badMethods <- list()
     envList <- list(codeEnv, S3groupGenericsEnv)
-    if(!isBase) envList <- c(envList, list(as.environment(NULL)))
+#    if(!isBase) envList <- c(envList, list(as.environment(NULL)))
+    if(!isBase) {
+        ## look for generics in the whole of the former base
+        envList <- c(envList,
+                     list(as.environment(NULL)),
+                     list(as.environment("package:graphics")),
+                     list(as.environment("package:stats")),
+                     list(as.environment("package:utils"))
+                     )
+    }
     for(env in envList) {
         ## Find all available S3 generics.
         objectsInEnv <- if(identical(env, codeEnv)) {

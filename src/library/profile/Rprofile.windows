@@ -11,8 +11,6 @@ if(nchar(Sys.getenv("R_PAPERSIZE")) > 0) {
         options(papersize = "letter")
     else options(papersize = "a4")
 }
-options(repositories=contrib.url(c(CRAN = "http://cran.r-project.org",
-	BIOC = "http://www.bioconductor.org")))
 if(interactive()) options(device="windows") else options(device = "postscript")
 options(graphics.record=FALSE)
 options(editor="notepad")

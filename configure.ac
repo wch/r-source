@@ -1363,6 +1363,8 @@ AC_CONFIG_FILES(
   src/library/eda/DESCRIPTION
   src/library/eda/Makefile
   src/library/eda/src/Makefile
+  src/library/graphics/DESCRIPTION
+  src/library/graphics/Makefile
   src/library/grid/DESCRIPTION
   src/library/grid/Makefile
   src/library/grid/src/Makefile
@@ -1384,6 +1386,8 @@ AC_CONFIG_FILES(
   src/library/nls/Makefile
   src/library/nls/src/Makefile
   src/library/profile/Makefile
+  src/library/stats/DESCRIPTION
+  src/library/stats/Makefile
   src/library/stepfun/DESCRIPTION
   src/library/stepfun/Makefile
   src/library/splines/DESCRIPTION
@@ -1398,6 +1402,8 @@ AC_CONFIG_FILES(
   src/library/ts/DESCRIPTION
   src/library/ts/Makefile
   src/library/ts/src/Makefile
+  src/library/utils/DESCRIPTION
+  src/library/utils/Makefile
   src/main/Makefile
   src/modules/Makefile
   src/modules/X11/Makefile

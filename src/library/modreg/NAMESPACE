@@ -7,6 +7,12 @@ export(isoreg, ksmooth, loess, loess.control, loess.smooth, ppr,
 # export(plot.isoreg, plot.ppr,
 #        predict.loess, predict.smooth.spline)
 
+importFrom(graphics, plot)
+importFrom(stats, anova)
+importFrom(stats, fitted)
+importFrom(stats, predict)
+importFrom(stats, residuals)
+
 S3method(anova, loess)
 S3method(fitted, isoreg)
 S3method(plot, isoreg)

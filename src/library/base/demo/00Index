@@ -1,17 +1,4 @@
-glm.vr			Some glm() examples from V&R with several predictors
-graphics		A show of some of R's graphics capabilities
-Hershey			Tables of the characters in the Hershey vector fonts
-image			The image-like graphics builtins of R
 is.things		Explore some properties of R objects and is.FOO()
 			functions.  Not for newbies!
-lm.glm			Some linear and generalized linear modelling
-			examples from `An Introduction to Statistical
-			Modelling' by Annette Dobson
-Japanese		Tables of the Japanese characters in the Hershey 
-			vector fonts
-nlm			Nonlinear least-squares using nlm()
-persp			Extended persp() examples
 recursion		Using recursion for adaptive integration
-plotmath		Examples of the use of mathematics annotation
 scoping			An illustration of lexical scoping.
-

@@ -9,6 +9,9 @@ export(as.polySpline, asVector, backSpline, bs, interpSpline, ns,
 #        predict.npolySpline, predict.ns, predict.pbSpline,
 #        predict.ppolySpline)
 
+importFrom(graphics, plot)
+importFrom(stats, predict)
+importFrom(stats, makepredictcall)
 S3method(as.data.frame, xyVector)
 S3method(asVector, xyVector)
 S3method(backSpline, nbSpline)

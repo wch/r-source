@@ -63,7 +63,8 @@ assign("plot.new",
                      outer = outer, adj = 1, cex = .8, col = "orchid")
 	   }
        },
-       env = environment(plot))
+#       env = environment(plot)) # now readonly
+       env = environment(print))
 assign("cleanEx",
        function(env = .GlobalEnv) {
 	   rm(list = ls(envir = env, all.names = TRUE), envir = env)

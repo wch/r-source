@@ -10,6 +10,20 @@ export(NLSstAsymptotic, NLSstClosestX, NLSstLfAsymptote,
 # documented but not exported
 # export(formula.nls, plot.profile.nls, predict.nls, profile.nls, profiler.nls)
 
+importFrom(graphics, plot)
+importFrom(stats, anova)
+importFrom(stats, coef)
+importFrom(stats, deviance)
+importFrom(stats, df.residual)
+importFrom(stats, fitted)
+importFrom(stats, formula)
+importFrom(stats, logLik)
+importFrom(stats, predict)
+importFrom(stats, profile)
+importFrom(stats, residuals)
+importFrom(stats, vcov)
+importFrom(stats, weights)
+
 S3method(NLSstAsymptotic, sortedXyData)
 S3method(NLSstClosestX, sortedXyData)
 S3method(NLSstLfAsymptote, sortedXyData)

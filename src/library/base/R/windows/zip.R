@@ -17,18 +17,3 @@ zip.file.extract <- function(file, zipname = "R.zip")
     }
     file
 }
-
-### the following function supports update.packages()
-
-zip.unpack <- function(zipname, dest)
-{
-    if(file.exists(zipname)) {
-        if((unzip <- getOption("unzip")) != "internal") {
-            system(paste(unzip, "-oq", zipname, "-d", dest),
-                   show = FALSE, invisible = TRUE)
-        } else {
-            .Internal(int.unzip(zipname, NULL, dest))
-        }
-    } else stop(paste("zipfile", zipname, "not found"))
-}
-

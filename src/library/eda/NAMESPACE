@@ -2,6 +2,8 @@ useDynLib(eda)
 
 export(line, medpolish, smooth)
 
+importFrom(graphics, plot)
+importFrom(stats, residuals)
 # S3method(coef, tukeyline)
 # S3method(fitted, tukeyline)
 S3method(plot, medpolish)

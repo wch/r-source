@@ -64,15 +64,6 @@ rbind <- function(..., deparse.level=1) {
     .Internal(rbind(...))
 }
 
-dataentry <- function (data, modes) {
-    if(!is.list(data) || !length(data) || !all(sapply(data, is.vector)))
-        stop("invalid data argument")
-    if(!is.list(modes) ||
-       (length(modes) && !all(sapply(modes, is.character))))
-        stop("invalid modes argument")
-    .Internal(dataentry(data, modes))
-}
-
 deparse <-
     function(expr, width.cutoff = 60,
 	     backtick = mode(expr) %in% c("call","expression","("))
@@ -112,8 +103,6 @@ mem.limits <- function(nsize=NA, vsize=NA)
 
 nchar <- function(x).Internal(nchar(x))
 
-plot.window <- function(xlim, ylim, log = "", asp = NA, ...)
-    .Internal(plot.window(xlim, ylim, log, asp, ...))
 polyroot <- function(z).Internal(polyroot(z))
 
 readline <- function(prompt="").Internal(readline(prompt))
@@ -154,6 +143,17 @@ inherits <- function(x, what, which = FALSE)
 
 NextMethod <- function(generic=NULL, object=NULL, ...)
     .Internal(NextMethod(generic, object,...))
+
+data.class <- function(x) {
+    if (length(cl <- oldClass(x)))
+	cl[1]
+    else {
+	l <- length(dim(x))
+	if (l == 2)	"matrix"
+	else if (l > 0)	"array"
+	else mode(x)
+    }
+}
 
 
 ## base has no S4 generics

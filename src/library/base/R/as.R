@@ -80,13 +80,3 @@ as.name <- as.symbol
 as.numeric <- as.double
 as.qr <- function(x) stop("you cannot be serious")
 ## as.ts <- function(x) if(is.ts(x)) x else ts(x) # in ts.R
-as.formula <- function(object,env=parent.frame()){
-    if(inherits(object, "formula"))
-           object
-    else{
-        rval<-formula(object,env=NULL)
-        if (is.null(environment(rval)) || !missing(env))
-            environment(rval)<-env
-        rval
-    }
-}
