@@ -106,26 +106,38 @@ suitable incantation from the top level of the R sources might be
      ./tools/link-recommended
      </pre>
 
-   <p>Sources are also available via <a href="https://svn.R-project.org/">https://svn.R-project.org/</a>, the R
-Subversion repository.  If you have a Subversion client (see
+   <p>Sources are also available via <a href="https://svn.R-project.org/R/">https://svn.R-project.org/R/</a>, the
+R Subversion repository.  If you have a Subversion client (see
 <a href="http://subversion.tigris.org/">http://subversion.tigris.org/</a>--those using Windows may also want
-to look at <a href="http://tortoiseSVN.tigris.org/">http://tortoiseSVN.tigris.org/</a>).  You can check out and
+to look at <a href="http://tortoiseSVN.tigris.org/">http://tortoiseSVN.tigris.org/</a>), you can check out and
 update the current r-devel from
-<a href="http://svn.r-project.org/R/trunk/">http://svn.r-project.org/R/trunk/</a>
-and the current r-patched from
-<code>http://svn.r-project.org/R/branches/R-</code><var>x</var><code>-</code><var>y</var><code>-patches/</code>
+<a href="https://svn.r-project.org/R/trunk/">https://svn.r-project.org/R/trunk/</a> and the current r-patched from
+<code>https://svn.r-project.org/R/branches/R-</code><var>x</var><code>-</code><var>y</var><code>-patches/</code>
 (where <var>x</var> and <var>y</var> are the major and minor number of the current
 released version of R).  E.g., use
 
-<pre class="smallexample">     svn checkout http://svn.r-project.org/R/trunk/ <var>path</var>
+<pre class="smallexample">     svn checkout https://svn.r-project.org/R/trunk/ <var>path</var>
      </pre>
 
 <p>to check out r-devel into directory <var>path</var>.
 
-   <p>Note that the recommended packages are only included in the tarballs of
-released versions.  To install the appropriate sources for the recommended
-packages, run <code>./tools/rsync-recommended</code> from the top-level of
-the R sources.
+   <p>Note that https is required, and that the SSL certificate for the
+Subversion server of the R project is
+
+<pre class="smallexample">     Certificate information:
+      - Hostname: svn.r-project.org
+      - Valid: from Jul 16 08:10:01 2004 GMT until Jul 14 08:10:01 2014 GMT
+      - Issuer: Department of Mathematics, ETH Zurich, Zurich, Switzerland, CH
+      - Fingerprint: c9:5d:eb:f9:f2:56:d1:04:ba:44:61:f8:64:6b:d9:33:3f:93:6e:ad
+     </pre>
+
+<p>(currently, there is no "trusted certificate").  You can accept this
+certificate permanently and will not be asked about it anymore.
+
+   <p>Note also that the recommended packages are only included in the
+tarballs of released versions.  To install the appropriate sources for
+the recommended packages, run <code>./tools/rsync-recommended</code> from
+the top-level of the R sources.
 
 <a name="Installing%20R%20under%20Unix"></a>
 

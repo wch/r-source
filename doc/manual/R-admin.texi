@@ -205,28 +205,42 @@ wget -r -l1 --no-parent -A\*.gz -nd -P src/library/Recommended \
 @c is to cause it to skip the CVS directories.  Further information on
 @c @command{rsync} is available at @uref{http://rsync.samba.org/rsync/}.
 
-Sources are also available via @uref{https://svn.R-project.org/}, the R
-Subversion repository.  If you have a Subversion client (see
+Sources are also available via @uref{https://svn.R-project.org/R/}, the
+R Subversion repository.  If you have a Subversion client (see
 @uref{http://subversion.tigris.org/}---those using Windows may also want
-to look at @uref{http://tortoiseSVN.tigris.org/}).  You can check out and
+to look at @uref{http://tortoiseSVN.tigris.org/}), you can check out and
 update the current r-devel from
-@uref{http://svn.r-project.org/R/trunk/}
-and the current r-patched from
-@samp{http://svn.r-project.org/R/branches/R-@var{x}-@var{y}-patches/}
+@uref{https://svn.r-project.org/R/trunk/} and the current r-patched from
+@samp{https://svn.r-project.org/R/branches/R-@var{x}-@var{y}-patches/}
 (where @var{x} and @var{y} are the major and minor number of the current
 released version of R).  E.g., use
 
 @smallexample
-svn checkout http://svn.r-project.org/R/trunk/ @var{path}
+svn checkout https://svn.r-project.org/R/trunk/ @var{path}
 @end smallexample
 
 @noindent
 to check out r-devel into directory @var{path}.
 
-Note that the recommended packages are only included in the tarballs of
-released versions.  To install the appropriate sources for the recommended
-packages, run @command{./tools/rsync-recommended} from the top-level of
-the @R{} sources.
+Note that https is required, and that the SSL certificate for the
+Subversion server of the R project is
+
+@smallexample
+Certificate information:
+ - Hostname: svn.r-project.org
+ - Valid: from Jul 16 08:10:01 2004 GMT until Jul 14 08:10:01 2014 GMT
+ - Issuer: Department of Mathematics, ETH Zurich, Zurich, Switzerland, CH
+ - Fingerprint: c9:5d:eb:f9:f2:56:d1:04:ba:44:61:f8:64:6b:d9:33:3f:93:6e:ad
+@end smallexample
+
+@noindent
+(currently, there is no ``trusted certificate'').  You can accept this
+certificate permanently and will not be asked about it anymore.
+
+Note also that the recommended packages are only included in the
+tarballs of released versions.  To install the appropriate sources for
+the recommended packages, run @command{./tools/rsync-recommended} from
+the top-level of the @R{} sources.
 
 
 @node Installing R under Unix, Installing R under Windows, Obtaining R, Top
