@@ -8,7 +8,7 @@
         horiz = FALSE, density = NULL, angle = 45,
         col = heat.colors(NR), border = par("fg"),
         main = NULL, sub = NULL, xlab = NULL, ylab = NULL,
-        xlim = NULL, ylim = NULL,
+        xlim = NULL, ylim = NULL, xpd = TRUE,
         axes = TRUE, axisnames = TRUE,
         cex.axis = par("cex.axis"), cex.names = par("cex.axis"),
         inside = TRUE, plot = TRUE, \dots)
@@ -66,6 +66,7 @@
   \item{ylab}{a label for the y axis.}
   \item{xlim}{limits for the x axis.}
   \item{ylim}{limits for the y axis.}
+  \item{xpd}{logical. Should bars be allowed to go outside region?}
   \item{axes}{logical.  If \code{TRUE}, a vertical (or horizontal, if
     \code{horiz} is true) axis is drawn.}
   \item{axisnames}{logical.  If \code{TRUE}, and if there are

@@ -594,6 +594,17 @@ persp(1:2, 1:2, matrix(1:4, 2), xlab=1)
 ## segfaulted in 1.4.1
 
 
+## PR#1244 bug in det using method="qr"
+m2 <- structure(c(9822616000, 3841723000, 79790.09, 3841723000, 1502536000,
+                  31251.82, 79790.09, 31251.82, 64156419.36), .Dim = c(3, 3))
+(d1 <- det(m2, method="eigenvalues"))
+(d2 <- det(m2, method="qr"))
+stopifnot(d2 == 0) ## 1.4.1 gave 9.331893e+19
+(d3 <- det(m2, method="qr", tol = 1e-10))
+stopifnot(all.equal(d1, d3))
+
+
+
 ## This example last: needed < 1.5.0 ##
 
 ## PR 902 segfaults when warning string is too long, Ben Bolker 2001-04-09

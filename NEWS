@@ -570,6 +570,11 @@ BUG FIXES
     o   fft() failed to give correct answers for sizes 392, 588, 968, 980 ....
 	(PR#1429)
 
+    o   det(method = "qr") gave incorrect results for numerically
+	singular matrices. (PR#1244)
+
+    o   barplot() has allows the user to control `xpd'. (PR#1088, 1398)
+
 
 	**************************************************
 	*						 *
