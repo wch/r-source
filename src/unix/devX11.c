@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--1998  Robert Gentleman, Ross Ihaka and the
+ *  Copyright (C) 1997--1999  Robert Gentleman, Ross Ihaka and the
  *                            R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -479,7 +479,7 @@ unsigned int GetX11Pixel(int r, int g, int b)
 static void FreeX11Colors()
 {
     int i;
-    if (model == PSEUDOCOLOR2 && Vclass == PseudoColor) {
+    if (model == PSEUDOCOLOR2) {
 	for (i = 0; i < PaletteSize; i++)
 	    XFreeColors(display, colormap, &(XPalette[i].pixel), 1, 0);
 	PaletteSize = 0;
@@ -1118,7 +1118,7 @@ static void X11_NewPage(DevDesc *dd)
     x11Desc *xd = (x11Desc *) dd->deviceSpecific;
 
     FreeX11Colors();
-    if(xd->bg != dd->dp.bg) {
+    if((model == PSEUDOCOLOR2) || (xd->bg != dd->dp.bg)) {
 	xd->bg = dd->dp.bg;
 	whitepixel = GetX11Pixel(R_RED(xd->bg),R_GREEN(xd->bg),R_BLUE(xd->bg));
 	XSetWindowBackground(display, xd->window, whitepixel);
