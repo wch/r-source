@@ -14,6 +14,10 @@ waiting to be installed.  Now the correct version is checked.
 The Copy, Paste, Copy&Paste and Kill buttons in the MDI mode failed to
 restore focus to the console (see rw1070 RGui changes).
 
+The BioConductor people had stolen the menu item for "Install
+package(s) from CRAN..." so it was not being enabled/disabled
+properly.
+
 
 
 rw1071
