@@ -292,11 +292,15 @@ utils-HELP = ziponly
 MASS-HELP = ziponly
 boot-HELP = ziponly
 cluster-HELP = ziponly
+cluster-ZIPDATA = zip
 grid-HELP = ziponly
 lattice-HELP = ziponly
+lattice-ZIPDATA = zip
 nlme-HELP = ziponly
+nlme-ZIPDATA = zip
 rpart-HELP = ziponly
 survival-HELP = ziponly
+survival-ZIPDATA = zip
 
 # need special-case handling for bundle, as --auto-zip is not enabled
 dse1-HELP = ziponly
@@ -522,14 +526,18 @@ clean-recommended:
 
 # this is really tricky for a bundle.
 # also note that as we are not using Rcmd INSTALL we do not get info
-# on LazyLoad / LazyData from the DESCRIPTION files. 
+# on LazyLoad / LazyData from the DESCRIPTION files.
+R_PKGS_RECOMMENDED_LAZYDATA = boot rpart
 recommended: unpack-recommended
 	@$(ECHO) "--- Making recommended packages"
 	@$(MAKE) --no-print-directory bundle-VR
 	@$(MAKE) --no-print-directory PKGDIR=../library/VR lazyload-MASS \
 	  lazyload-class lazyload-nnet lazyload-spatial lazydata-MASS
 	@for p in $(filter-out VR, $(R_PKGS_RECOMMENDED_SOURCES)); do \
-	  $(MAKE) --no-print-directory pkg-$$p lazyload-$$p lazydata-$$p || exit 1; \
+	  $(MAKE) --no-print-directory pkg-$$p lazyload-$$p || exit 1; \
+	done
+	@for p in $(R_PKGS_RECOMMENDED_LAZYDATA); do \
+	  $(MAKE) --no-print-directory lazydata-$$p || exit 1; \
 	done
 
 rinstaller:
