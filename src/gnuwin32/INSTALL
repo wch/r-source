@@ -177,7 +177,7 @@ However, as it is compiled for MSVC, we have been unable to make it
 work for complex arithmetic and so it is only used in for real linear
 algebra.
 
-Mr Goto supplies DLLs for PIII, P4 and Opteron processors: that for
+Dr Goto supplies DLLs for PIII, P4 and Opteron processors: that for
 PIIIs runs on AthlonXP as well.
 
 
@@ -266,11 +266,11 @@ all the parts in the sequence:
 	Rpwd.exe (a utility needed in the build)
 	rbuild (the executables, the FAQ docs etc.)
 	rpackage (the base packages)
-	rdocs (the HTML documentation)
+	htmldocs (the HTML documentation)
 	bitmapdll (the bitmap support files)
 	recommended (the recommended packages)
 	vignettes (the vignettes in package grid)
-	docs (the manuals)
+	manuals (the PDF manuals)
 	rinstaller (the install program)
 	crandir (the CRAN distribution directory)
 
@@ -315,6 +315,14 @@ README.packages.
 
 (It is possible to cross-build the main installers using WINE, which
 we leave as an exercise for the reader.)
+
+To distribute a cross-build (or just to transfer it to a Windows machine
+for testing) use
+
+	cd installer
+	make imagedir
+	tar jcvf rw2000.tar.bz2 rw2000  # or something similar
+
 
 
 Feedback

@@ -5,7 +5,7 @@ all:
 	@$(MAKE) --no-print-directory Rpwd.exe
 	@$(MAKE) --no-print-directory rbuild
 	@$(MAKE) --no-print-directory rpackage
-	@$(MAKE) --no-print-directory rdocs
+	@$(MAKE) --no-print-directory htmldocs
 
 ## must be absolute and space-free paths
 ifneq ($(strip $(BUILD)),CROSS)
@@ -217,7 +217,7 @@ R.exp1: R.a $(MAINLIBS) $(EXTRALIBS) exported-vars
 ../extra/bzip2/libbz2.a:
 	$(MAKE) --no-print-directory -C ../extra/bzip2  -f Makefile.win libbz2.a
 
-rdocs:
+htmldocs:
 	@$(ECHO)
 	@$(ECHO) "------ Making HTML documentation ------"
 	@$(MAKE) --no-print-directory -C ../../doc/manual -f Makefile.win html BUILD=$(BUILD)
@@ -418,6 +418,8 @@ distclean veryclean: clean clean-recommended
 	$(RM) rw-FAQ fixed/html/rw-FAQ.html
 	$(RM) -r cran/*.html cran/ReadMe cran/README* cran/*.exe cran/md5sum.txt \
 	  cran/mini
+	$(RM) -r .vignettes # it gets left behind sometimes
+	$(RM) XINSTALL # from cross-building
 	$(RM) Rpwd.exe # do this last of all
 
 cleanwin:
@@ -459,7 +461,7 @@ check-recommended: $(foreach i, $(R_PKGS_RECOMMENDED), pkgcheck-$i)
 
 #                          ===== documentation ======
 
-docs manuals:
+pdfdocs manuals:
 	@$(MAKE) --no-print-directory -C $(RHOME)/doc/manual -f Makefile.win clean BUILD=$(BUILD)
 	@$(MAKE) --no-print-directory -C $(RHOME)/doc/manual -f Makefile.win BUILD=$(BUILD)
 #	@$(MAKE) --no-print-directory ziponly-base
@@ -554,14 +556,11 @@ crandir:
 	$(SED) -e s/@RWVER@/$(RPREFIX)/g cran/release.in > cran/release.htm
 
 distribution:
-	$(MAKE) Rpwd.exe
-	$(MAKE) rbuild
-	$(MAKE) rpackage
-	$(MAKE) rdocs
+	$(MAKE) all
 	$(MAKE) bitmapdll
 	$(MAKE) recommended
 	$(MAKE) vignettes
-	$(MAKE) docs
+	$(MAKE) manuals
 	$(MAKE) rinstaller
 	$(MAKE) crandir
 
