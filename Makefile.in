@@ -63,10 +63,11 @@ install: installdirs
 	@sed "s@R_HOME=.*@R_HOME=$(rhome)\}@" < bin/R > $(rhome)/bin/R
 	@sed "s@R_HOME=.*@R_HOME=$(rhome)\}@" < bin/R > $(bindir)/R
 	@chmod 755 $(bindir)/R $(rhome)/bin/R
-	@if test -n "$(R_GUIS)"; then \
-	  for g in $(R_GUIS); do \
-	    $(INSTALL_PROGRAM) bin/R_$${g}.$(SHLIBEXT) $(rhome)/bin; \
-	  done; \
+	@for f in `ls bin/*.$(SHLIBEXT)`; do \
+	  $(INSTALL_PROGRAM) $${f} $(rhome)/bin; \
+	done
+	@if test -n "$(GNOMEUI_LIBS)"; then \
+	  $(INSTALL_PROGRAM) gnome/R_gnome.$(SHLIBEXT) $(rhome)/gnome; \
 	fi
 	@for f in `find bin -type f -print \
 	             | grep -v '^bin/R$$' \
@@ -112,6 +113,7 @@ uninstall:
 	@rm -rf $(rhome)/include
 	@echo "uninstalling executables ..."
 	@rm -rf $(rhome)/bin
+	@rm -rf $(rhome)/gnome
 	@rm -f $(bindir)/R
 	@for f in $(INSTFILES); do \
 	  rm -f $(rhome)/$${f}; \

@@ -486,7 +486,7 @@ void R_load_gnome_shlib()
     struct stat sb;
 
     strcpy(gnome_DLL, getenv("R_HOME"));
-    strcat(gnome_DLL, "/bin/R_gnome.");
+    strcat(gnome_DLL, "/gnome/R_gnome.");
     strcat(gnome_DLL, SHLIBEXT); /* from config.h */
     if(stat(gnome_DLL, &sb))
 	R_Suicide("Probably no GNOME support: the shared library was not found");

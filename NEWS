@@ -13,9 +13,9 @@ NEW FEATURES
 
     o	attach() now works for R data files.
 
-    o	R (under Unix) can be sent SIGUSR1 to quit and
-	save or SIGUSR2 to quit and save without running .Last and
-	on.exit expressions.
+    o   R (under Unix) can be sent SIGUSR1 to quit and save or SIGUSR2
+	to quit and save without running .Last and on.exit
+	expressions.
 
     o	Option for user-supplied normal random generator in RNGkind().
 
@@ -61,8 +61,7 @@ NEW FEATURES
 	and postscript() and functions that use them (for example, write()).
 
     o	postscript(print.it=TRUE) now does print the plot file.
-
-    o	postscript(onefile=FALSE) now produces multiple separate files.
+    	postscript(onefile=FALSE) now produces multiple separate files.
 
     o	image() has a new argument "breaks" and divides the zlim range
 	into equal-length intervals.
@@ -85,6 +84,9 @@ NEW FEATURES
 	gtk(); the x11() device from the X11 support can also be used.
 	(The gnome() device remains unreliable, and is by default
 	unavailable.)
+
+	All GNOME support now installs in R_HOME/gnome to make it
+	easier to package separately.
 
     o	New device xfig() to produce XFig files.
 
@@ -189,19 +191,20 @@ BUG FIXES
     o	Linpack.h now makes clear which routines are actually in R.
 
     o	The X11 data editor scrolls cells and so allows more than ca 10
-	characters to be entered.
+	characters to be entered.  Several interface/redraw errors
+	have been corrected.
 
     o	rpois(*, lambda) now works when lambda > .Machine$integer.max
 
     o	keep.source was not set correctly before the base package was
-	loaded, some functions in the base package had the source
+	loaded: some functions in the base package had the source
 	kept.  The memory usage should now be reduced by ca 1Mb.
 
     o	M <- 2 ; print(ppr(.., nterms = M))  now works.
 
-
     o   predict(,type="terms",se.fit=T) gives correct standard errors
  	(thanks to John Maindonald)
+
 
 		CHANGES IN R VERSION 1.0.1
 

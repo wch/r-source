@@ -25,7 +25,7 @@
 #include "gtkconsole.h"
 
 
-#define GLADE_INTERFACE_FILE "%s/etc/gnome-interface.glade"
+#define GLADE_INTERFACE_FILE "%s/gnome/gnome-interface.glade"
 
 GtkWidget *R_gtk_main_window;
 GtkWidget *R_gtk_terminal_text;
