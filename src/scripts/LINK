@@ -21,7 +21,7 @@ while test -n "${1}"; do
     -L*)
       Largs="${Largs} ${1}"
       arg=`echo "${1}" | sed -e 's/^-L//'`
-      rpath="${rpath}:${1}"
+      rpath="${rpath}:${arg}"
       ;;
     *)
       args="${args} ${1}"
