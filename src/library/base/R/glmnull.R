@@ -124,6 +124,10 @@ glm.fit.null <- function (x, y, weights = rep(1, nobs), start = NULL,
     validmu <- family$validmu
     if (is.null(validmu))
 	validmu <- function(mu) TRUE
+	## next line may change y and weights, and set n.
+    eval(family$initialize)
+    if (NCOL(y) > 1)
+	stop("y must be univariate unless binomial")
     eta <- rep(0, nobs)
     if (!valideta(eta + offset))
 	stop("Invalid linear predictor values in empty model")

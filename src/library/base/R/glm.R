@@ -131,9 +131,15 @@ glm.fit <-
     validmu <- family$validmu
     if (is.null(validmu))
 	validmu <- function(mu) TRUE
-    if(is.null(mustart))
+    if(is.null(mustart)) {
 	## next line calculates mustart and may change y and weights
+        ## and set n.
 	eval(family$initialize)
+    } else {
+        mukeep <- mustart
+	eval(family$initialize)
+        mustart <- mukeep
+    }
     if (NCOL(y) > 1)
 	stop("y must be univariate unless binomial")
     eta <-

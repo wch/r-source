@@ -404,17 +404,26 @@ stopifnot(all.equal(resid(glm3,"pearson"),resid(glm4,"pearson")))
 stopifnot(pt(-Inf, 3, ncp=0) == 0, pt(Inf, 3, ncp=0) == 1)
 ##  Comments: were 0.5 in 1.3.1
 
+
 ## Paul Gilbert, 2001-12-07
 library(mva)
 cancor(matrix(rnorm(100),100,1), matrix(rnorm(300),100,3))
 detach("package:mva")
 ##  Comments: failed in R-devel.
 
-## PR#1201" incorrect values in qbeta
+
+## PR#1201: incorrect values in qbeta
 x <- seq(0, 0.8, len=1000)
 xx <- pbeta(qbeta(x, 0.143891, 0.05), 0.143891, 0.05)
 stopifnot(max(abs(x - xx)) < 1e-6)
-##  Get a range of zeroes in 1.3.1
+##  Comments:  Get a range of zeroes in 1.3.1
+
+
+## PR#1216: binomial null model
+y <- rbinom(20, 1, 0.5)
+glm(y ~ 0, family = binomial)
+##  Comments:  1.3.1 gave  Error in any(n > 1) : Object "n" not found
+
 
 
 ## This example last ##
