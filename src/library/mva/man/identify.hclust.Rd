@@ -56,12 +56,12 @@
   data(USArrests)
   hca <- hclust(dist(USArrests))
   plot(hca)
-  (x <- identify.hclust(hca)) ##  Terminate with 2nd mouse button !!
+  (x <- identify(hca)) ##  Terminate with 2nd mouse button !!
 
   data(iris)
   hci <- hclust(dist(iris[,1:4]))
   plot(hci)
-  identify.hclust(hci, function(k) print(table(iris[k,5])))
+  identify(hci, function(k) print(table(iris[k,5])))
 
   # open a new device (one for dendrogram, one for bars):
   get(getOption("device"))()# << make that narrow (& small) and *beside* 1st one
@@ -69,8 +69,7 @@
   dev.set(dev.prev())# old one for dendrogram
   plot(hci)
   ## select subtrees in dendrogram and "see" the species distribution:
-  identify.hclust(hci, function(k) barplot(table(iris[k,5]),col=2:4),
-                  DEV.FUN = nD)
+  identify.(hci, function(k) barplot(table(iris[k,5]),col=2:4), DEV.FUN = nD)
 }
 % dev.off()
 }
