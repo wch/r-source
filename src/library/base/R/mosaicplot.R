@@ -74,23 +74,15 @@ function(x, main = deparse(substitute(x)), sub = NULL, xlab = NULL,
                     if (XP[i] > 0) {
                         polygon(c(x.l[i], x.r[i], x.r[i], x.l[i]),
                                 c(y1, y1, y2, y2),
-                                ## shade can be a vector: what is intended?
-                                lty = if(shade[1]) X[i, p+1] else 1,
-                                col = color[if(shade[1]) X[i, p+2] else i])
-                        ## <KH 2000-08-29>
-                        ## Is this really needed?
-                        ## segments(c(rep(x.l[i],3),x.r[i]),
-                        ##          c(y1,y1,y2,y2),
-                        ##          c(x.r[i],x.l[i],x.r[i],x.r[i]),
-                        ##          c(y1,y2,y2,y1))
-                        ## </KH>
+                                lty = if(extended) X[i, p+1] else 1,
+                                col = color[if(extended) X[i, p+2] else i])
                     } else {
                         segments(rep(x.l[i],3), y1+(y2-y1)*c(0,2,4)/5,
                                  rep(x.l[i],3), y1+(y2-y1)*c(1,3,5)/5)
                     }
                 }
             }
-        } else { ## dir[1] - "horizontal" : split here on the Y-axis.
+        } else {                        # split here on the Y-axis.
             ydim <- maxdim[1]
             YP <- rep(0, ydim)
             for (j in 1:ydim) {
@@ -136,16 +128,8 @@ function(x, main = deparse(substitute(x)), sub = NULL, xlab = NULL,
                     if (YP[j] > 0) {
                         polygon(c(x1,x2,x2,x1),
                                 c(y.b[j],y.b[j],y.t[j],y.t[j]),
-                                ## shade can be a vector: what is intended?
-                                lty = if(shade[1]) X[j, p+1] else 1,
-                                col = color[if(shade[1]) X[j, p+2] else j])
-                        ## <KH 2000-08-29>
-                        ## Is this really needed?
-                        ## segments(c(x1,x1,x1,x2),
-                        ##          c(y.b[j],y.b[j],y.t[j],y.t[j]),
-                        ##          c(x2,x1,x2,x2),
-                        ##          c(y.b[j],y.t[j],y.t[j],y.b[j]))
-                        ## </KH>
+                                lty = if(extended) X[j, p+1] else 1,
+                                col = color[if(extended) X[j, p+2] else j])
                     } else {
                         segments(x1+(x2-x1)*c(0,2,4)/5, rep(y.b[j],3),
                                  x1+(x2-x1)*c(1,3,5)/5, rep(y.b[j],3))
@@ -192,6 +176,7 @@ function(x, main = deparse(substitute(x)), sub = NULL, xlab = NULL,
     ## color vector which ranges from the ``most negative'' to the
     ## ``most positive'' residuals.
     if(is.logical(shade) && !shade) {
+        extended <- FALSE
         Ind <- cbind(Ind, NA, NA)
     }
     else {
@@ -199,6 +184,7 @@ function(x, main = deparse(substitute(x)), sub = NULL, xlab = NULL,
             shade <- c(2, 4)
         else if(any(shade <= 0) || length(shade) > 5)
             stop("invalid shade specification")
+        extended <- TRUE
         shade <- sort(shade)
         breaks <- c(-Inf, - rev(shade), 0, shade, Inf)
         color <- c(hsv(0,               # red
@@ -249,8 +235,7 @@ function(x, main = deparse(substitute(x)), sub = NULL, xlab = NULL,
     }
 
     ncolors <- length(tabulate(Ind[,dimd]))
-    ## shade can be a vector: what is intended?
-    if(!shade && ((is.null(color) || length(color) != ncolors))) {
+    if(!extended && ((is.null(color) || length(color) != ncolors))) {
         color <-
             if (is.logical(color) && color[1])
                 heat.colors(ncolors)
@@ -262,8 +247,7 @@ function(x, main = deparse(substitute(x)), sub = NULL, xlab = NULL,
 
     ##-- Plotting
     plot.new()
-    ## shade can be a vector: what is intended?
-    if(!shade) {
+    if(!extended) {
         opar <- par(usr = c(1, 1000, 1, 1000), mgp = c(1, 1, 0))
         on.exit(par(opar))
     }
