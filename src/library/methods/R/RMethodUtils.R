@@ -6,7 +6,8 @@
 ## and definition.
   function(f, fdef,
            fdefault = getFunction(f, generic = FALSE, mustFind = FALSE),
-           group = list(), valueClass = character(), package, signature = NULL) {
+           group = list(), valueClass = character(), package, signature = NULL,
+           genericFunction = NULL) {
       ## give the function a new environment, to cache methods later
       ev <- new.env()
       parent.env(ev) <- environment(fdef)
@@ -16,7 +17,10 @@
       if(length(valueClass)>0)
           fdef <- .ValidateValueClass(fdef, f, valueClass)
       group <- .asGroupArgument(group)
-      value <- new("genericFunction")
+      if(is.null(genericFunction))
+          value <- new("genericFunction")
+      else 
+          value <- genericFunction
       value@.Data <- fdef
       value@generic <- f
       value@group <- group
@@ -48,7 +52,8 @@
 makeGeneric <-
       function(f, fdef,
            fdefault = getFunction(f, generic = FALSE, mustFind = FALSE),
-           group = list(), valueClass = character(), package, signature = NULL) {
+           group = list(), valueClass = character(), package, signature = NULL,
+           genericFunction = NULL) {
       ## give the function a new environment, to cache methods later
       ev <- new.env()
       parent.env(ev) <- environment(fdef)
@@ -60,7 +65,10 @@ makeGeneric <-
       group <- .asGroupArgument(group)
 ###--------
       value <- fdef
-      class(value) <- "genericFunction"
+      if(is.null(genericFunction))
+          class(value) <- "genericFunction"
+      else
+          class(value) <- class(genericFunction)
       slot(value, "generic", FALSE) <- f
       slot(value, "group", FALSE) <- group
       slot(value, "valueClass", FALSE) <- valueClass
@@ -300,8 +308,9 @@ conformMethod <-
     message("Expanding the signature to include omitted arguments in definition: ",
             paste(fnames[omitted], "= \"missing\"",collapse = ", "))
     signature[omitted] <- "missing"
-    ## there may have been some unspecified, but included, args; they go to "ANY"
-    signature[nchar(signature) == 0] <- "ANY"
+    ## there may have been some unspecified args; they go to "ANY"
+    ## (R now inserts character NA's if signature was expanded)
+    signature[is.na(signature) | (nchar(signature) == 0) ] <- "ANY"
     ## remove trailing "ANY"'s
     n <- length(signature)
     while(identical(signature[[n]], "ANY"))
