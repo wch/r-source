@@ -12,9 +12,9 @@ NEW FEATURES
 
     o   New generic function preplot().
 
-    o	A new R BATCH interface for non-interactive execution.
+    o	a new R BATCH interface for non-interactive execution.
 
-    o   Added `offline' argument to help() for producing hardcopy via
+    o   added `offline' argument to help() for producing hardcopy via
 	latex and dvips.
 
     o   glm.fit.null now calculates AIC and print.glm.null prints it
@@ -23,7 +23,31 @@ NEW FEATURES
 
     o   new class "mlm" for multivariate "lm", predict.mlm to go with it
 
+    o   "Details" section added to .Rd format
+
+    o   R_PRINTCMD and R_PAPERSIZE can now be set via users' environment,
+	overriding setting in startup script.
+
+    o   enhanced identify() 
+
+    o   new function print.coefmat() 
+
+    o   added unix() as .Deprecated("system")
+
+    o   date() replacing system.date()
+
 BUG FIXES
+
+    o   substitute would re-substitute after expanding ... 
+
+    o   indexing modified object in some cases
+
+    o   sweep should work again on dataframes
+
+    o   minor changes in aov()
+
+    o	builds should now actually work on systems that do not add 
+	underscores to Fortran symbols
 
     o   biplot[.default]() was redundant in "base" package; now only in "mva".
 
@@ -79,6 +103,10 @@ BUG FIXES
 
     o   Modified makefiles so configure followed by "make distclean"
         should restore the source tree to its original form.
+
+    o   a leftover "colours <- colors" caused trouble when collating
+	sequence changes caused files to go into the "base" file in a 
+	different order
 
 		CHANGES IN R VERSION 0.62.2
 
