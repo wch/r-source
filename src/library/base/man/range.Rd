@@ -19,12 +19,8 @@ range(\dots, na.rm = FALSE)
   all the given arguments.
 }
 \details{
-  This is a generic function; currently, it has only a default method
-  (\code{\link{range.default}}).  It is also a member of the
-  \code{\link{Summary}} group generic.
-
-  It is also a member of the \code{Summary} group of functions, see
-  \code{\link[base]{Methods}}.
+  \code{range} is a generic function: methods can be defined for it
+  directly or via the \code{\link{Summary}} group generic.
 
   If \code{na.rm} is \code{FALSE}, \code{NA}
   and \code{NaN} values in any of the arguments will cause NA values
