@@ -5,12 +5,12 @@
 \usage{
 persp(x, ...)
 persp.default(x = seq(0, 1, len = nrow(z)), y = seq(0, 1, len = ncol(z)), z,
-      xlim = range(x), ylim = range(y), zlim = range(z, na.rm = TRUE), 
+      xlim = range(x), ylim = range(y), zlim = range(z, na.rm = TRUE),
       xlab = NULL, ylab = NULL, zlab = NULL, main = NULL, sub = NULL,
-      theta = 0, phi = 15, r = sqrt(3), d = 1, scale = TRUE, expand = 1, 
+      theta = 0, phi = 15, r = sqrt(3), d = 1, scale = TRUE, expand = 1,
       col = "white", border = NULL, ltheta = -135, lphi = 0, shade = NA,
       box = TRUE, axes = TRUE, nticks = 5, ticktype = "simple",
-      ...) 
+      ...)
 }
 \arguments{
   \item{x, y}{locations of grid lines at which the values in \code{z} are
@@ -44,8 +44,8 @@ persp.default(x = seq(0, 1, len = nrow(z)), y = seq(0, 1, len = ncol(z)), z,
   \item{expand}{a expansion factor applied to the \code{z}
     coordinates. Often used with \code{0 < expand < 1} to shrink the
     plotting box in the \code{z} direction.}
-  \item{col}{the color of the surface facets.  Transparent colours are
-    ignored.}
+  \item{col}{the color(s) of the surface facets.  Transparent colours are
+    ignored.  This is recycled to the \eqn{(nx-1)(ny-1)} facets.}
   \item{border}{the color of the line drawn around the surface facets.
     A value of \code{NA} will disable the drawing of borders.  This is
     sometimes useful when the surface is shaded.}
@@ -63,10 +63,10 @@ persp.default(x = seq(0, 1, len = nrow(z)), y = seq(0, 1, len = ncol(z)), z,
     illumination.}
   \item{box}{should the bounding box for the surface be displayed.
     The default is \code{TRUE}.}
-  \item{axes}{should ticks and labels be added to the box.  The 
+  \item{axes}{should ticks and labels be added to the box.  The
     default is \code{TRUE}.  If \code{box} is \code{FALSE} then no
     ticks or labels are drawn.}
-  \item{ticktype}{character: "simple" draws just an arrow parallel to 
+  \item{ticktype}{character: "simple" draws just an arrow parallel to
     the axis to indicate direction of increase; "detailed" draws normal
     ticks as per 2D plots.}
   \item{nticks}{the (approximate) number of tick marks to draw on the
@@ -90,25 +90,22 @@ persp.default(x = seq(0, 1, len = nrow(z)), y = seq(0, 1, len = ncol(z)), z,
   \code{\link{contour}} and \code{\link{image}}.
 }
 \examples{
+## More examples in  demo(persp) !!
+##                   -----------
+
 # (1) The Obligatory Mathematical surface.
 #     Rotated sinc function.
 
-x <- seq(-10, 10, length=50)
+x <- seq(-10, 10, length= 30)
 y <- x
-f <- function(x,y)
-{
-    r <- sqrt(x^2+y^2)
-    10 * sin(r)/r
-}
+f <- function(x,y) { r <- sqrt(x^2+y^2); 10 * sin(r)/r }
 z <- outer(x, y, f)
 z[is.na(z)] <- 1
-par(bg = "white")
-persp(x, y, z, theta = 30, phi = 30, expand = 0.5, col = "lightblue",
-      xlab = "X", ylab = "Y", zlab = "Z") 
+op <- par(bg = "white")
+persp(x, y, z, theta = 30, phi = 30, expand = 0.5, col = "lightblue")
 persp(x, y, z, theta = 30, phi = 30, expand = 0.5, col = "lightblue",
       ltheta = 120, shade = 0.75, ticktype = "detailed",
-      xlab = "X", ylab = "Y", zlab = "Z") 
-
+      xlab = "X", ylab = "Y", zlab = "Sinc( r )")
 
 # (2) Visualizing a simple DEM model
 
@@ -116,34 +113,11 @@ data(volcano)
 z <- 2 * volcano        # Exaggerate the relief
 x <- 10 * (1:nrow(z))   # 10 meter spacing (S to N)
 y <- 10 * (1:ncol(z))   # 10 meter spacing (E to W)
-persp(x, y, z, theta = 120, phi = 15, scale = FALSE, axes = FALSE)
-
-
-# (3) Now something more complex
-#     We border the surface, to make it more "slice like"
-#     and color the top and sides of the surface differently.
-
-zmin <- min(z) - 20
-z <- rbind(zmin, cbind(zmin, z, zmin), zmin)
-x <- c(min(x) - 1e-10, x, max(x) + 1e-10)
-y <- c(min(y) - 1e-10, y, max(y) + 1e-10)
-
-fill <- matrix("green3", nr = nrow(z)-1, nc = ncol(z)-1)
-fill[,1] <- "gray"
-fill[,ncol(fill)] <- "gray"
-fill[1,] <- "gray"
-fill[nrow(fill),] <- "gray"
-
-par(bg = "lightblue")
-persp(x, y, z, theta = 120, phi = 15, col = fill, scale = FALSE, axes = FALSE)
-title(main = "Maunga Whau\nOne of 50 Volcanoes in the Auckland Region.",
-      font.main = 4)
-
+## Don't draw the grid lines :  border = NA
 par(bg = "slategray")
-persp(x, y, z, theta = 135, phi = 30, col = fill, scale = FALSE,
-      ltheta = -120, lphi = 15, shade = 0.65, axes = FALSE)
 persp(x, y, z, theta = 135, phi = 30, col = "green3", scale = FALSE,
       ltheta = -120, shade = 0.75, border = NA, box = FALSE)
+par(op)
 }
 \keyword{hplot}
 \keyword{aplot}

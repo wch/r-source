@@ -1,11 +1,13 @@
 glm.vr			Some glm() examples from V&R with several predictors
 graphics		A show of some of R's graphics capabilities
 image			The image-like graphics builtins of R
-is.things		Explore some properties of R objects and is.FOO() 
-			functions.  Not for newbies! 
+is.things		Explore some properties of R objects and is.FOO()
+			functions.  Not for newbies!
 lm.glm			Some linear and generalized linear modelling
 			examples from `An Introduction to Statistical
 			Modelling' by Annette Dobson
 nlm			Nonlinear least-squares using nlm()
+persp			Extended persp() examples
 recursion		Using recursion for adaptive integration.
 scoping			An illustration of lexical scoping.
+

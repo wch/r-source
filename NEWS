@@ -11,9 +11,8 @@
 
 USER-VISIBLE CHANGES
 
-    o   The default colour palette now has "grey" instead of "white"
-	in location 8.  See palette().
-
+    o	The default colour palette now has "grey" instead of "white"
+	in location 8.	See palette().
 
 NEW FEATURES
 
@@ -65,7 +64,7 @@ NEW FEATURES
 	allows 64-bit platforms to use much larger amounts of memory.
 
     o	Command-line flags to set memory can now use the suffix `G'
-	for gigabytes.  The setting of maximum vsize is now only
+	for gigabytes.	The setting of maximum vsize is now only
 	limited by the platform's address space.
 
     o	All warning and error messages are truncated to a length set
@@ -76,15 +75,19 @@ NEW FEATURES
 
     o	as.POSIX[cl]t can now convert logical NAs.
 
-    o	as.data.frame() now coerces logical matrices into logical
-	columns (rather than factors).
-
     o	All installed packages (even those shipped with R) are
 	given a `Built' field in the DESCRIPTION file.
+
+    o	as.data.frame() now coerces logical matrices into logical
+	columns (rather than factors).
 
     o	[[<-.data.frame no longer coerces character replacement values
 	to factor.  This is consistent with using $ to replace and
 	with S4.
+
+    o	print.factor() has new arguments `max.levels' (with a smart default)
+	and `width'.  print.ordered() is no longer needed.
+
 
 
 DEPRECATED & DEFUNCT
@@ -92,9 +95,18 @@ DEPRECATED & DEFUNCT
     o	The assignment operator `_' is deprecated: a warning is
 	given once per R session.
 
+    o	The print.ordered() method is no longer needed, since handled by
+        print.factor() and hence deprecated.
+
     o	arima0.diag() (package ts) is defunct.
 
     o	piechart() is defunct.
+
+
+DOCUMENTATION CHANGES
+
+    o	new demo(persp) containing some of the former example(persp) ones
+	and more.
 
 
 C-LEVEL FACILITIES
