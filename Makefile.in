@@ -52,7 +52,7 @@ install: all installdirs
 	(cd $(rhome)/library; cat */TITLE > LibIndex 2> /dev/null)
 	$(rhome)/etc/build-help --rhome $(rhome) --htmllists
 
-installdirs: mkinstalldirs
+installdirs:
 	$(top_srcdir)/aux/mkinstalldirs $(bindir) $(mandir) $(mandir)/man1 \
 		$(datadir) $(rhome) $(rhome)/bin $(rhome)/cmd \
 		$(rhome)/etc $(rhome)/include $(rhome)/library
