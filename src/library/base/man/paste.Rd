@@ -1,5 +1,6 @@
 \name{paste}
 \title{Concatenate Strings}
+\concept{combine strings}
 \usage{
 paste(\dots, sep = " ", collapse = NULL)
 }
