@@ -31,6 +31,7 @@
 #include <Graphics.h>
 #include <Rdevices.h>
 
+
 SEXP do_getGraphicsEvent(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP prompt, onMouseDown, onMouseMove, onMouseUp, onKeybd;
@@ -45,10 +46,6 @@ SEXP do_getGraphicsEvent(SEXP call, SEXP op, SEXP args, SEXP env)
     if (!nd->newDevStruct || !nd->getEvent) 
     	errorcall(call, "Graphics device does not support graphics events");
     
-    if (nd->mouseDownHandler || nd->mouseMoveHandler 
-     || nd->mouseUpHandler   || nd->keybdHandler) 
-	errorcall(call, "graphics event handler already in use");
-     
     prompt = CAR(args);
     if (!isString(prompt)) errorcall(call, "invalid prompt");
     args = CDR(args);
@@ -57,82 +54,71 @@ SEXP do_getGraphicsEvent(SEXP call, SEXP op, SEXP args, SEXP env)
     if (TYPEOF(onMouseDown) == NILSXP) onMouseDown = NULL;
     else if (!nd->canGenMouseDown) errorcall(call, "onMouseDown not supported");
     else if (TYPEOF(onMouseDown) != CLOSXP) errorcall(call, "invalid onMouseDown callback");
-    nd->mouseDownHandler = onMouseDown;
     args = CDR(args);
     
     onMouseMove = CAR(args);
     if (TYPEOF(onMouseMove) == NILSXP) onMouseMove = NULL;
     else if (!nd->canGenMouseMove) errorcall(call, "onMouseMove not supported");
     else if (TYPEOF(onMouseMove) != CLOSXP) errorcall(call, "invalid onMouseMove callback");
-    nd->mouseMoveHandler = onMouseMove;
     args = CDR(args);
     
     onMouseUp = CAR(args);
     if (TYPEOF(onMouseUp) == NILSXP) onMouseUp = NULL;
     else if (!nd->canGenMouseUp) errorcall(call, "onMouseUp not supported");
     else if (TYPEOF(onMouseUp) != CLOSXP) errorcall(call, "invalid onMouseUp callback");
-    nd->mouseUpHandler = onMouseUp;
     args = CDR(args);
     
     onKeybd = CAR(args);
     if (TYPEOF(onKeybd) == NILSXP) onKeybd = NULL;
     else if (!nd->canGenKeybd) errorcall(call, "onKeybd not supported");
     else if (TYPEOF(onKeybd) != CLOSXP) errorcall(call, "invalid onKeybd callback");
-    nd->keybdHandler = onKeybd;
     
-    if (!nd->mouseDownHandler && !nd->mouseMoveHandler 
-     && !nd->mouseUpHandler   && !nd->keybdHandler) 
-	errorcall(call, "must install at least one handler");
-     
     /* NB:  cleanup of event handlers must be done by driver in onExit handler */
     
-    return(nd->getEvent(CHAR(STRING_ELT(prompt,0))));
+    return(nd->getEvent(env, CHAR(STRING_ELT(prompt,0))));
 }
     
 #define leftButton   1
 #define middleButton 2
 #define rightButton  4
 
-static void doMouseEvent(SEXP handler, NewDevDesc *dd, int buttons, double x, double y)
+static char * mouseHandlers[] = {"onMouseDown", "onMouseUp", "onMouseMove"};
+
+SEXP doMouseEvent(SEXP eventRho, NewDevDesc *dd, R_MouseEvent event,
+			 int buttons, double x, double y)
 {
     int i;
-    SEXP bvec, sx, sy, temp;
+    SEXP handler, bvec, sx, sy, temp, result;
     
     dd->gettingEvent = FALSE; /* avoid recursive calls */
     
-    PROTECT(bvec = allocVector(INTSXP, 3));
-    i = 0;
-    if (buttons & leftButton) INTEGER(bvec)[i++] = 0;
-    if (buttons & middleButton) INTEGER(bvec)[i++] = 1;
-    if (buttons & rightButton) INTEGER(bvec)[i++] = 2;
-    SETLENGTH(bvec, i);
+    handler = findVar(install(mouseHandlers[event]), eventRho);
+    if (TYPEOF(handler) == PROMSXP)
+    	handler = eval(handler, eventRho);
     
-    PROTECT(sx = allocVector(REALSXP, 1));
-    REAL(sx)[0] = (x - dd->left) / (dd->right - dd->left);
-    PROTECT(sy = allocVector(REALSXP, 1));
-    REAL(sy)[0] = (y - dd->bottom) / (dd->top - dd->bottom);
+    result = NULL;
     
-    PROTECT(temp = lang4(handler, bvec, sx, sy));
-    dd->eventResult = eval(temp, dd->eventRho);
-    UNPROTECT(4);
-    R_FlushConsole();
-    
+    if (handler != R_UnboundValue && handler != R_NilValue) {
+	PROTECT(bvec = allocVector(INTSXP, 3));
+	i = 0;
+	if (buttons & leftButton) INTEGER(bvec)[i++] = 0;
+	if (buttons & middleButton) INTEGER(bvec)[i++] = 1;
+	if (buttons & rightButton) INTEGER(bvec)[i++] = 2;
+	SETLENGTH(bvec, i);
+
+	PROTECT(sx = allocVector(REALSXP, 1));
+	REAL(sx)[0] = (x - dd->left) / (dd->right - dd->left);
+	PROTECT(sy = allocVector(REALSXP, 1));
+	REAL(sy)[0] = (y - dd->bottom) / (dd->top - dd->bottom);
+
+	PROTECT(temp = lang4(handler, bvec, sx, sy));
+	PROTECT(result = eval(temp, eventRho));
+
+	R_FlushConsole();
+	UNPROTECT(5);    
+    }
     dd->gettingEvent = TRUE;
-}
-
-void doMouseDown(NewDevDesc *dd, int buttons, double x, double y)
-{
-    if (dd->mouseDownHandler) doMouseEvent(dd->mouseDownHandler, dd, buttons, x, y);
-}
-
-void doMouseUp(NewDevDesc *dd, int buttons, double x, double y)
-{
-    if (dd->mouseUpHandler) doMouseEvent(dd->mouseUpHandler, dd, buttons, x, y);
-}
-
-void doMouseMove(NewDevDesc *dd, int buttons, double x, double y)
-{
-    if (dd->mouseMoveHandler) doMouseEvent(dd->mouseMoveHandler, dd, buttons, x, y);
+    return result;
 }
 
 static char * keynames[] = {"Left", "Up", "Right", "Down",
@@ -140,27 +126,30 @@ static char * keynames[] = {"Left", "Up", "Right", "Down",
     			 "F11","F12",
     			 "PgUp", "PgDn", "End", "Home", "Ins", "Del"};
 
-void doKeybd(NewDevDesc *dd, R_KeyName rkey)
+SEXP doKeybd(SEXP eventRho, NewDevDesc *dd, R_KeyName rkey, char *keyname)
 {
-    doKeybd2(dd, keynames[rkey]);
-}
+    SEXP handler, skey, temp, result;
+    
+    dd->gettingEvent = FALSE; /* avoid recursive calls */
 
-void doKeybd2(NewDevDesc *dd, char *keyname)
-{
-    SEXP skey, temp;
+    handler = findVar(install("onKeybd"), eventRho);
+    if (TYPEOF(handler) == PROMSXP)
+    	handler = eval(handler, eventRho);
+    	
+    result = NULL;
     
-    if (dd->keybdHandler) {
-    
-    	dd->gettingEvent = FALSE; /* avoid recursive calls */
+    if (handler != R_UnboundValue && handler != R_NilValue) {   
     
     	PROTECT(skey = allocVector(STRSXP, 1));
-    	SET_STRING_ELT(skey, 0, mkChar(keyname));
+    	if (keyname) SET_STRING_ELT(skey, 0, mkChar(keyname));
+    	else SET_STRING_ELT(skey, 0, mkChar(keynames[rkey]));
     
-    	PROTECT(temp = lang2(dd->keybdHandler, skey));
-    	dd->eventResult = eval(temp, dd->eventRho);
-    	UNPROTECT(2);
+    	PROTECT(temp = lang2(handler, skey));
+    	PROTECT(result = eval(temp, eventRho));
     	R_FlushConsole();
-    
-    	dd->gettingEvent = TRUE;
+    	UNPROTECT(3);
+    	
     }
+    dd->gettingEvent = TRUE;
+    return result;
 }

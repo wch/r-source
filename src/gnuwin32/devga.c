@@ -180,6 +180,8 @@ typedef struct {
     R_GE_linejoin ljoin;
     float lmitre;
     Rboolean enterkey; /* Set true when enter key is hit */
+    SEXP eventRho;     /* Environment during event handling */
+    SEXP eventResult;  /* Result of event handler */
 } gadesc;
 
 rect getregion(gadesc *xd)
@@ -241,7 +243,7 @@ static void GA_Clip(double x0, double x1, double y0, double y1,
 		     NewDevDesc *dd);
 static void GA_Close(NewDevDesc *dd);
 static void GA_Deactivate(NewDevDesc *dd);
-static SEXP GA_getEvent(char* prompt);
+static SEXP GA_getEvent(SEXP eventRho, char* prompt);
 static void GA_Hold(NewDevDesc *dd);
 static Rboolean GA_Locator(double *x, double *y, NewDevDesc *dd);
 static void GA_Line(double x1, double y1, double x2, double y2,
@@ -836,8 +838,9 @@ static void HelpMouseClick(window w, int button, point pt)
 	    xd->py = pt.y;
 	} else
 	    xd->clicked = 2;
-	if (dd->gettingEvent && dd->mouseDownHandler)  
-	    doMouseDown(dd, button, pt.x, pt.y);
+	if (dd->gettingEvent)  
+	    xd->eventResult = doMouseEvent(xd->eventRho, dd, meMouseDown, 
+	    			button, pt.x, pt.y);
     }
 }
 
@@ -846,9 +849,11 @@ static void HelpMouseMove(window w, int button, point pt)
     if (AllDevicesKilled) return;
     {
 	NewDevDesc *dd = (NewDevDesc *) getdata(w);
+	gadesc *xd = (gadesc *) dd->deviceSpecific;
 
-	if (dd->gettingEvent && dd->mouseMoveHandler)  
-	    doMouseMove(dd, button, pt.x, pt.y);
+	if (dd->gettingEvent)  
+	    xd->eventResult = doMouseEvent(xd->eventRho, dd, meMouseMove, 
+	    			button, pt.x, pt.y);
     }
 }
 
@@ -857,9 +862,11 @@ static void HelpMouseUp(window w, int button, point pt)
     if (AllDevicesKilled) return;
     {
 	NewDevDesc *dd = (NewDevDesc *) getdata(w);
+	gadesc *xd = (gadesc *) dd->deviceSpecific;
 
-	if (dd->gettingEvent && dd->mouseUpHandler)  
-	    doMouseUp(dd, button, pt.x, pt.y);
+	if (dd->gettingEvent)  
+	    xd->eventResult = doMouseEvent(xd->eventRho, dd, meMouseUp,
+	    			button, pt.x, pt.y);
     }
 }
 
@@ -1306,25 +1313,26 @@ static void CHelpKeyIn(control w, int key)
     
     R_KeyName keyname;
     
-    if (dd->gettingEvent && dd->keybdHandler) {
+    if (dd->gettingEvent) {
     	keyname = getKeyName(key);
-    	if (keyname > knUNKNOWN) doKeybd(dd, keyname);
-    }
-
-    if (xd->replaying) return;
-    switch (key) {
-      case INS:
-	menuadd(xd->madd);
-	break;
-      case PGUP:
-	menuprev(xd->mprev);
-	break;
-      case PGDN:
-	menunext(xd->mnext);
-	break;
-      case ENTER:
-        xd->enterkey = TRUE;
-        break;
+    	if (keyname > knUNKNOWN) 
+    	    xd->eventResult = doKeybd(xd->eventRho, dd, keyname, NULL);
+    } else {
+	if (xd->replaying) return;
+	switch (key) {
+	  case INS:
+	    menuadd(xd->madd);
+	    break;
+	  case PGUP:
+	    menuprev(xd->mprev);
+	    break;
+	  case PGDN:
+	    menunext(xd->mnext);
+	    break;
+	  case ENTER:
+	    xd->enterkey = TRUE;
+	    break;
+	}
     }
 }
 
@@ -1337,7 +1345,7 @@ static void NHelpKeyIn(control w, int key)
     NewDevDesc *dd = (NewDevDesc *) getdata(w);
     gadesc *xd = (gadesc *) dd->deviceSpecific;
     
-    if (dd->gettingEvent && dd->keybdHandler) {
+    if (dd->gettingEvent) {
 	if (0 < key && key < 32) {
 	    strcpy(keyname, "ctrl- ");
 	    keyname[5] = (char) (key + 'A' - 1);
@@ -1345,7 +1353,7 @@ static void NHelpKeyIn(control w, int key)
     	    keyname[0] = (char) key;
 	    keyname[1] = '\0';
 	}
-	doKeybd2(dd, keyname);
+	xd->eventResult = doKeybd(xd->eventRho, dd, knUNKNOWN, keyname);
     } else {
 	if (xd->replaying) return;
 	switch (key) {
@@ -1690,6 +1698,10 @@ setupScreenDevice(NewDevDesc *dd, gadesc *xd, double w, double h,
     dd->canGenMouseMove = TRUE;
     dd->canGenMouseUp = TRUE;
     dd->canGenKeybd = TRUE;
+    dd->gettingEvent = FALSE;
+    
+    xd->eventRho = NULL;
+    xd->eventResult = NULL;
 
     return 1;
 }
@@ -2980,10 +2992,7 @@ static void GA_onExit(NewDevDesc *dd)
     dd->onExit = NULL;
     xd->confirmation = FALSE;
     dd->gettingEvent = FALSE;
-    dd->mouseDownHandler = NULL;
-    dd->mouseMoveHandler = NULL;
-    dd->mouseUpHandler = NULL;
-    dd->keybdHandler = NULL;    
+    xd->eventRho = NULL;
     
     addto(xd->gawin);
     gchangemenubar(xd->mbar);
@@ -3030,13 +3039,16 @@ Rboolean winNewFrameConfirm()
     return TRUE;
 }
 
-static SEXP GA_getEvent(char* prompt)
+static SEXP GA_getEvent(SEXP eventRho, char* prompt)
 {
     gadesc *xd;
     GEDevDesc *dd = GEcurrentDevice();
 
     xd = dd->dev->deviceSpecific;
-
+    
+    if (xd->eventRho) error("recursive getGraphicsEvent not supported");
+    xd->eventRho = eventRho;
+    
     dd->dev->gettingEvent = TRUE;
     show(xd->gawin);
     addto(xd->gawin);
@@ -3047,14 +3059,14 @@ static SEXP GA_getEvent(char* prompt)
     R_WriteConsole("\n", 1);
     R_FlushConsole();
     settext(xd->gawin, prompt);
-    dd->dev->eventResult = NULL;
+    xd->eventResult = NULL;
     dd->dev->onExit = GA_onExit;  /* install callback for cleanup */
-    while (!dd->dev->eventResult || dd->dev->eventResult == R_NilValue) {
+    while (!xd->eventResult || xd->eventResult == R_NilValue) {
 	if(xd->buffered) SHOW;
         WaitMessage();
 	R_ProcessEvents(); /* May not return if user interrupts */
     }
     dd->dev->onExit(dd->dev);
 
-    return dd->dev->eventResult;
+    return xd->eventResult;
 }

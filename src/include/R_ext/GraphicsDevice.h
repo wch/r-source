@@ -142,15 +142,6 @@ typedef struct {
     Rboolean canGenKeybd;     /* can the device generate keyboard events */
     
     Rboolean gettingEvent;    /* This is set while getGraphicsEvent is actively looking for events */
-    SEXP eventRho;	      /* This is the environment of getGraphicsEvent in which to evaluate the handlers */
-    SEXP eventResult;	      /* The result of the last event handler is stored here, unprotected */
-    
-    /* These are the event handlers */
-    
-    SEXP mouseDownHandler;
-    SEXP mouseMoveHandler;
-    SEXP mouseUpHandler;
-    SEXP keybdHandler;
     
     /********************************************************
      * Device procedures.
@@ -452,7 +443,7 @@ typedef struct {
      * and then return it
      * An example is ...
      *
-     * static SEXP GA_getEvent(char *prompt);
+     * static SEXP GA_getEvent(SEXP eventRho, char *prompt);
      */
     SEXP (*getEvent)();
     
