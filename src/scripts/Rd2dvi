@@ -6,7 +6,7 @@
 #  R CMD Rd2dvi `grep -l "\\keyword{distr" \
 #                  /path/to/Rsrc/src/library/base/man/*.Rd | sort | uniq`
 
-REVISION='$Revision: 1.13 $'
+REVISION='$Revision: 1.14 $'
 VERSION=`set - ${REVISION}; echo ${2}`
 USAGE_MSG="Usage: R CMD Rd2dvi [options] files"
 
@@ -15,6 +15,8 @@ START_DIR=`pwd`
 CLEAN=true
 DEBUG=false
 USE_XDVI=true
+DVI_EXT="dvi"
+TEXINPUTS=.:${R_HOME}/doc/manual:${TEXINPUTS}
 
 file_sed='s/[_$]/\\\\&/g'
 
@@ -36,6 +38,13 @@ while test -n "${1}"; do
       USE_XDVI=false ;;
     --use-xdvi=[yY]*)
       USE_XDVI=true ;;
+    --pdf)
+      DVI_EXT="pdf";
+      USE_XDVI=false;
+      R_RD4DVI=${R_RD4PDF:-"ae,hyper"};
+      R_LATEXCMD=${PDFLATEX:-pdflatex};;
+    --title=*)
+      TITLE=`echo "${1}" | sed -e 's/[^=]*=//'` ;;
     --|*)
       break ;;
   esac
@@ -75,8 +84,8 @@ if ${DEBUG}; then
   echo ""; echo "subj:"; echo "${subj}"; echo ""
 fi
 
-if test -f Rd2.dvi; then
-  echo "file \`Rd2.dvi' exists; please remove first"
+if test -f Rd2.${DVI_EXT}; then
+  echo "file \`Rd2.${DVI_EXT}' exists; please remove first"
   exit 1
 fi
 BUILD_DIR=.Rd2dvi${$}
@@ -88,6 +97,8 @@ mkdir ${BUILD_DIR}
 sed 's/markright{#1}/markboth{#1}{#1}/' \
   ${R_HOME}/doc/manual/Rd.sty > ${BUILD_DIR}/Rd2.sty
 
+TITLE=${TITLE:-"\\R{} documentation}} \\par\\bigskip{{\\Large of ${subj}"}
+
 cat > ${BUILD_DIR}/Rd2.tex <<EOF
 \\documentclass[${R_PAPERSIZE}paper]{book}
 \\usepackage[${R_RD4DVI:-ae}]{Rd2}
@@ -96,9 +107,8 @@ cat > ${BUILD_DIR}/Rd2.tex <<EOF
 \\begin{document}
 \\chapter*{}
 \\begin{center}
-  {\\textbf{\\huge\\R{} documentation}}
-  \\par\\bigskip{\\Large of ${subj}}
-  \\par\\medskip{\\large \\today}
+{\\textbf{\\huge ${TITLE}}}
+\\par\\medskip{\\large \\today}
 \\end{center}
 ${TOC}
 EOF
@@ -117,7 +127,7 @@ cd ${BUILD_DIR}
 ${R_LATEXCMD} Rd2
 ${R_MAKEINDEXCMD} Rd2
 ${R_LATEXCMD} Rd2
-cp Rd2.dvi ..
+cp Rd2.${DVI_EXT} ..
 cd ${START_DIR}
 if ${CLEAN}; then
   rm -rf ${BUILD_DIR}
@@ -125,7 +135,7 @@ else
   echo "You may want to clean up by \`rm -rf ${BUILD_DIR}'"
 fi
 if ${USE_XDVI}; then
-  xdvi Rd2.dvi
+  xdvi Rd2.${DVI_EXT}
 fi
 
 ### Local Variables: ***
