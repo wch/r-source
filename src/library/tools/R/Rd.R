@@ -1,6 +1,10 @@
 Rdpp <-
 function(lines)
 {
+    if(!is.character(lines))
+        stop(paste("argument", sQuote(lines),
+                   "must be a character vector"))
+    
     ppLineIndices <- grep("^#(endif|ifn?def[[:space:]]+[[:alnum:]]+)",
                           lines)
     ## <NOTE>
@@ -66,16 +70,27 @@ function(file)
     ## keywords directly from them before collapsing them to one string
     ## (which also allows us to avoid looping as in the Perl code).
     ## </NOTE>
-    
+
+    if(is.character(file)) {
+        file <- file(file)
+        on.exit(close(file))
+    }
+    if(!inherits(file, "connection"))
+        stop(paste("argument", sQuote(file),
+                   "must be a character string or connection"))
+
     lines <- Rdpp(readLines(file))
+    
     aliasesRegExp <- "^\\\\alias{[[:space:]]*(.*)[[:space:]]*}.*"
     aliases <- grep(aliasesRegExp, lines, value = TRUE)
     aliases <- gsub(aliasesRegExp, "\\1", aliases)
     aliases <- gsub("\\\\%", "%", aliases)
+    
     keywordsRegExp <- "^\\\\keyword{[[:space:]]*(.*)[[:space:]]*}.*"
     keywords <- grep(keywordsRegExp, lines, value = TRUE)
     keywords <- gsub(keywordsRegExp, "\\1", keywords)
     keywords <- gsub("\\\\%", "%", keywords)
+    
     ## <FIXME>
     ## docType ... 
     RdTypeRegExp <- "^\\\\docType{[[:space:]]*(.*)[[:space:]]*}.*"
@@ -83,15 +98,18 @@ function(file)
     ## Could be none or more than one ... argh.
     RdType <- c(gsub(RdTypeRegExp, "\\1", RdType), "")[1]
     ## </FIXME>
+    
     txt <- paste(lines, collapse = "\n")
+    
     RdName <- sub(".*\\\\name{[[:space:]]*([^\}]+)[[:space:]]*}.*",
                   "\\1", txt)
     RdName <- gsub("[[:space:]]*", " ", RdName)
+    
     RdTitle <- sub(".*\\\\title{[[:space:]]*([^\}]+)[[:space:]]*}.*",
                    "\\1", txt)
     RdTitle <- gsub("[[:space:]]*", " ", RdTitle)
     
-    list(name = RdName, title = RdTitle, type = RdType,
+    list(name = RdName, type = RdType, title = RdTitle,
          aliases = aliases, keywords = keywords)
 }
 
@@ -100,8 +118,7 @@ function(RdFiles)
 {
     ## Compute contents db from Rd files.
 
-    ## Maybe use .fileTest("-f") but this is not vectorized ...
-    RdFiles <- RdFiles[which(file.exists(RdFiles))]
+    RdFiles <- RdFiles[.fileTest("-f", RdFiles)]
     contents <- matrix("", nr = length(RdFiles), nc = 6)
     for(i in seq(along = RdFiles)) {
         contents[i, ] <-
@@ -109,7 +126,7 @@ function(RdFiles)
               sapply(Rdinfo(RdFiles[i]), paste, collapse = " "))
     }
     colnames(contents) <-
-        c("File", "Name", "Title", "Type", "Aliases", "Keywords")
+        c("File", "Name", "Type", "Title", "Aliases", "Keywords")
     contents
 }
 
