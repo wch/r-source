@@ -83,6 +83,23 @@ function(dir, exts, path = TRUE)
     files
 }
 
+.listFilesWithType <-
+function(dir, type)
+{
+    ## Return a character vector with the paths of the files in
+    ## @code{dir} of type @code{type} (as in .makeFileExts()).
+    ## When listing R code and documentation files, files in OS-specific
+    ## subdirectories are included if present.
+    exts <- .makeFileExts(type)
+    files <- .listFilesWithExts(dir, exts)
+    if(type %in% c("code", "docs")) {
+        OSdir <- file.path(dir, .Platform$OS)
+        if(.fileTest("-d", OSdir))
+            files <- c(files, .listFilesWithExts(OSdir, exts))
+    }
+    files
+}
+
 .loadPackageQuietly <-
 function(package, lib.loc)
 {

@@ -43,11 +43,7 @@ function(package, dir, lib.loc = NULL)
         isBase <- basename(dir) == "base"
 
         ## Find all documented topics from the Rd sources.
-        docsExts <- .makeFileExts("docs")
-        files <- .listFilesWithExts(docsDir, docsExts)
-        docsOSDir <- file.path(docsDir, .Platform$OS)
-        if(.fileTest("-d", docsOSDir))
-            files <- c(files, .listFilesWithExts(docsOSDir, docsExts))
+        files <- .listFilesWithType(docsDir, "docs")
         aliases <- character(0)
         for(f in files) {
             aliases <- c(aliases,
@@ -64,11 +60,7 @@ function(package, dir, lib.loc = NULL)
             ## Collect code in codeFile.
             codeFile <- tempfile("Rcode")
             on.exit(unlink(codeFile))
-            codeExts <- .makeFileExts("code")
-            files <- .listFilesWithExts(codeDir, codeExts)
-            codeOSDir <- file.path(codeDir, .Platform$OS)
-            if(.fileTest("-d", codeOSDir))
-                files <- c(files, .listFilesWithExts(codeOSDir, codeExts))
+            files <- .listFilesWithType(codeDir, "code")
             file.create(codeFile)
             file.append(codeFile, files)
             ## Read code from codeFile into codeEnv
@@ -193,9 +185,6 @@ function(package, dir, lib.loc = NULL,
          ignore.generic.functions = FALSE,
          verbose = getOption("verbose"))
 {
-    unlinkOnExitFiles <- NULL
-    on.exit(unlink(unlinkOnExitFiles))
-
     ## Argument handling.
     if(!missing(package)) {
         if(length(package) != 1)
@@ -241,12 +230,8 @@ function(package, dir, lib.loc = NULL,
 
         ## Collect code in codeFile.
         codeFile <- tempfile("Rcode")
-        unlinkOnExitFiles <- c(unlinkOnExitFiles, codeFile)
-        codeExts <- .makeFileExts("code")
-        files <- .listFilesWithExts(codeDir, codeExts)
-        codeOSDir <- file.path(codeDir, .Platform$OS)
-        if(.fileTest("-d", codeOSDir))
-            files <- c(files, .listFilesWithExts(codeOSDir, codeExts))
+        on.exit(unlink(codeFile))
+        files <- .listFilesWithType(codeDir, "code")
         file.create(codeFile)
         file.append(codeFile, files)
 
@@ -310,14 +295,10 @@ function(package, dir, lib.loc = NULL,
 
     ## Collect usages into docsFile.
     docsFile <- tempfile("Rdocs")
-    unlinkOnExitFiles <- c(unlinkOnExitFiles, docsFile)
-    docsExts <- .makeFileExts("docs")
-    files <- .listFilesWithExts(docsDir, docsExts)
-    docsOSDir <- file.path(docsDir, .Platform$OS)
-    if(.fileTest("-d", docsOSDir))
-        files <- c(files, .listFilesWithExts(docsOSDir, docsExts))
+    on.exit(unlink(docsFile), add = TRUE)
+    files <- .listFilesWithType(docsDir, "docs")
     docsList <- tempfile("Rdocs")
-    unlinkOnExitFiles <- c(unlinkOnExitFiles, docsList)
+    on.exit(unlink(docsList), add = TRUE)
     writeLines(files, docsList)
     .Script("perl", "extract-usage.pl",
             paste(if(verbose) "--verbose", docsList, docsFile))
@@ -460,11 +441,7 @@ function(package, dir, lib.loc = NULL)
         ## Collect code into codeFile.
         codeFile <- tempfile("Rcode")
         on.exit(unlink(codeFile))
-        codeExts <- .makeFileExts("code")
-        files <- .listFilesWithExts(codeDir, codeExts)
-        codeOSDir <- file.path(codeDir, .Platform$OS)
-        if(.fileTest("-d", codeOSDir))
-            files <- c(files, .listFilesWithExts(codeOSDir, codeExts))
+        files <- .listFilesWithType(codeDir, "code")
         file.create(codeFile)
         file.append(codeFile, files)
 
@@ -531,11 +508,7 @@ function(package, dir, lib.loc = NULL)
     ## Collect usages into docsFile.
     docsFile <- tempfile("Rdocs")
     on.exit(unlink(docsFile))
-    docsExts <- .makeFileExts("docs")
-    files <- .listFilesWithExts(docsDir, docsExts)
-    docsOSDir <- file.path(docsDir, .Platform$OS)
-    if(.fileTest("-d", docsOSDir))
-        files <- c(files, .listFilesWithExts(docsOSDir, docsExts))
+    files <- .listFilesWithType(docsDir, "docs")
     docsList <- tempfile("Rdocs")
     on.exit(unlink(docsList), add = TRUE)
     writeLines(files, docsList)
@@ -675,11 +648,7 @@ function(package, dir, lib.loc = NULL)
         ## Collect code into codeFile.
         codeFile <- tempfile("Rcode")
         on.exit(unlink(codeFile))
-        codeExts <- .makeFileExts("code")
-        files <- .listFilesWithExts(codeDir, codeExts)
-        codeOSDir <- file.path(codeDir, .Platform$OS)
-        if(.fileTest("-d", codeOSDir))
-            files <- c(files, .listFilesWithExts(codeOSDir, codeExts))
+        files <- .listFilesWithType(codeDir, "code")
         file.create(codeFile)
         file.append(codeFile, files)
 
@@ -726,11 +695,7 @@ function(package, dir, lib.loc = NULL)
     ## Collect usages into docsFile.
     docsFile <- tempfile("Rdocs")
     on.exit(unlink(docsFile), add = TRUE)
-    docsExts <- .makeFileExts("docs")
-    files <- .listFilesWithExts(docsDir, docsExts)
-    docsOSDir <- file.path(docsDir, .Platform$OS)
-    if(.fileTest("-d", docsOSDir))
-        files <- c(files, .listFilesWithExts(docsOSDir, docsExts))
+    files <- .listFilesWithType(docsDir, "docs")
     docsList <- tempfile("Rdocs")
     on.exit(unlink(docsList), add = TRUE)
     writeLines(files, docsList)
@@ -854,12 +819,7 @@ function(package, dir, file, lib.loc = NULL,
         if(!.fileTest("-d", codeDir))
             stop(paste("directory", sQuote(dir),
                        "does not contain R code"))
-        codeExts <- .makeFileExts("code")
-        codeFiles <- .listFilesWithExts(codeDir, codeExts)
-        codeOSDir <- file.path(codeDir, .Platform$OS)
-        if(.fileTest("-d", codeOSDir))
-            codeFiles <- c(codeFiles,
-                           .listFilesWithExts(codeOSDir, codeExts))
+        codeFiles <- .listFilesWithType(codeDir, "code")
         file <- tempfile()
         on.exit(unlink(file))
         file.create(file)
@@ -990,11 +950,7 @@ function(package, dir, lib.loc = NULL)
         ## Collect code into codeFile.
         codeFile <- tempfile("Rcode")
         on.exit(unlink(codeFile))
-        codeExts <- .makeFileExts("code")
-        files <- .listFilesWithExts(codeDir, codeExts)
-        codeOSDir <- file.path(codeDir, .Platform$OS)
-        if(.fileTest("-d", codeOSDir))
-            files <- c(files, .listFilesWithExts(codeOSDir, codeExts))
+        files <- .listFilesWithType(codeDir, "code")
         file.create(codeFile)
         file.append(codeFile, files)
 
@@ -1123,21 +1079,10 @@ function(package, dir, file, lib.loc = NULL)
         if(!.fileTest("-d", codeDir))
             stop(paste("directory", sQuote(dir),
                        "does not contain R code"))
-        codeExts <- .makeFileExts("code")
-        codeFiles <- .listFilesWithExts(codeDir, codeExts)
-        codeOSDir <- file.path(codeDir, .Platform$OS)
-        if(.fileTest("-d", codeOSDir))
-            codeFiles <- c(codeFiles,
-                           .listFilesWithExts(codeOSDir, codeExts))
+        codeFiles <- .listFilesWithType(codeDir, "code")
         docsDir <- file.path(dir, "man")
-        if(.fileTest("-d", docsDir)) {
-            docsExts <- .makeFileExts("docs")
-            docsFiles <- .listFilesWithExts(docsDir, docsExts)
-            docsOSDir <- file.path(docsDir, .Platform$OS)
-            if(.fileTest("-d", docsOSDir))
-                docsFiles <- c(docsFiles,
-                               .listFilesWithExts(docsOSDir, docsExts))
-        }
+        if(.fileTest("-d", docsDir))
+            docsFiles <- .listFilesWithType(docsDir, "docs")
     }
     else if(!missing(file)) {
         if(!.fileTest("-f", file))
