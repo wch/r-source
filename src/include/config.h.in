@@ -1,4 +1,11 @@
 /* src/include/config.h.in.  Generated automatically from configure.in by autoheader.  */
+/* acconfig.h
+   Descriptive text for the C preprocessor macros that are needed by R.
+   */
+
+#ifndef _CONFIG_H
+#define _CONFIG_H
+
 
 /* Define if on AIX 3.
    System headers sometimes define this.
@@ -69,12 +76,10 @@
 /* Define if the X Window System is missing or not being used.  */
 #undef X_DISPLAY_MISSING
 
-/* FIXME: This is to avoid warnings when including `Rconfig.h'. */
-#define _CONFIG_H
-
-/* Define if you are on a Unix system.
-   FIXME: This is actually not checked by configure. */
-#define Unix
+/* Define according to your operating system type. */
+#undef Unix
+#undef Windows
+#undef Macintosh
 
 /* Define if calloc(0) does not return a null pointer. */
 #undef CALLOC_BROKEN
@@ -380,3 +385,5 @@
 /* Version number of package */
 #undef VERSION
 
+
+#endif /* not _CONFIG_H */

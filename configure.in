@@ -28,13 +28,6 @@ AC_INIT(src/include/Defn.h)
 AC_CONFIG_HEADER(src/include/config.h)
 AC_CONFIG_AUX_DIR(tools)
 
-### Before we begin ...
-
-## FIXME: This is to get autoheader to insert defines.  There should be
-## better ways of doing this.
-AC_DEFINE(Unix)
-AC_DEFINE(_CONFIG_H)
-
 ### Platform & Version
 
 AC_CANONICAL_HOST
@@ -49,8 +42,15 @@ AC_SUBST(R_PLATFORM)
 PACKAGE="R"
 VERSION=`cat ${srcdir}/VERSION | cut -d" " -f1`
 AM_INIT_AUTOMAKE(${PACKAGE}, ${VERSION})
-# AC_SUBST(PACKAGE)
-# AC_SUBST(VERSION)
+
+case "${host_os}" in
+  macos*)
+    AC_DEFINE(Macintosh) ;;
+  cygwin*|mingw*|windows*|winnt)
+    AC_DEFINE(Windows) ;;
+  *)
+    AC_DEFINE(Unix) ;;
+esac
 
 ### Defaults
 

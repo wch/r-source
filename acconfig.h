@@ -2,12 +2,15 @@
    Descriptive text for the C preprocessor macros that are needed by R.
    */
 
-/* FIXME: This is to avoid warnings when including `Rconfig.h'. */
+#ifndef _CONFIG_H
 #define _CONFIG_H
 
-/* Define if you are on a Unix system.
-   FIXME: This is actually not checked by configure. */
-#define Unix
+@TOP@
+
+/* Define according to your operating system type. */
+#undef Unix
+#undef Windows
+#undef Macintosh
 
 /* Define if calloc(0) does not return a null pointer. */
 #undef CALLOC_BROKEN
@@ -106,3 +109,6 @@
    Apparently necessary to fix a GCC bug on AIX? */
 #undef blkcnt_t
 
+@BOTTOM@
+
+#endif /* not _CONFIG_H */
