@@ -476,7 +476,7 @@ static void NewExtractNames(SEXP v, SEXP base, SEXP tag, int recurse,
 	    nameData->firstpos = data->ans_nnames;
 	nameData->count++;
 	namei = NewName(base, R_NilValue, 0, 1, ++(nameData->seqno));
-	SET_STRING_ELT(data->ans_names, (data->ans_nnames)++, base);
+	SET_STRING_ELT(data->ans_names, (data->ans_nnames)++, namei);
     }
     if (tag != R_NilValue) {
 	if (nameData->firstpos >= 0 && nameData->count == 1)

@@ -596,6 +596,8 @@ BUG FIXES
     o   Internal representation of logical values was not being
 	treated consistently. (Related to PR#1439)
 
+    o   The c() function sometimes inserted garbage in the name vector
+        for some types of objects, e.g.  names(c(ls,a=1)).
 
 
 	**************************************************

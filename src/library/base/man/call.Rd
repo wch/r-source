@@ -27,9 +27,10 @@ as.call(x)
   %NO We don't differentiate between expressions and function calls.
   %NO So \code{is.call} is the same as \code{is.expression}.
 
-  It is not possible to coerce objects to mode call (objects either are
-  calls or they are not calls).  \code{as.call} returns its argument if
-  it is a call and otherwise terminates with an error message.
+  Objects of mode \code{"list"} can be coerced to mode \code{"call"}.
+  The first element of the list becomes the function part of the call,
+  so should be a function or the name of one (as a symbol; a quoted
+  string will not do).  
 }
 \seealso{
   \code{\link{do.call}} for calling a function by name and argument
