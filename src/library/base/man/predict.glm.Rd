@@ -6,34 +6,34 @@ predict.glm(object, newdata = NULL, type = c("link", "response", "terms"),
 }
 \alias{predict.glm}
 \arguments{
- \item{object}{A fitted object of class inheriting from \code{"glm"}.}
- \item{newdata}{Optionally, a new data frame from which to make the
-   predictions. If omitted, the fitted linear predictors are used.}
- \item{type}{The type of prediction required. The default is on the
+ \item{object}{a fitted object of class inheriting from \code{"glm"}.}
+ \item{newdata}{optionally, a new data frame from which to make the
+   predictions.  If omitted, the fitted linear predictors are used.}
+ \item{type}{the type of prediction required.  The default is on the
    scale of the linear predictors; the alternative \code{"response"}
-   is on the scale of the response variable. Thus for a default
+   is on the scale of the response variable.  Thus for a default
    binomial model the default predictions are of log-odds (probabilities
    on logit scale) and \code{type = "response"} gives the predicted
-   probabilities. The \code{"terms"} option returns a matrix giving the 
-   fitted values of each term in the model formula on the linear predictor 
-   scale
+   probabilities.  The \code{"terms"} option returns a matrix giving the
+   fitted values of each term in the model formula on the linear predictor
+   scale.
 
    The value of this argument can be abbreviated.
  }
- \item{se.fit}{A switch indicating if standard errors are required.}
- \item{dispersion}{The dispersion of the GLM fit to be assumed in
-   computing the standard errors. If omitted, that returned by
+ \item{se.fit}{logical switch indicating if standard errors are required.}
+ \item{dispersion}{the dispersion of the GLM fit to be assumed in
+   computing the standard errors.  If omitted, that returned by
    \code{summary} applied to the object is used.}
-  \item{terms}{With \code{type="terms"} by default all terms are returned.
+  \item{terms}{with \code{type="terms"} by default all terms are returned.
    A vector of strings specifies which terms are to be returned}
 }
 \description{
- Obtains predictions and optionally estimates standard errors of those
- predictions from a fitted generalized linear model object.
+  Obtains predictions and optionally estimates standard errors of those
+  predictions from a fitted generalized linear model object.
 }
 \value{
-  If \code{se = FALSE}, a vector or matrix of predictions. If \code{se = TRUE}, a
-  list with components
+  If \code{se = FALSE}, a vector or matrix of predictions.  If \code{se
+    = TRUE}, a list with components
   \item{fit}{Predictions}
   \item{se.fit}{Estimated standard errors}
   \item{residual.scale}{A scalar giving the square root of the
