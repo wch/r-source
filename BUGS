@@ -368,3 +368,7 @@ Date: Fri, 17 Sep 1999 15:10:40 +0200
 Subject: hsv strangeness
 From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
 Date: 18 Sep 1999 21:07:50 +0200
+* PR# 287 *
+Subject: text( col=, cex=, font=) : doesn't allow more than length-1 arg
+From: Martin Maechler <maechler@stat.math.ethz.ch>
+Date: Mon, 27 Sep 1999 11:12:08 +0200
