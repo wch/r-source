@@ -75,7 +75,7 @@ else {
 sub usage {
 
     print "Rdconv\n";
-    print "Usage: Rdconv [--debug/-d] [--help/-h] [--os/--OS unix|mac|win]";
+    print "Usage: Rdconv [--debug/-d] [--help/-h] [--os/--OS unix|mac|windows]";
     print " [--type/-t html|nroff|txt|Sd|latex|example] file\n\n";
     exit 0;
 }

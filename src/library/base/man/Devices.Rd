@@ -6,7 +6,7 @@ pictex(\dots)
 #ifdef unix
 x11(\dots)
 #endif
-#ifdef win
+#ifdef windows
 windows(\dots)
 png(\dots)
 jpeg(\dots)
@@ -25,7 +25,7 @@ macintosh(\dots)
 #ifdef unix
   \item \link{x11} The graphics driver for the X11 Window system (Unix)
 #endif
-#ifdef win
+#ifdef windows
   \item \link{windows} The graphics driver for Windows (on screen, to
     printer and to Windows metafile.
   \item \link{png} PNG bitmap device
