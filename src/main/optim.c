@@ -453,6 +453,7 @@ vmmin(int n0, double *b, double *Fmin, optimfn fminfn, optimgr fmingr,
     int   n, *l;
 
     if (maxit <= 0) {
+	*fail = 0;
 	*Fmin = fminfn(n0, b, ex);
 	*fncount = *grcount = 0;
 	return;
@@ -579,6 +580,7 @@ vmmin(int n0, double *b, double *Fmin, optimfn fminfn, optimgr fmingr,
 	if (iter < maxit) Rprintf("converged\n");
 	else Rprintf("stopped after %i iterations\n", iter);
     }
+    *fail = (iter < maxit) ? 0 : 1;
     *fncount = funcount;
     *grcount = gradcount;
 }
@@ -608,7 +610,7 @@ void nmmin(int n, double *Bvec, double *X, double *Fmin, optimfn fminfn,
     if (maxit <= 0) {
 	*Fmin = fminfn(n, Bvec, ex);
 	*fncount = 0;
-	*fail = FALSE;
+	*fail = 0;
 	return;
     }
     if (trace)
