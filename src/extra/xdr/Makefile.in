@@ -13,14 +13,12 @@ include $(top_builddir)/Makeconf
 
 XDR_CPPFLAGS = -I$(srcdir)
 ALL_CPPFLAGS = $(XDR_CPPFLAGS) $(R_XTRA_CPPFLAGS) $(CPPFLAGS) $(DEFS)
-## make with CPICFLAGS so can be used with a shared library
-ALL_CFLAGS = $(R_XTRA_CFLAGS) $(CPICFLAGS) $(MAIN_CFLAGS) $(CFLAGS)
 
 SOURCES = xdr.c xdr_float.c xdr_mem.c xdr_stdio.c
 HEADERS = rpc/auth.h rpc/auth_uni.h rpc/bcopy.h rpc/clnt.h rpc/netdb.h \
   rpc/rpc.h rpc/rpc_msg.h rpc/svc.h rpc/svc_auth.h rpc/types.h rpc/xdr.h
 DEPENDS = $(SOURCES:.c=.d)
-OBJECTS = $(SOURCES:.c=.o)
+OBJECTS = $(SOURCES:.c=.lo)
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 ## <FIXME>
@@ -59,7 +57,7 @@ libxdr.a: $(libxdr_a_OBJECTS)
 
 mostlyclean: clean
 clean:
-	@-rm -f Makedeps *.d *.o *.a
+	@-rm -f Makedeps *.d *.lo *.a
 distclean: clean
 	@-rm -f Makefile
 maintainer-clean: distclean
