@@ -2788,11 +2788,11 @@ AC_DEFUN([R_UTF8],
 if test "$want_utf8_support" == yes ; then
 ## Wide character support -- need to include headers in case of macros?
 AC_CHECK_HEADERS(wchar.h wctype.h)
-AC_CHECK_FUNCS(mbrlen mbrtowc mbstowcs wcrtomb wcscoll wcsftime wcstombs \
+AC_CHECK_FUNCS(mbrtowc mbstowcs wcrtomb wcscoll wcsftime wcstombs \
                wcswidth wctrans wcwidth)
 fi
 ## can manage without wc[s]width
-for ac_func in mbrlen mbrtowc mbstowcs wcrtomb wcscoll wcsftime wcstombs \
+for ac_func in mbrtowc mbstowcs wcrtomb wcscoll wcsftime wcstombs \
                wctrans
 do
 this=`echo "ac_cv_func_$ac_func"`
