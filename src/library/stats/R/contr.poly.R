@@ -53,6 +53,7 @@ poly <- function(x, ..., degree = 1, coefs = NULL)
     }
     if(degree < 1)
         stop("degree must be at least 1")
+    if(any(is.na(x))) stop("missing values are not allowed in poly")
     n <- degree + 1
     if(is.null(coefs)) { # fitting
         if(degree >= length(x))
