@@ -1,5 +1,6 @@
 menu <- function(choices, graphics = FALSE, title = "")
 {
+    if(!interactive()) stop("menu() cannot be used non-interactively")
     nc <- length(choices)
     if(length(title) && nchar(title[1])) cat(title[1], "\n")
     op <- paste(format(seq(length=nc)), ": ", choices, sep="")

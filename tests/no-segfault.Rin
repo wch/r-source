@@ -40,7 +40,7 @@ misc.2 <- c("help.start", "browseEnv",
             "gctorture", "q", "quit", "restart", "try",
             "read.fwf", "source",## << MM thinks "FIXME"
             "data.entry", "dataentry", "de", apropos("^de\."),
-            "chooseCRANmirror", "setRepositories")
+            "chooseCRANmirror", "setRepositories", "select.list")
 if(.Platform$OS.type == "windows") {
     dev.int <- c(dev.int, "bmp", "windows", "win.graph", "win.print",
                 "win.metafile")
