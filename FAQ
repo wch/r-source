@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 1.2-11, 2001-01-05
+Version 1.2-12, 2001-01-06
 Kurt Hornik
 
 
@@ -1457,6 +1457,10 @@ Currently, there are
 *RSPerl*
      An interface from R to an embedded, persistent Perl interpreter,
      allowing one to call arbitrary Perl subroutines, classes and methods.
+
+*SLanguage*
+     Functions and C support utilities to support S language programming
+     that can work in both R and S-PLUS.
 
    Jim Lindsey <jlindsey@luc.ac.be> has written a collection of R packages
 for nonlinear regression and repeated measurements, consisting of *event*
