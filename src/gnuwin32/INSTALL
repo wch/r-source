@@ -89,13 +89,13 @@ Do not have our toolset and any other version of cygwin1.dll in your path.
 Building
 --------
 
-You also need the R source (R-1.x.y.tgz).
+You also need the R source (R-2.x.y.tgz).
 
-Then: untar R-1.x.y.tgz somewhere (with no spaces in the path names),
+Then: untar R-2.x.y.tgz somewhere (with no spaces in the path names),
 
 	cd /somewhere
-	tar zxvf /path/to/R-1.x.y.tgz
-	cd /somewhere/R-1.x.y/src/gnuwin32
+	tar zxvf /path/to/R-2.x.y.tgz
+	cd /somewhere/R-2.x.y/src/gnuwin32
 
 BEWARE: do untar the sources rather than use broken tools such as
 WinZip that don't understand about symbolic links.
@@ -292,11 +292,11 @@ There is currently a complete set of tools at
 You will need Perl, zip and unzip installed and makeinfo >= 4.2 
 (part of GNU texinfo).
 
-You also need the R source (R-1.x.y.tgz).
+You also need the R source (R-2.x.y.tgz).
 
-Then: untar R-1.x.y.tgz somewhere, and
+Then: untar R-2.x.y.tgz somewhere, and
 
-	cd /somewhere/R-1.x.y/src/gnuwin32
+	cd /somewhere/R-2.x.y/src/gnuwin32
 
 Edit MkRules to set BUILD=CROSS and the appropriate paths (including
 HEADER) as needed.
