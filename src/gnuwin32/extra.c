@@ -1197,7 +1197,7 @@ SEXP setTitle(char *title)
 	else settext(RConsole, title);
 	break;
     case RTerm:
-	if(R_Interactive) SetConsoleTitle(title);
+	SetConsoleTitle(title);
 	break;
     default:
 	/* do nothing */
