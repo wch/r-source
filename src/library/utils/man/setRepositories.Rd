@@ -13,7 +13,8 @@ setRepositories(graphics = TRUE)
     If true use a listbox,
 #endif
 #ifdef unix
-    If true and \pkg{tcltk} and an X server are available, use a Tk widget,
+    If true and \pkg{tcltk} and an X server are available, use a Tk
+    widget, or if under the AQUA interface use a MacOS X widget,
 #endif
     otherwise use a text list in the console.}
 }

@@ -24,13 +24,16 @@ select.list(list, preselect = NULL, multiple = FALSE, title = NULL)
   ranges.
 
   Normal termination is via the \code{OK} button or by hitting Enter.
-  The selection can be aborted via the \code{Cancel} button or pressing Escape.
+  Selection can be aborted via the \code{Cancel} button or pressing Escape.
 #endif
 #ifdef unix
-  This displays a text list from which the user can choose by number(s).
-  The \code{multiple = FALSE} case uses \code{\link{menu}}.
+  Under the AQUA interface for MacOS X this brings up a modal dialog box
+  with a (scrollable) list of items, which can be selected by the mouse.
+  
+  Otherwise it displays a text list from which the user can choose by
+  number(s). The \code{multiple = FALSE} case uses \code{\link{menu}}.
   Preselection is only supported for \code{multiple = TRUE}, where it is
-  indicated by a \code{"+"} preceding the item. 
+  indicated by a \code{"+"} preceding the item.
 #endif
 }
 \value{

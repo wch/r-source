@@ -441,12 +441,12 @@ chooseCRANmirror <- function(graphics = TRUE)
     m <- read.csv(file.path(R.home(), "doc/CRAN_mirrors.csv"), as.is=TRUE)
     if(graphics) {
         ## return a character vector of URLs
-        if((.Platform$OS.type == "unix" & .Platform$GUI != "AQUA")
-           && capabilities("tcltk") && capabilities("X11")) {
-            URL <- m[m[,1] == tcltk::tk_select.list(m[,1],, FALSE,
-                      "CRAN mirror"), "URL"]
-        } else if(.Platform$OS.type == "windows" || .Platform$GUI == "AQUA")
+        if(.Platform$OS.type == "windows" || .Platform$GUI == "AQUA")
             URL <- m[m[,1] == select.list(m[,1],, FALSE, "CRAN mirror"), "URL"]
+        else if(.Platform$OS.type == "unix" &&
+                 capabilities("tcltk") && capabilities("X11"))
+                URL <- m[m[,1] == tcltk::tk_select.list(m[,1],, FALSE,
+                          "CRAN mirror"), "URL"]
     } else {
         ## text-mode fallback
         res <- menu(m[,1], , "CRAN mirror")
@@ -491,14 +491,13 @@ setRepositories <- function(graphics=TRUE)
     res <- integer(0)
     if(graphics) {
         ## return a list of row numbers.
-        if((.Platform$OS.type == "unix" &.Platform$GUI != "AQUA") &&
-                  capabilities("tcltk") && capabilities("X11")) {
-            res <- match(tcltk::tk_select.list(a[, 1], a[default, 1],
-                                               multiple = TRUE, "Repositories"),
-                         a[, 1])
-         } else if(.Platform$OS.type == "windows" || .Platform$GUI == "AQUA")
+        if(.Platform$OS.type == "windows" || .Platform$GUI == "AQUA")
             res <- match(select.list(a[, 1], a[default, 1], multiple = TRUE,
-                                     "Repositories"),
+                                     "Repositories"), a[, 1])
+        else if(.Platform$OS.type == "unix" &&
+                capabilities("tcltk") && capabilities("X11"))
+            res <- match(tcltk::tk_select.list(a[, 1], a[default, 1],
+                                            multiple = TRUE, "Repositories"),
                          a[, 1])
     }
     if(!length(res)) {
