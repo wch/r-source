@@ -1,3 +1,21 @@
+r-base (1.6.1.cvs.20021230-1) unstable; urgency=low
+
+  * Upgraded to release candidate dated 2002-12-30 of R 1.6.2
+  * Added Douglas Bates as an Uploader following email discussion with Dirk
+  
+ -- Douglas Bates <bates@stat.wisc.edu>  Mon, 30 Dec 2002 20:43:24 -0600
+
+r-base (1.6.1-3) unstable; urgency=low
+
+  * debian/{control,rules}: Configure switch from f2c to g77 for m68k
+  * debian/{control,rules}: Configure switch from tcl/tk8.3 to tcl/tk8.4
+  * debian/control: Added libpaperg-dev to Build-Depends (Closes: #168259)
+  * debian/r-base-control: Substitute result from paperconf call 
+    into $R_HOME/etc/Renviron, not /usr/bin/R 
+  * debian/rules: Move $R_HOME/etc/* files into /etc/R/ (Closes: #170018)
+
+ -- Dirk Eddelbuettel <edd@debian.org>  Thu, 28 Nov 2002 07:49:49 -0600
+
 r-base (1.6.1-2) unstable; urgency=low
 
   * Rebuilt with support for bzip2 (compression) and pcre (reg.expressions)
