@@ -3022,3 +3022,10 @@ stopifnot(identical(mode(res1), "character"), is.na(res1[2]))
 af <- factor(c('A','B'))
 stopifnot(identical(af, af[1:2]))
 ## failed in 1.9.0 as the attributes were class, level for af[1:2]
+
+
+## Comparison between lists and expressions
+stopifnot(inherits(try(list(1) <= list(2)), "try-error"))
+e <- expression(3 + 2 * 4)
+stopifnot(inherits(try(e == e), "try-error"))
+## both were allowed but nonsense in 1.9.0
