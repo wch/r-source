@@ -78,7 +78,7 @@ png <- function(filename = "Rplot%03d.png",
                 fonts = getOption("X11fonts"))
     .Internal(X11(paste("png::", filename, sep=""),
                   width, height, pointsize, gamma,
-                  colortype, maxcubesize, bg, fonts))
+                  colortype, maxcubesize, bg, bg, fonts))
 
 jpeg <- function(filename = "Rplot%03d.jpeg",
                  width=480, height=480, pointsize=12,
@@ -88,4 +88,4 @@ jpeg <- function(filename = "Rplot%03d.jpeg",
                  fonts = getOption("X11fonts"))
     .Internal(X11(paste("jpeg::", quality, ":", filename, sep=""),
                   width, height, pointsize, gamma,
-                  colortype, maxcubesize, bg, fonts))
+                  colortype, maxcubesize, bg, bg, fonts))

@@ -10,7 +10,7 @@
 \usage{
 X11(display = "", width = 7, height = 7, pointsize = 12,
     gamma = 1, colortype = getOption("X11colortype"),
-    maxcubesize = 256, canvas = "white",
+    maxcubesize = 256, bg = "transparent", canvas = "white",
     fonts = getOption("X11fonts"))
 }
 \arguments{
@@ -31,6 +31,7 @@ X11(display = "", width = 7, height = 7, pointsize = 12,
     already open.}
   \item{maxcubesize}{can be used to limit the size of color
     cube allocated for pseudocolor devices.}
+  \item{bg}{color.  The default background color.}
   \item{canvas}{color.  The color of the canvas, which is visible only
     when the background color is transparent.}
   \item{fonts}{X11 font description strings into which weight, slant and
