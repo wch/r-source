@@ -839,9 +839,10 @@ page for object @var{foo}.  One main usage of @code{\link} is in the
 affects the creation of hyperlinks, for example in the @HTML{} pages
 used by @code{help.start()} and the PDF version of the reference manual.)
 
-There optional arguments specified as @code{\link@{@var{[pkg]foo}@}} and
-@code{\link@{@var{[pkg:bar]foo}@} to link to the package @var{pkg}
-with topic (file?) @var{foo} and @var{bar} respectively.
+There are optional arguments specified as
+@code{\link[@var{pkg}]@{@var{foo}@}} and
+@code{\link[@var{pkg:bar}]@{@var{foo}@}} to link to the package
+@var{pkg} with topic (file?) @var{foo} and @var{bar} respectively.
 
 @node Mathematics, Insertions, Cross-references, Writing R documentation
 @section Mathematics
