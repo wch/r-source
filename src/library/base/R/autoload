@@ -3,6 +3,8 @@
 	if (exists(name,envir=.GlobalEnv,inherits=F)) stop("Object already exists")
         newcall <- paste("delay(autoloader(\"", name, "\",\"", file, 
                 "\"))", sep = "")
+	if (is.na(match(file,.Autoloaded)))
+  	    assign(".Autoloaded",c(file,.Autoloaded),env=.AutoloadEnv)
         assign(name, parse(text = newcall), env = .AutoloadEnv)
 }
  autoloader <- function (name, file) 

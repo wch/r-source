@@ -1,4 +1,4 @@
-data <- function(..., list = character(0), package = .packages(),
+data <- function(..., list = character(0), package =c(.packages(),.Autoloaded),
 		 lib.loc = .lib.loc) {
  names <- c(as.character(substitute(list(...))[-1]), list)
  if (!missing(package))
@@ -43,7 +43,8 @@ getenv <- function(x) {
 	y
 }
 
-help <- function(topic, package = .packages(), lib.loc = .lib.loc) {
+help <- function(topic, package = c(.packages(),.Autoloaded), lib.loc =
+.lib.loc) {
   if (!missing(package))
     if (is.name(y <- substitute(package)))
       package <- as.character(y)

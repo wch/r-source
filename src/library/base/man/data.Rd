@@ -1,7 +1,7 @@
 \name{data}
 \title{Data Sets}
 \usage{
-data(..., list = character(0), package = .packages(),
+data(..., list = character(0), package = c(.packages(),.Autoloaded),
      lib.loc = .lib.loc)
 }
 \alias{data}
