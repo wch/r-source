@@ -442,6 +442,8 @@ void	R_ClearerrConsole(void);
 void	R_Busy(int);
 void	R_CleanUp(int);
 void	R_StartUp(void);
+int	R_ShowFile(char*);
+int	R_AppendFile(char*, char*);
 
 /* Type Coercions of all kinds */
 
