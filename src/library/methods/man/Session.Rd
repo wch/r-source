@@ -5,10 +5,10 @@
 \alias{browseAll}
 \title{Deprecated:  Session Data and Debugging Tools}
 \description{
-The functions \code{traceOn} and \code{traceOff} have been replaced by
-extended versions of the functions \code{\link{trace}} and
-\code{\link{untrace}}, and should not be used.
-  }
+  The functions \code{traceOn} and \code{traceOff} have been replaced by
+  extended versions of the functions \code{\link{trace}} and
+  \code{\link{untrace}}, and should not be used.
+}
 \usage{
 sessionData()
 
