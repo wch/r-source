@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-01-27 12:39+0000\n"
+"POT-Creation-Date: 2005-01-27 17:05+0000\n"
 "PO-Revision-Date: 2005-01-25 12:01+0000\n"
 "Last-Translator: Brian Ripley <Brian.Ripley@R-project.org>\n"
 "Language-Team: R-core <R-core@R-project.org>\n"
@@ -59,17 +59,453 @@ msgstr ""
 msgid ".C(..): `type' must be \"real\" for this format"
 msgstr ""
 
+#: src/gnuwin32/console.c:834 src/gnuwin32/console.c:874
+msgid "Not enough memory"
+msgstr ""
+
+#: src/gnuwin32/console.c:929 src/gnuwin32/console.c:933
+msgid "Insufficient memory: text not copied to the clipboard"
+msgstr ""
+
+#: src/gnuwin32/console.c:972 src/gnuwin32/extra.c:1062
+#: src/main/connections.c:1324
+msgid "Unable to open the clipboard"
+msgstr ""
+
+#: src/gnuwin32/console.c:1522
+msgid "Insufficient memory. Please close the console"
+msgstr ""
+
+#: src/gnuwin32/console.c:1575 src/gnuwin32/console.c:1626
+#: src/gnuwin32/preferences.c:216
+#, c-format
+msgid ""
+"Font %s-%d-%d  not found.\n"
+"Using system fixed font"
+msgstr ""
+
+#: src/gnuwin32/dataentry.c:216 src/include/Errormsg.h:35 src/main/plot.c:77
+#: src/main/plot.c:3662 src/main/scan.c:1464
+msgid "invalid argument"
+msgstr ""
+
+#: src/gnuwin32/dataentry.c:263
+msgid "invalid type for value"
+msgstr ""
+
+#: src/gnuwin32/dataentry.c:277 src/gnuwin32/extra.c:1307
+#: src/gnuwin32/extra.c:1309 src/gnuwin32/extra.c:1349
+msgid "invalid device"
+msgstr ""
+
+#: src/gnuwin32/dataentry.c:325
+msgid "dataentry: internal memory problem"
+msgstr ""
+
+#: src/gnuwin32/dataentry.c:619 src/gnuwin32/dataentry.c:1113
+msgid "dataentry: internal memory error"
+msgstr ""
+
+#: src/gnuwin32/dataentry.c:738 src/gnuwin32/dataentry.c:751
+msgid "internal type error in dataentry"
+msgstr ""
+
+#: src/gnuwin32/dataentry.c:918
+msgid "dataentry: expression too long"
+msgstr ""
+
+#: src/gnuwin32/dynload.c:101
+#, c-format
+msgid "DLL attempted to change FPU control word from %x to %x"
+msgstr ""
+
+#: src/gnuwin32/dynload.c:139
+msgid "cannot get working directory"
+msgstr ""
+
+#: src/gnuwin32/editor.c:437 src/gnuwin32/pager.c:170 src/gnuwin32/pager.c:190
+msgid "No RGui console to paste to"
+msgstr ""
+
+#: src/gnuwin32/editor.c:771
+msgid "Maximum number of editors reached"
+msgstr ""
+
+#: src/gnuwin32/editor.c:776
+msgid "Unable to create editor window"
+msgstr ""
+
+#: src/gnuwin32/extra.c:46
+msgid "invalid 'tempdir' in R_tmpnam"
+msgstr ""
+
+#: src/gnuwin32/extra.c:59 src/unix/sys-unix.c:304
+msgid "cannot find unused tempfile name"
+msgstr ""
+
+#: src/gnuwin32/extra.c:92
+msgid "invalid 'names' in R_unlink"
+msgstr ""
+
+#: src/gnuwin32/extra.c:136
+msgid "invalid file name argument"
+msgstr ""
+
+#: src/gnuwin32/extra.c:139
+msgid "invalid 'recursive' argument"
+msgstr ""
+
+#: src/gnuwin32/extra.c:160 src/gnuwin32/extra.c:207 src/gnuwin32/extra.c:391
+#: src/gnuwin32/extra.c:414
+msgid "R_HOME not set"
+msgstr ""
+
+#: src/gnuwin32/extra.c:167
+#, c-format
+msgid "%s\\doc\\html\\rwin.htm[l] not found"
+msgstr ""
+
+#: src/gnuwin32/extra.c:195
+msgid "invalid topic argument"
+msgstr ""
+
+#: src/gnuwin32/extra.c:201
+#, c-format
+msgid "%s not found"
+msgstr ""
+
+#: src/gnuwin32/extra.c:211 src/gnuwin32/extra.c:223
+msgid "invalid hlpfile argument"
+msgstr ""
+
+#: src/gnuwin32/extra.c:214 src/gnuwin32/extra.c:226
+msgid "WinHelp call failed"
+msgstr ""
+
+#: src/gnuwin32/extra.c:217
+msgid "too many .hlp files opened"
+msgstr ""
+
+#: src/gnuwin32/extra.c:228
+msgid "type not yet implemented"
+msgstr ""
+
+#: src/gnuwin32/extra.c:402 src/gnuwin32/extra.c:619 src/gnuwin32/extra.c:634
+#: src/main/platform.c:841 src/unix/sys-std.c:896 src/unix/sys-std.c:918
+msgid "invalid file argument"
+msgstr ""
+
+#: src/gnuwin32/extra.c:433 src/gnuwin32/extra.c:460
+msgid "invalid 'message' argument"
+msgstr ""
+
+#: src/gnuwin32/extra.c:445
+msgid "unknown type"
+msgstr ""
+
+#: src/gnuwin32/extra.c:463
+msgid "invalid 'default' argument"
+msgstr ""
+
+#: src/gnuwin32/extra.c:484 src/gnuwin32/extra.c:508 src/gnuwin32/extra.c:546
+#: src/gnuwin32/extra.c:581
+msgid "Menu functions can only be used in the GUI"
+msgstr ""
+
+#: src/gnuwin32/extra.c:512 src/gnuwin32/extra.c:549 src/gnuwin32/extra.c:584
+msgid "invalid 'menuname' argument"
+msgstr ""
+
+#: src/gnuwin32/extra.c:516
+#, c-format
+msgid "unable to retrieve items for %s (%s)"
+msgstr ""
+
+#: src/gnuwin32/extra.c:554
+#, c-format
+msgid "unable to add menu (%s)"
+msgstr ""
+
+#: src/gnuwin32/extra.c:560 src/gnuwin32/extra.c:592
+msgid "invalid 'itemname' argument"
+msgstr ""
+
+#: src/gnuwin32/extra.c:566
+#, c-format
+msgid "unable to add menu item (%s)"
+msgstr ""
+
+#: src/gnuwin32/extra.c:589
+msgid "menu does not exist"
+msgstr ""
+
+#: src/gnuwin32/extra.c:596
+#, c-format
+msgid "unable to delete menu item (%s)"
+msgstr ""
+
+#: src/gnuwin32/extra.c:623
+msgid "savehistory can only be used in Rgui and Rterm"
+msgstr ""
+
+#: src/gnuwin32/extra.c:638
+msgid "loadhistory can only be used in Rgui and Rterm"
+msgstr ""
+
+#: src/gnuwin32/extra.c:706 src/unix/sys-std.c:967
+msgid "invalid 'time' value"
+msgstr ""
+
+#: src/gnuwin32/extra.c:761 src/gnuwin32/extra.c:771
+msgid "incorrect argument"
+msgstr ""
+
+#: src/gnuwin32/extra.c:764
+msgid "don't be silly!: your machine has a 4Gb address limit"
+msgstr ""
+
+#: src/gnuwin32/extra.c:767
+msgid "cannot decrease memory limit"
+msgstr ""
+
+#: src/gnuwin32/extra.c:785 src/main/platform.c:881
+msgid "invalid 'path' argument"
+msgstr ""
+
+#: src/gnuwin32/extra.c:870
+msgid "invalid 'list' argument"
+msgstr ""
+
+#: src/gnuwin32/extra.c:874
+msgid "invalid 'preselect' argument"
+msgstr ""
+
+#: src/gnuwin32/extra.c:1047
+msgid "argument must be a character vector"
+msgstr ""
+
+#: src/gnuwin32/extra.c:1067 src/main/connections.c:1328
+msgid "Unable to write to the clipboard"
+msgstr ""
+
+#: src/gnuwin32/extra.c:1094
+msgid "default must be a character string"
+msgstr ""
+
+#: src/gnuwin32/extra.c:1096
+msgid "default is overlong"
+msgstr ""
+
+#: src/gnuwin32/extra.c:1105
+msgid "caption must be a character string"
+msgstr ""
+
+#: src/gnuwin32/extra.c:1107
+msgid "'multi' must be a logical value"
+msgstr ""
+
+#: src/gnuwin32/extra.c:1109
+msgid "'filterindex' must be an integer value"
+msgstr ""
+
+#: src/gnuwin32/extra.c:1243
+msgid "'title' must be a character string"
+msgstr ""
+
+#: src/gnuwin32/extra.c:1275
+msgid "'which' must be length 1"
+msgstr ""
+
+#: src/gnuwin32/extra.c:1305
+msgid "invalid value of 'which'"
+msgstr ""
+
+#: src/gnuwin32/extra.c:1310
+msgid "requires SDI mode"
+msgstr ""
+
+#: src/gnuwin32/extra.c:1343
+msgid "invalid graphical device number"
+msgstr ""
+
+#: src/gnuwin32/extra.c:1353
+msgid "bad device"
+msgstr ""
+
+#: src/gnuwin32/extra.c:1592 src/gnuwin32/extra.c:1600
+msgid "invalid input in Rmbstowcs"
+msgstr ""
+
+#: src/gnuwin32/pager.c:77
+msgid "Error opening file"
+msgstr ""
+
+#: src/gnuwin32/pager.c:84
+msgid "Insufficient memory to display file in internal pager"
+msgstr ""
+
+#: src/gnuwin32/pager.c:162 src/gnuwin32/pager.c:174 src/gnuwin32/pager.c:194
+msgid "No selection"
+msgstr ""
+
+#: src/gnuwin32/pager.c:499
+msgid "Unable to create pager window"
+msgstr ""
+
+#: src/gnuwin32/preferences.c:223
+#, c-format
+msgid ""
+"Font %s-%d-%d has variable width.\n"
+"Using system fixed font"
+msgstr ""
+
+#: src/gnuwin32/rui.c:810
+#, c-format
+msgid "Error at line %d of file %s"
+msgstr ""
+
+#: src/gnuwin32/run.c:43
+msgid "Insufficient memory (expandcmd)"
+msgstr ""
+
+#: src/gnuwin32/run.c:50
+msgid "A \" is missing(expandcmd)"
+msgstr ""
+
+#: src/gnuwin32/run.c:88
+msgid " not found"
+msgstr ""
+
+#: src/gnuwin32/run.c:137
+msgid "Impossible to redirect input"
+msgstr ""
+
+#: src/gnuwin32/run.c:183
+msgid "Impossible to run "
+msgstr ""
+
+#: src/gnuwin32/run.c:255
+msgid "Insufficient memory (rpipeOpen)"
+msgstr ""
+
+#: src/gnuwin32/run.c:263 src/gnuwin32/run.c:281
+msgid "Impossible to create pipe"
+msgstr ""
+
+#: src/gnuwin32/run.c:301
+msgid "Impossible to create thread/pipe"
+msgstr ""
+
+#: src/gnuwin32/run.c:432 src/main/connections.c:286 src/main/dounzip.c:317
+msgid "seek not enabled for this connection"
+msgstr ""
+
+#: src/gnuwin32/run.c:438
+msgid "truncate not enabled for this connection"
+msgstr ""
+
+#: src/gnuwin32/run.c:515 src/gnuwin32/run.c:519 src/gnuwin32/run.c:525
+#: src/gnuwin32/run.c:541 src/main/connections.c:803
+#: src/main/connections.c:807 src/main/connections.c:813
+#: src/main/connections.c:827
+msgid "allocation of pipe connection failed"
+msgstr ""
+
+#: src/gnuwin32/shext.c:101
+msgid "Invalid R_USER"
+msgstr ""
+
+#: src/gnuwin32/shext.c:104
+msgid "Invalid HOME"
+msgstr ""
+
+#: src/gnuwin32/shext.c:109
+msgid "Invalid HOMEDRIVE"
+msgstr ""
+
+#: src/gnuwin32/shext.c:112
+msgid "Invalid HOMEDRIVE+HOMEPATH"
+msgstr ""
+
+#: src/gnuwin32/sys-win32.c:188
+msgid "character string expected as first argument"
+msgstr ""
+
+#: src/gnuwin32/sys-win32.c:200
+msgid "character string expected as third argument"
+msgstr ""
+
+#: src/gnuwin32/system.c:116 src/unix/sys-std.c:65
+#, c-format
+msgid "Fatal error: %s\n"
+msgstr ""
+
+#: src/gnuwin32/system.c:286 src/unix/sys-std.c:587
+#, c-format
+msgid "encoding '%s' is not recognised"
+msgstr ""
+
+#: src/gnuwin32/system.c:292 src/unix/sys-std.c:593
+msgid "<ERROR: invalid input in encoding> "
+msgstr ""
+
+#: src/gnuwin32/system.c:490
+#, c-format
+msgid "Unable to open file '%s'"
+msgstr ""
+
+#: src/gnuwin32/system.c:503
+#, c-format
+msgid "file.show(): file %s does not exist\n"
+msgstr ""
+
+#: src/gnuwin32/system.c:623
+msgid "Invalid R_HOME"
+msgstr ""
+
+#: src/gnuwin32/system.c:838
+msgid "WARNING: no max-mem-size given\n"
+msgstr ""
+
+#: src/gnuwin32/system.c:844
+#, c-format
+msgid "WARNING: --max-mem-size value is invalid: ignored\n"
+msgstr ""
+
+#: src/gnuwin32/system.c:846
+#, c-format
+msgid "WARNING: --max-mem-size=%lu`%c': too large and ignored\n"
+msgstr ""
+
+#: src/gnuwin32/system.c:851
+#, c-format
+msgid "WARNING: max-mem-size =%4.1fM too small and ignored\n"
+msgstr ""
+
+#: src/gnuwin32/system.c:861
+#, c-format
+msgid "WARNING: unknown option %s\n"
+msgstr ""
+
+#: src/gnuwin32/system.c:904
+msgid "you must specify `--save', `--no-save' or `--vanilla'"
+msgstr ""
+
+#: src/gnuwin32/system.c:909
+msgid ""
+"impossible to create 'reader thread'; you must free some system resources"
+msgstr ""
+
+#: src/gnuwin32/system.c:918
+msgid "WARNING: invalid R_HISTSIZE ignored;"
+msgstr ""
+
 #: src/include/Errormsg.h:31
 msgid "NaNs produced"
 msgstr ""
 
 #: src/include/Errormsg.h:33
 msgid "Non-numeric argument to mathematical function"
-msgstr ""
-
-#: src/include/Errormsg.h:35 src/main/plot.c:77 src/main/plot.c:3662
-#: src/main/scan.c:1464
-msgid "invalid argument"
 msgstr ""
 
 #: src/include/Errormsg.h:37
@@ -1222,10 +1658,6 @@ msgstr ""
 msgid "getc not enabled for this connection"
 msgstr ""
 
-#: src/main/connections.c:286 src/main/dounzip.c:317
-msgid "seek not enabled for this connection"
-msgstr ""
-
 #: src/main/connections.c:292
 msgid "truncation not enabled for this connection"
 msgstr ""
@@ -1341,11 +1773,6 @@ msgstr ""
 msgid "cannot open pipe() cmd '%s'"
 msgstr ""
 
-#: src/main/connections.c:803 src/main/connections.c:807
-#: src/main/connections.c:813 src/main/connections.c:827
-msgid "allocation of pipe connection failed"
-msgstr ""
-
 #: src/main/connections.c:896
 msgid "pipe connections are not available on this system"
 msgstr ""
@@ -1397,14 +1824,6 @@ msgstr ""
 
 #: src/main/connections.c:1297
 msgid "memory allocation to open clipboard failed"
-msgstr ""
-
-#: src/main/connections.c:1324
-msgid "Unable to open the clipboard"
-msgstr ""
-
-#: src/main/connections.c:1328
-msgid "Unable to write to the clipboard"
 msgstr ""
 
 #: src/main/connections.c:1367
@@ -4208,16 +4627,8 @@ msgstr ""
 msgid "unable to determine R home location"
 msgstr ""
 
-#: src/main/platform.c:841 src/unix/sys-std.c:896 src/unix/sys-std.c:918
-msgid "invalid file argument"
-msgstr ""
-
 #: src/main/platform.c:878
 msgid "invalid 'topic' argument"
-msgstr ""
-
-#: src/main/platform.c:881
-msgid "invalid 'path' argument"
 msgstr ""
 
 #: src/main/platform.c:884
@@ -6189,36 +6600,36 @@ msgstr ""
 msgid "Could not listen on port %d"
 msgstr ""
 
-#: src/modules/internet/nanohttp.c:402
+#: src/modules/internet/nanohttp.c:407
 msgid "Removing HTTP proxy info"
 msgstr ""
 
-#: src/modules/internet/nanohttp.c:404
+#: src/modules/internet/nanohttp.c:409
 #, c-format
 msgid "Using HTTP proxy %s"
 msgstr ""
 
-#: src/modules/internet/nanohttp.c:975
+#: src/modules/internet/nanohttp.c:980
 #, c-format
 msgid "unable to resolve '%s'."
 msgstr ""
 
-#: src/modules/internet/nanohttp.c:1002
+#: src/modules/internet/nanohttp.c:1007
 #, c-format
 msgid "connected to '%s' on port %d."
 msgstr ""
 
-#: src/modules/internet/nanohttp.c:1007
+#: src/modules/internet/nanohttp.c:1012
 #, c-format
 msgid "unable to connect to '%s' on port %d."
 msgstr ""
 
-#: src/modules/internet/nanohttp.c:1271
+#: src/modules/internet/nanohttp.c:1276
 #, c-format
 msgid "Redirect to: %s"
 msgstr ""
 
-#: src/modules/internet/nanohttp.c:1280
+#: src/modules/internet/nanohttp.c:1285
 msgid "Too many redirects, aborting ..."
 msgstr ""
 
@@ -6675,11 +7086,6 @@ msgid ""
 " to recover"
 msgstr ""
 
-#: src/unix/sys-std.c:65
-#, c-format
-msgid "Fatal error: %s\n"
-msgstr ""
-
 #: src/unix/sys-std.c:119
 msgid "interrupt handler must not return"
 msgstr ""
@@ -6688,15 +7094,6 @@ msgstr ""
 msgid ""
 "An unusual circumstance has arisen in the nesting of readline input. Please "
 "report using bug.report()"
-msgstr ""
-
-#: src/unix/sys-std.c:587
-#, c-format
-msgid "encoding '%s' is not recognised"
-msgstr ""
-
-#: src/unix/sys-std.c:593
-msgid "<ERROR: invalid input in encoding> "
 msgstr ""
 
 #: src/unix/sys-std.c:597
@@ -6713,10 +7110,6 @@ msgstr ""
 
 #: src/unix/sys-std.c:929 src/unix/sys-std.c:931
 msgid "no history available to save"
-msgstr ""
-
-#: src/unix/sys-std.c:967
-msgid "invalid 'time' value"
 msgstr ""
 
 #: src/unix/sys-std.c:996
@@ -6741,10 +7134,6 @@ msgstr ""
 
 #: src/unix/sys-unix.c:284
 msgid "Can't allocate R_TempDir"
-msgstr ""
-
-#: src/unix/sys-unix.c:304
-msgid "cannot find unused tempfile name"
 msgstr ""
 
 #: src/unix/sys-unix.c:366

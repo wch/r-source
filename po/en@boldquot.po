@@ -32,8 +32,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-01-27 12:39+0000\n"
-"PO-Revision-Date: 2005-01-27 12:39+0000\n"
+"POT-Creation-Date: 2005-01-27 17:05+0000\n"
+"PO-Revision-Date: 2005-01-27 17:05+0000\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -86,6 +86,453 @@ msgstr ".C(..): ‘[1mtype[0m’ must be “[1minteger[0m” for  “[1md[
 msgid ".C(..): `type' must be \"real\" for this format"
 msgstr ".C(..): ‘[1mtype[0m’ must be “[1mreal[0m” for this format"
 
+#: src/gnuwin32/console.c:834 src/gnuwin32/console.c:874
+msgid "Not enough memory"
+msgstr "Not enough memory"
+
+#: src/gnuwin32/console.c:929 src/gnuwin32/console.c:933
+msgid "Insufficient memory: text not copied to the clipboard"
+msgstr "Insufficient memory: text not copied to the clipboard"
+
+#: src/gnuwin32/console.c:972 src/gnuwin32/extra.c:1062
+#: src/main/connections.c:1324
+msgid "Unable to open the clipboard"
+msgstr "Unable to open the clipboard"
+
+#: src/gnuwin32/console.c:1522
+msgid "Insufficient memory. Please close the console"
+msgstr "Insufficient memory. Please close the console"
+
+#: src/gnuwin32/console.c:1575 src/gnuwin32/console.c:1626
+#: src/gnuwin32/preferences.c:216
+#, c-format
+msgid ""
+"Font %s-%d-%d  not found.\n"
+"Using system fixed font"
+msgstr ""
+"Font %s-%d-%d  not found.\n"
+"Using system fixed font"
+
+#: src/gnuwin32/dataentry.c:216 src/include/Errormsg.h:35 src/main/plot.c:77
+#: src/main/plot.c:3662 src/main/scan.c:1464
+msgid "invalid argument"
+msgstr "invalid argument"
+
+#: src/gnuwin32/dataentry.c:263
+msgid "invalid type for value"
+msgstr "invalid type for value"
+
+#: src/gnuwin32/dataentry.c:277 src/gnuwin32/extra.c:1307
+#: src/gnuwin32/extra.c:1309 src/gnuwin32/extra.c:1349
+msgid "invalid device"
+msgstr "invalid device"
+
+#: src/gnuwin32/dataentry.c:325
+msgid "dataentry: internal memory problem"
+msgstr "dataentry: internal memory problem"
+
+#: src/gnuwin32/dataentry.c:619 src/gnuwin32/dataentry.c:1113
+msgid "dataentry: internal memory error"
+msgstr "dataentry: internal memory error"
+
+#: src/gnuwin32/dataentry.c:738 src/gnuwin32/dataentry.c:751
+msgid "internal type error in dataentry"
+msgstr "internal type error in dataentry"
+
+#: src/gnuwin32/dataentry.c:918
+msgid "dataentry: expression too long"
+msgstr "dataentry: expression too long"
+
+#: src/gnuwin32/dynload.c:101
+#, c-format
+msgid "DLL attempted to change FPU control word from %x to %x"
+msgstr "DLL attempted to change FPU control word from %x to %x"
+
+#: src/gnuwin32/dynload.c:139
+msgid "cannot get working directory"
+msgstr "cannot get working directory"
+
+#: src/gnuwin32/editor.c:437 src/gnuwin32/pager.c:170 src/gnuwin32/pager.c:190
+msgid "No RGui console to paste to"
+msgstr "No RGui console to paste to"
+
+#: src/gnuwin32/editor.c:771
+msgid "Maximum number of editors reached"
+msgstr "Maximum number of editors reached"
+
+#: src/gnuwin32/editor.c:776
+msgid "Unable to create editor window"
+msgstr "Unable to create editor window"
+
+#: src/gnuwin32/extra.c:46
+msgid "invalid 'tempdir' in R_tmpnam"
+msgstr "invalid ‘[1mtempdir[0m’ in R_tmpnam"
+
+#: src/gnuwin32/extra.c:59 src/unix/sys-unix.c:304
+msgid "cannot find unused tempfile name"
+msgstr "cannot find unused tempfile name"
+
+#: src/gnuwin32/extra.c:92
+msgid "invalid 'names' in R_unlink"
+msgstr "invalid ‘[1mnames[0m’ in R_unlink"
+
+#: src/gnuwin32/extra.c:136
+msgid "invalid file name argument"
+msgstr "invalid file name argument"
+
+#: src/gnuwin32/extra.c:139
+msgid "invalid 'recursive' argument"
+msgstr "invalid ‘[1mrecursive[0m’ argument"
+
+#: src/gnuwin32/extra.c:160 src/gnuwin32/extra.c:207 src/gnuwin32/extra.c:391
+#: src/gnuwin32/extra.c:414
+msgid "R_HOME not set"
+msgstr "R_HOME not set"
+
+#: src/gnuwin32/extra.c:167
+#, c-format
+msgid "%s\\doc\\html\\rwin.htm[l] not found"
+msgstr "%s\\doc\\html\\rwin.htm[l] not found"
+
+#: src/gnuwin32/extra.c:195
+msgid "invalid topic argument"
+msgstr "invalid topic argument"
+
+#: src/gnuwin32/extra.c:201
+#, c-format
+msgid "%s not found"
+msgstr "%s not found"
+
+#: src/gnuwin32/extra.c:211 src/gnuwin32/extra.c:223
+msgid "invalid hlpfile argument"
+msgstr "invalid hlpfile argument"
+
+#: src/gnuwin32/extra.c:214 src/gnuwin32/extra.c:226
+msgid "WinHelp call failed"
+msgstr "WinHelp call failed"
+
+#: src/gnuwin32/extra.c:217
+msgid "too many .hlp files opened"
+msgstr "too many .hlp files opened"
+
+#: src/gnuwin32/extra.c:228
+msgid "type not yet implemented"
+msgstr "type not yet implemented"
+
+#: src/gnuwin32/extra.c:402 src/gnuwin32/extra.c:619 src/gnuwin32/extra.c:634
+#: src/main/platform.c:841 src/unix/sys-std.c:896 src/unix/sys-std.c:918
+msgid "invalid file argument"
+msgstr "invalid file argument"
+
+#: src/gnuwin32/extra.c:433 src/gnuwin32/extra.c:460
+msgid "invalid 'message' argument"
+msgstr "invalid ‘[1mmessage[0m’ argument"
+
+#: src/gnuwin32/extra.c:445
+msgid "unknown type"
+msgstr "unknown type"
+
+#: src/gnuwin32/extra.c:463
+msgid "invalid 'default' argument"
+msgstr "invalid ‘[1mdefault[0m’ argument"
+
+#: src/gnuwin32/extra.c:484 src/gnuwin32/extra.c:508 src/gnuwin32/extra.c:546
+#: src/gnuwin32/extra.c:581
+msgid "Menu functions can only be used in the GUI"
+msgstr "Menu functions can only be used in the GUI"
+
+#: src/gnuwin32/extra.c:512 src/gnuwin32/extra.c:549 src/gnuwin32/extra.c:584
+msgid "invalid 'menuname' argument"
+msgstr "invalid ‘[1mmenuname[0m’ argument"
+
+#: src/gnuwin32/extra.c:516
+#, c-format
+msgid "unable to retrieve items for %s (%s)"
+msgstr "unable to retrieve items for %s (%s)"
+
+#: src/gnuwin32/extra.c:554
+#, c-format
+msgid "unable to add menu (%s)"
+msgstr "unable to add menu (%s)"
+
+#: src/gnuwin32/extra.c:560 src/gnuwin32/extra.c:592
+msgid "invalid 'itemname' argument"
+msgstr "invalid ‘[1mitemname[0m’ argument"
+
+#: src/gnuwin32/extra.c:566
+#, c-format
+msgid "unable to add menu item (%s)"
+msgstr "unable to add menu item (%s)"
+
+#: src/gnuwin32/extra.c:589
+msgid "menu does not exist"
+msgstr "menu does not exist"
+
+#: src/gnuwin32/extra.c:596
+#, c-format
+msgid "unable to delete menu item (%s)"
+msgstr "unable to delete menu item (%s)"
+
+#: src/gnuwin32/extra.c:623
+msgid "savehistory can only be used in Rgui and Rterm"
+msgstr "savehistory can only be used in Rgui and Rterm"
+
+#: src/gnuwin32/extra.c:638
+msgid "loadhistory can only be used in Rgui and Rterm"
+msgstr "loadhistory can only be used in Rgui and Rterm"
+
+#: src/gnuwin32/extra.c:706 src/unix/sys-std.c:967
+msgid "invalid 'time' value"
+msgstr "invalid ‘[1mtime[0m’ value"
+
+#: src/gnuwin32/extra.c:761 src/gnuwin32/extra.c:771
+msgid "incorrect argument"
+msgstr "incorrect argument"
+
+#: src/gnuwin32/extra.c:764
+msgid "don't be silly!: your machine has a 4Gb address limit"
+msgstr "don't be silly!: your machine has a 4Gb address limit"
+
+#: src/gnuwin32/extra.c:767
+msgid "cannot decrease memory limit"
+msgstr "cannot decrease memory limit"
+
+#: src/gnuwin32/extra.c:785 src/main/platform.c:881
+msgid "invalid 'path' argument"
+msgstr "invalid ‘[1mpath[0m’ argument"
+
+#: src/gnuwin32/extra.c:870
+msgid "invalid 'list' argument"
+msgstr "invalid ‘[1mlist[0m’ argument"
+
+#: src/gnuwin32/extra.c:874
+msgid "invalid 'preselect' argument"
+msgstr "invalid ‘[1mpreselect[0m’ argument"
+
+#: src/gnuwin32/extra.c:1047
+msgid "argument must be a character vector"
+msgstr "argument must be a character vector"
+
+#: src/gnuwin32/extra.c:1067 src/main/connections.c:1328
+msgid "Unable to write to the clipboard"
+msgstr "Unable to write to the clipboard"
+
+#: src/gnuwin32/extra.c:1094
+msgid "default must be a character string"
+msgstr "default must be a character string"
+
+#: src/gnuwin32/extra.c:1096
+msgid "default is overlong"
+msgstr "default is overlong"
+
+#: src/gnuwin32/extra.c:1105
+msgid "caption must be a character string"
+msgstr "caption must be a character string"
+
+#: src/gnuwin32/extra.c:1107
+msgid "'multi' must be a logical value"
+msgstr "‘[1mmulti[0m’ must be a logical value"
+
+#: src/gnuwin32/extra.c:1109
+msgid "'filterindex' must be an integer value"
+msgstr "‘[1mfilterindex[0m’ must be an integer value"
+
+#: src/gnuwin32/extra.c:1243
+msgid "'title' must be a character string"
+msgstr "‘[1mtitle[0m’ must be a character string"
+
+#: src/gnuwin32/extra.c:1275
+msgid "'which' must be length 1"
+msgstr "‘[1mwhich[0m’ must be length 1"
+
+#: src/gnuwin32/extra.c:1305
+msgid "invalid value of 'which'"
+msgstr "invalid value of ‘[1mwhich[0m’"
+
+#: src/gnuwin32/extra.c:1310
+msgid "requires SDI mode"
+msgstr "requires SDI mode"
+
+#: src/gnuwin32/extra.c:1343
+msgid "invalid graphical device number"
+msgstr "invalid graphical device number"
+
+#: src/gnuwin32/extra.c:1353
+msgid "bad device"
+msgstr "bad device"
+
+#: src/gnuwin32/extra.c:1592 src/gnuwin32/extra.c:1600
+msgid "invalid input in Rmbstowcs"
+msgstr "invalid input in Rmbstowcs"
+
+#: src/gnuwin32/pager.c:77
+msgid "Error opening file"
+msgstr "Error opening file"
+
+#: src/gnuwin32/pager.c:84
+msgid "Insufficient memory to display file in internal pager"
+msgstr "Insufficient memory to display file in internal pager"
+
+#: src/gnuwin32/pager.c:162 src/gnuwin32/pager.c:174 src/gnuwin32/pager.c:194
+msgid "No selection"
+msgstr "No selection"
+
+#: src/gnuwin32/pager.c:499
+msgid "Unable to create pager window"
+msgstr "Unable to create pager window"
+
+#: src/gnuwin32/preferences.c:223
+#, c-format
+msgid ""
+"Font %s-%d-%d has variable width.\n"
+"Using system fixed font"
+msgstr ""
+"Font %s-%d-%d has variable width.\n"
+"Using system fixed font"
+
+#: src/gnuwin32/rui.c:810
+#, c-format
+msgid "Error at line %d of file %s"
+msgstr "Error at line %d of file %s"
+
+#: src/gnuwin32/run.c:43
+msgid "Insufficient memory (expandcmd)"
+msgstr "Insufficient memory (expandcmd)"
+
+#: src/gnuwin32/run.c:50
+msgid "A \" is missing(expandcmd)"
+msgstr "A \" is missing(expandcmd)"
+
+#: src/gnuwin32/run.c:88
+msgid " not found"
+msgstr " not found"
+
+#: src/gnuwin32/run.c:137
+msgid "Impossible to redirect input"
+msgstr "Impossible to redirect input"
+
+#: src/gnuwin32/run.c:183
+msgid "Impossible to run "
+msgstr "Impossible to run "
+
+#: src/gnuwin32/run.c:255
+msgid "Insufficient memory (rpipeOpen)"
+msgstr "Insufficient memory (rpipeOpen)"
+
+#: src/gnuwin32/run.c:263 src/gnuwin32/run.c:281
+msgid "Impossible to create pipe"
+msgstr "Impossible to create pipe"
+
+#: src/gnuwin32/run.c:301
+msgid "Impossible to create thread/pipe"
+msgstr "Impossible to create thread/pipe"
+
+#: src/gnuwin32/run.c:432 src/main/connections.c:286 src/main/dounzip.c:317
+msgid "seek not enabled for this connection"
+msgstr "seek not enabled for this connection"
+
+#: src/gnuwin32/run.c:438
+msgid "truncate not enabled for this connection"
+msgstr "truncate not enabled for this connection"
+
+#: src/gnuwin32/run.c:515 src/gnuwin32/run.c:519 src/gnuwin32/run.c:525
+#: src/gnuwin32/run.c:541 src/main/connections.c:803
+#: src/main/connections.c:807 src/main/connections.c:813
+#: src/main/connections.c:827
+msgid "allocation of pipe connection failed"
+msgstr "allocation of pipe connection failed"
+
+#: src/gnuwin32/shext.c:101
+msgid "Invalid R_USER"
+msgstr "Invalid R_USER"
+
+#: src/gnuwin32/shext.c:104
+msgid "Invalid HOME"
+msgstr "Invalid HOME"
+
+#: src/gnuwin32/shext.c:109
+msgid "Invalid HOMEDRIVE"
+msgstr "Invalid HOMEDRIVE"
+
+#: src/gnuwin32/shext.c:112
+msgid "Invalid HOMEDRIVE+HOMEPATH"
+msgstr "Invalid HOMEDRIVE+HOMEPATH"
+
+#: src/gnuwin32/sys-win32.c:188
+msgid "character string expected as first argument"
+msgstr "character string expected as first argument"
+
+#: src/gnuwin32/sys-win32.c:200
+msgid "character string expected as third argument"
+msgstr "character string expected as third argument"
+
+#: src/gnuwin32/system.c:116 src/unix/sys-std.c:65
+#, c-format
+msgid "Fatal error: %s\n"
+msgstr "Fatal error: %s\n"
+
+#: src/gnuwin32/system.c:286 src/unix/sys-std.c:587
+#, c-format
+msgid "encoding '%s' is not recognised"
+msgstr "encoding ‘[1m%s[0m’ is not recognised"
+
+#: src/gnuwin32/system.c:292 src/unix/sys-std.c:593
+msgid "<ERROR: invalid input in encoding> "
+msgstr "<ERROR: invalid input in encoding> "
+
+#: src/gnuwin32/system.c:490
+#, c-format
+msgid "Unable to open file '%s'"
+msgstr "Unable to open file ‘[1m%s[0m’"
+
+#: src/gnuwin32/system.c:503
+#, c-format
+msgid "file.show(): file %s does not exist\n"
+msgstr "file.show(): file %s does not exist\n"
+
+#: src/gnuwin32/system.c:623
+msgid "Invalid R_HOME"
+msgstr "Invalid R_HOME"
+
+#: src/gnuwin32/system.c:838
+msgid "WARNING: no max-mem-size given\n"
+msgstr "WARNING: no max-mem-size given\n"
+
+#: src/gnuwin32/system.c:844
+#, c-format
+msgid "WARNING: --max-mem-size value is invalid: ignored\n"
+msgstr "WARNING: --max-mem-size value is invalid: ignored\n"
+
+#: src/gnuwin32/system.c:846
+#, c-format
+msgid "WARNING: --max-mem-size=%lu`%c': too large and ignored\n"
+msgstr "WARNING: --max-mem-size=%lu‘[1m%c[0m’: too large and ignored\n"
+
+#: src/gnuwin32/system.c:851
+#, c-format
+msgid "WARNING: max-mem-size =%4.1fM too small and ignored\n"
+msgstr "WARNING: max-mem-size =%4.1fM too small and ignored\n"
+
+#: src/gnuwin32/system.c:861
+#, c-format
+msgid "WARNING: unknown option %s\n"
+msgstr "WARNING: unknown option %s\n"
+
+#: src/gnuwin32/system.c:904
+msgid "you must specify `--save', `--no-save' or `--vanilla'"
+msgstr ""
+"you must specify ‘[1m--save[0m’, ‘[1m--no-save[0m’ or ‘[1m--vanilla[0m’"
+
+#: src/gnuwin32/system.c:909
+msgid ""
+"impossible to create 'reader thread'; you must free some system resources"
+msgstr ""
+"impossible to create 'reader thread'; you must free some system resources"
+
+#: src/gnuwin32/system.c:918
+msgid "WARNING: invalid R_HISTSIZE ignored;"
+msgstr "WARNING: invalid R_HISTSIZE ignored;"
+
 #: src/include/Errormsg.h:31
 msgid "NaNs produced"
 msgstr "NaNs produced"
@@ -93,11 +540,6 @@ msgstr "NaNs produced"
 #: src/include/Errormsg.h:33
 msgid "Non-numeric argument to mathematical function"
 msgstr "Non-numeric argument to mathematical function"
-
-#: src/include/Errormsg.h:35 src/main/plot.c:77 src/main/plot.c:3662
-#: src/main/scan.c:1464
-msgid "invalid argument"
-msgstr "invalid argument"
 
 #: src/include/Errormsg.h:37
 msgid "first argument must be a character string"
@@ -1271,10 +1713,6 @@ msgstr "invalid input found on input connection ‘[1m%s[0m’"
 msgid "getc not enabled for this connection"
 msgstr "getc not enabled for this connection"
 
-#: src/main/connections.c:286 src/main/dounzip.c:317
-msgid "seek not enabled for this connection"
-msgstr "seek not enabled for this connection"
-
 #: src/main/connections.c:292
 msgid "truncation not enabled for this connection"
 msgstr "truncation not enabled for this connection"
@@ -1390,11 +1828,6 @@ msgstr "fifo connections are not available on this system"
 msgid "cannot open pipe() cmd '%s'"
 msgstr "cannot open pipe() cmd ‘[1m%s[0m’"
 
-#: src/main/connections.c:803 src/main/connections.c:807
-#: src/main/connections.c:813 src/main/connections.c:827
-msgid "allocation of pipe connection failed"
-msgstr "allocation of pipe connection failed"
-
 #: src/main/connections.c:896
 msgid "pipe connections are not available on this system"
 msgstr "pipe connections are not available on this system"
@@ -1447,14 +1880,6 @@ msgstr "clipboard cannot be opened or contains no text"
 #: src/main/connections.c:1297
 msgid "memory allocation to open clipboard failed"
 msgstr "memory allocation to open clipboard failed"
-
-#: src/main/connections.c:1324
-msgid "Unable to open the clipboard"
-msgstr "Unable to open the clipboard"
-
-#: src/main/connections.c:1328
-msgid "Unable to write to the clipboard"
-msgstr "Unable to write to the clipboard"
 
 #: src/main/connections.c:1367
 msgid "attempt to seek outside the range of the clipboard"
@@ -4291,17 +4716,9 @@ msgstr "invalid ‘[1mpattern[0m’ regular expression"
 msgid "unable to determine R home location"
 msgstr "unable to determine R home location"
 
-#: src/main/platform.c:841 src/unix/sys-std.c:896 src/unix/sys-std.c:918
-msgid "invalid file argument"
-msgstr "invalid file argument"
-
 #: src/main/platform.c:878
 msgid "invalid 'topic' argument"
 msgstr "invalid ‘[1mtopic[0m’ argument"
-
-#: src/main/platform.c:881
-msgid "invalid 'path' argument"
-msgstr "invalid ‘[1mpath[0m’ argument"
 
 #: src/main/platform.c:884
 msgid "invalid 'indexname' argument"
@@ -6288,36 +6705,36 @@ msgstr "Failed to bind a port"
 msgid "Could not listen on port %d"
 msgstr "Could not listen on port %d"
 
-#: src/modules/internet/nanohttp.c:402
+#: src/modules/internet/nanohttp.c:407
 msgid "Removing HTTP proxy info"
 msgstr "Removing HTTP proxy info"
 
-#: src/modules/internet/nanohttp.c:404
+#: src/modules/internet/nanohttp.c:409
 #, c-format
 msgid "Using HTTP proxy %s"
 msgstr "Using HTTP proxy %s"
 
-#: src/modules/internet/nanohttp.c:975
+#: src/modules/internet/nanohttp.c:980
 #, c-format
 msgid "unable to resolve '%s'."
 msgstr "unable to resolve '%s'."
 
-#: src/modules/internet/nanohttp.c:1002
+#: src/modules/internet/nanohttp.c:1007
 #, c-format
 msgid "connected to '%s' on port %d."
 msgstr "connected to ‘[1m%s[0m’ on port %d."
 
-#: src/modules/internet/nanohttp.c:1007
+#: src/modules/internet/nanohttp.c:1012
 #, c-format
 msgid "unable to connect to '%s' on port %d."
 msgstr "unable to connect to ‘[1m%s[0m’ on port %d."
 
-#: src/modules/internet/nanohttp.c:1271
+#: src/modules/internet/nanohttp.c:1276
 #, c-format
 msgid "Redirect to: %s"
 msgstr "Redirect to: %s"
 
-#: src/modules/internet/nanohttp.c:1280
+#: src/modules/internet/nanohttp.c:1285
 msgid "Too many redirects, aborting ..."
 msgstr "Too many redirects, aborting ..."
 
@@ -6794,11 +7211,6 @@ msgstr ""
 " x <- edit()\n"
 " to recover"
 
-#: src/unix/sys-std.c:65
-#, c-format
-msgid "Fatal error: %s\n"
-msgstr "Fatal error: %s\n"
-
 #: src/unix/sys-std.c:119
 msgid "interrupt handler must not return"
 msgstr "interrupt handler must not return"
@@ -6810,15 +7222,6 @@ msgid ""
 msgstr ""
 "An unusual circumstance has arisen in the nesting of readline input. Please "
 "report using bug.report()"
-
-#: src/unix/sys-std.c:587
-#, c-format
-msgid "encoding '%s' is not recognised"
-msgstr "encoding ‘[1m%s[0m’ is not recognised"
-
-#: src/unix/sys-std.c:593
-msgid "<ERROR: invalid input in encoding> "
-msgstr "<ERROR: invalid input in encoding> "
 
 #: src/unix/sys-std.c:597
 msgid "re-encoding is not available on this system"
@@ -6835,10 +7238,6 @@ msgstr "no history mechanism available"
 #: src/unix/sys-std.c:929 src/unix/sys-std.c:931
 msgid "no history available to save"
 msgstr "no history available to save"
-
-#: src/unix/sys-std.c:967
-msgid "invalid 'time' value"
-msgstr "invalid ‘[1mtime[0m’ value"
 
 #: src/unix/sys-std.c:996
 msgid "Sys.sleep is not implemented on this system"
@@ -6863,10 +7262,6 @@ msgstr "Can't mkdir R_TempDir"
 #: src/unix/sys-unix.c:284
 msgid "Can't allocate R_TempDir"
 msgstr "Can't allocate R_TempDir"
-
-#: src/unix/sys-unix.c:304
-msgid "cannot find unused tempfile name"
-msgstr "cannot find unused tempfile name"
 
 #: src/unix/sys-unix.c:366
 msgid "Sys.info() is not implemented on this system"
