@@ -63,7 +63,7 @@ FFDecl.h FFTab.h:: $(top_srcdir)/src/appl/ROUTINES $(top_srcdir)/tools/GETSYMBOL
 mostlyclean:
 clean:
 	@rm -f Rconfig.h Rversion.h FFDecl.h FFTab.h
-distclean:
+distclean: clean
 	@rm -f Makefile config.h stamp-h
 maintainer-clean: distclean
 
