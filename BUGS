@@ -467,11 +467,6 @@ Date: Thu, 1 Aug 2002 19:01:59 +0200 (MET DST)
 ..  d$calls <- d$fitted + d$res[i]
 ..  coef(update(fit, data=d))
 ..}
-* PR# 2206 *
-Subject: model.matrix (via predict)
-From: Glenn.Stone@csiro.au
-Date: Thu, 24 Oct 2002 06:33:02 +0200 (MET DST)
-..strange model used!
 
 Directory:  Startup
 
@@ -559,3 +554,15 @@ Date: Thu, 16 Jan 2003 20:22:23 +1100 (EST)
 Subject: survival bug?
 From: Pius Korner <korner@eco.umnw.ethz.ch>
 Date: Mon, 27 Jan 2003 17:28:11 +0100
+* PR# 2500 *
+Subject:  URGENT ASSISTANCE
+From: Mrs mariam mobutu sese-seko <mrs_mariamsese13@rediffmail.com>
+Date: Tue, 28 Jan 2003 05:55:30 +0100
+* PR# 2501 *
+Subject: Timezone
+From: Michael.Jacob@bruker-axs.de
+Date: Tue, 28 Jan 2003 15:12:48 +0100 (MET)
+* PR# 2502 *
+Subject: Control YOUR own Income from NOW!                                      8892-4
+From: schultess.uwech840@berlin.de
+Date: Tue, 28 Jan 2003 07:18:48 +1100
