@@ -1,6 +1,5 @@
 \name{.BasicFunsList}
 \alias{.BasicFunsList}
-\non_function{}
 \title{List of Builtin and Special Functions}
 \description{
   A named list providing instructions for turning builtin and special

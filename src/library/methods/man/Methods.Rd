@@ -1,7 +1,6 @@
 \name{Methods}
 \alias{Methods}
 \title{General Information on Methods}
-\non_function{}
 \description{
   This documentation section covers some general topics on how methods
   work and how the \pkg{methods} package interacts with the rest of R.  The
