@@ -423,9 +423,6 @@ AC_OUTPUT_COMMANDS(
 (cd etc; chmod +x INSTALL REMOVE Rdconv Rdindex Rman2Rd Sd2Rd \
          build-help build-htmlpkglist help.pretty html2dos)
 (cd cmd; chmod +x fwf2table)
-<<<<<<< configure.in
 (cd doc; chmod +x keyword-test)
-=======
 mkdir -p bin include library src/lib
->>>>>>> 1.19.2.3
 )
