@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.5-3, 2002-05-12
+Version 1.5-4, 2002-05-14
 ISBN 3-901167-51-X
 Kurt Hornik
 
@@ -1321,6 +1321,10 @@ works, was published in the Journal of Statistical Software
 *bqtl*
      QTL mapping toolkit for inbred crosses and recombinant inbred lines.
      Includes maximum likelihood and Bayesian tools.
+
+*brlr*
+     Bias-reduced logistic regression: fits logistic regression models by
+     maximum penalized likelihood.
 
 *car*
      Companion to Applied Regression, containing functions for applied

@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2002
-@set FAQ-VERSION 1.5-3, 2002-05-12
+@set FAQ-VERSION 1.5-4, 2002-05-14
 @set REL-VERSION 1.5.0
 @set FAQ-ISBN 3-901167-51-X
 @c %**end of header
@@ -1580,6 +1580,9 @@ R. Tibshirani, 1993, Chapman and Hall.
 @item bqtl
 QTL mapping toolkit for inbred crosses and recombinant inbred lines.
 Includes maximum likelihood and Bayesian tools.
+@item brlr
+Bias-reduced logistic regression: fits logistic regression models by
+maximum penalized likelihood.
 @item car
 Companion to Applied Regression, containing functions for applied
 regession, linear models, and generalized linear models, with an
