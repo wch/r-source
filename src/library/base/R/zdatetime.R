@@ -1,5 +1,5 @@
 ## needs to run after paste()
-{
+.leap.seconds <- local({
     .leap.seconds <-
         c("1972-6-30", "1972-12-31", "1973-12-31", "1974-12-31",
           "1975-12-31", "1976-12-31", "1977-12-31", "1978-12-31",
@@ -9,5 +9,5 @@
           "1997-6-30", "1998-12-31")
     .leap.seconds <- strptime(paste(.leap.seconds , "23:59:60"),
                               "%Y-%m-%d %H:%M:%S")
-    .leap.seconds <- as.POSIXct(.leap.seconds, "GMT")
-}
+    c(as.POSIXct(.leap.seconds, "GMT")) # lose the timezone
+})

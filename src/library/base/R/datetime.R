@@ -29,13 +29,16 @@ as.POSIXlt <- function(x, tz = "")
     }
 
     if(inherits(x, "POSIXlt")) return(x)
-    if(inherits(x, "date") || inherits(x, "dates")) x <- as.POSIXct(x)
+    tzone <- attr(x, "tzone")
+    if(inherits(x, "Date") || inherits(x, "date") || inherits(x, "dates"))
+        x <- as.POSIXct(x)
     if(is.character(x)) return(fromchar(x))
     if(is.factor(x))	return(fromchar(as.character(x)))
     if(is.logical(x) && all(is.na(x))) x <- as.POSIXct.default(x)
     if(!inherits(x, "POSIXct"))
 	stop(paste("Don't know how to convert `", deparse(substitute(x)),
 		   "' to class \"POSIXlt\"", sep=""))
+    if(missing(tz) && !is.null(tzone)) tz <- tzone[1]
     .Internal(as.POSIXlt(x, tz))
 }
 
@@ -66,8 +69,10 @@ as.POSIXct.dates <- function(x, ...)
 
 as.POSIXct.POSIXlt <- function(x, tz = "")
 {
-    if(missing(tz) && !is.null(attr(x, "tzone"))) tz <- attr(x, "tzone")[1]
-    structure(.Internal(as.POSIXct(x, tz)), class = c("POSIXt", "POSIXct"))
+    tzone <- attr(x, "tzone")
+    if(missing(tz) && !is.null(tzone)) tz <- tzone[1]
+    structure(.Internal(as.POSIXct(x, tz)), class = c("POSIXt", "POSIXct"),
+              tzone = tz)
 }
 
 as.POSIXct.default <- function(x, tz = "")
@@ -102,13 +107,14 @@ strptime <- function(x, format)
 format.POSIXct <- function(x, format = "", tz = "", usetz = FALSE, ...)
 {
     if(!inherits(x, "POSIXct")) stop("wrong class")
+    if(missing(tz) && !is.null(tzone <- attr(x, "tzone"))) tz <- tzone
     structure(format.POSIXlt(as.POSIXlt(x, tz), format, usetz, ...),
               names=names(x))
 }
 
 print.POSIXct <- function(x, ...)
 {
-    print(format(x, usetz=TRUE), ...)
+    print(format(x, usetz=TRUE, ...), ...)
     invisible(x)
 }
 
@@ -122,6 +128,7 @@ summary.POSIXct <- function(object, digits=15, ...)
 {
     x <- summary.default(unclass(object), digits=digits, ...)
     class(x) <- oldClass(object)
+    attr(x, "tzone") <- attr(object, "tzone")
     x
 }
 
@@ -274,7 +281,8 @@ as.matrix.POSIXlt <- function(x)
 }
 
 mean.POSIXct <- function (x, ...)
-    structure(mean(unclass(x), ...), class = c("POSIXt", "POSIXct"))
+    structure(mean(unclass(x), ...), class = c("POSIXt", "POSIXct"),
+              tzone=attr(x, "tzone"))
 
 mean.POSIXlt <- function (x, ...)
     as.POSIXlt(mean(as.POSIXct(x), ...))
@@ -658,7 +666,7 @@ as.data.frame.POSIXlt <- function(x, row.names = NULL, optional = FALSE)
 rep.POSIXct <- function(x, times,  ...)
 {
     y <- NextMethod()
-    structure(y, class=c("POSIXt", "POSIXct"))
+    structure(y, class=c("POSIXt", "POSIXct"), tzone = attr(x, "tzone"))
 }
 
 rep.POSIXlt <- function(x, times, ...)

@@ -100,6 +100,14 @@ time1 lop time2
   and the alternate (daylight-saving) timezone.  Sometimes this may
   just be of length one, giving the timezone name.
 
+  \code{"POSIXct"} objects may also have an attribute \code{"tzone"}, a
+  character vector of length one.  If set, it will determine how the
+  object is converted to class \code{"POSIXlt"} and in particular how it
+  is printed.  This is usually desirable, but if you want to specify an
+  object in a particular timezone but to be printed in the current
+  timezone you may want to remove the \code{"tzone"} attribute (e.g. by
+  \code{c(x)}).
+
   Unfortunately, the conversion is complicated by the operation of time
   zones and leap seconds (22 days have been 86401 seconds long so far:
   the times of the extra seconds are in the object \code{.leap.seconds}).
@@ -118,7 +126,6 @@ time1 lop time2
 
   Using \code{\link{c}} on \code{"POSIXlt"} objects converts them to the
   current time zone.
-
 }
 \seealso{
   \code{\link{as.POSIXct}} and \code{\link{as.POSIXlt}} for conversion
@@ -150,6 +157,7 @@ Sys.time() - 3600             # an hour ago
 
 as.POSIXlt(Sys.time(), "GMT") # the current time in GMT
 format(.leap.seconds)         # all 22 leapseconds in your timezone
+print(.leap.seconds, tz="PST8PDT")  # and in Seattle's
 }
 \keyword{utilities}
 \keyword{chron}

@@ -203,6 +203,11 @@ NEW FEATURES
     o   array() and matrix() now allow 0-length `data' arguments for
 	compatibility with S.
 
+    o   "POSIXct" objects can now have a "tzone" attribute that
+	determines how they will be converted and printed.  This means
+	that date-time objects which have a timezone specified will
+	generally be regarded as in their original time zone.
+
 
 UTILITIES
 
