@@ -8,9 +8,11 @@
 \method{plot}{acf}(x, ci = 0.95, type = "h",
      xlab = "Lag", ylab = NULL, ylim = NULL, main = NULL,
      ci.col="blue", ci.type = c("white", "ma"), max.mfrow = 5,
-     mar = if(nser > 2) c(3,3,2,1.2) else par("mar"),
+     ask, mar = if(nser > 2) c(3,3,2,1.2) else par("mar"),
+     oma = if(nser > 2) c(1, 1.2, 1, 1) else par("oma"),
      mgp = if(nser > 2) c(1.5,0.6,0) else par("mgp"),
-     cex.main = if(nser > 2) 1 else par("cex.main"), \dots)
+     cex.main = if(nser > 2) 1 else par("cex.main"),
+     verbose = getOption("verbose"), \dots)
 }
 \arguments{
   \item{x}{an object of class \code{"acf"}.}
@@ -29,9 +31,13 @@
   \item{max.mfrow}{positive integer; for multivariate \code{x}
     indicating how many rows and columns of plots should be put on one
     page, using \code{\link{par}(mfrow = c(m,m))}.}
-  \item{mar, mgp, cex.main}{graphics parameters as in
+  \item{ask}{logical; if \code{TRUE}, the user is asked before a new
+    page is started.}
+  \item{mar, oma, mgp, cex.main}{graphics parameters as in
     \code{\link{par}(*)}, by default adjusted to use smaller than
     default margins for multivariate \code{x} only.}
+  \item{verbose}{logical.  Should \R report extra information on
+    progress?}
   \item{\dots}{graphics parameters to be passed to the plotting
     routines.}
 }
