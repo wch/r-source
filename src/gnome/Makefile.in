@@ -28,6 +28,7 @@ GNOME_OBJS = \
 	devGNOME.o \
 	devGTK.o \
 	gtkconsole.o \
+	gnome-find-dialog.o \
 	terminal.o \
 	terminal-functions.o \
 	terminal-menu.o \
@@ -77,13 +78,16 @@ devGTK.o: $(srcdir)/devGTK.c $(srcdir)/devGTK.h $(srcdir)/terminal.h $(top_srcdi
 gtkconsole.o: $(srcdir)/gtkconsole.c $(srcdir)/gtkconsole.h
 	$(CC) $(CFLAGS) $(CPPFLAGS) $(GNOME_INCLUDEDIR) -c $<
 
+gnome-find-dialog.o: $(srcdir)/gnome-find-dialog.c $(srcdir)/gnome-find-dialog.h
+	$(CC) $(CFLAGS) $(CPPFLAGS) $(GNOME_INCLUDEDIR) -c $<
+
 terminal.o: $(srcdir)/terminal.c $(srcdir)/terminal.h $(srcdir)/terminal-functions.h $(srcdir)/terminal-menu.h $(srcdir)/terminal-prefs.h $(srcdir)/terminal-toolbar.h
 	$(CC) $(CFLAGS) $(CPPFLAGS) $(GNOME_INCLUDEDIR) -c $<
 
 terminal-functions.o: $(srcdir)/terminal-functions.c $(srcdir)/terminal.h $(srcdir)/terminal-functions.h $(srcdir)/terminal-menu.h $(srcdir)/terminal-prefs.h $(srcdir)/terminal-toolbar.h
 	$(CC) $(CFLAGS) $(CPPFLAGS) $(GNOME_INCLUDEDIR) -c $<
 
-terminal-menu.o: $(srcdir)/terminal-menu.c $(srcdir)/terminal.h $(srcdir)/terminal-functions.h $(srcdir)/terminal-menu.h $(srcdir)/terminal-prefs.h $(srcdir)/terminal-toolbar.h
+terminal-menu.o: $(srcdir)/terminal-menu.c $(srcdir)/terminal.h $(srcdir)/terminal-functions.h $(srcdir)/terminal-menu.h $(srcdir)/terminal-prefs.h $(srcdir)/terminal-toolbar.h $(srcdir)/gnome-find-dialog.h
 	$(CC) $(CFLAGS) $(CPPFLAGS) $(GNOME_INCLUDEDIR) -c $<
 
 terminal-prefs.o: $(srcdir)/terminal-prefs.c $(srcdir)/terminal.h $(srcdir)/terminal-functions.h $(srcdir)/terminal-menu.h $(srcdir)/terminal-prefs.h $(srcdir)/terminal-toolbar.h

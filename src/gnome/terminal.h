@@ -24,6 +24,7 @@ enum save_choices {
   ASK,
   SAVE,
   SAVEAS,
+  SAVEIF,
   DONTSAVE
 };
 
@@ -33,12 +34,25 @@ struct _R_gnome_pref_t {
   GdkColor textcolor;
   GdkColor bgcolor;
 
+  gchar *vsize;
+  gchar *nsize;
+
   gint workspace_save;
   gint history_save;
+
+  gchar *pager_title_font;
+  GdkColor pager_title_textcolor;
+  GdkColor pager_title_bgcolor;
+  gchar *pager_text_font;
+  gchar *pager_em_font;
+  GdkColor pager_text_textcolor;
+  GdkColor pager_text_bgcolor;
 };
 
 R_gnome_pref_t R_gnome_userprefs;
 R_gnome_pref_t R_gnome_newprefs;
+
+gboolean font_pref_locked;
 
 
 /* functions */

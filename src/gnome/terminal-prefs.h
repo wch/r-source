@@ -10,4 +10,5 @@ GtkWidget *prefs_history_frame(void);
 GtkWidget *prefs_exit_page(void);
 GtkWidget *prefs_apps_page(void);
 GtkWidget *prefs_graphics_page(void);
-GtkWidget *prefs_env_page(void);
+GtkWidget *prefs_startup_page(void);
+GtkWidget *prefs_pager_page(void);

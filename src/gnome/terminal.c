@@ -104,7 +104,8 @@ void R_gnome_load_prefs(void)
   gchar *tmp;
   GdkColor text, bg;
 
-  gnome_config_push_prefix("/R.gnome/preferences/");
+  /* Text settings */
+  gnome_config_push_prefix("/R.gnome/Text/");
 
   R_gnome_userprefs.font = gnome_config_get_string("font=fixed");
 
@@ -112,14 +113,47 @@ void R_gnome_load_prefs(void)
   if(gdk_color_parse(tmp, &text) == 0) {
     gdk_color_parse("black", &text);
   }
+  R_gnome_userprefs.textcolor = text;
 
   tmp = gnome_config_get_string("bgcolor=white");
   if(gdk_color_parse(tmp, &bg) == 0) {
     gdk_color_parse("white", &bg);
   }
-
-  R_gnome_userprefs.textcolor = text;
   R_gnome_userprefs.bgcolor = bg;
+
+  gnome_config_pop_prefix();
+
+  /* Pager settings */
+  gnome_config_push_prefix("/R.gnome/Pager/");
+
+  R_gnome_userprefs.pager_title_font = gnome_config_get_string("title_font=-adobe-helvetica-bold-r-normal-*-*-100-*-*-p-*-iso8859-1");
+
+  tmp = gnome_config_get_string("title_textcolor=black");
+  if(gdk_color_parse(tmp, &text) == 0) {
+    gdk_color_parse("black", &text);
+  }
+  R_gnome_userprefs.pager_title_textcolor = text;
+
+  tmp = gnome_config_get_string("title_bgcolor=white");
+  if(gdk_color_parse(tmp, &bg) == 0) {
+    gdk_color_parse("white", &bg);
+  }
+  R_gnome_userprefs.pager_title_bgcolor = bg;
+
+  R_gnome_userprefs.pager_text_font = gnome_config_get_string("text_font=-misc-fixed-medium-r-normal-*-*-120-*-*-c-*-iso8859-1");
+  R_gnome_userprefs.pager_em_font = gnome_config_get_string("em_font=-misc-fixed-bold-r-normal-*-*-120-*-*-c-*-iso8859-1");
+
+  tmp = gnome_config_get_string("text_textcolor=black");
+  if(gdk_color_parse(tmp, &text) == 0) {
+    gdk_color_parse("black", &text);
+  }
+  R_gnome_userprefs.pager_text_textcolor = text;
+
+  tmp = gnome_config_get_string("text_bgcolor=white");
+  if(gdk_color_parse(tmp, &bg) == 0) {
+    gdk_color_parse("white", &bg);
+  }
+  R_gnome_userprefs.pager_text_bgcolor = bg;
 
   gnome_config_pop_prefix();
 }
@@ -128,16 +162,37 @@ void R_gnome_save_prefs(void)
 {
   GdkColor tmp;
 
-  gnome_config_push_prefix("/R.gnome/preferences/");
+  /* Text settings */
+  gnome_config_push_prefix("/R.gnome/Text/");
 
   gnome_config_set_string("font", R_gnome_userprefs.font);
-
   tmp = R_gnome_userprefs.textcolor;
   gnome_config_set_string("textcolor",
 			  g_strdup_printf("rgb:%04x/%04x/%04x", tmp.red, tmp.green, tmp.blue));
-
   tmp = R_gnome_userprefs.bgcolor;
   gnome_config_set_string("bgcolor",
+			  g_strdup_printf("rgb:%04x/%04x/%04x", tmp.red, tmp.green, tmp.blue));
+
+  gnome_config_pop_prefix();
+
+  /* Pager settings */
+  gnome_config_push_prefix("/R.gnome/Pager/");
+
+  gnome_config_set_string("title_font", R_gnome_userprefs.pager_title_font);
+  tmp = R_gnome_userprefs.pager_title_textcolor;
+  gnome_config_set_string("title_textcolor",
+			  g_strdup_printf("rgb:%04x/%04x/%04x", tmp.red, tmp.green, tmp.blue));
+  tmp = R_gnome_userprefs.pager_title_bgcolor;
+  gnome_config_set_string("title_bgcolor",
+			  g_strdup_printf("rgb:%04x/%04x/%04x", tmp.red, tmp.green, tmp.blue));
+
+  gnome_config_set_string("text_font", R_gnome_userprefs.pager_text_font);
+  gnome_config_set_string("em_font", R_gnome_userprefs.pager_em_font);
+  tmp = R_gnome_userprefs.pager_text_textcolor;
+  gnome_config_set_string("text_textcolor",
+			  g_strdup_printf("rgb:%04x/%04x/%04x", tmp.red, tmp.green, tmp.blue));
+  tmp = R_gnome_userprefs.pager_text_bgcolor;
+  gnome_config_set_string("text_bgcolor",
 			  g_strdup_printf("rgb:%04x/%04x/%04x", tmp.red, tmp.green, tmp.blue));
 
   gnome_config_pop_prefix();

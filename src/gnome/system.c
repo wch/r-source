@@ -818,23 +818,251 @@ int __main() {return 0;}
 
 
 /* New / Experimental API elements */
+typedef struct pager_data_ts pager_data_t;
+struct pager_data_ts {
+  GtkWidget *pagerwin;
+  GtkWidget *text;
+};
 
-/* Local Time and Date */
-
-int R_ShowFile(char *file, char *title)
+static void pagertb_print(GtkWidget *widget, gpointer data)
 {
-    FILE *fp;
-    int c;
-    if ((fp = fopen(file, "r")) == NULL)
-	error("unable to display file %s\n", file);
-    while ((c = getc(fp)) != EOF)
-      /* FIXME: do something here */;
-    fclose(fp);
+}
+
+static void pagertb_copy(GtkWidget *widget, gpointer data)
+{
+  pager_data_t *pager_data;
+
+  if(data != NULL) {
+    pager_data = (pager_data_t *) data;
+
+    gtk_editable_copy_clipboard(GTK_EDITABLE(pager_data->text));
+  }
+}
+
+static void pagertb_start(GtkWidget *widget, gpointer data)
+{
+  pager_data_t *pager_data;
+  GdkEventKey event;
+  gboolean retval;
+
+  if(data != NULL) {
+    pager_data = (pager_data_t *) data;
+
+    event.keyval = GDK_Home;
+    event.state |= GDK_CONTROL_MASK;
+
+    gtk_signal_emit_by_name(GTK_OBJECT(pager_data->text), "key_press_event",
+			    &event,
+			    &retval);
+  }
+}
+
+static void pagertb_pageup(GtkWidget *widget, gpointer data)
+{
+  pager_data_t *pager_data;
+  GdkEventKey event;
+  gboolean retval;
+
+  if(data != NULL) {
+    pager_data = (pager_data_t *) data;
+
+    event.keyval = GDK_Page_Up;
+
+    gtk_signal_emit_by_name(GTK_OBJECT(pager_data->text), "key_press_event",
+			    &event,
+			    &retval);
+  }
+}
+
+static void pagertb_pagedown(GtkWidget *widget, gpointer data)
+{
+  pager_data_t *pager_data;
+  GdkEventKey event;
+  gboolean retval;
+
+  if(data != NULL) {
+    pager_data = (pager_data_t *) data;
+
+    event.keyval = GDK_Page_Down;
+
+    gtk_signal_emit_by_name(GTK_OBJECT(pager_data->text), "key_press_event",
+			    &event,
+			    &retval);
+  }
+}
+
+static void pagertb_end(GtkWidget *widget, gpointer data)
+{
+  pager_data_t *pager_data;
+  GdkEventKey event;
+  gboolean retval;
+
+  if(data != NULL) {
+    pager_data = (pager_data_t *) data;
+
+    event.keyval = GDK_End;
+    event.state |= GDK_CONTROL_MASK;
+
+    gtk_signal_emit_by_name(GTK_OBJECT(pager_data->text), "key_press_event",
+			    &event,
+			    &retval);
+  }
+}
+
+static void pagertb_close(GtkWidget *widget, gpointer data)
+{
+  pager_data_t *pager_data;
+
+  if(data != NULL) {
+    pager_data = (pager_data_t *) data;
+    gtk_widget_destroy(GTK_WIDGET(pager_data->pagerwin));
+  }
+}
+
+static GnomeUIInfo pager_toolbar[] =
+{
+  GNOMEUIINFO_ITEM_STOCK("Print", "Print pager text", pagertb_print, GNOME_STOCK_PIXMAP_PRINT),
+  GNOMEUIINFO_SEPARATOR,
+  GNOMEUIINFO_ITEM_STOCK("Copy", "Copy the selection", pagertb_copy, GNOME_STOCK_PIXMAP_COPY),
+  GNOMEUIINFO_SEPARATOR,
+  GNOMEUIINFO_ITEM_STOCK("Top", "Scroll to the top", pagertb_start, GNOME_STOCK_PIXMAP_TOP),
+  GNOMEUIINFO_ITEM_STOCK("Page Up", "Scroll up one page", pagertb_pageup, GNOME_STOCK_PIXMAP_UP),
+  GNOMEUIINFO_ITEM_STOCK("Page Down", "Scroll down one page", pagertb_pagedown, GNOME_STOCK_PIXMAP_DOWN),
+  GNOMEUIINFO_ITEM_STOCK("Bottom", "Scroll to the end", pagertb_end, GNOME_STOCK_PIXMAP_BOTTOM),
+  GNOMEUIINFO_SEPARATOR,
+  GNOMEUIINFO_ITEM_STOCK("Close", "Close pager", pagertb_close, GNOME_STOCK_PIXMAP_CLOSE),
+  GNOMEUIINFO_END
+};
+
+int R_ShowFiles(int nfile, char **file, char **title, char *wtitle)
+{
+  pager_data_t *pager_data;
+  GtkWidget *toolbar;
+  GtkWidget *table, *vscrollbar;
+  gchar *realtitle;
+  GtkStyle *textstyle;
+  gint charw, charh, winw, winh;
+  GdkFont *titlefont, *emfont;
+
+  const gint bufsize = 2048;
+  gchar buf[bufsize];
+  gint i;
+  gint fd, readlen;
+  gchar *j, *k;
+  gboolean emmode;
+  gchar *modestart;
+
+  if(nfile < 1)
+    return 0;
+
+  if((wtitle != NULL) && (*wtitle != NULL))
+    realtitle = wtitle;
+  else
+    realtitle = "R pager";
+
+  pager_data = g_new(pager_data_t, 1);
+
+  pager_data->pagerwin = gnome_app_new("R.gnome.pager", realtitle);
+  
+  gnome_app_create_toolbar_with_data(GNOME_APP(pager_data->pagerwin), pager_toolbar, (gpointer) pager_data);
+
+  table = gtk_table_new(1, 2, FALSE);
+  gtk_table_set_col_spacing (GTK_TABLE (table), 0, 2);
+
+  pager_data->text = gtk_text_new(NULL, NULL);
+
+  /* set text font here */
+  textstyle = gtk_style_copy(gtk_widget_get_style(pager_data->text));
+  textstyle->font = gdk_font_load(R_gnome_userprefs.pager_text_font);
+  textstyle->text[GTK_STATE_NORMAL] = R_gnome_userprefs.pager_text_textcolor;
+  textstyle->base[GTK_STATE_NORMAL] = R_gnome_userprefs.pager_text_bgcolor;
+  gtk_widget_set_style(pager_data->text, textstyle);
+
+  /* load title and em font here */
+  titlefont = gdk_font_load(R_gnome_userprefs.pager_title_font);
+  emfont = gdk_font_load(R_gnome_userprefs.pager_em_font);
+
+  /* set width to 80 columns here */
+  charw = gdk_char_width(pager_data->text->style->font, 'w');
+  charh = gdk_char_height(pager_data->text->style->font, 'H');
+  winw = 83 * charw;
+  winh = 50 * charh;
+  gtk_widget_set_usize(pager_data->text, winw, winh);
+
+  gtk_text_set_editable (GTK_TEXT (pager_data->text), FALSE);
+  gtk_table_attach (GTK_TABLE (table), pager_data->text, 0, 1, 0, 1,
+		    GTK_EXPAND | GTK_SHRINK | GTK_FILL,
+		    GTK_EXPAND | GTK_SHRINK | GTK_FILL, 0, 0);
+
+  vscrollbar = gtk_vscrollbar_new (GTK_TEXT (pager_data->text)->vadj);
+  gtk_table_attach (GTK_TABLE (table), vscrollbar, 1, 2, 0, 1,
+		    GTK_FILL, 
+		    GTK_EXPAND | GTK_SHRINK | GTK_FILL, 0, 0);
+
+  for(i = 0; i < nfile; i++) {
+    if((title[i] != NULL) && (*title[i] != NULL)) {
+      g_snprintf(buf, bufsize, "%s\n\n", title[i]);
+      gtk_text_insert(GTK_TEXT(pager_data->text), 
+		      titlefont,
+		      &R_gnome_userprefs.pager_title_textcolor, 
+		      &R_gnome_userprefs.pager_title_bgcolor,
+		      buf, strlen(buf));
+    }
+    if((fd = open(file[i], O_RDONLY, "")) != -1) {
+      do {
+	readlen = read(fd, buf, bufsize);
+
+	emmode = FALSE;
+	modestart = buf;
+
+	/* strip backspaced stuff */
+	if(*buf == '\b')
+	  *buf == ' ';
+	for(j = buf, k = buf; j < buf + readlen; j++) {
+	  if(*j == '\b') {
+	    k--;
+	    if(k != modestart)
+	      gtk_text_insert(GTK_TEXT(pager_data->text), NULL, NULL, NULL,
+			      modestart, k - modestart);
+	    modestart = k;
+	    emmode = TRUE;
+	  }
+	  else {
+	    *k = *j;
+	    k++;
+	    if(emmode) {
+	      gtk_text_insert(GTK_TEXT(pager_data->text),
+			      emfont,
+			      &R_gnome_userprefs.pager_text_textcolor, 
+			      &R_gnome_userprefs.pager_text_bgcolor,
+			      k - 1, 1);
+	      modestart = k;
+	      emmode = FALSE;
+	    }
+	  }
+	}
+
+	gtk_text_insert(GTK_TEXT(pager_data->text), NULL, NULL, NULL,
+			modestart, k - modestart);
+      } while(readlen == bufsize);
+    }
+    else {
+      g_snprintf(buf, bufsize, "NO FILE %s\n\n", file[i]);
+      gtk_text_insert(GTK_TEXT(pager_data->text), NULL, NULL, NULL,
+		      buf, strlen(buf));
+    }
+  }
+
+  gnome_app_set_contents(GNOME_APP(pager_data->pagerwin), table);
+  gtk_widget_grab_focus(pager_data->text);
+  gtk_widget_show_all(pager_data->pagerwin);
+
+  return 0;
 }
 
 char *R_HomeDir()
 {
-	return getenv("RHOME");
+    return getenv("RHOME");
 }
 
 /* Unix file names which begin with "." are invisible. */
@@ -853,4 +1081,73 @@ int R_FileExists(char *path)
 {
     struct stat sb;
     return stat(R_ExpandFileName(path), &sb) == 0;
+}
+
+gboolean R_ChooseFile_result;
+gboolean R_ChooseFile_closing;
+
+R_ChooseFile_ok(GtkWidget *widget, gpointer data)
+{
+  R_ChooseFile_result = TRUE;
+  R_ChooseFile_closing = TRUE;
+
+  gtk_main_quit();
+}
+
+R_ChooseFile_cancel(GtkWidget *widget, gpointer data)
+{
+  R_ChooseFile_closing = TRUE;
+
+  gtk_main_quit();
+}
+
+R_ChooseFile_destroy(GtkWidget *widget, gpointer data)
+{
+  if(!R_ChooseFile_closing)
+    gtk_main_quit();
+}
+
+int R_ChooseFile(int new, char *buf, int len)
+{
+  GtkWidget *fs;
+  gchar *fname;
+
+  R_ChooseFile_result = FALSE;
+  R_ChooseFile_closing = FALSE;
+  *buf = '\0';
+
+  fs = gtk_file_selection_new("Choose file name");
+
+  gtk_window_set_transient_for(GTK_WINDOW(fs), GTK_WINDOW(R_gtk_main_window));
+  gtk_window_set_modal(GTK_WINDOW(fs), TRUE);
+
+  gtk_signal_connect(GTK_OBJECT(GTK_FILE_SELECTION(fs)->ok_button),
+		     "clicked",
+		     (GtkSignalFunc) R_ChooseFile_ok,
+		     NULL);
+  gtk_signal_connect(GTK_OBJECT(GTK_FILE_SELECTION(fs)->cancel_button),
+		     "clicked",
+		     (GtkSignalFunc) R_ChooseFile_cancel,
+		     NULL);
+  gtk_signal_connect(GTK_FILE_SELECTION(fs),
+		     "delete",
+		     (GtkSignalFunc) R_ChooseFile_cancel,
+		     NULL);
+  gtk_signal_connect(GTK_FILE_SELECTION(fs),
+		     "destroy",
+		     (GtkSignalFunc) R_ChooseFile_cancel,
+		     NULL);
+
+  gtk_widget_show(fs);
+  gtk_main();
+
+  if(R_ChooseFile_result) {
+    fname = gtk_file_selection_get_filename(GTK_FILE_SELECTION(fs));
+    strncpy(buf, fname, len);
+    buf[len - 1] = '\0';
+  }
+
+  gtk_widget_destroy(fs);
+
+  return strlen(buf);
 }

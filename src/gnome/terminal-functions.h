@@ -13,6 +13,8 @@ void R_gtk_terminal_interrupt();
 void R_gtk_terminal_quit();
 
 /* menu/toolbar functions */
+void R_gtk_terminal_file_save(GtkWidget *widget, 
+			      gpointer data);
 void R_gtk_terminal_file_saveas(GtkWidget *widget,
 				gpointer data);
 void R_gtk_terminal_file_open(GtkWidget *widget,

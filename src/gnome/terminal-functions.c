@@ -94,7 +94,10 @@ void R_gtk_terminal_file_open(GtkWidget *widget, gpointer data)
 {
   if(!R_gtk_os_file) {
     R_gtk_os_file = gtk_file_selection_new("Open R file");
+
     gtk_window_set_transient_for(GTK_WINDOW(R_gtk_os_file), GTK_WINDOW(R_gtk_main_window));
+    gtk_window_set_modal(GTK_WINDOW(R_gtk_os_file), TRUE);
+
     gtk_signal_connect_object(GTK_OBJECT(GTK_FILE_SELECTION(R_gtk_os_file)->cancel_button),
 			      "clicked",
 			      (GtkSignalFunc) gtk_widget_hide,
@@ -114,7 +117,11 @@ void R_gtk_terminal_file_open(GtkWidget *widget, gpointer data)
   gtk_widget_show(R_gtk_os_file);
 }
 
-static void file_save_ok(GtkWidget *widget, gpointer data)
+void R_gtk_terminal_file_save(GtkWidget *widget, gpointer data)
+{
+}
+
+static void file_saveas_ok(GtkWidget *widget, gpointer data)
 {
   FILE *fp;
   R_gtk_terminal_run("\n");
@@ -137,7 +144,10 @@ void R_gtk_terminal_file_saveas(GtkWidget *widget, gpointer data)
 {
   if(!R_gtk_os_file) {
     R_gtk_os_file = gtk_file_selection_new("Save R file");
+
     gtk_window_set_transient_for(GTK_WINDOW(R_gtk_os_file), GTK_WINDOW(R_gtk_main_window));
+    gtk_window_set_modal(GTK_WINDOW(R_gtk_os_file), TRUE);
+
     gtk_signal_connect_object(GTK_OBJECT(GTK_FILE_SELECTION(R_gtk_os_file)->cancel_button),
 			      "clicked",
 			      (GtkSignalFunc) gtk_widget_destroy,
@@ -151,7 +161,7 @@ void R_gtk_terminal_file_saveas(GtkWidget *widget, gpointer data)
 
   R_gtk_os_signal_ok = gtk_signal_connect(GTK_OBJECT(GTK_FILE_SELECTION(R_gtk_os_file)->ok_button),
 		     "clicked",
-		     (GtkSignalFunc) file_save_ok,
+		     (GtkSignalFunc) file_saveas_ok,
 		     GTK_OBJECT(R_gtk_os_file));
 
   gtk_widget_show(R_gtk_os_file);
